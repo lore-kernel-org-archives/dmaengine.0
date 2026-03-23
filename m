@@ -1,356 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022120.outbound.protection.outlook.com [40.107.75.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8B41FE44A;
-	Mon, 23 Mar 2026 09:35:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774258501; cv=none; b=cTP/QuxMSXF8HhGziyLj3Q+q4WjRXVCd1P35oI7EFQhAp1DENspqM5cyK6HONS/SCHanMHed3TO9+S0wcR7TFetmfNan03fVWw0Izmfr0aykRXICiRL75aF1qwrcn/3AF/0m4EgJjXqlqI54hpoJK8G1Mf9fo97mP5GNVi8qrTg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774258501; c=relaxed/simple;
-	bh=9DVS4XWePq3fWP8PnNkZL1RiZ3dghTt1ujGUsfLlRmM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qnQEftZYvpTuSidk8SNH6yeze1EUuRsFTpxG6U6hYLjC/sdFuSLvL9C9TeLE/VCfQtec68S6r05baxZnvoy33DdXWF9JspSLgIVOAPQNTigwtn8/DFyZMxvDPWHYgotgCKF8f9qzfuVSKLfeHI4uWx4sewcB+Nd6jAryYfxIjhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsTpQ8sr; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsTpQ8sr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E831BC2BC9E;
-	Mon, 23 Mar 2026 09:34:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774258500;
-	bh=9DVS4XWePq3fWP8PnNkZL1RiZ3dghTt1ujGUsfLlRmM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tsTpQ8sr9ZfFe23UYvY9gWpEp4pi3UFpdtCDyFUJ0o7LE32Uk5F4vgOPifpRJNFFY
-	 CK9ZxWImSDjq96G80Dpgjk0eEAT1UzCkSckZ+wUTTo1rwZgtfteXTCxy2eS0I0ivmj
-	 8ygvJ5lQwTk+7ZcemwDn0bDWOPeuokFyWfiIT12I7oWKoDelMfxFKX9wgcyrc3iTzg
-	 irjQBVP6hPhFVtkKv3WUp7FzrarlPkf8AngjZPRtaZEgRqxzwurhCueLJQZ5Xd3GHu
-	 BC0AgZQl897EaidI07vuDFoBbIPRr3E5WYLkF4Xsb9fvCiPPNXazkpFoZtGXnjIMCR
-	 P3Le4Kr6zRJRg==
-Date: Mon, 23 Mar 2026 15:04:50 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, brgl@kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v13 05/12] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <hohx2judes5c6na4svpah254hqbaf4kbeyu7prwkprfv5dy7hj@26nxwlvb76yp>
-References: <20260317-qcom-qce-cmd-descr-v13-0-0968eb4f8c40@oss.qualcomm.com>
- <20260317-qcom-qce-cmd-descr-v13-5-0968eb4f8c40@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336EF392828;
+	Mon, 23 Mar 2026 11:48:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.120
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774266512; cv=fail; b=DSf6Id34csZGNm7RcCrVHpyyAbQXg2sFw62n12QqBAKh2dSuOGQ7kQYdaj7i1PiGSlKNeofYiEPZQU7RCVaeln23ZhVKBIVthXK+hmatUEZ8ASW068t4laSUk6IHtjy1n3cdgFviE0ZzZG5wkhszqu8/Y0rCkqEHlz3gsGzjCV8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774266512; c=relaxed/simple;
+	bh=7A8MSo10fIttNaVumvCBAaqbEdKBCoWmoPr3+Yhg9K8=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GwrhNI3UBptqkREnKt5riafs/+THlr00s9GzdIAZPtDHSc4uidEIpTaZcbKJLXzQaMFXbTdFPuTzy0o/NtUbkAU4kdzLnWkBJKW38ZeRanxx/vGwb5xlQFNZl6UCVBq0GeHxfBaX+k+xNCRztY/8x0icoyyz9ifPM0qdiDyKQrs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=40.107.75.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=S2B69WFQlf46Mgk+wju5E1kFLBpSaOoZX+WHmO/C6bvinZZ7FAaVlYpjAe/QHAjBFV/V+GR3nY57x1fKDG4bs700GwIxlXx4YzleAWkUpOgpHxOXnIpQwFf03ZeljM7azqGXjTDA3nLh/BqZSTFfThHVoYWwwOz1pDwQG8FGVxqsrLvY2StZrxkLDaq29mtiSJBzC4/3rnn5RNJ6bUpN5/+4f/f7vcEWMELJUOEmiIquM5Bojt+rVuRn4Yf5ruihvdZ5HXFBqB+gaB5AhcvgerDOZvodXKJQSi8EuXAVcHAATCWkj/Tnlv5sp2quE7xxGnzFs73DrXcUkpIsSzUPsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vV532aEbVbKjSBZ8fOcIUS5jUDl3wqrJOvveGpsT9Do=;
+ b=Kn0anWcCxBBPDlr3QrW/vJUd97/wvLx91+czif+3ZIuSzX/ssOsMwk+9SWArP+bWQDNpAK+O61VKQfZi2QGmb/9NA5LX/bWRf4P0ZLshDW1tP9zCXF5ruzJw6Kh2lQyxWkigD+5YjbRjcnV9KuuqAE10QU0PYo1frP8mG2sJ2e/acj/7/BCBiXVy57mw1+yzxao9+a5oyS7PSFXKPCljJZJts2LWDD9FRfTRBmNn39tC80D86/9BqBLA67qAEFDAIw0wBCS594LuzucoVnOly5FP+muB3XwB7eRk4dOKm0kA48EOePtxjPBunsMiviSmEqMmSWOtS11LFtlXGKwOHw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
+ dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
+ not signed); arc=none (0)
+Received: from TY4P286CA0134.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:37f::6)
+ by TY2PPF7E205D1F6.apcprd06.prod.outlook.com (2603:1096:408::799) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Mon, 23 Mar
+ 2026 11:48:25 +0000
+Received: from TY2PEPF0000AB87.apcprd03.prod.outlook.com
+ (2603:1096:405:37f:cafe::ab) by TY4P286CA0134.outlook.office365.com
+ (2603:1096:405:37f::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9723.31 via Frontend Transport; Mon,
+ 23 Mar 2026 11:48:25 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 222.71.101.198)
+ smtp.mailfrom=cixtech.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
+Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
+ 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
+ client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
+Received: from smtprelay.cixcomputing.com (222.71.101.198) by
+ TY2PEPF0000AB87.mail.protection.outlook.com (10.167.253.6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9723.19 via Frontend Transport; Mon, 23 Mar 2026 11:48:25 +0000
+Received: from guoo-System-Product-Name.. (unknown [172.20.64.188])
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 397204126F88;
+	Mon, 23 Mar 2026 19:48:23 +0800 (CST)
+From: Jun Guo <jun.guo@cixtech.com>
+To: peter.chen@cixtech.com,
+	fugang.duan@cixtech.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	ychuang3@nuvoton.com,
+	schung@nuvoton.com,
+	robin.murphy@arm.com,
+	Frank.Li@kernel.org
+Cc: dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	cix-kernel-upstream@cixtech.com,
+	linux-arm-kernel@lists.infradead.org,
+	Jun Guo <jun.guo@cixtech.com>
+Subject: [PATCH v4 1/3] dt-bindings: dma: arm-dma350: document generic and combined IRQ topologies
+Date: Mon, 23 Mar 2026 19:48:20 +0800
+Message-Id: <20260323114822.1925869-2-jun.guo@cixtech.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260323114822.1925869-1-jun.guo@cixtech.com>
+References: <20260323114822.1925869-1-jun.guo@cixtech.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260317-qcom-qce-cmd-descr-v13-5-0968eb4f8c40@oss.qualcomm.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB87:EE_|TY2PPF7E205D1F6:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 158d76f5-c817-4f4d-6a3b-08de88d217ac
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|36860700016|1800799024|82310400026|56012099003|22082099003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info:
+	+4vQmSNEUsJpwjQkVw/da556zt7xu3bAylvwb9SV4ch34XKXATKkPudvLmJf0agaK+F4YlvIEXdDnBCRTTmBmG28O/gBDAzz4D+MieUNRNdK6OfcFi2m0Zcz3oeQwBp6Q/AbAAMzFCVof06bxjZBVmW8zrThSu6gMT9AN+QOoiwIi+xCxdiQlp8sV+uQrKOmAdUnnqU1EUzRztR5NYemEZGnp2CdrNCHuizEG5H+IAtPs62uUt4OpXfsN1NR4cIjC8C5qKKTbd+LZJ8NPZgpk8W1pYv7jGhu/9Xs8xwjNtyonbgFapqwifyejgqS6tutOg7C7xfFNYUYEee8mhJwBYIT226LuKxjGco7KflDEguw6musNUtOtAQRkLQhbd1gzh4Wdk3hThYlMrwCGFCMBenLVkxNehNiFYCO8y2PTLCCb3WxMSBifYOHKTxV1cNkc0NyJujpPcT/qZmx2t7AOsoEV/xAM31BFhuL8eI5eLM7oy4c/s6ivci/TSGKqmRHBlshqbDG98cORHV27WRYeYYyT73GyvYKMvRn8fg+JRZUnLwHfObEB5M4yQ4FmJ4K8rxtoisti727QrtZFRvZiqVIM5n5/bKRVjpUV27Fdp22eBYBsWMtYM2PV6G/YN5gPx8U9+0F4qUionS56kSSJlQlxlQMXmXvfqA2OVClvhbm6vfEVfPQn4I0ipfyQXqwlKmc0g72jJ3PvrnK13oV5OHr1xMAR7xUr32femJ5y4dT++ZUGBesmsI+8GtdwAFw/PRR2ZBr9s4zt4KHwAfRtUep2/oJ1nVtOQv88WqbSUTcFEdSXnOX1UW9SuYmyFbH
+X-Forefront-Antispam-Report:
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(36860700016)(1800799024)(82310400026)(56012099003)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	lzsl7ugjDZ293ozU2gm8WHR7aXgNip/RKR47Ep489oFvv6IkiAe6f2+JI1fwJ14bmXqX9qOIA5f6ZeedpJmj/ZGLdINz2ocmvzp0e7NOukjWfzE/pgUoxzNEEf3aFjewsk3Q02GxFag6GsfD2btN1dzde/uWbwPhEpXPGysjUes25aTamIrPP19iE68C1+AqY3lll8jPPmucSDHxrnDpyCqeZomMtNNscjQMuQNUFAsqSAohn5za9KEeEA8lUmj4m7ipwwz/Rq3Nd5sKDmNKhdfD7gJw7bJM0KdPXfyz4bS5f7qen8H2KUOhYupkK89ZdAqaShdfA9E4jeqP/tsUp94bP9BwTwdshcXWgdmyf15Tie0iMj1nmLFInLJcrJ8eH7aFKTGfP0LiJMlSsrjRlcwkmt06d8Gnevho/khSItEOVzUQpPXcxm7CcxgkL6eb
+X-OriginatorOrg: cixtech.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2026 11:48:25.2284
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 158d76f5-c817-4f4d-6a3b-08de88d217ac
+X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	TY2PEPF0000AB87.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPF7E205D1F6
 
-On Tue, Mar 17, 2026 at 03:02:12PM +0100, Bartosz Golaszewski wrote:
-> Add support for BAM pipe locking. To that end: when starting DMA on an RX
-> channel - prepend the existing queue of issued descriptors with an
-> additional "dummy" command descriptor with the LOCK bit set. Once the
-> transaction is done (no more issued descriptors), issue one more dummy
-> descriptor with the UNLOCK bit.
-> 
-> We *must* wait until the transaction is signalled as done because we
-> must not perform any writes into config registers while the engine is
-> busy.
-> 
-> The dummy writes must be issued into a scratchpad register of the client
-> so provide a mechanism to communicate the right address via descriptor
-> metadata.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Update the DMA-350 DT binding to match the current driver behavior.
 
-I've left some comments in v12, but looks like you've missed them. Anyhow,
-this version looks good to me as the design looks simple and doesn't warrant
-much change from the client driver other than passing the scratchpad register as
-metadata. I just have some minor comments in this version. 
+Allow both:
+- "arm,dma-350" as the generic compatible, and
+- "cix,sky1-dma-350", "arm,dma-350" for SoC-specific fallback usage.
 
-> ---
->  drivers/dma/qcom/bam_dma.c       | 160 ++++++++++++++++++++++++++++++++++++++-
->  include/linux/dma/qcom_bam_dma.h |   4 +
->  2 files changed, 160 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 83491e7c2f17d8c9d12a1a055baea7e3a0a75a53..895286452c8b5e701c1df482095e5fe4a49f4246 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -28,11 +28,13 @@
->  #include <linux/clk.h>
->  #include <linux/device.h>
->  #include <linux/dma-mapping.h>
-> +#include <linux/dma/qcom_bam_dma.h>
->  #include <linux/dmaengine.h>
->  #include <linux/init.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/kernel.h>
-> +#include <linux/lockdep.h>
->  #include <linux/module.h>
->  #include <linux/of_address.h>
->  #include <linux/of_dma.h>
-> @@ -60,6 +62,8 @@ struct bam_desc_hw {
->  #define DESC_FLAG_EOB BIT(13)
->  #define DESC_FLAG_NWD BIT(12)
->  #define DESC_FLAG_CMD BIT(11)
-> +#define DESC_FLAG_LOCK BIT(10)
-> +#define DESC_FLAG_UNLOCK BIT(9)
->  
->  struct bam_async_desc {
->  	struct virt_dma_desc vd;
-> @@ -391,6 +395,14 @@ struct bam_chan {
->  	struct list_head desc_list;
->  
->  	struct list_head node;
-> +
-> +	/* BAM locking infrastructure */
-> +	bool locked;
-> +	phys_addr_t scratchpad_addr;
-> +	struct scatterlist lock_sg;
-> +	struct scatterlist unlock_sg;
-> +	struct bam_cmd_element lock_ce;
-> +	struct bam_cmd_element unlock_ce;
->  };
->  
->  static inline struct bam_chan *to_bam_chan(struct dma_chan *common)
-> @@ -652,6 +664,27 @@ static int bam_slave_config(struct dma_chan *chan,
->  	return 0;
->  }
->  
-> +static int bam_metadata_attach(struct dma_async_tx_descriptor *desc, void *data, size_t len)
-> +{
-> +	struct bam_chan *bchan = to_bam_chan(desc->chan);
-> +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> +	struct bam_desc_metadata *metadata = data;
-> +
-> +	if (!data)
-> +		return -EINVAL;
-> +
-> +	if (!bdata->pipe_lock_supported)
-> +		return -EOPNOTSUPP;
+Also document interrupt topology variants supported by hardware
+integration:
+- one combined interrupt for all channels, or
+- one interrupt per channel (up to 8 channels).
 
-As mentioned in v12, you should return 0 to avoid erroring out the clients if
-pipe lock is not supported.
+Assisted-by: Cursor: GPT-5.3-Codex
+Signed-off-by: Jun Guo <jun.guo@cixtech.com>
+---
+ .../devicetree/bindings/dma/arm,dma-350.yaml  | 34 +++++++++++++------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-> +
-> +	bchan->scratchpad_addr = metadata->scratchpad_addr;
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct dma_descriptor_metadata_ops bam_metadata_ops = {
-> +	.attach = bam_metadata_attach,
-> +};
-> +
->  /**
->   * bam_prep_slave_sg - Prep slave sg transaction
->   *
-> @@ -668,6 +701,7 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->  	void *context)
->  {
->  	struct bam_chan *bchan = to_bam_chan(chan);
-> +	struct dma_async_tx_descriptor *tx_desc;
->  	struct bam_device *bdev = bchan->bdev;
->  	struct bam_async_desc *async_desc;
->  	struct scatterlist *sg;
-> @@ -723,7 +757,12 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
->  		} while (remainder > 0);
->  	}
->  
-> -	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
-> +	tx_desc = vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
-> +	if (!tx_desc)
-> +		return NULL;
-> +
-> +	tx_desc->metadata_ops = &bam_metadata_ops;
-> +	return tx_desc;
->  }
->  
->  /**
-> @@ -1012,13 +1051,115 @@ static void bam_apply_new_config(struct bam_chan *bchan,
->  	bchan->reconfigure = 0;
->  }
->  
-> +static struct bam_async_desc *
-> +bam_make_lock_desc(struct bam_chan *bchan, struct scatterlist *sg,
-> +		   struct bam_cmd_element *ce, unsigned long flag)
-> +{
-> +	struct dma_chan *chan = &bchan->vc.chan;
-> +	struct bam_async_desc *async_desc;
-> +	struct bam_desc_hw *desc;
-> +	struct virt_dma_desc *vd;
-> +	struct virt_dma_chan *vc;
-> +	unsigned int mapped;
-> +	dma_cookie_t cookie;
-> +	int ret;
-> +
-> +	sg_init_table(sg, 1);
-> +
-> +	async_desc = kzalloc_flex(*async_desc, desc, 1, GFP_NOWAIT);
-> +	if (!async_desc) {
-> +		dev_err(bchan->bdev->dev, "failed to allocate the BAM lock descriptor\n");
-> +		return NULL;
-> +	}
-> +
-> +	async_desc->num_desc = 1;
-> +	async_desc->curr_desc = async_desc->desc;
-> +	async_desc->dir = DMA_MEM_TO_DEV;
-> +
-> +	desc = async_desc->desc;
-> +
-> +	bam_prep_ce_le32(ce, bchan->scratchpad_addr, BAM_WRITE_COMMAND, 0);
-> +	sg_set_buf(sg, ce, sizeof(*ce));
-> +
-> +	mapped = dma_map_sg_attrs(chan->slave, sg, 1, DMA_TO_DEVICE, DMA_PREP_CMD);
-> +	if (!mapped) {
-> +		kfree(async_desc);
-> +		return NULL;
-> +	}
-> +
-> +	desc->flags |= cpu_to_le16(DESC_FLAG_CMD | flag);
-> +	desc->addr = sg_dma_address(sg);
-> +	desc->size = sizeof(struct bam_cmd_element);
-> +
-> +	vc = &bchan->vc;
-> +	vd = &async_desc->vd;
-> +
-> +	dma_async_tx_descriptor_init(&vd->tx, &vc->chan);
-> +	vd->tx.flags = DMA_PREP_CMD;
-> +	vd->tx.desc_free = vchan_tx_desc_free;
-> +	vd->tx_result.result = DMA_TRANS_NOERROR;
-> +	vd->tx_result.residue = 0;
-> +
-> +	cookie = dma_cookie_assign(&vd->tx);
-> +	ret = dma_submit_error(cookie);
-> +	if (ret)
-> +		return NULL;
-
-You are leaking async_desc here.
-
-> +
-> +	return async_desc;
-> +}
-> +
-> +static int bam_do_setup_pipe_lock(struct bam_chan *bchan, bool lock)
-> +{
-> +	struct bam_device *bdev = bchan->bdev;
-> +	const struct bam_device_data *bdata = bdev->dev_data;
-> +	struct bam_async_desc *lock_desc;
-> +	struct bam_cmd_element *ce;
-> +	struct scatterlist *sgl;
-> +	unsigned long flag;
-> +
-> +	lockdep_assert_held(&bchan->vc.lock);
-> +
-> +	if (!bdata->pipe_lock_supported || !bchan->scratchpad_addr ||
-> +	    bchan->slave.direction != DMA_MEM_TO_DEV)
-> +		return 0;
-> +
-> +	if (lock) {
-> +		sgl = &bchan->lock_sg;
-> +		ce = &bchan->lock_ce;
-> +		flag = DESC_FLAG_LOCK;
-> +	} else {
-> +		sgl = &bchan->unlock_sg;
-> +		ce = &bchan->unlock_ce;
-> +		flag = DESC_FLAG_UNLOCK;
-> +	}
-> +
-> +	lock_desc = bam_make_lock_desc(bchan, sgl, ce, flag);
-> +	if (!lock_desc)
-> +		return -ENOMEM;
-> +
-> +	if (lock)
-> +		list_add(&lock_desc->vd.node, &bchan->vc.desc_issued);
-> +	else
-> +		list_add_tail(&lock_desc->vd.node, &bchan->vc.desc_issued);
-> +
-> +	bchan->locked = lock;
-
-What is this flag for?
-
-> +
-> +	return 0;
-> +}
-> +
-> +static void bam_setup_pipe_lock(struct bam_chan *bchan)
-> +{
-> +	if (bam_do_setup_pipe_lock(bchan, true) || bam_do_setup_pipe_lock(bchan, false))
-> +		dev_err(bchan->vc.chan.slave, "Failed to setup BAM pipe lock descriptors");
-> +}
-> +
->  /**
->   * bam_start_dma - start next transaction
->   * @bchan: bam dma channel
->   */
->  static void bam_start_dma(struct bam_chan *bchan)
->  {
-> -	struct virt_dma_desc *vd = vchan_next_desc(&bchan->vc);
-> +	struct virt_dma_desc *vd;
->  	struct bam_device *bdev = bchan->bdev;
->  	struct bam_async_desc *async_desc = NULL;
->  	struct bam_desc_hw *desc;
-> @@ -1030,6 +1171,9 @@ static void bam_start_dma(struct bam_chan *bchan)
->  
->  	lockdep_assert_held(&bchan->vc.lock);
->  
-> +	bam_setup_pipe_lock(bchan);
-> +
-> +	vd = vchan_next_desc(&bchan->vc);
->  	if (!vd)
->  		return;
->  
-> @@ -1157,8 +1301,15 @@ static void bam_issue_pending(struct dma_chan *chan)
->   */
->  static void bam_dma_free_desc(struct virt_dma_desc *vd)
->  {
-> -	struct bam_async_desc *async_desc = container_of(vd,
-> -			struct bam_async_desc, vd);
-> +	struct bam_async_desc *async_desc = container_of(vd, struct bam_async_desc, vd);
-> +	struct bam_desc_hw *desc = async_desc->desc;
-> +	struct dma_chan *chan = vd->tx.chan;
-> +	struct bam_chan *bchan = to_bam_chan(chan);
-> +
-> +	if (le16_to_cpu(desc->flags) & DESC_FLAG_LOCK)
-> +		dma_unmap_sg(chan->slave, &bchan->lock_sg, 1, DMA_TO_DEVICE);
-> +	else if (le16_to_cpu(desc->flags) & DESC_FLAG_UNLOCK)
-> +		dma_unmap_sg(chan->slave, &bchan->unlock_sg, 1, DMA_TO_DEVICE);
->  
->  	kfree(async_desc);
->  }
-> @@ -1350,6 +1501,7 @@ static int bam_dma_probe(struct platform_device *pdev)
->  	bdev->common.device_terminate_all = bam_dma_terminate_all;
->  	bdev->common.device_issue_pending = bam_issue_pending;
->  	bdev->common.device_tx_status = bam_tx_status;
-> +	bdev->common.desc_metadata_modes = DESC_METADATA_CLIENT;
->  	bdev->common.dev = bdev->dev;
->  
->  	ret = dma_async_device_register(&bdev->common);
-> diff --git a/include/linux/dma/qcom_bam_dma.h b/include/linux/dma/qcom_bam_dma.h
-> index 68fc0e643b1b97fe4520d5878daa322b81f4f559..f85e0c72407b5e1a733750ac87bbaba6af6e8c78 100644
-> --- a/include/linux/dma/qcom_bam_dma.h
-> +++ b/include/linux/dma/qcom_bam_dma.h
-> @@ -34,6 +34,10 @@ enum bam_command_type {
->  	BAM_READ_COMMAND,
->  };
->  
-> +struct bam_desc_metadata {
-> +	phys_addr_t scratchpad_addr;
-
-I think it'd be worth adding a comment for this.
-
-- Mani
-
+diff --git a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
+index 429f682f15d8..47091614d1b4 100644
+--- a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
++++ b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
+@@ -14,7 +14,14 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: arm,dma-350
++    description:
++      Use "arm,dma-350" for generic integration. A SoC-specific
++      compatible may be listed first, followed by "arm,dma-350".
++    oneOf:
++      - const: arm,dma-350
++      - items:
++          - const: cix,sky1-dma-350
++          - const: arm,dma-350
+ 
+   reg:
+     items:
+@@ -22,15 +29,22 @@ properties:
+ 
+   interrupts:
+     minItems: 1
+-    items:
+-      - description: Channel 0 interrupt
+-      - description: Channel 1 interrupt
+-      - description: Channel 2 interrupt
+-      - description: Channel 3 interrupt
+-      - description: Channel 4 interrupt
+-      - description: Channel 5 interrupt
+-      - description: Channel 6 interrupt
+-      - description: Channel 7 interrupt
++    maxItems: 8
++    description:
++      Either one interrupt per channel (8 interrupts), or one
++      combined interrupt for all channels.
++    oneOf:
++      - items:
++          - description: Channel 0 interrupt
++          - description: Channel 1 interrupt
++          - description: Channel 2 interrupt
++          - description: Channel 3 interrupt
++          - description: Channel 4 interrupt
++          - description: Channel 5 interrupt
++          - description: Channel 6 interrupt
++          - description: Channel 7 interrupt
++      - items:
++          - description: Combined interrupt shared by all channels
+ 
+   "#dma-cells":
+     const: 1
 -- 
-மணிவண்ணன் சதாசிவம்
+2.34.1
+
