@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FAB3009F6;
-	Mon, 23 Mar 2026 12:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7B138E5DF;
+	Mon, 23 Mar 2026 12:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774267262; cv=none; b=pBDAxBJOEIlxp+I39AIROHs8Qk5v7OlD2blmS2AHUlqXfkDYu3njHt7hOkApLFHb1ZOGC1LRfFm1ZXTb95WRjDfByqgWekcCm/gBR4iIThBfxNnVH1WljqjbEaWxKv5mQKcLl/9fVdlrl+5gVkBT9r1PInjhr46eul9oPyhhtvg=
+	t=1774267373; cv=none; b=F2lqOeTrHqIspQWuqG5Hxltp55FU1hw4zc/yAhOp9FdE8cm6CEJJUCQ0MMPtS/m6TGVEuOT40TbUgp+cTTbqGy3k1EfFI7bSDrNnfuJejtCfQFcDpSwCMB+R/0yGDj7iK/aWUfSu+AYanJcn2jZIqmeqsglN7Cvd+kZ7erdgELo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774267262; c=relaxed/simple;
-	bh=YJ4Br2jWeQewN2ZzamQUZ7IWYgZzUXyO0fnzGfR/vAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NmI8eKjqXIOlTtRkWjKZwDfeZIRHFIak1lBbfs3pGaM1S2Onh9rX5SWe6Fd780H0NWjXrXBQuD9e1nLppHc1wk4ADfsaOKXZa1D1jp76RCWiqPEqUQoqt2AZ2T8Ee+atJYx86w3HBpGGvv7SUAxoLd2EvUN/CYXZRLoBdELzNM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3Xex9vM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774267373; c=relaxed/simple;
+	bh=AGZHTNBx2gUvha3PKcJjoSItuRMnv1LtpEWeHa4dcaY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=d3FEgRECy2AC9j5/948fMol72uKZw+V+/n8EPT67qVf3H1irbifhDF31thfREHSE9tR4SmoYQaK+n68oUrKePrfW8FKFn1Y0sljMcVL7zNFMoS8AeN1hqohVX2g9Ptzf6RRRxG5zHjDvCmcqdIxYpM946PA7Jy7NvAg+7NoetDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eWRCJCtm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3Xex9vM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22D2C4CEF7;
-	Mon, 23 Mar 2026 12:00:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eWRCJCtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AE8C2BC87;
+	Mon, 23 Mar 2026 12:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774267262;
-	bh=YJ4Br2jWeQewN2ZzamQUZ7IWYgZzUXyO0fnzGfR/vAM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=X3Xex9vM466+vfTL+IDc7FpFQ/L4+sbY7JdO1XwXe6qvadSXPe1o00Nj1Fqi8g38u
-	 L3CR5x/IPnstRTNxlprFlbXq2OqaEZRxF2j4U79wUBNkStgHBB+DsoU0tkEQ58cyFD
-	 9JEwxilkQJgtQAQt2KKpFwjYwGqwFth19t4P1pQyhJjZHeNR38J0yYPeUzI8yUt0HG
-	 roMYfA5YCtYVHAQBG3rHflq++YKZrBTm7Gosh+hetg0R908x9pJQRqxGc50NWvpgNH
-	 2joiaWU6HyQIG3O9T2VtyRImAEkESahTFqsckR+7mDO4iThswYIE7WWP2MrEIDH46k
-	 kJALxy5GHIMdQ==
-Message-ID: <64836645-7c54-44bd-a21f-b02e684d3863@kernel.org>
-Date: Mon, 23 Mar 2026 13:00:57 +0100
+	s=k20201202; t=1774267372;
+	bh=AGZHTNBx2gUvha3PKcJjoSItuRMnv1LtpEWeHa4dcaY=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=eWRCJCtmT7ESeoSFNeL3DFa3XEPJYZ6z8ZGFLCij2cZrGzJBCyREy3QWxJpUtzyG4
+	 ktUe86QMNYS+nz8aeGztigvbioHEaWVVzq4uljqJ89SmVeSj314DoP5cFkKPrDlRmq
+	 YzwTrL0z4zYLulMF8a+5sRk6F00QoNRRkXKir+qq5dB3rZNNbia4+QQZt1U1abN+Tj
+	 9LePEThcNTFWOu4+FFcMfIqPdbspcU9dsStT81Ow3Mjn6y/GooRGJmvKcEvkuXAJqR
+	 5xkIxthUcH5H3LwG5KZRqv2VsFcn6YAlx4lQ2RjX/FX1YIbnXZ+QBMG9pibLQN3ma9
+	 LAjdn1MWNav4Q==
+Message-ID: <88472f82-6171-4eaa-9a3b-59372c11a9f3@kernel.org>
+Date: Mon, 23 Mar 2026 13:02:47 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,6 +37,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 1/3] dt-bindings: dma: arm-dma350: document generic and
  combined IRQ topologies
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Jun Guo <jun.guo@cixtech.com>, peter.chen@cixtech.com,
  fugang.duan@cixtech.com, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, vkoul@kernel.org, ychuang3@nuvoton.com,
@@ -46,7 +47,7 @@ Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
 References: <20260323114822.1925869-1-jun.guo@cixtech.com>
  <20260323114822.1925869-2-jun.guo@cixtech.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <64836645-7c54-44bd-a21f-b02e684d3863@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -91,49 +92,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260323114822.1925869-2-jun.guo@cixtech.com>
+In-Reply-To: <64836645-7c54-44bd-a21f-b02e684d3863@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/03/2026 12:48, Jun Guo wrote:
-> Update the DMA-350 DT binding to match the current driver behavior.
+On 23/03/2026 13:00, Krzysztof Kozlowski wrote:
+> On 23/03/2026 12:48, Jun Guo wrote:
+>> Update the DMA-350 DT binding to match the current driver behavior.
+>>
+>> Allow both:
+>> - "arm,dma-350" as the generic compatible, and
+>> - "cix,sky1-dma-350", "arm,dma-350" for SoC-specific fallback usage.
+>>
+>> Also document interrupt topology variants supported by hardware
+>> integration:
+>> - one combined interrupt for all channels, or
+>> - one interrupt per channel (up to 8 channels).
+>>
+>> Assisted-by: Cursor: GPT-5.3-Codex
 > 
-> Allow both:
-> - "arm,dma-350" as the generic compatible, and
-> - "cix,sky1-dma-350", "arm,dma-350" for SoC-specific fallback usage.
-> 
-> Also document interrupt topology variants supported by hardware
-> integration:
-> - one combined interrupt for all channels, or
-> - one interrupt per channel (up to 8 channels).
-> 
-> Assisted-by: Cursor: GPT-5.3-Codex
+> There is no space here. Read the docs, I quite insisted on this last
+> time. If you make mistakes in this, I doubt you read the docs thus I
+> doubt you followed the requirements - have actual rights to send it for
+> example.
 
-There is no space here. Read the docs, I quite insisted on this last
-time. If you make mistakes in this, I doubt you read the docs thus I
-doubt you followed the requirements - have actual rights to send it for
-example.
+And you already received that comment:
 
-> Signed-off-by: Jun Guo <jun.guo@cixtech.com>
-> ---
->  .../devicetree/bindings/dma/arm,dma-350.yaml  | 34 +++++++++++++------
->  1 file changed, 24 insertions(+), 10 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> index 429f682f15d8..47091614d1b4 100644
-> --- a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> +++ b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> @@ -14,7 +14,14 @@ allOf:
->  
->  properties:
->    compatible:
-> -    const: arm,dma-350
-> +    description:
-> +      Use "arm,dma-350" for generic integration. A SoC-specific
-> +      compatible may be listed first, followed by "arm,dma-350".
-
-What is the point of explaining it? What is the difference between
-generic integration and non-generic?
+"Wrong tag, please read carefully the guideline before using LLM tools."
 
 Best regards,
 Krzysztof
