@@ -1,40 +1,39 @@
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022128.outbound.protection.outlook.com [40.107.75.128])
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023121.outbound.protection.outlook.com [40.107.44.121])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE4239A05D;
-	Mon, 23 Mar 2026 11:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D4439A074;
+	Mon, 23 Mar 2026 11:48:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.121
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774266513; cv=fail; b=WPAsI+/nSNFNAbOYhBPusVqO+khGLPfLfTQtsLU7JyzRPSNddEBs4I6KZwI30RD06W88hiKQkgSfXGA06FA9zGuiDSB1yFuDAgZ3cSyqNhcaPvpXqycEhAEYpITPeeUfIafZochnpxiNuzNqbkmTKes2/DC71zAWxih/T2FaWeE=
+	t=1774266513; cv=fail; b=ugFUND3ZRzfiWLrEz1w8nise+Q6+akEf+igZvCsP3ocD6muNpw0onVIr/A7uyN9w5istN962noOpb2wcFrBgpQBzoSTRcaltVdbi1nj2TfYFGMlqgQEAnzoqfwYLYFjIslnYumnjyhxAQGffl7DsLIYCIZyTKGb2NzZMl5x29PY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774266513; c=relaxed/simple;
-	bh=QuYtYVSMlUIXJ6Bk4thIiOTNT1akFHH0kPy20tA+tdw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PTZEUylEVRXcwjDt/VSHKd5J2PAoiLxEcSaJYQZ5miCtcCpYbvTN83gVnRsyCBNao0A5u377KUgJ2nXKMkI8ZC3/xr6h8xPji6k0ska13flKPphH6PQf2xpzugpCIpvy5TcyR37N8Hb6omXvqosx8eqVWdcdzgesqeeEoJsJWYI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=40.107.75.128
+	bh=3jFZekRkwQNkYHP+Khaa6QSsGMHa31AO1WojcpZZkQw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=AuVl28ycFMs2VVifMQ3ZhgAHSZL3OII5PEXU5OCHmd46cmkalCupY3+fv+TnzFaEjlo8jHKnfECmKAhjyGByuAEkf+JReHWK9cmJBusNq51cljytfb2d3DGSFAJx7WfDwkk0+F5L/ITpOpW2++PSw4/Z2HXuP73rgVw30VWopFQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=40.107.44.121
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yAax+DFxXwl7woKpY5dlL20YZVHhUYI72CNw/oREglwyhQmOaIg7YWNo4Av/WmW/sW4sF8kDKyc3ZnEYpHuhoXvuAesKtwqnmqP9TcYeGH0lJP9Rk886faFSHXDzH54WHbSpin/eAvbCRqOGf0tWMu6KRQuFFSOh2jR9L0LLaMbRidQSzgJmTNptM3MLIKT1gCnG43SetEWCnOk6GM0At4lCUmEGk+IQJWUjHWeQoP77gfMCdfFhAVzZkGQXaOmFjaKA7SLRZw+7jGZQsbC+JP/GGJnXHLyHAxddqRtU5vVjcOAzHQwVYrhLKbvD4M23QwQD88yPyVNpeFvEC40I6w==
+ b=kgOBIZ2O42eHpzUac7gA29SwuK9FxR77OaQA2VEsI7iHjZomVoEKdqVOqIB2mwZmIye7w1LGydqzi7gNKfUBd8MU24lGU833JbpXW4zHhGpVO4aBrdJOJ/O7Ilx4heZuPYZhh42aADFpLF4q7Ntd+h1WtDXDAM/txbUVwXgFz1s6h45KrUXyLtiHBD5I4wsapJ2a1Zsn2AbhHYMnuUyM683ZKLvXuQH6NfzDzdbrcUIyS/EvJfJvDixboS9Hqn+32M+0nSZh7a9yT7FRiGk/sFPlDTRASYLe6/oNowNKPKaNKbTuTn2fa49CuA9PwUxW4mZmPUfB5kmRUjVxnmGvVw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2jxXtUv8rDbAADEmoBH0SBT/zryraGBveDHVL7w+d5k=;
- b=EigJbVqmn4WmsbXS8pXrlBQSrD9RMbEJ7T/YN3rPR/+b57GGhEUccByqC9pW1uq9hPHE6myV+hJqGwFx/Vf1b5GQjMQRNFwNQXc8xo/VEKu0i95ID2VPRqhTo3fkRhZSbab/CNAt9tg57a9+p+PNjuI9pfiyUfR62HErmpEqN/hu+UW2ctpEFMUiDg2LL8aVopY7o9qAOVhgCiia85kaRyG6uHl/A4Z5VhbMcNQ9zH4DVgM3akoPrOSfF3sRfloGfKipbbK00l2lsyaUZkLTh8AMmOT0+WtyE/6eiAlYoeqG0hjF3WIx9GVzV/OLCeGPNbUYezIo23Ai9lLtY2jaEQ==
+ bh=zKDB0jdoKZi39X8HPp068xWyfksBFW34kbhM9caEeH0=;
+ b=k8v4nku1v3aOFQfBm6lh9PjFn6mPSTKWGZiVeA7TEKRJVKt2lUXkYs5hBA1H2NN8G5Gvox+aljXgEHFxlx5W5N28/jf3HJhOaIEArUS7+gb6Kvq4o9PLCe8FX88bFjse5UwKOrLHAfWYOJ8BcojdxSxYTvvohB6fa12wHFPqjpF8t6vOS3cMLYufXR4DRkS2bWZ49hSd2isHqK439gHlcJjD4jROMD9hJuK6ae3SPlSLyGH/FqumJOc5RDzLshUdOB6cdmz0lnHQMbwuTb0VhviEOpAq/SSgn90zHIThGoSjxSeeduf/JHBz7juxEnFrfgBPxw9fF986nyWwKPpEjg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
  dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
  not signed); arc=none (0)
-Received: from PS2PR03CA0023.apcprd03.prod.outlook.com (2603:1096:300:5b::35)
- by TYSPR06MB6795.apcprd06.prod.outlook.com (2603:1096:400:475::12) with
+Received: from OS0P286CA0155.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:16a::6)
+ by KL1PR06MB6906.apcprd06.prod.outlook.com (2603:1096:820:128::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.25; Mon, 23 Mar
- 2026 11:48:26 +0000
-Received: from TY2PEPF0000AB89.apcprd03.prod.outlook.com
- (2603:1096:300:5b:cafe::21) by PS2PR03CA0023.outlook.office365.com
- (2603:1096:300:5b::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.31; Mon, 23 Mar
+ 2026 11:48:27 +0000
+Received: from OSA0EPF000000CC.apcprd02.prod.outlook.com
+ (2603:1096:604:16a:cafe::37) by OS0P286CA0155.outlook.office365.com
+ (2603:1096:604:16a::6) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9723.25 via Frontend Transport; Mon,
- 23 Mar 2026 11:48:29 +0000
+ 23 Mar 2026 11:48:27 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 222.71.101.198)
  smtp.mailfrom=cixtech.com; dkim=none (message not signed)
  header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
@@ -42,12 +41,12 @@ Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
  222.71.101.198 as permitted sender) receiver=protection.outlook.com;
  client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
 Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- TY2PEPF0000AB89.mail.protection.outlook.com (10.167.253.7) with Microsoft
+ OSA0EPF000000CC.mail.protection.outlook.com (10.167.240.58) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9723.19 via Frontend Transport; Mon, 23 Mar 2026 11:48:25 +0000
+ 15.20.9723.19 via Frontend Transport; Mon, 23 Mar 2026 11:48:26 +0000
 Received: from guoo-System-Product-Name.. (unknown [172.20.64.188])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id B62BC4126F95;
-	Mon, 23 Mar 2026 19:48:23 +0800 (CST)
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id ADB444126F83;
+	Mon, 23 Mar 2026 19:48:22 +0800 (CST)
 From: Jun Guo <jun.guo@cixtech.com>
 To: peter.chen@cixtech.com,
 	fugang.duan@cixtech.com,
@@ -65,12 +64,10 @@ Cc: dmaengine@vger.kernel.org,
 	cix-kernel-upstream@cixtech.com,
 	linux-arm-kernel@lists.infradead.org,
 	Jun Guo <jun.guo@cixtech.com>
-Subject: [PATCH v4 2/3] dma: arm-dma350: support combined IRQ mode with runtime IRQ topology detection
-Date: Mon, 23 Mar 2026 19:48:21 +0800
-Message-Id: <20260323114822.1925869-3-jun.guo@cixtech.com>
+Subject: [PATCH v4 0/3] dmaengine: arm-dma350: support combined IRQ topology
+Date: Mon, 23 Mar 2026 19:48:19 +0800
+Message-Id: <20260323114822.1925869-1-jun.guo@cixtech.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260323114822.1925869-1-jun.guo@cixtech.com>
-References: <20260323114822.1925869-1-jun.guo@cixtech.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -80,323 +77,83 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB89:EE_|TYSPR06MB6795:EE_
+X-MS-TrafficTypeDiagnostic: OSA0EPF000000CC:EE_|KL1PR06MB6906:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: dff63033-a2d1-4271-fa76-08de88d217a9
+X-MS-Office365-Filtering-Correlation-Id: c6144477-9882-433f-8ba7-08de88d21829
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|36860700016|82310400026|1800799024|921020|22082099003|18002099003|56012099003;
+	BCL:0;ARA:13230040|82310400026|1800799024|376014|7416014|36860700016|921020|56012099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	dIKTxkL/w9BJOHfzdl/G7Q92ztBiu1Y1KcaD6OdesTKdPTBKQpiA/H7Vek3eQNq6oEahypSsQmOkTVjfRFlTvaJJCTBm5tTrZGFQIwo5zvkZcdvih4oSgIIwiHbLPRQR7WOPZ/+Xl0io3HJDA+IY8Lg91VhJdRObczMP9j0ekofttqPpOcFVwEjE2JG0IznpPyCjHngJxG8FDP6LxrWgZbbgIiXjPCwa6EgJf8n4bpP/td0IRFGp7bi7pEWEQXjm6n1yDNqq3KW4IVHfez21y8Rcz/tM7hFiU9dRlka+KKF4G2Hsr/f4cbmCYY5l4DeoF0hunkvBl7bNLLixqjVuknBmYskRFQMMgN7BeMZWcEIksZlrGaGUX7BmHwsAO3hnv0vDuccEAB02A+5jUMBIRkmJGonzI6K6+nRlz+xBDs8zpsX9s5fF6SKtWgCbwATkmniOMXCUI4Vov2qauN3tTN7+QzCCgu1P8hd31jGLK8lYQZDvNuJCMS0tLG+FUjkEOE+/2xoQz4DuV1sFC/HReob6yqmVsC8RxMpeGqqmnDhrA4Q+y7Q3Tb2eKIuERGR4I4Zd1RdK6oN6A7geBjdbV4NqM4Jy648PSKAhvlXRa3XEhWUV5vVmejz6ij/gUSjGhGew0xdLj14ooA+rggbK9r1xFQKgIok2wPSeoJ49f8RIorsb5344xZybJcOcu0kZUIfXKVHYnSA/bz0DxILIRpP9aPt7FVj533nhqSNssx/geS//w0eVmkb57yH6H/o9LcNU1Nt0ojyd7byWoCDHBwpiwOHYJxz++dqkES+MfJ7iBXFsVmLjp3hCqj8rk8wV
+	hoXNjqyFEsr0LXO8FGGf52Y0Wxajmht4ruX9bxa0UpMz0hXgaJUj2w+iHlaadfJL689trNqIc4LPvmsbcIdnluLVCKuZokkbpFgKcjdX40iJ57VDKDCfEx+iI2Nu2DGKF7hjGZLYTmX0hqTWEtN1XC/CI8auGGuzarCBROtFMPj/fWCaa6lKFH6ReTH8YwtmJB6qDeFK7E2rdhqXt8XSRMdC6IG2t3zFap/yEZjmxA4Yi2tHNksPBOzLSflyZPtHrUUwynycN/dh2fOZfoubjBOjlwgBJZll6R0n57eN3gFjWhKza2Ofn8uk4LnPjrOZ0q21hSMVeAB9LVb9ov0wkFvg1jTkAjRyG6xxfRo+1NsAbyE4/WCSmO2y3Fl6Cy2GFyRnl9LA7+lw+y67WF11Pjfj4cs6m/pkzFQasEsHP5QTy6isfaiJh+T6zvsM7q+TzPa7B5oqUcqR6hVAx585J9oVzCR6pS6FNB58w9TshrJjPoZwH5j1739HDZO45HW1opHLYDV2+YlLZpwZQ235eH/LFL+NovBQsrPEBfPzqN28heSH96dO+giO42+4/srKRVaEaWfyOu8Hg1nEA/qANk3FTqc00dpNTrSUnsNIRQuQH4El1o6cQxRaovW62y83AW9fCdrNvYRxlIgFjW5KIGNSlWIuDM3qc7b2LCsRzNtuiQSTRSyW99F3hESYp/79nvrK9+0njvbWTNyl3jTUfJmxKGTg+/wAJHphkkCSJ3C51Azx16Qzudw0WdYP3UwF3/ZcCxwDviBtLhGyOqApqFyLOwl0/cpQ5QKn4B75pCWMllgdZql6OyQGkvf/BUd0
 X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(7416014)(36860700016)(82310400026)(1800799024)(921020)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1102;
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(7416014)(36860700016)(921020)(56012099003)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	irxcDUwL30J4flLBn+Pk4ACc8kA7RSE1Qbb/SNWH4BGWdEHzA7/a23W0G8s24KlJ68eSQehr4IWzR5f/luc2V7EpVYx0WafcXDhImNtE4wzZF+aOCvgEyUavjr/cXv4UaLPdJVuvWEzUc9SzFiRtSQiudDdVMZhFqmV2sje1uev05DNwGIhqZKHTOxb/4tpREAe0pqehAoESU5oB68gG2l+NRjlkp28/APcMici7iuL43WTCZwCMG9L4d5XXlLjV63EmJCT7xHg+iyx5df5o5QlSPjDb0BIrN+YNqQqd3oCspGw6Q0pZXvzW5wpmx2dnEqYFGN31m55rWU0DiIAciJbU4HR8bijbJJx7XLJHiQxmP2nMnRj+Lo2AHkSMDP7X6RTKbSJopAXyoqcCbCJbidlf3RfIvIsbQ+DbCaDO1q5f8eCjrOZSd0epnH/v5Tn9
+	D5YiKiYWqXAXpxFgEKYm3kWhk8cecbcSKfVxqnzhTsleQmylT1A/Omexzmul8KJsIvc29RVTi4nkWJYxQD7AYnO7GrVFwhnD4ujepgQM0j3jQrG9eY4J4gN/0rua0FdY2bJ0sdj8d6xRI0Y2bNc5y/jCASm4U0EOB12kxqOJQx2z6FCcGRd/nZELjdJxv5TrdvaIwNqCj6Y1iU8hNNPSKg1Nys1yII12z98vLGMrpxnuSuoFDGEDmzZT72Hr2ys0a28kVKU6N/KLhQELVZiCUuW7FKpZBVntwoE0uAoBlKJxKSvDtJLtIYzs1G6YpES9jFzQzpHj5QeZFg2g0P5WKB9QYIkKeNtGp/AjxjWqFjGHUqqr/ClQjmG/blvpAQUbZ6sTnxSMXbrW/NSS+Vs8iZvYCidn8eFk/uNpqmK1dauYdRP3xNuO7YVvEUzxhrP+
 X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2026 11:48:25.2268
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Mar 2026 11:48:26.0483
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: dff63033-a2d1-4271-fa76-08de88d217a9
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6144477-9882-433f-8ba7-08de88d21829
 X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	TY2PEPF0000AB89.apcprd03.prod.outlook.com
+	OSA0EPF000000CC.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6795
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6906
 
-DMA-350 can be integrated with either per-channel IRQ lines or a single
-combined IRQ line. Add support for both layouts in a unified way.
+DMA-350 can be integrated with either one interrupt per channel or a
+single combined interrupt for all channels. This series adds support
+for the combined IRQ topology while keeping compatibility with the
+per-channel topology.
 
-Detect IRQ topology at probe time via platform_irq_count(), then:
-- request one global IRQ and enable DMANSECCTRL.INTREN_ANYCHINTR for
-  combined mode, or
-- request per-channel IRQs for channel mode.
+Patch 1 updates the DT binding to describe both interrupt topologies
+(1 combined IRQ or 8 per-channel IRQs) and keeps "arm,dma-350" as the
+generic compatible, with optional SoC-specific fallback compatible.
 
-Refactor IRQ completion/error handling into a shared channel handler
-used by both global and per-channel IRQ paths, and guard against IRQs
-arriving without an active descriptor.
+Patch 2 updates the driver to detect IRQ topology at runtime using
+platform_irq_count(), handles both modes in one code path, and enables
+DMANSECCTRL.INTREN_ANYCHINTR only when combined IRQ mode is used.
 
-Assisted-by: Cursor: GPT-5.3-Codex
-Signed-off-by: Jun Guo <jun.guo@cixtech.com>
----
- drivers/dma/arm-dma350.c | 165 +++++++++++++++++++++++++++++++++------
- 1 file changed, 139 insertions(+), 26 deletions(-)
+Patch 3 adds the Sky1 DMA DT node using the combined IRQ topology.
 
-diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
-index 84220fa83029..2cf6f783b44f 100644
---- a/drivers/dma/arm-dma350.c
-+++ b/drivers/dma/arm-dma350.c
-@@ -14,6 +14,7 @@
- #include "virt-dma.h"
- 
- #define DMAINFO			0x0f00
-+#define DRIVER_NAME		"arm-dma350"
- 
- #define DMA_BUILDCFG0		0xb0
- #define DMA_CFG_DATA_WIDTH	GENMASK(18, 16)
-@@ -142,6 +143,9 @@
- #define LINK_LINKADDR		BIT(30)
- #define LINK_LINKADDRHI		BIT(31)
- 
-+/* DMA NONSECURE CONTROL REGISTER */
-+#define DMANSECCTRL		0x20c
-+#define INTREN_ANYCHINTR_EN	BIT(0)
- 
- enum ch_ctrl_donetype {
- 	CH_CTRL_DONETYPE_NONE = 0,
-@@ -192,6 +196,7 @@ struct d350_chan {
- 
- struct d350 {
- 	struct dma_device dma;
-+	void __iomem *base;
- 	int nchan;
- 	int nreq;
- 	struct d350_chan channels[] __counted_by(nchan);
-@@ -461,18 +466,40 @@ static void d350_issue_pending(struct dma_chan *chan)
- 	spin_unlock_irqrestore(&dch->vc.lock, flags);
- }
- 
--static irqreturn_t d350_irq(int irq, void *data)
-+static void d350_handle_chan_irq(struct d350_chan *dch, struct device *dev,
-+				 int chan_id, u32 ch_status)
- {
--	struct d350_chan *dch = data;
--	struct device *dev = dch->vc.chan.device->dev;
--	struct virt_dma_desc *vd = &dch->desc->vd;
--	u32 ch_status;
-+	struct virt_dma_desc *vd;
-+	bool intr_done = ch_status & CH_STAT_INTR_DONE;
-+	bool intr_err = ch_status & CH_STAT_INTR_ERR;
- 
--	ch_status = readl(dch->base + CH_STATUS);
--	if (!ch_status)
--		return IRQ_NONE;
-+	if (!intr_done && !intr_err) {
-+		if (chan_id >= 0)
-+			dev_warn(dev, "Channel %d unexpected IRQ: 0x%08x\n",
-+				 chan_id, ch_status);
-+		else
-+			dev_warn(dev, "Unexpected IRQ source? 0x%08x\n", ch_status);
-+		writel_relaxed(ch_status, dch->base + CH_STATUS);
-+		return;
-+	}
-+
-+	writel_relaxed(ch_status, dch->base + CH_STATUS);
-+
-+	spin_lock(&dch->vc.lock);
-+	if (!dch->desc) {
-+		if (chan_id >= 0)
-+			dev_warn(dev,
-+				 "Channel %d IRQ without active descriptor: 0x%08x\n",
-+				 chan_id, ch_status);
-+		else
-+			dev_warn(dev, "IRQ without active descriptor: 0x%08x\n",
-+				 ch_status);
-+		spin_unlock(&dch->vc.lock);
-+		return;
-+	}
- 
--	if (ch_status & CH_STAT_INTR_ERR) {
-+	vd = &dch->desc->vd;
-+	if (intr_err) {
- 		u32 errinfo = readl_relaxed(dch->base + CH_ERRINFO);
- 
- 		if (errinfo & (CH_ERRINFO_AXIRDPOISERR | CH_ERRINFO_AXIRDRESPERR))
-@@ -483,14 +510,10 @@ static irqreturn_t d350_irq(int irq, void *data)
- 			vd->tx_result.result = DMA_TRANS_ABORTED;
- 
- 		vd->tx_result.residue = d350_get_residue(dch);
--	} else if (!(ch_status & CH_STAT_INTR_DONE)) {
--		dev_warn(dev, "Unexpected IRQ source? 0x%08x\n", ch_status);
- 	}
--	writel_relaxed(ch_status, dch->base + CH_STATUS);
- 
--	spin_lock(&dch->vc.lock);
- 	vchan_cookie_complete(vd);
--	if (ch_status & CH_STAT_INTR_DONE) {
-+	if (intr_done) {
- 		dch->status = DMA_COMPLETE;
- 		dch->residue = 0;
- 		d350_start_next(dch);
-@@ -499,6 +522,44 @@ static irqreturn_t d350_irq(int irq, void *data)
- 		dch->residue = vd->tx_result.residue;
- 	}
- 	spin_unlock(&dch->vc.lock);
-+}
-+
-+static irqreturn_t d350_global_irq(int irq, void *data)
-+{
-+	struct d350 *dmac = (struct d350 *)data;
-+	irqreturn_t ret = IRQ_NONE;
-+	int i;
-+
-+	(void)irq;
-+
-+	for (i = 0; i < dmac->nchan; i++) {
-+		struct d350_chan *dch = &dmac->channels[i];
-+		u32 ch_status;
-+
-+		ch_status = readl(dch->base + CH_STATUS);
-+		if (!ch_status)
-+			continue;
-+
-+		ret = IRQ_HANDLED;
-+		d350_handle_chan_irq(dch, dmac->dma.dev, i, ch_status);
-+	}
-+
-+	return ret;
-+}
-+
-+static irqreturn_t d350_channel_irq(int irq, void *data)
-+{
-+	struct d350_chan *dch = data;
-+	struct device *dev = dch->vc.chan.device->dev;
-+	u32 ch_status;
-+
-+	(void)irq;
-+
-+	ch_status = readl(dch->base + CH_STATUS);
-+	if (!ch_status)
-+		return IRQ_NONE;
-+
-+	d350_handle_chan_irq(dch, dev, -1, ch_status);
- 
- 	return IRQ_HANDLED;
- }
-@@ -506,10 +567,18 @@ static irqreturn_t d350_irq(int irq, void *data)
- static int d350_alloc_chan_resources(struct dma_chan *chan)
- {
- 	struct d350_chan *dch = to_d350_chan(chan);
--	int ret = request_irq(dch->irq, d350_irq, IRQF_SHARED,
--			      dev_name(&dch->vc.chan.dev->device), dch);
--	if (!ret)
--		writel_relaxed(CH_INTREN_DONE | CH_INTREN_ERR, dch->base + CH_INTREN);
-+	int ret = 0;
-+
-+	if (dch->irq >= 0) {
-+		ret = request_irq(dch->irq, d350_channel_irq, IRQF_SHARED,
-+				  dev_name(&dch->vc.chan.dev->device), dch);
-+		if (ret) {
-+			dev_err(chan->device->dev, "Failed to request IRQ %d\n", dch->irq);
-+			return ret;
-+		}
-+	}
-+
-+	writel_relaxed(CH_INTREN_DONE | CH_INTREN_ERR, dch->base + CH_INTREN);
- 
- 	return ret;
- }
-@@ -519,18 +588,21 @@ static void d350_free_chan_resources(struct dma_chan *chan)
- 	struct d350_chan *dch = to_d350_chan(chan);
- 
- 	writel_relaxed(0, dch->base + CH_INTREN);
--	free_irq(dch->irq, dch);
-+	if (dch->irq >= 0) {
-+		free_irq(dch->irq, dch);
-+		dch->irq = -EINVAL;
-+	}
- 	vchan_free_chan_resources(&dch->vc);
- }
- 
- static int d350_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct d350 *dmac;
-+	struct d350 *dmac = NULL;
- 	void __iomem *base;
- 	u32 reg;
--	int ret, nchan, dw, aw, r, p;
--	bool coherent, memset;
-+	int ret, nchan, dw, aw, r, p, irq_count;
-+	bool coherent, memset, combined_irq;
- 
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base))
-@@ -556,6 +628,7 @@ static int d350_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	dmac->nchan = nchan;
-+	dmac->base = base;
- 
- 	reg = readl_relaxed(base + DMAINFO + DMA_BUILDCFG1);
- 	dmac->nreq = FIELD_GET(DMA_CFG_NUM_TRIGGER_IN, reg);
-@@ -582,12 +655,46 @@ static int d350_probe(struct platform_device *pdev)
- 	dmac->dma.device_issue_pending = d350_issue_pending;
- 	INIT_LIST_HEAD(&dmac->dma.channels);
- 
-+	irq_count = platform_irq_count(pdev);
-+	if (irq_count < 0)
-+		return dev_err_probe(dev, irq_count,
-+				     "Failed to count interrupts\n");
-+
-+	if (irq_count == 1) {
-+		combined_irq = true;
-+	} else if (irq_count >= nchan) {
-+		combined_irq = false;
-+	} else {
-+		return dev_err_probe(dev, -EINVAL,
-+				     "Invalid IRQ count %d for %d channels\n",
-+				     irq_count, nchan);
-+	}
-+
-+	if (combined_irq) {
-+		int host_irq = platform_get_irq(pdev, 0);
-+
-+		if (host_irq < 0)
-+			return dev_err_probe(dev, host_irq,
-+					     "Failed to get IRQ\n");
-+
-+		ret = devm_request_irq(&pdev->dev, host_irq, d350_global_irq,
-+				       IRQF_SHARED, DRIVER_NAME, dmac);
-+		if (ret)
-+			return dev_err_probe(
-+				dev, ret,
-+				"Failed to request the combined IRQ %d\n",
-+				host_irq);
-+		/* Combined Non-Secure Channel Interrupt Enable */
-+		writel_relaxed(INTREN_ANYCHINTR_EN, dmac->base + DMANSECCTRL);
-+	}
-+
- 	/* Would be nice to have per-channel caps for this... */
- 	memset = true;
- 	for (int i = 0; i < nchan; i++) {
- 		struct d350_chan *dch = &dmac->channels[i];
- 
- 		dch->base = base + DMACH(i);
-+		dch->irq = -EINVAL;
- 		writel_relaxed(CH_CMD_CLEAR, dch->base + CH_CMD);
- 
- 		reg = readl_relaxed(dch->base + CH_BUILDCFG1);
-@@ -595,10 +702,15 @@ static int d350_probe(struct platform_device *pdev)
- 			dev_warn(dev, "No command link support on channel %d\n", i);
- 			continue;
- 		}
--		dch->irq = platform_get_irq(pdev, i);
--		if (dch->irq < 0)
--			return dev_err_probe(dev, dch->irq,
--					     "Failed to get IRQ for channel %d\n", i);
-+
-+		if (!combined_irq) {
-+			dch->irq = platform_get_irq(pdev, i);
-+			if (dch->irq < 0)
-+				return dev_err_probe(
-+					dev, dch->irq,
-+					"Failed to get IRQ for channel %d\n",
-+					i);
-+		}
- 
- 		dch->has_wrap = FIELD_GET(CH_CFG_HAS_WRAP, reg);
- 		dch->has_trig = FIELD_GET(CH_CFG_HAS_TRIGIN, reg) &
-@@ -640,6 +752,7 @@ static void d350_remove(struct platform_device *pdev)
- }
- 
- static const struct of_device_id d350_of_match[] __maybe_unused = {
-+	{ .compatible = "cix,sky1-dma-350" },
- 	{ .compatible = "arm,dma-350" },
- 	{}
- };
+Tested on CIX SKY1 with dmatest:
+  % echo 2000 > /sys/module/dmatest/parameters/timeout
+  % echo 1 > /sys/module/dmatest/parameters/iterations
+  % echo "" > /sys/module/dmatest/parameters/channel
+  % echo 1 > /sys/module/dmatest/parameters/run
+
+Changes in v4:
+- Reword binding text to align with kernel style.
+- Revise the AI attribution to the standard format.
+- Remove redundant links from the commit log.
+
+Changes in v3:
+- Rework binding compatible description to match generic-first model.
+- Keep interrupts schema support for both 1-IRQ and 8-IRQ topologies.
+- Drop SoC match-data dependency for IRQ mode selection.
+- Detect IRQ topology via platform_irq_count() in probe path.
+- Refactor IRQ handling into a shared channel handler.
+- Enable DMANSECCTRL.INTREN_ANYCHINTR only in combined IRQ mode.
+
+Changes in v2:
+- Update to kernel standards, enhance patch description, and refactor
+ driver to use match data for hardware differentiation instead of
+ compatible strings.
+
+Jun Guo (3):
+  dt-bindings: dma: arm-dma350: document generic and combined IRQ
+    topologies
+  dma: arm-dma350: support combined IRQ mode with runtime IRQ topology
+    detection
+  arm64: dts: cix: add DT nodes for DMA
+
+ .../devicetree/bindings/dma/arm,dma-350.yaml  |  34 ++--
+ arch/arm64/boot/dts/cix/sky1.dtsi             |   7 +
+ drivers/dma/arm-dma350.c                      | 165 +++++++++++++++---
+ 3 files changed, 170 insertions(+), 36 deletions(-)
+
 -- 
 2.34.1
 
