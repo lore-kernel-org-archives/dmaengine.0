@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E8A271A7C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B192C21C2;
 	Thu, 26 Mar 2026 13:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774532251; cv=none; b=o56M9YsZuSxyyo4UIgZHqMvLBsU7MgPuu7aNHlzG49nv6BH5hLJkMgOe1hf1D7tVWzf7swiRp/iWLaHrpWZgI4FKDu/9oLQcxeGAhLjfV47WmUJ7m+dduvgYFp1ktutyG3BqMVhlcgfpqu1lhHesZHOMaOipxT6fU8WTAbxKAKw=
+	t=1774532251; cv=none; b=IBg1koJr/G/8/5oN1izLiqQkpuwkHiIuxghPR+hYuyO1n1epBi/rpAM8UjhVPpgtKvUlY2iIK/foFWX4i5Wcdkreu3dGZCbf7+HLjq7OgwQBiZDxqT6eAc6Tg+MQEnDvZn4U3YrKPnJc0Tp85b0Fj6wpnOOFMGvT4OmuC4x+zCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774532251; c=relaxed/simple;
-	bh=UsmwhaGP+e5WwipGleUgGHqJL8dBThe2HRGuRQN3g7A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UiNwF7vTX3tp8qWGRKx4YIzsmGABLTN5/cRrxbI5X9myIRVmGdUFJqRXmdd/2Fb8/4smboZDqRyKWnpECWApR3BY/NscI3qK6BQghGcc63P0HWPjjE+ZeFNIvwKs4AKOh6N7DRS7GBfXjn7X2orCyH0bdiHWZ70UOzlRK1j6mRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tt8DZY1h; arc=none smtp.client-ip=10.30.226.201
+	bh=6V7xCJfEpHcsI1kelRuOtMsngH7oGbsYsxC25INvh04=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=BhIR2Npn3BHNxOmTuQR6Xrn9olXn3Ua7ztktX8KCvg53BcYkOGKW81Sm5m2iKEgKKG8tFArj4oyrmbtF7FDCSpj8tJiRgEP20yphAfOisQ9iyN0rWH/4QtZzF9XfZT1Yd1XeMF6ClpECQntCswFe3IzboEvZt5oyw9feCX/oaGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RHBq9W3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tt8DZY1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 06D1CC2BCB0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RHBq9W3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1FAA3C116C6;
 	Thu, 26 Mar 2026 13:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774532251;
-	bh=UsmwhaGP+e5WwipGleUgGHqJL8dBThe2HRGuRQN3g7A=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=tt8DZY1hPUw6KnatwIifYovFaZXDPotP8a2q2Rik5SZShX2IbtmCVs3rfTq+erlhr
-	 Cc5536y1Cdojhf5bNTVyBpLSq9W/MSNANTt5FwcqIyR4eLYVdJcFOncSCq6ouqIjP8
-	 fHpeLhpPRjWlCBseonxg3ulfIxoTxpp4IxZwzJBMb45pClOJ1VUUOXELqUoMOLBsKE
-	 eJjgKF+MtAvWTx4+vZFZK9G+4/BPbiGoVPE5ezc36U+evq+iRcccjT0M50zjuQmFiR
-	 XRUBd3ozH3C9P+A1OTvXzdhZod4c5kU55y8aWsEkFoogEXwmJ3e71YkCHUTH6b6jSv
-	 UDV/JBwV9/RJQ==
+	bh=6V7xCJfEpHcsI1kelRuOtMsngH7oGbsYsxC25INvh04=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=RHBq9W3OCscv5bMzBpdAotxFSWc54Dcwb/1PTX4+vSyKOB0rnaI1KoNDRATFdCnT4
+	 kL49FKoM1EGKsLor3ajGW33XwRyTO6JDdIqDs4IQ1vIYp8SNXvuGQJi+1ASjQd99W8
+	 sBZMvLWwk06vtuXISlWbzk+X5NaUl5ih2jUuC2CLQ6iuwAzTH6djhHEHH5nAa6Dfe5
+	 btPrlEVQwsJ0kUFC6jYeHALR6ckPybNccEy8JQ80NWbbJUrN8xuVFbS5XX6NRQZZdk
+	 ysPsOTzlK92hXninJ8+2vegs4s5gJRVMr+IbPsHLOhRK8AilktAMzIQFLeODtbZ/Dp
+	 kyLChkV4XlEzQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBFDF10A62D6;
-	Thu, 26 Mar 2026 13:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15FD210A62CF;
+	Thu, 26 Mar 2026 13:37:31 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Subject: [PATCH 0/2] dmaengine: dma-axi-dmac: Some memory related fixes
-Date: Thu, 26 Mar 2026 13:37:34 +0000
-Message-Id: <20260326-dma-dmac-handle-vunmap-v1-0-be3e46ffaf69@analog.com>
+Date: Thu, 26 Mar 2026 13:37:36 +0000
+Subject: [PATCH 2/2] dmaengine: dma-axi-dmac: fix use-after-free on unbind
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,19 +40,18 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQqDMBBFryKz7kBM1IpXKS5iZmynaJRERRDv3
- lgXf/H4vHdA5CAcockOCLxJlMknyB8ZuI/1b0ahxKCVrpTRJdJorzlMLw2M2+pHO2NdWFVR/6T
- cGEjyHLiX/R9+tTfHtfuyW64anOcP5evccXoAAAA=
-X-Change-ID: 20260325-dma-dmac-handle-vunmap-84a06df7d133
+Message-Id: <20260326-dma-dmac-handle-vunmap-v1-2-be3e46ffaf69@analog.com>
+References: <20260326-dma-dmac-handle-vunmap-v1-0-be3e46ffaf69@analog.com>
+In-Reply-To: <20260326-dma-dmac-handle-vunmap-v1-0-be3e46ffaf69@analog.com>
 To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Eliza Balas <eliza.balas@analog.com>
+ Frank Li <Frank.Li@kernel.org>
 X-Mailer: b4 0.15.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774532297; l=1511;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774532297; l=4725;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=UsmwhaGP+e5WwipGleUgGHqJL8dBThe2HRGuRQN3g7A=;
- b=nkgfcGteA/fbgayHV/UsxRPyYRHyEnS84P0LXM3iOYJyz450JJ50y/a1koPPn0jI9C+yeplRj
- ZLQMLUIgIX6CavXkS6RHXcPPaWYlYkLKQKiXSTd67g5Yn48ahq/rd8S
+ bh=3oOip9GOTG6Og9wQ6FNEHbQ61iic0c2QfMR92xEdP2o=;
+ b=/dP6+C3Zf6eLzl6gGhE28fBFM+vhQkt8yiwTx/pdRhKjPAKIBDlZ7VIyFRbvVpjz1pKBlMqRr
+ QMBcTIqs95RDMJXuuvW5INrDOvaTyr8K6AxCH6rt7KpIpptsHBFS+hH
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -60,42 +59,146 @@ X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
 X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
 Reply-To: nuno.sa@analog.com
 
-This series aims to fix some issues with axi-dmac driver related to
-memory:
+From: Nuno Sá <nuno.sa@analog.com>
 
-1. When testing the IP on a microblaze based platform, we get vmalloced
-   memory when allocation DMAC descriptors which will lead to BUG() when
-   releasing them. More on the commit message.
-2. The second is related with a well known issues with devm allocations
-   of reference counted objects on a provider-consumer relationship.
-   Seems to be a knows issue in dmaengine but fix it in the AXI-DMAC
-   driver by properly implementing .the device_release() callback.
+The DMA device lifetime can extend beyond the platform driver unbind if
+DMA channels are still referenced by client drivers. This leads to
+use-after-free when the devm-managed memory is freed on unbind but the
+DMA device callbacks still access it.
 
-Didn't add any fixes tag because for 1), it was not an issue when the
-drivers was first implemented (just triggered very recently) and for 2),
-because it seems like a well known issue. Anyways, for 2) seems more
-reasonable to have a fixes tag (IMO) if you want me to add one.
-
-Also note that my signoff on Eliza patch is merely because I'm sending
-the patch on her behalf. I had not part in the solution (just improved
-comments and commit message a bit).
+Fix this by:
+ - Allocating axi_dmac with kzalloc_obj() instead of devm_kzalloc() so
+its lifetime is not tied to the platform device.
+ - Implementing the device_release callback that so that we can free
+the object when reference count gets to 0 (no users).
+ - Adding an 'unbound' flag protected by the vchan lock that is set
+during driver removal, preventing MMIO accesses after the device has been
+unbound.
 
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
-Eliza Balas (1):
-      dmaengine: dma-axi-dmac: Defer freeing DMA descriptors
+ drivers/dma/dma-axi-dmac.c | 47 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 43 insertions(+), 4 deletions(-)
 
-Nuno Sá (1):
-      dmaengine: dma-axi-dmac: fix use-after-free on unbind
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index df2668064ea2..99454e096588 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -176,6 +176,8 @@ struct axi_dmac {
+ 
+ 	struct dma_device dma_dev;
+ 	struct axi_dmac_chan chan;
++
++	bool unbound;
+ };
+ 
+ static struct axi_dmac *chan_to_axi_dmac(struct axi_dmac_chan *chan)
+@@ -184,6 +186,11 @@ static struct axi_dmac *chan_to_axi_dmac(struct axi_dmac_chan *chan)
+ 		dma_dev);
+ }
+ 
++static struct axi_dmac *dev_to_axi_dmac(struct dma_device *dev)
++{
++	return container_of(dev, struct axi_dmac, dma_dev);
++}
++
+ static struct axi_dmac_chan *to_axi_dmac_chan(struct dma_chan *c)
+ {
+ 	return container_of(c, struct axi_dmac_chan, vchan.chan);
+@@ -616,6 +623,11 @@ static int axi_dmac_terminate_all(struct dma_chan *c)
+ 	LIST_HEAD(head);
+ 
+ 	spin_lock_irqsave(&chan->vchan.lock, flags);
++	if (dmac->unbound) {
++		/* We're gone */
++		spin_unlock_irqrestore(&chan->vchan.lock, flags);
++		return -ENODEV;
++	}
+ 	axi_dmac_write(dmac, AXI_DMAC_REG_CTRL, 0);
+ 	chan->next_desc = NULL;
+ 	vchan_get_all_descriptors(&chan->vchan, &head);
+@@ -644,9 +656,12 @@ static void axi_dmac_issue_pending(struct dma_chan *c)
+ 	if (chan->hw_sg)
+ 		ctrl |= AXI_DMAC_CTRL_ENABLE_SG;
+ 
+-	axi_dmac_write(dmac, AXI_DMAC_REG_CTRL, ctrl);
+-
+ 	spin_lock_irqsave(&chan->vchan.lock, flags);
++	if (dmac->unbound) {
++		spin_unlock_irqrestore(&chan->vchan.lock, flags);
++		return;
++	}
++	axi_dmac_write(dmac, AXI_DMAC_REG_CTRL, ctrl);
+ 	if (vchan_issue_pending(&chan->vchan))
+ 		axi_dmac_start_transfer(chan);
+ 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
+@@ -1206,6 +1221,14 @@ static int axi_dmac_detect_caps(struct axi_dmac *dmac, unsigned int version)
+ 	return 0;
+ }
+ 
++static void axi_dmac_release(struct dma_device *dma_dev)
++{
++	struct axi_dmac *dmac = dev_to_axi_dmac(dma_dev);
++
++	put_device(dma_dev->dev);
++	kfree(dmac);
++}
++
+ static void axi_dmac_tasklet_kill(void *task)
+ {
+ 	tasklet_kill(task);
+@@ -1216,6 +1239,16 @@ static void axi_dmac_free_dma_controller(void *of_node)
+ 	of_dma_controller_free(of_node);
+ }
+ 
++static void axi_dmac_disable(void *__dmac)
++{
++	struct axi_dmac *dmac = __dmac;
++
++	spin_lock(&dmac->chan.vchan.lock);
++	dmac->unbound = true;
++	spin_unlock(&dmac->chan.vchan.lock);
++	axi_dmac_write(dmac, AXI_DMAC_REG_CTRL, 0);
++}
++
+ static int axi_dmac_probe(struct platform_device *pdev)
+ {
+ 	struct dma_device *dma_dev;
+@@ -1225,7 +1258,7 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	u32 irq_mask = 0;
+ 	int ret;
+ 
+-	dmac = devm_kzalloc(&pdev->dev, sizeof(*dmac), GFP_KERNEL);
++	dmac = kzalloc_obj(struct axi_dmac);
+ 	if (!dmac)
+ 		return -ENOMEM;
+ 
+@@ -1270,9 +1303,10 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	dma_dev->device_prep_interleaved_dma = axi_dmac_prep_interleaved;
+ 	dma_dev->device_terminate_all = axi_dmac_terminate_all;
+ 	dma_dev->device_synchronize = axi_dmac_synchronize;
+-	dma_dev->dev = &pdev->dev;
++	dma_dev->dev = get_device(&pdev->dev);
+ 	dma_dev->src_addr_widths = BIT(dmac->chan.src_width);
+ 	dma_dev->dst_addr_widths = BIT(dmac->chan.dest_width);
++	dma_dev->device_release = axi_dmac_release;
+ 	dma_dev->directions = BIT(dmac->chan.direction);
+ 	dma_dev->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+ 	dma_dev->max_sg_burst = 31; /* 31 SGs maximum in one burst */
+@@ -1326,6 +1360,11 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	/* So that we can mark the device as unbound and disable it */
++	ret = devm_add_action_or_reset(&pdev->dev, axi_dmac_disable, dmac);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_irq(&pdev->dev, dmac->irq, axi_dmac_interrupt_handler,
+ 			       IRQF_SHARED, dev_name(&pdev->dev), dmac);
+ 	if (ret)
 
- drivers/dma/dma-axi-dmac.c | 95 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 78 insertions(+), 17 deletions(-)
----
-base-commit: b7560798466a07d9c3fb011698e92c335ab28baf
-change-id: 20260325-dma-dmac-handle-vunmap-84a06df7d133
---
-
-Thanks!
-- Nuno Sá
+-- 
+2.53.0
 
 
