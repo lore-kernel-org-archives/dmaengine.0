@@ -1,117 +1,145 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fsn-vps-1.bereza.email (fsn-vps-1.bereza.email [162.55.44.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA673B6C13
-	for <dmaengine@vger.kernel.org>; Wed,  1 Apr 2026 09:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA1D36CDF2;
+	Wed,  1 Apr 2026 09:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.55.44.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775036464; cv=none; b=sSOQRQu8/RlDf7W7rJNPK62t51wAwsi/NguliA7ASui/VD00ImlDcNA3Y254ZHI5guYCJXGA6Z08cGxgx3d6Lz96n52g7FYo/VRSSRfup0LEZ2TBGXI3j3jC0OenZLQVqgdQLIM3+ruryWZMev5x9fb0D0f++r9UuittAIlt4DQ=
+	t=1775037497; cv=none; b=DyIjlejOdYVaDxs3sm7FH62jttyY1D/CpEoVvJ1qCPgS89iXBJ+0LlY7XfC21R46x/hGZ+KLRcPCbYMIK8Rn193ey++3UuuH8yQ22EcPbwwxbDBoIolG8XY0J84He9zmPmxEINH6NMaAshoGXslRCcLhA3jY7pOjNQvD6+KL74w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775036464; c=relaxed/simple;
-	bh=OYYUWkgCxAQGpQCSIvAQ1bkD3r6IuE5Qn3pidaElBqg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YaxTvvZ8AtgK6oQubaaEWdHB5N70ggNtILGIPr0tb7tlraiY+Q3RDFhEDAqARVjfGG+eGD0QQPhYWhG3vRVe+T74j/JxNuK296EijsCngV/E/Gw57f0RyoOy07bF2dHeEKdYaByRxQ23yZmgvtFtxVtxFUmHS6/Soo0eWGa7vrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ss2mXuD4; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1775037497; c=relaxed/simple;
+	bh=Kl6JmqCrf42hfpt3PEtmRDalCUj2fSnXQP8BtsdNym0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Bp68nBKWR/g4ihSacgRjpNcawXWKcUKS8tBP74YA67Sg0o+HMO2sRERNUs5r82T0Fasfsw3toB+O31v9q7fS2NKXtp6Xxn9HbimzXue3BYtZ8gdNj/0x/EMj9/uGGTdlfKXiDlxibSQxpU8l+Fg7KmoT+lo5I6FpxujVpfUt6Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email; spf=pass smtp.mailfrom=bereza.email; dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b=lEMN2Vet; arc=none smtp.client-ip=162.55.44.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bereza.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ss2mXuD4"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-35d9923eec5so2696521a91.2
-        for <dmaengine@vger.kernel.org>; Wed, 01 Apr 2026 02:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775036461; x=1775641261; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RO4ZhYSZqYOFn/guHJmRqbXOWS6aNnS9NZJLkKz5OII=;
-        b=Ss2mXuD4qD61P+GugJKl1FNimk0k84zHilguKNwscc0FoGm+EOH6VFaKhQSibXg4wC
-         ZXf1B7oDno1nvem7exL0sJ7N6YW7GO2nd/HdpOB/Ks5sx/rbcgqoS5j7qfwcrMAg9PsD
-         dBxRLQwAfZM9KMB8f3JuxE7QHZyhHEsbBRnf4UhgU24rV+chWFhZPVeaMo8to4z/ny0E
-         NP4VPUgX4fCuHHwjGdaoYrJCxi61aTZnJ4+vCgVB4cMUEBrXI914UWybIHpqDoFbVvTA
-         zun2hy/eYeGtStOTnmdinAvHeCiHmzOsp32zflyAiuBOPkTciwbTI/wtR1hF7frtqBBk
-         TrMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775036461; x=1775641261;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RO4ZhYSZqYOFn/guHJmRqbXOWS6aNnS9NZJLkKz5OII=;
-        b=TGuV5lA1frZYsgtppSY+1PzdqZ0tkDocKaCydO+pVSO1JeX3oIiqE1c1vghqHNXIL8
-         fZzQBnibCbhzzkqJK1A1mBrTivo9xosBCTQp0oGXrIHzvHs+kig4MLbBwkjG28Gioh8t
-         Yw1f/DZZnqMfbA6zhyu9ilI1aMqpVDjAPjBHYMKzujaulQaKt/vmSacVMBvwal/NA6Ak
-         eqVWXMe+UFveQnCwglXvKMbPU33bYN3iqp+HmnZeJSKjrBDwjgHt8W8GQUBD2ailZ4ls
-         aw1scpNQt/En3I5pega7sowRZBK9JhPoeCRC3ujFxxQKs7m5m9QhKHwj09Ifi8QlsZGQ
-         kohw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhqSgPnYzc1CaK7CWHsvptDDcdd9Rr2nMdInRRPe5MGuRRTLSuT62XhKrLNjiLybPxluviscOE53g=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2OWakeMoR+skPQVCSMo8niVhS6yO4ZYQ3gFLwGkGd/ALg+Drq
-	i2iKSk/Mi1Z6x5th3uVL5ITPV+vinJ//5NHmuzW4yS3vycQmbNmNvaJZ
-X-Gm-Gg: ATEYQzzqs3NvU7FKWqMwy8JhokzI9ssjrF92k6x4W5w4Mt3oXtET6vxYu+gO0xHc3sm
-	j0VUIYhWxyvj5G52zKopV1Q1eRHkndEU4nKC8tZjPM8Xz0b46vP5Ck8BQ3cZlTXeLiszftfDG4+
-	EkyH/aHP2zzsGVn3PDr9GxIbwbezYjOv8n/8A9ehPOpCwEcKmit9yGs24cN2VTMGhuzUziQOvTW
-	0/HL/cKpgO9qLyvSU0zFKB2uIJVhx4Mf1mrgPW+sX7EP9By+aAWtjPi+21oYLRboT0de49BZu0E
-	XgrLOPJQFq0Wqn8f+xu9tuXSB8HYcqZH4HPMf04rpoxA9pVXgGvnTrizVY8Z4tTCk1KPPho+bHL
-	YyUa0NX+/6aBXMDyjUxjJUYp12YgFJwl/ZkBpPCvWMsgZNmX109P9dDKnJXp8RngAFGdHIPQQeK
-	df45xEF9Ap7TlJjaKWGf20
-X-Received: by 2002:a17:902:7610:b0:2b0:6365:21a9 with SMTP id d9443c01a7336-2b269c3f058mr21308135ad.31.1775036461375;
-        Wed, 01 Apr 2026 02:41:01 -0700 (PDT)
-Received: from lgs.. ([223.80.110.53])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b242642913sm140147225ad.10.2026.04.01.02.40.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Apr 2026 02:41:01 -0700 (PDT)
-From: Guangshuo Li <lgs201920130244@gmail.com>
-To: Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Fenghua Yu <fenghuay@nvidia.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Guangshuo Li <lgs201920130244@gmail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] dmaengine: idxd: fix double free in idxd_alloc() error path
-Date: Wed,  1 Apr 2026 17:40:03 +0800
-Message-ID: <20260401094003.1482794-1-lgs201920130244@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b="lEMN2Vet"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bereza.email; s=mail;
+	t=1775037494; bh=Kl6JmqCrf42hfpt3PEtmRDalCUj2fSnXQP8BtsdNym0=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=lEMN2Vetn19zRwFR3/mmnYzbtt60PYOcpvEJCSlF2upw0QfiFB1uHFv4WjcBrcsIB
+	 WULJiugDTyk//DbvZtgKBrmHYm4m++VmDBduSz/URcKv2AUY0z6vPR/4ACbPMfhXHf
+	 1Bcn7xHcndX2sTXMlBs9SsBxhlLG5mShYais9Wf0pVkb4U7O8W6KxXZUDLMUKr8sZo
+	 mXTN6VapiGmt5Pt2kbOj2+YGhisuB8vp+Qn3RGWazJN7TPC1mr68Sf8lqfRD8j92NH
+	 3Fjn0FcxASqs/QjDFg3ldMIPWfwH2i5r/hjxQzzCq5/N5lkQmTyo8TqSK9NIK8l6wf
+	 Fy68n0AF0yl1w==
+Received: from [127.0.1.1] (pd95bbad8.dip0.t-ipconnect.de [217.91.186.216])
+	by fsn-vps-1.bereza.email (Postfix) with ESMTPSA id 377515DF95;
+	Wed,  1 Apr 2026 11:58:14 +0200 (CEST)
+From: Alex Bereza <alex@bereza.email>
+Date: Wed, 01 Apr 2026 11:57:47 +0200
+Subject: [PATCH v2 1/2] dmaengine: xilinx_dma: Fix CPU stall in
+ xilinx_dma_poll_timeout
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260401-fix-atomic-poll-timeout-regression-v2-1-68a265e3770f@bereza.email>
+References: <20260401-fix-atomic-poll-timeout-regression-v2-0-68a265e3770f@bereza.email>
+In-Reply-To: <20260401-fix-atomic-poll-timeout-regression-v2-0-68a265e3770f@bereza.email>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Michal Simek <michal.simek@amd.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+ Tony Lindgren <tony@atomide.com>, 
+ Kedareswara rao Appana <appana.durga.rao@xilinx.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Alex Bereza <alex@bereza.email>
+X-Mailer: b4 0.15.1
 
-When dev_set_name() fails after device_initialize(), idxd_alloc()
-calls put_device(conf_dev).
+Currently when calling xilinx_dma_poll_timeout with delay_us=0 and a
+condition that is never fulfilled, the CPU busy-waits for prolonged time
+and the timeout triggers only with a massive delay causing a CPU stall.
 
-For these devices, conf_dev->type is set from idxd->data->dev_type,
-which resolves to dsa_device_type or iax_device_type, and both use
-idxd_conf_device_release() as their release callback.
+This happens due to a huge underestimation of wall clock time in
+poll_timeout_us_atomic. Commit 7349a69cf312 ("iopoll: Do not use
+timekeeping in read_poll_timeout_atomic()") changed the behavior to no
+longer use ktime_get at the expense of underestimation of wall clock
+time which appears to be very large for delay_us=0. Instead of timing
+out after approximately XILINX_DMA_LOOP_COUNT microseconds, the timeout
+takes XILINX_DMA_LOOP_COUNT * 1000 * (time that the overhead of the for
+loop in poll_timeout_us_atomic takes) which is in the range of several
+minutes for XILINX_DMA_LOOP_COUNT=1000000. Fix this by using a non-zero
+value for delay_us. Use delay_us=10 to keep the delay in the hot path of
+starting DMA transfers minimal but still avoid CPU stalls in case of
+unexpected hardware failures.
 
-That release callback frees idxd, idxd->opcap_bmap, and releases
-idxd->id, but the current error path then frees those resources again
-directly, causing a double free.
+One-off measurement with delay_us=0 causes the cpu to busy wait around 7
+minutes in the timeout case. After applying this patch with delay_us=10
+the measured timeout was 1053428 microseconds which is roughly
+equivalent to the expected 1000000 microseconds specified in
+XILINX_DMA_LOOP_COUNT.
 
-Keep the cleanup in idxd_conf_device_release() after put_device() and
-avoid freeing idxd-managed resources again in idxd_alloc().
+Add a constant XILINX_DMA_POLL_DELAY_US for delay_us value.
 
-Fixes: 46a5cca76c76 ("dmaengine: idxd: fix memory leak in error handling path of idxd_alloc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 9495f2648287 ("dmaengine: xilinx_vdma: Use readl_poll_timeout instead of do while loop's")
+Fixes: 7349a69cf312 ("iopoll: Do not use timekeeping in read_poll_timeout_atomic()")
+
+Signed-off-by: Alex Bereza <alex@bereza.email>
 ---
- drivers/dma/idxd/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 4eff74182225..94ce52565e7a 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -635,7 +635,7 @@ static struct idxd_device *idxd_alloc(struct pci_dev *pdev, struct idxd_driver_d
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 02a05f215614..345a738bab2c 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -167,6 +167,8 @@
  
- err_name:
- 	put_device(conf_dev);
--	bitmap_free(idxd->opcap_bmap);
-+	return NULL;
- err_opcap:
- 	ida_free(&idxd_ida, idxd->id);
- err_ida:
+ /* Delay loop counter to prevent hardware failure */
+ #define XILINX_DMA_LOOP_COUNT		1000000
++/* Delay between polls (avoid a delay of 0 to prevent CPU stalls) */
++#define XILINX_DMA_POLL_DELAY_US	10
+ 
+ /* AXI DMA Specific Registers/Offsets */
+ #define XILINX_DMA_REG_SRCDSTADDR	0x18
+@@ -1332,7 +1334,8 @@ static int xilinx_dma_stop_transfer(struct xilinx_dma_chan *chan)
+ 
+ 	/* Wait for the hardware to halt */
+ 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				       val & XILINX_DMA_DMASR_HALTED, 0,
++				       val & XILINX_DMA_DMASR_HALTED,
++				       XILINX_DMA_POLL_DELAY_US,
+ 				       XILINX_DMA_LOOP_COUNT);
+ }
+ 
+@@ -1347,7 +1350,8 @@ static int xilinx_cdma_stop_transfer(struct xilinx_dma_chan *chan)
+ 	u32 val;
+ 
+ 	return xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				       val & XILINX_DMA_DMASR_IDLE, 0,
++				       val & XILINX_DMA_DMASR_IDLE,
++				       XILINX_DMA_POLL_DELAY_US,
+ 				       XILINX_DMA_LOOP_COUNT);
+ }
+ 
+@@ -1364,7 +1368,8 @@ static void xilinx_dma_start(struct xilinx_dma_chan *chan)
+ 
+ 	/* Wait for the hardware to start */
+ 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMASR, val,
+-				      !(val & XILINX_DMA_DMASR_HALTED), 0,
++				      !(val & XILINX_DMA_DMASR_HALTED),
++				      XILINX_DMA_POLL_DELAY_US,
+ 				      XILINX_DMA_LOOP_COUNT);
+ 
+ 	if (err) {
+@@ -1780,7 +1785,8 @@ static int xilinx_dma_reset(struct xilinx_dma_chan *chan)
+ 
+ 	/* Wait for the hardware to finish reset */
+ 	err = xilinx_dma_poll_timeout(chan, XILINX_DMA_REG_DMACR, tmp,
+-				      !(tmp & XILINX_DMA_DMACR_RESET), 0,
++				      !(tmp & XILINX_DMA_DMACR_RESET),
++				      XILINX_DMA_POLL_DELAY_US,
+ 				      XILINX_DMA_LOOP_COUNT);
+ 
+ 	if (err) {
+
 -- 
-2.43.0
+2.53.0
 
