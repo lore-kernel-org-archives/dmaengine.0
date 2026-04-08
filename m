@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B79A3C6A20;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552083C4572;
 	Wed,  8 Apr 2026 12:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775652112; cv=none; b=ACmHTcBzdwgrotqqv6Lzxv2zGz9723RsfYcuNPE2rNYLBUEesECNvz41A2HEosinDBfgGBJkXB0XBGFKHniAaL2vEp+DRFoKpF4rTxjXBUE4+VHSuqnSRZIVG2ii6NPsl9EKUGWeI6a9n8xggMig4H58FjGsPQaJ/vqRumEMqtw=
+	t=1775652112; cv=none; b=GqSju7c4t3Jv5PRAnDZYZIbk97cWy5MQ8kGDYt6nFsoPC6ZqJsP+xj3K60ZiHuX0WYyWNV2VcwaRvYAwOwmBlwBFnUaMy1UlBYTaptT2bTqQJUP5P9pf+6YlevDnXWeNHnYPqdOz6wjVplDJ5f/jV5mqyW/TRZ1/LsKHZJ9zUFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775652112; c=relaxed/simple;
-	bh=ROtjIbpyDk96T8F2lSYYl+HG6LSKvrDvDMFfMYQBlzY=;
+	bh=tM8m65XuDlt5RZNy9a9VEBHaYpJqz9qh0EbGJHjxdUg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uJj6RxYM5FZxBi4JKZJU40iPEGBxlF74kS+YHZY8MAorjfJAR8BFCYOmnvyw9d8vZ9t9KA7n2Z/Wg1vo2q8NNh6VOxkAVqdYK32MmMpi26eJSZ28s0+unXdy226fbY7orDPIN5HOW9hKTlJjEj9pI2cTtgqT/2LORbzzAb+Df3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SenShctZ; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=np8X0GeSDrzmzZaDT9aNFnEatviNQs3/VgUeGVOFbQQq9Vq1rGS5qm/MCD9/824mRGLsZ9DgthnWSQME9q1TuSrUAV6/qZ+wsjbvL/l6AvxuQptiUloJsooBipXMHVMWInwst9Adc07Lr4uxLtLQjmPQ3xxL/jcGyi3mnjrNRJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uEqZsy1D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SenShctZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A850C2BCB3;
-	Wed,  8 Apr 2026 12:41:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uEqZsy1D"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EB2A0C2BCAF;
+	Wed,  8 Apr 2026 12:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775652112;
-	bh=ROtjIbpyDk96T8F2lSYYl+HG6LSKvrDvDMFfMYQBlzY=;
+	bh=tM8m65XuDlt5RZNy9a9VEBHaYpJqz9qh0EbGJHjxdUg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=SenShctZCFI+iZShB7HP4Jo/1XHOh/Stfz+hZvZjPxHJvv0zTb3+BgYJbAkdR79PO
-	 ua/Vp7CP4/YiBFfHcqj+fnMf5qjxUqT6+jVkoHLZxIGe+xKe5gXW8+6z1izTi8aZN2
-	 dPV6YpyZMTdAdqUUPMmLjfDNp3ypvARvj3Kelw9q7Emf8r8DVpHPn7oOtNHTQtuR7N
-	 Z5xGqvCt0cLFFvCs5xFLetUN1iCgYNFE9EhsMPKXHmZcGqQMKwea5rt+SKwecGCvXX
-	 01UhosLE2zGK5RI5QElIilwdLpCWQnLAATvYjPEYuAPgD/XT9AlwbTwTiZLdAlZ5Eh
-	 rWGSwSpKv2Kyw==
+	b=uEqZsy1D6iBY0SI0DEX43ndQO/dkztpntLR4jXZ/3MQ3PGBlbmiSqkWqxuszOSGUG
+	 eha8J1KGhYJXHomuoYLMZWw7lGWmJkKvfOq4baQEhKA7AeuW7GeY36MrNLhcK/JuTd
+	 W2L2HdmhmavX/l9DEEo898uLiZ29x1ZcqsdF+76PcrCHGzwjaOZex+vDExxuA78D7v
+	 H70Rguh0cvDqo/1CcMS0kLlGubsaOR5uVimMbz+IUPOp+0Rs6anTwwjLNkQQQVpxjR
+	 EJfusfhRNdCGW/ROruaXWMDgecHpndKPnG41yvXiA9RC/5ufgj5pKMdhlmRqoarMHY
+	 iRjGNxAZBrNtA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 129C31073C93;
-	Wed,  8 Apr 2026 12:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D475B1073CA8;
+	Wed,  8 Apr 2026 12:41:51 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Date: Wed, 08 Apr 2026 13:42:43 +0100
-Subject: [PATCH v3 4/4] dmaengine: dma-axi-dmac: Fig BUG() on vunmap()
+Date: Wed, 08 Apr 2026 13:42:40 +0100
+Subject: [PATCH v3 1/4] dmaengine: Fix possible use after free
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,18 +40,18 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260408-dma-dmac-handle-vunmap-v3-4-2456ad292154@analog.com>
+Message-Id: <20260408-dma-dmac-handle-vunmap-v3-1-2456ad292154@analog.com>
 References: <20260408-dma-dmac-handle-vunmap-v3-0-2456ad292154@analog.com>
 In-Reply-To: <20260408-dma-dmac-handle-vunmap-v3-0-2456ad292154@analog.com>
 To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>, 
  Frank Li <Frank.Li@kernel.org>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775652161; l=5247;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775652161; l=1349;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=KzDfaSnPpvy2D4wxKHW5ARqGw5aBbUaqGy+f36zi13Q=;
- b=thtB8sL05Q+PPK2j5gKDK5pSKysY9PnifHL08IQNkK48BKw/xnH8YOsi3efQhsWzJOrFEEMqS
- LauzH44E5UGDBV3H6MVzt8hKwA0+UhFqhzK1RsTfP+BA8RTTCQJW+WL
+ bh=6XbKWWnu/XLY2+T0r/woFDDSj9C/H1ATZbhK/NSCskE=;
+ b=+BZ++WfuTRR3OxUZPiujlmtxeI7Iicl4JzpuyEQ9qRfF3aMt3YU53A2ibkdNO0+ntfemOTx7o
+ FElg/27DZC+Czle7yzEylssm6eTFQsrpr1KiVOUi9GGgVVu9IB81yvv
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -61,157 +61,39 @@ Reply-To: nuno.sa@analog.com
 
 From: Nuno Sá <nuno.sa@analog.com>
 
-For architectures like Microblaze or arm64 (where this IP is used),
-DMA_DIRECT_REMAP is set which means that dma_alloc_coherent() might
-remap (and hence vmalloc()) some memory. This became visible in a design
-where dma_direct_use_pool() is not possible.
+In dma_release_channel(), we first called dma_chan_put() and then
+checked chan->device->privatecnt for possibly clearing DMA_PRIVATE.
+However, dma_chan_put() will call dma_device_put() which could,
+potentially (if the DMA provider is already gone for example),
+release the last reference of the device and hence freeing
+the it.
 
-With the above, when calling dma_free_coherent(), vunmap() would be
-called from softirq context and thus leading to a BUG().
+Fix it, by doing the check before calling dma_chan_put().
 
-To fix it, use a dma pool that is allocated in
-.device_alloc_chan_resources() and allocate blocks from it. The key
-point is that now dma_pool_free() is used in axi_dmac_free_desc() to
-free the blocks and that just frees the blocks from the pool in the
-sense they can be used again. In other words, no actual call to
-dma_free_coherent() happens. That only happens when destroying the pool
-in axi_dmac_free_chan_resources() which does not happen in any interrupt
-context.
-
+Fixes: 0f571515c332 ("dmaengine: Add privatecnt to revert DMA_PRIVATE property")
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
- drivers/dma/dma-axi-dmac.c | 66 ++++++++++++++++++++++++++++------------------
- 1 file changed, 40 insertions(+), 26 deletions(-)
+ drivers/dma/dmaengine.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 41898d594be7..d47ff27e1408 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -13,6 +13,7 @@
- #include <linux/device.h>
- #include <linux/dma-mapping.h>
- #include <linux/dmaengine.h>
-+#include <linux/dmapool.h>
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-@@ -147,6 +148,7 @@ struct axi_dmac_chan {
- 	struct virt_dma_chan vchan;
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 405bd2fbb4a3..9049171df857 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -905,11 +905,12 @@ void dma_release_channel(struct dma_chan *chan)
+ 	mutex_lock(&dma_list_mutex);
+ 	WARN_ONCE(chan->client_count != 1,
+ 		  "chan reference count %d != 1\n", chan->client_count);
+-	dma_chan_put(chan);
+ 	/* drop PRIVATE cap enabled by __dma_request_channel() */
+ 	if (--chan->device->privatecnt == 0)
+ 		dma_cap_clear(DMA_PRIVATE, chan->device->cap_mask);
  
- 	struct axi_dmac_desc *next_desc;
-+	void *pool;
- 	struct list_head active_descs;
- 	enum dma_transfer_direction direction;
- 
-@@ -648,11 +650,17 @@ static void axi_dmac_issue_pending(struct dma_chan *c)
- 	spin_unlock_irqrestore(&chan->vchan.lock, flags);
- }
- 
-+static void axi_dmac_free_desc(struct axi_dmac_desc *desc)
-+{
-+	for (unsigned int i = 0; i < desc->num_sgs; i++)
-+		dma_pool_free(desc->chan->pool, desc->sg[i].hw, desc->sg[i].hw_phys);
++	dma_chan_put(chan);
 +
-+	kfree(desc);
-+}
-+
- static struct axi_dmac_desc *
- axi_dmac_alloc_desc(struct axi_dmac_chan *chan, unsigned int num_sgs)
- {
--	struct axi_dmac *dmac = chan_to_axi_dmac(chan);
--	struct device *dev = dmac->dma_dev.dev;
- 	struct axi_dmac_hw_desc *hws;
- 	struct axi_dmac_desc *desc;
- 	dma_addr_t hw_phys;
-@@ -664,22 +672,22 @@ axi_dmac_alloc_desc(struct axi_dmac_chan *chan, unsigned int num_sgs)
- 	desc->num_sgs = num_sgs;
- 	desc->chan = chan;
- 
--	hws = dma_alloc_coherent(dev, PAGE_ALIGN(num_sgs * sizeof(*hws)),
--				&hw_phys, GFP_ATOMIC);
--	if (!hws) {
--		kfree(desc);
--		return NULL;
--	}
--
- 	for (i = 0; i < num_sgs; i++) {
--		desc->sg[i].hw = &hws[i];
--		desc->sg[i].hw_phys = hw_phys + i * sizeof(*hws);
-+		hws = dma_pool_zalloc(chan->pool, GFP_NOWAIT, &hw_phys);
-+		if (!hws) {
-+			desc->num_sgs = i;
-+			axi_dmac_free_desc(desc);
-+			return NULL;
-+		}
- 
--		hws[i].id = AXI_DMAC_SG_UNUSED;
--		hws[i].flags = 0;
-+		desc->sg[i].hw = hws;
-+		desc->sg[i].hw_phys = hw_phys;
-+
-+		hws->id = AXI_DMAC_SG_UNUSED;
- 
- 		/* Link hardware descriptors */
--		hws[i].next_sg_addr = hw_phys + (i + 1) * sizeof(*hws);
-+		if (i)
-+			desc->sg[i - 1].hw->next_sg_addr = hw_phys;
- 	}
- 
- 	/* The last hardware descriptor will trigger an interrupt */
-@@ -688,18 +696,6 @@ axi_dmac_alloc_desc(struct axi_dmac_chan *chan, unsigned int num_sgs)
- 	return desc;
- }
- 
--static void axi_dmac_free_desc(struct axi_dmac_desc *desc)
--{
--	struct axi_dmac *dmac = chan_to_axi_dmac(desc->chan);
--	struct device *dev = dmac->dma_dev.dev;
--	struct axi_dmac_hw_desc *hw = desc->sg[0].hw;
--	dma_addr_t hw_phys = desc->sg[0].hw_phys;
--
--	dma_free_coherent(dev, PAGE_ALIGN(desc->num_sgs * sizeof(*hw)),
--			  hw, hw_phys);
--	kfree(desc);
--}
--
- static struct axi_dmac_sg *axi_dmac_fill_linear_sg(struct axi_dmac_chan *chan,
- 	enum dma_transfer_direction direction, dma_addr_t addr,
- 	unsigned int num_periods, unsigned int period_len,
-@@ -933,9 +929,26 @@ static struct dma_async_tx_descriptor *axi_dmac_prep_interleaved(
- 	return vchan_tx_prep(&chan->vchan, &desc->vdesc, flags);
- }
- 
-+static int axi_dmac_alloc_chan_resources(struct dma_chan *c)
-+{
-+	struct axi_dmac_chan *chan = to_axi_dmac_chan(c);
-+	struct device *dev = c->device->dev;
-+
-+	chan->pool = dma_pool_create(dev_name(dev), dev,
-+				     sizeof(struct axi_dmac_hw_desc),
-+				     __alignof__(struct axi_dmac_hw_desc), 0);
-+	if (!chan->pool)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
- static void axi_dmac_free_chan_resources(struct dma_chan *c)
- {
-+	struct axi_dmac_chan *chan = to_axi_dmac_chan(c);
-+
- 	vchan_free_chan_resources(to_virt_chan(c));
-+	dma_pool_destroy(chan->pool);
- }
- 
- static void axi_dmac_desc_free(struct virt_dma_desc *vdesc)
-@@ -1238,6 +1251,7 @@ static int axi_dmac_probe(struct platform_device *pdev)
- 	dma_cap_set(DMA_SLAVE, dma_dev->cap_mask);
- 	dma_cap_set(DMA_CYCLIC, dma_dev->cap_mask);
- 	dma_cap_set(DMA_INTERLEAVE, dma_dev->cap_mask);
-+	dma_dev->device_alloc_chan_resources = axi_dmac_alloc_chan_resources;
- 	dma_dev->device_free_chan_resources = axi_dmac_free_chan_resources;
- 	dma_dev->device_tx_status = dma_cookie_status;
- 	dma_dev->device_issue_pending = axi_dmac_issue_pending;
+ 	if (chan->slave) {
+ 		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
+ 		sysfs_remove_link(&chan->slave->kobj, chan->name);
 
 -- 
 2.53.0
