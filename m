@@ -1,123 +1,92 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFCF39E183
-	for <dmaengine@vger.kernel.org>; Wed,  8 Apr 2026 09:49:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691C33C660E;
+	Wed,  8 Apr 2026 12:41:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775641804; cv=none; b=hVVek+moDBQ4P3PITDeGl7u0NxsMLsfRHZWe8wUvRKCt9P+LxLYQjLX1qfHIUDDhQGhYfvbPSv0py8CUCqUZCOjKPsdU3ww9WgegIGDJxzSKd3SydHl1tUdouf4MrM5E6N3MbrWqkMzEk/yiK+l/GjseiesR6xwxREQ0o8DP+ns=
+	t=1775652112; cv=none; b=PnYzADbGK2LUB32ZLEIb2bHaGYd53SCce0i7p7xNGy8S+IbBE7CWVru3LHDbKR/8FpZp0spKTxJ0XmwW93rS7rg91cMPe0DEMBI9RT4yfWud4F5LhlHAmI5FtGss76LUKfTMFOjAKCVLpGxT0Zz71JAEPV4gQou1xJ/SsENlRb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775641804; c=relaxed/simple;
-	bh=O0dPKIPUwqcZQdDhmwfagNKRPoro50YwQ5jiiYuAkY8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qQFn0TwWE1jKxwBF6BGy47jDaTm641mvV3nfqOaieoP4l3EfTbxLJnyRDLcP9jNM3qN5iFO0LGBHHhDJXOWxJwj5aiF0muvesp0TvqYwMXD+o7/BShngG4o0FawsZOhOe4WQ6ZGkY05aHzDmgpSnjcD/O4PrxmppCxXtif2biT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-47018d341f8so3155044b6e.3
-        for <dmaengine@vger.kernel.org>; Wed, 08 Apr 2026 02:49:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775641794; x=1776246594;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=quvvcejYXNcTSghIu/ABG/aBBVzSmRl0OrHbMTAKiNc=;
-        b=szAgreVQGKR6kBw0bkWNk3qeXF6lSC5can9vRfMcgClEn41qMRVMHG1Wo1eamIOMxL
-         VW3XIO7jvhHQTaDvbGgLLyXt5K4/polE8TdP+fkzEhoi64JGUDE2mqHSrIprEvITQ5aq
-         +mUawKsspya3rZMjfrDGFT7T8Fw4GsPzVOlihoxgHZeJEuQwJrNKINRGEFgHKHOqA3vW
-         L0gTiWZ+sHCf+cm+2jDhv75clyqmFCXOlK3fMRsLJPJOJqzDxUp+/LPFaCzDC+LmgA+V
-         id3qPwyxl9PxUBivyxk4YNkubuH+MdjqYLilRi2/trJeo9PCJGrxqFwgE3QTXQ8xbTUK
-         8dZg==
-X-Forwarded-Encrypted: i=1; AJvYcCV+ZvOuXL6Dj2RgfjdzcrNoi8pmZYDv+rZf6OjkQG3JdG6XVYdKLFtge2uvhLziKPkff66UvmzglMw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8wo91utbOpOwvDG/Vk3GgUBYr/ctG8L16PYCKvWA1d8hCCzIU
-	0TRJyWJSxmJoabQyU8w6/PUu4eixQr/GB5Nj9T0GHZTx6aJ0/lTxD8QB/LCyRoN0
-X-Gm-Gg: AeBDievCKympqKCQ4N2bFv9ohnFaz0WS5tDmfvUwr49RPN80hmeKDbiWkYbvD5kCJ45
-	LrCQQiVpkFfzoNHJL4rK//26zbUH667QeBS6BmCPU2yYYF9leJ38rxC32pMUENNB4dETN3epRiG
-	zphDdCtwlxTRAPBB3qSew9tvDsjl/bZNVb8LP+5H+7SUBsc2ThWpcCe+mMoK1zEQ8DpL4DrkdqD
-	7g7eBhHsMwDqOjoljEyc0daqsuOQwp2ianP2MpY5+OaDK88ksnvv8/EBlsbSnnJY6qOBLP3bLj7
-	h6YJAcUXgsrNHWa0vdl5aDYpoajCsr813ydry4uBVIH7kwkYQNKeEiQjn5vOLangY1vIl+ISbnU
-	qAZyEl8CXUwh7IiMT5QysWVw25U8aXVgmUcLGleo115l41i4INpELy8Y284JItRcpHN2Rl7oZZt
-	evyNrKrBJjO6YbBwtTgDtiHU1M78F+4WKI09dIxJv/WWa45DkjG/FiHeXwXe/yf0P5
-X-Received: by 2002:a05:6820:6108:b0:688:2480:7fa8 with SMTP id 006d021491bc7-689c1c169a5mr254600eaf.21.1775641793781;
-        Wed, 08 Apr 2026 02:49:53 -0700 (PDT)
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com. [209.85.167.176])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-422eb25acbesm18719700fac.11.2026.04.08.02.49.53
-        for <dmaengine@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Apr 2026 02:49:53 -0700 (PDT)
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-47018d341f8so3155032b6e.3
-        for <dmaengine@vger.kernel.org>; Wed, 08 Apr 2026 02:49:53 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWQcsn+ht7vs73yMVBXua/1J4Kn7meMMEj1LGCZrN4g9RLao45k0Z2A4Z88pA40PiFQFj6XBvA1fho=@vger.kernel.org
-X-Received: by 2002:a05:6122:a5c9:10b0:56e:e9cf:7134 with SMTP id
- 71dfb90a1353d-56ee9cfa0fbmr3844058e0c.3.1775641295235; Wed, 08 Apr 2026
- 02:41:35 -0700 (PDT)
+	s=arc-20240116; t=1775652112; c=relaxed/simple;
+	bh=09nJSRlAd6N1UqTYdtf9KSCV6nHMp6BK6/gYyYC5J8k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=GzjZh/vj3Ivy5xeO59C+NCOJsKgp2QT5gczgBaQS/udpnaNLgtqq6+c9gO/VL4ZYHmi6WzrMs+B+CbMUjnp7OxIEAHfKUBnUlK40XSfrFKC7smFbH1ZSx4b7Cn471iOluLN3THQV5IQ5YS2EnqtjiyOmlfflbdqd69mW1koscuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZ92NwHp; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZ92NwHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 01FCAC19424;
+	Wed,  8 Apr 2026 12:41:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775652112;
+	bh=09nJSRlAd6N1UqTYdtf9KSCV6nHMp6BK6/gYyYC5J8k=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=CZ92NwHp9kevRPMk08po5rN8gilb/coxsz11JyTia+9xFb7u/mvp3Np2qyPw5AvlH
+	 3KP+MG0XjWN9BvVSvA1+GECtWBZ5NYBnKI7Ua2HJz3YvefRedLWHEUWaXeSHD6ihdn
+	 7ChdmWOM7adcT9eVGWmpVEaPVd3+uQ8kSCFFUuz5WzbhGrPp38SIHTrgjnLgweILd2
+	 ZsOsLUqOzRaTeo8cRGzG2fo6XmOY3pGDm5US9de82ZoJ95XyTkERftb4DAN38u432t
+	 BgqdRhZTIfKXdFOIgMya3Czn0gilQKQzw274hlbakunMM10IpWlq9vn0cN3W7Hw1xz
+	 0p44QDrdlRDKQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E32951073CAB;
+	Wed,  8 Apr 2026 12:41:51 +0000 (UTC)
+From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
+Date: Wed, 08 Apr 2026 13:42:41 +0100
+Subject: [PATCH v3 2/4] dmaengine: dma-axi-dmac: Properly free struct
+ axi_dmac_desc
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260402090524.9137-1-john.madieu.xa@bp.renesas.com> <20260402090524.9137-25-john.madieu.xa@bp.renesas.com>
-In-Reply-To: <20260402090524.9137-25-john.madieu.xa@bp.renesas.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 8 Apr 2026 11:41:23 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVLb3Wj=4qK_5jLsiN28i2LDYPVH9ch91Y6e8XyT+yjjA@mail.gmail.com>
-X-Gm-Features: AQROBzD3bL2aOOG6EzT_imFnbWnAbXmWWZH1UF0TeTlDTbev2ZgK_ZCcpyzlvIk
-Message-ID: <CAMuHMdVLb3Wj=4qK_5jLsiN28i2LDYPVH9ch91Y6e8XyT+yjjA@mail.gmail.com>
-Subject: Re: [PATCH v2 24/24] arm64: dts: renesas: r9a09g047e57-smarc: add
- DA7212 audio codec support
-To: John Madieu <john.madieu.xa@bp.renesas.com>
-Cc: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, Vinod Koul <vkoul@kernel.org>, 
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Magnus Damm <magnus.damm@gmail.com>, 
-	Thomas Gleixner <tglx@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Biju Das <biju.das.jz@bp.renesas.com>, 
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	John Madieu <john.madieu@gmail.com>, linux-renesas-soc@vger.kernel.org, 
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260408-dma-dmac-handle-vunmap-v3-2-2456ad292154@analog.com>
+References: <20260408-dma-dmac-handle-vunmap-v3-0-2456ad292154@analog.com>
+In-Reply-To: <20260408-dma-dmac-handle-vunmap-v3-0-2456ad292154@analog.com>
+To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775652161; l=889;
+ i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
+ bh=FiW+zvQ0Vg5geNpbllXV8K8Pu2uQGa6K1A0veJRrIZI=;
+ b=pGZW9OUn4eE29hNeUkXDCFnvqVaFshghoo22ssxsncbZV8gPmifgJEWB2pP3dYtmhoTfbvfWh
+ 6jj/ZNNg+fCAuUQq8AGXTtrF7iv2AT8xDl0aCLurO8uy4B2GOnlfv3y
+X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
+ pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
+X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
+ auth_id=100
+X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
+Reply-To: nuno.sa@analog.com
 
-Hi John,
+From: Nuno Sá <nuno.sa@analog.com>
 
-On Thu, 2 Apr 2026 at 11:10, John Madieu <john.madieu.xa@bp.renesas.com> wrote:
-> RZ/G3E SMARC board has a DA7212 audio codec connected via I2C1 for
-> sound input/output using SSI3/SSI4 where:
->
->  - The codec receives its master clock from the Versa3 clock
->    generator present on the SoM
->  - SSI4 shares clock pins with SSI3 to provide a separate data
->    line for full-duplex audio capture.
->
-> Enable audio support on RZ/G3E SMARC2 EVK boards with a DA7212 audio codec.
->
-> Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
+In axi_dmac_prep_peripheral_dma_vec() if we fail after calling
+axi_dmac_alloc_desc(), we need to use axi_dmac_free_desc() to fully free
+the descriptor.
 
-Thanks for your patch!
+Fixes: 74609e568670 ("dmaengine: dma-axi-dmac: Implement device_prep_peripheral_dma_vec")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+---
+ drivers/dma/dma-axi-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> --- a/arch/arm64/boot/dts/renesas/r9a09g047e57-smarc.dts
-> +++ b/arch/arm64/boot/dts/renesas/r9a09g047e57-smarc.dts
-
-> @@ -280,6 +358,42 @@ &sdhi1 {
->         vqmmc-supply = <&vqmmc_sd1_pvdd>;
->  };
->
-> +&snd_rzg3e {
-
-Please preserve sort order (alphabetical, by label).
-
-Gr{oetje,eeting}s,
-
-                        Geert
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 45c2c8e4bc45..127c3cf80a0e 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -769,7 +769,7 @@ axi_dmac_prep_peripheral_dma_vec(struct dma_chan *c, const struct dma_vec *vecs,
+ 	for (i = 0; i < nb; i++) {
+ 		if (!axi_dmac_check_addr(chan, vecs[i].addr) ||
+ 		    !axi_dmac_check_len(chan, vecs[i].len)) {
+-			kfree(desc);
++			axi_dmac_free_desc(desc);
+ 			return NULL;
+ 		}
+ 
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+2.53.0
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
