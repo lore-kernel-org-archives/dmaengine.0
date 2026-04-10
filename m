@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3007313E1D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AF6311C2A;
 	Fri, 10 Apr 2026 13:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775826469; cv=none; b=n4zrRF41jhtZbEhthK5aNsi9UHmu6EZCKF+mOubCs49Qv3P+f3iLDsXow63hWcaTYtG4WdnOg8KF6YLL5uZJI39IjQRk+7Bv15BDpNM5wpRgrvn/Xh3bPIxsCnhlRDMSMwfpzKp4a/RhO1if4H8608Z5xq1yEQtdPnXTxPRKbRw=
+	t=1775826469; cv=none; b=XB8HA/BIQE9Ng0aPTlnszJs74YzLT3nMdRTFsf+Rm+oVNcL5GBUxhXRNkTso9OjvJ2L6W2Q9qemow8J/vg95duH0ay/ctxjwN0vEHWvUACCAsoH9KwPaV0+2hV2wn5NYru2ZyTMNh1QSW9y99WrumQRcOYfkQNgom3kHV/bym44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775826469; c=relaxed/simple;
-	bh=HKLbyRBVfPTHlCYt6B5t9msTPNnxCYsSjPdFZbFLnuw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eAJGJUM+4inkAkZFmcvpZhlAyTS+lx1NMnr8yWGiZlTtvLUoRHIm3eLuAduinWVpJGLMwb090LQjP9KaV48oXDI7HJJjcKcVtQKpIY24mUlEZvuSo0v7vGzoUoseso35rBOdJKo/VkfAmc44VUlHCVk2i9lJMgK8tHgSFCmcVJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ThL/1M3a; arc=none smtp.client-ip=10.30.226.201
+	bh=9rBcO8VxjER3OnuYfoq9G9H5KIuoJGxGfKEMHDiZlyY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nmZAaZiWXH3982FuuNty6wcuiYts45+rNU/OMBdC1EsD/2ootKfiDUSlNkTP8f/SZ/TTLvbl1nIjlBq7By/k6JyymUhqCYGlv9kdf6F0Vv0AilDIJosawjIYHF2GaPkw9y9e72EAgYsOhQ2AtA/N9eMCYi2TSaDsPwhwsiBp7gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JBqfXyEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ThL/1M3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A6B6BC2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JBqfXyEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 759FEC19421;
 	Fri, 10 Apr 2026 13:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775826469;
-	bh=HKLbyRBVfPTHlCYt6B5t9msTPNnxCYsSjPdFZbFLnuw=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ThL/1M3avfN/caZ2EIVBa9HXiCrGgT28bhLYEM2GPGatVekUgzTZSHrU94ulzFqVw
-	 Hm9PyfMh4G28Mj2bknSQxMfHDT89bxcS4NGCI7hoBBP1MmjR+yr5Ef40s6SFGiuPLN
-	 XsAiqzsaDlfAfrJudlUuHbyOL7t6qSEGq8OXOvp/5CfNJFf9okKC2qNkHRrTuGKqg3
-	 /3iw8LfshG3Z0rFZaHzCk8bjM1wC88SHrqoFqB290VE14Bnu69Hldw/PWT+oZ6Pl9P
-	 aigbfG4oTRGr27uB7JPuGukjvkC0OlHL0MulkD0ByzDyCg0fNh+etelsr3A/idZWFC
-	 zyDUWHbTJSUzQ==
+	bh=9rBcO8VxjER3OnuYfoq9G9H5KIuoJGxGfKEMHDiZlyY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=JBqfXyEb9TOT8FgY/nbT253IAXAJWn6WZXPN4ECiK0zkxL8r0ZdUm7ivM6yFvmx/+
+	 X0gypKP5qvXxp1oFFfeCUhf1WLxVBIizLagwF55RfkvU59V752i0H3a2+9JBm9wv/H
+	 BFKmo60dOGs0Xclw2gsZDZ8r39OmFE7cySVUaRtVuG6065THkKCCa81tjN7DdC//4T
+	 eWlaPXRsnVq+MGLDx8T182DCXVlzgJcHAJNPX2gFVum4/2Oic3rNULkkRJVzrxvrVk
+	 AeglrkNCCo5Womy993S9+W2pri7JZF7VBMHp6z9pBA5/DKLEGi4wqVBxhvRbram7GX
+	 BQD+GizXJzQng==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C12BF4485D;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEAFF4485B;
 	Fri, 10 Apr 2026 13:07:49 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Fri, 10 Apr 2026 08:07:13 -0500
-Subject: [PATCH 03/23] dmaengine: sdxi: Add PCI initialization
+Subject: [PATCH 00/23] dmaengine: Smart Data Accelerator Interface (SDXI)
+ basic support
+Date: Fri, 10 Apr 2026 08:07:10 -0500
+Message-Id: <20260410-sdxi-base-v1-0-1d184cb5c60a@amd.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,9 +41,10 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-sdxi-base-v1-3-1d184cb5c60a@amd.com>
-References: <20260410-sdxi-base-v1-0-1d184cb5c60a@amd.com>
-In-Reply-To: <20260410-sdxi-base-v1-0-1d184cb5c60a@amd.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/02MQQrCMBBFr1JmbSSTGGJceQ9xkWZGm0Ub6JSgl
+ NzdoBtXnwf/vR2E18wCl2GHlWuWXJYOeBggTXF5ssrUGYw2Tp/RKqFXVmMUVt6ST+FBiZ2H/p+
+ ybGV9f1MV+9x+VtDuz6qotCJtTxjRBDPGa5zpmMoM99baBxF+B9CQAAAA
+X-Change-ID: 20250813-sdxi-base-73d7c9fdce57
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Wei Huang <wei.huang2@amd.com>, 
  Mario Limonciello <mario.limonciello@amd.com>, 
@@ -53,11 +55,11 @@ Cc: Wei Huang <wei.huang2@amd.com>,
  linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
  Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775826467; l=7230;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775826467; l=6024;
  i=nathan.lynch@amd.com; s=20260410; h=from:subject:message-id;
- bh=3A0BXgIoSercG94OmOdIOrhmik2mZE2IAheGEIhO5Q0=;
- b=2bpWgEy4FtNh9XEmlaLsO4DAUK2nN/Cleb6ZaHIf364SRLwwh+r8I9KiBsaYNRewTH7sMda8a
- ZfFgYojVy55B0AqjxUrkcMD5AgVehdjWknUvWBOpk3qzmtOAnsWHm7Q
+ bh=9rBcO8VxjER3OnuYfoq9G9H5KIuoJGxGfKEMHDiZlyY=;
+ b=gAwlqr9NKfu+gJarBGqfqo48zzVDQS3J4QnIesv9toDOQO891IMNga67nVexAyP4Pm4cjv4uW
+ oxiFF3l5Vd7DriNYBpEMFpb7EjiywwC8C6tkz/ueyeKCXXbp7BcoEZv
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=PK4ozhq+/z9/2Jl5rgDmvHa9raVomv79qM8p1RAFpEw=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260410 with
@@ -65,265 +67,130 @@ X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260410 with
 X-Original-From: Nathan Lynch <nathan.lynch@amd.com>
 Reply-To: nathan.lynch@amd.com
 
-From: Nathan Lynch <nathan.lynch@amd.com>
+The Smart Data Accelerator Interface (SDXI) is a vendor-neutral
+architecture for memory-to-memory data movement offload designed for
+kernel bypass and virtualization.
 
-Add enough code to bind a SDXI device via the class code and map its
-control registers and doorbell region. All device resources are
-managed with devres at this point, so there is no explicit teardown
-path.
+General information on SDXI may be found at:
+https://www.snia.org/sdxi
 
-While the SDXI specification includes a PCIe binding, the standard is
-intended to be independent of the underlying I/O interconnect. So the
-driver confines PCI-specific code to pci.c, and the rest (such as
-device.c, introduced here) is bus-agnostic. Hence there is some
-indirection: during probe, the bus code registers any matched device
-with the generic SDXI core, supplying the device and a sdxi_bus_ops
-vector. After the core associates a new sdxi_dev with the device,
-bus-specific initialization proceeds via the sdxi_bus_ops->init()
-callback.
+This submission adds a driver with basic support for PCIe-hosted SDXI
+1.0 implementations and includes a DMA engine provider with memcpy
+capability. A more limited RFC version was posted in September 2025;
+the code has seen multiple substantial updates since then, described
+below.
 
-Co-developed-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
+Planned future SDXI work (out of scope for this series):
+
+* Character device for exposing SDXI contexts to user space.
+
+* Support for operation types to be added in future SDXI revisions.
+
+* Greater configurability for control structures, e.g. descriptor ring
+  size.
+
+The latest released version of the SDXI specification is 1.0:
+https://www.snia.org/sites/default/files/technical-work/sdxi/release/SNIA-SDXI-Specification-v1.0a.pdf
+
+Draft versions of future SDXI specifications in development may be found at:
+https://www.snia.org/tech_activities/publicreview#sdxi
+
 ---
- drivers/dma/Kconfig       |  2 ++
- drivers/dma/Makefile      |  1 +
- drivers/dma/sdxi/Kconfig  |  8 +++++
- drivers/dma/sdxi/Makefile |  6 ++++
- drivers/dma/sdxi/device.c | 26 ++++++++++++++
- drivers/dma/sdxi/pci.c    | 87 +++++++++++++++++++++++++++++++++++++++++++++++
- drivers/dma/sdxi/sdxi.h   | 45 ++++++++++++++++++++++++
- 7 files changed, 175 insertions(+)
+Changes in v1:
+- Reorder series and introduce functionality incrementally while
+  remaining buildable and functional at each step. (Jonathan Cameron)
+- Use devres APIs where possible for device resources (JC)
+- Use cleanup APIs to significantly reduce use of goto-oriented error
+  unwinding. (JC)
+- Drop SDXI_DEBUG config option. (JC)
+- Cite SDXI spec version and section number consistently throughout. (JC)
+- Combine local variable declarations of same type. (JC)
+- Mark descriptor structs __packed. (JC)
+- Use designated initializers in descriptor encoding functions. (JC)
+- Prefer dev_err_probe() over sdxi_err() in sdxi_pci_init(). (JC)
+- Prune unnecessary includes throughout source files. (JC)
+- Remove unnecessary/unhelpful comments in several places. (JC)
+- Remove SDXI spec material from "Add SNIA SDXI accelerator sub-class"
+  commit message and reword the remainder. (Bjorn Helgaas)
+- Remove unnecessary local for DMA_BIT_MASK() argument in
+  sdxi_pci_init(). (BH)
+- Use "{ }" for final null entry in id table, not "{ 0, }". (BH)
+- Replace sample descriptor submission code from the SDXI spec with an
+  improved API that has unit tests, eliminates a copy step for
+  callers, and can block until ring space becomes available if
+  desired.
+- Omit the error log facility for now; it can be reintroduced later.
+- Use a per-device xarray to allocate context IDs and map them to
+  context objects.
+- Implement interrupt-based completion signaling for memcpy operations
+  in the DMA engine provider, DMA provider code mostly rewritten.
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index e98e3e8c5036..5a19df2da7f2 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -783,6 +783,8 @@ source "drivers/dma/fsl-dpaa2-qdma/Kconfig"
- 
- source "drivers/dma/lgm/Kconfig"
- 
-+source "drivers/dma/sdxi/Kconfig"
-+
- source "drivers/dma/stm32/Kconfig"
- 
- # clients
-diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
-index df566c4958b6..3055ed87bc52 100644
---- a/drivers/dma/Makefile
-+++ b/drivers/dma/Makefile
-@@ -86,6 +86,7 @@ obj-$(CONFIG_XGENE_DMA) += xgene-dma.o
- obj-$(CONFIG_ST_FDMA) += st_fdma.o
- obj-$(CONFIG_FSL_DPAA2_QDMA) += fsl-dpaa2-qdma/
- obj-$(CONFIG_INTEL_LDMA) += lgm/
-+obj-$(CONFIG_SDXI) += sdxi/
- 
- obj-y += amd/
- obj-y += mediatek/
-diff --git a/drivers/dma/sdxi/Kconfig b/drivers/dma/sdxi/Kconfig
-new file mode 100644
-index 000000000000..a568284cd583
---- /dev/null
-+++ b/drivers/dma/sdxi/Kconfig
-@@ -0,0 +1,8 @@
-+config SDXI
-+	tristate "SDXI support"
-+	select DMA_ENGINE
-+	help
-+	  Enable support for Smart Data Accelerator Interface (SDXI)
-+	  Platform Data Mover devices. SDXI is a vendor-neutral
-+	  standard for a memory-to-memory data mover and acceleration
-+	  interface.
-diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
-new file mode 100644
-index 000000000000..f84b87d53e27
---- /dev/null
-+++ b/drivers/dma/sdxi/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_SDXI) += sdxi.o
-+
-+sdxi-objs += device.o
-+
-+sdxi-$(CONFIG_PCI_MSI) += pci.o
-diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
-new file mode 100644
-index 000000000000..b718ce04afa0
---- /dev/null
-+++ b/drivers/dma/sdxi/device.c
-@@ -0,0 +1,26 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SDXI hardware device driver
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/slab.h>
-+
-+#include "sdxi.h"
-+
-+int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
-+{
-+	struct sdxi_dev *sdxi;
-+
-+	sdxi = devm_kzalloc(dev, sizeof(*sdxi), GFP_KERNEL);
-+	if (!sdxi)
-+		return -ENOMEM;
-+
-+	sdxi->dev = dev;
-+	sdxi->bus_ops = ops;
-+	dev_set_drvdata(dev, sdxi);
-+
-+	return sdxi->bus_ops->init(sdxi);
-+}
-diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
-new file mode 100644
-index 000000000000..f3f8485e50e3
---- /dev/null
-+++ b/drivers/dma/sdxi/pci.c
-@@ -0,0 +1,87 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SDXI PCI device code
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+
-+#include <linux/dev_printk.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/iomap.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+
-+#include "sdxi.h"
-+
-+enum sdxi_mmio_bars {
-+	SDXI_PCI_BAR_CTL_REGS = 0,
-+	SDXI_PCI_BAR_DOORBELL = 2,
-+};
-+
-+static struct pci_dev *sdxi_to_pci_dev(const struct sdxi_dev *sdxi)
-+{
-+	return to_pci_dev(sdxi_to_dev(sdxi));
-+}
-+
-+static int sdxi_pci_init(struct sdxi_dev *sdxi)
-+{
-+	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	ret = pcim_enable_device(pdev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to enable device\n");
-+
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to set DMA masks\n");
-+
-+	sdxi->ctrl_regs = pcim_iomap_region(pdev, SDXI_PCI_BAR_CTL_REGS,
-+					    KBUILD_MODNAME);
-+	if (IS_ERR(sdxi->ctrl_regs)) {
-+		return dev_err_probe(dev, PTR_ERR(sdxi->ctrl_regs),
-+				     "failed to map control registers\n");
-+	}
-+
-+	sdxi->dbs = pcim_iomap_region(pdev, SDXI_PCI_BAR_DOORBELL,
-+				      KBUILD_MODNAME);
-+	if (IS_ERR(sdxi->dbs)) {
-+		return dev_err_probe(dev, PTR_ERR(sdxi->dbs),
-+				     "failed to map doorbell region\n");
-+	}
-+
-+	pci_set_master(pdev);
-+	return 0;
-+}
-+
-+static const struct sdxi_bus_ops sdxi_pci_ops = {
-+	.init = sdxi_pci_init,
-+};
-+
-+static int sdxi_pci_probe(struct pci_dev *pdev,
-+			  const struct pci_device_id *id)
-+{
-+	return sdxi_register(&pdev->dev, &sdxi_pci_ops);
-+}
-+
-+static const struct pci_device_id sdxi_id_table[] = {
-+	{ PCI_DEVICE_CLASS(PCI_CLASS_ACCELERATOR_SDXI, 0xffffff) },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(pci, sdxi_id_table);
-+
-+static struct pci_driver sdxi_driver = {
-+	.name = "sdxi",
-+	.id_table = sdxi_id_table,
-+	.probe = sdxi_pci_probe,
-+	.sriov_configure = pci_sriov_configure_simple,
-+};
-+
-+MODULE_AUTHOR("Wei Huang");
-+MODULE_AUTHOR("Nathan Lynch");
-+MODULE_DESCRIPTION(SDXI_DRV_DESC);
-+MODULE_LICENSE("GPL");
-+module_pci_driver(sdxi_driver);
-diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
-new file mode 100644
-index 000000000000..9430f3b8d0b3
---- /dev/null
-+++ b/drivers/dma/sdxi/sdxi.h
-@@ -0,0 +1,45 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * SDXI device driver header
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+
-+#ifndef DMA_SDXI_H
-+#define DMA_SDXI_H
-+
-+#include <linux/compiler_types.h>
-+#include <linux/types.h>
-+
-+#define SDXI_DRV_DESC		"SDXI driver"
-+
-+struct sdxi_dev;
-+
-+/**
-+ * struct sdxi_bus_ops - Bus-specific methods for SDXI devices.
-+ */
-+struct sdxi_bus_ops {
-+	/**
-+	 * @init: Map control registers and doorbell region, allocate
-+	 *        IRQ ranges. Invoked before bus-agnostic SDXI
-+	 *        function initialization.
-+	 */
-+	int (*init)(struct sdxi_dev *sdxi);
-+};
-+
-+struct sdxi_dev {
-+	struct device *dev;
-+	void __iomem *ctrl_regs;	/* virt addr of ctrl registers */
-+	void __iomem *dbs;		/* virt addr of doorbells */
-+
-+	const struct sdxi_bus_ops *bus_ops;
-+};
-+
-+static inline struct device *sdxi_to_dev(const struct sdxi_dev *sdxi)
-+{
-+	return sdxi->dev;
-+}
-+
-+int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
-+
-+#endif /* DMA_SDXI_H */
+Non-changes in v1:
+- Mario suggested that pci_clear_master() is needed in
+  sdxi_pci_init()'s error path and in sdxi_pci_exit() (now
+  sdxi_pci_remove()). However, sdxi uses pcim_enable_device(), which
+  appears to ensure that master is cleared for the device. Happy to
+  revisit this if I'm mistaken.
 
--- 
-2.53.0
+- Link to RFC: https://lore.kernel.org/r/20250905-sdxi-base-v1-0-d0341a1292ba@amd.com
+
+---
+Nathan Lynch (23):
+      PCI: Add SNIA SDXI accelerator sub-class
+      MAINTAINERS: Add entry for SDXI driver
+      dmaengine: sdxi: Add PCI initialization
+      dmaengine: sdxi: Feature discovery and initial configuration
+      dmaengine: sdxi: Configure context tables
+      dmaengine: sdxi: Allocate DMA pools
+      dmaengine: sdxi: Allocate administrative context
+      dmaengine: sdxi: Install administrative context
+      dmaengine: sdxi: Start functions on probe, stop on remove
+      dmaengine: sdxi: Complete administrative context jump start
+      dmaengine: sdxi: Add client context alloc and release APIs
+      dmaengine: sdxi: Add descriptor ring management
+      dmaengine: sdxi: Add unit tests for descriptor ring reservations
+      dmaengine: sdxi: Attach descriptor ring state to contexts
+      dmaengine: sdxi: Per-context access key (AKey) table entry allocator
+      dmaengine: sdxi: Generic descriptor manipulation helpers
+      dmaengine: sdxi: Add completion status block API
+      dmaengine: sdxi: Encode context start, stop, and sync descriptors
+      dmaengine: sdxi: Provide context start and stop APIs
+      dmaengine: sdxi: Encode nop, copy, and interrupt descriptors
+      dmaengine: sdxi: Add unit tests for descriptor encoding
+      dmaengine: sdxi: MSI/MSI-X vector allocation and mapping
+      dmaengine: sdxi: Add DMA engine provider
+
+ MAINTAINERS                         |   7 +
+ drivers/dma/Kconfig                 |   2 +
+ drivers/dma/Makefile                |   1 +
+ drivers/dma/sdxi/.kunitconfig       |   4 +
+ drivers/dma/sdxi/Kconfig            |  18 ++
+ drivers/dma/sdxi/Makefile           |  16 ++
+ drivers/dma/sdxi/completion.c       |  79 ++++++
+ drivers/dma/sdxi/completion.h       |  24 ++
+ drivers/dma/sdxi/context.c          | 504 ++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/context.h          | 105 ++++++++
+ drivers/dma/sdxi/descriptor.c       | 198 ++++++++++++++
+ drivers/dma/sdxi/descriptor.h       | 135 ++++++++++
+ drivers/dma/sdxi/descriptor_kunit.c | 484 ++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/device.c           | 333 ++++++++++++++++++++++++
+ drivers/dma/sdxi/dma.c              | 497 +++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/dma.h              |  12 +
+ drivers/dma/sdxi/hw.h               | 254 ++++++++++++++++++
+ drivers/dma/sdxi/mmio.h             |  57 ++++
+ drivers/dma/sdxi/pci.c              | 120 +++++++++
+ drivers/dma/sdxi/ring.c             | 158 +++++++++++
+ drivers/dma/sdxi/ring.h             |  84 ++++++
+ drivers/dma/sdxi/ring_kunit.c       | 105 ++++++++
+ drivers/dma/sdxi/sdxi.h             | 149 +++++++++++
+ include/linux/pci_ids.h             |   1 +
+ 24 files changed, 3347 insertions(+)
+---
+base-commit: c03d8b5462bcb0022f9477d09eb37dae66c3a769
+change-id: 20250813-sdxi-base-73d7c9fdce57
+
+Best regards,
+--  
+Nathan Lynch <nathan.lynch@amd.com>
 
 
