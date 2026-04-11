@@ -1,65 +1,65 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C3E2CCC5
-	for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 12:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC088E573
+	for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 12:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775910860; cv=none; b=sXpvFVm4/+lo0GKuLTeaRXZavUiHIUj7ICLrIRf4NnFnEq0y+ZnMF0/De9yNmG5vY0bL6vA2N+twdre4pCMJDH0SSAMej4qzXQAlqaebcuuT+AZHuASdJaCG365BUA+awsZS5rwToT7myS2iiICWMXsZg+/mtSZyEvF82yVbqsk=
+	t=1775911126; cv=none; b=f57LRpS3+d/8bs/iN2rr5SVK6B2UjE+TCd13jlJijhHsPTAB2UeFrdY5OqFMsrQWM+GFbcciHt9J78m+tdZ1Lpv5ZdmSQlm9Yb6d4ulfMJFTOHRdI5pHOSQKuRUw9GixN8SSnS4BZ6JbmuogqIN3/ES78F129ZzM6GJuBc85NAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775910860; c=relaxed/simple;
-	bh=X2t+yaYaZsutfPKPYxoJOyLmkjJDQRmkMhOU64B+e08=;
+	s=arc-20240116; t=1775911126; c=relaxed/simple;
+	bh=i+pQwJ5xqs5M5ypuPeuIDBf+kIH1BYcd/Hw6yFSK5Y4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L1Y/aWsIgqkGW2ZbOKdoe5nLzPnMrczUNljjyoTE6Ncp067zztf+38dHyO02wJ+miDyuXr0UCxg6zR9W/dhSJymSJKOWa+mPtmI3cxZFijq8BeIjjvnlqncUxK6i9q8TZ47PDkJJ/HrSu9wde3csFLADdgocyThKF5jOtyGWAwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=rOhNADDy; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:Content-Type; b=lj4Df8HBTctfPvRUAqXPIFnf88hTccLmGqYML0nLBedhcIcIZ+7bkFchjYw92JGbl12vDbXK1CpL4Ge7W4k+RZdiqRQo5GfSPmXXsg1tPnMHH09l9d2pG6AlSkFqheTEUcIG3eFHMCwkbMOMOdhSupH7IN1jCcv0B/xomGDaJlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=JXWXRQ9M; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="rOhNADDy"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43ba1f3fa7eso2990401f8f.2
-        for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 05:34:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="JXWXRQ9M"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so46114685e9.2
+        for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 05:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1775910857; x=1776515657; darn=vger.kernel.org;
+        d=tuxon.dev; s=google; t=1775911123; x=1776515923; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TOxwujemq0kL/KQS4PJuYHJAL6Vzf+e3T0xcOOritGk=;
-        b=rOhNADDytYjBJ0HRjp4nibc9ez03YXhjeGHbXTlXTjyjRtJNLbvlk3GFbK4i8b5ts7
-         A1GlMblsSiWBVqIeO+Un65Xi6Jbb2NKQyGus/4Ou9ojVosrh6wJ4F7s77Ivd100Zpgw2
-         zxDt6/RSl1WWduVoAPBFd+Qi6rufr+FC5WrRyKUCpl//mIX3fcKya2aj+/10l7yEmTgC
-         2Pbhl8BT4z04vS3tQIrssLu58FawoX4hSrhQZBpNM1GWEkBoJGPRSY4yoeMSqDimDDpg
-         6rwk2uCn8K0PiSEd/EsMhO7RYRt/LlHAmEdBmoA261VAbOScc5UPXrKpNpIuIQkFZNgH
-         Vecw==
+        bh=yE4wcQKN4kem8Y2lVQo69XargwGADU8xbkrwOp7CO4Q=;
+        b=JXWXRQ9M2/axU6NnP+lUcv/slzgAO7h/a0tIXB7PJf/pF3gTjZbqsIIeBBs9jc0Ott
+         c2HxSV4MK45SP6oCq+v02lafQqymg7FkwEonofQehsKvAtO+H6UAySuzVAr3yM93l2fd
+         z/c9mRHU3w5SlqGElauFuaUoeU9IfNeUWphZ+eGbCt2cBQrPVWAMivYdN+70akthpAwt
+         JolBcG/7cUnlOu8uP9UKQbiXYPX4Vgfikf862toV84F3PLotgL3KrAqr69STh8uTVDna
+         rHrN0GYcYzgbOetFYTKVKY5G0ljgU2otfYZqF4wUmLhxHaSz0hZYDMsKDlcz8HZhfYbL
+         7rlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775910857; x=1776515657;
+        d=1e100.net; s=20251104; t=1775911123; x=1776515923;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TOxwujemq0kL/KQS4PJuYHJAL6Vzf+e3T0xcOOritGk=;
-        b=g7ZFYtvOUqU0ipy6ve/ZbzBdyecpgPb4b8jWYsoaOVnTbMgUi7/DXble1+pHdmSjkm
-         U0a/ohSGxOJagaMWMLTlx0NGB1HGRzX9PAeMNqXh5opkentsMRGbpipjo4bA1wgbDFfd
-         tSmqOhqJ79bXPg+KVABVm8frnI2H/suumDl/xxvz+vTdS8J7E7zL/2juFcTf3SD+OBdB
-         kAImzv524nVJMV69EclwDvzQVcqPtlLD8ZidJKkSCh8FQ6XaNHh6D8ONO/a+qF1pTikI
-         Gw/LpLuJFtR7qbuBt6/Ovpi4xWkQ1gYv2kcU6Nln0JrLMMwwVosAemzLLNss5y46I0ox
-         LdQw==
-X-Gm-Message-State: AOJu0YxOvXrF7igPGah7L4UGdRLfsu6mAgEf3pxPPnPDLZzSioimqoEc
-	ivm7hXx30WGuDoRzkabp5V2PK0+pLh7oWElrWzMVGgY4yGS7UGQujRMK713lm0prqz0=
-X-Gm-Gg: AeBDieu8RYBuiwb4uvheekREdRL3Gon3B3vWMTdNiOgV2dOVwGa0qrEylCIDxIAcQRt
-	KQivFgRl9jgQjZtlrBHGzoKul02AIhBbiaci/KdvixzPCegODRvlKlbCgYQik284NtJXjhWNfCp
-	u1edAoM2KP+HDX/3VhuuKLtSdfrZcU/TrXXnCIRgQPlelMPQjshImkzHqhKOm7jcAOf0jAEBAaN
-	ArZk68fWEfP1PIsrBZM+qz+Qmt+4J/6LCb9nBt2zROhZWlWpp1+OfXwlq7xvEAoTDzzmMikqyV1
-	0SvKEwc1WmoEvVTIML6GqjRbNYqiOe9qEQHiuUp9x/k7mQ/MmTg/F1lxFiP1I+Y0kJjFt2SIV3+
-	UZcEd8XoQIGrzJU1IFPSu3g67hwk4fjMmiYWu4A56jlRgCmmCgbJ5U1DNY1r50XdMUgNETZwpB8
-	O74zv704+YdKOhuyJhbPyODUXhKMPvTG8=
-X-Received: by 2002:a05:6000:40c8:b0:439:be67:a038 with SMTP id ffacd0b85a97d-43d642d47f7mr9826259f8f.41.1775910856868;
-        Sat, 11 Apr 2026 05:34:16 -0700 (PDT)
+        bh=yE4wcQKN4kem8Y2lVQo69XargwGADU8xbkrwOp7CO4Q=;
+        b=X6RUIf48omkQheaWbfD7q/0f+PbVu+ytvDaSxWfI/N/rSHcJvTYVH/Bmk9kAnPtOam
+         QqJM/oMliM9CmDG59G/KapNlYIjE0qX1HUTlIFd57enJfmZRe588fKFsameErjeO10I5
+         0QpkUwgx4AhnTSdk1cyOl1Wl2H3DnL2Kqi1xsI6DR6erHjTqt8TZIqnthFbXC+RaxHOL
+         G0B34Msm+QqcYmTogLZSFVUbvWPGR3HLa9pL8ichVl5FTN/u0TI3PJ+ft8pe9U8cDpVR
+         JLIL9nFvpMEDllP1wdQ0jvSShRGhquzW+KYj2P60QfPUT+/3vbEdGwlZaB6enbUdlAP7
+         ReQA==
+X-Gm-Message-State: AOJu0Yyn8m1Zky0h5ErrK9hXzKPzfvpK0mFWDhhCBO6/ykIGXl/1VFH/
+	3MvQMzcjh57qCmJmcVVpO+u6KGMVcgaIi5zK8RqBZ/lnqYHYxa00e7mEFIjtAOdArF8=
+X-Gm-Gg: AeBDietYBpgooMUGA1kmV6NU1vDzUlsRjudQmEXU3cpbellV97p9usjsr/El86asxXk
+	6ek8LVg6pCZ/r53rPwMK4BgAlpyOqllei/YSOBu5Jl0p2NoLegx/2Up8GcFbcA3vzxsbYLnu2De
+	dZqJbohmuQiYgWmLOFUuE+IYBbhTtCQHMMhjRy5Db6SgAo34lUVmoUu107FSzWdPOWfNJbBQUJe
+	g1qxokgq+4DFSkmFJXCKOh2DGwrn00OtK0kRnf8JNEibZAzqJYmV+mfZdiBcISZdxiiyJzkfqwm
+	w6T2Gd1CR2yYHRtcxHR7aWh6fa+fT/ZW+BPp78wzK698VRiC0cqgFF5pSRUB9RvNIXKzo1DwkcO
+	NizJx0qHempyvXcQ7D6K/HhJ/mtv0VdG3ml4AWfl1wL4idzkT8P4LASMFDwVCGJqx+zk/KksY/9
+	ZB7uvvGwqMazUees+XONKE+TNlNSLEfVJclwXn7ah9Fw==
+X-Received: by 2002:a05:600c:a109:b0:488:b187:3c with SMTP id 5b1f17b1804b1-488d68431ebmr66421005e9.14.1775911123257;
+        Sat, 11 Apr 2026 05:38:43 -0700 (PDT)
 Received: from [192.168.50.4] ([82.78.167.248])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e5ccdasm16450654f8f.34.2026.04.11.05.34.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d5df2062sm47369605e9.12.2026.04.11.05.38.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Apr 2026 05:34:16 -0700 (PDT)
-Message-ID: <1932cc15-0ced-4e0a-8034-98ee78f370a2@tuxon.dev>
-Date: Sat, 11 Apr 2026 15:34:14 +0300
+        Sat, 11 Apr 2026 05:38:42 -0700 (PDT)
+Message-ID: <f3577fe6-efc6-4acf-956b-93be6d498238@tuxon.dev>
+Date: Sat, 11 Apr 2026 15:38:41 +0300
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -67,8 +67,8 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/17] dmaengine: sh: rz-dmac: Move interrupt request
- after everything is set up
+Subject: Re: [PATCH v4 07/17] dmaengine: sh: rz-dmac: Save the start LM
+ descriptor
 To: Biju Das <biju.das.jz@bp.renesas.com>, "vkoul@kernel.org"
  <vkoul@kernel.org>, "Frank.Li@kernel.org" <Frank.Li@kernel.org>,
  "lgirdwood@gmail.com" <lgirdwood@gmail.com>,
@@ -83,151 +83,86 @@ Cc: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
  "linux-sound@vger.kernel.org" <linux-sound@vger.kernel.org>,
  "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
- Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- "stable@vger.kernel.org" <stable@vger.kernel.org>
+ Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 References: <20260411114303.2814115-1-claudiu.beznea.uj@bp.renesas.com>
- <20260411114303.2814115-2-claudiu.beznea.uj@bp.renesas.com>
- <TY3PR01MB11346F56B1A311E46053EDB3486262@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+ <20260411114303.2814115-8-claudiu.beznea.uj@bp.renesas.com>
+ <TY3PR01MB11346602C7FD8ACAB74BB568486262@TY3PR01MB11346.jpnprd01.prod.outlook.com>
 Content-Language: en-US
 From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-In-Reply-To: <TY3PR01MB11346F56B1A311E46053EDB3486262@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+In-Reply-To: <TY3PR01MB11346602C7FD8ACAB74BB568486262@TY3PR01MB11346.jpnprd01.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 4/11/26 15:17, Biju Das wrote:
+On 4/11/26 15:34, Biju Das wrote:
+> Hi Claudiu,
 > 
 >> -----Original Message-----
->> From: Claudiu<claudiu.beznea@tuxon.dev>
+>> From: Claudiu <claudiu.beznea@tuxon.dev>
 >> Sent: 11 April 2026 12:43
->> Subject: [PATCH v4 01/17] dmaengine: sh: rz-dmac: Move interrupt request after everything is set up
+>> Subject: [PATCH v4 07/17] dmaengine: sh: rz-dmac: Save the start LM descriptor
 >>
->> From: Claudiu Beznea<claudiu.beznea.uj@bp.renesas.com>
+>> From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 >>
->> Once the interrupt is requested, the interrupt handler may run immediately.
->> Since the IRQ handler can access channel->ch_base, which is initialized only after requesting the IRQ,
->> this may lead to invalid memory access.
->> Likewise, the IRQ thread may access uninitialized data (the ld_free, ld_queue, and ld_active lists),
->> which may also lead to issues.
+>> Save the start LM descriptor to avoid looping through the entire channel's LM descriptor list when
+>> computing the residue. This avoids unnecessary iterations.
 >>
->> Request the interrupts only after everything is set up. To keep the error path simpler, use
->> dmam_alloc_coherent() instead of dma_alloc_coherent().
->>
->> Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
->> Cc:stable@vger.kernel.org
->> Signed-off-by: Claudiu Beznea<claudiu.beznea.uj@bp.renesas.com>
+>> Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 >> ---
 >>
 >> Changes in v4:
+>> - none
+>>
+>> Changes in v3:
 >> - none, this patch is new
 >>
->>   drivers/dma/sh/rz-dmac.c | 88 +++++++++++++++-------------------------
->>   1 file changed, 33 insertions(+), 55 deletions(-)
+>>   drivers/dma/sh/rz-dmac.c | 11 ++++++++---
+>>   1 file changed, 8 insertions(+), 3 deletions(-)
 >>
->> diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c index 625ff29024de..9f206a33dcc6
+>> diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c index 6bea7c8c7053..0f871c0a28bd
 >> 100644
 >> --- a/drivers/dma/sh/rz-dmac.c
 >> +++ b/drivers/dma/sh/rz-dmac.c
->> @@ -981,25 +981,6 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
->>   	channel->index = index;
->>   	channel->mid_rid = -EINVAL;
+>> @@ -58,6 +58,7 @@ struct rz_dmac_desc {
+>>   	/* For slave sg */
+>>   	struct scatterlist *sg;
+>>   	unsigned int sgcount;
+>> +	struct rz_lmdesc *start_lmdesc;
+>>   };
 >>
->> -	/* Request the channel interrupt. */
->> -	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
->> -	irq = platform_get_irq_byname(pdev, pdev_irqname);
->> -	if (irq < 0)
->> -		return irq;
->> -
->> -	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
->> -				 dev_name(dmac->dev), index);
->> -	if (!irqname)
->> -		return -ENOMEM;
->> -
->> -	ret = devm_request_threaded_irq(dmac->dev, irq, rz_dmac_irq_handler,
->> -					rz_dmac_irq_handler_thread, 0,
->> -					irqname, channel);
->> -	if (ret) {
->> -		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n", irq, ret);
->> -		return ret;
->> -	}
->> -
->>   	/* Set io base address for each channel */
->>   	if (index < 8) {
->>   		channel->ch_base = dmac->base + CHANNEL_0_7_OFFSET + @@ -1012,9 +993,9 @@ static int
->> rz_dmac_chan_probe(struct rz_dmac *dmac,
+>>   #define to_rz_dmac_desc(d)	container_of(d, struct rz_dmac_desc, vd)
+>> @@ -343,6 +344,8 @@ static void rz_dmac_prepare_desc_for_memcpy(struct rz_dmac_chan *channel)
+>>   	struct rz_dmac_desc *d = channel->desc;
+>>   	u32 chcfg = CHCFG_MEM_COPY;
+>>
+>> +	d->start_lmdesc = lmdesc;
+>> +
+>>   	/* prepare descriptor */
+>>   	lmdesc->sa = d->src;
+>>   	lmdesc->da = d->dest;
+>> @@ -377,6 +380,7 @@ static void rz_dmac_prepare_descs_for_slave_sg(struct rz_dmac_chan *channel)
 >>   	}
 >>
->>   	/* Allocate descriptors */
->> -	lmdesc = dma_alloc_coherent(&pdev->dev,
->> -				    sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
->> -				    &channel->lmdesc.base_dma, GFP_KERNEL);
->> +	lmdesc = dmam_alloc_coherent(&pdev->dev,
->> +				     sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
->> +				     &channel->lmdesc.base_dma, GFP_KERNEL);
->>   	if (!lmdesc) {
->>   		dev_err(&pdev->dev, "Can't allocate memory (lmdesc)\n");
->>   		return -ENOMEM;
->> @@ -1030,7 +1011,24 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
->>   	INIT_LIST_HEAD(&channel->ld_free);
->>   	INIT_LIST_HEAD(&channel->ld_active);
+>>   	lmdesc = channel->lmdesc.tail;
+>> +	d->start_lmdesc = lmdesc;
 >>
->> -	return 0;
->> +	/* Request the channel interrupt. */
->> +	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
->> +	irq = platform_get_irq_byname(pdev, pdev_irqname);
->> +	if (irq < 0)
->> +		return irq;
->> +
->> +	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
->> +				 dev_name(dmac->dev), index);
->> +	if (!irqname)
->> +		return -ENOMEM;
->> +
->> +	ret = devm_request_threaded_irq(dmac->dev, irq, rz_dmac_irq_handler,
->> +					rz_dmac_irq_handler_thread, 0,
->> +					irqname, channel);
->> +	if (ret)
->> +		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n", irq, ret);
-> As per [1], it is redundant.
+>>   	for (i = 0, sg = sgl; i < sg_len; i++, sg = sg_next(sg)) {
+>>   		if (d->direction == DMA_DEV_TO_MEM) { @@ -693,9 +697,10 @@ rz_dmac_get_next_lmdesc(struct
+>> rz_lmdesc *base, struct rz_lmdesc *lmdesc)
+>>   	return next;
+>>   }
+>>
+>> -static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel, u32 crla)
+>> +static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
+>> +						 struct rz_dmac_desc *desc, u32 crla)
 > 
-> [1]
-> https://elixir.bootlin.com/linux/v7.0-rc7/source/kernel/irq/devres.c#L108
+> U32 normally used with register read/writes hardware related.
+> 
+> Here it is just computation which returns number of bytes. Unsigned int will be
+> appropriate instead of u32.
 
-This is a fix patch, it just moves code around, intended to be backported to 
-older kernels (e.g. v6.1, v6.12). However devm_request_result() is introduced in:
-
-commit 55b48e23f5c4
-Author: Pan Chuang <panchuang@vivo.com>
-Date:   Tue Aug 5 17:29:22 2025 +0800
-
-     genirq/devres: Add error handling in devm_request_*_irq()
-
-     devm_request_threaded_irq() and devm_request_any_context_irq() currently
-     don't print any error message when interrupt registration fails.
-
-     This forces each driver to implement redundant error logging - over 2,000
-     lines of error messages exist across drivers. Additionally, when
-     upper-layer functions propagate these errors without logging, critical
-     debugging information is lost.
-
-     Add devm_request_result() helper to unify error reporting via dev_err_probe(),
-
-     Use it in devm_request_threaded_irq() and devm_request_any_context_irq()
-     printing device name, IRQ number, handler functions, and error code on failure
-     automatically.
-
-     Co-developed-by: Yangtao Li <frank.li@vivo.com>
-     Signed-off-by: Yangtao Li <frank.li@vivo.com>
-     Signed-off-by: Pan Chuang <panchuang@vivo.com>
-     Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-     Link: https://lore.kernel.org/all/20250805092922.135500-2-panchuang@vivo.com
-
-And it is not present in v6.1, v6.12 kernels.
-
-To have a clean backport (at least to the above mentioned kernel versions), 
-would be better to have the alignment to devm_request_result() done in a later 
-cleanup patch.
+Please check the type of residue as defined by dma_set_residue().
 
 Thank you,
 Claudiu
