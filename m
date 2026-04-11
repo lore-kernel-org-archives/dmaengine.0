@@ -1,293 +1,189 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AE93BF67A;
-	Fri, 10 Apr 2026 13:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13ACE1E633C
+	for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 11:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775826471; cv=none; b=uUHJA2KVKc+v+NHDWIisiLlOYWcO0EBByBoGABgfI7Th6wR786goK06AUJ7FxvxLu9scY264p6Xa5J7dh1dil+0UER80e0t2PcIBraAZzR4Yxy0uWVepVVjur2tDtwyrp0lEsKtIF7GHLXCXKyF/SECmEvr0uiKSyPO3Dy+BFik=
+	t=1775907793; cv=none; b=YgmSQ+rh1reT+VTUiXPwC3spHlRTopC1iHk+YWuroVHYe+d/2u+KNI7gOv7HiHaPC0zyUcJXxHyhYGITGeYND/cJS5wJm7RqOzEDMhPD+RsNVCpxxJts/iiwjcUhwwlxfFVw4rxtdjO85/WKqOPZjBnjS856yiwcIEwX394ZxOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775826471; c=relaxed/simple;
-	bh=G2huuPtM8dkZc7ys3YvCtddLjlcJRsje8S+Ue6LmqbM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=htgw1IC2PYxvY1lphIMjmqgl38lgf0Py7EFktpC+WlMDi1rAiifyC+9tikXR0AEYwHR5tkLknff1+LL/XnZerOhCuL00wX/jCbMGCCHMThrqWlc43smwipFJX8fmpwQGHBBCfKSkRwEDSQgshXX3s71DnTOIQ6DN6vwYX0Ne5YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kBtF9eLu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775907793; c=relaxed/simple;
+	bh=cKFhAtkhgAfTA+QAOjsxsnhy2l5B7v8pbAd2rbghqwI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LyJ6GZ6+zvkxh9N5k9f1slRV+biM76Yfrf/giq78MP4fj8R1ZkJ4ZUX1u/yIEC5Nxi3ApYBF5gSOdRhcq+8ZDAwFdLk8HCAQcMrMdOhNcrlUkxfPAZtED5Pz5EZXVU/oGEGBi0QkJk8e2nmo50oOOjczKUaGCjXdE9BhMtESZx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=JWWGFkez; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kBtF9eLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F0465C2BCAF;
-	Fri, 10 Apr 2026 13:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775826471;
-	bh=G2huuPtM8dkZc7ys3YvCtddLjlcJRsje8S+Ue6LmqbM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=kBtF9eLuCD+pBYJqjlEY3TzIftzPCZffmAqfpSKPWMt1Vc/DwAL7IHKct4/a85WJD
-	 0OAkdWGglJuYnopM2lDK0txfXejmx9KhgOqH6F3G1UBO+wnnxfQP4qzwoPmPYZJDLr
-	 GZVKjbxce6ctMb+HgXAAX0UJSQfYW2aCOtACyyoGH8MMkvXBop76KiZDO1tbtN/bRn
-	 jRyWsM60zlN31RUVsMtYSA7iSzdoGS6FrZZsKwYcZTYauVeSL2uFBqqxqIepyxdhLj
-	 IP4usiJzH4Oh+1D3RyXXV3M6xOPxGwun5IlPRWn4dH1fAZ40Nn083TCJt/d5LNVbH9
-	 6mq6g6jCVh6WA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9B42F44860;
-	Fri, 10 Apr 2026 13:07:50 +0000 (UTC)
-From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Fri, 10 Apr 2026 08:07:32 -0500
-Subject: [PATCH 22/23] dmaengine: sdxi: MSI/MSI-X vector allocation and
- mapping
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="JWWGFkez"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43cf8fe9c2aso1894801f8f.2
+        for <dmaengine@vger.kernel.org>; Sat, 11 Apr 2026 04:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tuxon.dev; s=google; t=1775907788; x=1776512588; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=q1eTBRD7MumKinxlgMqLdQk94b4xlHoIm/BiwJmzTkc=;
+        b=JWWGFkezFo1yDEDecIrZLJjGK42Vf6H9fJniOzTftW34XHdA/KSdoKkGZvuElKv+MK
+         Z19IEKV0IhAz2eXIQgf6cGCKVsS0oOiXeiP6g0N4f0cFTvzm9Hkjv4ZPhV+fRLwJJRKR
+         zB4ZQKF0KB3npU+CZIH4inalpg6wwo2QjR9N1ooDJQAGhbOnqBIt/VTKPQhxfuszUrK5
+         rhnXJrhiXOfxtQ6bo1DJ+BRJPid72SP49oiZJYa2T+bHKmkx7sVULLPjCYrIOD7W1/GO
+         /oG1IhGQ6c2yX5bW3YUCJ6XvhVFkUkMjO9yuWxAo/ic37ZB/++rRM0J7kTwlejMxpJxn
+         hPAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775907788; x=1776512588;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q1eTBRD7MumKinxlgMqLdQk94b4xlHoIm/BiwJmzTkc=;
+        b=Bk/ltnabDpInu83/f7O3p6L0q5xTbW1bAGBa+GNujBTE5UxGf1Z6FPZJSWjBQF8WU5
+         GDZppmzPtCO3f8Z1X/+t6X3rlPslFfHLMB8K76MM/egF+ss/Wew+ZuT/f/l4U9dvI6ea
+         rebw5+nyTo1D1Mp4S2qXh7DIu9ZeucdJ4a67S4p79fYu8dpU9xbj+2j/HOR5JWg1qnGu
+         npSDc6TKGVVEg5Qc2QB5IXp8e/LUrjtp2VHEh7SlKXl6fg918YsDyGHWpxD5tJlUk3h9
+         IuZ0Y4yYGQKA5wSV/3ACoYph6Dk/nAkbj9QH6kiIcI/7Gp41MSiRRF31UXstKGG4dtHw
+         C0KQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUv0XJRI3NMUq34WjvX3d3PXOfOYLID7Jf7aq54+9HMBIOY/yjpvP43mk1L6pmozuXwYt1qkSpIlco=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFfb4sKcx/RMYTq09PXYwCXajxBDa4IF0gsw2Ga/hvMnRTBA8v
+	Q7qw/yGT7eDKyvOagIwPt+Y8FuCQjSYDAlPnUBnyrhobkYUOhWE9UJ3Wrk3ZnaW76q4=
+X-Gm-Gg: AeBDieuQgSxUXFtgopZk5EL6UnpqQ0CResWM9tluzpQI4VhEmuemca9Erkf/ailpLaC
+	aDGDgvYvnJnuIR06WqL6V4CFlIjKg5oxTQV5si3fMXXmdnxmHozVnnlWYNwPMlrQCn9ImEVf3hm
+	ojWOusseeY2+FdA8gfSrOKS7JeI7lhZoyumT2tyby/Um1xqDnKUmAkoIzzCF1aMpRFTO4GlbzpM
+	ZU3/kFyZGYeUg9S/Q6pkxcZt0H1zmPvE0KWw/ovMnRJBKH/ngPRxSaGeG2yaWByQfsZonZH7oAu
+	K2ko4MlDk4UTN088109yJTsazpXCyUzA7RwQWMwYAonLHmGL3GKufKJgtPbjuVPh2zM0Ly6keg9
+	zLqEtBivNVpfT9KJ8Ss4g4aCdu/xSV2bBeev7pVh3TzRqWB5r3+sLS7mmpUD6/etZ8/7JYLfygn
+	2gmiHNHZSzzgduClibsejRJrC+1KVWYqgNZjtd1gK5NvNzIfxnrMbN
+X-Received: by 2002:a05:6000:3107:b0:43b:3e34:7fe with SMTP id ffacd0b85a97d-43d64289402mr9860136f8f.21.1775907788294;
+        Sat, 11 Apr 2026 04:43:08 -0700 (PDT)
+Received: from claudiu-X670E-Pro-RS.. ([82.78.167.248])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d63e5c981sm15776447f8f.33.2026.04.11.04.43.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Apr 2026 04:43:07 -0700 (PDT)
+From: Claudiu <claudiu.beznea@tuxon.dev>
+X-Google-Original-From: Claudiu <claudiu.beznea.uj@bp.renesas.com>
+To: vkoul@kernel.org,
+	Frank.Li@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	biju.das.jz@bp.renesas.com,
+	prabhakar.mahadev-lad.rj@bp.renesas.com,
+	p.zabel@pengutronix.de,
+	geert+renesas@glider.be,
+	fabrizio.castro.jz@renesas.com,
+	long.luu.ur@renesas.com
+Cc: claudiu.beznea@tuxon.dev,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH v4 00/17] Renesas: dmaengine and ASoC fixes
+Date: Sat, 11 Apr 2026 14:42:46 +0300
+Message-ID: <20260411114303.2814115-1-claudiu.beznea.uj@bp.renesas.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260410-sdxi-base-v1-22-1d184cb5c60a@amd.com>
-References: <20260410-sdxi-base-v1-0-1d184cb5c60a@amd.com>
-In-Reply-To: <20260410-sdxi-base-v1-0-1d184cb5c60a@amd.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Wei Huang <wei.huang2@amd.com>, 
- Mario Limonciello <mario.limonciello@amd.com>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- Stephen Bates <Stephen.Bates@amd.com>, PradeepVineshReddy.Kodamati@amd.com, 
- John.Kariuki@amd.com, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
- Nathan Lynch <nathan.lynch@amd.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775826467; l=6787;
- i=nathan.lynch@amd.com; s=20260410; h=from:subject:message-id;
- bh=+70bvPsXLZ6JtPOvD5LtOSlAhOg3eN58vo6yDBNKJ0s=;
- b=gNZi96Bgh+vS0dBam9zeGmkSaV4mScK2225z7j07aiU5mBGt3DVyCo+TfF8XaM2eeVgWVSM+B
- HwfUKkollP0Bl/f+3MeMuQPwo6ZQeFLagjMRwVaEuCSeylMKU7fXm5o
-X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
- pk=PK4ozhq+/z9/2Jl5rgDmvHa9raVomv79qM8p1RAFpEw=
-X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260410 with
- auth_id=728
-X-Original-From: Nathan Lynch <nathan.lynch@amd.com>
-Reply-To: nathan.lynch@amd.com
+Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathan.lynch@amd.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-During PCI probe, allocate a vector per context supported by the
-function as reported by the capability register, plus one for the
-error log interrupt, which is always vector 0. The rest of the vector
-range is available for use with interrupt-generating descriptors.
+Hi,
 
-Introduce sdxi_alloc_vector() and sdxi_free_vector() which are thin
-wrappers around the IDA that tracks the allocated vector range.
+This series addresses issues identified in the DMA engine and RZ SSI
+drivers.
 
-Introduce sdxi_vector_to_irq() which invokes a new get_irq() bus op to
-translate the device-relative index to the Linux IRQ number for use
-with request_irq() etc. For PCI this dispatches to pci_irq_vector().
+As described in the patch "dmaengine: sh: rz-dmac: Set the Link End (LE)
+bit on the last descriptor", stress testing on the Renesas RZ/G2L SoC
+showed that starting all available DMA channels could cause the system
+to stall after several hours of operation. This issue was resolved by
+setting the Link End bit on the last descriptor of a DMA transfer.
 
-Code such as the DMA engine provider that intends to submit interrupt
-descriptors should prepare by using sdxi_alloc_vector() and
-sdxi_vector_to_irq(), and clean up by using sdxi_free_vector().
+However, after applying that fix, the SSI audio driver began to suffer
+from frequent overruns and underruns. This was caused by the way the SSI
+driver emulated cyclic DMA transfers: at the start of playback/capture
+it initially enqueued 4 DMA descriptors as single SG transfers, and upon
+completion of each descriptor, a new one was enqueued. Since there was
+no indication to the DMA hardware where the descriptor list ended
+(though the LE bit), the DMA engine continued transferring until the
+audio stream was stopped. From time to time, audio signal spikes were
+observed in the recorded file with this approach.
 
-Co-developed-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
----
- drivers/dma/sdxi/device.c |  4 ++++
- drivers/dma/sdxi/pci.c    | 29 +++++++++++++++++++++++-
- drivers/dma/sdxi/sdxi.h   | 57 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 89 insertions(+), 1 deletion(-)
+To address these issue, cyclic DMA support was added to the DMA engine
+driver, and the SSI audio driver was reworked to use this support via
+the generic PCM dmaengine APIs.
 
-diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
-index aaff6b15325a..8b11197c5781 100644
---- a/drivers/dma/sdxi/device.c
-+++ b/drivers/dma/sdxi/device.c
-@@ -10,6 +10,7 @@
- #include <linux/device.h>
- #include <linux/dma-mapping.h>
- #include <linux/dmapool.h>
-+#include <linux/idr.h>
- #include <linux/log2.h>
- #include <linux/slab.h>
- #include <linux/xarray.h>
-@@ -303,6 +304,7 @@ int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
- 
- 	sdxi->dev = dev;
- 	sdxi->bus_ops = ops;
-+	ida_init(&sdxi->vectors);
- 	xa_init_flags(&sdxi->client_cxts, XA_FLAGS_ALLOC1);
- 	dev_set_drvdata(dev, sdxi);
- 
-@@ -323,5 +325,7 @@ void sdxi_unregister(struct device *dev)
- 		sdxi_cxt_exit(cxt);
- 	xa_destroy(&sdxi->client_cxts);
- 
-+	ida_destroy(&sdxi->vectors);
-+
- 	sdxi_dev_stop(sdxi);
- }
-diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
-index 8e4dfde078ff..99430eaa583d 100644
---- a/drivers/dma/sdxi/pci.c
-+++ b/drivers/dma/sdxi/pci.c
-@@ -5,6 +5,7 @@
-  * Copyright Advanced Micro Devices, Inc.
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/dev_printk.h>
- #include <linux/dma-mapping.h>
- #include <linux/err.h>
-@@ -13,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- 
-+#include "mmio.h"
- #include "sdxi.h"
- 
- enum sdxi_mmio_bars {
-@@ -29,7 +31,8 @@ static int sdxi_pci_init(struct sdxi_dev *sdxi)
- {
- 	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
- 	struct device *dev = &pdev->dev;
--	int ret;
-+	unsigned int cap1_max_cxt;
-+	int vecs, ret;
- 
- 	ret = pcim_enable_device(pdev);
- 	if (ret)
-@@ -53,12 +56,36 @@ static int sdxi_pci_init(struct sdxi_dev *sdxi)
- 				     "failed to map doorbell region\n");
- 	}
- 
-+	/*
-+	 * Allocate the minimum required set of vectors plus one for
-+	 * each client context supported by the function.
-+	 */
-+	cap1_max_cxt = FIELD_GET(SDXI_MMIO_CAP1_MAX_CXT,
-+				 sdxi_read64(sdxi, SDXI_MMIO_CAP1));
-+	vecs = pci_alloc_irq_vectors(pdev, SDXI_MIN_VECTORS,
-+				     SDXI_MIN_VECTORS + cap1_max_cxt,
-+				     PCI_IRQ_MSI | PCI_IRQ_MSIX);
-+	if (vecs < 0) {
-+		return dev_err_probe(dev, vecs,
-+				     "failed to allocate MSIs (max_cxt=%u)\n",
-+				     cap1_max_cxt);
-+	}
-+
-+	sdxi->nr_vectors = vecs;
-+	sdxi_dbg(sdxi, "allocated %u vectors\n", sdxi->nr_vectors);
-+
- 	pci_set_master(pdev);
- 	return 0;
- }
- 
-+static int sdxi_pci_get_irq(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	return pci_irq_vector(sdxi_to_pci_dev(sdxi), nr);
-+}
-+
- static const struct sdxi_bus_ops sdxi_pci_ops = {
- 	.init = sdxi_pci_init,
-+	.get_irq = sdxi_pci_get_irq,
- };
- 
- static int sdxi_pci_probe(struct pci_dev *pdev,
-diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
-index da33719735ab..d4e1236a775e 100644
---- a/drivers/dma/sdxi/sdxi.h
-+++ b/drivers/dma/sdxi/sdxi.h
-@@ -8,8 +8,10 @@
- #ifndef DMA_SDXI_H
- #define DMA_SDXI_H
- 
-+#include <linux/bug.h>
- #include <linux/compiler_types.h>
- #include <linux/dev_printk.h>
-+#include <linux/idr.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/types.h>
- #include <linux/xarray.h>
-@@ -27,6 +29,21 @@
- #define L1_CXT_CTRL_PTR_SHIFT		6
- #define L1_CXT_AKEY_PTR_SHIFT		12
- 
-+enum {
-+	/*
-+	 * Per SDXI 1.0 3.4 Error Log, the error log interrupt is
-+	 * always vector 0.
-+	 */
-+	SDXI_ERROR_VECTOR = 0,
-+
-+	/*
-+	 * Request at least one vector to account for the error log
-+	 * interrupt. Increment this if the driver gains more
-+	 * dedicated interrupts (e.g. one for the admin context).
-+	 */
-+	SDXI_MIN_VECTORS = 1,
-+};
-+
- struct sdxi_dev;
- 
- /**
-@@ -39,6 +56,10 @@ struct sdxi_bus_ops {
- 	 *        function initialization.
- 	 */
- 	int (*init)(struct sdxi_dev *sdxi);
-+	/**
-+	 * @get_irq: Map device interrupt index to Linux IRQ number.
-+	 */
-+	int (*get_irq)(struct sdxi_dev *sdxi, unsigned int index);
- };
- 
- struct sdxi_dev {
-@@ -61,6 +82,9 @@ struct sdxi_dev {
- 	struct dma_pool *cxt_ctl_pool;
- 	struct dma_pool *cst_blk_pool;
- 
-+	unsigned int nr_vectors;
-+	struct ida vectors;
-+
- 	struct sdxi_cxt *admin_cxt;
- 	struct xarray client_cxts; /* context id -> (struct sdxi_cxt *) */
- 
-@@ -76,6 +100,39 @@ static inline struct device *sdxi_to_dev(const struct sdxi_dev *sdxi)
- #define sdxi_info(s, fmt, ...) dev_info(sdxi_to_dev(s), fmt, ## __VA_ARGS__)
- #define sdxi_err(s, fmt, ...) dev_err(sdxi_to_dev(s), fmt, ## __VA_ARGS__)
- 
-+/**
-+ * sdxi_alloc_vector() - Allocate an interrupt vector.
-+ *
-+ * A vector that will have the same lifetime as the device does not
-+ * need to be released explicitly. Otherwise the vector must be
-+ * released with sdxi_free_vector().
-+ */
-+static inline int sdxi_alloc_vector(struct sdxi_dev *sdxi)
-+{
-+	return ida_alloc_max(&sdxi->vectors, sdxi->nr_vectors - 1,
-+			     GFP_KERNEL);
-+}
-+
-+/**
-+ * sdxi_free_vector() - Release a previously allocated index.
-+ */
-+static inline void sdxi_free_vector(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	ida_free(&sdxi->vectors, nr);
-+}
-+
-+/**
-+ * sdxi_vector_to_irq() - Translate an allocated interrupt vector to
-+ *                        Linux IRQ number suitable for passing to
-+ *                        request_irq() et al.
-+ */
-+static inline int sdxi_vector_to_irq(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	/* Moan if the index isn't currently allocated. */
-+	WARN_ON_ONCE(!ida_exists(&sdxi->vectors, nr));
-+	return sdxi->bus_ops->get_irq(sdxi, nr);
-+}
-+
- int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
- void sdxi_unregister(struct device *dev);
- 
+Due to the behavior described above, no Fixes tags were added to the
+patches in this series, and all patches should be merged through the
+same tree.
+
+In case this series will be merged this release cycle, best would
+be to go though the DMA tree as the DMA changes are based on the series
+at [1] which was merged on March 17th. Otherwise, any of the ASoC or DMA
+tree should be good.
+
+Thank you,
+Claudiu
+
+Changes in v4:
+- collected tags
+- addressed review comments got from sashiko.dev. For this:
+- added patches:
+-- dmaengine: sh: rz-dmac: Move interrupt request after everything is set up
+-- dmaengine: sh: rz-dmac: Fix incorrect NULL check on list_first_entry()
+
+Changes in v3:
+- addressed review comments got from sashiko.dev. For this:
+- added patches 1-9
+- added patch "ASoC: renesas: rz-ssi: Add pause support"
+- dropped patches:
+-- dmaengine: sh: rz-dmac: Add enable status bit
+-- dmaengine: sh: rz-dmac: Add pause status bit
+
+Changes in v2:
+- fixed typos in patch descriptions and patch titles
+- updated "ASoC: renesas: rz-ssi: Use generic PCM dmaengine APIs"
+  to fix the PIO mode
+- in patch "dmaengine: sh: rz-dmac: Add suspend to RAM support"
+  clear the RZ_DMAC_CHAN_STATUS_SYS_SUSPENDED status bit for
+  channel w/o RZ_DMAC_CHAN_STATUS_PAUSED_INTERNAL
+- per-patch updates can be found in individual patches changelog 
+- rebased on top of next-20260319
+- updated the cover letter
+
+[1] https://lore.kernel.org/all/20260316133252.240348-1-claudiu.beznea.uj@bp.renesas.com/
+
+
+Claudiu Beznea (17):
+  dmaengine: sh: rz-dmac: Move interrupt request after everything is set
+    up
+  dmaengine: sh: rz-dmac: Fix incorrect NULL check on list_first_entry()
+  dmaengine: sh: rz-dmac: Use list_first_entry_or_null()
+  dmaengine: sh: rz-dmac: Use rz_dmac_disable_hw()
+  dmaengine: sh: rz-dmac: Do not disable the channel on error
+  dmaengine: sh: rz-dmac: Add helper to compute the lmdesc address
+  dmaengine: sh: rz-dmac: Save the start LM descriptor
+  dmaengine: sh: rz-dmac: Add helper to check if the channel is enabled
+  dmaengine: sh: rz-dmac: Add helper to check if the channel is paused
+  dmaengine: sh: rz-dmac: Use virt-dma APIs for channel descriptor
+    processing
+  dmaengine: sh: rz-dmac: Refactor pause/resume code
+  dmaengine: sh: rz-dmac: Drop the update of channel->chctrl with
+    CHCTRL_SETEN
+  dmaengine: sh: rz-dmac: Add cyclic DMA support
+  dmaengine: sh: rz-dmac: Add suspend to RAM support
+  ASoC: renesas: rz-ssi: Add pause support
+  ASoC: renesas: rz-ssi: Use generic PCM dmaengine APIs
+  dmaengine: sh: rz-dmac: Set the Link End (LE) bit on the last
+    descriptor
+
+ drivers/dma/sh/rz-dmac.c   | 762 +++++++++++++++++++++++++------------
+ sound/soc/renesas/Kconfig  |   1 +
+ sound/soc/renesas/rz-ssi.c | 388 +++++++------------
+ 3 files changed, 652 insertions(+), 499 deletions(-)
 
 -- 
-2.53.0
-
+2.43.0
 
