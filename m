@@ -1,93 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4219033F5A5;
-	Fri, 24 Apr 2026 17:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A18346760;
+	Fri, 24 Apr 2026 17:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777050235; cv=none; b=aQkH9qSNTyX1UIAcoO9Uw9Mzbl2DKS/+PN/Ko2wwSaDSZAJBUqRoLBqJV+YNGNkSN8Kv1tnFuWUju3Ez4t253dmU7P7cE5W0hueEwLxizPOkmyJM16xrR1DfYQdeTsMUqwZZaoL+PV0asUayqsThCSTtMSA8a6u7b6LumVTVgyc=
+	t=1777052364; cv=none; b=OQT+bW//0Go7+Nl29RvD5qqMNo3uf71phLcvvxCh2026ofW8OIqmKRYp+N9SBav1y0csTKxxwGHYwbDSjYS5D6w66wlZfQQZvovpZ3xuuTTrhDWjIvz2gJrQrDUcvck77FxWRgbPuLQG/unbJ16uzMQOQCzpBFBolr4Uz1TKTcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777050235; c=relaxed/simple;
-	bh=vpzvilq6KjAFWPzsZTe/h1k59Km6tBvjeHIMJU1XgVU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaZT7ekBetI1ZIV6YtHml/fC7DTBlBiIW6oxRr1do3G+houJQj4ZFH+t7d+3as4RSqRjOs0RvciPIyroCJS4wkw5ILepWoOdnFVuleC1+k8Jsdc/3bxaeFedu7rQlN4SENHkl5PgI82IkW4lAK4TF9nW/5CWumMlaQSI5aoCaNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IpugPL49; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1777052364; c=relaxed/simple;
+	bh=cDLJpFn92CqJTxMH9bk80u6JF/HxsNTgQn9D8LmRdGY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ajl9eNRJBxxVbMJTbWoMD/4TDCEIorw2HEOKQeBZ8ND9qLesTQ5mlENt1cKmKXpAAkhmdEX9qNNDgrqAyHjG8MOh8EG3abywUWnvUYG955UABXqn4RJtn5XB8CvN6+xz9URzNGFIVrPjG04RHb/U60QMe1ElOm3cxCNMfI7gDSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQG+t0wZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpugPL49"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBB8C19425;
-	Fri, 24 Apr 2026 17:03:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQG+t0wZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0C73FC2BCB0;
+	Fri, 24 Apr 2026 17:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777050235;
-	bh=vpzvilq6KjAFWPzsZTe/h1k59Km6tBvjeHIMJU1XgVU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IpugPL49eT4rknt5I79qcZe3fYCzBUMSyILi/UbhYrpOpoDXJilS3IwNftdeMohl0
-	 r2v1HMKoXASRE/RWS1+TEW2XtBCaGY5Zddy1REBKsHeDsEzlPyFt4njYIAUJZC7/pI
-	 YlZ08TtSOsv1pN2mhbws/nv6oP28HANjH8LIatOLOnzUBBbmXwr9CLTEQYNDM6izek
-	 Bv0F1uJ3sUqnvIEq8bQVdJ7A88BNJOHIfkGxwge+/M2mPYOJu1+jmUF5X5yz335kIi
-	 cw1ei+fsew6EHR/N/bKn6eD2ISFWlMJkMTYjRjAAVef0+mnZRyiFe+h2gTv2mzCkxJ
-	 7pC5x8SS72STA==
-Date: Fri, 24 Apr 2026 18:03:49 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Guodong Xu <guodong@riscstar.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] dt-bindings: dmaengine: Add SpacemiT K3 DMA
- compatible string
-Message-ID: <20260424-collector-zone-26410e4707a7@spud>
-References: <20260424-k3-pdma-v3-0-efdf2e414a08@linux.spacemit.com>
- <20260424-k3-pdma-v3-1-efdf2e414a08@linux.spacemit.com>
+	s=k20201202; t=1777052364;
+	bh=cDLJpFn92CqJTxMH9bk80u6JF/HxsNTgQn9D8LmRdGY=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=XQG+t0wZoNccYos5sPAvALZBFs3h0mQLyNDpXVSYm1BJh2T89DomHSqq83Hdyha3l
+	 HQeWs0G9GEbU/XozNTI6Tjf4JArn8B2g3jpshSKB0L8nPPiWAFyjtnFnqc5piEFIGC
+	 dCPrRATkcui+pGmrg7XPm/z0Bw7Tw64nEF0S+JMj7Eyf1yYQidv835AeZ9mLr0yRJ4
+	 019zKoQMm3lcXcZClkAPnR4DRCtyuF10kb+F+iJddxsMulhPeYpHevKqqyPLHI1hIX
+	 wRdZunJHhGXn+Y3yR3Hgs/p+IhgHlb9VBWtii4dFE+wmf+f98ff8xqOG/87vCJdyX3
+	 tL2czIAiuFH7A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 030B6FED3F2;
+	Fri, 24 Apr 2026 17:39:24 +0000 (UTC)
+From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
+Date: Fri, 24 Apr 2026 18:40:15 +0100
+Subject: [PATCH v4 2/4] dmaengine: dma-axi-dmac: Properly free struct
+ axi_dmac_desc
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FJVvYi+3HKEojWVf"
-Content-Disposition: inline
-In-Reply-To: <20260424-k3-pdma-v3-1-efdf2e414a08@linux.spacemit.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260424-dma-dmac-handle-vunmap-v4-2-90f43412fdc0@analog.com>
+References: <20260424-dma-dmac-handle-vunmap-v4-0-90f43412fdc0@analog.com>
+In-Reply-To: <20260424-dma-dmac-handle-vunmap-v4-0-90f43412fdc0@analog.com>
+To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Lars-Peter Clausen <lars@metafoo.de>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777052415; l=874;
+ i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
+ bh=B1ajbF20z574tNU6MkzXpQc/3VcoJk7X7LFl6JpZA+I=;
+ b=Nk9EiMQtLm+6ZmUJeNmaI3JuixJVaUoxMeiVYrFhwKSQYe3C2gni+dEN3JcG95uWAB3gjCA9J
+ WOoISnGYxZvCdaqLeUPLRAHdgDXo3hK+nH4urVI2lns7ilca1aBM9n3
+X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
+ pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
+X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
+ auth_id=100
+X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
+Reply-To: nuno.sa@analog.com
+
+From: Nuno Sá <nuno.sa@analog.com>
+
+Use axi_dmac_free_desc() to free fully the descriptor at fail path when
+call axi_dmac_alloc_desc() in axi_dmac_prep_peripheral_dma_vec().
+
+Fixes: 74609e568670 ("dmaengine: dma-axi-dmac: Implement device_prep_peripheral_dma_vec")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+---
+ drivers/dma/dma-axi-dmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index 45c2c8e4bc45..127c3cf80a0e 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -769,7 +769,7 @@ axi_dmac_prep_peripheral_dma_vec(struct dma_chan *c, const struct dma_vec *vecs,
+ 	for (i = 0; i < nb; i++) {
+ 		if (!axi_dmac_check_addr(chan, vecs[i].addr) ||
+ 		    !axi_dmac_check_len(chan, vecs[i].len)) {
+-			kfree(desc);
++			axi_dmac_free_desc(desc);
+ 			return NULL;
+ 		}
+ 
+
+-- 
+2.54.0
 
 
---FJVvYi+3HKEojWVf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Apr 24, 2026 at 04:20:29PM +0800, Troy Mitchell wrote:
-> From: Guodong Xu <guodong@riscstar.com>
->=20
-> Add the "spacemit,k3-pdma" compatible string for the SpacemiT K3 SoC.
->=20
-> While the K3 PDMA IP reuses most of the design found on the earlier
-> K1 SoC, a new compatible string is required because the DRCMR
-> (DMA Request/Command Register) base address for extended DMA request
-> numbers (>=3D 64) differs from the K1 implementation.
->=20
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-pw-bot: not-applicable
-
---FJVvYi+3HKEojWVf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaeuidQAKCRB4tDGHoIJi
-0t/CAQCIAOQN4TYlpXK82vNLDwwODSFHT7GsOjh3smrUC7w+mwEA8RlB1ObCy1Og
-Sg0d01zgcYTCnZq0zfzrc83Psv/L+w8=
-=xIIX
------END PGP SIGNATURE-----
-
---FJVvYi+3HKEojWVf--
