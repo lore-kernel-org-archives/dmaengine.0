@@ -1,71 +1,71 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012039.outbound.protection.outlook.com [52.101.48.39])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012050.outbound.protection.outlook.com [40.107.200.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAAE3D810F;
-	Tue, 28 Apr 2026 08:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29BD3DB639;
+	Tue, 28 Apr 2026 08:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777366386; cv=fail; b=j3zOjvTxgnV+zyYW9SGcQosIqQZKB+QQOCISWhBy+nri7ak1vhuAPHxDzj4fr2yImShDp+X9hDID4r7JFt526Thwqcrs2dE4vt2/lVA3nm+rEa3aFjrx/kBka/wwn9Y9wnNq3UvACHLKe54JDawn6OKbu4ylhTRj0ClIz74ytJs=
+	t=1777366387; cv=fail; b=tqlsyzMg2Fg6VrHZMUdfzrJ1YDnBkAsvZEh/rrxHDjRuK6YFjgMqZZi+w0/8SpucDaayH7Pra5prh1lLK80INQp+WfdlGCIx8LHCKcP3I2gu2ig+SAtzQlW3SKTbwH1fMq/J9lcx98oxCXvnXfkvwNrbxT/8Je9YAUT4n+D6ojc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777366386; c=relaxed/simple;
-	bh=FL6pFKhcl0KhqsgZRQ5Rn6J+eI4+71d8mO/VpwQvZBc=;
+	s=arc-20240116; t=1777366387; c=relaxed/simple;
+	bh=LwumOpe199VExSyyzeZWw/Ue88Lcu3JlwJySYjLGQ0k=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NyzV+U/trJzhkkk4dlzGUfRmMATWz+dB3IK/nH38aus7XBqlsfRGCwieErAXgk7DrQ2VnLKrsyrEzSofFzw5CPj9ZPL+8nzdYNK8sqCot3ns0wls0HwrTkF67iqJ+eXC2AlkwYuY1KEAvHf2u1ZnT0EpHJzL5Qq37FlO4TUcydM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=DiK9jQwa; arc=fail smtp.client-ip=52.101.48.39
+	 MIME-Version:Content-Type; b=a3ioNNBr8N8hGNWyi7gUDYM6d8O1B0o/L9LSqztvkT3iBxN3d7JygOyMbtIyHnemxmtLZ7v+oBbxDV5lhTp4nczHxjdSTU+0oOt/ssdJ0+mMG6ksCNPRT/GCU6PPjnXXiJ1xQZongxgU8ZkHzOkjqTjtpMM3lKkF0Hx/+SFdNBk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=qCLV20RD; arc=fail smtp.client-ip=40.107.200.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DiK9jQwa"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="qCLV20RD"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wL0RD9EZc/ktVMuvv1r9lKw8BuXDXuRywroQz6mPTn6HXAEdMi3VpleV1TAjEYwoD6gl4b/m9AGr4+u3xEirUfxYV+mm0vH33Z65oKND8NQm2ooUoUkB9UQzQMFMXgk0qDA6hKAHbpdtw4SD/mfzDf/MmQ5/gau9rchThkdWR7HgD8xZhDt2Ykpr3x8xAY19usHaucRdfdd9TIAjObMWPr30I/g6ECzWhaTUl7MbK8X8E3A/HN0QdmLuBndRfUXosY9zX0xdflEey1xjJzcZgJsSFGdHILW6JWk4n2aWvyDfdnmkfpXqm+XexUjTKP8jUcbzDyhExxIG653Mr4smfw==
+ b=SVdJL05KRyZSKZ8+qpzWUKFXTRtb8/Q8Kw4hQu9lawsP04ZCz3bOtFJvuMU8eJhF70HqVlU2184TmQ5KWSDrwuBCXKBi8G/qeDyzJEAwRsn6T3XNDk79Hl9qCLodf+tb22N+58Lqrk2Ozt1g/2wZPQgmJlNG2mbIV3hHPJ19piyRDtzWTGXvAMBKDCPnRG3XgBGp93O3NfFJnGszYGpU1yKVsIiBIXNJ9fTwS+nXb/4upOjLNL8QtcJBiRaLJI5pQ+srobZS/KeiSPySGFn72ssXDwTzjnn5qOMc9f7KtQ7qeyhyOw1mE4qg8n8ImWIq8iVUf0wLi+XZF/KU2BcUJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Bd6jmkci0QKsJk2nCDDSZn7AM0lqsJgD8k8MS/Dm6k8=;
- b=M/4rP5wn0pAWGbiVM1YTZ/n7T33lEbO6XXCyM6ozHBTe1mjqTbO0/v6Fz1u5KEdt4N6wda0R2pJxAKMz1jkVUVQlW6HEQoSMZtTJ6m3/C01gC8AT1tB7Wr82KuxAPbNX3aunB6RQ6XZ72iSlP0RK+TQbmI2pzNzOoDztwXDUDp21GFEA/DpDbATCQlj3VtXjIwuI8XsldN003OalHpWqvrS+LbqnysIRBJ/K88lZjnLa8Pbb2Fse0LbncPFcJdae10ubd+rOrGtf9mll4kd9m1YO/Yc0Oy+zlkCgmCZVgLYjIeu2ZqbTnnJ9cEKrhoocyWfOE5jsaflLFWYrVnLGWA==
+ bh=gm020M7t3gXs0yIJcS2Jy9mtLkPCGIU8QkZDD4/7/cI=;
+ b=hn3awSJ6Ka3ehq+QEujKgte22d0JYBalAmFdyTSNJv2EUlCUxVSv9vLRheOnstXKVj8NKqoHMulJleHRoKMWExxvoUpDWSMPcJ1/+MWHXxlWndWHlqwtzX0ldorIcl3czbfUTfuec0bw0eTfIbH2EKOHZ/FzQtlVQRlxPPIwG0RGxNsd2znV99KRRmByPfMhyLyigJ9W6hsLIX76LqevHoWwLtrXtHz/QgPoWkCQgaJIiKfi3bqQxHqTKy2RJ8g5XVkUbekShsuwfj46EHQQQEZYQOFdTKT/SrUNhtvatdinCs217r82UDXPhjny2i5z1HK7QER+jkwUfQMxekKC7w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.21.194) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
+ 198.47.23.195) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
  (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
  (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bd6jmkci0QKsJk2nCDDSZn7AM0lqsJgD8k8MS/Dm6k8=;
- b=DiK9jQwaXM3OFaz6VeskjyGKQVmlR7BlFMaq5zlwflnaSoMH64yzAGJhnt/0sJ1UyXykr2nAn4MioIR3QriCME2ixOu141nAHCnGsfuYKXDqlGgJQqeM3F0k6rRJL7gfA54gfSx5pPHodTQH9jndyNpAxUP34E9MlClra/FFWEE=
-Received: from MW4PR03CA0206.namprd03.prod.outlook.com (2603:10b6:303:b8::31)
- by IA3PR10MB8707.namprd10.prod.outlook.com (2603:10b6:208:571::9) with
+ bh=gm020M7t3gXs0yIJcS2Jy9mtLkPCGIU8QkZDD4/7/cI=;
+ b=qCLV20RD9INCGWEdfH4+/mwrEN24xJ+Bk6d0E38esPMndVPrewtzC7OPUE7MS9UGxHXsPrYKmOMlgsLy3ZHhdYMbucG0KgU9gZX6/wDGGdKlm4C6z07pVUeFD5C+vlW1b/23LIJ54e9bVBbcIKb9xOKzHPkeAUrVS4XTSkAnxRE=
+Received: from MN2PR18CA0022.namprd18.prod.outlook.com (2603:10b6:208:23c::27)
+ by PH8PR10MB997906.namprd10.prod.outlook.com (2603:10b6:510:3cf::24) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Tue, 28 Apr
- 2026 08:53:03 +0000
-Received: from SJ5PEPF000001F2.namprd05.prod.outlook.com
- (2603:10b6:303:b8:cafe::a6) by MW4PR03CA0206.outlook.office365.com
- (2603:10b6:303:b8::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Tue,
- 28 Apr 2026 08:53:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.21.194)
+ 2026 08:53:04 +0000
+Received: from BL02EPF00021F6F.namprd02.prod.outlook.com
+ (2603:10b6:208:23c:cafe::4b) by MN2PR18CA0022.outlook.office365.com
+ (2603:10b6:208:23c::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.28 via Frontend Transport; Tue,
+ 28 Apr 2026 08:53:03 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.23.195)
  smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
  action=none header.from=ti.com;
 Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
-Received: from flwvzet200.ext.ti.com (198.47.21.194) by
- SJ5PEPF000001F2.mail.protection.outlook.com (10.167.242.70) with Microsoft
+ 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
+Received: from lewvzet201.ext.ti.com (198.47.23.195) by
+ BL02EPF00021F6F.mail.protection.outlook.com (10.167.249.11) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Tue, 28 Apr 2026 08:53:01 +0000
-Received: from DFLE203.ent.ti.com (10.64.6.61) by flwvzet200.ext.ti.com
- (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9846.18 via Frontend Transport; Tue, 28 Apr 2026 08:53:03 +0000
+Received: from DLEE214.ent.ti.com (157.170.170.117) by lewvzet201.ext.ti.com
+ (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 28 Apr
- 2026 03:52:40 -0500
-Received: from DFLE208.ent.ti.com (10.64.6.66) by DFLE203.ent.ti.com
- (10.64.6.61) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:53:02 -0500
+Received: from DLEE214.ent.ti.com (157.170.170.117) by DLEE214.ent.ti.com
+ (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 28 Apr
- 2026 03:52:39 -0500
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE208.ent.ti.com
- (10.64.6.66) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:53:02 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE214.ent.ti.com
+ (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Tue, 28 Apr 2026 03:52:39 -0500
+ Transport; Tue, 28 Apr 2026 03:53:02 -0500
 Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [172.24.233.239])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 63S8q6MO623293;
-	Tue, 28 Apr 2026 03:52:35 -0500
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 63S8q6MT623293;
+	Tue, 28 Apr 2026 03:52:58 -0500
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <nm@ti.com>,
@@ -74,9 +74,9 @@ To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<linux-arm-kernel@lists.infradead.org>, <vigneshr@ti.com>,
 	<Frank.li@nxp.com>, <s-adivi@ti.com>
 CC: <r-sharma3@ti.com>, <gehariprasath@ti.com>
-Subject: [PATCH v6 06/19] dmaengine: ti: k3-udma: move ring management functions to k3-udma-common.c
-Date: Tue, 28 Apr 2026 14:21:35 +0530
-Message-ID: <20260428085202.1724548-7-s-adivi@ti.com>
+Subject: [PATCH v6 11/19] dmaengine: ti: k3-udma: move inclusion of k3-udma-private.c to k3-udma-common.c
+Date: Tue, 28 Apr 2026 14:21:40 +0530
+Message-ID: <20260428085202.1724548-12-s-adivi@ti.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428085202.1724548-1-s-adivi@ti.com>
 References: <20260428085202.1724548-1-s-adivi@ti.com>
@@ -91,285 +91,65 @@ Content-Type: text/plain
 X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F2:EE_|IA3PR10MB8707:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71c9d6e9-e0a3-4513-ee7e-08dea5038dea
+X-MS-TrafficTypeDiagnostic: BL02EPF00021F6F:EE_|PH8PR10MB997906:EE_
+X-MS-Office365-Filtering-Correlation-Id: 88a64b9d-3dc2-48af-f024-08dea5038eec
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|376014|7416014|36860700016|921020|18002099003|22082099003|56012099003;
+	BCL:0;ARA:13230040|36860700016|82310400026|376014|7416014|1800799024|22082099003|56012099003|18002099003|921020;
 X-Microsoft-Antispam-Message-Info:
-	iNsaAg+FrU1MteLAcinmDyItrflG+iJ7jIfiXGV1i+q/PJqsU/smcp4oA6cVOZrhHZl08It2eAfedPXs7qm0mXZ1MkZD0ysWSBScfomjKOjfPlQIo0PH13UZKri1izpJusX4J1xzX4E4SyQC3n9IgeTYmlmj2ljrWcsoeBfAZgdiFHZVLlnc2fep0jqOymD5MNKD+38YP1ifyQZQ08UZZDmFqAzMLU2iEKAFOuPqMz94axiARJd0B6k5ATpjPxWgIj8ydLScHFS4IPteiscHoQ3fZmi4WeKEKk7DcPGJAgGs+eJZKb6QOYnM3dvPBci3IRi5nsAJA5j+ae7BFyTWiZrA5pzPCDzzyAGb+3lc5V2zkt+qwIwwuFJXwFWaH7Rayi0IiaRxK4Z2CXhNLRZingc25lI5h2zjZjLdDJ+jae8Gwzo2huJ1YmT8nO8FhTfmXdkohszBZWJW6kqOumo9novstbqiirgu0wrYS6Ug//Lo/QDg2pcVKaMCVTms+Fm4D5AwXpiRQSHfL6AO6+rA4Y1dju7rOD834Bi/u6K8qBy0hSMu4yw++lCLk6XcvRe5oWjtywQ2Cwol9HgG2a/gbAEfpO5a2aC88/9WkuFX7N5fJKNMSYfaZC7bk6vYQ7cZHxvebb7bQpN4uhBgDEHjHce1VoEmkRmcvVZ71Dgkvw9UFEHXfmS1BpKIcLoXagxzJnfeGPogNXd8Ip5ZODrl2ytk+S7Qy9lxxDzxh5NQGsS9rZSIBCSJ3SSSIQhc+8lSC2vSRb2YBlbzKEywfqtGr2dwFgO2xd7azzv/D0XijQYfi9erN8diQwnGP9Vr6LjH
+	c8nKy7sUHXVuDeaWmdicCkdPaKzglNiqEDy/7COpdXSLTFptYsaW1bLItzIvnMZaRJJWKrd+Gf22c/hYkoOLVMOqx1Z+HTgDVi+0N+FPK0TILeJ9XSFv0GSeRmu4NjCj/AE694sN1OOFt2K6BaOzHb3xvSvrMl6YH64vkie/uJWcIm6PO9IiqqNQ21V2ZYGjvo8zZ8URIDcUX6XNDOgiBW4iuQAKzT1gX4YrADO/VwvyHJ2zfNEmyz0oj+H6rhdUDkNoXyNu+ZwwpSWEdQg2U+mnFtfRLqEDPOqkp1CyI7cS8hb+KiF8YIu+ILK/iJt49OmKsq2ikLuLkKOW5/KO7Xz0cKRBWa5fV8oAYR0DfiXBQMvKOXj0HKogEFQf13jwOM8sZu9UIB8IUwSZdA8lI55KIlaH+bEirmhLPG45OAYLLD/V9idXDrcErFNkC9RR3lQQvNBzDG3ajRpZI1vsyKgfms/09K1T6LDSrYBAS6qBbhp54ZPWBHITXlKiNGWPuAciPk1VAibFH8ZSZBc59BKFwQ7mlRjeXM0dmy1Jse2/t6TXlCeI2oENpbDZX8doYACVTLDQaA7nttS9mdkQnEG/WL7x1A492e4ue8mYUackAYEjEuDji9B8XTRhP/PmH3pVjNw4RbtFSmF4C6ifER03mWbdU/fT/sr8GGcZv3Cyi6IUua+4IsrESljNtMhHUzUu4jePzOKa/6jFMNxF+IqxlNHYYJ2FmkyNgMke/+4S8msms63JrnvtXm3AH6/+u2KV/19ajyRv7jpNagwsxYJZgAxoUYKMdRULGVhRDkwcPvhle2VYV++BMOuUjz3J
 X-Forefront-Antispam-Report:
-	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(7416014)(36860700016)(921020)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
+	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(376014)(7416014)(1800799024)(22082099003)(56012099003)(18002099003)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	gaewmLXw3jvUAs/0I2ARwnQVbsaUb70n8SdaeaAHW4ZpsUNwdn/bDArcohETi9HnXXSGqQ4k0keuf5elE7Bt1/FLqHGCvWJu+gtVSA+lcABP7Ebm5SUhm5cZK5gLRFZQv2vZLV5u2C+GMsfos2fc6XKurXh/mscnxjWV8uNXjsmnkLdHwjtgGDj6FlN5/l3uTXsn54uv/0pD84dBAHbE7UJ66p8NcS7pve1EWnwZkEQrp4ebL4xwSc7AYv7BawvDb6xEJf+S8mKWh5yV0Fm7jb0TVvmns4USLUt76R920GhgfQENYm9RJF5SXGpyLAGywYIVgexSW8G+nlkkEzcHHGhGXShj1LUKxRdwXYMgxr7RzI2pPLnW4bREBUUYH9QyjpdAMA0YuR6y3vXzOuSMcBwFbWWROVK8rjj2vR5PTANeRpIQtslIRgp9e4T92v53
+	Or7zBhfO9BxHl1y2AwfUIdfQi2zBcH4CyTLV4xUkIkalOaOb79xeuLDnMS2d0e3nXYmyFLROcuVa6uyfx84WJUwU6/2evavKmVtScorbwGnDJ2cR8ySxZGKf+r8+5DIjmjBMriJ9zuflb1Bd2cGr4sDbCviVV4wpb4nVGU8txQE9zA5QH4vxboLpveuq94YsCPFU9frT1aZWM/JdkZ6vXhcxU+LRQW11YhdIZTI7/0WSj0J57NJ5sOSXbIe6Be6acdhaJ1e5Ba2UB6/5lv8o1JxjSHDNVfpO/d/IOQ5aIh919iQ9i3Q+FDFOUWI4O2MP7vJxsnEPyzoKclab840sWfMi0ihc4JXnitVzBhBJD7Bgc9rWqDkrE0ICFKzROBq+v/po9KbQ8lPFIHtjTDfHJJGRyUyuYsVGa0OAYXCN4A+lPx68er1leYNJoot3ONkf
 X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 08:53:01.6344
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 08:53:03.3388
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71c9d6e9-e0a3-4513-ee7e-08dea5038dea
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88a64b9d-3dc2-48af-f024-08dea5038eec
 X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF000001F2.namprd05.prod.outlook.com
+	BL02EPF00021F6F.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR10MB8707
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR10MB997906
 
-Relocate the ring management functions such as push, pop, and reset
-from k3-udma.c to k3-udma-common.c file. These operations are
-common across multiple K3 UDMA variants and will be reused by
-future implementations like K3 UDMA v2.
+Relocate the #include directive for k3-udma-private.c to
+k3-udma-common.c so that the code can be shared between other UDMA
+variants (like k3-udma-v2). This change improves modularity and prepares
+for variant-specific implementations.
 
 No functional changes intended.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 ---
- drivers/dma/ti/k3-udma-common.c | 103 ++++++++++++++++++++++++++++++++
- drivers/dma/ti/k3-udma.c        | 100 -------------------------------
- drivers/dma/ti/k3-udma.h        |   4 ++
- 3 files changed, 107 insertions(+), 100 deletions(-)
+ drivers/dma/ti/k3-udma-common.c | 3 +++
+ drivers/dma/ti/k3-udma.c        | 2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-common.c
-index 9cb35759c70bb..4dcf986f84d87 100644
+index b419b23c401a1..0ffc6becc402e 100644
 --- a/drivers/dma/ti/k3-udma-common.c
 +++ b/drivers/dma/ti/k3-udma-common.c
-@@ -1239,5 +1239,108 @@ void udma_desc_pre_callback(struct virt_dma_chan *vc,
- }
- EXPORT_SYMBOL_GPL(udma_desc_pre_callback);
+@@ -2539,3 +2539,6 @@ EXPORT_SYMBOL_GPL(setup_resources);
  
-+int udma_push_to_ring(struct udma_chan *uc, int idx)
-+{
-+	struct udma_desc *d = uc->desc;
-+	struct k3_ring *ring = NULL;
-+	dma_addr_t paddr;
-+
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		ring = uc->rflow->fd_ring;
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		ring = uc->tchan->t_ring;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	/* RX flush packet: idx == -1 is only passed in case of DEV_TO_MEM */
-+	if (idx == -1) {
-+		paddr = udma_get_rx_flush_hwdesc_paddr(uc);
-+	} else {
-+		paddr = udma_curr_cppi5_desc_paddr(d, idx);
-+
-+		wmb(); /* Ensure that writes are not moved over this point */
-+	}
-+
-+	return k3_ringacc_ring_push(ring, &paddr);
-+}
-+EXPORT_SYMBOL_GPL(udma_push_to_ring);
-+
-+int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
-+{
-+	struct k3_ring *ring = NULL;
-+	int ret;
-+
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		ring = uc->rflow->r_ring;
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		ring = uc->tchan->tc_ring;
-+		break;
-+	default:
-+		return -ENOENT;
-+	}
-+
-+	ret = k3_ringacc_ring_pop(ring, addr);
-+	if (ret)
-+		return ret;
-+
-+	rmb(); /* Ensure that reads are not moved before this point */
-+
-+	/* Teardown completion */
-+	if (cppi5_desc_is_tdcm(*addr))
-+		return 0;
-+
-+	/* Check for flush descriptor */
-+	if (udma_desc_is_rx_flush(uc, *addr))
-+		return -ENOENT;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(udma_pop_from_ring);
-+
-+void udma_reset_rings(struct udma_chan *uc)
-+{
-+	struct k3_ring *ring1 = NULL;
-+	struct k3_ring *ring2 = NULL;
-+
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		if (uc->rchan) {
-+			ring1 = uc->rflow->fd_ring;
-+			ring2 = uc->rflow->r_ring;
-+		}
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		if (uc->tchan) {
-+			ring1 = uc->tchan->t_ring;
-+			ring2 = uc->tchan->tc_ring;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	if (ring1)
-+		k3_ringacc_ring_reset_dma(ring1,
-+					  k3_ringacc_ring_get_occ(ring1));
-+	if (ring2)
-+		k3_ringacc_ring_reset(ring2);
-+
-+	/* make sure we are not leaking memory by stalled descriptor */
-+	if (uc->terminated_desc) {
-+		udma_desc_free(&uc->terminated_desc->vd);
-+		uc->terminated_desc = NULL;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(udma_reset_rings);
-+
  MODULE_DESCRIPTION("Texas Instruments K3 UDMA Common Library");
  MODULE_LICENSE("GPL v2");
++
++/* Private interfaces to UDMA */
++#include "k3-udma-private.c"
 diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 96df0893fa095..5c84741881cae 100644
+index d9d6cbda46b2c..58cbb399bc3b2 100644
 --- a/drivers/dma/ti/k3-udma.c
 +++ b/drivers/dma/ti/k3-udma.c
-@@ -174,106 +174,6 @@ static bool udma_is_chan_paused(struct udma_chan *uc)
- 	return false;
- }
+@@ -2857,5 +2857,3 @@ module_platform_driver(udma_driver);
+ MODULE_DESCRIPTION("Texas Instruments UDMA support");
+ MODULE_LICENSE("GPL v2");
  
--static int udma_push_to_ring(struct udma_chan *uc, int idx)
--{
--	struct udma_desc *d = uc->desc;
--	struct k3_ring *ring = NULL;
--	dma_addr_t paddr;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		ring = uc->rflow->fd_ring;
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		ring = uc->tchan->t_ring;
--		break;
--	default:
--		return -EINVAL;
--	}
--
--	/* RX flush packet: idx == -1 is only passed in case of DEV_TO_MEM */
--	if (idx == -1) {
--		paddr = udma_get_rx_flush_hwdesc_paddr(uc);
--	} else {
--		paddr = udma_curr_cppi5_desc_paddr(d, idx);
--
--		wmb(); /* Ensure that writes are not moved over this point */
--	}
--
--	return k3_ringacc_ring_push(ring, &paddr);
--}
--
--static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
--{
--	struct k3_ring *ring = NULL;
--	int ret;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		ring = uc->rflow->r_ring;
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		ring = uc->tchan->tc_ring;
--		break;
--	default:
--		return -ENOENT;
--	}
--
--	ret = k3_ringacc_ring_pop(ring, addr);
--	if (ret)
--		return ret;
--
--	rmb(); /* Ensure that reads are not moved before this point */
--
--	/* Teardown completion */
--	if (cppi5_desc_is_tdcm(*addr))
--		return 0;
--
--	/* Check for flush descriptor */
--	if (udma_desc_is_rx_flush(uc, *addr))
--		return -ENOENT;
--
--	return 0;
--}
--
--static void udma_reset_rings(struct udma_chan *uc)
--{
--	struct k3_ring *ring1 = NULL;
--	struct k3_ring *ring2 = NULL;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		if (uc->rchan) {
--			ring1 = uc->rflow->fd_ring;
--			ring2 = uc->rflow->r_ring;
--		}
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		if (uc->tchan) {
--			ring1 = uc->tchan->t_ring;
--			ring2 = uc->tchan->tc_ring;
--		}
--		break;
--	default:
--		break;
--	}
--
--	if (ring1)
--		k3_ringacc_ring_reset_dma(ring1,
--					  k3_ringacc_ring_get_occ(ring1));
--	if (ring2)
--		k3_ringacc_ring_reset(ring2);
--
--	/* make sure we are not leaking memory by stalled descriptor */
--	if (uc->terminated_desc) {
--		udma_desc_free(&uc->terminated_desc->vd);
--		uc->terminated_desc = NULL;
--	}
--}
--
- static void udma_decrement_byte_counters(struct udma_chan *uc, u32 val)
- {
- 	if (uc->desc->dir == DMA_DEV_TO_MEM) {
-diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
-index 7c807bd9e178b..4c6e5b946d5cf 100644
---- a/drivers/dma/ti/k3-udma.h
-+++ b/drivers/dma/ti/k3-udma.h
-@@ -610,6 +610,10 @@ void udma_desc_pre_callback(struct virt_dma_chan *vc,
- 			    struct virt_dma_desc *vd,
- 			    struct dmaengine_result *result);
- 
-+int udma_push_to_ring(struct udma_chan *uc, int idx);
-+int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr);
-+void udma_reset_rings(struct udma_chan *uc);
-+
- /* Direct access to UDMA low lever resources for the glue layer */
- int xudma_navss_psil_pair(struct udma_dev *ud, u32 src_thread, u32 dst_thread);
- int xudma_navss_psil_unpair(struct udma_dev *ud, u32 src_thread,
+-/* Private interfaces to UDMA */
+-#include "k3-udma-private.c"
 -- 
 2.53.0
 
