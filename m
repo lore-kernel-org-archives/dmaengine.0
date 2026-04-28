@@ -1,71 +1,71 @@
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazon11010051.outbound.protection.outlook.com [52.101.85.51])
+Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010010.outbound.protection.outlook.com [52.101.56.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB823D5672;
-	Tue, 28 Apr 2026 08:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.85.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B849A3D6673;
+	Tue, 28 Apr 2026 08:54:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777366433; cv=fail; b=P7VNOpEMsro4xKgH2O5SMaz8hFK2rZL7S2kHbXzCoa0U7I5ygQrFoZE25tXLKsCdAWYtUG+mcoQ1qo2GSu16DLwf0wSBfSHG8Hqtxp5Xzs21ei3lbv+V7G1piiznJmLqy0YTZMlpLPkDJ8Fx5JsaMp//7vsScisJHLzqCgvoUmc=
+	t=1777366445; cv=fail; b=Z80z0dUKnw+BJNgA6bXI+967vLviD+vUkRsEHkY9V7UJKUATfc7bor8jTDn2nfuJYXb8kN8vk7d2Bnj0H1UGHKVeu9lxoKwvdhN1XhiRTtMKnhlG+3WHZrI0inuNSWR3PYW54ktooifofBvcNCDodEyo7kwQNInQ/GjJea/pBzk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777366433; c=relaxed/simple;
-	bh=VCODBUcFdR+m4d+/qRMOdhUyDpMyO4qviqghUs4jBUE=;
+	s=arc-20240116; t=1777366445; c=relaxed/simple;
+	bh=U/DiUCGE0MTdXw22vutZnCVkof+cbVq6CdYlxmCcSLU=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ergrQFosONIJsqgqoOi0Io4N5DjPyN71g+hV9327u4hHrpxzVX6psqmvZ3mU8zZFnTI3iUhc1NKdZjjCUG7x4gYv0a7m00pQ18LjsjmxQCA3oGRbBv19qVcJLytJjxdtUfbcV6Z5O/IUFYGGCj50eVXg+BTUvnnJXtCzuyYX0dY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=M52iA5ek; arc=fail smtp.client-ip=52.101.85.51
+	 MIME-Version:Content-Type; b=PR0YDeg6TDQu+NClhwdGjpJccbzBRB9tSxk5twQ7npqJ2eIn2BC5kOr414Aotu4NPHX6Fd09ll7SPbs0+EOa5P6P6OOMRYxg+6aMgxCJxZkAMlAR7DR2amXXbSERb+hvScWMJt7wVlVEKk/TrOOod1XreWrhsQ7O2fhraPuPsxY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=XdhI5C1l; arc=fail smtp.client-ip=52.101.56.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="M52iA5ek"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="XdhI5C1l"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GUjG8g2ymZTTmNFx3Tn0fmkWxy8Kk5UCuF1aC64odMqvF4J4wc+ZqERBqfzRRsqX2YdCUG/E5NMU0AqWcgfQZmt5IWqobXbY+rwhGDYol23kjj0ihFWFHmqy3A9O59YwaQ0JhgN3gIh+sVk54ra0THPOHLbPHkh+w6Ms0u21Hccf/OI3ezknkAvg+PD8rSByGdU7GytiwP2ljLWDArjvOEsmLH3CbdJH5Cl2JGArz8o/TuR9OqLecv6ed0XNHACCHVvkCvX3fuq0JTi4XAfIJ+wrTszWdmPmmEebqBiGyeQ+YbFyeQ0O22hGDQVFlitGQaPgD+uFo1LNZqTmh28wUA==
+ b=MdpFcg76LhOFjZNV4t4/ahWUhMpXhzdiX1pzsD0+Ya/QEArfEW57fkKbdv0ks8tIivxUasYs7OsY5Hs/9k6u45dnBvb4rX4NQjrX6dFsUclOR/vqh7sQBMusnUuk6kaTNMzhAEJ7BZL67zpuJd4eiGKvIMqEcceGNPWQE/YM/mXm4lTwRX9bauAH/1DSy6EDuzp6kkUEU+3+7ERfwdm0NStAAqLQai7+S7GdaulmQ1w8wIOfoluonD5m1WyQ6dsPgIBpbGQDWPNE4lyZxYjLpYKPyDeVqrO24yT9H9HLGAleIWpvj1yytmpbHIlLC5rt/fqsZZPvQ+y1zUxyRHrkIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YNvSzmo8PxtYDxH+iUZiaWOO2AJ7iRrwNgPX/z2xyYA=;
- b=ySiiljqGm1VUh4UTmOYZa/4Lyf3qk68ke6l87sz3S1K17F1I12UnSgknj/z6C4xJv4iz+HJddeRtESfJ4zsoq1aMcCI5JQ1WngGPU580T+RJPRITtXda8FOHD39HkmeiBIe39WxyngeWC88vTYBVYydSEtLS13cJ7SnLbZF1SOdGSn97gnfQFHTzLB31HN2QMR6S7dUvaK2kQeaggnXq6d33sSjjtirdcqJnWK+OHsXy+Ku0eZPj85rkhuvRj15VOskIWYvgbVkCiUgHCXYSzpWtMlF2j2hilrQOnOw+Ywx2YhFgWdPjaHmSRMRLcUM7aPSh0j9Mg1MGh1PT4nLL8A==
+ bh=sMNmze9D/smZWTbqcmnj/N8fgqgsTRWcKHnTetGUt/Y=;
+ b=asfjswpWcaEtIKb7s91GK+gc/LI50SEEGwG8sfzns72IU/VnIFPrQWH3abE67kuioEody5/6IK3GGK8Job+U6ak/n5WPnIaw2dNR6H1rI0JwsMT3ftIh/GrfCvp6/wrOtqMKORfRLln1h9i+SJ2QFt3ASZHoQor7IO65BqfvyRVpeXcNtARu3KWJzvIXXRS/YiTggJTu8dva5uBZ/gIO2K7wW3ZLSE9Ou7tRE60gnnPYQaFBG3pS1bne+OSIIXVOOucMgi+TsGDnSxX3ZQvozYXUznHnul6r+DtVDEB9yn8K/P8T6c/Svgqc7x0brgYJQBkVXcI9pQi/yWImnPgt2Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.21.195) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
+ 198.47.21.194) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
  (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
  (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YNvSzmo8PxtYDxH+iUZiaWOO2AJ7iRrwNgPX/z2xyYA=;
- b=M52iA5ekDS6qSGpJeNP/JUJJILayNfzMI4RTZIz/0+e+r79t2f9TzvWW5KP39ENYXy7oN0qkk5kRxHyDXHUOthsL9WanDvcLmZ7rZXxRxX1tTTMHzB/z1aXzDdFcjgaHymSUqHrs67kp53w4ib57n9JhmheBhdFw4bJKCkw4kis=
-Received: from PH8PR05CA0020.namprd05.prod.outlook.com (2603:10b6:510:2cc::27)
- by DS7PR10MB4959.namprd10.prod.outlook.com (2603:10b6:5:3a0::22) with
+ bh=sMNmze9D/smZWTbqcmnj/N8fgqgsTRWcKHnTetGUt/Y=;
+ b=XdhI5C1lP97c0IMiuw3t8N73gX8LLcVuS6NLDdAYsXAT7Cs4hHRA2LQJvbWGV9yhqrp0o84IQQ6icVKoFUB75V1EOKwG4sb3hX5d3+xHnV0qlE9wgxN1ZSN34EdyVREd3EJgTIShOhBaEvjM83TlUuCjzLLc6fhqFqp2Hb3pQ9U=
+Received: from MW4PR03CA0209.namprd03.prod.outlook.com (2603:10b6:303:b8::34)
+ by SJ0PR10MB4560.namprd10.prod.outlook.com (2603:10b6:a03:2d3::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Tue, 28 Apr
- 2026 08:53:50 +0000
-Received: from SN1PEPF00036F40.namprd05.prod.outlook.com
- (2603:10b6:510:2cc:cafe::19) by PH8PR05CA0020.outlook.office365.com
- (2603:10b6:510:2cc::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.27 via Frontend Transport; Tue,
- 28 Apr 2026 08:53:49 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.21.195)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Tue, 28 Apr
+ 2026 08:54:01 +0000
+Received: from SJ5PEPF000001F2.namprd05.prod.outlook.com
+ (2603:10b6:303:b8:cafe::a0) by MW4PR03CA0209.outlook.office365.com
+ (2603:10b6:303:b8::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Tue,
+ 28 Apr 2026 08:54:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.21.194)
  smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
  action=none header.from=ti.com;
 Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.21.195 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.21.195; helo=flwvzet201.ext.ti.com; pr=C
-Received: from flwvzet201.ext.ti.com (198.47.21.195) by
- SN1PEPF00036F40.mail.protection.outlook.com (10.167.248.24) with Microsoft
+ 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
+Received: from flwvzet200.ext.ti.com (198.47.21.194) by
+ SJ5PEPF000001F2.mail.protection.outlook.com (10.167.242.70) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Tue, 28 Apr 2026 08:53:48 +0000
-Received: from DFLE206.ent.ti.com (10.64.6.64) by flwvzet201.ext.ti.com
- (10.248.192.32) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.9846.18 via Frontend Transport; Tue, 28 Apr 2026 08:53:59 +0000
+Received: from DFLE210.ent.ti.com (10.64.6.68) by flwvzet200.ext.ti.com
+ (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 28 Apr
- 2026 03:53:16 -0500
-Received: from DFLE205.ent.ti.com (10.64.6.63) by DFLE206.ent.ti.com
- (10.64.6.64) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:53:39 -0500
+Received: from DFLE200.ent.ti.com (10.64.6.58) by DFLE210.ent.ti.com
+ (10.64.6.68) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 28 Apr
- 2026 03:53:16 -0500
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE205.ent.ti.com
- (10.64.6.63) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:53:39 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE200.ent.ti.com
+ (10.64.6.58) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Tue, 28 Apr 2026 03:53:16 -0500
+ Transport; Tue, 28 Apr 2026 03:53:39 -0500
 Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [172.24.233.239])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 63S8q6MW623293;
-	Tue, 28 Apr 2026 03:53:12 -0500
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 63S8q6Mb623293;
+	Tue, 28 Apr 2026 03:53:34 -0500
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <nm@ti.com>,
@@ -74,9 +74,9 @@ To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
 	<linux-arm-kernel@lists.infradead.org>, <vigneshr@ti.com>,
 	<Frank.li@nxp.com>, <s-adivi@ti.com>
 CC: <r-sharma3@ti.com>, <gehariprasath@ti.com>
-Subject: [PATCH v6 14/19] dt-bindings: dma: ti: Add K3 PKTDMA V2
-Date: Tue, 28 Apr 2026 14:21:43 +0530
-Message-ID: <20260428085202.1724548-15-s-adivi@ti.com>
+Subject: [PATCH v6 19/19] dmaengine: ti: k3-udma: Validate resource ID and fix logging in reservation
+Date: Tue, 28 Apr 2026 14:21:48 +0530
+Message-ID: <20260428085202.1724548-20-s-adivi@ti.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428085202.1724548-1-s-adivi@ti.com>
 References: <20260428085202.1724548-1-s-adivi@ti.com>
@@ -91,149 +91,75 @@ Content-Type: text/plain
 X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF00036F40:EE_|DS7PR10MB4959:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9dcfca8-daf5-4768-e903-08dea503a9b9
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F2:EE_|SJ0PR10MB4560:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2105cdf1-2af9-4006-f1e6-08dea503b046
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|1800799024|82310400026|376014|7416014|56012099003|18002099003|22082099003|921020;
+	BCL:0;ARA:13230040|82310400026|36860700016|7416014|1800799024|376014|22082099003|921020|56012099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	2qgHDO51QND2SG3RWpQTfZxTW4t1NIcN0jx0L/cXb5AQT5Nd0ROO+tq4gT4ZI/g0OplZ7w176rQymU2SYIccEzKOPiUXh3lIdq1UHkHyR7/RDYfMuI0W5xen2hYmrs2tDzVXJ8+94aBMP114uzevSPzGg+wLFZlcach4M5KOUAmNV9/6m0wc8WSSvc8LfyLT8npSGdsoCGKIhXjSQ8MSMYb1cfUi0NcOPJIIaOL4D8SNs9RMr17vdYrzfJhM/+oylS8ZalOvRbdu4EbJVVZqnmpZtIYuhuGtYbb8gf6UpZKfZSZFmQ1mUo9Gu83Jk2dm41Zw/XpPh7e1djdHw0L09QkfBF46c3I1h+iqjTCmT91ActVsFEhOeLWbBxzJSTtwi5E3exuAf0kgNsxUkprBDp0sp9QiGocZV3Rdayy+hm6uCdKtFVGngQX+5+tu7g36eqdbcqqhWwVSNpbSnAQW/OcBZZq+Ize4ozJTYzkBSWPXEVGKz23WurqAbxvUhnXht5Z45hV2NLUig3qkIiybINmhbH5tTqDpKjpz0Yla75jrJF+o42vvrbUJhAZ5+aqDlxixlc8Mkcjnxaj4GOan9oMF7i+7n9sPdQQHjOMV69NwTohOF0hkOx44amUqKQQazgyuLhitTgMadAdLe5dzeBPq0wOXgH4WWiymt45YdhsBtW1T4d+lTm4DJ81DEz+XSbz8Ys09S6+QiBLP3xgM0JM3AgPm793B6d5ouQS7ZOrWYApz5Tu29U5MordKYufTqJrHi/W9/af0JIcW2yjnHw==
+	MTAzQ8n3aao/b9YSiEV7ODHS1Zb0SluDPWakMYtent7TEJlitl4GgEgmXic2MjWr9sKFUPkYaffYaSGHgOoSE1mAdDVIKqIWXOGV+d6d25vdaCGbtyYVSikjj1q7rqzRinVLQk+Hs/Do3URvAcbDXVelGzBiWP127wtS6v+Nz6ACKOzlLVPRPveXOjmT1X6/23z20foVQ2ZKpOtn/ofcJoSRq0CRU3I8ThUcVdL3RiUEu4/alANGlNDEnob4CNTx6+bMkNKtVwLI/c2w8UW/l8LlZ5Cg/cWU/A0KGuFun6I5MtFTSJWt4QHv6QE6uViYHMvnDfavF+KLGk7IPtWBXHkjrUs6yHWW7MQ/f+kvSuy/b/EwBctiXNH2+GzS3gGxwkhLWgtJJ3Digjczzeyq8Z98hV434x+YI15pK1BWN4ZG567T0B0yDA001afQVua6p8vBIDtO/dySFIidSCWVphwLR7HklFwLdLfa2pGdS8WVCIA3Yw7kOEJOs2FErs8RnF+qGxxK50VE5Jo0E4s3u1c6/mQD7s9NRWrPrhdsqqYsLfK9eXihc8snlWIcbGhCmCVIaqRzb0FZSfnUeMT35xQRMCR36i6lZAjfoHdaP0SR389tpmCJM9pUbub7xCEMZuYTekUIOKCSjyPIPA3McZbraBIMh+Bnnnckokk2yLo/JJCUTwcufBpn3/X4AeaOlk0ocCzoh7iHhQEOKzn79A5zLcu2i3rZVcY0FJX5WlUUfAjCJZdLlr1vs5r99sn4woQEIPuXEd0X8OH9dvUw7sLXRKWS2lPFpHJTWaZmiJ7HLomH3DNBw7x9OBqw93Dw
 X-Forefront-Antispam-Report:
-	CIP:198.47.21.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet201.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(82310400026)(376014)(7416014)(56012099003)(18002099003)(22082099003)(921020);DIR:OUT;SFP:1101;
+	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(82310400026)(36860700016)(7416014)(1800799024)(376014)(22082099003)(921020)(56012099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	AOtNrfAKW1KrMFfo9IgiXt6OCVYVzJyIEJthOoKGSyjfpyyHg2fuc4Ar/yu/EVTed7bYTa/aWRLMF0cyucaJcqIyVxWLWynH6EWH0LfhGkrOc4fymQdyPQ/eg4jEG2cX7LZIddiAuzOabFazChza+6LB0Sm5oK8AU326EoQamigQmq2IQIEKDhjGE5O9yrjml4D/hHg0iGY9oJAqKHlGgOHCC5lIBBqN2vqWjW9j4vujpUvaPxysLHhu6LDO5BiXXoEfZvw8kR3SfxxVk6dEmZ7AV/XlxTAnv/BzO1rUZEW+TCYmx+dpMdqhDZNxYBeJuggpypReHtbQ/7PmnbDM3ISHf5HKB0Kzr6/Xk2XZH/RKMbhts3B6WZiXDe3zpFszQXeokDVo5RmUVgSxNIGvSTmAb9mzyU3md3bOfp0VCc7nnDW/vUvj1Tld3ATNXkRr
+	oDj3qW0PLq/yTQfWanSXsw+lqzxl8lq14TIVCaeScUhuRk/9bRCgYYyfPqANt9jPq719oWlk0UvKdwyC9+Axx+OCG1cs18pEdGPNyHvtHTTNLQk8K0tZPQ6c1XEsDDyRy63eIoDub2e0L9dKKDQFqBNtU14pcWyXyaj6wvU75WK/WlyfP3dhZMBahJ5/VZsY4ChWcOTXDRqlj3VxmFmdC7u0Idg+/52gNoWVGnM20RpTSB94Z0isLLBflU1p+zp7iTtWSCa6CiOXOHNr3iIDiDd7ydOGGa1NiYeectIHNSqVTWteMaC3jZ40LSYx/a6H+83s5lHoh8ZO5CZTt58fzlJ15XaV+cpCAVbns0j0m3k7hpeBqNHUnBU9/zCrvrhLfosooLYXrbf9SFRPnekYdzHdCT1PtK7hFG2DbpI9iq7tiuYav3Yjw0rZlriVlk08
 X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 08:53:48.3430
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Apr 2026 08:53:59.2778
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9dcfca8-daf5-4768-e903-08dea503a9b9
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2105cdf1-2af9-4006-f1e6-08dea503b046
 X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.195];Helo=[flwvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF00036F40.namprd05.prod.outlook.com
+	SJ5PEPF000001F2.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB4959
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4560
 
-New binding document for
-Texas Instruments K3 Packet DMA (PKTDMA) V2.
+The `__udma_reserve_##res` macro currently lacks a bounds check for
+the provided `id`. If a caller passes an ID exceeding the resource
+count (`ud->res##_cnt`), `test_bit()` performs an out-of-bounds
+memory access on the bitmap.
 
-PKTDMA V2 is introduced as part of AM62L.
+Additionally, the macro returns `-ENOENT` when a resource is already
+in use, which is semantically incorrect. The logging logic is also
+broken, printing the literal "res##<id>" instead of the resource
+name.
+
+Update the macro to:
+1. Validate `id` against `ud->res##_cnt` and return `-EINVAL` if out
+   of bounds.
+2. Return `-EBUSY` instead of `-ENOENT` when a resource is already
+   reserved, correctly reflecting the resource state.
+3. Use the stringification operator `#res` to correctly print the
+   resource name (e.g., "tchan") in error messages.
 
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 ---
- .../bindings/dma/ti/ti,am62l-dmss-pktdma.yaml | 101 ++++++++++++++++++
- 1 file changed, 101 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml
+ drivers/dma/ti/k3-udma-common.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml
-new file mode 100644
-index 0000000000000..32bcb0ba502c1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml
-@@ -0,0 +1,101 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+# Copyright (C) 2024-2025 Texas Instruments Incorporated
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/ti/ti,am62l-dmss-pktdma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Texas Instruments K3 DMSS PKTDMA V2
-+
-+maintainers:
-+  - Sai Sree Kartheek Adivi <s-adivi@ti.com>
-+
-+description:
-+  The PKTDMA V2 is intended to perform similar functions as the packet mode
-+  channels of K3 UDMA-P. PKTDMA V2 only includes Split channels to service
-+  PSI-L based peripherals.
-+
-+  The peripherals can be PSI-L native or legacy, non PSI-L native peripherals
-+  with PDMAs. PDMA is tasked to act as a bridge between the PSI-L fabric and the
-+  legacy peripheral.
-+
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
-+
-+properties:
-+  compatible:
-+    const: ti,am62l-dmss-pktdma
-+
-+  reg:
-+    items:
-+      - description: Packet DMA Control & Status
-+      - description: Channel Realtime
-+      - description: Ring Realtime
-+
-+  reg-names:
-+    items:
-+      - const: gcfg
-+      - const: chanrt
-+      - const: ringrt
-+
-+  "#address-cells":
-+    const: 0
-+
-+  "#dma-cells":
-+    const: 2
-+    description: |
-+      cell 1: Channel identification for the peripheral
-+        PSI-L thread ID of the remote (to PKTDMA) end.
-+        Valid ranges for thread ID depends on the data movement direction:
-+        for source thread IDs (rx): 0 - 0x7fff
-+        for destination thread IDs (tx): 0x8000 - 0xffff
-+
-+        Please refer to the device documentation for the PSI-L thread map and
-+        also the PSI-L peripheral chapter for the correct thread ID.
-+
-+      cell 2: ASEL value for the channel
-+
-+  interrupts:
-+    minItems: 1
-+    maxItems: 112
-+    description:
-+      Interrupts for DMA channels.
-+
-+  interrupt-names:
-+    minItems: 1
-+    maxItems: 112
-+    items:
-+      pattern: "^chan[0-9]+$"
-+    description:
-+      The name of the interrupt corresponding to the DMA channel.
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - "#address-cells"
-+  - "#dma-cells"
-+  - interrupts
-+  - interrupt-names
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    dma-controller@485c0000 {
-+        compatible = "ti,am62l-dmss-pktdma";
-+        reg = <0x485c0000 0x4000>,
-+              <0x48900000 0x80000>,
-+              <0x47200000 0x100000>;
-+        reg-names = "gcfg", "chanrt", "ringrt";
-+
-+        #address-cells = <0>;
-+        #dma-cells = <2>;
-+
-+        interrupts = <GIC_SPI 500 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 501 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names = "chan64", "chan65";
-+    };
+diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-common.c
+index 304dad59bf183..92b14b0b620a8 100644
+--- a/drivers/dma/ti/k3-udma-common.c
++++ b/drivers/dma/ti/k3-udma-common.c
+@@ -2010,9 +2010,14 @@ struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
+ 					       int id)			\
+ {									\
+ 	if (id >= 0) {							\
++		if (id >= ud->res##_cnt) {				\
++			dev_err(ud->dev,				\
++				#res " id %d is out of bounds.\n", id);	\
++			return ERR_PTR(-EINVAL);			\
++		}							\
+ 		if (test_bit(id, ud->res##_map)) {			\
+-			dev_err(ud->dev, "res##%d is in use\n", id);	\
+-			return ERR_PTR(-ENOENT);			\
++			dev_err(ud->dev, #res "%d is in use\n", id);	\
++			return ERR_PTR(-EBUSY);			\
+ 		}							\
+ 	} else {							\
+ 		int start;						\
 -- 
 2.53.0
 
