@@ -1,137 +1,93 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116603B8D5C
-	for <dmaengine@vger.kernel.org>; Thu,  7 May 2026 18:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74F317BCA;
+	Fri,  8 May 2026 01:36:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778179894; cv=none; b=kWBhAwn5a4KNrjzJ2xJ659rHwZeR6Rrc9ih2ZmfU7WDbpjUzF7mZJo8ZQ3UB0aUv1V17PVvhRm2f4UOHA12h+OHf2Tbf/quyO3BuIOMYv9AXPO5pKUBvgedU/oehjbxcA0ePZUF62d5B0YiptIuXfBIlIJbxkyKg6MrRHHr5iH0=
+	t=1778204194; cv=none; b=MakL0xouCv1ql5Sa7SE/oZrJJuBn0+nMjjZut3e6+h0lb4QOcEYGci/b0zgTP3nnOVVnPQSbOgDh1P4zQkajtdILegNkIU+7qIa4wX5yFHy3YJ/MlCYv5T7EupFTlEQMllHrFV8tw3jTlKvF4guI/P3XhRXyF+3d/e8TDh0IuzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778179894; c=relaxed/simple;
-	bh=SPljrVad3SfHOMV6CoDc+b6SoToalM1kLwKQ3HCcS5Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Y2TOnx7TFvjH1pnrfEC96pMmsE1j9CCMFYez7bMNPjpqTgsE/FgFE6/iwHWQbQW1ZbJQMLX63F1bQhFj2GI6HHNQxX7ADv/vgG1r9rLCOBT1i7CxhVcQW9Xmum8VX71GS03KzP+gnllg2koOO5u8e1Rvo8vnpq0lBFWgdsVt+/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZoXyJNNS; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778204194; c=relaxed/simple;
+	bh=e0+0lja+Kzksa0cbDYWXWMbHJC7h8ozTJ8kJwijGG/Y=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=tidGHSiZc6JC9yJHplpm5ht8rnteU7x357fb5eY3v4nTj8+L6+tGWLdd1nEI/mhQu+YzQWrNqWwyLuJjNkfMnbSgvLCCYcaXuG+MMJU8w6wMIyJQQrSXtYkcPRSMYwrXUe4kQE5iJTzHuA9D9exVvnZm229qIfzu3wV+Y3D6zwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=mk2UKeSo; arc=none smtp.client-ip=117.135.210.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZoXyJNNS"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-449cdc12a8aso134188f8f.2
-        for <dmaengine@vger.kernel.org>; Thu, 07 May 2026 11:51:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778179889; x=1778784689; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lsCgDB2SeUmpLesfortnurxRDaLmMTCCnWudo37xq5s=;
-        b=ZoXyJNNSk49/PnDLRtdSvV8MXSRPxNryIqnL5tJ7kFxBTReJehwvpnse8UHiQ3vWjG
-         KuyH7A3VN6RBDp0qxJsgZcaIGr2v1Au81mMCDKQB2AVLdG2sWb+/oFlP6zgkRY7XJubS
-         k47zIvN3w8ZH2eZuLYkyj40eWE3mQsY3Arw8JQO9kxo9fJ6M/rFMb8R03MvtPr9nndEl
-         9o6zsBkjPt4W6suNI+b2YDtj4h3Ec4ZXJyhgVr49pi/gUlcixHJrTFAaJ7JQguONZWlb
-         TCce4vubEXd2TfbSe6eUOVBhaycW//zxiwPvirK3IoBcm0kHWEXgVT7JYLsz/vB55SrR
-         FKNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778179889; x=1778784689;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lsCgDB2SeUmpLesfortnurxRDaLmMTCCnWudo37xq5s=;
-        b=hSj0tqEXoXklUFrMJB8HUny4CLhinrNc1toZINRO4erI7KuosX+J/MwKGLgjgvTvRx
-         AvRGfCLqzduDsRRcsZL388Y5YqefHHt3iNvu2FION4YwLQqpuPcCBXvnGj25q1BAZOi6
-         WVNagj1FMZgijbwGsmvD8kUfnf4+rk1nntcZhwct8bWCqXik/0YHWPiIwcwJvitoR1ot
-         +aaCoqG9NuEVZ/TWzTFK8bxy5AWtYWPZ0QJYMl+znDycttoo937DTU7Bo0+RAOM5ox/g
-         559BnF3gC9U1F+3LyyPb6V9J3OiixSBae9GZjBrbgG4Y1FeCVAe/qc+LEGDnKIB8X6PO
-         UOgQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8MED6RBZPDDA184oXywS2w14Gi1Zq8MXFhR52ZHXccpEAowk9uJCtDdS/JnLG7qLNEg1Z30ihK6hA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxv3ZM6Z5W7yE848JNmcWLCvVmGGo6aruwHnM2N+bEQd6+UXAhy
-	tdxvFKPcx1gC0MTTYb5IKNOGRf5qVmc6C1c/GhBInLoiO1v+eDmGSGj5VEQgzMxe74nkaA==
-X-Gm-Gg: AeBDieuJy7Sz3cCZFK3SN25RsrCa/Wi0q1DnGDIId3BZFXGMw7grWiGib69H426CxQX
-	yTbBIUn34wKrmn91Hsqme0SQXVz5c2JgFL9FhdklPaEEB3dc8ri1c8Bx56JxyA9koTXS+g3DFr1
-	XZIFG+AJS1Fo2CWxFM5xHoHJpJQH29WcVoK8i4vJslwcuqOeOlyOWCT1JaRVGft14U3c14ar+M8
-	IuWHoKFy02V0It2fZ7kxl3u1zpG7fTRaJKUafhbndSkWGZhvSMaxQSHEG/HtwtDALKp9vm6Fva+
-	Cm7TOpqpSS2JLcG0GMPwL7uU60YEBIJ+XXV7bzx0N/3KDghKGsS+6MiQ1QWSYWp2RPlx6v9GuGn
-	trzNaKTQlP3GA81Ak/AkPdfpnm1yU70/0s5nreBUzAL6/n88OGf6O1MG/P4ifhIX9/fxde/FJOx
-	PUq9X+vd85yop5hi9jrpM+FRyQzvNX1XdQWcKohNAKAm97
-X-Received: by 2002:a05:600c:a0b:b0:48a:5391:8424 with SMTP id 5b1f17b1804b1-48e532a4dfamr68507655e9.6.1778179888852;
-        Thu, 07 May 2026 11:51:28 -0700 (PDT)
-Received: from localhost.localdomain ([94.158.58.131])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45416a67bdfsm910506f8f.23.2026.05.07.11.51.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 11:51:28 -0700 (PDT)
-From: Stepan Ionichev <sozdayvek@gmail.com>
-To: zhoubinbin@loongson.cn
-Cc: vkoul@kernel.org,
-	Frank.Li@nxp.com,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Stepan Ionichev <sozdayvek@gmail.com>
-Subject: [PATCH v2] dma: loongson2-apb-cmc: fix NULL deref in residue computation
-Date: Thu,  7 May 2026 22:50:52 +0500
-Message-Id: <20260507175052.9711-1-sozdayvek@gmail.com>
-X-Mailer: git-send-email 2.33.0.windows.2
-In-Reply-To: <20260507023153.400-1-sozdayvek@gmail.com>
-References: <20260507023153.400-1-sozdayvek@gmail.com>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="mk2UKeSo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=e0+0lja+Kzksa0cbDYWXWMbHJC7h8ozTJ8kJwijGG/Y=; b=m
+	k2UKeSoqQIBS+lHd0SLop6udm6z17TsAoG8R4yP9yFFJ5mlSxeeT5UwAeHPez2vc
+	W8aAFHqBhDWiQo+jYdpSWe82ZT3cvaYN2//VV7mIKo/ooThnIx/P8t564pceTWUJ
+	BJ3XGgnQHQf6YCaKpFJ1SodoUpoMj5SsarZZB23ChQ=
+Received: from zhongling0719$126.com (
+ [2409:8a1e:7359:c00:9929:af11:b280:fd4b] ) by ajax-webmail-wmsvr-41-118
+ (Coremail) ; Fri, 8 May 2026 09:33:19 +0800 (CST)
+Date: Fri, 8 May 2026 09:33:19 +0800 (CST)
+From: dd  <zhongling0719@126.com>
+To: "Frank Li" <Frank.li@nxp.com>
+Cc: "Hongling Zeng" <zenghongling@kylinos.cn>,
+	ludovic.desroches@microchip.com, vkoul@kernel.org,
+	Frank.Li@kernel.org, djbw@kernel.org, nicolas.ferre@microchip.com,
+	maciej.sosnowski@intel.com, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re:Re: [PATCH] dma: at_hdmac: Fix IRQ leak in at_dma_probe()
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260403(27802f6d) Copyright (c) 2002-2026 www.mailtech.cn 126com
+In-Reply-To: <afzY9B9lGrfWMWUh@lizhi-Precision-Tower-5810>
+References: <20260507075750.14310-1-zenghongling@kylinos.cn>
+ <afzY9B9lGrfWMWUh@lizhi-Precision-Tower-5810>
+X-NTES-SC: AL_Qu2cCv6bvEEi7yeeYukfn0YbgOw2Wcewuv8j24dVc84Onjng2RwjVnlyLGDW3NK2FyynizqYbCJB1ONqZ5d2emH7VIvgfSN58zycY3r6nA==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <1a41b0d2.11d6.19e0537be23.Coremail.zhongling0719@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:dikvCgC338lgPf1ppy6DAA--.17082W
+X-CM-SenderInfo: x2kr0wpolqwiqxrzqiyswou0bp/xtbBoABBEmn9PWC81AAA3S
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-loongson2_cmc_dma_desc_residue() takes a "desc" parameter that is the
-descriptor whose residue should be computed. The body uses it
-correctly via "desc->num_sgs" and "desc->sg_req[i].len", but the
-cyclic check incorrectly looks at the channel's stale current
-descriptor instead:
-
-	if (lchan->desc->cyclic && next_sg == 0)
-		return residue;
-
-This breaks when the function is called from the vdesc fallback path
-of loongson2_cmc_dma_tx_status():
-
-	if (lchan->desc && cookie == lchan->desc->vdesc.tx.cookie)
-		state->residue = ...desc_residue(lchan, lchan->desc, ...);
-	else if (vdesc)
-		state->residue = ...desc_residue(lchan, to_lmdma_desc(vdesc), 0);
-
-The else-if branch is taken precisely when "lchan->desc" is NULL or
-points to a different descriptor than the one being queried, so
-dereferencing "lchan->desc->cyclic" inside the helper either NULL-
-derefs or reads the wrong descriptor's flag.
-
-smatch flags the inconsistency:
-
-  drivers/dma/loongson/loongson2-apb-cmc-dma.c:516
-  loongson2_cmc_dma_tx_status() error: 'lchan->desc' could be
-  null (see line 512)
-
-Use the "desc" parameter, matching how the rest of the function
-already accesses fields of the descriptor under inspection.
-
-Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson Multi-Channel DMA controller")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
----
-v2:
-- Drop "we previously assumed" from the smatch quote (Frank Li).
-- Add Fixes: tag.
-
- drivers/dma/loongson/loongson2-apb-cmc-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-index 1c9a542ed..3b02bcd75 100644
---- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-+++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-@@ -487,7 +487,7 @@ static size_t loongson2_cmc_dma_desc_residue(struct loongson2_cmc_dma_chan *lcha
- 	ndtr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CNDTR, lchan->id);
- 	residue = ndtr << width;
-
--	if (lchan->desc->cyclic && next_sg == 0)
-+	if (desc->cyclic && next_sg == 0)
- 		return residue;
-
- 	for (i = next_sg; i < desc->num_sgs; i++)
---
-2.43.0
+CgoKSGkgRnJhbmssCgpUaGFua3MgZm9yIHlvdXIgcmV2aWV3LgoKWW91J3JlIHJpZ2h0IHRoYXQg
+aW4gdGhlIG5vcm1hbCBjYXNlIHBsYXRmb3JtX2dldF9pcnEoKSByZXR1cm5zIHRoZQoKc2FtZSB2
+YWx1ZSBhcyAnaXJxJy4gSG93ZXZlciwgdGhpcyBwYXR0ZXJuIHRyaWdnZXJzIGEgc21hdGNoIHdh
+cm5pbmc6CgrCoCDCoCDCoCDCoCDCoCDCoGRyaXZlcnMvZG1hL2F0X2hkbWFjLmM6MjExMCBhdF9k
+bWFfcHJvYmUoKQoKwqAgwqAgwqAgwqAgwqAgwqB3YXJuOiAnaXJxJyBmcm9tIHJlcXVlc3RfaXJx
+KCkgbm90IHJlbGVhc2VkIG9uIGxpbmVzOiAyMTEwLgoKU3RhdGljIGFuYWx5c2lzIHRvb2xzIGNh
+bm5vdCBndWFyYW50ZWUgdGhhdCBwbGF0Zm9ybV9nZXRfaXJxKCkgd2lsbAoKYWx3YXlzIG1hdGNo
+IHRoZSBwcmV2aW91c2x5IHJlcXVlc3RlZCBJUlEsIHNvIHRoZXkgdHJlYXQgaXQgYXMgYQoKcG90
+ZW50aWFsIHJlc291cmNlIGxlYWsuCgpVc2luZyB0aGUgc3RvcmVkICdpcnEnIG1ha2VzIHRoZSBl
+cnJvciBwYXRoIHVuYW1iaWd1b3VzIGFuZCBzaWxlbmNlcwoKdGhlIHdhcm5pbmcuIFRoZXJlZm9y
+ZSBJIHRoaW5rIGl0IHF1YWxpZmllcyBhcyBhIHNtYWxsIGJ1ZyBmaXggcmF0aGVyCgp0aGFuIGp1
+c3QgY2xlYW51cC4KClRoYW5rcywKCgoKQXQgMjAyNi0wNS0wOCAwMjoyNDo1MiwgIkZyYW5rIExp
+IiA8RnJhbmsubGlAbnhwLmNvbT4gd3JvdGU6Cj5PbiBUaHUsIE1heSAwNywgMjAyNiBhdCAwMzo1
+Nzo1MFBNICswODAwLCBIb25nbGluZyBaZW5nIHdyb3RlOgo+PiBXaGVuIHJlcXVlc3RfaXJxKCkg
+c3VjY2VlZHMgYnV0IGEgbGF0ZXIgZXJyb3Igb2NjdXJzIGluIGF0X2RtYV9wcm9iZSgpLAo+PiB0
+aGUgZXJyb3IgaGFuZGxpbmcgcGF0aCBhdHRlbXB0cyB0byBmcmVlIHRoZSBJUlEgYnkgY2FsbGlu
+Zwo+PiBwbGF0Zm9ybV9nZXRfaXJxKCkgYWdhaW4gaW5zdGVhZCBvZiB1c2luZyB0aGUgYWxyZWFk
+eSBzdG9yZWQgSVJRIG51bWJlcgo+PiBpbiB0aGUgbG9jYWwgdmFyaWFibGUgJ2lycScuCj4+Cj4+
+IEZpeCB0aGlzIGJ5IHVzaW5nIHRoZSBzdG9yZWQgJ2lycScgdmFyaWFibGUgZGlyZWN0bHkgaW4g
+ZnJlZV9pcnEoKS4KPj4KPj4gRml4ZXM6IGRjNzhiYWEyYjkwYjIgKCJkbWFlbmdpbmU6IEF0bWVs
+IEhETUFDIGRyaXZlciIpCj4KPkFueSBhY3R1YWwgcHJvYmxlbSBkbyB5b3UgbWVldD8gc3VwcG9z
+ZSBpdCBzaG91bGQgYmUgdGhlIHNhbWUgYXMgJ2lycScuCj4KPm9mIGNvdXJzZSB1c2luZyB2YXJp
+YmxlIGlycSBpcyBjb3JyZWN0LiBidXQgdGhpcyBwYXRjaCBzaG91bGQgYmVsb25nIGNvZGUKPmNs
+ZWFudXAsIG5vdCBmaXguCj4KPkZyYW5rCj4KPj4gU2lnbmVkLW9mZi1ieTogSG9uZ2xpbmcgWmVu
+ZyA8emVuZ2hvbmdsaW5nQGt5bGlub3MuY24+Cj4+IC0tLQo+PiAgZHJpdmVycy9kbWEvYXRfaGRt
+YWMuYyB8IDIgKy0KPj4gIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlv
+bigtKQo+Pgo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEvYXRfaGRtYWMuYyBiL2RyaXZlcnMv
+ZG1hL2F0X2hkbWFjLmMKPj4gaW5kZXggZTViMzBhNTdjNDc3Li4yYTg2MDY3OWI5ZTEgMTAwNjQ0
+Cj4+IC0tLSBhL2RyaXZlcnMvZG1hL2F0X2hkbWFjLmMKPj4gKysrIGIvZHJpdmVycy9kbWEvYXRf
+aGRtYWMuYwo+PiBAQCAtMjEwOSw3ICsyMTA5LDcgQEAgc3RhdGljIGludCBfX2luaXQgYXRfZG1h
+X3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpCj4+ICBlcnJfbWVtc2V0X3Bvb2xf
+Y3JlYXRlOgo+PiAgCWRtYV9wb29sX2Rlc3Ryb3koYXRkbWEtPmxsaV9wb29sKTsKPj4gIGVycl9k
+ZXNjX3Bvb2xfY3JlYXRlOgo+PiAtCWZyZWVfaXJxKHBsYXRmb3JtX2dldF9pcnEocGRldiwgMCks
+IGF0ZG1hKTsKPj4gKwlmcmVlX2lycShpcnEsIGF0ZG1hKTsKPj4gIGVycl9pcnE6Cj4+ICAJY2xr
+X2Rpc2FibGVfdW5wcmVwYXJlKGF0ZG1hLT5jbGspOwo+PiAgCXJldHVybiBlcnI7Cj4+IC0tCj4+
+IDIuMjUuMQo+Pgo=
