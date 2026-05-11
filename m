@@ -1,290 +1,319 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013033.outbound.protection.outlook.com [52.101.83.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987F74C0428;
-	Mon, 11 May 2026 19:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778526839; cv=fail; b=LcCPiBzRxro/nFk2nylIWL0JMd8k3A9XR8k33Po90Zm4ZJw2tXkXCJzuUta/OcXX9IhlEcU5vU08jCcPmNLPgkMeCNiuUnrF8r1zNwwRD/N19bYNtJLF0oeMANsvlDCfzJ2KNRBalZmK0Mi2tiJFI0eeTdk1H+lXtF0ZOx+f/yM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778526839; c=relaxed/simple;
-	bh=i6xfDWyaShJAoHlCIg7pmQVTBOs/ZvQNnivuY/jV2ug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ounfKeQYghglCzhFUrVKtWQI6v4yXWXVKjYw75KPZHifBBFQ9UO7h0AA7pnhCasQPWRP5FF2PCOCIN0tBrLnM/b/rHI5LVbys5B0iHGiPq59ibRKJjU76RqxPvIw74uWoJ6WnrjIXv3yEuG8Ri2TZZdsWY36iCG0PqPsBcbdbJU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=fail (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=VZ7WriL+ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D794A13A2;
+	Mon, 11 May 2026 19:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778526997; cv=none; b=GHFqSweSXoOByipiakPKroWpJaRWdLj6wwa4gOTo/fFIPlQv7KRSHNN879YA3SSQA9WmjUCb5F1Kc+17po7IF9F9Gnx2VpHA7wY0w9C8fEQEnWqZLUDYVS3fBgNehzw6wT+/AM5FyUBXjdolLCMR54Kuz8FXW0EaCM8wS7oPLBk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778526997; c=relaxed/simple;
+	bh=p6RJfuGgVOjbO2AC07tSsL0VZfxUHgZN+0PancIMbDc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Ilajs4YTo3Vl1WSwMQrBOu+Zsa3bLVqyYBAt6bb/aemv/mQRqciRW5y8uyj0LtaE97o+UyWsgtMDfZjBt4YJTCwd4XzrVfTMj20VK0/OZRFjjbIZ7Mt2tHR949YXrsnbeKQdDbUjqsmEKc4qhyLotG2hRn8iVxGSbsOLbzQ2PZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LKJS/g7U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="VZ7WriL+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=H8Qv/Eq406fFviPvnkm0Pe5OnAyLgd0x6Y46H5tr0IYcv70e324aaeQwa0GGSR1lWPIW8JDzaR7QSrfgqwNiqaYUVleYzOh2CcF6L1P1TXKHB61lYcPIVKfutIcl/8D3mnh7BAWqXxxnkPCYq9GJF5yNGGdyV2vU9w7UlIOb/m+3DnYqQoSW1/+xaV7n861RFyVHLhneljSp932UZ5GuAgExjxy9E851uAWP4z0FfIoIaWKzmW6T/4c5Ux4WepXTR131atZqwDwsQi404PepYfClF4Ltql6bjCezQLr99Lq+E7sbRsm7QnJuYhL0HwKLz9sRFRB/QRU5h/lG8mvYMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JJRAreoAgF87+4L3c6T5znXmSF5TAsHPntO8RCbe+RM=;
- b=pSU5GPpqWBl0nSdK2GdY7PiNmzhi8/w8HaW6NX+JLDVFmnXN4+L6dUQKumuDFZ3otAaNHpPr11eQ3kywHAMYtiO2xKLIQBydDDOFj/W8R7WWjeFjmZjKN7ginEoP+5ObSUI6L8DBQQ56AH6c2vG5/I7nKYqrKp5PVJ6f2SQxHTWKCm9eHT/2BnI/zqvw1U5tFqmuAIZXZQZ2GVnGCcsGmKppGib54aYLsYFl76HjBrfHbRzqp1sG7O0j9fwwDeJA5iamfH0fcSwNLx64ocfu2PVXMChpWOqK+rB8Jq4V5CEPtEGutfgcjnN/2xf7Fm12jk/y+kVR0GMBmhMWdeYWCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JJRAreoAgF87+4L3c6T5znXmSF5TAsHPntO8RCbe+RM=;
- b=VZ7WriL+2myFFTyCmDHgiaVy2rFRyWpap9tzx+aVaOFw3CWGW1Ja7RxN6VBHOr3WwtvCRgtBzDwMJS4HKZJDGPcFghPLV3q+zbfiQiMY6HR+1naMj//fEPsOVJROgoCExOjVZqHyRfqbOpMo2bgZ67bYF0c4N+oo//7qNLDTfZl86MjD9jLYqVEQ3z0uM13u0rmECoZg6CwJrA5tT4yjJ6PBCfX+shxIrkv6pBW/fa52yFT0WxNI7gNufMxnkAwhxfWpRmGklXlZ/JQ5D0TfcTi21KJAf6Aiuuy/R9vpevk/VJn+ayOcpJgf8iSjgmO8juT1S2kQVcQOfSdTrP//8w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
- by AS4PR04MB9552.eurprd04.prod.outlook.com (2603:10a6:20b:4fb::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Mon, 11 May
- 2026 19:13:54 +0000
-Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
- ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.20.9891.021; Mon, 11 May 2026
- 19:13:54 +0000
-Date: Mon, 11 May 2026 15:13:47 -0400
-From: Frank Li <Frank.li@nxp.com>
-To: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dmaengine: fsl-edma: Implement
- device_prep_peripheral_dma_vec
-Message-ID: <agIqa4iQAXg_GHhu@lizhi-Precision-Tower-5810>
-References: <20260511-fsl-edma-dyn-sg-v3-0-98a181775dae@bootlin.com>
- <20260511-fsl-edma-dyn-sg-v3-1-98a181775dae@bootlin.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511-fsl-edma-dyn-sg-v3-1-98a181775dae@bootlin.com>
-X-ClientProxiedBy: PH7PR10CA0020.namprd10.prod.outlook.com
- (2603:10b6:510:23d::18) To PA4PR04MB9366.eurprd04.prod.outlook.com
- (2603:10a6:102:2a9::8)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LKJS/g7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 55A45C2BCFC;
+	Mon, 11 May 2026 19:16:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778526997;
+	bh=p6RJfuGgVOjbO2AC07tSsL0VZfxUHgZN+0PancIMbDc=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=LKJS/g7UDdLl3gRKvqS+STZmWWL7yrAl4k0uvtI6Dz6sd74CYaS1WB3fSD+39DJpA
+	 nmNC4nGfOIvCkW/KFKDgYr5I2ENn2MP+ZgjehFUlp14bDOv3YcvV+BBG0IwOEOKqOm
+	 7hPo8XeuGu5g+NpssEnRKBZLsaLsGhA+a1HvKHVn/3EwuQvVFdwjmCBzqJyV3cB/C/
+	 BcOozrk6uAzXSogXWjZ1/guLrixP8FwaObA65VVf6ZEJlFGVM95L1mPdKda/foJ4jT
+	 UDlbwBrPhEjBXOcmEl446voZIoGyVrp51NjGt5r6XrGl1hMSvYIyOZ0pKCRDid043/
+	 4MVzHJ6MJcknA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E330CD37BE;
+	Mon, 11 May 2026 19:16:37 +0000 (UTC)
+From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
+Date: Mon, 11 May 2026 14:16:15 -0500
+Subject: [PATCH v2 03/23] dmaengine: sdxi: Add PCI initialization
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|AS4PR04MB9552:EE_
-X-MS-Office365-Filtering-Correlation-Id: 561db272-731e-47e3-0d60-08deaf91716f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|19092799006|366016|52116014|376014|38350700014|11063799003|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	kFsJFgFLDpP9HVIfqPcrJUDv3U03FujTTDSQZSR2oAXJyfmxpe19/5ZL3viWCv5yE+ZwZTCqsU0llDS3/yzN5/Mc7cs2e89HxgYO0/IOTl9MyI02/gWC2CdguZ1NmvY/ZFbalyRdIe91EkbJZqQYAEMPieoYgxpNsltIqcw6xuqxjhv50/CQdHO76GXVY5GS2qN26TzQR5HGhjypcPZRFeOsPZdCN8c5OmoGUhSD1EIuGCCkAIv4FRetAPzUEBLkxTY7lHAwUGDv6veJwxBCi9nNxOEEHbzMHoZ4HlwX4ydqBsV3GyCotjy3kpiLAFdz/VsBcWYsDmvirz1RW6UMgYtfQ7WVaGrQ0JmREATyiI9I1/CKKAOVaPlom5b/Ta7kri3QjKDEERaKeLeT92RFQHXiMPMJ8lFbr3DdqyQhoFLCbPy5nOmt1K8h48WJrUBcAlmXzoemRaqu7rMtMH0f+Oyw+wMU2Jmw2eufhXLWh2IX48s01Ppubey8kRjxd7XCJzP0MOYaHlvESAN9/FlCpGwPDb/JQs/X8DFrXbiUh3+pSDw4QAA23LPbQgQhKPnSry+9Z8LDPrn/IMCWrN87FjZeK0HDDonFJcuJP62nzVKwrrmyPRLyGX4HA7idEl27kCjdv5Y5lYEEuWY218H69kkmhfSQRIetRVqNOf2NkklM/GfqyCt4pTvDGeB2Kyg4UBhjOpvzjVeyCkCQuNnDxG0IrnBF53UIbwNTTp94tiNFd3xGCA/WG1XEyAMzVA/9
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(366016)(52116014)(376014)(38350700014)(11063799003)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?FwgyhtNajPsGjzW4FzLZxHEFgpbo1shAlrfP9idKHjNOd6g9pXYHWFS67d?=
- =?iso-8859-1?Q?qbNTYgrjm+G0vWMbyQi0o+88PHG+rzmMxrJbrmch35eChTiLuT3w6BNUwC?=
- =?iso-8859-1?Q?4yiQ1LaZvJf6jodSTOMsGT53b6B+IX7jwhkUwLab/paqBOccFXjhYWGBlX?=
- =?iso-8859-1?Q?PhFagUpH77PsOW6lfeDmqsx7jk4+UinLrdY8Q3nR0ZRTFRWn6sPS3FRQSa?=
- =?iso-8859-1?Q?eNR99fdaN5ovCS0hfODa6w07wckIkD2rmb01SMW7gLKsoPPJ3RO0YJaQzC?=
- =?iso-8859-1?Q?09SWun+HZ1I+Yp23to7100fmi/9Gw6K6hZLE99xmbkwDHMq9vk3GI90RCl?=
- =?iso-8859-1?Q?tD1Gm4ANEANt62fSCoh4Anr17aob/g+/7ppq4Q7Gm9zmKJ7OVZcG/SNPAG?=
- =?iso-8859-1?Q?4icikDPf9xqDHg9bct5Oa2RJX0lkJKMj4tqBx0AFL+NnVQrl16Wm3ylqaV?=
- =?iso-8859-1?Q?LfRlZIxxpHJBaOT3NLWA7cGoSqd0Ihb9WqoMTGb9+GPYBLDGbDsW20wuL1?=
- =?iso-8859-1?Q?05YCvL6TkE6aeehtJbnTr+6znhHNz2shFreQSHxH38ctJJ+r8fp0GEyg1y?=
- =?iso-8859-1?Q?o31O6GsFQHljJoGvjTxQmQeJsMEKpMhcOJkqSFNm4QsMpySzCkSUPb9n0d?=
- =?iso-8859-1?Q?2QjY296ixVv6HCUrby18PUAxbeWpVfJA96CdnBSiqipyqkKAHzAHgx82Q/?=
- =?iso-8859-1?Q?1Ufm2HvqMlGXiP4aEEs2w3Lex9NLceJJW3WtaQx4EJHDikw/YrSN6MCBo9?=
- =?iso-8859-1?Q?Dlj/B/reKFXg9NlyykIVUr9Y2TVvVwYQ04U1m4+IZBBSsIW9Dm0LMQgYjx?=
- =?iso-8859-1?Q?aNy0KziATEvyGhhXMRkizIxHwISAb5bDWUNHmR4cmL9bTL2mS7S7Z9Iz8g?=
- =?iso-8859-1?Q?ovar4GzsCz+NbImwB7CtAJg3UG1oOO3D6Qo7Ksuyf91VUfcFYjd9ZIcmme?=
- =?iso-8859-1?Q?k8Ac1e6nMvl0cJoedgqj4XsaJBajLjxPSgMvsKZf5ws4CJmAL13yq39OA4?=
- =?iso-8859-1?Q?zdKFafOn2560F50NZAkGZLEnb28pMKBOhsGAbjaDSPbpJnYgPhJBs5PrSR?=
- =?iso-8859-1?Q?3lpqoGMBWYwCGhKA3sJ2DYdNrUrxNJzEOUKgvFJ7kbUchjlvQV81uir5yR?=
- =?iso-8859-1?Q?bAEuRabEeHHFHZUJcuQ17yd39ddHZ9Qv8rQrwDklwa9FqF5XowRkf0t+9e?=
- =?iso-8859-1?Q?ao0Pi9ez1Wd01gl9Iy+fdGHpaRMxQBpGZTXoJUUZkNuQKqTIPnhkYdOyGL?=
- =?iso-8859-1?Q?ebLoZ6W4r2/BELaSnzNqtij9qX4RnOzss3TTEo2RrnIASkJbOGu6OWg3uN?=
- =?iso-8859-1?Q?cHBu/EEJTKN7bKCjPtuWn1n99vLluNYjA6xCz2Mh5cxIoQtR9sxh7XqKMH?=
- =?iso-8859-1?Q?b+5tytiBfp33S39A9VzeSkIk3U65hFlEIOqwi6kWXHvXo8QAFSf1/Qh+Bk?=
- =?iso-8859-1?Q?hPs9yg52BziauRyl51XSNABLcQ7zx1t9t1vvgaAmArRVcA2pk3iyWTPiCg?=
- =?iso-8859-1?Q?6FATHh6mugdDC7xAduj27KRkiXW8F/3v4H9skGwYbi4BT+kQdRp3Dawv5y?=
- =?iso-8859-1?Q?9ga3TncCiDJnZrCltFeDwBWjxinhaSkLe8Zd6o1ACII90cIOOSqMAkuK72?=
- =?iso-8859-1?Q?B0G9mk3dUklKLDCBrzQ4D9ZSx1kDCIwB/tvAPBTUosS3dHZswxEAUP5pEU?=
- =?iso-8859-1?Q?a3rbXeOp1V8f16s/elNcgv2vs8NNL4ekEfujXqYa6e81gmirTcperRmCdc?=
- =?iso-8859-1?Q?0mNSSKpp+LLwh4Rv4hpGXJwMgZ3sk6A9XJflgcBux4Bg9K?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 561db272-731e-47e3-0d60-08deaf91716f
-X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 19:13:54.3482
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S+1g43wrZzZhLvXbglM/MzBrBSv51KEuB+gQBSf/ca1Mfueu7zrug5SBVcUkhr0t1fe1pcUWsY721nGL5/KIkg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR04MB9552
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260511-sdxi-base-v2-3-889cfed17e3f@amd.com>
+References: <20260511-sdxi-base-v2-0-889cfed17e3f@amd.com>
+In-Reply-To: <20260511-sdxi-base-v2-0-889cfed17e3f@amd.com>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>, 
+ David Rientjes <rientjes@google.com>, John.Kariuki@amd.com, 
+ Kinsey Ho <kinseyho@google.com>, 
+ Mario Limonciello <mario.limonciello@amd.com>, 
+ PradeepVineshReddy.Kodamati@amd.com, Shivank Garg <shivankg@amd.com>, 
+ Stephen Bates <Stephen.Bates@amd.com>, Wei Huang <wei.huang2@amd.com>, 
+ Wei Xu <weixugc@google.com>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+ Jonathan Cameron <jic23@kernel.org>, Nathan Lynch <nathan.lynch@amd.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778526994; l=6987;
+ i=nathan.lynch@amd.com; s=20260410; h=from:subject:message-id;
+ bh=Jr/4QKf8JJOoYOpO1PMCwsIuwzKb0eqSFB9z91gGX0w=;
+ b=iS7K0F3kxuiokKzkHZ+v2FPj9hh3Kvd4IKMybGZRuBR7yakUe4g98s8dXGUlMj4dpqEdlMXsQ
+ +fpM3v3KHchDJnWnKatmiz/0n5Qce0OkyB/pns0ViBT/6/VaYxdLlVN
+X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
+ pk=PK4ozhq+/z9/2Jl5rgDmvHa9raVomv79qM8p1RAFpEw=
+X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260410 with
+ auth_id=728
+X-Original-From: Nathan Lynch <nathan.lynch@amd.com>
+Reply-To: nathan.lynch@amd.com
 
-On Mon, May 11, 2026 at 03:57:19PM +0200, Benoît Monin wrote:
-> Add implementation of .device_prep_peripheral_dma_vec() callback to setup
-> a scatter/gather DMA transfer from an array of dma_vec structures. Setup
-> a cyclic transfer if the DMA_PREP_REPEAT flag is set.
->
-> Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
-> ---
+From: Nathan Lynch <nathan.lynch@amd.com>
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Add enough code to bind a SDXI device via the class code and map its
+control registers and doorbell region. All device resources are
+managed with devres at this point, so there is no explicit teardown
+path.
 
->  drivers/dma/fsl-edma-common.c | 109 ++++++++++++++++++++++++++++++++++++++++++
->  drivers/dma/fsl-edma-common.h |   4 ++
->  drivers/dma/fsl-edma-main.c   |   2 +
->  3 files changed, 115 insertions(+)
->
-> diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-> index bb7531c456df..c10190164926 100644
-> --- a/drivers/dma/fsl-edma-common.c
-> +++ b/drivers/dma/fsl-edma-common.c
-> @@ -673,6 +673,115 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
->  	return vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc, flags);
->  }
->
-> +struct dma_async_tx_descriptor *
-> +fsl_edma_prep_peripheral_dma_vec(struct dma_chan *chan, const struct dma_vec *vecs,
-> +				 size_t nb, enum dma_transfer_direction direction,
-> +				 unsigned long flags)
-> +{
-> +	struct fsl_edma_chan *fsl_chan = to_fsl_edma_chan(chan);
-> +	dma_addr_t src_addr, dst_addr, last_sg;
-> +	struct fsl_edma_desc *fsl_desc;
-> +	u16 soff, doff, iter;
-> +	u32 nbytes;
-> +	int i;
-> +
-> +	if (!is_slave_direction(direction))
-> +		return NULL;
-> +
-> +	if (!fsl_edma_prep_slave_dma(fsl_chan, direction))
-> +		return NULL;
-> +
-> +	fsl_desc = fsl_edma_alloc_desc(fsl_chan, nb);
-> +	if (!fsl_desc)
-> +		return NULL;
-> +	fsl_desc->iscyclic = flags & DMA_PREP_REPEAT;
-> +	fsl_desc->dirn = direction;
-> +
-> +	if (direction == DMA_MEM_TO_DEV) {
-> +		if (!fsl_chan->cfg.src_addr_width)
-> +			fsl_chan->cfg.src_addr_width = fsl_chan->cfg.dst_addr_width;
-> +		fsl_chan->attr =
-> +			fsl_edma_get_tcd_attr(fsl_chan->cfg.src_addr_width,
-> +					      fsl_chan->cfg.dst_addr_width);
-> +		nbytes = fsl_chan->cfg.dst_addr_width * fsl_chan->cfg.dst_maxburst;
-> +	} else {
-> +		if (!fsl_chan->cfg.dst_addr_width)
-> +			fsl_chan->cfg.dst_addr_width = fsl_chan->cfg.src_addr_width;
-> +		fsl_chan->attr =
-> +			fsl_edma_get_tcd_attr(fsl_chan->cfg.src_addr_width,
-> +					      fsl_chan->cfg.dst_addr_width);
-> +		nbytes = fsl_chan->cfg.src_addr_width * fsl_chan->cfg.src_maxburst;
-> +	}
-> +
-> +	for (i = 0; i < nb; i++) {
-> +		if (direction == DMA_MEM_TO_DEV) {
-> +			src_addr = vecs[i].addr;
-> +			dst_addr = fsl_chan->dma_dev_addr;
-> +			soff = fsl_chan->cfg.dst_addr_width;
-> +			doff = 0;
-> +		} else if (direction == DMA_DEV_TO_MEM) {
-> +			src_addr = fsl_chan->dma_dev_addr;
-> +			dst_addr = vecs[i].addr;
-> +			soff = 0;
-> +			doff = fsl_chan->cfg.src_addr_width;
-> +		} else {
-> +			/* DMA_DEV_TO_DEV */
-> +			src_addr = fsl_chan->cfg.src_addr;
-> +			dst_addr = fsl_chan->cfg.dst_addr;
-> +			soff = 0;
-> +			doff = 0;
-> +		}
-> +
-> +		/*
-> +		 * Choose the suitable burst length if dma_vec length is not
-> +		 * multiple of burst length so that the whole transfer length is
-> +		 * multiple of minor loop(burst length).
-> +		 */
-> +		if (vecs[i].len % nbytes) {
-> +			u32 width = (direction == DMA_DEV_TO_MEM) ? doff : soff;
-> +			u32 burst = (direction == DMA_DEV_TO_MEM) ?
-> +						fsl_chan->cfg.src_maxburst :
-> +						fsl_chan->cfg.dst_maxburst;
-> +			int j;
-> +
-> +			for (j = burst; j > 1; j--) {
-> +				if (!(vecs[i].len % (j * width))) {
-> +					nbytes = j * width;
-> +					break;
-> +				}
-> +			}
-> +			/* Set burst size as 1 if there's no suitable one */
-> +			if (j == 1)
-> +				nbytes = width;
-> +		}
-> +
-> +		iter = vecs[i].len / nbytes;
-> +		if (i < nb - 1) {
-> +			last_sg = fsl_desc->tcd[(i + 1)].ptcd;
-> +			fsl_edma_fill_tcd(fsl_chan, fsl_desc->tcd[i].vtcd, src_addr,
-> +					  dst_addr, fsl_chan->attr, soff,
-> +					  nbytes, 0, iter, iter, doff, last_sg,
-> +					  false, false, true);
-> +		} else {
-> +			if (fsl_desc->iscyclic) {
-> +				last_sg = fsl_desc->tcd[0].ptcd;
-> +				fsl_edma_fill_tcd(fsl_chan, fsl_desc->tcd[i].vtcd, src_addr,
-> +						  dst_addr, fsl_chan->attr, soff,
-> +						  nbytes, 0, iter, iter, doff, last_sg,
-> +						  true, false, true);
-> +			} else {
-> +				last_sg = 0;
-> +				fsl_edma_fill_tcd(fsl_chan, fsl_desc->tcd[i].vtcd, src_addr,
-> +						  dst_addr, fsl_chan->attr, soff,
-> +						  nbytes, 0, iter, iter, doff, last_sg,
-> +						  true, true, false);
-> +			}
-> +		}
-> +	}
-> +
-> +	return vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc, flags);
-> +}
-> +
->  struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
->  		struct dma_chan *chan, struct scatterlist *sgl,
->  		unsigned int sg_len, enum dma_transfer_direction direction,
-> diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
-> index 205a96489094..0d028048701d 100644
-> --- a/drivers/dma/fsl-edma-common.h
-> +++ b/drivers/dma/fsl-edma-common.h
-> @@ -496,6 +496,10 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_cyclic(
->  		struct dma_chan *chan, dma_addr_t dma_addr, size_t buf_len,
->  		size_t period_len, enum dma_transfer_direction direction,
->  		unsigned long flags);
-> +struct dma_async_tx_descriptor *fsl_edma_prep_peripheral_dma_vec(
-> +		struct dma_chan *chan, const struct dma_vec *vecs,
-> +		size_t nb, enum dma_transfer_direction direction,
-> +		unsigned long flags);
->  struct dma_async_tx_descriptor *fsl_edma_prep_slave_sg(
->  		struct dma_chan *chan, struct scatterlist *sgl,
->  		unsigned int sg_len, enum dma_transfer_direction direction,
-> diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-> index 36155ab1602a..6693b4270a1a 100644
-> --- a/drivers/dma/fsl-edma-main.c
-> +++ b/drivers/dma/fsl-edma-main.c
-> @@ -841,6 +841,8 @@ static int fsl_edma_probe(struct platform_device *pdev)
->  	fsl_edma->dma_dev.device_free_chan_resources
->  		= fsl_edma_free_chan_resources;
->  	fsl_edma->dma_dev.device_tx_status = fsl_edma_tx_status;
-> +	fsl_edma->dma_dev.device_prep_peripheral_dma_vec
-> +		= fsl_edma_prep_peripheral_dma_vec;
->  	fsl_edma->dma_dev.device_prep_slave_sg = fsl_edma_prep_slave_sg;
->  	fsl_edma->dma_dev.device_prep_dma_cyclic = fsl_edma_prep_dma_cyclic;
->  	fsl_edma->dma_dev.device_prep_dma_memcpy = fsl_edma_prep_memcpy;
->
-> --
-> 2.54.0
->
+While the SDXI specification includes a PCIe binding, the standard is
+intended to be independent of the underlying I/O interconnect. So the
+driver confines PCI-specific code to pci.c, and the rest (such as
+device.c, introduced here) is bus-agnostic. Hence there is some
+indirection: during probe, the bus code registers any matched device
+with the generic SDXI core, supplying the device and a sdxi_bus_ops
+vector. After the core associates a new sdxi_dev with the device,
+bus-specific initialization proceeds via the sdxi_bus_ops->init()
+callback.
+
+Co-developed-by: Wei Huang <wei.huang2@amd.com>
+Signed-off-by: Wei Huang <wei.huang2@amd.com>
+Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
+---
+ drivers/dma/Kconfig       |  2 ++
+ drivers/dma/Makefile      |  1 +
+ drivers/dma/sdxi/Kconfig  |  8 +++++
+ drivers/dma/sdxi/Makefile |  6 ++++
+ drivers/dma/sdxi/device.c | 26 +++++++++++++++
+ drivers/dma/sdxi/pci.c    | 83 +++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/sdxi.h   | 38 ++++++++++++++++++++++
+ 7 files changed, 164 insertions(+)
+
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index ae6a682c9f76..3d89284e7cf8 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -762,6 +762,8 @@ source "drivers/dma/lgm/Kconfig"
+ 
+ source "drivers/dma/loongson/Kconfig"
+ 
++source "drivers/dma/sdxi/Kconfig"
++
+ source "drivers/dma/stm32/Kconfig"
+ 
+ # clients
+diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
+index 14aa086629d5..371927615c4a 100644
+--- a/drivers/dma/Makefile
++++ b/drivers/dma/Makefile
+@@ -84,6 +84,7 @@ obj-$(CONFIG_XGENE_DMA) += xgene-dma.o
+ obj-$(CONFIG_ST_FDMA) += st_fdma.o
+ obj-$(CONFIG_FSL_DPAA2_QDMA) += fsl-dpaa2-qdma/
+ obj-$(CONFIG_INTEL_LDMA) += lgm/
++obj-$(CONFIG_SDXI) += sdxi/
+ 
+ obj-y += amd/
+ obj-y += loongson/
+diff --git a/drivers/dma/sdxi/Kconfig b/drivers/dma/sdxi/Kconfig
+new file mode 100644
+index 000000000000..a568284cd583
+--- /dev/null
++++ b/drivers/dma/sdxi/Kconfig
+@@ -0,0 +1,8 @@
++config SDXI
++	tristate "SDXI support"
++	select DMA_ENGINE
++	help
++	  Enable support for Smart Data Accelerator Interface (SDXI)
++	  Platform Data Mover devices. SDXI is a vendor-neutral
++	  standard for a memory-to-memory data mover and acceleration
++	  interface.
+diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
+new file mode 100644
+index 000000000000..f84b87d53e27
+--- /dev/null
++++ b/drivers/dma/sdxi/Makefile
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0
++obj-$(CONFIG_SDXI) += sdxi.o
++
++sdxi-objs += device.o
++
++sdxi-$(CONFIG_PCI_MSI) += pci.o
+diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
+new file mode 100644
+index 000000000000..b718ce04afa0
+--- /dev/null
++++ b/drivers/dma/sdxi/device.c
+@@ -0,0 +1,26 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * SDXI hardware device driver
++ *
++ * Copyright Advanced Micro Devices, Inc.
++ */
++
++#include <linux/device.h>
++#include <linux/slab.h>
++
++#include "sdxi.h"
++
++int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
++{
++	struct sdxi_dev *sdxi;
++
++	sdxi = devm_kzalloc(dev, sizeof(*sdxi), GFP_KERNEL);
++	if (!sdxi)
++		return -ENOMEM;
++
++	sdxi->dev = dev;
++	sdxi->bus_ops = ops;
++	dev_set_drvdata(dev, sdxi);
++
++	return sdxi->bus_ops->init(sdxi);
++}
+diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
+new file mode 100644
+index 000000000000..9ac94d6f8b96
+--- /dev/null
++++ b/drivers/dma/sdxi/pci.c
+@@ -0,0 +1,83 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * SDXI PCI device code
++ *
++ * Copyright Advanced Micro Devices, Inc.
++ */
++
++#include <linux/dev_printk.h>
++#include <linux/dma-mapping.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/iomap.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++
++#include "sdxi.h"
++
++enum sdxi_mmio_bars {
++	SDXI_PCI_BAR_CTL_REGS = 0,
++	SDXI_PCI_BAR_DOORBELL = 2,
++};
++
++static struct pci_dev *sdxi_to_pci_dev(const struct sdxi_dev *sdxi)
++{
++	return to_pci_dev(sdxi->dev);
++}
++
++static int sdxi_pci_init(struct sdxi_dev *sdxi)
++{
++	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
++	struct device *dev = &pdev->dev;
++	int ret;
++
++	ret = pcim_enable_device(pdev);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to enable device\n");
++
++	dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
++
++	sdxi->ctrl_regs = pcim_iomap_region(pdev, SDXI_PCI_BAR_CTL_REGS,
++					    KBUILD_MODNAME);
++	if (IS_ERR(sdxi->ctrl_regs))
++		return dev_err_probe(dev, PTR_ERR(sdxi->ctrl_regs),
++				     "failed to map control registers\n");
++
++	sdxi->dbs = pcim_iomap_region(pdev, SDXI_PCI_BAR_DOORBELL,
++				      KBUILD_MODNAME);
++	if (IS_ERR(sdxi->dbs))
++		return dev_err_probe(dev, PTR_ERR(sdxi->dbs),
++				     "failed to map doorbell region\n");
++
++	pci_set_master(pdev);
++	return 0;
++}
++
++static const struct sdxi_bus_ops sdxi_pci_ops = {
++	.init = sdxi_pci_init,
++};
++
++static int sdxi_pci_probe(struct pci_dev *pdev,
++			  const struct pci_device_id *id)
++{
++	return sdxi_register(&pdev->dev, &sdxi_pci_ops);
++}
++
++static const struct pci_device_id sdxi_id_table[] = {
++	{ PCI_DEVICE_CLASS(PCI_CLASS_ACCELERATOR_SDXI, 0xffffff) },
++	{ }
++};
++MODULE_DEVICE_TABLE(pci, sdxi_id_table);
++
++static struct pci_driver sdxi_driver = {
++	.name = "sdxi",
++	.id_table = sdxi_id_table,
++	.probe = sdxi_pci_probe,
++	.sriov_configure = pci_sriov_configure_simple,
++};
++
++MODULE_AUTHOR("Wei Huang");
++MODULE_AUTHOR("Nathan Lynch");
++MODULE_DESCRIPTION("SDXI PCIe interface driver");
++MODULE_LICENSE("GPL");
++module_pci_driver(sdxi_driver);
+diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
+new file mode 100644
+index 000000000000..d4c61ca2f875
+--- /dev/null
++++ b/drivers/dma/sdxi/sdxi.h
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * SDXI device driver header
++ *
++ * Copyright Advanced Micro Devices, Inc.
++ */
++
++#ifndef DMA_SDXI_H
++#define DMA_SDXI_H
++
++#include <linux/compiler_types.h>
++#include <linux/types.h>
++
++struct sdxi_dev;
++
++/**
++ * struct sdxi_bus_ops - Bus-specific methods for SDXI devices.
++ */
++struct sdxi_bus_ops {
++	/**
++	 * @init: Map control registers and doorbell region, allocate
++	 *        IRQ ranges. Invoked before bus-agnostic SDXI
++	 *        function initialization.
++	 */
++	int (*init)(struct sdxi_dev *sdxi);
++};
++
++struct sdxi_dev {
++	struct device *dev;
++	void __iomem *ctrl_regs;	/* virt addr of ctrl registers */
++	void __iomem *dbs;		/* virt addr of doorbells */
++
++	const struct sdxi_bus_ops *bus_ops;
++};
++
++int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
++
++#endif /* DMA_SDXI_H */
+
+-- 
+2.54.0
+
+
