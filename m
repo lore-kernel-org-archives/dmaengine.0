@@ -1,130 +1,141 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BF435A397
-	for <dmaengine@vger.kernel.org>; Fri, 15 May 2026 15:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CCA3FF1DA;
+	Fri, 15 May 2026 15:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778857722; cv=none; b=jC69kXF4+jidfoEHlqJ+Mh6wlYdt0ZN8KLwcuCaBWN1njwwyJ8ql3QW0KpAoM7el02e1ImNwUuGRvuOGUflwNMjh6VsY/wDFf6tP9FksPji309YQQzg9dpZ2I5i8DmmNWh2vUcU48n+pvPMY/CowefzK/F75HpYPTJeHrnkGK6M=
+	t=1778860396; cv=none; b=c1FDr9SOcIUTMXT9aXfz02A1j7QBMFbpWpD5DnwmViWPPp16oAFabJBc/nGVFcpIx1eDIL0uU23/87G/rBogJS/onlrJ68ckUiIdc1OrCZeIUlhhHS8vAt4jwhfIQgIN8nqGnUHCVovMqnGzteo2sknSZLoGz7yquS0XMzexQN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778857722; c=relaxed/simple;
-	bh=lIpEQrXlajMOFICW7MzNodUJb/HupkFG9o0RzZwkwxs=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=jTe0jRfosF4BiVbd6qmzHr1RsSgSgb95P+z7jqUdHT3lmezF3UrV6YrNyuaOEVBsGpSIiAabFJNB+K8zkVaBvBc5do1DretpBeQcfqIpSWXtloKoC2CPMhKlQa/IxebWL72Ym9+zr35MLOqmcZJVdKLpbpRDd6CFdQ0Q5hYcKxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t2+wzFjr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778860396; c=relaxed/simple;
+	bh=M4gY2h6P2P8MDlTavWbOY/URprPBD6HWXCETyDVT91c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=og0Sy3OVT8SQzeiBeUegT3diIyYJkuQrBBZdzCUoMJrfPAyHBsotZMRjbWgRSoqeLSLaVgKln2QfiT0VY1rPx6ouL4RIq2N1NLbWe/PgTDMbfeTRZGvBziNDG8+9Pfe2rpB8OcwAgwRWhTd/s/LpHWp0QofsqrZcFTqjDCtwOd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CLxbvCYf; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t2+wzFjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE11C2BCFD;
-	Fri, 15 May 2026 15:08:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778857722;
-	bh=lIpEQrXlajMOFICW7MzNodUJb/HupkFG9o0RzZwkwxs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=t2+wzFjrAXYZQqeO/w6XOSYxrLnz+9C/WMmzCuOaI0CdPBR0NFGudxQq0Dcj64QOf
-	 2ELVno60a4bACSiReH94vUh2VkzH8umvu5YBysnDDJnuL9Umzr7ekqm7XmmR7ODPvG
-	 bG0CRUqXYozOwOiCs0FTgw7aHB5mIak9HZOcn0XsEbLhZRnXzV2JGZJj+6m9UBDwfY
-	 ioHyOYuxVHO/I5Faqr0MwoAoEjxw1KFenxc6ZSlM+MXLeMBJRYx7xV1ToZLN+d0ZUw
-	 xo+3spHs79uj77AnrNI1BocZlSa2ccOiy91PjKBH3YRM6GodchKiFfV0BAx7WVsqoF
-	 DYCuQtJ8hQAAw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] dmaengine: idxd: fix deadlock and double free in
- idxd_cdev_open()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Yuho Choi" <dbgh9129@gmail.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260515142623.793549-1-dbgh9129@gmail.com>
-References: <20260515142623.793549-1-dbgh9129@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 15 May 2026 15:08:41 +0000
-Message-Id: <20260515150841.DDE11C2BCFD@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CLxbvCYf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778860395; x=1810396395;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=M4gY2h6P2P8MDlTavWbOY/URprPBD6HWXCETyDVT91c=;
+  b=CLxbvCYfGjCfjqo4fnlVLgUprWIRpLda6hWjHtEpuMRZQJWvRp5EW3WA
+   ILiV1zk5Tfl5qEJgI4gl05KvlrN2Nvj251oPEazLEV0zzQjHpWKmOjhfh
+   sCqWbMGUuVGUkBNaMXPSaN1mPxlAyZrwwNnMPQmc0EndyNcbDLAE+9jDD
+   EHADzPzQRiEI3gdfsLTIazR3AnCZ4kNgvsZC1N0wIHq5tD1vFopUV6Mbf
+   s0oRxINasKanMenyNwnT0KcZtMOaXwgCQyJoi/M97Bz1QgbHqB/5g5E0z
+   yiJYqSVpIa3MKhDDR0lTXZ5SPR1p4AkP9TYuVpjMUWuTbbi87UgfTvTwh
+   g==;
+X-CSE-ConnectionGUID: O9Ypt7MKQZS/6j2oMWlV4w==
+X-CSE-MsgGUID: gTOBIY4sTk2BpfH5TLlHbA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11787"; a="90920790"
+X-IronPort-AV: E=Sophos;i="6.23,236,1770624000"; 
+   d="scan'208";a="90920790"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 08:53:15 -0700
+X-CSE-ConnectionGUID: gwa4ZgF6QNSr4ohM0MSLbw==
+X-CSE-MsgGUID: EUx1GBEsQ/u/H98HBRl7MQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,236,1770624000"; 
+   d="scan'208";a="262244745"
+Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.108.188]) ([10.125.108.188])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 08:53:13 -0700
+Message-ID: <8407feed-0619-4b94-95c7-0d2f27c643c3@intel.com>
+Date: Fri, 15 May 2026 08:53:12 -0700
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: idxd: fix deadlock and double free in
+ idxd_cdev_open()
+To: Yuho Choi <dbgh9129@gmail.com>,
+ Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+ Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260515142623.793549-1-dbgh9129@gmail.com>
+Content-Language: en-US
+From: Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <20260515142623.793549-1-dbgh9129@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Hardware state leak and potential IOMMU fault on ida_alloc() failu=
-re path.
-- [Medium] Mixing goto-based error handling and scope-based __free() cleanu=
-p in the same function.
---
 
-commit e8ca7b853ba46b3d4f21adcfca83ffcc065ffc9c
-Author: Yuho Choi <dbgh9129@gmail.com>
 
-dmaengine: idxd: fix deadlock and double free in idxd_cdev_open()
-
-This commit resolves a deadlock and double free in idxd_cdev_open() by
-using a scoped put_device() cleanup for fdev. It also adjusts the locking
-and reference counting on the error paths when device_add() or dev_set_name=
-()
-fails.
-
+On 5/15/26 7:26 AM, Yuho Choi wrote:
+> The failed_dev_add and failed_dev_name error paths in idxd_cdev_open()
+> drop the file-device reference while still holding wq->wq_lock. If this
+> is the last reference, put_device(fdev) runs idxd_file_dev_release(),
+> which takes wq->wq_lock again and deadlocks.
+> 
+> Those error paths also fall through into the later ctx cleanup labels
+> after idxd_file_dev_release() has already freed ctx. This can make
+> idxd_xa_pasid_remove(ctx) operate on freed memory and can later free ctx
+> again at the failed label.
+> 
+> Use scoped put_device() cleanup for fdev and return from the fdev setup
+> failure path after unlocking wq->wq_lock. Take the WQ reference before
+> fdev can be released so idxd_file_dev_release() always balances a
+> matching idxd_wq_get().
+> 
+> Fixes: e6fd6d7e5f0fe ("dmaengine: idxd: add a device to represent the file opened")
+> Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+> ---
+> Changes in v2:
+> - Use __free(put_device) for the file-device reference.
+> - Take the WQ reference before fdev can be released so the release
+>   callback's idxd_wq_put() has a matching idxd_wq_get().
+> 
+>  drivers/dma/idxd/cdev.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
 > diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-> index 0366c7cf35020..18ff29118d121 100644
+> index 0366c7cf3502..18ff29118d12 100644
 > --- a/drivers/dma/idxd/cdev.c
 > +++ b/drivers/dma/idxd/cdev.c
-> @@ -216,7 +216,7 @@ static int idxd_cdev_open(struct inode *inode, struct=
- file *filp)
+> @@ -216,7 +216,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
 >  	struct idxd_user_context *ctx;
 >  	struct idxd_device *idxd;
 >  	struct idxd_wq *wq;
 > -	struct device *dev, *fdev;
-> +	struct device *dev, *fdev __free(put_device) =3D NULL;
+> +	struct device *dev, *fdev __free(put_device) = NULL;
 
-The official cleanup subsystem guidelines recommend against mixing goto-bas=
-ed
-error handling and scope-based __free() cleanup in the same function, as it
-can create confusing ownership semantics.
+It's probably not a good idea to mix scope based cleanups with gotos. Use one or the other and not both. Otherwise the whole thing become a mess to read and maintain. In this function it looks to be pretty difficult to completely convert to scope based cleanups so I suggest avoiding it.
 
-Since this function still retains several goto labels for earlier failure
-paths, would it be better to either fully convert the function to scope-bas=
-ed
-cleanup or continue relying on goto for this variable?
+DJ
 
-[ ... ]
-
-> @@ -301,13 +302,14 @@ static int idxd_cdev_open(struct inode *inode, stru=
-ct file *filp)
+>  	int rc = 0;
+>  	struct iommu_sva *sva = NULL;
+>  	unsigned int pasid;
+> @@ -289,6 +289,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+>  	fdev->bus = &dsa_bus_type;
+>  	fdev->type = &idxd_cdev_file_type;
+>  
+> +	idxd_wq_get(wq);
+>  	rc = dev_set_name(fdev, "file%d", ctx->id);
+>  	if (rc < 0) {
+>  		dev_warn(dev, "set name failure\n");
+> @@ -301,13 +302,14 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
 >  		goto failed_dev_add;
 >  	}
-> =20
+>  
 > -	idxd_wq_get(wq);
-> +	fdev =3D NULL;
+> +	fdev = NULL;
 >  	mutex_unlock(&wq->wq_lock);
 >  	return 0;
-> =20
+>  
 >  failed_dev_add:
 >  failed_dev_name:
 > -	put_device(fdev);
 > +	mutex_unlock(&wq->wq_lock);
 > +	return rc;
 >  failed_ida:
-
-This issue predates this commit, but I noticed a potential hardware state l=
-eak
-on the ida_alloc() failure path that leads to this label.
-
-If the workqueue is dedicated, idxd_wq_set_pasid() is called to program the
-PASID into the hardware registers. Immediately after, if ida_alloc() fails,
-the code jumps to failed_ida.
-
-The error path then unbinds the SVA device via iommu_sva_unbind_device().
-However, because fdev is still NULL at this point, idxd_file_dev_release()
-is skipped and idxd_wq_disable_pasid() is never called.
-
-Does this leave the hardware workqueue enabled and programmed with an unbou=
-nd
-PASID, potentially triggering IOMMU translation faults during subsequent
-hardware activity?
-
 >  failed_set_pasid:
 >  	if (device_user_pasid_enabled(idxd))
->  		idxd_xa_pasid_remove(ctx);
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260515142623.7935=
-49-1-dbgh9129@gmail.com?part=3D1
