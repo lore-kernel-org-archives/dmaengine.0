@@ -1,207 +1,127 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0FC3D6487
-	for <dmaengine@vger.kernel.org>; Sun, 17 May 2026 22:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779057697; cv=pass; b=FM4uBzY2l6V8eu7Tz2IHtF30/ojPBNFrNs9g/+wOdXL+thbjgHjf7yvYMLzkDiIC8AU5Rg+sa10l9TGdR1OyMt9FKWyJJ3gQHqVZA+91384haaz1t4bQjWhaCfNQPd05vXTCzw+PHNrToDuKlDFqWDLuGewOAU5yl9kcuW6KAP4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779057697; c=relaxed/simple;
-	bh=UDRqVbPZNo1rDKG47pl3Cfg1y+NpJU3+9tCj4VzpKzA=;
-	h=References:MIME-Version:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nL4t9ChhcmEQvW1uxeZgivDULrlwoT0UF0qsCrcQmtd0Oqlr8xX6VamswNJ5e2m+qaepfs6xqSwoq7MHc18/zXVOPmXM80qy0hEAjTq+8kBcLM4aSpEPvzk58nwEXCv8DTqxEHi+0ssZxv6VAzlNV7ueuWuP2eb2EVhcTMyPsSo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=yeUYLRx2; arc=pass smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6D7219E8;
+	Mon, 18 May 2026 03:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779075242; cv=none; b=FW0e8nQkZRYz8oPSsvuUKevo3Ygca9ITyWoXEbjnHv69pkEvY1IgCvzPz1gyb1ipXhBFZC96qV2uYxg5ncaMfNdJWIe0VjtoHDAHZN7Tqtd+F9nliOTLSq2XfUJEkt7IONShuTbP4LIaO8ZgLkLW+AJ953SqWQsjPjHP0R2JE30=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779075242; c=relaxed/simple;
+	bh=Q7iJZ6VUq1H8Bt3WwDMb4K4clOEXomOap5ooldumwW4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=rdSmmMoTwIQ3kD+9tnyB82RyQqx1Dmwiphyf4rzW3sA7QOSyqKqRzJ5u2llxz4W92nZ7gHashZZSE0htBHJJFbc9MZ2kHVA8C6Lh0e2mu4yJlKO/b6TelN1n4HlQb+HHu7zWYhcCwh8yGX16JuMwNCg6WoWApq9Hwqx8sZg5ZAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Hv+Ec8hg; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="yeUYLRx2"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bd5047a2a4cso291873466b.3
-        for <dmaengine@vger.kernel.org>; Sun, 17 May 2026 15:41:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779057692; cv=none;
-        d=google.com; s=arc-20240605;
-        b=SfRdUdFxGEzXkwRtXdkhpc3IS0f124zXOK3f0ExxuSyocREpSQ36RdQaQsAgF+ZjFk
-         ewF0YQDbrpBjJgrmcuQxlYNWYV3uYz2crhgXdaJ3cL+d3hWjUpLjWOah5zxwc3SWyXYE
-         nj1xhCLFm1lLFLaDg+3t8RFCRxGRFsBIndGTAvne0V/BB5B6fLhB/Lr1fbvRLYHb3Gm4
-         kiWDU7/Hov79I9ZLha+sWQsY/Qn0pF1g2Wnkp0GDHBFvXjefB3sHRE+2kniUdrah1FyU
-         A/sa/6Nzm/sWz2io0b6fY5esQA5UE+yeqtaiUHJrtobalVpazIv1aLMpG0/d3RK39lM3
-         ke6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:mime-version
-         :references:esfrom:dkim-signature;
-        bh=6WvnwIRGvHEPeQ8ZKX+R0d/VCeeAw5//At/YqjZNVr0=;
-        fh=i8uF9BYLS8Pwi3AI00Vcm020SysOH1qZm1oeO70j0qE=;
-        b=YBbP5OJze1dL0pcJpPu72RtcPmsMfi4N1XDMYqdHYR/zIG7bDG81z2UDUBx1edz2uR
-         HrTPnKR/TKuiBrlrEI7cxGhmPSfc+2+zcbLBROZhAHsv0ltW6wHnaHbLgqCtQdqTSo/V
-         089y6PmWAvsHPYvNaj/CP5rUxG6lpkDNleM3m8SxBGenrpgbopavSyVpOPdukwi/XeTr
-         BJxVslKo6wpVRqV+7cVroonAnqPvT+6Wz5QfZypyseU9zR0paalZfpDA8eNdFUOO/DRV
-         J81As/nwZ/kmppxpOAb1WdUWgJnTkEsON5vmLkrSLBKh+FVgd5PWs4MVX6BrA4loeW8/
-         w0Ng==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1779057692; x=1779662492; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:mime-version
-         :references:esfrom:from:to:cc:subject:date:message-id:reply-to;
-        bh=6WvnwIRGvHEPeQ8ZKX+R0d/VCeeAw5//At/YqjZNVr0=;
-        b=yeUYLRx2ZpZFxVDTbe432d7JGuXuyNQn2mARdpaCX0NIQUBK2S4HkgWyUxmF3ZtAhf
-         gja4tkIKOU6EYIswd6FavucUO/m/Z8XKwkUeZyf05p0zRclWWcAJ+lJyIpxUhDwBVl1E
-         Ne0Wf62u8gN6ca82mlsJ6DTEMKib/xM3U7Gref0cc3UNC4fv5Rh/ZKlnC7g6DhvsOkJa
-         ocqbCsO62WsFBPQWIPykD+F2WZxsKb0P1zJcxkEYVnam+bUUV3WgBwhjUbBfQj70hqqO
-         XsOEg19E7oDkjPuv4zVPNbItSde66le3vGzH87KGzemIfIJsBGF97tp10C8Fe5WWx22u
-         M5IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779057692; x=1779662492;
-        h=cc:to:subject:message-id:date:from:in-reply-to:mime-version
-         :references:esfrom:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6WvnwIRGvHEPeQ8ZKX+R0d/VCeeAw5//At/YqjZNVr0=;
-        b=JN7qV7KP+cSykmM4nsBN+QnxkaL503QkJrDKK0vcvrklUSs7vSP+ohT3esRTMuAvJ4
-         w+UDJn443SJesWHhEPoPNmVtPVJeJNVsP0puLcB1IneHgQv2rttdTRaA+Kcx0s7q+0gn
-         XSzSb+3AzR8GAUA8WLB4wOCuG67hz1hcHTJNRaLUdBS7MYBC2XCQ4ixZNyDMS1So+VYK
-         SIA2sFn/5Y2tAjpVXHHU76dx/KajVD+57Vky/4xCQiykiDkJRfGSHifG+B/4fFANT3yM
-         kP8MC2RwoVPX5bA7lznRgxBc/G1EBKNCjeeTT0QJs64D+I2EredxcNfzFyYYhQxXwXx8
-         lM7g==
-X-Forwarded-Encrypted: i=1; AFNElJ/W/K0UkoNcrpXrhHGjWyqGPPPBztbUIe4W8o6DdDNDuur8WXHIb2H12k8F3VVK+l+f4BjdqKqLTkk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzysPvalujFfaMZxw/Xcqy+2oUWF/HJgnkjb9gswEmByutqYnlM
-	J6+/E9t4+TEJQTAV4aGR523w32FiTq20jke2LJL0ywKM7L9wOb/ujpROvSBQ0usCkFNS+XeVefR
-	ZDSkXC0//iLYcdbOAzY07e0CI21IoQ8RVMQLTqlM7Yg==
-X-Gm-Gg: Acq92OF5JIX77Q0TGtHCNgleODmUDTufSfYEIYSIl/+aCMKfcjK50XW/X2BNY/uFSgn
-	16IkbZvmGoUxB8M4y6AmQg3DrVQwCQwzR9L1nPS+VO3x0emKzMPoWwBZOY+CNIZ7DhgFrysWz+q
-	a4LtGdl4UmaTSksHwQEstTpgGz5GG82gjYFgEmMXSHv1DWktIJS8tVWcA50hXVupITBt08ZsJwX
-	zzLs5sAs/UKhpOm3o1t2OSbncZGHTWhcOYz1h5l07imqC663n7P8CuQGUJ8eimsumrunPZw8ee7
-	qNS+aSazPqBwVwB4Zwr+fpnWZRH2DHBwJW6k
-X-Received: by 2002:a17:907:1c8d:b0:bd2:bd2:6ca0 with SMTP id
- a640c23a62f3a-bd5177bd03fmr585833066b.11.1779057691600; Sun, 17 May 2026
- 15:41:31 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 17 May 2026 15:41:31 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 17 May 2026 15:41:31 -0700
-esFrom: angelo@archlinux
-References: <20260506142644.3234270-2-gerg@kernel.org> <20260506142644.3234270-8-gerg@kernel.org>
- <40aefc39-bd98-460d-8aa7-5dd79f562e0d@app.fastmail.com> <fdd6fc14-f607-4186-8db4-25de973ac322@kernel.org>
- <CALSJ-wCrNDv3N2Kdo0uoXsKGtp0GthJRBeYTNQA1gGE2akUWFg@mail.gmail.com>
- <9391b782-7727-47fa-ac37-05cd50821d35@app.fastmail.com> <CALSJ-wBRmUpjz-_ehZ0U0Gu+fPqRUeAn47E0_pwpXQa0tCNzVA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Hv+Ec8hg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1779075179;
+	bh=gy+vLIjyMT6857Vtois325dTt+YrnhLSIrioPPR6St8=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=Hv+Ec8hgUmMLye2OnkQiMFf6pNZglDWaHNm5otFpf3mbNPl5A1P047LEhZolhwCTL
+	 amNTCigG8Og5Y8hmBiSfG0RwyPcS/3cQUE0osyzpbZCpdReQUy3SK/2QcDYkJBNulc
+	 F3VaOhavKdoBGuRAeeladZdrp2Ei56vQy+z8hg2M=
+X-QQ-mid: zesmtpgz9t1779075171tf46ec625
+X-QQ-Originating-IP: DRI+fk7/Uf0YrY164m/MNKWpAys+m6hYORxEOfYA7Og=
+Received: from = ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 18 May 2026 11:32:47 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2042237181081148708
+EX-QQ-RecipientCnt: 21
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Mon, 18 May 2026 11:32:41 +0800
+Subject: [PATCH v6 1/4] dt-bindings: dmaengine: Add SpacemiT K3 DMA
+ compatible string
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CALSJ-wBRmUpjz-_ehZ0U0Gu+fPqRUeAn47E0_pwpXQa0tCNzVA@mail.gmail.com>
-From: Angelo Dureghello <adureghello@baylibre.com>
-Date: Sun, 17 May 2026 15:41:31 -0700
-X-Gm-Features: AVHnY4L86sFPwvstwRi47J91deZeB_tEn5rDsykk8GHRpiEzaTYsrGzZ-WixK9I
-Message-ID: <CALSJ-wCuZs9cBJsuOOYMEYM6xOXZbdOm_pr=70d3HRYYSYJ0KA@mail.gmail.com>
-Subject: Re: [RFC 4/4] m68k: coldfire: fix non-standard readX()/writeX() functions
-To: Angelo Dureghello <adureghello@baylibre.com>
-Cc: Arnd Bergmann <arnd@kernel.org>, Greg Ungerer <gerg@kernel.org>, linux-m68k@lists.linux-m68k.org, 
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-can@vger.kernel.org, linux-spi@vger.kernel.org, 
-	Vladimir Oltean <olteanv@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260518-k3-pdma-v6-1-67fdf319a8f8@linux.spacemit.com>
+References: <20260518-k3-pdma-v6-0-67fdf319a8f8@linux.spacemit.com>
+In-Reply-To: <20260518-k3-pdma-v6-0-67fdf319a8f8@linux.spacemit.com>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Guodong Xu <guodong@riscstar.com>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779075161; l=1136;
+ i=troy.mitchell@linux.spacemit.com; s=20250710; h=from:subject:message-id;
+ bh=yaSmXSO5vYt5nKO5ZoIxkQx6dxueeCXO+Z09BlgFE88=;
+ b=W+5F5yNPpwe5k4aNvILetfG8MTdaq9zRwfU6oC4yYxh+ievsDveayf932kijLZHal5EV7LC30
+ PZvbYXimU2DAWfDHmLPX+hwbP9b2HvQFH3223XiI8PRhWzmrEK18hCk
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=ed25519;
+ pk=lQa7BzLrq8DfZnChqmwJ5qQk8fP2USmY/4xZ2/MSsXc=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M8UYpcaD4/AyTVxWAAid9s0jQq/BAhkHQDxth8iqqpCeSeac47mut5LG
+	k6jnognRm1gzKbPOc3aXX9xe2gs6wNeyNVqOzXXOUw7/Vwtciw+PsE0W8Nthm5FLLUCozrd
+	5qn8yh5MLMjTluoXNLp35PLP+wKza6/8xkvugg82cKVoBNDJXDY+4UJEVsfxPicVwKXRPMq
+	GV4PLya2EFlYNM8gWjllIkwhyPz9eTVR4UkBoxWl/BpI8kWz8+9uFTAQz1sA8e9LM3sfx6F
+	iihIxirk4b6LZ9OusD9HLPIABOLDGeagjIWfxlezfdD1vjzJ7dPGuC53AuLQYrXXbrTy4u/
+	+USwITUWmmy5WrzO77Kjm+gelIeIg9pNBLoTKxpayctCrHgWrr+TQk89W1qI1Bp1oCXRzAg
+	3LSl5C43E7XFP30TlVII0x5ZgfwNJhxhaUjSzSaA8b7cfbP9sch3OgeaeH6cIIN+oC3QawA
+	hXiEOAarfuKhwOUFboe/Ydf70Ijo6OWdHEYnOtE5op5lSOXqSPV4e3yDxbBPyoPdByIJxbU
+	f2D7o5s7AKNIOcebZnxA0yE1NDKCOkupGMNFQ4G+DqMXnk8k/7gUWGC+oHnAFs6Hl3nD4w5
+	2ZdoOgg2r6Th4A7UszCvYzG4VL4piz7XTc4USzY1Aa/aFwK9rX7sSd1/sefx3JO7n488w6e
+	Y43Lw0yS7PyAUyb3oOKpYdZYiWE8jIEdDAPbR9fNkJMJiZcnr7EgnBuGQ6Q3XbEosvph58X
+	0rwc22E3AFpZzTh3jTsFGeJhkNp1XUNUds0RZchr5z4YXzCE+9v5W414ZCYX4XHPdXoq8LH
+	iu4DA7pIjK59ZeuKE5Yu1bUS1zXPw3SMiUgQWNXV08gc2sjf7dYandyZdCgt69DASOViZUM
+	7oFJJpA7FGpMm6ZnrfnaGv0Ub0uRmFtPtHY+uulZrJBLjZnxV51Cti4foKcVqZvnft7BrP3
+	rMjKJq7EZ0ONHPlKDJsrTC82LIo/cEArKz19GiJlKaPL+DPPkJlX860AjgC5MLFsj97rM0/
+	GSdbhzaDl7+XvEc1NMajSdnA0FeC8DoVV53qtUfUh+G4ihYCAqHWoKspNW0IZstM6yfcoXi
+	5AQJ6jhkMwEUplRqnF5S3sUsOieLXoyspkW9lWaNyJUqE3QfxC7cxpOKJOIzI5M2Q==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-RECHKSPAM: 0
 
-Hi,
+From: Guodong Xu <guodong@riscstar.com>
 
-On Sun, May 17, 2026 at 03:04:23PM -0700, Angelo Dureghello wrote:
-> Hi Arnd,
->
-> On Sun, May 17, 2026 at 10:08:22PM +0200, Arnd Bergmann wrote:
-> > On Sun, May 17, 2026, at 21:43, Angelo Dureghello wrote:
-> > > On Thu, May 07, 2026 at 10:43:01PM +1000, Greg Ungerer wrote:
-> > >> On 7/5/26 05:12, Arnd Bergmann wrote:
-> > >> > On Wed, May 6, 2026, at 16:26, Greg Ungerer wrote:
-> > >
-> > > [    2.270000] fsl-dspi fsl-dspi.0: Not able to get desc for DMA xfer
-> > > [    2.280000] fsl-dspi fsl-dspi.0: DMA transfer failed
-> > > [    2.280000] spi_master spi0: failed to transfer one message from queue
-> > > [    2.290000] spi_master spi0: noqueue transfer failed
-> > > [    2.290000] spi-nor spi0.1: probe with driver spi-nor failed with error -5
-> > >
+Add the "spacemit,k3-pdma" compatible string for the SpacemiT K3 SoC.
 
-About this issue, it fails on dma_pool_alloc(), so tomorrow will check,
-i probably lost some dma config option.
+While the K3 PDMA IP reuses most of the design found on the earlier
+K1 SoC, a new compatible string is required because the DRCMR
+(DMA Request/Command Register) base address for extended DMA request
+numbers (>= 64) differs from the K1 implementation.
 
-> > > DSPI is using edma, i will try to understand where the issue is asap.
-> > >
-> > > About how it works:
-> > > - for accesses to edma module (IP) mmio registers, must be native
-> > > big_endian, so using the "be" suffix in "mcf"_edma looks ok for me.
-> >
-> > The twist here is that with the way that readl() is defined on
-> > coldfire as a non-swapping operation, and the generic
-> > definition assuming the opposite in
-> >
-> > static inline u32 ioread32be(const void __iomem *addr)
-> > {
-> >         return swab32(readl(addr));
-> > }
-> >
-> > the function called ioread32be() actually tries to access
-> > the registers as little-endian. I can see two possible ways
-> > we got here, but don't know which one is currect:
-> >
-> > a) the device actually has little-endian registers (like it
-> >    does on i.MX, but unlike all other coldfire devices), and
-> >    you just never noticed because using ioread32be() worked
-> >    as you expected.
-> >
-> > b) you tested the driver using an ioread32be() definition that
-> >    did not have a byteswap and it correctly accessed big-endian
-> >    registers at the time, but the version in mainline today does
-> >    not.
->
-> Ok. The ioread32be now works properly since i had applied Greg patches.
-> I generated an error in _probe on edma channel 2, reading status reg.
-> looks consistent:
->
-> 	iowrite16(2121, regs->erqh);
-> 	iowrite8(0x77, regs->serq);
-> 	iowrite8(0x12, regs->ssrt);
-> 	
-> 	u32 status = ioread32be(regs->es);
-> 	printk("%s() status: %04x\n", __func__, status);
->
-> [    0.140000] mcf_edma_probe() entering
-> [    0.140000] mcf_edma_probe(): allocating data
-> [    0.140000] mcf_edma_probe() status: 800012f8
->
-> If i am not loosing myself in this r/w labyrinth, the path should be:
->
-> 1) Greg removed coldfire readl/writel, leaving now the standard LE r/w,
-> 2) So the ioread32be swaps the standard LE read giving BE.
->
-> Am i correct ?
->
->
-> >
-> > > - for accessing the "tcd" memory structure, that must be, from what i
-> > > remember, anyway in little endian, independently from the cpu core
-> > > endiannes, this is the reason that big_endian flag is needed, it is
-> > > used for tcd area accesses, so the IP module was built.
-> > > The tcd area may be similar to pci accesses (see mcf54415 RM 19.4.16).
-> >
-> > edma_read_tcdreg() calls into edma_readl(), which is the same function
-> > that is used for normal register access, so from what I can tell,
-> > they always use the same endianess here.
-> >
->
-> If edma_readl was using
->
->         if (edma->big_endian)
->                 val = ioread32be(addr);
->
-> and never changed, without Greg patch, it was likely returning little
-> endian for coldfire and correct LE for other arch ? :)
->
-> I remember something about tcd area was coded LE, but will investigate
-> better, now i am over midnight.
->
-> Regards,
-> angelo
->
-> >       Arnd
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Regards,
-angelo
+diff --git a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+index ec06235baf5c..62ce6d81526b 100644
+--- a/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
++++ b/Documentation/devicetree/bindings/dma/spacemit,k1-pdma.yaml
+@@ -14,7 +14,9 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: spacemit,k1-pdma
++    enum:
++      - spacemit,k1-pdma
++      - spacemit,k3-pdma
+ 
+   reg:
+     maxItems: 1
+
+-- 
+2.54.0
+
