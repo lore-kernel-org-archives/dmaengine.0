@@ -1,94 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E774028D7
-	for <dmaengine@vger.kernel.org>; Tue, 19 May 2026 14:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C86D2765D7;
+	Tue, 19 May 2026 17:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779200260; cv=none; b=fG33k5RDyuIH0dWUadcQzQ/2XZG4Sflw2ArqCMjACK7ozUBKyjiEza9GLoT31M2cLBB5fxPxaRjOdwYxWulDXUGB0VQFJiybWeOCf+bqHWPSTj7mwlDB8M39Evdk/PGkJ3Jnf0Cxg0CuhUzXIjXrYS4wXQXU7DlfPNPNUWeAic0=
+	t=1779210405; cv=none; b=RkDHGiBv5RQe1bclR6WYSRtD9p6IFUHM5alBtnG0tOHGCJbkl/7ALNGi3hdUyL3kBar++3jq9i8NW7B73tAXXIs9MiDxI2gySdNcQF2QBO0tnfq5ec1j+RFs3xH5ARu36vRj4ZIqfNeZ2NAwNqI8OGk0xOvkwX656gezd2uKVPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779200260; c=relaxed/simple;
-	bh=oPWm6QeU7Ez5gidpx9UvJefw79pdupyqpRVsJ23GDi4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=DJ2f4OR0y9Bm46r7+OxOr1EMWOaODFDF8VZTXOUJQ/k1CRRqNUT6uSIsIMxrF1LuAOFJX02TM57pEK35WKKhAVfySAgK/CAZdy6scD2GYZKcKmZlfcdnRoDlUZbyhiqi51vju9/8iZCE1evr9F0UDa1oNRKTJeoVeaXB3z1eP6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUc4PXKN; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779210405; c=relaxed/simple;
+	bh=Mi5fefcgSQTvi9ChCan9hgaXY1JdITu+bouW9m7d4bc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aFbqqcYOqTKuVWa6QE2bhTHSDlKLeUrvaIcGW6tX0zgrLeCI8MDD2PkvNVsu+bRPNLzPW2vetKLrEKAETtcSFUSBm+cvXuu/8sVC4vs+LU0uPocleEtL5Z5+pMExrrJ4P9S3MuahxQQjBf6t1tuK+7PKXx6zNQ1dqGUYrtXioQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qyRlrMBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUc4PXKN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAB4C2BCB3;
-	Tue, 19 May 2026 14:17:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qyRlrMBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17BEC2BCB3;
+	Tue, 19 May 2026 17:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779200259;
-	bh=oPWm6QeU7Ez5gidpx9UvJefw79pdupyqpRVsJ23GDi4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date:From;
-	b=mUc4PXKNI2fn63K10KZAXLo1amWms9sW79G1bDYhycaiAxbq4yjvWEej60l1NspBH
-	 w3JpZs1VRDdfhOyQaM9JaIMwH32moblOSIv4K0ps/BCu9TJpszM/FIF04a1oS2KXJh
-	 KG4BdSZ9arzx1f/2yspf/0u2HnIn4dI8Kc855EWXcubg5iqY5bIVaWX1ompkvg5CFy
-	 BChoIDmOIbgDgGyPjb7FOYcbe7x/fx2e1x6FW372rLAwZsbJ1suh7Sg+QifljGh4Q4
-	 kzkn3PpX4kUxi49nmckLfJcUJba+IVd2sctmdKsbXyRcxcQDadsT7g+7DwKFpD3ttI
-	 namxDvfeAOzRQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v17 14/14] crypto: qce - Communicate the base physical
- address to the dmaengine
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260519-qcom-qce-cmd-descr-v17-14-53a595414b79@oss.qualcomm.com>
-References: <20260519-qcom-qce-cmd-descr-v17-14-53a595414b79@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 19 May 2026 14:17:38 +0000
-Message-Id: <20260519141739.3BAB4C2BCB3@smtp.kernel.org>
+	s=k20201202; t=1779210404;
+	bh=Mi5fefcgSQTvi9ChCan9hgaXY1JdITu+bouW9m7d4bc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qyRlrMBO1sL+WYVfkjgioWKMXBDN59ziCG91KC2k00Snafz1CgyOKwE35FBwT9J5O
+	 xhchP6fmchvZjLokeJewszskcJ2fyyPZstJXWt7PlRdHIOrGsGwN0qfX8SxS7hmmSc
+	 HXYddniIHpZdyUs6dOMSSFKHq+PnHs1zHqjkM2owzjNYGddKSzLrN9ClF9vvz/e1Ge
+	 kxWNN2uAXyTT+04uowQYnaaycsVNeslCXJWz+lZt60XjY6yTmqIJ0DCk6FNvPUlukO
+	 II+qsgaM0WAiqC8sOpSoSH932L+UBlTMSBwWRkr+HIzrZlOn4hL2xl3tlsDYd48DaG
+	 ToQ1G8V72Z5RA==
+Date: Tue, 19 May 2026 22:36:40 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Cc: peter.ujfalusi@gmail.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, nm@ti.com, ssantosh@kernel.org,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	vigneshr@ti.com, Frank.li@nxp.com, r-sharma3@ti.com,
+	gehariprasath@ti.com
+Subject: Re: [PATCH v6 00/19] dmaengine: ti: Add support for BCDMA v2 and
+ PKTDMA v2
+Message-ID: <agyYoLc1yJyI9eDn@vaman>
+References: <20260428085202.1724548-1-s-adivi@ti.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260428085202.1724548-1-s-adivi@ti.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Passing 0 as the length parameter to `dmaengine_desc_attach_meta=
-data()` bypasses size validation.
---
+On 28-04-26, 14:21, Sai Sree Kartheek Adivi wrote:
+> This series adds support for the BCDMA_V2 and PKTDMA_V2 which is
+> introduced in AM62L.
+> 
+> The key differences between the existing DMA and DMA V2 are:
+> - Absence of TISCI: Instead of configuring via TISCI calls, direct
+>   register writes are required.
+> - Autopair: There is no longer a need for PSIL pair and instead AUTOPAIR
+>   bit needs to set in the RT_CTL register.
+> - Static channel mapping: Each channel is mapped to a single peripheral.
+> - Direct IRQs: There is no INT-A and interrupt lines from DMA are
+>   directly connected to GIC.
+> - Remote side configuration handled by DMA. So no need to write to PEER
+>   registers to START / STOP / PAUSE / TEARDOWN.
+> - Unified Channel Space: Tx and Rx channels share a single register
+>   space. Each channel index is specifically fixed in hardware as either
+>   Tx or Rx in an interleaved manner.
 
-commit 1f893f890dfe69aa8cb0e7aec2e87e8d24b5cdc6
-Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Please check the commments from Sashiko https://sashiko.dev/#/patchset/20260428085202.1724548-1-s-adivi%40ti.com
 
-crypto: qce - Communicate the base physical address to the dmaengine
-
-This commit fills out and attaches the BAM descriptor metadata to the DMA
-descriptor. This provides the BAM DMA engine with the scratchpad address
-for dummy writes related to pipe locking.
-
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> index b66e6386fccda..97b0f02c2b4d2 100644
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
-
-[ ... ]
-
-> @@ -63,6 +68,10 @@ int qce_submit_cmd_desc(struct qce_device *qce)
->  		goto err_unmap_sg;
->  	}
-> =20
-> +	ret =3D dmaengine_desc_attach_metadata(dma_desc, &meta, 0);
-
-Should this call pass sizeof(meta) instead of 0 for the length parameter?
-
-The generic DMA engine API dmaengine_desc_attach_metadata() expects the
-length argument to specify the size of the metadata payload being attached.
-While the underlying BAM DMA provider might not currently validate the leng=
-th
-parameter, passing 0 bypasses this API contract.
-
-If size validation is enforced in the future by the generic DMA framework or
-the underlying driver, this could cause the call to unconditionally fail.
-
-> +	if (ret)
-> +		goto err_unmap_sg;
-> +
->  	qce_desc->dma_desc =3D dma_desc;
->  	cookie =3D dmaengine_submit(qce_desc->dma_desc);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260519-qcom-qce-c=
-md-descr-v17-0-53a595414b79@oss.qualcomm.com?part=3D14
+-- 
+~Vinod
