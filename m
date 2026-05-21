@@ -1,61 +1,63 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600D7264617
-	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 14:48:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2EF2F7EF3
+	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 14:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779374881; cv=none; b=ePOXQaR3sTaF+SB/otVQH0sx1hC1KcGIofX2OVUbsapsqg9Nsc3icwrNgIxvv3OxvBjRtVSAOMgBjoJ3BDRTCJKWsk5VON8LX5RWXxvnLbKG9tv19GZg+8ah8oD4XcUhxTptU1+3WgvfU8bTP0oORBBzuNQEzyPds1ZJcaaaUzs=
+	t=1779374885; cv=none; b=Rorb2SbijWncdWTAt73m65eVvuRR207eYuJb8RCjYGSNR8NLRdPzYKhUzOveGTW4xXviUrP0NqmB94H2HPD5K/1faiHbmRtlJSJXWjx8fzBsWr3D1JMfH8xhmVPXt/GoxNvPtW75GoOLWHP9dg3p7QZo9jY0lJUN9imLT0icQn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779374881; c=relaxed/simple;
-	bh=WLhHq04fBXG0DNoal9+1yxqpgRYusFLymvrxnQKKfK0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WH/PYEY9L4tF/l4viCWzp67p11GdGP+paVj1nHDOTbb/1ofR+y2ZYoEjjrh5AtH/xq8Gvjhv5V+2QlNaPAwMqT1VGuLHjF9Cy55ns0A4ITfJkgkhaXpT3F1VosuVtLlw0nUW4OtMKvPdBwpAp3fXYV8/mdmkT+qx0aLbqXmjSLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEGTSSJV; arc=none smtp.client-ip=209.85.216.44
+	s=arc-20240116; t=1779374885; c=relaxed/simple;
+	bh=EX9iuFe2HivKCwOTaxCINsh3UzE2ULn9Ke1iwK2Idbg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=U9ePkJJ2COcml0BnqwF9Lgrb99od0iTqoAUDdBq1P54L4j9vq3nLbp6lOJWX24B0L6pgKfJj8cdh2pXKjBpNtLGNOWMi5nm6clV1yT5bQwEeSndbrweciXgjSnIGEzolgsbNmeizbWEMM5WVy8r/n3MkjxsSbzjnnqK57HT97Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bcdbmhcp; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEGTSSJV"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-366be8040a9so2624644a91.3
-        for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 07:48:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bcdbmhcp"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-36a35e4eefeso992046a91.1
+        for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 07:48:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779374880; x=1779979680; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nO5Guq8P5pYUyNX9rihjVTq3LCCfxDcguL6lLRydU30=;
-        b=BEGTSSJV4c3sQc1QF87dxrc+5R3Kf2zaAiVFkNpx6A8jikBnaMaKgAG64v+qH0bmpf
-         +FrFo1j2GlPGtrfYBXFXsi/NwGv9zMVE2G6aS6D/w3pjgq6rvoDgOyeuprEtg9jK1I9h
-         sh5TbXbBT0fZfJ73BGDUCuw6v04RS8f6nrkO1ke+BUxUWF+Fd8S0beJ0u3B/M01Dpqvc
-         xBwMqIvSPp97ci4U8R3ejrCmBie4/uxbD3pznKIzZYSKnv0zwbbuX7z5+ojxhYhtQvsq
-         BJ6Q4MFzB/bDHteMAamTY8+Wn11xBOzCndHbQ55+a1RHFd4sQavmGNx+ulqjpKanMoWt
-         AC9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779374880; x=1779979680;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779374882; x=1779979682; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nO5Guq8P5pYUyNX9rihjVTq3LCCfxDcguL6lLRydU30=;
-        b=pKggTVDSXuiRODydJVATeONBtPQAlDIt600F+BljQ2CPtjrtJD0xLXaAj6inrYmGqF
-         sKXLbmAbtJ44i9xLiuVY1jRcI25vW0hSVtm5ZkBOJ30VDSDHegzUNrhDU8+KBguowBFh
-         zwhegi2cuNjc6j8C5b5dPjPEV2OMZx/O7ff3t2zxdqPbb9Biyop89qQiRsyY2Hn1oz/9
-         PEZPVXqBizGmcMrx9Iv9gHTCea3reJGZjcQV7/QshXGRG9qJSUsrdmDno6mDB8nf5ApP
-         MyzM5t2Hj51Qq7qfQA2Rruk7+Hcg+eU8Gp8O7t/93OIGLrosEKX2qoSvu8P4MNrmuucx
-         h4sA==
-X-Forwarded-Encrypted: i=1; AFNElJ8nZ4RMiVhCiIUkRpXrsQfTqs9XmO+RVXdKuDibfpypKkWdz3eHGDsbvIjfhHanHvzNDBIbf1T5GTk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+Drjpx2RSODAE5T1QqEcBcYvAD9t6kWByBC0GlGGrwptg05Kg
-	g2aHKzgJlXHTyG1l+1WwrRGQbtj3NiqVN8ICN5hNv1Ys9o4OKCniqjyg
-X-Gm-Gg: Acq92OFjg93HpSeo2+EYDhw2PsC7iLxQAy5YdmpZK1BpDwWoFje42fd4DsFIg63k+8z
-	j6k8ykR6YR/nYCX4C15Kcr5QaZq5+NTcH8AB3lD2cU+Fn3KW+vlqSexpHAUBEyHtH7XCf70p/DH
-	gScwN1TjXEEsrzQEUCAWsiv0SBU5DpiFt3mQe/mwLvReLoECDbeq4MTTKJi1qpawiErZxeaac93
-	tns5kXidY8hAGBP9huGzz2OtIptRlxJ7pz2L4wZku04Jwq1/nXs9vF0Kr+z2rqLOg8aAA07DYrh
-	8BlExUje2p44M5fLQJyCAzaFXW+6RUMRl3IoIdxypwvj++vZrtzTDeT1EWHQQKfxx1Bl3YEbSMn
-	xX3nXtayc2mIv/WTgaAzfOuyDgxIXQO1wOmNjHlkVZhsQw926DCdwht9RvE6aByf41VBY3Tg75t
-	ytYub2Qapgi+wjBACjLuwFP+0hJLpf9Pskh/nyyUHG3CmC+Dgw
-X-Received: by 2002:a17:90b:2c8d:b0:366:4782:1375 with SMTP id 98e67ed59e1d1-36a45658e79mr3220163a91.22.1779374879710;
-        Thu, 21 May 2026 07:47:59 -0700 (PDT)
+        bh=4mtwRPah/bLATx6RFt0C3QCf1Zldq1D4z7+HKhDsfT0=;
+        b=BcdbmhcpIg3BmHtFuL7hjmv3fUftzTae5zUPCgAjfG7w50/w9iAjCu/lBYzHSyS4r2
+         Vo285i6VJox1jj2g5ISCHMDFCNgUBCl4EMRZvdAFQEzmBigDGFNdtHePLP77YNRCOh3C
+         PI0kSc50VYIHnRYpdWkfKaYZzgRal2I6SH6WrR9YE6pAoxLg71dYYvTFZkRNo/1VHtZm
+         oqLednpGUpGL/E/2yxJUDkM8eydNVenVl3zv3+7W5QEH9UwcO1hKOndIHbKxQPQnDIPg
+         fTCSEiRK4b85wFgjWhEZ+pK6xBQswzwG8Yv2K6Gp532LGAQTv/ioTx9MOAklyvT43wem
+         3S7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779374882; x=1779979682;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4mtwRPah/bLATx6RFt0C3QCf1Zldq1D4z7+HKhDsfT0=;
+        b=aIWL7wVrxnGQGFBG2yW5iU6YdlVA5elUdVgstcEv35YC8PvPz/6lZmC330SmP2wEW/
+         jdgArTyrK/Bud4uHuCdLP1QzlBfzqQGfpWghQWpM7ZHIWnl5DJM40hOzTtaYl09oIJD4
+         IrVH1uV3WzPN1NzPeIFnYBi+XGaSiDt6QuT2QpqfARXCRfh9q6VKwKzjYjBFilZpG0Lz
+         ai+RzS1NONcg0kIxqvB3CxnEqLDpolz9IxdYjb/3F/dt9V7FVOCbwTTvzPjGicxa0RJm
+         +xfgvx7TEproJySEspvI7Yl9ruM0nIF41J8EwA+V2LU03wjZ3XF0eor3lgBxN097mPyN
+         9Peg==
+X-Forwarded-Encrypted: i=1; AFNElJ/mUWraXWbwjvIC0UnAZ0BulZY0sjXDfq12sLdt06Cf34/6YCjnmnwqoQOjr+sQ7aoyjFXUhDTpgz8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvuFEVsfXZpnLOF3lY764PZEa05smR0v5zr9z0RWC2eZcVwcId
+	mrZI2ff42pVe3ZTfL3Lg1x7ErkWRwu9qX0r602DryRSiEJa5emOepky/ty8kVA==
+X-Gm-Gg: Acq92OFLwzcPQSGJhYZIhIvz07JQI2VFvlhm10FbL5Q9HVRnVwaXvGbtHsoyS+zCezD
+	6ufRYPMLCPlggb1Oz9ztikl/2KBp3Tf3HE5hT7K9HRVD61c/hl9IINTpX+JpTjtDPV9cOQ8huxi
+	dyIi6pYjcD6GXatYhgKg/x5jRqUSmdFiKkiXyf9VKGd7SG8tbQJSp+K/Wwe2Ya5Ayy9Bi0tfMeP
+	VS+HWQVPpbVJxQMHvFO7ZqgsuhOBIe16p4C2jnronJsm6X44/yIsf7ukf+ujBwJ1x0eSHXetpEI
+	ADsKqpzVT5Qz2akzXQ6dcGqGG2uFZ+wedkPr1UXU/mRWmo4RcPD+X6uhKL/NjMFgsOsaZHQh1qn
+	KxsRQYbDrT7ZHfoOrn0+tWkTDsPH/1l26xRChkHn3J6DiqELIeAfPue74zvIgSjaPjRISt5U+hf
+	6zzVGkJMhDiWjxJsXpdPXe45PRa6U5mtQY8JlbbWyY3THnt8GE8n/l4a+J/9Y=
+X-Received: by 2002:a17:90b:2f8d:b0:36a:31c2:d402 with SMTP id 98e67ed59e1d1-36a451592edmr3478966a91.10.1779374882162;
+        Thu, 21 May 2026 07:48:02 -0700 (PDT)
 Received: from csl-conti-dell7858.ntu.edu.sg ([155.69.195.57])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a3cc5643dsm3773472a91.7.2026.05.21.07.47.57
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a3cc5643dsm3773472a91.7.2026.05.21.07.47.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 07:47:59 -0700 (PDT)
+        Thu, 21 May 2026 07:48:01 -0700 (PDT)
 From: Maoyi Xie <maoyixie.tju@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.Li@kernel.org>,
@@ -63,10 +65,12 @@ Cc: Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org,
 	linux-renesas-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/2] dmaengine: fix dead empty checks in mpc512x and rz-dmac
-Date: Thu, 21 May 2026 22:47:53 +0800
-Message-Id: <20260521144755.3476353-1-maoyixie.tju@gmail.com>
+Subject: [PATCH 1/2] dmaengine: mpc512x: fix dead empty check in mpc_dma_prep_slave_sg()
+Date: Thu, 21 May 2026 22:47:54 +0800
+Message-Id: <20260521144755.3476353-2-maoyixie.tju@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260521144755.3476353-1-maoyixie.tju@gmail.com>
+References: <20260521144755.3476353-1-maoyixie.tju@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -75,22 +79,51 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Two dmaengine drivers use list_first_entry() and then test the
-returned pointer against NULL. list_first_entry() never returns
-NULL, so the NULL check is dead code. The author intent at both
-sites was clear from the existing recovery path. Switch to
-list_first_entry_or_null() so the existing NULL path runs.
+mpc_dma_prep_slave_sg() reads mchan->free with list_first_entry()
+and then tests the returned pointer against NULL. list_first_entry()
+never returns NULL. On an empty free list it returns
+container_of(&mchan->free, struct mpc_dma_desc, node), an aliased
+pointer derived from the list head. The recovery path (drop lock,
+scan completed list, return NULL) is dead code.
 
-The two sites were raised in an inquiry on 2026-05-20. Frank Li
-confirmed and asked for a patch.
+If the free list is ever empty here, the aliased mdesc points at
+&mchan->free. The list_del(&mdesc->node) that follows then runs on
+the head itself, corrupting mchan->free.next and mchan->free.prev.
 
-Maoyi Xie (2):
-  dmaengine: mpc512x: fix dead empty check in mpc_dma_prep_slave_sg()
-  dmaengine: rz-dmac: fix dead empty check in rz_dmac_chan_get_residue()
+The free list is reachable empty when the descriptor pool is
+exhausted. The author intent was clear from the recovery path:
+release the lock, scan the completed list to free descriptors, and
+return NULL so the caller can retry.
 
+Use list_first_entry_or_null() so the empty case returns NULL and
+the existing recovery path runs as intended.
+
+The same shape has been cleaned up elsewhere, for example in
+commit fbb8bc408027 ("net: qed: Remove redundant NULL checks after list_first_entry()"),
+commit c708d3fad421 ("crypto: atmel - use list_first_entry_or_null to simplify find_dev"),
+and commit 10379171f346 ("ksmbd: use list_first_entry_or_null for opinfo_get_list()").
+This site was missed by those cleanups.
+
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+---
  drivers/dma/mpc512x_dma.c | 4 ++--
- drivers/dma/sh/rz-dmac.c  | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---
+diff --git a/drivers/dma/mpc512x_dma.c b/drivers/dma/mpc512x_dma.c
+index 0adc8e01057e..f5934136efc4 100644
+--- a/drivers/dma/mpc512x_dma.c
++++ b/drivers/dma/mpc512x_dma.c
+@@ -706,8 +706,8 @@ mpc_dma_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 	for_each_sg(sgl, sg, sg_len, i) {
+ 		spin_lock_irqsave(&mchan->lock, iflags);
+ 
+-		mdesc = list_first_entry(&mchan->free,
+-						struct mpc_dma_desc, node);
++		mdesc = list_first_entry_or_null(&mchan->free,
++						 struct mpc_dma_desc, node);
+ 		if (!mdesc) {
+ 			spin_unlock_irqrestore(&mchan->lock, iflags);
+ 			/* Try to free completed descriptors */
+-- 
 2.34.1
+
