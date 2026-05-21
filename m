@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF46292B4B
-	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 06:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD463438AC
+	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 06:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779345987; cv=none; b=rjrd2vvbFkp7Hc4FThZwTJcT1P8A5zEfSH/qcIMXCi7eDrpFN1RvnrV/MihKRDfYdNeyEPQxkzWVcB/D0uM81Vo/0hnH4IUG63RLf6lDEZ1jW3EmvobDuaXy1BSfCz1ewOlAcl9oXuaOAMmLTxGLMU+XACobmPVC0oMlg9qYR3k=
+	t=1779346086; cv=none; b=nHxXssEMyIArp3dFuNxwuKnBbw6p1iYZdMV5El6Svb77ejNBSKOUuoLONcmEDICDOVMDG8qQLgXCCKFjxVajwuelIuVZf70u8ryZHnV/O/mSvTBXdzocEHYQ9o2MDId+pdpxiQ6/7YjIanPM8jG+SFkmUWht/PnNMHI2BFRo10k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779345987; c=relaxed/simple;
-	bh=+TM7cOL/ranbeb2jJKKtq9npfjoKYPs/mmlN6qMssvQ=;
+	s=arc-20240116; t=1779346086; c=relaxed/simple;
+	bh=zVWJKcQ+m2GwP35KMPuPqBMQQEF2fmGmXWvTLAdBVAo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=NiZbcawjr28m5cAiTm+CUS9lsFwZTQCEa7FZbFKnuqiF+nHNplmf63Ll7FFpy2KguQcmtUhMM4iWoVn35uQbvK61Q/GCAOyC9s3SXJztJET0cHHxXqH6fCEFl9vymednGojxPeeR1mMEWTR8lZnh8pdbi93A5avfEEulQHJBWeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJ6v27pY; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=PSOXMUgWYQYkiWtsIdao7/Tl30wEShg77knprGsh1YpOzG27Io4hzfh5pfHZj98dPu0pczXPKBCGho3X/eT4Z2bXRdMIZ4epQSzFR6g0pRYuxclWbjs48cPhbpkrQvWkxKx8rUsrV89m/Ys5KQwQz0ZyVxrE3r7UNixpxIuBKJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jCWz6xsp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJ6v27pY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77D61F000E9;
-	Thu, 21 May 2026 06:46:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jCWz6xsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EE01F000E9;
+	Thu, 21 May 2026 06:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779345986;
-	bh=I0y8RUF3Mg0zVzmC8FtDq+tEfq5RazMWfXyppvfK4/s=;
+	s=k20260515; t=1779346085;
+	bh=p6nyZZ6fD7RbUKi3W9U18LSz00WlWiqBpUCEXQeGQ20=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=eJ6v27pYxHBvGCbKnqGUlHzoKfqaP/GXHsUDbcXGJCZ3NhkSiN6zDVfVskI2915Ca
-	 z7/yX/vkCfY/TLgCpylohQXrIb0zRDJ7nB42kNEyc9qHn4V+cMfSLMqAdbLj0nkaS+
-	 +VRBPenCuaa146wjYEKWbYJHpXFejbT5bbzF3K0dXhmokKc8ZaQMLIAiyzl1L0qT4F
-	 v6ClAF+NRUp0fLOVfdOSkKUeEQ30mIlk280OiUuO3XUWphD8M89SK4Mw4aDbFI9MQ4
-	 Z4N/TJA4u8xR6ZzD+oEkgDkAtS6ZTkqfX/ZPElvOremX2g0zhzfZz1bKwT0W3t1h8B
-	 LUY6mmiczAyaQ==
+	b=jCWz6xspu8n8UQPKWQVrrVmgzoGmPSQRbnP+JPU5tgMTbY5k9EndkIhGr1kiZjzX2
+	 f9/bFJT09SVhfBV0dUHv62zvHxeUsjxCHDh1JAS4GHmeYBjGwayqzSkgKIxOOA+l5X
+	 cKDgoDDw8RBDSw0QhZD9MtVjs8cLxkCJMllvlrC5ZUXhq0J7Te0NEyA/NQIgwPQMHo
+	 rpMmUrPQ1fnE0jj3OAUcStqoy6wzRZ4rDLFNtIVYlk2z7GiMS2JAcO2YYlnSL+nbO+
+	 xgjmj9BDwME42nXq2btp7C63Z7TkjUPGOfxR9MZyco92YebzEKjo67oo79hiZ1PZDs
+	 62bmcNNkM9Z9Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 09/12] dmaengine: dw-edma-pcie: Add register offset
- match flag
+Subject: Re: [PATCH 01/12] dmaengine: Make dma_get_slave_channel() public
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260521063115.2842238-10-den@valinux.co.jp>
-References: <20260521063115.2842238-10-den@valinux.co.jp>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260521063115.2842238-2-den@valinux.co.jp>
+References: <20260521063115.2842238-2-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 06:46:25 +0000
-Message-Id: <20260521064625.A77D61F000E9@smtp.kernel.org>
+Date: Thu, 21 May 2026 06:48:04 +0000
+Message-Id: <20260521064804.D8EE01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -46,55 +45,51 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Failure to call pci_free_irq_vectors() in error paths after succes=
-sful allocation in dw_edma_pcie_probe().
+- [High] Making dma_get_slave_channel() public violates the dmaengine subsy=
+stem design and introduces a Use-After-Free (UAF) risk for consumers.
 --
 
-commit b1a3bd1859bef8f97300ebe53456cdf2659af1d6
+commit bca7617ed6ffe5982c4183ddcd7dd50d600573dc
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma-pcie: Add register offset match flag
+dmaengine: Make dma_get_slave_channel() public
 
-This commit adds a match-data flag that enables devices to specify an offset
-for the DMA register block inside the mapped BAR. Existing match data entri=
-es
-keep using the BAR mapping base directly without functional changes.
+This commit moves dma_get_slave_channel() from the private dmaengine header
+to the public include/linux/dmaengine.h. This change is intended to allow
+PCI endpoint DMA drivers to reserve an exact channel from outside the
+drivers/dma subsystem.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
-edma-pcie.c
-> index 651269708cc54..6b375a58c5508 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-
-[ ... ]
-
-> @@ -450,6 +451,8 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->  	chip->reg_base =3D pcim_iomap_table(pdev)[dma_data->rg.bar];
->  	if (!chip->reg_base)
->  		return -ENOMEM;
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index b3d251c9734e9..59be52e74d5ef 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -1527,6 +1527,7 @@ struct dma_chan *dma_request_chan(struct device *de=
+v, const char *name);
+>  struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask);
+>  struct dma_chan *devm_dma_request_chan(struct device *dev, const char *n=
+ame);
+> =20
+> +struct dma_chan *dma_get_slave_channel(struct dma_chan *chan);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does returning directly here
-leak IRQ resources?
+Does this expose consumers to a use-after-free risk?
 
-Earlier in dw_edma_pcie_probe(), pci_alloc_irq_vectors() is successfully
-called to allocate resources:
+The dmaengine core intentionally keeps this function private to prevent
+consumers from directly targeting specific channels with unreferenced
+pointers.
 
-    nr_irqs =3D pci_alloc_irq_vectors(pdev, 1, dma_data->irqs,
-                                    PCI_IRQ_MSI | PCI_IRQ_MSIX);
+If an external consumer obtains an unreferenced struct dma_chan pointer
+and passes it here, the underlying DMA controller and its channels could be
+concurrently unregistered and freed (e.g., via sysfs unbind) before the
+private dma_list_mutex is acquired.
 
-It appears that failing to call pci_free_irq_vectors() in this error path
-(and several other error paths further down in the function) could prevent
-future allocations and exhaust system IRQ capacity.
+This could lead to a UAF read on chan->client_count inside
+dma_get_slave_channel().
 
-> +	if (match->flags & DW_EDMA_PCIE_F_REG_OFFSET)
-> +		chip->reg_base +=3D dma_data->rg.off;
-> =20
->  	for (i =3D 0; i < chip->ll_wr_cnt && !non_ll; i++) {
->  		struct dw_edma_region *ll_region =3D &chip->ll_region_wr[i];
+To safely reserve an exact channel, shouldn't an API that iterates and
+references channels while already holding the core mutex be used instead,
+such as passing a custom filter function to dma_request_channel()?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521063115.2842=
-238-1-den@valinux.co.jp?part=3D9
+238-1-den@valinux.co.jp?part=3D1
