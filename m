@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFE53546E0
-	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 06:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00161D5AD4
+	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 06:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779346529; cv=none; b=ePAMPqRNsy888TS/dBXNIerkBcgxPlvDmZRj6fPm6e0sth8YGaDjb0B8U++8xMK3eorX7XTOBhUKmfdso+iCppHXeFGx/WKAyE7Bcg92RsexB74XAJNNg4Iw74LQkWZqum50rbYDzFyG9c16b+bQIoe7SNDe+0LTnOxDx6D6pmE=
+	t=1779346702; cv=none; b=hnTm7qjFM7usrjxXExFRJVtNjvc3yQRbWT0biZKxJA2MeRNRBTMgy0J301T8iO6nV1jNIduNRgYXei/ZjL774r7SG05kzGPRAohyf0DsH3rHbZUyeB63TRJX9LBK6RoCvLK7tsexRYiGWLDTmqiG8KzSDlYPaCqD5VAxhJvxkhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779346529; c=relaxed/simple;
-	bh=+gmBjPHlzww0hd1H/SMUs9VGtj2VcNXYlhM2fulu3rA=;
+	s=arc-20240116; t=1779346702; c=relaxed/simple;
+	bh=aeD6ARHKMAczWDMkwvE2/U4K8E344voTJXh9Uq9I8W4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=VI/kchjg+ygTvu4Pe7QR0yAzUIum9YCVg5z0gAjgDiK45z4Mpa6YVk7ETGl6LTfH6to0XQnRrTCmcLRKn0RVhn/W0rWxeeVdpzkGbuUwaLUm7wltJIyQloy3Ffp7wkWX8Z8HWCFjqyJv+ndS9MJgXtjJq/Y2PACwEVjy9+iFkUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gRnUkAto; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=GLmIKw9ni06GXvGo6AgC4z8xW/IQOQg7YwtpjTxapwgwy9I5Ww9mqT9rbY//73oPErUlm5e5P7hWFa2L/2IVa4nql80IMKy4qSxgtaY4eFs/WWV5qA3CV49RW8YGt4KOniSm0N2L6GdnFu5LEXFRD5iE7YLpuKVoIEmz8SKvv3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l77/bIPD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gRnUkAto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A822B1F000E9;
-	Thu, 21 May 2026 06:55:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l77/bIPD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376191F000E9;
+	Thu, 21 May 2026 06:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779346528;
-	bh=iqJojMp878TDvhZ+sXtrOjCuMyH8Cp67COil1MesxSA=;
+	s=k20260515; t=1779346701;
+	bh=pmAJJrhH6qs+ZplmK//pqN9O3OGJVaNhHrjAbIj7EaE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=gRnUkAtoAl/URW+RCgPzvudRPesl1zJDQkDbApY5I4wMXPCBtbV3YbhdRVrKA+N9T
-	 0WAvX9+gtwxt710yUlUnW26Xaohc+NhOuAQeqvkE4xHiYRgzYIRCfYb48JiQ+J0E1k
-	 NInw9FapAoBddSQ0EBWz+jpxGitwGfROqaSX5GBExgtH/f9oGrdviG7Rk4FiwufWGE
-	 /dAP2Sbk5/5xcmxzWLAzmdJhz/S61HTKhYjvQknQNxOs1p26PizFZn1nR5f/hnzKhm
-	 zXOFggGTgNdSiwxE2OjVnHEqGJ/6aJ5xp8Wl+/zd9SvC+YokimKETnsPLdBddIoXrI
-	 4LPms9RK0p0ug==
+	b=l77/bIPDTDFeGoxJ3IUrMOg41m/Z50U/Na/pK5BJNG42r9KC/6slE9geA6JQuF3XP
+	 pBl1aK4IEKpiwm5Y/44EcGspv7Qe0wMVIAJ0WNsPzXnp+0zd7O5s4eJW30SNRCI9X9
+	 USLssBaWIQb/cpV5/aIrhM9YEweM0n8/Oj+yoQ3RP28Mm7YIYqqCCrIO6OE9Maxg9W
+	 UAdUWsr93xi/AfytbS/ANho3pBWR1dnWvhtN4CdNG7Yghmh7kV+VEfuFxVXAwsvMcK
+	 UJ6enQklzTAE0Jc5X5FAFld5+RMT32RHaZIVuahZEARcQ0uJh3cXyu0BkDAurewRhl
+	 FKyCOhNfFboFQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 11/12] dmaengine: dw-edma-pcie: Handle optional data
- blocks
+Subject: Re: [PATCH 10/12] dmaengine: dw-edma-pcie: Factor descriptor block
+ addresses
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260521063115.2842238-12-den@valinux.co.jp>
-References: <20260521063115.2842238-12-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260521063115.2842238-11-den@valinux.co.jp>
+References: <20260521063115.2842238-11-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 06:55:27 +0000
-Message-Id: <20260521065527.A822B1F000E9@smtp.kernel.org>
+Date: Thu, 21 May 2026 06:58:20 +0000
+Message-Id: <20260521065821.376191F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,52 +48,51 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing pci_free_irq_vectors() on error paths after successful all=
-ocation leaks IRQ resources.
+- [High] Missing pci_free_irq_vectors() in error paths after successful all=
+ocation.
 --
 
-commit ffb39523070415905152724035835f0ef0303b0c
+commit 74626deb81195f155f5f491b3bc17f8702eeb0bd
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma-pcie: Handle optional data blocks
+dmaengine: dw-edma-pcie: Factor descriptor block addresses
 
-This commit updates the driver to skip data block BAR mapping and debug
-output when a channel has no data block size. This allows describing
-channels that only need descriptor memory exposed, with a zero-sized
-data block indicating it is not present.
+This commit adds an optional physical address override to struct dw_edma_bl=
+ock.
+It also introduces a helper to compute descriptor block addresses, falling =
+back
+to the previous behavior when the override is unset.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
 edma-pcie.c
-> index 2a95fb9d5fc3f..df02b244e7487 100644
+> index 6b375a58c5508..2a95fb9d5fc3f 100644
 > --- a/drivers/dma/dw-edma/dw-edma-pcie.c
 > +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
 
 [ ... ]
 
-> @@ -483,6 +485,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->  							  ll_block);
->  		ll_region->sz =3D ll_block->sz;
-> =20
-> +		if (!dt_block->sz)
-> +			continue;
-> +
->  		dt_region->vaddr.io =3D pcim_iomap_table(pdev)[dt_block->bar];
->  		if (!dt_region->vaddr.io)
+> @@ -475,9 +488,8 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
 >  			return -ENOMEM;
 
 [Severity: High]
-This is a pre-existing issue, but does returning directly here leak the IRQ
-vectors allocated earlier?
+This isn't a bug introduced by this patch, but does this error path leak the
+IRQ vectors allocated earlier in the probe function?
 
-Earlier in this function, the IRQs are allocated like this:
+Looking at dw_edma_pcie_probe(), pci_alloc_irq_vectors() is called before
+this point, but returning -ENOMEM here bypasses calling
+pci_free_irq_vectors(). It looks like there are several error paths after
+the IRQ allocation that return directly without cleanup.
 
-    nr_irqs =3D pci_alloc_irq_vectors(pdev, 1, dma_data->irqs,
-                                    PCI_IRQ_MSI | PCI_IRQ_MSIX);
-
-Should this error path, as well as the other similar error paths following
-the IRQ allocation, call pci_free_irq_vectors() before returning to prevent
-potentially exhausting system IRQ capacity?
+> =20
+>  		dt_region->vaddr.io +=3D dt_block->off;
+> -		dt_region->paddr =3D dw_edma_get_phys_addr(pdev, match,
+> -							 dma_data, dt_block->bar);
+> -		dt_region->paddr +=3D dt_block->off;
+> +		dt_region->paddr =3D dw_edma_get_block_addr(pdev, match, dma_data,
+> +							  dt_block);
+>  		dt_region->sz =3D dt_block->sz;
+>  	}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521063115.2842=
-238-1-den@valinux.co.jp?part=3D11
+238-1-den@valinux.co.jp?part=3D10
