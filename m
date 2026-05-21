@@ -1,218 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023123.outbound.protection.outlook.com [40.107.44.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE55A3815DD
-	for <dmaengine@vger.kernel.org>; Thu, 21 May 2026 07:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779348298; cv=none; b=pdMjZXZlKdIRzEc+DJ+og28bTrTwPZLIElrg7/WOTikBkrn2GKK/6D0j3aEEHXo3eJgu0pr3uwVJ9n7pZnNupEqky7FWeCScT6QaZ7Et3vbFqj08W94aycCVuv9jiRc1csGoFDEksLf90RK545dlFvlebBr/UdvbF8RWMOf9usk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779348298; c=relaxed/simple;
-	bh=m5IDhNeRwMH8PP0OpflBBRv0Fn+xa1/ETaIzCWCGTPw=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=rKNkgfC6WCZA3eqfr+3h17t/UgUVBOAR43Bq7sDZHjAYsdN9brQZZ9ti1hoVkoIUALmGvY0/XlIVxkPSTQki/jdMnA/L0hSI47/zzJy/oBWW1KkEUpKDQwGq4QSMLjXlxjPOaSk5Wu2i6l6hhSIKL81SBkupfeJg/bh/wfFe18g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xx57IHv2; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xx57IHv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AD21F00A3C;
-	Thu, 21 May 2026 07:24:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779348294;
-	bh=eZl/3GLROF5YGEmvAGhh4uYtr2y+7OA2muo7bv/g20Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Xx57IHv2Kiv7tyrpPmPFSU4TK2rTMHiYw1P+6OcQ9AAWPgZB8k4r4OahDh3jBtkc+
-	 XU4U/eCmYBn2dpIyKfeCObqEG24fMfvUlKr3C+Vj8/qbn1DgyT9nwootxjyw/o7nc3
-	 1CMCVDKqIqZB99Mt9cvu7gxw4iXPKdeoNGoR5VaJSXwXHpXh853QNjww0JuiRtYkG4
-	 L6+kNRkB+5FNS4h1DsmRvXJPNyG/QFnEdlQFFYLrAveGXHolt1s71p6v+FOwozKpYC
-	 a7oUBdyZ1kFy7ru8hXLlNwwDsOEEX9HuzFVq7Sw+JtIEsy0TxiczlLlfP5qg9kO5qi
-	 fMR1uiwxNCZ7g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 04/12] dmaengine: dw-edma: Add partial channel ownership
- mode
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260521063115.2842238-5-den@valinux.co.jp>
-References: <20260521063115.2842238-5-den@valinux.co.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 21 May 2026 07:24:53 +0000
-Message-Id: <20260521072453.E5AD21F00A3C@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649E8399039;
+	Thu, 21 May 2026 07:29:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.123
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779348575; cv=fail; b=Bz/XbmsoCWHTR6yAn+QlmzNH4uHlUOLOLxA1bkkq0E6fRQKPSEgu49iYHSNVhC96/bYnfvZp1XWTTa+2cDfAuHeGD6FjCLNj1PJF/EVRlm1m+BG/R/2xqlFpiVN9SCItOCmToyGJ3+UpUkrqQH0u0Hr5xnsGKJRcrR+ygMcJyz8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779348575; c=relaxed/simple;
+	bh=HYkwSF1+DvBufNm2Ewk4k3jImkDzwCBdm12gtJIriZE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZXa+8X33AIDLG7sC8ir6mTBBYF4DFZDX18OOViVGRiqP44OwZ6Do5i439+ab6+PCccWBArf0q/uBNpaT4yx1p/Cfu3kImLRvMFO4jSKp6PxEpHYlkVLE4y5LNVOphpB5blhm0DQ76qO+qA1CU1EKNlnzqrOtxqh2Hak7xCeI9d8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=40.107.44.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RkIeVPCdn+4Pc3Zpto8j4keeE3PDmW6ZBPd1SmwSPKLS+rDUtlg/p0WzeMtg6KjwwEZOk6gawSEbe8ettbBZ6+Xqz6Oh8U8SwkcUUvIwqLkUT+4PwNjKNv8ZWVV9Kvq3YmnW9M2eD0H8aIr+NBL+A0xvRO0oMGeya9NqB4bGruSGAAhF73SytTWFDVC6rdmoH/lbANq3z0ArTUNH9gyJaztGJwJMgGt5+ZrVh+l3CNPECTJlFTecY3fs6NgTfaoigSJnSHunJVOVC9z9+g40H04m4mEfxJz5JwOGx/Ta4pJyxQbsTIXB3VLXRCNdVRPo0Yaw9bV7lHiRRhYbg87tUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2NFEHhBIbJD1YCyMXcRYvDkf8EG7neu+txkBEQyH45Y=;
+ b=lO6QoCtFL3B+hSu+f6evkrnULvlk6kCitbK4FidHoBCAWtEnvE0Ic95TgJdOsMxY5UgpnCdJWMQgb+wrY9ifUfiVtLlwpZbNI+dNgsLgow652+a6NsjnPwbe9VcaiydKPWD7Atr0zXakmm1aK3GzaKRrDjTBbBHCAeC2jqxPUDihvbq5lNe8avHNbUj9j2V+Muau740kQJuFTbjOhW0jSi3II4mStom9ekQT2BVrx85wDm4tDfXbvWr8OhZ93Wg6uqkJpW8i2P8wSLQQ5kz4JkOTHnOSM/CtLr62ZMom15ZWcYIfSc2i18dHr+p6ebTgT45USIUG2nePQR/1hJXbrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
+ dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
+ not signed); arc=none (0)
+Received: from TYCP286CA0060.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2b5::15)
+ by SE1PPF4D95A16FB.apcprd06.prod.outlook.com (2603:1096:108:1::414) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.16; Thu, 21 May
+ 2026 07:29:29 +0000
+Received: from TY2PEPF0000AB88.apcprd03.prod.outlook.com
+ (2603:1096:400:2b5:cafe::fb) by TYCP286CA0060.outlook.office365.com
+ (2603:1096:400:2b5::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.17 via Frontend Transport; Thu, 21
+ May 2026 07:29:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 222.71.101.198)
+ smtp.mailfrom=cixtech.com; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
+Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
+ 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
+ client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
+Received: from smtprelay.cixcomputing.com (222.71.101.198) by
+ TY2PEPF0000AB88.mail.protection.outlook.com (10.167.253.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.48.11 via Frontend Transport; Thu, 21 May 2026 07:29:28 +0000
+Received: from guoo-System-Product-Name.. (unknown [172.20.64.188])
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id EA55841609D9;
+	Thu, 21 May 2026 15:29:26 +0800 (CST)
+From: Jun Guo <jun.guo@cixtech.com>
+To: peter.chen@cixtech.com,
+	fugang.duan@cixtech.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	vkoul@kernel.org,
+	ychuang3@nuvoton.com,
+	schung@nuvoton.com,
+	robin.murphy@arm.com,
+	Frank.Li@kernel.org
+Cc: dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	cix-kernel-upstream@cixtech.com,
+	linux-arm-kernel@lists.infradead.org,
+	Jun Guo <jun.guo@cixtech.com>
+Subject: [PATCH v7 2/2] arm64: dts: cix: add sky1 DMA-350 node with channel IRQ entries
+Date: Thu, 21 May 2026 15:29:24 +0800
+Message-Id: <20260521072924.3000282-3-jun.guo@cixtech.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260521072924.3000282-1-jun.guo@cixtech.com>
+References: <20260521072924.3000282-1-jun.guo@cixtech.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB88:EE_|SE1PPF4D95A16FB:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 43d594bc-f59c-4da2-e362-08deb70ab169
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|7416014|36860700016|22082099003|18002099003|56012099003|921020;
+X-Microsoft-Antispam-Message-Info:
+	46TnyAE17GHy5OP1bdmiwOIo0Ojl8viM2pUXPjlNUYqHMoffPaD5ETDJ0NVT8EAfFo9p5YaM7djnb8LqQ5GNppFlomA1KcVoEaJD4RBro+jifNKDG9RbrhofB0ts7PEFp4nRgEqQsjKDyVSNIzhCC794hCnpqGbRxKftl+FNfxAwIEPCzIqOa2Gq7tNw0rVSlpN6y6srmLKs1NOkGU3YW3XD+SGeJM9WccP5SoEAhJWkg2+JW49TWjc8ef0wDCsz0sLzV0pfcGDj5TTHVggPnKNJeJK6SYLPea52pU3Lgigw/QvUCjJIJ9OMhcsfuULVkbetM7PJdD0qhLCJGArPGIfyK0jGOBsseBB8gAe0dPGmn6CLlMmQZ2YT773EWErKO5aCaU1R/OVCDS35hz2Y7RSwNcB/bxJNwf8CTkN0+/R8koOJa6yDa4fCRGwjGJxH0G2tuev8XlPA+EFpJUh435R9Qq8A+9BBVqN6ezapeLNsLb6iWXo45uYulDWwEjMvufRfhUePHaugvPgifklrkALf8Z9wec2EFumxbcTcOrX2SZuZIy1UF/0ekhenPZncVZM6dXGdXuGRtMLTbiOcWKfA4jl6ANPFboHNk+ATPC+1CjQPyM4UMHuZWrHB/oLD8bnnv/OSdlWE4l4XgQ4EIf3crmwNib2jsNvirwnXAM7rXFlyKiA9dKNCIA3Q1r8492KwIMK6QDuNafA9gPOUVrT1v+HRAyDjHmHatSQ9TXCDr2rh/NF1Zy2ZEcarU7/WJyyWfmpvdETGwR/gqeg+5g==
+X-Forefront-Antispam-Report:
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(7416014)(36860700016)(22082099003)(18002099003)(56012099003)(921020);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	yRjxJU5iVjQlAJdt0WacJl0Oc9KzXVCKAW1fTvHmsNKgTRNSXYNEZlDWOi86Ef9b7Zyk8t95tS06p5eRk7i7j4VNvUenkpBPEm/c92JmER3Vaie8Tfp6c0/OF05STQLtWristkcLy3UtjoH8Yef4Qws7v/oSvpLghdI/Z9eK0wrLJ2WNnSSL64DMk1zor/8Ar9UNtwotxTwXjxUUh+UF6JSuBpg/+xYui+0fM3JsK/8+g37hOkUWkVtUgniLPd9tpnXuH6PiCxVum+a4+1kO+ZSnAXdJ9rUfEEYVx3/tvDdgyegW0UBS+HrqJ49E30PlOrPR3Y1tfXJTB0VwBXyJLF64lhFK1Zdhghj54sggVsEFAlY+sxWGuc+HYq+wpBamQqIaOkM1YFby58WLVruUBQChV0gKhS49gtPqiYUas1WR4frnRBIBUYw9q71N+z8Q
+X-OriginatorOrg: cixtech.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2026 07:29:28.4949
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43d594bc-f59c-4da2-e362-08deb70ab169
+X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	TY2PEPF0000AB88.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPF4D95A16FB
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+Describe the DMA-350 channel interrupt sources in DT using 8
+interrupt entries, while all entries map to the same GIC SPI
+as wired on this platform.
 
-New issues:
-- [High] The partial ownership check compares requested channels against a =
-software-capped limit instead of the true hardware channel count.
-- [High] Bypassing the global controller reset in partial mode leaves claim=
-ed hardware channels uninitialized, risking runaway DMA and memory corrupti=
-on.
+Signed-off-by: Jun Guo <jun.guo@cixtech.com>
+---
+ arch/arm64/boot/dts/cix/sky1.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Pre-existing issues:
-- [High] Requesting IRQs before channel setup completes exposes a NULL poin=
-ter dereference.
-- [High] Freeing IRQs before unregistering the DMA device leaves the hardwa=
-re active without an interrupt handler, leading to interrupt storms.
-- [High] Concurrent channel starts in the same direction race on read-modif=
-y-write of shared direction-wide registers, leading to lost interrupt unmas=
-ks.
---
+diff --git a/arch/arm64/boot/dts/cix/sky1.dtsi b/arch/arm64/boot/dts/cix/sky1.dtsi
+index bb5cfb1f2113..823adeef51f1 100644
+--- a/arch/arm64/boot/dts/cix/sky1.dtsi
++++ b/arch/arm64/boot/dts/cix/sky1.dtsi
+@@ -444,6 +444,20 @@ iomuxc: pinctrl@4170000 {
+ 			reg = <0x0 0x04170000 0x0 0x1000>;
+ 		};
+ 
++		fch_dmac: dma-controller@4190000 {
++			compatible = "arm,dma-350";
++			reg = <0x0 0x4190000 0x0 0x10000>;
++			interrupts = <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
++				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>;
++			#dma-cells = <1>;
++		};
++
+ 		mbox_ap2se: mailbox@5060000 {
+ 			compatible = "cix,sky1-mbox";
+ 			reg = <0x0 0x05060000 0x0 0x10000>;
+-- 
+2.34.1
 
-commit f43f6aa75a3f74ae4984f3bcd2491f36243b0786
-Author: Koichiro Den <den@valinux.co.jp>
-
-dmaengine: dw-edma: Add partial channel ownership mode
-
-Some endpoint DMA frontends expose only a subset of a controller that is
-also initialized by the endpoint-side OS. Add a partial ownership flag
-so dw-edma does not reset controller-wide state in probe() or remove().
-
-> Keep the mode conservative. Do not enable interrupt-emulation doorbells,
-> and reject eDMA legacy mode because it uses a shared viewport selector.
-> For EDMA_MF_EDMA_UNROLL and EDMA_MF_HDMA_COMPAT, require ownership of
-> all channels in each exposed direction. The driver updates registers
-> shared by all channels in a direction, such as interrupt masks and
-> linked-list error enables, so two independent OS instances cannot safely
-> split one direction without a shared locking protocol, which is
-> unrealistic.
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this actually guarantee
-safety?
-
-Looking at dw_edma_v0_core_start(), the driver updates direction-wide
-registers like int_mask and linked_list_err_en using a read-modify-write
-sequence. This code executes with only the per-channel virt-dma spinlock
-(chan->vc.lock) held.
-
-If two channels in the same direction are started concurrently on different
-CPUs, won't they race on the read-modify-write, causing one channel's
-interrupt unmask to be silently overwritten and lost?
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
-edma-core.c
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-
-[ ... ]
-
-> @@ -1152,13 +1161,25 @@ int dw_edma_probe(struct dw_edma_chip *chip)
-> =20
->  	raw_spin_lock_init(&dw->lock);
-> =20
-> -	dw->wr_ch_cnt =3D min_t(u16, chip->ll_wr_cnt,
-> -			      dw_edma_core_ch_count(dw, EDMA_DIR_WRITE));
-> -	dw->wr_ch_cnt =3D min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
-> +	hw_wr_ch_cnt =3D min_t(u16, dw_edma_core_ch_count(dw, EDMA_DIR_WRITE),
-> +			     EDMA_MAX_WR_CH);
-> +	hw_rd_ch_cnt =3D min_t(u16, dw_edma_core_ch_count(dw, EDMA_DIR_READ),
-> +			     EDMA_MAX_RD_CH);
-> =20
-> -	dw->rd_ch_cnt =3D min_t(u16, chip->ll_rd_cnt,
-> -			      dw_edma_core_ch_count(dw, EDMA_DIR_READ));
-> -	dw->rd_ch_cnt =3D min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
-> +	if (chip->flags & DW_EDMA_CHIP_PARTIAL) {
-> +		/*
-> +		 * Direction-wide registers are shared by all channels in that
-> +		 * direction, so a direction must have a single owner.
-> +		 */
-> +		if ((chip->mf =3D=3D EDMA_MF_EDMA_UNROLL ||
-> +		     chip->mf =3D=3D EDMA_MF_HDMA_COMPAT) &&
-> +		    ((chip->ll_wr_cnt && chip->ll_wr_cnt !=3D hw_wr_ch_cnt) ||
-> +		     (chip->ll_rd_cnt && chip->ll_rd_cnt !=3D hw_rd_ch_cnt)))
-> +			return -EOPNOTSUPP;
-
-[Severity: High]
-Does this validation reliably ensure a single OS instance owns an entire
-direction?
-
-Because hw_wr_ch_cnt is capped by EDMA_MAX_WR_CH (8) during its calculation,
-if the hardware supports more channels (e.g., 10), dw_edma_core_ch_count()
-will return 10, but hw_wr_ch_cnt is truncated to 8.
-
-A frontend requesting 8 channels will then falsely pass the check, leaving
-the remaining hardware channels unowned and available to another OS instanc=
-e.
-Could this allow multiple instances to share and corrupt direction-wide
-registers?
-
-> +	}
-> +
-> +	dw->wr_ch_cnt =3D min_t(u16, chip->ll_wr_cnt, hw_wr_ch_cnt);
-> +	dw->rd_ch_cnt =3D min_t(u16, chip->ll_rd_cnt, hw_rd_ch_cnt);
-
-[ ... ]
-
-> @@ -1175,8 +1196,10 @@ int dw_edma_probe(struct dw_edma_chip *chip)
->  	snprintf(dw->name, sizeof(dw->name), "dw-edma-core:%s",
->  		 dev_name(chip->dev));
-> =20
-> -	/* Disable eDMA, only to establish the ideal initial conditions */
-> -	dw_edma_core_off(dw);
-> +	if (!(chip->flags & DW_EDMA_CHIP_PARTIAL)) {
-> +		/* Disable eDMA only when this instance owns the controller. */
-> +		dw_edma_core_off(dw);
-> +	}
-
-[Severity: High]
-If the global controller reset is bypassed in partial mode, could this leave
-the claimed hardware channels uninitialized?
-
-If the bootloader or a prior kernel left these exclusively owned channels
-active, won't they continue running and risk memory corruption when the
-new kernel reallocates descriptor rings? Does the driver need to perform a
-targeted reset for the specific channels it owns during probe?
-
-> =20
->  	/* Request IRQs */
->  	err =3D dw_edma_irq_request(dw, &wr_alloc, &rd_alloc);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does requesting IRQs here
-expose a NULL pointer dereference?
-
-dw_edma_irq_request() is called before dw_edma_channel_setup(). The IRQ
-handlers like dw_edma_interrupt_write_inner() dereference dw_irq->dw, which
-is only initialized later inside dw_edma_channel_setup().
-
-Since the IRQ is requested with IRQF_SHARED, couldn't another device sharing
-the IRQ line trigger the handler prematurely? This patch seems to make it
-more likely for partial instances since dw_edma_core_off() is skipped,
-allowing the device to immediately assert an unmasked interrupt.
-
-[ ... ]
-
-> @@ -1220,8 +1243,8 @@ int dw_edma_remove(struct dw_edma_chip *chip)
->  	if (!dw)
->  		return -ENODEV;
-> =20
-> -	/* Disable eDMA */
-> -	dw_edma_core_off(dw);
-> +	if (!(chip->flags & DW_EDMA_CHIP_PARTIAL))
-> +		dw_edma_core_off(dw);
-> =20
->  	/* Free irqs */
->  	for (i =3D (dw->nr_irqs - 1); i >=3D 0; i--)
-
-[Severity: High]
-This isn't a bug introduced by this patch, but doesn't freeing IRQs before
-unregistering the DMA device leave the hardware active without a handler?
-
-If active DMA transfers are running during dw_edma_remove(), the hardware
-will continue asserting the interrupt. Since the handler is removed and
-the IRQ is IRQF_SHARED, won't the kernel's spurious interrupt detector
-permanently disable the shared IRQ line?
-
-This was previously masked because the unconditional dw_edma_core_off()
-safely disabled the hardware. With DW_EDMA_CHIP_PARTIAL, the hardware is
-left running, which directly exposes this ordering bug.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260521063115.2842=
-238-1-den@valinux.co.jp?part=3D4
