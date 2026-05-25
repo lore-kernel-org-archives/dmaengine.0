@@ -1,46 +1,47 @@
 Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010042.outbound.protection.outlook.com [52.101.56.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F403BFE50;
-	Mon, 25 May 2026 07:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5153C0621;
+	Mon, 25 May 2026 07:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779693030; cv=fail; b=UoWw77DwfGINHbJCXPf6Dtb3dUbbAXTx9V4Hmlgf3SnfNhgAE44QS5BXVOrsBr3KML5mLG0nyMfllARjcY8xNSt8YnacSrGQRWFaMAHgFS4UYUDiAcJhCDn1GJgGD5IshAtWt8KzqPaOD5Kdb2Ms8BRebpCrA5DAMFPelImXCxA=
+	t=1779693031; cv=fail; b=j8yZD/DNJKdXbElNmF6dRZb46Jd6kgrVy+M9ZXz336J3r5yhEcW7XA/jrLE7Ak9nF/sw4EJs1qf7cX8lYDrwgl4EPv6wclN2MdsOtSHc/4odscgyv8AMUXnlUY27+7eurrQw+M6bcfbzhJVhGhytR1LOTBjg58rztz91Hc0Fwas=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779693030; c=relaxed/simple;
-	bh=PKzIPL3W67hXs0/bRymUU18UwMJ7EoW9U1VvyeXU+DU=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=M4OQJtpHLor7o/2fm6+omWhlXC3LYB9hTepHsU42hbYivMSeRFeAR6nAAwsX1TO3tupZStVusC8CJqnRzy5EMkhuQBY1K2DvL3xzeVwRlCNEgzm4UGjHzVT/Pow/cn1796fYAwH8Qt/rxu+NabTG2Q7qqL8YQqFBzhghjhy2gVE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=VbqFv3At; arc=fail smtp.client-ip=52.101.56.42
+	s=arc-20240116; t=1779693031; c=relaxed/simple;
+	bh=NgthwP+aVYYPA9/dcVIWdg3SD0opIMlddn4g/b/O3Jk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aMu2rTOxHjWazd6yb+9CaJKmHGN5AQOAfwv35CXcbLpPIMHbrMV5os0fSJaMOedI3xZIBPFj3giSawyd3adR7l/0B1gLtTAMbTtz0UHWTfkYNq9oX4UMg4T0brGLx7HOYAFgzjZb4osCTrEbUSDN60HcRCcxiEhmzrH8YoKYZPE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com; spf=pass smtp.mailfrom=altera.com; dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b=Xct1kSwr; arc=fail smtp.client-ip=52.101.56.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=altera.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altera.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="VbqFv3At"
+	dkim=pass (2048-bit key) header.d=altera.com header.i=@altera.com header.b="Xct1kSwr"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=efCtfw3YFcV8MTH2rfWNHin7XmwLCLMUVjtiYixfLk2SxEFVIupJ3N+UBGXLD368wxychJ8XOpVAk3BEcHIFeKjL4VVQWxLJrwvMbP1hvkVZXkHvj4bUYxITCO9mElIS9ELPjmn48oXGCBAg26xzAQTOh06qy0My0RDzWnO8L/sdCS2ZONNQ0vHevbKJwmY2cbTGTu415T/6IYhe9LGU0Lz2jISHSi6a0ktLbjFSFp3WaNg1CA76xp2sk/jVaz3j77wh1OKRiEAkzgA4xXBgUs458ZyvOCmBMX/07Oylp5/L/1TBkq6cVf/oFMnT5nh8ZM3nC7jOE9FnrKEKPSwrSw==
+ b=dfayba/bs24PQdz1Al0kH8HysW4n6zPKXm/xtfNP8zG4vjiudYo8nQ3DsNDRLuoFr1Ck95TWQ3zlOgUgmNEsQW0r+K8zH+meb87kRl9rFQC9mv8I8ecIj8phxsfKJZcoLohlExupFyyOs/8eRVYrlHvwP/PzRdny/IDPHsG2q6UbfepZ0xiSjkMpoS0HknD5YCFQbI0J4mwX9w1tW1pMuBZS4qtF9gQlqBcRduVUzdc9fr3KxDJOdveRvQzBgzSXmAnx0XueXnghwFvjbGkA7KggQWYTx7+cXD8lJgyPIy223rFsZXluSFldOEAqKebAjz1roEz7QAmqHfhJ1qhAqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g+cXSKUk/17XIOrc451vjYzghMrtog/gsx7qeCsAe3U=;
- b=HCDCC1FQuPN/CesE7zBNSv4jb+q1huM5LgCjrTLHO5w/g3dCnNGf+mBkb239sGHDE1bDukxBE+cIAy08ZVUx6GP9MVBF8i95bOC5bxEVSnuPUn4Xk1c9cPD88hLen6sY+Sclca8TlFXD7WiI0YvicuyusO8FTYWI/AyW99XyM4qXadJiaSEUgjOwbTX5pvO3b6t8Q8blhyjjAcxbmB2EIVQNLq5YZTEAhm0BCoq/YIR2yTLSo89ty97pICZWPDO5V/PNE96c8Kat+fgmYrXaD4ctzhsfPsp6XCskRVtJjgJz7ohZUBoGA55iK/KI9G5Oq6d8BKruIoNzWHH9132nBA==
+ bh=qw2cE/0PkZzDCcGZzKQIbiYTWfNmxH3PgBlZNq19DKs=;
+ b=Jfw5jeyU91xTriYtzmlHMlm4ljz4D73OB8VY17kpFQVKh2aEKGLIJL7WIkPDY6I56ejepjoNZOoaBLx1dGPad/Bf+jOVSL7gTWnPMXy1E0+EKW+SiSd21VxswTSJnnQx3SaODOTycS4ZFX+i6wnIYBTLM9nU8C4mYDvvdv7hu8/c6Hz+zBU/X5TszAtG94uIf7BnNYY74EDjpiIip1m5jTFUGaT3mlNknFawJlLL7Nczm6jAHO4m/LVBW1btTe2EjzehR+HJpGveWfBzxVfEr18AyEf/l/xSrrVA0Zcp4s4Q3HAxO2FE2R9ELTpbiHu4pCoxp+xp1S8h36CSB5pa/Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=altera.com; dmarc=pass action=none header.from=altera.com;
  dkim=pass header.d=altera.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=altera.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g+cXSKUk/17XIOrc451vjYzghMrtog/gsx7qeCsAe3U=;
- b=VbqFv3AtZALCeNBtQfDU1BC8b6aicAlhiYFrnJuTDb4wbnBByF86GhHwzboLs++zzdFZ0rBRtIW3oGv91zYltcfBMX7X7Urk45bemlkNnuoksICG1jkJVPxUwkLUXFvgT8OVaBNU3tYCPz1ZFHS5Wmd0DaxJUbolMqD12did29ulEAzAmqz4xrVgnRIsK69UpXHct6RI1DwpbSymI18rmLw9HOsRhk7O5kgR+TK/25F/t1Aa8cY0qOQ0acxyojkzbssbepTDUQuRxswE89fzCdOaFPtwhzTq/+j7w/JvdTgiaOfh0cuDBBu4B+uABYlsd0RU14Ams3+C1J0HusQjXw==
+ bh=qw2cE/0PkZzDCcGZzKQIbiYTWfNmxH3PgBlZNq19DKs=;
+ b=Xct1kSwr5dvexw+aEbDtTbGR0cB/Mx8itruAO+A0JNXsFNXbCNpNe7B+DaR8GcP1bAyRIIHWVWC77qGnwnImdaqSt/pG+7g678oECTYe5Yeanatfjq32gbQ+Iv3i8t5M6ODmGHECaU5eSKW+jUH1FdNfwjRpKUm1SzuaulRKObRa0yVXEJ9NMlEmzIGoABQg2RoI0B8FRmw7g3Z7+MlxpeuAU8PdbM2r43yebu3850IMfDsdNuNTiez0T1p3vxC1A3BHybLTyDHT6ee/5sV+BlbfrbSeK3jksopb5lkqVBCPGDaTluRXohvxzHpkhwIftBbvAukJ/F3gpeHTXwyzPw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=altera.com;
 Received: from SJ0PR03MB5950.namprd03.prod.outlook.com (2603:10b6:a03:2d3::20)
  by IA3PR03MB8456.namprd03.prod.outlook.com (2603:10b6:208:53c::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.20; Mon, 25 May
- 2026 07:10:24 +0000
+ 2026 07:10:25 +0000
 Received: from SJ0PR03MB5950.namprd03.prod.outlook.com
  ([fe80::53a0:bf93:6b6b:de01]) by SJ0PR03MB5950.namprd03.prod.outlook.com
  ([fe80::53a0:bf93:6b6b:de01%4]) with mapi id 15.21.0048.019; Mon, 25 May 2026
- 07:10:24 +0000
+ 07:10:25 +0000
 From: tze.yee.ng@altera.com
 To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -50,10 +51,12 @@ To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
 Cc: Tze Yee Ng <tze.yee.ng@altera.com>,
 	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
 	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Subject: [PATCH v2 0/2] dmaengine: dw-axi-dmac: clean up DMAC enable and PM
-Date: Mon, 25 May 2026 00:10:20 -0700
-Message-ID: <cover.1779688569.git.tze.yee.ng@altera.com>
+Subject: [PATCH v2 2/2] dmaengine: dw-axi-dmac: fix PM for system sleep and channel alloc
+Date: Mon, 25 May 2026 00:10:22 -0700
+Message-ID: <18bf778a3a1cc2f377ef8eb0d1508d8ac6371896.1779688569.git.tze.yee.ng@altera.com>
 X-Mailer: git-send-email 2.43.7
+In-Reply-To: <cover.1779688569.git.tze.yee.ng@altera.com>
+References: <cover.1779688569.git.tze.yee.ng@altera.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: SJ0PR13CA0107.namprd13.prod.outlook.com
@@ -67,104 +70,125 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR03MB5950:EE_|IA3PR03MB8456:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a514ff4-96e4-41fb-e538-08deba2cb0a4
+X-MS-Office365-Filtering-Correlation-Id: b16ef17e-9c2b-4949-69b9-08deba2cb14c
 X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|55112099003|18002099003|56012099003|5023799004|11063799006|6133799003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|55112099003|22082099003|18002099003|56012099003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	11S+JH9PEUOoRzPUmfPQ7q1+KUz3E95+4czio6hvWSz4IBjdeRnu+kvHAne6dLqGi4MxSsZav82+wElV41UaJ1Rc6VjWd4Y2bNy1b+7BsYqp/AvF2hjCqDEZCmxtVHuklqgnDepvAYNojtEnP6F6plvse53tU7KBc2yMyypEzyp03C8X2UuxoI4aeQe1REg6hoDgdK/JseQ3nwflh/srgHolckfC04rLIh21jEFppUiGhL2I8Zxl21DpaoP0211Z5askYPKBjmx1I8x8WzzZIXuPW6NTbI1GKpNPwVlElQNxzhbv+fExUKnQYD42SGEJ9fPFwadz/DS1+oh8tslU1pOSQOM8zIjqmhm5i0iOK2ftPyeyGRcWf5hp04S6+mIJ8ugnFsXHXXkvPe18Vk3gU8HxNe71vhkQ/SN1ZhZLWiXkrkZFkBfFVcCfJoWu/ORP1EGFx5nmnQ7HyMIPhBn+o100stK7+9oCUq/o6UIdmRRqJZa9EtfEN4vmGonnBEsFyQveBbOFhJXUKpYghqRD60hiaixpUhDKCnvtXNISn5H6enwOlHGtFhAmTvctnQlKxSAkxr0bgVNsIzPn4SngJ3myM6sCIhp+n5EfzB3HIUuhxrIfKJJ8hmsGripJ8MVB/aCGfIiMtREJHrzE3HVwzWob3SQZssY9nRSERMgaufjS8tFor58VTIGENxx1rawG
+	7ToblRRu0yyhS5R7kmlmZKJnQUA863tHmXRaq9A9Qr5QnWQHJeC3iTx1eCpV5kFn7z2YxN/sABdnCKoYox9XpC7wVUVttOdepeCbLqUdfG1F11WMUHnBs8oELi97AIQZeRqGF9PJbXZo6jF4X7zjnDIr4u7JzXtjaMS6vlxgFh2k8TUJCsTs19NzFRMKQadaiUjboUvqkxiIrSNQAoW+xsfK568po9PCUsjF62A65BWF8tdFRGB1l94IX7R9P9M5R51dDntF9zR++bA2HieWaoMFw3/8vIg/PDyx+4iGuU9AMCaCC/JiNLwAn1et3PQpR2hnlMTkxjAxKz8bF7YtySw1dCMaLc+W7S18joesJo5xNn7zyWX5XCO9rh9vSRjjlOySOBdps8bdAMbHDGXS2gLCBvLbZHL9PFSnJYCXbGoRrenA1/OGe0s299fNONW7MluWYdtI8WRzHh4J0NaojsGE8dU4LZ8eI9tGV85FTNwxxRMPYOsDf9aTTxGu5+SQq8loKlsBZ1fWXQ3J44SgFovOHK3x6beUtqRs9jDdTCRnO2JoQ5TxgKUGFVXGbavVZlxg/8Kwd7CNcGe4qaOM3FjO4f2Gf5Gwiy44eGXGMB815zJTzZqt/qrNBZ7XVQeFjZ69aaS1UZW3jOSCqRtoeE/n1rgGKCRo+HKHT4e0kNyVKsRkc1lEizqEg7OqHDI+
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5950.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(55112099003)(18002099003)(56012099003)(5023799004)(11063799006)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5950.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(55112099003)(22082099003)(18002099003)(56012099003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?8+Q1CknihaMv33NzlxRX25X6mf+MeIOLAroHRj21Hids3Tr9E/MlsSitkgj8?=
- =?us-ascii?Q?JNsAbLbozRMqXTem7uKVolTYAF3jtCMW4FodQXyB/+z5JR9S03ohDbeak+Wp?=
- =?us-ascii?Q?7a3LN+CGkbVR3onCJFfmj+t97XiCWoe9lwAeKQ8QyfwmeiUrd8u3gUl/Y1hG?=
- =?us-ascii?Q?RQ4vjFBuGheyX56umn6Ue7pNSKj22IQQy/zQ1b0SXdnZeOqCFFX67HSp9/XZ?=
- =?us-ascii?Q?D8MvHvOSpzgfcwQKomyxMzQygMvIDerWp24vRxvO70XjkkAah26F80pFSkgc?=
- =?us-ascii?Q?FrT5hYEBRABYsRagEavsKXxtYkkwJjs6/0/fMMgTI2SY43hiEXoxI3+gML43?=
- =?us-ascii?Q?dbXl8sI16qCyLRKOzS1i1z4aMbvOjHpNTqCEx+/t0xQnPBkDLYhPUfkraj7x?=
- =?us-ascii?Q?W0gbCFSsyPgOrSJkkknMWMLgZR1Kq4mJzTERfpH37j3TQ9i1YRjfHlbXxcue?=
- =?us-ascii?Q?CA5uuEq8Txpg14R61kRHLj9hOGqj9LqOpcOuKVfvVRkuepDwVvwfsjR/0nOI?=
- =?us-ascii?Q?vMhgl27Q/jQ2N8VA8T6+2PnfRkTDgvS51psAIaoZGDNiJ9/tSlE7UExrfQpb?=
- =?us-ascii?Q?anXzBv9L+haZeiPZS83DooYF6rwGMA1Dk9glRX9Wr1Os/HMkLv1Q6e6rRMhU?=
- =?us-ascii?Q?yOk85BIrl+gdx6efpurqYz+PPUHSrM5NmrECjPJiKK9Oe81rA+BvC9hzJMMp?=
- =?us-ascii?Q?cnWst5Fbcf14j1clDMbjsQnU/XghPFU6ctd0QCMQgJKnWOp2D8PN8xZdGg6s?=
- =?us-ascii?Q?IyRVORHbEDTtQNRujfhGCleHae44XNRP+Vks0N5uxmUnb6DNYBcU5lTYxBrn?=
- =?us-ascii?Q?9TsAJl0NyXhLBeDRylXDFVLsqiS+y7HCvZph611gxG17vtfNdnXfAXBTjtMp?=
- =?us-ascii?Q?A6VTElmA7p0uYSD75j/Jh5aueB0Du92zWrd7eDeOg1NovwlMANna3j0+xUfV?=
- =?us-ascii?Q?9JsCSWKRVu6kioLFAzRFhj9DuCr/lKHaiwYoq9sQubtRG6TfRtE/S9x6ymuu?=
- =?us-ascii?Q?1mFOB9/AacSzKJMBcrYKKCTW/vBGmRGN/h9z+WHgNkWu6415U++c5jLxN7pR?=
- =?us-ascii?Q?cN7CvkFL4N6F9VjVoTJjeXeSd+wDyE5FzO51LXez5YBPNwMJE/AfBPIoOpie?=
- =?us-ascii?Q?y1+jkwUH6zmB6GIs6C3yGkgdngux63S+lYTc+0oGelSbvhzRAk4na5IyH0dK?=
- =?us-ascii?Q?QV5Kcs739DT8mdsVBRbiJNWt4gxU124+SKLRzT+L6QK4cGADkIn6QHGxN+/S?=
- =?us-ascii?Q?d10mRvPgKbWhieY8xgFlbR8xrbrpINcoJOkC5QVGTbglo+yFnpyDc9T+bFLP?=
- =?us-ascii?Q?E+j0r76lTF/UDq+CTukvl7xHsgncdKL+xxquj0xowqb2Q0cH41qEz+6DtW2+?=
- =?us-ascii?Q?NUaANzYdrTsbqRW5bdg6j565iRmnOjMy0XOpsfwEEdEQYah/BcaWiS6VfWpA?=
- =?us-ascii?Q?EliQRFV7K+T5PnLdcaUOc052Z7dPz0XWLtt4r6aspMKYEptmjBQ2i5zfDctP?=
- =?us-ascii?Q?9DxjDW3pUiJuAHJ9DHbIQOBpRwPN/n8ZMG2qhWq0PRMbNB7LMUAVD3bvjU4J?=
- =?us-ascii?Q?qj2dabN8xRSQzmURA0LI5LVZsDEniFMs309IKGOy59tXP9BHR23IptqDJ+pd?=
- =?us-ascii?Q?IURyrm16YyS+vlYvDgZ4+qm07WDnD71Y+FxUEYX1bNAvZ1JLNDMeT7f8a6eF?=
- =?us-ascii?Q?sVfHbCSxzIp4MyIdn+Qfh1vBUlEtxUrkPmYmlRZCpBZFVejbSUNQqv1cG7C/?=
- =?us-ascii?Q?oeMNSoXOiw=3D=3D?=
+	=?us-ascii?Q?HnqzCKAswFXSxsA+CAFMJhcmVtvcxdX/5wngO44p7Pyn7xUzMF+EPoPw1+lE?=
+ =?us-ascii?Q?zGG853qh67X3y54vGjjp0PZxZvHq1sZHDoDaMicV4oiPZGUeLb43WXOK4ZlQ?=
+ =?us-ascii?Q?rFvZMvoo0aVa5LLy5aOztjeRIkDIgG02BIeecvqjNR8u6LeQaeOP4FSxzT4B?=
+ =?us-ascii?Q?Y7H32+fi7A4fTJLgfo9nkXC+A13DteEM0BfjSKyV5VYJYWyfrh4GOziGQbL0?=
+ =?us-ascii?Q?nAn+DUFt/IRDAf25usiS1tY5EZf485DKL8astb7qjaR2SV4PVu4LJF/C1yXI?=
+ =?us-ascii?Q?C3Jfq4ntyjgmWCtnZQ+5CYZ+Gu0UuspsoXiL5u7Y0IJsYEnyztTTxTBqaEi1?=
+ =?us-ascii?Q?watFU6U2R0A8/7lul9d3vpmCa5d3zgCoS7N+jBJWg/RgtjRw9EKQxe708w78?=
+ =?us-ascii?Q?T3RRmeJkjUa1NVGYchY3BCKHrZvjvzfqmg/HShowGnbOv4ivfvgXEi0fsIl1?=
+ =?us-ascii?Q?M7qepYzVyIGEdZHCJvUEk6p733J7nQQQLQhVH2C4qTFIO0MGsIp9F6/qa76w?=
+ =?us-ascii?Q?SKt2iDWSltZkwdr3cdcrB+DPDBW88mX77sJ666UWwEKB4J6FfUxm3f3B37nb?=
+ =?us-ascii?Q?OKWAh3oV2KMW1Hux5pKkf8Ij2MK5W+FKz2JZLgrJOPksb7UmHV7oRWr9+ZEF?=
+ =?us-ascii?Q?AYiEx3zQPVaMVXk197WBuWExDzx4Tnj6/ce5taYRURU505zvJqkknoTBRk8k?=
+ =?us-ascii?Q?gEYQ1G26BjaiczH8fuP9MjMxk8tnzAX0scJCnn8kpthht/okJyh11nr4y4/V?=
+ =?us-ascii?Q?5+u9F/7DL7NhYyRk0De60iNKjSxxV1Q7hkXAwWJu/MOrCV18rKflktUgEHD/?=
+ =?us-ascii?Q?Nz+fS9W5jXLPbI6juQlGZtgQSj8kee8xRnWDELcw+qGELux/SCrHfqzFcJKY?=
+ =?us-ascii?Q?b0gJygfthZjVlWlUB73FbLWNfr+8ngH0iADID39ebwS1oelbm0YU8+voaZrI?=
+ =?us-ascii?Q?DWkoF7vvZlBwaqJ7yxwoEr8asT0dvbN7lTQfVPffvfClX9/BSqFcY4jBcJwC?=
+ =?us-ascii?Q?X0A+ahOt1zaVJ0rqqZ8sJDUa4nplwog2AUebpnJsMTkCcHb70pit4H4Aq+0H?=
+ =?us-ascii?Q?SKMUvPA/UQl3Hq6D9ay3a17sDZsx2iMMNcN+3J9QkL0brDMUKEAgb35FSCuH?=
+ =?us-ascii?Q?hsWSMuyiPhzGbptciiC2A5wVF11j1pxw8qDDHULDo+n4mbOGThY1+fV/SDgc?=
+ =?us-ascii?Q?EpH92H2Q+IlBWsGI48IwccE5V9WRnfmIOTAqCF5oLkHJK9/GUeprFxHX6KFr?=
+ =?us-ascii?Q?X/11f/HcLqLwE9rEMVgewd5XT8Idygk9VYucPVsDr9wu3dax3dTntL7LtxXs?=
+ =?us-ascii?Q?TE2Ki0QusgOBVSuxjamcmPS5uiGlFJEnWvVTvDmgM2E7whDssNFGCnJSsD6F?=
+ =?us-ascii?Q?ovWAru0i2wNPKEqEg+q4M8tAUHDokdRzAOnFz67R0hU8CfQgZLpe89uOqzao?=
+ =?us-ascii?Q?ZvrnqoTS1EgVrEYMfDwxjoSVDciMHT59rjQKg6FO8DBkRC0M3WiEPZxBioyE?=
+ =?us-ascii?Q?NsMJc2umE3XkjvZl/7AdImJnbEm3RE2z5dCYX7lzrEjoi8kmY4xNg5wg2eV5?=
+ =?us-ascii?Q?vZlaZRxO0xX541E+tdFvsPzgJqHm8mx9ttZfuxBHDRzFKSzcPdwjWJFtxq6E?=
+ =?us-ascii?Q?AoWl8eMlUDD60yT0TMjK86PohzzTS/44jSw/xUImHepQhNPhTx+R9dFZF01n?=
+ =?us-ascii?Q?gpZcl+k8a/zYsZoXYywkvSTNeq5y/bmvu9AToN4r7pxKhJic4ZaBEh0vMs2S?=
+ =?us-ascii?Q?iyzuJCQ34Q=3D=3D?=
 X-OriginatorOrg: altera.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a514ff4-96e4-41fb-e538-08deba2cb0a4
+X-MS-Exchange-CrossTenant-Network-Message-Id: b16ef17e-9c2b-4949-69b9-08deba2cb14c
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB5950.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2026 07:10:24.0017
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2026 07:10:25.0301
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: fbd72e03-d4a5-4110-adce-614d51f2077a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: r4FSlCxIHe3+FOkhx9cc8w5C2uCCvMR4LZT4U7SLlUjtdB6KZrjOkdHmyd8tXK7KDi+MmbSY/Mk1htpEviwm5g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: piuDo+FpFiITs1oFXHkvuQKYhEHWA84Qfvg5hNlxGv/BcdJlpOYPR1F6EOkExsfyx1G5NKjxaLnF+G5ZQIn5GA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR03MB8456
 
 From: Tze Yee Ng <tze.yee.ng@altera.com>
 
-The DesignWare AXI DMAC driver enables the controller in axi_dma_resume(),
-which is invoked from the runtime PM resume path and from probe. Calling
-axi_dma_enable() again at the start of every block transfer is redundant
-on the normal path.
+The driver only had runtime PM callbacks. If a channel stayed allocated
+across system suspend/resume, the runtime usage count could remain
+non-zero while hardware state (DMAC_CFG, clocks) was lost, and
+axi_dma_runtime_resume() would not run to restore it.
 
-That extra call had also masked a gap in system-sleep power management:
-with only runtime PM callbacks registered, a channel could remain allocated
-across suspend/resume while the runtime usage count stayed non-zero and
-axi_dma_runtime_resume() was not run, leaving DMAC_CFG and clocks out of
-sync with software state. Removing the per-transfer enable without fixing
-PM would make that scenario more visible.
+Add system-sleep PM ops that use pm_runtime_force_suspend() and
+pm_runtime_force_resume() so suspend/resume reuses the existing
+axi_dma_suspend() and axi_dma_resume() paths.
 
-This series drops the redundant enable and adds the missing system-sleep
-and channel-allocation PM handling called out during review.
+Replace pm_runtime_get() with pm_runtime_resume_and_get() in
+dma_chan_alloc_chan_resources() so clocks are enabled before a client
+can immediately submit a transfer and touch MMIO.
 
-Patch 1 removes axi_dma_enable() from axi_chan_block_xfer_start().
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-Patch 2 (follow-up to review feedback from Sashiko Watanabe):
-
- - Add SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-   pm_runtime_force_resume) so system suspend/resume reuses the existing
-   axi_dma_suspend() and axi_dma_resume() paths even when the runtime
-   usage count is non-zero.
-
- - Replace pm_runtime_get() with pm_runtime_resume_and_get() in
-   dma_chan_alloc_chan_resources(), with pm_runtime_put() on error paths,
-   so clocks are enabled before a client can submit a transfer immediately
-   after allocation.
-
-Changes in v2:
-- Add Patch 2 as a follow-up to review feedback from Sashiko Watanabe.
-- No changes to Patch 1.
-
-Niravkumar L Rabara (1):
-  dmaengine: dw-axi-dmac: drop redundant DMAC enable in block start
-
-Tze Yee Ng (1):
-  dmaengine: dw-axi-dmac: fix PM for system sleep and channel alloc
-
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
-
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index f7a50f470461..bcefaff03b5c 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -516,11 +516,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
+ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(chan->chip->dev);
++	if (ret < 0)
++		return ret;
+ 
+ 	/* ASSERT: channel is idle */
+ 	if (axi_chan_is_hw_enable(chan)) {
+ 		dev_err(chan2dev(chan), "%s is non-idle!\n",
+ 			axi_chan_name(chan));
++		pm_runtime_put(chan->chip->dev);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -531,12 +537,11 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 					  64, 0);
+ 	if (!chan->desc_pool) {
+ 		dev_err(chan2dev(chan), "No memory for descriptors\n");
++		pm_runtime_put(chan->chip->dev);
+ 		return -ENOMEM;
+ 	}
+ 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
+ 
+-	pm_runtime_get(chan->chip->dev);
+-
+ 	return 0;
+ }
+ 
+@@ -1663,6 +1668,8 @@ static void dw_remove(struct platform_device *pdev)
+ }
+ 
+ static const struct dev_pm_ops dw_axi_dma_pm_ops = {
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ 	SET_RUNTIME_PM_OPS(axi_dma_runtime_suspend, axi_dma_runtime_resume, NULL)
+ };
+ 
 -- 
 2.43.7
 
