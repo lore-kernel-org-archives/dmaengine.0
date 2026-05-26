@@ -1,119 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27093AEF3D
-	for <dmaengine@vger.kernel.org>; Tue, 26 May 2026 16:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3CD3C4B76
+	for <dmaengine@vger.kernel.org>; Tue, 26 May 2026 16:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779811743; cv=none; b=V6uGzgZgTSyNgSS5CftKRhORuQX0egc4GHAhs6dxHzqgKVvaa7IaurOD1SNWkQuk++dl3NF0JVMKtg2GV3omqZzQMx8esQyeiun1ebwRMZgzKxEEX/k9ut1QvtFklP6ofo7Els4I5EGCsig+FY8w48rnrws4hUNrMzQHihQR3y8=
+	t=1779813034; cv=none; b=fwzysBz1Hg+oAm90KSiKqIxT9kzNuLjC0gz/dxmSpqnz/Hi43S2Z6rA6j6uaRoanv6JoUj9tX0lJhsE4ItJ3HA5YcGzuzprFJ4XIQ438YhUDKCNYdtdevSnz59HB/6yrThS8GYJpcnXEYX/6nrXjXsLFdo6V/TwzBOOT6mD+064=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779811743; c=relaxed/simple;
-	bh=+Aqn+qHJSeqAjO0H7aFJnhkt7Wgvp1QLOykDLoA7Jpk=;
+	s=arc-20240116; t=1779813034; c=relaxed/simple;
+	bh=afyRj54G4C8v/MwKIXNGpc9wOYhSheiRvneiifQbWjM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iCFbhNuu3RkYWAkaF4F1vY0f1SEFq0304gI7EgvR9K8hkp7vO+W1VlcEAjAvyfznWXlJPz2UdtNNzcON2srA1pf6s7tUlQmj2N+WYx0I3Ow47WR4K2PEvEn75krvoSI+WPxcp1M5W6HdUmhir0EHRBmyKDm/XSlW3Ofsjy0RRt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGiJdhLO; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=sQgXzQdzROsF39RLiBCBrf5/YaCNaNwBeIc+tryWn6R+EWpkT4hTl8YDBrLXyEf6ASQvGv9VKsyG4EAigc2NvO8plV6jxKtgn4TnwEtICisqIkZow93MJUIO5p1fsieTJ4Cgt6wooJU3w7nK6R6ftOxOgKYow/iM7yt5XfyTjl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MU1uOv/e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGiJdhLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528571F000E9;
-	Tue, 26 May 2026 16:09:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MU1uOv/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A881F000E9;
+	Tue, 26 May 2026 16:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779811742;
-	bh=gw8tMCE+T+V1pPC9U/kHqWeMmvHh3vnn4Z1CLoewot0=;
+	s=k20260515; t=1779813033;
+	bh=us8tVTFYMK9Gwx4b1efPebw4ep5vFbH/z0FYs1xytzc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kGiJdhLOC3NJ00nRsLFj0rHOoV6bBdT3yRAhIfrbcdK1qZC9ygWkx2EAGRGnnm0fn
-	 qyxfMq6XYG/byaVa3fcjTHmeunM0CygHqALVEupRpijaiQQqniRR5RlU+va6fmYbfl
-	 FSGB+SfBbunalyd/UfkWG8gPKONKCcwZ+NX9Su+cRsnFbn2muyDVW7e0NJkdWWTJ8T
-	 4z0NtNgfIuce6hmC8aUmQjDtnjuwgrLLCwopIoUKBnTbfp38DTMnbhMx5Krzn3UuaI
-	 p+cjn5MkZ9R293RbPqOqpMzDcfRQ55ociCz31ZaemKDpZwaWv8CfRsymS0rSylfnOD
-	 gJGESxA0VRT6g==
+	b=MU1uOv/eJ5l8SNi5yfiBBOWiFdX2HB6z1BAqfQZYudfFLQRPhiAzc6X4sFvOh5k1m
+	 ZEQ2JedX4GnPRFF12wdxTkDFhbjzxndlJJWzyAgMweCTMexRyWwSeeXy4lTWO3tyB3
+	 WZND9jiQECHPdQCvdhoDQimZsT1ZUptWXQUhS8rTK0YkewrUR/5Q2aICa4mEa+btlm
+	 8Pl5jSjVGvSJk/ryJvd80EhTQNGch+2vpyb89/tJRCIDzs01c1k1y1ufeik7nK8huq
+	 E4t1pyyfWKsjhlBYfvlcBpG1BwYStuej2Cmi8oo8JMxCByl9P8jqi+7mbi2ipQ5e79
+	 ThoxmixHiMQyQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v19 11/14] crypto: qce - Use existing devres APIs in
- devm_qce_dma_request()
+Subject: Re: [PATCH v19 12/14] crypto: qce - Map crypto memory for DMA
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260526-qcom-qce-cmd-descr-v19-11-08472fdcbf4a@oss.qualcomm.com>
-References: <20260526-qcom-qce-cmd-descr-v19-11-08472fdcbf4a@oss.qualcomm.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260526-qcom-qce-cmd-descr-v19-12-08472fdcbf4a@oss.qualcomm.com>
+References: <20260526-qcom-qce-cmd-descr-v19-12-08472fdcbf4a@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 26 May 2026 16:09:01 +0000
-Message-Id: <20260526160902.528571F000E9@smtp.kernel.org>
+Date: Tue, 26 May 2026 16:30:32 +0000
+Message-Id: <20260526163032.E0A881F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] Invalid explicit cleanup of devm-managed resources causes slab cor=
-ruption and double-free vulnerabilities.
+
+New issues:
+- [High] The newly added DMA mapping is unmapped before the DMA engine is t=
+erminated and the workqueue is cancelled, leading to potential IOMMU faults=
+ or memory corruption during teardown.
+
+Pre-existing issues:
+- [High] Explicit free of devm-managed resources in `qce_dma_terminate` cau=
+ses a double-free and memory pool corruption.
+- [High] The background completion work is cancelled after its required loc=
+k is destroyed and DMA channels are released, potentially causing lock corr=
+uption or a use-after-free.
 --
 
-commit 633f351bd909cf49fe67df70c5d1504f4356decf
+commit 0c5470463f2ecb5c08f0a1037a6585137db4fa3e
 Author: Bartosz Golaszewski <brgl@kernel.org>
+Subject: crypto: qce - Map crypto memory for DMA
 
-crypto: qce - Use existing devres APIs in devm_qce_dma_request()
+This commit maps the crypto memory range for DMA as an initial step towards
+converting the driver's register I/O to use DMA.
 
-This commit switches the explicit dma_request_chan and kmalloc calls to
-their devm_* counterparts in devm_qce_dma_request. It also simplifies the
-error handling paths and renames the release action.
-
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> index d60efb5c26d88..c2602d35baa6a 100644
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
-> @@ -12,7 +12,7 @@
-> =20
->  #define QCE_IGNORE_BUF_SZ		(2 * QCE_BAM_BURST_SIZE)
-> =20
-> -static void qce_dma_release(void *data)
-> +static void qce_dma_terminate(void *data)
->  {
->  	struct qce_dma_data *dma =3D data;
+> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> index a0e2eadc3afd5..d7b7a3dda4649 100644
+> --- a/drivers/crypto/qce/core.c
+> +++ b/drivers/crypto/qce/core.c
+> @@ -192,10 +192,19 @@ static void qce_cancel_work(void *data)
+>  	cancel_work_sync(work);
+>  }
 
 [Severity: High]
-Does qce_dma_terminate() still call kfree(dma->result_buf) and
-dma_release_channel() on the DMA channels?
+This isn't a bug introduced by this patch, but is it possible that the
+background completion work is cancelled after its required lock is destroye=
+d?
 
-Looking at the unmodified portion of the function:
+Because devres executes cleanups in LIFO order, if the devm cleanup action
+for the workqueue (qce_cancel_work) is registered before
+devm_qce_dma_request() and devm_mutex_init(), the mutex is destroyed and
+DMA channels are released before cancel_work_sync() is called.
 
-static void qce_dma_terminate(void *data)
-{
-        struct qce_dma_data *dma =3D data;
-
-        dmaengine_terminate_sync(dma->txchan);
-        dmaengine_terminate_sync(dma->rxchan);
-        dma_release_channel(dma->txchan);
-        dma_release_channel(dma->rxchan);
-        kfree(dma->result_buf);
-}
-
-Since dma->result_buf, dma->txchan, and dma->rxchan are now allocated using
-devm_kmalloc() and devm_dma_request_chan() below, won't the devres framework
-automatically clean them up during device teardown?
-
-Because devm_add_action_or_reset() adds this callback to the devres list, it
-will execute first and manually free these resources. When the devres
-framework subsequently cleans up the devm allocations, could this lead to a
-double-free and slab corruption?
+If the background work is executing or gets scheduled during this teardown,
+qce_req_done_work() might attempt to lock a destroyed mutex and access
+already-freed DMA channels, potentially causing lock corruption or a
+use-after-free.
 
 [ ... ]
 
-> @@ -27,34 +27,22 @@ int devm_qce_dma_request(struct qce_device *qce)
->  {
->  	struct qce_dma_data *dma =3D &qce->dma;
->  	struct device *dev =3D qce->dev;
-> -	int ret;
+> @@ -255,6 +264,18 @@ static int qce_crypto_probe(struct platform_device *=
+pdev)
+>  	qce->async_req_enqueue =3D qce_async_request_enqueue;
+>  	qce->async_req_done =3D qce_async_request_done;
 > =20
-> -	dma->txchan =3D dma_request_chan(dev, "tx");
-> +	dma->result_buf =3D devm_kmalloc(dev, QCE_RESULT_BUF_SZ + QCE_IGNORE_BU=
-F_SZ, GFP_KERNEL);
-> +	if (!dma->result_buf)
-> +		return -ENOMEM;
+> +	qce->dma_size =3D resource_size(res);
+> +	qce->base_dma =3D dma_map_resource(dev, res->start, qce->dma_size,
+> +					 DMA_BIDIRECTIONAL, 0);
+> +	qce->base_phys =3D res->start;
+> +	ret =3D dma_mapping_error(dev, qce->base_dma);
+> +	if (ret)
+> +		return ret;
 > +
-> +	dma->txchan =3D devm_dma_request_chan(dev, "tx");
+> +	ret =3D devm_add_action_or_reset(qce->dev, qce_crypto_unmap_dma, qce);
+
+[Severity: High]
+Will this cause the DMA mapping to be unmapped while the DMA engine is
+still active?
+
+Since this devres cleanup action is registered near the end of the probe
+sequence, devres will execute it first in LIFO order during device unbind
+or a late probe failure.
+
+However, because the background work cancellation and DMA channel
+termination were registered earlier in the probe sequence, they will
+execute later. This means the memory could be unmapped from the IOMMU
+while the DMA engine is processing in-flight requests or while the
+workqueue can still submit new requests, potentially leading to IOMMU
+faults or memory corruption.
+
+[Severity: High]
+This is a pre-existing issue, but I wanted to ask about the cleanup
+sequence in qce_dma_terminate().
+
+In a preceding patch that converted the driver to use devm_kmalloc() for
+dma->result_buf and devm_dma_request_chan() for the TX/RX DMA channels,
+the explicit kfree() and dma_release_channel() calls don't appear to have
+been removed from qce_dma_terminate().
+
+Calling kfree() on a devm_kmalloc() pointer bypasses the devres allocation
+header and corrupts the slab allocator. Likewise, calling
+dma_release_channel() on devm-managed channels usually results in a
+double-free when the devres framework later runs its own cleanup loop.
+
+> +	if (ret)
+> +		return ret;
+> +
+>  	return devm_qce_register_algs(qce);
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260526-qcom-qce-c=
-md-descr-v19-0-08472fdcbf4a@oss.qualcomm.com?part=3D11
+md-descr-v19-0-08472fdcbf4a@oss.qualcomm.com?part=3D12
