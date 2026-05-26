@@ -1,208 +1,137 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AFF3D6CCF
-	for <dmaengine@vger.kernel.org>; Tue, 26 May 2026 09:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799993D9035
+	for <dmaengine@vger.kernel.org>; Tue, 26 May 2026 09:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779788504; cv=none; b=HXS+hZwuwwhERy74IMiyGLJQI5Kcq5bbmgTFSXDwUCXcpygPXGIQGFqCdK6mVXqinxObKV9LGUE3v6Zfm9PHtCIrQGmcCbav8REu48TKNg74xee+vyeIMIOs7I3ODXwcaCibNgZhfwwQs/KRgkcXDxQQdYOcg4UaTSOzMBoFs0s=
+	t=1779788591; cv=none; b=UWoqS+aIX0Wib4KsrDY8IF+R86qorWoI4Lw/Ni8HBTRofAOUtAEywP42nxD+o4dQLbaStEmV63J1ibloyozP/5uJ/3gOTUYQ/egcw7K1PJygriPL94k1+rJd+s+OrAuKGlA6WTirR5wtj9AdPOgWH7vpq1VOhIz0U6v0I52ppBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779788504; c=relaxed/simple;
-	bh=UddJJGSRWEvpiDeGKFK7SlznexuXZeKMsdddGovSSlI=;
+	s=arc-20240116; t=1779788591; c=relaxed/simple;
+	bh=xt+pWEtU4Zyeck6siShLZG5Yhuu4hj8eiaHYiIvUJbE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=rRlgWoE1OOOzSFQ/NxBfOBvz/76FR51HhwZxJ2gnlbMaQEutO1u9Q6AooQIKgj/ssoNapZLCPEaDsZAV2fWGzo3CMf0JqkT/oQMj8SEGX+izjVhMWgz8Th0jHqgULioQ4TsiaraEm/e7M3n6msEnKeK4VQWpNPoPAOkrua6MPr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+QsiMt2; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=M4yqEliyb43bQyTeOono5vdVwO1kdTHONQIVOJJ3hV84Zum//xve1i2+6HNuWi7EgcP+Ft/CdQWKobtvLH4Ogiqb4jAdJ0bEFzAnRHZ08NJDVU3lmgM3R/5pHBqrh4EkkPWqfFSqxpu+t8lST7yUak80Cl49wxIcEJFrWiE3830=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaiZ+pjn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+QsiMt2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FAF1F000E9;
-	Tue, 26 May 2026 09:41:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaiZ+pjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3316C1F000E9;
+	Tue, 26 May 2026 09:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779788503;
-	bh=TEJWrcFwsFePQTz+2PWw7rBagaYlrd26aqRPUB0//4g=;
+	s=k20260515; t=1779788590;
+	bh=Wf1hbnV4EW8RBBUEkyMtmTqyA/vftPL6E0NhSKhgvms=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=a+QsiMt2yVi9IhGJh1tzhpxwELxxEG8jj6Wfip09L7zGmhu23xUWQCaOvQTiaq2zO
-	 Nsgo65JL2yIZVTGNcfal2Aki1HVGwjr1bbwHgMaXZpHaOXNcYYQzgFicgVtW3KyOH9
-	 HGV/FZdQkvk/prlygr1HAbtfbD0/ETs7xD9sfAz/0R95ASOsbzIukMRbml5NLj15SP
-	 z9HBtI4xCHZ8AcB9N0sBWV5GbKEi54yxK3oGbKdwLyvEsz+7W26BhLcnIn2W0ZZkTQ
-	 c+wKFSjEXHgolcv0DQz+3acXP+YZbbkErz2ai/w5+uNpME0PWHzjeRsaMYjVhB6Kfx
-	 U/eyYNHo0nweg==
+	b=FaiZ+pjnPeH8j7LGNqE0vW4ZbOxY7Am0VLxPY9/2VPcBwUpwwpDeyUGLcsEQkShvo
+	 m5gUWWEJWNvYA2Y1GLEcxE96j25IqZsZSgcSWMEtQcZxdrJKnSFySl1F1pRDCdeWC7
+	 +4skz3je5BaL1BsCwWuwzS2l/tF19CcFTXezidgFyaqB5Q2IU6iizgtnba7Mznb3Ag
+	 XaxU6EfeXtkZk5McUpdVuSPzJXPWnZj+Iu2JnaflgFQEUEBBzUbOSncld+sGaxEX6d
+	 SDv/BOe82QbJKORREbGr+HPr9ZxzbEI6eZhEyZiWZSHjmA+67sssK2JyWVJ2hiksqP
+	 wk5hzrgj/YGrg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 06/18] dmaengine: sh: rz-dmac: Save the start LM
- descriptor
+Subject: Re: [PATCH v6 18/18] dmaengine: sh: rz-dmac: Set the Link End (LE)
+ bit on the last descriptor
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Claudiu Beznea" <claudiu.beznea@kernel.org>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, wsa+renesas@sang-engineering.com
-In-Reply-To: <20260526084710.3491480-7-claudiu.beznea@kernel.org>
-References: <20260526084710.3491480-7-claudiu.beznea@kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, wsa+renesas@sang-engineering.com
+In-Reply-To: <20260526084710.3491480-19-claudiu.beznea@kernel.org>
+References: <20260526084710.3491480-19-claudiu.beznea@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 26 May 2026 09:41:41 +0000
-Message-Id: <20260526094142.42FAF1F000E9@smtp.kernel.org>
+Date: Tue, 26 May 2026 09:43:09 +0000
+Message-Id: <20260526094310.3316C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
-New issues:
-- [High] The newly introduced `start_lmdesc` field can be dereferenced whil=
-e `NULL` in `rz_dmac_calculate_residue_bytes_in_vd()`.
-
 Pre-existing issues:
-- [High] Multiple MEMCPY transfers overwrite each other's hardware descript=
-ors causing data corruption.
-- [High] Missing `dma_wmb()` memory barrier before setting the Link Valid (=
-`HEADER_LV`) bit in DMA descriptors.
-- [High] Silent ring buffer overflow when preparing slave SG descriptors if=
- the scatterlist exceeds 64 entries.
+- [High] Missing validation for `sg_len` in `rz_dmac_prep_slave_sg` and `pe=
+riods` in `rz_dmac_prep_dma_cyclic` leads to either an infinite loop (kerne=
+l hard lockup) or descriptor ring buffer overflow and silent data corruptio=
+n.
+- [High] The DMA residue calculation logic in `rz_dmac_calculate_residue_by=
+tes_in_vd` is broken due to incorrect descriptor matching and off-by-one er=
+rors, resulting in bogus residue reports.
 --
 
-commit 1282aed7089327e34eb2eeee4b69973599e70406
+commit 1936bc22a913ae590a18e0828fe08cbdd4e5a588
 Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-dmaengine: sh: rz-dmac: Save the start LM descriptor
-   =20
-This commit saves the start LM descriptor in the channel's descriptor=20
-structure to avoid unnecessary iterations from the beginning of the list=20
-when calculating residue bytes.
+dmaengine: sh: rz-dmac: Set the Link End (LE) bit on the last descriptor
+
+This patch sets the Link End (LE) bit on the last descriptor of a transfer
+to inform the DMA engine that it is the final descriptor. This prevents the
+DMA engine from loading an invalid descriptor and raising a descriptor erro=
+r.
 
 > diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-> index c48858b68dee6..d3926ecd63ac1 100644
+> index 2a7124e4aea3a..f1174d25da849 100644
 > --- a/drivers/dma/sh/rz-dmac.c
 > +++ b/drivers/dma/sh/rz-dmac.c
-
 [ ... ]
-
-> @@ -343,6 +344,8 @@ static void rz_dmac_prepare_desc_for_memcpy(struct rz=
-_dmac_chan *channel)
->  	struct rz_dmac_desc *d =3D channel->desc;
->  	u32 chcfg =3D CHCFG_MEM_COPY;
-> =20
-> +	d->start_lmdesc =3D lmdesc;
-> +
->  	/* prepare descriptor */
->  	lmdesc->sa =3D d->src;
->  	lmdesc->da =3D d->dest;
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does=20
-rz_dmac_prepare_desc_for_memcpy() overwrite hardware descriptors of an=20
-already active memcpy transfer?
-
-The transfer is configured at channel->lmdesc.tail, but the tail pointer is=
-=20
-never advanced (unlike in the slave_sg path). If rz_dmac_issue_pending()=20
-is called while a memcpy transfer is already active, the new transfer is=20
-prepared into the exact same channel->lmdesc.tail slot currently being read=
-=20
-by the active DMA hardware.
-
-Can this cause memory corruption and unpredictable hardware behavior?
-
-I note this is fixed later in the series in commit d09437d0a9b5a=20
-("dmaengine: sh: rz-dmac: Use virt-dma APIs for channel descriptor=20
-processing"), which adds a !channel->desc check.
-
-[ ... ]
-
-> @@ -377,6 +380,7 @@ static void rz_dmac_prepare_descs_for_slave_sg(struct=
+> @@ -425,7 +426,7 @@ static void rz_dmac_prepare_descs_for_slave_sg(struct=
  rz_dmac_chan *channel)
->  	}
-> =20
->  	lmdesc =3D channel->lmdesc.tail;
-> +	d->start_lmdesc =3D lmdesc;
-> =20
->  	for (i =3D 0, sg =3D sgl; i < sg_len; i++, sg =3D sg_next(sg)) {
->  		if (d->direction =3D=3D DMA_DEV_TO_MEM) {
+>  		lmdesc->chext =3D 0;
+>  		if (i =3D=3D (sg_len - 1)) {
+>  			lmdesc->chcfg =3D (channel->chcfg & ~CHCFG_DEM);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does this loop lack a=20
-bounds check for sg_len?
+This is a pre-existing issue, but is the DMA residue calculation broken?
 
-The driver iterates over sg_len without checking if it exceeds the hardware=
-=20
-ring buffer size (DMAC_NR_LMDESC, which is 64).
+The logic to calculate remaining bytes in
+rz_dmac_calculate_residue_bytes_in_vd() appears to have several issues:
 
-If a client submits a scatterlist with more than 64 entries, the loop will=
-=20
-wrap around and overwrite the beginning of the very same transfer it is=20
-currently preparing.
+1) The search loop while (lmdesc->nxla !=3D crla) erroneously matches the n=
+ext
+link address against the current link address (crla), causing lmdesc to
+incorrectly resolve to the descriptor preceding the currently executing one.
 
-Could this result in a corrupted DMA ring buffer and an infinite hardware=20
-loop?
+2) The subsequent sum adds the total bytes (lmdesc->tb) of this
+already-completed preceding descriptor, and then double-counts the current
+descriptor (whose remaining bytes are already added via crtb).
 
-[Severity: High]
-This is a pre-existing issue, but does setting the Link Valid (HEADER_LV)=20
-bit require a dma_wmb() barrier?
+3) Because CHCFG_DEM is intentionally cleared on the final descriptor here,
+the accumulation loop while (lmdesc->chcfg & CHCFG_DEM) terminates early
+and fails to include the byte count of the last descriptor.
 
-The DMA descriptors (lmdesc) are allocated in coherent memory. The driver=20
-writes the payload (sa, da, tb, chcfg) and then sets the HEADER_LV bit to=20
-indicate to the hardware that the descriptor is ready:
+Could this impact subsystems like ALSA audio and serial UART that rely on
+precise DMA residue?
 
-rz_dmac_prepare_descs_for_slave_sg() {
-    ...
-    lmdesc->tb =3D sg_dma_len(sg);
-    lmdesc->chitvl =3D 0;
-    lmdesc->chext =3D 0;
-    if (i =3D=3D (sg_len - 1)) {
-        lmdesc->chcfg =3D (channel->chcfg & ~CHCFG_DEM);
-        lmdesc->header =3D HEADER_LV;
-    ...
-}
-
-Because writes to Normal Non-Cacheable memory can be reordered by the CPU=20
-write buffer, is a dma_wmb() barrier strictly required before setting=20
-lmdesc->header =3D HEADER_LV?
-
-Without it, if the hardware is executing the chain and polling for the=20
-next descriptor, it might see the HEADER_LV bit set before the payload=20
-writes have completed.
-
-[ ... ]
-
-> @@ -693,9 +697,10 @@ rz_dmac_get_next_lmdesc(struct rz_lmdesc *base, stru=
-ct rz_lmdesc *lmdesc)
->  	return next;
->  }
-> =20
-> -static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *ch=
-annel, u32 crla)
-> +static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *ch=
-annel,
-> +						 struct rz_dmac_desc *desc, u32 crla)
->  {
-> -	struct rz_lmdesc *lmdesc =3D channel->lmdesc.head;
-> +	struct rz_lmdesc *lmdesc =3D desc->start_lmdesc;
+> -			lmdesc->header =3D HEADER_LV;
+> +			lmdesc->header =3D HEADER_LV | HEADER_LE;
 
 [Severity: High]
-Can desc->start_lmdesc be NULL here and cause a kernel panic when=20
-accessing lmdesc->nxla?
+This is a pre-existing issue, but does the lack of validation for sg_len and
+periods cause problems?
 
-Because struct rz_dmac_desc is allocated via kzalloc_obj(), start_lmdesc=20
-is initially NULL and only assigned when the descriptor is prepared by the=
-=20
-hardware.
+If dma_map_sg() returns 0 and the client passes sg_len =3D=3D 0, the
+initialization loop is skipped entirely, leaving all descriptor headers as =
+0.
 
-Due to the driver's internal queue management, if a descriptor is prepared=
-=20
-but not yet submitted, an unrelated IRQ or issue_pending call can move it=20
-from ld_queue to ld_active without processing it.
+When rz_dmac_enable_hw() is called, rz_dmac_lmdesc_recycle() enters an
+infinite loop because no descriptor has the HEADER_LV bit set:
 
-If rz_dmac_chan_get_residue() is then called and matches this descriptor's=
-=20
-cookie, it will unconditionally dereference the NULL pointer.
+	while (!(lmdesc->header & HEADER_LV))
 
-I note this is addressed later in the series by commit d09437d0a9b5a=20
-("dmaengine: sh: rz-dmac: Use virt-dma APIs for channel descriptor=20
-processing"), which completely removes ld_queue and ld_active.
+This could cause a kernel hard lockup with spinlocks held.
 
->  	struct dma_chan *chan =3D &channel->vc.chan;
->  	struct rz_dmac *dmac =3D to_rz_dmac(chan->device);
->  	u32 residue =3D 0, i =3D 0;
+Additionally, if a client submits a transfer with more than 64 segments
+(sg_len or periods > DMAC_NR_LMDESC), the fixed-size ring buffer overflows
+and wraps around.
+
+Because the last segment will overwrite the beginning of the transfer
+with the HEADER_LE bit added by this patch, the hardware will only execute
+the corrupted tail of the scatterlist and immediately stop.
+
+Could this lead to silent data corruption?
+
+>  		} else {
+>  			lmdesc->chcfg =3D channel->chcfg;
+>  			lmdesc->header =3D HEADER_LV;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260526084710.3491=
-480-1-claudiu.beznea@kernel.org?part=3D6
+480-1-claudiu.beznea@kernel.org?part=3D18
