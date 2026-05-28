@@ -1,613 +1,154 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11011001.outbound.protection.outlook.com [40.107.74.1])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AFD21ABBB;
-	Thu, 28 May 2026 13:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.1
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779976188; cv=fail; b=UhKXCQDH0Av2CatVSCKO7/uJW3vV5imqyECJPClN4N+wxeoYYBzBbv7Un710nU8O8BaK6qxYXmkA87X3OVGEtMLLh9gEfabqDPWB1+XkMJEOef3hkcNYjNEOK7asHM7c10IZvZ4mula9MTVcD7LNKfr22YQwgPXU6AhKUg2kIFU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779976188; c=relaxed/simple;
-	bh=xgy+Qc2zkeJetuiNA66+zkPXmHLqYJAHO8LosjkCwf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=I1E81LSaOFzYLJ2H9UfZVTIksr0hUp27SOU0qSf93sswreKG2JFwC55ffahyq4iMeMjhq9UUeS4T3gNGJvVPOFE6zuq6imEiYhZ1cWPQv6S4Z91lEMXNTaBZY6kvHh+FtCXQ/Vfee7srgWNgjvNYpJkAxqZLwj36rbKWSXrZ7zQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=N48cCmMI; arc=fail smtp.client-ip=40.107.74.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92FB277C81
+	for <dmaengine@vger.kernel.org>; Thu, 28 May 2026 13:50:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779976218; cv=none; b=ppMaYJFh5/8oHXCg9p1P+PU0Ff5yCdqK0nlCN7Z4dk6ygEen/8Zrz1167lgahNBqq7z4hIoTyy27Mk6RU9sKOSFtq/y/HC6ForPrjw2skmRHJE/6BWT2eiDGswNjQwSI46gWiJxwVpJr9cpkiAGhNKT3K+P9b/5AJhtajHEGPRY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779976218; c=relaxed/simple;
+	bh=vd/rQRJQWLIg+xDuYcY88Qbbo0c1bTx1+oaoNovwGyA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uAPr7Izw93gmxYBOt+LuKwWBmNJdPOH+m4obPbz46lA13aGvXYdaCMgXjT6gLIJ7M1rnnw6SO7TDgsIfUsTGPGevZ0pQUDtuQ1xK0ChGv6EAtDIU3gYH8xxEQ0IagXnIWSLwUcrUY3BDzfaVfO5DvR3Q3qdcjlcHK40tA28pdv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NgX2AMwD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fdvJp/K5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="N48cCmMI"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=emyLMpDIeTzljHWGzhWgdFWtq7A3ArOjahOW5LM75xMY9oOC7ecDVv4lRB1gzO8j2htRO7V+YhTHgdaCpEm+jqMJ5IswIGIIB5fA+Dj+5ahJGKbu3J2XxQLfKwolcsmP/fBQFXBEOJEqBNZe5c2R/xYwmW0hniOaRH1I8PfOcTD6DEldbotByxhpaX5Z1ptguO70eu0smgZkGXS5g9v1GAMMWRgeAAnwF9IINmB7IqBsncBUhy4wwMn4pyHIIpZxwSiosEIsvZFQuhJrUJyYnvLOjD2N8v4TH+x05vJ/fCbmYQUFK0JQGl5Cz/mzHk6zrteEt0i38rzeRODHvl9d2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Hyu2KLjbhdwOLwLQk/vgNkaomy1wv/hEWfajqn+eARY=;
- b=l2tl6muILiTOBAKCmMgy8lw4YgeHgOXIGNdztVpguDRetFpvljp4wff5AM4gF+xOCIUMCl1MQs1hm88XT7lScg/nCoxcliwm6LYYbwIL3GbFcdtIMs2m9d78DvxIEzN7bo+N7ynnilHg/PaA5TaKkkYyS/naYZ3t6M/wDB3Zh1KbMaXjVtBjaCl6cR7hLCm2VHX98aNG/TrA2mJ4z50cr7PIMO5mrl1CR6WXQahokT3eDA2rPnP/iBTmzzEYukA31AkagmfjL6RbMiiQZMOVqn11hwRzE8GAJLuHBA6PMDx7O1lXcxFR2/+VybjExuRamQZpxcUhJeuZ+GGci+Ib6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Hyu2KLjbhdwOLwLQk/vgNkaomy1wv/hEWfajqn+eARY=;
- b=N48cCmMIGXjE+BZIojdbwh+YbKcFVTQCWEnbDvX5zXv9balM/sUvA9zBHbKZnx3/JsEXYGMTKDLIQAX0LjX9Bo6yZ61f+Sqxi4OqTd/GvYU0WNO/BGTQSScE888HMwSl+KAeWNkz4Xf3GlBHWB35D5GE47yp25n5Oyki7liekQI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bp.renesas.com;
-Received: from TYCPR01MB11947.jpnprd01.prod.outlook.com (2603:1096:400:3e1::6)
- by OSRPR01MB11420.jpnprd01.prod.outlook.com (2603:1096:604:234::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Thu, 28 May
- 2026 13:49:44 +0000
-Received: from TYCPR01MB11947.jpnprd01.prod.outlook.com
- ([fe80::33f1:f7cd:46be:e4d8]) by TYCPR01MB11947.jpnprd01.prod.outlook.com
- ([fe80::33f1:f7cd:46be:e4d8%5]) with mapi id 15.21.0071.011; Thu, 28 May 2026
- 13:49:44 +0000
-Date: Thu, 28 May 2026 15:49:30 +0200
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-To: Claudiu Beznea <claudiu.beznea@kernel.org>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, lgirdwood@gmail.com,
-	broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-	biju.das.jz@bp.renesas.com, prabhakar.mahadev-lad.rj@bp.renesas.com,
-	p.zabel@pengutronix.de, geert+renesas@glider.be,
-	kuninori.morimoto.gx@renesas.com, long.luu.ur@renesas.com,
-	claudiu.beznea@tuxon.dev, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	John Madieu <john.madieu.xa@bp.renesas.com>
-Subject: Re: [PATCH v6 09/18] dmaengine: sh: rz-dmac: Use virt-dma APIs for
- channel descriptor processing
-Message-ID: <ahhH6vSmdX7Aca1N@tom-desktop>
-References: <20260526084710.3491480-1-claudiu.beznea@kernel.org>
- <20260526084710.3491480-10-claudiu.beznea@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260526084710.3491480-10-claudiu.beznea@kernel.org>
-X-ClientProxiedBy: FR0P281CA0118.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a8::19) To TY3PR01MB11948.jpnprd01.prod.outlook.com
- (2603:1096:400:409::5)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NgX2AMwD";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fdvJp/K5"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64S8vlIF298274
+	for <dmaengine@vger.kernel.org>; Thu, 28 May 2026 13:50:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=V1s8jKskQG0bDSH4tCE3i2dJ
+	j/wDsiGH0s/CmPfjVgE=; b=NgX2AMwDdKD5hgnZ/aYfhZ8QKTSbIG1dhVGw28oC
+	JE9VZ9pHC7Q9lp0qBxKGwnbXDagxOHrxzUaHpAS7hXdptOXPGCF4f8m6NQPyW6Z2
+	KMjfUFxVH1jCEkCXkKVUaj4KEssFUt1vVfIiUJl2DNaN8YEQT7sFqEuD088Kv8Ft
+	uJDIsZXU/ho+KkQKf2lx8e3lO5DUexyPcYZWGsH72h/Aa2tACM2fu8thXVZQYecv
+	WE1IY48F8aA9vkYcxFlfa3PFRdXFvyjyO8YLJMueXqkInfP/Xbd6Hgptmp00SJUY
+	zda8ERh+f/Z5TjiAA+dduUqaTkg5oqXjdYALwFWwdC1s+Q==
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com [209.85.222.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yajy16-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Thu, 28 May 2026 13:50:15 +0000 (GMT)
+Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-95cfe3d4c16so19347550241.3
+        for <dmaengine@vger.kernel.org>; Thu, 28 May 2026 06:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779976215; x=1780581015; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V1s8jKskQG0bDSH4tCE3i2dJj/wDsiGH0s/CmPfjVgE=;
+        b=fdvJp/K5Q9X3GiJZCj+oDun76mibiFVvphFV8V7wH/f8dvY4BlIxrzIwgRC31A/Omu
+         nhVRXT6LZMoz24Bqt3kzkOoUOdIH2oy44dw3bYxFmvOOmPRJM2LiR1gZPw9oezawVzA/
+         g1B0Ovo+yyhP0hMTpa+TCHoUR6+Co18tlwHmtncIFgLtLq0SOOsp0lb20fYMD9PiqW4/
+         +iJz7dAUEJ7tbusRiRZaLm1p6cWl715j+c/Gu1gubVLhwih2fVKH8QVkK0HZbANvsOH3
+         mfoYH608D8boPTdhksT1p941dyivWSHI+StYMHqTxZm8f0wMdfYYjGQgeMnXnN9YUA5I
+         w+0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779976215; x=1780581015;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V1s8jKskQG0bDSH4tCE3i2dJj/wDsiGH0s/CmPfjVgE=;
+        b=Gy+6mHuB5UAZbhhllIuWDrKBA749jrY5QXOM5okcJdiC0bAqPUI37itnXfzcvX7eVz
+         9VNc7cCaFN01Yu6gFOOkf3oa0yyQ++NAXMRHqswLFfMjxfYE8e/08K/7dkvtyG9lPt+i
+         ZgjTXa28Vv4z3WwmEvi6gkST0371J3ZMiqEccoK7cOG4wRkjG53UGlupGlSPGkumVC0H
+         2iDayfkpw1tJWqxm5zwR9L2ADeM28f2PIvM5PKBN14Nji1AuBctoEjTaSs91gfgHEKRU
+         xwYbdrqMMjWCODGd0h4A8FLiCIHivpKq92uLlEwuR0cE1c7B98gJpCLBXZUJR8rjBtcD
+         U8+w==
+X-Forwarded-Encrypted: i=1; AFNElJ8+mCTP+4bZZL/sMu+WrJv6O+6Kt1Qa/dtzBxrpnLNZUChEYdsIcz5tmK40QK16QriYRBaNWG8OItg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzq4g+K6ven8x7tTgwry8cB4JwAdvEKH4T/ylzhqNPQHHPyaVHu
+	vqYeYX/uqb4oH4vgOtInckb/uUgME7qw/b3PZR+xkwtbxIaTSH8XdUkVaBX66WqUQXrim1bODMB
+	+rOl5C/hdraz5l0jJ1cC5Rbaoylvl514mQohnil6pazILh0/51D49OjNU84Hlx2A=
+X-Gm-Gg: Acq92OFAj2v7vECAiH3m6e+ce4+iwuoB96RaTjNpj1oCtP3WZx3etA1UdR3orMG8kyE
+	eeJLqKdHh6iszBxqwo2RZZxW8TP+ICB6vrtR3D/S+BUaKTC55YN2QcYRiEkrIAkvkr0FSCD1FKZ
+	TpTW+hPZfUiwTRc8R+ICpDALYCEJ177AW6GXUOHz33VTzpMB7Uzlf5N4JHQz8TKa3peLQAhyrYb
+	ALDnhduLmEIVxtyntO2Vli1vP+jCQjEAyqalL7kuH7noHq2GVVgmivRyJndvLPcPZUyfhwdfr62
+	R9DaDCrPtZVyNel+rQmeQAdI+nRBUpql/8IJ/az1d4sg2eIk/5mrycXR8lR9EzVhTd7zLubVOFx
+	MAx5JElL7+yaBnqvucjKHI9VB2zOTd6W6HI4mk2IhnPQnGDXIEiQofTNcXecEfqRdJ14DwfzjrW
+	RxqSpIHjsGNBjHj7AYs13rwVrU8hkZQg3PbX1NZi4JZsZhug==
+X-Received: by 2002:a05:6102:5ccb:b0:632:73ad:6c8 with SMTP id ada2fe7eead31-67c7f273532mr15881164137.7.1779976214957;
+        Thu, 28 May 2026 06:50:14 -0700 (PDT)
+X-Received: by 2002:a05:6102:5ccb:b0:632:73ad:6c8 with SMTP id ada2fe7eead31-67c7f273532mr15881139137.7.1779976214562;
+        Thu, 28 May 2026 06:50:14 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-395dcc45b19sm39183511fa.40.2026.05.28.06.50.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 May 2026 06:50:12 -0700 (PDT)
+Date: Thu, 28 May 2026 16:50:10 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
+        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
+        Eric Biggers <ebiggers@kernel.org>
+Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
+Message-ID: <lj7geczhthury476ilkjym2k5fblo5pqroefsbdfgh5jcf7zy2@qrss5xc7umn3>
+References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
+ <20260514194735.GA1939213@google.com>
+ <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
+ <20260522024912.GC5937@quark>
+ <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
+ <20260525142843.GA2018@quark>
+ <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
+ <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYCPR01MB11947:EE_|OSRPR01MB11420:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5547631e-af9e-4281-655f-08debcbff935
-X-LD-Processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|7416014|52116014|1800799024|38350700014|18002099003|22082099003|4143699003|6133799003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	GQRUcJ58bh3Ate+xmy42nJ+pZoLoPJyM6otjSmE239wsVEQLxdL1kQEpNjBZKlTxwOQoTtZcYZdPd0Sn5kWlHWS66BVpRz1DxL6y3O0IHrDiK88Db3Cwu4KzgI7R6iEo5JAsE3kef1UvI8oi5N8JKNN5gAhRAPCVsJIeQrmUvq7PZxzwzh/q5NvTtDn+E42DeCi0amH99L41CzHizh9Bo1WxNVt6CTERiw33jY6Bp5OHpBtH/BeGgfhC7hnf2SaEJcKwwyXJXhNu7qznx0q8tt8uMZPK841zPvRrq4TgSfoiY+BSbTyXIBCswC76ZTUpTsNoZiArBHubp5s7ZETZnSlAeUAjkrJyQE4hlOkG3HwritENklg3tjsvp3G+N9ppN5MM/Ce9q3ioFIMWrl/idJb61sW6MIuEOpg1TiEQ/XJw8X5iNiluUj5Fq9F9WtvreUfOvfwsxMumEviMKCteKLP1VwNTpN+cR7/2FGaktFbINMCkit150m5F7WUFwvm1144/swTF4Jg5wZrgCqe38pYRUxNEAxKRGDlq0PbXI6kfyqdh7kL0WudC5ZY/gZoek/T/4BRM81JXLPhWuwvUqPyMvJC596B0Ni0X8bwSpEgD1Wi2ICRH8TYCKdkihrybmFUzyXfax5rjMgSu/jQtWrJlQZHOXMudf772KwBbf6SKim+UCoTt7BWDifWVCA/70JDeFVbAZdxOn0K/5g4qCkqwb2IEF5JHR7eCN/IarCA5ScM0OqNxvMB/Btpk7Rgm
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYCPR01MB11947.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(52116014)(1800799024)(38350700014)(18002099003)(22082099003)(4143699003)(6133799003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vW68E7xk6M6ZrgkYVNbSZHaAeMP4jHvSbHNDAC2bwcnGolTqEAC02UjLFEzf?=
- =?us-ascii?Q?QSlYz1INb7aK+mR+81GuCmGzCQUVB6tIwFJ+ETgr7MCgQ3dNzH1q/qMgL+a5?=
- =?us-ascii?Q?tqWS/2afnuK++vYL1a+1TSWtde3drSGGag23UWLHN8ErzBn9uFThTdhpQhuK?=
- =?us-ascii?Q?9kCL9rgLZR5yIglnkCHQe4OVomaAuM5MAimm5q0CaMCi2bVsiuzySmkhx2yv?=
- =?us-ascii?Q?Ci+9Jm1peujdlb4Z32PUtLfMqQQ86aP6Ku5Why4AsmgHYv/wk6Pbj0eTTl6Q?=
- =?us-ascii?Q?K5TcPE/LSWC+GaEbX7Zz+Od3ciICITfMY893BrN6Dgp1xb3mc1FEK1fKXY9P?=
- =?us-ascii?Q?DSHbFzvmfTpyzjUz/WQ91LHxbIPmOFNC2a4YsU/Vme7pYZv7NdRUyjMa36UC?=
- =?us-ascii?Q?vPm9RLvx1gY8/SN9HwHLE+US+Am0uwZ7AU686MQUaD0ouxfK9tBW//sJRl/l?=
- =?us-ascii?Q?e8n5KLfMGFpNy/61yW/KS8eqLVymvF3Q/oOcZ1GC1ba2BEolhAv4j4uw8Mgk?=
- =?us-ascii?Q?+fWzF6SBL8wGijEIAZQDp2rxoALHuQUtEIq7nGvhzlz6xExufHWEkKtgy4dV?=
- =?us-ascii?Q?sEO5xbDB+ExYIEx2FNcrCt3pg75S7wOlDdymDqtnsIAQGU2wOH20dvxS3k8X?=
- =?us-ascii?Q?X7GAOPvTbW2UStCG4bsCQ6bnRqoJKAW/Cncl6i9oaRoxNOw0yGm0XO17yFV8?=
- =?us-ascii?Q?MVMLIC8AklGA1UCCDsihQbrstK5+q0e8BaDY4dqph1cwRxYL2IOecymj9BhM?=
- =?us-ascii?Q?aqqoraWunYUazuSMaVwqNgimqHWUMg7ZKnhCoTSLVZaRp13ft75zR7Q1t/0q?=
- =?us-ascii?Q?jrUXVd0F+jyveHoDRNCu0eGsPJZaVwdpSneBzrSLvjEFiDjvHTMxs1aGfnWw?=
- =?us-ascii?Q?OLkbaqXbBTAFD9Dc+fSnkH5WybMwk5nL3iusw2Xkpt9kVGcHCysY6cTwwkz+?=
- =?us-ascii?Q?yHyRFIv5TrQVFkus1NpOOuQbwUBl5hVB1FmrkAeCaNbr8CeXEtnO18tp6k0d?=
- =?us-ascii?Q?KUzWqNrAI9N3XE6NRVcyMkTZnCBpb5rcghtaODKUxd/4P6gjgDx8iPB2OZdl?=
- =?us-ascii?Q?nXg1nuLp45kCPPM5Y6hI74uXT1kN1jDmlasYrJThtrczsq3tC/WOPZX9kSU4?=
- =?us-ascii?Q?btTAgNXejmWw0AtpwzCPHKkSPyBjpZOcdJQsrK9Uq1oNXq2pg59ZbGTgfeS2?=
- =?us-ascii?Q?attPTZXfsEoDSiYvdGCx7vK9l3FU86h7wRrgsuSAR+g9S1Ik3sc4f7o2Hq9B?=
- =?us-ascii?Q?abepn5Qp6dnJ2VlHi4GRIZL2QeWNTpGF+aWniRDuM/cYDIEnHK0mJ/p2aXga?=
- =?us-ascii?Q?Fl3aGkhScCw6dbV/OHLkcLyjdIUx3SQBfq9C5d3YJyVOh08hfSTIdh5G/9yZ?=
- =?us-ascii?Q?dELTFKDM6XAK0RQjfsKKCiImD2Nvw2z1ifxGfrmwPlFrPcH626wW72YF8I11?=
- =?us-ascii?Q?ikRO1BlAKmWUSlnKyZX3h9m0OYlUncJc/95BgvBS/z4AL0qB3I4Soz9GeFOO?=
- =?us-ascii?Q?yjeAXvQ7W7PyWM1oPbpCWRfn1XonbSo6UJ3nK4uCO4zxrM0EOcfyRAtZTIa8?=
- =?us-ascii?Q?PfiwQPOGBRkAsJSPp5XPXe1+ywhZm/ME86WPnymmj1Uqlyvpe7gNyP4B9xi2?=
- =?us-ascii?Q?GUPHvjx/I2X+3Mbgi/o/u12LE4oWQEN2rFrPzPQKCjNCp2w5o3po7exLme9v?=
- =?us-ascii?Q?wZ1hRpDOHGPeEQLR30KUQJmr/gUvseB3IvcRAdNlKCrOa77vSObESRZLeGgI?=
- =?us-ascii?Q?RWaUwCjOJ7zuZF2N26oHcMCUjV0yDTlFvC2BTzujP46z9RBanA3f?=
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5547631e-af9e-4281-655f-08debcbff935
-X-MS-Exchange-CrossTenant-AuthSource: TY3PR01MB11948.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2026 13:49:44.2800
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NmZR/MjAXsR1jD7u4FiYhCbpkfxI4ip2ST8tA5STf4rdX3Q8St+ho/8yZxc4xftRApoGpGkK7/mt9t/iOkA/3vcglTc4hopz+2kpf0VhiZ3Pr7AiKF5bE094FJ+MOlBH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSRPR01MB11420
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+X-Proofpoint-GUID: PdJtXsdhsmUKEjVEcL0jWbLKqOQFoHe7
+X-Proofpoint-ORIG-GUID: PdJtXsdhsmUKEjVEcL0jWbLKqOQFoHe7
+X-Authority-Analysis: v=2.4 cv=CaE4Irrl c=1 sm=1 tr=0 ts=6a184817 cx=c_pps
+ a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=7wDE0xjjevibnHHXysgA:9 a=CjuIK1q_8ugA:10 a=TOPH6uDL9cOC6tEoww4z:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDEzOCBTYWx0ZWRfX6m7MpzAAasFU
+ EksIYvwOK/3sCHE/orScvBCbHq9VUSnQivmoJGi7GpsABgzAh0wH/CTahkSnn/vFYRaRrTsYnXt
+ IpwzQ491hzCFUV2ODW5pYSJ9a4S5PADkHngLIQVs7HPsy+jXxjXZWGCq+UfL70jRNdrrFIFYTYP
+ kvN2GzYz/XEhZoan1zxZThvsuZeLF8BEk2hthISIid9gYHnjtevcrukISlaDA6vxxvSISZx+g/h
+ 8AY6bcDZuIyiOlB8DeVavQLyKV7pZR7KB6bLl5RrkpgvP0b6qChHgOGOeSIhGSlHmkuDOyA0rk7
+ Jx6Ra+63JLIsl/aktg83jYGNkeHOLzLQv8jQb/5aXuVY926yWGKirU3h8JRK6DgXwy7h2XJflGp
+ ZYN5oq1YGT6HTEz2Rt5m2ADf9/fuK4W5xOpe/hrQBCKVjLGF2SBA4FDwr93EUxnOzdgr6E1P+kr
+ qs6JdLCj0bi2haoVxNw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_03,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280138
 
-On Tue, May 26, 2026 at 11:47:01AM +0300, Claudiu Beznea wrote:
-> From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+On Thu, May 28, 2026 at 09:13:23AM -0400, Bartosz Golaszewski wrote:
+> On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
+> <kuldeep.singh@oss.qualcomm.com> said:
+> >>> +Bartosz, Gaurav, Neeraj
 > 
-> The driver used a mix of virt-dma APIs and driver specific logic to
-> process descriptors. It maintained three internal queues: ld_free,
-> ld_queue, and ld_active as follows:
-> - ld_free: stores the descriptors pre-allocated at probe time
-> - ld_queue: stores descriptors after they are taken from ld_free and
->   prepared. At the same time, vchan_tx_prep() queues them to
->   vc->desc_allocated. The vc->desc_allocated list is then checked in
->   rz_dmac_issue_pending() and rz_dmac_irq_handler_thread() before
->   starting a new transfer via rz_dmac_xfer_desc(). In turn,
->   rz_dmac_xfer_desc() grabs the next descriptor from vc->desc_issued and
->   submits it for transfer
-> - ld_active: stores the descriptors currently being transferred
-> 
-> The interrupt handler moved a completed descriptor to ld_free before
-> invoking its completion callback. Once returned to ld_free, the
-> descriptor can be reused to prepare a new transfer. In theory, this
-> means the descriptor could be re-prepared before its completion
-> callback is called.
-> 
-> Commit fully back the driver by the virt-dma APIs. With this, only ld_free
-> need to be kept to track how many free descriptors are available. This
-> is now done as follows:
-> - the prepare stage removes the first descriptor from the ld_free and
->   prepares it
-> - the completion calls for it vc->desc_free() (rz_dmac_virt_desc_free())
->   which re-adds the descriptor at the end of ld_free
-> 
-> With this, the critical areas in prepare callbacks were minimized to only
-> getting the descriptor from the ld_free list.
-> 
-> Introduce struct rz_dmac_chan::desc to keep track of the currently
-> transferred descriptor. It is cleared in rz_dmac_terminate_all(),
-> referenced from rz_dmac_issue_pending() to determine whether a new transfer
-> can be started, and from rz_dmac_irq_handler_thread() once a descriptor has
-> completed. Finally, the rz_dmac_device_synchronize() was updated with
-> vchan_synchronize() call to ensure the terminated descriptor is freed and
-> the tasklet is killed.
-> 
-> With this, residue computation is also simplified, as it can now be
-> handled entirely through the virt-dma APIs.
-> 
-> The spin_lock/unlock operations from rz_dmac_irq_handler_thread() were
-> replaced by guard as the final code after rework is simpler this way.
-> 
-> As subsequent commits will set the Link End bit on the last descriptor
-> of a transfer, rz_dmac_enable_hw() is also adjusted as part of the full
-> conversion to virt-dma APIs. It no longer checks the channel enable
-> status itself; instead, its callers verify whether the channel is
-> enabled and whether the previous transfer has completed before starting
-> a new one.
->
+> I know about the self-tests etc., I will address them next.
 
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+My 2c, the self-tests would be more important, as they are fixes. Doing
+the crypto in a wrong way is a bad idea...
 
-> Tested-by: John Madieu <john.madieu.xa@bp.renesas.com>
-> Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> ---
-> 
-> Changes in v6:
-> - updated patch description as suggested in the review process
-> - collected tags
-> 
-> Changes in v5:
-> - none
-> 
-> Changes in v4:
-> - in rz_dmac_tx_status(): return DMA_PAUSED if the channel is paused;
->   call rz_dmac_chan_get_residue() only if status is not complete
-> 
-> Changes in v3:
-> - none, this patch is new
-> 
->  drivers/dma/sh/rz-dmac.c | 233 +++++++++++++++------------------------
->  1 file changed, 86 insertions(+), 147 deletions(-)
-> 
-> diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-> index 217657513fa7..1f884ec101f8 100644
-> --- a/drivers/dma/sh/rz-dmac.c
-> +++ b/drivers/dma/sh/rz-dmac.c
-> @@ -79,8 +79,6 @@ struct rz_dmac_chan {
->  	int mid_rid;
->  
->  	struct list_head ld_free;
-> -	struct list_head ld_queue;
-> -	struct list_head ld_active;
->  
->  	struct {
->  		struct rz_lmdesc *base;
-> @@ -299,7 +297,6 @@ static void rz_dmac_enable_hw(struct rz_dmac_chan *channel)
->  	struct rz_dmac *dmac = to_rz_dmac(chan->device);
->  	u32 nxla;
->  	u32 chctrl;
-> -	u32 chstat;
->  
->  	dev_dbg(dmac->dev, "%s channel %d\n", __func__, channel->index);
->  
-> @@ -307,14 +304,11 @@ static void rz_dmac_enable_hw(struct rz_dmac_chan *channel)
->  
->  	nxla = rz_dmac_lmdesc_addr(channel, channel->lmdesc.head);
->  
-> -	chstat = rz_dmac_ch_readl(channel, CHSTAT, 1);
-> -	if (!(chstat & CHSTAT_EN)) {
-> -		chctrl = (channel->chctrl | CHCTRL_SETEN);
-> -		rz_dmac_ch_writel(channel, nxla, NXLA, 1);
-> -		rz_dmac_ch_writel(channel, channel->chcfg, CHCFG, 1);
-> -		rz_dmac_ch_writel(channel, CHCTRL_SWRST, CHCTRL, 1);
-> -		rz_dmac_ch_writel(channel, chctrl, CHCTRL, 1);
-> -	}
-> +	chctrl = (channel->chctrl | CHCTRL_SETEN);
-> +	rz_dmac_ch_writel(channel, nxla, NXLA, 1);
-> +	rz_dmac_ch_writel(channel, channel->chcfg, CHCFG, 1);
-> +	rz_dmac_ch_writel(channel, CHCTRL_SWRST, CHCTRL, 1);
-> +	rz_dmac_ch_writel(channel, chctrl, CHCTRL, 1);
->  }
->  
->  static void rz_dmac_disable_hw(struct rz_dmac_chan *channel)
-> @@ -426,18 +420,20 @@ static void rz_dmac_prepare_descs_for_slave_sg(struct rz_dmac_chan *channel)
->  	channel->chctrl = CHCTRL_SETEN;
->  }
->  
-> -static int rz_dmac_xfer_desc(struct rz_dmac_chan *chan)
-> +static void rz_dmac_xfer_desc(struct rz_dmac_chan *chan)
->  {
-> -	struct rz_dmac_desc *d = chan->desc;
->  	struct virt_dma_desc *vd;
->  
->  	vd = vchan_next_desc(&chan->vc);
-> -	if (!vd)
-> -		return 0;
-> +	if (!vd) {
-> +		chan->desc = NULL;
-> +		return;
-> +	}
->  
->  	list_del(&vd->node);
-> +	chan->desc = to_rz_dmac_desc(vd);
->  
-> -	switch (d->type) {
-> +	switch (chan->desc->type) {
->  	case RZ_DMAC_DESC_MEMCPY:
->  		rz_dmac_prepare_desc_for_memcpy(chan);
->  		break;
-> @@ -445,14 +441,9 @@ static int rz_dmac_xfer_desc(struct rz_dmac_chan *chan)
->  	case RZ_DMAC_DESC_SLAVE_SG:
->  		rz_dmac_prepare_descs_for_slave_sg(chan);
->  		break;
-> -
-> -	default:
-> -		return -EINVAL;
->  	}
->  
->  	rz_dmac_enable_hw(chan);
-> -
-> -	return 0;
->  }
->  
->  /*
-> @@ -494,8 +485,6 @@ static void rz_dmac_free_chan_resources(struct dma_chan *chan)
->  	rz_lmdesc_setup(channel, channel->lmdesc.base);
->  
->  	rz_dmac_disable_hw(channel);
-> -	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
-> -	list_splice_tail_init(&channel->ld_queue, &channel->ld_free);
->  
->  	if (channel->mid_rid >= 0) {
->  		clear_bit(channel->mid_rid, dmac->modules);
-> @@ -504,13 +493,19 @@ static void rz_dmac_free_chan_resources(struct dma_chan *chan)
->  
->  	spin_unlock_irqrestore(&channel->vc.lock, flags);
->  
-> +	vchan_free_chan_resources(&channel->vc);
-> +
-> +	spin_lock_irqsave(&channel->vc.lock, flags);
-> +
->  	list_for_each_entry_safe(desc, _desc, &channel->ld_free, node) {
-> +		list_del(&desc->node);
->  		kfree(desc);
->  		channel->descs_allocated--;
->  	}
->  
->  	INIT_LIST_HEAD(&channel->ld_free);
-> -	vchan_free_chan_resources(&channel->vc);
-> +
-> +	spin_unlock_irqrestore(&channel->vc.lock, flags);
->  }
->  
->  static struct dma_async_tx_descriptor *
-> @@ -529,15 +524,15 @@ rz_dmac_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
->  		if (!desc)
->  			return NULL;
->  
-> -		desc->type = RZ_DMAC_DESC_MEMCPY;
-> -		desc->src = src;
-> -		desc->dest = dest;
-> -		desc->len = len;
-> -		desc->direction = DMA_MEM_TO_MEM;
-> -
-> -		list_move_tail(channel->ld_free.next, &channel->ld_queue);
-> +		list_del(&desc->node);
->  	}
->  
-> +	desc->type = RZ_DMAC_DESC_MEMCPY;
-> +	desc->src = src;
-> +	desc->dest = dest;
-> +	desc->len = len;
-> +	desc->direction = DMA_MEM_TO_MEM;
-> +
->  	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
->  }
->  
-> @@ -558,22 +553,22 @@ rz_dmac_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
->  		if (!desc)
->  			return NULL;
->  
-> -		for_each_sg(sgl, sg, sg_len, i)
-> -			dma_length += sg_dma_len(sg);
-> +		list_del(&desc->node);
-> +	}
->  
-> -		desc->type = RZ_DMAC_DESC_SLAVE_SG;
-> -		desc->sg = sgl;
-> -		desc->sgcount = sg_len;
-> -		desc->len = dma_length;
-> -		desc->direction = direction;
-> +	for_each_sg(sgl, sg, sg_len, i)
-> +		dma_length += sg_dma_len(sg);
->  
-> -		if (direction == DMA_DEV_TO_MEM)
-> -			desc->src = channel->src_per_address;
-> -		else
-> -			desc->dest = channel->dst_per_address;
-> +	desc->type = RZ_DMAC_DESC_SLAVE_SG;
-> +	desc->sg = sgl;
-> +	desc->sgcount = sg_len;
-> +	desc->len = dma_length;
-> +	desc->direction = direction;
->  
-> -		list_move_tail(channel->ld_free.next, &channel->ld_queue);
-> -	}
-> +	if (direction == DMA_DEV_TO_MEM)
-> +		desc->src = channel->src_per_address;
-> +	else
-> +		desc->dest = channel->dst_per_address;
->  
->  	return vchan_tx_prep(&channel->vc, &desc->vd, flags);
->  }
-> @@ -588,8 +583,11 @@ static int rz_dmac_terminate_all(struct dma_chan *chan)
->  	rz_dmac_disable_hw(channel);
->  	rz_lmdesc_setup(channel, channel->lmdesc.base);
->  
-> -	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
-> -	list_splice_tail_init(&channel->ld_queue, &channel->ld_free);
-> +	if (channel->desc) {
-> +		vchan_terminate_vdesc(&channel->desc->vd);
-> +		channel->desc = NULL;
-> +	}
-> +
->  	vchan_get_all_descriptors(&channel->vc, &head);
->  	spin_unlock_irqrestore(&channel->vc.lock, flags);
->  	vchan_dma_desc_free_list(&channel->vc, &head);
-> @@ -600,25 +598,16 @@ static int rz_dmac_terminate_all(struct dma_chan *chan)
->  static void rz_dmac_issue_pending(struct dma_chan *chan)
->  {
->  	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
-> -	struct rz_dmac *dmac = to_rz_dmac(chan->device);
-> -	struct rz_dmac_desc *desc;
->  	unsigned long flags;
->  
->  	spin_lock_irqsave(&channel->vc.lock, flags);
->  
-> -	if (!list_empty(&channel->ld_queue)) {
-> -		desc = list_first_entry(&channel->ld_queue,
-> -					struct rz_dmac_desc, node);
-> -		channel->desc = desc;
-> -		if (vchan_issue_pending(&channel->vc)) {
-> -			if (rz_dmac_xfer_desc(channel) < 0)
-> -				dev_warn(dmac->dev, "ch: %d couldn't issue DMA xfer\n",
-> -					 channel->index);
-> -			else
-> -				list_move_tail(channel->ld_queue.next,
-> -					       &channel->ld_active);
-> -		}
-> -	}
-> +	/*
-> +	 * Issue the descriptor. If another transfer is already in progress, the
-> +	 * issued descriptor will be handled after the current transfer finishes.
-> +	 */
-> +	if (vchan_issue_pending(&channel->vc) && !channel->desc)
-> +		rz_dmac_xfer_desc(channel);
->  
->  	spin_unlock_irqrestore(&channel->vc.lock, flags);
->  }
-> @@ -676,13 +665,13 @@ static int rz_dmac_config(struct dma_chan *chan,
->  
->  static void rz_dmac_virt_desc_free(struct virt_dma_desc *vd)
->  {
-> -	/*
-> -	 * Place holder
-> -	 * Descriptor allocation is done during alloc_chan_resources and
-> -	 * get freed during free_chan_resources.
-> -	 * list is used to manage the descriptors and avoid any memory
-> -	 * allocation/free during DMA read/write.
-> -	 */
-> +	struct rz_dmac_chan *channel = to_rz_dmac_chan(vd->tx.chan);
-> +	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
-> +	struct rz_dmac_desc *desc = to_rz_dmac_desc(vd);
-> +
-> +	guard(spinlock_irqsave)(&vc->lock);
-> +
-> +	list_add_tail(&desc->node, &channel->ld_free);
->  }
->  
->  static void rz_dmac_device_synchronize(struct dma_chan *chan)
-> @@ -692,6 +681,8 @@ static void rz_dmac_device_synchronize(struct dma_chan *chan)
->  	u32 chstat;
->  	int ret;
->  
-> +	vchan_synchronize(&channel->vc);
-> +
->  	ret = read_poll_timeout(rz_dmac_ch_readl, chstat, !(chstat & CHSTAT_EN),
->  				100, 100000, false, channel, CHSTAT, 1);
->  	if (ret < 0)
-> @@ -739,58 +730,22 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
->  static u32 rz_dmac_chan_get_residue(struct rz_dmac_chan *channel,
->  				    dma_cookie_t cookie)
->  {
-> -	struct rz_dmac_desc *current_desc, *desc;
-> -	enum dma_status status;
-> +	struct rz_dmac_desc *desc = NULL;
-> +	struct virt_dma_desc *vd;
->  	u32 crla, crtb, i;
->  
-> -	/* Get current processing virtual descriptor */
-> -	current_desc = list_first_entry_or_null(&channel->ld_active,
-> -						struct rz_dmac_desc, node);
-> -	if (!current_desc)
-> -		return 0;
-> -
-> -	/*
-> -	 * If the cookie corresponds to a descriptor that has been completed
-> -	 * there is no residue. The same check has already been performed by the
-> -	 * caller but without holding the channel lock, so the descriptor could
-> -	 * now be complete.
-> -	 */
-> -	status = dma_cookie_status(&channel->vc.chan, cookie, NULL);
-> -	if (status == DMA_COMPLETE)
-> -		return 0;
-> -
-> -	/*
-> -	 * If the cookie doesn't correspond to the currently processing virtual
-> -	 * descriptor then the descriptor hasn't been processed yet, and the
-> -	 * residue is equal to the full descriptor size. Also, a client driver
-> -	 * is possible to call this function before rz_dmac_irq_handler_thread()
-> -	 * runs. In this case, the running descriptor will be the next
-> -	 * descriptor, and will appear in the done list. So, if the argument
-> -	 * cookie matches the done list's cookie, we can assume the residue is
-> -	 * zero.
-> -	 */
-> -	if (cookie != current_desc->vd.tx.cookie) {
-> -		list_for_each_entry(desc, &channel->ld_free, node) {
-> -			if (cookie == desc->vd.tx.cookie)
-> -				return 0;
-> -		}
-> -
-> -		list_for_each_entry(desc, &channel->ld_queue, node) {
-> -			if (cookie == desc->vd.tx.cookie)
-> -				return desc->len;
-> -		}
-> -
-> -		list_for_each_entry(desc, &channel->ld_active, node) {
-> -			if (cookie == desc->vd.tx.cookie)
-> -				return desc->len;
-> -		}
-> +	vd = vchan_find_desc(&channel->vc, cookie);
-> +	if (vd) {
-> +		/* Descriptor has been issued but not yet processed. */
-> +		desc = to_rz_dmac_desc(vd);
-> +		return desc->len;
-> +	} else if (channel->desc && channel->desc->vd.tx.cookie == cookie) {
-> +		/* Descriptor is currently processed. */
-> +		desc = channel->desc;
-> +	}
->  
-> -		/*
-> -		 * No descriptor found for the cookie, there's thus no residue.
-> -		 * This shouldn't happen if the calling driver passes a correct
-> -		 * cookie value.
-> -		 */
-> -		WARN(1, "No descriptor for cookie!");
-> +	if (!desc) {
-> +		/* Descriptor was not found. May be already completed by now. */
->  		return 0;
->  	}
->  
-> @@ -813,7 +768,7 @@ static u32 rz_dmac_chan_get_residue(struct rz_dmac_chan *channel,
->  	 * Calculate number of bytes transferred in processing virtual descriptor.
->  	 * One virtual descriptor can have many lmdesc.
->  	 */
-> -	return crtb + rz_dmac_calculate_residue_bytes_in_vd(channel, current_desc, crla);
-> +	return crtb + rz_dmac_calculate_residue_bytes_in_vd(channel, desc, crla);
->  }
->  
->  static enum dma_status rz_dmac_tx_status(struct dma_chan *chan,
-> @@ -824,21 +779,17 @@ static enum dma_status rz_dmac_tx_status(struct dma_chan *chan,
->  	enum dma_status status;
->  	u32 residue;
->  
-> -	status = dma_cookie_status(chan, cookie, txstate);
-> -	if (status == DMA_COMPLETE || !txstate)
-> -		return status;
-> -
->  	scoped_guard(spinlock_irqsave, &channel->vc.lock) {
-> +		status = dma_cookie_status(chan, cookie, txstate);
-> +		if (status == DMA_COMPLETE || !txstate)
-> +			return status;
-> +
->  		residue = rz_dmac_chan_get_residue(channel, cookie);
->  
-> -		if (rz_dmac_chan_is_paused(channel))
-> +		if (status == DMA_IN_PROGRESS && rz_dmac_chan_is_paused(channel))
->  			status = DMA_PAUSED;
->  	}
->  
-> -	/* if there's no residue and no paused, the cookie is complete */
-> -	if (!residue && status != DMA_PAUSED)
-> -		return DMA_COMPLETE;
-> -
->  	dma_set_residue(txstate, residue);
->  
->  	return status;
-> @@ -918,28 +869,18 @@ static irqreturn_t rz_dmac_irq_handler(int irq, void *dev_id)
->  static irqreturn_t rz_dmac_irq_handler_thread(int irq, void *dev_id)
->  {
->  	struct rz_dmac_chan *channel = dev_id;
-> -	struct rz_dmac_desc *desc = NULL;
-> -	unsigned long flags;
-> +	struct rz_dmac_desc *desc;
->  
-> -	spin_lock_irqsave(&channel->vc.lock, flags);
-> +	guard(spinlock_irqsave)(&channel->vc.lock);
->  
-> -	if (list_empty(&channel->ld_active)) {
-> -		/* Someone might have called terminate all */
-> -		goto out;
-> -	}
-> +	desc = channel->desc;
-> +	if (!desc)
-> +		return IRQ_HANDLED;
->  
-> -	desc = list_first_entry(&channel->ld_active, struct rz_dmac_desc, node);
->  	vchan_cookie_complete(&desc->vd);
-> -	list_move_tail(channel->ld_active.next, &channel->ld_free);
-> -	if (!list_empty(&channel->ld_queue)) {
-> -		desc = list_first_entry(&channel->ld_queue, struct rz_dmac_desc,
-> -					node);
-> -		channel->desc = desc;
-> -		if (rz_dmac_xfer_desc(channel) == 0)
-> -			list_move_tail(channel->ld_queue.next, &channel->ld_active);
-> -	}
-> -out:
-> -	spin_unlock_irqrestore(&channel->vc.lock, flags);
-> +	channel->desc = NULL;
-> +
-> +	rz_dmac_xfer_desc(channel);
->  
->  	return IRQ_HANDLED;
->  }
-> @@ -1021,9 +962,7 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
->  
->  	channel->vc.desc_free = rz_dmac_virt_desc_free;
->  	vchan_init(&channel->vc, &dmac->engine);
-> -	INIT_LIST_HEAD(&channel->ld_queue);
->  	INIT_LIST_HEAD(&channel->ld_free);
-> -	INIT_LIST_HEAD(&channel->ld_active);
->  
->  	/* Initialize register for each channel */
->  	rz_dmac_disable_hw(channel);
-> -- 
-> 2.43.0
-> 
+-- 
+With best wishes
+Dmitry
