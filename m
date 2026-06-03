@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB26A3F164E
-	for <dmaengine@vger.kernel.org>; Wed,  3 Jun 2026 03:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401301C84BB
+	for <dmaengine@vger.kernel.org>; Wed,  3 Jun 2026 03:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780457042; cv=none; b=a2jz3vagf7TP6LvujPdxiRdL9+dMxuSIEFUO/iaAcVvyZWrZRw3j/Z5ujzpJL0Xsue3CPy/kSTXqof5Soo2EU/BGkmfRPQYdtJa2sPz1Om3wa2Lu3uBz94MxZHpZUCBq3fV3jhTWxeydJPm+sezT6f+B5EurTuhJdKXRhl9sYk4=
+	t=1780457119; cv=none; b=DdUugpX8aC/y0NMQB/2qJ8RfzMMQfyXjqYOlOEyBvpbCqBPWYpD5hHRNOnLuMD1D96phKDVugB4GPnKPTQKZH3AtUu3X1yr5kwSB/myrs88c0F+wmgJa6ILwaxVRWWwvroWtxx5d4e95Jwj3leK8PocEUvtJeRyEnTSzHGNqC+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780457042; c=relaxed/simple;
-	bh=1COY9GRpTK309zdbd0UA/NxzLcfXbSHzI1tF8oakITw=;
+	s=arc-20240116; t=1780457119; c=relaxed/simple;
+	bh=F1NNEbDFvlrh5A1rcwLzJ23MLTVsy7dBNFXgcUYE7yA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gGAgoKcnLxYASOcPRAf1NRF+vDh310Ja5JZfWypjwf2mf7gdw9EN6ZRaAdqXTbAHhy1BD7XUEEQrouJpNtn0T2QpgaZ6St9robcX7VKDz1jMyt64WjhpHzgOZAdKvBlMQUsrYIyVgPC3cwFkdvbdy66OP66woxk4Sf2BbX+Je78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J10I2urx; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=kR2DeV2Dk7HUxsz0J39ZElubCjWCODEb5NnBSOS24W128BfBHlirsAHCdlg1UUSTdCem6LnaE26Iogzd6AFr2RF5dhnN+QlO8xvYSKI/TRPttorm2y3kVeO2hWeGjCVi7kcQo6KW+tTyFmXpJsEBeDVAoBBGmkH5GpIu/VCoA+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V2QvhQjW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J10I2urx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595881F00893;
-	Wed,  3 Jun 2026 03:24:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V2QvhQjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A613C1F00893;
+	Wed,  3 Jun 2026 03:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780457040;
-	bh=1COY9GRpTK309zdbd0UA/NxzLcfXbSHzI1tF8oakITw=;
+	s=k20260515; t=1780457117;
+	bh=yZT7NEJHizJPDlyN7AkKvUtU4j+tTf/IfmO7Fc2UCpI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=J10I2urxtBFk52xhOpLVEkaehPWeeyhRPXrY212Qbjo9sXt+DMvlPJ5jgvjz3mEH8
-	 NAj6AZL1HNe0mMXZngPyuA6mDFx4VZ55bezhbGy0e1F3gzF9qkXokiw3emQAMmINu4
-	 UAwKrV4i5eHBMLyOCrSRbTg5YY+6ZuVLTDuPQAeueyBfhoKXnygj6A84kJi/Cgtgt3
-	 8KLketqr8c9fXY0g5rULC4DnWrlNfANhBEvi+PeCTZMGSCF+xHCkBlWXELhdAyX2l6
-	 woO1/G1ylNvBbMouvPohMEVMYQbei4xYVp74DJBE0b3wN4+4kPzmBvNU7hYt4kW0pj
-	 i/O9SMjBqTbQw==
+	b=V2QvhQjW7Bp5+OmOBJZ9+x1XXncdzCzNDZhttaRpfDHvnitBQg7muyNvUCFZx3CbB
+	 6G0vY1Ws/EKIrJ3yzSZl5+y0U49Bon7lqecEqohkSM9h+WBC6iQslF2B1Qt55xRMNv
+	 gJPd22q9brkOeMrabCB2tCrwYi7mmJbrJM5apT9YJXPGVSanz1MBICVuUKdX9tYgnB
+	 hyZ7Uomu/zhgfYGqXo+EzLbRuXaXVK4PL/wOO/VN6U5jeyLArUG4ZokIJeJbnTBu5s
+	 ZNaElbporsTZbg/0TtgD6xA/2tAWQKyrxORKC0wbtd+CNjH/BoxIiEw7I/eOiC88cy
+	 OM5MQRJd9yeVQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv3 8/8] dmaengine: ti: omap-dma: turn lch_map into a
- flexible array
+Subject: Re: [PATCHv3 4/8] dmaengine: ti: omap-dma: stop channels during
+ teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Rosen Penev" <rosenp@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260603030754.288757-9-rosenp@gmail.com>
-References: <20260603030754.288757-9-rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260603030754.288757-5-rosenp@gmail.com>
+References: <20260603030754.288757-5-rosenp@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Jun 2026 03:23:59 +0000
-Message-Id: <20260603032400.595881F00893@smtp.kernel.org>
+Date: Wed, 03 Jun 2026 03:25:17 +0000
+Message-Id: <20260603032517.A613C1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -46,54 +46,69 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Use-After-Free due to dangling CPU PM notifier on probe failure or=
- device unbind
+- [High] Use-after-free on `od->desc_pool` during driver teardown.
 --
 
-Note: The format of this review has been altered due to recitation restrict=
-ions.
-No code from the patch is directly quoted below.
-
-commit 8df6bfe3cea1126b3e862e90d788d6cedc19c9bf
+commit cb697a8a2b4f2a6d911676cfaf5fc92a182d4653
 Author: Rosen Penev <rosenp@gmail.com>
 
-dmaengine: ti: omap-dma: turn lch_map into a flexible array
+dmaengine: ti: omap-dma: stop channels during teardown
 
-This commit converts the lch_map pointer array to a C99 flexible array memb=
-er=20
-at the end of struct omap_dmadev. The probe function is reordered to look u=
-p=20
-platform data and determine the logical channel count before allocation,=20
-collapsing two allocations into one and enabling bounds checking.
+omap_dma_free() removes channels and frees their storage without first
+stopping an active transfer. This patch terminates each channel before
+removing it, and drains the virt-dma resource lists before freeing the
+channel structure.
 
+> diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+> index 55ece7fd0d99a..3ed2e8d91ba6d 100644
+> --- a/drivers/dma/ti/omap-dma.c
+> +++ b/drivers/dma/ti/omap-dma.c
+> @@ -1520,8 +1520,10 @@ static void omap_dma_free(struct omap_dmadev *od)
+>  		struct omap_chan *c =3D list_first_entry(&od->ddev.channels,
+>  			struct omap_chan, vc.chan.device_node);
+> =20
+> +		omap_dma_terminate_all(&c->vc.chan);
+>  		list_del(&c->vc.chan.device_node);
+>  		tasklet_kill(&c->vc.task);
+> +		vchan_free_chan_resources(&c->vc);
 [Severity: High]
-This isn't a bug introduced by this patch, but there is a pre-existing=20
-issue with CPU PM notifier registration in omap_dma_probe() and cleanup=20
-in omap_dma_remove().
+Does this code introduce a use-after-free regression during driver teardown?
 
-In omap_dma_probe(), if of_dma_controller_register() fails, the code cleans
-up some resources, but it doesn't return early. Instead, execution drops=20
-through to the end of the function, where it registers the CPU PM notifier=
-=20
-by calling cpu_pm_register_notifier(&od->nb) before finally returning the=20
-error code. Since the probe failed, the memory for the device structure wil=
-l=20
-be freed, but the notifier remains in the global chain.
+Looking at omap_dma_remove(), the dma pool is explicitly destroyed before
+omap_dma_free() is called:
 
-Additionally, in omap_dma_remove(), cpu_pm_unregister_notifier() is only=20
-called if od->cfg->may_lose_context is true. However, in omap_dma_probe(),=
-=20
-the notifier is registered if either needs_busy_check or may_lose_context=20
-is true. If a platform has needs_busy_check set but may_lose_context false,=
-=20
-the notifier is never unregistered during device removal.
+omap_dma_remove() {
+    ...
+    if (od->ll123_supported)
+        dma_pool_destroy(od->desc_pool);
 
-Could these paths leave a dangling pointer in the CPU PM notifier chain,=20
-resulting in a use-after-free when a subsequent power management event=20
-triggers the callback?
+    omap_dma_free(od);
+}
+
+This new call to vchan_free_chan_resources() actively drains the virt-dma
+resource lists, which invokes the driver's descriptor freeing callback,
+omap_dma_desc_free(), for any pending or reusable descriptors.=20
+
+If a descriptor uses linked lists, omap_dma_desc_free() will attempt to
+free it to the pool:
+
+omap_dma_desc_free() {
+    ...
+    if (d->using_ll) {
+        ...
+        dma_pool_free(od->desc_pool, d->sg[i].t2_desc,
+                      d->sg[i].t2_desc_paddr);
+    }
+}
+
+Since od->desc_pool has already been destroyed, will this result in a
+use-after-free when dma_pool_free() is called? Should the dma pool be
+destroyed after omap_dma_free() completes?
+
+>  		kfree(c);
+>  	}
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260603030754.2887=
-57-9-rosenp@gmail.com?part=3D1
+57-5-rosenp@gmail.com?part=3D1
