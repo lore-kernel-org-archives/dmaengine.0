@@ -1,106 +1,145 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02CF39184E;
-	Thu,  4 Jun 2026 10:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91AE3CC315
+	for <dmaengine@vger.kernel.org>; Thu,  4 Jun 2026 10:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780568693; cv=none; b=X/tbvUqUY3h+Il5CdPHvpTShVqu1Nwd/c5cBHaRPQy0amd4XV1tEHfhDsPG9PuncqWqhkcajiQwwwq4rWjJUJuJfVJf3alwZCw7wxh76GtUzSAKBtrIzoV2x+P1PlAuQGVD3jDEqwmqI7MJ4UN9mnMC/2KZkWhkepVn/+COJm9M=
+	t=1780569082; cv=none; b=QiDw71Lm6dgZQRka3Ly0BNeL0MVkDZw2HK/VhfcjDIWXyf2SYEOYLGHHUSrj6NZFz3XVN0+1bPEahxfGHOGsBbGTATT2HWigniHrni+6l9j/EfqPO8ZNuIqNDQobsa62RvulJ5JPDrAvWj4Z9qjLiTgeIIwTbDMHnXEq32LtY0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780568693; c=relaxed/simple;
-	bh=DUNkrCkw0SJaQUP5viB0eyam3KH5SYzBZYBmSC/AUsw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NREl9L4A0HcJF3bNGUoGuzmflTby/o1PEQ3uitg3IiID3MZO2XLozMqBc5sA1uqX5UKNtBCjYt8IkF9Y3fCLjGGvTn+fu7Y5YIgj3brHbGTLquQAsDA588ziWrLYQldORBFJSNmwyxsCQ5cIL4WE7/CGEbYkc49AGg4pd3eVxuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QElofj1S; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780569082; c=relaxed/simple;
+	bh=ZW6Rn7g+XSHrWD+T5Y7fbMOIgOKoUy1q2wQvSs80i58=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=TMLVSmGs1OS1+ZgQom7FDKTAG6ZNkhKoSn60Zz5tXbt1S7obi2EwWJc+ZYQ7S9dZUFOCrTsgJYv5CFQUaylDyyn7tuPi/jlDxeD+K0QC8hJCqr/s+bHZZDXjbkd9DI+DvmyVD01C3xwOMXt5Wo8vLG+PxjmYDxd35YXp5G3mEVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=APpqF0qT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QElofj1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025381F00893;
-	Thu,  4 Jun 2026 10:24:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="APpqF0qT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E631F00893;
+	Thu,  4 Jun 2026 10:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780568691;
-	bh=9T1aihntidZljr34HDw/hIULFopJrt+Z1joPKFnXEaM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QElofj1SOIeab/SKpIaqUUxs6uDMPVQ5dljMNgVGOMkK7pHKbxcCQwiidDNnmvSpY
-	 VT/4ll6IDM4WFhBK8Y7LERc8KH+4qIly6/g26qu1A5NUrK4EHuXRMkHGtKIjkgWLUh
-	 swl4e9psPUsC5lYaQmyVRnu0LqtHEXIYYHXMcCvZftRU+2R1oPXKkNWzQEOlZ4eCCG
-	 ub8OpTEVvcypJtV82bp5caktDtdoUaEVNOaVyGMizLboBntDu+5OJGXCB844W9uXDq
-	 8ZLKzXAxp+ZgjjuDUYOQtC3PeDeio8NkKH22MOoE1C9VWxfSIe7DjdvWuq1CexsZfG
-	 0pJVKXe8D4SYQ==
-Date: Thu, 4 Jun 2026 15:54:48 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Andy Gross <agross@codeaurora.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	brgl@kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v19 00/14] crypto/dmaengine: qce: introduce BAM locking
- and use DMA for register I/O
-Message-ID: <aiFScCW_NEY3CsEf@vaman>
-References: <20260526-qcom-qce-cmd-descr-v19-0-08472fdcbf4a@oss.qualcomm.com>
- <ah8G_ajPS1KhgPP_@linaro.org>
+	s=k20260515; t=1780569081;
+	bh=8D8t8Ma08zYin46M5DKkMsYtnbRyZZ7eKJ7F+BXH7Ro=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=APpqF0qT5fTTGI2hIgtKjTH+y5mRpRUDG8BqySUz7H3gUj5YbXrhFzLW5+xYzfaPN
+	 jbOuW/HRvXRlCahqV6PIoVB3QMcyzu5M+CUbFCUIVbQZEN9q0D0tEQxWDEC4aSr4D2
+	 W+uwGcwrKkaYubim6eLM01USWtHDSZNwIsowBqaeGyOP+xa0AFhm2EotGkOGPky1ev
+	 W8jMEhVa5W5yze6nJ8+i5fWmQQDaIsLQDHB/vXhB/rp0aGGK/LSCBYiGtwfU5foOGL
+	 YmKSQjUwlfzFdeY6HMTCprIPzwUHDTrEXFKsu6HQV75DHVITHzopVFzvP7KalrhAMg
+	 iQOZ7wPphNSrw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] dma: at_hdmac: Fix use-after-free by proper tasklet
+ cleanup
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Hongling Zeng" <zenghongling@kylinos.cn>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260604101912.318118-1-zenghongling@kylinos.cn>
+References: <20260604101912.318118-1-zenghongling@kylinos.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 Jun 2026 10:31:20 +0000
+Message-Id: <20260604103121.41E631F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ah8G_ajPS1KhgPP_@linaro.org>
 
-On 02-06-26, 18:38, Stephan Gerhold wrote:
-> On Tue, May 26, 2026 at 03:10:48PM +0200, Bartosz Golaszewski wrote:
-> > I feel like I fell into the trap of trying to address pre-existing
-> > issues reported by sashiko and in the process provoking more reports so
-> > let this be the last iteration where I do this. Vinod can we get this
-> > queued for v7.2 now and iron out any previously existing problems in
-> > tree?
-> 
-> Thanks a lot for working on fixing all these issues!
-> 
-> I agree there is no point addressing all the "pre-existing issues"
-> pointed out by Sashiko, but have you looked through the other comments
-> for new issues pointed out for your patches?
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] Incorrect teardown order in the probe error path leaves the driver=
+ vulnerable to Use-After-Free and pool corruption.
+- [Low] Unused local variables `chan` and `_chan` are left in `at_dma_remov=
+e()`, which will cause compiler warnings.
+--
 
-I hope Bart and Qualcomm can fix these driver issues as well
-> 
-> Out of curiosity, I was looking a bit at the comments for [PATCH v19
-> 06/14] dmaengine: qcom: bam_dma: add support for BAM locking [1]. There
-> are 8 open comments there (Critical: 1, High: 6 and Medium: 1). From a
-> quick look I would say most of these could be valid. The critical one
-> about the usage of dma_cookie_assign() sounds a bit concerning to me, if
-> it is true we would be basically breaking parts of the dmaengine API for
-> consumers by inserting the lock descriptor in front of everything else.
+commit 2676b9fc85315dd8a64edbcb2460a143edbcb102
+Author: Hongling Zeng <zenghongling@kylinos.cn>
 
-Yes this seems to be a valid one. Attaching another descriptor for lock
-does not sound right to me, as in this case causes descriptor to be
-marked 'done' prematurely.
+dma: at_hdmac: Fix use-after-free by proper tasklet cleanup
+   =20
+This commit fixes a use-after-free vulnerability by properly ordering the
+teardown path to free IRQs before killing tasklets and freeing other
+resources.
 
-Honestly, I am not quite happy with the way lock is being handled here.
-I would hope we can have some better suggestions. Adding a descriptor
-for lock does not look right to me. We are adding odd hardware/firmware
-behaviour on engine apis.
+Closes: https://lore.kernel.org/all/20260604073945.54B311F00898@smtp.kernel=
+.org/
 
-I had earlier suggested to lock always or lock only for hw/sw versions
-supported inside the driver, that might be simplist solution without the
-complexity added here
+> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+> index e5b30a57c477a..9048b56b082f4 100644
+> --- a/drivers/dma/at_hdmac.c
+> +++ b/drivers/dma/at_hdmac.c
+[ ... ]
+> @@ -2109,6 +2122,8 @@ static int __init at_dma_probe(struct platform_devi=
+ce *pdev)
+>  err_memset_pool_create:
+>  	dma_pool_destroy(atdma->lli_pool);
+>  err_desc_pool_create:
+> +	if (atdma->dma_device.channels.next !=3D NULL)
+> +		at_dma_cleanup_channels(atdma);
+>  	free_irq(platform_get_irq(pdev, 0), atdma);
 
--- 
-~Vinod
+[Severity: High]
+Does this sequence in the probe error path violate the cleanup order mentio=
+ned
+in the commit message?
+
+The commit message states that free_irq() should happen first, then tasklets
+should be killed, and finally other resources should be freed.
+
+In this error path, if probe fails at dma_async_device_register(), we call
+dma_pool_destroy() on both pools, then at_dma_cleanup_channels() kills the
+tasklets, and free_irq() is called last:
+
+err_dma_async_device_register:
+	dma_pool_destroy(atdma->memset_pool);
+err_memset_pool_create:
+	dma_pool_destroy(atdma->lli_pool);
+err_desc_pool_create:
+	if (atdma->dma_device.channels.next !=3D NULL)
+		at_dma_cleanup_channels(atdma);
+	free_irq(platform_get_irq(pdev, 0), atdma);
+
+Could an active IRQ handler still fire and schedule tasklets, causing a
+use-after-free on the already-destroyed pool memory?
+
+>  err_irq:
+>  	clk_disable_unprepare(atdma->clk);
+> @@ -2125,16 +2140,11 @@ static void at_dma_remove(struct platform_device =
+*pdev)
+>  		of_dma_controller_free(pdev->dev.of_node);
+>  	dma_async_device_unregister(&atdma->dma_device);
+> =20
+> -	dma_pool_destroy(atdma->memset_pool);
+> -	dma_pool_destroy(atdma->lli_pool);
+>  	free_irq(platform_get_irq(pdev, 0), atdma);
+
+[Severity: Low]
+This isn't a bug, but does at_dma_remove() still declare the local variables
+chan and _chan after this refactoring?
+
+The loop previously using these variables was moved to
+at_dma_cleanup_channels(), so leaving them declared at the top of
+at_dma_remove() might cause -Wunused-variable compiler warnings:
+
+static void at_dma_remove(struct platform_device *pdev)
+{
+	struct at_dma		*atdma =3D platform_get_drvdata(pdev);
+	struct dma_chan		*chan, *_chan;
+
+> +	at_dma_cleanup_channels(atdma);
+> =20
+> -	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
+> -			device_node) {
+> -		/* Disable interrupts */
+> -		atc_disable_chan_irq(atdma, chan->chan_id);
+> -		list_del(&chan->device_node);
+> -	}
+> +	dma_pool_destroy(atdma->memset_pool);
+> +	dma_pool_destroy(atdma->lli_pool);
+> =20
+>  	clk_disable_unprepare(atdma->clk);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260604101912.3181=
+18-1-zenghongling@kylinos.cn?part=3D1
