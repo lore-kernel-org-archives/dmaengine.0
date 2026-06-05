@@ -1,61 +1,63 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103563815CE
-	for <dmaengine@vger.kernel.org>; Fri,  5 Jun 2026 22:01:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB783CC7F4
+	for <dmaengine@vger.kernel.org>; Fri,  5 Jun 2026 22:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780696915; cv=none; b=Ew6sXdNb+5QHYe/Y84O948xGqg4Yoc+8gEqa82S5SDqKgnm11fJ/MnV5nj0QGa6njouxLmSRaEHskITtSFG3HiuMGfoJU4cnfsnrnMOXNvsFjYkTn90KtPhK/D9SqnnwAgsqDFSzgp834edKgIG60R7mzjQmqdcleBPcOPd/uA8=
+	t=1780696916; cv=none; b=TO4QJFgKuWuY59QRx2sWm6ip5/EiMtsRTS1h8gBDj6EsGlC5XZpSrRC5bccSLaAWgGkNUbyhiP/Z91SNrIGprzmoOeKtBgCXmzGL0lQ7xvs563UAU6CNYzozVs+10lBvpRQ0lgqgShLCY+w+h7sGiEE72UAjdVl14a5EuDMnYsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780696915; c=relaxed/simple;
-	bh=ngmjTppZ4R8OgX4SoxvBD/WHaDhJUoUg0fzo0m51EWQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=biiTmWn1U/FX+qaVDkK7LCVk0M+vGSkSisaJjHNHrPYZ6s/xxFpyTXO9zfRYeOkKjp+5NZxs9LqqZO1miZafxSv6Hko5j2xSqV0NxcsNFBEa3Rg6sBrGSGseBKVMd8Mc5BA8jUXEdzxPZu7tOu8jWfmKAyjCUJkBcTpDbvhUWOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHwZ0b4+; arc=none smtp.client-ip=209.85.210.181
+	s=arc-20240116; t=1780696916; c=relaxed/simple;
+	bh=Bg1Ph+IpxoVLkz/WKf4vXKiBL9F/M23vAU1d0u4X7c4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pfL+7/6oCi0TQfsqHooKL2ZpW+Z1bNxz0b8T/7oI2izeGT2UN2etOEswBtf+7L00i/MhGNPoObJbUnPlutrgkqVV22BBd70CVsbSoDpYiimWU6m8XPe6AAsYLbnALy8KuxYrbXmkn/JGb4i4bujAGo72Du1BunYv78ohCZTaboQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HyR4SK9/; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHwZ0b4+"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84237c55ef9so1244810b3a.0
-        for <dmaengine@vger.kernel.org>; Fri, 05 Jun 2026 15:01:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HyR4SK9/"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84234c83142so1018166b3a.1
+        for <dmaengine@vger.kernel.org>; Fri, 05 Jun 2026 15:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780696913; x=1781301713; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jPyXiBEaDClQK0uMOGkx+P1/d3TAmzFQ5qeaXXNxnLk=;
-        b=iHwZ0b4+Ecz5V50Xt0F1DG4uPV9duEitu6V9CpCU7eSmZDQVxSqa3SpJI9B71avYYw
-         jm0AVvWp9P4KJAeBzVgjVh45BtWK5WFfWxZZJM6NJMjtse6Ku620bx//Mc1N33Y5yiZJ
-         o4HJMBGrDJ25JSQXPt/IxGHB9XCGGlab+hXowJtaAT0Ql/BbmrEVrMKDnHgiBRaYM7+c
-         x2UdyJVVonSZzQL8b/TR5hs1YlPFQnV1EYHCon8vcV/64jYA/clOkfAiMbZaixLN090j
-         hY+qY51XifIKSZJveAeeyXZH7QvTBK+/LgHCf5zPp62skJkInfMfOIOQJ4k/YoLNQJMi
-         865g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780696913; x=1781301713;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780696915; x=1781301715; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jPyXiBEaDClQK0uMOGkx+P1/d3TAmzFQ5qeaXXNxnLk=;
-        b=oDotzkjPNWI8xF8sIlihx7BG2bw8Bewt6Y/qLjwOt8sQiMRS7NfSVgaDHk6+uMufnQ
-         TCXUCF9FpMSMRH9VXbE+hyeKlUernLhpjNzba53c0SMJgmvWRFYbEqx7tEoYVYpWZtKq
-         x5XRcvaTJMidhFbCjB56xas41Jt16kX+szi8J143vkNRG/f3wTF7STNLx3QsZrRdO4Zc
-         CX1JEQKlHOcoZJKKz3ZeS8yXx0DpFza66k+ky2CV7l9jnQ2QFjKgaVtYNYMZRH/VK2ag
-         A7T5/WTl3omWx23U1OHQShacpKub5oPgDGJ0hKIQ4/hgBUyK57NBwK2mLAtXkjjjh8DZ
-         NH5w==
-X-Gm-Message-State: AOJu0YyjvdFofdWarH2L8MjeGaLsAo3jpeZHVGd8jQUEnHFTtl4RFDtq
-	QdwZne6u87k2OE+VI5rw5muwZ/RGKpU+5Jfrf18bd3rbY1rg3OycMHgDgfL/Ug==
-X-Gm-Gg: Acq92OGq4ZcH/MjMCZLHDW/lnbu6ozTFT5BudiCkdpGsSnANeoCT07t/4Caa3LjiBMQ
-	i2e6+X4oXS4TJX5BvMBEayfiGBwjmn9OZeAMvs5Mtc6FhY59qtKTKPRM380H9yQRj+OEXMimZVj
-	xEt/EferptifusVwhCbwbbOvcKchY+y9s01bLMr6HW6pUCvPmqPV9jG7QkLjDjqCBqC2HXPzFgS
-	yUktPYF6OoYeNcPZWR0mjKL6sDVXb0V4USJhdEfafMnYme2RvVGwo3182LBy7FoohX5tK9cxsta
-	W0xlzar27Woie61m6I3ZgkuIW4charWufpyylylSvEWEQe9Dq0S9OVwDgY0QJj0nBjtQoUhRsRn
-	nvUq5wF28EV0RHQy0LHKDScoyTZA1hUwBiZFF7FO6DN5K2BmZKU+dNhFy0M8aKw8udabZB7jaJm
-	fxSejTLyu1C5Ws8ENjZH4mCurk13VASzYq2d6NzM6im6j7GkiIKchioOoPPrbxGCccsRW21kGse
-	WkjUgyODlSKvT5sF11dbot3lppXVQwJOxtZlBFD+sNHi79bjq6Dy+dT
-X-Received: by 2002:a05:6a00:6c9c:b0:842:5b63:6118 with SMTP id d2e1a72fcca58-842b0f1f43emr5730143b3a.3.1780696912990;
-        Fri, 05 Jun 2026 15:01:52 -0700 (PDT)
+        bh=W3mpU00CFRN4T3ZBRPTrtzwzlNmgP77kODqdYKCW0Ak=;
+        b=HyR4SK9/gqvpO9ZU+iEOl4UgLCLGsilp0aduHPXIH+9RsiofvtIlgEn17SnQ6Eovaj
+         /7+LgrnJV4m0hfprf/cvCWOLq2B+DjQCb0dZZLpV/Q67TMP9Ku/zT7WHERPCTopc/fAD
+         tOaIRSQQPlyLA88nGMa/PLsi18mLOeKA64wLFVZ1l4bmpOZI1ww+VfjrsRWNBuE7z5j3
+         G8gr5VbTPRUTnQDetAB1kKE1Rinn0/SgefijMrXC4caUlsj04yrGBqFNN3Ak/jDQNdkA
+         JlzFq+9uk+1aVjMXHr3MUXwH2uE+IkJs4qswwYsC6Dspm0PXe56+snFowrTOnn6KWiRT
+         CesA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780696915; x=1781301715;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=W3mpU00CFRN4T3ZBRPTrtzwzlNmgP77kODqdYKCW0Ak=;
+        b=SujoYwHIB8OHddBRUo52+7HBqXbaaceJR7oacP/q043vsT+x9oj1cmNxJ76qRa4Gxs
+         9ev86QMIeaaxFSvdpZq2aFHEjV6mZoGRUn53jzUjfdbaJk2Wb7sHMi1Pd6NZJO38Cii7
+         WG6+TqbyYAZ17vToreaCKAvR/mG8WxfOaKwG7LBbRa4xrS1bwxuflwde+X/27Q2hbgSr
+         7o/dWRkPydOeivNSq1HHODUoMDAY9cGJtg4HdCZ2GOqlp34nc0dmWeT/uCGikZJkMze/
+         0dlZMDnqIR7THG/BHJSEeQSGH3GqjXLfQVtOItZYcPuTTCA+m65Z3xLUNMz/Z+mK3/S7
+         KdBA==
+X-Gm-Message-State: AOJu0Yxt6qJiFIn/NXphHHAjyuWLEkoZ4YiG+bIJLw4Z8/Iza6N1YTGw
+	PJGEuIw4CaYgnEarRDJLM271KIxH9sJDEFfWOUyIJb/ZhGlGwhDuk3h1I1lheA==
+X-Gm-Gg: Acq92OFRz7SvmvvmJ1rKaQ3JSdl4oDFpArjEgYaflMfK8mNPcS96CE8mcQSnbsPdcLX
+	FgttasXyHVouNnXOB6jGb2tbvE06z+EFbbC0Idz5kGFbuPP7Ghtm3ZPWyQMcxnk4stW4yX5CF4d
+	4chobtkyluCUezUxriDvwmkTjCV4+/nRk/tJXhY2Lj6OWXKZx4sARnbbGUY/LNTqSe37DsGtSZW
+	jiICmaSKm+ALS8kCOKw4G7UOIRre1h2gVmVdn6mqjMC8Su2KA+AwCmOwdK1Nz0kxIrQfeRxmlkr
+	6QppyTHqDoQjp3t4/OffRZ0U6Ewc7QdQn52fvpH4HckjOmh2DF2xvFWojq0K22V3CsBc7VPLN1Y
+	/BbuJ8f4r2xFPyw+vsM/l0k4LmkpXeV8jPiQVeVGLDI72aODJbGluQ9klO9J+gy250T0xOPeIqk
+	wzm9bvRCCTstDj0xrx9bvBjou3oT/Fa5+EBf5XfUrw34TbybdagJCa2+bnGjvSMD78qxi9gKQI3
+	5dRfNR2q2rx5kuBiDbsUAEBSOLraLxvlN7dFgX4m7EEsg==
+X-Received: by 2002:a05:6a00:32c7:b0:842:422b:259f with SMTP id d2e1a72fcca58-842b0e30c6dmr5022742b3a.10.1780696914650;
+        Fri, 05 Jun 2026 15:01:54 -0700 (PDT)
 Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-842824a1cb4sm12518883b3a.26.2026.06.05.15.01.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-842824a1cb4sm12518883b3a.26.2026.06.05.15.01.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2026 15:01:50 -0700 (PDT)
+        Fri, 05 Jun 2026 15:01:53 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -68,53 +70,46 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-kernel@vger.kernel.org (open list),
 	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
 	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCH 00/10] dmaengine: fsldma: devm conversion, fixups, and cleanups
-Date: Fri,  5 Jun 2026 15:01:24 -0700
-Message-ID: <20260605220134.43295-1-rosenp@gmail.com>
+Subject: [PATCH 01/10] dmaengine: fsldma: kill tasklet before removing channel
+Date: Fri,  5 Jun 2026 15:01:25 -0700
+Message-ID: <20260605220134.43295-2-rosenp@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260605220134.43295-1-rosenp@gmail.com>
+References: <20260605220134.43295-1-rosenp@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Convert the Freescale Elo DMA driver to use managed device resources
-(devm), simplifying probe error handling and the remove path by
-dropping explicit iounmap, kfree, and free_irq calls.
+Add tasklet_kill() in fsl_dma_chan_remove() to prevent a race
+where the tasklet, scheduled by the IRQ handler, runs after
+the channel has been torn down. With the recent devm conversions
+the channel struct is no longer freed in the remove path, so
+this is not a use-after-free crash fix, but rather correct
+shutdown sequencing to avoid the tasklet operating on a
+logically-removed channel.
 
-While doing so, fix a few issues uncovered along the way:
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/fsldma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-  - Kill the channel tasklet before removal to prevent a race with
-    the IRQ handler.
-  - Check the return value of dma_async_device_register() instead
-    of silently returning success.
-  - Replace the powerpc-specific I/O accessors with portable
-    generic ones so the driver can be built on non-powerpc
-    architectures.
-
-Build-tested with LLVM=1 ARCH=powerpc allmodconfig.
-
-Rosen Penev (10):
-  dmaengine: fsldma: kill tasklet before removing channel
-  dmaengine: fsldma: check dma_async_device_register() return value
-  dmaengine: fsldma: convert to platform_get_irq_optional()
-  dmaengine: fsldma: convert to devm_kzalloc and fix error path
-  dmaengine: fsldma: convert ioremap to devm_platform_ioremap_resource
-  dmaengine: fsldma: convert channel allocation to devm_kzalloc
-  dmaengine: fsldma: convert channel ioremap to devm_of_iomap
-  dmaengine: fsldma: replace irq_of_parse_and_map with of_irq_get
-  dmaengine: fsldma: convert to devm_request_irq
-  dmaengine: fsldma: replace ppc-specific accessors with portable
-    generic ones
-
- drivers/dma/Kconfig  |   2 +-
- drivers/dma/fsldma.c | 139 +++++++++++++------------------------------
- drivers/dma/fsldma.h |  35 ++++++++++-
- 3 files changed, 76 insertions(+), 100 deletions(-)
-
+diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
+index 22d62d958abd..0e2f84862261 100644
+--- a/drivers/dma/fsldma.c
++++ b/drivers/dma/fsldma.c
+@@ -1205,6 +1205,7 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
+ 
+ static void fsl_dma_chan_remove(struct fsldma_chan *chan)
+ {
++	tasklet_kill(&chan->tasklet);
+ 	irq_dispose_mapping(chan->irq);
+ 	list_del(&chan->common.device_node);
+ 	iounmap(chan->regs);
 -- 
 2.54.0
 
