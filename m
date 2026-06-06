@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96AF64;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E053F13DDA4;
 	Sat,  6 Jun 2026 00:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780704142; cv=none; b=mFFGAcl34l6vwEo7bKzzwcUxVSm17w2Xi1c7dm4h1t7+lp9M8ilfLYSkSBJU6QYQ5fUlmxQXMaJOzxXNcfCzeNmiNmUhYKVhXjf1esY3ka6zrYBNlqgKMX6MCo1Ji5COpHjZo7gw7lnRnbWEcf8SNbnGH74o2wRHHPXDLfJD/bM=
+	t=1780704143; cv=none; b=Tw8rrdET1x+VZuQBYkvcsqvFvEyLN+aEzeOqo6VRtBfaiyct4vbmFPhtFhYYbi4P18Y52KhHsdp379fKHHayO337VlNGb/fK4qcME1EYHdcRH6iHq3b948+/tcPKzyRY4CAXqncpnYLAqPMJyUyNC5Db5AYQQcgBwFRH2YitfZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780704142; c=relaxed/simple;
-	bh=sOAB8FquBY7jrHJW7M3Or3hi1sUAHq+p1Pl4iW3yR4U=;
+	s=arc-20240116; t=1780704143; c=relaxed/simple;
+	bh=Tp2DRlO6SqKW2OmnnN6MqpnTkP5tD4sN8tnLoKhufPg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aWIXLAu2B3jvmc5Ei2exYaRtof/ySTz7QkD34fYLm83nwg1DvW2nAGZ6i4Cw5e3B/SL7m3uvYKHqkL0UORtsP84mCqxN2FzojHKOXbWjO05mTkS9hVuno6iKofWjrTG2stVYm7tKziM8Qj6q4tRCTHYfyRx28PhP/NFVWjX2doU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8+rTFXA; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=qm7VlpzvCv1F1PwRt9vdtnX05Xu45o4/xMGgFAsa+NXuEuaIzzZ6Gl+HCDL2Ndg2S8HFBLsocVS2P/hrsupwUMUN48yK7el0+ux2xP7xMty3rjSkZUqKJtOPDwX90qNl2Q+dDueQxU0qoUelUqwPLjdFlxmBSlYcrUCYzTBur1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RMlYRuwp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8+rTFXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 735E2C4AF09;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RMlYRuwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C045CC2BD05;
 	Sat,  6 Jun 2026 00:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1780704142;
-	bh=sOAB8FquBY7jrHJW7M3Or3hi1sUAHq+p1Pl4iW3yR4U=;
+	bh=Tp2DRlO6SqKW2OmnnN6MqpnTkP5tD4sN8tnLoKhufPg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=B8+rTFXA8oPeHPbMT57VeUqp4/DFXqVL/XvEEHvT5449IOIPu/4Xgc6VERqbmo8Ku
-	 JeBX+ISW0hZRW0IoIGOBbSN3lzoohURUa3POADtSwIsfiJuesZ9Gqw0VjrXDJqhkhF
-	 TkVqnNCHXwDENuE74+uOv8qG/7hqhcTfU+oL7tmiDS2tzPZMKXIgMmUw8Y9moKQMeD
-	 Zr/Xzx0NPeH5c4CGM4OSPq2H3F97kNm46tOBeyAC6S3MFQ/Rez0UvNnfFImGa9GDrL
-	 LiYZS/JC+MZT86Qm7V6CWyV4pLAzvBISzM5/jNv5ewSfvBW7hGzADlghbMikqFAaXb
-	 6O1Bt5jJ1kXWg==
+	b=RMlYRuwpBUvhCH6vvDx/LEHsjFtkhpVa0+FRsCgOV0N3IDu1IEa84+d63gYqbU9gM
+	 OYv6klxAEmqfAd1hx6puw4+O79DT0o4XVMgrr+vGiBuU3ECUdp9kZCHEg66zo4vhmU
+	 I76lMxOntzkV0DOUJm6z8CzyK5uSyd9QFEUlolztE/FB67GsTeqpGK0AjQhuYRPcHP
+	 YLmLYdrHCivVsVeZr7GU9QA5Y9/8ydiWmMdiWIuafOCnwhlkZac6+RqfOx5nAT9mo5
+	 uwrdeiOzfh13illIcy6pF6A8d9X6AbgSzlDzI77zvLMHW7XSFiKxycihddT9RFCSKh
+	 fBO/9eAsj+tGg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D52CD6E7B;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B841CCD8C81;
 	Sat,  6 Jun 2026 00:02:22 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Fri, 05 Jun 2026 19:02:06 -0500
-Subject: [PATCH v3 03/23] dmaengine: sdxi: Add PCI initialization
+Date: Fri, 05 Jun 2026 19:02:11 -0500
+Subject: [PATCH v3 08/23] dmaengine: sdxi: Install administrative context
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,7 +40,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260605-sdxi-base-v3-3-4d38ca2bdffe@amd.com>
+Message-Id: <20260605-sdxi-base-v3-8-4d38ca2bdffe@amd.com>
 References: <20260605-sdxi-base-v3-0-4d38ca2bdffe@amd.com>
 In-Reply-To: <20260605-sdxi-base-v3-0-4d38ca2bdffe@amd.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -54,11 +54,11 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
  dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-pci@vger.kernel.org, Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780704140; l=8020;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780704140; l=9174;
  i=nathan.lynch@amd.com; s=20260410; h=from:subject:message-id;
- bh=BQZvxuDditz9IitbnDyUmKk8ltcT1WRXb6dWdWsUaGw=;
- b=9a5D3vEH+NkB7ShoIgfSvfFWXtouG9i5xbvR2GnjIbyDoNj3PQej2PGz/HEtgZUj9OQ6Ilkyi
- CfV+NkOQIpAABNbpciefnZsYnxeg9ALmsPisoz2BaU8ByyXkvBc14/b
+ bh=zW988Sovngm2snUuwqnu55nb+6mHuS+MKCdhjdyAMsI=;
+ b=7XxWXdYXlti/8gV4wmltQKSYR89kye/zJuHomV2vjs0l/aygalZGlJChaMcFQMj/uOV9nmIzi
+ VnyHdc9IzvCCctQKH2ib1iGZCzzjRCwpzzFMdIqaWYvFzyhnbNg3Lpc
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=PK4ozhq+/z9/2Jl5rgDmvHa9raVomv79qM8p1RAFpEw=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260410 with
@@ -68,278 +68,301 @@ Reply-To: nathan.lynch@amd.com
 
 From: Nathan Lynch <nathan.lynch@amd.com>
 
-Add enough code to bind a SDXI device via the class code and map its
-control registers and doorbell region. All device resources are
-managed with devres at this point, so there is no explicit teardown
-path.
-
-While the SDXI specification includes a PCIe binding, the standard is
-intended to be independent of the underlying I/O interconnect. So the
-driver confines PCI-specific code to pci.c, and the rest (such as
-device.c, introduced here) is bus-agnostic. Hence there is some
-indirection: during probe, the bus code registers any matched device
-with the generic SDXI core, supplying the device and a sdxi_bus_ops
-vector. After the core associates a new sdxi_dev with the device,
-bus-specific initialization proceeds via the sdxi_bus_ops->init()
-callback.
+Serialize the context control block, akey table, and L1 entry for the
+admin context, making its descriptor ring, write index, and context
+status block visible to the SDXI implementation once it is activated.
 
 Co-developed-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 ---
- drivers/dma/Kconfig       |  2 ++
- drivers/dma/Makefile      |  1 +
- drivers/dma/sdxi/Kconfig  | 28 ++++++++++++++++
- drivers/dma/sdxi/Makefile |  6 ++++
- drivers/dma/sdxi/device.c | 33 +++++++++++++++++++
- drivers/dma/sdxi/pci.c    | 84 +++++++++++++++++++++++++++++++++++++++++++++++
- drivers/dma/sdxi/sdxi.h   | 38 +++++++++++++++++++++
- 7 files changed, 192 insertions(+)
+ drivers/dma/sdxi/context.c | 162 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/context.h |   7 ++
+ drivers/dma/sdxi/hw.h      |  15 +++++
+ drivers/dma/sdxi/sdxi.h    |   9 +++
+ 4 files changed, 193 insertions(+)
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index ae6a682c9f76..3d89284e7cf8 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -762,6 +762,8 @@ source "drivers/dma/lgm/Kconfig"
+diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
+index 443c231303af..cc99fe9ecf92 100644
+--- a/drivers/dma/sdxi/context.c
++++ b/drivers/dma/sdxi/context.c
+@@ -7,16 +7,22 @@
  
- source "drivers/dma/loongson/Kconfig"
+ #define pr_fmt(fmt)     "SDXI: " fmt
  
-+source "drivers/dma/sdxi/Kconfig"
-+
- source "drivers/dma/stm32/Kconfig"
++#include <linux/align.h>
++#include <linux/bitfield.h>
+ #include <linux/bug.h>
+ #include <linux/cleanup.h>
+ #include <linux/device/devres.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/dmapool.h>
+ #include <linux/errno.h>
++#include <linux/iommu.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
++#include <asm/barrier.h>
++#include <asm/rwonce.h>
  
- # clients
-diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
-index 14aa086629d5..069bba1d26c7 100644
---- a/drivers/dma/Makefile
-+++ b/drivers/dma/Makefile
-@@ -84,6 +84,7 @@ obj-$(CONFIG_XGENE_DMA) += xgene-dma.o
- obj-$(CONFIG_ST_FDMA) += st_fdma.o
- obj-$(CONFIG_FSL_DPAA2_QDMA) += fsl-dpaa2-qdma/
- obj-$(CONFIG_INTEL_LDMA) += lgm/
-+obj-$(CONFIG_SDXI_CORE) += sdxi/
+ #include "context.h"
++#include "hw.h"
+ #include "sdxi.h"
  
- obj-y += amd/
- obj-y += loongson/
-diff --git a/drivers/dma/sdxi/Kconfig b/drivers/dma/sdxi/Kconfig
-new file mode 100644
-index 000000000000..b91b44231a04
---- /dev/null
-+++ b/drivers/dma/sdxi/Kconfig
-@@ -0,0 +1,28 @@
-+config SDXI_CORE
-+	tristate "SDXI (Smart Data Accelerator Interface) support"
-+	# Doorbell updates require naturally-aligned 64-bit writes, per
-+	# SDXI 1.0 9 MMIO Control Registers.
-+	depends on 64BIT
-+	select DMA_ENGINE
-+	help
-+	  Enable support for Smart Data Accelerator Interface (SDXI)
-+	  Platform Data Mover devices. SDXI is a vendor-neutral
-+	  standard for a memory-to-memory data mover and acceleration
-+	  interface.
-+
-+	  This option is automatically selected by the SDXI PCI driver.
-+	  Enable it manually if you want to build the SDXI core for unit
-+	  testing without enabling the PCI driver.
-+
-+	  To compile this driver as a module, choose M here: the module
-+	  will be named "sdxi-core".
-+
-+config SDXI_PCI
-+	tristate "SDXI (Smart Data Accelerator Interface) PCI driver"
-+	depends on PCI_MSI && 64BIT
-+	select SDXI_CORE
-+	help
-+	  Enable support for PCI-hosted SDXI devices.
-+
-+	  To compile this driver as a module, choose M here: the module
-+	  will be named "sdxi-pci".
-diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
-new file mode 100644
-index 000000000000..0006edf74d86
---- /dev/null
-+++ b/drivers/dma/sdxi/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0
-+obj-$(CONFIG_SDXI_CORE) += sdxi-core.o
-+sdxi-core-y := device.o
-+
-+obj-$(CONFIG_SDXI_PCI) += sdxi-pci.o
-+sdxi-pci-y := pci.o
-diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
-new file mode 100644
-index 000000000000..0974a83bb45c
---- /dev/null
-+++ b/drivers/dma/sdxi/device.c
-@@ -0,0 +1,33 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SDXI hardware device driver
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/export.h>
-+#include <linux/slab.h>
-+
-+#include "sdxi.h"
-+
-+int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
-+{
-+	struct sdxi_dev *sdxi;
-+
-+	sdxi = devm_kzalloc(dev, sizeof(*sdxi), GFP_KERNEL);
-+	if (!sdxi)
-+		return -ENOMEM;
-+
-+	sdxi->dev = dev;
-+	sdxi->bus_ops = ops;
-+	dev_set_drvdata(dev, sdxi);
-+
-+	return sdxi->bus_ops->init(sdxi);
-+}
-+EXPORT_SYMBOL_NS_GPL(sdxi_register, "SDXI");
-+
-+MODULE_AUTHOR("Wei Huang");
-+MODULE_AUTHOR("Nathan Lynch");
-+MODULE_DESCRIPTION("SDXI core");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
-new file mode 100644
-index 000000000000..42e8af008b10
---- /dev/null
-+++ b/drivers/dma/sdxi/pci.c
-@@ -0,0 +1,84 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SDXI PCI device code
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+
-+#include <linux/dev_printk.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/iomap.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+
-+#include "sdxi.h"
-+
-+enum sdxi_mmio_bars {
-+	SDXI_PCI_BAR_CTL_REGS = 0,
-+	SDXI_PCI_BAR_DOORBELL = 2,
+ #define DEFAULT_DESC_RING_ENTRIES 1024
+@@ -106,6 +112,152 @@ static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
+ 	return_ptr(cxt);
+ }
+ 
++struct sdxi_cxt_ctl_cfg {
++	dma_addr_t ds_ring_ptr;
++	dma_addr_t cxt_sts_ptr;
++	dma_addr_t write_index_ptr;
++	u32 ds_ring_sz;
++	u8 qos;
++	u8 csa;
++	bool se;
 +};
 +
-+static struct pci_dev *sdxi_to_pci_dev(const struct sdxi_dev *sdxi)
++static int configure_cxt_ctl(struct sdxi_cxt_ctl *ctl, const struct sdxi_cxt_ctl_cfg *cfg)
 +{
-+	return to_pci_dev(sdxi->dev);
-+}
++	u64 ds_ring_ptr, cxt_sts_ptr, write_index_ptr;
 +
-+static int sdxi_pci_init(struct sdxi_dev *sdxi)
-+{
-+	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
-+	struct device *dev = &pdev->dev;
-+	int ret;
++	write_index_ptr = FIELD_PREP(SDXI_CXT_CTL_WRITE_INDEX_PTR,
++				     cfg->write_index_ptr >> WRT_INDEX_PTR_SHIFT);
++	cxt_sts_ptr = FIELD_PREP(SDXI_CXT_CTL_CXT_STS_PTR,
++				 cfg->cxt_sts_ptr >> CXT_STATUS_PTR_SHIFT);
 +
-+	ret = pcim_enable_device(pdev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to enable device\n");
++	*ctl = (typeof(*ctl)) {
++		/*
++		 * ds_ring_ptr contains the validity bit and is updated
++		 * after a barrier is issued.
++		 */
++		.ds_ring_sz      = cpu_to_le32(cfg->ds_ring_sz),
++		.cxt_sts_ptr     = cpu_to_le64(cxt_sts_ptr),
++		.write_index_ptr = cpu_to_le64(write_index_ptr),
++	};
 +
-+	dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
++	ds_ring_ptr = FIELD_PREP(SDXI_CXT_CTL_VL, 1) |
++		      FIELD_PREP(SDXI_CXT_CTL_QOS, cfg->qos) |
++		      FIELD_PREP(SDXI_CXT_CTL_SE, cfg->se) |
++		      FIELD_PREP(SDXI_CXT_CTL_CSA, cfg->csa) |
++		      FIELD_PREP(SDXI_CXT_CTL_DS_RING_PTR,
++				 cfg->ds_ring_ptr >> DESC_RING_BASE_PTR_SHIFT);
++	/* Ensure other fields are visible before hw sees vl=1. */
++	dma_wmb();
++	WRITE_ONCE(ctl->ds_ring_ptr, cpu_to_le64(ds_ring_ptr));
 +
-+	sdxi->ctrl_regs = pcim_iomap_region(pdev, SDXI_PCI_BAR_CTL_REGS,
-+					    KBUILD_MODNAME);
-+	if (IS_ERR(sdxi->ctrl_regs))
-+		return dev_err_probe(dev, PTR_ERR(sdxi->ctrl_regs),
-+				     "failed to map control registers\n");
-+
-+	sdxi->dbs = pcim_iomap_region(pdev, SDXI_PCI_BAR_DOORBELL,
-+				      KBUILD_MODNAME);
-+	if (IS_ERR(sdxi->dbs))
-+		return dev_err_probe(dev, PTR_ERR(sdxi->dbs),
-+				     "failed to map doorbell region\n");
-+
-+	pci_set_master(pdev);
 +	return 0;
 +}
 +
-+static const struct sdxi_bus_ops sdxi_pci_ops = {
-+	.init = sdxi_pci_init,
++/*
++ * Logical representation of CXT_L1_ENT subfields.
++ */
++struct sdxi_cxt_L1_cfg {
++	dma_addr_t cxt_ctl_ptr;
++	dma_addr_t akey_ptr;
++	u32 cxt_pasid;
++	u32 opb_000_enb;
++	u16 max_buffer;
++	u8 akey_sz;
++	bool ka;
++	bool pv;
 +};
 +
-+static int sdxi_pci_probe(struct pci_dev *pdev,
-+			  const struct pci_device_id *id)
++static int configure_L1_entry(struct sdxi_cxt_L1_ent *ent,
++			      const struct sdxi_cxt_L1_cfg *cfg)
 +{
-+	return sdxi_register(&pdev->dev, &sdxi_pci_ops);
++	u64 cxt_ctl_ptr, akey_ptr;
++	u32 misc0;
++
++	if (WARN_ON_ONCE(!IS_ALIGNED(cfg->cxt_ctl_ptr, SZ_64)))
++		return -EFAULT;
++	if (WARN_ON_ONCE(!IS_ALIGNED(cfg->akey_ptr, SZ_4K)))
++		return -EFAULT;
++
++	akey_ptr = FIELD_PREP(SDXI_CXT_L1_ENT_AKEY_SZ, cfg->akey_sz) |
++		   FIELD_PREP(SDXI_CXT_L1_ENT_AKEY_PTR,
++			      cfg->akey_ptr >> L1_CXT_AKEY_PTR_SHIFT);
++
++	misc0 = FIELD_PREP(SDXI_CXT_L1_ENT_PASID, cfg->cxt_pasid) |
++		FIELD_PREP(SDXI_CXT_L1_ENT_MAX_BUFFER, cfg->max_buffer);
++
++	*ent = (typeof(*ent)) {
++		/*
++		 * cxt_ctl_ptr contains the validity bit and is
++		 * updated after a barrier is issued.
++		 */
++		.akey_ptr    = cpu_to_le64(akey_ptr),
++		.misc0       = cpu_to_le32(misc0),
++		.opb_000_enb = cpu_to_le32(cfg->opb_000_enb),
++	};
++
++	cxt_ctl_ptr = FIELD_PREP(SDXI_CXT_L1_ENT_VL, 1) |
++		      FIELD_PREP(SDXI_CXT_L1_ENT_KA, cfg->ka) |
++		      FIELD_PREP(SDXI_CXT_L1_ENT_PV, cfg->pv) |
++		      FIELD_PREP(SDXI_CXT_L1_ENT_CXT_CTL_PTR,
++				 cfg->cxt_ctl_ptr >> L1_CXT_CTRL_PTR_SHIFT);
++	/* Ensure other fields are visible before hw sees vl=1. */
++	dma_wmb();
++	WRITE_ONCE(ent->cxt_ctl_ptr, cpu_to_le64(cxt_ctl_ptr));
++
++	return 0;
 +}
 +
-+static const struct pci_device_id sdxi_id_table[] = {
-+	{ PCI_DEVICE_CLASS(PCI_CLASS_ACCELERATOR_SDXI, 0xffffff) },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(pci, sdxi_id_table);
-+
-+static struct pci_driver sdxi_driver = {
-+	.name = "sdxi",
-+	.id_table = sdxi_id_table,
-+	.probe = sdxi_pci_probe,
-+	.sriov_configure = pci_sriov_configure_simple,
-+};
-+
-+MODULE_IMPORT_NS("SDXI");
-+MODULE_AUTHOR("Wei Huang");
-+MODULE_AUTHOR("Nathan Lynch");
-+MODULE_DESCRIPTION("SDXI PCIe interface driver");
-+MODULE_LICENSE("GPL");
-+module_pci_driver(sdxi_driver);
-diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
-new file mode 100644
-index 000000000000..d4c61ca2f875
---- /dev/null
-+++ b/drivers/dma/sdxi/sdxi.h
-@@ -0,0 +1,38 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
-+ * SDXI device driver header
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
++ * Make the context control structure hierarchy valid from the POV of
++ * the SDXI implementation. This may eventually involve allocation of
++ * a L1 table page, so it needs to be fallible.
 + */
++static int sdxi_publish_cxt(const struct sdxi_cxt *cxt)
++{
++	struct sdxi_cxt_ctl_cfg ctl_cfg;
++	struct sdxi_cxt_L1_cfg L1_cfg;
++	struct sdxi_cxt_L1_ent *ent;
++	u8 l1_idx;
++	int err;
 +
-+#ifndef DMA_SDXI_H
-+#define DMA_SDXI_H
++	if (WARN_ONCE(cxt->id > cxt->sdxi->max_cxtid,
++		      "can't install cxt with id %u (limit %u)",
++		      cxt->id, cxt->sdxi->max_cxtid))
++		return -EINVAL;
 +
-+#include <linux/compiler_types.h>
-+#include <linux/types.h>
++	ctl_cfg = (typeof(ctl_cfg)) {
++		.se              = 1,
++		.csa             = 1,
++		.ds_ring_ptr     = cxt->sq->ring_dma,
++		.ds_ring_sz      = cxt->sq->ring_size >> 6,
++		.cxt_sts_ptr     = cxt->sq->cxt_sts_dma,
++		.write_index_ptr = cxt->sq->write_index_dma,
++	};
 +
-+struct sdxi_dev;
++	err = configure_cxt_ctl(cxt->cxt_ctl, &ctl_cfg);
++	if (err)
++		return err;
 +
-+/**
-+ * struct sdxi_bus_ops - Bus-specific methods for SDXI devices.
-+ */
-+struct sdxi_bus_ops {
-+	/**
-+	 * @init: Map control registers and doorbell region, allocate
-+	 *        IRQ ranges. Invoked before bus-agnostic SDXI
-+	 *        function initialization.
-+	 */
-+	int (*init)(struct sdxi_dev *sdxi);
-+};
++	l1_idx = ID_TO_L1_INDEX(cxt->id);
 +
-+struct sdxi_dev {
-+	struct device *dev;
-+	void __iomem *ctrl_regs;	/* virt addr of ctrl registers */
-+	void __iomem *dbs;		/* virt addr of doorbells */
++	ent = &cxt->sdxi->L1_table->entry[l1_idx];
 +
-+	const struct sdxi_bus_ops *bus_ops;
-+};
++	L1_cfg = (typeof(L1_cfg)) {
++		.ka          = 1,
++		.pv          = 0,
++		.cxt_ctl_ptr = cxt->cxt_ctl_dma,
++		.akey_sz     = akey_table_order(cxt->akey_table),
++		.akey_ptr    = cxt->akey_table_dma,
++		.cxt_pasid   = IOMMU_NO_PASID,
++		.max_buffer  = 11, /* 4GB */
++		.opb_000_enb = cxt->sdxi->op_grp_cap,
++	};
 +
-+int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
++	return configure_L1_entry(ent, &L1_cfg);
++	/* todo: need to send DSC_CXT_UPD to admin */
++}
 +
-+#endif /* DMA_SDXI_H */
+ static void free_admin_cxt(void *ptr)
+ {
+ 	struct sdxi_dev *sdxi = ptr;
+@@ -115,13 +267,23 @@ static void free_admin_cxt(void *ptr)
+ 
+ int sdxi_admin_cxt_init(struct sdxi_dev *sdxi)
+ {
++	int err;
++	struct sdxi_sq *sq;
++
+ 	struct sdxi_cxt *cxt __free(sdxi_cxt) = sdxi_alloc_cxt(sdxi);
+ 	if (!cxt)
+ 		return -ENOMEM;
+ 
++	sq = cxt->sq;
++	/* SDXI 1.0 4.1.8.4.b: Set CXT_STS.state to CXTV_RUN. */
++	sq->cxt_sts->state = FIELD_PREP(SDXI_CXT_STS_STATE, CXTV_RUN);
+ 	cxt->id = SDXI_ADMIN_CXT_ID;
+ 	cxt->db = sdxi->dbs + cxt->id * sdxi->db_stride;
+ 
++	err = sdxi_publish_cxt(cxt);
++	if (err)
++		return err;
++
+ 	sdxi->admin_cxt = no_free_ptr(cxt);
+ 
+ 	return devm_add_action_or_reset(sdxi->dev, free_admin_cxt, sdxi);
+diff --git a/drivers/dma/sdxi/context.h b/drivers/dma/sdxi/context.h
+index a29387900df7..65b773446ba3 100644
+--- a/drivers/dma/sdxi/context.h
++++ b/drivers/dma/sdxi/context.h
+@@ -20,6 +20,13 @@ struct sdxi_akey_table {
+ 	struct sdxi_akey_ent entry[SZ_4K / sizeof(struct sdxi_akey_ent)];
+ };
+ 
++/* For encoding the akey table size in CXT_L1_ENT's akey_sz. */
++static inline u8 akey_table_order(const struct sdxi_akey_table *tbl)
++{
++	static_assert(sizeof(*tbl) == SZ_4K);
++	return 0;
++}
++
+ /* Submission Queue */
+ struct sdxi_sq {
+ 	u32 ring_entries;
+diff --git a/drivers/dma/sdxi/hw.h b/drivers/dma/sdxi/hw.h
+index 55d63d50a01b..4b65337a5975 100644
+--- a/drivers/dma/sdxi/hw.h
++++ b/drivers/dma/sdxi/hw.h
+@@ -45,8 +45,16 @@ static_assert(sizeof(struct sdxi_cxt_L2_table) == 4096);
+ /* SDXI 1.0 Table 3-3: Context Level 1 Table Entry (CXT_L1_ENT) */
+ struct sdxi_cxt_L1_ent {
+ 	__le64 cxt_ctl_ptr;
++#define SDXI_CXT_L1_ENT_VL             BIT_ULL(0)
++#define SDXI_CXT_L1_ENT_KA             BIT_ULL(1)
++#define SDXI_CXT_L1_ENT_PV             BIT_ULL(2)
++#define SDXI_CXT_L1_ENT_CXT_CTL_PTR    GENMASK_ULL(63, 6)
+ 	__le64 akey_ptr;
++#define SDXI_CXT_L1_ENT_AKEY_SZ        GENMASK_ULL(3, 0)
++#define SDXI_CXT_L1_ENT_AKEY_PTR       GENMASK_ULL(63, 12)
+ 	__le32 misc0;
++#define SDXI_CXT_L1_ENT_PASID          GENMASK(19, 0)
++#define SDXI_CXT_L1_ENT_MAX_BUFFER     GENMASK(23, 20)
+ 	__le32 opb_000_enb;
+ 	__u8 rsvd_0[8];
+ } __packed __aligned(32);
+@@ -62,10 +70,17 @@ static_assert(sizeof(struct sdxi_cxt_L1_table) == 4096);
+ /* SDXI 1.0 Table 3-4: Context Control (CXT_CTL) */
+ struct sdxi_cxt_ctl {
+ 	__le64 ds_ring_ptr;
++#define SDXI_CXT_CTL_VL             BIT_ULL(0)
++#define SDXI_CXT_CTL_QOS            GENMASK_ULL(3, 2)
++#define SDXI_CXT_CTL_SE             BIT_ULL(4)
++#define SDXI_CXT_CTL_CSA            BIT_ULL(5)
++#define SDXI_CXT_CTL_DS_RING_PTR    GENMASK_ULL(63, 6)
+ 	__le32 ds_ring_sz;
+ 	__u8 rsvd_0[4];
+ 	__le64 cxt_sts_ptr;
++#define SDXI_CXT_CTL_CXT_STS_PTR    GENMASK_ULL(63, 4)
+ 	__le64 write_index_ptr;
++#define SDXI_CXT_CTL_WRITE_INDEX_PTR GENMASK_ULL(63, 3)
+ 	__u8 rsvd_1[32];
+ } __packed __aligned(64);
+ static_assert(sizeof(struct sdxi_cxt_ctl) == 64);
+diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
+index f5e0cd986b9e..903bf18bd3cc 100644
+--- a/drivers/dma/sdxi/sdxi.h
++++ b/drivers/dma/sdxi/sdxi.h
+@@ -15,6 +15,15 @@
+ 
+ #include "mmio.h"
+ 
++#define ID_TO_L1_INDEX(id)	((id) & 0x7F)
++
++#define DESC_RING_BASE_PTR_SHIFT	6
++#define CXT_STATUS_PTR_SHIFT		4
++#define WRT_INDEX_PTR_SHIFT		3
++
++#define L1_CXT_CTRL_PTR_SHIFT		6
++#define L1_CXT_AKEY_PTR_SHIFT		12
++
+ struct sdxi_dev;
+ 
+ /**
 
 -- 
 2.54.0
