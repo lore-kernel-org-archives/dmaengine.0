@@ -1,120 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30748318EEE
-	for <dmaengine@vger.kernel.org>; Mon,  8 Jun 2026 03:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A86A329C7C
+	for <dmaengine@vger.kernel.org>; Mon,  8 Jun 2026 04:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780888607; cv=none; b=l50TndJ42hqJz0/xPZITRulZvqyvJ+z4jJD2EhRcxtK+C3eM9J++it1WqgG4iN49WjbdPJ0u+60ua3icXki1Nl395zDxg/qL+YQtoLkpoKYj6MSgJ1JPcpJfudCcAZyu5Gjd2JlwCqmp8F2fcRWkFd3K0zhMzDMCIRNMROtFufs=
+	t=1780894424; cv=none; b=JPMIh6QgZuvFCqugKFf3Z1aYN8OWOaGsYDUozbNYznnrVwfDITFi4DPmRN73SajS9HgDGfcbusyYFAvUVYeqRLT5sztINRjoFxw6HiDDfbZjD6Il/R+MVKOudIqurCrAwNRvavTB8VJq95kwQszx6TccT2bVg9+L6jRzGFv7IV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780888607; c=relaxed/simple;
-	bh=aLuq5M63mC/fRTgOhSVFiWnc+s4iIHo4Ao19YNh5+lw=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QiId2unRl0KqCwFqBrHHFv0WX2REyfUbiQ13aPM+cgfLuVV8t/4WKX7W1fGSSlKc9FdnihbH/F+LjOLURM9ArKOp0moH+Hgb/R3FHZK6kcRHatv+nSJMkGRLDt5hG3ddJBD8kFcSj3jYzoMYaFgw4pvgj9HuZwSnQIPSbLj266M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RIwVU+Jq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780894424; c=relaxed/simple;
+	bh=11RGwLkj26xqPdN0wscC2AFma7LM/lWRQj+dLXsSXQo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CY8MC/IB0pcJP5ZFk8Tj78eaup5zvviI5qtOZfTN1xJ2B/3uT/k0uAz1NdUEHciRTP41gcKjYWWS1lyk/7fwFOy2plwpGVOL76N8PRa/RvKqxLLWUOvMwWM4anogqX8z94DAaVkJyUhRryv/aLRAg45L8oyPTK5EyL85qxLzHb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pLV0JfS0; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RIwVU+Jq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E59F1F00893;
-	Mon,  8 Jun 2026 03:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780888605;
-	bh=1kZTAzSmo2UBGUuKlRb5G90bPrA1TYnCasX1wnX7eps=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=RIwVU+JqFxur0zulrwvEAz3u7693auOvgO/YHUHLAMJuXwDvr36N+wgq/VNNfM8B3
-	 Zs/WBctHOGpB4QzRHGmY09sKeQMgtobTESdoY89EVhs6mVq9zxnuqUBApwH6e/8ZgF
-	 wEQn9hTbjVJciJ72GNne7XC6F5nW5I1fYLQJcB0OhPsuCHoshDa/YdfY4k/9CVU6jU
-	 e8YXlVGoki2TPHHIpuNyO+b+aW4EewNAT7m6vu9YOd4/K2CpxHS+p9IxGrXjwMsj7P
-	 Akr3w/npRXpCGBRf9W9smcGwGMXNCeDg3RRF8pwfKFRofLPHMUHNVTQZOKRbUwEL7q
-	 uGPLDaRi40nww==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v1] dmaengine: qcom: hidma-mgmt: Fix sysfs cleanup on
- setup failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Yuho Choi" <dbgh9129@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260608030846.2602111-1-dbgh9129@gmail.com>
-References: <20260608030846.2602111-1-dbgh9129@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 08 Jun 2026 03:16:45 +0000
-Message-Id: <20260608031645.8E59F1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pLV0JfS0"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2bf22d29dabso25251175ad.2
+        for <dmaengine@vger.kernel.org>; Sun, 07 Jun 2026 21:53:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780894422; x=1781499222; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jgvJ9+4PgpXMrVBHtZnQjq8CEK1hGoHMz+18CbE8EQY=;
+        b=pLV0JfS0gYmdUz6DriNrCndd5Xazut3iROHO9IIHj9g6zsSQ5hMX+hEeNF/KcRF7Eb
+         nOqWTfFMG0oeUFDoVbneiGHw9KK85mmcwnMXZokJXb6tC/xEziEafULo/l3eNsb7ozyN
+         iFyhVyKb636aONpE3gJc39FRcRRx9khHwMKLNBs8bZPtLZqImBOTCh+YrS+qTpeGT7jr
+         DNt2N4xi63HNAECrxycuUF2wzl+jq6htQqtL/1V1UcNLX3SUebddnlyaGXPW7vF3HyIT
+         CcoGnVYBAfe61pUJkIMlj3mI9c4oFw6OXkW+8/akNnGdupJ8Xluidn+5qCqXOxHKzL9c
+         L0Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780894422; x=1781499222;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jgvJ9+4PgpXMrVBHtZnQjq8CEK1hGoHMz+18CbE8EQY=;
+        b=muy5OmFwHblFiZNJx3Bislehx+y3kM2iQopHlT/Z48GMsR4x8fQRGz6oCNXQ6GGJHX
+         N8SlRGbWk/bzZDEscRfS+1YLfCPxs7G2hBXN3Fmabio5fNR/j96Q1/nJff3uBxs+OePl
+         IBRJR6NINKRxJQfdhtlu57SNinSej727o9Q6As9I2fbtOXZgw/hB52ieSRwMvtM1RfHC
+         +lGxi0NMU2rkoCIW1T9xY8FI77xuURJMVGL8WhtSLf+i8cRlO+/rSeJFqWkRaZYdQDvG
+         xom7gpSVuMqU7/zjZN6lnwHsFzQph9pfEMJ193YXmuap0Uw+FJjNFqf+CJn8rWo2O1xZ
+         TwyQ==
+X-Gm-Message-State: AOJu0YwhpKIKIXa+3jS0ct3ERrAmxaQ4v92wPmJgLu9XqIITCKKIQKwD
+	T3khyP2r2WkfhdD8lCqUny02zvCC+fE6BBOkwDezxopL8LXH8hSDL74vG4bBlA==
+X-Gm-Gg: Acq92OE+ksxiXbK7RYN8PWCwCqvoCl0GYJlOf3ARv+zgliYNibsRJWFnvaS2GehJROE
+	C3gKWjuKUklCZKTCP/Y08lzGgypT1VFm9SWpwM6SiHcGiAkekmpIYny7+Cyf6mGFPjkgQjqqQDR
+	nWGeEUZgfdph6UALTfx3a9zjbdILsu9BFeJFUBReIxAIuyIezoCFUhuu1uyRqn7r+b0zjGqk/4I
+	MiANITV5O6M5PBfcjUd+DcNR7Ti8r2Jn8ZWGxDZRwmUmxcqRF3qODNuCt+szQ8OpoPS2XMBKS/F
+	ZougFsRr1U8ZKGD53ZyveAvmGUx1IpadU8G4nRaaImMG5U5khHmW4wdyi0yPVT9pJrKEwNgLDyQ
+	ERfwCyqYXOvgEDVcUYvjnju/GQaZDcU6pYLeXirLa8nAYGvAadmYE0bP//M2bO7NeRS7Tectz8o
+	RVTXlzeVRKwNfd7kEmZbdt9TpzCmLJ1uFLAFDgnnBDchYC3KdlPwsjFg4Y8MoUtAmfCOVF448m0
+	PBagJuewibncGkOzkjenvWPn9oL8y6vJZt53otOjc0vMg==
+X-Received: by 2002:a17:903:3c6f:b0:2c2:7baf:139f with SMTP id d9443c01a7336-2c27baf148emr18097875ad.30.1780894421834;
+        Sun, 07 Jun 2026 21:53:41 -0700 (PDT)
+Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d389sm162552855ad.16.2026.06.07.21.53.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2026 21:53:41 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	linux-tegra@vger.kernel.org (open list:TEGRA ARCHITECTURE SUPPORT),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv3] dmaengine: tegra210-adma: use
+Date: Sun,  7 Jun 2026 21:53:24 -0700
+Message-ID: <20260608045324.4980-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+Simpler to call the proper function.
 
-Pre-existing issues:
-- [High] Reliance on `kobject_put` without `kobject_del` for sysfs cleanup =
-leads to use-after-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v3: change subject
+ v2: reword commit message
+ drivers/dma/tegra210-adma.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 14e0c408ed1e..be2ad6e28618 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -1073,14 +1073,9 @@ static int tegra_adma_probe(struct platform_device *pdev)
+ 		}
+ 	} else {
+ 		/* If no 'page' property found, then reg DT binding would be legacy */
+-		res_base = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-		if (res_base) {
+-			tdma->base_addr = devm_ioremap_resource(&pdev->dev, res_base);
+-			if (IS_ERR(tdma->base_addr))
+-				return PTR_ERR(tdma->base_addr);
+-		} else {
+-			return -ENODEV;
+-		}
++		tdma->base_addr = devm_platform_ioremap_resource(pdev, 0);
++		if (IS_ERR(tdma->base_addr))
++			return PTR_ERR(tdma->base_addr);
+
+ 		tdma->ch_base_addr = tdma->base_addr + cdata->ch_base_offset;
+ 	}
 --
+2.54.0
 
-commit a6dc90d05cf8a69c255834fbadc8ca4eb60dbe56
-Author: Yuho Choi <dbgh9129@gmail.com>
-
-dmaengine: qcom: hidma-mgmt: Fix sysfs cleanup on setup failure
-
-hidma_mgmt_init_sys() creates the chanops kobject, per-channel
-kobjects and sysfs files incrementally. If a later creation step fails,
-the function returns without tearing down the objects already created.
-
-> diff --git a/drivers/dma/qcom/hidma_mgmt_sys.c b/drivers/dma/qcom/hidma_m=
-gmt_sys.c
-> --- a/drivers/dma/qcom/hidma_mgmt_sys.c
-> +++ b/drivers/dma/qcom/hidma_mgmt_sys.c
-
-[ ... ]
-
-> @@ -231,20 +231,52 @@ static int create_sysfs_entry_channel(struct hidma_=
-mgmt_dev *mdev, char *name,
->  	return sysfs_create_file(parent, &chattr->attr.attr);
->  }
-> =20
-> +static void hidma_mgmt_uninit_sys(struct hidma_mgmt_dev *mdev,
-> +				  unsigned int sysfs_count,
-> +				  unsigned int chroot_count)
-> +{
-> +	unsigned int i;
-> +
-> +	for (i =3D 0; i < sysfs_count; i++) {
-> +		struct attribute attr =3D { .name =3D hidma_mgmt_files[i].name };
-> +
-> +		sysfs_remove_file(&mdev->pdev->dev.kobj, &attr);
-> +	}
-> +
-> +	for (i =3D 0; i < chroot_count; i++) {
-> +		kobject_put(mdev->chroots[i]);
-
-[Severity: High]
-This is a pre-existing issue, but does this teardown logic still leave a
-potential use-after-free?
-
-Since the sysfs attributes (chattr) and their names are allocated using
-devm_kmalloc() and devm_kstrdup() in create_sysfs_entry_channel(), devres
-will free them immediately upon probe failure or device unbind.
-
-If userspace holds an open file descriptor to any of the per-channel sysfs
-files, or if CONFIG_DEBUG_KOBJECT_RELEASE is enabled, kobject_put() will
-only decrement the reference count and the implicit kobject_del() inside
-kobject_release() will be delayed. A subsequent read or write to the open
-sysfs file would then dereference the already freed chattr memory.
-
-Should kobject_del() be explicitly called before kobject_put() here to
-synchronously remove the sysfs directory and files before devres frees the
-backing memory?
-
-> +		mdev->chroots[i] =3D NULL;
-> +	}
-> +
-> +	if (mdev->chanops) {
-> +		kobject_put(mdev->chanops);
-> +		mdev->chanops =3D NULL;
-> +	}
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260608030846.2602=
-111-1-dbgh9129@gmail.com?part=3D1
