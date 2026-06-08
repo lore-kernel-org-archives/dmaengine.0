@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C0537DABD;
-	Mon,  8 Jun 2026 12:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E286B379C45
+	for <dmaengine@vger.kernel.org>; Mon,  8 Jun 2026 12:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780920799; cv=none; b=d0pDMb52Ae5j+asiJzY+uX9LdDtNyhnvOppr1q3jRj1JkNpphRRIowIY6Z6VhoTkPTsplX1gUwtScnmXDJ8cg2kBwCPWPAL28F9fC9rq/JeDWBg4LJ/zJR6Cl3qORjmYS9VaVzStNkqt0yM0mgOOSxU6TgNMLtHLUzQMckYybAE=
+	t=1780920801; cv=none; b=EEumFYrHT4WIWrwnNxx/fQi2fyxgq/uySx5GGgjK/wVK0ccPqqCJvilYiyc5iNjK2s1SlHzX0xv3SjOKFYjIK9EVEMsZe7kUeBGjCvSGe0eVpg2yUPIP6n8Hpm80WakmYP6f67V9uzvEcKyugr2Bv7zkw0Y7bzGm537JlPlW8rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780920799; c=relaxed/simple;
-	bh=GYOFshXSQ2rXp7L0Bti4gLR0Q8s6aqYfAMiRNc7lE+g=;
+	s=arc-20240116; t=1780920801; c=relaxed/simple;
+	bh=WGc3PeODadgGJTYFmb73G1wqBayTvLlCVWcffcILCS0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=YKKQ8uK+/884WcqihnqoRW1EwUUiyKuJ+Q6nkhtpxguMrV3S9Yj9Zf+OcHZpbXQSvgLWWSd48jv1RiVfz59mujW3ppAocjGn8HYdWJWMiHDghFVN0N38PNw6wzLXLFt+psR4J/1nC8kAI6+NMY8/YjBWdg8M+sykFHsP8PLrYbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4gXuBVM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g9N6ip5/zHgzVp70lEbVfk40IeLt85Bs4DWufZZ7+OPsFIxwscVP0HOVUeBHGiGoK/x404zekmuDTVjOXskouBNMHgplC5/JwRYUdrYQUHMB3w16+oBHB2YvuFaLNSoBvI75+MR8gm2lXeV0kzl6FFqPEMFMdWPe9xvU3LqKAPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i2vA+bbJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4gXuBVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0895D1F00893;
-	Mon,  8 Jun 2026 12:13:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i2vA+bbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801BC1F00898;
+	Mon,  8 Jun 2026 12:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780920798;
-	bh=Iydd94isOhUeQpr5j0eFZ1PK9qHVg+SrEz2KxmyD7qE=;
+	s=k20260515; t=1780920800;
+	bh=iWgAokzavpqmec2YiMNbooYltQWxuP9rTl2xaj0elE0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=h4gXuBVM060nEkQrSm8GnwkG61zbsEpNPfJwvo36tRxEE7PDajQlkcVXA1Em351KJ
-	 k12kE6/eiV+H+7ApNOApDWfNl70PUUujowp3ddK/8Lmr8eRTfqSISsDO/qHpz0QwKf
-	 7DXFm/oRsr94Z/cA/bTQhPaOkWYlq56XJ5I/kCWc0hDCiC4BdDb+YIc+HpmnlsDpoU
-	 aKGfVQiRkG3G4xGtTfzdQBNakGTettJGipCTBt9uCQLFYlYlXTMS8hdfCnBwA3elYW
-	 DUcB6Lxg0KHvc+Ps+AqiLSmcN6IS+/cW/c4IYI9oh1nuVb46ogPQWtJp47eeAqqPMQ
-	 /YmhlB5kQi5Qg==
+	b=i2vA+bbJCF0M2n8NGQLYN3xg9VyQn0rdOxE2W8826R8Ng50JVr2DZLLRBgxcXMoP/
+	 IrlZBQ3lypF1mMFqL03DtvmUNxej7LwMN806zsAbF0OmS9AtDH1yPCawL0VGfLa0NB
+	 gA7YjFphMuLhxkFNtYvLVoBH0uh2YaRv/mZ4crojhrRq4Ghz2CaFl033RnX3T1eccf
+	 FfOVRgg39/aWA60fhtHml3Xa6ATosX2b7quYAacecXX3IkP1Kle92vv0yy2QA2CaGx
+	 ZjgJBOegKs3Trd2qXWqnyMGydJj4ZE/8gyZXohf3b9yvlOxgyfwAHFt1vrffyg3SUI
+	 n2qZA+zpwygYg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
- Koichiro Den <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260521142153.2957432-1-den@valinux.co.jp>
-References: <20260521142153.2957432-1-den@valinux.co.jp>
-Subject: Re: (subset) [PATCH 0/4] dmaengine: dw-edma: Fix probe paths and
- register races
-Message-Id: <178092079664.96550.12858701594139945991.b4-ty@kernel.org>
-Date: Mon, 08 Jun 2026 17:43:16 +0530
+To: Arnd Bergmann <arnd@arndb.de>, Vladimir Zapolskiy <vz@mleia.com>
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260114051508.3908807-1-vz@mleia.com>
+References: <20260114051508.3908807-1-vz@mleia.com>
+Subject: Re: [PATCH] dma: iop32x-adma: Remove a leftover header file
+Message-Id: <178092079913.96550.13876541717008221519.b4-ty@kernel.org>
+Date: Mon, 08 Jun 2026 17:43:19 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,23 +45,17 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Thu, 21 May 2026 23:21:49 +0900, Koichiro Den wrote:
-> This series fixes pre-existing dw-edma issues flagged by Sashiko in:
-> https://lore.kernel.org/dmaengine/20260521063115.2842238-1-den@valinux.co.jp/
+On Wed, 14 Jan 2026 07:14:58 +0200, Vladimir Zapolskiy wrote:
+> The Intel IOPx3xx platform was completely removed in commit b91a69d162aa
+> ("ARM: iop32x: remove the platform"), and it'd be safe to remove an unused
+> and leftover platform data specific header file dma-iop32x.h also.
 > 
-> Note: Patch 4 was based on a patch Frank posted in January:
->       https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
->       Since it has not been merged, I included it here. Frank, please let me
->       know if you prefer a different handling.
 > 
-> [...]
 
 Applied, thanks!
 
-[2/4] dmaengine: dw-edma-pcie: Reject devices without driver data
-      commit: 11d7cfe0c119691b2dafbb699bbca90258c678aa
-[4/4] dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
-      commit: 8ffba0171c6bbce5f093c6dba5a02c0805b31203
+[1/1] dma: iop32x-adma: Remove a leftover header file
+      commit: b2d44b3ea95e10315559d8deedd8af2977c7f534
 
 Best regards,
 -- 
