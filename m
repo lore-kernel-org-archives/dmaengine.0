@@ -1,59 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96081E5B63;
-	Mon,  8 Jun 2026 12:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5397C2DB798;
+	Mon,  8 Jun 2026 12:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780920568; cv=none; b=LfEla5zAN6PnzJDI/l5F95xMML5Z/lJDD56rXrmnrArPOvN/EgT4UQBzBiTA3SwZ/+cRB/J3LNv9Gtm0NCl4VhtdCtyW4pbvW6ShcNOFs+UpUAJOI07BBIXcXl6JHL+JCl527rS8+ZyKu4k9b1DannvdnTWlxVGlhZDVoC6bH8E=
+	t=1780920772; cv=none; b=tT/xwDqPprN3kdOthGIdd3Mbu9aeC2UbjVXDI4vPYAeqyqWZqWgr6B061dfPWUywpnHv6TfZ1pzpoR3x1DpEntBHWU227YdylIT13EqZ3BlrGM83tDvSq4ljW42BHjuGclUnsX+SzO6VartmFVJla1o5NxQuUn126vLFo/gst5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780920568; c=relaxed/simple;
-	bh=afFlbiE1PJ1WlaaiaJEYNVfsDX6QYlh7ghKtTCuesgw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k1ia6wurT3JE3ka08lSEW+aBMMmlpejf6fRkC1jy+sEP0ejimEfzp8Ti6VXECeAkWBEwuYyuJLpQAjpdmeml2cs0F7z2a+qOYXyCbu1703tmBME4G9N2EG0EaphHRzhXOM+yXq1JeqhT7n2XgdN1ZpNSBCM46QheSRaetBLtf1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lJCC/7YE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780920772; c=relaxed/simple;
+	bh=+tLmKfMpk8drSfyfQSTMrb6JFo6LepIGwKm92nnk62Y=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=eWjgO4Ee9aRb6hdRZvsSFZ2kORwdg16h02ay2uu0z0bgACUYbhmU+4QhzV2odRhmgQlZcv0cYeB4Ol6K7TFR5eip7sMM3qAOFYvqxN5cD3Ouo/95V8bJirlTC/yWf6S3/P/u1b3oXIBFStvenysL9TbTnSAohE/N1oqrsMlQsG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnKFr/Xa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJCC/7YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66961F00893;
-	Mon,  8 Jun 2026 12:09:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnKFr/Xa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549B81F00893;
+	Mon,  8 Jun 2026 12:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780920567;
-	bh=ZpiDNYSzBKDsaWbTBujoPCwlcdcM+NFdKmVE3hxzxeg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lJCC/7YE41aeB5clAPeyVTZk3YLMVU80Z1V9qVIoHxt/2jE9jDRZzi1AJoDaK/ir0
-	 z15VqiP2oUSSZUZHHsCRLMC6ySZXrcRtd8fS/ZYFFPIcarqSlrKI942f9LrO6GYrb9
-	 U6x8eH/UbJNwrXnjSuguPi+0iR8yy+vk0lzCInPpH6VYbtIPgymTL609+9/hTn/Az5
-	 5by8i8H86uhm7vRsYSNTGdJgjXG0qVGDPAP3S172oQayraAiO2WZDT9geFQAelUBoe
-	 xHdW8OGgsxCwDGTU1MTKg9P1dEgHJk4KQozUExwmuNzXmfj8PV6Ahp/fy5uEdSQiLv
-	 QxWYuvBjpgIcg==
-Date: Mon, 8 Jun 2026 17:39:23 +0530
+	s=k20260515; t=1780920771;
+	bh=9qS7SFSfRUq21Gc1cCdftCGwGNUZJGwmb3/Fobz/um8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=bnKFr/Xava7syJUYy3DbrNNysklMEgaCgXy4yG6EFpoKtBxC8nMdYyDYOM3TJfHt4
+	 5WUCrgcw4zcVhGhFOVCXIVdju3zAIHHI/CBTjB0mB1w+Fo+E7cxoWbSUp7BBYXP3gP
+	 cqGTRJroRjMMMR0HsgfFJacnywij8RuI5X0E+qiNR+c7SVhtuy0toYNvmwr+dJutCP
+	 Jabm8XZGPAVcsFQLvLegRpEqE/5ThpxcXGWrtFtSIiGhX0ZQxEKP8+jbYggiz4kNFG
+	 49Zn63GrhWUfqJxx90zLdeev37pqmD/3hPn3hDnc5nq4EmrZHtZbyiJjRza8sk6KNY
+	 Nqip07nS4BTxg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Costa Shulyupin <costa.shul@redhat.com>
-Cc: linux-kernel@vger.kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v1] include: Remove unused dma-iop32x.h
-Message-ID: <aiaw87jYQRnYivUA@vaman>
-References: <20260605073952.840988-1-costa.shul@redhat.com>
+To: Jon Hunter <jonathanh@nvidia.com>, 
+ Thierry Reding <thierry.reding@kernel.org>, Sheetal <sheetal@nvidia.com>
+Cc: Laxman Dewangan <ldewangan@nvidia.com>, Frank Li <Frank.Li@kernel.org>, 
+ Mohan Kumar <mkumard@nvidia.com>, dmaengine@vger.kernel.org, 
+ linux-tegra@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20260318073922.1760132-1-sheetal@nvidia.com>
+References: <20260318073922.1760132-1-sheetal@nvidia.com>
+Subject: Re: [PATCH] dmaengine: tegra210-adma: Add error logging on failure
+ paths
+Message-Id: <178092076795.96550.4000844569244724664.b4-ty@kernel.org>
+Date: Mon, 08 Jun 2026 17:42:47 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260605073952.840988-1-costa.shul@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On 05-06-26, 10:39, Costa Shulyupin wrote:
-> The IOP32X platform was removed in commit b91a69d162aa
-> ("ARM: iop32x: remove the platform") and its DMA driver in
-> commit cd0ab43ec91a ("dmaengine: remove iop-adma driver").
-> No file includes this header.
 
-Thanks for the patch. This is same as [1], which I have applied
-So dropping this
+On Wed, 18 Mar 2026 07:39:22 +0000, Sheetal wrote:
+> Add dev_err/dev_err_probe logging across failure paths to improve
+> debuggability of DMA errors during runtime and probe.
+> 
+> 
 
-[1]: 20260114051508.3908807-1-vz@mleia.com
+Applied, thanks!
 
+[1/1] dmaengine: tegra210-adma: Add error logging on failure paths
+      commit: b55bfcc677dd58d808a53173e0574b466dc27b9f
+
+Best regards,
 -- 
 ~Vinod
+
+
