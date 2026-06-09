@@ -1,223 +1,106 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80DA4C77A4
-	for <dmaengine@vger.kernel.org>; Tue,  9 Jun 2026 22:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6734A41167C
+	for <dmaengine@vger.kernel.org>; Tue,  9 Jun 2026 22:28:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781043616; cv=none; b=LUeyEsCo1VM+j7j6IN6V7Z0BpECIym5JxsX52A4ZaIncbuDFZapMnYfpS0fOuOfCqwJCwkNEK/k0O+HFiFElUK7jbwsieTwkiDauj7SOwFg5EW9DZaRAZL+tT3P6eyc+8NI/rwZqLp7Isf6SGl2mxulkRvCTX/H1ZgPRP83epsk=
+	t=1781044129; cv=none; b=F6T49weR2AxqQUhr67yuVws53/BZ3hcHjZDjSudNMaH6Mq/65x3RUiCH/OztFiOwfU2EnOuOZsFdDNmyQjtrtHWFgN39m0ZvQU+c0nDtvuRMSs2/zGtTKjppcJNmvM2hyIoPImHeGu1t29I516g9C8godqpspm69xXJedjkfgWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781043616; c=relaxed/simple;
-	bh=qh8I3vnOxyJVMrriCmgL8Ppb0gIh5xcK0e99IyDGG7o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0eAGqIABrezuEF9LP+AAIsmbSQ1uI6G6kVMvW9qM6V8w+bBiKsvzMZVRZp2jH01py7mQN+G9O5RTA+iz514maapC7JKuCPb45N+hIc3DEGIIFVoPVigdduVfYLAdXc8xtr80IFn3sZDL7uX0suICkP5C1odzu8MyLgs6r7aI+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnhHJJM3; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781044129; c=relaxed/simple;
+	bh=DYnL6EG1lGhwXl+DfTqV2ae+Fpv7/Vpwp0n8FMyUp7Y=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=l4L6EBgdnDsLr3QKN7F3j/r2OgZkEDM0zKEe+J3h6TNonGdyds/MXag/nqxG2zuDfckKTRKqlWV7PWALLTXhCqzKl8Z3aWBge2VGySzbDG+qTE5FBtqSsMeAAm59mrJx33LeW8tfBPWUbIoJ8jQmDVnwODD8Ciam+VapCiIRXvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eehznUL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnhHJJM3"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c858b392697so2922885a12.3
-        for <dmaengine@vger.kernel.org>; Tue, 09 Jun 2026 15:20:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781043613; x=1781648413; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8UhO55Yo3qdvFwINhOeOCySQ32WXkyaaxtV0xfPLwL8=;
-        b=EnhHJJM3QQp8DPPTURyWelewrfH0BgItxin6HttJE0m3e7kPRX6H0KUdZBiOGWWejK
-         2JoI4DEpfnWbJo+CtStlEA29Nul0nNh6o/TcTx0qDqAOf3bSu8R72U3XpE377Gjfhm6B
-         xbY2VM14jNRdwISe2bEtcxN/rcp5mQAQgwe52rdghkc9EUaYUzrFqK3NlS5XBLba/A3p
-         PyIKgRjRaQfstizAv6JAqr87vhZDBPCEPSef1nqc+OQJMpINhQeWTb2FmYFUCyOrX4p7
-         OdmmI6gEDxU0wAyUWJ0L8aBDoeSmFdYYRM9hs3Ek3ku3bZmAl/XWd7f7pCvKYoLYkU0N
-         Ep/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781043613; x=1781648413;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8UhO55Yo3qdvFwINhOeOCySQ32WXkyaaxtV0xfPLwL8=;
-        b=KYwUkqnDqXor3aZyPjd2CC8PxIrEfpI+u++EFOBseY29Fz2gu8Z7OdljwsfVE1N/hR
-         WoXgAOoQ9FhLIC3fb3n8mD56YTCuRoGiBTP2NXJV9t5U+DNpSQCTv2NqfVc1B4hBH3kZ
-         mK7eiiddR3LB0YRwvkP6VLea/aXuzz6uIAMLldMni2jBhn7UOtrXu/EK4OZO0TKKsMv8
-         BcriGZhlJ0ang2UsthRi1ZGEAETTcTS2JCnxJdIZy67aXGlqDZ85Vd4hPSqFc2j9JDj3
-         ZrykMZg0S0TIc+CDuJ20PkOHqcP2KYRdGTyjYJ6k3nRe5xgBLwbcs0WscShMfBN9vUix
-         +Y0Q==
-X-Gm-Message-State: AOJu0YwqXl3qnlSN/UCvduFgONInhEVCky2F6zvOhcMHIgXi0l/Adz73
-	RBWOLq7wUbZZw28bL7kR7GuCl+KoikJNgp6307gclToGDrms3LWtM3sCVBC1Qs4u
-X-Gm-Gg: Acq92OEWPaiAFu0H6yrMFH9Kr1ZU8S32+Ccw7TAOdrx0Vn+0S+pW08F6hSDd3yVEjiq
-	c2mcwnPv64Jn31+b9V5Iah+wKBoIC2ajYnx4xc1GZ7Ssz9eX+hDjxh7Q2AhMkoEMOIUmWUWWMvg
-	9MH/pZGPolOGuQnWe8SydoWbooPWDjNFxNtPjy067N4g2aVz3k0MH8PiMF9WX1FFH36mQtJLKdL
-	LKt5/Mtr1sOh2N76NmBBkeVSgbjHzJd9ahhSlBVKe0XVKn18h855fuZUrIa2lcv9cVD22wE9hrx
-	d35b4QgiNa/QhCXuEmLb2JAcv0nVNjMKxrV1CeLqpjfx7mOsHLILwD46WuvUSLFyoHaFLlaQ6Gz
-	Ok3dmSxYL5n7zLBGG8Jaa50DINvIuMh5Slu5PtbXjbC+9Yofu50mj6jZWH5Y8pr/otX6Nr6GMAy
-	g9BFncdxB7M//H+BwYTDnih51Sdq5/ltFt8854hlkSYF4sYKqUkTl4PTsPFKdCVIdUcZ4r9e+w+
-	ImQbCzCBzeg79hevdf8TwcF4NySkd2pnHn88UXtPmifgQ==
-X-Received: by 2002:a05:6a20:918b:b0:3b4:79fd:cba4 with SMTP id adf61e73a8af0-3b4ccdedeb9mr26932559637.12.1781043613288;
-        Tue, 09 Jun 2026 15:20:13 -0700 (PDT)
-Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df04ff24sm19661834a12.14.2026.06.09.15.20.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 15:20:12 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Zhang Wei <zw@zh-kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	linux-kernel@vger.kernel.org (open list),
-	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
-	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCHv3 14/15] dmaengine: fsldma: replace ppc-specific accessors with portable generic ones
-Date: Tue,  9 Jun 2026 15:19:25 -0700
-Message-ID: <20260609221926.35538-15-rosenp@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260609221926.35538-1-rosenp@gmail.com>
-References: <20260609221926.35538-1-rosenp@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eehznUL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA9B1F00898;
+	Tue,  9 Jun 2026 22:28:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781044127;
+	bh=n/mBjyKIZ5tBtQ5ZxX1Fb1V0zDDT24bIB8IkMCEJ1E0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=eehznUL/DdZzQFQ8est6NE6SXsuGwpjYnjKZcg39q+60ZD9Gbxgs/6BqCzQaLW4FL
+	 OzrpuF0GiGCIztSwPTxzR27XcXefhXxGX2cHdsk5ZJWZ3nH+B26tVknHStIgoyzKSX
+	 aZVSpBPva21CIwdakOFlub69zNS9Fls+U8YiR2Svm1Lsol4reNZhvKw0EfGcMlPFiF
+	 vW8i0vGg5VeFhj88PJFH2Y4Xxm0uyvaufKbpwyTwrjPIsgdPV3B3p/1Tce1V1IqaAH
+	 E52Nwzu01TDcljND9jMYqZIdg49wzLuBWToqvYPKKBWa1mPYgfcJkAECQSqXzpJnHe
+	 plZfWU7fMPYaQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv3 07/15] dmaengine: fsldma: fix request_irqs unwind
+ freeing unregistered IRQ
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260609221926.35538-8-rosenp@gmail.com>
+References: <20260609221926.35538-8-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 09 Jun 2026 22:28:47 +0000
+Message-Id: <20260609222847.ADA9B1F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-- Convert remaining in_be32/in_le32 calls to FSL_DMA_IN macro
-- Replace __ilog2 with generic ilog2 (pull in linux/log2.h)
-- Add linux/io.h include
-- Expand non-PPC accessor support from ARM-only to all architectures
-- Guard 64-bit generic accessors with CONFIG_64BIT; provide
-  emulation using 32-bit accessors on 32-bit platforms
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Add COMPILE_TEST support as a result for extra compile coverage.
+Pre-existing issues:
+- [High] Failure to kill the tasklet before freeing the channel structure l=
+eads to a potential Use-After-Free.
+--
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- drivers/dma/Kconfig  |  2 +-
- drivers/dma/fsldma.c | 11 ++++++-----
- drivers/dma/fsldma.h | 35 ++++++++++++++++++++++++++++++++---
- 3 files changed, 39 insertions(+), 9 deletions(-)
+commit 5aba4f3ed6853fa11aefa9651d0a60e344f6e486
+Author: Rosen Penev <rosenp@gmail.com>
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 302021540d76..9b13e7aa31c7 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -206,7 +206,7 @@ config EP93XX_DMA
- 
- config FSL_DMA
- 	tristate "Freescale Elo series DMA support"
--	depends on FSL_SOC
-+	depends on FSL_SOC || COMPILE_TEST
- 	select DMA_ENGINE
- 	select ASYNC_TX_ENABLE_CHANNEL_SWITCH
- 	help
-diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-index 7d0c80121aa4..d4c9b81ade0d 100644
---- a/drivers/dma/fsldma.c
-+++ b/drivers/dma/fsldma.c
-@@ -32,6 +32,8 @@
- #include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
-+#include <linux/io.h>
-+#include <linux/log2.h>
- #include <linux/fsldma.h>
- #include "dmaengine.h"
- #include "fsldma.h"
-@@ -266,7 +268,7 @@ static void fsl_chan_set_src_loop_size(struct fsldma_chan *chan, int size)
- 	case 4:
- 	case 8:
- 		mode &= ~FSL_DMA_MR_SAHTS_MASK;
--		mode |= FSL_DMA_MR_SAHE | (__ilog2(size) << 14);
-+		mode |= FSL_DMA_MR_SAHE | (ilog2(size) << 14);
- 		break;
- 	}
- 
-@@ -299,7 +301,7 @@ static void fsl_chan_set_dst_loop_size(struct fsldma_chan *chan, int size)
- 	case 4:
- 	case 8:
- 		mode &= ~FSL_DMA_MR_DAHTS_MASK;
--		mode |= FSL_DMA_MR_DAHE | (__ilog2(size) << 16);
-+		mode |= FSL_DMA_MR_DAHE | (ilog2(size) << 16);
- 		break;
- 	}
- 
-@@ -326,7 +328,7 @@ static void fsl_chan_set_request_count(struct fsldma_chan *chan, int size)
- 
- 	mode = get_mr(chan);
- 	mode &= ~FSL_DMA_MR_BWC_MASK;
--	mode |= (__ilog2(size) << 24) & FSL_DMA_MR_BWC_MASK;
-+	mode |= (ilog2(size) << 24) & FSL_DMA_MR_BWC_MASK;
- 
- 	set_mr(chan, mode);
- }
-@@ -1007,8 +1009,7 @@ static irqreturn_t fsldma_ctrl_irq(int irq, void *data)
- 	u32 gsr, mask;
- 	int i;
- 
--	gsr = (fdev->feature & FSL_DMA_BIG_ENDIAN) ? in_be32(fdev->regs)
--						   : in_le32(fdev->regs);
-+	gsr = FSL_DMA_IN(fdev, fdev->regs, 32);
- 	mask = 0xff000000;
- 	dev_dbg(fdev->dev, "IRQ: gsr 0x%.8x\n", gsr);
- 
-diff --git a/drivers/dma/fsldma.h b/drivers/dma/fsldma.h
-index d7b7a3138b85..01f93123b233 100644
---- a/drivers/dma/fsldma.h
-+++ b/drivers/dma/fsldma.h
-@@ -232,17 +232,46 @@ static void fsl_iowrite64be(u64 val, u64 __iomem *addr)
- 	out_be32((u32 __iomem *)addr + 1, (u32)val);
- }
- #endif
--#endif
--
--#if defined(CONFIG_ARM64) || defined(CONFIG_ARM)
-+#else
- #define fsl_ioread32(p)		ioread32(p)
- #define fsl_ioread32be(p)	ioread32be(p)
- #define fsl_iowrite32(v, p)	iowrite32(v, p)
- #define fsl_iowrite32be(v, p)	iowrite32be(v, p)
-+
-+#ifdef CONFIG_64BIT
- #define fsl_ioread64(p)		ioread64(p)
- #define fsl_ioread64be(p)	ioread64be(p)
- #define fsl_iowrite64(v, p)	iowrite64(v, p)
- #define fsl_iowrite64be(v, p)	iowrite64be(v, p)
-+#else
-+static inline u64 fsl_ioread64(const u64 __iomem *addr)
-+{
-+	u32 val_lo = ioread32((u32 __iomem *)addr);
-+	u32 val_hi = ioread32((u32 __iomem *)addr + 1);
-+
-+	return ((u64)val_hi << 32) + val_lo;
-+}
-+
-+static inline void fsl_iowrite64(u64 val, u64 __iomem *addr)
-+{
-+	iowrite32(val >> 32, (u32 __iomem *)addr + 1);
-+	iowrite32((u32)val, (u32 __iomem *)addr);
-+}
-+
-+static inline u64 fsl_ioread64be(const u64 __iomem *addr)
-+{
-+	u32 val_hi = ioread32be((u32 __iomem *)addr);
-+	u32 val_lo = ioread32be((u32 __iomem *)addr + 1);
-+
-+	return ((u64)val_hi << 32) + val_lo;
-+}
-+
-+static inline void fsl_iowrite64be(u64 val, u64 __iomem *addr)
-+{
-+	iowrite32be(val >> 32, (u32 __iomem *)addr);
-+	iowrite32be((u32)val, (u32 __iomem *)addr + 1);
-+}
-+#endif
- #endif
- 
- #define FSL_DMA_IN(fsl_dma, addr, width)			\
--- 
-2.54.0
+dmaengine: fsldma: fix request_irqs unwind freeing unregistered IRQ
 
+This commit fixes the unwind loop in fsldma_request_irqs() to skip the
+failed channel by decrementing the index before the loop. This prevents
+freeing an unregistered IRQ when request_irq() fails.
+
+> diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
+> --- a/drivers/dma/fsldma.c
+> +++ b/drivers/dma/fsldma.c
+> @@ -1085,7 +1085,7 @@ static int fsldma_request_irqs(struct fsldma_device=
+ *fdev)
+>  	return 0;
+> =20
+>  out_unwind:
+> -	for (/* none */; i >=3D 0; i--) {
+> +	for (i--; i >=3D 0; i--) {
+
+[Severity: High]
+This is a pre-existing issue, but does the cleanup process fail to kill
+the tasklet before freeing the channel?
+
+If fsldma_request_irqs() fails and triggers this unwind, the error path
+eventually leads to fsldma_of_probe() calling fsl_dma_chan_remove() for
+the previously initialized channels.
+
+fsl_dma_chan_remove() unmaps registers and frees the channel memory via
+kfree(chan), but it omits tasklet_kill(&chan->tasklet):
+
+drivers/dma/fsldma.c:fsl_dma_chan_remove() {
+...
+	irq_dispose_mapping(chan->irq);
+	list_del(&chan->common.device_node);
+	iounmap(chan->regs);
+	kfree(chan);
+}
+
+Since interrupts are shared via IRQF_SHARED, the interrupt handler could
+schedule the tasklet at any point after request_irq() is called. If the
+tasklet is scheduled just before free_irq() executes during this unwind
+path, could it remain pending and run after kfree(chan), resulting in a
+use-after-free?
+
+>  		chan =3D fdev->chan[i];
+>  		if (!chan)
+>  			continue;
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260609221926.3553=
+8-8-rosenp@gmail.com?part=3D1
