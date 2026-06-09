@@ -1,63 +1,63 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55314403B1E
-	for <dmaengine@vger.kernel.org>; Tue,  9 Jun 2026 22:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FED54D2EF1
+	for <dmaengine@vger.kernel.org>; Tue,  9 Jun 2026 22:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781043612; cv=none; b=kqdTSMBmuoyhNadeoQjs5FMMlBLrIepvvd3Q6djc+JsMk7RzJiQlCW48ObncfA+wVB2yv9IWjPGfjNSenE5r90OGIT3zo09xUpRwZTlKsQXW7QKD0TMeDt5SXdymzzkwabYofl9RBHygyn+LdCWqFZfHuGBUPeovC4tndQCTy64=
+	t=1781043616; cv=none; b=nWzkBMR2jSrmNNZ0+Pg+rjpZ7ixGYTni+f1TSYLhK3y08S5T3ozCn1quV6ITg8o7Be2uIO1SpSCiOhxDYavCt1mocCOR3e00h7iQ0sZZuvpUsHvppHE8tEF9LfkZkCt57aP9xG/GQXkChetHT5+RfADgmyPg7HG6XTOBizVWGbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781043612; c=relaxed/simple;
-	bh=xaWrr2fdsZgTd0OCkKwIZ+Wux7+r+wiMWqymMs4IDvM=;
+	s=arc-20240116; t=1781043616; c=relaxed/simple;
+	bh=9Yea6xTnMAtPCPNuS9VV3xysMhmXAvdi4sueisMN3io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWCbEjw8DIXWWpOs9TgmNcnE8JLB7sUV6TxoSYLVbqm2SKvYxizQ/bFtqS4I5+xRgYB1oFQKYWe8mryfeJ1rKPfm5EshY77XdfXp6BIn0UwOqb0ijFQYQot53xrnCWxQFnPspA9UoR6gJiydfi+9ODMlmESrcjv220Iyys+T1Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hlo/BG+J; arc=none smtp.client-ip=209.85.215.173
+	 MIME-Version; b=HAqasddKHdcPLkrTC6zQYNUB9GpvWWYmOhqOuFA2pFiqfpWNQLLVo++6AYLUUSQbt5HHE0GPql+gQZZXvtmoH7Ri/jOyrp1rKYHAKErRhTIzaqJkSYu7bBa+mqlMcakTv/UG4jVC+UJbfqpnIB/15T9nv/36okho084+exL3Bik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VWauepGf; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlo/BG+J"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c85a297d2d2so3589760a12.0
-        for <dmaengine@vger.kernel.org>; Tue, 09 Jun 2026 15:20:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VWauepGf"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-36da8439078so5404453a91.2
+        for <dmaengine@vger.kernel.org>; Tue, 09 Jun 2026 15:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781043611; x=1781648411; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781043614; x=1781648414; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SpnKWjXftKVnMmEr+XvL/qwRK2/ShAzH1rSpA9h79n8=;
-        b=hlo/BG+JMq7fGfXHACGe3SpAYnEyQcWi+gqfK+nNp5DgFP3H7yM46rWoI4HFieo9qi
-         xzOOMCEk1RK028Ct1lsfw2XDo6q9dg7KeFBdCgOSz8yu3tzlkoh2ps3gCC8KetDX1KDy
-         Ynce2cmEmWJnm9HkAD4FEUPsBXO8Yk++3mZ4fRvbNZ1GTyJ9OVVREkkwntoaQAID/dMo
-         KjhL4Ub9JU4f1HXmb7z8do6vGBfYKDh5nL5aPU19aSZXTLpqWVALlCvIDE/ZjliTDjxn
-         R5KNqtHFQiPz3VLE3bMKGvl0kHU4E4NhR4AgBnEkSckQw9LYa8MnNWTyK3aOADMzYw+U
-         yu/Q==
+        bh=7abx5gUeKQ1VRxaWBSzbzTorD8zfPoqeElZR6g6xg44=;
+        b=VWauepGfrsCMINXFx+icD3YiflHTFMgH8mD3+Nvr6QR41UOr0CFC1tsDgO5uugKnS/
+         6zOx3NEBW2m303t8b4F51gY5xAOPlE5EkX0k3tRTE2QL1P5FtIpVye01bdEBkkuV/Mym
+         kJBzsPc8inemI0RLGDP3NLw7blUURy5t1B2AXhrOBrWaZrwMg0IusQPWUBM4o5hFWIWd
+         RQv6bGYvWP7sW6q34IBNLrPxmZvvKn0kf5ukGdZm9d96kSErADNzFvNtcu55fdvHrCSG
+         g4asjeaFyrOyZ21juY0R6EgZxgG+5qfo90ewfRPr6cq31bRJ4fuMq8/emNobZ6Sn5m8q
+         q75Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781043611; x=1781648411;
+        d=1e100.net; s=20251104; t=1781043614; x=1781648414;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=SpnKWjXftKVnMmEr+XvL/qwRK2/ShAzH1rSpA9h79n8=;
-        b=YMoAgF2bRq7+Y0QUNBLzXVOk6EnaZ+jtXAlvyOEyJOk/RpDjEGyAdCBSqSSBQQAAvr
-         R1NsJdnW967qwM8yUNHJCrnkfi0Shuxd1HPr6GXNvJMFzP8KgtZqkmsopmltMZ7oBZjJ
-         OCJgvlLFbigsrMoPQrz8xOGac9S79owt9nS3kSLQYu6ZqOV7Mq3Zu8wIbjY68f4Mz2Zj
-         H9ho//5dZuCPOqPNI/H5/PcVE+4ZmEpX8cNak+x9OMbmEq9VKMqRrwbbzG2PG1pJGxrk
-         O2uHyHOmS4RRLboKf0cTWGTB6z1VSdrubcEifGkWDPlm7e0GHrbE414aiUhKUqg8uhU/
-         kTlg==
-X-Gm-Message-State: AOJu0YzKh3tEca/IX93vWZepPfEw/9cUD3klNxWtZMXa7eUXt6RKnOTK
-	dYNuPidgJkOBLtZhYKHhby72yvPFr18nby0o+WSoN50UkyJKFKpCTgujrzst9cmj
-X-Gm-Gg: Acq92OFZGEqQpyRYFWgGjwgXVo0iF68a+OjBeBtke2rZy+XeJexDwSDVVKoV1/qQXg5
-	DcGW8bEP2z5AbiHOR6ggUhJQVofJgKhhcnpI6HdpDqmwQ0AxcC0AMojzurs9QxfP2VgwtSQePdg
-	CSk3PBjrl54DLqfFcrUTvCdNjGcBupDGz5KwvKrcMlOlDhzhfMIUS6Omaw6dUQNU6k1iX71OcWo
-	+n5oGYYENwbeSIehIw+1uN8ELvXPDzEt6YJ/HjaviR3AHedyWxWWortD+VfZ/HDAAM4gfIzsY8z
-	F2xWMkcEaVMq5prTqzy2+I/yYxaXpVZcakRtrjG4/kpkVsu6tMv4jhNoGYanUJAoOXUCx1jdtNY
-	SJLf7KbvPkoSYWtUh7cX7f6Z54lVrBa3c1POU5NeO+TidZEpp5/83d+QfIMfW6VRFsXKwYn+cdI
-	7YbS2VXE2YXbgK2nhCBhFk4CyXvzi6PHCH295ddLfa3AalqLDjKWkkM+Z9hoOWQ0HtcxxYzhB8T
-	IG5SjhDO2pybG3J4OnV0FtJ8KX51a5jVgbUeIYUgUTnsg==
-X-Received: by 2002:a05:6a21:62c8:b0:3b4:93b9:2b91 with SMTP id adf61e73a8af0-3b4ccd45993mr24628603637.12.1781043610661;
-        Tue, 09 Jun 2026 15:20:10 -0700 (PDT)
+        bh=7abx5gUeKQ1VRxaWBSzbzTorD8zfPoqeElZR6g6xg44=;
+        b=Kt0mgCvKQCiwXNkvdtLEhnA/L79Z1TtQZiF5OuwoN+Rigp6zz9DsNydUndvwBjJsmy
+         8GGh4FhrPrRh7AJLjuX9BGMHGL5Jmedxje+OWLQABkB7l2U+K28c+Jnh/yms0Dxnne+0
+         5VudFuHaBby5cvr36xC22SHXsTa/eAmPN4YP+zqQuXV3iQDrqfnGvSgwTOlsimRlPpEK
+         Cubk0qGsrlc4p22bfNU9SMDSUmmUl85Svf6Q+SqAiodqyxrfnVDBehVCcS6ZAdnU2W5f
+         YvL5+0exzHMjl36ueUEGLgPibZ0nz7AUTksd7Q251SGVWTWsiDzB45Ou8ttetnkovnzR
+         b4Nw==
+X-Gm-Message-State: AOJu0YxFsS5roTl2Aq6u8xGOf5cIUo5scuRTx7y/N2IhLppUuzw1MLAh
+	/culAd0GB22RZy+wNtKEgcXC9vidbtfdtWbkfKBFalRwIbQpOnxjPRUdTmG3wnph
+X-Gm-Gg: Acq92OH7uujXZac4MQFS98XTsObpJT6IXv1IGhJRLgcONttgiIy8er/F2/qfPS9y+hA
+	8Cv0xZNNsEmHsY6kFM39ets4A3LYXNaHhe/Oeey0VBTgTJS22m6dYmiIup/gsOCCdr4JQRRLM2p
+	4NLft/G773nImrspRvZnL2YOPkIglN8EEfKWwEmtr527nTFjkX1+FVevKHiaAbqlzfPlA3qMHot
+	gnfHm9OBIgThePQtbZREorkIidFIzaVjNtgcoinZTvp1s0ncTEQFx7yW2AZRud4C6G0th5KKpj7
+	h43aBwhH93pvlkFDbcz2NMKE+XESkPlF0uR6Jd4vkncv8LW1GPLLqBx0vSFAZUeU/ScdYBEcS06
+	D83lF1wClC4tolT/mEPpvxhfFNPHu5yqR19B/TK1UyLafTBXFxzgrOvGXVTQJtf9uUsYzSJgEJ8
+	zP+5btsd7f+xBrhp7gsmtIPfTVlADA8meVpQGRpdXv6zrdztJ36/IQEYfGF2vL5+6MIBy59MGys
+	b1Pe3VS0RtUmMqjyl0o3pWATEbx9mXh9y6TTIVXbgpJKHg3dWX6bTEV
+X-Received: by 2002:a17:90b:5204:b0:36d:df4f:ab2 with SMTP id 98e67ed59e1d1-370f0772dd1mr26545593a91.13.1781043614688;
+        Tue, 09 Jun 2026 15:20:14 -0700 (PDT)
 Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df04ff24sm19661834a12.14.2026.06.09.15.20.09
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df04ff24sm19661834a12.14.2026.06.09.15.20.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 15:20:10 -0700 (PDT)
+        Tue, 09 Jun 2026 15:20:14 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -70,9 +70,9 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-kernel@vger.kernel.org (open list),
 	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
 	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCHv3 13/15] dmaengine: fsldma: replace irq_of_parse_and_map with of_irq_get
-Date: Tue,  9 Jun 2026 15:19:24 -0700
-Message-ID: <20260609221926.35538-14-rosenp@gmail.com>
+Subject: [PATCHv3 15/15] dmaengine: fsldma: fix kernel-doc param names to match function signatures
+Date: Tue,  9 Jun 2026 15:19:26 -0700
+Message-ID: <20260609221926.35538-16-rosenp@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260609221926.35538-1-rosenp@gmail.com>
 References: <20260609221926.35538-1-rosenp@gmail.com>
@@ -84,58 +84,62 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use of_irq_get() which returns a negative error code on failure
-instead of silently returning 0. Split the IRQ validation check
-in fsldma_request_irqs to handle three cases:
+Fix kernel-doc warnings where the documented parameter names
+(@chan) no longer match the actual function signatures (@dchan),
+and add the missing @cookie and @txstate parameters to
+fsl_tx_status.
 
-  - chan->irq < 0: propagate the error (e.g. -EPROBE_DEFER)
-  - chan->irq == 0: IRQ not found, return -ENODEV
-  - chan->irq > 0: valid IRQ, proceed
-
-The fsldma_free_irqs() function's !chan->irq check is unchanged
-since both 0 and negative values mean no IRQ to free.
+These are pre-existing mismatches that predate the recent
+devm conversion series.
 
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/fsldma.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/dma/fsldma.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-index a3792864f02a..7d0c80121aa4 100644
+index d4c9b81ade0d..c0dbcd09999e 100644
 --- a/drivers/dma/fsldma.c
 +++ b/drivers/dma/fsldma.c
-@@ -1070,6 +1070,12 @@ static int fsldma_request_irqs(struct fsldma_device *fdev)
- 		if (!chan)
- 			continue;
+@@ -685,7 +685,7 @@ static void fsldma_cleanup_descriptors(struct fsldma_chan *chan)
  
-+		if (chan->irq < 0) {
-+			if (chan->irq != -EPROBE_DEFER)
-+				chan_err(chan, "interrupts property missing in device tree\n");
-+			ret = chan->irq;
-+			goto out_unwind;
-+		}
- 		if (!chan->irq) {
- 			chan_err(chan, "interrupts property missing in device tree\n");
- 			ret = -ENODEV;
-@@ -1093,7 +1099,7 @@ static int fsldma_request_irqs(struct fsldma_device *fdev)
- 		if (!chan)
- 			continue;
+ /**
+  * fsl_dma_alloc_chan_resources - Allocate resources for DMA channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  *
+  * This function will create a dma pool for descriptor allocation.
+  *
+@@ -742,7 +742,7 @@ static void fsldma_free_desc_list_reverse(struct fsldma_chan *chan,
  
--		if (!chan->irq)
-+		if (chan->irq <= 0)
- 			continue;
+ /**
+  * fsl_dma_free_chan_resources - Free all resources of the channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_free_chan_resources(struct dma_chan *dchan)
+ {
+@@ -878,7 +878,7 @@ static int fsl_dma_device_config(struct dma_chan *dchan,
  
- 		free_irq(chan->irq, chan);
-@@ -1181,7 +1187,7 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
- 	dma_cookie_init(&chan->common);
+ /**
+  * fsl_dma_memcpy_issue_pending - Issue the DMA start command
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
+ {
+@@ -891,7 +891,9 @@ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
  
- 	/* find the IRQ line, if it exists in the device tree */
--	chan->irq = irq_of_parse_and_map(node, 0);
-+	chan->irq = of_irq_get(node, 0);
- 
- 	/* Add the channel to DMA device channel list */
- 	list_add_tail(&chan->common.device_node, &fdev->common.channels);
+ /**
+  * fsl_tx_status - Determine the DMA status
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
++ * @cookie : DMA transaction identifier
++ * @txstate : DMA transaction state
+  */
+ static enum dma_status fsl_tx_status(struct dma_chan *dchan,
+ 					dma_cookie_t cookie,
 -- 
 2.54.0
 
