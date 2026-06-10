@@ -1,161 +1,99 @@
-Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CDF3E6DCE;
-	Wed, 10 Jun 2026 10:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642713E834B;
+	Wed, 10 Jun 2026 10:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781085799; cv=none; b=lj/BVpYmnqs2+nM+5lB+DcpQYSo0nvrnUwENojNnzQ13YnQMYJDHPvM5/cX9lCMw4adn4m/Fdvr5xyjc0ittvZvY1npp+LtYY6hPMoXPbV7VefIaQ3SUvDRmgVwjp1u9ZrQ176s86gLevHz/z7Ouy87ZRlzrBd9h2QuCuyj0naQ=
+	t=1781086313; cv=none; b=Y9NufuykGK3CynW+yC8S3Pg6iSSklqCbx8RnK4gAhvG14z7nbblcP+l4BhtHIH52e0Jrr++WVx0JMpD4+wbk65ox9Ki3I8QpEcexRIbUa+9vojDlH3BQdL+cYzf7khINKRZ6rDQsj7ZEvWzbfaMiyiRJvaLFCFsN0kQo/P2Ibi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781085799; c=relaxed/simple;
-	bh=x1ntVEPXBZggV4PzToUxUW8i0TVdfMRXZZsNxGs65sM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tZ77Dw6GJwquEqpYEjQ5Lk8hKJLcQQV/QF/OuJAN/IDgOif4bC7haIpzRInRwFpj/5QyW/LcX7zlqZREipuI94Gfx5LMIX2BMdJU8ARC//W60wc9J3OvoaK1cT/G3ZZ0Av87qiJ7WaNXL2/Ta38sOJIAeC6a1hESpMPpAn0HRi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
-Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
-	by Atcsqr.andestech.com with ESMTP id 65A9vxRs075640;
-	Wed, 10 Jun 2026 17:57:59 +0800 (+08)
-	(envelope-from cl634@andestech.com)
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
-	by Atcsqr.andestech.com with ESMTPS id 65A9vaER075387
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-	Wed, 10 Jun 2026 17:57:36 +0800 (+08)
-	(envelope-from cl634@andestech.com)
-Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 10 Jun
- 2026 17:57:36 +0800
-From: CL Wang <cl634@andestech.com>
-To: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <dmaengine@vger.kernel.org>
-CC: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <tim609@andestech.com>, <cl634@andestech.com>,
-        Conor Dooley
-	<conor.dooley@microchip.com>
-Subject: [PATCH v5 1/3] dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
-Date: Wed, 10 Jun 2026 17:57:22 +0800
-Message-ID: <20260610095724.1980622-2-cl634@andestech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260610095724.1980622-1-cl634@andestech.com>
-References: <20260610095724.1980622-1-cl634@andestech.com>
+	s=arc-20240116; t=1781086313; c=relaxed/simple;
+	bh=TGppL9hDgW5mi5BZI2txZVKn4B8Bduk6VVtIfcRfxcU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=WsPG+8R9kLW05mK98qCdZ9VfO1T5r5chJyHocPW7I08G0QJcqpVwmIktFGdvurissZPveO+2eGKm9WNzs+4xjPJ3QUCizzmhDUK6Pf2iUKGMg9tFRhRZWhV1mb4SCRDoYT9AA238mMyMjIYBwhQXYqTPPDgn1ja8OAKMmMb0nhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mThRrkQu; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mThRrkQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1611F00893;
+	Wed, 10 Jun 2026 10:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781086312;
+	bh=w2L/TnCaqDd4KnTRIQ+TaHnC3QgS/VxXV74wjJWXoG4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=mThRrkQusiGr8imwkIt5HOS7tZlAK8UwMj6FPIg9iAPFP3GvN1zrRtUbLN/07uPKo
+	 KFScJG5xbtLlguGnyc7HGTvMXwNRu54MlEe8cCOVkV6BeaOP+Hu49Dhlku0k1hbE/t
+	 X8IxNyArUuf6I8IE8OmVUlI3pYh142nnxX7dfSCBFGxSaeclD7bwt3M2ZSLjSJK2yf
+	 wE/noCbSn109cGucbeMzbCuWObtn2bjiHHWfWqo3O6HDhCx/jAwBsLqnQhya5m1Oeh
+	 m6kUSl6w1JsIAVMH56Rva12S08hcJwd2e3omZrFSKxyThxaLU0+7MJRJVlF6sn9mgO
+	 XcLE+IHndrALg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 1/3] dt-bindings: dmaengine: Add support for
+ ATCDMAC300 DMA engine
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "CL Wang" <cl634@andestech.com>
+Cc: Frank.Li@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260610095724.1980622-2-cl634@andestech.com>
+References: <20260610095724.1980622-2-cl634@andestech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 10 Jun 2026 10:11:50 +0000
+Message-Id: <20260610101151.AA1611F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:Atcsqr.andestech.com 65A9vxRs075640
 
-Document devicetree bindings for Andes ATCDMAC300 DMA engine
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] The schema uses `additionalProperties: false` instead of `unevaluat=
+edProperties: false` while referencing a common subsystem schema.
+--
 
-ATCDMAC300 is the IP name, which is embedded in AndesCore-based
-platforms or SoCs such as AE350 and Qilai.
+commit 0c4fc28dab967baedae4dfdcb32dfa0eb77d45a5
+Author: CL Wang <cl634@andestech.com>
 
-Signed-off-by: CL Wang <cl634@andestech.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
 
----
-  Changes for v5:
-    - No changes from v4
+This commit documents devicetree bindings for the Andes ATCDMAC300 DMA
+engine, which is embedded in AndesCore-based platforms such as AE350 and
+Qilai.
 
-  Changes for v4:
-    - Use items list format with descriptions for reg property
-      as suggested by Conor Dooley
+> diff --git a/Documentation/devicetree/bindings/dma/andestech,ae350-dma.ya=
+ml b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
+> new file mode 100644
+> index 0000000000000..f040a2bf7d4b9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
 
-  Changes for v3:
-    - Rename DT binding file from andestech,qilai-dma.yaml to
-      andestech,ae350-dma.yaml.
-    - Deprecate IP-core-based compatible usage and align with
-      SoC/platform-based strings.
-    - Dropped Acked-by tag from Conor Dooley due to the above change.
----
- .../bindings/dma/andestech,ae350-dma.yaml     | 67 +++++++++++++++++++
- 1 file changed, 67 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
+[ ... ]
 
-diff --git a/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
-new file mode 100644
-index 000000000000..f040a2bf7d4b
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
-@@ -0,0 +1,67 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/andestech,ae350-dma.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Andes ATCDMAC300 DMA Controller
-+
-+maintainers:
-+  - CL Wang <cl634@andestech.com>
-+
-+allOf:
-+  - $ref: dma-controller.yaml#
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - items:
-+          - enum:
-+              - andestech,qilai-dma
-+          - const: andestech,ae350-dma
-+      - const: andestech,ae350-dma
-+
-+  reg:
-+    minItems: 1
-+    items:
-+      - description: DMA controller register range
-+      - description: cache control in IOCP controller
-+
-+  reg-names:
-+    minItems: 1
-+    items:
-+      - const: dma
-+      - const: iocp
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  "#dma-cells":
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - "#dma-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    soc {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        dma-controller@f0c00000 {
-+            compatible = "andestech,ae350-dma";
-+            reg = <0x0 0xf0c00000 0x0 0x1000>,
-+                  <0x0 0xe8000000 0x0 0x10>;
-+            reg-names = "dma", "iocp";
-+            interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
-+            #dma-cells = <1>;
-+        };
-+    };
-+...
--- 
-2.34.1
+> +allOf:
+> +  - $ref: dma-controller.yaml#
 
+[ ... ]
+
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - "#dma-cells"
+> +
+> +additionalProperties: false
+
+[Severity: Low]
+Does using additionalProperties: false here prevent the use of common DMA
+properties defined in dma-controller.yaml (like dma-channels or
+dma-requests)?=20
+
+Since this binding includes another schema under allOf, should it use
+unevaluatedProperties: false instead, so that dt-validate correctly
+evaluates and permits those inherited properties?
+
+> +
+> +examples:
+> +  - |
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610095724.1980=
+622-1-cl634@andestech.com?part=3D1
