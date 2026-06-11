@@ -1,63 +1,63 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231B633D6F7
-	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 03:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780D233ADB5
+	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 03:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781150007; cv=none; b=h48TRK6MbW5ijnoI/NGqt6ttQ7NWMxwQL8DuNFpnQ2ct5Inap+q9BjLHaPycDTsWw6yGdlXadXzw+mxNmGoHf8EjjnOVdJ70jr88W3vQOoCSFKEDimsN8wPtSyf/G0SeSC/GHflHm5vgaolvtAIP59Ht1nY37MM13S5x7z2FiyI=
+	t=1781150009; cv=none; b=KVo3V/MM2qMWNtjFJ81XCKXZrrKIytCCS5PkH3sqVTeM5B/LnEUC2QwfyGP3ArGONUgBINmkR46qLZXADQJqTUYc5pTJUZaNIIAhiq9nhCECbkAx0iKgP1kvb6/R34WegjPyF4KPiB/iQ4oSCEyZVIgrbNpgZudKUcbWLfQ4WU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781150007; c=relaxed/simple;
-	bh=jfLTQBXqXxvw70iEv1i6xCExnx46J4bUPF8pUSY2PwM=;
+	s=arc-20240116; t=1781150009; c=relaxed/simple;
+	bh=Yy/+xRHJiX/hDJ5xQsjisJqg3r4yly3VHd3NS0SNXAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPwXlFKcZ1aqwyd0SBWa3EnNSuz1CE9JZHOxUADbDovn9lkMavf/0wBlHkG9P0qMRjgu2MUhwnnD598y5nWUj1SrNTH45AjSY1kY846+GAQ5ceqcoR9JiT24cyi6PwPhnqJmcKlVK37O2Sv2HGvDUoBqRj1P378QdfosYruiOjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rz2YvnFy; arc=none smtp.client-ip=209.85.216.42
+	 MIME-Version; b=bhTDVILh955sXpox0fB9RlR/6EFAAAi/z+MqIhZCGryZicfaMsN3LEelXLMWqRtThABhR6Kt5YwXmuoz/c9RnR4dpL+6R88IMsf+grLfLVobZQG2s/MTTvXHmmeqq38NyL0he6oC5xAydirZE371y8LDm5XzVwKWRA4m0pTts48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iTc9+OyB; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rz2YvnFy"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-36d630c0e35so7976837a91.3
-        for <dmaengine@vger.kernel.org>; Wed, 10 Jun 2026 20:53:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iTc9+OyB"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-36bdb11bf8bso4426765a91.0
+        for <dmaengine@vger.kernel.org>; Wed, 10 Jun 2026 20:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781150001; x=1781754801; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781150006; x=1781754806; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fUIaRwpiq+bPDJ7oRrThyVs0svDhFW8QwchzUggrjyo=;
-        b=Rz2YvnFy06E+Q1/VnUqZAWoVAAKNvOGuZlGMa8ozVBF3x1DRxn3v4/QLONMIZUOf3E
-         gNUcLY50oanwKVEFV2n8ihD2NbN+pRm9ZR23qaspc5NlQ3fDlUwTTTrW1W3VhDcGPIYf
-         PNMRayo61NWa8zv0+sZ+lzsBfxH4996jOGIehnkEqzztHBYZLAdXH5MumfPPhRFpptGH
-         wVJkdQAlQayM44erqJM/R/qFMnov9IU24et5/E0UYvFs+tNhyaHMp353Nm/MKeqXAa9t
-         LKiBDzwmHfDNePYMbduGOKRrvVQCiXuJa/4wmD6s4UWJFZYxFlZgXdgsnXfXeViQDsu7
-         Jb4A==
+        bh=9N+wW4hckA7+pUN5DQbu3VTnKoKBAMqPRZDxheSBFcw=;
+        b=iTc9+OyB0Ta1O9T3y2riFYWqWEQPrAaZSZo2mHggfUU5NWaURzi/glz+Bo68MB96Av
+         1gChjETzOMjxyDVJV+XaVkJJM41qo0pmOfg6D869ZIs2qb1MoivXfEylxbo9nxyIsm1X
+         LrwNqXyiQru12IPic7eXppJF7UV+Q5TvuEAYN8U5GwiushSZPctxBfjflxIKWlP94KAT
+         pj2gknfJ7P+AB49H2udexJen3o658Jxp+X/aMQKjhoskGD5UtcgettEX3Tm+rVYMP7HM
+         K+jGP3glH8VysvLmFzj5G/5xv7LdWleNjI5A1Dp1VX9ZE2MrWdR1qM0ni9K6Pm9gEujh
+         XrCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781150001; x=1781754801;
+        d=1e100.net; s=20251104; t=1781150006; x=1781754806;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fUIaRwpiq+bPDJ7oRrThyVs0svDhFW8QwchzUggrjyo=;
-        b=gH25QxcNebbyWQb6zhCsUANfGp3e50eH6z6m+MW5jMiH7gfPAn+2QLChBdx2ob9wzc
-         hj7tZ7Jqr5qzMAV+YC5WNkNlJqePoUBVVOY03vYlNn7c0shFQbJ98iV3RKvzGZecSo3d
-         +5fl8L4ULt1DLrgWIPLj3+7No1jG0QXzKTVSZ+qQ4CImt9gbcgnQ+3BPM6nPdJA0Tklg
-         ml2aoyXPd4ABPpgOiG2veERgm2glmymUpIp4vsRtcnJczQ4Cn71AkvcdDy4qpvu+w8dG
-         mjeXRl8/XM/Fbf0F2L9WV7yduNKC5mR1Lni1Li3W3nSHQuC7jZk60LXmUUAjgWPisxfL
-         sI3g==
-X-Gm-Message-State: AOJu0YzfJdmOoF6ouGezh7HAuzcHoTC3o89KOw5jSlDR342V2e+WnJsz
-	geD6FJdJjxBrKx9OMrT/Sh/Yc8ZOSz/B99ZEErMUzXHr29qmavkDhE+8CwGWPQ==
-X-Gm-Gg: Acq92OH+1dlfkzqD/4eQbscN36WW3W7sjuupe/uFo/FnQB4Ov2/c17R794f3GrV7SIB
-	gVpp5fyBNGp0hCys/mdvhFxVQ5AvJ8/20Bmi0xamL3WkcldWw1jrdOiZGDBWeFSbtUzyCma7SAN
-	UVuvnWA4bv9P+XMfMtJb0/FDYcWN3QIZV3eBqEAQqTrTz3bLBj9rRD+JX5Z1URmMkb/iiXOmCLt
-	Lf1KvBZ12aytrrAo2Xp3g7fe9D5G86lEyWgWv5QGvTo5HWO4xdn/Ncnv0TEWqfXfYOM0CuQ5+HU
-	dCzYDIUASuTrNcWvG4KzrlLIS60cRBlZ5RX/ywJ6uvnP4W4Rez245R3g8LPlci7bgrwnLsbwFDy
-	upwnPG08fb14vGaznciVHDeDx8wnkFkFACfA9FNZSqrhRWucucXf6UVxyMBxM2iv/3ep+zTXBVQ
-	liqBUzvsfr/WpiVMnc1YY5kYecWYAcwWQSFzxlDzbpBzePJOqeL2qQRTxJQ6dN4ucAKjRVlEoMv
-	65tJ34IrShT52t4sc8+jaZEyZxzLmh/1YCrJP8pcVfhWQ==
-X-Received: by 2002:a17:90b:48cd:b0:36b:b3f4:d578 with SMTP id 98e67ed59e1d1-377a73e273dmr1261621a91.15.1781150001523;
-        Wed, 10 Jun 2026 20:53:21 -0700 (PDT)
+        bh=9N+wW4hckA7+pUN5DQbu3VTnKoKBAMqPRZDxheSBFcw=;
+        b=ObivXsT1PXNGEDgZMIR6FWXSMJUThytdd/jjjFeWb26M4m2l7b2Qkiw72C1b6PDc6V
+         NK7Sh4DUlz8r6cURdViNtEOlWm+Wa14j1tzOx5kzRVzSAUhtZ2zcXRNNxpMz3iy3LeMN
+         F3H+WVM0Aqf27oKtK/93JFRglkJ/bvd2M7fb5w/t1iwONFi8YZN+oUnyRTcpPQJqIm0W
+         /41g0qeugVDVgr4C+21jk1WydY7M3ri7FZJB1Bw3Ct1ZnhfhfhBElgNE2C/6DZZJ9GHL
+         t22cjcisnRQmH9knH4nyNLvDxHWqz5Z6Urhfc/bQYkB2eQnABUdoB1s5vlozzKh4zSUu
+         k73Q==
+X-Gm-Message-State: AOJu0YyuaVCZqH3b3BDK9h5Ub29aPofVyb7DhB9+HwbVPuYFeA3E0ZiA
+	4L3ZyxkojWXcGR6JAxA7cczXt27TfKLy/g6GhgmZ0eDNmVHaqCQAKcwCzcO4fw==
+X-Gm-Gg: Acq92OGxjKAxz6eIT6Am6jtvaQoeVzhm809Qsu3dqyTBeHxFhG97KKZI9e6TIjq4sNI
+	cutRtB7NWLOcBYZ50rh/R1MyjhYQoNu4939uKRDfphXMFfvyJxakKp1ZobET1TH1dwVgTkrCch0
+	Nl7z24iht6cX5DkKLvLX23gS2I2wJ4RbDjUGBCINYrFJKjSqrsXkIgCTDZfLlCa0Ev6zpxYZDQX
+	JXRl28qbk+Iuyt7aLjtHDNG5MYH/Bq2CQFQi94HUTqp020j/20LyowoiE2kiNf/ph9dD2qw7IY/
+	TemCyhnsWZhrCshl2xedRJRio6lisQzdjzI8F3V3v5YcjKkvBb88rGfig8aoBmRm8l0IH3WpN/n
+	VM5dXTTEtXLBzRzgnMsgocoEA5G54p1CgtAJzpBCkc5NK0OW1tQmtk+doBugZeZfEmsw8hhE8U5
+	2gF99DMJgN98Zt/r/rOyOGDjA5dWJir+vxAQYF890bBmUIyULRnV7dAiyQBWy8tL9OEJztx9JoS
+	85XmYZx2wRQg39MIILrVsM9sLpYFKxhxO3KoAanYMcr2A==
+X-Received: by 2002:a17:90b:1a84:b0:369:f48a:f24b with SMTP id 98e67ed59e1d1-3778ebecbeemr1357925a91.0.1781150005805;
+        Wed, 10 Jun 2026 20:53:25 -0700 (PDT)
 Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-377522a188asm910131a91.3.2026.06.10.20.53.19
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-377522a188asm910131a91.3.2026.06.10.20.53.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 20:53:20 -0700 (PDT)
+        Wed, 10 Jun 2026 20:53:25 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -70,9 +70,9 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-kernel@vger.kernel.org (open list),
 	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
 	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCHv4 12/15] dmaengine: fsldma: use devm_of_iomap() to simplify code
-Date: Wed, 10 Jun 2026 20:52:42 -0700
-Message-ID: <20260611035245.13439-13-rosenp@gmail.com>
+Subject: [PATCHv4 15/15] dmaengine: fsldma: fix kernel-doc param names to match function signatures
+Date: Wed, 10 Jun 2026 20:52:45 -0700
+Message-ID: <20260611035245.13439-16-rosenp@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260611035245.13439-1-rosenp@gmail.com>
 References: <20260611035245.13439-1-rosenp@gmail.com>
@@ -84,78 +84,62 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace of_iomap() with devm_of_iomap() for per-channel register
-mappings. This eliminates the iounmap calls in both the probe
-error path and fsl_dma_chan_remove, and simplifies the error
-handling by returning directly on failure.
+Fix kernel-doc warnings where the documented parameter names
+(@chan) no longer match the actual function signatures (@dchan),
+and add the missing @cookie and @txstate parameters to
+fsl_tx_status.
+
+These are pre-existing mismatches that predate the recent
+devm conversion series.
 
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/fsldma.c | 27 +++++++--------------------
- 1 file changed, 7 insertions(+), 20 deletions(-)
+ drivers/dma/fsldma.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-index 0df09789187d..dc70a6bf5723 100644
+index 157db416eaaf..694c1b12bf2b 100644
 --- a/drivers/dma/fsldma.c
 +++ b/drivers/dma/fsldma.c
-@@ -1119,18 +1119,13 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
- 		return -ENOMEM;
+@@ -685,7 +685,7 @@ static void fsldma_cleanup_descriptors(struct fsldma_chan *chan)
  
- 	/* ioremap registers for use */
--	chan->regs = of_iomap(node, 0);
--	if (!chan->regs) {
--		dev_err(fdev->dev, "unable to ioremap registers\n");
--		err = -ENOMEM;
--		goto out_free_chan;
--	}
-+	chan->regs = devm_of_iomap(fdev->dev, node, 0, NULL);
-+	if (IS_ERR(chan->regs))
-+		return dev_err_probe(fdev->dev, PTR_ERR(chan->regs), "unable to ioremap registers\n");
+ /**
+  * fsl_dma_alloc_chan_resources - Allocate resources for DMA channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  *
+  * This function will create a dma pool for descriptor allocation.
+  *
+@@ -742,7 +742,7 @@ static void fsldma_free_desc_list_reverse(struct fsldma_chan *chan,
  
- 	err = of_address_to_resource(node, 0, &res);
--	if (err) {
--		dev_err(fdev->dev, "unable to find 'reg' property\n");
--		goto out_iounmap_regs;
--	}
-+	if (err)
-+		return dev_err_probe(fdev->dev, err, "unable to find 'reg' property\n");
+ /**
+  * fsl_dma_free_chan_resources - Free all resources of the channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_free_chan_resources(struct dma_chan *dchan)
+ {
+@@ -878,7 +878,7 @@ static int fsl_dma_device_config(struct dma_chan *dchan,
  
- 	chan->feature = feature;
- 	if (!fdev->feature)
-@@ -1146,11 +1141,8 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
- 	chan->id = (res.start & 0xfff) < 0x300 ?
- 		   ((res.start - 0x100) & 0xfff) >> 7 :
- 		   ((res.start - 0x200) & 0xfff) >> 7;
--	if (chan->id >= FSL_DMA_MAX_CHANS_PER_DEVICE) {
--		dev_err(fdev->dev, "too many channels for device\n");
--		err = -EINVAL;
--		goto out_iounmap_regs;
--	}
-+	if (chan->id >= FSL_DMA_MAX_CHANS_PER_DEVICE)
-+		return dev_err_probe(fdev->dev, -EINVAL, "too many channels for device\n");
+ /**
+  * fsl_dma_memcpy_issue_pending - Issue the DMA start command
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
+ {
+@@ -891,7 +891,9 @@ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
  
- 	fdev->chan[chan->id] = chan;
- 	tasklet_setup(&chan->tasklet, dma_do_tasklet);
-@@ -1195,10 +1187,6 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
- 		 chan->irq ? chan->irq : fdev->irq);
- 
- 	return 0;
--
--out_iounmap_regs:
--	iounmap(chan->regs);
--	return err;
- }
- 
- static void fsl_dma_chan_remove(struct fsldma_chan *chan)
-@@ -1209,7 +1197,6 @@ static void fsl_dma_chan_remove(struct fsldma_chan *chan)
- 
- 	tasklet_kill(&chan->tasklet);
- 	list_del(&chan->common.device_node);
--	iounmap(chan->regs);
- }
- 
- static void fsldma_device_release(struct dma_device *dma_dev);
+ /**
+  * fsl_tx_status - Determine the DMA status
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
++ * @cookie : DMA transaction identifier
++ * @txstate : DMA transaction state
+  */
+ static enum dma_status fsl_tx_status(struct dma_chan *dchan,
+ 					dma_cookie_t cookie,
 -- 
 2.54.0
 
