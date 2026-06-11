@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A5440D573
-	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 04:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C29440D573
+	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 04:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781150610; cv=none; b=Dd21l11dvs9gZUESGNTWVbbeZHuAEqg3UcqF8UkspEKZcSdBnR0fnId7PYeLR6jM/zCCDiyhSZ9hPoG+pv8BbdK5WnmI4pBa5ScZ0oVD6ZbiTfeplcXmlts5/0NbCrgcBbIhK/hWET9RMjJPTly8FnJITtxZPFk/qEBqiq8FlzQ=
+	t=1781150626; cv=none; b=N7OSDdQ3MlOHC+tGOC1tC1wpKP9BoVxMg/iCYVPENHR+eTRdNAJjdwKsGDF9mEYik5VhtBjUXhThXxawQNlDXaF1R1o3H1jc8Gu1bA4hXHMSFv/1jKZn7WhoBClJ1H4SccJgGiN4cGqk20tk7xyCw/Xdib88DtCYiYjCUOBGcl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781150610; c=relaxed/simple;
-	bh=LKNOr2cORPV3T20xex3Sdi7swcGMJZrOzGi/LoWxDS4=;
+	s=arc-20240116; t=1781150626; c=relaxed/simple;
+	bh=79kWozNAQmVIUQm/+Ob9cobKiWtLVP4X91Rsi/qZoxo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=lsMQ+EI/pS+64I7ek+iHncKQWREdToId3vFf/nbJWYAg02wNteLAykC2JLfAkkdMY9W7TtyRbQl2/QSIK13Zxpgyi9xBJ9WYYz5UBp65DT5k9wuGoNFOSjC3efcLnyEl8x8lcCvfOptXO3H0lmzqsXz0tr9BNmrChtpxwwVWeng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmNphZOj; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=AC6PjY0pK1hMW91jTcHiwTnuUUbiuJNs0aVnEdHc9zFSuAlwrd1fNDHAUFaO1ynTZpgm1upr4krdyhp+6hbZbxfkCD1J+MDt0jkkZdQ9OF0JPvxVjVHjhOroC+BnBRyZYmNeJnMrGRIS0lJNGai9tDEaLJbF3aRUxmngGDNe1xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CRF8UbYU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmNphZOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A931F00893;
-	Thu, 11 Jun 2026 04:03:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CRF8UbYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937421F00893;
+	Thu, 11 Jun 2026 04:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781150609;
-	bh=v0GrWbNKTJrktvR52NdKBBD05j7RneQGXsOLpWTKc/o=;
+	s=k20260515; t=1781150624;
+	bh=pka8pIhbnsM62zp8d9O7+58GhIK5vp5R4DlpO+4AA7k=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mmNphZOj1oyJTUEZ7xbIM2FEG0AkXKICdxfIRKZMlc4dbLRJxedWxGlYtQFJhCic7
-	 stQ7OrxOs6MO0UhWXJEMjJw7OttQvnipP4eVAPf0MBlkQmpqA13k7DQJbskxCQT+05
-	 Bph8PQPmYsC6U3gcr47n/6YCuXZZoK2hu7Df6WqTGtW7YnKKnq6xyTpI5B/gPdYxYL
-	 4DyNM3bdjz/wHaQ4TsS9hcBmJ8eDa6hD6WOxWIix3AgYokxgq5ocOXx1TIFM7aYXag
-	 Ps5M0nR/aVTQ6ymxuM7dmbiTMY/OfHYuDp1kGVcuLf6u883XRIyFRuTca9OeLU9pkE
-	 XHNnEWkQpT1/g==
+	b=CRF8UbYUgFm+TgkxgjyF2uAmyQ2wOnEwSaA/iNlv+n73yLw7BXiL5n+F1PRGaVhIS
+	 izS8vFrX+kgh5h5VRFTQ2At/6e4yowLGvsQqhgh+RrcshDQQsWdYaTIg7P5TQsbYJN
+	 /umW2yNO3EYnIJSUqFxuM2BLFXLhEUefyOyY23JU7ebm+QNGopNHBTL99LMrg2O4vO
+	 R5jIWBNUkjnoFUmUGcAdonFRt8U81AyRULHGDPxiLh7HGwLezBCe11vflqiVtIcjkg
+	 yn1FLoQBsi12H5eefENtSteq102ok8ad+cXqnjCNug0mqgusmJxWJSBRpTLYGK/oUM
+	 e6U7x9DHfBfXg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv4 07/15] dmaengine: fsldma: fix request_irqs unwind
- freeing unregistered IRQ
+Subject: Re: [PATCHv4 05/15] dmaengine: fsldma: check
+ dma_async_device_register() return value
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Rosen Penev" <rosenp@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260611035245.13439-8-rosenp@gmail.com>
-References: <20260611035245.13439-8-rosenp@gmail.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260611035245.13439-6-rosenp@gmail.com>
+References: <20260611035245.13439-6-rosenp@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 11 Jun 2026 04:03:28 +0000
-Message-Id: <20260611040328.D1A931F00893@smtp.kernel.org>
+Date: Thu, 11 Jun 2026 04:03:44 +0000
+Message-Id: <20260611040344.937421F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,78 +47,66 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
+New issues:
+- [Critical] Missing `fsldma_free_irqs()` in the new `dma_async_device_regi=
+ster()` error path causes an IRQ leak and a critical Use-After-Free vulnera=
+bility.
+
 Pre-existing issues:
-- [High] The error cleanup path in `fsl_dma_prep_memcpy` causes a Use-After=
--Free read when using `fsldma_free_desc_list_reverse` to free a list whose =
-head is embedded in one of the freed elements.
-- [High] Missing `tasklet_kill()` during channel teardown leads to Use-Afte=
-r-Free if a tasklet is pending or running.
+- [High] `fsl_dma_chan_remove` frees the channel structure without killing =
+its associated tasklet.
 --
 
-commit d650ce798a908cef623fc8f4999005d166fe7691
+commit f785c70429012a6e6c4030348e0a3906083e918d
 Author: Rosen Penev <rosenp@gmail.com>
 
-dmaengine: fsldma: fix request_irqs unwind freeing unregistered IRQ
+dmaengine: fsldma: check dma_async_device_register() return value
 
-When fsldma_request_irqs() fails on a per-channel IRQ, the unwind
-loop starts at the current index i, which calls free_irq() on the
-IRQ that request_irq() just failed to register. Decrement i before
-the loop to skip the failed channel.
+This commit adds a check for the return value of dma_async_device_register()
+in the probe path. It propagates the error instead of silently succeeding,
+fixing a null pointer dereference during removal on registration failure.
 
 > diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-> index 22d62d958abd9..285c5e284d425 100644
 > --- a/drivers/dma/fsldma.c
 > +++ b/drivers/dma/fsldma.c
-> @@ -1085,7 +1085,7 @@ static int fsldma_request_irqs(struct fsldma_device=
- *fdev)
+> @@ -1292,7 +1292,11 @@ static int fsldma_of_probe(struct platform_device =
+*op)
+>  		goto out_free_fdev;
+>  	}
+> =20
+> -	dma_async_device_register(&fdev->common);
+> +	err =3D dma_async_device_register(&fdev->common);
+> +	if (err) {
+> +		dev_err(fdev->dev, "unable to register DMA device\n");
+> +		goto out_free_fdev;
+
+[Severity: Critical]
+If dma_async_device_register() fails here, we jump to out_free_fdev, but
+what happens to the IRQs requested just prior in fsldma_request_irqs()?
+
+The out_free_fdev cleanup path unmaps memory and frees the fdev structure,
+but doesn't appear to call fsldma_free_irqs() or free_irq(). Will this leave
+active IRQ handlers pointing to freed memory, leading to a use-after-free
+if an interrupt fires on the shared line?
+
+> +	}
 >  	return 0;
 > =20
->  out_unwind:
-> -	for (/* none */; i >=3D 0; i--) {
-> +	for (i--; i >=3D 0; i--) {
->  		chan =3D fdev->chan[i];
->  		if (!chan)
->  			continue;
+>  out_free_fdev:
 
 [Severity: High]
-This is a pre-existing issue, but while reviewing the error handling I noti=
-ced
-a potential use-after-free in drivers/dma/fsldma.c.
+This is a pre-existing issue, but does fsl_dma_chan_remove() need to kill
+the channel's tasklet before freeing the channel structure?
 
-In fsl_dma_prep_memcpy(), if a descriptor allocation fails, the error path
-cleans up by calling fsldma_free_desc_list_reverse() and passing the list
-head embedded in the `first` descriptor:
+In the cleanup loop immediately following this label, fsl_dma_chan_remove()
+is called to tear down each channel. Looking at fsl_dma_chan_remove(), it
+unmaps memory and frees the chan struct via kfree() without calling
+tasklet_kill(&chan->tasklet).
 
-	fsldma_free_desc_list_reverse(chan, &first->tx_list);
-
-In fsldma_free_desc_list_reverse(), the traversal is done using:
-
-	list_for_each_entry_safe_reverse(desc, _desc, list, node)
-		fsl_dma_free_descriptor(chan, desc);
-
-Since the list head `&first->tx_list` is embedded within the memory that wi=
-ll
-be freed, does the list traversal macro's increment step cause a read from
-freed memory when it evaluates the previous node?
-
-[Severity: High]
-This isn't a bug introduced by this patch, but I found a potential missing
-cleanup in the channel teardown path in drivers/dma/fsldma.c.
-
-In fsldma_chan_irq(), a tasklet is scheduled:
-
-	tasklet_schedule(&chan->tasklet);
-
-During driver unbind or error handling, fsl_dma_chan_remove() frees the DMA
-channel:
-
-	kfree(chan);
-
-Does fsl_dma_chan_remove() need to call tasklet_kill(&chan->tasklet) before
-freeing the channel memory? Even though fsldma_free_irqs() unregisters the
-interrupt, if the tasklet is scheduled right before the IRQ is freed, could
-the tasklet run after `chan` has been freed and cause a use-after-free?
+If a scheduled tasklet executes concurrently or immediately after the
+channel is freed, will the tasklet handler dereference the freed chan
+pointer?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611035245.1343=
-9-8-rosenp@gmail.com?part=3D1
+9-6-rosenp@gmail.com?part=3D1
