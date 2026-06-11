@@ -1,63 +1,63 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A83833031C
-	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 03:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0483333260B
+	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 03:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781149992; cv=none; b=Rj7iAv3046nxlovhM1kIY6zIQ2cGfZH30aDxBoeriicGTdd8NLIAVpJ2HTQ/kQ23NahH19uaDZRJlEjV2JffDCKm2WjFWgJUwm7oBaQgK9zElDWf3xbGWaAuuI2XDcTeNvejywtwLvA3yyXOV7BRC+VGQ3ruXfxZOcycVlfNYAA=
+	t=1781149995; cv=none; b=Tl4PgPNX5Mj4vJ4MNAAuwn1ifyrc8S2yIJ+Cz+miLk3Y03wBb1JEjSBAe51WvAXaNqrg0jQgUCCNvHIDFuXLutIBeyY16tNjSvUSZbq5aAqDbEWMGsvBJS1LaR4+eOunj/lHM8D6LgeNwlOW+HGe0+wKa0vajTgDJqdKHxEcZks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781149992; c=relaxed/simple;
-	bh=xvy4bkq3P2rtPuts3OtlogJt4Cz0NMbc+ohhmCAWkn0=;
+	s=arc-20240116; t=1781149995; c=relaxed/simple;
+	bh=hpFYqVe6ysg9za0CJbNVYYOl7z3o1IuEZ7WBoGNTegg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOVEbiYtnvYjWrDk6Tqr1i86scOeGUlu/KYNGu8pCyhhuO5AMC36vKECoz6MPe7YZTll5jmmd9Pt4HmYNYrXik4BQD6eQxc9Y6D0OvsH3k9dFE9Nsfv5hEi/aUGyMhF7CtClpMBnsGiHXTUY+SX/8Ab/rgPyWjPNCMRB8ATq+yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+Lsou2A; arc=none smtp.client-ip=209.85.216.47
+	 MIME-Version; b=lALALOuD12MWhUddnndqBEuHySVRS79pr/T3MecLEygEEGJ4S9wDEArwE3Sv0hTVDZc10TZaiOuH99vYPuHLLJ60wi351BqBbMYXaTcKz+bcpxgXZzvnuG6PuL9lonpOol/rWCYVkNM0zxGEzwOtMeyA9qAe51AJ7TPB+WoSL18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OWRQAF6c; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+Lsou2A"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-36da8439078so6522432a91.2
-        for <dmaengine@vger.kernel.org>; Wed, 10 Jun 2026 20:53:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWRQAF6c"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-36b8d414666so4196510a91.3
+        for <dmaengine@vger.kernel.org>; Wed, 10 Jun 2026 20:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781149990; x=1781754790; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781149988; x=1781754788; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y6ipJNaJivS6R5/q/SqMYFm/sZfUc0Uv8GQU8fX6jMU=;
-        b=C+Lsou2AiQjb0SRlqEO25xzgoNgIdIBbK3f6KwBedUFCOuVA0F9ppvq4yWRmupaS3C
-         gE83HwUzu1SfvlipHNMBMnJnMEtCdPnPOkP60YnA10nXzEu1+dOh4Zqd7WzlxUERv2JC
-         tQZ5jmCkPqoN0EgHqxpFjZ5+AkXCpvsc2xsSfGaEyajzXFT0d/wUT7DA7M9iAoAcEp/2
-         0TqNS8vV6b0D/enKqvSl0Ghkx9a3JKDp4ON4M58FVFPtQKszSiUu3xh/FBejBIYIiZKz
-         GwPOsm+uHVToKGM0v7cOum3H4PRkXuY+TK/TnpKpqLfWweM0KcOIqAstv8pzoE7A3+Kg
-         4FNA==
+        bh=/U4fRir7cY7WmN1QFR3JHwmFXZxM36Et4Gv4EjzBgmY=;
+        b=OWRQAF6cIJE+8kFar8W0K/P3Ac4He8NpzIzdvFwKSPZMXJSAeXSmXYUDveVuFJOhSD
+         E3EHIoOBoyTViFrNgCVr3++4u7jaWvbS8ep3y43e05B1OuVNltU+AjQ2e1dNFIsHWrsy
+         6hYpwiNB9WGKXLT/ZsA7odqVJMq0qc3s/rRXnbHIKP9Ze+bRckXLf3Odv0wzdyUazSR9
+         BUYz9v8zvW5D7y/HI/PzgdqmjerXwe41AZtraOBfV5bt4BsemCRkTDOWBhkHEDgy7nY3
+         AYwmcUI8wYrtW5E6FiM+o1Yq6wVeEhJa6BKjK7E5vjhvxeKg/wMn37G9Jv0EN8JpI7qe
+         uy0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781149990; x=1781754790;
+        d=1e100.net; s=20251104; t=1781149988; x=1781754788;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Y6ipJNaJivS6R5/q/SqMYFm/sZfUc0Uv8GQU8fX6jMU=;
-        b=gTeDAyAe9jfMJSvXJ1NM+PvFoMaIrKG3MKFCVxJJ3Km4Vrjnv6TBzZrTN4xPJ0T1Kf
-         Fjjb0TC6FM/JT+8mSGCW2ac3ILa9/fwEGGBKzFN8lFd9oWagp6ppQnbVNPYXmkEvaJss
-         WK7ZLflzOz8m9RuvMi7gxd343Omqq9VPOSGDzaieH5c3KzhD/4a/ybR6DqfhvvrMNo5s
-         d5ByrYo+Y5m6DQwzmiRKDpNMx2FJxJPPmm0tpv73AfhJ7o8U90aBzmuGABKH1qHzC2dB
-         fBTNFwlgs896isZoR5DSodPD7laoYR1uI/hgyGd4ru3nE6Rgfmhn085FP09PIZM0djRE
-         eRbg==
-X-Gm-Message-State: AOJu0YzlYIdXnIFpnvE2zzyTA2jhB0dlCjjav4ncXTL2QeM6lQDTQ5Wi
-	EEZ3JXTlhagyU6R5HQ9CLYx/bNWISQsC8F3Tm4QaAXl8/LHEW/b/bZiGypyhDQ==
-X-Gm-Gg: Acq92OH1SGOuaFwfEA4WxcjQJsVHseHmK1DE9PwMkp3NVgon4PxrDgLSESeH3YrLNqR
-	RNwZiIPi/IxXkE//u+ouQMw7jIVbFRSf4NoDLDsEE7IQJ6KeHzTGsQkUEQmRyW30d7VtG7Jq/2S
-	ska3zUC16EI/lT+fIlk0eQfUOE0ZfaI7wjs7E/mM1GCJmndbKEWUbM68j56Pwtkd7yKciOUxslO
-	djQx83frmAXn745vXavJ5tWEWbNZtJK58JUPW9g1OYOQ2a+gYpqVCjFOBy5SxdsyLKxNkhIjf/3
-	t1Nv3mUNyVnG3/apCoPElEBFQklXqJqNBc0exAhabWqM96QzDBF9wm6b/OLDVoz6Q7DlzOud5MH
-	JpVWuKliTyZcQdyLI5Dy0MJnBOKBdKK74x7jFLiBMqlyU05NKZHK0uFvkjMKLgfKo6eXqIvwQm+
-	f37GCZL0LEJvBXuYgRHlF7BToO3Q9zLM5GDHfKhDw4cxf9GWSA63n9YnQalmccfULRvH48e+7mp
-	WdrxoiPv+5NPm4PCCfvX4umipfNGVwxnP7WwobKEchvlg==
-X-Received: by 2002:a17:90b:48c7:b0:366:132:fda7 with SMTP id 98e67ed59e1d1-377a15f7523mr1221678a91.10.1781149989944;
-        Wed, 10 Jun 2026 20:53:09 -0700 (PDT)
+        bh=/U4fRir7cY7WmN1QFR3JHwmFXZxM36Et4Gv4EjzBgmY=;
+        b=d9awEO2XoHuNf7g65G7+DqHpDKs5aKwmyllDGB1UMDY60TcBiy2T3LoiDyAp/I6oIx
+         +tld6GObVx1h52oV18zzJG5SKLfmohLdJRWu1gbi7fo3XYZ5Xdb2OTazPicoFM66hwaJ
+         OS/0I6A9Sk87AU/jsAPfb0+duub0zmDBkCYNUX0BTiqEnPdypd13f/yvrP6hSdY3Y9CU
+         di2RmoW9/JK/zweNAChJa87LAmuOTViIyCihPLBXB8a5qeQZey76FKBjy9iTNgEeZDmc
+         jCTeYaK/JJyZ9dltbn3vkwXYcaApod31USS0QRW+pYPtHM3/ee5Egqf8oC7Yl/F2yX+a
+         MN/g==
+X-Gm-Message-State: AOJu0Yxo+/NU6d9vgeqZh6O9nR9+60mTmBtna2wG9kao4Q3fiyabgsje
+	GpX9HQPbT9t5mzKNi/VuFV/qOCGSKglohbPl8fuoTNqXZbNoHGOqGr1w06/Lig==
+X-Gm-Gg: Acq92OG7Kqw6GdnkwSqLOsC8m4+JtN536ufDO09Xkt4zHHTEkCaBx0VV44qbiJgXy9a
+	B22ue/YdOCdP6q1fU8jJPlmo1T7v31O9QOzZOMaQgdRuiDYpv+Oi3ZqVS6HGYqN5tm06k6eKQba
+	7GRoAku1zVBmjpg2HtzuOO/fqP6NM28WM5JRILM3y6lAirveIY/b0COjxS7xzVJDjvu1OEmwz4J
+	EWiFolMrBRXwhrZ7nNaWBjoSXkvSnGnWjNMke4CXN4F8/hv2yVnX2nMl7WFSbO6tkBxSyRExS+7
+	xcv7Izai8SAbQZqNqC8pPROPJ/0CPWFD5vzLtxCx8Q9Jc1VO/CXurJ+fcVNeB2w1d+yx+UuexV7
+	6F/eozAnYyL9YVUX58l978mNdbM+oz3KnO44WgeZtlqzi1grLQErReMrfE6/2xDKcHNLtLKYMtc
+	PlvmRXYQxUg9QeD/DCKkJvsAFmwmejBVS2koJL4ack62RE9uhK6elt2KaQUlTHa4Il9llAtT/j0
+	DnmenZ3lXY8gj0ELAmN7nLjbwjkJy/bWUi0ICxNaxfBSA==
+X-Received: by 2002:a17:90b:3f50:b0:369:c5f4:9681 with SMTP id 98e67ed59e1d1-377a870982emr1259378a91.22.1781149988448;
+        Wed, 10 Jun 2026 20:53:08 -0700 (PDT)
 Received: from ryzen ([2601:644:8000:5b5d:7285:c2ff:fe45:8a32])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-377522a188asm910131a91.3.2026.06.10.20.53.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-377522a188asm910131a91.3.2026.06.10.20.53.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 20:53:09 -0700 (PDT)
+        Wed, 10 Jun 2026 20:53:07 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -70,9 +70,9 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-kernel@vger.kernel.org (open list),
 	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
 	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCHv4 04/15] dmaengine: fsldma: provide device_release callback
-Date: Wed, 10 Jun 2026 20:52:34 -0700
-Message-ID: <20260611035245.13439-5-rosenp@gmail.com>
+Subject: [PATCHv4 03/15] dmaengine: fsldma: halt DMA engine before freeing resources
+Date: Wed, 10 Jun 2026 20:52:33 -0700
+Message-ID: <20260611035245.13439-4-rosenp@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260611035245.13439-1-rosenp@gmail.com>
 References: <20260611035245.13439-1-rosenp@gmail.com>
@@ -84,87 +84,45 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The DMA core requires drivers to set dma_device.device_release so that
-the container structure is only freed after all references to it have
-been dropped (see the comment above dma_async_device_register()).
+When a channel is released (fsl_dma_free_chan_resources) or the driver is
+unbound (fsl_dma_chan_remove), the descriptor pool and channel resources
+are freed without stopping the DMA hardware first.  An active transfer
+could continue executing in the background, fetching descriptors or
+writing data to physical memory pages that have already been freed.
 
-This driver violated that contract: fdev was devm_kzalloc()'d with no
-device_release callback.  If a client still held a channel reference
-when the driver was unbound, dma_device_release() would eventually
-run on freed memory, causing a use-after-free.
-
-Fix by allocating fdev with kzalloc_obj(), adding
-fsldma_device_release() to free it, and setting device_release.
-fsldma_of_remove() now saves channel pointers and frees IRQs before
-calling dma_async_device_unregister(), since fdev may be freed by
-the release callback inside that call.
+Fix by calling dma_halt() in both paths before cleaning up, matching
+the pattern already used in fsl_dma_device_terminate_all().
 
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/fsldma.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/dma/fsldma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-index 1ba10d065278..43d817f6ded1 100644
+index 455d21d738de..1ba10d065278 100644
 --- a/drivers/dma/fsldma.c
 +++ b/drivers/dma/fsldma.c
-@@ -1219,6 +1219,8 @@ static void fsl_dma_chan_remove(struct fsldma_chan *chan)
- 	kfree(chan);
- }
+@@ -748,6 +748,7 @@ static void fsl_dma_free_chan_resources(struct dma_chan *dchan)
  
-+static void fsldma_device_release(struct dma_device *dma_dev);
-+
- static int fsldma_of_probe(struct platform_device *op)
+ 	chan_dbg(chan, "free all channel resources\n");
+ 	spin_lock_bh(&chan->desc_lock);
++	dma_halt(chan);
+ 	fsldma_cleanup_descriptors(chan);
+ 	fsldma_free_desc_list(chan, &chan->ld_pending);
+ 	fsldma_free_desc_list(chan, &chan->ld_running);
+@@ -1207,6 +1208,10 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
+ 
+ static void fsl_dma_chan_remove(struct fsldma_chan *chan)
  {
- 	struct fsldma_device *fdev;
-@@ -1257,6 +1259,7 @@ static int fsldma_of_probe(struct platform_device *op)
- 	fdev->common.device_issue_pending = fsl_dma_memcpy_issue_pending;
- 	fdev->common.device_config = fsl_dma_device_config;
- 	fdev->common.device_terminate_all = fsl_dma_device_terminate_all;
-+	fdev->common.device_release = fsldma_device_release;
- 	fdev->common.dev = &op->dev;
- 
- 	fdev->common.src_addr_widths = FSL_DMA_BUSWIDTHS;
-@@ -1316,19 +1319,33 @@ static int fsldma_of_probe(struct platform_device *op)
- 	return err;
- }
- 
-+static void fsldma_device_release(struct dma_device *dma_dev)
-+{
-+	struct fsldma_device *fdev = container_of(dma_dev, struct fsldma_device,
-+						  common);
-+	kfree(fdev);
-+}
++	spin_lock_bh(&chan->desc_lock);
++	dma_halt(chan);
++	spin_unlock_bh(&chan->desc_lock);
 +
- static void fsldma_of_remove(struct platform_device *op)
- {
--	struct fsldma_device *fdev;
-+	struct fsldma_device *fdev = platform_get_drvdata(op);
-+	struct fsldma_chan *chans[FSL_DMA_MAX_CHANS_PER_DEVICE];
- 	unsigned int i;
- 
--	fdev = platform_get_drvdata(op);
--	dma_async_device_unregister(&fdev->common);
-+	for (i = 0; i < FSL_DMA_MAX_CHANS_PER_DEVICE; i++)
-+		chans[i] = fdev->chan[i];
- 
- 	fsldma_free_irqs(fdev);
- 
-+	/*
-+	 * fdev may be freed by fsldma_device_release inside this call;
-+	 * use saved copies of the channel pointers afterwards.
-+	 */
-+	dma_async_device_unregister(&fdev->common);
-+
- 	for (i = 0; i < FSL_DMA_MAX_CHANS_PER_DEVICE; i++) {
--		if (fdev->chan[i])
--			fsl_dma_chan_remove(fdev->chan[i]);
-+		if (chans[i])
-+			fsl_dma_chan_remove(chans[i]);
- 	}
- 	irq_dispose_mapping(fdev->irq);
- 
+ 	tasklet_kill(&chan->tasklet);
+ 	irq_dispose_mapping(chan->irq);
+ 	list_del(&chan->common.device_node);
 -- 
 2.54.0
 
