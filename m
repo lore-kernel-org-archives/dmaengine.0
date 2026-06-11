@@ -1,42 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ABB352010;
-	Thu, 11 Jun 2026 05:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF33303A04;
+	Thu, 11 Jun 2026 05:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781157088; cv=none; b=m9o5a7TE0CRyLsdOLB3zPphKiY3MRDn50DBKP1dGmSN7mreSSZdAePtiwtKdXnA93ICfCcnzCzNj3urdb1TykDtIjC+U4iBnV4GyN1p1zd5xgbJRRrs3RfwzJ7fV6OlkirJrd9ZulmskAQC5heXYN8h27jVsVZQWOHO1X4X2jyg=
+	t=1781157094; cv=none; b=qGceQjDmvzq2FV/KcoTVOKpWJA7Pi+YnguvcZTzPn9gPB/+1OEUCkS76w1OP8oOXPlNbjEvw9isnOVkHUp1TVOdDrdGHoW7usM0l/peFLNpuRT8YZvdRoMeqQ28bzbfBKUMPgZZtyxgveWtwwZx85g5D0vshveyx9Fns/MDBTx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781157088; c=relaxed/simple;
-	bh=QKG48vrRFo7Txxgz/yVhR27NhGkUONPhGEj9VJF+7j0=;
+	s=arc-20240116; t=1781157094; c=relaxed/simple;
+	bh=BbzaiPfNSKeB/pFF7jjE+dqxsgeGOXI96TJl3aCeNZA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=lIbYOigWPw6tLdqJ20o1mRvjzE6JKiTWm0SHmsA5xGBQTRcmzJg3QzHGx/uaUwSwL5XzXJLJjpCG5gfl8pELjiApvN/q/9qfCZCKLtrGENcCw4/I61HaYEknYufFFC2kJoqJ1aBOgEYolCUaJA7ZFU70Cz7Ja4QqmMRHRfzIvqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltendcq+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LdMcdYM6NXfIDijvvx8Cz5qG9POzZxaebkOoQk8wOpqUO4yDPoFptYYHSF+7Wv/QYV3hO869Kexgw68D8oYOcPaWCF94D1fJ5J24SQviIfpiO1U1wa0M1NFlURevSpkcsBylc1e8MZUJgZRZL2vZzGF9DBWHFZUQXwK/73XI7ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rn2lmac3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ltendcq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AE61F0089A;
-	Thu, 11 Jun 2026 05:51:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rn2lmac3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22FB1F00893;
+	Thu, 11 Jun 2026 05:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781157086;
-	bh=wU9QahE17CHcvOem5UsKxBBxUuQVPCMM9FqgoNv0fUs=;
+	s=k20260515; t=1781157093;
+	bh=Ybypv8jY2JlamzMUpYTkKUAdHbHVgJc3GEzJSVi7uRI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=ltendcq+AAz8Kp/fDbsuB6K+OqKdl/kL2fMiTeZchbhNIhi8K6spbNhLwcnfHj+Gd
-	 kxtiVtmL3YdkKr3dwsVJqJgoWQez95r6u8PymmfpHYkxniT/nmwlwf+feqDFXeDsqB
-	 aCoW4wrYb+WmUfRIQcw3GeIYHLKw0eRXH2Lp68T++tsDOZSk1ho22cr62N+lYgBySL
-	 l44GV9AlHGrn7+T1xASigUXew50l8EX9/F0Jj8cPUnIrSu6Zk4s/d+eeRsBPAY5Jrz
-	 g1Zlv2lCGQOypJkhiLSb7kPCkAfkepx0GYqIvyHuGEWX5MesX0mc18xLJlgTDzZ2Hk
-	 V5Ef0FcvGOpjg==
+	b=Rn2lmac3Ntga93Vpxzm5OXWKKDp7lb5vKlvNe6GEdjCaAJppcBb2izK1coVC5neFz
+	 ZqiiSG+auzTXz4zvnHp9i7PPF9G5P3Na8zeY+52zB+5MyXo/+Bmx2kSdGAmcSPJ1eA
+	 SaYEG4M+yjLhQW2cE9wrnvGge4TZgm08v2NbsDFoZEuby//hWtIYE63tDO9lvK4blb
+	 jJoOlNb9WtJfPN2T+NuFbL0ppjMor4drFBpmOnrFN8HaMxOyhzEAk8z4lEWbXA2EMs
+	 kBjQprb/3Te8Xka26TNVEy0x1hBgLYTe+6UkHxgU5lVC5WQPMOq1QezGTZ2uDsHmyp
+	 5cDlzcgReLqIA==
 From: Vinod Koul <vkoul@kernel.org>
-To: okaya@kernel.org, Hungyu Lin <dennylin0707@gmail.com>
-Cc: Frank.Li@kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260607163119.78717-1-dennylin0707@gmail.com>
-References: <20260607163119.78717-1-dennylin0707@gmail.com>
-Subject: Re: [PATCH] dmaengine: qcom: hidma: use sysfs_emit() in sysfs show
- callbacks
-Message-Id: <178115708382.468137.8784208588482548501.b4-ty@kernel.org>
-Date: Thu, 11 Jun 2026 11:21:23 +0530
+To: Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+ Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pm@vger.kernel.org, Xueyao An <xueyao.an@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Sayantan Chakraborty <sayantan.chakraborty@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Aastha Pandey <aastha.pandey@oss.qualcomm.com>, 
+ Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+ Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>, 
+ Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>, 
+ Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>, 
+ Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, 
+ Yepuri Siddu <yepuri.siddu@oss.qualcomm.com>, 
+ Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+In-Reply-To: <20260608-shikra-dt-m1-v4-0-2114300594a6@oss.qualcomm.com>
+References: <20260608-shikra-dt-m1-v4-0-2114300594a6@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 00/10] arm64: dts: qcom: Extend Shikra
+ device tree with peripheral and subsystem support
+Message-Id: <178115708647.468137.15343207918116447303.b4-ty@kernel.org>
+Date: Thu, 11 Jun 2026 11:21:26 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,20 +65,32 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Sun, 07 Jun 2026 16:31:19 +0000, Hungyu Lin wrote:
-> Replace sprintf() and strlen() patterns in sysfs show callbacks
-> with sysfs_emit().
+On Mon, 08 Jun 2026 18:40:20 +0530, Komal Bajaj wrote:
+> Extend Shikra DT with peripheral and subsystem support across all SoM
+> variants (CQ2390M, CQ2390S, IQ2390S) and their EVK boards.
 > 
-> sysfs_emit() is the preferred helper for formatting sysfs output
-> and simplifies the implementation.
+> The series adds:
 > 
+> - QUPv3 serial engine configuration
+> - cpufreq-hw node for hardware-assisted CPU frequency scaling
+> - DDR bandwidth monitor (BWMONv5) nodes with OPP tables for dynamic
+>   DDR frequency scaling
+> - EPSS L3 interconnect provider node for L3 cache frequency scaling
+> - CPU OPP tables to drive DDR and L3 scaling per frequency domain
+> - SMP2P nodes for CDSP, modem and LMCU inter-processor signalling
+> - Remoteproc PAS nodes for CDSP, LPAICP and MPSS subsystems
+> - TSENS instance with 14 thermal sensors and thermal zone definitions
+> - Bluetooth (WCN3988) node with board-specific regulator supplies on
+>   all three EVK variants
+> - WiFi node in the SoC DTSI with board-specific power supply and
+>   calibration variant selection on all three EVK variants
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: qcom: hidma: use sysfs_emit() in sysfs show callbacks
-      commit: 26f926b44dbfc035d5ba0ccfc4387a40aa9947c1
+[01/10] dt-bindings: dma: qcom,gpi: Document GPI DMA engine for Shikra SoC
+        commit: 0fbf772fabe93b52f1ecd9ea193dbc90a6042c4d
 
 Best regards,
 -- 
