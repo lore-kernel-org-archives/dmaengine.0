@@ -1,209 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06F640D573
-	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 04:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A5440D573
+	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 04:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781150553; cv=none; b=bQOMPkEMLcwySR20cuh+RQryKk0uBjC1DWFWT7m357VOSV+2wTp0X8THW9h8QS5uaOoHOyyFh9El68ECBtq5AcUGyA8eY04Id2ahzT6pB4TOXTyr3ZfXw5cwwaeZPtZvcnOAeCqhAR2IwnT+da3bLgaqbjs/L1NhtPcev6VX9kE=
+	t=1781150610; cv=none; b=Dd21l11dvs9gZUESGNTWVbbeZHuAEqg3UcqF8UkspEKZcSdBnR0fnId7PYeLR6jM/zCCDiyhSZ9hPoG+pv8BbdK5WnmI4pBa5ScZ0oVD6ZbiTfeplcXmlts5/0NbCrgcBbIhK/hWET9RMjJPTly8FnJITtxZPFk/qEBqiq8FlzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781150553; c=relaxed/simple;
-	bh=AIeuXQNC//+bQzfQFKJukTn+ya4F452qxFtxSLU9w2c=;
+	s=arc-20240116; t=1781150610; c=relaxed/simple;
+	bh=LKNOr2cORPV3T20xex3Sdi7swcGMJZrOzGi/LoWxDS4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=X2WBIUXwpcA0zAfTxx+KvecVfqnc2vRG8AN2Ujli1lZWfDiPHi6iPnSJ+cz/6lkCNX1iLI8b0+6eUYlRjGpyBtAb4YQ76m0s3fJI+lpZuJYC7JSF5GAJ1gmSyE2Fblq1waY0ldUQmnEVKaXtJJEVLcoziAqfBRWh16hYvNSbWUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ds0hNMCF; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=lsMQ+EI/pS+64I7ek+iHncKQWREdToId3vFf/nbJWYAg02wNteLAykC2JLfAkkdMY9W7TtyRbQl2/QSIK13Zxpgyi9xBJ9WYYz5UBp65DT5k9wuGoNFOSjC3efcLnyEl8x8lcCvfOptXO3H0lmzqsXz0tr9BNmrChtpxwwVWeng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mmNphZOj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ds0hNMCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB23F1F00893;
-	Thu, 11 Jun 2026 04:02:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mmNphZOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A931F00893;
+	Thu, 11 Jun 2026 04:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781150552;
-	bh=Gp2Ve/zH5iRiTDsJFqarGX8iFc3j5dst0PzcCEoqCGk=;
+	s=k20260515; t=1781150609;
+	bh=v0GrWbNKTJrktvR52NdKBBD05j7RneQGXsOLpWTKc/o=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Ds0hNMCFA+0riSWauLuYIXIqdl7Z1oz2LVjcZeyESpaY7nbIFfva1UujH5YowuFGz
-	 eqLCuZ3jpjZZdcELcGh7ICUxkTZhMcP8VdrYw1vNvMigIEz1Cqrbwv9bdwkNAGsTkD
-	 aCGDQHl7+3kB5XILbppLNKmHpt9rIFgU2ur09AaIg/ZAP2PdfTRY0ZkSXucZlZVlZB
-	 fEXp0JTSZDKEopuyyMFmxHgQ20vvJrxVl4q/elYv7vlq24PJrzbj6g3GTso/sFNIc6
-	 bidFpaZAhlWpAYuNwQI/Yjo3L7Z+e0CNjLlV7RetKlcOz0zTPTdZHmF3hyYdHWutdT
-	 7nKFpjt5RwAmg==
+	b=mmNphZOj1oyJTUEZ7xbIM2FEG0AkXKICdxfIRKZMlc4dbLRJxedWxGlYtQFJhCic7
+	 stQ7OrxOs6MO0UhWXJEMjJw7OttQvnipP4eVAPf0MBlkQmpqA13k7DQJbskxCQT+05
+	 Bph8PQPmYsC6U3gcr47n/6YCuXZZoK2hu7Df6WqTGtW7YnKKnq6xyTpI5B/gPdYxYL
+	 4DyNM3bdjz/wHaQ4TsS9hcBmJ8eDa6hD6WOxWIix3AgYokxgq5ocOXx1TIFM7aYXag
+	 Ps5M0nR/aVTQ6ymxuM7dmbiTMY/OfHYuDp1kGVcuLf6u883XRIyFRuTca9OeLU9pkE
+	 XHNnEWkQpT1/g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv4 04/15] dmaengine: fsldma: provide device_release
- callback
+Subject: Re: [PATCHv4 07/15] dmaengine: fsldma: fix request_irqs unwind
+ freeing unregistered IRQ
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Rosen Penev" <rosenp@gmail.com>
 Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260611035245.13439-5-rosenp@gmail.com>
-References: <20260611035245.13439-5-rosenp@gmail.com>
+In-Reply-To: <20260611035245.13439-8-rosenp@gmail.com>
+References: <20260611035245.13439-8-rosenp@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 11 Jun 2026 04:02:31 +0000
-Message-Id: <20260611040231.EB23F1F00893@smtp.kernel.org>
+Date: Thu, 11 Jun 2026 04:03:28 +0000
+Message-Id: <20260611040328.D1A931F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
-New issues:
-- [Critical] Use-After-Free (Read/Write) and Double-Free of `fdev` during d=
-evice removal.
-- [High] Teardown reordering causes a race condition leading to hung transf=
-ers.
-
 Pre-existing issues:
-- [Critical] Invoking client callbacks with the descriptor spinlock held ca=
-uses a recursive deadlock.
-- [High] DMA channels are unconditionally destroyed leading to potential Us=
-e-After-Free by active clients.
-- [High] Missing tasklet cancellation leads to a Use-After-Free of the chan=
-nel structure.
-- [High] The error rollback path in fsldma_suspend_late() double-unlocks sp=
-inlocks.
+- [High] The error cleanup path in `fsl_dma_prep_memcpy` causes a Use-After=
+-Free read when using `fsldma_free_desc_list_reverse` to free a list whose =
+head is embedded in one of the freed elements.
+- [High] Missing `tasklet_kill()` during channel teardown leads to Use-Afte=
+r-Free if a tasklet is pending or running.
 --
 
-commit dc56cbc463b043a9535d2906ead690c87f19ad18
+commit d650ce798a908cef623fc8f4999005d166fe7691
 Author: Rosen Penev <rosenp@gmail.com>
 
-dmaengine: fsldma: provide device_release callback
+dmaengine: fsldma: fix request_irqs unwind freeing unregistered IRQ
 
-The DMA core requires drivers to set dma_device.device_release so that
-the container structure is only freed after all references to it have
-been dropped (see the comment above dma_async_device_register()).
+When fsldma_request_irqs() fails on a per-channel IRQ, the unwind
+loop starts at the current index i, which calls free_irq() on the
+IRQ that request_irq() just failed to register. Decrement i before
+the loop to skip the failed channel.
 
 > diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-> index 22d62d958abd9..06a6996a53229 100644
+> index 22d62d958abd9..285c5e284d425 100644
 > --- a/drivers/dma/fsldma.c
 > +++ b/drivers/dma/fsldma.c
-> @@ -1211,6 +1211,8 @@ static void fsl_dma_chan_remove(struct fsldma_chan =
-*chan)
->  	kfree(chan);
->  }
+> @@ -1085,7 +1085,7 @@ static int fsldma_request_irqs(struct fsldma_device=
+ *fdev)
+>  	return 0;
+> =20
+>  out_unwind:
+> -	for (/* none */; i >=3D 0; i--) {
+> +	for (i--; i >=3D 0; i--) {
+>  		chan =3D fdev->chan[i];
+>  		if (!chan)
+>  			continue;
 
 [Severity: High]
-This is a pre-existing issue, but does this unconditionally destroy the
-channel even if clients are still using it?
+This is a pre-existing issue, but while reviewing the error handling I noti=
+ced
+a potential use-after-free in drivers/dma/fsldma.c.
 
-Since dma_async_device_unregister() doesn't enforce that clients drop all
-channel references before it returns, clients might still hold pointers to
-the freed chan structure.=20
+In fsl_dma_prep_memcpy(), if a descriptor allocation fails, the error path
+cleans up by calling fsldma_free_desc_list_reverse() and passing the list
+head embedded in the `first` descriptor:
 
-If they try to use it later, couldn't this cause a use-after-free?
+	fsldma_free_desc_list_reverse(chan, &first->tx_list);
 
-[Severity: High]
-This is also a pre-existing issue, but is it safe to free the channel witho=
-ut
-killing the tasklet first?
+In fsldma_free_desc_list_reverse(), the traversal is done using:
 
-The code frees the IRQ but does not call tasklet_kill(&chan->tasklet).=20
+	list_for_each_entry_safe_reverse(desc, _desc, list, node)
+		fsl_dma_free_descriptor(chan, desc);
 
-If an interrupt fires and schedules a tasklet just before the IRQ is
-disabled, the tasklet could execute concurrently or later and dereference
-the freed chan structure in dma_do_tasklet().
-
-> =20
-> +static void fsldma_device_release(struct dma_device *dma_dev);
-> +
-
-[ ... ]
-
-> @@ -1308,19 +1311,33 @@ static int fsldma_of_probe(struct platform_device=
- *op)
->  	return err;
->  }
-> =20
-> +static void fsldma_device_release(struct dma_device *dma_dev)
-> +{
-> +	struct fsldma_device *fdev =3D container_of(dma_dev, struct fsldma_devi=
-ce,
-> +						  common);
-> +	kfree(fdev);
-> +}
-> +
->  static void fsldma_of_remove(struct platform_device *op)
->  {
-> -	struct fsldma_device *fdev;
-> +	struct fsldma_device *fdev =3D platform_get_drvdata(op);
-> +	struct fsldma_chan *chans[FSL_DMA_MAX_CHANS_PER_DEVICE];
->  	unsigned int i;
-> =20
-> -	fdev =3D platform_get_drvdata(op);
-> -	dma_async_device_unregister(&fdev->common);
-> +	for (i =3D 0; i < FSL_DMA_MAX_CHANS_PER_DEVICE; i++)
-> +		chans[i] =3D fdev->chan[i];
-> =20
->  	fsldma_free_irqs(fdev);
+Since the list head `&first->tx_list` is embedded within the memory that wi=
+ll
+be freed, does the list traversal macro's increment step cause a read from
+freed memory when it evaluates the previous node?
 
 [Severity: High]
-Does this reordering open a race condition that could hang transfers?
+This isn't a bug introduced by this patch, but I found a potential missing
+cleanup in the channel teardown path in drivers/dma/fsldma.c.
 
-By calling fsldma_free_irqs(fdev) before dma_async_device_unregister(),
-there is a window where the DMA device is still fully active and accepting
-new transfers, but its interrupts have been disabled and freed.=20
+In fsldma_chan_irq(), a tasklet is scheduled:
 
-If a transaction completes during this window, will the completion interrupt
-never fire?
+	tasklet_schedule(&chan->tasklet);
 
-> =20
-> +	/*
-> +	 * fdev may be freed by fsldma_device_release inside this call;
-> +	 * use saved copies of the channel pointers afterwards.
-> +	 */
-> +	dma_async_device_unregister(&fdev->common);
-> +
->  	for (i =3D 0; i < FSL_DMA_MAX_CHANS_PER_DEVICE; i++) {
-> -		if (fdev->chan[i])
-> -			fsl_dma_chan_remove(fdev->chan[i]);
-> +		if (chans[i])
-> +			fsl_dma_chan_remove(chans[i]);
->  	}
->  	irq_dispose_mapping(fdev->irq);
-> =20
+During driver unbind or error handling, fsl_dma_chan_remove() frees the DMA
+channel:
 
-[Severity: Critical]
-Does this sequence result in a use-after-free and double-free of fdev?
+	kfree(chan);
 
-If dma_async_device_unregister() drops the final reference and triggers
-fsldma_device_release(), fdev is freed.=20
-
-However, the function then continues to access fdev indirectly by calling
-fsl_dma_chan_remove(chans[i]), which modifies the list. It also reads
-fdev->irq here to perform unmapping, and eventually explicitly calls
-kfree(fdev) at the end of the function.
-
-[Severity: High]
-This is a pre-existing issue, but does fsldma_suspend_late() double-unlock
-spinlocks in the error rollback path?
-
-In fsldma_suspend_late(), the forward iteration acquires the descriptor
-spinlock, updates the state, and then unlocks it on success. If it
-encounters a busy channel, it jumps to the out label to roll back.=20
-
-However, the rollback loop unconditionally calls
-spin_unlock_bh(&chan->desc_lock) for all previously processed channels,
-even though their locks had already been successfully released in the
-forward loop.
-
-[Severity: Critical]
-This is a pre-existing issue, but does invoking client callbacks with the
-descriptor spinlock held cause a recursive deadlock?
-
-fsldma_cleanup_descriptors() is called with chan->desc_lock held. It then
-calls fsldma_run_tx_complete_actions(), which synchronously invokes the
-client's completion callback.=20
-
-If the client submits a new DMA transaction from within this callback:
-
-fsldma_run_tx_complete_actions()
-   dmaengine_desc_get_callback_invoke()
-      client_callback()
-         fsl_dma_tx_submit()
-
-Will fsl_dma_tx_submit() attempt to acquire the exact same chan->desc_lock
-and result in an immediate deadlock?
+Does fsl_dma_chan_remove() need to call tasklet_kill(&chan->tasklet) before
+freeing the channel memory? Even though fsldma_free_irqs() unregisters the
+interrupt, if the tasklet is scheduled right before the IRQ is freed, could
+the tasklet run after `chan` has been freed and cause a use-after-free?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260611035245.1343=
-9-5-rosenp@gmail.com?part=3D1
+9-8-rosenp@gmail.com?part=3D1
