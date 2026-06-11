@@ -1,63 +1,63 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883A637D110
-	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 21:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561FF36C0CA
+	for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 21:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781212069; cv=none; b=dshN/QFd1HT9auo/wHo2DDVsn9M5aCGdtAIyPjA3SJWJXOz6mNwHfv4ldxVnLgBumG0DW9r/r5awcHkzV6R670EMRC0kj890FCEt8+/PYyPFtAUlOCl8uJIHwtwypbYB3LhV08UM+HkinGqF//yper4Kyb6ukSbQ2h1XRLQs2kc=
+	t=1781212069; cv=none; b=RjIKyqTr387ta/m9DqXzISFM4A2Aa9GQo/0H4svC6kp+JFthYZzyJzpz+QBoYzdn6hsWZevlB7Qasg61yRhZohY3BnWhYWpx7VXGsgkySzD+jePy2Tpjs/qSGwLfkyY/I03a1IbaPap/UYbSYrMv/mdYXjnWLeRoeRfbWGYoUQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781212069; c=relaxed/simple;
-	bh=FhI2APYt+4/QJVRA2SyiUcYBi407KrWDfJ01MWqJtK8=;
+	bh=2X1JrFMQp01an9/RJ7l+lKYWT1eLonp7fIj1AAy9osw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUsvBIA1AG2xDg+3T3N6nb9WhwKcaqrnHAfDKKS5xl1PuWqRknLrMCuxhWa3wEPZZhvQkiMI61H/npK81lIDTvXcIF3v4/DqzlrX6WnlZk4U/zgTXhm2QT+l8Y+y3v/nU+AiTEoZv3v9IvNogqViw47Ja7FX/9/TDJ7nNcQhd28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UCP7iUXh; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=HAc+kvmdlQK7TVM3D/ZRQ+GDp7urpgA2Ec/jQ1LT0ZzbruMo5aYZyNBV9hIWs7SEFVia8bYM2VK7q2HzRyy8i4Zm/ZsCQIDYGwkR5A3RR7RNjP8aF6XUpU8adrvYU5WGYa++jqyOhPkFRVafda699/NNZi1utX3Rtrg1ptrqN3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QsvyQuVF; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UCP7iUXh"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c0c2d8b95bso2359665ad.1
-        for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 14:07:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QsvyQuVF"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2c132ac5ec2so3119355ad.1
+        for <dmaengine@vger.kernel.org>; Thu, 11 Jun 2026 14:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781212064; x=1781816864; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781212067; x=1781816867; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=U4LqIqcR28wVKNTcplRcL0sj6x/zHUyaukQuodAoubU=;
-        b=UCP7iUXhm+LVdUrz2dtHec7KhoFJbDfm0ljlolJpn/rKtetMRBzzFP1zq3Sn0gak0t
-         VqI26Z/L7cQiVJ3oVD0rZkGY7+dKjee6inYKXPxugAICSBcoxg9IIwMcdwYrNpZmzY8X
-         QfI//iV3xF/EKq4CwhDiJa+lRskgTDAMssE0NqpNYyfG8h995jwq5j8qJUBgjG/i+pgt
-         ksmV4BS0CTD+dgHPQ1jQhMHs7SVJMeLmQxWPKAUCypSOwzkYXWssQvhP0WiGA9c+zIhD
-         IVHD86y1hBvfK/1G9Ecs1qItpdZCMCQ9cCLEZfS62d4jAflkbvDfoNds7l2rJCuxkt2D
-         WwiQ==
+        bh=uPXmf4vJCxY/GXQznJICMIjctSkGmBgR6J23ifVCHco=;
+        b=QsvyQuVFPS8m7a9dUFxSDL4s3qnSZDJw4WRCjRPm7LbhLMsFUuyncuCN5DV9ccHp0C
+         K5YClyW9wkh1jnkjcgcgZ0UqM/CZWEbfQCICxr/EztxCOVS5GVG9OoRGy/GN3C9qoiLb
+         MmbegjO4cVNX3HphUyDWRiTfhJDey8N4w39NBqnRS2maK1ncYylad5CCn4o5KD7igj55
+         ymxft3sQHpmgEqDHxulaQH35pYiP2Sfqb9GcwOhccZ3H8KEA5E+ucD202XOoqbA7jICw
+         vv2PSm92ao2Xrt0V1VhJ3pVsGBSkXDEsLyNrItes3nBNwcUoRQv6Slx6W3+xvGP6vOgF
+         5Cqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781212064; x=1781816864;
+        d=1e100.net; s=20251104; t=1781212067; x=1781816867;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=U4LqIqcR28wVKNTcplRcL0sj6x/zHUyaukQuodAoubU=;
-        b=YHxiia1Op0dnFp3pQ1Szc5RLERV6kkUb7hZMHwToLEEsMVqP45uzaMDp1+BZVros8c
-         REQVK7knfRcbf6wJFeKc17zikBwCdJqeqYFUJLHAaJzO9xSLJWZwCYoMHSpjsM2eScPV
-         Xpe/WynXRZjgF0JKtIW+XKttBkjnaHJ5PWrayE3FwKVTlld4D0c0n7FPwARZTiLO80aE
-         zZMuA2jlMLbDF4tLf28bUGbIjDZGzhZlJ9awfNVNo0dHUkB2eMVi4vW1VINAlvYynxYL
-         UwEWLZvYG94dXFjlfzBMMNZuaG1a1drVrnwdIhIaIC7BxI9QaUpH0B2xduOvFN7owHl9
-         Nl/g==
-X-Gm-Message-State: AOJu0YwvtXBi6lpHrR7skqX2dxNlhjYZNjUzK5avk0G7CboCaDr5mRmJ
-	qQTdHL7Dh+1f5+lTHmYB5TTWLmN5Sv9P/4pVu9Evmvx4bBjbRWg7P0KwxExVTQ==
-X-Gm-Gg: Acq92OHFYGSMqSdYohn+MOKtbQGRjUiKSidf8a/+99e+OuPP9MOQpbuIDq5dem7Bn1/
-	px0gJvwZtGab2zzej/Qmk7An+3+RXeumHmkHnZaLwxUEq73qEsVMhYDzpmInpSWXNnwfFca2qFU
-	1rW9H4kYj3e7JpP37QLcU1dQ96mag76Dj7bhG0jd49HpBKGw5OO3jGBtZMqPZbW+33lr97tSWCR
-	AYkkhd6uONa3Hm8LJVdFLH5MM9q2+oeFgnd92v7CElNoSWch8avG2NRNlNFNhuij8ZMW914AJ6c
-	8rG+Gsc9RE3gMrEwjmvV3AtIu6cSY1BLEW3eKgrgVQeEPDFYBO6HbSLoA2Bp+LqQduPqK9kjDIp
-	Mk5Po1E3fshw4XZAkvf+PiEQp4g/GGmqDImQwzrRDsPuMrytr1nlZiPp8dd1ifbFTSm3uLHol47
-	1kxTfgWhgxh6pZQLiQJ0ijBvh0nVfDwq6PoIXuKlZ2RL82G2mx6lj3nJMrm4RabMKKzJsq3Rpdz
-	wSeOWFx5QG5qFEL4wSX7D8epHzQMBstTh0=
-X-Received: by 2002:a17:903:298f:b0:2c0:cb0e:ac42 with SMTP id d9443c01a7336-2c410ae2b51mr1097205ad.3.1781212063884;
-        Thu, 11 Jun 2026 14:07:43 -0700 (PDT)
+        bh=uPXmf4vJCxY/GXQznJICMIjctSkGmBgR6J23ifVCHco=;
+        b=Ku69q0YgKY5L8iIJHzqxv601HM21IfDjBZcBKwc7gTwVTmkZ7uxQug7do4GVoxHmsB
+         OV2UpqUcu5RBPWUkOi2tayw/4oBvM3YSLsaJKc3uARQwcQcHd+Yc5D8n+j2dnEs+Znm0
+         cq80wPwOSGuR1sV/5rxYFUfVWAIfu+rrE6SujYYQZDEo7wSxwYFkHQ/+vsCh3+1PFWPk
+         d8wBIm3WACqx1cytDfyAP0HA6wxCTPBiQeFRUe+nO6/Gs5DUPhP7ltf7/sOupQVDtFF1
+         NXRcu66pY9HXtnHCP7UPaPo67GdsQCNzOKzueoptvgs5hdt2+Mm7tUftlpmJvRdlfcg7
+         pGcg==
+X-Gm-Message-State: AOJu0Yx2O72R47Ic56O0SBrh2FdQEdPB1pr1ftDgZqplzgmPUdIE92MH
+	ABH84qZnlED824RAPjYIzDyYHH5pSvZOr03tVbFxFqKaOSGy6tFYw8xTJ7mcIg==
+X-Gm-Gg: Acq92OEkuR4iVMRYp9C+2rGQiDGIDr9dL7n5f2+z/0sTTptnMRL0oA8PTinfNEgEFsd
+	6Ion2e6SzK1bmHQZdzhFhFJXIb+G98+9so1982UMdjsQVywkLXvkh2LzqRpOr1kj/cC1L0T850t
+	zmfN08tUnFHhREW7a0O0RGg4qVdfQR8npNYxswskwq4PXUMPURbXOTZn4H7HovpgHgrdy9ZjwFL
+	O+tqwPM+UEVQHBoxMKXXtFexBipC/Xx9N/Ju2gWkyhpANVPc3gyINk2BxS+wURkaxrCXgzh7y8s
+	fsbWCxHHz4ef1Y7L726m/DIAG+NN9NhO+Dj/G7dMcU83wGZFkWxzabPL5jNfsjdHyLSCNtobEBf
+	4vaMRzJntH8TjZcg0lP8SMOANKdY/cpKvsdvxbGKI9808XoUFRtrWzl9g10KtCqrBpwHdG2j7JG
+	+MrJH63aDdrnsDKlTUJo04ANiiFkY+y8eqeayKvSocRLNHXf7pTM78/pk2V8GZfmpVR37tgJnH6
+	wMi+9RQ/Bk9pY9SRA6PIZxXQ2pFiT4zYbI37xE9uLQZQw==
+X-Received: by 2002:a17:902:f54f:b0:2c1:f262:4962 with SMTP id d9443c01a7336-2c411980d5emr1090465ad.20.1781212066645;
+        Thu, 11 Jun 2026 14:07:46 -0700 (PDT)
 Received: from ryzen ([2601:644:8000:5b5d:6d3a:64fc:4ee8:9cc3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c411d79289sm389995ad.14.2026.06.11.14.07.42
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c411d79289sm389995ad.14.2026.06.11.14.07.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 14:07:43 -0700 (PDT)
+        Thu, 11 Jun 2026 14:07:46 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
@@ -67,9 +67,9 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	Marcin Wojtas <mw@semihalf.com>,
 	Rob Herring <robh@kernel.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2 3/9] dmaengine: mv_xor: bound maximum channels for Armada 37xx
-Date: Thu, 11 Jun 2026 14:07:15 -0700
-Message-ID: <20260611210721.81979-4-rosenp@gmail.com>
+Subject: [PATCHv2 5/9] dmaengine: mv_xor: use devm_clk_get_optional_enabled
+Date: Thu, 11 Jun 2026 14:07:17 -0700
+Message-ID: <20260611210721.81979-6-rosenp@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260611210721.81979-1-rosenp@gmail.com>
 References: <20260611210721.81979-1-rosenp@gmail.com>
@@ -81,33 +81,48 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For XOR_ARMADA_37XX the driver set max_channels = num_present_cpus()
-without bounding it by MV_XOR_MAX_CHANNELS (2).  On a system with
-more than 2 CPUs this lets the probe loop write past the end of the
-xordev->channels[] array when the DT describes enough child nodes.
-Add the missing min_t() guard.
+Replace clk_get() + clk_prepare_enable() + clk_put() with
+devm_clk_get_optional_enabled(). This eliminates the need for manual clock
+cleanup in the probe error path.
 
 Assisted-by: opencode:big-pickle
-Fixes: ac5f0f3f863e ("dmaengine: mv_xor: add support for Armada 3700 SoC")
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/mv_xor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/mv_xor.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index ef29e8be1db6..588af337afe3 100644
+index 44a7d4f7fb0d..d9403172ef59 100644
 --- a/drivers/dma/mv_xor.c
 +++ b/drivers/dma/mv_xor.c
-@@ -1387,7 +1387,8 @@ static int mv_xor_probe(struct platform_device *pdev)
- 	 */
- 	max_engines = num_present_cpus();
- 	if (xordev->xor_type == XOR_ARMADA_37XX)
--		max_channels =	num_present_cpus();
-+		max_channels = min_t(unsigned int, MV_XOR_MAX_CHANNELS,
-+				     num_present_cpus());
- 	else
- 		max_channels = min_t(unsigned int,
- 				     MV_XOR_MAX_CHANNELS,
+@@ -1383,12 +1383,9 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 			mv_xor_conf_mbus_windows(xordev, dram);
+ 	}
+ 
+-	/* Not all platforms can gate the clock, so it is not
+-	 * an error if the clock does not exists.
+-	 */
+-	xordev->clk = clk_get(&pdev->dev, NULL);
+-	if (!IS_ERR(xordev->clk))
+-		clk_prepare_enable(xordev->clk);
++	xordev->clk = devm_clk_get_optional_enabled(&pdev->dev, NULL);
++	if (IS_ERR(xordev->clk))
++		return PTR_ERR(xordev->clk);
+ 
+ 	/*
+ 	 * We don't want to have more than one channel per CPU in
+@@ -1477,11 +1474,6 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 				irq_dispose_mapping(xordev->channels[i]->irq);
+ 		}
+ 
+-	if (!IS_ERR(xordev->clk)) {
+-		clk_disable_unprepare(xordev->clk);
+-		clk_put(xordev->clk);
+-	}
+-
+ 	return ret;
+ }
+ 
 -- 
 2.54.0
 
