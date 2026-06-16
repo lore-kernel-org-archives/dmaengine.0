@@ -1,87 +1,262 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A24739DBF2;
-	Tue, 16 Jun 2026 09:13:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DF94611C1;
+	Tue, 16 Jun 2026 15:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781601226; cv=none; b=MkUrJyYkpYdD2xXy3W8HjGCi8j5UbgeZIxUjjUvu7nHzZWGYLLiyJUeUXQ44M6rU9e9szOmMq70roGiY4VrEj+LRsb4ewQA18HAVNxqKg2yJnqv31cEP0zsQo4g1pftsGHTzSod2pgu1LvCHD3EvpblpTNLvmYLh23pFvZMkCRA=
+	t=1781624393; cv=none; b=rBHwq9ov+FoiSo7qNR8r1938DnxfLsR53wOoqvnlq4TL8fW49Hp8kaphsmh7to0HQZ8/Hp3OT4CvXfsBXWJRLZ43cTC/fRbJ07Enu7nhiLjlE5Dhq6VJNkAkhscOUFWjZQZD5ShF0pz+bjEdKk5hmzFrl67GfBE3K4QaDm9yuMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781601226; c=relaxed/simple;
-	bh=dr5QjL3Y5+7Y/dCPDwngV6wqM9mvwgQs8oxaLaUIUrA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tU+sVaLn6i0bDOCyYO8eJuNhgcz4XymWrK3vnVmW56EsLcxjm3O4cQgZDUnov8AHu9DoPZiJwpm3Zd/0ee/idko1n4Yn9ATPnUUllanYkiQ5wGIG9nydVVMhTZDkQ1S8bMRAZT2xymBxX/FpvNmAy+NbaJmF/pprGH2ikP4Q4eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mlIOg8pb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781624393; c=relaxed/simple;
+	bh=oQq3yLuyHGjLa0GJ346W7tMuWSX4yq2K+HhZggGzkAk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=HEYdKGoLsFm330KOQOMsEcKdveqAxNvCl2130HVfNU4Ej+vqMO612o5U0PcbUYADmegg2vO96e0O4BXyztFb5LzVUGVsJutf82ln2vIFAN6mccTTh9S0x7hMT+RE4JY/47NpJaXTpsH1GXm0RPoozayUfa8RfUcyfE+Xs8iqSKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsZYz83h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mlIOg8pb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01011F000E9;
-	Tue, 16 Jun 2026 09:13:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781601225;
-	bh=T6O0q1IfXtevvhpoYxo0G7LAbHxOjdSWxBrNhX9eDVE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mlIOg8pbv1qOCEvNNDhAPtuDD04+gXQ/Xhse2HRlLBTtPUftUc2rudUqDY4awhyoS
-	 iPgd5rI0w1Xh0dKxqLIhJ5QzGXuuKfrMqIFryOMr1zi38dYd4VSlD/7IIdyxeJlcsJ
-	 Cw5EI4ZopUH0vkI9eug1lykNfJwVTMA8ws0Vzf31ImBOtf7pQhK99Du5pgDgEdZ9TN
-	 SIclzhh2ZWuT+nobYj3nW8occsmHvSxumKN7pl9mrAAd3WbEHffgPf6P/BxwSJj3kY
-	 Kki9er0GHtysQfDL/pDEzjKWpzUUhcaKmA+6SKOIQw+ncVLTDjeRrxXUUvJkuZf8cZ
-	 oCdGBWUMZCTqg==
-Date: Tue, 16 Jun 2026 11:13:39 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Koichiro Den <den@valinux.co.jp>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-	Kees Cook <kees@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Cai Huoqing <cai.huoqing@linux.dev>,
-	Devendra K Verma <devendra.verma@amd.com>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/17] dmaengine: dw-edma: Support dynamic LL appends
-Message-ID: <ajETw7uwVx_U9o5F@ryzen>
-References: <20260615154111.2174161-1-den@valinux.co.jp>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsZYz83h"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3B35BC4AF0F;
+	Tue, 16 Jun 2026 15:39:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1781624393;
+	bh=oQq3yLuyHGjLa0GJ346W7tMuWSX4yq2K+HhZggGzkAk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=HsZYz83hZhomdTI4kWBdepJKb5rxQ1UFC5fcazRHKEwxVLAINMptjQUQIwM/VOlAd
+	 lHh2pPr4Tw5a9dx6PlHpA4Wf1Kt/ZOjMG87H2dfTUOToBk7YKhYE25yE1UZHfbATDR
+	 OApDAGSRIzGwAHG9zPpWYlvC4mQu0Y+bysjYYXTxzetz9ACa9pAh1eDvqObhL7vAel
+	 FEYvVwbK3II2BgoAtBAxrXRP7oiROU3lAy2eNNbX7QpOMfFQC1rNH/bcabh91GCOXy
+	 CgsTNw4cpih4Hi3QSwfv0HCyOME1ekmHZy0rn2TsA+xiUrslwnMWR1HSVjfRXCdUoa
+	 Bjb75C9X6TS8A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2586DCD98E1;
+	Tue, 16 Jun 2026 15:39:53 +0000 (UTC)
+From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
+Date: Tue, 16 Jun 2026 16:40:52 +0100
+Subject: [PATCH RFC 1/3] dmaengine: Support address bus widths of 32 bytes
+ and above
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260615154111.2174161-1-den@valinux.co.jp>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260616-dmaengine-support-wider-dma-masks-v1-1-da23a8dcb756@analog.com>
+References: <20260616-dmaengine-support-wider-dma-masks-v1-0-da23a8dcb756@analog.com>
+In-Reply-To: <20260616-dmaengine-support-wider-dma-masks-v1-0-da23a8dcb756@analog.com>
+To: dmaengine@vger.kernel.org, linux-iio@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
+ David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781624455; l=6136;
+ i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
+ bh=seK2wQ1gP5/CY+c6SdU0DSHpgs7+1OD32PnCpLFnNMU=;
+ b=VaSoQ22ie0zIfavrrNdBnJAYVMaoPhET+P1sK1CJcaHwofsEfWskGzpE1WIYXko/2LjABb4Bg
+ 9RDlOcrGB3sC+T4i94u/b9UbtFuta4UtWqxEHLuYX8weyX0HFdrgZQA
+X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
+ pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
+X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
+ auth_id=100
+X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
+Reply-To: nuno.sa@analog.com
 
-Hello Koichiro,
+From: Nuno Sá <nuno.sa@analog.com>
 
-On Tue, Jun 16, 2026 at 12:40:54AM +0900, Koichiro Den wrote:
-> Hi,
-> 
-> This series is a reworked version of Frank's earlier RFT series:
-> 
->   https://lore.kernel.org/dmaengine/20260109-edma_dymatic-v1-0-9a98c9c98536@nxp.com/
-> 
-> After discussing the HDMA test results with Frank, I am sending this as a
-> standalone series that keeps the main dynamic-append direction, while adding the
-> fixes and HDMA handling needed to make it work reliably on both eDMA and HDMA.
-> 
-> Several patches are kept from, or based on, Frank's RFT series; the individual
-> patches carry the corresponding attribution.
-> 
-> The series has been tested on both eDMA and HDMA systems. Both completed the fio
-> test set reliably; performance results are shown below.
+The src_addr_widths and dst_addr_widths capability masks encode each
+supported width as a bit whose position equals the corresponding
+enum dma_slave_buswidth value (e.g. DMA_SLAVE_BUSWIDTH_4_BYTES sets
+bit 4). As these masks are plain u32, widths of 32 bytes and above
+(DMA_SLAVE_BUSWIDTH_32/64/128_BYTES map to bits 32, 64 and 128) cannot
+be represented at all.
 
-Great work! The performance increase is significant :)
+Introduce bitmap-based masks that span the full enum range. To allow
+controllers and consumers to be converted incrementally, the legacy
+u32 fields are kept alongside the new bitmaps: producers populate the
+bitmap (mirroring the low 32 bits back into the legacy field) and
+dma_get_slave_caps() folds a legacy-only producer's u32 into the
+returned bitmap.
 
-In Frank's earlier RFT series, the change
-"dmaengine: dw-edma: Dynamically append requests while running"
-broke the pci_endpoint_test selftest:
-https://lore.kernel.org/dmaengine/aXNQcowVEMaE1xr5@ryzen/
+Add dma_set_{src,dst}_addr_mask() for producers and
+dma_slave_caps_get_{src,dst}_width_min() for consumers so that, once
+every user is converted, the legacy u32 fields can be dropped and the
+bitmaps renamed without further churn.
 
-I can see that you have included a modified version of this change in
-this series. Does the pci_endpoint_test selftest pass with your series?
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+---
+ drivers/dma/dmaengine.c   |  18 +++++++++
+ include/linux/dmaengine.h | 100 ++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 114 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 9049171df857..a21bc9c140aa 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -593,7 +593,25 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+ 		return -ENXIO;
+ 
+ 	caps->src_addr_widths = device->src_addr_widths;
++	if (bitmap_empty(device->src_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX)) {
++		bitmap_zero(caps->src_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		bitmap_from_arr32(caps->src_addr_widths_mask,
++				  &device->src_addr_widths, 32);
++	} else {
++		bitmap_copy(caps->src_addr_widths_mask,
++			    device->src_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++	}
++
+ 	caps->dst_addr_widths = device->dst_addr_widths;
++	if (bitmap_empty(device->dst_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX)) {
++		bitmap_zero(caps->dst_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		bitmap_from_arr32(caps->dst_addr_widths_mask,
++				  &device->dst_addr_widths, 32);
++	} else {
++		bitmap_copy(caps->dst_addr_widths_mask,
++			    device->dst_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++	}
++
+ 	caps->directions = device->directions;
+ 	caps->min_burst = device->min_burst;
+ 	caps->max_burst = device->max_burst;
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index b3d251c9734e..e249158aa4a5 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -5,6 +5,7 @@
+ #ifndef LINUX_DMAENGINE_H
+ #define LINUX_DMAENGINE_H
+ 
++#include <linux/bitops.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/uio.h>
+@@ -391,6 +392,7 @@ enum dma_slave_buswidth {
+ 	DMA_SLAVE_BUSWIDTH_32_BYTES = 32,
+ 	DMA_SLAVE_BUSWIDTH_64_BYTES = 64,
+ 	DMA_SLAVE_BUSWIDTH_128_BYTES = 128,
++	DMA_SLAVE_BUSWIDTH_MAX
+ };
+ 
+ /**
+@@ -509,8 +511,14 @@ enum dma_residue_granularity {
+  * resubmitted multiple times
+  */
+ struct dma_slave_caps {
+-	u32 src_addr_widths;
+-	u32 dst_addr_widths;
++	struct {
++		DECLARE_BITMAP(src_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		u32 src_addr_widths;
++	};
++	struct {
++		DECLARE_BITMAP(dst_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		u32 dst_addr_widths;
++	};
+ 	u32 directions;
+ 	u32 min_burst;
+ 	u32 max_burst;
+@@ -887,8 +895,14 @@ struct dma_device {
+ 	struct module *owner;
+ 	struct ida chan_ida;
+ 
+-	u32 src_addr_widths;
+-	u32 dst_addr_widths;
++	struct {
++		DECLARE_BITMAP(src_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		u32 src_addr_widths;
++	};
++	struct {
++		DECLARE_BITMAP(dst_addr_widths_mask, DMA_SLAVE_BUSWIDTH_MAX);
++		u32 dst_addr_widths;
++	};
+ 	u32 directions;
+ 	u32 min_burst;
+ 	u32 max_burst;
+@@ -1678,4 +1692,82 @@ static inline struct device *dmaengine_get_dma_device(struct dma_chan *chan)
+ 	return chan->device->dev;
+ }
+ 
++static inline enum dma_slave_buswidth
++__dma_slave_caps_get_width_min(const unsigned long *bitmask)
++{
++	enum dma_slave_buswidth width = find_first_bit(bitmask,
++						       DMA_SLAVE_BUSWIDTH_MAX);
++
++	if (width == DMA_SLAVE_BUSWIDTH_MAX)
++		return DMA_SLAVE_BUSWIDTH_UNDEFINED;
++
++	return width;
++}
++
++static inline enum dma_slave_buswidth
++dma_slave_caps_get_src_width_min(const struct dma_slave_caps *caps)
++{
++	return __dma_slave_caps_get_width_min(caps->src_addr_widths_mask);
++}
++
++static inline enum dma_slave_buswidth
++dma_slave_caps_get_dst_width_min(const struct dma_slave_caps *caps)
++{
++	return __dma_slave_caps_get_width_min(caps->dst_addr_widths_mask);
++}
++
++static inline int __dma_set_addr_mask(unsigned long *bitmask,
++				      enum dma_slave_buswidth *widths,
++				      unsigned int n_widths)
++{
++	for (unsigned int i = 0; i < n_widths; i++) {
++		switch (widths[i]) {
++		case DMA_SLAVE_BUSWIDTH_1_BYTE:
++		case DMA_SLAVE_BUSWIDTH_2_BYTES:
++		case DMA_SLAVE_BUSWIDTH_3_BYTES:
++		case DMA_SLAVE_BUSWIDTH_4_BYTES:
++		case DMA_SLAVE_BUSWIDTH_8_BYTES:
++		case DMA_SLAVE_BUSWIDTH_16_BYTES:
++		case DMA_SLAVE_BUSWIDTH_32_BYTES:
++		case DMA_SLAVE_BUSWIDTH_64_BYTES:
++		case DMA_SLAVE_BUSWIDTH_128_BYTES:
++			break;
++		default:
++			return -EINVAL;
++		}
++
++		__set_bit(widths[i], bitmask);
++	}
++
++	return 0;
++}
++
++static inline int dma_set_src_addr_mask(struct dma_device *device,
++					enum dma_slave_buswidth *widths,
++					unsigned int n_widths)
++{
++	int ret;
++
++	ret = __dma_set_addr_mask(device->src_addr_widths_mask, widths, n_widths);
++	if (ret)
++		return ret;
++
++	device->src_addr_widths = bitmap_read(device->src_addr_widths_mask, 0, 32);
++	return 0;
++}
++
++static inline int dma_set_dst_addr_mask(struct dma_device *device,
++					enum dma_slave_buswidth *widths,
++					unsigned int n_widths)
++{
++	int ret;
++
++	ret = __dma_set_addr_mask(device->dst_addr_widths_mask, widths, n_widths);
++	if (ret)
++		return ret;
++
++	device->dst_addr_widths = bitmap_read(device->dst_addr_widths_mask, 0, 32);
++	return 0;
++}
++
+ #endif /* DMAENGINE_H */
+
+-- 
+2.54.0
 
 
-Kind regards,
-Niklas
