@@ -1,107 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3672227BB9;
-	Thu, 18 Jun 2026 16:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ED83438BC
+	for <dmaengine@vger.kernel.org>; Thu, 18 Jun 2026 17:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781801518; cv=none; b=HphKrrVBr/EkcIW6JpH6mMqI1TJM9HrDiAfG9CJ6ktW8o+ijp80t5hKsSpLpkkmWNnT92diYnkQL6l6FN2IbIqhtycDgBIvFI9ZCFgg8IuDWeCvFvAt8qdCHVUqvAWsKDNJQWmta/K6lACcn2PLoQKqZbLb2bIabQjMInPha04s=
+	t=1781802593; cv=none; b=liGdRAyMTb2vCl0B3mAEXsEYFkG9eKAhVCCI18xGI2xCN+gzEWmgwcCmZFBi9/Yw74Kvf82OJRoMEHwwOhOlAGfsPjm0hktSNZpW2cmJB8vksQckZEkB0hbr4xwdmO4oIvlQ/QXkoVtJztMKtgeuEwa/1gohPf50r7How5BfrYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781801518; c=relaxed/simple;
-	bh=7jO5PWoE2N5ydihCITbr3HpSBs4kiBOQ62fm0mBEeq4=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=rJKVDoYzjmNAzinTzjP5Oq4RdHCxNrKnryYg5OqC/Ou8nSHSieWY1nGdcS7Vqano0NqdIZV61YjWV12o6pj7vdKYQNrNSB1OtBpG/OU2Uvmg1MMCrO/yFmwpmIyqX7lzzEsEvUld902CTbjcUbSAd2vl0Fyaq8b/gkQxCM4BjyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cRz3Arfn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781802593; c=relaxed/simple;
+	bh=ek1Rt+RCKFx1ZAENatPdrTmZhOVWSxe+TUDrReqCslQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b5LH2m1werhlUKhVC7YPtWuRsNDQEOYkuI/SEl45lsetsnfbbrmbBxk2yr6rSpwPQJznG9/WGMDJMvSiFIhGB2kPad8CZbtCOcxEOXzQsCgIzdzr8DPJKrfApfTC9y9/84OznFs0uP/uY0Ju6LKngFfWdChnW6oeoIL5ukvZDWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DTF8u9QR; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cRz3Arfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CECA1F000E9;
-	Thu, 18 Jun 2026 16:51:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781801517;
-	bh=+C7UJ5EIB57xL4KV5//HXNlxtQfTiI3AQWlDNB9xG9M=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject;
-	b=cRz3Arfn81Xxb0sb5xjVuc9aHEbbew8OcSDJxv/ZQWPs6orcRzAeN2C+dIx2RArvC
-	 NxqS0oBMA4GI7gesRaqxmeuVANuET6TQ1GMQSsm6gGujTjolJMi5hiFQM6cZ7GS1zj
-	 cUb9z5VIgT5bC3c7Kc8XYT9PRIYm9uhF2cawTytA+LLC9GYJMt5jc5nYKDsJLzcOn2
-	 +LoJNrvv+dVlmX/MzxNlEQamZooeOeMlq7/aa4uWYOedDUylJvasepXktDtifWt+Hw
-	 obOgwDjHstjkEzlU9nqPrTDH/uR1biK3+vvZJuMxyQcCyqGt+XWe6fJ43wKvDdcqvL
-	 zXdtW9BTCB+XQ==
-Date: Thu, 18 Jun 2026 11:51:56 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DTF8u9QR"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490acbb0f89so7371055e9.0
+        for <dmaengine@vger.kernel.org>; Thu, 18 Jun 2026 10:09:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781802591; x=1782407391; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pb6ELezZamFIkjKnVRa59Yjxr/sCCIOAAtSuv8gn1wU=;
+        b=DTF8u9QRWt0bafU4I/kvxlEJn8P425OJmfYbnHsDt2e6rNF1FxFN/eFZojYeEU3Vwd
+         0kuRMoxT93tCujJBZgOYCi9pVii7NqtudAllomOuorGnvVVtVzYwcP++CVid0MEnhTcj
+         dMB+uLpEkH4Zlj1kBdUhGjkFWgZVCwsUgDLVPLnXPeDzS+l+zetkWHQnF0+9nyB9hCF5
+         FCNeD3tQidY3ICSdGrmpF2DeOuUDQ2bzfAF6fazb3n/IYX53I9X+lgsEXgHJkar0FLlA
+         tAgoHd2rK63HIp4sIUB8b6IVEqUGhKXaJLdijEpFgkyNo0MIOLyog2pdb2Q80ynNqP/J
+         D8Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781802591; x=1782407391;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pb6ELezZamFIkjKnVRa59Yjxr/sCCIOAAtSuv8gn1wU=;
+        b=PJTnWXGUetR/ggLJwkE7uuw/kI6vb15chRM63DcAwiWleSwtBxI4zrV5quzWcQxXpx
+         NGRWxgAo49Pt/KINCzqXnQBg5Q227O5Dnj6O3p/AiU3fQdTW9YL8xkyXliO2znBvKkrD
+         +dV805MgTY86qvA86J8hCwnKHpRlTvwz9GAYoWn42MiVPf/Btu3/VCE9YnGbgkplm+GJ
+         U51VupDWE1J3TzLHMsnS7XljATMWqdy/WvCpe7ZK/JLdvsE01jrOwtmSHbLkHeH++2bc
+         hL+LX3+4cddLFyd2Qn4AwjmG02V4HeJwQ4xFlMSaAKqfk/7Gq2FUMQ15wjfOekoU1Z9O
+         mhrA==
+X-Forwarded-Encrypted: i=1; AFNElJ/ixOhyS4ZLXAI/ZpX+HgLR4WB1pM7Fxp83liMCv5YqIL1xXEm9oB1hKgx0A4xfvASQdrt+ztvj+ys=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVp/pRzzddvSdKoDt+FwBYSFXSmLu78mF5THc1pqhzCvyo3GgC
+	sNyhSvU0KEfo59Dm0Q2zsCPmdbI6mLuWZAMK7BGtkJTlZdc6Z8J7ZHkM
+X-Gm-Gg: AfdE7clbIZByQ0Bes98VfrFmUhErKQYhF19PZqOtk8Hk1b4zHRDZGwzr5prZg+TgFvO
+	eAMH/RIuzZbPYTJomV7U0JScMc9HAltMwM9Ok9C8wc0UhNjiabaNNVMIUnDd4PAO1SJbMyr79qi
+	nVVFwIzYFbHUNHrCcHH63M8MvjvZAf45KUoWnOuI/EACwR6fFrBsJcuqDGckAATHN4SZUPOnAiG
+	8VQQScdMj+EGySnFMOSgYqipF0E40i1qA9DRRqiGg9wCMZAJ6tFmWgCyGo9Nh+mXErRKYKJw0t3
+	gvOBCctO5jNlP+gltaTFzG/nCDykHTXygzdpJCvYd5DPYHXfMU2u/KK7pvTkRRNS/iClTaurnlM
+	+Wg+IBN+4qgBNuMg3SQilScfd7raidnTv7SFZqVF14P1FFhs0l5ni8II9ksZwoRnNysYNu0KtKa
+	nmRT29
+X-Received: by 2002:a05:600c:828a:b0:490:b58a:e6ff with SMTP id 5b1f17b1804b1-4923f56c180mr7690965e9.22.1781802590913;
+        Thu, 18 Jun 2026 10:09:50 -0700 (PDT)
+Received: from nsa ([148.63.225.166])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4650bc422c0sm233910f8f.26.2026.06.18.10.09.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jun 2026 10:09:50 -0700 (PDT)
+Date: Thu, 18 Jun 2026 18:10:52 +0100
+From: Nuno =?utf-8?B?U8Oh?= <noname.nuno@gmail.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: nuno.sa@analog.com, dmaengine@vger.kernel.org, 
+	linux-iio@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
+	David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
+Subject: Re: [PATCH RFC 2/3] dmaengine: dma-axi-dmac: Switch to bitmap-based
+ address width masks
+Message-ID: <ajQkupPzv8-GdEjv@nsa>
+References: <20260616-dmaengine-support-wider-dma-masks-v1-0-da23a8dcb756@analog.com>
+ <20260616-dmaengine-support-wider-dma-masks-v1-2-da23a8dcb756@analog.com>
+ <ajF4i3o0gNRtUelb@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Lee Jones <lee@kernel.org>, dri-devel@lists.freedesktop.org, 
- linux-pm@vger.kernel.org, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- David Airlie <airlied@gmail.com>, linux-arm-kernel@lists.infradead.org, 
- Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>, 
- dmaengine@vger.kernel.org, Thomas Zimmermann <tzimmermann@suse.de>, 
- Mark Brown <broonie@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
- Vinod Koul <vkoul@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Linus Walleij <linusw@kernel.org>
-In-Reply-To: <20260618-ux500-power-domains-v7-1-v1-1-eb5e50b1a588@kernel.org>
-References: <20260618-ux500-power-domains-v7-1-v1-0-eb5e50b1a588@kernel.org>
- <20260618-ux500-power-domains-v7-1-v1-1-eb5e50b1a588@kernel.org>
-Message-Id: <178180151626.1898523.11669770093439143903.robh@kernel.org>
-Subject: Re: [PATCH 01/11] dt-bindings: power: Convert Ux500 PM domains to
- schema
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ajF4i3o0gNRtUelb@SMW015318>
 
-
-On Thu, 18 Jun 2026 07:00:47 +0200, Linus Walleij wrote:
-> Convert the legacy Ux500 power domain text binding to YAML.
+On Tue, Jun 16, 2026 at 11:23:39AM -0500, Frank Li wrote:
+> On Tue, Jun 16, 2026 at 04:40:53PM +0100, Nuno Sá via B4 Relay wrote:
+> > [You don't often get email from devnull+nuno.sa.analog.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> >
+> > From: Nuno Sá <nuno.sa@analog.com>
+> >
+> > Advertise the source and destination bus widths through the new
+> > dma_set_{src,dst}_addr_mask() helpers instead of open-coding the legacy
+> > BIT() mask. This moves the driver onto the representation that can
+> > express widths of 32 bytes and above and allows the legacy u32 field to
+> > be removed once all users are converted.
+> >
+> > While at it, give the channel width members their proper
+> > enum dma_slave_buswidth type.
+> >
+> > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+> > ---
+> >  drivers/dma/dma-axi-dmac.c | 12 ++++++++----
+> >  1 file changed, 8 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> > index d47ff27e1408..19c258d511ca 100644
+> > --- a/drivers/dma/dma-axi-dmac.c
+> > +++ b/drivers/dma/dma-axi-dmac.c
+> > @@ -152,8 +152,8 @@ struct axi_dmac_chan {
+> >         struct list_head active_descs;
+> >         enum dma_transfer_direction direction;
+> >
+> > -       unsigned int src_width;
+> > -       unsigned int dest_width;
+> > +       enum dma_slave_buswidth src_width;
+> > +       enum dma_slave_buswidth dest_width;
+> >         unsigned int src_type;
+> >         unsigned int dest_type;
+> >
+> > @@ -1262,8 +1262,12 @@ static int axi_dmac_probe(struct platform_device *pdev)
+> >         dma_dev->device_terminate_all = axi_dmac_terminate_all;
+> >         dma_dev->device_synchronize = axi_dmac_synchronize;
+> >         dma_dev->dev = &pdev->dev;
+> > -       dma_dev->src_addr_widths = BIT(dmac->chan.src_width);
+> > -       dma_dev->dst_addr_widths = BIT(dmac->chan.dest_width);
+> > +       ret = dma_set_src_addr_mask(dma_dev, &dmac->chan.src_width, 1);
+> > +       if (ret)
+> > +               return ret;
+> > +       ret = dma_set_dst_addr_mask(dma_dev, &dmac->chan.dest_width, 1);
+> > +       if (ret)
+> > +               return ret;
 > 
-> Move it under bindings/power.
 > 
-> Reference the generic power-domain schema.
+> This patch is okay.  I think most system only set one width once, do we
+> really need pass down arrary.
+
+I think so. See:
+
+https://elixir.bootlin.com/linux/v7.1/source/drivers/dma/st_fdma.c#L723
+https://elixir.bootlin.com/linux/v7.1/source/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c#L1565
+https://elixir.bootlin.com/linux/v7.1/source/drivers/dma/hsu/hsu.c#L475
+
+And likely there are more. To fully support all widths I'm not seeing
+any other obvious way.
+
+- Nuno Sá
 > 
-> Update MAINTAINERS for the new path.
+> Frank
 > 
-> Assisted-by: Codex:gpt-5-5
-> Signed-off-by: Linus Walleij <linusw@kernel.org>
-> ---
->  .../devicetree/bindings/arm/ux500/power_domain.txt | 35 ----------------
->  .../power/stericsson,ux500-pm-domains.yaml         | 46 ++++++++++++++++++++++
->  MAINTAINERS                                        |  1 +
->  3 files changed, 47 insertions(+), 35 deletions(-)
-> 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/power/stericsson,ux500-pm-domains.example.dts:25.28-28.11: Warning (unit_address_vs_reg): /example-0/sdi0_per1@80126000: node has a unit name, but no reg or ranges property
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/power/stericsson,ux500-pm-domains.example.dtb: sdi0_per1@80126000 (arm,pl18x): $nodename:0: 'sdi0_per1@80126000' does not match '^mmc(@.*)?$'
-	from schema $id: http://devicetree.org/schemas/mmc/arm,pl18x.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/power/stericsson,ux500-pm-domains.example.dtb: sdi0_per1@80126000 (arm,pl18x): 'oneOf' conditional failed, one must be fixed:
-	'interrupts' is a required property
-	'interrupts-extended' is a required property
-	from schema $id: http://devicetree.org/schemas/mmc/arm,pl18x.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/power/stericsson,ux500-pm-domains.example.dtb: sdi0_per1@80126000 (arm,pl18x): 'reg' is a required property
-	from schema $id: http://devicetree.org/schemas/mmc/arm,pl18x.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20260618-ux500-power-domains-v7-1-v1-1-eb5e50b1a588@kernel.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> >         dma_dev->directions = BIT(dmac->chan.direction);
+> >         dma_dev->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
+> >         dma_dev->max_sg_burst = 31; /* 31 SGs maximum in one burst */
+> >
+> > --
+> > 2.54.0
+> >
+> >
