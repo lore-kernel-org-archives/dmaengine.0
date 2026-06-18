@@ -1,121 +1,138 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012016.outbound.protection.outlook.com [52.101.48.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44958257854;
-	Thu, 18 Jun 2026 06:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781764494; cv=none; b=X0UmHEA3Y0e8zCfObJ1cFC2CArsytdzkq8vZOc4KZ0wZKgteCuCdkpJBGAq0psaKn8TeopjrpqPMDs0lgkGteqwgN2hLoYLcYFaKpxbtLq2Cno3iea6uTeRpug60N3exj3eUbNxMWCgCaAEIpB5BUb+2rURymrTiQriVhKP0dqY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781764494; c=relaxed/simple;
-	bh=mHQfaPHeB4yZmfPnmw0ITlavwoe+a+VD3LpQc7i5iTs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m0vYEj0sFZQJrIotI4rLxyDqclf4pgtFUkM/ns7cSjghtOAQFl//AbZmTGWlW58rsPoESK2gbzNuyqVP24czYdIDDga5WAX7tKpz/cI6TLLkTJgjtPiTDRZUDS2F/sqbPg4bvnChLtFOTvASSQxrA5thhSw9e158LvXICdKS6VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Smw/w9Wn; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42C13AEF30;
+	Thu, 18 Jun 2026 07:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781766674; cv=fail; b=efrwdaxuAZYMnKGGzWTWeMnhkcHOfcJcSK0vBFemc+lA1h8tDvPIO5RYLXWUzptx6qwRGooUQWEAZa9RsHHPSWpvqww9FZMjthV+7ZrHijXeyUyVajKbeF3JEPJa42h/H34nkZSDlmY/no4bbKYZcjf8xMKSESxSPUSHBLo2v7g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781766674; c=relaxed/simple;
+	bh=I+QISvZIzQOatmDoo9djaLZbeVd0wYhRnvAQaN+hyIc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GO2Cu0OwRw1mrb2tGmG3OGpoPA58borr3/J3f8Qd6fmdVbVyB2DV43SVP5qRqxMUxZEJkpn0wOZw7nDSTb+lPseNPNP9pOXWzHEceuv0AsHH0Jby8sOOsMhMjwC0QFO81ul+mAauS/DKJsiIULIX82iobf74C0QZcv5LnFs2uVA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kEDlrq8H; arc=fail smtp.client-ip=52.101.48.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Smw/w9Wn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781764492; x=1813300492;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=mHQfaPHeB4yZmfPnmw0ITlavwoe+a+VD3LpQc7i5iTs=;
-  b=Smw/w9WnanRGEqiiqlCweR32Vhgw7hyonNR30Ixd9xCD7otRCRuhtFsV
-   yH1Rm25GJzHUzGVhSfWzggx6OGXYc4yhDDhiUH1dJoAR75xIrqjCrRFYK
-   jAL/tuJyrgwtU1skd63HyZSXFQvzk9rnX9T+o87PP+36v9DhcwyUzyrxV
-   H6kc7X8XNAxGvW1FGqoowSi5WG3hvsmZUEzD6EcYMfnGlgQ3C5mrq2C+U
-   JBI980eZPmqpFL7rJlaunx2uNkAhrj654k9sFNSaEaryHKw3DnMkEL8q8
-   wClIjxwn/0pG5OvzfR39QawpARmk4dZy91VRAfoXOandr+d+BpSQaakOB
-   Q==;
-X-CSE-ConnectionGUID: qGLx6OENShWAMBoeq1qmRw==
-X-CSE-MsgGUID: Lwd2lX3aTNmcQzD2nMxiRw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11820"; a="86431996"
-X-IronPort-AV: E=Sophos;i="6.24,211,1774335600"; 
-   d="scan'208";a="86431996"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 23:34:52 -0700
-X-CSE-ConnectionGUID: oBuVv9rbSoOjSZsf25/Hvg==
-X-CSE-MsgGUID: jjNy/8VnRRy9uGYCzUqKsw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,211,1774335600"; 
-   d="scan'208";a="241905091"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.10])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 23:34:50 -0700
-Date: Thu, 18 Jun 2026 09:34:48 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Subject: Re: [PATCH v1 1/1] dmaengine: acpi: Free resource list at
- appropriate time
-Message-ID: <ajORiHmedgWiT64Z@ashevche-desk.local>
-References: <20260617091421.2649071-1-andriy.shevchenko@linux.intel.com>
- <ajMI-QgrEREC6OTD@lizhi-Precision-Tower-5810>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kEDlrq8H"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nMzKAxZFaZnIKYgVESX1IqzO7GGKDe3DyoykurqCKqMVgjNmK2m9XNTvmJuV9HphI7X8AhC4nFzLBtnt4f4Cq5Fpla9I7U6a35eWnZvuvnSOMvgf+k8EiqT4YxXl4rsYUIbyJ+R/5Wkqgg4QWk/uvdp7TLGaVTz9sa3EElwEdOFk+w+LY/HYHmMMk99tbXlOFM0p/wXFua7J7mMSCVzQuyasU1bLuR5bPCUvyChuDh7hOiIYziZ/I1CHZm1em/kYO37aRKye/BKl4HEAsB9OeIW+cR3K5dB2yW2lcKRJ0wRcf4Qx9wuOwVzZzK4kzB6iuz4aFPpZ4DvkwuM9C8IlVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5SUIPw3uRSPV0LsL14eHJ/vGa542eKOH9eK3Bp8b2I8=;
+ b=ndWoWFxuEALSNy3JMcc60EBcCQzJGvXMHSVDmSiTPEusyR/cv70xPBvc6/nur7TtWseNb1N6n5tXUuxer1p5558FDMxaSeFzOZ+0OdYliiVcs95c/yAipRH6daKXuAlueey+7nwa/9tSCiLhh96nOGa2B8fS0GjxJZGQBJExcZEnVEmJ6DeRU/2r+DF4E7KHecRGBym/bvHD0ywVBaqHFkF1p2RAjKhYqlFOKAVL6nKsezl/vOkyvBFF+Yez88PQJOxK+E5JsptMho7P9HYC+qyPKqn3yFsuJkT1noZVxBNJ7tqVI5cV24f5sx59QicOSITOKxKN18ZyaYHQeFosMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5SUIPw3uRSPV0LsL14eHJ/vGa542eKOH9eK3Bp8b2I8=;
+ b=kEDlrq8HqKdApbrhdrngwKWH5J3v5XTVXWyXV107lR0ah+eWprGMekhDvj3O0/22odRhokmzwlDk3eCL1eh9x6NGOdrznY45aX+3Wv4n2PmOukLz7XAEmUZOW99aTFHVCttIWB+JUeGh34P7lLsrb8tLFGohS9Kmdnf2FsRXGWc=
+Received: from MW4P222CA0023.NAMP222.PROD.OUTLOOK.COM (2603:10b6:303:114::28)
+ by CY3PR12MB9607.namprd12.prod.outlook.com (2603:10b6:930:103::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Thu, 18 Jun
+ 2026 07:11:08 +0000
+Received: from SJ1PEPF0000231E.namprd03.prod.outlook.com
+ (2603:10b6:303:114:cafe::7d) by MW4P222CA0023.outlook.office365.com
+ (2603:10b6:303:114::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Thu,
+ 18 Jun 2026 07:11:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF0000231E.mail.protection.outlook.com (10.167.242.230) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.139.8 via Frontend Transport; Thu, 18 Jun 2026 07:11:07 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Thu, 18 Jun
+ 2026 02:11:01 -0500
+Received: from xhdappanad40.xilinx.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Thu, 18 Jun 2026 02:10:57 -0500
+From: Golla Nagendra <nagendra.golla@amd.com>
+To: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <michal.simek@amd.com>,
+	<robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+	<nagendra.golla@amd.com>, <jay.buddhabhatti@amd.com>,
+	<harini.katakam@amd.com>, <m.tretter@pengutronix.de>,
+	<radhey.shyam.pandey@amd.com>, <abin.joseph@amd.com>, <kees@kernel.org>,
+	<sakari.ailus@linux.intel.com>
+CC: <git@amd.com>, <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH V2 0/3] dmaengine: zynqmp_dma: Add per-channel reset support
+Date: Thu, 18 Jun 2026 12:40:53 +0530
+Message-ID: <20260618071056.2024286-1-nagendra.golla@amd.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ajMI-QgrEREC6OTD@lizhi-Precision-Tower-5810>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF0000231E:EE_|CY3PR12MB9607:EE_
+X-MS-Office365-Filtering-Correlation-Id: 92ac8a26-6751-4980-eec8-08decd08c4c1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|82310400026|7416014|23010399003|376014|1800799024|18002099003|6133799003|921020|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	/idZklhEaEfMrSc2QiSrL7YO/1pKxdnmtX3YUkHNE5z+ipmWNGuMHLa86DKGRhil1t3X2Dkvc4Aa+UyLC8XkKS54AQWcxlAvq8Sc47IbVgp0bs4/o3sYV6osFXwA9+sfWWE4EoP+BoZN4dxFfzDIJr2Y+RU03yAYqjboKBGRdLCtLv9SwC6sTI37A+rCtfX+CHjrhp/DFcEgwcdL6fIgFHfCo9MZpQA2xtrIRMq48X0BMQowNM8hvYY9Tno0OCgSvO80Se5uFYYWJo/8nm+TVKJ8aS6aiPtFlqd0JNPjILRZ2urzDPS6LZAlmCqZJScTCTe8FQcr+u1LqAobpzFLBxm0rzG2m5hqczgc8akuRMEZDhtRPKjv4VvTrgI+cGUaa4M1wEZbo/egK3HJDC3J8MuxwUrRXBcE0byhGjMhyPNVl6Gc/C0gnd2BovmwXbK1Wy4WOjVtobYFoPL5mS+M332IYfziC2QUkDj6lZrCHOZZ1B9m1ELUPbPlFZ/bWEDIocHGCSLUxvz7KCHytzecYdIM/DwugUe7x3jFZygfeVu3yCBMJuLEXXn1Lx3nCj2sSJN9WpXGUIBD4JyoP/U7c7SFHrprlNiSkzBSGBRdh36QPYmDtnD9/A1qdS3lBuLvQKB7DWY3DPtmS3wUmm2wIQ8z1tAshj5oBp/0kzcQrDsKnyurlFxyzyWkvjTcSlovHi5yaPtGv64pjDsNrm33YoWPuPkAq+ckCN1GXIodlTSSrr+prhURDgxBdxQKU9uMXElf8aOEiBMAJ0dPpYzC3Q==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(7416014)(23010399003)(376014)(1800799024)(18002099003)(6133799003)(921020)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	QPyJCZGyNIfMlm3YVWNQs41TCQJjPhSauurZ85Z8PRGZBI/ReLZW70sU227DCjCWz0s0vOEBsqfdgEdsO3wZsiAORJXonWcOWuCQTV0fNRxRFxu1GNdo7YgswcJee3xAgke03KRkAiLYr3pV/wAdZOsHh/U518gLnS6Atw+wxwUWCBaayckDRJBM/n9ZDMNirt492aeH3fNc3cbTDLP7q5VVO06U3TaVpkIrMbXZt5mQO+ykPyvbFGlPj1KbYQ9QLGzcDmlROIoiP2VlSCfUSDtMHxD0MBY+gfg9X139bChZAvJtqNigdOcnYqPf4QvOqh88xJdBpnWl21cBj5+omBBTJPUlaxcrBghN14VkoiTvZMQRGKhsU26W5ZBpLHaQy6sjSOg/S1nV6/xYOpcekxJqEBQ8gpn8cqRIU5vWCJK902Tan4uSQLWkBdRvqeUd
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2026 07:11:07.6392
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92ac8a26-6751-4980-eec8-08decd08c4c1
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF0000231E.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9607
 
-On Wed, Jun 17, 2026 at 04:52:09PM -0400, Frank Li wrote:
-> On Wed, Jun 17, 2026 at 11:14:21AM +0200, Andy Shevchenko wrote:
-> > In one case we don't free resources when formally should, and
-> > in the other we do unneeded "double free" (emptying an empty
-> > list).
-> >
-> > Both are not critical issues at all, they just make code robust
-> > against any possible future changes in the flow.
-> 
-> what are you talking about, can use straight forward words.
-> 
-> You just move acpi_dev_free_resource_list() after check return value
-> of acpi_dev_get_resources().
+This series adds per-channel reset support to the ZynqMP DMA driver using
+the generic reset framework, along with the corresponding dt-bindings
+update. It also adds a runtime PM guard in the IRQ handler to handle
+spurious interrupts safely.
 
-Not really. There are _two_ cases. And while they are slightly different,
-the solution is to make them behave in the same ways.
+Patch 1 adds the optional 'resets' property to the ZynqMP DMA dt-binding.
 
-...
+Patch 2 adds reset control handling in the channel probe path to assert
+and deassert the channel reset during initialization.
 
-> >  	INIT_LIST_HEAD(&resource_list);
-> >  	ret = acpi_dev_get_resources(adev, &resource_list, NULL, NULL);
-> > -	if (ret <= 0)
-> > +	if (ret < 0)
-> >  		return 0;
-> 
-> Dose this change related with this patch?
+Patch 3 adds a pm_runtime_get_if_active() check in the IRQ handler to
+avoid accessing hardware registers when the device is runtime-suspended,
+which could occur on spurious interrupts.
 
-Yes. It's mentioned in the very first part of the first sentence in the commit
-message.
+Changes in V2:
+- Added patch 3 to guard IRQ handler against spurious interrupts
 
-> >
-> >  	list_for_each_entry(rentry, &resource_list, node) {
-> > @@ -370,10 +370,11 @@ struct dma_chan *acpi_dma_request_slave_chan_by_index(struct device *dev,
-> >  	INIT_LIST_HEAD(&resource_list);
-> >  	ret = acpi_dev_get_resources(adev, &resource_list,
-> >  				     acpi_dma_parse_fixed_dma, &pdata);
-> > -	acpi_dev_free_resource_list(&resource_list);
-> >  	if (ret < 0)
-> >  		return ERR_PTR(ret);
-> >
-> > +	acpi_dev_free_resource_list(&resource_list);
-> > +
-> >  	if (dma_spec->slave_id < 0 || dma_spec->chan_id < 0)
-> >  		return ERR_PTR(-ENODEV);
-> >
-> > --
-> > 2.50.1
-> >
+Golla Nagendra (2):
+  dmaengine: zynqmp_dma: Add per-channel reset support
+  dmaengine: zynqmp_dma: Guard IRQ handler against spurious interrupts
+
+Jay Buddhabhatti (1):
+  dt-bindings: dma: xilinx: Add optional resets property for ZDMA
+
+ .../bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml     |  3 +++
+ drivers/dma/xilinx/zynqmp_dma.c                      | 12 ++++++++++++
+ 2 files changed, 15 insertions(+)
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.34.1
 
