@@ -1,224 +1,194 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021126.outbound.protection.outlook.com [40.107.74.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E008A18A92F
-	for <dmaengine@vger.kernel.org>; Sat, 20 Jun 2026 20:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781988460; cv=none; b=rElmclHJbxNAYoR2mHDtqFk+2AvtWzee54Bxq56jyTjkIL/jktoilo556+q8Da7x1IAgvCdkkYa3DTH27GHkh1pPPbW28OkPCPhJw5ESsR9JwPVLKGO7+S+IQ7GJ6NPdbTbhjbUU8hpo1uLEGSCoJTEzOP9c3vwHTGHsRh6Ppbs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781988460; c=relaxed/simple;
-	bh=D2FazJvQ4DdaBbZqQE6QDyr4aIvd8PN8XprpZ2TE2y0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=aYq7g9Xfr4UEkO0JvG88so+ucTYEvHMBgvFeRa/1lK/BHm/s9/Hdge4ZUQi3ogmbm7MN9MuqAj7UhCgYtl7hUU6NSk+6QFmbRAxOn1qgv076tq+SWU7ba4JenXLIfTqyp3flPklardFHqGTVYxqvO9YpX9anZG5T17CLmx/J5ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAIRB+iQ; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F38F368D6F
+	for <dmaengine@vger.kernel.org>; Sun, 21 Jun 2026 14:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.126
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782052544; cv=fail; b=CVnBoUCShg/2dr+JuSoB8i2uKEiKdXAiYOrtoYB5dW32/591YxJi7wU/CtTXNKKuhm+cUeQO4B70vzS8zT6BlbdGEpD5vdhobk9c6qzbZ3S125ICj01itncE09pNIp/LNYeQa0SZO+ow0WozEYHCtLkIyfoweHL7zoy/4F8wh6w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782052544; c=relaxed/simple;
+	bh=ao1cMbF7isrVCp/TzGurklCyHAihXJVCcKjWXK9Bj9I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=dqCfJoKWAjk1kK3yadEFfWmemzhYtUboIZyhbE3I3nvBBfrGVhoLadxUM6VAqwJP+LYzO+w0thjqiXLCugwECPFlYq3o5UXgCUKRPPaMROjGXWkCESeot/VAWFShOw1QI5pzrnZEzuSysLABq/uXvq84/2Ds0Qaf2Pd2wP6uXCk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=hTfmCaXm reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAIRB+iQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462EE1F000E9;
-	Sat, 20 Jun 2026 20:47:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781988458;
-	bh=1FFeNlvV9Fef8dVVOsJEUXpFjNZ+SoZvBk36H8T0zCw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XAIRB+iQ1cVcT7u9nU814s7rUaYD7Qe5ElwMGpz/tyVWKxZtbbEJ7MZjz1Uf4I8No
-	 /j1UYuwyZhz4edgzDssnT3FzA6c3SBl4/Z7K5IywwFpDqJNnhj9YUAuGlcpA+8SPTQ
-	 uUT9OhW8VuByQ9SlYv2ZYLgYxj1344kxVY7Vu+ue+HS9u8zCsInwCPD3SWxbl2n3vm
-	 X5Sotd7VbF0xQXTYJ0/QzGxojy7DG5bVpKNaGnj2ACJmFD5M8At84SxI2tqMhRGPF2
-	 qnTG/DgZVGvYmnNZPHNlQ456uo2XblBaREifi9AdTFzUPellN+BE7/cBSeg3wqDX1V
-	 Kpq4RRDLkvDBw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH RESEND 2/3] dmaengine: xilinx_dma: Enable transfer
- chaining for AXIDMA and MCDMA by removing idle restriction
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Suraj Gupta" <suraj.gupta2@amd.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260620203417.4000360-3-suraj.gupta2@amd.com>
-References: <20260620203417.4000360-1-suraj.gupta2@amd.com>
- <20260620203417.4000360-3-suraj.gupta2@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 20 Jun 2026 20:47:37 +0000
-Message-Id: <20260620204738.462EE1F000E9@smtp.kernel.org>
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="hTfmCaXm"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YjKHJR+cGteiLrSH7SkrI0DfgsEVr5o7GoWnKC9IosTt4FagxIrB/P9rh9AOiG85N6dsb3Ii/JtEJXSjeV0PDS1hH7b4PlUnm1jNsJWU15+QyO43G/rRXMYKqaFHHi3WjLrymdvLy7MvojU2oUVd+xzyWyI280VAPfjKCPgrYR0rYgYY7PsEK80vvnkD3BldcC7J5ISCfRXCzpgX33ZJNPwlTwxSkfflH1cYK/nQ32kk9ayykWn1yniBZhOwyFQCDjLF6e/u+xU3lJBzMLSwZicFIii0dkVzT89KMURC+bMSr8nRd3wSDhWhG1JAqZUUqKVpsDRK6/zqafh8oAG0nQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
+ b=R+lHZ1I2gTkXay2JHp6qIZQrlzg/yKKjwomcwIVSZCnDfBulgkP4gtCOXRNIhK7wGt1aNGDi5+G7fkqF6fHETYnfI7gZaQPDPgJQ6DAYYzPMbQ+Az2aPHTvuFjDbeohZgUdkZmwPQ99R17whdl4LE96B11JGHbeOPIr3plg75yv5bj3eV4nY5kQA82nM5di7oy45f0wZbCc87pOOsKw1ASCWyUeCB+3IaKi6bRLOZUrZ6e6jORr0oMqye3kilyvd2sPZF/P6HaGonXz3M3ibvsOUFlKBwPYoXX9TO2tT0uNcZoaiHiKG1eijoJv+1nCoTm0nPOxrCQHMKIKaiR4qvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pMVcVKHqJkfI4vW666Rhv585VAoJitcO0Eq+zytx/9A=;
+ b=hTfmCaXmG+AlWNstfO2KYBRCyD2NnNNVWx6PrLh++Zaahadhn9+Ru6qySjjG1mAAiqUhGpwq5EgwkO9EDZq6OekaKY7JcwPDcT1Zqbxj92H+JRMZYphEHtRmfc3geEnTOQEXvWLyDEX20jwwh1DGgp0/r8HtCcwAInxJBy0ccgQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY4P286MB5774.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:2c7::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Sun, 21 Jun
+ 2026 14:35:35 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0139.018; Sun, 21 Jun 2026
+ 14:35:35 +0000
+Date: Sun, 21 Jun 2026 23:35:33 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v3 01/13] dmaengine: dw-edma: Add per-channel interrupt
+ routing control
+Message-ID: <srhpqgi4vitjhbehchlq7ri6yti6ghvlxjzszxad2lmfvr6vz4@aqfnmcew3zlu>
+References: <20260620170040.3756043-1-den@valinux.co.jp>
+ <20260620170040.3756043-2-den@valinux.co.jp>
+ <20260620171353.436AE1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260620171353.436AE1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: TYCP286CA0031.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:29d::6) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB5774:EE_
+X-MS-Office365-Filtering-Correlation-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|366016|376014|23010399003|1800799024|6133799003|3023799007|56012099006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	/1aS6phgtEDY6veayhvrMrV0WFuknfolAtlJ7Q2eWQJ6A6AClHgQCXPVDNJ1oqleZM4dHsd0EN1XZkuNED9BSqMkYEhQcUWlgCSH3/pblAmA0aYW/Lcq1V1/KHS3kdlt5uEY9MbP3yGxRZXghGFSHkStTfV8oCUgq8fPdLjoPRy3oJ07WcWyd/a6tNdDKnqJg0tq77UI5ZfjXFVzGed2fPLSW4yu5+uadDPrXIpZ7G3UTL7aRHcu2ZKdLbl+DNx1M3NbaNk7qzppFf87MtzxWrrvxG/z7M0+AcxaVHLTQgjvTgYHw/PQQOJMJ85xJDpTL7zNNVnI1sl3lRtqw+6GmuGGEbUrpMvF5aAOJ9BPRBxQVgguk7+LzTm+bo/H3Ylu+gmmKyvqHfvkNj117bc8qLTfQkMrld98VhwTeBdK20/vCRIO8edtL9QVIKkNBw9TSCZZpgPFbFJHmU/Dx8PvvCdyTh5qzP2fA3PuPh1//XWAeDm7q/FFnmatq2g6cbFfagWfDGlw8iOIQoxR5wdcCqpta0gv1fPvMULokBQ0esYdrfF3MhzyYEwVz3ksf2aMmXeXIjmCOCmVMXjNIwPlPAeG2YDPZ0mGE7fJ4xLX6UI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(376014)(23010399003)(1800799024)(6133799003)(3023799007)(56012099006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?dEx++/QkoTtcsjxXpVEaLmhlU3QIpUrGIIxS5aOrnEyO1HHIIBcVsQ+/ZR?=
+ =?iso-8859-1?Q?pK9j3IrpOjQQtMK5n5C32TtDloSS/sVb3Gyaqs8bHO8UaUN+MahaWEnJHI?=
+ =?iso-8859-1?Q?C6MS0B1bW4LLV6an81+ZcPnoalbhqhbnWlRh6dPGhjxpF5bJf6Yr4CYrdY?=
+ =?iso-8859-1?Q?si64tz2+/QsdCdLTjzW2KqQqva9t4hOqjIADJnU41QjTMrpJcXyFCq6+Js?=
+ =?iso-8859-1?Q?3m0qgV+Tb6S6adJsM+cfo4uek+X8YGc0cEZRcnz6CC3jzsvSPDtNibU1Br?=
+ =?iso-8859-1?Q?vOa2a1aw823hwVpIP/+NVUTNLHNZ0D1+7pHhTVaEzTxxrOO2dCg9Kd5a69?=
+ =?iso-8859-1?Q?/X31Lf8YphYmUjxt3Vh4BOljr9sA4uQCgTttgC7uqAoaUPdyEj4v6fQv6t?=
+ =?iso-8859-1?Q?DCRzRrkU5k2S55bW+r0L6Oz9Z+pl27puEuYtJw6HOcofqPWmJZHFKUH6IZ?=
+ =?iso-8859-1?Q?FO6DApIRfDlFse3B3ln76BzBGlKbWs7/zkgi7Lub0LPqiS3czXTS51Ozcb?=
+ =?iso-8859-1?Q?0dCM2QVnluFBJ9Hul4jbEGchX551FMd55YGD6xIibCSwvixv1FUPDF41Sr?=
+ =?iso-8859-1?Q?a6pBPBtE58LW2rws4feOmBcuRYAdwkNcT41mB1KNVyW/lRyI1/IVQiUqDC?=
+ =?iso-8859-1?Q?A0/wd9Qu9S9OZMDylpzosyjIgcBwvWpH+dBqPir72Y4U+C6+FYcu60bsOE?=
+ =?iso-8859-1?Q?ILni0K8ix9d390Jj+vt1erlxO+jYdym6q5jrc7JwG+J8kwjJZ+Rlo1oSqT?=
+ =?iso-8859-1?Q?1t9GO8FbhInqPaOZpuAWd2a8PdWMM8m0GPRQkLClzliF3C8tp8y3HO9Kxo?=
+ =?iso-8859-1?Q?bL/uCdpNsHaFhz+cA3s0NrRRGpVOPmWy9B66aXIWpF/vP5MI3QVe/Lv3ye?=
+ =?iso-8859-1?Q?SnFhcgHqRJ5gkmLo9y2ZUoOShcj/Kg1YPFKZfBOJBpq3YXRBw1tfM6Eyuv?=
+ =?iso-8859-1?Q?NnBu3wrB8wvkDglcvJ2fzG7ShJaVDm9dsIsYSfcu8pVRUHyCp9xvC0xu8d?=
+ =?iso-8859-1?Q?H0XJpO1oO93xZKkaURjr3ywMzYmZCKtA4wmpcEac7L+3Mc0u9ejiWyq7VU?=
+ =?iso-8859-1?Q?VKe0WDEcUqL1w02UZLhNu7DsDc3el/tAOwnn0k5KV33qiYqQ/1nGnsLoEW?=
+ =?iso-8859-1?Q?gl+D+5GmWfmXhrgSFvLHvu/3yNrbUxX3H7/3KZEKyINo7jXOd55o8a5RIL?=
+ =?iso-8859-1?Q?c268TJmajJ9ye6bFYz4mQm0yZcsIZQBX8WuKW1qQYdNXMLoFJ0nDncw86i?=
+ =?iso-8859-1?Q?A2xNeN3KXz1mtcWxOLfuVbNPOK9YfLcMmj3LYcQFJkc5v5CQsQWKC+DgnA?=
+ =?iso-8859-1?Q?w12g+PvOmvVySmwFngY94B+rlceIGCxBDX2U0beaiozaf4lkbHdEIAwqb3?=
+ =?iso-8859-1?Q?/vcGj6i7F9tAe+x9qiz2i3awItFqg5UY8X+PWTyKbSyPvbl2MJvTxXYbHD?=
+ =?iso-8859-1?Q?ujCGOrntzYSTs7fv6fwNb8p2FCC/03BUJOF0NL0TQIDcbi4+pb/JzrSwBp?=
+ =?iso-8859-1?Q?VwvFHpv7aNI93zDZweqEb3EneMgys7kyME6QwaN+02LfyFvtJrrlCHavYC?=
+ =?iso-8859-1?Q?5pWZ/MMldhXwlyGiM2rcsX/D6D5JpB9KrRTukYQbzqxYEtVnWscMzlhp8Q?=
+ =?iso-8859-1?Q?cfSFIPqN7TEjhQ3/S63uPkIy6Ur7FOaqsrm04XWLCGP3m1LyX4qMPpgU0E?=
+ =?iso-8859-1?Q?qf4iw7WlJD3puFcfsSxj5TFT0LyPUJZKq3Msicr1Rs3FR7TTki5SaerrDn?=
+ =?iso-8859-1?Q?QnfDspGfxVykIKzl3HAz4ICzlDp2kB1rd3OmOOT3KkCWvgDdxs+KD+0y6x?=
+ =?iso-8859-1?Q?QBNDVnyLeGBirHnUBpO/HK4Q0FxemdBZYBXDA1lNdo0qIYxT/K52?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5434c95-93bf-418d-4eef-08decfa25ae1
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2026 14:35:35.0070
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Jg/Z2vS69GHPHrg+V+0yK570JRSvER446v66yNRA6TM5lwogKtpt4cAZxAGLG1CIPXaLf13z+BEVp8nCYJWWWA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB5774
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [Critical] Removing the channel idle check unconditionally overwrites har=
-dware registers in Direct (non-SG) mode, corrupting active transfers.
-- [Critical] Appending new transfers to a running Scatter-Gather chain brea=
-ks the hardware descriptor chain, as new descriptors are never physically l=
-inked in memory.
-- [High] Updating the interrupt coalesce threshold while the channel is act=
-ive uses a partial descriptor count, disrupting interrupt generation.
---
+On Sat, Jun 20, 2026 at 05:13:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] V0 eDMA fails to set the Remote Interrupt Enable (RIE) bit for remote-routed channels on a local endpoint controller.
 
-commit 59ccde00ae0d672019658b79ee8d2055ebb8fa7a
-Author: Suraj Gupta <suraj.gupta2@amd.com>
+This is a false positive.
 
-dmaengine: xilinx_dma: Enable transfer chaining for AXIDMA and MCDMA by rem=
-oving idle restriction
+> --
+> 
+> commit df5a2947e52cc02cfc126b63bc365277ac3752fa
+> Author: Koichiro Den <den@valinux.co.jp>
+> dmaengine: dw-edma: Add per-channel interrupt routing control
+> 
+> This commit adds per-channel interrupt routing control to the DesignWare
+> eDMA driver, allowing channels to route completion signals locally or
+> remotely. It updates the v0 eDMA and HDMA paths to configure interrupt masks
+> and generation based on the selected mode.
+> 
+> > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> [ ... ]
+> > @@ -331,7 +335,8 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+> >  		j--;
+> >  		if (!j) {
+> >  			control |= DW_EDMA_V0_LIE;
+> > -			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
+> > +			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) &&
+> > +			    chan->irq_mode != DW_EDMA_CH_IRQ_LOCAL)
+> >  				control |= DW_EDMA_V0_RIE;
+> >  		}
+> 
+> [Severity: High]
+> When a local endpoint controller delegates a channel to a remote host, the
+> irq_mode is set to DW_EDMA_CH_IRQ_REMOTE, but DW_EDMA_CHIP_LOCAL is also
+> present in the chip flags.
+> 
+> Because the check in dw_edma_v0_core_write_chunk() explicitly requires that
+> DW_EDMA_CHIP_LOCAL is not present, the first condition evaluates to false
+> and DW_EDMA_V0_RIE is never set.
 
-This commit removes the idle check in xilinx_dma_start_transfer() and
-xilinx_mcdma_start_transfer() to allow queuing new transfers while the
-channel is busy. It also updates the CURDESC register only when the active
-list is empty in scatter-gather mode, relying on the hardware tail pointer
-extension mechanism to handle chaining.
+The key point is that a delegated channel is not driven by any EP-local
+consumer. The EP side calls dw_edma_request_delegated_chan() only to reserve the
+exact HW channel, so no local DMA engine client can take it while it is exposed
+to the host. pci-epf-dma itself never submits DMA transfers on that channel.
 
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
-dma.c
-> index ca396b7097427..35b553ee3205c 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> @@ -1580,9 +1580,6 @@ static void xilinx_dma_start_transfer(struct xilinx=
-_dma_chan *chan)
->  		return;
->  	}
-> =20
-> -	if (!chan->idle)
-> -		return;
-> -
+Transfers on delegated channels are programmed by the RC-side dw-edma-pcie [1],
+after the DMA register window and descriptor memory have been exposed through
+the BARs. On that RC-side instance, DW_EDMA_CHIP_LOCAL is not set, so the
+existing condition still sets DW_EDMA_V0_RIE.
 
-[Severity: Critical]
-Does removing this early return cause active transfers to be corrupted in
-Direct (non-SG) mode?
+So the EP-local channel having irq_mode == DW_EDMA_CH_IRQ_REMOTE does not mean
+that the EP-local instance will call dw_edma_v0_core_write_chunk() for that
+channel. It only means that the EP-local instance must not consume the
+completion status if a local interrupt is unexpectedly observed.
 
-Without the idle check, xilinx_dma_start_transfer() can proceed while a
-transfer is running. In Direct DMA mode (has_sg is false), the code falls
-through and executes:
+[1] The protocol does not exclude other RC-side consumers for other vendors in
+    the future. dw-edma-pcie is just the first supported consumer for the
+    pci-ep-dma.h protocol.
 
-    xilinx_write(chan, XILINX_DMA_REG_SRCDSTADDR,
-                 xilinx_prep_dma_addr_t(hw->buf_addr));
+Best regards,
+Koichiro
 
-    dma_ctrl_write(chan, XILINX_DMA_REG_BTT,
-                   hw->control & chan->xdev->max_buffer_len);
-
-Could this unconditionally overwrite the active hardware registers if a
-transfer is already in progress?
-
-Additionally, moving the newly queued descriptor into active_list appears to
-cause xilinx_dma_complete_descriptor() to prematurely complete newly append=
-ed
-descriptors, because the loop break condition is skipped for non-SG mode:
-
-    if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
-        break;
-
-[Severity: Critical]
-Can appending new transfers to a running Scatter-Gather chain break the
-hardware descriptor chain?
-
-When the idle check is removed, we update the TAILDESC register to append
-transfers on-the-fly. However, the Xilinx AXI DMA engine requires SG
-descriptors to be physically linked in memory via their next_desc pointers.
-
-In the driver, descriptor linking occurs in append_desc_queue():
-
-    if (list_empty(&chan->pending_list))
-        goto append;
-    ...
-    tail_desc =3D list_last_entry(&chan->pending_list, ...);
-
-Since start_transfer() moves all queued descriptors to chan->active_list and
-leaves pending_list empty, a subsequent submission will find an empty
-pending_list.
-
-Will this cause it to skip linking its next_desc pointer to the tail of the
-actively running descriptor chain in active_list?
-
-When the DMA engine reaches the end of the original active chain, it might
-follow a stale next_desc pointer instead of the physically unlinked new
-descriptors.
-
->  	head_desc =3D list_first_entry(&chan->pending_list,
->  				     struct xilinx_dma_tx_descriptor, node);
->  	tail_desc =3D list_last_entry(&chan->pending_list,
-> @@ -1599,7 +1596,7 @@ static void xilinx_dma_start_transfer(struct xilinx=
-_dma_chan *chan)
->  		dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
->  	}
-> =20
-> -	if (chan->has_sg)
-> +	if (chan->has_sg && list_empty(&chan->active_list))
-
-[Severity: High]
-Does updating the interrupt coalesce threshold while the channel is active
-disrupt interrupt generation?
-
-The driver updates the hardware interrupt coalesce threshold using
-chan->desc_pendingcount before writing to the DMACR register:
-
-    if (chan->desc_pendingcount <=3D XILINX_DMA_COALESCE_MAX) {
-        reg &=3D ~XILINX_DMA_CR_COALESCE_MAX;
-        reg |=3D chan->desc_pendingcount << XILINX_DMA_CR_COALESCE_SHIFT;
-    }
-
-With the removal of the idle check, this function now executes while
-descriptors are actively running. Since desc_pendingcount is reset to 0 at
-the end of each start_transfer() call, it now only represents the number
-of newly submitted descriptors in the latest pending_list batch.
-
-Will overwriting the active coalesce threshold with this potentially much
-smaller partial count disrupt the DMA engine's interrupt generation and cau=
-se
-erratic coalescing behavior?
-
->  		xilinx_write(chan, XILINX_DMA_REG_CURDESC,
->  			     head_desc->async_tx.phys);
->  	reg  &=3D ~XILINX_DMA_CR_DELAY_MAX;
-
-[ ... ]
-
-> @@ -1660,9 +1657,6 @@ static void xilinx_mcdma_start_transfer(struct xili=
-nx_dma_chan *chan)
->  	if (chan->err)
->  		return;
-> =20
-> -	if (!chan->idle)
-> -		return;
-> -
-
-[Severity: Critical]
-Does MCDMA suffer from the same unlinked descriptor chain vulnerability when
-TDESC is updated while active?
-
-Like xilinx_dma_start_transfer(), appending new transfers to a running
-Scatter-Gather chain might break the hardware descriptor chain because the
-new descriptors are not physically linked in memory to the active list.
-
->  	if (list_empty(&chan->pending_list))
->  		return;
-> =20
-> @@ -1685,8 +1679,9 @@ static void xilinx_mcdma_start_transfer(struct xili=
-nx_dma_chan *chan)
->  	dma_ctrl_write(chan, XILINX_MCDMA_CHAN_CR_OFFSET(chan->tdest), reg);
-> =20
->  	/* Program current descriptor */
-> -	xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
-> -		     head_desc->async_tx.phys);
-> +	if (chan->has_sg && list_empty(&chan->active_list))
-
-[Severity: High]
-Does this also overwrite the MCDMA CR coalesce field with a partial count
-while the engine may be active?
-
-    if (chan->desc_pendingcount <=3D XILINX_MCDMA_COALESCE_MAX) {
-        reg &=3D ~XILINX_MCDMA_COALESCE_MASK;
-        reg |=3D chan->desc_pendingcount << XILINX_MCDMA_COALESCE_SHIFT;
-    }
-
-Similar to the AXIDMA case, using desc_pendingcount here while active might
-disrupt interrupt generation.
-
-> +		xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
-> +			     head_desc->async_tx.phys);
-> =20
->  	/* Program channel enable register */
->  	reg =3D dma_ctrl_read(chan, XILINX_MCDMA_CHEN_OFFSET);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260620203417.4000=
-360-1-suraj.gupta2@amd.com?part=3D2
+> 
+> According to the commit message, requesting a remote-only interrupt requires
+> setting both LIE and RIE while masking the local interrupt. Since
+> dw_edma_v0_core_start() correctly masks the local interrupt for these
+> channels, does this prevent the DMA completion event from being sent
+> entirely, potentially causing the remote host to wait forever?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260620170040.3756043-1-den@valinux.co.jp?part=1
