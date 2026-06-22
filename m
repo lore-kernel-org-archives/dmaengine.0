@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02EF1C2324;
-	Mon, 22 Jun 2026 17:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F452E7F39;
+	Mon, 22 Jun 2026 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782147641; cv=none; b=GWa9M5wCaqpAkWHtBXPspLJvScGJ/Dg13JacECBRq+8if4fYkdSl0EgEQOxRnXEBfR5XEl7reXuVUWFQIfVJ3Ms4AXkSYVDF2/zHm1s9G1OWQhEyxJzpLbMcGDjcoFDfJogfWRnzKxJhBdR1O49fKtxuwcl5dLlZNBrMUP3HD2E=
+	t=1782148642; cv=none; b=u39npyINLE2b9dDr7wKUngrlCEUsYwCi2aEGEiz0e7LCGssC44qxS0ooyAMZ6y++1ljP00ZDm1o2QBhL3cVf8sZiRunR0zG3oDFQvloYpcsV9WMl8pR1lAz5Fhzh4BCLWAXTgeAWoETa9tBPnKxLerML5EbFy3cT8WYA0BbtPo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782147641; c=relaxed/simple;
-	bh=FBPNSe4CPrmYI7tdrVEFFESNM2AQv28THAVOyYtFOEU=;
+	s=arc-20240116; t=1782148642; c=relaxed/simple;
+	bh=IoxRqDzW/YusH97TjyW2ECanEv4Zamve7IMGFB0B5pk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cG9Eq6bM5k8vdeOCL3e/g2mNYtv2JCeM4ProtlQfYedGTmOI7hHmf3QLJIBfwV4/qY34kAiCzgAzZcufLsGKtk8RPdBvrA4BN3+w1iadyFENDP1W4wQxJTpfAgJkbK+oB5rfBFbc50o1UaUMJtXiJXhA5H+yZzpuyLVgV2lZGd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n7sNwPJL; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=lmhv+fyeEWcT1c94b+j0grX4GE3i6UtjDuET03LLBeY+vDmvfD4uOaCR7chi+PceWRODvj0xw4QvUXaxxCRW3b8wViWcfJuCdbX48L0iR9bPPAtvSjaH5YjbS3lGRR+OosfTVYiWZOhfyDrdUa0F29z57Vy1kuhb4yLSHnt9PAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZTlltqDv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n7sNwPJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179101F00A3A;
-	Mon, 22 Jun 2026 17:00:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZTlltqDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204171F000E9;
+	Mon, 22 Jun 2026 17:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782147638;
-	bh=FBPNSe4CPrmYI7tdrVEFFESNM2AQv28THAVOyYtFOEU=;
+	s=k20260515; t=1782148641;
+	bh=YGkyB08LSwfG3jOi5aBUi+D7lklfNHZo+RPl42buynE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=n7sNwPJLODKiRXF3ckMys9a0madlZ0QlBOjYZTx2GavzrrW3/QRmV3JeyB24/EZv3
-	 BRHFAExyTS2FzXigFI8UDWdLfavBXWAuhHMrapEic0JLHIohNnMHnohCRjYK3PUPLC
-	 4Rl5EYkYprfryDf3jF89EjjuImusXvrM9H0WgPgEacIMbCPAxH7oPXuWbvPZrFUBVu
-	 GwWHT/ScgXSiGewELPxVxuIfWHGkNtWAVyT11/AJf0F/5CJIqeonNdRebDGYbCo6I9
-	 /AClqSuz6/0yFBwwPcQVSgR49SkKXOGd0x2fQ1S9mPE6/v767IrCuv0/SsYC25QLxd
-	 VRKBj0ZycUhpQ==
-Date: Mon, 22 Jun 2026 18:00:32 +0100
+	b=ZTlltqDvqyJYG3a03TZfHyc2f2P+tyf/JRiGuG4Eyfc7c/c0Dzw8NRSq0hGFoemVg
+	 WjiZuXiLGZ0waoPpYAgvA5ao/Fj2Mwn7Exj2OcpMXlrumETsnsaTWK7lPkRNWpM/1D
+	 dxd9KfBplpaR1w7KCjE9jLsuHt1JUV4H1dgHnTPcDMGKdsFNkhDS4AahTbcrP04OoK
+	 IV3ZXBhPT0epaX2jfgMSE9hG9CNJKqxGOy3G2+0vIKvPVja+ip/moFMbCXeNGpqrWG
+	 ULccuLsK33waAlSJVkGacIL5dPc/5bH0OaOb8Zv20m24n+guDjNw0lgfuGT6wP6aL+
+	 VOWETkloHTafQ==
+Date: Mon, 22 Jun 2026 18:17:15 +0100
 From: Mark Brown <broonie@kernel.org>
 To: Linus Walleij <linusw@kernel.org>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -39,10 +39,10 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Lee Jones <lee@kernel.org>, linux-arm-kernel@lists.infradead.org,
 	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 09/11] regulator: db8500-prcmu: Remove EPOD regulators
-Message-ID: <70dd1974-3360-4169-8b3a-36e7e1cc4460@sirena.org.uk>
+Subject: Re: [PATCH 10/11] regulator: db8500: Add power domain regulators
+Message-ID: <68c010de-8716-45c7-9d2c-71bd7dcb2410@sirena.org.uk>
 References: <20260618-ux500-power-domains-v7-1-v1-0-eb5e50b1a588@kernel.org>
- <20260618-ux500-power-domains-v7-1-v1-9-eb5e50b1a588@kernel.org>
+ <20260618-ux500-power-domains-v7-1-v1-10-eb5e50b1a588@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,34 +50,43 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rGlF+30zJ9UqBxku"
+	protocol="application/pgp-signature"; boundary="b4s6q5sc4PEIczEO"
 Content-Disposition: inline
-In-Reply-To: <20260618-ux500-power-domains-v7-1-v1-9-eb5e50b1a588@kernel.org>
+In-Reply-To: <20260618-ux500-power-domains-v7-1-v1-10-eb5e50b1a588@kernel.org>
 X-Cookie: Now I am depressed ...
 
 
---rGlF+30zJ9UqBxku
+--b4s6q5sc4PEIczEO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Thu, Jun 18, 2026 at 07:00:55AM +0200, Linus Walleij wrote:
-> Remove the obsolete DB8500 PRCMU regulator drivers.
+On Thu, Jun 18, 2026 at 07:00:56AM +0200, Linus Walleij wrote:
 
-Acked-by: Mark Brown <broonie@kernel.org>
+> +static int db8500_regulator_get_voltage(struct regulator_dev *rdev)
+> +{
+> +	struct db8500_regulator_info *info = rdev_get_drvdata(rdev);
+> +
+> +	if (!info->desc.fixed_uV)
+> +		return -EINVAL;
+> +
+> +	return info->desc.fixed_uV;
+> +}
 
---rGlF+30zJ9UqBxku
+The core supports single fixed voltages, set desc->fixed_uV.
+
+--b4s6q5sc4PEIczEO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmo5ai8ACgkQJNaLcl1U
-h9BaJwf/cE6zFilqlprukQbzoS9v80E9/7Y2JJSaiLnvW6JjSjMvkSnz7MwKRKjV
-5YmmCXijisVfGbkgQLL3ad/7NkhLD//cJnPh11Mp4W8IA1IGV41qH9W5gUgwo7QE
-MHb+IChEB+Ba8VSWtCqsktqI6O3TNmd/SKnnheO8g88/ldpZ+keIlYk6Ox8zVVf4
-JmMuWMMFBJR2ybHy/L2ok0OshjgcUKGaQS0QpAhPBJTQ2/+NJYGliH322Y/irXhe
-exF9MfFUEJDjCI6RxKMOqAp+IChlNd2l9/5zJ4xG+1jPtgdCd8g8P/WMGjdebbhB
-mELR4oOXs2c5uPurZH8ILur5P+kN8w==
-=UUpz
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmo5bhoACgkQJNaLcl1U
+h9CpRQf/dOhQq9/GU7zTV3JsdHIbbJMAd7F3IoT2PBCjFzrNdXng1yds9DFZYkyO
+DK8dDx608Y0kOUwZ2q0tKuuKniQ9hzyVJqvdJ93s9XvP18H08nbcVULBETg2EtBj
+HnznimPSnu2TYLd1PffHpG3qzK3VZV8U2tO5ui2iu8H76IpkadTxARyvBPDFTW7B
+4zzPy6zZxBCPrJz0kXzRtDEUDxVeMmgxMjgkfpYeFVrZI5Hl2G024Hww/oMODKb5
+rbQZcNj5U4lKmTNdtWuozV35pk6SeARJgJhy0zyGTVU2slW/ByHUO6opXL51m/rL
+1XVzYaLz8lpJkfkMjZu/YQBQKrRQ4w==
+=CpDw
 -----END PGP SIGNATURE-----
 
---rGlF+30zJ9UqBxku--
+--b4s6q5sc4PEIczEO--
