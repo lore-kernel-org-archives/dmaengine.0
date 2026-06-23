@@ -1,61 +1,73 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773C2364028;
-	Tue, 23 Jun 2026 09:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E1836F90C
+	for <dmaengine@vger.kernel.org>; Tue, 23 Jun 2026 10:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782208213; cv=none; b=doKlCum7Lm4r4bZBDnwxY2ZdTDN7CaJGmLLXY5b6r+SDmdpZaSHyr/QFAEEQpScYsYJuazZp+6R60iYD3vZlrqv8gUU6Y+dyMhr+IMY79wJsCDuJOXN9+PRslS7TK+cYxaZnl6JXoOroXlhF3zGStJ3yX1xDbChPgUE6lGZljqs=
+	t=1782209632; cv=none; b=XZ9/X6cupdbS4T0aX6KVcEBEEDA7n2tJKK2eYEmvgVLG/++5BeOCZhF3jvrOYVtvj7w7e0xLf0rdJgVnWS8MIAb6ZusDtlyHFnwBy9UIsHl3n038dQI/PgOnbg6ynXfO8YXFOBN06OYiomzuUSULHL2GzrjKDsFLzUuH9eRObP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782208213; c=relaxed/simple;
-	bh=E8ME3jUr5NZJ1u/pCLY21u1GJkbr4nhtiz3fxeYF7rU=;
+	s=arc-20240116; t=1782209632; c=relaxed/simple;
+	bh=tnl7GLt1lMnQdAToYGCWBnvZQISBDvAS4IfsxYwkecQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fHSh4JYD47TRMLUgw8W2kQaY7lfFM6DrNE32imFmM3Awt8R+T+7vUsoGsZyT8E7MGfsiKRxaNcCyQuIms97qEA/6aPyXFzWE7Ch5ClhTqN/iss1pLo2yYX61ExayMyGxDCtwh8h2TAwM9cbY9Dy2mYbEX1FnFgjLBBzWftfa18Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QvtppI88; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=AUSNI6YQfiI/X4YgONiHBY4Ny4deh81wgzFX28BoqFB7eUSMvAjqTI5sfjCNgXbr3SyFE2T7+oETIQiOLRw++XPRq7SeAZQzDyhZwCHsY6Pw1rUQ1XOGgrD4YPvIpPYEkAPkDykZtkvUHTDZo49gABGVbtR9ITQnsCPtiYH82XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n5Mw18MU; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QvtppI88"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1782208212; x=1813744212;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=E8ME3jUr5NZJ1u/pCLY21u1GJkbr4nhtiz3fxeYF7rU=;
-  b=QvtppI88qA793xtjVD/0e6n+DaP8F5NoQ/F5NG9CRqw4OFhR4l4O2SJO
-   mtZxekXnwny+9A6ETzF71bBgyoOnOHPiOHntZpbSX4oK02KByLVS6JX1I
-   K5brzlDqGJf93Cr4tQLWxuA218Fu0MnL0pfyOl6a5xxWNw4/7I6pFUyjX
-   McqVdAly8cp6u6FluqZZn5HeBnXJqqIPNJ2vf+CdWBgVLhQME1zEk2mmX
-   zp1k7cWe18mtMvBvFYP1hIpSs2EOr6NpMDrta+c0iZ9e6ojUtQ/xKpNw5
-   iWVcLxKuxQLUiazXN8s/HxlNrcZdSihgJewUlocIQ06a7xmAqDSi35IR7
-   g==;
-X-CSE-ConnectionGUID: dEyVXKGySiO63xN1G5I+cA==
-X-CSE-MsgGUID: 5QhCHgioTxqLhUwt4EQEGg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11825"; a="94336765"
-X-IronPort-AV: E=Sophos;i="6.24,220,1774335600"; 
-   d="scan'208";a="94336765"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2026 02:50:11 -0700
-X-CSE-ConnectionGUID: IH26D8UmRLCopMGYbxH9Hw==
-X-CSE-MsgGUID: 2DN7P0YPSxSLKcavwrDRcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,220,1774335600"; 
-   d="scan'208";a="245333747"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.7])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2026 02:50:08 -0700
-Date: Tue, 23 Jun 2026 12:50:06 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n5Mw18MU"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45ef189aa1cso3738526f8f.0
+        for <dmaengine@vger.kernel.org>; Tue, 23 Jun 2026 03:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782209629; x=1782814429; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pXlxUZFPy1UXDAGOZwdnhyv0lKMkiBKFrADH8UIznYk=;
+        b=n5Mw18MUejCdeyf9+M7tEe59V9G3DR/txDtA5mducpQn5dbzWhp+3VxTbhXQHNk9rR
+         bbFMHdOVKWScZURIjvMCRexkS9gVAkA2T7L+j63/a23fpR79vXmCzrevL3AxnnjLyJxp
+         GTnLA0swYcDj1wKu4KiAXI6P3L+P7dtbVkjtxMN1lhP1MmW3J/E8eNBhInVEAmVb4y3o
+         GvKfBDfJP+5OE421hdT5FdRg1NX2OM922jFjahCYinEmVT08+1aIeag5QAQyj7uT3Ppu
+         PrTfT8mo4keNTd2tNdJqecxj4/3KObx9fdKwFPbzNnIG4Sgu50DYLwverxUv2ef0/CYs
+         AMGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782209629; x=1782814429;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pXlxUZFPy1UXDAGOZwdnhyv0lKMkiBKFrADH8UIznYk=;
+        b=SZZJ+44qGFG/7pCI3ekqi2zsY+smDgX/4HTlvPZ1dJdTMl8FT5jaOoIuRLz6D3XvBS
+         JFJPU399M5B8CCGvgpnmyVmI7hVts+eVPCXxnAQj7dd3eTXkLol7ynmFpc7FHt9wFJwZ
+         pNb9Wo6N2lEApGFuFKR7QuGAJ9sYcXiONUss1An03uJS56X0mwv5GNo/tUVLxG3ouELO
+         L8NyVqpb/nDsUkBHiHIUhv5uP9EwVx2kEYHPbxL35n3Z+iDPNHKwBfUVIKgoziKcVp6x
+         SMDVyRbt/vQJTfwZ6JCqy3OY/sv4hNXRqjsDeyEqwEuUFA4+u9GBZGf3PcV8MZHD41Lr
+         praw==
+X-Forwarded-Encrypted: i=1; AHgh+Ro/NfCjlr6pmtyEGR37OygFDVAYGnGvdH2sqrZXN2BbiAgzeRc/JS/PpF2bdWIv/Wyukzt/8ob++K8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrzXWLL1dyqY4g5i7vTfuAcOiKV2AlvATD7p1klMbCbasj+PPP
+	6iOst7oykGGH38C5Z/Sj1NI2uLZfN+f2Y532FzDT6mGdD+i3Tbnlx7bF
+X-Gm-Gg: AfdE7cnDJO3P4PVJDDZNS9cvCjsfMYWnHxZ+OxASBU2u5IzoRrNyDpQy51EYBI2or8Z
+	jBOSFEn6Iiu3RSQ0+CqdWniXeOTX979SFNVCV7zVdsdtK0fOYBNznhTTT0uGvXHkQY6Bt07mShK
+	4OkhHby3x2wNQGL1Ju782JPUEX+k5B2xFPrcdXG3eayn/PJSCkdN2ThK2bi9cUckaGiR0HoAvo0
+	lo533BIm5cptT522EBw+E1xdcIVWHWDrbP/YvZSiI2l/bWVkB4gQDd4amBvWLsumWbAUfU5A90/
+	+39kCrwNV/FC0Zp9ac4Vx/SKy5G8bNyqHLMLm6/Q+NI9lv4ftQv8gm57GfSkzA/APmvqq36kRxN
+	+jbpEjb2yugdvyStZOnlrEIrhbAlJwJyh+qaVsx3MlAmUCmFCpdO3syPYaV1yjkw8k6F0s53lc5
+	YkO6fx
+X-Received: by 2002:adf:f6cd:0:b0:45e:ec17:430a with SMTP id ffacd0b85a97d-46507102de3mr25581996f8f.11.1782209629222;
+        Tue, 23 Jun 2026 03:13:49 -0700 (PDT)
+Received: from nsa ([148.63.225.166])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-466643f4ee6sm33129868f8f.5.2026.06.23.03.13.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jun 2026 03:13:48 -0700 (PDT)
+Date: Tue, 23 Jun 2026 11:14:51 +0100
+From: Nuno =?utf-8?B?U8Oh?= <noname.nuno@gmail.com>
 To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Nuno =?iso-8859-1?Q?S=E1?= <noname.nuno@gmail.com>, nuno.sa@analog.com,
-	dmaengine@vger.kernel.org, linux-iio@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andy@kernel.org>
+Cc: nuno.sa@analog.com, dmaengine@vger.kernel.org, 
+	linux-iio@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
+	David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
 Subject: Re: [PATCH RFC 2/3] dmaengine: dma-axi-dmac: Switch to bitmap-based
  address width masks
-Message-ID: <ajpWzimx-5jlczpp@ashevche-desk.local>
+Message-ID: <ajpYvzlHSPiJRvnX@nsa>
 References: <20260616-dmaengine-support-wider-dma-masks-v1-0-da23a8dcb756@analog.com>
  <20260616-dmaengine-support-wider-dma-masks-v1-2-da23a8dcb756@analog.com>
  <ajF4i3o0gNRtUelb@SMW015318>
@@ -72,22 +84,25 @@ List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <ajmAP2nKzi2dPEVx@SMW015318>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
 
 On Mon, Jun 22, 2026 at 01:34:39PM -0500, Frank Li wrote:
-> On Mon, Jun 22, 2026 at 05:09:10PM +0100, Nuno S� wrote:
+> On Mon, Jun 22, 2026 at 05:09:10PM +0100, Nuno Sá wrote:
 > > On Mon, Jun 22, 2026 at 09:51:46AM -0500, Frank Li wrote:
-> > > On Mon, Jun 22, 2026 at 10:26:41AM +0100, Nuno S� wrote:
+> > > On Mon, Jun 22, 2026 at 10:26:41AM +0100, Nuno Sá wrote:
 > > > > On Fri, Jun 19, 2026 at 03:02:53PM -0400, Frank Li wrote:
 > > > > > On Fri, Jun 19, 2026 at 11:22:54AM -0500, Frank Li wrote:
-> > > > > > On Thu, Jun 18, 2026 at 06:10:52PM +0100, Nuno S� wrote:
+> > > > > > On Thu, Jun 18, 2026 at 06:10:52PM +0100, Nuno Sá wrote:
+> > > > > > > [You don't often get email from noname.nuno@gmail.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> > > > > > >
 > > > > > > > On Tue, Jun 16, 2026 at 11:23:39AM -0500, Frank Li wrote:
-> > > > > > > > On Tue, Jun 16, 2026 at 04:40:53PM +0100, Nuno S� via B4 Relay wrote:
+> > > > > > > > On Tue, Jun 16, 2026 at 04:40:53PM +0100, Nuno Sá via B4 Relay wrote:
+> > > > > > > > > [You don't often get email from devnull+nuno.sa.analog.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> > > > > > > > >
+> > > > > > > > > From: Nuno Sá <nuno.sa@analog.com>
 > > > > > > > > >
 > > > > > > > > > Advertise the source and destination bus widths through the new
 > > > > > > > > > dma_set_{src,dst}_addr_mask() helpers instead of open-coding the legacy
@@ -98,7 +113,7 @@ On Mon, Jun 22, 2026 at 01:34:39PM -0500, Frank Li wrote:
 > > > > > > > > > While at it, give the channel width members their proper
 > > > > > > > > > enum dma_slave_buswidth type.
 > > > > > > > > >
-> > > > > > > > > Signed-off-by: Nuno S� <nuno.sa@analog.com>
+> > > > > > > > > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 > > > > > > > > > ---
 > > > > > > > > >  drivers/dma/dma-axi-dmac.c | 12 ++++++++----
 > > > > > > > > >  1 file changed, 8 insertions(+), 4 deletions(-)
@@ -191,12 +206,16 @@ On Mon, Jun 22, 2026 at 01:34:39PM -0500, Frank Li wrote:
 > 
 > So needn't bit mask to indicate all support bytes.
 
+
+> 
+> > >
 > > > each transfer, dma_slave_cfg should set specific bus width requirement.
 > > >
 > > > If memory have requirement for 32bytes, typical cache line length for
 > > > hardwaer coherence transfer, it should use dmaengine_alignment.
 > > >
 > > > So I think only need set min value should be enough if fix pcm_dmaegine.c.
+> > >
 > >
 > > What fix for pcm_dmaegine.c? Not sure there's anything to be fixed in
 > > there... The code seems to use the dma bus width to match against PCM
@@ -205,35 +224,64 @@ On Mon, Jun 22, 2026 at 01:34:39PM -0500, Frank Li wrote:
 > if cap is one byte, it should support 8, 16, 24, 32, 64
 > if cap is two byte, it should support 16, 32, 64
 > if cap is 4 byte,  it only support 32 and 64.
+
+Well, Now I see your point but not exactly. Because we do have
+
+DMA_SLAVE_BUSWIDTH_3_BYTES
+
+and it might be used by the pcm_dmaengine code,
+
+There are also some controllers that set it. But it looks like all that
+set it also set 1byte.
+
+So your suggestion might still hold and work but I'm not too convinced
+that having the array complicates things that bad when compared with the
+risk of breaking existing code.
+
+- Nuno Sá
+
 > 
 > Needn't mask each bit.
-
-I think you missed the point completely. It's other way around. If the HW
-supports say 32-byte bus width, one _might_ assume it supports lower sizes.
-
-It's similar to what we have with MMIO. Some HW, for example, may only operate
-with 32-bit accesses, while only transferring a single byte (8 bits).
-
+> 
+> Frank
+> 
 > > If we only set the min, that means the PCM code all of the sudden only
 > > supports one format and I'm not sure that should be always the case or
 > > that we won't break any user.
 > >
 > > I mean the dmaengine src/dst_addr_widths must be a mask for a reason,
 > > no?
-
+> >
+> > - Nuno Sá
+> >
+> > > Frank
+> > >
 > > > > I would say the
 > > > > array is fine. IMHO, it's also safer (from a "support all" point of view  and really not
 > > > > complicated at all so I would just not risk it.
 > > >
+> > >
+> > >
+> > > >
 > > > > (we can also have one liner helpers for the case where only width is
 > > > > set).
-
+> > > >
+> > > > - Nuno Sá
+> > > >
+> > > > >
+> > > > > >
+> > > > > > Frank
+> > > > > >
+> > > > > > >
+> > > > > > > - Nuno Sá
+> > > > > > > >
+> > > > > > > > Frank
+> > > > > > > >
 > > > > > > > > >         dma_dev->directions = BIT(dmac->chan.direction);
 > > > > > > > > >         dma_dev->residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
 > > > > > > > > >         dma_dev->max_sg_burst = 31; /* 31 SGs maximum in one burst */
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+> > > > > > > > >
+> > > > > > > > > --
+> > > > > > > > > 2.54.0
+> > > > > > > > >
+> > > > > > > > >
