@@ -1,172 +1,115 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EEC385D99
-	for <dmaengine@vger.kernel.org>; Thu, 25 Jun 2026 08:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439A0387345;
+	Thu, 25 Jun 2026 08:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782377626; cv=none; b=iPeQ40Z+055VGIfzfMKk1E7/zYfhMDNTyk34+P7uAQ/CTRVWyqIGvIxPc5GryQzk2/ABtkmBWNx4BoPeo/QjbpK3Qiu0aGEiHYVilk2DHZX+0ORDsjotWaKbCVrQwmSXCWtRmuKEI5eQUlD7i7U7fzk7HoMVFf2WSne9m+t1Nx8=
+	t=1782377983; cv=none; b=s5Or8YKNxkhN1+Ly51zJIXB+UsxnlkPSxkARCP3yBQDKsD/5567K+mXEJRZCkHB4VbZFKUhWvUIQz0ymxEIlkPMgEESJzgPnwsBxwKL3GBY9SYAi82jAKKYdzRrTetTTkfDAAYEneixYiE/kl9FGnmOv/bX3slnRZmSOHqpxen4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782377626; c=relaxed/simple;
-	bh=aG9UPb6X3t49TQGKWNh8CixzzbYHvf/dhqIW9MNKXCw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tvkacCifwjcwIxXiGSOtanroQDU2ATg9aHGzynKYC71bSBn0TaIyzzfX07EABdyXPgFdMWPHzpdA97RH4kmmT/cDIXSfnnEQ4gglG9dracqb7FBD6BmNY2WydOP1ahEOIHoE3m3VQ2dpBSq9uet+d7zHlKiqMGGd9q3CCllPfJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MdLasqpf; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1782377983; c=relaxed/simple;
+	bh=e/2rnKpCeIVZssQggJLnbZXTCrHVAz/NPfW+nKRPin0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=b9MQ6ra9xHo0l9/sB64plgfvCnWDg69iK/WHD36t8MAhmmdSMyD63enFU1+rYZoA7NCqU4Q1rD5gfjpFXaqG5Z23L77UKq3amz1qXGPFt/aFduquqY9IHSKU/rqWusu4LaaheRVFCUzr8hH/vJLfkmFSjfwAx6jZGMl1p+STy10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yoseli.org; spf=pass smtp.mailfrom=yoseli.org; dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b=OXKLXghz; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yoseli.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yoseli.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MdLasqpf"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4923fb1f095so19615505e9.1
-        for <dmaengine@vger.kernel.org>; Thu, 25 Jun 2026 01:53:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782377624; x=1782982424; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rOgQcEJt6Q/UXFy+W00eved1xO9DzXrtsP5AvlpEQN4=;
-        b=MdLasqpfkOXRRB466ILiGSAwfihYqJyXKtgfkNP9i/GMOs6Xx374FGCX7/yMAPPHEw
-         n9XHR6qu7ob3UARi7qiX1eBctc6QHCbQPSDT+irE79FzKu9grfJbbsN5ojtTMWDI5cjt
-         axSLYMqdylwbaanqlIHYUY9dEKJOQcmHR1wTj7bAr/miJE6svZ88O0X7WQCBBNv6oBsx
-         P0jskw0Kht/LMv7fNnn5NOj5yPEaP0XZQ7YbcbnkD0XLanOU+mJjRHgz2aWQDiLJpmO1
-         RNM1FUOWe3WV554YXZ5Jwvyk65CWptz66eRDHZZCZ/k+SVqvUwwK0IQERfXWD6QgmGYi
-         ZUSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782377624; x=1782982424;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rOgQcEJt6Q/UXFy+W00eved1xO9DzXrtsP5AvlpEQN4=;
-        b=Pj4jbTSD5N4CChvGVgiLKfivynaODs5jrmKkqTajrl1lnU00DuML2ym0X/leUaYwGj
-         L7M0bxiytzmMwPg1l1wUPUNZ8tsVMoKkm14FzqhZENphknX4mXzOekzLB3uSIpoEW77e
-         N+U9I3kODExLgNhJ6tQVqRp4j3TmZiVveHcT4bQ20J33oAdIFhyE+dg2DaUQoESrnHNb
-         hCpMSybG4niShgb0pUQ0qkbPLe3+sZAfsiRR8ejx4hpu0Dz9NaEi7nf8C/Jo/RlgwjQW
-         A1ygi+taFLrWOre6CUXc47BYCFlwxD2hliXYwNj60iaFSvqAAjPgq/JeQ99zlYpEN21I
-         m/7w==
-X-Forwarded-Encrypted: i=1; AFNElJ84w7Mr1f607ncxygv4a2c3bsoOiqDmy6eS5WxMC9pc/jvHeWx9XPTa1GzTss9An13It2HSqO7KLLk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzU5mx467aG7sXLy9WezJS8DU43TgdHufOZIImI9TNGdpf/SS0Q
-	2FcVM/WVLis2XO56ZwPkumr43GCTGjTEPHtR42tkoe/Cy9XoZ4CutYKF
-X-Gm-Gg: AfdE7clUVUWw7Xz1AdzAos7FEndpyuaW2G4FsJqT7Tyj6C99cKpFGJL8ptV3hY7/o8I
-	5R5rHV4gGOX69OeX/8LtHVfVwUSMeg0HVZFb44P5myXSPSPxB2PoVBhuoilhLUhVtwb4WhFTS04
-	fPFDOZamiDmAbExvqXCQccICPQCrmv+wSw0nhiWlITy97RA3a3YSERC1OLnGBT6N4JkUlVU7Ui5
-	pfRuQrZBiPxOAFdiB97HQCONOfsRdZ+nZV9nZ1WaRkzE0Qx9jQHwiI9WdfvRxhKr1c/eErSFNzX
-	1U/j5Xh+T07aEnaH+L5R7kFZulKxpADI1+WE9NMS9S/ANykOPonyjcCTDsy9t73Dj6fbS7O/SFP
-	J+wU7LFzAOVR2Ot0fd8jKCmdPhmTJqTvX/e8inOGs41d0X4GO1n3PXT+KKJz+vsX25U9TT2H7zA
-	4LXQ==
-X-Received: by 2002:a05:600c:c1d7:10b0:492:4667:8c40 with SMTP id 5b1f17b1804b1-492668638c1mr15548305e9.8.1782377623588;
-        Thu, 25 Jun 2026 01:53:43 -0700 (PDT)
-Received: from nsa ([45.94.208.61])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49264082426sm58844265e9.9.2026.06.25.01.53.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jun 2026 01:53:43 -0700 (PDT)
-Date: Thu, 25 Jun 2026 09:54:46 +0100
-From: Nuno =?utf-8?B?U8Oh?= <noname.nuno@gmail.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Andy Shevchenko <andriy.shevchenko@intel.com>, nuno.sa@analog.com, 
-	dmaengine@vger.kernel.org, linux-iio@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
-	Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, 
-	Andy Shevchenko <andy@kernel.org>
-Subject: Re: [PATCH RFC 2/3] dmaengine: dma-axi-dmac: Switch to bitmap-based
- address width masks
-Message-ID: <ajzsjhXHzpV2phby@nsa>
-References: <ajVs3jwoxq7Jhop1@SMW015318>
- <ajWSXeq6h_OjNNqh@lizhi-Precision-Tower-5810>
- <ajj8AhN1YC3uvuLb@nsa>
- <ajlMAijTUHsnOhEQ@SMW015318>
- <ajlR9QiXiBAH4mWH@nsa>
- <ajmAP2nKzi2dPEVx@SMW015318>
- <ajpYvzlHSPiJRvnX@nsa>
- <ajpfmQ6JID5rHLMF@ashevche-desk.local>
- <ajv4NVSmSR_dn9CJ@nsa>
- <ajwKq0CB8sGdvvcO@SMW015318>
+	dkim=pass (2048-bit key) header.d=yoseli.org header.i=@yoseli.org header.b="OXKLXghz"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 175313EBBB;
+	Thu, 25 Jun 2026 08:59:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yoseli.org; s=gm1;
+	t=1782377980;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zEMsk8DLPdcsuda1vhWw6oSZHPS1DB/ks4bLgM5CJfo=;
+	b=OXKLXghz9AAtkS9LVkwxumJ4UjaNv7Csi1xvRoaIu6kaGKGnA7CaMgRisdDKSDZVSwOMPf
+	iFp1gFcL/KxzdTZW+iugikVForCYgLTTqffG6rxkUp8hi9SBGAm5G5950G8I0WDsbaHdUo
+	NvRYXR9OhXwI6RPNFMkvYaovoBRL1UfvLWUZhz7qOeU/8Pz1zMSg7OrQ1ftZwGh7I6LkHF
+	0uMB9T4zOx2pwPfNlk8fWkGjyWw1isCjj8d8AMeKgshzCn6JexnPLM7W2HttCGIfLV0hPd
+	NzuStgT69HNjUIwQ3DFhsZDQZuLm+ugA0V3cpTM0P6vqBhyfMviESqGM/b5mbw==
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Date: Thu, 25 Jun 2026 10:59:37 +0200
+Subject: [PATCH v3 1/5] dmaengine: fsl-edma: Move error handler out of
+ header file
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ajwKq0CB8sGdvvcO@SMW015318>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260625-b4-edma-dmaengine-v3-1-44be00ace37d@yoseli.org>
+References: <20260625-b4-edma-dmaengine-v3-0-44be00ace37d@yoseli.org>
+In-Reply-To: <20260625-b4-edma-dmaengine-v3-0-44be00ace37d@yoseli.org>
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
+ Angelo Dureghello <angelo@sysam.it>
+Cc: Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+X-Mailer: b4 0.15-dev-47773
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782377978; l=1740;
+ i=jeanmichel.hautbois@yoseli.org; s=20240925; h=from:subject:message-id;
+ bh=e/2rnKpCeIVZssQggJLnbZXTCrHVAz/NPfW+nKRPin0=;
+ b=BFjYzGy9ecwqlQaNIuUuGzneVoz8h9ARN+ReX9196+DdCkESCW9dsVgG0GTnV16vYIfFu1ozE
+ nUsx6ksBkykBNueWyHQ/pRDmkNKMCasnYzlbHAxh2+lOlxTGaE0ONWD
+X-Developer-Key: i=jeanmichel.hautbois@yoseli.org; a=ed25519;
+ pk=MsMTVmoV69wLIlSkHlFoACIMVNQFyvJzvsJSQsn/kq4=
+X-GND-Sasl: jeanmichel.hautbois@yoseli.org
+X-GND-Score: -100
+X-GND-Cause: dmFkZTERfnVehNAXUaQWJD0/6HJbgJtZl0Ej3OYaeHof8oDy1WB86V/78PQoPiPsUkMAlLJSzMa32RwYG0O7jJl+U4XeipYvUQD7YfunmGQPzf9T1GMhnJVE3XTdMMDTQYQM1NHSJ0Pe7NaHwLPFtefdoHse0N5UTpmZUux+iEWKv1OFgiFioAehx1wOQX+5jvl8e8XLYNNYaKByfpia8KxVMb06K+oUQwzDskJt2ZrW4fFJO5ncIkEfkR41qn6zsImliiXoF3w0CU5wasgCKIrQcmBCjhO4koX1KW97HomtLjfkrG3wGHoGXZrujKxrRMacqCDkrt7pZOPJALw8QekhuJJ7O1NOKC1d9q1tmnUwPQmEMwA1osRZ1XYE54HHII0Ng+DgY7lbk2n28fcWoEGVs1ZgimbSOgl8SQz9gqbHW106WXAneE/cXPJgDEqWlSa2a62h6ouWquu9xgKOw+u5PkmjK+jCQA3qmb9p3P3e9Fy6PW6SKIn/9OHmhLvY6mBPV8wLKNVMYDegwNaMam15mgWkT14Xl2ZUZOSIgQyRCyRt8wllpDCY3Wl+NHMpIFs0hs9hcSAdII+tKjkKUa+qZJkp/1Za17YVZEfzmhDKT8ywUQWxdWgi+aGv5JmhllmTFynaz84PJUii7cEs1a96QcfJ0OE6hkDfUOhGEEA5x566Uw
+X-GND-State: clean
 
-On Wed, Jun 24, 2026 at 11:49:47AM -0500, Frank Li wrote:
-> On Wed, Jun 24, 2026 at 04:33:53PM +0100, Nuno Sá wrote:
-> > On Tue, Jun 23, 2026 at 01:27:37PM +0300, Andy Shevchenko wrote:
-> > > On Tue, Jun 23, 2026 at 11:14:51AM +0100, Nuno Sá wrote:
-> > > > On Mon, Jun 22, 2026 at 01:34:39PM -0500, Frank Li wrote:
-> > > > > On Mon, Jun 22, 2026 at 05:09:10PM +0100, Nuno Sá wrote:
-> > > > > > On Mon, Jun 22, 2026 at 09:51:46AM -0500, Frank Li wrote:
-> > > > > > > On Mon, Jun 22, 2026 at 10:26:41AM +0100, Nuno Sá wrote:
-> > >
-> > > ...
-> > >
-> > > > > If support 4Byte, it native supportted any N*4Byte.
-> > > > >
-> > > > > So needn't bit mask to indicate all support bytes.
-> > > >
-> > > > > > > each transfer, dma_slave_cfg should set specific bus width requirement.
-> > > > > > >
-> > > > > > > If memory have requirement for 32bytes, typical cache line length for
-> > > > > > > hardwaer coherence transfer, it should use dmaengine_alignment.
-> > > > > > >
-> > > > > > > So I think only need set min value should be enough if fix pcm_dmaegine.c.
-> > > > > >
-> > > > > > What fix for pcm_dmaegine.c? Not sure there's anything to be fixed in
-> > > > > > there... The code seems to use the dma bus width to match against PCM
-> > > > > > formats supported and filter only the ones we can support (per dma cap).
-> > > > >
-> > > > > if cap is one byte, it should support 8, 16, 24, 32, 64
-> > > > > if cap is two byte, it should support 16, 32, 64
-> > > > > if cap is 4 byte,  it only support 32 and 64.
-> > > >
-> > > > Well, Now I see your point but not exactly. Because we do have
-> > > >
-> > > > DMA_SLAVE_BUSWIDTH_3_BYTES
-> > > >
-> > > > and it might be used by the pcm_dmaengine code,
-> > > >
-> > > > There are also some controllers that set it. But it looks like all that
-> > > > set it also set 1byte.
-> > >
-> > > But this might be not true for all HW in the world. In previous reply I made
-> > > a comparison with MMIO accesses where not all HW that needs 1-byte read can
-> > > cope with that. If there is some proof that this is the case when 1-byte
-> > > DMA bus implies 3-bytes (or other odd number), I would like to see it.
-> >
-> > True. I'm also not too keen in making the above assumption and have no
-> > proof that it will work for the controllers we support.
-> 
-> Okay, I think it is fine by use bitmask. suggest change name to
-> src_bus_widths,  addr_wdiths is quite confused.
+Move fsl_edma_err_chan_handler from an inline function in the header
+to a proper function in fsl-edma-common.c. This prepares for MCF
+ColdFire eDMA support where the error handler needs to be called from
+the MCF-specific error interrupt handler.
 
-Ack
+No functional change for existing users.
 
-> 
-> And since not much place use it. suggest change all consumers and cleanup
-> original u32 src_addr_widths in followup patches.
-> 
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+---
+ drivers/dma/fsl-edma-common.c | 5 +++++
+ drivers/dma/fsl-edma-common.h | 6 +-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Alright! Will include all consumers conversion in followups of the
-initial patchset!
+diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+index bb7531c456df..1b1a0496b5e6 100644
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -44,6 +44,11 @@
+ #define EDMA64_ERRH		0x28
+ #define EDMA64_ERRL		0x2c
+ 
++void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
++{
++	fsl_chan->status = DMA_ERROR;
++}
++
+ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
+ {
+ 	spin_lock(&fsl_chan->vchan.lock);
+diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
+index 205a96489094..abc8f7805515 100644
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -475,11 +475,7 @@ static inline struct fsl_edma_desc *to_fsl_edma_desc(struct virt_dma_desc *vd)
+ 	return container_of(vd, struct fsl_edma_desc, vdesc);
+ }
+ 
+-static inline void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan)
+-{
+-	fsl_chan->status = DMA_ERROR;
+-}
+-
++void fsl_edma_err_chan_handler(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_disable_request(struct fsl_edma_chan *fsl_chan);
+ void fsl_edma_chan_mux(struct fsl_edma_chan *fsl_chan,
 
-Thx!
-- Nuno Sá
+-- 
+2.39.5
 
-> 
-> 
-> >
-> > - Nuno Sá
-> >
-> > >
-> > > > So your suggestion might still hold and work but I'm not too convinced
-> > > > that having the array complicates things that bad when compared with the
-> > > > risk of breaking existing code.
-> > >
-> > > > > Needn't mask each bit.
-> > >
-> > > --
-> > > With Best Regards,
-> > > Andy Shevchenko
-> > >
-> > >
