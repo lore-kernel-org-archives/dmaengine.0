@@ -1,147 +1,148 @@
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012013.outbound.protection.outlook.com [40.107.200.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0098E3A83A8;
-	Fri, 26 Jun 2026 08:11:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782461467; cv=fail; b=Sk6NkG2aWeKCcPhxfSZ+QKvgoNRL0cCO6l49zgDKrOBCpRd7b27F45rKdOmQ87pMv4ffoFgIOCxQ17HkF+11Oqd0DoWs0WMAWFW4YVoxDYNiMeX1NB8bJjFMU6bekmT5OYQaptE8ECssFB/HGTkDKG3KZyoVeyGyJqCZ60lipK0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782461467; c=relaxed/simple;
-	bh=nkg4uGlF1IENSw9PMq32uZquHYQGQAoTDReVcM/fJAA=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=rXteuaU/GX3lC0IQVrF0RGbJfE74SYiOwcxrX5HU4J/L5PZlYuA2XIllhxp/V8RwmsflU4GigZM7iWbhzTIda9SfkVckYWpC1ceaUZ0B2/fsz1rdaW6HaKfSEnoa6N7vLlRdeR/m120pa4U2yYYmxu5FgJrrSaexAK001g3HJnA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=4GS0SiL8; arc=fail smtp.client-ip=40.107.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C9027FD43;
+	Fri, 26 Jun 2026 08:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782461747; cv=none; b=Mhm+xn7XTkfw6RYhurkfcED1EW+PVIBpHUpax4/Fi4ebKiqSubXbmqkz+MlzObHwOArfZ19QNH4yRGwNZ/ftK5ljO5eOkQ7JYBWAfqdLrQkDYaYbT7PIxgIhO384tiSs7DFcPLxpCxt6pchRuG0RuUT84AS8WTqs+jNNknYYRr4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782461747; c=relaxed/simple;
+	bh=FSpoo9SK7Ccz2UIDW/xjZ2+jXOrE4r8QxIzWwq4B4ao=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mj/jJHS3OWUdurUNNt4FqGKeqXX7sigPXX7lKcgtEos0kVKONMCtZ2uhuro3biUaJPkujliC4hFqpDwiNyN+6U8VwokJPvv8GzxHd30stwD5ZyJwI1peOjtecVc4PuQka0tmvB+X686McLdXCX3e0J3LBi8tb4e1V3lY4VOWARQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYDtPdfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="4GS0SiL8"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=I2jqujJJemN57kcYw/LfUyzVC0PYdJGUMQCgKT8c17l4yCXZrKINXLu5QsuOI70jJyh68z7+mYWzu5/jfiJFQU4JekL2pBTsyWjHAoHca/q18zKLBYqwQSbjntviFjk6W59Dsid3QgA2nP8DzIihj40pfhVvrx90bJtHpmmZUz/IJxsXw38VmbMsI7wEsOdlWcVviVtycPiHt3MClRD+k66NyD6o+ufKB9L55r8giR2ZMoHJPcY1kzvyduot+ygcLnJzqd/QYfZ3TvywSlB1d6ZyTQlub/GuhY7G6YZlaQzZfJF7mv4nZtf+ufnRyqLarRteF2igWp+nuojn7M/xxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fQLCmWN/4I1WLBrd2OWCevzdthRd1FxS5lv12Xj/0lM=;
- b=khkmn+Gj1lUcHU6vhE+Jwjn4+Iels7g10HWlT6vRIT3G5fUAgqjp0SYhRe1MPMcYpxcKGdZjV+87//X5xTM9KEjmIf7YUSbrNS71Zkw0nXq4x/C+jcQd3jQ8T1OsbJ9GS8g58r3TRG2UazMcSIagwUpH2tnRwMLPCmCha4If7sfBpUbLOSy2sVLmqgSfms7Cko6Vj83fkAsFw1TtddAbtGXviuNK6oFumk3i4ab6SvD0q0yNqky+/wXkXT921SMWifqP9U5dKbKn4ykuWQm+xtVcQnLgYBdmRsE9X/alkgBKtgDQ/Q+7FRXZq851jxFA6/s7Gwj8AQjYudUiQZU9Kg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fQLCmWN/4I1WLBrd2OWCevzdthRd1FxS5lv12Xj/0lM=;
- b=4GS0SiL87lDOigJZr4QAsy4jLTm4t44nz/3eJQRt3tF8UOahuEqwjXT25hUBe6qrEy557f4jg0q5g0bRPQvKHBl7gyvNFoqrAr9yAVgXMGaBBJHGO/Rg+z8f5N0Pj97OPDcHDEaUdulCkg84mybhomH6qHHPL5GRck3Inxdf/VE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY1PR12MB9697.namprd12.prod.outlook.com (2603:10b6:930:107::6)
- by SJ1PR12MB6075.namprd12.prod.outlook.com (2603:10b6:a03:45e::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.17; Fri, 26 Jun
- 2026 08:11:01 +0000
-Received: from CY1PR12MB9697.namprd12.prod.outlook.com
- ([fe80::3a41:55a0:8203:596d]) by CY1PR12MB9697.namprd12.prod.outlook.com
- ([fe80::3a41:55a0:8203:596d%5]) with mapi id 15.21.0159.015; Fri, 26 Jun 2026
- 08:11:00 +0000
-Message-ID: <244488e8-81a3-49ec-ba71-3ae40a334e55@amd.com>
-Date: Fri, 26 Jun 2026 13:40:51 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/2] Fix CPU stall in xilinx_dma_poll_timeout caused by
- passing delay_us=0
-To: Alex Bereza <alex@bereza.email>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Ulf Hansson <ulf.hansson@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
- Tony Lindgren <tony@atomide.com>,
- Kedareswara rao Appana <appana.durga.rao@xilinx.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, Suraj Gupta <suraj.gupta2@amd.com>,
- Frank Li <Frank.Li@nxp.com>
-References: <DsE3FsHGEnJCtXR3Z9SV8EKrNPT5Ts7jJzvuFbYxFFwXiTIk9D95VxhojlLSRRnswrBlhXLZAePfM5VH9axGhQ==@protonmail.internalid>
- <20260402-fix-atomic-poll-timeout-regression-v4-0-f30d6a6c13cb@bereza.email>
- <DJITDJYQEOPN.I0S9T54IS104@bereza.email>
-Content-Language: en-US
-From: "Pandey, Radhey Shyam" <radheys@amd.com>
-In-Reply-To: <DJITDJYQEOPN.I0S9T54IS104@bereza.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0009.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:272::13) To CY1PR12MB9697.namprd12.prod.outlook.com
- (2603:10b6:930:107::6)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYDtPdfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23ECA1F000E9;
+	Fri, 26 Jun 2026 08:15:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782461741;
+	bh=UjdJOdYkJ840W0oSZDEwNaxUJAvwyJYWZ+XcDw5k27Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=gYDtPdfKwzWLU3NcZhsHdVpI3ptP8a6ltHZ7Qe0uj/1d4BSNbVeDmzhawjTMCxL12
+	 E1dyuGspTQGTnzNOQf+A59A3hve5xucLZIbYBkebA2TEveAXRYNJokWcSBvxL1yeC5
+	 AH2qsTDkkii5TOJ1k2K4wVEFUnCkMgrLrtHmGdjKNaLvVL3l514LA4BFcro3O+2orm
+	 Xo1wQMvhkZH07hhWSVCMH1xn2obV2wh5PxEykNtf9yGEocanYG0CBuXTHY6GKFUd4L
+	 RvnSaGdZeDbyjaOJOvLxtg5ASLbxXOu+qlQS1X8b4pqTyd2vPhX2nJLvPubkD6S/es
+	 MtY+6KnK89CQw==
+Date: Fri, 26 Jun 2026 10:15:38 +0200
+From: Vinod Koul <vkoul@kernel.org>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/17] dmaengine: dw-edma: Support dynamic LL appends
+Message-ID: <aj41KvHARdenWnk8@vaman>
+References: <20260615154111.2174161-1-den@valinux.co.jp>
+ <tau5svk3bcatzeapqeb6mun7dxi4ifk56g5ltkk366ljozjzit@vepneiac3f26>
+ <ajlEGS99fQT5rGkf@ryzen>
+ <wmwhekjfeqomzehfyqczzxel3knkxlfgfyrifeqpcqpqq6viwq@abwyzxaibkio>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY1PR12MB9697:EE_|SJ1PR12MB6075:EE_
-X-MS-Office365-Filtering-Correlation-Id: a4dfa9db-85d1-42ed-6d0c-08ded35a755a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|366016|1800799024|23010399003|18002099003|22082099003|4143699003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	KwXbj7DrzMxKmbgqx78RvyFdrpymWJrCdr9TVLGwbm/6j0t8EL2n3AAB+ZPcXCBxTppgbMb/Z+Sm/SMZzFphAntCA7svszjDzwIjMSmsDhzxWXS8V8bgsNqzrgtoCn/VzVlRH7y3AEJR5qFL6iimpTX7q0mKFXHR4RCd/Ff40y3BPeVqs4EnDkqEzew35IJZj7SckNDC+GA9/cUoPhPCrTLQsVAzZ0GxWfhjiYpOk3QUhG9TJoWxcWcEM7sLoCs2Q/A+uEs+kUgVJqxfTtQkXj3EhEaS3klQ+noLmusXSXIiMdZQ1CT+qSJdpo/j2hnUJ6LQDyWBW0xxeyq/yO/7EuL/mX46e1Tq3BRTV6NduD2JTt9VunoBbZgIXjT9Z28O6D5X5XEZdr7i3K77MZEyAeA9ZiZpjHPB2yMqhYue//FG6WIvtfP9eE26TUKnSCjZQjM9tfLiE64dITx+ws8KNYNrB9uhNuE3IR3BWuuNqAZvtKCeQ56guFFCfpV1JyctInsX33g6RbU9mRs+WK/L4auU1Zozj1XqQWM1yBsJHn2DgWjBZCWFfg6s0163f2OcK/NTiR72JPm5VMmvG+vzlvB4nhjSWRYMJ+bB/+g0Vc2vhM1Oe/RndK4x1/L8t1El0K8FLoiaMZjCGxcEVLmStVhX5JKpZNIHh2X9pEN98M4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY1PR12MB9697.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SEIrNGE2T2tnb3Q2MWlMTE53ZEpndFRkMVdoRTlDbHBPNjc3dlJuUFNaR09X?=
- =?utf-8?B?MTB1dGtJYmtLaE12YVJlcndNS05nd09OdDB4WitrOU12c1NGUG53WTJ1UVFr?=
- =?utf-8?B?cWpaeTNwL3Brb0l4NVhFMDhPUWNaL0doV2VaVmRNekdNc2VtUVZmOVlIMmNH?=
- =?utf-8?B?OEdYbE8rOGtQbkNvMi9vL0l0M0NWclFkMkxOQTdydkFldXp2bXJpbHlOdW1G?=
- =?utf-8?B?aGdYK0NUSTZ6dURVYVh6RW9TdjdDSG8rM2JmS2tNUTVoWEFCYnRjL2orcDU3?=
- =?utf-8?B?NWFCU0luaDJjT2htbC9vck1aWUFXQmZyMlcyQjVBUUx5S3c1NmJVUS9TbUpU?=
- =?utf-8?B?UXB1T2RUNWliY3VPV2loRysxbEtZVFNlMXMvZGF5VlFrM0Jldm5EalhoakNQ?=
- =?utf-8?B?R3g2L2xqd1BXUHZWL0s5K0NqN2RvZXFmNkFGbkhBYk8vNXYyS0pMUEZuVGx1?=
- =?utf-8?B?L0s2OExJQ29aUHlKVy9VMExZcWpWbE96OTcyYWFKdHdIVXF1aWl2WlFNakZp?=
- =?utf-8?B?R2drOHZDM1piVjZoUGxTR1hzUzhpUXJMQkFDVWwzRWJLRG9JMWdvM2JYaWVR?=
- =?utf-8?B?d2NyMGkvWUhzKzVCcWtFSk83cUtEUzBYWW4yQ1FPMVMvZml0TGNLdXdaLzRL?=
- =?utf-8?B?K1ZnRm1CRncxWUxlb0RyUUUvaTNOclpWWkJib3dsdVEycklacFBJeDBDVXRm?=
- =?utf-8?B?Y09vcHM3ZU9FM2tuWDREaDBZSTI5RG9hT3QvMGc5Q0JjZEFpZzVCbW9pMzRP?=
- =?utf-8?B?T2I5bFFJWWVSV2tIV0ErdzlWZHV4eHlzaTk3MFpLS2plWUUzREFUZ05EWVhQ?=
- =?utf-8?B?M1lMMG1JaFpzd1ZPWlA0cDZsYVJEaUlYdTRXTkxsdVAycC9TNzdQWU9Ec0J2?=
- =?utf-8?B?aDlvYXpDYVh1SzdiUThpRUptZUlmZDV0MU5jc3FWQ281SDI2TWRSUm9TSGpT?=
- =?utf-8?B?bjEzeXUyRFZzTFNHeFFZYlNrRGZHaFVKb2Q2R2dXTnRMa0hvNHQ2ODY1QzJn?=
- =?utf-8?B?UWx2T05md3J2MmliQjBFbklvSklUaEdOaEtiWHpzT3ZjbWJZam93Wjd1ZG5G?=
- =?utf-8?B?b3hRWjhycTNwL29neDErTUxrU0dVSVVIV2xZY1Uxd2tOSHI0WlpNSVNob2xD?=
- =?utf-8?B?YWhLOUM2Wlg5TFRzK1p3TmlNT3JyR1N4Q20zeGoxWkpPalN4S1pCcDNOTmN2?=
- =?utf-8?B?OU1uaXljeHV4NGJDb09RdnlkMUMvMXB6WTdaQ0ZyVlVwUWNSNk5tYXdmZldF?=
- =?utf-8?B?dHYyMnFMV1k0aFFtOVluMG54NFV2WGVqOXJKcjA3UFZtaUJDRUErdFlzMTZP?=
- =?utf-8?B?WEhEUW5BeENKeHo2VmlvRUFaNTVUNjZ2Zjd2SklRQit1c3ljWlpwdlNLUXJa?=
- =?utf-8?B?M3FKUFlSZEcySzQvVVJTajFzSjk3V0Y0b2xhNHFxRkcwOVpLa1Fnd3VPbFhQ?=
- =?utf-8?B?VXdlNExnRzdYeE8wVVJUSUwxQmpqeWZnWGVPUU4wSnpXOUJuRW5haXBIWElq?=
- =?utf-8?B?MjM0eVhBZlByU1ZJejRSR0k0Y3pnRzU0SWlRLzdIWVh1cW9GNjVXQXlObjB2?=
- =?utf-8?B?N0pDUmJLd2gxR29WNU8zb0hRRXNGSmlOSDZha2w4d2kzTks0NWtCRUxkSitw?=
- =?utf-8?B?STl2eHpyWTRwUWVpQkt0OXA0anBpNUpSM3hMNGFRREVBd3BWVm9nMTV3aU9V?=
- =?utf-8?B?Vk5XZUsrOGFabUVmdDlFVjFJWEtpVHd6Z21ZUlZUSWU0NktGZVRBQ252cjZh?=
- =?utf-8?B?VEgvMHVEeUJDdFA1dXY2cjJsUEpFTzV0ei93STFuOEZYQUNpeHBBL3phUzV6?=
- =?utf-8?B?UmZNOWRGbzJDSm9MMFB5WWNNNTUwYUpuYlZ4Yyt3K0RMUnpxV25JTVI1S2Fq?=
- =?utf-8?B?d3FqQzllQWF1d0JycXNYV2dZc0VMajVhSjhFeGgvcHBNTkJtTzhOdkNtd1VS?=
- =?utf-8?B?L21RWXJ1RGZmK2xhcEd5Z2xIeDVkeGNleHcyeThMUWREMGdVODU0K0x2RGNS?=
- =?utf-8?B?WktiRy9HYi9CSUQyRFc2eFQ5c0RRZTNDRkg2SG9sSW84ME4rck0rb201V3Fl?=
- =?utf-8?B?aUpQWmlQTmJJZVdkRjJ6ZFBzdG1KUTI2QUY0Q2RRUXpJY1REM0V3NDhqb2N3?=
- =?utf-8?B?VEQ5MVh4dUFYbjcvQ0NtSFRHODBZcitnaEd1NCtGaEUweUJXMUptNHJ6Q09L?=
- =?utf-8?B?RHI3UkN3L2luWVg0YnJMZ1k4YVR5NDNIbHBUek0xR2Y5cGI1WHZtSjJoWnFt?=
- =?utf-8?B?Y21VbEtvTFpncy9yK2RsbDU0UXNKV3VFSVorZkRaLzVNVW9nV0JPQjhURkpQ?=
- =?utf-8?B?K1lQdW9OS3hKRjJ6ZnFpV01ZaFEyYmYvRzkwWi9lVTM5MUVkTnQ1Zz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a4dfa9db-85d1-42ed-6d0c-08ded35a755a
-X-MS-Exchange-CrossTenant-AuthSource: CY1PR12MB9697.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 08:11:00.6076
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7JOhWDBKAZV+NYVSTF9yaxpsOZoaR+BCfiNg+c4a1YHKph6ZdSRUitdjUoPRbAQV
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6075
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wmwhekjfeqomzehfyqczzxel3knkxlfgfyrifeqpcqpqq6viwq@abwyzxaibkio>
 
-On 6/26/2026 1:18 PM, Alex Bereza wrote:
-> Hi, could it be that this patch was forgotten? I still can't find it in
-> dmaengine tree. Is there anything I should do? It still applies cleanly
-> to dmaengine/fixes.
+On 23-06-26, 14:56, Koichiro Den wrote:
+> Hi Niklas, Mani,
 > 
-I see both the patches are reviewed. So let's wait for Vinod.
+> On Mon, Jun 22, 2026 at 04:18:01PM +0200, Niklas Cassel wrote:
+> > On Mon, Jun 22, 2026 at 04:38:49PM +0900, Koichiro Den wrote:
+> > > On Tue, Jun 16, 2026 at 12:40:54AM +0900, Koichiro Den wrote:
+> > > 
+> > > Hi Frank, Niklas, all,
+> > > 
+> > > I am looking for a good way to stress PCIe controller DMA engines, such as
+> > > eDMA/HDMA, and measure their upper-bound throughput.
+> > > 
+> > > nvmet_pci_epf is useful since it is a real in-tree consumer, but it is not a
+> > > very direct benchmark for the DMA engine itself. So I wonder if
+> > > pci_endpoint_test would be a reasonable place to add an opt-in DMA performance
+> > > mode.
+> > > 
+> > > One possible option I have in mind is:
+> > > 
+> > >   - a new fixture, pci_ep_dma_perf
+> > >   - opt-in execution, for example with PCITEST_PERF=1 environment variable
+> > >   - a few variants such as single and sg, possibly with a few knobs:
+> > >      - PCITEST_PERF_NUM_WORKERS, to use multiple EP-side workers
+> > >      - PCITEST_PERF_NUM_CHANS, to use multiple DMA channels
+> > >      - perhaps other knobs for SG entry size, number of entries, etc.
+> > >   - the new tests: READ_PERF_TEST and WRITE_PERF_TEST
+>        `--- (A)
+> 
+> > > 
+> > > For the other possible places I could think of, this still seems to fit best in
+> > > pci_endpoint_test. For example, extending dmatest does not seem to fit well
+>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> > > because this needs both EP and RC side setup. A separate kselftest also feels
+>     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>                          `--- (B)
+> 
+> > > like it would duplicate a lot of pci_endpoint_test code. That said, I might be
+> > > missing something.
+> > > 
+> > > What do you think? Any thoughts or suggestions would be much appreciated.
+> > 
+> > There are two existing (out-of-tree) tests for eDMA that I know of:
+> > 
+> > 1)
+> > https://patchwork.kernel.org/project/linux-pci/patch/cc195ac53839b318764c8f6502002cd6d933a923.1547230339.git.gustavo.pimentel@synopsys.com/
+> > 
+> > But as you can see, the comment was to use dmatest instead.
+> > AFAICT, dmatest currently only supports DMA_MEMCPY, which, by hardware design,
+> > cannot be supported by DWC eDMA HW (since it only allows remote to local, or
+> > local to remote, and remote has to be a PCI address, while local is local
+> > physical address).
+> > 
+> > Perhaps it is possible to add DMA_SLAVE support to dmatest.
+> 
+> Thanks for the pointers, Niklas.
+> 
+> The first one looks like a host-side test on top of dw-edma-pcie, where the
+> RC-side driver programs the eDMA through BARs. That is useful, but it is a bit
+> different from what I had in mind here.
+> 
+> What I am looking for is closer to pci_endpoint_test READ_TEST/WRITE_TEST, but
+> with a perf/stress mode: the RC side provides the buffers, while EP Linux
+> drives the EP-local DMA engine and reports the throughput.
+> 
+> I agree that, if we extend dmatest with DMA_SLAVE support, then Vinod should be
+> involved early. In theory that could cover this too, if dmatest also had a way
+> to set up RC-side buffers and pass their PCI addresses to the EP side. That is
+> the part that makes me unsure dmatest is the right fit here (see (B) above).
+> Before going too far down that path, I wanted to check whether the PCI endpoint
+> test stack would be an acceptable home for this EP-driven case.
+> 
+> > 
+> > 
+> > 2)
+> > https://github.com/rockchip-linux/kernel/blob/develop-6.1/drivers/pci/controller/dwc/pcie-dw-dmatest.c
+> > https://github.com/rockchip-linux/kernel/blob/develop-6.1/drivers/pci/controller/rockchip-pcie-dma.h
+> > 
+> > 
+> > Anyway, since Vinod is the maintainer, it is probably him you need to talk
+> > to come up with a way forward. To not waste your time, I would talk to him
+> > before you spend a lot of time implementing something :)
+> 
+> Yes, that makes sense. I will keep Vinod in the loop. :)
 
-Thanks,
-Radhey
+Thanks, I am not sure it makes sense for dmatest to support slave
+transfers. We need a hardware signalling for these dma transfers to
+work and data is pushed/pulled from hardware.
+
+I know it can be made to work for some kind of slave transfers like
+possibly pcie etc and(there was another attempt to add a
+driver for slave tests) but it is not really right as it would confuse
+folks who might want to test it for slave transfers which typically cant
+be done
+
+So I am not is support of supporting this
+
+-- 
+~Vinod
