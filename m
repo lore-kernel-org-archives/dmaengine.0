@@ -1,152 +1,353 @@
-Received: from www522.your-server.de (www522.your-server.de [195.201.215.122])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012023.outbound.protection.outlook.com [40.107.209.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828393CE0AE;
-	Fri, 26 Jun 2026 13:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.215.122
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782479958; cv=none; b=SsrI3wKNCBwIMwxxMev4dGhLesXus9Z6eL/Manmozaoq+FOlgl5HPHQwolwHy4mS2tCKLsEPTs7oHBKNg3C532MLXZ2uLYye9DBHQ4Fnpdvmd1u/RvbxB8N2t5XxCPP6dWdOVI5v4/ikjHefAN3VPgqWFCFR3CfqhFNR9urNspA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782479958; c=relaxed/simple;
-	bh=t37nkRLkcr3BKhm4ou5f6OZvlQMUBy5woWPuLyPalNU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:From:To:
-	 References:In-Reply-To; b=muo1CfGEYcsjE4m4Bgdc/BJRTr9EIIJNhb8Zv/V1qhKtTv9MUwZa3eiM8O4wF+nt7wMqg6w3hHxTDi8QG243788C5h/8i9qt/+A5rqUF7wmdCP/XbrdFeONFG15RyCvUG+TJ6/H4DAr2khY4sjDV3ZyCLhQLb7i6E6V7JvRvq68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de; spf=pass smtp.mailfrom=folker-schwesinger.de; dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b=fCb6qML9; arc=none smtp.client-ip=195.201.215.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=folker-schwesinger.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=folker-schwesinger.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A39A3BB118;
+	Fri, 26 Jun 2026 13:22:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782480133; cv=fail; b=QJnZjXcZ2sByH3VjOEz0RLDpO2OZsIaMdIW9+mfc8wTmgkVDg9wDtn0QjQlb7Vr2UR4OpKkFGUTtkDDGT1Wl0wjJjBp/eg/gr6k7d/LPNaEJvwRGDiSSnUQ8g7MUh8rSlJ32pLAH+oVgp/JgJps0D4hXvaeKZR5V3S4EmbzsNEk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782480133; c=relaxed/simple;
+	bh=+Orq2kF2ssd/UlrTcFN9RjlZLQwAECorIEm4/K3Jo+0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GSrd/2GlgeWXPJKohCGIz8F52A4wU2aj1GW8AH2SWLo+zDbHiD8mU7P2u6vgeiUkVjZi+JLim1+KpOMr21w12SHBYkL+IH5pGjvgcFkzVAsFz3zwwgYQuN8S7Wlxgam0TsPHq0oJppfm9+9Z4tcQ51Md0NvjVtAORIMWrdhUzto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=GZ+9AIe4; arc=fail smtp.client-ip=40.107.209.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=folker-schwesinger.de header.i=@folker-schwesinger.de header.b="fCb6qML9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=folker-schwesinger.de; s=default2212; h=In-Reply-To:References:To:From:Cc:
-	Subject:Message-Id:Date:Content-Type:Content-Transfer-Encoding:Mime-Version:
-	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=P2Idfefkhd5yd2wTqXvp/0zaLmn55htaW7rWMLoCA2w=; b=fCb6qML9biq0KYATmm+LYcSegQ
-	fwq23ZA3TmsHz4YwMcG1/3eR7iaRM6/yYCi1EenQA3gZvonB0ZjqDt5icDzqDqdi/Ytl1X0HVbLiL
-	RdvoAC9UOzVpZ6DecBzuI2vvlpSus1DCvsirhrNnkDkme7N4MQDBM7sJZj2IFszenrtFw3Bw6dAis
-	HApFD0lgo75fSYNpvbj6UGAdnOq4rB0dMBEwpOZB7S3XTtHDAxH+pHPM7fLGlpiHLmovLkcQDwt3H
-	yEO37KdeKmZNA4rGr8Dzkq/3EehBSUqJ+/vqaKB6HE1x4jabS587kHOvEqsu8QoV1Fs4zRyU8yhfD
-	ABVaFw2Q==;
-Received: from sslproxy04.your-server.de ([78.46.152.42])
-	by www522.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <dev@folker-schwesinger.de>)
-	id 1wd6Ak-00018g-2k;
-	Fri, 26 Jun 2026 15:00:42 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy04.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <dev@folker-schwesinger.de>)
-	id 1wd69m-000Cq5-0G;
-	Fri, 26 Jun 2026 15:00:42 +0200
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="GZ+9AIe4"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UFTfIAlxElLr1VnpTjXR2SrX82HYyOln8+7/KqxkgDSwXT5YRsBIXyK13zZPTdHgQB+Kx648W6s8NXij/X/5VtbmFQ/NionX88MzHq76JouPstQ0BV3YQYDQ87xSz4YhLvvJvHkQtMr9ldgNa49zPNZDOED51AULreO3bmCDIO8WUNneUJi1SXCTQgu2CtUbSqiAS4Vfvg0zUE8hp2PKQ3KyOIfalH2uvuuzBVwyt0MbOXD+WlN5hT6711Wg8stS/UzTUNKHsj1N75lDPKjhBSv1OkhepjrfhdBY45qMmmxs854RCsuU1gWOJLey5wre9o4Y11Gi34j6RmUooJenGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=M52TyjCJ0Ukt+S63pn/17jAPLL7z1YnI8pBgwF3SAwU=;
+ b=TGiuiFiBnLnCSECo3z5FTzQSpw2PT10tGZYg0rjgGz7Y3CUiwnzrhF1ffavboXYA/e2ZsGALrrlgCeoB5NdbU0J+zQABJX60NTz42cfM0Zq+P5SJ6qhF0snuu6Fhzh8whQFMlffCwD/Nt45n9mSWaXygzx7N+2AQXhcHnoiuHneLdR9lJvUy33U2cWrbwOfBDt6cZMmQ0qdc3j5Isora95yiKYilBHqlJr8XQWlGD02Q2e65h6oXaVpGoph9Z824LziVK4MhGsQaYRdX0V00DConSnh1qwvD1FHlTNkpjsw9LkhweLpsGbudov+1Qi4NOXC/aWxRxbD6E/+vPeSPPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=google.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=M52TyjCJ0Ukt+S63pn/17jAPLL7z1YnI8pBgwF3SAwU=;
+ b=GZ+9AIe4LgfqJacMrqXsWU2gykNAQoFBCIJkXC20vR1GI9EwE6CAD8WaXRo/ClLwhyINdn7ny8VFbZhJBUQ6VboscBZ21MEeMZQXJP3DHa7Fxbuh+C5mb/mT11iu2Mwu5Jd4IH1XEmOWH6ebW6RiC4c0Zw0YMtfdMgLn2PtWXks=
+Received: from BN9PR03CA0649.namprd03.prod.outlook.com (2603:10b6:408:13b::24)
+ by DM4PR12MB6589.namprd12.prod.outlook.com (2603:10b6:8:b4::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Fri, 26 Jun
+ 2026 13:22:00 +0000
+Received: from BN2PEPF000044AB.namprd04.prod.outlook.com
+ (2603:10b6:408:13b:cafe::3d) by BN9PR03CA0649.outlook.office365.com
+ (2603:10b6:408:13b::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.18 via Frontend Transport; Fri,
+ 26 Jun 2026 13:21:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN2PEPF000044AB.mail.protection.outlook.com (10.167.243.106) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.181.6 via Frontend Transport; Fri, 26 Jun 2026 13:21:59 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 26 Jun
+ 2026 08:21:59 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 26 Jun
+ 2026 08:21:59 -0500
+Received: from xhddevverma40x.xilinx.com (10.180.168.240) by
+ satlexmb08.amd.com (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41
+ via Frontend Transport; Fri, 26 Jun 2026 08:21:57 -0500
+From: Devendra K Verma <devendra.verma@amd.com>
+To: <bhelgaas@google.com>, <mani@kernel.org>, <vkoul@kernel.org>,
+	<Frank.Li@kernel.org>
+CC: <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<michal.simek@amd.com>, <devendra.verma@amd.com>
+Subject: [PATCH v5] dmaengine: dw-edma: Enable HDMA 64R/W Channels
+Date: Fri, 26 Jun 2026 18:51:51 +0530
+Message-ID: <20260626132151.1875965-1-devendra.verma@amd.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 26 Jun 2026 13:00:41 +0000
-Message-Id: <DJJ00J6ROCIR.17UYIA64S2JHY@folker-schwesinger.de>
-Subject: Re: [PATCH v3 2/3] dmaengine: xilinx_dma: Enable transfer chaining
- for AXIDMA and MCDMA by removing idle restriction
-Cc: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-kernel@vger.kernel.org>
-From: "Folker Schwesinger" <dev@folker-schwesinger.de>
-To: "Suraj Gupta" <suraj.gupta2@amd.com>, <vkoul@kernel.org>,
- <Frank.Li@kernel.org>, <michal.simek@amd.com>
-X-Mailer: aerc 0.21.0-151-gce80509b8454
-References: <20260626092656.1563871-1-suraj.gupta2@amd.com>
- <20260626092656.1563871-3-suraj.gupta2@amd.com>
-In-Reply-To: <20260626092656.1563871-3-suraj.gupta2@amd.com>
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28043/Fri Jun 26 08:24:31 2026)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044AB:EE_|DM4PR12MB6589:EE_
+X-MS-Office365-Filtering-Correlation-Id: c6b2c7ed-96c9-47e5-0558-08ded385e737
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|36860700016|1800799024|82310400026|376014|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	gcZi9TpH9/UhEvfPuhdYVHOmsYgkrZheySzJyZlexC8FI7KPP77AkNnUvW0+irw419qNP/EScJMGAe3Z/Ox1Le6G3TkFwlGl0QBLUS4vBTYw/4CdiC5Nj2FK3+zXpH2mcqYnYWR/AuJSeY0TzCzZA6jmPna00Tj8duYM2RNmFoBpsiEAr4L88/2YvvonrGL+QVLmy1W5M9eEgozLuMTTigILWktBFDbiugUKhwKMa1jM2+bhugBQ6IxvFoeMwcAwOfBCKeSbVKASKYFDF/xsGX1dfVWjjE5CkeOQLCLPlxzdJT8RRK8dWvKCOR7pI4OqempkFYnRhC61N8kbZ5AJnpG+5SHdEIykyTyXnilopRHYwy80BMV0ZE94P9qAAUwHqmFL2g1RpPgH5agBZ0FV2WlrpH1icy70sSYaYYfhPfU9HuC3/nkaaBzlokT8spCAijt/D9ttEePT+WAd72zuLu50pG8t3AwROVbw6d6LMWEH/nsZ9wlnnsZwRRqKxR5k/DOz1i2Gv2v/kO6XAjJoji+L2smdiAHFzGv4EDnpD+EMWmEIcHHNvm47O65RN6QtrV/UYajn3vVejovBHpdv1N6zjVFSgktrN8MVUnhbDeJ9A/xJKInpfZxVYtbZyYNh3rqiGIUcP83+Ns9ICYbk6lvCykG7Xewi1ME8z6vp7+uzqPag2/Xz/BiB1oqwFS7JEU+V1L0lt+zuLn5iXr2p+A==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(36860700016)(1800799024)(82310400026)(376014)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	5rPxZfmuHXNUdD4kO/VB380CI9v6OUwqdrLEoGEtZ1Xxks3EZc046VUZ8hZg4Ll4fGo/iL0pQ7qS2XGoPYb6joMajxA3xRluaIUDz6LSX6Lw03opcWSMueQR040zjTr7XbETh63vZbzZXQ7BraCO8LyVenmR21k8L7VvgFqhrP+OY//QjscZmag2c+bFQUdCe+iheslcVSrXHjDvTLJ8trTfD02FTNrMzMwfOtkEupyDdtX60iyAeZut/GjYxBs2STkejL8Rmbea6EWubbwxCFq69XkPymYHU1n280cU1s3mH9gTLERhg/iqDmT7eUqeoauYfBbQNXfdLuhCpq2Kz85wZhaXEPhgS1RXmUvonTSfgEfhjiE3NreGrzwRmGuGqzkfbWzDk0nGq1i1rTlDGr31gAgFWBHSURw0OTAu5B0Rh2ytbwE6jT9xpwQsf2vM
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 13:21:59.6018
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6b2c7ed-96c9-47e5-0558-08ded385e737
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN2PEPF000044AB.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6589
 
-On Fri Jun 26, 2026 at 11:26 AM CEST, Suraj Gupta wrote:
-> Relax the idle check in xilinx_dma_start_transfer() and
-> xilinx_mcdma_start_transfer() that prevented new transfers from being
-> queued when the channel was busy, so scatter-gather transfers can be
-> chained onto an in-flight transfer.
->
-> In scatter-gather mode, only update the CURDESC register when the active
-> list is empty to avoid interfering with transfers already in progress.
-> When the active list contains transfers, the hardware tail pointer
-> extension mechanism handles chaining automatically via the descriptor
-> next pointer chain, which is set up at channel allocation and preserved
-> across descriptor recycling.
->
-> Direct (non-SG) mode has no descriptor queue: writing the BTT register
-> launches a transfer immediately, so a new transfer must not be programmed
-> while one is in flight. Keep those transfers serialized by retaining the
-> idle check on the non-SG path. MCDMA always operates in scatter-gather
-> mode, so it is unaffected.
->
-> Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-> Co-developed-by: Srinivas Neeli <srinivas.neeli@amd.com>
-> Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+As per 'Designware Cores PCI Express Controller Databook',
+Section 7.1 - Overview, HDMA supports 64 Read and 64 Write
+channels. Current controller driver supports up to 8 read and
+write channels only. In order to utilize all the channels the
+controller driver need to have the channel related structs
+and variables as per the number of channels supported by IP.
+Following changes are made to enable 64 Read / 64 Write
+channel support:
 
-For the AXIDMA SG-path:
+ o Defined HDMA specific macros to reflect the channel count.
+ o The count of ll_regions and dt_regions in dw_edma_chip and
+   dw_edma_pcie_data shall be in accordance to number of read
+   and write channels.
+ o In dw_edma_probe() configure the channels as per the channels
+   of the IP used.
+ o Changed mask types to u64 for higher channel counts.
 
-Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
+Signed-off-by: Devendra K Verma <devendra.verma@amd.com>
+---
+Changes in v4:
+  o Changed 'mask' variable to a bitmap type as per the
+    review comment.
 
-> ---
->  drivers/dma/xilinx/xilinx_dma.c | 19 ++++++++++++-------
->  1 file changed, 12 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
-dma.c
-> index ca396b709742..6e7b183cb499 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> @@ -1580,7 +1580,14 @@ static void xilinx_dma_start_transfer(struct xilin=
-x_dma_chan *chan)
->  		return;
->  	}
-> =20
-> -	if (!chan->idle)
-> +	/*
-> +	 * Direct (non-SG) mode has no descriptor queue: writing the BTT
-> +	 * register launches a transfer immediately, so a new transfer must
-> +	 * not be programmed while one is in flight. Keep such transfers
-> +	 * serialized. SG mode supports chaining onto a running transfer via
-> +	 * tail-pointer extension, so it is allowed to proceed when busy.
-> +	 */
-> +	if (!chan->has_sg && !chan->idle)
->  		return;
-> =20
->  	head_desc =3D list_first_entry(&chan->pending_list,
-> @@ -1599,7 +1606,7 @@ static void xilinx_dma_start_transfer(struct xilinx=
-_dma_chan *chan)
->  		dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
->  	}
-> =20
-> -	if (chan->has_sg)
-> +	if (chan->has_sg && list_empty(&chan->active_list))
->  		xilinx_write(chan, XILINX_DMA_REG_CURDESC,
->  			     head_desc->async_tx.phys);
->  	reg  &=3D ~XILINX_DMA_CR_DELAY_MAX;
-> @@ -1660,9 +1667,6 @@ static void xilinx_mcdma_start_transfer(struct xili=
-nx_dma_chan *chan)
->  	if (chan->err)
->  		return;
-> =20
-> -	if (!chan->idle)
-> -		return;
-> -
->  	if (list_empty(&chan->pending_list))
->  		return;
-> =20
-> @@ -1685,8 +1689,9 @@ static void xilinx_mcdma_start_transfer(struct xili=
-nx_dma_chan *chan)
->  	dma_ctrl_write(chan, XILINX_MCDMA_CHAN_CR_OFFSET(chan->tdest), reg);
-> =20
->  	/* Program current descriptor */
-> -	xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
-> -		     head_desc->async_tx.phys);
-> +	if (chan->has_sg && list_empty(&chan->active_list))
-> +		xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
-> +			     head_desc->async_tx.phys);
-> =20
->  	/* Program channel enable register */
->  	reg =3D dma_ctrl_read(chan, XILINX_MCDMA_CHEN_OFFSET);
+Changes in v3:
+  o Reverted the FIX for AI reported GET_CH_32() issue, as
+    per the recommendation of reviewers, need to create
+    separate patch for it.
+
+Changes in v2:
+  o Fixed the pre-existing bug related to GET_CH_32
+    interchanging the channel direction and id.
+    This bug was not caused by any version of this patch.
+  o Fixed the issue when using for_each_set_bit() for mask
+    of u64 type.
+
+Changes in v1:
+  o On review recommendation of sashiko bot, in the function
+    dw_hdma_v0_core_off(), the loop iterates over registers
+    as per the number of channels enabled and not on total
+    number of channels supported.
+  o Changed mask types to u64 for higher channel counts.
+---
+ drivers/dma/dw-edma/dw-edma-core.c    | 19 +++++++++++-----
+ drivers/dma/dw-edma/dw-edma-core.h    |  4 ++--
+ drivers/dma/dw-edma/dw-edma-pcie.c    |  8 +++----
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 32 ++++++++++++++++++---------
+ drivers/dma/dw-edma/dw-hdma-v0-regs.h |  2 +-
+ include/linux/dma/edma.h              | 10 +++++----
+ 6 files changed, 48 insertions(+), 27 deletions(-)
+
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index c2feb3adc79f..adf1b3939f96 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -925,9 +925,9 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+ 		irq = &dw->irq[pos];
+ 
+ 		if (chan->dir == EDMA_DIR_WRITE)
+-			irq->wr_mask |= BIT(chan->id);
++			irq->wr_mask |= BIT_ULL(chan->id);
+ 		else
+-			irq->rd_mask |= BIT(chan->id);
++			irq->rd_mask |= BIT_ULL(chan->id);
+ 
+ 		irq->dw = dw;
+ 		memcpy(&chan->msi, &irq->msi, sizeof(chan->msi));
+@@ -1079,6 +1079,8 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+ 	struct dw_edma *dw;
+ 	u32 wr_alloc = 0;
+ 	u32 rd_alloc = 0;
++	u16 max_wr_cnt;
++	u16 max_rd_cnt;
+ 	int i, err;
+ 
+ 	if (!chip)
+@@ -1094,20 +1096,25 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+ 
+ 	dw->chip = chip;
+ 
+-	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE)
++	if (dw->chip->mf == EDMA_MF_HDMA_NATIVE) {
+ 		dw_hdma_v0_core_register(dw);
+-	else
++		max_wr_cnt = HDMA_MAX_WR_CH;
++		max_rd_cnt = HDMA_MAX_RD_CH;
++	} else {
+ 		dw_edma_v0_core_register(dw);
++		max_wr_cnt = EDMA_MAX_WR_CH;
++		max_rd_cnt = EDMA_MAX_RD_CH;
++	}
+ 
+ 	raw_spin_lock_init(&dw->lock);
+ 
+ 	dw->wr_ch_cnt = min_t(u16, chip->ll_wr_cnt,
+ 			      dw_edma_core_ch_count(dw, EDMA_DIR_WRITE));
+-	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, EDMA_MAX_WR_CH);
++	dw->wr_ch_cnt = min_t(u16, dw->wr_ch_cnt, max_wr_cnt);
+ 
+ 	dw->rd_ch_cnt = min_t(u16, chip->ll_rd_cnt,
+ 			      dw_edma_core_ch_count(dw, EDMA_DIR_READ));
+-	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, EDMA_MAX_RD_CH);
++	dw->rd_ch_cnt = min_t(u16, dw->rd_ch_cnt, max_rd_cnt);
+ 
+ 	if (!dw->wr_ch_cnt && !dw->rd_ch_cnt)
+ 		return -EINVAL;
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index 902574b1ba86..d12fefbf3952 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -91,8 +91,8 @@ struct dw_edma_chan {
+ 
+ struct dw_edma_irq {
+ 	struct msi_msg                  msi;
+-	u32				wr_mask;
+-	u32				rd_mask;
++	u64				wr_mask;
++	u64				rd_mask;
+ 	struct dw_edma			*dw;
+ };
+ 
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index 0b30ce138503..79f653da8e0f 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -61,11 +61,11 @@ struct dw_edma_pcie_data {
+ 	/* eDMA registers location */
+ 	struct dw_edma_block		rg;
+ 	/* eDMA memory linked list location */
+-	struct dw_edma_block		ll_wr[EDMA_MAX_WR_CH];
+-	struct dw_edma_block		ll_rd[EDMA_MAX_RD_CH];
++	struct dw_edma_block		ll_wr[HDMA_MAX_WR_CH];
++	struct dw_edma_block		ll_rd[HDMA_MAX_RD_CH];
+ 	/* eDMA memory data location */
+-	struct dw_edma_block		dt_wr[EDMA_MAX_WR_CH];
+-	struct dw_edma_block		dt_rd[EDMA_MAX_RD_CH];
++	struct dw_edma_block		dt_wr[HDMA_MAX_WR_CH];
++	struct dw_edma_block		dt_rd[HDMA_MAX_RD_CH];
+ 	/* Other */
+ 	enum dw_edma_map_format		mf;
+ 	u8				irqs;
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 632abb8b481c..61064de293b8 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -53,13 +53,24 @@ __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
+ static void dw_hdma_v0_core_off(struct dw_edma *dw)
+ {
+ 	int id;
++	enum dw_edma_dir dir;
++
++	dir = EDMA_DIR_WRITE;
++	for (id = 0; id < dw->wr_ch_cnt; id++) {
++		SET_CH_32(dw, dir, id, int_setup,
++			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		SET_CH_32(dw, dir, id, int_clear,
++			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		SET_CH_32(dw, dir, id, ch_en, 0);
++	}
+ 
+-	for (id = 0; id < HDMA_V0_MAX_NR_CH; id++) {
+-		SET_BOTH_CH_32(dw, id, int_setup,
+-			       HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
+-		SET_BOTH_CH_32(dw, id, int_clear,
+-			       HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
+-		SET_BOTH_CH_32(dw, id, ch_en, 0);
++	dir = EDMA_DIR_READ;
++	for (id = 0; id < dw->rd_ch_cnt; id++) {
++		SET_CH_32(dw, dir, id, int_setup,
++			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		SET_CH_32(dw, dir, id, int_clear,
++			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		SET_CH_32(dw, dir, id, ch_en, 0);
+ 	}
+ }
+ 
+@@ -118,19 +129,20 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+ 	unsigned long total, pos, val;
+ 	irqreturn_t ret = IRQ_NONE;
+ 	struct dw_edma_chan *chan;
+-	unsigned long off, mask;
++	DECLARE_BITMAP(mask, 64);
++	unsigned long off;
+ 
+ 	if (dir == EDMA_DIR_WRITE) {
+ 		total = dw->wr_ch_cnt;
+ 		off = 0;
+-		mask = dw_irq->wr_mask;
++		bitmap_from_u64(mask, dw_irq->wr_mask);
+ 	} else {
+ 		total = dw->rd_ch_cnt;
+ 		off = dw->wr_ch_cnt;
+-		mask = dw_irq->rd_mask;
++		bitmap_from_u64(mask, dw_irq->rd_mask);
+ 	}
+ 
+-	for_each_set_bit(pos, &mask, total) {
++	for_each_set_bit(pos, mask, total) {
+ 		chan = &dw->chan[pos + off];
+ 
+ 		val = dw_hdma_v0_core_status_int(chan);
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-regs.h b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+index 7759ba9b4850..48e40efceb2e 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-regs.h
++++ b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+@@ -11,7 +11,7 @@
+ 
+ #include <linux/dmaengine.h>
+ 
+-#define HDMA_V0_MAX_NR_CH			8
++#define HDMA_V0_MAX_NR_CH			64
+ #define HDMA_V0_CH_EN				BIT(0)
+ #define HDMA_V0_LOCAL_ABORT_INT_EN		BIT(6)
+ #define HDMA_V0_REMOTE_ABORT_INT_EN		BIT(5)
+diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+index 1fafd5b0e315..da7a5cc93ad4 100644
+--- a/include/linux/dma/edma.h
++++ b/include/linux/dma/edma.h
+@@ -14,6 +14,8 @@
+ 
+ #define EDMA_MAX_WR_CH                                  8
+ #define EDMA_MAX_RD_CH                                  8
++#define HDMA_MAX_WR_CH                                  64
++#define HDMA_MAX_RD_CH                                  64
+ 
+ struct dw_edma;
+ 
+@@ -89,12 +91,12 @@ struct dw_edma_chip {
+ 	u16			ll_wr_cnt;
+ 	u16			ll_rd_cnt;
+ 	/* link list address */
+-	struct dw_edma_region	ll_region_wr[EDMA_MAX_WR_CH];
+-	struct dw_edma_region	ll_region_rd[EDMA_MAX_RD_CH];
++	struct dw_edma_region	ll_region_wr[HDMA_MAX_WR_CH];
++	struct dw_edma_region	ll_region_rd[HDMA_MAX_RD_CH];
+ 
+ 	/* data region */
+-	struct dw_edma_region	dt_region_wr[EDMA_MAX_WR_CH];
+-	struct dw_edma_region	dt_region_rd[EDMA_MAX_RD_CH];
++	struct dw_edma_region	dt_region_wr[HDMA_MAX_WR_CH];
++	struct dw_edma_region	dt_region_rd[HDMA_MAX_RD_CH];
+ 
+ 	/* interrupt emulation */
+ 	int			db_irq;
+-- 
+2.43.0
 
