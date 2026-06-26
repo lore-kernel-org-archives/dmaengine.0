@@ -1,64 +1,65 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010054.outbound.protection.outlook.com [52.101.46.54])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011011.outbound.protection.outlook.com [40.93.194.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241E43EF0A4
-	for <dmaengine@vger.kernel.org>; Fri, 26 Jun 2026 10:45:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426D73F65E8;
+	Fri, 26 Jun 2026 13:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.11
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782470719; cv=fail; b=TVp3cfcesIRGhuryO11FC4qYBoLpxB+xGJr11wz5aMnlubcS740/O7d8qY5kOIvZakskoNIzZWRKAL2X38YvSF2LaeOU7SnHEPuFrHC0diiHOvnIEzWNejmllOvzm+/Xntxh123OKEfXrmL8k8Z6OABKV54OIf2PKVy10gPpLN4=
+	t=1782479786; cv=fail; b=ZyKtdHe5SEMtPYI97a0Ps2icTxZ47mjPo00kiYR3DjLFOtDZXsGCM2rZGP1wK5qPbFiSIo0Ib0eAo378hyhxVQfB1l9UCNgdlDn0pix309knMU5REoR+zPy67KA/0t76vItxlFXB3j4H6qgts0bQ4vHpYfUjDtxRrzpMJPXJCik=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782470719; c=relaxed/simple;
-	bh=Yv6WOYGAL0bqx9LkSV79iWGAb9CT3hxv9YOn+PIvCJg=;
+	s=arc-20240116; t=1782479786; c=relaxed/simple;
+	bh=A+zVNgCrIxdROMb3jBPsqQILEH1kw6Sw5bv1sPOqtsY=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=cIqaPwPAYN0QYqp3+3hUtCAeOMAotc4eXooUvTyqM69bcZY9P2474+qST5VTGCf+MnMPmvGyMEm5cHujUfpcCSn37Ih/VbBsKvDhwnrDBVnVAn8pUhMNSR7CywjK93SaWNJtw+rZgtiQgmmEJGYPjN5+2UR7LPZKTpri1lMVI7Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=q04a+FNj; arc=fail smtp.client-ip=52.101.46.54
+	 Content-Type:MIME-Version; b=RTSUpgTkaHY44WfmcLN8yYHQ7n9WmiiZ1Vc1/R/ibl8+HHgI0p2kdDLU/+XfpcreMfBH7bhDgM3PBWzTqTgpkITNaeyHCZlMkUYcqToolk4ydcN4m6l55c0GWIPb+fGU6/yvzhnCwyxj16vV3h5Q9r7ECaMvuYeBzHcdtI685ns=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lz2AXapL; arc=fail smtp.client-ip=40.93.194.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="q04a+FNj"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lz2AXapL"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k0Es3pXulUSfzDBKIo7xOcvPzyzL4aSPU31pZ9Ou0u52+HRN/tFQaVYOQMvSxXJPdCuGh0treNw/kLUpJIjjK7CQ+8ApaRUC+CjiyMoVxcx0RkBHaIMRamVYbOop6ae6ymO8Ytp8e0aB9l+4G8RHKQH1+jVjDdrGAaWz0ogDYxN5qYS/jxFNn7/SCzQaGeAayhjUNI2Rd8dpZdZOWdOJlBbr+orAxPYbD4SQRRl4ossDTYe5bkUs2MRrWzDQinitvfgrWAlL4jUPwMYn8sqYNa7oRLrChtFE4GgegMbDo9c0it8QPy+WZuffTc7ActtPW/iPbJJBL4YgTzIU5/VYOQ==
+ b=Eciu1eHBR2RVd59Nb11g37mHNrQDDmz5GLD5rdxzEpEJT85pHD2+7o8F0CGMXXnow1X6wdFevhBsLL4+I6+hpEEbkq+t//g0wyX//dUUb64Jbs1Tt2SYxDLJYE341MYEZBkn/kRFZMqDo7zDHx/oDSTPjUfmGZSLokwMkrin47RoAxMF5fExzPyDjQ2qBnbZivagD725bW/wMkOop71Lwn4ddvpI+0fJv1lx6MZb8ZOSIkW5g07cgLoboFQ6wfAefiHDv02OV3xChB65O+T0AVqbECSiMPhRsxV1xrpx0t5J6xI1ijSMGm2r3x42cw2Pb2/w7W+iM3vOUQ0NTchOww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4B8F9JvYNBKxZg/U5T8n56xgO3YGNjHIl7gdIYknp68=;
- b=mTIHcMs6AYfpDxTVvoLV5MB3yh1LP3cx4bpnwsXs76mG1jmggBY29MuFLCt3Wm3nn3f8Wb6RXnKRTHgGYBsqZg/v6fYj3NYkhcV5x2qGVQBjs5ow4kdd9U6Crra2CCGGvk7ucn43TYZVnbyIblU00kJXzNg8KU/ZqAS8+H1/vf6aBdmUnm6nlNmedSOfqyXKBEQvwncZU+4EwTBxCAtHQKtifxE/AYdCXr1WjDfPo3i6I4Mo+iGi+F0QJxcFjZCiY4juiLFuLCPZlPir1LVONcC1GbmndlI49Xr9MH1xUf6rR2YGCbgsTFHUKXwHz9Fl/68Tw8w/pLFgZNfPe58H3A==
+ bh=+1HrctEqKrffFy/DlojrG7lTnrxpRYMfH5cVDTndB20=;
+ b=UoGuufiXIjV8gVK4GMN8CX/pK5CS1s9VlZCPkScljEjUuTStoMBOC19lCJzY/1YMYhFQQ+vE/nCWHYfEQxwJEqmLKurF8J2ZTP4BRJT2QWhu+BmJeru2k8tDCUBY+W1NPCiioQQ80+TPGGaNVxjsxYOj3DyNbiLbQ3/+8HoTMfSoadByBcU4EtVPwPe53nwGqzWWIZeP1Na0MQeM90ZIIczy6J6v943bqlVKzZKfyD2bQ49Ls1grVhMS7dpK/IgsL6tIyxmlB7XQ+gsriUGs6aUKWoJOszvZXCH9Ir0Zn7jSPDfYAT9eL0ltQI8eDNbmuFPt6lJ+kACN7HjrcNRJqg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4B8F9JvYNBKxZg/U5T8n56xgO3YGNjHIl7gdIYknp68=;
- b=q04a+FNjblj/61jzipCAsCGsjx/8TcficpEpM94jes1hY8YLBiF3mtzz9NxBXKUiJYMH7Ddlk1eRrEXWm2rnoqJZ4qDF5YUhE/6soQMuu96UhlccqH3D7XubepHRTRJjjmhPle0ycGAXtR0ZKa61HFH80EbGLs++F++LxnZ8DQk=
+ bh=+1HrctEqKrffFy/DlojrG7lTnrxpRYMfH5cVDTndB20=;
+ b=lz2AXapL+GPExwKXMavyhbQVis+XhRaSMKj+1YREw9ZxmNwmS4hlz9cbpZYVWj+7nFaPRgu16zJYmPe6Lm+oOeQPI+qgI3ASyyf4cpKbq7rfP/hOn3SJgYOjssjktBfCUQY8CD+H/g6TxY+RK7YbKIlwfyXmVnAHGDXfFZkSzuE=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SA1PR12MB6798.namprd12.prod.outlook.com (2603:10b6:806:25a::22)
- by SN7PR12MB7324.namprd12.prod.outlook.com (2603:10b6:806:29b::12) with
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
+ by CH3PR12MB8726.namprd12.prod.outlook.com (2603:10b6:610:17b::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.18; Fri, 26 Jun
- 2026 10:45:12 +0000
-Received: from SA1PR12MB6798.namprd12.prod.outlook.com
- ([fe80::e317:e4a3:6ae9:8c54]) by SA1PR12MB6798.namprd12.prod.outlook.com
- ([fe80::e317:e4a3:6ae9:8c54%2]) with mapi id 15.21.0159.012; Fri, 26 Jun 2026
- 10:45:12 +0000
-Message-ID: <cc79a319-ced7-4270-80d4-13e8cb20895f@amd.com>
-Date: Fri, 26 Jun 2026 16:15:06 +0530
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.13; Fri, 26 Jun
+ 2026 13:16:19 +0000
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965%4]) with mapi id 15.21.0159.016; Fri, 26 Jun 2026
+ 13:16:19 +0000
+Message-ID: <18960153-149c-42b4-aca5-9e266ee5ea87@amd.com>
+Date: Fri, 26 Jun 2026 18:46:12 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dmaengine: xilinx_dma: Enable transfer chaining
- for AXIDMA and MCDMA by removing idle restriction
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-References: <20260626092656.1563871-1-suraj.gupta2@amd.com>
- <20260626092656.1563871-3-suraj.gupta2@amd.com>
- <20260626094826.3CF8A1F000E9@smtp.kernel.org>
+Subject: Re: [PATCH RESEND v4] dmaengine: dw-edma: Enable HDMA 64R/W Channels
+To: Frank Li <Frank.li@oss.nxp.com>, Devendra K Verma <devendra.verma@amd.com>
+Cc: bhelgaas@google.com, mani@kernel.org, vkoul@kernel.org,
+ Frank.Li@kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, michal.simek@amd.com,
+ "Verma, Devendra" <Devendra.Verma@amd.com>
+References: <20260623112647.3379581-1-devendra.verma@amd.com>
+ <aj1PuyaxAHOILiwg@lizhi-Precision-Tower-5810>
 Content-Language: en-US
-From: "Gupta, Suraj" <suraj.gupta2@amd.com>
-In-Reply-To: <20260626094826.3CF8A1F000E9@smtp.kernel.org>
+From: "Verma, Devendra" <devverma@amd.com>
+In-Reply-To: <aj1PuyaxAHOILiwg@lizhi-Precision-Tower-5810>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PNYP287CA0078.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:25c::14) To SA1PR12MB6798.namprd12.prod.outlook.com
- (2603:10b6:806:25a::22)
+X-ClientProxiedBy: MA5P287CA0289.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:221::12) To BL4PR12MB9482.namprd12.prod.outlook.com
+ (2603:10b6:208:58d::19)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -66,201 +67,126 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR12MB6798:EE_|SN7PR12MB7324:EE_
-X-MS-Office365-Filtering-Correlation-Id: cfcd8a32-ba81-48f2-b760-08ded3700047
+X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|CH3PR12MB8726:EE_
+X-MS-Office365-Filtering-Correlation-Id: c06e2d80-f974-4d24-7a9b-08ded3851c28
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|22082099003|18002099003|11063799006|4143699003|56012099006|6133799003;
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|56012099006|4143699003|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	RyBvWmos2eJWzCPWw4vSa3ZVsHXC0E5BRi0dFGyDKTXkGIjHf3GS0YgmQLPFU4ebv6xiEtKe02G+pMAVlzl6a4kuzuRgsd3H5yNKu3GDFYjS9yPv53SvY/Ob+RtSEQWltm1JSczp719+E43U97nJHxi0TLtkIodwZydRZYkCqSnStFSuOHu4sj81QZ11zN0UKngiEdQ10/YYq2cZGEJyBJrn1FjMGvYsv3F6FdkskcDH5y8OUF08Fwz+CB8j4Gduxl8KcwPf5KJlnPRObbc0DdC9XDjRGHuV9ogZ2mnAd7cKMRRsfAWcyFyqy77Sq1urs8VdutjNqPFrNJgOAKqpvwvARlBv2nwZ+Y+JSn+/xPfVE0QoE2Klt0R3nvvM4a/rl60NqYXIh52JFHdyEsLPPXlSSp50H5OWASt4VhyDvvaP9m40kck/ddjXnXKB5JHAO7bc7R2bFB0TKfANh/8/u2pVArGs5z0TfD/XEp7snF5boSht+aFkZ/PDK6tYYyS8NQVObC+lAk+yJDnGhrnzBTfRyigLAmFeH9UAdXBXGaVXv2Se/aVwvodGn4XrcZjn7wFOPSbBZeH+0HI5EhZCXPIkgg+ZHQsXDlqBAoi0q3c0orbE8GBsyAopYNLyfGAyzkaxdufKVuInV+PjgLQLZBcPDLHGYDQMrUACu8CTZbE=
+	uSfa/DuafotDL4tPmCt++dnSb+ckkFaopHYr0KfTKPMUNEMAfnWUAdDXVjaJDuvEB+utpWGV2zrq1DyjvBOn8aCE378VwllY4DVqZpytkUkxvp/GyR6jrRXL68HcvPo9mx7BU8doJtUi75SWZw1/wUJFVqs3b/lYrZxvSgsWHy2z6D1+J8VHZ/Y4TcL39cfsN79WJ5ML0Oa6sUZvZa1q41ZXTOUCVsE+CihIj7FJDhd2NDPEbs5Q5Dxu0OhNaB364g2voZSIxO3N6fuXjY6PGZ/vJqLUKSuIICzbXhV+N709Q8ABcUPPDIUF0UZNEMyhcv84UMBZ8/KjZ3v9GxIkkJQ010Yz3i5R/uDJrbzq1IERqvEhmmnYu+mz4kYuI3GXm7+k7FcPeBuTueaBwP0RdIFY2v63cELIYsPfkIeMsv7Yrute6/vxKiSHzw/jJZ0oA9dW6hlpS2tjGCvlDwKfcSP0XgpUnk6+WhfFzcKEi7repPST+RSfCJx+jxQKdzjgZS+qiuuYJcsDSi9hiHCpZv4JCQy2MLwKpKA9svt+BScxOncPlnT9UzAchbsYqT2Uga99qLspiTZ4FPFwJWqIv7v3do6wbhFSYloXxH6rc8/ceYJfzBrj8RAHzSB43ANimdzWWdieVK8vbUM4vEgYALx1h+KGvDB9eNQUmQ7X+Do=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB6798.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RXQrK3VYRHRPcENkUGhBekJKVDV2WlhMTyt6MGlLN0x6SHZ5cnVCeDlTdnFm?=
- =?utf-8?B?N0ZPZmJjVDJOU2U3c3J3SzI1cjhKQ0E3Y2FYMUZEK2lKTW1IdXp2TFVwaUtv?=
- =?utf-8?B?OTYrMmU5b0hQeEw0R21zL2lsYmZVOTlFRWE5ZmRNVnFsaUs3ZDQyU1lSbFoz?=
- =?utf-8?B?d1o0eDFCU0xhM2RGVERPU24zMUFabGVOd1pxZHVKMSt6T0ZUTlh4NkhwRmUx?=
- =?utf-8?B?TlNQcFRhWnM5d0ZteDIzaGhoM3g2cTNHdEVpT3BUbWgxeEdPVnJqMmR6N0JF?=
- =?utf-8?B?QnY1Vll5MjNXaHdFN3ljZER2WWltMFdHQUQxR3RjYVdETEdSQXIwM1NTK1Za?=
- =?utf-8?B?aDRjbHVIWlBQQUdUczhFa3dYUnhFczNmeUR5MFpRSUt6SW53MldTK2d1NTRv?=
- =?utf-8?B?YVdOT1JXWXNPUUFmRXduN1RwT3FnSzR3RzNFUWpBeDRWRzNwdjNqRGc2VVFm?=
- =?utf-8?B?V2xnUjZGT1VsM0Z2dXFoRm5JckJpeE9YdnZ4cS8wdE5abEpiMzB2ZGlPOGlP?=
- =?utf-8?B?TEs2a1hyVy91bmFvR29uRGg3RzVQeWEwWTlVMVZ4Y09tZjdhUUpJM2tuVWY4?=
- =?utf-8?B?N01EdmFCMlpoSEo0OTFQbERHYjN0K3F4ZkJjUXhJazc4YVpoRUVLM2JvTFlL?=
- =?utf-8?B?bDVmOGYvUDlENGpZQVN6QmpNUWlKZDBIUmxIZkNpSHpySldwL2Y3ZXNJVGRX?=
- =?utf-8?B?bFV3dXMxUStWTUJyeXhidWx4OWlJc1pkQVlvR0szYnFacSttZXFRUGFwRGNG?=
- =?utf-8?B?Nk93d1hrZis5Qy9STER3ellQQWJwK3pqL1RpeG1jTndnMU5vc3RXRlFZWjhY?=
- =?utf-8?B?WUVlYVAzOFpuSHpjNGpjSmh1VGg5Qk9OZitHR3B4OUhPSnFRUDFUVzhlZzZC?=
- =?utf-8?B?VnlISkdIektHNC8rbWNDWGpFbXZvQklDbndGT0VrdzhQTkNQc0xLZVFOV1pH?=
- =?utf-8?B?S1VId1VuakFMQWhhcktiQUZwOS80aFRkZTdiUTdNNjVvY3NUMkttcWY0cE5O?=
- =?utf-8?B?WGdiMjdsZnE2NWxvdFVmTmdES052a2cxbkU1RGV1QmNkcXZHRHpDRTd6bmNY?=
- =?utf-8?B?WW83dGhuQjF0WHV3dEl3OTJ2Ymx1QkhDR1JXcE9ZcWg5dkZpdkxpTC9LYnlG?=
- =?utf-8?B?eWQyM1NHRWJFWTdNaEFQRGhWS2FvWUR2SXl2bCtMdEp3RGRaVG1CR01qQ3ls?=
- =?utf-8?B?TDN5bHJnOUxlZW8ybjZ0aG9GQytXUXJpbXdsWk5WMEtOSDV0K3VMTk1VeVBv?=
- =?utf-8?B?b1pDLy9Jc1BnQXVLRzhMb1BidTRnSXIvQmttZk43ZCtvcVlzWTZ2amVmNGZM?=
- =?utf-8?B?alMxSVpFOExVOXlhNGlicnU3MitaZ0ttUVFXZEMxYnFUN3B4Rzh5clRNT0cz?=
- =?utf-8?B?bG8yMzhXaTJCWHYyNE5FRW9LQUFkVHk5anYwcVZIRWo3YWw0TzVPZFhLTHNH?=
- =?utf-8?B?M1ZYSXQ2eFF5a0VNVVA3SnZZMllVZWxMYm1OS1o5YXJ3WCtWanE5Qzc5S0NX?=
- =?utf-8?B?MzdlZU9TcGc0WnNmd3kwOU9OTHMrNDI5RFFiS1kzR3RNcnZZVW10SzUrTFdj?=
- =?utf-8?B?dVFMWlNwT2ZTemZCWUpLUDIrRkErYnFMUGwrTW41cThmc2ZpRFVjbHdkbG9E?=
- =?utf-8?B?ak56VUM1SkxKVUJpK1FOMlY1a05JL1hxM2NZRTZlZkprS1RlczhqNDZpUjkz?=
- =?utf-8?B?NndMT08rYjlwZkNuUVZ1SWFtTGZLc25OUFJSbk0yZ2JFN29VQmxrVnMwUzNM?=
- =?utf-8?B?aFkvelN6RUcrQlNERXpvcmZ6WCtrVXFSbHBodzFBNmVhYWMxdFF2QmlScmxY?=
- =?utf-8?B?NWJCVSswa1lhdVE0QmhiQVRhMHpGajlnK1duWHZHeXpWaHBxTjAzOWZLZXM2?=
- =?utf-8?B?dlIrM0ZDYUhoenBGaThZQ0lXdnh4Qzc2K1NHZm9lL012UzZvaTMvaVNPZ01K?=
- =?utf-8?B?WkVhMVJqV3FCMll1cWZ3c3RLR25UWkZZWGhXdWZZRm4xWks4VGkrSERQYmlw?=
- =?utf-8?B?M1VUQk95Mk5uVG5CcDh3S3JsQkNzYUIvYS9TL2Q4bW9PM0huRmt4c0RxVktN?=
- =?utf-8?B?TzVVd294bTVGdUlrNnV0Y01TY05QOXFJb2k1aE5STWV6K1doRzFQbzFqK3Jx?=
- =?utf-8?B?dEJCODhSNDZlNkFOeVBvckR2NDIxc0M2cFFlb0NNQUxpc0Y2R0xKeHpCRnBw?=
- =?utf-8?B?WkR3RDR2bm9EMjc4R2M2WUlFU1RWMlpGNmJYRmd5NHpHSk0wS1BqMDF1bTVy?=
- =?utf-8?B?ZlVNbGNCRGxiT1FRSUo0ZDJQUE94RzFsRlZ2c1JnSjlRRSs3RElwMFB2eG5O?=
- =?utf-8?B?ZmtnUVZSSlpieVlXY2NBS1JXOUpZbm1wVFpFSkp6OGJTUzdMMlMxZz09?=
+	=?utf-8?B?eWN5cXZYYVVJSWMyNWg1NGVwU2F1WGZwdlJ0em9HWm9NdC8yVFRaNHNEcDNy?=
+ =?utf-8?B?U294am1peUhiWWNWdCtiWU1ETzJRbDJLb0JFSUpBdkxiYi9hdFErSzFBYzhE?=
+ =?utf-8?B?Z2dRSUhqMURvRkxTTE9qaTZiazRJUWZtZUJjeXVPQjJGQ216b1hySEF3eWww?=
+ =?utf-8?B?OXJQWGhQMHdlRW92YUk4TnFaQXRwVDhWTHRVN1hJWCt0ZjJ1dnl5eEd6Tys0?=
+ =?utf-8?B?TDlpdHVETjNJNEtoZlFibml3ZWJCR0dKblRtRHB4OWVyR29zNWQ5SUNVaFlI?=
+ =?utf-8?B?QkFaMFhDVlJuMFFKT3dZUUh4MG14dXk2SDRsTWJIMHpRR3hVVnovZmJvMngv?=
+ =?utf-8?B?QzNjT0VHbjhnSlc2azQ5OU1DYTE3d0NmUFRabUhOZUcrUHlVNk91QlFqZ0J2?=
+ =?utf-8?B?anRrdHJ1TERsWld6eXh6MlR6U0wzU1dVWm8weU95NEJEYXNJdEdnQWhMY0th?=
+ =?utf-8?B?b0ZKUVprS0gwdGo0ZzNHaHZITjlkb0tFUXF3alB4elV6OStJNkplbmVBSGt2?=
+ =?utf-8?B?dTlLdklldFVIclVwc1FMNzdWZ0RsQXlEZTlrZkphUnU5QUUzSkdUK09yN25j?=
+ =?utf-8?B?cmlvWjJIc3VTbkRqWmducUdMUitFb0MxNGxwWmkrcHE5SXdoQ2QwTHlwTXY3?=
+ =?utf-8?B?ZkxXUlYyeHlqQy94ZGQwR1lMTEJVZHNFd2RCUU5UN3dpcEVuSGY1Y053b0JK?=
+ =?utf-8?B?dlJGbnRNc1pZT2lwN05rbHV2cXFIVGovcjA3bUs3KzRQSDlsZ3BzaXkwMGhV?=
+ =?utf-8?B?Y0tvc0kyOFlxblVqL255SXY3cndOMkhzTUFoMGMzbFZNd2FmYVU0eitMR3dB?=
+ =?utf-8?B?YzdSVmtKUzFqZVMyMUordlEyMjNxRHM5Ky93RHBKbmpKaWdObWJyWmhoWERM?=
+ =?utf-8?B?MTF0ZzBuTkFxQ2pxOEd4SjUxUVdlVTJIS3JlNGtrY3lWRWoyNEZxU0ZVejRD?=
+ =?utf-8?B?MlZuUXFSSDFwUmd5eU5BaTBrMmhOQjIxNFN3N0NiUW9LU0g2ZWg3VFk1QVk1?=
+ =?utf-8?B?ZDM1TDE0MDhLYXE0aGRScjZ5ckh4R0h4Rk4vZUh4QXQ1OU9Ma1pZc2x1aFN3?=
+ =?utf-8?B?NlZaZUVFY0dvMEx0NHhYaDIyMjMzVXVscUdIOHZ0d0NoZEdBNElYakQ0blZV?=
+ =?utf-8?B?WkFud3JJUjZKN0V2MlpuZHQ0K2Y2Z09PTllielg5NEpOSzYwOWkySmwvRjhY?=
+ =?utf-8?B?ZjhEZFVaZ0NTcU41T1oraGJPUmNiYU45SXBiRC9hMjkra09rd2ZZaGFaekt1?=
+ =?utf-8?B?bzJHOTdqTnVhSkFiWG94YUtaNWVzcU5nNm5xVWVBQXI2T3hsZWZEaWhlR1dC?=
+ =?utf-8?B?bjFvSHFYMytJTHRSdlp5Wkh4Q3R0cEgwN0RqZDVON3pHZURZK1ZWUk1kc0VW?=
+ =?utf-8?B?RUgwN2ZBcGV0Nm5FRjdKWVpqbTc0bk01SElnaUJiTU0yaVFiTXE5SExMSVRh?=
+ =?utf-8?B?SnRFYitnZkdEMzFuRHVHQm9ZMXZnaWM0Mzd1VXJzWlVaOGN4aDZCaDRISUJ2?=
+ =?utf-8?B?cUFJeTBRdmdYZjU2OWxvc00zb3hwc3NOcGJzcVVRVGJlZ3VlZmIvSW1kc3gw?=
+ =?utf-8?B?M2Qzdit4NHZwRGM1ejhJblptVEJJcy9mREdiUmxCeGNTZGVjbDVkTXNaMGxk?=
+ =?utf-8?B?VUcrOXArZ1BSNHBSb0JoRCtRc0g4QXpSdm8rd3RQZ2lDNnVqSDg5cUFmb0kx?=
+ =?utf-8?B?YTB4SHVZeGljVm03eDBOTENyTzBxMWRxL2hWcGVLRE9NK0RUSTRlS2FSVDVa?=
+ =?utf-8?B?K2tyZFVzSFJFYmFwYlA2S2VTK09rWmNhZzRjZUUyMDA3dTlJQzIramxRVjVw?=
+ =?utf-8?B?Z1dlc3dNaHh5cjNvR2ZLYnpHdUtPUVhRUTJLRHVyWFhURXlIQVFQUzlOdVBM?=
+ =?utf-8?B?RTVFV1VJVkpHRTk1SmRmQXdhUUhyUnJ6REdHYk4vdlF3VjVGUnNqS3BvbWdj?=
+ =?utf-8?B?WFpCcGZlM09WR2xDK2I4dFdmTkc0QXR2c003RklRT0pHMk5ZTDhCZEdFSjVm?=
+ =?utf-8?B?NHhmdTIyODdQWTQ1MTFUbVQvV3hOVzNmQ0hPb04rZnA0dmZIQ2o1RHgxU3F6?=
+ =?utf-8?B?WE01ek9mZWhKcVZXTEVLRFhkbGNjSDdJbkV0TGlnQXdVN09tbU8yeUcwSUxO?=
+ =?utf-8?B?MkFMUy9tNkdoemNOTGVZNnMxMXBqYW4vVWt3S2FySVdOeXVXOEV2YUdOSEF3?=
+ =?utf-8?B?ai9sYitQUUVZMmtJcWN0WjQ3N0FsbWZKNkxWWm4xVEZpelBBcEM4MXR4VkNM?=
+ =?utf-8?B?RE42OHZHUDM3OXRsMUhUYmQwenIzdEdiVHNTempjem5MMkZac0tFQmpJSnU5?=
+ =?utf-8?B?K2VnSDZ4VDZTcFEvMm96NGxGTElTcDVFdVlET1lIU3J6ZjRkVVVaZz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cfcd8a32-ba81-48f2-b760-08ded3700047
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB6798.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c06e2d80-f974-4d24-7a9b-08ded3851c28
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 10:45:12.8644
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2026 13:16:19.3588
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: T0CfTsmmvqn2GpYBVfUhR89CkYJpBhZI+DHo8PjE+4n/vnX20WwNgf0VPG5pRNN4rjqimUA04gwrE2eHe8TgZg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7324
+X-MS-Exchange-CrossTenant-UserPrincipalName: EMZhg4KPGJKyWa5dcJYqz/2oQM9krvTlYTDYd9znif1E2Dcw3Nd+eXnpeY+fpKVOEgW2GiNaib1Xbmpk11UDZw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8726
 
 
 
-On 6/26/2026 3:18 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] Bypassing the idle check allows new descriptors to be appended to a running transfer, but the driver fails to link the active transfer's hardware `next_desc` pointer to the newly appended descriptors, leading to wild DMA fetches.
-> - [High] Overwriting the DMA Coalesce Threshold register while a channel is running resets the hardware coalescing counter, causing the channel to stall indefinitely.
-> --
-
-I replied for same comments in V2 here:
-
-https://lore.kernel.org/all/0f00a643-8aa0-48c0-b6e8-d1956e623cc4@amd.com/
-
-Regards,
-Suraj
-
-> 
-> commit 06494ab31953d1c39c050abca192d725ee06375d
-> Author: Suraj Gupta <suraj.gupta2@amd.com>
-> 
-> dmaengine: xilinx_dma: Enable transfer chaining for AXIDMA and MCDMA by removing idle restriction
-> 
-> This commit relaxes the idle checks in xilinx_dma_start_transfer() and
-> xilinx_mcdma_start_transfer() to allow scatter-gather transfers to be chained
-> onto an in-flight transfer. It relies on the hardware tail pointer extension
-> mechanism to handle chaining automatically.
-> 
->> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
->> index ca396b7097427..6e7b183cb4994 100644
->> --- a/drivers/dma/xilinx/xilinx_dma.c
->> +++ b/drivers/dma/xilinx/xilinx_dma.c
->> @@ -1580,7 +1580,14 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
->>   		return;
+On 25-Jun-26 21:26, Frank Li wrote:
+> On Tue, Jun 23, 2026 at 04:56:47PM +0530, Devendra K Verma wrote:
+>> As per 'Designware Cores PCI Express Controller Databook',
+>> Section 7.1 - Overview, HDMA supports 64 Read and 64 Write
+>> channels. Current controller driver supports up to 8 read and
+>> write channels only. In order to utilize all the channels the
+>> controller driver need to have the channel related structs
+>> and variables as per the number of channels supported by IP.
+>> Following changes are made to enable 64 Read / 64 Write
+>> channel support:
+>>
+>>   o Defined HDMA specific macros to reflect the channel count.
+>>   o The count of ll_regions and dt_regions in dw_edma_chip and
+>>     dw_edma_pcie_data shall be in accordance to number of read
+>>     and write channels.
+>>   o In dw_edma_probe() configure the channels as per the channels
+>>     of the IP used.
+>>   o Changed mask types to u64 for higher channel counts.
+>>
+>> Signed-off-by: Devendra K Verma <devendra.verma@amd.com>
+>> ---
+> ...
+>>
+>> @@ -118,7 +129,8 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+>>   	unsigned long total, pos, val;
+>>   	irqreturn_t ret = IRQ_NONE;
+>>   	struct dw_edma_chan *chan;
+>> -	unsigned long off, mask;
+>> +	unsigned long off;
+>> +	u64 mask;
+>>
+>>   	if (dir == EDMA_DIR_WRITE) {
+>>   		total = dw->wr_ch_cnt;
+>> @@ -130,7 +142,11 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+>>   		mask = dw_irq->rd_mask;
 >>   	}
->>   
->> -	if (!chan->idle)
->> +	/*
->> +	 * Direct (non-SG) mode has no descriptor queue: writing the BTT
->> +	 * register launches a transfer immediately, so a new transfer must
->> +	 * not be programmed while one is in flight. Keep such transfers
->> +	 * serialized. SG mode supports chaining onto a running transfer via
->> +	 * tail-pointer extension, so it is allowed to proceed when busy.
->> +	 */
->> +	if (!chan->has_sg && !chan->idle)
->>   		return;
+>>
+>> -	for_each_set_bit(pos, &mask, total) {
+>> +	while (mask) {
 > 
-> [Severity: Critical]
-> Does bypassing this idle check for SG mode result in wild DMA fetches when a new
-> transfer is queued on a busy channel?
+> can you use  DECLARE_BITMAP(status_mask, 64); and keep original for_each_set_bit()
+> ref:
 > 
-> If a new transfer is queued while the channel is busy, the pending_list will
-> be empty when processed by append_desc_queue():
+> https://lore.kernel.org/dmaengine/aj1JrufD1vIZH06s@lizhi-Precision-Tower-5810/T/#u
 > 
-> drivers/dma/xilinx/xilinx_dma.c:append_desc_queue() {
->      ...
->      if (list_empty(&chan->pending_list))
->          goto append;
->      ...
-> }
+> Frank
 > 
-> Because of this, append_desc_queue() explicitly skips hardware chaining entirely
-> and fails to link the active transfer's tail descriptor to the newly submitted
-> descriptor.
-> 
-> Since out-of-order frees can scramble the ring at runtime, won't the hardware
-> finish the active transfer and follow a stale next_desc pointer to an unrelated,
-> uninitialized, or freed descriptor segment?
-> 
-> [ ... ]
->> @@ -1599,7 +1606,7 @@ static void xilinx_dma_start_transfer(struct xilinx_dma_chan *chan)
->>   		dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
->>   	}
->>   
->> -	if (chan->has_sg)
->> +	if (chan->has_sg && list_empty(&chan->active_list))
->>   		xilinx_write(chan, XILINX_DMA_REG_CURDESC,
->>   			     head_desc->async_tx.phys);
->>   	reg  &= ~XILINX_DMA_CR_DELAY_MAX;
-> 
-> [Severity: High]
-> Does updating the Coalesce Threshold register while a channel is running stall
-> the channel indefinitely?
-> 
-> Just before this CURDESC check in xilinx_dma_start_transfer(), the threshold
-> is updated:
-> 
->      if (chan->desc_pendingcount <= XILINX_DMA_COALESCE_MAX) {
->          reg &= ~XILINX_DMA_CR_COALESCE_MAX;
->          reg |= chan->desc_pendingcount <<
->                    XILINX_DMA_CR_COALESCE_SHIFT;
->      }
->      ...
->      dma_ctrl_write(chan, XILINX_DMA_REG_DMACR, reg);
->      
-> According to the Xilinx AXI DMA specification (PG021), writing this threshold
-> automatically resets the hardware coalescing counter to zero.
-> 
-> If there are already active transfers running, writing the new threshold will
-> reset the counter. As a result, the total number of remaining transfers
-> (active + pending) will no longer align with the new threshold multiple. The
-> hardware will finish the transfers and stop with a counter value strictly below
-> the threshold, never triggering the completion interrupt.
-> 
-> [ ... ]
->> @@ -1685,8 +1689,9 @@ static void xilinx_mcdma_start_transfer(struct xilinx_dma_chan *chan)
->>   	dma_ctrl_write(chan, XILINX_MCDMA_CHAN_CR_OFFSET(chan->tdest), reg);
->>   
->>   	/* Program current descriptor */
->> -	xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
->> -		     head_desc->async_tx.phys);
->> +	if (chan->has_sg && list_empty(&chan->active_list))
->> +		xilinx_write(chan, XILINX_MCDMA_CHAN_CDESC_OFFSET(chan->tdest),
->> +			     head_desc->async_tx.phys);
->>   
->>   	/* Program channel enable register */
->>   	reg = dma_ctrl_read(chan, XILINX_MCDMA_CHEN_OFFSET);
-> 
-> [Severity: High]
-> This appears to introduce the same coalescing regression as seen in
-> xilinx_dma_start_transfer().
-> 
-> Earlier in xilinx_mcdma_start_transfer(), the CR register is overwritten
-> with the new pending count:
-> 
->      if (chan->desc_pendingcount <= XILINX_MCDMA_COALESCE_MAX) {
->          reg &= ~XILINX_MCDMA_COALESCE_MASK;
->          reg |= chan->desc_pendingcount <<
->              XILINX_MCDMA_COALESCE_SHIFT;
->      }
->      ...
->      dma_ctrl_write(chan, XILINX_MCDMA_CHAN_CR_OFFSET(chan->tdest), reg);
->      
-> Won't this similarly reset the MCDMA hardware coalescing counter while the
-> channel is active, causing it to stall indefinitely?
-> 
+
+Hi Frank, thank you for the suggestion!
+This is also appreciation comment in the way you review and provide
+example for the ease of reviewer and patch developers which helps
+in speed up evaluation and implementation for that particular
+suggestion.
+
+I will push the changes in next review.
+
+-Devendra
 
