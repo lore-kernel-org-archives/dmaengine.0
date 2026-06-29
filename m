@@ -1,132 +1,297 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B003E2767
-	for <dmaengine@vger.kernel.org>; Mon, 29 Jun 2026 10:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D63B3B2FD4
+	for <dmaengine@vger.kernel.org>; Mon, 29 Jun 2026 10:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782728107; cv=none; b=LmDuI412dxBgUfLssWXlZ4Aq7s2B2Rj2TjUZaj8fnoPMs5e8Szf/+WV8VJf3n2FW3SDXAFTODh3Nv7hEq0JVQlbPwnByaNwEfDtJ6kCCjyRTm5mFqh1WyLDHSVucrlLJAnkO6j3mkmi8rM9gaIUgjd5/gvTYm3RulU1rsXpRVYA=
+	t=1782728176; cv=none; b=BDR45CIWuZ4MpXGC91Qx8JUSeM4xYRXTxBpjqwThAX14IiyY6vzCo3fOnHRPQXvvRc4ufSjX6Br8pxPNonstfeoTlvyd67zfuwqG5KjmCR6zeI/Oe0rBkEPEQcSzdr2Z42V0UgwhyJ6k5s1iX7PyxyVFIYnWTCQ2CFYmgp70UsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782728107; c=relaxed/simple;
-	bh=SJcY/ytpz3Hmfq2d6s/yeyuwvoFAadQ6gH82YnBkNaU=;
+	s=arc-20240116; t=1782728176; c=relaxed/simple;
+	bh=p4fO68t2YUsdopmamKnSgRC0bVYgGoOzDytI3EAn374=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bw9/4gN9hIg9zlKA6zwWbSajhkNbkLdEerYbplj0bmOh9lAHgcxWF6r9+qP0HepmQwW1tLcJcyboZGRI520eKxciwONy+VpKrhdEcQMIZNm15GVYIJnKQI2rYs5QCzD5SubzE34nmzBMUTqQ7cOh/PkK87rO4wL2B3P5A+8bvJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SKpbZdOk; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=vGJdXyrFD3JMtO5ucChUitYkmPsoXU5jEXC+DLNjQunL5slvNdSXh4s/E/0aV6MJ7HBVolel5Njpkimx0VCbgfoZk5+r1CstOV6n/UAZXp93fv/Cx/r7Nr63OOH1czv7B3zSRbsilh5vz/1K8mBa9DxGgRQ+ycIX1X7iaS8AQDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ACPtIGed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SKpbZdOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB7F1F000E9;
-	Mon, 29 Jun 2026 10:15:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ACPtIGed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0821F00A3D;
+	Mon, 29 Jun 2026 10:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782728106;
-	bh=kCp+XPekm/Ivysony92IOorHESUmE7e+gXTjhEEi3Fg=;
+	s=k20260515; t=1782728174;
+	bh=v+LZcHQ9oW2mjm1wzuQ102T8kG2XQ0ghvwfrKESkcVo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SKpbZdOkX9wnLQUwSXufhO6eqKMh4hExg3Q6fZ8x44vIQMFc8RtfOWvIG/UjdPWvY
-	 VD5XboYEPbXC+Nt7pAYEGbHn2IRuDGFxn+dh2V4SuLhuHxM94ZrocFCTGmwwtnWEvL
-	 bpEfZLlR9Qxh7LQogRfUC3RFceK9sgyQqAGVPlRWVD4B2wKjPVpwB7Vc8BpmxlSe4g
-	 65GJ1Ad+ggc04oy4EneRSS4VR2WdMVQ0xUC3OQzO2ZTpXt1zDbnYlFOydYrHFLmCxt
-	 MdGUtPBcAN0gOSzNupuqUWDF+dDBlnjK/bm9/ib7TBu4LligazQkU8nb+BK3FMidrB
-	 5+IJlg5QkOqMw==
+	b=ACPtIGedtf0AVZR7Iek0vbgpx6Uodbkbku36WU/OTNMFw9fpffXibWkSN40IuWfXK
+	 iR88xcWtloBYvFHKQ9O0eO/nsfZUv6RzfjgU40bpNTmAhLKU5sPARIV6BGrPqJ5zH3
+	 DSmieYA0C8IiIcFVoHrFsrwgX4UChCFBUrDR0i107uwcFRuBZUTnPT9nRaoumqDkdW
+	 0vsts29mamSolq3lC9N7w9Bd/0S4MGkqIvwinqbqPQN0vF1H8qhkQ+Y/Cfn7ZMgzXN
+	 W7iGUF7RbARG08+cnbDGcBnoQtq2h05NZpjst5uUl3zDWcacaT0bvJTPXFmlgESXkD
+	 tFtYX43OBkniw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v20 07/14] crypto: qce - Cancel work on device detach
+Subject: Re: [PATCH v20 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260629-qcom-qce-cmd-descr-v20-7-56f67da84c05@oss.qualcomm.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260629-qcom-qce-cmd-descr-v20-6-56f67da84c05@oss.qualcomm.com>
 References: <20260629-qcom-qce-cmd-descr-v20-0-56f67da84c05@oss.qualcomm.com>
- <20260629-qcom-qce-cmd-descr-v20-7-56f67da84c05@oss.qualcomm.com>
+ <20260629-qcom-qce-cmd-descr-v20-6-56f67da84c05@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 29 Jun 2026 10:15:04 +0000
-Message-Id: <20260629101505.2CB7F1F000E9@smtp.kernel.org>
+Date: Mon, 29 Jun 2026 10:16:13 +0000
+Message-Id: <20260629101613.DA0821F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 6 potential issue(=
 s) to consider:
-- [High] Incorrect devres registration order causes Use-After-Free and Use-=
-After-Destroy during device unbind.
-- [High] Canceling the workqueue without completing pending requests causes=
- a system hang.
+- [High] Race condition in locked descriptor processing leaves appended tra=
+nsactions unprotected.
+- [High] Missing endianness conversion on physical address assigned to hard=
+ware descriptor.
+- [High] Per-descriptor metadata is unsafely stored in the shared channel s=
+tate.
+- [High] Mapping an unaligned embedded structure field for DMA.
+- [Medium] Internal command buffers are mapped using the client device inst=
+ead of the DMA controller device.
+- [Medium] Logic mismatch restricts BAM locking to TX channels instead of R=
+X channels.
 --
 
-commit bbc1062dac800956a5d7f42e6fe7594986dd0251
+commit 74132b5d8141c72f8f781c94cfc7fae626e96be7
 Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-crypto: qce - Cancel work on device detach
+dmaengine: qcom: bam_dma: add support for BAM locking
 
-The workqueue is setup in probe() but never cancelled on error or in
-remove(). Set up a devres action to clean it up early, ensuring work is
-not cancelled before outstanding DMA transfers terminate.
-
-Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-94=
-5fd1cafbbc%40oss.qualcomm.com?part=3D7
-
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index b966f3365b7de..f671946cf7351 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -186,6 +186,13 @@ static int qce_check_version(struct qce_device *qce)
->  	return 0;
->  }
-> =20
-> +static void qce_cancel_work(void *data)
-> +{
-> +	struct work_struct *work =3D data;
-> +
-> +	cancel_work_sync(work);
-
-[Severity: High]
-If the work is cancelled here, does the active crypto request get leaked?
-
-If a DMA transfer completes and schedules the work, but the device unbinds
-before the work executes, cancel_work_sync() will discard the pending work
-item. Since qce_cancel_work() does not implement a fallback to propagate an
-error completion (like -ESHUTDOWN) to the active crypto request,
-crypto_request_complete() is never called.
-
-Will upstream callers of the crypto API waiting on the request hang
-indefinitely, potentially causing a system lockup?
-
-> +}
-> +
->  static int qce_crypto_probe(struct platform_device *pdev)
->  {
+Add support for BAM pipe locking. To that end: when starting DMA on an RX
+channel - prepend the existing queue of issued descriptors with an
+additional "dummy" command descriptor with the LOCK bit set. Once the
+transaction is done (no more issued descriptors), issue one more dummy
+descriptor with the UNLOCK bit.
 
 [ ... ]
 
-> @@ -227,6 +234,11 @@ static int qce_crypto_probe(struct platform_device *=
-pdev)
->  	if (ret)
->  		return ret;
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+
+[ ... ]
+
+> @@ -686,6 +701,35 @@ static int bam_slave_config(struct dma_chan *chan,
+>  	return 0;
+>  }
 > =20
-> +	INIT_WORK(&qce->done_work, qce_req_done_work);
-> +	ret =3D devm_add_action_or_reset(dev, qce_cancel_work, &qce->done_work);
-> +	if (ret)
-> +		return ret;
+> +static int bam_metadata_attach(struct dma_async_tx_descriptor *desc, voi=
+d *data, size_t len)
+> +{
+> +	struct bam_chan *bchan =3D to_bam_chan(desc->chan);
+> +	const struct bam_device_data *bdata =3D bchan->bdev->dev_data;
+> +	struct bam_desc_metadata *metadata =3D data;
 > +
->  	ret =3D devm_qce_dma_request(qce->dev, &qce->dma);
+> +	if (!data)
+> +		return -EINVAL;
+> +
+> +	if (!bdata->pipe_lock_supported)
+> +		/*
+> +		 * The client wants to use locking but this BAM version doesn't
+> +		 * support it. Don't return an error here as this will stop the
+> +		 * client from using DMA at all for no reason.
+> +		 */
+> +		return 0;
+> +
+> +	guard(spinlock_irqsave)(&bchan->vc.lock);
+> +
+> +	bchan->scratchpad_addr =3D metadata->scratchpad_addr;
+> +	bchan->direction =3D metadata->direction;
 
 [Severity: High]
-Will this devres registration order cause a use-after-free and
-use-after-destroy during device unbind?
+Does this safely handle multiple descriptors being prepared before they are
+issued?
 
-Devres executes actions in LIFO order. Because qce_cancel_work is registered
-here before devm_qce_dma_request() and devm_mutex_init() (which happens lat=
-er
-in qce_crypto_probe), the teardown sequence will be:
+Since the attach callback operates per-descriptor, storing these properties
+directly into the shared bchan object could overwrite the state of previous=
+ly
+prepared descriptors.=20
 
-1. Destroy qce->lock
-2. Terminate and free DMA channels
-3. Wait for the workqueue via cancel_work_sync()
+When the locked sequence is eventually executed, might the channel apply th=
+is
+overwritten metadata to all pending transactions, potentially using the wro=
+ng
+scratchpad address for earlier ones?
 
-If a DMA callback schedules qce->done_work just before teardown,
-qce_req_done_work() could execute while cancel_work_sync() is waiting.
-Does this allow the work item to attempt to lock the already destroyed
-qce->lock and access the freed DMA channels?
+> +
+> +	return 0;
+> +}
+> +
+
+[ ... ]
+
+> @@ -1046,13 +1114,101 @@ static void bam_apply_new_config(struct bam_chan=
+ *bchan,
+>  	bchan->reconfigure =3D 0;
+>  }
+> =20
+> +static struct bam_async_desc *
+> +bam_make_lock_desc(struct bam_chan *bchan, unsigned long flag)
+> +{
+> +	struct dma_chan *chan =3D &bchan->vc.chan;
+> +	struct bam_async_desc *async_desc;
+> +	struct bam_desc_hw *desc;
+> +	struct virt_dma_desc *vd;
+> +	struct virt_dma_chan *vc;
+> +	unsigned int mapped;
+> +
+> +	async_desc =3D kzalloc_flex(*async_desc, desc, 1, GFP_NOWAIT);
+> +	if (!async_desc) {
+> +		dev_err(bchan->bdev->dev, "failed to allocate the BAM lock descriptor\=
+n");
+> +		return ERR_PTR(-ENOMEM);
+> +	}
+> +
+> +	sg_init_table(&async_desc->lock_sg, 1);
+> +
+> +	async_desc->num_desc =3D 1;
+> +	async_desc->curr_desc =3D async_desc->desc;
+> +	async_desc->dir =3D DMA_MEM_TO_DEV;
+> +
+> +	desc =3D async_desc->desc;
+> +
+> +	bam_prep_ce_le32(&async_desc->lock_ce, bchan->scratchpad_addr, BAM_WRIT=
+E_COMMAND, 0);
+> +	sg_set_buf(&async_desc->lock_sg, &async_desc->lock_ce, sizeof(async_des=
+c->lock_ce));
+
+[Severity: High]
+Could this mapping violate DMA API requirements for cacheline alignment?
+
+The lock_ce field is embedded within struct bam_async_desc and is not
+guaranteed to be cacheline-aligned to ARCH_DMA_MINALIGN. Mapping it via
+dma_map_sg() means it shares a cacheline with other fields.
+
+If the CPU modifies adjacent fields (like async_desc->desc_node) while the
+DMA mapping is active, it dirties the cacheline. On non-coherent
+architectures, could this lead to unpredictable behavior and trigger DMA API
+debug warnings?
+
+> +
+> +	mapped =3D dma_map_sg(chan->slave, &async_desc->lock_sg, 1, DMA_TO_DEVI=
+CE);
+
+[Severity: Medium]
+Should this use the BAM DMA controller device instead of the client device?
+
+The DMA mapping is being created in the IOMMU domain of the client device
+(chan->slave). If the client device and the BAM controller do not share an
+IOMMU domain, the BAM controller might be unable to access the command
+element, resulting in an IOMMU fault.
+
+Would it be better to map this using chan->device->dev or bchan->bdev->dev
+since the BAM controller is the one reading the command buffer?
+
+> +	if (!mapped) {
+> +		kfree(async_desc);
+> +		return ERR_PTR(-ENOMEM);
+> +	}
+> +
+> +	desc->flags |=3D cpu_to_le16(DESC_FLAG_CMD | flag);
+> +	desc->addr =3D sg_dma_address(&async_desc->lock_sg);
+
+[Severity: High]
+Is an endianness conversion missing here?
+
+The desc->addr field is __le32, but it is being assigned a native
+dma_addr_t without cpu_to_le32().=20
+
+On big-endian systems, won't this write the wrong byte order into the hardw=
+are
+descriptor and cause the BAM controller to fetch from an invalid memory add=
+ress?
+
+> +	desc->size =3D cpu_to_le16(sizeof(struct bam_cmd_element));
+> +
+> +	vc =3D &bchan->vc;
+> +	vd =3D &async_desc->vd;
+> +
+> +	dma_async_tx_descriptor_init(&vd->tx, &vc->chan);
+> +	vd->tx.flags =3D DMA_PREP_CMD;
+> +	vd->tx_result.result =3D DMA_TRANS_NOERROR;
+> +	vd->tx_result.residue =3D 0;
+> +
+> +	return async_desc;
+> +}
+> +
+> +static int bam_setup_pipe_lock(struct bam_chan *bchan)
+> +{
+> +	const struct bam_device_data *bdata =3D bchan->bdev->dev_data;
+> +	struct bam_async_desc *lock_desc, *unlock_desc;
+> +
+> +	lockdep_assert_held(&bchan->vc.lock);
+> +
+> +	if (!bdata->pipe_lock_supported || !bchan->scratchpad_addr ||
+> +	    bchan->direction !=3D DMA_MEM_TO_DEV)
+
+[Severity: Medium]
+Does this logic correctly target RX channels?
+
+The commit message explicitly states: "when starting DMA on an RX channel",
+but DMA_MEM_TO_DEV specifies the TX direction.=20
+
+Will this silently skip the lock setup for RX channels (DMA_DEV_TO_MEM)?
+
+> +		return 0;
+
+[ ... ]
+
+> @@ -1064,9 +1220,23 @@ static void bam_start_dma(struct bam_chan *bchan)
+> =20
+>  	lockdep_assert_held(&bchan->vc.lock);
+> =20
+> +	vd =3D vchan_next_desc(&bchan->vc);
+>  	if (!vd)
+>  		return;
+> =20
+> +	/*
+> +	 * Wrap the issued work with a LOCK/UNLOCK pair exactly once, at the
+> +	 * start of a fresh sequence and only when there is real work to lock
+> +	 * around. On a re-entry after a full FIFO, we see the BAM is locked
+> +	 * and must not add another pair we simply continue loading the
+> +	 * remainder of the same locked sequence.
+> +	 */
+> +	if (!bchan->bam_locked) {
+> +		ret =3D bam_setup_pipe_lock(bchan);
+> +		if (ret =3D=3D 0 && bchan->bam_locked)
+> +			vd =3D vchan_next_desc(&bchan->vc);
+> +	}
+
+[Severity: High]
+Is there a race condition here if new descriptors are appended?
+
+If a new descriptor is submitted via vchan_issue_pending() while the hardwa=
+re
+is busy processing a locked sequence, the new descriptor is appended after =
+the
+UNLOCK descriptor.
+
+When bam_start_dma() loops to process this new descriptor, bchan->bam_locked
+is still true because it is only cleared asynchronously when the UNLOCK
+hardware interrupt fires:
+
+process_channel_irqs() {
+    ...
+    if (flags & DESC_FLAG_UNLOCK)
+        bchan->bam_locked =3D false;
+    ...
+}
+
+Because bchan->bam_locked is still true, won't this skip adding a new LOCK,
+leaving the new transaction unprotected in the hardware FIFO?
+
+> +
+>  	ret =3D pm_runtime_get_sync(bdev->dev);
+>  	if (ret < 0)
+>  		return;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260629-qcom-qce-c=
-md-descr-v20-0-56f67da84c05@oss.qualcomm.com?part=3D7
+md-descr-v20-0-56f67da84c05@oss.qualcomm.com?part=3D6
