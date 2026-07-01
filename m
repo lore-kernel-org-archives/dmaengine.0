@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE20FEED8;
-	Wed,  1 Jul 2026 08:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8955A5FDA7;
+	Wed,  1 Jul 2026 08:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782894086; cv=none; b=E86uYPmM3Sl1Kx1nlU+HoFjD05qmGYuSJcDtnWyyMQ8yNY61F3F0bbTNEKvkdskSmSpwlcL2CWVYBqnILXr6UD5VTbO/Up1MV9s3JG85zKGxPEjH+iurMRLwIgcL2pSg1hoJpJPwuc973ikYL3q7mMUDdHcXh+qCNCuu3WH4WBE=
+	t=1782895600; cv=none; b=ihgJL6E8lxaR91QAYS6xEw+ErMHmsY1qAI1LhVLjB+WlPKpWjO/gylNZuyKSGhkV0dJ9TrL6CY09DiAPEIXLXtK45neqp+y8dCpDojUvqUDWQ616Aj4R2yhxi/xBWX/9lkcI2bRo9ueze10XZS2IVv2lAQGYllBYsdC96Cy4yBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782894086; c=relaxed/simple;
-	bh=PvEw0UPdQ1EZMAoKMP89AcPz55a0OOLxucM/cI6aQWE=;
+	s=arc-20240116; t=1782895600; c=relaxed/simple;
+	bh=C0RbXQ8kRWzJwgtFJMB15xNRhY6aNbAMPpWBryzPlXs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gQff/JAbzkaw5hmcQsTLRefON1UK/KsqU+8Gdpu76AGVx1TUUyyl5UNH77mCTQTv+D5iGk5kS9SdgL8iOzOwVkf6PAak5j9iaqgVcqiTmbh+/C5hGgJtDDa4/OU7UOcILscR12CG/3aacMkbhTr2EWbPxSkxq2luY2oz75Oy3CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbsb1CfV; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=YQpis9Q/gDAxhRIHOxDfGpPnrbHXUsziXpisCZOpO0tg1V6TvVeOhwONdQ7WyA7AvyXHwzqYIrcNS31go4gKLkQE2zeBpeHYLFFN1WFa/0Ykefhx1USmMVumOvljrZG8ITIN/cl4DwVPm9kJSj5Z5+S12MzGSttSoH4ynbvx4PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D1iUBD95; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbsb1CfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECAE1F000E9;
-	Wed,  1 Jul 2026 08:21:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D1iUBD95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9B81F000E9;
+	Wed,  1 Jul 2026 08:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782894085;
-	bh=p8+LoiQEPl9c/fRVf/vVLivgXz49UlU+h7hWhLWqyfM=;
+	s=k20260515; t=1782895599;
+	bh=+FBXMR3yiiIwAA5txG6AiPm9Ran8YbRcDPiawHSeJ74=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=cbsb1CfV6e/Gz95XkBHU7qsjLx/n6zXPzemsNmsYUuFKmvyYysrgSGE16JU/ZQLDO
-	 +dLik8cHwVS9GSh3mewqqob02yC/WigChupzQGwuuoOhzQn5PGUHkr+zUF7gRoecsQ
-	 1i1KVrl+AjwLr9901xoAZ4upIWamfzix7nFQgKDbKRWslw8Bnk3pZTkKP1m+o/LNat
-	 Ad1OlqHjFFz65XT73VoNHOB4CZUdO72x0YKLqydHgPg839EcBdT9Fpd4m9OY/cpITl
-	 O1p+SjUzOsKOKjaZomd7gEFqN++yMAPtnxdo+Hr8gG+ysKz6aom5pRamEmNGUcH9zm
-	 apCy+CeVNSyYg==
-Date: Wed, 1 Jul 2026 13:51:21 +0530
+	b=D1iUBD95PYkiqJNJcuRvQJGsEDc6swRGCwG5k80LksiHTSwfEtkntky0fZkimtc6I
+	 t1IVNNIG+XqGkLFISqlyQND3Iy4ZF5GYjqC8DuEYm0Y0PTBtkF7Hd61LnhcLEKVijP
+	 8bnaTA0z6M2UCVeyMcr3PuBLBoT9KEPaj9mZUlEzcDHkzrMs+SZQ0jtqucNfqlBxi8
+	 m6Z2h1v3+eF28XZY/coXM1vaD1ta9EGwmLQ3TKRBuu95ZFTWwDFi/0NCx1DlvYEBZH
+	 VyIRTg6F4NgsLro7r9xFBGVAhIyDiP7LASVg/va3+peMIaG22lO6X/IkQS/ynM60E8
+	 1NTIxfHcxcPpw==
+Date: Wed, 1 Jul 2026 14:16:35 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
-	Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>, Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: altr,msgdma: update maintainer
-Message-ID: <akTOAdKsFt0jxAnh@vaman>
-References: <20260701023455.36330-1-adrian.ho.yin.ng@altera.com>
- <20260701-tactful-viridian-horse-3fa1f5@quoll>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: "Verma, Devendra" <devverma@amd.com>, sashiko-reviews@lists.linux.dev,
+	Devendra K Verma <devendra.verma@amd.com>, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v5] dmaengine: dw-edma: Enable HDMA 64R/W Channels
+Message-ID: <akTT639rZ712TZ5t@vaman>
+References: <20260626132151.1875965-1-devendra.verma@amd.com>
+ <20260626134641.87D161F000E9@smtp.kernel.org>
+ <3ac6b44c-febb-4c20-a737-aba34de5c208@amd.com>
+ <aj6iIr61LI9Sm10h@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,34 +46,38 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260701-tactful-viridian-horse-3fa1f5@quoll>
+In-Reply-To: <aj6iIr61LI9Sm10h@SMW015318>
 
-On 01-07-26, 09:36, Krzysztof Kozlowski wrote:
-> On Wed, Jul 01, 2026 at 10:34:55AM +0800, Adrian Ng Ho Yin wrote:
-> > Olivier Dautricourt has stepped down as maintainer of the Altera
-> > msgDMA driver as he no longer has access to the hardware. Replace him
-> > with Adrian Ng Ho Yin as the new maintainer.
-> > 
-> > Signed-off-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-> > ---
-> >  Documentation/devicetree/bindings/dma/altr,msgdma.yaml | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+On 26-06-26, 11:00, Frank Li wrote:
+> On Fri, Jun 26, 2026 at 08:56:35PM +0530, Verma, Devendra wrote:
+> > Hi Frank, Vinod
+> >
+> > Do you have any suggestion about handling of the repeated comments from
+> > AI?
+> > On every version of this patch the similar issues have been raised and
+> > I am replying with the same answers as many version-times.
+> > Please suggest so that multiple replies to the same queries by AI bot
+> > can be managed.
 > 
-> And maintainers file? Don't send such commits separately.
+> You can omit pre-existing. Only reply once when patch close to land. I hope
+> there are tool, which can help identified comments and pull your previous
+> reply.
 
-That was sent separately
-065e447dc41ea149c900338e64f047575ca6c348.1782279704.git.adrian.ho.yin.ng@altera.com
+Right, fixing preexisting is indeed optional but since it may impact your device,
+we are looking forward to fixes on these from you. More important for us
+is not adding new issues.
 
-But yes subject could be better for both. Myabe replace Oliver as altera
-maintainer.
-
-Would be good to post both together as update
-
+> On method may help:
 > 
-> Also, subject is too generic - "update maintainer" can be any update...
-> 
-> Best regards,
-> Krzysztof
+> After I provided review-by, you can reply you already checked AI's results,
+> so It help vnod offload his checking work.
+
+Thanks this helps a lot.
+
+> AI is quite new for us. we are looking for efficent flow to handle it.
+
+Just like any other tool, it is tool which helps us. People should also
+run the locally as well.
 
 -- 
 ~Vinod
