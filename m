@@ -1,66 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF6637475B;
-	Wed,  1 Jul 2026 07:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4AA3BB678;
+	Wed,  1 Jul 2026 08:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782891418; cv=none; b=THvV5hEcTzHMELrjHDl6bcdTCWJh2DLUyQBpv0jj57zfePhM/wcDfmjOA16/zvGDu3+0HyDVVnrVtF8T1+vgFr/Q/KW5HIgEI5N4PHbL4r2C3Lva/Y+a92LaRJIkF33GQ+QuVxrZiBGWBUf+JjOy8GEAfaH1UgTxbRlzpyrLg10=
+	t=1782893879; cv=none; b=PKULD4ezDyCvh9MTVy1JR/BMFzscH9CtRGLieBqGZMjVGve8Uf5b7FoCC9hhNd65vImk6jnMr2kK4ffvK5V5qksH+v6+svCaPreRMYv+ETQAvdWrdxMCB4V53/b79HEu7rTwN/wmxdj4zHzIVLMYFtUHeRshYBqvvvPm9fh6TEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782891418; c=relaxed/simple;
-	bh=sb7MtjAPvN4H8CvDnNzFLVettlgxFgu3xYo1XaigWyo=;
+	s=arc-20240116; t=1782893879; c=relaxed/simple;
+	bh=dWBO3Ub498Krs5H8NbYO+IVSFHciaITAmJ2wCOmUxdo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hm6hC2Q+BDXF2zUSYptYknJNJxWmim3PKYJ5rp4lUzU8XS+Gdg4jvjJBWlGD341lV2P0BMjPGjT236+cKD96TzamaeHU5ZtRGgppyNCgvhwyQiO3hdZupnEnWU7XyhfAoN9W6ZZt1gqACX91dHVZ9Aae3fsk5MA5BwERzdNCgFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5zjPmjf; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ff5ZSB+XbNl0lpJiA/zbCiKffXhZOwHYB1DZldXGKyQQppL9RQToGYokfrLHRQmFiSm5gFEbUXab5Q9bQkRaJv+TzuV2tJdvx0s5Ji1Gmst8Mk33nngWuveVPi87cOldtX4hGMRRaSxtFFDGagzL4Z2FNiqicU6ZNB5G2jOkzsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e1YXBn3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5zjPmjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC701F000E9;
-	Wed,  1 Jul 2026 07:36:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e1YXBn3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62A61F000E9;
+	Wed,  1 Jul 2026 08:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782891417;
-	bh=DljkT19cUqE3l4MrFgOZ8ywoQMMd4Lg1hWzeciZWhcE=;
+	s=k20260515; t=1782893878;
+	bh=h+neGWa8OqKBZ1Do2yjMNb/FZN1kT+CXr2XFwta3nxI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=a5zjPmjf4riyt5ohCPNx+za/l1ZUbdqiuzElNLxvPRQHMpZU5+Daj8IZFtHIP94UB
-	 MmVDSteuTVAd1A9EVhgxTY1Zqva+4Cevv5cSJ6pNJbggmHVKmvHFHQTC17ujHsFkul
-	 tey8qV1M2p3mIiU8yQnE2UUzHRckXpbd20Yg647mixIsbcAm2UWxd2ZTyBID1z0bnq
-	 HYgWEjEgBZCup+S6BRXR8lb2/OdY6RdzPEHBMjlWh1crmAZF7PFaRUKZpzwe9MyUbi
-	 UH/z1QEAAtpiea0v3pU2FZOrtq2dadLJgLZ5P++idq23H5RRWBlHBYMRSf3UDpVaP8
-	 5JnHCkeo3upNQ==
-Date: Wed, 1 Jul 2026 09:36:53 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>, 
-	Stefan Roese <sr@denx.de>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: altr,msgdma: update maintainer
-Message-ID: <20260701-tactful-viridian-horse-3fa1f5@quoll>
-References: <20260701023455.36330-1-adrian.ho.yin.ng@altera.com>
+	b=e1YXBn3WqP2Zd4Z8JlUanT1IFMAXm57F4Y2bNb+ms+CRVMoLbk6A2N+AJD9aQIXe7
+	 xoffTqEhCluA44hJHcPR48I5pv9IRCtMG5EqYxGq2H86kZHsCHWUC+fyWWLTO8PhJ/
+	 kv7YL6/MStckCZuDK3ijElsAq5B0wpqfiVPfx11x1cYFp/XtMr7+OszojAXfyEMOgN
+	 bQ7s8jvxMnD5lAUBAD+ITg/5ggtRz4Ux4ijRW/iKvDlY/1+7GvTZzEoaGpXvH+WMnR
+	 7lt8C2ICQyu/d0YbRsg9IgbhhApSylUw4hY9A3FRo3R6fSlzjGilDve3ijj8Me5aWm
+	 EpBV7onJCeS1Q==
+Date: Wed, 1 Jul 2026 13:47:54 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: Frank.Li@kernel.org, wens@kernel.org, jernej.skrabec@gmail.com,
+	samuel@sholland.org, mripard@kernel.org, arnd@arndb.de,
+	dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+	zhongling0719@126.com, Frank Li <Frank.li@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v5] dmaengine: sun6i-dma: Fix reclaim descriptors while
+ terminating DMA
+Message-ID: <akTNMl8dhepg6GvN@vaman>
+References: <20260701045733.33654-1-zenghongling@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260701023455.36330-1-adrian.ho.yin.ng@altera.com>
+In-Reply-To: <20260701045733.33654-1-zenghongling@kylinos.cn>
 
-On Wed, Jul 01, 2026 at 10:34:55AM +0800, Adrian Ng Ho Yin wrote:
-> Olivier Dautricourt has stepped down as maintainer of the Altera
-> msgDMA driver as he no longer has access to the hardware. Replace him
-> with Adrian Ng Ho Yin as the new maintainer.
+On 01-07-26, 12:57, Hongling Zeng wrote:
+> When terminating DMA transfers, active descriptors are not properly
+> reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
+> descriptors and their LLI chains to be permanently leaked.
 > 
-> Signed-off-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-> ---
->  Documentation/devicetree/bindings/dma/altr,msgdma.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Fix by using vchan_terminate_vdesc() which handles both cyclic and
+> non-cyclic descriptors by adding them to desc_terminated queue for
+> proper cleanup.
+> 
+> Add pchan->desc != pchan->done check to prevent double-adding completed
+> descriptors, which would corrupt the list.
 
-And maintainers file? Don't send such commits separately.
+You should run checkpatch to fix the formatting issues.
+ERROR: trailing whitespace
+#65: FILE: drivers/dma/sun6i-dma.c:95
 
-Also, subject is too generic - "update maintainer" can be any update...
+For now, I have fixed and applied
 
-Best regards,
-Krzysztof
-
+-- 
+~Vinod
