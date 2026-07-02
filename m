@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6278D3161A4;
-	Thu,  2 Jul 2026 16:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE8B3242BC
+	for <dmaengine@vger.kernel.org>; Thu,  2 Jul 2026 16:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783008230; cv=none; b=QusDJFiD6/o/lC8dHw0l3KFN55/n/7iS5P+hUdVnPU67bIOs5dXMsmBB3j6zBxchxkhgYLbEhwAVa2ZPa/TtPTIkMJirTBlGQxAYbdqVimhVffMsssUijaFrIryc2Tc6uKNxABgh5PsBFmapyQWSbTBYWJP7gggq+YTBsh5I/64=
+	t=1783008232; cv=none; b=AV524fy/xT/1Cqjb1gYM0a/YrY3gJXs8jH1H7MmYVQ5pzmrbKbcOy9NlLzDuMEPH+UFQwpEqM5rYqu9DUBYL3odAYReqxN9xNBAW1h+ZURECXGWVRdO70PT76qSR0+0Xn8Fmf2y72SH4A0NuyahFAMoF5+ydPrI+4tIavZUBS0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783008230; c=relaxed/simple;
-	bh=JYg5ysdWFhPiKG5oQW3/CJhMcQ8XRUuITz8PCAg+EWw=;
+	s=arc-20240116; t=1783008232; c=relaxed/simple;
+	bh=nEul18I5MldvqlFcrP9QWyte6ZI6AuOd18zhVdIXJA8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=aw3ty3uMEFWFpgKH04zYWd2PeOsjQjEJIHY6htI6wLRdf1TlS96WcKT/CuPWa3kZ/hT3h2Sbk/sUvx4OQa161HxRCALVg/okKhVgZqp3b90NF0Sm4Zx3rVcnh9N9y+1ZORdx5gNI/1TMYr8dqVOszj0gtTxRp8MUgxwQi2nTRjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YVjNS9G9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=e0Wcm9CvuAFNIm/zgJs1XkSHLjX7jRtZHrmQcWS+rdYv1JcnEscsfoWV0BH16Ji5hVBNZF/q5+qN9IORZMZVJmJWzfjj+19KDCHJMrPUhxpri9NBID6zwu6NsiLKmvsye8OV5wMhde5e/R1T4z0pHQVMYFlujqBEgp638iUvyc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEBmqItC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YVjNS9G9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFB71F00A3A;
-	Thu,  2 Jul 2026 16:03:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEBmqItC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC281F000E9;
+	Thu,  2 Jul 2026 16:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783008229;
-	bh=UtNd6BSHdRaL0Wa1rIKAQuRLmED7YnoMHeDT0+9L1os=;
+	s=k20260515; t=1783008231;
+	bh=fN/+c184JJBkP+Kubh0STnQ/01/ooGVRgaPIa+dzx0c=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=YVjNS9G9IcSAAFNX7IuV/uQMIz74W5Vz5r3Ondup6k/Ze9BrwqgCXPAJE0/Whc5Bd
-	 oc0DhkAPFmuwawqja0ZY9D2/nW/3FLynz8BBGDnP3SfzV+OQ61/4POGaYdfxW21aFt
-	 ru27hIJ5csE+s2Uv+FvarXZP/yvBYUFED2E/1O0SeK014fZ99f8b7a0rK3FWe7XTTq
-	 tbazRlxXn4wCTb9RJA8Dol2r+qpTGNkThydlUkP/9/oejjfh6R2xlFJp8b+cbX58WH
-	 1hcDep6PFJgKFiZcBYQHZuMG5JW9GxJgrlncXGfMut0v+uFVgw967kRf0NcSQBUZFA
-	 VFEENUyobEmVA==
+	b=gEBmqItC1jZkuXhcXRaHtN8N/KCDkphgPbRAAcyOHepxM06TcgtpcL4g8s4nWRmqn
+	 Xl5q1reZ17YqG6YlcbdSyEEGJVsKLeYEEqmFf68++8wPW23b0QZMRiC6OMZuhsxQEh
+	 BvSztJ6we/duL1JVuYzPriWH4t4g9Eyvkw55BHLZQYw43+MAx5DWFlFfmLFir7vG7n
+	 fP4U3uRs2fEDeobPw82aesJ2FKMYBYP7A7pp6QTeV3ibS2iwtQDYvM4zko5lxgsjSj
+	 5dUHNy1yXeK9l3XFHKWjMWTDEO8vE7++Fx1D+yhHUB4RK0Tf9zloM5Yk5JCNIE1KYR
+	 z5neKGznOTdqQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank.Li@kernel.org, michal.simek@amd.com, abin.joseph@amd.com, 
- kees@kernel.org, ptsm@linux.microsoft.com, sakari.ailus@linux.intel.com, 
- radhey.shyam.pandey@amd.com, u.kleine-koenig@pengutronix.de, 
- Golla Nagendra <nagendra.golla@amd.com>
-Cc: git@amd.com, dmaengine@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260630064844.705173-1-nagendra.golla@amd.com>
-References: <20260630064844.705173-1-nagendra.golla@amd.com>
-Subject: Re: [PATCH 0/2] dmaengine: zynqmp_dma: fix race between runtime PM
- and device removal
-Message-Id: <178300822534.756665.17882853364669506909.b4-ty@kernel.org>
-Date: Thu, 02 Jul 2026 21:33:45 +0530
+To: Zhou Wang <wangzhou1@hisilicon.com>, 
+ Longfang Liu <liulongfang@huawei.com>, Vladimir Zapolskiy <vz@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, Zhenfa Qiu <qiuzhenfa@hisilicon.com>, 
+ dmaengine@vger.kernel.org
+In-Reply-To: <20260630144214.4080302-1-vz@kernel.org>
+References: <20260630144214.4080302-1-vz@kernel.org>
+Subject: Re: [PATCH] dmaengine: hisilicon: Return -ENOMEM on dynamic memory
+ allocation in probe
+Message-Id: <178300822927.756665.7017607086496061232.b4-ty@kernel.org>
+Date: Thu, 02 Jul 2026 21:33:49 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,24 +48,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Tue, 30 Jun 2026 12:18:42 +0530, Golla Nagendra wrote:
-> This patch series addresses two issues in the zynqmp_dma_remove() function:
+On Tue, 30 Jun 2026 17:42:14 +0300, Vladimir Zapolskiy wrote:
+> Out of memory situation on driver's probe is expected to be reported to
+> the driver's framework with a proper -ENOMEM error code.
 > 
-> 1. Fix the race condition between runtime PM and device removal where
->    pm_runtime_disable() was called after the power state check, leaving
->    a window for the runtime PM framework to change state unexpectedly.
 > 
-> 2. Update the stale kernel doc comment that still references a return
->    value after the function was converted to return void.
-> 
-> [...]
 
 Applied, thanks!
 
-[1/2] dmaengine: zynqmp_dma: fix race between runtime PM and device removal
-      commit: 516ba2d8b7aac4238f9fcbd58579c43c71b9b695
-[2/2] dmaengine: zynqmp_dma: fix kernel doc for zynqmp_dma_remove()
-      commit: f7e89cba18a1ca6462712ae459a88dd40537b693
+[1/1] dmaengine: hisilicon: Return -ENOMEM on dynamic memory allocation in probe
+      commit: cbabdd6ce1b313b5877c7fbb2f5e2f7936564d2f
 
 Best regards,
 -- 
