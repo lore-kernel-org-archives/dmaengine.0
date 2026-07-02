@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EB1353A63;
-	Thu,  2 Jul 2026 15:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A628A37A84E;
+	Thu,  2 Jul 2026 15:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783006333; cv=none; b=a/StOWVCHli+uvKuZHyfLQIRed2cZqaBDGHwuOCnS1GhzLS7kZ7+sPo3Kz5oviW6MTeNRCE6wdDM7rtbqfewtYvgizEitG5cq1fQnF2KxyDx4vK2T57cGRyjXsQ1LrG9dHYLdfPyUNYmPuL7/lBWPKKCVRP5ZGIckFJN4WDwwM4=
+	t=1783006336; cv=none; b=tPmM7UyUXLI86UwXlU6QSejvxkktvNWxKA7TULe9CY61I6AxF7uhTp2mprTtQr6F2RG/1uIb49QMXt/XHjN/lbl9XHFTf75X4T1hqQAQtzNA/sG+Fso/TUzpg/SLSPmQ/SaWw1eCqAEHiBuNANgKAUBiZeoIvrLqjgP0nQxeSxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783006333; c=relaxed/simple;
-	bh=Sb3LKkmQyqomKK27FPLNJF6IlkXvXhAyXMJUrV39tHw=;
+	s=arc-20240116; t=1783006336; c=relaxed/simple;
+	bh=+cGn/g6vlxxoicm4aGN5PKiJ90qLv0h1llZMltqCYuk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=F1xKG3bqgmTne2VioyQmoX7I+QDGKWE99TPEIzJo3S+LVzalEr+MD5Pr42MNO/S4dKX5WutKfsG2R3yDKrLIqmmPK0dqSPoeujoCSO/yu+XDyKeYX3rDCLgmvUA99b23B/aHiWHvar4Rhm1MaDAByVosCHwz6jAxZG/rfsFrRIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6+YRcEk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pMTH6d7wOsylRnozQ8j9Sn95IPss4027tzHXDVr2dHd31vpBBi1qW1BqVQmh/kvdoEZh3gpCRr3JHP4HWs2x51u8OYWQlhgkBQnORfcSeoo7qtUwhJYVzU/hqcfojGAJkLDJMtFbWDnd/gjkBziKmaPsnYL+ydVTV3a0ShmEkfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQPj9UK2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6+YRcEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8741F00A3E;
-	Thu,  2 Jul 2026 15:32:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQPj9UK2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E981F000E9;
+	Thu,  2 Jul 2026 15:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783006332;
-	bh=lHqpWAShTGw0CBIGY4OTCZoZs2U3Gv9S6HeoH1CtmfE=;
+	s=k20260515; t=1783006335;
+	bh=SkFOU4Oyw7LYLPAfVqtgnDjfsTBzuUdC4zo1Q4spOx4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=h6+YRcEkDn01G0p4rOMjNZFGHjcAINtexYDwZ0siYrekxWvmW38iZUpWCVyYUvwAD
-	 Hi4W+jLzpb/jxSMqP9faj1i1wuaDFIKNvMa5+1Yx3I5vzkGGWBb28o74N9r6Dn9Z/i
-	 cgQKCV0UrqdJ8HVu35GdfZYcSY5ahlBs1+FlZ/Yf2xiJrMssyV42scsjajrtPFz0Rf
-	 KUdhwtQZZhPzTvoyyhZQ/2u9A/upgPtcF5PV2bw9iJ8ugjaS5pXwaIYHdtj9B30jGM
-	 +CaBtLeFtnz+vvtaJlxtNeyZK3sbFnVY1oQTEFA/sUv9Gm3nzIOAOR1/ZC1b/HQBoO
-	 5MZ4CN/mXFrkw==
+	b=YQPj9UK2pOkhB8RDcHuXW0QbDJbhBpl/OLo4rsgcb7PkoDO1QJXiMLqtfE0SUVv40
+	 UL6BVRrDxAk0o5MMoG8xnQ/0Qlm7wbShq2PhJ7b1qaw89ETLwZJzqUkywna8Q9EHrD
+	 9S8z7to74FPFl9x5bh6IpH1Cu4JIB7B+3+g4TUbj9CL+75ISLidqWEAYl3t5sR4sLE
+	 3JF1+8M+mojiCWWqRaXyMlAqloQq5Bfou/qbyZ1YDUraPuAG8C1803p49UY9EGZUtN
+	 HZs43qOxi30mrWhxd9XxjK0rx/6KPyQlL8rIUu8f7INKqrwRt6irAhL00rE+HqB6Ql
+	 Bq3vxONR02d6A==
 From: Vinod Koul <vkoul@kernel.org>
-To: Sean Wang <sean.wang@mediatek.com>, Frank Li <Frank.Li@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Long Cheng <long.cheng@mediatek.com>, 
- Louis-Alexis Eyraud <louisalexis.eyraud@collabora.com>
-Cc: kernel@collabora.com, dmaengine@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260701-mt8189-dt-bindings-uart-dma-v1-1-c7106216a40d@collabora.com>
-References: <20260701-mt8189-dt-bindings-uart-dma-v1-1-c7106216a40d@collabora.com>
-Subject: Re: [PATCH] dt-bindings: dma: mediatek,uart-dma: add support for
- MT8189 SoC
-Message-Id: <178300632766.735405.17747916047775158971.b4-ty@kernel.org>
-Date: Thu, 02 Jul 2026 21:02:07 +0530
+To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
+Cc: Laxman Dewangan <ldewangan@nvidia.com>, 
+ Jon Hunter <jonathanh@nvidia.com>, Frank Li <Frank.Li@kernel.org>, 
+ Thierry Reding <thierry.reding@kernel.org>, linux-tegra@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260609212531.22044-1-rosenp@gmail.com>
+References: <20260609212531.22044-1-rosenp@gmail.com>
+Subject: Re: [PATCHv4] dmaengine: tegra210-adma: use platform to ioremap
+Message-Id: <178300633253.735405.8595624907524864073.b4-ty@kernel.org>
+Date: Thu, 02 Jul 2026 21:02:12 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -54,16 +48,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 01 Jul 2026 17:47:20 +0200, Louis-Alexis Eyraud wrote:
-> Add the compatible string for the APDMA IP found in MT8189 SoC,
-> that supports 35-bits addressing as MT6985 SoC.
+On Tue, 09 Jun 2026 14:25:31 -0700, Rosen Penev wrote:
+> Simpler to call devm_platform_ioremap_resource() as it returns multiple
+> error messages for whichever part fails.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] dt-bindings: dma: mediatek,uart-dma: add support for MT8189 SoC
-      commit: 0d2b094b1c10be619a63f53a610587bcabbee06b
+[1/1] dmaengine: tegra210-adma: use platform to ioremap
+      commit: 95cf38ae309f21b651fb7b8afe267eb3c84017a3
 
 Best regards,
 -- 
