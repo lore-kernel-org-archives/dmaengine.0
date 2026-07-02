@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D3381E89;
-	Thu,  2 Jul 2026 15:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA719381EA5;
+	Thu,  2 Jul 2026 15:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783005932; cv=none; b=FtDCvBOECzOAr7lZai1dtvhDUjVYFAJGBbaZTQ6TsXC+/X3Ky1Al5Eih26OTlvNmfgNJGRJyQTGG2/euMgQwje5Iqy/pdJ3/Ze+stEPXdWswoFib+kAWAsgqyXsbvV6rOzWfEhjRaR6ByGJrVIKbDCAIXeoiBalYNPt8Sqsgx98=
+	t=1783005934; cv=none; b=Q/fQoi2LrE8kBIaEUyiUuJSFnUfdpMsXx9vD3am/uIRd3H8idtWHAYiXSQh+cQ1nPYEla8xVMi1vxkhjlM8hUgCfwkwm/A7tzOx9cVB3hK3mmC9pyFoPJvLJ3m9en3rXAa5GcbzDqQ1a4jlOgTt4lmsiZaoJ4CegIjbW6a1bUFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783005932; c=relaxed/simple;
-	bh=/XEr68Ab70OWUPgB/b4jZQF+7hBnpfA+l5X1ad/e+QI=;
+	s=arc-20240116; t=1783005934; c=relaxed/simple;
+	bh=xj5s7WY+QLQUy8AfL07dCQIIJdpNmdH1DCaF0zyc43w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=th4NhC48spC77Le2cg6aYwquqpv9LUD2Mn8QTHK8oS1C2PCXLhsfQXwNLvfne72l0cNviE6+9Z1+3bs0g9Rx8usAuqAPi3gmusdJQSU6tshVqG4EpmJprxsIwy4v5I8Ce8jffbZQqCXYypIITCwt/qQwcmRg4mLYGooy8gOQ8GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mld9zIRz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mDwONwJmtcLqNE2ybdPzSHcUWJs+ypYQXIIqZZW1ROK4hDrk2gtrfPHSv1sBz/ZppL5zgfT9VJ2F/hInV02Eb2enPOZtNnd53tiwlaeC3QYX4FQGdZsAbhOkv1MYjEq6fWqK5C19PBYNfm0iXgkm46KP7Zk+DkXGc8WBfq+2Dxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K0PhNZuh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mld9zIRz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756AF1F000E9;
-	Thu,  2 Jul 2026 15:25:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K0PhNZuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2C31F00A3A;
+	Thu,  2 Jul 2026 15:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783005931;
-	bh=hh1GKcBgtMqoFUkB0LHwE/UJFOYQ6UKfpRoxk/RQ+SM=;
+	s=k20260515; t=1783005933;
+	bh=BkCp8+eEHAV99V9AXfR1dKbJ9C/llthtkDgqG+qt64g=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=Mld9zIRzBnjiFW5lin9TsanOqPeEQE/KwS0c4zVNixDNe9FKNlqenqFcbXoKAC5n/
-	 YFeVMaEY/nH0xqToUjpnejqS0Ru87jW9UkZmpHJJF4cW6FT5jiQ96MBEJnrSj4grbC
-	 d5DJmELYFnr9KcZdzQjBYq4Sz0LhEiqqTafLrAC6l8kfXgZIdRCt8GY4+YyIfK+n2G
-	 OKYxbHteRSxxXJSRqfOWB9FySj5aKkHuxsqGL2XOefEybA7XRYaGfKYFJcLOIbxqcZ
-	 HZDJoGt3I508Fb4WEkMcFdgm1AU8VBbyZR3Co99O3EQ1V13+qcYW2HKaSnT3WYFQ9A
-	 Urn/jSXMqhrHQ==
+	b=K0PhNZuhHvIhoOs32p/Oy3Y7LIfLGgkVvqa/UucJXeFRPCqNqLLXoXGz7dI3sVPF8
+	 1+tTZLC3F1Ffmq70iL9fG61hi3N1NFE0GBlrtujfxGoIu3QsBwhfXcNDfj/zhE+Pea
+	 R8fI3rhp0cY4UC/MpskNGv2JfNX2FQGCLd9CvHV8b/4RpIKmqZ/ZPhD++2dHt6ZxEY
+	 BK/Wtw6njP0x5NV4jlOyJFvB4471EzWAKGssnX8pqc81j6iLv5brtEkt2xJpzddD+E
+	 vP4y2NYpPQpATIcHYqug+e5JGpey8X+ZPphYuiqxBWKXihMSZoMWn/AIcaIMZaGnaF
+	 JEh4esO3lNhiQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank.Li@kernel.org, wens@kernel.org, jernej.skrabec@gmail.com, 
- samuel@sholland.org, mripard@kernel.org, arnd@arndb.de, 
- Hongling Zeng <zenghongling@kylinos.cn>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
- zhongling0719@126.com, Frank Li <Frank.li@oss.nxp.com>, 
- Frank Li <Frank.Li@nxp.com>
-In-Reply-To: <20260701045733.33654-1-zenghongling@kylinos.cn>
-References: <20260701045733.33654-1-zenghongling@kylinos.cn>
-Subject: Re: [PATCH v5] dmaengine: sun6i-dma: Fix reclaim descriptors while
- terminating DMA
-Message-Id: <178300592710.726714.11534436321396496964.b4-ty@kernel.org>
-Date: Thu, 02 Jul 2026 20:55:27 +0530
+To: Vinicius Costa Gomes <vinicius.gomes@intel.com>, 
+ Yuho Choi <dbgh9129@gmail.com>
+Cc: Dave Jiang <dave.jiang@intel.com>, Frank Li <Frank.Li@kernel.org>, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20260415205452.67155-1-dbgh9129@gmail.com>
+References: <20260415205452.67155-1-dbgh9129@gmail.com>
+Subject: Re: [PATCH v1] dmaengine: idxd: fix double free of wq, engine, and
+ group structs
+Message-Id: <178300593132.726714.650968686982910854.b4-ty@kernel.org>
+Date: Thu, 02 Jul 2026 20:55:31 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -51,21 +48,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 01 Jul 2026 12:57:33 +0800, Hongling Zeng wrote:
-> When terminating DMA transfers, active descriptors are not properly
-> reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
-> descriptors and their LLI chains to be permanently leaked.
-> 
-> Fix by using vchan_terminate_vdesc() which handles both cyclic and
-> non-cyclic descriptors by adding them to desc_terminated queue for
-> proper cleanup.
+On Wed, 15 Apr 2026 16:54:52 -0400, Yuho Choi wrote:
+> The release callbacks for wq, engine, and group devices
+> (idxd_conf_wq_release, idxd_conf_engine_release,
+> idxd_conf_group_release) each call kfree() on the enclosing struct.
+> The setup error paths and cleanup functions also call kfree()
+> explicitly after put_device(), producing a double free whenever
+> put_device() drops the reference count to zero and fires the release.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
-      commit: ab1150115e68a46b687eb38c1ab92782018c9f2c
+[1/1] dmaengine: idxd: fix double free of wq, engine, and group structs
+      commit: ec2d428b2e32dd157de8f86a86dd85c5b2c8f45c
 
 Best regards,
 -- 
