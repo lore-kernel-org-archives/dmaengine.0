@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E5833E367;
-	Thu,  2 Jul 2026 15:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3044F1A9F8C;
+	Thu,  2 Jul 2026 16:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783007932; cv=none; b=nT1Imk+v5RH8s1SZo5bSPtwq6ICCYO1kd3oYWyHNSJG8FB0KWChiRJlrcWWelRNnB/eGwAW6g7YoVjWPt+vJID5vNb1oM+TksLgynOMpf6SSK7MVGWoIrI245a88rN4naqCoBeY77WqBYrFfYWbYKExhwe+JIYximGOWNMha4pQ=
+	t=1783008226; cv=none; b=Z2uVq2HdhcEpdRV0qpV39ADzEu7P39VAg5rhnAWeVp/Lz5u3o+dXO3zVkfoN05sAPiIJufTXDs3MW/1NeTCyj/wMVp7QmWeTSVkMT5Yldm2UezLf0Fd6d0LDS3ON3QQfVSWSXa8ymsRTiBkC0uXJRxAYJETSlluS6mQhobd67f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783007932; c=relaxed/simple;
-	bh=ktOLSkM4QNGp+BofIWyIQCjC61aNq1Rwowp/RLsjqi0=;
+	s=arc-20240116; t=1783008226; c=relaxed/simple;
+	bh=2W5jI5Z0ruU7sjL+sATlklT+n3cwAfJOAOb87kLkQX8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Ud0LjxXEro0MsCAPzgsBwntKkt4yWWbV/4Tt5de3Ns4tsMHF/Lx+iChM7MREztLquk10hwuESdCbKhTWDsmvrXPNFIBBw+06zV02NNQu6VkiwDaAJ8rVsrGXRCXsfY5uZ1HLYQnnS204+WaAEoEoMSA7AhGYkuhkQOlU6P3849E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DK9u0G4L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ANdohWk6Km0amaR9p7elPKSvlQlOyKGbALQxO3+pYk2/pM+CMlISp6n76rW/sDY5YZbzev3tGNsBbtcJhKeuFANPxyX4joZnMoiCuG83QbyEeCvwnku8wgviEVLKT9jynu03xZDb5x5AvWR48PIqonrpap6tG+FxmU9GgxjOFhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XDmHyGxW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DK9u0G4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3781F000E9;
-	Thu,  2 Jul 2026 15:58:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XDmHyGxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330CD1F000E9;
+	Thu,  2 Jul 2026 16:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783007931;
-	bh=zhi0CQ2SoxC+BtbxZrczEoNYIRXLtoEisvqq87+Gc9k=;
+	s=k20260515; t=1783008225;
+	bh=rzDg6Eu0nRR4p4AkNSCywRzTxAwA/c7nHfpbUiOlcNE=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=DK9u0G4LxdYDzdX7KkEQJo31HVW1qTC+azJx6ZptlLjsMCkWOxw4Tx13f8SPHH4i2
-	 yhld5Nfc84pApxj9+Y/Hz7Tag38LNF3vI25DAsFAsl9eb0OjRYCP5apo3AwtMt2Wih
-	 3VB768MIygVZLuoNM3nFeei5+59xXKGB2fq6auEYyenYWR5MNrmQjKVpE5A/divVAq
-	 CaJ6QmeFrtToBe6sgcYXatnaTbmZVop5PC9owa2r6Wt3dDiIVQp6PkbQOXTOCOhFgi
-	 yNw1XC5AHRo4Fycmdb5a0lSZNx/af4PFZV9aXQbheeRWuZuW6EC9z/NQQU9pNMAKVr
-	 WAoKp6ONmhzjQ==
+	b=XDmHyGxWFNpd+TXH31F8Y65qId4sMIqFOB/0x0UMCZtGjx1jtvshcuYYeASiYxTcO
+	 dBk8EX9wQiBK4XTNWdHEODZqN7CNateo63o+1QQ1ZvG4nSZXjJrskVxNclS9QB7c7j
+	 rwg8IqwC+anXaKa8AEZsX058hCfCTFGZQptu/CQh8NPFr7uGPg+uGZ5sDofleZ+Qrc
+	 M7VuuR01jXbWi+uD3guMuH8+vnhHmmYaZ9sG6fppmDOjLvvJTzaqLOY5cSK/ZT5XM2
+	 hqqdwi6jI1+WYZjlmYitdaD/B7kkTG9JB78Ch+suKYQ3lztkYEPlBBDEhwtL3M2VBW
+	 li4EWV8pKpXMQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank.Li@kernel.org, absahu@codeaurora.org, 
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-Cc: Md Sadre Alam <md.alam@oss.qualcomm.com>, 
- Lakshmi Sowjanya D <lakshmi.d@oss.qualcomm.com>, 
- Frank Li <Frank.Li@nxp.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- stable@vger.kernel.org
-In-Reply-To: <20260615060908.1263171-1-varadarajan.narayanan@oss.qualcomm.com>
-References: <20260615060908.1263171-1-varadarajan.narayanan@oss.qualcomm.com>
-Subject: Re: [PATCH v7] dmaengine: qcom: bam_dma: Fix command element mask
- field for BAM v1.6.0+
-Message-Id: <178300792825.748656.1093234634497578365.b4-ty@kernel.org>
-Date: Thu, 02 Jul 2026 21:28:48 +0530
+To: Frank.Li@kernel.org, michal.simek@amd.com, dev@folker-schwesinger.de, 
+ Suraj Gupta <suraj.gupta2@amd.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260626092656.1563871-1-suraj.gupta2@amd.com>
+References: <20260626092656.1563871-1-suraj.gupta2@amd.com>
+Subject: Re: [PATCH v3 0/3] dmaengine: xilinx_dma: Fixes and optimizations
+ for AXIDMA and MCDMA channel management
+Message-Id: <178300822284.756665.15130671466547971043.b4-ty@kernel.org>
+Date: Thu, 02 Jul 2026 21:33:42 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -53,23 +48,27 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 15 Jun 2026 11:39:08 +0530, Varadarajan Narayanan wrote:
-> BAM version 1.6.0 and later changed the behavior of the mask field in
-> command elements for read operations.
+On Fri, 26 Jun 2026 14:56:53 +0530, Suraj Gupta wrote:
+> This patch series addresses issues and optimizations in the Xilinx
+> AXI DMA and MCDMA drivers:
+> 1. Fix channel idle state management in the interrupt handlers.
+> 2. Enable transfer chaining by removing unnecessary idle restrictions.
+> 3. Optimize control register writes and channel start logic.
 > 
-> In older BAM versions, or prior implementation assumptions, the mask
-> field was effectively ignored for read commands. However, starting from
-> BAM v1.6.0, the mask field for read commands is repurposed to carry the
-> upper 4 bits of the destination address, enabling support for 36-bit
-> addressing. For write commands, the mask field continues to function as
-> a traditional write mask.
+> Note: The patches in this series were part of following IRQ coalescing
+> series which is under discussion:
+> https://lore.kernel.org/all/20250710101229.804183-1-suraj.gupta2@amd.com/
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: qcom: bam_dma: Fix command element mask field for BAM v1.6.0+
-      commit: 867621ba203027338b525af6729719c544135336
+[1/3] dmaengine: xilinx_dma: Fix channel idle state management in AXIDMA and MCDMA interrupt handlers
+      commit: 0b6d055edb55ecadadf54e930c2b4fab76fa9a5a
+[2/3] dmaengine: xilinx_dma: Enable transfer chaining for AXIDMA and MCDMA by removing idle restriction
+      commit: 6078690034790131b9a59081bdf30e26de2254af
+[3/3] dmaengine: xilinx_dma: Optimize control register write and channel start logic for AXIDMA and MCDMA in corresponding start_transfer()
+      commit: 887b3119380cde56f648130029062c223341a1b3
 
 Best regards,
 -- 
