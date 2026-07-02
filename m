@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AD0353A6D;
-	Thu,  2 Jul 2026 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EAC37A842
+	for <dmaengine@vger.kernel.org>; Thu,  2 Jul 2026 15:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783006326; cv=none; b=SrAlhS+Mhq64SjPCOOhmDGys/YA/cN8K89lsiKGrOfqmifVFejX7xy66j3O4VS9d6KrGsUxtae+q4m+vzdzmtg9vdXmLHBWmbTZ18kkg/7hHPOAkewjMjql0aIE5DsS00APv4HKrxbnJPdxmpBlvP6zvJ/bq5udTqZ8CWGnOgIo=
+	t=1783006329; cv=none; b=NC+L7n0vUFvLk86Tml1jsRgCsccgodQkaZTP6gU8UUdgHYdBcgaEoqJF89l13kIl5RyJPl0eo+oT32ieK83BMNmzqXVrkwi6fcxGoj2ar27RRaU6MpkDS9SZ7eDTM21DtPyCRCF/ySohNy5r6/Cd2Zpm3wl7RnVhs9ddHYAW/ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783006326; c=relaxed/simple;
-	bh=0Au11BzDoZ6WbYbD94/aWaC10QjLDWSQyE+SafPW5CM=;
+	s=arc-20240116; t=1783006329; c=relaxed/simple;
+	bh=FzApVQfiQMe+KFDDKOPepOMUsI0skLMOonK6G5v6IyE=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ETZRzb5dJcGI291IV9WweFS04GZBNRoZwXtJxhaiM2/QHhrdA4XF0KtwE+OM9IOVQ7pH1Vh6/h75uRD19Dz7mefrHag7YDASWtctkRVsjIJWx2+BEDzc0U5BOIl0plULOyMSe121HyVva+ZnNL8Ldw3rldQn9IBKURdWsWz0IEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XaW+qLOr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tcFiY0Mf6/lDDpaPrBA2AwbAoWiEToQAR35psPGTGPxxrlAZXyq2JZS+yvZDaJq6+7Xe49yGfY7/T4a5Eny2UzKniALI+CAkwCMmWQfGV97p9vC3QBtGxbrg0UmEu4k9vXlPvkAODwCHfClDGHUJSa80jhN7nKxFeAA3XdkVjO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jzm3JnZH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XaW+qLOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31601F00A3A;
-	Thu,  2 Jul 2026 15:32:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jzm3JnZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CAC1F000E9;
+	Thu,  2 Jul 2026 15:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783006324;
-	bh=jJ3DLTIlknojKBYsHiBKYugHEIBfbYTLpD95P/rrvbo=;
+	s=k20260515; t=1783006327;
+	bh=/mTDxEEXhf1dHuXuCAdsHsLXruAQZQS4VLT12t4ez0w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=XaW+qLOrHSkDMzJu6XPRHmFIpYJdsCBqaciYzbaiRU3sanrl2ntlnm2T+/tI1AoFj
-	 aKbaNqItCSLp/5eKIQFZPwUXULZaKvTrXGoEt9/ysUR0Fa4U8pyXL4opAQ/wDz/RgQ
-	 M80RX2y574G+0W0rM3bU2iTRK/f5nHFrdIXZe7ANyY/dBUiYdJUtP06KsVemLe70re
-	 TGQAofhFPRrV0Ujg+0ea6JIEr4yKBoMfE5NxvrjIxuugAo2iXgR3iPw+htBwvJJVou
-	 iJWz2VH97MY5Dztk9FsFQQcAfe34YqWW8WvX2ENNDeXTG5u7GhNS7T0g+bZ4Ck6vnS
-	 D5B60OSW/o/zg==
+	b=jzm3JnZHFwt/mqn9jWUA02Owh5bjidWASS5DJ/T1BuIak6b45txHrmHFY2OD7kTFZ
+	 hawKT/j3+DeENwu/Y4qX5BKoOhyukLWxpmaylheHpl2c7Z5XG4aMRgNC50WGmMJSaw
+	 0XjMKWpCykkafVObJ/OJiT1jPiMefA25l0lSEszULIo4FK3HUvCjWO/vqYVZ7+QVMM
+	 51/xXH/BTzmWnRbmA7xrnv6qTjzSrkx609UIL3LD/aZo8Q1+7Pki2XsJDQVO7oBdEb
+	 F/nQ2vVaX8qeNOZ5f/EF1yYQjpGrC9AIxl9I/FbIZfBZNySVAIRGDLMZVUOJN+UMbn
+	 6P0VdgzeHdWGA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Michal Simek <michal.simek@amd.com>, 
- Shyam Pandey <radhey.shyam.pandey@amd.com>, 
- Abin Joseph <abin.joseph@amd.com>, "Rob Herring (Arm)" <robh@kernel.org>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260612215226.1887726-1-robh@kernel.org>
-References: <20260612215226.1887726-1-robh@kernel.org>
-Subject: Re: [PATCH] dt-bindings: dma: xilinx: Fix "xlnx,irq-delay" type
-Message-Id: <178300632060.735405.1201510775186759971.b4-ty@kernel.org>
-Date: Thu, 02 Jul 2026 21:02:00 +0530
+To: Sean Wang <sean.wang@mediatek.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Frank Li <Frank.Li@kernel.org>, Vladimir Zapolskiy <vz@kernel.org>
+Cc: Long Cheng <long.cheng@mediatek.com>, dmaengine@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+In-Reply-To: <20260701200703.117929-1-vz@kernel.org>
+References: <20260701200703.117929-1-vz@kernel.org>
+Subject: Re: [PATCH] dmaengine: mediatek: mtk-uart-apdma: Return -ENOMEM on
+ memory allocation failure
+Message-Id: <178300632440.735405.9920364004468870936.b4-ty@kernel.org>
+Date: Thu, 02 Jul 2026 21:02:04 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,21 +50,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 12 Jun 2026 16:52:25 -0500, Rob Herring (Arm) wrote:
-> "xlnx,irq-delay" programs an 8-bit delay field in the DMA control
-> register, and the driver stores and reads it as a byte. The binding
-> described the property as a uint32 cell, which made the helper type
-> check report the driver as wrong.
+On Wed, 01 Jul 2026 23:07:03 +0300, Vladimir Zapolskiy wrote:
+> If dynamic memory allocation in driver's probe function execution fails, it
+> should be reported to the driver's framework with -ENOMEM error code.
 > 
-> Document "xlnx,irq-delay" as uint8 so the generated schema reflects
-> the hardware field width and the existing driver access.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] dt-bindings: dma: xilinx: Fix "xlnx,irq-delay" type
-      commit: fa9cb11584851414b25fd8bf9f59518424b5917c
+[1/1] dmaengine: mediatek: mtk-uart-apdma: Return -ENOMEM on memory allocation failure
+      commit: 467265c750edd7ab43803deeafe7d3120a791d32
 
 Best regards,
 -- 
