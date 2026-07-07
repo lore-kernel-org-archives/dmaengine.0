@@ -1,40 +1,39 @@
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0433433E9E
-	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787D32B10E
+	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441269; cv=none; b=H3JlJfLnkJD4kE49e83pqmPCwiQhEHme580mFm/zph8f1FqBWgaEwW0q+gL/vd5jtDabCD+/apWaV/fqk9KjhDJIZfMVsZIgzCb4TXXgHzYe5XEnfbgkKJhaB/b8C7jdbq4pOZYuujNY26sr/8kjY/1G35hFIesy1u1QFDpmTdE=
+	t=1783441269; cv=none; b=lEoFhjcxslBHVRdLws+r2j0nZ2mHqlD6eC0yJyW+FpOrA9IYKdWMZClVRc52K23w8lqqXBSRLe2LAs4whe+GcDOhccFVOeGKD2m+/Q1gMq53jgF2cJRVa9NywXUmM5MNbHYTz4HrYLds1miBqbtEoJt/4QihaLTX5gAOUAPh43c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783441269; c=relaxed/simple;
-	bh=snuMzwebrzBcg3AtPpa0riT3h/vIaWuet9CF7M2UDSA=;
-	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
-	 Subject; b=u5kasquGPNwuHh9O0/6jy9XuGqwQfTE6aEdiYF1wz3AhY6S9Ut8q2cYY1AbFwms3JQB+ewLulC6p8BIBN/RwE+2/B6+3jV+0HT1rgycaABtYyz7r/7RGG71lEpBN26nAmBRp01T7tis3R1Kq26o9MyzOsIVQMPYPHcMeMjcUR30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=BQJQxmzw; arc=none smtp.client-ip=204.191.154.188
+	bh=hj9LrshnQAnFfYgPKc2gqhfDMPxI7JyKxI6VsYIQFJ8=;
+	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=Z/NdZzkMdXGrgteKEx+i5a7neIdr5q9E3JUEDs6TfZcQ851pfOC7Rx9q1KoOvdWBkEZuSKiYoNQrtM9RQIRzN8sw+x0fPK0hw0/Ta7oRH7ZbW0u6EiiFB8UQr33Nm++6sVj8Ia+hq3iz0Vw4+8NAR/0/dtsTbZq4cx3r2Txd55M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=j3iaoNnR; arc=none smtp.client-ip=204.191.154.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="BQJQxmzw"
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="j3iaoNnR"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=oqKXTOOA0NgLffHjYC0maEA/FMT7Cjd3M2/MCySeCm8=; b=BQJQxmzwetAZgaWSkrLQ/ePAjl
-	AROtIU1eQwXM1TvpGPM0cZlD4vwYlCoi/cD7cL65WpbCsplVZdc6el8j949qeURHISpHY7QIpkdJn
-	15gBfJxmg1RDW0FHHUY3KG0ggQ61kuQ1pP1/X1ipSkvirvH5QgfP4V8/KQPGUzvvd0Dcw/sULjLdn
-	mw7u2pHTEo9krPz2fHOLxB0uSAKb3WdeQndrqKo3ipiuUGT5OEhq9MwIGZcyi91GwQ8dx2oP5Vsll
-	qW7jP4SE3AnD+2V50btXFSgmn83mBkdkbuiomt7IS6++o4WcOmtK3qgtz2UoXvv91GAuWUMJdvY0v
-	YBl5sEDQ==;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
+	:references:content-disposition:in-reply-to;
+	bh=R26IUAxOmdigIViFUqnKLPPsdOzbCk+M8ESETOzbR2Y=; b=j3iaoNnROIH0T1NhdSv9s1fLJS
+	DPERdsbIEo5a6SqV6ud4Gtsn0IWjqLpvRsOh+35Y2nQNLXIvqy/jhk1A/R7IQUVtvoIxb7feLJOvF
+	fCXKJSFR5FaetjVmIK8NSUmHVDGmq6lqQHU13JHNEn0x2YOyjb4FS7GTiT1eFW+2SnryDfhO/O5kV
+	gZwYzXyOm4VDXzbZ+ExJDdV6Gyhga49VFBv6j1PO9yYJWzvlNDPiC+bz4vKY4hi2pY2Sem09rtrlI
+	JIUgObRoy5LBI2J1OZ5y/1iai/vYiwD0wVmAXtvHin4UrH4v2VDv0gaUUCElZMNz7ZoKvvByBrSUr
+	KC+ePdIA==;
 Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8Xc-00000000nsw-36h9;
-	Tue, 07 Jul 2026 10:21:01 -0600
+	id 1wh8Xc-00000000nsu-36jn;
+	Tue, 07 Jul 2026 10:21:02 -0600
 Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8XR-000000006E8-1Iqh;
-	Tue, 07 Jul 2026 10:20:49 -0600
+	id 1wh8XP-000000006E1-2DRS;
+	Tue, 07 Jul 2026 10:20:47 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
 	Vinod Koul <vkoul@kernel.org>
@@ -45,11 +44,9 @@ Cc: Frank Li <Frank.li@nxp.com>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Kelvin Cao <kelvin.cao@microchip.com>,
 	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue,  7 Jul 2026 10:20:42 -0600
-Message-ID: <20260707162045.23910-3-logang@deltatee.com>
+Date: Tue,  7 Jul 2026 10:20:40 -0600
+Message-ID: <20260707162045.23910-1-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260707162045.23910-1-logang@deltatee.com>
-References: <20260707162045.23910-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -61,195 +58,39 @@ X-SA-Exim-Connect-IP: 172.16.1.31
 X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com
 X-SA-Exim-Mail-From: gunthorp@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v1 2/5] dmaengine: ioatdma: use common channel sysfs attribute creation
+Subject: [PATCH v1 0/5] Add sysfs interface to switchtec-dma
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Instead of manually creating and adding sysfs attributes to each channel
-use the common dma_chan_kobject_add() facility.
+This patch set adds a handful of sysfs attributes to the switchtec-dma
+driver.
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
----
- drivers/dma/ioat/dma.h   |  2 -
- drivers/dma/ioat/init.c  |  4 +-
- drivers/dma/ioat/sysfs.c | 88 +++-------------------------------------
- 3 files changed, 7 insertions(+), 87 deletions(-)
+The first two patches clean up and generalizes the technique that
+ioat used to add sysfs attributes to a dma channel. The third and forth
+patches add a couple different sets of sysfs attributes that are useful
+in configuring and monitoring the hardware. The last patch just adds a
+new device ID for the hardware.
 
-diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
-index e8a880f338c6..bea2a0101ede 100644
---- a/drivers/dma/ioat/dma.h
-+++ b/drivers/dma/ioat/dma.h
-@@ -393,8 +393,6 @@ void ioat_issue_pending(struct dma_chan *chan);
- /* IOAT Init functions */
- bool is_bwd_ioat(struct pci_dev *pdev);
- struct dca_provider *ioat_dca_init(struct pci_dev *pdev, void __iomem *iobase);
--void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type);
--void ioat_kobject_del(struct ioatdma_device *ioat_dma);
- int ioat_dma_setup_interrupts(struct ioatdma_device *ioat_dma);
- void ioat_stop(struct ioatdma_chan *ioat_chan);
- #endif /* IOATDMA_H */
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index 737496391109..82f76fd0ccc1 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -541,8 +541,6 @@ static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
- 
- 	ioat_disable_interrupts(ioat_dma);
- 
--	ioat_kobject_del(ioat_dma);
--
- 	dma_async_device_unregister(dma);
- }
- 
-@@ -1174,7 +1172,7 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 	if (err)
- 		goto err_disable_interrupts;
- 
--	ioat_kobject_add(ioat_dma, &ioat_ktype);
-+	dma_chan_kobject_add(&ioat_dma->dma_dev, &ioat_ktype, "quickdata");
- 
- 	if (dca)
- 		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
-diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
-index e796ddb5383f..4dc61fdddb21 100644
---- a/drivers/dma/ioat/sysfs.c
-+++ b/drivers/dma/ioat/sysfs.c
-@@ -14,12 +14,6 @@
- 
- #include "../dmaengine.h"
- 
--struct ioat_sysfs_entry {
--	struct attribute attr;
--	ssize_t (*show)(struct dma_chan *, char *);
--	ssize_t (*store)(struct dma_chan *, const char *, size_t);
--};
--
- static ssize_t cap_show(struct dma_chan *c, char *page)
- {
- 	struct dma_device *dma = c->device;
-@@ -32,7 +26,7 @@ static ssize_t cap_show(struct dma_chan *c, char *page)
- 		       dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
- 
- }
--static const struct ioat_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
-+static const struct dma_chan_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
- 
- static ssize_t version_show(struct dma_chan *c, char *page)
- {
-@@ -42,77 +36,7 @@ static ssize_t version_show(struct dma_chan *c, char *page)
- 	return sprintf(page, "%d.%d\n",
- 		       ioat_dma->version >> 4, ioat_dma->version & 0xf);
- }
--static const struct ioat_sysfs_entry ioat_version_attr = __ATTR_RO(version);
--
--static ssize_t
--ioat_attr_show(struct kobject *kobj, struct attribute *attr, char *page)
--{
--	const struct ioat_sysfs_entry *entry;
--	struct ioatdma_chan *ioat_chan;
--
--	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
--	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
--
--	if (!entry->show)
--		return -EIO;
--	return entry->show(&ioat_chan->dma_chan, page);
--}
--
--static ssize_t
--ioat_attr_store(struct kobject *kobj, struct attribute *attr,
--const char *page, size_t count)
--{
--	const struct ioat_sysfs_entry *entry;
--	struct ioatdma_chan *ioat_chan;
--
--	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
--	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
--
--	if (!entry->store)
--		return -EIO;
--	return entry->store(&ioat_chan->dma_chan, page, count);
--}
--
--static const struct sysfs_ops ioat_sysfs_ops = {
--	.show	= ioat_attr_show,
--	.store  = ioat_attr_store,
--};
--
--void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type)
--{
--	struct dma_device *dma = &ioat_dma->dma_dev;
--	struct dma_chan *c;
--
--	list_for_each_entry(c, &dma->channels, device_node) {
--		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
--		struct kobject *parent = &c->dev->device.kobj;
--		int err;
--
--		err = kobject_init_and_add(&ioat_chan->kobj, type,
--					   parent, "quickdata");
--		if (err) {
--			dev_warn(to_dev(ioat_chan),
--				 "sysfs init error (%d), continuing...\n", err);
--			kobject_put(&ioat_chan->kobj);
--			set_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state);
--		}
--	}
--}
--
--void ioat_kobject_del(struct ioatdma_device *ioat_dma)
--{
--	struct dma_device *dma = &ioat_dma->dma_dev;
--	struct dma_chan *c;
--
--	list_for_each_entry(c, &dma->channels, device_node) {
--		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
--
--		if (!test_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state)) {
--			kobject_del(&ioat_chan->kobj);
--			kobject_put(&ioat_chan->kobj);
--		}
--	}
--}
-+static const struct dma_chan_sysfs_entry ioat_version_attr = __ATTR_RO(version);
- 
- static ssize_t ring_size_show(struct dma_chan *c, char *page)
- {
-@@ -120,7 +44,7 @@ static ssize_t ring_size_show(struct dma_chan *c, char *page)
- 
- 	return sprintf(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
- }
--static const struct ioat_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
-+static const struct dma_chan_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
- 
- static ssize_t ring_active_show(struct dma_chan *c, char *page)
- {
-@@ -129,7 +53,7 @@ static ssize_t ring_active_show(struct dma_chan *c, char *page)
- 	/* ...taken outside the lock, no need to be precise */
- 	return sprintf(page, "%d\n", ioat_ring_active(ioat_chan));
- }
--static const struct ioat_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
-+static const struct dma_chan_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
- 
- static ssize_t intr_coalesce_show(struct dma_chan *c, char *page)
- {
-@@ -154,7 +78,7 @@ size_t count)
- 	return count;
- }
- 
--static const struct ioat_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
-+static const struct dma_chan_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
- 
- static const struct attribute *const ioat_attrs[] = {
- 	&ring_size_attr.attr,
-@@ -167,6 +91,6 @@ static const struct attribute *const ioat_attrs[] = {
- ATTRIBUTE_GROUPS(ioat);
- 
- const struct kobj_type ioat_ktype = {
--	.sysfs_ops = &ioat_sysfs_ops,
-+	.sysfs_ops = &dma_chan_sysfs_ops,
- 	.default_groups = ioat_groups,
- };
+This patch set is based on v7.2-rc2.
+
+Logan Gunthorpe (5):
+  dmaengine: add support for custom per-channel sysfs attributes
+  dmaengine: ioatdma: use common channel sysfs attribute creation
+  dmaengine: switchtec-dma: Add config sysfs attributes
+  dmaengine: switchtec-dma: Add pmon sysfs attributes
+  dmaengine: switchtec-dma: Add PCI1008 device ID
+
+ drivers/dma/dmaengine.c     |  62 +++++++
+ drivers/dma/dmaengine.h     |  11 ++
+ drivers/dma/ioat/dma.h      |   2 -
+ drivers/dma/ioat/init.c     |   4 +-
+ drivers/dma/ioat/sysfs.c    |  88 +---------
+ drivers/dma/switchtec_dma.c | 341 ++++++++++++++++++++++++++++++++++++
+ include/linux/dmaengine.h   |   3 +
+ 7 files changed, 424 insertions(+), 87 deletions(-)
+
+
+base-commit: 8cdeaa50eae8dad34885515f62559ee83e7e8dda
 -- 
 2.47.3
 
