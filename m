@@ -1,39 +1,40 @@
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787D32B10E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577AD175A89
 	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441269; cv=none; b=lEoFhjcxslBHVRdLws+r2j0nZ2mHqlD6eC0yJyW+FpOrA9IYKdWMZClVRc52K23w8lqqXBSRLe2LAs4whe+GcDOhccFVOeGKD2m+/Q1gMq53jgF2cJRVa9NywXUmM5MNbHYTz4HrYLds1miBqbtEoJt/4QihaLTX5gAOUAPh43c=
+	t=1783441269; cv=none; b=aQVkMaVUkGuxv08Ed3jG9A+BHlWOqIEOMorr6RaLNv189lDmZDDd/OOh+KUCGe56lTnBs0WcHraRKxPPA23/2Vjq8dEGrub3iM9p/Jn4Ni2yuqKrX7muNlHVLE/Wi7R7aelRBKtkWPRd0O7l3/jiORrp9iN70CaE8odxbVzJ7Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783441269; c=relaxed/simple;
-	bh=hj9LrshnQAnFfYgPKc2gqhfDMPxI7JyKxI6VsYIQFJ8=;
-	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=Z/NdZzkMdXGrgteKEx+i5a7neIdr5q9E3JUEDs6TfZcQ851pfOC7Rx9q1KoOvdWBkEZuSKiYoNQrtM9RQIRzN8sw+x0fPK0hw0/Ta7oRH7ZbW0u6EiiFB8UQr33Nm++6sVj8Ia+hq3iz0Vw4+8NAR/0/dtsTbZq4cx3r2Txd55M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=j3iaoNnR; arc=none smtp.client-ip=204.191.154.188
+	bh=PxHfaNiltiVSFBk9+yhjXhtFcnMBg9MvRWkeIfcPDwk=;
+	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
+	 Subject; b=JG2B/P5LM12zbhXWUqqMWC6brpkGV+YjuH2wf3lD7BxFmREl8H2mtkkNPq78fZmX/O5XJBmA4OmKXvZmXJTSsfWox+Pmt7XjsTDOQiR9yw5l9ssW/yuWB4cGcynIC1sHEvlQbFH5VtFAu4UK9BNbkMH3d8VO5L+5ho+Ga7yB5vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=r+vjNxOk; arc=none smtp.client-ip=204.191.154.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="j3iaoNnR"
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="r+vjNxOk"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
-	:references:content-disposition:in-reply-to;
-	bh=R26IUAxOmdigIViFUqnKLPPsdOzbCk+M8ESETOzbR2Y=; b=j3iaoNnROIH0T1NhdSv9s1fLJS
-	DPERdsbIEo5a6SqV6ud4Gtsn0IWjqLpvRsOh+35Y2nQNLXIvqy/jhk1A/R7IQUVtvoIxb7feLJOvF
-	fCXKJSFR5FaetjVmIK8NSUmHVDGmq6lqQHU13JHNEn0x2YOyjb4FS7GTiT1eFW+2SnryDfhO/O5kV
-	gZwYzXyOm4VDXzbZ+ExJDdV6Gyhga49VFBv6j1PO9yYJWzvlNDPiC+bz4vKY4hi2pY2Sem09rtrlI
-	JIUgObRoy5LBI2J1OZ5y/1iai/vYiwD0wVmAXtvHin4UrH4v2VDv0gaUUCElZMNz7ZoKvvByBrSUr
-	KC+ePdIA==;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=0U/BtM0ZTMKhM7yc3tCJeVmRch1+GQex6MiqUfh0EJg=; b=r+vjNxOkr7/SYHX1CGp0ZXNR2n
+	vrpvV2ejR0g8CKkefKpQ3FL6p7oYb1RDYU59SClVVwKIDxFkiUJGwpIdpkNi5n/elbU/n3ksPHVa3
+	ylLU+vyDkhKry90Ze8/XfrW8t6TBODe+0h0ggbGXwXOQM0uhmmNzxcXFeZ5DpQ0dzKdJ3t2x3QKNn
+	kAXVqrMMd6tXydr8/hplXdwKJx8OXzShbRwgaecSHfm2HnRO+AYOgPt7Nxicy8KKU1B48tUtWH3OW
+	bnLQytfkw6lCBDsIsSVX7LomXmbf3rdcO4JvjFe1+WJMgd7+Y4aRxH8kMgcnhRQps6Z51yigrLl8X
+	Zyzv4fZw==;
 Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8Xc-00000000nsu-36jn;
+	id 1wh8Xc-00000000nsx-36gB;
 	Tue, 07 Jul 2026 10:21:02 -0600
 Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8XP-000000006E1-2DRS;
-	Tue, 07 Jul 2026 10:20:47 -0600
+	id 1wh8XR-000000006EC-1tQa;
+	Tue, 07 Jul 2026 10:20:49 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
 	Vinod Koul <vkoul@kernel.org>
@@ -44,9 +45,11 @@ Cc: Frank Li <Frank.li@nxp.com>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Kelvin Cao <kelvin.cao@microchip.com>,
 	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue,  7 Jul 2026 10:20:40 -0600
-Message-ID: <20260707162045.23910-1-logang@deltatee.com>
+Date: Tue,  7 Jul 2026 10:20:43 -0600
+Message-ID: <20260707162045.23910-4-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260707162045.23910-1-logang@deltatee.com>
+References: <20260707162045.23910-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -58,39 +61,176 @@ X-SA-Exim-Connect-IP: 172.16.1.31
 X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com
 X-SA-Exim-Mail-From: gunthorp@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v1 0/5] Add sysfs interface to switchtec-dma
+Subject: [PATCH v1 3/5] dmaengine: switchtec-dma: Add config sysfs attributes
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-This patch set adds a handful of sysfs attributes to the switchtec-dma
-driver.
+Add sysfs configuration options for switchtec-dma devices.
 
-The first two patches clean up and generalizes the technique that
-ioat used to add sysfs attributes to a dma channel. The third and forth
-patches add a couple different sets of sysfs attributes that are useful
-in configuring and monitoring the hardware. The last patch just adds a
-new device ID for the hardware.
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/switchtec_dma.c | 141 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 141 insertions(+)
 
-This patch set is based on v7.2-rc2.
-
-Logan Gunthorpe (5):
-  dmaengine: add support for custom per-channel sysfs attributes
-  dmaengine: ioatdma: use common channel sysfs attribute creation
-  dmaengine: switchtec-dma: Add config sysfs attributes
-  dmaengine: switchtec-dma: Add pmon sysfs attributes
-  dmaengine: switchtec-dma: Add PCI1008 device ID
-
- drivers/dma/dmaengine.c     |  62 +++++++
- drivers/dma/dmaengine.h     |  11 ++
- drivers/dma/ioat/dma.h      |   2 -
- drivers/dma/ioat/init.c     |   4 +-
- drivers/dma/ioat/sysfs.c    |  88 +---------
- drivers/dma/switchtec_dma.c | 341 ++++++++++++++++++++++++++++++++++++
- include/linux/dmaengine.h   |   3 +
- 7 files changed, 424 insertions(+), 87 deletions(-)
-
-
-base-commit: 8cdeaa50eae8dad34885515f62559ee83e7e8dda
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index 3ef928640615..4841134bd7b8 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -1027,6 +1027,145 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
+ 	return SWITCHTEC_DMA_SQ_SIZE;
+ }
+ 
++static __always_inline ssize_t perf_cfg_show(struct dma_chan *chan, char *page,
++					     unsigned int mask)
++{
++	struct switchtec_dma_chan *swdma_chan =
++		container_of(chan, struct switchtec_dma_chan, dma_chan);
++	struct chan_fw_regs __iomem *chan_fw = swdma_chan->mmio_chan_fw;
++	u32 perf_cfg;
++	int value;
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		rcu_read_unlock();
++		return -ENODEV;
++	}
++
++	perf_cfg = readl(&chan_fw->perf_cfg);
++	value = field_get(mask, perf_cfg);
++
++	rcu_read_unlock();
++	return sprintf(page, "0x%x\n", value);
++}
++
++static __always_inline ssize_t perf_cfg_store(struct dma_chan *chan,
++		const char *page, size_t count, unsigned int mask)
++{
++	struct switchtec_dma_chan *swdma_chan =
++		container_of(chan, struct switchtec_dma_chan, dma_chan);
++	struct chan_fw_regs __iomem *chan_fw = swdma_chan->mmio_chan_fw;
++	ssize_t ret = count;
++	u32 perf_cfg;
++	int value;
++
++	if (kstrtoint(page, 0, &value) < 0)
++		return -EINVAL;
++
++	if (value < 0 || value > field_max(mask))
++		return -EINVAL;
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		ret = -ENODEV;
++		goto err_unlock;
++	}
++
++	if (chan->client_count)
++		goto err_unlock;
++
++	perf_cfg = readl(&chan_fw->perf_cfg);
++	perf_cfg = (perf_cfg & ~mask) | field_prep(mask, value);
++	writel(perf_cfg, &chan_fw->perf_cfg);
++
++err_unlock:
++	rcu_read_unlock();
++	return ret;
++}
++
++static ssize_t burst_scale_show(struct dma_chan *chan, char *page)
++{
++	return perf_cfg_show(chan, page, PERF_BURST_SCALE_MASK);
++}
++
++static ssize_t burst_scale_store(struct dma_chan *chan, const char *page,
++				 size_t count)
++{
++	return perf_cfg_store(chan, page, count, PERF_BURST_SCALE_MASK);
++}
++static struct dma_chan_sysfs_entry burst_scale_attr = __ATTR_RW(burst_scale);
++
++static ssize_t mrrs_show(struct dma_chan *chan, char *page)
++{
++	return perf_cfg_show(chan, page, PERF_MRRS_MASK);
++}
++
++static ssize_t mrrs_store(struct dma_chan *chan, const char *page,
++				 size_t count)
++{
++	return perf_cfg_store(chan, page, count, PERF_MRRS_MASK);
++}
++static struct dma_chan_sysfs_entry mrrs_attr = __ATTR_RW(mrrs);
++
++static ssize_t interval_show(struct dma_chan *chan, char *page)
++{
++	return perf_cfg_show(chan, page, PERF_INTERVAL_MASK);
++}
++
++static ssize_t interval_store(struct dma_chan *chan, const char *page,
++				 size_t count)
++{
++	return perf_cfg_store(chan, page, count, PERF_INTERVAL_MASK);
++}
++static struct dma_chan_sysfs_entry interval_attr = __ATTR_RW(interval);
++
++static ssize_t burst_size_show(struct dma_chan *chan, char *page)
++{
++	return perf_cfg_show(chan, page, PERF_BURST_SIZE_MASK);
++}
++
++static ssize_t burst_size_store(struct dma_chan *chan, const char *page,
++				size_t count)
++{
++	return perf_cfg_store(chan, page, count, PERF_BURST_SIZE_MASK);
++}
++static struct dma_chan_sysfs_entry burst_size_attr = __ATTR_RW(burst_size);
++
++static ssize_t arb_weight_show(struct dma_chan *chan, char *page)
++{
++	return perf_cfg_show(chan, page, PERF_ARB_WEIGHT_MASK);
++}
++
++static ssize_t arb_weight_store(struct dma_chan *chan, const char *page,
++				 size_t count)
++{
++	return perf_cfg_store(chan, page, count, PERF_ARB_WEIGHT_MASK);
++}
++static struct dma_chan_sysfs_entry arb_weight_attr = __ATTR_RW(arb_weight);
++
++static struct attribute *switchtec_config_attrs[] = {
++	&burst_scale_attr.attr,
++	&mrrs_attr.attr,
++	&interval_attr.attr,
++	&burst_size_attr.attr,
++	&arb_weight_attr.attr,
++	NULL
++};
++
++static struct attribute_group switchtec_config_group = {
++	.attrs = switchtec_config_attrs,
++};
++
++static const struct attribute_group *switchtec_groups[] = {
++	&switchtec_config_group,
++	NULL,
++};
++
++static const struct kobj_type switchtec_ktype = {
++	.sysfs_ops = &dma_chan_sysfs_ops,
++	.default_groups = switchtec_groups,
++};
++
+ static void switchtec_dma_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct switchtec_dma_chan *swdma_chan =
+@@ -1286,6 +1425,8 @@ static int switchtec_dma_create(struct pci_dev *pdev)
+ 		goto err_chans_release_exit;
+ 	}
+ 
++	dma_chan_kobject_add(dma, &switchtec_ktype, "switchtec");
++
+ 	pci_dbg(pdev, "Channel count: %d\n", chan_cnt);
+ 
+ 	list_for_each_entry(chan, &dma->channels, device_node)
 -- 
 2.47.3
 
