@@ -1,277 +1,255 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C740341226E
-	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 15:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0433433E9E
+	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783437966; cv=none; b=tixwQZTua8rFUMYp4yyi154C5erNU1JfJsKQt4q7zpzXsVY8lQ4wwqAuWzPSSkQfHtUJ2B/Gi3/x37LuTd2nvToJaihpY01vbn0Aq4+7zbtS+k2KZW8fLiUy4B97lbYZqAiTeVc5FG1GXm4ad8Lk8FRvjg+UJGvMi/5HjJObCUg=
+	t=1783441269; cv=none; b=H3JlJfLnkJD4kE49e83pqmPCwiQhEHme580mFm/zph8f1FqBWgaEwW0q+gL/vd5jtDabCD+/apWaV/fqk9KjhDJIZfMVsZIgzCb4TXXgHzYe5XEnfbgkKJhaB/b8C7jdbq4pOZYuujNY26sr/8kjY/1G35hFIesy1u1QFDpmTdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783437966; c=relaxed/simple;
-	bh=gWxwECSKxRACvJWLbl2tihLuDZSrRcobaw55YZicHEE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dQAsH7i6agDo6/T5X6Xx+Poe7fteq6bXd+bkU3vpR1a8yjcBsfffiKh7YWSPFZ8QKo/iS8ZlUCZQTeM5dP6r1F1/l4hFGT30Y3U/tPoBaGfeYG+Qc1d9xGRuzqIoGO7bAwOeG0Cbhehhi/IOACSIimo+p49Y1kw+qVu+r+bVEVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TivktELq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783441269; c=relaxed/simple;
+	bh=snuMzwebrzBcg3AtPpa0riT3h/vIaWuet9CF7M2UDSA=;
+	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
+	 Subject; b=u5kasquGPNwuHh9O0/6jy9XuGqwQfTE6aEdiYF1wz3AhY6S9Ut8q2cYY1AbFwms3JQB+ewLulC6p8BIBN/RwE+2/B6+3jV+0HT1rgycaABtYyz7r/7RGG71lEpBN26nAmBRp01T7tis3R1Kq26o9MyzOsIVQMPYPHcMeMjcUR30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=BQJQxmzw; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TivktELq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C7D1F000E9;
-	Tue,  7 Jul 2026 15:26:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783437964;
-	bh=Hjoobx63WWPVBLIWgEjcP36K3dN0hQ3n94fxJEsqRFE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TivktELq4gx1/m8FHXgYxsSud10uVow0pYf4K3uN4bgkAOMdw735hZmJZq00ubH46
-	 t+KdOmnE6VoWvR69hZOm6XtQDEZEOl3RTxM6opjOGJvfOf0QOHjZQW92AVn2rzJn0J
-	 WQbM6e8hoeCQZXmA6cHUEhdt9hePGyySFhe6kLR1pktsBT7SGcRWqCOpT9Sa0gLRrZ
-	 XqX4UhGQ4UjWN4KXx1DP9jYaiYm0IbYRT4zXJDhpZxxDJ5l/NzQXlcoOmX5b5phfkh
-	 bKjKlvMu1LtZyKbEnj1NivTPiq3hDSM5BQyGcxzyJHXyY35AKOtTsbVlIDgIHZa1Xp
-	 FAZ1+2VTSMhvA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: mmp_pdma: Check virtual channel before
- scheduling tasklet
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Ruoyu Wang" <ruoyuw560@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260707150356.2257833-1-ruoyuw560@gmail.com>
-References: <20260707150356.2257833-1-ruoyuw560@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 15:26:03 +0000
-Message-Id: <20260707152604.37C7D1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="BQJQxmzw"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=oqKXTOOA0NgLffHjYC0maEA/FMT7Cjd3M2/MCySeCm8=; b=BQJQxmzwetAZgaWSkrLQ/ePAjl
+	AROtIU1eQwXM1TvpGPM0cZlD4vwYlCoi/cD7cL65WpbCsplVZdc6el8j949qeURHISpHY7QIpkdJn
+	15gBfJxmg1RDW0FHHUY3KG0ggQ61kuQ1pP1/X1ipSkvirvH5QgfP4V8/KQPGUzvvd0Dcw/sULjLdn
+	mw7u2pHTEo9krPz2fHOLxB0uSAKb3WdeQndrqKo3ipiuUGT5OEhq9MwIGZcyi91GwQ8dx2oP5Vsll
+	qW7jP4SE3AnD+2V50btXFSgmn83mBkdkbuiomt7IS6++o4WcOmtK3qgtz2UoXvv91GAuWUMJdvY0v
+	YBl5sEDQ==;
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1wh8Xc-00000000nsw-36h9;
+	Tue, 07 Jul 2026 10:21:01 -0600
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1wh8XR-000000006E8-1Iqh;
+	Tue, 07 Jul 2026 10:20:49 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: dmaengine@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Dave Jiang <dave.jiang@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Kelvin Cao <kelvin.cao@microchip.com>,
+	Logan Gunthorpe <logang@deltatee.com>
+Date: Tue,  7 Jul 2026 10:20:42 -0600
+Message-ID: <20260707162045.23910-3-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260707162045.23910-1-logang@deltatee.com>
+References: <20260707162045.23910-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v1 2/5] dmaengine: ioatdma: use common channel sysfs attribute creation
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
-s) to consider:
+Instead of manually creating and adding sysfs attributes to each channel
+use the common dma_chan_kobject_add() facility.
 
-Pre-existing issues:
-- [High] The patch leaves a Time-Of-Check to Time-Of-Use (TOCTOU) race open=
- by taking two separate snapshots of `phy->vchan`.
-- [High] Time-of-check to time-of-use (TOCTOU) races on `chan->phy` can lea=
-d to NULL pointer dereferences when racing with channel termination.
-- [High] Missing `tasklet_kill()` during channel teardown and driver remova=
-l leads to use-after-free vulnerabilities.
-- [High] A use-after-free write occurs on the error paths of the `prep_*` f=
-unctions when freeing the descriptor list.
-- [High] The DMA channel hangs indefinitely if multiple transactions are su=
-bmitted before `issue_pending` is called.
-- [Medium] Stale hardware interrupts are not reliably cleared when a physic=
-al channel is disabled, risking state corruption upon reallocation.
---
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/ioat/dma.h   |  2 -
+ drivers/dma/ioat/init.c  |  4 +-
+ drivers/dma/ioat/sysfs.c | 88 +++-------------------------------------
+ 3 files changed, 7 insertions(+), 87 deletions(-)
 
---- Patch [1]: [PATCH] dmaengine: mmp_pdma: Check virtual channel before sc=
-heduling tasklet ---
-commit 4969ecc3a7a7a671c042835c34adbdf0229a2d70
-Author: Ruoyu Wang <ruoyuw560@gmail.com>
+diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
+index e8a880f338c6..bea2a0101ede 100644
+--- a/drivers/dma/ioat/dma.h
++++ b/drivers/dma/ioat/dma.h
+@@ -393,8 +393,6 @@ void ioat_issue_pending(struct dma_chan *chan);
+ /* IOAT Init functions */
+ bool is_bwd_ioat(struct pci_dev *pdev);
+ struct dca_provider *ioat_dca_init(struct pci_dev *pdev, void __iomem *iobase);
+-void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type);
+-void ioat_kobject_del(struct ioatdma_device *ioat_dma);
+ int ioat_dma_setup_interrupts(struct ioatdma_device *ioat_dma);
+ void ioat_stop(struct ioatdma_chan *ioat_chan);
+ #endif /* IOATDMA_H */
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 737496391109..82f76fd0ccc1 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -541,8 +541,6 @@ static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
+ 
+ 	ioat_disable_interrupts(ioat_dma);
+ 
+-	ioat_kobject_del(ioat_dma);
+-
+ 	dma_async_device_unregister(dma);
+ }
+ 
+@@ -1174,7 +1172,7 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
+ 	if (err)
+ 		goto err_disable_interrupts;
+ 
+-	ioat_kobject_add(ioat_dma, &ioat_ktype);
++	dma_chan_kobject_add(&ioat_dma->dma_dev, &ioat_ktype, "quickdata");
+ 
+ 	if (dca)
+ 		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
+diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
+index e796ddb5383f..4dc61fdddb21 100644
+--- a/drivers/dma/ioat/sysfs.c
++++ b/drivers/dma/ioat/sysfs.c
+@@ -14,12 +14,6 @@
+ 
+ #include "../dmaengine.h"
+ 
+-struct ioat_sysfs_entry {
+-	struct attribute attr;
+-	ssize_t (*show)(struct dma_chan *, char *);
+-	ssize_t (*store)(struct dma_chan *, const char *, size_t);
+-};
+-
+ static ssize_t cap_show(struct dma_chan *c, char *page)
+ {
+ 	struct dma_device *dma = c->device;
+@@ -32,7 +26,7 @@ static ssize_t cap_show(struct dma_chan *c, char *page)
+ 		       dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
+ 
+ }
+-static const struct ioat_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
++static const struct dma_chan_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
+ 
+ static ssize_t version_show(struct dma_chan *c, char *page)
+ {
+@@ -42,77 +36,7 @@ static ssize_t version_show(struct dma_chan *c, char *page)
+ 	return sprintf(page, "%d.%d\n",
+ 		       ioat_dma->version >> 4, ioat_dma->version & 0xf);
+ }
+-static const struct ioat_sysfs_entry ioat_version_attr = __ATTR_RO(version);
+-
+-static ssize_t
+-ioat_attr_show(struct kobject *kobj, struct attribute *attr, char *page)
+-{
+-	const struct ioat_sysfs_entry *entry;
+-	struct ioatdma_chan *ioat_chan;
+-
+-	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
+-	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
+-
+-	if (!entry->show)
+-		return -EIO;
+-	return entry->show(&ioat_chan->dma_chan, page);
+-}
+-
+-static ssize_t
+-ioat_attr_store(struct kobject *kobj, struct attribute *attr,
+-const char *page, size_t count)
+-{
+-	const struct ioat_sysfs_entry *entry;
+-	struct ioatdma_chan *ioat_chan;
+-
+-	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
+-	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
+-
+-	if (!entry->store)
+-		return -EIO;
+-	return entry->store(&ioat_chan->dma_chan, page, count);
+-}
+-
+-static const struct sysfs_ops ioat_sysfs_ops = {
+-	.show	= ioat_attr_show,
+-	.store  = ioat_attr_store,
+-};
+-
+-void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type)
+-{
+-	struct dma_device *dma = &ioat_dma->dma_dev;
+-	struct dma_chan *c;
+-
+-	list_for_each_entry(c, &dma->channels, device_node) {
+-		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
+-		struct kobject *parent = &c->dev->device.kobj;
+-		int err;
+-
+-		err = kobject_init_and_add(&ioat_chan->kobj, type,
+-					   parent, "quickdata");
+-		if (err) {
+-			dev_warn(to_dev(ioat_chan),
+-				 "sysfs init error (%d), continuing...\n", err);
+-			kobject_put(&ioat_chan->kobj);
+-			set_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state);
+-		}
+-	}
+-}
+-
+-void ioat_kobject_del(struct ioatdma_device *ioat_dma)
+-{
+-	struct dma_device *dma = &ioat_dma->dma_dev;
+-	struct dma_chan *c;
+-
+-	list_for_each_entry(c, &dma->channels, device_node) {
+-		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
+-
+-		if (!test_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state)) {
+-			kobject_del(&ioat_chan->kobj);
+-			kobject_put(&ioat_chan->kobj);
+-		}
+-	}
+-}
++static const struct dma_chan_sysfs_entry ioat_version_attr = __ATTR_RO(version);
+ 
+ static ssize_t ring_size_show(struct dma_chan *c, char *page)
+ {
+@@ -120,7 +44,7 @@ static ssize_t ring_size_show(struct dma_chan *c, char *page)
+ 
+ 	return sprintf(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
+ }
+-static const struct ioat_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
++static const struct dma_chan_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
+ 
+ static ssize_t ring_active_show(struct dma_chan *c, char *page)
+ {
+@@ -129,7 +53,7 @@ static ssize_t ring_active_show(struct dma_chan *c, char *page)
+ 	/* ...taken outside the lock, no need to be precise */
+ 	return sprintf(page, "%d\n", ioat_ring_active(ioat_chan));
+ }
+-static const struct ioat_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
++static const struct dma_chan_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
+ 
+ static ssize_t intr_coalesce_show(struct dma_chan *c, char *page)
+ {
+@@ -154,7 +78,7 @@ size_t count)
+ 	return count;
+ }
+ 
+-static const struct ioat_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
++static const struct dma_chan_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
+ 
+ static const struct attribute *const ioat_attrs[] = {
+ 	&ring_size_attr.attr,
+@@ -167,6 +91,6 @@ static const struct attribute *const ioat_attrs[] = {
+ ATTRIBUTE_GROUPS(ioat);
+ 
+ const struct kobj_type ioat_ktype = {
+-	.sysfs_ops = &ioat_sysfs_ops,
++	.sysfs_ops = &dma_chan_sysfs_ops,
+ 	.default_groups = ioat_groups,
+ };
+-- 
+2.47.3
 
-dmaengine: mmp_pdma: Check virtual channel before scheduling tasklet
-
-mmp_pdma_chan_handler() clears a physical-channel interrupt and then
-unconditionally schedules phy->vchan->tasklet. The physical channel can
-be detached from its virtual channel when the channel is terminated or
-when no pending work remains, so a late or shared interrupt can reach the
-handler with phy->vchan already NULL.
-
-Snapshot phy->vchan in the interrupt path, skip tasklet scheduling when
-there is no virtual channel, and use the same snapshot for the BUSERR
-warning. Use WRITE_ONCE() for the matching attach/detach stores because
-the IRQ path reads this pointer without taking phy_lock.
-
-Fixes: c8acd6aa6bed ("dmaengine: mmp-pdma support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-
-> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-> index 386e85cd4882a..6f379e9f10017 100644
-> --- a/drivers/dma/mmp_pdma.c
-> +++ b/drivers/dma/mmp_pdma.c
-
-[ ... ]
-
-> @@ -370,11 +372,16 @@ static int clear_chan_irq(struct mmp_pdma_phy *phy)
->  static irqreturn_t mmp_pdma_chan_handler(int irq, void *dev_id)
->  {
->  	struct mmp_pdma_phy *phy =3D dev_id;
-> +	struct mmp_pdma_chan *vchan;
-> =20
->  	if (clear_chan_irq(phy) !=3D 0)
->  		return IRQ_NONE;
-> =20
-> -	tasklet_schedule(&phy->vchan->tasklet);
-> +	vchan =3D READ_ONCE(phy->vchan);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does taking two separate
-snapshots of phy->vchan leave a time-of-check to time-of-use race open?
-
-The commit message mentions using the same snapshot, but the implementation
-takes one snapshot in clear_chan_irq() and a second one here in
-mmp_pdma_chan_handler(). If an interrupt fires for an old virtual channel
-exactly as the physical channel is reassigned to a new one, the two
-READ_ONCE(phy->vchan) calls could fetch different virtual channels.
-
-The interrupt would be cleared for the old channel, but the tasklet would be
-scheduled for the new channel, prematurely completing its pending descripto=
-rs.
-
-Could this be fixed by returning the vchan pointer from clear_chan_irq()
-instead of reading it twice?
-
-> +	if (!vchan)
-> +		return IRQ_HANDLED;
-> +
-> +	tasklet_schedule(&vchan->tasklet);
->  	return IRQ_HANDLED;
->  }
-
-[Severity: High]
-This is a pre-existing issue, but can this lead to a NULL pointer dereferen=
-ce
-due to a time-of-check to time-of-use race in mmp_pdma_residue()?
-
-In mmp_pdma_residue(), chan->phy is checked and used locklessly:
-
-drivers/dma/mmp_pdma.c:mmp_pdma_residue() {
-    ...
-    if (!chan->phy)
-        return 0;
-
-    if (chan->dir =3D=3D DMA_DEV_TO_MEM)
-        curr =3D pdev->ops->read_dst_addr(chan->phy);
-    ...
-}
-
-Concurrently, mmp_pdma_terminate_all() can call mmp_pdma_free_phy(), which
-sets chan->phy =3D NULL. Because chan->phy is accessed without READ_ONCE() =
-or
-locks, the compiler might reload the variable from memory between the check
-and its use, resulting in a NULL dereference.
-
-[Severity: High]
-This is a pre-existing issue, but does the channel teardown path miss a
-tasklet_kill() call, potentially leading to a use-after-free?
-
-In mmp_pdma_free_chan_resources(), the descriptor pool is destroyed without
-synchronizing or killing active tasklets:
-
-drivers/dma/mmp_pdma.c:mmp_pdma_free_chan_resources() {
-    ...
-    dma_pool_destroy(chan->desc_pool);
-    chan->desc_pool =3D NULL;
-    ...
-}
-
-Similarly, in mmp_pdma_remove(), the driver unregisters the device and allo=
-ws
-devres to free chan memory without first killing the tasklet. If a tasklet =
-is
-scheduled just before the DMA channel is freed, dma_do_tasklet() could run
-concurrently with or after teardown, causing it to dereference chan after it
-is freed or operate on chan->desc_pool after it is destroyed.
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does the error path in the
-prep_* functions cause a use-after-free write when freeing the descriptor l=
-ist?
-
-In mmp_pdma_prep_memcpy(), newly allocated descriptors are appended using
-list_add_tail(&new->node, &first->tx_list). If an allocation fails, the err=
-or
-path passes the dynamically embedded list head to the cleanup function:
-
-drivers/dma/mmp_pdma.c:mmp_pdma_prep_memcpy() {
-    ...
-fail:
-    if (first)
-        mmp_pdma_free_desc_list(chan, &first->tx_list);
-    ...
-}
-
-During cleanup in mmp_pdma_free_desc_list():
-
-drivers/dma/mmp_pdma.c:mmp_pdma_free_desc_list() {
-    ...
-    list_for_each_entry_safe(desc, _desc, list, node) {
-        list_del(&desc->node);
-        dma_pool_free(chan->desc_pool, desc, desc->async_tx.phys);
-    }
-    ...
-}
-
-Since first->tx_list is embedded in first, and first is freed during the
-first iteration, subsequent iterations perform list_del(&desc->node). This
-modifies the list head inside the already freed first descriptor, corrupting
-the memory of the DMA descriptor pool.
-
-[Severity: High]
-This is a pre-existing issue, but does the DMA channel hang indefinitely if
-multiple transactions are submitted before issue_pending() is called?
-
-In start_pending_queue(), all pending transactions are moved to chain_runni=
-ng,
-but only the physical address of the first descriptor is programmed to the
-hardware:
-
-drivers/dma/mmp_pdma.c:start_pending_queue() {
-    ...
-    list_splice_tail_init(&chan->chain_pending, &chan->chain_running);
-
-    /*
-     * Program the descriptor's address into the DMA controller,
-     * then start the DMA transaction
-     */
-    pdev->ops->write_next_addr(chan->phy, desc->async_tx.phys);
-    ...
-}
-
-Since descriptors from different transactions are not linked, the controller
-will stop after the first transaction. The tasklet in dma_do_tasklet() sees
-that chain_running is not empty and leaves chan->idle =3D false:
-
-drivers/dma/mmp_pdma.c:dma_do_tasklet() {
-    ...
-    chan->idle =3D list_empty(&chan->chain_running);
-
-    /* Start any pending transactions automatically */
-    start_pending_queue(chan);
-    ...
-}
-
-However, start_pending_queue() returns immediately if chan->idle is false,
-meaning the remaining transactions in chain_running are never started.
-
-[Severity: Medium]
-This isn't a bug introduced by this patch, but can stale hardware interrupt=
-s be
-incompletely cleared when a physical channel is disabled or enabled?
-
-In disable_chan(), the read-modify-write sequence might miss W1C
-(write-1-to-clear) interrupt bits that become asserted during the window:
-
-drivers/dma/mmp_pdma.c:disable_chan() {
-    ...
-    dcsr =3D readl(phy->base + reg);
-
-    if (phy->vchan) {
-        struct mmp_pdma_device *pdev;
-
-        pdev =3D to_mmp_pdma_dev(phy->vchan->chan.device);
-        writel(dcsr & ~pdev->ops->run_bits, phy->base + reg);
-    ...
-}
-
-If a hardware interrupt fires between readl() and writel(), the snapshot's
-W1C interrupt bit is 0, so writel() writes 0, failing to clear the pending
-interrupt.=20
-
-Similarly, enable_chan() performs an unlocked read-modify-write on a W1C
-register, blindly clearing any pending W1C bits without processing them. Wh=
-en
-the physical channel is later reassigned, this stale interrupt can trigger
-the IRQ handler for the new channel.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707150356.2257=
-833-1-ruoyuw560@gmail.com?part=3D1
