@@ -1,307 +1,176 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412B53B71CA
-	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4294A372049
+	for <dmaengine@vger.kernel.org>; Tue,  7 Jul 2026 16:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441271; cv=none; b=CLx4QxmcM7qJNNCX6Dhv4UpkR25NYTu02ztr2V5GGsRi6eijrSyVvHp0SPehiRTZqQSMqGgvRZS9mJgpCTW3gtRA+TRymjxkq8quoFmATmEJwouSzqw0zYBU4nsoOyMCvGBsqx3s5T7bgU8dVwuHjCheYykYWj1RbwvOGyCQYVI=
+	t=1783442176; cv=none; b=Bqhr8QKmR/m8Ih8fb7LqoHVYMp5cs6fPxczW4t6cjz6FBkaoS1knT4HUebr9ZnwwocaFIAN7CtOjkW3pi88ID/dJGmpZ3XiP90JNiP4PuYN1qQ7Iw7J3IMHMRRBkPYviCskZx0hH32fg8rcSbBAv1us+qAxkMdSzbqvEFxbEZbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441271; c=relaxed/simple;
-	bh=ts5315SZO2lFwKHbrG+faeDKUmlEwkuUnmhymjUqYlk=;
-	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
-	 Subject; b=lev2NOAh+mcXQk4SLybZKoZTdfJdQpM9Y0HOsgWapllsLzkpDw86+lCrnpHEEWKGDJnB2FAhJ1MEnc/MkEtKIjf+KmpI+WTxzfeGaOzi1/fGe6yT52sZKnKVUjZZ0VhfAq4cxF88bClatt73qH9jyw3CUkSD/1MO44HL30KlTu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=E0AbnEc5; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1783442176; c=relaxed/simple;
+	bh=jD7vMq40BtjbLgY2tK+JEwoLI6ZCP6ExRZNtAmmlxYM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d9tvXha9F4u9I/6HEgCeiuFI3XpcDbSXFgRoauavTTA/mInwzIQa1DOjur9BF50m2mqGljMUukFarjcf5vLmZuRpX8hHt+/3y5Pk1j8FHf04h3wynoQDI3hrCPGMSQdYNG142dNmiwG3qSSQSbdIlkVoLvxUsf2DyHS10fH0IrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V83Lk7Ef; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FxCtv8Rf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="E0AbnEc5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=pa1WxCKyk+GyNH7kCC/+DTbbe07rJ5RIShHGJNYROPA=; b=E0AbnEc5HkL8zmReXwLAIgg+es
-	tSPiChughCpPcm8iNBF/jNyIfyFKNpI6bAwwIAdHgvPXxhZpciGLWcCWhOW6exPAulb67ejWlVi2/
-	/DVZ/3p5GrzYTn+/G1MdVBueRDpraJwyYUZfOJNKKBm+qPPId3b5jXvVKgNMhrxnGIIm+YRzJE5mz
-	YQLn5ysdL7IzO/00hznhq7QrxxiQJF005fZG7XjiRd2g+0fOY3cV74I07j4YLpmU+L8sJBtRybQgO
-	+biyjami0vX2pPo2TlRr4J1CYh7lkm01ySkaUZySA4La7DC7yWY0ocWi5bJv+AAKIOXOSZkY7i9JM
-	27cN4/oQ==;
-Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
-	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8Xc-00000000nsy-36jn;
-	Tue, 07 Jul 2026 10:21:03 -0600
-Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1wh8XR-000000006EG-2Vv2;
-	Tue, 07 Jul 2026 10:20:49 -0600
-From: Logan Gunthorpe <logang@deltatee.com>
-To: dmaengine@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
-	Dave Jiang <dave.jiang@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue,  7 Jul 2026 10:20:44 -0600
-Message-ID: <20260707162045.23910-5-logang@deltatee.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260707162045.23910-1-logang@deltatee.com>
-References: <20260707162045.23910-1-logang@deltatee.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V83Lk7Ef";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FxCtv8Rf"
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 667FT2qv045829
+	for <dmaengine@vger.kernel.org>; Tue, 7 Jul 2026 16:36:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	rOfu/YSWSoVJ9+8gOLnE9/D8lneB3OTBsZ8QT6Zknbs=; b=V83Lk7EfjAfcIHfd
+	bkLPBHZ7XgqzFQ9jyOKPYHyMkGKzP7+6Qr/7y1Y10nxHQOmGEnfiYcdrtZj8vJVe
+	huf+LH3EXGxlwQ5Zc6gyIpLVJkcFUXPxNu1Lub0lZrhHU5Incyp/bl7LulZNGj3T
+	1adSCkhBFLXP5OqmCWI4hBid86sdntPa/eAK3cAbrPHA5OuiOjKkVbwzloPyitAD
+	Br7JeOHWzbXFwR+BUvgbDap8qMW3pwVx4gZLZ9Y3ERe/oNl2kWYD8GydLMJK/bfb
+	TTLhMaPXC5iX7SptJ/yL4LOhOzXFNvsXketDXDOrDheXo5ZHJij0XomcMZ3TOSuH
+	XJlWpA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f8w11t8b6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Tue, 07 Jul 2026 16:36:14 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2c804e38c65so87710855ad.2
+        for <dmaengine@vger.kernel.org>; Tue, 07 Jul 2026 09:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1783442174; x=1784046974; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=rOfu/YSWSoVJ9+8gOLnE9/D8lneB3OTBsZ8QT6Zknbs=;
+        b=FxCtv8Rf8Uekvi4+/jnXVNMxDJq6E+bhmfoiK/LBmEBqQPcuEF4gKhTrQWzNy19KTx
+         eu+gopMGpfMo7VlB0IJ9F/9I2FN6fcf2/cxB8ew0NY7z3sGpN9sQASia5lxGreFhizkx
+         bb0z1GiXWDl6fY8oCahECnFyzWf/PxEXNVOxJVwCC+fvQ1RbCw5aXdxIAkK/H6pASCq2
+         x6O8Q36WiOx3fP1twVisOdhPM9BvrOu1wyosFXII/JTUSjXLDtkOJOPNSiaZGv02jpvr
+         /TShSUUZyfaSvymSMOYS8Q7pg/AHzQ/+PrmoCRCnYhS6A1V4lEG0ixZ9YjVqW0Rz4GtM
+         alAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783442174; x=1784046974;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rOfu/YSWSoVJ9+8gOLnE9/D8lneB3OTBsZ8QT6Zknbs=;
+        b=OfhR8VaTePcZRuHRhMn/SA58jDSx4YUbOM4cflIhWx8s0YiRpp7IuSalTbEWwrwaWn
+         fvgPFPTE0ffbNNioWAvLI7AMNjO5odVuxst4HsYStxbPAuld5qXMJara7566KPBHS64z
+         L5JDEugwoRjG0OR51AlEeRH85/zSf542gwrelq1f82ZuVXQN97h09l5ijV8xpGlSWX3U
+         d2Uyp+Qzc9bgTbeyJ3LuJXGIPNfjPaX7XqoQnUFqrN5un7cVhUaSQouAhccj1MYnll5K
+         BOnNoAnFw2MWGIzuelbJ6mSPoxktnyDPsIS4qbBQVQg8hSSmrJw2ZfGzdpSDnAUTGdMX
+         qy5A==
+X-Forwarded-Encrypted: i=1; AHgh+RpfXmIrLPZC7ouFvC4z0SbyE8/i4cRT8mbZgUFdJib6hQiqxawoa9PxVei4BxGzbdA9iIiK0MsTfgs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGqwirhewbc5LmlvxrC5hBePgsKR87V4+5u1aZ4JLFYSl73W3S
+	q3IVdR7upxd20gIuQPC9YOO5Hk+wBWZKDw7Q5XbWw0ynMp9Pl+ZmKM3fd4OKCokpB2JEaTb02FN
+	vZMc03C0bRq50JSo2PWSj2VUjSvojt9WN5lWoc1Wr1Q9fwEZ7KKdx5xAc6XF2sEg=
+X-Gm-Gg: AfdE7cnqnjG1ArbqE3+lk1CQgA5U20mf2vfeicHx4j+yxwI8xH0v+CEJqRYEc9oBaG4
+	GiH5shVLTXxzLKAQXq1k3gUSD6qxm/8xqcDVJQsilNSSI2pqwPmCKPUHh6v274csCggrQhgreQr
+	BLYgJkqvj1uCRjyKIQRpOz3A1DK/srWtl9pXrUgAQTn9ngC7me6q3kWgSsYrIqyXt1tPKqlOvl1
+	l/V5IyB/oU6SvMzD8pHmaKX0KSd7/QzUhBnh9Bsb994tN6EuNycjd6Y1bD5dzcQ5nWe4O8o/RDS
+	5mQ8s27aF6FXOAThjVWGguJ28UF4RwouQslZvaXbqdrjqHDQlIYEhzLj9dX+xgFHft8iX/yLjmK
+	7L1dbdCKeBZLnLwOaTkf7Lyixl51xoDE6+7BT+VlfwA==
+X-Received: by 2002:a17:90b:4ec5:b0:37e:1609:b304 with SMTP id 98e67ed59e1d1-38756801500mr5684092a91.1.1783442173918;
+        Tue, 07 Jul 2026 09:36:13 -0700 (PDT)
+X-Received: by 2002:a17:90b:4ec5:b0:37e:1609:b304 with SMTP id 98e67ed59e1d1-38756801500mr5684047a91.1.1783442173406;
+        Tue, 07 Jul 2026 09:36:13 -0700 (PDT)
+Received: from [192.168.29.166] ([49.43.234.127])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3118389d9bcsm2524489eec.20.2026.07.07.09.36.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jul 2026 09:36:12 -0700 (PDT)
+Message-ID: <97b205e8-5ab7-4205-b1dc-cbcb0497987d@oss.qualcomm.com>
+Date: Tue, 7 Jul 2026 22:06:05 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com
-X-SA-Exim-Mail-From: gunthorp@deltatee.com
-X-Spam-Level: 
-Subject: [PATCH v1 4/5] dmaengine: switchtec-dma: Add pmon sysfs attributes
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/11] arm64: dts: qcom: shikra: Add
+ gpio-reserved-ranges to tlmm
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, Anurag Pateriya <apateriy@qti.qualcomm.com>
+References: <20260702-shikra-dt-m1-v5-0-f911ac92720c@oss.qualcomm.com>
+ <20260702-shikra-dt-m1-v5-11-f911ac92720c@oss.qualcomm.com>
+ <9c1aab59-14b2-4811-b778-8e96645bd65b@oss.qualcomm.com>
+Content-Language: en-US
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+In-Reply-To: <9c1aab59-14b2-4811-b778-8e96645bd65b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=DMe/JSNb c=1 sm=1 tr=0 ts=6a4d2afe cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=fIivk1FRtaL8gRNK6azaIA==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=TqdALn-mf9RdMn6JgEsA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-GUID: JhHds-Stt3hUpjcHBk7IpUZWba9zYLJX
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzA3MDE2MiBTYWx0ZWRfX5D8q/1lho4GG
+ x1iVLSQ429w0gNzFn3PfUx/kDO2xHt/x0g9NayBfw3S+72K91iCX1ylqQaDMvRvYen3h33rsRbi
+ /ItXM/czSRiZ+ueH/3HQ27reVi1/hJk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzA3MDE2MiBTYWx0ZWRfX6QiYjYHiQIVh
+ 1c2WgaIZIA9iQPcJDZ/6uHpxDOjp5mFEddfQQfilc2Jc3HAF3U3Y/9V9d6R0QJh0DA+HYHLz0C6
+ BSWROERXYm3YVBENs+si5cnhK/xr8AoD0t1Tk8yylrp0cBuCV5WSZBYm+t2iHwemFh/okE+SxiJ
+ XGhKtyLc+kNrjE8EN7lXahuAa60S8DDHDns07q90TxopT3vf+D3kc+X2aLgvvobF1VTJx4iGecU
+ BLToIhF0xPE3oBy5Qpm94Z4tWKSBnv0loH5y5SGsZuv1qTFxU3EQZ5BZb9EcMRORcUEV700U+Bd
+ P5uM0keH3cP/KJmM7U+BG06OC3CtOiuKcvg2+wfPpc8Fhfsb5cyErDO8u8DeAMeN41/ScewnnAM
+ +xB2g9Kn9qwPxmxTGDChfzQ4Bjq3okQBGibtck5yTSqpGx6T3k2r6stZbDoogA+A1jQYCSixDPF
+ oJgw7thRg19B6a0dFWQ==
+X-Proofpoint-ORIG-GUID: JhHds-Stt3hUpjcHBk7IpUZWba9zYLJX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-07_04,2026-07-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607070162
 
-Switchtec hardware exposes some performance monitor registers which
-can be used to monitor various statistics of the hardware.
+On 7/2/2026 4:25 PM, Konrad Dybcio wrote:
+> On 7/2/26 11:50 AM, Komal Bajaj wrote:
+>> Add gpio-reserved-ranges property to the tlmm node for all three
+>> Shikra EVK variants (CQM, CQS, IQS) to mark GPIOs used by the
+>> SoC internally and not available for general use.
+> These are generally added to prevent non-secure access upon TLMM
+> probe, i.e. the board won't boot if some of them are not protected.
+>
+> I assume the proposed set contains both ones that are _absolutely
+> forbidden_ for Linux to touch, but also ones that are dedicated to
+> some specific purpose that Linux _shouldn't_ touch.
 
-Expose these as a sysfs interface under the switchtec group in a
-pmon sub-group.
+Yes, some GPIOs are reserved for secure-world use and are therefore not 
+accessible from the non-secure world.
+I will update the commit message accordingly.
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
----
- drivers/dma/switchtec_dma.c | 199 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 199 insertions(+)
+>
+> Please add comments, like in glymur-crd.dtsi:
+>
+>          gpio-reserved-ranges = <4 4>, /* EC TZ Secure I3C */
+>                                 <10 2>, /* OOB UART */
+>                                 <44 4>; /* Security SPI (TPM) */
+>
+> explaining what these pins are.
 
-diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-index 4841134bd7b8..2ac43eb58995 100644
---- a/drivers/dma/switchtec_dma.c
-+++ b/drivers/dma/switchtec_dma.c
-@@ -12,6 +12,7 @@
- #include <linux/pci.h>
- #include <linux/delay.h>
- #include <linux/iopoll.h>
-+#include <linux/io-64-nonatomic-lo-hi.h>
- 
- #include "dmaengine.h"
- 
-@@ -91,6 +92,12 @@ struct chan_hw_regs {
- #define SE_BUF_LEN_MASK		GENMASK_U32(20, 12)
- #define SE_THRESH_MASK		GENMASK_U32(31, 23)
- 
-+#define SWITCHTEC_LAT_SE_FETCH   BIT(0)
-+#define SWITCHTEC_LAT_VDM        BIT(1)
-+#define SWITCHTEC_LAT_RD_IMM     BIT(2)
-+#define SWITCHTEC_LAT_FW_NP      BIT(3)
-+#define SWITCHTEC_LAT_SE_PROCESS BIT(4)
-+
- #define SWITCHTEC_CHAN_ENABLE	BIT(1)
- 
- struct chan_fw_regs {
-@@ -1156,8 +1163,200 @@ static struct attribute_group switchtec_config_group = {
- 	.attrs = switchtec_config_attrs,
- };
- 
-+#define pmon_show(chan, page, field, reader) ({				     \
-+	struct switchtec_dma_chan *__swdma_chan =			     \
-+		container_of((chan), struct switchtec_dma_chan, dma_chan);   \
-+	struct chan_fw_regs __iomem *__chan_fw = __swdma_chan->mmio_chan_fw; \
-+	u64 __pmon_val = 0;						     \
-+	int __pmon_ret = 0;						     \
-+									     \
-+	rcu_read_lock();						     \
-+	if (!rcu_dereference(__swdma_chan->swdma_dev->pdev)) {		     \
-+		__pmon_ret = -ENODEV;					     \
-+	} else {							     \
-+		__pmon_val = reader(&__chan_fw->field);			     \
-+		__pmon_ret = sysfs_emit((page), "0x%llx\n", __pmon_val);     \
-+	}								     \
-+	rcu_read_unlock();						     \
-+	__pmon_ret;							     \
-+})
-+
-+static ssize_t se_count_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_fetched_se_cnt_lo, lo_hi_readq);
-+}
-+static struct dma_chan_sysfs_entry se_count_attr = __ATTR_RO(se_count);
-+
-+static ssize_t byte_count_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_byte_cnt_lo, lo_hi_readq);
-+}
-+static struct dma_chan_sysfs_entry byte_count_attr = __ATTR_RO(byte_count);
-+
-+static ssize_t se_pending_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_se_pending, readw);
-+}
-+static struct dma_chan_sysfs_entry se_pending_attr = __ATTR_RO(se_pending);
-+
-+static ssize_t se_buf_empty_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_se_buf_empty, readw);
-+}
-+static struct dma_chan_sysfs_entry se_buf_empty_attr = __ATTR_RO(se_buf_empty);
-+
-+static ssize_t chan_idle_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_chan_idle, readl);
-+}
-+static struct dma_chan_sysfs_entry chan_idle_attr = __ATTR_RO(chan_idle);
-+
-+static ssize_t latency_max_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_lat_max, readl);
-+}
-+static struct dma_chan_sysfs_entry latency_max_attr = __ATTR_RO(latency_max);
-+
-+static ssize_t latency_min_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_lat_min, readl);
-+}
-+static struct dma_chan_sysfs_entry latency_min_attr = __ATTR_RO(latency_min);
-+
-+static ssize_t latency_last_show(struct dma_chan *chan, char *page)
-+{
-+	return pmon_show(chan, page, perf_lat_last, readl);
-+}
-+static struct dma_chan_sysfs_entry latency_last_attr = __ATTR_RO(latency_last);
-+
-+static ssize_t latency_selector_show(struct dma_chan *chan, char *page)
-+{
-+	struct switchtec_dma_chan *swdma_chan =
-+		container_of(chan, struct switchtec_dma_chan, dma_chan);
-+	struct chan_fw_regs __iomem *chan_fw = swdma_chan->mmio_chan_fw;
-+	u32 lat = 0;
-+
-+	rcu_read_lock();
-+	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-+		rcu_read_unlock();
-+		return -ENODEV;
-+	}
-+
-+	lat = readl(&chan_fw->perf_latency_selector);
-+	rcu_read_unlock();
-+
-+	strcat(page, "To select a latency type, write the type number (1 ~ 5) to latency_selector\n\n");
-+
-+	strcat(page, "Latency Types:\n");
-+	strcat(page, "(1) SE Fetch latency");
-+	if (lat & SWITCHTEC_LAT_SE_FETCH)
-+		strcat(page, " (*)\n");
-+	else
-+		strcat(page, "\n");
-+
-+	strcat(page, "(2) VDM latency");
-+	if (lat & SWITCHTEC_LAT_VDM)
-+		strcat(page, " (*)\n");
-+	else
-+		strcat(page, "\n");
-+
-+	strcat(page, "(3) Read Immediate latency");
-+	if (lat & SWITCHTEC_LAT_RD_IMM)
-+		strcat(page, " (*)\n");
-+	else
-+		strcat(page, "\n");
-+
-+	strcat(page, "(4) SE Processing latency");
-+	if (lat & SWITCHTEC_LAT_SE_PROCESS)
-+		strcat(page, " (*)\n");
-+	else
-+		strcat(page, "\n");
-+
-+	strcat(page, "(5) FW NP TLP latency");
-+	if (lat & SWITCHTEC_LAT_FW_NP)
-+		strcat(page, " (*)\n");
-+	else
-+		strcat(page, "\n");
-+
-+	strcat(page, "\n");
-+
-+	return strlen(page);
-+}
-+
-+static ssize_t latency_selector_store(struct dma_chan *chan, const char *page,
-+				      size_t count)
-+{
-+	struct switchtec_dma_chan *swdma_chan =
-+		container_of(chan, struct switchtec_dma_chan, dma_chan);
-+	struct chan_fw_regs __iomem *chan_fw = swdma_chan->mmio_chan_fw;
-+	ssize_t ret = count;
-+	int lat_type;
-+
-+	if (kstrtoint(page, 0, &lat_type) < 0)
-+		return -EINVAL;
-+
-+	switch (lat_type) {
-+	case 1:
-+		lat_type = SWITCHTEC_LAT_SE_FETCH;
-+		break;
-+	case 2:
-+		lat_type = SWITCHTEC_LAT_VDM;
-+		break;
-+	case 3:
-+		lat_type = SWITCHTEC_LAT_RD_IMM;
-+		break;
-+	case 4:
-+		lat_type = SWITCHTEC_LAT_SE_PROCESS;
-+		break;
-+	case 5:
-+		lat_type = SWITCHTEC_LAT_FW_NP;
-+		break;
-+	default:
-+		return -EINVAL;
-+	};
-+
-+	rcu_read_lock();
-+	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-+		ret = -ENODEV;
-+		goto err_unlock;
-+	}
-+
-+	if (chan->client_count) {
-+		ret = -EBUSY;
-+		goto err_unlock;
-+	}
-+
-+	writel(lat_type, &chan_fw->perf_latency_selector);
-+
-+err_unlock:
-+	rcu_read_unlock();
-+
-+	return ret;
-+}
-+static struct dma_chan_sysfs_entry
-+latency_selector_attr = __ATTR_RW(latency_selector);
-+
-+static struct attribute *switchtec_pmon_attrs[] = {
-+	&se_count_attr.attr,
-+	&byte_count_attr.attr,
-+	&se_pending_attr.attr,
-+	&se_buf_empty_attr.attr,
-+	&chan_idle_attr.attr,
-+	&latency_max_attr.attr,
-+	&latency_min_attr.attr,
-+	&latency_last_attr.attr,
-+	&latency_selector_attr.attr,
-+	NULL,
-+};
-+
-+static struct attribute_group switchtec_pmon_group = {
-+	.name = "pmon",
-+	.attrs = switchtec_pmon_attrs,
-+};
-+
- static const struct attribute_group *switchtec_groups[] = {
- 	&switchtec_config_group,
-+	&switchtec_pmon_group,
- 	NULL,
- };
- 
--- 
-2.47.3
+Sure, will add this info.
+
+Thanks
+Komal
+
+>
+> If any of them are boot-critical, squash this into the introductory
+> change
+>
+> Konrad
 
