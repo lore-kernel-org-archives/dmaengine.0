@@ -1,95 +1,142 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F02334695
-	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5283290D5
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783607581; cv=none; b=FHGTUh7gqqWbHpizVRyqYFKUqvrA5ly9WKlRUv7Ed7KmHFVUki2BjeSdiehDMBX7pn/9IKyVv58qKW1eFInKhw6LYNpyyvIPs1OZwHe7YouTHYZ2RzSKPqPM5OpeNTFbmnULtFhkC98jwhcBaY9DeJntsEMHJebhuybrpyLdlKM=
+	t=1783607591; cv=none; b=oRJ9YVa/6zr+iN6G57DEcnS/xBviAPweEScjXLMaTopSE3hOzXziEOmp+G/TV8Seq1VcsY5kWSELbaVy1FQiRC0WMeN2INuAhVP5wobcMRMEUKE+dRWR81jtBDl3tBpJofdZkslck+Oc6P84stbYqzMnePRXjGIK1ih4wQd5NKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783607581; c=relaxed/simple;
-	bh=4e6S3buX9tHz34skulac1BE1E4xsPZ2vcWh+YB8nd1U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tofK6p9HTqAHjr9m+eb69uUOtN0R2A7Rr/YtY3IgWMIKMQKyaCu8pJDAh4nwWBkijv7Tyz+oeV2mk702UOdLzm3pIujlN7WwH4Uwz1moVmJnAR5WTerMo6ZC6ssjmoH/AmVxqDx1ItfU2WPyqoQMg5SJ9Q1tf+OVB80/H2Fq0WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-966d4748ad5so630685241.3
-        for <dmaengine@vger.kernel.org>; Thu, 09 Jul 2026 07:33:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783607579; x=1784212379;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=9TsPZDpzdYomEeV6URKjJG4JoPB+LXiKVJ0uWCnI2HA=;
-        b=TgLuGz1IKmOYAhev29yISm2shojrjme5Xobt3I/6S9m8MFsPVjUxy7YL4l+bRUNZ6c
-         MEFlH7tiSHlDc21raAbT+T5v5ExY2uyoIFa55IrWTzsdh8Nu1Yhbfo4gp+rE1w/QKlLN
-         XJqHaLrhHAGwCLaazvKdzDoQAZLlDEZMCFMa19d7cOo4lcA/CtDSimW+CJwghLz6+Ffw
-         ePIh1sLnCZxdkxBbfY7nGrMcmkmAcxv8Q2by5CqoQBkBhPT+iQN0lUE4iiFc5XmMVrTo
-         XNqUWDf6uCtX05E2C0E+HxFZ60fjGF/Ldzy3b6AUpK6OLLqbZ3GRmMm3jHjZ7/6/iMlo
-         30TQ==
-X-Forwarded-Encrypted: i=1; AHgh+RqHAaOXporik1sPED53sj/kUYzq5z5uKyUdHotux77rBvsJUNmP+jzkCsga2Zii6swsOKLM2xrM4ZE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxyFsBGGiz8dhW4prw0tP7UGH1Ujc1FEadG+Mr+pM9X6Cr0qXs
-	ncYcawjVd4F18dI2iSMDOvnZD8pNzgp3u0wAsweU2nwvjGgp2t8gJZr1SAFgeOmvIaM=
-X-Gm-Gg: AfdE7cnK3S0kDJUuZy5cCrXkHSehX7JpqUbjFdG99fbVK+u2rjw4PYaw2PoYU1UxfS4
-	3ySjV0erY9ABwLAtcITOpGccqGeOOZ1zFYznLNQ9pXsiW//P8oqbupbXTAuK6tz9uuE6mgvn3bU
-	Y29Npzakf+2WR9hTIoPJnxSvF85sgLqZkcHjOIfRzcNi7x2n+iRq2VkvzdOXFSLI0BA3waSmayP
-	axqMeKuXdkNzSMW3TynvDbO8LvlgiBKR8zL2e9o/JoeerLOswdTkGt8IEFTk9G+xA62WmrXd6dg
-	bk0Yl10REEEheOWeDMyrgd31A7gM0CpcBRi1ILWPM5zHCsZq/hdIG3ZzMS+02BYT+u13Ir2RYm3
-	flZFeXDcz1VobI733nk47eEHbQfi+zRFN8+kGEittGT4exL7/Fl1wAG8xd9w8s49rObfApoTrRc
-	wpUYAAKLJi9JlL4hWg98owlPdKNE71Rj67FF9DIhG/b8RL7qY7MQ==
-X-Received: by 2002:a05:6102:1622:b0:738:9d06:2a1e with SMTP id ada2fe7eead31-744dfe6b4e2mr4324209137.8.1783607579352;
-        Thu, 09 Jul 2026 07:32:59 -0700 (PDT)
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com. [209.85.222.49])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-96ed2c94ba7sm3131235241.4.2026.07.09.07.32.56
-        for <dmaengine@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jul 2026 07:32:56 -0700 (PDT)
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-966d4748ad5so630635241.3
-        for <dmaengine@vger.kernel.org>; Thu, 09 Jul 2026 07:32:56 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Ro1ki5sEKjrmEG+QgSbsxK+bre7wOZKBDLeoLd2IPSZDo432Sm2HcKF8xuCGlbH3YPM8z5b4v7BrDw=@vger.kernel.org
-X-Received: by 2002:a05:6102:c47:b0:739:d787:bed with SMTP id
- ada2fe7eead31-744dfdf18c8mr4765287137.5.1783607576432; Thu, 09 Jul 2026
- 07:32:56 -0700 (PDT)
+	s=arc-20240116; t=1783607591; c=relaxed/simple;
+	bh=KgfpZz1OuF3V0Yuu48fRBNQvSSFXWvNG4obMKBRc4eM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=LB4sy5j9/87It3KRNijwjr8vqOpbDX1s8zSYGTbQL/EnzxjcEA65Y5F2Z/Vfdtl/FgfjcEiHxeJ5tJjybdonHOBzaCWKKKJu1GqrfElp35kAj32//Z7Eqn8yRijKSpo87YwB3M26aakV6S3WbThiaW+udR3C31JX/k0Q69ozyZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g1Ak8pIh; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g1Ak8pIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F351F000E9;
+	Thu,  9 Jul 2026 14:33:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783607590;
+	bh=m5KPzB6O7cfcLIvw397wxyVwMVJ0p5tXuzIhBHWrSJE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=g1Ak8pIh/7AcRWqqzbziO0AhVmWQDK+GTVt6lBkO6DnlkiftDmOJAhfAs6mh03CpL
+	 Fm/kzJ/2vBNGOaeuytK4WCG4/WzyEFBwHypybyBjrdZ4KH/sjCNm5jipAEeZKHPVGd
+	 6VCG/Q7uLNTFsm6mlRfP/1nfHYeB5QlZq5aC1hBR7EbdJnlNVv2rHuRCDQlr7dPP6l
+	 ENjlxB1H4bS9hxs6X5ZRBqqVJjDqAFCIBJaGVh7AgPsMqDrTlyOZst0K4otrUeMoDT
+	 UlDVot08vhbNZumYyoYo4XjTKATrxnDM8gc69Zk2MGbR6Y2drSHmK93JPrxUCtkCaM
+	 s4YhuyTfvTmHg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 19/26] dmaengine: stm32-stm32-dma3: Remove redundant
+ dev_err()/dev_err_probe()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Pan Chuang" <panchuang@vivo.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260709135846.97972-20-panchuang@vivo.com>
+References: <20260709135846.97972-1-panchuang@vivo.com>
+ <20260709135846.97972-20-panchuang@vivo.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 09 Jul 2026 14:33:09 +0000
+Message-Id: <20260709143309.F1F351F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20260709135846.97972-1-panchuang@vivo.com> <20260709135846.97972-14-panchuang@vivo.com>
-In-Reply-To: <20260709135846.97972-14-panchuang@vivo.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 9 Jul 2026 16:32:44 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVVYrz+DX2anzzz=tSVOsAsOXucWC=739enSrL8dTkRVg@mail.gmail.com>
-X-Gm-Features: AUfX_mxOEHj_kI8yJnHfJQeZj91udetbzorKSQKSh_rYMM2dOhrIt6shCaR01TE
-Message-ID: <CAMuHMdVVYrz+DX2anzzz=tSVOsAsOXucWC=739enSrL8dTkRVg@mail.gmail.com>
-Subject: Re: [PATCH 13/26] dmaengine: sh-rz-dmac: Remove redundant dev_err()/dev_err_probe()
-To: Pan Chuang <panchuang@vivo.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, Biju Das <biju.das.jz@bp.renesas.com>, 
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
-	John Madieu <john.madieu.xa@bp.renesas.com>, 
-	"open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" <dmaengine@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 9 Jul 2026 at 15:59, Pan Chuang <panchuang@vivo.com> wrote:
-> The devm_request_threaded_irq() and devm_request_irq now automatically
-> logs detailed error messages on failure. This eliminates the need for
-> driver-specific dev_err() and dev_err_probe() calls that previously
-> printed generic messages.
->
-> Signed-off-by: Pan Chuang <panchuang@vivo.com>
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Pre-existing issues:
+- [High] The OF DMA controller is registered using the non-managed `of_dma_=
+controller_register()`, but it is never freed in the driver's `remove` func=
+tion, leading to a resource leak and a Use-After-Free vulnerability.
+- [High] The DMA controller exposes its channels to clients before completi=
+ng initialization, creating a fatal race condition if subsequent channel se=
+tups fail.
+- [High] Disabling the clock manually before devres cleans up devm-managed =
+IRQs leaves a window where active IRQs can access unclocked hardware.
+--
 
-Gr{oetje,eeting}s,
+--- Patch [19]: [PATCH 19/26] dmaengine: stm32-stm32-dma3: Remove redundant=
+ dev_err()/dev_err_probe() ---
+commit 71644e471343978f46dd63e4905f5c779768528f
+Author: Pan Chuang <panchuang@vivo.com>
 
-                        Geert
+dmaengine: stm32-stm32-dma3: Remove redundant dev_err()/dev_err_probe()
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+The devm_request_irq() now automatically logs detailed error messages on
+failure. This eliminates the need for driver-specific dev_err() and
+dev_err_probe() calls that previously printed generic messages.
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma=
+3.c
+> --- a/drivers/dma/stm32/stm32-dma3.c
+> +++ b/drivers/dma/stm32/stm32-dma3.c
+> @@ -1893,11 +1893,8 @@ static int stm32_dma3_probe(struct platform_device=
+ *pdev)
+> =20
+>  		ret =3D devm_request_irq(&pdev->dev, chan->irq, stm32_dma3_chan_irq, 0,
+>  				       dev_name(chan2dev(chan)), chan);
+> -		if (ret) {
+> -			dev_err_probe(&pdev->dev, ret, "Failed to request channel %s IRQ\n",
+> -				      dev_name(chan2dev(chan)));
+> +		if (ret)
+>  			goto err_clk_disable;
+
+[Severity: High]
+This is a pre-existing issue, but by jumping to err_clk_disable here, could
+we trigger a crash if an interrupt fires?
+
+If stm32_dma3_probe() fails on a later iteration of this loop, we jump to
+the manual clock disable cleanup:
+
+err_clk_disable:
+        clk_disable_unprepare(ddata->clk);
+
+Since we used devm_request_irq() for previous channels, those IRQs remain
+active until devres runs. If an interrupt fires during this window, the
+handler would access unclocked registers.
+
+[Severity: High]
+This is also a pre-existing issue, but does failing here leave dangling
+channel registrations?
+
+Earlier in stm32_dma3_probe(), we called dmaenginem_async_device_register()
+and dma_async_device_channel_register() before this channel initialization
+loop completes.=20
+
+If a failure occurs in this loop and we jump to the error path, any client
+that has already requested the successfully registered channels could be
+exposed to an asynchronous teardown, potentially accessing unclocked hardwa=
+re
+or freed memory.
+
+> -		}
+>  	}
+> =20
+>  	ret =3D of_dma_controller_register(np, stm32_dma3_of_xlate, ddata);
+
+[Severity: High]
+This is a pre-existing issue, but does this leak the DMA controller?
+
+The of_dma_controller_register() function is used here, but looking at
+stm32_dma3_remove(), there is no corresponding call to
+of_dma_controller_free().
+
+stm32_dma3_remove() simply disables runtime PM:
+
+static void stm32_dma3_remove(struct platform_device *pdev)
+{
+        pm_runtime_disable(&pdev->dev);
+}
+
+If the driver is unbound, the devm-managed ddata will be freed, but the
+controller remains registered. A subsequent DMA request via devicetree
+would then invoke stm32_dma3_of_xlate() with a dangling ddata pointer,
+causing a use-after-free.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709135846.9797=
+2-1-panchuang@vivo.com?part=3D19
