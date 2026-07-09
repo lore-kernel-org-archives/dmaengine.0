@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FEA3F54C3
-	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 10:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940C13BC685
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 10:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783591885; cv=none; b=LLzgzcO/+RYoF3X1qgyQdDkWCI73HJITSgpnxIgpM3rDV50xtQ5d+OlANm2L6+x0AX2lXfF4AHHl2rOxf0svOaUt37XwsnJHBHVCPlxIh/e8xjlfdLzjM/dCcZuLz0QixZsDMW7llmY66KPo+yWKJmUhNGQVbkXCCkATqHJ3gyc=
+	t=1783591885; cv=none; b=ad0TqbxCDWtQ0Ldj7ANPk/dpZOQ///laYOKPERETimro2q/dWzO/nml9/ae1/EgH/0iP+kf+Q1JW8eJzSPDrO5du3/WI5Z6kGktV9hoNlqcamcVAGsRUpA1EWGqcgiWmPfhEZ3hmlf2F/ExanBnarDz8Ge+LGsKEPfuDSgRRb1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783591885; c=relaxed/simple;
-	bh=CFxqPinoD8hr0KlsMn8fy25bL4RtUl8inQgipYRiejA=;
+	bh=xsgd8JpadUKWXJXXai+LA14bXnjQA6ykFoyt/TbfZj0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=jvZzLU1x5ffmGDV4Yzntp/j/OFBe2y1Ggymz8dTbyjrMbaItCTggk1X9qCjD6Or/KROJZ+t+ZgRQmey+4LjaFQ1hqnD3flryaeP1qI/VEfIwkaDLCwp4D3fAlm2rFe+MwXjvV046ANgmHFQqhIDjGuWY7tbfl2SC1dnOChKioRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jcPmKgpx; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=dJf//pugmpByyQTlQoyKocd+tqP0Tb4n1ne7fOWJiZZazzh36mff5mVMg1DQCR2XSnDqHJl46ex25vnkYi/Rod7aLOZqCcD/veOU1e+j56vcYhGV9KllpDOX623xiEm7rBUzjUzkkTzCy2vUYmllkW3Rw2Mx6lIS8HNYO+7vkSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eK277kL4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jcPmKgpx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375A41F00A3A;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eK277kL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F9E1F00A3D;
 	Thu,  9 Jul 2026 10:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783591883;
-	bh=12K4hKVWLyKbIIhiBglXDKaMHkj7UmRbo/sqLo7LKvg=;
+	s=k20260515; t=1783591884;
+	bh=XBy38IpjuaWtrQK/YWYoMKvQS0uQnrFonQMIVR2BESY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=jcPmKgpx8ODxBIVaDoxm6zyDjbyJm/mAxdfSEWn7f7Dt2JUoxijx2o/Hk8bq3pIdB
-	 +b/Si1+3t9Xz0N3S578p8EUwJkx3ulGvLVZarQFlKUjxrTzAYm2J6xoxTIiP/JqlGy
-	 nIHf3OY84szYO84jNDd9sCChdlmUN3C5rd8k128zzq8F9H51xQfC62LgzevOXCnLz3
-	 5DT6/4kYIqo1UMVll5d5IHItiF7qwP3kGXwTlXg5GoVjFiTRR8Ayr/G4OoVOrCw6pL
-	 9olxnYAIH0h5rlS7zJryQBRGGKlWgZKd1EfhEAUs/l8+hzZQ0yfTr8Elv1XO3dEe+3
-	 4ERK46P8ER+MA==
+	b=eK277kL4ow8ILSekRD4EKJt/HEhZ65mo7mfBksz7kUe7mWQ19WJvL45yegkHx8QdY
+	 FYMEvnGUPg4rq6ujbJE5MKw+NbnqVm75Uwy6o2R+5MTzy4FxUnMhMt6iykJIDfowYs
+	 OOdoTdhhkkstZ8YUJFgIB1DIQn6wPNpFIj3dztOQs1r1aToQ+SRfuZz9t99Bbcz+3A
+	 +ez7Uw2TxaoyLbNfYoPXW30W7HifJ1UXVaoGvQlRhyzwjtemKc39DUL9lfIjla2mIp
+	 SKizp6b09uImIxuUtplMQsCgFBoC1hvXzZUjDtH+OY5RXbwYmXS9VcGFmPDr/bzlF9
+	 IpMXRjGVdU7iw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH V3 3/4] net: xilinx: axienet: Derive RX frame length
- from DMA residue
+Subject: Re: [PATCH V3 2/4] dmaengine: xilinx_dma: Move descriptors to done
+ list based on completion bit
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Srinivas Neeli" <srinivas.neeli@amd.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260708100652.603074-4-srinivas.neeli@amd.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260708100652.603074-3-srinivas.neeli@amd.com>
 References: <20260708100652.603074-1-srinivas.neeli@amd.com>
- <20260708100652.603074-4-srinivas.neeli@amd.com>
+ <20260708100652.603074-3-srinivas.neeli@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Jul 2026 10:11:22 +0000
-Message-Id: <20260709101123.375A41F00A3A@smtp.kernel.org>
+Date: Thu, 09 Jul 2026 10:11:23 +0000
+Message-Id: <20260709101123.F2F9E1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,108 +47,89 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Pending SKBs and DMA mappings are completely leaked during device =
-stop when using dmaengine.
-- [High] TX ring head/tail desynchronization on DMA mapping failure leads t=
-o use-after-free and double-free in the TX callback.
+- [High] Software state mismatch leading to hardware corruption and channel=
+ hang in AXI MCDMA.
+- [Medium] Missing read memory barrier (`dma_rmb()`) after checking the DMA=
+ completion flag in coherent memory.
 --
 
---- Patch [3]: [PATCH V3 3/4] net: xilinx: axienet: Derive RX frame length =
-from DMA residue ---
-commit 0ead77c343fc9310122738aba9dee99007a10e45
+--- Patch [2]: [PATCH V3 2/4] dmaengine: xilinx_dma: Move descriptors to do=
+ne list based on completion bit ---
+commit d59255ad1a6d4a4beb643022da1f9820716a0752
 Author: Srinivas Neeli <srinivas.neeli@amd.com>
 
-net: xilinx: axienet: Derive RX frame length from DMA residue
+dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
 
-The dmaengine RX path previously determined the received frame length by
-reading APP word 4 of the DMA descriptor metadata. This patch updates the
-code to use the standard dmaengine residue mechanism instead, allowing the
-driver to work on designs without the AXI4-Stream status/control interface.
-
-> diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/=
-net/ethernet/xilinx/xilinx_axienet_main.c
-> index fcf517069d161..67d1b8e91d683 100644
-> --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-> +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-> @@ -53,7 +53,6 @@
->  #define TX_BD_NUM_MAX			4096
->  #define RX_BD_NUM_MAX			4096
->  #define DMA_NUM_APP_WORDS		5
-> -#define LEN_APP				4
->  #define RX_BUF_NUM_DEFAULT		128
-> =20
->  /* Must be shorter than length of ethtool_drvinfo.driver field to fit */
-
-[ ... ]
-
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c:axienet_stop() {
-    ...
-		for (i =3D 0; i < TX_BD_NUM_MAX; i++)
-			kfree(lp->tx_skb_ring[i]);
-		kfree(lp->tx_skb_ring);
-		for (i =3D 0; i < RX_BUF_NUM_DEFAULT; i++)
-			kfree(lp->rx_skb_ring[i]);
-		kfree(lp->rx_skb_ring);
-    ...
-}
-
-[Severity: High]
-This isn't a bug introduced by this patch, but are pending SKBs and DMA
-mappings leaked during device stop when using dmaengine?
-
-The descriptor wrapper objects are freed here without first unmapping the
-associated DMA addresses or freeing the encapsulated SKBs.
-
-Since the driver loses all pointers to previously allocated SKBs and their =
-DMA
-mappings, could this exhaust IOMMU space and leak memory each time the inte=
-rface
-is brought down?
-
-
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c:axienet_start_xmit_dmaeng=
-ine() {
-    ...
-	lp->tx_ring_head++;
-	sg_init_table(skbuf_dma->sgl, sg_len);
-	ret =3D skb_to_sgvec(skb, skbuf_dma->sgl, 0, skb->len);
-	if (ret < 0)
-		goto xmit_error_drop_skb;
-
-	ret =3D dma_map_sg(lp->dev, skbuf_dma->sgl, sg_len, DMA_TO_DEVICE);
-	if (!ret)
-		goto xmit_error_drop_skb;
-    ...
-}
-
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c:axienet_dma_tx_cb() {
-    ...
-	skbuf_dma =3D axienet_get_tx_desc(lp, lp->tx_ring_tail++);
-	len =3D skbuf_dma->skb->len;
-	txq =3D skb_get_tx_queue(lp->ndev, skbuf_dma->skb);
-    ...
-	dev_consume_skb_any(skbuf_dma->skb);
-    ...
-}
-
-[Severity: High]
-This is a pre-existing issue, but does this lead to a TX ring head and tail
-desynchronization on DMA mapping failure?
-
-In axienet_start_xmit_dmaengine(), the tx_ring_head is advanced before the
-failure points, and the error path does not roll it back or submit a dummy
-descriptor.
-
-If skb_to_sgvec() or dma_map_sg() fails, and a subsequent packet successful=
+In AXI MCDMA scatter-gather mode, xilinx_dma_complete_descriptor() previous=
 ly
-completes, axienet_dma_tx_cb() will unconditionally increment tx_ring_tail.
+moved all active descriptors to the done list unconditionally. This commit =
+adds
+a check for the descriptor completion bit before moving entries, handling
+scenarios where interrupt coalescing causes interrupts before all queued
+descriptors are processed.
 
-Would it then incorrectly operate on the out-of-sync tail index, dereferenc=
-ing
-and freeing the SKB pointer of the previously failed mapping?
+> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
+dma.c
+> index 965fb69a2a3ad..9b8b6f1acd4ea 100644
+> --- a/drivers/dma/xilinx/xilinx_dma.c
+> +++ b/drivers/dma/xilinx/xilinx_dma.c
+> @@ -1773,6 +1773,17 @@ static void xilinx_dma_complete_descriptor(struct =
+xilinx_dma_chan *chan)
+>  					      struct xilinx_axidma_tx_segment, node);
+>  			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
+>  				break;
+> +		} else if (chan->xdev->dma_config->dmatype =3D=3D XDMA_TYPE_AXIMCDMA) {
+> +			struct xilinx_aximcdma_tx_segment *seg;
+> +			u32 status;
+> +
+> +			seg =3D list_last_entry(&desc->segments,
+> +					      struct xilinx_aximcdma_tx_segment,
+> +					      node);
+> +			status =3D (chan->direction =3D=3D DMA_DEV_TO_MEM) ?
+> +				seg->hw.s2mm_status : seg->hw.mm2s_status;
+> +			if (!(status & XILINX_DMA_BD_COMP_MASK))
+
+[Severity: Medium]
+Is a read memory barrier needed after checking this completion status?
+
+The CPU polls the s2mm_status or mm2s_status field in coherent memory to
+check the completion bit. Without a dma_rmb() here, could weakly ordered
+architectures speculatively execute subsequent descriptor reads out of
+order?
+
+This might result in stale reads of the descriptor fields later on
+(for instance, during residue calculation) before the hardware has
+actually confirmed completion.
+
+> +				break;
+
+[Severity: High]
+Does breaking out early here create a state mismatch with the IRQ handler?
+
+If this check breaks out leaving descriptors in the active list, the
+channel is technically still running. However, looking at the call chain,
+xilinx_mcdma_irq_handler() immediately forces the channel idle and
+starts a new transfer:
+
+xilinx_mcdma_irq_handler() {
+    ...
+    xilinx_dma_complete_descriptor(chan);
+    chan->idle =3D true;
+    chan->start_transfer(chan);
+    ...
+}
+
+This appears to bypass the idle safety check in
+xilinx_mcdma_start_transfer() and overwrite the CDESC hardware register
+while the DMA engine is actively processing the remaining active list.
+Could this software-splice new descriptors without establishing hardware
+links, leading to a permanent channel hang?
+
+> +		}
+>  		if (chan->has_sg && chan->xdev->dma_config->dmatype !=3D
+>  		    XDMA_TYPE_VDMA)
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708100652.6030=
-74-1-srinivas.neeli@amd.com?part=3D3
+74-1-srinivas.neeli@amd.com?part=3D2
