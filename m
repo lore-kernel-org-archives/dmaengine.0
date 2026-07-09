@@ -1,114 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D801BBBFC
-	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E062A33E358
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783607021; cv=none; b=aoIyL6sEf7s+iq5tTnOZodp1MK/nTrzyIWXvCt4nYYDk3LP22jMokzcYi53DIOvb5BeVFKQ4n6KEaLSNU5MAdns+hXDR8f7+jgo1pdIAo01JWS8Dte+vkK/QIOZ6KLULGbqqGpoHZ+RW04L5yig1Co+EPXv+B3ohTknNtQX4AnY=
+	t=1783607058; cv=none; b=VB6RmQKWRz93rmIbOGueUG0vYYNpcBBa/sXRzt/ktROwOfKsD8LVxA0A7WqqhqpqUKynOMS/XBsesdbF1EMLPyI4d/K2L2hthScwFOgO0qVeAhTGqex6xZtXqKpLiJ/i03loUIlR5F47vdmfVdaSTlpYRDMxJ0vw3De5XCRUQHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783607021; c=relaxed/simple;
-	bh=N2owLqQ+Ple1keEPEHMm5sLk/V92rsy5s/mPlrC29CQ=;
+	s=arc-20240116; t=1783607058; c=relaxed/simple;
+	bh=pLzv/19tsq0/na9rS6H3Y2MCyiMjeP+wioUMztZfPDI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=BRFh5/buy/mjGpnTskU452OdOahlppLs2kdkLJ/v6+cEk5TkjEDl9Ef4mbjbkDhPFQICPq/b5OPGe4z9W+8PDQQRhCVIo66ajFdn4BM8FAjoYHQvzcGu2G9n+3B8HQURYMLFqNsRwqMLbjl9drnQ0GGUhhDpA1XJOkEyHMEdzSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6548fE9; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=JKx9oxqKnlWXRnauP8vu3/wgGXrr7CQYiLFEYTDEgVx+JrOJXfAPcIesEqTGtTMHBnJEvcjJW8KTcEdTRKRKqYHTYk/dk+3PHyuXGLXLr0D9HgpsRYpqm99Atl2iWVwtAyXGpIq09793oTpJ1p/50SBFU4M0uJG9B56eblhP9Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfwEJ4JH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6548fE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84981F00A3E;
-	Thu,  9 Jul 2026 14:23:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfwEJ4JH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E04B1F00A3A;
+	Thu,  9 Jul 2026 14:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783607020;
-	bh=UsNXh191FC+P1JDNVQfHz0rhp50vuU38c3VHCuRUNN0=;
+	s=k20260515; t=1783607056;
+	bh=2yFQpd4fKzffm2XGKkUUzElLfpQF3H2JGQkHzEs5XO4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=W6548fE9IZMHgDX9Uv73jmYAHnX+Z/dlPXeOnOD+0JVuh270aRLvmCiVpv1WroTon
-	 Gfyem70EjU41LKUEJ/sJwQJbVw7J90yyp1+pMDMRR1ffEPaBC3YMjsXl3z2Vi8MKlu
-	 VCOdrg0U7GH5mmy2+TcznGGHDzQ9eQe7mbcm1Gf1JBI+w1fcFERmmET0M4/Msz5+ir
-	 1myO7P6w0m3m23pDiEctO0u1IUudag4H0jWBwppWAk/xbgoyJZHBTMXJP3B9xPO3Ia
-	 P2jE85n+/+Hv68KtE2EilYnq/fELZh5PtYEqZocKOL1pn8hS0hwyu06FsFNyKZQIc7
-	 IT9mRXzgwykdQ==
+	b=VfwEJ4JHvM9/S96R6pvrz1MzrsY+OUnATa97/yaw2y7QhQOJelTk0wYw3lOEpdm6Q
+	 XmO3WY72/ogjJ/arp/lgDlzaiCTQmYMmo3i9MvMB74STVY9hsKOcHNkp2j8+E2wdlw
+	 L/I8vPkWSoi9cbAUKRj0vqTfF9nT4GYT7VnVQkqvwlZhrPp+t0+o0Ov4pvspN8dX7v
+	 JDHRHRvKsYelflDWqze8hLknI9sPOgUZFXi+/gsafONGHUcE5CHV7Hkbsca3uPS0b6
+	 l5OqWbRues0kOZNby9E4BPfQEL2SCjersitwaQmQ1NRklrHwCwpbj8rHVoV1+GQbfL
+	 vKfx1vxgb+8sA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 12/26] dmaengine: sh-rcar-dmac: Remove redundant
+Subject: Re: [PATCH 14/26] dmaengine: sh-shdmac: Remove redundant
  dev_err()/dev_err_probe()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Pan Chuang" <panchuang@vivo.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, wsa+renesas@sang-engineering.com, vkoul@kernel.org
-In-Reply-To: <20260709135846.97972-13-panchuang@vivo.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260709135846.97972-15-panchuang@vivo.com>
 References: <20260709135846.97972-1-panchuang@vivo.com>
- <20260709135846.97972-13-panchuang@vivo.com>
+ <20260709135846.97972-15-panchuang@vivo.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Jul 2026 14:23:39 +0000
-Message-Id: <20260709142339.A84981F00A3E@smtp.kernel.org>
+Date: Thu, 09 Jul 2026 14:24:16 +0000
+Message-Id: <20260709142416.8E04B1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] System crash due to unclocked register access on spurious interrupt
+- [High] Possible use-after-free of `sdev->schan` in `sh_dmae_err` during d=
+evice probe failure or driver removal.
+- [High] Unsafe hardware register access in a shared interrupt handler whil=
+e the device is runtime suspended.
+- [High] Failure of pm_runtime_get_sync() is logged but execution continues=
+, potentially causing hardware faults.
 --
 
---- Patch [12]: [PATCH 12/26] dmaengine: sh-rcar-dmac: Remove redundant dev=
-_err()/dev_err_probe() ---
-commit 910ca9859b95c7ea2133b72448deeefa62bebf2b
+--- Patch [14]: [PATCH 14/26] dmaengine: sh-shdmac: Remove redundant dev_er=
+r()/dev_err_probe() ---
+commit c205bd1feae8c44a14e3a6ace262ed40dc6c1ba6
 Author: Pan Chuang <panchuang@vivo.com>
 
-dmaengine: sh-rcar-dmac: Remove redundant dev_err()/dev_err_probe()
+dmaengine: sh-shdmac: Remove redundant dev_err()/dev_err_probe()
 
-This commit removes driver-specific error logging when requesting the
-channel interrupt. The logging is removed because
-devm_request_threaded_irq() now automatically logs detailed error messages
-on failure.
+The devm_request_irq() now automatically logs detailed error messages on
+failure. This eliminates the need for driver-specific dev_err() and
+dev_err_probe() calls that previously printed generic messages.
 
-> diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-> index 44eab2d21d54f..4cd7f0189bc7b 100644
-> --- a/drivers/dma/sh/rcar-dmac.c
-> +++ b/drivers/dma/sh/rcar-dmac.c
-> @@ -1793,11 +1793,8 @@ static int rcar_dmac_chan_probe(struct rcar_dmac *=
-dmac,
->  					rcar_dmac_isr_channel,
->  					rcar_dmac_isr_channel_thread, 0,
->  					irqname, rchan);
+> diff --git a/drivers/dma/sh/shdmac.c b/drivers/dma/sh/shdmac.c
+> index 603e15102e45e..e0391f72384d3 100644
+> --- a/drivers/dma/sh/shdmac.c
+> +++ b/drivers/dma/sh/shdmac.c
+> @@ -800,12 +800,8 @@ static int sh_dmae_probe(struct platform_device *pde=
+v)
+> =20
+>  		err =3D devm_request_irq(&pdev->dev, errirq, sh_dmae_err,
+>  				       irqflags, "DMAC Address Error", shdev);
 
 [Severity: High]
-This is a pre-existing issue, but is it safe to leave the interrupt active
-when the device enters runtime suspend?
+This is a pre-existing issue, but since we are requesting a potentially
+shared interrupt here, is there a risk of accessing memory-mapped registers
+of an unclocked or powered-down device?
 
-Since the IRQ is managed by devm_request_threaded_irq(), it remains
-unmasked even when the power domain gates the clock (for example, after
-rcar_dmac_probe() calls pm_runtime_put()).
+If the device is runtime suspended and a shared interrupt fires from another
+device, the handlers sh_dmae_err() and sh_dmae_chan_irq() unconditionally
+read registers like DMAOR and CHCR.
 
-If a spurious interrupt fires while the clock is gated, the hardirq
-handler unconditionally accesses a device register:
+Could this result in a synchronous external abort or system hang if the
+module clock is disabled?
 
-rcar_dmac_isr_channel() {
-        ...
-        chcr =3D rcar_dmac_chan_read(chan, RCAR_DMACHCR);
-        ...
+> -		if (err) {
+> -			dev_err(&pdev->dev,
+> -				"DMA failed requesting irq #%d, error %d\n",
+> -				errirq, err);
+> +		if (err)
+>  			goto eirq_err;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the error handling path
+have a use-after-free risk?
+
+If a subsequent probe step fails and we take the eirq_err path, it calls
+shdma_cleanup() which frees the sdev->schan array. However, the devm-managed
+interrupt requested above is not freed until the probe function returns and
+devres cleanup runs.
+
+If the shared interrupt fires during this window, sh_dmae_err() executes. If
+it reads a value with DMAOR_AE set, it calls sh_dmae_reset() -> shdma_reset=
+()
+which iterates over the freed sdev->schan array.
+
+The same vulnerability appears to exist in sh_dmae_remove() where
+shdma_cleanup() is called before the devm-managed interrupt is freed. Might
+we need to explicitly free or disable the interrupt before cleaning up?
+
+[Severity: High]
+This is also a pre-existing issue, but I noticed earlier in sh_dmae_probe()
+that we log a pm_runtime_get_sync() failure but continue execution:
+
+drivers/dma/sh/shdmac.c:sh_dmae_probe() {
+    ...
+	pm_runtime_enable(&pdev->dev);
+	err =3D pm_runtime_get_sync(&pdev->dev);
+	if (err < 0)
+		dev_err(&pdev->dev, "%s(): GET =3D %d\n", __func__, err);
+
+	spin_lock_irq(&sh_dmae_lock);
+	list_add_tail_rcu(&shdev->node, &sh_dmae_devices);
+	spin_unlock_irq(&sh_dmae_lock);
+
+	/* reset dma controller - only needed as a test */
+	err =3D sh_dmae_rst(shdev);
+    ...
 }
 
-Could this unclocked register read cause a synchronous external abort and
-subsequent kernel panic?
-
-A similar window appears to exist in rcar_dmac_remove(). It calls
-pm_runtime_disable(), which leaves the clock disabled if the device was
-already suspended, before devres unregisters the IRQ. Can a spurious
-interrupt during this teardown phase also trigger the same panic?
-
-> -	if (ret) {
-> -		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
-> -			rchan->irq, ret);
-> +	if (ret)
->  		return ret;
-> -	}
-> =20
->  	return 0;
->  }
+Will this cause a fatal bus error? If the PM domain failed to power on the
+device, accessing the memory-mapped registers in sh_dmae_rst() could cause a
+crash. Should the probe process be aborted if pm_runtime_get_sync() fails?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709135846.9797=
-2-1-panchuang@vivo.com?part=3D12
+2-1-panchuang@vivo.com?part=3D14
