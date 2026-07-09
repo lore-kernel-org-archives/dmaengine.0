@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2443385D71
-	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6252C029D
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 14:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783606230; cv=none; b=Np+lGxV/VpNxM0HmTSSHLXMtq0F/rjlURTtokCRb5bmiSpyefRisRKX4e0bUR0CoWLm7GLNkSXrhERp59QxbPWwJRTpksPB7LyJ5LqAu1uh1XQheje/vXUtmymbCQfsW8ZRPJQ5mTgi3Iik/5IfMCeW0Z2f3gYBrqf5N2wlo6aE=
+	t=1783606293; cv=none; b=F4Ni6fqqKJrd75bADdTYeNQxeElt7NHJAJ6YJdmyt1pVF663mSK+PYIFUeK5LHNPb6FVXxpKZdgosjXbf8MfohzrLq+Hb637IIhOF1Ix8mG4C/v3o1OUO8CKIGrvPHsK6KQd2j+/LQ7A/a+R/4FFxR07lZUxf8uDuP4/hm1t/ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783606230; c=relaxed/simple;
-	bh=8Z1ltOCKX0F8bYFUFfE7GhlkDvQ+g/9n0sslHqbIWWg=;
+	s=arc-20240116; t=1783606293; c=relaxed/simple;
+	bh=hV/F1beu/518CWUMUgEbPaWsw/NxYCjncgtM7MrlVIw=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=pVREo/JCFmUzJnumb3KuFFhLwn2LZjMINj7uUpyQ0hLL5dnoEu3yIUjpgHBccOsY7hDN7RdWavG9LakTMwmYQ+T7/OhUMVTKWTxUXF/AOX7AqC8J8VmsFAZwg2x8bmI5IDW3IFkg4/OS7IJixthBfhKeOpKS1d8SShYSuU/nUS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HxZjaAe0; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=K26aJwX5z9CCRMxlz7pbEg/Tfad3h2FBP2hNnvHIegPjssuQS5fVC6dMn0GpeKQ06Rjd1MJbKhWex1tVX+oiJuEGfjD820QVk7u01ompgTiQcojmZmO3sDv2s478IUCKtHhz2pEy/vomn9oDoqUo0YyxY1S4BScXgBSbkneiKNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GLjA1UE3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HxZjaAe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335C31F00A3A;
-	Thu,  9 Jul 2026 14:10:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GLjA1UE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796011F00A3A;
+	Thu,  9 Jul 2026 14:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783606228;
-	bh=QzFea2G14lfbUJF0JZWnEj/H68Ly+feNHGDCdcx78nY=;
+	s=k20260515; t=1783606291;
+	bh=XoCi73E3xYLoGT+XIsTHlA2yCnknfqd9Y9QogdSGIf8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HxZjaAe0QHGWLvLAZU18TQTJ27jEf39BTVeyptdJefZ/MLpkE0wepg+NoytLj5Syh
-	 QHpTraS8VJ4ICnzEbdhLl6E8HK0Ep2ULstakxaKJOp+fx55x7GL4N7P0RBQs+mKeQG
-	 0IpFrzMtez1KyBqMCv/KMmkskgX1zC9kozyTd7G0lwiW+TSjhTbW7xe8XeqZ1AcDJk
-	 v/AqFGEjv6Bw/8wNgDjJiyzHwAmZLeGRZyNiDcwfXi8XzcB2JT92kwtd9s+3p5tXxA
-	 IOv+Tw7WJNXZye//lQ9KTKIN0cDen4uB8tx0UDo3J6j7wlfWVrq34O0VMXRTORBHEb
-	 nbyZi9+PBMmAg==
+	b=GLjA1UE3cwip+hd4spsEGNvdyl3rgBgfRsoD5zjmOBqf5CjJQW+2pf6iGvMsx7saT
+	 P80zIxeDXG0OnCrZ0dZvT4QLnAWJbe382h95A7iAVe02iwnlJXxisYXYz7H7g7JD/M
+	 bE6MNL337WxY/HTpJk+sT7qglMcKjFGTVTxCGMReqC53WcoKKCEVZ18TD1fNqKlBE7
+	 xrk4uNV/4wBJiRjBfHqYGtx/NXkCDJQpZ1FLpkY5e3LLCb+kZzvSy315WZ8VJnlcXf
+	 vrhsaCaa0g+N/u/rwoYlDVWITt0JSQ/4RjDFpBFlJshlMd5amp4JkkULXyqF9Mbbw7
+	 NmjIxrcVbjy4g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 04/26] dmaengine: mediatek-mtk-cqdma: Remove redundant
- dev_err()/dev_err_probe()
+Subject: Re: [PATCH 03/26] dmaengine: loongson-loongson1-apb-dma: Remove
+ redundant dev_err()/dev_err_probe()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Pan Chuang" <panchuang@vivo.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260709135846.97972-5-panchuang@vivo.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260709135846.97972-4-panchuang@vivo.com>
 References: <20260709135846.97972-1-panchuang@vivo.com>
- <20260709135846.97972-5-panchuang@vivo.com>
+ <20260709135846.97972-4-panchuang@vivo.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Jul 2026 14:10:27 +0000
-Message-Id: <20260709141028.335C31F00A3A@smtp.kernel.org>
+Date: Thu, 09 Jul 2026 14:11:30 +0000
+Message-Id: <20260709141131.796011F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,172 +49,200 @@ Thank you for your contribution! Sashiko AI review found 6 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] IRQ is requested and enabled before tasklets are initialized, lead=
-ing to a crash.
-- [High] The IRQ handler accesses unallocated channel structures, causing a=
- NULL pointer dereference.
-- [High] Device registers are accessed before clocks and power management a=
-re enabled, due to premature device registration.
-- [High] Missing OF DMA controller deregistration on hardware initializatio=
-n failure.
-- [High] Missing cleanup for virtual channel tasklets on the probe error pa=
-th leads to a potential Use-After-Free.
-- [High] Teardown asymmetry in the device removal routine allows concurrent=
- access to destroyed state.
+- [High] Missing cleanup of devm-managed IRQ on error paths inside ls1x_dma=
+_alloc_chan_resources() leading to persistent leaks.
+- [High] Unsafe IRQF_SHARED handler lacks hardware status verification, ris=
+king data corruption.
+- [High] API violation: non-atomic readl_poll_timeout macro used in atomic =
+context risks hard lockups.
+- [High] Incorrect use of the logical sysfs channel device for DMA API oper=
+ations and devres allocations.
+- [High] Bypassing the devres unregister mechanism causes a Use-After-Free =
+and resource leaks.
+- [High] Memory for the DMA descriptor is leaked if scatterlist allocation =
+fails in ls1x_dma_prep_dma_cyclic().
 --
 
---- Patch [4]: [PATCH 04/26] dmaengine: mediatek-mtk-cqdma: Remove redundan=
-t dev_err()/dev_err_probe() ---
-commit 04c062c96653e2015152bd44faa0dd41edc7a398
+--- Patch [3]: [PATCH 03/26] dmaengine: loongson-loongson1-apb-dma: Remove =
+redundant dev_err()/dev_err_probe() ---
+commit cc0e2dcbd30ac2febb8a1c6ef2b34cbde416aa33
 Author: Pan Chuang <panchuang@vivo.com>
 
-dmaengine: mediatek-mtk-cqdma: Remove redundant dev_err()/dev_err_probe()
+dmaengine: loongson-loongson1-apb-dma: Remove redundant dev_err()/dev_err_p=
+robe()
 
-This commit removes redundant dev_err() calls when devm_request_irq() fails
-in mtk_cqdma_probe(), relying on the core's built-in logging instead. It al=
-so
-simplifies the error path by returning -EINVAL directly.
+This commit removes redundant dev_err() calls when devm_request_irq() fails=
+ in
+ls1x_dma_alloc_chan_resources(). Since devm_request_irq() logs its own deta=
+iled
+error messages, the driver-specific messages are no longer needed.
 
-> diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-=
-cqdma.c
-> index 80791e30aec24..4dbe84954de6b 100644
-> --- a/drivers/dma/mediatek/mtk-cqdma.c
-> +++ b/drivers/dma/mediatek/mtk-cqdma.c
-> @@ -828,11 +828,8 @@ static int mtk_cqdma_probe(struct platform_device *p=
-dev)
->  		err =3D devm_request_irq(&pdev->dev, cqdma->pc[i]->irq,
->  				       mtk_cqdma_irq, 0, dev_name(&pdev->dev),
->  				       cqdma);
-
-[Severity: High]
-This is a pre-existing issue, but is it safe to request and enable the IRQ
-here before the required tasklet is initialized?
-
-If a pending hardware interrupt fires before tasklet_setup() is called at
-the end of the probe function, won't the interrupt handler mtk_cqdma_irq()
-execute and call tasklet_schedule() on a zero-initialized tasklet structure?
-
-[Severity: High]
-This is also a pre-existing issue, but does the IRQ handler safely handle
-unallocated channels?
-
-Physical channels (cqdma->pc[i]) are allocated and their IRQs requested
-sequentially in this loop. If an interrupt fires for an earlier channel
-(e.g., i=3D0) before the loop allocates the remaining channels,
-mtk_cqdma_irq() executes and blindly iterates over all channels
-(0 to cqdma->dma_channels - 1) attempting to lock cqdma->pc[i]->lock.
-
-Could this result in a NULL pointer dereference for the unallocated
-channels?
-
-> -		if (err) {
-> -			dev_err(&pdev->dev,
-> -				"request_irq failed with err %d\n", err);
-> +		if (err)
->  			return -EINVAL;
-> -		}
->  	}
+> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loong=
+son/loongson1-apb-dma.c
+> index 89786cbd20ab5..812bd7c2068f9 100644
+> --- a/drivers/dma/loongson/loongson1-apb-dma.c
+> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
+> @@ -162,10 +162,8 @@ static int ls1x_dma_alloc_chan_resources(struct dma_=
+chan *dchan)
 > =20
->  	/* allocate resource for VCs */
-
-While reviewing this patch, I noticed a few other pre-existing issues in
-this driver:
-
-drivers/dma/mediatek/mtk-cqdma.c:mtk_cqdma_probe() {
-    ...
-    err =3D dma_async_device_register(dd);
-    ...
-    err =3D mtk_cqdma_hw_init(cqdma);
-    ...
-}
-
-[Severity: High]
-This isn't a bug introduced by this patch, but are device registers accessed
-before clocks and power management are enabled?
-
-dma_async_device_register() exposes the DMA engine to clients. If a client
-immediately requests a channel, mtk_cqdma_alloc_chan_resources() is called,
-which invokes mtk_cqdma_hard_reset() to write to device registers.
-
-However, mtk_cqdma_hw_init(), which enables the device clocks and power
-management, is called after registration.
-
-Can the register writes occur with disabled clocks causing a synchronous
-external abort?
-
-
-drivers/dma/mediatek/mtk-cqdma.c:mtk_cqdma_probe() {
-    ...
-    err =3D of_dma_controller_register(pdev->dev.of_node,
-                                     of_dma_xlate_by_chan_id, cqdma);
-    ...
-err_unregister:
-    dma_async_device_unregister(dd);
-
-    return err;
-}
+>  	ret =3D devm_request_irq(dev, chan->irq, ls1x_dma_irq_handler,
+>  			       IRQF_SHARED, dma_chan_name(dchan), chan);
+> -	if (ret) {
+> -		dev_err(dev, "failed to request IRQ %d\n", chan->irq);
+> +	if (ret)
+>  		return ret;
+> -	}
+> =20
+>  	chan->lli_pool =3D dma_pool_create(dma_chan_name(dchan), dev,
+>  					 sizeof(struct ls1x_dma_lli),
+>  					 __alignof__(struct ls1x_dma_lli), 0);
+>  	if (!chan->lli_pool)
+>  		return -ENOMEM;
+> =20
+>  	/* allocate memory for querying the current lli */
+>  	dma_set_coherent_mask(dev, DMA_BIT_MASK(32));
+>  	chan->curr_lli =3D dma_alloc_coherent(dev, sizeof(struct ls1x_dma_lli),
+>  					    &phys, GFP_KERNEL);
+>  	if (!chan->curr_lli) {
+>  		dma_pool_destroy(chan->lli_pool);
+>  		return -ENOMEM;
+>  	}
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does the error path leak the
-OF DMA controller registration?
+This is a pre-existing issue, but is the devm-managed IRQ leaked on this
+error path?
 
-If mtk_cqdma_hw_init() fails, the code jumps to err_unregister. The error
-path calls dma_async_device_unregister() but fails to call
-of_dma_controller_free(pdev->dev.of_node).
+If dma_pool_create() or dma_alloc_coherent() fails, we return -ENOMEM witho=
+ut
+freeing the IRQ requested via devm_request_irq().=20
 
-Could this leave the device registered in the OF DMA list with a freed
-driver context?
+The devm-managed cleanup won't happen because the channel's sysfs device is=
+ not
+destroyed, leading to local clients hitting -EBUSY on subsequent allocation
+attempts.
 
+[ ... ]
 
-drivers/dma/mediatek/mtk-cqdma.c:mtk_cqdma_probe() {
-    ...
-    for (i =3D 0; i < cqdma->dma_requests; i++) {
-        vc =3D &cqdma->vc[i];
-        vc->vc.desc_free =3D mtk_cqdma_vdesc_free;
-        vchan_init(&vc->vc, dd);
-        init_completion(&vc->issue_completion);
-    }
-    ...
-err_unregister:
-    dma_async_device_unregister(dd);
-
-    return err;
-}
+> static inline struct device *chan2dev(struct dma_chan *chan)
+> {
+> 	return &chan->dev->device;
+> }
 
 [Severity: High]
-This isn't a bug introduced by this patch, but is there missing cleanup for
-virtual channel tasklets on the probe error path?
+This isn't a bug introduced by this patch, but should this helper be return=
+ing
+the hardware platform device instead?
 
-vchan_init() sets up virtual channel tasklets. If a subsequent
-initialization step (like mtk_cqdma_hw_init) fails, the err_unregister path
-does not call tasklet_kill() for these channels.
+This macro returns the logical sysfs channel device instead of the hardware
+platform device (dchan->device->dev). Passing this logical device to DMA API
+operations like dma_alloc_coherent() or dma_pool_create() can cause allocat=
+ion
+failures or incorrect mappings on platforms with strict DMA tracking or an
+IOMMU.
 
-Because the device was temporarily exposed via dma_async_device_register(),
-a client could have scheduled a transaction, leaving the tasklet active.
+[ ... ]
 
-When devres frees the device memory, could the executing tasklet trigger a
-use-after-free?
-
-
-drivers/dma/mediatek/mtk-cqdma.c:mtk_cqdma_remove() {
-    ...
-    /* internal driver state torn down here */
-    ...
-    dma_async_device_unregister(&cqdma->ddev);
-    of_dma_controller_free(pdev->dev.of_node);
-}
+> static inline int ls1x_dma_start(struct ls1x_dma_chan *chan,
+> 				 dma_addr_t *lli_phys)
+> {
+[ ... ]
+> 	ret =3D readl_poll_timeout(chan->reg_base + LS1X_DMA_CTRL, val,
+> 				 !(val & LS1X_DMA_START), 0, 1000);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does the teardown asymmetry
-in the device removal routine allow concurrent access to destroyed state?
+This is a pre-existing issue, but does using readl_poll_timeout() here risk
+hard lockups?
 
-In mtk_cqdma_remove(), internal driver state (tasklets and hardware
-clocks/interrupts) is torn down before the subsystem interfaces
-(dma_async_device_unregister and of_dma_controller_free) are unregistered.
+ls1x_dma_start() is called from ls1x_dma_resume() and ls1x_dma_issue_pendin=
+g()
+with the channel's lock held and interrupts disabled:
 
-Does this teardown inversion allow clients to issue new DMA requests while
-the driver is actively being destroyed?
+ls1x_dma_resume()
+    guard(spinlock_irqsave)(&chan->vc.lock);
+    return ls1x_dma_start(chan, &chan->curr_lli->phys);
+
+Using the non-atomic readl_poll_timeout() macro in an atomic context is uns=
+afe
+because timekeeping might be suspended, causing the internal ktime_get() to
+stall or return invalid values.
+
+[ ... ]
+
+> static struct dma_async_tx_descriptor *
+> ls1x_dma_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t buf_addr,
+[ ... ]
+> 	desc =3D ls1x_dma_alloc_desc();
+> 	if (!desc)
+> 		return NULL;
+>=20
+> 	/* allocate the scatterlist */
+> 	sg_len =3D buf_len / period_len;
+> 	sgl =3D kmalloc_objs(*sgl, sg_len, GFP_NOWAIT);
+> 	if (!sgl)
+> 		return NULL;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but what happens to the allocated
+descriptor if kmalloc_objs() fails?
+
+If we fail to allocate the scatterlist, the function returns NULL without
+freeing the desc allocated just above it, resulting in a memory leak.
+
+[ ... ]
+
+> static irqreturn_t ls1x_dma_irq_handler(int irq, void *data)
+> {
+[ ... ]
+> 	scoped_guard(spinlock, &chan->vc.lock) {
+> 		vd =3D vchan_next_desc(&chan->vc);
+> 		if (!vd) {
+> 			dev_warn(dev,
+> 				 "IRQ %d with no active desc on channel %d\n",
+> 				 irq, dchan->chan_id);
+> 			return IRQ_NONE;
+> 		}
+
+[Severity: High]
+This is a pre-existing issue, but is it safe for a shared IRQ handler to
+assume ownership of the interrupt without checking hardware status?
+
+The handler is registered with IRQF_SHARED, but it processes active descrip=
+tors
+purely based on whether one is queued in software. If another device sharing
+the IRQ line triggers an interrupt, this could prematurely complete the cur=
+rent
+in-flight DMA transfer and cause data corruption.
+
+[ ... ]
+
+> static void ls1x_dma_chan_remove(struct ls1x_dma *dma)
+> {
+> 	int id;
+>=20
+> 	for (id =3D 0; id < dma->nr_chans; id++) {
+> 		struct ls1x_dma_chan *chan =3D &dma->chan[id];
+>=20
+> 		if (chan->vc.chan.device =3D=3D &dma->ddev) {
+> 			list_del(&chan->vc.chan.device_node);
+> 			tasklet_kill(&chan->vc.task);
+> 		}
+> 	}
+> }
+
+[Severity: High]
+This isn't a bug introduced by this patch, but will deleting the channel fr=
+om
+the list here bypass the devres unregister mechanism?
+
+During module removal or probe failure, manually calling list_del() orphans
+the channel from the dmaengine core. When devres later runs
+dma_async_device_unregister(), it iterates over an empty list and fails to
+unregister the channels.
+
+This permanently leaks the sysfs channel devices and percpu memory, and will
+trigger a Use-After-Free when the underlying struct ls1x_dma is freed by
+devm_kzalloc cleanup.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709135846.9797=
-2-1-panchuang@vivo.com?part=3D4
+2-1-panchuang@vivo.com?part=3D3
