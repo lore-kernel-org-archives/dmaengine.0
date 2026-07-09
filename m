@@ -1,111 +1,103 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22363ABD8E
-	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 06:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879D03D5647
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 06:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783578191; cv=none; b=rJdpDS+JCoaJATM2Hp/ORZTWH6W+v1MGtPencripUp5F/P2cJUYGkhfgyMTn4iuwQsGbe59fdW3GEm+KDq/c95rm3QEuPwWPqQm2cQa2RPUQM0ABIB8cDHbLpSEcIyrzf0wzI1Z9/yeYRqiztSrTUThwL64vvJG7bKgYd/fdcHY=
+	t=1783579053; cv=none; b=RPgy5NkMbBO7CUqeCvc+fDlYNFnn4j3sjCEGl+llKicf2FWFAX9j0sFnUAhRCCNQxmRl0RuMTi01Cl49tX05vcnizX2zZcLGnCeMGpbuBoazd0s7O8Gbeq/BLY2Yqcfdv7owolbHOmsoZCJiiTFb4GYeNV2UZGxGdMcbeeXK9hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783578191; c=relaxed/simple;
-	bh=pq1wmXw71YCRzR+cu7V0HWBywIZfXDGwW6no91IJSGs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rUapPISEZ72j+ffieW/hQmxbVcTFqQTT7Hwv3t3d9oGL2YNrq0ezNAvuYb8NiFDLkhjKB0XI3zUxZy36dpEDYcJgnwY15ojoPRX/OO3V/WDqUobcYEpgiSUC2v9EwJtCu1XnrB8YKuQMyvYyhT/7fvRYxF7U8WOQvjpnnPSdgko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rBj6qjz5; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783579053; c=relaxed/simple;
+	bh=DuAfwTWBZdt0MNaVN/DJ5SgFXNzwB2qxa6IMwkFx0S4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=nnyCKngA1bDoNxGZoYUBILcZp0UBG66XYve38SvdmuwP34fmlMfxv2RiRoWGrjz0Mjp5/XCYBdgwvrMfcAoQH6UtdKsdKswqhDQvnGPr5JSEBJ75h0LPmc8sqmdFymWfnj+43bPJi8NPp0LxVCOHQDgHMW9OT8ZfWNQILDvPK2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZPDDDza/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBj6qjz5"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-381b831d535so1785372a91.0
-        for <dmaengine@vger.kernel.org>; Wed, 08 Jul 2026 23:23:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783578189; x=1784182989; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=r1+ya/9yyEu4sJpheJqx/dxg2ovJThfipd/qF4HGIA8=;
-        b=rBj6qjz5eIzieJYcMW20WohRYr24efNLbbdNMWWoDV8EI9GgpEAiBd73Yz46ZbQZzQ
-         VYB/R7gJrWuhIy1SRC6rAURUQBalBC9bNKCaBZJIepfm2rwOeCQhG7Fim8o81cTTms0D
-         4+YUDBdmp9RZyImA8KgLmXktKBrFq3+O+dcBsa6qVSEh5aQf1yjcG82xmGguyULkvXL2
-         zVM70J5uAUvUK08plVc8BzrP1JckMAgRkw4NkapcFyE/9+Y/IWrF5wHYTDy2a5X56Y3T
-         mlqw6PvNP3mp94wnS95u8Vu7iUNfuqthCm/MvohYuMrbH9yKE6Lf2SvyZszLPBW2GhsW
-         Gl5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783578189; x=1784182989;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=r1+ya/9yyEu4sJpheJqx/dxg2ovJThfipd/qF4HGIA8=;
-        b=D8hrf3sQgKgc9+rb5IHpwAD244hW39KCEw5Qj9QQp+IbnsD8SdbyH8kppQpmxc4TGf
-         dCaXaRuExYg/rEFYjm2qnw2gCJ2VaBzRQcmJssLHLlt9iKmM94JzmfV0bwRJzTMFkyuG
-         yjl0s9PQDtrOlEa55J86fd4v50bHvRmCqclh8RJqaatdJzDdE5LHsruwYGtz2W848x3/
-         0QesnAkOemqpamCEMBz5uONw/TUUXAKnRZS4G4YdrKGvlrH4uxkWBScgbiEC6QyCD1eI
-         ATXBpBUmbyKXG1yCDyULcR4Uk2TPSE7R3ZGWHJW7xzyL4pRuCKWwHJrQt8dBSvykoefW
-         KnWw==
-X-Forwarded-Encrypted: i=1; AHgh+RoYBkUDK74nVLdkw+8EaE7Ht0Gj/5LivZsNVpUATEYsBSDUoWwGvdALBbVL0hTjdXr62r3NmCB5z8Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1mXz/YI25Fck3w0FqIU9mbQJ8erYM+H7FsvFJCl5px1RUYqMv
-	SBciNPzsRZUClSuSA7HHYR7VtbOna2T/jmQVSBCmBKO8kA/pSOEmX1Bm
-X-Gm-Gg: AfdE7cnuBRjlongPLtQO6malx/dLo8qrmFT50bxg96EUvuwGhNtgbNxDsx3BIy8kvuv
-	ERs/WIq7t0caHTUTwtoOV4zteolVAwu7tmEQ76i0JpDE/0kew2x/O2duuo7HOiKihJdRLyc5Kcf
-	AuB0mOFGDAsf3tF6KmJPLzx/c6QWolsPCeFdXMgnna3mvxlNpI7mGexkjpecPGLPaBQQf0kX+fR
-	ItQ2Ffd8vAxdZ8d6ponuj+m658yszLQ7fk/MxQ9y3hCiteDBnd3qTiUxtECiwNS4aGWaarydA+n
-	K4Gp7iulAiVQD1+gB06wbeN87cHdntmz7uTx7SqlpV4oGDo2QQRiTeXbd8aKLZ9nZIx44ZBFPJU
-	bNkgxgvdLbsAbBwAYAjq9LGX63oowo0JmRHZn03FF2Xjbwg9QR9NStzMlwovvSBORLUf15ghHfL
-	I7rIzI2hTOeoIwugYmYH9/naKWvDyDV7Mq
-X-Received: by 2002:a17:90b:2fc6:b0:381:20b:a9ee with SMTP id 98e67ed59e1d1-38940631b27mr5682814a91.14.1783578189408;
-        Wed, 08 Jul 2026 23:23:09 -0700 (PDT)
-Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:ea9b:46f2:6d0c:46c7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38a5632235bsm586232a91.15.2026.07.08.23.23.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jul 2026 23:23:08 -0700 (PDT)
-From: Ruoyu Wang <ruoyuw560@gmail.com>
-To: dave.jiang@intel.com,
-	vkoul@kernel.org
-Cc: ashok.raj@intel.com,
-	fenghua.yu@intel.com,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Ruoyu Wang <ruoyuw560@gmail.com>
-Subject: [PATCH] dmaengine: idxd: Remove channel from list on registration failure
-Date: Thu,  9 Jul 2026 14:23:03 +0800
-Message-ID: <20260709062303.4167624-1-ruoyuw560@gmail.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZPDDDza/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE0A1F000E9;
+	Thu,  9 Jul 2026 06:37:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783579048;
+	bh=Y2LCVHewSJw9M3C0dmB5VeGqU1QNaoApllvBYVOjO2k=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ZPDDDza/kpNsspb49JZ32l6hdTP+X2Rz/7k+pVBqX/UWsst2gBIa7sMp6TZSz3GNP
+	 9aLnV6f4L5B7FIG6JUbM/na5J482EDZ6T/u+s0/r3pL7lxqaVBlmHgWQ9QwAWTouSF
+	 CAWAypDFtzb8wt3+kZ7ZmlTcKyWb1Qcyoebd8Pimm+9qW6j9D61xe/eaw64WGDe6Jw
+	 BXdYNeN5bCQNMQ8/xM+BlCSg75NIiAWJLXlLkF09o3u57JTRdYGUkpKUzmVa7VSsdm
+	 twAyQqtJaCorMxzJxc7OBmY8P17KoqWn24l7RGWkMb3LPdxpHz4NpekkJGdAB76l0x
+	 KHhRnOeAOoLZA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: Remove channel from list on
+ registration failure
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Ruoyu Wang" <ruoyuw560@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260709062303.4167624-1-ruoyuw560@gmail.com>
+References: <20260709062303.4167624-1-ruoyuw560@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 09 Jul 2026 06:37:27 +0000
+Message-Id: <20260709063728.3BE0A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-idxd_register_dma_channel() links the channel before registering it.
-If dma_async_device_channel_register() fails after that, the error path
-frees idxd_chan while chan->device_node remains on dma->channels.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-The DMA device can therefore retain a channel list entry that points into
-freed idxd_chan memory. Remove the channel from dma->channels before
-freeing idxd_chan on the registration failure path, matching the driver's
-normal unregister path.
+Pre-existing issues:
+- [High] Unsafe lockless modification of `dma->channels` and missing `dma_l=
+ist_mutex` lock leading to global list corruption.
+--
 
-A static analysis checker reported the stale list entry, and manual
-source review confirmed the registration failure path.
+--- Patch [1]: [PATCH] dmaengine: idxd: Remove channel from list on registr=
+ation failure ---
+commit 4fb2c9798431d41ef3638a29b584b02b54cf00cf
+Author: Ruoyu Wang <ruoyuw560@gmail.com>
 
-Fixes: 397862855619 ("dmaengine: idxd: fix dma device lifetime")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
----
- drivers/dma/idxd/dma.c | 1 +
- 1 file changed, 1 insertion(+)
+dmaengine: idxd: Remove channel from list on registration failure
 
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index 9937b671f6376..f2c03f3cf1925 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -289,6 +289,7 @@ static int idxd_register_dma_channel(struct idxd_wq *wq)
- 
- 	rc = dma_async_device_channel_register(dma, chan, NULL);
- 	if (rc < 0) {
-+		list_del(&chan->device_node);
- 		kfree(idxd_chan);
- 		return rc;
- 	}
--- 
-2.51.0
+This commit fixes a stale list entry bug by removing the channel from the
+dma channels list before freeing it on the registration failure path.
 
+> diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+> --- a/drivers/dma/idxd/dma.c
+> +++ b/drivers/dma/idxd/dma.c
+> @@ -289,6 +289,7 @@ static int idxd_register_dma_channel(struct idxd_wq *=
+wq)
+> =20
+>  	rc =3D dma_async_device_channel_register(dma, chan, NULL);
+>  	if (rc < 0) {
+> +		list_del(&chan->device_node);
+
+[Severity: High]
+This is a pre-existing issue, but does this list_del() and the surrounding
+code need additional locking to safely modify the channel list?
+
+Currently, idxd_register_dma_channel() modifies the shared dma->channels
+list while only holding a per-workqueue lock, rather than a lock that
+serializes access to the parent dma device.
+
+Furthermore, this path calls dma_async_device_channel_register() which
+leads to a lockless global list traversal:
+
+idxd_register_dma_channel()
+  dma_async_device_channel_register()
+    dma_channel_rebalance()
+
+The dma_channel_rebalance() function requires the caller to hold the global
+dma_list_mutex, but dma_async_device_channel_register() does not acquire it.
+
+If a privileged user triggers concurrent sysfs bind operations on multiple
+idxd workqueue devices, could they race here and corrupt both the global
+dma_device_list and the shared dma->channels list?
+
+>  		kfree(idxd_chan);
+>  		return rc;
+>  	}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709062303.4167=
+624-1-ruoyuw560@gmail.com?part=3D1
