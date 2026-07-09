@@ -1,113 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E807543932C;
-	Thu,  9 Jul 2026 05:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22363ABD8E
+	for <dmaengine@vger.kernel.org>; Thu,  9 Jul 2026 06:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783575828; cv=none; b=J6cqVpVfQnbzLtQuLE7wDETTubkNuLrShdDq0XwBtLPfkuWacATdUTFIPV/e/Q+WCSoOOAr2cuphHeWtXgRHs3NnRMmGhivW71455WHdTsXGgvyuy4g/3yKWpL9KiDoQNx8eYy0ijLtpr0FwZ9y3ZTsBQKxWQ1acdtEVWLBTkIQ=
+	t=1783578191; cv=none; b=rJdpDS+JCoaJATM2Hp/ORZTWH6W+v1MGtPencripUp5F/P2cJUYGkhfgyMTn4iuwQsGbe59fdW3GEm+KDq/c95rm3QEuPwWPqQm2cQa2RPUQM0ABIB8cDHbLpSEcIyrzf0wzI1Z9/yeYRqiztSrTUThwL64vvJG7bKgYd/fdcHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783575828; c=relaxed/simple;
-	bh=c/7Wj6PdrlZXC2hh+OdKcA0brKNMahmYbkopRZsSj4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tSyI5CHFr6sr9wle9ITTkCmdtm1fXavm5qFbQHV2CtdSUkHUrZSZEd6XTNHkQRNwpyyjbvvhhMWT7Cn2Wd1ClrEmi3WoriHjRmdgHF808PNzBRRMpPga/qySEdn+IaevZqBsucUj2AAkE/b9jbAI7scTOYQbPr2Z1VJz6HYAE6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzMErqn7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783578191; c=relaxed/simple;
+	bh=pq1wmXw71YCRzR+cu7V0HWBywIZfXDGwW6no91IJSGs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rUapPISEZ72j+ffieW/hQmxbVcTFqQTT7Hwv3t3d9oGL2YNrq0ezNAvuYb8NiFDLkhjKB0XI3zUxZy36dpEDYcJgnwY15ojoPRX/OO3V/WDqUobcYEpgiSUC2v9EwJtCu1XnrB8YKuQMyvYyhT/7fvRYxF7U8WOQvjpnnPSdgko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rBj6qjz5; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzMErqn7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAF51F000E9;
-	Thu,  9 Jul 2026 05:43:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783575826;
-	bh=qiRZlu+pN9UCQWPo2SujBtFWkDfJIgfryKRGlCH9SOw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BzMErqn7H0tBQWhIwwL6cUV+PjYiwddzfMugre75ZSIDqZBCLeCqXrYojO2boVY6m
-	 WEHqDK9+AFssKNWzeZSrEXx6ZE8pGP7XrpR/kzxGx0xXXBHhVlVk05mMLjuZx3AN3q
-	 nFwms3UbgAZTz7CoZQfvH1PiOO0qS3P/j07senEZR/5mIK9KDJT3xrUlGAfo+o5Pzk
-	 P9PlZ9QqFsr4ZtFXhvfxdyJmNot3XsN9XOSspEw0RmfmQP+oJ0IKP8AK6VLS+VFyh4
-	 9hMocZ0tLgRbX3AucUK107XcluYsLU4ZDIC+IANdz7E7zD6WbZ1KA6LiNnn/ZYB3C4
-	 F7pcOoylRdyqw==
-Date: Thu, 9 Jul 2026 07:43:19 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <bhelgaas@google.com>, 
-	"Vaibhaav Ram T . L" <vaibhaavram.tl@microchip.com>, Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>, 
-	Even Xu <even.xu@intel.com>, Xinpeng Sun <xinpeng.sun@intel.com>, 
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>, Jiri Kosina <jikos@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Zhou Wang <wangzhou1@hisilicon.com>, 
-	Longfang Liu <liulongfang@huawei.com>, Vinod Koul <vkoul@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Jijie Shao <shaojijie@huawei.com>, Jian Shen <shenjian15@huawei.com>, 
-	Sunil Goutham <sgoutham@marvell.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, "David S . Miller" <davem@davemloft.net>, 
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, 
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>, Karol Wachowski <karol.wachowski@linux.intel.com>, 
-	Min Ma <mamin506@gmail.com>, Lizhi Hou <lizhi.hou@amd.com>, 
-	Andreas Noever <andreas.noever@gmail.com>, Mika Westerberg <westeri@kernel.org>, 
-	Will Deacon <will@kernel.org>, Xinliang Liu <xinliang.liu@linaro.org>, 
-	Tian Tao <tiantao6@hisilicon.com>, Davidlohr Bueso <dave@stgolabs.net>, 
-	Srujana Challa <schalla@marvell.com>, Bharat Bhushan <bbhushan2@marvell.com>, 
-	Antoine Tenart <atenart@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	Raag Jadav <raag.jadav@intel.com>, Hans de Goede <hansg@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	Andi Shyti <andi.shyti@kernel.org>, Robert Richter <rric@kernel.org>, 
-	Mark Brown <broonie@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-	Kurt Schwemmer <kurt.schwemmer@microsemi.com>, Logan Gunthorpe <logang@deltatee.com>, 
-	Linus Walleij <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Bingbu Cao <bingbu.cao@intel.com>, 
-	Tomasz Jeznach <tomasz.jeznach@linux.dev>, Jonathan Cameron <jic23@kernel.org>, 
-	Ulf Hansson <ulfh@kernel.org>, Shawn Lin <shawn.lin@rock-chips.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Benjamin Tissoires <bentiss@kernel.org>, 
-	linux-input@vger.kernel.org, linux-i3c@lists.infradead.org, dmaengine@vger.kernel.org, 
-	Philipp Stanner <phasta@kernel.org>, netdev@vger.kernel.org, nic_swsd@realtek.com, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org, 
-	iommu@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-cxl@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-serial@vger.kernel.org, mhi@lists.linux.dev, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org, 
-	Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, 
-	linux-spi@vger.kernel.org, Jonathan Derrick <jonathan.derrick@linux.dev>, 
-	linux-pci@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org, linux-mmc@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/37] PCI/MSI: Enforce explicit IRQ vector
- management by removing devres auto-free
-Message-ID: <vb3ywnzdult3h3bzvh2m6ye5xcuxuzvufcsp4kdos6g2a4q6tn@5ut3kgguaey6>
-References: <1771860581-82092-1-git-send-email-shawn.lin@rock-chips.com>
- <178357565325.731734.7291964273199898845.b4-ty@b4>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rBj6qjz5"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-381b831d535so1785372a91.0
+        for <dmaengine@vger.kernel.org>; Wed, 08 Jul 2026 23:23:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783578189; x=1784182989; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=r1+ya/9yyEu4sJpheJqx/dxg2ovJThfipd/qF4HGIA8=;
+        b=rBj6qjz5eIzieJYcMW20WohRYr24efNLbbdNMWWoDV8EI9GgpEAiBd73Yz46ZbQZzQ
+         VYB/R7gJrWuhIy1SRC6rAURUQBalBC9bNKCaBZJIepfm2rwOeCQhG7Fim8o81cTTms0D
+         4+YUDBdmp9RZyImA8KgLmXktKBrFq3+O+dcBsa6qVSEh5aQf1yjcG82xmGguyULkvXL2
+         zVM70J5uAUvUK08plVc8BzrP1JckMAgRkw4NkapcFyE/9+Y/IWrF5wHYTDy2a5X56Y3T
+         mlqw6PvNP3mp94wnS95u8Vu7iUNfuqthCm/MvohYuMrbH9yKE6Lf2SvyZszLPBW2GhsW
+         Gl5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783578189; x=1784182989;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=r1+ya/9yyEu4sJpheJqx/dxg2ovJThfipd/qF4HGIA8=;
+        b=D8hrf3sQgKgc9+rb5IHpwAD244hW39KCEw5Qj9QQp+IbnsD8SdbyH8kppQpmxc4TGf
+         dCaXaRuExYg/rEFYjm2qnw2gCJ2VaBzRQcmJssLHLlt9iKmM94JzmfV0bwRJzTMFkyuG
+         yjl0s9PQDtrOlEa55J86fd4v50bHvRmCqclh8RJqaatdJzDdE5LHsruwYGtz2W848x3/
+         0QesnAkOemqpamCEMBz5uONw/TUUXAKnRZS4G4YdrKGvlrH4uxkWBScgbiEC6QyCD1eI
+         ATXBpBUmbyKXG1yCDyULcR4Uk2TPSE7R3ZGWHJW7xzyL4pRuCKWwHJrQt8dBSvykoefW
+         KnWw==
+X-Forwarded-Encrypted: i=1; AHgh+RoYBkUDK74nVLdkw+8EaE7Ht0Gj/5LivZsNVpUATEYsBSDUoWwGvdALBbVL0hTjdXr62r3NmCB5z8Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1mXz/YI25Fck3w0FqIU9mbQJ8erYM+H7FsvFJCl5px1RUYqMv
+	SBciNPzsRZUClSuSA7HHYR7VtbOna2T/jmQVSBCmBKO8kA/pSOEmX1Bm
+X-Gm-Gg: AfdE7cnuBRjlongPLtQO6malx/dLo8qrmFT50bxg96EUvuwGhNtgbNxDsx3BIy8kvuv
+	ERs/WIq7t0caHTUTwtoOV4zteolVAwu7tmEQ76i0JpDE/0kew2x/O2duuo7HOiKihJdRLyc5Kcf
+	AuB0mOFGDAsf3tF6KmJPLzx/c6QWolsPCeFdXMgnna3mvxlNpI7mGexkjpecPGLPaBQQf0kX+fR
+	ItQ2Ffd8vAxdZ8d6ponuj+m658yszLQ7fk/MxQ9y3hCiteDBnd3qTiUxtECiwNS4aGWaarydA+n
+	K4Gp7iulAiVQD1+gB06wbeN87cHdntmz7uTx7SqlpV4oGDo2QQRiTeXbd8aKLZ9nZIx44ZBFPJU
+	bNkgxgvdLbsAbBwAYAjq9LGX63oowo0JmRHZn03FF2Xjbwg9QR9NStzMlwovvSBORLUf15ghHfL
+	I7rIzI2hTOeoIwugYmYH9/naKWvDyDV7Mq
+X-Received: by 2002:a17:90b:2fc6:b0:381:20b:a9ee with SMTP id 98e67ed59e1d1-38940631b27mr5682814a91.14.1783578189408;
+        Wed, 08 Jul 2026 23:23:09 -0700 (PDT)
+Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:ea9b:46f2:6d0c:46c7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38a5632235bsm586232a91.15.2026.07.08.23.23.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2026 23:23:08 -0700 (PDT)
+From: Ruoyu Wang <ruoyuw560@gmail.com>
+To: dave.jiang@intel.com,
+	vkoul@kernel.org
+Cc: ashok.raj@intel.com,
+	fenghua.yu@intel.com,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Ruoyu Wang <ruoyuw560@gmail.com>
+Subject: [PATCH] dmaengine: idxd: Remove channel from list on registration failure
+Date: Thu,  9 Jul 2026 14:23:03 +0800
+Message-ID: <20260709062303.4167624-1-ruoyuw560@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <178357565325.731734.7291964273199898845.b4-ty@b4>
 
-On Thu, Jul 09, 2026 at 07:40:53AM +0200, Manivannan Sadhasivam wrote:
-> 
-> On Mon, 23 Feb 2026 23:29:39 +0800, Shawn Lin wrote:
-> > This patch series addresses a long-standing design issue in the PCI/MSI
-> > subsystem where the implicit, automatic management of IRQ vectors by
-> > the devres framework conflicts with explicit driver cleanup, creating
-> > ambiguity and potential resource management bugs.
-> > 
-> > ==== The Problem: Implicit vs. Explicit Management ====
-> > Historically, `pcim_enable_device()` not only manages standard PCI resources
-> > (BARs) via devres but also implicitly triggers automatic IRQ vector management
-> > by setting a flag that registers `pcim_msi_release()` as a cleanup action.
-> > 
-> > [...]
-> 
-> Applied, thanks!
-> 
-> [13/37] bus: mhi: host: Replace pci_alloc_irq_vectors() with pcim_alloc_irq_vectors()
->         commit: 256995e80fcd39cab94eee8135dd90f6da6ac744
-> 
+idxd_register_dma_channel() links the channel before registering it.
+If dma_async_device_channel_register() fails after that, the error path
+frees idxd_chan while chan->device_node remains on dma->channels.
 
-Sorry, this is a mistake. This patch is not applied.
+The DMA device can therefore retain a channel list entry that points into
+freed idxd_chan memory. Remove the channel from dma->channels before
+freeing idxd_chan on the registration failure path, matching the driver's
+normal unregister path.
 
-- Mani
+A static analysis checker reported the stale list entry, and manual
+source review confirmed the registration failure path.
 
+Fixes: 397862855619 ("dmaengine: idxd: fix dma device lifetime")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+---
+ drivers/dma/idxd/dma.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+index 9937b671f6376..f2c03f3cf1925 100644
+--- a/drivers/dma/idxd/dma.c
++++ b/drivers/dma/idxd/dma.c
+@@ -289,6 +289,7 @@ static int idxd_register_dma_channel(struct idxd_wq *wq)
+ 
+ 	rc = dma_async_device_channel_register(dma, chan, NULL);
+ 	if (rc < 0) {
++		list_del(&chan->device_node);
+ 		kfree(idxd_chan);
+ 		return rc;
+ 	}
 -- 
-மணிவண்ணன் சதாசிவம்
+2.51.0
+
