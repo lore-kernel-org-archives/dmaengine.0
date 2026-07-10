@@ -1,134 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702E53E3D90;
-	Fri, 10 Jul 2026 10:43:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E507B3C9892
+	for <dmaengine@vger.kernel.org>; Fri, 10 Jul 2026 12:07:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783680234; cv=none; b=RO0XEZ2rcLdC8NSC2/4O11cMNl/fPyl+4VHcX5gxEzQdvnNOwrwhZv2g4b2+I3XXVEGYaaid/3CDLGE98tnzpBA9wvbo0DPytfvy6op0VXpmeIyOTfzuji8wwPGcHc/CnBzed0XHur400KBycPn20iQ1s3wX13ngoMVDyoFTXu4=
+	t=1783685229; cv=none; b=WV7t3WAvmtQOoLj73zOgFjHGfODIh4L0oKa6vlLQ0tQvmq4yAofnwpOOBJ/4c9VpSIw069/97M2+QoJ2LBAhXyB26SYiCRBgKp03MePqj0nQ/eSJP8jIYx+SoMErOpIZkLvEGANpffvyNvYB5ErkhfLeSnmeH23x3eXavU+Zfjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783680234; c=relaxed/simple;
-	bh=/OkMsSt2pEZeE3L97MlLY3KCCaaTYO+eAl6y3/W7H/I=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GqHdq+zzUGIZ0vmYgHx7n13yzQNlxn01Ul/6SaPye3/sRmCDAIJgvY4J4zR+FMj5QKyCBg0jDvfMGGtjGDDvdTKFwXpEyprBzaTuVtCV8yBupdYdjXcgjf/sTPHT8Lnt0ujamOb3Au6gFmqDqywpllGUbyfWJv0KyntEpjwMosg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RffkoNhX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783685229; c=relaxed/simple;
+	bh=jKnXIpvL88HqV9czvsBpE4syZ9onPnIFVuryxMVD3Lo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bqH8Z345yAGYxO5yJ7P7pRbtTG6yU95TWoL2gQWf9qcS1h+NIwHndMo9BFpKuuiJWXO3V/Urks7X3OtXrcm7h8Uxri8XYnglIvCHLjoOe198X+BIr3tLOYIbffjfTDZgAY9QSsVXkJ2X5yVn2ODZ7X66U1yf9WcG8rX3HhOY5pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=y0YjSnLK; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RffkoNhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D671F00A3A;
-	Fri, 10 Jul 2026 10:43:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783680233;
-	bh=C/lSeXagT+mgcjUZOLp/BIsZTNEz+dIkjPEvhvMwzaM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=RffkoNhXMGWbrcYteWv1afwKNGsrf6IfRxJGUxd7xpUP+G7fOiLy2qoDL/Cov+8NK
-	 hZPY6Koxshgv4auYznOPxBUXv84jvd3AS7AcHe9jdUrrYncE6gM30ob/y1m09FXW9/
-	 K+M5obFmGP3uKsoIbN0UxkQovRP43Ukq0TFCSc6cSls04Y+ULJIaiNuS76YADNv1mj
-	 aL5EvcX9N5maa/YVLseJ/PyKhF7wp49Ebi8/0TDYq9TxRn57Eq19eoiFnCZhysgObb
-	 SqUEuTBD0kfck/HTdjpFaUk3KVehuH9CFePQGhOojeoD9ir47SL5w9B38NVnFxR7d7
-	 SY1nrzlUPaklw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 5/6] dmaengine: dw-edma: Add delegated channel
- request helpers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Koichiro Den" <den@valinux.co.jp>
-Cc: linux-pci@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260710082156.2395844-6-den@valinux.co.jp>
-References: <20260710082156.2395844-1-den@valinux.co.jp>
- <20260710082156.2395844-6-den@valinux.co.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 10:43:52 +0000
-Message-Id: <20260710104352.C9D671F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="y0YjSnLK"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 18AE4C2C641;
+	Fri, 10 Jul 2026 12:07:20 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 386C860342;
+	Fri, 10 Jul 2026 12:07:05 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 88E9E11BD0BCF;
+	Fri, 10 Jul 2026 14:07:02 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1783685224; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding; bh=qoGea9P2hn5GwEWx560Wpe+wG3lWyCKZN5FcLlZbMSI=;
+	b=y0YjSnLK20uxdsS79Vp2+60KkDnhvA2wg/Wdwokgrwcx8uNGzQqRunLPmAmXytkH8bmaIi
+	EcqZlEpdjhT3yrOcckSqYcBoSIYGUvE++p6uZ11Yq07v6UUHXkwWx8mLyu6hxmrRHUG44f
+	mEVTpuhyf+dPUES4Z+lS9p7vOwjs9rZz8Gddhl7MqAsB3XwmX1XHSpsE2dRJ/y4KXb134s
+	BXViYOJdhhu6Jok9rF2RHdHvAYm6IqMvRxLd50B0aDMgP57l9T2Pn7WkFAooNh9O1IO8bk
+	FRt0/iGmfLGP8y+UTN51qvQRJpQs/5a9lP719bD2RVRz1lI6qepM7Fdj/3sngQ==
+From: =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>
+Subject: [PATCH v6 0/2] dmaengine: fsl-edma: Scatter/gather improvements
+Date: Fri, 10 Jul 2026 14:06:59 +0200
+Message-Id: <20260710-fsl-edma-dyn-sg-v6-0-831b96be3f31@bootlin.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAGPgUGoC/23Qy2rDMBAF0F8JWldFo7ez6n+ULvQYJyqJVSxXN
+ AT/e+W0kFB1eeHOuTBXUnBOWMh+dyUz1lRSnlrQTzsSjm46IE2xZcIZ10xyS8dyohjPjsbLRMu
+ BDpoZAShMdJy0q48Zx/R1E1/ffnL59O8Ylo3ZGsdUljxfbpMVtt6vLlinV6CMSmQYPPI4av3ic
+ 15OaXoO+Uw2v/K7oJjuBd4EraUYQowSJPaCeBAAekE0YbAOLBijovtHkI9C/6Mqm2ADmjgoDwG
+ HXlB3wTDeC6oJoI01YJVH+UdY1/UbocEbE8oBAAA=
+X-Change-ID: 20260428-fsl-edma-dyn-sg-960731e37da2
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+ Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>
+X-Mailer: b4 0.15.2
+X-Last-TLS-Session-Version: TLSv1.3
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Critical] The patch references nonexistent constants, functions, and str=
-uct fields, which will cause an immediate compilation failure.
-- [Medium] The `irq_mode` field is modified without holding `chan->vc.lock`=
- during channel release, violating the locking discipline established durin=
-g delegation.
---
+This series adds support for scatter/gather DMA transfers via dma_vec
+and dynamic descriptor chaining to the Freescale eDMA controller driver.
 
---- Patch [5]: [PATCH v4 5/6] dmaengine: dw-edma: Add delegated channel req=
-uest helpers ---
-commit 15a8e802b8e938899858a00862b359f85ce5f547
-Author: Koichiro Den <den@valinux.co.jp>
+The first patch implements the .device_prep_peripheral_dma_vec() callback,
+enabling the DMA engine to accept an array of dma_vec structures. This
+callback supports both regular and cyclic transfer modes.
 
-dmaengine: dw-edma: Add delegated channel request helpers
+The second patch introduces dynamic scatter/gather chaining, which allows
+multiple DMA descriptors to be linked together without stopping the channel.
+This optimization eliminates idle periods when back-to-back transfers are
+submitted, improving throughput and reducing latency. The implementation
+carefully preserves cyclic transfer semantics and respects hardware
+constraints on platforms with split register layouts.
 
-This commit adds DW eDMA-specific helpers that request a write/read
-hardware channel through DMAengine. It switches the selected endpoint-local
-channel to remote interrupt routing after reservation, and restores default
-routing upon release.
+I tested it on the i.MX93. The dynamic scatter/gather chaining should
+work with other eDMA controller with split register layout.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
-edma-core.c
-> index 89a4c498a17b8..cbf6f539d4369 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-[ ... ]
-> @@ -1178,6 +1178,92 @@ int dw_edma_remove(struct dw_edma_chip *chip)
-[ ... ]
-> +static int dw_edma_delegate_chan(struct dma_chan *dchan)
-> +{
-> +	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
-> +	unsigned long flags;
-> +	int ret =3D 0;
-> +
-> +	if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
-> +		return -EINVAL;
-> +
-> +	spin_lock_irqsave(&chan->vc.lock, flags);
-> +	if (chan->configured || chan->status !=3D EDMA_ST_IDLE ||
-> +	    chan->request !=3D EDMA_REQ_NONE)
-> +		ret =3D -EBUSY;
-> +	else
-> +		chan->irq_mode =3D DW_EDMA_CH_IRQ_REMOTE;
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+---
+Changes in v6:
+- Link DMA transactions in fsl_edma_issue_pending() when they are issued,
+  not when submitted.
+- Add an identifier to linked transactions to handle missed/coalesced
+  end-of-transfer interrupt.
+- Link to v5: https://patch.msgid.link/20260702-fsl-edma-dyn-sg-v5-0-16787185be49@bootlin.com
 
-[Severity: Critical]
-Are we missing a prerequisite patch in this series? The field irq_mode does
-not seem to exist in struct dw_edma_chan, and the DW_EDMA_CH_IRQ_REMOTE
-macro appears to be undefined, which will cause a build regression here.
+Changes in v5:
+- Rebased on v7.2-rc1.
+- Add a call to dma_wmb() to ensure that dlast_sga is updated
+  before csr when linking scatter/gather transactions.
+- Don't update TCD registers if updating csr requires clearing the
+  channel DONE bit to avoid a status mismatch in fsl_edma_tx_chan_handler().
+- Link to v4: https://patch.msgid.link/20260518-fsl-edma-dyn-sg-v4-0-8ce7d95b1ce9@bootlin.com
 
-> +	spin_unlock_irqrestore(&chan->vc.lock, flags);
-> +
-> +	return ret;
-> +}
-[ ... ]
-> +void dw_edma_release_delegated_chan(struct dma_chan *dchan, bool quiesce)
-> +{
-> +	struct dw_edma_chan *chan;
-> +
-> +	if (!dchan)
-> +		return;
-> +
-> +	chan =3D dchan2dw_edma_chan(dchan);
-> +	if (quiesce)
-> +		dw_edma_core_ch_quiesce(chan);
-> +	chan->irq_mode =3D dw_edma_get_default_irq_mode(chan);
+Changes in v4:
+- To keep transactions in order, link DMA transaction to the end of
+  submitted list first, only lookup the issued list is the submitted
+  list is empty.
+- Link to v3: https://patch.msgid.link/20260511-fsl-edma-dyn-sg-v3-0-98a181775dae@bootlin.com
 
-[Severity: Critical]
-Are there missing prerequisites for this code as well?=20
-dw_edma_core_ch_quiesce() and dw_edma_get_default_irq_mode() appear to be
-undeclared functions in this tree.
+Changes in v3:
+- Fix formatting errors reported by Frank Li.
+- Add fsl_edma_tx_submit() to link the DMA transactions
+  when they are submitted, not when they are prepared.
+- Link to v2: https://patch.msgid.link/20260506-fsl-edma-dyn-sg-v2-0-66439cdd414e@bootlin.com
 
-[Severity: Medium]
-Does chan->irq_mode need to be protected by chan->vc.lock here?
+Changes in v2:
+- Drop the RFC prefix, as asked by Frank Li
+- No code change
+- Link to v1: https://patch.msgid.link/20260430-fsl-edma-dyn-sg-v1-0-4e0ecbe2df66@bootlin.com
 
-In dw_edma_delegate_chan() above, chan->irq_mode is modified while holding
-the chan->vc.lock. Here, it is modified locklessly.=20
+To: Frank Li <Frank.Li@nxp.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Cc: Frank Li <Frank.Li@kernel.org>
+Cc: imx@lists.linux.dev
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-If quiesce is false, could an ongoing interrupt handler concurrently read
-irq_mode while it is being restored?
+---
+Benoît Monin (2):
+      dmaengine: fsl-edma: Implement device_prep_peripheral_dma_vec
+      dmaengine: fsl-edma: Support dynamic scatter/gather chaining
 
-> +	dma_release_channel(dchan);
-> +}
+ drivers/dma/fsl-edma-common.c | 207 ++++++++++++++++++++++++++++++++++++++++--
+ drivers/dma/fsl-edma-common.h |   7 ++
+ drivers/dma/fsl-edma-main.c   |   2 +
+ drivers/dma/fsl-edma-trace.h  |   5 +
+ 4 files changed, 215 insertions(+), 6 deletions(-)
+---
+base-commit: dc59e4fea9d83f03bad6bddf3fa2e52491777482
+change-id: 20260428-fsl-edma-dyn-sg-960731e37da2
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710082156.2395=
-844-1-den@valinux.co.jp?part=3D5
+Best regards,
+--  
+Benoît Monin, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
