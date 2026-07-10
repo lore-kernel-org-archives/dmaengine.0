@@ -1,141 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB80C3CDBC0;
-	Fri, 10 Jul 2026 08:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702E53E3D90;
+	Fri, 10 Jul 2026 10:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783672328; cv=none; b=dC85us03zi9uqD42mouwDV1a3UIb2ww1/mgL3DAePZ3iYr4+Y/74b/iEbxvh3gVukaDuBCmhGMZFya5AkUFT0C4F63h11rpJ0mb3hSN2D8CwllJS12SWmECOwgtyfJULGVBMJOD9YIwUt3IVhdJynVfzIEjw4tTtye2aInw+5B8=
+	t=1783680234; cv=none; b=RO0XEZ2rcLdC8NSC2/4O11cMNl/fPyl+4VHcX5gxEzQdvnNOwrwhZv2g4b2+I3XXVEGYaaid/3CDLGE98tnzpBA9wvbo0DPytfvy6op0VXpmeIyOTfzuji8wwPGcHc/CnBzed0XHur400KBycPn20iQ1s3wX13ngoMVDyoFTXu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783672328; c=relaxed/simple;
-	bh=zsmqvjIGE+kIwi3lbXc2APYHOfB6GvWHuZe2vwFm5TY=;
+	s=arc-20240116; t=1783680234; c=relaxed/simple;
+	bh=/OkMsSt2pEZeE3L97MlLY3KCCaaTYO+eAl6y3/W7H/I=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=RtZM8+U5jkUEwWn+WA7zRl8MLl5Gh+XHy1TznnSRq9GbAXIbzp7mFaUWYt5knBJSL0NhIsKUg830JPpQ36PWnnBaIWJPZAM5YrCfPAtuLhqN6Rpt7mw36eC5fFPDfsXZu8GhUlokHEYSimaGbSZq4JwELTjt4i160e0rRSn/ku8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HF3Slxm+; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=GqHdq+zzUGIZ0vmYgHx7n13yzQNlxn01Ul/6SaPye3/sRmCDAIJgvY4J4zR+FMj5QKyCBg0jDvfMGGtjGDDvdTKFwXpEyprBzaTuVtCV8yBupdYdjXcgjf/sTPHT8Lnt0ujamOb3Au6gFmqDqywpllGUbyfWJv0KyntEpjwMosg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RffkoNhX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HF3Slxm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198D31F000E9;
-	Fri, 10 Jul 2026 08:32:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RffkoNhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D671F00A3A;
+	Fri, 10 Jul 2026 10:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783672326;
-	bh=KoUaYJJJTzCLwsRsrwobIDFPW2BtE6yXrfgQODLamYs=;
+	s=k20260515; t=1783680233;
+	bh=C/lSeXagT+mgcjUZOLp/BIsZTNEz+dIkjPEvhvMwzaM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HF3Slxm+htk8FW3C2nRm1+NbQsN1yziBZy5P16NKsLjK+s5bKc6SZujpGGckFgc8q
-	 cjbrPV0LzbUoF2jpk1vOVVy0vp0kjrPafI4WfWSxRtrouwebK47VbE+Jqb+ichV0xk
-	 L/UqwwL36/8RUpm8X9KRDyUT0AHOKH6QTZs+be1ZAb5wkQh+0RRXzWfDrS7sGm8rP0
-	 /KFMGdw7buCPezx1wGFAndiUkhl+DL2YxGcfOQ6PSAhUg/bsCMChe/8hg3tj9oCJMa
-	 KSTcfCRV9LbIoW+u383YU5lKAwcSIrq8s/pf0SD0uc8GZnOLE6JC7tDB1l2WUVROA9
-	 7NGqXhDq6Sh+A==
+	b=RffkoNhXMGWbrcYteWv1afwKNGsrf6IfRxJGUxd7xpUP+G7fOiLy2qoDL/Cov+8NK
+	 hZPY6Koxshgv4auYznOPxBUXv84jvd3AS7AcHe9jdUrrYncE6gM30ob/y1m09FXW9/
+	 K+M5obFmGP3uKsoIbN0UxkQovRP43Ukq0TFCSc6cSls04Y+ULJIaiNuS76YADNv1mj
+	 aL5EvcX9N5maa/YVLseJ/PyKhF7wp49Ebi8/0TDYq9TxRn57Eq19eoiFnCZhysgObb
+	 SqUEuTBD0kfck/HTdjpFaUk3KVehuH9CFePQGhOojeoD9ir47SL5w9B38NVnFxR7d7
+	 SY1nrzlUPaklw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 3/6] PCI: endpoint: Add API to delegate EPC DMA
- channels to the host
+Subject: Re: [PATCH v4 5/6] dmaengine: dw-edma: Add delegated channel
+ request helpers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260710082156.2395844-4-den@valinux.co.jp>
+Cc: linux-pci@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260710082156.2395844-6-den@valinux.co.jp>
 References: <20260710082156.2395844-1-den@valinux.co.jp>
- <20260710082156.2395844-4-den@valinux.co.jp>
+ <20260710082156.2395844-6-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 08:32:05 +0000
-Message-Id: <20260710083206.198D31F000E9@smtp.kernel.org>
+Date: Fri, 10 Jul 2026 10:43:52 +0000
+Message-Id: <20260710104352.C9D671F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but pre-existing API=
- functions `pci_epc_get_aux_resources()` and `pci_epc_get_aux_resources_cou=
-nt()` unconditionally dereference `epc` before checking if it is an `ERR_PT=
-R`.
+- [Critical] The patch references nonexistent constants, functions, and str=
+uct fields, which will cause an immediate compilation failure.
+- [Medium] The `irq_mode` field is modified without holding `chan->vc.lock`=
+ during channel release, violating the locking discipline established durin=
+g delegation.
 --
 
---- Patch [3]: [PATCH v4 3/6] PCI: endpoint: Add API to delegate EPC DMA ch=
-annels to the host ---
-commit 1d374b51cba0f1ce466c2d806368e6604aa12539
+--- Patch [5]: [PATCH v4 5/6] dmaengine: dw-edma: Add delegated channel req=
+uest helpers ---
+commit 15a8e802b8e938899858a00862b359f85ce5f547
 Author: Koichiro Den <den@valinux.co.jp>
 
-PCI: endpoint: Add API to delegate EPC DMA channels to the host
+dmaengine: dw-edma: Add delegated channel request helpers
 
-Some endpoint functions expose an EPC-integrated DMA controller to the
-host. The endpoint function should not need to know the backend-specific
-mechanism used to reserve a channel locally and hand its programming
-interface to the host.
+This commit adds DW eDMA-specific helpers that request a write/read
+hardware channel through DMAengine. It switches the selected endpoint-local
+channel to remote interrupt routing after reservation, and restores default
+routing upon release.
 
-> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/p=
-ci-epc-core.c
-> index 831b40458dcd8..9c908051aa235 100644
-> --- a/drivers/pci/endpoint/pci-epc-core.c
-> +++ b/drivers/pci/endpoint/pci-epc-core.c
-
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
+edma-core.c
+> index 89a4c498a17b8..cbf6f539d4369 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
 [ ... ]
-
-> @@ -236,6 +243,101 @@ int pci_epc_get_aux_resources(struct pci_epc *epc, =
-u8 func_no, u8 vfunc_no,
->  }
->  EXPORT_SYMBOL_GPL(pci_epc_get_aux_resources);
-> =20
-> +/**
-> + * pci_epc_delegate_dma_chan() - delegate an EPC-owned DMA channel to th=
-e host
-> + * @epc: EPC device
-> + * @func_no: function number
-> + * @vfunc_no: virtual function number
-> + * @dir: DMA channel direction relative to the endpoint
-> + * @hw_ch: hardware channel number
-> + * @chan: output delegated-channel handle
-> + *
-> + * Some EPC backends integrate DMA channels that can be exposed to the h=
-ost.
-> + * This helper asks the backend to reserve the specified channel locally=
- and
-> + * place it in a state where the host driver may program it through the =
-exposed
-> + * register window.
-> + *
-> + * Return: 0 on success, -EOPNOTSUPP if the backend does not support DMA=
- channel
-> + * delegation, or another -errno on failure.
-> + */
-> +int pci_epc_delegate_dma_chan(struct pci_epc *epc, u8 func_no, u8 vfunc_=
-no,
-> +			      enum pci_epc_aux_dma_dir dir, u16 hw_ch,
-> +			      struct pci_epc_dma_chan **chan)
+> @@ -1178,6 +1178,92 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+[ ... ]
+> +static int dw_edma_delegate_chan(struct dma_chan *dchan)
 > +{
-> +	struct pci_epc_dma_chan *epc_chan;
-> +	void *data =3D NULL;
-> +	int ret;
+> +	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
+> +	unsigned long flags;
+> +	int ret =3D 0;
 > +
-> +	if (!pci_epc_function_is_valid(epc, func_no, vfunc_no))
+> +	if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
 > +		return -EINVAL;
+> +
+> +	spin_lock_irqsave(&chan->vc.lock, flags);
+> +	if (chan->configured || chan->status !=3D EDMA_ST_IDLE ||
+> +	    chan->request !=3D EDMA_REQ_NONE)
+> +		ret =3D -EBUSY;
+> +	else
+> +		chan->irq_mode =3D DW_EDMA_CH_IRQ_REMOTE;
 
-[Severity: High]
-This is a pre-existing issue, but while you correctly call
-pci_epc_function_is_valid() here first to avoid dereferencing an error
-pointer, could the pre-existing pci_epc_get_aux_resources() and
-pci_epc_get_aux_resources_count() functions be crashing for the same
-reason?
+[Severity: Critical]
+Are we missing a prerequisite patch in this series? The field irq_mode does
+not seem to exist in struct dw_edma_chan, and the DW_EDMA_CH_IRQ_REMOTE
+macro appears to be undefined, which will cause a build regression here.
 
-Looking at pci_epc_get_aux_resources() in drivers/pci/endpoint/pci-epc-core=
-.c:
+> +	spin_unlock_irqrestore(&chan->vc.lock, flags);
+> +
+> +	return ret;
+> +}
+[ ... ]
+> +void dw_edma_release_delegated_chan(struct dma_chan *dchan, bool quiesce)
+> +{
+> +	struct dw_edma_chan *chan;
+> +
+> +	if (!dchan)
+> +		return;
+> +
+> +	chan =3D dchan2dw_edma_chan(dchan);
+> +	if (quiesce)
+> +		dw_edma_core_ch_quiesce(chan);
+> +	chan->irq_mode =3D dw_edma_get_default_irq_mode(chan);
 
-	if (!epc || !epc->ops)
-		return -EINVAL;
+[Severity: Critical]
+Are there missing prerequisites for this code as well?=20
+dw_edma_core_ch_quiesce() and dw_edma_get_default_irq_mode() appear to be
+undeclared functions in this tree.
 
-	if (!pci_epc_function_is_valid(epc, func_no, vfunc_no))
-		return -EINVAL;
+[Severity: Medium]
+Does chan->irq_mode need to be protected by chan->vc.lock here?
 
-If epc is an ERR_PTR, the !epc NULL check passes, and it crashes when
-dereferencing epc->ops before reaching pci_epc_function_is_valid().
+In dw_edma_delegate_chan() above, chan->irq_mode is modified while holding
+the chan->vc.lock. Here, it is modified locklessly.=20
 
-Does it make sense to update these sibling functions as well to ensure they
-safely handle an ERR_PTR?
+If quiesce is false, could an ongoing interrupt handler concurrently read
+irq_mode while it is being restored?
+
+> +	dma_release_channel(dchan);
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710082156.2395=
-844-1-den@valinux.co.jp?part=3D3
+844-1-den@valinux.co.jp?part=3D5
