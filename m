@@ -1,46 +1,47 @@
 Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020113.outbound.protection.outlook.com [52.101.229.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5873EEAFE;
-	Fri, 10 Jul 2026 08:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD883EEAF8;
+	Fri, 10 Jul 2026 08:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.113
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783671327; cv=fail; b=rA7XxrSYODmDbPJ0bds2dsXDZ/cSFrZ78nq4NRgeAVcAmtVx/4KTHZYFsUT3AxqPzSVw7I/vsrx3rHaumZQy9CLbI1sNpP5px5vsEX/Xqqng/MYVhWrGaSDVZHPzD3L7m1DpxmTBqqQSPI35Nxp+m9A7ZN0RnF7D3Yy+8CqD2XM=
+	t=1783671329; cv=fail; b=gAwj7fMiYmS47PE+m2cw1/b22u1gEkSy82gmiQA7y+Y4HCIXHIeyKX0UFEvC/eOqcHU+1h9k5aqmyDb5vNBgTrHpWJ9epxpG9eI0FPq5+ccOeLt38OIlPtesNyAZL0zC3VjwZwdlybwFBSfurOhJdGeQPfD3NCY7Ifl//xJ8fD8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783671327; c=relaxed/simple;
-	bh=RbfAU2tEdo0ZG2SNRjNkvmw5cfwsd3MZiNSHfw5fiSM=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=T0HOHjDEoPDEeH9YjJNPqHBIrqMZ8TDYdcRY2RhARLELZOXL7URPL5iEOtHCOcEn3wWdWMIjpJdSfHmMpmx/+C57bUV5ytNgIvfHuJm6vQ0WFuLuW/rUMOeWPQY/8iBKAk8+yBxLb7HoWw7YdChK8dsR5Hr0jTdM+teXkbxZWM4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=fIy0T+c4; arc=fail smtp.client-ip=52.101.229.113
+	s=arc-20240116; t=1783671329; c=relaxed/simple;
+	bh=JaRFpR0IAKujDYdT3drbkPWtCiMhrql/GH0fPJnWPLU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=pp+D5frcZgnH8pfavy74HdU3TfBgce/1tfmkczI2241pp7rVc/puV0wIaZtudBccENtUvOG5zsGymksjBjLoaCJz5RHazTTlrDy9aI5sj2CNSCvlKO+dehRThrzJAafZykLhWEduRNd/tVK492Jhx1DNd5Zxx8YYT0PcCFlyd2o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=PbixA+bb; arc=fail smtp.client-ip=52.101.229.113
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="fIy0T+c4"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="PbixA+bb"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QvaOxAsJR16ZyS4CsphyZIDl34mJbXcx/EtI5O75Vmn9Bd00rXIBJX3DwZTCsrczn9aPhACHNtn2k53lNfHCb1/BxueX91fxYtHv02CE/aGGD3rcIe+wt2UopHIu+2Ajq/G2rey3L2j0PsMq29ufM3RsJDokHRtWT+11hnd1Wj+M5Mdp4jZ7HD9vDFnBlzPco+zdcVAvOiuI15zXd5kBECvzdDIowNiEELHbWVUC/ENZSaBaHFRysOlFb6bhCahcTJuD2eGJEz+E4geaqYgkitIuPyKZXVx5/y4aJL8g7aaHbZRc6AYIGrAj/QqZkm5GX+P7l+QI//HN6wvi5USg0Q==
+ b=vUTK5Hpj9hGeCPbuyXF/aINibL/RPpB1jJJ8K8ILPvr2edoNuF2eqrTePeX8mafVIFmRU+z8ncp/6oQPvA/yHzxrnQvyBvsFM9GBNcZa4s/H9vD1D57G+uvMs9e26ARIO3GjcEeVvizZBE1eCKI33FiJwbwR8sP5MHXgCBVUXm5kmOBvZ+FogbjcuMfBmfPzEbE0NFs4rNdHu9DplpCeiyHregHQsHviFfk+2NFJMDW1LtUryA6Ed701l7jEPliarCGXqoQMzKdIZ8QmSUMQK97nJ18sYgTKy66a7bjhStqKOQdzqnZ/PRj7pzBI5Y+Yr4faa/AVaEGNQ8Gg8S4+MQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2a8wIr1hQ6f8z7+O1jcHsKBfMt/yP7CZCkABqT/Xsyk=;
- b=J2q4+HUP/NvOYR3iutYNY8DRlRhsXAuzGiypZ3x6GP7YhXBqq7sLvQotYlUwZn2kN8wWUXrVrlTifFi/S2Ubn/doPJXVewm2SIIJq0RApZESl6PoFsgicb1cB7+xTs/kc0cwp9CGVy+baZ7CjhzGy8fYPLFMveRsso1dgRoCn/m13/Or+aSKWVtsVqCIFsYLwP/h47aSvaRM3JDd8lwpmUMyL1RuWhm/i5150CoVgFKbBKSplHV7zjWrFNhA/dUWZQ+pP68+HVlgHyvma3Etal671/0WatEIOIhcSxi7CD6L/A5WLDVQPkRFvDufCkLMEDlfIphhcdXATjw7qGjtwQ==
+ bh=V8VFhAouUSDfsZ6di4Wy9JZbjD6EcSxLsHy9NBMy+RE=;
+ b=sGULJXIe14so+2YGQHG3pG0JZwWcWYGC6nIXLlKas7nH9b8bnGUSdQxzHBRN86DyBD/F0ZWwaqo7OFMLNGU3XbAcEr9kxAm1TGPKSynqL80JXZBlqnhhptA/AiTdhWYV9hunC+98yQlFU3v91AcuHifc4geimIZ+8paDwXR6NwRRqmF0iPXCt3EXd600nGmBM/IO2VfCUXIQm9exGzBHsCJsR0y7Mh6FChvNrx9PI5is/JrlB30RMgnNs906QwTN2jrcAM54TXDQuxL0ClzMAjpBYMfYusW0qegV8CfcGWnmb9/MxArRQ7lNkvvOB5B6O1OW3FifWgNiiv7UVfj8kw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2a8wIr1hQ6f8z7+O1jcHsKBfMt/yP7CZCkABqT/Xsyk=;
- b=fIy0T+c4e/wMFkOErgOocp6LslIrQSL+33bgQNgauIQMx536+Z/PyKYSQQDIXkIOFvLbPgoeDW47mQGce/4pejHYoVnt2KppBCyp5fsdUFyiHhBiAHSEG1M/8kk26kovvKPsjXuR1sokDeBH7xBXpLll5jc3yeZr+Yut0SRUDV8=
+ bh=V8VFhAouUSDfsZ6di4Wy9JZbjD6EcSxLsHy9NBMy+RE=;
+ b=PbixA+bbxgPk052L223uTGpaNAeRGNtwOaMHIRCXlCjGkF6P3EtnAMMQ5mMw3WpJuM3yRV2LuyXL9frBFAZh3NU8JZ5hrEZdb3F4v244SZbyB0ZF9g+hDpT3Ucu3CM70m/R+9C3R7aKfb43ZVZ4TEYmtdiRpSYeiJaeI/rpDOBw=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
  by OS9P286MB6307.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:409::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.15; Fri, 10 Jul
- 2026 08:15:20 +0000
+ 2026 08:15:22 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.21.0181.009; Fri, 10 Jul 2026
- 08:15:20 +0000
+ 08:15:22 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
@@ -49,14 +50,16 @@ Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>,
 	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 00/14] dmaengine: dw-edma: Prepare for PCI EP DMA (part 1/3)
-Date: Fri, 10 Jul 2026 17:15:04 +0900
-Message-ID: <20260710081518.2394357-1-den@valinux.co.jp>
+Subject: [PATCH v4 02/14] dmaengine: dw-edma: Add per-channel interrupt routing control
+Date: Fri, 10 Jul 2026 17:15:06 +0900
+Message-ID: <20260710081518.2394357-3-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260710081518.2394357-1-den@valinux.co.jp>
+References: <20260710081518.2394357-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TYCP301CA0015.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:400:386::17) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TYCP286CA0118.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:29c::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,194 +69,327 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB6307:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8bf8e53-41f4-4716-f9c9-08dede5b625b
+X-MS-Office365-Filtering-Correlation-Id: c042a292-28bc-4360-2de9-08dede5b6349
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|10070799003|23010399003|376014|6133799003|18002099003|56012099006;
+	BCL:0;ARA:13230040|1800799024|366016|10070799003|23010399003|376014|6133799003|18002099003|22082099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	/tf1abHGkNGnJBK1LhKlAOoMuC9jAvoL2uYm52UfZEB++fxs+SqwuiJOks1RyLncXqqIQwhsIgL3B/5+hFOrHA5X7m+RpiDgl/+zP5NjJZPFhw96A9rI+lW+aL7RP5oCYoGYPfsbZrIfaqGQA4Kn4AYLNVE332R0x1J1fcAOSbO36tfBOQHFNmPQP/RckMhV16wEUaifZJk7rA17sJYJFQmwOuzn/FPago5HqyMRmbb7lAuK1a9AIGNoZYbd/deJxAT4YUlOhL6TjSrXDXutjOthHTdEXJzawq+6bp1D6Vfihb2G335LV2Is5FFDh6yoNE1B/z7o9tktzIG8tLF7GFQdjbgVEBv6OOtD3cXSeMhOJkrwp9Aga0TyRWKrZRxZFQwiYRpyUjBkRTuVl/8GB2u1jRxdSugLBCXGGAY4QnnO882sdW9+dZm6UGcXj6kvCqmcQ0C6wtTsxvrBAp7yALHwoLJTfS0D2jZqlZllEhcRyBK2TY/PyR4YQwh/l1n1jpYZrZp0kDzhGyowTGHkE2dVWxXSf165j+V6/HIajGxBtEFgPogSM+yDXN6r1SPX0DWE2P8UFDhao5wIu1VJXvTN19UD+GbYFTj6M+a7pcO76ESICGXOHpNpXIGzvBBCGPj4+r/MD0U6FZs0ZXffMjPF4+KDpcxwbCUMKa+VzeI=
+	iUTqwChWSWTKSrj64EYbG5vh6hRNEA/eMJru0Tn25YS4VkX+Y6XyrlRWTPd8VOy+AO+KUylKhpWQudIpUKAdY0wWZvx0Wgc7ebzYZ+rJzaVEg/DFHNOzVuaOv6xsH9TzI47IHk+eGSjj1fqRQyZL9jzqsbETkvTCrDLwlwWMwaKxMpU1t3wHavFoHfl8b+oIwhiBVKDaRvi03O0gviYz2i16sCsHPPj2DU249djkz26Kqq/hRoFlQrQQcs5Gl1JZ/r2WsyhnuUwUAo2o6WoW2Yri+GdAkMOFDtX332HQqakADqCfmzlCy9vRZGvFtvPslaCM9wQse2NcnGVZSCwHJSzCntKDPy13SHLP1oNvz2BtXDcbXqeqg0jSNPhMRBmGtVhGV9XnPiHSn94jgtOIfLfOE3EiZ9yJMBUYvyv3twDayxgMY821YYN+EFn2khuWUCvvZx9Zi+j/MpUMFJuaB4V0UNa1Hcwe0mtmCfVZS/IJUVgDham68belJH6Fo2a2B60tauMYd3bh7stp3z14ZRnHrBkPeZDuoWi5Q3XEkrMM7ygFMCgHS0nUVZRs9oyuipP3ETr661Yw/UfxThs4A5ifhlb6sdqLbPxiu76psQz8vdvzaPyC6QTIlCJcRweUztc8XH4mH5a5GG/3zyDkER/sl3KM+BFAQVLo11ZotUI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(23010399003)(376014)(6133799003)(18002099003)(56012099006);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(23010399003)(376014)(6133799003)(18002099003)(22082099003)(56012099006);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?qEx7BRYCFYb7T627IBllJ79Tj/4asWViru+970BaI0PeGX7uKCvwiVWtF3H/?=
- =?us-ascii?Q?2kdR2ZV1DzXlkNPnNE+N553Qaq+vA71WA5GBswgqTS7lRNLz2gw6FCkT+r7l?=
- =?us-ascii?Q?Kd2QXIvdT16ah7tXC4nE/EhNqEtebh5sPGxioqVq4J4W/8+P2N4Hgcvren/L?=
- =?us-ascii?Q?AnFPMSK0fyUUYClIqwYG2+rqIA2jdpfWTx394Oh7EsOL5WbWhqyhXKTicNft?=
- =?us-ascii?Q?yJPcN3fdPZpXx3vVWDGp8TFhzRpvZVs79kYxmcR0u1JQf2/oOD4kv0i7rgcL?=
- =?us-ascii?Q?3S+hfMev47nvBGzxz7vAkfoIqqPdGyHoXQj2dYRJ4/LzeA8+oohj9CYq4P3c?=
- =?us-ascii?Q?U2+0Hj+jAKey34+z0Ri53JFD6enwRvqeR/sywOr0yNDw2jHFuAQ3nVr1g7gE?=
- =?us-ascii?Q?NBsMlCgKsVEjMA4zPntXmOVXY8ZA1dahL1+KtcSAuLZvK8B6hBvNEeN5pThc?=
- =?us-ascii?Q?ONzrKV3cuSTZkloQ+DJLBuh/niaCv0Pst8FrYFnAk1tbKntypfL7W/gbeXhE?=
- =?us-ascii?Q?pjiDj/m6sz6dD2fDHIW6cATr1q0P+kemJkeZB1yaE4MOghnkJsRfxb1DT5FS?=
- =?us-ascii?Q?EcpfHFph/r4tRcqNHtoKSW4vA/k/PTfkQelad8VwitdawFf5hAB8Ni+0EoV+?=
- =?us-ascii?Q?iv6v3KTLhtx06mW+jgA3nLyrESSRRWuIEj79lPy0NeGHFHiQTGUbio9EVdau?=
- =?us-ascii?Q?5ZIwOPe+3N6wYNlaknYBFMMgWHY2ZBzJvfQKAA0LzOg6BRTpAalXTL5kN/g8?=
- =?us-ascii?Q?KZPM1v0u96GllW2kUJ5/djFjKOIKbWtjCnnH/7A/HYvqaTh2VVbfRnvsh9Lc?=
- =?us-ascii?Q?vGGZb0f4ip/zfAINeplYjD9uRvD6f/9aUq1dlpWeZbCbOq/RPu6/XIikUm2/?=
- =?us-ascii?Q?iZBlbQh3K5CAZO+DvWp9/ioSh22WdkEciUPVxWuMwuWLbvrJoMtC1Rv8R/xa?=
- =?us-ascii?Q?4bZn5LcUgnPTgVVsfxeL70LACXKUmpOuF21ipjS5CtsS97yR64gKP46h1q/O?=
- =?us-ascii?Q?R/ZSAKtnAP+1J2P5Y0P36DFb8FdyIt4nVBoMB/oiwtIHr4mg76du45Wkgo3M?=
- =?us-ascii?Q?VRsoC8K8EcnBRf0rs5mzUxx8u/BHvXnWUhZSnwxwf3jdi8+rToRfRDjqG46X?=
- =?us-ascii?Q?c/XLvgpGG44iQcr3aypPOXdS6n6nmaUr5LfkP9B8TxnTAendd3zIxKONx0G0?=
- =?us-ascii?Q?WUpeHMCdBIPLmMdVSssgUTuq/lKb9VJPxTD98kHpFQe5jiOR7SjUZIlbPThK?=
- =?us-ascii?Q?p/qF8YSDs8BjgEwimqCsCCMpw0RjPwC4D1S51VPGzosa/7vieoftHB4aUag3?=
- =?us-ascii?Q?h80u3G3+982TZNARChqnstzspTQUFUl1V8XLjzUW2qb7V7KR7ZK6IltStaz2?=
- =?us-ascii?Q?xPCp7wdL/O6+ZvsGfPOkAuAB6CCSREL2uFlohKQioi/FmgwJMe4ABNCisKYx?=
- =?us-ascii?Q?8OSRCwQ0Vu1ZJTRcX8qs5kwjXCRlKh5vsqiTQJFx37ZWFDYPQ+VlXfiPqpMo?=
- =?us-ascii?Q?rNhDNVvJKsvdZUCrKCSwxo/GgfDRJMv439sK6j4LQ22IvABSiWtjP4DV2ApW?=
- =?us-ascii?Q?TH1rngwGYvLyOV5nQEAr43bqiNuedRVJv2sYY8zb8JIIp3kG2/FhaQMXO6mR?=
- =?us-ascii?Q?B0di3n/CwERU9J2v3s3GT86xglp2n+jzZ6ISwHs5rcaKz3V6qrqcktdrBIKt?=
- =?us-ascii?Q?4qbIhcrq07CnUr7M7wy7VWpJw3ydyUCQMctKUEOiaXsfQDVByH5u+efMfVev?=
- =?us-ascii?Q?1n3qyFIxNXhlCo0WsS97Rc/GFVhYEu+nJm1b+67EFIEgJQLXpX5P?=
+	=?us-ascii?Q?DABWbN7j6aPo4AY2uQn6GKy8Gll1iCMFtoY3F6yfogiyrDsIwofErDlKOSqc?=
+ =?us-ascii?Q?cKIfcEJdxQK24kc3cANldjo/Y0TT1bOa7JkznUqOfQ2a2Qd7MziQ7o58aGAw?=
+ =?us-ascii?Q?zdG1o6PVtM1MtMo7b7C/7MlK5V3ZS6f6nK7Cu5Yi7C1KVsG3cSp/oms+UzhD?=
+ =?us-ascii?Q?oy7khiYaX67QQ9QVe/uSZfd/J0buqpoc1MBLHKAOA0ZcVINA0K1mC492HCYO?=
+ =?us-ascii?Q?9pqXh0+iFA1ze3EB2d/grTx833EKIsNT94XSGh5L8RaX4GvLTE2aGyJULKak?=
+ =?us-ascii?Q?ecDUh6Lox1fQRZfmfrBPwxQf4ruEnkPVtzIgwkFBJ6KeXXycACoaFRnpCkuW?=
+ =?us-ascii?Q?6a4KAEc7+LUQkcOMX/91Co83wZ5d3ByUIZsmXVvQB5GVbj71am3EDAViqjD4?=
+ =?us-ascii?Q?nSxC7S7nssP0oSAqf5mPWBJ77pFy9l4mYqf+q2TROEG7moPjPJ6KbIKd0U9j?=
+ =?us-ascii?Q?19kJd0+qbDQuqYXouienx5C1QzSYnIe1/8t/WefeK7e7ma7R1ESQ83AzVjBI?=
+ =?us-ascii?Q?Wgn2ekaVYNPHRVMlCy6WnzR3pM0/mjQvbjE1+dE4n3Txym9WNnIYjEyeaRfU?=
+ =?us-ascii?Q?n/GSiDRh48KnRyq1xoG55Zii8E19mRVQkZmxqi/8qpovNVzdKhpxowJYyUqg?=
+ =?us-ascii?Q?4w/XRfbJZpfYQtavf23NZVlSWafBiLoso/6/IGV2KlLWuY91vcybcUqvh3qy?=
+ =?us-ascii?Q?hmBhvhUbxeYlT3ZDs0eQDDxR1/mz0I74f3gkPlufD0mCntXpm0wWEiu37nkG?=
+ =?us-ascii?Q?D4jjymmVeBeJrJe/LrWbuKxcG0TF/udbTFPopSSyCQPrJy0G5/4W8K8OVX/7?=
+ =?us-ascii?Q?afYaaiLvIXxnxYrd1l17EwdmiH23UQayvW0SpNT6g76zbujeQirgmpkVrmUe?=
+ =?us-ascii?Q?DPrQP2VCR7pjifkwSKg3wqns56ZCXu0wAX+GV0uX6KkL02RqxYGW8NuDTjsc?=
+ =?us-ascii?Q?tf5nODwvygH105lDk/RaPfblaPMvcML+Um5PSpdfv5228myFtPVlcpCyKRp6?=
+ =?us-ascii?Q?xu4z37I6QNNHeNUz1qK+kkYyTcAWBuzVpRdqawlpuSsYeYFvvbAMZdZAyapp?=
+ =?us-ascii?Q?uzblVdzLib8vC1JPzFAe3Tz2TesF5EldtfCOfshPM/Bb6WymKKb5DHSZyOv9?=
+ =?us-ascii?Q?115igHUxbXCnuaxznrE8ZxlpYmNK0oCw/qJG8glb5zrCXjTLzi2+uo4qOwwW?=
+ =?us-ascii?Q?QnUFYkoSYyTn21HMEjZl1vPtr8CNp8SmTUqoJJ/wu+fZEJfHX7lb4D8O3Rtc?=
+ =?us-ascii?Q?jMf7gq1KOnqVwrACuBVht4fSqzJnviKPkS7wS12p8x5cztYyl0QjGZ/K7SXe?=
+ =?us-ascii?Q?MvClSJfKl2mPUS2U81a5v34iEZPLj1GcDpS2w0VU7p3wtayScAIdDYPcBa3a?=
+ =?us-ascii?Q?jcmFoxNXdodphC5cn3DJzqLxlTivbZJ43yAWlRMnIz7QHWzauV4v1mgIpU+E?=
+ =?us-ascii?Q?pmtFbxd9rSoCy6zOqFe9f0rj3jnCb8laVbdmuBsVTzS2+QhWt2W23PUmJjRj?=
+ =?us-ascii?Q?r8JWie9m+Gwl2gXDk9uHj2ZWs4LdroJ1L8ZsZ8Zfz/xkGOXna83tGnsvhHcr?=
+ =?us-ascii?Q?6xcuJiIiRD+yrloYKKjkJp0NaemBDesmxdIsWV/2EgBdxovOMu/q+vQwXiP0?=
+ =?us-ascii?Q?/ZF2peJJ/1AQHq0URaCQQR/Lsp2QcKsxGn942d3zZlT4zFZsaupy9Ma0nt5Z?=
+ =?us-ascii?Q?+ZaiEH0xro2n3FSY4rEVrN/ygiR4nXGH4v5vzWmlauN0mmHbK5NiwtRj86YC?=
+ =?us-ascii?Q?IK9r6U2adD1v1pi9t7fQ3qkgQnnFepCJGsgPyuhsg0YdcKbPKp5X?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8bf8e53-41f4-4716-f9c9-08dede5b625b
+X-MS-Exchange-CrossTenant-Network-Message-Id: c042a292-28bc-4360-2de9-08dede5b6349
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 08:15:20.7507
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2026 08:15:22.3228
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: POn5oGZ9mqQWCcxhsspOFBJH3pC8PIyU8mE0PL8ieke9esWTEaVRXiF/LIPXBtP+rXrBi4/ZL1BJ+iZ1LTh0Dg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: rrJj5tKgkNASbs68Nu2lyIsbIZxqCkximpKNZOpXmPJ1zEvT27H0v0vSAHQaOGz8KleluEavH0dHeqdK0AQ40Q==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB6307
 
-Hi,
+DesignWare eDMA can signal completion locally through edma_int[] and
+remotely through IMWr/MSI. When channels are delegated to a remote
+frontend, the local endpoint side and the remote host side must not both
+service the same DONE/ABORT status.
 
-This is v4, part 1 of three series for PCI endpoint DMA.
+Add channel interrupt routing state and initialize it from the
+controller instance configuration. Update the v0 eDMA and HDMA native
+paths so linked-list interrupt generation, HDMA non-linked-list
+interrupt enables, and DONE/ABORT masking follow the selected mode. For
+HDMA native non-linked-list channels, use the dedicated remote
+stop/abort enables without local stop/abort enables.
 
-The three series are:
+Keep the existing dw-edma-pcie host-side instances in remote interrupt
+routing mode so their IMWr/MSI completion model remains unchanged after
+local routing becomes the zero value.
 
-  * part 1: dmaengine: dw-edma: Prepare for PCI EP DMA
-  * part 2: PCI: endpoint: Expose endpoint DMA resources
-  * part 3: PCI: endpoint: Add PCI DMA endpoint function
+Note:
+- The routing mode describes where a channel should report completion.
+  It does not by itself say whether this dw-edma instance owns the
+  interrupt status. A local instance must ignore remote-only channels,
+  and a remote instance must ignore local-only channels, even if such
+  interrupts are unexpectedly delivered. Otherwise the non-owner side
+  could steal the interrupt from the owner by clearing shared DONE/ABORT
+  status.
+- This drops the stop/abort interrupt masking that non-LL setup has
+  applied since its introduction commit b7560798466a ("dmaengine:
+  dw-edma: Add non-LL mode"). The databook's non-LL examples program the
+  masks to zero in both directions, and with the local enables now
+  cleared in remote mode there is no local interrupt left to mask.
+  Remote-driven non-LL users keep the same delivered interrupts: the
+  local pin was enabled-but-masked before and is not enabled at all now.
 
-Most v4 changes come from Frank's review of v3 and from the rebase
-onto v7.2-rc1 plus the dw-edma groundwork series (v3 was based on
-Frank's edma_ll, which this revision no longer depends on); the
-delegated channel request helpers moved to part 2, next to their only
-users, and a new patch programs the endpoint function number into
-each channel.
-
-This series is (re-)based on v7.2-rc1 + my dw-edma groundwork:
-
-  [PATCH 0/7] dmaengine: dw-edma: Fixes and interrupt-path groundwork
-  https://lore.kernel.org/dmaengine/20260710080903.2392888-1-den@valinux.co.jp/
-
-and parts 2 and 3 depend on this series. It is independent of Frank's
-edma_ll work; the combination of both (edma_ll v5 applied on top) has
-been tested on an R-Car S4 endpoint/host pair.
-
-Scope
-=====
-
-This series prepares dw-edma and dw-edma-pcie for endpoint-local DMA
-channels that are delegated to a PCI host. It does not add the endpoint
-metadata format, DesignWare endpoint resource exposure, or the endpoint
-function driver; those are added by parts 2 and 3.
-
-This part is the DesignWare dmaengine backend work. The endpoint resource
-and endpoint function pieces in parts 2 and 3 keep the generic PCI endpoint
-interfaces separate from the DesignWare implementation.
-
-In summary, this series:
-
-  * adds per-channel interrupt routing so a channel can report completion
-    either to the local endpoint side or to the remote host side,
-  * adds quiesce operations for the resources represented by a dw-edma
-    instance,
-  * programs the endpoint function number into each channel so DMA
-    requests are attributed to the function that owns them,
-  * adds partial channel ownership mode for dw-edma instances that share a
-    controller with another OS instance, and
-  * prepares dw-edma-pcie to describe device-specific DMA layouts through
-    match data.
-
+Cc: Devendra K Verma <devendra.verma@amd.com>
+Suggested-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
-Changelog
-=========
-
 Changes in v4:
-  - Rebase onto v7.2-rc1 plus the dw-edma fixes/groundwork series:
-    20260710080903.2392888-1-den@valinux.co.jp.
-  - Split the HDMA interrupt setup helper out as a new first patch.
-    (Frank)
-  - Rework the routing patch per review: default-irq-mode naming and
-    call sites simplified, chip->irq_mode dropped. (Frank)
-  - Revise the partial-ownership patch: message fixed, validation moved
-    into dw_edma_check_partial(). (Frank)
-  - Move "dmaengine: dw-edma: Add delegated channel request helpers"
-    into part 2, next to its only users.
-  - New patch "dmaengine: dw-edma: Program endpoint function numbers",
-    so channels delegated to PF1+ issue TLPs attributed to their
-    function; this also lifts part 2's v3 PF0-only restriction.
-
-Changes in v3:
-  - Replace the public dw-edma hardware-channel filter API with delegated
-    channel request/release helpers, keeping the DMAengine filter private
-    to dw-edma. (Frank)
-  - Rework IRQ routing so local routing is the zero value, existing
-    dw-edma-pcie instances stay remote-routed, and delegated endpoint-local
-    channels are handed to the remote side explicitly. (Frank/Sashiko)
-  - Add HDMA native interrupt routing and allow channel-granular partial
-    ownership for HDMA native.
-  - Add quiesce operations and use them for delegated-channel reclaim and
-    partial-owned remove paths.
-  - Reintroduce the IRQ data initialization fix because partial-owned probe
-    skips the core_off() reset that previously made the early-IRQ window
-    unlikely.
-  - Adjust dw-edma-pcie match-data preparation for the CPM6 entry present
-    in the new base, and reject dynamic PCI IDs without match data.
-
-Changes in v2:
-  - Move non-LL state and platform ops into match data. (Frank)
-  - Use a named .driver_data initializer for the Xilinx MDB ID entry and
-    fix the vsec_data rename patch title. (Frank)
-  - Replace the dma_get_slave_channel() export with a dw-edma channel
-    filter for dma_request_channel(). (Sashiko)
-  - Rework the IRQ-routing config as dw_edma_irq_config, keep HDMA native
-    int config separate, and reject remote IRQ mode on local instances.
+  - Document that a local instance never drives a remote-routed channel
+    as the channel is handed over to and programmed by the remote side.
     (Sashiko)
-  - Report IRQ_HANDLED only for status that was actually serviced and drop
-    the lockless free_chan_resources() reset. (Sashiko)
-  - Tighten partial ownership: reject unsupported map formats early and
-    require direction-wide ownership for supported shared-register
-    layouts. (Sashiko)
+  - Rename dw_edma_get_irq_mode() back to dw_edma_get_default_irq_mode()
+    and simplify its implementation. (Frank)
+  - Drop redundant dw_edma_get_irq_mode() call from
+    dw_edma_alloc_chan_resources(). (Frank)
+  - Drop unnecessary new-line drops. (Frank)
+  - Simplify by just using DW_EDMA_CH_IRQ_REMOTE instead. (Frank)
+  - Drop unnecessary chip->irq_mode. (Frank)
+  - Revise int_setup for HDMA.
 
-v3: https://lore.kernel.org/dmaengine/20260620170040.3756043-1-den@valinux.co.jp/
-v2: https://lore.kernel.org/dmaengine/20260525062420.3315904-1-den@valinux.co.jp/
-v1: https://lore.kernel.org/dmaengine/20260521063115.2842238-1-den@valinux.co.jp/
+ drivers/dma/dw-edma/dw-edma-core.c    | 10 ++++++++
+ drivers/dma/dw-edma/dw-edma-core.h    | 13 +++++++++++
+ drivers/dma/dw-edma/dw-edma-v0-core.c | 28 +++++++++++++++++++----
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 28 +++++++++++++++--------
+ include/linux/dma/edma.h              | 33 +++++++++++++++++++++++++++
+ 5 files changed, 99 insertions(+), 13 deletions(-)
 
-Best regards,
-Koichiro
-
-
-Koichiro Den (14):
-  dmaengine: dw-edma: Factor out HDMA interrupt setup helper
-  dmaengine: dw-edma: Add per-channel interrupt routing control
-  dmaengine: dw-edma: Add core quiesce operations
-  dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
-  dmaengine: dw-edma: Add partial channel ownership mode
-  dmaengine: dw-edma-pcie: Track non-LL mode in DMA data
-  dmaengine: dw-edma-pcie: Add capability match data
-  dmaengine: dw-edma-pcie: Rename vsec_data to dma_data
-  dmaengine: dw-edma-pcie: Add platform ops to match data
-  dmaengine: dw-edma-pcie: Add register offset match flag
-  dmaengine: dw-edma-pcie: Factor out descriptor block address lookup
-  dmaengine: dw-edma-pcie: Handle optional data blocks
-  dmaengine: dw-edma-pcie: Add chip flags to match data
-  dmaengine: dw-edma: Program endpoint function numbers
-
- drivers/dma/dw-edma/dw-edma-core.c    |  89 +++++++--
- drivers/dma/dw-edma/dw-edma-core.h    |  28 +++
- drivers/dma/dw-edma/dw-edma-pcie.c    | 253 +++++++++++++++++---------
- drivers/dma/dw-edma/dw-edma-v0-core.c |  72 +++++++-
- drivers/dma/dw-edma/dw-hdma-v0-core.c |  75 ++++++--
- drivers/dma/dw-edma/dw-hdma-v0-regs.h |   1 +
- include/linux/dma/edma.h              |  42 +++++
- 7 files changed, 445 insertions(+), 115 deletions(-)
-
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 704d8f9746e8..1c6db2c381e2 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -255,6 +255,15 @@ static void dw_edma_device_caps(struct dma_chan *dchan,
+ 	}
+ }
+ 
++static enum dw_edma_ch_irq_mode
++dw_edma_get_default_irq_mode(struct dw_edma_chan *chan)
++{
++	struct dw_edma_chip *chip = chan->dw->chip;
++
++	return chip->flags & DW_EDMA_CHIP_LOCAL ? DW_EDMA_CH_IRQ_LOCAL :
++						  DW_EDMA_CH_IRQ_REMOTE;
++}
++
+ static int dw_edma_device_config(struct dma_chan *dchan,
+ 				 struct dma_slave_config *config)
+ {
+@@ -1016,6 +1025,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+ 		chan->configured = false;
+ 		chan->request = EDMA_REQ_NONE;
+ 		chan->status = EDMA_ST_IDLE;
++		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
+ 		INIT_WORK(&chan->irq_work, dw_edma_irq_work);
+ 		atomic_set(&chan->irq_pending, 0);
+ 
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index a6a9ed09fe1b..3ea384706b1b 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -83,6 +83,8 @@ struct dw_edma_chan {
+ 
+ 	struct msi_msg			msi;
+ 
++	enum dw_edma_ch_irq_mode	irq_mode;
++
+ 	enum dw_edma_request		request;
+ 	enum dw_edma_status		status;
+ 	u8				configured;
+@@ -236,4 +238,15 @@ dw_edma_core_db_offset(struct dw_edma *dw)
+ 	return dw->core->db_offset(dw);
+ }
+ 
++static inline bool
++dw_edma_core_ch_ignore_irq(struct dw_edma_chan *chan)
++{
++	struct dw_edma *dw = chan->dw;
++
++	if (dw->chip->flags & DW_EDMA_CHIP_LOCAL)
++		return chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE;
++	else
++		return chan->irq_mode == DW_EDMA_CH_IRQ_LOCAL;
++}
++
+ #endif /* _DW_EDMA_CORE_H */
+diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+index 377812eaa110..14700ac42fa8 100644
+--- a/drivers/dma/dw-edma/dw-edma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+@@ -254,6 +254,9 @@ dw_edma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+ 	for_each_set_bit(pos, &val, total) {
+ 		chan = &dw->chan[pos + off];
+ 
++		if (unlikely(dw_edma_core_ch_ignore_irq(chan)))
++			continue;
++
+ 		dw_edma_v0_core_clear_done_int(chan);
+ 		done(chan);
+ 
+@@ -265,6 +268,9 @@ dw_edma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+ 	for_each_set_bit(pos, &val, total) {
+ 		chan = &dw->chan[pos + off];
+ 
++		if (unlikely(dw_edma_core_ch_ignore_irq(chan)))
++			continue;
++
+ 		dw_edma_v0_core_clear_abort_int(chan);
+ 		abort(chan);
+ 
+@@ -329,7 +335,16 @@ static void dw_edma_v0_core_write_chunk(struct dw_edma_chunk *chunk)
+ 		j--;
+ 		if (!j) {
+ 			control |= DW_EDMA_V0_LIE;
+-			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
++
++			/*
++			 * A local instance never issues transfers on a
++			 * remote-routed channel: on CHIP_LOCAL instances,
++			 * REMOTE routing denotes a channel handed over to the
++			 * remote side, which programs the linked list through
++			 * its own instance.
++			 */
++			if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) &&
++			    chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE)
+ 				control |= DW_EDMA_V0_RIE;
+ 		}
+ 
+@@ -406,12 +421,17 @@ static void dw_edma_v0_core_start(struct dw_edma_chunk *chunk, bool first)
+ 				break;
+ 			}
+ 		}
+-		/* Interrupt unmask - done, abort */
++		/* Interrupt mask/unmask - done, abort */
+ 		raw_spin_lock_irqsave(&dw->lock, flags);
+ 
+ 		tmp = GET_RW_32(dw, chan->dir, int_mask);
+-		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
+-		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
++		if (chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE) {
++			tmp |= FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
++			tmp |= FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
++		} else {
++			tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
++			tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
++		}
+ 		SET_RW_32(dw, chan->dir, int_mask, tmp);
+ 		/* Linked list error */
+ 		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 44e7b6c1263c..cc908ca24061 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -52,17 +52,25 @@ __dw_ch_regs(struct dw_edma *dw, enum dw_edma_dir dir, u16 ch)
+ /* HDMA management callbacks */
+ static u32 dw_hdma_v0_core_int_setup(struct dw_edma_chan *chan, u32 val)
+ {
+-	if (chan->non_ll)
+-		val |= HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK;
+-	else
+-		val &= ~(HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++	val &= ~(HDMA_V0_LOCAL_ABORT_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN |
++		 HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_REMOTE_STOP_INT_EN |
++		 HDMA_V0_ABORT_INT_MASK | HDMA_V0_STOP_INT_MASK);
+ 
+-	val |= HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_LOCAL_ABORT_INT_EN;
+-	if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL))
+-		val |= HDMA_V0_REMOTE_STOP_INT_EN |
+-		       HDMA_V0_REMOTE_ABORT_INT_EN;
++	/*
++	 * DWC PCIe DM Databook 6.10a-lca06 remote non-LL examples
++	 * program LSIE/LAIE=0 and RSIE/RAIE=1. Use the HDMA remote
++	 * enable bits directly for stop/abort routing.
++	 *
++	 * This is unlike the eDMA LIE/RIE and HDMA LL LWIE/RWIE paths:
++	 * those pair local and remote enables and mask the local interrupt
++	 * path, but HDMA stop/abort has separate remote enable bits.
++	 */
++	if (chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE)
++		return val | HDMA_V0_REMOTE_ABORT_INT_EN |
++			     HDMA_V0_REMOTE_STOP_INT_EN;
+ 
+-	return val;
++	return val | HDMA_V0_LOCAL_ABORT_INT_EN |
++		     HDMA_V0_LOCAL_STOP_INT_EN;
+ }
+ 
+ static void dw_hdma_v0_core_off(struct dw_edma *dw)
+@@ -147,6 +155,8 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+ 
+ 	for_each_set_bit(pos, &mask, total) {
+ 		chan = &dw->chan[pos + off];
++		if (unlikely(dw_edma_core_ch_ignore_irq(chan)))
++			continue;
+ 
+ 		val = dw_hdma_v0_core_status_int(chan);
+ 		if (FIELD_GET(HDMA_V0_STOP_INT_MASK, val)) {
+diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+index 1fafd5b0e315..1007122d4123 100644
+--- a/include/linux/dma/edma.h
++++ b/include/linux/dma/edma.h
+@@ -60,6 +60,39 @@ enum dw_edma_chip_flags {
+ 	DW_EDMA_CHIP_LOCAL	= BIT(0),
+ };
+ 
++/**
++ * enum dw_edma_ch_irq_mode - per-channel interrupt routing control
++ * @DW_EDMA_CH_IRQ_LOCAL:     local interrupt only (edma_int[])
++ * @DW_EDMA_CH_IRQ_REMOTE:    remote interrupt only (IMWr/MSI), without
++ *                            delivering local edma_int[].
++ *
++ * DesignWare EP eDMA can signal interrupts locally through the edma_int[]
++ * bus, and remotely using posted memory writes (IMWr) that may be
++ * interpreted as MSI/MSI-X by the RC.
++ *
++ * For the v0 eDMA linked-list programming path, DMA_*_INT_MASK gates the local
++ * edma_int[] assertion, while there is no dedicated per-channel mask for IMWr
++ * generation. To request a remote-only interrupt, Synopsys recommends setting
++ * both LIE and RIE, and masking the local interrupt in DMA_*_INT_MASK. See the
++ * DesignWare endpoint databook 6.30a, Linked List Mode interrupt handling
++ * ("Software Programming of an Endpoint's LIE and RIE Bits for Linked List
++ * Transfers", Attention).
++ *
++ * A local (DW_EDMA_CHIP_LOCAL) instance never issues transfers on a
++ * remote-routed channel: REMOTE routing on such an instance denotes a channel
++ * handed over to and driven by the remote side, and the recipe above is
++ * applied by the driving instance.
++ *
++ * HDMA linked-list watermark interrupts have the same LWIE/RWIE guidance. HDMA
++ * non-linked-list mode has dedicated local and remote stop/abort interrupt
++ * enables, and the remote CPU programming examples use remote enables without
++ * local enables.
++ */
++enum dw_edma_ch_irq_mode {
++	DW_EDMA_CH_IRQ_LOCAL	= 0,
++	DW_EDMA_CH_IRQ_REMOTE,
++};
++
+ /**
+  * struct dw_edma_chip - representation of DesignWare eDMA controller hardware
+  * @dev:		 struct device of the eDMA controller
 -- 
 2.51.0
 
