@@ -1,72 +1,151 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6951F33262F;
-	Fri, 10 Jul 2026 08:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B2A3EF650
+	for <dmaengine@vger.kernel.org>; Fri, 10 Jul 2026 08:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783671865; cv=none; b=W94phqWcL/n/e82tp7f4QgiHtNodV+jFgzXeuIDGvbsv1/54L257rxyUoaWCy4KZnr7TBkuanThrI695XVF7w2zmuS4ddlU2SKkwJXAJt43de/YXhm/Jtf6Vp2f2URRctvuv7WUa5qHrAnetaHCChYTANbjWP4LIuLpPD8SD2gE=
+	t=1783671866; cv=none; b=tctm+QcvGvkuYTn8bXN+7yeGxiklJcLCuefk66e3CU0GVnxxMj6obuhrROk0Gk01hHTUi/4ndFiGI6Y1+bcmw9CeTwSXPWxfWjf792D38T9Az7+n7qoyKJ8qwRfvlXYvrco4bS3D4LSXEC7sJH9sq4CJCuceJp8+izQQAIg3bEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783671865; c=relaxed/simple;
-	bh=1n2pHRvn5SQpMkOz2wjE7yjDY3UpHbq2PujQ6Cs00L0=;
+	s=arc-20240116; t=1783671866; c=relaxed/simple;
+	bh=BjqJFUPVJzmZ+ZupdNdilNohfzgAhHtf7gJ59M5I4kE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dSqANOhIt+ZCDFvt5iCu7IYVntstik2mdkDKz9MiI6OEo3TzUmMsjRqe3ZBYQotLoUZ5aiV0mnWttj5nfCpA0PMJl6P5kaj79hpHB8IN5166MPMRFY9s051mGWkLJT1x4q6RMIhJ21vwEyhiQ5nNAlrhg97bzICI33mWe2+OWpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltIUvAhL; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Ep8J37EemGcZIzp/XbdAsnHKXY1yF8owSzFgNPrhCMFYWbXK6xiB9e2oxL0A42EfDtj9t0jVSHBC83pMviRQ0Fms/+flEc+goEcYS6zkzgkC07NENR6hk/PTnelriG9gjiVy65JsG2EvVgVvNFSAl0WW/+Qt1ZdZiBAS+aiFLgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JLcnlZtU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ltIUvAhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55341F000E9;
-	Fri, 10 Jul 2026 08:24:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JLcnlZtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD7B1F00A3A;
+	Fri, 10 Jul 2026 08:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783671863;
-	bh=1n2pHRvn5SQpMkOz2wjE7yjDY3UpHbq2PujQ6Cs00L0=;
+	s=k20260515; t=1783671864;
+	bh=PMPTc48n44L7RPsf84Wcf1OeVhJgsjZwq0Q30hEgUR4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ltIUvAhL4OI0Dt6A81DwAxFKFwiJWyLJKvJUq8jiadUb0JogyxZW7PMaCvRfz7kU0
-	 uB/ldaDnBEx+KpohjpX3ts2jGpRmFBfNs5LGlK8YdRF2WHHnmNgEKZYxfGRhPZ8MP9
-	 B/sIcbAdnTwXYYyxcfDllbh5rC9eMYd/Zkqoqv+L1qoTQ0PJfN+TEykmSRsA5pkclG
-	 iUwidSjimLH74C0E1E1/RvGhvIGCSyjvPziWdTXaFLLCLQNJ8iCzls8BFpVKUbYKFn
-	 jvHzh3qVZ9jT6dREoMd9P/2PzFr6HT79Bs4jG4irh05aysXjVML+j8V06oYf9Dov5R
-	 sfJ4kRt5sX7Rg==
+	b=JLcnlZtUvyf0gSX0CljqS4/qsLkFBLDGXLLOEsvTAF0qpeU2V8wv+XYUoiP8j0p/c
+	 a4wY6vMoOep4PKO4LDwbg6xt0MJ9iLI3x4w2uctkOt9PAgXgpegK+J3yvuZ4X/O+wD
+	 rBSZ2JhlGiXJ4rDbcbV9H6UeFBIhnsusRu11ZXt4vuZxUagYG+hAf1LGr9lV6carRb
+	 gRRBotiaU4VaXCSz1IgPUDfKrNgS1plfZ62h/bjwYZ99xdMMFVJ6xhlYww4myQOmQ2
+	 wpiZ1YGhsSPzIfrGMSLaWewt+M8eSnC/DFTyEhmvXi04pknTuegIxnq3AsFLYpRn7f
+	 S0iI4sxRc7ISA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 1/6] PCI: endpoint: Define endpoint DMA BAR metadata
- format
+Subject: Re: [PATCH 3/7] dmaengine: dw-edma: Clean up vchan descriptors on
+ termination
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: linux-pci@vger.kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260710082156.2395844-2-den@valinux.co.jp>
-References: <20260710082156.2395844-1-den@valinux.co.jp>
- <20260710082156.2395844-2-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260710080903.2392888-4-den@valinux.co.jp>
+References: <20260710080903.2392888-1-den@valinux.co.jp>
+ <20260710080903.2392888-4-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 08:24:23 +0000
-Message-Id: <20260710082423.A55341F000E9@smtp.kernel.org>
+Date: Fri, 10 Jul 2026 08:24:24 +0000
+Message-Id: <20260710082424.6CD7B1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-> Define the BAR-resident metadata format used by endpoint functions that
-> expose an endpoint-integrated DMA controller to the host.
->=20
-> A VSEC-based discovery scheme would be a natural fit, and existing
-> dw-edma-pcie providers such as Synopsys EDDA and AMD (Xilinx) MDB/CPM6
-> already use VSECs for DMA discovery. However, some endpoint controllers
-> cannot provide enough writable configuration-space storage for a
-> complete, controller-defined payload. Keep the extensible metadata in a
-> BAR instead, where the endpoint function controls the layout and size.
->=20
-> The format describes the DMA register window, exported channel counts,
-> descriptor windows, optional auxiliary windows, endpoint-local descriptor
-> and auxiliary DMA addresses, and a ready bit that tells the host when the
-> described BAR windows are usable. Channel entries keep the auxiliary
-> window optional so layouts that need a separate data or auxiliary aperture
-> can describe it without a format bump.
->=20
-> Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+Pre-existing issues:
+- [High] Data race in dw_edma_abort_interrupt leads to permanently stalled =
+DMA channels.
+- [High] Missing lock protection in pause and resume paths leads to list co=
+rruption and data races.
+--
+
+--- Patch [3]: [PATCH 3/7] dmaengine: dw-edma: Clean up vchan descriptors o=
+n termination ---
+commit 7bc17c43c74d58634aed20f3d0b0b4c9f907d26a
+Author: Koichiro Den <den@valinux.co.jp>
+
+dmaengine: dw-edma: Clean up vchan descriptors on termination
+
+This patch cleans up virtual channel descriptors when a channel is terminat=
+ed.
+It moves issued and submitted descriptors to the terminated list whenever a
+termination request completes, preventing leaked descriptors or restarting
+work that was already terminated. It also changes the busy-polling wait
+loop to use usleep_range() and cond_resched() instead of busy-polling.
+
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
+edma-core.c
+> index 4e0dc52397e2e..1b493c104a5b1 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+[ ... ]
+> @@ -313,20 +337,25 @@ static int dw_edma_device_resume(struct dma_chan *d=
+chan)
+>  static int dw_edma_device_terminate_all(struct dma_chan *dchan)
+>  {
+
+[Severity: High]
+This is a pre-existing issue, but can the lack of lock protection in the
+pause and resume paths lead to list corruption and data races?
+
+In dw_edma_device_resume() and dw_edma_device_pause(), the channel state is
+modified concurrently without holding chan->vc.lock:
+
+dw_edma_device_resume() {
+    ...
+    } else {
+        chan->status =3D EDMA_ST_BUSY;
+        dw_edma_start_transfer(chan);
+    }
+    ...
+}
+
+Calling dw_edma_start_transfer() unlocked invokes vchan_next_desc() (which
+triggers lockdep_assert_held()) and modifies child->list with list_del().
+Concurrent calls to dw_edma_device_pause() or dw_edma_device_resume(), or
+in-flight interrupts, will corrupt the list pointers leading to a kernel
+panic.
+
+Should these functions acquire chan->vc.lock before modifying state and
+calling dw_edma_start_transfer()?
+
+>  	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
+> +	unsigned long flags;
+>  	int err =3D 0;
+> =20
+> +	spin_lock_irqsave(&chan->vc.lock, flags);
+>  	if (!chan->configured) {
+[ ... ]
+> @@ -680,7 +710,7 @@ static void dw_edma_done_interrupt(struct dw_edma_cha=
+n *chan)
+>  			break;
+> =20
+>  		case EDMA_REQ_STOP:
+> -			dw_edma_terminate_vdesc(vd);
+> +			dw_edma_terminate_all_descs(chan);
+>  			chan->request =3D EDMA_REQ_NONE;
+>  			chan->status =3D EDMA_ST_IDLE;
+>  			break;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but I noticed a potential data
+race in dw_edma_abort_interrupt() that could lead to permanently stalled
+DMA channels.
+
+In dw_edma_abort_interrupt(), the spinlock is released before chan->request
+and chan->status are updated:
+
+dw_edma_abort_interrupt() {
+    ...
+    spin_unlock_irqrestore(&chan->vc.lock, flags);
+    chan->request =3D EDMA_REQ_NONE;
+    chan->status =3D EDMA_ST_IDLE;
+}
+
+If a client concurrently calls dw_edma_device_issue_pending(), it will
+acquire the lock, observe the old state (not IDLE), and skip starting the
+transfer. Then the interrupt handler updates the state to IDLE outside the
+lock. The pending descriptors remain on the queue but the hardware is never
+started.
+
+Could the state updates be moved inside the locked region to prevent this?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710082156.2395=
-844-1-den@valinux.co.jp?part=3D1
-
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710080903.2392=
+888-1-den@valinux.co.jp?part=3D3
