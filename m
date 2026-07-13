@@ -1,64 +1,87 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24F03112AB
-	for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 12:37:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAC6411679
+	for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 13:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783946264; cv=none; b=fxSSGflR49ocg7ss9N8vzc3vp0Xg6SU6oReR9k0zSVltZ4P2IFFu+CgxKhWwegzRedCgmuK27PYYf2Al1VtXkStw2B49dXOhDIkAMTqd89qctGQYG+AVpD1dl9vQ59ECQ39Y4Y2xF/4RIcmjkdMRUJSa9DpGY9CYtSpT08M9JO0=
+	t=1783947694; cv=none; b=dqFG8v35yJw6LDfZc6rI4GIXcz5aN4lPofDQFVuqEBFIYUeu9k+MqO5bh7X//Rl1exD0Dd9Um43O9ZKoAisKCAevovyQwPl99RIVZ8NdAkMU5+5vmHuQtd9NozMHBb+ezu/Zw4BM9QNkmgVP5Z/Hn75MUAMxHdPJnLnHR0slB4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783946264; c=relaxed/simple;
-	bh=jqYyoMG9cIhIr1bVpCsLdm1qwArlmbeG5gPxMFq1aLA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KmQ1FenZFjLgkuroqB/U3drlksr5BOV6kxc+JZwzufio1sRPtwOCeU8uviXTp48tRC19YreG55DijyRWPfm9v/U7jHWkS5wzjanNUiBmjEfDwUCgtJJpUjR2rl8hwAMr6+baB6Z6oOCsUurc/e7j4rEP/ea9JGqFtvkomQP1sJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIanZH+l; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783947694; c=relaxed/simple;
+	bh=T0ZAEoPGlcD+MBsHOs7IR7iXvbxs2FRnDbpOdt9CWCM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Ap1VclrpjsCLOKoui4lBGMaIOYhjnsNcgB5wQEZ9bKJduhGNNLH4Sw9XvuwL/gQEBSd6mSQVFiVYoaARnyaOh653xrOm2vtA4YN+gvYZqZSaljRGLakMCaJVsj/bbQIfR8jmHEAF4mEkWOZoo3Kg0jidVs3sugGdbZrkuj26TlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YJFK4Jks; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ElnqDfNO; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIanZH+l"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c8612812170so295210a12.2
-        for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 05:37:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YJFK4Jks";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ElnqDfNO"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66DCE6SJ1210675
+	for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 13:01:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ssHW8XScr3JWgrcOFJ5LiFi8t9CrlHFACuaOrI33AwM=; b=YJFK4JksueG3kSy8
+	CsEOscJBC0OK7MMfArRUpRlNVdIMqiFLSsK8Rxk7/0TdNSPRnBCtCiG0+lhDxu28
+	BfamHVNKBqy/hPtjgzzoA+09KlodvXoxi08WlHwwHwuh08qfKmmg4prKnYwRIy7Z
+	+Po+aWQwWnfnO3w/IxNsmiY4m5NlC/GAid4Vz5OyPmmoWC8xTtKjFxuJdq0ivwc/
+	InSTFrya04EUXnWu5IMjBH3kixlulKAAaIDFFNYFd3lBiGSN9ygLRbNgdzkti7/C
+	m6xeANqK3lYQCtkgWlJzZxXOEUZ/brJdM/WHD05dylQ6s3zy824QgqdyWq9tDtRP
+	6odF/g==
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fcw4qrtb5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 13:01:30 +0000 (GMT)
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-7e9f565a6e7so5224572a34.2
+        for <dmaengine@vger.kernel.org>; Mon, 13 Jul 2026 06:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783946262; x=1784551062; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=1iDad2QVdj4/nBD86WrgH7MagYtru4Jp7EnF3L9WAic=;
-        b=iIanZH+lnMGRuzItoiTpVfEwnNdULeTl5OBXPF58vIDOFym+HagGuc37JTD+BUhQZR
-         auertkIk9IbbtblseC8c5ge3jketwKFouAcaCeAaNUW0ohv/gS5rDOdPy7BF0R/J09EH
-         sAsk7n8bDY5vpnHBA7Sy13GnD3yAUB0nPYzJU+QzApa0KuVRChCR+ZtRPtR0dVFN+VO0
-         ttcA1n5J/TpQ+n6+XmKKupGHAQmPGrgu6f5HhKDsH3w2ZtgLwbKCZwkorkbgTllWaXFo
-         Qyh2oP16kFHldASd+C0jZARIgwO7X7UQY+rh0uLQAvqWLmC1e6x5whOu/YGCFiiP3pWm
-         92sg==
+        d=oss.qualcomm.com; s=google; t=1783947689; x=1784552489; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ssHW8XScr3JWgrcOFJ5LiFi8t9CrlHFACuaOrI33AwM=;
+        b=ElnqDfNOn8dAenjbnxHlOiwrae1oUlbt6MQ1Eqeit7dzYxNu4IceZ9DXA69GYgZ+ow
+         rot/UEFy1/dKC6oDOB4WvvGfyJCf+9stMvTLD8ixhLPQ3HDqMFPpYeDDLhB9VcA2XvaS
+         XblHw6SBj4Y3hsbJxORlSN/LeJ1fJC0FGXH/aCNN3IANtKoUmwXQxvBhh6OiXU0O/Mj/
+         OAlb2wovRySs208OXw9WWU8WtBxQ36mHj6IFUx4uKIgbnh12H1A4dEWnRem7rrWCokQ7
+         l+UR0pTgJWfYk2QX/WC5EJmDHliBtS6JmZzq0Dyl94PobwNxuME+dRCLBleoKhM8oBSg
+         XWuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783946262; x=1784551062;
-        h=cc:to:message-id:content-transfer-encoding:content-type
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=1iDad2QVdj4/nBD86WrgH7MagYtru4Jp7EnF3L9WAic=;
-        b=N3WP5Ga8l/qEtiKQe+0weWbjsQgE6S0xKOd3//PreCiFWdVvyCs47HkSPE5w5o7GP2
-         H8V+sQ6cH1ALCjW7o2mTVxQji1CJmiCJPxejvkjaolwsqdryVeRPlrS69i5GEw/ZV9GB
-         sgpZwSeAfsl06Zr0RH5qoMQcTPiSD9egJs/d53SE+GmALEWOekO5v6ahF2G58QiQQ6Rr
-         xmlBb8akLPW20OUueIYJfhq2t0hkKEj8K4VFZMH1Cxl4va8PT0dmNzG5PfXBlsoYr+wQ
-         66yLHO5iTjdfkENdrrYyktEMnrLv1CUZCz70kcAgSjcyFuV0DuT3mME4R3G8bXZEuINh
-         WLog==
-X-Gm-Message-State: AOJu0Ywz5EY1syaSVweTzRw2l3zbf2PVq1PwXTga/tRr7S2baU2ZwNPh
-	gCXZgNiJilyZe7BQ6kWowUqVQOPBTsSCgQOm8hrdSNH8dGzbwQyVS7gekCPEcw==
-X-Gm-Gg: AfdE7cnAk55UQUz5qUsKYHDsf56a95ZUptRIoDOdSr1LXER2Az+R+Dsn57yoBpBi9S6
-	SgtLczXXyk8/bl5ACY+jESDqDDlm19a19h2EHSFhbZtVCUNL58uY849PWeaxqAp9OKWGjr84FJ8
-	7sJo8AqDbJEY6WAeADimZLcUjVwPuCuFINoa0H9GSquM3RsRf0x0OYL1eTK72gGvEB2/zVe0QKT
-	8eowwSM9Qy3oIXnh18E4M8P5Fw8eKxusKv15eF8+KnHVE+A0r+hbr4hGt7cAb6vXONA2dWawe4j
-	CUbVS1Hk4/mcM/j06JTNZW7ZaaLiNdSXmRf8fMQ2LyzV85JuUA3u8N+vuCPJPT3k5ZzVvgke3cc
-	QK6FUC4ChLwrWW2E1pLZ/eqCGGI/O70FrGvfxU5nhP2MLZzBXVcW06yQsMvorBA6zcVrhBsyWAC
-	LB06qBrHCVbQf2hiRmH2u7sg==
-X-Received: by 2002:a05:6a20:9404:b0:39f:1dc2:70c with SMTP id adf61e73a8af0-3c110ac0a5cmr6123739637.6.1783946262056;
-        Mon, 13 Jul 2026 05:37:42 -0700 (PDT)
-Received: from [192.168.1.2] ([2401:4900:881f:4446:b692:9244:2734:87f6])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13ba16d46dfsm5372188c88.7.2026.07.13.05.37.36
+        d=1e100.net; s=20251104; t=1783947689; x=1784552489;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ssHW8XScr3JWgrcOFJ5LiFi8t9CrlHFACuaOrI33AwM=;
+        b=O6ogCc59cpnF9o7i1rIxefzzbuYgjrso3ewdM/tnE33mtrC/Sg01dvSZy3tlWwgsYS
+         zlbcUE+Gx+7E3ui3IdV43uYYO26z+QNqRnxWIWlxaYJNi8bQm8O6shvvQmx1pTF/ctVU
+         lM1opcc/58zAQxmqBEPftoveP4UmdbFHYc9EQMdQpX1/6hmbRkMPjNdB5xs9wdxeoUeV
+         hzVx+XihsYp+tlD2x5ZgUxH7vJ8wVCd/hq7DLEo2GWz+sgQHQ24r3NnfXr/7Jh45ZvKf
+         MSNRSn/DlDs+c7X8LqsaYCkYdw8fM4RnAioIJNRrV4FlvOWJjI9tHHrDAP7PQBgjpdYA
+         2ljA==
+X-Gm-Message-State: AOJu0YxhvUjxZ91SHCmHy2R/I85V08y5HjPgOX0hY5RDCTxXmDIJztYb
+	ZJKHNVwdrBEhRqM+bx3wgai6+afrQPJ3RFkBfqJ4bAvQpJfWptaUQwE77erRU9WpwLkUTvWLGBv
+	c9Z6R5NvWgx9x+yCcRsXBqQ88y8BiR7IQtUGb8fDtjpY4o/gBqLaaB1jFCMPzo3Q=
+X-Gm-Gg: AfdE7ckPWbl5OiJ2lDwzwnZ2MrrEWvP8HdRf1hWRCnfTPGuTv+9QiIp2emPZ1Z9cZFT
+	MzlRiK/axUaIKbSTZSIkz6lrpYlaXtEv+/Zqtbv2nMeUrf+dM/aJKAobqx110m5aL79TEh1o0eA
+	jIfecn+QDxEyccJqTqT0ycDTMbMHxlAZxfi4MtdrSFli17aBxR+JfHzUbV8l1gvZ7GWFpg4Fl/c
+	Wdd2FT90UH4oL5KrUbswsH+JImRrhJl0ZGbCZItWnl/fWcwgjXWgkcXPzZbeH9qbG1z9MJALLFs
+	aXpFvNxFBkhsoLTgDqqUeqJ3kTOt0OBJFNhGw/cUmSfPGoj4aRkhD7uGGy9P/ilpccCqgYIsJWl
+	Htj/VsG2bOJjBQ2+O8FcnB/fQUjdNDUHGsLQcwjvw
+X-Received: by 2002:a05:6820:216:b0:69d:fcab:c640 with SMTP id 006d021491bc7-6a39a6cc376mr4848261eaf.42.1783947689335;
+        Mon, 13 Jul 2026 06:01:29 -0700 (PDT)
+X-Received: by 2002:a05:6820:216:b0:69d:fcab:c640 with SMTP id 006d021491bc7-6a39a6cc376mr4848226eaf.42.1783947688764;
+        Mon, 13 Jul 2026 06:01:28 -0700 (PDT)
+Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:8881:83b8:89fa:1a2a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493f2d97527sm306129725e9.2.2026.07.13.06.01.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jul 2026 05:37:41 -0700 (PDT)
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Mon, 13 Jul 2026 18:07:30 +0530
-Subject: [PATCH v3] dt-bindings: dma: ti,dma-crossbar: Convert to DT schema
+        Mon, 13 Jul 2026 06:01:27 -0700 (PDT)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Date: Mon, 13 Jul 2026 15:01:02 +0200
+Subject: [PATCH v21 01/14] dmaengine: constify struct
+ dma_descriptor_metadata_ops
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -67,246 +90,128 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260713-ti-dma-crossbar-v3-1-734509b316c1@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNwQ7CIBAFf6XhLAa2lVJP/ofxgLC0m9hioCGap
- v8u7cmL8TgvmXkLSxgJEztXC4uYKVGYCtSHitnBTD1ycoUZCFCiFZrPxN1ouI0hpbuJ3KBupLQ
- n12lgxXpG9PTai9db4YHSHOJ7P8hyW3+3suSSewVtpxrQXtaXfjT0ONowsq2V4Y8PxQdjhVPoH
- dbq21/X9QNkIRR77gAAAA==
-X-Change-ID: 20260708-ti-dma-crossbar-ae8411c5d982
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vignesh Raghavendra <vigneshr@ti.com>, 
- Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, goledhruva@gmail.com, m-chawdhry@ti.com, 
- daniel.baluta@gmail.com, simona.toaca@nxp.com, j.bhargav.u@gmail.com
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1783946256; l=7562;
- i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=jqYyoMG9cIhIr1bVpCsLdm1qwArlmbeG5gPxMFq1aLA=;
- b=MdCnIFJmdPFCBPeHbffmuaLjRrJTHlI+VsSEv1qMvN/7oQ4aEQZ4sDkq7vLPuaVMOMJhCVyR3
- VcxKksBpOgPCn8eacDHQ0DS+TOhOygA/h1xp63+L9MS4AEx/QGxQLH/
-X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
- pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
+Message-Id: <20260713-qcom-qce-cmd-descr-v21-1-bc2583e18475@oss.qualcomm.com>
+References: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
+In-Reply-To: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Udit Tiwari <quic_utiwari@quicinc.com>,
+        Md Sadre Alam <mdalam@qti.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+        Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+        Andy Gross <agross@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        brgl@kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2359;
+ i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
+ bh=T0ZAEoPGlcD+MBsHOs7IR7iXvbxs2FRnDbpOdt9CWCM=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBqVOGVtk23j9WMdAK9vTBVzx3ggbDwbf+8TN6Cj
+ XQXTvzeETaJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCalThlQAKCRAFnS7L/zaE
+ w6FeD/9JqF+LVP1epiNp5FsiCS3htRKz5PlF4mocU3VrUG0etSCHC1tK4PzMixQZj2Tl7N7Zok1
+ j7/LP9ZI6/0xY7u7YuY9behpQ1mex/SKrXXzCId0DC1R40Gmifr67MXasXktEjiBwQNnHeouM3I
+ KggDHXo4ccrCjBc9werjgP+GRdbBDWgE4lRaxZjjTOhkqAOgUrvIsv6KL/+nhZFSP4VAOtruUkr
+ kJ/nzdGXfU6u1yCW3F0XbJaXqPdvE5rEi/RlO7ux6I7OXN4T7BPztA54Dc/Sv65u8TdxBn0d48q
+ RevX3zqSTgmWUbfeb3PuW18MSNd7V/pU2Z2iJgHWX/1oYf0LDfwPIfcb7Pg+GWUD1WtcmVsWd7y
+ DfCgRwzhPPnDaIwoeDGYK7OBE/RdtbRR25xC++dDTWSiCVlcIRvCvajQANHjzIO7NbKBNUI0uiX
+ QFmbCPLc6SAwmhe1QojBH313wPgkjP9fYsCAoTwYGwW0tvaWaoWZPKrRNlDYJhNEqaSFhZJJs2h
+ tesL4V5Kqv481xfqgE+XQdYFht2EAAFxyGQRRlHfzXyNPFesmC0bxRR/KG4FQjI4zOsKmphhDZl
+ d6LFkMywLBDJO5nZzwXC4BIorLovMhXH+YyUuLEyqmUDehwLEBuDoPszp1uEOwmzRCUF86VVY+i
+ eyex7CGHqOPsVWg==
+X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzEzMDEzNSBTYWx0ZWRfXxkUBX6H2PPvv
+ Tq/9HRetx1NyG6DWRw/Q0t4Tfezvo6PwAwokoCePKitcCho690eelwfl0oUfjtW0QMQy7p15E79
+ hPqaQkh4bygI2EruMdhU2YrYUk8urzkUdXKohqZQY6h69DBoXTEsQNUbxBYTBCRL6QpZe/iEuhJ
+ 7LPkbtdGL7xVDOFpNROoIlGWgDYN/Yg2BkM/7U7EtY5nnUQCjOk4ev6cpYK72p8fsUJRfNsKi8P
+ ceiHU7k/fmsYwxfgZzayb8I4b/I6aw23mzjT3fIo+3sVYNzDw+UZWbuusZ4V3eHR6jdRDsmDoiQ
+ iDol93J8BihnJwqOCk1GBNdKFEIJGaH1o9Zbvy/4pYCrB9sZeKB612lbmFZo2BgHdi08AOytTS5
+ gioLFSmjVWi3KSysN5URTZecNWAXjzi4w+SZ5iyORox0plYhTu4YBz4QeezkudS0qMSNZL4vKpW
+ kx+cxg1kwxtUR+IVi5g==
+X-Authority-Analysis: v=2.4 cv=HJrz0Itv c=1 sm=1 tr=0 ts=6a54e1aa cx=c_pps
+ a=z9lCQkyTxNhZyzAvolXo/A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
+ a=zd2uoN0lAAAA:8 a=EUspDBNiAAAA:8 a=XeVHrwws4l7kqE2Ex6IA:9 a=QEXdDO2ut3YA:10
+ a=EyFUmsFV_t8cxB2kMr4A:22
+X-Proofpoint-GUID: buf6S24uz2dRyxjCFTkgHckBpw2-Uynx
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzEzMDEzNSBTYWx0ZWRfX38k3CasRKG0o
+ KoSb3b3y/MM5pgD8YlT08O/rVLSYiNOTu7eBR3KJBtNyTun0LffSd75y5VOs6c45RX1y5pONuvo
+ gQf8vVbGLvcExMwRyt5jVHJM0s235io=
+X-Proofpoint-ORIG-GUID: buf6S24uz2dRyxjCFTkgHckBpw2-Uynx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-13_03,2026-07-10_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ clxscore=1015 malwarescore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607130135
 
-Convert Texas Instruments DMA Crossbar from text to DT schema.
-Modify MAINTAINERS file to correctly point to new yaml file.
+There's no reason for the instances of this struct to be modifiable.
+Constify the pointer in struct dma_async_tx_descriptor and all drivers
+currently using it.
 
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 ---
-Changes in v3:
-- Add else block to validate dma-cells property better
-- Link to v2: https://lore.kernel.org/r/20260708-ti-dma-crossbar-v2-1-2ac0d6efde36@gmail.com
+ drivers/dma/ti/k3-udma.c        | 2 +-
+ drivers/dma/xilinx/xilinx_dma.c | 2 +-
+ include/linux/dmaengine.h       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Changes in v2:
-- Removed the unmatched `ti,omap4430-sdma` compatible string from the
-  example block and trim down example
-- Restored dropped documentation regarding client dma-cells
-  configuration into the top-level description block.
-- Updated the MAINTAINERS file to replace the old .txt reference with
-  the new .yaml file path.
-- Added constraints on its inner tuple dimensions of
-  ti,reserved-dma-request-ranges
-- Link to v1: https://lore.kernel.org/r/20260708-ti-dma-crossbar-v1-1-f62796428f13@gmail.com
----
- .../bindings/dma/ti,dra7-dma-crossbar.yaml         | 94 ++++++++++++++++++++++
- .../devicetree/bindings/dma/ti-dma-crossbar.txt    | 68 ----------------
- MAINTAINERS                                        |  2 +-
- 3 files changed, 95 insertions(+), 69 deletions(-)
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 1cf158eb7bdb541c4e7f4f79f65ab70be4311fad..fb21e0df5ab7b20e4e16777b5ff7f61d2ae67b2b 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -3408,7 +3408,7 @@ static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
+ 	return 0;
+ }
+ 
+-static struct dma_descriptor_metadata_ops metadata_ops = {
++static const struct dma_descriptor_metadata_ops metadata_ops = {
+ 	.attach = udma_attach_metadata,
+ 	.get_ptr = udma_get_metadata_ptr,
+ 	.set_len = udma_set_metadata_len,
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 404235c1735384635597e88edc25c67c7d250647..165b11a7c776abc6a8d66d631e19da669644577d 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -653,7 +653,7 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
+ 	return seg->hw.app;
+ }
+ 
+-static struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
++static const struct dma_descriptor_metadata_ops xilinx_dma_metadata_ops = {
+ 	.get_ptr = xilinx_dma_get_metadata_ptr,
+ };
+ 
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index b3d251c9734e95e1b75cf6763d4d2c3a1c6a9910..5244edb90e7e7510bf4460b6a74ee2a7f91c1ccc 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -623,7 +623,7 @@ struct dma_async_tx_descriptor {
+ 	void *callback_param;
+ 	struct dmaengine_unmap_data *unmap;
+ 	enum dma_desc_metadata_mode desc_metadata_mode;
+-	struct dma_descriptor_metadata_ops *metadata_ops;
++	const struct dma_descriptor_metadata_ops *metadata_ops;
+ #ifdef CONFIG_ASYNC_TX_ENABLE_CHANNEL_SWITCH
+ 	struct dma_async_tx_descriptor *next;
+ 	struct dma_async_tx_descriptor *parent;
 
-diff --git a/Documentation/devicetree/bindings/dma/ti,dra7-dma-crossbar.yaml b/Documentation/devicetree/bindings/dma/ti,dra7-dma-crossbar.yaml
-new file mode 100644
-index 000000000000..873cedd1427d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti,dra7-dma-crossbar.yaml
-@@ -0,0 +1,94 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/dma/ti,dra7-dma-crossbar.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Texas Instruments DMA Crossbar (DMA request router)
-+
-+maintainers:
-+  - Vignesh Raghavendra <vigneshr@ti.com>
-+  - Bhargav Joshi <j.bhargav.u@gmail.com>
-+
-+description:
-+  When requesting channel via ti,dra7-dma-crossbar, the DMA client must request
-+  the DMA event number as crossbar ID (input to the DMA crossbar). For
-+  ti,am335x-edma-crossbar the meaning of parameters of dmas for clients dmas =
-+  <&edma_xbar 12 0 1>; where <12> is the DMA request number, <0> is the TC the
-+  event should be assigned and <1> is the mux selection for in the crossbar.
-+  When mux 0 is used the DMA channel can be requested directly from edma node.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - ti,dra7-dma-crossbar
-+      - ti,am335x-edma-crossbar
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#dma-cells":
-+    minimum: 1
-+    maximum: 3
-+
-+  dma-requests:
-+    minimum: 1
-+    maximum: 256
-+
-+  dma-masters:
-+    maxItems: 1
-+
-+  ti,dma-safe-map:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Safe routing value for unused request lines
-+
-+  ti,reserved-dma-request-ranges:
-+    $ref: /schemas/types.yaml#/definitions/uint32-matrix
-+    description:
-+      DMA request ranges which should not be used when mapping xbar input to
-+      DMA request, they are either allocated to be used by for example the DSP
-+      or they are used as memcpy channels in eDMA.
-+    items:
-+      items:
-+        - description: starting DMA request line number
-+        - description: number of consecutive lines to reserve
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#dma-cells"
-+  - dma-requests
-+  - dma-masters
-+
-+allOf:
-+  - $ref: dma-router.yaml#
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: ti,am335x-edma-crossbar
-+    then:
-+      properties:
-+        "#dma-cells":
-+          const: 3
-+
-+    else:
-+      properties:
-+        "#dma-cells":
-+          enum: [1, 2]
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    dma-router@4a002b78 {
-+        compatible = "ti,dra7-dma-crossbar";
-+        reg = <0x4a002b78 0xfc>;
-+        #dma-cells = <1>;
-+        dma-requests = <205>;
-+        ti,dma-safe-map = <0>;
-+        /* Protect the sDMA request ranges: 10-14 and 100-126 */
-+        ti,reserved-dma-request-ranges = <10 5>, <100 27>;
-+        dma-masters = <&sdma>;
-+    };
-diff --git a/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt b/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-deleted file mode 100644
-index 1f9831540c97..000000000000
---- a/Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-+++ /dev/null
-@@ -1,68 +0,0 @@
--Texas Instruments DMA Crossbar (DMA request router)
--
--Required properties:
--- compatible:	"ti,dra7-dma-crossbar" for DRA7xx DMA crossbar
--		"ti,am335x-edma-crossbar" for AM335x and AM437x
--- reg:		Memory map for accessing module
--- #dma-cells:	Should be set to match with the DMA controller's dma-cells
--		for ti,dra7-dma-crossbar and <3> for ti,am335x-edma-crossbar.
--- dma-requests:	Number of DMA requests the crossbar can receive
--- dma-masters:	phandle pointing to the DMA controller
--
--The DMA controller node need to have the following poroperties:
--- dma-requests:	Number of DMA requests the controller can handle
--
--Optional properties:
--- ti,dma-safe-map: Safe routing value for unused request lines
--- ti,reserved-dma-request-ranges: DMA request ranges which should not be used
--		when mapping xbar input to DMA request, they are either
--		allocated to be used by for example the DSP or they are used as
--		memcpy channels in eDMA.
--
--Notes:
--When requesting channel via ti,dra7-dma-crossbar, the DMA client must request
--the DMA event number as crossbar ID (input to the DMA crossbar).
--
--For ti,am335x-edma-crossbar: the meaning of parameters of dmas for clients:
--dmas = <&edma_xbar 12 0 1>; where <12> is the DMA request number, <0> is the TC
--the event should be assigned and <1> is the mux selection for in the crossbar.
--When mux 0 is used the DMA channel can be requested directly from edma node.
--
--Example:
--
--/* DMA controller */
--sdma: dma-controller@4a056000 {
--	compatible = "ti,omap4430-sdma";
--	reg = <0x4a056000 0x1000>;
--	interrupts =	<GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
--	#dma-cells = <1>;
--	dma-channels = <32>;
--	dma-requests = <127>;
--};
--
--/* DMA crossbar */
--sdma_xbar: dma-router@4a002b78 {
--	compatible = "ti,dra7-dma-crossbar";
--	reg = <0x4a002b78 0xfc>;
--	#dma-cells = <1>;
--	dma-requests = <205>;
--	ti,dma-safe-map = <0>;
--	/* Protect the sDMA request ranges: 10-14 and 100-126 */
--	ti,reserved-dma-request-ranges = <10 5>, <100 27>;
--	dma-masters = <&sdma>;
--};
--
--/* DMA client */
--uart1: serial@4806a000 {
--	compatible = "ti,omap4-uart";
--	reg = <0x4806a000 0x100>;
--	interrupts-extended = <&gic GIC_SPI 67 IRQ_TYPE_LEVEL_HIGH>;
--	ti,hwmods = "uart1";
--	clock-frequency = <48000000>;
--	/* Requesting crossbar input 49 and 50 */
--	dmas = <&sdma_xbar 49>, <&sdma_xbar 50>;
--	dma-names = "tx", "rx";
--};
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f37a81950e25..a4b39e0dc178 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -26710,7 +26710,7 @@ TEXAS INSTRUMENTS DMA DRIVERS
- M:	Vignesh Raghavendra <vigneshr@ti.com>
- L:	dmaengine@vger.kernel.org
- S:	Maintained
--F:	Documentation/devicetree/bindings/dma/ti-dma-crossbar.txt
-+F:	Documentation/devicetree/bindings/dma/ti,dra7-dma-crossbar.yaml
- F:	Documentation/devicetree/bindings/dma/ti-edma.txt
- F:	Documentation/devicetree/bindings/dma/ti/
- F:	drivers/dma/ti/
-
----
-base-commit: 0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53
-change-id: 20260708-ti-dma-crossbar-ae8411c5d982
-
-Best regards,
 -- 
-Bhargav
+2.47.3
 
