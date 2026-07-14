@@ -1,38 +1,50 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E367429CE8;
-	Tue, 14 Jul 2026 21:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A153358CA;
+	Tue, 14 Jul 2026 21:53:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784065460; cv=none; b=U+0oOI65nENucIMe6GmRbMFLJzNo7lap1JsfTdmJDqDj75JXsztZoDFaDRrPtbxdNbqSkcyu5iYAWrJorpolDOK8v145oIKANwydms1XymHF483FS8rexZz7WLhmvSkq9n+gdpX25uCalYUDLpUXdlBGuY+6ZcsuIqruVANTKXU=
+	t=1784065992; cv=none; b=OeByRz5mGyX7QgcWOydjdGuckwiHkCYzkE3RgrVG+FRXdTWxOYSNagSfwgdegY8Z3NWbjPvsSn6amgg2kF0Mqw8XApWG7tODZrNPuXKe/gZwg7Tktd+wADYAqCKzKyxvHB1rA0swoFInxJKATjqBoyw6x8mTgQ2cxZWcsoF+B5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784065460; c=relaxed/simple;
-	bh=5MMvUzfPFSHRFS9iGY5trpg9sc8q7isOO7HuCXazzbc=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Subject; b=UFrA3TSJKrJJmieZ/+Wopf6bbOYBZzgv2JLGjp6kyCSXS3MPDV5o6YPIEW4CBGjAnUwWsu2ZkjvYGvzOHvaQT0+MyKt8PIhJf88HFf43HI2s67BPMGWk4S/vEBdd7fB7RAjhUU2SH/gxtWecF3gmssWCyj8Z5RwRDn2x9pwN5j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=ZNnkTYRG; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1784065992; c=relaxed/simple;
+	bh=nBJF1huhfRnkLuP6nsnzKOJ93Pj9BiHpUVzk9hZpPWc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ufaTef+pkIDx1quOg0uzc+scQX8li9zW7oMSpV9+zSJ4JwPAz5Pxc9/6l70qC1V3ecjEt+5qFB2eJX2CtmM/B1FMB5V51Exy6zDc/90l4OLBZB1QE5+tZd8URRmTfs44y3yY4gnR84euRDFRT0Uxnlb8ly0ywjKmhUwbwXmWGco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U074G6fS; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="ZNnkTYRG"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=JvSBZj1Vq5wUOwV0VVic1jYGrF9K1DEaesscS8WrHOs=; b=ZNnkTYRGed9/i/sXg025bNJf+s
-	MV0+tcfokYyDYVzmOXwycEU0UtZ4gBngjEe/EBqL8KLTgzl5F+ib1Ghnz8X0WlIw+IsQ4/frU8PrR
-	GGeHgurLuKrAHiiUiboU/efnTJZwa8CmLybiwXadtLYsmWJrVSf/rVkehF1PlEpcNL4F/ALatT+YH
-	uZ2tmuByOwLbXl0TSwpjeK5W8clTf497Qzps3MGBG6dv5gPaaUKTS9yIpjfTevSNzdgcEOXT7v9Eq
-	G4IuOTB5Qdhecgzj5k7aH3cc3b6jBWU/gqxiLZ4Bf/JsZOkkFW/nP9Z3RTdFylf6c/31oRCFg+gfT
-	YH4agZrQ==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1wjkvK-00000006fJT-0mvL;
-	Tue, 14 Jul 2026 15:44:18 -0600
-Message-ID: <f51bb6b4-700f-44f4-bac1-5815e47edfd6@deltatee.com>
-Date: Tue, 14 Jul 2026 15:44:18 -0600
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U074G6fS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1784065990; x=1815601990;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=nBJF1huhfRnkLuP6nsnzKOJ93Pj9BiHpUVzk9hZpPWc=;
+  b=U074G6fSqdyQXAP1emnGjAfl1q/ZU6kgmbhflICm7J2/DGGHTklCit3c
+   mjSMv7ozP7A3KDhs1r0ZcRFGLsJrMRUAgRP+UUrQmsEkECZAlLc2/ah3i
+   G5l1+lLcpqsDY1LELl2EXka3mPWNALfLxgVCBkn6sbKCfkElM5bkOFnuM
+   +/mxTQwSHn1QXK3wNk6M8N+3mfTmUSCa2iBHEaj667RkXpGH2Y/9sjVn3
+   6gLlrzWwjyBLP3bwU7ofUPJ4Ex1p8s7jeldq2CVW4iIAPF+a8a1YN8muL
+   Uuul8dcLxUymvwtxYYayDLZcaGuqpTJZEc5Q4KAKAYmtSysE6hMBWfsKz
+   g==;
+X-CSE-ConnectionGUID: 7LPUXCQdTICTPPc6wZOnhg==
+X-CSE-MsgGUID: H9iEgEJHSGOqtLMeDdhFyw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11847"; a="84579724"
+X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
+   d="scan'208";a="84579724"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 14:53:08 -0700
+X-CSE-ConnectionGUID: yKJJ/6CmTr6Jk8v61QImzw==
+X-CSE-MsgGUID: X7xhfKPoTYOcNRDF5XST1A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,164,1779174000"; 
+   d="scan'208";a="252595874"
+Received: from aschende-mobl.amr.corp.intel.com (HELO [10.125.108.131]) ([10.125.108.131])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2026 14:53:07 -0700
+Message-ID: <90c8d0e8-99fc-4fd8-bdfd-f3093ffac256@intel.com>
+Date: Tue, 14 Jul 2026 14:53:06 -0700
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,54 +52,77 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, Frank.Li@kernel.org,
- dmaengine@vger.kernel.org, vkoul@kernel.org
-References: <20260714212010.230606-1-logang@deltatee.com>
- <20260714212010.230606-4-logang@deltatee.com>
- <20260714213824.A2F201F000E9@smtp.kernel.org>
-Content-Language: en-CA
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <20260714213824.A2F201F000E9@smtp.kernel.org>
+Subject: Re: [PATCH 1/4] dmaengine: idxd: assign all engines to group 0 in IAA
+ defaults
+To: Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Kristen Accardi <kristen.c.accardi@intel.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>,
+ Andrew Morton <akpm@linux-foundation.org>, Yosry Ahmed <yosry@kernel.org>,
+ Nhat Pham <nphamcs@gmail.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-crypto@vger.kernel.org, Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+References: <20260713-iaa-crypto-fixes-zswap-v1-0-65cac23c684d@intel.com>
+ <20260713-iaa-crypto-fixes-zswap-v1-1-65cac23c684d@intel.com>
+Content-Language: en-US
+From: Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <20260713-iaa-crypto-fixes-zswap-v1-1-65cac23c684d@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, linux-pci@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Level: 
-Subject: Re: [PATCH v1 3/3] PCI: Add PCI1008 to switchtec NTB DMA alias quirk
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
 
 
-On 2026-07-14 15:38, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> This isn't a bug introduced by this patch, but while looking at the function
-> triggered by this quirk (quirk_switchtec_ntb_dma_alias()), I noticed an
-> incorrect pointer arithmetic issue.
+On 7/13/26 9:10 PM, Vinicius Costa Gomes wrote:
+> From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 > 
-> In drivers/pci/quirks.c:quirk_switchtec_ntb_dma_alias():
+> The IAA device defaults only assigned engine 0 to group 0, leaving
+> engines 1 through max_engines-1 unassigned (group_id = -1). This means
+> that by default only a single engine processed descriptors, limiting
+> throughput to one engine's capacity.
 > 
-> 	partition_map = ioread32(&mmio_ntb->ep_map);
-> 	partition_map |= ((u64) ioread32(&mmio_ntb->ep_map + 4)) << 32;
+> Assign all available engines to group 0 so that the full hardware
+> parallelism is used out of the box without requiring manual
+> accel-config setup.
 > 
-> Since mmio_ntb->ep_map is a u64, does the + 4 advance the pointer by 32
-> bytes (4 * sizeof(u64)) instead of the intended 4 bytes?
+> Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+
+
+> ---
+>  drivers/dma/idxd/defaults.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
 > 
-> Looking at struct ntb_info_regs, this would read from offset 36
-> (target_part_low) instead of the upper 32 bits of ep_map at offset 8. This
-> populates the upper 32 bits of partition_map with unintended data, causing
-> the device initialization loop to process invalid partition IDs, which
-> could potentially access out-of-bounds MMIO registers or create incorrect
-> DMA aliases.
-> 
-> Could this read be corrected to avoid scaling by the type size?
+> diff --git a/drivers/dma/idxd/defaults.c b/drivers/dma/idxd/defaults.c
+> index 2bbbcd02a0da..26ebfa2ca144 100644
+> --- a/drivers/dma/idxd/defaults.c
+> +++ b/drivers/dma/idxd/defaults.c
+> @@ -8,6 +8,7 @@ int idxd_load_iaa_device_defaults(struct idxd_device *idxd)
+>  	struct idxd_engine *engine;
+>  	struct idxd_group *group;
+>  	struct idxd_wq *wq;
+> +	int i;
+>  
+>  	if (!test_bit(IDXD_FLAG_CONFIGURABLE, &idxd->flags))
+>  		return 0;
+> @@ -41,11 +42,12 @@ int idxd_load_iaa_device_defaults(struct idxd_device *idxd)
+>  	/* set driver_name to "crypto" */
+>  	strscpy_pad(wq->driver_name, "crypto");
+>  
+> -	engine = idxd->engines[0];
+> -
+> -	/* set engine group to 0 */
+> -	engine->group = idxd->groups[0];
+> -	engine->group->num_engines++;
+> +	/* assign all engines to group 0 */
+> +	for (i = 0; i < idxd->max_engines; i++) {
+> +		engine = idxd->engines[i];
+> +		engine->group = group;
+> +		group->num_engines++;
+> +	}
+>  
+>  	return 0;
+>  }
 > 
 
-As noted by the Sashiko bot, this issue is unrelated to this series. But
-I'll dig into it and try to remember if that was intended or a mistake
-and send a patch if needed. In the mean time, this shouldn't gate this
-series.
-
-Logan
