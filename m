@@ -1,190 +1,172 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8387D372B45;
-	Tue, 14 Jul 2026 08:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4D03DA7C4;
+	Tue, 14 Jul 2026 08:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784016138; cv=none; b=Dn+StMtKXsWUaTmW6w479qmUhP1KrRuemTX0NHfoTq6Z646oym2gBn1YoNvxjPqWrL3V+AgsCS3Rydr9jFkmDSWAu4qbLN9TGeoUEbabY/ICTPQi+6gWLBtCyv9lPvBJ3FJYizNUeuybBxrAXwmupAZx+HFGjEri7s/K4AZyWAA=
+	t=1784016507; cv=none; b=aSfOvUwQT6WqzgITXVYLEmz7+LZaBMgU81CO0AGfotI2NQpFLnYqSAuLcKfTl057sMizEvMC9ZErbMXjqNiGc0F5AYA4zCPapw+B9v9LWhPx3IXpchnciAHdOxfnAMR2OD9exs4zM5pBROoIfibwDNjJSnB8eihqxaHe4LEiEuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784016138; c=relaxed/simple;
-	bh=Lcf4nKR26voolH2pfIkoDtL1N08ZRtyep7I475jkkXo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X1ulCl74wvOALz39PwDbgmC/yKVPCfVCSk9v3vhge/0Vk9FywcQgzd++E5PJ56KzEoHje49p+EBVgzaPMQPnoKPfQh0ArzkzORszSknm/xPRzAZn64I/kS1EmfRCG6TOWjUt1deH4SIC5cc+KHBuaFSVeaGvc+LCFDCH6g83/Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vd3Tpbkr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784016507; c=relaxed/simple;
+	bh=1JoqAKvb1v+9+8D6Z6hKQDixrMHBsj2+KAE8y7K+VgE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=SgINwG2/U44vGHAgPVeBUGMM53iXjJpE/ZMYIdtELvkH3Ky16pjitr1XMqXYPIEJnMEXMlCSnQhQ91xDDouKMfGNptFEirKoVyEhfMp/f7UqOwSn/Fya3NyTyIy8s9yhyyML4O1oaQdDCebyjOyushpKO2IuT72m9O6oMblFL9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rUpjOmZt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vd3Tpbkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED48E1F000E9;
-	Tue, 14 Jul 2026 08:02:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784016137;
-	bh=TrIeJmVXMyc9vJtT76XLafOEKO7HH8hJhTX0Einc3GE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vd3Tpbkrp7xoeJE2wnGMrsPG9DytBnCImQpTEpa970Cm09wK91/Z0Li+4MEj5twyV
-	 GfxLsdjO9wMaMlGVpMNVPrO4INwH9uX5v+tD4cYdJfFeRtwUmPbEXL0F1QIa1umcWt
-	 gHX9JG39Kj8Y8DBeOEeGsu2Kso5XUuoPRekl6XT65PxeqNCMlrccIW5D7up7GVAmp6
-	 O7BE7m8NPhOu0iV7d9K8TnKjjRHMT0mPD7GDhMLLt2K2JGlSX8D+VpkxQhz97OU6BY
-	 04aztGwuA+g223Auj/938ojj64nat8n74JwevXf9EtIylorkVtEi2e4x4hViiM22G1
-	 2xKELEYO414Pw==
-Date: Tue, 14 Jul 2026 10:02:10 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: 
-	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, vkoul@kernel.org, linux-pci@vger.kernel.org, 
-	dmaengine@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 2/3] bus: mhi: ep: Add mhi_cntrl->flush_async() callback
- to flush the async read/write
-Message-ID: <dbjdfjrpci2wwpf7lcyqhwbkm6amdsxfbirrb5metqau4keui6@o33fswugtxjp>
-References: <20260629-mhi-ep-flush-v1-0-714e0d56e87c@oss.qualcomm.com>
- <20260629-mhi-ep-flush-v1-2-714e0d56e87c@oss.qualcomm.com>
- <20260629085917.350211F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rUpjOmZt"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 91B1DC2BCF4;
+	Tue, 14 Jul 2026 08:08:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1784016506;
+	bh=1JoqAKvb1v+9+8D6Z6hKQDixrMHBsj2+KAE8y7K+VgE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=rUpjOmZtT75xj83ZbwU9ymmX5LepMtytDbzi4/8PqHGS22JqWifzAs6lHWc2SSIok
+	 vtF/jbpcj5Uh464PiADd7Qex2cDmLnu6LVnjtAszlyePRwGso5PWTM2rkj1bB4MPBI
+	 IpdctoBTq+pBSAr/QghTqI4CvabmGAqX4jBHf+bAEMCtdoYTk67Tty40ar+l/PGkeg
+	 XmFRiUcXIdX4hyhenNObQNctUMQiJ5v35b7n+Z+WTEg5tsUQzAIToQ5z0J5A7UcZgf
+	 /Gpvhh5OrTo0nmikDT7TqaOyss0PMZPzkBBWq8tyhCveWUvNivJ2aSeN+qn6y9hwr0
+	 HwssCC0d/d+pw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 719C8C44507;
+	Tue, 14 Jul 2026 08:08:26 +0000 (UTC)
+From: Xianwei Zhao via B4 Relay <devnull+xianwei.zhao.amlogic.com@kernel.org>
+Date: Tue, 14 Jul 2026 08:08:22 +0000
+Subject: [PATCH v11 1/3] dt-bindings: dma: Add Amlogic A9 SoC DMA
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260629085917.350211F000E9@smtp.kernel.org>
+Message-Id: <20260714-amlogic-dma-v11-1-de79c2394282@amlogic.com>
+References: <20260714-amlogic-dma-v11-0-de79c2394282@amlogic.com>
+In-Reply-To: <20260714-amlogic-dma-v11-0-de79c2394282@amlogic.com>
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>
+Cc: linux-amlogic@lists.infradead.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-hardening@vger.kernel.org, Xianwei Zhao <xianwei.zhao@amlogic.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784016504; l=2916;
+ i=xianwei.zhao@amlogic.com; s=20251216; h=from:subject:message-id;
+ bh=o/Qp8oCw+N9EVwbF9aeiSMMFq+aTHa2sv+r3V4aaRw0=;
+ b=6Ol2T8VYPwXMhxCqvfoGG4CJmGSmph6kYYxU+hYx5OG61IblfX88kRxiSJBeSVhKP3AXVN8n0
+ s0i8bRRnMYdCSAA8X04Q2x8pbO1+f9zwmphm/ccgkQujLrg+eUWTiy8
+X-Developer-Key: i=xianwei.zhao@amlogic.com; a=ed25519;
+ pk=dWwxtWCxC6FHRurOmxEtr34SuBYU+WJowV/ZmRJ7H+k=
+X-Endpoint-Received: by B4 Relay for xianwei.zhao@amlogic.com/20251216 with
+ auth_id=578
+X-Original-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Reply-To: xianwei.zhao@amlogic.com
 
-On Mon, Jun 29, 2026 at 08:59:16AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Incorrect ordering of channel teardown, disconnect notification, and DMA flushing in mhi_ep_remove() causes data delivery after disconnect.
-> - [High] The newly introduced flush_async() callback lacks channel context, forcing a controller-wide flush that aborts DMA operations for all active channels.
-> - [High] Dropping the channel lock during flush_async exposes a window for worker threads to process disconnected channels, defeating the fix and re-introducing the UAF.
-> 
-> Pre-existing issues:
-> - [Critical] In-flight asynchronous DMA operations are not flushed before mhi_ep_ring_reset() frees ring->ring_cache.
-> - [High] Lockless access to mhi_chan->xfer_cb in completion handlers causes a TOCTOU data race with mhi_ep_remove().
-> --
-> 
-> commit 191c1d6e4eab8c4a6ee949c2b5b9499a56060800
-> Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> bus: mhi: ep: Add mhi_cntrl->flush_async() callback to flush the async read/write
-> 
-> This commit introduces a flush_async() callback in the MHI endpoint
-> controller. It is called during device removal to ensure any in-flight
-> asynchronous DMA operations are completed before continuing teardown.
-> This aims to prevent use-after-free issues caused by delayed DMA callbacks.
-> 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> [ ... ]
-> > @@ -1636,6 +1637,12 @@ static void mhi_ep_remove(struct device *dev)
-> >  		}
-> >  
-> >  		mhi_chan->state = MHI_CH_STATE_DISABLED;
-> > +		mutex_unlock(&mhi_chan->lock);
-> 
-> [Severity: High]
-> Does dropping the channel lock here leave a window for worker threads to
-> process disconnected channels?
-> 
-> If mhi_ep_ch_ring_worker wakes up while the lock is dropped, it sees
-> ring->started is still true. For Downlink channels, mhi_ep_process_ch_ring()
-> skips the state check and fires xfer_cb() directly:
-> 
-> drivers/bus/mhi/ep/main.c:mhi_ep_process_ch_ring() {
->     if (ring->ch_id % 2) {
->         /* DL channel */
->         result.dir = mhi_chan->dir;
->         mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->     } else {
->     ...
-> }
-> 
-> Could this execute xfer_cb() mid-teardown and cause a use-after-free?
-> 
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-AI slop:
+Add documentation describing the Amlogic A9 SoC DMA. And add
+the properties specific values defines into a new include file.
 
-Even if xfer_cb() is fired, it won't cause any UAF as all the resources are
-freed in the client driver remove() callback which gets called last.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+---
+ .../devicetree/bindings/dma/amlogic,a9-dma.yaml    | 68 ++++++++++++++++++++++
+ include/dt-bindings/dma/amlogic,a9-dma.h           |  8 +++
+ 2 files changed, 76 insertions(+)
 
-> > +
-> > +		if (mhi_cntrl->flush_async)
-> > +			mhi_cntrl->flush_async(mhi_cntrl);
-> 
-> [Severity: High]
-> Does this order of operations allow successful data delivery callbacks after
-> disconnecting the client?
-> 
-> Since the channel lock is dropped, completing in-flight DMA operations during
-> flush_async() will invoke their completion handlers. Those handlers find
-> xfer_cb still populated and call it with a success status.
-> 
-> Should flush_async() be called before sending the -ENOTCONN disconnect
-> status to avoid notifying the client after it may have freed its contexts?
-> 
-
-Not strictly required. Client drivers won't free the context until their
-remove() callbacks are called.
-
-
-> > +
-> > +		mutex_lock(&mhi_chan->lock);
-> >  		mhi_chan->xfer_cb = NULL;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but is there a data race when clearing xfer_cb
-> concurrently with completion handlers?
-> 
-> In mhi_ep_read_completion(), the callback is checked locklessly:
-> 
-> drivers/bus/mhi/ep/main.c:mhi_ep_read_completion() {
->     if (mhi_chan->xfer_cb) {
->         ...
->         mhi_chan->xfer_cb(mhi_dev, &result);
->     }
-> }
-> 
-> If mhi_ep_remove() clears mhi_chan->xfer_cb to NULL after the lockless check
-> but before execution, could this result in a NULL pointer dereference or
-> execution of freed memory?
-> 
-> >  		mutex_unlock(&mhi_chan->lock);
-> >  	}
-> > diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-> > --- a/include/linux/mhi_ep.h
-> > +++ b/include/linux/mhi_ep.h
-> [ ... ]
-> > @@ -164,6 +165,7 @@ struct mhi_ep_cntrl {
-> >  	int (*write_sync)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
-> >  	int (*read_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
-> >  	int (*write_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
-> > +	void (*flush_async)(struct mhi_ep_cntrl *mhi_cntrl);
-> 
-> [Severity: High]
-> Does the flush_async callback need a channel argument to avoid flushing
-> all channels on the controller?
-> 
-> When mhi_ep_remove() calls this without specifying a channel, an
-> implementation like pci_epf_mhi_edma_flush_async() terminates the shared
-> DMA channels indiscriminately:
-> 
-> drivers/pci/endpoint/functions/pci-epf-mhi.c:pci_epf_mhi_edma_flush_async() {
->     dmaengine_terminate_sync(epf_mhi->dma_chan_rx);
->     dmaengine_terminate_sync(epf_mhi->dma_chan_tx);
-> }
-> 
-> Will this abruptly discard in-flight operations and cause data loss for all
-> other active MHI clients sharing the controller?
-> 
-
-While it is true that flush_async() implementation will affect shared channels
-also, there is no use in passing the channel argument to it. Because, there is
-no way we can selectively flush DMA for a single MHI channel. If multiple MHI
-channels are sharing the same DMA channels, and a single client is going away,
-then there is not much to do. But this is not very common or may not happen at
-all.
-
-- Mani
+diff --git a/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml b/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml
+new file mode 100644
+index 000000000000..6cedd5fdfefd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/amlogic,a9-dma.yaml
+@@ -0,0 +1,68 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/amlogic,a9-dma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Amlogic general DMA controller
++
++description:
++  This is a general-purpose peripheral DMA controller. It currently supports
++  major peripherals including I2C, I3C, PIO, and CAN-BUS. Transmit and receive
++  for the same peripheral use two separate channels, controlled by different
++  register sets. I2C and I3C transfer data in 1-byte units, while PIO and
++  CAN-BUS transfer data in 4-byte units. From the controller’s perspective,
++  there is no significant difference.
++
++maintainers:
++  - Xianwei Zhao <xianwei.zhao@amlogic.com>
++
++properties:
++  compatible:
++    const: amlogic,a9-dma
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    const: sys
++
++  '#dma-cells':
++    const: 2
++    description:
++      The first cell is the DMA channel type(DMA_TX or DMA_RX).
++      The second cell is the DMA channel index.
++
++  dma-channels:
++    maximum: 64
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - '#dma-cells'
++  - dma-channels
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    dma-controller@fe400000 {
++        compatible = "amlogic,a9-dma";
++        reg = <0xfe400000 0x4000>;
++        interrupts = <GIC_SPI 35 IRQ_TYPE_EDGE_RISING>;
++        clocks = <&clkc 45>;
++        #dma-cells = <2>;
++        dma-channels = <28>;
++    };
+diff --git a/include/dt-bindings/dma/amlogic,a9-dma.h b/include/dt-bindings/dma/amlogic,a9-dma.h
+new file mode 100644
+index 000000000000..c59c2fd4b956
+--- /dev/null
++++ b/include/dt-bindings/dma/amlogic,a9-dma.h
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: (GPL-2.0 OR MIT) */
++
++#ifndef __DT_BINDINGS_DMA_AMLOGIC_DMA_H__
++#define __DT_BINDINGS_DMA_AMLOGIC_DMA_H__
++
++#define DMA_TX			0
++#define DMA_RX			1
++#endif /* __DT_BINDINGS_DMA_AMLOGIC_DMA_H__ */
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.52.0
+
+
