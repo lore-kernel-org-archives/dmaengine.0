@@ -1,225 +1,159 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021099.outbound.protection.outlook.com [40.107.74.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58443AE704
-	for <dmaengine@vger.kernel.org>; Wed, 15 Jul 2026 16:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784131603; cv=none; b=i6fyNmCKlS81ukJ5BJEBPA9fxmzClpG3QGGI0Y5oAD+pzcl2PvJy0SbYCY26GT4NBFltIykEzRSCCSZE0Jm4wQ/wtC0uPkNM1yQtQ1tG9ZiG9qQOG85BzNGSSbLSwPgiC/ynhZ7UDqaIXV3NoAFlf/yDtt3Pz8Epht/ikAxhOIA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784131603; c=relaxed/simple;
-	bh=uPscrPb3ETPjEhpObEhVsTsiQn+HK7qL2dKRijNuK8c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iyU9NDLRJICdWrBlDjofTUCvx9sfTLyJpaH+Tscvc9j1O5ULDQSI+mbZaHXz9kHIRCeVJOgyqeYx5uZShq0xnvI8hcK4yO51mOyBUo26m6cnM9CpdSsAr4l9BKZE8Y/OeZmdH2KWuxKXzxIrLnVNx0PhpJI/Io1wwtqU+pbCd5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L/w6819Y; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020FE2FDC57;
+	Wed, 15 Jul 2026 17:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.99
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784138269; cv=fail; b=ps5GVwQc4HROZAaCDr1qMNZtOSS9BLuD8dwgWcGjt51o/nOk7+T/5dp26ZJetyaYL9M9g3SwaMgArjVUvSe2Y3SZhGt9WNGTCE3y2X4HvmKjaZIyu4FlWHCXlI4ZsJpcSFFxNIyxjtkWggG3MaeSRJ/1HojtWymoObAkfQQvwWY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784138269; c=relaxed/simple;
+	bh=UxqaHxY4oyoAhGB+h30UsuQY9ujTPFez9Hr1O4tBaPQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=lqyXq+FlRYuIZgTtHsOA6a2kzmMcsuCcUffqdEXkLTxEQOJV2PT2hYyftNmMWkFaUxjKUBEpmSDVonmOm/hSdPsrem/dHMvEC3Zh+HAqxXUIcmhNtafj5Zm/+pk9cg6R/8poYe0zz0x5UsIT5MHRJmrONB460/YBtcWVLJRhFfU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=P10HXEDm; arc=fail smtp.client-ip=40.107.74.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L/w6819Y"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-493f0ae9572so23421325e9.3
-        for <dmaengine@vger.kernel.org>; Wed, 15 Jul 2026 09:06:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784131597; x=1784736397; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+lQdKSmRz9WhvxdTzt01CBN7vUfgGKc2JFY2x/IMYok=;
-        b=L/w6819YpG6zvtVivauQzoTlUu6iQhFmqBRoilsZiSCK9bQvK1uS8A/r3QjmXYY5X5
-         8otN79COhU6MBjKpOKi/nSGDsbCB9LLJH28m4/mcZMrj3YpPvOA7QVcupTn0PGQyKq6D
-         vN858PP+vcd0qcMtE2qcT2ubcCLikN4tLHztdwbikYKNsuz2VWnurQs4Rr66qVsFzZdQ
-         s863zaiNwAqGKK22Qk+pG/SNajH4cjlZhXLbJBI9YpME7bAEwJa+KsEmJWJQKkStSixp
-         M7KlZK7lNe6Q62rXbRcJ2vH7K64axATViboGvAJWgRiTzEGtbLM/dx4XZrAJCRywWZi3
-         F9Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784131597; x=1784736397;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+lQdKSmRz9WhvxdTzt01CBN7vUfgGKc2JFY2x/IMYok=;
-        b=sAAwM5cQIwsU5zJAz8SfKLuq501ap4zFEv7y6AZyIuM7gp74xBsVLHvLNF2QKFVgvi
-         kUJljv5NKMWTyOvGLf89M+WPSUwoZvmijRvs+nOE7gZZQi5MWp63uMb7Gj4jEoO7VKMN
-         SGDZJsivda0fBSOzmCAHCpVA8jsPuK7GWzT38sLMBxz9JthB4UUhuhQZerlWuhaSUeix
-         FywkasfhFeZSLz1enzki9TYbArupsd+lHSQRd23P8OuV3lR+5WvOjeZMbBqMd6X5G/cS
-         IQC2zmOYHgE192iLDbrwiHVOyMJzpE8+dHBfzNAGsu3P2mQsUsyjh4SI+V+701AE8cJj
-         MSAQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr+n13neG7tyI99biIba9hd80HHd36z/QNDsw+n+5U1LaiFUTlEq/nyL1o2qXJU+4wFNIgqyoPp9R4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuB+KBVlDOnr2pruRXCIk2bdEHwcXRG6SqhfGr6TJpDn4EHHlm
-	8UHuLLmOYBgUZwf0o/S5tmBtovqTexssrZk1NeyHTPEe+is+3nwduA9qzLTzx//RHDs=
-X-Gm-Gg: AfdE7cm7YNrAGBbZiQ/0ZSSYLZ/O2AvNR1a4ojAArfgO9wOUJMdMuL4N3TUiSEvTx2b
-	XgRS58tr6wY2dGhpmQ3GkzvBcmifRmgidzbNSxWxznJB/PebEekaHMA0O+eCB6cvf+6hvhxFL8o
-	jnpmADRU5gTOdxYPPYst5Hv5817HILvciZfKgix2i7HyAp1qJ4nWgK21qJcT86I3SOnybUDt2om
-	zRTnyBxPwWhy28d3fMXtW3OiOnh9T4WS1/tRnHdA/dN0PvaLVRPJAmb5V7M/1OwyCljVC8+o9Y0
-	fpEhfEYJzdg6xsFgt/pV5ZK7othDvMwWYBvyZrZnFHr4FOoozc6v6Em0uBTS5I+ZoQPGD8GGmwz
-	rnju6+1GNm6MVyFgo1W7FbaGaeBKTrbGyynA2IKMn4tYV3Y8ljjemvsCGK1U8iexacAb9ASYjiH
-	omOgI2qn4LaB4TW6tqYApi0KfdUPKsWseAZLM=
-X-Received: by 2002:a05:600c:8b6d:b0:495:3fc4:81b4 with SMTP id 5b1f17b1804b1-495403fcaadmr9759685e9.30.1784131597440;
-        Wed, 15 Jul 2026 09:06:37 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:d62b:a557:d06c:e9ea])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4950a32a2casm232743795e9.12.2026.07.15.09.06.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jul 2026 09:06:36 -0700 (PDT)
-Date: Wed, 15 Jul 2026 18:06:27 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Andy Gross <agross@codeaurora.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: [PATCH v21 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <alewA9ubkYKHpnuj@linaro.org>
-References: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
- <20260713-qcom-qce-cmd-descr-v21-6-bc2583e18475@oss.qualcomm.com>
- <alYGGu7_3G6mJAzQ@linaro.org>
- <CAMRc=MevqXga1u-XC8LYc3hnjjzmdESntsSGYP25XECeeySfJA@mail.gmail.com>
- <alepDnRJmRLbFGRQ@vaman>
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="P10HXEDm"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gtxlW+XqPWsSQVcpjGsDGyIEw+CaMCDg9+cSoTl+Rn4zzASpESKNESPBY1/HH2wLcifN2Sy7zmqcGR9LBs2FlEVWAXAwGooD4qua2RgjOC+/7xNGxLuyi7FrC0HajWMNXYJdl8F9ozOVYm5gxQmVFWIXgJ8IhJ3PFPrVmXf8ldm9oUEXRUn7oY5yNRHYn6pUztOFPNI70Q5opVSXzvoS/lhr/RXvHj5+GDBhg1C8pSHuhWGJZV9BT7fhYpixyaFRzgcL6PHTXPdz61Q1su6xsjhhtz/PSgnzKt+8P1Q4t6yXGsxF7G/qFSClFhuESqCm9ZXCeYGLVPeJSY6r0r8m3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zmIUNrhLAZk2W5yxnMslRzZC9yBajRHcyuMBTOfE9Gc=;
+ b=SQdcoH/UNT/xyDT94g6lbzXroc7lkkKBfr1wmNaNS9LiABC281bkg5vBLSfFRSDr9h4A/EZd4eJIo6+OQh5j1cUt9uVggTfqG3PRo/MezSX0ulme07mNXq4opSIq1u3x/1k3TfXkVYOf7rxQOm5BnSBfS1Z4rfYWvrzHqqTduC6RBKq5Yzz2gW5P5mTMxnhzx5uPYs50VO52d4mthjNiygUW/qT9Z5DnKIDcd7AW0CZkrPudmoSX4A6JSwS8k6Vk8iWK2XqPtOwhIRNpBxaGU7Uf8c2kFSjfmrs1c7SSEQ+SnpdMxlrLiJXZ4mohJWp4LZkrTzD/uDAPYGByfpCH3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zmIUNrhLAZk2W5yxnMslRzZC9yBajRHcyuMBTOfE9Gc=;
+ b=P10HXEDmWQprHwdpuc99GWRPtCMi0Ouno12JYe/HufhbW9botm7mj1LsjdqSjMs6gf+vbBgrwFrjH8HY06DFLRbvN77xeXDvC7QK/zYz+3/hWRofhLwc56qf2tScEmlG7o/yd8WVOwD976FDWdNQoiXOwOTR7fgymEiUqObHpRY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TYYP286MB4406.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:110::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.10; Wed, 15 Jul
+ 2026 17:57:44 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0223.008; Wed, 15 Jul 2026
+ 17:57:44 +0000
+From: Koichiro Den <den@valinux.co.jp>
+To: Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Cai Huoqing <cai.huoqing@linux.dev>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>
+Cc: Devendra K Verma <devendra.verma@amd.com>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 1/9] dmaengine: dw-edma: Fix HDMA channel status register access
+Date: Thu, 16 Jul 2026 02:57:32 +0900
+Message-ID: <20260715175740.1110404-2-den@valinux.co.jp>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260715175740.1110404-1-den@valinux.co.jp>
+References: <20260715175740.1110404-1-den@valinux.co.jp>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TY4PR01CA0090.jpnprd01.prod.outlook.com
+ (2603:1096:405:37d::8) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alepDnRJmRLbFGRQ@vaman>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYYP286MB4406:EE_
+X-MS-Office365-Filtering-Correlation-Id: a531a0e1-0672-4a10-33de-08dee29a923b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|10070799003|366016|23010399003|56012099006|18002099003|10067099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	jrKF3TcVK0fxNfon0Ok+XcHUC+DyG1Qqt8rIrm7S5vKuO+JH2JoIrp9WXhevgOZE0BszNaENuVq430EXsrBpsZSbVFhwzfM4PAQNa1jhlSbKlYUoWBC3Jm2XDKJ41MRf/GPU1Ut8xptB1ue7fhNfSNN+crE2kma5C+DRv06Tb2oAa30oNhKKRDCXZ8T42aiytUfmNoBGEYe7GwoBlEFIsjXUgHAjN33sLGlgAMR9R1PBZTwN1mcHcjUCFft/2MUIFTO/rX+0sJVE0fvzOLpR2KHFmPaG49lnendCdL/dsmzDjSkWnwh/SY+Lb1ZjzBKBzn4u9Ts7dlqXCNFVPaTh6h7rr85ilZ2UkMmUVkcgYmXU5cGtfmVXiqC6voyYZPJ0p+rO4Gs/DwjhzgyOVAB724VNMJ8RG7NFURK07QIfMn3DOMQ9coiotWCLK1E8WfBD3Y6F2gazwG0WJtZkS1+0BDqOoQMFqOsS02CTQdkwtqyN+WkgbhnRG7qJgD6QmWRyYSo0BYXRq2zDmLvDgp1Or3UnvnBGQMl1m12pJrkj/uGCz718i2Wq6J2B5m/O4ORZGkarJjLctulaGtFlLm83IkE31ZDctGN3LAR5v1CC5mc63Z80OBJZNbSFFr7ALSHya74690yTlMCs8QQ3xslrIZ7E07AHB6izPeHRtjH02r0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(10070799003)(366016)(23010399003)(56012099006)(18002099003)(10067099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?K0lrGGaMQJJh8Z/A6O5SYSO8Lhz09ioZ/xlWE23BZGYQDtfXhq04FOY3EjKH?=
+ =?us-ascii?Q?t0bgYcJ7zERtZz9/B1eTzs5G0bw2XKgv9Vwg5LjopalLBhGZ304IPTer42pB?=
+ =?us-ascii?Q?W6xp+SQ2E+7zKcvQB7xC+gnOVKKXXUcAawHZ6CeXlyWFIFGQXCASzlogtZz4?=
+ =?us-ascii?Q?JtHq67LiuREgoiJ8zm4Ozec+a1efOcICbFFzJ8zh2z8XfMOHb5/xPtC8Le8B?=
+ =?us-ascii?Q?7lP8hrEYyJA5mo/Sl+vf7sicT8E2Y2rVRJHdlURECUqrNi15HpsfRLhxGi80?=
+ =?us-ascii?Q?c6P9LjedC18t+B7OU355IsxADPE+vNGQDvdNYpjP7MFKsDPaZzB7thhGGuC2?=
+ =?us-ascii?Q?JfUQ6P6Jhdzg2Jj+ZnBpkhCIw8+iByA1Zgh2b2Ibc+ZZ/i68VXkrP3kcmB9J?=
+ =?us-ascii?Q?i7dy7tTNpnQICQ+5zfdHzb7hjenOhMSIo5Nutk7GRvB3XxS44d6rKJgBRG6+?=
+ =?us-ascii?Q?FN4W4TFR4Yak9iHqzRg9XhDpeWPe1JbCW8c94vMPJJCcK1Dqqw99ej6J8GBR?=
+ =?us-ascii?Q?h2eDvgpsjJYdDM/1bqtiqZlnxMbZaECpIcvd3b0qf18MbkhEQuQUIVEDO31H?=
+ =?us-ascii?Q?1OMoNE/k7lwRJRMHi9C2a5I98kNnTTqIy1HyAdZJeOrIYkC1+kOlEM81Rb/n?=
+ =?us-ascii?Q?IiJKuB+MeZNb8bE3/MXPZATx97JsjKLs5OsgYXr5AzHlsqMJpGVse/WxJYOU?=
+ =?us-ascii?Q?DhidzsgL/CHaVDrhiDIoHa/V9B9/ecS4sjyg0c5Cl34YxFxWiyfogPa0Sxr8?=
+ =?us-ascii?Q?2rPMhbEdPGfKjuot771RZYE9fJEavHJZrENNupoIEZipIl5hbbcXnf9bEgon?=
+ =?us-ascii?Q?XuuX+KtcoS7VpV6xKKaK6VPvnOn1ck42aWfVaEbXsWX62VxOUd8uX0CYyqPU?=
+ =?us-ascii?Q?5OqTyr+oIy66OsgYnjRSv9rOj8VmUJbvVERkZWPz0cWhHt5eWZzpHAIFYEq8?=
+ =?us-ascii?Q?YWABq/o2sHKvO1AKPaLNfkja1XXC2K2Y2ji066A3ynl/jvv8WT/My/LSTCv6?=
+ =?us-ascii?Q?CDgR3zs1FMsse6lZN9OvXm6LECDh+9EuqrD0+dRNQ1bR/67nMNhfhZk7hgnU?=
+ =?us-ascii?Q?So7yW/X6VrCKKpV68KP6GImRNPPdukhOs9G2hi1pRRa3goOHS72SgvoksM7u?=
+ =?us-ascii?Q?PBjK1hlEQHy1u2fMuuIrxWDsSRhcIQqk9KxyHieBmp/R+UFJ+j4czBuhDs/u?=
+ =?us-ascii?Q?vG7iuv/CPCPguRPT2Obf8S2HM6XZgylRxWMrZ3OLMxDkXOmwtlT5i7XKUULO?=
+ =?us-ascii?Q?CljKaKCLdUASbhOOJj2g8QNZ0tjhj8GKhNW/Tl/2pZL3Z35AFS2n28A/d3cE?=
+ =?us-ascii?Q?oLEPOMVewQsjqKNO0napgz950BovVu7gxdVIWgWhScgiPJyUuQtppgQz/k38?=
+ =?us-ascii?Q?Ix3MbGxs3bWfdG7RmaopMoTW6xQbzdmJDUljZ8tvcBedbkz43GiZ5cLFlAIb?=
+ =?us-ascii?Q?iabEi3CYrqx8Lm5I4D8SAuxvxzFgVysSFV7zVUE7FdUYWZEMLSRUhKO7kE3a?=
+ =?us-ascii?Q?d4nAiX3B11rUGIj9Ft5rHcso+lmFPDNariP0eD6FecUBsLnSMf8eVLLNhOLm?=
+ =?us-ascii?Q?xYnlLz57msLt09L0+G3qnG32n4lB2NEQtNclsQkixXoeL/wZfF82M6RU9Q3b?=
+ =?us-ascii?Q?Tx0fpkROL6rWbCqi7VfXDMHEe38Vx7VyQBLs98fT7sgveoCaur2DajUyVpMD?=
+ =?us-ascii?Q?CMxUJDX2Q2FJy5tUpCDGYAtO3FQzTxAWXdmmF5cKkmoq5zGHGKpSfjx7eXvX?=
+ =?us-ascii?Q?HC2eZ/mswdVM0PKlGMBhkLl/XMCOmIE35B4y9GDXdzTbG1XqwoOy?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: a531a0e1-0672-4a10-33de-08dee29a923b
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jul 2026 17:57:43.9849
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JyGa816KO6lXpSURrePd24kOqyV5mBt2xt2z/3Rd+jnw+XAhWRN0teRcbMYrknlyR+tzWZ1X18k+qaeQDbNkqQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYYP286MB4406
 
-On Wed, Jul 15, 2026 at 09:06:46PM +0530, Vinod Koul wrote:
-> On 15-07-26, 14:43, Bartosz Golaszewski wrote:
-> > On Tue, 14 Jul 2026 11:49:14 +0200, Stephan Gerhold
-> > <stephan.gerhold@linaro.org> said:
-> > > On Mon, Jul 13, 2026 at 03:01:07PM +0200, Bartosz Golaszewski wrote:
-> > >> Add support for BAM pipe locking. To that end: when starting DMA on an RX
-> > >> channel - prepend the existing queue of issued descriptors with an
-> > >> additional "dummy" command descriptor with the LOCK bit set. Once the
-> > >> transaction is done (no more issued descriptors), issue one more dummy
-> > >> descriptor with the UNLOCK bit.
-> > >>
-> > >> We *must* wait until the transaction is signalled as done because we
-> > >> must not perform any writes into config registers while the engine is
-> > >> busy.
-> > >>
-> > >> The dummy writes must be issued into a scratchpad register of the client
-> > >> so provide a mechanism to communicate the right address via descriptor
-> > >> metadata.
-> > >>
-> > >> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> > >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> > [...]
-> > >> ---
-> > >>  drivers/dma/qcom/bam_dma.c       | 191 +++++++++++++++++++++++++++++++++++++--
-> > >>  include/linux/dma/qcom_bam_dma.h |  14 +++
-> > >>  2 files changed, 198 insertions(+), 7 deletions(-)
-> > >>
-> > >> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > >> index f3e713a5259c2c7c24cfdcec094814eb1202971a..f08549ee3872eece85884606d6ee9e540ee688ca 100644
-> > >> --- a/drivers/dma/qcom/bam_dma.c
-> > >> +++ b/drivers/dma/qcom/bam_dma.c
-> > >> [...]
-> > >> @@ -686,6 +702,35 @@ static int bam_slave_config(struct dma_chan *chan,
-> > >>  	return 0;
-> > >>  }
-> > >>
-> > >> +static int bam_metadata_attach(struct dma_async_tx_descriptor *desc, void *data, size_t len)
-> > >> +{
-> > >> +	struct bam_chan *bchan = to_bam_chan(desc->chan);
-> > >> +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> > >> +	struct bam_desc_metadata *metadata = data;
-> > >> +
-> > >> +	if (!data)
-> > >
-> > > Doesn't really matter much, but since the parameter exists you might as
-> > > well add
-> > >
-> > > 	&& len == sizeof(*metadata)
-> > >
-> > > here to be sure.
-> > >
-> > 
-> > Ok.
-> > 
-> > >> +		return -EINVAL;
-> > >> +
-> > >> +	if (!bdata->pipe_lock_supported)
-> > >> +		/*
-> > >> +		 * The client wants to use locking but this BAM version doesn't
-> > >> +		 * support it. Don't return an error here as this will stop the
-> > >> +		 * client from using DMA at all for no reason.
-> > >> +		 */
-> > >> +		return 0;
-> > >> +
-> > >> +	guard(spinlock_irqsave)(&bchan->vc.lock);
-> > >> +
-> > >> +	bchan->scratchpad_addr = metadata->scratchpad_addr;
-> > >> +	bchan->direction = metadata->direction;
-> > >> +
-> > >> +	return 0;
-> > >> +}
-> > >> +
-> > >> +static const struct dma_descriptor_metadata_ops bam_metadata_ops = {
-> > >> +	.attach = bam_metadata_attach,
-> > >> +};
-> > >
-> > > I'm not sure if we have discussed this before, but could we avoid
-> > > re-programming the scratchpad_addr all the time by placing it into
-> > > struct dma_slave_config -> peripheral_config? It still feels awkward to
-> > > me to place a global constant configuration value into per-descriptor
-> > > metadata.
-> 
-> The concept is that a dmaengine can handle multiple peripherals, so the
-> peripheral is always per desciptor
-> 
-> > Yes, this was discussed several versions ago. I went with using
-> > dmaengine_slave_config() until v11. I think Vinod or Dmitry requested we change
-> > it to the metadata.
-> 
-> metadata seems better fit for this.
-> 
+GET_CH_32() takes the direction before the channel ID, but
+dw_hdma_v0_core_ch_status() passed them in the opposite order. This can
+make the status callback read another HDMA channel status register.
 
-Modelling this as descriptor metadata is really misleading. You call
-dmaengine_desc_attach_metadata() on a specific descriptor, but then the
-bam_metadata_attach() above just writes it globally into
+Use the same argument order as the other HDMA register accesses.
 
-desc->chan (struct dma_chan) -> to_bam_chan() (struct bam_chan)
--> bchan->scratchpad_addr
+Fixes: e74c39573d35 ("dmaengine: dw-edma: Add support for native HDMA")
+Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+---
+Changes in v3:
+  - No changes.
 
-The descriptor that you pass in is completely unused. If you call this
-on a different descriptor later with a different value, it will just
-change the global configuration for the previous descriptor as well (if
-they are submitted together). It will always be like this, since it's
-the entire channel (and descriptor sequence) that is locked and not an
-individual descriptor.
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-dmaengine_slave_config() operates directly on the struct dma_chan, so it
-is IMO the right place to add this. That makes it clear that this
-configures something for the entire channel.
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 632abb8b481c..2beec876b184 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -79,7 +79,7 @@ static enum dma_status dw_hdma_v0_core_ch_status(struct dw_edma_chan *chan)
+ 	u32 tmp;
+ 
+ 	tmp = FIELD_GET(HDMA_V0_CH_STATUS_MASK,
+-			GET_CH_32(dw, chan->id, chan->dir, ch_stat));
++			GET_CH_32(dw, chan->dir, chan->id, ch_stat));
+ 
+ 	if (tmp == 1)
+ 		return DMA_IN_PROGRESS;
+-- 
+2.51.0
 
-I don't think that breaks support for multiple peripherals connected to
-a single BAM (dmaengine). A BAM pipe (channel) should always belong to a
-single peripheral. And even if it belongs to multiple peripherals, we
-still need a single "scratchpad_addr" to use for the lock/unlock
-sequence.
-
-I would avoid using struct dma_slave_config->dst_addr (like in v11) [1]
-though, since it's more a "address to dummy register" now than the
-actual dst_addr of the peripheral. That's why I suggested
-struct dma_slave_config->peripheral_config.
-
-Thanks,
-Stephan
-
-[1]: https://lore.kernel.org/linux-arm-msm/20260302-qcom-qce-cmd-descr-v11-7-4bf1f5db4802@oss.qualcomm.com/
