@@ -1,47 +1,47 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020090.outbound.protection.outlook.com [52.101.229.90])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021134.outbound.protection.outlook.com [40.107.74.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623CF4248B5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28B9424D66;
 	Thu, 16 Jul 2026 15:25:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.90
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.134
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784215526; cv=fail; b=sYhJ+UpWm3DleBt6A1dvS/EkirVAhTyokvWx4DLRiy2c+w4hxCg/8inqPFldYhjCe0EqehYPz+qhI0vfVuUNFTGjSf/P8fZ2AUKC/d0RpIFLCKYl5xIvu0/9DD3EB85oDE5Xy4qYfr0D+4uY8i8JSbbNvmuLxeOMUScih2BvYok=
+	t=1784215527; cv=fail; b=dXuks3t21CErT0mT8VyZxeiPXg3HtdcPOYrYiQve4jrknoUrAfe3s+d2rtE+OnCvfZtiXuTkDFnD21bPgerb9UIJ3UL0pWkOyHBmZPGifmxvToISIodbC5b3lzg3+e9m0TNLcxzk0YWa419oPspghpUW8N0ehkEXycXbvOzrw6Q=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784215526; c=relaxed/simple;
-	bh=gR/i+canls+Nbdp7y1twKR3dmBEyT4lcFr1gI838Mxs=;
+	s=arc-20240116; t=1784215527; c=relaxed/simple;
+	bh=b04DAAA6z8mDQOrxaqUPTYxnJ3T+JwG5/r9WhoA41E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=uKvayfEyarEeFdbaOwx5c/zk3RTslZRmCOXwL6KncsTm6WVHqgsFzIK+esc2nqO+VVATOvzzC5nKpRUTsgKF2eN0Nne1cKvjMQw8ynSp7SbLB/3kz5z3x5XoXG45AfiFp2N0D8r9D0uQyniENcmKqzPXUEgcqYRW6KjcZGzIBXw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=Lky9qHbU; arc=fail smtp.client-ip=52.101.229.90
+	 Content-Type:MIME-Version; b=LwNnPikQ6XPJKTAIA2W4CtKiQBLfcA1AiUWsh/Z8CV7EVdchzJc7mxM+3CVxB+w+baQZ7EbQIOy8zoo+15qDyDdpCkt+5BBiXB4HpALwfNUQkiUEH8H37hPIgo2AaczQuKPWmxq/oXcjLERg8Vky4mppkmqG7T7vjTOzN7+fkKA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=Vl4kk7zH; arc=fail smtp.client-ip=40.107.74.134
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="Lky9qHbU"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="Vl4kk7zH"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WdfUuw8rrbBVPa2xYudT2EZing/ThNJOMXcfFeIMxX+5gx0hFUa4SsegexeMyca8vM61TW3kIk9RkTMbYQ3JYjtFvxoJhAc+gJ0ZrLIk1gkcGqevkOCf6lNmDtyIyxAvyueyoYmoO8gU22iRGljSLFQoklBI+kLkkiJd90FonD7E43EwlAvWQ3RVHmO4FvHoTy7FFfCPUPl05J40EbkyrCf71leOw/aChJehXDDZL0kViDmEpzSvo/U8RBU3RmQ0HpWUqw990MOWTnGsEq6f0u96LefghE6gpE64Y/YuyztwB/5zzdd2xTpulFWGSOYhIAS9t6j4AhoAGAIjMpzG5Q==
+ b=i/w6YaoIk7rz4iVg2v7OS5Vfab5rb+t6qZrL94bAj7kaNha7i6X4dB7gdfIKGrhp+h5riY+H2xguQ9FcImLUye6AaCgqlRHVobCZe7eIvhwaJI2qGXv1Z5doOMMwGLcL2J8lccuorOo8Subb5h2nb+dJCd9PJEcDiZ06c16TEeI3ky0mrKggbJ9cEUGeqNvvGYUSy/h7vyGMszfb0CXe7r77gaU3gbKgRbVAf03ftOBb98xqhwHFv+ZiDDp1jrfoGREkteM3ljjNviTyjqfGzBnHk4Cb9edySvS10IvkVVjtRXxBz8L+ZL/jRshRNJ7WYd9EjY9TjgqTxB06gIxLsg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BQrQ0jcWWWCY54LbPpB9BhiJ6NRwAkUYHz7bGyjZxPQ=;
- b=TsgvFBAW6ebvuXKuOnX9ehpKQcpqFzviYPFpUxsI/kUFqBPsV3NsK0wUrZlzzfOYe4e9ayUIVXJqbfK+QRElbgBup2rAmpzsmEILOWwTnAQtVNsgDdB6GlFDhPh4LYWxAzxNwkp6GAQUYMDUTpxNhFqrvmDvXC6TMv1jqjmItAQrG/MFHrRZHXPlJqrnsALR06tXcBP0Zj3oQQpX+7ELXUPeo9LeXKSjMYtTo+1p6rKnCwtOLa7EM0UpC9APtlWkFKT+INV3e5PiaN1TQyTTwzYxvqnD9JwI5Hp1myjU3CCUM+34sA4aYkvpwZsy6gsALhQROc0q86niimwstOeJhw==
+ bh=yxwacdM76OOCOdsLxuwzYvGKu/KWzCe7FsFlty3pjn0=;
+ b=rV8QKz0QshZLWl/KQ82PRncxRNhEFs0Tb7y7FzGs22kIlmRdP0v6ejbIU7doedSyCVC1qpFxW9ukVk1pu8uJ2m/9k0kuZx4Fp2Dvpm0CBxtKUpDO5+SKUT3W3JflsxpTJZOX1N278Qf+AC+swaYVmtPD2frt8kDKWu1fvAFO6ooBT/JAef9In9WGRV+sx14ygqHw4/796p168PmxbMjSrFVPdQVWdSkN1KYCpvpLiOFO0TXnGVIiOdo1MbCjOeR152D4SIQIgND6nLwX+LMyBVY1P+/+QitgafER19+Ci5/iWOa7qnQ0DRTtdfjRdk5BsM+FMI3bDrpc6zZXIAyx4w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BQrQ0jcWWWCY54LbPpB9BhiJ6NRwAkUYHz7bGyjZxPQ=;
- b=Lky9qHbUx5ovBeKHBNKbXh1hzC3to7UB4FM/aqevi66n9zoAqcwiVFFw7ruXBQ30U/AwhW78PwO+IOuL5x04A9t07pQddcr+4lGNgmUr00lOT4oSfmCOh3pHaiBHX2WAfEt/z5oFB9oGQzGfiMC9Z/lbDrQlSpnjsnUrOS6AEGw=
+ bh=yxwacdM76OOCOdsLxuwzYvGKu/KWzCe7FsFlty3pjn0=;
+ b=Vl4kk7zHC97xhb8YPeKMvCl4ce+jMoModR41XoKNiMoooahLUhjnKZhBi/fKyqBmCM6Ir2mkxmifz7FFUEj+nCvKKoYDRYywd3py+5TanQeX1mh4d9ZPMVkRrYjBtA3qMbBJikGlJYCNR5nsCkbpaOSHPyIQp4H4vzgBv8k9BLE=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
  by TYCP286MB3635.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:3a8::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Thu, 16 Jul
- 2026 15:25:18 +0000
+ 2026 15:25:19 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0223.008; Thu, 16 Jul 2026
- 15:25:18 +0000
+ 15:25:19 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Manivannan Sadhasivam <mani@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -52,16 +52,16 @@ To: Manivannan Sadhasivam <mani@kernel.org>,
 Cc: Devendra K Verma <devendra.verma@amd.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 5/9] dmaengine: dw-edma: Serialize channel state checks
-Date: Fri, 17 Jul 2026 00:24:59 +0900
-Message-ID: <20260716152503.1747922-6-den@valinux.co.jp>
+Subject: [PATCH v4 6/9] dmaengine: dw-edma: Clear stale requests on termination
+Date: Fri, 17 Jul 2026 00:25:00 +0900
+Message-ID: <20260716152503.1747922-7-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260716152503.1747922-1-den@valinux.co.jp>
 References: <20260716152503.1747922-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TY6PR01CA0019.jpnprd01.prod.outlook.com
- (2603:1096:405:3bb::15) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TY4PR01CA0084.jpnprd01.prod.outlook.com
+ (2603:1096:405:36c::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -71,122 +71,90 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYCP286MB3635:EE_
-X-MS-Office365-Filtering-Correlation-Id: 352beaeb-67b5-4dec-5106-08dee34e7151
+X-MS-Office365-Filtering-Correlation-Id: 83af7388-8c05-4d93-251d-08dee34e7219
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|10070799003|23010399003|376014|366016|1800799024|10067099003|56012099006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	mHhGU4udijctt+SOq5GxEt+DfcV5V4Ajzm9Ot76D53oebdFQM9qEKXfvbwiSJP0nVEM5LBRePpo21cDscI9/TS5beTAj0KRxK839luaP771gl1yJcimRLvRvtNxa4ZJmvceEB/d41KCWW0R7wg5gehWz+lIfLJJjjYI4XP0Ijerl4OkotKaJPz3dWvJvmkjkOpu5SKU1WlJWwiiD6NL3lq/9V56DbZ2qaegAUxuXHSx+QJzyxk9zwnC27QoCIT6pDPoKqOdovnQjygIpQpiYTH+Rzs51oUgn7UTi7CQs5ffZ3oZOsNWsyXVeLXb9lF5cFiMYWqEdaa52ENRYU2mYzM9Bt61ljPVfqbSKfqjrS866Nsstx0ODPzbhvZEEE2HnQmeIe+qgMUyieHC2ONf8g5ksDfiYkMquzHTWx45PIwmy/10FtggRn60p8JVuS9CXQce/1/CSW3sEQij1D89UTzuoaTZYexSD20nTIxGzMBwGgYi8TIQqI3DKeVUS5wa/B9Qin6v70cKbKiSXi9O+Hez+kAFSU3zPyzo6LIT1X8CkDnakKwLsXlZRr0j32FPobkPXn2RUMwLxpj691ian8vRbVAJ4keKNLiVdn8/gDpMvocyhfocPzmN+IzatsPQiH7SxS97dMUg6ZW2Ynj3pupz6JftJpmqypI/S9wUEyFc=
+	tdzuUVDvvW5wOkHqrIG0dq9PY3lOVGmJ/zkVh/BwpMhaP+iBlY5/GcGL3kB2IsPWTgOjSA1mpzsSpzki5D5UOfQo+A+T8kavH9xXllRSVTxC37t89saRQ2OMR7ASSFTEaXLJP1cimXTeRb89Z1AC8WGt+rKfuLCZEgUrPYFOPfslsM1Wm+gBYoVs7i25Xo2umgTqfd4Y78V3t1N+5+VPF5rJ1YQtfWvY1qIUhyjYHV/hVFChT4pVU5KIue1r/L4KRfp8lrVU66Wfq9ZsXGgNOoKR23f93EZhHRi42QQgVT6ISGmea523TvgTF6x+mQnyFOTp9iq3O8hqOkx9rEvTV4SoB2CPafUdmd/IWw1hEdPqvMcDmkiyFjvpcHzYmavjWeoXgPd6L8SP61Qz4XjM+ayK2GvIV7i6yTmqRdCZvMfz+0zzJ9MIWbMGxabmv4rljeUz5LtQ+dOMkweEtZP0ZWvgx2pUivEmYal7ebVw3HLutjhXGgME/6FApsnMBGElkd2UaqyTYH9qULxaXdmiCXd6TyP7XZqjAHGxHbXMcEYj4PLbgA2hd3JlYpRpPVQMEdF0g5RcKO30OENci+aoLvPPC5V/X4xUo8w0MbfUsAQXs/SVEP01yIIEJaozVqK9qL2Uit0ybSeN5qU+4c75Ttpbh15Qa4+6GmWB632a1MU=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(376014)(366016)(1800799024)(10067099003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ZjZJmn3AyjfbkyPeZyFnVd3Q/iROewmyuafHsKgz+niPS40xHUp40x0Yg53a?=
- =?us-ascii?Q?PgptSpIIrHIq1+7FIV6DzFmQdhUcHoFVURqD1e3j9PcRc+3WhLdszcvPsjm1?=
- =?us-ascii?Q?HqP47XxyTKfn1HwadlDa2dcs5uad3yM6wLJEi4s1IO+uLoONwfvTlJtGPrwb?=
- =?us-ascii?Q?BChxqxIrZI63kg3VAhudoi/EuTHYolI8FLtofpR7PZoQ3Kca/1dTIzqv4KH9?=
- =?us-ascii?Q?hrWsXLHDHg4oVar9IAxHQIkXbqFQf9dX0SCGXM/5AlDL+2WlV+3R2wzI3YLi?=
- =?us-ascii?Q?hPDHcA9gX11Zgln+CastX2pWDobUm5FJlMaA7qII/BoiCT//wAEOCUQ+xF6V?=
- =?us-ascii?Q?vko1Wgrn44l7X2tiaMAfbumNoa2xRtX1QtRsxGesqVPzAetXX9nMeNHeOrkj?=
- =?us-ascii?Q?zvZ2hGbEcYgK+RFHWSMWkLInk5McQo0cD5pFtHIuPCMdwwwzKnp4SPCtnUyC?=
- =?us-ascii?Q?bngWKTYpB/B4q6PlbCwQuT/IgduimJcAgvQHW2gCLXadUjH6AkX4z+HxjTjS?=
- =?us-ascii?Q?Bptx7qNcuhzvrtPCGUBp6Wtns7lSXVAJKZYYdVIURHspe4qj3vNxwWOrgPFZ?=
- =?us-ascii?Q?rH46BWhXtdtjZ7wZ3kYrtxUEriCKep1+XXal2wr1Lalk4/9fAOXXW7/A3bX9?=
- =?us-ascii?Q?jAucAsYGWpU/Uj4K/zcc9aYOdzrIjl8MGICX/USrgMYl0xusY5JlQVsSUsiG?=
- =?us-ascii?Q?ACi3k1kj0//C08aJcYMT0IruMgv9AnNVk1OcJo6OQr2SKq5ZMfBkhaGBGlpo?=
- =?us-ascii?Q?tI1TWfb3QHHIGaI30oV8lJqDOpOq5BLg9Fl1n6KiZVbpfF/fQv1JdLuyWfkL?=
- =?us-ascii?Q?yycdzNaFxCoB86xNAp0ub3Abxh9b24k6puYIMSh+nJc/nNLeb1IsUbB7RB3n?=
- =?us-ascii?Q?yKe8rkR3rgflgeaYJdoOE0TxmYrbracrf/p5f8qNUaAkN3NG4WtmHNpUvpEL?=
- =?us-ascii?Q?GANfOt/PwYoy38JNWU1mOiBQLCfLKPG6TtCTM+YLKFTosfumgePiwD1Q6oA9?=
- =?us-ascii?Q?MNGqbiLHLMaO8I6vOSU8y/MG6eE2sKlcRo9IEpNYKvdsnYAOnPrkiTyyC/Kl?=
- =?us-ascii?Q?I8wKZ/s7Tw6iCFAJI1K25LVph/Bb0zQ7TvQEaWaEGPIQd0oy7uAP2ymA/RD0?=
- =?us-ascii?Q?ZXHA15WdtKfwNkYxRoN3r3xI2h5lJSZyhdJonFe4R4GvHfeoC5npXe+fQr4x?=
- =?us-ascii?Q?GGMAf/BA3c5mQ3bFKdNSbC9pIdpSknNdefFOvlb1jev+zKOaCZ9hDl0wAt5K?=
- =?us-ascii?Q?Nn00bF3Ew9OG5Wso7VrKhL1DpskPdGWCUmvw3dW5MSBXIfubClFs2TyTGLsy?=
- =?us-ascii?Q?BgdnVC7msnC1qXt/0PIHJMW/lBupDKMz/f0SUjhYbFOHn3/PbEVDn+zENDyT?=
- =?us-ascii?Q?uqhqzM+bUsx6Y+UeR6KgqZH0f65C7tEIhA9eq/FfaqcPGMj/OWIROXzz9gyu?=
- =?us-ascii?Q?gvxoA1XwFqVUnlgHjwYImMYQA1LLpG7QQwisNRkpAmgg8EQgNVJOMHUTOR87?=
- =?us-ascii?Q?mEpxfIuFqs5csafr+WsTFQPh58+juhm3QFIuTbh/EXgkpstpAYiDwd9tSnd2?=
- =?us-ascii?Q?dwtAgPxrEWbkx4KOuveDTp6PMMejvX0MBOdTk7mkcBNoPL/GO22OFH4v9IrM?=
- =?us-ascii?Q?/1xFktA0oXuxLLPz2/7X+Vb0q21bJiJ8DNUt8OKqJMi08DykEyt5QOCyzfoh?=
- =?us-ascii?Q?4WaQXJ0Ab1KgrfXeViAgYrJOSp4jeEBSDxFQ2ZsO5l4DHooarxFm+LKWd7Y/?=
- =?us-ascii?Q?QUKYhaC1b3zq0Pf+k4v1U2ayRE0mBGD0bBN8+Nohy5v1Mro9mnUk?=
+	=?us-ascii?Q?y59fx4u+5WU6sNRoGXZ/WHidLn4DvLKwCK5mZJ82bpVJKgjEJVT9GS0FdwIr?=
+ =?us-ascii?Q?351xkKWkd1s7VNk8WO8oNz2A/7z0GSzmrtQoUiJYm/5h3guRXjMFOV/smLcY?=
+ =?us-ascii?Q?058ARV/UM7Br3YzF//Wmndxv/kCqqdQ2/n+YSJKrlyT6N97oLqLDEPvgLDxX?=
+ =?us-ascii?Q?YQom+k7FoQ1Lv/zqpf+eAamgX1qt57O+W8aLE7+be8FJI3UaIJle1NhzvGMa?=
+ =?us-ascii?Q?xX12/kAWHcEC+biOmSSLQCxrctmzVUUpFwrVqo//NXHZX+focW3KWgWVhmxJ?=
+ =?us-ascii?Q?d18+WsVhVWyWWy3DrGZPbsGS4akRXwivDfGqNqbJF2EloVq5AcaS9yhI9MHJ?=
+ =?us-ascii?Q?wtN5pQnPKiZ1vfFuqnRPztVo3KgHUGqFwUJIC+AlttEPLxCcEGaYvnEzhC+C?=
+ =?us-ascii?Q?h3r5zvIDREs19JR5J4N8Pqb4r8Lvpdt0BaNIH75kPZ+t7XzwF9qnwM3NhruB?=
+ =?us-ascii?Q?9hNevF/sfZ/m+D805VqgiRsVa6NXfUeDqFDyi7O3bMBE6erL4+BaVm5F0P11?=
+ =?us-ascii?Q?aOzhDsyAfHcnGCIpI6wKtfGpAUhcvo0cDU3OZOkG9u+gn2mLbEFvW7AZQCD9?=
+ =?us-ascii?Q?hFSfdQO+r/Lks5W1QmrRJ7AhfOKWsskP4rkDrOSyw6usJ1Tu5cUfKlcyWuXi?=
+ =?us-ascii?Q?w4Vs+DiogJ62Vv8lMKqA+QX+QG0dhwbztDQ8Y9/0M0hwde/s7EZEzX29flk8?=
+ =?us-ascii?Q?D94/uY9tMujrTDjkzB7KXvAFcqnI4zbTAbzg8k9cx4dL1QtxDpT/N0L/RZe9?=
+ =?us-ascii?Q?dup3yHIMkUvueLQ1fumAXgERipJaFTd78cXOnks0jWOv3X1+NZJ5NzKdkQoM?=
+ =?us-ascii?Q?rZyP3NQLJqmIuuOXAYMkj+vjqhsHbDrPrz5USsEdKANw3enpbHwll4B6MM4h?=
+ =?us-ascii?Q?+gZCT+Tgg1cueCIRTPosMypFHXc+G/liDr6itY/M7rWcY8hlh4JvdzGqROQk?=
+ =?us-ascii?Q?vAyBU/q63SSWep8zozl4ehOU2BRwtaX6XSUckJ00R8f+qaoMqzNp+Vw9+u8s?=
+ =?us-ascii?Q?qSw1DOM7NwF1627jmu0feT3Iuwi/Wy63MqyM7l41+C5gvP0KLXzfGugrMdBa?=
+ =?us-ascii?Q?MwbrqVpMRbgfrYLhs4sFQdLoFelJebXQZUgAnkuIslAHCAZ7Xb+pfpEgoKX8?=
+ =?us-ascii?Q?ouCzlh1HoRi1cnzpEQDHz40DPs4FDCKtCZytfCbivP78/rVsIrSx9YuLRcpO?=
+ =?us-ascii?Q?8weRWhU1t6qdW3p6fCBeskj5OUTcIovmDWeoXNEKWh6sfyMVWK1TTHiOb5XC?=
+ =?us-ascii?Q?4b8rh+ST5tmsIE0zF/LETECmq5wr4R/p52NyIVMpWUnfqHVBIcGTAr/wwLhw?=
+ =?us-ascii?Q?0BD+ir3ry9vW2L0XuRlThDDuSSHPUfLzqPDRU+Opni9SxhygrYCJn4sud0WE?=
+ =?us-ascii?Q?jCBWwAOWP2ZgsBjHrFmWREnsVGvPPgvqw6jhWwYkZxH4gtUchtPc/W2s4Hf7?=
+ =?us-ascii?Q?eRYUY8uzOiFdwFkriESRCrQEm4joSvol5FL623ajOUh9irfDsCQyjH/FQCEp?=
+ =?us-ascii?Q?uzGOWVzngOTJzPD4blY0L6zRc2SMTfobWLCxYMqs7fPwa/gKsgpPVobToDju?=
+ =?us-ascii?Q?gvKKBpAh5ZXmFnG1WeV5Ekt4YCKvxGz6c+x3M7+Z5nC0au/Ry83D//p+sdEU?=
+ =?us-ascii?Q?EFpv5PBbEKk/AIYZrFPGqYn+JxkywDKtxKB8kH/jN1zc/uVx86uv4iDDQwCr?=
+ =?us-ascii?Q?DLjDGlFL52GRV6xzhAZzWRanz2NS2ZNWEQcezQa6KE6ki3n3g8tgUlHc3SkS?=
+ =?us-ascii?Q?gA7OqP4/uR7+l2OhfYn6IVr+0rw559FNgzKD10J8sfCxqwy8gVAq?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 352beaeb-67b5-4dec-5106-08dee34e7151
+X-MS-Exchange-CrossTenant-Network-Message-Id: 83af7388-8c05-4d93-251d-08dee34e7219
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 15:25:18.1837
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 15:25:19.4898
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HRMQQyl1gx2rgy8WRgOSpqa6ttkDhLJymUW8sNFWmAqI75LMCey+lfb1+XH/UGowI7pKiNAJWR4xUlXBLYA6mg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: s0LM4pNUEiFsnrQvXbERFH7f3V4uL6ZW1Nzxr+KG8NhbmJ7BRmYh8Jwxw69RY98MrjEIDty9Rjktxq5GOfwJuQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB3635
 
-pause() and resume() read and update channel state without holding vc.lock,
-while the interrupt handlers update the same state under it. Take the same
-lock around those state checks so that request, status, and configured stay
-consistent.
+terminate_all() can finish immediately when the channel is unconfigured,
+paused, idle, or already stopped in hardware. A pending PAUSE request can
+survive these paths and block issue_pending() even after termination.
 
-For example, pause() can observe EDMA_ST_BUSY right before the interrupt
-handler completes the final descriptor and moves the channel to
-EDMA_ST_IDLE, and then record EDMA_REQ_PAUSE on an already idle channel. No
-further interrupt will acknowledge the request, and since issue_pending()
-requires EDMA_REQ_NONE, the channel is wedged for good: terminate_all()
-leaves the stale request behind, so even reconfiguring the channel does not
-recover it.
-
-issue_pending() already runs under vc.lock, but it tests configured before
-taking it. Move that test under the lock as well, so configured, request,
-and status are evaluated as one channel-state snapshot.
+Clear the request whenever termination leaves the channel idle. A running
+channel keeps its STOP request until the interrupt handler consumes it.
 
 Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
 Changes in v4:
-  - Use guard() where lock/unlock is newly added. (Frank)
+  - Collect Frank's Reviewed-by tag and adjust context for the preceding
+    patch.
 
- drivers/dma/dw-edma/dw-edma-core.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index ac40a832a9c7..64ace6b9ebdc 100644
+index 64ace6b9ebdc..b76f0aeb647d 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -302,6 +302,8 @@ static int dw_edma_device_pause(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	int err = 0;
+@@ -364,6 +364,8 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
+ 	} else {
+ 		chan->request = EDMA_REQ_STOP;
+ 	}
++	if (chan->status == EDMA_ST_IDLE)
++		chan->request = EDMA_REQ_NONE;
  
-+	guard(spinlock_irqsave)(&chan->vc.lock);
-+
- 	if (!chan->configured)
- 		err = -EPERM;
- 	else if (chan->status != EDMA_ST_BUSY)
-@@ -319,6 +321,8 @@ static int dw_edma_device_resume(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	int err = 0;
- 
-+	guard(spinlock_irqsave)(&chan->vc.lock);
-+
- 	if (!chan->configured) {
- 		err = -EPERM;
- 	} else if (chan->status != EDMA_ST_PAUSE) {
-@@ -369,11 +373,9 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	unsigned long flags;
- 
--	if (!chan->configured)
--		return;
--
- 	spin_lock_irqsave(&chan->vc.lock, flags);
--	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
-+	if (chan->configured && vchan_issue_pending(&chan->vc) &&
-+	    chan->request == EDMA_REQ_NONE &&
- 	    chan->status == EDMA_ST_IDLE) {
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
+ 	return err;
+ }
 -- 
 2.51.0
 
