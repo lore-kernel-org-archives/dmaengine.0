@@ -1,113 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3D713AA2D
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 05:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F963AFB03
+	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 07:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784180238; cv=none; b=jSWkr3fhrBANGwKqBS+18RP/rsxemQebTVgTACN+fbs7Py+DWgG+sjy/tMJX2/Ud22ymKAwD6i+RFyZ28OEMFFBdYughrQHRE2V/7kyJ7JdR1HOey10RdbrHwPomtmJ3E9jkKWxnNLWhHC8oG5O8vZ5qTpZbTDfdPUHa53cBOno=
+	t=1784187789; cv=none; b=EYLr6SOyn9dXg0pxTDkIQZmA+GvPMrSvfsWMefdBgq4dXk3oybtlqJyKAgxxZrvKIvt6WR6sSKdKcltSUhzRJ1AYzM4J9EzbVkBSVRlFW/d4krGcewYBNhBRN9HDoU+YmGD3+IJEOHQWtJfv3cLpQZoXS5KObAvYlQx0xHILXFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784180238; c=relaxed/simple;
-	bh=H5XZiuIy8tdmcHOy9SxXW3aCIvkaEpqFBk9+Jq5UWu8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=jUn6ScCTxuOrJv+LiKtNXlf82UM1c04NkUjvFf5/wcCNc0zSsMJSAa3FhoeE+OYIf9Lr4AR9X8nbZRqAfNlmhmmfN/F64ga08wyWi2rjSyKuVaKMi5iuiDAD52VSpYmP9qxzA8U6iteJCIlFLuVsZBF/mEZI1ADOPvAtgtCcYjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gOZzqGHi; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784187789; c=relaxed/simple;
+	bh=Z3WoiBwaBMuJQ2HDEWUbzUshEOFUjZRXGdz3c8S0ItE=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sFLsujwJ9019LncQpwpIrOzWPfB0Ue1qaApMbh/Y4yPUZz7DucTuQ81EPu/51h3XfaCxmjzcMxVMrGmPx/5TKzXZ+ARaLeWZxzzwIHH+zE+EjdR0ypWRJI8w1azrQaFfGpi8SN861j/isKtGmZW0Gx6V7v9bB373YvXyqlrG24I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GKvlLjti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gOZzqGHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3F31F000E9;
-	Thu, 16 Jul 2026 05:37:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GKvlLjti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15B11F00ACF
+	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 07:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784180237;
-	bh=9IaVx07vaX0zRa0DcFo7zZtObRBWdl3pNWVGYI6N+i4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=gOZzqGHi5zzz1sljQXo5tagwVPoDC7IHs9LbTpcrBbzQGuDUg+K1N+UCEnH9G1crW
-	 ya8wRPamRnle8sZU5+IDK7dAb0oM79U7tXaXsH22cGf4DQQFdZvxX2iCggkk/44o5v
-	 1sEtO7mPCMQyqPJ2faKvSyabm0hogAOMS7gt1iZomDfNKpvLyv1/a5IiEiVeT32CzH
-	 EniwylaKdDgRyY+N2RVPKHEVCzuWdeCFysz0wk1hmD1Fs8EWRN/vciKQzCBWKMUgTD
-	 JQdar4E+JKmR9NxyrpgnEv9Gjo27by1UjDO0merdk+Hb78bi6rebB5sgwNOSh6nffV
-	 AciwBvnnld0Ag==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: validate dev and name in dma_request_chan()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: phucduc.bui@gmail.com
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260716052758.23465-1-phucduc.bui@gmail.com>
-References: <20260716052758.23465-1-phucduc.bui@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 16 Jul 2026 05:37:16 +0000
-Message-Id: <20260716053717.0B3F31F000E9@smtp.kernel.org>
+	s=k20260515; t=1784187787;
+	bh=vClHeog58KNqWH8CCWBc/ZspAK1VXs4jFJuykhl903U=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=GKvlLjtigec06rS4zHMLnidYeHW74IQ4uSCnp0hcH1K/O2C3GQDf3Q7fg24nHNU2A
+	 A1WEo5w5u/YwtkWERLdLHscDGFED0JTEYBup+wz4dWIzRuhfDLXi9jvMyEl6+dM2cI
+	 +lU43pEiPZ2HZeY1xziYypsiej0SdJuAAoPU64gSltHwKwJJ9d3yEXLmBTW4Un/Zn0
+	 87uHk9TQuQbHVn4Io0AnCuqOhZheuEC9iWnZbkFQBdO1gjYXTuwRb5ENItRaWTHjXz
+	 NKlVugm5FhmvKa1Yc7FK14JbY3T1BCS2CemvjYVFqhpj5y4MPBd/aAozyKAEbu9e7D
+	 4zgS2Gz5WKdhA==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5aea9d606f0so6720194e87.3
+        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 00:43:07 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RqD3fcVdO/On9+9VfVRBvtIPbwE5cFt9U4HxbsE7XIyM6/JWwcTn2tkLALRUyPUcmUFVtHgdNUi19s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNJwUpYpJ0njk8tqZdG6TZiybTcC5yv28gT2Z3rbv0kwa7PXtB
+	5Wv3qHMaPIZok0mXXkLztbwfc8KoEMq0KK0aXn6vGPwqSItkqNXOhPaUCD5I2VVd8DXYsmp+gFd
+	F1wdP8pKFDe3erKc00HAFVDau0cO1FkRPabEGY+qI+Q==
+X-Received: by 2002:a05:6512:131f:b0:5ae:b130:1e1 with SMTP id
+ 2adb3069b0e04-5b15d78ec38mr1636875e87.28.1784187786412; Thu, 16 Jul 2026
+ 00:43:06 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 16 Jul 2026 00:43:04 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 16 Jul 2026 00:43:04 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <alewA9ubkYKHpnuj@linaro.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
+ <20260713-qcom-qce-cmd-descr-v21-6-bc2583e18475@oss.qualcomm.com>
+ <alYGGu7_3G6mJAzQ@linaro.org> <CAMRc=MevqXga1u-XC8LYc3hnjjzmdESntsSGYP25XECeeySfJA@mail.gmail.com>
+ <alepDnRJmRLbFGRQ@vaman> <alewA9ubkYKHpnuj@linaro.org>
+Date: Thu, 16 Jul 2026 00:43:04 -0700
+X-Gmail-Original-Message-ID: <CAMRc=McZK1=S2SFgpCjtHSRecY0SiQWbBqsUxGX1w4229s2yKg@mail.gmail.com>
+X-Gm-Features: AUfX_mzRskw0QsuLe9nseN2xcUB6TP8BPyj9JPMV-mxeetGr6n2mWyZ5pOfIYHc
+Message-ID: <CAMRc=McZK1=S2SFgpCjtHSRecY0SiQWbBqsUxGX1w4229s2yKg@mail.gmail.com>
+Subject: Re: [PATCH v21 06/14] dmaengine: qcom: bam_dma: add support for BAM locking
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Udit Tiwari <quic_utiwari@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, 
+	Andy Gross <agross@codeaurora.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Wed, 15 Jul 2026 18:06:27 +0200, Stephan Gerhold
+<stephan.gerhold@linaro.org> said:
+> On Wed, Jul 15, 2026 at 09:06:46PM +0530, Vinod Koul wrote:
+>> On 15-07-26, 14:43, Bartosz Golaszewski wrote:
+>> > On Tue, 14 Jul 2026 11:49:14 +0200, Stephan Gerhold
+>
 
-Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but if `kasprintf` f=
-ails to allocate `chan->name`, the function returns the channel but leaves =
-`chan->slave` uninitialized.
---
+...
 
---- Patch [1]: [PATCH] dmaengine: validate dev and name in dma_request_chan=
-() ---
-commit ac1213130dc39a9098faa262ed0755d63436e5be
-Author: bui duc phuc <phucduc.bui@gmail.com>
+> I would avoid using struct dma_slave_config->dst_addr (like in v11) [1]
+> though, since it's more a "address to dummy register" now than the
+> actual dst_addr of the peripheral. That's why I suggested
+> struct dma_slave_config->peripheral_config.
 
-dmaengine: validate dev and name in dma_request_chan()
+As in:
 
-This commit adds a WARN_ON check for NULL dev and name pointers at the
-start of dma_request_chan(). It helps catch invalid caller arguments early
-instead of causing NULL pointer dereferences later during lookup.
+struct bam_dma_peripheral_config {
+	phys_addr_t scratchpad_addr;
+};
 
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-[ ... ]
-> @@ -814,10 +814,15 @@ static const struct dma_slave_map *dma_filter_match=
-(struct dma_device *device,
->  */
-> struct dma_chan *dma_request_chan(struct device *dev, const char *name)
-> {
-[ ... ]
-> found:
-> #ifdef CONFIG_DEBUG_FS
-> 	chan->dbg_client_name =3D kasprintf(GFP_KERNEL, "%s:%s", dev_name(dev), =
-name);
-> 	/* No functional issue if it fails, users are supposed to test before us=
-e */
-> #endif
->=20
-> 	chan->name =3D kasprintf(GFP_KERNEL, "dma:%s", name);
-> 	if (!chan->name)
-> 		return chan;
-> 	chan->slave =3D dev;
+struct dma_slave_config cfg = { .peripheral_config = &scratchpad_addr };
 
-[Severity: High]
-This isn't a bug introduced by this patch, but is it intended to return the
-channel with an uninitialized slave pointer here?
+?
 
-If kasprintf fails under memory pressure, the function returns the channel
-early:
-
-dma_request_chan() {
-    ...
-    chan->name =3D kasprintf(GFP_KERNEL, "dma:%s", name);
-    if (!chan->name)
-        return chan;
-    ...
-}
-
-This leaves chan->slave uninitialized. If DMA provider drivers rely on
-chan->slave pointing to the client device, could this cause a NULL pointer
-dereference or memory corruption when accessed later?
-
-If returning the channel is intended upon name allocation failure, should
-chan->slave be initialized first?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716052758.2346=
-5-1-phucduc.bui@gmail.com?part=3D1
+Bart
