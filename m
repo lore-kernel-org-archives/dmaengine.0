@@ -1,179 +1,381 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C771133A70A
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 18:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784226836; cv=none; b=Z1zZTwJQYpjKGEc+sDKWKKlrIXyI8gHZ/GWunmWvPhkEt5R0AXkwcu2dapwz3AW58avVOEAg0V7RPL7nUGQxD0N1NhVlqhDKAjVIP2ZyXnp/mR6Hcy8TIicfa2jULvfNjsT8V6hFMG79z5rSeW8xi5gM5fTCNKa6g9JW5yccIjA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784226836; c=relaxed/simple;
-	bh=dj60ZZJxV3iY3P5TWn+xSeE+wPY4h+ZYSZ2q9TaXG0o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jSRnKoNg7FcccoDTRxkkOQE6iZuZH3+LDdO/BiKUj3+2FZ6k6ecnj0zu5VkyvOW6R0c+pOUDZ09RsT21EdwEBiu3MsZSZVRg6NpGPkU2hwFge53PhdS064aIc3jv2hCbDuf2jXZKnSNZ4Uf2pb9qeGhjPxwizEYq60hUEuwdYvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XPlu6I4U; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i1HxJGFc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFF5346A0C
+	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 18:35:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784226948; cv=pass; b=g65dUfqTtMbuWK6RT3woSb62Q7V6tvRFmI00DNVh1sAmgeyaM8g/UgX/YLAw2A/PzOJ+qaSfm3DGCQ+2l2cQDU7EcWG7Dz3ZhdJNtjfb8XmKW3MnqLFQ5/g0MxrkVRwNG7pV/now4QtVhmHABlfdAMyHtJHJ9PWZkd7HaKFbatE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784226948; c=relaxed/simple;
+	bh=KuSPQH1PIT8HqjLDXw8Df6FITpqp/xSN0Y1rM0TwZeU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QPU31azJzG2qA5mSPXyDzFboh1JWoHuyFHl4SOhtoF9uNpj/gow6izu78YKedwoDjHjN9XQpyNO8pky+OG+mrVCdpIroaOFfTRvzq0RPP5uRqly1JR1KhGd3vRkLzjgt11GIG6g1ChKyXefRLERzxEltuqkfC9homRh+BbyYv6o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WBP6uQVv; arc=pass smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XPlu6I4U";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i1HxJGFc"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66GGSka93481505
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 18:33:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zU8L98CG4jOXv8caWEcZP/r5gL/dFX0R4r+uH5SPbGM=; b=XPlu6I4UH921Q9Fp
-	qpnXiVUOueZAvHLPBQmfTk6h6H36ZxE+5bYRjUIgz1oIRD57kL0EnhjPAz1Im8E5
-	8H4+MK3DYX5JtnDFQzTTF5Kr0wLMXozi/YOmvvj17C3D8eYM+eaCnFUJuixtT6UM
-	ZcwW4cgRFDunhbNrroLvGWlUPGsT3iaY/+VdaRhufJzQjpdLAVy9vBLr/bDXe7AV
-	jG5rSeIw6SWW00J2RAnLm7Fc57AgqdXgkyNaZfM7SsvWXFUFSbv0q9uKh7Fa8db+
-	8vhbOLLhEIpvQH7TZrbCE27P5W7vPcPHrREQneLeNC7FKDSpoA6rMEdBF0MKqJG3
-	svlQXA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fetcf2xw8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 18:33:51 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-92e9c0c4492so131827085a.2
-        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 11:33:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WBP6uQVv"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-69c5f6f7a40so3319370a12.0
+        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 11:35:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784226943; cv=none;
+        d=google.com; s=arc-20260327;
+        b=dVUtnIpa3omGXMTX/zIEB1nOflis3LWl/zJlCVvKV9pgB5xG9dC//EeKQ6NXDnkiwB
+         Wd7ywZV9ryB3OueMgqOSFHU+M1DWL8BP5JfjVI5XUPMKu5dOsIgRmfv28BNJ8YV8xDZo
+         or/67lEhanzjlYIA1qaZ9gh/EqqtmhbTXwsrJCRRotCt33cHj/LgBk5fcaeE0DGnxua9
+         zNpB8U2qb0jXLZyov1qyXf3ViSsY5+Smtdw3dcw5DV6yxd7BDkv1NQsBwvjgb3KdyGMS
+         iBNma2+DhCBCrvmr6SXW8UtFRMg87W4efNIRmqS7M6IfxRDc6kMo/TR1KvISLP/W/nWX
+         Zkiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kB+rnJqM+xTsqNMdF9Rk9QynNwvqNR0sY/Ay973UlGQ=;
+        fh=qfuWBQ7eQ4UUv7HDrLQXFhxUKbyAroUFqYScBhqYvdU=;
+        b=o9KnEwppmHEv14PXPPg/XBU1qGLx688JCkyNoosmZPfzuV9zZTEZOhvDy5Z16qWQ7o
+         o8rqPR0TEO6pUgWyY+8T0oErdgB6OHDoRGINQQOY2hdOT2+B0xK74nrR8taXhVqsF+FX
+         CLGvgd7IIGstWSu67z1rTWC1a57kc5vztpA5eil8VmToOWrBVxD/sKaDSPBXyIybps4T
+         75gm6Zv8lQDnvgXHhSjfQs2Rzgqo6T4m3J5NY9jh/4/yMhXY0n3fiU65ch72VZlzVv+9
+         IyrvoV2N2NrJ4M23SL5Urm3WRoiRx6Ej6XGOx+1LQni5xr2b8zlExXWJeQ8OUilbCHGo
+         D2ZQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784226830; x=1784831630; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=zU8L98CG4jOXv8caWEcZP/r5gL/dFX0R4r+uH5SPbGM=;
-        b=i1HxJGFc/bR+7aUu1aG9+kVewPYngQBUTFyqju86+/IE7FJuS8jhjPwH79L0Eid+rz
-         6NjpQvorlfcQhLe0o/dMBx9F3d88Y/uYR1bu7REtapwEwpADDfYaESPwoIm2AXg7t/Te
-         vPZQkqhCrAApyVcyUgXWj7zTsi4lgZxtbcGMFJJKrSUFM9sEzKD2n8M8PIhn8r7VXW3D
-         K+JgsTd/AmJleo1w5C2C1Z4dDizopU5Z/HskpTkh5/Oq7BC5OCsYHVElRC7P2u2/uFLr
-         6sOvxT79Rp+CSoDZ0DnivKJpLUoST0I0GhbsTyXQjyOPNoLoQPk60thwBazv4bEGH4fM
-         KSrA==
+        d=gmail.com; s=20251104; t=1784226943; x=1784831743; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kB+rnJqM+xTsqNMdF9Rk9QynNwvqNR0sY/Ay973UlGQ=;
+        b=WBP6uQVvS+RGajlaTk96xhEe3MCF1C7oSqCzmtBiLtXyIHrdR7Apl54WZWr8yE9KCA
+         yIlLcL0bC3ZMhypCZ6YrSteQs0LBVWgtJJRX9q7o7ZDA0PM9Rkzu5/II1qBJIXAAc6S/
+         6slqNp4FBI20o9s6MQnOSr8eltxSw1UbVt3qM2qon0S1VRiIRZ+LOVP6HOvIxg5wKUqj
+         0o8fbyUzMDmi+YZjJ2jiR4Pmn4a2m3XcVbcKG7YDg41hP+277mJpwqy20aT3cdQtdpE8
+         94cn2GT9ynkj1YjsP0rx7DVrfFwnQyVCrE4hxrP2blrJcc0zbe018DfUur0cH7tVfTyp
+         q2Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784226830; x=1784831630;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=zU8L98CG4jOXv8caWEcZP/r5gL/dFX0R4r+uH5SPbGM=;
-        b=PYfMUJRKAzipJx+FtqCfxekrDk4nVu7mONXocMlbe7TE+8WHx9zYsa+n5L5f0E57lA
-         ub83ZGP8FT+xPiDqa+KtqUpZl8GQrB+hJV7k2BRhX/uS1SdgJwlDIfMX3Ww1FbgObAKa
-         AD8Y3m1FokN5whd7a22tE8oZtOe51BI1n78Jny3br2qRXaTdiyEI11RJLFJ8S4hbm0h4
-         LrbqJKZqOvo4AiLUy+1G4oaIaOEJXtKn2KV0mL3U60zLWF3wM2AhOvSUTnCuPEgvI/5v
-         8Mo4zh0iuSDSVbA22+FL8BMM9/OPdmP82wjMEAOtCSzC6Irqc5Z0FZW5ixb5VXUI9o8O
-         fi3g==
-X-Forwarded-Encrypted: i=1; AHgh+RrBT+p4R6oEqWlFuKWDJyjfkYMlkiQ1p7ieYeMeSAS2okgW9xIaYa+cfTleryrmpwJr1/alCL50iDM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YysY0mvIfbIKiGM6MHNVeMFMyJ4xG2PUJvzcjB3ocyXdRXDtDb+
-	q7jIHH4AXPvz5qByqw67G9gjC734OCwNvhafsg17RWfuyU4LOMY/fhp74Vy0EgLdGzFL92rn2J3
-	bfwjfPYMn2uoA55jzphnypqrmo80oORXIeOBoAM1FkFynwAS0GMjzn5KFYZCaT+Y=
-X-Gm-Gg: AfdE7cm+Ygx6oGXhvMj/4Nhesvn/RaFN+1kw35DdI9KFhqWb7B38I8Yy4D7c9qCoSTF
-	C+PZPiO4/4Y3XrGGBnizpsRuxA2OVVsbbWKchR6RabXEXBka9KUqQpW6tndlEDBB4B8X/0StTOT
-	b56nRDpjxTfCHVSlRESBjEFZ2HsyqQFmm1TvjOW7/O7id6IRsfu6t0t2QMcwO8TTjt5YjaI1AFl
-	f1XIQjxsjY0oM2sTBf3vziTPhsSWIJMCQccfDa6qDA6ZwiPZkIguAaiL8l9fSd0aLPGLy8sFd7I
-	oYnY6lsCKThAaqB5+1J4zv6FvDSjAugBgsAHvgacdQYMBeOPEklJQYUX4s7SvqsNnERvMw3EIca
-	XpuoXp4liz0hXB+8cl13Plqba
-X-Received: by 2002:a05:622a:43:b0:51c:f3e:781e with SMTP id d75a77b69052e-51cbf2159eamr208524361cf.6.1784226829951;
-        Thu, 16 Jul 2026 11:33:49 -0700 (PDT)
-X-Received: by 2002:a05:622a:43:b0:51c:f3e:781e with SMTP id d75a77b69052e-51cbf2159eamr208523871cf.6.1784226829396;
-        Thu, 16 Jul 2026 11:33:49 -0700 (PDT)
-Received: from [192.168.120.193] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c16874a2453sm255164466b.56.2026.07.16.11.33.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Jul 2026 11:33:48 -0700 (PDT)
-Message-ID: <1153ebbd-659f-4ba9-9317-66ece33423e9@oss.qualcomm.com>
-Date: Thu, 16 Jul 2026 20:33:44 +0200
+        d=1e100.net; s=20251104; t=1784226943; x=1784831743;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kB+rnJqM+xTsqNMdF9Rk9QynNwvqNR0sY/Ay973UlGQ=;
+        b=eb06tocJQgu6BPyPGIPTcGgtCTeMwlIINi+qTHU+6HdtBdCGkmZ5jC5409FfyyGKiL
+         vA5O1ermCr7fWsNlYkGYmMvWTflRgA+o1D1rXiH9zUQuY/Ft/kzRbAfVeKFM1Ckn2JAt
+         OkJDB+dTHqzYJT/PtyNbC6QEfZbHf8rRrVIRPEpx3A4Xgq7jKGxQFeREHKKbAuuRRd3M
+         X1LfalKUKkQwp5Wid6nlwLg11lGxN1qTtC3rCxW3/A5lSidI3xbxUyYVCLFMWdT1rEo9
+         RcTJol7r8dBe1f2fk+mBrZWqOui1zw1erBiWizo1tLiET4cd6X6iqMPrm8sEzRmcJ8AP
+         KJMw==
+X-Gm-Message-State: AOJu0Yw89nzxD8hr0PB3USUfV84tu80tiNqScI7QhACqyvPPEzx8mA6k
+	wdPKCYxKsO4vSSklIVQaNzHj78Cuh2IOhXJZkO8HewoVTyb/QWMogYsfcjpDAuTMkKRU0cAqFHZ
+	kFeaN/PPboiabG8G/rCFdEFUIvX6vAMY=
+X-Gm-Gg: AfdE7ckWtzvj5B2mIkYFCI540ogicSV+WZLV+VaaBgUsA6LuwQT/HPVEktlvUekfV0i
+	o1BhJ7SlvRzu2x1/z4jQgP1ggZx41j1iV/AZLGHFnffbCiSwN+x3aD6rLMTirZaLYvsb0wfLOQt
+	NB9L8ZjLBcq+hrp6Vm9Nab0CjUcIqKERTOS4IP+XCnxoNZDFVdsQea4UNGvj1HHsxmoAKyWy6V0
+	Cg6tvEv9spbbPP2IcuDF89NSsA0CkCi5LIHb+FczuUak5BZbXKCozzExkidSbDPLpb4yb3iqKZ8
+	UjDlga3gyZX1UVPR/nLA9Tnz8N+KgrJeLHjAyJnCQeLywus4+Sz+bVQZfIvuB8OeFgmo+hCp7Vn
+	172oxVHIL1FVq8RoAtMHnFJEuaKNs9zLwmuAlPaqk/kA0Px8rK1YA89tTC4ZIh4eZfd325wzrY0
+	6+DCJxfXA=
+X-Received: by 2002:a05:6402:5304:b0:698:3b7c:7e5b with SMTP id
+ 4fb4d7f45d1cf-69e1a05b602mr5053989a12.39.1784226943053; Thu, 16 Jul 2026
+ 11:35:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 11/11] arm64: dts: qcom: shikra: Add
- gpio-reserved-ranges to tlmm
-To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>, Vinod Koul
- <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, Anurag Pateriya <apateriy@qti.qualcomm.com>
-References: <20260702-shikra-dt-m1-v5-0-f911ac92720c@oss.qualcomm.com>
- <20260702-shikra-dt-m1-v5-11-f911ac92720c@oss.qualcomm.com>
- <9c1aab59-14b2-4811-b778-8e96645bd65b@oss.qualcomm.com>
- <97b205e8-5ab7-4205-b1dc-cbcb0497987d@oss.qualcomm.com>
- <986da1da-db2e-4d4a-b9d0-70482adaf4bd@oss.qualcomm.com>
- <4f641f13-a278-4465-8033-670c7279a7e3@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <4f641f13-a278-4465-8033-670c7279a7e3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: rQVhq14sjluqWBzaWORJSe5jCYzrXEQx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE2MDE5MCBTYWx0ZWRfXzpubHoJWJEO7
- zr+EKgroT3pd7J6vYZYH2hFlL88/0NGcKC1YTr9fgRWHXWMLXRbbPaFI5WWDYY21w4PpiNvgc1J
- SV86eBY9cHPcbbw06/t1bNbwbG5G4gnajTVK+kJfJjHxhZYzFjfV/b9fA1Rozv/GsdbAUUOoCzN
- Y2X4EzGuGyt1pk6b9j1/V4+bImda2IYo88hNpaLaGwF4V+vK874YRaM2cP0dwSsmbVchgBHy1h6
- xxjIafG1K5cXOp3r7MifHHv99easkkQU20+7H3UilDffonB5sa2TSNp7GP0cjYMLP9pYN5x7i4F
- hDl33BmASJMKRmtEa3uSfRf4eX4V28Oh5GhZJlqvWu8AIwpYp9GGJa6v1/8ZE8AqN0oEsd6FSYJ
- AYRxEV2ZysllPx/Q0QSSt8LPrFizGY+fD7lu4lcK1yVwACu1JalzW0WZsJS6Y22HE9ZkKr3glym
- dtKTxy2NPB25xzVBO4A==
-X-Authority-Analysis: v=2.4 cv=f8R4wuyM c=1 sm=1 tr=0 ts=6a59240f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=E75d-Z-T5IGyIi2ltCUA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: rQVhq14sjluqWBzaWORJSe5jCYzrXEQx
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE2MDE5MCBTYWx0ZWRfXzUB6I+PX5bQX
- b1+fyy0b9NcH9R0cGdAqRK5VNqStdpujajcUblw1kHmG/Rb5xoo7Jy1e/mT9jX0mZ0lhr1V4U2S
- Ko/OqqpKlfYyFTDrI5ll6T/SDhLQNbo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-16_06,2026-07-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607160190
+References: <20260714233855.870797-1-rosenp@gmail.com> <20260714233855.870797-3-rosenp@gmail.com>
+ <alkOwebrTsoMTX7l@lizhi-Precision-Tower-5810>
+In-Reply-To: <alkOwebrTsoMTX7l@lizhi-Precision-Tower-5810>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Thu, 16 Jul 2026 11:35:31 -0700
+X-Gm-Features: AUfX_mx3wGx4LMmujU_R7dacaBQ7NKVQjEuqSgamvKVf5d5Il1MwzTFjuVSoNtE
+Message-ID: <CAKxU2N_iW3ygrzfPDBvSkeOOxoA0eHG_bnASLZbhV4aYphDrKw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] dma: fsl_raid: keep MMIO bases as void __iomem and
+ cast at access
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/15/26 3:41 PM, Komal Bajaj wrote:
-> 
-> 
-> 
-> On 7/15/2026 3:57 PM, Konrad Dybcio wrote:
->> On 7/7/26 6:36 PM, Komal Bajaj wrote:
->>> On 7/2/2026 4:25 PM, Konrad Dybcio wrote:
->>>> On 7/2/26 11:50 AM, Komal Bajaj wrote:
->>>>> Add gpio-reserved-ranges property to the tlmm node for all three
->>>>> Shikra EVK variants (CQM, CQS, IQS) to mark GPIOs used by the
->>>>> SoC internally and not available for general use.
->>>> These are generally added to prevent non-secure access upon TLMM
->>>> probe, i.e. the board won't boot if some of them are not protected.
->>>>
->>>> I assume the proposed set contains both ones that are _absolutely
->>>> forbidden_ for Linux to touch, but also ones that are dedicated to
->>>> some specific purpose that Linux _shouldn't_ touch.
->>> Yes, some GPIOs are reserved for secure-world use and are therefore not accessible from the non-secure world.
->>> I will update the commit message accordingly.
->> I'm not sure how to read your response. In other words - is this
->> patch boot-critical?
-> 
-> Yes, with Access Policy enabled, it becomes boot-critical.
+On Thu, Jul 16, 2026 at 10:03=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wr=
+ote:
+>
+> On Tue, Jul 14, 2026 at 04:38:54PM -0700, Rosen Penev wrote:
+> > The fsl_re_ctrl and fsl_re_chan_cfg structures describe memory-mapped
+> > RAID Engine registers accessed only via ioread32be()/iowrite32be(), yet
+> > the pointers to them (re_regs in struct fsl_re_drv_private, and jrregs
+> > in struct fsl_re_chan) were not __iomem-qualified, so sparse emitted
+> > "different address spaces" warnings for every register access.
+> >
+> > Store both MMIO bases as a plain void __iomem * and derive jrregs with
+> > void __iomem * arithmetic from re_regs, rather than carrying typed
+> > register struct pointers through the driver. Each function that touches
+> > the registers introduces a local typed pointer (struct fsl_re_ctrl
+> > __iomem *ctrl / struct fsl_re_chan_cfg __iomem *jr) and uses ->field,
+> > which is the idiomatic kernel pattern and keeps the registers' __iomem
+> > qualification intact.
+>
+> Any document or reference show this is idiomatic kernel pattern?
+Closest thing I can find is
 
-Well then, I'm no less than surprised since we have DTs for 3 boards
-in -next right now that I'm learning can't possibly boot..
+https://lkml.indiana.edu/hypermail/linux/kernel/0409.1/2592.html
 
-I understand you might have disabled that at some point during the
-development, but it's clearly not the configuration that's supported
-by any means. Please make sure to take that into account next time.
+As the link mentions, it's real nice to avoid the unnecessary casting in
 
-For this issue, since the pins seem common, perhaps moving them to
-the SoM DTSI makes more sense. And this most definitely needs 'fixes'
-tags.
+chan->jrregs =3D (struct fsl_re_chan_cfg *)((u8 *)re_priv->re_regs +
+               off + ptr);
 
-Konrad
+sparse would flag that anyway. __iomem would need to be added to both point=
+ers.
+>
+> Frank
+>
+> >
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Fixes: https://lore.kernel.org/oe-kbuild-all/202008111749.yy85rFMD%25lk=
+p@intel.com/
+> > Assisted-by: opencode:hy3-free
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > ---
+> >  drivers/dma/fsl_raid.c | 66 ++++++++++++++++++++----------------------
+> >  drivers/dma/fsl_raid.h |  4 +--
+> >  2 files changed, 34 insertions(+), 36 deletions(-)
+> >
+> > diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+> > index 888f55b672a5..47ebdf274331 100644
+> > --- a/drivers/dma/fsl_raid.c
+> > +++ b/drivers/dma/fsl_raid.c
+> > @@ -106,15 +106,17 @@ static dma_cookie_t fsl_re_tx_submit(struct dma_a=
+sync_tx_descriptor *tx)
+> >  static void fsl_re_issue_pending(struct dma_chan *chan)
+> >  {
+> >       struct fsl_re_chan *re_chan;
+> > +     struct fsl_re_chan_cfg __iomem *jr;
+> >       int avail;
+> >       struct fsl_re_desc *desc, *_desc;
+> >       unsigned long flags;
+> >
+> >       re_chan =3D container_of(chan, struct fsl_re_chan, chan);
+> > +     jr =3D re_chan->jrregs;
+> >
+> >       spin_lock_irqsave(&re_chan->desc_lock, flags);
+> >       avail =3D FSL_RE_SLOT_AVAIL(
+> > -             in_be32(&re_chan->jrregs->inbring_slot_avail));
+> > +             in_be32(&jr->inbring_slot_avail));
+> >
+> >       list_for_each_entry_safe(desc, _desc, &re_chan->submit_q, node) {
+> >               if (!avail)
+> > @@ -127,7 +129,7 @@ static void fsl_re_issue_pending(struct dma_chan *c=
+han)
+> >
+> >               re_chan->inb_count =3D (re_chan->inb_count + 1) &
+> >                                               FSL_RE_RING_SIZE_MASK;
+> > -             out_be32(&re_chan->jrregs->inbring_add_job, FSL_RE_ADD_JO=
+B(1));
+> > +             out_be32(&jr->inbring_add_job, FSL_RE_ADD_JOB(1));
+> >               avail--;
+> >       }
+> >       spin_unlock_irqrestore(&re_chan->desc_lock, flags);
+> > @@ -158,6 +160,7 @@ static void fsl_re_cleanup_descs(struct fsl_re_chan=
+ *re_chan)
+> >  static void fsl_re_dequeue(struct tasklet_struct *t)
+> >  {
+> >       struct fsl_re_chan *re_chan =3D from_tasklet(re_chan, t, irqtask)=
+;
+> > +     struct fsl_re_chan_cfg __iomem *jr =3D re_chan->jrregs;
+> >       struct fsl_re_desc *desc, *_desc;
+> >       struct fsl_re_hw_desc *hwdesc;
+> >       unsigned long flags;
+> > @@ -167,7 +170,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t=
+)
+> >       fsl_re_cleanup_descs(re_chan);
+> >
+> >       spin_lock_irqsave(&re_chan->desc_lock, flags);
+> > -     count =3D FSL_RE_SLOT_FULL(in_be32(&re_chan->jrregs->oubring_slot=
+_full));
+> > +     count =3D FSL_RE_SLOT_FULL(in_be32(&jr->oubring_slot_full));
+> >       while (count--) {
+> >               found =3D 0;
+> >               hwdesc =3D &re_chan->oub_ring_virt_addr[re_chan->oub_coun=
+t];
+> > @@ -192,8 +195,7 @@ static void fsl_re_dequeue(struct tasklet_struct *t=
+)
+> >               oub_count =3D (re_chan->oub_count + 1) & FSL_RE_RING_SIZE=
+_MASK;
+> >               re_chan->oub_count =3D oub_count;
+> >
+> > -             out_be32(&re_chan->jrregs->oubring_job_rmvd,
+> > -                      FSL_RE_RMVD_JOB(1));
+> > +             out_be32(&jr->oubring_job_rmvd, FSL_RE_RMVD_JOB(1));
+> >       }
+> >       spin_unlock_irqrestore(&re_chan->desc_lock, flags);
+> >  }
+> > @@ -201,12 +203,12 @@ static void fsl_re_dequeue(struct tasklet_struct =
+*t)
+> >  /* Per Job Ring interrupt handler */
+> >  static irqreturn_t fsl_re_isr(int irq, void *data)
+> >  {
+> > -     struct fsl_re_chan *re_chan;
+> > +     struct device *dev =3D data;
+> > +     struct fsl_re_chan *re_chan =3D dev_get_drvdata(dev);
+> > +     struct fsl_re_chan_cfg __iomem *jr =3D re_chan->jrregs;
+> >       u32 irqstate, status;
+> >
+> > -     re_chan =3D dev_get_drvdata((struct device *)data);
+> > -
+> > -     irqstate =3D in_be32(&re_chan->jrregs->jr_interrupt_status);
+> > +     irqstate =3D in_be32(&jr->jr_interrupt_status);
+> >       if (!irqstate)
+> >               return IRQ_NONE;
+> >
+> > @@ -216,13 +218,13 @@ static irqreturn_t fsl_re_isr(int irq, void *data=
+)
+> >        * need to do something more than just crashing
+> >        */
+> >       if (irqstate & FSL_RE_ERROR) {
+> > -             status =3D in_be32(&re_chan->jrregs->jr_status);
+> > +             status =3D in_be32(&jr->jr_status);
+> >               dev_err(re_chan->dev, "chan error irqstate: %x, status: %=
+x\n",
+> >                       irqstate, status);
+> >       }
+> >
+> >       /* Clear interrupt */
+> > -     out_be32(&re_chan->jrregs->jr_interrupt_status, FSL_RE_CLR_INTR);
+> > +     out_be32(&jr->jr_interrupt_status, FSL_RE_CLR_INTR);
+> >
+> >       tasklet_schedule(&re_chan->irqtask);
+> >
+> > @@ -627,6 +629,7 @@ static int fsl_re_chan_probe(struct platform_device=
+ *ofdev,
+> >       struct device *dev, *chandev;
+> >       struct fsl_re_drv_private *re_priv;
+> >       struct fsl_re_chan *chan;
+> > +     struct fsl_re_chan_cfg __iomem *jr;
+> >       struct dma_device *dma_dev;
+> >       u32 ptr;
+> >       u32 status;
+> > @@ -657,8 +660,8 @@ static int fsl_re_chan_probe(struct platform_device=
+ *ofdev,
+> >               goto err_free;
+> >       }
+> >
+> > -     chan->jrregs =3D (struct fsl_re_chan_cfg *)((u8 *)re_priv->re_reg=
+s +
+> > -                     off + ptr);
+> > +     jr =3D re_priv->re_regs + off + ptr;
+> > +     chan->jrregs =3D jr;
+> >
+> >       /* read irq property from dts */
+> >       chan->irq =3D irq_of_parse_and_map(np, 0);
+> > @@ -709,30 +712,23 @@ static int fsl_re_chan_probe(struct platform_devi=
+ce *ofdev,
+> >       }
+> >
+> >       /* Program the Inbound/Outbound ring base addresses and size */
+> > -     out_be32(&chan->jrregs->inbring_base_h,
+> > -              chan->inb_phys_addr & FSL_RE_ADDR_BIT_MASK);
+> > -     out_be32(&chan->jrregs->oubring_base_h,
+> > -              chan->oub_phys_addr & FSL_RE_ADDR_BIT_MASK);
+> > -     out_be32(&chan->jrregs->inbring_base_l,
+> > -              chan->inb_phys_addr >> FSL_RE_ADDR_BIT_SHIFT);
+> > -     out_be32(&chan->jrregs->oubring_base_l,
+> > -              chan->oub_phys_addr >> FSL_RE_ADDR_BIT_SHIFT);
+> > -     out_be32(&chan->jrregs->inbring_size,
+> > -              FSL_RE_RING_SIZE << FSL_RE_RING_SIZE_SHIFT);
+> > -     out_be32(&chan->jrregs->oubring_size,
+> > -              FSL_RE_RING_SIZE << FSL_RE_RING_SIZE_SHIFT);
+> > +     out_be32(&jr->inbring_base_h, chan->inb_phys_addr & FSL_RE_ADDR_B=
+IT_MASK);
+> > +     out_be32(&jr->oubring_base_h, chan->oub_phys_addr & FSL_RE_ADDR_B=
+IT_MASK);
+> > +     out_be32(&jr->inbring_base_l, chan->inb_phys_addr >> FSL_RE_ADDR_=
+BIT_SHIFT);
+> > +     out_be32(&jr->oubring_base_l, chan->oub_phys_addr >> FSL_RE_ADDR_=
+BIT_SHIFT);
+> > +     out_be32(&jr->inbring_size, FSL_RE_RING_SIZE << FSL_RE_RING_SIZE_=
+SHIFT);
+> > +     out_be32(&jr->oubring_size, FSL_RE_RING_SIZE << FSL_RE_RING_SIZE_=
+SHIFT);
+> >
+> >       /* Read LIODN value from u-boot */
+> > -     status =3D in_be32(&chan->jrregs->jr_config_1) & FSL_RE_REG_LIODN=
+_MASK;
+> > +     status =3D in_be32(&jr->jr_config_1) & FSL_RE_REG_LIODN_MASK;
+> >
+> >       /* Program the CFG reg */
+> > -     out_be32(&chan->jrregs->jr_config_1,
+> > -              FSL_RE_CFG1_CBSI | FSL_RE_CFG1_CBS0 | status);
+> > +     out_be32(&jr->jr_config_1, FSL_RE_CFG1_CBSI | FSL_RE_CFG1_CBS0 | =
+status);
+> >
+> >       dev_set_drvdata(chandev, chan);
+> >
+> >       /* Enable RE/CHAN */
+> > -     out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
+> > +     out_be32(&jr->jr_command, FSL_RE_ENABLE);
+> >
+> >       return 0;
+> >
+> > @@ -752,6 +748,7 @@ static int fsl_re_probe(struct platform_device *ofd=
+ev)
+> >       u8 ridx =3D 0;
+> >       struct dma_device *dma_dev;
+> >       struct resource *res;
+> > +     struct fsl_re_ctrl __iomem *re_regs;
+> >       int rc;
+> >       struct device *dev =3D &ofdev->dev;
+> >
+> > @@ -767,17 +764,18 @@ static int fsl_re_probe(struct platform_device *o=
+fdev)
+> >       re_priv->re_regs =3D devm_ioremap(dev, res->start, resource_size(=
+res));
+> >       if (!re_priv->re_regs)
+> >               return -EBUSY;
+> > +     re_regs =3D re_priv->re_regs;
+> >
+> >       /* Program the RE mode */
+> > -     out_be32(&re_priv->re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+> > +     out_be32(&re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+> >
+> >       /* Program Galois Field polynomial */
+> > -     out_be32(&re_priv->re_regs->galois_field_config, FSL_RE_GFM_POLY)=
+;
+> > +     out_be32(&re_regs->galois_field_config, FSL_RE_GFM_POLY);
+> >
+> >       dev_info(dev, "version %x, mode %x, gfp %x\n",
+> > -              in_be32(&re_priv->re_regs->re_version_id),
+> > -              in_be32(&re_priv->re_regs->global_config),
+> > -              in_be32(&re_priv->re_regs->galois_field_config));
+> > +              in_be32(&re_regs->re_version_id),
+> > +              in_be32(&re_regs->global_config),
+> > +              in_be32(&re_regs->galois_field_config));
+> >
+> >       dma_dev =3D &re_priv->dma_dev;
+> >       dma_dev->dev =3D dev;
+> > diff --git a/drivers/dma/fsl_raid.h b/drivers/dma/fsl_raid.h
+> > index 69d743c04973..6069615e2e1e 100644
+> > --- a/drivers/dma/fsl_raid.h
+> > +++ b/drivers/dma/fsl_raid.h
+> > @@ -256,7 +256,7 @@ struct fsl_re_hw_desc {
+> >  struct fsl_re_drv_private {
+> >       u8 total_chans;
+> >       struct dma_device dma_dev;
+> > -     struct fsl_re_ctrl *re_regs;
+> > +     void __iomem *re_regs;
+> >       struct fsl_re_chan *re_jrs[FSL_RE_MAX_CHANS];
+> >       struct dma_pool *cf_desc_pool;
+> >       struct dma_pool *hw_desc_pool;
+> > @@ -273,7 +273,7 @@ struct fsl_re_chan {
+> >       struct device *dev;
+> >       struct fsl_re_drv_private *re_dev;
+> >       struct dma_chan chan;
+> > -     struct fsl_re_chan_cfg *jrregs;
+> > +     void __iomem *jrregs;
+> >       int irq;
+> >       struct tasklet_struct irqtask;
+> >       u32 alloc_count;
+> > --
+> > 2.55.0
+> >
