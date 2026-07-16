@@ -1,132 +1,220 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922E23537FB
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 20:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5189D397E9E
+	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 20:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784233804; cv=none; b=HG0Mp7yrzm99ZsSf0JG4IfQ4jwz8j0qiIZEuqPM0Ro3EYOmKhmvARx4A5C4Gqc2Kn/lh4hq8GHmoikqvtoFK2V3Xu3C1Cu6DAM1QWq1Qb20HptVA0txxK7a2XireO5VZ9K0AUrylm34Jswc0NwcvhxITsCKapn+TVlL5O7qKwOc=
+	t=1784234672; cv=none; b=FkSjWZ2zR5T+N2BrnERuL4+yMLxod0MhiHkWpD0XFgUBEgJd7TcTRamCYYfEb/Pddp0fJ/CXofY8OVuvLOeXbxC3N2PdENnoGdcF08ZJTEU8a8Yd9e9rLprZ5ltWqsZ9og4I9O+eR9QvW271HsjVsxC7ySWfIuggl8OXlbV38Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784233804; c=relaxed/simple;
-	bh=aiUf3J/DMgL7A60YXutHrKt7mc+0jAQzbAUeMGys5WI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nxiMr41a4aB2HUg9Qyc7k11B4fxW4GDP1d+OXhvOOyD8fnO8lbWUevXOBqRGVTmAfkUlkNcnUd0wTgMetFDu1F0wQSZ7xvHVijUVoFeTrm0Olf8refSZkUaJ+8xUvyCrT0VBs6YBQuNAlN7TQOeSozmEwrFZZOkNifLFfyGH49A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YsJPRtSV; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1784234672; c=relaxed/simple;
+	bh=shZfS2bmAMWHtGjKTm9ZuPtIF/GY4pTj4jW0U83Tf0c=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=FbWQ7JuOCmacVUbSKgYG9Ce+f61YCFaBBK34MFHwg5Z6CdrV3TG2WgrbnTEQ0bsV9tMkk93efEJWj557cRgWPvfdWhli02lmSaymS/VccAQSsm+t8bAYbTOy/HeUAhdIg4EXx/opK6WOvRTMP2Rveu5lUDYvvhzcQ6Z3Zu0Vng4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CBQ9wG3U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YsJPRtSV"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-84862b0d5aeso7828506b3a.2
-        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 13:30:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784233801; x=1784838601; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=j86JWTDEYzHZnOUJNqNzQRfU3fCHXDlbngSp/YHU0R4=;
-        b=YsJPRtSVBWH+IFzozQT0+qPD8jorJwKOEuJy3ptMJmJqC4rawgSgbrrK++wI5PTb+Z
-         VMp05bXXMC0p2Pf4+/wMwmGebT0tJ+wIjZ0QC2TxFceblvUgsLil9C3Av137LDo9Q2q+
-         Es81T2fxhY0MNfDf47QKieK6T5NDrbmnLEGQoTjM6NXJnu+l6xkrzM7lJiSeVNI5fPOt
-         bDrVeuHERr4+myV9Qjn/pBYDBgz4lHk1U48CzT2BUqBlcxcIi6YVwkEco4ElxcvxoW4J
-         QE62N/SXN2jNqVZMk9w0qMDBMrS4kf6pRWZJe6+K1AfxPtc1OjHibIO5+Jhsou0k2daj
-         qGkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784233801; x=1784838601;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=j86JWTDEYzHZnOUJNqNzQRfU3fCHXDlbngSp/YHU0R4=;
-        b=pZP7wtFzzWOblLM/ZK2szQx3excSX4BNj6a879KYoeHLYgdwcvZbGREOh69KKDWadD
-         BFmWHff6vfl3gI41PIdTWh1Zpa8ZL23o1hdc8qarhWy4AtvqBMbJaB6qW5++C7YY6nab
-         rrEOb9tDC60l5Do7Wx9wPoCEFswEaHstadLx9bmro0/s2ZWAVxA5cghsK0cv18qkOrXC
-         FrJrgTKYey1iJQSg91rtPeQszWE2A4lXr0VbjUfLPgMzJlbACxptAfdELglG0V0HMGpL
-         cBGWEr7YnmKJ9eAyJymgfSka/wZpzFHqib7l5QGH3khqOAUERyDgSIPEpnyezGglKWu0
-         XhLw==
-X-Gm-Message-State: AOJu0YyEd1CktrpflrtHtXNN3tuHg8hxuU3kj16tl8m0+e9uq6+w9Rii
-	uMTiW2xh1SX5sA7jF/3vdvjB4tVYNmTU5E7MgJei/dIfS2sm9GJl9F46ZYZFvA==
-X-Gm-Gg: AfdE7ckzU3w3Yb0ZRs9igvWYXGcZ3QkPcVIF75PjbIeGx2w27PAcg/4mxsn23YEms+j
-	66pqwyCmcRsRA/tOA39bn69zosqhUeFIl15Md1CwVaEIjnuL9/iKwEnTdXg/+7MxeE7Wv/ZrOQN
-	mIabosGMch0nfo7RC9pGr6W2QJ7OqrcxkMiVeJPSUlWDKBaBWZYUgye32FnFljBeeV+vdOn4F5D
-	gFL38gxvFgJm0MplQaVLeDbYKHI0hJ/BwQjP+lDU22tduj2enE8Zp2OyH0vuvDKHc0lqSU+WAPq
-	MdFQrBOPa2ILhQiTQ44MLd/HaltzbfTm0TfyqpqN7k1I0D6xE5FsriRFjOL/FMlt/y9J/UPqByD
-	PLKfuKDTcobHbJQOQOw/g57M4WpidO7wP9rS7xUV/RBPN8Oxz01kadkRT4wEWeL+MlAa6sW79Z5
-	a1l0p1w5/itqi7qfcTyNOI5yksPLWAxV0ObX6LDcG/lNpqW3cgLejA7SApZxCzlJ7ItoBbuNAEg
-	lzOPI9l4AR4cjKFf0QtsZYmPOYfDvXzoFJvNNsVFoFGNOlDJoC8PW4=
-X-Received: by 2002:a05:6a00:6c86:b0:848:60d5:9526 with SMTP id d2e1a72fcca58-84a558201c9mr11417799b3a.43.1784233801270;
-        Thu, 16 Jul 2026 13:30:01 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f26f703sm5536776b3a.17.2026.07.16.13.29.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 13:30:00 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2 4/4] dma: fsl_raid: use devm_platform_ioremap_resource
-Date: Thu, 16 Jul 2026 13:29:49 -0700
-Message-ID: <20260716202949.677290-5-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260716202949.677290-1-rosenp@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CBQ9wG3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5071F000E9;
+	Thu, 16 Jul 2026 20:44:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784234671;
+	bh=kWy24fe4PMYU5HaX+9wX9miMEuIPbA5Z/F3vCPs3eUY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=CBQ9wG3U2OasHWz65aJGqnGp/0vGB2Nfp6fVxTw8YXRYIOJOVW2lRIibgx7n96Av/
+	 9mBKyPu9vtFWboLdMi3lVOtJlAXIrJUHD5+0U/eI8VEfPaSgCwTwL2Adw+beEZxAFA
+	 BKvvCnGrWlRNsaRbEBWYIBmHXCM9Rg0tz/+R2GhXTOx0NbXYmYheIgeoDhiyUinRxO
+	 HFxP9/4Qf2Ju2oYRwO0OaaE1vF1kXyO0W/D02CAxs5b3hu7+z3kuSe4vHWLGzyrimo
+	 mYa0fvO22CWxWruyTpM44N27wWi9SBlJYE2tCKTtudMAd20jARVYCfslG3z5Sk1rUC
+	 luyKlFyoMgc+g==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv2 3/4] dma: fsl_raid: keep MMIO bases as void __iomem
+ and cast at access
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260716202949.677290-4-rosenp@gmail.com>
 References: <20260716202949.677290-1-rosenp@gmail.com>
+ <20260716202949.677290-4-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 16 Jul 2026 20:44:30 +0000
+Message-Id: <20260716204430.BB5071F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Replace the open-coded platform_get_resource() plus devm_ioremap()
-sequence with devm_platform_ioremap_resource(), which fetches the
-resource, requests the region and maps it in one call. Switch the error
-check to IS_ERR()/PTR_ERR() and drop the now-unused struct resource
-pointer.
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
 
-The raideng node has a single reg region (0x320000, 0x10000); the
-job-queue/ring children are separate OF devices probed independently, so
-the region reservation added by devm_ioremap_resource() is exclusive and
-does not introduce overlap failures.
+Pre-existing issues:
+- [High] Missing bounds check when parsing device tree Job Ring nodes.
+- [High] `fsl_re_probe()` ignores the return value of `fsl_re_chan_probe()`=
+ and unconditionally increments `total_chans`, leading to a NULL pointer de=
+reference.
+- [High] DMA channels are never registered with the parent DMA device frame=
+work.
+- [High] Missing cleanup for channel IRQs and platform devices in both erro=
+r paths and driver removal, plus incorrect teardown order.
+- [High] Potential NULL pointer dereference in `fsl_re_isr` due to prematur=
+e IRQ registration.
+--
 
-Assisted-by: opencode:hy3-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
----
- drivers/dma/fsl_raid.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+--- Patch [1]: [PATCHv2 3/4] dma: fsl_raid: keep MMIO bases as void __iomem=
+ and cast at access ---
+commit d9bcf292f2ff70b568c4dd2362d8ec21ba56f6cd
+Author: Rosen Penev <rosenp@gmail.com>
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 524f83faf3da..2d86f61105e5 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -751,22 +751,18 @@ static int fsl_re_probe(struct platform_device *ofdev)
- 	u32 off;
- 	u8 ridx = 0;
- 	struct dma_device *dma_dev;
--	struct resource *res;
- 	int rc;
- 	struct device *dev = &ofdev->dev;
- 
-+	/* IOMAP the entire RAID Engine region */
-+	re_regs = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(re_regs))
-+		return PTR_ERR(re_regs);
-+
- 	re_priv = devm_kzalloc(dev, sizeof(*re_priv), GFP_KERNEL);
- 	if (!re_priv)
- 		return -ENOMEM;
- 
--	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
--	if (!res)
--		return -ENODEV;
--
--	/* IOMAP the entire RAID Engine region */
--	re_regs = devm_ioremap(dev, res->start, resource_size(res));
--	if (!re_regs)
--		return -EBUSY;
- 	re_priv->base = re_regs;
- 
- 	/* Program the RE mode */
--- 
-2.55.0
+dma: fsl_raid: keep MMIO bases as void __iomem and cast at access
 
+The commit modifies the fsl_re_drv_private and fsl_re_chan structures to
+store MMIO bases as void __iomem * instead of typed struct pointers. This
+resolves sparse warnings about mismatched address spaces by ensuring typed
+pointers are only introduced locally in functions that touch the registers.
+
+Fixes: https://lore.kernel.org/oe-kbuild-all/202008111749.yy85rFMD%25lkp@in=
+tel.com/
+
+> diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+> index 99945845d8b5e..5bc5bd499ba27 100644
+> --- a/drivers/dma/fsl_raid.c
+> +++ b/drivers/dma/fsl_raid.c
+> @@ -656,8 +656,7 @@ static int fsl_re_chan_probe(struct platform_device *=
+ofdev,
+>  		goto err_free;
+>  	}
+> =20
+> -	chan->jrregs =3D (struct fsl_re_chan_cfg *)((u8 *)re_priv->re_regs +
+> -			off + ptr);
+> +	chan->jrregs =3D re_priv->base + off + ptr;
+> =20
+>  	/* read irq property from dts */
+>  	chan->irq =3D irq_of_parse_and_map(np, 0);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but the driver context seems to
+be attached to the device too late.
+
+In fsl_re_chan_probe(), request_irq() is called before dev_set_drvdata()
+populates the driver data:
+
+    ret =3D request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
+    ...
+    dev_set_drvdata(chandev, chan);
+
+If an interrupt triggers immediately, fsl_re_isr() retrieves a NULL pointer
+and dereferences it:
+
+    re_chan =3D dev_get_drvdata((struct device *)data);
+    irqstate =3D in_be32(&re_chan->jrregs->jr_interrupt_status);
+
+Is there a vulnerable window here where an incoming interrupt could lead to
+a NULL pointer dereference?
+
+[Severity: High]
+This is a pre-existing issue, but it appears the DMA channels are never
+registered with the parent DMA device framework.
+
+In fsl_re_chan_probe(), the channels are initialized, but the required list
+addition to attach them to dma_dev->channels is omitted:
+
+    re_priv->re_jrs[q] =3D chan;
+    chan->chan.device =3D dma_dev;
+    ...
+
+Without adding the channel to dma_dev->channels, will
+dma_async_device_register() end up registering 0 channels and leave the
+driver functionally dead?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but I noticed potential resource
+leaks and incorrect teardown ordering.
+
+On error paths inside fsl_re_chan_probe(), resources like requested IRQs
+and platform devices are not freed:
+
+    err_free:
+        return ret;
+
+Additionally, in fsl_re_remove_chan(), free_irq() or
+of_platform_device_destroy() are not called.
+
+This leaves an active unmanaged IRQ pointing to freed driver memory.
+
+Also, in fsl_re_remove(), the driver frees ring buffers before unregistering
+the async DMA device:
+
+    for (i =3D 0; i < re_priv->total_chans; i++)
+        fsl_re_remove_chan(re_priv->re_jrs[i]);
+
+    /* Unregister the driver */
+    dma_async_device_unregister(&re_priv->dma_dev);
+
+Could this cause a use-after-free if the IRQ fires, and does the teardown
+order violate teardown safety expectations?
+
+[ ... ]
+
+> @@ -763,20 +763,21 @@ static int fsl_re_probe(struct platform_device *ofd=
+ev)
+>  		return -ENODEV;
+> =20
+>  	/* IOMAP the entire RAID Engine region */
+> -	re_priv->re_regs =3D devm_ioremap(dev, res->start, resource_size(res));
+> -	if (!re_priv->re_regs)
+> +	re_regs =3D devm_ioremap(dev, res->start, resource_size(res));
+> +	if (!re_regs)
+>  		return -EBUSY;
+> +	re_priv->base =3D re_regs;
+> =20
+>  	/* Program the RE mode */
+> -	out_be32(&re_priv->re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+> +	out_be32(&re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+
+[ ... ]
+
+[Severity: High]
+This is a pre-existing issue, but there seems to be a missing bounds check
+when parsing device tree Job Ring nodes.
+
+In fsl_re_probe(), the ridx counter is incremented indefinitely and passed
+directly to fsl_re_chan_probe() without being bounded against
+FSL_RE_MAX_CHANS (4):
+
+    fsl_re_chan_probe(ofdev, child, ridx++, off);
+    re_priv->total_chans++;
+
+Then in fsl_re_chan_probe(), the unbounded index q is directly used to write
+into the statically sized array:
+
+    re_priv->re_jrs[q] =3D chan;
+
+If a malformed device tree contains more than 4 job ring child nodes,
+would this cause an out-of-bounds write and memory corruption?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but fsl_re_probe() appears to
+ignore the return value of fsl_re_chan_probe() and unconditionally
+increments total_chans.
+
+    fsl_re_chan_probe(ofdev, child, ridx++, off);
+    re_priv->total_chans++;
+
+If fsl_re_chan_probe() fails and returns an error, fsl_re_probe() ignores
+the error but still increments re_priv->total_chans.
+
+Subsequent calls to fsl_re_remove_chan() on driver remove or error rollback
+will then dereference a NULL pointer:
+
+    static void fsl_re_remove_chan(struct fsl_re_chan *chan)
+    {
+        tasklet_kill(&chan->irqtask);
+        ...
+
+Might this result in a kernel panic from a NULL pointer dereference during
+teardown?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260716202949.6772=
+90-4-rosenp@gmail.com?part=3D1
