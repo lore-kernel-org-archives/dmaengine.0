@@ -1,63 +1,63 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013065.outbound.protection.outlook.com [52.101.72.65])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011051.outbound.protection.outlook.com [40.107.130.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C59437E5E9;
-	Thu, 16 Jul 2026 20:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A423BC696;
+	Thu, 16 Jul 2026 21:03:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784235469; cv=fail; b=pOobje/rTMyFaVjA9cLeLlWSSZXd1hWqBD9EhqmLEN/iA6n73oeiMqcmMf71OWocPQwImJz4fPIvRMBgfNXT0Ylj2qypnyEBqlcd0OSxnnUSCci+aXOFgWCEo4yJIWCT6/IkblOxqQqyTGpJV1d7L6Q3YXOAdt7b8BNiboO+2hk=
+	t=1784235785; cv=fail; b=lPgttP2fcBwmhB/pKyaohUSdR5xpr8vqr5JJzMxy+N7NzEJvM0+vv+GNU4GbHqhZ6otiYB6qIOTYTcpVqD9zbtQ3UhUNKDb/Nbr28ggvjhLI3Sad9s6M3b1hae/cOytkfUSVqwXZ9ctJGDcbQcJKDAoXYAGL5JTbyNmbcE+UFZU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784235469; c=relaxed/simple;
-	bh=Y0+nWZEKVIgQ+obCxA8z+30Sst6NFiET19p1a4QA09g=;
+	s=arc-20240116; t=1784235785; c=relaxed/simple;
+	bh=HH/w2yXw/lqda69xuPOVu/L5ZDwUM06S77ErmvqXZ9Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ZWJcFklMKJrzWdMR5c4faUXYlYH5Cy3DoZOwyqXnN8Eoapl1h4k4cGt1Fi+xcwbuA2Hr6htQPEh5eb/+BQHfbC+6wQOXXPaEJpd2G6dKvjNSt+xIp6JHfJg85rhVRrYqItP9xaADww89Ck3oGRPSG7rBltVCEKMzlbQhJtH8aUU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=kntAHUxL; arc=fail smtp.client-ip=52.101.72.65
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ACnCpCuDVEpflVXXH4so4EFoD+AEwoKQcgXXpaZWmz9Z9BRg7PAXgauNYeGYELMaYnLRxlmLZdk1yYbU2Jic7WZQEOM9sdfSpsFtJakCA1JyR9BIqToG7ALVXjcb+drr5Vyw55BRFsngHkFwsXKZkHoL0YbRcztILmAgqhnvFK0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=R4tdaN1P; arc=fail smtp.client-ip=40.107.130.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="kntAHUxL"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="R4tdaN1P"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f77XxHB0H9oXlLeAmtyIqJkYACYErWYXaQKqsPQP20GscFlNUs2yfXS3IqKFkeRsq/lVdzyd2YywjRDJ+TLAKkKvlCU0oZw0RYDLzn+iM21jVmF5lbWei9N5RHGVW1YwiXybcjU7KzLWdkD0K+dRm6mhgfpMCSZqXfw9vhRneFqBFNpqcBHzrzHtNDHK/i9aCRNtsfk154vr8rFmPzjYSYZr9V0n97z6YYclz6XF4KgYNLlVMAl1OFZEd8vD8gmRf+5pYWRrrOmsXi1YMysZ7CgdDs0BlCnq2PN2cDsoSqQt5Nx0u+6MAsC6Fcdz+xaE4AcNf8ocagHgjZONH3kARg==
+ b=FFuVMWWWsLVvC7/HRM/z85LJNkV5h8TWf82fdld0GI//liOAh5inlPvP5RoTVLIlIa82eUcS1m1r2ZbMTlWa+h/gR/H6TzU+wTLOt9IHfqSjJlfQ40T1xlFaSn7Rjhcz5yEkBcC9wGcgq/hT3yovmVoTnbOk66rXckozZAcL1DRDWSXUTu3kM2OeLMARRLIJHKemm1hEp+Glla+a2lG6i8jdH5t0uq7K+sj5rdqcFM+MR4Mt7VQDn4F8fNYQiEytCut1JqW1rZr/IjXbSbt+RAMrIyYi1afxJ/Qr/0NG8gaNc0WwyHHcJk7/K8zIyAB/PLWYr0/FztDniNvtd3csqQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HHTAfx97tfkPNcHAaG7u6I58qBoIY/M4VeHIAjp9/gw=;
- b=LDg9rL69x67Uj9MZStW6So8APUMOcSZLXa5vCNOll4+ULKU5x2T7/N771NP2FwhNadpTGyM9molZ/5qeU4XZzDvT9jGiUNJbxHQQwMdp0QzL4/7NoHEUZESYlmgOWV3xklFhwcJ0H+kc2OAMp8iEQACWzhtQKIKFxnzwBI7SE1dciit4x/j8kmcJhlAzAEUpHolzQ/O0o05pLrlM5uTxrLJfIpn3NKz6rc2aRLirDlqcbxw+yBe5Bxag/nFWpScgtRqIaI4zZC9D4XWa7ai41xJr8s4wxSyztEL2rSJBoOuLCH2ID80THWstx1AqwgSCHc7pw5OB+URY2WyevNKZHA==
+ bh=y4FMspBbfw1iAJL7lfP4mPSGggvPkT6E5pcVT3VZUX8=;
+ b=dHXAlTQJqxl99W9AIdt/ObwjdfFI9H6VBb2bpn6h76xE1eioVfEXEplNjs6x4eeeHCcVbstEbk/q1yHvgbhGscRVIVCvqQlu0CB7PprYk+3g6aNfv3nYKPVodXs+RsKpuU7GEY/zGTUnRI/PADN4hkuQ9DoEXUCUQSDwx9gngSeSTbZ2iwUtl9c7DkdrsnhmtD1CezusvUMGZ0HQ7YYqQ1/9rH/woRR0WM4gh35Cn9Xy/heejo7NODQ2HUAIDHsAMAZOqazG9GCuABizZ0vuGwfoC4OlUxiFYfx5/UorFae6Rm+2eBG/JBLA8Vt4ogmJPzm9kSYUD08+GaJT/wzpZA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HHTAfx97tfkPNcHAaG7u6I58qBoIY/M4VeHIAjp9/gw=;
- b=kntAHUxLUczTw/DTRW/Ym04Z2FAdFzcUbf89Wk5r9lnWXX5tWF4eSb8evAfRS9Rd+r2i6IeU8dGYzNOExxcItCwoEVciHg2KQW2j+THENCyk/nrphCISKpHrpBeYP77xF/HGloC1ymhGpuwiC7lXz9/qsYi1SoWkNo46MswoP1DRtCiBbEH+q1a7mE4iDFIfrwyVSuxy9ZUAMI4/AcJFc0h0pWARRUBTiltx2Cu8lWvy+lvQsO52Gou5UAlmzbVo9+22+gp/SnUrcyQiT9KFHK734UWpBHO1fV+89Td4dmfhUQnrsYmMQyWyKdOeFgYZ2mMjWHFZzlzueb44tX0dLA==
+ bh=y4FMspBbfw1iAJL7lfP4mPSGggvPkT6E5pcVT3VZUX8=;
+ b=R4tdaN1P+gbULonot1Cc2hzWM3y3+vb4c8AcCErj09z9oX0ydspVf2/9JbxXeHufqzn2JMlTCCYcaMTPpxDWBq2HAiDe8oNnzpc5xL8YPVVKnBiTDSLr53S87A3Dl1Q/k/OlFcgCavisM8WNnA5Yxi4gZAX0YG8lfpEq33HHbRIxzNag5xw9FWJpotCCPGXylGRgsC22OS/ZlO+vVYoaBrtE/8WcjO2L1dmyS6qXPmGttfzX3yaPMuB209q6mIiXp7r0javCnRM3Vtacx4J3FpFna8OOP9XNylHXbhDRaOlwJkJSE+UIhcjjtN5B0brEhWOyt3KJ9jdfeFFfEK5fyA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DUZPR04MB9984.eurprd04.prod.outlook.com (2603:10a6:10:4dd::18) with
+ by PAXPR04MB9089.eurprd04.prod.outlook.com (2603:10a6:102:225::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.8; Thu, 16 Jul
- 2026 20:57:45 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Thu, 16 Jul
+ 2026 21:03:01 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0223.011; Thu, 16 Jul 2026
- 20:57:45 +0000
-Date: Thu, 16 Jul 2026 15:57:38 -0500
+ 21:03:00 +0000
+Date: Thu, 16 Jul 2026 16:02:54 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Rosen Penev <rosenp@gmail.com>
 Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCHv2 2/4] dma: fsl_raid: set final bit via fill_cfd_frame()
- argument
-Message-ID: <allFwqJcks3JixOx@SMW015318>
+Subject: Re: [PATCHv2 3/4] dma: fsl_raid: keep MMIO bases as void __iomem and
+ cast at access
+Message-ID: <allG_krfWa3w2lJ6@SMW015318>
 References: <20260716202949.677290-1-rosenp@gmail.com>
- <20260716202949.677290-3-rosenp@gmail.com>
+ <20260716202949.677290-4-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260716202949.677290-3-rosenp@gmail.com>
-X-ClientProxiedBy: PH8PR22CA0013.namprd22.prod.outlook.com
- (2603:10b6:510:2d1::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260716202949.677290-4-rosenp@gmail.com>
+X-ClientProxiedBy: PH7P222CA0002.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:33a::21) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,116 +66,161 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DUZPR04MB9984:EE_
-X-MS-Office365-Filtering-Correlation-Id: 714a3a5d-b6f3-474d-b425-08dee37ce297
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PAXPR04MB9089:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6e70d7d4-3dfd-4f3f-1238-08dee37d9e9d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|19092799006|22082099003|18002099003|11063799006|56012099006|10067099003|4143699003;
+	BCL:0;ARA:13230040|376014|19092799006|366016|23010399003|1800799024|6133799003|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	+bRnt0EqfpIC6g4JqHI7sUMEeTQQPskdLZGRG0dapAsbxRlAflsmPE72z6APQpRkr1AUhNmhzN+wo7EJT3pJ9/60PCl4fso6MGntnOC+jpNFZhwH+kmorgDUeoV4ZPqDnEvYVxOMe9NTI73AEcKud1CWefW2dUd7lnghKQPk5+sKjc6PEkxQza/tn/cMcsbiHTa6WZ1XTaldtEe7FqrYptvoxwBnD3EQHlkld+AgqwkmvHuHCgKE3i1VWdh6c5s/CYBUH1h8HefHlIA61PKXNXRF4JIGSJ2QgEx63d/9gZCnit26KQ+NRYlo12ZlWOoN81Q/EdSgBaPnQnBpJvIXqnyf7L37O/YqrMIwPiNoAs3MKpMwGliNG9Ecm6EKEani5nmQn6+mjcSbH5Mt/tF71kdPg7z/mhMZaVd6S44XNBBHsmZBE5qOKkweWhaaeYK1NjrAX2+yOGFyPNMSXrKz4t/qOflyUYcEK0C+6h5aUQB7be/tqtXi5KOdq8oovORLguvKmuSN43kBRq2zh34E2Gsb3isDkybRhtgqnETHyvZ3unTq8jN3bFKk7M6RPG+9SAH3w6Vf1MgriQRu4/4EyEpFGHGvivukBYQXKURV+8XRjrj9fE1QVX/A6TxKqVfdVRyUtQaW/YrUrpO64kIg1oiTiXIOxwJmEX+NRKvUtz0=
+	J6JeSUVOo4WshXRy4OPyY3G2kgSRDjCYkI3XNaPgEkbngaZeGK/JOR7aZUaH0GhJ3FtmqXgeEhnENnvGzz40ic5Sg9t5gmzy017FgnhZjidN54J8a+VJsUMoQ1M8F08omAvhRSsAxHPIeCgNepzXwCTTuuCgNZZE2nYWWSemQy1pFP5xzj2CmmSUL1pMtWcSqzOCIpIhqUx9GnuoWelXK316cs4zL3agZui/jrIu6XTxFKMMGs6XkBJXDacFly7vcc3acDms9tVHkwktwCmQwcG8jT4ngDeDMcjL3O61aS0FTXd+pLtw5NtJfp02e7ryuAoCwFZydBe2CIKqJ1zYAsaHMNJFrUydkK8BD1c9lBA1pPDz3TWRMVvfPbPldNE94cHwGflxhTYzrrIlq63lH9a5wuHB4Ed0aiZoPHtINt3mnHkc/NhxCC/lTbQf7mgFJK7rNsC3q1bgDZFzppEiMjSnLbA65l0vtS893jaJtUDaeag8gUVdfgyXqNfzIMS9FJ41LJEyj592s5r4U3N5+DvINxrhrZoXP5I2y2Af949Ap0tZMcxu30H7OxKZZ/Hjj3MeNgem1sCmG+vcuzlasKoGLr8PTI2S4JcqQbrgTjXNQSxxDV5Tc1mi8Pphm1p8sBs0rfa2VlrJaW3SkhOQ5dOrWx8f1UtBc2VIhLMQru0=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(19092799006)(22082099003)(18002099003)(11063799006)(56012099006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xF1Kd0Kk3J4KlnESQW8HYsuyh7affJIYd7DNVwy3UwyXfaS+jO66WMsPn63E?=
- =?us-ascii?Q?aOrV/w2Gwebh7+UUSC9aFpVhYeuwTvuvQwgyb8Eep/MjozWSlKarQ6kSZBvy?=
- =?us-ascii?Q?vWPT3moy3j9lCtGZfrNfDerDO4jVh6RYrV+4CW5uhXZ2ld1dZhLKoV/l22Wd?=
- =?us-ascii?Q?kWNYRGxMIeI4ELHmT9QzLVKAy07vCfs0gfyb5KJqsLjiyr3m9oWZ8/T30ZB/?=
- =?us-ascii?Q?4MH6Be2YnF0yusrnLG4M5+GddvNxqkKawoqEYhxC+kGNqyv5P6LBfDJkXQ37?=
- =?us-ascii?Q?3hPyx1M3MV5Jn6zZDQAzFWIwwUs/S4hgi22dMYS1JpZj9o/0sUNMvtPWwgag?=
- =?us-ascii?Q?LheMtMdj9YFDqHvKw0/68Otqno8zQQqnNZS+VZP8OrpnXbpUth/MhVhE4AEY?=
- =?us-ascii?Q?MC6UjDcIsjtXq7cXwPaYAcGKxqjIuwTYSjLf/vEIcO3YPkhQhqj74Ms4logM?=
- =?us-ascii?Q?QMFbnmvRydlHUA23hlL3JN9iTd5aRwAtHvOzvfpPjQUCqzIi3FLd3o9ZHE4E?=
- =?us-ascii?Q?0nhjEU9pWllhkoAf1/6fSvQng9hJtHJWHpKzbaHidnoNBL6DDZowb2xWFLPG?=
- =?us-ascii?Q?5XYqrZ9HVG1qeiikKWg5cEbGz5VPSWd/Q9RQkrUhqB2x4OKK5tF6fqF4cPkg?=
- =?us-ascii?Q?W8PdYOiJFNlODIPRdUVy6+gQv6KZ8FsreGhb6YXIi/9/Ma3H2l6Vk2GfSMBK?=
- =?us-ascii?Q?eeDFEcGdZUqV9ds9+2QbKz4RUSgGS8nUytxYRtMHOQYBX6n35+weiwawACDr?=
- =?us-ascii?Q?IsHxh/87K+wdpAgZ32h31GXqVeX4XsWX31ohliSniEUjIUU7WCRLPGpxciCo?=
- =?us-ascii?Q?IAulWlGyIlzASq9Z+TE2+nN4UryqUCAd5XAI20m4JRXIDZlVKBZIBSOeXd2D?=
- =?us-ascii?Q?qYltTsvBLqyyg6xhPomEwQNs7iyP8fm1Do2w/yzIM4rN/bngiKbohp7hRWwf?=
- =?us-ascii?Q?7mxpyqP+sgb5fkYAdUiM8+e1muBqliCN9REZYjC0+RX9lpXcn6EDQSPwzH0e?=
- =?us-ascii?Q?liVj5JMf1mQ9fx0RZGnHiME5TnVuiun4Po+USDDp4WrYerlwg0nEhvOqcQlD?=
- =?us-ascii?Q?SCQ+2vQ1c+Qpu7i1sEWeMKdFhotWrCMy6ycqyL+/dn28TwGeU3SzzgysgJug?=
- =?us-ascii?Q?Md+Y0Mrpc9i7uPWw1cCJ9MzXcZYK+l/zKIFwQpZo4jLpnqTglxbH/q/JCA+J?=
- =?us-ascii?Q?Fm/NGdPipYorxY7IFT7D7p70JCvYXLttHnv11yGYuJrVe2JxLos++9OxLAwB?=
- =?us-ascii?Q?aJY+V4oRfxFOPYy/6xt36RQ9gWAgMtJbFi67BYXodpO9+jsftzM77E4B7PSi?=
- =?us-ascii?Q?iQT3iHfXEXdJIQt1WiUwDRMRi8mKfg1oRMRUY0+69EoM97JNba5A/djQYTdg?=
- =?us-ascii?Q?Lb/lTT+1lHCGbCBvvJN0KFa1O+zYuM0KFOE/ewsBd5Fj+ZrEBFRlwvKnKaRW?=
- =?us-ascii?Q?iWah9Tjh+WBoPL4kGxk1e86U1CKWhxd3UiJbzqBn2cvPS0jsRbhjzNLmcA7q?=
- =?us-ascii?Q?TbUP8RKmvcvdC6ACFHe3oa8nj2UGZfVQfBAuyWh8tCScK0WtgfvZNpo3hMAX?=
- =?us-ascii?Q?r2WoQ5iAwizkmBYmzINn1wLX9HvaJwq28NpeZ94mB0FK0qXOylUr3a0cXBNh?=
- =?us-ascii?Q?ONU/jODThk1kVnaj4mZu6Fj5HG8xDZMwPEKn3LxBC0DoeYDEElk2/Y/Qvb4V?=
- =?us-ascii?Q?Jl56bbQLx5nQoIbjLTbkoj8THzeeLCKmOXSDm6v2q7X+BZrd5D/TY/rg96Q6?=
- =?us-ascii?Q?HClv0izXm6vNBjsOTgCBxmdlptlETxaw7E69Whj146AWFNrzfbAS?=
+	=?us-ascii?Q?MT0OS318efWH2TdCEl/QiZVtcCOPd7oHwuZtxI+sWzMkne9O0wfMRM5VsBkW?=
+ =?us-ascii?Q?2XRRJyYfwCeZe6oLdvc9KtyoRz7DdkYu/1v5c3fCn6U1+uP5txyjyL++PvXd?=
+ =?us-ascii?Q?q0P4Q24mpsABoyNbJsm/j5oXMYa5g8AWBNGjvOGON2hQkEPwBcKkD/7ufSkK?=
+ =?us-ascii?Q?lTXzJ1ksK/+en/Y4k4ov19x4MamjTmJh9Yl4AMxecasp1XGacrwGYET2F1vh?=
+ =?us-ascii?Q?TT/53BmIhVPc154j7wm0JaDuyqfDFBvJXKfg8q+V31txnYyXppZcNwRGEyNu?=
+ =?us-ascii?Q?zvOF9BiHCc5FTFNTt++0EkZ34ltmzqEYjKDH7FSt0GeHec/QtXSFe8Xq0qWk?=
+ =?us-ascii?Q?JugAqECrczrbTKC9bOUhn1oJJ0bEwu4HX7V7qVC1G2nQvqvfsPQ4jrnp19VN?=
+ =?us-ascii?Q?4hu4tP57aEC+cQpCuk4UOqE39969ijOAhkHieARoRkbEBK10PCyKPfxX1l+Z?=
+ =?us-ascii?Q?+LyHk0GZwoRoriwUIwbp7qHsMuc6psQY/2TeC8wSiLqOhQxpdWenv8n9vqzT?=
+ =?us-ascii?Q?cP7zluBwRlyLgTcNaUV/gvG2omazPKQvGNOsciIQwcIEa6RrS0PQS7LBXjvl?=
+ =?us-ascii?Q?lXU5mW1WoVWG+Kf6p/zs/ZbaGaQ/hr8A5my0zo701niV871I4+43ajvNs1N4?=
+ =?us-ascii?Q?IjKvW8QAK50af4Rx1epyeg0/BitmpgudTqRkuBWFt9cPqK1jnrV4nEA5FoEH?=
+ =?us-ascii?Q?+4ArMbKbtjfmjt2E2+GHBTCsiL/UJdiuykp/tCqT0IM6zvsww9BsXQvZNbMX?=
+ =?us-ascii?Q?yC1oVtir4hKEdtZq67j3S27MDQV+QE2q/863dhC9uVoVvwlNH3d19ZI5vg60?=
+ =?us-ascii?Q?vpDnbZa24+A1+viwx6N2fZl++vuEBIACx4TzgezhxsVIh6LvZJlZI9BDnDbf?=
+ =?us-ascii?Q?J6BDonFJ+UO1e3x06QImLOVgFKbZRXPBH3t66SUpGb4LBv13iOuN/qEJWm28?=
+ =?us-ascii?Q?TKTImtRndNCQAH0Wn7kwiviMzYEek4FKB7cda+fZjtsofNE13x0juMc26SmM?=
+ =?us-ascii?Q?nnprIhSOik/ScxGRJsmxD7uif3FGpvQX8+nLqoWur5w60JTY23iZVXlBJtwH?=
+ =?us-ascii?Q?LhjE60v0C+Sy1q2yZ5GHywQqIAq389Enoidq/0uxKFSfa39QCfTaSrNJ35Tg?=
+ =?us-ascii?Q?pD5jwp+MW+yXHrcRKfO41ppMf7MkLZoYM/7YvjlAAt8PZ5E6al7twvOSeuh+?=
+ =?us-ascii?Q?229qXz1O3s3CILcbQSTAiFvbkPSkVer6TFdiAc0UKsZA4d7G5szUaUXlk31I?=
+ =?us-ascii?Q?fQ9XmwnD2z+cagC83PVBubbAw8fzQ7TNFtnu/id8Y8/eZWH1G53LQMuy8FXS?=
+ =?us-ascii?Q?uwYhrCOQ3DDfmNuGyHH2tewQlwK9Epg1b9W2RJJyf+v5TQjUOiO7bHc0LUSF?=
+ =?us-ascii?Q?fDEYYMyhXjr1WCQImMvqEc/u9ymT+gSS+xek90qToSklHp3KQf9mo7lq3KsP?=
+ =?us-ascii?Q?1KDX61ZPnOdeOpqn6y2ltRk8gHs45p9THP3SxUPppoUcwlpLXaKf3umNkh3a?=
+ =?us-ascii?Q?K0Ju/GxVHCjj/u/z9L9VvGAj9pdIYcD3x5RcjVFZNWCuda0Z2HfkpJ94GLgJ?=
+ =?us-ascii?Q?mLtj9EISSEL94U8/4PY7FTj6xEhxgjVt920O/ZHaZ0tSvXBHkm2ZsR6deiGE?=
+ =?us-ascii?Q?SiLdz9mMvyxUc5PjZ/L/WmPbmrefKoHTkpaBy7DYzw/U2pd9vSRACfVgLIu0?=
+ =?us-ascii?Q?L2ob72GBQb+UA7tfU9/L6zh2AzUvFHcQ9sTdliI7EAHNlF0acJfg3P8L5uDh?=
+ =?us-ascii?Q?jE/5kRfnfY2mErI0j8GjhKUuJohmoG8K6qHCoUJ470EadsjROXIP?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 714a3a5d-b6f3-474d-b425-08dee37ce297
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6e70d7d4-3dfd-4f3f-1238-08dee37d9e9d
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 20:57:45.3213
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 21:03:00.7832
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 83DDPk5uSbfwBokRtWr0gakZSSpR3qOfMtLTqui312Ka/LxcldzAcQuD7NXSunoOxMOD7XumIN9Ndd87WTP/SlFE/ymxkuOUWNeys09MSoWOfx+9qSNGh1UO0VRwR+RB
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9984
+X-MS-Exchange-CrossTenant-UserPrincipalName: /rVHRri5p2xLoYKAefgdLk+66tDXd+i41I29SXWO8y3k5D4SlTctaPYPH56zoYOQFyBRToNqzkLuZzqSXKaoYPxw9iRVLzwtDwUcVfYqUJf3Z5p8RY8Ni+kGw1uwsstc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9089
 
-On Thu, Jul 16, 2026 at 01:29:47PM -0700, Rosen Penev wrote:
-> The final-frame bit is now passed as the "final" argument of
-> fill_cfd_frame() (as fsl_re_prep_dma_memcpy already did) and set in CPU
-> order before the single cpu_to_be32() store, replacing the previous
-> read-modify-write of the __be32 efrl32 field.
+On Thu, Jul 16, 2026 at 01:29:48PM -0700, Rosen Penev wrote:
+> The fsl_re_ctrl and fsl_re_chan_cfg structures describe memory-mapped
+> RAID Engine registers accessed only via ioread32be()/iowrite32be(), yet
+> the pointers to them (re_regs in struct fsl_re_drv_private, and jrregs
+> in struct fsl_re_chan) were not __iomem-qualified, so sparse emitted
+> "different address spaces" warnings for every register access.
 >
+> Store both MMIO bases as a plain void __iomem * and derive jrregs with
+> void __iomem * arithmetic from re_regs, rather than carrying typed
+                                 ^ base
+
+> register struct pointers through the driver. Each function that touches
+> the registers introduces a local typed pointer (struct fsl_re_ctrl
+> __iomem *ctrl) and uses ->field, which is the idiomatic kernel pattern
+>  and keeps the registers' __iomem qualification intact.
+>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Fixes: https://lore.kernel.org/oe-kbuild-all/202008111749.yy85rFMD%25lkp@intel.com/
 > Assisted-by: opencode:hy3-free
 > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
->  drivers/dma/fsl_raid.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+>  drivers/dma/fsl_raid.c | 19 ++++++++++---------
+>  drivers/dma/fsl_raid.h |  4 ++--
+>  2 files changed, 12 insertions(+), 11 deletions(-)
 >
 > diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 2778d07a05e8..888f55b672a5 100644
+> index 888f55b672a5..524f83faf3da 100644
 > --- a/drivers/dma/fsl_raid.c
 > +++ b/drivers/dma/fsl_raid.c
-> @@ -375,11 +375,11 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_genq(
->  	for (i = 2, j = 0; j < save_src_cnt; i++, j++)
->  		fill_cfd_frame(cf, i, len, src[j], 0);
->
-> +	/* Fill the last frame and mark it final */
->  	if (cont_q)
-> -		fill_cfd_frame(cf, i++, len, dest, 0);
-> -
-> -	/* Setting the final bit in the last source buffer frame in CFD */
-> -	cf[i - 1].efrl32 |= 1 << FSL_RE_CF_FINAL_SHIFT;
-> +		fill_cfd_frame(cf, i, len, dest, 1);
-> +	else
-> +		fill_cfd_frame(cf, i - 1, len, src[j - 1], 1);
->
->  	return &desc->async_tx;
->  }
-> @@ -505,16 +505,16 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_pq(
->  			p[save_src_cnt + 2] = 1;
->  			fill_cfd_frame(cf, i++, len, dest[0], 0);
->  			fill_cfd_frame(cf, i++, len, dest[1], 0);
-> -			fill_cfd_frame(cf, i++, len, dest[1], 0);
-> +			fill_cfd_frame(cf, i++, len, dest[1], 1);
->  		} else {
->  			dev_err(re_chan->dev, "PQ tx continuation error!\n");
->  			return NULL;
->  		}
-> +	} else {
-> +		/* Mark the last source buffer frame final */
-> +		fill_cfd_frame(cf, i - 1, len, src[j - 1], 1);
+> @@ -657,8 +657,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  		goto err_free;
 >  	}
 >
-> -	/* Setting the final bit in the last source buffer frame in CFD */
-> -	cf[i - 1].efrl32 |= 1 << FSL_RE_CF_FINAL_SHIFT;
-> -
->  	return &desc->async_tx;
->  }
+> -	chan->jrregs = (struct fsl_re_chan_cfg *)((u8 *)re_priv->re_regs +
+> -			off + ptr);
+> +	chan->jrregs = re_priv->base + off + ptr;
 >
+>  	/* read irq property from dts */
+>  	chan->irq = irq_of_parse_and_map(np, 0);
+> @@ -746,6 +745,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  /* Probe function for RAID Engine */
+>  static int fsl_re_probe(struct platform_device *ofdev)
+>  {
+> +	struct fsl_re_ctrl __iomem *re_regs;
+>  	struct fsl_re_drv_private *re_priv;
+>  	struct device_node *child;
+>  	u32 off;
+> @@ -764,20 +764,21 @@ static int fsl_re_probe(struct platform_device *ofdev)
+>  		return -ENODEV;
+>
+>  	/* IOMAP the entire RAID Engine region */
+> -	re_priv->re_regs = devm_ioremap(dev, res->start, resource_size(res));
+> -	if (!re_priv->re_regs)
+> +	re_regs = devm_ioremap(dev, res->start, resource_size(res));
+> +	if (!re_regs)
+>  		return -EBUSY;
+> +	re_priv->base = re_regs;
+>
+>  	/* Program the RE mode */
+> -	out_be32(&re_priv->re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+> +	out_be32(&re_regs->global_config, FSL_RE_NON_DPAA_MODE);
+>
+>  	/* Program Galois Field polynomial */
+> -	out_be32(&re_priv->re_regs->galois_field_config, FSL_RE_GFM_POLY);
+> +	out_be32(&re_regs->galois_field_config, FSL_RE_GFM_POLY);
+>
+>  	dev_info(dev, "version %x, mode %x, gfp %x\n",
+> -		 in_be32(&re_priv->re_regs->re_version_id),
+> -		 in_be32(&re_priv->re_regs->global_config),
+> -		 in_be32(&re_priv->re_regs->galois_field_config));
+> +		 in_be32(&re_regs->re_version_id),
+> +		 in_be32(&re_regs->global_config),
+> +		 in_be32(&re_regs->galois_field_config));
+>
+>  	dma_dev = &re_priv->dma_dev;
+>  	dma_dev->dev = dev;
+> diff --git a/drivers/dma/fsl_raid.h b/drivers/dma/fsl_raid.h
+> index 69d743c04973..adbfede330a7 100644
+> --- a/drivers/dma/fsl_raid.h
+> +++ b/drivers/dma/fsl_raid.h
+> @@ -256,7 +256,7 @@ struct fsl_re_hw_desc {
+>  struct fsl_re_drv_private {
+>  	u8 total_chans;
+>  	struct dma_device dma_dev;
+> -	struct fsl_re_ctrl *re_regs;
+> +	void __iomem *base;
+>  	struct fsl_re_chan *re_jrs[FSL_RE_MAX_CHANS];
+>  	struct dma_pool *cf_desc_pool;
+>  	struct dma_pool *hw_desc_pool;
+> @@ -273,7 +273,7 @@ struct fsl_re_chan {
+>  	struct device *dev;
+>  	struct fsl_re_drv_private *re_dev;
+>  	struct dma_chan chan;
+> -	struct fsl_re_chan_cfg *jrregs;
+> +	struct fsl_re_chan_cfg __iomem *jrregs;
+>  	int irq;
+>  	struct tasklet_struct irqtask;
+>  	u32 alloc_count;
 > --
 > 2.55.0
 >
