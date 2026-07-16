@@ -1,63 +1,62 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013014.outbound.protection.outlook.com [52.101.83.14])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013051.outbound.protection.outlook.com [52.101.83.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FFA37D128;
-	Thu, 16 Jul 2026 16:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EB4431A38;
+	Thu, 16 Jul 2026 16:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784220726; cv=fail; b=dTp+ZGkHIMgOWXZ7LIHpyp0y21S/7FEwBEgeC9yxhF5Tv3J/iLdTTrubTgVkKAQFwpztpSy/F1yookWjwpBJ33N2Inwnund6oGON2Ny+t4LIMmgKfHSIda+8sdK0tsx3qTgFyCz2g6tK9IJRSLcdPnYamW43DwmQK3FDvMb1Ul4=
+	t=1784220841; cv=fail; b=h19DCuL53j1af0u5jbNukbD0AWurerT9hPrLdunrySQiiqeJGXi8mo5bIhaZ51VOHXZNpCgUTZaAU8cDztO9L3l8lrDM3NDB+nXqqBA+q/BkD3WsVJyp99Fjt2avclsGZKGxYOsiiZ39LNYUYUFLGjDqxAY+TAMPHgWt1X2qcWA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784220726; c=relaxed/simple;
-	bh=+saNy/L483rvfkDG7hKD3K0DhKNek+A+C1qLEZJQ/5w=;
+	s=arc-20240116; t=1784220841; c=relaxed/simple;
+	bh=CShPFd7FcWGGlRkzk/B+xSkp6bRXGYXR6q8WbWxy6OE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TDrefGxJrXvwIxxM2bXRM3dfVdf50s9c32FHS51mNc65AfUBghK3u5UUD6qKePfdpUa9CfdwJcLkZlRe6vu+EVQJaFGgutviXbuB1FS7/UX9zQL81t3wrmM4I1dcg019ZVu5gBKXHKUremifCEc2dFWo6DyGsKTbdLWFowHaPz4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=kxuw65i+; arc=fail smtp.client-ip=52.101.83.14
+	 Content-Disposition:In-Reply-To:MIME-Version; b=s5A60tuMoCEyxY/GNc8M6s6YcCsZzl9Goj2wRHpOTSSmKLH13Z7zRLQSls4SVazT8AGXq3bodPCq6R8Nrm6O14/tWDgIwT6ZjUtGaPzXPrcy1GwtV3X84gbRdxu2do604AjwBe41pQpX7bXWLCZrHIRaVqPQkYylqzFaAiajgM0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=w0iOdIZO; arc=fail smtp.client-ip=52.101.83.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="kxuw65i+"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="w0iOdIZO"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q9HusilrXA/MR6y1z3aDG2ng1Tssl4+aQ7bQ/uGu94RK+C2Gt8qx8DpxTM4W5m1wr7XYLSfYKT+DrYN1t9YQwhjkY86CKnwmz+pO6en2l71MTSlicRfT2c6YaeaZgNt66vZbsyLPXQ2kUJ0uL5ZwxNQYY5ia33VEOxNxFvswryXX6xTBoqyR8cAGAnDLmFI1XN2sO4Wv4HM2/uWJosGUv1TyqMBqUU88hFpp2LjUSNNeuuXvyb5L3MM8BkIlLOdQoR0PtjMU6k3u3ZQRHPWsejbZkDtPntei9bc55sc6HGFRjVv18ks6Zo4xEshCjQKDr/rLphCa8x/rt0CwAHbVhQ==
+ b=yJ+K8YqQNKbn2V2V8rz8xsTC4ydxd8zH/go68ttiFX+qmpA5oggs5P5N45h7xCIhIPpkCg9qMbvl8JshpQshveXo5nQanVnu7uWFyIi9nidhcDiqsp+pQToo5TPCcUqmQv9hfqYb2Ep/vfVRIONnDM9LOSjCsuASTJx3j0HFz/pLECw+Edb/wBNPNzA9BaWzrN85PcZkDt0C0rQl8a4rYu/j/+WPbF5lA0athF17vSJnLcxmp5t6Hb+zFJL/ckID7eVNIucdOfas0xzoVlSirqKqZUwfy3RYWfI8spnT3NrWz8dL1nOgv3TelWXYJPfGx3t+jcDSZT7qEaV3rwp/IA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kEqLHhv9CEhclfikOI1MkWchipJswzQy1J8uZOaXh9Y=;
- b=hRs848cChrTg08utAW2+wJV0HVVhRltKkMk/Xva4g3n6x5OsdbalX39QPtdhFYfKZL8Id7ErIB5CrC2hRKXGYfH/MM7DJ+Yzhjr3Sh3MznFH1QY+CN5Zh7ikVPAJ1uPLuPdD7Z/K732ZIhimjMSmRb4Rw+d7imWKyuqJDACYl2dOJtt3DjVhvhxC9oV90L5hIHAjhlgejUfpcv3o02y747R/ZEuhmzu9Wnq41mGcO7Xcoly5g69Yp+hmVhzF/m+w/t0WSpkttYqpG3OsagTrU500KKT44ABUVuYGXtZtjIvhLnywAPclvomv2XtsB5r1H7UcmIaWqfWo+guEGhIt4A==
+ bh=eLQH2H0Krei9+7RuIdfX2QT/+g2DvLDJ2JySdTceZNI=;
+ b=ZdPcyXIH8/eRsDmROjbDhnsLYpqfMwf/gInRYguM8ImKxIFiJWZAS1PLyynevO3alsp2TfvqZGsqw3ZC7Aj+yXyld2Z5GiEoWwBRZ5+PorkWpQFGa08QeFSMP0GQvNPqdEu2ZxicuRKRjruEukR2E+Ll+jEJ2c/jCmHclm+QG8qDeKYvteJ+Oa3aV56gvO9LI4TWFPy52OeOlLka5ZEHfgL+1p1F0R3BeQARbH6OtJOK1AXWO4m5e/aPDsLEb7qo/IRXfu/nXtaXykFGjxu1NwNJ/rbzE4B6D+dSPmuu/qzS+T1prVhXKtyAUvlZCvIMSbbDdqXkqdTc0MX7tYMQwQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kEqLHhv9CEhclfikOI1MkWchipJswzQy1J8uZOaXh9Y=;
- b=kxuw65i+6jSN+Rb7/6zSG7XFMAolT1aXtl3cWLQ1UChsh5UR0iRUX+QaTfoc5POFW5j29eaysoUcK0JK5foYvWm0EKBMEZr65tlBp28jYOduu4pqhol5LtwHHwUJ41dwUJgbVv14EWZ1c8xXNxJRj7oN4sVybvi/jRL645RPP2YlKScbzQedYJfJLop4+IU2UiBKiHopc8bgGxbYy8sZWx+fY0baXpPvPa8TQpP7/P0K06PT8uTCexcNL+8/HZI/aVALM15nXMXYvmu4Ebiwhojl0mCUS+M/94hNtpkCMEa065gQK2OGn0vLJA7sDZ0czKj7Bi2t5N2VwS9a3qek0Q==
+ bh=eLQH2H0Krei9+7RuIdfX2QT/+g2DvLDJ2JySdTceZNI=;
+ b=w0iOdIZObjxAsE2A25zkEX33UBPnodgg2GhbbpkvqKeQPJ+SF5C8zuoS3cc8OV9V+8sxzkyxUjs8cQ6OBVHBpZp2v2ys09IZjMt7g9jVjd1r7eewTYq2X/a8MWm2dYXjelE3juWxusoTwnZc5xU/u4m0+c5cXclm5IW72vuLKqbV0DoFCsD9JPOs+sxgsInt2apm1zhQHlQdVh0j3+2F7qA5UkRp1+q1nhcVUQhRDdFoyBIC+ydBPz3X0020TS01DYea9dFuRfNbyKgLulZbVZqsCPa/AHSwiiwl2gUqj8Yzp5ZDgucZVSgsRdGaRIs1XXiUoL3YyhMSN2Y3z1HDuA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DU2PR04MB8822.eurprd04.prod.outlook.com (2603:10a6:10:2e1::11) with
+ by PAXPR04MB8846.eurprd04.prod.outlook.com (2603:10a6:102:20d::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Thu, 16 Jul
- 2026 16:52:01 +0000
+ 2026 16:53:54 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0223.011; Thu, 16 Jul 2026
- 16:52:00 +0000
-Date: Thu, 16 Jul 2026 12:51:53 -0400
+ 16:53:54 +0000
+Date: Thu, 16 Jul 2026 12:53:47 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Rosen Penev <rosenp@gmail.com>
 Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] dma: fsl_raid: fix endianness of in-memory
- descriptor stores
-Message-ID: <alkMKba4Sc8L46GB@lizhi-Precision-Tower-5810>
+Subject: Re: [PATCH 3/3] dma: fsl_raid: use devm_platform_ioremap_resource
+Message-ID: <alkMm6omqT9XPMWd@lizhi-Precision-Tower-5810>
 References: <20260714233855.870797-1-rosenp@gmail.com>
- <20260714233855.870797-2-rosenp@gmail.com>
+ <20260714233855.870797-4-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260714233855.870797-2-rosenp@gmail.com>
-X-ClientProxiedBy: PH1PEPF000132E6.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:518:1::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260714233855.870797-4-rosenp@gmail.com>
+X-ClientProxiedBy: SA9P223CA0002.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:806:26::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,155 +65,116 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU2PR04MB8822:EE_
-X-MS-Office365-Filtering-Correlation-Id: 59f37ed1-9ca0-4cd0-4b84-08dee35a8e53
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PAXPR04MB8846:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f54240b-0c86-41a5-af24-08dee35ad1cd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|19092799006|4143699003|10067099003|11063799006|56012099006|18002099003|22082099003;
+	BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|19092799006|10067099003|56012099006|4143699003|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	TKkWfJ9UKDqzjY3bDhkAU1Mn5sZHdIBN0xMGz3yzd9qV2edffeB+Xx6/UayvRUNO2an1pCnTr5449gtnPullg/uYQTj71MnURB3QesdTT2FXfDiAntw6Tswf1gQmFWNqQ/AM7I5y1NtniZ15ZkJPz6fsFadU83XS/2SqDejHsX/og0NxK5Vnzx72bzf6dYdjbRprveYrCUtzvyudSew/H6X8fvT+e3eoukYR/Z7pwbTNG2huvyg5rShUMeQAP2x9asvN5n8yQlODTrA1yKFmwtKHlIW0Qjmt/KqsjZpiTLQg4HB57/T/XkeIAmw1omGAytZYt+mhd8K2bu57pUXBF4Xj9h9uxGsWGytes5XI2i+eR+soqQu1RTNibNXsUfZLmizrLQky2RTXUl0H1r7AUEBCgYo0RBgsn5+S6M2NIya6g/UgA9ycrg14DlrJR8+jf78Lojoyr9Ck6B8q8mtjbQgx1/efqSM+CR50Ho419C2IH+8Dg9Kf7m9/EPoC/2CG1Vfqu504bIXnt6wFp0gEd2qQ2M8WojxLxAi9FkO+TlA5Dm/Dpv1J+1zUZufuDs8t0k0ckRBXF9T9AGoipdWI8A3glBaj5GTBhA9hhNIVnDm+DFIpHlRlQqXgaUvjjRVQVUOQHGrwdR/PQ2kXo4bL5kf30FqCENpHJw4U3cc//n0=
+	wB2uuRX2pemdHk0U9t9N9fapU8BAc7qW9VD2dbVatKjbOP79kK0szJxb2cpEUP5DPJQRm9OnQWAN9lgFh41OFoKeaDhbas/nr7Wh82t3UBdL18nQcfguJT5qmCKQbkrTyvNWg/0W9iP/l2y8GCNSbxXNSdLLa7uT77oAJRUukO0S3DNSARHr066bbd1UmfPLq0d1sJfKst6MWK75MRKoiZbY1MBzvG/bu/UFvuHcxBIMFZZ174SrwnmTx1c5pe3w7mzpUlIeq7sDnmojAfLwPVO+EofBl8EVVkKMd5n0ZTWAKplpinCoyFtccUIaczXPj13/+/vybk+YBlc2exonxdU+9yKK73R/l8Nwfx6Hj2g8R0u47+wi0dkLPWmszaBEDiYhbzzynnsFqrdY7gPcLqnBzGAKkx7wgG/jacGI34e+fiWN+X1scAjp9nRFoMfjqBHG+U+uevFNyNhTlA+7U44jr9xTwlx5GZLlViVdBIJGqCsZSXleSrFwSjeTtKBSAhv5jnvL84R8Gn5fzl0ahnCzeQByAw+S37QQNcxKcNe2JhQOR9MJjYtgG3+2NzQX2SEsbQOuxCuaUYRMnhcmjIdNZvTr/1NOsSqjXDjjBTrBehgECTWNsSy/m1vjSZzO73SrgUlj+oxaGzagFpCyZBPQuzY61+GEacIIx0NlB4s=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(19092799006)(4143699003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(19092799006)(10067099003)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?kjwH6Phqx77kiCBvA9y92p51r1uyoPImRL2YOW46hWk/9IPmsqkyPqG6l8+b?=
- =?us-ascii?Q?RqNerJC3wWWIpJSGydmaBOl1gTXG/uVKtphC9PpILlG5pXp3cazTQzGtULQ2?=
- =?us-ascii?Q?bl+BBHdy6fIxAme0LR0bIiKLR861uxoUkPQa8GX1X4W+Pnd2VBHlRi5HmumU?=
- =?us-ascii?Q?R5slgGJ0CmT/bFB6j5hTHTyK5JUGs+yaX1S/Gxhx+Th3/V33rx0Y+aV4Aa4X?=
- =?us-ascii?Q?lBvaKF4LRIu34QnSVYKOq55gWQDB50eYX7s+7Ab8NM2vbQfKJjNsH1R5bWcU?=
- =?us-ascii?Q?NDLMDKG60gGsUHjJIOGzKu6KRAQOuJyhwaHK5hP4+iESAO/1HZPF1N7imJ4C?=
- =?us-ascii?Q?xc5Cj7VRGgRYxrKKdalml6dab0u46GiJEqGqhIVgI8/Hb+vHdaUNjAF9NEz5?=
- =?us-ascii?Q?Q4pEFSNWjIil/JpoBZUqaGL9OhqAOTveKdurmFwC3wUxRTCbEIM4vELENqaz?=
- =?us-ascii?Q?vKmH166cCRZe3yznW4tFM4Qhso4rmLSvuBJFb9jOm8cO0VB21ufVVakLgfiL?=
- =?us-ascii?Q?cdzcFaPRr+nnJ85YoUlOgIPzewKo+TqPdSXTY7X7IuiPjvdHojMuw6ZUoAWj?=
- =?us-ascii?Q?sXZ/aJq2gjBsxEkxfQbVh9zkAovRt5877P1xguzzIuywWYbTXhFVwvx7V+Lw?=
- =?us-ascii?Q?hta0LZqxRkO/jgEcGEAgNSb1vM9c1ofEZGun81cJif/BUstT14kQDU41Mpzw?=
- =?us-ascii?Q?c320h5EFYiKuJcjJeRR9EiUdd7x1dnhQAYMF1SZbvuLzY2tX/ipmReVAnGOx?=
- =?us-ascii?Q?CPwlhgd0YCyml+4sjcwG6e1N0BZb8kA0yzeWqGgXwqSA0Hujn6JSf9xj99XL?=
- =?us-ascii?Q?KhX51jGTXHhi0HEdYcqTp4lbQj9GHN5JuA6xljZaE10QTeMIyaPtk6pEvSC+?=
- =?us-ascii?Q?WrtFMal30FwZayM/WD6tLGbOnwXqw8EEtbuXddBcSAwmNnoNHLeOorWsOtYg?=
- =?us-ascii?Q?J4/xdBZQhQUVQb4Y2njtMik8FT9SKiZ6F4A81LcP/dy3oRbYnM3ccqZjYNqm?=
- =?us-ascii?Q?2jetCjJ66XiTe3V9MfNYgr6LZHDdYoUEWFKQEz6UxxZieDLoKepXKlkN0TcT?=
- =?us-ascii?Q?8m0x9nkhhayPHTDnFSeNvQUH1/hTH1i/Lsx9ZP6Bf333t8ozCA9kDF+TSefN?=
- =?us-ascii?Q?0GJm8kigFtIc04riiRot6s99m/Gj3INnhKt6QWwFjdAc0clMEjN3jeCmS3f6?=
- =?us-ascii?Q?8pa5L0rXZfTPyrU6XEkpXk8cEirNsWMVEOZ/Ju1K91iHEOTr/sRpgofW5je+?=
- =?us-ascii?Q?2xIwDrxgqMgrEE53oBhUh9QvipUKEYAbmPHnzuxfyYQ85yeJBRVS9WNiDSrv?=
- =?us-ascii?Q?chkMkjfWCdIIRRNpNynFU4lw2yXCQfcGMsZ6suIYY9IaALM5gUgthZu5cv0Q?=
- =?us-ascii?Q?Mye4YB1637gOa+4t9tYIGusryb5Roa7r5v3XPHMY4ec+9Onzzek2bGMg0whf?=
- =?us-ascii?Q?kLnC+FkcoBKJYSpMAfzdwzDzznqNHIJKPjaePKcqm6dq2+WL4yvywitoWSZa?=
- =?us-ascii?Q?Y1aA437ZAweqpf0NuvRK8g5SSpaD3OblI3mU10u+9yFER1JXXRoC814GeQNI?=
- =?us-ascii?Q?O/yISHWgWwFK4dzqJppHAw9A/AX82S2cPXTt/r3xkE2laDx/k6/pt9ZwT1Do?=
- =?us-ascii?Q?D5Sl9FpRrmA1+TShWeS8iyZfp48j+AwnEY7kgMx+7wogiXbORmE/0ceK6eTo?=
- =?us-ascii?Q?7ffpjBaVy0o6/8cuTJQIIuGgtSEWplLslaYTmSdMy3Ll/496XpQRevdmag9T?=
- =?us-ascii?Q?VrSq9uY3pyH41Z6boQGsr94RDM2G3vkimcXSaAMKVo/udqtkz5++?=
+	=?us-ascii?Q?50tjp1CELh7dV8wt1meV3Sh6Y21an+u2cgPHAHPm9aImDRptlD5Nf9hbMXRM?=
+ =?us-ascii?Q?xxoA84tyOzQlvFsmRckjG+McaG224Rpsvsk7jf/qbiFmqZoOFoKiGGaoD5o6?=
+ =?us-ascii?Q?4veX7Kx4a/vzYRYBMV7HtWUBhe6L4+f7H6MW+lR/kPN21+EVEqz0Juj0KuVB?=
+ =?us-ascii?Q?UkT51EWPt60FvrHxEryo9/uf4EHtebsOmfu4+7LGBCOuk3WtibhB75Lzeoh1?=
+ =?us-ascii?Q?A9kwlx9cSLTmCzuVyL02AggkzCoXEpEdNeM5vaDpHCcmKMghmuf9CamQg0ZX?=
+ =?us-ascii?Q?vAAC0KDggS8eLDbmJ9VAWEyhaOVjLm+eoHkFA2MQqt0V/Pn0xMeZMg2YUSWI?=
+ =?us-ascii?Q?jkwkJcDLLSI5kmqyQM/BrYsJVWZUh8rhRYdSlk8TPc55w/6GWCt5kJPaPC9J?=
+ =?us-ascii?Q?lGk4vholp1BTM4kCPnPs0NjGx9y8FXnWa27G1A61AuS53sB72QM4kyvpWW0s?=
+ =?us-ascii?Q?/N8xd1TzwtvOJagDE4LNjSx6Grw2+VsOBUUYjFDYNWRbpBLY81onl5s5XFmM?=
+ =?us-ascii?Q?+jwEMmSiEmwMeYQ4cAQc5q6zWahzjeNAePca9wUgCslWs29jeLUOHWbrihlQ?=
+ =?us-ascii?Q?lFoYDZ57iTX2/LKFSxxcCygwCQrw2u0eR4dvDy1MXDDiXQBleM+9+kjxC/M/?=
+ =?us-ascii?Q?v5irJifEKNXtAE0JRY0IOGgrFLIb8PmlNw7I0eHrmiuQShC7a14Ypi5gx1QH?=
+ =?us-ascii?Q?aFDEVef/DmKOjzeoQwqOqV04W+2LabAe4NWb82YpQQPykALuhzYzohB4qtZu?=
+ =?us-ascii?Q?gDL5ZOTisINfy9KhG8WqmhXCaQQdXNp5SFfIMvRBcv38Rny8duBis+nnNHAj?=
+ =?us-ascii?Q?DJ7QlypOuG1TSzIaOo4olqGheI2kHnrhdgTXt0SRtHnaCPngItOGVbafHAKl?=
+ =?us-ascii?Q?akpJ94CFvtoEXjz5pDmj+3VW3Ku/pEU2mORXZu3KAyknhayiuwPyoAT29/Mu?=
+ =?us-ascii?Q?+M4nvuq3IIR1qLUFawIuTRa8qvRJdCS6oEdikzY9LHzBl3AmRYVjScbXQ8Y+?=
+ =?us-ascii?Q?7RXTVpOVlEmf6evhc8vJf1Q1hhosylYW/ERBeXoq6SY3qMCmZDcdtkocXNrS?=
+ =?us-ascii?Q?L1i+lVZJEnf8ZOwgg67h1pJI3U30Uzek+aUZojBDu4f2va3FQwDGH5c6CgbK?=
+ =?us-ascii?Q?TaEXq+46coK60HzAtsYh1T6GCym8K48ODwtOkRS3TlU5r83OlG5S0i4nsFS+?=
+ =?us-ascii?Q?bhI59NPQemqYPE8Z1PpT8wmxCZWlxUZk2iQElV2gunff/aJXPj+YoR+hqmKG?=
+ =?us-ascii?Q?uTjxyR++cOdaMXCyW0gc9kMoSm+NpXoZlnlE0NL6bsN3GSOYxTsaE645Hpj2?=
+ =?us-ascii?Q?O2nrN+aiUzVA7s6JCCSZMdFA0EAqYaVYx2S8eQkbp2yd/2vjejBR3ITq8oLZ?=
+ =?us-ascii?Q?gs62GmWFv7Wk0QH8z7d1V7nAlBCJDNf081DaNxE99pXRMKvJu5ATw2+kzaV9?=
+ =?us-ascii?Q?TkBQ5RmMoyuUQ2diY4n7/+xaG/mJfl+XN719eHNiwci5jTFmu79qECS/cKmA?=
+ =?us-ascii?Q?0mu2UMWuyxrcQM3Q3NoTFYPQ3gDEWWCFkre5aDpR0z92hQ2JsoPes11e7I18?=
+ =?us-ascii?Q?sVZpp1EhWNKgYNTSAce07kkaQwLDJ/imTsJUzqkT3DmdsLyk1SS6rsP/U962?=
+ =?us-ascii?Q?HYXOZeG73bbkpQYZfkk4ZXkm6zBEP4jHrGYB2SBwmbTtGEpJj+NsUMFW+fkR?=
+ =?us-ascii?Q?Kr9MOKFPfKUXpAp/YUINBwSdMYoW7zQIT5hh0qKXvq7Gh/LucMeKBdToLg1B?=
+ =?us-ascii?Q?ahxnzqzzrfc5TAW/VakdaFFdIF1xZJ2ipNyYYTTsgqujV6JL3fJE?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 59f37ed1-9ca0-4cd0-4b84-08dee35a8e53
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f54240b-0c86-41a5-af24-08dee35ad1cd
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 16:52:00.9099
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2026 16:53:54.1069
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: t85cwLjE48JPIhvHLM8XEcqv3RAxoGflqSt5m96hGFlqVKegrPsG8is1JC2L37teT1YXcz/mGzm/dWdYo2fxchAED1Ribem6tugqC9LCKkHcKEzRxHI8KwieJ/te7Hz5
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB8822
+X-MS-Exchange-CrossTenant-UserPrincipalName: 81VpyBqMtsdDs7XLunc2OE4+b18ZKeeU83ZWr07bZulbbPgBzCfgya87daSwkWeMdualiyDaOlQwx4gnWhoBRfJXc2ip7DCcpl7rjhQclj90V22S8Cmde5srmeRxf3zC
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8846
 
-On Tue, Jul 14, 2026 at 04:38:53PM -0700, Rosen Penev wrote:
-> The descriptor structs (fsl_re_cmpnd_frame / fsl_re_hw_desc) are
-> in-memory but their fields are __be32, because the structures are handed
-> to the device as big-endian. The driver stored CPU-endian u32 values
-> into them directly, which is both wrong (the engine would see
-> byte-swapped lengths/addresses) and flagged by sparse as a base-type
-> mismatch.
+On Tue, Jul 14, 2026 at 04:38:55PM -0700, Rosen Penev wrote:
+> Replace the open-coded platform_get_resource() plus devm_ioremap()
+> sequence with devm_platform_ioremap_resource(), which fetches the
+> resource, requests the region and maps it in one call. Switch the error
+> check to IS_ERR()/PTR_ERR() and drop the now-unused struct resource
+> pointer.
 >
-> Wrap those stores in cpu_to_be32() so the values are little->big
-> converted. The final-frame bit is now passed as the "final" argument of
-> fill_cfd_frame() (as fsl_re_prep_dma_memcpy already did) and set in CPU
-> order before the single cpu_to_be32() store, replacing the previous
-> read-modify-write of the __be32 efrl32 field.
-
-Can you split two patches, one add cpu_le_be32(), other change to call
-fill_cfd_frame()
-
-Frank
+> The raideng node has a single reg region (0x320000, 0x10000); the
+> job-queue/ring children are separate OF devices probed independently, so
+> the region reservation added by devm_ioremap_resource() is exclusive and
+> does not introduce overlap failures.
 >
-> Reported-by: kernel test robot <lkp@intel.com>
-> Fixes: https://lore.kernel.org/oe-kbuild-all/202008111749.yy85rFMD%25lkp@intel.com/
 > Assisted-by: opencode:hy3-free
 > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
->  drivers/dma/fsl_raid.c | 29 +++++++++++++++--------------
->  1 file changed, 15 insertions(+), 14 deletions(-)
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+
+>  drivers/dma/fsl_raid.c | 16 ++++++----------
+>  1 file changed, 6 insertions(+), 10 deletions(-)
 >
 > diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 99945845d8b5..888f55b672a5 100644
+> index 47ebdf274331..aadb3dcb1b03 100644
 > --- a/drivers/dma/fsl_raid.c
 > +++ b/drivers/dma/fsl_raid.c
-> @@ -242,9 +242,9 @@ static void fill_cfd_frame(struct fsl_re_cmpnd_frame *cf, u8 index,
->  	u32 efrl = length & FSL_RE_CF_LENGTH_MASK;
+> @@ -747,24 +747,20 @@ static int fsl_re_probe(struct platform_device *ofdev)
+>  	u32 off;
+>  	u8 ridx = 0;
+>  	struct dma_device *dma_dev;
+> -	struct resource *res;
+>  	struct fsl_re_ctrl __iomem *re_regs;
+>  	int rc;
+>  	struct device *dev = &ofdev->dev;
 >
->  	efrl |= final << FSL_RE_CF_FINAL_SHIFT;
-> -	cf[index].efrl32 = efrl;
-> -	cf[index].addr_high = upper_32_bits(addr);
-> -	cf[index].addr_low = lower_32_bits(addr);
-> +	cf[index].efrl32 = cpu_to_be32(efrl);
-> +	cf[index].addr_high = cpu_to_be32(upper_32_bits(addr));
-> +	cf[index].addr_low = cpu_to_be32(lower_32_bits(addr));
->  }
+> +	/* IOMAP the entire RAID Engine region */
+> +	re_regs = devm_platform_ioremap_resource(ofdev, 0);
+> +	if (IS_ERR(re_regs))
+> +		return PTR_ERR(re_regs);
+> +
+>  	re_priv = devm_kzalloc(dev, sizeof(*re_priv), GFP_KERNEL);
+>  	if (!re_priv)
+>  		return -ENOMEM;
 >
->  static struct fsl_re_desc *fsl_re_init_desc(struct fsl_re_chan *re_chan,
-> @@ -256,9 +256,10 @@ static struct fsl_re_desc *fsl_re_init_desc(struct fsl_re_chan *re_chan,
->  	dma_async_tx_descriptor_init(&desc->async_tx, &re_chan->chan);
->  	INIT_LIST_HEAD(&desc->node);
->
-> -	desc->hwdesc.fmt32 = FSL_RE_FRAME_FORMAT << FSL_RE_HWDESC_FMT_SHIFT;
-> -	desc->hwdesc.lbea32 = upper_32_bits(paddr);
-> -	desc->hwdesc.addr_low = lower_32_bits(paddr);
-> +	desc->hwdesc.fmt32 = cpu_to_be32(FSL_RE_FRAME_FORMAT <<
-> +					  FSL_RE_HWDESC_FMT_SHIFT);
-> +	desc->hwdesc.lbea32 = cpu_to_be32(upper_32_bits(paddr));
-> +	desc->hwdesc.addr_low = cpu_to_be32(lower_32_bits(paddr));
->  	desc->cf_addr = cf;
->  	desc->cf_paddr = paddr;
->
-> @@ -374,11 +375,11 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_genq(
->  	for (i = 2, j = 0; j < save_src_cnt; i++, j++)
->  		fill_cfd_frame(cf, i, len, src[j], 0);
->
-> +	/* Fill the last frame and mark it final */
->  	if (cont_q)
-> -		fill_cfd_frame(cf, i++, len, dest, 0);
+> -	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
+> -	if (!res)
+> -		return -ENODEV;
 > -
-> -	/* Setting the final bit in the last source buffer frame in CFD */
-> -	cf[i - 1].efrl32 |= 1 << FSL_RE_CF_FINAL_SHIFT;
-> +		fill_cfd_frame(cf, i, len, dest, 1);
-> +	else
-> +		fill_cfd_frame(cf, i - 1, len, src[j - 1], 1);
+> -	/* IOMAP the entire RAID Engine region */
+> -	re_priv->re_regs = devm_ioremap(dev, res->start, resource_size(res));
+> -	if (!re_priv->re_regs)
+> -		return -EBUSY;
+> -	re_regs = re_priv->re_regs;
+> +	re_priv->re_regs = re_regs;
 >
->  	return &desc->async_tx;
->  }
-> @@ -504,16 +505,16 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_pq(
->  			p[save_src_cnt + 2] = 1;
->  			fill_cfd_frame(cf, i++, len, dest[0], 0);
->  			fill_cfd_frame(cf, i++, len, dest[1], 0);
-> -			fill_cfd_frame(cf, i++, len, dest[1], 0);
-> +			fill_cfd_frame(cf, i++, len, dest[1], 1);
->  		} else {
->  			dev_err(re_chan->dev, "PQ tx continuation error!\n");
->  			return NULL;
->  		}
-> +	} else {
-> +		/* Mark the last source buffer frame final */
-> +		fill_cfd_frame(cf, i - 1, len, src[j - 1], 1);
->  	}
->
-> -	/* Setting the final bit in the last source buffer frame in CFD */
-> -	cf[i - 1].efrl32 |= 1 << FSL_RE_CF_FINAL_SHIFT;
-> -
->  	return &desc->async_tx;
->  }
->
+>  	/* Program the RE mode */
+>  	out_be32(&re_regs->global_config, FSL_RE_NON_DPAA_MODE);
 > --
 > 2.55.0
 >
