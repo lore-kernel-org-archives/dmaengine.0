@@ -1,70 +1,74 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DECB34F27F
-	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 20:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E806C34F27F
+	for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 20:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784233795; cv=none; b=PRtLgTEdn8ZVIgBuUVBXBWhHAArTgyklZe5QKlXFAJ3HbC5tz1h4VHfa4vPmNg8HN6BdZdZEZDCdSHw49jpqMaUxYtluHGB6zY8BkZP+AdAVoQk1b1KA9lOJRGC4SaegShVZkCWSpVQvUg68KplH5yd0Nh2FPTc49UMz2lDxkL0=
+	t=1784233797; cv=none; b=XZXP35gKHkgdo+t2G2VAYMcNNXkfkP8uHsUyzKjYtgYu2mKoXT/M8MMCPAdtfnwQdrtPrvT5ERFNjdp4TcmS4vnUk3yqNgWBmCFQyZwS+E+PxCW/sC7YPKJEzRdJy4geS8qYMEqWhi8+/6XViBU88Z972sC576rqW9qby6Ch02Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784233795; c=relaxed/simple;
-	bh=dkVGwu4vEDLeWwTYlZZmsYVQJ5jzFTbSfPYoCEcHEUg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WUTJMboWmJyJa7wZwmqo4ZBnbf1ogfXTXAK6MF3MFDCKy++3AaXFIQbI3LLcn/PD3W2S+RAqvRYTKQhq918lP21ljwslA+s/icHP9/rEnuP/FLUW2CSJZ9CpAjzrTY4+ks9i30wtzAPK/SqGX4o5BabBLGIEJ2WTXDAGSDQBkv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oQLi0YpC; arc=none smtp.client-ip=209.85.210.178
+	s=arc-20240116; t=1784233797; c=relaxed/simple;
+	bh=IJeXEkvaYFI2ijYHmji3XnM2xTV5dy+jj6rf7SrwbqI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ml0D8qb8/x1qePcmZwp9vKqeJtqjEeld17jkOA9B1785mv/0AvF3ESgTx6xjMbWVTfsRkju/eSGIPGx7okTJ9vfXWuhR3/Bdfm5bMU61neBnlOXk/ekMPK3/RsvA7PVJ0Y5ohqLpK1go2QOO4feLRU6pocWTgttddQ3Td/oMsZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MLCgeyW1; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oQLi0YpC"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8485ef63b68so6581655b3a.1
-        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 13:29:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MLCgeyW1"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-84874b52eabso5017659b3a.0
+        for <dmaengine@vger.kernel.org>; Thu, 16 Jul 2026 13:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784233793; x=1784838593; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=8n/qihM1wH8ZL18Ajd3REpJyisiDchT34om9j3flBi4=;
-        b=oQLi0YpCHQdnOsoL3T/bPpBYwLjd9IDPQk2UoPE2MuSlnNxA2XQ/bkRuCNCvnvH99i
-         gmH4LgUirdlflBOsKJGvTczrYsqz0v+v96Lp/5PyNNT6w6kkXChUE1XEl8lzesHo6rvf
-         OmwU490VeB5GiL5UwOFm2peHsDkHWDCaBbjdWP/GQAtYKo43SCrOk0YkNv6zm3fOc7dd
-         5hjzfFitLs95Z2nF/5uvSWk74Yv/wC7gcV7s6+NwuSWmMphEKJ/o3oFAWJnm4YE943QC
-         CUZ4ST0l+29BOoaV1wSeXGYT/+NrFdbH+jsIu2VQxr05pfCrYYD/sERsbfkmfJqRcyNZ
-         9uLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784233793; x=1784838593;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1784233795; x=1784838595; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8n/qihM1wH8ZL18Ajd3REpJyisiDchT34om9j3flBi4=;
-        b=KGfDRAbXI/9+PhEJ8PtGtob8B6SJcAi3huBW/gcIBelRYI7veE9BRlg8RVJtlUF5SX
-         hF7Y7RNmQXlHbgsZw9pVA1fdCQsh9y2s1LoBoTEb7XWm4Kidz/qx6dRwriPgk3yuDuGh
-         xxFbf7zgzZnwh9jGiWCBmUUt/qK2/Qdtpo5SGUXmqg/NHyfe4HAssOwxSiKq/8VaatZa
-         qMpMU1jaCSJ2tHuyebqIgtntmDQ6MmpQvEFrx+qzGPUftfP6Tcu0mPUnTi5He3kfBRTA
-         ZcfO/yayLFN+9l6JNWxDEqpdXi+QMYFcuku394x8zizFJTzutj1a173RWX660sQ5OR42
-         kxWg==
-X-Gm-Message-State: AOJu0Yw/thWfltndKx7uvVsiuTPaXNqhLs0aGMaafIuKVuFajNOm7CqE
-	P6I9UgZMob9cHrwSyPeBAZ1pocfao1ok32KZHvXaR8vOUp8clv4cQcgLiN2xZw==
-X-Gm-Gg: AfdE7cmzuuoUBTdH4vzyUxZRY04vZ5d6Up5h6iU8kdBIVzOBgg1lP34CDVLtcxmUMLL
-	RwNGUqHAgriA5t4JFdedKz83tt0egFpN2Z6MJRSoUuDHA6TwV67ccUK09pOx1USSkI8rpM9eVeT
-	hcQ5ZdhmHJimT2ugTf3CBEBmCJdcRfhIgY/KnTt8ByC0DnJoiII2YOgL47ax7JQE7pefP1Uw44g
-	jKpWHJTJm2IktTbdH8NIJujtavcRphv2dTzjkU5tUEZ0hwrjvkSq1xNt+AWFEVa+YQEmEcmupe7
-	P1aeGtgmqWHR/bzRNsjEaATjJ5RFZdR9gHLDClbfS4Het3SY2nMe0FY9jg4h81MCin4+ABZ6MSH
-	9XLlsUBKiuPk+MmupISrksYmkP4VREWNijkzPRnS+3gSXQMSdFdDEd+xtp2XhA9WRA/ugVJ9i5U
-	gir6i9K2OUrrmVmtESsKX/KhUOz9WnGn/K77lT0BSRgD0jttsyVIPfxSJ8w/9rQamElsN2dEwDC
-	9WZ4OpUSFpK0R13XXk4bcWLHgAJ3yKQ7bpC0dNgJmJZSjQOb6zKv9w=
-X-Received: by 2002:a05:6a00:460e:b0:845:363e:12d9 with SMTP id d2e1a72fcca58-84a554f93damr12435719b3a.3.1784233792515;
-        Thu, 16 Jul 2026 13:29:52 -0700 (PDT)
+        bh=fq5+Et8VCLx3YNlIRBYElnfSV6kqx1OSwg8TLAZrMWc=;
+        b=MLCgeyW1elEKq4u6vnf07npCC6EEOIPz2PU0jDlk1gGKvOqctznswNDBBfwdN13IuC
+         RLVjUk+o0KkcVqG3xOn3voCScfBJi5j8Lfmwz0vvNi7UkX0+p5lk3xh7PO1Py+ECP/1O
+         k2/3XH0qXiQlqgj0q44xpKvVlU1WbkvCQDtJniJN7Gwg61DucumQXqyt02ycVlhI5B5V
+         HaDBJC3f7MIlGgroq1IAhaIUeyskpMkc3uJdkwGuUrrCxdbgYcddGaorf+5yLs/A/Bit
+         n+ZUYTgaC0H9s/FfEF/oqzIMETDp9LOVlF0H0ZeLeycbM4SZweDtGKcRNeMFeJGcD25n
+         +KUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784233795; x=1784838595;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=fq5+Et8VCLx3YNlIRBYElnfSV6kqx1OSwg8TLAZrMWc=;
+        b=heBG0jPk5OcXKUrb7b2Piu2VlqUuNJzpvX4/GezH/OniHh3NqHmvkrshwedWmqS47I
+         OEeAxTNdGP5PTgI+s0yg4ezx/OYzqfpv4mKCrM5q720qju+9ANrxcBd5NiuvabLZc49m
+         LKPQyefXUeGDn+//VpC1htWA8hbxgTi3OZzoGUiv09sXx/i06GHNEiOEPzIujqbzxqSQ
+         uSMLFydSAQ/Fjf+Bw1wIs52p5hYCFs4FTeeFZig8j659cFJmy/cPfkiVlguUFAfc3mn1
+         V/XBS8nul6WwiWgX9tiBT64SMg7IgPjL8ZK6VgPBqteVUOIU72qY3waFQW6wrpRwqhU7
+         bEGA==
+X-Gm-Message-State: AOJu0Yy59hhxGuToRR8IW0nOyTeq3AqHhqS/yqcXg4XDSPv4Qd/ymYDZ
+	GFYjGjdIm4Wo2LakAI0jXL9eUU6PSWgjxs0zLrsKF3qpqblPVwqQHqJU4TGCaQ==
+X-Gm-Gg: AfdE7clW1+lB2r1oRmRKJcXg+3JwLvQTDXn+QIrZTQ0Nn8Hh+mFQPb+1EizmI7G44ZS
+	qpPQSqtSIvR0oSBMGHvZNntrjla1466d8cuQazAsIU6sv1fdOvz38G+0sMVNm3FS7f5U6+kAtKC
+	EqVWJu5NS4hH2dtntjL0Zwh9To0oS5Ah0KSGoisyRo/WuCxaxiUxoVmATNagBVCsJKQIJZmezIL
+	kuj+NGdusIcqSfCJuZIzq7Dz8j2RG9673KyQAWsiSz4esEtDzI9fJUouFNkJfXOEur83q0kxrfC
+	96//NNbKdIPtFLR6u8UNbyASoTK6p0Df7TMm/hrRgwiG7ZKlLw74GceiMbxBQuS1QKMAp0iLNBQ
+	wz7O9RqDIWLaloTdy5ENkXbGpwMgpF7zO0uyiusCbFtCegOdyVz0Zaq8BbeWOQxh1V9LPtHFc0D
+	LtP7C8XU36mHMrbDxiBfEng9E1gqZXQM2k1WkK4esIrQYjTMbpwo+NebJ6yyBkm7/TtjWYZaFss
+	sum6MhdoKynywq51ggGiFfAfIoqQ6M9+weD6/U/KJaSao14vqa3TTI=
+X-Received: by 2002:a05:6a00:4388:b0:82f:50cd:e586 with SMTP id d2e1a72fcca58-84c234f913fmr859680b3a.13.1784233795193;
+        Thu, 16 Jul 2026 13:29:55 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f26f703sm5536776b3a.17.2026.07.16.13.29.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84a4f26f703sm5536776b3a.17.2026.07.16.13.29.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jul 2026 13:29:50 -0700 (PDT)
+        Thu, 16 Jul 2026 13:29:54 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2 0/4] dma: fsl_raid: fix sparse warnings and simplify probing
-Date: Thu, 16 Jul 2026 13:29:45 -0700
-Message-ID: <20260716202949.677290-1-rosenp@gmail.com>
+Subject: [PATCHv2 1/4] dma: fsl_raid: convert descriptor stores to big-endian
+Date: Thu, 16 Jul 2026 13:29:46 -0700
+Message-ID: <20260716202949.677290-2-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260716202949.677290-1-rosenp@gmail.com>
+References: <20260716202949.677290-1-rosenp@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -73,36 +77,55 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series cleans up the fsl_raid driver to address issues reported by
-sparse and to simplify its MMIO handling.
+The descriptor structs (fsl_re_cmpnd_frame / fsl_re_hw_desc) are
+in-memory but their fields are __be32, because the structures are handed
+to the device as big-endian. The driver stored CPU-endian u32 values
+into them directly, which is both wrong (the engine would see
+byte-swapped lengths/addresses) and flagged by sparse as a base-type
+mismatch.
 
-Patch 1 fixes the endianness of in-memory descriptor stores. The
-descriptor structs are handed to the device as big-endian, but the driver
-stored CPU-endian values directly, which is both incorrect and flagged by
-sparse as a base-type mismatch. The stores are wrapped in cpu_to_be32()
-and the final-frame bit is now passed as an argument rather than
-read-modify-written.
+Wrap those stores in cpu_to_be32() so the values are little->big
+converted.
 
-Patch 2 keeps the MMIO bases (re_regs and jrregs) as void __iomem *
-instead of typed register struct pointers, eliminating "different address
-spaces" sparse warnings on every register access. Each accessor derives a
-local __iomem-qualified typed pointer.
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: https://lore.kernel.org/oe-kbuild-all/202008111749.yy85rFMD%25lkp@intel.com/
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/fsl_raid.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-Patch 3 replaces the open-coded platform_get_resource() +
-devm_ioremap() sequence with devm_platform_ioremap_resource().
-
-v2: split up first patch and simplify __iomem patch.
-
-Rosen Penev (4):
-  dma: fsl_raid: convert descriptor stores to big-endian
-  dma: fsl_raid: set final bit via fill_cfd_frame() argument
-  dma: fsl_raid: keep MMIO bases as void __iomem and cast at access
-  dma: fsl_raid: use devm_platform_ioremap_resource
-
- drivers/dma/fsl_raid.c | 58 ++++++++++++++++++++----------------------
- drivers/dma/fsl_raid.h |  4 +--
- 2 files changed, 30 insertions(+), 32 deletions(-)
-
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 99945845d8b5..2778d07a05e8 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -242,9 +242,9 @@ static void fill_cfd_frame(struct fsl_re_cmpnd_frame *cf, u8 index,
+ 	u32 efrl = length & FSL_RE_CF_LENGTH_MASK;
+ 
+ 	efrl |= final << FSL_RE_CF_FINAL_SHIFT;
+-	cf[index].efrl32 = efrl;
+-	cf[index].addr_high = upper_32_bits(addr);
+-	cf[index].addr_low = lower_32_bits(addr);
++	cf[index].efrl32 = cpu_to_be32(efrl);
++	cf[index].addr_high = cpu_to_be32(upper_32_bits(addr));
++	cf[index].addr_low = cpu_to_be32(lower_32_bits(addr));
+ }
+ 
+ static struct fsl_re_desc *fsl_re_init_desc(struct fsl_re_chan *re_chan,
+@@ -256,9 +256,10 @@ static struct fsl_re_desc *fsl_re_init_desc(struct fsl_re_chan *re_chan,
+ 	dma_async_tx_descriptor_init(&desc->async_tx, &re_chan->chan);
+ 	INIT_LIST_HEAD(&desc->node);
+ 
+-	desc->hwdesc.fmt32 = FSL_RE_FRAME_FORMAT << FSL_RE_HWDESC_FMT_SHIFT;
+-	desc->hwdesc.lbea32 = upper_32_bits(paddr);
+-	desc->hwdesc.addr_low = lower_32_bits(paddr);
++	desc->hwdesc.fmt32 = cpu_to_be32(FSL_RE_FRAME_FORMAT <<
++					  FSL_RE_HWDESC_FMT_SHIFT);
++	desc->hwdesc.lbea32 = cpu_to_be32(upper_32_bits(paddr));
++	desc->hwdesc.addr_low = cpu_to_be32(lower_32_bits(paddr));
+ 	desc->cf_addr = cf;
+ 	desc->cf_paddr = paddr;
+ 
 -- 
 2.55.0
 
