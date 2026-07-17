@@ -1,55 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE5437F00A;
-	Fri, 17 Jul 2026 12:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FAA3947B8;
+	Fri, 17 Jul 2026 12:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784291373; cv=none; b=XlbN1mjB+geOzVU9f9YDF8UDEDEXwVbd0SFiSG78e0k4od1hwmNVleE6PfX4PLj0Ne2pKffm7URX+ZJHGsC2BDDde/qaht2D/y5F9sKPW5/aVgamWwtVyl7hEury1jCE0+fv3/mzUgaSOxNRCMFbGMcJcgSCsZqbQ/+2g+ny9zg=
+	t=1784291741; cv=none; b=O4+qgcwNQXOV5YuBXeVazs24iu2oJz18Xn8tIsA+gILcvqS/85BdoKmDhRyoHFu/1wAEnWDsr/5YasF/+Y8XF2eeGfrRlP/gkv2IjvqR+KM6xo2obE4qwaR+cmg7BOUa53PkI2FeD4cGn7VO4Lc+V7uWoNlynQEHBzJl+TDYXPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784291373; c=relaxed/simple;
-	bh=6CpbO9cDC7fPF/jU1lNa979CN+dldEcbEhbOG+ifaIw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LiNlJqVc1RgjDidE/Esz7we6GeQOPXwTVh/nzer7wIFgWu7AFWazdhT5fs1FlAqdfb3nZyFVLqJFeOzSMzh8WaiWiHeZFf7GvmK7ia8YWQbPMk4JDW+bO9LboWXIvVqCQExM7H+e5imDJYdw2Dmlr/mpb9orVMIkDOp+rL6nqKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aIzWYoRH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784291741; c=relaxed/simple;
+	bh=crAxDYFWBsPoHYtJplTfaWrNlreEKCmvFcOGRjlhvWk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=iVk9niqffvQpKjlzUyU5fzHwVEAbjRol8ayDXePC2KBcdVb4oH6OVuREB+WLYkLs+fK+10Y1r426hm1JamW0noAwLbiwKL2cw1Ci+4dbJNgTpafV6MAp5WJQx6+AE4feBn05LctB8PeSlGVo4xznKseG0RVgMn2eJFSjxzhk7Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NzxcOn7E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aIzWYoRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561BC1F00A3A;
-	Fri, 17 Jul 2026 12:29:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NzxcOn7E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6C91F000E9;
+	Fri, 17 Jul 2026 12:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784291372;
-	bh=bPkB9sL6mY6O9RFZh/Qv5uF/ZSrP+dcSmej20sG/t50=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=aIzWYoRH6tNeUtKYWn/pEc+Q9HgK99tm0B9SBxf6j5qKPennJDwoXDaKEwrHK8fSk
-	 HtWVlEqL3LnK30IBxB9KAei5YxSyqjOoQrKnNb5TaRHC88/coywdGibuaEhzH9SFp0
-	 LCQjNvp5IzOtgeENpapX0uv1qlBUye7ckMEuswoBH75d1TjHCMbCcaHSLHJIEXve7a
-	 UIblFq0A6MoHrZtL7KIP8pXJIKyvf+9vltbSPpM0Yt0tK9hV+IJm4YTXja29OaLGi6
-	 Rb8hWnLHFDwoDvVGpqd3Cn4bQaeXkXFm4RwvVM2v1qljTgwfy9S3gyun5SWobcEgF1
-	 M9DUe9x/C34fA==
-Date: Fri, 17 Jul 2026 17:59:28 +0530
+	s=k20260515; t=1784291739;
+	bh=eQBV55pjnPQzDP+7XLl0sT2CKxbeF7SyKYEGPiZVinQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=NzxcOn7E2r9Xy1DDG2MutRPBR1JRlm+9Wd6wqR0bviRX5uhKgenCqXRxOyllvSOBH
+	 4D4hbAJqEGGRY2n/W9gC6YKLzNGswuU12ocXS4xynXmjdGikdMpfduSYHjS62H76gA
+	 OAGOfqWEPY3HmPzpYKVrlI3iJZEXtPDeOMCZZ8QByoXzrC3tyEUx9NVXoyINGNMZO/
+	 0U1G8ZxreuM5HwiUDuONVFnnBrK/UaL4qd/WTS8LmfcNw9YPaDXP3xJwXmhmaFq6v9
+	 jWT3T/HKGIuJK3RLFXRp/W+6h0HG5Wkasxi9JRmrzfFLIqh+d6qC9DW/rEFXwJS/rc
+	 rcrj+ddlt//bg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Logan Gunthorpe <logang@deltatee.com>
-Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	dmaengine@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.li@nxp.com>, Kelvin Cao <kelvin.cao@microchip.com>
-Subject: Re: [PATCH v1 1/3] dmaengine: switchtec-dma: Add PCI1008 device ID
-Message-ID: <alogKEzstqyO6Eh8@vaman>
-References: <20260714212010.230606-1-logang@deltatee.com>
- <20260714212010.230606-2-logang@deltatee.com>
+To: peter.chen@cixtech.com, fugang.duan@cixtech.com, robh@kernel.org, 
+ krzk+dt@kernel.org, conor+dt@kernel.org, ychuang3@nuvoton.com, 
+ schung@nuvoton.com, robin.murphy@arm.com, Frank.Li@kernel.org, 
+ Jun Guo <jun.guo@cixtech.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, cix-kernel-upstream@cixtech.com, 
+ linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20260521072924.3000282-1-jun.guo@cixtech.com>
+References: <20260521072924.3000282-1-jun.guo@cixtech.com>
+Subject: Re: (subset) [PATCH v7 0/2] dmaengine: arm-dma350: handle shared
+ channel IRQ wiring on sky1
+Message-Id: <178429173437.1176696.17881383591434929640.b4-ty@kernel.org>
+Date: Fri, 17 Jul 2026 18:05:34 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260714212010.230606-2-logang@deltatee.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On 14-07-26, 15:20, Logan Gunthorpe wrote:
-> Add the PCI1008 device ID for switchtec-dma.
 
-Acked-by: Vinod Koul <vkoul@kernel.org>
+On Thu, 21 May 2026 15:29:22 +0800, Jun Guo wrote:
+> This series updates DMA-350 support for the SKY1 integration where all
+> DMA
+> channel interrupt outputs are wired to the same GIC SPI.
+> 
+> Patch 1 enables DMANSECCTRL.INTREN_ANYCHINTR in the driver so
+> per-channel
+> interrupt status is propagated even when channels share one parent IRQ
+> line.
+> 
+> [...]
 
+Applied, thanks!
+
+[1/2] dmaengine: arm-dma350: enable ANYCH interrupt for shared IRQ wiring
+      commit: 643c1e1ae3eb3cd9be31e83c2240e41849a6cb56
+
+Best regards,
 -- 
 ~Vinod
+
+
