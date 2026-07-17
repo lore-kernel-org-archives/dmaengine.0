@@ -1,121 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7F325701
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6B03328FA
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 08:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784266191; cv=none; b=oDZUafQcvJtoIMnIXHCmpR2bO7bm2wtUful8hTD7MT0fSRL44bREuq7432mhVbGE5ERadpizG5ZZtf0cp02BTkTTihBQqdcCSDHEwP6iUm1pVfycA6Ji3UJ195Xwm3gbmj2541f3hcKW1fzu+fYH0ZGsDRKSW6jO67PjJOwn+Zs=
+	t=1784275740; cv=none; b=lEMI3RGtttdkPndJIpw0E7A7RGXCK21Gg0BxRxvN5kUQrHJBR6hwtjl9vyw6kB0Pm+2duN6jD3TmKffJTyPj1DnOIsW+6eWejS0iX1bU9jSuSmpVTufJKk0Ob1jb6uB9KV3Y0sdRnilBHyTMHYMDVmVci1bC6zSwD8NksZWwl2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784266191; c=relaxed/simple;
-	bh=XoVrT/1tjS2H5VU1eLE77YYtDtg5SOReVAfKHl8bwcM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=BMhqPTXHPpCQDxREFtBu0VPVb8SSsqmrz5RG0uz2AbhhgAIu+S0oIwqr0nC/apUXZ1anf0let3TFAS8EdaCyVz6473AHdsh6wjeRoGxQC0LOx4Wr4eRWy5cXoLhTEEOqRLQ5duU5Y/ah+JSoS1L0I/Z0PJEh/1uKCZBwE6/wgvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lDOy8kt1; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784275740; c=relaxed/simple;
+	bh=Efk8T20ib1TU+anxk5s9h+6z/GBa9HbZ0owrpqerfYA=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B5q/pE8rEtOSLV+kTiwSccOHmD/XUPmxBsU2XR/tCFCut2YcATugHPIlbJjWDPnFGSEH9uCJ5kruZLq6bLr8mj7gEexmwHv3jroAwdIjh3MvGGkZmjZTceC28OW7qKGxq5GbMjxJWk/Q1Xd1AtEpT6yjjrGbHa6uLv7tFHiwkQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJMJFMal; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lDOy8kt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949521F000E9;
-	Fri, 17 Jul 2026 05:29:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJMJFMal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C751E1F00A3F
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 08:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784266189;
-	bh=J4B6O1v7Nn3YfqjWK4psElhRnn+hAA6/6zyc59/eqDY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lDOy8kt1bYjiV8cRbBK20uURkycbqvQpjI5TgsI5hMZUOpj9KUPBw3n6Gn0VZKveW
-	 zPxsmpvwD+CLQu7LDY3d9uceu/TmnQJ8RnqG8fNS2vyeLCI/HLh0nbllLrPk7XDbJN
-	 DJ2kvB3SlDPHyMOu2n9gngjpdZ/XCqPibJFqa+owtR+7nVHCJDX32mMJ82cmVbJw4b
-	 Bd/cu1NXsAXKuPDsuu2jLFyV5zEPeMOE7OskkcIH28KcQWpDc4n4kCWwAViKiQIShD
-	 ldxAAM+oS/hVwoF5AZ0GBhqz5nMncZmI7x7IWONGYked7jefGzN16xVLuUDnVJjwxB
-	 y3FH4UqwpP9Qg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 14/14] dmaengine: dw-edma: Program endpoint function
- numbers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260717050308.2144108-15-den@valinux.co.jp>
-References: <20260717050308.2144108-1-den@valinux.co.jp>
- <20260717050308.2144108-15-den@valinux.co.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 05:29:49 +0000
-Message-Id: <20260717052949.949521F000E9@smtp.kernel.org>
+	s=k20260515; t=1784275738;
+	bh=dIadBkIMfc92d1GDfpRAdnJ2I4MVADdry9Rz78wXpcI=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=SJMJFMal+Qz/rARkuCF+DZhrZzvT9aEH2zlfAfunhCtri3omP3VMqQcqXZArWx5dk
+	 FQ4hrHxmR6iSCoIBL5QUbMaXVqRkGZDCMGjEv2toykAa201dMPjp6vVvRmLo2ouonT
+	 PQBSXd3WZJCyYzEQOOmfDQ1akkfrXQxbTS4EaRka3dPnP8mfp7Tezb2GHHgh1Eji3T
+	 V8oTgLjkF1p/uW23CR10ZjXD20Ml0fw8L4OblvIy0oZLE/2F9RYqiMqfa2ul+ZU8fF
+	 Alq83hx0i/bpN7q27cPgT8oFfCZcR1MvJmZLOfOMiGyQDJnqgJJZor3OUdWneyD02c
+	 FLO2aGpeCCWKg==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-39c86945164so64895771fa.1
+        for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 01:08:58 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Rr6SEO4W4t3wzEPvzUEGiFWzuy9qsExegI0slJ/Wxi/8NKqXn/JV4CoYGxeMe6n/dHR6aXIsltq5v8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwAcdD2cdZD2LfR7yxr02I+eT5Mm4+ugp1BB9e2LBd/oPzS2mLo
+	s6XP9dBYikjrZLqerZjCsVazUM/cwlP4ZwqBv0JXF33yEfiuJ9KsBiOF5VxuwIJEKk0GE6aq9P9
+	IFGwvA7FOuPWg8dDDFX3ZHvxjWcFBOABN8e1+KIMBmw==
+X-Received: by 2002:a05:6512:2524:b0:5ae:baa7:5ed2 with SMTP id
+ 2adb3069b0e04-5b28fabc53fmr376905e87.63.1784275737391; Fri, 17 Jul 2026
+ 01:08:57 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 Jul 2026 01:08:54 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 Jul 2026 01:08:54 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <alYGGu7_3G6mJAzQ@linaro.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260713-qcom-qce-cmd-descr-v21-0-bc2583e18475@oss.qualcomm.com>
+ <20260713-qcom-qce-cmd-descr-v21-6-bc2583e18475@oss.qualcomm.com> <alYGGu7_3G6mJAzQ@linaro.org>
+Date: Fri, 17 Jul 2026 01:08:54 -0700
+X-Gmail-Original-Message-ID: <CAMRc=Mdj4n_EodNvdNK31wmiF=av6eqSNuVouPc8d+LFmQHi+w@mail.gmail.com>
+X-Gm-Features: AUfX_mx9FEOhptFi_3CRTp4Yaa7L94thQb83JpWfCNZjqAXnfBqalAbWqZfnado
+Message-ID: <CAMRc=Mdj4n_EodNvdNK31wmiF=av6eqSNuVouPc8d+LFmQHi+w@mail.gmail.com>
+Subject: Re: [PATCH v21 06/14] dmaengine: qcom: bam_dma: add support for BAM locking
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
+	Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@codeaurora.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, brgl@kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Using `PCI_FUNC(pdev->devfn)` incorrectly truncates the 8-bit PCI =
-`devfn` to 3 bits, leading to corrupted Requester IDs in outgoing DMA TLPs =
-for Alternative Routing-ID Interpretation (ARI) devices and non-zero device=
- number RCiEPs.
---
+On Tue, 14 Jul 2026 11:49:14 +0200, Stephan Gerhold
+<stephan.gerhold@linaro.org> said:
+>
+>> +
+>>  /**
+>>   * bam_prep_slave_sg - Prep slave sg transaction
+>>   *
+>> [...]
+>> @@ -802,6 +851,7 @@ static int bam_dma_terminate_all(struct dma_chan *chan)
+>>  		}
+>>
+>>  		vchan_get_all_descriptors(&bchan->vc, &head);
+>> +		bchan->bam_locked = false;
+>
+> I wonder about the implications of this. If the LOCK descriptor was
+> already processed, will we cause a deadlock if we never submit the
+> UNLOCK descriptor? Or I guess bam_reset_channel() might reset the lock
+> as well?
+>
 
---- Patch [14]: [PATCH v5 14/14] dmaengine: dw-edma: Program endpoint funct=
-ion numbers ---
-commit 69615a1713850d90b9bf46ff89bf560c8d19478f
-Author: Koichiro Den <den@valinux.co.jp>
+There's nothing in the HPG that would imply it but I instrumented a test where
+I excercised this situation and QCE was not locked up in any way. If there
+were more execution environments doing the same, I'm not sure but this series
+was tested by the NAND team and they didn't notice anything.
 
-dmaengine: dw-edma: Program endpoint function numbers
-
-This commit programs the requester function number for eDMA/HDMA transfers
-so that the host can attribute and translate them correctly. It records the
-function number using PCI_FUNC() during probe and programs it per channel.
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
-edma-pcie.c
-> index 7f96e65ee2746..07ea237577d5e 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> @@ -473,6 +473,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> =20
->  	chip->mf =3D dma_data->mf;
->  	chip->flags =3D match->chip_flags;
-> +	chip->func_no =3D PCI_FUNC(pdev->devfn);
-
-[Severity: High]
-Does PCI_FUNC(pdev->devfn) incorrectly truncate the 8-bit PCI devfn to 3 bi=
-ts
-for Alternative Routing-ID Interpretation (ARI) devices and non-zero device
-number RCiEPs?
-
-Because the PCI_FUNC() macro masks the value with 0x07, it discards the upp=
-er
-5 bits. This might cause DMA transfers from an endpoint function with an ARI
-function number >=3D 8 to carry an aliased Requester ID.
-
->  	chip->nr_irqs =3D nr_irqs;
->  	chip->ops =3D match->plat_ops;
-
-[ ... ]
-
-> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
-dw-hdma-v0-core.c
-> index 77260c076cd3a..fdb2c6fb08e41 100644
-> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> @@ -334,6 +334,9 @@ static void dw_hdma_v0_core_ch_config(struct dw_edma_=
-chan *chan)
->  	SET_CH_32(dw, chan->dir, chan->id, msi_abort.msb, chan->msi.address_hi);
->  	/* config MSI data */
->  	SET_CH_32(dw, chan->dir, chan->id, msi_msgdata, chan->msi.data);
-> +	/* Configure the requester function number used by outbound TLPs. */
-> +	SET_CH_32(dw, chan->dir, chan->id, func_num,
-> +		  FIELD_PREP(HDMA_V0_FUNC_NUM_PF_MASK, chan->func_no));
-
-[Severity: High]
-Since HDMA_V0_FUNC_NUM_PF_MASK is defined as GENMASK(7, 0) and is intended =
-to
-hold the full Routing ID, will this field end up receiving the truncated
-3-bit value set during probe? If so, could this lead to IOMMU faults by
-blocking TLPs with mismatched Requester IDs?
-
->  }
-> =20
->  static void
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717050308.2144=
-108-1-den@valinux.co.jp?part=3D14
+Bart
