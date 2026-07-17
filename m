@@ -1,152 +1,174 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E7A35E1B8
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B447538F934
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784279144; cv=none; b=U2YtTy6h1UCveVaeiyComiJh5COBmcBn4n+9e33FniMrsW3uMiklXEZWnm8iGgue8Fz8okn4jKcF37gJHP4T8FWUB45JqIk8Mdn5dDjXIMDKaGFXHzlN19m8yRGcO+bC1nwhqs0HlyizbTZmf9SNjOXrlHu6J0XKRokmOIsh1BM=
+	t=1784279326; cv=none; b=Hlf2ydINhK7J9SMJY519aIXNoUzooMZ1h7E0ouJK+t56KRs/ZSXyHFs7amwvzaHzMQeRly52niA+Q3ne4/1vk1/lzlOG1EcLBUy+m/3xYvYBWw2ovbhv+dxrwxz2/bN3aSIX9QJmFGw+ZZBUrNMhJdYm1Nl4KW6oh0K/ixpu2Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784279144; c=relaxed/simple;
-	bh=XaFw7pFdUCVqWDEWA6piLP/Slu5H9d/NR3wUHAAMEsI=;
+	s=arc-20240116; t=1784279326; c=relaxed/simple;
+	bh=FgPEv3lZbTdO14tDT37sFwY23tYt2BtCuZEdWcjlq84=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=qeXhBhAUokzmRIcNnCFDEXFE6LYaeblt1PesvLI/uSys/HFOGsEBhfPkrvF4IgtEYr+5qNdGm91YE62sHw33GpjgThRfJ9SyJE04qIOIQUqUZ4ssoCZRTilf22/QaQeIlq9ADiTqeDg1lSlYFw3l/unbiIVm+EQAF5d0p9o+MWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ok1PimG4; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=B+DfU2cFmXBo5df3EHgRDgcMwddso459yYXDtlGV92Z/X5nr2aukGzjX4p0gOZOWPIi+Ud8dowXUUzntNy+EtevzHulruZeQAAO1Jr2YjdZkBTis7LTYvOIYnGxE4umXJnE/z4/WFb+4+kKaUnHrJGNY/mVMx+Gm2GfGbNbuZqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YsT4aaOA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ok1PimG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2E81F000E9;
-	Fri, 17 Jul 2026 09:05:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YsT4aaOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9861F00A3F;
+	Fri, 17 Jul 2026 09:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784279142;
-	bh=HJbL0/9zj/3fArLDKRQzPJtrL66ifBEebG+XKf0if3c=;
+	s=k20260515; t=1784279320;
+	bh=UmPkz0tugV1M9S9ZFiFz+R1ZgLeBLBoqNXvtJrE+QUE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Ok1PimG41WD9djmesCCxYN4UjJr/srgZOTTB/uz08c3YoU+gRklYS6eDb7k1RtdSs
-	 uFjCoBJqTtgu77kHzzNtU0wmt9iPr4rRXoWiIxZGYroW6Ve9qXHEif2F6vgaxbICj5
-	 A+njOqo9nhiGtn4Iz7dSt3VFQlFRGbHveGk88ZJgffgKYFC+pr97nFFPUWbqBd3k77
-	 0KRnSQEP2qKyYiXKg2Nno/p5GPhG+KtatMLV5TaHbVVy2JY1ualsa6Knau6TODXhza
-	 +YpRw3dGXkj4T7x4t3fbbR7KE90ghjVzaHOKDHjXPSkcxdkp+royHJI06midyV/XK6
-	 9+u/+BzuJGCdQ==
+	b=YsT4aaOA0UeoqBAW/Xzsp/NeQgFav3j9+vQM+mOjB2ksR94/JvV//K3PZQUkOf2nj
+	 /kO6sUhP0OFxXfcIklRqET0pGk1trwAhGHbi2v3QbrSk/13VVZSQ5jhTrfSPKnZlcn
+	 ROGZhXspZC3hPrmWW04MFdqXQ7VC/WIt5IySqSVozdaMt1fsaV+JP9tem4mv3RfSzm
+	 yXQ0fWwyprx2aqxCx6CFQuut80BMxS1pCsdILXuc0/ilxwW04BRuEuP+PIzJguzaiK
+	 tzICRrGDJM8cLYr/FrcT7Qs0XyipgYbYX85e05SC+QCMBPBRraCK0RpdaWDDCDYHSM
+	 wPmvvpfBkWNeA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v22 11/14] crypto: qce - Use existing devres APIs in
- devm_qce_dma_request()
+Subject: Re: [PATCH v22 13/14] crypto: qce - Add BAM DMA support for crypto
+ register I/O
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
 Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-11-ff0d18b27246@oss.qualcomm.com>
+In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-13-ff0d18b27246@oss.qualcomm.com>
 References: <20260717-qcom-qce-cmd-descr-v22-0-ff0d18b27246@oss.qualcomm.com>
- <20260717-qcom-qce-cmd-descr-v22-11-ff0d18b27246@oss.qualcomm.com>
+ <20260717-qcom-qce-cmd-descr-v22-13-ff0d18b27246@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 09:05:41 +0000
-Message-Id: <20260717090542.4A2E81F000E9@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 09:08:40 +0000
+Message-Id: <20260717090840.8F9861F00A3F@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
+New issues:
+- [High] BAM DMA command descriptors misinterpret host-endian values on big=
+-endian architectures, causing incorrect register writes.
+
 Pre-existing issues:
-- [High] The crypto request completion work (`qce->done_work`) is cancelled=
- after the DMA channels and result buffer are released, leading to a Use-Af=
-ter-Free if the work executes concurrently during device unbind.
+- [High] The error cleanup path in `qce_aead_async_req_handle` unmaps the w=
+rong scatterlist for the source buffer when `diff_dst` is true, leaking ass=
+ociated data mappings.
+- [High] Incorrect error check for `dma_map_sg()` allows an unmapped scatte=
+rlist to be erroneously unmapped on fallback paths.
 --
 
---- Patch [11]: [PATCH v22 11/14] crypto: qce - Use existing devres APIs in=
- devm_qce_dma_request() ---
-commit 7b0cecb1f8e81a661dc520eb8657f4134a795b47
+--- Patch [13]: [PATCH v22 13/14] crypto: qce - Add BAM DMA support for cry=
+pto register I/O ---
+commit 61e73b38a77173b6ebf2858f2dd73a186ca5b139
 Author: Bartosz Golaszewski <brgl@kernel.org>
 
-crypto: qce - Use existing devres APIs in devm_qce_dma_request()
+crypto: qce - Add BAM DMA support for crypto register I/O
 
-Switch to devm_kmalloc() and devm_dma_alloc_chan() in
-devm_qce_dma_request(). This allows us to drop two labels and shrink the
-function.
+This commit switches the driver to use BAM DMA for register I/O instead of
+direct register writes. It provides the necessary DMA infrastructure, updat=
+es
+the ordering of operations, and replaces direct I/O calls with wrappers that
+queue DMA command descriptors.
 
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> index d60efb5c26d88..26347e9fc078a 100644
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
+> diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
+> index 92d84941d3dbf..48ea7fb9a91e6 100644
+> --- a/drivers/crypto/qce/aead.c
+> +++ b/drivers/crypto/qce/aead.c
+> @@ -461,17 +461,17 @@ qce_aead_async_req_handle(struct crypto_async_reque=
+st *async_req)
+>  			src_nents =3D dst_nents - 1;
+>  	}
+> =20
+> -	ret =3D qce_dma_prep_sgs(&qce->dma, rctx->src_sg, src_nents, rctx->dst_=
+sg, dst_nents,
+> -			       qce_aead_done, async_req);
+> +	ret =3D qce_start(async_req, tmpl->crypto_alg_type);
+>  	if (ret)
+>  		goto error_unmap_src;
+
+[Severity: High]
+This is a pre-existing issue, but is the error check for dma_map_sg()
+correct prior to this step?
+
+Looking earlier in qce_aead_async_req_handle():
+
+    src_nents =3D dma_map_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_s=
+rc);
+    if (src_nents < 0) {
+        ret =3D src_nents;
+        goto error_unmap_dst;
+    }
+
+Since dma_map_sg() returns 0 on failure, checking for < 0 bypasses this err=
+or
+handler. This allows an unmapped scatterlist to proceed and later be
+erroneously unmapped on fallback paths (such as if qce_start or
+qce_dma_prep_sgs fails).
+
+[Severity: High]
+This is also a pre-existing issue, but does this error path unmap the wrong
+scatterlist when diff_dst is true?
+
+In qce_aead_async_req_handle(), the source buffer is mapped using:
+
+    src_nents =3D dma_map_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_s=
+rc);
+
+However, if a subsequent step fails and execution jumps to error_unmap_src,
+the code performs:
+
+error_unmap_src:
+    if (diff_dst)
+        dma_unmap_sg(qce->dev, req->src, rctx->src_nents, dir_src);
+
+Could this leak IOMMU mappings by unmapping req->src instead of the actually
+mapped rctx->src_sg buffer?
 
 [ ... ]
 
-> @@ -21,40 +21,25 @@ int devm_qce_dma_request(struct qce_device *qce)
->  {
->  	struct qce_dma_data *dma =3D &qce->dma;
->  	struct device *dev =3D qce->dev;
-> -	int ret;
+> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
+> index 26347e9fc078a..88d253d9147cf 100644
+> --- a/drivers/crypto/qce/dma.c
+> +++ b/drivers/crypto/qce/dma.c
+> @@ -11,6 +13,98 @@
+>  #include "dma.h"
 > =20
-> -	dma->txchan =3D dma_request_chan(dev, "tx");
-> +	dma->result_buf =3D devm_kmalloc(dev, QCE_RESULT_BUF_SZ + QCE_IGNORE_BU=
-F_SZ, GFP_KERNEL);
-> +	if (!dma->result_buf)
-> +		return -ENOMEM;
+>  #define QCE_IGNORE_BUF_SZ		(2 * QCE_BAM_BURST_SIZE)
+> +#define QCE_BAM_CMD_SGL_SIZE		128
+[ ... ]
+> +static void qce_prep_dma_cmd_desc(struct qce_device *qce, struct qce_dma=
+_data *dma,
+> +				  unsigned int addr, void *buf)
+> +{
+> +	struct qce_bam_transaction *bam_txn =3D dma->bam_txn;
+> +	struct bam_cmd_element *bam_ce_buf;
+> +	int bam_ce_size, cnt, idx;
 > +
-> +	dma->txchan =3D devm_dma_request_chan(dev, "tx");
->  	if (IS_ERR(dma->txchan))
->  		return dev_err_probe(dev, PTR_ERR(dma->txchan),
->  				     "Failed to get TX DMA channel\n");
-> =20
-> -	dma->rxchan =3D dma_request_chan(dev, "rx");
-> -	if (IS_ERR(dma->rxchan)) {
-> -		ret =3D dev_err_probe(dev, PTR_ERR(dma->rxchan),
-> -				    "Failed to get RX DMA channel\n");
-> -		goto error_rx;
-> -	}
-> -
-> -	dma->result_buf =3D kmalloc(QCE_RESULT_BUF_SZ + QCE_IGNORE_BUF_SZ,
-> -				  GFP_KERNEL);
-> -	if (!dma->result_buf) {
-> -		ret =3D -ENOMEM;
-> -		goto error_nomem;
-> -	}
-> -
-> -	return devm_add_action_or_reset(dev, qce_dma_release, dma);
-> +	dma->rxchan =3D devm_dma_request_chan(dev, "rx");
-> +	if (IS_ERR(dma->rxchan))
-> +		return dev_err_probe(dev, PTR_ERR(dma->rxchan),
-> +				     "Failed to get RX DMA channel\n");
-> =20
-> -error_nomem:
-> -	dma_release_channel(dma->rxchan);
-> -error_rx:
-> -	dma_release_channel(dma->txchan);
-> -	return ret;
-> +	return devm_add_action_or_reset(dev, qce_dma_terminate, dma);
+> +	idx =3D bam_txn->bam_ce_idx;
+> +	bam_ce_buf =3D &bam_txn->bam_ce[idx];
+> +	bam_prep_ce_le32(bam_ce_buf, addr, BAM_WRITE_COMMAND, *((__le32 *)buf));
 
 [Severity: High]
-This isn't a bug introduced by this patch, but this devres conversion
-highlights an existing cleanup ordering issue that could lead to a
-Use-After-Free.
+Does this direct cast incorrectly handle host-endian values on big-endian
+architectures?=20
 
-In drivers/crypto/qce/core.c:qce_crypto_probe(), the devres action to
-cancel the work is registered before requesting DMA resources:
+The buf parameter is passed a native u32 pointer from qce_write_dma():
 
-	INIT_WORK(&qce->done_work, qce_req_done_work);
-	ret =3D devm_add_action_or_reset(dev, qce_cancel_work, &qce->done_work);
-	if (ret)
-		return ret;
+    unsigned int reg_addr =3D ((unsigned int)(qce->base_phys) + offset);
+    qce_prep_dma_cmd_desc(qce, &qce->dma, reg_addr, &val);
 
-	ret =3D devm_qce_dma_request(qce);
+By casting the native u32 to *((__le32 *)buf) without applying cpu_to_le32(=
+),
+the little-endian BAM DMA hardware might receive reversed byte sequences for
+crypto register writes on big-endian systems.
 
-Because devres actions execute in reverse order of registration (LIFO), dur=
-ing
-device unbind, devm_qce_dma_request()'s devres actions will run first. This
-means qce_dma_terminate() will execute, and the devm-allocated rxchan, txch=
-an,
-and result_buf will be freed.
-
-Only after these DMA resources are gone will qce_cancel_work() run.
-
-If done_work was already scheduled by a DMA callback before
-dmaengine_terminate_sync() executed, could the workqueue thread run
-qce_req_done_work() after the resources are freed, accessing the freed
-channels and result_buf?
-
->  }
+> +
+> +	bam_ce_buf =3D &bam_txn->bam_ce[bam_txn->pre_bam_ce_idx];
+> +	bam_txn->bam_ce_idx++;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717-qcom-qce-c=
-md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D11
+md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D13
