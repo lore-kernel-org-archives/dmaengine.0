@@ -1,263 +1,191 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012070.outbound.protection.outlook.com [40.93.195.70])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C533570AD;
-	Fri, 17 Jul 2026 09:08:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784279344; cv=fail; b=oa09GQmYjsmoz8ZJtpOesYb/1tJWdniKWxcdkW3y5GKUJXiFUIzViQRyJI/5d83WK6+sQN7kQCzJ8bzE65/oX3suqtcAJ3tlbr8Ju05e2lEc2Ymr8gkeWgzSzwKRMJZYRbZvVGrMtnSqEbRftX00pLEQ4mSUcuvSLoy/xTs+0mM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784279344; c=relaxed/simple;
-	bh=Un/U2rCZ6QQWDCe7j1mw3anKnUUmDhgHYUl8xdP3NDk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ACvV1XhmxfDCdE8E4lf5AtPKOxzuhNPdcz0usRdO3Fs1Vzozk+chvNuOKfB0F8dY/jvZ3a37WDW+Io27dzodAsjlUFuLlEaE64q07KpKro7wSTnvyiFPuZtqlltS/A83eKi6DX7FEHOWeHg0szLKCazUgn+Yw0YDvqTZK5h8IUs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=NkDshncK; arc=fail smtp.client-ip=40.93.195.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6081F3976B8
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784279984; cv=none; b=jAeSEw9qyBMQOM3lNHHRP9XZ7DHebTKnwqLgJNmQyzN9x4TTZeoh6jt5g/W0WjDWwJiV9ZAyYE2ODgmSqGdFJDfHiEiOmaL7MGjkjtkqZeAEzJGfhGO24KsdrxLB8LFmnv6x4lc8JtX8oPH4R0QlwMf9+3enabFLiHIrRTfmnh0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784279984; c=relaxed/simple;
+	bh=Hzglabe4fPRfpMhvzvFOhd9PrI7n4OZPOiOIVE4Fp3s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q9BRfk2ry+s559+PAERHwT4NJIcDlg6j7sC7GATiX84Qkl4qTkE0nJOpeonWlxN0gbghhwoUFO9jmW445Ja937h+sZKJci4gp3oIp4UXRUI9pWp6h+eafUo+xfSNUzelU9LWju0v0E8+PMNQB+qdkcQAsOsAMMSlRQedWeKq3MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZmbLp3uL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AW8CmSZK; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="NkDshncK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pK07kPB2PjocoePPVIH3/6HOCeZIv/i+s/q/ApQ4Hk8PGBmna4rEmIgtpg2/EX/wAEZFv2t/lGR2aWiicLIQdmbGVxg7EkNOnP9hIiyIFLwzo+xHPCNw2JkX1tseKoAwpT6mcgmApYf/riFY5nYLGaFIBqfKBfuSPU5eC/bKLfGqZlI0IcREFpSaPShPE/s+EZITq9j45pFDWmuVtmqfZii3q2nph46lAbAes5YDhw4dy/nhvkuX+MoepTfaH+1AzHaDEo+e9+qEpPTdtFz2YqeSYRNrsxnVluFuV2WbR3s9BegTxtwPXHnlop80J9AVPEZZPGpEOYvDcdxTYYODMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kmoqMb3dIzK3siCOfLO3U9g4OKJjSLzCQuPFj2MKo68=;
- b=lc884ugMx/JVUbGABnZdYm8nV3/4eyelwULL/xH17NWpKL0sPVGcCoh7ADkJlpSoGwgB3JtsaGFDIbtTk+IaBhgvLBnpeTuvf5lBF18eOqNEzjxl2zg/4uOSYiltFlGVaJof+EIf9clIicLP7mgQVgg2bsoTNP6PsOIDY9OVBI9qx4F08+cmOjQ5dLIA1/w9grsK5C0LGG2HNuzN6afzNMQ3TbJWkCTN4TuaYy2M3tCZWQNnfc5ZTNoL9FtXYOBuuJJS9LmfFn7fyFkfABbtS12wYOpytLZuu6P/Ep2qHvxQRMJdywucnfyNRFst9+8Hsl629Xyl0SYZ4rCRVweprA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kmoqMb3dIzK3siCOfLO3U9g4OKJjSLzCQuPFj2MKo68=;
- b=NkDshncKqEiKHMSNhwrVdQ/cBKLPbGqBMX5Yuh/sMgguQ/K21w2RGsQ+zSLMOdScAcsm7PPgpgQUfSn+cVv1eaEq+/N4o4mUMEL7/KgkQ6xWZSm7bsgmDxJUGchbbRzwf9uVhcYTZZJDC2Wbh9hcSUPCP/qK7Zm1ldGmwfTINY4=
-Received: from DS7P220CA0053.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:224::31) by
- CH3PR12MB8933.namprd12.prod.outlook.com (2603:10b6:610:17a::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Fri, 17 Jul
- 2026 09:08:54 +0000
-Received: from CY4PEPF0000EDD1.namprd03.prod.outlook.com
- (2603:10b6:8:224:cafe::1b) by DS7P220CA0053.outlook.office365.com
- (2603:10b6:8:224::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.223.13 via Frontend Transport; Fri,
- 17 Jul 2026 09:08:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- CY4PEPF0000EDD1.mail.protection.outlook.com (10.167.241.197) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.245.5 via Frontend Transport; Fri, 17 Jul 2026 09:08:53 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 17 Jul
- 2026 04:08:49 -0500
-Received: from xhdsneeli40.xilinx.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Fri, 17 Jul 2026 04:08:45 -0500
-From: Srinivas Neeli <srinivas.neeli@amd.com>
-To: Vinod Koul <vkoul@kernel.org>, Radhey Shyam Pandey
-	<radhey.shyam.pandey@amd.com>
-CC: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S . Miller"
-	<davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Suraj Gupta
-	<suraj.gupta2@amd.com>, Marek Vasut <marex@nabladev.com>, Tomi Valkeinen
-	<tomi.valkeinen@ideasonboard.com>, Alex Bereza <alex@bereza.email>, "Folker
- Schwesinger" <dev@folker-schwesinger.de>, <dmaengine@vger.kernel.org>,
-	<netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>, <git@amd.com>
-Subject: [PATCH v5 4/4] dmaengine: xilinx_dma: Extend metadata handling for AXI DMA and MCDMA
-Date: Fri, 17 Jul 2026 14:38:24 +0530
-Message-ID: <20260717090824.2364230-5-srinivas.neeli@amd.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260717090824.2364230-1-srinivas.neeli@amd.com>
-References: <20260717090824.2364230-1-srinivas.neeli@amd.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZmbLp3uL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AW8CmSZK"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66H6cFSk1065321
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:19:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jnWJTq3ZZfdGzIIHwOFOt1HkgzENpzxRhvMtusPnSOU=; b=ZmbLp3uLosyqjFTW
+	M7IlmuApo6IEagko80gfYY29NIZ2F4aqEnSZ4JvBrk7XQYDRsxSymdjV63kBMCaK
+	vCbLmDV9ZeSOLSDr6eRaceNTIcWn1yr58wSLiaxZwqS1ZV8bZvaEBFWYnZFAqGEK
+	Y1M2othd9oLr+oF0/n4SimhJ3xvD6kLQjP8tCJVZCryueG3JGA025Jb1BWsXvvau
+	A9km4aP4oBjRnSkFw9k7GOJcN/nQo/UF+lpTXaAg3EKBftlqspsIw4wyk9VKEJWv
+	2mfGD8aTRYC1K5ma6w0Kw7kDga2d5O9F6LBx8nSDmfZIXxdhV+OXy+H+2ffujoCs
+	oO5a8A==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ffbquhd1q-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:19:41 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8483e038efeso4802031b3a.2
+        for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 02:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784279981; x=1784884781; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jnWJTq3ZZfdGzIIHwOFOt1HkgzENpzxRhvMtusPnSOU=;
+        b=AW8CmSZKs7BZSnkmxyeQPjRN583VYGJGw2Uqzn7bzD3U88RM6AGXQm6LUdNSOQfCBg
+         HbMYRMkDRkKdZhz593Ck3p821SyIfy3LJv+n+rQLUisTR3BkvZOSOVujyWo180TYKgDS
+         QZHSdHS3/Z1FuJt7Qy3H5HRQFi2Ijjj++bFHaseR4ffTAxg5hE2cCK5BQMbG446R9LMT
+         XFdhAkFJZX0AIcmni66+jlPsJy86RtRI+WEussksk9HHdfLH/6pz5usvpQMC1LeEmkph
+         aazCtkPcMo20cyhsdj1H6woam52CoTb/i5qEDrTCZL7ACqsmkFxAY6DrmruubDwjPRSW
+         zWFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784279981; x=1784884781;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=jnWJTq3ZZfdGzIIHwOFOt1HkgzENpzxRhvMtusPnSOU=;
+        b=K7j7YCaZi5WMw4ounG8PBYZbf8BHoptIe2pAOAzlZygsYT2f8fpxyXP5nAJgdosrPa
+         9l3PZDS/1NAPPBaf9A43n/YOOeSUdRoORh8ZupeOy4jziTty19B/k/Cj8QAB7Kayl2W2
+         j/afUG/6aDf7dRS333f7MRKBM/WduZ2W7FXxBQsZtsl/aQaxSIjCsBKEMKNXx/5vUZyn
+         0qCy98tLieuz2ysCQlEE44+234kLvHkzJLeMQSG3LuahkrPR5UWteRdTRAp4KknnmdGU
+         o7YUn9H9VD0aK7eFFih1Ke05hn5OxCAo/csoWJOEeFc8j8sEnzMKaRtY+it17MGsaXAj
+         AtCw==
+X-Forwarded-Encrypted: i=1; AHgh+RrSaixVZ+8o0xESZE+o8KY8mQGV7lRPYz0F6n4IVy6Yi+oKWXfZ/YJ67PsR6ULGrSxQwqB/qAmyFU4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzndKtTBAsDGZEdqF6MKgKLTYloLZfu0F066Ut9QsZ7qQsYH7RE
+	Au6t8uiqN6j/Hv9c8XzwtgB/sKqPdOR5FEmRiElHKmvZRgY37rHNgpmrfNC+u4biSrb4dpmrpSO
+	E+xqnfYI9llP73xG+W+IVqBpn7r0RM093hYp/gbBbuJ6KjSylG7m8K0l2tDZfYBY=
+X-Gm-Gg: AfdE7cl/TxP1qLhf0PRKJv0ffNW20iWJf0bpYINhIwRZoXCNXTYsfoL1cLuoXxil/P/
+	jBs2QaCS+1QE9+yQZIeJ3qKq9Q5O2sbT4yJd5vMtVRu1yWB3uPcWJGAEz6/Y2MbdeHDvVdhN0sm
+	BbMrdlx6d5zpVBkGs7gwgoHjvgu2m7GvPfZNFwAjoFUmnpYcBZR+g+ZYArgV/6G84dpJqxacNbJ
+	vLcaLYNahpNSMdRzkdJBj61LZ57N4hFyYcWgFVVWOKjDC4XMxm5THzhPcjVKoxWhkdmhPC9+4pb
+	JDAzigV+B7Mdp6Hg1UFupfn9jSD8Tbn8xnu65F/mwoJAdFtEcBwojnkKf+rixyU0r23yAC2lQet
+	0CZgd6kkQ3xWRBRy4k881Z7G4KtAo
+X-Received: by 2002:a05:6a00:887:b0:847:e2c7:59c5 with SMTP id d2e1a72fcca58-84c294fc35bmr1785576b3a.49.1784279980792;
+        Fri, 17 Jul 2026 02:19:40 -0700 (PDT)
+X-Received: by 2002:a05:6a00:887:b0:847:e2c7:59c5 with SMTP id d2e1a72fcca58-84c294fc35bmr1785532b3a.49.1784279980040;
+        Fri, 17 Jul 2026 02:19:40 -0700 (PDT)
+Received: from [10.219.57.117] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2adcd3dcsm676117b3a.24.2026.07.17.02.19.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jul 2026 02:19:39 -0700 (PDT)
+Message-ID: <c74550ed-7233-4a21-910b-409ef705171f@oss.qualcomm.com>
+Date: Fri, 17 Jul 2026 14:49:32 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD1:EE_|CH3PR12MB8933:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0396e30-165d-4ec0-f856-08dee3e3067c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|7416014|23010399003|36860700016|1800799024|10067099003|18002099003|22082099003|6133799003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	mHpVHfB35mY5jLNbziS4EYK8nT9wCQYwCGrBI+Suj9dyfqWk9+Qpt6NjiZRAWiuY296pvLEYWH3DwTkq1fFetQYykFsWVDa2iKiNyBfL7jEnzFksl8Sohn1LYJK1P2FVn1jYn9IVJT9SPKktmnw+a3UzhK3B3OVu5hmpWk2OMLH0i1fleLt13nrN+2cAaJax1S1KbttTAUrXATJjOIJ1DKZrgPbLrmAJHj3OOzVVB50bJdH0CnENAhgXA27eUZ5owd1qEitlHF956XYxAjJZlJXngOztBdkOkHMoWAabOpGuXmqp3Jqm69H2B1Y9NmkMDFMXa1DU7MWDy9x5PRy9ZnE72kCze/j9NcQTxz5UQxwaJGh+T5KTqY4eK1G2LKlk1HhzIFm4ieeNJmGx16aL7hcd7Vu8TLEbNZjHSDbeUYuqH/JPlVRHkhUxFDNpYXOpj1G8gNLznEuc3DsaB144zgqFT712Nj9OawzINzApA5h9DyRYINCiwLhdgWRVoi4dw9hYYrVbvLwSWB6+SxfMrhisy62GnQyil5RaFi6FLFVQZ4pJF8O5uM12Dr45ASKxqCX5cE7daLf8cVQPYrfAUoyy6tKIdLS0TwcYlvMTWL8+g0MUNh74mER0WAPd0kr4SuFc80RB/ypuKDp+1CldwzTYOwSgsmqsVCZj9pLOBaL5hHBqbL2CNGrxvJ+QV+fgzo5oiwW+uRfdb2VqBeCE7Q==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(376014)(7416014)(23010399003)(36860700016)(1800799024)(10067099003)(18002099003)(22082099003)(6133799003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	GWmgsgiU3qbPQbDVO+jlVEnYkrowiOR9UIIG6TKwfip2bqkiOAbwXDwPTSuR41KJlNjyn9cdKHQ3ajzNufFWrONMILEqfSvArbPubpetwNRhAJ96KOm5f9I27t8w/OtzYqP3gjHX5HK51qgemIobwL4++cQyTAy3Efw/W9eBw2QOZffJlx+w7n91XNenBLKDSx6wtKXpXRBgaXztTKuM5x0bCURv9Glw7aQp3cHDU6/Kz7MopUftKpkDogE2hBnnOCFNyo2nZKMk7WMhIk/pVDToS1NTfCxp1IvxoyjzZU4vUTAChC/g40JzoFQM9PKR9L06Hp2DefPEm8nP5hXKnc5wfGDz0G0aQrwzAL/Jlm6VJ2C5M+YR42rShn2ZB2z8StOhSAM0CbBZVKCm0UTcWlAb27swoCEEeZJzYGPEzGujwZ3a4KyykTzuk9W4YCiE
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jul 2026 09:08:53.8242
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0396e30-165d-4ec0-f856-08dee3e3067c
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EDD1.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8933
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/11] arm64: dts: qcom: shikra: Add
+ gpio-reserved-ranges to tlmm
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, Anurag Pateriya <apateriy@qti.qualcomm.com>
+References: <20260702-shikra-dt-m1-v5-0-f911ac92720c@oss.qualcomm.com>
+ <20260702-shikra-dt-m1-v5-11-f911ac92720c@oss.qualcomm.com>
+ <9c1aab59-14b2-4811-b778-8e96645bd65b@oss.qualcomm.com>
+ <97b205e8-5ab7-4205-b1dc-cbcb0497987d@oss.qualcomm.com>
+ <986da1da-db2e-4d4a-b9d0-70482adaf4bd@oss.qualcomm.com>
+ <4f641f13-a278-4465-8033-670c7279a7e3@oss.qualcomm.com>
+ <1153ebbd-659f-4ba9-9317-66ece33423e9@oss.qualcomm.com>
+Content-Language: en-US
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+In-Reply-To: <1153ebbd-659f-4ba9-9317-66ece33423e9@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 1G4rnmPqUecUTGvRSO1nVWVEdvdpdKNN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzE3MDA5MSBTYWx0ZWRfX6EsUjoB7Dow2
+ ZLnUvhCXnd2QXGvbNwcZyoR+tmtcBv/JorUBykL/L2RkAsUhUdyQ8igrpSriXMHkUH27T8oVIfm
+ uZaZ9Gbjdufno+NCSOtmyFDJtKdJBmbGmoxR4n9MSrXkAc49Kg1XAS5FwgeiDteRc73+lL+/qJ9
+ SKu1m02Jnc46/uqHqiTV0Osh4HDi71F1u4O9chPkfi+0YtXPx8pCTAezY7Gf7EuCd4KcLRmuehc
+ GRATZDjPWKmk9oeYt0q83cpDQw08hmXslGyiWlpJ3/P5pfs7VN1K5XqdDNOgbhzkph1dylv04mJ
+ XVoBueSFmMpQTd58rBuboG7mwQ1GuJRKNaMtlvPHo56jg4Xe7LP10x1i6EJMUkwzWRYKSzs4I4s
+ nWXzYU/1BKqgaW9lllNmlTdK3ZSJWXPPts+2W47dpMjr7Q8HvgBICzhYIonnpXeVSm1Zxx2v3KI
+ 9dyklk+MbzdPJVFXPlg==
+X-Authority-Analysis: v=2.4 cv=NZ3WEWD4 c=1 sm=1 tr=0 ts=6a59f3ad cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=lo2R6pnlw34kmT72REkA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-ORIG-GUID: 1G4rnmPqUecUTGvRSO1nVWVEdvdpdKNN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzE3MDA5MSBTYWx0ZWRfX2UQ2cgN8iAW0
+ I5v+BiYb8jShFwJRtFn2gCh2L4EjX8BwiDtrasPIqrTLuVxGvRNDxSJuiCFPRujgL8AQ/1cSWZX
+ Fd+UPM2ei0+9jyf9RI+1AeySQU8/Da0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-17_02,2026-07-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607170091
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+On 7/17/2026 12:03 AM, Konrad Dybcio wrote:
+> On 7/15/26 3:41 PM, Komal Bajaj wrote:
+>>
+>>
+>> On 7/15/2026 3:57 PM, Konrad Dybcio wrote:
+>>> On 7/7/26 6:36 PM, Komal Bajaj wrote:
+>>>> On 7/2/2026 4:25 PM, Konrad Dybcio wrote:
+>>>>> On 7/2/26 11:50 AM, Komal Bajaj wrote:
+>>>>>> Add gpio-reserved-ranges property to the tlmm node for all three
+>>>>>> Shikra EVK variants (CQM, CQS, IQS) to mark GPIOs used by the
+>>>>>> SoC internally and not available for general use.
+>>>>> These are generally added to prevent non-secure access upon TLMM
+>>>>> probe, i.e. the board won't boot if some of them are not protected.
+>>>>>
+>>>>> I assume the proposed set contains both ones that are _absolutely
+>>>>> forbidden_ for Linux to touch, but also ones that are dedicated to
+>>>>> some specific purpose that Linux _shouldn't_ touch.
+>>>> Yes, some GPIOs are reserved for secure-world use and are therefore not accessible from the non-secure world.
+>>>> I will update the commit message accordingly.
+>>> I'm not sure how to read your response. In other words - is this
+>>> patch boot-critical?
+>> Yes, with Access Policy enabled, it becomes boot-critical.
+> Well then, I'm no less than surprised since we have DTs for 3 boards
+> in -next right now that I'm learning can't possibly boot..
+>
+> I understand you might have disabled that at some point during the
+> development, but it's clearly not the configuration that's supported
+> by any means. Please make sure to take that into account next time.
+Development initially started with firmware builds that did not have 
+Access Policy enabled.
+Recently, firmware has since been updated to enable Access Policy, which 
+makes these GPIOs boot-critical and requires this change.
+If its needed, I can add Fixes tag.
 
-xilinx_dma_get_metadata_ptr() returns the AXI DMA APP words from the SOP
-descriptor in both directions. This is wrong for RX, where the hardware
-writes the APP words into the EOF descriptor. It also leaves AXI MCDMA
-without metadata support.
+>
+> For this issue, since the pins seem common, perhaps moving them to
+> the SoM DTSI makes more sense. And this most definitely needs 'fixes'
+> tags.
 
-Return the metadata from the SOP descriptor for TX and from the EOF
-descriptor for RX, matching where the hardware reads and writes the
-fields. For AXI DMA, expose the APP words (20 bytes). For AXI MCDMA,
-expose the control sideband, status, and APP fields (28 bytes). On TX
-the control sideband holds TID and TUSER configuration for the outgoing
-stream. On RX the sideband status holds the received TID, TDEST and TUSER
-from the incoming stream. The field layout differs between MM2S and S2MM,
-and the wider payload lets a consumer distinguish the two controllers.
-No in-tree consumer is affected.
+Makes sense. I'll move it to the SoM DTSI in the next revision.
 
-Read xlnx,axistream-connected for AXI MCDMA. Attach metadata_ops in
-xilinx_mcdma_prep_slave_sg() when an AXI4-Stream interface is present,
-so MCDMA clients use the metadata API the same way as AXI DMA clients.
+Thanks
+Komal
 
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Co-developed-by: Srinivas Neeli <srinivas.neeli@amd.com>
-Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
----
-Changes in V5:
- - Take the metadata pointer from the SOP descriptor for TX and the EOF
-   descriptor for RX, matching where the hardware reads and writes the
-   fields (TX previously used the EOF descriptor).
- - AXI DMA now exposes only the APP words (20 bytes) in both directions,
-   instead of the status word followed by APP (24 bytes).
- - AXI MCDMA exposes the control sideband, status and APP fields
-   (28 bytes), with the sideband position differing between MM2S and S2MM.
- - Reworked the kernel-doc index table and commit message accordingly.
+>
+> Konrad
 
-Changes in V4:
- - Restructured xilinx_dma_get_metadata_ptr(): AXIDMA is now the
-   fall-through path instead of a separate branch guarded by
-   WARN_ON_ONCE()/ERR_PTR().
- - Rewrote the kernel-doc as an index table covering AXI DMA, MCDMA S2MM
-   and MCDMA MM2S, and documented that the pointer and payload length are
-   the same for both MCDMA directions.
- - Added an inline comment explaining the union aliasing.
- - Condensed the commit message.
-
-Changes in V3:
- - Renamed subject to include "AXI DMA and MCDMA" (was "AXI MCDMA" only).
- - Complete rewrite of commit message and implementation.
- - Metadata pointer now returns status field at index 0 instead of APP
-   fields, exposing status and sideband information to clients.
- - Changed from list_first_entry to list_last_entry to return the EOF
-   descriptor where hardware writes status and APP fields.
- - Added explicit handling for both AXIDMA and MCDMA types with proper
-   payload length calculation.
- - Added WARN_ON_ONCE for unsupported DMA types.
- - Removed the 'chan' field from struct xilinx_dma_tx_descriptor (was
-   added in V2) as it's no longer needed; channel is obtained from
-   tx->chan instead.
- - Dropped V2 patches 4/5 (dt-bindings xlnx,include-stscntrl-strm) and
-   5/5 (xferred_bytes support) as the approach changed to use residue.
-
-Changes in V2:
- - Added support for MCDMA metadata handling alongside AXIDMA.
- - Added 'chan' field to struct xilinx_dma_tx_descriptor.
----
- drivers/dma/xilinx/xilinx_dma.c | 48 +++++++++++++++++++++++++++++----
- 1 file changed, 43 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 1b5b00f08c5f..6bf509d33e7c 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -651,17 +651,51 @@ static inline void xilinx_aximcdma_buf(struct xilinx_dma_chan *chan,
-  * @tx: async transaction descriptor
-  * @payload_len: metadata payload length
-  * @max_len: metadata max length
-- * Return: The app field pointer.
-+ *
-+ * The metadata lives in the SOP descriptor for TX and the EOF descriptor for RX.
-+ * Field order depends on dmatype and direction:
-+ *
-+ *   AXI DMA:         [0..] app
-+ *   AXI MCDMA (TX):  [0] ctrl_sideband, [1] status, [2..] app
-+ *   AXI MCDMA (RX):  [0] status, [1] sideband, [2..] app
-+ *
-+ * Return: Pointer to the first metadata word.
-  */
- static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
- 					 size_t *payload_len, size_t *max_len)
- {
- 	struct xilinx_dma_tx_descriptor *desc = to_dma_tx_descriptor(tx);
-+	struct xilinx_dma_chan *chan = to_xilinx_chan(tx->chan);
-+
-+	if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
-+		struct xilinx_aximcdma_tx_segment *seg;
-+
-+		if (chan->direction == DMA_DEV_TO_MEM) {
-+			seg = list_last_entry(&desc->segments,
-+					      struct xilinx_aximcdma_tx_segment, node);
-+			*max_len = *payload_len = sizeof(seg->hw.s2mm_status) +
-+						  sizeof(seg->hw.s2mm_sideband_status) +
-+						  sizeof(seg->hw.app);
-+			return &seg->hw.s2mm_status;
-+		}
-+		seg = list_first_entry(&desc->segments,
-+				       struct xilinx_aximcdma_tx_segment, node);
-+		*max_len = *payload_len = sizeof(seg->hw.mm2s_ctrl_sideband) +
-+					  sizeof(seg->hw.mm2s_status) +
-+					  sizeof(seg->hw.app);
-+		return &seg->hw.mm2s_ctrl_sideband;
-+	}
-+
- 	struct xilinx_axidma_tx_segment *seg;
- 
--	*max_len = *payload_len = sizeof(u32) * XILINX_DMA_NUM_APP_WORDS;
--	seg = list_first_entry(&desc->segments,
--			       struct xilinx_axidma_tx_segment, node);
-+	if (chan->direction == DMA_DEV_TO_MEM)
-+		seg = list_last_entry(&desc->segments,
-+				      struct xilinx_axidma_tx_segment, node);
-+	else
-+		seg = list_first_entry(&desc->segments,
-+				       struct xilinx_axidma_tx_segment, node);
-+
-+	*max_len = *payload_len = sizeof(seg->hw.app);
- 	return seg->hw.app;
- }
- 
-@@ -2639,6 +2673,9 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		segment->hw.control |= XILINX_MCDMA_BD_EOP;
- 	}
- 
-+	if (chan->xdev->has_axistream_connected)
-+		desc->async_tx.metadata_ops = &xilinx_dma_metadata_ops;
-+
- 	return &desc->async_tx;
- 
- error:
-@@ -3287,7 +3324,8 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 
- 	dma_set_max_seg_size(xdev->dev, xdev->max_buffer_len);
- 
--	if (xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
-+	if (xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA ||
-+	    xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
- 		xdev->has_axistream_connected =
- 			of_property_read_bool(node, "xlnx,axistream-connected");
- 	}
--- 
-2.43.0
