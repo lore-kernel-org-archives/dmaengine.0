@@ -1,141 +1,164 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD9A3955CD;
-	Fri, 17 Jul 2026 22:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F9C223DCE;
+	Fri, 17 Jul 2026 22:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784326808; cv=none; b=C4VVuGZZNaGGo0pkE6XQN8bncRYn5gdMGSeCCh3UcCGlQeDKYtF7G7/bpU3p8OYqu7YiyR8HYfhzIl07LeihEb+Vyy+7/5Tfo4iCYnU0UDrOLSTEWCg4q9cTTKaB0opSWMMCV5Y1ifcNzB8lnH5UJaeQuyPA6OaunhCHY8vCW40=
+	t=1784327426; cv=none; b=OPgZq31vxXxScEmrM1yLi4mG5LtSKd9XYoeaONpZ+zvXEEnqHin+hOofDoo0imWI8nPLtGq5agISTyhbjyj+SEqme83ypLN0FmUPzJB6wRrq3TnffQ7CbV+0gvb4INJMQXRiRcq11wtZG/TWyjTirkaxiYjUDaIZZwcMT/ff4sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784326808; c=relaxed/simple;
-	bh=CoUiwWrHYlbdSivViJap2VPMr1u4C1g594WmORgtiq4=;
-	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
-	 Subject; b=DFcLB23yK4/YMIvJHT41YMvFyMLlEALda0heBF/WFbQs4AO5og5ks6gzLYqCFo2J28r9gXS6q7iz3k3xROk3hfbGqIkNLfU3jG6Uj1uC8mlf7y6sK7zpKCL8tkLOKWO5T7jvbruK974wq1qYEQf9G/9lGE2ehnitIhGGC9+f4q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=rPy1fTP5; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1784327426; c=relaxed/simple;
+	bh=ZBAB0k1Tk7jH8+ku9r213ytppkPaXnSIRXQoJHcdmr8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=h4tmfBbCtYZX1I938zi6aJTgZH6Wy3beAWbinXDJRiwezWIlw1W6rfUEnn5dwgcyzpJCfUJfbyr033Z4RF68OT8Apz/butXsZAm9kk59N8SAh5jyYqHtkMfvSCAbPdrDmJCwsD/6XOh877JYZTUxyybe7U50w5Ht0xgWk66teiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mUTFgKc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="rPy1fTP5"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=ipTAymtpVpnfbcTyjH7O8f3+s0e/pKqBLscUDcJLr7E=; b=rPy1fTP5ZFgxxcdoXqHAohq6M0
-	qAADV3OXdf3SS5w+r1VJysoVnVU18W6qIquGHuD/uY26gYNtb6y8Gxk7btD6gbB9FbqNau+SJJFV5
-	E/YTDKg1Ho8TwmAfEzzBC9wRNpHD93C/4s/k+NtWFQ0C0Y3w7ePiGTgOlZin7W4dY0tZ1EJ7Zdrm1
-	mhdHDKidgGwlTR8ZbuGQFfj0CpQv//8TSaGIckTmha3VKqXsYniZgzJiftewD5lESFa3NJqGj261r
-	HANg/7rJZ5mXMgOhmtdCYn0RyBkLY6iwAQwU2zDjinbKl252moL50u580NcDVsTJzz9qGA+R3Hbud
-	hy9pxK2Q==;
-Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
-	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1wkquc-00000008wLZ-2uoh;
-	Fri, 17 Jul 2026 16:20:07 -0600
-Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1wkqkv-00000001W27-17oo;
-	Fri, 17 Jul 2026 16:10:05 -0600
-From: Logan Gunthorpe <logang@deltatee.com>
-To: linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	George Ge <george.ge@microchip.com>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Logan Gunthorpe <logang@deltatee.com>
-Date: Fri, 17 Jul 2026 16:10:00 -0600
-Message-ID: <20260717221001.361421-6-logang@deltatee.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260717221001.361421-1-logang@deltatee.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mUTFgKc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB8A1F000E9;
+	Fri, 17 Jul 2026 22:30:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784327424;
+	bh=mNwLyfPs2lQZ9PQtGKwWN9h+4lSSmNVFn368M6bSYac=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=mUTFgKc4da1FP6maBqMH960Xdc65jxZCI/gb5pjbKpkVkI1i4+bdVE69oAAJHVyaf
+	 wx+t91E2YO02kfJLyINnHMSvkSiGKikJ4ulYT5PpV38FJpDhQT73EOznEnwLjpHJc7
+	 PBZhZQJJJcQtJj9nFT8dx4xw9xGIn8oKL2fOS/dXM+whBEpenH3HyJKKHZWZFV58Fb
+	 ZCkaGw+eKQS9L36u0M56eWpJBJ6xEi1wY1siujaFfRfLfJm79HrNF/c8Cp++Dp8xcD
+	 rfM2DjYuwYkuTAHVNEp8ZbJ6oZAt6GqbBTHDCTyY1lf3lmZZqypfFiC91ijjhti51W
+	 VZLd0s+VHqH/w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v1 1/6] dmaengine: switchtec-dma: fix double-free in
+ switchtec_dma_free_desc()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Logan Gunthorpe" <logang@deltatee.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, linux-pci@vger.kernel.org
+In-Reply-To: <20260717221001.361421-2-logang@deltatee.com>
 References: <20260717221001.361421-1-logang@deltatee.com>
+ <20260717221001.361421-2-logang@deltatee.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 17 Jul 2026 22:30:24 +0000
+Message-Id: <20260717223024.9BB8A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, linux@weissschuh.net, dave.jiang@intel.com, kelvin.cao@microchip.com, george.ge@microchip.com, jjy600901@snu.ac.kr, logang@deltatee.com
-X-SA-Exim-Mail-From: gunthorp@deltatee.com
-X-Spam-Level: 
-Subject: [PATCH v1 5/6] dmaengine: ioat: use sysfs_emit() in per-channel sysfs show()
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Convert the sprintf() calls in the per-channel sysfs attribute show()
-functions to sysfs_emit().
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
----
- drivers/dma/ioat/sysfs.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Pre-existing issues:
+- [High] Allocated descriptor and coherent DMA memory resources are permane=
+ntly leaked if hardware channel enablement fails in `switchtec_dma_alloc_ch=
+an_resources()`.
+- [High] Multiple memory leaks of `switchtec_dma_chan` structures in driver=
+ initialization error paths.
+--
 
-diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
-index e796ddb5383f..976134df8108 100644
---- a/drivers/dma/ioat/sysfs.c
-+++ b/drivers/dma/ioat/sysfs.c
-@@ -24,12 +24,12 @@ static ssize_t cap_show(struct dma_chan *c, char *page)
- {
- 	struct dma_device *dma = c->device;
- 
--	return sprintf(page, "copy%s%s%s%s%s\n",
--		       dma_has_cap(DMA_PQ, dma->cap_mask) ? " pq" : "",
--		       dma_has_cap(DMA_PQ_VAL, dma->cap_mask) ? " pq_val" : "",
--		       dma_has_cap(DMA_XOR, dma->cap_mask) ? " xor" : "",
--		       dma_has_cap(DMA_XOR_VAL, dma->cap_mask) ? " xor_val" : "",
--		       dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
-+	return sysfs_emit(page, "copy%s%s%s%s%s\n",
-+		dma_has_cap(DMA_PQ, dma->cap_mask) ? " pq" : "",
-+		dma_has_cap(DMA_PQ_VAL, dma->cap_mask) ? " pq_val" : "",
-+		dma_has_cap(DMA_XOR, dma->cap_mask) ? " xor" : "",
-+		dma_has_cap(DMA_XOR_VAL, dma->cap_mask) ? " xor_val" : "",
-+		dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
- 
- }
- static const struct ioat_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
-@@ -39,8 +39,8 @@ static ssize_t version_show(struct dma_chan *c, char *page)
- 	struct dma_device *dma = c->device;
- 	struct ioatdma_device *ioat_dma = to_ioatdma_device(dma);
- 
--	return sprintf(page, "%d.%d\n",
--		       ioat_dma->version >> 4, ioat_dma->version & 0xf);
-+	return sysfs_emit(page, "%d.%d\n",
-+			   ioat_dma->version >> 4, ioat_dma->version & 0xf);
- }
- static const struct ioat_sysfs_entry ioat_version_attr = __ATTR_RO(version);
- 
-@@ -118,7 +118,7 @@ static ssize_t ring_size_show(struct dma_chan *c, char *page)
- {
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
--	return sprintf(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
-+	return sysfs_emit(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
- }
- static const struct ioat_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
- 
-@@ -127,7 +127,7 @@ static ssize_t ring_active_show(struct dma_chan *c, char *page)
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
- 	/* ...taken outside the lock, no need to be precise */
--	return sprintf(page, "%d\n", ioat_ring_active(ioat_chan));
-+	return sysfs_emit(page, "%d\n", ioat_ring_active(ioat_chan));
- }
- static const struct ioat_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
- 
-@@ -135,7 +135,7 @@ static ssize_t intr_coalesce_show(struct dma_chan *c, char *page)
- {
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
--	return sprintf(page, "%d\n", ioat_chan->intr_coalesce);
-+	return sysfs_emit(page, "%d\n", ioat_chan->intr_coalesce);
- }
- 
- static ssize_t intr_coalesce_store(struct dma_chan *c, const char *page,
--- 
-2.47.3
+--- Patch [1]: [PATCH v1 1/6] dmaengine: switchtec-dma: fix double-free in =
+switchtec_dma_free_desc() ---
+commit 36a3a50ecff021c64b2470dc8539fa5396858275
+Author: Logan Gunthorpe <logang@deltatee.com>
 
+dmaengine: switchtec-dma: fix double-free in switchtec_dma_free_desc()
+
+switchtec_dma_free_desc() frees swdma_chan->hw_sq, hw_cq, and every
+desc_ring[] entry without clearing the pointers afterward. If
+switchtec_dma_alloc_chan_resources() fails partway through and calls
+it during unwind, then a later retry of alloc_chan_resources() fails
+in switchtec_dma_alloc_desc() before reallocating one of those
+pointers, its own failure path calls switchtec_dma_free_desc() again
+and frees the same, already-freed pointers a second time.
+
+NULL out each pointer as it's freed so a subsequent call is a no-op
+for anything already released.
+
+> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+> index 3ef9286406159..a4a7d66d042de 100644
+> --- a/drivers/dma/switchtec_dma.c
+> +++ b/drivers/dma/switchtec_dma.c
+[ ... ]
+> @@ -886,14 +886,18 @@ static void switchtec_dma_free_desc(struct switchte=
+c_dma_chan *swdma_chan)
+>  	if (swdma_chan->hw_sq)
+>  		dma_free_coherent(swdma_dev->dma_dev.dev, size,
+>  				  swdma_chan->hw_sq, swdma_chan->dma_addr_sq);
+> +	swdma_chan->hw_sq =3D NULL;
+> =20
+>  	size =3D SWITCHTEC_DMA_CQ_SIZE * sizeof(*swdma_chan->hw_cq);
+>  	if (swdma_chan->hw_cq)
+>  		dma_free_coherent(swdma_dev->dma_dev.dev, size,
+>  				  swdma_chan->hw_cq, swdma_chan->dma_addr_cq);
+> +	swdma_chan->hw_cq =3D NULL;
+> =20
+> -	for (i =3D 0; i < SWITCHTEC_DMA_RING_SIZE; i++)
+> +	for (i =3D 0; i < SWITCHTEC_DMA_RING_SIZE; i++) {
+>  		kfree(swdma_chan->desc_ring[i]);
+> +		swdma_chan->desc_ring[i] =3D NULL;
+> +	}
+>  }
+
+[Severity: High]
+This isn't a bug introduced by this patch, but while reviewing I noticed
+that if hardware enablement fails in switchtec_dma_alloc_chan_resources(),
+the resources allocated by switchtec_dma_alloc_desc() appear to be permanen=
+tly
+leaked:
+
+drivers/dma/switchtec_dma.c:switchtec_dma_alloc_chan_resources() {
+	rc =3D switchtec_dma_alloc_desc(swdma_chan);
+	if (rc)
+		return rc;
+
+	rc =3D enable_channel(swdma_chan);
+	if (rc)
+		return rc;
+    ...
+}
+
+Since the DMA framework does not automatically clean up if
+device_alloc_chan_resources fails, does this need a call to
+switchtec_dma_free_desc() in the error path?
+
+[Severity: High]
+This is also a pre-existing issue, but I spotted a memory leak of the chann=
+el
+structures during driver initialization:
+
+drivers/dma/switchtec_dma.c:switchtec_dma_chans_enumerate() {
+    ...
+err_exit:
+	for (i =3D 0; i < chan_cnt; i++)
+		switchtec_dma_chan_free(pdev, swdma_dev->swdma_chans[i]);
+
+	kfree(swdma_dev->swdma_chans);
+    ...
+}
+
+Since switchtec_dma_chan_free() stops the channel and frees IRQs but does n=
+ot
+kfree the switchtec_dma_chan struct itself, does this permanently leak the
+successfully initialized channel structs?
+
+Similarly, in switchtec_dma_create(), if dma_async_device_register() fails:
+
+drivers/dma/switchtec_dma.c:switchtec_dma_create() {
+    ...
+err_chans_release_exit:
+	switchtec_dma_chans_release(pdev, swdma_dev);
+
+err_exit:
+    ...
+	kfree(swdma_dev);
+    ...
+}
+
+The array and channel structs are missed here since they are only normally =
+freed
+in the device_release callback. Does this path also need to kfree the array
+and channel elements?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717221001.3614=
+21-1-logang@deltatee.com?part=3D1
