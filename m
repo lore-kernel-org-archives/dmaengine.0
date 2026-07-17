@@ -1,75 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BC73FADEE;
-	Fri, 17 Jul 2026 12:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A7533D6ED;
+	Fri, 17 Jul 2026 16:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784291755; cv=none; b=MQK2zy3KSJnVZSVuvNnV0xO1kPtPnY8eP5uLY09A1P8QLI0WMpKj0qrS8YRzGrnwLeM0JpzjDQ2yKI/VLvMxKfAjgW5rNgS9nMcvFExjgbBSFaqlFq/Mjkn0BrRN8lWg+E4LSzjRc7ave/6JA/hmBHuw+uZPKVDJrW8vF0wL7iI=
+	t=1784306445; cv=none; b=Wd5veJ0morcLdPwQOwVRbnSkkq0MX5FVgYlJrISOxKzk6BU9o1EpRYSq1pcLiM30DNpg810894J0Y/3mtnxaYyCMy6Nm8y2s9YP0zFlY9LE3I5iNrwHYKAO4pnwvkKka2ofT9tkwDLfbatYffG/BHAGGwUy3ECot/qXsk9Q5hHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784291755; c=relaxed/simple;
-	bh=ccosWI9X4jHK+0JHg85OjbycEMIiBdKsnp3Ff38uIp8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ULj6DzWdvhtIOYGVWvZ81J86TrPa9L6cDn6o0vKlITZDTvBpjHdkGECWoARXNV1cbi72NR/mxS/BfAS4ousYrL7DYCnDkEYqokNoKhcRWGPVs1Ig5JcS2LaDsvgJVT2rCX9B68YyteVXEk3R3ZuA3KVGY325YpMVaQvAsOWpaak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCJAeN3u; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784306445; c=relaxed/simple;
+	bh=67NO3e4JW6lV9EN7KJeXPlVlQJs0Youe7oUDWXQwlis=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ey83ofkAvNSjeu9HMnIHxdRu1pr/tIGr0YvgS0U990RRBOlm46nXODvDZK1ohb1AEOUwg3p6pKiZS1JgWZJ335MGKS2Y9myHYEUHxecv+Vj1ROrJ/b31g572nwzu70hnutvOmozgjjfStNMyAEiFtZg9Chp4wzBG8Aj0lkrMxis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1rpjT0c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCJAeN3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995F31F00A3F;
-	Fri, 17 Jul 2026 12:35:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1rpjT0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A5F1F000E9;
+	Fri, 17 Jul 2026 16:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784291751;
-	bh=vW8pWm8rsdK9m5Q0HotqdfGr5xc15Rx6xUUgGdCCdJQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=GCJAeN3usxOsQR1vVrty384kmMqGCBnPsuNew07uH5FHKnERjy4JwrlUR2XVV4ZO5
-	 QbtidVqVs0OVOgQEz0hUZdC0A/mc/1Do6N+jDt+nzq5k/LarE3d7SaBp/k6XTxNEix
-	 W1jdXKT51c1n1BY1qjjhk250vIRPi4zg3iQBNY5hNVXeemWigzwAQPi7zB52OyB4Va
-	 y6Laq7Vddnmb9FvLOtVuIKkPT/uNjl+L0WKqRfjGjeMPQCxOTr6MyCVGnBIiG7KMYx
-	 iUZZ94hpnRpNUksVVTJpMjaqY7wGfjf94l3NMDoUzj9SMPOlgH0jGKhqcoAJCxxzMa
-	 /sHZ4FOzm99CQ==
-From: Vinod Koul <vkoul@kernel.org>
-To: Vignesh Raghavendra <vigneshr@ti.com>, Frank Li <Frank.Li@kernel.org>, 
- Michal Simek <michal.simek@amd.com>, 
- Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org, 
- dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-In-Reply-To: <b0a22171f3ed68e156a2fa84383e99c23ec6b2ff.1784037977.git.christophe.jaillet@wanadoo.fr>
-References: <b0a22171f3ed68e156a2fa84383e99c23ec6b2ff.1784037977.git.christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH] dmaengine: Constify struct dma_descriptor_metadata_ops
-Message-Id: <178429174814.1176696.13776361509358729486.b4-ty@kernel.org>
-Date: Fri, 17 Jul 2026 18:05:48 +0530
+	s=k20260515; t=1784306444;
+	bh=sazuWWhO5vFjW3RGCLXV7yTirDG6fq2/U1Vn9iGe+uA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=n1rpjT0ctxTf1hQq+fugV5Vh5NNvavGb0R/Ssc0fyQCh4i2eQEAQ4chv32v1NOLUt
+	 2Xh9IWDn77L4RRrEXLBqLCLzwaCKt8WWH9eNEFtLz3+cHsUKN8oAJ8AGuikpEfcKuB
+	 4mJ3xXRiYuDU405NOzQi5ghlmiwZaH1HADc6zoryPzDkgAy8mFs3fnRZp6/+uTEyn2
+	 vNhou0FGpTUuw6elSfx8fVyshXmyr+qtyqLMZdD6wxYScSalZDBVjyG5oNifB51Z1f
+	 0+TO89HU58HXIpB0m6+wjwHPfMo3AaeknCXeN4wKbGbhvGKP/84nmpluEwNzGvGLA1
+	 EjZRwZDThFftw==
+Date: Fri, 17 Jul 2026 11:40:43 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Logan Gunthorpe <logang@deltatee.com>
+Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Frank Li <Frank.li@nxp.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>
+Subject: Re: [PATCH v1 0/3] switchtec: add new device IDs
+Message-ID: <20260717164043.GA11343@bhelgaas>
+References: <20260714212010.230606-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260714212010.230606-1-logang@deltatee.com>
 
-
-On Tue, 14 Jul 2026 16:06:33 +0200, Christophe JAILLET wrote:
-> 'struct dma_descriptor_metadata_ops' in not modified in these drivers.
+On Tue, Jul 14, 2026 at 03:20:07PM -0600, Logan Gunthorpe wrote:
+> This little patch set adds some new device IDs for switchtec hardware
+> to the PCI driver, the DMA driver and the PCI quirk needed for NTB.
 > 
-> Constifying these structures moves some data to a read-only section, so
-> increases overall security, especially when the structure holds some
-> function pointers.
+> I originally included this in a patchset I'm working on for
+> switchtec-dma but the Sashiko bot reminded me I need to add it to the
+> PCI management device and the quirk used for NTB. So I've respun three
+> patches here.
 > 
-> On a x86_64, with allmodconfig, as an example:
-> Before:
-> ======
->    text	   data	    bss	    dec	    hex	filename
->  120635	  21584	     64	 142283	  22bcb	drivers/dma/xilinx/xilinx_dma.o
+> I'm open to options, but I might suggest if everyone is okay with it
+> these three patches could just go through the PCI tree together.
 > 
-> [...]
+> These three patches are based on v7.2-rc3.
+> 
+> Thanks,
+> 
+> Logan
+> 
+> Logan Gunthorpe (3):
+>   dmaengine: switchtec-dma: Add PCI1008 device ID
+>   PCI/switch: switchtec: Add PCI1008 device ID
+>   PCI: Add PCI1008 to switchtec NTB DMA alias quirk
+> 
+>  drivers/dma/switchtec_dma.c    | 1 +
+>  drivers/pci/quirks.c           | 1 +
+>  drivers/pci/switch/switchtec.c | 1 +
+>  3 files changed, 3 insertions(+)
 
-Applied, thanks!
-
-[1/1] dmaengine: Constify struct dma_descriptor_metadata_ops
-      commit: 338c853b7c3b422fefda195b9b8010e40611c96f
-
-Best regards,
--- 
-~Vinod
-
-
+Applied to pci/switchtec for v7.3, thanks!
