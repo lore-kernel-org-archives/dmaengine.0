@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F2E357CEC;
-	Fri, 17 Jul 2026 12:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ADC3D9DD4;
+	Fri, 17 Jul 2026 12:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784289664; cv=none; b=BnBF4xARYUUA/c5oc+lj6vbgWBugIofrQs42ul2jqTCqKRaEl+HPuNyMG60Hjo9I31tX9M8CaRKLtkhJiWLC9PxH+edTLzjD/NX2KVJpOINrJ30tPxeWomwu09QHwuq5oSN5lN2bymntlgszBs/Wqpb1F1jS/mCKGYh/bUqcl0E=
+	t=1784291167; cv=none; b=mQFufk8OJ4q1Wi2HkdRtpdWJ+tKjqWrreM4o1S8zym6EeEBCU5yEKM/kxCDgZtTVAeVSznjdD0uPpaDyrQ+KbZqKSk7bpJaNnefh7lYgkrWD4mLKCqLs0A23J32bJ7NKQOeHMpQuPei0JR7/oF0nLsoGbMyQYVZxqF0gNqsChDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784289664; c=relaxed/simple;
-	bh=Row2zwNBIa7NHSD8hoMiCpCTm9DyeBQNazUQfsoqHE0=;
+	s=arc-20240116; t=1784291167; c=relaxed/simple;
+	bh=59BW7XUuCJF6b0URlF/eeU8WFwGL3YRzQpZrP/7O1n4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nP1xa/6cAUk79IVKwSVkk6JFibSJTZJQhFnLDImO9EY8ZXnaRUlJai1X0EV90Zee+2Hjqz6y+TdKjWcWxP1N291bMJYq3KvNZYjerJ5rNn2vXwdGlAOy4e8o4UqZQqDkxIrWHKWLk2W4yZdPtRy8QsqwaK77MS07+20o/e3/dqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZS90eA2Y; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=JAiw6WtFVbukCCQM4icnTET7OUfp2rLPsfWeNs7NW8IoX69AeMfuYvpzMEUhKpcySx9DqkCTF9MAFlGzwD3G2SFZ2y7LA8ogXlotsCqW2/pGnDBS8SR2o+T6Yb35ONygb7bL//dxcBhdeVv9hB8CVn/ENO244J3eia3Wtgyba60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6NS7/VN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZS90eA2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9140A1F000E9;
-	Fri, 17 Jul 2026 12:01:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6NS7/VN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3081F00A3A;
+	Fri, 17 Jul 2026 12:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784289663;
-	bh=wWuj4RJqXa+o1WVFv6qOnRs119CWOd1DZQqEz3AuEb4=;
+	s=k20260515; t=1784291163;
+	bh=Zv6fV9VNX+JdpShESLrJLeVhg8ac4lshdyYencdWapA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ZS90eA2YJsFj5nLDovXcq33D7sUjZ/TMEbZwuAQ+zUZ6m5BXYgXmxY/uvxNR3UmG3
-	 NK1InVIww3bGJEvNDmfO2Vw77aOdyJK8XcLfkGN/2xXMcsjUbfB7zfEmSSOQnXxEAQ
-	 XM4HXwVoNbcf3emYIkKGBbpCfcjtBHVxfoYFGvw3SaTYz8mQEG6BM6DS6ZtOYC+Y8d
-	 0uQotNKkgPXwcl/tayMyalp4LP24PQhR5JH/hlJE8Pr9PUiQ8JCJ8bVmNLKdgP19lp
-	 2lkxsjsSz2b0LsVrT6fTHv5EkG6LmY8aWEip8kQB+VkYN9a6NadQCXgywCgbYTC/XT
-	 Pp0QRtTkivmZg==
-Date: Fri, 17 Jul 2026 17:30:58 +0530
+	b=W6NS7/VNus0avQVqx8tPTuoVPfgpkhg8EIGogP/Vj/D8mWtL9IblfRSwoJ9wZyezG
+	 tth/waY6E56us9R1ebMazCdw0aqeaYAL3Ws3jeyomSwRcejUF3mDGqnIx6eNGWS0Cg
+	 wr57AZyWLWEF4dpicXlvgIibPkpuUDA/6tvptrfIjr/Vl0bFTV0Dx7qi3tOqAD2g55
+	 slmCrO/NbK3LoUnn8WmDTyP6yu/3O/vLua1erVKyBU2vffRxg7Xv6VL3Jbh66WH7W1
+	 j1nKR2V4gsQuXu/9g+mhXhjBmrAfJGxse6sbebCDPOlIKMUes5CDroesOLxGpcKeda
+	 yvSrxh6Ynsd7A==
+Date: Fri, 17 Jul 2026 17:55:59 +0530
 From: Vinod Koul <vkoul@kernel.org>
 To: Koichiro Den <den@valinux.co.jp>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Cai Huoqing <cai.huoqing@linux.dev>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-	Devendra K Verma <devendra.verma@amd.com>,
+Cc: Frank Li <Frank.Li@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 0/9] dmaengine: dw-edma: Fixes and interrupt-path
- groundwork
-Message-ID: <aloZei10QXM1e_0P@vaman>
-References: <20260716152503.1747922-1-den@valinux.co.jp>
+Subject: Re: [PATCH v5 00/14] dmaengine: dw-edma: Prepare for PCI EP DMA
+ (part 1/3)
+Message-ID: <alofV2-d8v7DWkk3@vaman>
+References: <20260717050308.2144108-1-den@valinux.co.jp>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,28 +45,30 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260716152503.1747922-1-den@valinux.co.jp>
+In-Reply-To: <20260717050308.2144108-1-den@valinux.co.jp>
 
-On 17-07-26, 00:24, Koichiro Den wrote:
+On 17-07-26, 14:02, Koichiro Den wrote:
 > Hi,
 > 
-> This series collects dw-edma fixes and interrupt-path groundwork, mostly
-> split from v1 of the "Support dynamic LL appends" series.
+> This is v5, part 1 of three series for PCI endpoint DMA.
 > 
-> Most v4 changes address review feedback from Frank and Sashiko. I also
-> collected Frank's Reviewed-by tags.
+> The three series are:
 > 
->   v3: https://lore.kernel.org/r/20260715175740.1110404-1-den@valinux.co.jp/
->   v2: https://lore.kernel.org/r/20260710080903.2392888-1-den@valinux.co.jp/
->  (v1: https://lore.kernel.org/r/20260615154111.2174161-1-den@valinux.co.jp/)
+>   * part 1: dmaengine: dw-edma: Prepare for PCI EP DMA
+>   * part 2: PCI: endpoint: Expose endpoint DMA resources
+>   * part 3: PCI: endpoint: Add PCI DMA endpoint function
 > 
-> Rebased on the latest dmaengine/fixes:
-> commit 867621ba2030 ("dmaengine: qcom: bam_dma: Fix command element mask
->                       field for BAM v1.6.0+")
+> This series prepares dw-edma and dw-edma-pcie for endpoint-local DMA
+> channels delegated to a PCI host. The generic PCI endpoint interfaces
+> and endpoint function are kept in parts 2 and 3.
+> 
+> v5 is based on next-20260715, which includes Frank's merged dw-edma
+> descriptor-flattening series. Parts 2 and 3 depend on this series.
 
-Can you rebase this on next. Yes there are fixes but there are updates
-as well, so rather than splitting I would prefer they go via next
-It does not apply on next for me
+Sorry looks like rebase is required, it fails on patc2, which I resolved
+but failed again at 4...
+
+I should be pushing updated next this evening...
 
 -- 
 ~Vinod
