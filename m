@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEE03612EC
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114112F1FE4
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784265460; cv=none; b=b90BAXSXSyEdyFjqP0p22LuzlF6SwIvhrWfkw7SCNRFncPPfR4IO57Djfs8HX/MOG0cZa+imT7Ld+Ffqk3RGkIH+lTIOvgYPBsWpoEyxBcTIjyzkPonv6V79BYslbRdgs9CGgTfExY3PQIbl/3ViJ7L9qMu0Cp9wLZoMQO4y6hQ=
+	t=1784265492; cv=none; b=CkPTvRzvwAIcY4BKZCPJrwTtkgsfFb2ZWbFiK2lS7H+J+2xJNb4GNLF4AZYolKYku8eY4A4k5ETFTvz6p+TmCw/VDUGF3Lri12EVeAosU04yMNkrNs65Iv9s+/t742aV827X8AVkrfsxhElm4hYCyfNIl5sJnSPDhsunaoH0fHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784265460; c=relaxed/simple;
-	bh=qaEm1z299SYmAfPHVP753osyjRelKxorGOtG9Mv26OE=;
+	s=arc-20240116; t=1784265492; c=relaxed/simple;
+	bh=97ey76CLyqvBy0KQH1iPI5eU0lStqj9QmgaS07ovwF0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bYGWEhSx6FOPr5tsmDz0ZMRP6DTSXX0fKbQQTB/DG71dkx1iYplq8zurc/B55IzH47UjjT/FjAqhSQM/J9gBQvyIsptt9kNyQEYRC1CIIolDyIR+0RdhzDts/pUoJFIMoZzo40phPI2uAfR1gh6eJlDtEP5KDY6lvTQ67fpfyIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/Y/dek7; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=F738aS+QJVHeFZbP/KXNnUQYICHd8osr9KrGHPo90L7EJFionF56NDTXhN7kID6IWNCOK2Dy8Jdnm9CcGMtTcWF/fyxUKa8bL3uLvVLq6umm/etLC6GTnqptptXsefc+xas4FHeJOQk6Z8if9iiXqZTA0hhmbhuCT5DD7aaJ2L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edL4Nulp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/Y/dek7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC921F000E9;
-	Fri, 17 Jul 2026 05:17:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edL4Nulp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D581F000E9;
+	Fri, 17 Jul 2026 05:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784265459;
-	bh=CIqfpjof5KiKXTceTRRsJJSO0VwtAaOC3ZXmtRdWPSo=;
+	s=k20260515; t=1784265490;
+	bh=ySs6GVpLtafLGC2E2HTGhRUlPtLmv1X5/G6Rwz7IudU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=K/Y/dek7hrBUyG33rTF29SmVOI8+LXltQ5Eu1/Wcrb9ofXTzXr2v6eG/mLv90Sa94
-	 NIkF3zMmP7p397y4tdAY30m8Wv/aUDdzT7xVz8S1jys2wGCwe2j12/57tQPpHHMyC4
-	 2iwqVrbPqM00LylT6N/pHBany6GEnr5hpt81Wj3QlfnlTUo/ik30u4xwK/hO56j3uT
-	 1cOIhEII13RJlvUZ26x06w+u1v+RcSgxcqASyutLweLXEEakvc2pCaScwZUzG8LU/M
-	 1HnpMOE75G4V6u/TTJ4TRYAEvI7Ethaeneipr8AQdw7cpWgHsFZkxJyoPGXsuNOUI4
-	 9MbKoB8W9drBw==
+	b=edL4Nulp1AJwmvrvbTI1I0WnV2KvrWoZguaFZb2NtF11WuLLbG4hPQGdTbgifkiIX
+	 C5zgw4i3dxzafSe99sqKDq+2OSNslb1iuqwhaLkBBmmGObamlo6DvMLLqTHog8+ldj
+	 GgopksxnypDFdDSQG7nmsGCy7VVPXPJQFHhWQTZmgwYgzvsT35suHjo5vgh8CSgu/J
+	 WIhwahzLlL8tLkKQAI/i7TmW9kCAL/p1RrRvKY5DmYKhs3v8RVqwvhA3RpQ+dNE1mf
+	 es8pqX4JXUd/dijKipcth53lgxqsnzNUqE6klUxYlVCqqAlYwjMfBshhpUMtfJQ99f
+	 6lwL7QoomLxaQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 03/14] dmaengine: dw-edma: Add core quiesce
- operations
+Subject: Re: [PATCH v5 12/14] dmaengine: dw-edma-pcie: Handle optional data
+ blocks
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260717050308.2144108-4-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260717050308.2144108-13-den@valinux.co.jp>
 References: <20260717050308.2144108-1-den@valinux.co.jp>
- <20260717050308.2144108-4-den@valinux.co.jp>
+ <20260717050308.2144108-13-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 05:17:38 +0000
-Message-Id: <20260717051738.EDC921F000E9@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 05:18:10 +0000
+Message-Id: <20260717051810.70D581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,55 +49,53 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] dw_edma_v0_core_off() fails to actually stop the DMA engines in HD=
-MA compatibility mode because it relies on the non-existent ENGINE_EN regis=
-ter.
+- [High] IRQ vectors allocated by pci_alloc_irq_vectors() are leaked in mul=
+tiple error paths within dw_edma_pcie_probe().
 --
 
---- Patch [3]: [PATCH v5 03/14] dmaengine: dw-edma: Add core quiesce operat=
-ions ---
-commit b74cbf35e0d2a9867f8a66e3ed4776b896fc6152
+--- Patch [12]: [PATCH v5 12/14] dmaengine: dw-edma-pcie: Handle optional d=
+ata blocks ---
+commit 668bf3e5a48eceeac33c0a1fc5620f41d4cdbd7d
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Add core quiesce operations
+dmaengine: dw-edma-pcie: Handle optional data blocks
 
-This commit adds core operations to quiesce only the resources represented
-by a dw-edma instance. It implements specific handling for unrolled eDMA
-and HDMA compatibility mode.
+This commit skips data block BAR mapping and debug output when a channel has
+no data block size. This allows future providers to describe channels that
+only need descriptor memory exposed, with no functional change intended for
+existing devices.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/=
-dw-edma-v0-core.c
-> --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
+edma-pcie.c
+> index a5d65cc9706c2..8c4d1359a5456 100644
+> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
 [ ... ]
->  static void dw_edma_v0_core_off(struct dw_edma *dw)
->  {
->  	SET_BOTH_32(dw, int_mask,
->  		    EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
->  	SET_BOTH_32(dw, int_clear,
->  		    EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
->  	SET_BOTH_32(dw, engine_en, 0);
->  }
+> @@ -497,6 +499,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>  							  ll_block);
+>  		ll_region->sz =3D ll_block->sz;
+> =20
+> +		if (!dt_block->sz)
+> +			continue;
+> +
+>  		dt_region->vaddr.io =3D pcim_iomap_table(pdev)[dt_block->bar];
+>  		if (!dt_region->vaddr.io)
+>  			return -ENOMEM;
 
 [Severity: High]
-This isn't a bug introduced by this patch, but looking at
-dw_edma_v0_core_off() in drivers/dma/dw-edma/dw-edma-v0-core.c, does it
-fail to actually stop the DMA engines in HDMA compatibility mode?
+This is a pre-existing issue, but does this error path in
+dw_edma_pcie_probe() leak IRQ resources?
 
-Since HDMA compatibility mode does not implement the ENGINE_EN register (as
-noted in the commit message and addressed in the new quiesce path), writing
-0 to engine_en here doesn't seem to stop the channels.
+The probe function successfully allocates vectors via pci_alloc_irq_vectors=
+()
+earlier in the execution, but if this dt_region mapping fails, the function
+returns -ENOMEM directly without calling pci_free_irq_vectors().=20
 
-If a user unbinds the driver or unloads the module, could the DMA controller
-continue executing transfers into memory that is subsequently unmapped and
-freed, since chX_pwr_en is never cleared during the remove path?
-
-> =20
-> +static int dw_edma_v0_core_quiesce(struct dw_edma *dw)
-> +{
-> +	int ret =3D 0;
-> +	int err;
+Failing to free IRQ resources can exhaust system IRQ capacity and prevent
+future allocations. The same pattern appears to exist in the read channel
+mapping loop and the final dw_edma_probe() error paths. Should there be a
+common error handling label to properly clean up the allocated IRQ vectors?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717050308.2144=
-108-1-den@valinux.co.jp?part=3D3
+108-1-den@valinux.co.jp?part=3D12
