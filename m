@@ -1,163 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB0C2459E5
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEE03612EC
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784265403; cv=none; b=YqHa3LzLqh3FsJuEGCMwl0wk5eHF1STA5iM4odwgswXg7EIWHNm98CzlS6GsJjccJLW+bwdOOgJrF06YK9MqSTjIznTPpXAZbYVLHK0NyLrW2CCnGJwB4SEsd6uKpzTcrM1EtHFWP2BUA6lv2HNAYqk0pkDN34eKE42iAZQ+XGY=
+	t=1784265460; cv=none; b=b90BAXSXSyEdyFjqP0p22LuzlF6SwIvhrWfkw7SCNRFncPPfR4IO57Djfs8HX/MOG0cZa+imT7Ld+Ffqk3RGkIH+lTIOvgYPBsWpoEyxBcTIjyzkPonv6V79BYslbRdgs9CGgTfExY3PQIbl/3ViJ7L9qMu0Cp9wLZoMQO4y6hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784265403; c=relaxed/simple;
-	bh=1WWCVy6sZjFrBmAAkJnkd3j5SILbHskeI+wzrTTe6W0=;
+	s=arc-20240116; t=1784265460; c=relaxed/simple;
+	bh=qaEm1z299SYmAfPHVP753osyjRelKxorGOtG9Mv26OE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=etx9Acp1N7c4oX6omUQzmDyo1mjB7BGKd8yz2875ZO60UDF9DcCjGzdxi3L3gzmLTTetam4BGdooInUBIbOV4XzMKRsDY8tDaP+IUWWP7/GD1ZBD3xesJJ+KGmVO2LSG7vGxOHwdZGVvmcJrhoV2Ier4cxqxcVHS1Qisx824exI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aDJBy0C4; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=bYGWEhSx6FOPr5tsmDz0ZMRP6DTSXX0fKbQQTB/DG71dkx1iYplq8zurc/B55IzH47UjjT/FjAqhSQM/J9gBQvyIsptt9kNyQEYRC1CIIolDyIR+0RdhzDts/pUoJFIMoZzo40phPI2uAfR1gh6eJlDtEP5KDY6lvTQ67fpfyIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K/Y/dek7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aDJBy0C4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE371F000E9;
-	Fri, 17 Jul 2026 05:16:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K/Y/dek7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC921F000E9;
+	Fri, 17 Jul 2026 05:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784265402;
-	bh=syXj+7O1eT9cvwAFUWRRFpO25ShjxKglLECEzQixCq8=;
+	s=k20260515; t=1784265459;
+	bh=CIqfpjof5KiKXTceTRRsJJSO0VwtAaOC3ZXmtRdWPSo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=aDJBy0C4CTKWZVp+ol1DLfMPKY26YfzPHOuZdYL/uu/Ge9X5XXvEdVDIr4bzBmkSa
-	 ektsEhYNSrHtncg2XETImw5f4VBfrGhvevCIVvryAYlgcyFIkkOq0Od495Ssw3WY2R
-	 LwJLd+CCrJ16/MmCu9kYd14b4uHa3xOE3yQl5IXBdeBU4SoxnEZh+4CNnTYCOgpyuI
-	 RJWnQQ0uWlg9QP2X51a2h2hIdh0CCHFQTi2GZ/a1zGZr43TKpHR1G0quQAVHKYk1xZ
-	 GchwZxxao4GsNTGr2jl4wfpet2i7OTiA7iY3mR0vg6EjvBPVcCnoXxBYvHYO1MSQkl
-	 NnrGaV7Wf3NRQ==
+	b=K/Y/dek7hrBUyG33rTF29SmVOI8+LXltQ5Eu1/Wcrb9ofXTzXr2v6eG/mLv90Sa94
+	 NIkF3zMmP7p397y4tdAY30m8Wv/aUDdzT7xVz8S1jys2wGCwe2j12/57tQPpHHMyC4
+	 2iwqVrbPqM00LylT6N/pHBany6GEnr5hpt81Wj3QlfnlTUo/ik30u4xwK/hO56j3uT
+	 1cOIhEII13RJlvUZ26x06w+u1v+RcSgxcqASyutLweLXEEakvc2pCaScwZUzG8LU/M
+	 1HnpMOE75G4V6u/TTJ4TRYAEvI7Ethaeneipr8AQdw7cpWgHsFZkxJyoPGXsuNOUI4
+	 9MbKoB8W9drBw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 04/14] dmaengine: dw-edma: Initialize IRQ data before
- requesting IRQs
+Subject: Re: [PATCH v5 03/14] dmaengine: dw-edma: Add core quiesce
+ operations
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260717050308.2144108-5-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260717050308.2144108-4-den@valinux.co.jp>
 References: <20260717050308.2144108-1-den@valinux.co.jp>
- <20260717050308.2144108-5-den@valinux.co.jp>
+ <20260717050308.2144108-4-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 05:16:41 +0000
-Message-Id: <20260717051641.BEE371F000E9@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 05:17:38 +0000
+Message-Id: <20260717051738.EDC921F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Teardown race condition in dw_edma_remove where the hardware is di=
-sabled and IRQs are freed before the DMA device is unregistered.
-- [High] State modification and linked list accesses are performed lockless=
-ly in the pause, resume, and terminate_all routines, leading to data races =
-and list corruption.
-- [High] dw_edma_device_terminate_all() fails to stop the hardware synchron=
-ously and neglects to clear pending virt-dma descriptors, leading to DMA us=
-e-after-free and memory leaks.
+- [High] dw_edma_v0_core_off() fails to actually stop the DMA engines in HD=
+MA compatibility mode because it relies on the non-existent ENGINE_EN regis=
+ter.
 --
 
---- Patch [4]: [PATCH v5 04/14] dmaengine: dw-edma: Initialize IRQ data bef=
-ore requesting IRQs ---
-commit 65ff3b1fccd7b06e00ca72a89bc12e41c6366a28
+--- Patch [3]: [PATCH v5 03/14] dmaengine: dw-edma: Add core quiesce operat=
+ions ---
+commit b74cbf35e0d2a9867f8a66e3ed4776b896fc6152
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
+dmaengine: dw-edma: Add core quiesce operations
 
-This commit prevents a potential NULL pointer dereference in the shared
-interrupt handler. It fixes the initialization order by setting the back
-pointer before requesting the IRQ.
+This commit adds core operations to quiesce only the resources represented
+by a dw-edma instance. It implements specific handling for unrolled eDMA
+and HDMA compatibility mode.
 
-Cc: stable@vger.kernel.org
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
-edma-core.c
-> index 8a1ec0fd057bd..392981f3b7bb5 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-
+> diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/=
+dw-edma-v0-core.c
+> --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
 [ ... ]
-
-> static int dw_edma_device_resume(struct dma_chan *dchan)
-> {
-> 	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
-> 	int err =3D 0;
-[ ... ]
-> 	} else {
-> 		chan->status =3D EDMA_ST_BUSY;
-> 		dw_edma_start_transfer(chan);
-> 	}
->=20
-> 	return err;
-> }
+>  static void dw_edma_v0_core_off(struct dw_edma *dw)
+>  {
+>  	SET_BOTH_32(dw, int_mask,
+>  		    EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
+>  	SET_BOTH_32(dw, int_clear,
+>  		    EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
+>  	SET_BOTH_32(dw, engine_en, 0);
+>  }
 
 [Severity: High]
-This is a pre-existing issue, but does dw_edma_start_transfer() need to be
-called with the vc.lock held here?
+This isn't a bug introduced by this patch, but looking at
+dw_edma_v0_core_off() in drivers/dma/dw-edma/dw-edma-v0-core.c, does it
+fail to actually stop the DMA engines in HDMA compatibility mode?
 
-Looking at dw_edma_start_transfer(), it appears to locklessly call
-vchan_next_desc(), which reads the desc_issued linked list. Could a
-concurrent list modification from dmaengine_issue_pending() or the interrupt
-handler corrupt the list pointers?
+Since HDMA compatibility mode does not implement the ENGINE_EN register (as
+noted in the commit message and addressed in the new quiesce path), writing
+0 to engine_en here doesn't seem to stop the channels.
 
-[ ... ]
+If a user unbinds the driver or unloads the module, could the DMA controller
+continue executing transfers into memory that is subsequently unmapped and
+freed, since chX_pwr_en is never cleared during the remove path?
 
-> static int dw_edma_device_terminate_all(struct dma_chan *dchan)
-> {
-> 	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
-> 	int err =3D 0;
-[ ... ]
-> 	} else {
-> 		chan->request =3D EDMA_REQ_STOP;
-> 	}
->=20
-> 	return err;
-> }
-
-[Severity: High]
-This is a pre-existing issue, but is setting chan->request sufficient to
-safely terminate the transfer?
-
-By not synchronously stopping the hardware via dw_edma_core_ch_quiesce(),
-the hardware might continue running and writing to memory. If the client
-subsequently frees the DMA buffer, could this result in a use-after-free or
-IOMMU fault?
-
-Additionally, this locklessly modifies chan->request, bypassing
-synchronization with the interrupt handler. Does this routine also need to
-acquire the lock and call vchan_get_all_descriptors() to purge pending
-queues and prevent descriptor memory leaks?
-
-[ ... ]
-
-> int dw_edma_remove(struct dw_edma_chip *chip)
-> {
-[ ... ]
-> 	/* Disable eDMA */
-> 	dw_edma_core_off(dw);
->=20
-> 	/* Free irqs */
-> 	for (i =3D (dw->nr_irqs - 1); i >=3D 0; i--)
-> 		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
-> 	dw_edma_emul_irq_free(dw);
->=20
-> 	/* Deregister eDMA device */
-> 	dma_async_device_unregister(&dw->dma);
-
-[Severity: High]
-This is a pre-existing issue, but is it safe to disable the hardware and
-free the IRQs before unregistering the dmaengine device?
-
-If a concurrent client calls dma_async_issue_pending() during driver unbind,
-dw_edma_start_transfer() could re-enable the eDMA hardware. Because IRQs are
-already freed, the software will never be notified when the transfer
-completes.
-
-Could this leave the hardware running while the DMA driver is fully removed,
-potentially causing memory corruption?
+> =20
+> +static int dw_edma_v0_core_quiesce(struct dw_edma *dw)
+> +{
+> +	int ret =3D 0;
+> +	int err;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717050308.2144=
-108-1-den@valinux.co.jp?part=3D4
+108-1-den@valinux.co.jp?part=3D3
