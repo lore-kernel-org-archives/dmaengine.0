@@ -1,149 +1,152 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94933451DA
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E7A35E1B8
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 09:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784278970; cv=none; b=PoyzjfG4sNLj6k1fn6wC767tBkA5Xi4MaoWK6pwnjURGkOpotcDLV0Er3D5UX5vIoD1xSE8fzTA0JORXcbYZw2GtXjQrXeETr3/cDe1lWRUjcZQ+K4fo7CS8L8VASeRWjY1oakuJ88VBMkpKrzDeFzNMVMY6fQXEroDy5gXpRQ4=
+	t=1784279144; cv=none; b=U2YtTy6h1UCveVaeiyComiJh5COBmcBn4n+9e33FniMrsW3uMiklXEZWnm8iGgue8Fz8okn4jKcF37gJHP4T8FWUB45JqIk8Mdn5dDjXIMDKaGFXHzlN19m8yRGcO+bC1nwhqs0HlyizbTZmf9SNjOXrlHu6J0XKRokmOIsh1BM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784278970; c=relaxed/simple;
-	bh=gv8CwNZSsrVDkJijlsJ/EumD2OVigkY9y7fjCwollTQ=;
+	s=arc-20240116; t=1784279144; c=relaxed/simple;
+	bh=XaFw7pFdUCVqWDEWA6piLP/Slu5H9d/NR3wUHAAMEsI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=jWJPjkIZ3EAZr0G4nCsq0tpxRA7PsyJEW+P3uIR74uN/q2wtKc0Vys3gq1ueS3RNE5QWKx33RXwgXY3PObnv/gOUP+EvSVT1e2qvMC1nQqLgKxgWskhBkOObOOHUH0lG5NYt/NDEcwWOZXXdPZY6IXojEIDfmqeXg/OkH7sVjpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzW4RcqW; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=qeXhBhAUokzmRIcNnCFDEXFE6LYaeblt1PesvLI/uSys/HFOGsEBhfPkrvF4IgtEYr+5qNdGm91YE62sHw33GpjgThRfJ9SyJE04qIOIQUqUZ4ssoCZRTilf22/QaQeIlq9ADiTqeDg1lSlYFw3l/unbiIVm+EQAF5d0p9o+MWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ok1PimG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzW4RcqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997791F00A3A;
-	Fri, 17 Jul 2026 09:02:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ok1PimG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2E81F000E9;
+	Fri, 17 Jul 2026 09:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784278967;
-	bh=atBwCUUI/c6ZGMOuTyhpFRyMAv/XcrILZV8DecPgr+4=;
+	s=k20260515; t=1784279142;
+	bh=HJbL0/9zj/3fArLDKRQzPJtrL66ifBEebG+XKf0if3c=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BzW4RcqWO0PkXjL98CcToq4GEOABy1p+5Lt/Iy91Pl0xGoNgPzsfLParsp9MClavP
-	 r8AItZjHSrcay7cgl1T+fncgRvkj2rtgQCwqjtLzx2NjV2azC8RybnbbPg6y9j2Mqc
-	 cAdUKZrIgMxelWVEKvXG/o/3phX3IELW9i69ws9CEpWH0GUBCOsGPvMYjfR9ry1YQ1
-	 v9KtrvXOfQ4KwiemhGEZdLycYfx/Dp7jPJvV+5egh4yR5IW4dOUVtezMvwDjfSOqZ2
-	 m5YcwkE3bRMxpOa8W8vBjXV3W24HRDZbWeWRJQnomtz1jWEoRcwkpifphrn1qCOCaJ
-	 Tj2jzdbfzxAOA==
+	b=Ok1PimG41WD9djmesCCxYN4UjJr/srgZOTTB/uz08c3YoU+gRklYS6eDb7k1RtdSs
+	 uFjCoBJqTtgu77kHzzNtU0wmt9iPr4rRXoWiIxZGYroW6Ve9qXHEif2F6vgaxbICj5
+	 A+njOqo9nhiGtn4Iz7dSt3VFQlFRGbHveGk88ZJgffgKYFC+pr97nFFPUWbqBd3k77
+	 0KRnSQEP2qKyYiXKg2Nno/p5GPhG+KtatMLV5TaHbVVy2JY1ualsa6Knau6TODXhza
+	 +YpRw3dGXkj4T7x4t3fbbR7KE90ghjVzaHOKDHjXPSkcxdkp+royHJI06midyV/XK6
+	 9+u/+BzuJGCdQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v22 12/14] crypto: qce - Map crypto memory for DMA
+Subject: Re: [PATCH v22 11/14] crypto: qce - Use existing devres APIs in
+ devm_qce_dma_request()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
 Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-12-ff0d18b27246@oss.qualcomm.com>
+In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-11-ff0d18b27246@oss.qualcomm.com>
 References: <20260717-qcom-qce-cmd-descr-v22-0-ff0d18b27246@oss.qualcomm.com>
- <20260717-qcom-qce-cmd-descr-v22-12-ff0d18b27246@oss.qualcomm.com>
+ <20260717-qcom-qce-cmd-descr-v22-11-ff0d18b27246@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 09:02:46 +0000
-Message-Id: <20260717090246.997791F00A3A@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 09:05:41 +0000
+Message-Id: <20260717090542.4A2E81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
-New issues:
-- [High] The workqueue cancellation devres action is registered too early, =
-leading to use of a destroyed mutex and freed DMA channels during teardown.
-- [Medium] The DMA unmap action `qce_crypto_unmap_dma` is registered in the=
- wrong devres order, causing it to execute before DMA is terminated.
-
 Pre-existing issues:
-- [High] Incorrect algorithm unregistration on the failure path in devm_qce=
-_register_algs() causes a resource leak and potential use-after-free.
+- [High] The crypto request completion work (`qce->done_work`) is cancelled=
+ after the DMA channels and result buffer are released, leading to a Use-Af=
+ter-Free if the work executes concurrently during device unbind.
 --
 
---- Patch [12]: [PATCH v22 12/14] crypto: qce - Map crypto memory for DMA -=
---
-commit d6ac886b4f29b8b9e4e4a48b6b23f8358b593923
+--- Patch [11]: [PATCH v22 11/14] crypto: qce - Use existing devres APIs in=
+ devm_qce_dma_request() ---
+commit 7b0cecb1f8e81a661dc520eb8657f4134a795b47
 Author: Bartosz Golaszewski <brgl@kernel.org>
 
-crypto: qce - Map crypto memory for DMA
+crypto: qce - Use existing devres APIs in devm_qce_dma_request()
 
-As the first step in converting the driver to using DMA for register
-I/O, let's map the crypto memory range.
+Switch to devm_kmalloc() and devm_dma_alloc_chan() in
+devm_qce_dma_request(). This allows us to drop two labels and shrink the
+function.
 
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index aa4a0b1774908..4031b4516d651 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -191,10 +191,19 @@ static void qce_cancel_work(void *data)
->  	cancel_work_sync(work);
->  }
-
-[Severity: High]
-Is the workqueue cancellation devres action registered too early?
-
-Looking at qce_crypto_probe, devm_add_action_or_reset for qce_cancel_work is
-registered before devm_qce_dma_request and devm_mutex_init. Because devres
-actions execute in LIFO order on teardown, this means the mutex is poisoned
-and DMA channels are released before cancel_work_sync is called.
-
-If qce_req_done_work executes concurrently during unbind or probe failure,
-could this lead to locking a destroyed mutex and issuing commands on freed
-DMA channels?
+> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
+> index d60efb5c26d88..26347e9fc078a 100644
+> --- a/drivers/crypto/qce/dma.c
+> +++ b/drivers/crypto/qce/dma.c
 
 [ ... ]
 
-> @@ -254,6 +263,18 @@ static int qce_crypto_probe(struct platform_device *=
-pdev)
->  	qce->async_req_enqueue =3D qce_async_request_enqueue;
->  	qce->async_req_done =3D qce_async_request_done;
+> @@ -21,40 +21,25 @@ int devm_qce_dma_request(struct qce_device *qce)
+>  {
+>  	struct qce_dma_data *dma =3D &qce->dma;
+>  	struct device *dev =3D qce->dev;
+> -	int ret;
 > =20
-> +	qce->dma_size =3D resource_size(res);
-> +	qce->base_dma =3D dma_map_resource(dev, res->start, qce->dma_size,
-> +					 DMA_BIDIRECTIONAL, 0);
-> +	qce->base_phys =3D res->start;
-> +	ret =3D dma_mapping_error(dev, qce->base_dma);
-> +	if (ret)
-> +		return ret;
+> -	dma->txchan =3D dma_request_chan(dev, "tx");
+> +	dma->result_buf =3D devm_kmalloc(dev, QCE_RESULT_BUF_SZ + QCE_IGNORE_BU=
+F_SZ, GFP_KERNEL);
+> +	if (!dma->result_buf)
+> +		return -ENOMEM;
 > +
-> +	ret =3D devm_add_action_or_reset(qce->dev, qce_crypto_unmap_dma, qce);
-
-[Severity: Medium]
-Will this DMA unmap action execute before the DMA engine is terminated?
-
-During teardown, the devres LIFO ordering will cause qce_crypto_unmap_dma
-to run before qce_dma_terminate, which was registered earlier in
-devm_qce_dma_request. Can this unmap the crypto memory from the IOMMU
-while the BAM DMA engine is still active, potentially causing an IOMMU faul=
-t?
-
-> +	if (ret)
-> +		return ret;
-> +
->  	return devm_qce_register_algs(qce);
+> +	dma->txchan =3D devm_dma_request_chan(dev, "tx");
+>  	if (IS_ERR(dma->txchan))
+>  		return dev_err_probe(dev, PTR_ERR(dma->txchan),
+>  				     "Failed to get TX DMA channel\n");
+> =20
+> -	dma->rxchan =3D dma_request_chan(dev, "rx");
+> -	if (IS_ERR(dma->rxchan)) {
+> -		ret =3D dev_err_probe(dev, PTR_ERR(dma->rxchan),
+> -				    "Failed to get RX DMA channel\n");
+> -		goto error_rx;
+> -	}
+> -
+> -	dma->result_buf =3D kmalloc(QCE_RESULT_BUF_SZ + QCE_IGNORE_BUF_SZ,
+> -				  GFP_KERNEL);
+> -	if (!dma->result_buf) {
+> -		ret =3D -ENOMEM;
+> -		goto error_nomem;
+> -	}
+> -
+> -	return devm_add_action_or_reset(dev, qce_dma_release, dma);
+> +	dma->rxchan =3D devm_dma_request_chan(dev, "rx");
+> +	if (IS_ERR(dma->rxchan))
+> +		return dev_err_probe(dev, PTR_ERR(dma->rxchan),
+> +				     "Failed to get RX DMA channel\n");
+> =20
+> -error_nomem:
+> -	dma_release_channel(dma->rxchan);
+> -error_rx:
+> -	dma_release_channel(dma->txchan);
+> -	return ret;
+> +	return devm_add_action_or_reset(dev, qce_dma_terminate, dma);
 
 [Severity: High]
-This is a pre-existing issue, but does the error rollback loop in
-devm_qce_register_algs fail to unregister the correct algorithms?
+This isn't a bug introduced by this patch, but this devres conversion
+highlights an existing cleanup ordering issue that could lead to a
+Use-After-Free.
 
-If ops->register_algs() fails, the rollback iterates backwards through j:
+In drivers/crypto/qce/core.c:qce_crypto_probe(), the devres action to
+cancel the work is registered before requesting DMA resources:
 
-drivers/crypto/qce/core.c:devm_qce_register_algs() {
-    ...
-	for (i =3D 0; i < ARRAY_SIZE(qce_ops); i++) {
-		ops =3D qce_ops[i];
-		ret =3D ops->register_algs(qce);
-		if (ret) {
-			for (j =3D i - 1; j >=3D 0; j--)
-				ops->unregister_algs(qce);
-			return ret;
-		}
-	}
-    ...
-}
+	INIT_WORK(&qce->done_work, qce_req_done_work);
+	ret =3D devm_add_action_or_reset(dev, qce_cancel_work, &qce->done_work);
+	if (ret)
+		return ret;
 
-Because this calls ops->unregister_algs(qce) instead of using
-qce_ops[j]->unregister_algs(qce), won't it repeatedly unregister the
-currently failed algorithm and leave the previously successful algorithms
-active?
+	ret =3D devm_qce_dma_request(qce);
+
+Because devres actions execute in reverse order of registration (LIFO), dur=
+ing
+device unbind, devm_qce_dma_request()'s devres actions will run first. This
+means qce_dma_terminate() will execute, and the devm-allocated rxchan, txch=
+an,
+and result_buf will be freed.
+
+Only after these DMA resources are gone will qce_cancel_work() run.
+
+If done_work was already scheduled by a DMA callback before
+dmaengine_terminate_sync() executed, could the workqueue thread run
+qce_req_done_work() after the resources are freed, accessing the freed
+channels and result_buf?
+
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717-qcom-qce-c=
-md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D12
+md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D11
