@@ -1,171 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49346305E28
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 08:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7A43E4C88
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 08:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784278440; cv=none; b=YfsVApp3xySuRU0LfaksLNbF9C9WDC6AXyheRXz6IZwOaGK8oMpUiBMLgjt9wUQdIru2pdLCoQGceb4aXcGESkde5b21BeBMMgvLFBpBZsWOFEbmEw6sEYlsP6ccODolsPRQ35EKgVefSCn+MUOfvMSemQWFqSloI7FQmhVgM8E=
+	t=1784278478; cv=none; b=KdlXuWxiMN9N0BnsluBIizAOWkC4J0o6cf1+QETar1gNy2yQkk9oaDYrXluqBI7flmPA8ya45+oYejgYYxsXb88qG369YnO6OHVVhYJkUIrOO2rrwHrbobH5kak/xq91jyOKc7R2hBrtaeOweroLEjlGdknIRTz+9g3Oi5Lb7WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784278440; c=relaxed/simple;
-	bh=ksjhlpkzcTRl9u/ZzJlO7Pb7SvmJNrZwob1dJcBw9pA=;
+	s=arc-20240116; t=1784278478; c=relaxed/simple;
+	bh=Ejdd/suH1lvDkk655iM2tvrTs5uFHgpEFMIoBtZBqGI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WHGyXzZM8r+KOPr5wiXWUlBGKuycqHMsUHowXbRmxEUDZwMSf1d2FDpSyVU8JFi07NdD2I284ztEr8oydw25ZfgbaasMXEB9WXkPZbBaTwRR9ECmT6+lv+HJoc0NTJgcexyCsEXqb5CmfTS3oi9m51neVkHTx9Md+CPSQI5NuKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olEzqfG6; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=OGngwBCDlrAD4vCSzi7WbzHxnxMCaa37ZqNNhl0tG3W/XAijDQ3LKnddckOLHNluf+eJZmDlmbQlrKobcG9mvq/HMJ1PgFR1LZZpM/W2CgwT9eMcUgcT/qg0/2m+ya4Gc4GgTftBgwnv8YXMc5lEHfh430pNmPJwQUnOufNBi5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mgtqlczD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olEzqfG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9872E1F00A3A;
-	Fri, 17 Jul 2026 08:53:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mgtqlczD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B41C1F000E9;
+	Fri, 17 Jul 2026 08:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784278438;
-	bh=a44GTuiTSylJgPvVyybU3vE+VtA9F8eyks59r6cF0UI=;
+	s=k20260515; t=1784278476;
+	bh=ENGnzumt8D1GcA6poLQUJj/CXtLxCWtw/OqiVXTAACw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=olEzqfG6c+SxWVr4DqgyprrRC070cnd1jdan50XT4tlH9U4ZRR6STCipsCZErGmC+
-	 oEEbqvS3bJ2Y3tb+CCYYb5FNZjcbGIS/Hd80e6pwC6X/Mdq3luG212VrfAdOoduaNR
-	 97QejomSl0eXbKcvacCtO/trCT6ittQwJ43KZiBFgSiQrOOh1F8IU+rnQ2B8nC01a9
-	 yuRpDuvgckVgeh0Pn6eg9qyqrrYCrSLmCM1iZRB4jLFXICjJGpI6UJ9Asz3bg+GdH2
-	 83ZV+HtZQxUCy1qjNfoTUeN0mfQUBTZa/GrXgRv+CB8oKmYkv/1mnWOgfYKmXcePYG
-	 vvMWf+uGggCNw==
+	b=mgtqlczDJpHYgAbHks060sZWVG46T2vnc8HaNg0969hMJbE/L7IQrNJslh1SW9mmW
+	 KmyK+O7MyAWGkxTa8vVjIsg79ivupYmKBd2pwABXc8tqqVxhZ7WdLPAV/wxp5cy6Jc
+	 XwTWT3VoLWEIPBClWK+aEb/CA9/j6NaV8907EMJbLiQ73V1mcZOygRNa0AfqOqpFTd
+	 EbIoVgBB3Yf+gEqE4qFHhZ9b0kFJFgsYs44Y07XdCrQXkW0cDMR2Nat8CBevGKW77B
+	 VyV4qd4ntspcnkBGjIK3q7dcQKEODYhloZ6/XLYxRHQjVkRF4aMh0WH2xeHj5k2O1+
+	 eIcjKwLW+q7JA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v22 03/14] dmaengine: qcom: bam_dma: convert tasklet to
- a BH workqueue
+Subject: Re: [PATCH v22 09/14] crypto: qce - Remove unused ignore_buf
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-3-ff0d18b27246@oss.qualcomm.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260717-qcom-qce-cmd-descr-v22-9-ff0d18b27246@oss.qualcomm.com>
 References: <20260717-qcom-qce-cmd-descr-v22-0-ff0d18b27246@oss.qualcomm.com>
- <20260717-qcom-qce-cmd-descr-v22-3-ff0d18b27246@oss.qualcomm.com>
+ <20260717-qcom-qce-cmd-descr-v22-9-ff0d18b27246@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 08:53:58 +0000
-Message-Id: <20260717085358.9872E1F00A3A@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 08:54:35 +0000
+Message-Id: <20260717085436.2B41C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] The interrupt handler accesses hardware registers before verifying=
- the device's runtime PM state, risking an unclocked access crash.
-- [High] Race condition between asynchronous workqueue and `pm_runtime_forc=
-e_suspend` causes unclocked register access.
-- [High] `bam_dma_remove` accesses hardware registers after explicitly disa=
-bling device clocks.
-- [High] `bam_dma_terminate_all` accesses hardware registers without acquir=
-ing a runtime PM reference.
+- [High] Background workqueue is cancelled after DMA channels and memory ar=
+e freed, leading to a UAF if the work executes concurrently during device t=
+eardown.
+- [High] Self-deadlock in `qce_handle_queue` when completing a backlog requ=
+est.
 --
 
---- Patch [3]: [PATCH v22 03/14] dmaengine: qcom: bam_dma: convert tasklet =
-to a BH workqueue ---
-commit 38bf51a7c8174c93f29b343f8403a75a6af1a76e
-Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+--- Patch [9]: [PATCH v22 09/14] crypto: qce - Remove unused ignore_buf ---
+commit 2247b3c61623eab5bba053110822c8e653d692e5
+Author: Bartosz Golaszewski <brgl@kernel.org>
 
-dmaengine: qcom: bam_dma: convert tasklet to a BH workqueue
+crypto: qce - Remove unused ignore_buf
 
-BH workqueues are a modern mechanism, aiming to replace legacy tasklets.
-Let's convert the BAM DMA driver to using the high-priority variant of
-the BH workqueue.
+This commit removes the unused ignore_buf field from the qce_dma_data struc=
+t.
+It also moves the QCE_IGNORE_BUF_SZ definition to dma.c since it is only
+used locally.
 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index fc155e0d1870c..ea3df28e777f9 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-
+> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
+> index 7ec9d72fd690f..d1daa229361aa 100644
+> --- a/drivers/crypto/qce/dma.c
+> +++ b/drivers/crypto/qce/dma.c
 [ ... ]
-
-> @@ -922,9 +923,9 @@ static irqreturn_t bam_dma_irq(int irq, void *data)
-> =20
->  	srcs |=3D process_channel_irqs(bdev);
-> =20
-
-[Severity: High]
-This is a pre-existing issue, but does process_channel_irqs() access
-hardware registers before verifying the device's runtime PM state?
-
-Looking at process_channel_irqs(), it performs a register read right away:
-
-    srcs =3D readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_SRCS_EE));
-
-However, the interrupt handler only takes a PM reference via
-pm_runtime_get_sync() after this call.
-
-If a spurious interrupt arrives, or if handler execution is delayed until
-after the device has entered runtime suspend and disabled the bamclk, would
-this read hit unclocked hardware and crash the system?
-
-> -	/* kick off tasklet to start next dma transfer */
-> +	/* kick off the work queue to start next dma transfer */
->  	if (srcs & P_IRQ)
-> -		tasklet_schedule(&bdev->task);
-> +		queue_work(system_bh_highpri_wq, &bdev->work);
-> =20
->  	ret =3D pm_runtime_get_sync(bdev->dev);
-
-[ ... ]
-
-> @@ -1424,7 +1424,7 @@ static void bam_dma_remove(struct platform_device *=
-pdev)
->  			    bdev->channels[i].fifo_phys);
+> @@ -43,8 +45,6 @@ int devm_qce_dma_request(struct device *dev, struct qce=
+_dma_data *dma)
+>  		goto error_nomem;
 >  	}
 > =20
-> -	tasklet_kill(&bdev->task);
-> +	cancel_work_sync(&bdev->work);
+> -	dma->ignore_buf =3D dma->result_buf + QCE_RESULT_BUF_SZ;
+> -
+>  	return devm_add_action_or_reset(dev, qce_dma_release, dma);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but is there a race condition
-between the work queue and pm_runtime_force_suspend() in the removal path?
+This is a pre-existing issue, but does device teardown have a race condition
+leading to a use-after-free here?
 
-In bam_dma_remove(), pm_runtime_force_suspend() is called to disable the
-clock before the work queue is cancelled.
+During device unbind, devres executes cleanup actions in reverse order.
+In drivers/crypto/qce/core.c:qce_crypto_probe(), the devm action to cancel
+the work queue is registered before devm_qce_dma_request() is called:
 
-If the asynchronous work queue is executing concurrently, it could pass its
-internal pm_runtime_get_sync() check before force_suspend overrides the PM
-state.
+    ret =3D devm_add_action_or_reset(dev, qce_cancel_work, &qce->done_work);
 
-Would the work queue then execute bam_start_dma() and write to unclocked
-hardware registers?
+This means qce_cancel_work() will run after qce_dma_release().
 
-[Severity: High]
-This is also a pre-existing issue, but does bam_dma_remove() access
-hardware registers after explicitly disabling device clocks?
+If a dma transfer just completed and scheduled qce->done_work,
+qce_dma_release() will terminate pending dma transfers and free dma->result=
+_buf
+before the worker thread is actually canceled.
 
-In bam_dma_remove(), immediately following the pm_runtime_force_suspend()
-call which disables the bamclk, it issues a writel_relaxed() to
-BAM_IRQ_SRCS_MSK_EE and calls bam_dma_terminate_all() which modifies
-hardware registers.
+Could the worker thread then execute qce_req_done_work() and attempt to sub=
+mit
+a new dma transfer using the freed dma->result_buf and dma channels?
 
-Since the clock is disabled at this point, could these accesses crash the
-system during driver unbind?
 
 [Severity: High]
-While looking at bam_dma_terminate_all(), this is another pre-existing
-issue, but does it access hardware registers without acquiring a runtime
-PM reference?
+This is another pre-existing issue, but is there a risk of a self-deadlock =
+in
+qce_handle_queue() when completing a backlog request?
 
-When called by DMA clients to abort a transfer, if the channel is active,
-it calls bam_chan_init_hw(), which writes to the BAM_P_RST register:
+In drivers/crypto/qce/core.c:qce_handle_queue():
 
-bam_dma_terminate_all()
-    if (!list_empty(&bchan->desc_list)) {
-        ...
-        bam_chan_init_hw(bchan, async_desc->dir);
+    if (backlog) {
+        scoped_guard(mutex, &qce->lock)
+            crypto_request_complete(backlog, -EINPROGRESS);
     }
 
-However, it does not call pm_runtime_get_sync() first.
+The crypto_request_complete() callback is invoked while holding qce->lock.
 
-Since the driver drops its PM reference immediately after submitting a
-transaction (relying on a 100ms autosuspend delay), could a client calling
-terminate_all hit unclocked hardware if the device has already auto-suspend=
-ed?
+If the submitter's completion callback immediately submits another request
+(which is standard behavior for dm-crypt or ipsec when waiting for queue
+space), it calls qce_async_request_enqueue().
 
-> =20
->  	clk_disable_unprepare(bdev->bamclk);
->  }
+This would re-enter qce_handle_queue() and attempt to acquire the same
+non-recursive qce->lock again.
+
+Can this cause a kernel thread self-deadlock when the queue is full?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717-qcom-qce-c=
-md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D3
+md-descr-v22-0-ff0d18b27246@oss.qualcomm.com?part=3D9
