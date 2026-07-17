@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F3837B015
-	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E7F325701
+	for <dmaengine@vger.kernel.org>; Fri, 17 Jul 2026 05:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784265673; cv=none; b=CqNpUOmUqCwaFX21ZyCH8fr0IHGU0FO0IOluIY5HznDLPxGJz7m8eb3SiSuJoVtT0y5KunRO/GcxvbFkdLZb3ygzYZ8Sw6VKrcvJCzyjJ+6IbUeKA8KAXzD0XIRQUzh9Kthqf9T5MqxCWCmzpdhmEyyzXpud4gwPWmLQHQKe+Lk=
+	t=1784266191; cv=none; b=oDZUafQcvJtoIMnIXHCmpR2bO7bm2wtUful8hTD7MT0fSRL44bREuq7432mhVbGE5ERadpizG5ZZtf0cp02BTkTTihBQqdcCSDHEwP6iUm1pVfycA6Ji3UJ195Xwm3gbmj2541f3hcKW1fzu+fYH0ZGsDRKSW6jO67PjJOwn+Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784265673; c=relaxed/simple;
-	bh=Sdobcesm7eUE++M3DYUWZxZFEXBuDXLxejjMfRSyn+4=;
+	s=arc-20240116; t=1784266191; c=relaxed/simple;
+	bh=XoVrT/1tjS2H5VU1eLE77YYtDtg5SOReVAfKHl8bwcM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=UsbRELvlawBhSSP5BUOBPxjm2qRL9AnW3OhTRUociA1RKVpbpDsANnNrhIxPxmRBB35O4bEqJTXeGFOuHS8uxqQNNLvFFs+32J5ORIf0ULSrgr9riIK9es+lK93WkUdanG4ouSAl9dhZWKkjtHkeXKa4KbE0oaZy/+Cd12E9Wp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eILBwSN9; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=BMhqPTXHPpCQDxREFtBu0VPVb8SSsqmrz5RG0uz2AbhhgAIu+S0oIwqr0nC/apUXZ1anf0let3TFAS8EdaCyVz6473AHdsh6wjeRoGxQC0LOx4Wr4eRWy5cXoLhTEEOqRLQ5duU5Y/ah+JSoS1L0I/Z0PJEh/1uKCZBwE6/wgvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lDOy8kt1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eILBwSN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CAF1F00A3E;
-	Fri, 17 Jul 2026 05:21:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lDOy8kt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949521F000E9;
+	Fri, 17 Jul 2026 05:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784265670;
-	bh=SHg0HRkbeCLxpEif8J+xJHoDgM3AgjHfDT4pA2esmwk=;
+	s=k20260515; t=1784266189;
+	bh=J4B6O1v7Nn3YfqjWK4psElhRnn+hAA6/6zyc59/eqDY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=eILBwSN9Rp/3Ip3IM5kycoDFVr/kGPDS/KQFd4Ttl/9g+BYPvq1i/aNmlVy9QkJAL
-	 Z1RxtXn5NRY3eYf+et0A0BzW5s6NkuX/V3wClcVDBb95MFupnQk+enr97DlXnytKnf
-	 AHef3elb0rseq7WXvujjGopWvSn+VqzaQsdhaW7+kwsCdbSeYyGMdInYI1oDblfaeO
-	 j8Gub32TmAsXBaM4pxWHOkSru7DCmAYEaYXlEB2KlVx8Ou/sdX4DU2KNmXIYaehWAM
-	 3FvdfAlb85BJSmRHNelDWVzgQgy+7F+t12zx1RvXAAEaxllMD3EBvRpiR6kSeYGvPo
-	 /sO0htdttTTMg==
+	b=lDOy8kt1bYjiV8cRbBK20uURkycbqvQpjI5TgsI5hMZUOpj9KUPBw3n6Gn0VZKveW
+	 zPxsmpvwD+CLQu7LDY3d9uceu/TmnQJ8RnqG8fNS2vyeLCI/HLh0nbllLrPk7XDbJN
+	 DJ2kvB3SlDPHyMOu2n9gngjpdZ/XCqPibJFqa+owtR+7nVHCJDX32mMJ82cmVbJw4b
+	 Bd/cu1NXsAXKuPDsuu2jLFyV5zEPeMOE7OskkcIH28KcQWpDc4n4kCWwAViKiQIShD
+	 ldxAAM+oS/hVwoF5AZ0GBhqz5nMncZmI7x7IWONGYked7jefGzN16xVLuUDnVJjwxB
+	 y3FH4UqwpP9Qg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 02/14] dmaengine: dw-edma: Add per-channel interrupt
- routing control
+Subject: Re: [PATCH v5 14/14] dmaengine: dw-edma: Program endpoint function
+ numbers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260717050308.2144108-3-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260717050308.2144108-15-den@valinux.co.jp>
 References: <20260717050308.2144108-1-den@valinux.co.jp>
- <20260717050308.2144108-3-den@valinux.co.jp>
+ <20260717050308.2144108-15-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 05:21:09 +0000
-Message-Id: <20260717052109.D9CAF1F00A3E@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 05:29:49 +0000
+Message-Id: <20260717052949.949521F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,64 +47,75 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Cross-system read-modify-write (RMW) race on the shared `int_mask`=
- register causes lost unmasks and DMA hangs. (Pre-existing)
+- [High] Using `PCI_FUNC(pdev->devfn)` incorrectly truncates the 8-bit PCI =
+`devfn` to 3 bits, leading to corrupted Requester IDs in outgoing DMA TLPs =
+for Alternative Routing-ID Interpretation (ARI) devices and non-zero device=
+ number RCiEPs.
 --
 
---- Patch [2]: [PATCH v5 02/14] dmaengine: dw-edma: Add per-channel interru=
-pt routing control ---
-commit ce3c3f8c0117acd509b753117d45f3c2cf75e27d
+--- Patch [14]: [PATCH v5 14/14] dmaengine: dw-edma: Program endpoint funct=
+ion numbers ---
+commit 69615a1713850d90b9bf46ff89bf560c8d19478f
 Author: Koichiro Den <den@valinux.co.jp>
-dmaengine: dw-edma: Add per-channel interrupt routing control
 
-This patch adds per-channel interrupt routing control for the DesignWare
-eDMA controller. It introduces a new routing mode to determine where a
-channel should report completion and updates the interrupt masking and
-generation logic accordingly.
+dmaengine: dw-edma: Program endpoint function numbers
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/=
-dw-edma-v0-core.c
-> --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-[ ... ]
-> @@ -354,12 +360,17 @@ static void dw_edma_v0_core_ch_enable(struct dw_edm=
-a_chan *chan)
->  			break;
->  		}
->  	}
-> -	/* Interrupt unmask - done, abort */
-> +	/* Interrupt mask/unmask - done, abort */
->  	raw_spin_lock_irqsave(&dw->lock, flags);
+This commit programs the requester function number for eDMA/HDMA transfers
+so that the host can attribute and translate them correctly. It records the
+function number using PCI_FUNC() during probe and programs it per channel.
+
+> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
+edma-pcie.c
+> index 7f96e65ee2746..07ea237577d5e 100644
+> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> @@ -473,6 +473,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
 > =20
->  	tmp =3D GET_RW_32(dw, chan->dir, int_mask);
-> -	tmp &=3D ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-> -	tmp &=3D ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-> +	if (chan->irq_mode =3D=3D DW_EDMA_CH_IRQ_REMOTE) {
-> +		tmp |=3D FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-> +		tmp |=3D FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-> +	} else {
-> +		tmp &=3D ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
-> +		tmp &=3D ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-> +	}
->  	SET_RW_32(dw, chan->dir, int_mask, tmp);
+>  	chip->mf =3D dma_data->mf;
+>  	chip->flags =3D match->chip_flags;
+> +	chip->func_no =3D PCI_FUNC(pdev->devfn);
 
 [Severity: High]
-This is a pre-existing issue, but does this read-modify-write sequence on t=
-he
-shared int_mask register risk a race condition across the PCIe bus?
+Does PCI_FUNC(pdev->devfn) incorrectly truncate the 8-bit PCI devfn to 3 bi=
+ts
+for Alternative Routing-ID Interpretation (ARI) devices and non-zero device
+number RCiEPs?
 
-Since the PCIe Host and local endpoint drivers can independently execute
-dw_edma_v0_core_ch_enable() concurrently, the local dw->lock does not
-synchronize operations across the bus.
+Because the PCI_FUNC() macro masks the value with 0x07, it discards the upp=
+er
+5 bits. This might cause DMA transfers from an endpoint function with an ARI
+function number >=3D 8 to carry an aliased Requester ID.
 
-If the Host performs a read-modify-write that sets its mask bit to 1, could
-this overwrite a concurrent read-modify-write by the endpoint clearing its
-mask bit to 0? If the endpoint's unmask operation is reverted by the Host,
-the endpoint's channel would remain masked, which appears to lead to a
-lost interrupt and a DMA hang.
+>  	chip->nr_irqs =3D nr_irqs;
+>  	chip->ops =3D match->plat_ops;
+
+[ ... ]
+
+> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
+dw-hdma-v0-core.c
+> index 77260c076cd3a..fdb2c6fb08e41 100644
+> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> @@ -334,6 +334,9 @@ static void dw_hdma_v0_core_ch_config(struct dw_edma_=
+chan *chan)
+>  	SET_CH_32(dw, chan->dir, chan->id, msi_abort.msb, chan->msi.address_hi);
+>  	/* config MSI data */
+>  	SET_CH_32(dw, chan->dir, chan->id, msi_msgdata, chan->msi.data);
+> +	/* Configure the requester function number used by outbound TLPs. */
+> +	SET_CH_32(dw, chan->dir, chan->id, func_num,
+> +		  FIELD_PREP(HDMA_V0_FUNC_NUM_PF_MASK, chan->func_no));
+
+[Severity: High]
+Since HDMA_V0_FUNC_NUM_PF_MASK is defined as GENMASK(7, 0) and is intended =
+to
+hold the full Routing ID, will this field end up receiving the truncated
+3-bit value set during probe? If so, could this lead to IOMMU faults by
+blocking TLPs with mismatched Requester IDs?
+
+>  }
+> =20
+>  static void
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717050308.2144=
-108-1-den@valinux.co.jp?part=3D2
+108-1-den@valinux.co.jp?part=3D14
