@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A6021FF2E;
-	Sun, 19 Jul 2026 18:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F973B6368;
+	Sun, 19 Jul 2026 18:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784485990; cv=none; b=ZQnsjIG7kCKOUCD3hqptbJj+SZuKKieqPKIASYj8kqYwyGbscAHW3VDMlsY3ucTG5eSKNDYVOFlSeb3/j8PVdF55q/c9e8gE26IKdzyIC4f0a9Yb9BZM2BD2ch0sBSbALZsxIiLXoBmy9tIxohMHZks/Tmpn48gpEVlJXTcCJ0I=
+	t=1784485993; cv=none; b=P/qwFdKl6f3rbYwdmn1DnPujHbClEJ7QVkU/cnp46AQdLRnUM77LKxfx5wmn4dkp7lOOor3KBKH0pYhpTFaJ65OzzKc4bh5Zoy4SU2Wl9pyQ1dfQfK1IrgFHVLuT6QzFW7eUv6yweaOLloT9/44bzuzMMLVxlA+XThi0KnZkhg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784485990; c=relaxed/simple;
-	bh=zxFPwRk/+w4fiCQ82nZl51rK5pr2JoKaB182mWLb2VU=;
+	s=arc-20240116; t=1784485993; c=relaxed/simple;
+	bh=F+m0hJKLRRHTVDONSqx2Gh+20BsxNKmsm/K9bCIvD/8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=rhF2BotjAl3AFT/KCbt2SkzBPkmQRxXmK8rancVwqowR969F/d+yFeoaN915s5gzx3KvFMvaKHN9OaeZ1NQ5z5LRbsEpH0w+Skcvd0aI/l1AambnJPPkjSI67pkqwYqxZaYtSzdooF4d8JJQLc2J4BiaOoDYX4NolEesDd4QnQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAjoeJqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QWaxmTCyyi79P+xtAM6m8FH+aTYzFhYeMMaVAX88FY2KJ8fVsGKg8B4U2cbvG1nbPmucVe8j11M1HE3bMxQKc7VkL+0YY5EvxadCbigTxCcijH4eMpUKylg1PShbcYk1Cnbq1XCH1qXZWeSRSNkWVgzLGBcG1XPSCYljXnLwOjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BIfEaF3J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lAjoeJqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAB21F000E9;
-	Sun, 19 Jul 2026 18:33:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BIfEaF3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397841F00A3A;
+	Sun, 19 Jul 2026 18:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784485988;
-	bh=7Z/EjemJzPUh6s553jnRJduk5JDbIRmGPX1LAv16sQk=;
+	s=k20260515; t=1784485991;
+	bh=q4RB9nFp3ihovuaAmOWN/xIdk+m45mlyfb2xDRE/hw4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=lAjoeJqhV2TvEAaVwrk4BywWkmmEd+vRcWnE2ETcwMaWCKcxfIrY+c1AHiS1FLlls
-	 fPaunVUC9xzFzmfsDMRAG0SWOMaclJye6sgRnTB5XO5l5ZpbBflsUzKaSHNBCuEyRL
-	 7sbB11opU7cp4ftXNVzreUakB0/EeHbd26Aj+Z2daGV3PMXr4B/QKz/XAbBxbDlxeP
-	 av5MXda70E9ERzNCsqErWiN2m3U+zEwj4qGlnrg22KDF0UUHtCXK7LJ6Dk8BjZgI/D
-	 M650+BhIdk6FB8y93OBSlTJm9NYuxa3IqEh8/loDm74iibRK47Z9d9EtUSp3fbplNw
-	 rK5fibqC8Fy3g==
+	b=BIfEaF3JVotwkGFiGnegYKUa0/XKKMdkGWPTK48VaMjxUoNemoRR2M79euguhYblN
+	 VVdVhqT9QLEbJdiGzLoEODLJm5vmfpbc0WgfT25U0qzew8Rq7Rbqqo555hj8OiwaU9
+	 kbLemstswnP+gS0m2yK8QURZAKPgmkRhZklk8OSGDi0hi74IF+fLaZQAhwoTWH3qZy
+	 sv6j/4KJy8mCMavzg6WtQnk7gVLepbJAlzeqWf3zymFXhQltM9uyM3P6g3CynMTAyh
+	 89OYYRnClbtbQoP20g2arvLmIsHLxNIARK3yIdXSgXsQOBENQAFpn4Uf6kuQ3yKwA4
+	 lHvb+z+8T3AOg==
 From: Vinod Koul <vkoul@kernel.org>
 To: Manivannan Sadhasivam <mani@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
  Cai Huoqing <cai.huoqing@linux.dev>, Serge Semin <fancer.lancer@gmail.com>, 
@@ -33,12 +33,12 @@ To: Manivannan Sadhasivam <mani@kernel.org>, Frank Li <Frank.Li@kernel.org>,
  Koichiro Den <den@valinux.co.jp>
 Cc: Devendra K Verma <devendra.verma@amd.com>, dmaengine@vger.kernel.org, 
  linux-kernel@vger.kernel.org
-In-Reply-To: <20260716152503.1747922-1-den@valinux.co.jp>
-References: <20260716152503.1747922-1-den@valinux.co.jp>
-Subject: Re: [PATCH v4 0/9] dmaengine: dw-edma: Fixes and interrupt-path
+In-Reply-To: <20260717180639.2643243-1-den@valinux.co.jp>
+References: <20260717180639.2643243-1-den@valinux.co.jp>
+Subject: Re: [PATCH v5 0/9] dmaengine: dw-edma: Fixes and interrupt-path
  groundwork
-Message-Id: <178448598578.1267529.4032933142249960015.b4-ty@kernel.org>
-Date: Mon, 20 Jul 2026 00:03:05 +0530
+Message-Id: <178448598884.1267529.6421446402772059480.b4-ty@kernel.org>
+Date: Mon, 20 Jul 2026 00:03:08 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,13 +50,14 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 17 Jul 2026 00:24:54 +0900, Koichiro Den wrote:
+On Sat, 18 Jul 2026 03:06:30 +0900, Koichiro Den wrote:
 > This series collects dw-edma fixes and interrupt-path groundwork, mostly
 > split from v1 of the "Support dynamic LL appends" series.
 > 
-> Most v4 changes address review feedback from Frank and Sashiko. I also
-> collected Frank's Reviewed-by tags.
+> Apart from minor adjustments to patches 4 and 8 for the new base, the only
+> change is Frank's Reviewed-by tag on patch 2.
 > 
+>   v4: https://lore.kernel.org/r/20260716152503.1747922-1-den@valinux.co.jp/
 >   v3: https://lore.kernel.org/r/20260715175740.1110404-1-den@valinux.co.jp/
 >   v2: https://lore.kernel.org/r/20260710080903.2392888-1-den@valinux.co.jp/
 >  (v1: https://lore.kernel.org/r/20260615154111.2174161-1-den@valinux.co.jp/)
