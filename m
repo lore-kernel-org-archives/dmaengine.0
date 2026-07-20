@@ -1,63 +1,64 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010022.outbound.protection.outlook.com [52.101.84.22])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012018.outbound.protection.outlook.com [52.101.66.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D6A423EBD;
-	Mon, 20 Jul 2026 16:04:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA7740929B;
+	Mon, 20 Jul 2026 16:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784563462; cv=fail; b=XigZ2nE7txwQ9bxJ9pqzRyzqZQovcJQBqR3ne9DGqmeEmBRQGHT0bEeayYzQVziA/DQJzftgTIbQDa+FO7vVqYShs48d/1B7bSvRBBfcUCwzSngZeGoIuGbRrXBuTfhua76Q6TX601jNrtK+7B2s0PY6yGcDE501RvD2KVNjWZ4=
+	t=1784563775; cv=fail; b=jg6mkV8Qna/2d0aGxzJxmveq9M+hbrD1YPHmtT8fsictilVtTH6vdPNr+nMJbBBheOFW4Yrc9otLNCFK3It0pIGK7sf31afoB9TbHHRJdZDMWhV6URltp/hZ3V7qA9nHUbBFe57CXO+PduPGd3xAvXdprZALNJupix3mRf5T/Pc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784563462; c=relaxed/simple;
-	bh=TMbIfMIyjSz04giqxmUF9C1sgAaPjOq04F7v9j8QM/Q=;
+	s=arc-20240116; t=1784563775; c=relaxed/simple;
+	bh=phIy1F/4stgT5xpqGh1BodO9Xn1O0YnKhwA2U5dI8nQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Ap0whmoGCLZZHfBOzR+4+UMQ/C30FoWSfGlscRIJWO4nhEmwpkWFd1Tp+bJKxPqRsK1fYbKmLZBtqMYHqqYhHGFatYSaYDr2avL2ff5yvDZWSNxqeehp3hq76qYCM2xBM8+X56r4AZm/MJKS5Y7ovdy92v6uAOrWzlpHnKbYwUw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=xGgmAi99; arc=fail smtp.client-ip=52.101.84.22
+	 Content-Disposition:In-Reply-To:MIME-Version; b=IXI6NT3fsM1pVhSB5pmPJhwRtwCMiplQiFU8IZavZoq8Q7wrKaFnk/vCHuqcbPHHRzoC3lYj4HYEMHsASqZeONry8XAgaJz1mBh2ZGCOu3FAb/gOKDlbvI8peXl7xDzg+mLUhRNQK+dZqv4iGbUx8LutBXBaUvTZVU94lszKJ2Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=pIHvc5Qy; arc=fail smtp.client-ip=52.101.66.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="xGgmAi99"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="pIHvc5Qy"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kKEkMMR+R1OF/rsW08gA+AQ5cvYUheWYDc7yjm2dukvzCPKADVkUIrV0SjHzFckRyuNBHgJn1qplPhyVt9M+ZdoS6OriTRie9wNUvrL/EtSacfp3jhstx8J+ltUvyWoP4B6BrsLEqAdpz+KtqwlahNzzt5ae8UVcPaQwO7qtx/L5diyDlqO8pfz0w2fHD24o2KpbrZP9CN3QvZXklEMMvoCYXNnJ1nN3J8PVk/oBGH3jQ+tf+EiOP0etdCQKmxz9uRfZq+ki99bpH4C3UxBUxnW0fkSjfAiqyoqOBnFfkAWI1rpBIPmwPOkyhtzqwHalYa5nZmnEQU6o14t8DR29GA==
+ b=G9M3XBh+NOmcmBUOT8cmislY7vj9LL/aNddjpprYAQdjjcoiHSoW/qTdgGxqVAjDjA7pPYijkYlBB3cJ5Ak+q1ItjY78DbUPUv4KAR/rSla/iMydma6DniAoJNfVbzHPw7vsV79yZ/TXT9yIGrs90QtcQ92w4A/LPpCJ3QuCWLEqlMegeItHEIPAI/+OK4wHRwD63k2ziNvS9M80u3oKjBjoIKPfSUfFJYtNJ4QD+KDI1YP8lCXzGS21K5RJhS9n9rPepxqqZ27pwRk53CF/lIv3B4VLkbbmidIrPpMA2f7YJMR2C5VtpHOCoLdvkFaSG+tE83LOc78j0zVUH8We1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z/1B6K1QVqyolFUrpKtlu9yCnBl+RcpItakvIepye/w=;
- b=Es3wyGMwhCe6evxfQhSnQiEJiOOyGeGA5HVaIV0Fi1GxZnHlcvHffAiFDEovp10o2nF1jA6XJMVehXH9dh7ircFs0unj/Am4ZgpdOAAdFzCMub2uq7LGFGYiqAm2YshRH5qZxJYi5RqFWZ0i81oiZLXt1TUIckcFDxpgmsEnUMEyvuTGqzkg8dUJ0XPPkB3dGnmaZrXAiVfHABm4bYwTRtAsMJOzsOTFudCO988NdEhAjZfXBq+Dg45JUfcZAKLwxJxoTvH/Wi+k0XbbCNKG2dLXbZTLCgWbFhUbaNAn7q2apaNdQFDPx3EOHwOhpGUD3za0AMQM7gMug+pxye3GJQ==
+ bh=d35zit1GJDQcMKiLRqQxmdr08tx5RWBmEiZNtxUkbMk=;
+ b=Qh2NefIPMRAabMo+gyryueJSCWxN7I33MXE1xeJPyr+i7NGpHFnwdtzFToS2WfE+yvtuEfo2GA6UCgcJgV0ZZyzMzRU6f6tfC+716ptrFCog/WsbETwNmjZurh1zUrBMqRsDi/Yxuctl09XYfNa9f+C31a/DUfE0GhGNg1R3BMTZ4R2JAfe1Q+YxsTIQB/KhH8f/mQAHHZABEQ96wcr6CnhD1TbdE1p0KlQAbsBDCi+9GlYxZS/CLmx2hB41aMHZTh6hhHZgQl4R/AKy//vc/lThvEu/bAztlky+SNzSqLDXylxIBxo4r9NZEyq4fftI4fHU4GRVogTSn87+0sQnMQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z/1B6K1QVqyolFUrpKtlu9yCnBl+RcpItakvIepye/w=;
- b=xGgmAi99U4tf8ZhWtYBKOiyeERP6cDCapvZ6Agd6RaFNBaqNqR8N2e80s7LtgPnX+ug4ubGXqZ4rquIDLmztxiFXVSeZhUYJYmvF75Ga3l5jdWx4KPjAOBwDnrSM3R40cHJyt6ELYurCvWkY3mIhDGkD2iZN6ugW9ViVl5pWqyztIVQZDTEi2cwppHrqXj4yCZOeqhQc4WQ3KelCDckDY/SwBKrnXR5fgflMR4tpSFuXKIXJkOOKCRiDdp+LgQeS1q3z7ylnXUaCenMgbHQRUro5OlIT3C2pAj+ntQxq3UaRd3kdMiEPTmsfsgv2qcvUFBQMZQACAsicFi6+M9m5JA==
+ bh=d35zit1GJDQcMKiLRqQxmdr08tx5RWBmEiZNtxUkbMk=;
+ b=pIHvc5QyXIUvb64hdWxab4C5RPnUnK9MelsaApZlH0OPbvQfvQ8AXcUAoDjifz9gtqtV5DlTTTVSluQ/Nf0JmsKrkd73hPxDoKeOaceNBiSL138qAvKqprkhJF+MezZNapr+MWkSU6P3m+YbHgm6ezxQfWouYgHdM5bDTOAx0bfjc9PHRIWlWx2yein/xq7ozIFcTcUbN3geevdikTvFOX9e895woi7/UKUAHlXVI61C5J7AnFXX13a1EVkrJBvlnpsIOgG7ZwKpDsh66GL2pNNtPToAYgqhWu8dWwIj+oiOathBCw8JmL+s7YWKpKR5FOenLGFUkJ4BrlUsAzNuCQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DU2PR04MB8822.eurprd04.prod.outlook.com (2603:10a6:10:2e1::11) with
+ by AS8PR04MB8993.eurprd04.prod.outlook.com (2603:10a6:20b:42c::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Mon, 20 Jul
- 2026 16:04:15 +0000
+ 2026 16:09:27 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0223.012; Mon, 20 Jul 2026
- 16:04:15 +0000
-Date: Mon, 20 Jul 2026 12:04:09 -0400
+ 16:09:27 +0000
+Date: Mon, 20 Jul 2026 12:09:20 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Rosen Penev <rosenp@gmail.com>
 Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Xuelin Shi <xuelin.shi@freescale.com>,
 	Harninder Rai <harninder.rai@freescale.com>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: fsl_raid: free resources in probe
-Message-ID: <al5G-QqO55iNJpbe@lizhi-Precision-Tower-5810>
-References: <20260718231716.230144-1-rosenp@gmail.com>
+Subject: Re: [PATCH] dmaengine: fsl_raid: check fsl_re_chan_probe() return
+ value
+Message-ID: <al5IMHWdYsDZmczp@lizhi-Precision-Tower-5810>
+References: <20260718231521.222456-1-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260718231716.230144-1-rosenp@gmail.com>
-X-ClientProxiedBy: SA0PR11CA0139.namprd11.prod.outlook.com
- (2603:10b6:806:131::24) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260718231521.222456-1-rosenp@gmail.com>
+X-ClientProxiedBy: SN7P220CA0015.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:806:123::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,224 +67,115 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU2PR04MB8822:EE_
-X-MS-Office365-Filtering-Correlation-Id: b177c95e-d9e1-4803-4b35-08dee6788c24
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8993:EE_
+X-MS-Office365-Filtering-Correlation-Id: 95d32e5e-a79a-456e-cd7c-08dee6794628
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|366016|19092799006|1800799024|11063799006|10067099003|56012099006|18002099003|22082099003;
+	BCL:0;ARA:13230040|23010399003|376014|19092799006|1800799024|366016|11063799006|56012099006|10067099003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	hpqS/UKBAEXnmxir+loAwwEHzP9qi3NJpKoh7a4pZSX8BzkidJ0kId5O18lTjWL37oYGMW7XG+h//6dXxXMt8FTe81b/jlTw+QiAgE2kNhHSFGBwfzP76VRWxfXhKPYeFgCl32Zk7krtsYRSciV0/yz+Y0Wu0UaO3WqdPoIlWo2q++v3JFKPMjVinRAbq8Fm1XqUFUxvgfgwuInQizjdoPx2opMacGYwI8DpZoFBLGCHJQQVyAx3NDCet/M3/7tG26qgleOVHxk4MU5oX+90EzH4gasRF+RMC2gJneyeb5kaN9WqsiNJwGrDTWGuKaXKVsyuOdPT8OnqQue5+jJw9m58eTiTEPCYxg1eg4A7tgSGsltiG4CfEOHHBvoX4uyPUvN/HRqQ+Ss+BQQpVHBqv1Tfyqff8pv6prWTTa7Xhcv1T/1rCSQke7kxp/pMwA41cFwK+parvNLQLYntKVjWdTPQBfBy63oQjsgx7IqpQB7rIAo/MB7VOdI3bbOwqLiSPtb0fmMxZAAtOzeFnXkeJK8rJ5J5sXxOFUwP6WxXr7UlQAFc3LZxa0JSO3QP+T5FKp5Bte4qGg2/Y0LuE8C35PlRpsHSLNwSiLMb0vkckCOI8L48JJJdrMEwSDj1l/ZlD+lVl47p5be59lnzlPJc9nrbkbOM8xVq19lm+bS952Q=
+	xrEnnopgdn9bBhyL7/UHqu9fS4znHl5KX2Tp+y8Vd0WL0MmclETu0kBwlqVyxTbWqlynbAiw84Wb2hLK+KHRk4cWhf2aWmUGMohxZaRh88WvHQp6s9Io8cea9JZZ/GrlKBQMXCLKkvb0nswMlKphPE7YhdqdKXaET2jF645CZK0xgjfpo7mVePoZp8oRIp24WzFiMj9ZgARaE5Fb/QC8ZhZuGY7SVdMv61MNbU27SdS9CUXUjOgzqes0sVVXenGcAUDI62mA9a3CBpJkf9Kso5Yhu8b182egq6V00AlOWUEFC9fRM+bK1fFsb7NjY+ttAxfkag8be/0kKd0/erBXhR7khHnndYhYoq/SsZGQnPOO4HrrzNH9X6s/CHRrBNLevSOT/SG0sVBy62M29tvSNYPTDvn5KQ9kEmCZgxiclYZ61BIerTN/g+zR56or9MR0Vza/44KDZQU0F74PJ4BW9SVo8GY66u3G3NRfhw40Hv+/vS2qT6dQpuo9a7erN40imxpY4P9ngsRc8K3svZTgdmF2lk0CXQA7dvlXUDEWoefw6/5kYQMfldFNUyne/Yy3pcTfD/vkPXC8KaUFGM4vuAfY9X5VMz9hA3AglLTkjozG0eWR6zgtr8tfJDlyqQ4Z0gtz5i5nHB0ZVpogvuzwnvn3bUx/mW/ByM+2DBpDUdw=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(19092799006)(1800799024)(11063799006)(10067099003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(1800799024)(366016)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?JHLtsdQ/IrKEiEdwsFrS7AKUmXQaHsN4fGrw6LOIi49beQjplDkk+NHD+r1h?=
- =?us-ascii?Q?kadRzPYms/tCK6T2JzMoBGptug/iMuXFIIvOEvgS4HbayBkzuvyq81VGmrTe?=
- =?us-ascii?Q?UtpbenGOtFjUH1dan7PiywJplgjZn/Qcii2k/z/RYHsfAb3J+DbzIdUXUJa/?=
- =?us-ascii?Q?DzvwfiiHw8Xbxn1B7VclCx7gx4b51kUntnZF6gc213dOrOsQrZsODrm//Io7?=
- =?us-ascii?Q?C6II6dO3Teznv2kMoKOAIqG7e1zBv7Gmaq/bZIWFEIRh8RqORrZwe/P8IQEK?=
- =?us-ascii?Q?3jEJahlfc35yRMU8YubKtoxPfYOQ4PN9FJbUcxN8idNv4IWXcDrzq7xHiSbt?=
- =?us-ascii?Q?zDJrikXBpv9HwbwNB0XZ87qzt27pSUGtsr/aQdSl+jSniI2QjmXn3XZCdWrg?=
- =?us-ascii?Q?fbZQX9V0HJ+w/v/ZLC69fnkbVOyhCCeRmjW4QwIWukgDdfKkgs1vK4+LZn1m?=
- =?us-ascii?Q?vi9hwnNeJ6OcKFnwvGlMAB7UVLFkLHac0CfZRhIprwyah7GxMF1OO2KJdbL8?=
- =?us-ascii?Q?uimFuzsvD0F8k1mkveSpP5U3DMlVXNzaEVz1yWztix2xmwu1ZVufWrMZLGex?=
- =?us-ascii?Q?Hdif3ROneUVXjIA6nL3rfljHWDLK0p3dY+MPTRm1udMGkLswc+I00geLtd3D?=
- =?us-ascii?Q?iprib9L899BWAQLt+ikaRP/a3YYMGxeXN3KmPo3Rj8GT9xOrh9hhfWjeRQoV?=
- =?us-ascii?Q?gdp9mPzU3Op7wJJDjOn9IsBROs3/iDJ+YCUkS5/93kB1rxP6Z5XbPao8j+Ip?=
- =?us-ascii?Q?8gN9S7TsSxdnrdS2GIt/ni+1EJO9uhE8vzOrCHC9HtNITuJr4JhQByLTur/M?=
- =?us-ascii?Q?QR2dD1naTPIgSFksUm5wSt81mQHcX6gRnXiebB0baRAh55jjFwfaFUkqxwRb?=
- =?us-ascii?Q?3jtqFxJULUZPp48HINOSL22hXW/oTAfYs2p0oE/Z8RbSc2CJrc6uIVHyPtJV?=
- =?us-ascii?Q?eqyStKAoKrdKsRBaRQ2rMxzs94NEIruo0hzWX82nL5DLXnrPf13pLrTU7nr2?=
- =?us-ascii?Q?6GBuwLOVqJU2hDdgt0JQG/sanUq4SwzFA+M6R60oW3BCuPs/G0Q17UGwPP7g?=
- =?us-ascii?Q?Gz9neS+Mufwuei8hILAdjtIRW9bLn5u8KZWez+IUSAUYD2jkPjOurRe22Eef?=
- =?us-ascii?Q?p0a5BKv4u2K0uvKSReX26wl2czLSzJqiWvr1UJ1ox8W6dIuYKw/6jkvSo3Ez?=
- =?us-ascii?Q?dtJ+50fKybn8eTtyJ/lmwdSHMxl2NRVV29Bkjd5tDuaXdfYEmnQu5CKJCx2z?=
- =?us-ascii?Q?hHkSMB4xrac9GOOCHxG9gdulnF9xlETio43QAg0Qkhixbq555OsA7aiN/Fkb?=
- =?us-ascii?Q?uGPyPpBccI+y85E7o/JQhWSLl5xhcs6exRACk9XcZr/RFynnqrBsJUMpjAaP?=
- =?us-ascii?Q?zd/PEAYtrtaeQMNlMq3XwmRsaiDl0e8NfeqDu9W5dPMKwP7K8WlAzHHYMOuG?=
- =?us-ascii?Q?hYwEWZtB+7FTSwcbjz2AMsB8UY5USc92SBh/FcNUbtSQLnurb8RBQITrZEKN?=
- =?us-ascii?Q?8+wxfxaeY4DFDrmDVLeSn5R9hiEmEkWJu+nSTNokMcWX6255V03NiRANDhSJ?=
- =?us-ascii?Q?hq9KNW8Pcx7P1oys2JJk+xntFrsyvS/Wi1d3hZQs8Cwp1D5ygt6QvwKIFFW5?=
- =?us-ascii?Q?lWfqDzGNzQQEex5cW8NCB3T+423zLxg0QT6I3f9mJmz63gTb2Vt0yq8Fveaw?=
- =?us-ascii?Q?+BijG8K/FMre4EJpHIm5h+EsRraSw0FKEEz+QpFZXOq/WdqOAfhgKcogwEGT?=
- =?us-ascii?Q?HD28fpmC2Yt3ss7vNafDkBUBYD3+5hW0Xo+5qbz6aW/anJVojs3n?=
+	=?us-ascii?Q?VpI/NXbQTD5U4DhFAMh/B/yEG2EiOGYrQW0iAOsbJwMcXUci7rhVS6V64dbG?=
+ =?us-ascii?Q?ASTz9Tfsr0eSoMFQAYRCsdZ/X879+QSF3+bALhxKcKyPTGImYInKvhqERRCO?=
+ =?us-ascii?Q?NDPdItVEVbNVFO2T1nODJ/X2IAt0M2fFDibbGJbC6QV/1lTSb7zPcH6PX+ph?=
+ =?us-ascii?Q?dFXS12PDLRUdWGChjjEQi5P5x7XKgdWnVDPWlQVhacwYLCcwDpnKLxeP/HCj?=
+ =?us-ascii?Q?4ATqSOCPaFFuVfr249RatHvdHDVXPkWSpoksASKnznPASHQu/m2I4gJjuL0N?=
+ =?us-ascii?Q?m4SWoxNTrzgDBo+g/0tFtwlKlz5d/NSdpEssd18xavQME09vD1Z5+6oBHS/T?=
+ =?us-ascii?Q?1qKU8W9IMXt5GevFPv7zQuA0n6DSWi9YD3m/07ypo4n7LzeKzPOwswDyhAAm?=
+ =?us-ascii?Q?QbJBvUD6qTCzJ1s2Fl2ufuvoVnbe+Rvuwi5PbDqU3OpLhz4Y2OWmPnFV9U90?=
+ =?us-ascii?Q?iTZyMzoAnQvFp0WGDylxtA7QnLmBOMnBOTSm8OWH/vvgc7V/wf9qXsCRgQRf?=
+ =?us-ascii?Q?KT+9s5xJRegXstcz8orIokcIUaSWRUIiW4AqS4YbYHV4XS49fsqn1a9V0/zu?=
+ =?us-ascii?Q?wvk1XUTPZRvCXXYjXxplHCP3CuFB60u9omT0N2pgxVVaLBQNZAJy+ekIUrWz?=
+ =?us-ascii?Q?qYN2umIbKijz8IfYIiJ+M0EiVCrFtAEy0RaEe4ihUQ1QZilITtENMO/sD+dv?=
+ =?us-ascii?Q?BNkN/XzEcYBHHZhMRguLIEyzNeFxHYbBmbfLa1qchFIVCu2ApQAzkXBGS1lm?=
+ =?us-ascii?Q?ajzp6fLEWfeHgCsp0nwpo90vgazjofS8/T49Gyf/RhXwh8oLSGk266RGDk2f?=
+ =?us-ascii?Q?qgsfDFs3Ts+RKt513GzYc8qe4RZRi7CJN1p5XsEX28kVZvAA46ZqrthLemNS?=
+ =?us-ascii?Q?KryK9+xGXkn0kIuMUGx4uap8xn4SzsBwaf4PxXA/tsP8bJn6ON2SMvjxUCCb?=
+ =?us-ascii?Q?b8RSehnR15j1RcJeN0Sv2IP31xOmA0DKLsu+5wLF9X5P/zgyPHPn+jN5+47b?=
+ =?us-ascii?Q?yQdfeIJZ3YpFH+DJS+iyY1+pyeMatmFEr1kDvv1LS+UMCTlcg7Kq48/nA85o?=
+ =?us-ascii?Q?v4jcyFYedpkbmaCNLTrR0cfICytuQvfB9Zzk3S6+RGglVe3vzlSCLcHXZ0Sg?=
+ =?us-ascii?Q?gig5Zxtgy0O402g52lQ6eWuU+TeITylKj4EWxvTyyML7HAo2WiQcEwU1lX8G?=
+ =?us-ascii?Q?TTCG8cvX+dU5eEoHXENhKbQ1XnKRRUVVcmZSvvC3a5q2sZjQvviR62b5o6Cn?=
+ =?us-ascii?Q?B/rI7I9XLVSi6+Azwj2bmXDh7uYKIEutDYUMGI3z5/bL2ZoB23s5pyViZGOT?=
+ =?us-ascii?Q?860FmJJ0aqvfRmYMsuYdODK97LoYQx/FSzZ5gg6l8NwWw4kVAz2zYNL2Su8D?=
+ =?us-ascii?Q?e24b6WBDJF9Ar6gNcr+mf/j1Wj++W8rHTKwZ1NtW+0nhsAc5lA9TWcnXEY3c?=
+ =?us-ascii?Q?mcexnkgDI+Ps2QDmo66C1N/pHeSxiS5dY2I1OmTRgJ1Tgql186Or1cgOPENA?=
+ =?us-ascii?Q?am797IN3+nPTR1ySgEwNQiLouQpjFZWNdsAv0gvjXLy5GPinieKJnWKr/hEz?=
+ =?us-ascii?Q?nieHM4S1TijPigexx3C11kZtN6rVZCLCkumQbLbbjbxlI3/+O13pSxzsNces?=
+ =?us-ascii?Q?AigxN6k8vq7hvnC+EpgiVwYCw0rgh41PQsKnIw+N1cqf39sv2apzIqMZZamw?=
+ =?us-ascii?Q?miAF1I/nV4mmtYEcZAqhd1NnWNnQ+MIpeS7eL46G1QIeLSD+zZcFBURR2GxS?=
+ =?us-ascii?Q?V/0FIuKFXogxIJXsXxpP9Osdva8MMFMltcNujcTgUM590VEV7Cda?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b177c95e-d9e1-4803-4b35-08dee6788c24
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95d32e5e-a79a-456e-cd7c-08dee6794628
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 16:04:15.6928
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jul 2026 16:09:27.7486
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SsvjLBfwzTpuZVf0nqWtb8uQF9k+nqri5yWyX4IqiR2qyDgcOEbYJStuIPX1rq+R9O0z4NRhUhrDkqWR+zWc7YboHof+LjJscuHc1wl8N9qbT7tiWNGa8U7969RoaqYY
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR04MB8822
+X-MS-Exchange-CrossTenant-UserPrincipalName: uDY9bse7Ail2FbfTWvTI6taZyImUxQBAZWm5NW0ieBFj5jZAscd3kniK6YWNBwEHB5vjHRLE8dHw+gA0TWBSmVOQjmVNa7rxoD6m/ce2h2qXRfIELkCpv+eJ3Lvv45p0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8993
 
-On Sat, Jul 18, 2026 at 04:17:15PM -0700, Rosen Penev wrote:
-> Add free_irq() in the error unwind of fsl_re_chan_probe() and in
-> fsl_re_remove_chan() so the interrupt is always released.
+On Sat, Jul 18, 2026 at 04:15:21PM -0700, Rosen Penev wrote:
+> fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
+> unconditionally increments total_chans. When a channel fails to probe
+> (for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
+> total_chans still advances, so fsl_re_remove_chan() later dereferences the
+> NULL pointer during device removal.
 >
-> Also add tasklet_kill(). Present in _remove but not _probe.
->
-> Also add platform_device_put on failure as of_platform_device_create()
-> increases the reference count and needs platform_device_put on failure.
-> Requires placing the pointer in the struct for the _remove function.
-> While at it, use platform_get/set_drvdata as there's no need for using a
-> device pointer for that.
->
+> Propagate the error, only count successfully probed channels, and guard
 
-Can you split these patch, one patch just fix one problem.
-1: replace dev_get_drvdata() with platform_get_drvdata()
-2: add error handle one by one.
+It is not Propagate the error to caller.
 
+Check return value and only count ....
 
 Frank
 
+
+> fsl_re_remove() against NULL entries.
+>
 > Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
 > Assisted-by: opencode:hy3-free
 > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
->  drivers/dma/fsl_raid.c | 32 ++++++++++++++++++++------------
->  drivers/dma/fsl_raid.h |  1 +
->  2 files changed, 21 insertions(+), 12 deletions(-)
+>  drivers/dma/fsl_raid.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 >
 > diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 0b0b4e8fc821..b1a10292324d 100644
+> index bfaef6245695..0b0b4e8fc821 100644
 > --- a/drivers/dma/fsl_raid.c
 > +++ b/drivers/dma/fsl_raid.c
-> @@ -212,10 +212,11 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
->  /* Per Job Ring interrupt handler */
->  static irqreturn_t fsl_re_isr(int irq, void *data)
->  {
-> +	struct platform_device *pdata = data;
->  	struct fsl_re_chan *re_chan;
->  	u32 irqstate, status;
->
-> -	re_chan = dev_get_drvdata((struct device *)data);
-> +	re_chan = platform_get_drvdata(pdata);
->
->  	irqstate = in_be32(&re_chan->jrregs->jr_interrupt_status);
->  	if (!irqstate)
-> @@ -645,7 +646,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	struct platform_device *chan_ofdev;
->
->  	dev = &ofdev->dev;
-> -	re_priv = dev_get_drvdata(dev);
-> +	re_priv = platform_get_drvdata(ofdev);
->  	dma_dev = &re_priv->dma_dev;
->
->  	chan = devm_kzalloc(dev, sizeof(*chan), GFP_KERNEL);
-> @@ -656,8 +657,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	chan_ofdev = of_platform_device_create(np, NULL, dev);
->  	if (!chan_ofdev) {
->  		dev_err(dev, "Not able to create ofdev for jr %d\n", q);
-> -		ret = -EINVAL;
-> -		goto err_free;
-> +		return -EINVAL;
->  	}
->
->  	/* read reg property from dts */
-> @@ -683,17 +683,18 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	chandev = &chan_ofdev->dev;
->  	tasklet_setup(&chan->irqtask, fsl_re_dequeue);
->
-> -	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-> +	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chan_ofdev);
->  	if (ret) {
->  		dev_err(dev, "Unable to register interrupt for JR %d\n", q);
->  		ret = -EINVAL;
-> -		goto err_free;
-> +		goto err_free_tasklet;
->  	}
->
->  	re_priv->re_jrs[q] = chan;
->  	chan->chan.device = dma_dev;
->  	chan->chan.private = chan;
->  	chan->dev = chandev;
-> +	chan->ofdev = chan_ofdev;
->  	chan->re_dev = re_priv;
->
->  	spin_lock_init(&chan->desc_lock);
-> @@ -707,7 +708,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	if (!chan->inb_ring_virt_addr) {
->  		dev_err(dev, "No dma memory for inb_ring_virt_addr\n");
->  		ret = -ENOMEM;
-> -		goto err_free;
-> +		goto err_free_irq;
->  	}
->
->  	chan->oub_ring_virt_addr = dma_pool_alloc(chan->re_dev->hw_desc_pool,
-> @@ -739,7 +740,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	out_be32(&chan->jrregs->jr_config_1,
->  		 FSL_RE_CFG1_CBSI | FSL_RE_CFG1_CBS0 | status);
->
-> -	dev_set_drvdata(chandev, chan);
-> +	platform_set_drvdata(chan_ofdev, chan);
->
->  	/* Enable RE/CHAN */
->  	out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
-> @@ -749,7 +750,12 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  err_free_1:
->  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
->  		      chan->inb_phys_addr);
-> +err_free_irq:
-> +	free_irq(chan->irq, chan_ofdev);
-> +err_free_tasklet:
-> +	tasklet_kill(&chan->irqtask);
->  err_free:
-> +	platform_device_put(chan_ofdev);
->  	return ret;
->  }
->
-> @@ -828,7 +834,7 @@ static int fsl_re_probe(struct platform_device *ofdev)
->  		return -ENOMEM;
->  	}
->
-> -	dev_set_drvdata(dev, re_priv);
-> +	platform_set_drvdata(ofdev, re_priv);
->
->  	/* Parse Device tree to find out the total number of JQs present */
->  	for_each_compatible_node_scoped(np, NULL, "fsl,raideng-v1.0-job-queue") {
-> @@ -864,21 +870,23 @@ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
->  {
->  	tasklet_kill(&chan->irqtask);
->
-> +	free_irq(chan->irq, chan->ofdev);
-> +
->  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
->  		      chan->inb_phys_addr);
->
->  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->oub_ring_virt_addr,
->  		      chan->oub_phys_addr);
-> +
-> +	platform_device_put(chan->ofdev);
->  }
->
->  static void fsl_re_remove(struct platform_device *ofdev)
->  {
->  	struct fsl_re_drv_private *re_priv;
-> -	struct device *dev;
->  	int i;
->
-> -	dev = &ofdev->dev;
-> -	re_priv = dev_get_drvdata(dev);
-> +	re_priv = platform_get_drvdata(ofdev);
+> @@ -842,7 +842,14 @@ static int fsl_re_probe(struct platform_device *ofdev)
+>  			rc = of_device_is_compatible(child,
+>  					     "fsl,raideng-v1.0-job-ring");
+>  			if (rc) {
+> -				fsl_re_chan_probe(ofdev, child, ridx++, off);
+> +				rc = fsl_re_chan_probe(ofdev, child, ridx, off);
+> +				if (rc) {
+> +					dev_err(dev,
+> +						"job ring %d probe failed: %d\n",
+> +						ridx, rc);
+> +					continue;
+> +				}
+> +				ridx++;
+>  				re_priv->total_chans++;
+>  			}
+>  		}
+> @@ -875,7 +882,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
 >
 >  	/* Cleanup chan related memory areas */
 >  	for (i = 0; i < re_priv->total_chans; i++)
-> diff --git a/drivers/dma/fsl_raid.h b/drivers/dma/fsl_raid.h
-> index adbfede330a7..34d362803610 100644
-> --- a/drivers/dma/fsl_raid.h
-> +++ b/drivers/dma/fsl_raid.h
-> @@ -270,6 +270,7 @@ struct fsl_re_chan {
->  	struct list_head active_q; /* already issued on hw, not completed */
->  	struct list_head submit_q;
->  	struct list_head free_q; /* alloc available queue */
-> +	struct platform_device *ofdev;
->  	struct device *dev;
->  	struct fsl_re_drv_private *re_dev;
->  	struct dma_chan chan;
+> -		fsl_re_remove_chan(re_priv->re_jrs[i]);
+> +		if (re_priv->re_jrs[i])
+> +			fsl_re_remove_chan(re_priv->re_jrs[i]);
+>
+>  	/* Unregister the driver */
+>  	dma_async_device_unregister(&re_priv->dma_dev);
 > --
 > 2.55.0
 >
