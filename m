@@ -1,118 +1,257 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E3A3EC6A1
-	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 06:51:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784616668; cv=none; b=aAi7DQbOcCbAWftY9u/6IeOZD2S6N8Qjd//a/bq5lfsSMP8P/i7Ormy6nsNNBLX3/rdLn7C1a9qMHKbHr2XkKbgbzDUc/3oUggShxIibA1lcTg5bXrQeGiXpTC5zCMbwEF5TBwYg6jZY+4Mwd76UmjuwaebN+jhhusCOarCGfpc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784616668; c=relaxed/simple;
-	bh=KEpAZCqcOjV92CQsTe96TnUvoQgwH8E/BX4VUcLTfYc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ANWCnLuQvA+0kyUux40v1bhm+ZTOJiewj8Hyo9mxrJEsUY4395Y+i15YPwcQF5F525n3OU4H2oIu2FAAWghK49tpck0RE2IuEwN99hVEBoK6AFI27Y5q8jW1SEFmT4pdZwUXpBEyo3aBtm7yT+VDpm8zKAwkcV7nwAhG4UjjSoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afV2l/ho; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04263FDBF7
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 07:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784619180; cv=pass; b=tvR95lC0AseSsEPS2qAONyqdXdqc/43AoDSOBpAL3ut2U4qnwsuriLTvF34Xt5doPQR8zJAPrJvmjP3lKxE5L3lZo5CNXMGYRN4DHyW/qyELIVCTZz58P0ZOrbEz/0S+hm8zQ0TQZJpaPp9/NmYyM3aCh+3r+9ovgnMPPFVSQE4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784619180; c=relaxed/simple;
+	bh=0CChg2Zb5gvOp1ImzkoIk799nOEo9CcxWjq6XbKoBpY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QCvgPdFD1fDp68M06alCc8302kZowq/3A+JbkXFq4UWyOd+YO3UyV+mnFihemUGUcO3YtyzlkKpC6232lZWq+UFc1A+TUGbTeqQojyv4vIIV7XsTdQHemtInwMYGY8IlA0zohN7U/FPA+T/rZeV7x34GUrqFbtLgDs0xornWn6g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9pxgdBC; arc=pass smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afV2l/ho"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F381F000E9;
-	Tue, 21 Jul 2026 06:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784616667;
-	bh=es8eLxpx6yGIcsrpK7FijBYEFV91KJ9tHfEA/EvTDRY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=afV2l/hoNjgXUhWCDUNHvpVnzZwC6RTfsDCmr+wCZsRPgv3P+BqkbyYHYgonzxOh6
-	 9WmZxG2A5gGmpG39Rqc7AOnN2Otex7S1JCFU9HdFtJFcwQSgtwCRmO4DL0wGAfAULL
-	 3rXVNS595jelaN4u7KVb6RlLp4lqzHGCTZjQmcuDJNw+nJ76gQX/01rZ4DVGjJxRXd
-	 Cs6/KS7kQcklZPLL+Hx5cpH4u5ry7s3z8lhNRq6wGY2ZiJ6yLz30nnZ8VGRB4G01YN
-	 PcE+1iW3gNq1E9/W4ukoK5/c3LnScy4u5YRHrhxC7B916hX1szFT8lA+mvro4PTIKU
-	 ncwUZZjzivgeA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 14/14] dmaengine: dw-edma: Program endpoint function
- numbers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Koichiro Den" <den@valinux.co.jp>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260721062815.4117887-15-den@valinux.co.jp>
-References: <20260721062815.4117887-1-den@valinux.co.jp>
- <20260721062815.4117887-15-den@valinux.co.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 06:51:06 +0000
-Message-Id: <20260721065107.19F381F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9pxgdBC"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-39c8dbf4ef0so99305561fa.2
+        for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 00:32:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1784619177; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Uc2nUqp/BOQ47ZTpQdWF0WZ2BVVomNYa4s5uem2CVrezY0JWe6+z3xe2+l8Pr77Zib
+         4f6dmAxC6dHGzf13+7SJqdk3IZNNmrOuEs3klCTaL3b+Rofz2GUNMHfqJPxcm3CM9fOz
+         g8ZiyDMom6U1XjI8aaVa4KYmmvjj+R3AYiDzHtfd352wx4gCVd+0D9HGNTyx0S93nPh4
+         zqYcK78ZkEOVf9Xz23l1F504OLbF2fCEsOMqpObfcIbaZcxMnvyue2O2hzPIqmhw5n+8
+         ZXcsT8O9tthKBhc3HTDKmaR92Bd8MNfH8HeL1FmNHkGJ99PIsNZ4tr/ta5GcrAULcJKX
+         JpHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
+        fh=zcm1aTUQ8PBLpEDB5nq4wSiCYzlo2KbP47Rfp5hx0X4=;
+        b=QP4IYzgrBKfRq0SXb7e9XTNRbgJai3pfUQ2BzlQLIlWDHNkkw2Pt6dZ5MRu3sbWhZe
+         rgfPkjd8bDS4yoLalCzPhvY0yjH+EhDwhtJmfYuOEBX79gmmI0gFixTLmk0ZoMV8V5hq
+         P7IZZAqnIQodIEsSmN3aYh4Cox5SIerrRojEdaTp2VBKSgl98Ipz50MgJrV02agWfrq4
+         NXEEKiiq06g2icRqyUx7kphWtTTsMS9/xvtajNGhyhY2NGmLVLeTaMhgf1m5xGnPcXRq
+         H38J0AwP01XDmDO6+o76QkVWbpNkvGREmUmKfqGK7+3owTz8w5iOcjBbI4NSBKEKFBH7
+         MBsg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784619177; x=1785223977; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
+        b=e9pxgdBCro6ocluiu5ViwvkZMMAFtfxCN20GJIFlbfk8xo25/JR7DOTveRyBz+CoKQ
+         +SKP+tBS8rT7hY131kmorS6qx2EAe5hVFRmM/UK2+1trQdeJDQsoJZKXBzGvR5Gk5vX+
+         9nM0ACRqv9fsQSOIbmT1uaTV1QEO4PFQ7gNRjIC4Ec1+u6L4+FXRl0SwqY8fwWFgA2Fj
+         y6p7kmht8e+BkoGy7BiAMwaQkWM1ZZcptu4hwU3BFqIu8m1lxAP0ugENsPRKFbwEg/7R
+         X/cQ1BgGYb7rAyubcz/EIL/QDFgmTdXkZyD4zXSZzk5sDpbU/MiZtgxriDLBPG51gjN0
+         9uWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784619177; x=1785223977;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
+        b=W+NNfqC+bEk2EuUCG9ehLS2rcso5ebOibpkpJUVuiwuo/jIQ+d3dvUZ0VpXKjqygK4
+         ugtPxve3UkwwaoZDJNppZi/x3MVyTgU68fa9FRmCme+vRh/ADJhsdkBQe3Wzxw5w096S
+         kTv5+ykqqeu0AE6oSje4Ncxa3VTeeWauXButbtAlzESDWFo0Xo6vymyQN5dXoMLggWwL
+         r1xZJXsyKxG9YjRN3M2DJ77X8g4tKTXm4zfDoQbLnk6h0luk+yLKYfiE/eU7Kn0smh4B
+         DMAfeDt+V+toWUmA5ACrY/C1XKpVv81jDOv6Ro4g535XnpzOyBEXLMCVQ0NgYRvjV0yW
+         ju6Q==
+X-Forwarded-Encrypted: i=1; AHgh+RoAACHGaJCgaezS2XMTw6G4EomXWyys90yTjuVaanHgav9RH2XdvaZuxEezP166iBYIzRHCup+ZuVY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTLB56i8JG4u3Xpcxt5y6wI+ZTqGhCDDHnCOv+Cv0G3/99XPIY
+	2G1RP34hEeNaapj26SzeNmjB9G/YGcuLiI7ZlYBpvyESHurjILbvPrl2NYKPBZLpgrGPUm3SHOg
+	5UyFYlOq3n0jn823dTLaXEU9zPvqRngg=
+X-Gm-Gg: AR+sD11G6mZ5rohBTD5QF1Q4ToB7Sc8/00koMjflpyCL0JoZyQ/dOjK4kfTyOCjgktG
+	YwwVm7YgfWFXc/eAM1xHcN/w+c/r6RPjAyRO/iYb3YMPPDCVM8qf+wm9VnUjgCdMMqQwb6xPoYf
+	uc2CPW9hB23mxQy8xPcaxORrtvg+s8ZEBaBLtCJHbpTNWeC9fbgGiAro/qIMy1z8QgZGBiXUD4u
+	Kzup15zepcqnsv2cY6xghbTlz9HfEvxkM7rtL5/ci+dtWnOFKmQNCJBhL/HpfuDHHcEs6uZaucS
+	P30j8612i4C3V6iI1DuN/iL5lKlPpB0MQ7gmhCyt1Yk00eAs
+X-Received: by 2002:a05:6512:1543:20b0:5b0:1433:13b9 with SMTP id
+ 2adb3069b0e04-5b28f880702mr2439566e87.25.1784619176459; Tue, 21 Jul 2026
+ 00:32:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260720142538.2766-1-mahad.ibrahim.dev@gmail.com>
+In-Reply-To: <20260720142538.2766-1-mahad.ibrahim.dev@gmail.com>
+From: Keguang Zhang <keguang.zhang@gmail.com>
+Date: Tue, 21 Jul 2026 15:32:19 +0800
+X-Gm-Features: AUfX_myATwUZEeTvJp4nyV2ynsqaaPWg3tbxcSDpGX1RQHgXD6rcBP3NojFEJVA
+Message-ID: <CAJhJPsVj=pntghpDvzwcNj4hm-7Uu0bD+Uy-4b3Okw5Sq__JQw@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: loongson1-apb-dma: fix residue calculation for
+ queued descriptors
+To: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, linux-mips@vger.kernel.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Truncation of PCIe Requester ID using `PCI_FUNC()` breaks IOMMU is=
-olation and DMA for ARI devices and SR-IOV Virtual Functions.
---
+Hi Mahad,
 
---- Patch [14]: [PATCH v6 14/14] dmaengine: dw-edma: Program endpoint funct=
-ion numbers ---
-commit 12cd49191ea0c234c70a872c83095a085495199a
-Author: Koichiro Den <den@valinux.co.jp>
+Thanks for catching this use-after-iterator issue.
 
-dmaengine: dw-edma: Program endpoint function numbers
+On Mon, Jul 20, 2026 at 10:25=E2=80=AFPM Mahad Ibrahim
+<mahad.ibrahim.dev@gmail.com> wrote:
+>
+> ls1x_dma_tx_status() locates the descriptor actively being processed by
+> walking the LLI list and comparing the hardware reported next descriptor
+> pointer against each element's next-descriptor pointer.
+>
+> A list_for_each_entry macro is used in the comparison phase, which
+> internally expands to the container_of macro to find the current
+> ls1x_dma_lli's next-descriptor pointer to compare against. However a
+> problem occurs when the loop reaches the final lli list element and wraps
+> around to the head. The head is a different struct ls1x_dma_desc. It goes
+> down to the offset the node member would be at in ls1x_dma_lli inside of
+> ls1x_dma_desc.
+>
+> This leaves the lli pointer somewhere inside of ls1x_dma_desc at the end
+> of the loop. The subsequent phys debug value read therefore would print
+> garbage as a valid phys address.
+>
+> The primary bug occurs in the residue calculation list_for_each_entry_fro=
+m
+> macro. The lli pointer still points to somewhere inside of ls1x_dma_desc,
+> when the list_for_each_entry_from performs the same wrong offset
+> calculation on ls1x_dma_desc to determine the stop condition of the loop,
+> it lands at the same offset that lli pointer is on, and the loop
+> immediately stops.
+>
+> This produces a 0 residue value, while it should be the entire length of
+> the lli list chain. The driver advertises DMA_RESIDUE_GRANULARITY_SEGMENT=
+,
+> so a 0 residue would mean the transfer has completed.
+>
+> Found by the following Coccinelle check:
+>
+>   scripts/coccinelle/iterators/use_after_iter.cocci
+>
+>   drivers/dma/loongson/loongson1-apb-dma.c:461:6-9: ERROR: invalid
+>   reference to the index variable of the iterator on line 450
+>
+> Note the check still reports this line after the fix; the remaining use
+> is safe (the cursor is only dereferenced on the match path, or reset to
+> the first entry otherwise).
+>
+> I did not see a bug upstream detailing this error, nor do I have the
+> hardware to confirm this bug or error, all this is from a pure code
+> examination.
+>
+> As I do not possess the hardware, I cannot test the patch. Compile tested
+> only with mips64-linux-gnu-gcc.
+>
+> Signed-off-by: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+> ---
+>  drivers/dma/loongson/loongson1-apb-dma.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loong=
+son/loongson1-apb-dma.c
+> index 89786cbd20ab..8bb6e6e5719d 100644
+> --- a/drivers/dma/loongson/loongson1-apb-dma.c
+> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
+> @@ -439,6 +439,7 @@ static enum dma_status ls1x_dma_tx_status(struct dma_=
+chan *dchan,
+>                         struct ls1x_dma_desc *desc =3D to_ls1x_dma_desc(v=
+d);
+>                         struct ls1x_dma_lli *lli;
+>                         dma_addr_t next_phys;
+> +                       bool found =3D false;
+>
+>                         /* get the current lli */
+>                         if (ls1x_dma_query(chan, &chan->curr_lli->phys))
+> @@ -447,11 +448,17 @@ static enum dma_status ls1x_dma_tx_status(struct dm=
+a_chan *dchan,
+>                         /* locate the current lli */
+>                         next_phys =3D chan->curr_lli->hw[LS1X_DMADESC_NEX=
+T];
+>                         list_for_each_entry(lli, &desc->lli_list, node)
+> -                               if (lli->hw[LS1X_DMADESC_NEXT] =3D=3D nex=
+t_phys)
+> +                               if (lli->hw[LS1X_DMADESC_NEXT] =3D=3D nex=
+t_phys) {
+> +                                       found =3D true;
+>                                         break;
+> -
+> -                       dev_dbg(chan2dev(dchan), "current lli_phys=3D%pad=
+",
+> -                               &lli->phys);
+> +                               }
+> +
+> +                       if (!found)
+> +                               lli =3D list_first_entry(&desc->lli_list,
+> +                                                      struct ls1x_dma_ll=
+i, node);
 
-This patch configures the requester function number for eDMA/HDMA transfers
-by recording it in the chip data and programming it per channel. It extracts
-the function number using PCI_FUNC() during PCIe probe. Endpoint-local
-instances keep it at 0, while host-side instances use the probing device's
-function number.
+However, I don't think falling back to list_first_entry() when no
+match is found is appropriate. Since next_phys should always match one
+of the LLIs in the descriptor chain, failing to find a match should be
+treated as an unexpected condition rather than silently falling back
+to the first LLI.
+I would suggest something like:
 
-[ ... ]
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
-edma-pcie.c
-> index 64f2a80072bce..9f237ba916dea 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> @@ -473,6 +473,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
-> =20
->  	chip->mf =3D dma_data->mf;
->  	chip->flags =3D match->chip_flags;
-> +	chip->func_no =3D PCI_FUNC(pdev->devfn);
+       scoped_guard(spinlock_irqsave, &chan->vc.lock) {
+               vd =3D vchan_find_desc(&chan->vc, cookie);
+               if (vd) {
+                       struct ls1x_dma_desc *desc =3D to_ls1x_dma_desc(vd);
+                       struct ls1x_dma_lli *lli;
+                       dma_addr_t next_phys;
 
-[Severity: High]
-Does PCI_FUNC() truncate the function number for Alternative Routing-ID
-Interpretation (ARI) devices and SR-IOV Virtual Functions?
+                       /* get the current lli */
+                       if (ls1x_dma_query(chan, &chan->curr_lli->phys))
+                               return status;
 
-PCI_FUNC() masks the input to 3 bits, dropping the upper bits of the
-function number. Since ARI or SR-IOV topologies can have function numbers
-up to 255 (8 bits), could this cause the host IOMMU to attribute DMA traffic
-from functions >=3D 8 to functions 0-7, breaking isolation?
+                       /* locate the current lli */
+                       next_phys =3D chan->curr_lli->hw[LS1X_DMADESC_NEXT];
+                       list_for_each_entry(lli, &desc->lli_list, node) {
+                               if (lli->hw[LS1X_DMADESC_NEXT] !=3D next_phy=
+s)
+                                       continue;
 
->  	chip->nr_irqs =3D nr_irqs;
->  	chip->ops =3D match->plat_ops;
->  	chip->cfg_non_ll =3D dma_data->cfg_non_ll;
-[ ... ]
-> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
-dw-hdma-v0-core.c
-> index 8d20bb028b528..36ee72efcd317 100644
-> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> @@ -345,6 +345,9 @@ static void dw_hdma_v0_core_ch_config(struct dw_edma_=
-chan *chan)
->  	SET_CH_32(dw, chan->dir, chan->id, msi_abort.msb, chan->msi.address_hi);
->  	/* config MSI data */
->  	SET_CH_32(dw, chan->dir, chan->id, msi_msgdata, chan->msi.data);
-> +	/* Configure the requester function number used by outbound TLPs. */
-> +	SET_CH_32(dw, chan->dir, chan->id, func_num,
-> +		  FIELD_PREP(HDMA_V0_FUNC_NUM_PF_MASK, chan->func_no));
+                               dev_dbg(chan2dev(dchan), "current
+lli_phys=3D%pad\n", &lli->phys);
 
-[Severity: High]
-HDMA_V0_FUNC_NUM_PF_MASK is an 8-bit mask, which implies the hardware expec=
-ts
-the full 8-bit devfn. Because chan->func_no was assigned using PCI_FUNC()
-earlier, does this result in programming a truncated 3-bit value into this
-8-bit hardware field, causing the hardware to emit TLPs with an incorrect
-Requester ID?
+                               /* count the residues */
+                               list_for_each_entry_from(lli,
+&desc->lli_list, node)
+                                       bytes +=3D
+lli->hw[LS1X_DMADESC_LENGTH] * chan->bus_width;
 
->  }
+                               dma_set_residue(state, bytes);
+                               return status;
+                       }
+
+                       dev_warn(chan2dev(dchan), "unable to locate
+current LLI\n");
+               }
+       }
+
+       return status;
+
+> +                       else
+> +                               dev_dbg(chan2dev(dchan), "current lli_phy=
+s=3D%pad",
+> +                                       &lli->phys);
+>
+>                         /* count the residues */
+>                         list_for_each_entry_from(lli, &desc->lli_list, no=
+de)
+> --
+> 2.54.0
+>
+
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721062815.4117=
-887-1-den@valinux.co.jp?part=3D14
+Best regards,
+
+Keguang Zhang
