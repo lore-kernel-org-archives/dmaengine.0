@@ -1,136 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3782379C2A
-	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 13:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6080646C4AE;
+	Tue, 21 Jul 2026 16:10:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784642155; cv=none; b=E9Zv/qgU4vRVv1/Ev27irtRQ/tzUr0YtpeW6IIEr8pEUmgWM770JSwI9qrJNFAhRyqQmcI31JAl5RyeCHu6ZtG0Jq6iWLeczNK9iI5JPsTEymMaMKOBTU25Mrb2wX/AsE2c1jXMcb/nQZMoXGnynTzMg5tZ/Jo4M9vA0kDIAdqc=
+	t=1784650204; cv=none; b=AvhhgXthUgJUEGfyULehOC8zolGxTvTfmWAgGXZMDiFcSx1TH1SiCiujb23kb9oqVgKmXPgwCT0mPbc+SqHmXf4GaoIbUlmBmysomnufW4CJW4l9Sppw5PZy+vTeL49IGAgUAhRCZcSYfDMLXH0JNP58Or6YRIvO64u0Opa0W7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784642155; c=relaxed/simple;
-	bh=26KNaVMJXZmibGDzt7ZUoU4jSweEbLUTwf+m1vbK0lg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iF4Xb8pL6qcQzuC95VXXDYT8tpp2Ydq97gA92HuB2ZS5KhIfjxb6Uq1XtFgEvKK/cgn0wpQmC1+6ga3qXsVYAWe1X5ClQLcc1UO30H23Z0wJxIopLBJQcZ9oNRu+xBgdzOw3FXBDwc6l1+nAi2ww0I1CnVFQA2xPTjZNb7nD6Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L+jBdvhd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784650204; c=relaxed/simple;
+	bh=tfBqgRwo5lSxjdc+tWvb4JILEyOEQw+AekmxGo4B3W0=;
+	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=XPbL5CQKyICORmboGTMkE4EuesZ/1Fxlo3dqbe+N1S2StSDZQ76wzY71hBpr7oEeIxetxKoHcgJmTiG8f4M8lDc9VmRv86kZjOHDCfLhe/wKX3LgDHidEHhLsXPn0NTJIzxS5N7wH7bbtjclPbmWyTxsGDvfvjxu20itKbE+vBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=VkQoe+6z; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L+jBdvhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE261F00A3D;
-	Tue, 21 Jul 2026 13:55:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784642154;
-	bh=TJFPioPFIr56lhHCeug+nO0NHhLJwL6dQ8L8FOZ7nCA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=L+jBdvhdKtPNHqgxvn6d1cKnQsR78Ske8ADYZB158msjS8KqvZt00gu3jcyIhlhYS
-	 TYkAbBuCMkNsL7M3716jbW7ZVqeiE1wNCggAss7OHNkWCixFyfhqjK6vCcDX+qWFMU
-	 mK+dA58TjPp4YwAFEbRVNm3nA3fioaJDQFNOeArp2yW88sl4q+ZrJdS+GXzsJ64zJE
-	 lCeQ3+UNtxJ5WAEdI7vVlPLFRlbdetjlCdR0lvYbE9KnLf255qJVRiSRhJsZ+/gM2n
-	 Ig0d3Ee86g2KyKPpVb0/NTmL/LZNU9T4uwT0BVTJ+Ks/F74xahm6joIwu+3/iQ64Re
-	 wE9El6ltGiFsA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v23 14/14] crypto: qce - Communicate the base physical
- address to the dmaengine
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260721-qcom-qce-cmd-descr-v23-14-1be02deffda9@oss.qualcomm.com>
-References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
- <20260721-qcom-qce-cmd-descr-v23-14-1be02deffda9@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 13:55:53 +0000
-Message-Id: <20260721135554.4DE261F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="VkQoe+6z"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
+	:references:content-disposition:in-reply-to;
+	bh=v08H3BIshCvUiuEYOPd8JivvigUoNVfXU/KEqUKJ4rQ=; b=VkQoe+6z79uhhQfYh9mCcTrmdA
+	En6LP8JHMx9P2K4iHugxxB3Rh+aT0DKK0e0A3ScCB/e3QoFkv9BIUaxJTVCvtoGIZynGLWmRGS8Jh
+	Tc06GAG02eBWo5Sp8wuHq2vD85fhTJc+aTicvfHVssqO53uA81aKvJMoLxjIWDi37azOFuf0MDIJb
+	FGTQFGU4O1wKwpye1g7R/uYtplM7+Macx4sfEm9sc6AUVGQuwftcTHxJjxrVeBC9ewQSCcUvX3V4N
+	uEH1c2uKtNo9JqnM7um/iOLt7XhSu1mSjYBlWThgOBOl9h6cccuclu+tHggZeCkfccBhk7WaAC6Ck
+	tOFZSS2A==;
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1wmD2Y-0000000BodJ-1fNC;
+	Tue, 21 Jul 2026 10:09:55 -0600
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1wmD2T-00000000GBH-2FMF;
+	Tue, 21 Jul 2026 10:09:49 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	George Ge <george.ge@microchip.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Logan Gunthorpe <logang@deltatee.com>
+Date: Tue, 21 Jul 2026 09:57:27 -0600
+Message-ID: <20260721155739.62120-1-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, linux@weissschuh.net, dave.jiang@intel.com, kelvin.cao@microchip.com, george.ge@microchip.com, jjy600901@snu.ac.kr, logang@deltatee.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v2 00/11] dmaengine: miscellaneous fixes for ioat, switchtec_dma and plx_dma
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] Unintended hardware misconfiguration due to partially initialize=
-d `dma_slave_config`.
-- [Medium] Potential memory leak in qce_submit_cmd_desc() error path becaus=
-e dmaengine_desc_free() refuses to free non-reusable descriptors.
+When reviewing the recent switchtec patchset[1], the Sashiko bot noticed
+a handful of pre-existing problems in the ioat and switchtec drivers.
+I attempted to fix those plus an unrelated issue reported in plxdma but
+when I submitted those patches, Sashiko found even more issues[2]. (It is
+relentless!).
+
+I've fixed the issues reported with v1 of this series and the ones for the
+switchtec driver. But the pre-existing issues in ioat, plxdma and the
+dmaengine itself I've punted until I can find some time to dig into them.
+
+Hopefully, this is good enough for Sashiko this time and we can get
+it reviewed by real humans.
+
+The series is based off of v7.2-rc4.
+
+Thanks,
+
+Logan
+
+[1] https://lore.kernel.org/all/20260707162045.23910-1-logang@deltatee.com
+[2] https://sashiko.dev/#/patchset/20260717221001.361421-1-logang@deltatee.com
+
+Changes since v1:
+
+ * Added a fix for switchtec_dma_alloc_chan_resources()'s error path
+   calling disable_channel() instead of properly halting the channel
+   before freeing the descriptor rings. (Per Sashiko)
+ * Added a fix for switchtec-dma channel structs being freed without
+   being removed from dma_dev->channels on a registration failure,
+   while the channel status IRQ is still live. (Per Sashiko)
+ * Added a fix for switchtec_dma_remove() using swdma_dev after it may
+   already have been freed by dma_async_device_unregister(). (Per
+   Sashiko)
+ * Added a fix for chan_status_irq being freed with the wrong API, and
+   a valid vector index of 0 being incorrectly treated as unset.
+   (Per Sashiko)
+ * Made switchtec_dma_chans_release() void, since nothing checked its
+   return value. (Noticed while reviewing the code for these changes).
+
+Logan Gunthorpe (11):
+  dmaengine: switchtec-dma: fix double-free in switchtec_dma_free_desc()
+  dmaengine: switchtec-dma: fix resource leak in alloc_chan_resources
+  dmaengine: switchtec-dma: halt channel on alloc_chan_resources error
+  dmaengine: switchtec-dma: fix channel leak on registration failure
+  dmaengine: switchtec-dma: make switchtec_dma_chans_release() void
+  dmaengine: switchtec-dma: unlink channels before freeing on
+    registration failure
+  dmaengine: switchtec-dma: fix use-after-free of swdma_dev in remove()
+  dmaengine: switchtec-dma: fix chan_status_irq cleanup on create()
+    error
+  dmaengine: ioat: disable relaxed ordering before registering the
+    device
+  dmaengine: ioat: use sysfs_emit() in per-channel sysfs show()
+  dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
+
+ drivers/dma/ioat/init.c     | 18 ++++-----
+ drivers/dma/ioat/sysfs.c    | 22 +++++------
+ drivers/dma/plx_dma.c       | 10 ++---
+ drivers/dma/switchtec_dma.c | 78 +++++++++++++++++++++++++++----------
+ 4 files changed, 82 insertions(+), 46 deletions(-)
+
+
+base-commit: 1590cf0329716306e948a8fc29f1d3ee87d3989f
 --
-
---- Patch [14]: [PATCH v23 14/14] crypto: qce - Communicate the base physic=
-al address to the dmaengine ---
-commit 6c1591ac036f81ee86f8eab63457a3de06d13cef
-Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-
-crypto: qce - Communicate the base physical address to the dmaengine
-
-This patch configures the BAM DMA engine with the base physical address
-to be used as a scratchpad for dummy writes related to BAM pipe locking.
-It passes the peripheral configuration structure to the DMA driver via
-dmaengine_slave_config().
-
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> index 88d253d9147cf..09699d96575b1 100644
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
-> @@ -116,8 +117,16 @@ static void qce_dma_terminate(void *data)
-> =20
->  int devm_qce_dma_request(struct qce_device *qce)
->  {
-> +	struct bam_config peripheral_cfg =3D {
-> +		.lock_scratchpad_addr =3D (u32)qce->base_phys + REG_VERSION,
-> +	};
-> +	struct dma_slave_config cfg =3D {
-> +		.direction =3D DMA_MEM_TO_DEV,
-> +		.peripheral_config =3D &peripheral_cfg,
-> +	};
-
-[Severity: Medium]
-Does this partially initialized dma_slave_config cause an unintended
-hardware misconfiguration?
-
-By only setting the direction and peripheral_config, the designated
-initializer silently zeroes out src_maxburst and dst_maxburst.
-
-When dmaengine_slave_config() is called, the BAM DMA driver copies this
-configuration. Later, if the engine is not remotely controlled, it will
-write this zeroed maxburst value to the hardware threshold register:
-
-drivers/dma/qcom/bam_dma.c:bam_apply_new_config() {
-    ...
-    if (dir =3D=3D DMA_DEV_TO_MEM)
-        maxburst =3D bchan->slave.src_maxburst;
-    else
-        maxburst =3D bchan->slave.dst_maxburst;
-
-    writel_relaxed(maxburst,
-               bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
-    ...
-}
-
-This alters the hardware configuration from its default (4) and might
-break DMA interrupt generation or cause an interrupt storm on systems
-where the BAM is natively configured.
-
-[ ... ]
-
-Also, there is a second issue I'd like to ask about regarding
-qce_submit_cmd_desc():
-
-[Severity: Medium]
-Can this error path leak the DMA descriptor?
-
-In qce_submit_cmd_desc(), the code calls dmaengine_prep_slave_sg() with
-attrs =3D DMA_PREP_CMD but lacks the DMA_CTRL_REUSE flag. If
-dma_submit_error() detects an error, it branches to err_free_desc:
-
-drivers/crypto/qce/dma.c:qce_submit_cmd_desc() {
-    ...
-err_free_desc:
-    dmaengine_desc_free(dma_desc);
-    ...
-}
-
-Because the descriptor was not prepared with DMA_CTRL_REUSE,
-dmaengine_desc_free() will immediately return -EPERM without freeing the
-descriptor.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721-qcom-qce-c=
-md-descr-v23-0-1be02deffda9@oss.qualcomm.com?part=3D14
+2.47.3
