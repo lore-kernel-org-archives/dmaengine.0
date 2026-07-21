@@ -1,98 +1,138 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007133C060E;
-	Tue, 21 Jul 2026 11:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5BA3CA4A8
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 11:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784633103; cv=none; b=YaJ26knkNJD/Pl6TAF94WnjmbOEJg/EvMO1V66viLh8CQ1wHxFelnw3RcuX+hr2lISNLhE7FzIjXcNiXcBJ5GiZ2J/ASxus4gCHRJzex5uk5OOTGIviwiQmjMn/zv78+0+a0iF/P/AXoU6xc6ZMqFFiIjm8obugs44+QI7SVuLQ=
+	t=1784633172; cv=none; b=VQbn6InZEKROj2Af6r26uFySLR94te1i8AmUw1Qi/JxlNVMavjSYDPqUuGIybbDXuPt1kdWyPweIDfpHhsHDD/CAF8WK/s83nETuElpuGPMdRvuxMPtDctYqihNn5lbuiO9gVRoANLoGglFOr41oKrhvM32hc32UpW/bkWl87lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784633103; c=relaxed/simple;
-	bh=hFlYZinIE2pmIEnxdcpdsYjnVx080PnBbqYVzYeqyzs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=OD2DPbSivVq+SWarKhl2rVOAB7SP62BDstjnTRI/bdsB/datzE0Igs8dVceUOi5OditZQs4Yd1gDkVj5OaTRUrthsgepqnL/b/ANAQsFU9ALYE2u8uLT4/Fl80jTVt4/MlqpITMiijzHskYZyFMgm8RT4SXc9dv+ZUUM/TV37hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RZ2eVv9J; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784633172; c=relaxed/simple;
+	bh=zHUnYuYlXzpNArtq1R7LGUDLcnO4gGX8bjpDztkAtGU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ip/1yDmIClyUdnk1Xut9eXKf+8YKRUdYMDCM9Z3MBlxikjposMMZ4SpEc/JYOzTtqaLyEIpxaWrm/xbD+xYPgy032FYQNH3K1z8F7bPFx06NMleEWijViBa/cIRfzLcGQ0MT5WV0PnzgYFrRsCdjOKG6QfFqY5JKK3IZfm122fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LubtTR83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RZ2eVv9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E9D1F00A3A;
-	Tue, 21 Jul 2026 11:24:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LubtTR83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0241F000E9;
+	Tue, 21 Jul 2026 11:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784633098;
-	bh=eXObcevundgN2b+3MiW0k0Fzs19dpRQ06wK6a1vgO68=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=RZ2eVv9J5Qp39wo4ChVTRv4PkQthSDgIgHzrPk8MHmFCrufRmPxM86OAkoeRQbJBv
-	 iJUQ2Rx8nKbI/X4HHdq67LVPb68wPC/72UtF8zbBkONkqzyD5wupyOUkwy99ZZ19km
-	 BbOZdO/UVKlBgpan3cCO9tjwHYq5PdAsUJ4flMhN1+4gbOthieJdk5Go6V7Yd+B8U8
-	 WpL4w4cOit+mLr5UbFmYBAb42mpe+7wg025FN7RI5xcQI2Zk2VXwk55P5BNIQmP9fm
-	 YZOBTCAJSXYUXIP/5mT8Dt3E8ZPkeb4Lu8WXcfSbgScNRCNtFO6xpcdsBsrXBo64jF
-	 lYiLtUprw8Hpw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- Koichiro Den <den@valinux.co.jp>
-Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260721062815.4117887-1-den@valinux.co.jp>
-References: <20260721062815.4117887-1-den@valinux.co.jp>
-Subject: Re: [PATCH v6 00/14] dmaengine: dw-edma: Prepare for PCI EP DMA
- (part 1/3)
-Message-Id: <178463309622.96200.16223401872873220724.b4-ty@kernel.org>
-Date: Tue, 21 Jul 2026 16:54:56 +0530
+	s=k20260515; t=1784633159;
+	bh=83FTGxWBsCDyYVDChbvl0TCuDlAisJAYrOoioLvBpLw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=LubtTR83P0e+rVj5xMNxZjm6/Dze6BqCPEh+eclkb9luXAmAnNOmmylky+Vz+zMcC
+	 bltczBYlAZzFBxjLzbkVxAP+qIc6EZ1OrzsFWPSIAExCoWma2i2Yj6rkYg0RhvV+J6
+	 DqCUS177EfYRre2imbzRV7zHb5gdXPPp7EtlEuB1J5SRpWpTvjQS7D1bNZWR7pmi3X
+	 opdS/uE6ZMK8GHnkwMNLoLlVbA6ZD2FCyczkeCE3kd7lqAeH5nk48VfpEe3ZUapRbg
+	 hrYyhAXSaOMLym+zu5Kk0h7JeyRBSvTDh1hflcmlchnRGR1tOUXHnDl86iCqs7iJIk
+	 GoWqseHc/0sdg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] dmaengine: qcom: gpi: Fix SE ID and SE Protocol
+ fields widths in SCRATCH_0
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Chandana Kishori Chiluveru" <chandana.chiluveru@oss.qualcomm.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
+References: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 21 Jul 2026 11:25:58 +0000
+Message-Id: <20260721112559.0E0241F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] Missing write memory barrier between copying TREs to the DMA ring =
+buffer and ringing the hardware doorbell.
+- [High] Missing read memory barrier after reading the event ring read poin=
+ter and before reading the event descriptor from DMA memory.
+--
+
+--- Patch [1]: [PATCH v2] dmaengine: qcom: gpi: Fix SE ID and SE Protocol f=
+ields widths in SCRATCH_0 ---
+commit 57c9b90268b2dd84de12a839b2d8897b5356eee0
+Author: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
+
+dmaengine: qcom: gpi: Fix SE ID and SE Protocol fields widths in SCRATCH_0
+
+This commit fixes silently truncated serial engine indices when written into
+the scratch register. It widens the GPII_n_CH_k_SCRATCH_0_SEID mask to
+GENMASK(3, 0) and adjusts the GPII_n_CH_k_SCRATCH_0_PROTO mask to GENMASK(8=
+, 4)
+to match the documented register layout.
+
+Link: https://patch.msgid.link/20260720-fix_se_id_and_se_protocol_fields-v1=
+-1-e41dbb107d97@oss.qualcomm.com
+
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index a5055a6273af6..fc12cf9122f9a 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -207,8 +207,8 @@ enum CNTXT_OFFS {
+> =20
+>  /* Scratch registers */
+>  #define GPII_n_CH_k_SCRATCH_0_OFFS(n, k)	(0x20060 + (0x4000 * (n)) + (0x=
+80 * (k)))
+> -#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(2, 0)
+> -#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(7, 4)
+> +#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(3, 0)
+> +#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(8, 4)
+>  #define GPII_n_CH_k_SCRATCH_0_PAIR		GENMASK(20, 16)
+
+While reviewing this driver, I noticed a couple of potential memory ordering
+concerns in other parts of the file.
+
+[Severity: High]
+This is a pre-existing issue, but was not introduced by this patch. Is it
+possible for the hardware to fetch uninitialized descriptors here?
+
+In gpi_issue_pending(), the code queues descriptors via gpi_queue_xfer()
+(which performs a memcpy()) and then rings the doorbell:
+
+drivers/dma/qcom/gpi.c:gpi_issue_pending() {
+    ...
+	gpi_desc->db =3D ch_ring->wp;
+	gpi_write_ch_db(gchan, &gchan->ch_ring, gpi_desc->db);
+    ...
+}
+
+Because gpi_write_ch_db() uses writel_relaxed() without a preceding
+dma_wmb(), weakly ordered architectures like ARM64 might reorder the
+doorbell IO write ahead of the descriptor memory writes. Could this allow
+the DMA controller to fetch stale or uninitialized descriptors from memory?
 
 
-On Tue, 21 Jul 2026 15:28:01 +0900, Koichiro Den wrote:
-> This is v6, part 1 of three series for PCI endpoint DMA.
-> 
-> The three series are:
-> 
->   * part 1: dmaengine: dw-edma: Prepare for PCI EP DMA
->   * part 2: PCI: endpoint: Expose endpoint DMA resources
->   * part 3: PCI: endpoint: Add PCI DMA endpoint function
-> 
-> [...]
+[Severity: High]
+This is a pre-existing issue, but was not introduced by this patch. Can the
+CPU speculatively prefetch a stale event descriptor?
 
-Applied, thanks!
+In gpi_process_events(), the read pointer is fetched from the device via
+readl_relaxed(), but there is no subsequent dma_rmb() before reading the
+event descriptor from DMA memory:
 
-[01/14] dmaengine: dw-edma: Factor out HDMA interrupt setup helper
-        commit: 3e5933f2003e89d733b8d3a3a026ab9af411fbb5
-[02/14] dmaengine: dw-edma: Add per-channel interrupt routing control
-        commit: 9c317842eceece7efbaf07ac1a08c5d5e8be7ad0
-[03/14] dmaengine: dw-edma: Add core quiesce operations
-        commit: c9c25b2f32601409a53845b41183a29c8260f33e
-[04/14] dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
-        commit: 647217abea849d3d45f8cb0b8ee5b78d50f26985
-[05/14] dmaengine: dw-edma: Add partial channel ownership mode
-        commit: b24a5e9db6863567df1a10fcd29e01467672c56e
-[06/14] dmaengine: dw-edma-pcie: Track non-LL mode in DMA data
-        commit: 1415d6d1f101398441da43e82a076afe1c5aebd3
-[07/14] dmaengine: dw-edma-pcie: Add capability match data
-        commit: f3468b998a00c1491b774af188d5f741c64a1c71
-[08/14] dmaengine: dw-edma-pcie: Rename vsec_data to dma_data
-        commit: 6cb89b38dcd7e2144c7af8c6c6bc9d30e84b73c9
-[09/14] dmaengine: dw-edma-pcie: Add platform ops to match data
-        commit: f8850e66ae8b3f2809b665375ba9a7106a4779f8
-[10/14] dmaengine: dw-edma-pcie: Add register offset match flag
-        commit: 9504c24325ede003d111cd004e56803969764355
-[11/14] dmaengine: dw-edma-pcie: Factor out descriptor block address lookup
-        commit: 6f3328acabc4b78de2545bc4b4d2c8c7a4988624
-[12/14] dmaengine: dw-edma-pcie: Handle optional data blocks
-        commit: 81964f539601f3dcbf1ed64979aa9b5ae0e4adf4
-[13/14] dmaengine: dw-edma-pcie: Add chip flags to match data
-        commit: 1d68178b3404737af2cee6c7b4395de3de6dccaa
-[14/14] dmaengine: dw-edma: Program endpoint function numbers
-        commit: 0613e7934ee233d726af8d8c89f251a1c4df738d
+drivers/dma/qcom/gpi.c:gpi_process_events() {
+    ...
+	cntxt_rp =3D gpi_read_reg(gpii, gpii->ev_ring_rp_lsb_reg);
+	rp =3D to_virtual(ev_ring, cntxt_rp);
 
-Best regards,
--- 
-~Vinod
+	do {
+		while (rp !=3D ev_ring->rp) {
+			gpi_event =3D ev_ring->rp;
+			chid =3D gpi_event->xfer_compl_event.chid;
+    ...
+}
 
+Since control dependencies do not enforce memory ordering on ARM64, the
+memory read of gpi_event->xfer_compl_event.chid can be reordered ahead of
+the register read. Could a dma_rmb() be needed after reading the RP register
+to prevent processing a stale event descriptor?
 
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721-fix_se_id_=
+and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com?part=3D1
