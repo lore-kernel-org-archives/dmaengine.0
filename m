@@ -1,48 +1,48 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013071.outbound.protection.outlook.com [40.107.162.71])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011025.outbound.protection.outlook.com [40.107.130.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FF343C7C2;
-	Tue, 21 Jul 2026 21:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328D357CEB;
+	Tue, 21 Jul 2026 21:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.25
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784669910; cv=fail; b=tbxB05MqMCi97STTeCOwePADTEEHlcrthsCnGY0nXZJBhoW4Z04aAhmiXtx3dLUFgcX7pMi+YP9cojpVrKcIVVqhD9on7NiBBW67L0tXpW1OVCi7ieQGFCz8BbZsUhnRP1Vj9s3tpKmxeps6VHlzx8ohXsgEGbosmSk6JCG2c3E=
+	t=1784670210; cv=fail; b=Y8ebhlfWeOnTXDcMizaT0RTj0m4lJI+QCEq+i106s2xu/zbBHGu45hAN20x4JbpOOD8foCZyUr8VW287azVPignwPWsOeF38kIUpj2fqRQLAU2i8hInGFSk9rZSo95zEV4FKMN9WLZcSGRrPhlMdK3sauF4GvrxBJRnfiNQn3Cs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784669910; c=relaxed/simple;
-	bh=2fWnOm9ZnMUaJXzVS0gQts5tTgyk/kkCfKAL+GrrWHU=;
+	s=arc-20240116; t=1784670210; c=relaxed/simple;
+	bh=kPAIDd00MZI+MRuuCjt+6NWm8MUcqkn+HfeO6ywcOo4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=SoU6bvBmWGp5p3Xm9LwkFUR3T1vEX2R6mD1ojgZQhwG6JHFx1P3am1cWJClslhVnyzjI7jB+R1NYJnjK21v37Xud/vsXdef/CUVFLJCxZN3pdt83cbQL92NuHjirNffMBZdiXHRHNxO50ih5jjj6++OlTjQ3IpaEgox6cy1JV4w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=RGJvNh8X; arc=fail smtp.client-ip=40.107.162.71
+	 Content-Disposition:In-Reply-To:MIME-Version; b=aoxnQCca+sVfTkOF0ow24AIVc1KIYehJKZ+AwlY8U0Bgw1xFJrXX7IZC65DxVvxX1VX61A6AEIMV1vxzFCNyA5zVfTpsGptSIsugqvu0ut+zDtp/CIRf6c6p4rkpHA1/J2zYoeZI1aTYlLrQ6et0hLYFj/XtbWSHGziw3hY7el0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=GlSvODqG; arc=fail smtp.client-ip=40.107.130.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="RGJvNh8X"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="GlSvODqG"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Rj9KiU8KxhrKOJtx1Vy25gVHRWdVtrWq2JVnh5a/uAjXBADTfkuKufhZzenW7/1aPUxdORbGgygrP0R55SMuOKENQLQVUYPs3q0C3gCg60ds7ot2Ah34IeaAEtvUqjzyBICUyOzQ4m1XwNV3+j/CY9Lki2+mc11os+LajOSb0xyY1q5cLnoq+uGlvwU0nHHWrpAM1AoRV/76CQxL7O2ffMQU08XXJKQEVP0Ppn+cOauD57WVXBSjjUmJsvgy6nMxC+libLuX8BOjSIpor72pjyiLbq3zaYqnIvS55AEoup1Vg1g/vKD+GZ/B1F+zG3iByWfoeyAAwGaQiW/TdzT5QA==
+ b=pqxW8j06vADK5W3O+xXnnyMdUzlRMYfqEWAj77fRoMn75TXOBJTUe+C9onbfuWG/6BhxNwCtfcyYr4jCR1VADz0o92jZL9+L63ErocwkVicf/HqsCbxIGRxwLXpVw0PSEAHLp1uL5ldmM7ELHse1NmOAFGLzuHyE69daWNyU5fwxlUp9BInU5lbMdgG4eeqjeIEkpnwXTHquFf8ZbGHvhBSOLIzgmt1vkL4MGlHCYhZwHh1wIRxmj24qlZ0MIrKaGkP6NCIc6GGcwQ364HokQEPs7D71wb7C0c9aRKmwL07rvt00JIvtge8irC+LdohifGP+o8fn1vT9qG50G2I2Kg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ty25UkBaA3WJsCEcAdcAcDbhC26DzqSD8zziw4WuAyI=;
- b=sFsBR34xiarE7E5uCpNKMsIZBf2uPjKPNZCgn59mX1FmlCLy1efNGS378vULM+xR6g3MvJdQ41La+oSSPzbFLZvCY7VEo9wmdyWNtv9SO+zBxBdG6Golbf94dS7LT/HTf1u7frSPx7/ofbRgLzAaJvfkeWerSpThbO81qmL3JTAv5wqpf4ryUAQju0soNcJeK66HbZW6Pe6cl9P6HPalRw7dqkQsvYtFHoMW7z8p0nt5HirV7CwShwPd/F6vCxQzdsn451uv8w2xG1gtrzQtWyzX/ISLxZCBVfg9vAxwMbOAUidNxUlnBiSYsVbCDT8E/+bMzl32lp4Nr05F0zHJ1A==
+ bh=HIuQJOOVXKkvpUKgCw/RcuHgk159lEOChzvZfoRAu1M=;
+ b=GP65O4XYYKK24HHVKiyfRpfbvB89Du6MjLfOoTOpsIJi4LBm5g8Tw8Z6nLr9DSU1kkHh4B51smVxq4TWUuVBbL/x98NZi9whmhzlX8na4it/CjM53wtnsCB0AuHiyriWnNsL5kqcYGF2/L+wkNMgsJdGKmXCBLzPwclcoLsnwAFBcaxETud4v7l7IahF8hmGR1VzSXoL2fwe5GI8ZE9wB6NjyJFlSKDLwGLDd4Hb0+30+9BtDzOqw9aqoYGSd2vQpkdjg+jfZjbyqxlmTWueuCWj+TjvjX2N/4vDcJBcKO25P/KBcQwhkLk7X2SvyZiDDU5FTVtMGWY6fu/bxZCNtA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ty25UkBaA3WJsCEcAdcAcDbhC26DzqSD8zziw4WuAyI=;
- b=RGJvNh8XchP8ZmAe0KrmAllF5y0jGIBwrZldSTg4/MPBdvtgaKzEinYZ9LDqZkrCdSNFrBY4swXzBiipQ/q0ZlOJnKmBOMzgi/8gCDkFTPcvsbB/b5yOxxtpdLrS4X2EyJwHgJLzKYOCYMuS91KxEoeXMnCA3hhbfMLr9JI+akzB6+LvOuRvvnjS+lGkZHlOnkvjsDXKS3dR24JCYyqm3hyNH7UZOVMvtMsEKeysrbp0MX7eudYUBHs7UKZW7DAwJTXHB70yRXZomUx37gmE2cWDeGYbS7laCLLQG66va37hy99GdP0girpoeMCtuYLV9Oa9gi2qr2IbGxfnB8jP+Q==
+ bh=HIuQJOOVXKkvpUKgCw/RcuHgk159lEOChzvZfoRAu1M=;
+ b=GlSvODqGXb7taJg2k3QmiOdpsOccKzI378oY3wAOZBOo+Py07f8EaXzeXKgNTWywuTNCVxVl9mj8OqgiDCvAknZHdWGvRoNhm1ViO+y5j9WAYw40dR2kWeb+6isIhay14MQEfyxE8TYs3I/m1GLMVLrMULbfSExuJ1oYszN+JQA+dyy3jm+h9HcnCYmCUeks+lTISFJxRlYpFpemfrn2Qx0PkjZ/F6gJ94PPklUWy4x7lF4pc6CZQ2VURW3+lSMJHmVRlYVVO0bSlmMFFRQX8LVU9FhW9m82BMIvaJDONcQBkKb1YdEaOId1SXOakuin8bA8+tULVTyA5rU8rmILwA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS8PR04MB8835.eurprd04.prod.outlook.com (2603:10a6:20b:42e::21) with
+ by AS5PR04MB9998.eurprd04.prod.outlook.com (2603:10a6:20b:67e::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Tue, 21 Jul
- 2026 21:38:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.18; Tue, 21 Jul
+ 2026 21:43:26 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.009; Tue, 21 Jul 2026
- 21:38:26 +0000
-Date: Tue, 21 Jul 2026 16:38:17 -0500
+ 21:43:26 +0000
+Date: Tue, 21 Jul 2026 16:43:17 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Rosen Penev <rosenp@gmail.com>
 Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
@@ -50,16 +50,15 @@ Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
 	Xuelin Shi <xuelin.shi@freescale.com>,
 	Harninder Rai <harninder.rai@freescale.com>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCHv2 1/2] dmaengine: fsl_raid: pass platform_device to
- drvdata
-Message-ID: <al_myb34GW14qd9a@SMW015318>
+Subject: Re: [PATCHv2 2/2] dmaengine: fsl_raid: free resources in probe
+Message-ID: <al_n9QnYzdvII8fZ@SMW015318>
 References: <20260721195422.353794-1-rosenp@gmail.com>
- <20260721195422.353794-2-rosenp@gmail.com>
+ <20260721195422.353794-3-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260721195422.353794-2-rosenp@gmail.com>
-X-ClientProxiedBy: PH0P220CA0026.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:d3::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260721195422.353794-3-rosenp@gmail.com>
+X-ClientProxiedBy: SA1PR04CA0022.namprd04.prod.outlook.com
+ (2603:10b6:806:2ce::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,138 +67,180 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8835:EE_
-X-MS-Office365-Filtering-Correlation-Id: a81928cf-e52c-4829-3e6c-08dee7706588
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS5PR04MB9998:EE_
+X-MS-Office365-Filtering-Correlation-Id: eb352f46-501c-4bef-e6c5-08dee771184c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|19092799006|366016|376014|23010399003|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|19092799006|1800799024|366016|23010399003|376014|22082099003|18002099003|10067099003|56012099006|11063799006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	ZVAkn/w4ZotQk+IHXTI4oOqX8VsNWU3PAFot6USfL0Q4eMoG2uC82ph3IofcwdskOySVm5MCLpJlIkPcragkT7vnJ5t6tQCIIIp31ZB2SAG3L2WE87Z49K0xWOav+VuU0fwsiV668U70YND4aGHzwAfEedffl4GAm6QGgesf5xTJg0hI73s6dxVbyxASmKbaRDeILpezH3jPLmFN1RbrBcO/09alB6X3SHXLImFsrT2RZyofhbxyNGjvcLWHs1u3TrdPbfrHpgax8Waqr/gAvcHUOICcB5Z4XlaAScNKeB6+xNpAeB8uxSEEKejRuitHUfQ81DunvaJLpV1u98XkcsJp/U6E8fq3u4Qk3uGgCRmgVW5/dfCaPli3cRDGxyNtGFGiIMVT3GsqnkuVJPmBOppmrwuNIT2DHljwMMCqD8/In53PCEDxQRUHWgVjXTouQhyDzqYqvUqB2wLAp6FatOzjV3KDuVbIE6FTdNMtD+znHuGf5/EoAx09eFL52FczeO0s4zIoik3loTGzy2IHqi8VkwbYrH6rclX2MbPZGNLtJx7Sqn9mReF97ge/Sn91Z3k7c9mOQ1KXxLimvgrOgkWk5F4pZQdxGRJ+58Tw23nPWlgKoW+Zye/o6m6/xRdEi6ETlKTbP+NFIliNMT+IMNg+73/4YpSxZ06TU4sDFH4=
+	Ajxumq4iMTgioZUZ6qD85Vc2Fm6EEt6tegnoNE3wXwP0WcyKWfIm15vPpVCHvewi7LMAHAwf/O9XFesmPQYXG4xHK/gljLTobjeHnHTbLZ6h1QYMZ/MkyiYTIhUKO+C8SD+tPRau9drBK7ceCCr0d67wja+VJy7Mgz7PfyKFjZ4ipw9rNtB9FQYuktIrQUHm419YPuf/SrgWWwFlD2aHucNxnwjTgpixMipG6LqsrSS08Mb4M8ZBY1zt6CRryMZUdiX5+ORGOOYoD+igh5HtqIefgTBCfvZQ+a4Df3szmwiIHVlc0kr4xvzkoBKE1sG+zFMkL2iphOM0mGXy5M/vPBv4LkHL5EGE7f07UVknOX2oI4WsaW8NgkIEhUiuVe+7aSVTmTF/cl3cOKagY4gDmlvvdYoV1dMwoBg2HjVGGZwAyJTY5ZWvi0mpyyCeQEJRuXmNgqZ9tZBw5LtgBLkAhnZPRWCrexb4QSky8U35XACPl7jOEVuhR1eXm0OuuA0cgKWrTOwuwtZNl0nW3ghUx8bp9AgS8YwsGJeD1RO/YHWJfeuEMyFDiOzWSAMqC2TAEPxje7U/QGrRPLCGfzT+UmIAeuqzp0VESlZGJHJSz4VZ2Y66YxTGFW7jb0bNyXPHnc6GYENN0FxnVcx8kJyWvEmAvATLPIN4C9k7yMSf568=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(366016)(376014)(23010399003)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(23010399003)(376014)(22082099003)(18002099003)(10067099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?4b9Z+1ASlJAOIEXKClRLU+UpXuKYH85m/a0Dy/CNKI1PNnU4hIbhIkZmp0L+?=
- =?us-ascii?Q?VnXXSz6fDu9NQ/++TSGEAGpS2KzAmhzlZFPbu2hxCZK4NwOxvAl20QzjQDH7?=
- =?us-ascii?Q?nbcH3dpHLcDqizCu0ceN0mJ4RoYerXLchXpkFWL9fm3qjO7uAqW83M1vq6ao?=
- =?us-ascii?Q?tKUE3RpRLcUbTnM6CJ26/S80PMOGVP4DV7qc/YM1DJvMr7mzHwtjWF3bAvvf?=
- =?us-ascii?Q?8rqDD7LM9pNHlv274elFWchpzTdeLH3VZktvILO+Vax4Dy3Cty0jae4an/Kf?=
- =?us-ascii?Q?ntMesneHrnZrkaiC721LiWHktL7s8RjN/YJDKhJXHxkLU7cQp9QMoHcsBs/C?=
- =?us-ascii?Q?6G03fgB1qM6hg+dnBJ0KkDe3shmdET3bAFRe1YmgYqiRvOBnPKetUNBau47r?=
- =?us-ascii?Q?48U4H55s2YmDiAaU0c/zmgfcyu9dMzXNMISUBPPMCmkDJbhgwzlMsHMS9NeT?=
- =?us-ascii?Q?1TR7WIFVzjcAMUXSZzM8X9LzTqIjaSvwxE6RHctXRi7ziZvxB+U1MDWjIIR4?=
- =?us-ascii?Q?JioFTprUNLU/3EhNnalc4SRwcAO52Hs67enr/52D3MZklMqJ8I/NrE2KCRos?=
- =?us-ascii?Q?smmtUXzWwM5m8H3l0pdZYJ930l/z/udyrmn5rW0GPQj1ySMujnix2FqXJo22?=
- =?us-ascii?Q?VvrYbZCotwA6G5Q8xAIpTyc7MKFwCw+4zNjSEVs7Wre/ljBeZ3Sii0gy6TUr?=
- =?us-ascii?Q?EfsMa0AcYs95Ge+dRIlfPNH0uGPooafpXqlgh7uTll9co+7FgcbrE5kReDA6?=
- =?us-ascii?Q?RVR5n02oidqDwgtEbno5nR5cn2NGySDSc60VdMEhVBxl5lHwQ93/gM5mmrid?=
- =?us-ascii?Q?xBGbMSKJfv3yyPnlpLaS1us161xC+Pyw5t2RLi3IdQDXh0Wxss+pkaivAoDJ?=
- =?us-ascii?Q?wjmL7HBWl/UJvh991uwHgZJuRYmXMnMjJO2LyvqcSpNHwq6oMl8HQP9QyIzT?=
- =?us-ascii?Q?gOUOjy/wGYLvvA6Pk+a0m000LhcVB3EP3pUTpqcTSFWK4DNnkQ01LiqxqYKQ?=
- =?us-ascii?Q?6g/aIdUEjgI1DwyT1Auc5D7GecuC6BaCfDfemzSWm4NhN6vy98L0CI1k0RYH?=
- =?us-ascii?Q?1YfrvB9tJw/C5T51eBVHB0AgPMTEm39csKUBM73kJvPpGBKeR7sQUxyTpj49?=
- =?us-ascii?Q?t1dIZiu4jo+adshBOcwZTXew9iXETvrCw36YH+3YR+C84dLwmzsJnL4nJieW?=
- =?us-ascii?Q?+abJO3wwr09nhNtgFInyC8deO9vJEeskIOKvBil3gQ2cKDWkYqFZ6R4IYOHA?=
- =?us-ascii?Q?knK17QHvUgJplIia+qa4PhmdGiEULQ7eiUbeiHdvtcQxq3JK6TBORaj3Uzbp?=
- =?us-ascii?Q?0EHXYJS5pKI+3PLfCLngJe8ormgos0tZkHzoWnJU9gx2g4DMmhFVMkE4aFQi?=
- =?us-ascii?Q?z/72UDQCgmiQKocB2W/luAb0vDJn+vHN8KBXC1WzuXGu/bwOCFvdBYE2Mtlo?=
- =?us-ascii?Q?8A0HnrWwHhMhZ4AcRtUFZv87kvvtHcETRBYRrIBIEU/CKMaZRmeAs75F5K5Q?=
- =?us-ascii?Q?WxwvvXDiyHk2uv7pxvLK89jZhnkGMRPxCIIBCoLDvGi5gD0RRZL7KmXrDF3J?=
- =?us-ascii?Q?oIuI4pXFr/fslKyCraj/0B5hAvRsLPQ1kuEvuOZAvlFYjeopSp0JwaeP0+fu?=
- =?us-ascii?Q?HQykz/r6AgTsRILTnyDZni2vJueeiiF36NJfF2a9mnhBz57F+xtoX7yr+hnt?=
- =?us-ascii?Q?CKFuqd5qQSvRJ7FW6TNQ9zzc4WSg5hUfRYqa/4qGDXpeI8Ir04QAVTJxHCWa?=
- =?us-ascii?Q?KOd3drcoLgcTTa3sk5kFeDenAQxuTgzZ3P3c/s/Ys96WsXuUs+lZ?=
+	=?us-ascii?Q?5zSKGU7cymLzYqf0jqOx2iN2132EVOwQfO7BhupgLV+CN20ekGTZAzyv916G?=
+ =?us-ascii?Q?F/5ms40R4OombHQG1o0LxpsFUOvgTbUDBOt6AtALhh4rbkXDUe1p6Q5MBYRL?=
+ =?us-ascii?Q?B4+kpPvsyvKBwNVlcC/iH3ED/aA07n/UR1ZxonZwracxwfklRxlK2YuFvB6P?=
+ =?us-ascii?Q?1h0sHmzTu9Py2KZiVk0odpNXz0BeEMzyjkVHFtqo8MsCM38J06vDY0ipTxpo?=
+ =?us-ascii?Q?H6qHfx64QKRzcoZMwZBBPEGGs3lYg259YsyCGyrGXIP9JaUij0KIQe096r+x?=
+ =?us-ascii?Q?/emo50TAKXKHzvK9INR7oFzqsRcERxl54bUqw9ZZzitS4pIdpNgJxKhzbOE7?=
+ =?us-ascii?Q?JMq/l7lqFBY23X9+gZl6LH/stXNdvfvA8Gb+GdJ09pbFWfD6l/hh/TImIBcX?=
+ =?us-ascii?Q?2RjVYNMY6BV67/0IZ1udOBVdkJT36g7why1D/Icn6nPSOwew4k9JeVBSbNTr?=
+ =?us-ascii?Q?6wuvSuR9pOKKXNe/rKLWYqDx1HBd8+wp0hTe+dUftGnloLv5HSCOJJUhBnHZ?=
+ =?us-ascii?Q?0i0RGeaTMGrKBxsWmBUJFN3k/rqTA6zSV7tEsMqM9VSOYptMTw7HSkCOpprY?=
+ =?us-ascii?Q?m+PCuTVjCiU+zFlLjoPgI4b7t3dXOHBE613n6jBt/08ypNskO/FwGYHLCRPH?=
+ =?us-ascii?Q?YlwYnJ5m5ejmuTged/BFM0c2lMtaGJiIWQdW98OCNZERqOz2Mae/C/nuwf5I?=
+ =?us-ascii?Q?J8C6ygZn99N2Op7Fdd7p+TFYHaxUFDG0v4W8WQDgtiX7hXbqw2JF50I8u7QQ?=
+ =?us-ascii?Q?51FfstYTYhQ8rYk0j8nhQBdLsY3pKnYlkyWIXZ5ok+hmB85N2ZtaDJp1N6Bm?=
+ =?us-ascii?Q?7dZaAh29GBdWcmQbTGzMxgi2NQ0aWyZl5m/hthHEYCkg+UeFPJ7Wgv4z4IOs?=
+ =?us-ascii?Q?WXLbfMr5oFttoBmQRn8SauWO9swOXnvfzHhkOvveVQXjJRC48zZkM+IJFuHo?=
+ =?us-ascii?Q?OWc2Fh4z0kFfghaYE91ZIFatgttko+9Fd9G8j3c0MUQIkIlc2cRVffWN2nni?=
+ =?us-ascii?Q?dFyWfswNLkdlkK+Yo3zv2cwhUJWAYPSvmgaK4scpxiM+TMr7MmUCS08nNMOy?=
+ =?us-ascii?Q?baZt5TJC0B4Lf4fLtogNa/4RRRT8uNSQ0sei7Xf6zJ07EbHjJqJwho7EJZnD?=
+ =?us-ascii?Q?NsgUgBK0kRVAN+JfN6ushKpFjr97dDvD+J7Un322rJyW6yzyF9tGCP4Rw4Jz?=
+ =?us-ascii?Q?OBDPlpjA6ZWhiFYjucwR5vw/xxQ8v+GYTV84AOj4CgcfSbZ+TwHNkkSdZok/?=
+ =?us-ascii?Q?lnaPGJolQxqmLWC0cpKC2qlIYyPtpaSkC4BzEMsrT3l2w3ShpQS/cJqMv+J6?=
+ =?us-ascii?Q?Mj8tNwKq3AV4WNmRPKemzjxiOm26dEpxpwW9sSQAXPrm1xB1XFiIjY4mlTUV?=
+ =?us-ascii?Q?UtJ+fZVSZ+2jXddYwL815nZykW3ht5x43+tPL1YmtkxqGRIeUZcNIMoEbcyV?=
+ =?us-ascii?Q?qkd0ES0JZcVSMCvix17GHPsFmg84sRmQ8Bl8zaEX8XN13JBG2TIAtq/qWrw4?=
+ =?us-ascii?Q?D9wNNUB+68Xq8R3aow53s+j5I7o5OfqssbKN+rDzjpJOt0fE4XmS1yLT/e+W?=
+ =?us-ascii?Q?7HKjY+EmGySSAF8sHwqvc+X0r5ifu7IGtiuN0wx8nk87B6lYLv3SPVeqt86u?=
+ =?us-ascii?Q?t6T4eICNgd5IIRrJwB2HimWDbx60jN0DTH8iHet3TqpA6OQH58uFtJhm/MbJ?=
+ =?us-ascii?Q?vWRwRwtjpXipHNWYMgRkHji0KStXuk0Nofr33mVpxK5hVlWPFxDu+wfdlHph?=
+ =?us-ascii?Q?iFvBV60OejEl8oLStGDX4zhSPvK7KySVOtwaX9wjGb6ZvqRwAYUA?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a81928cf-e52c-4829-3e6c-08dee7706588
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb352f46-501c-4bef-e6c5-08dee771184c
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 21:38:26.1644
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2026 21:43:26.0882
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S0CR5v+LgycNBQW3OmbT9cdJdgxcdN83VTakP42rMZMGc4DJte97CUbCE7lDB0HjGIDguDD2ESzkPtbZvFSN3e2zl61vLQoGcrMXwtK2Ag9vx4Kf+WszHju4zUf5AokO
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8835
+X-MS-Exchange-CrossTenant-UserPrincipalName: q/qgYrSOdsGq2BbFsRv7Uf3KDqQxG4ZjLlxX5zY2wHEFVOKoUGADwbAD5nIXi4QQFEG8uCPy3e2JxerzeoixonxUqYYYMcM8QS2hFnJK6TTSQjaDiX6SkexR6zySOjxm
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR04MB9998
 
-On Tue, Jul 21, 2026 at 12:54:21PM -0700, Rosen Penev wrote:
-> Simplifies code slightly and avoids having to take pointer of a platform
-> device member. A platform device is always used.
+On Tue, Jul 21, 2026 at 12:54:22PM -0700, Rosen Penev wrote:
+> Add free_irq() in the error unwind of fsl_re_chan_probe() and in
+> fsl_re_remove_chan() so the interrupt is always released.
 >
+> Also add tasklet_kill(). Present in _remove but not _probe.
+>
+> Also add platform_device_put on failure as of_platform_device_create()
+> increases the reference count and needs platform_device_put on failure.
+> Requires placing the pointer in the struct for the _remove function.
+> While at it, use platform_get/set_drvdata as there's no need for using a
+> device pointer for that.
+>
+> Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+> Assisted-by: opencode:hy3-free
 > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  drivers/dma/fsl_raid.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
+>  drivers/dma/fsl_raid.c | 20 ++++++++++++++------
+>  drivers/dma/fsl_raid.h |  1 +
+>  2 files changed, 15 insertions(+), 6 deletions(-)
 >
 > diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index da5228e121d1..2d54879cd6e1 100644
+> index 2d54879cd6e1..cabc79e61e85 100644
 > --- a/drivers/dma/fsl_raid.c
 > +++ b/drivers/dma/fsl_raid.c
-> @@ -219,10 +219,11 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
->  /* Per Job Ring interrupt handler */
->  static irqreturn_t fsl_re_isr(int irq, void *data)
->  {
-> +	struct platform_device *pdev = data;
->  	struct fsl_re_chan *re_chan;
->  	u32 irqstate, status;
+> @@ -661,8 +661,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  	chan_ofdev = of_platform_device_create(np, NULL, dev);
+>  	if (!chan_ofdev) {
+>  		dev_err(dev, "Not able to create ofdev for jr %d\n", q);
+> -		ret = -EINVAL;
+> -		goto err_free;
+> +		return -EINVAL;
+>  	}
 >
-> -	re_chan = dev_get_drvdata((struct device *)data);
-> +	re_chan = platform_get_drvdata(pdev);
->
->  	irqstate = in_be32(&re_chan->jrregs->jr_interrupt_status);
->  	if (!irqstate)
-> @@ -649,7 +650,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
->  	struct platform_device *chan_ofdev;
->
->  	dev = &ofdev->dev;
-> -	re_priv = dev_get_drvdata(dev);
-> +	re_priv = platform_get_drvdata(ofdev);
->  	dma_dev = &re_priv->dma_dev;
->
->  	chan = devm_kzalloc(dev, sizeof(*chan), GFP_KERNEL);
-> @@ -687,7 +688,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  	/* read reg property from dts */
+> @@ -688,17 +687,19 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
 >  	chandev = &chan_ofdev->dev;
 >  	tasklet_setup(&chan->irqtask, fsl_re_dequeue);
 >
-> -	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-> +	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chan_ofdev);
+> +	platform_set_drvdata(chan_ofdev, chan);
+
+Previous patch already set, why need set again?
+
+Frank
+>  	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chan_ofdev);
 >  	if (ret) {
 >  		dev_err(dev, "Unable to register interrupt for JR %d\n", q);
 >  		ret = -EINVAL;
-> @@ -743,7 +744,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+> -		goto err_free;
+> +		goto err_free_tasklet;
+>  	}
+>
+>  	re_priv->re_jrs[q] = chan;
+>  	chan->chan.device = dma_dev;
+>  	chan->chan.private = chan;
+>  	chan->dev = chandev;
+> +	chan->ofdev = chan_ofdev;
+>  	chan->re_dev = re_priv;
+>
+>  	spin_lock_init(&chan->desc_lock);
+> @@ -712,7 +713,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  	if (!chan->inb_ring_virt_addr) {
+>  		dev_err(dev, "No dma memory for inb_ring_virt_addr\n");
+>  		ret = -ENOMEM;
+> -		goto err_free;
+> +		goto err_free_irq;
+>  	}
+>
+>  	chan->oub_ring_virt_addr = dma_pool_alloc(chan->re_dev->hw_desc_pool,
+> @@ -744,8 +745,6 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
 >  	out_be32(&chan->jrregs->jr_config_1,
 >  		 FSL_RE_CFG1_CBSI | FSL_RE_CFG1_CBS0 | status);
 >
-> -	dev_set_drvdata(chandev, chan);
-> +	platform_set_drvdata(chan_ofdev, chan);
->
+> -	platform_set_drvdata(chan_ofdev, chan);
+> -
 >  	/* Enable RE/CHAN */
 >  	out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
-> @@ -834,7 +835,7 @@ static int fsl_re_probe(struct platform_device *ofdev)
->  		return -ENOMEM;
->  	}
 >
-> -	dev_set_drvdata(dev, re_priv);
-> +	platform_set_drvdata(ofdev, re_priv);
+> @@ -754,7 +753,12 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+>  err_free_1:
+>  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
+>  		      chan->inb_phys_addr);
+> +err_free_irq:
+> +	free_irq(chan->irq, chan_ofdev);
+> +err_free_tasklet:
+> +	tasklet_kill(&chan->irqtask);
+>  err_free:
+> +	of_platform_device_destroy(chan_ofdev);
+>  	return ret;
+>  }
 >
->  	/* Parse Device tree to find out the total number of JQs present */
->  	for_each_compatible_node_scoped(np, NULL, "fsl,raideng-v1.0-job-queue") {
-> @@ -903,11 +904,9 @@ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
->  static void fsl_re_remove(struct platform_device *ofdev)
+> @@ -892,6 +896,8 @@ static int fsl_re_probe(struct platform_device *ofdev)
+>
+>  static void fsl_re_remove_chan(struct fsl_re_chan *chan)
 >  {
->  	struct fsl_re_drv_private *re_priv;
-> -	struct device *dev;
->  	int i;
+> +	free_irq(chan->irq, chan->ofdev);
+> +
+>  	tasklet_kill(&chan->irqtask);
 >
-> -	dev = &ofdev->dev;
-> -	re_priv = dev_get_drvdata(dev);
-> +	re_priv = platform_get_drvdata(ofdev);
+>  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
+> @@ -899,6 +905,8 @@ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
 >
->  	/* Unregister the DMA device first so no client can still hold a
->  	 * channel and submit new work while the channel rings are torn
+>  	dma_pool_free(chan->re_dev->hw_desc_pool, chan->oub_ring_virt_addr,
+>  		      chan->oub_phys_addr);
+> +
+> +	of_platform_device_destroy(chan->ofdev);
+>  }
+>
+>  static void fsl_re_remove(struct platform_device *ofdev)
+> diff --git a/drivers/dma/fsl_raid.h b/drivers/dma/fsl_raid.h
+> index adbfede330a7..34d362803610 100644
+> --- a/drivers/dma/fsl_raid.h
+> +++ b/drivers/dma/fsl_raid.h
+> @@ -270,6 +270,7 @@ struct fsl_re_chan {
+>  	struct list_head active_q; /* already issued on hw, not completed */
+>  	struct list_head submit_q;
+>  	struct list_head free_q; /* alloc available queue */
+> +	struct platform_device *ofdev;
+>  	struct device *dev;
+>  	struct fsl_re_drv_private *re_dev;
+>  	struct dma_chan chan;
 > --
 > 2.55.0
 >
