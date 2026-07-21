@@ -1,257 +1,184 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04263FDBF7
-	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 07:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784619180; cv=pass; b=tvR95lC0AseSsEPS2qAONyqdXdqc/43AoDSOBpAL3ut2U4qnwsuriLTvF34Xt5doPQR8zJAPrJvmjP3lKxE5L3lZo5CNXMGYRN4DHyW/qyELIVCTZz58P0ZOrbEz/0S+hm8zQ0TQZJpaPp9/NmYyM3aCh+3r+9ovgnMPPFVSQE4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784619180; c=relaxed/simple;
-	bh=0CChg2Zb5gvOp1ImzkoIk799nOEo9CcxWjq6XbKoBpY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QCvgPdFD1fDp68M06alCc8302kZowq/3A+JbkXFq4UWyOd+YO3UyV+mnFihemUGUcO3YtyzlkKpC6232lZWq+UFc1A+TUGbTeqQojyv4vIIV7XsTdQHemtInwMYGY8IlA0zohN7U/FPA+T/rZeV7x34GUrqFbtLgDs0xornWn6g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e9pxgdBC; arc=pass smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25CF27E1DC
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 11:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784632324; cv=none; b=XNunm+gwSZ1mW5aqebTxh2WP51cHvRE6OkpChZLGE1Yz6x8q6DpFpGybv5rhSXlJG6LmgCOFDtD/X3hvvTRYh1p8iJXF1CyvNEP00fBOXTwN748ttx0qKQzfwaoQUKsOHV8ys+GkSfJiUISFuEkCJbjq4o0isNPu0iZl+w5DxhI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784632324; c=relaxed/simple;
+	bh=Yatm9ZxnOj/ym6CjLLtiZlAqlYcNBFpdb3IRAxm4+Mc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i2vMsPsl9Y45Wge5lSEFEx3ZyigNkAlIqj/OZajl6lHoUrSqTOTSngo5eqoxvuO/1KEfk5Ty7iU1B61hkYiplnvvX8EOaJjVj494f4s9xs7fnlr0QFnYNVO3DGiS24vhGC8HabtI5zK7lZ0Iyj71JjWzN/Hd0/AfZBCxMy0CbdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JnhOE2cj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MgTo4g5z; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e9pxgdBC"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-39c8dbf4ef0so99305561fa.2
-        for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 00:32:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1784619177; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Uc2nUqp/BOQ47ZTpQdWF0WZ2BVVomNYa4s5uem2CVrezY0JWe6+z3xe2+l8Pr77Zib
-         4f6dmAxC6dHGzf13+7SJqdk3IZNNmrOuEs3klCTaL3b+Rofz2GUNMHfqJPxcm3CM9fOz
-         g8ZiyDMom6U1XjI8aaVa4KYmmvjj+R3AYiDzHtfd352wx4gCVd+0D9HGNTyx0S93nPh4
-         zqYcK78ZkEOVf9Xz23l1F504OLbF2fCEsOMqpObfcIbaZcxMnvyue2O2hzPIqmhw5n+8
-         ZXcsT8O9tthKBhc3HTDKmaR92Bd8MNfH8HeL1FmNHkGJ99PIsNZ4tr/ta5GcrAULcJKX
-         JpHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
-        fh=zcm1aTUQ8PBLpEDB5nq4wSiCYzlo2KbP47Rfp5hx0X4=;
-        b=QP4IYzgrBKfRq0SXb7e9XTNRbgJai3pfUQ2BzlQLIlWDHNkkw2Pt6dZ5MRu3sbWhZe
-         rgfPkjd8bDS4yoLalCzPhvY0yjH+EhDwhtJmfYuOEBX79gmmI0gFixTLmk0ZoMV8V5hq
-         P7IZZAqnIQodIEsSmN3aYh4Cox5SIerrRojEdaTp2VBKSgl98Ipz50MgJrV02agWfrq4
-         NXEEKiiq06g2icRqyUx7kphWtTTsMS9/xvtajNGhyhY2NGmLVLeTaMhgf1m5xGnPcXRq
-         H38J0AwP01XDmDO6+o76QkVWbpNkvGREmUmKfqGK7+3owTz8w5iOcjBbI4NSBKEKFBH7
-         MBsg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JnhOE2cj";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MgTo4g5z"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66LARACX2503041
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 11:12:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qlTRXKprfy8H5Qp0s1PDGixTI63RzoUst5XmEPyz0Fk=; b=JnhOE2cjuVkrNNV9
+	bT7H5zhtfoPr2dwS8x4fOLarH6mUm7Ve5wTexfIoayC0J696pD4ex6Be7TeobJWl
+	0dw8T2CUaCMx06yS2lcY2gwevJB0ly3ORehZFUyZPKTtskjtvEGDxYgEzZrrcoSO
+	itEvpzR4Xw/71OANgCJWN45TKiKH+LaYTX2A2jc0i+7cXUclWeuGMBX3jT5ZYYrb
+	d7Gl29raXd/sLzs0v8ICMpXFwi4P5GX7osoVuMfpjQm8RVqblqLHEo7TyvRAr6bl
+	4gVnFjTzEizADurp8JPNjp6rI+NIBLm5oA33dxMWd6OtlnZgGzZ99U5QiUBvNoa0
+	ebnJxQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj6nsr8wj-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 11:12:01 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-ca7c1e22995so17066358a12.3
+        for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 04:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784619177; x=1785223977; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
-        b=e9pxgdBCro6ocluiu5ViwvkZMMAFtfxCN20GJIFlbfk8xo25/JR7DOTveRyBz+CoKQ
-         +SKP+tBS8rT7hY131kmorS6qx2EAe5hVFRmM/UK2+1trQdeJDQsoJZKXBzGvR5Gk5vX+
-         9nM0ACRqv9fsQSOIbmT1uaTV1QEO4PFQ7gNRjIC4Ec1+u6L4+FXRl0SwqY8fwWFgA2Fj
-         y6p7kmht8e+BkoGy7BiAMwaQkWM1ZZcptu4hwU3BFqIu8m1lxAP0ugENsPRKFbwEg/7R
-         X/cQ1BgGYb7rAyubcz/EIL/QDFgmTdXkZyD4zXSZzk5sDpbU/MiZtgxriDLBPG51gjN0
-         9uWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784619177; x=1785223977;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=oss.qualcomm.com; s=google; t=1784632321; x=1785237121; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=j8o+RAe0niZAElELakupe2TNV2APmi2bhtI/BI8Bs84=;
-        b=W+NNfqC+bEk2EuUCG9ehLS2rcso5ebOibpkpJUVuiwuo/jIQ+d3dvUZ0VpXKjqygK4
-         ugtPxve3UkwwaoZDJNppZi/x3MVyTgU68fa9FRmCme+vRh/ADJhsdkBQe3Wzxw5w096S
-         kTv5+ykqqeu0AE6oSje4Ncxa3VTeeWauXButbtAlzESDWFo0Xo6vymyQN5dXoMLggWwL
-         r1xZJXsyKxG9YjRN3M2DJ77X8g4tKTXm4zfDoQbLnk6h0luk+yLKYfiE/eU7Kn0smh4B
-         DMAfeDt+V+toWUmA5ACrY/C1XKpVv81jDOv6Ro4g535XnpzOyBEXLMCVQ0NgYRvjV0yW
-         ju6Q==
-X-Forwarded-Encrypted: i=1; AHgh+RoAACHGaJCgaezS2XMTw6G4EomXWyys90yTjuVaanHgav9RH2XdvaZuxEezP166iBYIzRHCup+ZuVY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTLB56i8JG4u3Xpcxt5y6wI+ZTqGhCDDHnCOv+Cv0G3/99XPIY
-	2G1RP34hEeNaapj26SzeNmjB9G/YGcuLiI7ZlYBpvyESHurjILbvPrl2NYKPBZLpgrGPUm3SHOg
-	5UyFYlOq3n0jn823dTLaXEU9zPvqRngg=
-X-Gm-Gg: AR+sD11G6mZ5rohBTD5QF1Q4ToB7Sc8/00koMjflpyCL0JoZyQ/dOjK4kfTyOCjgktG
-	YwwVm7YgfWFXc/eAM1xHcN/w+c/r6RPjAyRO/iYb3YMPPDCVM8qf+wm9VnUjgCdMMqQwb6xPoYf
-	uc2CPW9hB23mxQy8xPcaxORrtvg+s8ZEBaBLtCJHbpTNWeC9fbgGiAro/qIMy1z8QgZGBiXUD4u
-	Kzup15zepcqnsv2cY6xghbTlz9HfEvxkM7rtL5/ci+dtWnOFKmQNCJBhL/HpfuDHHcEs6uZaucS
-	P30j8612i4C3V6iI1DuN/iL5lKlPpB0MQ7gmhCyt1Yk00eAs
-X-Received: by 2002:a05:6512:1543:20b0:5b0:1433:13b9 with SMTP id
- 2adb3069b0e04-5b28f880702mr2439566e87.25.1784619176459; Tue, 21 Jul 2026
- 00:32:56 -0700 (PDT)
+        bh=qlTRXKprfy8H5Qp0s1PDGixTI63RzoUst5XmEPyz0Fk=;
+        b=MgTo4g5zdPtim0RcGxTCD6NJwwVmZi+wDyTHGL8856nLY9voznJZGhSYuU+G0/ZX3L
+         kTknJ+W7EFT9UrPo36sCn4KMra/nuTB2o9psFP5qr/baGvHkofKy0kpprm6xb/oGpDjC
+         3oTno5WPlV8Tk2vV7L+0vvlgi41vE7Dx4umXVbJLTESt/QM7MBXzQMpwB3iZ9LXfFz8H
+         1QaSCd0uESTaZOq5jgg+N1nIZumUTN0usbRIjBMBCM6eZYfXU7bYMrVnn7XlhKRkk0yf
+         14s0ppTwbsuKW4V9mEsSIEmoSMwxsInegYwXi0RvVMW4U7eLZAW8Ekv63X5MLn0a7YJO
+         FUUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784632321; x=1785237121;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qlTRXKprfy8H5Qp0s1PDGixTI63RzoUst5XmEPyz0Fk=;
+        b=RTQ3EukIeDQY58+Z8JxJ1lChgfz306YStuisMGNVUH0cR1WNSIfVyGSMC67X4zKygS
+         6u1BneNeG+srbwX/N/SgohVTfBAkGp6z7GmNoq/ap5jVhh3Xo6Xqsl/1fKwTKCcFXn7M
+         KJVi5IhfdRrFxf0S5diw5MrStkVnNanf4PffXk77lOh2mvzSmgNBIt8I4GyOZ96V/ZSq
+         2ukZgXRP3MfKkLAuUKY0QLg0cDrFxQ+kzocUkMjCiZKdAwSRPFVhAeqV0WTtQQzQrH7g
+         x6hVb1Xl/Sa0FBd66jHPllv/ErUFS/zfvyggBzJEBCqTLH6Jl7hjcqCMYoPEEndsiwRw
+         20UA==
+X-Forwarded-Encrypted: i=1; AHgh+RoRFPdstN0KtYEmFPjHvOQdtaFVV51qW/CSNFNb2okNSwe4ejqXqZGxwjWGeDdq6UAlY9oiWfooRsc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1QQtoH/+bcvVQ79W6YcFpN31k4i5o+SPwR4btcq/XxxIrxvIv
+	Qakea716t+7brlnKOBaCBWhGjhoyhYo6VpgGwnjUdvMRCTcOZidzQQGVkJv7sFhG9xUQa6JiqWP
+	px4WqsNAe1UJnH0kUMNzRdH5il6fCSXY71LjX35H78TOwpzE+58P658fdxox7aU8=
+X-Gm-Gg: AfdE7cmRhXt9f/IkeJdv/8T5ZCYDVYJ2rEl6jAnmfrytr3EejX92S7+j7UiCaIs1xaC
+	oRH2GsOShqTU5J/HrRVfbJqTtK9njKEmvaC4A+YCUnZEmQjmzbdB9dNMjXnjTCldxClDhP9PoEf
+	hRzrgHGD8jjTvBR3uiptiy/T6X/gUAza+D6XjNE6p4NlVibpj7n2P75gyvNKZsqrak895q0oK3Y
+	fvEzCkXWy7i5xrf599LWP4ss+FPpJeoq4FbXhdAp+L0xIpba1peHXWBXZ5LToekxTHJIAQ1t5o9
+	FvmQEtZz3Vpt1qNVPRRIv8mGqIDTII2hIRwX0YVGY7iEiinrNVYIHJDkilA9oZQof3xcYABXdZ6
+	Q7m0I7GDiPk2tLWHfFWPxdMuxLgLRyOKN2hmpC97WzSki
+X-Received: by 2002:a05:6a20:310a:b0:3bf:6c08:fb88 with SMTP id adf61e73a8af0-3c3ad9bb494mr12815162637.56.1784632321131;
+        Tue, 21 Jul 2026 04:12:01 -0700 (PDT)
+X-Received: by 2002:a05:6a20:310a:b0:3bf:6c08:fb88 with SMTP id adf61e73a8af0-3c3ad9bb494mr12815141637.56.1784632320698;
+        Tue, 21 Jul 2026 04:12:00 -0700 (PDT)
+Received: from [10.81.89.22] (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3142a1de21asm47287844eec.23.2026.07.21.04.11.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 04:12:00 -0700 (PDT)
+Message-ID: <94b10cea-7541-43e7-bdca-ab79e5729d55@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 04:11:59 -0700
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260720142538.2766-1-mahad.ibrahim.dev@gmail.com>
-In-Reply-To: <20260720142538.2766-1-mahad.ibrahim.dev@gmail.com>
-From: Keguang Zhang <keguang.zhang@gmail.com>
-Date: Tue, 21 Jul 2026 15:32:19 +0800
-X-Gm-Features: AUfX_myATwUZEeTvJp4nyV2ynsqaaPWg3tbxcSDpGX1RQHgXD6rcBP3NojFEJVA
-Message-ID: <CAJhJPsVj=pntghpDvzwcNj4hm-7Uu0bD+Uy-4b3Okw5Sq__JQw@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: loongson1-apb-dma: fix residue calculation for
- queued descriptors
-To: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, linux-mips@vger.kernel.org, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: qcom: gpi: Fix SE ID and SE Protocol fields
+ widths in SCRATCH_0
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        bjorn.andersson@oss.qualcomm.com
+Cc: praveen.talari@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mukesh.savaliya@oss.qualcomm.com
+References: <20260720-fix_se_id_and_se_protocol_fields-v1-1-e41dbb107d97@oss.qualcomm.com>
+ <34b0bb3b-d756-4cd6-806d-75b1124f4397@oss.qualcomm.com>
+Content-Language: en-US
+From: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
+In-Reply-To: <34b0bb3b-d756-4cd6-806d-75b1124f4397@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: J3_LVYG64-q0hsmeFlUFJOfaKZunDDYB
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX77uEBATRxNVZ
+ VOkHIOb1NLOvMTg2tcyMd/gISCkqnW7TIRU4Ca5TQUOufIfRfzlwhRroI+o61bvEdbuVesJ8THb
+ DpySI4PIpVB6lHw+0XH/HlZi2GfcrXA=
+X-Authority-Analysis: v=2.4 cv=ZJjnX37b c=1 sm=1 tr=0 ts=6a5f5401 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=-nvh27Yv-2H1FMEgutIA:9 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-ORIG-GUID: J3_LVYG64-q0hsmeFlUFJOfaKZunDDYB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDExOCBTYWx0ZWRfX9A0dhtDJyVzU
+ PSFDWvyqVX4SVWFhEo3XSc6D8zkzGWNtJFaVQnegDYKsoP8p9T3TaMYu2bGr73JCUYw0noYRf1f
+ mExQnZ9oyXsSYXxSEXJ8C9T/4+6OaRjEz2IuXHdAgbt1AFRmEsazzKgAEmqjdhHToja6LQ5+k0f
+ ou7pB0c52eKzzhgbAUC5fDUDRUJEtKCS1llEy6Og26rdbOxOOrVFNkl0s5BUJ9WQogZcw/h7C7/
+ 2yV+IYDcrGvFQ8x7IM8I+4MLe2NuB0tZmBAFYNEiXuOajpfbZO9HeXBvmkZ5vd5Wk69KVfu+l4M
+ E2GL1CPLzAa4PYRm76J+7+Ih77Xp7e+/sUc8iW1qaKMCVV+XEjT9HomEihsIBGg8h2qF+2u+FNC
+ HGRx12xwvM2/G/Kqu7vAK+g7W1xZbZCuMJ7Jfa+rIjWq//dDOL0RCO9d+oelagSrXLg+n/hnDI8
+ qlKr9m55plo0A2aEzvA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_01,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 suspectscore=0 impostorscore=0
+ malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210118
 
-Hi Mahad,
+HI Konrad
 
-Thanks for catching this use-after-iterator issue.
+On 7/20/26 08:47, Konrad Dybcio wrote:
+> On 7/20/26 5:27 PM, Chandana Kishori Chiluveru wrote:
+>> GPII_n_CH_k_SCRATCH_0_SEID is currently defined as GENMASK(2, 0), only
+>> 3 bits wide. Serial engine indices >= 8 get silently truncated by
+>> FIELD_PREP()/u32_encode_bits() when written into the scratch register,
+>> causing the GPI channel to bind to the wrong serial engine. The
+>> channel allocate command still succeeds (it doesn't require the
+>> target SE to respond), but the subsequent channel start command times
+>> out waiting for hardware to complete the handoff to the (incorrectly
+>> bound) SE, and gpi_send_cmd() returns -EIO leading to GSI usecase failures
+>> for SE8 and SE9 serial engines.
+>>
+>> Older documentation, such as the SDM845 hardware programming guide,
+>> describes the SE ID field as bits [2:0]. More recent QUP hardware
+>> documentation defines the field as bits [3:0]. Use the wider definition
+>> to match current hardware documentation while remaining compatible with
+>> existing platforms and enabling serial engine IDs greater than 7.
+>>
+>> Also update the SE Protocol field definition to match the documented
+>> register layout and keep both fields correctly packed.
+>>
+>> Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+>> Signed-off-by: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
+>> ---
+>>   drivers/dma/qcom/gpi.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+>> index a5055a6273af..8f09eaf4e714 100644
+>> --- a/drivers/dma/qcom/gpi.c
+>> +++ b/drivers/dma/qcom/gpi.c
+>> @@ -207,8 +207,8 @@ enum CNTXT_OFFS {
+>>   
+>>   /* Scratch registers */
+>>   #define GPII_n_CH_k_SCRATCH_0_OFFS(n, k)	(0x20060 + (0x4000 * (n)) + (0x80 * (k)))
+>> -#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(2, 0)
+>> -#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(7, 4)
+>> +#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(3, 0)
+>> +#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(6, 4)
+> There exist protocols, such as QSPI with id=9, so this surely can't
 
-On Mon, Jul 20, 2026 at 10:25=E2=80=AFPM Mahad Ibrahim
-<mahad.ibrahim.dev@gmail.com> wrote:
->
-> ls1x_dma_tx_status() locates the descriptor actively being processed by
-> walking the LLI list and comparing the hardware reported next descriptor
-> pointer against each element's next-descriptor pointer.
->
-> A list_for_each_entry macro is used in the comparison phase, which
-> internally expands to the container_of macro to find the current
-> ls1x_dma_lli's next-descriptor pointer to compare against. However a
-> problem occurs when the loop reaches the final lli list element and wraps
-> around to the head. The head is a different struct ls1x_dma_desc. It goes
-> down to the offset the node member would be at in ls1x_dma_lli inside of
-> ls1x_dma_desc.
->
-> This leaves the lli pointer somewhere inside of ls1x_dma_desc at the end
-> of the loop. The subsequent phys debug value read therefore would print
-> garbage as a valid phys address.
->
-> The primary bug occurs in the residue calculation list_for_each_entry_fro=
-m
-> macro. The lli pointer still points to somewhere inside of ls1x_dma_desc,
-> when the list_for_each_entry_from performs the same wrong offset
-> calculation on ls1x_dma_desc to determine the stop condition of the loop,
-> it lands at the same offset that lli pointer is on, and the loop
-> immediately stops.
->
-> This produces a 0 residue value, while it should be the entire length of
-> the lli list chain. The driver advertises DMA_RESIDUE_GRANULARITY_SEGMENT=
-,
-> so a 0 residue would mean the transfer has completed.
->
-> Found by the following Coccinelle check:
->
->   scripts/coccinelle/iterators/use_after_iter.cocci
->
->   drivers/dma/loongson/loongson1-apb-dma.c:461:6-9: ERROR: invalid
->   reference to the index variable of the iterator on line 450
->
-> Note the check still reports this line after the fix; the remaining use
-> is safe (the cursor is only dereferenced on the match path, or reset to
-> the first entry otherwise).
->
-> I did not see a bug upstream detailing this error, nor do I have the
-> hardware to confirm this bug or error, all this is from a pure code
-> examination.
->
-> As I do not possess the hardware, I cannot test the patch. Compile tested
-> only with mips64-linux-gnu-gcc.
->
-> Signed-off-by: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
-> ---
->  drivers/dma/loongson/loongson1-apb-dma.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loong=
-son/loongson1-apb-dma.c
-> index 89786cbd20ab..8bb6e6e5719d 100644
-> --- a/drivers/dma/loongson/loongson1-apb-dma.c
-> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
-> @@ -439,6 +439,7 @@ static enum dma_status ls1x_dma_tx_status(struct dma_=
-chan *dchan,
->                         struct ls1x_dma_desc *desc =3D to_ls1x_dma_desc(v=
-d);
->                         struct ls1x_dma_lli *lli;
->                         dma_addr_t next_phys;
-> +                       bool found =3D false;
->
->                         /* get the current lli */
->                         if (ls1x_dma_query(chan, &chan->curr_lli->phys))
-> @@ -447,11 +448,17 @@ static enum dma_status ls1x_dma_tx_status(struct dm=
-a_chan *dchan,
->                         /* locate the current lli */
->                         next_phys =3D chan->curr_lli->hw[LS1X_DMADESC_NEX=
-T];
->                         list_for_each_entry(lli, &desc->lli_list, node)
-> -                               if (lli->hw[LS1X_DMADESC_NEXT] =3D=3D nex=
-t_phys)
-> +                               if (lli->hw[LS1X_DMADESC_NEXT] =3D=3D nex=
-t_phys) {
-> +                                       found =3D true;
->                                         break;
-> -
-> -                       dev_dbg(chan2dev(dchan), "current lli_phys=3D%pad=
-",
-> -                               &lli->phys);
-> +                               }
-> +
-> +                       if (!found)
-> +                               lli =3D list_first_entry(&desc->lli_list,
-> +                                                      struct ls1x_dma_ll=
-i, node);
+Its my bad, The PROTO field should be [8:4]. I will correct this in the 
+next patch
 
-However, I don't think falling back to list_first_entry() when no
-match is found is appropriate. Since next_phys should always match one
-of the LLIs in the descriptor chain, failing to find a match should be
-treated as an unexpected condition rather than silently falling back
-to the first LLI.
-I would suggest something like:
-
-       scoped_guard(spinlock_irqsave, &chan->vc.lock) {
-               vd =3D vchan_find_desc(&chan->vc, cookie);
-               if (vd) {
-                       struct ls1x_dma_desc *desc =3D to_ls1x_dma_desc(vd);
-                       struct ls1x_dma_lli *lli;
-                       dma_addr_t next_phys;
-
-                       /* get the current lli */
-                       if (ls1x_dma_query(chan, &chan->curr_lli->phys))
-                               return status;
-
-                       /* locate the current lli */
-                       next_phys =3D chan->curr_lli->hw[LS1X_DMADESC_NEXT];
-                       list_for_each_entry(lli, &desc->lli_list, node) {
-                               if (lli->hw[LS1X_DMADESC_NEXT] !=3D next_phy=
-s)
-                                       continue;
-
-                               dev_dbg(chan2dev(dchan), "current
-lli_phys=3D%pad\n", &lli->phys);
-
-                               /* count the residues */
-                               list_for_each_entry_from(lli,
-&desc->lli_list, node)
-                                       bytes +=3D
-lli->hw[LS1X_DMADESC_LENGTH] * chan->bus_width;
-
-                               dma_set_residue(state, bytes);
-                               return status;
-                       }
-
-                       dev_warn(chan2dev(dchan), "unable to locate
-current LLI\n");
-               }
-       }
-
-       return status;
-
-> +                       else
-> +                               dev_dbg(chan2dev(dchan), "current lli_phy=
-s=3D%pad",
-> +                                       &lli->phys);
+> be right (unless there's another bitfield for that?)
 >
->                         /* count the residues */
->                         list_for_each_entry_from(lli, &desc->lli_list, no=
-de)
-> --
-> 2.54.0
+> Konrad
 >
-
-
---=20
-Best regards,
-
-Keguang Zhang
