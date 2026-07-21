@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9740241737C
-	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 06:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846EB357CEB
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 06:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784616304; cv=none; b=ij64PD0OdCjegR0k7QLSHA49awxg7o0YQP8N9O6Yt6Qnwe8jRmKdXN8pAJcDMzEOCWJQWJyAMwNCA9fLsu1sf37m4rdtMrL8jdXeCABKQxFFXXNst1xMJHskL8Tq0USdYydFipr4TLzKNNR59Eaw/p31ozEg/C4w2h1Rey4uQms=
+	t=1784616340; cv=none; b=kU4wBJtLt8X15ZYWGeBlnOtQ3LmvkNrcDI8/JgOs0qfme6T4CvjGk7Gr6jm7+HmT74vCXv28U5HNz0G6C1NoQLl4fZZ+1vNILnitd04NGkTcLwcsZjbRh2RZXgBMlzL9t3bBdgHODcB8ChyNOQv+eLY//lkopokB0IshTytldls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784616304; c=relaxed/simple;
-	bh=pxBC6sI7/BiFZ8LooZMx9s1q/FX0lnzqoftwMnuzY28=;
+	s=arc-20240116; t=1784616340; c=relaxed/simple;
+	bh=kgmrpkaawGPWLvpEO5jG3CYdRwkvk/nJZWsX4ITBtE0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=oyv6guS0dgjaFKd+rliNWsWkBuc0vczn8ODVkte493gtW2Y7KwMLxz6rY2DmfggffUbe6HnLqnv6dfGi+fp99TlZReBaVVAzK7q8Y1vjWMgfE4c5Uk1AtutNSzsRkgC90p8EfyOJf5VSu3v/1+RNletzBCgEMgsR3MTOhDtW4+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+6auro+; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=TZmzRTUY1eYKMJx4Yj/8CyrW3Zow/zd8x855R8X8XipEhE2S7m54UxCTw+R0agSh4jIpAmMPuKIKI2NnvElZKq/6w+QUMX7QxHTkyxH+nA7MHKfi28m9r6QtNRKdITwWOrAkhPFT5kyR6kyQByrmR8tcMbC69XoK6/Nloc0Izzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SzMnHf0Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+6auro+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56821F000E9;
-	Tue, 21 Jul 2026 06:45:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SzMnHf0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6581F000E9;
+	Tue, 21 Jul 2026 06:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784616303;
-	bh=ghmv6ITATXvC7Rscz0RRtZ6KSnWsIOgAAgcqdnOs8fE=;
+	s=k20260515; t=1784616339;
+	bh=f4rfS+kzSrXZx85O+DrYRWscDbG7oq2ij9wGZvxJqvs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=a+6auro+I/TstXvdhBIJgbrAJnLH5f0qkOO31Orzp+6Dm/ewZi5uST0F6DMxEJrXn
-	 BfE8WcyKLDN5lXCTQtElaqYWmUvpHZpSqGm3/mPB0LaUBErw+wU2JB1wF4n556N/zb
-	 oACcU5NdPklyAL12ecOPBGqQIZmGvcrLnK8fTQmPG2ATA/M4+orvkyc4yEUKO1dj9l
-	 p8ah02kqFo4tRkXkTulz9tl4yZVekyPdEr5UVIylYHfzxzSpZ81kFMBYgof1DQXRPV
-	 ygn7xHnegYAbhVbLQ7e5CCpjfkDc6PYi6oUKfkzFsEibsbLISqmkaL8RtnuSZXlJdt
-	 eVxn81hacDoQg==
+	b=SzMnHf0Zs8+wFKZL6/ner7Xv8QTTuaNFs9G2gwr851lGi1NDUn9eQOar2+JhRqK70
+	 ILwufJ3fwUvlSYLSlcnNA3pYiOof6Uuv5D9PsKPQ2JFKEQvrumnOZ1WKuCurHxFt78
+	 xLKijskSbgM3svCKutSDuz6Mqsmr3uLRHNmRksw/5Xn5fpk5XM69ghTSudUlA8f2vN
+	 zeuJBQnYUcWz3y5EjnccUMWlKrDVO8AmIor2VBHCVr0u7c+/uh+rYdhDQvCPke+5ko
+	 G3hkHFijfgrgjfmWCnCl1mvg7spQXxGWd1kOawSb11X2TCVd2MG7lAqpJBeHanwERY
+	 T20NYAs+zS7ig==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 10/14] dmaengine: dw-edma-pcie: Add register offset
- match flag
+Subject: Re: [PATCH v6 04/14] dmaengine: dw-edma: Initialize IRQ data before
+ requesting IRQs
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260721062815.4117887-11-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260721062815.4117887-5-den@valinux.co.jp>
 References: <20260721062815.4117887-1-den@valinux.co.jp>
- <20260721062815.4117887-11-den@valinux.co.jp>
+ <20260721062815.4117887-5-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 06:45:02 +0000
-Message-Id: <20260721064502.E56821F000E9@smtp.kernel.org>
+Date: Tue, 21 Jul 2026 06:45:38 +0000
+Message-Id: <20260721064538.DF6581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,54 +49,59 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] IRQ vectors allocated by `pci_alloc_irq_vectors()` are leaked on e=
-rror paths and during device unbinding.
+- [High] The DMA device is unregistered after its underlying resources (IRQ=
+s and workqueue) are destroyed, which violates teardown symmetry and risks =
+use-after-free.
 --
 
---- Patch [10]: [PATCH v6 10/14] dmaengine: dw-edma-pcie: Add register offs=
-et match flag ---
-commit 96fe59ecf68ecec537def0ad5937dd1f7c596bd9
+--- Patch [4]: [PATCH v6 04/14] dmaengine: dw-edma: Initialize IRQ data bef=
+ore requesting IRQs ---
+commit 987fcaf0e4c8b1c734032a25584db5da396d1c81
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma-pcie: Add register offset match flag
+dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
 
-Add a match-data flag for devices whose DMA register block starts at an
-offset inside the mapped BAR. Existing Synopsys EDDA and AMD (Xilinx)
-MDB/CPM6 matches keep using the BAR mapping base directly.
+This patch addresses a potential NULL pointer dereference in
+dw_edma_irq_request(). It initializes the back pointer of dw_edma_irq
+before calling request_irq(), ensuring that shared interrupts have access
+to it.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
-edma-pcie.c
-> index 99ddb6e6da348..4b2757c1eda28 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
+edma-core.c
+> index 3a8610862cff5..ee9a8c32adf4c 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
 
 [ ... ]
 
-> @@ -464,6 +465,8 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->  	chip->reg_base =3D pcim_iomap_table(pdev)[dma_data->rg.bar];
->  	if (!chip->reg_base)
->  		return -ENOMEM;
-
 [Severity: High]
-This is a pre-existing issue, but does this error path leak IRQ vectors?
+This is a pre-existing issue, but does dw_edma_remove() have a teardown
+asymmetry that could lead to a use-after-free?
 
-Looking at dw_edma_pcie_probe(), pci_alloc_irq_vectors() is called earlier
-in the function to allocate IRQ resources. However, this direct return on
-failure bypasses releasing them.
+Looking at dw_edma_remove() in drivers/dma/dw-edma/dw-edma-core.c:
 
-It looks like other error returns after IRQ allocation, as well as the
-dw_edma_pcie_remove() function, might also be missing a call to
-pci_free_irq_vectors().
+	/* Disable eDMA */
+	dw_edma_core_off(dw);
 
-Could we exhaust system IRQ capacity if these resources are leaked during
-failed probe attempts or device unbinding?
+	/* Free irqs */
+	for (i =3D (dw->nr_irqs - 1); i >=3D 0; i--)
+		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
 
-> +	if (match->flags & DW_EDMA_PCIE_F_REG_OFFSET)
-> +		chip->reg_base +=3D dma_data->rg.off;
-> =20
->  	for (i =3D 0; i < chip->ll_wr_cnt && !dma_data->cfg_non_ll; i++) {
->  		struct dw_edma_region *ll_region =3D &chip->ll_region_wr[i];
+[ ... ]
+
+	destroy_workqueue(dw->wq);
+
+	/* Deregister eDMA device */
+	dma_async_device_unregister(&dw->dma);
+
+The DMA device is unregistered after its underlying resources (IRQs and
+workqueue) are destroyed.
+
+If a concurrent client requests and interacts with a DMA channel via
+dma_request_chan() during module unload or device unbind, could it
+access a device that has already had its hardware turned off and interrupts
+freed?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721062815.4117=
-887-1-den@valinux.co.jp?part=3D10
+887-1-den@valinux.co.jp?part=3D4
