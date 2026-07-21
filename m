@@ -1,181 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5743254BD;
-	Tue, 21 Jul 2026 16:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047CC386571
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 16:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784651799; cv=none; b=ChtRqnLt/9U/aN3PrP83dr00pNokxR+IwakkcYYANetA07cHGIjscCcMh2GXYXjU1SLYv2o+WXlY0QiaN+FTeGqBfOG2pHV68rLsfbaEqCk9om/V21jyLU1PacC2SiSsdEOMgDSacS9na/MvT4xWBqKVVdAXg9hXWDdAAYm9DHg=
+	t=1784652906; cv=none; b=dc9A0MazLT9R7mv53oevNG14uT5Lov6QGfu4g8xHwiJR5S65ZKYbdaUmNXxRw2wBk++ZHnnsakobIkntw7oAgZslwjv65qDuK1gUswv9lVZ23vk2NMoyKvAuAhODVD9RJtBjPvjv7ymIsjq25SVgPsmysJ5eNxRKLLlE3uUnsF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784651799; c=relaxed/simple;
-	bh=dQBRuTQNIPTlB0snqosTGQWNXzuMTeePAkASfMwNGMg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ZwpD5vZFzddX7b02CVJBkDEhHSYWNijzU0E+D+tev1KN9O0CjkJoHsSbyaSBqQfWLuizTwm3navpvC2vdXn4RiKCOzU8ink775CEILM0fgMZnymkWtW23ROzQLPLlOKqDIwUDUYjmx5DPFEnux94rI3g/pJqOEhrdLrNOgqwgPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XB2e9rXx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784652906; c=relaxed/simple;
+	bh=tUOGkrU38mJEYQ6zuey7GmqIR1DTnR211ZbxiXdMIpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UlInk+x7fGpUhzvesy93dotx1wRF2HyyzO/5B39C2r21ttvbo/LwOVCqfOIpRInkqF236Fy2UMBUnJ4KHms/n+dce5Gxv8SBhVCMPZ/WNoY+TDfiZQRoOnpuhV5kq0sN/WwyZkBdA7JqtgyuwVAaEfbXe+jeNTkJt42zwm9QopA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UjCIE/t/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jifx4CeU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XB2e9rXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905601F000E9;
-	Tue, 21 Jul 2026 16:36:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784651797;
-	bh=dptWaGrz99xJ8FmC83NpagCyFHvs6A+N8YRLNh+gCw4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XB2e9rXxrBkC0ocmE1NrX8sSaBxsW1pFUx/SacVSMxNZEw4d0uH9jwr8zwdMd5Z/m
-	 tM3NXh1CHcVLg9AV4LX8e6x9PXWjPcm6NZAcb6UZc8giD/LZkIYDN3IiOg09RrUv47
-	 EJYM6X9xmU0CMMjVvgzdpadauSwnYcNE1kIMGcH2jFu8LgSnkJvjfEi4EEXtN+cMuy
-	 bewzj/M5DNwZhfIwKHFZcY09hy/BTIeo+BOW6EEH0yz50NiA9x3CfVUlfbT5ToTC3t
-	 hUvu13SBp9LPgXj4l73ky3+xTt2K3p44P+9AgsN4cATzDsaGdcpxq4Q81GUccK35VG
-	 3pAQ8TSrI2SEw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 07/11] dmaengine: switchtec-dma: fix use-after-free
- of swdma_dev in remove()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: Frank.Li@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260721155739.62120-8-logang@deltatee.com>
-References: <20260721155739.62120-1-logang@deltatee.com>
- <20260721155739.62120-8-logang@deltatee.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 16:36:37 +0000
-Message-Id: <20260721163637.905601F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UjCIE/t/";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Jifx4CeU"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66LDfvaU1687427
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 16:55:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	l1o8yex40q2dVFxxH/gSrgSpN6Ch4JjKqRjhqPQXctg=; b=UjCIE/t/65fmEIq0
+	kq92YjXNqmxGYGE81D2sfm+knDmJT/TNZRdGfegorbV6og/Io4zCHGkrO00UtGqQ
+	t9wotnCGH+wXIzfdOzGVy6D2b9GDO1yT/USMFtBiwAjS0A79zcP60xeA1xs7SvXT
+	6OPFESLQ+Jbu9E1tgZEHuEO0+NhPLf9b5ZNtt12Y3C0hj19IOM1gjQy9xjs3Ujx4
+	9iArhVY5zAXHwEeyqnYgCY1iD8GYU274RAnrI79hI81eSmNiopFcCKpLVY45PRf5
+	Dn54CcHUJ+vl5M9qF6rCNXRFDaMDjB9uDj51enUvukdKRwFlTGQKLgnr9QUAYcB+
+	XBUPiQ==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fj9c41461-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 16:55:03 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cb4cdf95b5aso9266694a12.1
+        for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 09:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784652902; x=1785257702; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=l1o8yex40q2dVFxxH/gSrgSpN6Ch4JjKqRjhqPQXctg=;
+        b=Jifx4CeUlstoBuGCBbiEktS+hgG71KzAN73QPYp7+E+r8AW65LDQ5S8SYw/YnArBd2
+         cAtDQMN7VhvptHZ+7txg51YjY8pHZn7BpEjgoPuZENocPoCKMq5r8Hbk6SmAArmnvwen
+         nrLHPZ82ewbEqSh8oZZnbN8lB7HSO8StSI53vD8OjJIcfcp5przvbfCTy368I8tgWft6
+         UdYLot36ZyPJzml5Ni3Ka4D5vI6RrMa0wcYlPr9TaGvfLvN/hBW5Mx1MuB7XFl8vNWKD
+         /nM+SrClM65Lv+QocMRr4rYODgSo2EvNuceqyrkEp8Q8Nzv4/4WZIFDfeSdSAI/UaW2I
+         c8Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784652902; x=1785257702;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=l1o8yex40q2dVFxxH/gSrgSpN6Ch4JjKqRjhqPQXctg=;
+        b=W40EItSVTM8oNrt+tS3g3s5fYkPJvVSjrnI7l2ErK6L7F9FmfxwFVwHKj9SmBJUGZ1
+         BOMt26IuS2At9BFUJ58MSBjqFnSDapDPtvDLTkKkD+VC62mrgBwTf2xOBzhojvISl0yK
+         tuuTLFtKXugvipegSAOUdZ/UKl/wSeAZXlhLa4SkBhLXgBlT8m3lxu/2qYcN4XFVP9s6
+         tzEh6X8KptniBCvkpbmutxm6PYikOQBUN7AFiPPF8ZDpu5Cv/pCuth8GWfmkISp+brrI
+         hG1/KsWzIyEJls6Bs8ptF6/6EYMRq06i7XVB/qlzyoTthL2tPlCedO1Cnvn4bqsFMp0v
+         vpOA==
+X-Forwarded-Encrypted: i=1; AHgh+Rrc+DBniSkPRQFpmOoNFJfTf9R8N3cOiud/IMarpbc0wpDytfkMsPA7U3xKb1rzHtJkMr0a6gTlggQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywui6xvK6fYv7KWpJ+TfuCITu5hHuXqFUIs6EpnEYPDL+3hARBT
+	MLsE6hcQztR4E3eu1+0tD71ej+ezc+5csRhUdgmNbQOrxvxEZFJzcPYtNog2VJJSlue6O9zOTEL
+	C7gPu5POVClDbtHL91y0cLtaKRkvQdQirkHxJ/6l7CObX+CzO32PsqIBABJzWwhg=
+X-Gm-Gg: AfdE7cm7+ZOP4BoGriP5YB7J+U1AFHiu4NxfZsap3Ie21DxEOCg7rle/jL7bqWfHdD/
+	th24AE+yMHUPefserGb5A+Dppy1oTPDkgxOjI2lF+wHUzJq+QimQcDSai5ybEXdWwvEmp33/Mwo
+	uRI/+0sPJTu7geiP42EFcVFE1Jfc6pmTNtNgvA1DnU3WwulN4Uf5ohi+9IZrCf7dzjhJuuPD+tU
+	PP0gZt2b9Kf4AFgfKEivQSR8JHAQ7AhBqoSS4Hy9yZwPaLUTlyV2YlbS7sKGNQQfHiszY7C6lLu
+	vscPg22/LgzhneMJZeg1inPiGcj3+8Qw4qlv26iyu80K/A7LyxtNHEHvTUze+ZGTr5VkWy7qRWd
+	IzU5l4xAO4kFb0aSR5xOJ5ca5cz8n9Q841jki/JK9a67bVv8vPJd3nQAUFuUm2h0AzIy/kdq7
+X-Received: by 2002:a05:6300:2704:10b0:3c4:1708:9cd8 with SMTP id adf61e73a8af0-3c417089d37mr2522201637.76.1784652902522;
+        Tue, 21 Jul 2026 09:55:02 -0700 (PDT)
+X-Received: by 2002:a05:6300:2704:10b0:3c4:1708:9cd8 with SMTP id adf61e73a8af0-3c417089d37mr2522176637.76.1784652902041;
+        Tue, 21 Jul 2026 09:55:02 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1cb4:d969:b5b5:8f5b:ef15:61de? ([2401:4900:1cb4:d969:b5b5:8f5b:ef15:61de])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147dc61637sm657080eec.8.2026.07.21.09.54.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jul 2026 09:55:01 -0700 (PDT)
+Message-ID: <8885f841-798e-4c8b-af10-88551f39f2a2@oss.qualcomm.com>
+Date: Tue, 21 Jul 2026 22:24:55 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
-
-Pre-existing issues:
-- [High] Incorrect IRQ cleanup in `switchtec_dma_create` error path using `=
-free_irq` with a hardware vector index instead of `pci_free_irq`.
-- [High] Pending DMA transactions are not aborted during device removal, po=
-tentially causing DMA clients to hang indefinitely.
-- [High] Missing bounds check on the hardware-provided channel count allows=
- out-of-bounds MMIO accesses.
-- [Medium] Missing `put_device(dma->dev)` in the `switchtec_dma_create` err=
-or path causes a reference count leak on the PCI device.
---
-
---- Patch [7]: [PATCH v2 07/11] dmaengine: switchtec-dma: fix use-after-fre=
-e of swdma_dev in remove() ---
-commit 0e37b79ac2f6503c0a4dc42c7b0cf19efff70cbd
-Author: Logan Gunthorpe <logang@deltatee.com>
-
-dmaengine: switchtec-dma: fix use-after-free of swdma_dev in remove()
-
-This patch fixes a use-after-free regression in switchtec_dma_remove() by
-caching the PCI BAR in a local variable before dma_async_device_unregister()
-is called, avoiding access to swdma_dev after it is freed.
-
-Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.ke=
-rnel.org
-
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index 2a1ae27bd1a69..a7e25cb7c0b9f 100644
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-[ ... ]
-> @@ -1388,7 +1389,7 @@ static void switchtec_dma_remove(struct pci_dev *pd=
-ev)
-> =20
->  	dma_async_device_unregister(&swdma_dev->dma_dev);
-> =20
-> -	iounmap(swdma_dev->bar);
-> +	iounmap(bar);
->  	pci_release_mem_regions(pdev);
->  	pci_disable_device(pdev);
->  }
-
-While reviewing this patch, I noticed a few pre-existing issues in the driv=
-er
-that might be worth addressing.
-
-drivers/dma/switchtec_dma.c:switchtec_dma_create() {
-    ...
-    chan_cnt =3D readl(swdma_dev->bar + SWITCHTEC_REG_CHAN_CNT);
-
-[Severity: High]
-This is a pre-existing issue, but is it safe to use this hardware-provided
-channel count without bounds checking?
-
-If the endpoint returns an unexpectedly large channel count, this value is
-later used in switchtec_dma_chan_init() to calculate MMIO offsets:
-
-    swdma_chan->mmio_chan_fw =3D
-        swdma_dev->bar + SWITCHTEC_DMAC_CHAN_CFG_STS_OFFSET +
-        i * SWITCHTEC_DMA_CHAN_FW_REGS_SIZE;
-
-Since chan_cnt is never validated against the mapped length of the PCI BAR,
-could this result in out-of-bounds MMIO accesses?
-
-    if (!chan_cnt) {
-        pci_err(pdev, "No channel configured.\n");
-        rc =3D -ENXIO;
-        goto err_exit;
-    }
-    ...
-err_chans_release_exit:
-    switchtec_dma_chans_unlist(swdma_dev);
-    switchtec_dma_chans_release(pdev, swdma_dev);
-    switchtec_dma_chans_free(swdma_dev);
-
-[Severity: Medium]
-This is another pre-existing issue, but does this error path leak the device
-reference count?
-
-If dma_async_device_register() fails earlier in this function, we jump here,
-but there is no call to put_device() to balance the get_device() called
-previously. This could leave the PCI device with an elevated reference count
-permanently.
-
-err_exit:
-    if (swdma_dev->chan_status_irq)
-        free_irq(swdma_dev->chan_status_irq, swdma_dev);
-
-[Severity: High]
-This is a pre-existing issue, but could this lead to a use-after-free
-if an interrupt fires?
-
-The code requests the IRQ using pci_request_irq() with a hardware vector
-index, but attempts to free it here with free_irq() using that same vector
-index instead of the global Linux IRQ number. Since free_irq() expects a
-global IRQ number, it may fail to free the interrupt. The handler would
-remain registered while swdma_dev is freed right after this.
-
-Also, if the hardware uses vector 0, the if statement skips cleanup entirel=
-y.
-Should this use pci_free_irq(pdev, swdma_dev->chan_status_irq, swdma_dev)
-instead?
-
-    iounmap(swdma_dev->bar);
-    kfree(swdma_dev);
-    return rc;
-}
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: qcom: gpi: Fix SE ID and SE Protocol fields
+ widths in SCRATCH_0
+To: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>,
+        konrad.dybcio@oss.qualcomm.com, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, bjorn.andersson@oss.qualcomm.com
+Cc: praveen.talari@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
+Content-Language: en-US
+From: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+In-Reply-To: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=I4JVgtgg c=1 sm=1 tr=0 ts=6a5fa467 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=bC-a23v3AAAA:8
+ a=EUspDBNiAAAA:8 a=k8JVevEbTmNoh4gevwMA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-ORIG-GUID: 4KthgTXEmv6W1ADp3juRwv3slc_-QbNk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIxMDE3OCBTYWx0ZWRfXw7rwXbRFviTA
+ s5x+JyiMXivx+juOIgab59H9rlzctEAz5P2TKnfW35uY1oR0JV2h7LnqlQYoEqhsCddDGzE+oKD
+ iOQQmOLfQRsF2BVj2pHkiX4kzgADUyiulFmLsa4NEUdS5N0HpKzN4G8bJbK9cuaop17BHwoXYvR
+ Jp2CpGkwiCqzAS4rYXBsZGorK8TN0phhKawOHxFe8KXm6+yfkP6lzwa4xyQqyyZ7JO7IS92jwW3
+ 6MiUfjgXWC+nw+BNWpg+SPiNvxU3sQx4PNdYB4OWwiKEb+3dP9mp7DXfCcj/cbwtpt3nFsAq2jo
+ 6RMGIZqxKG68Flbz5kP/Jpm3b5d0ECuDDNUO46jhLRxlOsvuQTthFGK2opO3qcMksUGHE2fNPl/
+ 1gVDXL6kiogjA6SvnC1W2CLFeoLJXuKou7Ems7GmkVnddupKR+bIG2MxXbITLAJLkasLA2ic8Qf
+ JosyUnZSfKc5uCuSD6A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIxMDE3OCBTYWx0ZWRfXxljQ0FhK+t5r
+ YttKdYkeWNYbY5WUtvrWyYb4uujGIJzy388WmqOysbrivt36MdCy0yjywyQbkgnnXXMFRz8ewx8
+ vzfK3lXo+FWexI9HapjF3EHygXhTQuo=
+X-Proofpoint-GUID: 4KthgTXEmv6W1ADp3juRwv3slc_-QbNk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-21_03,2026-07-20_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607210178
 
 
-drivers/dma/switchtec_dma.c:switchtec_dma_chan_free() {
-    ...
-    pci_free_irq(pdev, swdma_chan->irq, swdma_chan);
-    tasklet_kill(&swdma_chan->desc_task);
 
-    switchtec_dma_chan_stop(swdma_chan);
+On 7/21/2026 4:45 PM, Chandana Kishori Chiluveru wrote:
+> GPII_n_CH_k_SCRATCH_0_SEID is currently defined as GENMASK(2, 0), only
+> 3 bits wide. Serial engine indices >= 8 get silently truncated by
+> FIELD_PREP()/u32_encode_bits() when written into the scratch register,
+> causing the GPI channel to bind to the wrong serial engine. The
+> channel allocate command still succeeds (it doesn't require the
+> target SE to respond), but the subsequent channel start command times
+> out waiting for hardware to complete the handoff to the (incorrectly
+> bound) SE, and gpi_send_cmd() returns -EIO leading to GSI usecase failures
+> for SE8 and SE9 serial engines.
+> 
+> Older documentation, such as the SDM845 hardware programming guide,
+> describes the SE ID field as bits [2:0]. More recent QUP hardware
+> documentation defines the field as bits [3:0]. Use the wider definition
+> to match current hardware documentation while remaining compatible with
+> existing platforms and enabling serial engine IDs greater than 7.
+> 
+> Also update the SE Protocol field definition to match the documented
+> register layout and keep both fields correctly packed.
+> 
+> Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+> Signed-off-by: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Updated the protocol field value properly
+> - Link to v1: https://patch.msgid.link/20260720-fix_se_id_and_se_protocol_fields-v1-1-e41dbb107d97@oss.qualcomm.com
+> ---
+>   drivers/dma/qcom/gpi.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-[Severity: High]
-This is a pre-existing issue, but does removing the device without aborting
-pending transactions cause DMA clients to hang indefinitely?
+Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
 
-If a client is blocking on a completion object (e.g., via
-wait_for_completion), and the device is removed, the IRQ is freed and the
-hardware is stopped here. However, active descriptor rings aren't traversed
-to report DMA_TRANS_ABORTED. Can this prevent the client from ever unbindin=
-g?
-
-    return 0;
-}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721155739.6212=
-0-1-logang@deltatee.com?part=3D7
