@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D740419315
-	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 06:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E3A3EC6A1
+	for <dmaengine@vger.kernel.org>; Tue, 21 Jul 2026 06:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784616414; cv=none; b=QaTdTbNQE8xDhVdiBe8xfg22p+kj8BAKVTrdKwcj795dZbJkMuGZPlm/Pt2fB1ykNlw6YXFQBDmJlezsn5RDbSIRG/7ra6ht5JmwTP76Ot0rZiZHho1Qi7G6pR6nJ6FTt4UIa5N8d7eA+n5KMEYnkWOaNTMeNxvsfNoA5zgCfCg=
+	t=1784616668; cv=none; b=aAi7DQbOcCbAWftY9u/6IeOZD2S6N8Qjd//a/bq5lfsSMP8P/i7Ormy6nsNNBLX3/rdLn7C1a9qMHKbHr2XkKbgbzDUc/3oUggShxIibA1lcTg5bXrQeGiXpTC5zCMbwEF5TBwYg6jZY+4Mwd76UmjuwaebN+jhhusCOarCGfpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784616414; c=relaxed/simple;
-	bh=Zws/PsXKJtLpxxAV9YnCjOFm2PtMtvsj1+sCwXZJXJ8=;
+	s=arc-20240116; t=1784616668; c=relaxed/simple;
+	bh=KEpAZCqcOjV92CQsTe96TnUvoQgwH8E/BX4VUcLTfYc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=q1Q6J4HlKTRmOr3SzQHX7MpojfHVWIOIrxNKbM498Jn8Fh8pJaUtB4zXdKWxSwl116LWB9clRInXz1O7i7spgZ76krziXk85QOv7HNzjcQ1FM3Z46h/jk/cMMnCaYLtEnMbM4TH9Q2wblilQ+0LuA9LJwV6PPrv1NYvuKa006pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=faZRtG/w; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=ANWCnLuQvA+0kyUux40v1bhm+ZTOJiewj8Hyo9mxrJEsUY4395Y+i15YPwcQF5F525n3OU4H2oIu2FAAWghK49tpck0RE2IuEwN99hVEBoK6AFI27Y5q8jW1SEFmT4pdZwUXpBEyo3aBtm7yT+VDpm8zKAwkcV7nwAhG4UjjSoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afV2l/ho; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="faZRtG/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF39E1F000E9;
-	Tue, 21 Jul 2026 06:46:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="afV2l/ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F381F000E9;
+	Tue, 21 Jul 2026 06:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784616413;
-	bh=Bu21m6vSAdHNh2qAifs/pecfIlb07gcsnvyDh+xoKts=;
+	s=k20260515; t=1784616667;
+	bh=es8eLxpx6yGIcsrpK7FijBYEFV91KJ9tHfEA/EvTDRY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=faZRtG/wRqm0i1cAMGg13hQNsdmlSZKr1gAhsveRYwAuyCh+IwmoOwH33X+7u8T/E
-	 Ljw2rvjzQ4rBH8Sv59dTj8dHZGPoerJgXyRgFQzkB2P3yINC2m/p2AOEJhgt+AMcX3
-	 Dgsv1RjBogbMWlQV2ckD34ggkO+/ghX7XJLCrWj6PkWOhN0fMzmjn9bSh85MC3to9w
-	 6MhPgVjGTVN76lO5k6y3Yoty+7WRZ3mPIIfozD6JjZhl9iCLdt3LSY1xmuk1ub5vsc
-	 WnXQI20nni1/h0RP87ze0r9xB7YhzSoyijma0hlrgglseTaCG+uL7QpgS/B3wCSGai
-	 hi8zB6A9t6juw==
+	b=afV2l/hoNjgXUhWCDUNHvpVnzZwC6RTfsDCmr+wCZsRPgv3P+BqkbyYHYgonzxOh6
+	 9WmZxG2A5gGmpG39Rqc7AOnN2Otex7S1JCFU9HdFtJFcwQSgtwCRmO4DL0wGAfAULL
+	 3rXVNS595jelaN4u7KVb6RlLp4lqzHGCTZjQmcuDJNw+nJ76gQX/01rZ4DVGjJxRXd
+	 Cs6/KS7kQcklZPLL+Hx5cpH4u5ry7s3z8lhNRq6wGY2ZiJ6yLz30nnZ8VGRB4G01YN
+	 PcE+1iW3gNq1E9/W4ukoK5/c3LnScy4u5YRHrhxC7B916hX1szFT8lA+mvro4PTIKU
+	 ncwUZZjzivgeA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 05/14] dmaengine: dw-edma: Add partial channel
- ownership mode
+Subject: Re: [PATCH v6 14/14] dmaengine: dw-edma: Program endpoint function
+ numbers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260721062815.4117887-6-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260721062815.4117887-15-den@valinux.co.jp>
 References: <20260721062815.4117887-1-den@valinux.co.jp>
- <20260721062815.4117887-6-den@valinux.co.jp>
+ <20260721062815.4117887-15-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 21 Jul 2026 06:46:52 +0000
-Message-Id: <20260721064652.CF39E1F000E9@smtp.kernel.org>
+Date: Tue, 21 Jul 2026 06:51:06 +0000
+Message-Id: <20260721065107.19F381F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,72 +47,72 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Teardown asymmetry / UAF risk in dw_edma_remove
+- [High] Truncation of PCIe Requester ID using `PCI_FUNC()` breaks IOMMU is=
+olation and DMA for ARI devices and SR-IOV Virtual Functions.
 --
 
---- Patch [5]: [PATCH v6 05/14] dmaengine: dw-edma: Add partial channel own=
-ership mode ---
-commit 4c8696aea18fd0130d8ca7adb9a53eadf014e468
+--- Patch [14]: [PATCH v6 14/14] dmaengine: dw-edma: Program endpoint funct=
+ion numbers ---
+commit 12cd49191ea0c234c70a872c83095a085495199a
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Add partial channel ownership mode
+dmaengine: dw-edma: Program endpoint function numbers
 
-This commit adds a partial ownership flag for DesignWare eDMA instances
-representing a subset of channels. It modifies initialization and teardown
-to use a limited quiesce path instead of full core resets, preserving
-controller-wide state owned by the peer.
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
-edma-core.c
-> index ee9a8c32adf4c..c9df5bbe23925 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+This patch configures the requester function number for eDMA/HDMA transfers
+by recording it in the chip data and programming it per channel. It extracts
+the function number using PCI_FUNC() during PCIe probe. Endpoint-local
+instances keep it at 0, while host-side instances use the probing device's
+function number.
 
 [ ... ]
-
-> @@ -1213,14 +1268,16 @@ int dw_edma_remove(struct dw_edma_chip *chip)
->  	struct dw_edma_chan *chan, *_chan;
->  	struct device *dev =3D chip->dev;
->  	struct dw_edma *dw =3D chip->dw;
-> -	int i;
-> +	int i, err =3D 0;
+> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
+edma-pcie.c
+> index 64f2a80072bce..9f237ba916dea 100644
+> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> @@ -473,6 +473,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
 > =20
->  	/* Skip removal if no private data found */
->  	if (!dw)
->  		return -ENODEV;
-> =20
-> -	/* Disable eDMA */
-> -	dw_edma_core_off(dw);
-> +	if (chip->flags & DW_EDMA_CHIP_PARTIAL)
-> +		err =3D dw_edma_core_quiesce(dw);
-> +	else
-> +		dw_edma_core_off(dw);
+>  	chip->mf =3D dma_data->mf;
+>  	chip->flags =3D match->chip_flags;
+> +	chip->func_no =3D PCI_FUNC(pdev->devfn);
 
 [Severity: High]
-This is a pre-existing issue, but does the teardown sequence in
-dw_edma_remove() risk a use-after-free during device unbind?
+Does PCI_FUNC() truncate the function number for Alternative Routing-ID
+Interpretation (ARI) devices and SR-IOV Virtual Functions?
 
-Looking at dw_edma_remove() in drivers/dma/dw-edma/dw-edma-core.c, the core=
- is
-disabled here, IRQs are freed, and the workqueue is destroyed via
-destroy_workqueue(dw->wq). Only after these steps are completed is the devi=
-ce
-unregistered from the DMA subsystem via dma_async_device_unregister(&dw->dm=
-a).
+PCI_FUNC() masks the input to 3 bits, dropping the upper bits of the
+function number. Since ARI or SR-IOV topologies can have function numbers
+up to 255 (8 bits), could this cause the host IOMMU to attribute DMA traffic
+from functions >=3D 8 to functions 0-7, breaking isolation?
 
-Since the device is still exposed to the DMA engine subsystem during this
-window, could a client request a channel or submit a new DMA transfer, caus=
-ing
-the driver to queue operations on the already destroyed workqueue or program
-disabled hardware?
-
->  	/* Free irqs */
->  	for (i =3D (dw->nr_irqs - 1); i >=3D 0; i--)
-
+>  	chip->nr_irqs =3D nr_irqs;
+>  	chip->ops =3D match->plat_ops;
+>  	chip->cfg_non_ll =3D dma_data->cfg_non_ll;
 [ ... ]
+> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
+dw-hdma-v0-core.c
+> index 8d20bb028b528..36ee72efcd317 100644
+> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> @@ -345,6 +345,9 @@ static void dw_hdma_v0_core_ch_config(struct dw_edma_=
+chan *chan)
+>  	SET_CH_32(dw, chan->dir, chan->id, msi_abort.msb, chan->msi.address_hi);
+>  	/* config MSI data */
+>  	SET_CH_32(dw, chan->dir, chan->id, msi_msgdata, chan->msi.data);
+> +	/* Configure the requester function number used by outbound TLPs. */
+> +	SET_CH_32(dw, chan->dir, chan->id, func_num,
+> +		  FIELD_PREP(HDMA_V0_FUNC_NUM_PF_MASK, chan->func_no));
+
+[Severity: High]
+HDMA_V0_FUNC_NUM_PF_MASK is an 8-bit mask, which implies the hardware expec=
+ts
+the full 8-bit devfn. Because chan->func_no was assigned using PCI_FUNC()
+earlier, does this result in programming a truncated 3-bit value into this
+8-bit hardware field, causing the hardware to emit TLPs with an incorrect
+Requester ID?
+
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721062815.4117=
-887-1-den@valinux.co.jp?part=3D5
+887-1-den@valinux.co.jp?part=3D14
