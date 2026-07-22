@@ -1,225 +1,218 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1EA43BDD0
-	for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 15:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB113E6DE0;
+	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784734646; cv=none; b=QEoyL1fPdAjZVqpPu9wrqwzHTSDaoVP8vTLagu2dmCh3JXTgcSaxcp4u+Q9IcfVclFQpDTbShM9os7gZs69LDXfMVOkdm+VIHkEI7/RRVB/AFLh/ZBr5dDH7qw/0ZPty8IWp28cFlg+XldPk3/Gu6sml8JNkDQZxBYvZoN+s2ak=
+	t=1784735282; cv=none; b=hCLjRHE1UCGobO5taagluRjcz6sVRcaMj/xoHTOwwfBvEGk9LEqi5qV7wfu4WoNJ9Sn2NJeetEs9+UuUykiU4/CVWLXM8c2ll1r/MBTVqCJar51j2y8CT3RyozrH34HHmy/qaavz6qFgr/NHcBGtQp5l5+jD4ckGlhekeGB5GSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784734646; c=relaxed/simple;
-	bh=UloBQ8Ez6MOjDxcfoVY4Udfg1eK6fAx1N25vx7IHZAo=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MzqXbz+cEIt4krcJ2hCMuuintJIzsAxPmrd7H/q8R5ek46vfqKCoDLWIq/+PPRQSbezgeV3pQkfRA8GtchGTi+rXfi82Nzsz517/qb2w+6rg12vjEJAN/yqWXdR1dzSsgMTmh539p5y0Mm7sREx2zqjIYesLQ4hSp3701loIInM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I077rulp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784735282; c=relaxed/simple;
+	bh=64xabAWb6b96UxIec7wnq6bHoMDXnZdqDarHAvAS0o0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=BFCRnd7uHlzAu2TyOEpDWoYKs+ob8iOdW7AXvbuF0attBDI+yurmtXKsAcC2Hg1PAZW82A0X9w/Y+Gj8Ho41jvKjzqyaLLCb+ezmutvj+d1WFEZNibyIESMb5lGlI7CejxjtTqPbTgW1Dzbhb/tXxyr4aakLZgufyxhS/5ONOUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnQ+NZnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I077rulp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142E51F00A3D
-	for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 15:37:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784734644;
-	bh=HaoajPDNv29VaTIIf6GrfEb1E+GCgrFVcWpJuxlF4Rw=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=I077rulpvIMsOe6tkrV8gx8zpsWHdrPd39WfPQeSWMGGtdEqabk5IEkHcasaHQxMQ
-	 3Utvuh34SdDZ0wjlcs9DpQhTIkMHqs+feblw7DPxHVsQeJE9Z8JCMF+e53eaEAa0kw
-	 OlGtUVPXBELLlkjEE0znz7L7VGGjSjWkYxibg8dtANcjFvYdk7qgC6kJTsRLlXRIsp
-	 SnAETrXuQLvcMLU1nqyM/hvWkdNhx94EQf8paleAIRGr371/JQQvf12EbSm3sAZoIk
-	 AdimRO3MS/OsulJSQtB1AdbHtng0+ZwiQTO1L+g8U9QHmIUAp4kl1FHaIOdkTc2yhf
-	 sRfE4T/YUsl/g==
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5b00d083818so5070675e87.1
-        for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 08:37:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RqUGiuMNHCauf/iPl1HNduordSoD0wZbB4n/UzSE5SzJGCIvmM4jtpLMTEEGH4F7Gq0JrMukVaMnZQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKRutTM6TN0fTbX4PHBE/Zlweez7msxIpoqUbDTg+rC6YaOybB
-	w4rc0vapqEAC5DNaqccfgJySgObBVxwApQ/rYIeXfqV70+95bAlDPyzTjILcc15nmOJFhtIdQFd
-	cXTR/BYUJ927vXX76VYTOycCpMX33d/zkJK3JLi+Fqg==
-X-Received: by 2002:a05:6512:2c8c:b0:5b0:6343:a298 with SMTP id
- 2adb3069b0e04-5b2a9b6b30fmr903822e87.7.1784734641868; Wed, 22 Jul 2026
- 08:37:21 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Jul 2026 08:37:19 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Jul 2026 08:37:19 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <amDRxPkdvbA-iVer@linaro.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnQ+NZnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1F96CC2BCF6;
+	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1784735282;
+	bh=64xabAWb6b96UxIec7wnq6bHoMDXnZdqDarHAvAS0o0=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=CnQ+NZnFI9iKaFjxDbne3CppK/GxH/u6p4xh/PXOonyvybu9haDP0MGo2qgA2R8HL
+	 1C7nCv5BtthpLsUI9vgOE9ffChSUGJ5L7KqwVVDGX3Lod4WiEUdghIdwOWQb+CL9xt
+	 Tfno0DgYYHczZn5jA7pIcoa1WZ7eCkEffSUT4fof9arodalRZVkozq0STOrl5JrHE8
+	 nJXcZsdT+//sZfoHcLaUFUipNLCbQgFBkVUEWXMwDobP17EJ7dn8d7OcM1j7seKgr2
+	 IIh0MI4AWfxRkWrUmK133lQMiEclko0rI/LMFoHT/jccum3KIGXoCwVqMb4Y4RXwi0
+	 OvZ8Aib55JqWQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F009C531BC;
+	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
+From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
+Date: Wed, 22 Jul 2026 10:47:49 -0500
+Subject: [PATCH 4/4] dmaengine: dmatest: Optionally make test errors fatal
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
- <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
- <20260721134853.2B2401F000E9@smtp.kernel.org> <amCGXUUd4VmuQRGD@linaro.org>
- <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
- <amC7_M-HjVZ3sQuT@linaro.org> <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
- <amDRxPkdvbA-iVer@linaro.org>
-Date: Wed, 22 Jul 2026 08:37:19 -0700
-X-Gmail-Original-Message-ID: <CAMRc=Me523xQbfJvML9taJ-fR128SJurJS4eX9N9E9WtHF5W5Q@mail.gmail.com>
-X-Gm-Features: AUfX_mxQ1adakAy8nL_SM-KsxZbJKd9YkddzHJ2sI4McTRRY2kICnwBZ3NzCrbU
-Message-ID: <CAMRc=Me523xQbfJvML9taJ-fR128SJurJS4eX9N9E9WtHF5W5Q@mail.gmail.com>
-Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
-	Frank Li <Frank.Li@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	sashiko-reviews@lists.linux.dev, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260722-dmatest-fixes-and-fatal-errors-v1-4-8287709987ea@amd.com>
+References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
+In-Reply-To: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Cc: Tycho Andersen <tycho@kernel.org>, Wei Huang <wei.huang2@amd.com>, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Nathan Lynch <nathan.lynch@amd.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784735280; l=5353;
+ i=nathan.lynch@amd.com; s=20260722; h=from:subject:message-id;
+ bh=r1oLdav/T8y/iZ+lMH1y1LszIWGqEDNjroTj5YnSY/4=;
+ b=OOwqmJqiFUGXTYHXFgESLpyGa7lUqTmyJjMfbbR3vznkOSnvTfOdXf9mbAyyi7YQOWiKEpExS
+ U17QLqCOaLVC5eww7va6h+oYHPDL0A/tt5R5r/BtrX1yI9Rn7g5PPxi
+X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
+ pk=pO5+BCw/TENGLvwX5NYZOZmZihcxjkxeFSMuk47erps=
+X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260722 with
+ auth_id=891
+X-Original-From: Nathan Lynch <nathan.lynch@amd.com>
+Reply-To: nathan.lynch@amd.com
 
-On Wed, 22 Jul 2026 16:20:52 +0200, Stephan Gerhold
-<stephan.gerhold@linaro.org> said:
-> On Wed, Jul 22, 2026 at 07:11:10AM -0700, Bartosz Golaszewski wrote:
->> On Wed, 22 Jul 2026 14:47:56 +0200, Stephan Gerhold
->> <stephan.gerhold@linaro.org> said:
->> > On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
->> >> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
->> >> <stephan.gerhold@linaro.org> said:
->> >> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
->> >> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->> >> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
->> >> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
->> >> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
->> >> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
->> >> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
->> >> >> --
->> >> >>
->> >> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
->> >> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
->> >> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
->> >> >>
->> >> >> dmaengine: qcom: bam_dma: add support for BAM locking
->> >> >>
->> >> >> This commit adds support for BAM pipe locking by prepending and appending
->> >> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
->> >> >> channel. It uses a peripheral-local scratchpad address communicated via slave
->> >> >> config for the dummy writes.
->> >> >>
->> >> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->> >> >> > index f3e713a5259c2..411c60c4433e2 100644
->> >> >> > --- a/drivers/dma/qcom/bam_dma.c
->> >> >> > +++ b/drivers/dma/qcom/bam_dma.c
->> >> [...]
->> >> >> [ ... ]
->> >> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
->> >> >> >
->> >> >> >  	lockdep_assert_held(&bchan->vc.lock);
->> >> >> >
->> >> >> > +	vd = vchan_next_desc(&bchan->vc);
->> >> >> >  	if (!vd)
->> >> >> >  		return;
->> >> >> >
->> >> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
->> >> >> >  		return;
->> >> >> >
->> >> >> >  	while (vd && !IS_BUSY(bchan)) {
->> >> >> > +		/*
->> >> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
->> >> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
->> >> >> > +		 * already have bam_locked set and must not trigger a second pair.
->> >> >> > +		 */
->> >> >> > +		if (!bchan->bam_locked) {
->> >> >> > +			ret = bam_setup_pipe_lock(bchan);
->> >> >> > +			if (ret) {
->> >> >> > +				dev_err_ratelimited(bdev->dev,
->> >> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
->> >> >> > +					ret);
->> >> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
->> >> >> > +				break;
->> >> >> > +			}
->> >> >>
->> >> >> [Severity: High]
->> >> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
->> >> >> starvation? Because system_bh_highpri_wq executes in softirq context,
->> >> >> requeuing immediately without sleeping prevents the memory reclaim needed
->> >> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
->> >> >>
->> >> >
->> >> > It looks like my suggestion to queue_work() again in the error path of
->> >> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
->> >> > We do need to retry somehow or report an error though, I don't think
->> >> > aborting and leaving the desccriptors completely unhandled is an option
->> >> > either... :(
->> >> >
->> >> > One option would be to try to avoid the allocation and write the lock
->> >> > descriptors directly into the FIFO, but this will probably get really
->> >> > messy as well, since you would need to carefully modify the FIFO
->> >> > management in several functions ...
->> >> >
->> >> > I don't have a good spontaenous idea how to solve this right now. :/
->> >> >
->> >>
->> >> Pre-allocate the lock descriptors (if needed) in bam_prep_slave_sg()? As in:
->> >> call bam_make_lock_desc() in bam_prep_slave_sg(), store the descriptors and
->> >> make bam_setup_pipe_lock() return void as it will no longer be possible for it
->> >> to fail? It would just grab the preallocated descriptors.
->> >>
->> >
->> > I considered suggesting this, but how do you know which descriptor needs
->> > it in bam_prep_slave_sg()? It's just the allocation, afaict it doesn't
->> > tell you anything about the order in which they will be submitted. :/
->> >
->> > We could always allocate the extra lock descriptors and waste the extra
->> > memory for the descriptors that won't need it. That should work, but is
->> > also not great ...
->> >
->>
->> Oh, I was thinking about having pointers to lock/unlock descriptors in struct
->> bam_chan and to just grab them in bam_setup_pipe_lock() when needed and then
->> next time we enter bam_slave_prep_sg(), we see we consumed them so let's
->> re-allocate them. And of course: don't do it at all if pipe locking is not
->> supported.
->>
->
-> Sadly, I think(?) from the API perspective it is valid to
-> dmaengine_prep_slave_*() a couple of buffers and them issue them
-> separately, e.g.:
->
-> 	desc1= dmaengine_prep_slave_*();
-> 	desc2 = dmaengine_prep_slave_*();
->
-> 	dmaengine_submit(desc1);
-> 	dma_async_issue_pending(chan);
->
-> 	// do a bunch of other random stuff
-> 	// bam_setup_pipe_lock() consumes lock descriptors
->
-> 	dmaengine_submit(desc2);
-> 	dma_async_issue_pending(chan);
->
-> In this situation, we wouldn't have any lock descriptors allocated
-> anymore?
->
-> Thanks,
-> Stephan
->
+From: Nathan Lynch <nathan.lynch@amd.com>
 
-I'm not really sure this is correct. From:
+For automated testing it is useful to have dmatest halt the machine when
+errors occur rather than logging them and continuing, so that the system
+state at the point of failure can be captured instead of allowing the run
+to carry on.
 
-    https://www.kernel.org/doc/html/latest/driver-api/dmaengine/client.html
+Add a 'fatal_errors' module parameter, defaulting to 0. When set to a
+non-zero value N, panic the kernel once N test errors have accumulated in
+a run; the count is reset at the start of each run. The panic is triggered
+after the existing result() line is logged, so the specific error (data
+mismatch, mapping/prep/submit error, timeout, or bad completion status) is
+recorded before the crash.
 
-"Some DMA engine drivers may hold a spinlock between a successful preparation
-and submission so it is important that these two operations are closely
-paired."
+Assisted-by: Claude:claude-opus-4-8 [Claude-Code]
+Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
+---
+ drivers/dma/dmatest.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-What you presented above looks like abuse of the DMA engine API in light of
-this statement. I also haven't found any place in the kernel where this would
-happen.
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 0d7752c2451a..a070ce6f2fa9 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -7,6 +7,7 @@
+  */
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <linux/atomic.h>
+ #include <linux/err.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+@@ -92,6 +93,11 @@ static bool polled;
+ module_param(polled, bool, 0644);
+ MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
+ 
++static unsigned int fatal_errors;
++module_param(fatal_errors, uint, 0644);
++MODULE_PARM_DESC(fatal_errors,
++		"Panic after this many test errors in a run; 0 = never (default: 0)");
++
+ /**
+  * struct dmatest_params - test parameters.
+  * @nobounce:		prevent using swiotlb buffer
+@@ -109,6 +115,7 @@ MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
+  * @alignment:		custom data address alignment taken as 2^alignment
+  * @transfer_size:	custom transfer size in bytes
+  * @polled:		use polling for completion instead of interrupts
++ * @fatal_errors:	panic after this many test errors in a run (0 = never)
+  */
+ struct dmatest_params {
+ 	bool		nobounce;
+@@ -126,6 +133,7 @@ struct dmatest_params {
+ 	int		alignment;
+ 	unsigned int	transfer_size;
+ 	bool		polled;
++	unsigned int	fatal_errors;
+ };
+ 
+ /**
+@@ -133,6 +141,7 @@ struct dmatest_params {
+  * @params:		test parameters
+  * @channels:		channels under test
+  * @nr_channels:	number of channels under test
++ * @error_count:	test errors in the current run (for fatal_errors)
+  * @lock:		access protection to the fields of this structure
+  * @did_init:		module has been initialized completely
+  * @last_error:		test has faced configuration issues
+@@ -144,6 +153,7 @@ struct dmatest_info {
+ 	/* Internal state */
+ 	struct list_head	channels;
+ 	unsigned int		nr_channels;
++	atomic_t		error_count;
+ 	int			last_error;
+ 	struct mutex		lock;
+ 	bool			did_init;
+@@ -487,6 +497,24 @@ static void dbg_result(const char *err, unsigned int n, unsigned int src_off,
+ 		dbg_result(err, n, src_off, dst_off, len, data);\
+ })
+ 
++/*
++ * Record a test error whose details were just logged via result(). When
++ * fatal_errors is set, panic once that many errors have accumulated in the
++ * current run.
++ */
++static void dmatest_note_error(struct dmatest_info *info)
++{
++	unsigned int errors;
++
++	if (!info->params.fatal_errors)
++		return;
++
++	errors = atomic_inc_return(&info->error_count);
++	if (errors >= info->params.fatal_errors)
++		panic("dmatest: fatal_errors=%u and %u error(s) encountered\n",
++		      info->params.fatal_errors, errors);
++}
++
+ static unsigned long long dmatest_persec(s64 runtime, unsigned int val)
+ {
+ 	unsigned long long per_sec = 1000000;
+@@ -583,7 +611,7 @@ static int dmatest_func(void *data)
+ 	struct dma_device	*dev;
+ 	struct device		*dma_dev;
+ 	unsigned int		error_count;
+-	unsigned int		failed_tests = 0;
++	unsigned int		failed_tests = 0;	/* for this thread */
+ 	unsigned int		total_tests = 0;
+ 	dma_cookie_t		cookie;
+ 	enum dma_status		status;
+@@ -755,6 +783,7 @@ static int dmatest_func(void *data)
+ 			failed_tests++;
+ 			result("unmap data NULL", total_tests,
+ 			       src->off, dst->off, len, ret);
++			dmatest_note_error(info);
+ 			continue;
+ 		}
+ 
+@@ -910,6 +939,7 @@ static int dmatest_func(void *data)
+ 			result("data error", total_tests, src->off, dst->off,
+ 			       len, error_count);
+ 			failed_tests++;
++			dmatest_note_error(info);
+ 		} else {
+ 			verbose_result("test passed", total_tests, src->off,
+ 				       dst->off, len, 0);
+@@ -920,6 +950,7 @@ static int dmatest_func(void *data)
+ error_unmap_continue:
+ 		dmaengine_unmap_put(um);
+ 		failed_tests++;
++		dmatest_note_error(info);
+ 	}
+ 	ktime = ktime_sub(ktime_get(), ktime);
+ 	ktime = ktime_sub(ktime, comparetime);
+@@ -1135,6 +1166,7 @@ static void add_threaded_test(struct dmatest_info *info)
+ 	params->alignment = alignment;
+ 	params->transfer_size = transfer_size;
+ 	params->polled = polled;
++	params->fatal_errors = fatal_errors;
+ 
+ 	request_channels(info, DMA_MEMCPY);
+ 	request_channels(info, DMA_MEMSET);
+@@ -1147,6 +1179,8 @@ static void run_pending_tests(struct dmatest_info *info)
+ 	struct dmatest_chan *dtc;
+ 	unsigned int thread_count = 0;
+ 
++	atomic_set(&info->error_count, 0);
++
+ 	list_for_each_entry(dtc, &info->channels, node) {
+ 		struct dmatest_thread *thread;
+ 
 
-What the docs say is legal is preparing/submitting a new transaction from
-a completion callback but in this case the lock/unlock descriptors will be
-refilled by the call to prep_slave_sg().
+-- 
+2.54.0
 
-I would go with pre-allocated descriptors references from bam_chan,
-re-allocated (if needed) on each prep_slave_sg() and just WARN() or even BUG()
-if we ever end up not having any descriptors ready.
 
-Bart
