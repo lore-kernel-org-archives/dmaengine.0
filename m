@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB113E6DE0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494C14746A9;
 	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784735282; cv=none; b=hCLjRHE1UCGobO5taagluRjcz6sVRcaMj/xoHTOwwfBvEGk9LEqi5qV7wfu4WoNJ9Sn2NJeetEs9+UuUykiU4/CVWLXM8c2ll1r/MBTVqCJar51j2y8CT3RyozrH34HHmy/qaavz6qFgr/NHcBGtQp5l5+jD4ckGlhekeGB5GSc=
+	t=1784735282; cv=none; b=lO3kGPMWSwkbq0lJhwBp8pFZ+EWiXWR1DqROku3dEqk2gJt+GyG0HN/aeAxT0NxD7j8/Y35PHzAXmDhumGtVj2BTi8FnDShOe3Y9JluBWXNs55m6HN9o07Jo4kCDTi/xWbV+QgtbFYZTS0FdCSdWNAjw9O8g8GSLScLuL/qkc/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1784735282; c=relaxed/simple;
-	bh=64xabAWb6b96UxIec7wnq6bHoMDXnZdqDarHAvAS0o0=;
+	bh=w5Qar+QoG5RH8yAeQ9Y9wPVTkp9H94z3ypFFhg5ET1M=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BFCRnd7uHlzAu2TyOEpDWoYKs+ob8iOdW7AXvbuF0attBDI+yurmtXKsAcC2Hg1PAZW82A0X9w/Y+Gj8Ho41jvKjzqyaLLCb+ezmutvj+d1WFEZNibyIESMb5lGlI7CejxjtTqPbTgW1Dzbhb/tXxyr4aakLZgufyxhS/5ONOUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CnQ+NZnF; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=tbpJLf0ypyuHQE9lZPTObKd3iR7JfvYt1tTQegmeaw2Al/U0bSfYGfbNLHCevvadaivmyN0nli++M2kEVCtohyrd9THjU9cQzdrYf/LrnXimOjwHcmfYmiX42SCvqQAyzBP59IhkDwfwJccjR9erkZGeB7y9+3mv/lUDdFj3wN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CtJHG7gq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CnQ+NZnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1F96CC2BCF6;
-	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CtJHG7gq"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E2498C2BCB3;
+	Wed, 22 Jul 2026 15:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1784735282;
-	bh=64xabAWb6b96UxIec7wnq6bHoMDXnZdqDarHAvAS0o0=;
+	bh=w5Qar+QoG5RH8yAeQ9Y9wPVTkp9H94z3ypFFhg5ET1M=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=CnQ+NZnFI9iKaFjxDbne3CppK/GxH/u6p4xh/PXOonyvybu9haDP0MGo2qgA2R8HL
-	 1C7nCv5BtthpLsUI9vgOE9ffChSUGJ5L7KqwVVDGX3Lod4WiEUdghIdwOWQb+CL9xt
-	 Tfno0DgYYHczZn5jA7pIcoa1WZ7eCkEffSUT4fof9arodalRZVkozq0STOrl5JrHE8
-	 nJXcZsdT+//sZfoHcLaUFUipNLCbQgFBkVUEWXMwDobP17EJ7dn8d7OcM1j7seKgr2
-	 IIh0MI4AWfxRkWrUmK133lQMiEclko0rI/LMFoHT/jccum3KIGXoCwVqMb4Y4RXwi0
-	 OvZ8Aib55JqWQ==
+	b=CtJHG7gqy57hlFSnVFPalxNd3jtfl5JI4sUtbMCVkoB/yYw+oUyUFPfPCg/1JukuH
+	 Od5AlBTqkG7ifI5zlR+cwEJ/5B3X7aBi2pppWmp3WXD2/QkF1sMj86asPqYNomalEY
+	 m2SqgjVGYdnz4nlVpdrmxGLFSdgr8mAp6mG1gQonEsRCdq3pXRjyVPUZYy3FkWiaF5
+	 pUwOXJREkR4DuT6AKD/Dqh+4E7o6zcHqwgG3dlb1T0coz5lj0N24aAyGkkQUxVVLMf
+	 mh4QHvEJ1PCfCy8Vbw7uGDsCuulvmiTpdC3e/omXSEPUBgmplJWsTpDDm4/rjH/ejk
+	 t9MWB5RIZvPwA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F009C531BC;
-	Wed, 22 Jul 2026 15:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C31F5C44539;
+	Wed, 22 Jul 2026 15:48:01 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Wed, 22 Jul 2026 10:47:49 -0500
-Subject: [PATCH 4/4] dmaengine: dmatest: Optionally make test errors fatal
+Date: Wed, 22 Jul 2026 10:47:46 -0500
+Subject: [PATCH 1/4] dmaengine: dmatest: Don't forcibly terminate channel
+ in polled mode
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,7 +41,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260722-dmatest-fixes-and-fatal-errors-v1-4-8287709987ea@amd.com>
+Message-Id: <20260722-dmatest-fixes-and-fatal-errors-v1-1-8287709987ea@amd.com>
 References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
 In-Reply-To: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -48,11 +49,11 @@ Cc: Tycho Andersen <tycho@kernel.org>, Wei Huang <wei.huang2@amd.com>,
  dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1784735280; l=5353;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1784735280; l=1508;
  i=nathan.lynch@amd.com; s=20260722; h=from:subject:message-id;
- bh=r1oLdav/T8y/iZ+lMH1y1LszIWGqEDNjroTj5YnSY/4=;
- b=OOwqmJqiFUGXTYHXFgESLpyGa7lUqTmyJjMfbbR3vznkOSnvTfOdXf9mbAyyi7YQOWiKEpExS
- U17QLqCOaLVC5eww7va6h+oYHPDL0A/tt5R5r/BtrX1yI9Rn7g5PPxi
+ bh=bgtcSNqMScacYr65kuIB7nzRdUTetKq2Oy8oDO2rtQI=;
+ b=Uk5WS/4WEiqYz81XjlyzumJ4PJwdv1BZQ3iYnda/sghVKSOMhLxhyxMqDYaFT7bWwxRC5D8s2
+ aZVnIkcjovMB6d4nu9+R4IpJ7W1SQFmf/akwyDI3EYRJIgNVu5X1rNk
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=pO5+BCw/TENGLvwX5NYZOZmZihcxjkxeFSMuk47erps=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260722 with
@@ -62,155 +63,47 @@ Reply-To: nathan.lynch@amd.com
 
 From: Nathan Lynch <nathan.lynch@amd.com>
 
-For automated testing it is useful to have dmatest halt the machine when
-errors occur rather than logging them and continuing, so that the system
-state at the point of failure can be captured instead of allowing the run
-to carry on.
+Invoking dmaengine_terminate_sync() against the channel after each
+submitted descriptor is strange. It's benign when the test is
+single-threaded, but disruptive when multiple threads are submitting
+descriptors to the channel concurrently:
 
-Add a 'fatal_errors' module parameter, defaulting to 0. When set to a
-non-zero value N, panic the kernel once N test errors have accumulated in
-a run; the count is reset at the start of each run. The panic is triggered
-after the existing result() line is logged, so the specific error (data
-mismatch, mapping/prep/submit error, timeout, or bad completion status) is
-recorded before the crash.
+  # cd /sys/module/dmatest/parameters/
+  # echo 1 > polled
+  # echo 2 > threads_per_chan
+  # echo dma0chan0 > channel
+  # echo 1 > run
+...
+  dmatest: Added 2 threads using dma0chan0
+  dmatest: Started 2 threads using dma0chan0
+  xilinx-zynqmp-dma ffa80000.dma: dma_sync_wait: timeout!
+  xilinx-zynqmp-dma ffa80000.dma: dma_sync_wait: timeout!
+  dmatest: dma0chan0-copy0: result #3: 'test timed out' with
+    src_off=0x487 dst_off=0xf8 len=0x171b (0)
+  dmatest: dma0chan0-copy1: result #6: 'test timed out' with
+    src_off=0x227d dst_off=0xf99 len=0xf7a (0)
 
-Assisted-by: Claude:claude-opus-4-8 [Claude-Code]
+Remove the call to dmaengine_terminate_sync() from the main thread
+loop.
+
+Fixes: fb9816f9d05f ("dmaengine: dmatest: Add support for completion polling")
 Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 ---
- drivers/dma/dmatest.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ drivers/dma/dmatest.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 0d7752c2451a..a070ce6f2fa9 100644
+index 2ae3469397f3..60bc448f42ee 100644
 --- a/drivers/dma/dmatest.c
 +++ b/drivers/dma/dmatest.c
-@@ -7,6 +7,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+@@ -837,7 +837,6 @@ static int dmatest_func(void *data)
  
-+#include <linux/atomic.h>
- #include <linux/err.h>
- #include <linux/delay.h>
- #include <linux/dma-mapping.h>
-@@ -92,6 +93,11 @@ static bool polled;
- module_param(polled, bool, 0644);
- MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
- 
-+static unsigned int fatal_errors;
-+module_param(fatal_errors, uint, 0644);
-+MODULE_PARM_DESC(fatal_errors,
-+		"Panic after this many test errors in a run; 0 = never (default: 0)");
-+
- /**
-  * struct dmatest_params - test parameters.
-  * @nobounce:		prevent using swiotlb buffer
-@@ -109,6 +115,7 @@ MODULE_PARM_DESC(polled, "Use polling for completion instead of interrupts");
-  * @alignment:		custom data address alignment taken as 2^alignment
-  * @transfer_size:	custom transfer size in bytes
-  * @polled:		use polling for completion instead of interrupts
-+ * @fatal_errors:	panic after this many test errors in a run (0 = never)
-  */
- struct dmatest_params {
- 	bool		nobounce;
-@@ -126,6 +133,7 @@ struct dmatest_params {
- 	int		alignment;
- 	unsigned int	transfer_size;
- 	bool		polled;
-+	unsigned int	fatal_errors;
- };
- 
- /**
-@@ -133,6 +141,7 @@ struct dmatest_params {
-  * @params:		test parameters
-  * @channels:		channels under test
-  * @nr_channels:	number of channels under test
-+ * @error_count:	test errors in the current run (for fatal_errors)
-  * @lock:		access protection to the fields of this structure
-  * @did_init:		module has been initialized completely
-  * @last_error:		test has faced configuration issues
-@@ -144,6 +153,7 @@ struct dmatest_info {
- 	/* Internal state */
- 	struct list_head	channels;
- 	unsigned int		nr_channels;
-+	atomic_t		error_count;
- 	int			last_error;
- 	struct mutex		lock;
- 	bool			did_init;
-@@ -487,6 +497,24 @@ static void dbg_result(const char *err, unsigned int n, unsigned int src_off,
- 		dbg_result(err, n, src_off, dst_off, len, data);\
- })
- 
-+/*
-+ * Record a test error whose details were just logged via result(). When
-+ * fatal_errors is set, panic once that many errors have accumulated in the
-+ * current run.
-+ */
-+static void dmatest_note_error(struct dmatest_info *info)
-+{
-+	unsigned int errors;
-+
-+	if (!info->params.fatal_errors)
-+		return;
-+
-+	errors = atomic_inc_return(&info->error_count);
-+	if (errors >= info->params.fatal_errors)
-+		panic("dmatest: fatal_errors=%u and %u error(s) encountered\n",
-+		      info->params.fatal_errors, errors);
-+}
-+
- static unsigned long long dmatest_persec(s64 runtime, unsigned int val)
- {
- 	unsigned long long per_sec = 1000000;
-@@ -583,7 +611,7 @@ static int dmatest_func(void *data)
- 	struct dma_device	*dev;
- 	struct device		*dma_dev;
- 	unsigned int		error_count;
--	unsigned int		failed_tests = 0;
-+	unsigned int		failed_tests = 0;	/* for this thread */
- 	unsigned int		total_tests = 0;
- 	dma_cookie_t		cookie;
- 	enum dma_status		status;
-@@ -755,6 +783,7 @@ static int dmatest_func(void *data)
- 			failed_tests++;
- 			result("unmap data NULL", total_tests,
- 			       src->off, dst->off, len, ret);
-+			dmatest_note_error(info);
- 			continue;
- 		}
- 
-@@ -910,6 +939,7 @@ static int dmatest_func(void *data)
- 			result("data error", total_tests, src->off, dst->off,
- 			       len, error_count);
- 			failed_tests++;
-+			dmatest_note_error(info);
+ 		if (params->polled) {
+ 			status = dma_sync_wait(chan, cookie);
+-			dmaengine_terminate_sync(chan);
+ 			if (status == DMA_COMPLETE)
+ 				done->done = true;
  		} else {
- 			verbose_result("test passed", total_tests, src->off,
- 				       dst->off, len, 0);
-@@ -920,6 +950,7 @@ static int dmatest_func(void *data)
- error_unmap_continue:
- 		dmaengine_unmap_put(um);
- 		failed_tests++;
-+		dmatest_note_error(info);
- 	}
- 	ktime = ktime_sub(ktime_get(), ktime);
- 	ktime = ktime_sub(ktime, comparetime);
-@@ -1135,6 +1166,7 @@ static void add_threaded_test(struct dmatest_info *info)
- 	params->alignment = alignment;
- 	params->transfer_size = transfer_size;
- 	params->polled = polled;
-+	params->fatal_errors = fatal_errors;
- 
- 	request_channels(info, DMA_MEMCPY);
- 	request_channels(info, DMA_MEMSET);
-@@ -1147,6 +1179,8 @@ static void run_pending_tests(struct dmatest_info *info)
- 	struct dmatest_chan *dtc;
- 	unsigned int thread_count = 0;
- 
-+	atomic_set(&info->error_count, 0);
-+
- 	list_for_each_entry(dtc, &info->channels, node) {
- 		struct dmatest_thread *thread;
- 
 
 -- 
 2.54.0
