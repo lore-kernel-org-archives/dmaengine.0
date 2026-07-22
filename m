@@ -1,165 +1,266 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD12D0605;
-	Wed, 22 Jul 2026 05:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E4948165E
+	for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 08:59:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784699924; cv=none; b=tnOT+AdrgvhSTe1yxLRqFFcLNoJBqMj/AAiWwVkzx1gLJ4eQO1kvsxzDlBxqtHtjezU8ZH2bVOspFV91r0vu0hQ6kVW8fcKuHqQnqzgRFA3EGxODTwYyPqlECV+3rRDoOy/CPCO72RThyWMG1ikJ7tbeWrDEb/0xU0BQWF9WvGE=
+	t=1784710758; cv=none; b=AxZY/nluL07QOJtBvPW6G/APNbyTdhqxXTkuFZ7U9AjOeheM0B7BLOpt7s3Hn0XtO9YU4c3dnz+dBPGKAfPfQOwCPJbXGh0Lj0lRaoOEMR0v1o9BE+ikXKr2k6p5G3ilQ/SlZjT9NJlgZAQfTkde6Arq1Kg+vJ2QdKB/SEGY7NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784699924; c=relaxed/simple;
-	bh=0u0FhLDzl/Ofwfay/25ek4tyFIxmtmmR3ZzB4gEOehA=;
+	s=arc-20240116; t=1784710758; c=relaxed/simple;
+	bh=kAhsFnpMMGSdnrXFMd+QnnJ8OmeMFzLuIG+aMiiQ0V4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QmPizRz39eSPMSWfgqmNRJvxFxKAkNd3KH+q3M83R5u8vZZvfnikhPS+kbpVaCuFxGwJ7cPk+vwN9ifa3i/0FE1vl/O5DWvIHGSofnyQcaAupbK97XJBTCFvnunmmtEbZ6D/5+dQ31koDlf1M2OibUy5ThL/mBKsIZf+PRlqjEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VTT2w9zq; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=XDHvrpse+2IZe9V9imc+/KW1J1XBlOhJ5UL4xW8RLNR4XbSof8Ydy/c2q0+sUbGMSjava4ElKgCaNigdMbao7hXynUMfhns0TIPQfTURbu+efzjObRJ8H3kr0o/128xgum+vG38821ocFHopfu3NL1t4NrWpvsi+gZX4aq5F25Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fqNeW9sf; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VTT2w9zq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4131F000E9;
-	Wed, 22 Jul 2026 05:58:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784699922;
-	bh=5T+9Zo3cTjyaTauys3fPWTruOr/6JMUDiMzHi2ct70E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=VTT2w9zqPup8HDv24ijAZ5UufMCABEfuAhGZrUHsWDmO4Kqp/6A7Jom1Dxb0C1gGu
-	 OnN06DmlP7R/ZnIZe766maHtdIxV2VM9DVByVVKgEMi/l61ruoAPdNr/1MltqcEObD
-	 xsWHrKlM1j5h2fHEsMuYWwSqpuzuEOCQtT/uCdOfRTjIRM6jWGZp9+k5FFgIHito51
-	 TQINBjQ2oZnB9RW6ifBTpCcSqIzPxQSsq4XlZTGfydGnFngIEI6qBz9Y1VuqusskFn
-	 0Rw/IpAxnoSH6mgQ8EQto5CdCGVHo44b059AD6WjzdgYJN7dcLGSVcdoYxtGrkolht
-	 CsX86tCrodUKg==
-Date: Wed, 22 Jul 2026 07:58:34 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dmaengine: dw-edma: Implement
- device_synchronize() callback
-Message-ID: <a7rswvi476dml2vuvqycnzsq7orc5jxzxl3n4wixclly4cvqrl@x26rz7ytdrr3>
-References: <20260714-mhi-ep-flush-v2-0-b6a9db011e85@oss.qualcomm.com>
- <20260714-mhi-ep-flush-v2-1-b6a9db011e85@oss.qualcomm.com>
- <amAXdwI_pYA4p_0P@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fqNeW9sf"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-47f71156e1aso1767698f8f.3
+        for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 01:59:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784710754; x=1785315554; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=wVkzG+wHl7b0hFwJEBuSwYI7fFrwiKABhZ91z4775sk=;
+        b=fqNeW9sfa1toRnDMGjmVPGCP1baEA3JPIcfDTRDeeUNGO6hH1MoyRUgcJ3EanzPnmy
+         WIbon2hzmVC0IcSDEZ3t+tHgWTfYtycfTGBQLg2ljzAzeKC2kaGwM/hSJ5trMUfC2jZn
+         XW8iPr67bjh9dmgQ/qhBGzCx8xCwvfL9H80JaOQr2PJwxvmX+ZZymm7l8DB3mjf3nZ0+
+         eohcgZcBtArLlpl97rdHUaAxVOqYuf4QYhQ6QQSWURs3J3R+4TS+ZO58Q92bZSjbbOM5
+         9MwHwXrf/ihQ/uILZOBU8uKtLmNHU8BQczKRgabBhbUVitr+wjD5yZc6rGVBTB9J+5h0
+         XLWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784710754; x=1785315554;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wVkzG+wHl7b0hFwJEBuSwYI7fFrwiKABhZ91z4775sk=;
+        b=FkIHc6DpujpFvI29m7VrvBMuvTRQZGr9Hr2a68zhAMoFn/B0HStIbSj9Sg+kLFpewS
+         pzxSrvsvNJZH6A44+P0Im29cOA2Z3gbaBWVoZ4mbhss6LvpYPnuzRwezJ1jo1civrd9N
+         tjL0mpQ2cbgm+RUxpghEe6VpLd0wg89IRrpvuXcCsNqS3Hop3ohya17yVecdWR5gPFXT
+         cChWy+dSxX4C+7QsLDx2SkHrYh3sWxTIGm5LeuBwSKDctQReH7NRjXGOPHRrL7GH1sga
+         CfO71N6so9Xn1gVH6HsVB++0ccUiFaH3kmOujfSc0cVnCYlTydvbCwdrTyck2MRcHpkO
+         tf1Q==
+X-Forwarded-Encrypted: i=1; AHgh+RoO84pYpwtgo1lApsa7JzOKfUoWp5RXGVMoT+w74015Ghqmp5Gki5fD9mz66A8E3LOGaC43ExJRyvE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRcsYeI6oKNFbsgMw4v1gXE7qEsEEZMBxhiGf3LfEimQCWzhmm
+	BzIp++S1PjfOoMg6dYXy0NJZ847N/x9T2raNBRh+EVk7t6uoMCDDyzD/iSCkwFdie0Q=
+X-Gm-Gg: AR+sD12yuL36LpPZxszhGMAv5Co7XNlfsOo2II7OMQfRugQmJrkwNm9ngnBp5vjGMe9
+	WC9RvAMQYoCHI1YLjNVwVnIBTVa8ZWxqytN9F2sSX7/kgACa79lJNVo06Y4jwSsEURgf8iMcy/J
+	A2XDPfWTvc2BlZRYyEV/p4wOPD5IjWApY+zbuLtHeDKIAitn6S/Ipu40tr8Ogw7FCjIC2YeWqWT
+	IbfBKtINnQlIaDeZpRrgnVfpo/PyZdz99Bw+RcuYBcU1vSwUP+mDJoeg3w2tMQzOrriYMB6Li5W
+	KJXzY3IXNEB2UEgbvP1m+xKDugA9piux6fCQ1fnhjFo4LRUai/yN9PDDl9zn81XCpvJ5tyDU0zl
+	IQdnjmNDZoOP6BMqzy86cBfDUA9YPx9CuxkWH3SqzKLg0WSwfwe1O/b0oU3abzJ3X44427N9A3a
+	WY5/f+iK3zcLza
+X-Received: by 2002:a05:6000:310f:b0:47f:83f8:a956 with SMTP id ffacd0b85a97d-47f83f8ac9cmr3886714f8f.37.1784710754365;
+        Wed, 22 Jul 2026 01:59:14 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff24:7210:7ae3:a857:e482:495])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5127sm4587664f8f.10.2026.07.22.01.59.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 01:59:13 -0700 (PDT)
+Date: Wed, 22 Jul 2026 10:59:09 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, brgl@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
+Message-ID: <amCGXUUd4VmuQRGD@linaro.org>
+References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
+ <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
+ <20260721134853.2B2401F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <amAXdwI_pYA4p_0P@lizhi-Precision-Tower-5810>
+In-Reply-To: <20260721134853.2B2401F000E9@smtp.kernel.org>
 
-On Tue, Jul 21, 2026 at 09:05:59PM -0400, Frank Li wrote:
-> On Tue, Jul 14, 2026 at 02:08:32PM +0200, Manivannan Sadhasivam wrote:
-> > device_synchronize() callback is required by the client drivers to ensure
-> > all the DMA operations are completed so that they can free the memory
-> > associated with the complete callbacks.
-> >
-> > So implement this callback by first making sure that all the in-flight DMA
-> > operations are completed and then call vchan_synchronize() to drain the
-> > DMA tasklet.
-> >
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
+On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
+> - [High] Channel state corruption when `bam_slave_config` fails validation.
+> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
+> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
+> - [Low] Unused assignment of `hdesc` in IRQ handler.
+> --
 > 
-> Similar implement already in linux-next, recent many fixes and update about
-> dw edma already merged in dma tree.
+> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
+> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 > 
-
-Ah, I didn't notice this patch. I've dropped this patch from my series.
-
-This patch also suffers from the same RMW issue that Sashiko pointed out. So
-I'll send a separate fix for that.
-
-- Mani
-
-> commit 99109a51efd28c9a661fbfb9469b023c517b31d1
-> Author: Koichiro Den <den@valinux.co.jp>
-> Date:   Sat Jul 18 03:06:32 2026 +0900
+> dmaengine: qcom: bam_dma: add support for BAM locking
 > 
->     dmaengine: dw-edma: Terminate all descriptors without callbacks
+> This commit adds support for BAM pipe locking by prepending and appending
+> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
+> channel. It uses a peripheral-local scratchpad address communicated via slave
+> config for the dummy writes.
 > 
->     The DMA Engine client documentation says in the "Terminate APIs" section
->     of Documentation/driver-api/dmaengine/client.rst:
-> 
->     "No callback functions will be called for any incomplete transfers."
-> 
->     dw-edma instead calls vchan_cookie_complete() when a deferred STOP reaches
->     the interrupt handler. This schedules a callback for the active descriptor
->     and leaves other issued or submitted descriptors queued. A late callback
->     after dmaengine_terminate_sync() can dereference client state that has
->     already been freed, while leftover descriptors may later restart into
->     reused buffers or leak.
-> 
->     Move all issued and submitted descriptors to the terminated list whenever
->     termination completes. For a pending STOP, do this from both the DONE and
->     ABORT paths. Complete their cookies in order without scheduling callbacks.
-> 
->     A STOP can remain pending until the running transfer raises an
->     interrupt. Make device_synchronize() wait for such a pending STOP to
->     complete before releasing terminated descriptors. Reuse it from
->     free_chan_resources(), then release the remaining virt-dma resources.
->     Sleep instead of busy-polling while waiting, and warn if the existing
->     timeout expires.
-> 
->     Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
->     Reviewed-by: Frank Li <Frank.Li@nxp.com>
->     Signed-off-by: Koichiro Den <den@valinux.co.jp>
->     Link: https://patch.msgid.link/20260717180639.2643243-3-den@valinux.co.jp
->     Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> 
-> Frank
-> 
-> >  drivers/dma/dw-edma/dw-edma-core.c | 16 ++++++++++++++++
-> >  1 file changed, 16 insertions(+)
-> >
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index c2feb3adc79f..df0d1a946ed0 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > @@ -12,6 +12,7 @@
-> >  #include <linux/dmaengine.h>
-> >  #include <linux/err.h>
-> >  #include <linux/interrupt.h>
-> > +#include <linux/iopoll.h>
-> >  #include <linux/irq.h>
-> >  #include <linux/dma/edma.h>
-> >  #include <linux/dma-mapping.h>
-> > @@ -331,6 +332,20 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
-> >  	return err;
-> >  }
-> >
-> > +static void dw_edma_device_synchronize(struct dma_chan *dchan)
-> > +{
-> > +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> > index f3e713a5259c2..411c60c4433e2 100644
+> > --- a/drivers/dma/qcom/bam_dma.c
+> > +++ b/drivers/dma/qcom/bam_dma.c
+> [ ... ]
+> > @@ -72,6 +76,11 @@ struct bam_async_desc {
+> >  
+> >  	struct bam_desc_hw *curr_desc;
+> >  
+> > +	/* BAM locking infrastructure */
+> > +	bool is_lock_desc;
+> > +	struct scatterlist lock_sg;
+> > +	struct bam_cmd_element lock_ce;
 > > +
-> > +	/*
-> > +	 * Make sure all the in-flight DMA operations are completed before
-> > +	 * draining the tasklet using vchan_synchronize().
-> > +	 */
-> > +	read_poll_timeout(READ_ONCE, chan->status, chan->status != EDMA_ST_BUSY,
-> > +			  10, 0, false, chan->status);
-> > +
-> > +	vchan_synchronize(&chan->vc);
-> > +}
-> > +
-> >  static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+> >  	/* list node for the desc in the bam_chan list of descriptors */
+> >  	struct list_head desc_node;
+> 
+> [Severity: High]
+> Does placing lock_ce immediately adjacent to desc_node risk a DMA API
+> violation? lock_ce is mapped for DMA via dma_map_sg(), but desc_node is
+> actively modified by the CPU via list_add_tail() during bam_start_dma()
+> while the mapping is active. On non-coherent architectures, could this
+> cause cacheline tearing or stale data writebacks if they share the same
+> cacheline?
+> 
+
+I think this complaint was there in some revisions before. Could be
+mostly a false positive given that the lock_ce is just DMA_MEM_TO_DEV
+(i.e. read-only for the BAM)...
+
+> [ ... ]
+> > @@ -676,13 +691,26 @@ static void bam_free_chan(struct dma_chan *chan)
+> >  static int bam_slave_config(struct dma_chan *chan,
+> >  			    struct dma_slave_config *cfg)
 > >  {
-> >  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > @@ -968,6 +983,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
-> >  	dma->device_pause = dw_edma_device_pause;
-> >  	dma->device_resume = dw_edma_device_resume;
-> >  	dma->device_terminate_all = dw_edma_device_terminate_all;
-> > +	dma->device_synchronize = dw_edma_device_synchronize;
-> >  	dma->device_issue_pending = dw_edma_device_issue_pending;
-> >  	dma->device_tx_status = dw_edma_device_tx_status;
-> >  	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
-> >
-> > --
-> > 2.43.0
-> >
+> > +	struct bam_config *peripheral_cfg = cfg->peripheral_config;
+> >  	struct bam_chan *bchan = to_bam_chan(chan);
+> > +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
+> >  
+> >  	guard(spinlock_irqsave)(&bchan->vc.lock);
+> >  
+> >  	memcpy(&bchan->slave, cfg, sizeof(*cfg));
+> >  	bchan->reconfigure = 1;
+> >  
+> 
+> [Severity: High]
+> Is it safe to overwrite bchan->slave and set bchan->reconfigure = 1 before
+> validating the configuration direction below? If cfg->direction !=
+> DMA_MEM_TO_DEV, this returns -EINVAL to the caller, but the channel
+> retains the rejected parameters and will apply them on the next transfer
+> because bchan->reconfigure remains set.
+> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+Yeah, better to swap the order.
+
+> > +	/*
+> > +	 * This is required to setup the pipe locking and must be done even
+> > +	 * before the first call to bam_start_dma().
+> > +	 */
+> > +	if (bdata->pipe_lock_supported && peripheral_cfg) {
+> > +		if (cfg->direction != DMA_MEM_TO_DEV)
+> > +			return -EINVAL;
+> > +
+> > +		bchan->lock_scratchpad_addr = peripheral_cfg->lock_scratchpad_addr;
+> > +	}
+> 
+> [Severity: High]
+> If bam_slave_config() is called without peripheral_cfg, should
+> bchan->lock_scratchpad_addr be reset to 0 to avoid leaking state from a
+> prior configuration? If the previous lock_scratchpad_addr is retained,
+> bam_start_dma() might erroneously inject dummy lock descriptors on new
+> transfers.
+> 
+
+Probably unlikely to happen, but yeah.
+
+I would also check if (cfg->peripheral_size == sizeof(peripheral_cfg)),
+just to be safe.
+
+> [ ... ]
+> > @@ -919,13 +959,19 @@ static u32 process_channel_irqs(struct bam_device *bdev)
+> >  			 * push back to front of desc_issued so that
+> >  			 * it gets restarted by the work queue.
+> >  			 */
+> > +
+> > +			list_del(&async_desc->desc_node);
+> >  			if (!async_desc->num_desc) {
+> > -				vchan_cookie_complete(&async_desc->vd);
+> > +				hdesc = async_desc->desc;
+> > +
+> 
+> [Severity: Low]
+> Is the assignment to hdesc used anywhere? It appears to be assigned here but
+> is never read.
+> 
+
+Yeah, I think I pointed this out before.
+
+> [ ... ]
+> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >  
+> >  	lockdep_assert_held(&bchan->vc.lock);
+> >  
+> > +	vd = vchan_next_desc(&bchan->vc);
+> >  	if (!vd)
+> >  		return;
+> >  
+> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >  		return;
+> >  
+> >  	while (vd && !IS_BUSY(bchan)) {
+> > +		/*
+> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
+> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
+> > +		 * already have bam_locked set and must not trigger a second pair.
+> > +		 */
+> > +		if (!bchan->bam_locked) {
+> > +			ret = bam_setup_pipe_lock(bchan);
+> > +			if (ret) {
+> > +				dev_err_ratelimited(bdev->dev,
+> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
+> > +					ret);
+> > +				queue_work(system_bh_highpri_wq, &bdev->work);
+> > +				break;
+> > +			}
+> 
+> [Severity: High]
+> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
+> starvation? Because system_bh_highpri_wq executes in softirq context,
+> requeuing immediately without sleeping prevents the memory reclaim needed
+> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
+> 
+
+It looks like my suggestion to queue_work() again in the error path of
+bam_start_dma() wasn't great if we end up causing an infinite spin loop.
+We do need to retry somehow or report an error though, I don't think
+aborting and leaving the desccriptors completely unhandled is an option
+either... :(
+
+One option would be to try to avoid the allocation and write the lock
+descriptors directly into the FIFO, but this will probably get really
+messy as well, since you would need to carefully modify the FIFO
+management in several functions ...
+
+I don't have a good spontaenous idea how to solve this right now. :/
+
+Thanks,
+Stephan
