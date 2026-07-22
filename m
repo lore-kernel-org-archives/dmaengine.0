@@ -1,226 +1,267 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010026.outbound.protection.outlook.com [52.101.84.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFFD35A397
-	for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 14:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784730062; cv=none; b=nuAc3QSF+2AwvgkpTt2Ic2NfDmysMqJK2kO/Qe2xU3WDauS6FxoleTl5583zxRjMnfrV5eXmCVTGkzYxCuieoOjCr1j/lWm4B2xu+ljWos6C34b3iusNwFw2uUPNM+0Cupmh5gOy8isIhEc5NHF0F36FfvSKSQOSriOfmb742+k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784730062; c=relaxed/simple;
-	bh=+fF7dWQHSuRuzFljxnSNaUBElzuZYXaOYUHtcv1srZ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TlchbMIjjCKTBQR6y8TDCbsT0ffsy/uGIhLJAjSu6k8s41Z1fZCNC5iMK2QAin4o15g2w7pzm5LII8+j1vlk/Aw/h6/Wxx+ZDeHZMk1i0FaDhJbrriuSs/JeqgcPlSe9+fr6W8xt9AmSUjYf+PIuExuqFH+F60ON+X8CPDbI2DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MqUVjYnN; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0A7369D6A;
+	Wed, 22 Jul 2026 14:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.26
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784731900; cv=fail; b=MhabSWbKbfyQ2BEPxhRIMcrZTBxZvD+gh952zcEmCfkIj9H4VFsHVWa2O52SbxrwnENKX16BSZqB0KkHBnlUEzKJwwul70cb817+ktQ9B09AzDQGdKRTt0hNcjLlvVALzj8HM1PRt7ZqhoxMvrlxmsGIXNd9n7wEOJ9F+T5mw4A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784731900; c=relaxed/simple;
+	bh=dUI6N1mz2Pwmp4gzQCWFBZAhMTZmuiLCPV1i3NBx+3E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WqYP/2tbhInEdzcprv9WhK27yto3K8/wd9Rx6l8mjKgll/DBWqPwnCmZGybFVTZDxMZIY/LwppSSFF8pSLY4C4N+WqdxnL5fID73RxhP2604Iu7L4g+cii/1/55fdsNpcEJUMVIb42SVmrJGSLVT8nXsdNLGsG9IRy3AI4JnEno=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=OgorLHhp; arc=fail smtp.client-ip=52.101.84.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MqUVjYnN"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-495590dde14so36664025e9.0
-        for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 07:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784730058; x=1785334858; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=v1zNXC882j0BCwBxeji6HC1ZHjIGfjhbbSn9tIs8/0s=;
-        b=MqUVjYnNHgjYx/DzQuwmlu1GBC1dk56cCPbhvAGDJSqvAwb6CbAWq1KolHgW+LAL8i
-         PMXAaZ4dZN88XF8kHZEZDpnB9+7eXXjIJcoeTKbE0ZGGDm/uDNuB0bWr99sBlhM/070t
-         euGFjp5OTLZ0dBKXkcVSNSilvxkwh6+Jiv4F5X1RjS/9EGDs3kzmGAinMoEXeQMyc+bU
-         D6e1Y5IMvZUhYIdNZ9QnZwEQDmp3uNXIAegzoDc+ym3pBnJKQ77hGGaOZhtDbMeRsfuE
-         M7FDL22IjjP8k2PCtwbtJEcUMgW/fSgEfxTMUo/pE6z4Q7LNbc5vLgYXSZ8vEho1P3/W
-         x3Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784730058; x=1785334858;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=v1zNXC882j0BCwBxeji6HC1ZHjIGfjhbbSn9tIs8/0s=;
-        b=QYyNOBXaYVQ+7A5mwEqSonIafUOI7YIjBRdhTsaPJi6+2WSn1wfXSpRb8fdLi/GK+/
-         5uX4f38MRCOfUO4lWtPblt7dF8cnaTA0Xry+CCVmWwI0WmQB1iOvmDAb+sLqAo0hClJ4
-         ibVc/jwhZJR4CJ0mnYtzufAnc93jDkFEcP9s5lalf14ejfxmYdoWzSAF8zy9gCI/R+X/
-         J7uTIMxFYdPFL75lpVgHDl1pc7sO+laBwObdwlK9FldyGOMauYLVFIT92pLK2YRkZH/q
-         WH9eJLUiqlawQbB6hqlwDq4cTF3GMhWG4/nvtWQfcAp0idLemI6/6lmcdRn/f3fgVgnN
-         YQRw==
-X-Forwarded-Encrypted: i=1; AHgh+Rqi2yNbwuPps5LE3mSG3LKuFbFeNX+tnQgpy5kdmHgOP7fM5aVHPN8dJAPiMtXIMc2fc6fBXTjjGFs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIfQ0eGYMy/8Uh7HwAKfNc2vYh6M0fP0jDaT4Me0YybkmmiE+J
-	SR6ihaYIeWeNiP7On1QpH37qc2F3qtd+5+g5vMNTd+QU9K44dCg4A0mCo5zOp/Wadg8=
-X-Gm-Gg: AR+sD10pb14BJzz+l2wc66zNPBPdoTBUN4RMnrhp2uM7TIL4i0I96/xyMqmlgmvL1Rh
-	mOJbBd0nIHVklU5KxwqKd6mJaO+XnNX1cyb0x7/4uhCO2ILxAc8zL8U8/SsR3wOXbjHrpX48MP6
-	2C9klw5UhoNJji2CK2HKfy3rWoFJW9cm4s5A8mF8NGN2uTMrFcX9fTn7r0FxS2B97y1A91ocbPo
-	z1H4wuvs7ZB83arV57hoCKoepbc2EMUwv6R+yzjyag4zSaZ7n30MJRfSK8x+Scs1MWKf8bBuSzp
-	PFoidshOKZi8XyejaOFtkMy2FjXSeFGmW9aSQWjgPegwCQb+phker702Xi8Y10uT7Oq4GdfLKNm
-	FvY6ZUgGRAjn1Q8pleLcDdtlSKwv8l6Mtq+Xjd3/qgV5FjS4nP8ksfVa5ismWhMEXOUW8iA5mKT
-	7P0M+jUEi7Qul1SGXIXxNw+Gc=
-X-Received: by 2002:a05:600c:3b01:b0:495:4fd4:144b with SMTP id 5b1f17b1804b1-4954fd419e8mr224754385e9.21.1784730058312;
-        Wed, 22 Jul 2026 07:20:58 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:7ae3:a857:e482:495])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4956d475e24sm40717585e9.0.2026.07.22.07.20.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jul 2026 07:20:57 -0700 (PDT)
-Date: Wed, 22 Jul 2026 16:20:52 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	sashiko-reviews@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <amDRxPkdvbA-iVer@linaro.org>
-References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
- <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
- <20260721134853.2B2401F000E9@smtp.kernel.org>
- <amCGXUUd4VmuQRGD@linaro.org>
- <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
- <amC7_M-HjVZ3sQuT@linaro.org>
- <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="OgorLHhp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=prSE57xKEBQqLhqzYsm7PNi7dv1sF/lRv3Zus6NL28TMfSHT87L78Nm6vOfc6EPMeMubGvZ2vw2AstxAfSXi0HJX8pg6nk1G+y+mm9INll96hTtKZ/h83V5Ajzq/dOYP3QL/73d21zbUWyLknSCXGXxMvsKktE4ZJ+KhcgOp/1+ScVzl92TTTj7cH3GQ8X0wu1BvNz8qwEl/XFOlhgZV14ldqY/GFDq3sQYIuZJmJcPsx3JohhKDrckGCTqoiL278ncnNdDqtaR02BeFJNroaudpT2zqR8JV360RuU3of2fMY++7h3dxVcJk/ada8jgiBYkz8tcV0rmCx6I8ZoCKHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=i2YCRQznHmgGT0XNHxGepaocevArP1D15vdqLc3mxRk=;
+ b=ukD7Q99aALzeYeeigJU+5HFI9/F1NSk5l4YbM3Uzhrji5FAriobO4gBcXB+gFvFFL9TWNMYOESQzlg7j79BBGvKqCE8dkwebG4pYj5lzphDi/c2eYIPxQYDQWMMpN1rMqlr348Jfiqq95KRxJNnjMij0WZmcVC6vnb0IDvMOB8gzkMZe3ikusx77DpwXEua1OnQBWXAsyN5Ee6kLAzWSFI8kkgwKJznPIVFlsNTlTHGJInKY+QauhC/+ObxrRwatt5h5SDbA3q867YVChcc45DzhelvjAGRvMQvpsgNUHxiujhb/34A/RUTc/gtEyzjiezJHxuDBkctOhkwe9QG6PQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i2YCRQznHmgGT0XNHxGepaocevArP1D15vdqLc3mxRk=;
+ b=OgorLHhpW8xjZb9qeUjpKsGJcijfVVL+NyHsWhfX6A11dS3hP3SYH+vTFFB7GTeO5nyBUX54spw9AbwJvn8BroEA+RKpFee40fqmGskuERAlykPuHKBzS5MjVhryHNp64BPksIUJzrzrvLyesZLyPpbASmD3N28vwxv1jfxLM39yIN5LDZn36oV+j+2SUXpCXqIj+EdukfhFZ4FLEYV/BHnIEMYqJWtOvHWZ99QOoIjzjiwuv5LxAf7LZIkedmVgfZ5TkgMo57K+oRyjxGXOoGGtprh1QHkaHo/68n/9PgPWG9GQyTYbHfuJbjw5KfX8aQQmw49AdwWIauS1bUtG9w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB7926.eurprd04.prod.outlook.com (2603:10a6:20b:2ab::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Wed, 22 Jul
+ 2026 14:51:35 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.009; Wed, 22 Jul 2026
+ 14:51:35 +0000
+Date: Wed, 22 Jul 2026 09:51:26 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Devendra K Verma <devverma@amd.com>
+Cc: mani@kernel.org, vkoul@kernel.org, frank.li@kernel.org,
+	dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, michal.simek@amd.com
+Subject: Re: [PATCH v1 1/3] dmaengine: dw-edma: Make Xilinx Macros Dev Name
+ Agnostic
+Message-ID: <amDY7rTS06xEfFxu@SMW015318>
+References: <20260722111640.1146212-1-devverma@amd.com>
+ <20260722111640.1146212-2-devverma@amd.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260722111640.1146212-2-devverma@amd.com>
+X-ClientProxiedBy: SA0PR12CA0005.namprd12.prod.outlook.com
+ (2603:10b6:806:6f::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB7926:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5d8fb299-e986-4223-00ce-08dee800b9f9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|19092799006|1800799024|366016|56012099006|11063799006|10067099003|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	2zM6cl891i/odlhT7Nrtx74EvrVNii1OmDqqp7zphwdwtPABOj+s+9fr5yAm3nlCG7LZn8VXlUlGa6hY1/7NDo0AohDqHnryXr57GkcyJQTlOaBDFgF9eze9B31V+W5M5pi0f2q6mcHesho0aH7n49Whm2m5g3kzjE760YwuZSvPSMzq20xd7mSIbcfQoajjCptMtsSkoFbmjwGwu6HGCYhKnfGkH0vWgabWym2mAZoTzsZa1sPXHHe42YmGuj0NGRCxud2Wb0I5GF2vL0gWYFEmq8FPmEdZUJxBcvXy82N590iFZTvrD1QjQDY7erOF7+CHijgvcK3Os9PMgO0pLLKQNnkUQNdLW+s0QrPh6ko4LfMc/Lug1ruAb/C0BJHRyjpI0KhZ7VyjYDkiHKD8uL8wqok8euqCmmMnBHmAs9QNW1Xzh7Cr7aqjUPO0s1z09+ZcLIqQrot2dfZGu2HtPkDEdY4RNN43qxshHlGnjr6UqJWHcXmjaUo84x4TNJfUBgN4Ylcm45KZocCGv8PBKibQLdMPLSA32wLrnVRW9xv5El51xHJtAyN+aScJ211jUaCIwkTcDJ3GgtsL29tWD3UiAlGt5FHg9CsM161xq2z1icul8WBxh02F7gavK00uSxPlV85aEA0JQ0nZ4Rpc3w==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(1800799024)(366016)(56012099006)(11063799006)(10067099003)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?t7uAnh3bIFjw/xjyRadzSXDfzP1Jgkxj2NOMUuO6hCpNInakpBD/iFVbizNV?=
+ =?us-ascii?Q?ab/grY90s92ibIn+tj+1Tue7Midx6q/eVRBcSFusnM2tXZ9t+B808+Ss4zKs?=
+ =?us-ascii?Q?wllItc5KbT7tpDQkF8jie/Vj/hvZUMkuyTlY3Jm02pwE7eDVKLkXchBb4PxM?=
+ =?us-ascii?Q?YxwXkhf8iQarn6v7LHm5em+12vEwSnlaATjzkLrOFfMtGZPYzv9S8rIlh89D?=
+ =?us-ascii?Q?muy83vJ0SPu39nyunLAUtKeek6dO89cK4QPyFFriNUlXkFj5uDVVruYnuZqP?=
+ =?us-ascii?Q?gQwLCJ7+JszI1REX4yQCK5UoyXn9d0zsbioxC3j9Gl/+iQeWJBfKOwCBk+1W?=
+ =?us-ascii?Q?oBdpr/dOM4BREGPCWetT71+JVaPA1i/FOHQXYY2yW+e9Z67Ovx2BmWq2QTed?=
+ =?us-ascii?Q?LcYWMhGb5KrV8urCeaaGHyk4+mkb35EiCPvSO/JOFfweNgSDBq5U3m3Dn6TF?=
+ =?us-ascii?Q?4oReKgEL6SE+jrWEJHX13MWyG9MIBuPHkiqJ0WezHOTraITHvQZ75m6xYXss?=
+ =?us-ascii?Q?w4nAAApG6q0nXNwbdeyjt30YDxA0wDI9OJfPdi3UqaHZkO1zh9jZnXZVjQAS?=
+ =?us-ascii?Q?kZm9Jb04HLSTipcq4Wrl2EAekr2LugToBEEDsQqjtbvxET7g0AfkfR6kaSRD?=
+ =?us-ascii?Q?Q81xZ6Dx8hmUz46PUCvDsTavHh0+uA0B77/hg8o1UjHmb8uiwp5mmzPtIdFi?=
+ =?us-ascii?Q?SSMX3xV+SL5DAPe+BtnSVjv12wkpxB+CVrVUU94pnial8DgDgl+EIzhVtzKF?=
+ =?us-ascii?Q?wC/4zgJvxEHkJMp9x7godbRxc9UGdgjxAIzafte4Yeh96+fC6j3UgR8z/pa+?=
+ =?us-ascii?Q?GSAN7CXOcTiwsS3vKVEJkbqWgDh68LcHDQyqsILQcjpPhO2qksGBymQ0NFuI?=
+ =?us-ascii?Q?4SoVZOGkxIewqmp2XWY4VoELfIdlk6H5SiIjxgjlgdY/6TvgHp1Dw2BTQk34?=
+ =?us-ascii?Q?n7zjOS16CXKHYafxkMxdIMSMvqB4FKWzp4e1HTJVSjg2dN4ZGPTBxO4tazFD?=
+ =?us-ascii?Q?Nqs/X3/9cRMAyHJz4hudv8zy0TGHiJ9UPMTyfyxFeAnrXF3VlsFwZDPjMKA7?=
+ =?us-ascii?Q?W+/q//U2uEgQjzBfmILuzWwYpCVnL3p/3uUGp5R/3dt/DNfm23N5yQv08vEJ?=
+ =?us-ascii?Q?ZBsbA67p/bRC3sbd+LrIT1BYBDfDoLI4miwg/I+qSjYev1z5wzYWANCr9w+e?=
+ =?us-ascii?Q?sXHHIrr1efiOTLnmvv56fwhDFzw5dQJMR16Pvq6P2Ft91EP68Dxpi8WnJT4o?=
+ =?us-ascii?Q?2oGHhZ6rIhIQ/lFL6EMKtGAmwR88UbT51QyFwyNr0UP3xWYWQuOxqSX1vWqN?=
+ =?us-ascii?Q?J7/NSOb18hviijtZqHk/KHL+j2i2HM1axO1lxF4JH8KMw8AMSvyl1s6Hy7XV?=
+ =?us-ascii?Q?M0UyVXzS8GD4fFh9o+iEIwltsZ9hlT81+7RnC0IGSCLQ0oGsnR0CZASMDqpu?=
+ =?us-ascii?Q?5u8l5fvxbw6IAhnMUyglEtNKzm/U75m78U4un0ju0B+Tx7GUwTYDgGcvjZ8D?=
+ =?us-ascii?Q?tTGK+8ilTFltQVQl+W0ajaxZiIOI0LVCDBkraCJNdIkjIIQrreiDofPDkDA+?=
+ =?us-ascii?Q?b79FdEyYrrSXEwyAFLBOqAwu2IEQV0fzDBi6c0IFxOKsvKl7wBmKrZH+B5X7?=
+ =?us-ascii?Q?w6xguxclnOiG4jPG1GqbLclZMU44W+3KV0mGvvAfpZczXts6mavP6OtnyC6s?=
+ =?us-ascii?Q?IE7oisnHYqsOxFEfIadrNS6tRqghqmDvUDmmouToKK01ZaRtj4ioQqZRo8If?=
+ =?us-ascii?Q?G2GA2xpCozdE3QlIFs69cFjaS6RFtn4hN3dANK1IKXhUK0yalKas?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d8fb299-e986-4223-00ce-08dee800b9f9
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2026 14:51:35.3812
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YhSb4qYzl0TJQpq4JX/acoBR8qxnnKjSQUfh6tncTv59Tky3hdn+9ZztXB7pHLkoAvX6ESsx9QRLpSzb5rX2GUzZNCcO6UybK13rNFGk8lIMs4+eNDvj0GTOg5LAq3w3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7926
 
-On Wed, Jul 22, 2026 at 07:11:10AM -0700, Bartosz Golaszewski wrote:
-> On Wed, 22 Jul 2026 14:47:56 +0200, Stephan Gerhold
-> <stephan.gerhold@linaro.org> said:
-> > On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
-> >> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
-> >> <stephan.gerhold@linaro.org> said:
-> >> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
-> >> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> >> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
-> >> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
-> >> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
-> >> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
-> >> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
-> >> >> --
-> >> >>
-> >> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
-> >> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
-> >> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> >> >>
-> >> >> dmaengine: qcom: bam_dma: add support for BAM locking
-> >> >>
-> >> >> This commit adds support for BAM pipe locking by prepending and appending
-> >> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
-> >> >> channel. It uses a peripheral-local scratchpad address communicated via slave
-> >> >> config for the dummy writes.
-> >> >>
-> >> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> >> >> > index f3e713a5259c2..411c60c4433e2 100644
-> >> >> > --- a/drivers/dma/qcom/bam_dma.c
-> >> >> > +++ b/drivers/dma/qcom/bam_dma.c
-> >> [...]
-> >> >> [ ... ]
-> >> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >> >> >
-> >> >> >  	lockdep_assert_held(&bchan->vc.lock);
-> >> >> >
-> >> >> > +	vd = vchan_next_desc(&bchan->vc);
-> >> >> >  	if (!vd)
-> >> >> >  		return;
-> >> >> >
-> >> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >> >> >  		return;
-> >> >> >
-> >> >> >  	while (vd && !IS_BUSY(bchan)) {
-> >> >> > +		/*
-> >> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
-> >> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
-> >> >> > +		 * already have bam_locked set and must not trigger a second pair.
-> >> >> > +		 */
-> >> >> > +		if (!bchan->bam_locked) {
-> >> >> > +			ret = bam_setup_pipe_lock(bchan);
-> >> >> > +			if (ret) {
-> >> >> > +				dev_err_ratelimited(bdev->dev,
-> >> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
-> >> >> > +					ret);
-> >> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
-> >> >> > +				break;
-> >> >> > +			}
-> >> >>
-> >> >> [Severity: High]
-> >> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
-> >> >> starvation? Because system_bh_highpri_wq executes in softirq context,
-> >> >> requeuing immediately without sleeping prevents the memory reclaim needed
-> >> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
-> >> >>
-> >> >
-> >> > It looks like my suggestion to queue_work() again in the error path of
-> >> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
-> >> > We do need to retry somehow or report an error though, I don't think
-> >> > aborting and leaving the desccriptors completely unhandled is an option
-> >> > either... :(
-> >> >
-> >> > One option would be to try to avoid the allocation and write the lock
-> >> > descriptors directly into the FIFO, but this will probably get really
-> >> > messy as well, since you would need to carefully modify the FIFO
-> >> > management in several functions ...
-> >> >
-> >> > I don't have a good spontaenous idea how to solve this right now. :/
-> >> >
-> >>
-> >> Pre-allocate the lock descriptors (if needed) in bam_prep_slave_sg()? As in:
-> >> call bam_make_lock_desc() in bam_prep_slave_sg(), store the descriptors and
-> >> make bam_setup_pipe_lock() return void as it will no longer be possible for it
-> >> to fail? It would just grab the preallocated descriptors.
-> >>
-> >
-> > I considered suggesting this, but how do you know which descriptor needs
-> > it in bam_prep_slave_sg()? It's just the allocation, afaict it doesn't
-> > tell you anything about the order in which they will be submitted. :/
-> >
-> > We could always allocate the extra lock descriptors and waste the extra
-> > memory for the descriptors that won't need it. That should work, but is
-> > also not great ...
-> >
-> 
-> Oh, I was thinking about having pointers to lock/unlock descriptors in struct
-> bam_chan and to just grab them in bam_setup_pipe_lock() when needed and then
-> next time we enter bam_slave_prep_sg(), we see we consumed them so let's
-> re-allocate them. And of course: don't do it at all if pipe locking is not
-> supported.
-> 
+On Wed, Jul 22, 2026 at 04:46:38PM +0530, Devendra K Verma wrote:
+> Xilinx specific macros for MDB device can be reused for the
+> Xilinx supported other similar IP such as CPM6.
+> Renamed the Xilinx specific macros in a way that can be
+> reused for Xilinx supported upcoming IP, CPM6.
+> Naming is in accordance with the naming done for Synopsys macros.
+>
+> Signed-off-by: Devendra K Verma <devverma@amd.com>
+> ---
 
-Sadly, I think(?) from the API perspective it is valid to
-dmaengine_prep_slave_*() a couple of buffers and them issue them
-separately, e.g.:
+I don't think it is necessary to remove MDB. You may mention somewhere
+CMP6 compatible with MDB. It is quite common in driver.
 
-	desc1= dmaengine_prep_slave_*();
-	desc2 = dmaengine_prep_slave_*();
+The major concerns is that if a incompatible devices appear, such as CMP7,
+which have special registers, need add _MDB_ back.
 
-	dmaengine_submit(desc1);
-	dma_async_issue_pending(chan);
+Frank
 
-	// do a bunch of other random stuff
-	// bam_setup_pipe_lock() consumes lock descriptors
-
-	dmaengine_submit(desc2);
-	dma_async_issue_pending(chan);
-
-In this situation, we wouldn't have any lock descriptors allocated
-anymore?
-
-Thanks,
-Stephan
+>  drivers/dma/dw-edma/dw-edma-pcie.c | 58 +++++++++++++++---------------
+>  1 file changed, 29 insertions(+), 29 deletions(-)
+>
+> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+> index 791c46e8ae4c..ec5e057a0f11 100644
+> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> @@ -29,21 +29,21 @@
+>  #define PCI_DEVICE_ID_XILINX_B054		0xb054
+>  #define PCI_DEVICE_ID_XILINX_B00F		0xb00f
+>
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_ID		0x6
+> -#define DW_PCIE_XILINX_MDB_VSEC_ID		0x20
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_BAR		GENMASK(10, 8)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_MAP		GENMASK(2, 0)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH	GENMASK(9, 0)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH	GENMASK(25, 16)
+> -
+> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH	0xc
+> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW	0x8
+> -#define DW_PCIE_XILINX_MDB_INVALID_ADDR		(~0ULL)
+> -
+> -#define DW_PCIE_XILINX_MDB_LL_OFF_GAP		0x200000
+> -#define DW_PCIE_XILINX_MDB_LL_SIZE		0x800
+> -#define DW_PCIE_XILINX_MDB_DT_OFF_GAP		0x100000
+> -#define DW_PCIE_XILINX_MDB_DT_SIZE		0x800
+> +#define DW_PCIE_XILINX_VSEC_DMA_ID		0x6
+> +#define DW_PCIE_XILINX_VSEC_ID			0x20
+> +#define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
+> +#define DW_PCIE_XILINX_VSEC_DMA_MAP		GENMASK(2, 0)
+> +#define DW_PCIE_XILINX_VSEC_DMA_WR_CH		GENMASK(9, 0)
+> +#define DW_PCIE_XILINX_VSEC_DMA_RD_CH		GENMASK(25, 16)
+> +
+> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH	0xc
+> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW	0x8
+> +#define DW_PCIE_XILINX_INVALID_ADDR		(~0ULL)
+> +
+> +#define DW_PCIE_XILINX_LL_OFF_GAP		0x200000
+> +#define DW_PCIE_XILINX_LL_SIZE			0x800
+> +#define DW_PCIE_XILINX_DT_OFF_GAP		0x100000
+> +#define DW_PCIE_XILINX_DT_SIZE			0x800
+>
+>  #define DW_BLOCK(a, b, c) \
+>  	{ \
+> @@ -258,10 +258,10 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>  	u16 vsec;
+>  	u64 off;
+>
+> -	pdata->devmem_phys_off = DW_PCIE_XILINX_MDB_INVALID_ADDR;
+> +	pdata->devmem_phys_off = DW_PCIE_XILINX_INVALID_ADDR;
+>
+>  	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
+> -					DW_PCIE_XILINX_MDB_VSEC_DMA_ID);
+> +					DW_PCIE_XILINX_VSEC_DMA_ID);
+>  	if (!vsec)
+>  		return;
+>
+> @@ -272,18 +272,18 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>
+>  	pci_dbg(pdev, "Detected Xilinx PCIe Vendor-Specific Extended Capability DMA\n");
+>  	pci_read_config_dword(pdev, vsec + 0x8, &val);
+> -	map = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_MAP, val);
+> +	map = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_MAP, val);
+>  	if (map != EDMA_MF_HDMA_NATIVE)
+>  		return;
+>
+>  	pdata->mf = map;
+> -	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_BAR, val);
+> +	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_BAR, val);
+>
+>  	pci_read_config_dword(pdev, vsec + 0xc, &val);
+>  	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
+> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH, val));
+> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_WR_CH, val));
+>  	pdata->rd_ch_cnt = min(pdata->rd_ch_cnt,
+> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH, val));
+> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_RD_CH, val));
+>
+>  	pci_read_config_dword(pdev, vsec + 0x14, &val);
+>  	off = val;
+> @@ -293,16 +293,16 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>  	pdata->rg.off = off;
+>
+>  	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
+> -					DW_PCIE_XILINX_MDB_VSEC_ID);
+> +					DW_PCIE_XILINX_VSEC_ID);
+>  	if (!vsec)
+>  		return;
+>
+>  	pci_read_config_dword(pdev,
+> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH,
+> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH,
+>  			      &val);
+>  	off = val;
+>  	pci_read_config_dword(pdev,
+> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW,
+> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW,
+>  			      &val);
+>  	off <<= 32;
+>  	off |= val;
+> @@ -360,7 +360,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>  		 * address use the non-LL mode or simple mode supported by
+>  		 * the HDMA IP.
+>  		 */
+> -		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_MDB_INVALID_ADDR)
+> +		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_INVALID_ADDR)
+>  			non_ll = true;
+>
+>  		/*
+> @@ -370,10 +370,10 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>  		 */
+>  		if (!non_ll)
+>  			dw_edma_set_chan_region_offset(vsec_data, BAR_2, 0,
+> -						       DW_PCIE_XILINX_MDB_LL_OFF_GAP,
+> -						       DW_PCIE_XILINX_MDB_LL_SIZE,
+> -						       DW_PCIE_XILINX_MDB_DT_OFF_GAP,
+> -						       DW_PCIE_XILINX_MDB_DT_SIZE);
+> +						       DW_PCIE_XILINX_LL_OFF_GAP,
+> +						       DW_PCIE_XILINX_LL_SIZE,
+> +						       DW_PCIE_XILINX_DT_OFF_GAP,
+> +						       DW_PCIE_XILINX_DT_SIZE);
+>  	}
+>
+>  	/* Mapping PCI BAR regions */
+> --
+> 2.43.0
+>
