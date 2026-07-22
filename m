@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AEE23395C;
-	Wed, 22 Jul 2026 03:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBD12D0605;
+	Wed, 22 Jul 2026 05:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784691217; cv=none; b=VAtuMt7VMZzJ+ewAM20U1z0usfZMoNjk0IQ/n2IAd7wrLHY6CierEPBvun8mbuh9ndsdy2jjpaI4omr38g1WHFFcQHLrzRwRLXYCk6Hb1KJk54HWBqZFfeUpvM+nNG7DZC9axPRryae6FkuLk0doWXgMGQ3qYCAOjja6VDHACHM=
+	t=1784699924; cv=none; b=tnOT+AdrgvhSTe1yxLRqFFcLNoJBqMj/AAiWwVkzx1gLJ4eQO1kvsxzDlBxqtHtjezU8ZH2bVOspFV91r0vu0hQ6kVW8fcKuHqQnqzgRFA3EGxODTwYyPqlECV+3rRDoOy/CPCO72RThyWMG1ikJ7tbeWrDEb/0xU0BQWF9WvGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784691217; c=relaxed/simple;
-	bh=M2HQHJqVdQNEiV01yYm4Y5Gi5nkFE+8hq+0ZUsceYjE=;
+	s=arc-20240116; t=1784699924; c=relaxed/simple;
+	bh=0u0FhLDzl/Ofwfay/25ek4tyFIxmtmmR3ZzB4gEOehA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jpTnUcjUgxQXuoOKc5JXmrT4thBLeiY/6HG2+Cwx1W22XMIN4BwgUWIDOmiUPU0QC9w6m8EuC8KgT6alEBzv8p6sf0FZAyxLxlbwHS+GORGOQkTvp06Dj9NdMdu+Dn8ootIzS+wwtPkroCEvOEtgeepNqfM631RSzcPphFhce0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ta3allVk; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=QmPizRz39eSPMSWfgqmNRJvxFxKAkNd3KH+q3M83R5u8vZZvfnikhPS+kbpVaCuFxGwJ7cPk+vwN9ifa3i/0FE1vl/O5DWvIHGSofnyQcaAupbK97XJBTCFvnunmmtEbZ6D/5+dQ31koDlf1M2OibUy5ThL/mBKsIZf+PRlqjEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VTT2w9zq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ta3allVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9BF1F000E9;
-	Wed, 22 Jul 2026 03:33:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VTT2w9zq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4131F000E9;
+	Wed, 22 Jul 2026 05:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784691215;
-	bh=DSaqgeqSYkbgA5e+c2ekMOCXJvziE1pv4FqFj2N09VI=;
+	s=k20260515; t=1784699922;
+	bh=5T+9Zo3cTjyaTauys3fPWTruOr/6JMUDiMzHi2ct70E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Ta3allVk1/1keekEZ/7ZK09i0bHJkdH7z1jrvAdygHs0N6Co55lV1jphH7qCnRHiS
-	 udBQy+wvmKAmfQQzj+02fw1NYYOgb1ABi7BOHNxLoBOiIj77q1k5n/W21nAUHnKymC
-	 vmHhQj6ksiJcPvEbW8Nwq5MjAJHi1rgTEpMLtyBrmpwAyB+rYqZYHT020FzQ3UJTjj
-	 TcS8rJLjdXuxhmYP0PPtH/JLway8Tzou7aomufi9qfTM9ZFFOnXRRQccMFAnEByUHl
-	 mZh0+Nc4wBwREGCm9Pw9aPmCYlLB9liOlj/f4iPWNL1TjqU3Jr2zV8tlM+4VTN/05S
-	 e00uZE+KgkyNA==
-Date: Wed, 22 Jul 2026 05:33:28 +0200
+	b=VTT2w9zqPup8HDv24ijAZ5UufMCABEfuAhGZrUHsWDmO4Kqp/6A7Jom1Dxb0C1gGu
+	 OnN06DmlP7R/ZnIZe766maHtdIxV2VM9DVByVVKgEMi/l61ruoAPdNr/1MltqcEObD
+	 xsWHrKlM1j5h2fHEsMuYWwSqpuzuEOCQtT/uCdOfRTjIRM6jWGZp9+k5FFgIHito51
+	 TQINBjQ2oZnB9RW6ifBTpCcSqIzPxQSsq4XlZTGfydGnFngIEI6qBz9Y1VuqusskFn
+	 0Rw/IpAxnoSH6mgQ8EQto5CdCGVHo44b059AD6WjzdgYJN7dcLGSVcdoYxtGrkolht
+	 CsX86tCrodUKg==
+Date: Wed, 22 Jul 2026 07:58:34 +0200
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
+To: Frank Li <Frank.li@oss.nxp.com>
 Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, 
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] bus: mhi: ep: Add mhi_cntrl->flush_async()
- callback to flush the async read/write
-Message-ID: <m2lmcrionmqdnpbauhdgaatyq3uexyupnyeeigfg4ftambqoxt@wpoj26lmtv2e>
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dmaengine: dw-edma: Implement
+ device_synchronize() callback
+Message-ID: <a7rswvi476dml2vuvqycnzsq7orc5jxzxl3n4wixclly4cvqrl@x26rz7ytdrr3>
 References: <20260714-mhi-ep-flush-v2-0-b6a9db011e85@oss.qualcomm.com>
- <20260714-mhi-ep-flush-v2-2-b6a9db011e85@oss.qualcomm.com>
- <20260714123126.5FA091F000E9@smtp.kernel.org>
+ <20260714-mhi-ep-flush-v2-1-b6a9db011e85@oss.qualcomm.com>
+ <amAXdwI_pYA4p_0P@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,85 +49,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260714123126.5FA091F000E9@smtp.kernel.org>
+In-Reply-To: <amAXdwI_pYA4p_0P@lizhi-Precision-Tower-5810>
 
-On Tue, Jul 14, 2026 at 12:31:25PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+On Tue, Jul 21, 2026 at 09:05:59PM -0400, Frank Li wrote:
+> On Tue, Jul 14, 2026 at 02:08:32PM +0200, Manivannan Sadhasivam wrote:
+> > device_synchronize() callback is required by the client drivers to ensure
+> > all the DMA operations are completed so that they can free the memory
+> > associated with the complete callbacks.
+> >
+> > So implement this callback by first making sure that all the in-flight DMA
+> > operations are completed and then call vchan_synchronize() to drain the
+> > DMA tasklet.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
 > 
-> New issues:
-> - [High] Draining async transfers *after* sending a disconnect notification causes out-of-order successful callbacks to be delivered to a disconnected client.
-> - [High] Controller-wide `flush_async()` called inside a per-channel loop disrupts active channels and causes livelocks.
-> 
-> Pre-existing issues:
-> - [Critical] The `MHI_PKT_TYPE_RESET_CHAN_CMD` handler frees the transfer ring without flushing in-flight async DMA operations.
-> - [High] Lockless TOCTOU race on `mhi_chan->xfer_cb` in completion handlers leads to a Use-After-Free.
-> - [High] Null pointer dereference on `mhi_chan->mhi_dev` in `mhi_ep_process_ch_ring` during controller teardown.
-> --
-> 
-> --- Patch [2]: [PATCH v2 2/3] bus: mhi: ep: Add mhi_cntrl->flush_async() callback to flush the async read/write ---
-> commit 2e23a5ef008c4098d55a3f07d062a8941cc90ccd
-> Author: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> Subject: bus: mhi: ep: Add mhi_cntrl->flush_async() callback to flush the async read/write
-> 
-> This patch introduces a flush_async() callback to the MHI EP controller and
-> invokes it during device removal. It aims to prevent use-after-free issues
-> by ensuring that any in-flight asynchronous DMA operations are completed
-> before the channel's transfer callback is unregistered.
-> 
-> > diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> > --- a/drivers/bus/mhi/ep/main.c
-> > +++ b/drivers/bus/mhi/ep/main.c
-> 
-> [ ... ]
-> 
-> > @@ -1636,6 +1637,12 @@ static void mhi_ep_remove(struct device *dev)
-> >  		}
-> >  
-> >  		mhi_chan->state = MHI_CH_STATE_DISABLED;
-> > +		mutex_unlock(&mhi_chan->lock);
-> > +
-> > +		if (mhi_cntrl->flush_async)
-> > +			mhi_cntrl->flush_async(mhi_cntrl);
-> > +
-> 
-> [Severity: High]
-> Does this sequence result in successful callbacks being delivered after the
-> client has already been notified of disconnection?
-> 
-> When mhi_ep_remove() sends -ENOTCONN to mhi_chan->xfer_cb(), it signals the
-> client to free its context. If we then drop the lock and block on
-> flush_async() while xfer_cb is still registered, pending DMA completions
-> can invoke mhi_ep_read_completion():
-> 
-> mhi_ep_read_completion()
->     if (mhi_chan->xfer_cb) {
->         ...
->         mhi_chan->xfer_cb(mhi_dev, &result);
->     }
-> 
-> Can this lead to the client driver receiving a success callback after it has
-> already freed its resources in response to the -ENOTCONN notification?
+> Similar implement already in linux-next, recent many fixes and update about
+> dw edma already merged in dma tree.
 > 
 
-This is a valid concern too. Will fix it.
+Ah, I didn't notice this patch. I've dropped this patch from my series.
 
-> [Severity: High]
-> Can calling a controller-wide flush operation inside a per-channel loop
-> disrupt other active channels or cause a livelock?
-> 
-> The code loops over the device's channels (UL then DL). When disabling the UL
-> channel, it calls mhi_cntrl->flush_async(). Since flush_async() operates on
-> the controller context and MHI EP architectures typically share RX/TX DMA
-> channels across the entire controller, the DL channel might still be active
-> and queuing new transfers.
-> 
-> Could waiting for all controller DMAs to flush while other channels are active
-> cause a livelock or drain traffic inappropriately?
-> 
-
-This will be fixed by moving the flush_async() call outside of the channel loop.
+This patch also suffers from the same RMW issue that Sashiko pointed out. So
+I'll send a separate fix for that.
 
 - Mani
+
+> commit 99109a51efd28c9a661fbfb9469b023c517b31d1
+> Author: Koichiro Den <den@valinux.co.jp>
+> Date:   Sat Jul 18 03:06:32 2026 +0900
+> 
+>     dmaengine: dw-edma: Terminate all descriptors without callbacks
+> 
+>     The DMA Engine client documentation says in the "Terminate APIs" section
+>     of Documentation/driver-api/dmaengine/client.rst:
+> 
+>     "No callback functions will be called for any incomplete transfers."
+> 
+>     dw-edma instead calls vchan_cookie_complete() when a deferred STOP reaches
+>     the interrupt handler. This schedules a callback for the active descriptor
+>     and leaves other issued or submitted descriptors queued. A late callback
+>     after dmaengine_terminate_sync() can dereference client state that has
+>     already been freed, while leftover descriptors may later restart into
+>     reused buffers or leak.
+> 
+>     Move all issued and submitted descriptors to the terminated list whenever
+>     termination completes. For a pending STOP, do this from both the DONE and
+>     ABORT paths. Complete their cookies in order without scheduling callbacks.
+> 
+>     A STOP can remain pending until the running transfer raises an
+>     interrupt. Make device_synchronize() wait for such a pending STOP to
+>     complete before releasing terminated descriptors. Reuse it from
+>     free_chan_resources(), then release the remaining virt-dma resources.
+>     Sleep instead of busy-polling while waiting, and warn if the existing
+>     timeout expires.
+> 
+>     Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+>     Reviewed-by: Frank Li <Frank.Li@nxp.com>
+>     Signed-off-by: Koichiro Den <den@valinux.co.jp>
+>     Link: https://patch.msgid.link/20260717180639.2643243-3-den@valinux.co.jp
+>     Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> 
+> Frank
+> 
+> >  drivers/dma/dw-edma/dw-edma-core.c | 16 ++++++++++++++++
+> >  1 file changed, 16 insertions(+)
+> >
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > index c2feb3adc79f..df0d1a946ed0 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> > @@ -12,6 +12,7 @@
+> >  #include <linux/dmaengine.h>
+> >  #include <linux/err.h>
+> >  #include <linux/interrupt.h>
+> > +#include <linux/iopoll.h>
+> >  #include <linux/irq.h>
+> >  #include <linux/dma/edma.h>
+> >  #include <linux/dma-mapping.h>
+> > @@ -331,6 +332,20 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
+> >  	return err;
+> >  }
+> >
+> > +static void dw_edma_device_synchronize(struct dma_chan *dchan)
+> > +{
+> > +	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> > +
+> > +	/*
+> > +	 * Make sure all the in-flight DMA operations are completed before
+> > +	 * draining the tasklet using vchan_synchronize().
+> > +	 */
+> > +	read_poll_timeout(READ_ONCE, chan->status, chan->status != EDMA_ST_BUSY,
+> > +			  10, 0, false, chan->status);
+> > +
+> > +	vchan_synchronize(&chan->vc);
+> > +}
+> > +
+> >  static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+> >  {
+> >  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> > @@ -968,6 +983,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+> >  	dma->device_pause = dw_edma_device_pause;
+> >  	dma->device_resume = dw_edma_device_resume;
+> >  	dma->device_terminate_all = dw_edma_device_terminate_all;
+> > +	dma->device_synchronize = dw_edma_device_synchronize;
+> >  	dma->device_issue_pending = dw_edma_device_issue_pending;
+> >  	dma->device_tx_status = dw_edma_device_tx_status;
+> >  	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
+> >
+> > --
+> > 2.43.0
+> >
 
 -- 
 மணிவண்ணன் சதாசிவம்
