@@ -1,145 +1,202 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3EB3E1713;
-	Wed, 22 Jul 2026 11:33:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C2F18C332
+	for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 12:48:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784719989; cv=none; b=Ifct3zYKdCY/+7Ey0wiPxB0Zd8fWJnB1m9vte3hfref70IcUqKk1Ta0/7aKVAZL95gYYSXfSww/0UWopgW7XWOyE4eM6CebB/adFbKryo7ZjveixfdEjfo3zWAUnWvg+5bbc62RAWbcNzuzjGwHnok/CBehlSF5Is0gI11n58Ck=
+	t=1784724493; cv=none; b=Qrgi7lslaLaKMp9NjrAjy+22x6KYzG9+GKX1CwicKSV45BSCrQFWsZ1Rict+qJPthE7Uwu0QClTEtRScy6dQ5eAw4Dk6X9iR7fftGbZYlBjyUwWCinEkByWy86fToG/gLxBI0a1KWC4m/8dQlJ6cWasu9zRN4YWQh9lFqB31sFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784719989; c=relaxed/simple;
-	bh=vMc1+1V8K9TmCwlC8DDoCRfNt95/eXlB29jBwd21abM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=k2yNBDePgQFuAVDKlbfraxTnI4UuUwMZQYOP+vGDZvw3/r6EKT95S12K6NtN4YomxMYnHl3UZFaAfeFmYLfpX5sg5cfedOw/+kAt0hPgbTz1p6aK0ttkHCiirV7AxBfv7z5XnzsXZVabhuH2LAxKYvg88Hql880lX8xCfuz7T7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7Cs03wU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784724493; c=relaxed/simple;
+	bh=LSan+qsl/PdUzA+3tf/f+0lljAi+xqioinYXzBQFQpM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LY1v6s6WL63bAQzcFH9OgLtwU65IrLJ8jyLERypPDOX3JBoviYSi1UtXWEUhue+Eedlm462AcgknTCo8BEhKPCpFIM4uuyD81gUfPacKuIjMguoDkdhuE9JyGwIV1C43APEm2AFO9YRAJWSw3RRGEy/T5SMNOZ6wo1NX5boefrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QTDcGTKP; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7Cs03wU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1EA1F000E9;
-	Wed, 22 Jul 2026 11:33:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784719988;
-	bh=TxxsBLufSm++Cvz5kOkT33qzoU4aWSoS8KEmFIitGVQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=X7Cs03wUc26msWWm3Ejqk08TxEj5JCC7l88rjGwg0w+M10ri2OhoCgMO45a1zFvPV
-	 sE/e4WZjtkdXVMoy5ZNsKpFJsBppag5dN+56CF2NZKSl6JQdTXiHA23TdNzRhp6fwc
-	 EwuDYTuMJIHWAmy/SPmYaUHneoc3PjOoPQ+iddXmV1jDZBqRBykyYVudpcIaw8pFN1
-	 jig0/AqxW+gYzMIv5vTN+mplV/gkGzL3tG5VpGfkCMRkAqOVqECYLnn7pNsS1Urvzu
-	 T3Sr5HO9/H6+wRdVdUkfeMImL3WENqkrDRrWgFWZLOkBVMl1IwSXxIhDr2Ry9b6yTZ
-	 +WJ3UjAXjWrZQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v1 2/3] dmaengine: dw-edma: Enable Chan Separation via
- VSEC
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Devendra K Verma" <devverma@amd.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, linux-pci@vger.kernel.org
-In-Reply-To: <20260722111640.1146212-3-devverma@amd.com>
-References: <20260722111640.1146212-1-devverma@amd.com>
- <20260722111640.1146212-3-devverma@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 22 Jul 2026 11:33:07 +0000
-Message-Id: <20260722113308.1F1EA1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QTDcGTKP"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4953e04ef16so65823095e9.2
+        for <dmaengine@vger.kernel.org>; Wed, 22 Jul 2026 05:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1784724490; x=1785329290; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=3vll96HvxjohoJS+PNU+ieDa/RF4H+N4kRxOCCao22w=;
+        b=QTDcGTKPsYGAlYqslFtyfqpQMz8CFViRPzgVwUFv1krUZ4zz0Pen5q33Xp7SHZp4yI
+         cND4LWrHo2fylcNol1+GAj1fBz02X6aGJRiIiwLT3K7EGRQMbWwWtvgjm9jNEj8tChlk
+         c1CrMx8PT2QM2BB90OL2owbQne8LE7OpC74PT7Iju+h5aCpaHAjykyterGAqRoJ6rYNz
+         a7UzrVvUQ1htleJtablQs6t6fm4yzdejCQiAmwh5M/1MdVgEETMMbsXyvNHHG86GZ7Hj
+         pkhMzvlcL6yXsIvtBiTCsYNugCTx3+xEcu0ttUzakA3mI5hIJNy5AglGOsrtj6BYEOKT
+         UfZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784724490; x=1785329290;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3vll96HvxjohoJS+PNU+ieDa/RF4H+N4kRxOCCao22w=;
+        b=nHjPj3/6uol3hlzG+FNPXqC/f6flGTeszB1KhMaKEL+PPWitUFeUZL7tDWFQOVdTTq
+         HqViUSL+B+a1cEqMW4ieWUoYnNA3z1ZhFdPP9nhs7cRyFCE8dwYfYLb1qSErmIdBD4XV
+         PCK+xqqUGGufLod/Oxb+piGlUGIyMhMMsp+rc2SqzQZR64SKN7u9y53V7B9Ls9gCqnER
+         lL7+8iKlWeqldeW5Fo/9dJTnb7LhiaXzhMNFVlJ5rXfqneBNcrS2iXTMYwjp6dcVgKIf
+         3aZfVshUnU+MkVyBW40GZdfUgdAaE5oDa3Yzq7/gMGeqrRjMANC11em9QWwNYVyY44qT
+         RhTg==
+X-Forwarded-Encrypted: i=1; AHgh+RpYKMQjr95DlQVPMzXHHjNbWDTQwPzBIzTBkjcniIPgDaU5TQg62JXmg1uixphzLtSyjODueaB6ZSo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0Zf/DPdBc690XA28ZozEW36fxlpliNVmVN943sfoHQHQ45YWD
+	R89mGJ1E8UHiI8e+0wQltg9PeQmOY16JPTBpBx+ZT7KEChMyYoF3uyA8ZlNyYkXmzGw=
+X-Gm-Gg: AR+sD12oAaf6vFPElW6OOULyxSGWdkQpah2CrdqE4WKTZRdd1AEYk2Ml18nVMZX+VW2
+	eAojr7rAvi4b18MvEwW4ZGHtEtmB8nY7lA56C5VyonmZWPHqEsbLhfAQqsX27RtzrqMIVDmut7n
+	/4SmQB4c1olwpw0m2Dcl1xTpx7ephLFzX6C5L98l7Jw7nO5xx5rGxJ8+rnLL04uxph1meRKabzu
+	eagM/fG5B8viWRpTIrUxPyoeVB0fVQOetYSNZTiQQn41bnbUe5gJmly/XPqj+RYFkt4xR562Mrw
+	AIUAK3k+aGix8V4nqDG0xavmUZIik4TDJ6zfJy+WUrvFsA76moVo+YUnlLIkfc1yyWeYBMoCJZm
+	Em/jGU1daawD38V2vYM25dr649UEbcc1yDdrDvQXVQ935hlgCX94lRpZUoM7U5OVWjnid1eOBRn
+	OMZq57DsT7TKIm
+X-Received: by 2002:a05:600c:474e:b0:493:915b:dc4a with SMTP id 5b1f17b1804b1-4954a3d005amr297618495e9.8.1784724489524;
+        Wed, 22 Jul 2026 05:48:09 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff24:7210:7ae3:a857:e482:495])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-495653bffefsm131520645e9.9.2026.07.22.05.48.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 05:48:08 -0700 (PDT)
+Date: Wed, 22 Jul 2026 14:47:56 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	sashiko-reviews@lists.linux.dev,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM
+ locking
+Message-ID: <amC7_M-HjVZ3sQuT@linaro.org>
+References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
+ <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
+ <20260721134853.2B2401F000E9@smtp.kernel.org>
+ <amCGXUUd4VmuQRGD@linaro.org>
+ <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] The parsed channel separation size (`ch_sep_sz`) is a dead store; =
-it is never passed to the core DMA driver.
-- [Medium] dw_edma_get_ch_sep_sz() silently falls back to 256 bytes for uns=
-upported hardware channel separation values.
-- [Medium] The newly added `ch_sep_sz` field is left uninitialized (implici=
-tly 0) for statically defined devices.
---
+On Wed, Jul 22, 2026 at 02:34:52AM -0700, Bartosz Golaszewski wrote:
+> On Wed, 22 Jul 2026 10:59:09 +0200, Stephan Gerhold
+> <stephan.gerhold@linaro.org> said:
+> > On Tue, Jul 21, 2026 at 01:48:52PM +0000, sashiko-bot@kernel.org wrote:
+> >> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> >> - [High] State leak causing hardware misconfiguration on channel reuse due to uncleared `lock_scratchpad_addr` and hardcoded direction.
+> >> - [High] Channel state corruption when `bam_slave_config` fails validation.
+> >> - [High] Infinite BH workqueue loop and unratelimited log flood on memory allocation failure.
+> >> - [High] DMA API violation: `lock_ce` buffer shares a cacheline with frequently CPU-modified struct members.
+> >> - [Low] Unused assignment of `hdesc` in IRQ handler.
+> >> --
+> >>
+> >> --- Patch [6]: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
+> >> commit 8b44c5e4935cbb61832adb3262df00b3b606a283
+> >> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> >>
+> >> dmaengine: qcom: bam_dma: add support for BAM locking
+> >>
+> >> This commit adds support for BAM pipe locking by prepending and appending
+> >> dummy command descriptors with LOCK/UNLOCK bits when starting DMA on a TX
+> >> channel. It uses a peripheral-local scratchpad address communicated via slave
+> >> config for the dummy writes.
+> >>
+> >> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> >> > index f3e713a5259c2..411c60c4433e2 100644
+> >> > --- a/drivers/dma/qcom/bam_dma.c
+> >> > +++ b/drivers/dma/qcom/bam_dma.c
+> [...]
+> >> [ ... ]
+> >> > @@ -1064,6 +1197,7 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >> >
+> >> >  	lockdep_assert_held(&bchan->vc.lock);
+> >> >
+> >> > +	vd = vchan_next_desc(&bchan->vc);
+> >> >  	if (!vd)
+> >> >  		return;
+> >> >
+> >> > @@ -1072,6 +1206,24 @@ static void bam_start_dma(struct bam_chan *bchan)
+> >> >  		return;
+> >> >
+> >> >  	while (vd && !IS_BUSY(bchan)) {
+> >> > +		/*
+> >> > +		 * Open a LOCK/UNLOCK bracket around each fresh sequence.
+> >> > +		 * Sentinels inserted by bam_setup_pipe_lock() are skipped: they
+> >> > +		 * already have bam_locked set and must not trigger a second pair.
+> >> > +		 */
+> >> > +		if (!bchan->bam_locked) {
+> >> > +			ret = bam_setup_pipe_lock(bchan);
+> >> > +			if (ret) {
+> >> > +				dev_err_ratelimited(bdev->dev,
+> >> > +					"failed to setup the pipe lock, deferring transfer: %d\n",
+> >> > +					ret);
+> >> > +				queue_work(system_bh_highpri_wq, &bdev->work);
+> >> > +				break;
+> >> > +			}
+> >>
+> >> [Severity: High]
+> >> Does requeuing to a high-priority BH workqueue upon ENOMEM cause CPU
+> >> starvation? Because system_bh_highpri_wq executes in softirq context,
+> >> requeuing immediately without sleeping prevents the memory reclaim needed
+> >> to resolve the GFP_NOWAIT failure, leading to an infinite spin loop.
+> >>
+> >
+> > It looks like my suggestion to queue_work() again in the error path of
+> > bam_start_dma() wasn't great if we end up causing an infinite spin loop.
+> > We do need to retry somehow or report an error though, I don't think
+> > aborting and leaving the desccriptors completely unhandled is an option
+> > either... :(
+> >
+> > One option would be to try to avoid the allocation and write the lock
+> > descriptors directly into the FIFO, but this will probably get really
+> > messy as well, since you would need to carefully modify the FIFO
+> > management in several functions ...
+> >
+> > I don't have a good spontaenous idea how to solve this right now. :/
+> >
+> 
+> Pre-allocate the lock descriptors (if needed) in bam_prep_slave_sg()? As in:
+> call bam_make_lock_desc() in bam_prep_slave_sg(), store the descriptors and
+> make bam_setup_pipe_lock() return void as it will no longer be possible for it
+> to fail? It would just grab the preallocated descriptors.
+> 
 
---- Patch [2]: [PATCH v1 2/3] dmaengine: dw-edma: Enable Chan Separation vi=
-a VSEC ---
-commit 5d0ec977534da50b8d8937caafb8d91a21d54565
-Author: Devendra K Verma <devverma@amd.com>
+I considered suggesting this, but how do you know which descriptor needs
+it in bam_prep_slave_sg()? It's just the allocation, afaict it doesn't
+tell you anything about the order in which they will be submitted. :/
 
-dmaengine: dw-edma: Enable Chan Separation via VSEC
+We could always allocate the extra lock descriptors and waste the extra
+memory for the descriptors that won't need it. That should work, but is
+also not great ...
 
-This commit aims to enable channel separation via the VSEC capability for
-DEVICE INFORMATION. It parses the channel separation size from the hardware
-registers up to 4K.
+I was hammering at the code a bit earlier to try the "write the lock
+descriptors directly into the FIFO" approach. It has some advantages,
+but also makes the FIFO management quite a bit trickier, hard to get it
+right without full concentration. :')
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-=
-edma-pcie.c
-> index ec5e057a0f11b..6295d01ba2f71 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-[ ... ]
-> @@ -73,6 +74,7 @@ struct dw_edma_pcie_data {
->  	u16				wr_ch_cnt;
->  	u16				rd_ch_cnt;
->  	u64				devmem_phys_off;
-> +	u32				ch_sep_sz;
->  };
-> =20
->  static const struct dw_edma_pcie_data snps_edda_data =3D {
+I _think_ it could potentially work, but if you have a simpler idea I'm
+also happy to throw away the mess I started. :-)
 
-[Severity: Medium]
-Does this leave the newly added ch_sep_sz field uninitialized (implicitly 0)
-for statically defined devices like snps_edda_data?=20
-
-If the core driver begins relying on this field to space out channel regist=
-ers,=20
-will preexisting devices calculate an offset of 0 for all channels and brea=
-k=20
-DMA functionality?
-
-[ ... ]
-> @@ -189,6 +191,23 @@ static int dw_edma_pcie_irq_vector(struct device *de=
-v, unsigned int nr)
->  	return pci_irq_vector(to_pci_dev(dev), nr);
->  }
-> =20
-> +static u32 dw_edma_get_ch_sep_sz(u32 ch_sep_val)
-> +{
-> +	switch (ch_sep_val) {
-> +	default:
-> +	case 0:
-> +		return 256;
-
-[Severity: Medium]
-If a hardware device advertises a channel separation size greater than 4K
-(e.g., 8K/0x5, 16K/0x6, 32K/0x7 as mentioned in the commit message), will
-this switch statement silently hit the default case and return 256 bytes
-instead of the actual hardware size, leading to incorrect memory offsets?
-
-> +	case 1:
-> +		return 512;
-> +	case 2:
-> +		return 1024;
-> +	case 3:
-> +		return 2048;
-> +	case 4:
-> +		return 4096;
-> +	}
-> +}
-[ ... ]
-> @@ -324,9 +345,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->  	struct dw_edma_pcie_data *pdata =3D (void *)pid->driver_data;
->  	struct device *dev =3D &pdev->dev;
->  	struct dw_edma_chip *chip;
-> +	bool non_ll =3D false;
->  	int err, nr_irqs;
->  	int i, mask;
-> -	bool non_ll =3D false;
-> =20
->  	if (!pdata)
->  		return -ENODEV;
-
-[Severity: High]
-Is the parsed channel separation size actually used by the core driver?
-
-The VSEC capability is parsed into pdata->ch_sep_sz in this patch, but it
-doesn't appear to be copied to the struct dw_edma_chip or used anywhere
-to calculate register offsets, leaving the feature non-functional.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260722111640.1146=
-212-1-devverma@amd.com?part=3D2
+Thanks,
+Stephan
