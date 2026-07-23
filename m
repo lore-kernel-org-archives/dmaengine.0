@@ -1,218 +1,250 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013040.outbound.protection.outlook.com [40.93.201.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6803E7BCF
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 10:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784801838; cv=none; b=gK54EkbWrd0LJ33g9PO+2ogfFpHiwk7eGCcI7Ad4iwWCn2nRgUX3sl+Lw9Qzuy0B8cYzb1w3yR6bp9UJl14FhEJV8jvbLimDa9ZZ3dFVb1cvOnyofChaxtvOxVoQR1V/PqViSukuW6bZ/JAnc3K0waGKmbyovYSEvte58d8bx1Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784801838; c=relaxed/simple;
-	bh=mDyxfx/NZz9oNnZFCPreKorg39pfBefeKdll9onCsN0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VPbcapZPFWTxremKs55py4+PuoRSayMIYWfwalxy5ZfpZevnTV0S9HLZMnoDgK/auhW5Y0j5bgAqgmrDiboaVjNQ09jMYJOpHujjE0xCJKMKiYBEweo/ebQRSR/uHQw6Dpq0t9AhvSjTevvaw/Pv1yKbeBF7q73VoWw7lhsibLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UdSRW8kq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MNzYJELU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E32F1FEC;
+	Thu, 23 Jul 2026 10:19:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.40
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784801981; cv=fail; b=EbUyZo+kejEygwgZzecmBtPR7gWMkpZpOxU99towSE+LLiIL0eJ/7D2B7iWO/HFNCviT8s1YikMH7mpAuOr8tpawC6gsOoYakNn+n8DrpmztHJF0g39NMkrjITsuCXYzyGiWtqWi4uPTJ+RqBcNBolYEcanSzSam0XH4T+GeoZk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784801981; c=relaxed/simple;
+	bh=eiiDEu4v2aEtSBKxPSsUr8J66Z7d+JKjnCtBfoe0Fe8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=UKH4GdvC9S0g69bTGbL5oWOu3TKmB1JcITP0UXg1UOvnIXtlBJl9gIwrYvMqP6hMVrfBVq/L6zcIVRGInkJVfH0iSWBpvGzfbOGIUd/3uBXvvssit3e7M7UuA41M26KmTPvZF6z98rk8+dJR08SP26omDTqVNx3lCsCDWbCLOzs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=16Fst+PL; arc=fail smtp.client-ip=40.93.201.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UdSRW8kq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MNzYJELU"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66N8qxOu3789846
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 10:17:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IzqDP9svjE918lug8DfM2SuGbpL5ftEU4aAYCmv2ZJY=; b=UdSRW8kqefYachFF
-	IV9dIp0qf3FYQToOala+OeCf+onFCRSUlJ5m/XLXYV5ewf7tJSnhJfq/y67tJXOF
-	wa8YYhjuvkXW/xnvyVvSUrGA25N9s+RZXAjoQ8AVC1DQtI3I3PufosAMj/SXKlga
-	p5cWJ8WTFYWjBTYlyWz1gcuhwYgtZnSmogzMy+h/RJS7U2V6fFWWicBHqKgaWBCc
-	7S99MKBEB2/7vIUif2yqSTF2gKdBO3Sw7JIkocPzkKqqU1EBihIXwOpgsApXZ6I1
-	g3rZx8/esa5F7bi/pfWiFcnoOJoamcfwyy7qYVQVbN91Nd4Gz1gIYBcvJpJK+lN2
-	OIpq5Q==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fk7b529vf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 10:17:16 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2cf6acd760cso8006335ad.3
-        for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 03:17:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784801836; x=1785406636; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=IzqDP9svjE918lug8DfM2SuGbpL5ftEU4aAYCmv2ZJY=;
-        b=MNzYJELUZwVpTKje6CyyjK2TuQpT9fLyN7jgF4WuvxZG1ucSFbwqmQFdpaGazjXuaM
-         A8wsj9zZMTtyP/gj2F88FmD2mabzhbSmC43AlI5+rZ5yUuPDyy5+VChYKkShoC8XLm/w
-         Gr6ezY9KbUeoU09UKtvStMzRandlE9/2VbHFcmqyQ0jISj2eXlAO6ckzC9vYx9/rJUom
-         rLsYSyvbX8lB3N5qP/bvLZaiBYHM0lwVKx0ZlGkstp+fxDGQq5iGYqx+VjN1MWyzRpyb
-         i/7pkql+VYO5P0J012mh20UlEi2OfoRu1JlILwX8CbzL8vwzsY11MWT0kPBN4nXBRLd8
-         kZqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784801836; x=1785406636;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IzqDP9svjE918lug8DfM2SuGbpL5ftEU4aAYCmv2ZJY=;
-        b=YycD4C1s5Z34ynLrycOI5v8IxdCDa5aUuZkjDyRZzItcL10FcyVIc8APE1+kM6QX7R
-         xLaMQ5xIZIJwpJ3RBGZEIa8r7Amxd10MHmx6JAUoDhuPfve5/8pDxnEkmBMCEDhww+4k
-         vrxomb6w3CvCDC57FM09yFcPK73fZYI7YBhZgTuPXc0opvc/2iLSADqfNyqzSqkpTeRz
-         jUt2jlMIGRkcmkFk55al7hBsqEcyhDTsp3nCRtyNyCWrR4IrQTMta0xbpHKn/JRQhsDD
-         UiBCHKEGO77nC6e3k/gk6RicxrUG9kEXabIyMMLBuy++d1DLoCN/1DlHEPa7xuKeIevB
-         nuhQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rpdf8LksbgXgfwMDvupZ6uwFV6QZVQOJK3pj2XaOz9AIzheTAyXbVsOlCtNhMjZ542P7DHnqnCEQ6M=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxoj5gZ4TERpFgQWRZPwBEPd+Ttsw9KQGbSRS9QE8rZephhMiJp
-	Bum1Qmt+HnF2pjJwg5wyXDv2gDr3AbRhqf4RtHbJr38ViSLcUpaTlgpg62Z0rxhBFxNKklryxD8
-	yq5cg4V+NT8V5BFPiazqIMcf32m19i/zqx3iKYy9sV4xfscxRfVTU/qsO12ME6YA=
-X-Gm-Gg: AR+sD11mvVo9aMmYpO7m3hFY4feAfGFX3T5XF1zXw6iBZn0zdq+1pWp9a/fTkBSRmJe
-	RTTVTgBmgIIMDeP6p2uUiAOXkFbJcmx3k8aElilNvuJ7pNVCcmCHQBAPBIOsrQFvW7/8SbIW1yz
-	B6D9dKDLpJf8rKIOS1tK1yswebE9unhc+9a5Pb2GDp+BDvw3IIPfS1QqJC393pOzqEWgKoNNFi7
-	0U5mQnIOEcNMW7INrZcYRXbDDDBqOTHZHoRxOnw1FLbE6q6YylZX7sNZ+WO9WQ02utpgDhFhGgi
-	J79yKBd2oCKd1wx/KvlvEXoIUtUII0l3/BVNOo54tHd80MPJhOompo/kOKiZcVFotCv+I9WPHoL
-	xAD7AXoAAURK3eCOuZkgqGCMbdTsvG1u4rSU=
-X-Received: by 2002:a17:903:46c6:b0:2c0:a555:80d6 with SMTP id d9443c01a7336-2cfa6a51b56mr29011795ad.2.1784801835680;
-        Thu, 23 Jul 2026 03:17:15 -0700 (PDT)
-X-Received: by 2002:a17:903:46c6:b0:2c0:a555:80d6 with SMTP id d9443c01a7336-2cfa6a51b56mr29011245ad.2.1784801835131;
-        Thu, 23 Jul 2026 03:17:15 -0700 (PDT)
-Received: from [10.217.219.142] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf8f3b7c9dsm30151915ad.83.2026.07.23.03.17.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jul 2026 03:17:14 -0700 (PDT)
-Message-ID: <933d864d-f0c2-4727-a01d-f564eb854d23@oss.qualcomm.com>
-Date: Thu, 23 Jul 2026 15:47:08 +0530
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="16Fst+PL"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HI440e6MFXoKgayAnHcLYJlI5q9IVw8TStXSgbflqNI4nBuQA2gfYzrUnUGbe02OGYpMTfC6g+NsT8hciQiC9ZWtwJZyRcFTTVVDp9sSSKJf591WCAw3awU/UE3If9VYYVQOJJCQ2u8OztNKpXKvVDXwPfFEDKHeeF70QDXwFGCFDMk1HAmKR13OkpfjHJPqjROofVd3QNIQHizn2JII8lwtEA2v2i452k/VL6LoXwrp0KcsUMbaR3bXlaiG2IcHOfG762p5QGEuHpHq4mOlB3TWNKvCUtrQRz+gPA5QpLXFZ4KrMlISbdtb+xdluroPqBdydHyHO4yGPth4xaUcYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dxt9PH3kIGwyJixFkB7QmNUaW/k6zlaup5DCE6H3frk=;
+ b=sNjgHLnshIAKlRGRjxTxFFRAp68U91nde1kUHo03SXCUZxJk17FwmnvPIiFaWjwJpe2H7LNm24xc43nnyvy2cSHZc6uMRs4WJz7ns1fccHju1pwoWKjyIeCkhZylyLpHWyH9gLSIMkzXuLS5viJebDriMY1dsJuBfD1+J4u78apFd5kCDSPDcMI8D0FAfP6cn4OYqwqER3Uo1K23fI/ef3jQENkxj1EjFQ6dHwc7UiEMJwlOGcy5LPpy33GZArWyH8w+kIGOjh1m6+9tnwQE7tqv9/DECkVOPQgYra1l93NfFcqyRi/iObfCoBQIXQrvor+ceVtX1pNEg48KJ0Dcgw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dxt9PH3kIGwyJixFkB7QmNUaW/k6zlaup5DCE6H3frk=;
+ b=16Fst+PL2UDw07XVdNywczs3e9OEZLySKOAkiK9JIXMwbnQMUJQDFIpsjTUsxh2xXEaMhLW75pCLdi3ySuSDX+uwxksEQ1ZD1sa92hbYnl28FGvDmWgPOOHd0J9NUaDcHhj+f0PtI25QlCIeXbvKgKNTcB3tFesS/ff5cU+t2w4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
+ by PH7PR12MB9103.namprd12.prod.outlook.com (2603:10b6:510:2f5::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.10; Thu, 23 Jul
+ 2026 10:19:35 +0000
+Received: from BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
+ ([fe80::e4cf:3801:9631:2965%5]) with mapi id 15.21.0245.010; Thu, 23 Jul 2026
+ 10:19:34 +0000
+Message-ID: <c21dfef1-9de0-4e37-97f3-b7dca0bf8c3a@amd.com>
+Date: Thu, 23 Jul 2026 15:49:27 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] dmaengine: dw-edma: Enable Chan Separation via
+ VSEC
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: mani@kernel.org, vkoul@kernel.org, frank.li@kernel.org,
+ dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org, michal.simek@amd.com,
+ Koichiro Den <den@valinux.co.jp>
+References: <20260722111640.1146212-1-devverma@amd.com>
+ <20260722111640.1146212-3-devverma@amd.com> <amDbGHRbObX-lt5F@SMW015318>
+Content-Language: en-US
+From: "Verma, Devendra" <devverma@amd.com>
+In-Reply-To: <amDbGHRbObX-lt5F@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0145.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d7::15) To BL4PR12MB9482.namprd12.prod.outlook.com
+ (2603:10b6:208:58d::19)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] i2c: qcom-geni: Handle runtime PM disabled state
- during early resume
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>, Frank.Li@kernel.org,
-        viken.dadhaniya@oss.qualcomm.com, andi.shyti@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, zhengxingda@iscas.ac.cn,
-        kees@kernel.org, quic_jseerapu@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: bjorn.andersson@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
-        Aniket Randive <aniketrandive@oss.qualcomm.com>
-References: <20260709134623.1724212-1-mukesh.savaliya@oss.qualcomm.com>
- <20260709134623.1724212-2-mukesh.savaliya@oss.qualcomm.com>
- <9cf5b5ab-c418-4b0d-8b2f-b888a64db0f0@oss.qualcomm.com>
-Content-Language: en-US
-From: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-In-Reply-To: <9cf5b5ab-c418-4b0d-8b2f-b888a64db0f0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzIzMDEwMSBTYWx0ZWRfX+0PCP6oPtJgD
- h8Jlmj3gZT63okrkifPzf1W4ptxMkxlEU0Sugo7vE+p/Nao0qc+fEYalabrzsjydZeeDuLYwNkp
- 64Opc+Dn2iL/dHL4Up19Hpp72G3qY8AJAYfe3p2QlXPISkzqSBXM/74RPMuafxWoCfuvGamCE14
- eJNgXIm3/5Z6pz0PzAYuBYhdyt7Gve3ZRlUTbQDFpAgFJbI1oYNGTJEolAtkE1EnebxPJI9K2fF
- hNHs9xfYecmjELW0IjKjDlqRfNl1NQE4nfXbSXcGsarbyebc/q85Xtr/jdNwQeFV4g4fKfC/q8S
- D1wYrXvl4tiAVbR0Gyz4+POMrVpyQy4sCarZ6NDthIdTPtSckyXxvn0Kkx+RWTnHbrzyLqYE9y7
- DfmgMyVPVG8Eyi2LZSo/B2L42dkm6u2ZUQmbxLh+4OLZHnUYM/Li2G7fa1isA8fEdvq/GPizATw
- bjLA+kik9TaheqvisqA==
-X-Proofpoint-GUID: 7T_pSBcYN7ifOXcH50dfHR4axh0b_Zy6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzIzMDEwMSBTYWx0ZWRfX2NtzK+UPI+yi
- AZESyuTfL5rZgPaXTDjz1s6A2HNJOjBLWikgZxn98rTeHZnukUbqV5K6+4liboULo6lQxxwdIcy
- vPBfouGeTpH0Mow5aSEpWFkh/dK88yI=
-X-Authority-Analysis: v=2.4 cv=btx8wkai c=1 sm=1 tr=0 ts=6a61ea2c cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=7hCvE-jUh320BGmwNlAA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: 7T_pSBcYN7ifOXcH50dfHR4axh0b_Zy6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_03,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 priorityscore=1501 spamscore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607230101
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|PH7PR12MB9103:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc95aba2-29a3-4ac0-27ec-08dee8a3e4b4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|11063799006|56012099006|4143699003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	vY1N251I5K0n6BcxcCquKsSNpBaX3EHU/Bnnc7R2tvQ1ICnI9qnqE4tODhjncQwp4Xp4KG+w5gigmLrysJ2ToF4QRHfIclpqJEbY7kxyndP+LncBoRqHHXpeVuwPWG9s3FCGbcF4IiZITtvJlJrclobWdLE4iaCoXcYqCJgGexdKmgDZXXR52F6RjVBwZG4G3lrVBOAj3HRq72wyirjYKX8QSQPRgIMhTpoHJbWup/Zi1yV4ldHomEKxz0JhpMY4hWJamyy+ZEwUmy3FWhbVQR0dYdCVordyVgpOwK1s6qQEuQoiT4E+SJgLfHvMbs+6zXxbFyXEc1sIthGbYQz/xos9qFfGWQgLPsUZHbTqzcGbYNgfsj465OT/B/rUcc3yG3l3mnEoz0ooSi9algZt1XVkG7Kh5GjCxOuczSHByGBz95wOfjoIBvz2HdC4SxK46xR5cWfUwN4Ys2O9aeCa9wcreXBXbpl0sEEwfIS1iyfu7hY3nkpOgi9hmVrXQfmYhLPABR8u8AMxgtR4Nxv14zjWe9WebfMRVr7RRebm0NLR1CSU1BaIwzrlLaWV0R7AOZR85Lte+zBz/aO945EFPlVK6tVYMWpf4WDERJpk1PDmSpreyciEkV0+NMVjwjI1BPztRpO3NBqOLYmKofYfOG7hyCeOQPQlJHcsvQIiBT4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(11063799006)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SC9wVi9Jem5YR0VKVDdEUmNWUzl1THRrNHBuOTJ3bUpxcGlCMXlQdTlxenVW?=
+ =?utf-8?B?SndLVUpiTm1JRVc5Z3IwY09nS3lWbytudmp6cDlrb2MwV29xd0pDbGwwejNn?=
+ =?utf-8?B?ZEF6V2c1eXFjNFIzUytpc2pxeUc4V1BVckZON3EwWGVweGFEb3JoV0tJc3Jn?=
+ =?utf-8?B?bmhXLys4dEhRSEg4VG00R0QzVDd5MmsyeW0vTkh1YVRDVWRFNy91Z1BBMlBL?=
+ =?utf-8?B?TGVIbVIvcno3WVRLRWlWZGRNNzdLK21NejR6L1RGZDRkSFNrZ045NzcvL0Nu?=
+ =?utf-8?B?N3ZtK2tuWnZxNnRUTXFrZEJMeThVSW1ITnNYRTViakwzRjFiVUxqR1N4R0E1?=
+ =?utf-8?B?TXM2WDR0TU5URmxnaWUxQjE0dWVnTTdvenpiV29sdHI3Vy9Fa3pqNmRiWmsy?=
+ =?utf-8?B?VjZiL1FVUmxHeTBLVDRoR2JKL0ZvdCtzMVdCWjE1MVdBaGkwLzVaczZ5OFND?=
+ =?utf-8?B?SmptWG9zdm9BWE9uRXowTktNT2pSWmR6SC9mMFNhai9mYXVxU1YzYWU5L29n?=
+ =?utf-8?B?cVNSL1M5N2ptNk1WVWtieDQxaHNHSG56LzF4WW5rMnIwSlhuLzJTdU0renA3?=
+ =?utf-8?B?WlBGVUhiS3I4MzZwMnRQTFN1dENJQ3d0SlBueGRzeC84ZUV3UEJ1NGFGSHVJ?=
+ =?utf-8?B?NU9GdVBlc25HSEpoVElYMzR4VDFPcDdJOVpNam44aFc0ZEhTQnh1YnhSTGx0?=
+ =?utf-8?B?cndsVkJraVE0VHM5WncrYlRvQ0RWLzA0TXFmdXZQOFE4QTdJcjFNTTlTRlda?=
+ =?utf-8?B?WEtsWUZhSnErcHJDODMzN3FjY1FIamRUbk5scjZFYktFQ28va0RNRzBGckla?=
+ =?utf-8?B?UVJEUnkwak5oL3hwYmFDU1cxOUVGVzZRMm5qTFFKUWVSU1hjcmpDNm1XVjYz?=
+ =?utf-8?B?b2gwZEJqdWNmMjhENVdXNytwN3dQdU1uZEY0NFpGTDF3bk8xbGVOQ3hLdmZG?=
+ =?utf-8?B?RDY3TkdUQ0JkcXpLRTNwV2lmK1duUHJuWUprajNTOEhielFqMHRsWjRZSWxI?=
+ =?utf-8?B?MGg2WjZRRkJLeGs1dG9hOXNWODg4VHI3aEorL1ZyQmo2aWxvckxQbFJxaEYz?=
+ =?utf-8?B?QkpCZmlqT0t4Vk02b04rMy9OcUVlcjJmOGJ4REFNYjB2Q3FxcVByaFAvdnFQ?=
+ =?utf-8?B?M3oySWlFRmZlbUp4bmJxOTloTWhpM2dKNGdLMHFzczN2VjZIanZMbG1qazM3?=
+ =?utf-8?B?QkZWQ0x4SUl1TFZ1RFlPQ0ZUZDhCTERoS2R4azdQTUZTVDdZb1dPWUR4V0My?=
+ =?utf-8?B?ZVR0V29ESlJFOGp1OHNaanVmWGp1SEI1S2tORDlTSEZqOUsrcXZvZG95dUlk?=
+ =?utf-8?B?RVlRTElTM0lRaGt5TVFIaURGMHd5V3dZUVloYzI4R0xsVTBMWnExcDk1OFlD?=
+ =?utf-8?B?K0duWm9CRkdCcFU0c0MyNS9GUllTTUJVWE5BdW1KbElJN2xScm9PZXJuYzZV?=
+ =?utf-8?B?VXE1N1ZiMGkxNFFoZzFnbWVYMU5tbC9MaDIzZDN5bUxPcGp3ZzdVdDVOM2Y0?=
+ =?utf-8?B?bkladGNpODc5MUROajJ5YjhRbFdHdW9BbFZtRGkvaWpIWkhXMm1hUEhtQk5a?=
+ =?utf-8?B?bjN3djFSMmZuT3owQTl0VzF0bVpnd0R4dDkrMGtQN1dhb2VST3F3Ui80dm9j?=
+ =?utf-8?B?d0RSQ2YxenEvZzh3aUxrT0xEVXMwUmVmWUh1RGczb3BTT0NwUnFqbnlFN0t1?=
+ =?utf-8?B?Y3RlOEQ0cEdRS0VvZ0I5SXhmdUoyMEw4c1lvcXpSNDNxLzNiRCtyUHFuU2da?=
+ =?utf-8?B?dC9kSWFOZlNKLzdxQWo1aXNaQkMxY0hPdCtjeW9QRUNmaENCTWtsL2JRN2dk?=
+ =?utf-8?B?enlGM2FqdHZ1OXlsQ05yd2dzYlM5SWRnRnVvYnhKajhFTlltRmhUeFlaNVNs?=
+ =?utf-8?B?clFEYk1PVWRjUHhobFplVU94UkVqVnczZ3lVWHovTEpiYVY0UFFtSDRmYjZq?=
+ =?utf-8?B?ZUpPeVBVK1dyUE82RE1tR0wzaU50N3RqQjltckp1U05PSFpJQjZ2b1JkS1lX?=
+ =?utf-8?B?ZWszSHNqWk9sSjRXT0F6WDlBTzRpdzl1cjN2cmRaWVBkd0lTa28razAxYURl?=
+ =?utf-8?B?L2M4VG5JWTRpNVVia082cVVYak1BL2R1WkUwVzY4UTRTTmdNOW9hN1QwQm9t?=
+ =?utf-8?B?NDl4SitzWDlxTy9rdEszc0JLajhNc0hZYzl5bjMyZGtHenFGTUxNdDcwakxH?=
+ =?utf-8?B?eS9qY0R3K0Z3SUd5MnkzR1ZReWtvY1QrOW9ncXlERS9RV2tWL0J3TjlqdTJQ?=
+ =?utf-8?B?MnpZc3BWRWlicjdld1VvWFE0N1BVN0huTUNIWnhoTUFUcWh1NCtVWTFPcEVz?=
+ =?utf-8?B?OTZoakdjUjZTYWtrTHpwYWdVTDRlRnNQRkwvTFEyV3VuTUZEMktrQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc95aba2-29a3-4ac0-27ec-08dee8a3e4b4
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2026 10:19:34.8768
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fz84BCy+Z8X1S5ufq8L+Emlbrz754HjSFtrrtbO0choIt2MHkoJ1DVlOtkujGM0GMy6+5wLTbXiaF0HKXyIIgA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9103
 
-Hi Praveen,
 
-On 7/23/2026 3:32 PM, Praveen Talari wrote:
-> Hi Mukesh
+On 22-Jul-26 20:30, Frank Li wrote:
+> On Wed, Jul 22, 2026 at 04:46:39PM +0530, Devendra K Verma wrote:
+>> As per, 'Designware Cores PCI Express DM Controller - Reference
+>> Manual', section 3.2.34.3, VSEC for DEVICE INFORMATION supports
+>> the channel separation mechanisms. Basically, the HDMA IP allows
+>> the user to configure the separation between DMA channel
+>> registers and retrieve it via the VSEC capability mentioned
+>> above.
+>>
+>> HDMA IP supports the channel separation up to 32K but for
+>> the simplicity channel separation support has been added till
+>> 4K. As and when required the function can be expanded to include
+>> the higher sizes for channel separation.
+>> Supported and missed out sizes are:
+>> 8K (0x5), 16K (0x6), 32K (0x7)
+>>
+>> Signed-off-by: Devendra K Verma <devverma@amd.com>
+>> ---
+>>   drivers/dma/dw-edma/dw-edma-pcie.c | 25 +++++++++++++++++++++++--
+>>   1 file changed, 23 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+>> index ec5e057a0f11..6295d01ba2f7 100644
+>> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+>> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+>> @@ -33,6 +33,7 @@
+>>   #define DW_PCIE_XILINX_VSEC_ID			0x20
+>>   #define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
+>>   #define DW_PCIE_XILINX_VSEC_DMA_MAP		GENMASK(2, 0)
+>> +#define DW_PCIE_XILINX_VSEC_CH_SEP		GENMASK(18, 16)
 > 
-[...]
-
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index 96dbf04138be..4bc00922cd97 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -917,6 +917,10 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   	gi2c->err = 0;
->>   	reinit_completion(&gi2c->done);
->>   	ret = pm_runtime_get_sync(gi2c->se.dev);
->> +	if (ret == -EACCES) {
->> +		dev_warn(gi2c->se.dev, "Runtime PM is disabled:%d\n", ret);
->> +		ret = 0;
+> Can keep as bit pos order for the same register?
 > 
-> Here it is clear that pm_runtime_get_sync() is returning -EACCES from 
-> the runtime PM framework,
-> 
-> which indicates that the request was rejected before the runtime resume 
-> path could enable any resources.
-> 
->  From the rpm_resume() implementation:
-> 
-> static int rpm_resume(struct device *dev, int rpmflags) __releases(&dev- 
->  >power.lock) __acquires(&dev->power.lock) { [...] repeat: if (dev- 
->  >power.runtime_error) { retval = -EINVAL; } else if (dev- 
->  >power.disable_depth > 0) { [...] else retval = -EACCES; } if (retval) 
-> goto out; [...] out: if (parent && !dev->power.irq_safe) 
-> { spin_unlock_irq(&dev->power.lock); pm_runtime_put(parent); 
-> spin_lock_irq(&dev->power.lock); } trace_rpm_return_int(dev, _THIS_IP_, 
-> retval); return retval; }
-> 
-> The -EACCES error is returned when runtime PM is disabled (disable_depth 
->  > 0),
-> 
-> causing the function to exit without invoking the device's runtime 
-> resume callback.
-> 
-> As a result, no resource enablement is performed by the PM framework.
-> 
-> 
-> In your change, the error is effectively converted to ret = 0 and 
-> execution continues.
-> 
-> How can we guarantee that the required resources have been enabled in 
-> this scenario?
-> 
-> More importantly, where are those resources expected to be enabled if 
-> the runtime PM resume path was never executed?
-> 
-
-This was answered in V6 already on 7/3 exactly at same place.
-Pasting below.
-
-==
- > Why we are checking specific error code here? Why can't we use the 
-below error check directly?
- > if get sync itself is failed with pm runtime disabled then why we are 
-going ahead by making ret = 0 here? How you will make sure resources are 
-enabled?
-
-This reason is also mentioned in the commit log. we surely get -EACCESS 
-as runtime PM is disabled during no_irq resume phase. We still need to 
-serve the transfer, hence we need to override it.
-
-Review geni_i2c_resume_noirq() to know what all we do to enable 
-resources. That's guaranteed and tested with system suspend/resume test 
-back to back and PCIe could do i2c transfer successfully.
-==
-> 
-> Thanks,
-> 
-> Praveen Talari
-> 
-Do not keep this thanks/regards here. only leave the comments.
-
+>>   #define DW_PCIE_XILINX_VSEC_DMA_WR_CH		GENMASK(9, 0)
+>>   #define DW_PCIE_XILINX_VSEC_DMA_RD_CH		GENMASK(25, 16)
+>>
+>> @@ -73,6 +74,7 @@ struct dw_edma_pcie_data {
+>>   	u16				wr_ch_cnt;
+>>   	u16				rd_ch_cnt;
+>>   	u64				devmem_phys_off;
+>> +	u32				ch_sep_sz;
+>>   };
+>>
+>>   static const struct dw_edma_pcie_data snps_edda_data = {
+>> @@ -127,7 +129,7 @@ static const struct dw_edma_pcie_data xilinx_mdb_data = {
+>>   };
+>>
+>>   static const struct dw_edma_pcie_data xilinx_cpm6_dma_data = {
+>> -	/* MDB registers location */
+>> +	/* CPM6 registers location */
+>>   	.rg.bar				= BAR_0,
+>>   	.rg.off				= SZ_4K,	/*  4 Kbytes */
+>>   	.rg.sz				= SZ_8K,	/*  8 Kbytes */
+>> @@ -189,6 +191,23 @@ static int dw_edma_pcie_irq_vector(struct device *dev, unsigned int nr)
+>>   	return pci_irq_vector(to_pci_dev(dev), nr);
+>>   }
+>>
+>> +static u32 dw_edma_get_ch_sep_sz(u32 ch_sep_val)
+>> +{
+>> +	switch (ch_sep_val) {
+>> +	default:
+>> +	case 0:
+>> +		return 256;
+>> +	case 1:
+>> +		return 512;
+>> +	case 2:
+>> +		return 1024;
+>> +	case 3:
+>> +		return 2048;
+>> +	case 4:
+>> +		return 4096;
 >> +	}
-[...]
+> 
+> 	256 << ch_sep_val ?
+> 
+
+Thank you for this suggestion.
+
+> 
+>> +}
+>> +
+>>   static u64 dw_edma_pcie_address(struct device *dev, phys_addr_t cpu_addr)
+>>   {
+>>   	struct pci_dev *pdev = to_pci_dev(dev);
+>> @@ -278,6 +297,8 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>>
+>>   	pdata->mf = map;
+>>   	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_BAR, val);
+>> +	pdata->ch_sep_sz = dw_edma_get_ch_sep_sz(FIELD_GET(DW_PCIE_XILINX_VSEC_CH_SEP,
+>> +							   val));
+>>
+>>   	pci_read_config_dword(pdev, vsec + 0xc, &val);
+>>   	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
+>> @@ -324,9 +345,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>>   	struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
+>>   	struct device *dev = &pdev->dev;
+>>   	struct dw_edma_chip *chip;
+>> +	bool non_ll = false;
+>>   	int err, nr_irqs;
+>>   	int i, mask;
+>> -	bool non_ll = false;
+> 
+> unnessary change here.
+> 
+> Frank
+
+Just wanted to maintain the inverted X-tree formatting.
+Missed this in the previous submitted patch series.
+
+>>
+>>   	if (!pdata)
+>>   		return -ENODEV;
+>> --
+>> 2.43.0
+>>
+
