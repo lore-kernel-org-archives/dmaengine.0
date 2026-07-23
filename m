@@ -1,257 +1,199 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1D241684F
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 09:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9D8412C0C
+	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 09:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784798077; cv=none; b=JXO1gsX91Qf1W1KZQGdYxjikd2PkkXP1i42J2Wlkuw09/h0LwoQUecUIVXKHzXXjg2WiSBY8u0rNkDW0vAD7qoo8w25NbHzjjulJXz38ycopm0xHFZdvlrYZfVlzL3xELAYTfp3R54YCLqdS4rKBxP0cR8RRgRJMtGaUeGEEOJ0=
+	t=1784798087; cv=none; b=AHurP4izbKflO7pjpTq9vUozrkOy2hznvHgnmbvjqukfDGBsphMEsyHQ8sL94LsDLyzd0H6j+SrDfrY74XjNBxWYOffdNzuU145A1604X2N3Agjwi2h75f4HwB45NpEp0QgYUWftNCoOIXMBoTAipknLQnB+5u47Cw5vas0Tid8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784798077; c=relaxed/simple;
-	bh=JqCedYB+mE35Smi/HsSBC4qHxcReecjF9vWZhsGcKJE=;
+	s=arc-20240116; t=1784798087; c=relaxed/simple;
+	bh=VMCRGx20eOH2vpjzT+qD9NQTllLa7CQNfltUjvwJug4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=qVZe8yIGwkUVmwne0hOBjm9YeHufhicsJcQpJXKIQgqH28tRiPUK7eY7cTiknv+tyWM5KRQy7+2FG+JG6W/KXGZ+uMV+mQmzCxfqgK+tJahNNQhGwjc7qGpeuzu4SRKn7DXLVM8umXHgjJIqngeqndj0nqNUIutoSDh64UwpRJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xdjb7WBF; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=sStUejS5UE55zDaWhvXCXjwZEHssgYRubo2jxx0Mlpg2+aHJEZhEvC8GxtsNhcmlfLXea+GmX/0bSISqfJwmdUY8ZvMZxqFSknGdDnNTts8unvFO1X+cY2UEKWdMV6frah9SbdH4HMf8KOQCSu1OdKOovhW4xylKDhhG/eI9Eww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dln8Z+6f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xdjb7WBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A131F000E9;
-	Thu, 23 Jul 2026 09:14:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dln8Z+6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFA51F000E9;
+	Thu, 23 Jul 2026 09:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784798075;
-	bh=BFaYYXxSKaknGFkXIvY9aLl6mxtgrl8G1XGhL8CdnxY=;
+	s=k20260515; t=1784798086;
+	bh=NOfrQAhehq2ifDLALc2ekQpVhzyHAkIv5CMjRAKIyAo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Xdjb7WBFsZB9UlYRtLRAMcTDvouliJVfVI33799UtJZ+wuGyr3AwXrSb0aSZUyHzG
-	 /HR1AUQEYA04t9UNqLJhYjw39y4U9O9q3qiIrdahnit6ft8RA9E8FtDRG0q5KpE3ff
-	 K53AX7+DNQgfBrcOqZA49D5oTe9/mn7ppPFTyRujKTKrJgSFSWPp8qTFzBOoo2g1oI
-	 9SkNB9lAgsuBUiqeCvQ0C0lthH9X5IJPKTYmGR7LzBKVTubmvOQdwjhzQH2qq+n1EA
-	 ZttDtzOitGeP1QDRHi29GHsaz7GFBWeSvEPMkuiUtolzfY5PY976C6DSojYbCjfxWZ
-	 f6TWcc8zb0INQ==
+	b=Dln8Z+6fq7EK7kd0lSCilraph9BudmYMVjrPchkQ2T4Glzg1yi6ksHuE1GR3xYmeR
+	 P3EJVpwTILJQTsYYUtrtQhUC9yQYL4T0aCRrPf9tuQlS8bj+kr9q3PwfVM/08vIUx7
+	 lR/CMDK7GIikFGUXMMxTxd9BBfrSmUEfRoqzpS/HwkzWs4MjRpXNZZSjTEn/CbNqWN
+	 Y9NwqLhn9LJBSsDoJRLe7+tkFJsFvTibt5bwqWhnJYfOfChDbcfr1wH7xrmBNOVMdP
+	 EZYB9YeZRemFwiTIP7O71B5OVUvjNJ0BDCj4QXBTOx5PICcdCSs10lDhZMUeJasskf
+	 mg5Pd9ZlJD/NQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 16/19] dmaengine: dw-edma: Add engine recovery
- infrastructure
+Subject: Re: [PATCH v2 14/19] dmaengine: dw-edma: Reset LL state after
+ terminate and abort
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260723084150.521366-17-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260723084150.521366-15-den@valinux.co.jp>
 References: <20260723084150.521366-1-den@valinux.co.jp>
- <20260723084150.521366-17-den@valinux.co.jp>
+ <20260723084150.521366-15-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Jul 2026 09:14:28 +0000
-Message-Id: <20260723091434.F0A131F000E9@smtp.kernel.org>
+Date: Thu, 23 Jul 2026 09:14:35 +0000
+Message-Id: <20260723091445.EFFA51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 New issues:
-- [High] Hardware interrupts are disabled via free_irq() before the hardwar=
-e engine is stopped, risking an interrupt storm.
-- [High] Passive stall detection will fail to trigger recovery for sleeping=
- clients, leading to indefinite hangs.
-- [High] Queueing work on a destroyed workqueue during driver removal leads=
- to a kernel crash.
-- [Low] Mixing goto-based cleanup labels with guard()/scoped_guard() declar=
-ations in the same function.
+- [High] Deferring `EDMA_REQ_STOP` for Legacy eDMA when `ll_pending > 0` ca=
+uses a permanent channel stall if the hardware has already stopped without =
+a pending doorbell.
 
 Pre-existing issues:
-- [High] IRQs are requested before channels are fully initialized, leading =
-to potential crashes from early interrupts.
+- [High] Virtual descriptors are permanently leaked during channel terminat=
+ion because `dw_edma_terminate_vdesc` removes them from the tracking lists =
+without ever freeing their backing memory.
 --
 
---- Patch [16]: [PATCH v2 16/19] dmaengine: dw-edma: Add engine recovery in=
-frastructure ---
-commit 348674e8eed041726892cbce36b8d539a278c6d1
+--- Patch [14]: [PATCH v2 14/19] dmaengine: dw-edma: Reset LL state after t=
+erminate and abort ---
+commit 88e57ef5a9d3ec5120e32fad81665662de2e275a
 Author: Koichiro Den <den@valinux.co.jp>
-Subject: dmaengine: dw-edma: Add engine recovery infrastructure
 
-This commit adds a worker to coordinate engine recovery in the dw-edma
-driver. It gates publication and doorbells, waits for channels to stop,
-and rebuilds linked-list contexts after resetting the engine.
+dmaengine: dw-edma: Reset LL state after terminate and abort
+
+Termination and abort can leave published entries in the circular ring.
+Reset such a ring before reuse, but leave an already clean ring alone.
+This avoids clearing the whole ring after every synchronous transfer.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
 edma-core.c
-> index 9305137f85f67..14cd0038dbd27 100644
+> index 963abecdc59ed..9305137f85f67 100644
 > --- a/drivers/dma/dw-edma/dw-edma-core.c
 > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-
 [ ... ]
-
-> +static void dw_edma_engine_recovery_work(struct work_struct *work)
+> @@ -616,36 +617,64 @@ static int dw_edma_device_resume(struct dma_chan *d=
+chan)
+>  	return err;
+>  }
+> =20
+> +/* Must be called with vc.lock held. */
+> +static bool dw_edma_may_be_active(struct dw_edma_chan *chan)
 > +{
-> +	struct dw_edma_engine_recovery *rec =3D
-> +		container_of(work, struct dw_edma_engine_recovery, work);
-> +	struct dw_edma *dw =3D rec->dw;
-> +	const char *dir_name =3D str_write_read(rec->dir =3D=3D EDMA_DIR_WRITE);
-> +	u16 off =3D rec->dir =3D=3D EDMA_DIR_WRITE ? 0 : dw->wr_ch_cnt;
-> +	u16 cnt =3D rec->dir =3D=3D EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_=
-cnt;
-> +	unsigned long timeout =3D
-> +		jiffies + msecs_to_jiffies(DW_EDMA_ENGINE_QUIESCE_TIMEOUT_MS);
-> +	struct dw_edma_chan *chan;
-> +	bool configured_ll;
-> +	bool busy;
-> +	u16 i;
+> +	if (chan->non_ll)
+> +		return dw_edma_core_ch_status(chan) =3D=3D DMA_IN_PROGRESS;
 > +
-> +	if (!dw_edma_engine_recovery_needed(rec)) {
-> +		if (READ_ONCE(rec->active))
-> +			dw_edma_engine_recovery_release(rec);
-> +		return;
-> +	}
+> +	if (!dw_edma_ll_pending(chan))
+> +		return false;
 > +
-> +	WRITE_ONCE(rec->active, true);
+> +	/*
+> +	 * Legacy eDMA can report STOPPED while a doorbell-triggered start is
+> +	 * still pending. Native HDMA has a dedicated STOP event.
+> +	 */
+> +	return !dw_edma_ll_has_hdma_stop_event(chan) ||
+> +	       dw_edma_core_ch_status(chan) =3D=3D DMA_IN_PROGRESS;
+> +}
 > +
-> +	/* Gate each channel before inspecting or resetting the direction. */
-> +	for (i =3D 0; i < cnt; i++) {
-> +		chan =3D &dw->chan[off + i];
-> +		guard(spinlock_irqsave)(&chan->vc.lock);
-
-[Severity: Low]
-Does this code violate the cleanup subsystem guidelines by mixing goto-based
-cleanup labels with scope-based guards?
-
-The cleanup subsystem guide explicitly states that functions must not mix
-goto-based cleanup labels with guard() or scoped_guard() declarations. This
-function uses a goto out_release; label further down, while declaring
-guard(spinlock_irqsave) here in the loop.
-
-[ ... ]
-
-> +		if (moving) {
-> +			dev_warn_ratelimited(dw->chip->dev,
-> +					     "%s engine quiesce timed out with transfers still progressing,=
- retrying\n",
-> +					     dir_name);
-> +			queue_work(dw->wq, &rec->work);
-> +			return;
-> +		}
-> +
-> +		dev_warn(dw->chip->dev,
-> +			 "%s engine reset with a channel frozen mid-element\n",
-> +			 dir_name);
-> +	}
-> +
-> +	if (!dw_edma_engine_recovery_needed(rec))
-> +		goto out_release;
-
-[ ... ]
-
-> +	if (!dw->core->engine_reset(dw, rec->dir)) {
-> +		/*
-> +		 * Keep channels gated and do not re-enable the engine unless
-> +		 * ENGINE_EN clears.
-> +		 */
-> +		if (++rec->fails >=3D DW_EDMA_ENGINE_RESET_MAX_FAILS) {
-> +			dev_err(dw->chip->dev,
-> +				"%s engine did not drain after %u attempts; leaving channels gated\n=
-",
-> +				dir_name, rec->fails);
-> +			return;
-> +		}
-> +		queue_work(dw->wq, &rec->work);
+> +/* Must be called with vc.lock held after the channel has stopped. */
+> +static void dw_edma_finish_termination(struct dw_edma_chan *chan)
+> +{
+> +	dw_edma_terminate_all_descs(chan);
 
 [Severity: High]
-Can passive stall detection fail to trigger this recovery for clients that
-are sleeping?
+This is a pre-existing issue, but does dw_edma_terminate_all_descs() leak
+virtual descriptors during channel termination?
 
-The stall check relies on dw_edma_ll_stall_check() reading timeouts, but
-it appears to only be invoked when dw_edma_core_ch_maybe_doorbell() is
-called. If a hardware channel freezes and generates no further interrupts
-while a client waits via wait_for_completion(), could the stall go
-completely undetected because the status is never actively polled?
+Looking at the termination path, dw_edma_terminate_all_descs() uses
+dw_edma_terminate_vdesc_list() to move descriptors to the desc_terminated l=
+ist:
 
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_terminate_all_descs() {
+    dw_edma_terminate_vdesc_list(&chan->vc.desc_issued);
+    dw_edma_terminate_vdesc_list(&chan->vc.desc_submitted);
+}
+
+However, there appears to be no call to vchan_dma_desc_free_list() within t=
+he
+termination path.
+
+Are these descriptors permanently leaked until the entire channel is releas=
+ed
+via free_chan_resources(), potentially exhausting system memory if triggered
+repeatedly by userspace?
+
+> +
+> +	/* Preserve a clean ring; resync only if entries remain published. */
+> +	if (!chan->non_ll && dw_edma_ll_pending(chan))
+> +		dw_edma_core_reset_ll(chan);
+> +
+> +	chan->request =3D EDMA_REQ_NONE;
+> +	chan->status =3D EDMA_ST_IDLE;
+> +}
 [ ... ]
-
-> @@ -1640,6 +1905,13 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+> @@ -965,17 +994,30 @@ static void dw_edma_done_interrupt(struct dw_edma_c=
+han *chan)
+>  	bool active;
 > =20
->  	raw_spin_lock_init(&dw->lock);
-> =20
-> +	for (i =3D 0; i < ARRAY_SIZE(dw->eng_recovery); i++) {
-> +		dw->eng_recovery[i].dw =3D dw;
-> +		dw->eng_recovery[i].dir =3D i;
-> +		INIT_WORK(&dw->eng_recovery[i].work,
-> +			  dw_edma_engine_recovery_work);
-> +	}
+>  	spin_lock_irqsave(&chan->vc.lock, flags);
+> -	if (chan->status =3D=3D EDMA_ST_PAUSE) {
+> -		spin_unlock_irqrestore(&chan->vc.lock, flags);
+> -		return;
+> -	}
+> +	if (chan->status =3D=3D EDMA_ST_PAUSE)
+> +		goto out;
 > +
+> +	/*
+> +	 * A stopped event sampled after the request can complete it directly.
+> +	 * If it was sampled just before the request, complete the request only
+> +	 * when its boundary drains all published entries. A running event only
+> +	 * advances LL progress.
+> +	 */
+> +	if (chan->request !=3D EDMA_REQ_NONE && !chan->non_ll &&
+> +	    (!chan->ll_irq_stopped || !chan->ll_irq_requested)) {
+> +		bool stopped =3D chan->ll_irq_stopped;
+> =20
+> -	if (!chan->non_ll)
+>  		dw_edma_ll_consume_progress(chan);
+> +		if (!stopped || dw_edma_ll_pending(chan))
+> +			goto out;
 
 [Severity: High]
-This is a pre-existing issue, but does dw_edma_probe() register interrupts
-before the driver's internal channel state is initialized?
+Can this cause a permanent channel stall for Legacy eDMA when descriptors
+are pending?
 
-In dw_edma_probe(), the interrupt handler is registered by calling
-dw_edma_irq_request() before the channel structures and work items are
-fully initialized via dw_edma_channel_setup().
+If dw_edma_device_terminate_all() is called while ll_pending > 0, it defers
+termination by setting EDMA_REQ_STOP and waits for a DONE IRQ.
 
-If a spurious or shared interrupt fires immediately after registration:
+If the hardware has already stopped (e.g., reaching the end of the previous
+chain) and the doorbell was bypassed, the DONE IRQ handler processes comple=
+ted
+elements but sees ll_pending > 0. It takes the goto out path:
 
-dw_edma_probe()
-   dw_edma_irq_request(dw, &wr_alloc, &rd_alloc);
-   ...
-   dw_edma_channel_setup(dw, wr_alloc, rd_alloc);
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_done_interrupt() {
+    if (!stopped || dw_edma_ll_pending(chan))
+        goto out;
+    ...
+out:
+    dw_edma_core_ch_maybe_doorbell(chan);
+}
 
-Could this attempt to access or queue work using zeroed memory, leading to
-a kernel crash?
+However, dw_edma_core_ch_maybe_doorbell() will refuse to ring the doorbell
+because EDMA_REQ_STOP is set:
 
-[ ... ]
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_core_ch_maybe_doorbell() {
+    if (... || chan->request !=3D EDMA_REQ_NONE || ...)
+        return;
+    ...
+}
 
-> @@ -1738,11 +2010,6 @@ int dw_edma_remove(struct dw_edma_chip *chip)
->  	if (!dw)
->  		return -ENODEV;
-> =20
-> -	if (chip->flags & DW_EDMA_CHIP_PARTIAL)
-> -		err =3D dw_edma_core_quiesce(dw);
-> -	else
-> -		dw_edma_core_off(dw);
-> -
->  	/* Free irqs */
->  	for (i =3D (dw->nr_irqs - 1); i >=3D 0; i--)
->  		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
-> @@ -1751,6 +2018,16 @@ int dw_edma_remove(struct dw_edma_chip *chip)
->  	for (i =3D 0; i < dw->wr_ch_cnt + dw->rd_ch_cnt; i++)
->  		cancel_work_sync(&dw->chan[i].irq_work);
-> =20
-> +	/* Prevent a running recovery worker from requeueing itself. */
-> +	disable_work_sync(&dw->eng_recovery[0].work);
-> +	disable_work_sync(&dw->eng_recovery[1].work);
-> +
-> +	/* A recovery worker can re-enable the engine, so stop it last. */
-> +	if (chip->flags & DW_EDMA_CHIP_PARTIAL)
-> +		err =3D dw_edma_core_quiesce(dw);
-> +	else
-> +		dw_edma_core_off(dw);
-> +
-
-[Severity: High]
-Will moving dw_edma_core_off() after free_irq() risk an interrupt storm?
-
-By tearing down the interrupt handler before stopping the hardware, the
-hardware remains fully active while its handler is unregistered. If the
-engine generates an interrupt, a shared interrupt handler would return
-IRQ_NONE. Because the hardware interrupt is never cleared, won't the CPU
-get stuck in an interrupt loop until the kernel disables the shared IRQ
-line completely?
-
->  	destroy_workqueue(dw->wq);
-> =20
->  	/* Deregister eDMA device */
-
-[Severity: High]
-Could destroying the workqueue before unregistering the DMA device cause
-a use-after-free crash?
-
-Since destroy_workqueue() is called before dma_async_device_unregister(),
-the device is still visible to clients. If a client software calls
-dmaengine_tx_status() during driver unload, it can invoke
-dw_edma_core_ch_maybe_doorbell(). With this patch, the doorbell logic now
-eventually hits dw_edma_ll_stall_check(), which can call
-queue_work(chan->dw->wq, &rec->work).=20
-
-Could this attempt to queue work on the already-destroyed workqueue?
+With the hardware stopped and no doorbell rung, will any further IRQs arriv=
+e,
+or does this permanently stall the channel?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260723084150.5213=
-66-1-den@valinux.co.jp?part=3D16
+66-1-den@valinux.co.jp?part=3D14
