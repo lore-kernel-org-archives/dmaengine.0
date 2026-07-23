@@ -1,188 +1,344 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F95C39150E
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 17:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C5A364929
+	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 18:45:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784827965; cv=none; b=gVoqRXl4FIMzQrBdsphxVIE7PVjyJtbvVX0mlEdGvqcewKxDrtXOZb15X1vIRWbdPfeF62T6K43JzERH9Ki4DImhOBMk/K5LnyK85LgUeKlAJteYB/d4poGBN7pCRI5CoBDxbN4V7dvs0ux+PT+FXrAl7sI3r3PVbTrQlhGvby4=
+	t=1784832368; cv=none; b=RBeKmGrKZUWKT40zDDR9m8pgc/ikRAJrx2xQfV39QlaN2R+oUItkKqMoqfm2oX0r3nFw3GpjG3jbT6pGJJpFEMRjhuoGDwELD45p7DoKqW8xTgn4BbqrCUcIchWz61WxY9J10amjBEXq/QNbAaMwoRU75yZrwuyaoIHLMj9MdiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784827965; c=relaxed/simple;
-	bh=jUuepjNXNqS0v5K7TAgDWM7qFdrxmrBH3NHhpX+FnKU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=FJMuId99Iij8M8zEoj94cytKTjWIsmp22VpugoJ9gg+60aizSaGI+26ssNgoRzNXhJ6y31a15kgLVFHxHbe0nvr3egCpuuKPTqgFtxTO+DZBODC/9lRGAFUVBzK7OQZ+v8DCKT0JrAz7Xq4bCnbHFNmDcCndcqAzUVHNbeA4ubc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HnEVDmJp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784832368; c=relaxed/simple;
+	bh=0DUXMETFOiPrjHj0I+f8Jjf1hUhgRxwBlToSkMOuX8E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QS2+5+aMUSHq3n+Sc7rXiKrMyBrhcSzs3nsHOjScDprBM56qSudQkPEQfV8Hqy9gNDW9KT/ADPXUTo+lvhGTnVjzc+pTIRKmC3oCKdUI0by29nemH0aOkjJQ+u+w55q7gYyt/9hoaJe238BncCyJzkbRd0aDUIzKVgNCBXA3mYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UcuaoKRQ; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HnEVDmJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66661F000E9;
-	Thu, 23 Jul 2026 17:32:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784827964;
-	bh=LYGqak0Y+G/LCQyCmjq3KD5dTEaSvhkuZTZChXYmjQs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HnEVDmJpX2HReUhk9tq/aBuaPfOs50mvsEsjgc3rhNZkQRF4IZBwARgmwO+qSLQPY
-	 ZRU7bIvNY+NkrZ/vesoplj96NzRWguavDuQkDBtjOnoUfeeYseBQJTVThRkPUyvjvy
-	 LJaqCGteLcd6wKXmY7XyRBmcN45MVaLrG+g12bk2mm18zOOWzF4he3f9DFgTEZHq6f
-	 qRkA4nZIKzOblYgmU+Xao2vPOiubw2jKUrmh1ysImN+MCij50cv96p0Rpk5h/eOxJc
-	 1Ps+YRcu42K3e3bDn5MvJacOrSzGjCBGnkCD9y0w6yuAFaCAf35Ip53wzwLxPt/POU
-	 a4+hiaMqCrqnQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v24 13/14] crypto: qce - Add BAM DMA support for crypto
- register I/O
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260723-qcom-qce-cmd-descr-v24-13-4f87bb4d9938@oss.qualcomm.com>
-References: <20260723-qcom-qce-cmd-descr-v24-0-4f87bb4d9938@oss.qualcomm.com>
- <20260723-qcom-qce-cmd-descr-v24-13-4f87bb4d9938@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 23 Jul 2026 17:32:42 +0000
-Message-Id: <20260723173243.C66661F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UcuaoKRQ"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e071ed6aeso807740a91.0
+        for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 11:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784832355; x=1785437155; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+cqQ6sQJkvsR3VtIbpEjUXStuHRs0SJj4jk7Uojzitk=;
+        b=UcuaoKRQCbsReVhzJf/ZGJlXbh64b3U6AAC/KmroIrAb+XqaMu03L72UQmO1UfiKoH
+         v5t8SdZGnnvGRm0kSFNoBBew4GakZFP6aUp0kui6MrYim7VuZY25y/41yO+xQdCUuVSt
+         AYyG4u/HZr03V71uuN4Tg/H5roah86A3Hs7n7D/0j87fgcqbgrsjvKIgirqEL8EVhOiX
+         7gOxTc3j6W0PsrZth3785bq/XUTCNFWLPQqtgqJpSDa8IKj5CH876rkjW/PMTVdQUJ0V
+         ZoxYoGuEX+u+JYgBv4Zw44W3wGn4VBag2holCYN7hZ6yV5iHWiGOKFKN5GFOZqwlTJyB
+         wTzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784832355; x=1785437155;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+cqQ6sQJkvsR3VtIbpEjUXStuHRs0SJj4jk7Uojzitk=;
+        b=N5pIZVMz3Gph3ceXtavT9WvQCoiv/B1wFsp38z9JG9Eq1bzGT17i/mRPnIT57OVv8o
+         7QTJjYkhxFvtJmqQbhfheaKqT8wLNa/CKQa/AiWmfFDyQdT2z8vErCfOtutNxcE+oObD
+         z5nsJmiMzr0A+GBVmvJr0f3m+rXp427ezAnZaqC/DU7qkBCjUimZXQXKAegFMXMw/voX
+         IzEKPHR69NaH2JoM8dCCmaXE3+TtIOrz7reUSlKTpPXv9eJeR6EZzWvgX4DQ37xtKd/Z
+         DbEjrVn5xEXgHQzsf7PvPHjRBAO6Zdd5fDz0B6pC+I9BrQKyapH65Vod5pD7gN4RmwDD
+         X1Iw==
+X-Forwarded-Encrypted: i=1; AHgh+RrDLr+SKeZCovz+Q2LFm7kMa/RcalqZ5qmuBct5aTPOkHHz28TAiD7F2mi/gleKYmwHuRnwAbP1sv8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzsmxrg8w3nJi/q9h7IyFx8vX6XJGLwKAfQfiFaoYXPJ7jDzCgF
+	m1ML8UgaByiGC4Gx7KEceMj+r37dFgOJqAlCukAjmPlOCrWefBDTzJtK
+X-Gm-Gg: AR+sD138p0ass4GfbKFGSCr7N4eQ4xRT8cDDH23PuWZqkQkZ/n0Ey0k3msCBvRIk/jd
+	fooNozLaai8t1FWhc+7Wqw6PLT9wgCxwCv0uOOGiOh92H0n/FUNGNPH+3YseCRWxUdvPDSlnKzs
+	Bj+uDd+A7DQjdX+GZ/le0t/8NUhh06WY2dm5XYotMjJvMfnDhpIS+9NBPkZcRBo8wZCQV2Q+mK4
+	TSrm7+Jrv+/UGsgtg7ju7XbGDjCUeaTuYXwNrLmsWryJrFSMzwXTeovScKJyZuhH9OVRSUaMWx6
+	REccmgVhH2fw1TOPCrVLaEaScgj2epQQEPTA+xkdDH6Sws7FCSwqXypOPv222LQNeEh7lFizi/c
+	Uzw0WmnXsIdPfbfkeoEEpN2WXaCiaRlkqlC/UOfmVl32FL/CaGeM9wk1WRRbb5Q3O2GmkwQxy
+X-Received: by 2002:a17:90b:1350:b0:36d:66d4:270e with SMTP id 98e67ed59e1d1-38ec6455120mr4430242a91.5.1784832354540;
+        Thu, 23 Jul 2026 11:45:54 -0700 (PDT)
+Received: from ubuntu.. ([110.9.142.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f03af8a45sm308155a91.10.2026.07.23.11.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2026 11:45:53 -0700 (PDT)
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
+To: Julia.Lawall@inria.fr,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Borislav Petkov <bp@alien8.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Hans de Goede <hansg@kernel.org>,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jiri Pirko <jiri@resnulli.us>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Johan Hovold <johan@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Matthew Sakai <msakai@redhat.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Nicolas Palix <nicolas.palix@imag.fr>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Simona Vetter <simona@ffwll.ch>,
+	Simon Horman <horms@verge.net.au>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Steve French <sfrench@samba.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	Thomas Renninger <trenn@suse.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Yazen Ghannam <Yazen.Ghannam@amd.com>
+Cc: cocci@inria.fr,
+	amd-gfx@lists.freedesktop.org,
+	dmaengine@vger.kernel.org,
+	dm-devel@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	intel-wired-lan@lists.osuosl.org,
+	iommu@lists.linux.dev,
+	linux-cifs@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-input@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-pm@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	lvs-devel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	netfilter-devel@vger.kernel.org,
+	nouveau@lists.freedesktop.org,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH 00/36] treewide: remove conditional returns with no effect
+Date: Fri, 24 Jul 2026 03:45:02 +0900
+Message-ID: <20260723184538.3888637-1-ekffu200098@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+Hello,
 
-New issues:
-- [High] Type punning of host-endian `u32` to `__le32` causes BAM DMA to wr=
-ite byte-swapped values to configuration registers on big-endian architectu=
-res.
-- [Medium] Premature error return in `qce_dma_terminate_all()` leads to a l=
-eaked DMA mapping and a skipped TX channel termination.
+While reading mm/memblock, I found a conditional return where both
+branches return the same value:
 
-Pre-existing issues:
-- [High] The error path `error_unmap_src` unmaps `req->src`, but for CCM al=
-gorithms with associated data, the DMA mapping was actually performed on a =
-newly allocated scatterlist table `rctx->src_sg`.
+	err = do_something();
+	if (err)
+		return err;
+	return err;
+
+Such code is usually a leftover from removing a statement between
+the two returns, and the tree has about a hundred of these.
+
+Patch 1 adds a Coccinelle script that matches the pattern, including
+negation and constant-comparison variants. Where a local variable is
+assigned right before the check, the assignment and the two returns
+turn into a single return of the assigned expression.
+
+Patches 2-36 are generated by the script, with hand fixes to restore
+unexpectedly removed comments and to fix the formatting checkpatch.pl
+complained about.
+
+The patches are grouped by subsystem instead of split per file. If
+you would rather split, merge or drop your part, just let me know
+and I will address it in the next version.
+
+All patches are independent and can be applied separately, but for
+everyone's convenience, it would be nice if they were merged through
+a single tree.
+
+The series is based on next-20260721.
+
+Sang-Heon Jeon (36):
+  coccinelle: misc: add cond_return_no_effect.cocci
+  drm/amd: remove conditional return with no effect
+  drm/radeon: remove conditional return with no effect
+  dpll: zl3073x: remove conditional return with no effect
+  drm/i915: remove conditional return with no effect
+  drm: remove conditional return with no effect
+  net: ethernet: remove conditional return with no effect
+  net: remove conditional return with no effect
+  net: intel: remove conditional return with no effect
+  wifi: remove conditional return with no effect
+  ipvs: remove conditional return with no effect
+  media: remove conditional return with no effect
+  ALSA: remove conditional return with no effect
+  ASoC: remove conditional return with no effect
+  iio: remove conditional return with no effect
+  Input: remove conditional return with no effect
+  clk: remove conditional return with no effect
+  crypto: drivers - remove conditional return with no effect
+  dmaengine: qcom_hidma: remove conditional return with no effect
+  stm class: remove conditional return with no effect
+  RDMA/ocrdma: remove conditional return with no effect
+  iommu/s390: remove conditional return with no effect
+  dm vdo: remove conditional return with no effect
+  pinctrl: mediatek: remove conditional return with no effect
+  platform/x86: toshiba_haps: remove conditional return with no effect
+  power: supply: pm8916_lbc: remove conditional return with no effect
+  RAS/AMD/ATL: remove conditional return with no effect
+  regulator: wm831x-isink: remove conditional return with no effect
+  rtc: pcf2127: remove conditional return with no effect
+  scsi: mpt3sas: remove conditional return with no effect
+  thermal/drivers/k3_bandgap: remove conditional return with no effect
+  USB: serial: ch341: remove conditional return with no effect
+  usb: typec: fusb302: remove conditional return with no effect
+  smb: client: remove conditional return with no effect
+  cpupower: remove conditional return with no effect
+  memblock: remove conditional return with no effect
+
+ drivers/clk/clk-cs2000-cp.c                   |   6 +-
+ drivers/clk/clk-lmk04832.c                    |  12 +-
+ .../intel/qat/qat_common/adf_gen2_config.c    |   8 +-
+ .../marvell/octeontx2/otx2_cpt_mbox_common.c  |   7 +-
+ drivers/dma/qcom/hidma_ll.c                   |   6 +-
+ drivers/dpll/zl3073x/dpll.c                   |   6 +-
+ drivers/dpll/zl3073x/out.c                    |   8 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c         |   6 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c         |   6 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c       |   6 +-
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c      |   6 +-
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_0.c        |   6 +-
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c        |   6 +-
+ drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c        |   6 +-
+ drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c         |   6 +-
+ drivers/gpu/drm/amd/amdgpu/uvd_v5_0.c         |   6 +-
+ drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c         |   6 +-
+ drivers/gpu/drm/amd/amdgpu/vce_v4_0.c         |   6 +-
+ drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c    |  32 ++---
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c    |   6 +-
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c     |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c   |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c    |  19 +--
+ .../gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c  |   7 +-
+ .../gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c   |   7 +-
+ .../drm/amd/pm/swsmu/smu13/aldebaran_ppt.c    |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c    |  19 +--
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  |   6 +-
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c  |  10 +-
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu14/smu_v14_0.c    |  19 +--
+ .../drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c  |   6 +-
+ .../gpu/drm/amd/pm/swsmu/smu15/smu_v15_0.c    |   9 +-
+ .../drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c  |  16 +--
+ drivers/gpu/drm/i915/display/intel_hdmi.c     |   7 +-
+ drivers/gpu/drm/i915/gvt/gtt.c                |   8 +-
+ drivers/gpu/drm/imx/ipuv3/imx-drm-core.c      |   6 +-
+ drivers/gpu/drm/nouveau/dispnv50/disp.c       |  14 +-
+ .../drm/panel/panel-osd-osd101t2587-53ts.c    |   7 +-
+ drivers/gpu/drm/radeon/ci_dpm.c               |   6 +-
+ drivers/gpu/drm/radeon/kv_dpm.c               |  30 ++---
+ drivers/gpu/drm/radeon/si_dpm.c               |  14 +-
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c           |   6 +-
+ drivers/hwtracing/stm/core.c                  |   8 +-
+ drivers/iio/light/isl29028.c                  |   6 +-
+ drivers/iio/light/tsl2583.c                   |  14 +-
+ drivers/iio/magnetometer/ak8974.c             |   6 +-
+ drivers/infiniband/hw/ocrdma/ocrdma_verbs.c   |   7 +-
+ drivers/input/keyboard/pmic8xxx-keypad.c      |   8 +-
+ drivers/input/mouse/synaptics_i2c.c           |   6 +-
+ drivers/input/rmi4/rmi_smbus.c                |   7 +-
+ drivers/iommu/s390-iommu.c                    |   8 +-
+ drivers/md/dm-vdo/encodings.c                 |   8 +-
+ drivers/media/i2c/mt9p031.c                   |   6 +-
+ .../microchip/microchip-sama7g5-isc.c         |   7 +-
+ .../media/platform/qcom/iris/iris_resources.c |   6 +-
+ .../media/platform/qcom/venus/pm_helpers.c    |   7 +-
+ drivers/media/platform/renesas/rcar-csi2.c    |   6 +-
+ .../platform/samsung/s3c-camif/camif-core.c   |   7 +-
+ drivers/media/usb/dvb-usb-v2/mxl111sf.c       |  12 +-
+ drivers/media/usb/gspca/jl2005bcd.c           |   7 +-
+ drivers/net/ethernet/amazon/ena/ena_netdev.c  |   6 +-
+ .../ethernet/aquantia/atlantic/aq_macsec.c    |   6 +-
+ .../ethernet/freescale/dpaa2/dpaa2-switch.c   |   6 +-
+ drivers/net/ethernet/freescale/gianfar.c      |   6 +-
+ drivers/net/ethernet/intel/i40e/i40e_main.c   |   8 +-
+ drivers/net/ethernet/intel/igb/e1000_i210.c   |   6 +-
+ drivers/net/ethernet/intel/igc/igc_phy.c      |   6 +-
+ .../ethernet/qlogic/netxen/netxen_nic_hw.c    |   7 +-
+ .../ethernet/qlogic/qlcnic/qlcnic_83xx_init.c |   6 +-
+ drivers/net/ethernet/renesas/rtsn.c           |   7 +-
+ drivers/net/phy/microchip_t1.c                |   6 +-
+ drivers/net/pse-pd/tps23881.c                 |   6 +-
+ drivers/net/wireless/ath/ath6kl/init.c        |   6 +-
+ drivers/net/wireless/intel/iwlwifi/mvm/link.c |   6 +-
+ .../wireless/realtek/rtlwifi/rtl8821ae/hw.c   |   7 +-
+ drivers/net/wireless/realtek/rtw89/mac.c      |   6 +-
+ drivers/net/wireless/realtek/rtw89/mac_be.c   |   6 +-
+ .../pinctrl/mediatek/pinctrl-mtk-common-v2.c  |   6 +-
+ drivers/platform/x86/toshiba_haps.c           |   6 +-
+ drivers/power/supply/pm8916_lbc.c             |   8 +-
+ drivers/ras/amd/atl/map.c                     |   6 +-
+ drivers/regulator/wm831x-isink.c              |   6 +-
+ drivers/rtc/rtc-pcf2127.c                     |   7 +-
+ drivers/scsi/mpt3sas/mpt3sas_base.c           |   6 +-
+ drivers/thermal/k3_bandgap.c                  |   7 +-
+ drivers/usb/serial/ch341.c                    |   8 +-
+ drivers/usb/typec/tcpm/fusb302.c              |  14 +-
+ fs/smb/client/smb1maperror.c                  |   6 +-
+ mm/memblock.c                                 |   7 +-
+ net/netfilter/ipvs/ip_vs_sync.c               |   7 +-
+ .../misc/cond_return_no_effect.cocci          | 121 ++++++++++++++++++
+ sound/pci/echoaudio/echoaudio_dsp.c           |   6 +-
+ sound/pci/echoaudio/layla24_dsp.c             |   6 +-
+ sound/pci/riptide/riptide.c                   |   5 +-
+ sound/soc/amd/acp/acp-mach-common.c           |  11 +-
+ sound/soc/intel/atom/sst-mfld-platform-pcm.c  |   7 +-
+ sound/soc/samsung/smdk_spdif.c                |   8 +-
+ sound/soc/sof/intel/hda-dsp.c                 |   6 +-
+ sound/usb/mixer_scarlett.c                    |  26 ++--
+ tools/power/cpupower/utils/powercap-info.c    |   2 -
+ 102 files changed, 295 insertions(+), 643 deletions(-)
+ create mode 100644 scripts/coccinelle/misc/cond_return_no_effect.cocci
+
 --
+2.43.0
 
---- Patch [13]: [PATCH v24 13/14] crypto: qce - Add BAM DMA support for cry=
-pto register I/O ---
-commit 4d2a36eb6d9e1e8c0d5c28a8810d39001454e83e
-Author: Bartosz Golaszewski <brgl@kernel.org>
-crypto: qce - Add BAM DMA support for crypto register I/O
-
-This commit switches the driver to use BAM DMA for register I/O alongside
-data transfer. It introduces infrastructure to queue DMA command descriptors
-for register writes, altering the sequence of operations accordingly.
-
-> diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
-> --- a/drivers/crypto/qce/aead.c
-> +++ b/drivers/crypto/qce/aead.c
-> @@ -463,17 +463,17 @@ qce_aead_async_req_handle(struct crypto_async_reque=
-st *async_req)
->  			src_nents =3D dst_nents - 1;
->  	}
-> =20
-> -	ret =3D qce_dma_prep_sgs(&qce->dma, rctx->src_sg, src_nents, rctx->dst_=
-sg, dst_nents,
-> -			       qce_aead_done, async_req);
-> +	ret =3D qce_start(async_req, tmpl->crypto_alg_type);
->  	if (ret)
->  		goto error_unmap_src;
-> =20
-> -	qce_dma_issue_pending(&qce->dma);
-> -
-> -	ret =3D qce_start(async_req, tmpl->crypto_alg_type);
-> +	ret =3D qce_dma_prep_sgs(&qce->dma, rctx->src_sg, src_nents, rctx->dst_=
-sg, dst_nents,
-> +			       qce_aead_done, async_req);
->  	if (ret)
->  		goto error_terminate;
-> =20
-> +	qce_dma_issue_pending(&qce->dma);
-> +
->  	return 0;
-> =20
->  error_terminate:
-
-[Severity: High]
-This is a pre-existing issue, but does the error handling in
-qce_aead_async_req_handle() unmap the wrong scatterlist?
-
-If a hardware setup failure or other error occurs during CCM request
-processing with associated data, the error path drops into error_unmap_src:
-
-error_unmap_src:
-        if (diff_dst)
-                dma_unmap_sg(qce->dev, req->src, rctx->src_nents, dir_src);
-
-Earlier in the function, qce_aead_ccm_prepare_buf() constructs a new
-scatterlist table and assigns rctx->src_sg =3D rctx->src_tbl.sgl.
-
-If dma_map_sg() mapped rctx->src_sg, wouldn't unmapping req->src instead
-cause a memory leak and potentially trigger IOMMU corruption or DMA API
-warnings?
-
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
-[ ... ]
-> +static void qce_prep_dma_cmd_desc(struct qce_device *qce, struct qce_dma=
-_data *dma,
-> +				  unsigned int addr, void *buf)
-> +{
-> +	struct qce_bam_transaction *bam_txn =3D dma->bam_txn;
-> +	struct bam_cmd_element *bam_ce_buf;
-> +	int bam_ce_size, cnt, idx;
-> +
-> +	idx =3D bam_txn->bam_ce_idx;
-> +	bam_ce_buf =3D &bam_txn->bam_ce[idx];
-> +	bam_prep_ce_le32(bam_ce_buf, addr, BAM_WRITE_COMMAND, *((__le32 *)buf));
-
-[Severity: High]
-Does this code write byte-swapped values to the configuration registers
-on big-endian architectures?
-
-In qce_write_dma(), the host-endian u32 val is passed by reference:
-
-    qce_prep_dma_cmd_desc(qce, &qce->dma, reg_addr, &val);
-
-Inside qce_prep_dma_cmd_desc(), it is cast directly to a little-endian
-pointer and dereferenced without byte-swapping, as shown above.
-
-Could this cause the BAM DMA controller to interpret the data backwards on
-big-endian systems? It seems cpu_to_le32() might be needed here.
-
-[ ... ]
-> @@ -98,28 +202,36 @@ int qce_dma_prep_sgs(struct qce_dma_data *dma, struc=
-t scatterlist *rx_sg,
-[ ... ]
->  int qce_dma_terminate_all(struct qce_dma_data *dma)
->  {
-> +	struct qce_device *qce =3D container_of(dma, struct qce_device, dma);
-> +	struct qce_bam_transaction *bam_txn =3D dma->bam_txn;
->  	int ret;
-> =20
->  	ret =3D dmaengine_terminate_all(dma->rxchan);
-> -	return ret ?: dmaengine_terminate_all(dma->txchan);
-> +	if (ret)
-> +		return ret;
-
-[Severity: Medium]
-Can this early return leak the DMA mapping and leave the TX channel active?
-
-If dmaengine_terminate_all(dma->rxchan) fails and returns an error, the
-function returns immediately. This bypasses the newly added dma_unmap_sg()
-cleanup for the command descriptors:
-
-    dma_unmap_sg(qce->dev, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt, DMA_TO_DEV=
-ICE);
-
-It also skips terminating the TX channel entirely.
-
-> +
-> +	dma_unmap_sg(qce->dev, bam_txn->wr_sgl, bam_txn->wr_sgl_cnt, DMA_TO_DEV=
-ICE);
-> +
-> +	return dmaengine_terminate_all(dma->txchan);
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260723-qcom-qce-c=
-md-descr-v24-0-4f87bb4d9938@oss.qualcomm.com?part=3D13
