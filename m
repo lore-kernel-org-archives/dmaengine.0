@@ -1,107 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DDB37189C
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 08:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A52A3F58F0
+	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 08:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784796258; cv=none; b=PysK6dwnBV21PhMYwWs8Am3lSMHtF1GYhhcx4B2/kDTpe6Fv4vZxYiZxIqcllxpqljuRm6RrWvn8zoORxpnLd+r+oflD/T55vCpKl7jF7WkYsPuadTU/PyspxTjIkKHWMZpkBPJizP0BV0aonkQ2J+UtaH1kI1BKgqECbK8UtHU=
+	t=1784796936; cv=none; b=PyfmvF2y5eMTJa77iecxCb5O0oo+3PzgD1CL+qqT9ModAPzHH4HZo11OwMCoe73kBPqP3rl1n3ow+pQBR2ZueAiUUo2kFFvUCIARcmp+ZAoACUBfqsr3DwNXv/SfY0nifhxoKClgvszn0RwPXz/cuzlxwvtNDvhDMaJ/pICShpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784796258; c=relaxed/simple;
-	bh=j2EBRvjl4THMhyqlpfuX6DTQgfmPpqpfKHZum4qGV80=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=erTMuv0zH6yp1hWkwc6M1wZ8Y9rXnmqpREgKtfiw8gWDYDk1YHBR1BPv9ROR6dgtHNbLv3v/gMSLqKiZ7Nc6OhWDh6BFxe61+Cq3Hx3cS0FXCiffN/hzB8n3stfebXWldqTfLDcwKRBAyjY1D8guHXDsCg04BSJYpuEEnv9+KN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AF2H0Ivx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784796936; c=relaxed/simple;
+	bh=JTK8NiYCNIqgqj9aM1Bm3QcbUeS5KiyDhkJR2AlbL0U=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=FJNjPYZVbY2go4IvMh7KjPNsjdGo8VmmaHNSCafmcJIA1pNtKJXPL8Dr+KGr8Z9mMAclGyi2W1YAftXj1SNpwM3md/y9OtIAqu4IbirGMemMPijRe/8p54asp7HIXgJOQazSGsHhS1yLCfERDzQHifyjJn7GfSnxd7sqwHzkXI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jwswytyY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AF2H0Ivx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0321F00A3D
-	for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 08:44:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jwswytyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBC51F000E9;
+	Thu, 23 Jul 2026 08:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784796254;
-	bh=j2EBRvjl4THMhyqlpfuX6DTQgfmPpqpfKHZum4qGV80=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=AF2H0Ivxkn/L+1ybDUv7MML9W8QcujyElf5e09Llo5YxQnfu0FoCb4rraYIwSyDc0
-	 6hAu+dnmkpUdotPlZZOSTDSqKzcBNXcC2XIO2yIgM7AY5CxgHlIHocSq6g8HG++9pB
-	 CPIFVh5yWFVkD2B7kmcEEHexB66hXrb/YY5UH8GbvdUpbJ808i/E4J4eth7FhmyRCC
-	 y0pJA6iayLWo1+s/q9goJvyQIqNIvLbGgFBvoMnH+em4qvTH4STv32eYposTC0W3Xx
-	 keUGtzAPyjXYiGAUYkS09WK4pj6KL4UCjiETehDL5poDC2+GfrmbZIltkjxcCtBmjM
-	 y++nxkZeL+W5w==
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-39db07589caso2745161fa.2
-        for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 01:44:14 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Ro5mY+gb3jbgyJqfJKomF19XVbqOrDK27ScD/s4HZjBwicIBaK/kIi6+iexX2yWBi+auadgAuszWx8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4B/HYi1kLGnhKcjv0+KS8nmIvei86xxwCoiIkDwiA7VpS7pXg
-	VXKUNLusWuVKNw/tuHXDv28zByv0PWHnTlaWQlAMbvBtwQTBBqZTV5a00bO+JSVSu3y4J81SAA+
-	Z4hSMcJbFVceWJErwHu4fZ0pChSV2dXFPeu+zP8i0iw==
-X-Received: by 2002:a2e:b8d5:0:b0:39c:8124:93b3 with SMTP id
- 38308e7fff4ca-39f07bcfce0mr4681721fa.9.1784796246084; Thu, 23 Jul 2026
- 01:44:06 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jul 2026 01:44:04 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jul 2026 01:44:04 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <amDuqoRBg5qGafi2@linaro.org>
+	s=k20260515; t=1784796934;
+	bh=Xp+erNy49LWUQb1SAqY0daXdeMa0LbrD9p/OdlBMfz4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=jwswytyYDVFgx8SQ4gIwZiw+RRCv6mhWRYOT1ne7PHqEPwHVjy8jeQgjVratDeOqh
+	 nfKkpT3DXw2fKZNYbx0Y6ZEgW190pyLIJVK3quxBQBn+Mki4QUXwtRj+uWkYsUrtDk
+	 ZLEHDO1K7u+kVaL1RBieOkf1tq+prnoYSUlaGN26VUtVgZdnD9o6xeVNuCC5aHOYKE
+	 4ohMpbYdowqGSHIaTpuZ3x7ec5METB8ZF5yV+J4U8g4XmBsPM5AOtXnRwm6xmp8z5G
+	 bUehVhFs5oxEWF9VlL9VlO70Vih+04Ku5tJRMhZS1waAaZiNTIqVQyeS2NJIgqFt9w
+	 r4VgIiVW1v2KQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 07/19] dmaengine: dw-edma: Dispatch DONE interrupts
+ by channel request
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Koichiro Den" <den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260723084150.521366-8-den@valinux.co.jp>
+References: <20260723084150.521366-1-den@valinux.co.jp>
+ <20260723084150.521366-8-den@valinux.co.jp>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 23 Jul 2026 08:55:33 +0000
+Message-Id: <20260723085534.6EBC51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20260721-qcom-qce-cmd-descr-v23-0-1be02deffda9@oss.qualcomm.com>
- <20260721-qcom-qce-cmd-descr-v23-6-1be02deffda9@oss.qualcomm.com>
- <20260721134853.2B2401F000E9@smtp.kernel.org> <amCGXUUd4VmuQRGD@linaro.org>
- <CAMRc=MfBNB0pvv1kPPcswE4Y2m7PXBO49bwJg=v0+aY=JmJKWw@mail.gmail.com>
- <amC7_M-HjVZ3sQuT@linaro.org> <CAMRc=MdnSyPmbK0skMx686=wSe52nnuWgCNJ0uSoKs_=HyAq-Q@mail.gmail.com>
- <amDRxPkdvbA-iVer@linaro.org> <CAMRc=Me523xQbfJvML9taJ-fR128SJurJS4eX9N9E9WtHF5W5Q@mail.gmail.com>
- <amDuqoRBg5qGafi2@linaro.org>
-Date: Thu, 23 Jul 2026 01:44:04 -0700
-X-Gmail-Original-Message-ID: <CAMRc=McJBVkCT+rFToY-Sn+nrLy-Sb8otz1NYWkQj1J-4-RK-A@mail.gmail.com>
-X-Gm-Features: AUfX_mwJQKKrlt_uOHiEXNJho9ROwjpR_PSftHZZM5GhDPu9qwbx9QpVEO72mS0
-Message-ID: <CAMRc=McJBVkCT+rFToY-Sn+nrLy-Sb8otz1NYWkQj1J-4-RK-A@mail.gmail.com>
-Subject: Re: [PATCH v23 06/14] dmaengine: qcom: bam_dma: add support for BAM locking
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>, 
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
-	Frank Li <Frank.Li@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	sashiko-reviews@lists.linux.dev, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 22 Jul 2026 18:24:10 +0200, Stephan Gerhold
-<stephan.gerhold@linaro.org> said:
->
-> FWIW, I couldn't stop myself trying to finish my "write lock descriptors
-> directly into FIFO" idea, once I started I was curious how it would turn
-> out. I think it's actually quite elegant, the loop in bam_start_dma() is
-> wrapped with LOCK and UNLOCK, later process_channel_irqs() looks at the
-> FIFO again and just skips over these descriptors. lock_ce is allocated
-> once at channel creation time, no other allocations are needed. (Could
-> probably move lock_ce allocation to slave_config() so it's allocated
-> only when locking is configured for a channel).
->
-> See diff below. It doesn't crash badly in a quick test, but didn't check
-> in detail if the locking is actually working correctly. :')
->
-> I'm okay with whatever is "free of known races" and works with the use
-> cases we have, so use/adapt whatever you like best.
->
-> If you want to use this, feel free to add
-> Co-developed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
->
-> Good luck! :D
->
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Oh, neat! Thanks, I may use some of that. And that makes you have a stake in
-this series now. :)
+Pre-existing issues:
+- [High] Channel state machine can get permanently stuck if a delayed inter=
+rupt arrives after a termination timeout (or if the interrupt never arrives=
+).
+--
 
-Bartosz
+--- Patch [7]: [PATCH v2 07/19] dmaengine: dw-edma: Dispatch DONE interrupt=
+s by channel request ---
+commit 820c52e0edf662b1111ec33a334d76d30c13a546
+Author: Koichiro Den <den@valinux.co.jp>
+
+dmaengine: dw-edma: Dispatch DONE interrupts by channel request
+
+This patch modifies the DONE interrupt path to handle the channel request
+first before looking at the issued descriptor list. The change is intended
+to keep the existing behavior without introducing functional changes.
+
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+[ ... ]
+> @@ -682,41 +682,43 @@ static void dw_edma_done_interrupt(struct dw_edma_c=
+han *chan)
+[ ... ]
+> +	case EDMA_REQ_STOP:
+> +		vd =3D vchan_next_desc(&chan->vc);
+> +		if (!vd)
+>  			break;
+
+[Severity: High]
+This is a pre-existing issue, but does this early break leave the channel
+permanently stuck in EDMA_ST_BUSY if a delayed interrupt arrives after a
+termination timeout?
+
+If a driver calls dmaengine_terminate_sync() and the hardware hangs,
+dw_edma_wait_termination() will time out. Then
+dw_edma_free_chan_resources() calls vchan_free_chan_resources(),
+clearing the descriptor list.
+
+If a delayed interrupt arrives afterward, dw_edma_done_interrupt() handles
+EDMA_REQ_STOP but hits this if (!vd) check because the list is now empty.
+
+By breaking early, the code skips resetting chan->request =3D EDMA_REQ_NONE
+and chan->status =3D EDMA_ST_IDLE. Will this cause subsequent calls to
+dw_edma_alloc_chan_resources() to fail with -EBUSY and permanently leak
+the DMA channel resource?
+
+> +
+> +		dw_edma_terminate_all_descs(chan);
+> +		chan->request =3D EDMA_REQ_NONE;
+> +		chan->status =3D EDMA_ST_IDLE;
+> +		break;
+> +
+> +	default:
+> +		break;
+>  	}
+>  	spin_unlock_irqrestore(&chan->vc.lock, flags);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260723084150.5213=
+66-1-den@valinux.co.jp?part=3D7
