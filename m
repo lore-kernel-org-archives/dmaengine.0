@@ -1,159 +1,285 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6317A3859E0;
-	Fri, 24 Jul 2026 10:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386342587B;
+	Fri, 24 Jul 2026 10:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784890136; cv=none; b=PrgFZu0HR9JKt9W3nsycq5/vDBNKZ+M9IQtem1tF1mVktYKIhoAiB8yxO3U04Rrd9mupFOZ1Y8Npwx7snYxJLfcYyxcR/+dnrW/Em2E7y6+EZQKonYuLKVXIVseisB77M2WvibFsjmcrY14TUxIDW1AsZ7mbNzOjlIbzNrvK7g0=
+	t=1784890357; cv=none; b=KL054ZE+wso5tHQH/W/n/7cC1zBwwFuOxvZjNVn5Sce09VIYs3gNTrw29D9dbNKwUMjOSj0TUtDaRIxJI2oPUSV2IoMes928aGc/i+rlNeQcCaCZsAGBmHgGlfP7ESrEIgNDadM/ZtNIMgpGkNYs5mZRT6VvtaMh1U4gZC2d3MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784890136; c=relaxed/simple;
-	bh=U+4kGWb/OH++9k/cnyaAqWRscGLl1Gjnp6J1XeJZJ6U=;
+	s=arc-20240116; t=1784890357; c=relaxed/simple;
+	bh=nivbMWYTpuBr7Eb7p9qP4UEJ3yHFJhRjOSxY7woZLuQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bRXBl4BbxESFRm6GLO3mgC2/rrjcApiV5myXOgRrHjNZb6oRdZXCbJ+Tslx2W8zSwV/xDi31hGfpF9jnr492hqdmTv7fVWwS7P4pGWKpnncxQXCfyzj2nwftH3VTxX9HXpCE1GrakTgGCzY9QVZULI8wVqPx5vHQCCR7ibjqW8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZkPFEjWZ; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=IGGAizvOrTDN54Xksqo6ILI2C/r6VKFRSUfgOu76EYCB0VWDbXXuwz2ISjuI6NwvaSDn50xtMqUzv9GOWOvyhpUYQBYy8TSDpIrngn23gyLlVteJkqalHXvxuMkLrch4Z7afM4jauZ5F/U75LaB4Ctt5f/SLU5+IGhlXM1eRfqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oZL8BE/9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZkPFEjWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38971F000E9;
-	Fri, 24 Jul 2026 10:48:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oZL8BE/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84761F000E9;
+	Fri, 24 Jul 2026 10:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784890135;
-	bh=AKyBkjl5p16HnZ20sR7ZVM26h8JtLCK599D6rzSUi8g=;
+	s=k20260515; t=1784890353;
+	bh=plyDL0tHSmwjrixQV0T65hsRiJHtVh05UcJdcnaV5Z0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZkPFEjWZUaNQbZyeX8ChAtdd/j8iJrKgwuSJ5GwH0F6AJwxsus85I2JewuakN3am5
-	 WCz3H4QWMlE1NjakjiuCK5sG0ywvsQTBzymdbrgKZYf78NcqUjq2dzceyeJZgn1pW/
-	 xNqDpQIBy+hWs0C6hSL2yUlRCmuyY240bvox5on9F9qdhH/aRNCt8C9adbDAjYokWM
-	 k8UjBEKnOnV1BR0EY+NUDjGbnp4s1rr/heRK8dSO6yjhPC8aU26nxeSgc0jGmOdERh
-	 kvlRqaSmmagBwBcA8EyWx8LsERtVvAaesJkxESJVFO2YvKMSzy6e+/nuv5ip/e6Ha1
-	 tYd9pPMF2XFCA==
+	b=oZL8BE/9KIFN3NcXglg4oTbF1L/NZ23I2TjGrus7k99Jnsra1VB0A61WqDPhyuRHc
+	 41D0pDYzEbj9bF2a1Xi1J+rgBuV+GlRs05omRyz+7ALzhq07X79NjI+vZQYTB0CHvq
+	 7FRM4vFH2WQ8YyPX7INYHVJnbsp7JGWeSYJCH2NaNXvJQXeFT6o94kejX/+3BV6nHn
+	 3+J2XHzLYKufCr6MG83HvBTxS1rPWVq/WnARxys6574tFdvnniK7E1VkMy+jgWQCPT
+	 mb7Qpk5c07/qofZFVIxMTi0yauYlbsiOP6tkG5grtf3Glg3UFsZDxRaCZBDN7cMr2E
+	 PGZtaz4msOKcA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 15/19] dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL
- and PDMA data
+Subject: Re: [PATCH v7 09/19] dmaengine: ti: k3-udma: move resource
+ management functions to k3-udma-common.c
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: robh@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260724102115.2854-16-s-adivi@ti.com>
+Cc: vkoul@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org, conor+dt@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260724102115.2854-10-s-adivi@ti.com>
 References: <20260724102115.2854-1-s-adivi@ti.com>
- <20260724102115.2854-16-s-adivi@ti.com>
+ <20260724102115.2854-10-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jul 2026 10:48:54 +0000
-Message-Id: <20260724104854.D38971F000E9@smtp.kernel.org>
+Date: Fri, 24 Jul 2026 10:52:32 +0000
+Message-Id: <20260724105232.B84761F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
-- [High] NULL pointer dereference in psil_get_ep_config_by_id() if the SoC =
-is not matched.
-- [High] psil_set_new_ep_config() incorrectly checks the client device node=
- instead of the DMA controller node for compatibility.
-- [Medium] Uninitialized stack variable 'thread_id' is logged on the error =
-path, leaking stack memory.
+
+Pre-existing issues:
+- [Critical] Tasklet can dereference a freed cyclic descriptor due to missi=
+ng `vchan_terminate_vdesc()`.
+- [High] Missing bounds checks for resource IDs in `UDMA_RESERVE_RESOURCE` =
+macro and `udma_get_tchan` before performing bitmap accesses.
+- [High] Lack of synchronization in UDMA resource allocation functions lead=
+ing to TOCTOU races and potential bitmap corruption.
+- [High] Incorrect boundary check in `udma_get_chan_pair` leads to potentia=
+l out-of-bounds bitmap writes.
 --
 
---- Patch [15]: [PATCH v7 15/19] dmaengine: ti: k3-psil-am62l: Add AM62Lx P=
-SIL and PDMA data ---
-commit 508a30e21ce25dc9ce58a2b1505b256e86a5d8a4
+--- Patch [9]: [PATCH v7 09/19] dmaengine: ti: k3-udma: move resource manag=
+ement functions to k3-udma-common.c ---
+commit e7614ebd200c614b2a17303347bcfc13ecd5262d
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL and PDMA data
+dmaengine: ti: k3-udma: move resource management functions to k3-udma-commo=
+n.c
 
-Add PSIL and PDMA data for AM62Lx SoC.
+Move functions responsible for allocation and release of udma
+resources such as channels, rings and flows from k3-udma.c
+to the common k3-udma-common.c file.
 
-Introduce new PSIL_EP_PDMA_XYMF type for channels that have multiple
-selectable fifos. Also add a new fifo_id field to psil_endpoint_config
-to specify the selectable fifo_id.
+> diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-com=
+mon.c
+> --- a/drivers/dma/ti/k3-udma-common.c
+> +++ b/drivers/dma/ti/k3-udma-common.c
+> @@ -1891,5 +1891,447 @@ enum dmaengine_alignment udma_get_copy_align(stru=
+ct udma_dev *ud)
 
-> diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
-> index c4b6f0df46861..ed9c92d5a7b2b 100644
-> --- a/drivers/dma/ti/k3-psil.c
-> +++ b/drivers/dma/ti/k3-psil.c
 [ ... ]
-> @@ -71,6 +72,57 @@ struct psil_endpoint_config *psil_get_ep_config(u32 th=
-read_id)
->  }
->  EXPORT_SYMBOL_GPL(psil_get_ep_config);
-> =20
-> +struct psil_endpoint_config *psil_get_ep_config_by_id(u32 channel_id,
-> +						       bool is_pktdma,
-> +						       u32 *thread_id,
-> +						       bool *dev_to_mem)
+
+> +int __udma_alloc_gp_rflow_range(struct udma_dev *ud, int from, int cnt)
 > +{
-> +	int i;
-> +
-> +	mutex_lock(&ep_map_mutex);
-> +	if (!soc_ep_map) {
-> +		const struct soc_device_attribute *soc;
-> +
-> +		soc =3D soc_device_match(k3_soc_devices);
-> +		if (soc)
-> +			soc_ep_map =3D soc->data;
-> +	}
-> +
-> +	if (soc_ep_map->src) {
 
-[Severity: High]
-If soc_device_match() fails to find a match, soc_ep_map is not populated and
-remains NULL. Will this unconditionally dereference soc_ep_map here?
-
-> +		for (i =3D 0; i < soc_ep_map->src_count; i++) {
-> +			struct psil_ep *ep =3D &soc_ep_map->src[i];
 [ ... ]
-> @@ -90,9 +142,22 @@ int psil_set_new_ep_config(struct device *dev, const =
-char *name,
->  				       index, &dma_spec))
->  		return -ENOENT;
-> =20
-> -	thread_id =3D dma_spec.args[0];
-> -
-> -	dst_ep_config =3D psil_get_ep_config(thread_id);
-> +	if (of_device_is_compatible(dev->of_node, "ti,am62l-dmss-pktdma")) {
+
+> +	start =3D bitmap_find_next_zero_area(tmp,
+> +					   ud->rflow_cnt,
+> +					   tmp_from, cnt, 0);
+> +	if (start >=3D ud->rflow_cnt)
+> +		return -ENOMEM;
+> +
+> +	if (from >=3D 0 && start !=3D from)
+> +		return -EEXIST;
+> +
+> +	bitmap_set(ud->rflow_gp_map_allocated, start, cnt);
 
 [Severity: High]
-Are we checking the compatibility of the correct device node here?
+This is a pre-existing issue, but since these functions are exported for use
+by other drivers (like k3-udma-glue.c), can they be called concurrently?
 
-dev->of_node is the client device's node, which won't match the DMA
-controller's compatible string. Should this check dma_spec.np instead?
+There is no locking (e.g., ud->lock) around the bitmap_find_next_zero_area()
+search and the subsequent bitmap_set() operation. Does this expose a
+time-of-check to time-of-use (TOCTOU) race condition that could result in
+double allocations or bitmap corruption?
 
-> +		bool dev_to_mem;
+> +	return start;
+> +}
+> +EXPORT_SYMBOL_GPL(__udma_alloc_gp_rflow_range);
 > +
-> +		dst_ep_config =3D psil_get_ep_config_by_id(dma_spec.args[0],
-> +							  true,
-> +							  &thread_id, &dev_to_mem);
-> +	} else if (of_device_is_compatible(dev->of_node, "ti,am62l-dmss-bcdma")=
-) {
+> +int __udma_free_gp_rflow_range(struct udma_dev *ud, int from, int cnt)
+> +{
+> +	if (from < ud->rchan_cnt)
+> +		return -EINVAL;
+> +	if (from + cnt > ud->rflow_cnt)
+> +		return -EINVAL;
+> +
+> +	bitmap_clear(ud->rflow_gp_map_allocated, from, cnt);
 
 [Severity: High]
-This check also seems to use the client device node (dev->of_node) instead =
-of
-the DMA controller node.
+This is a pre-existing issue, but similarly to the allocation function, this
+modifies the shared bitmap without synchronization. Could this cause data r=
+aces
+if multiple flows are freed concurrently?
 
-> +		bool dev_to_mem;
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(__udma_free_gp_rflow_range);
+
+[ ... ]
+
+> +#define UDMA_RESERVE_RESOURCE(res)					\
+> +struct udma_##res *__udma_reserve_##res(struct udma_dev *ud,	\
+> +					       enum udma_tp_level tpl,	\
+> +					       int id)			\
+> +{									\
+> +	if (id >=3D 0) {							\
+> +		if (test_bit(id, ud->res##_map)) {			\
+
+[Severity: High]
+This is a pre-existing issue, but is it possible for a client driver or dev=
+ice
+tree to provide an out-of-bounds id here?
+
+The macro calls test_bit(id, ud->res##_map) and set_bit(id, ud->res##_map)
+without verifying if id is strictly less than ud->res##_cnt. Could this lead
+to out-of-bounds memory accesses?
+
+> +			dev_err(ud->dev, "res##%d is in use\n", id);	\
+> +			return ERR_PTR(-ENOENT);			\
+> +		}							\
+
+[ ... ]
+
+> +int udma_get_tchan(struct udma_chan *uc)
+> +{
+> +	struct udma_dev *ud =3D uc->ud;
+> +	int ret;
+
+[ ... ]
+
+> +	if (ud->tflow_cnt) {
+> +		int tflow_id;
 > +
-> +		dst_ep_config =3D psil_get_ep_config_by_id(dma_spec.args[0],
-> +							  false,
-> +							  &thread_id, &dev_to_mem);
-> +	} else {
-> +		thread_id =3D dma_spec.args[0];
-> +		dst_ep_config =3D psil_get_ep_config(thread_id);
+> +		/* Only PKTDMA have support for tx flows */
+> +		if (uc->config.default_flow_id >=3D 0)
+> +			tflow_id =3D uc->config.default_flow_id;
+> +		else
+> +			tflow_id =3D uc->tchan->id;
+> +
+> +		if (test_bit(tflow_id, ud->tflow_map)) {
+
+[Severity: High]
+This is a pre-existing issue, but tflow_id can be controlled by
+uc->config.default_flow_id and is used in bitmap operations without being
+checked against ud->tflow_cnt.
+
+Can this cause out-of-bounds reads/writes if a malformed default flow ID is
+provided?
+
+> +			dev_err(ud->dev, "tflow%d is in use\n", tflow_id);
+> +			clear_bit(uc->tchan->id, ud->tchan_map);
+> +			uc->tchan =3D NULL;
+> +			return -ENOENT;
+> +		}
+
+[ ... ]
+
+> +int udma_get_chan_pair(struct udma_chan *uc)
+> +{
+> +	struct udma_dev *ud =3D uc->ud;
+> +	int chan_id, end;
+
+[ ... ]
+
+> +	/* Can be optimized, but let's have it like this for now */
+> +	end =3D min(ud->tchan_cnt, ud->rchan_cnt);
+> +	/*
+> +	 * Try to use the highest TPL channel pair for MEM_TO_MEM channels
+> +	 * Note: in UDMAP the channel TPL is symmetric between tchan and rchan
+> +	 */
+> +	chan_id =3D ud->tchan_tpl.start_idx[ud->tchan_tpl.levels - 1];
+> +	for (; chan_id < end; chan_id++) {
+> +		if (!test_bit(chan_id, ud->tchan_map) &&
+> +		    !test_bit(chan_id, ud->rchan_map))
+> +			break;
 > +	}
->  	if (IS_ERR(dst_ep_config)) {
->  		pr_err("PSIL: thread ID 0x%04x not defined in map\n",
->  		       thread_id);
+> +
+> +	if (chan_id =3D=3D end)
+> +		return -ENOENT;
+> +
+> +	set_bit(chan_id, ud->tchan_map);
+> +	set_bit(chan_id, ud->rchan_map);
 
-[Severity: Medium]
-If psil_get_ep_config_by_id() fails to find a channel and returns an error
-pointer, thread_id is left uninitialized. Does this cause the error log to
-print uninitialized stack memory?
+[Severity: High]
+This is a pre-existing issue, but is it possible for the loop's initial
+chan_id (from start_idx) to be strictly greater than end?
 
->  		of_node_put(dma_spec.np);
->  		return PTR_ERR(dst_ep_config);
->  	}
+If ud->tchan_cnt > ud->rchan_cnt and start_idx > rchan_cnt, the loop condit=
+ion
+chan_id < end is immediately false. The exit check chan_id =3D=3D end will =
+also
+fail, bypassing the -ENOENT return. Would this cause the set_bit() calls to
+write out of bounds?
+
+> +	uc->tchan =3D &ud->tchans[chan_id];
+> +	uc->rchan =3D &ud->rchans[chan_id];
+
+[ ... ]
+
+> +void udma_free_chan_resources(struct dma_chan *chan)
+> +{
+> +	struct udma_chan *uc =3D to_udma_chan(chan);
+> +	struct udma_dev *ud =3D to_udma_dev(chan->device);
+> +
+> +	udma_terminate_all(chan);
+> +	if (uc->terminated_desc) {
+> +		ud->reset_chan(uc, false);
+> +		udma_reset_rings(uc);
+> +	}
+> +
+> +	cancel_delayed_work_sync(&uc->tx_drain.work);
+> +
+> +	if (uc->irq_num_ring > 0) {
+> +		free_irq(uc->irq_num_ring, uc);
+> +
+> +		uc->irq_num_ring =3D 0;
+> +	}
+> +	if (uc->irq_num_udma > 0) {
+> +		free_irq(uc->irq_num_udma, uc);
+> +
+> +		uc->irq_num_udma =3D 0;
+> +	}
+> +
+> +	/* Release PSI-L pairing */
+> +	if (uc->psil_paired && ud->psil_unpair) {
+> +		ud->psil_unpair(ud, uc->config.src_thread,
+> +				  uc->config.dst_thread);
+> +		uc->psil_paired =3D false;
+> +	}
+> +
+> +	vchan_free_chan_resources(&uc->vc);
+> +	tasklet_kill(&uc->vc.task);
+
+[Severity: Critical]
+This is a pre-existing issue, but does this sequence leave a window for a
+use-after-free on cyclic descriptors?
+
+udma_terminate_all() sets uc->terminated_desc =3D uc->desc without calling
+vchan_terminate_vdesc(), which leaves vc->cyclic pointing to the descriptor.
+udma_reset_rings() then frees uc->terminated_desc.
+
+If a custom completion tasklet is scheduled and executes concurrently before
+tasklet_kill() runs, won't it try to dereference the already freed vc->cycl=
+ic
+memory?
+
+> +
+> +	bcdma_free_bchan_resources(uc);
+> +	udma_free_tx_resources(uc);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724102115.2854=
--1-s-adivi@ti.com?part=3D15
+-1-s-adivi@ti.com?part=3D9
