@@ -1,372 +1,316 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012032.outbound.protection.outlook.com [52.101.66.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F703AE18D
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 12:52:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784897556; cv=none; b=ESb2cOWvk1UbttS3An+e2IqbVsksJTwhQ5CUaBx+re7lVm8nxTxwU/TzNMY07wWxFGuh5qM1oJXBI+IuYcPjo08Z3YgVs4H6L6WY0qsRlq3nmgzDHmTAma+DybpxZiMey+RqDFWsKFkyspDscChL4JunOH5dXQIod+ikZgytFlI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784897556; c=relaxed/simple;
-	bh=qlJA9/DIwLTOal1LH4qMNzHESvTfeFf3a5zLYfiBOvQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d1tlHlQqeuqmNaz9ZQT+UlXVuxJGVD1JkLIa0qo6RlCBtB9chuj33EnslzPm8lZsx32uN8jV0GFhXBwA1Y+rDEV3d1oBgpJaMWMDnEGw0PVIV7hedHwr8OX+8McYogmO4CwDfPmRMPOjck7iZXHgZbfO4+zgnZ4Muh+ogaCsuw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KKBqLPEd; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D0233A6E2;
+	Fri, 24 Jul 2026 15:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784907416; cv=fail; b=dQR9NlYg0EbN6islGOgn6/x0zEGiEsmpaz2f1Ee5/qy2Nu5PYKXryKDqPXm/EowUPt34YTBlm0qinkePczbk9rNccHNcoAk96JzJC3lwGKQazxwdL8kSqGtXYa45rrKVFbyD+TEuXEGMY5MkzjKQnERHm8TKmC+GNolopXgk8bU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784907416; c=relaxed/simple;
+	bh=nm6gbVc/SdKc9JA9x8Cf4rdcfbgZz5M6PDpJQng5cHw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=t9a3bQi6T+7GxqIRKQkBBi1TPopilKEd+TD2xvnUTde2cBbLQsif3L0VzynxVlfLJtlgB6PT06c9OcUi9fVrDPOOkN76x9CM7QqP4I0NMEalSLeWkhSXbWivg9CVAweuMYpMZLHQUYP0rba2rgpxnmInYQbrkUHphyaf3pzrw8w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=u6aa7Qah; arc=fail smtp.client-ip=52.101.66.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KKBqLPEd"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4954aff6088so3440225e9.3
-        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 05:52:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784897552; x=1785502352; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=rtN44z1BuwvvFd9UHNBpsGREUSMEsEWybwxiKcauHzU=;
-        b=KKBqLPEdP9JGycRByu5RZFxC6mHjtSlz/zbpiYV+eEVMKroIGbnHsSFb0VHprmIEkQ
-         eVutXpwLHLjFrJl1hpuoWdoQydB+oJXoqx0cA2pXyU2vi1T0xRdhAzBTrNXG+jyuqxhi
-         A8AQ2l0CL1q0ULAWYm8Vib4KHwZ6e7k0l3DduZ1qbEe8oOoNKVlIEx5mTVfiExvVNke3
-         QGU3OojP0U3BTpGdzwE26iLd+vCwQfLdb0kHtziGTE1yN0GscNlzIR/ir1h/iSqzWPt6
-         gNnQPnADKsscdBh5POcXA71piRU5YICXtHw6llkv0ztA/Xzg5urBLV7LEAymamVuRUA2
-         kgUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784897552; x=1785502352;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=rtN44z1BuwvvFd9UHNBpsGREUSMEsEWybwxiKcauHzU=;
-        b=OlxpehcEfIAcGjI3LvEOHefh75gfWFQi+Jal2Hj7MOIAh7uk3enI9H0PzcCoL5bV3i
-         NqAkFhx/ZI95sx7VFzvcBZf4I7DmDt6oqraQk38LuoYOWxvuIaQctauMGLZD2I/f8gCQ
-         QuEWRSRBOuNYAVA1MlCb3FSCyZ6BHeeMNRIjYzgLKmWktAG+N1jylAfC2ppQRmXMowTb
-         hRXFtcyeLA3PTx8nIihugIEHXgETSx/u2EoLP2q/oyw5H5KRAxh7EiD/358FrnoUyHWd
-         P5U5PlMMRk3FJiMer2r60FSVXy0aD6Lj3l/XTZjYKCbv/BPJ0mzGAErsojPEz8TlxSt/
-         TsaQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr/jZuyylHEZ95+o480S2BZEL9yhTSO03ifdOBG+wUJLbNmvvQmu3ABX76KY0GFsL1xBRicUnigdU8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwegCZF92WstejfC8IQ6PKXltem2MTjHhuDAFaBhWhoMMo5+DDZ
-	dFnmASFOWfqZZ/3MxY3z9T7jalCAOgPpPb/Vvu4PscRfqTbblMPG0/KNafPsJV2+zHM=
-X-Gm-Gg: AR+sD13rGPbGeoRYmNEzgquUNUdRAQMDmcE1Xfm0VvEmAHv9+LvV347ihZPggoj2sSd
-	+3oT51H0Lm1CaUW49TuPWkN97fY1GUxhnhc5YWdy0aEo0QETUiuNaHxmfBzaE+9oE0hVVtu7lHe
-	L5KC34AY0KUT13GnduDPBT6FuuzCld0ytzDpKxrt/NHlBqQUuycrD2Dgn2D9L5JsHmpBdiMttGC
-	CQd3ImrHpmh3GBK/6KHyVJIZBLtQObV8rKIwRvPHxFsr71IFuMjnXvhnEDv9YExZCTAOgN7PciH
-	vltEt8xc9oIu5vmdmcyrxlM3nyiOjWt3wEgEeK84GBpEVGISkTNC5dNupx2ZfCNP6ByM8qSJbrC
-	rY6Kv+kMWYjn9nxMbnc0UOef3cAPyXAW7fvc0TT9uKYrb3ksmCIuBkDos5euD3wSpQBTqQnwHCs
-	FmAq5CehaWzyO1BA==
-X-Received: by 2002:a05:600d:8444:10b0:495:5845:fb2 with SMTP id 5b1f17b1804b1-49573cfa980mr62663925e9.38.1784897552342;
-        Fri, 24 Jul 2026 05:52:32 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:d8e1:da6c:62ef:6ff9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4957af78a02sm67574155e9.7.2026.07.24.05.52.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 05:52:31 -0700 (PDT)
-Date: Fri, 24 Jul 2026 14:52:27 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, brgl@kernel.org
-Subject: Re: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <amNf-bljjasmTKn_@linaro.org>
-References: <20260723-qcom-qce-cmd-descr-v24-0-4f87bb4d9938@oss.qualcomm.com>
- <20260723-qcom-qce-cmd-descr-v24-6-4f87bb4d9938@oss.qualcomm.com>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="u6aa7Qah"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IRgKZWZWNAugX2ukzI/9mQqI5FyWP4WLo2jY5gwKYuuS4NOmN8jUwB9gPgjIMAHARWc8esN5zi32tB4zBliyj3NazbkHWqMpvQw+lzCj6RRYKAHABC8CKPZXTfYhWmYD50n7Ri3Nj/RwKeILZbQhVMGHlU1EcTsZVHaiepHEQRUGQf9mxWpudz6ushnxxNsRDiwqk3tNaEwCEGv5w4CNOwAM/ma35CttdrUxyDRqWsOV7Uh2ni0QaOkKCVS5OTqv2fu5Hmtc1acAoSNas8RB9ZboQi0n1c/cU+BvguQplQj37MQpw99+q7BvaJUUGqHEDpvE8+ZdJgO5KdNjeZXp4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4yF+hTg/Ans88wTlSZN7cmbgEQpqGtEcpJO9sUJmdUo=;
+ b=NgGb6Bgl1BPF4a7ESEyFfp9BV/nji3iUgq1KPkB3ZGWg8w/n0pn2ABFlatVG3x8G4+6lo/yajesPZcO9sUnVok9WYjZEGeRRD+Zz0fKKO3XOysq8hVU8J7pV4CzCeVA1/RfReF8nyKbFFSTx2E04xiYntaYhvQGGbD20U2fqnyFkD4OcjN3I0gvNw+3e8yxYf3FdIdylgSKalcHOgsV1zBS20HeR08W30/PvXnJ7LvMkhHPzj8sonu+3puAOHyBtyMXn+G7mL1PbDPedLiw7wnX5X+moXlJEaHQNqqXy+R5QhRBVz2fZv5VCuTX8tFFfxINAMkLbazLJwiOF3s3EGw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4yF+hTg/Ans88wTlSZN7cmbgEQpqGtEcpJO9sUJmdUo=;
+ b=u6aa7Qah+nU9FFn721F9IgKzlralgBJzucoyuIAGusa9AMDvsXRbtnuEJksoMsiiDiL8EeqnZ1leMEzVe2HNJlgJ34rSNuNhS7H6KOGl/rKsXjFbUX7MdsHb8vr7Yhs4jA08qPcjGTA7Q+n6+3IWZWhQWIfP6EIYxWLvqiDr2aPLmjA6Vdlc4+DVEmKJv8lYvhNigHurr1cg/hFBtDdlD1oUuLUis5fHXmwW/PBxLqpgnuUOILLjwdh/cNdy0pewtLGI3tx9q3MSQ010tURmbnOmvmDnFXEGjrUBWkzCI4nyQgGPtcVoogtbEKD9rjcm4/k1dujTIYi3sEgkZabp9g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VI0PR04MB10104.eurprd04.prod.outlook.com (2603:10a6:800:248::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Fri, 24 Jul
+ 2026 15:36:50 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.010; Fri, 24 Jul 2026
+ 15:36:50 +0000
+Date: Fri, 24 Jul 2026 10:36:40 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+	Kees Cook <kees@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Cai Huoqing <cai.huoqing@linux.dev>,
+	Niklas Cassel <cassel@kernel.org>,
+	Devendra K Verma <devendra.verma@amd.com>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 05/19] dmaengine: dw-edma: Add LL interrupt placement
+ policy
+Message-ID: <amOGiJe8fVRoLCMQ@SMW015318>
+References: <20260723084150.521366-1-den@valinux.co.jp>
+ <20260723084150.521366-6-den@valinux.co.jp>
+ <amJyWDdq7MBkoudf@SMW015318>
+ <dbnylap6togkuwbgrnt4oors56c4litp7ndvfnbvgg4wynigtx@z4mrupqrd5sg>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dbnylap6togkuwbgrnt4oors56c4litp7ndvfnbvgg4wynigtx@z4mrupqrd5sg>
+X-ClientProxiedBy: SA9PR13CA0070.namprd13.prod.outlook.com
+ (2603:10b6:806:23::15) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723-qcom-qce-cmd-descr-v24-6-4f87bb4d9938@oss.qualcomm.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB10104:EE_
+X-MS-Office365-Filtering-Correlation-Id: bafae791-b856-436e-583a-08dee9996106
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|366016|7416014|376014|1800799024|10067099003|56012099006|4143699003|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	XxZYDQ1kQiSAD/WTB7rYOQoWezIw9AAz6f6HjMX+GOZEPSWVC9jA4ay3ZL7l8WrndXyXvyFT4yqRabkFgh2m3jQ/LGJPfer9OdkhC1JSDZ8LDMeHiFwdrnDKs6Z8p/rCTcSjYG7sxxy7574h4jmq5Pa6f6I4pgJvgAkB/pOSlw/81RL8K8pm1UJJc+IPt//QVw0MPneHyBxHp+Ud+bqOa3eEZCTrn9zKSzvHaf8Bi9WVAgGRcavlQBG04Tqk5tGuCtYR62niiuLOoNFr20x/qbrxpScwXNoPIZIRYbePEaNeAbJ8lJVy1j21vh2hdCNQwdfiXYj+PG7fWaQVZBzfid61aDZoLD01hAEQzKd6m9br2n5LiHFMzcM/ZzdFFOtB8kSf4vqQ9vvrwU2dnT4zAHaImOSBjJ0HCh7U+ZXOygmkOBHqmxPXrJXcfSdOhuJxX9L3G9GK5WLj04XdrZA3WN+bxmpb+E+MSA7LKLYFlJKen1sC5XNO9Npwc+d+cM45mr3PsNJKhXOBkqMQXj9+2UflPvJo8AC3OcsWYmMiTyv75TETtoX73gyW6lCg1xUNx+1+lN0mOUYeNxITmqybkK1TPP6Deh/dx/2W4QYiWFPUfsS8MYZQWkjJe3YuImwQ9BgANtJG6OzUcf0ej7NicmQyK9HyY2fy0RCIx6gtmZE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(7416014)(376014)(1800799024)(10067099003)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?LycIjG73OwVJbRjavm2H5lbXi0noXeiX165D4Z3rnKCVlP5p8anig0NXopXh?=
+ =?us-ascii?Q?1zmfz7rG403PAX23v/DoJe2UCRtpF2PwnCQ/GdyRvtKlO9N1BCwuzs5HPETh?=
+ =?us-ascii?Q?UvWuktW+HXmD/syDP5NGWCVbziqGBO+6X9Wdd72mUWTAbQT302WLLwLX52Je?=
+ =?us-ascii?Q?ENdnaUaWrHRqonpkpKDWLoHPWITrEAtlEeWj2hwJCLze6uheS/BN+3XsLVcD?=
+ =?us-ascii?Q?Y4v/pDG5p1xfwdIgNR1C4bl16SdFjuZXGWkGYdaCaXOIZih9icyLiuZX9Xby?=
+ =?us-ascii?Q?oxLAvWdIeG4W5svHg6FPH7z/lz8RBrMt0JCLMGOUe4lCf9DgcCRmYNEjJv42?=
+ =?us-ascii?Q?WOMThZGfnkmR8V4xfWR7jsURfwxhTzF5j2UmH13GtFiFTBWo9LFYDJLyM1Aa?=
+ =?us-ascii?Q?iQTeoRhhH3b2gl6rTLa94ifYe7Oj6nG270KegVh5GwVOzCfCdRh+xhC1A7w5?=
+ =?us-ascii?Q?LQeGpJti1rMEzbDvfHG5dDwr0SbXQpYD4SIRD8yj7/rtJPrHV8LPcMtTsKzY?=
+ =?us-ascii?Q?b+QfZISPGg6UY9OJZvEwLyrqozLALjBkA73syCouXKzZdSte5WYeUB25zJqF?=
+ =?us-ascii?Q?RtfjOs0iwdbf1gXRuV6VA5g3gdNFGNG5FZ9io2DVIJYI6LMh+1ocsk8NGW3u?=
+ =?us-ascii?Q?cbzIxgvkTBIWcMKOZC0iLmkjtsgVmjvzjGRAHTDN8+seFhpqJk1Cb0ZzQcA/?=
+ =?us-ascii?Q?uzeqhQ7O9Brz0FFu636eXE1Eb/+C3SHjysXb0EY5xHXFtftLhEic9SUkyc5y?=
+ =?us-ascii?Q?OyYQOJ+tAlAxxwuWvWZASaJa9VM1DmFbRRvmK40uH5928jTAQbME4OGx+/vG?=
+ =?us-ascii?Q?q0edHKD4QBrcFP3TSo4C+Zx0Q8rnkrwQwOFrFCSkgdyvRA7u5+Y0ypCZ32/f?=
+ =?us-ascii?Q?xEiV4MOieH+cY6EBNH4jmg4z4vwoj7Sm0lm9fsjdZpsyFiyE5I/4Y4RUAMwA?=
+ =?us-ascii?Q?iY7G5UhJME1jUp97h0CEQCm87Ca5igaL6tN/+UEEUU9OgIqIHi84NJoe7Vo4?=
+ =?us-ascii?Q?4pRWS6UD5d55HpLSN7Rvy0qffylv2ZPjuH7JugfoGfEqOla0HZIuulYjHIF5?=
+ =?us-ascii?Q?H7PZaTP0w3wfCAtYxMv5orPjhg6lcSju2839r5hfuSEYWkGWU8769Zgk6Pil?=
+ =?us-ascii?Q?wQuPyrmtPkMIUW20ZkwN+zSHNeZ+yfVgUyuIEVWtktbHCJB6NXzIHPfcqOku?=
+ =?us-ascii?Q?mpkDivLJc/nuTLsri+BwJIIieLDsOADUrT+Xg0Qc0ShAT3c/1WmEzIOY/lmq?=
+ =?us-ascii?Q?qcDzX7EW9RWGgS0NxboJ1K40m8K89+BNmpAsDAACUI/6/5qIwI6rNCG6YQ+k?=
+ =?us-ascii?Q?Q8lO0FwBMovCdAOPMCnle+rlUMoPbmLZ5Kg1qHp0wvFpv2rAhF/YuP8YFJQF?=
+ =?us-ascii?Q?FTgSco+JQ8I0uKn9fyYyAbQxWtM/kq5aK5C96cimssuXMRdbOTJaCysuWOOw?=
+ =?us-ascii?Q?iCDVc++w4u3n1F0W5mEYCy+pf83n5oGgDgBBsAFAg06jEs392JbEjcefET+o?=
+ =?us-ascii?Q?WbYS9rgEtZNSgx4C7uCiGkDwFyg8QUwRy63b6CWPjx0pJiJ49oEwdajoauJG?=
+ =?us-ascii?Q?5bX6/J7IxZKsAry2+ET6b68B//ELrUCr+6RoUl0nUX8uTOGD5JHrBagV822R?=
+ =?us-ascii?Q?8Fxp/H/zQR81aaIjAaLiK9tseYOON7aD1Hp4+60/xMgQwDjZN5wEvSltoXS9?=
+ =?us-ascii?Q?kUmG2MtLeUz8+OOYMWhuEk2vtalklXxsCZ9TMj+VMJtXq9MHwuN7B9D2xmb2?=
+ =?us-ascii?Q?dJXJ9BugJIySz4Z6mN3MhIxHok5DfCpljkrS4YNWTBQvvE5KaU6l?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bafae791-b856-436e-583a-08dee9996106
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 15:36:50.2915
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DYSKJWIxtCvIdIzrQuj9BwXQiD7MgqpnslEKYaUr82+U3YNG+gmMfiTPr3stHeQRwkuPuQSICpl4BEnNNRSUjKBvNHRiITsNek6WovwVtANDuqE3LRsWervHlNMORNLc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10104
 
-On Thu, Jul 23, 2026 at 07:09:12PM +0200, Bartosz Golaszewski wrote:
-> Add support for BAM pipe locking. To that end: when starting DMA on a TX
-> channel (DMA_MEM_TO_DEV) - prepend the existing queue of issued
-> descriptors with an additional "dummy" command descriptor with the LOCK
-> bit set. Once the transaction is done (no more issued descriptors),
-> issue one more dummy descriptor with the UNLOCK bit.
-> 
-> We *must* wait until the transaction is signalled as done because we
-> must not perform any writes into config registers while the engine is
-> busy.
-> 
-> The dummy writes must be issued into a scratchpad register of the client
-> so provide a mechanism to communicate the right address via slave
-> config.
-> 
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> [Stephan: came up with the solution to write lock/unlock descriptors
-> directly into the FIFO]
-> Co-developed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> ---
->  drivers/dma/qcom/bam_dma.c       | 146 ++++++++++++++++++++++++++++++++++-----
->  include/linux/dma/qcom_bam_dma.h |  13 ++++
->  2 files changed, 142 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index f3e713a5259c2c7c24cfdcec094814eb1202971a..373569c36a94e149d54ef041974b11018e634669 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> [...]
-> @@ -676,10 +697,51 @@ static void bam_free_chan(struct dma_chan *chan)
->  static int bam_slave_config(struct dma_chan *chan,
->  			    struct dma_slave_config *cfg)
->  {
-> +	struct bam_config *peripheral_cfg = cfg->peripheral_config;
->  	struct bam_chan *bchan = to_bam_chan(chan);
-> +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> +
-> +	if (peripheral_cfg && cfg->peripheral_size != sizeof(*peripheral_cfg))
-> +		return -EINVAL;
->  
->  	guard(spinlock_irqsave)(&bchan->vc.lock);
->  
-> +	/*
-> +	 * This is required to setup the pipe locking and must be done even
-> +	 * before the first call to bam_start_dma().
-> +	 */
-> +	if (bdata->pipe_lock_supported && peripheral_cfg) {
-> +		if (cfg->direction != DMA_MEM_TO_DEV)
-> +			return -EINVAL;
-> +
-> +		if (bchan->bam_locked)
-> +			return -EBUSY;
-> +
-> +		if (!bchan->lock_ce) {
-> +			bchan->lock_ce = kmalloc_obj(*bchan->lock_ce, GFP_ATOMIC);
-> +			if (!bchan->lock_ce)
-> +				return -ENOMEM;
-> +
-> +			bchan->lock_ce_phys = dma_map_single(bchan->bdev->dev, bchan->lock_ce,
-> +							     sizeof(*bchan->lock_ce),
-> +							     DMA_TO_DEVICE);
-> +			if (dma_mapping_error(bchan->bdev->dev, bchan->lock_ce_phys)) {
-> +				kfree(bchan->lock_ce);
-> +				bchan->lock_ce = NULL;
-> +				return -ENOMEM;
-> +			}
-> +		}
-> +
-> +		bam_prep_ce_le32(bchan->lock_ce, peripheral_cfg->lock_scratchpad_addr,
-> +				 BAM_WRITE_COMMAND, 0);
-> +		dma_sync_single_for_device(bchan->bdev->dev, bchan->lock_ce_phys,
-> +					   sizeof(*bchan->lock_ce), DMA_TO_DEVICE);
+On Fri, Jul 24, 2026 at 02:46:23PM +0900, Koichiro Den wrote:
+> On Thu, Jul 23, 2026 at 02:58:16PM -0500, Frank Li wrote:
+> > On Thu, Jul 23, 2026 at 05:41:36PM +0900, Koichiro Den wrote:
+> > > Move linked-list interrupt placement behind a core callback so eDMA and
+> > > HDMA can use different policies.
+> > >
+> > > Keep the eDMA behavior. For HDMA, place watermarks at descriptor ends,
+> > > before link entries, and every four entries when a descriptor exceeds the
+> > > usable ring capacity or another issued descriptor follows. A later patch
+> > > handles these watermarks as progress events.
+> > >
+> > > Four entries is an empirically chosen coalescing interval.
+> > >
+> > > Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> > > ---
+> > > Changes in v2:
+> > >   - Fix the zero-based interval so the first watermark is on the fourth
+> > >     entry, not the fifth.
+> > >   - Revise the commit message and source comments.
+> > >
+> > >  drivers/dma/dw-edma/dw-edma-core.c    |  8 +++++++-
+> > >  drivers/dma/dw-edma/dw-edma-core.h    |  2 ++
+> > >  drivers/dma/dw-edma/dw-edma-v0-core.c | 10 ++++++++++
+> > >  drivers/dma/dw-edma/dw-hdma-v0-core.c | 28 +++++++++++++++++++++++++++
+> > >  4 files changed, 47 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > > index a9f25a65294e..78d1bb6302fb 100644
+> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> > > @@ -98,6 +98,12 @@ static u32 dw_edma_core_get_free_num(struct dw_edma_chan *chan)
+> > >  		chan->ll_max;
+> > >  }
+> > >
+> > > +static bool dw_edma_core_enable_ll_irq(struct dw_edma_desc *desc, u32 i,
+> > > +				       u32 free)
+> > > +{
+> > > +	return desc->chan->dw->core->ll_irq(desc, i, free);
+> > > +}
+> > > +
+> > >  static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
+> > >  {
+> > >  	struct dw_edma_chan *chan = desc->chan;
+> > > @@ -120,7 +126,7 @@ static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
+> > >
+> > >  		dw_edma_core_ll_data(chan, &desc->burst[i],
+> > >  				     chan->ll_head, chan->cb,
+> > > -				     i == desc->nburst - 1 || free == 1);
+> > > +				     dw_edma_core_enable_ll_irq(desc, i, free));
+> > >
+> > >  		chan->ll_head++;
+> > >
+> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+> > > index f2c2d5af1fff..8ed37e8a12cb 100644
+> > > --- a/drivers/dma/dw-edma/dw-edma-core.h
+> > > +++ b/drivers/dma/dw-edma/dw-edma-core.h
+> > > @@ -162,6 +162,8 @@ struct dw_edma_core_ops {
+> > >  	void (*ll_link)(struct dw_edma_chan *chan, u32 idx, bool cb, u64 addr);
+> > >  	void (*ll_clear)(struct dw_edma_chan *chan, u32 idx);
+> > >  	int (*ll_cur_idx)(struct dw_edma_chan *chan);
+> > > +	/* Called with chan->vc.lock held. */
+> > > +	bool (*ll_irq)(struct dw_edma_desc *desc, u32 i, u32 free);
+> > >  	void (*ch_doorbell)(struct dw_edma_chan *chan);
+> > >  	void (*ch_enable)(struct dw_edma_chan *chan);
+> > >  	void (*ch_config)(struct dw_edma_chan *chan);
+> > > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > > index c31fff095b4f..62141aa32e50 100644
+> > > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
+> > > @@ -649,6 +649,15 @@ static int dw_edma_v0_core_ll_cur_idx(struct dw_edma_chan *chan)
+> > >  	return (val - base) / EDMA_LL_SZ;
+> > >  }
+> > >
+> > > +static bool dw_edma_v0_core_ll_irq(struct dw_edma_desc *desc, u32 i, u32 free)
+> > > +{
+> > > +	/*
+> > > +	 * eDMA reports LL interrupts through DONE. Keep them at
+> > > +	 * descriptor ends, plus the last free slot to refill the ring.
+> > > +	 */
+> > > +	return i == desc->nburst - 1 || free == 1;
+> > > +}
+> > > +
+> > >  /* eDMA debugfs callbacks */
+> > >  static void dw_edma_v0_core_debugfs_on(struct dw_edma *dw)
+> > >  {
+> > > @@ -685,6 +694,7 @@ static const struct dw_edma_core_ops dw_edma_v0_core = {
+> > >  	.ll_link = dw_edma_v0_core_ll_link,
+> > >  	.ll_clear = dw_edma_v0_core_ll_clear,
+> > >  	.ll_cur_idx = dw_edma_v0_core_ll_cur_idx,
+> > > +	.ll_irq = dw_edma_v0_core_ll_irq,
+> > >  	.ch_doorbell = dw_edma_v0_core_ch_doorbell,
+> > >  	.ch_enable = dw_edma_v0_core_ch_enable,
+> > >  	.ch_config = dw_edma_v0_core_ch_config,
+> > > diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > > index b2d35f0b7b6d..fb651a83f0f3 100644
+> > > --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > > +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> > > @@ -13,6 +13,9 @@
+> > >  #include "dw-hdma-v0-regs.h"
+> > >  #include "dw-hdma-v0-debugfs.h"
+> > >
+> > > +/* Empirically chosen watermark interval. */
+> > > +#define HDMA_V0_WATERMARK_INTERVAL			4
+> > > +
+> > >  enum dw_hdma_control {
+> > >  	DW_HDMA_V0_CB					= BIT(0),
+> > >  	DW_HDMA_V0_TCB					= BIT(1),
+> > > @@ -417,6 +420,30 @@ static int dw_hdma_v0_core_ll_cur_idx(struct dw_edma_chan *chan)
+> > >  	return (val - base) / EDMA_LL_SZ;
+> > >  }
+> > >
+> > > +static bool dw_hdma_v0_core_ll_irq(struct dw_edma_desc *desc, u32 i, u32 free)
+> > > +{
+> > > +	struct dw_edma_chan *chan = desc->chan;
+> > > +	bool needs_progress;
+> > > +
+> > > +	/*
+> > > +	 * Always place a watermark at a descriptor end and before the link
+> > > +	 * element. The first reports descriptor progress; the second provides
+> > > +	 * one progress point per ring lap.
+> > > +	 */
+> > > +	if (i == desc->nburst - 1 || chan->ll_head == chan->ll_max - 1)
+> > > +		return true;
+> > > +
+> > > +	/*
+> > > +	 * Use periodic watermarks when a descriptor exceeds the usable ring or
+> > > +	 * when more issued work follows it.
+> > > +	 */
+> > > +	needs_progress = desc->nburst > chan->ll_max - 1 ||
+> > > +			 !list_is_last(&desc->vd.node, &chan->vc.desc_issued);
+> > > +
+> > > +	return needs_progress &&
+> > > +	       (chan->ll_head + 1) % HDMA_V0_WATERMARK_INTERVAL == 0;
+> >
+> > This is not good layer design. edma/hdma supposed just do action to operate
+> > register, less software logic.
+>
+> Indeed, thanks for pointing that out.
+>
+> >
+> > Can we move this code to core layer?  introduce an 'interval' for difference
+> > backend.
+> >
+> > eDMA: interval is number description.
+> > hDMA: interval is HDMA_V0_WATERMARK_INTERVAL
+>
+> Sorry, by "eDMA: interval is number description", do you mean using desc->nburst
+> as the "interval", so eDMA keeps one interrupt at the end of each descriptor?
 
-Nitpick: The sync is redundant if you just called dma_map_single()
-above. It doesn't hurt to sync again for the one-time setup though.
+Yes, of cource, you also can periodic interval check eDMA if want.
 
-> +		bchan->locking_enabled = true;
-> +	} else {
-> +		/* Don't touch lock_ce here, it might still be used by issued descriptors */
-> +		bchan->locking_enabled = false;
-> +	}
-> +
->  	memcpy(&bchan->slave, cfg, sizeof(*cfg));
->  	bchan->reconfigure = 1;
->  
-> @@ -802,6 +864,7 @@ static int bam_dma_terminate_all(struct dma_chan *chan)
->  		}
->  
->  		vchan_get_all_descriptors(&bchan->vc, &head);
-> +		bchan->bam_locked = false;
->  	}
+Frank
 
-I think this needs some more thought. I put this assignment into
-bam_reset_channel(), because presumably that's the only operation that
-would really reset the lock status without processing an unlock
-descriptor.
-
-bam_dma_terminate_all() does not always reset the BAM channel. It does
-that only if (!list_empty(&bchan->desc_list)) {
-	bam_chan_init_hw(bchan, async_desc->dir);
-}
-
-I _think_ it is possible that we have no in-flight descriptors
-(bchan->desc_list), but the unlock is still pending (or not even written
-to the FIFO yet). In that case, bchan->bam_locked should not be reset
-here.
-
-I would put the bchan->bam_locked = false; into bam_reset_channel() like
-in my diff.
-
-Then, you could either leave this as-is (and assume the unlock
-descriptor will still be finished/written even after cancelling the
-descriptors).
-
-Or, you add some more checks to this if statement to reset the BAM. This
-could work I think:
-
-	if (!list_empty(&bchan->desc_list)) {
-		async_desc = list_first_entry(&bchan->desc_list,
-					      struct bam_async_desc, desc_node);
-		bam_chan_init_hw(bchan, async_desc->dir);
-	} else if (bchan->bam_locked || bchan->head != bchan->tail) {
-		/* BAM still locked or unlock still pending */
-		bam_chan_init_hw(bchan, DMA_MEM_TO_DEV);
-	}
-
-Unfortunately, bchan->bam_locked alone doesn't tell us if the BAM is
-locked, only if we haven't written the UNLOCK descriptor yet. It may be
-pending in the FIFO. head != tail should tell us that the FIFO is not
-empty (which should be the UNLOCK descriptor if desc_list is empty)...
-
->  
->  	vchan_dma_desc_free_list(&bchan->vc, &head);
-> @@ -869,7 +932,7 @@ static int bam_resume(struct dma_chan *chan)
->  static u32 process_channel_irqs(struct bam_device *bdev)
->  {
->  	u32 i, srcs, pipe_stts, offset, avail;
-> -	struct bam_async_desc *async_desc, *tmp;
-> +	struct bam_async_desc *async_desc;
->  
->  	srcs = readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_SRCS_EE));
->  
-> [...]
-> @@ -919,13 +991,12 @@ static u32 process_channel_irqs(struct bam_device *bdev)
->  			 * push back to front of desc_issued so that
->  			 * it gets restarted by the work queue.
->  			 */
-> -			if (!async_desc->num_desc) {
-> +			list_del(&async_desc->desc_node);
-> +			if (!async_desc->num_desc)
->  				vchan_cookie_complete(&async_desc->vd);
-> -			} else {
-> +			else
->  				list_add(&async_desc->vd.node,
->  					 &bchan->vc.desc_issued);
-> -			}
-> -			list_del(&async_desc->desc_node);
->  		}
-
-I think this is an unneeded/unrelated formatting change now. Drop?
-
->  	}
->  
-> [...]
->  /**
->   * bam_start_dma - start next transaction
->   * @bchan: bam dma channel
->   */
->  static void bam_start_dma(struct bam_chan *bchan)
->  {
-> -	struct virt_dma_desc *vd = vchan_next_desc(&bchan->vc);
-> +	struct virt_dma_desc *vd;
->  	struct bam_device *bdev = bchan->bdev;
->  	struct bam_async_desc *async_desc = NULL;
->  	struct bam_desc_hw *desc;
-> @@ -1064,22 +1145,34 @@ static void bam_start_dma(struct bam_chan *bchan)
->  
->  	lockdep_assert_held(&bchan->vc.lock);
->  
-> -	if (!vd)
-> +	vd = vchan_next_desc(&bchan->vc);
-> +	if (IS_BUSY(bchan) || (!vd && !bchan->bam_locked))
->  		return;
->  
->  	ret = pm_runtime_get_sync(bdev->dev);
->  	if (ret < 0)
->  		return;
->  
-> +	if (!bchan->initialized)
-> +		bam_chan_init_hw(bchan, container_of(vd, struct bam_async_desc, vd)->dir);
-
-Okay yeah, that was my bug. Thanks for moving it :-)
-
-> +
-> +	if (bchan->locking_enabled && !bchan->bam_locked) {
-> +		/* Defer locking until we also have space for a data descriptor */
-> +		avail = CIRC_SPACE(bchan->tail, bchan->head, MAX_DESCRIPTORS + 1);
-> +		if (avail < 2) {
-> +			queue_work(system_bh_highpri_wq, &bdev->work);
-> +			goto out;
-> +		}
-> +
-> +		bam_fifo_write_lock(bchan, DESC_FLAG_LOCK);
-> +		bchan->bam_locked = true;
-> +	}
-> +
->  	while (vd && !IS_BUSY(bchan)) {
->  		list_del(&vd->node);
->  
->  		async_desc = container_of(vd, struct bam_async_desc, vd);
->  
-> -		/* on first use, initialize the channel hardware */
-> -		if (!bchan->initialized)
-> -			bam_chan_init_hw(bchan, async_desc->dir);
-> -
->  		/* apply new slave config changes, if necessary */
->  		if (bchan->reconfigure)
->  			bam_apply_new_config(bchan, async_desc->dir);
-> @@ -1135,11 +1228,24 @@ static void bam_start_dma(struct bam_chan *bchan)
->  		list_add_tail(&async_desc->desc_node, &bchan->desc_list);
->  	}
->  
-> +	/*
-> +	 * Close the bracket once there is no more client work queued. The
-> +	 * UNLOCK is flagged for an interrupt so process_channel_irqs() is
-> +	 * guaranteed to observe its completion and retire it from the FIFO
-> +	 * promptly, instead of leaving bchan->head to lag until a later
-> +	 * bracket's skip-loop catches up with it.
-> +	 */
-
-Fair enough, I was a bit lazy here and omitted the DESC_FLAG_INT. It
-should help with the head!=tail check I mentioned for
-bam_dma_terminate_all() though.
-
-> +	if (bchan->bam_locked && !vd && !IS_BUSY(bchan)) {
-> +		bam_fifo_write_lock(bchan, DESC_FLAG_UNLOCK | DESC_FLAG_INT);
-> +		bchan->bam_locked = false;
-> +	}
-> +
->  	/* ensure descriptor writes and dma start not reordered */
->  	wmb();
->  	writel_relaxed(bchan->tail * sizeof(struct bam_desc_hw),
->  			bam_addr(bdev, bchan->id, BAM_P_EVNT_REG));
->  
-> +out:
->  	pm_runtime_mark_last_busy(bdev->dev);
->  	pm_runtime_put_autosuspend(bdev->dev);
->  }
-> @@ -1162,7 +1268,13 @@ static void bam_dma_work(struct work_struct *work)
->  
->  		guard(spinlock_irqsave)(&bchan->vc.lock);
->  
-> -		if (!list_empty(&bchan->vc.desc_issued) && !IS_BUSY(bchan))
-> +		/*
-> +		 * A channel also needs kicking if a bracket is still open
-> +		 * (bam_locked) with no further client work queued: closing
-> +		 * the UNLOCK requires a fresh call into bam_start_dma().
-> +		 */
-> +		if ((!list_empty(&bchan->vc.desc_issued) || bchan->bam_locked) &&
-> +		    !IS_BUSY(bchan))
->  			bam_start_dma(bchan);
-
-The if statement is redundant, bam_start_dma() now checks all of that
-internally. 
-
-	if (IS_BUSY(bchan) || (!vd && !bchan->bam_locked))
-		return;
-
-list_empty(desc_issed) == !vd
-
-Same for !IS_BUSY() in bam_issue_pending().
-
-Thanks,
-Stephan
+>
+> >
+> > So core layer can use unified logic to handle for both eDMA and hDMA?
+>
+> I'll move as much of the software policy as possible into the common core. I
+> think even the periodic interval and descriptor-end placement can be shared.
+> I'll rework this part and verify it with performance tests.
+>
+> Thanks for the review and suggestion. Much appreciated.
+> Koichiro
+>
+> >
+> > Frank
+> >
+> > > +}
+> > > +
+> > >  /* HDMA debugfs callbacks */
+> > >  static void dw_hdma_v0_core_debugfs_on(struct dw_edma *dw)
+> > >  {
+> > > @@ -441,6 +468,7 @@ static const struct dw_edma_core_ops dw_hdma_v0_core = {
+> > >  	.ll_link = dw_hdma_v0_core_ll_link,
+> > >  	.ll_clear = dw_hdma_v0_core_ll_clear,
+> > >  	.ll_cur_idx = dw_hdma_v0_core_ll_cur_idx,
+> > > +	.ll_irq = dw_hdma_v0_core_ll_irq,
+> > >  	.ch_doorbell = dw_hdma_v0_core_ch_doorbell,
+> > >  	.ch_enable = dw_hdma_v0_core_ch_enable,
+> > >  	.ch_config = dw_hdma_v0_core_ch_config,
+> > > --
+> > > 2.51.0
+> > >
