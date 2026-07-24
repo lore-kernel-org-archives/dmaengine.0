@@ -1,117 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF752476CEE;
-	Fri, 24 Jul 2026 23:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49573352020
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 23:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784936112; cv=none; b=J0KWaa/Munz1//BCYW2eIjIIeNnd1whPFGcvXNYu//CpZtkf4/iPsAuY3kGvjEHlLpCWJsbZbYiD6sAP6agFEyde0Ue97aPr8n3idslwePjXgd6d3Lj2BE2Y/DY6BmGRdDhJswgTB1A9A3ZslJhCTB/2yfx9GLjbwksWwr5o2/4=
+	t=1784936158; cv=none; b=b71gw8y99tw/E63IX0j+/yeC8cGRwcA0bAFWKfXEo8j/blCt8MMGXK9cygYQDxGWSqWvMssMiwcxg8XDFk1rbfs4JHYvQ6+u2TQgqp5ZJ9hfQyYy6kwYFEbKLnQqjlH3QEC9AnMwsMSIgy40CPPDnLOK7vw7m/sNfbTW7Kv+CYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784936112; c=relaxed/simple;
-	bh=aYrgDhizOckPspQJ6t3G3K3Lc7NOOpJo78OVx01YiFQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=G/cSxaNLZ38oJ0X1nq0GPY0ElORcleiWqC7Akkm8pgkr2qB4x24Wfhj25KXuDl209nPlNLwTXL/IiP67u++BEachw61Hw9arR/4iQCsKPNLl3YZpLwOJuyc1XtIlbzlSCXdN6vhikgAv3oHAtpg6bAtc5HzcC/qwyzIeJuO+DGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E171F00A3A;
-	Fri, 24 Jul 2026 23:35:11 +0000 (UTC)
-Received: by venus (Postfix, from userid 1000)
-	id 93CE9181F1C; Sat, 25 Jul 2026 01:35:08 +0200 (CEST)
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Julia.Lawall@inria.fr, Alex Deucher <alexander.deucher@amd.com>, 
- Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Andrew Lunn <andrew@lunn.ch>, Andrew Morton <akpm@linux-foundation.org>, 
- Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>, 
- Borislav Petkov <bp@alien8.de>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Daniel Lezcano <daniel.lezcano@kernel.org>, 
- David Airlie <airlied@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Hans de Goede <hansg@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Jakub Kicinski <kuba@kernel.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- Jani Nikula <jani.nikula@linux.intel.com>, Jaroslav Kysela <perex@perex.cz>, 
- Jason Gunthorpe <jgg@ziepe.ca>, Jiri Pirko <jiri@resnulli.us>, 
- "Joerg Roedel (AMD)" <joro@8bytes.org>, Johan Hovold <johan@kernel.org>, 
- Jonathan Cameron <jic23@kernel.org>, 
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
- Julian Anastasov <ja@ssi.bg>, Leon Romanovsky <leon@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Linus Walleij <linusw@kernel.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Mark Brown <broonie@kernel.org>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Matthew Sakai <msakai@redhat.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Maxime Ripard <mripard@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Mike Rapoport <rppt@kernel.org>, 
- Miri Korenblit <miriam.rachel.korenblit@intel.com>, 
- Nicolas Palix <nicolas.palix@imag.fr>, 
- Pablo Neira Ayuso <pablo@netfilter.org>, Paolo Abeni <pabeni@redhat.com>, 
- Ping-Ke Shih <pkshih@realtek.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Sebastian Reichel <sre@kernel.org>, 
- Shuah Khan <shuah@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
- Simon Horman <horms@verge.net.au>, Stephen Boyd <sboyd@kernel.org>, 
- Steve French <sfrench@samba.org>, Takashi Iwai <tiwai@suse.com>, 
- Thomas Renninger <trenn@suse.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Tony Luck <tony.luck@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, 
- Vadim Fedorenko <vadim.fedorenko@linux.dev>, Vinod Koul <vkoul@kernel.org>, 
- Will Deacon <will@kernel.org>, Yazen Ghannam <Yazen.Ghannam@amd.com>, 
- Sang-Heon Jeon <ekffu200098@gmail.com>
-Cc: cocci@inria.fr, amd-gfx@lists.freedesktop.org, 
- dmaengine@vger.kernel.org, dm-devel@lists.linux.dev, 
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
- intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev, 
- linux-cifs@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-crypto@vger.kernel.org, linux-edac@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
- linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-media@vger.kernel.org, linux-mm@kvack.org, linux-pm@vger.kernel.org, 
- linux-rdma@vger.kernel.org, linux-rtc@vger.kernel.org, 
- linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
- linux-wireless@vger.kernel.org, lvs-devel@vger.kernel.org, 
- netdev@vger.kernel.org, netfilter-devel@vger.kernel.org, 
- nouveau@lists.freedesktop.org, platform-driver-x86@vger.kernel.org
-In-Reply-To: <20260723184538.3888637-1-ekffu200098@gmail.com>
-References: <20260723184538.3888637-1-ekffu200098@gmail.com>
-Subject: Re: (subset) [PATCH 00/36] treewide: remove conditional returns
- with no effect
-Message-Id: <178493610858.699463.6794401814873674138.b4-ty@collabora.com>
-Date: Sat, 25 Jul 2026 01:35:08 +0200
+	s=arc-20240116; t=1784936158; c=relaxed/simple;
+	bh=rR6i4faiV6TxqN+vp5MEpwaUuH2istgSlPiEeLBJsM8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=OZg4g1VLWSb+MhhUmwzkk/WkWbvwscW3s/AAR4T03kiMEBpB9QFxP+Mo1kNXwqhNF386A5CSjxNpcb5befr7HL+cLluM3ZNIjHkZqXWD51WJP/vVtu/RWuofNwKBhejkRKA6t+cgi+SQcqENyz1zK7MO2hh4vhX1c7KxaXYTVsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEG2gR4r; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEG2gR4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4A11F000E9;
+	Fri, 24 Jul 2026 23:35:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784936156;
+	bh=HLZNuYDn/u7Kq3ycviFBas07x43B4w7mjndCUYnk9/0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=gEG2gR4rPH0Do3TFmjJQcoDCZB53soupoIBzSm2tI5LiMPZchKg5UxXpSB/xtQabt
+	 9qKH1WBZhpUFZjzVPnkFw9B60EsjLm1gdbCRRYtCcs91hu0TKOCd9VDnMZcW3IRDHj
+	 BBiY567RhY8hph23XPr8flZV1yU7rH/3/Hfjsx/1QyUt97oN+qeDlkyM5DYu4V/MeM
+	 RitC1apCL4GfS4oYKlt7cI+/GTG62qaQxFPHGO8LLbMwl2tX3RrRY3Q2HviotV5RVV
+	 Sy3libw04/7Wx+5gZ8xw5wnLcNVuFZGGmFFqmyNfDVowGWD7GmqUxOCChPGjutEaiT
+	 g5UNLdL5lJDRg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dma: at_hdmac: add device_synchronize callback
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260724232301.50237-1-rosenp@gmail.com>
+References: <20260724232301.50237-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 24 Jul 2026 23:35:56 +0000
+Message-Id: <20260724233556.8B4A11F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-On Fri, 24 Jul 2026 03:45:02 +0900, Sang-Heon Jeon wrote:
-> While reading mm/memblock, I found a conditional return where both
-> branches return the same value:
-> 
-> 	err = do_something();
-> 	if (err)
-> 		return err;
-> 	return err;
-> 
-> [...]
+Pre-existing issues:
+- [High] Adding `device_synchronize` is insufficient to fix descriptor sync=
+hronization races because `atc_terminate_all()` still prematurely frees act=
+ive/terminated descriptors, causing a Use-After-Free.
+--
 
-Applied, thanks!
+--- Patch [1]: [PATCH] dma: at_hdmac: add device_synchronize callback ---
+commit cf29784e04ea139aef404987d19236faf066af03
+Author: Rosen Penev <rosenp@gmail.com>
 
-[26/36] power: supply: pm8916_lbc: remove conditional return with no effect
-        commit: b7c8d46411317f135e7791c0eddc56691de63f07
+dma: at_hdmac: add device_synchronize callback
 
-Best regards,
--- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
+Implement the device_synchronize callback for the atmel DMA driver by adding
+atc_synchronize() which calls vchan_synchronize() on the associated virt
+channel. This ensures proper synchronization of pending descriptors when
+requested by the DMA framework.
 
+> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+> index e5b30a57c477a..96233eb7a3c6e 100644
+> --- a/drivers/dma/at_hdmac.c
+> +++ b/drivers/dma/at_hdmac.c
+> @@ -1616,6 +1616,13 @@ static int atc_resume(struct dma_chan *chan)
+>  	return 0;
+>  }
+> =20
+> +static void atc_synchronize(struct dma_chan *chan)
+> +{
+> +	struct at_dma_chan *atchan =3D to_at_dma_chan(chan);
+> +
+> +	vchan_synchronize(&atchan->vc);
+> +}
+
+[Severity: High]
+This is a pre-existing issue, but does adding device_synchronize fully reso=
+lve
+the descriptor synchronization races?
+
+When dmaengine_terminate_sync() is called, it first invokes
+device_terminate_all() (which maps to atc_terminate_all()) and then calls
+device_synchronize().
+
+Looking at atc_terminate_all(), it currently stops the hardware and moves t=
+he
+active cyclic descriptor to the desc_terminated list, but then immediately
+extracts and frees all lists:
+
+atc_terminate_all() {
+        ...
+        if (atchan->desc) {
+                vchan_terminate_vdesc(&atchan->desc->vd);
+                ...
+        }
+
+        vchan_get_all_descriptors(&atchan->vc, &list);
+        ...
+        vchan_dma_desc_free_list(&atchan->vc, &list);
+}
+
+If the period completion tasklet (vchan_complete()) is concurrently executi=
+ng
+on another CPU, the cyclic descriptor will be freed out from under it. By t=
+he
+time atc_synchronize() is called to wait for the tasklet via tasklet_kill(),
+the memory is already freed.
+
+Can this result in a use-after-free when the tasklet calls
+dmaengine_desc_callback_invoke() and computes an address based on the freed
+pointer?
+
+Should atc_terminate_all() avoid extracting and freeing the desc_terminated
+list so vchan_synchronize() can clean it up safely after the tasklet finish=
+es?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724232301.5023=
+7-1-rosenp@gmail.com?part=3D1
