@@ -1,187 +1,228 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2543423EB9;
-	Fri, 24 Jul 2026 10:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACA141DDF6;
+	Fri, 24 Jul 2026 10:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784889782; cv=none; b=TG/6kvLqm+wzg3OuFuumiaV561v9sAxPS45KmwEXQFMHhzeI4l9Elc63IPu2FMXZ7ZAFPjDvR4iWSIsZDn27yUnzwH1NOrsmhHgI1pmq6QuOx2/CvguXS4osyVIzxBgu5crkbHf+DuUgyoldQNnGmf27Hhjazn94I2hF6jh+6jc=
+	t=1784889901; cv=none; b=mqVcje8wG1Lg0L6+Vq3NrWxgC214gSn0M69bXLsfuJnMU/bN4UvKnbRj7mV665YUzOk7eWSqiDPnUgZ0ytj1t3c4DWJNlNH6siSm5nvo1TpxFF0AMtDt0kIgJNTzCMhNallmpAP7mswrkqk+je5iiLjUP/VZ0ohtCX9edoDTawM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784889782; c=relaxed/simple;
-	bh=gye+MEsct0+5BGbQ54xdXsyRU6WZK2rDYaWANUNNCMw=;
+	s=arc-20240116; t=1784889901; c=relaxed/simple;
+	bh=AVzt7UkRxLLPLdkPQOU72xA1EajeqzzI/GKslgjQeTg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=R1O5W/duat2KAT1bcPLnjfV/OeDXoRNnQhINm6s0yOM8cSbEEHONv/k+GwNhvqHw5aPP/trzkX1x6KUiJ3xE9+g9F3hfMXU/IOubW3dcHK6XkITq5QC1UaJzKg8rmGv3Ll1ZorMoYNDIOp0gxraKZyd4101gshO7CWqWCoqAG+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dLQjMRRf; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=JVGfpuM3+BXKizug2th0CjhxC9rvwTum19bF0zHatp/gQGh6cqXpjY5BEu68knEm+JXf5ZVcTa3Oo3avCB5+TICsFMLWCQjNYzk7MrzgBI9UX2wvxwOpi7uNjY661pkY42NXia+wi1Rwf2mUb9hTowgAoRY+5bbW8yaThxG3ox0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OmN3ES/r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dLQjMRRf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F591F00A3A;
-	Fri, 24 Jul 2026 10:42:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OmN3ES/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25201F000E9;
+	Fri, 24 Jul 2026 10:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784889778;
-	bh=EmkK83BaoWlMRVA7vqkIhlQ3vKgYswDz9g7ZNLthUGc=;
+	s=k20260515; t=1784889900;
+	bh=I9nvbyycG4huU86hLYlNNOTL+P44tTl9GG8JhAxB2ds=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dLQjMRRf4/3Zn+dnOymVrTTSJ0UoSJK4LVmCnzU938RXM+ZBPxzYJzp2XO+8qjYWk
-	 FMbszluIKlH/PvCbNKwj5eJImdBOF8nQm2dNtONigsT0/4vFdhFaVp2Cd8bYZ2CbP9
-	 gt5XNclLyPtfPL0PKVeJz4CUvD/QptsGnYlD4kxDnUDFlFD6GkmwGMrGevl/1kJFpo
-	 OWLUnufKCTEkMoOdwAXZIhpGyuEJu/I09f3e+SHm4Ykyg2Qt1T82SWxmQ/kf7ze/a/
-	 wDiqCs+R/Y59YqYDw/O46S31Qy7tC+Y+c6/JNpucKzeDWvSJEgWTzh7zd0xoaU48QF
-	 3ZdyksXudTSaQ==
+	b=OmN3ES/rNlkW+27LM+WO60B9Li1CJFwbuHA20rQM3btmohtBtz73BotENZjZhH9Oj
+	 zGajvTSF5T2HGuUKZBJMdIYwsJekkCySW7Z5un5oEEa1LFzbpUGMfTEMml6BRnyoA2
+	 1hvHvPsECw71HgNZpAhhmiRNijZFvgwUYUGkwBZD5UYNfnNX1B84EYL2BLpJe1NJpp
+	 9ZTFeWaKwWpNu+uaa4CVz1VRGM1an8gZJfwCvEMpbA9So4JU9j3g02zUgbBepO9yNa
+	 RCe+8iAgkWtZ5x7YWlD/gFAxJSGGbnvQbySrQOqy6/17lfT/4LilWZR4dUHbfbjbt6
+	 /4j0xLRHL9A3A==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 08/19] dmaengine: ti: k3-udma: move udma utility
- functions to k3-udma-common.c
+Subject: Re: [PATCH v7 05/19] dmaengine: ti: k3-udma: move descriptor
+ management to k3-udma-common.c
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20260724102115.2854-9-s-adivi@ti.com>
+Cc: Frank.Li@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260724102115.2854-6-s-adivi@ti.com>
 References: <20260724102115.2854-1-s-adivi@ti.com>
- <20260724102115.2854-9-s-adivi@ti.com>
+ <20260724102115.2854-6-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jul 2026 10:42:57 +0000
-Message-Id: <20260724104257.A8F591F00A3A@smtp.kernel.org>
+Date: Fri, 24 Jul 2026 10:44:59 +0000
+Message-Id: <20260724104459.B25201F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
+New issues:
+- [Low] Global namespace pollution due to missing `static` keyword on `meta=
+data_ops`.
+
 Pre-existing issues:
-- [Critical] Unprotected access to `uc->terminated_desc` in `udma_reset_rin=
-gs` races with `udma_ring_irq_handler`, causing a potential double-free or =
-use-after-free.
-- [High] The delayed work `udma_check_tx_completion` can enter a runaway lo=
-op and incorrectly reschedule itself if its channel is terminated concurren=
-tly, leaving a rogue timer active.
+- [Critical] Signed 32-bit integer overflow during multi-TR DMA address cal=
+culation causes massive negative offset.
+- [High] Buffer underallocation and out-of-bounds write due to swapped argu=
+ments in `cppi5_trdesc_calc_size`.
 --
 
---- Patch [8]: [PATCH v7 08/19] dmaengine: ti: k3-udma: move udma utility f=
-unctions to k3-udma-common.c ---
-commit a1188aac2ed37ae50666251d86303353027b5fbb
+--- Patch [5]: [PATCH v7 05/19] dmaengine: ti: k3-udma: move descriptor man=
+agement to k3-udma-common.c ---
+commit bdc5f8902724dd8a4b2dc695e0b04524fbd51779
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Subject: dmaengine: ti: k3-udma: move udma utility functions to k3-udma-com=
+
+dmaengine: ti: k3-udma: move descriptor management to k3-udma-common.c
+
+Refactor the K3 UDMA driver by moving all DMA descriptor handling
+functions from k3-udma.c to a new common library, k3-udma-common.c.
+This prepares the driver for supporting new K3 UDMA v2 variant
+(used in AM62L) that can reuse the same descriptor handling logic.
+
+> diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-com=
 mon.c
-
-This commit relocates several utility functions from k3-udma.c to
-k3-udma-common.c to improve code reuse and maintainability between K3 UDMA
-and K3 UDMA v2 variants. There are no intended functional changes.
-
-diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-commo=
-n.c
-index fc5e2c99ee28a..01aea77c25715 100644
---- a/drivers/dma/ti/k3-udma-common.c
-+++ b/drivers/dma/ti/k3-udma-common.c
+> new file mode 100644
+> index 0000000000000..daf5f19dfb3ab
+> --- /dev/null
+> +++ b/drivers/dma/ti/k3-udma-common.c
+> @@ -0,0 +1,1243 @@
 [ ... ]
-> +void udma_check_tx_completion(struct work_struct *work)
+> +
+> +const struct dma_descriptor_metadata_ops metadata_ops =3D {
+> +	.attach =3D udma_attach_metadata,
+> +	.get_ptr =3D udma_get_metadata_ptr,
+> +	.set_len =3D udma_set_metadata_len,
+> +};
+
+[Severity: Low]
+Does this struct need to be exported to the global namespace? The static
+keyword seems to have been dropped during the code move. Leaving such a
+generic name in the global namespace might cause linker collisions with oth=
+er
+subsystems.
+
+> +
+> +struct udma_desc *udma_udma_desc_from_paddr(struct udma_chan *uc,
+[ ... ]
+> +struct udma_desc *udma_alloc_tr_desc(struct udma_chan *uc,
+> +				     size_t tr_size, int tr_count,
+> +				     enum dma_transfer_direction dir)
 > +{
-> +	struct udma_chan *uc =3D container_of(work, typeof(*uc),
-> +					    tx_drain.work.work);
-> +	bool desc_done =3D true;
-> +	u32 residue_diff;
-> +	ktime_t time_diff;
-> +	unsigned long delay;
-> +	unsigned long flags;
-> +
-> +	while (1) {
-> +		spin_lock_irqsave(&uc->vc.lock, flags);
-> +
-> +		if (uc->desc) {
-> +			/* Get previous residue and time stamp */
-> +			residue_diff =3D uc->tx_drain.residue;
-> +			time_diff =3D uc->tx_drain.tstamp;
-> +			/*
-> +			 * Get current residue and time stamp or see if
-> +			 * transfer is complete
-> +			 */
-> +			desc_done =3D udma_is_desc_really_done(uc, uc->desc);
-> +		}
-> +
-> +		if (!desc_done) {
+[ ... ]
+> +	/* Allocate memory for DMA ring descriptor */
+> +	if (uc->use_dma_pool) {
+> +		hwdesc->cppi5_desc_size =3D uc->config.hdesc_size;
+> +		hwdesc->cppi5_desc_vaddr =3D dma_pool_zalloc(uc->hdesc_pool,
+> +							   GFP_NOWAIT,
+> +							   &hwdesc->cppi5_desc_paddr);
+> +	} else {
+> +		hwdesc->cppi5_desc_size =3D cppi5_trdesc_calc_size(tr_size,
+> +								 tr_count);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but is a pre-existing logic
-issue. If uc->desc becomes NULL during the worker's sleep (e.g., if
-udma_terminate_all() is called concurrently):
+This is a pre-existing issue, but does this call to cppi5_trdesc_calc_size()
+pass the arguments in the correct order? The function expects tr_count first
+and tr_size second.
 
-udma_terminate_all() {
-	if (uc->desc) {
-		uc->terminated_desc =3D uc->desc;
-		uc->desc =3D NULL;
-...
+Passing them in reverse order calculates a smaller size than needed when
+the scatterlist has a large number of entries (e.g., tr_count > 64). As a
+result, when the hardware writes the 4-byte responses, does it write past t=
+he
+allocated buffer size and corrupt adjacent coherent DMA memory?
 
-could the worker wake up, bypass the if (uc->desc) check, and see
-desc_done still false from the previous iteration?
-
-It seems this would use stale residue_diff values on every subsequent loop
-iteration, continually sleeping until residue_diff wraps around to 0:
-
+> +		hwdesc->cppi5_desc_size =3D ALIGN(hwdesc->cppi5_desc_size,
+> +						uc->ud->desc_align);
+> +		hwdesc->cppi5_desc_vaddr =3D dma_alloc_coherent(uc->ud->dev,
 [ ... ]
-> +			} else {
-> +				/* No progress, check again in 1 second  */
-> +				schedule_delayed_work(&uc->tx_drain.work, HZ);
-> +				break;
-> +			}
-
-and then incorrectly reschedule itself, leaving a rogue delayed work armed
-despite the channel being terminated?
-
-[ ... ]
-> +void udma_synchronize(struct dma_chan *chan)
+> +struct udma_desc *
+> +udma_prep_slave_sg_tr(struct udma_chan *uc, struct scatterlist *sgl,
+> +		      unsigned int sglen, enum dma_transfer_direction dir,
+> +		      unsigned long tx_flags, void *context)
 > +{
-> +	struct udma_chan *uc =3D to_udma_chan(chan);
-> +	unsigned long timeout =3D msecs_to_jiffies(1000);
-> +
-> +	vchan_synchronize(&uc->vc);
-> +
-> +	if (uc->state =3D=3D UDMA_CHAN_IS_TERMINATING) {
-> +		timeout =3D wait_for_completion_timeout(&uc->teardown_completed,
-> +						      timeout);
 [ ... ]
-> +	}
+> +		if (num_tr =3D=3D 2) {
+> +			cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1,
+> +				      false, false,
+> +				      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
+> +			cppi5_tr_csf_set(&tr_req[tr_idx].flags,
+> +					 CPPI5_TR_CSF_SUPR_EVT);
 > +
-> +	uc->ud->reset_chan(uc, false);
-> +	if (udma_is_chan_running(uc))
-> +		dev_warn(uc->ud->dev, "chan%d refused to stop!\n", uc->id);
-> +
-> +	cancel_delayed_work_sync(&uc->tx_drain.work);
-> +	udma_reset_rings(uc);
-> +}
+> +			tr_req[tr_idx].addr =3D sg_addr + tr0_cnt1 * tr0_cnt0;
 
 [Severity: Critical]
-This is a pre-existing issue, but does udma_reset_rings() race with
-udma_ring_irq_handler() and potentially cause a double-free?
+This is a pre-existing issue, but can this address calculation overflow and
+result in a massive negative offset?
 
-When a DMA channel is terminated, udma_synchronize() waits for the teardown
-completion. The hardware raises an interrupt, and udma_ring_irq_handler()
-signals completion before it finishes clearing uc->terminated_desc:
+When processing a DMA buffer larger than 2GB, the variables tr0_cnt0 and
+tr0_cnt1 (both u16) can have a product that exceeds 2^31. Multiplying two u=
+16
+values in C promotes them to a signed 32-bit int, so the product can become
+negative.
 
-drivers/dma/ti/k3-udma.c:udma_ring_irq_handler() {
-	if (cppi5_desc_is_tdcm(paddr)) {
-		complete_all(&uc->teardown_completed);
+When this negative 32-bit int is added to sg_addr (a 64-bit dma_addr_t), it
+is sign-extended to a massive 64-bit negative offset, calculating a backward
+DMA address. Could this bypass memory isolation and corrupt arbitrary kernel
+memory?
 
-		if (uc->terminated_desc) {
-			udma_desc_free(&uc->terminated_desc->vd);
-			uc->terminated_desc =3D NULL;
-		}
-...
+> +			tr_req[tr_idx].icnt0 =3D tr1_cnt0;
+> +			tr_req[tr_idx].icnt1 =3D 1;
+> +			tr_req[tr_idx].dim1 =3D tr1_cnt0;
+> +			tr_idx++;
+> +		}
+> +
+> +		d->residue +=3D sg_dma_len(sgent);
+> +	}
+[ ... ]
+> +struct udma_desc *
+> +udma_prep_dma_cyclic_tr(struct udma_chan *uc, dma_addr_t buf_addr,
+> +			size_t buf_len, size_t period_len,
+> +			enum dma_transfer_direction dir, unsigned long flags)
+> +{
+[ ... ]
+> +		if (num_tr =3D=3D 2) {
+> +			cppi5_tr_csf_set(&tr_req[tr_idx].flags,
+> +					 CPPI5_TR_CSF_SUPR_EVT);
+> +			tr_idx++;
+> +
+> +			cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1,
+> +				      false, false,
+> +				      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
+> +
+> +			tr_req[tr_idx].addr =3D period_addr + tr0_cnt1 * tr0_cnt0;
 
-This immediately wakes up udma_synchronize(), which proceeds to call
-udma_reset_rings() without holding uc->vc.lock:
+[Severity: Critical]
+This is a pre-existing issue, but can this run into the same signed 32-bit
+integer overflow regression during the cyclic descriptor preparation path?
 
-drivers/dma/ti/k3-udma-common.c:udma_reset_rings() {
-...
-	if (uc->terminated_desc) {
-		udma_desc_free(&uc->terminated_desc->vd);
-		uc->terminated_desc =3D NULL;
-	}
-}
+> +			tr_req[tr_idx].icnt0 =3D tr1_cnt0;
+> +			tr_req[tr_idx].icnt1 =3D 1;
+> +			tr_req[tr_idx].dim1 =3D tr1_cnt0;
+> +		}
+[ ... ]
+> +struct dma_async_tx_descriptor *
+> +udma_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t =
+src,
+> +		     size_t len, unsigned long tx_flags)
+> +{
+[ ... ]
+> +	if (num_tr =3D=3D 2) {
+> +		cppi5_tr_init(&tr_req[1].flags, CPPI5_TR_TYPE15, false, true,
+> +			      CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
+> +		cppi5_tr_csf_set(&tr_req[1].flags, csf);
+> +
+> +		tr_req[1].addr =3D src + tr0_cnt1 * tr0_cnt0;
+> +		tr_req[1].icnt0 =3D tr1_cnt0;
+> +		tr_req[1].icnt1 =3D 1;
+> +		tr_req[1].icnt2 =3D 1;
+> +		tr_req[1].icnt3 =3D 1;
+> +
+> +		tr_req[1].daddr =3D dest + tr0_cnt1 * tr0_cnt0;
 
-If the awakened thread reaches udma_reset_rings() while the IRQ handler
-is still executing udma_desc_free(), couldn't both threads invoke
-udma_desc_free() on the same descriptor?
+[Severity: Critical]
+This is a pre-existing issue, but does the same vulnerable 32-bit integer
+promotion and overflow occur here when calculating both the source and
+destination addresses for the second TR?
+
+> +		tr_req[1].dicnt0 =3D tr1_cnt0;
+> +		tr_req[1].dicnt1 =3D 1;
+> +		tr_req[1].dicnt2 =3D 1;
+> +		tr_req[1].dicnt3 =3D 1;
+> +	}
+> +
+> +	cppi5_tr_csf_set(&tr_req[num_tr - 1].flags, csf | CPPI5_TR_CSF_EOP);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724102115.2854=
--1-s-adivi@ti.com?part=3D8
+-1-s-adivi@ti.com?part=3D5
