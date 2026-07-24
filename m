@@ -1,255 +1,247 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021077.outbound.protection.outlook.com [40.107.74.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED661EB19B
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 04:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784868159; cv=none; b=TlYc9ylijCCQGJaUy9Njjj+OQtAA1QNAaGctUFyn8WO7ElpZpVoHCDQsEZ6nIUp3HONZiZhQH1a2QdN4x1q1hEjRYvn3s2MZqolhhHhfBYIvKlQ1FyoT7mLYZRhayT5lr0HCqpdjmmvldbIH7x+nVWhnPaVyhme979M5xEe7WdU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784868159; c=relaxed/simple;
-	bh=n1KFEYqvw09G5uzxWwyzES6V1zg/warhcgYsGVn0xOA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=elXMh4uMk0dAWacRK8uCGnwNatIb3UjA/8dhqErlH9A7LuqwxcP135AHkn3brL09h0GlmHqe39wH4ycw+mB9v4hg+RFmWyNMANUppsq87Kbtde/C8v44P73KzjX7T7TzwxXx+2gWiDWLacIYaSAmlLlRZbpETyny8y5wIr7Dc6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HopyFHqJ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jsEWB+p7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C132BF3F4;
+	Fri, 24 Jul 2026 04:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784868652; cv=fail; b=jatPFGBg1E/PYYiSB6Dcl2RrnqUDI8tUn+FD9B/yuz2aK8U/YTkPHoHbPlnIuuzIcRZAp/QwEZIIGv3C3P71ZNHAuekpoN4AvT3d7Uq9D7CPhL6har4V16Uy8kqjYVHa45Ot3VkQY1mKIx7mLVDcAIuhp4We8sO81NlEdJLMczY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784868652; c=relaxed/simple;
+	bh=6gITzVv0UuMKnZfMykEOJyIlq4KxvjpB9tz/d3Ahb/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=BfDW5BC4k15O+72B+VIO3zBhehd53xhIAUf5MHSkW8Ka5sswKr19E4IfLOXwx59OJ32xPJ1b4qJd2nlTpbjQcUmjoBpAv8lZ9Jf3wCwC39H26IYLq2b/YlS0r9FoC/FJ04zRGIRZ1A91dQGDvz0XAKVY77i4RHwMVAEciHISfkg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=TLVarvyV; arc=fail smtp.client-ip=40.107.74.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HopyFHqJ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jsEWB+p7"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66O2ii3q1707387
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 04:42:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1pz8laA+S9BPO2S13XqwM8yA5GZVaczUsJOdms3VfvU=; b=HopyFHqJ/6QYARcf
-	OkRqT4hHe4PQ9idSSP3hLDAszwGmu1K9VqJT2ZVGyZudiF2WsryUVClsuWOAeWYJ
-	ZhbRG6vIcSTID6Y0A6Xyc0SBtV/Nz7VSNbc1Uj3CgJY/7eTmUFU8LImkQGAvOz46
-	HQLV8nTCpyJ2w8987EkhfRMg/AUfDd7LTzLP9DXMo3SafwD9qbKcDORRQX5PSOF+
-	tn3qnnAfhd1s6D/abswpL3/7DLC9JQvuks6I0IEoFb/hFVV51cal4IT2h+CYU52s
-	qGb+kDrHRs5op1Cy/YVFGGH9Z6O7zf/RkmxIm/qcRFBmiVJz+FTAIw23a5qnVEVd
-	wb9qXw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fknbmjt27-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 04:42:36 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cb733fc5024so64215a12.2
-        for <dmaengine@vger.kernel.org>; Thu, 23 Jul 2026 21:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1784868156; x=1785472956; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1pz8laA+S9BPO2S13XqwM8yA5GZVaczUsJOdms3VfvU=;
-        b=jsEWB+p75EPKM4fI5aIfNYIa6/4aDFOxDKlVSwiC3lOkBsBnBxR2/kyE2hUSndJyy5
-         1pMxT3q6mM9lP5P+5g1mvDd7xaKj0hhItXImyClvfKaxmSYH7KI/6NGHWRsFs5M5ZvAP
-         CJpzL9093Z0Eafhq1iXl4zmoPG8fORsUy4cYRQhkm3VGh/naXWCGa9VAQkj4S0Njr5MI
-         oYb87WEZtLf0k7a9nCD8ByJGS/mYdahdvwK8sEaqyXJ1spLpH0CtaZ1pvJ8K6NeCzPvX
-         S6nO2rOeeXAd5Qd+su4m3nxEl31GjlD//4gC03ovYCr4FOYHNTkEUUnzVmi6Fpb4co0m
-         B8LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784868156; x=1785472956;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1pz8laA+S9BPO2S13XqwM8yA5GZVaczUsJOdms3VfvU=;
-        b=Lv4BaDJOQ72HChEHQrmWdNrL5opzYjmIa5gYigxeg6x1QJu4j9kKNEWN1v3W8mikSU
-         oGD2KYU5AwiqntUKCSsRRpL+rhLuKBkrmMdGwvZjTnaKCUQa57ftKy3V2FVon4KCKGMQ
-         1sKbKLkeOkuYoSPkHpWHxX2xP76eGRO1V+N5YoflscTtIJeooqyB8iFJBroPLyTtjqEs
-         DQo/O2Ty29IWWUMQtNwR1i4Y3pTlKtiQEQtcPnmfatKkl1onLLQDfMXZ02LgZ859AC2k
-         b5JyuXTIOHlzBTWwRW7drn/inxDXAukFRFYHErcjOiBiuekyUqghiG9ZxD/J9pyUDOHt
-         5Z5g==
-X-Forwarded-Encrypted: i=1; AHgh+RraAIQz7qLcYL39gupGAdwvJvLcRftZge7fu7eYcXIwWTloAVcGtTMAF2aNqtSVbjkfZdk2rfYfD7I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxaOsmo+9+lQm8E6nrWsdB/msBMy9wcGkEaovUCqYXjahqC+qac
-	pSWEwZ2SclaWh52S0+sjwaAZj8GYZyxuwor1Ycjd4txl9ul1bxffWgBO/pgcwzGTBSxPrcAyj8c
-	Gk4MT5UTosae1RLwrQ1pGJqKfsIGDs1LirykWLDBW09IB/goTKSU/MbfWATGIWwE=
-X-Gm-Gg: AR+sD10QUKbTXZGc0p94fy/MhjMBxGa0RK8E9fsjDsTfXXfnCFUqcWu8K4rb2MhFkR6
-	z5dJqkH3SybvM4Up/HjG9GWbbIuK6Mp9Rzgie4z8IPV4nWFiIwS6hkMtvwSSzWGFhUTE/VkDRFJ
-	s9fFPDoFZd3h03lqeSAkDp0jjFlJKbBSrRaAqGo1hqWMAET6iSqXdlIfcHIHGectUJhmF77vDZO
-	1bZRV2RbH2isz2H/od6KFcwhawp/eKkGHWt0362FFYwms936OIZX5+oS+xKzo4/+VsL6H/K/mbg
-	bohVFjdAAc5tMrAzrf4n3awROwNUzetvDxH1dVYXENTqs7F4lU5syp5J8evcBdYhKJ6q/q/Ispv
-	4Gdegee+undZyuvCoEsdlCu8EMhuf5Nc=
-X-Received: by 2002:a05:6a21:62c4:b0:3bf:d1f9:b1df with SMTP id adf61e73a8af0-3c44b210f22mr6445090637.54.1784868155818;
-        Thu, 23 Jul 2026 21:42:35 -0700 (PDT)
-X-Received: by 2002:a05:6a21:62c4:b0:3bf:d1f9:b1df with SMTP id adf61e73a8af0-3c44b210f22mr6445061637.54.1784868155227;
-        Thu, 23 Jul 2026 21:42:35 -0700 (PDT)
-Received: from [10.218.14.97] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3147e081978sm23370369eec.24.2026.07.23.21.42.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Jul 2026 21:42:34 -0700 (PDT)
-Message-ID: <d8e2519c-4fe8-4db8-94e1-3231000bf51f@oss.qualcomm.com>
-Date: Fri, 24 Jul 2026 10:12:28 +0530
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="TLVarvyV"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cnqutQXCF29U8/LKF15DdOKG1j18G7YXDcp9F9P3RYreXBnycy4XdN8Djb/OiDKk5yrAjJPsar19aiIecqnNfe0DNEJPhUfgc3G3wOZnGd/kc6kFFN922r0C/wuxOnYosAIGRewRkN+eQJjQAIXrpZWRmLtHyrPs2lE04eY4SoEN9NzvyX7NIr+KkdPQqFKHaGGreCZiGWp38jswVUgwNoTaZLSAX6afuNA49Nfa5EB2EvAhezaeqKRBOZjLOj0QUSITkiVTY7lbIy4zfG2mc79y9MxFradOEY4kHPzvkH7lROSBxIT36r1yLJxAM4dpce54043rP83xM81AngFMNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SjRJf/In44QaL9rWBdlRs2Rc2kYHNag82KCOOMFqyr8=;
+ b=Gr1HtY1jH1flCCh0XYJJ8qn9EDW4YPweNkH+v+JGILqRCTFVL6ddqRgVtXg3DNtLjvXmTR98wMtLhqOT9aLhQ1FU5oBYQxy0fDVqMzXQfsqPYgmXZc3uYmdd3UUMYjKHDLbpg/rKA9Hc0ScXFvPcfpMUFL/OODUXWE979GVILwP4Dqpbc1l5Bcie/wp91DeR8st25UMTAk95ymbTdXsbm/76qGHtdxAnUemCx2CPfclZoSNc6ph/IX6Aru/cPqfBXfs3WBTc5Wq6ePOLPI347tLW5BKdRj0mwgZReqyKLrgzvTquUNlZqbfP+sZ+TalniUVzpjYtStGzla+uIXVUWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SjRJf/In44QaL9rWBdlRs2Rc2kYHNag82KCOOMFqyr8=;
+ b=TLVarvyVUApjSuvqtFPwyq+OJTHjnQ/pyllf1LGBpKfSpOkFtZjq5YqqGFzuW/1pDNyScqKetYF1i2Mda5mvvTp8dmQxyTzX+L5sSKYy/hycNCy2kTgXi8oruLhQD56ae+O70+f8udNkdheGxaiAuQj23dZhwQZCk4SHGRF/0jQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TYYP286MB2931.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:30d::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.11; Fri, 24 Jul
+ 2026 04:50:46 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0245.010; Fri, 24 Jul 2026
+ 04:50:46 +0000
+Date: Fri, 24 Jul 2026 13:50:44 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>, 
+	Kees Cook <kees@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Christoph Hellwig <hch@lst.de>, Serge Semin <fancer.lancer@gmail.com>, 
+	Cai Huoqing <cai.huoqing@linux.dev>, Niklas Cassel <cassel@kernel.org>, 
+	Devendra K Verma <devendra.verma@amd.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 07/19] dmaengine: dw-edma: Dispatch DONE interrupts by
+ channel request
+Message-ID: <3z6xrvrf726u2t63k4fqn4b6rxpr5dgkxhekyjcpmnqgtrnix6@htsgodh6lvkg>
+References: <20260723084150.521366-1-den@valinux.co.jp>
+ <20260723084150.521366-8-den@valinux.co.jp>
+ <amJH_IknotEHF5Nr@SMW015318>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <amJH_IknotEHF5Nr@SMW015318>
+X-ClientProxiedBy: TYCPR01CA0194.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b0::18) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] i2c: qcom-geni: Handle runtime PM disabled state
- during early resume
-To: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>, Frank.Li@kernel.org,
-        viken.dadhaniya@oss.qualcomm.com, andi.shyti@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, zhengxingda@iscas.ac.cn,
-        kees@kernel.org, quic_jseerapu@quicinc.com,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: bjorn.andersson@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
-        Aniket Randive <aniketrandive@oss.qualcomm.com>
-References: <20260709134623.1724212-1-mukesh.savaliya@oss.qualcomm.com>
- <20260709134623.1724212-2-mukesh.savaliya@oss.qualcomm.com>
- <9cf5b5ab-c418-4b0d-8b2f-b888a64db0f0@oss.qualcomm.com>
- <933d864d-f0c2-4727-a01d-f564eb854d23@oss.qualcomm.com>
- <4133bbcb-22e7-41e0-b9f4-affd63df0e38@oss.qualcomm.com>
- <86828cb8-0e96-48ce-aff4-0f7e59438ad7@oss.qualcomm.com>
-Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <86828cb8-0e96-48ce-aff4-0f7e59438ad7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=e742j6p/ c=1 sm=1 tr=0 ts=6a62ed3c cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=W_FluUXm2JYo8mKuQuoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-ORIG-GUID: PBFm4OxtvA6G75tpkHdwkMGv15pQk-vT
-X-Proofpoint-GUID: PBFm4OxtvA6G75tpkHdwkMGv15pQk-vT
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDA0MCBTYWx0ZWRfX3fPk/qyIcOaN
- wwR38qObcOzPi7YFj8CXmYO70N3t7r6C0IIFsDiSg0WVkqHkbAFlljLO51/eabSUEzsfT8wrWi1
- oQWxNvuDVHlglmeXR61VbyHiyeavuAQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDA0MCBTYWx0ZWRfX8O2hsU1RVgCw
- t2NyQ5hL3r9PDpzBJq9jap2fiwrtxElPQYS/jDx6Vfgf1ZFQZ3b8+7tjSlgKQE5oSxOOYTljRVX
- S+lpVJoivS7GRG3An2uajhtpw9okNm2xMvaihhJBqmM9KDxA5dBmhVqP2gHN20FPqX5MSCL9c2V
- qzsCTWZZ/SXpG/5UBF65HmiAS5TtCB3c+YGCjnv62Zypp8ZyVJg2027nkjBnQM3W1muXOL01VTs
- U4UZsfoXVsp1oPxuKsU9aIDk2gZSDmwhbaLZaYyGNKGgvUZnshFf5W+8gFND+M8GWQVsmRJiN7I
- yPGPlUAoxEGYZekpJx7PoVMLxccSORLJviXnei9oXfe38GY9UV7I1dqKTc5kITJLV/9dPZ+tjN9
- qeJkDEloappCPapozqwCpLwLbQNsRsIHIycESqYDh+VS0XghNpPsRG9e6oJvEya/C695TBKw5Yt
- lWOLFg3OTYqUdskpF8g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-07-23_07,2026-07-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240040
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYYP286MB2931:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6cbc51da-c647-4fdb-6b67-08dee93f1feb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|10070799003|23010399003|1800799024|366016|6133799003|10067099003|4143699003|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	OYPzOgjuDQouSgBpkR/O+f1QVWwo7e10Z63nzW4bNeK92gCHx4PW3IBc6nrnRMSgxNFnCYmqsMobiT2sMe65JTRUedeefdj48kUXTgpp0Ai4itkkw4dZDRkvhBFEL45SN0nWrAF0b/2yFXaN4hcgSetowlUdUCvKdmpaIsQ9T/llT4yiCtJE9DuqlIZkvkhP0k0pJQKC0rvBnFoWS9RI6wnsjIWtXiFCAa91uRT30eZOAK4I87Z3ELBC3ctMbV3Rs+9DvkSTog60dNqzDEdsoTCUL73ZvfH6ggRYf2BqpHx+pQM3jyWa7sSMHcScIICrYc6ILey/lMcyCvlxb0y8xtn/yMhBXS1uQmnSW9PxZn4uPT6npCxxwWA/W37E9o0zwd6kbogjQNLmWSoNy9CRsDNkymw1d45OWAHai/KVIYSdBD0j9ogthdIRoy1ETo+U0Y4cGX2IiKqUZb87m5uP8Ji3huKP77mYNkVnBsWStn0nCj1zAdZmq9AFC5s0eH+1NotO1dp1xTf+oAza88/aiNDEK6kWchKIOOkE0XZgzI0rYPVRcLju/xweSOIkmH9Ftp8Mhe91GVr49JzsqKKmQorIFPFZVsujbpmjt8VASC9qNn0Jr0BMxaVI5zwb+2kwhlPCl4vyxi7BR8Rf6XluVxY8jQAQMTOK8jrFBpzf1FE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(10070799003)(23010399003)(1800799024)(366016)(6133799003)(10067099003)(4143699003)(5023799004)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ZSVKnQlTZaChVCajTNcW/j+BQSSAX4JaUb0ynTn7Z1dcSAgpktwyJ5jmYxl0?=
+ =?us-ascii?Q?pZA+AmO3NHDoMkoUKbgn1jiVKd94jI45R2MFjjGsGtuUs/o/jAt3/+Wasjmi?=
+ =?us-ascii?Q?LO7Ev334gG1Lr1xA6Si2cwUMmAkztQqngatw1A/21gFPQxlrlrwwagfZ1vVh?=
+ =?us-ascii?Q?uKQCw543t/waOScAe3VcTBgXvlOUnfc17pkB1+nlGUHUCPlmaNVwPXNZTjm8?=
+ =?us-ascii?Q?QIGdhAy0DCuwOTRQxxP/JRGKvdOGCnGVwsLrRGP9fDcW57eQeV1W3YkBbWrz?=
+ =?us-ascii?Q?mdx8zfqMkSu7dowJ597xB8hpi7GHFwxPyG3I6naSKMF8dy5o/jkpVaYh7pX1?=
+ =?us-ascii?Q?ZY3wYzCVPghcXr8G8jr+hQFe2kT9znHuvpcFccFZdM8f/bDaoAVOpVynqQAr?=
+ =?us-ascii?Q?rQhk5ZQCM5F2v8/CQBpN6ivNN5LlcSEpTHwynGb3srIl0QM58cNHvy1QFiVI?=
+ =?us-ascii?Q?qjmi1q+gOYYOfJk9L5jFE2XvMN8KNE41gjFy96AMg+LNsnVn3WZaU+KKH4zi?=
+ =?us-ascii?Q?5jZ4CAHGH4tpXZSpEAyYGXUvTHZzwWmIuzaoFZo98dfq5Gqtd68+dOeh/92x?=
+ =?us-ascii?Q?jObIejfBP9wkRJoDT0UDXucB4kts+kHVZ5uboMrR41eaddggrX/9ahybMRlv?=
+ =?us-ascii?Q?dTdcsVhDQhVAFZ5Jgud8WaS3gsmDg3L4YCidKpd34hPO7pz38Ony4hBr2hnw?=
+ =?us-ascii?Q?NHdCswpOdMhGQrfBtY37bt/C1hU2H6fHpzP0d+8fD85SKNJ1WqCaqkaRtM9M?=
+ =?us-ascii?Q?hjJwUirQZiN33xPqdcfgrajGx4R6FLjIaY78v7LSLAaMnxe4eg9C8tx/CIV3?=
+ =?us-ascii?Q?vhciNilq6pfd6kIl/MfGm6Qt/opLopB0GUbaIXr/bWXlFWzAnYOj3aJLs3Bj?=
+ =?us-ascii?Q?Eyb3akjCtIgwUetr69DFEDDZZ8sl5dzjfG1nhSeEyVVo8/1D6TrUkGB3Sh87?=
+ =?us-ascii?Q?JjNhmOwM5Cjv1nCsnxviGhTOqeVwnZRz/9WYH7GFM+SCQw3h6PEr7HfybT2e?=
+ =?us-ascii?Q?yRCSWKy1o7jwePcmC38plGsKPztXEDBDU+vTF2rl17z28fYasTVsFsfej6hZ?=
+ =?us-ascii?Q?jMYEvReWS6Ps3aL1W/AqBSYywJRMaLAB1+e5ueeomx1DKbTSTZ3XA7WPJI2J?=
+ =?us-ascii?Q?0Q+kGtGg6H/qGAfuRkV7jB9rjs7A4jHSQM1ArYcj/MypKZ+2mOdn0+xTvR4S?=
+ =?us-ascii?Q?6FHLbKRvfuJFUKXIYVvvlqvoxKss2qWXGPFDTTj5gsNNJueserJ+b0RwzYyT?=
+ =?us-ascii?Q?HUEwluMj3Z8SvQjoAtD4zjhDCEO/3ijmx9hzau3yiAI3SoWe4cEI+dyFNw/N?=
+ =?us-ascii?Q?p5ZuFil3uOFblOwlpoOPgsSiFgUB+fjgpZZ1+pygGVvrR+UqSQ7UOBv8qI4B?=
+ =?us-ascii?Q?p0L4jTKexlI7+XS7/s91YWuoKV2dWan8ozDgiSDSfB0L2imn6n3/YG7oaYiE?=
+ =?us-ascii?Q?Rj7VcsYWhUU8vjspwjoV7M9PygSvbQs8E5ShZPU6K5egzx1r/pqCL3R/4D4E?=
+ =?us-ascii?Q?+L8U5mt3DQ/LQFHAXNqB1/FhfNnTly/OepLLujTCs24Rmss67+cwP4vapuxt?=
+ =?us-ascii?Q?UPSxTMAptAdl/3957J46pqYEoDIl0vLmpdjG9awy5r+/CjtvXLQ2JctuAlrw?=
+ =?us-ascii?Q?nCrFwmM99BMs2oHMdxfri28sycVVTMaCsfothdfSm4wbJBJIZFdWUTMbe+h7?=
+ =?us-ascii?Q?ZdiJc+lBf3f0abJHHbDGdOEPIxn1dKId2oFOjHGBe7bFvkcfBmrZZ1+/TxI4?=
+ =?us-ascii?Q?U7yFXVQU1kPcsNgeeKQhUnbVpaej2u8Qk3aaSwkFCPQZ6yLvvWBF?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6cbc51da-c647-4fdb-6b67-08dee93f1feb
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2026 04:50:46.1829
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hnrfq9Y7to8qN1axUbuyzHjn2y+Ag4mpCiFHKoojaPRi/ah80v39rKmPwaFFNpqEX9AXWQE/J6Qye12SYWW6pg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYYP286MB2931
 
-Hi
+On Thu, Jul 23, 2026 at 11:57:32AM -0500, Frank Li wrote:
+> On Thu, Jul 23, 2026 at 05:41:38PM +0900, Koichiro Den wrote:
+> 
+> Subject:
+> 
+> Check channel request firstly at DONE channel interrupts ?
+> 
+> > Handle the channel request first in the DONE interrupt path, then look
+> > at the issued descriptor list only in the cases that need it.
+> >
+> > This keeps the existing behavior, including the current STOP and PAUSE
+> > handling when no issued descriptor is present.
+> 
+> Need descript why need this change?
 
-On 23-07-2026 17:14, Mukesh Savaliya wrote:
->
->
-> On 7/23/2026 4:24 PM, Praveen Talari wrote:
->> Hi mukesh
->>
->> On 23-07-2026 15:47, Mukesh Savaliya wrote:
->>> Hi Praveen,
->>>
->>> On 7/23/2026 3:32 PM, Praveen Talari wrote:
->>>> Hi Mukesh
->>>>
->>> [...]
->>>
->>>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/ 
->>>>> busses/i2c-qcom-geni.c
->>>>> index 96dbf04138be..4bc00922cd97 100644
->>>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->>>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->>>>> @@ -917,6 +917,10 @@ static int geni_i2c_xfer(struct i2c_adapter 
->>>>> *adap,
->>>>>       gi2c->err = 0;
->>>>>       reinit_completion(&gi2c->done);
->>>>>       ret = pm_runtime_get_sync(gi2c->se.dev);
->>>>> +    if (ret == -EACCES) {
->>>>> +        dev_warn(gi2c->se.dev, "Runtime PM is disabled:%d\n", ret);
->>>>> +        ret = 0;
->>>>
->>>> Here it is clear that pm_runtime_get_sync() is returning -EACCES 
->>>> from the runtime PM framework,
->>>>
->>>> which indicates that the request was rejected before the runtime 
->>>> resume path could enable any resources.
->>>>
->>>>  From the rpm_resume() implementation:
->>>>
->>>> static int rpm_resume(struct device *dev, int rpmflags) 
->>>> __releases(&dev-  >power.lock) __acquires(&dev->power.lock) { [...] 
->>>> repeat: if (dev-  >power.runtime_error) { retval = -EINVAL; } else 
->>>> if (dev-  >power.disable_depth > 0) { [...] else retval = -EACCES; 
->>>> } if (retval) goto out; [...] out: if (parent && 
->>>> !dev->power.irq_safe) { spin_unlock_irq(&dev->power.lock); 
->>>> pm_runtime_put(parent); spin_lock_irq(&dev->power.lock); } 
->>>> trace_rpm_return_int(dev, _THIS_IP_, retval); return retval; }
->>>>
->>>> The -EACCES error is returned when runtime PM is disabled 
->>>> (disable_depth  > 0),
->>>>
->>>> causing the function to exit without invoking the device's runtime 
->>>> resume callback.
->>>>
->>>> As a result, no resource enablement is performed by the PM framework.
->>>>
->>>>
->>>> In your change, the error is effectively converted to ret = 0 and 
->>>> execution continues.
->>>>
->>>> How can we guarantee that the required resources have been enabled 
->>>> in this scenario?
->>>>
->>>> More importantly, where are those resources expected to be enabled 
->>>> if the runtime PM resume path was never executed?
->>>>
->>>
->>> This was answered in V6 already on 7/3 exactly at same place.
->>> Pasting below.
->>>
->>> ==
->>> > Why we are checking specific error code here? Why can't we use the 
->>> below error check directly?
->>> > if get sync itself is failed with pm runtime disabled then why we 
->>> are going ahead by making ret = 0 here? How you will make sure 
->>> resources are enabled?
->>>
->>> This reason is also mentioned in the commit log. we surely get - 
->>> EACCESS as runtime PM is disabled during no_irq resume phase. We 
->>> still need to serve the transfer, hence we need to override it.
->>
->> We should not get it and not go further since you are already enabled 
->> in system_resume_no_irq().
->>
->> I just need to understand why we need to proceed when we get -EACCESS 
->> as runtime PM .
->>
->
-> ret = 0 was added because during early system resume, -EACCES from 
-> pm_runtime_get_sync() indicates runtime PM is disabled, not that the 
-> controller is unusable; treating it as an error would incorrectly 
-> reject valid I2C transfers occurring during resume.
+This is a prep, non-functional change for patch 9. Patch 9 first invokes
+dw_edma_ll_consume_progress(), which may complete and remove the last issued
+descriptor.  Even then, the switch still has work to do for each request state,
+so it can no longer be guarded by 'if (vd)'.
 
+I split this reordering (non-functional change) out only to keep the functional
+diff in patch 9 readable and easier to review.
 
-What is the purpose of enabling runtime PM during system resume? It is 
-not clear how this helps, given that -EACCES can still be returned.
+Best regards,
+Koichiro
 
-
->
-> Other than early PM time, we are not going to get -EACESS. So i don't 
-> see any case where this will be a problem.
->>>
->>> Review geni_i2c_resume_noirq() to know what all we do to enable 
->>> resources. That's guaranteed and tested with system suspend/resume 
->>> test back to back and PCIe could do i2c transfer successfully.
->>> ==
->>>>
->>>> Thanks,
->>>>
->>>> Praveen Talari
->>>>
->>> Do not keep this thanks/regards here. only leave the comments.
->>>
->>>>> +    }
->>> [...]
->
+> 
+> Frank
+> >
+> > No functional change intended.
+> >
+> > Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> > ---
+> > Changes in v2:
+> >   - Limit this patch to request dispatch with no functional change;
+> >     move LL progress and empty-issued-list handling to later patches.
+> >
+> >  drivers/dma/dw-edma/dw-edma-core.c | 60 +++++++++++++++---------------
+> >  1 file changed, 31 insertions(+), 29 deletions(-)
+> >
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > index 29f78405e9fb..fa104af4146e 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> > @@ -682,41 +682,43 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+> >  		return;
+> >  	}
+> >
+> > -	vd = vchan_next_desc(&chan->vc);
+> > -	if (vd) {
+> > -		switch (chan->request) {
+> > -		case EDMA_REQ_NONE:
+> > -		case EDMA_REQ_PAUSE:
+> > -			desc = vd2dw_edma_desc(vd);
+> > -			if (desc->start_burst >= desc->nburst) {
+> > -				dw_hdma_set_callback_result(vd,
+> > -							    DMA_TRANS_NOERROR);
+> > -				list_del(&vd->node);
+> > -				vchan_cookie_complete(vd);
+> > -				if (!chan->non_ll)
+> > -					chan->ll_end = chan->ll_head;
+> > -			}
+> > -
+> > -			if (chan->request == EDMA_REQ_PAUSE) {
+> > -				chan->request = EDMA_REQ_NONE;
+> > -				chan->status = EDMA_ST_PAUSE;
+> > -				break;
+> > -			}
+> > -
+> > -			/* Continue transferring if there are remaining chunks or issued requests.
+> > -			 */
+> > -			chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
+> > +	switch (chan->request) {
+> > +	case EDMA_REQ_NONE:
+> > +	case EDMA_REQ_PAUSE:
+> > +		vd = vchan_next_desc(&chan->vc);
+> > +		if (!vd)
+> >  			break;
+> >
+> > -		case EDMA_REQ_STOP:
+> > -			dw_edma_terminate_all_descs(chan);
+> > +		desc = vd2dw_edma_desc(vd);
+> > +		if (desc->start_burst >= desc->nburst) {
+> > +			dw_hdma_set_callback_result(vd, DMA_TRANS_NOERROR);
+> > +			list_del(&vd->node);
+> > +			vchan_cookie_complete(vd);
+> > +			if (!chan->non_ll)
+> > +				chan->ll_end = chan->ll_head;
+> > +		}
+> > +
+> > +		if (chan->request == EDMA_REQ_PAUSE) {
+> >  			chan->request = EDMA_REQ_NONE;
+> > -			chan->status = EDMA_ST_IDLE;
+> > +			chan->status = EDMA_ST_PAUSE;
+> >  			break;
+> > +		}
+> >
+> > -		default:
+> > +		chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
+> > +		break;
+> > +
+> > +	case EDMA_REQ_STOP:
+> > +		vd = vchan_next_desc(&chan->vc);
+> > +		if (!vd)
+> >  			break;
+> > -		}
+> > +
+> > +		dw_edma_terminate_all_descs(chan);
+> > +		chan->request = EDMA_REQ_NONE;
+> > +		chan->status = EDMA_ST_IDLE;
+> > +		break;
+> > +
+> > +	default:
+> > +		break;
+> >  	}
+> >  	spin_unlock_irqrestore(&chan->vc.lock, flags);
+> >  }
+> > --
+> > 2.51.0
+> >
