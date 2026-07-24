@@ -1,71 +1,73 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314053C2796
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 22:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9A3421239
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 23:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784933846; cv=none; b=seTlurrUATNEqjrS90pGaUvwViFJxSfKfsc7ksXaX5iZv6XHo8uBX4yq/FoiExy/bPdbCOR5Sg2ZZYI1vASrUCoNXqdLclNCSNRrZOOVAfi8QDHH/F5bHfDn3+fC3ulIBx9j1A7TWRmz1LaytMW314h3gC1xYSH6YeueRm2RvKI=
+	t=1784934008; cv=none; b=lPE/FTdGLU8qyPzBST+K+Z4y4B84CnREe2HMxkIa0yQsipRTLp6tvmmUx12DMTCh+CMUIemMA1sUWmzMlyRPVMJOkSi0ITwUPv3YQmToHSYhc0bGV2tR5w3ol7hnjqAMO1jFsHGj/c6Qk8pZu9p1FrbSY1qYM4S+YrZ6gTfwM6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784933846; c=relaxed/simple;
-	bh=TElq1Kki924a5CaW1J7lYnAjY2sRtqH1W1lXcKZ5DuU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d200gPlUdMi2e7+XWhknEauFgrUXPBIq86QoUm/VLBMCdihFGyO2DQU4FGJ2d72UFccIqy3BxICCMuXncY4Rnokkao7DLxKwCK95mxllRX6PSckWZDha/EcmtQe1w8/4MA2Y/PaGRNnH5qrUU9r8uDyxi2v6hj2+jS1V5DzxCJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o8qXsI1f; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1784934008; c=relaxed/simple;
+	bh=4pBlsWm+5sbUVQxH31HUjiphsO651Ia0DfjKkHUNPI4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZYCCM3XKWXkhwCoAYxIEsJ7HeU3vo3x4hZJQ3vgzKRaLiXke3ptQqdsv3nqL0CBIzAnlZ6ou3AfFEvofQoNGdsTMDDRAfIHgfjy/SLtrinzMjN9SLGiBp/wMtPzxfLAg/q2im2cqZz5BSSBxgdKcvmBavHzrXxD5yaOwBrnqLps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q6NLzddS; arc=none smtp.client-ip=209.85.160.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o8qXsI1f"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso1242221a91.1
-        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 15:57:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q6NLzddS"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-448b89f700fso749608fac.2
+        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 16:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784933843; x=1785538643; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1784934003; x=1785538803; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DudDQKCoIhab8frMhgA6W9h7XpPyKDOhbOMYUMP2BNI=;
-        b=o8qXsI1fWXVnXRhKbdgWC1utsOEYyYZvSHJ+jB3XWNMepl3LqxDnemku+XWnVCVhgn
-         vJ77HeXV/fe7qdOgMj85yuFaQ3kDXBBELzhQ7MwCn+7ZEE6InLCVidFBIqYWhcaFBG9M
-         fb7JdntUptBHn2rOFeGYpPiXX/P3w7omusBEkK4DW6otM4P8gYmipQq5N1ZWqctbAo9w
-         FNykvmXRmiW7GHB7Vo9mhl3B0tvuSIwXb6JkTS0Oq29VxnhktluFQ0IEYIlFYq7SklAS
-         m547CMNmcrCciYOIoGtuFEaiddScIa+qKZaGBM2VCzaaveKFRoy4ITeTSdtgP9Nyu6Dp
-         YZwQ==
+        bh=ESTD8fjQr67xhujYSv9nCY2fZpeH0iTV4/0hUbjiKHU=;
+        b=Q6NLzddSrRbfRK4Vg1WXduY4cAb/+Gl+1kfE7FJSrfmUiPQ+OVyt+eX8yI4v918muZ
+         TvgCUXXLQuHz3xHj6L5fNncaQSuUmru/kd65tbhlouzvfC5s8vRWtaMnCeGfQt3MnWUv
+         x0BNaZEWskZTWBzMSKo0jLZLQ1AdaPQZV478xDiDzzsWDA7L3YYSaDvL8QtwW07LOEmF
+         9W1hd3lV3LOwybWfA/I2R1oFpTDP8+ZaY5kvvb6Rnvflr/M7Q4HRzePhbDc/n87I8weB
+         c0fQDeo/kHqC3z+9Hl5kNd4Kg1YlXmHuBfVsHlNUhdVawmib4BlHKHUIECGyJ9rJUx+o
+         Gn7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784933843; x=1785538643;
+        d=1e100.net; s=20251104; t=1784934003; x=1785538803;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=DudDQKCoIhab8frMhgA6W9h7XpPyKDOhbOMYUMP2BNI=;
-        b=Dbz11O6JlPAVZH139rIzfzFeoYk4nKjFdFdxROLTjyNyTYCWmKPVQRQVr7Ok24Tf28
-         VrERqR32R7AxA0dXYND42+pD0t1Hvw7gebDbzqQ0kAWRL8JKtQFX1Ov4Xm3qD8jnbgha
-         gLX8EHPaukg84lKRe7JtTfEAOfR9Ii5DjYMmYw5OZbSi+QVtrgMxPzpIC8e5lyRY8pTA
-         Y1BHZV133rVbrJDhVciQyAFLLwHq8YChTfANSSC+EK9XEa7OA8tav3Kaz7hdjDzLgnsr
-         UM04piGmoE4r4E0AMxsprfC2vVywiJVk9b5ZVs0MOTjwSJyziIiysFonovtFIU8gyVRR
-         eZ9A==
-X-Gm-Message-State: AOJu0YyEAmNveG7q7o3Lnwi4Q/qjsRxwq76r/BBI1mu4Lpr6y8tfT0M3
-	ZXGNuKWoMne7zwptFI5dHD24JmyCCRfar8WZmFCNWcuQbkF17cxbs4ciH7USWA==
-X-Gm-Gg: AR+sD10XIE2JRNHxQRiylN2g3eO1G7hm/37N3Moh8ic0jsN1byJvJ1pNEoyJtYU+WHZ
-	VzXk4xCSytEFbWmpmLtKOQWIFu6F2saO+oe2RoEvR8ey2PfuFobvhdpLrh7IPZlNrzV6timh/J9
-	eE8Cxcrlb094xbdXIlRZ/yzLYUgULtUlPhmr2hieivQ5O6s2oFN0Z7h1IWXu6y2NYA97pmmOafQ
-	xEqE3wwyxipEiiYiS6JspNh8geg7jYXIvm9RpAUgm6m65KRx7sCR6tt/2LVc2xo3mblnWaoHHuk
-	Y8+AHrRuq6GinS9XgRrrHoHRunO/1uUZrzbgNGt/5ubt6hsN++6RXpMcYnC0XoUGJti7eVCSx7R
-	0VAjsj3svMUHsFgi62jyT2Ubl24q0/aWfwGO++OjZulRqn6p0wozwmh7Z5LLOnT29JMG6iov65G
-	nVqOe4o+iylVBYpByZB9CW7wmwx8h7CXA7yQFHMf4Im7NVN7CwDvqhYP0uGeue6dMOpIUw1UMKO
-	SY0Vhyg1vI3XkmIZ29CPPWvthD+N6q9Ok3qzbkWGH9c2MwvrNXPNXcATdrx4LsuQw==
-X-Received: by 2002:a17:90b:1f85:b0:387:e0db:3fae with SMTP id 98e67ed59e1d1-38f298bc8e2mr342043a91.39.1784933842946;
-        Fri, 24 Jul 2026 15:57:22 -0700 (PDT)
+        bh=ESTD8fjQr67xhujYSv9nCY2fZpeH0iTV4/0hUbjiKHU=;
+        b=mASCHsjQcXU3QEtjAFzKXyMI0jGfL3f8fP3t/AUhXQ1WzFmMTT/Oz2bIfNWnCfohH8
+         CQ4B9/Z2KtbZEUSQ2xPzulzZuEXJNsP62IkNhLghKYTCE4a/cUsUCSmjRKF4UB0mjusn
+         NhUjFjJuIViZanqsRXY5l0Yp4LGsG6ReBPbtjszg5IqeU7mNLby3eaoxOiVZUlOLGpJ+
+         qElhHL/ts3Y9cLkSQRxWzcy0UW5aIOaUjPPFoxDsNofezOx5JP8KwLBXAaYMbfKPChxk
+         9o4POiqSD+VAgVHw1PiKGUHtRGj5hX3t2xQZcvtN91U5/0vjCM+Y2u2Kg9osI68ILNSh
+         s2Dw==
+X-Gm-Message-State: AOJu0YyzlvtafSAJQB5yT8PDtW689GHoPsxMbe7wKwT8j5UUmJ0BixIJ
+	nrwrark7Hn8wGEGe/03IzMVTqZBH+PhkHIpQMIV+1fBXI44XghRb7FoM25cpjg==
+X-Gm-Gg: AR+sD11t7RvH5G2MEkCBI+JQm/joC5rfn972p8MNVYPBKJdELaAshMEUh2sadsKXNMo
+	lFn5tFZajoHE4Wsik4rjyX35v+bChO5yXZaQYIQil6q+SR/pL1xEDxHZl8VbCK09AtZ0UKqLQjQ
+	Xeh59Od4Blh/6/WNJDBQyKvdBsKjzY8bNBtnFqdY7vJOiq3C++crXUugwuygB/uyDMKjaENPr94
+	aMsx+V5hPQEpqnGjA41BEPRwYeEDR45pDQ3vH7oe9RYrovX5DKCpAyCcj2VJRVgC8jV2++E+2x+
+	o69IO+IuTFF28KNSW89IZpMx3q7+1aWB7dJU+NHbtjLDCF7LDzOKrWFI1CTocbDjtdeDg+gT5Ha
+	TAsBmFunDxCnxIbLy3sELmR/t3wscqYf8S+60prcPNVrVClQoojtjXvZ69n/Cj6IQmouuNOPC6w
+	48bjspmTOnJBPuDWfc92kRyMB/I5zAcxCU4H67s21wETJvs1+iKk3935sHtx6Lqu8X0zPh0LSmZ
+	4kr0+vo/wb3Spu9aEsUL4Fikm0/KFA3p5VHr9JCt5cLV0YpM3/I7ai4zVWHqZpRQg==
+X-Received: by 2002:a05:6871:7817:b0:448:558c:d833 with SMTP id 586e51a60fabf-457f280d0fdmr441239fac.34.1784934003379;
+        Fri, 24 Jul 2026 16:00:03 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f292d1d75sm119239a91.5.2026.07.24.15.57.21
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-457a07c9427sm5974953fac.9.2026.07.24.16.00.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 15:57:22 -0700 (PDT)
+        Fri, 24 Jul 2026 16:00:02 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Eugen Hristev <ehristev@kernel.org>,
 	linux-arm-kernel@lists.infradead.org (moderated list:MICROCHIP AT91 DMA DRIVERS),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2] dmaengine: at_hdmac: use more devm in _probe
-Date: Fri, 24 Jul 2026 15:57:20 -0700
-Message-ID: <20260724225720.43410-1-rosenp@gmail.com>
+Subject: [PATCHv2] dmaengine: at_hdmac: fix sparse '__iomem' cast warning in memset helpers
+Date: Fri, 24 Jul 2026 15:59:58 -0700
+Message-ID: <20260724225958.43925-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -75,134 +77,84 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As devm is already used in _probe, complete the conversion so that
-everything unwinds in proper order.
+Both atc_prep_dma_memset() and atc_prep_dma_memset_sg() declare vaddr
+as 'void __iomem *' but assign the return of dma_pool_alloc(), which
+returns 'void *' (not iomem memory). This causes sparse to warn about
+a cast removing the __iomem address space at the dereference site.
 
+The struct field memset_vaddr is also typed as 'int *', which is
+neither the type returned by dma_pool_alloc() nor the type used for
+the actual writes.
+
+Fix by declaring vaddr as 'u32 *' in both functions and changing
+memset_vaddr in struct at_desc from 'int *' to 'u32 *'. This matches
+the actual usage and eliminates the need for the (u32 *) cast.
+
+Fixes: 5d8c5bea0da9 ("dmaengine: at_hdmac: add COMPILE_TEST support")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607231110.8MqNRj0Q-lkp@intel.com/
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- v2: remove list_del
- drivers/dma/at_hdmac.c | 50 ++++++++++--------------------------------
- 1 file changed, 11 insertions(+), 39 deletions(-)
+ v2: remove extra cast
+ drivers/dma/at_hdmac.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index e5b30a57c477..f16cf29ca548 100644
+index 7b6aa9bbc3c8..f24e64219fb5 100644
 --- a/drivers/dma/at_hdmac.c
 +++ b/drivers/dma/at_hdmac.c
-@@ -1980,40 +1980,34 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	atdma->dma_device.cap_mask = plat_dat->cap_mask;
- 	atdma->all_chan_mask = (1 << plat_dat->nr_channels) - 1;
+@@ -244,7 +244,7 @@ struct at_desc {
+ 	/* Memset temporary buffer */
+ 	bool				memset_buffer;
+ 	dma_addr_t			memset_paddr;
+-	int				*memset_vaddr;
++	u32				*memset_vaddr;
+ 	struct atdma_sg			sg[] __counted_by(sglen);
+ };
  
--	atdma->clk = devm_clk_get(&pdev->dev, "dma_clk");
-+	atdma->clk = devm_clk_get_enabled(&pdev->dev, "dma_clk");
- 	if (IS_ERR(atdma->clk))
- 		return PTR_ERR(atdma->clk);
+@@ -1097,7 +1097,7 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
+ 	struct at_dma		*atdma = to_at_dma(chan->device);
+ 	struct at_desc		*desc;
+-	void __iomem		*vaddr;
++	u32			*vaddr;
+ 	dma_addr_t		paddr;
+ 	char			fill_pattern;
+ 	int			ret;
+@@ -1126,10 +1126,10 @@ atc_prep_dma_memset(struct dma_chan *chan, dma_addr_t dest, int value,
+ 	/* Only the first byte of value is to be used according to dmaengine */
+ 	fill_pattern = (char)value;
  
--	err = clk_prepare_enable(atdma->clk);
--	if (err)
--		return err;
--
- 	/* force dma off, just in case */
- 	at_dma_off(atdma);
+-	*(u32*)vaddr = (fill_pattern << 24) |
+-		       (fill_pattern << 16) |
+-		       (fill_pattern << 8) |
+-		       fill_pattern;
++	*vaddr = (fill_pattern << 24) |
++		 (fill_pattern << 16) |
++		 (fill_pattern << 8) |
++		  fill_pattern;
  
--	err = request_irq(irq, at_dma_interrupt, 0, "at_hdmac", atdma);
-+	err = devm_request_irq(&pdev->dev, irq, at_dma_interrupt, 0, "at_hdmac", atdma);
- 	if (err)
--		goto err_irq;
-+		return err;
- 
- 	platform_set_drvdata(pdev, atdma);
- 
- 	/* create a pool of consistent memory blocks for hardware descriptors */
--	atdma->lli_pool = dma_pool_create("at_hdmac_lli_pool",
-+	atdma->lli_pool = dmam_pool_create("at_hdmac_lli_pool",
- 					  &pdev->dev, sizeof(struct at_lli),
- 					  4 /* word alignment */, 0);
- 	if (!atdma->lli_pool) {
- 		dev_err(&pdev->dev, "Unable to allocate DMA LLI descriptor pool\n");
--		err = -ENOMEM;
--		goto err_desc_pool_create;
-+		return -ENOMEM;
+ 	desc = kzalloc_flex(*desc, sg, 1, GFP_ATOMIC);
+ 	if (!desc)
+@@ -1168,7 +1168,7 @@ atc_prep_dma_memset_sg(struct dma_chan *chan,
+ 	struct at_dma		*atdma = to_at_dma(chan->device);
+ 	struct at_desc		*desc;
+ 	struct scatterlist	*sg;
+-	void __iomem		*vaddr;
++	u32			*vaddr;
+ 	dma_addr_t		paddr;
+ 	size_t			total_len = 0;
+ 	int			i;
+@@ -1189,7 +1189,7 @@ atc_prep_dma_memset_sg(struct dma_chan *chan,
+ 			__func__);
+ 		return NULL;
  	}
+-	*(u32*)vaddr = value;
++	*vaddr = value;
  
- 	/* create a pool of consistent memory blocks for memset blocks */
--	atdma->memset_pool = dma_pool_create("at_hdmac_memset_pool",
-+	atdma->memset_pool = dmam_pool_create("at_hdmac_memset_pool",
- 					     &pdev->dev, sizeof(int), 4, 0);
- 	if (!atdma->memset_pool) {
- 		dev_err(&pdev->dev, "No memory for memset dma pool\n");
--		err = -ENOMEM;
--		goto err_memset_pool_create;
-+		return -ENOMEM;
- 	}
- 
- 	/* clear any pending interrupt */
-@@ -2080,10 +2074,10 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	  dma_has_cap(DMA_SLAVE, atdma->dma_device.cap_mask)  ? "slave " : "",
- 	  plat_dat->nr_channels);
- 
--	err = dma_async_device_register(&atdma->dma_device);
-+	err = dmaenginem_async_device_register(&atdma->dma_device);
- 	if (err) {
- 		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
--		goto err_dma_async_device_register;
-+		return err;
- 	}
- 
- 	/*
-@@ -2092,27 +2086,15 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	 * dma_request_channel().
- 	 */
- 	if (pdev->dev.of_node) {
--		err = of_dma_controller_register(pdev->dev.of_node,
-+		err = devm_of_dma_controller_register(&pdev->dev, pdev->dev.of_node,
- 						 at_dma_xlate, atdma);
- 		if (err) {
- 			dev_err(&pdev->dev, "could not register of_dma_controller\n");
--			goto err_of_dma_controller_register;
-+			return err;
- 		}
- 	}
- 
- 	return 0;
--
--err_of_dma_controller_register:
--	dma_async_device_unregister(&atdma->dma_device);
--err_dma_async_device_register:
--	dma_pool_destroy(atdma->memset_pool);
--err_memset_pool_create:
--	dma_pool_destroy(atdma->lli_pool);
--err_desc_pool_create:
--	free_irq(platform_get_irq(pdev, 0), atdma);
--err_irq:
--	clk_disable_unprepare(atdma->clk);
--	return err;
- }
- 
- static void at_dma_remove(struct platform_device *pdev)
-@@ -2121,22 +2103,12 @@ static void at_dma_remove(struct platform_device *pdev)
- 	struct dma_chan		*chan, *_chan;
- 
- 	at_dma_off(atdma);
--	if (pdev->dev.of_node)
--		of_dma_controller_free(pdev->dev.of_node);
--	dma_async_device_unregister(&atdma->dma_device);
--
--	dma_pool_destroy(atdma->memset_pool);
--	dma_pool_destroy(atdma->lli_pool);
--	free_irq(platform_get_irq(pdev, 0), atdma);
- 
- 	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
- 			device_node) {
- 		/* Disable interrupts */
- 		atc_disable_chan_irq(atdma, chan->chan_id);
--		list_del(&chan->device_node);
- 	}
--
--	clk_disable_unprepare(atdma->clk);
- }
- 
- static void at_dma_shutdown(struct platform_device *pdev)
+ 	desc = kzalloc_flex(*desc, sg, sg_len, GFP_ATOMIC);
+ 	if (!desc)
 -- 
 2.55.0
 
