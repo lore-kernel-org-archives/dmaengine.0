@@ -1,327 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FA441DE1F;
-	Fri, 24 Jul 2026 11:05:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5646A429CEC
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 11:09:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784891144; cv=none; b=Fw17471Npf4BWqOudQuiOnJApAYfvuR5+miUVpcXmWCZvhzcNt2pWMlH4KYh/K4HbSoPIUHubwYtbjhDvU5bfrMoXY0af/jxIDSaiYO5cTPkCrXJBp/bS15iC3zsAsFRzHC+uUiuspDTpK2UhtfBkm3gnvic7A3DFZ9mSY2nmUw=
+	t=1784891399; cv=none; b=n1E00rYI8ianWyzL7fjUytpQcEBKX38qFOwJQ4Ti/0elkSdLqLJzdCL9eCRWQOsnORG5djDUIOdO/qdXNR5nNDW+PLk8cdnHbG4m90fnXrbWkABv+KhG9NRK6N59WTgPHJ549r+32wdchhCezhHxZ5PRXBwvPAl4D6xwGuWRCxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784891144; c=relaxed/simple;
-	bh=pVdCnNhDOGojPHYfkAdLyFB2+p3gNQJ8yQFJyTWZdBs=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=YtHx3xOGMP/1u7K7eGkxbEGZizQvQpvTJ08TbhYQLc0v6gQubioUHdXr3c4/tgEICT13AYtI0htLHu9CXUx8XHqGA6EAHAfOb/tj8Dxt4hZg/fxs3RTEAPRkKV+qAtmtN79Kt1H+ipOr+HFfuZ3V5cEPJTWWYaC8V9Thswd7wRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJMT1hw3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784891399; c=relaxed/simple;
+	bh=SjaRgO11ZVAa77PForVsP04f24YEfRy+ox6Gs+mujQA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OpgEo2lMF6IPTd8nAfCgaFNQUghhFcLW39fHfD6lZlvN8drei96eBxVJ6y7ff6X9s/BufqGNS5FP68MHDyiFVmqHpJD6TOh1jNmFOHKYUQofyFU97LTI8zbwArnEz2bmHNZun/t+++8Fvbcl28ChdxiQrRgrcd1M5xEL4lOun7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eB8r8vo9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KREWTtQw; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJMT1hw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4DE1F031D9;
-	Fri, 24 Jul 2026 11:05:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784891142;
-	bh=cAy2F9yBD/uIM/zmHh1rlq0iHpvl+IXMITj3uZ8hC74=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BJMT1hw3xnbsfi7yCm75WuV+X7evvIx73J0hNvZCddg2Z1O0M3loN8LD399dgYoXb
-	 j3OZzRoXqvq1hRICtJMlqRnFefCYpVuSEo0DODmkiJAdzT9z2BPCf6dFDQdBJ5pqaV
-	 aEjdcMfVGsUpevxxT83aaUam3qDpPK2bKm7/p0Iu+TpskwBa5kXtoXX/Yx1kY7w6rk
-	 c0M16Qo1mG43U0krri20vsTpyEdOM64mvh7yfkGQsYdv1n2hg9/mFqHJ1JQWEY0zIU
-	 y0+EOVWLh57wCnrdyX5qGGZNzJ73VuCkFXkROWfpNpx3dhHd3Lng/goV72jNSR54aE
-	 NXNtblgK/s6Qw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 16/19] dmaengine: ti: k3-udma-v2: New driver for K3
- BCDMA_V2
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260724102115.2854-17-s-adivi@ti.com>
-References: <20260724102115.2854-1-s-adivi@ti.com>
- <20260724102115.2854-17-s-adivi@ti.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jul 2026 11:05:41 +0000
-Message-Id: <20260724110541.AF4DE1F031D9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eB8r8vo9";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KREWTtQw"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 66OADsfH2742648
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 11:09:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ux5qS+vam7s/34MW3MovvdC6Je/WYT0RC4mrKVIhqVw=; b=eB8r8vo9xIJzqacz
+	WEYbI7oxZo5zmIrFDlHvDtivC2+DNlAkgpf6tip+nzVX2H28i6IT5vKndueJTxVl
+	3FEvMdJWFmEnyt+XM32lXDNC8LxwqUvE2aNOSZ4PyN1k4Wv/pB6EfRoDanpBkgmu
+	mPRK+FkHQ/Bg1zgeDJxJTMukjbxGk9OYy7v19hS2v2lhCmbzZyEpJeyw8c+2UWha
+	iNRRl19KlINckWJm03OZnSr/Z/9OxIUfS9otptHbX45MIbPjJ0KcCQz5xM7tWrnb
+	ciov2cO/RaeXUbEbS40+pvQhjNj/R0mPjKc0ADHmG9Y9rJavvIOwEqNDxRnbQW4b
+	5JbfSw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fm0p51g21-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 11:09:57 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-93105103d06so5734585a.2
+        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 04:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1784891396; x=1785496196; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ux5qS+vam7s/34MW3MovvdC6Je/WYT0RC4mrKVIhqVw=;
+        b=KREWTtQwkwiziMFVPkX5PfIpif8CpkHgvDBqopCZHm+NKgHZYpgIwceh8r4Q2B8Nhx
+         p6izjQfBFTrdiUWSAu8Vgc5kHiEouXaWQacx55XQ8+ZdvaqIanmBh6r+U0E2Ig0YAb5d
+         pKSwlFnoes4fWQ87OaeV/BsBnC8LKq4LoeVPk0GT8UYPSVgxXGIBuVjTBc8711lWHRXn
+         S5ez5qilAgLyba1dULvQ7RTll3+5y3aEogLloJyOjwEK9cS5TEYDEfTqaA53OYd6gQBp
+         AhSYEseFKAFUM9nw3JfJyRSkDF7UU7xdHmNuzihwagVOmiFf9XGaNrMTUddkcY5h1CDw
+         rTqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784891396; x=1785496196;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ux5qS+vam7s/34MW3MovvdC6Je/WYT0RC4mrKVIhqVw=;
+        b=gezjMlCIfuTt6C3aoil17ahxHaj05XTwpW9l9PSNfm6eiy+Ujq51GOaOz00BxHX0Ym
+         3MNRV0EKB4nVJh7mSEJUATkuzQ0pZaCTNBbVCFWvl28Ey6g2ObR1uAMkXbt/Xy9CRDMY
+         YxGoiHn8Dg5eJV9m31VZl6LoV79ultDOoJAOdZkRED8/ciwjhnjEeVVIQtFtdejO6QkM
+         OR+UsMFw3tTVSVXmh9WFdd4fEzcdDzlZ2hn7Bx9ZCFjs5t+gxu/PZatVdpaWdcJ7vbjQ
+         8zoUi+hGmikgzegAzC31Es7w1W1KqYO8wQAnHas6KFJ7419lgawTQ55dd5KyHjgwE9/P
+         DA5g==
+X-Forwarded-Encrypted: i=1; AHgh+RqldBUvlUAAbgp0gXE89WNLJl65tNRJX/AIjSC4vqag4otlrYekyLKRIJ2Ol2AxSMSU97FJG09V2Pc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRddwGUep7wVks1Xx/3rK2pAepHxFCMwFwWSCAuDDwm2yrwqVP
+	CQl8drStLC/AatkFBZ4Ul5UNkl6vwU8TW33MZ26jsdZ89n5PXQYjcHtPvy+as+Qj/dTJ2gR9VMM
+	+BfpkdonbbmNFiZO5aown4ZQAmOMicEZBLh9GgMCiaDBffXQBfmnXsxz9hoO3eDM=
+X-Gm-Gg: AR+sD11Gm7Qv5P6EpETeFbrzjJ0u7z0mDvPfHYQ9Vuw5I70xb2+vyXRmF6Iavq6CAub
+	64Qoi12u5oGCtoXxiOUqDpmdB+QrDD68n/THzvl+9mNyI8mHZ7G6yg7qWp3S2pBL4VpdhKs+aa3
+	kgRODU1xVYUY7h1zz9q4cMXMqtm1GnM+/YkOWctyV8lID4gNZSs9j+6OjfRWtrJyJwOfkQFa9jq
+	gBEoxXlgJPIBOGcO7U/0Tn4Px285T95YWiUfKouJySSb3NqnqzTOKbLtepcAxuh06W2PAM0GZjm
+	gZ+PJuiBa+QfDbwYicN4xn7eCOm8J03ZvcfznvssadWPDOWOs/bffuWwxF2ZiInL0cTHM9FdSqD
+	cOn9n5ScmxaBCKllIuFmF6aLe
+X-Received: by 2002:a05:620a:4804:b0:92e:9cb3:3f67 with SMTP id af79cd13be357-9310365429amr571676385a.2.1784891396593;
+        Fri, 24 Jul 2026 04:09:56 -0700 (PDT)
+X-Received: by 2002:a05:620a:4804:b0:92e:9cb3:3f67 with SMTP id af79cd13be357-9310365429amr571673785a.2.1784891396117;
+        Fri, 24 Jul 2026 04:09:56 -0700 (PDT)
+Received: from [192.168.120.193] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-69f34b92a98sm3034189a12.10.2026.07.24.04.09.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jul 2026 04:09:55 -0700 (PDT)
+Message-ID: <36ec6823-8792-4015-8693-ff6937dca771@oss.qualcomm.com>
+Date: Fri, 24 Jul 2026 13:09:52 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/10] arm64: dts: qcom: shikra: Add
+ gpio-reserved-ranges to tlmm
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>, Vinod Koul
+ <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, Anurag Pateriya <apateriy@qti.qualcomm.com>
+References: <20260720-shikra-dt-m1-v7-0-7dc99100c6dd@oss.qualcomm.com>
+ <20260720-shikra-dt-m1-v7-10-7dc99100c6dd@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260720-shikra-dt-m1-v7-10-7dc99100c6dd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Pq6jqQM3 c=1 sm=1 tr=0 ts=6a634805 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=RAioF0-LDSMA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=VaiqnSBy5ELP4sQjxKAA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: YPKTddc22gugaD5HYJbRNOP_FBqzqfhA
+X-Proofpoint-ORIG-GUID: YPKTddc22gugaD5HYJbRNOP_FBqzqfhA
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNzI0MDEwMSBTYWx0ZWRfX22GOTo/4OgZT
+ D80J57Hz4f8U4orouqkIOHw3Kc0XtXVZQ7FqU7Bx4wiq1l268UGw8gCv2YRpN+XFvRRZ8/JdyCN
+ oiVSb9CTeuuuYEWo5dVPORI/UnDcZew=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNzI0MDEwMSBTYWx0ZWRfX3QXG1fntOwTn
+ DfNGTtvPg5m843rGoqJ1sKmGsUfKOCzR5UiB/qA7/DlvusWObpprcBqmaIBO5CDPzWm73N6mLb7
+ JPuUctRjmZ96/FrF3L4s7MODCjOxeZ+rZ6hy9+YoHUCBlqaF+fDkEwJNVz0nqhMZvdorX9r3RIv
+ fYlv3pDXLI9GRyxKL6gmGFEaJ9Ah3BjFcy3RrZw34jejmg+0gdAldZ/PPYI2mABgIjn87Wmduo9
+ +vYiEOXbdyPVDMXwjvx6EPZFsfDfaEjHVAMSSmT9yWwU83DCIYjWbXEvbVyg73PmIgXFlN+Xw6Z
+ io1F/UVOOY2jBZvcbe+NsDe4bswGFfu32GRLxwVs7TK6K8QJ71RPYe/SArg5ZTTd9NtruIHFZl+
+ EG4F5jEM+4u1LxJTbhmFqHjlaJQGzc0QL6ddM52d6NeL1zMJy7IcyXEmlh6+6JtbWvH/bbbJTS+
+ dSp/oepOfgRPWdWL/SQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-07-24_02,2026-07-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0
+ bulkscore=0 clxscore=1015 impostorscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2607240101
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
-s) to consider:
-- [High] Out-of-bounds array access and channel allocation failure in `bcdm=
-a_v2_get_bchan()`.
-- [High] Unconditional PEER register access in `udma_v2_stop()` for block c=
-opy channels (BCHAN).
-- [High] Ignored completion ring events due to an early return in `udma_v2_=
-ring_irq_handler()`.
-- [High] Protocol violation by asserting EOP on every TR in a scatter-gathe=
-r list in `udma_prep_slave_sg_tr()`.
-- [Medium] Missing locking in `udma_v2_pause()` and `udma_v2_resume()` caus=
-es a read-modify-write race on `UDMA_CHAN_RT_CTL_REG`.
-- [Low] Hardcoded register offset used instead of predefined macro in `udma=
-_v2_tx_status()`.
---
+On 7/20/26 12:49 PM, Komal Bajaj wrote:
+> Add gpio-reserved-ranges property to the TLMM node for both Shikra
+> SoM variants (CQM and IQS). These reserved GPIOs are inaccessible
+> from the non-secure world and dedicated to fixed functions.
+> 
+> Signed-off-by: Anurag Pateriya <apateriy@qti.qualcomm.com>
+> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+> ---
 
---- Patch [16]: [PATCH v7 16/19] dmaengine: ti: k3-udma-v2: New driver for =
-K3 BCDMA_V2 ---
-commit 4f5633caae3e5cd709118b7e0fd5b3865c70a1dc
-Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Subject: dmaengine: ti: k3-udma-v2: New driver for K3 BCDMA_V2
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This commit adds support for the BCDMA_V2 hardware found in SoCs like AM62L.
-It introduces a new driver file tailored to the differences in V2, including
-direct IRQs, static channel mapping, and a unified channel space.
-
-> diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-com=
-mon.c
-> --- a/drivers/dma/ti/k3-udma-common.c
-> +++ b/drivers/dma/ti/k3-udma-common.c
-[ ... ]
-> @@ -342,6 +348,11 @@ udma_prep_slave_sg_tr(struct udma_chan *uc, struct s=
-catterlist *sgl,
->  	else
->  		asel =3D (u64)uc->config.asel << K3_ADDRESS_ASEL_SHIFT;
-> =20
-> +	if (uc->ud->match_data->type =3D=3D DMA_TYPE_BCDMA &&
-> +	    uc->ud->match_data->version =3D=3D K3_UDMA_V2 &&
-> +	    dir =3D=3D DMA_MEM_TO_DEV)
-> +		extra_flags =3D CPPI5_TR_CSF_EOP;
-> +
->  	tr_req =3D d->hwdesc[0].tr_req_base;
->  	for_each_sg(sgl, sgent, sglen, i) {
->  		dma_addr_t sg_addr =3D sg_dma_address(sgent);
-> @@ -358,7 +369,7 @@ udma_prep_slave_sg_tr(struct udma_chan *uc, struct sc=
-atterlist *sgl,
-> =20
->  		cppi5_tr_init(&tr_req[tr_idx].flags, CPPI5_TR_TYPE1, false,
->  			      false, CPPI5_TR_EVENT_SIZE_COMPLETION, 0);
-> -		cppi5_tr_csf_set(&tr_req[tr_idx].flags, CPPI5_TR_CSF_SUPR_EVT);
-> +		cppi5_tr_csf_set(&tr_req[tr_idx].flags, CPPI5_TR_CSF_SUPR_EVT | extra_=
-flags);
-
-[Severity: High]
-Does this code inadvertently assert the End Of Packet (EOP) flag on every
-Transfer Request (TR) in the scatter-gather list?
-
-In udma_prep_slave_sg_tr(), extra_flags is initialized with CPPI5_TR_CSF_EOP
-for DMA_MEM_TO_DEV transfers. By bitwise-ORing it into every TR generated
-within the for_each_sg loop, the packet becomes artificially fragmented on
-the hardware bus.
-
-Should the EOP bit be reserved exclusively for the final TR of the final SG
-segment to avoid protocol violations where peripherals expect a continuous
-payload?
-
-[ ... ]
-> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
-> new file mode 100644
-> index 0000000000000..e7989b0b34cac
-> --- /dev/null
-> +++ b/drivers/dma/ti/k3-udma-v2.c
-[ ... ]
-> +static int udma_v2_stop(struct udma_chan *uc)
-> +{
-> +	uc->state =3D UDMA_CHAN_IS_TERMINATING;
-> +	reinit_completion(&uc->teardown_completed);
-> +
-> +	if (uc->config.dir =3D=3D DMA_DEV_TO_MEM) {
-> +		if (!uc->cyclic && !uc->desc)
-> +			udma_push_to_ring(uc, -1);
-> +	}
-> +
-> +	udma_chanrt_write(uc, UDMA_CHAN_RT_PEER_REG(8), UDMA_CHAN_RT_PEER_REG8_=
-FLUSH);
-
-[Severity: High]
-Can this unconditional PEER register write cause a kernel panic when stoppi=
-ng
-block copy channels?
-
-In udma_v2_stop(), there is an MMIO write to UDMA_CHAN_RT_PEER_REG(8). Since
-block copy channels (which handle DMA_MEM_TO_MEM transfers) do not have this
-PEER register region mapped, this write may trigger an asynchronous external
-abort (SError).
-
-Could this be guarded with a check like if (uc->config.ep_type !=3D
-PSIL_EP_NATIVE), similar to how it was handled in the V1 driver?
-
-> +	udma_chanrt_update_bits(uc, UDMA_CHAN_RT_CTL_REG,
-> +				UDMA_CHAN_RT_CTL_EN | UDMA_CHAN_RT_CTL_TDOWN,
-> +				UDMA_CHAN_RT_CTL_EN | UDMA_CHAN_RT_CTL_TDOWN);
-> +
-> +	return 0;
-> +}
-[ ... ]
-> +static irqreturn_t udma_v2_ring_irq_handler(int irq, void *data)
-> +{
-[ ... ]
-> +	if (!intr_status)
-> +		return IRQ_NONE;	/* Not this channel's interrupt */
-> +
-> +	reg =3D udma_chanrt_read(uc, UDMA_CHAN_RT_CTL_REG);
-> +
-> +	if (intr_status & K3_RINGACC_RT_INT_STATUS_TR) {
-> +		/* check teardown status */
-> +		if ((reg & UDMA_CHAN_RT_CTL_TDOWN) && !(reg & UDMA_CHAN_RT_CTL_EN))
-> +			complete_all(&uc->teardown_completed);
-> +		return udma_v2_udma_irq_handler(irq, data);
-> +	}
-> +
-> +	if (udma_pop_from_ring(uc, &paddr) || !paddr)
-> +		return IRQ_NONE;
-
-[Severity: High]
-Is there a risk of missing completion ring events if both the TR interrupt
-and the completion ring interrupt are asserted simultaneously?
-
-If the hardware asserts both interrupts, intr_status will have both bits se=
-t.
-The handler processes the TR event and then returns early, completely
-bypassing the udma_pop_from_ring() logic.
-
-This could leave stale descriptors stuck in the completion ring indefinitel=
-y,
-potentially causing ring slot leaks and channel stalls. Would it be safer to
-process the TR event without returning immediately, allowing the completion
-ring to be serviced as well?
-
-[ ... ]
-> +static int bcdma_v2_get_bchan(struct udma_chan *uc)
-> +{
-> +	struct udma_dev *ud =3D uc->ud;
-> +	enum udma_tp_level tpl;
-> +	int ret;
-> +
-> +	if (uc->bchan) {
-> +		dev_dbg(ud->dev, "chan%d: already have bchan%d allocated\n",
-> +			uc->id, uc->bchan->id);
-> +		return 0;
-> +	}
-> +
-> +	/*
-> +	 * Use normal channels for peripherals, and highest TPL channel for
-> +	 * mem2mem
-> +	 */
-> +	if (uc->config.tr_trigger_type)
-> +		tpl =3D 0;
-> +	else
-> +		tpl =3D ud->bchan_tpl.levels - 1;
-> +
-> +	uc->bchan =3D __udma_reserve_bchan(ud, tpl, uc->id);
-
-[Severity: High]
-Could passing uc->id to __udma_reserve_bchan() lead to out-of-bounds array
-accesses and allocation failures?
-
-The driver creates a single logical pool of virtual channels. If a client
-requests a DMA_MEM_TO_MEM channel and receives a virtual channel index
-(uc->id) that is greater than or equal to the hardware block copy channel
-count (e.g., 16), __udma_reserve_bchan() will use this out-of-bounds ID to
-test and set bits in ud->bchan_map.
-
-Should this use -1 to dynamically allocate a free hardware channel, as was
-done in the V1 driver?
-
-> +	if (IS_ERR(uc->bchan)) {
-> +		ret =3D PTR_ERR(uc->bchan);
-> +		uc->bchan =3D NULL;
-> +		return ret;
-> +	}
-> +	uc->chan =3D uc->bchan;
-> +	uc->tchan =3D uc->bchan;
-> +
-> +	return 0;
-> +}
-> +
-> +static int bcdma_v2_alloc_bchan_resources(struct udma_chan *uc)
-> +{
-> +	struct k3_ring_cfg ring_cfg;
-> +	struct udma_dev *ud =3D uc->ud;
-> +	int ret;
-> +
-> +	ret =3D bcdma_v2_get_bchan(uc);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret =3D k3_ringacc_request_rings_pair(ud->ringacc, ud->match_data->chan=
-_cnt + uc->id, -1,
-
-[Severity: High]
-Does calculating the ring IDs using uc->id instead of the hardware channel
-ID (uc->bchan->id) violate the ring pool limits?
-
-Since uc->id is the software virtual channel index, using it here may result
-in requesting ring pairs outside the allocated hardware boundaries.
-
-[ ... ]
-> +static enum dma_status udma_v2_tx_status(struct dma_chan *chan,
-> +					 dma_cookie_t cookie,
-> +					 struct dma_tx_state *txstate)
-> +{
-[ ... ]
-> +		if (uc->desc->dir =3D=3D DMA_MEM_TO_DEV) {
-> +			bcnt =3D udma_chanrt_read(uc, UDMA_CHAN_RT_SBCNT_REG);
-> +
-> +			if (uc->config.ep_type !=3D PSIL_EP_NATIVE) {
-> +				peer_bcnt =3D udma_chanrt_read(uc, 0x810);
-> +
-> +				if (bcnt > peer_bcnt)
-> +					delay =3D bcnt - peer_bcnt;
-> +			}
-> +		} else if (uc->desc->dir =3D=3D DMA_DEV_TO_MEM) {
-> +			bcnt =3D udma_chanrt_read(uc, UDMA_CHAN_RT_BCNT_REG);
-> +
-> +			if (uc->config.ep_type !=3D PSIL_EP_NATIVE) {
-> +				peer_bcnt =3D udma_chanrt_read(uc, 0x810);
-
-[Severity: Low]
-Is there a reason this hardcodes the register offset 0x810 instead of using
-the UDMA_CHAN_RT_PERIPH_BCNT_REG macro?
-
-Using the predefined macro would improve code maintainability and keep it
-consistent with other parts of the driver.
-
-[ ... ]
-> +static int udma_v2_pause(struct dma_chan *chan)
-> +{
-> +	struct udma_chan *uc =3D to_udma_chan(chan);
-> +
-> +	/* pause the channel */
-> +	udma_chanrt_update_bits(uc, UDMA_CHAN_RT_CTL_REG,
-> +				UDMA_CHAN_RT_CTL_PAUSE, UDMA_CHAN_RT_CTL_PAUSE);
-
-[Severity: Medium]
-Could this read-modify-write operation on the channel control register
-silently corrupt state due to missing locks?
-
-In udma_v2_pause() and udma_v2_resume(), udma_chanrt_update_bits() accesses
-UDMA_CHAN_RT_CTL_REG without holding uc->vc.lock. Since the IRQ handler or
-tasklet might hold the lock and concurrently invoke udma_v2_start() or
-udma_v2_stop() (which also modify this register), it appears there is a
-race condition.
-
-Can a concurrent update cause the driver to drop channel enable or teardown
-flags, potentially locking the channel state?
-
-> +
-> +	return 0;
-> +}
-> +
-> +static int udma_v2_resume(struct dma_chan *chan)
-> +{
-> +	struct udma_chan *uc =3D to_udma_chan(chan);
-> +
-> +	/* resume the channel */
-> +	udma_chanrt_update_bits(uc, UDMA_CHAN_RT_CTL_REG,
-> +				UDMA_CHAN_RT_CTL_PAUSE, 0);
-
-[Severity: Medium]
-Could this register update face the same concurrent read-modify-write race
-as mentioned above due to the absence of uc->vc.lock?
-
-> +
-> +	return 0;
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724102115.2854=
--1-s-adivi@ti.com?part=3D16
+Konrad
