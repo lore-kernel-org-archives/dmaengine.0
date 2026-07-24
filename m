@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B253E4756B9
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 23:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE414908AE
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 23:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784934501; cv=none; b=Zt06ezDxAb80pn9z+TeXmcLO6yhbNEloK5C+WKArgIIwurF7b+7aBU2PXorvo+nZui3d6rp4K1qZscXYayOctSunXJ9IOx90EdQVLY4dOrqjO/dhClPjugFUAZjgZrg5b8XXBCch4kD8G3r/PGdHiPFsb3lNe0mJOmsXEXBXeTE=
+	t=1784934615; cv=none; b=SvNyi5l/09IodOA7ctZX4S5G97OR2O05Shb1M4oaO7r1Vm4i5cWcUk5OCDboJbGx0dLP8sYVVWBEMAPApF0mx+qHnpDwLTxN4mqc7rx/A09GGXUQnkv9Qu/om9PXz5FrTTA0s7r5GXxf+JDFI6ARVWphBju4CUHBdpuqRuYbJoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784934501; c=relaxed/simple;
-	bh=793ZjjvHT+LHVNhYPF+RN4h0Qqd9eZuf4CtugYIyHzc=;
+	s=arc-20240116; t=1784934615; c=relaxed/simple;
+	bh=SWXBIYvoklg2F13oljV7p5qX4pQhYOj2EMiHhfXKgwg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=R10kRj0gGAwIlqFfdSW9jMwCEKvmoqd35DiYGnxHYjTxd/EhzTYeA5+FvGoyNQaU3YQp9KTuEXX3pgqnsej+lbvmio2ZzdkvF+8g/VZD8EvT8Edu3Zx7XzGVVSy7mNdilv+G+IprQxSyVFvs/1TGyGdHCbjBjGpuNtQ+UbQFBFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TgkWdObj; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=RAk4s4/dI10u8OMjL57rWTH06EvK5hFMcmRWlad3Pq7KRLLAArH7uNwup9myYWH+p+9I6OaknZJAH6ldX3YxnLywjV3u5pqMT2xeu+0KySbLQqNEiFmfYuLnCAEsK7huzkbXv7L1lFA4XfXLFuc/K9SC8S5dfCteOUQ1QYU78Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WNgmiKZr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TgkWdObj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4AA1F000E9;
-	Fri, 24 Jul 2026 23:08:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WNgmiKZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44771F000E9;
+	Fri, 24 Jul 2026 23:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784934497;
-	bh=r4GJcwp9mfEYHfMcSL/2QYNYT/E2P/j6G39Ri9MsRbQ=;
+	s=k20260515; t=1784934614;
+	bh=uwk0Tv6VKWOv0wVKF1eKN5bodSicCTF2RbHdwpll9S0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TgkWdObj04WO2yDrrZtLvKqx0JDQtjWcv1pODgBj0olFZKSO9GBZYfToe8oATXw8b
-	 EA821SiL/oVtbS6uFvQKMxpebxvKfPS5LDX6s3qbejpZLzEFM7yPHpnX28pchX0mab
-	 McZC79Kh8xxfsDT8kLd5bmno16YCRN1a1c8amGifHgira0dOtHr+7pZpGjXmlLuKgs
-	 ol/6iTwSEiIX2+xkqJ3tViheBpVrwy2OSAc7N+UgsaWD0yzwuVsEnPkphHGod5b8kp
-	 49BWwQydUzCRoBfUCacEnHS0X9q3FY/k4V2lV1ub9cMACBIGysMuLcLO8IHfUt0OqV
-	 CiTt2kplaq30A==
+	b=WNgmiKZro0QTUykevsvvDtOdVyJElOf8TCJgsRSufJ8c6nWsPSxpEJE8j9r4soyiq
+	 VfcMxiuFQZl3hIkMLhutewXf3Zk48U0qriMzzukXSE4vb9uHXqp7pzIVCb5XYFKuSy
+	 3+juPo6bfzok2GymT2hKFIAfCvbqIBAeWw72WLWY5Sp+p+FwgSgcm5WpzuIksh81Xq
+	 2UeeuU7ysmCoBQKAq7A3W+Pp0fCMA02A4w6ceTAV8hd7t7cCL/TmayzkA/cgkQGOz7
+	 j+Yi++63pgQAWKZOWmRzNiYl38iQD0xt1YAvgja1mWnMlpTWvoRm4Il1FSxYsh8d4N
+	 TR0851ZzkaBBA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv2] dmaengine: at_hdmac: use more devm in _probe
+Subject: Re: [PATCHv2] dmaengine: at_hdmac: fix sparse '__iomem' cast
+ warning in memset helpers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Rosen Penev" <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260724225720.43410-1-rosenp@gmail.com>
-References: <20260724225720.43410-1-rosenp@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260724225958.43925-1-rosenp@gmail.com>
+References: <20260724225958.43925-1-rosenp@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jul 2026 23:08:16 +0000
-Message-Id: <20260724230817.2D4AA1F000E9@smtp.kernel.org>
+Date: Fri, 24 Jul 2026 23:10:13 +0000
+Message-Id: <20260724231013.D44771F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,93 +48,82 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing tasklet_kill() for vchan tasklets during device removal le=
-ads to a potential use-after-free.
-- [High] The driver does not implement the device_synchronize callback requ=
-ired for vchan.
+- [High] This problem wasn't introduced by this patch, but atc_prep_dma_mem=
+set_sg() fails to broadcast the byte value into a 32-bit pattern, leading t=
+o incorrect memory fills.
+- [High] This problem wasn't introduced by this patch, but there is a guara=
+nteed kernel oops on error paths of DMA prep functions due to dereferencing=
+ an uninitialized vd->tx.chan pointer in atdma_desc_free().
 --
 
---- Patch [1]: [PATCHv2] dmaengine: at_hdmac: use more devm in _probe ---
-commit 4a21134962b742ca7876c61c580dce0a0982f3d7
+--- Patch [1]: [PATCHv2] dmaengine: at_hdmac: fix sparse '__iomem' cast war=
+ning in memset helpers ---
+commit e39a1989ac7867eaa551256bdc408f22e82b835b
 Author: Rosen Penev <rosenp@gmail.com>
 
-dmaengine: at_hdmac: use more devm in _probe
+dmaengine: at_hdmac: fix sparse '__iomem' cast warning in memset helpers
 
-As devm is already used in _probe, complete the conversion so that everythi=
-ng
-unwinds in proper order.
+This patch changes the type of vaddr in memset helpers to avoid sparse
+warnings about casting away the __iomem address space. It also updates the
+memset_vaddr field in struct at_desc to match the actual usage.
+
+Link: https://lore.kernel.org/oe-kbuild-all/202607231110.8MqNRj0Q-lkp@intel=
+.com/
 
 > diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-> index e5b30a57c477a..f16cf29ca5487 100644
+> index e5b30a57c477a..7c071e6496371 100644
 > --- a/drivers/dma/at_hdmac.c
 > +++ b/drivers/dma/at_hdmac.c
+
 [ ... ]
-> @@ -2080,10 +2074,10 @@ static int __init at_dma_probe(struct platform_de=
-vice *pdev)
->  	  dma_has_cap(DMA_SLAVE, atdma->dma_device.cap_mask)  ? "slave " : "",
->  	  plat_dat->nr_channels);
-> =20
-> -	err =3D dma_async_device_register(&atdma->dma_device);
-> +	err =3D dmaenginem_async_device_register(&atdma->dma_device);
+
+> @@ -1189,7 +1189,7 @@ atc_prep_dma_memset_sg(struct dma_chan *chan,
+>  			__func__);
+>  		return NULL;
+>  	}
+> -	*(u32*)vaddr =3D value;
+> +	*vaddr =3D value;
 
 [Severity: High]
-This is a pre-existing issue, but I noticed that atdma->dma_device does not
-implement the device_synchronize callback.
+This problem wasn't introduced by this patch, but does this correctly format
+the fill pattern?
 
-Client drivers call dmaengine_synchronize() to ensure all transfers and the=
-ir
-callbacks have completed before freeing buffers. Because at_hdmac defers
-descriptor completion to a tasklet via vchan but omits the device_synchroni=
-ze
-callback, dmaengine_synchronize() becomes a no-op.
+If atc_prep_dma_memset_sg() is called with a non-zero byte value (e.g., 0xA=
+A),
+the hardware memset pool buffer is initialized with the unexpanded 32-bit w=
+ord
+(0x000000AA). Because the controller repeatedly copies this 32-bit word to =
+the
+destination buffer in 4-byte chunks, the resulting memory is filled with an
+incorrect pattern.
 
-Could this lead to client drivers freeing memory while the tasklet is still
-actively running or queued, causing a use-after-free or data corruption?
-Should device_synchronize be mapped to vchan_synchronize?
+In atc_prep_dma_memset(), the value is correctly expanded into a 32-bit
+pattern before assignment. Should atc_prep_dma_memset_sg() do the same?
 
->  	if (err) {
->  		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
-> -		goto err_dma_async_device_register;
-> +		return err;
->  	}
-[ ... ]
-> @@ -2121,22 +2103,12 @@ static void at_dma_remove(struct platform_device =
-*pdev)
->  	struct dma_chan		*chan, *_chan;
 > =20
->  	at_dma_off(atdma);
-> -	if (pdev->dev.of_node)
-> -		of_dma_controller_free(pdev->dev.of_node);
-> -	dma_async_device_unregister(&atdma->dma_device);
-> -
-> -	dma_pool_destroy(atdma->memset_pool);
-> -	dma_pool_destroy(atdma->lli_pool);
-> -	free_irq(platform_get_irq(pdev, 0), atdma);
-> =20
->  	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
->  			device_node) {
->  		/* Disable interrupts */
->  		atc_disable_chan_irq(atdma, chan->chan_id);
-> -		list_del(&chan->device_node);
+>  	desc =3D kzalloc_flex(*desc, sg, sg_len, GFP_ATOMIC);
+>  	if (!desc)
 
 [Severity: High]
-This is a pre-existing issue, but it seems there is no tasklet_kill() called
-for the vchan tasklets during device removal in at_dma_remove().
+This isn't a bug introduced by this patch, but will the error paths after t=
+his
+allocation cause a NULL pointer dereference?
 
-If a DMA channel tasklet is scheduled by an interrupt just before device
-removal (for example, via sysfs unbind), at_dma_remove() might execute and
-return without killing the vchan tasklets. Devres would then subsequently
-destroy the lli_pool and free the at_dma structure.
+If a failure occurs later in this function, such as when checking buffer
+alignment, the code jumps to err_free_desc and calls atdma_desc_free().
 
-If the pending softirq tasklet executes after this, could it access the fre=
-ed
-pool and cause a use-after-free?
+Since desc was allocated via kzalloc_flex() and vchan_tx_prep() has not yet
+initialized the virtual channel structure, vd->tx.chan is NULL.
 
->  	}
-> -
-> -	clk_disable_unprepare(atdma->clk);
->  }
+atdma_desc_free() immediately dereferences it:
+
+atdma_desc_free()
+    struct at_dma *atdma =3D to_at_dma(vd->tx.chan->device);
+
+Could this crash the kernel under memory pressure or when invalid scatterli=
+sts
+are passed?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724225720.4341=
-0-1-rosenp@gmail.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724225958.4392=
+5-1-rosenp@gmail.com?part=3D1
