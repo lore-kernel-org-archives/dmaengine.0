@@ -1,113 +1,208 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCBC392803;
-	Fri, 24 Jul 2026 21:48:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314053C2796
+	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 22:57:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784929717; cv=none; b=lmE59OT/cc2rq/lI2LdfzBtVYT4hzbls+hc/puzRBhJuGm5j3xEmP2kIvVItV5pC2Rbi4lxgGHbhKrDYEeTMrCN1eC8XOcA3xGjJrP+l+yZU9CCMN/DkacPClBgHbF7NqUdmEDbAb+4Nfiq1T1e5DIcnUFOO5ofjo7aK41epYhc=
+	t=1784933846; cv=none; b=seTlurrUATNEqjrS90pGaUvwViFJxSfKfsc7ksXaX5iZv6XHo8uBX4yq/FoiExy/bPdbCOR5Sg2ZZYI1vASrUCoNXqdLclNCSNRrZOOVAfi8QDHH/F5bHfDn3+fC3ulIBx9j1A7TWRmz1LaytMW314h3gC1xYSH6YeueRm2RvKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784929717; c=relaxed/simple;
-	bh=GTdZSgSwBlfAlIxva5M6ZU/kD9VYoe26BBxVBJ5WdPE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f0dWPJXuJkkHlQ5NLOuD9Ax5Gho1OuqyiVb7t0nd5oWleu8UvKWZ0I9ZwliB4KZE49TmmB6QFpuZUZCvhsdQzWUJFHk39L78Jrb5jzWdYLl7N97uSjvi3jiv7Dfm4rIqq0HGBt3VlUk4FDbtEfdYIBkLNyeZ2WbbL7Xj7V2F1Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhpTuvSZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784933846; c=relaxed/simple;
+	bh=TElq1Kki924a5CaW1J7lYnAjY2sRtqH1W1lXcKZ5DuU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d200gPlUdMi2e7+XWhknEauFgrUXPBIq86QoUm/VLBMCdihFGyO2DQU4FGJ2d72UFccIqy3BxICCMuXncY4Rnokkao7DLxKwCK95mxllRX6PSckWZDha/EcmtQe1w8/4MA2Y/PaGRNnH5qrUU9r8uDyxi2v6hj2+jS1V5DzxCJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o8qXsI1f; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhpTuvSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6FC1F000E9;
-	Fri, 24 Jul 2026 21:48:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784929705;
-	bh=GTdZSgSwBlfAlIxva5M6ZU/kD9VYoe26BBxVBJ5WdPE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=bhpTuvSZWBV7iq9keKc8+pixk18qLEuyMz3ZTlqKcB81KF/CnyeLGI6JSyvHGt9tA
-	 E+SxQVBXcXsXsZgtn3HAr+6nPULrU5HRAYu13tTfnL5ffRJr3w0sXxS3y6FSy3SRlS
-	 Qe3XQkADPgbjY9nioQHCBPR4pvKP4dL5d3HxM/ORX/63JYStNE+wqJy61XHcdbEpWF
-	 xaZAuoqTpynwYjXBJP4BY73AhLP471MMWjcWFGi91teQEabAfmboMZJJ2AI9mVl919
-	 5Vj52Ap+SYxCLa6sCvz56w/tCisRBng0kD6I+yiTKpyHAoJV1VexiywmsHK9mBuUsB
-	 8QLvkwcrgPftA==
-Date: Fri, 24 Jul 2026 14:48:22 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Sang-Heon Jeon <ekffu200098@gmail.com>
-Cc: Julia.Lawall@inria.fr, Alex Deucher <alexander.deucher@amd.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Andrew Lunn <andrew@lunn.ch>, Andrew
- Morton <akpm@linux-foundation.org>, Arkadiusz Kubalewski
- <arkadiusz.kubalewski@intel.com>, Borislav Petkov <bp@alien8.de>, Christian
- =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>, Daniel Lezcano
- <daniel.lezcano@kernel.org>, David Airlie <airlied@gmail.com>, "David S.
- Miller" <davem@davemloft.net>, Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, Hans de Goede
- <hansg@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, Heikki Krogerus
- <heikki.krogerus@linux.intel.com>, Herbert Xu
- <herbert@gondor.apana.org.au>, Ilpo =?UTF-8?B?SsOkcnZpbmVu?=
- <ilpo.jarvinen@linux.intel.com>, "James E.J. Bottomley"
- <James.Bottomley@HansenPartnership.com>, Jani Nikula
- <jani.nikula@linux.intel.com>, Jaroslav Kysela <perex@perex.cz>, Jason
- Gunthorpe <jgg@ziepe.ca>, Jiri Pirko <jiri@resnulli.us>, "Joerg Roedel
- (AMD)" <joro@8bytes.org>, Johan Hovold <johan@kernel.org>, Jonathan Cameron
- <jic23@kernel.org>, Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Julian Anastasov <ja@ssi.bg>, Leon Romanovsky <leon@kernel.org>, Liam
- Girdwood <lgirdwood@gmail.com>, Linus Walleij <linusw@kernel.org>, Maarten
- Lankhorst <maarten.lankhorst@linux.intel.com>, Mark Brown
- <broonie@kernel.org>, "Martin K. Petersen" <martin.petersen@oracle.com>,
- Matthew Sakai <msakai@redhat.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Maxime Ripard <mripard@kernel.org>, Michael Turquette
- <mturquette@baylibre.com>, Mike Rapoport <rppt@kernel.org>, Miri Korenblit
- <miriam.rachel.korenblit@intel.com>, Nicolas Palix <nicolas.palix@imag.fr>,
- Pablo Neira Ayuso <pablo@netfilter.org>, Paolo Abeni <pabeni@redhat.com>,
- Ping-Ke Shih <pkshih@realtek.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Sebastian Reichel <sre@kernel.org>,
- Shuah Khan <shuah@kernel.org>, Simona Vetter <simona@ffwll.ch>, Simon
- Horman <horms@verge.net.au>, Stephen Boyd <sboyd@kernel.org>, Steve French
- <sfrench@samba.org>, Takashi Iwai <tiwai@suse.com>, Thomas Renninger
- <trenn@suse.com>, Thomas Zimmermann <tzimmermann@suse.de>, Tony Luck
- <tony.luck@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, Vadim
- Fedorenko <vadim.fedorenko@linux.dev>, Vinod Koul <vkoul@kernel.org>, Will
- Deacon <will@kernel.org>, Yazen Ghannam <Yazen.Ghannam@amd.com>,
- cocci@inria.fr, amd-gfx@lists.freedesktop.org, dmaengine@vger.kernel.org,
- dm-devel@lists.linux.dev, dri-devel@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, intel-wired-lan@lists.osuosl.org,
- iommu@lists.linux.dev, linux-cifs@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-edac@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-input@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-mm@kvack.org, linux-pm@vger.kernel.org, linux-rdma@vger.kernel.org,
- linux-rtc@vger.kernel.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
- lvs-devel@vger.kernel.org, netdev@vger.kernel.org,
- netfilter-devel@vger.kernel.org, nouveau@lists.freedesktop.org,
- platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH 00/36] treewide: remove conditional returns with no
- effect
-Message-ID: <20260724144822.6af8213f@kernel.org>
-In-Reply-To: <20260723184538.3888637-1-ekffu200098@gmail.com>
-References: <20260723184538.3888637-1-ekffu200098@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o8qXsI1f"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso1242221a91.1
+        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 15:57:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784933843; x=1785538643; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DudDQKCoIhab8frMhgA6W9h7XpPyKDOhbOMYUMP2BNI=;
+        b=o8qXsI1fWXVnXRhKbdgWC1utsOEYyYZvSHJ+jB3XWNMepl3LqxDnemku+XWnVCVhgn
+         vJ77HeXV/fe7qdOgMj85yuFaQ3kDXBBELzhQ7MwCn+7ZEE6InLCVidFBIqYWhcaFBG9M
+         fb7JdntUptBHn2rOFeGYpPiXX/P3w7omusBEkK4DW6otM4P8gYmipQq5N1ZWqctbAo9w
+         FNykvmXRmiW7GHB7Vo9mhl3B0tvuSIwXb6JkTS0Oq29VxnhktluFQ0IEYIlFYq7SklAS
+         m547CMNmcrCciYOIoGtuFEaiddScIa+qKZaGBM2VCzaaveKFRoy4ITeTSdtgP9Nyu6Dp
+         YZwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784933843; x=1785538643;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DudDQKCoIhab8frMhgA6W9h7XpPyKDOhbOMYUMP2BNI=;
+        b=Dbz11O6JlPAVZH139rIzfzFeoYk4nKjFdFdxROLTjyNyTYCWmKPVQRQVr7Ok24Tf28
+         VrERqR32R7AxA0dXYND42+pD0t1Hvw7gebDbzqQ0kAWRL8JKtQFX1Ov4Xm3qD8jnbgha
+         gLX8EHPaukg84lKRe7JtTfEAOfR9Ii5DjYMmYw5OZbSi+QVtrgMxPzpIC8e5lyRY8pTA
+         Y1BHZV133rVbrJDhVciQyAFLLwHq8YChTfANSSC+EK9XEa7OA8tav3Kaz7hdjDzLgnsr
+         UM04piGmoE4r4E0AMxsprfC2vVywiJVk9b5ZVs0MOTjwSJyziIiysFonovtFIU8gyVRR
+         eZ9A==
+X-Gm-Message-State: AOJu0YyEAmNveG7q7o3Lnwi4Q/qjsRxwq76r/BBI1mu4Lpr6y8tfT0M3
+	ZXGNuKWoMne7zwptFI5dHD24JmyCCRfar8WZmFCNWcuQbkF17cxbs4ciH7USWA==
+X-Gm-Gg: AR+sD10XIE2JRNHxQRiylN2g3eO1G7hm/37N3Moh8ic0jsN1byJvJ1pNEoyJtYU+WHZ
+	VzXk4xCSytEFbWmpmLtKOQWIFu6F2saO+oe2RoEvR8ey2PfuFobvhdpLrh7IPZlNrzV6timh/J9
+	eE8Cxcrlb094xbdXIlRZ/yzLYUgULtUlPhmr2hieivQ5O6s2oFN0Z7h1IWXu6y2NYA97pmmOafQ
+	xEqE3wwyxipEiiYiS6JspNh8geg7jYXIvm9RpAUgm6m65KRx7sCR6tt/2LVc2xo3mblnWaoHHuk
+	Y8+AHrRuq6GinS9XgRrrHoHRunO/1uUZrzbgNGt/5ubt6hsN++6RXpMcYnC0XoUGJti7eVCSx7R
+	0VAjsj3svMUHsFgi62jyT2Ubl24q0/aWfwGO++OjZulRqn6p0wozwmh7Z5LLOnT29JMG6iov65G
+	nVqOe4o+iylVBYpByZB9CW7wmwx8h7CXA7yQFHMf4Im7NVN7CwDvqhYP0uGeue6dMOpIUw1UMKO
+	SY0Vhyg1vI3XkmIZ29CPPWvthD+N6q9Ok3qzbkWGH9c2MwvrNXPNXcATdrx4LsuQw==
+X-Received: by 2002:a17:90b:1f85:b0:387:e0db:3fae with SMTP id 98e67ed59e1d1-38f298bc8e2mr342043a91.39.1784933842946;
+        Fri, 24 Jul 2026 15:57:22 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f292d1d75sm119239a91.5.2026.07.24.15.57.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jul 2026 15:57:22 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:MICROCHIP AT91 DMA DRIVERS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv2] dmaengine: at_hdmac: use more devm in _probe
+Date: Fri, 24 Jul 2026 15:57:20 -0700
+Message-ID: <20260724225720.43410-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Fri, 24 Jul 2026 03:45:02 +0900 Sang-Heon Jeon wrote:
-> Patch 1 adds a Coccinelle script that matches the pattern, including
-> negation and constant-comparison variants. Where a local variable is
-> assigned right before the check, the assignment and the two returns
-> turn into a single return of the assigned expression.
+As devm is already used in _probe, complete the conversion so that
+everything unwinds in proper order.
 
-Huh, I thought we already had such script. Various script children have
-been sending such "cleanups" in the past.
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v2: remove list_del
+ drivers/dma/at_hdmac.c | 50 ++++++++++--------------------------------
+ 1 file changed, 11 insertions(+), 39 deletions(-)
 
-> Patches 2-36 are generated by the script, with hand fixes to restore
-> unexpectedly removed comments and to fix the formatting checkpatch.pl
-> complained about.
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index e5b30a57c477..f16cf29ca548 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1980,40 +1980,34 @@ static int __init at_dma_probe(struct platform_device *pdev)
+ 	atdma->dma_device.cap_mask = plat_dat->cap_mask;
+ 	atdma->all_chan_mask = (1 << plat_dat->nr_channels) - 1;
+ 
+-	atdma->clk = devm_clk_get(&pdev->dev, "dma_clk");
++	atdma->clk = devm_clk_get_enabled(&pdev->dev, "dma_clk");
+ 	if (IS_ERR(atdma->clk))
+ 		return PTR_ERR(atdma->clk);
+ 
+-	err = clk_prepare_enable(atdma->clk);
+-	if (err)
+-		return err;
+-
+ 	/* force dma off, just in case */
+ 	at_dma_off(atdma);
+ 
+-	err = request_irq(irq, at_dma_interrupt, 0, "at_hdmac", atdma);
++	err = devm_request_irq(&pdev->dev, irq, at_dma_interrupt, 0, "at_hdmac", atdma);
+ 	if (err)
+-		goto err_irq;
++		return err;
+ 
+ 	platform_set_drvdata(pdev, atdma);
+ 
+ 	/* create a pool of consistent memory blocks for hardware descriptors */
+-	atdma->lli_pool = dma_pool_create("at_hdmac_lli_pool",
++	atdma->lli_pool = dmam_pool_create("at_hdmac_lli_pool",
+ 					  &pdev->dev, sizeof(struct at_lli),
+ 					  4 /* word alignment */, 0);
+ 	if (!atdma->lli_pool) {
+ 		dev_err(&pdev->dev, "Unable to allocate DMA LLI descriptor pool\n");
+-		err = -ENOMEM;
+-		goto err_desc_pool_create;
++		return -ENOMEM;
+ 	}
+ 
+ 	/* create a pool of consistent memory blocks for memset blocks */
+-	atdma->memset_pool = dma_pool_create("at_hdmac_memset_pool",
++	atdma->memset_pool = dmam_pool_create("at_hdmac_memset_pool",
+ 					     &pdev->dev, sizeof(int), 4, 0);
+ 	if (!atdma->memset_pool) {
+ 		dev_err(&pdev->dev, "No memory for memset dma pool\n");
+-		err = -ENOMEM;
+-		goto err_memset_pool_create;
++		return -ENOMEM;
+ 	}
+ 
+ 	/* clear any pending interrupt */
+@@ -2080,10 +2074,10 @@ static int __init at_dma_probe(struct platform_device *pdev)
+ 	  dma_has_cap(DMA_SLAVE, atdma->dma_device.cap_mask)  ? "slave " : "",
+ 	  plat_dat->nr_channels);
+ 
+-	err = dma_async_device_register(&atdma->dma_device);
++	err = dmaenginem_async_device_register(&atdma->dma_device);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
+-		goto err_dma_async_device_register;
++		return err;
+ 	}
+ 
+ 	/*
+@@ -2092,27 +2086,15 @@ static int __init at_dma_probe(struct platform_device *pdev)
+ 	 * dma_request_channel().
+ 	 */
+ 	if (pdev->dev.of_node) {
+-		err = of_dma_controller_register(pdev->dev.of_node,
++		err = devm_of_dma_controller_register(&pdev->dev, pdev->dev.of_node,
+ 						 at_dma_xlate, atdma);
+ 		if (err) {
+ 			dev_err(&pdev->dev, "could not register of_dma_controller\n");
+-			goto err_of_dma_controller_register;
++			return err;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-err_of_dma_controller_register:
+-	dma_async_device_unregister(&atdma->dma_device);
+-err_dma_async_device_register:
+-	dma_pool_destroy(atdma->memset_pool);
+-err_memset_pool_create:
+-	dma_pool_destroy(atdma->lli_pool);
+-err_desc_pool_create:
+-	free_irq(platform_get_irq(pdev, 0), atdma);
+-err_irq:
+-	clk_disable_unprepare(atdma->clk);
+-	return err;
+ }
+ 
+ static void at_dma_remove(struct platform_device *pdev)
+@@ -2121,22 +2103,12 @@ static void at_dma_remove(struct platform_device *pdev)
+ 	struct dma_chan		*chan, *_chan;
+ 
+ 	at_dma_off(atdma);
+-	if (pdev->dev.of_node)
+-		of_dma_controller_free(pdev->dev.of_node);
+-	dma_async_device_unregister(&atdma->dma_device);
+-
+-	dma_pool_destroy(atdma->memset_pool);
+-	dma_pool_destroy(atdma->lli_pool);
+-	free_irq(platform_get_irq(pdev, 0), atdma);
+ 
+ 	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
+ 			device_node) {
+ 		/* Disable interrupts */
+ 		atc_disable_chan_irq(atdma, chan->chan_id);
+-		list_del(&chan->device_node);
+ 	}
+-
+-	clk_disable_unprepare(atdma->clk);
+ }
+ 
+ static void at_dma_shutdown(struct platform_device *pdev)
+-- 
+2.55.0
 
-Please post patches 4,7,8,9 as a separate series. Since you only CCed
-netdev on subset of the series patchwork thinks there are patches
-missing and doesn't kick off any CI.
