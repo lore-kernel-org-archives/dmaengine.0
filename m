@@ -1,119 +1,117 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022A24756B8
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 23:23:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF752476CEE;
+	Fri, 24 Jul 2026 23:35:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784935387; cv=none; b=nUgOkycu6Skm0lIZASWSerk72KUu8kD8bBFHYHrAXdK4wPuG+yE7B7ugq/1WKn7ROktAA6Md/6gev8XBO7WoWzof8knqteEIjVHs0NbTnF7XoWmxhsst+TyEgObrUnEIl952EISCT+R8Eu5diFh65u2GHwcpusTahkJ3Vii4ZX0=
+	t=1784936112; cv=none; b=J0KWaa/Munz1//BCYW2eIjIIeNnd1whPFGcvXNYu//CpZtkf4/iPsAuY3kGvjEHlLpCWJsbZbYiD6sAP6agFEyde0Ue97aPr8n3idslwePjXgd6d3Lj2BE2Y/DY6BmGRdDhJswgTB1A9A3ZslJhCTB/2yfx9GLjbwksWwr5o2/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784935387; c=relaxed/simple;
-	bh=3ZGWXISsjF8lL5z+RPaUpb0GJkUQ1n0Yr3mcTRITdEw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bo8xdtanp8p4muRZGDkA+j1xMvKFWSjwAVAmUuVtqow3+1Os9ffMsj6td5tvMaQRnjbe3z6wwCjY8O9oaEnyE8Q8OlT9WIjMlzrFWE/MGCdRN6Wb23ZuXC5+VV7Cd0B8b8okHH3CISL27Hc4pTR4zQpRyOjLMOnvix91MB9DmtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DBmvhGN8; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DBmvhGN8"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-84536ecfc5bso1227885b3a.2
-        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 16:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784935385; x=1785540185; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ak3a7+5iHL+DI779EzdC6NLfZP9M06vxpEidoqxCeoA=;
-        b=DBmvhGN8AnK0fX1oFNesxpjAh6f7uGBikYDR/ocgBaYzulG0SyWFpQhrKJLGb+p3hz
-         bDkmcDQhrJTAIpjb8F/OwnxPqDYAhZRKJZYrjiKeKUxDlcTq1hcvjlNyxWd1/OUDoaeY
-         e88Kxo4KgU7BZ2kJ7SHEKqQf2yjiWN513pfZlXo4l+ZWeUz7dUEs2nWRwc2Q+fFhNW/9
-         fjH4GuvHfCeMdH/guBK8Vm8aKR0AZQvej0CaXWvhRo9/ZGavRBu5QaY+YbmFJqDBY1yN
-         PjakvwTXJE+q8WTmr67V3RIdrokt0/QIcC05o/UcWakSocODWiTzk5NFFQs3pvYvUww6
-         3FRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784935385; x=1785540185;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ak3a7+5iHL+DI779EzdC6NLfZP9M06vxpEidoqxCeoA=;
-        b=gTnUkvTYdQJHDk9jH3W6XDL8U+puPAd1A4JJ082Pihq/YEdtnCoaQrTBSbiP7dR0gA
-         2KT0GNEFs4Jp2nU7pLiGEyAUO4X6Aot98vVy9bc1GNH9IBJOLMu9s0iPLcQtJTeh6SM7
-         XAuYTcN/+jpizMq8ko3ImfWI8cgYwwM2voTFyRqJoiq0o0LqEX5nk1pqUlUzmA1RIUE0
-         yuuENM1jM4Sj18aMq2pAMkv7EWwOAPPI/VaNjTrMjYtQKZfhQI43D/Hp8auzgdAuoLaX
-         tm6QD07KZ8pHUZ0vCKpS66Rj5FETVVqay8E/Ao65zwDE3w1NGZWeZVtsOYIncq6pi0SR
-         cn7A==
-X-Gm-Message-State: AOJu0YxgxLOkaiE8ZyAv9rbfqM/81DRrABO9JnU9Ak/+42qmxyN/PRBt
-	KsPnf9MF0ef9JjL6BvPXSDgiOEXe2H4+TNbJ+TPuLmlUWW3ZkBq3bQxlVNoiZQ==
-X-Gm-Gg: AR+sD10/Dy5ABMqiMT31/RPPYyXVpBByLHuMh3J9OC0mepIx7CFLTbU0YvclP1KPDCw
-	cubXPGWrM1YJlPIflclUN7Qu5njskuO9KgeKXSf2ODhm4vpEoQO71kQ43iZt4jMEy8otzP3JYNq
-	O9wDmpOq+Tl5KxasoaBHblqLp8LNeSQLfCwUHSgRIZrEdwyKojNyD1CuPkZ+PKiqvTIo/eNSh/k
-	TKDC9dmjJXbn4XnvGDV57+77XB3Un4qqwyJIJYJ4OctEODaEkkqSLXmG8IJbU8eeyKx7683wUUb
-	CRRkfB+CZepv5OwHxnHaxpfzJxzkBBYDYBVa6vrcEDe1NtLWwbxD0HVMP9KWziZ498qlPj/NZzx
-	RDcMMScaol+eVXEBorH0dtotWl16k9qlgf6qeDsyBWdG+n2pa3ZAHr6SMHy4RMBq3/SQv5w1IYJ
-	2gWqiKPt1uqCtHPrSqvvWfdQaRLwAQTWXp9MONgAxHSjvrGXGTTTF1d4jgVlwRBd2s1Avl6GdQA
-	ejdd74HM+IDAABTOP46/m5phvxqHx5nUlNH6qhHqgNT06J8l1eOa1I=
-X-Received: by 2002:a05:6a00:178e:b0:84a:2d5c:528c with SMTP id d2e1a72fcca58-84e5958d84fmr206478b3a.61.1784935385215;
-        Fri, 24 Jul 2026 16:23:05 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e5341d8f0sm510545b3a.44.2026.07.24.16.23.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 16:23:04 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-arm-kernel@lists.infradead.org (moderated list:MICROCHIP AT91 DMA DRIVERS),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dma: at_hdmac: add device_synchronize callback
-Date: Fri, 24 Jul 2026 16:23:01 -0700
-Message-ID: <20260724232301.50237-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	s=arc-20240116; t=1784936112; c=relaxed/simple;
+	bh=aYrgDhizOckPspQJ6t3G3K3Lc7NOOpJo78OVx01YiFQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=G/cSxaNLZ38oJ0X1nq0GPY0ElORcleiWqC7Akkm8pgkr2qB4x24Wfhj25KXuDl209nPlNLwTXL/IiP67u++BEachw61Hw9arR/4iQCsKPNLl3YZpLwOJuyc1XtIlbzlSCXdN6vhikgAv3oHAtpg6bAtc5HzcC/qwyzIeJuO+DGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E171F00A3A;
+	Fri, 24 Jul 2026 23:35:11 +0000 (UTC)
+Received: by venus (Postfix, from userid 1000)
+	id 93CE9181F1C; Sat, 25 Jul 2026 01:35:08 +0200 (CEST)
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Julia.Lawall@inria.fr, Alex Deucher <alexander.deucher@amd.com>, 
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Andrew Lunn <andrew@lunn.ch>, Andrew Morton <akpm@linux-foundation.org>, 
+ Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>, 
+ Borislav Petkov <bp@alien8.de>, 
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ David Airlie <airlied@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Eric Dumazet <edumazet@google.com>, Florian Westphal <fw@strlen.de>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Hans de Goede <hansg@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+ Herbert Xu <herbert@gondor.apana.org.au>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ Jakub Kicinski <kuba@kernel.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ Jani Nikula <jani.nikula@linux.intel.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Jason Gunthorpe <jgg@ziepe.ca>, Jiri Pirko <jiri@resnulli.us>, 
+ "Joerg Roedel (AMD)" <joro@8bytes.org>, Johan Hovold <johan@kernel.org>, 
+ Jonathan Cameron <jic23@kernel.org>, 
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, 
+ Julian Anastasov <ja@ssi.bg>, Leon Romanovsky <leon@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Linus Walleij <linusw@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Mark Brown <broonie@kernel.org>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Matthew Sakai <msakai@redhat.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Mike Rapoport <rppt@kernel.org>, 
+ Miri Korenblit <miriam.rachel.korenblit@intel.com>, 
+ Nicolas Palix <nicolas.palix@imag.fr>, 
+ Pablo Neira Ayuso <pablo@netfilter.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Ping-Ke Shih <pkshih@realtek.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, Sebastian Reichel <sre@kernel.org>, 
+ Shuah Khan <shuah@kernel.org>, Simona Vetter <simona@ffwll.ch>, 
+ Simon Horman <horms@verge.net.au>, Stephen Boyd <sboyd@kernel.org>, 
+ Steve French <sfrench@samba.org>, Takashi Iwai <tiwai@suse.com>, 
+ Thomas Renninger <trenn@suse.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Tony Luck <tony.luck@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, Vinod Koul <vkoul@kernel.org>, 
+ Will Deacon <will@kernel.org>, Yazen Ghannam <Yazen.Ghannam@amd.com>, 
+ Sang-Heon Jeon <ekffu200098@gmail.com>
+Cc: cocci@inria.fr, amd-gfx@lists.freedesktop.org, 
+ dmaengine@vger.kernel.org, dm-devel@lists.linux.dev, 
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
+ intel-wired-lan@lists.osuosl.org, iommu@lists.linux.dev, 
+ linux-cifs@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-crypto@vger.kernel.org, linux-edac@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-media@vger.kernel.org, linux-mm@kvack.org, linux-pm@vger.kernel.org, 
+ linux-rdma@vger.kernel.org, linux-rtc@vger.kernel.org, 
+ linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
+ linux-wireless@vger.kernel.org, lvs-devel@vger.kernel.org, 
+ netdev@vger.kernel.org, netfilter-devel@vger.kernel.org, 
+ nouveau@lists.freedesktop.org, platform-driver-x86@vger.kernel.org
+In-Reply-To: <20260723184538.3888637-1-ekffu200098@gmail.com>
+References: <20260723184538.3888637-1-ekffu200098@gmail.com>
+Subject: Re: (subset) [PATCH 00/36] treewide: remove conditional returns
+ with no effect
+Message-Id: <178493610858.699463.6794401814873674138.b4-ty@collabora.com>
+Date: Sat, 25 Jul 2026 01:35:08 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 
-Implement the device_synchronize callback for the atmel
-DMA driver by adding atc_synchronize() which calls
-vchan_synchronize() on the associated virt channel.
 
-This ensures proper synchronization of pending descriptors
-when requested by the DMA framework.
+On Fri, 24 Jul 2026 03:45:02 +0900, Sang-Heon Jeon wrote:
+> While reading mm/memblock, I found a conditional return where both
+> branches return the same value:
+> 
+> 	err = do_something();
+> 	if (err)
+> 		return err;
+> 	return err;
+> 
+> [...]
 
-Assisted-by: OpenCode:Big-Pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- drivers/dma/at_hdmac.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Applied, thanks!
 
-diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index bb501c0baa7e..d587f5809814 100644
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1617,6 +1617,13 @@ static int atc_resume(struct dma_chan *chan)
- 	return 0;
- }
- 
-+static void atc_synchronize(struct dma_chan *chan)
-+{
-+	struct at_dma_chan *atchan = to_at_dma_chan(chan);
-+
-+	vchan_synchronize(&atchan->vc);
-+}
-+
- static int atc_terminate_all(struct dma_chan *chan)
- {
- 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
-@@ -2040,6 +2047,7 @@ static int __init at_dma_probe(struct platform_device *pdev)
- 	atdma->dma_device.device_free_chan_resources = atc_free_chan_resources;
- 	atdma->dma_device.device_tx_status = atc_tx_status;
- 	atdma->dma_device.device_issue_pending = atc_issue_pending;
-+	atdma->dma_device.device_synchronize = atc_synchronize;
- 	atdma->dma_device.dev = &pdev->dev;
- 
- 	/* set prep routines based on capability */
+[26/36] power: supply: pm8916_lbc: remove conditional return with no effect
+        commit: b7c8d46411317f135e7791c0eddc56691de63f07
+
+Best regards,
 -- 
-2.55.0
+Sebastian Reichel <sebastian.reichel@collabora.com>
 
