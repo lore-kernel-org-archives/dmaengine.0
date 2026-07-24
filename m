@@ -1,321 +1,257 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF3E427A1A
-	for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 10:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E0942BC20;
+	Fri, 24 Jul 2026 10:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784890431; cv=none; b=cVzhxJ5Rl7zeq1QoBbbDCBWTVGliMocy1+QdSVa/PNg/XY9VJy6ETR5h0dIDcRPoYZA/ZJLn41rvo5uekpCK6F5SdjClwIIpHhjrgzQZtrWqSk1K2r/YfINm5Hg30U61I/r1gityPseuAKiduHAYrcrmMz2p0JIJMnyZI8r3mbw=
+	t=1784890713; cv=none; b=YlIo0IfFFgtijmFEEGlkzDg6PpErcLw1Im7jJIVpWABT5n+NKNclzsXDqVgItdY3ZFLUaid7fyO1efgALTyHM6Tsxz98kKVbUYHGUWTAkNhMtgvbfyP2XbrWgj0BSmYyFiqrxG/oNW9Me3Rm4bYwxQi6qFVkcrl6S2cpfhd/OfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784890431; c=relaxed/simple;
-	bh=2Id8Lf7l9nSqlQQ3kJj2nmTWJEwu65vgbgq0B4au8sw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=scTmvzrAhqg32juJMv14YqCWsxElPFhlY7Xyk0UAT48+zeVBQCDtsUBwRN8S76eKOdCtk+0miysuNUpamYoWkMe6r353tQdBOp7vKcihWb5qc65Y1j1U7GvH8cQXlvnchm5LIoFn/UNLylOrYSJsHipZT1F4wuho05T0MC4Sss4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q2XKA4pc; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1784890713; c=relaxed/simple;
+	bh=ThWPD2vO6WFChLLKHLS5nruVc5+/3YACWxONEFf+T2M=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=estyut6V8NTs7TTpfw/jrUgj2I0MLLf0tHTKivG52CPfsqGr9YYB1j+1PsQMkc6+v6UZZu7tVsg9b351IwAiwHo9fRsNRcqmtr5+UxuAN+TpAqjSXOAOg3ZoUGtVwDjkRnp8EDWvNTnNfAPsueX7a6ptMUJgf39Q+BS+eoylsp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nOQ2pHCA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q2XKA4pc"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-472326ca506so257154f8f.2
-        for <dmaengine@vger.kernel.org>; Fri, 24 Jul 2026 03:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1784890428; x=1785495228; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
-        b=Q2XKA4pcoFE0/oewMrGycoNNC4PVtJI3YgBQm7O2y+RxaGCYV9Gvkr6ppuUF/C2jTw
-         xJqbhcW5qbSXSEe32kG/Ijo+SNvAsJro3R+zEdv7Ob8FPhDfjA+5BUv4pDglvxxoUOTm
-         A+a6kLKBGYP1PE/wgmBjBmQ3KTQinKigH4wUQjTLaCKouzV8/Ccxy0DLWkFgFCXQlPvv
-         z/roC2b/3ndSZ4qbcmIRZ9w/Vp07rho4xjJ2Bj33s5DMGD2dBQtJmF3EYU9Sctn3oMYT
-         KUehfiKlwEv3nsh9Zx3wshRRZy9HT85pmN00ySfZMlQ4WxvjJIVNSHNPiVt1c/eKsRU0
-         bWtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784890428; x=1785495228;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9qGNYqgu45iCzPUDN1sRc/iOGDzLiyCE7X0FhGMvUzY=;
-        b=RbPPZUZu3Kv6i98eywDyC6loQYcQoneLhgbAjJQerIobBPoYkG29MOU4F0mmMDK+f5
-         sTFL8RTROWJkyHeZISVcS+V80op6cjKP1/gNreUslP0U836VI9A69kKO6gbIKrsNQKPV
-         N8SNV7+uYrBSqsMgwwSh6WxN6GbSubmg6KVX9eTlT2USCb/rga+4gFxNDywgJ2U/DJrW
-         sfIafMOrwfW0a2URBEYTidXlyQ+EL2FOoDZI7igorEumhkAreGH1uNi17CyQL56UKbrk
-         kPyBOCzFyTzDB0vPQYPlB0pUXDufkiML0LtzuyZYJ2pebCP/OuCJFLK/vgghuLimVw8B
-         cvJA==
-X-Forwarded-Encrypted: i=1; AHgh+RrwfZyEccMgqCPwS0qsUXqJHJC8ZoQMFlf+IELx6gUk0gVYr+DYMKvoDwa8FXlJGoX/OAlKvWWP5HE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz08G2gJNyeQfhCdf3d9uEyT9+BBSd8MEGGljkc/fWASuEzN+it
-	xMQofvS6eCoiQ0MZjveSB/tIxK8HbYpMchVsGZkq8hrR6Qz/fk1If6oLTZbvpPfvN9Q=
-X-Gm-Gg: AR+sD132+rTReBektkyiLSDFzZcoqXriRFoY3s//7IiD28ZLwOCBnQTGU6xVkqbGulj
-	N91UuDVhi+U4ZAaBGDHp/Y1tQpYYcXdbCUi/JnDCnc90FjTI3JcISN+SaWI9QzumIrqmDrWQKux
-	nseFiHKyGbrkxnbDo9i0mW+toyusziay6xOfe8G6nz6JzZsbW3ZxvY6+Y9smnI/5rOz7wwY+3pS
-	soXcrLngL0gkCVe9tUHBdydBmKd6WI0XVj4Q63HGRd/qCkCUzTqDAY64B4RFIOWWDHNsQbpVIYy
-	sGeCP4rVHsoV8nbufba53eb7X/KefN7BzLSyIWnG94tugUX1pLrQjso2uYw9KStI2BGQI3+HXcX
-	vQO49QhfbChgYXP4O4GiVjKFj6y4Xus2WCPey5QGU/ztTAEPjRxlX1yqzPDt0yXoR4VOMuJ1O81
-	9oL3LyhFDTt0pvZg==
-X-Received: by 2002:a05:6000:2489:b0:460:3233:beed with SMTP id ffacd0b85a97d-47f8d75ec77mr9286973f8f.41.1784890427609;
-        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff24:7210:d8e1:da6c:62ef:6ff9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47f85bb5127sm22309568f8f.10.2026.07.24.03.53.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jul 2026 03:53:47 -0700 (PDT)
-Date: Fri, 24 Jul 2026 12:53:36 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, brgl@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <amNEMK4k54l655ku@linaro.org>
-References: <20260723-qcom-qce-cmd-descr-v24-0-4f87bb4d9938@oss.qualcomm.com>
- <20260723-qcom-qce-cmd-descr-v24-6-4f87bb4d9938@oss.qualcomm.com>
- <20260723172814.661591F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nOQ2pHCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07121F01561;
+	Fri, 24 Jul 2026 10:58:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784890709;
+	bh=plF2j54U8gl8dhYEYhsoHOEWZ0ryy2oTvAaJXHg1aRE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=nOQ2pHCA0azsscOqhJtvPt9fhI7F437pNVazX20IUPGR45qcoijvtDM/5ULQITnIB
+	 JwzEf8UVw2yQPf7dsv8YQcHu5kcZYjkLjmnloSCtAb2MQDQU2GNt1H0hodgdK/9AJa
+	 T15D8TVdCQiwJL1NlY8j5iJ7uMP1U0mfSMEBXmRoxY/5IXA2859W1G7uX7uoDZfG7r
+	 P3iol2ccUi4E83cE2A5x6BzwUqk7vvA5zjM+z1UAZRLHMS0wu265XD9CThEbcvMQmk
+	 V7y9u4rwVkgyFUYkNSaRUsR54qOeUkOEKcqgMz/pbh7PdbPBskLvvZUGI8nk9Tuqq/
+	 rXKKYYdPl7V4w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v7 18/19] dmaengine: ti: k3-udma-v2: Update glue layer
+ to support PKTDMA V2
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20260724102115.2854-19-s-adivi@ti.com>
+References: <20260724102115.2854-1-s-adivi@ti.com>
+ <20260724102115.2854-19-s-adivi@ti.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 24 Jul 2026 10:58:28 +0000
+Message-Id: <20260724105828.D07121F01561@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723172814.661591F000E9@smtp.kernel.org>
 
-On Thu, Jul 23, 2026 at 05:28:13PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Calling `queue_work()` inside `bam_start_dma()` when there is exactly 1 slot available creates an infinite busy-loop in softirq context (softlockup).
-> - [High] The transaction completion callback fires before the hardware pipe is actually unlocked, violating the mutual exclusion requirement.
-> - [High] The driver clears the software lock state prematurely, allowing concurrent configuration changes to corrupt in-flight hardware execution.
-> - [Medium] The 'reserved' field of the lock command element is left uninitialized before being synced to the device.
-> 
-> Pre-existing issues:
-> - [Critical] Mismatch between FIFO wrapping modulo and CIRC_SPACE size leads to silent descriptor overwrites and data corruption.
-> --
-> 
-> --- Patch [6]: [PATCH v24 06/14] dmaengine: qcom: bam_dma: add support for BAM locking ---
-> commit bf87fb2cf384d859e1e0efff5d0a48f0cb3ccea2
-> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> 
-> dmaengine: qcom: bam_dma: add support for BAM locking
-> 
-> Add support for BAM pipe locking. To that end: when starting DMA on a TX
-> channel (DMA_MEM_TO_DEV) - prepend the existing queue of issued
-> descriptors with an additional "dummy" command descriptor with the LOCK
-> bit set. Once the transaction is done (no more issued descriptors),
-> issue one more dummy descriptor with the UNLOCK bit.
-> 
-> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > --- a/drivers/dma/qcom/bam_dma.c
-> > +++ b/drivers/dma/qcom/bam_dma.c
-> 
-> [ ... ]
-> 
-> > @@ -676,10 +697,51 @@ static void bam_free_chan(struct dma_chan *chan)
-> >  static int bam_slave_config(struct dma_chan *chan,
-> >  			    struct dma_slave_config *cfg)
-> >  {
-> > +	struct bam_config *peripheral_cfg = cfg->peripheral_config;
-> >  	struct bam_chan *bchan = to_bam_chan(chan);
-> > +	const struct bam_device_data *bdata = bchan->bdev->dev_data;
-> > +
-> > +	if (peripheral_cfg && cfg->peripheral_size != sizeof(*peripheral_cfg))
-> > +		return -EINVAL;
-> >  
-> >  	guard(spinlock_irqsave)(&bchan->vc.lock);
-> >  
-> > +	/*
-> > +	 * This is required to setup the pipe locking and must be done even
-> > +	 * before the first call to bam_start_dma().
-> > +	 */
-> > +	if (bdata->pipe_lock_supported && peripheral_cfg) {
-> > +		if (cfg->direction != DMA_MEM_TO_DEV)
-> > +			return -EINVAL;
-> > +
-> > +		if (bchan->bam_locked)
-> > +			return -EBUSY;
-> > +
-> > +		if (!bchan->lock_ce) {
-> > +			bchan->lock_ce = kmalloc_obj(*bchan->lock_ce, GFP_ATOMIC);
-> 
-> [Severity: Medium]
-> Will this leave the reserved field of the command element uninitialized?
-> 
-> Looking at how this is initialized in include/linux/dma/qcom_bam_dma.h:
-> 
-> static inline void
-> bam_prep_ce_le32(struct bam_cmd_element *bam_ce, u32 addr,
->                  enum bam_command_type cmd, __le32 data)
-> {
->         bam_ce->cmd_and_addr =
->                 cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
->         bam_ce->data = data;
->         bam_ce->mask = cpu_to_le32(0xffffffff);
-> }
-> 
-> The reserved field is not set here, and kmalloc_obj() does not zero the
-> memory. Could this map and sync uninitialized kernel heap memory to the DMA
-> hardware?
-> 
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [High] Improper teardown and disable sequences for PKTDMA V2 hardware, ca=
+using state corruption and timeouts.
+- [High] Incomplete and contradictory configuration of PKTDMA V2 channels a=
+nd flows when TISCI is absent, leading to memory corruption and missing set=
+tings.
+- [High] The driver fails to poll for the completion of the channel autopai=
+ring sequence for PKTDMA V2, returning before the hardware is ready.
+--
 
-kzalloc_obj()? This is your bug. :-)
+--- Patch [18]: [PATCH v7 18/19] dmaengine: ti: k3-udma-v2: Update glue lay=
+er to support PKTDMA V2 ---
+commit e70a50b02c5e24b0a06466a8296de08ac78f41b1
+Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-> [ ... ]
-> 
-> > @@ -1064,22 +1145,34 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >  
-> >  	lockdep_assert_held(&bchan->vc.lock);
-> >  
-> > -	if (!vd)
-> > +	vd = vchan_next_desc(&bchan->vc);
-> > +	if (IS_BUSY(bchan) || (!vd && !bchan->bam_locked))
-> >  		return;
-> >  
-> >  	ret = pm_runtime_get_sync(bdev->dev);
-> >  	if (ret < 0)
-> >  		return;
-> >  
-> > +	if (!bchan->initialized)
-> > +		bam_chan_init_hw(bchan, container_of(vd, struct bam_async_desc, vd)->dir);
-> > +
-> > +	if (bchan->locking_enabled && !bchan->bam_locked) {
-> > +		/* Defer locking until we also have space for a data descriptor */
-> > +		avail = CIRC_SPACE(bchan->tail, bchan->head, MAX_DESCRIPTORS + 1);
-> 
-> [Severity: Critical]
-> This is a pre-existing issue, but does CIRC_SPACE() calculate the correct
-> available space when bchan->tail wraps at 4095?
-> 
-> MAX_DESCRIPTORS is 4095. Down below in bam_start_dma(), the pointers wrap
-> via:
-> 
->     bchan->tail += async_desc->xfer_len;
->     bchan->tail %= MAX_DESCRIPTORS;
-> 
-> Since bchan->tail wraps to 0 after 4094, it never reaches 4095. However,
-> CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096). Because
-> CIRC_SPACE() assumes the pointers wrap at the provided power-of-2 size, when
-> the buffer is full (tail == head), won't it incorrectly evaluate the space as
-> 4095 and cause a massive buffer overrun?
-> 
+    dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
+   =20
+    Update glue layer to support PKTDMA V2 for non DMAengine users.
 
-Ooof, this seems correct to me but we can/should fix this separately
-probably...
+> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+> index bec4deb480e60..07952c4efee2d 100644
+> --- a/drivers/dma/ti/k3-udma-glue.c
+> +++ b/drivers/dma/ti/k3-udma-glue.c
+> @@ -267,6 +267,9 @@ static int k3_udma_glue_cfg_tx_chn(struct k3_udma_glu=
+e_tx_channel *tx_chn)
+>  	const struct udma_tisci_rm *tisci_rm =3D tx_chn->common.tisci_rm;
+>  	struct ti_sci_msg_rm_udmap_tx_ch_cfg req;
+> =20
+> +	if (!tisci_rm->tisci)
+> +		return 0;
+> +
 
-> > +		if (avail < 2) {
-> > +			queue_work(system_bh_highpri_wq, &bdev->work);
-> > +			goto out;
-> > +		}
-> 
-> [Severity: High]
-> Can this early return cause an infinite busy-loop softlockup?
-> 
-> If exactly one slot is available (avail == 1), queue_work() is called and
-> we return. The worker executes bam_dma_work():
-> 
->     if ((!list_empty(&bchan->vc.desc_issued) || bchan->bam_locked) &&
->         !IS_BUSY(bchan))
->         bam_start_dma(bchan);
-> 
-> Since IS_BUSY() only tests for avail == 0, the check passes and
-> bam_start_dma() is immediately called again. It sees avail < 2 again,
-> queues the work again, and returns. Could this loop indefinitely in softirq
-> context until a hardware interrupt eventually fires?
-> 
+[Severity: High]
+Does returning early here skip all TX channel configuration for PKTDMA V2?
 
-Yes, the queue_work() doesn't make sense here. We need to wait for the
-BAM to finish processing some descriptors. Once it has notified us about
-that, the IRQ handler will queue_work() it anyway, so you can just drop
-this.
+This skips configuring the fetch size, pause on error, and other
+essential parameters for the channel.
 
-Technically, the avail < 2 check isn't even needed. We could start
-writing the LOCK descriptor and then wait for the BAM to make further
-room for the data descriptors. I just thought it's a bit weird to queue
-LOCK without also adding some data descriptors at the same time.
+>  	memset(&req, 0, sizeof(req));
+> =20
+[ ... ]
+> @@ -525,21 +528,26 @@ int k3_udma_glue_enable_tx_chn(struct k3_udma_glue_=
+tx_channel *tx_chn)
+>  {
+>  	int ret;
+> =20
+> -	ret =3D xudma_navss_psil_pair(tx_chn->common.udmax,
+> -				    tx_chn->common.src_thread,
+> -				    tx_chn->common.dst_thread);
+> -	if (ret) {
+> -		dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (tx_chn->common.udmax->match_data->version =3D=3D K3_UDMA_V1) {
+> +		ret =3D xudma_navss_psil_pair(tx_chn->common.udmax,
+> +					    tx_chn->common.src_thread,
+> +					    tx_chn->common.dst_thread);
+> +		if (ret) {
+> +			dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
+> +			return ret;
+> +		}
+> =20
+> -	tx_chn->psil_paired =3D true;
+> +		tx_chn->psil_paired =3D true;
+> =20
+> -	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+> -			    UDMA_PEER_RT_EN_ENABLE);
+> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+> +				    UDMA_PEER_RT_EN_ENABLE);
+> =20
+> -	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
+> -			    UDMA_CHAN_RT_CTL_EN);
+> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
+> +				    UDMA_CHAN_RT_CTL_EN);
+> +	} else {
+> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
+> +				    UDMA_CHAN_RT_CTL_AUTOPAIR | UDMA_CHAN_RT_CTL_EN);
+> +	}
 
-> [ ... ]
-> 
-> > @@ -1135,11 +1228,24 @@ static void bam_start_dma(struct bam_chan *bchan)
-> >  		if (((avail <= async_desc->xfer_len) || !vd ||
-> >  		     dmaengine_desc_callback_valid(&cb)) &&
-> >  		    !(async_desc->flags & DESC_FLAG_EOT))
-> >  			desc[async_desc->xfer_len - 1].flags |=
-> >  				cpu_to_le16(DESC_FLAG_INT);
-> 
-> [Severity: High]
-> Does this cause the transaction completion callback to fire before the
-> hardware pipe is actually unlocked?
-> 
-> DESC_FLAG_INT is set on the data descriptor here, regardless of whether an
-> UNLOCK descriptor will immediately follow. When the data descriptor completes,
-> an interrupt is generated and process_channel_irqs() completes the cookie:
-> 
->     if (!async_desc->num_desc)
->         vchan_cookie_complete(&async_desc->vd);
-> 
-> Could this notify client drivers of transaction completion while the UNLOCK
-> descriptor is still pending in the hardware FIFO, allowing clients to modify
-> state or power down the device prematurely?
-> 
+[Severity: High]
+Does this need to poll for the completion of the channel autopairing
+sequence?
 
-Yes, but the client driver should be only concerned about the completion
-of its own data operations, the lock handling is transparent and
-internal to the BAM driver IMO. "Works as intended."
+By returning immediately after setting UDMA_CHAN_RT_CTL_AUTOPAIR, the caller
+might begin submitting descriptors before the hardware is fully initialized
+or paired. The core k3-udma-v2.c dmaengine driver polls for
+UDMA_CHAN_RT_CTL_PAIR_COMPLETE after setting this bit.
 
-> [ ... ]
-> 
-> > +	/*
-> > +	 * Close the bracket once there is no more client work queued. The
-> > +	 * UNLOCK is flagged for an interrupt so process_channel_irqs() is
-> > +	 * guaranteed to observe its completion and retire it from the FIFO
-> > +	 * promptly, instead of leaving bchan->head to lag until a later
-> > +	 * bracket's skip-loop catches up with it.
-> > +	 */
-> > +	if (bchan->bam_locked && !vd && !IS_BUSY(bchan)) {
-> > +		bam_fifo_write_lock(bchan, DESC_FLAG_UNLOCK | DESC_FLAG_INT);
-> > +		bchan->bam_locked = false;
-> > +	}
-> 
-> [Severity: High]
-> Is the software lock state cleared too early here?
-> 
-> We synchronously set bchan->bam_locked to false immediately after placing the
-> UNLOCK descriptor into the software FIFO, before the hardware has actually
-> completed the transaction. 
-> 
-> If a client then calls bam_slave_config(), the -EBUSY check for
-> bchan->bam_locked will pass, and the driver might overwrite bchan->lock_ce
-> or configuration registers while the hardware is still busy processing
-> in-flight descriptors. Does this violate the mutual exclusion requirement?
+[Severity: High]
+Since this adds V2-specific setup using UDMA_CHAN_RT_CTL_AUTOPAIR, do we
+also need to update k3_udma_glue_tdown_tx_chn() and=20
+k3_udma_glue_disable_tx_chn() for V2 hardware?
 
-It's true, but I think this can be ignored. That's why I didn't even
-have the -EBUSY check in my diff. bam_start_dma() already re-configures
-the channel in the middle of a transaction (if bchan->reconfigure is
-set), so that one will already make changes to in-progress descriptors
-anyway. It's a bit problematic though that we don't provide a way for
-clients to wait until the unlocking has been completed, so they don't
-have any chance to avoid affecting ongoing unlock operations from their
-side.
+Currently k3_udma_glue_tdown_tx_chn() unconditionally executes a direct
+register write to UDMA_CHAN_RT_CTL_REG with just EN and TDOWN bits, which
+will clobber the UDMA_CHAN_RT_CTL_AUTOPAIR bit set here. This abruptly
+unpairs the channel while attempting to tear it down.
 
-Or you just disallow changing the lock_scratchpad_addr once it has been
-set. Whatever. I don't think anyone will ever use multiple different
-addresses there.
+Additionally, k3_udma_glue_disable_tx_chn() unconditionally writes 0 to
+UDMA_CHAN_RT_PEER_RT_EN_REG without checking the hardware version.
 
-Thanks,
-Stephan
+> =20
+>  	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn en");
+>  	return 0;
+[ ... ]
+> @@ -725,11 +732,18 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_g=
+lue_rx_channel *rx_chn)
+>  	req.rx_chan_type =3D TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+>  	req.rx_atype =3D rx_chn->common.atype_asel;
+> =20
+> +	if (!tisci_rm->tisci) {
+> +		// TODO: look at the chan settings
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CFG_REG,
+> +				    UDMA_CHAN_CFG_FILT_EINFO | UDMA_CHAN_CFG_FILT_PSWORDS);
+> +		return 0;
+> +	}
+> +
+
+[Severity: High]
+Does hardcoding UDMA_CHAN_CFG_FILT_EINFO and UDMA_CHAN_CFG_FILT_PSWORDS
+miss the rest of the actual channel configuration, like the fetch size?
+
+>  	req.nav_id =3D tisci_rm->tisci_dev_id;
+>  	ret =3D tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
+>  	if (ret)
+[ ... ]
+> @@ -826,6 +843,14 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_g=
+lue_rx_channel *rx_chn,
+>  		rx_ringfdq_id =3D k3_ringacc_get_ring_id(flow->ringrxfdq);
+>  	}
+> =20
+> +	if (!tisci_rm->tisci) {
+> +		xudma_rflowrt_write(flow->udma_rflow, UDMA_RX_FLOWRT_RFA,
+> +				    UDMA_FLOWRT_RFA_RX_EINFO_PRESENT |
+> +				    UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT);
+> +		rx_chn->flows_ready++;
+> +		return 0;
+> +	}
+> +
+
+[Severity: High]
+Will forcing these flags cause memory corruption if the software
+descriptors weren't configured with space for this metadata?
+
+By unconditionally forcing UDMA_FLOWRT_RFA_RX_EINFO_PRESENT and
+UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT into the UDMA_RX_FLOWRT_RFA register,
+the hardware will write extended protocol information into the receive
+buffers. If the software did not allocate space for them (checked via
+rx_chn->common.epib and rx_chn->common.psdata_size in the TISCI path),
+could this overwrite adjacent packet data or exceed descriptor boundaries?
+
+>  	memset(&req, 0, sizeof(req));
+> =20
+>  	req.valid_params =3D
+[ ... ]
+> @@ -1406,21 +1437,26 @@ int k3_udma_glue_enable_rx_chn(struct k3_udma_glu=
+e_rx_channel *rx_chn)
+>  	if (rx_chn->flows_ready < rx_chn->flow_num)
+>  		return -EINVAL;
+> =20
+> -	ret =3D xudma_navss_psil_pair(rx_chn->common.udmax,
+> -				    rx_chn->common.src_thread,
+> -				    rx_chn->common.dst_thread);
+> -	if (ret) {
+> -		dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (rx_chn->common.udmax->match_data->version =3D=3D K3_UDMA_V1) {
+> +		ret =3D xudma_navss_psil_pair(rx_chn->common.udmax,
+> +					    rx_chn->common.src_thread,
+> +					    rx_chn->common.dst_thread);
+> +		if (ret) {
+> +			dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
+> +			return ret;
+> +		}
+> =20
+> -	rx_chn->psil_paired =3D true;
+> +		rx_chn->psil_paired =3D true;
+> =20
+> -	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
+> -			    UDMA_CHAN_RT_CTL_EN);
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
+> +				    UDMA_CHAN_RT_CTL_EN);
+> =20
+> -	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+> -			    UDMA_PEER_RT_EN_ENABLE);
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+> +				    UDMA_PEER_RT_EN_ENABLE);
+> +	} else {
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
+> +				    UDMA_CHAN_RT_CTL_AUTOPAIR |  UDMA_CHAN_RT_CTL_EN);
+> +	}
+
+[Severity: High]
+Does this also need to poll for the completion of the channel autopairing
+sequence, similar to the TX side?
+
+[Severity: High]
+Since V2 channel enable logic is added here, do k3_udma_glue_tdown_rx_chn()
+and k3_udma_glue_disable_rx_chn() also need updates for V2 hardware?
+
+k3_udma_glue_tdown_rx_chn() currently writes the teardown trigger to
+UDMA_CHAN_RT_PEER_RT_EN_REG, which V2 hardware ignores for teardown. The
+UDMA_CHAN_RT_CTL_EN bit would never clear, leading to a permanent failure
+in the polling loop (RX tdown timeout).
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724102115.2854=
+-1-s-adivi@ti.com?part=3D18
