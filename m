@@ -1,257 +1,219 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E0942BC20;
-	Fri, 24 Jul 2026 10:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D06142BC29;
+	Fri, 24 Jul 2026 10:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784890713; cv=none; b=YlIo0IfFFgtijmFEEGlkzDg6PpErcLw1Im7jJIVpWABT5n+NKNclzsXDqVgItdY3ZFLUaid7fyO1efgALTyHM6Tsxz98kKVbUYHGUWTAkNhMtgvbfyP2XbrWgj0BSmYyFiqrxG/oNW9Me3Rm4bYwxQi6qFVkcrl6S2cpfhd/OfQ=
+	t=1784890735; cv=none; b=mk5gQmC9/I5hozB1HnALkLUEvRnLPZeWfO5IZDXDRtjacTYIPC1x62BSYpf5J46PatwXynVpr1+dT4dfSuQS8a//X2HWoBg27LfgSuWQhLBicz0UHR3D4GjMx+zVqeYmz7iikn3qyRksU2e9nm1xd3pVimuiEEuIUXh349Qg2Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784890713; c=relaxed/simple;
-	bh=ThWPD2vO6WFChLLKHLS5nruVc5+/3YACWxONEFf+T2M=;
+	s=arc-20240116; t=1784890735; c=relaxed/simple;
+	bh=7KO5AY6/xP42HS8Mb98WVjS44eN8pa4IPDgR2rz7UD0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=estyut6V8NTs7TTpfw/jrUgj2I0MLLf0tHTKivG52CPfsqGr9YYB1j+1PsQMkc6+v6UZZu7tVsg9b351IwAiwHo9fRsNRcqmtr5+UxuAN+TpAqjSXOAOg3ZoUGtVwDjkRnp8EDWvNTnNfAPsueX7a6ptMUJgf39Q+BS+eoylsp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nOQ2pHCA; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=D7d0u9ZJMafVUS1A3eWDh6+HNb02AmkPxX6b3T+rmSbgZ+bVqKDTdbF08HFTQDwTckFlpScf1pV4HHzo5RAanqqtBX0JPOGmupb1qFDdeIxHWplzHHYKNWGRBC/aGCOkcxyKvnD8K5cq/O97J88zZzpTvlpEzehWO0ViyXjczN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h+UytFzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nOQ2pHCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07121F01561;
-	Fri, 24 Jul 2026 10:58:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h+UytFzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090191F01566;
+	Fri, 24 Jul 2026 10:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784890709;
-	bh=plF2j54U8gl8dhYEYhsoHOEWZ0ryy2oTvAaJXHg1aRE=;
+	s=k20260515; t=1784890710;
+	bh=yMc7gyDK0r0NtkLua7NhcNVnaEzxalhklvUr2E+GHCU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nOQ2pHCA0azsscOqhJtvPt9fhI7F437pNVazX20IUPGR45qcoijvtDM/5ULQITnIB
-	 JwzEf8UVw2yQPf7dsv8YQcHu5kcZYjkLjmnloSCtAb2MQDQU2GNt1H0hodgdK/9AJa
-	 T15D8TVdCQiwJL1NlY8j5iJ7uMP1U0mfSMEBXmRoxY/5IXA2859W1G7uX7uoDZfG7r
-	 P3iol2ccUi4E83cE2A5x6BzwUqk7vvA5zjM+z1UAZRLHMS0wu265XD9CThEbcvMQmk
-	 V7y9u4rwVkgyFUYkNSaRUsR54qOeUkOEKcqgMz/pbh7PdbPBskLvvZUGI8nk9Tuqq/
-	 rXKKYYdPl7V4w==
+	b=h+UytFzp0//uhc/FltHnzwkFHvPf6KHbo8foSLPNR58LlozbNcPqd3d/tGtBx9E2y
+	 rDHFkiIVGe7h9l1+8oBTTadli3rygOJTpdxjR/e0nNzPEb+QsLOrvfeTV0bHfQ3OjT
+	 bJKFaxnpX5zFlIDTOPotCYkWLuU0QsMYITFlF+SoTC+00dCA8rrbadu5AHCcJ3mzDQ
+	 AsLOIBCuv0ztZTsHOtkyLvZUTUNDUWaWPxUnX324yLVLsJY523q9U/PCdvqlV1PU22
+	 Dx+L1Z/tZeE9FHVsvs9hqQhoR4kgT1EkIKaaVaMUt3FQJb3UdmFeMNE0DwNqE+SyEr
+	 cKDlkiXKhqCRw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 18/19] dmaengine: ti: k3-udma-v2: Update glue layer
- to support PKTDMA V2
+Subject: Re: [PATCH v7 17/19] dmaengine: ti: k3-udma-v2: Add support for
+ PKTDMA V2
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20260724102115.2854-19-s-adivi@ti.com>
+Cc: conor+dt@kernel.org, vkoul@kernel.org, robh@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20260724102115.2854-18-s-adivi@ti.com>
 References: <20260724102115.2854-1-s-adivi@ti.com>
- <20260724102115.2854-19-s-adivi@ti.com>
+ <20260724102115.2854-18-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 24 Jul 2026 10:58:28 +0000
-Message-Id: <20260724105828.D07121F01561@smtp.kernel.org>
+Date: Fri, 24 Jul 2026 10:58:29 +0000
+Message-Id: <20260724105830.090191F01566@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 6 potential issue(=
 s) to consider:
-- [High] Improper teardown and disable sequences for PKTDMA V2 hardware, ca=
-using state corruption and timeouts.
-- [High] Incomplete and contradictory configuration of PKTDMA V2 channels a=
-nd flows when TISCI is absent, leading to memory corruption and missing set=
-tings.
-- [High] The driver fails to poll for the completion of the channel autopai=
-ring sequence for PKTDMA V2, returning before the hardware is ready.
+- [High] Unconditional replacement of msi_get_virq() with platform_get_irq_=
+byname() breaks PKTDMA V1 support.
+- [High] udma_v2_stop unconditionally writes to UDMA_CHAN_RT_PEER_REG(8), v=
+iolating PKTDMA V2 constraints.
+- [High] Incorrect num_rings initialization and fd_ring_id calculation for =
+PKTDMA V2 causes out-of-bounds array access and RX ring RT register aliasin=
+g.
+- [High] The IRQ handler is registered with IRQF_SHARED before the channel'=
+s work structure is initialized, creating a race condition.
+- [Medium] Missing cleanup on error path when platform_get_irq_byname() fai=
+ls in pktdma_v2_alloc_chan_resources().
+- [Medium] Invalid use of INIT_DELAYED_WORK_ONSTACK for heap-allocated dela=
+yed work object.
 --
 
---- Patch [18]: [PATCH v7 18/19] dmaengine: ti: k3-udma-v2: Update glue lay=
-er to support PKTDMA V2 ---
-commit e70a50b02c5e24b0a06466a8296de08ac78f41b1
+--- Patch [17]: [PATCH v7 17/19] dmaengine: ti: k3-udma-v2: Add support for=
+ PKTDMA V2 ---
+commit f4058832544fa5fe72bb0caead7472593369f2f4
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-    dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
-   =20
-    Update glue layer to support PKTDMA V2 for non DMAengine users.
+dmaengine: ti: k3-udma-v2: Add support for PKTDMA V2
 
-> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-> index bec4deb480e60..07952c4efee2d 100644
-> --- a/drivers/dma/ti/k3-udma-glue.c
-> +++ b/drivers/dma/ti/k3-udma-glue.c
-> @@ -267,6 +267,9 @@ static int k3_udma_glue_cfg_tx_chn(struct k3_udma_glu=
-e_tx_channel *tx_chn)
->  	const struct udma_tisci_rm *tisci_rm =3D tx_chn->common.tisci_rm;
->  	struct ti_sci_msg_rm_udmap_tx_ch_cfg req;
-> =20
-> +	if (!tisci_rm->tisci)
-> +		return 0;
-> +
+The PKTDMA V2 is different than the existing PKTDMA supported by the
+k3-udma driver. It introduces autopairing, static channel mapping,
+direct IRQs, and unified channel space.
+
+>     - Remote side configuration handled by DMA. So no need to write to
+>       PEER registers to START / STOP / PAUSE / TEARDOWN.
 
 [Severity: High]
-Does returning early here skip all TX channel configuration for PKTDMA V2?
+The commit message notes that there is no need to write to PEER registers
+for operations like STOP. However, does the existing udma_v2_stop() function
+still unconditionally write to UDMA_CHAN_RT_PEER_REG(8)?
 
-This skips configuring the fetch size, pause on error, and other
-essential parameters for the channel.
+If PKTDMA V2 hardware does not implement these registers, could this trigger
+an asynchronous external abort or bus fault when stopping the channel?
 
->  	memset(&req, 0, sizeof(req));
+> diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-pr=
+ivate.c
+> index 44c097fff5ee6..41299d3c3d91a 100644
+> --- a/drivers/dma/ti/k3-udma-private.c
+> +++ b/drivers/dma/ti/k3-udma-private.c
+> @@ -174,16 +174,20 @@ EXPORT_SYMBOL(xudma_is_pktdma);
 > =20
-[ ... ]
-> @@ -525,21 +528,26 @@ int k3_udma_glue_enable_tx_chn(struct k3_udma_glue_=
-tx_channel *tx_chn)
+>  int xudma_pktdma_tflow_get_irq(struct udma_dev *ud, int udma_tflow_id)
 >  {
->  	int ret;
+> -	const struct udma_oes_offsets *oes =3D &ud->soc_data->oes;
+> +	struct platform_device *pdev =3D to_platform_device(ud->dev);
+> +	char irq_name[10];
 > =20
-> -	ret =3D xudma_navss_psil_pair(tx_chn->common.udmax,
-> -				    tx_chn->common.src_thread,
-> -				    tx_chn->common.dst_thread);
-> -	if (ret) {
-> -		dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
-> -		return ret;
-> -	}
-> +	if (tx_chn->common.udmax->match_data->version =3D=3D K3_UDMA_V1) {
-> +		ret =3D xudma_navss_psil_pair(tx_chn->common.udmax,
-> +					    tx_chn->common.src_thread,
-> +					    tx_chn->common.dst_thread);
-> +		if (ret) {
-> +			dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
-> +			return ret;
-> +		}
-> =20
-> -	tx_chn->psil_paired =3D true;
-> +		tx_chn->psil_paired =3D true;
-> =20
-> -	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
-> -			    UDMA_PEER_RT_EN_ENABLE);
-> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
-> +				    UDMA_PEER_RT_EN_ENABLE);
-> =20
-> -	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
-> -			    UDMA_CHAN_RT_CTL_EN);
-> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
-> +				    UDMA_CHAN_RT_CTL_EN);
-> +	} else {
-> +		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
-> +				    UDMA_CHAN_RT_CTL_AUTOPAIR | UDMA_CHAN_RT_CTL_EN);
-> +	}
+> -	return msi_get_virq(ud->dev, udma_tflow_id + oes->pktdma_tchan_flow);
+> +	snprintf(irq_name, sizeof(irq_name), "tflow%u", udma_tflow_id);
+> +	return platform_get_irq_byname(pdev, irq_name);
+>  }
 
 [Severity: High]
-Does this need to poll for the completion of the channel autopairing
-sequence?
+Does this unconditional change to platform_get_irq_byname() break PKTDMA V1
+hardware?
 
-By returning immediately after setting UDMA_CHAN_RT_CTL_AUTOPAIR, the caller
-might begin submitting descriptors before the hardware is fully initialized
-or paired. The core k3-udma-v2.c dmaengine driver polls for
-UDMA_CHAN_RT_CTL_PAIR_COMPLETE after setting this bit.
+V1 devices rely on MSI interrupts and their device tree nodes might not
+contain named interrupt properties like "tflowX", causing interrupt lookups
+to fail for all V1 platforms.
+
+>  int xudma_pktdma_rflow_get_irq(struct udma_dev *ud, int udma_rflow_id)
+>  {
+> -	const struct udma_oes_offsets *oes =3D &ud->soc_data->oes;
+> +	struct platform_device *pdev =3D to_platform_device(ud->dev);
+> +	char irq_name[10];
+> =20
+> -	return msi_get_virq(ud->dev, udma_rflow_id + oes->pktdma_rchan_flow);
+> +	snprintf(irq_name, sizeof(irq_name), "rflow%u", udma_rflow_id);
+> +	return platform_get_irq_byname(pdev, irq_name);
+>  }
 
 [Severity: High]
-Since this adds V2-specific setup using UDMA_CHAN_RT_CTL_AUTOPAIR, do we
-also need to update k3_udma_glue_tdown_tx_chn() and=20
-k3_udma_glue_disable_tx_chn() for V2 hardware?
+As with xudma_pktdma_tflow_get_irq() above, will this also break V1 hardware
+that depends on msi_get_virq() for interrupt lookups?
 
-Currently k3_udma_glue_tdown_tx_chn() unconditionally executes a direct
-register write to UDMA_CHAN_RT_CTL_REG with just EN and TDOWN bits, which
-will clobber the UDMA_CHAN_RT_CTL_AUTOPAIR bit set here. This abruptly
-unpairs the channel while attempting to tear it down.
-
-Additionally, k3_udma_glue_disable_tx_chn() unconditionally writes 0 to
-UDMA_CHAN_RT_PEER_RT_EN_REG without checking the hardware version.
-
-> =20
->  	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn en");
->  	return 0;
+> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
+> index e7989b0b34cac..879042bff79a6 100644
+> --- a/drivers/dma/ti/k3-udma-v2.c
+> +++ b/drivers/dma/ti/k3-udma-v2.c
 [ ... ]
-> @@ -725,11 +732,18 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_g=
-lue_rx_channel *rx_chn)
->  	req.rx_chan_type =3D TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
->  	req.rx_atype =3D rx_chn->common.atype_asel;
-> =20
-> +	if (!tisci_rm->tisci) {
-> +		// TODO: look at the chan settings
-> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CFG_REG,
-> +				    UDMA_CHAN_CFG_FILT_EINFO | UDMA_CHAN_CFG_FILT_PSWORDS);
-> +		return 0;
+> +static int pktdma_v2_alloc_chan_resources(struct dma_chan *chan)
+> +{
+[ ... ]
+> +	if (uc->config.dir =3D=3D DMA_MEM_TO_DEV)
+> +		snprintf(irq_name, sizeof(irq_name), "tflow%u", irq_ring_idx);
+> +	else
+> +		snprintf(irq_name, sizeof(irq_name), "rflow%u", irq_ring_idx);
+> +	uc->irq_num_ring =3D platform_get_irq_byname(pdev, irq_name);
+> +	if (uc->irq_num_ring < 0)
+> +		return uc->irq_num_ring;
+
+[Severity: Medium]
+If platform_get_irq_byname() fails here, the direct return bypasses the
+err_res_free cleanup block. Does this leak the descriptor pool
+(uc->hdesc_pool) and the DMA rings allocated earlier in this function?
+
+> +
+> +	ret =3D request_irq(uc->irq_num_ring, udma_v2_ring_irq_handler,
+> +			  IRQF_SHARED | IRQF_TRIGGER_HIGH, uc->name, uc);
+> +
+> +	if (ret) {
+> +		dev_err(ud->dev, "chan%d: ring irq request failed\n", uc->id);
+> +		goto err_irq_free;
 > +	}
 > +
-
-[Severity: High]
-Does hardcoding UDMA_CHAN_CFG_FILT_EINFO and UDMA_CHAN_CFG_FILT_PSWORDS
-miss the rest of the actual channel configuration, like the fetch size?
-
->  	req.nav_id =3D tisci_rm->tisci_dev_id;
->  	ret =3D tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
->  	if (ret)
-[ ... ]
-> @@ -826,6 +843,14 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_g=
-lue_rx_channel *rx_chn,
->  		rx_ringfdq_id =3D k3_ringacc_get_ring_id(flow->ringrxfdq);
->  	}
-> =20
-> +	if (!tisci_rm->tisci) {
-> +		xudma_rflowrt_write(flow->udma_rflow, UDMA_RX_FLOWRT_RFA,
-> +				    UDMA_FLOWRT_RFA_RX_EINFO_PRESENT |
-> +				    UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT);
-> +		rx_chn->flows_ready++;
-> +		return 0;
-> +	}
+> +	uc->irq_num_udma =3D 0;
 > +
+> +	udma_reset_rings(uc);
+> +
+> +	INIT_DELAYED_WORK_ONSTACK(&uc->tx_drain.work,
+> +				  udma_check_tx_completion);
 
 [Severity: High]
-Will forcing these flags cause memory corruption if the software
-descriptors weren't configured with space for this metadata?
+Because request_irq() is called with IRQF_SHARED prior to initializing
+the delayed work structure, could a pending spurious interrupt or shared
+IRQ cause udma_v2_ring_irq_handler() to run concurrently?
 
-By unconditionally forcing UDMA_FLOWRT_RFA_RX_EINFO_PRESENT and
-UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT into the UDMA_RX_FLOWRT_RFA register,
-the hardware will write extended protocol information into the receive
-buffers. If the software did not allocate space for them (checked via
-rx_chn->common.epib and rx_chn->common.psdata_size in the TISCI path),
-could this overwrite adjacent packet data or exceed descriptor boundaries?
+If the handler processes a descriptor and calls schedule_delayed_work(),
+it would operate on uninitialized memory before INIT_DELAYED_WORK_ONSTACK()
+is executed.
 
->  	memset(&req, 0, sizeof(req));
-> =20
->  	req.valid_params =3D
+[Severity: Medium]
+Additionally, is INIT_DELAYED_WORK_ONSTACK() the correct macro to use here?
+
+The uc object is part of ud->channels which is allocated on the heap via
+devm_kcalloc() during setup. Using the _ONSTACK variant registers the
+object with lockdep's object tracker as a stack object, which could corrupt
+lockdep state tracking and leak memory in the tracker since there is no
+matching destroy_delayed_work_on_stack() on teardown. This pattern also
+appears in bcdma_v2_alloc_chan_resources().
+
 [ ... ]
-> @@ -1406,21 +1437,26 @@ int k3_udma_glue_enable_rx_chn(struct k3_udma_glu=
-e_rx_channel *rx_chn)
->  	if (rx_chn->flows_ready < rx_chn->flow_num)
->  		return -EINVAL;
+> @@ -1101,7 +1274,17 @@ static int udma_v2_probe(struct platform_device *p=
+dev)
 > =20
-> -	ret =3D xudma_navss_psil_pair(rx_chn->common.udmax,
-> -				    rx_chn->common.src_thread,
-> -				    rx_chn->common.dst_thread);
-> -	if (ret) {
-> -		dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
-> -		return ret;
-> -	}
-> +	if (rx_chn->common.udmax->match_data->version =3D=3D K3_UDMA_V1) {
-> +		ret =3D xudma_navss_psil_pair(rx_chn->common.udmax,
-> +					    rx_chn->common.src_thread,
-> +					    rx_chn->common.dst_thread);
-> +		if (ret) {
-> +			dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
-> +			return ret;
-> +		}
+>  	struct k3_ringacc_init_data ring_init_data =3D {0};
 > =20
-> -	rx_chn->psil_paired =3D true;
-> +		rx_chn->psil_paired =3D true;
-> =20
-> -	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
-> -			    UDMA_CHAN_RT_CTL_EN);
-> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
-> +				    UDMA_CHAN_RT_CTL_EN);
-> =20
-> -	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
-> -			    UDMA_PEER_RT_EN_ENABLE);
-> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
-> +				    UDMA_PEER_RT_EN_ENABLE);
-> +	} else {
-> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
-> +				    UDMA_CHAN_RT_CTL_AUTOPAIR |  UDMA_CHAN_RT_CTL_EN);
+> -	ring_init_data.num_rings =3D ud->bchan_cnt + ud->chan_cnt;
+> +	if (ud->match_data->type =3D=3D DMA_TYPE_BCDMA) {
+> +		ring_init_data.num_rings =3D ud->bchan_cnt + ud->chan_cnt;
+> +	} else if (ud->match_data->type =3D=3D DMA_TYPE_PKTDMA) {
+> +		ring_init_data.num_rings =3D ud->rflow_cnt;
+> +
+> +		ud->rflow_rt =3D devm_platform_ioremap_resource_byname(pdev, "ringrt");
+> +		if (IS_ERR(ud->rflow_rt))
+> +			return PTR_ERR(ud->rflow_rt);
+> +
+> +		ring_init_data.base_rt =3D ud->rflow_rt;
 > +	}
 
 [Severity: High]
-Does this also need to poll for the completion of the channel autopairing
-sequence, similar to the TX side?
+Is ring_init_data.num_rings incorrectly sized here for PKTDMA V2?
 
-[Severity: High]
-Since V2 channel enable logic is added here, do k3_udma_glue_tdown_rx_chn()
-and k3_udma_glue_disable_rx_chn() also need updates for V2 hardware?
+It is currently set to only ud->rflow_cnt. If this should be
+ud->tflow_cnt + ud->rflow_cnt, later calculations for fd_ring_id
+in udma_v2_alloc_rx_resources() (which computes ud->tflow_cnt + rflow->id)
+will generate IDs that exceed the allocated rings. Passing these
+out-of-bounds IDs to k3_ringacc_request_rings_pair() could read and write
+past the end of the ring arrays.
 
-k3_udma_glue_tdown_rx_chn() currently writes the teardown trigger to
-UDMA_CHAN_RT_PEER_RT_EN_REG, which V2 hardware ignores for teardown. The
-UDMA_CHAN_RT_CTL_EN bit would never clear, leading to a permanent failure
-in the polling loop (RX tdown timeout).
+Furthermore, does initializing ud->rflow_rt at offset 0 cause the RX flows
+to alias exactly over the TX flows' register space in hardware when
+rflow->reg_rt is configured during probe?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260724102115.2854=
--1-s-adivi@ti.com?part=3D18
+-1-s-adivi@ti.com?part=3D17
