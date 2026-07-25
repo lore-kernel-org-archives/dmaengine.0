@@ -1,121 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6547F1E492D;
-	Sat, 25 Jul 2026 12:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9D81494A8;
+	Sat, 25 Jul 2026 15:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784982936; cv=none; b=lFAQ1DOzGzgMCAMHhf3OcJibUIIWx2kBw8vXjWwaokBdtGww+j+6AiY9xCC+qGhr2GwoVDFwG8k9pADXQQYLSKJ6HN2lMBOq72ilsQgPcfJO1yNXpks40MIu8ziRmE5q5eEFYGiG/2iTzUPQZc0mbqInacpOMsTRB91ztKRS8p0=
+	t=1784993093; cv=none; b=jbUlHkk4H1JTIviFXikI85FghIehQSUgPOQ7GkqPTpckp3hJevmxqJUiswlbi7ByhFp91mxQHpQtTZpuyR2qppmYfATYotbWKF5aEITmIUyHK1tH4ZVm/BpiDAk/ZjnzUyqdIP7f0W01hYaQRKUwz86ZSys3iTyrAA5T/XTAzb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784982936; c=relaxed/simple;
-	bh=4qCQdaM9dOGRg5e8Y66mDNI9/3y8p18DT8QxyhsWwdA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=X/vM+GTgcXnDLiGE8qJIa+3/4BSvCzTmomVwcJy5hrTwBDMOy6OPMHrJD8ymv2/Mz2pWoOO07mI4vr0h2Y/RYPP7gds/eXAZ6nBxcPiYEbDOQFMBHxeq9yXqPqtLFhN47ojJlArJBbhhLLImost21tXOD1N6gesc/IqZ/6UTZpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZgYWc9fS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784993093; c=relaxed/simple;
+	bh=705DzC5cgsjSoiDYkMRyQ7CiNkY2R155gzrj/G5RcpI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mmU2IXFrKycF/XisnzoQkWfGFXT3lwsgTnxtqsM4e7oztCV5cPI8m8al77X5J+fME5XhZpmq1RVkeFiM8eGCpvSf9GjHUmBJDEqcokS5254xevfyC9E1l5AvLG3OxUnDXLvm1SSUwr1aYYPBvVwYi2z+yJq1cVzrpstm0hQcpVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OQufEFhe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZgYWc9fS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972861F000E9;
-	Sat, 25 Jul 2026 12:35:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OQufEFhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6BC1F000E9;
+	Sat, 25 Jul 2026 15:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784982935;
-	bh=14j3s6VceEsHb91H5pJ7MWrS8NMUkLwu4jqXDFTd81I=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZgYWc9fSvbyJjERuPdpzi/+toBAGz26GZlt/76EnWChuqUGL0fYeZivQCGpqW1dEW
-	 GsfsdQUvImrv7bvGPnTxVuP+ONtTRU0trzhw7PqwL9srDdUcyNwBgyuAJW96pE1jt4
-	 EH4/QCt1b2mvuBVgG2Ye7mPJ3kHG5BWakXD7nUKK+7vKSQUO5g/y1W1Ad54ZeBM/zp
-	 D+oeICXum5oJeCxl4maiDeoLhwejnQQKL1pqGm18V7PAPszStmhQ5NPnWhZbtpcLFe
-	 CkcRmVwS3n8KMPc8LfAQLJEnThxE5r9oKAnSRh2qOMtQuq28wBByuQNG93g6Es2QFB
-	 OskqaorlQ19Zw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] dmaengine: apple-admac: Add M3 generation ADMACs
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sasha Finkelstein" <k@chaosmail.tech>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260725-t603x-admac-v1-2-6a4dec023f02@chaosmail.tech>
-References: <20260725-t603x-admac-v1-0-6a4dec023f02@chaosmail.tech>
- <20260725-t603x-admac-v1-2-6a4dec023f02@chaosmail.tech>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 25 Jul 2026 12:35:34 +0000
-Message-Id: <20260725123534.972861F000E9@smtp.kernel.org>
+	s=k20260515; t=1784993091;
+	bh=qsGh62njhoKlewROetP2PvNKUr3a3BT6K5c3XMORfWc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OQufEFheAC7SqbrvLG1R2l/zb+kY0GUNTGO8s949cIv/7E8ADyC8Vnzmj/t1bdn6Y
+	 GKOI8WWejexTVkqWZ7RTJ0BmO223lS8IZulq/V3FxF0M/M4ueUO9Ln+2b3Qe3XsU2F
+	 COGEOTEDoHT30+or0iqq78vwXC7nSKILbXTz580sG/3tTlSrrzSl/MBoNQA0/GUk4Z
+	 LWpKiYMiEHXfMluV5W9ArtFhW4K30DwwhNhrnyylAHvZNtMQ4fM96H6qDFgveuEUDP
+	 ncjrWvDO4r1/Vudpz6Vx1u2yYzoX778fO2kV+ysbV4A0hjkimiZPprpw3mcm0/zo91
+	 3MoMVGH5G4DmQ==
+Date: Sat, 25 Jul 2026 17:24:48 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Cc: peter.ujfalusi@gmail.com, vkoul@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, nm@ti.com, ssantosh@kernel.org, 
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, vigneshr@ti.com, Frank.li@nxp.com, r-sharma3@ti.com, 
+	gehariprasath@ti.com
+Subject: Re: [PATCH v7 13/19] dt-bindings: dma: ti: Add K3 BCDMA V2
+Message-ID: <20260725-acoustic-orchid-tiger-a6be5f@quoll>
+References: <20260724102115.2854-1-s-adivi@ti.com>
+ <20260724102115.2854-14-s-adivi@ti.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260724102115.2854-14-s-adivi@ti.com>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-
-New issues:
-- [Low] Typo in the hardware data structure name for the Apple M1 (t8103) S=
-oC.
-
-Pre-existing issues:
-- [High] Tasklets are not killed on device unbind, leading to a use-after-f=
-ree when scheduled tasklets run after driver data is freed.
---
-
---- Patch [2]: [PATCH 2/2] dmaengine: apple-admac: Add M3 generation ADMACs=
- ---
-commit f948efc911901cc77f53f693f8dbf1d4ad04e169
-Author: Sasha Finkelstein <k@chaosmail.tech>
-
-dmaengine: apple-admac: Add M3 generation ADMACs
-
-This commit adds support for the ADMACs found on Apple t8122 and t603x SoCs.
-It introduces additional register writes required for correct operation on
-these platforms, and updates the device match table accordingly.
-
-> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-> index 14a5ee14a4815..7ee9a59081c1a 100644
-> --- a/drivers/dma/apple-admac.c
-> +++ b/drivers/dma/apple-admac.c
-
-[ ... ]
-
-> @@ -935,9 +954,18 @@ static void admac_remove(struct platform_device *pde=
-v)
->  	reset_control_rearm(ad->rstc);
->  }
-
-[Severity: High]
-This is a pre-existing issue, but does this code leave scheduled tasklets
-running after the driver is unbound?
-
-If the device is unbound via sysfs, admac_remove() is called and frees the
-IRQ, but it does not appear to stop scheduled tasklets for its channels.
-If an interrupt fires just before free_irq() and schedules a tasklet,
-the software tasklet won't be canceled.
-
-Since the driver uses devm-allocated memory for struct admac_data, that
-memory is automatically freed after admac_remove() returns. If the tasklet
-runs after this, could it lead to a use-after-free? Should we be calling
-tasklet_kill() for all active channels before returning?
-
-> +static const struct admac_hw admac_t8013_hw =3D {
-
-[Severity: Low]
-This isn't a bug, but should this be named admac_t8103_hw to match the
-apple,t8103-admac compatible string it targets?
-
-> +	.set_unk28 =3D false,
-> +};
+On Fri, Jul 24, 2026 at 03:50:46PM +0530, Sai Sree Kartheek Adivi wrote:
+> +  "#dma-cells":
+> +    const: 4
+> +    description: |
+> +      cell 1: Trigger type for the channel
+> +        0 - disable / no trigger
+> +        1 - internal channel event
+> +        2 - external signal
+> +        3 - timer manager event
 > +
-> +static const struct admac_hw admac_t8122_hw =3D {
-> +	.set_unk28 =3D true,
-> +};
+> +      cell 2: parameter for the trigger:
+> +        if cell 1 is 0 (disable / no trigger):
+> +          Unused, ignored
+> +        if cell 1 is 1 (internal channel event):
+> +          channel number whose TR event should trigger the current channel.
+> +        if cell 1 is 2 or 3 (external signal or timer manager event):
+> +          index of global interfaces that come into the DMA.
 > +
->  static const struct of_device_id admac_of_match[] =3D {
-> -	{ .compatible =3D "apple,t8103-admac", },
-> -	{ .compatible =3D "apple,admac", },
-> +	{ .compatible =3D "apple,t8122-admac", .data =3D &admac_t8122_hw },
-> +	{ .compatible =3D "apple,t8103-admac", .data =3D &admac_t8013_hw },
-> +	{ .compatible =3D "apple,admac", .data =3D &admac_t8013_hw },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, admac_of_match);
+> +          Please refer to the device documentation for global interface indexes.
+> +
+> +      cell 3: Channel ID for the peripheral
+> +        This is the mapped_channel_id assigned to the peripheral in the PSI-L
+> +        endpoint map. For XYMF peripherals (SPI, CRC32) each chip-select/FIFO
+> +        has a distinct channel ID; use the channel ID for the specific
+> +        direction and chip-select being requested. Use 0 for triggered
+> +        block-copy channels (cell 1 != 0).
+> +
+> +        Please refer to the device documentation for the channel map.
+> +
+> +      cell 4: ASEL value for the channel
+> +
+> +  interrupts:
+> +    minItems: 75
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260725-t603x-adma=
-c-v1-0-6a4dec023f02@chaosmail.tech?part=3D2
+You can drop this
+
+> +    maxItems: 75
+> +    description:
+> +      Interrupts for DMA channels.
+> +
+> +  interrupt-names:
+> +    minItems: 75
+
+And this as well, implied by maxItems.
+
+With these:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
