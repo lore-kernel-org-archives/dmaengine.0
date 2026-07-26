@@ -1,38 +1,40 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043122F546D
-	for <dmaengine@vger.kernel.org>; Sat, 25 Jul 2026 19:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net (zg8tmtyylji0my4xnjqumte4.icoremail.net [162.243.164.118])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E4152DB79F;
+	Sun, 26 Jul 2026 05:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.164.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785008629; cv=none; b=rIz8jcagARJ/Ne+Z4Ys9ZFtP6pVTSZ/hmIEJyFQz+ctjui5w27/tOn+AFUGsT8VeBHxiojA3zFWC9NGHIGTGr1IsnhJzi+xub4HGICoI3RuUwQ/KYkjn68Ju1q2kRvSNIBJCa8oC6Fqy9xqrhy9rfDGmvC8L9lQr4Csy8UXPIHA=
+	t=1785043862; cv=none; b=Uiy4nRRAcyQWXlxDrx27NQOdoqXY/XXELyXHBHyUiHPYd+cIXH8sDCqOKV9JuK3g2tPWcBW1IrRWVimVCsg2bFYhe1KVLhvT/5UOsilAqQ49b9eK9AzLW96nylBt9ECcJWnzVas90No5TME6EeLxpA8CmHhc7zn9cs/gxi5LTCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785008629; c=relaxed/simple;
-	bh=+qwrI2xpYruIfMm426+7TsdzhEoc3TunCN7d5QjPkTI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XQhMK4QXDNdOM5HR4KFsmxGA71AIJgIN0GPjJ7idNa10U69ap0+l06vGMzyqJylphCIgPgwZ5/TzBsoKrJ+eJnlSeVu7exSwyAwzpufiP4TQOetyZXf2eGGtVuIVrW6bl1tDE500BBayJseDoihbzsH/jC7bl16sAbN5PlPAgR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLKiNhIU; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLKiNhIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745561F000E9;
-	Sat, 25 Jul 2026 19:43:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785008627;
-	bh=KI58gjSe9LjPAnGCmOQgCMyqNY1sP6oWfg6T10xeHC0=;
-	h=From:To:Cc:Subject:Date;
-	b=FLKiNhIUMon/4onpAOg/PKaPJgTsl6Yi0ZPzmfRswLa2OrtEtnb7VT9FPWNZ7JRil
-	 l/rSm7WGWRPB3U3VhUHVXb9dGM9Ok5O1dzg6T41Wdy9cZEIcvuk5QhzVJlDJMnpEme
-	 ay9Zb9zkUGlOE1wBinPw6N8wbl1eNNod2d8TOS1YTWODwhzcKdFmNYRYYp3pwEvUlG
-	 zrxbNcR/HVtB7phd3lTh9xQrZblCxfP/jJPGWKSu8y2OI6XcV3c8Ycx2vD5j9zwal+
-	 3vHr/biY/0r4ug16xvRBspKuUqiMEhMaBF+2kSJZZW2raOl11TcfEJvSqzp6RYrTqX
-	 uHOB6los/Ykcg==
-From: Vladimir Zapolskiy <vz@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org
-Subject: [PATCH] dmaengine: pl330: Move device specific debugfs file to its directory
-Date: Sat, 25 Jul 2026 22:43:43 +0300
-Message-ID: <20260725194343.494973-1-vz@kernel.org>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1785043862; c=relaxed/simple;
+	bh=OiBdca1MBotMVbHv2sxz0zgmYzW5WSI9HVbA+/945lM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=d8ir1khFMGrxIoJKZ5Yn6duTVxuolHFAwwDjvCVEdIJ/hWYB+GKfzgZP30gMJPGyfCgea5hP7dU3kuMABSDSZOZipcLx29o4SJCf8y9UuyifvHNfA4AecdKk20fBe9qXS6cR/wLbJMC8KkU8ctYxXGFNlZcEvJbBS/EN70dTHtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn; spf=pass smtp.mailfrom=zju.edu.cn; arc=none smtp.client-ip=162.243.164.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zju.edu.cn
+Received: from zju.edu.cn (unknown [10.98.66.117])
+	by mtasvr (Coremail) with SMTP id _____wB3T_yHm2VqXL0+AA--.15401S3;
+	Sun, 26 Jul 2026 13:30:47 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.98.66.117])
+	by mail-app2 (Coremail) with SMTP id zC_KCgBHt8yGm2VqrsI5Aw--.61727S3;
+	Sun, 26 Jul 2026 13:30:47 +0800 (CST)
+From: Fan Wu <fanwu01@zju.edu.cn>
+To: vkoul@kernel.org,
+	sven@kernel.org,
+	j@jannau.net
+Cc: neal@gompa.dev,
+	povik+lin@cutebit.org,
+	asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [RFC PATCH 1/1] dmaengine: apple-admac: suppress bind/unbind sysfs attributes
+Date: Sun, 26 Jul 2026 05:29:50 +0000
+Message-Id: <20260726052950.37062-2-fanwu01@zju.edu.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260726052950.37062-1-fanwu01@zju.edu.cn>
+References: <20260726052950.37062-1-fanwu01@zju.edu.cn>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,36 +42,66 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zC_KCgBHt8yGm2VqrsI5Aw--.61727S3
+X-CM-SenderInfo: qrstjiaswqq6lmxovvfxof0/
+X-CM-DELIVERINFO: =?B?VX5ItQXKKxbFmtjJiESix3B1w3vZ3A9ovKVTomAyoQazvoRs/NHSP8GI2EvgeEEW7R
+	sfncGSG+szpQCInt5Y8rbJUI2Pg//e6j4FKdZm0BtzyOi6Gk4fn5lSG9u6ag7PbtwWS0tV
+	+3ZpGbDuFwA7FmFP7M2p9E6mavGmQbzmcFsnzP86
+X-Coremail-Antispam: 1Uk129KBj93XoW7urW7Kw1UCw43CF47XF4DKFX_yoW8XFW5pF
+	WfGFW3uFyUKF43Jan8ZF1UuFyFy3W7CrWYgry7Kw45uFs8Xry7ZrWkKFWjkFZ8ArWrWF42
+	yrWFyFy5WayYy3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUU9Gb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
+	xVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc804V
+	CY07AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AK
+	xVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48Icx
+	kI7VAKI48JM4x0Y48IcxkI7VAKI48G6xCjnVAKz4kxMxAIw28IcxkI7VAKI48JMxC20s02
+	6xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_Jr
+	I_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v2
+	6r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj4
+	0_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8
+	JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8-6pPUUUUU==
 
-Under DMA framework every DMA device gets its dedicated directory
-dmaengine/$device_name in debugfs to store any supplementary data
-accessible from userspace. This change moves a single registered
-debugfs file of each PL330 device from debugfs top directory to the
-device specific directory, the file is renamed to "stats" to match
-the most popular name among all DMA device debugfs files.
+apple-admac stores its dma_device and channels in devm-managed memory and
+does not implement dma_device.device_release. At registration, the
+DMAengine core emits a diagnostic that the driver is not safe to unbind
+while in use, and on channel unregister it emits WARN_ONCE if a channel
+still has clients. admac_data is released by devres after admac_remove()
+returns, so if a client still holds a channel at that point it may
+reference the freed dma_chan and admac_data.
 
-The S_IFREG mask is dropped as excessive for debugfs_create_file()
-function.
+As the controller is a fixed SoC resource, remove the standard
+driver-core sysfs bind/unbind controls. It also opts the driver out of
+CONFIG_DEBUG_TEST_DRIVER_REMOVE.
 
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+This RFC does not define behavior for other removal paths, such as
+device or DT-overlay removal. Guidance is requested on whether this
+restriction is appropriate, or whether the driver should retain manual
+bind/unbind support.
+
+This issue was found by an in-house static analysis tool.
+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 ---
- drivers/dma/pl330.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/apple-admac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 25ba84b18704..9736eb24e5ac 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -2952,8 +2952,7 @@ DEFINE_SHOW_ATTRIBUTE(pl330_debugfs);
- 
- static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
- {
--	debugfs_create_file(dev_name(pl330->ddma.dev),
--			    S_IFREG | 0444, NULL, pl330,
-+	debugfs_create_file("stats", 0444, pl330->ddma.dbg_dev_root, pl330,
- 			    &pl330_debugfs_fops);
- }
- #else
--- 
-2.51.0
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 04bbd774b3b4..b448ee323454 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -946,6 +946,7 @@ static struct platform_driver apple_admac_driver = {
+ 	.driver = {
+ 		.name = "apple-admac",
+ 		.of_match_table = admac_of_match,
++		.suppress_bind_attrs = true,
+ 	},
+ 	.probe = admac_probe,
+ 	.remove = admac_remove,
+--
+2.34.1
 
