@@ -1,132 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4273E63A8
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813EC3C457A
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187054; cv=none; b=Vl5H6QJ9RGtWkL7B9S4kpFfkg9stMBX+zv4auUIoHptNOQHzNH2U8whZe3VUrxpGLeFBiEsTUKtuEm+IIF1ccoMXL921SBqx8id9RcolGUs1nl7xgGB6gC90ik2nGE94ascj2QMM2FcuFVsOlcsdWijXkk5Ed3ukTHLeeh3GFBU=
+	t=1785187100; cv=none; b=s3oIomaE7bIvuP/IUJYrjPXlRB0xBFK9dKzElK787b6S1s3ojVPr2qcpCGkpGbPhdVDZb/kxJZFBo9xSkv9I3o1SIDz2d4lVKDiHJ3Q7suO2lTPNfTxtE3pfES9V0t/2NUb5YJiMdv/4a0gs0i6fce9ziMhMkTOKbDetabgUfys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187054; c=relaxed/simple;
-	bh=b9tiCO1OEfgWSVQbJEY2wsk8pg7BiFIiYZE5skOpdc8=;
+	s=arc-20240116; t=1785187100; c=relaxed/simple;
+	bh=0LreWxq7dh/W89hY4+dtdlHcPXf+cNui79nHRub8arY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Y2xagnA9gMaPGrXBoUM7Dx797NphAjFwSk+lkxrrZd0OAn81aHBZoj5R85eIKbXhjKJq6NHoxV4bofv+CCI1IRqMwXlmgjiORbn7w+E0OXWHUu2FzOMZ7K718usxG4NlyedwAC4Nytap2wqraCHmRrcYh51CWXMG6qnXHmPf2C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFXPk+Dx; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Rg5jfNdzULENDwkMO8lG1phPKP/5dWOtYAcgEGZsJ1yd1GtTnmrspefnj+DAd7sprEpdxUt3v44CldIZRvfrKOluw4ap7TsAxIgzGiVD8E/L5mJpE9a5eEjefpe46+ZqNIPI1fv+wko28K7fpDbE4IpqWnWlET8QKA4AUlnZuqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g4Rznu50; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFXPk+Dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31BE1F00A3A;
-	Mon, 27 Jul 2026 21:17:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g4Rznu50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54C01F000E9;
+	Mon, 27 Jul 2026 21:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187053;
-	bh=fZcMU+mU+B96r9a1R3yG9zY+ZS+ANGqbvRK4Nhv4wQE=;
+	s=k20260515; t=1785187099;
+	bh=UFlyY3Zao484n6vRpDz9lI2OfB45D/a0yCdsrZ6DdRw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=jFXPk+DxXwWiGIX42WoohhyW3yBkR/IF5ox2EOTx9YD2hYF4g362hSxE9sdCqY7D5
-	 4LYL7g4MjV9IX5+ivwJnSCXCq/he+6L9efbFHU4Td1cyilZ6/ZgB0pREOG161cFtSh
-	 opf5xS/qNT425fcky55s3QB855q4vgy2ox/pRYoRAoVPfx5bSiOb0uhg7/Gsrfs48H
-	 eBIiF8QdIhyPtknIWsnsNqwb9QRbP51bYlcH6w93MGikYMSai77hH4sk+LOZ4Ariwz
-	 KmRSyhPYnqdy+1XBEbrFCsAQ+xBakS8J5h0+98v8K6Ms4Z2aIGc+CgrIF30qHXOvwt
-	 tXxbOyN4Q1Y7g==
+	b=g4Rznu50SeMpGQ5UFL+E6BF0FTRjT1wCtlWWghYNP+IvNTtCrrwu8BvP6/gOTM2PU
+	 I5SD6A1fAr7BbECGiT/taowpsxJ44GbCLna/5p6yHkoVACi4EuA7QvlmyD0lpU8FSj
+	 Fq1hNmV0li/4ZatAvq8k6HnnG8CwnAjJAlHzmWdSoOTBFaiWajyL/FTLfwYFR+EDsH
+	 jMKgDAICLRkgqJaxC9lrtANZsXYVAqq3oWF9QpjvuMB3vqQK0Lzi790biiCAVF1o8H
+	 SgmQikZvuaRHuJ22YIKr2NhEeLNJTK6vNePK4hcTaeVVjrp+PLbtzziKrfuAaR8tMF
+	 SigTcpzF+3XlQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 52/64] dmaengine: tegra210-adma: kill vchan BH on
- teardown
+Subject: Re: [PATCH v2 55/64] dmaengine: dma-axi-dmac: use dma_chan_kill_bh
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <131ec17f48b91f3981df2d5e84fae5d43195d32b.1785183549.git.allen.lkml@gmail.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <8b42f611df2e037246dbf58d21f3d3bfffe17de1.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <131ec17f48b91f3981df2d5e84fae5d43195d32b.1785183549.git.allen.lkml@gmail.com>
+ <8b42f611df2e037246dbf58d21f3d3bfffe17de1.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:17:32 +0000
-Message-Id: <20260727211732.C31BE1F00A3A@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:18:18 +0000
+Message-Id: <20260727211818.E54C01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
+New issues:
+- [Low] Several other DMA drivers fail to build because they still explicit=
+ly reference the removed `task` member in `struct virt_dma_chan`.
+
 Pre-existing issues:
-- [High] Incorrect ordering of bottom-half termination and IRQ freeing leav=
-es a window for spurious execution and use-after-free.
-- [High] Requesting the IRQ before powering up the device via Runtime PM ca=
-uses a kernel panic if a pending or spurious interrupt fires.
+- [High] axi_dmac_terminate_all() frees active descriptors without clearing=
+ the vc->cyclic pointer, leading to a Use-After-Free in the completion bott=
+om half.
+- [High] The driver lacks a devm action or a remove callback to explicitly =
+disable the DMA hardware upon device unbind, causing system hangs if the cl=
+ock is disabled while a transfer is active.
 --
 
---- Patch [52]: [PATCH v2 52/64] dmaengine: tegra210-adma: kill vchan BH on=
- teardown ---
-commit acf1e1ab4d7c08f6577663273485ed69a1d42e71
+--- Patch [55]: [PATCH v2 55/64] dmaengine: dma-axi-dmac: use dma_chan_kill=
+_bh ---
+commit d769925844316e4d839799af39da3b91a09472d0
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: tegra210-adma: kill vchan BH on teardown
+dmaengine: dma-axi-dmac: use dma_chan_kill_bh
+   =20
+virt-dma now dispatches completion callbacks through per-channel BH
+work instead of its tasklet. Cancel that work during teardown before
+channel storage is released.
 
-Use dma_chan_kill_bh() for virt-dma cleanup.
-
-> diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-> index ceaee1e33e68a..598abcc4edaa1 100644
-> --- a/drivers/dma/tegra210-adma.c
-> +++ b/drivers/dma/tegra210-adma.c
-> @@ -811,7 +811,7 @@ static void tegra_adma_free_chan_resources(struct dma=
-_chan *dc)
+> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> index d47ff27e1408f..d26bfa852806f 100644
+> --- a/drivers/dma/dma-axi-dmac.c
+> +++ b/drivers/dma/dma-axi-dmac.c
+> @@ -1195,9 +1195,11 @@ static int axi_dmac_detect_caps(struct axi_dmac *d=
+mac, unsigned int version)
+>  	return 0;
+>  }
 > =20
->  	tegra_adma_terminate_all(dc);
->  	vchan_free_chan_resources(&tdc->vc);
-> -	tasklet_kill(&tdc->vc.task);
-> +	dma_chan_kill_bh(&tdc->vc.chan);
->  	free_irq(tdc->irq, tdc);
+> -static void axi_dmac_tasklet_kill(void *task)
+> +static void axi_dmac_kill_bh(void *data)
+>  {
+> -	tasklet_kill(task);
+> +	struct dma_chan *chan =3D data;
+> +
+> +	dma_chan_kill_bh(chan);
+>  }
 
-[Severity: High]
-This is a pre-existing issue, but does this ordering leave a window for a
-use-after-free?
+[Severity: Low]
+Does this patch series miss updates to other drivers?
 
-If a delayed or spurious interrupt fires after dma_chan_kill_bh() flushes t=
-he
-bottom-half, but before free_irq() unregisters the interrupt, couldn't the
-interrupt handler execute and reschedule the bottom half via
-vchan_cyclic_callback()?
+Several other DMA drivers fail to build because they still explicitly
+reference the removed task member in struct virt_dma_chan. For example:
 
-Because free_irq() only waits for hardirq handlers and does not flush pendi=
-ng
-bottom halves, this rescheduled bottom half could execute asynchronously af=
-ter
-the channel teardown completes and the client driver has freed its buffers.
-
-Would it be safer to call free_irq() before dma_chan_kill_bh() to ensure
-hardware events are disabled before flushing the work?
-
->  	pm_runtime_put(tdc2dev(tdc));
-> =20
-
-[Severity: High]
-This is also a pre-existing issue, but looking at the allocation side in
-tegra_adma_alloc_chan_resources(), is it safe to request the IRQ before
-powering up the device?
-
-drivers/dma/tegra210-adma.c:tegra_adma_alloc_chan_resources() {
+drivers/dma/qcom/bam_dma.c:bam_dma_remove() {
     ...
-    ret =3D request_irq(tdc->irq, tegra_adma_isr, 0, dma_chan_name(dc), tdc=
-);
-    if (ret) {
-        ...
-    }
-
-    ret =3D pm_runtime_resume_and_get(tdc2dev(tdc));
+    tasklet_kill(&bdev->channels[i].vc.task);
     ...
 }
 
-If the interrupt line is already active from a previous session or a spurio=
-us
-hardware event, the CPU could immediately execute tegra_adma_isr() upon IRQ
-registration.
+Should these drivers be updated to use dma_chan_kill_bh() as well?
 
-Since tegra_adma_isr() unconditionally reads the ADMA_CH_INT_STATUS registe=
-r,
-and the device clock is disabled before pm_runtime_resume_and_get(), can
-this access to unclocked hardware cause a synchronous external abort?
+[ ... ]
+
+> @@ -1302,8 +1304,8 @@ static int axi_dmac_probe(struct platform_device *p=
+dev)
+>  	 * Put the action in here so it get's done before unregistering the DMA
+>  	 * device.
+>  	 */
+> -	ret =3D devm_add_action_or_reset(&pdev->dev, axi_dmac_tasklet_kill,
+> -				       &dmac->chan.vchan.task);
+> +	ret =3D devm_add_action_or_reset(&pdev->dev, axi_dmac_kill_bh,
+> +				       &dmac->chan.vchan.chan);
+
+[Severity: High]
+This is a pre-existing issue, but can the system hang if the driver is
+unbound while a transfer is active?
+
+The driver relies entirely on devres for teardown and lacks an explicit
+remove callback or devm action to halt the DMA hardware.=20
+
+In axi_dmac_probe(), the clock is enabled via devm_clk_get_enabled(). If the
+driver is forcefully unbound via sysfs, devres unwinding will disable the
+clock.=20
+
+Disabling the clock while the AXI DMA controller is actively performing bus
+transactions could stall the AXI bus.
+
+Should an action be added here to gracefully halt the DMA engine prior to
+the clock being disabled?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does
+axi_dmac_terminate_all() safely handle cyclic descriptor termination?
+
+When a cyclic transfer period completes, it sets vc->cyclic to the active
+descriptor and schedules the bottom half.=20
+
+If a client concurrently calls dmaengine_terminate_async(),
+axi_dmac_terminate_all() frees the active descriptors without clearing the
+vc->cyclic pointer:
+
+drivers/dma/dma-axi-dmac.c:axi_dmac_terminate_all() {
+    ...
+    list_splice_tail_init(&chan->active_descs, &head);
+    spin_unlock_irqrestore(&chan->vchan.lock, flags);
+
+    vchan_dma_desc_free_list(&chan->vchan, &head);
+    ...
+}
+
+When the scheduled BH runs, could it dereference the dangling vc->cyclic
+pointer to fetch the callback, resulting in a use-after-free?
+
+>  	if (ret)
+>  		return ret;
+>
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D52
+t.allen.lkml@gmail.com?part=3D55
