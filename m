@@ -1,184 +1,162 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C743E638E;
-	Mon, 27 Jul 2026 21:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C9B3E51FF
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187025; cv=none; b=WFRxSzQQJTwnwM4PIF6rMtR/1QhWhNFL5/1fIkpUpimaeHSRMp4hFow564upJ6Y9ipCdDO9JOK1+cbhnVjcASc4+ecQrGET7TRLCPN7cFcCd39QLxLyXas/w/RxC/1Ob9DtcQ4lfZzP10xooL9WCaFwnnjq93tFwrOIvHccPwOY=
+	t=1785187031; cv=none; b=EypziZ/oUMnpvYzml58huX4miw9jvMZlcznsJdbbJImDgu4xrHvYddRl0Dy2FyHCPiol3v9CGTNlIzwRwKl/yMiknX0zE9hXOzIiVBRzbq3tD2/7o9L6F9Le0jFgBlBFjRiyfSA9wyztGrJfJ/fRsUMn1jdqPY/70Sjhk3nAkUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187025; c=relaxed/simple;
-	bh=mTMHCQMkexpcZ65759/ciESTDfl4VErA/dDxQ8QlzdY=;
+	s=arc-20240116; t=1785187031; c=relaxed/simple;
+	bh=GmBeIEWzPxxMAc3tJtwIXzALSaf6cuyuQA+vzs/rbYY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iteK5etAANf0BUBgpV+VvwrjsVhyRACNe/o6c/eEJosPK08PfCjTLuqtnAKmOnfOeUY5zVUTMM+LOEWyFKQiq9w/D4uiLL28QbqMWqpPzdsqvoaRrudHeEK7s3qPiXw1OWViSdBHi9pFnbjRYj7quliSzB8Ccza4EGkmfdkLfEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngCb/bk9; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=P4TiGNTeKW1DPpSSzifyHSgoihB3EbK36roUghVG6bKqeY6OVgtAt1OHC7FCFh4EV0yH0ePtnqQe+gmLHlkaB+0kZvC3rh0s8JFRJz/eD6vscSwHmkD6TmoHgVavUegBB5tzjgpdpQbJJSWrEbFqVooEd5awhj47VJYhf4kmdT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6+HAAVl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngCb/bk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED74A1F000E9;
-	Mon, 27 Jul 2026 21:17:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6+HAAVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9831E1F000E9;
+	Mon, 27 Jul 2026 21:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187023;
-	bh=Y5W89RwgpT1IzwIFNOD/KCdQJtXOe4yIlfF14Qqn9Wo=;
+	s=k20260515; t=1785187029;
+	bh=gnMBXK3V5hiEtNlM5ektR75Mvi5Na1eH/wfrh3ixOHI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ngCb/bk9EOqbD8ERnfZzf8eyeOFrHsxJAV9Ii14pcEFT3qG3yTGrt2UBJg87TGGeq
-	 IEbChLayapS75i5CuP25+BeHK2pBpVYHL1Sm+bPOmwaBNK5RTF448wZzLSiJsDll3M
-	 XTQ3vnnxGAXNKWn0MQiz0tUHjYZh4IPkFkRtfj/6513x0KQgRctrmGc82/01NF9gfi
-	 cHSQyc8gT8c6/ZuwBTAv3s/lgvFJgRhnC7bkTMj44+G5w3Ue6hP1cZ2kl9MKj3ywxN
-	 x3G7x4x4U99k9yrqGwvUoLjPGAORAMRwzNhF035DqP/5r50cK/jqf1wdMd60kgyuWN
-	 3BnbzDV4Ln2Sw==
+	b=F6+HAAVlg0YWZwbJqruBimn01VF7fYMOBgXA+e0/6e+74Whz9Q/A4b357P81cf0/7
+	 ESM3oa0C/7+T68Yezpd0jHdU3oCTCC6z11+CauY/upCYA6XimNqfN623Xv9QdkIbNb
+	 QZpZ3c3VKiaGOvQ48MpwbQizosRyZ3WxkyDLgAh9DPvZAl9GOTIhN/3ePRua1SrkgM
+	 5yUSlzFc0P6CEZ1zuMGh1EFWwPjsoDZJXTqwpU1/zHXq5Y8W5v3bCeYOKRl8tedLnC
+	 xmnIandlnr3202yEHke+/2Fj1VFVmq+T3B88o3HJ3x2etf4DeN8eXbfamJA9IuT9Me
+	 VBu4zQqZ7Y3Zw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 46/64] dmaengine: imx-sdma: kill vchan BH on teardown
+Subject: Re: [PATCH v2 53/64] dmaengine: fsl-qdma: use dma_chan_kill_bh
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <10f4e15741836cf24f08cdaf935da3260dea0250.1785183549.git.allen.lkml@gmail.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <bfcda179429c502ce7633b7858f07f8050999d8b.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <10f4e15741836cf24f08cdaf935da3260dea0250.1785183549.git.allen.lkml@gmail.com>
+ <bfcda179429c502ce7633b7858f07f8050999d8b.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:17:02 +0000
-Message-Id: <20260727211702.ED74A1F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:17:09 +0000
+Message-Id: <20260727211709.9831E1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Kernel OOPS on module removal due to uninitialized list head in ch=
-annel 0.
-- [High] Acquiring an uninitialized spinlock for channel 0 during teardown =
-causes a kernel BUG.
-- [High] Accessing hardware registers while clocks are disabled causes a sy=
-nchronous external abort.
-- [High] Unbalanced clock disables in `sdma_remove` trigger refcount underf=
-low warnings.
-- [High] Use-After-Free race condition in `sdma_update_channel_loop` during=
- concurrent termination.
+- [High] Prematurely removing channels from the `dmadev->channels` list in =
+`fsl_qdma_cleanup_vchan()` bypasses core DMA engine unregistration, leading=
+ to resource leaks and Use-After-Free vulnerabilities.
+- [High] The driver fails to halt the DMA engine during device removal and =
+tears down IRQs before unregistering the DMA controller.
+- [High] Unconditionally destroying shared DMA pools in `fsl_qdma_free_chan=
+_resources()` causes a Use-After-Free for other active channels.
 --
 
---- Patch [46]: [PATCH v2 46/64] dmaengine: imx-sdma: kill vchan BH on tear=
-down ---
-commit 3996df4e4fdc79870fd89eac795a9295e1141104
+--- Patch [53]: [PATCH v2 53/64] dmaengine: fsl-qdma: use dma_chan_kill_bh =
+---
+commit 705da09605a777fa7dd32343007b9e054bcb5942
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: imx-sdma: kill vchan BH on teardown
+dmaengine: fsl-qdma: use dma_chan_kill_bh
 
-This commit modifies the virt-dma cleanup path to use dma_chan_kill_bh()
-during driver teardown.
+virt-dma now dispatches completion callbacks through per-channel BH
+work instead of its tasklet. Cancel that work during teardown before
+channel storage is released.
 
-> --- a/drivers/dma/imx-sdma.c
-> +++ b/drivers/dma/imx-sdma.c
-> @@ -2399,11 +2399,11 @@ static void sdma_remove(struct platform_device *p=
-dev)
->  	int i;
-> =20
->  	devm_free_irq(&pdev->dev, sdma->irq, sdma);
-> -	/* Kill the tasklet */
-> +	/* Kill the channel BH */
->  	for (i =3D 0; i < MAX_DMA_CHANNELS; i++) {
->  		struct sdma_channel *sdmac =3D &sdma->channel[i];
-> =20
-> -		tasklet_kill(&sdmac->vc.task);
-> +		dma_chan_kill_bh(&sdmac->vc.chan);
->  		sdma_free_chan_resources(&sdmac->vc.chan);
+Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+
+> diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+> index df843fad0ece5..e0fb39fe821c9 100644
+> --- a/drivers/dma/fsl-qdma.c
+> +++ b/drivers/dma/fsl-qdma.c
+> @@ -1255,7 +1255,7 @@ static void fsl_qdma_cleanup_vchan(struct dma_devic=
+e *dmadev)
+>  	list_for_each_entry_safe(chan, _chan,
+>  				 &dmadev->channels, vchan.chan.device_node) {
+>  		list_del(&chan->vchan.chan.device_node);
 
 [Severity: High]
-This is a pre-existing issue, but does iterating over all channels here lead
-to a null pointer dereference for channel 0?
+This is a pre-existing issue, but does removing this channel from the
+dmadev->channels list here bypass the core DMA engine unregistration?
 
-Channel 0 intentionally skips vchan_init() during probe, leaving its list
-heads 0-initialized. When sdma_free_chan_resources() calls
-vchan_synchronize() for channel 0, it executes:
+If the driver empties the channel list before the core DMA framework
+unregisters it in fsl_qdma_remove():
 
-drivers/dma/virt-dma.h:vchan_synchronize() {
-    ...
-    list_splice_tail_init(&vc->desc_terminated, &head);
+drivers/dma/fsl-qdma.c:fsl_qdma_remove() {
+        ...
+        fsl_qdma_cleanup_vchan(&fsl_qdma->dma_dev);
+        ...
+        dma_async_device_unregister(&fsl_qdma->dma_dev);
+}
 
-Could this evaluate an empty list on the null next pointer and cause a pani=
-c?
+The framework's cleanup loop will be silently skipped:
 
+drivers/dma/dmaengine.c:dma_async_device_unregister() {
+        ...
+        list_for_each_entry_safe(chan, n, &device->channels, device_node)
+                __dma_async_device_channel_unregister(device, chan);
+        ...
+}
 
-[Severity: High]
-This isn't a bug introduced by this patch, but does calling
-sdma_free_chan_resources() on channel 0 also attempt to acquire an
-uninitialized spinlock?
+Could this leave sysfs entries exposed and cause a use-after-free when
+the underlying memory is freed?
 
-During teardown, sdma_terminate_all() executes:
-
-drivers/dma/imx-sdma.c:sdma_terminate_all() {
-    ...
-    spin_lock_irqsave(&sdmac->vc.lock, flags);
-
-Since vchan_init() is skipped for channel 0, the lock remains uninitialized
-from devm_kzalloc. Can this result in a bad magic system crash?
-
-
-[Severity: High]
-This is a pre-existing issue, but does writing to the hardware registers
-during this loop cause a synchronous external abort?
-
-When iterating over all channels, unallocated channels (or when all channels
-are inactive) will have the ipg and ahb clocks disabled.
-
-sdma_free_chan_resources() calls sdma_terminate_all(), which invokes
-sdma_disable_channel() doing:
-
-drivers/dma/imx-sdma.c:sdma_disable_channel() {
-    ...
-    writel_relaxed(BIT(channel), sdma->regs + SDMA_H_STATSTOP);
-
-Writing to an i.MX SDMA register while the IP block clocks are gated
-typically causes a hardware bus fault. Is there a way to verify the clocks
-are enabled before this write?
-
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this cleanup loop
-cause clock refcount underflow warnings?
-
-sdma_free_chan_resources() unconditionally calls:
-
-drivers/dma/imx-sdma.c:sdma_free_chan_resources() {
-    ...
-    clk_disable(sdma->clk_ipg);
-    clk_disable(sdma->clk_ahb);
-
-Since clk_enable() is only invoked dynamically when a client requests a
-channel, calling disable on unallocated channels seems unbalanced. Could th=
-is
-break clock tracking?
-
-
-[Severity: High]
-This is a pre-existing issue, but is there a use-after-free race condition
-in sdma_update_channel_loop() during concurrent termination?
-
-sdma_update_channel_loop() drops the lock to invoke the callback:
-
-drivers/dma/imx-sdma.c:sdma_update_channel_loop() {
-    ...
-    spin_unlock(&sdmac->vc.lock);
-    dmaengine_desc_get_callback_invoke(&desc->vd.tx, NULL);
-    spin_lock(&sdmac->vc.lock);
-
-    /* Assign buffer ownership to SDMA */
-    bd->mode.status |=3D BD_DONE;
-
-If a concurrent thread calls dmaengine_terminate_sync(), it can take the
-lock, move the active descriptor to the terminated list, and schedule the
-terminate_worker which frees the descriptor memory.
-
-When the IRQ thread reacquires the lock, it writes to bd->mode.status. Since
-bd points inside the freed descriptor, does this overwrite freed memory?
-
+> -		tasklet_kill(&chan->vchan.task);
+> +		dma_chan_kill_bh(&chan->vchan.chan);
 >  	}
->
+>  }
+
+[Severity: High]
+This is also a pre-existing issue, but does the driver fail to halt the
+DMA engine during device removal?
+
+Looking at fsl_qdma_remove(), IRQs are destroyed while the controller
+might still be active:
+
+drivers/dma/fsl-qdma.c:fsl_qdma_remove() {
+        ...
+        fsl_qdma_irq_exit(pdev, fsl_qdma);
+        fsl_qdma_cleanup_vchan(&fsl_qdma->dma_dev);
+        ...
+}
+
+Since fsl_qdma_halt() is not called here, could the hardware continue
+performing reads or writes against freed memory?
+
+[Severity: High]
+This is another pre-existing issue, but does destroying the shared DMA
+pools in fsl_qdma_free_chan_resources() cause a use-after-free for
+other active channels?
+
+During initialization, multiple channels can share the same physical
+queue structure and memory pools:
+
+drivers/dma/fsl-qdma.c:fsl_qdma_probe() {
+        ...
+        fsl_chan->queue =3D fsl_qdma->queue + i % (fsl_qdma->n_queues *
+                                        fsl_qdma->block_number);
+        ...
+}
+
+However, when a channel is freed, the shared pools are unconditionally
+destroyed:
+
+drivers/dma/fsl-qdma.c:fsl_qdma_free_chan_resources() {
+        ...
+        dma_pool_destroy(fsl_queue->comp_pool);
+        dma_pool_destroy(fsl_queue->desc_pool);
+        ...
+}
+
+If another active channel shares this same queue, will it crash or
+corrupt memory upon subsequent operations?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D46
+t.allen.lkml@gmail.com?part=3D53
