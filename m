@@ -1,47 +1,47 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020093.outbound.protection.outlook.com [52.101.229.93])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021072.outbound.protection.outlook.com [40.107.74.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFB643785D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876C9438001;
 	Mon, 27 Jul 2026 17:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.93
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.72
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785171835; cv=fail; b=OQSTRdDh8bRqfVD7gXhrCpYPK7h2E8FzQET78oA77FbLDUV84rBX9gY+f/dCq7Jd3TlT3FMo/n4Iisvi9Bo5xirS47/CkWD7/+Pwue9NXtswWHuTfOCQBWqjjnSCbylrRnebgHF52Fws+a0tx2ZMsrMwqM73j1MVtyJRC0esaGQ=
+	t=1785171835; cv=fail; b=vEreKv4f0WoKftLO76ECmf3XUvcFXgxQ3Q0QFYzJEeoDWWEhpzqcx9XexEIXITzHpFfMSvgPfEKN+0vgM/dq4rF6g++J7OxTHFp4KXhqPVD6+6iYIpGkGKsbfv9y1hN3OdLdEEJU6NRrUvIDkhLk9F4nrZug3VDLbqHtPFUAo+0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785171835; c=relaxed/simple;
-	bh=gTZWF2U5wqly8PIDXV9J2AoQI81w2jlN26qSQykvGCA=;
+	bh=2627ykscgXqGcDr9iLHer6yEdHhn01NNMkRpPedFnx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=nK0VpKXio1uNvy9YrmrIrRNCL5lPDMYi9XOynNzjtg6YbpraZH7xxlEWubE/h6EoZTrGF4jb6w7XkZgEvBx5YKQRbtfG25kdJbqeEHPt4/emT1Bk17+xdBdDpbr/WUVhqdlr+c5kBudiyeo2TnS3P8+69Po47nQuqIFrMxBmIfQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=uvfSTRcx; arc=fail smtp.client-ip=52.101.229.93
+	 Content-Type:MIME-Version; b=XOXfLEglEnyv75RgUNz1cfqxQ377X2ewuXmBoh1ZLhzgCTZCOERm6JnrhBEqhmkWkUzikfZm8RaOBwJw1EP3R8B77FIQZj04+UmZQhZo3gr5UiabsybaUhxN+Dk0Jvag3Ec1wdkQa+x1pX8ZPsBLrnKrykTw3yxnD4Yd9v8r4zI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=oNb59Crd; arc=fail smtp.client-ip=40.107.74.72
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="uvfSTRcx"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="oNb59Crd"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EetrZZ7SxntmNoflWP6h2YGryRA0vIqdyX2Y/pidQ/UiYjRODyVtthmXjtD9T6HIZTYmImrRMV6IvYnMwsOlOrvv9p79IqZrmz2DPryV+WamlDU0RZznftUh88lvLDo2kItkqg/O1BVUjO6lW8/VFnUXPo8wpQ5bg3yeAH7q17I097q00sOI63Nm3oiXNPDJBUQctYXy8iz6Zxz135APZGGsl/habkLoLRwnQg7NtibrOTbLMA704QXEUtsfk+Wj0vDYq7gCP+wvAe+5+pjNqNUYW9qYtyv9Dku2LvadL3BQ9E3DR3ueCBbjDj0IyviVHcAO3mFocCzbbItgPZRHnw==
+ b=T0o1MurnieuhmnfJ9IbOw19CiN3ctAOc1QuknHNNSglD7cvPjlmdtPDyjF5h7U8Hmf+liMxp5VfwZQ2X5OqGFLvv3UgBeNEBzwUP9ElsJygc6FHsZ9xWYQJZQUlJ0PM4g3uqpzY0HkQBjLoAX5JZvKPRpA3bxS/k9YKldvPL11SsmZhHvuu4+NzyR05N6+fHfPnK3NVk7VvXtdvfC8/+hP8qMOpFRWrOV0GInSMJdVpJW8a29r1fPSKi22NZO6Uw1mRI4flaj3fsI2bFjvxb4tF5jY8f5nGu0LGt+ClUa3jRfXzCDZuMpo/nGAOu8l1SQFefQKxQbxFM13R6/Z3MKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=B3ttWMO5gagP/BCrwUvtYGOgVqG5XxyAE6EFnneKdhc=;
- b=iopFbTi9VqKkt+J/BhSSD9N/manTYvylE62KHcy/j0djTEgsN9ZO4aaXIms6K70zmV4rie+oDHaPIjlWUzIBblOC9iF8/A19lvHjcqxmTHEb9IeU41F0gnUOJAYKQAGIg6a50YlcnenCZCljk92j4AMNsVyzlVTLfdINDBBaFwTptrCtT1WK5q3TDRfC4dFEn5gWWC/5zt9I1hrEYreg3T2EYArFDMsV2FUOq6fkeldoSL65/8eQRai7R/B+iMI0x97qM5Ywv84h6pIcLu35DXW5tdRVrcBHnevsJbbwiOzaQKVblKdkKGTbE6/0Qw7OlDpLg2NPmWiyKqUCQMA+NQ==
+ bh=WWL5MgVC9xwE1YJwui81s9a5t6Qy+6vS6xzVNJz+GbI=;
+ b=dSmiKoaD8IhgVG2DE36Q5soQpkM5TR0oKosrd3tu/IN9RfLHgvrZv+7/aIfyLldbjWoC5nmUPLOL4rt4qrLWCXoaatM0sRyw024yd+fkBrcQ4Y1xDZuxcy7l3KgwKp2x991dBkUrDkmuZGnuIeVUbF1AdI+Inpc0cgJaVVC7TxrrP4Fl28r4GNdibcYSeJqk+9zB02e0JJax6dXPI/2RrWm7JnwBHYHx5Q1iOn30jtlYJNll0zZ2W9PlsajL/Hg2lKqWuatRhKUZkdrKD+c52azb6V+j8o2RJPrMShgmwmJ7+OKcUtU/h+IWZ2klU1FQrQHeAygzwpre29WXKSDIKw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B3ttWMO5gagP/BCrwUvtYGOgVqG5XxyAE6EFnneKdhc=;
- b=uvfSTRcxn6OYEIEKFO/CoRSQrVsGs4xVz/BYQM1uRCV53RtH9TP2Z9/3DvwgZdWA325a4IOU2c0BZ2TB1FHDdJ4ME/XOk4jRbJWGUXZJ+jN6NfLdw8eoFCxhBZsyghnc1JkWZpHdSuODuuzekuUA7OhEQ1bwx5IQFVCG7Sd3co4=
+ bh=WWL5MgVC9xwE1YJwui81s9a5t6Qy+6vS6xzVNJz+GbI=;
+ b=oNb59CrdQ22cDu2PwGFOh8w50JdNoKN8V8i/blFynoyWTP1TA7ZPj+px918FffjVfygG9hcds7DZlzTWXW0xSJg0goKI9YkumObdjzKITDTXWFdjQ+ltcfVCqEnCiiDGbZkYzncP2DpCGygj92Txhi+b5dYqXzcRwmXYmFVGjIA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
  by TYRP286MB4609.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:1a9::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.12; Mon, 27 Jul
- 2026 17:03:43 +0000
+ 2026 17:03:44 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 17:03:43 +0000
+ 17:03:44 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Manivannan Sadhasivam <mani@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -58,16 +58,16 @@ To: Manivannan Sadhasivam <mani@kernel.org>,
 Cc: Devendra K Verma <devendra.verma@amd.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 15/24] dmaengine: dw-edma: Recheck stopped LL channels before restart
-Date: Tue, 28 Jul 2026 02:03:14 +0900
-Message-ID: <20260727170323.2321369-16-den@valinux.co.jp>
+Subject: [PATCH v3 16/24] dmaengine: dw-edma: Use HDMA watermarks as progress events
+Date: Tue, 28 Jul 2026 02:03:15 +0900
+Message-ID: <20260727170323.2321369-17-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260727170323.2321369-1-den@valinux.co.jp>
 References: <20260727170323.2321369-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TY6P286CA0037.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:3b7::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TY6PR01CA0022.jpnprd01.prod.outlook.com
+ (2603:1096:405:3bb::18) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,465 +77,253 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYRP286MB4609:EE_
-X-MS-Office365-Filtering-Correlation-Id: 08205c67-eea4-47ce-dda5-08deec0103c9
+X-MS-Office365-Filtering-Correlation-Id: 337d93e0-9794-4f5e-e125-08deec01045e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|7416014|1800799024|366016|376014|23010399003|10070799003|18002099003|22082099003|10067099003|56012099006|921020|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	BE3YiWrst8v9xXeEuyTmLQL8aTUZzqzlBPyO9mao6SbONwvmV/UCBnhItydaPecet58iSfFw6XGmFTIrBHi3e+ts/hqFfB6NiLqEi0Qe+mVXStHl5f6Q/hz04DPYz+HYTwOtsswV0rBJMB0UojtEUWZ+oOEN5AhJnaWrW5xY70XxNy9x4cqocnCFk2/AjBFyukATPLaHfFXET6g2dHQr1RNYAkP1pNtq9vBosC9u/Rhgsmo/yS8gwZZ9DX0I8Xxqd0IrZ5KQQdWRmB55dXXSrTG2/qalgk5TI9f/SGSbT7hDt5mxgEqQpr8AT43REafYkVP+CTJDlm2+29I+Dnv3CrA5q6KzvtLVTNhytcgI9J6frrzGcon5UFnwXjuVm2X4pJl34ymYBfBi9QuCmY7iwLrd5A5YCUbuDVLd1wGezFjmgFuTT/KUvFkKYts+eXX4JEMCwsIAv3AetQD4lVlAqi7AQmzJPaWkZ9Q1XAJ8C4qknBw1Y4/osRjwoH3ljP6XzGu1ckF3EbTZJo81JWNZcYbOO63HtYRrZ+qHfut/FfTQucW6niLsvynVKBdmnm1RRPK51xUi2erTEgIb4B0Jkbmt5dp/S43u0s7E7ByXnD73v1JRTr39iteCzUfnp5XiRkduFhse/dRTuHYMUZAqd60uBJeAmvR7RfJaGppDOlBc1cjnKfPIJ8S+yghHTOPtlOlTcPN9Yb0zqllwwvdcSQ==
+	jpsXjSgOZbILeSaOAT/VcC4xVn+t9uL3w+eAWTG6qwdAskhR1BjYl0Ls5kiB0dJdhyjNG218gist1QS61GAu7PicR7lHBGmCx7bvm2Qbx5jayTgU3bNS1N5CbIq0yzpNTNjLig6/iO0at3GKmEoUHwBcRv1vs0Svkjfa2YeyDD2RqPo1PctewYi+6GIjQqQCGLzsjYq/SUTZiewvDKJQzd2eBtUSqgvCJ7JArJiMY2zQai76YJLGNYaPM12r++hbNi+8XVYLOIjAm123Z6UBemL2n0lPhnqwgjE7ecHvvRCLe3opl9EC+UgsAjz1dN9qzMUFAdAu/AjWeG8vNjl7ks0VrPfwjR0YwlsMXNHMJN842Gn/izUTRY1RvBzaoNVZW/VqmrnkYL7Q7iI69KE98m+CUHUYtIg7jRHf+nydoXscrMF8H3ToPKhgjuggsxO+4hc3qj37nFx7thVdC03KH0YLqgqpCRNBjp6fuEuiRear8OehWSI40jzPbImjkx3RqIbThJMaxIccoL2vghSlmIZ2aCSApVdPrv7iS/jKyl42q0NBRD/SIK/BNB+J4N9U+WVW+HiOll0gr6rLrFOHZ6CH+fPPWzFD+QijwEQr5ylj8rm+Qlc0W9T66XxhbcQu1zIMQ0ALFZSgrk+Soi856rvj/phg8XGwhd8dMahni0A7uLnwIM28scf2xrGQ28owJWbJ54sHeSzmb0bzAFNNgw==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014)(23010399003)(10070799003)(18002099003)(22082099003)(10067099003)(56012099006)(921020)(6133799003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Mi2FUo/bmJhRUrYcPoQe+PMJHwqBtRFCpcH9aKFmbuHgeOBDgVeKLWo5RP7U?=
- =?us-ascii?Q?AZWrp8F69PAs0dOoMVgMDcaZDSGO6NeG/L0VapS9yAxU+2H9pzvGU/ayDc3F?=
- =?us-ascii?Q?GG/oUfjECQwhy9+dMFf1AbUxVXZbgoj4oJxz2y4YGCpyYW0MAUdVIZNN9a1b?=
- =?us-ascii?Q?PmjNZDjhPQ6BbzJOzl+x9JBmtWvON1o0uTVGB7hYioVW9maWd5SyccXso+Cx?=
- =?us-ascii?Q?QJ56dHEWhLC56ivUgz8da13NtUaJ/Di262Ujt1/X7UJaaW6vUBjghxWs1dw5?=
- =?us-ascii?Q?Ef9MdB3LRUCfEHMBmwIw4pE8RSZXyxMpEqsYXyum7FEBbzNEZ4/jg/+9sgbx?=
- =?us-ascii?Q?ha0B3+MANXXczyLl3iLl/33TIm3ygh5R8jk477RpY4imuCDahkdM0//utABQ?=
- =?us-ascii?Q?3A4cztpGule07Rt8/kSROTyXDrThD00sn5XlqNjcsR7uN0j7/cEUr8O36//o?=
- =?us-ascii?Q?wGoJCj6XR2iz1lfIp4MSwNPi1lbEtX7HtLMIDRKoAwPQbaCTmIHLG6vIGbUQ?=
- =?us-ascii?Q?SdZoPAfMII0DBTigEJjj2Det44PQa6Od1h5OYrMvc4ZpZ6qH6sZZKWuEAp1T?=
- =?us-ascii?Q?ZfMPppmstvtJpEjEP3KLGx5+AYwLlJPSebfjtFeO2YZWJ8JHIjhCQk6nbhr1?=
- =?us-ascii?Q?rt5wtD8BoPF9boky/1LG6jGd6w1Mer10gEQoreqMv/dffGAuJICPKzK1eRoO?=
- =?us-ascii?Q?3fNZb/af7cw1KibGuw0B6PsUDFLPICd5cdfueLI9CuG5fU8p3iovUw3Ksvst?=
- =?us-ascii?Q?ECZrxgV/tpaGIJC/BMBqbJI9aSbDrkogQ6GQPK/sYUUKPD96SETf891HNR8A?=
- =?us-ascii?Q?U0Zrr0DOiZDEqlQi5x/gjphHgfhfup1WiUKBKlARJcBGVD0T0gm3whCsTsnd?=
- =?us-ascii?Q?X6FFyYVDlCGwl556C0gqH1PI5RHXNA0+62k01iz4mYkG3AfkfZD+XMWJfn4B?=
- =?us-ascii?Q?8AqXMR6SROu/vMmab/SVsDXFF4ZkyCWW4Yjxje29GB/z75ZSjmtF69zHxKlF?=
- =?us-ascii?Q?c8RlVSKt71FqDPkXW24UWGMgV4UDtMOlGahwSE2YjvMi83TYdP1eQgo8y3qz?=
- =?us-ascii?Q?8Ur+4/GCr5XiyKY1cbWBJCMV8Nbo+Iemhn/yhKikTykM+Mj+FoBgDpgJDD3G?=
- =?us-ascii?Q?DiwbdK0GTNddKLThQ15pk76dMUSoezyBN/clNlQxWMNBgRXlXR+m01t4F23n?=
- =?us-ascii?Q?lSTRdDfSmeF1CfBJGGeHFSYI6tTkQoGUp3FRQkRhs89CCfiE4z3iBTHdpcMv?=
- =?us-ascii?Q?tuch2dB1yxrRmGQ8A+HkrylIVbNRBPMT9PssrYraDzJv1BNo0UEWh7hkVT2S?=
- =?us-ascii?Q?2uojU/Sdg4go+3mFIFJCWJIDONaDmYBGS6r36tLit/YRxFDCZf+27o1nvyd/?=
- =?us-ascii?Q?9ZKEvARuZmatQLwUG455NoYAvuxCnpP7ws7hCSnHr5umL1zZ9sMW1RWo0L7o?=
- =?us-ascii?Q?EOwgb58ruNZw3o5chOOPeLGmvce/FpnGueRtT9qFQMH5tGma7qgF6r6F6390?=
- =?us-ascii?Q?jo7HMv3wCStAq0TwabcaXtxB+P/JqTFLwnjnIgvX6nTZ4uDpsmF7QDPTdnlO?=
- =?us-ascii?Q?Vorvck1mgrH7U13bLH1d0LIDjh502geGDyoqhNeOM+skDwQT/r3qYM5Wyg1O?=
- =?us-ascii?Q?qHGLu5qCR75CdSuGcCwsIXdwlVob4kGuP076vfSt+Oczsou5eMM9czpNbssh?=
- =?us-ascii?Q?My7ufPrBqINuEa6+C0f53ZD6+5xotCZf13RlPMbJ0qcoXrPVLZ8/QISuWhz2?=
- =?us-ascii?Q?lFDBsmyxzdEDulix1OtqdlXhiGO1QsClfnRJX94BYFWdP2ohRLbs?=
+	=?us-ascii?Q?3VmsH7bDhp7vB9+FvlKRIHxZoVEYgTBkcxnQDVT0Bb0GBkCgGCN/RMGuTYb7?=
+ =?us-ascii?Q?Osc8EXTxE1wDt4fn4by5TzIKWTjSGJhw8FeKBQYZ6fLh1RSufLpNPAc1bj48?=
+ =?us-ascii?Q?mCmeP/3eVhWpahG4uI1ERY1If0LuUEbbSJ2NKhPTzBB4FY7CjKtpwbczgTdD?=
+ =?us-ascii?Q?QK1LqVdR0m0BbnJ+MCjspVyxH+sU1j+PsysL+F40PCvV1JYcU0v4M9n8uhT3?=
+ =?us-ascii?Q?DIeK2sr8aqJjLeZKsfFNGHx5ylxN8nzonHKih/qAiEOno7J8hb45mxFie1yx?=
+ =?us-ascii?Q?Mx591+yjzR8lq0uFcdwFU4UwyMfz5NWuiujYC8jQofBQjZ75+ZDPcpgMFZa+?=
+ =?us-ascii?Q?vwzPjFc2QmCnzA+526xZT8SS1kESGtpQDqSZBOu89CdzFhE9/QOrP5UzfroD?=
+ =?us-ascii?Q?WdVqPfSuwFZhQ366OhZfDtxihpD6fXWTIuttDmg5+Jo4qGsjb1chnYybpsYg?=
+ =?us-ascii?Q?+wCAwf6wssyguplFWk1bQ55Ei3pjd3/0wclvna29VBvrZcE0Q9GQb3u5zHVa?=
+ =?us-ascii?Q?QYmgReUj5OL35gfbOjEJ9YVRS+JrmgGgbqRiqXbrL5RZGSLcYPVd0X2w8nK5?=
+ =?us-ascii?Q?9FUVgObRQQqf5xGnorqk1SYgXc/LBOAL4OI+a3jp0Y6b7fSXF1vi7Km5aDG9?=
+ =?us-ascii?Q?pLpdPdwT5avDgsTeL+j5rlZXFLTN7naWib/V+bHi4qMxJESfejzRV6YVcy8A?=
+ =?us-ascii?Q?utUUaTvjFxKtZO1JloVPkbKK4L/p21qyIElkG25Sr3P5fHVDN5+F0Gv837CQ?=
+ =?us-ascii?Q?xAKTRHiRTofbRrnPA4LNwuv0xjjfvs5ZDDfi3LdHEkLVj0xbrsyQ1pI3XdiE?=
+ =?us-ascii?Q?rWmGT5Oa09+ab5NETKliS0IyvQxgqd1PLoC5As4oUUXeoFRYPq5r/gZ+EJFa?=
+ =?us-ascii?Q?kVf/TN6su+QMeF0ILDJug7v9KgKw3VjL4q76QY64EG0UvdFWvNvTkS9KmsgK?=
+ =?us-ascii?Q?+j8pywewVtCZI1SA8ot8H6z7ghH+084no1liyD01xEOkJRWd1BU1rVfJWIyR?=
+ =?us-ascii?Q?q/DRm+oYVSCHNm8hhyvPFJYl5Fzsl9TtqC5Mg6dzuxUZ5Tnn+VdnB2SKHLy2?=
+ =?us-ascii?Q?NyLxK+mXHUMsVHYD7mET0a1MSKY0BbCe+2qquIk2WVBx9rtzWcDMIyuAdbse?=
+ =?us-ascii?Q?Ei7PXdfeDkJ8d8jZv81aiQWwr+rd6OVS7Fz3wdFnwe+Fv925e2eQYrFHy07M?=
+ =?us-ascii?Q?Oo9B7wykDKgzV0h4CLY93OUhwVgFIX/X0/x85HZAAttObes+2bBWtLItKpeE?=
+ =?us-ascii?Q?eoP27qXHYIF0fezB7CKEauI9oOCNS44WYMjSry/U9wzifiP6fOfPF/cm6M+U?=
+ =?us-ascii?Q?X76ZzXxekImGWAJJCpH+0gUreDcR84jVlUJGS9HyjTWLY73kVsba+3OiYvPq?=
+ =?us-ascii?Q?zz6mzz8fVtSze6XffpILebL8/6r/NwMfx8vGr/s/6aeP0ow3nE0nskg3Vp0R?=
+ =?us-ascii?Q?bd43ShlN/10bb2y2LT1jhOxoZKpJykWHr/hxFLnJ3YQ5QQysyjMYSdWRq4RI?=
+ =?us-ascii?Q?Zxe0ingo9qBFQ04qvDoippl5lYrFVtTJ8pXa8m08Hhh83VbM7AZ0iRyLsDtn?=
+ =?us-ascii?Q?4eta1pe9uS3RotrD4DEtDOqvH9iSV2bfdPnc57Dw0VMwyjzWFN32BG/XKYBb?=
+ =?us-ascii?Q?RphnJ9LrfjuWeL/7LrGeDq8wsJkPx1KO+ht1qOmCl5BI/IuMg7IzCx1qeLu9?=
+ =?us-ascii?Q?O7XU5YSdTJ+4NLO2croxETlAsl6iVMZra3PmZHDvH4Ruu6dXR+o1j/FUxxiT?=
+ =?us-ascii?Q?XKbn5arDUSMpuT9B9c8zkuebQExTvQICF5oaPbBTVm0ZOUY2K/EM?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 08205c67-eea4-47ce-dda5-08deec0103c9
+X-MS-Exchange-CrossTenant-Network-Message-Id: 337d93e0-9794-4f5e-e125-08deec01045e
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 17:03:43.6561
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 17:03:44.6345
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 49RdWTfgJ8T+mLz12cDDLoPZmNX1667e/TpowvQiXwARYDfoNqv5Ners76IA7hXWlC1GOLp7PR+mo1zWN5/5VA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ek+w+7U3fEZP0Y1YX3yT/429vpm3uA3uFZ9PhWn2kmIcAzk5qT/XKXCof4r9sbB1vb1J0Vlbu+5wMxS3tFvPIQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRP286MB4609
 
-A DMA_LLP sample taken for a DONE interrupt through the eDMA-compatible
-interface can race with the final DMA_LLP update and leave the recorded
-consumer boundary one entry short. If the channel stops there, no later
-interrupt reports the missing progress.
+HDMA reports running LL progress through WATERMARK and channel stop
+through STOP. Wire watermark setup, clearing, MSI programming, and
+LWIE/RWIE into the core interrupt path. Record WATERMARK as progress;
+STOP remains a stopped event.
 
-Before restarting a stopped LL channel, sample DMA_LLP again and reclaim
-any newly visible progress. If the channel still reports running, do not
-ring another doorbell. It may stop at a CB mismatch just after the
-status read, so schedule one delayed recheck. Native HDMA reports STOP
-separately and does not need this recheck.
+DWC PCIe Controller Databook 6.10a, Section 7.2.1, permits recycling
+LLEs through the watermark LLP. Testing on a 6.30a integration found
+that boundary unsafe for DMAengine completion: clients released mappings
+while hardware still accessed them. Keep completion one entry behind the
+raw LLP. Once the channel has stopped, LLP points to the next entry and
+needs no such margin.
 
-Serialize the stopped-state check, LLP sample and interrupt-status clear
-against IRQ capture. Do not reconcile a stopped boundary while ABORT is
-pending. Keep stopped-boundary reconciliation separate from refilling so
-STOP and PAUSE drain paths can consume it without publishing more entries.
+Leave EDMA_REQ_STOP and EDMA_REQ_PAUSE to the STOP path instead of
+handling their watermark as normal running progress. The eDMA path is
+unchanged.
 
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
 Changes in v3:
-  - Rework and rename v2's "Reconcile lost completions from a stopped
-    LLP re-sample"; retain the stopped LLP re-sample and add one delayed
-    recheck for interfaces without a dedicated STOP event. (Sashiko)
-  - Serialize the stopped-state check, LLP sample and interrupt-status
-    clear against IRQ capture, block reconciliation while ABORT is
-    pending, and separate stopped reconciliation from refill. (Sashiko)
-  - Route normal kick paths through the helper that arms the delayed
-    recheck after observing a running channel. (Sashiko)
-  - Gate asynchronous work, unregister the DMA device before quiesce,
-    and quiesce the hardware before freeing IRQs. (Sashiko)
+  - Record HDMA STOP, WATERMARK, and ABORT status under its per-channel
+    event lock. (Sashiko)
 
- drivers/dma/dw-edma/dw-edma-core.c | 201 +++++++++++++++++++++++++++--
- drivers/dma/dw-edma/dw-edma-core.h |   5 +
- 2 files changed, 194 insertions(+), 12 deletions(-)
+ drivers/dma/dw-edma/dw-hdma-v0-core.c | 69 +++++++++++++++++++++++----
+ drivers/dma/dw-edma/dw-hdma-v0-regs.h |  1 +
+ 2 files changed, 60 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index d28e3633a866..dbccd11aa92f 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -27,6 +27,7 @@
- 
- /* Empirically chosen progress interval. */
- #define DW_EDMA_LL_PROGRESS_INTERVAL	4
-+#define DW_EDMA_LL_RECHECK_DELAY_MS		30
- 
- static inline
- struct dw_edma_desc *vd2dw_edma_desc(struct virt_dma_desc *vd)
-@@ -148,6 +149,26 @@ static void dw_edma_ll_event_discard_locked(struct dw_edma_chan *chan)
- 	dw_edma_ll_snapshot_discard_locked(chan);
- }
- 
-+/* Must be called with vc.lock held. */
-+static void dw_edma_ll_recheck_cancel(struct dw_edma_chan *chan)
-+{
-+	chan->ll_recheck_at = 0;
-+	cancel_delayed_work(&chan->ll_recheck_work);
-+}
-+
-+/* Must be called with vc.lock held. */
-+static void dw_edma_ll_recheck_schedule(struct dw_edma_chan *chan)
-+{
-+	unsigned long delay =
-+		msecs_to_jiffies(DW_EDMA_LL_RECHECK_DELAY_MS);
-+
-+	if (unlikely(READ_ONCE(chan->dw->teardown)))
-+		return;
-+
-+	chan->ll_recheck_at = jiffies + delay;
-+	mod_delayed_work(chan->dw->wq, &chan->ll_recheck_work, delay);
-+}
-+
- /* Must be called with vc.lock held for an LL channel. */
- static void dw_edma_ll_event_discard(struct dw_edma_chan *chan)
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+index 5d0d7575bae9..cbf9ef109e08 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
++++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+@@ -53,7 +53,8 @@ static u32 dw_hdma_v0_core_int_setup(struct dw_edma_chan *chan, u32 val)
  {
-@@ -160,6 +181,8 @@ static void dw_edma_ll_event_discard(struct dw_edma_chan *chan)
- static void
- dw_edma_set_request(struct dw_edma_chan *chan, enum dw_edma_request request)
- {
-+	if (!chan->non_ll && chan->request != request)
-+		dw_edma_ll_recheck_cancel(chan);
- 	chan->request = request;
- }
+ 	val &= ~(HDMA_V0_LOCAL_ABORT_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN |
+ 		 HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_REMOTE_STOP_INT_EN |
+-		 HDMA_V0_ABORT_INT_MASK | HDMA_V0_STOP_INT_MASK);
++		 HDMA_V0_ABORT_INT_MASK | HDMA_V0_WATERMARK_INT_MASK |
++		 HDMA_V0_STOP_INT_MASK);
  
-@@ -192,6 +215,8 @@ static void dw_edma_core_reset_ll(struct dw_edma_chan *chan)
- {
- 	u32 i;
- 
-+	dw_edma_ll_recheck_cancel(chan);
-+
- 	chan->ll_head = 0;
- 	chan->ll_done = 0;
- 	/* Drop stale CB bits before reusing the circular LL ring. */
-@@ -430,7 +455,7 @@ static bool dw_edma_ll_clean_pending(struct dw_edma_chan *chan, int idx)
- 
- 		if (WARN_ON_ONCE(desc->done_burst > desc->start_burst ||
- 				 desc->start_burst > desc->nburst))
--			return advanced;
-+			goto out;
- 
- 		/*
- 		 * start_burst is the next burst to append. done_burst counts
-@@ -449,7 +474,7 @@ static bool dw_edma_ll_clean_pending(struct dw_edma_chan *chan, int idx)
- 			gap = dw_edma_core_get_ll_dist(chan, chan->ll_done,
- 						       desc->ll_start);
- 			if (gap > done)
--				return advanced;
-+				goto out;
- 
- 			chan->ll_done = desc->ll_start;
- 			done -= gap;
-@@ -480,6 +505,10 @@ static bool dw_edma_ll_clean_pending(struct dw_edma_chan *chan, int idx)
- 
- 	WARN_ON_ONCE(done);
- 
-+out:
-+	if (advanced)
-+		dw_edma_ll_recheck_cancel(chan);
-+
- 	return advanced;
- }
- 
-@@ -535,6 +564,59 @@ dw_edma_ll_consume_progress(struct dw_edma_chan *chan, int idx)
- 	return dw_edma_ll_clean_pending(chan, idx);
- }
- 
-+static bool dw_edma_ll_has_hdma_stop_event(struct dw_edma_chan *chan)
-+{
-+	return chan->dw->chip->mf == EDMA_MF_HDMA_NATIVE;
-+}
-+
-+/*
-+ * Must be called with vc.lock held. A DONE-time DMA_LLP sample may miss
-+ * the final burst element. For the legacy interrupt interface, accept a
-+ * fresh LLP sample only when status is STOPPED and transfer size is zero.
-+ * Native HDMA reports STOP directly.
-+ */
-+static bool dw_edma_ll_reconcile_stopped(struct dw_edma_chan *chan)
-+{
-+	int idx;
-+
-+	scoped_guard(raw_spinlock_irqsave, dw_edma_event_lock(chan)) {
-+		if (dw_edma_abort_latch_locked(chan))
-+			return false;
-+
-+		/*
-+		 * Leave an IRQ-captured event to its worker. Otherwise pair the
-+		 * stopped boundary with the status clear before another kick.
-+		 */
-+		if (chan->ll_irq.event != DW_EDMA_LL_EVENT_NONE ||
-+		    dw_edma_core_ch_status(chan) != DMA_COMPLETE)
-+			return false;
-+
-+		/* Native HDMA reports STOP without a transfer-size check. */
-+		if (!dw_edma_ll_has_hdma_stop_event(chan) &&
-+		    dw_edma_core_ch_transfer_size(chan) != 0)
-+			return false;
-+
-+		idx = dw_edma_ll_recycle_idx(chan,
-+					     dw_edma_core_ll_cur_idx(chan),
-+					     DW_EDMA_LL_EVENT_STOP);
-+		dw_edma_core_ll_irq_clear(chan);
-+	}
-+
-+	return dw_edma_ll_clean_pending(chan, idx);
-+}
-+
-+static bool dw_edma_ll_reconcile_and_refill(struct dw_edma_chan *chan)
-+{
-+	if (!dw_edma_ll_reconcile_stopped(chan))
-+		return false;
-+
-+	dw_edma_start_transfer(chan);
-+	chan->status = dw_edma_ll_pending(chan) ?
-+		       EDMA_ST_BUSY : EDMA_ST_IDLE;
-+
-+	return true;
-+}
-+
- static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
- {
  	/*
-@@ -548,6 +630,15 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
- /* Must be called with vc.lock held for an LL channel. */
- static void dw_edma_core_ch_kick(struct dw_edma_chan *chan)
- {
-+	if (unlikely(READ_ONCE(chan->dw->teardown)))
-+		return;
-+
-+	dw_edma_ll_recheck_cancel(chan);
-+
-+	/*
-+	 * Complete the remote LL publication before serializing the new
-+	 * hardware run with IRQ capture.
-+	 */
- 	dw_edma_core_ll_sync(chan);
- 
- 	guard(raw_spinlock_irqsave)(dw_edma_event_lock(chan));
-@@ -566,14 +657,71 @@ static void dw_edma_core_ch_kick(struct dw_edma_chan *chan)
- 	dw_edma_core_ch_doorbell(chan);
- }
- 
--/* Must be called with vc.lock held. */
--static void dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
-+/*
-+ * Must be called with vc.lock held. Return true when published work is still
-+ * running and may need one later stop recheck.
-+ */
-+static bool dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
- {
- 	if (chan->non_ll || chan->request != EDMA_REQ_NONE ||
--	    chan->status != EDMA_ST_BUSY || !dw_edma_ll_pending(chan))
--		return;
-+	    chan->status != EDMA_ST_BUSY || !dw_edma_ll_pending(chan) ||
-+	    dw_edma_abort_is_pending(chan))
-+		return false;
-+
-+	/*
-+	 * While running, both eDMA and HDMA consume newly published
-+	 * elements without another doorbell.
-+	 */
-+	if (dw_edma_core_ch_status(chan) == DMA_IN_PROGRESS)
-+		return true;
-+
-+	dw_edma_ll_reconcile_and_refill(chan);
-+	if (!dw_edma_ll_pending(chan))
-+		return false;
- 
- 	dw_edma_core_ch_kick(chan);
-+
-+	return false;
-+}
-+
-+/*
-+ * eDMA may stop at a CB mismatch just after reporting RUNNING.
-+ * Recheck once so the stopped tail is not left pending.
-+ */
-+static void
-+dw_edma_core_ch_maybe_doorbell_or_recheck(struct dw_edma_chan *chan)
-+{
-+	if (dw_edma_core_ch_maybe_doorbell(chan) &&
-+	    !dw_edma_ll_has_hdma_stop_event(chan))
-+		dw_edma_ll_recheck_schedule(chan);
-+}
-+
-+static void dw_edma_ll_recheck_work(struct work_struct *work)
-+{
-+	struct dw_edma_chan *chan =
-+		container_of(to_delayed_work(work), struct dw_edma_chan,
-+			     ll_recheck_work);
-+	unsigned long delay;
-+
-+	guard(spinlock_irqsave)(&chan->vc.lock);
-+
-+	if (unlikely(READ_ONCE(chan->dw->teardown))) {
-+		chan->ll_recheck_at = 0;
-+		return;
-+	}
-+
-+	if (!chan->ll_recheck_at)
-+		return;
-+
-+	if (time_before(jiffies, chan->ll_recheck_at)) {
-+		delay = chan->ll_recheck_at - jiffies;
-+		mod_delayed_work(chan->dw->wq, &chan->ll_recheck_work, delay);
-+		return;
-+	}
-+
-+	chan->ll_recheck_at = 0;
-+	if (chan->request == EDMA_REQ_NONE)
-+		dw_edma_core_ch_maybe_doorbell(chan);
- }
- 
- static void dw_edma_device_caps(struct dma_chan *dchan,
-@@ -701,7 +849,7 @@ static int dw_edma_device_resume(struct dma_chan *dchan)
- 		chan->status = EDMA_ST_BUSY;
- 		if (!dw_edma_start_transfer(chan))
- 			chan->status = EDMA_ST_IDLE;
--		dw_edma_core_ch_maybe_doorbell(chan);
-+		dw_edma_core_ch_maybe_doorbell_or_recheck(chan);
- 	}
- 
- 	return err;
-@@ -751,7 +899,7 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 			dw_edma_ll_snapshot_discard(chan);
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
--		dw_edma_core_ch_maybe_doorbell(chan);
-+		dw_edma_core_ch_maybe_doorbell_or_recheck(chan);
- 	}
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
- }
-@@ -1101,7 +1249,7 @@ static void dw_edma_ll_interrupt(struct dw_edma_chan *chan)
- 	}
- 
- out:
--	dw_edma_core_ch_maybe_doorbell(chan);
-+	dw_edma_core_ch_maybe_doorbell_or_recheck(chan);
- }
- 
- static bool dw_edma_abort_interrupt(struct dw_edma_chan *chan)
-@@ -1140,6 +1288,11 @@ static void dw_edma_irq_work(struct work_struct *work)
- 						 irq_work);
- 	unsigned int events;
- 
-+	if (unlikely(READ_ONCE(chan->dw->teardown))) {
-+		atomic_set(&chan->irq_pending, 0);
-+		return;
-+	}
-+
- 	do {
- 		events = atomic_xchg(&chan->irq_pending, 0);
- 
-@@ -1157,6 +1310,9 @@ static void dw_edma_irq_work(struct work_struct *work)
- static void dw_edma_queue_irq_work(struct dw_edma_chan *chan,
- 				   unsigned int events)
- {
-+	if (unlikely(READ_ONCE(chan->dw->teardown)))
-+		return;
-+
- 	atomic_or(events, &chan->irq_pending);
- 	queue_work(chan->dw->wq, &chan->irq_work);
- }
-@@ -1394,6 +1550,9 @@ static void dw_edma_device_synchronize(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 
- 	dw_edma_wait_termination(dchan);
-+	scoped_guard(spinlock_irqsave, &chan->vc.lock)
-+		dw_edma_ll_recheck_cancel(chan);
-+	cancel_delayed_work_sync(&chan->ll_recheck_work);
- 	cancel_work_sync(&chan->irq_work);
- 	atomic_set(&chan->irq_pending, 0);
- 	dw_edma_irq_events_discard(chan);
-@@ -1447,6 +1606,8 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
- 		chan->status = EDMA_ST_IDLE;
- 		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
- 		INIT_WORK(&chan->irq_work, dw_edma_irq_work);
-+		INIT_DELAYED_WORK(&chan->ll_recheck_work,
-+				  dw_edma_ll_recheck_work);
- 		atomic_set(&chan->irq_pending, 0);
- 		chan->ll_irq.idx = -1;
- 		chan->ll_irq.event = DW_EDMA_LL_EVENT_NONE;
-@@ -1789,23 +1950,39 @@ int dw_edma_remove(struct dw_edma_chip *chip)
- 	if (!dw)
- 		return -ENODEV;
- 
-+	/*
-+	 * Stop new clients and asynchronous hardware access before dismantling
-+	 * their execution context.
-+	 */
-+	WRITE_ONCE(dw->teardown, true);
-+	dma_async_device_unregister(&dw->dma);
-+
-+	/*
-+	 * Drain channel work that may have passed the teardown gate before
-+	 * stopping the hardware. IRQ handlers remain installed while it is
-+	 * active.
-+	 */
-+	for (i = 0; i < dw->wr_ch_cnt + dw->rd_ch_cnt; i++) {
-+		disable_delayed_work_sync(&dw->chan[i].ll_recheck_work);
-+		cancel_work_sync(&dw->chan[i].irq_work);
-+	}
-+
- 	if (chip->flags & DW_EDMA_CHIP_PARTIAL)
- 		err = dw_edma_core_quiesce(dw);
- 	else
- 		dw_edma_core_off(dw);
- 
--	/* Free irqs */
-+	/* No new hardware event can be raised after the quiesce. */
- 	for (i = (dw->nr_irqs - 1); i >= 0; i--)
- 		free_irq(chip->ops->irq_vector(dev, i), &dw->irq[i]);
- 	dw_edma_emul_irq_free(dw);
- 
-+	/* Drain IRQ work queued by a handler that raced with the gate. */
- 	for (i = 0; i < dw->wr_ch_cnt + dw->rd_ch_cnt; i++)
- 		cancel_work_sync(&dw->chan[i].irq_work);
- 
- 	destroy_workqueue(dw->wq);
- 
--	/* Deregister eDMA device */
--	dma_async_device_unregister(&dw->dma);
- 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
- 				 vc.chan.device_node) {
- 		tasklet_kill(&chan->vc.task);
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 3d4844b5c6e3..f56885747e57 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -127,6 +127,9 @@ struct dw_edma_chan {
- 	bool				abort_pending;
- 	raw_spinlock_t			event_lock;
- 
-+	struct delayed_work		ll_recheck_work;
-+	unsigned long			ll_recheck_at;
-+
- 	u32				ll_max;		/* Data entries */
- 	struct dw_edma_region		ll_region;	/* Linked list */
- 	bool				ll_valid;	/* LL context programmed */
-@@ -175,6 +178,8 @@ struct dw_edma {
+ 	 * HDMA_INT_STATUS.STOP and .ABORT are latched only when LSIE and
+@@ -63,10 +64,14 @@ static u32 dw_hdma_v0_core_int_setup(struct dw_edma_chan *chan, u32 val)
  	 */
- 	struct workqueue_struct		*wq;
+ 	val |= HDMA_V0_LOCAL_ABORT_INT_EN | HDMA_V0_LOCAL_STOP_INT_EN;
  
-+	bool				teardown;	/* Gate asynchronous hardware access */
+-	if (chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE)
++	if (chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE) {
++		if (!chan->non_ll)
++			val |= HDMA_V0_WATERMARK_INT_MASK;
 +
- 	raw_spinlock_t			lock;		/* Protect v0 shared registers */
- 	raw_spinlock_t			event_lock[2];	/* Per-direction event scopes */
+ 		val |= HDMA_V0_REMOTE_ABORT_INT_EN |
+ 		       HDMA_V0_REMOTE_STOP_INT_EN |
+ 		       HDMA_V0_ABORT_INT_MASK | HDMA_V0_STOP_INT_MASK;
++	}
  
+ 	return val;
+ }
+@@ -76,10 +81,12 @@ static void dw_hdma_v0_core_ch_off(struct dw_edma *dw, enum dw_edma_dir dir,
+ 				   u16 id)
+ {
+ 	SET_CH_32(dw, dir, id, int_setup,
+-		  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		  HDMA_V0_STOP_INT_MASK | HDMA_V0_WATERMARK_INT_MASK |
++		  HDMA_V0_ABORT_INT_MASK);
+ 	SET_CH_32(dw, dir, id, ch_en, 0);
+ 	SET_CH_32(dw, dir, id, int_clear,
+-		  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++		  HDMA_V0_STOP_INT_MASK | HDMA_V0_WATERMARK_INT_MASK |
++		  HDMA_V0_ABORT_INT_MASK);
+ }
+ 
+ static void dw_hdma_v0_core_off(struct dw_edma *dw)
+@@ -90,18 +97,26 @@ static void dw_hdma_v0_core_off(struct dw_edma *dw)
+ 	dir = EDMA_DIR_WRITE;
+ 	for (id = 0; id < dw->wr_ch_cnt; id++) {
+ 		SET_CH_32(dw, dir, id, int_setup,
+-			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++			  HDMA_V0_STOP_INT_MASK |
++			  HDMA_V0_WATERMARK_INT_MASK |
++			  HDMA_V0_ABORT_INT_MASK);
+ 		SET_CH_32(dw, dir, id, int_clear,
+-			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++			  HDMA_V0_STOP_INT_MASK |
++			  HDMA_V0_WATERMARK_INT_MASK |
++			  HDMA_V0_ABORT_INT_MASK);
+ 		SET_CH_32(dw, dir, id, ch_en, 0);
+ 	}
+ 
+ 	dir = EDMA_DIR_READ;
+ 	for (id = 0; id < dw->rd_ch_cnt; id++) {
+ 		SET_CH_32(dw, dir, id, int_setup,
+-			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++			  HDMA_V0_STOP_INT_MASK |
++			  HDMA_V0_WATERMARK_INT_MASK |
++			  HDMA_V0_ABORT_INT_MASK);
+ 		SET_CH_32(dw, dir, id, int_clear,
+-			  HDMA_V0_STOP_INT_MASK | HDMA_V0_ABORT_INT_MASK);
++			  HDMA_V0_STOP_INT_MASK |
++			  HDMA_V0_WATERMARK_INT_MASK |
++			  HDMA_V0_ABORT_INT_MASK);
+ 		SET_CH_32(dw, dir, id, ch_en, 0);
+ 	}
+ }
+@@ -158,6 +173,22 @@ static void dw_hdma_v0_core_clear_done_int(struct dw_edma_chan *chan)
+ 	SET_CH_32(dw, chan->dir, chan->id, int_clear, HDMA_V0_STOP_INT_MASK);
+ }
+ 
++static void dw_hdma_v0_core_clear_watermark_int(struct dw_edma_chan *chan)
++{
++	struct dw_edma *dw = chan->dw;
++
++	SET_CH_32(dw, chan->dir, chan->id, int_clear,
++		  HDMA_V0_WATERMARK_INT_MASK);
++}
++
++static void dw_hdma_v0_core_clear_ll_int(struct dw_edma_chan *chan)
++{
++	struct dw_edma *dw = chan->dw;
++
++	SET_CH_32(dw, chan->dir, chan->id, int_clear,
++		  HDMA_V0_STOP_INT_MASK | HDMA_V0_WATERMARK_INT_MASK);
++}
++
+ static void dw_hdma_v0_core_clear_abort_int(struct dw_edma_chan *chan)
+ {
+ 	struct dw_edma *dw = chan->dw;
+@@ -214,6 +245,12 @@ dw_hdma_v0_core_handle_int(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
+ 				dw_hdma_v0_core_clear_done_int(chan);
+ 			}
+ 
++			if (FIELD_GET(HDMA_V0_WATERMARK_INT_MASK, val)) {
++				if (!(events & DW_EDMA_IRQ_STOP))
++					events |= DW_EDMA_IRQ_PROGRESS;
++				dw_hdma_v0_core_clear_watermark_int(chan);
++			}
++
+ 			if (FIELD_GET(HDMA_V0_ABORT_INT_MASK, val)) {
+ 				events |= DW_EDMA_IRQ_ABORT;
+ 				dw_edma_abort_event_mark(chan);
+@@ -282,7 +319,7 @@ static void dw_hdma_v0_core_ch_enable(struct dw_edma_chan *chan)
+ 
+ 	/* Enable engine */
+ 	SET_CH_32(dw, chan->dir, chan->id, ch_en, BIT(0));
+-	/* Interrupt unmask - stop, abort */
++	/* Interrupt unmask - stop, watermark, abort */
+ 	tmp = GET_CH_32(dw, chan->dir, chan->id, int_setup);
+ 	tmp = dw_hdma_v0_core_int_setup(chan, tmp);
+ 	SET_CH_32(dw, chan->dir, chan->id, int_setup, tmp);
+@@ -343,6 +380,11 @@ static void dw_hdma_v0_core_ch_config(struct dw_edma_chan *chan)
+ 	/* MSI done addr - low, high */
+ 	SET_CH_32(dw, chan->dir, chan->id, msi_stop.lsb, chan->msi.address_lo);
+ 	SET_CH_32(dw, chan->dir, chan->id, msi_stop.msb, chan->msi.address_hi);
++	/* MSI watermark addr - low, high */
++	SET_CH_32(dw, chan->dir, chan->id, msi_watermark.lsb,
++		  chan->msi.address_lo);
++	SET_CH_32(dw, chan->dir, chan->id, msi_watermark.msb,
++		  chan->msi.address_hi);
+ 	/* MSI abort addr - low, high */
+ 	SET_CH_32(dw, chan->dir, chan->id, msi_abort.lsb, chan->msi.address_lo);
+ 	SET_CH_32(dw, chan->dir, chan->id, msi_abort.msb, chan->msi.address_hi);
+@@ -362,6 +404,13 @@ dw_hdma_v0_core_ll_data(struct dw_edma_chan *chan, struct dw_edma_burst *burst,
+ 	if (cb)
+ 		control |= DW_HDMA_V0_CB;
+ 
++	if (irq) {
++		control |= DW_HDMA_V0_LWIE;
++
++		if (chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE)
++			control |= DW_HDMA_V0_RWIE;
++	}
++
+ 	dw_hdma_v0_write_ll_data(chan, idx, control, burst->sz, burst->sar,
+ 				 burst->dar);
+ }
+@@ -444,7 +493,7 @@ static const struct dw_edma_core_ops dw_hdma_v0_core = {
+ 	.ll_link = dw_hdma_v0_core_ll_link,
+ 	.ll_clear = dw_hdma_v0_core_ll_clear,
+ 	.ll_cur_idx = dw_hdma_v0_core_ll_cur_idx,
+-	.ll_irq_clear = dw_hdma_v0_core_clear_done_int,
++	.ll_irq_clear = dw_hdma_v0_core_clear_ll_int,
+ 	.ch_doorbell = dw_hdma_v0_core_ch_doorbell,
+ 	.ch_enable = dw_hdma_v0_core_ch_enable,
+ 	.ch_config = dw_hdma_v0_core_ch_config,
+diff --git a/drivers/dma/dw-edma/dw-hdma-v0-regs.h b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+index 2124c162a62f..60dc054adafa 100644
+--- a/drivers/dma/dw-edma/dw-hdma-v0-regs.h
++++ b/drivers/dma/dw-edma/dw-hdma-v0-regs.h
+@@ -18,6 +18,7 @@
+ #define HDMA_V0_LOCAL_STOP_INT_EN		BIT(4)
+ #define HDMA_V0_REMOTE_STOP_INT_EN		BIT(3)
+ #define HDMA_V0_ABORT_INT_MASK			BIT(2)
++#define HDMA_V0_WATERMARK_INT_MASK		BIT(1)
+ #define HDMA_V0_STOP_INT_MASK			BIT(0)
+ #define HDMA_V0_LINKLIST_EN			BIT(0)
+ #define HDMA_V0_CONSUMER_CYCLE_STAT		BIT(1)
 -- 
 2.51.0
 
