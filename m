@@ -1,149 +1,205 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5E03D301F;
-	Mon, 27 Jul 2026 19:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10D64248AC;
+	Mon, 27 Jul 2026 20:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785181943; cv=none; b=LMcxZA/7lCvicvqJJWxpcBo/Qky02Qk4TL48WgnKeWORkAbWLOmf1ZIXpq79FhG5tEN6nM5oO8APpICd51R+iqQrkOn/HBH2POvfQkc1mQ+jZpnIe4XBwMH8Qn34AvWU/sg/NJapG9ooG/DD6tPZzv3ciXUx4GEBH3/y6RpiVg8=
+	t=1785182822; cv=none; b=jOa1PD2ov6WR0XPVkWaqvUJFK0w6T1oMP4Iag0THZ13OgO2uiFs906uHynjo7VyV8UJAE2kg3hAKtARMTeP/OpapliVSWP6x2hgylrrCiI29eiHJYRlI5eZo8o1PGo/8r4qh0qhuv8uO2R9qxowKsSkPaT+U3kvvS5bvm9oHw/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785181943; c=relaxed/simple;
-	bh=mdgvFA3F0fkGRGRfkPOi/WGcSY7PnBWSaaFb08FOU88=;
+	s=arc-20240116; t=1785182822; c=relaxed/simple;
+	bh=9lMBIt9JzLYor/8jU1paTN05CWh0pExCXgGe54v+MHo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=hJ2ZpGsKpRi/opHlokk0Pw/JffNtS59V0BHHgIR9KdZ3ADVOZw3vBC46jWGhuMmjECFSELOM1W2PpvTZk6fzjA2UQ+AEGJSY/4bc7eiH4XzgKPhZTedEfVXSIN4cZK7sgfxSyGOQcoUIQ1jhn7BJAVgWYEofRAZpEmipoi3Fcsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUG5yc7M; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=tM735Q9qRugCrISyPGgXehNcYFNXrQ+n2AbaCg1IWUUa6Tc8NVKXSpArtJS1TeTK1M7IKmGXZFnKZBVqkI2VpOyh2mIxeMQ1JePxlp7e+7p8S+6qzBklSDp8CO7eZc13MJorrcfSHQm1Fh9LOVZDk0zUUC/UuDs5SThsBmYuSSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQjUm52v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUG5yc7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64181F000E9;
-	Mon, 27 Jul 2026 19:52:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQjUm52v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEBC1F00A3A;
+	Mon, 27 Jul 2026 20:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785181942;
-	bh=pA/Hm5el/ygEdVb3CVc9MntJJauvaEDr67lQlX0i+iY=;
+	s=k20260515; t=1785182820;
+	bh=KwUcdDxYplkOmTwya6GwP9bI8zKV8hTZuxuskwdEgis=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OUG5yc7MuqqTDLGA2zjruLOITgeWCW1fcgICdkNDNHoeBOBtGMedRaNeWtA8eHkO5
-	 g/NqBy+IKHp6tXqf9dOCXgs8SgXte6aTYBA3Dolxwx1DcuDLWh3gYYH2HgPVyFCexy
-	 EAu9JvBbrVo1F4jV34d7UjjJeZjZywTqZ3436mnT3t3ZPJe3DCiHAu59MyjXjVtRld
-	 TZViOdrS+FMS0Tsc0/VfuEjitCwot+6ICm/ttDLgE+TJA3WCL7QSdDKpMJDSxoshRB
-	 KYy6iUWTe8QLRtCZhDqJK/9T1Oy+bDg8He1iHkjdCW8ZkSN/uauXG9DPcdB9vV96lZ
-	 eQU6NewxcwG5Q==
+	b=ZQjUm52v/iNw8ByRmj/Vk0IMLJmXxgZ7L6LoSz+Vyx84uKo1UjUiHFqitpOzkKhya
+	 Su0dp+jhlke3seUxXcHtiVNat5UWYh7t3T2m/XvNEOGphU0onx2iZLbRDGZm45z8Pp
+	 fWUi62NpXAnDyStd/g8GYsrU0YBlVGH6HMPiA8XxjPXFaZIJ2mWIsKUKaL43ACZV/y
+	 Q9SjRb1zWeOlT6k9QCq2WA1u62zSRdE9A9yTDZru64Y+1pBN7VfNEUHi/kNXE0Eo9n
+	 hq0VBX0QG1oIigt9av6jEXCRvdryYrY4hDNfe4bBqUwABhH7zr4Q9PVY+QdlIYjOYL
+	 +xV1U3nRsGR0Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 08/11] dmaengine: switchtec-dma: fix use-after-free
- of swdma_dev in remove()
+Subject: Re: [PATCH v3 09/11] dmaengine: ioat: disable relaxed ordering
+ before registering the device
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, linux-pci@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260727181526.9672-9-logang@deltatee.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260727181526.9672-10-logang@deltatee.com>
 References: <20260727181526.9672-1-logang@deltatee.com>
- <20260727181526.9672-9-logang@deltatee.com>
+ <20260727181526.9672-10-logang@deltatee.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 19:52:21 +0000
-Message-Id: <20260727195221.C64181F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 20:06:58 +0000
+Message-Id: <20260727200659.9FEBC1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing check for ioremap() failure in switchtec_dma_create() can =
-cause a null pointer dereference.
-- [High] Client callbacks are invoked while holding the channel's `complete=
-_lock`, leading to a self-deadlock if the callback calls DMA engine APIs.
-- [High] The channel status IRQ is requested before the `dma_dev->channels`=
- list is initialized, which will cause a NULL pointer dereference if an int=
-errupt fires early.
+- [High] Fallback from MSI-X to MSI leaves MSI-X enabled, breaking interrup=
+t delivery.
+- [High] Possible Use-After-Free of `device` in shared interrupt handler on=
+ probe failure.
+- [High] Global IDA leak in the dma_async_device_register error path.
+- [Medium] Hardware prefetch limit is configured after the DMA device is ex=
+posed.
+- [Medium] Sysfs kobject 'quickdata' is added after device uevent (TOCTOU r=
+ace).
 --
 
---- Patch [8]: [PATCH v3 08/11] dmaengine: switchtec-dma: fix use-after-fre=
-e of swdma_dev in remove() ---
-commit 29e71ea6cf1f57028cf682c7cc5c705361a852e2
+--- Patch [9]: [PATCH v3 09/11] dmaengine: ioat: disable relaxed ordering b=
+efore registering the device ---
+commit bae11619501364346652f2b925166039da65e184
 Author: Logan Gunthorpe <logang@deltatee.com>
+Subject: dmaengine: ioat: disable relaxed ordering before registering the d=
+evice
 
-dmaengine: switchtec-dma: fix use-after-free of swdma_dev in remove()
+Moves the capability read/write ahead of dma_async_device_register() so
+failure doesn't leave dangling registered devices.
 
-This commit fixes a use-after-free of swdma_dev in switchtec_dma_remove().
-It caches the bar variable locally before calling
-dma_async_device_unregister(), which can synchronously free swdma_dev.
-
-Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.ke=
+Link: https://lore.kernel.org/dmaengine/20260707165906.249F41F000E9@smtp.ke=
 rnel.org
 
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index 800d8ecd07171..d73506b5cabc1 100644
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-
+> diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+> index 737496391109e..a57024c4b066e 100644
+> --- a/drivers/dma/ioat/init.c
+> +++ b/drivers/dma/ioat/init.c
 [ ... ]
+> @@ -1194,6 +1185,15 @@ static int ioat3_dma_probe(struct ioatdma_device *=
+ioat_dma, int dca)
+>  		goto err_disable_interrupts;
+>  	}
+> =20
+> +	err =3D dma_async_device_register(&ioat_dma->dma_dev);
+> +	if (err)
+> +		goto err_disable_interrupts;
+> +
+> +	ioat_kobject_add(ioat_dma, &ioat_ktype);
+> +
+
+[Severity: Medium]
+This isn't a bug introduced by this patch, but doesn't this create a
+TOCTOU race?  The sysfs kobject 'quickdata' and its attributes are added
+after dma_async_device_register() has already emitted the KOBJ_ADD uevent.
+Could userspace tools reacting to the uevent miss these sysfs attributes?
+
+> +	if (dca)
+> +		ioat_dma->dca =3D ioat_dca_init(pdev, ioat_dma->reg_base);
+> +
+>  	if (ioat_dma->cap & IOAT_CAP_DPS)
+>  		writeb(ioat_pending_level + 1,
+>  		       ioat_dma->reg_base + IOAT_PREFETCH_LIMIT_OFFSET);
+
+[Severity: Medium]
+This isn't a bug introduced by this patch, but is it safe to configure the
+hardware prefetch limit after the DMA device has already been exposed?
+Since dma_async_device_register() makes the channels available, could
+concurrent DMA clients submit and execute operations with uninitialized or
+stale prefetch hardware states before this writeb() occurs?
+
+
+Additionally, while reviewing this code, I noticed a few pre-existing issues
+outside the modified context:
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does switchtec_dma_create()
-check if ioremap() fails?
+This isn't a bug introduced by this patch, but in ioat_pci_probe(), the
+device struct is manually freed if ioat3_dma_probe() fails:
 
-If ioremap() fails due to resource exhaustion, it returns NULL. The code
-appears to immediately dereference this pointer:
-
-drivers/dma/switchtec_dma.c:switchtec_dma_create() {
+drivers/dma/ioat/init.c:ioat_pci_probe() {
     ...
-    swdma_dev->bar =3D ioremap(pci_resource_start(pdev, 0),
-                             pci_resource_len(pdev, 0));
-    ...
-    irq =3D readw(swdma_dev->bar + SWITCHTEC_REG_CHAN_STS_VEC);
+	err =3D ioat3_dma_probe(device, ioat_dca_enabled);
+	if (err) {
+		for (i =3D 0; i < IOAT_MAX_CHANS; i++)
+			kfree(device->idx[i]);
+		kfree(device);
+		dev_err(dev, "Intel(R) I/OAT DMA Engine init failed\n");
+		return -ENODEV;
+	}
     ...
 }
 
-Can this lead to a NULL pointer dereference during device probe?
+However, ioat_dma_setup_interrupts() allocates IRQs using
+devm_request_irq(). Because the IRQs are devm-managed, they are not actually
+unregistered until ioat_pci_probe() returns. Doesn't this create a window
+where a shared interrupt could trigger ioat_dma_do_interrupt(), which
+then casts and dereferences the already freed device pointer?
+
+drivers/dma/ioat/dma.c:ioat_dma_do_interrupt() {
+	struct ioatdma_device *instance =3D data;
+    ...
+	intrctrl =3D readb(instance->reg_base + IOAT_INTRCTRL_OFFSET);
+    ...
+}
+
 
 [Severity: High]
-This is a pre-existing issue, but does the driver hold complete_lock while
-invoking client callbacks?
+This isn't a bug introduced by this patch, but when falling back from MSI-X
+to MSI in ioat_dma_setup_interrupts(), is MSI-X properly disabled?
 
-In switchtec_dma_cleanup_completed(), the lock is acquired:
-
-drivers/dma/switchtec_dma.c:switchtec_dma_cleanup_completed() {
-    spin_lock_bh(&swdma_chan->complete_lock);
+drivers/dma/ioat/init.c:ioat_dma_setup_interrupts() {
     ...
-    dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+	err =3D pci_enable_msix_exact(pdev, ioat_dma->msix_entries, msixcnt);
+	if (err)
+		goto msi;
+
+	for (i =3D 0; i < msixcnt; i++) {
+        ...
+		err =3D devm_request_irq(dev, msix->vector, ...);
+		if (err) {
+			for (j =3D 0; j < i; j++) {
+                ...
+				devm_free_irq(dev, msix->vector, ioat_chan);
+			}
+			goto msi;
+		}
+	}
     ...
 }
 
-The same pattern appears in switchtec_dma_abort_desc().
+If devm_request_irq() fails, the code frees the requested IRQs and jumps
+to the msi label. However, it doesn't call pci_disable_msix(). Since the
+device is still programmed for MSI-X, pci_enable_msi() will fail, and
+the fallback will continue to INTx. Will the device ever generate INTx
+interrupts if it was left with MSI-X enabled?
 
-If the client callback calls back into the DMA engine API (such as=20
-dmaengine_terminate_all()), could this cause a self-deadlock when the=20
-driver attempts to acquire complete_lock again?
 
 [Severity: High]
-This is a pre-existing issue, but is it safe to request the channel status
-IRQ before the channels list is initialized?
+This isn't a bug introduced by this patch, but does the error path in
+dma_async_device_register() leak the global device IDA?
 
-In switchtec_dma_create(), pci_request_irq() is called before the channel
-list is populated:
+drivers/dma/dmaengine.c:dma_async_device_register() {
+    ...
+err_out:
+	/* if we never registered a channel just release the idr */
+	if (!device->chancnt) {
+		ida_free(&dma_ida, device->dev_id);
+		return rc;
+	}
 
-drivers/dma/switchtec_dma.c:switchtec_dma_create() {
-    ...
-    rc =3D pci_request_irq(pdev, irq, NULL, switchtec_dma_chan_status_isr,
-                         swdma_dev, KBUILD_MODNAME);
-    ...
-    chan_cnt =3D switchtec_dma_chans_enumerate(swdma_dev, pdev, chan_cnt);
-    ...
-}
-
-If an interrupt fires early, switchtec_dma_chan_status_isr() will iterate
-over the uninitialized dma_dev->channels list:
-
-drivers/dma/switchtec_dma.c:switchtec_dma_chan_status_isr() {
-    ...
-    list_for_each_entry(chan, &dma_dev->channels, device_node) {
+	list_for_each_entry(chan, &device->channels, device_node) {
     ...
 }
 
-Could this loop dereference a NULL pointer and crash if the list head is
-completely zeroed before initialization?
+If dma_async_device_register() successfully registers at least one channel
+but fails on a subsequent one (so device->chancnt is greater than 0), it ju=
+mps
+to err_out. The error path explicitly skips calling ida_free() because
+device->chancnt is greater than 0. Does this permanently leak the global
+IDA for this device?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727181526.9672=
--1-logang@deltatee.com?part=3D8
+-1-logang@deltatee.com?part=3D9
