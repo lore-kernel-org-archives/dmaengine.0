@@ -1,112 +1,137 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF7D372B26
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0553E2AD6
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186438; cv=none; b=FnVGOIz5zkPMNwwN6IL3MGLzUWnDMgbQ+xiiJuT7dQ2RJkLq4no1a21hTklxnC+X141Fcj25ydvzJ/lcRrVVtVQ5ei7+5D7hgQ03suNyUQiGd6A4O2OXmVIICwQn09Alle4UvTKAAvyLY1ie/R1YTM4I4eY/Pj/FgvT+nAI1cRw=
+	t=1785186444; cv=none; b=qI4Knol2uH53vPmEMvIaUTtIiPB5zhlUlJQwUcwUZ2L2IY7Z0Icpp6a9wo3XC8/ZkcEsh2yVU4hiU31iBmTD3MZuB3NEb/V7g+0LQXooTXpoChCIBaJS+7U+qliLuKZNH/1fZqfKAjrJ9ZxHWADyfXzDAmLCSJJ4FdnrRq+mH2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186438; c=relaxed/simple;
-	bh=EfzWrzdY97n5tBiJUgyz7nOurC8bJEKYjQVMrsuqwm8=;
+	s=arc-20240116; t=1785186444; c=relaxed/simple;
+	bh=IZKibR/6N47f5yt8d/LvQPFvgtZasRmifebYOyywMGc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=NK1sXprEnGecidQQnutOGAZeFwJp+ATTJQzz0tHW6MM85phev2dbb1NYXK/Bhs8qDbYZ6j+aLHSC1rCHTRr5yAaCzVYk+2ejmTTwl5jcavUkH0caiRJTA9VqprWbe4OdeUbHxOKiBx0toBk6/LJkWTaFRJPhpzAwQeiZT/vjQ1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTf+tk0T; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=tD7wroWkgHOTmSzSHSYqJPHSLH1rtPpsLGStpqJFT1gRt00rIjzk6fx26NUFckhYy31+u4k4Gbdxf1yDsMMTzEymYujgrDUkFXXaYmd7Q6jwovOf7bnDNHMGFKl4+0ddvo0XItP+lXtS1EEhWOzYkzc1qy+lEsbiCAVij4tZMcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZydAmpqD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTf+tk0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4865D1F00A3D;
-	Mon, 27 Jul 2026 21:07:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZydAmpqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200551F000E9;
+	Mon, 27 Jul 2026 21:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785186437;
-	bh=0ums6E1lDVBLhZKovHQiVNE7FUedWj+4g89M0NAroRo=;
+	s=k20260515; t=1785186443;
+	bh=yBLGFzN20MtyVIVdFJqH3mCkY9aPuTNakRnwSI214+k=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cTf+tk0TEt8HbSICse5y9RNo3JbVzoLeoTd2WlaTbZNfpnr/S52M7GlkrZht0b7cc
-	 XieY5NyS48KMcBayLeZCMy/DDuJOF3W9dNl6ibewIF1qK3kfzaY3pEHyg7KFYrCVKW
-	 ZKBSFczqO7wPMN8OeBSc0dAI57SB+uaLnbmBIYjaIX0Aviu9QjJ3PXln9nljq9Qsuo
-	 YPQwiBXB2axs3L5HWlitRVEg4XG5f7trcs0R7atIIuE4ouOptf9qD21QtwF1Rswczy
-	 Yz4ojjP8KAwOl8G0y6hgRHBOaYx3xsrwaGOlAMKp3sMOoEw5eeTnMVF5Cykc/wqzzX
-	 K2tDaFDnNGBhQ==
+	b=ZydAmpqDnBxO1PLoLZ+mrfvmwnCxPFNk3ycNcNK7XDrVUOcGaXI2ueoTWb5MfHCUA
+	 r6pl3aXzrFR2+3Ytfph0tJajFmfavLLVk4iWbc0s7i6jWspNE2ZVnCmKcpkbFyy+GG
+	 X8T7L8q15bqFFiveiAR+ycInYVmI98RxiJRyO76cXysvxdeJ5JBwIWmu1/xvU2PYkj
+	 pnWUklX6xWALK11tIK1XLE4ybYa4i4FR62GT4m+usrl+mMsSMLpyQ4aJuZeN7AtBKl
+	 Jm0fpXN2nwcGf9Jj1kLv3kWqqDonFQvQLrQohZ5GLg7qkNGKvSkdRPhqrn9XbIdfUV
+	 V1yqLPTmWxN0w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 30/64] dmaengine: sa11x0-dma: kill vchan BH on remove
+Subject: Re: [PATCH v2 36/64] dmaengine: sprd-dma: kill vchan BH on teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
 Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <83cb2ec3443e6061816a37699d18bc1afc0fb908.1785183549.git.allen.lkml@gmail.com>
+In-Reply-To: <6b93116a29794e917499ab4f84caf7138ee810b0.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <83cb2ec3443e6061816a37699d18bc1afc0fb908.1785183549.git.allen.lkml@gmail.com>
+ <6b93116a29794e917499ab4f84caf7138ee810b0.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:07:16 +0000
-Message-Id: <20260727210717.4865D1F00A3D@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:07:22 +0000
+Message-Id: <20260727210723.200551F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] The driver's teardown sequence in `sa11x0_dma_remove()` and the pr=
-obe error path is critically flawed, freeing DMA channels before disabling =
-hardware interrupts and stopping the device tasklet.
+- [High] The driver prematurely removes channels from `sdev->dma_dev.channe=
+ls` before calling `dma_async_device_unregister()`, causing the core DMA fr=
+amework to silently skip unregistering them, which leaks per-CPU memory, ID=
+As, and sysfs nodes, leading to a Use-After-Free.
+- [High] IRQ is requested before the MMIO base is mapped and clocks are ena=
+bled, leading to a guaranteed NULL pointer dereference or bus hang if an in=
+terrupt is pending.
 --
 
---- Patch [30]: [PATCH v2 30/64] dmaengine: sa11x0-dma: kill vchan BH on re=
-move ---
-commit 34b16ea740696f927777e47c145e53481090efcc
+--- Patch [36]: [PATCH v2 36/64] dmaengine: sprd-dma: kill vchan BH on tear=
+down ---
+commit 90cb440f02a76b9f95f830c9b7cd74c3b47c9d5f
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: sa11x0-dma: kill vchan BH on remove
+dmaengine: sprd-dma: kill vchan BH on teardown
+   =20
+Use dma_chan_kill_bh() for virt-dma cleanup.
 
-Use dma_chan_kill_bh() when tearing down virt-dma channels.
-
-> diff --git a/drivers/dma/sa11x0-dma.c b/drivers/dma/sa11x0-dma.c
-> index a6fa431530e3d..ea4357da5e39d 100644
-> --- a/drivers/dma/sa11x0-dma.c
-> +++ b/drivers/dma/sa11x0-dma.c
-> @@ -891,7 +891,7 @@ static void sa11x0_dma_free_channels(struct dma_devic=
-e *dmadev)
-> =20
->  	list_for_each_entry_safe(c, cn, &dmadev->channels, vc.chan.device_node)=
- {
+> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+> index 087fea3af2e41..42a0c1c34337b 100644
+> --- a/drivers/dma/sprd-dma.c
+> +++ b/drivers/dma/sprd-dma.c
+> @@ -1253,7 +1253,7 @@ static void sprd_dma_remove(struct platform_device =
+*pdev)
+>  	list_for_each_entry_safe(c, cn, &sdev->dma_dev.channels,
+>  				 vc.chan.device_node) {
 >  		list_del(&c->vc.chan.device_node);
-> -		tasklet_kill(&c->vc.task);
-> +		dma_chan_kill_bh(&c->vc.chan);
->  		kfree(c);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but is a pre-existing structural
-flaw in the driver's teardown sequence.
+This isn't a bug introduced by this patch, but removing the channels from
+sdev->dma_dev.channels here causes the core dma framework to skip
+unregistering them when dma_async_device_unregister() is called later in
+this function:
 
-In both sa11x0_dma_remove() and the error path of sa11x0_dma_probe(),
-sa11x0_dma_free_channels() is called before the device interrupts are freed
-and the main device tasklet is killed:
-
-sa11x0_dma_remove() {
-	...
-	sa11x0_dma_free_channels(&d->slave);
-	for (pch =3D 0; pch < NR_PHY_CHAN; pch++)
-		sa11x0_dma_free_irq(pdev, pch, &d->phy[pch]);
-	tasklet_kill(&d->task);
-	...
+drivers/dma/dmaengine.c:dma_async_device_unregister() {
+    ...
+    list_for_each_entry_safe(chan, n, &device->channels, device_node)
+        __dma_async_device_channel_unregister(device, chan);
+    ...
 }
 
-If an unbind happens while a DMA transfer is active, could an interrupt fire
-during this window? If so, would sa11x0_dma_irq() dereference a freed chann=
-el
-(p->vchan) and cause a use-after-free when attempting to acquire c->vc.lock?
+By emptying the channel list early, the sysfs nodes for the channels are
+never unregistered.
 
-Additionally, could the lockless traversal of the d->slave.channels list in
-sa11x0_dma_tasklet() encounter list poisoning or a use-after-free if channe=
-ls
-are freed concurrently by the list_del() and kfree() operations here?
+Since the driver data is devres-managed and freed after unbind, does this
+leave orphaned sysfs nodes pointing to freed memory, leading to a
+use-after-free if a user reads the sysfs files?
 
+> -		tasklet_kill(&c->vc.task);
+> +		dma_chan_kill_bh(&c->vc.chan);
 >  	}
->  }
+> =20
+>  	of_dma_controller_free(pdev->dev.of_node);
+
+[Severity: High]
+This is another pre-existing issue, but there appears to be a null pointer
+dereference risk during probe in this driver.
+
+The interrupt is requested before the mmio base is mapped:
+
+drivers/dma/sprd-dma.c:sprd_dma_probe() {
+    ...
+    ret =3D devm_request_irq(&pdev->dev, sdev->irq, dma_irq_handle,
+                           0, "sprd_dma", (void *)sdev);
+    ...
+    sdev->glb_base =3D devm_platform_ioremap_resource(pdev, 0);
+    ...
+}
+
+If an interrupt is already pending when devm_request_irq() unmasks it,
+the interrupt handler will fire immediately and dereference the uninitializ=
+ed
+glb_base pointer:
+
+drivers/dma/sprd-dma.c:dma_irq_handle() {
+    ...
+    u32 irq_status =3D readl(sdev->glb_base + SPRD_DMA_GLB_INT_MSK_STS);
+    ...
+}
+
+Should the memory mapping and clock enablement be done before requesting
+the interrupt to avoid this panic during boot or module load?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D30
+t.allen.lkml@gmail.com?part=3D36
