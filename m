@@ -1,130 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7C3C3F7B
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944083C3F7B
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187042; cv=none; b=lhVlkgDpFhbRo5A5P6jyvbyHQz8qaCSbzUvbsA4YGbGoMidG3EydZ2gdYhqKh3l2wqwrIWdpmjzAIYj5Jyl1ZQOVwJCN8kmT2NFH7VsfACKFiKtAnGQhTzKlGYA77ZT84DaFdMfMJ7/vEd54m+pvLak2XatjeFt2OBqqTOWKa6s=
+	t=1785187053; cv=none; b=atU0SJEMbWIROlVmau2qstgsDE71b/B/sBYrgljSOv8U1zLD+HeoQ2FoE/eiFHdhblphFdAKjnAinSkGXEkKqhJrzvhCW/7uW54IJ8G5k8FjSgphd38CQwO50qJfscZ09O/BNaISBu0buLX78fuikMIkm9EBorLoMo0goTDNIao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187042; c=relaxed/simple;
-	bh=rEQ6TP1t1S59Lu8WtIInCjUp3K3sFbPL1wqAc3ygj0Q=;
+	s=arc-20240116; t=1785187053; c=relaxed/simple;
+	bh=L4kQMROuo/T5HkfMlyBRBzd9yeeZK23el0xUIwcYjf8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WJ9JoZqEMA4Jf6sFZjvLTiVi6WUJkVMTuYuTlVkBUIld3DTbHgkao/OcAn1jnn96fB/H9QGXoHQ9wmWcc2xONDbUAiJARDp49T5CD03OTLFlSn1VZ6exxveZ1BuAanbwGwrpHJ/0QSGDZrUMoYa++XOxB3D8tlQhJkrsVYrBAdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e+g+/jGa; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=EMG8lcPi8cRxtBxWt88Vb0x5VPnvuH/o+jDFaZwyVrzru7X2a8S3syxUaJ6jmBJWzmEfnSdu+ZnSxQ7Y1O1bmgUUoiwonhgGrY/qIVM3VvQXF28gCbkuqByhCcGNxYj+IRqduBxUPIMKsdLJ50354i5kvrS3MgFpDwEMeBjOW/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SA6nksos; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e+g+/jGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332D31F000E9;
-	Mon, 27 Jul 2026 21:17:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SA6nksos"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E931F000E9;
+	Mon, 27 Jul 2026 21:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187041;
-	bh=LB1oejMlDPXlo1MiaIPMH3bC2dM1m2w0itGpQyXrWCo=;
+	s=k20260515; t=1785187052;
+	bh=L2NcL35OepWVOfKljX2dDJn8S3uTMbaeQDpVNMw8lG0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=e+g+/jGank0n+Tb3rofKcZ0ylQHesSpdfAddPYSizokDtwVP8ZoH2aWEbROm+GSDH
-	 ZyKL53XHdRRsEZnxZVn7G0VH3cRE1hYbQTGXDagSvd18Q41LAD6FwMZ3AnB+D2EUZM
-	 JykpxtFeqLyERmsEgOyKybKzHDe+IetZegpfnoh4V4Ca320gfu3ciFs28HHiNfzKYr
-	 6VOw9vWzoe5Tm2gE7qADZiORddMuaVqoPXQV/tpSJiHH2VzcNa94jRn7XGtl/vMr+G
-	 /Vfg1JSXRrrexGYMJ6b7hEhygvIVk5SpwlkAsaGi/D/Hz54Q4q84bIkmcocIsUJpbN
-	 bkAoT4IBu5Ebw==
+	b=SA6nksosuhBLYmIB7oJzlT/L24drWMD2Cn08JTgV6h9K4NrLe2ADXRUQruEVQplEY
+	 0md89K+/QiTHse8pXzFBTBXNfdQS/xxG4eTeszEa2yLuQW2f1HfeqcgXLEv6fpdzVR
+	 6t6C+A+KvqUdD3zjrCMMNwgICo2EgvEztOtZiREg4nX538ZSJ4ngDshqsT2DRm1nRT
+	 hCFwhwthHhdH+9uS4X3Ub4Qbg77hwax9OvHND1WkguNbuH+BiTihadUBMTGGJ13ZnQ
+	 +v9xh8Pf3BbhxFyTj10JqvzR7Z3YoLef97+QfZWha+Ivq8rM/O66Ep5Ubw9fd92nUA
+	 XxmDH1DJlSfKg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 58/64] dmaengine: qcom-adm: use dma_chan_kill_bh
+Subject: Re: [PATCH v2 48/64] dmaengine: owl-dma: kill vchan BH on teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <295b8a8c7e6a8e3da7a7eb1f632906569c5ab87a.1785183549.git.allen.lkml@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <36654fac68081c725fc25c3cce5db571567d6985.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <295b8a8c7e6a8e3da7a7eb1f632906569c5ab87a.1785183549.git.allen.lkml@gmail.com>
+ <36654fac68081c725fc25c3cce5db571567d6985.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:17:20 +0000
-Message-Id: <20260727211721.332D31F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:17:31 +0000
+Message-Id: <20260727211732.04E931F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Teardown race condition in adm_dma_remove() leading to use-after-f=
-ree
-- [High] Missing device_synchronize callback exposes DMA clients to use-aft=
-er-free
+- [High] The interrupt handler incorrectly processes cyclic DMA transaction=
+s as if they were one-shot transfers, breaking cyclic DMA (e.g., audio play=
+back) by stopping the channel after the first period.
+- [High] Virtual channels stall indefinitely if their transactions are queu=
+ed when all physical DMA channels are busy.
+- [High] Missing `device_synchronize` callback exposes client drivers to Us=
+e-After-Free vulnerabilities during channel teardown.
+- [High] The driver fails to halt active hardware DMA channels during `remo=
+ve()`, causing rogue DMA transfers and potential bus lockups.
 --
 
---- Patch [58]: [PATCH v2 58/64] dmaengine: qcom-adm: use dma_chan_kill_bh =
----
-commit be25e9ce5563c30843636df639280bce697e48d5
+--- Patch [48]: [PATCH v2 48/64] dmaengine: owl-dma: kill vchan BH on teard=
+own ---
+commit 2420d60507a6a038239d14db32bd418a2fe41702
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: qcom-adm: use dma_chan_kill_bh
+dmaengine: owl-dma: kill vchan BH on teardown
 
-virt-dma now dispatches completion callbacks through per-channel BH
-work instead of its tasklet. Cancel that work during teardown before
-channel storage is released.
+This commit updates the driver to use dma_chan_kill_bh() for virt-dma clean=
+up
+during teardown, replacing the older tasklet_kill() interface.
 
-> diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
-> index 07fbe32d31fa4..ea24e2de51544 100644
-> --- a/drivers/dma/qcom/qcom_adm.c
-> +++ b/drivers/dma/qcom/qcom_adm.c
-> @@ -918,8 +918,8 @@ static void adm_dma_remove(struct platform_device *pd=
-ev)
->  		/* mask IRQs for this channel/EE pair */
->  		writel(0, adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
-> =20
-> -		tasklet_kill(&adev->channels[i].vc.task);
-> -		adm_terminate_all(&adev->channels[i].vc.chan);
-> +		dma_chan_kill_bh(&achan->vc.chan);
-
-[Severity: High]
-This is a pre-existing issue, but does this sequence leave a window for a
-use-after-free?
-
-If adm_dma_remove() calls dma_chan_kill_bh() before devm_free_irq()
-synchronizes with the interrupt handler, a concurrent interrupt can still
-fire:
-
-cpu1
-adm_dma_remove()
-    writel(0, ...)
-    dma_chan_kill_bh()
-
-cpu2
-adm_dma_irq()
-    vchan_cookie_complete()
-        dma_chan_schedule_bh()=20
-
-Because cpu1 proceeds to devm_free_irq() which waits for the interrupt hand=
-ler
-to finish but does not flush the newly queued bottom-half work, the device
-context is subsequently freed. The workqueue could then execute the schedul=
-ed
-bottom-half work on the freed memory.=20
-
-Could devm_free_irq() be explicitly called before tearing down the channels?
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this driver also lack a
-device_synchronize callback during its initialization in adm_dma_probe()?
-
-When clients call dmaengine_terminate_sync() to abort transactions, it reli=
-es
-on device_synchronize (usually mapped to vchan_synchronize) to wait for
-callbacks to complete.
-
-Without it, dmaengine_terminate_sync() returns immediately, and clients may
-free their buffers while the virt-dma bottom-half work is still executing.
-
-Can this lead to a use-after-free in the client's completion callback?
-
-> +		adm_terminate_all(&achan->vc.chan);
+> diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+> index 7c80572fc71d1..5f2140dc01cec 100644
+> --- a/drivers/dma/owl-dma.c
+> +++ b/drivers/dma/owl-dma.c
+> @@ -1055,7 +1055,7 @@ static inline void owl_dma_free(struct owl_dma *od)
+>  	list_for_each_entry_safe(vchan,
+>  				 next, &od->dma.channels, vc.chan.device_node) {
+>  		list_del(&vchan->vc.chan.device_node);
+> -		tasklet_kill(&vchan->vc.task);
+> +		dma_chan_kill_bh(&vchan->vc.chan);
 >  	}
-> =20
->  	devm_free_irq(adev->dev, adev->irq, adev);
+>  }
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the interrupt handler
+incorrectly process cyclic DMA transactions as if they were one-shot transf=
+ers?
+
+In drivers/dma/owl-dma.c:owl_dma_interrupt():
+
+    txd =3D vchan->txd;
+    if (txd) {
+        vchan->txd =3D NULL;
+        vchan_cookie_complete(&txd->vd);
+
+        if (vchan_next_desc(&vchan->vc))
+            owl_dma_start_next_txd(vchan);
+        else
+            owl_dma_phy_free(od, vchan);
+    }
+
+It appears this unconditionally completes and removes the descriptor without
+checking txd->cyclic or calling vchan_cyclic_callback(). Can this break
+cyclic DMA transfers by stopping the channel after the first period?
+
+
+[Severity: High]
+This is a pre-existing issue, but could virtual channels stall indefinitely=
+ if
+their transactions are queued when all physical DMA channels are busy?
+
+When allocating a physical channel in owl_dma_phy_alloc_and_start():
+
+    pchan =3D owl_dma_get_pchan(od, vchan);
+    if (!pchan)
+        return;
+
+If no physical channel is available, the request silently remains in the
+virtual queue. However, when a physical channel is later freed in
+owl_dma_phy_free():
+
+    owl_dma_terminate_pchan(od, vchan->pchan);
+    vchan->pchan =3D NULL;
+
+The physical channel is released, but it doesn't appear to be reassigned to
+other waiting virtual channels. Does this cause queued transfers on those
+unassigned virtual channels to stall indefinitely?
+
+
+[Severity: High]
+While this isn't a bug introduced by your change, is the device_synchronize
+callback missing from the DMA engine operations?
+
+In drivers/dma/owl-dma.c:owl_dma_probe():
+
+    od->dma.device_pause =3D owl_dma_pause;
+    od->dma.device_resume =3D owl_dma_resume;
+    od->dma.device_terminate_all =3D owl_dma_terminate_all;
+    od->dma.src_addr_widths =3D BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+
+Without mapping device_synchronize to vchan_synchronize,
+dmaengine_terminate_sync() acts as a no-op for synchronization. Could this
+expose client drivers to use-after-free vulnerabilities if the bottom-half
+continues to run concurrently after the client assumes the channel is safely
+halted?
+
+
+[Severity: High]
+This is a pre-existing issue, but does the driver fail to cleanly halt acti=
+ve
+hardware DMA channels during removal?
+
+In drivers/dma/owl-dma.c:owl_dma_remove():
+
+    of_dma_controller_free(pdev->dev.of_node);
+    dma_async_device_unregister(&od->dma);
+
+    /* Mask all interrupts for this execution environment */
+    dma_writel(od, OWL_DMA_IRQ_EN0, 0x0);
+
+    /* Make sure we won't have any further interrupts */
+    devm_free_irq(od->dma.dev, od->irq, od);
+
+    owl_dma_free(od);
+
+    clk_disable_unprepare(od->clk);
+
+The removal function destroys driver resources and disables clocks, but
+it doesn't seem to loop over od->pchans to smoothly halt running physical
+channels via owl_dma_terminate_pchan(). Can disabling the clock while the
+DMA controller is actively mastering the bus lock up the system, or cause
+rogue DMA writes to freed memory?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D58
+t.allen.lkml@gmail.com?part=3D48
