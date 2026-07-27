@@ -1,140 +1,145 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121C2371D1F
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D21A3D47C0
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186135; cv=none; b=CXEu8te8ey+uGe6BPJge2IMcVdFat0vQ+ce+BUYWwGWHtvKHxqWIk92cFh6kqyX70Oqe3R2OolS56a5TiqMKraeKEDawdNGS8+9CC6afunUdoq/r2Y2SKlqy+HDM2xNqzYlLy1HRMjfNHUOfjBQiYcVDC6pSYYV2DndMKFuMTyM=
+	t=1785186141; cv=none; b=tTMq+W7/xzVoBqdkm8ydqq1rS+ivdMAIc7C7fUqhiOaUQO7UtYoVgzfX3VHb+IJ7xXBSFfKQ3S+k6WhCHTmL39VK+dYvpHfSLc3ljByNiXe/pl1vKp0xQE5SKfUdwqnuBeNmBcN+j1qKBySxcjpfhj2z0rD0Nm23Ea9yz5MA2es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186135; c=relaxed/simple;
-	bh=3sjxmaKBKYtjDFLMSQV67IFokoGFgQ4Jq6h6oTW6Poc=;
+	s=arc-20240116; t=1785186141; c=relaxed/simple;
+	bh=m+8a6KYaIEudxR11rs5D3GAczlDyZ1WLujOlRmS1pA0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ZmxTZ1eBgzZpbN11AP0yUBbY05mwpyugcaEaZEpRJRoj+Lbwf91aJA+NPkOrVMZrs7POh3zzrJIQ8B7us5gz/XBBmeSTTYcuaXuEaT9+5Z5dICwR/aW9psz0ZcNZAjLUYUEFFxeb8qNV+2zLjvDJmsHrCeAYOCKpuLfeXWlvAZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CYwWKxyp; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=HfSieV3Ha5bvjKNG7w8iFA6bkOIzF55KWhprr+/wnL6Nm9ZA+NgwmZPrqLvDP9dPnq4gdGRQilVDh/615HgfFNK/Onv1PSYHFWepvOslilcwcv7R4fTqCza18VgZW+PprmNGa+Rwe9gjXSiiJykRDRtZgIyvWl4XtBdsHd6eJMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PN7HN9/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CYwWKxyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81981F000E9;
-	Mon, 27 Jul 2026 21:02:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PN7HN9/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C26A1F000E9;
+	Mon, 27 Jul 2026 21:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785186134;
-	bh=f9IlPhjU/86wrcYSlNH/nobBmNv0Vb1Vd9Qg1wuaFiM=;
+	s=k20260515; t=1785186139;
+	bh=7Rw/vMpPHNpNd0sWtgF0Tn7ATusvRuY12l4m3ZyY8TI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=CYwWKxyp5z9B9flFw0zwO+olc2gr55iD/FvyKvMvy6jVep0uereTJSkNd0PbiG1Yi
-	 T+5N5rmWpBXD7Pr2z3DUuAYQV1cEZEZseB49Gp80D5EBuHUdDokh5qwcHkBA/UWt8/
-	 ltCvG2TYdP2O7IeJkdrLfmHAe6KL8FZRF8t75xp0vH4c19OeTu4rGsRQqWK3IyOnYR
-	 1usFIxW0esefBFa8AdMA4KPy8afRIUo3Kc+Hs2kiqQhXGX5Bxm05MxkO5kIFX6YpQl
-	 rHwwaz2FXsyCkgMgZh8nj1UhN5sX3YCBhe4Yxg7kvScUwct3/XC+HZYQRFkC0hmqMO
-	 acpXhRub6n11g==
+	b=PN7HN9/h6BHvB31yAhqCds8VL06WpUVGMFn6HmR2lzFhNdAILef9vD4/cliSNagMX
+	 SZNclOZiyV7iii79jSKSdIplOva7+cZWZUmRhZYy0v6aSFUgzBWTMJhsCKhdiSFNqd
+	 OKGOKzDfMKiwj9tYQ2EeyZ9iZYIk96c0Q3HKu+9pP7ISzAhe0y+GByf/GDtaX8oKdm
+	 UVcYZyeY71TVU9/JPXntlZui3y7yLm3lly0LC6Kbuxmu9eXK4zabclw2rWv1TF7Xoc
+	 BBpgaRSpRGkyQzNbPW0hgeftoRDC+JK4HibTm1u1ru5B81PS4ipmnYy0nKozckhfeC
+	 dFiAh4q/ZZAWQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 09/64] dmaengine: ioat: convert cleanup tasklet to
- dma_chan BH
+Subject: Re: [PATCH v2 25/64] dmaengine: mv_xor_v2: use channel BH helpers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
 Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <325f449ad6fca109ec1e8c34e4e12c1952272a8f.1785183549.git.allen.lkml@gmail.com>
+In-Reply-To: <64a4b1b008b641510416ee8ff13df3cca0b69314.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <325f449ad6fca109ec1e8c34e4e12c1952272a8f.1785183549.git.allen.lkml@gmail.com>
+ <64a4b1b008b641510416ee8ff13df3cca0b69314.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:02:13 +0000
-Message-Id: <20260727210213.A81981F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:02:19 +0000
+Message-Id: <20260727210219.7C26A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] The teardown sequence in `ioat_stop()` cancels the timer using `ti=
-mer_delete_sync()`, but it can be subsequently re-armed by the final cleanu=
-p sequence, leading to a use-after-free when channel resources are freed.
-- [High] `ioat_shutdown()` does not flush inflight BH runs, which can lead =
-to a use-after-free or crash on module unload.
+- [High] Incorrect teardown order in remove() leading to Use-After-Free.
+- [High] Missing dma_chan_kill_bh() in probe error path leads to Use-After-=
+Free.
+- [High] Early interrupt request in probe allows uninitialized state access.
 --
 
---- Patch [9]: [PATCH v2 09/64] dmaengine: ioat: convert cleanup tasklet to=
- dma_chan BH ---
-commit 1d64b3893af8e57fe59c7d2f05e40d26e9aec652
+--- Patch [25]: [PATCH v2 25/64] dmaengine: mv_xor_v2: use channel BH helpe=
+rs ---
+commit 1d8bd96829601184f429fc1fa7947ce7a05990e9
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: ioat: convert cleanup tasklet to dma_chan BH
+dmaengine: mv_xor_v2: use channel BH helpers
 
-Replace the per-channel tasklet with the shared dma_chan BH helper.
-The handler continues to run in softirq context while dmaengine owns
-the common scheduling and teardown mechanism.
+This patch replaces the device tasklet with the per-channel BH helper.
+Descriptor callbacks are updated to run through dma_chan_*_bh instead
+of the tasklet API.
 
-> diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
-> index ee93b029f9e3d..827b46c6354ad 100644
-> --- a/drivers/dma/ioat/dma.c
-> +++ b/drivers/dma/ioat/dma.c
-
+> diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+> index cad4d4fb51ac3..e5fa7a221d5b0 100644
+> --- a/drivers/dma/mv_xor_v2.c
+> +++ b/drivers/dma/mv_xor_v2.c
 [ ... ]
-
-> @@ -161,11 +161,11 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
->  	/* flush inflight timers */
->  	timer_delete_sync(&ioat_chan->timer);
+> @@ -760,7 +758,7 @@ static int mv_xor_v2_probe(struct platform_device *pd=
+ev)
+>  	if (ret)
+>  		goto free_msi_irqs;
 > =20
-> -	/* flush inflight tasklet runs */
-> -	tasklet_kill(&ioat_chan->cleanup_task);
-> +	/* flush inflight BH runs */
-> +	dma_chan_kill_bh(&ioat_chan->dma_chan);
-> =20
->  	/* final cleanup now that everything is quiesced and can't re-arm */
-> -	ioat_cleanup_event(&ioat_chan->cleanup_task);
-> +	ioat_cleanup_event(&ioat_chan->dma_chan);
+> -	tasklet_setup(&xor_dev->irq_tasklet, mv_xor_v2_tasklet);
+> +	dma_chan_init_bh(&xor_dev->dmachan, mv_xor_v2_tasklet);
 
 [Severity: High]
-This is a pre-existing issue, but does this sequence inadvertently re-arm
-the timer during teardown?
+This is a pre-existing issue, but does requesting the interrupt before
+initializing the bottom-half allow an early interrupt to crash the system?
 
-After timer_delete_sync() is called, ioat_cleanup_event() triggers a call
-chain that can re-arm the timer unconditionally:
+In mv_xor_v2_probe(), devm_request_irq() requests and enables the interrupt
+before dma_chan_init_bh() and dma_alloc_coherent() are called. If the
+hardware is left in an active state with pending events, an interrupt will
+fire immediately.
 
-ioat_stop()
-   timer_delete_sync(&ioat_chan->timer);
-   ioat_cleanup_event()
-      ioat_cleanup()
-         ioat_cleanup_preamble()
-            mod_timer(&ioat_chan->timer, jiffies + COMPLETION_TIMEOUT);
-
-If the timer is re-armed here, could the delayed timer callback execute
-after ioat_free_chan_resources() frees the completion pool memory?
-
-Would upgrading timer_delete_sync() to timer_shutdown_sync() properly
-prevent the timer from being re-armed?
+The handler mv_xor_v2_interrupt_handler() calls dma_chan_schedule_bh().
+Depending on the timing, this could crash trying to schedule an uninitializ=
+ed
+work struct, or the scheduled work could run and dereference a NULL
+hw_desq_virt pointer.
 
 [Severity: High]
-This is also a pre-existing issue, but does ioat_shutdown() in=20
-drivers/dma/ioat/init.c have a similar teardown problem with the BH?
+This is a pre-existing issue, but is a call to dma_chan_kill_bh() missing
+in the probe error paths?
 
-In ioat_shutdown(), the driver calls timer_delete_sync() and disables=20
-interrupts, but it does not appear to flush inflight BH runs like it does=20
-here in ioat_stop().=20
+If a setup step fails after initialization, such as dma_alloc_coherent()
+failing, the probe function jumps to the error labels and returns without
+calling dma_chan_kill_bh().
 
-Since the IOAT_RUN bit is not cleared in ioat_shutdown():
+If an early interrupt had already fired and scheduled the bottom-half, the
+work item remains active in the workqueue. When devres automatically frees
+the xor_dev structure containing the work item, could the executing workque=
+ue
+corrupt memory?
 
-drivers/dma/ioat/init.c:ioat_shutdown() {
-    ...
-    timer_delete_sync(&ioat_chan->timer);
-    ioat_reset_hw(ioat_chan);
-    ...
-    ioat_disable_interrupts(ioat_dma);
-}
-
-Could an interrupt firing just before ioat_disable_interrupts() successfully
-schedule the BH via dma_chan_schedule_bh()?
-
-If the module is then unloaded, could the scheduled BH execute after=20
-release_ioatdma() has freed the channel structures, resulting in a=20
-use-after-free?
-
+> =20
+>  	xor_dev->desc_size =3D mv_xor_v2_set_desc_size(xor_dev);
+[ ... ]
+> @@ -869,7 +867,7 @@ static void mv_xor_v2_remove(struct platform_device *=
+pdev)
+> =20
+>  	platform_device_msi_free_irqs_all(&pdev->dev);
+> =20
+> -	tasklet_kill(&xor_dev->irq_tasklet);
+> +	dma_chan_kill_bh(&xor_dev->dmachan);
 >  }
+
+[Severity: High]
+This is a pre-existing issue, but is the teardown order in mv_xor_v2_remove=
+()
+safe from use-after-free races?
+
+In mv_xor_v2_remove(), dma_free_coherent() is called to free the hardware
+descriptor ring (hw_desq_virt) before the device interrupt is disabled via
+devm_free_irq() and before the bottom-half is killed via dma_chan_kill_bh().
+
+If a pending hardware interrupt fires during this window, or if a previously
+scheduled bottom-half is running concurrently, the executing bottom-half
+could dereference the freed hw_desq_virt memory:
+
+mv_xor_v2_tasklet() {
+    ...
+		struct mv_xor_v2_descriptor *next_pending_hw_desc =3D
+			xor_dev->hw_desq_virt + pending_ptr;
+    ...
+}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D9
+t.allen.lkml@gmail.com?part=3D25
