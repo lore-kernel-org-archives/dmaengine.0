@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2172737F9
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB58429CE8
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187234; cv=none; b=oqhkNYR9e3gpVdfiMLKcMbvfWAtPR0hFaYEYbLU/aHPKFC1XVaTBrqGyw62x/uGZr90Og3YSzBzNWqhYmpVY3IEwQXYNbazIJTX82/wvs5nOrTGJ3g2FbbXxOryRrAH3k12AkxiH+l6HYkg8m7il2r1ASjgceWzSJhFu2zIorJ0=
+	t=1785187235; cv=none; b=Q80FDSKi62lEQm5U6Y2ny/K0j0cAFqKrRr2MFh0qwopdNtA5DPAamb14VMO+FMdyVB4CWyBWMKNmHTFESt8CCJPj0CFiANnGvzBgsh2h3gtGl6S2mb74I3b2N2A2lsGVtjgeeM+BCZAaxMsouAuxw3w2YIbALWV18SHg4PwZagE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187234; c=relaxed/simple;
-	bh=RL8vxfCGLv9tCPHEgPXgz1okGTiRzvr9L9iVr+/wjoY=;
+	s=arc-20240116; t=1785187235; c=relaxed/simple;
+	bh=Hhh3cDaaJldgtG0dlXnKTl2GWFbpD6YIF1uwcpTfSEg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=C5y3faotmJsPChDuIT2vXQha9oyKuabxV76/cpp6HDWo3HIaeB1cu9Rl+ViMtf5mdepGM0XVVRmYEZ2zgB1BupMjRP24+E5NjsnX2/8g442+4Dc9L6Tb6gbiEpR2ToBAy5P8DC4td4x4yNwBHG/7kMvC0Cn8ub09WUkDTjDm0Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNwe4CLT; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=PJv+V/OhS651G6cUyTL33CLWHba3TzuGNdZkkZN0d14vO+bDx8GMhmpCaEsuK7f5n5UY76W9BdfHck8tnup+9PN4eSMYlFc5HhfGr8ebeHVFstbz5V3yFNlvoENhbrxDRc20GvZD26OEhTiXFXB7AGnuFDWqG0DXcZvcWdEWSqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ClMen0Tf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNwe4CLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085E81F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ClMen0Tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9CE1F00A3A;
 	Mon, 27 Jul 2026 21:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187233;
-	bh=1DsovQe9xkLsWrmv3TOqXB/gSVzMuI4x8nd3dxAAlCc=;
+	s=k20260515; t=1785187234;
+	bh=RimXYlGLmh+g2dtEI+2cmW0u35/KUlE8Re2OglY4BbA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nNwe4CLTh0MPUHEMa+KkHtVKKBlO6UoBIFMP0FIUZAyPuqWUUSsdp/3i0wvrKnJx7
-	 hdvQXoSU2J9phbiKwuzU8M5NQgHqW7Ppc7cx6gRrG9RkQh3obq/SA+ILmijLSffbLf
-	 vOav8/YvWsHsM7RgSIXAO1Jgq+FmpsWZZoqKNcCYSlYaLInVkRgGvuU7rmBCGAAQUq
-	 O+GeI/dx6UM4QdY6CljjrNIloGgAM21rp4zwJ/ks0S6Gwbt+UZ/IATQjzN7uOpvPrh
-	 XVavoCCHQ9f4c4ahGDevJXCBL5QpkM7KUzTAYY8OwDdu9ppX0yhRHFAAWs9QIuiugR
-	 xvmZ/ff7QOojA==
+	b=ClMen0TfPOUu0XHE4+Ckz1Db5kJzjUIi4VIkbNLt6sm6IguGPARxMSiGfYyG5t67Z
+	 Wl1uua6xbwW00kIO3OykSmSa4WhpjSZIe/gbxaqh2vdViiaR3EVqj+R+hSMyvL/zMB
+	 xlhlsW3qfGXO7TXDCEaYVbvmk/5bzwLCV0Jvia5eCL/PLkR6CACU/uWFCi+e9Fcg0I
+	 ROfqI+CwS9v1Otw/VSsuz9bg40NHX4Zpt6fGBok2abbBCVaIt5l1FiIjhXVe6YAynt
+	 Be9CWJUNcYaHOZZPE+4RDyJzGapo6z5qoCnrXuvyfvWtOmXufAJ9XKppu33SyR2jM1
+	 5ml26Vlna3c4w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 51/64] dmaengine: bcm2835: kill vchan BH on teardown
+Subject: Re: [PATCH v2 49/64] dmaengine: hisi: kill vchan BH on teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <2079c09aba6b298cad25fb95b062ac370a65452b.1785183549.git.allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <9035b2331349a57b145796c56920ebbd7c0737ef.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <2079c09aba6b298cad25fb95b062ac370a65452b.1785183549.git.allen.lkml@gmail.com>
+ <9035b2331349a57b145796c56920ebbd7c0737ef.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:20:32 +0000
-Message-Id: <20260727212033.085E81F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:20:33 +0000
+Message-Id: <20260727212033.AD9CE1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,113 +49,88 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing of_dma_controller_free() in the probe error path and remov=
-e function leaves a dangling pointer in the OF DMA list.
-- [High] Force unbinding the driver while a client holds a DMA channel leak=
-s the channel's IRQ and DMA pool, leading to a Use-After-Free when the IRQ =
-fires.
+- [High] Race condition during device teardown can lead to a use-after-free=
+ because the bottom-half work is killed before IRQs are synchronized, allow=
+ing a concurrent IRQ handler to reschedule the bottom-half work on freed me=
+mory.
+- [High] The driver requests shared IRQs before fully initializing virtual =
+channel structures, risking an uninitialized spinlock access and null point=
+er dereference if a shared or spurious interrupt occurs early.
 --
 
---- Patch [51]: [PATCH v2 51/64] dmaengine: bcm2835: kill vchan BH on teard=
-own ---
-commit 922bf2cdbf2470f43f83cc2698c5817aa6b5f545
+--- Patch [49]: [PATCH v2 49/64] dmaengine: hisi: kill vchan BH on teardown=
+ ---
+commit f8a5265e01e8ff281f13c0af8c64babbb3148800
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: bcm2835: kill vchan BH on teardown
+dmaengine: hisi: kill vchan BH on teardown
+   =20
+This commit replaces tasklet_kill() with dma_chan_kill_bh() for virt-dma=20
+cleanup during device teardown.
 
-Use dma_chan_kill_bh() for virt-dma cleanup instead of tasklet_kill().
-
-> diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-> index 06d830d368822..68e86c8d3d439 100644
-> --- a/drivers/dma/bcm2835-dma.c
-> +++ b/drivers/dma/bcm2835-dma.c
-> @@ -829,7 +829,7 @@ static void bcm2835_dma_free(struct bcm2835_dmadev *o=
-d)
->  	list_for_each_entry_safe(c, next, &od->ddev.channels,
->  				 vc.chan.device_node) {
->  		list_del(&c->vc.chan.device_node);
-> -		tasklet_kill(&c->vc.task);
-> +		dma_chan_kill_bh(&c->vc.chan);
->  	}
+> diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+> index 28bf818f9aa63..39bc88c465138 100644
+> --- a/drivers/dma/hisi_dma.c
+> +++ b/drivers/dma/hisi_dma.c
+> @@ -720,7 +720,7 @@ static void hisi_dma_disable_qps(struct hisi_dma_dev =
+*hdma_dev)
 > =20
->  	dma_unmap_page_attrs(od->ddev.dev, od->zero_page, PAGE_SIZE,
+>  	for (i =3D 0; i < hdma_dev->chan_num; i++) {
+>  		hisi_dma_disable_qp(hdma_dev, i);
+> -		tasklet_kill(&hdma_dev->chan[i].vc.task);
+> +		dma_chan_kill_bh(&hdma_dev->chan[i].vc.chan);
 
 [Severity: High]
-This is a pre-existing issue, but I noticed a potential leak and use-after-=
-free
-if dma_async_device_register() fails in bcm2835_dma_probe() or if the driver
-is forcefully unbound via sysfs.
+This is a pre-existing issue, but does this teardown sequence leave us open=
+ to
+a use-after-free regression?
 
-In bcm2835_dma_probe(), if dma_async_device_register() fails, the error path
-jumps to err_no_dma:
+During device unbind, devres executes hisi_dma_disable_hw_channels() which
+calls hisi_dma_disable_qps(). However, devm_free_irq() hasn't been called y=
+et.=20
 
-drivers/dma/bcm2835-dma.c:bcm2835_dma_probe() {
-    ...
-	rc =3D dma_async_device_register(&od->ddev);
-	if (rc) {
-		dev_err(&pdev->dev,
-			"Failed to register slave DMA engine device: %d\n", rc);
-		goto err_no_dma;
-	}
-    ...
-err_no_dma:
-	bcm2835_dma_free(od);
-	return rc;
+If hisi_dma_irq() is concurrently executing on another CPU, it can call
+vchan_cookie_complete():
+
+drivers/dma/hisi_dma.c:hisi_dma_irq() {
+	...
+	vchan_cookie_complete(&desc->vd);
+	...
 }
 
-Since of_dma_controller_register() was called earlier in the probe function,
-does this error path leave a dangling pointer in the OF DMA list?
+This can schedule the bottom half after dma_chan_kill_bh() has already
+flushed it. When devres subsequently frees the device memory, could the
+scheduled bottom half execute on the freed channel structure?
 
-If the devm-managed bcm2835_dmadev struct is freed automatically by devres,
-any subsequent DMA channel request from another driver matching this device
-tree node might dereference the freed pointer during the bcm2835_dma_xlate
-callback.
-
-Similarly, in bcm2835_dma_remove(), the OF DMA controller is not freed:
-
-drivers/dma/bcm2835-dma.c:bcm2835_dma_remove() {
-	struct bcm2835_dmadev *od =3D platform_get_drvdata(pdev);
-
-	dma_async_device_unregister(&od->ddev);
-	bcm2835_dma_free(od);
-}
-
-Should of_dma_controller_free() be called in both of these paths?
+>  	}
+>  }
 
 [Severity: High]
-This is also a pre-existing issue, but I noticed another potential
-use-after-free and memory leak if the driver is forcefully unbound via sysfs
-while a client still holds a DMA channel.
+This isn't a bug introduced by this patch, but is it possible for a shared
+interrupt to fire before the channel structures are fully initialized?
 
-When a client requests a channel, an IRQ and a DMA pool are dynamically
-allocated:
+In hisi_dma_enable_hw_channels(), the driver requests shared IRQs before
+calling hisi_dma_enable_qps(), which initializes the channels:
 
-drivers/dma/bcm2835-dma.c:bcm2835_dma_alloc_chan_resources() {
-    ...
-	return request_irq(c->irq_number, bcm2835_dma_callback,
-			   c->irq_flags, "DMA IRQ", c);
+drivers/dma/hisi_dma.c:hisi_dma_enable_hw_channels() {
+	...
+	ret =3D hisi_dma_request_qps_irq(hdma_dev);
+	...
 }
 
-If the driver is unbound via sysfs, bcm2835_dma_remove() executes and retur=
-ns
-without tearing down active channel resources, as the DMA engine core skips
-forcefully releasing channel resources.
+If a shared or spurious interrupt fires immediately, hisi_dma_irq() would
+execute and dereference an uninitialized pointer and lock:
 
-Since the IRQ was requested without devm_, it remains registered after the
-driver memory (struct bcm2835_chan) is automatically freed by devres.
-
-Could a subsequent hardware interrupt execute bcm2835_dma_callback() and
-dereference the freed channel pointer?
-
-drivers/dma/bcm2835-dma.c:bcm2835_dma_callback() {
-    ...
-	spin_lock_irqsave(&c->vc.lock, flags);
-    ...
+drivers/dma/hisi_dma.c:hisi_dma_irq() {
+	...
+	struct hisi_dma_dev *hdma_dev =3D chan->hdma_dev;
+	...
+	spin_lock(&chan->vc.lock);
+	...
 }
 
-Should we ensure that free_irq() and dma_pool_destroy() are called when
-cleaning up these resources during driver removal?
+Could this lead to a NULL pointer dereference or uninitialized lock access?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D51
+t.allen.lkml@gmail.com?part=3D49
