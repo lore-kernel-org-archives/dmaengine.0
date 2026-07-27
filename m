@@ -1,75 +1,125 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E74376A1F;
-	Mon, 27 Jul 2026 21:08:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EC92737F9;
+	Mon, 27 Jul 2026 21:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186495; cv=none; b=QByIuhqbB9GjFtBQX6gVWWfm16uf+GlsSGrmMZYBY52zyams1FXXhCHz0sFV0p4UF9GWHzq2WPzalH8sdmkCqGJOUOtKtC7mvrpbbxaBbXAy281rXgPs/QZQ0ukKO/I5KSX+8fxZQx5FZNkpwDnbhZ0omjcSW2RNEwKHiq2tJQQ=
+	t=1785186523; cv=none; b=u/NJfQYT7EMhGLbN/6+VM04UVQvwFEaRcKxBp3/fPTCQX2LmUwpKpoxfFrHsC7urhHmR6szjyEq1C1ZWTQsrAwWGRHbu3WitkTZfKwh1JyZ9TbBJwIpsXIQf3SzQZLKPV/VP54JepqbEnBkxtEP5H2qf9xnVUXcWUieDGGluYGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186495; c=relaxed/simple;
-	bh=3eH8YjGdqkylxy5CtuOHurkd7XUFmSc/D446vbDyUjc=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Subject; b=U9Zm+vNEiQSgioifN+ZwrsePUAa/fWhhhPWE3ZQyE8s/SFaxvCL55gkYn4p4elUJ/miga4iwpaQY1+UNzw3fqmGlw8UEid5RQ7g5EiJp2e9Qzyj3dRIGmT5iGnMns/HIF0O22Q1+YtHqgKB5uh5m2lEeHH32X4xEBHXLcgt7Z9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=ijNF+Ccs; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1785186523; c=relaxed/simple;
+	bh=fJveZJeF/SF9eZfktmfOZTcx/anrzEqrfJ0gfaa1PDc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=mUUc7iDNh+OZajQUJ+dwGj3Ysw6PZThbChR/+dm3OKAzk9HLztpZxMvBk7oNWiBMfp+11btdRN7Sb3903s20yEcmqUYRO8XGuHGkoU7byNq3nCLfXSD/YNVd/YDtdS0fRVq79XG+41GmjiKIkB/bnpJRTWvqQ/P/+YC44AGiwjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFJKEQ5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="ijNF+Ccs"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=d3EmRGi7Q/4c4z88zkXCxe/GaP/TPUfudYyUne3VyP8=; b=ijNF+Ccs1L846T5LPpRU8fDSle
-	InROM9XsgIpOxM6ZBEFREZICYRJ3NXblTf9L7Cc6V88OdTJncMlUfvcPOkVhvvvLy6GVB3DzlJSGq
-	3vvzR7B1bJrjIKXQgGoQdv0ky9s9u0iC7FSVtr0KOs6Kb5pdIN2VO2NY4PJtn2BeuwWGnWwAvlWkY
-	6aeGnCvf70Oe3sg3T+e+dXQSOLV3hX/PPj4WBh+hoI4OjEnNYuumApbGPQVm1Vv0JaaGuuiMP22Rn
-	l+e0H3AF589BX/1AfALeIj3qs0gxhIwVVHma2MKHA/ItBbZ6FGUcXQu+9kYNLDdseYC0M2lB02ZKq
-	H/nImdog==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1woSYW-00000000733-1w0N;
-	Mon, 27 Jul 2026 15:08:13 -0600
-Message-ID: <a64dd902-6626-4f2d-8c11-bf728366b484@deltatee.com>
-Date: Mon, 27 Jul 2026 15:08:11 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oFJKEQ5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73981F000E9;
+	Mon, 27 Jul 2026 21:08:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785186522;
+	bh=C1sZy6oSoEfTM2lcRK3InYAvDyrECQvfa+BM3Y17xtA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=oFJKEQ5ZZSkh+F0GK5dAKVf81uxgdZlVLUERvUiZP7BZzfGzM+i4683xZQxj98V9x
+	 gYwSiAGBrpVnUp7b7YBTr64n28gAM6LLaKuFsoC/dvpBcap600ZFxOanx1ZnkVuDRe
+	 4kf9gr5mBfDSOgUlCe05wqaZ0V3kmwlBsL/ePh4lN9nVrYNVw5Ays5kp4fqs71UlHn
+	 RZDSrU1+EPHsYEk8Q07ZNpvMzWhMAO+3wzpaAD1Bgw25hr8QwoiEk17Fkl/xE3dBqD
+	 WuBr9PHLBz5Xrs3ViXrTofY/H6amMbI16rvOvlC1Nh27FLgI+Oq0DL2/t2zGOISROs
+	 VOHppQofRaEjw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 33/64] dmaengine: sun6i: kill vchan BH on teardown
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Allen Pais" <allen.lkml@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, linux-sunxi@lists.linux.dev, dmaengine@vger.kernel.org
+In-Reply-To: <176cf55cdf7e686ba064befa2b257f3ae76696ab.1785183549.git.allen.lkml@gmail.com>
+References: <20260108080332.2341725-1-allen.lkml@gmail.com>
+ <cover.1785183549.git.allen.lkml@gmail.com>
+ <176cf55cdf7e686ba064befa2b257f3ae76696ab.1785183549.git.allen.lkml@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 27 Jul 2026 21:08:41 +0000
+Message-Id: <20260727210841.B73981F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Allen Pais <allen.lkml@gmail.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
- Kelvin Cao <kelvin.cao@microchip.com>
-References: <20260108080332.2341725-1-allen.lkml@gmail.com>
- <cover.1785183549.git.allen.lkml@gmail.com>
- <5eb60739b22e88b9220179dc024186c19724db28.1785183549.git.allen.lkml@gmail.com>
-Content-Language: en-CA
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <5eb60739b22e88b9220179dc024186c19724db28.1785183549.git.allen.lkml@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: allen.lkml@gmail.com, vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, arnd@arndb.de, kees@kernel.org, kelvin.cao@microchip.com
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Level: 
-Subject: Re: [PATCH v2 64/64] dmaengine: switchtec: use channel BH helpers
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
+Pre-existing issues:
+- [High] Client callbacks flushed during cleanup can reschedule the driver =
+tasklet after it was killed and clocks were disabled, leading to a hardware=
+ fault and list corruption.
+--
 
-On 2026-07-27 14:39, Allen Pais wrote:
-> Replace the per-channel descriptor completion tasklet with the shared
-> dma_chan BH helpers. Client callbacks remain in softirq context while
-> using the common scheduling and teardown mechanism.
-> 
-> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+--- Patch [33]: [PATCH v2 33/64] dmaengine: sun6i: kill vchan BH on teardow=
+n ---
+commit 0c78bc25a98ea85ad52645998923d5aa57383201
+Author: Allen Pais <allen.lkml@gmail.com>
 
-This one also looks good to me, thanks.
+dmaengine: sun6i: kill vchan BH on teardown
+   =20
+Use dma_chan_kill_bh() for virt-dma channel cleanup.
 
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+> index a9a254dbf8cb9..9289c24dfcfaf 100644
+> --- a/drivers/dma/sun6i-dma.c
+> +++ b/drivers/dma/sun6i-dma.c
+> @@ -1097,7 +1097,7 @@ static inline void sun6i_dma_free(struct sun6i_dma_=
+dev *sdev)
+>  		struct sun6i_vchan *vchan =3D &sdev->vchans[i];
+> =20
+>  		list_del(&vchan->vc.chan.device_node);
+> -		tasklet_kill(&vchan->vc.task);
+> +		dma_chan_kill_bh(&vchan->vc.chan);
+
+[Severity: High]
+This is a pre-existing issue, but could this cleanup sequence trigger a
+hardware fault or list corruption if a client callback submits a new
+transfer?
+
+During device removal or sysfs unbind, sun6i_dma_remove() kills the
+hardware tasklet and disables controller clocks before calling
+sun6i_dma_free():
+
+drivers/dma/sun6i-dma.c:sun6i_dma_remove() {
+    ...
+    sun6i_kill_tasklet(sdc);
+
+    clk_disable_unprepare(sdc->clk_mbus);
+    clk_disable_unprepare(sdc->clk);
+    reset_control_assert(sdc->rstc);
+
+    sun6i_dma_free(sdc);
+}
+
+sun6i_dma_free() then calls dma_chan_kill_bh() which flushes pending work.
+If a client callback runs during this flush and submits a new transfer,
+sun6i_dma_issue_pending() is invoked:
+
+drivers/dma/sun6i-dma.c:sun6i_dma_issue_pending() {
+    ...
+    list_add_tail(&vchan->node, &sdev->pending);
+    tasklet_schedule(&sdev->task);
+}
+
+Because tasklet_schedule() is called unconditionally without checking if
+the device is tearing down, it resurrects the killed tasklet.
+
+When the scheduled tasklet runs, it accesses hardware registers without
+clocks enabled, leading to an external abort. Additionally, it concurrently
+accesses the channel lists while sun6i_dma_free() mutates them via
+list_del() without locks.
+
+Should the teardown order in sun6i_dma_remove() be adjusted to flush
+callbacks before disabling clocks, or should sun6i_dma_issue_pending()
+check a shutdown flag before scheduling the tasklet?
+
+>  	}
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
+t.allen.lkml@gmail.com?part=3D33
