@@ -1,63 +1,63 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3A942BC48
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A242742CAE4
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:31:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785184265; cv=none; b=hofef1k1Py7QBymUmqg2vhmE0TQBsZqy2iVj0gGZiaAcPhSZA9mPHJ/LCpk+3/L+Swx3eBzSD8HCvM+6MK8nvF4mWWNTmNNeUgBqdMOlbDU/LPCT5deK65ekCc0tLjdUcNDMzrcKZosnLFltUJWNgTuGBY/4zVueGirH0S3qvnY=
+	t=1785184267; cv=none; b=pvPXPYAy74iJ0/W2LnaZWI1MobXd+MqikNRYFWJwRFrcnJ+OOcO9GpTHyJY11eKG/WnLWeXn4ihhuAWk5CG5b5N1fYzKMF5UO3swkWF5FWGAVHfdPCnWfQkhC2aK9UN/eea8l/inIIfTZQttNAYrBNDd2mJzHHHt1ltZ01nyBW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785184265; c=relaxed/simple;
-	bh=htPEkRt/wlUc/B5CfMfsVrTbdwmpn7Pc0EUUOX+Q2x0=;
+	s=arc-20240116; t=1785184267; c=relaxed/simple;
+	bh=52mgaibdl5c58d3AYAN5WRtXVWbPgmpaRi1q76IfdMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsN3OeKUmVGxybjYLw+seJKbUeLqXrgB1cJDnK/CCt80jQ1PKogmEnPYUQWbop7iAQhRzsJGf52UC1FgSa5zJqs8M1fVcosNGDlAmwdbHC8CdpBRS76q0IchVZbBiSe9Oa0DVrHZXDnu0mgBJUPCtQmRC6+YkSHHhXowkViOmII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3+FdmP9; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=sQZ2rginaixdb1QiQxw4IUAln0Nx+OXafjLykCAfplANcp9Y5sxFK2dq9lDFqKHAGrqEOrGpJeSarbcsqRC8O4YpUPom4K8jL9fv7x7hkj1KtDMxTLKiDwWNgof4QI85V2bRtbGeJDQI7TKwHILwUYHVbgzSsvbs5GbDFetGBvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AxeGB8xU; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3+FdmP9"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2caea3f742bso38311035ad.0
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:31:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AxeGB8xU"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cca0c5799eso29752505ad.0
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785184263; x=1785789063; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785184265; x=1785789065; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=eL6u4024lYZo08Y4G1gwSt9iJeSU/PAgv8//3iOWwdk=;
-        b=D3+FdmP9V6rsovSMOLDc/rzdoEyDzWHzxgXXJ0fwqmKUKtwrSlbU0S+6s7lKFAygoi
-         g2vfbeVS10E1M8nWvKBLHARFZSHNAiY5OFXZrlOpmRriBOe0VYf/Rr3hjcBi8BAL3nds
-         l16KuR/Xk0ZrO/wnF4SasbPD3/Bg+0oBt9vXlckA8PV33QrsNMf9XppCmJocAe1wBFsa
-         DbpfaxeWvJe3pixOuZYqdaw7KMWh7F7YpZBRnKl19c/sHINtJuey1tnN/T/yJaGd5jQY
-         43wY8D51o/n8XrR2xNmK0BwgvMDnP4mnxQVHDfOZf3SiSkCWbgHYI8NHUfj0Cn3riTpT
-         FcEA==
+        bh=Wtr6C7a2bWw56KI7UgkJ9lIBa9lQozueu7UESTIAJSY=;
+        b=AxeGB8xUztVJYWS1tDkP+zOkHYGxR4OFBN7ZdWb5CNlKMOfzg0J7p73Ns+Bu+0TAog
+         eOrMNFWQhjGm4JROxI8GJQiVvT29iJOWssBy6NJUQt9Ix2h20Zi5nFb5ixRpf/NaEUcx
+         nl/3Htyg3dUS+erkXfk3aXQhcnD/we0lWih0pUAxaizFH2hOudN3zV9X+a9Qkfd5halT
+         IB75vs2WtHYy1dBYKI5t4KBEIgJVSuBHjnMXg9gEypwgJdr2lIftnAH/11n1p+cT2gC6
+         M0+yItEXzac8zh0+Ir31SAZXB9brLz6DpEV5Z/SZ71YEVzFesbSi0Iq/K+dOjnjhExsR
+         ZrYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785184263; x=1785789063;
+        d=1e100.net; s=20251104; t=1785184265; x=1785789065;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eL6u4024lYZo08Y4G1gwSt9iJeSU/PAgv8//3iOWwdk=;
-        b=l1+hCguNNclbzClM7sfdAmXU8Ai+rqQ5flRhvgn0BJCzNaKWQ9Ss/7qcvHD6C+VM+H
-         UMgQhG0BDg+s56qXqGRAiZUAjAXUqZ5EF8VWjcA4+s6ttGNXgdyrwavAV+8YXSFcTAL1
-         nby4nJ8O947aEwnvEDC3qwv/SSoA8LaMJwzfLSADauIohtbjMDWwnbzKrxK3O7ckOlcA
-         1Tl5gmg8ro8DhZ6hG8qzrR0uVVIyevcO8fRIX02y4S6KuxL8zA+lQ+3JTRsbXz4v2yHM
-         4UDd/9Fqe4lnkUFA6hjsBBiJoA/+IWviKxjylfKNGCyIwu7GiFXRb/k7kq0hHZsok5JJ
-         EzUw==
-X-Forwarded-Encrypted: i=1; AHgh+Rqx61EJIv9gO/cpsW4x32myB3YCiY2asnaAB+Jo7xLEvMhmr1heMyWgxWNV5EnRI0LJ8446Hp5fD30=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPqug/3Jf4IR6iYgYv+Mlb87Tkl+uDr4/Qfsbd65NMcocnfelH
-	7K+3xlAepCO/vSjMkvtgy/jJqppbWJDphTwvSuGlogHTFUOfzWT7tOZI
-X-Gm-Gg: AR+sD12+6nzijJN14uERPLTs+AE8Wmmv+Y50e1dIr6F8qTnDuKbp6NFP7AFrIS8uy0e
-	8Y1E4cUBij1RhRqE9z0h+P9pUu+F1/gx/cEMTH/jqH+paA2rI2PoMkNlhXjfJNXFfZSdAD8NrT+
-	So2o0ouWl/LinymVWhwera56ycCX+uFtyav8dy/5quECqzupGkM0fnetY/B6letwidYMO/2aK0M
-	1G5yQ/NG2p6huxSp9+Gf2C7cl/qDPm1otVlAfF56cyFnhQVDFk+mGtHIRhal44o1rxolXFEAH2b
-	6IPRlgOgqRd5eUi6XD4QxnQBxTDAOrORzAkZFFNumAsc/zum6aP4kH30v/0ksCA9igPrYZDC6QQ
-	WkUikr7Ce/3zscZYFftwGs9vR9iRzBW53II0amAmP+Uzbs3MZlR4CwmUVnz7z/Rh+oIE88hbuBI
-	dTnBg94EbPE/1OSQ8=
-X-Received: by 2002:a17:903:2ca:b0:2ca:c411:78a with SMTP id d9443c01a7336-2d00f26a4f0mr7911805ad.3.1785184263356;
-        Mon, 27 Jul 2026 13:31:03 -0700 (PDT)
+        bh=Wtr6C7a2bWw56KI7UgkJ9lIBa9lQozueu7UESTIAJSY=;
+        b=hYiMbEZgfNakfzhed8I0z/0bztCcrEv5FiVNfwNzZr8v39NHUl6JTyWKI7J/KjzQjU
+         2Db4iFgcYIR7HYvnSAeaLwurr//Df9zbG82XRQ0I6H2WHqfRKHWGD0cDEJ+a2vH8aInD
+         kY64mW9rzioY+nKWydkxvDxFixzGlDTGDhkE232E+4RGhg0NL/0hBr6JE781uDHjjwwA
+         SVBfgU/CkcRhEzxjMw8l97XKS7NUHWVSGSgWqcBr9tJMCKoMQnB01KyC8eGlO88a6WPr
+         1Xfxt4GjMskhTxhNjGpy+TiYksfpxw9OYkMPAKdhr/+Xx6pIDBods3nBhOGB60DG/hr0
+         7Wbw==
+X-Forwarded-Encrypted: i=1; AHgh+Rq/POYjP6nvOl9jj5pOUKlrj1/2PClsJz18IWyupQP161eqFciXEx2z3D5QfLRpnc8cNcJmmitiLQ8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5bdv/Z0ve8uy8Gs5NsdPcOXwu9eBEMZp5Wn6i3hOYvViF9XKD
+	7coHNTJRzk2DmgXQWLCI8Xbav/whC4bwe98/UD3P3iQq9N4dmBaeTK6p
+X-Gm-Gg: AR+sD13gTxHR8O8CZ6DK8NUC+Vd8XNGsuLHppQ5Ebhybb1MyK/HSrIamZOewGSLvGAX
+	FjJnTQ23+aMx6hcLch9dvb8WsMBCUTaHYAXOsAwvCjoAK6GxDrO4mbkoWqTRxUyCH3xSBAsOUWn
+	VJziZGrQdT21LDS2F5ZS/kbBEEa6W+HzIvdWrUmMhngA6Dt/b4sfShmDE4NLwlF+KcJU9LbUnNv
+	pNr5PDwU/ztca3glR4MBIZYJJsbwptjsR4GfcqRXz+oory5ikA6t27j7p+pC/WhmflUDYNOghNf
+	TPO9OLKzxfrQox7d4/H3zlHOV56jmo9ibcnbRG6+28xyLwJgdM1Xbvmpuc3zUWSJtbXWpCv+slD
+	vAjuISeyy/VYBLzsp9Tcc3jJb5eOmvbb3NEIDaxRjNWsDnzoa1mpYP0r4wrSWdA6x/m9IC0y31n
+	6IH6Aq
+X-Received: by 2002:a17:902:f547:b0:2cf:9344:b80c with SMTP id d9443c01a7336-2cfde7aca4dmr86641865ad.18.1785184265001;
+        Mon, 27 Jul 2026 13:31:05 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fab:e200:3789:64f9:8855:c0af])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59b768sm41551805ad.4.2026.07.27.13.31.02
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59b768sm41551805ad.4.2026.07.27.13.31.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 13:31:02 -0700 (PDT)
+        Mon, 27 Jul 2026 13:31:04 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -65,10 +65,15 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH v2 02/64] dmaengine: back channel BH helpers with WQ_BH
-Date: Mon, 27 Jul 2026 13:28:30 -0700
-Message-ID: <dccbdfb0da3283455c72521e918ce1e98b77194b.1785183549.git.allen.lkml@gmail.com>
+	Kees Cook <kees@kernel.org>,
+	Sven Peter <sven@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Neal Gompa <neal@gompa.dev>,
+	asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2 03/64] dmaengine: apple-admac: use dma_chan BH callback
+Date: Mon, 27 Jul 2026 13:28:31 -0700
+Message-ID: <3804b35d529e0b80d8d0898f1dad1fd4cb917fcb.1785183549.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com> <cover.1785183549.git.allen.lkml@gmail.com>
@@ -80,173 +85,78 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace the tasklet implementation of the channel BH helpers with a
-dedicated WQ_BH | WQ_PERCPU workqueue. The public dma_chan_*_bh() API and
-its softirq execution context remain unchanged.
-
-Keep the workqueue operations internal to dmaengine. Drain scheduled work
-in dma_chan_kill_bh() to preserve the completion semantics of
-tasklet_kill().
+Replace the per-channel tasklet with the shared dma_chan BH helper.
+The handler continues to run in softirq context while dmaengine owns
+the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/dmaengine.c   | 59 ++++++++++++++++++++++++++++++++-------
- include/linux/dmaengine.h | 10 +++----
- 2 files changed, 54 insertions(+), 15 deletions(-)
+ drivers/dma/apple-admac.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index f43aeecb47f9..8b1b17794956 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -54,6 +54,7 @@
- #include <linux/rcupdate.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-+#include <linux/workqueue.h>
+diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+index 14a5ee14a481..84483247bde6 100644
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -89,7 +89,6 @@ struct admac_chan {
+ 	unsigned int no;
+ 	struct admac_data *host;
+ 	struct dma_chan chan;
+-	struct tasklet_struct tasklet;
  
- #include "dmaengine.h"
+ 	u32 carveout;
  
-@@ -61,6 +62,7 @@ static DEFINE_MUTEX(dma_list_mutex);
- static DEFINE_IDA(dma_ida);
- static LIST_HEAD(dma_device_list);
- static long dmaengine_ref_count;
-+static struct workqueue_struct *dmaengine_bh_wq;
- 
- /* --- debugfs implementation --- */
- #ifdef CONFIG_DEBUG_FS
-@@ -1428,9 +1430,34 @@ static void dmaengine_destroy_unmap_pool(void)
+@@ -521,10 +520,7 @@ static int admac_terminate_all(struct dma_chan *chan)
+ 		list_add_tail(&adchan->current_tx->node, &adchan->to_free);
+ 		adchan->current_tx = NULL;
  	}
+-	/*
+-	 * Descriptors can only be freed after the tasklet
+-	 * has been killed (in admac_synchronize).
+-	 */
++	/* Descriptors are released once the BH is flushed in admac_synchronize */
+ 	list_splice_tail_init(&adchan->submitted, &adchan->to_free);
+ 	list_splice_tail_init(&adchan->issued, &adchan->to_free);
+ 	spin_unlock_irqrestore(&adchan->lock, flags);
+@@ -543,7 +539,7 @@ static void admac_synchronize(struct dma_chan *chan)
+ 	list_splice_tail_init(&adchan->to_free, &head);
+ 	spin_unlock_irqrestore(&adchan->lock, flags);
+ 
+-	tasklet_kill(&adchan->tasklet);
++	dma_chan_kill_bh(&adchan->chan);
+ 
+ 	list_for_each_entry_safe(adtx, _adtx, &head, node) {
+ 		list_del(&adtx->node);
+@@ -662,7 +658,7 @@ static void admac_handle_status_desc_done(struct admac_data *ad, int channo)
+ 		tx->reclaimed_pos %= 2 * tx->buf_len;
+ 
+ 		admac_cyclic_write_desc(ad, channo, tx);
+-		tasklet_schedule(&adchan->tasklet);
++		dma_chan_schedule_bh(&adchan->chan);
+ 	}
+ 	spin_unlock_irqrestore(&adchan->lock, flags);
+ }
+@@ -712,9 +708,9 @@ static irqreturn_t admac_interrupt(int irq, void *devid)
+ 	return IRQ_HANDLED;
  }
  
--static void dma_chan_bh_entry(struct tasklet_struct *tasklet)
-+static void dmaengine_destroy_bh_wq(void)
+-static void admac_chan_tasklet(struct tasklet_struct *t)
++static void admac_chan_bh(struct dma_chan *chan)
  {
--	struct dma_chan *chan = from_tasklet(chan, tasklet, bh_tasklet);
-+	if (!dmaengine_bh_wq)
-+		return;
-+
-+	destroy_workqueue(dmaengine_bh_wq);
-+	dmaengine_bh_wq = NULL;
-+}
-+
-+static bool dmaengine_queue_bh_work(struct work_struct *work)
-+{
-+	if (WARN_ON(!dmaengine_bh_wq))
-+		return false;
-+
-+	return queue_work(dmaengine_bh_wq, work);
-+}
-+
-+static void dmaengine_flush_bh_work(struct work_struct *work)
-+{
-+	if (!work)
-+		return;
-+
-+	flush_work(work);
-+}
-+
-+static void dma_chan_bh_entry(struct work_struct *work)
-+{
-+	struct dma_chan *chan = container_of(work, struct dma_chan, bh_work);
- 	dma_chan_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
+-	struct admac_chan *adchan = from_tasklet(adchan, t, tasklet);
++	struct admac_chan *adchan = to_admac_chan(chan);
+ 	struct admac_tx *adtx;
+ 	struct dmaengine_desc_callback cb;
+ 	struct dmaengine_result tx_result;
+@@ -886,7 +882,7 @@ static int admac_probe(struct platform_device *pdev)
+ 		INIT_LIST_HEAD(&adchan->issued);
+ 		INIT_LIST_HEAD(&adchan->to_free);
+ 		list_add_tail(&adchan->chan.device_node, &dma->channels);
+-		tasklet_setup(&adchan->tasklet, admac_chan_tasklet);
++		dma_chan_init_bh(&adchan->chan, admac_chan_bh);
+ 	}
  
- 	if (fn)
-@@ -1446,7 +1473,7 @@ void dma_chan_init_bh(struct dma_chan *chan, dma_chan_bh_work_fn fn)
- 		return;
- 
- 	chan->bh_work_fn = fn;
--	tasklet_setup(&chan->bh_tasklet, dma_chan_bh_entry);
-+	INIT_WORK(&chan->bh_work, dma_chan_bh_entry);
- 	chan->bh_work_initialized = true;
- }
- EXPORT_SYMBOL_GPL(dma_chan_init_bh);
-@@ -1456,8 +1483,7 @@ bool dma_chan_schedule_bh(struct dma_chan *chan)
- 	if (WARN_ON(!chan->bh_work_initialized))
- 		return false;
- 
--	tasklet_schedule(&chan->bh_tasklet);
--	return true;
-+	return dmaengine_queue_bh_work(&chan->bh_work);
- }
- EXPORT_SYMBOL_GPL(dma_chan_schedule_bh);
- 
-@@ -1466,7 +1492,7 @@ void dma_chan_kill_bh(struct dma_chan *chan)
- 	if (!chan->bh_work_initialized)
- 		return;
- 
--	tasklet_kill(&chan->bh_tasklet);
-+	dmaengine_flush_bh_work(&chan->bh_work);
- }
- EXPORT_SYMBOL_GPL(dma_chan_kill_bh);
- 
-@@ -1666,15 +1692,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
- 
- static int __init dma_bus_init(void)
- {
--	int err = dmaengine_init_unmap_pool();
-+	int err;
- 
-+	dmaengine_bh_wq = alloc_workqueue("dmaengine_bh",
-+					  WQ_BH | WQ_PERCPU, 0);
-+	if (!dmaengine_bh_wq)
-+		return -ENOMEM;
-+
-+	err = dmaengine_init_unmap_pool();
- 	if (err)
--		return err;
-+		goto err_destroy_wq;
- 
- 	err = class_register(&dma_devclass);
--	if (!err)
--		dmaengine_debugfs_init();
-+	if (err)
-+		goto err_destroy_pool;
- 
-+	dmaengine_debugfs_init();
-+	return 0;
-+
-+err_destroy_pool:
-+	dmaengine_destroy_unmap_pool();
-+err_destroy_wq:
-+	dmaengine_destroy_bh_wq();
- 	return err;
- }
- arch_initcall(dma_bus_init);
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index c670781b3150..c87974d5048b 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -12,7 +12,7 @@
- #include <linux/scatterlist.h>
- #include <linux/bitmap.h>
- #include <linux/types.h>
--#include <linux/interrupt.h>
-+#include <linux/workqueue.h>
- #include <asm/page.h>
- 
- /**
-@@ -339,9 +339,9 @@ struct dma_router {
-  * @router: pointer to the DMA router structure
-  * @route_data: channel specific data for the router
-  * @private: private data for certain client-channel associations
-- * @bh_tasklet: bottom-half tasklet stored per-channel
-- * @bh_work_fn: callback executed when @bh_tasklet runs
-- * @bh_work_initialized: indicates whether @bh_tasklet has been initialized
-+ * @bh_work: bottom-half work item stored per-channel
-+ * @bh_work_fn: callback executed when @bh_work runs
-+ * @bh_work_initialized: indicates whether @bh_work has been initialized
-  */
- struct dma_chan {
- 	struct dma_device *device;
-@@ -367,7 +367,7 @@ struct dma_chan {
- 	void *route_data;
- 
- 	void *private;
--	struct tasklet_struct bh_tasklet;
-+	struct work_struct bh_work;
- 	dma_chan_bh_work_fn bh_work_fn;
- 	bool bh_work_initialized;
- };
+ 	err = reset_control_reset(ad->rstc);
 -- 
 2.43.0
 
