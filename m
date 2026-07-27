@@ -1,63 +1,63 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56D7431A30
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA9442D767
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:40:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785184834; cv=none; b=I5PKAnfoYza9wRPmBcAvKrMYSJhekyOJNuanOPlTEP5ybLNYpMO7CWUdEJ1N3Lheug+qeD+WtUDyjPB9X4qpR9JcDAMezsDyjTQKg0gZDq1EMc0HgfwcQh/XFeVAk6YzxvXPxPScJLMiUPA7dFrllLHZZYdQDu7I4xHxVQYHhdU=
+	t=1785184837; cv=none; b=W+fNvxqNZS1qeImTe90KQUddcWmFgC4LAniV18P+8MjnLHXvtdYpNH79ut3Qm++lwiU+sCqXg3gvQjxoCRNLxp5vTYOHmxvaEIgocirYD2+d0n6PSEhsLF5UiCd+Vh81llGVV/hXggFdD2jdMSSO43yIj90MGV6RwtEg+q4pMo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785184834; c=relaxed/simple;
-	bh=ad41UXJMfOEQb8wNXSqsTLm9VUwCcsvBLe7BxK2QHSo=;
+	s=arc-20240116; t=1785184837; c=relaxed/simple;
+	bh=N8WuSkHIr8cpGRFmrHSddr/VxgFAmae/TguOVqZaqVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtT/vv/Wy7b9gvDo12Fj2NOOm1X3fxcmCftcDIUTHBuO96m/f5i8lQYtmMmc27JaEtYEESEX246krJc23gX5rgcb0MQBJC7e8pEuJkpHJGEMeNLLUSk+8WM/c6y8KAEZ5EELvaTH7bZAsI0Dz3UiVwpZeU/TkD84eChLazcRCWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aBygaJTM; arc=none smtp.client-ip=209.85.210.182
+	 MIME-Version; b=n7Gkrz0TMcFzuwfdUFbYbxNijZKK2DhbuJ23Zsw/OJSXv+mCb7H4BtOxzsGxT7KhGW6FVjV6ZgBoz3el4M7ku9BY7zoWgQwK75Lymj8n1X4r3YWnd4UoXnmjfLVRmE2PwjuBtP5ibPC2J8IW7NzojCVvGgPi/hiRDHFX4U0544w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=La2jJY29; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aBygaJTM"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-848d21bbaffso3240819b3a.0
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:40:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="La2jJY29"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-84e507b079dso1816656b3a.0
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:40:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785184832; x=1785789632; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785184835; x=1785789635; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Sjx+7tR04q8WCjgsUYMcsHB4XmblQgjVAPwj0NbvgUU=;
-        b=aBygaJTMlpK04Hxw9VfkjosTg5ZyJq/EaTSbAlqGTXnYXSZT7r1hGyHqcoYeyuVMyJ
-         kfFbGufp5ftui8c/mdTZtIfdeZSo5xVinTp/PJCznFIgqF2/FVkJPbpgIQaao0eonRfH
-         kLYBp5bXv5YRw40WtVnQWlyC677tXc3pzpNS8HrRf6zqUGFhxGiT6bZO2jVrpO6+B/E8
-         WJmnkdzpuKTtpMfAFZxg7caN7BC1jGPt6UYXafeqmIPEoDxnZyGUjVb4BoXUnenmSPUB
-         qSyaMDL2mZEed0UAe9zFove9eP005gS7hO2RVhOzPvVUkONXqlyCGb3FriIrv09RqIE2
-         Fm5Q==
+        bh=k5gaDUFMjFsf2p7Cgms6fENCmHCCMnNOp2lQps8mOFU=;
+        b=La2jJY294CoP+34Ab8vO1bp+YFnGKA4IIcSurpajvcx6l30dl7c272fe/eimhJB20y
+         MnwvR5n6FTmHckTI/5F97t9PbzobVuVgiGFyNk3wTD4/aUdDMzPxm5OqZRVIHjstK8VP
+         uxJrjgSEb6XIb7oUNfHby4dbQhHxevow2rwaPC4svMYtMZ9y7cLjBf56Zoh3wzA9lGXY
+         ZzDucaZ4lc5rneG+sOEL33SgbE7cOEnquhKRvGH9wVRso3kVjyVzftZ76rxYa7nXOEN3
+         LTlVYzaHM4CghKaAXTBq+JVITGgJG1LQk1LZpgPo3UtXlepg8iDA8XcvXq0cIUCqz8hr
+         K6bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785184832; x=1785789632;
+        d=1e100.net; s=20251104; t=1785184835; x=1785789635;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Sjx+7tR04q8WCjgsUYMcsHB4XmblQgjVAPwj0NbvgUU=;
-        b=Aw524wIOi/f/hmIoOUqm6FlLjuMVe+EAumWeSJ4QflyRScQPEO5meXxRNwZd5RSHwz
-         0L6yqzz6T2FfC5/LIkGiAIm1C7JkqSKz1tQDDoztcvOXP5DYA2SelNOjJmfORiblYml2
-         08Flc4yOfyiELkBrDhQQodNykWqtXm7fo1QCRuwbdk72FJInhtRqLykpEcLjuKlKyfWg
-         5eZb0iUESNOJh4EPZwPAoRHGfGaHFyK0qa5nHhIydteQin5Sqg50saEUySExx+ILog1u
-         XRvWhqhB3rKFOOlakMcy6MGTsGkvlkVxZs5WKkYx3XgB0XWbM/6A9m8t6fZtaKX0awYH
-         KReQ==
-X-Forwarded-Encrypted: i=1; AHgh+RraoVhkLULUVV58kqH5NHCwplf2Icdv4ZByNwOO55xypH5T0yrnewA4EDf48LwcSKF8CQcq0vRlm/k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0FB56DeIgnW7EkMQd8S/rc7UOqS4QQ6h2aLYRe/eQSe91RQv2
-	U5CrHt7oWweBMs+l3MLMT+Csqe1wCCRsu0mTJrajPG71X339d6ljToAd
-X-Gm-Gg: AR+sD102yDYwexWJh7N/TiBdt5aFh7IQt18FuE2HVjtZyGT/VLZJ0/houriKxF2BMsO
-	Zyy+YLcVqJwU6FMlUqgg0trtP1dYN/rVBR14bBl2/mXto0SOQZXQXY+qJt5cVUSWgQJLitCIgTI
-	3D+DBLkOx+J+X15kFuN+QDMgnslfoIBx/0CBtXCkzS8IhnrEP64TA4oR9GZQAewil61ZAFIG4/p
-	rYo8DqFui22Uwu+0OcMyDnkbE15VUZEoRnGoVwduwksGRC6lfcKoL7wJEQFWLtIBOMmfSPzaYpX
-	+YEl62M1HsHfRL5J4AOqPeyR36tsx6HCnf2gzl97ylrqQRS3R1/NA5OI0Xc2ZoY0KPonZuGWN6D
-	StEfyB4Jk3hT8LM18u3X5nTphfHckBuHNTvhRuOS0RBBxa4Ok+Jo9dF6NsQLtCh3v4cpcIJE8kN
-	ALNLfZ
-X-Received: by 2002:a05:6a00:4ac8:b0:84e:165:da65 with SMTP id d2e1a72fcca58-84e8d0f92e2mr772302b3a.64.1785184831978;
-        Mon, 27 Jul 2026 13:40:31 -0700 (PDT)
+        bh=k5gaDUFMjFsf2p7Cgms6fENCmHCCMnNOp2lQps8mOFU=;
+        b=iohb0lfw4Y+IBNhjnaD4UtQvIR72YnSZ5g57PxA4PzGmT4W8oq+QeAnfZMm0H+ts6F
+         Hj5a0zQHxolhvlWLuByad1LAmEvZ6vMESsH45o01BI1NE8L8y+sMdtaatUfISpynmolg
+         gBFA6VGCxbQE/SpcKOJLYd+NgN/m7YaTXQK20fLF2zsiRN3hDnY3Mj3rt0dn1XkvVRY4
+         PPdfI/rF09uzQHZo9Y7bfvLnCRCofrYLKew4QJ8qLO/xWHcsFcvlXdFVc2jN0xLHv/Bo
+         PX8CTKKWzh+3eF9CgolyVmdHA3pC/ffWyzK/exIA5Wvd5ccntz/6KWOezHxBGJL9i+va
+         kbMw==
+X-Forwarded-Encrypted: i=1; AHgh+Rpz0dZFpT1cLAyVvp/wa0eWmUthZmy0NMUUbIG0V0BpLN8240/fvTDvo6ZEtwsZuWGyOR1jVKaIACY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwO1ao+8amE1x2Bn5dKDIvHKtCKtYDXPzZZJ5vVr3/79x8IQC6s
+	D1rhd/zJgCPfbEk3TQuIDPeOHgYqj/YdXR22YFJNiJ9lYVVg7+r3Obk2
+X-Gm-Gg: AR+sD13OIvYLWiwe1b5+HjuW61falnp8VT9ubRuBbA1BqRYNB6Vp+zPtGsuhQiLOtNf
+	eIxyGHZ6P5TwDnJmLdJcEQs4Yz2CJ7AudCzeRG52BjF1Bh+noXgaafZp44YiMf2ubHNUdrnzeEy
+	U7Tw2aueeXfdAr/tQuvpettR+E/fetcWftnw0qeYAYN2FXTvt55CK6s76dD5jZLrZO9xUwgDwPF
+	6htMKO2RjhjIFy7CJZ1V2+1ji+SiG/0Qh055YgMxII3YpWH/G5TEizkfAM0n2Cfb7fSK/I5u8vN
+	CvWGP/6BTxoifNldngaNEi//KyHkSndhIM4khS749JB8jE1i+SvXoGIs61aohV0TX+N5HIDpwEb
+	5Evgh6i7LNZucvgMUyT/kQA/uPGRTyJBdB9uLKFx4aSqdAXmRVknt0ykC6tDt7Kgb6nXHjmMwBs
+	82AKly
+X-Received: by 2002:a05:6a00:22c5:b0:848:2f74:d8d7 with SMTP id d2e1a72fcca58-84e595d7b61mr7910310b3a.72.1785184835278;
+        Mon, 27 Jul 2026 13:40:35 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fab:e200:3789:64f9:8855:c0af])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.40.31
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.40.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 13:40:31 -0700 (PDT)
+        Mon, 27 Jul 2026 13:40:34 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -66,14 +66,11 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 46/64] dmaengine: imx-sdma: kill vchan BH on teardown
-Date: Mon, 27 Jul 2026 13:39:08 -0700
-Message-ID: <10f4e15741836cf24f08cdaf935da3260dea0250.1785183549.git.allen.lkml@gmail.com>
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	linux-mips@vger.kernel.org
+Subject: [PATCH v2 47/64] dmaengine: loongson1-apb: kill vchan BH on teardown
+Date: Mon, 27 Jul 2026 13:39:09 -0700
+Message-ID: <22694524f7cc07a687d0f1ff7957af97fa51beb4.1785183549.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com> <cover.1785183549.git.allen.lkml@gmail.com>
@@ -89,27 +86,22 @@ Use dma_chan_kill_bh() for virt-dma cleanup.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/imx-sdma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/loongson/loongson1-apb-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 36368835a845..46f66e5f9f30 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -2399,11 +2399,11 @@ static void sdma_remove(struct platform_device *pdev)
- 	int i;
+diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+index 89786cbd20ab..7fc77d8e6db3 100644
+--- a/drivers/dma/loongson/loongson1-apb-dma.c
++++ b/drivers/dma/loongson/loongson1-apb-dma.c
+@@ -552,7 +552,7 @@ static void ls1x_dma_chan_remove(struct ls1x_dma *dma)
  
- 	devm_free_irq(&pdev->dev, sdma->irq, sdma);
--	/* Kill the tasklet */
-+	/* Kill the channel BH */
- 	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
- 		struct sdma_channel *sdmac = &sdma->channel[i];
- 
--		tasklet_kill(&sdmac->vc.task);
-+		dma_chan_kill_bh(&sdmac->vc.chan);
- 		sdma_free_chan_resources(&sdmac->vc.chan);
+ 		if (chan->vc.chan.device == &dma->ddev) {
+ 			list_del(&chan->vc.chan.device_node);
+-			tasklet_kill(&chan->vc.task);
++			dma_chan_kill_bh(&chan->vc.chan);
+ 		}
  	}
- 
+ }
 -- 
 2.43.0
 
