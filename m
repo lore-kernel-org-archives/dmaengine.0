@@ -1,139 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5654E42BC48
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998BD3D47D9;
+	Mon, 27 Jul 2026 21:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187879; cv=none; b=ZZV0BvOHFxqs8BRz1HesdMzeVYUJd6MOqnul/hIkm9bhvOdTuP3BoP5q7MogZ92WRW6sU1rdSRkIQ91/dfofAZWG2PLEhLFFa0CPYQO5TS+XvpsRPHO/AZ2SIwRawOu2czH0+2YfoqE7mg6dmJnzMf2JH1Tp/7VwQIMSlUjsP50=
+	t=1785189080; cv=none; b=MgOW9LwZZzAsiOxv59G1Ndl2H8ngxysE6s0lk0b36kHskVBxdFAWzPm/7Bxf2lCYKlmSl/bAcV0DuvbCBoDegtWP9nLT74x/3gN+gVJGyZAWllWs7g6ycV57AHKbwQ2lSlFQtXFNXDsOTqBw6Ic/BT4v+RBtAvQb66cH07MeW/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187879; c=relaxed/simple;
-	bh=d7wZFMY/XPkQm+qJFDVjXjGFJJuZmpdbqINYCg3u/7c=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=UilGzUogK/AP3+gVBwghLkpKR0Yr/qLEGg27LWfqa7zHLT6AlBUG4IxuQylLqQtvaPIzFJB2dSRN9cC5Zkicrg5bihj/N7nzRhb2keFVeyQiNPUoKrAzhAdjhIomUNXdDiJOlQROvZUrGlosE1QcuasJ7s0HxF70+EIJirTDpqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldOXUkrz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785189080; c=relaxed/simple;
+	bh=Sn/1GrL+E3sMGZEcN8MyUo6xgKjvGS4FElmUNSEgpcc=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Subject; b=bHhUVw/QQ00J+BIsI3iqxmYQCeJNp/MOlMZPfvVRb/xZ+hSJc16h3HN61QX+NsUTdfSPnFHfk0yqEgKHtiTrF0MPmD5XN3YdIedZedS3+Xo8uTj0IS3K/vYEoacOrBCu4XRcZehVHp17iKqy9rR50LRu/WuY4EaCRlN/VNaEgag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=cjjxl4kW; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldOXUkrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9B41F000E9;
-	Mon, 27 Jul 2026 21:31:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187877;
-	bh=mxDz9PdobEflQy4QSYlf1u+uoFpsC9XnqmoTxg70a+k=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ldOXUkrzZgHSb4GxBOmC4pLQ8QyQcKgsHDlaM+daSjjy81J1+gUZyxbPp14B4uas3
-	 6ABX8haur7gqpAdQDWG9OuCEW+Kdjt2fd5gW6Mipr4XXWfbQeh6fZ4Dv3XZgPtTxHr
-	 WjpvAjgpP2Y1NQMnsCdpjKbQ8/SlLcaVjtCWFRlHSEEa4M9BuUlledYw2uxeH0WH3e
-	 Koezlu+tiuTn0cGKxN3Mn5PDKyPomIyBK6CxWhy2LQO8Rp1nQhJZI9z7atKCr4hDK0
-	 crC4aLovt0HDi6JSJXp5FJjVr99Ph6Z+LjQeii+7YzbKRj4lpgt6EgyJXuPvMPFPgx
-	 ZJ/3v8FsDQ0Wg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 61/64] dmaengine: dw: defer callbacks via channel BH
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <4399a85a5ffe0dcbace462217f15c682c5f8d28a.1785183549.git.allen.lkml@gmail.com>
-References: <20260108080332.2341725-1-allen.lkml@gmail.com>
- <cover.1785183549.git.allen.lkml@gmail.com>
- <4399a85a5ffe0dcbace462217f15c682c5f8d28a.1785183549.git.allen.lkml@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:31:17 +0000
-Message-Id: <20260727213117.9C9B41F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="cjjxl4kW"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=b0mO2A2To0CCd5NIZxufdN8DmSu65OeTKkWB8Zm2mNU=; b=cjjxl4kWfyxpF6s2Y6x7ozptA+
+	HPfppZHkAuvjavgHELiCZZvUwuIRsJx2UxHr9uC7bOyuyFTMuuZ6zbouJ+tNhjriY/P6XFDco6WsF
+	z3+UDSly8ydpruKkv8UtcBWqaBG6DAZxCEwyZj8qu7fUM7J99SPlg0UdOeb169sKP/1lKFsWHyBOI
+	AcrVClHRNjrDQzjOer9Csn2vqTHvzAnWyruHJ6m6gvISxpLrkKaaryu3eNMI45qtqzt1kzC0al121
+	ULkqO4INcN0O3tynrm1XZXTJHVUFWlivlTyMPfVbH88oDeyCG2rR0ZQ0iyMF+Me9/EekNAmuiGS+K
+	j+umFMBw==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1woTEE-000000007Ox-1T5a;
+	Mon, 27 Jul 2026 15:51:18 -0600
+Message-ID: <f1671c82-4cbd-45d1-8875-1466b2df6bd8@deltatee.com>
+Date: Mon, 27 Jul 2026 15:51:16 -0600
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+ dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.li@nxp.com>, Kelvin Cao <kelvin.cao@microchip.com>,
+ =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+ Dave Jiang <dave.jiang@intel.com>, George Ge <george.ge@microchip.com>,
+ Jaeyoung Chung <jjy600901@snu.ac.kr>, Sashiko <sashiko-bot@kernel.org>
+References: <20260727181526.9672-1-logang@deltatee.com>
+ <20260727181526.9672-8-logang@deltatee.com>
+ <amfL4H-ddHGONlUl@lizhi-Precision-Tower-5810>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <amfL4H-ddHGONlUl@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: Frank.li@oss.nxp.com, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, kelvin.cao@microchip.com, linux@weissschuh.net, dave.jiang@intel.com, george.ge@microchip.com, jjy600901@snu.ac.kr, sashiko-bot@kernel.org
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v3 07/11] dmaengine: switchtec-dma: disable channels
+ before freeing on registration failure
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Concurrent list modification between dwc_scan_descriptors() and dw=
-c_terminate_all() leads to an infinite loop and list corruption.
---
 
---- Patch [61]: [PATCH v2 61/64] dmaengine: dw: defer callbacks via channel=
- BH ---
-commit d2107b5998f3b825a629b786e29b948ab851a743
-Author: Allen Pais <allen.lkml@gmail.com>
-Subject: dmaengine: dw: defer callbacks via channel BH
 
-Queue completed descriptors on the channel and invoke their callbacks
-from per-channel BH work instead of the controller tasklet. Add a
-synchronize hook so termination can wait for deferred callbacks before
-their descriptor storage is released.
+On 2026-07-27 15:21, Frank Li wrote:
+> On Mon, Jul 27, 2026 at 12:15:22PM -0600, Logan Gunthorpe wrote:
+>> +static void switchtec_dma_chans_disable(struct pci_dev *pdev,
+>> +					struct switchtec_dma_dev *swdma_dev)
+>> +{
+>> +	int i;
+>> +
+>> +	if (swdma_dev->chan_status_irq >= 0) {
+>> +		pci_free_irq(pdev, swdma_dev->chan_status_irq, swdma_dev);
+>> +		swdma_dev->chan_status_irq = -1;
+>> +	}
+>> +
+>> +	for (i = 0; i < swdma_dev->chan_cnt; i++)
+>> +		list_del(&swdma_dev->swdma_chans[i]->dma_chan.device_node);
+>> +}
+>> +
+> 
+> Maybe historic reason, it is not good to touch dma_chan::device_node.
+> Suppose some hepler function to manage channels.
+> 
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-> diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-> index dd75f97a33b3d..e780116a944bc 100644
-> --- a/drivers/dma/dw/core.c
-> +++ b/drivers/dma/dw/core.c
-> @@ -236,25 +236,24 @@ dwc_descriptor_complete(struct dw_dma_chan *dwc, st=
-ruct dw_desc *desc,
->  	struct dma_async_tx_descriptor	*txd =3D &desc->txd;
->  	struct dw_desc			*child;
->  	unsigned long			flags;
-> =20
->  	dev_vdbg(chan2dev(&dwc->chan), "descriptor %u complete\n", txd->cookie);
-> =20
->  	spin_lock_irqsave(&dwc->lock, flags);
->  	dma_cookie_complete(txd);
-> -	if (callback_required)
-> -		dmaengine_desc_get_callback(txd, &cb);
-> -	else
-> -		memset(&cb, 0, sizeof(cb));
-> +	list_del_init(&desc->desc_node);
-> =20
->  	/* async_tx_ack */
->  	list_for_each_entry(child, &desc->tx_list, desc_node)
->  		async_tx_ack(&child->txd);
->  	async_tx_ack(&desc->txd);
-> -	dwc_desc_put(dwc, desc);
-> +	if (callback_required) {
-> +		list_add_tail(&desc->desc_node, &dwc->completed_list);
+Ok, thanks. When I have some free time I'll see if I can clean that up,
+but not for this series.
 
-[Severity: High]
-Can this concurrent list modification lead to an infinite loop during chann=
-el
-termination?
-
-If dwc_tx_status() races with dwc_terminate_all(), dwc_scan_descriptors()
-temporarily drops dwc->lock while iterating over dwc->active_list.
-
-If dwc_terminate_all() runs concurrently, it acquires the lock, splices
-active_list to a local list, drops the lock, and begins locklessly iterating
-the local list:
-
-drivers/dma/dw/core.c:dwc_terminate_all() {
-    ...
-    list_splice_init(&dwc->queue, &list);
-    list_splice_init(&dwc->active_list, &list);
-
-    spin_unlock_irqrestore(&dwc->lock, flags);
-
-    /* Flush all pending and queued descriptors */
-    list_for_each_entry_safe(desc, _desc, &list, desc_node)
-        dwc_descriptor_complete(dwc, desc, false);
-}
-
-When dwc_scan_descriptors() resumes, it calls dwc_descriptor_complete()
-which now modifies desc->desc_node by moving it to dwc->completed_list.
-
-Because dwc_terminate_all()'s lockless list_for_each_entry_safe() traversal
-may have already prefetched a descriptor that is subsequently moved, its
-iteration could jump into dwc->completed_list.
-
-This would prevent the loop termination condition from ever matching the
-stack-allocated list head in dwc_terminate_all(), causing an infinite loop.
-Could this sequence happen in practice?
-
-> +		dma_chan_schedule_bh(&dwc->chan);
-> +	} else {
-> +		dwc_desc_put(dwc, desc);
-> +	}
->  	spin_unlock_irqrestore(&dwc->lock, flags);
-> -
-> -	dmaengine_desc_callback_invoke(&cb, NULL);
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D61
+Logan
