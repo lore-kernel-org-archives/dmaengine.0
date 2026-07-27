@@ -1,189 +1,140 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20E217F27
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121C2371D1F
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186052; cv=none; b=E7oMcFRGDACcw+F3W9AjW/T/fvmzzVoNbdY6TjQHWwSFJG2LyTuBNyKodldLxJDKvFJ8g2SCVIbbaOjmaSc2WpQe54qUloZqls5Db4Eu9nTOO5Fnsl0cZ4T+bk8eISxK+dtVVw7+BWYYaHgcd5cTUmUAF08KKcxTBLwq0DWaUtE=
+	t=1785186135; cv=none; b=CXEu8te8ey+uGe6BPJge2IMcVdFat0vQ+ce+BUYWwGWHtvKHxqWIk92cFh6kqyX70Oqe3R2OolS56a5TiqMKraeKEDawdNGS8+9CC6afunUdoq/r2Y2SKlqy+HDM2xNqzYlLy1HRMjfNHUOfjBQiYcVDC6pSYYV2DndMKFuMTyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186052; c=relaxed/simple;
-	bh=jZqI9zdngHSk9xLxSHjLTCL88sT48xdgofDl5qjYJUo=;
+	s=arc-20240116; t=1785186135; c=relaxed/simple;
+	bh=3sjxmaKBKYtjDFLMSQV67IFokoGFgQ4Jq6h6oTW6Poc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ixGFb6M4wFLbyXOR7CDDQjF2QFxYAzz2khNfOhWFw0IY0lbWLIa1fEvQH6yeb+Oz2aRtqTt545Wa3dvkWdoqlOIyGVn/t0M/3YPAYFgNRvPeLw4xNZcfakAFzO4lj7S3DWiuUZlGsTUmfic6r7zb6PlBT5V+ETuSi9CEiQPJkHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oxPEIt3b; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=ZmxTZ1eBgzZpbN11AP0yUBbY05mwpyugcaEaZEpRJRoj+Lbwf91aJA+NPkOrVMZrs7POh3zzrJIQ8B7us5gz/XBBmeSTTYcuaXuEaT9+5Z5dICwR/aW9psz0ZcNZAjLUYUEFFxeb8qNV+2zLjvDJmsHrCeAYOCKpuLfeXWlvAZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CYwWKxyp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oxPEIt3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0DB41F000E9;
-	Mon, 27 Jul 2026 21:00:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CYwWKxyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81981F000E9;
+	Mon, 27 Jul 2026 21:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785186051;
-	bh=4rUJeRmXWeKGpl0CSByjDQThCLW3WwFk6yVVnP50jno=;
+	s=k20260515; t=1785186134;
+	bh=f9IlPhjU/86wrcYSlNH/nobBmNv0Vb1Vd9Qg1wuaFiM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=oxPEIt3bcAZRiZpOCMc+jAHwg0MoMnjkPQktLrtjZHmsvyP1bRKeH5tiXysyn0EcM
-	 8r1ZxnegZuekizmR7IFGMhkHInSJc8vRtYPL7Gm0x0dwlh6gfkAU2n9fU5a3bpZew+
-	 QkA4albPjIGlMXqIeco2vloFDhoEkzdPSscX4ZdrmgLveEM5CJ3ZlSOGDBJP7hpWY/
-	 hUQOv8C6XMK0YgMkreMVGHYLlDorF0eec/MxNpCsNDp6+AEMOXIL+xSELZTurXEVyZ
-	 O1XNJIFExN/E9O9xp7cOPl5mwHq0qHxG1/taEAu/tTnG1fCPXuZr539tA6UBcX8es0
-	 CGJnLpG7jq3Iw==
+	b=CYwWKxyp5z9B9flFw0zwO+olc2gr55iD/FvyKvMvy6jVep0uereTJSkNd0PbiG1Yi
+	 T+5N5rmWpBXD7Pr2z3DUuAYQV1cEZEZseB49Gp80D5EBuHUdDokh5qwcHkBA/UWt8/
+	 ltCvG2TYdP2O7IeJkdrLfmHAe6KL8FZRF8t75xp0vH4c19OeTu4rGsRQqWK3IyOnYR
+	 1usFIxW0esefBFa8AdMA4KPy8afRIUo3Kc+Hs2kiqQhXGX5Bxm05MxkO5kIFX6YpQl
+	 rHwwaz2FXsyCkgMgZh8nj1UhN5sX3YCBhe4Yxg7kvScUwct3/XC+HZYQRFkC0hmqMO
+	 acpXhRub6n11g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 17/64] dmaengine: ste_dma40: convert per-channel
- tasklet to dma_chan BH
+Subject: Re: [PATCH v2 09/64] dmaengine: ioat: convert cleanup tasklet to
+ dma_chan BH
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <119d257968c0a337b7e439fe71b59636e7fb37c3.1785183549.git.allen.lkml@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <325f449ad6fca109ec1e8c34e4e12c1952272a8f.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <119d257968c0a337b7e439fe71b59636e7fb37c3.1785183549.git.allen.lkml@gmail.com>
+ <325f449ad6fca109ec1e8c34e4e12c1952272a8f.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:00:50 +0000
-Message-Id: <20260727210050.B0DB41F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:02:13 +0000
+Message-Id: <20260727210213.A81981F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing `free_irq()` on `d40_probe` error paths leads to a leaked =
-IRQ handler and a potential Use-After-Free of `base`.
-- [High] Missing `device_synchronize` callback causes a race condition duri=
-ng channel release, potentially invoking callbacks in unloaded client modul=
-es.
-- [High] Probe failure after exposing channels causes a Use-After-Free beca=
-use devres forcefully frees memory while clients or scheduled BH work may b=
-e active.
+- [High] The teardown sequence in `ioat_stop()` cancels the timer using `ti=
+mer_delete_sync()`, but it can be subsequently re-armed by the final cleanu=
+p sequence, leading to a use-after-free when channel resources are freed.
+- [High] `ioat_shutdown()` does not flush inflight BH runs, which can lead =
+to a use-after-free or crash on module unload.
 --
 
---- Patch [17]: [PATCH v2 17/64] dmaengine: ste_dma40: convert per-channel =
-tasklet to dma_chan BH ---
-commit 7d6ec649e7f14a8affbdbde4ad9aa8498383284e
+--- Patch [9]: [PATCH v2 09/64] dmaengine: ioat: convert cleanup tasklet to=
+ dma_chan BH ---
+commit 1d64b3893af8e57fe59c7d2f05e40d26e9aec652
 Author: Allen Pais <allen.lkml@gmail.com>
-Subject: dmaengine: ste_dma40: convert per-channel tasklet to dma_chan BH
 
-This commit replaces the per-channel tasklet with the shared dma_chan BH
-helper. The handler continues to run in softirq context while dmaengine
-manages the scheduling and teardown mechanism.
+dmaengine: ioat: convert cleanup tasklet to dma_chan BH
 
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 0d9ffa3e26639..f279a093a81f6 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
+Replace the per-channel tasklet with the shared dma_chan BH helper.
+The handler continues to run in softirq context while dmaengine owns
+the common scheduling and teardown mechanism.
+
+> diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+> index ee93b029f9e3d..827b46c6354ad 100644
+> --- a/drivers/dma/ioat/dma.c
+> +++ b/drivers/dma/ioat/dma.c
+
 [ ... ]
-> @@ -1641,7 +1638,7 @@ static void dma_tasklet(struct tasklet_struct *t)
->  	d40c->pending_tx--;
+
+> @@ -161,11 +161,11 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
+>  	/* flush inflight timers */
+>  	timer_delete_sync(&ioat_chan->timer);
 > =20
->  	if (d40c->pending_tx)
-> -		tasklet_schedule(&d40c->tasklet);
-> +		dma_chan_schedule_bh(&d40c->chan);
+> -	/* flush inflight tasklet runs */
+> -	tasklet_kill(&ioat_chan->cleanup_task);
+> +	/* flush inflight BH runs */
+> +	dma_chan_kill_bh(&ioat_chan->dma_chan);
 > =20
->  	spin_unlock_irqrestore(&d40c->lock, flags);
-> =20
+>  	/* final cleanup now that everything is quiesced and can't re-arm */
+> -	ioat_cleanup_event(&ioat_chan->cleanup_task);
+> +	ioat_cleanup_event(&ioat_chan->dma_chan);
 
 [Severity: High]
-This is a pre-existing issue, but does this create a race condition during
-channel release?
+This is a pre-existing issue, but does this sequence inadvertently re-arm
+the timer during teardown?
 
-The driver doesn't seem to implement the device_synchronize callback, making
-dmaengine_synchronize() a no-op. When a DMA client module unloads and
-releases its channel, it relies on this synchronization to flush any pending
-async work.
+After timer_delete_sync() is called, ioat_cleanup_event() triggers a call
+chain that can re-arm the timer unconditionally:
 
-Could dma_release_channel() return and the client module unload while the
-bh_work is still executing here? If the work is preempted right after
-dropping the channel lock and before invoking the client callback:
+ioat_stop()
+   timer_delete_sync(&ioat_chan->timer);
+   ioat_cleanup_event()
+      ioat_cleanup()
+         ioat_cleanup_preamble()
+            mod_timer(&ioat_chan->timer, jiffies + COMPLETION_TIMEOUT);
 
-	spin_unlock_irqrestore(&d40c->lock, flags);
+If the timer is re-armed here, could the delayed timer callback execute
+after ioat_free_chan_resources() frees the completion pool memory?
 
-	if (callback_active)
-		dmaengine_desc_callback_invoke(&cb, NULL);
-
-wouldn't it resume and attempt to execute the callback residing in the
-now-freed module's .text segment?
-
-Additionally, I noticed a couple of pre-existing issues in d40_probe():
+Would upgrading timer_delete_sync() to timer_shutdown_sync() properly
+prevent the timer from being re-armed?
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does d40_probe() leak the
-IRQ handler on error paths?
+This is also a pre-existing issue, but does ioat_shutdown() in=20
+drivers/dma/ioat/init.c have a similar teardown problem with the BH?
 
-drivers/dma/ste_dma40.c:d40_probe() {
-    ...
-	ret =3D request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-	if (ret) {
-		d40_err(dev, "No IRQ defined\n");
-		goto destroy_cache;
-	}
-    ...
-	if (base->plat_data->use_esram_lcla) {
+In ioat_shutdown(), the driver calls timer_delete_sync() and disables=20
+interrupts, but it does not appear to flush inflight BH runs like it does=20
+here in ioat_stop().=20
 
-		base->lcpa_regulator =3D regulator_get(base->dev, "lcla_esram");
-		if (IS_ERR(base->lcpa_regulator)) {
-			d40_err(dev, "Failed to get lcpa_regulator\n");
-			ret =3D PTR_ERR(base->lcpa_regulator);
-			base->lcpa_regulator =3D NULL;
-			goto destroy_cache;
-		}
+Since the IOAT_RUN bit is not cleared in ioat_shutdown():
+
+drivers/dma/ioat/init.c:ioat_shutdown() {
     ...
- destroy_cache:
-	if (base->lcla_pool.dma_addr)
-		dma_unmap_single(...)
+    timer_delete_sync(&ioat_chan->timer);
+    ioat_reset_hw(ioat_chan);
     ...
- report_failure:
-	d40_err(dev, "probe failed\n");
-	return ret;
+    ioat_disable_interrupts(ioat_dma);
 }
 
-If d40_probe() fails after request_irq() (for example, in regulator_enable()
-or of_dma_controller_register()), it branches to the destroy_cache label and
-returns an error without freeing the registered IRQ.
+Could an interrupt firing just before ioat_disable_interrupts() successfully
+schedule the BH via dma_chan_schedule_bh()?
 
-Because base is automatically freed by the devres framework, if a spurious
-or lingering interrupt fires afterwards, won't the still-registered
-d40_handle_interrupt() execute and dereference the freed base pointer?
+If the module is then unloaded, could the scheduled BH execute after=20
+release_ioatdma() has freed the channel structures, resulting in a=20
+use-after-free?
 
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does a probe failure after
-exposing channels cause a Use-After-Free?
-
-drivers/dma/ste_dma40.c:d40_probe() {
-    ...
-	ret =3D d40_dmaengine_init(base, num_reserved_chans);
-	if (ret)
-		goto destroy_cache;
-    ...
-	ret =3D of_dma_controller_register(np, d40_xlate, NULL);
-	if (ret) {
-		dev_err(dev,
-			"could not register of_dma_controller\n");
-		goto destroy_cache;
-	}
-    ...
-}
-
-In d40_probe(), the driver exposes channels globally by calling
-dmaenginem_async_device_register() midway through the function via
-d40_dmaengine_init().
-
-If a subsequent initialization step fails, like of_dma_controller_register(=
-),
-the function returns an error. The devres framework then automatically
-unregisters the DMA device and frees the driver's memory.
-
-In the window between registration and failure, could a concurrent client
-driver request a channel and start a transfer, or an interrupt fire and
-schedule the channel's BH work?
-
-Since dma_async_device_unregister() doesn't wait for active clients to drop
-references when called from devres, will the client or BH work access the
-forcefully freed structures?
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D17
+t.allen.lkml@gmail.com?part=3D9
