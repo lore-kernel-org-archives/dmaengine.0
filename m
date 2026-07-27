@@ -1,142 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F963D5229
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25FA3E51E6
 	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186556; cv=none; b=QzJctXbHxA4Gnpcm/YI5isn/mn4EogTsL85R0qUcF9YkdL5E57kx3SKjjgBn9X/fwIsx6M9DqE6YI1aEAUMbws/FXOfnsFHPwhbHfGlVPgUkR0rAzJUSnAFkZnqFwlgU439Vwbg5ey+exQNJwleiGpY3/Q1vnx9ysSFReQsuICA=
+	t=1785186557; cv=none; b=TYxqJ7z+h6VIISY4KjTxroV1oAL1s0l98ct2VISbOgZG163W+RH/3hIN6H7ZGT6TtC0HJamANwZAI2QVDPGlvdFqaAygKsXWvMLH3VIKaW7KYqbPQXhQ6fKC8wNSe6n/0edmLAitbpx5UAORXIN3+t3VgP+yszXf/0LMo94gmf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186556; c=relaxed/simple;
-	bh=rLmUUcjYTXpS2ZmKNw3WAq51yKat/ZjbFpcm0PzXQqc=;
+	s=arc-20240116; t=1785186557; c=relaxed/simple;
+	bh=SAR+Ec1IbOGCxgJQwQ/3IdvazAlbmDjyoo0HXvwarbQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=HPgb1o6GTDv+1XtsF0BsrRCOaZfkgWH7EMl/Elx3WHqxQLOL9zjYSgB4c90yCXpZnzsJIrhbIycEMkv3TkpzwCSBQbNFbUJNJYask2sRFHDTsfudtovBVoOHY4hVVVbkINVlOmoKLOQZajoqF6kbC9r8AN/1KWB99tutXJyG2Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nYlWCdTU; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=puhXRlE1JcC0PhFnSorL5CZid6oKjOEe/ttQSmDLQH+urvBBXRB1vVLz5766feCgQrZXuNVw6EitF3jSsp3c48g9VYW06sWW2HA607YqH8yf5uDK2p3ytZNj0rPUaJ/5A/KVY614+r+Pl12FvOTsKYfMZItTNLAy2tlL/JEBSf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oo9SXrbK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nYlWCdTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC241F00A3A;
-	Mon, 27 Jul 2026 21:09:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oo9SXrbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0871F00A3D;
+	Mon, 27 Jul 2026 21:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785186554;
-	bh=u08Z6iG0tdCuHz/1QTCgPZ6avXgXq+x0yHKf6VZtz5U=;
+	s=k20260515; t=1785186555;
+	bh=N1GQJsrJLBU46nTvq5ciG1St0dFmqiDta2NJKTQmAhA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nYlWCdTULr/y+J0W3GmhA+QpTw6TiTnMtmbU+g+7+sTCjm9+sqs33pzBUz/alVEnz
-	 jPkguEqyUdxDCZVPSadRTTCHimrSUsZXOvfSPR82oMe9oZUS6h18X0R1GOIEjcyahn
-	 ztfCv7DrXpMsU5xz5fDv6/U5v20zcUwDwgrtSFPAx9qbf8cPoERRH23gnAetAjsVe8
-	 +e+f9coKPZg51w63/RfZvY/mtYHzfgp0bGNzIkY139x0m7anHeHuxLj3qcCkFGV8lI
-	 +Ul7865Ax/hRYSqngCu9h7f7aIG7spH0rTsq9TY5pLJoXDpKPtvVDYZ7oJl/hD3hwe
-	 gYzByYOx5JX0g==
+	b=Oo9SXrbKzaXzbxYTKJ6mkYJ1ZMZ+X7Bu9/imzqAVo37LxVBVRv4xK67iLvOVALnM0
+	 4Qq5NXpg1JYtkBn4RYbpvRny7XfbVqyW7/sXPHt9Qii7y7xsWQkSU8fcwF0Nxzp6n7
+	 b2wE5LmBIOYSHQpS667fbL6MtWlyBiBEJI0yfTfD2zpwaeURvRxrxRgCp1UMHqpm70
+	 Zj2DUg4PkUaiXkgceQge7ytESsoZEfn1wHmWIQRhbgUp1bB8fmysovb+pBwbSbB1Oi
+	 roc2VTkV2KtxnuY59dIHP9JG13+v0CkpASgRmtaZ/ieTG8B35EdeB29pT1+0rlILBe
+	 tmDK9eaXyOWZg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 23/64] dmaengine: timb_dma: route callbacks via
- channel BH
+Subject: Re: [PATCH v2 42/64] dmaengine: jz4780: kill vchan BH on teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
 Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <b13242b2b3e1ea01e6c1b7b2daa32836b8ea5398.1785183549.git.allen.lkml@gmail.com>
+In-Reply-To: <95741599738bb33731b9a1148fa2c7045a2fbdb2.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <b13242b2b3e1ea01e6c1b7b2daa32836b8ea5398.1785183549.git.allen.lkml@gmail.com>
+ <95741599738bb33731b9a1148fa2c7045a2fbdb2.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:09:14 +0000
-Message-Id: <20260727210914.9EC241F00A3A@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:09:15 +0000
+Message-Id: <20260727210915.6C0871F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
-New issues:
-- [High] Data race and out-of-bounds read in __td_ier_mask due to lockless =
-traversal of active_list racing with asynchronous workqueue.
-
 Pre-existing issues:
-- [High] Premature completion of active transfers due to a race between td_=
-issue_pending and timb_dma_chan_bh.
+- [Critical] Use-after-free and arbitrary physical memory corruption during=
+ descriptor setup failure
+- [High] Hardware teardown race in jz4780_dma_remove due to incorrect devre=
+s ordering
+- [High] NULL Pointer Dereference in jz4780_dma_tx_status
 --
 
---- Patch [23]: [PATCH v2 23/64] dmaengine: timb_dma: route callbacks via c=
-hannel BH ---
-commit 2a07cb9b339578f9caa75d42037da515bda38de2
+--- Patch [42]: [PATCH v2 42/64] dmaengine: jz4780: kill vchan BH on teardo=
+wn ---
+commit 80e35ad454b351671c271c48790a44cd6f63d096
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: timb_dma: route callbacks via channel BH
+dmaengine: jz4780: kill vchan BH on teardown
 
-This patch schedules per-channel BH work for completions so callbacks run
-through the dma_chan deferral mechanism while keeping the controller
-tasklet for IRQ handling.
+This commit updates virt-dma cleanup to use dma_chan_kill_bh() instead of
+tasklet_kill().
 
-> diff --git a/drivers/dma/timb_dma.c b/drivers/dma/timb_dma.c
-> --- a/drivers/dma/timb_dma.c
-> +++ b/drivers/dma/timb_dma.c
-
-[ ... ]
-
-> @@ -580,17 +582,25 @@ static void td_tasklet(struct tasklet_struct *t)
->  	for (i =3D 0; i < td->dma.chancnt; i++)
->  		if (ipr & (1 << i)) {
->  			struct timb_dma_chan *td_chan =3D td->channels + i;
-> -			spin_lock(&td_chan->lock);
-> -			__td_finish(td_chan);
-> -			if (!list_empty(&td_chan->queue))
-> -				__td_start_next(td_chan);
-> -			spin_unlock(&td_chan->lock);
-> +			dma_chan_schedule_bh(&td_chan->chan);
->  		}
+> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+> index 6070dfdb7114c..45c1096563e32 100644
+> --- a/drivers/dma/dma-jz4780.c
+> +++ b/drivers/dma/dma-jz4780.c
+> @@ -1019,7 +1019,7 @@ static void jz4780_dma_remove(struct platform_devic=
+e *pdev)
+>  	free_irq(jzdma->irq, jzdma);
 > =20
->  	ier =3D __td_ier_mask(td);
+>  	for (i =3D 0; i < jzdma->soc_data->nb_channels; i++)
+> -		tasklet_kill(&jzdma->chan[i].vchan.task);
+> +		dma_chan_kill_bh(&jzdma->chan[i].vchan.chan);
 
 [Severity: High]
-Can this lead to an out-of-bounds memory read?
+This is a pre-existing issue, but does disabling the hardware clock here
+before devres gets a chance to unregister the DMA device create a race
+condition?
 
-With completion processing moved to an asynchronous workqueue via
-dma_chan_schedule_bh(), td_tasklet() and timb_dma_chan_bh() can now run
-concurrently. The tasklet calls __td_ier_mask() right here, which
-locklessly evaluates td_chan->ongoing and traverses td_chan->active_list.
+If an interrupt fires or a client accesses the DMA engine (for example,
+calling dmaengine_terminate_all()) during or immediately after
+jz4780_dma_remove(), it appears this would trigger a fatal MMIO fault
+because the device clock is already disabled.
 
-If __td_ier_mask() reads ongoing as true right before the workqueue removes
-the final descriptor from active_list in __td_finish(), wouldn't list_entry=
-()
-calculate a bogus pointer relative to the empty list head? This could cause=
- a
-read of unmapped memory or garbage when accessing td_desc->interrupt.
-
->  	iowrite32(ier, td->membase + TIMBDMA_IER);
 >  }
 > =20
-> +static void timb_dma_chan_bh(struct dma_chan *chan)
-> +{
-> +	struct timb_dma_chan *td_chan =3D container_of(chan, struct timb_dma_ch=
-an,
-> +						     chan);
-> +
-> +	spin_lock(&td_chan->lock);
-> +	__td_finish(td_chan);
+>  static const struct jz4780_dma_soc_data jz4740_dma_soc_data =3D {
 
 [Severity: High]
-This is a pre-existing issue, but does moving to an asynchronous workqueue
-widen a race condition here?
+This is a pre-existing issue, but is there a risk of a NULL pointer
+dereference in jz4780_dma_tx_status() when a transfer isn't active?
 
-Currently, if td_issue_pending() races with a hardware interrupt, it can
-acknowledge the interrupt and complete the transfer before the completion
-path runs.
+drivers/dma/dma-jz4780.c:jz4780_dma_tx_status() {
+    ...
+	} else if (cookie =3D=3D jzchan->desc->vdesc.tx.cookie) {
+    ...
+}
 
-If td_issue_pending() also started the next transfer, this newly scheduled
-timb_dma_chan_bh() workqueue will blindly call __td_finish() and complete
-whatever is currently in the active_list. By changing the completion from a
-tasklet (which had a very short race window) to a scheduled workqueue, the
-delay is much longer. Will this result in erroneously aborting and completi=
-ng
-the newly started transfer?
+If a client prepares and submits a descriptor, moving it to the desc_submit=
+ted
+list, and then polls its status before it is issued, vchan_find_desc()
+would return NULL. If no transfer is active, jzchan->desc is NULL, which
+seems to lead to an unguarded dereference in this branch.
 
-> +	if (!list_empty(&td_chan->queue))
-> +		__td_start_next(td_chan);
-> +	spin_unlock(&td_chan->lock);
-> +}
+
+[Severity: Critical]
+This is a pre-existing issue, but could the error paths during descriptor
+setup lead to a use-after-free and potential physical memory corruption?
+
+drivers/dma/dma-jz4780.c:jz4780_dma_prep_slave_sg() {
+    ...
+			jz4780_dma_desc_free(&jzchan->desc->vdesc);
+			return NULL;
+    ...
+}
+
+If jz4780_dma_setup_hwdesc() fails, the error path frees jzchan->desc.
+However, jzchan->desc appears to hold the currently active, running
+descriptor rather than the newly allocated one. Does this free the running
+descriptor while the DMA controller is still executing it? This pattern also
+appears to exist in jz4780_dma_prep_dma_cyclic().
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D23
+t.allen.lkml@gmail.com?part=3D42
