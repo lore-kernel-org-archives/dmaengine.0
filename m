@@ -1,47 +1,47 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021110.outbound.protection.outlook.com [40.107.74.110])
+Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11021097.outbound.protection.outlook.com [52.101.125.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11124399FF;
-	Mon, 27 Jul 2026 17:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5AF43A7FD;
+	Mon, 27 Jul 2026 17:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.97
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785171839; cv=fail; b=KlzKYwtDlIPn8rLj/2DIrIUtKTg4yfA0U+iIRhQwZ2iRV8dgXU2n+xt3G5TE0oRmgwtvgXx1sCPUdNUn3iWz7YdDkyULsdCJNfm8n7mH2czpBAhTWSUbVqEVWbaOwemuCTwzMxxG9a7PtUFMzJ6Pz2j98PSycFbaVX2L3UwccPE=
+	t=1785171840; cv=fail; b=fCsEzSdtejHJkHicrW6bC+1aRQWCJe0wxhlH5ST1iRRk2mS/DY5mfSEspL6vSkJuDHaVCivCupZ39EuLbQ92eW8zzWAvPp9dSNCxZphW6wI3Hfli3bVNTsFJJxdE2/VZcpTx9V8NTs0jX5dMfOaDkSLLEe0YEXOfMlwP5sCl8ZE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785171839; c=relaxed/simple;
-	bh=uYXQ+TgPYLyKpeaT4iQ6BY/6Vy4jlcqSi1RqGvL0m3w=;
+	s=arc-20240116; t=1785171840; c=relaxed/simple;
+	bh=7g1BgBM7c5HT2Hrm0Sx3wNSkF+x+9R/axGbmMk9PK5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ZOIKr+XJoEPMvB4v86DLpKMIGQikf6ipGov6jKTuphV7EsbPtziGcrqZGemGd7ZQmMl0TqQiZvhOXeuCm+TvsZmWuqd1laoR2N7ib6szJtvjjriAEnxH4hPHO5pVWJoKpboAVSQ9/Zw7NXn2TtWTMsFvHTqGYXEdzByiWQB7Nc8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=cbhfPl8r; arc=fail smtp.client-ip=40.107.74.110
+	 Content-Type:MIME-Version; b=QCR1FLwy6aVoh8IbugSN7SGZsTvGT/lY5YBDaWKcaWJiS+heMpV5EX9F3hPpZw5dTDT8CrJjYUnUPoZnilKiXFsXL0BPKYPiBhqx1ASCknK4F8oKLKbU2y2uIvgu87ht+P9SYNrQVyUKF1ufpetdShSnS3wp2JFTE3AHCu9Sfw8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=Tq8cLGNr; arc=fail smtp.client-ip=52.101.125.97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="cbhfPl8r"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="Tq8cLGNr"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jLaTHQktBiSHJMlqXt2UnpfS5cLo19hk27FPD6sp9n3y6BWkFP7z1M79RFaJDhLZ7vilTQkkxluP0ahS8dadtvs6UYUqoNtyQagKTf7rnUqLJm1fJ9HX4xr2+ATrx3dfyo5TTAWQfeYQltVib43i3RlRZwStv+HaOnjv0sl1PMif5JHRGb6YcpLcsmzyBy7xYO2ebWM0uMGoOyDvqNcn8M+qJGh3Mezb7xUCgNPt9ao9yqq18lGAA2jLWXpXfdrEJaRwX4EGZycLAiIsHwHmWu+mTMadDebuaov+wuNIz4czSonHHqitxLknEW80MRUG5IMiMEPF0b1L/fzSM1h7Fg==
+ b=iDuDKwUz7L+ey+Nfx+ugYfT0Gh5MmqQkLXR3fNpi6gqgf93w32v290JVp+zI9dq9LItSjlJg9zwmmitDQAqbT6CP9cuJ5c2aIonUQa/ushauqgZgmzaYZ0vgS+qc7ROETEr3hCkEQ4iyOHLsQQCoPHyi61G4G43gfh/bCarNYTwOc9yPeCVZekoMC8bSptv4qUM0rubaVi6cKbAgiI8GLgF7bOJTYOvt3CGwu6YHGcKxCFXZ33vR6C2p89pIc5+1NIfzZJg6nE3wxyN99TA27UN29X2Yw5D/03R0Z2HKC895bakz+i+uW8cnISOgTVy3LnMTHn593bv6moGbQKy8xA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6oTiXnRx4GxBphnBKvtAiojTwOv3LgpDBrsDRwF40RU=;
- b=zH7w14l8YdgyNqXonlTfSbxWvR9yDdqTC2LX70TKEdZjY8GCEg4rhv6ZFeemJh/VvoDzyqJhbPhQAoe5BqCE1YcXhMU3qEnQJtH3W+/+ARJK1ssLG2lswl5n1NJGxx5U4C0IhLVjjZrzX58i0aWkn/0lEumbXHT1fVh7ZY21QMIwDyVqwdZAsKNQ0HHvb+t1j+GmzZPPLe2iAV3LuP13cHwgDc5StBUkwh8T7fZliffi7F4ee/39Qn09fE3Iy0m88d0nR7UQn3Vy7qrMmpXipMVp9tlpZKlPhdo6RhT2dCTR/QCDlihqFihgBBv6OcNv3eq7ikYGhg1jvPZOlNAN6Q==
+ bh=VE52KkB9yYCNzVjRHZhp38JLHjiQLfd+gv3wyDLv144=;
+ b=NPlHxlulMo/ZoC+kV4PBgDchEtj7HvCO5+njBG7wCHDy59u2/HTFpgK2lPK9RBtRO1mOsqwP31qnPZl4L3KaoxPn+9TiQhcEppCO+ORbcweqAxRhDzmVqCqAuYDci+K7lX5yEIxCBXFcL+C1xCgpSsE3C4zUoh3Nr1ZwqGPYjsGA9lq9xt0iQlADtixyS6OyTx85d4IRkaW7nuS4DRGDNYN3ZUfiNtGhMdiTPadAHwUkXa/1DkQgkdfxGFlI6bKzAjcIHBEx9khIVRhnqt3cW+Du006ROzELOxqxt6qNDQ4Fd3MHH57Uhlv/cQVrlTu/ujNd3aqXU74kTB4HRt3R1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6oTiXnRx4GxBphnBKvtAiojTwOv3LgpDBrsDRwF40RU=;
- b=cbhfPl8rPVDLHYMrrNw2TFOZpO0I9ey6+0PTRMEJgbNeOZ5IwfHmAAUXH/yQAAAy0iuOmfe7714qcfc6AM5b/fGk5sCNit3ac4egIxglf0Dhy6KOkImC3UsoQk3b6ja77zzwNxEO7DDA2JceDivsWG+nt3k1Cwm5jZouKGGLGvw=
+ bh=VE52KkB9yYCNzVjRHZhp38JLHjiQLfd+gv3wyDLv144=;
+ b=Tq8cLGNr5MRW1unTFoWPDUtcR1ilRVmPjkw5L2FeaWOaRlP3fPMRZNCt9qjHBz8kCgfFkLrqFjceRg0ebXpvZoW9396/9ek+q4T3sIBGemHq0sXhXrZRpsKS5html+rDmdUdjOUo2G6jSMCXqEEJeUOzCqyagnMZEsmeqboBcu0=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
  by TY7P286MB6515.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:31d::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 17:03:48 +0000
+ 2026 17:03:49 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 17:03:48 +0000
+ 17:03:49 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Manivannan Sadhasivam <mani@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -58,16 +58,16 @@ To: Manivannan Sadhasivam <mani@kernel.org>,
 Cc: Devendra K Verma <devendra.verma@amd.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 21/24] dmaengine: dw-edma: Add engine reset and enable operations
-Date: Tue, 28 Jul 2026 02:03:20 +0900
-Message-ID: <20260727170323.2321369-22-den@valinux.co.jp>
+Subject: [PATCH v3 22/24] dmaengine: dw-edma: Add engine recovery infrastructure
+Date: Tue, 28 Jul 2026 02:03:21 +0900
+Message-ID: <20260727170323.2321369-23-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260727170323.2321369-1-den@valinux.co.jp>
 References: <20260727170323.2321369-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TY4PR01CA0027.jpnprd01.prod.outlook.com
- (2603:1096:405:2bf::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TY6P286CA0039.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:3b7::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,199 +77,522 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY7P286MB6515:EE_
-X-MS-Office365-Filtering-Correlation-Id: ec265bed-7224-4ad8-502d-08deec0106da
+X-MS-Office365-Filtering-Correlation-Id: 31e298d4-594d-446a-3a1a-08deec01074d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|1800799024|23010399003|366016|10070799003|7416014|376014|921020|6133799003|56012099006|10067099003|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	Uk6ysAlMuVgcAhw78dsvEIdMbw5XVtZCyfz5rcWXCXqqnigD8faJSSqwseIQe4gp/y41EWlaHDIvL40RMD4axMEiXxkZP4MetMyuY7hofXZ6h9iEM/n4Ic+LKQQJmsU1VPwWMeuyQ9P8zR9eK73swfflq1e0vAyEpuy5jcy1Gjt2rGd1gJjKE5OnpQ9txNyNOWc6wxerWHU33dPC/oHXGGfUPp3kHDXaA9D00R5WPw/jMLAS8+G8AhsxfJhr79REYHppNlNf8qeflTWcoX5sdUEmnYSlw8mqP0u/yvcn02fnutaalqwcADkXTxWEVi8tmYqZSL/OcassXGM/QT1Jijbk+vCu9hwjjTMX72PEAGlVltrup8oWRS1Nw9/rmpUdkEuQPzywSeLnD3Vdr0Lw7etlcabZh1ZcNhaAGvQbMkzWPUy0d4vU+/AVMzPQ+HWkYPDUlA9h12tOY076aP9Uf2o4bDNBMbGwgUimMkyItI+WQWezvgxSA9pqB5cR6+gkwK1VPPeEZpunr8AmMzJ/rC7XacecrTmBTmiKk3zOrB0LBQKu7+kXFtzSr90CkT00DpSR83WNIipoa5R9SPqEH6Oe2t0InlzbZWGssO/SdJXBhMUbSoPhlYaSWZqk57EV/2bDF8uXF1JBeCndVmGt/y3QKo9ILs7RCc6KkMFDcAjQHutICgvQWxFksXYTEpRlLKPqS5Lu2lF8a/3I/UVcFg==
+	AwVS+y9AZqnfkt83/rZYHqW0iGliOA2+cz8DlOwKDa3clsiuDcVEYcI38y3BFJvheX1RN0nD0GLjXe2zPRyN4wz7AqGUMeiWS7/DiM6XSowuJcu6cb1ktq5CGsNSXps6ODnhrRkWPepgIq0U+KmUeynS+S4J79Vc1l2qHwG5KyA9w+XVTaWoUR6L6zS1613CS9TMGGD+gg/UC1PhNLrASzjGof9eJgRczGlzejZoBf8+YqbPCDML78/JGyccL2tWHUeiNj0YXCZzS4DhZIlhlzXeq1n7H64R1F4VZ/goQQfGA1AUKKL4i3oAxbgMh2jyqM25mPpZJiIjrtAD3aq3KW4ofp5Da4k+MT9OJucjyeeKSOa2jjHQagebSO+h0EzCxA4i7BTTcxM+DouENaUefsq0WJSaSXMqBguyUWYxr54lvcqlYo/6V08/s39RP1wlx2t4FmZZLnny1jLevBaQxb8WYooiryVQOC/RZAGbhh6BMxwaIMjZXChs+EBgPysUSSBjUwY0IkvVKPF8+llIPFG4UxGsomoc1nPzaaR3IZJ+/xCw/q4OMyXMwWg8Ybo3gvoz1HwNIrp5i1/F+RDsFNRHfAY9yWuxZrbi98vanA9PzipuXR6y4+9C5kJm6neXzWknk7C01zq7jZI1CRvq9byCzdiy8v5FJSu3e6QP1/EeW74z16LOZSMxfyUV1gMOGnagVQkKpkknnF9UT///oQ==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(10070799003)(7416014)(376014)(921020)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?DULF5wUJkijdXEbNbOubmFy09KdssK269pb156VAQBDCMdNEmX0DON0JYFew?=
- =?us-ascii?Q?MxhAa5hT+e+rE+rGeKk45UOk0sMUv1E+Sf/6A60g0pv6kZ8So9N3kwSXO9qF?=
- =?us-ascii?Q?Z67xq0+H5aegvORtpYmT+rZk0D5O8kr9NmX+jZcQlMBlwgkr5EkLf8UuhFIt?=
- =?us-ascii?Q?AcHP3tfwVxYUSuXTs7C4yH16NN2pdcKtx/uchMtDqXHhT+O4YF6O/AiLHgPX?=
- =?us-ascii?Q?3Ygd8Xo1eALb5erAYrLUU902aUsuZhWOh9oz4RBH2VXND4GH7EPxqQrSQ2bZ?=
- =?us-ascii?Q?1uMYu+i3B2vusqcaS+8pupcr2adDwzRLkFe4o4Tz/sntjuA12pWoCjeCFjTE?=
- =?us-ascii?Q?VXNAes3hYuXOObtXegiSIC2pAOrFcKS4JYKcnd4fkEZr862q1UFNCHN9Lavn?=
- =?us-ascii?Q?dJBkDXgq6NqNGxFjp+acE6mlSVODQPTevMJavQSuF+I74r4eaxaUd8HBmDaX?=
- =?us-ascii?Q?K9D4x9bd24eIxRGnXVo6ztsogjky3kofnGjAIsDa85uiZv5byEIFD0yuY7Qc?=
- =?us-ascii?Q?W7MjErJy96aKvpJrpS6B+zPbJJtB8SlKTbgxFI40SOln0fH3xtE8ZQcsK8c/?=
- =?us-ascii?Q?OLuCQR6c09ixHoUhq72LQouDl5Nuw5K1hKrNV2sgxQNDcJ4y2T6vtAmNvPgN?=
- =?us-ascii?Q?bJc524SkKGCpSvfA6njHERBgZmMxk+f1stMeX/8SFumgEYs+A6WK15MxHUc2?=
- =?us-ascii?Q?LpCoGzJSIfZHfFcEx7PkCgo3XjdC3WSblPO6Mjkp9+2njHFWxjWeKYkAC9zy?=
- =?us-ascii?Q?7mNNfTz//bfzUM6MpIbMRyVtXf1rbiVMnWjizTsATC/8+TgI9hJNCH+6KWEK?=
- =?us-ascii?Q?mlWQWD8GR9Sj63VwiKpJ3tcjsuGLwGgHrbfiZFFzdXxnK5EAKNq583XCH6/V?=
- =?us-ascii?Q?69uEdirl1tJ64JbTIrmLtI0dgGTVLpCVQLMpNNC+KtCXyR8a2ivwE3GTBTDb?=
- =?us-ascii?Q?fYoB5IPsIDUUTwwfC6orU9Yx0rusW4paTTEaIekUKQEDWiuPhIi4eSog0FW5?=
- =?us-ascii?Q?HmnY98NwDLnyW9ANC08bUKTKhDHcUEHN0b2gHIoyGxz07D3QheNBFHlWstnS?=
- =?us-ascii?Q?W+baVWeMjW/9TV00+U57SbN7pe/q8cSQknNVrmaHreqgTvAJZouabg0Ox/mJ?=
- =?us-ascii?Q?hEi2BExdkZe/42CiC/MN8gIawPcbArMKdmzSP5dsT/NnPR4qe1KgJKoyJj2d?=
- =?us-ascii?Q?pWfkeHHcOCaI9AUg09B5cYS//psMoT2cYVjUJJO/xHiLEh3fEA8sXq9OG2XC?=
- =?us-ascii?Q?kHNOJBJ9r4cS3JDkHGEU3XsTskXtfr/CyVLDKSkNQuEFK4scQEw14BQ0vEcX?=
- =?us-ascii?Q?AQMopkv5FPSC3QNaJ+3q3mT6p0T/dT/pGMGxJKH2K8Ns2KQLPNROY2mWt+Vt?=
- =?us-ascii?Q?M/lSg79Gb85TUbqPIXhsC++KvmoJyqJveAR9RhbRumOWEkgZOFpxLocs+16f?=
- =?us-ascii?Q?ufT3JeUZF1+Zav7eLIhORS4j6RLYfHxTQ+If1GcmJm5tzepSNBUqF8yJhCYD?=
- =?us-ascii?Q?XmXDMou+tQ0fTwnNO5c/SPO+LWncq8PBTeihE1AcDwDeqBOA1TSK1hXzbMPs?=
- =?us-ascii?Q?uKO983OlW4deUr1lnBRoPr/XAfyzp725UUh6cy+pp/AY4VvU9up4iPAqWbCT?=
- =?us-ascii?Q?OX8PIx0MbJ+m4a6PPKcEtxgidCXM8Lx3nSN7Cfi+XLo1AIgdtkUMoba74vs0?=
- =?us-ascii?Q?uEHqNyr70Sc89qNaypFJlhpCb31Wskh1Eedj+2zlWWrCDjZHl/AEmxOLR8hd?=
- =?us-ascii?Q?donVKzgfO+r9G8COeLhtRffgVT+Zb30qB2blw+ceZSUFJV0bZm+S?=
+	=?us-ascii?Q?EPG6DGN1gfH4udMkl9+4Il94SpTqfFqkMWcoV2C3YQukJlWsqct9M0DTkhVR?=
+ =?us-ascii?Q?mMD8VTTsUmZJBNLIca0sI+z1Jzg5b1urnz0ezngOUS+u8fKg5t4tpsqDpaUi?=
+ =?us-ascii?Q?kQhpjnrstK0Jbwb6Zvrxw/P5UrI3taVNmu0vYrNrQWk4m9PrFxw9tFa8EXe0?=
+ =?us-ascii?Q?cQbilWPQHvpY05GcCJSqzxXPEix5XYn5LFDDXib4P3mhDLhAISGKyqrIaoo1?=
+ =?us-ascii?Q?Hs4QIJX7DEUH7ceDMHV6JLT5hgf3pFk15oYjCFyKxmwSsclrm58KAXN8Msv3?=
+ =?us-ascii?Q?VmdPT59zSl8yIL4C9VLkyl64pNXPyklxNboHM3YaaHQy0pkBtT735roglh1Y?=
+ =?us-ascii?Q?oB/+IyNau3XjCmTXsfGYvyJ65Q7pMjnqGDHbN/6+DrD88zbxjMJEZpmHArBK?=
+ =?us-ascii?Q?6cNBsjvj3FAsZsqHoM7lzoJ86VPGyPtpincW3G0GkgleRET2/SvaErcaYgG1?=
+ =?us-ascii?Q?T2KIwwxN8JAM3SyWGTeGzSB9bf88pnMUQctJp2B3O/8jeSwxU39wwAuGUltq?=
+ =?us-ascii?Q?Hz0iNoBRos2Cez8WU+pL5LoF7cDkcC29esq47jm1KQuat2JYJ96940283pdV?=
+ =?us-ascii?Q?CWXZenj/Io8+UndL8XVPjWwLtNXuvAEoCSvO7lD7azxKLPsSdU6Hvn68aeH+?=
+ =?us-ascii?Q?Q8vISlPPViw7zaIo8EDVDVND8jCmU7T3+H/thpf02YvmOzAjz6fZlJjbGE87?=
+ =?us-ascii?Q?QMtwz2NXSSNFA04Mvvto/IjSQdv/0+aW5xN4j+3MXsw7AUV5RhKBuSVnYcUG?=
+ =?us-ascii?Q?30TqYqaCbytnvT7xlGFxafdzrs+FOkNLgVVTau4wOVrWnWfCwrDKouRvnl3Z?=
+ =?us-ascii?Q?TyipiUkxLE0g1zJ9oy0Vsmi3M6yKQYQJfwEQbPtwpxYzL89K4s2bwbJ7uXri?=
+ =?us-ascii?Q?0WY8XDKurHfUmqpGsun46112XcZHNV+PkmZaOI0Z9rsxkGWmxQcZzBATLVzo?=
+ =?us-ascii?Q?K+ZNc2LRF6XKTT0nQeo0CL/2uG7Zelq+nUQSPDe3h+piFczKpJl4tYqCVnbA?=
+ =?us-ascii?Q?kb8kgZO0hOwJrZcL31mMcTPiaTQ9XZFkT5fvahcvcCdPLbIpxz8ZZuROF8FW?=
+ =?us-ascii?Q?bZhQM4CDqxDmIHl78cFoTRcxfzdKphuH6EOsn9HNbRuaey8DaAUe365OZKzQ?=
+ =?us-ascii?Q?nhACzGrxI/Ie7uLsgm6thPKP6H3h6JKIjOk54iNGVYwAW+pBbVZh5Cbcz6lK?=
+ =?us-ascii?Q?vRfsRxqPvzzDpLOVWu1FoFBwoiCI1ZdlDC8TXCzAHuWGKP9rJz3g/nkMjCyG?=
+ =?us-ascii?Q?+l9U+MphOsCnZmdHjNDj853sf9MFJZ1O1xixhvZrGs5OR2KIYOXcVYW//y/7?=
+ =?us-ascii?Q?l82TOlxjgZehwrdIt+X7SYC+fioOg8pURp9OtpNGueCKQrR5T8jOUyghTCyI?=
+ =?us-ascii?Q?QA5zoo0cIW4PyJ8zu0BMDdlr4vlJ7Bp7ei5cu03dHNNj8zigBz6amjuuA0lC?=
+ =?us-ascii?Q?euipHYartXgsizeDu4p02A9uXqefWmfDXL5kHXzCl0/7aN7gRYw5mYPpnshy?=
+ =?us-ascii?Q?ucYpJcxaBA0nVfhKtbXjdM/Xiq2eaEyy5jIjKH9JVrlISBporCKX763CXCc9?=
+ =?us-ascii?Q?zONdxuU7//CF7RjxpncYgjEMnD3xBHpzsKJ+CoPWmycFSHjX1TqJ2WDBo4hM?=
+ =?us-ascii?Q?nyF7oTO59XS8SStbCWECClYEy54Pjbrk2Y4skxLhe+cegCTViS6WvIvGhml9?=
+ =?us-ascii?Q?klwqEqTMs+6K6A3vwcw8OyquUWhcM17FD0YgxDTSLN1mmNuGKM1bvs1n+tzm?=
+ =?us-ascii?Q?FFABW4ida8SxkwGxX76nYeUhHXJ0AD+cWvRGzYBvX36cQpXtlU2p?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: ec265bed-7224-4ad8-502d-08deec0106da
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31e298d4-594d-446a-3a1a-08deec01074d
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 17:03:48.7890
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 17:03:49.5374
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3K4l3DayYv4MvryigM39BgtualB3dBNtoRiGxYLx+2mrvruJqDJowXE956naMHwAn0kh81oAJNyX2N8olIY2ZQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: fbmOpblwjunVzuY9q2Y/ME03krYMiJf8jbmd4QrgOZi1puiSw9FHqRyDFFnwSW7eTlh8VlDt34H6V8VdcyQv3Q==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY7P286MB6515
 
-Direction recovery must keep the engine disabled while all exposed LL
-channel contexts are rebuilt.
+For eDMA, resetting one direction affects every channel in it. Add a
+worker to coordinate that recovery.
 
-Add separate engine_reset and engine_enable operations. For eDMA, reset
-clears ENGINE_EN, waits for it to read back zero, then clears latched
-DONE and ABORT status. If ENGINE_EN does not clear, dump the state and
-do not try to enable it again. A separate enable operation lets the
-caller rebuild channel contexts first.
+Gate publication and doorbells, and prevent channel setup from
+re-enabling the direction during recovery. Wait for active LL channels
+to stop. If a transfer is still active, compare two transfer-size
+samples. Retry when it is moving; treat an unchanged value as frozen.
 
-Enable the direction after channel context programming. Reject reset and
-keep enable a no-op in HDMA compatibility mode, which does not expose
-ENGINE_EN.
+For a frozen direction, drain IRQ handling so pending ABORT cleanup can
+finish. If recovery is still needed, reset the direction, rebuild every
+exposed LL context while it remains disabled, publish remote LL writes,
+and enable it again. Honor EDMA_REQ_STOP and EDMA_REQ_PAUSE during the
+rebuild; leave channels gated if reset keeps failing.
+
+Providers opt in with engine_reset(), engine_enable(), and
+ch_transfer_size(). No caller requests recovery until the next patch.
 
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
 Changes in v3:
-  - Reject engine reset in HDMA compatibility mode instead of accessing
-    its unavailable ENGINE_EN register. (Sashiko)
-  - Clarify that recovery must rebuild every exposed LL context before
-    re-enabling a reset direction.
+  - Drain pending IRQ and ABORT handling before and after reset.
+  - Complete remote LL publication before re-enabling the direction.
+  - Keep the direction disabled while rebuilding every exposed LL
+    context, including those of unconfigured channels.
+  - Queue every recovery request and stop recovery before hardware
+    teardown. (Sashiko)
+  - Avoid mixing scope-based lock guards with goto cleanup. (Sashiko)
+  - Trim recovery and teardown details from the commit message.
 
- drivers/dma/dw-edma/dw-edma-core.h    |  5 ++
- drivers/dma/dw-edma/dw-edma-v0-core.c | 67 ++++++++++++++++++++++++++-
- 2 files changed, 70 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 304 ++++++++++++++++++++++++++++-
+ drivers/dma/dw-edma/dw-edma-core.h |  22 ++-
+ 2 files changed, 321 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index 98b8732a6cb0..56032137a4bb 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -28,6 +28,9 @@
+ /* Empirically chosen progress interval. */
+ #define DW_EDMA_LL_PROGRESS_INTERVAL	4
+ #define DW_EDMA_LL_RECHECK_DELAY_MS		30
++#define DW_EDMA_ENGINE_QUIESCE_TIMEOUT_MS	250
++#define DW_EDMA_ENGINE_RESET_MAX_FAILS		5
++#define DW_EDMA_MAX_DIR_CH			MAX(HDMA_MAX_WR_CH, HDMA_MAX_RD_CH)
+ 
+ static inline
+ struct dw_edma_desc *vd2dw_edma_desc(struct virt_dma_desc *vd)
+@@ -186,6 +189,15 @@ dw_edma_set_request(struct dw_edma_chan *chan, enum dw_edma_request request)
+ 	chan->request = request;
+ }
+ 
++static void
++dw_edma_engine_recovery_queue(struct dw_edma_engine_recovery *rec)
++{
++	if (unlikely(READ_ONCE(rec->dw->teardown)))
++		return;
++
++	queue_work(rec->dw->wq, &rec->work);
++}
++
+ static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
+ 					enum dmaengine_tx_result result)
+ {
+@@ -238,6 +250,7 @@ static void dw_edma_core_reset_ll(struct dw_edma_chan *chan)
+ 
+ 	chan->ll_head = 0;
+ 	chan->ll_done = 0;
++	chan->ll_recovery_pending = false;
+ 	/* Drop stale CB bits before reusing the circular LL ring. */
+ 	for (i = 0; i < chan->ll_max; i++)
+ 		dw_edma_core_ll_clear(chan, i);
+@@ -398,7 +411,7 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 		return 1;
+ 	}
+ 
+-	if (dw_edma_abort_is_pending(chan))
++	if (chan->ll_recovering || dw_edma_abort_is_pending(chan))
+ 		return 0;
+ 
+ 	if (!chan->ll_valid)
+@@ -548,8 +561,10 @@ static bool dw_edma_ll_clean_pending(struct dw_edma_chan *chan, int idx)
+ 	WARN_ON_ONCE(done);
+ 
+ out:
+-	if (advanced)
++	if (advanced) {
+ 		dw_edma_ll_recheck_cancel(chan);
++		chan->ll_recovery_pending = false;
++	}
+ 
+ 	return advanced;
+ }
+@@ -706,6 +721,7 @@ static void dw_edma_core_ch_kick(struct dw_edma_chan *chan)
+ static bool dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
+ {
+ 	if (chan->non_ll ||
++	    chan->ll_recovering ||
+ 	    chan->status != EDMA_ST_BUSY ||
+ 	    !dw_edma_ll_pending(chan) ||
+ 	    dw_edma_abort_is_pending(chan))
+@@ -782,6 +798,279 @@ static void dw_edma_ll_recheck_work(struct work_struct *work)
+ 	dw_edma_core_ch_maybe_doorbell(chan);
+ }
+ 
++static bool
++dw_edma_engine_recovery_needed(struct dw_edma_engine_recovery *rec)
++{
++	struct dw_edma *dw = rec->dw;
++	u16 off = rec->dir == EDMA_DIR_WRITE ? 0 : dw->wr_ch_cnt;
++	u16 cnt = rec->dir == EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_cnt;
++	struct dw_edma_chan *chan;
++	bool found = false;
++	bool needed;
++	u16 i;
++
++	for (i = 0; i < cnt; i++) {
++		chan = &dw->chan[off + i];
++		scoped_guard(spinlock_irqsave, &chan->vc.lock) {
++			needed = chan->ll_recovery_pending && chan->configured &&
++				 !chan->non_ll &&
++				 chan->status != EDMA_ST_PAUSE;
++			if (needed && chan->request == EDMA_REQ_NONE &&
++			    dw_edma_ll_reconcile_and_refill(chan))
++				dw_edma_core_ch_maybe_doorbell(chan);
++			needed = needed && chan->ll_recovery_pending &&
++				 dw_edma_ll_pending(chan);
++			if (!needed)
++				chan->ll_recovery_pending = false;
++		}
++		found |= needed;
++	}
++
++	return found;
++}
++
++static void
++dw_edma_engine_recovery_release(struct dw_edma_engine_recovery *rec)
++{
++	struct dw_edma *dw = rec->dw;
++	u16 off = rec->dir == EDMA_DIR_WRITE ? 0 : dw->wr_ch_cnt;
++	u16 cnt = rec->dir == EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_cnt;
++	struct dw_edma_chan *chan;
++	u16 i;
++
++	rec->fails = 0;
++
++	for (i = 0; i < cnt; i++) {
++		chan = &dw->chan[off + i];
++		guard(spinlock_irqsave)(&chan->vc.lock);
++		chan->ll_recovering = false;
++
++		if (!READ_ONCE(dw->teardown) &&
++		    chan->configured && !chan->non_ll &&
++		    chan->request == EDMA_REQ_NONE &&
++		    chan->status != EDMA_ST_PAUSE) {
++			dw_edma_start_transfer(chan);
++			chan->status = dw_edma_ll_pending(chan) ?
++				       EDMA_ST_BUSY : EDMA_ST_IDLE;
++			dw_edma_core_ch_maybe_doorbell(chan);
++		}
++	}
++
++	WRITE_ONCE(rec->active, false);
++}
++
++static void
++dw_edma_engine_recovery_drain_irqs(struct dw_edma_engine_recovery *rec)
++{
++	struct dw_edma *dw = rec->dw;
++	struct device *dev = dw->chip->dev;
++	u16 off = rec->dir == EDMA_DIR_WRITE ? 0 : dw->wr_ch_cnt;
++	u16 cnt = rec->dir == EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_cnt;
++	struct dw_edma_chan *chan;
++	u16 i;
++
++	/* Drain events observed before the engine context changes. */
++	for (i = 0; i < dw->nr_irqs; i++) {
++		if (bitmap_empty(rec->dir == EDMA_DIR_WRITE ?
++				 dw->irq[i].wr_mask : dw->irq[i].rd_mask, cnt))
++			continue;
++
++		synchronize_irq(dw->chip->ops->irq_vector(dev, i));
++	}
++
++	for (i = 0; i < cnt; i++) {
++		chan = &dw->chan[off + i];
++		flush_work(&chan->irq_work);
++	}
++}
++
++static void dw_edma_engine_recovery_work(struct work_struct *work)
++{
++	struct dw_edma_engine_recovery *rec =
++		container_of(work, struct dw_edma_engine_recovery, work);
++	struct dw_edma *dw = rec->dw;
++	const char *dir_name = str_write_read(rec->dir == EDMA_DIR_WRITE);
++	u16 off = rec->dir == EDMA_DIR_WRITE ? 0 : dw->wr_ch_cnt;
++	u16 cnt = rec->dir == EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_cnt;
++	unsigned long timeout =
++		jiffies + msecs_to_jiffies(DW_EDMA_ENGINE_QUIESCE_TIMEOUT_MS);
++	struct dw_edma_chan *chan;
++	bool configured_ll;
++	bool busy;
++	u16 i;
++
++	/*
++	 * Recovery resets a whole direction. The legacy eDMA register map does
++	 * not support partial ownership, while unrolled eDMA partial ownership
++	 * and delegation are direction-granular. Native HDMA permits per-channel
++	 * ownership, but does not provide direction recovery operations.
++	 */
++	if (unlikely(READ_ONCE(dw->teardown)))
++		return;
++
++	if (!dw_edma_engine_recovery_needed(rec)) {
++		if (READ_ONCE(rec->active))
++			dw_edma_engine_recovery_release(rec);
++		return;
++	}
++
++	WRITE_ONCE(rec->active, true);
++
++	/* Gate each channel before inspecting or resetting the direction. */
++	for (i = 0; i < cnt; i++) {
++		chan = &dw->chan[off + i];
++		guard(spinlock_irqsave)(&chan->vc.lock);
++		chan->ll_recovering = true;
++	}
++
++	/*
++	 * Gated channels stop at their first unpublished element. Wait for that
++	 * point before resetting; otherwise a restart could skip the remainder
++	 * of an in-flight element.
++	 */
++	do {
++		busy = false;
++		for (i = 0; i < cnt; i++) {
++			chan = &dw->chan[off + i];
++			scoped_guard(spinlock_irqsave, &chan->vc.lock)
++				configured_ll = chan->configured && !chan->non_ll;
++			if (configured_ll &&
++			    dw_edma_core_ch_status(chan) == DMA_IN_PROGRESS)
++				busy = true;
++		}
++		if (!busy)
++			break;
++		fsleep(1000);
++	} while (time_before(jiffies, timeout));
++
++	/* Progress after queueing makes this recovery request obsolete. */
++	if (!dw_edma_engine_recovery_needed(rec)) {
++		dw_edma_engine_recovery_release(rec);
++		return;
++	}
++
++	if (busy) {
++		DECLARE_BITMAP(busy_mask, DW_EDMA_MAX_DIR_CH) = { 0 };
++		u32 tsz[DW_EDMA_MAX_DIR_CH];
++		bool moving = false;
++
++		/*
++		 * A transfer_size change or a transition out of DMA_IN_PROGRESS
++		 * shows movement after the first sample. Retry while producers
++		 * remain gated. If neither occurs, treat the channel as frozen
++		 * within one element.
++		 */
++		for (i = 0; i < cnt; i++) {
++			chan = &dw->chan[off + i];
++			scoped_guard(spinlock_irqsave, &chan->vc.lock)
++				configured_ll = chan->configured && !chan->non_ll;
++			if (configured_ll &&
++			    dw_edma_core_ch_status(chan) == DMA_IN_PROGRESS) {
++				__set_bit(i, busy_mask);
++				tsz[i] = dw_edma_core_ch_transfer_size(chan);
++			}
++		}
++		fsleep(1000);
++		for_each_set_bit(i, busy_mask, cnt) {
++			chan = &dw->chan[off + i];
++			if (dw_edma_core_ch_status(chan) != DMA_IN_PROGRESS ||
++			    tsz[i] != dw_edma_core_ch_transfer_size(chan))
++				moving = true;
++		}
++		if (!dw_edma_engine_recovery_needed(rec)) {
++			dw_edma_engine_recovery_release(rec);
++			return;
++		}
++		if (moving) {
++			dev_warn_ratelimited(dw->chip->dev,
++					     "%s engine quiesce timed out with transfers still progressing, retrying\n",
++					     dir_name);
++			dw_edma_engine_recovery_queue(rec);
++			return;
++		}
++
++		dev_warn(dw->chip->dev,
++			 "%s engine reset with a channel frozen mid-element\n",
++			 dir_name);
++	}
++
++	if (!dw_edma_engine_recovery_needed(rec)) {
++		dw_edma_engine_recovery_release(rec);
++		return;
++	}
++
++	/*
++	 * Let a terminal ABORT finish its normal channel cleanup before a
++	 * direction-wide reset. It may also make recovery unnecessary.
++	 */
++	dw_edma_engine_recovery_drain_irqs(rec);
++	if (!dw_edma_engine_recovery_needed(rec)) {
++		dw_edma_engine_recovery_release(rec);
++		return;
++	}
++
++	if (!dw->core->engine_reset(dw, rec->dir)) {
++		/*
++		 * Keep channels gated and do not re-enable the engine unless
++		 * ENGINE_EN clears.
++		 */
++		if (++rec->fails >= DW_EDMA_ENGINE_RESET_MAX_FAILS) {
++			dev_err(dw->chip->dev,
++				"%s engine did not drain after %u attempts; leaving channels gated\n",
++				dir_name, rec->fails);
++			return;
++		}
++		dw_edma_engine_recovery_queue(rec);
++		return;
++	}
++
++	if (rec->fails)
++		dev_warn(dw->chip->dev, "%s engine drained after %u retries\n",
++			 dir_name, rec->fails);
++
++	/* Drain an event that raced with the engine reset. */
++	dw_edma_engine_recovery_drain_irqs(rec);
++
++	/*
++	 * Keep the engine disabled until every LL channel context is rebuilt.
++	 * On the tested integration, re-enabling a preserved context resumed an
++	 * old element without a doorbell, causing an IOMMU fault and stalling the
++	 * engine again. Reset each ring so it starts from a fresh context, and
++	 * complete remote LL publication before re-enabling the direction.
++	 */
++	for (i = 0; i < cnt; i++) {
++		bool stop;
++
++		chan = &dw->chan[off + i];
++		guard(spinlock_irqsave)(&chan->vc.lock);
++
++		if (chan->non_ll)
++			continue;
++
++		/* Honor EDMA_REQ_STOP and EDMA_REQ_PAUSE instead of republishing. */
++		stop = chan->request == EDMA_REQ_STOP;
++		if (stop)
++			dw_edma_terminate_all_descs(chan);
++
++		dw_edma_core_reset_ll(chan);
++		dw_edma_core_ll_sync(chan);
++
++		if (stop) {
++			dw_edma_set_request(chan, EDMA_REQ_NONE);
++			chan->status = EDMA_ST_IDLE;
++		} else if (chan->request == EDMA_REQ_PAUSE) {
++			dw_edma_set_request(chan, EDMA_REQ_NONE);
++			chan->status = EDMA_ST_PAUSE;
++		}
++	}
++
++	dw->core->engine_enable(dw, rec->dir);
++	dw_edma_engine_recovery_release(rec);
++
++	dev_warn(dw->chip->dev, "%s engine was reset to recover a stalled channel\n",
++		 dir_name);
++}
++
+ static void dw_edma_device_caps(struct dma_chan *dchan,
+ 				struct dma_slave_caps *caps)
+ {
+@@ -1974,6 +2263,13 @@ int dw_edma_probe(struct dw_edma_chip *chip)
+ 	for (i = 0; i < ARRAY_SIZE(dw->event_lock); i++)
+ 		raw_spin_lock_init(&dw->event_lock[i]);
+ 
++	for (i = 0; i < ARRAY_SIZE(dw->eng_recovery); i++) {
++		dw->eng_recovery[i].dw = dw;
++		dw->eng_recovery[i].dir = i;
++		INIT_WORK(&dw->eng_recovery[i].work,
++			  dw_edma_engine_recovery_work);
++	}
++
+ 	/*
+ 	 * chip->ll_*_cnt describes the channels exposed by this instance. Keep
+ 	 * the usable hardware counts separate for partial ownership checks.
+@@ -2079,6 +2375,10 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+ 	WRITE_ONCE(dw->teardown, true);
+ 	dma_async_device_unregister(&dw->dma);
+ 
++	/* A recovery worker can re-enable the engine. */
++	disable_work_sync(&dw->eng_recovery[0].work);
++	disable_work_sync(&dw->eng_recovery[1].work);
++
+ 	/*
+ 	 * Drain channel work that may have passed the teardown gate before
+ 	 * stopping the hardware. IRQ handlers remain installed while it is
 diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index f56885747e57..46962a9bb4a6 100644
+index 46962a9bb4a6..a2699a663260 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.h
 +++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -211,6 +211,9 @@ struct dw_edma_core_ops {
- 	int (*ll_cur_idx)(struct dw_edma_chan *chan);
- 	/* Called with the event scope locked. */
- 	void (*ll_irq_clear)(struct dw_edma_chan *chan);
-+	/* Reset one direction, clear its IRQ status, and leave it disabled. */
-+	bool (*engine_reset)(struct dw_edma *dw, enum dw_edma_dir dir);
-+	void (*engine_enable)(struct dw_edma *dw, enum dw_edma_dir dir);
- 	/* Called with the event scope locked for an LL channel. */
- 	void (*ch_doorbell)(struct dw_edma_chan *chan);
- 	void (*ch_enable)(struct dw_edma_chan *chan);
-@@ -375,6 +378,8 @@ static inline void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
+@@ -129,6 +129,9 @@ struct dw_edma_chan {
+ 
+ 	struct delayed_work		ll_recheck_work;
+ 	unsigned long			ll_recheck_at;
++	/* Per-channel recovery state. */
++	bool				ll_recovery_pending;
++	bool				ll_recovering;
+ 
+ 	u32				ll_max;		/* Data entries */
+ 	struct dw_edma_region		ll_region;	/* Linked list */
+@@ -159,6 +162,18 @@ struct dw_edma_irq {
+ 	DECLARE_BITMAP(rd_mask, HDMA_MAX_RD_CH);
+ };
+ 
++/*
++ * Direction-wide recovery state. active records that recovery has gated the
++ * channels; workqueue state coalesces duplicate requests.
++ */
++struct dw_edma_engine_recovery {
++	bool				active;
++	unsigned int			fails;
++	struct work_struct		work;
++	struct dw_edma			*dw;
++	enum dw_edma_dir		dir;
++};
++
+ struct dw_edma {
+ 	char				name[32];
+ 
+@@ -173,12 +188,13 @@ struct dw_edma {
+ 	struct dw_edma_chan		*chan;
+ 
+ 	/*
+-	 * WQ_HIGHPRI keeps completion processing responsive under heavy load;
+-	 * WQ_UNBOUND lets different channels run on different CPUs.
++	 * WQ_HIGHPRI keeps completion and recovery work responsive under heavy
++	 * load; WQ_UNBOUND lets independent work run on different CPUs.
+ 	 */
+ 	struct workqueue_struct		*wq;
+ 
+ 	bool				teardown;	/* Gate asynchronous hardware access */
++	struct dw_edma_engine_recovery	eng_recovery[2];
+ 
+ 	raw_spinlock_t			lock;		/* Protect v0 shared registers */
+ 	raw_spinlock_t			event_lock[2];	/* Per-direction event scopes */
+@@ -378,7 +394,7 @@ static inline void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
  static inline void dw_edma_core_ch_enable(struct dw_edma_chan *chan)
  {
  	chan->dw->core->ch_enable(chan);
-+	if (chan->dw->core->engine_enable)
-+		chan->dw->core->engine_enable(chan->dw, chan->dir);
+-	if (chan->dw->core->engine_enable)
++	if (!chan->ll_recovering && chan->dw->core->engine_enable)
+ 		chan->dw->core->engine_enable(chan->dw, chan->dir);
  }
  
- static inline
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-index 5efeaaaa404e..08d67b4d677e 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -220,6 +220,69 @@ static int dw_edma_v0_core_engine_disable(struct dw_edma *dw,
- 	return ret;
- }
- 
-+static void dw_edma_v0_core_engine_dump(struct dw_edma *dw,
-+					enum dw_edma_dir dir)
-+{
-+	u16 cnt = dir == EDMA_DIR_WRITE ? dw->wr_ch_cnt : dw->rd_ch_cnt;
-+	u16 i;
-+
-+	dev_warn(dw->chip->dev, "%s engine: int_status 0x%08x err_status 0x%08x\n",
-+		 dir == EDMA_DIR_WRITE ? "wr" : "rd",
-+		 GET_RW_32(dw, dir, int_status),
-+		 dir == EDMA_DIR_WRITE ? GET_32(dw, wr_err_status) :
-+					 GET_32(dw, rd_err_status.lsb));
-+	for (i = 0; i < cnt; i++)
-+		dev_warn(dw->chip->dev,
-+			 "  ch%u: ch_control1 0x%08x transfer_size 0x%08x llp.lsb 0x%08x\n",
-+			 i, GET_CH_32(dw, dir, i, ch_control1),
-+			 GET_CH_32(dw, dir, i, transfer_size),
-+			 GET_CH_32(dw, dir, i, llp.lsb));
-+}
-+
-+static bool dw_edma_v0_core_engine_reset(struct dw_edma *dw,
-+					 enum dw_edma_dir dir)
-+{
-+	/* HDMA compatibility mode does not implement ENGINE_EN. */
-+	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT)
-+		return false;
-+
-+	/*
-+	 * The databook says clearing ENGINE_EN resets the DMA logic while
-+	 * preserving configuration registers, but does not document drain
-+	 * semantics. On the tested integration, ENGINE_EN read back as zero
-+	 * only after outstanding transactions appeared to drain; the stalled
-+	 * channel then resumed after reset.
-+	 *
-+	 * If ENGINE_EN does not clear, do not re-enable the engine. On the
-+	 * tested integration, re-enabling after such a timeout wedged the
-+	 * controller and also blocked inbound BAR accesses. Return failure so
-+	 * the caller can keep channels gated and retry.
-+	 */
-+	if (dw_edma_v0_core_engine_disable(dw, dir)) {
-+		dw_edma_v0_core_engine_dump(dw, dir);
-+		return false;
-+	}
-+
-+	/* Discard interrupt status belonging to the contexts being reset. */
-+	SET_RW_32(dw, dir, int_clear,
-+		  EDMA_V0_DONE_INT_MASK | EDMA_V0_ABORT_INT_MASK);
-+	GET_RW_32(dw, dir, int_status);
-+
-+	return true;
-+}
-+
-+/*
-+ * Re-enabling can resume a previously running channel from preserved
-+ * internal state without a doorbell, so the caller must rebuild every
-+ * channel context first.
-+ */
-+static void dw_edma_v0_core_engine_enable(struct dw_edma *dw,
-+					  enum dw_edma_dir dir)
-+{
-+	if (dw->chip->mf != EDMA_MF_HDMA_COMPAT)
-+		SET_RW_32(dw, dir, engine_en, BIT(0));
-+}
-+
- static int dw_edma_v0_core_dir_off(struct dw_edma *dw, enum dw_edma_dir dir)
- {
- 	u16 count, id;
-@@ -458,8 +521,6 @@ static void dw_edma_v0_core_ch_enable(struct dw_edma_chan *chan)
- 	unsigned long flags;
- 	u32 tmp;
- 
--	 /* Enable engine */
--	SET_RW_32(dw, chan->dir, engine_en, BIT(0));
- 	if (dw->chip->mf == EDMA_MF_HDMA_COMPAT)
- 		dw_edma_v0_core_ch_power(dw, chan->dir, chan->id, true);
- 	/* Interrupt mask/unmask - done, abort */
-@@ -686,6 +747,8 @@ static const struct dw_edma_core_ops dw_edma_v0_core = {
- 	.ll_clear = dw_edma_v0_core_ll_clear,
- 	.ll_cur_idx = dw_edma_v0_core_ll_cur_idx,
- 	.ll_irq_clear = dw_edma_v0_core_clear_done_int,
-+	.engine_reset = dw_edma_v0_core_engine_reset,
-+	.engine_enable = dw_edma_v0_core_engine_enable,
- 	.ch_doorbell = dw_edma_v0_core_ch_doorbell,
- 	.ch_enable = dw_edma_v0_core_ch_enable,
- 	.ch_config = dw_edma_v0_core_ch_config,
 -- 
 2.51.0
 
