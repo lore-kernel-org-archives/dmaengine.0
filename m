@@ -1,202 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011053.outbound.protection.outlook.com [52.101.70.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D503E316C
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785185651; cv=none; b=P+L+3rFkaxxRtZsnC25ZZzyeWWjZeZWAdEwCX4yYJdl3dCkcLKaVuCaufot4SOwXvNV2QCVnDf/vKaEVQgh0UhMKNfg7PHYji2EOYCn4DECGKvUdUz2Otz2PGoOa3Ytwl52OClHFD65n3ctwJX554PkHGm0s0UymGbablgyVJ8c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785185651; c=relaxed/simple;
-	bh=8chrRAh6kTHPHBa8qt9oqyPArS5c0PSqxZduYidJdAQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=mZDlinv/5l1A0GY80I9h5FAmkfbwc1J9+pGAxlyFg0eoUiV883hepro1WplKLerRKdGC99YvzjuGmt3Oi9Pr+NaUt26iuXZRa8yvnzjLUdhMN1o0b35UCAWtbHMskS6kw8IVYfbFOILdJLY9DxyUOo3TTMUQ/Wf3ALQTWlJojrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHjYUtAJ; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8A22E6CB3;
+	Mon, 27 Jul 2026 20:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785185662; cv=fail; b=bCPBZTknzWOAcEBe/DhrH06VCkoBqgVEvS1ogOmfWvt4jkRkp311bEer12QROs5Dwcgm3ojZx++7Vl1XVaZxAbFDLQ507K+rBc9Snwezj/blNGfgY+/dZTZgl9FmAkH/Qpftt5s6q09VZZ1N0wxZiz3JqwtYnUxlf3fqpRv6hLw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785185662; c=relaxed/simple;
+	bh=Ep/0+WPyog12N1Negd4RidhT/HFIxWly2zuslLqEvQQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=H/HEqeCJcmzxKREnnq5ABIVeTtJ9O7Xc1P2YTUf1uECmy3PFjPilrxHHgBZ97Gk3fheTucMBRGWvYr4BvlX+kC2WZmiQBf+gz5lQ1nNAo1VrezA6m1R1D6PWaRzOmRTHdEKUktMC0ArhCpdTjFTavWTQWz9ryWwx5U0e5VisK+g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=j0kn2sXF; arc=fail smtp.client-ip=52.101.70.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHjYUtAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1601F00A3A;
-	Mon, 27 Jul 2026 20:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785185649;
-	bh=Wt5k9v5YxKE38+9Wl9s+Sg58Rvv2Hm08Z5BCocOYCAw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=QHjYUtAJDXVlJYHEMo8fro27Vgyuu72hSWDzAPufyjAdn9PwhaktZTBOtANYN661u
-	 lJB0qe7bi+Qsb5+KlR86tVKIMAlC2KFSFMUtHu70/dpuRG85h+duRb7oaJfpIuCIOU
-	 vnL59TUrE1U51ejgH0dWo0e8L8R0B3A499fWQJOrHrOxzQ9MbD0W1R2KXV8Jiq8Gz4
-	 2NuPTe7T/GxxHv709NRnSpryVCW96Hke9reNG0LihiiLywW7RLLvqPhy6pU96MMJuD
-	 2Cix/haem0hUoiJjU/QlPB+4YOSBSk/1RTGmQ/tYH1WrKW8Wp+QM+hYqHQpCM8t5fh
-	 Cp8cveO1CVszA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 16/64] dmaengine: ppc4xx: replace irq tasklet with
- dma_chan BH
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <c2fa905ca405e0832085111ea534750e5cf90e28.1785183549.git.allen.lkml@gmail.com>
-References: <20260108080332.2341725-1-allen.lkml@gmail.com>
- <cover.1785183549.git.allen.lkml@gmail.com>
- <c2fa905ca405e0832085111ea534750e5cf90e28.1785183549.git.allen.lkml@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 20:54:09 +0000
-Message-Id: <20260727205409.9A1601F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="j0kn2sXF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SRJwqYjA8e/UECUE6tJouprDh6qtyO4MuAba67DI6IcdYd0qXBYk7ZLtZHTBwl47WLzSg0wft9VMWLSW+cFHNddMyB4iQDfhvjCFOTEHzL1goaCT/JW2PvlQRZKkvM3Wp8i+XF1wHg7kNDZojDj5mbQDCFwnz+F+LmtKzwseWuHBsObfnZFcUhrKJOmhuQYkZqSoDZ8Z7bSjcDhB7JrzvzHWDgbmB7bt4zHn9KGGA1c8hAoTDI032ntP8EP4DI6J+WJqAvrUELAABVNWr5BlPPJew9f32Kvncxcx7cE+N9uUfMbl8kppuKZNNRQMqpygKYeGMwdojaHE/7W/tB++yA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5HVaVQn3RFKJQ8jpK3cvWuVPEkUlBflfwuco9XC+9Wk=;
+ b=s+0wjgNorrMJg4EfZceZ53Cfaq5ez3ad6i79bMgSwmzjdmjoteV/APZTaFYPYNwQekDbGHuVL4/udX2qxIvDmcdV/Oom6jRu4/qY9aY+0wHkIFYnmsLOlmU3Bxzii2eqIpTKtJbR/dkbfxLLmuqjyMYPgNVUcuLJirLRjzA8syZMAEZxfecC/rx5cKAMIwecaBvXGZzZeLeYocYRCZrxFxd2kT2HhYRc4MhO5m5ArDoRAakcDI6fyfR50IZKCu7yIhMljGTy139IhHJosABFEaYfQBUDIacVKGtbUnvKnPgb76mF6p1MeSijUvOH2oXrF42+YEZYKWDlRgxsNgMVOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5HVaVQn3RFKJQ8jpK3cvWuVPEkUlBflfwuco9XC+9Wk=;
+ b=j0kn2sXFJ0lYYKC8Mk8MkARZJB3X0kmPgWbGyQP036JoMrG3ZO2BwX7uo331oHfx0bhgGG68e9sOKSojJxOoXvriAkgjFvzfAd4i+brAZvhrdyBVtKhtQLxCTLEA93lvAVTBxbWxglNsZvxX/2iAb8d3rzxtVrAzfsb3Ib5xx89M+ZBlyQ9yvgw/Jqz4n6XMIZ5YbAVTk4a+fnIKL7msIrD2TjC7DKQZXj9ufcrcH+ED8eA1XZmqWHr1W6ugwQN38qOrGNGUiw5GKWXzSLUV9smgCodyPSRwoAsjdKogz2S27x+ogNRzAzyR8aYWHYCfkyhFxWEyNfLH8vVAQsHLGA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DB9PR04MB8156.eurprd04.prod.outlook.com (2603:10a6:10:246::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
+ 2026 20:54:18 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
+ 20:54:18 +0000
+Date: Mon, 27 Jul 2026 16:54:11 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Logan Gunthorpe <logang@deltatee.com>
+Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.li@nxp.com>, Kelvin Cao <kelvin.cao@microchip.com>,
+	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	George Ge <george.ge@microchip.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>
+Subject: Re: [PATCH v3 05/11] dmaengine: switchtec-dma: make
+ switchtec_dma_chans_release() void
+Message-ID: <amfFc4JquytfjGRZ@lizhi-Precision-Tower-5810>
+References: <20260727181526.9672-1-logang@deltatee.com>
+ <20260727181526.9672-6-logang@deltatee.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260727181526.9672-6-logang@deltatee.com>
+X-ClientProxiedBy: SA9PR10CA0004.namprd10.prod.outlook.com
+ (2603:10b6:806:a7::9) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB8156:EE_
+X-MS-Office365-Filtering-Correlation-Id: eed3ae34-5c87-4575-96c5-08deec2139e6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|19092799006|1800799024|376014|7416014|22082099003|18002099003|56012099006|11063799006|10067099003|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	ylmxc5g+NFLplAWQB/uX15Z9+Ro+2au4RXqdVXJiGzhZMHsIO22Or+vuqC7PzZlecDG3W32N87j2LyRYd174UoEsiDQ8p9zbv1dxGVgdOexYweqyIbVtXaXsQZJD8yzEdxrITWuKvnB5mwgdYFO9/fXel/4pMFz6hqHIV6hr/xviTHfx1tkJqDiR2Zdl4lXON+xv72JgqiS6MC0EXOV4STZMtOXrd9ItWtGyVIWSftdo8IP961EE3TWDH5jvWZWh9xzGuQLz9y7dhq7L5lvXaD3zwNaJ8y+gHGpBM/U0Y4f5ytiRq+0bCUXHslRexDtDArqoPnp4S7kaSYfXKFWp5jG45BGhkud0NSlP4rwzTjbAfTCFSVw5Eyj5DsA3Hp6BNgVYoG94g9cazkaO0RxhO2NLen1NKFwz+x8CeXQnp6yF9GqlVyOyZCVHWDfYiudRtWF2XoYhar5ZmQNe3Dj2WnTf9zX6SFuEz6DKsCJPrmVQEzOq8EvbGsTZIHl4mmX8kYPDic9hHQ6Y5Jlx+JZCHdERA7DBTEs8ljaHE8fmh7Kq8tkTImss7hTN2eSuXIkhjBU5rOAN86n/47kE801JkaSwQeriizjZUqwOmFo5KweM4JLPnqlmNXsG18XdYNkeo58Dpx4bOXNkgorDs9v5Oo/w8QQHxJ/8JQ3XOvJkCOM=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(19092799006)(1800799024)(376014)(7416014)(22082099003)(18002099003)(56012099006)(11063799006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?gs8VxYaub5eVZq0dj/V78NrUz6ObCTjfROWrOybbexCBjY8v3xg8tODF+ZGS?=
+ =?us-ascii?Q?mbYtj/G4/kYh9LqEt7l8ne5CkmX6RIv0scHcbG9p/UMDpR648hq/DvtWXKBl?=
+ =?us-ascii?Q?6MxvgEWsljt982bqm21eJkKDPc0TVn8lzaOKe4YkynCEf6aMX8LNpG5+Ye5C?=
+ =?us-ascii?Q?LwZpqZR3bYlCyOwz/ucnJGOoeQaciSMvQpFF1ICpQVLVh+zfvP4C8hXoULl4?=
+ =?us-ascii?Q?dFbeoUMJNr2DZvoLSHXLgx3wYB/1UPjhWBr0qnYX3UQyus+gXG+q3bK4tRsE?=
+ =?us-ascii?Q?T/lB8w7GtmPNLVAxxArUuHN9cmTgM8gSEV8DLB5lFZ2rmt+1rxCazj0VUQmG?=
+ =?us-ascii?Q?e1uCiwWfXOCLbDtoJlg18G10ed2UKU+nQuC5bdFAjuwypY0YQ7xZJaBWJWBW?=
+ =?us-ascii?Q?FANS0qiWBnbSVBUZ0CHGWTebcyof1uD55mJCrGEWrLV488l3LmyxUvgUdPYS?=
+ =?us-ascii?Q?Y6MGw8ce247GoIpxT3Hz09KYtafh3q1DXgWcI3MAIa78iFPTPmAUdb0kA2k1?=
+ =?us-ascii?Q?P5nsS5Jjbnp2nEyinxebEzE6elCJSBkUpxPDmgh8AOgncFHgawkgl4dhzwED?=
+ =?us-ascii?Q?LXqKo2K9h+svBBwGTHEp2BUbVWqvIQCkvsRQBS5nr+9RHIXr6JkyQGKDtR3e?=
+ =?us-ascii?Q?LHtoBb/5r+OUMmYbgCnyEKuP8QOCUiK4g3u9yhTFqi40ylc2ycz9/pSvpm/r?=
+ =?us-ascii?Q?jaZ2M2WvFoNvLdLlVOV+2zOk/rKXfaxm2TdenYHPdLA6pynnDtO3T1gLRvsB?=
+ =?us-ascii?Q?mPV2pDu6OHoGEtFAi/0O79UpH+XiYwvLnidK7+gkd1pytzmn3rgNirObEVMh?=
+ =?us-ascii?Q?4XDKNmCkekOdA5bDtp+VEYKeB8+oP0KQODFHslTcjRo7yHSbnqoUXr1luKwI?=
+ =?us-ascii?Q?nFFEL87Edf85zBPcwFTo1m118B2m44en4xMpNOvn9EKKvAsKj2PCFCVfPq8Z?=
+ =?us-ascii?Q?3jO1gGcb7oAnmBdkUns5lvMkuOZH6Bn4ssAS/zGyriFDvO8QIFRQ/CA0Q2HI?=
+ =?us-ascii?Q?qAywcG046qixAsSMr1eF3+FIe+of8z3YhDp2dYiWBpw2iRnnMW8uD7VxTiWJ?=
+ =?us-ascii?Q?2N0G+rP8jrh5JtjCLa+tBsKbDoqzdaa9uyTimYosphJfHpmk89pPPSp8L7Ix?=
+ =?us-ascii?Q?+1Gx5Kd2I4xGq0aR2PN7uLVVd1az5t1sKJ0CroXPbZBhtiIkxlJ6FEKiR8Zr?=
+ =?us-ascii?Q?9ff/+IF04lIden5HgF9+0wcqVll8LmSKNYyAX1cyrR0TTEI5tvxDnBR63WwT?=
+ =?us-ascii?Q?FhzGtA13xCqF78wuzoeNI6pqZxTvVyaRlAY6f3aUGDS1B5NcrOovccHz8a21?=
+ =?us-ascii?Q?fK3VvA0CulzDYki74Er5SriFKXj38u49hwIsICi7bdmCuAwNq86KuLnBMGke?=
+ =?us-ascii?Q?QvFWstIdxuN7eZlOVfZVjuz/gIY+c+djYU3jC7QblmBWwvch6Xfv41Za7X75?=
+ =?us-ascii?Q?XHT7EEk4V53Uq0T25URtqBgGF5+XtpYaE53fZ150ki9PjG+X2BTWtzspkGCP?=
+ =?us-ascii?Q?bZ9ZvvP7qZUOeW9uoekXZrVeTb0mHYUIYLAQpqJzhIOv41xVYQ4evnEV5mvO?=
+ =?us-ascii?Q?6uh+dS+YPMHt7SV6XEdNaabG7hkLp+38GMX4qKBeiG0VSkj12uKUJ7rKgpP7?=
+ =?us-ascii?Q?zW0NIRLmgWP9xfjGP5gWmt/JFZkMEhOZr6OCONx/h97j1mKwC2h7nN4tGVQD?=
+ =?us-ascii?Q?aVJ11OEfhyUDvyxtR5olDSwkF8lP/Zxf9kB2wjQ98chEf+hjS05Vl+EH+K4d?=
+ =?us-ascii?Q?Tau9TFDoGWsc504MjNfyzELxPWAysxtAhTyoM7cHDDP5+gB/s+P3?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eed3ae34-5c87-4575-96c5-08deec2139e6
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 20:54:18.4022
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ScyiKdLbOKtOpIhX7La44jDeeEweePWe/prXpD0OdLQ4BUoZghDgq6nSnHd2plDSEVaDSO3rlZMr95vrJyWjHODQySdfC1bV6QCNv+BQvv8GdkJqBR+wRlBTN3Pj61d8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8156
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+On Mon, Jul 27, 2026 at 12:15:20PM -0600, Logan Gunthorpe wrote:
+> It always returned 0, and no caller checked it.
+>
 
-Pre-existing issues:
-- [High] Missing dma_chan_kill_bh() on probe error paths leads to use-after=
--free.
-- [High] Lockless traversal of chan->chain in hardirq context races with li=
-st modification, causing panics.
-- [High] Missing channel lock in ppc440spe_adma_issue_pending causes concur=
-rent list/hardware corruption.
-- [High] Direct freeing of DMA structures in remove() without waiting for a=
-ctive clients causes Use-After-Free.
---
+Nit: s/It/switchtec_dma_chans_release()
 
---- Patch [16]: [PATCH v2 16/64] dmaengine: ppc4xx: replace irq tasklet wit=
-h dma_chan BH ---
-commit f5f6478c931c241a7fdae2271fa2dee782cc4570
-Author: Allen Pais <allen.lkml@gmail.com>
-Subject: dmaengine: ppc4xx: replace irq tasklet with dma_chan BH
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-Replace the per-channel tasklet with the shared dma_chan BH helper.
-The handler continues to run in softirq context while dmaengine owns
-the common scheduling and teardown mechanism.
-
-> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-> index 279a431ccae38..98cfd012ca5bf 100644
-> --- a/drivers/dma/ppc4xx/adma.c
-> +++ b/drivers/dma/ppc4xx/adma.c
-> @@ -1658,9 +1658,9 @@ static void __ppc440spe_adma_slot_cleanup(struct pp=
-c440spe_adma_chan *chan)
->  /**
->   * ppc440spe_adma_tasklet - clean up watch-dog initiator
->   */
-> -static void ppc440spe_adma_tasklet(struct tasklet_struct *t)
-> +static void ppc440spe_adma_tasklet(struct dma_chan *c)
+> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+> ---
+>  drivers/dma/switchtec_dma.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+> index 13efd4189bbb..c752a1b05871 100644
+> --- a/drivers/dma/switchtec_dma.c
+> +++ b/drivers/dma/switchtec_dma.c
+> @@ -1165,15 +1165,13 @@ static int switchtec_dma_chan_free(struct pci_dev *pdev,
+>  	return 0;
+>  }
+>
+> -static int switchtec_dma_chans_release(struct pci_dev *pdev,
+> -				       struct switchtec_dma_dev *swdma_dev)
+> +static void switchtec_dma_chans_release(struct pci_dev *pdev,
+> +					struct switchtec_dma_dev *swdma_dev)
 >  {
-> -	struct ppc440spe_adma_chan *chan =3D from_tasklet(chan, t, irq_tasklet);
-> +	struct ppc440spe_adma_chan *chan =3D to_ppc440spe_adma_chan(c);
-> =20
->  	spin_lock_nested(&chan->lock, SINGLE_DEPTH_NESTING);
->  	__ppc440spe_adma_slot_cleanup(chan);
-
-[Severity: High]
-This is a pre-existing issue, but does this list modification race with
-hardirq context?
-
-The hardirq handlers (ppc440spe_adma_eot_handler and
-ppc440spe_adma_err_handler) call ppc440spe_adma_device_clear_eot_status(),
-which traverses chan->chain locklessly:
-
-drivers/dma/ppc4xx/adma.c:ppc440spe_adma_device_clear_eot_status() {
-    ...
-    list_for_each_entry(iter, &chan->chain, chain_node) {
-        if (iter->phys =3D=3D phys)
-            break;
-    }
-    ...
-}
-
-Meanwhile, this softirq/BH code modifies the list without disabling local
-interrupts (using spin_lock_nested or spin_lock_bh). If a hardware interrupt
-fires on the same CPU while the list is being modified, couldn't the hardirq
-handler traverse a corrupted list and cause memory corruption or a panic?
-
-[ ... ]
-
-> @@ -4137,7 +4137,7 @@ static int ppc440spe_adma_probe(struct platform_dev=
-ice *ofdev)
->  	chan->common.device =3D &adev->common;
->  	dma_cookie_init(&chan->common);
->  	list_add_tail(&chan->common.device_node, &adev->common.channels);
-> -	tasklet_setup(&chan->irq_tasklet, ppc440spe_adma_tasklet);
-> +	dma_chan_init_bh(&chan->common, ppc440spe_adma_tasklet);
-> =20
->  	/* allocate and map helper pages for async validation or
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does the probe error path
-need to call dma_chan_kill_bh()?
-
-In ppc440spe_adma_probe(), dma_chan_init_bh() initializes the bottom-half
-work. Later, hardware IRQs are requested. If an interrupt fires and schedul=
-es
-the BH via dma_chan_schedule_bh(), but a subsequent initialization step fai=
-ls,
-the error path uses free_irq() and then frees the channel structure without
-canceling the pending work:
-
-err_page_alloc:
-    kfree(chan);
-
-When the background work queue executes later, won't it access the freed
-chan memory and cause a use-after-free?
-
-[ ... ]
-
-> @@ -4247,7 +4247,7 @@ static void ppc440spe_adma_remove(struct platform_d=
-evice *ofdev)
->  				 device_node) {
->  		ppc440spe_chan =3D to_ppc440spe_adma_chan(chan);
->  		ppc440spe_adma_release_irqs(adev, ppc440spe_chan);
-> -		tasklet_kill(&ppc440spe_chan->irq_tasklet);
-> +		dma_chan_kill_bh(&ppc440spe_chan->common);
->  		if (adev->id !=3D PPC440SPE_XOR_ID) {
->  			dma_unmap_page(&ofdev->dev, ppc440spe_chan->pdest,
->  					PAGE_SIZE, DMA_BIDIRECTIONAL);
-
-[Severity: High]
-This is a pre-existing issue, but does this function safely wait for all
-clients to drop their references?
-
-In ppc440spe_adma_remove(), the driver calls dma_async_device_unregister()
-which unregisters the device but does not synchronously block for active
-client references to be dropped.
-
-Immediately after, it frees the channel and device structures:
-
-    list_del(&chan->device_node);
-    kfree(ppc440spe_chan);
-    ...
-    kfree(adev);
-
-If a client (like the network stack or filesystem) still holds a reference
-and attempts to use the channel or release it later, will it dereference
-these freed structures and cause a use-after-free?
-
-[ ... ]
-
-[Severity: High]
-This is another pre-existing issue in the driver. Is channel locking missin=
-g=20
-in ppc440spe_adma_issue_pending()?
-
-The DMA engine callback executes without acquiring chan->lock when checking
-chan->pending and calling ppc440spe_chan_append():
-
-drivers/dma/ppc4xx/adma.c:ppc440spe_adma_issue_pending() {
-    ...
-    if (ppc440spe_chan->pending) {
-        ppc440spe_chan->pending =3D 0;
-        ppc440spe_chan_append(ppc440spe_chan);
-    }
-    ...
-}
-
-Other parts of the driver (like ppc440spe_adma_tx_submit) correctly lock
-around these calls using spin_lock_bh. Because issue_pending is an
-asynchronous dmaengine API that can be called concurrently across multiple
-CPUs, couldn't this race and corrupt hardware MMIO registers and descriptor
-lists?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D16
+>  	int i;
+>
+>  	for (i = 0; i < swdma_dev->chan_cnt; i++)
+>  		switchtec_dma_chan_free(pdev, swdma_dev->swdma_chans[i]);
+> -
+> -	return 0;
+>  }
+>
+>  static void switchtec_dma_chans_free(struct switchtec_dma_dev *swdma_dev)
+> --
+> 2.47.3
+>
