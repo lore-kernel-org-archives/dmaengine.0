@@ -1,196 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6034E37B00E
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC83737B00E
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187430; cv=none; b=DVV9FxS/hYygTPbCDiaAMEafS3K34dkutcGw50Mbsmy8B7rJULSu7/B/VxMgpXt3cCKurl0qgP6cy6kS6OYshebdpD7Tvmhq0O8Mdm7wOlwjoJ4thRlgQ1OYn/xotY4JAmcPGWpCcAM9Q4hwKugd3JoYOpOdFb527vcPXYyuMh8=
+	t=1785187499; cv=none; b=tlbCvpYnavVFGRcnBGt+TTahmBkEALN1ZONya8O62WpCYP/j7WtUz2+N6fDq2AXUUWynlmrBJ7+u2CSHmqDJXJDbQSt3o/429Q75AS2aP0HK5BlrTeVb2ycpDP2NgrYGlTeXPb/MUpr6oy2ne1Nhr7PpdkiBU5B3kts6Ufw+LNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187430; c=relaxed/simple;
-	bh=0bOMn+ClBE1dDdK9g2YIJMxxc1cCb1gW6aW4p98Zc9g=;
+	s=arc-20240116; t=1785187499; c=relaxed/simple;
+	bh=awiShoYG5jOggJcCkBb0HEtHfIXe3QCyHcI4Zp3tjaI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=AXenPby49mupUVtzZu3r2jgE3bX98Vsn/n0dUH3uX0zRxFMjcfPkt90YtJGVVNosiyHkfcO5GQ7i86NLuOFNn0GndgqXHu9aNLJk4D7IKUwsjdG9frGUgEEgQBbhCflQeAVQ4DsmhZIw4OY8EXQFNj2btqthCFT2JfmstDMeJrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kh8+9LZ6; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=tVChw1906Q3ULV3lvv/MSmYQK9S91KODlSANJ8wZM6cwtwiZruuvbjhtE66YdM9TPWTY7NCcHnNAZRpHQ83pBn4G+ai2Mp1AzTdTZ5mT1ZaXW9SJhLM7xwXingX/B+qOfkdrPMJTnqLsfuJI5HCziWdOLqIlcmSBMH21283xBUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k4jZvH8y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kh8+9LZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0309D1F000E9;
-	Mon, 27 Jul 2026 21:23:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k4jZvH8y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F651F000E9;
+	Mon, 27 Jul 2026 21:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785187429;
-	bh=xeLXv9kY9FY3N8C81CVVrjyfEyuU7gWA4fLszMZJosA=;
+	s=k20260515; t=1785187497;
+	bh=8zCFed27kE5Jja2gicTcso34QfF9umgtn0mdQPiWsr4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Kh8+9LZ6cQWPHZhFBLMFiD7P40TijV5/R7nQkJqo2xl7YJVWKytiGFXdyvuDNEY5g
-	 Q1T9+h7cUmxpXDlr9QXy50FzlpsSXJUNlp+MQB7mRsRrBtHtiaj8u3XERhScjxpgSq
-	 Rc2y8YQe+nc2Om6FEAUWDbH+K/U9E7MEO3kg6dMx449exFFr6LYrPM25smFUaLdsK5
-	 fitdfFOqIFwt6I8fBZzwkpR2fJufssrjwdOG+8EF6QnyRy6rmfK5TviSeQhp8PYW0/
-	 kjeENOab9GcgHUngKHF8o8R/ux9Uu3N9NxsHrGgxLZXqRLUX+rEJqPdpnR8Tdg9dJ0
-	 3CF4/uJK4EGxg==
+	b=k4jZvH8yON0foLljuElmBcaRCLUMK7BK8Pt001atcG2OgdOZH/zzYcBqn9SRbdYfF
+	 hz99y195f6h/sGQ+u6/ZKwH1O8k2xI0+vZodT4zkuscNN0dazUUAsHeeSLkstREHUN
+	 4LHfrl7sS4CfKFIPrEy6pn0XTS++Yrk7ESwsjhHSeKFIgAkhitSe/NkhPSp/85z376
+	 QfEXW1wahPt5gOyEUezbQw+83RzQa9zYHyBl6IgvZppHZ4dPWnZ7AjzpEhGAXG8ynO
+	 9hWdJpCUJm21yMiDUr1pU1LkkTDjl2OqWSmg1WZwX2VqZWqlaUK+F0msrAVPfmAOen
+	 MuDmWjvPVL6YA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 59/64] dmaengine: tegra186-gpc: use dma_chan_kill_bh
+Subject: Re: [PATCH v2 63/64] dmaengine: qcom-gpi: defer callbacks via vchan
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <b37cd91a6f4418b9a352cf9893ca238de9af88bf.1785183549.git.allen.lkml@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <2685692fbcc37b41bdef7b88e37ffc7ca359986e.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <b37cd91a6f4418b9a352cf9893ca238de9af88bf.1785183549.git.allen.lkml@gmail.com>
+ <2685692fbcc37b41bdef7b88e37ffc7ca359986e.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:23:48 +0000
-Message-Id: <20260727212349.0309D1F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:24:57 +0000
+Message-Id: <20260727212457.77F651F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [Critical] Zero-length DMA requests cause an integer underflow when calcu=
-lating the hardware word count, resulting in an unbounded 4GB DMA transfer.
-- [High] TOCTOU race condition in the interrupt handler `tegra_dma_isr` lea=
-ding to a Use-After-Free of `dma_desc`.
-- [High] Incorrect teardown order in `tegra_dma_free_chan_resources()` allo=
-ws late interrupts to reschedule the channel bottom-half, leading to a Use-=
-After-Free.
-- [High] Ignored error return from `tegra_dma_terminate_all()` leads to des=
-criptor memory leak and active hardware DMA during channel teardown.
-- [High] An unsupported DMA slave bus width causes `get_transfer_param()` t=
-o silently propagate an error code (-EINVAL) into the DMA hardware's MMIO s=
-equence register.
+- [High] Incorrect teardown sequence in gpi_free_chan_resources(): dma_chan=
+_kill_bh() is called after gpi_free_ring(), exposing a freed ring buffer to=
+ concurrent client callbacks, leading to a divide-by-zero crash.
+- [High] The driver defers callbacks to a virt-dma BH but fails to implemen=
+t the device_synchronize callback, breaking dmaengine_terminate_sync().
 --
 
---- Patch [59]: [PATCH v2 59/64] dmaengine: tegra186-gpc: use dma_chan_kill=
-_bh ---
-commit a9e2657d46f0ef7a89cb50bf6bca1e73ae39ee11
+--- Patch [63]: [PATCH v2 63/64] dmaengine: qcom-gpi: defer callbacks via v=
+chan ---
+commit e55f43a67f69dbf222b5c7eba067eedde92ac98b
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: tegra186-gpc: use dma_chan_kill_bh
-   =20
-virt-dma now dispatches completion callbacks through per-channel BH
-work instead of its tasklet. Cancel that work during teardown before
-channel storage is released.
+dmaengine: qcom-gpi: defer callbacks via vchan
 
-> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dm=
-a.c
-> index 64cedef1050ae..1ba8897ec614e 100644
-> --- a/drivers/dma/tegra186-gpc-dma.c
-> +++ b/drivers/dma/tegra186-gpc-dma.c
-> @@ -1284,7 +1284,7 @@ static void tegra_dma_free_chan_resources(struct dm=
-a_chan *dc)
->  	tegra_dma_terminate_all(dc);
+Complete descriptors through virt-dma instead of invoking callbacks
+directly from event processing. This preserves the transfer result for
+the shared vchan BH, which invokes the callback and frees the descriptor;
+drain that BH before releasing channel resources.
 
-[Severity: High]
-This isn't a bug introduced by this patch, but should we check the return
-value of tegra_dma_terminate_all() here?
-
-If tegra_dma_terminate_all() fails due to a hardware timeout, it returns ea=
-rly
-without moving the active descriptor to the terminated list and without
-disabling the hardware.
-
-Since the caller ignores the return value, vchan_free_chan_resources() might
-fail to locate and free the active descriptor. Could this leave the hardware
-executing a transfer into client memory that may be subsequently freed?
-
->  	synchronize_irq(tdc->irq);
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index a5055a6273af6..4cf68cf8eb2e5 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+[ ... ]
+> @@ -1060,8 +1064,12 @@ static void gpi_process_xfer_compl_event(struct gc=
+han *gchan,
+>  	result.residue =3D gpi_desc->len - compl_event->length;
+>  	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
 > =20
-> -	tasklet_kill(&tdc->vc.task);
-> +	dma_chan_kill_bh(&tdc->vc.chan);
+> -	dma_cookie_complete(&vd->tx);
+> -	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
+> +	spin_lock_irqsave(&gchan->vc.lock, flags);
+> +	list_del(&vd->node);
+> +	vd->tx_result =3D result;
+> +	vchan_cookie_complete(vd);
 
 [Severity: High]
-This is a pre-existing issue, but does killing the bottom-half before freei=
-ng
-the IRQ expose a race window?
+Since this patch defers callbacks to the virt-dma bottom-half, does the dri=
+ver
+now need to implement the device_synchronize callback?
 
-If the DMA hardware remains active after a timeout, and dma_chan_kill_bh() =
-is
-called before free_irq(), could a late interrupt fire and invoke
-vchan_cookie_complete() or vchan_cyclic_callback()?
+When a client driver calls dmaengine_terminate_sync() to ensure no callbacks
+are running before freeing its DMA buffers, the absence of device_synchroni=
+ze
+causes it to fall back to dmaengine_terminate_all(), which merely stops the
+hardware.
 
-This would re-queue the bottom-half work. After vchan_free_chan_resources()
-subsequently frees all descriptors, the queued bottom-half might execute and
-dereference the freed memory.
+Could the newly introduced deferred BH execute a completion callback after
+dmaengine_terminate_sync() has already returned, potentially leading to a
+use-after-free in the client driver?
 
->  	tdc->config_init =3D false;
->  	tdc->slave_id =3D -1;
->  	tdc->sid_dir =3D DMA_TRANS_NONE;
+Should gpi_probe() be updated to set gpi_dev->dma_device.device_synchronize
+to a function that wraps vchan_synchronize()?
 
-
-While reviewing the file, I noticed a few other pre-existing issues:
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does tegra_dma_isr() have a
-race condition leading to a use-after-free of dma_desc?
-
-drivers/dma/tegra186-gpc-dma.c:tegra_dma_isr() {
-    ...
-    struct tegra_dma_desc *dma_desc =3D tdc->dma_desc;
-    ...
-    spin_lock_irqsave(&tdc->vc.lock, flags);
-    ...
-    if (!dma_desc)
-        goto irq_done;
-    ...
-}
-
-The shared descriptor pointer is cached into a local variable before acquir=
-ing
-the spinlock.
-
-If the ISR is delayed while another CPU calls tegra_dma_terminate_all(), the
-descriptor is freed. Could a subsequent DMA transfer quickly trigger another
-interrupt, causing the delayed ISR to acquire the lock, pass the check, and
-dereference the stale local pointer?
-
+> +	spin_unlock_irqrestore(&gchan->vc.lock, flags);
+> +	return;
+> =20
+>  gpi_free_desc:
+>  	spin_lock_irqsave(&gchan->vc.lock, flags);
+[ ... ]
+> @@ -2009,6 +2017,7 @@ static void gpi_free_chan_resources(struct dma_chan=
+ *chan)
+> =20
+>  	/* free all allocated memory */
+>  	gpi_free_ring(&gchan->ch_ring, gpii);
+> +	dma_chan_kill_bh(&gchan->vc.chan);
 
 [Severity: High]
-This is a pre-existing issue, but do zero-length DMA requests cause an
-integer underflow when calculating the hardware word count?
+Does this cleanup sequence introduce a race condition that could result in a
+divide-by-zero crash?
 
-In tegra_dma_prep_dma_memset():
+Because dma_chan_kill_bh() is called after gpi_free_ring(), the bottom-half
+is still permitted to run after the channel's ring has been freed and
+zero-initialized.
 
-drivers/dma/tegra186-gpc-dma.c:tegra_dma_prep_dma_memset() {
-    ...
-    sg_req[0].wcount =3D ((len - 4) >> 2);
-    ...
-}
+If a deferred callback executes in the BH and calls dmaengine_prep_slave_sg=
+()
+to queue the next transfer, it will eventually call gpi_prep_slave_sg(). Th=
+at
+function calls gpi_ring_num_elements_avail(), which blindly accesses the now
+zeroed ch_ring and divides by ring->el_size.
 
-The same calculation exists in tegra_dma_prep_dma_memcpy() and
-tegra_dma_prep_slave_sg().
+Could dma_chan_kill_bh() be moved before gpi_free_ring() to ensure the BH is
+drained before tearing down the hardware ring resources?
 
-If a client requests a 0-length DMA transfer, the length checks appear to p=
-ass.
-The computation then underflows to 0x3FFFFFFF. Because the hardware
-interprets this as N+1 words, could this trigger an unbounded 4GB DMA
-transfer?
-
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does get_transfer_param()
-silently propagate an error code to the MMIO sequence register?
-
-drivers/dma/tegra186-gpc-dma.c:get_transfer_param() {
-    ...
-    *mmio_seq =3D get_bus_width(tdc, tdc->dma_sconfig.dst_addr_width);
-    *burst_size =3D tdc->dma_sconfig.dst_maxburst;
-    *slave_bw =3D tdc->dma_sconfig.dst_addr_width;
-    *csr =3D TEGRA_GPCDMA_CSR_DMA_MEM2IO_FC;
-    return 0;
-}
-
-If a client configures an unsupported dst_addr_width, get_bus_width() retur=
-ns
--EINVAL. This negative error code is assigned directly to *mmio_seq, and the
-function still returns 0 for success.
-
-Could this signed error be bitwise-ORed with other flags and written direct=
-ly
-to the hardware register, corrupting the configuration bitfields?
+>  	vchan_free_chan_resources(&gchan->vc);
+>  	kfree(gchan->config);
+>
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D59
+t.allen.lkml@gmail.com?part=3D63
