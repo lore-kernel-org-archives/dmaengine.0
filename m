@@ -1,63 +1,63 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D181343B482
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFAE43B4BA
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:41:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785184892; cv=none; b=HMQ3bMRCShHUduElIJfRTQo6H1ix1w/3Be32fvFH+4CXfjZoo3LoKkQkThavE3mPCxlodN9KLAH4+5VRZ31vbY7NepIhdH0e117eP+uj/KM6aK6xawOBe8FU/x1qZ5wsZyx5/lan6YXnEJqOy6qsPrVNd4XfFlAxS3xmvSjwVlo=
+	t=1785184899; cv=none; b=fzSSyM0mcZB+tK5YwePt9Mert1PvuhcELa16bo0vwUKbHPdSJik4z4qi+ldwEOJqg5DTeVyRbpOphWI6RSHpRUbSFONSjH5cDHCD34WmS9nky34h90UnTk6w/+tSnwtRX1Hn03Tz0vNQgriHWSIigVH3GsQrqGdHWagH08Jt2LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785184892; c=relaxed/simple;
-	bh=tMRDKtsorJv19qh4QIBQf7AjHv8Uu0NRMvUjf0NFpmQ=;
+	s=arc-20240116; t=1785184899; c=relaxed/simple;
+	bh=mkvTWGl/7jnQBsumfGNrGUMVRJfBwZ0IzD784XaiKNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ITQW6dSJ21xR7TtDsU4WH/yuo5nzmxNnwPgEIFbYhTuVohodS45xRLnP2Ea0yJ3RmyuE5xQ0oBSmb9XJ+tczQYteSJ/T80FVV2YRvFxwjbpOcqGy8s2Q6PVumvK4uHsNH2KWbzYiU+f6jg5oLga3QBOTRgiFu8K9/Tz8QFIT0as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cte2Gofa; arc=none smtp.client-ip=209.85.210.171
+	 MIME-Version; b=D/d7n+ydkbsRWCqnqwd0N9/hjL6Qc4gOGjYiwtjJxUOFE6EvUwnsrvVi9Cx8pzjDOoZpTTXfuOXNfk4AsiDBppvJIPBXvVwh1q+gQZX4+7VXfVWEK/SpcnsQt9XKlnD3hww6vjQNzoFjtH1wYvs9UeYED+/4n7WJOd8/hxy6Xv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2B5t0E8; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cte2Gofa"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-84861fc51f5so2449698b3a.1
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:41:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2B5t0E8"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-84536ecfc5bso3649479b3a.2
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785184890; x=1785789690; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785184896; x=1785789696; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Uq203R1ZYb1EoosBcCQ2LhjDPAR7gIRz0Ot9zI/XvNU=;
-        b=Cte2GofaPy1ynCY24f73+gmwADoYz9jz9o2jwz9NC6UdhJbVgdmHO0X8aZS4rVZZup
-         N34+ItmnL4fFjAcyiLTFrQTgsP1Ly8ZOaOxJWjsUrCgUGPT/eFPbuy6tLNlBxtSUKiCD
-         nyLKORu58eH+lSre63zKbON9Hu+kfiZGbk2dfwwm+loWGyzN8PxvhYuZbKmwBBxvfQM2
-         LlxiP90YOqxe7Yw8YSdcV9R/Nk1iRJimU7IOfD2fpj7KQNOTHAcYGDDlNHgdQIANsGQ6
-         lZHmLBIL9/r5hFyHO/cMz49ztbzvLIgd2N8Mrz5ZQO3QmJK51+4TfV5/YDHMZ4xrJYVo
-         qICQ==
+        bh=ZE8TVS27+6a892mUCRUCaEb8DNYyLcGJV97gPBVei3g=;
+        b=g2B5t0E8E7Lmsr8ORtfpUCKVLJKzT39egs3iA/HkVOsieH/EzyrSNI39oV/tXJLl4d
+         QWXSnJ+g2tRnAY1/DQMCWMaP1GitPikXuujGcBJpdrMYTTEtn7UZPsH+gs+bAtB9aPdD
+         2fpefjhumawJQc2v+nMCw67kDbKgWbiEjxWwJ0T5lPcl0IbVrFD0aMc1sM3jgxvoDv09
+         oRuV28/CStzTqI13SVe2QZJPBLh7p0kSHj6hUqnQOXHZvc2ixi7nLFCv3uTJWRdUxA9S
+         H7jZatHKESsmwYc9tLewaiF5Lktb4N7VpJfXc1+60t1ngRUUDEhMxK4xt3wn26nBiokn
+         F3ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785184890; x=1785789690;
+        d=1e100.net; s=20251104; t=1785184896; x=1785789696;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Uq203R1ZYb1EoosBcCQ2LhjDPAR7gIRz0Ot9zI/XvNU=;
-        b=hiIaWOOynU7aInLxJxegb9FvJ6FnyRafKHjQWk3CzlqTzQYViHSdWZyTXbXFNmXNeV
-         7Zt5j+PVOJxxWO2xF5y6/63jGDrOG98zW5b6iGE5HDiAjUhXUB/9tbn4HpYHVYH1TtBz
-         DfsKhLiU8n0X1hNyfJHaUsp/iFk8/RqIErg4kyGu9BN24qZWjKxPSVtxusxDfWQuJyMZ
-         7r3n8nLuScNq5gw3HOrg+F9XzGhc84em8Q5cp8FhiBzmxKRj+I6UMV+D84rwM0MNAU6J
-         lybinpojaLu0mWMZbOXCYKI8GkxWXUQDiFFaahb694b9zq731dKYV2ISpPxyMh3lOuF9
-         SrLQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rp27vr1vOXABM2McljREyKLdTqOR+h/6EvVvoz9XwlfQ8qKKokF/8J9uWRWlLp9QtJMe3iBoRbcnVQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxeHFxYL3iOlMlm1wbKJrVCct0gINRdFxzhwTC06gcQNjo+uxDz
-	tEtvDzCLeND5D+BX6VRnWMPfCKoKPAm6v2pneCr+LMKa59hYqLHeUiw2Lvii7g==
-X-Gm-Gg: AR+sD10ZMaGtC1G+pd/vCslq1H/Zt7Ew1iMXmwl/KQv/TD3J1pZyyEr7UO845G01k70
-	lwqH8uJCYrN96XUKiyFmy3/3KZDEQ+NWaPAd7uw9glgMmG9scbEo8Wu6NbVhDs+9SGzK4pDo7zb
-	9v02PqaUHvFenGRHT6HWiwxeqTvxfny3xzfUjNIxvA/3poZ5P0RVxatQbfzVdykmWIeiNtvmcDb
-	TK8VU7JtEQ4eJ8GlqfovBI//bAdNBSDoitBJScgzgBbYCoio86LTUDYhq6abU+auwxmCTCeCJ8o
-	KYM92RBkOLgzqOBbGhCrg6IhpRw2Iz9zz4Pb6oZTHB7ulm2I5QiD9CNBwwXJNa5Rt4gXttjGLoR
-	H3QTFVdwkbfNdtqhMohm+iK+aeqs1vmArTrD65RDiUPwCfIcqfuKPGj3m3PPKwf3DCH4JDHAMS5
-	vKenbX
-X-Received: by 2002:a05:6a00:a88e:b0:848:41e1:473c with SMTP id d2e1a72fcca58-84e8d41cd52mr759600b3a.72.1785184890357;
-        Mon, 27 Jul 2026 13:41:30 -0700 (PDT)
+        bh=ZE8TVS27+6a892mUCRUCaEb8DNYyLcGJV97gPBVei3g=;
+        b=PRpaIOsZDNpb9x2mXwY2NjYkGXyIqjY69r5H19l0x0Ps5E3BtDnlq8zOBLAj9/BwMp
+         kqyuYcssG8kBWOoi50NgoAYoVQRIA2pyKzl44XkQR+ctiD191OmoIUxLBoQF108ffhM/
+         03vNMWJ/GNdsdDVV+hsbFeRICFpf6UaSD8qhHpQRcR8+qIT0GJMj0ttrMxE7aliQGcfw
+         HnHPO6WvfHuw6WWIl3vH+L9LzbZMMsttSRf+JbgikdfyTlortL0IwfDsGgqggEiX9Uqr
+         JnFJpfnSr1gpGI1h6PUp0hZOpRQgUGnwy634Tp3YsyQReF1AALBhOh0JcvoNGjPVVx+B
+         HO6g==
+X-Forwarded-Encrypted: i=1; AHgh+RqEZH+Ki9iZk5BtyEx5b+/UPcZg9rZBl/LNyrztvp4Ex5h0/DmPkDHmcXs2XMAMQ+Q76VReejCHIOg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzlz/SdQcKfD2s7Bg2SgoRfLL4ASiIF3bo1NwDwQVpKhIhL+lX7
+	hxJigieGU8wq/UHdeTUDJ7+hyWlrfJDXy4r20c5x7wxtGej/rpygU6CD
+X-Gm-Gg: AR+sD12tpG3ZNwtCXF0Y5TA6+TGJunr5M2HjUu983L5RugsuA8QHT6RySnNvNIw4L+l
+	hXL3P/OgZMWoPcfRnXfBEu8VwMYif9GW1/ukd3xaUcUPmTDey6ZeKw6Jt5iU8RExamIAgdzJk1t
+	oHQ+/AAeEWvPlFayxEuEyOzsRmnNWmRplUF2RehyTSRFfA9q6UkpFRXaB/BL7WSMCoHyTNaPrro
+	g8Mycg3M9POr8FtDrQ5yrBzrDita9hvZmCrCGjE/j7VBs8U4RKoDqUkoBvgTewVPU3Y2Vh+mwXr
+	YBUpMKRwKJMEh+7Zo1u4YazkCfnTf+wWGNgqzH/RojJIRZUz8Pq1CDjHS9eTdG50akGkPjzXpsR
+	vQ9zbVk8cQ+cYgYELGo0Z8enOPc1i3G9lnGkl0ut59+dlASzePDgV/2mXXaTRhP8IDV1cCfANz8
+	B4ig2A
+X-Received: by 2002:a05:6a00:1f05:b0:846:c7f4:74d with SMTP id d2e1a72fcca58-84e5955b5b4mr7126826b3a.41.1785184896473;
+        Mon, 27 Jul 2026 13:41:36 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fab:e200:3789:64f9:8855:c0af])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.41.29
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.41.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 13:41:29 -0700 (PDT)
+        Mon, 27 Jul 2026 13:41:35 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -66,12 +66,14 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>,
-	Sinan Kaya <okaya@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 62/64] dmaengine: hidma: defer callbacks via channel BH
-Date: Mon, 27 Jul 2026 13:39:24 -0700
-Message-ID: <1648cb3a6b6c85009831e1dd263a6336bd31638a.1785183549.git.allen.lkml@gmail.com>
+Subject: [PATCH v2 63/64] dmaengine: qcom-gpi: defer callbacks via vchan
+Date: Mon, 27 Jul 2026 13:39:25 -0700
+Message-ID: <2685692fbcc37b41bdef7b88e37ffc7ca359986e.1785183549.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com> <cover.1785183549.git.allen.lkml@gmail.com>
@@ -83,65 +85,58 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Move descriptor callback processing out of the low-level completion
-path and schedule it through per-channel BH work. Drain that work while
-freeing channels so callbacks cannot outlive channel storage.
+Complete descriptors through virt-dma instead of invoking callbacks
+directly from event processing. This preserves the transfer result for
+the shared vchan BH, which invokes the callback and frees the descriptor;
+drain that BH before releasing channel resources.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/qcom/hidma.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/dma/qcom/gpi.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-index c939635be21d..1f875a499ab3 100644
---- a/drivers/dma/qcom/hidma.c
-+++ b/drivers/dma/qcom/hidma.c
-@@ -90,7 +90,13 @@ static inline struct hidma_chan *to_hidma_chan(struct dma_chan *dmach)
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index a5055a6273af..4cf68cf8eb2e 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -981,8 +981,12 @@ static void gpi_process_imed_data_event(struct gchan *gchan,
+ 		result.result = DMA_TRANS_NOERROR;
+ 	result.residue = gpi_desc->len - imed_event->length;
  
- static void hidma_free(struct hidma_dev *dmadev)
- {
--	INIT_LIST_HEAD(&dmadev->ddev.channels);
-+	struct hidma_chan *mchan, *next;
-+
-+	list_for_each_entry_safe(mchan, next, &dmadev->ddev.channels,
-+				 chan.device_node) {
-+		dma_chan_kill_bh(&mchan->chan);
-+		list_del(&mchan->chan.device_node);
-+	}
- }
+-	dma_cookie_complete(&vd->tx);
+-	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
++	spin_lock_irqsave(&gchan->vc.lock, flags);
++	list_del(&vd->node);
++	vd->tx_result = result;
++	vchan_cookie_complete(vd);
++	spin_unlock_irqrestore(&gchan->vc.lock, flags);
++	return;
  
- static unsigned int nr_desc_prm;
-@@ -155,6 +161,13 @@ static void hidma_process_completed(struct hidma_chan *mchan)
- 	}
- }
+ gpi_free_desc:
+ 	spin_lock_irqsave(&gchan->vc.lock, flags);
+@@ -1060,8 +1064,12 @@ static void gpi_process_xfer_compl_event(struct gchan *gchan,
+ 	result.residue = gpi_desc->len - compl_event->length;
+ 	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
  
-+static void hidma_chan_bh(struct dma_chan *chan)
-+{
-+	struct hidma_chan *mchan = to_hidma_chan(chan);
-+
-+	hidma_process_completed(mchan);
-+}
-+
- /*
-  * Called once for each submitted descriptor.
-  * PM is locked once for each descriptor that is currently
-@@ -181,7 +194,7 @@ static void hidma_callback(void *data)
- 	}
- 	spin_unlock_irqrestore(&mchan->lock, irqflags);
+-	dma_cookie_complete(&vd->tx);
+-	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
++	spin_lock_irqsave(&gchan->vc.lock, flags);
++	list_del(&vd->node);
++	vd->tx_result = result;
++	vchan_cookie_complete(vd);
++	spin_unlock_irqrestore(&gchan->vc.lock, flags);
++	return;
  
--	hidma_process_completed(mchan);
-+	dma_chan_schedule_bh(&mchan->chan);
+ gpi_free_desc:
+ 	spin_lock_irqsave(&gchan->vc.lock, flags);
+@@ -2009,6 +2017,7 @@ static void gpi_free_chan_resources(struct dma_chan *chan)
  
- 	if (queued) {
- 		pm_runtime_mark_last_busy(dmadev->ddev.dev);
-@@ -203,6 +216,7 @@ static int hidma_chan_init(struct hidma_dev *dmadev, u32 dma_sig)
- 	mchan->dmadev = dmadev;
- 	mchan->chan.device = ddev;
- 	dma_cookie_init(&mchan->chan);
-+	dma_chan_init_bh(&mchan->chan, hidma_chan_bh);
+ 	/* free all allocated memory */
+ 	gpi_free_ring(&gchan->ch_ring, gpii);
++	dma_chan_kill_bh(&gchan->vc.chan);
+ 	vchan_free_chan_resources(&gchan->vc);
+ 	kfree(gchan->config);
  
- 	INIT_LIST_HEAD(&mchan->free);
- 	INIT_LIST_HEAD(&mchan->prepared);
 -- 
 2.43.0
 
