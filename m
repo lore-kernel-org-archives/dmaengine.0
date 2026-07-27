@@ -1,212 +1,173 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D84C3CB552
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7E237CD4E
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785186562; cv=none; b=aTrVX/0fr2UMmdSp+tIV4sTgCXDu+DgAyLDvHl+NltOQc/uwMOyD1eEe5XEJ/V1wubRSkzuSZPQNRCpMjmZsJoFHdUhM1C3g+dLygyMBqGRSue0MS0Q2FxQHatdWIMVZM2cpRPZLt1S7lUZYv7+hjLnZ6zcbWLDBoLJJ8HtwBBo=
+	t=1785186589; cv=none; b=mxXABTK0hm2g0Yh4nqLNvYUPztRxvcDlCpe3Db9paec6WOkNDDAq3CukPpv7m3114odhdWfngdv9J58WKqnehHZkBRa6aT+Z3N+RSRyRJKCJyQukn3vqrWOoK/L+DPNPVarieJxgb3RjhiEanCyHg9e12xlzFkqDJ2BW2KX68eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785186562; c=relaxed/simple;
-	bh=+sk6mMYrESkDx31BMTBGdZ9jtiospBWiu0Bvx1zL2/k=;
+	s=arc-20240116; t=1785186589; c=relaxed/simple;
+	bh=+IMuydudj8qgaWR/kduJHJp9NJ7kwjwmj9fip6WqDoY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=azApytRp4acK1TXsvIctakFhhEksBPXL8lnrkFiBV79YjjQJDWPBWg1VYFwmqGl5yGr+x29RKM2JdHByNIlyJy+SinL6yUzGAgyl1+7XsQ8b24n4vU5/4Y40Eqt3UvkEVqfiSjtOjmt5pc+ZX0Hwo5Q3EzG7RHGcUQ+kHHnU+7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E3DT546H; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=UusI/eijJ9GLrz1uEwYwukSdT5p78vh5hSdIItwGCxP5wTW2ahnq/LAARvbYMBE+Y3XjSI9cIWhj9r8j8lJrdb/S5R+9oU/oAIRLr4b0LcaXLjMf6H3a8iT23E8yAMMfnW1JvzTIqnS+3cbMw5VAn9wGtbtFrNpl0AYUAjntXU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oVtAhai8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E3DT546H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E351F000E9;
-	Mon, 27 Jul 2026 21:09:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oVtAhai8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13421F00A3A;
+	Mon, 27 Jul 2026 21:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785186561;
-	bh=/UCgz5WdkhxJGRxtkz8f01BFLWaVw7ju6eVwwj2xGVE=;
+	s=k20260515; t=1785186588;
+	bh=5IQHF4gaxGtYvvwrAr8xOmEPGO3WHcvASx374Sfrzxw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=E3DT546Hn34H3LgMXYiFjnXcXPgEddpUezLADoiSScmkLXx4VvJdtYBv6bdSozGI0
-	 zkPYNWhmOSQUqkeiyycF+FyEixWCU63HDW+wJmzlUNAk3Jd2JgdMkuFgPJVBjNktH4
-	 jdUWYxtAhdXiAnEQ5Y2m8vXYcD//1+S45AON+97DyQOWG7IXgTZCJkZpS6OkDQKvUX
-	 VKSfXuuoEjqiP0IOETQiMXb3zceRXCIM/72zpknXcRZ7Zn5gbBO1Y+RiurOG1nMW7f
-	 CiPmuB1ceLtNf3pvbWjNW+ZnDx+ulR6izHFi6E5v45hnymPU2nkGnfnJmSU82EGBzW
-	 p9ibvgoniu9BQ==
+	b=oVtAhai84HXBtFa9K2Zd51OlVymHsfKla4n9HusuRTpGRyiGysY03f0LSni5mw8Wh
+	 OYdgx8u4SFSIDPTHGiAzm1U1F2i/E2Cpy3/SUr+4iFkpATySjGOSE4wMp3B6ZNSCIL
+	 usZh0NWjbAn7j5vPFc/dPFl2QUDuPQ4xKbA2+5dGxxe2ehcfk6pujIcuF7tbmG7E0L
+	 I9upcO21XZB2DbzERXOrphjboHyeCDUfnnCja7UhKZGyhECrKRSbnvyqjUVsmtrrMR
+	 dG4d8f/HgSRp4CbB4S/qswaJTaQBYzrkhk/rHBrCElOkN17LVVjk80YS3jMIvdV1eY
+	 Hnz0SYdg30yzw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 28/64] dmaengine: plx_dma: use channel BH helpers
+Subject: Re: [PATCH v2 38/64] dmaengine: img-mdc-dma: kill vchan BH on
+ teardown
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <f2aa736ef2d9422717ab798cd38bcc405eefa94b.1785183549.git.allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <333e90fe6e8df85aec14d6b4c9ebe9da7040d122.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com>
  <cover.1785183549.git.allen.lkml@gmail.com>
- <f2aa736ef2d9422717ab798cd38bcc405eefa94b.1785183549.git.allen.lkml@gmail.com>
+ <333e90fe6e8df85aec14d6b4c9ebe9da7040d122.1785183549.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 21:09:20 +0000
-Message-Id: <20260727210921.39E351F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 21:09:47 +0000
+Message-Id: <20260727210947.F13421F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Deadlock risk due to invoking DMA client callbacks with a spinlock=
- held.
-- [High] Deadlock risk due to inadequate lock context (plain spin_lock inst=
-ead of spin_lock_bh) exposing the lock to softirq preemption.
-- [High] Unbounded spinning (1000ms busy-wait) inside an RCU read-side crit=
-ical section.
-- [High] plx_dma_prep_memcpy() acquires a spinlock and returns with it held=
-, violating locking and API rules.
-- [High] The device IRQ is requested before the MMIO base pointer (`plxdev-=
->bar`) is initialized, causing a potential NULL pointer dereference.
+- [High] Missing pm_runtime_set_suspended() in the driver removal path caus=
+es PM state mismatch on subsequent rebinds, leading to hardware faults.
+- [High] The PM runtime usage counter is leaked in mdc_alloc_chan_resources=
+() if pm_runtime_get_sync() fails.
+- [High] Hardware registers are accessed in mdc_dma_probe() before the devi=
+ce clock is enabled.
+- [High] The IRQ handler is registered before its associated virtual channe=
+l spinlock is initialized, allowing a spurious interrupt to lock an uniniti=
+alized spinlock.
 --
 
---- Patch [28]: [PATCH v2 28/64] dmaengine: plx_dma: use channel BH helpers=
- ---
-commit 978a06c861c9b53f0d972a684863de23c7d55eb8
+--- Patch [38]: [PATCH v2 38/64] dmaengine: img-mdc-dma: kill vchan BH on t=
+eardown ---
+commit b4d81ea29e678b96ef67f182eaf0b8fc7065fe66
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: plx_dma: use channel BH helpers
+dmaengine: img-mdc-dma: kill vchan BH on teardown
 
-Replace the device tasklet with the per-channel BH helper so completion
-callbacks run via dma_chan_*_bh.
+Use dma_chan_kill_bh() for virt-dma cleanup.
 
-> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-> index 84941a918b01f..9d6bbdfa5a698 100644
-> --- a/drivers/dma/plx_dma.c
-> +++ b/drivers/dma/plx_dma.c
+> diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+> index b3765ba158030..374034c737c0e 100644
+> --- a/drivers/dma/img-mdc-dma.c
+> +++ b/drivers/dma/img-mdc-dma.c
 [ ... ]
-> @@ -241,9 +240,10 @@ static void plx_dma_stop(struct plx_dma_dev *plxdev)
->  	rcu_read_unlock();
->  }
-
-[Severity: High]
-This isn't a bug introduced by this patch, but can this busy-wait loop
-cause issues within the RCU read-side critical section?
-
-plx_dma_stop() initiates an RCU read-side critical section and then calls
-__plx_dma_stop():
-
-plx_dma_stop()
-{
-    rcu_read_lock();
-    ...
-    __plx_dma_stop(plxdev);
-}
-
-__plx_dma_stop() then executes a busy-wait loop for up to 1000ms:
-
-__plx_dma_stop()
-{
-    while (!time_after(jiffies, timeout)) {
-        if (val & PLX_REG_CTRL_GRACEFUL_PAUSE_DONE)
-            break;
-        cpu_relax();
-    }
-}
-
-Executing a 1-second busy loop inside an RCU read-side critical section cou=
-ld
-lead to severe scheduling latency or RCU stalls.
-
-> -static void plx_dma_desc_task(struct tasklet_struct *t)
-> +static void plx_dma_desc_task(struct dma_chan *chan)
->  {
-> -	struct plx_dma_dev *plxdev =3D from_tasklet(plxdev, t, desc_task);
-> +	struct plx_dma_dev *plxdev =3D container_of(chan, struct plx_dma_dev,
-> +						  dma_chan);
+> @@ -1031,7 +1031,7 @@ static void mdc_dma_remove(struct platform_device *=
+pdev)
 > =20
->  	plx_dma_process_desc(plxdev);
->  }
+>  		devm_free_irq(&pdev->dev, mchan->irq, mchan);
+> =20
+> -		tasklet_kill(&mchan->vc.task);
+> +		dma_chan_kill_bh(&mchan->vc.chan);
+>  	}
+> =20
+>  	pm_runtime_disable(&pdev->dev);
+>  	if (!pm_runtime_status_suspended(&pdev->dev))
+>  		img_mdc_runtime_suspend(&pdev->dev);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but could plx_dma_process_desc()
-lead to a deadlock?
+This is a pre-existing issue, but does mdc_dma_remove() need to call
+pm_runtime_set_suspended() here?
 
-A client DMA driver submitting a new DMA request from within its completion
-callback might cause a self-deadlock. The callback is invoked in
-plx_dma_process_desc() while holding the ring_lock:
+When the driver is unbound and rebound via sysfs, the hardware is manually
+suspended but the PM runtime state is left as RPM_ACTIVE. On rebind,
+mdc_dma_probe() enables runtime PM but sees the device as already active.
 
-plx_dma_process_desc()
-{
-    spin_lock(&plxdev->ring_lock);
-    ...
-    dmaengine_desc_get_callback_invoke(&desc->txd, &res);
-}
+When a channel is requested, won't pm_runtime_get_sync() return without
+enabling the clock, leading to an imprecise external abort (kernel panic)
+during subsequent register writes?
 
-If the client's callback calls dmaengine_prep_dma_memcpy(), it will invoke
-plx_dma_prep_memcpy() which attempts to acquire the same ring_lock.
+
+While reviewing this file, I noticed a few other pre-existing issues:
+
+drivers/dma/img-mdc-dma.c:mdc_alloc_chan_resources()
+> static int mdc_alloc_chan_resources(struct dma_chan *chan)
+> {
+> 	struct mdc_chan *mchan =3D to_mdc_chan(chan);
+> 	struct device *dev =3D mdma2dev(mchan->mdma);
+>=20
+> 	return pm_runtime_get_sync(dev);
+> }
 
 [Severity: High]
-This is also a pre-existing issue, but does ring_lock need to be acquired
-with bottom halves disabled?
+This isn't a bug introduced by this patch, but does mdc_alloc_chan_resource=
+s()
+leak the PM runtime usage counter if pm_runtime_get_sync() fails?
 
-If a process context function like plx_dma_tx_status() calls
-plx_dma_process_desc() and acquires ring_lock without disabling bottom halv=
-es:
+If pm_runtime_get_sync() returns an error (e.g., -EACCES), the usage counter
+is incremented but the error is directly propagated. Since the allocation
+aborts, the free routine is never called to decrement the counter.
 
-plx_dma_process_desc()
-{
-    spin_lock(&plxdev->ring_lock);
-}
+Doesn't this permanently prevent the device (and potentially the parent pow=
+er
+domain) from entering low-power suspend states? Should this check the return
+value and call pm_runtime_put_noidle() on failure?
 
-A hardware interrupt could fire, and the softirq handler would then execute
-plx_dma_desc_task() -> plx_dma_process_desc() on the same CPU, attempting
-to acquire the already-held ring_lock, which could result in a hard deadloc=
-k.
 
+drivers/dma/img-mdc-dma.c:mdc_dma_probe()
+> 	mdma->clk =3D devm_clk_get(&pdev->dev, "sys");
+> 	if (IS_ERR(mdma->clk))
+> 		return PTR_ERR(mdma->clk);
 [ ... ]
-> @@ -510,7 +510,7 @@ static int plx_dma_create(struct pci_dev *pdev)
->  		goto free_plx;
-> =20
->  	spin_lock_init(&plxdev->ring_lock);
-> -	tasklet_setup(&plxdev->desc_task, plx_dma_desc_task);
-> +	dma_chan_init_bh(&plxdev->dma_chan, plx_dma_desc_task);
-> =20
->  	RCU_INIT_POINTER(plxdev->pdev, pdev);
->  	plxdev->bar =3D pcim_iomap_table(pdev)[0];
+> 	val =3D mdc_readl(mdma, MDC_GLOBAL_CONFIG_A);
 
 [Severity: High]
-This isn't a bug introduced by this patch, but is there a race condition
-during initialization?
+This is a pre-existing issue, but are hardware registers accessed in
+mdc_dma_probe() before the device clock is enabled?
 
-The interrupt handler is registered before the MMIO region pointer is
-initialized:
+mdc_readl() reads MDC_GLOBAL_CONFIG_A shortly after getting the "sys" clock,
+but the clock appears to only be enabled later in img_mdc_runtime_resume().
 
-plx_dma_create()
-{
-    rc =3D request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, ...);
-    ...
-    plxdev->bar =3D pcim_iomap_table(pdev)[0];
-}
+On systems where the bootloader doesn't leave the clock enabled, wouldn't
+reading from unclocked peripheral registers cause an imprecise external abo=
+rt
+(kernel panic) during device initialization?
 
-If an interrupt fires immediately after request_irq(), plx_dma_isr() could
-read from plxdev->bar, which would still be an uninitialized pointer:
 
-plx_dma_isr()
-{
-    status =3D readw(plxdev->bar + PLX_REG_INTR_STATUS);
-}
+drivers/dma/img-mdc-dma.c:mdc_dma_probe()
+> 		ret =3D devm_request_irq(&pdev->dev, mchan->irq, mdc_chan_irq,
+> 				       IRQ_TYPE_LEVEL_HIGH,
+> 				       dev_name(&pdev->dev), mchan);
+> 		if (ret < 0)
+> 			return ret;
+>=20
+> 		mchan->vc.desc_free =3D mdc_desc_free;
+> 		vchan_init(&mchan->vc, &mdma->dma_dev);
 
 [Severity: High]
-This is another pre-existing issue outside the diff context, but does
-plx_dma_prep_memcpy() intentionally return with the ring_lock held?
+This isn't a bug introduced by this patch, but is the IRQ handler registered
+before its associated virtual channel spinlock is initialized?
 
-plx_dma_prep_memcpy() acquires the lock but returns without releasing it:
+devm_request_irq() is called before vchan_init() initializes mchan->vc.lock.
+If the IRQ line is asserted immediately after registration (e.g. from a warm
+boot or shared interrupt), mdc_chan_irq() will fire and attempt to acquire a
+zero-initialized lock.
 
-plx_dma_prep_memcpy()
-{
-    spin_lock_bh(&plxdev->ring_lock);
-    ...
-    return &plxdesc->txd;
-}
-
-The lock appears to only be released later in plx_dma_tx_submit(). If a cli=
-ent
-prepares multiple descriptors before submitting, it might self-deadlock
-trying to acquire the lock a second time. If it sleeps between prep and
-submit, it would be sleeping in an atomic context.
+Could this trigger a kernel panic with lock debugging enabled?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
-t.allen.lkml@gmail.com?part=3D28
+t.allen.lkml@gmail.com?part=3D38
