@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E8F42BC34
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 17:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B793BE16E
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 17:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785173435; cv=none; b=T3dtXBtAUVksY9gfuzGCHJxJLnu96EMFFUYnOFiImA/24RLMhq6ZiluVaKj6P2ErGBLG8RKpexQejIhp10p9p5sobYzishc5ZcJHPUzYsGMcBa8Sqdcz61mwRLguI0sNJWWOqQXgCoBCzdgwIRguxpa8Y8MIXvmkUmkBo6/NYvc=
+	t=1785173840; cv=none; b=U6Nv+unYdyfV1QMiFVSYhqnXafP541IF6WM/lXsUNCuQA0zzTblHYF5ItQGlMI2XcD64bdqzYuKakTBv/kujHO+WFuKaR8pVP3Q9Mh9jbS4RbBrsIBxsvN2z6t8mCZDbaJ5CkeIlk/ypImvOTnSGmv4Pp1yn1Ve0FHSgIMCvCoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785173435; c=relaxed/simple;
-	bh=FwhEM6AjmYt5JgOtfVrM4XeDt1Bs8OBjZma/PEECNS0=;
+	s=arc-20240116; t=1785173840; c=relaxed/simple;
+	bh=6x8fcqRHaL8COF4E4KtDnjI1D7u1f5cGhUxvltHGm3k=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=If+w2HArTctvO2SSryTFRkvenZVNrpkh1fwt6RwvAM45PoRzisdABl4xW+w0two8B6skLxt0rWh/z6XTZW8FPvr367YrYHmarQai9c34m+wTVfpKUc/WirRbrmgsAaZGmr1cdQVmDZkCi4xXd9zSj91QUNIXT7hNfqEUcivTGok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apI5LAGC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=H5GAulOkje27+XJCoqb9BiYoV5eRNpvl8dQ6aHhuTGQu2Whp8+OIGP9fH9WtV0+JVuxHd9GyFv8aWVTXf+VbyF7CM9E1PedOt0OBYe1wynKyGbPjLCutk0STyX9QmFvTzV9GfWgS40jO/ZcYxABU2tINZghyYaEHsZjiwarprOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dmF0JQJr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apI5LAGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047221F000E9;
-	Mon, 27 Jul 2026 17:30:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dmF0JQJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1588B1F000E9;
+	Mon, 27 Jul 2026 17:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785173427;
-	bh=Y/dfFBQtpZGiJZP1TSoVkfvy9LgYxBdVWpt6btYFTrY=;
+	s=k20260515; t=1785173839;
+	bh=x44gtBlKBDn2qQRMErGz6UcKuvNgmmIVm6/zVzWUns4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=apI5LAGC5db8eRONACeXupJ6unUvVkRYgBG2oyj+pBGUmie4LjZVXBld0UL9i7qoe
-	 OSNQn5oj0avdhDlXO/ss7zraXWJQCeMqUFTkIt2tykzgM+EQTjdJIqXNIjvpPABz1P
-	 Svr3CTwvpHLI8Z3BvSn+lQm+3UedaqmZtyje8SAjS6c17WeD3JfpkrTaz6eHFGmL/S
-	 eqdgD8IcucAHEEh5EfEFdhQug80fBD5hliIaDTkw//n21s/yeitrdakEcDZsliYQya
-	 I8iaMUGZDM1rv6K+T4rx1DAzGUEkqFKeDxVKjEz0P7G1bKl68XGZMD3Ua+CB0M/bCM
-	 XOJpMEsqnPpnw==
+	b=dmF0JQJrp7+HHltFjPtxkuW6RBkFaeJN9n8DK4lee/rNzu/z+ySWCtNibmnGYi4X6
+	 S3obknuAeGDZbJApHE2FuROhWUO52CkruvD3blIppmE3EvkaxLKpjQm2bPKq1nN0eB
+	 5X0yfy3Bn+RdIcKY7lUohbShSmfYPHYaJzkGO8+BcfgM79PNbrMMAIcLZpiNCQQc4Q
+	 3t/QICCqJbnI9vxmaIdrgvRj0kieZ/7xxTdI8e/C8OsuXtGUkMKB7fYeagAlHNIO5v
+	 XPNH9SSswopUv/8KqUWiB3c4p63pc+KVrQ6zaVPnojyEGTttCshAp2ODAT46XofPJ+
+	 AgtCFdvpvUaOQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 19/24] dmaengine: dw-edma: Drain LL entries for STOP
- and PAUSE
+Subject: Re: [PATCH v3 23/24] dmaengine: dw-edma: Detect and recover a
+ stalled eDMA engine
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260727170323.2321369-20-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260727170323.2321369-24-den@valinux.co.jp>
 References: <20260727170323.2321369-1-den@valinux.co.jp>
- <20260727170323.2321369-20-den@valinux.co.jp>
+ <20260727170323.2321369-24-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 17:30:26 +0000
-Message-Id: <20260727173027.047221F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 17:37:18 +0000
+Message-Id: <20260727173719.1588B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,110 +47,103 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] The delayed stop recheck is not armed when draining a stopped chan=
-nel, leading to an infinite hang in dw_edma_wait_termination().
+- [High] Unkillable hang in dw_edma_wait_termination() if the engine fails =
+to recover from a stall.
 --
 
---- Patch [19]: [PATCH v3 19/24] dmaengine: dw-edma: Drain LL entries for S=
-TOP and PAUSE ---
-commit 2379a4182966c17e3764b5d21a024f5b0063f553
+--- Patch [23]: [PATCH v3 23/24] dmaengine: dw-edma: Detect and recover a s=
+talled eDMA engine ---
+commit 8c110ba5f33df8c06f35fa69ddd95a9b7e7cab52
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Drain LL entries for STOP and PAUSE
+dmaengine: dw-edma: Detect and recover a stalled eDMA engine
 
-This commit modifies the handling of STOP and PAUSE requests to drain
-published LL entries instead of discarding ring state immediately. It waits
-for hardware to consume them and uses a delayed recheck to catch a later
-stop.
+This commit introduces passive stall detection for write channels under
+sustained multi-channel traffic. It reuses the bounded LL recheck and queue=
+s a
+recovery request if a channel remains stopped with no progress for 30 ms.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
 edma-core.c
-> index 0c30c0f51fea2..bbd417e98a9d7 100644
+> index 56032137a4bb0..262ea893174f3 100644
 > --- a/drivers/dma/dw-edma/dw-edma-core.c
 > +++ b/drivers/dma/dw-edma/dw-edma-core.c
 [ ... ]
-> @@ -883,35 +916,52 @@ static int dw_edma_device_resume(struct dma_chan *d=
+> @@ -291,6 +292,54 @@ static bool dw_edma_ll_pending(struct dw_edma_chan *=
 chan)
+>  	return chan->ll_head !=3D chan->ll_done;
+>  }
+> =20
 [ ... ]
->  static int dw_edma_device_terminate_all(struct dma_chan *dchan)
->  {
->  	struct dw_edma_chan *chan =3D dchan2dw_edma_chan(dchan);
-> -	int err =3D 0;
-> =20
->  	guard(spinlock_irqsave)(&chan->vc.lock);
-> =20
->  	if (!chan->configured) {
->  		dw_edma_terminate_all_descs(chan);
-> +		chan->request =3D EDMA_REQ_NONE;
->  	} else if (chan->status =3D=3D EDMA_ST_PAUSE) {
-> +		/* A paused channel has already stopped. */
->  		dw_edma_finish_termination(chan);
-> -	} else if (chan->status =3D=3D EDMA_ST_IDLE) {
-> -		dw_edma_finish_termination(chan);
-> -	} else if (dw_edma_core_ch_status(chan) =3D=3D DMA_COMPLETE) {
-> +	} else if (dw_edma_may_be_active(chan)) {
->  		/*
-> -		 * The channel is in a false BUSY state, probably didn't
-> -		 * receive or lost an interrupt
-> +		 * Keep published entries intact until an IRQ sample confirms
-> +		 * that the channel stopped. An outstanding EDMA_REQ_PAUSE is
-> +		 * replaced by EDMA_REQ_STOP.
->  		 */
-> -		dw_edma_finish_termination(chan);
-> -	} else if (chan->request > EDMA_REQ_PAUSE) {
-> -		err =3D -EPERM;
-> -	} else {
->  		dw_edma_set_request(chan, EDMA_REQ_STOP);
-> +		dw_edma_core_ch_maybe_doorbell_or_recheck(chan);
+> +/*
+> + * Called with vc.lock held for a stopped channel with LL work pending. =
+Queue
+> + * direction recovery if repeated doorbells show no progress for one rec=
+heck
+> + * interval.
+> + */
+> +static bool dw_edma_ll_stall_check(struct dw_edma_chan *chan)
+> +{
+> +	struct dw_edma_engine_recovery *rec;
+> +
+[ ... ]
+> +	rec =3D &chan->dw->eng_recovery[chan->dir];
+> +	chan->ll_recovery_pending =3D true;
+> +	dw_edma_engine_recovery_queue(rec);
 
 [Severity: High]
-Does dw_edma_core_ch_maybe_doorbell() unconditionally return false after
-kicking a stopped channel?
+If the hardware stalls and the recovery work queued here fails to reset it,
+can this lead to an unkillable hang later when the channel is freed?
 
-If dw_edma_core_ch_maybe_doorbell() returns false, it looks like
-dw_edma_core_ch_maybe_doorbell_or_recheck() will fail to arm the delayed
-recheck timer:
+Looking at dw_edma_engine_recovery_work(), if the maximum reset attempts are
+reached, the worker exits without clearing chan->ll_recovering:
 
-static void dw_edma_core_ch_maybe_doorbell_or_recheck(...)
-{
-    if (dw_edma_core_ch_maybe_doorbell(chan) &&
-        !dw_edma_ll_has_hdma_stop_event(chan))
-        dw_edma_ll_recheck_schedule(chan);
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_engine_recovery_work() {
+    ...
+		if (++rec->fails >=3D DW_EDMA_ENGINE_RESET_MAX_FAILS) {
+			dev_err(dw->chip->dev,
+				"%s engine did not drain after %u attempts; leaving channels gated\n",
+				dir_name, rec->fails);
+			return;
+		}
+    ...
 }
 
-Without an interrupt and with no recheck timer armed, could chan->request
-remain EDMA_REQ_STOP indefinitely?
+If chan->ll_recovering remains true, the doorbell logic aborts early and do=
+es
+not process the stop request when releasing the channel.=20
 
->  	}
-[ ... ]
-> @@ -1591,18 +1639,21 @@ static void dw_edma_wait_termination(struct dma_c=
-han *dchan)
->  	 * A STOP may be deferred to a later interrupt while the channel is sti=
-ll
->  	 * running. Wait until that handler completes the termination.
->  	 */
-> -	while (time_before(jiffies, timeout)) {
-> +	for (;;) {
->  		scoped_guard(spinlock_irqsave, &chan->vc.lock)
->  			stopping =3D chan->request =3D=3D EDMA_REQ_STOP;
-> =20
->  		if (!stopping)
->  			return;
-> =20
-> +		if (time_after_eq(jiffies, timeout)) {
-> +			dev_warn(chan->dw->chip->dev,
-> +				 "timeout waiting for channel termination; still waiting\n");
-> +			timeout =3D jiffies + msecs_to_jiffies(5000);
-> +		}
+This causes dw_edma_wait_termination() to loop indefinitely because the loop
+lacks a hard timeout break and the stop request is never cleared:
+
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_wait_termination() {
+    ...
+	for (;;) {
+		scoped_guard(spinlock_irqsave, &chan->vc.lock)
+			stopping =3D chan->request =3D=3D EDMA_REQ_STOP;
+
+		if (!stopping)
+			return;
+
+		if (time_after_eq(jiffies, timeout)) {
+			dev_warn(chan->dw->chip->dev,
+				 "timeout waiting for channel termination; still waiting\n");
+			timeout =3D jiffies + msecs_to_jiffies(5000);
+		}
+
+		fsleep(1000);
+	}
+    ...
+}
+
+Could this result in an unkillable process hang when dw_edma_wait_terminati=
+on()
+polls indefinitely?
+
 > +
->  		fsleep(1000);
->  	}
-
-[Severity: High]
-If the channel remains stuck in EDMA_REQ_STOP due to the missing recheck
-timer, will a task calling dmaengine_terminate_sync() or
-dmaengine_synchronize() hang indefinitely in this loop?
+> +	return false;
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727170323.2321=
-369-1-den@valinux.co.jp?part=3D19
+369-1-den@valinux.co.jp?part=3D23
