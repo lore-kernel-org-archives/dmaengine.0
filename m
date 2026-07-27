@@ -1,168 +1,196 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013017.outbound.protection.outlook.com [52.101.83.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0EF2737F9;
-	Mon, 27 Jul 2026 21:23:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785187414; cv=fail; b=ZRWAf0M+smjrzfePUOGo1xCPGviRHrC5CUxjRdgGlWFqQNK32wPA3wYklsDD1pRcNJFuv9j4UmYd/zrugKnGL8UNDTpyQ1PTLz7kbEJJiypTwZ9Dtqm6M4nyYObOOSnyWGHciSD6nF9EF+3WwXfSLBvzrerbfD3QeOhN8Hsfmts=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785187414; c=relaxed/simple;
-	bh=Vnw3M2+LayA/8vCspM5Ck7zmhR/zyrUyvSZXt/a0710=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=er7f5LffJNhNRNLGMArg8iC2ul5C1SOJdJ4c/99lbiQZZp6SXDOi/0d23jvk6hZ1We/+MJDHbbf2N1XODRpir/2S6UTyjCPpUEVEjVKvmTvBSzq1/a23foP/5x4+QsCS3TbMuckL9XanCKl1DUr1DMigTYKVaOR9gQBqOVQoYVw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=bPOxjP0t; arc=fail smtp.client-ip=52.101.83.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6034E37B00E
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 21:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785187430; cv=none; b=DVV9FxS/hYygTPbCDiaAMEafS3K34dkutcGw50Mbsmy8B7rJULSu7/B/VxMgpXt3cCKurl0qgP6cy6kS6OYshebdpD7Tvmhq0O8Mdm7wOlwjoJ4thRlgQ1OYn/xotY4JAmcPGWpCcAM9Q4hwKugd3JoYOpOdFb527vcPXYyuMh8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785187430; c=relaxed/simple;
+	bh=0bOMn+ClBE1dDdK9g2YIJMxxc1cCb1gW6aW4p98Zc9g=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=AXenPby49mupUVtzZu3r2jgE3bX98Vsn/n0dUH3uX0zRxFMjcfPkt90YtJGVVNosiyHkfcO5GQ7i86NLuOFNn0GndgqXHu9aNLJk4D7IKUwsjdG9frGUgEEgQBbhCflQeAVQ4DsmhZIw4OY8EXQFNj2btqthCFT2JfmstDMeJrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kh8+9LZ6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="bPOxjP0t"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wcNtiuXZz+WeatRfND8ILHHym50wWVHqZqtcTsFLYLHxOU2ObO+lOUB5rPnRSiigmFiAg/QK7iW0hZNVtOrp2i2A125a1Wr69RIcDz/M5emZj7fP6YM2ixKd9oI+H327GbZm/h+8IdDOXgtCmpoV3BCXRPqxE4L/i1dyxHhFt6TJLAANQB6R48Qsc4nQmgmXt9vDTv38Doc/EG/mpu+4/nA6bhRqNTVmHOVa4BqryvKkQ4+otDUXro4v9UfbFqd5JW9SEIBRu8UsanNZTDrmdUh87M7GAgRmJc1VVeh7Qc+Xqv+QgduqADFzvKtfVYXCjBQDye4pME+e5/gnv79ahw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BZ2gzp5/mxUei/4YGFn6rLIJY1GeyWo17qvJC8UB7Xk=;
- b=KGf1cFo0gErXD4XygJ2sERR54uFW/ybbTKTqAnpi3YwOIDWBRfnStk3ZzKFunJugGS3sE5d4AWazUiw0n1ToNVj0LJLPsdk0HjjJDaFBEcw1DwsmAjC/Xqlev8nruZpqWIimKtG/PQVhQNIFzsg6k0n92CYhcHzi4wgvuLsm+Qi0MQB4z69O+103T93QfWshOG/env7kJkTe9jK2vY8Kg05GXD9u5L4IZPpeowRSRWXI6WdXBzxnbYqYzDMiyily3vWP7Sc2hHgAcG7htYhCZhjQXG/6Edrjod9kX3ZrHNYVtyGxAq3bfUdCl2/mTZujFZXA3/NyQgYoMBtxU7KZaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BZ2gzp5/mxUei/4YGFn6rLIJY1GeyWo17qvJC8UB7Xk=;
- b=bPOxjP0tR0EsOolPxsNt/zceF5Fd1OVve3KaAMjhhVE+xSsegeNmPtDMdVYIIUDEpCFFwo3ykVFhs0AQR45QJxims+SevtNOdIJ1L8fn7A2HOGWK3sQ5A3tn0YSrYTbqHTR9q69UA+4gxF9iBbu+qtw6+pKm+r6qh9N7WFttMvvAl3x+3Ns/AH7b53unwCiwu7LqmVArNqUH0ShJOuDPyX9IrYDhkeJljksi56gtLCvpzfe4RshjuXBQYUZjS9eLx/GgxRHjioxyxHjWnQwzkz4aIPNsek/IudbCuECARMONYVDMZbYnvckpYGvDpEnjoDOYbVWqfqQtRv3s7GOVqQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI0PR04MB10592.eurprd04.prod.outlook.com (2603:10a6:800:266::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Mon, 27 Jul
- 2026 21:23:29 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0245.012; Mon, 27 Jul 2026
- 21:23:29 +0000
-Date: Mon, 27 Jul 2026 17:23:21 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Logan Gunthorpe <logang@deltatee.com>
-Cc: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.li@nxp.com>, Kelvin Cao <kelvin.cao@microchip.com>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	George Ge <george.ge@microchip.com>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: Re: [PATCH v3 08/11] dmaengine: switchtec-dma: fix use-after-free of
- swdma_dev in remove()
-Message-ID: <amfMSVyuqhV4KKgv@lizhi-Precision-Tower-5810>
-References: <20260727181526.9672-1-logang@deltatee.com>
- <20260727181526.9672-9-logang@deltatee.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260727181526.9672-9-logang@deltatee.com>
-X-ClientProxiedBy: PH7P220CA0075.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32c::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kh8+9LZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0309D1F000E9;
+	Mon, 27 Jul 2026 21:23:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785187429;
+	bh=xeLXv9kY9FY3N8C81CVVrjyfEyuU7gWA4fLszMZJosA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Kh8+9LZ6cQWPHZhFBLMFiD7P40TijV5/R7nQkJqo2xl7YJVWKytiGFXdyvuDNEY5g
+	 Q1T9+h7cUmxpXDlr9QXy50FzlpsSXJUNlp+MQB7mRsRrBtHtiaj8u3XERhScjxpgSq
+	 Rc2y8YQe+nc2Om6FEAUWDbH+K/U9E7MEO3kg6dMx449exFFr6LYrPM25smFUaLdsK5
+	 fitdfFOqIFwt6I8fBZzwkpR2fJufssrjwdOG+8EF6QnyRy6rmfK5TviSeQhp8PYW0/
+	 kjeENOab9GcgHUngKHF8o8R/ux9Uu3N9NxsHrGgxLZXqRLUX+rEJqPdpnR8Tdg9dJ0
+	 3CF4/uJK4EGxg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 59/64] dmaengine: tegra186-gpc: use dma_chan_kill_bh
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Allen Pais" <allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <b37cd91a6f4418b9a352cf9893ca238de9af88bf.1785183549.git.allen.lkml@gmail.com>
+References: <20260108080332.2341725-1-allen.lkml@gmail.com>
+ <cover.1785183549.git.allen.lkml@gmail.com>
+ <b37cd91a6f4418b9a352cf9893ca238de9af88bf.1785183549.git.allen.lkml@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 27 Jul 2026 21:23:48 +0000
+Message-Id: <20260727212349.0309D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB10592:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0367608-7ead-4a6f-3aa2-08deec254d36
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|19092799006|1800799024|376014|7416014|11063799006|10067099003|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	bY/u+HidWE0oju3MaW68qjlG4CBxBTSSqdo0N6O4Y4/4/paHXpUGBI6uxVbQ8tgFWAZEew3baFA76EgE9yu5So3LeTdXLCp3fjpVK9pmoeYHVEK3HQFyPkFpV+80B68JQ8L9FRNThZ3Poa9MqrqM7IeaAibdvs/V9G44wKbogWeqDKSi04IOxNJhhOWbbTRdPlm0hNu3lp8Y/exC5jCeqRxyQlnZnP++4dgNrwWpk0Q7FkI5mOYtf+aW4kX5bVv4tFxB5ZLENV0dU4YswQYISKoQL1Qk0hsfR2sW9sAoMf8v5BQ8PLQ+DmqqANF32mv8JoeqpcO6h+OzpJGp0dpQn7g7r5YFk3KNN051ZaEiXX/6+pi07vmC+VslRkpFUmNy2FNQ+kiBiHdA7NtioVEcY4r66Gd2EMpu2oCAhMNfBrk/66jnNENBBClK9ojVXPePX0jEV3DCHRqASiBl1wvFgtUGgyIe6l0Z8tvcIU3z4HvPIOOJgc5ihv9X5lqiKrdYTqFN07oFmqj/4fgoCWcCjc6I6rDESN71+lLLubyqPlxvY/qaPq0aGPPT3iMjunNMqqy8igW0gEBwRWnFCOc8/+XgvKyqkkzPCgOODuThfXQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(19092799006)(1800799024)(376014)(7416014)(11063799006)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Axwpy7HqXmqLnT21UDGPSD0v8wEJdRaRifkFf8hOS5JEhEiRQS/YMIUQzw4d?=
- =?us-ascii?Q?FlvqpBp7ZYaxFoOjAqiXQQwQLlchFBWUBX5wmELUvkupvPLpUhXMjsdLqUPU?=
- =?us-ascii?Q?XaYSL1xdxlksVL+392lrVGXPci2TO+dYQZWEga/b3nwvpoHUxKywC9FLnJsq?=
- =?us-ascii?Q?WzSoPO+TeTMSjLdbzw+CYL2gm4NsEJQOPIqG4CmRIxKp0N5VsIRPMKFl1oZr?=
- =?us-ascii?Q?nYMRQfDoVi4vX4/mQYAf6o7hIUTHWmdfpBCnoE00m5i+1m99fqG+gruuXA8q?=
- =?us-ascii?Q?FsmiO44Ps8OnvVl8R+rGxOsQi4QxD2ou3a1syhCNlLllz258aMfKfotMTFmO?=
- =?us-ascii?Q?k9KYqMJrvHlimTFU6B09gcnFytTUcL/fFvV0Z0iKFxRz8RGF5dwj0vM+rVam?=
- =?us-ascii?Q?1KL7YGlCK6ngb9dfAXVmqTl6+5BXLB+A4ow8HVjNxVoHce7edvTm5kzjepPI?=
- =?us-ascii?Q?kLhNOtQ6Pi287BGBp483mv2TBjiw+TFN/oFrsnAAs0F1ee6/U/qvtane30/j?=
- =?us-ascii?Q?kaPUZimFiS000/jBxpyHe330D8zV4yDH5c9ZXJOk7r3jI1bErmQP2f46UPpf?=
- =?us-ascii?Q?Mbpqm6tdTtTNqljT1autQZ6i5E5DVchAngYX8wwtUKLlotqVzxVJXZV7rbnJ?=
- =?us-ascii?Q?W7hogPYsx0jM1mTA7vsWJG5zHdpSu45c9lNbDD1p29JqDILR8kDmZ/2hqqCN?=
- =?us-ascii?Q?ZkN47Hj09xbH/EpCeHXvmFhaHGn7n+P0TdJPrx66fu4bRcYksi6KdeGMaS08?=
- =?us-ascii?Q?v9Gb962FY0+JIdT7brq2YGfZJRrmSlL7ijoTJ2RiBujgm6UzjpGDa0VToYr0?=
- =?us-ascii?Q?cnW7kU0L8LpklFhO5uAiizu9rUTCzHF5UDvpXJruM9ogfjOapbI9OpgnsFfI?=
- =?us-ascii?Q?2/CFxIcg1+0QuoYQkJurF3fajCwmntkTYzcPUFW+fxBmZTDw1qaJFkE0WazP?=
- =?us-ascii?Q?xzFhfuqRMP/UMCgviQKl9POnmKL1tlx3cgigabksN/SuuwG0PdLJ2Z5C6Hdz?=
- =?us-ascii?Q?BDaH+zRtFcj+P7bialo90R/xAhRzcExdMZdBf20ue23mY88wUm4vtc5CqXk4?=
- =?us-ascii?Q?mIC1w3UkGZpehaHkM12AuwfL0ZU8xKbDjjmZk9N+tY7H8fY5NXq9Jyo5GKpb?=
- =?us-ascii?Q?cLHXB2ZL/2wi6wY5Eq7LXWHgZCIQ2PSL3HJ/stmFHp9FFl7xc42QA+IH6OR/?=
- =?us-ascii?Q?WCyEmOumZqw7/Sst4WuSOMAS3WpInNU1k062PbUSpGdKOTBiEmlNzE5h8XGp?=
- =?us-ascii?Q?bHcXoEFKAWyPeg1+Y81hBhJIIRXVuayDAGXiT9SXNbz+LQPM4pA/D6OG7XRg?=
- =?us-ascii?Q?2UHvQXL7T+ZqgAO5bS7zJ+lkcKElTley9iTSOlq1gKBJaUjRpOZqXSXdOEtc?=
- =?us-ascii?Q?lQ/imPRU95ekSl9zYPzv+kGl2reThjrQSBBohl1vc6NR1XmRckcNQUEdf9iw?=
- =?us-ascii?Q?EtLimVhEAmKsgt/qz+iPlHEg66+GjNCuxZx3c4ko1v5JBRKzgkNvEz81cR06?=
- =?us-ascii?Q?lGp7Vro2dGl/dh/yGzzTVJb1bDprb8G5K55+EdiIz1KqX3OBXpFOamN+G3ig?=
- =?us-ascii?Q?nvvTkj+rYGL+434JkGFZp0fUIOkxmO9J9iZg38csIqpFPzVcBe7uMDWsOOxY?=
- =?us-ascii?Q?LRoV5FcTGtG7HDBgAZNnbH+VrPIGG1816UI6HIDLD8doYvNnRHKPArrNR0Hg?=
- =?us-ascii?Q?jqBwX8rqBo6c3sP+k34Fq2vIWU6mnhNqjL/wagb9TQH2f4ixQ9NsZyROR/F1?=
- =?us-ascii?Q?hxjE9Xz3y0Ls+2bJaNDHK4fz5yEK7jtM9gLPhR80bVtMJgk43l1M?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0367608-7ead-4a6f-3aa2-08deec254d36
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jul 2026 21:23:28.9702
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IVsfRCeXYNAB0UFX2O6xUxIbz7jVIbrT2HTGQHuQI7tZQdWUBqHdXHHQrnQK5Kz27J86+uAy92fDlymIavMvc+V7dFzjyWHSGNNqTJ+801ItVkH0Uen09TfSn/+NRV3c
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10592
 
-On Mon, Jul 27, 2026 at 12:15:23PM -0600, Logan Gunthorpe wrote:
-> dma_async_device_unregister() can drop the last reference on dma_dev
-> and free swdma_dev synchronously via switchtec_dma_release(), but
-> switchtec_dma_remove() then uses swdma_dev->bar for iounmap().
->
-> Cache bar in a local variable before the unregister call.
->
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.kernel.org
-> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-> ---
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Pre-existing issues:
+- [Critical] Zero-length DMA requests cause an integer underflow when calcu=
+lating the hardware word count, resulting in an unbounded 4GB DMA transfer.
+- [High] TOCTOU race condition in the interrupt handler `tegra_dma_isr` lea=
+ding to a Use-After-Free of `dma_desc`.
+- [High] Incorrect teardown order in `tegra_dma_free_chan_resources()` allo=
+ws late interrupts to reschedule the channel bottom-half, leading to a Use-=
+After-Free.
+- [High] Ignored error return from `tegra_dma_terminate_all()` leads to des=
+criptor memory leak and active hardware DMA during channel teardown.
+- [High] An unsupported DMA slave bus width causes `get_transfer_param()` t=
+o silently propagate an error code (-EINVAL) into the DMA hardware's MMIO s=
+equence register.
+--
 
->  drivers/dma/switchtec_dma.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index 800d8ecd0717..d73506b5cabc 100644
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-> @@ -1384,6 +1384,7 @@ static int switchtec_dma_probe(struct pci_dev *pdev,
->  static void switchtec_dma_remove(struct pci_dev *pdev)
->  {
->  	struct switchtec_dma_dev *swdma_dev = pci_get_drvdata(pdev);
-> +	void __iomem *bar = swdma_dev->bar;
->
->  	switchtec_dma_chans_release(pdev, swdma_dev);
->
-> @@ -1396,7 +1397,7 @@ static void switchtec_dma_remove(struct pci_dev *pdev)
->
->  	dma_async_device_unregister(&swdma_dev->dma_dev);
->
-> -	iounmap(swdma_dev->bar);
-> +	iounmap(bar);
->  	pci_release_mem_regions(pdev);
->  	pci_disable_device(pdev);
->  }
-> --
-> 2.47.3
->
+--- Patch [59]: [PATCH v2 59/64] dmaengine: tegra186-gpc: use dma_chan_kill=
+_bh ---
+commit a9e2657d46f0ef7a89cb50bf6bca1e73ae39ee11
+Author: Allen Pais <allen.lkml@gmail.com>
+
+dmaengine: tegra186-gpc: use dma_chan_kill_bh
+   =20
+virt-dma now dispatches completion callbacks through per-channel BH
+work instead of its tasklet. Cancel that work during teardown before
+channel storage is released.
+
+> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dm=
+a.c
+> index 64cedef1050ae..1ba8897ec614e 100644
+> --- a/drivers/dma/tegra186-gpc-dma.c
+> +++ b/drivers/dma/tegra186-gpc-dma.c
+> @@ -1284,7 +1284,7 @@ static void tegra_dma_free_chan_resources(struct dm=
+a_chan *dc)
+>  	tegra_dma_terminate_all(dc);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but should we check the return
+value of tegra_dma_terminate_all() here?
+
+If tegra_dma_terminate_all() fails due to a hardware timeout, it returns ea=
+rly
+without moving the active descriptor to the terminated list and without
+disabling the hardware.
+
+Since the caller ignores the return value, vchan_free_chan_resources() might
+fail to locate and free the active descriptor. Could this leave the hardware
+executing a transfer into client memory that may be subsequently freed?
+
+>  	synchronize_irq(tdc->irq);
+> =20
+> -	tasklet_kill(&tdc->vc.task);
+> +	dma_chan_kill_bh(&tdc->vc.chan);
+
+[Severity: High]
+This is a pre-existing issue, but does killing the bottom-half before freei=
+ng
+the IRQ expose a race window?
+
+If the DMA hardware remains active after a timeout, and dma_chan_kill_bh() =
+is
+called before free_irq(), could a late interrupt fire and invoke
+vchan_cookie_complete() or vchan_cyclic_callback()?
+
+This would re-queue the bottom-half work. After vchan_free_chan_resources()
+subsequently frees all descriptors, the queued bottom-half might execute and
+dereference the freed memory.
+
+>  	tdc->config_init =3D false;
+>  	tdc->slave_id =3D -1;
+>  	tdc->sid_dir =3D DMA_TRANS_NONE;
+
+
+While reviewing the file, I noticed a few other pre-existing issues:
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does tegra_dma_isr() have a
+race condition leading to a use-after-free of dma_desc?
+
+drivers/dma/tegra186-gpc-dma.c:tegra_dma_isr() {
+    ...
+    struct tegra_dma_desc *dma_desc =3D tdc->dma_desc;
+    ...
+    spin_lock_irqsave(&tdc->vc.lock, flags);
+    ...
+    if (!dma_desc)
+        goto irq_done;
+    ...
+}
+
+The shared descriptor pointer is cached into a local variable before acquir=
+ing
+the spinlock.
+
+If the ISR is delayed while another CPU calls tegra_dma_terminate_all(), the
+descriptor is freed. Could a subsequent DMA transfer quickly trigger another
+interrupt, causing the delayed ISR to acquire the lock, pass the check, and
+dereference the stale local pointer?
+
+
+[Severity: High]
+This is a pre-existing issue, but do zero-length DMA requests cause an
+integer underflow when calculating the hardware word count?
+
+In tegra_dma_prep_dma_memset():
+
+drivers/dma/tegra186-gpc-dma.c:tegra_dma_prep_dma_memset() {
+    ...
+    sg_req[0].wcount =3D ((len - 4) >> 2);
+    ...
+}
+
+The same calculation exists in tegra_dma_prep_dma_memcpy() and
+tegra_dma_prep_slave_sg().
+
+If a client requests a 0-length DMA transfer, the length checks appear to p=
+ass.
+The computation then underflows to 0x3FFFFFFF. Because the hardware
+interprets this as N+1 words, could this trigger an unbounded 4GB DMA
+transfer?
+
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does get_transfer_param()
+silently propagate an error code to the MMIO sequence register?
+
+drivers/dma/tegra186-gpc-dma.c:get_transfer_param() {
+    ...
+    *mmio_seq =3D get_bus_width(tdc, tdc->dma_sconfig.dst_addr_width);
+    *burst_size =3D tdc->dma_sconfig.dst_maxburst;
+    *slave_bw =3D tdc->dma_sconfig.dst_addr_width;
+    *csr =3D TEGRA_GPCDMA_CSR_DMA_MEM2IO_FC;
+    return 0;
+}
+
+If a client configures an unsupported dst_addr_width, get_bus_width() retur=
+ns
+-EINVAL. This negative error code is assigned directly to *mmio_seq, and the
+function still returns 0 for success.
+
+Could this signed error be bitwise-ORed with other flags and written direct=
+ly
+to the hardware register, corrupting the configuration bitfields?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1785183549.gi=
+t.allen.lkml@gmail.com?part=3D59
