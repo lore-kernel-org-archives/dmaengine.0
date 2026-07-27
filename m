@@ -1,225 +1,186 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2600A3D3492;
-	Mon, 27 Jul 2026 19:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C96C3CB561;
+	Mon, 27 Jul 2026 19:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785180514; cv=none; b=GQCCx1qyhF5qJK6Edx0Pxev+qcJ2C/hHca7Y1acrGYnoar2eBDzCfUP8cE2bWx/u7kPfiXj2Ap8HFgP0IE9PbSEdxkmFHrOz8hnopnnGBqQbVeDVISIRLKHQLV/OIDHCC5D3/Pt/0vxDBJ8QoJKcXuBRzoJzl7LiTsVSM9ZHLrA=
+	t=1785181154; cv=none; b=Atgs3rmYTXwDECtzR/SRLdpSmbywmzajvgOlBJNRbsts78sXhpii8O14ys1z0EeNI8T6/VxHMgrj8x+uuRo4Q7/npmNWYC7oe5KfmeSqt1G4hD8r5EEGg6PjhOWmUTjqluNDrT3nNuEh9kElGs2oBpY7iRn78t9mwfCSWI6m9GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785180514; c=relaxed/simple;
-	bh=pt7c+IYrZmhDZJAOgqhniP5f4g0dsusOojerIR3qS8I=;
+	s=arc-20240116; t=1785181154; c=relaxed/simple;
+	bh=7O+aEQLqEV+gX/mtpoLOi/an81kEAh2hZB+vwCH/2ec=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=kWPOpCGA3TJQtYP05HixzcVbgTwnhM6SbhxgJwtKwRdfe4E9RlWUSHFcNUSDYzBsBlyzlAkzCHTeA2UI82Y9AGY5GGq/PgIGpk+xii9ASuDUzEj9H4UABfftV3Z5LE19UI0mLwFXdAITuT4lwyiuM26mMdEzui0EDRUp2p7qAMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DJUpLiHt; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=mEyqYMoIIGCwANOHVshScXURVk5w5TPfxNsl1AbubDdRFaJLoTUGKLlthydIQGJ4QrLetbBcFxwkTng0MdNrRAGLU3CwcKhB9PWS34udubU9/pnsJFmj8iCucJLIS5RKhHf5D+nke/KPqQGjFbqi/1AAPL0H5HVASg59rle5xKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QDduvTcR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DJUpLiHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C991F000E9;
-	Mon, 27 Jul 2026 19:28:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QDduvTcR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEF31F000E9;
+	Mon, 27 Jul 2026 19:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785180513;
-	bh=/XJwn/dWibDwAlxOkqgsayA2XnzIY/6xKk9OywdbbAc=;
+	s=k20260515; t=1785181153;
+	bh=SZMI7p2nXhAEg1Iq17RqGoOyuw1AsGJfpmlKqz5i9PA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=DJUpLiHtoCFnyQ/E2hAxgHhbwkDwnjwzwZcB9+90Ckg+ivi7qQoOxhikXNxH0DANL
-	 NrxoS0PexPASE3nVvzvGxsZDOpVewNPuMqaLhc+0cDBxbidyadPIukdJ1bZQnyD9Ek
-	 41h34WwDxX2lkBic6ah7EcogA4Dws26EKIwPEWFFt3FFtp8aiiwfWZB3yneVxdWj5i
-	 auXeHFwr8VPZFAKSbXc9SafOAid4WNJn9/okhhJ95Kj1YJmNi1K0aWqxnR4XSzs+0h
-	 Rz5qVozFCcMq5qQrJokSm5RfPOxRWHYkC3/xw9uJSWCNgtmpfRE7eX4AmhaWyTLnAg
-	 fVBmy357isZng==
+	b=QDduvTcRK7rwQ495yGm7vlvbO+TB92WIldMgru3N/eD+bHqqIbH5GeUJMTNd0Isz3
+	 YR9LiqMr3ByNuSimGZFft1w9jGXLcMOq6RymiNioV44hwg85FnF2pEUIVNu+AxWYaP
+	 SBA+S0hNYxlit10qfxB6a6iTz2/d8POR0QmKHf2qLd1ad2hvxVJGvQGy+A1ch5Eorp
+	 JD+rtctCrWuXdUKiDSWL3cOpXtEex8Wdd/FbCk/SAnPEGtbHCg590gG6fm6SnnA0KY
+	 Emb9CHslpFsVHXNNXseF8Y2vpxwNjrmoKVHiDlqOw5I3Jugo55/51vWRjheBnViPQp
+	 oq1daSC9wSxGA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 06/11] dmaengine: switchtec-dma: fix chan_status_irq
- cleanup on create() error
+Subject: Re: [PATCH v3 07/11] dmaengine: switchtec-dma: disable channels
+ before freeing on registration failure
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260727181526.9672-7-logang@deltatee.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260727181526.9672-8-logang@deltatee.com>
 References: <20260727181526.9672-1-logang@deltatee.com>
- <20260727181526.9672-7-logang@deltatee.com>
+ <20260727181526.9672-8-logang@deltatee.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 19:28:32 +0000
-Message-Id: <20260727192832.B1C991F000E9@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 19:39:12 +0000
+Message-Id: <20260727193912.AFEF31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Unmapping `swdma_dev->bar` after `dma_async_device_unregister` cau=
-ses a use-after-free.
-- [High] Missing NULL check after `ioremap()` in `switchtec_dma_create` lea=
-ds to a NULL pointer dereference on failure.
-- [High] The DMA channel list is initialized after the status IRQ is reques=
-ted, allowing an early interrupt to trigger a NULL pointer dereference.
-- [High] In the error paths of `switchtec_dma_create()`, DMA channels are f=
-reed while the status IRQ remains registered, causing a Use-After-Free.
-- [High] Invoking client callbacks while holding a driver spinlock causes a=
- recursive locking deadlock if the callback re-enters the driver.
-- [High] Incorrect teardown sequence in device remove risks hangs or crashe=
-s for active DMA clients.
+- [High] Accessing `swdma_dev->bar` in `iounmap()` after the structure has =
+been kfreed.
+- [High] The `chan_status_irq` interrupt is requested before channel initia=
+lization is complete, leading to a NULL pointer dereference in the ISR.
+- [High] The driver invokes the client's DMA completion callback while hold=
+ing the internal `complete_lock` spinlock, creating a self-deadlock risk.
+- [High] Missing check on the return value of `ioremap()` leads to a NULL p=
+ointer dereference.
 --
 
---- Patch [6]: [PATCH v3 06/11] dmaengine: switchtec-dma: fix chan_status_i=
-rq cleanup on create() error ---
-commit 4abb826d6d25e80cfa344cde79ed065a727edad5
+--- Patch [7]: [PATCH v3 07/11] dmaengine: switchtec-dma: disable channels =
+before freeing on registration failure ---
+commit eb5cc523afcf50094dfae39f87e70f0557894b90
 Author: Logan Gunthorpe <logang@deltatee.com>
 
-dmaengine: switchtec-dma: fix chan_status_irq cleanup on create() error
+dmaengine: switchtec-dma: disable channels before freeing on registration f=
+ailure
 
-This patch initializes chan_status_irq to -1 and uses the non-negative
-value to determine when to call pci_free_irq() instead of free_irq().
-This prevents freeing the wrong Linux IRQ and ensures the handler is
-properly unregistered when the vector index is 0.
+When switchtec_dma_create() fails after channels have been added to
+dma_dev->channels (either from switchtec_dma_chans_enumerate()'s own
+error path, or from dma_async_device_register() failing), the channels
+are released and freed but never removed from dma_dev->channels.
+
+Add switchtec_dma_chans_disable() which disables interrupts and
+removes the channels from the list.. Call it before releasing and
+freeing channels in both error paths.
 
 Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.ke=
 rnel.org
+Link: https://lore.kernel.org/dmaengine/20260721162822.05CDD1F000E9@smtp.ke=
+rnel.org
 
 > diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index c752a1b05871d..31feb2816e79b 100644
+> index 31feb2816e79b..800d8ecd07171 100644
 > --- a/drivers/dma/switchtec_dma.c
 > +++ b/drivers/dma/switchtec_dma.c
-> @@ -1248,6 +1248,8 @@ static int switchtec_dma_create(struct pci_dev *pde=
-v)
->  	if (!swdma_dev)
->  		return -ENOMEM;
-> =20
-> +	swdma_dev->chan_status_irq =3D -1;
-> +
->  	swdma_dev->bar =3D ioremap(pci_resource_start(pdev, 0),
->  				 pci_resource_len(pdev, 0));
-
-[Severity: High]
-This is a pre-existing issue, but does ioremap() need a NULL check here?
-
-If it fails under memory pressure and returns NULL, swdma_dev->bar will be
-assigned NULL.
-
-Shortly after, the code executes:
-
-    irq =3D readw(swdma_dev->bar + SWITCHTEC_REG_CHAN_STS_VEC);
-
-Will this lead to an immediate NULL pointer dereference?
 
 [ ... ]
 
-> @@ -1322,8 +1324,8 @@ static int switchtec_dma_create(struct pci_dev *pde=
-v)
->  	switchtec_dma_chans_free(swdma_dev);
+> @@ -1217,6 +1231,7 @@ static int switchtec_dma_chans_enumerate(struct swi=
+tchtec_dma_dev *swdma_dev,
+>  	return chan_cnt;
 > =20
 >  err_exit:
-> -	if (swdma_dev->chan_status_irq)
-> -		free_irq(swdma_dev->chan_status_irq, swdma_dev);
-> +	if (swdma_dev->chan_status_irq >=3D 0)
-> +		pci_free_irq(pdev, swdma_dev->chan_status_irq, swdma_dev);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but can this error path lead to a
-use-after-free?
-
-If dma_async_device_register() fails, the code jumps to
-err_chans_release_exit, which calls switchtec_dma_chans_free(). This frees
-the channel structures but leaves them linked in dma_dev->channels.
-
-The status IRQ remains registered until pci_free_irq() is called here.
-
-If an interrupt fires during this window, will
-switchtec_dma_chan_status_isr() iterate the list and access the freed
-channel objects?
-
+> +	switchtec_dma_chans_disable(pdev, swdma_dev);
+>  	switchtec_dma_chans_release(pdev, swdma_dev);
+>  	switchtec_dma_chans_free(swdma_dev);
 > =20
->  	iounmap(swdma_dev->bar);
->  	kfree(swdma_dev);
-
-While reviewing this file, I noticed a few other pre-existing issues.
 
 [Severity: High]
-This is a pre-existing issue, but could an early interrupt trigger a NULL
-pointer dereference?
+This is a pre-existing issue, but could an early interrupt cause a NULL
+pointer dereference here?
 
-In switchtec_dma_create(), pci_request_irq() is called before the channel
-list is initialized:
+In switchtec_dma_create(), pci_request_irq() is called to enable
+switchtec_dma_chan_status_isr() before switchtec_dma_chans_enumerate()
+is called.
 
-switchtec_dma_create()
-    ...
-    rc =3D pci_request_irq(pdev, irq, NULL, switchtec_dma_chan_status_isr, =
-...);
+The enumerate function is what initializes the list head:
 
-If an interrupt fires immediately, switchtec_dma_chan_status_isr() will
-execute:
+    INIT_LIST_HEAD(&dma->channels);
 
-switchtec_dma_chan_status_isr()
-    ...
-    list_for_each_entry(chan, &dma_dev->channels, device_node) {
+If an interrupt fires before the list is initialized, the ISR will execute
+list_for_each_entry() over a NULL channels.next pointer.=20
 
-Since swdma_dev was allocated with kzalloc_obj(), the list head is NULL.
+Should the interrupt request be deferred until after the channel enumeration
+is complete?
 
-Does iterating this uninitialized list bypass termination checks and crash?
+[ ... ]
 
+> @@ -1320,6 +1335,7 @@ static int switchtec_dma_create(struct pci_dev *pde=
+v)
+>  	return 0;
+> =20
+>  err_chans_release_exit:
+> +	switchtec_dma_chans_disable(pdev, swdma_dev);
+>  	switchtec_dma_chans_release(pdev, swdma_dev);
+>  	switchtec_dma_chans_free(swdma_dev);
+> =20
 
 [Severity: High]
-This isn't a bug introduced by this patch, but can unmapping swdma_dev->bar
-after unregistering the DMA device cause a use-after-free?
+This isn't a bug introduced by this patch, but does the ioremap call in
+switchtec_dma_create() need a return value check?
 
-Looking at switchtec_dma_remove(), dma_async_device_unregister() is called
-before iounmap():
+In switchtec_dma_create(), the BAR is mapped and then immediately used:
+
+switchtec_dma_create() {
+    ...
+    swdma_dev->bar =3D ioremap(pci_resource_start(pdev, 0), ...);
+    ...
+    irq =3D readw(swdma_dev->bar + SWITCHTEC_REG_CHAN_STS_VEC);
+}
+
+If ioremap() fails and returns NULL, readw() will dereference it.=20
+
+Should this include an error check before accessing swdma_dev->bar?
+
+[Severity: High]
+This is a pre-existing issue, but is there a use-after-free risk during
+driver unbind?
+
+When switchtec_dma_remove() unregisters the device, it can drop the final
+reference:
 
 switchtec_dma_remove()
-    ...
-    dma_async_device_unregister(&swdma_dev->dma_dev);
-    iounmap(swdma_dev->bar);
-    ...
+    dma_async_device_unregister()
+        switchtec_dma_release()
+            kfree(swdma_dev);
 
-When dma_async_device_unregister() drops the final reference to the DMA
-device, it triggers the release callback:
+Immediately after dma_async_device_unregister() returns, the remove function
+calls iounmap(swdma_dev->bar), dereferencing the freed pointer.=20
 
-switchtec_dma_release()
-    ...
-    kfree(swdma_dev);
-
-Will this sequence cause iounmap() to dereference the freed swdma_dev
-structure?
-
+Can this cause a kernel panic when the module is removed?
 
 [Severity: High]
-This is a pre-existing issue, but can invoking client callbacks while
-holding the driver spinlock cause a recursive locking deadlock?
+This is also a pre-existing issue, but does this locking pattern introduce a
+CPU deadlock risk?
 
-Looking at switchtec_dma_cleanup_completed():
+In switchtec_dma_cleanup_completed(), a spinlock is held while invoking an
+opaque client callback:
 
+switchtec_dma_cleanup_completed()
     spin_lock_bh(&swdma_chan->complete_lock);
     ...
     dmaengine_desc_get_callback_invoke(&desc->txd, &res);
 
-If the client callback re-enters the driver API, for example by calling
-dmaengine_tx_status(), it will execute switchtec_dma_tx_status(), which
-again calls switchtec_dma_cleanup_completed().
+If the client's callback invokes dmaengine_terminate_all(), the core will
+call switchtec_dma_terminate_all(), which unconditionally attempts to acqui=
+re
+the exact same complete_lock.=20
 
-Since complete_lock is a non-recursive spinlock, will this inner call
-attempt to acquire it and lead to an immediate self-deadlock?
-
-
-[Severity: High]
-This isn't a bug introduced by this patch, but is the teardown sequence in
-switchtec_dma_remove() correct?
-
-switchtec_dma_remove()
-    ...
-    switchtec_dma_chans_release(pdev, swdma_dev);
-    ...
-    dma_async_device_unregister(&swdma_dev->dma_dev);
-
-Here, switchtec_dma_chans_release() halts the hardware and frees channel IR=
-Qs
-before dma_async_device_unregister() safely quiesces the DMA engine.
-
-Will this inverted teardown destroy the hardware state while the DMA core
-still considers the device active, causing active clients to hang waiting
-for completions or crash if they submit new requests?
+Could this cause the CPU to deadlock?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727181526.9672=
--1-logang@deltatee.com?part=3D6
+-1-logang@deltatee.com?part=3D7
