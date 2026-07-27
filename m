@@ -1,63 +1,63 @@
 Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CD2438485
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA2B4398EF
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785184861; cv=none; b=uA2INHRUKoJPlF+bqTVrj+7r47v4zx5zY4rQRF7BgfpNcSodHjrITM95a0jB6GYwP+g8Ba9yLVTr2XvaklpVa4uguU7Qq+3SlzgUNJMuxg71O15S+JvRAyKaD9kYl8IwJgMiJ9NvD/iocvGHtk6FZBebKMcfKu2/MrUwnycJMbE=
+	t=1785184865; cv=none; b=dhgmB8A/nP2DIafcfIW52sPdgREMkQt+c9CKSuFUOe+Nxje1lxFjJ1UyzO9QkwGC6UL/1Z9tIZVPuiThsQmTkdmBQlshN65QyTNrwhVfk0AbQ1psioPwsrad4PRsTdjLQgckE0x/Qkd1E81fpmFx3MMBa/Dkvq+84s9v5yQFwxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785184861; c=relaxed/simple;
-	bh=SQwxSUtIBBj4RrttKVUl3hvy9l70UXNdS3dcjJr2+ZM=;
+	s=arc-20240116; t=1785184865; c=relaxed/simple;
+	bh=FyKAMmX0CxgscsP+BPCFodUDhZmInNUYJC9cJrNgEPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCUmpw2kkfl2/8yAzISVRhee2xbQfS+E+KIr55uMvqQ/yqQOB/FhoCabiBfd5u9DKiSMEKGlAGGnSJqfMVyPQRpb0FDgx4VlmezT4c7aoztOXJPvh5q+zQNA7ASsTwMwU7Y+uOQM4b/MgpbH+z/+/UIXRKqL3Lt+eU+K54cZCwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BEytKq1M; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=e3ez05ZxhLo8GaRkdQLiGIw4UwBPqWprmHF4vkf8eRGkV7w+tjDYfSpqiO/COpiGc8DPJ/iQJ56xLKjfEMMRZT0xIqzOji79jWZSBwY2AZvWXGLj1cH1BA+5K4xWrCO8LQKYzdsNAYQHtAL0f/sAWaNJjj7oTO7B/1cBJ5/meV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZM6f/hAA; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BEytKq1M"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-845c92bc464so2608797b3a.2
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:41:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZM6f/hAA"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-84867f07d63so3846073b3a.2
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:41:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785184859; x=1785789659; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785184864; x=1785789664; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=L4xnrxY6hyCblG5rdEl+ABf/Yty/8w8iGAzjnhjNo58=;
-        b=BEytKq1MQlSb+sfPByRke9lCVcdKHX+tfm7YWpRNxacPcre/IWr+V/yvLvNWpN/xuW
-         f39GR1K5wZdAef2UeTWlWNlnuHOlyrL1OLKWY70sQ+JSoiAd/gxGs+YvQfXINGXnhfvD
-         thMPKHLzaJ7JED1i5driSW1DTkyZNfGbjCYcZ8S8KtkTez7gJvjXvkWAtfEv718WA+On
-         6CTncppdnfpw8aN84pR+wxJi8BWsSZmW41UF4zmWpPysTvdJboEpfI6emjyOBytVEacY
-         nEcWdmCnaElz27P204YIZlANr8tez8gEApZOsTCSiLenPtTxTyA5p17tcRT+Yj0u5+K8
-         fiVg==
+        bh=MoGDnKIkCWUYPRJHysO+SEgLQsJmuE/s2iHiDIk04IE=;
+        b=ZM6f/hAAXecIRfZ6WLN1SAXsTj8XPj4HGltdblF/8gJJfbFtAPHMZEcH0flZ0EvDl9
+         l2FLFpAhKKtqZ8QFe14UpJLr1O/+vlcWceDhR5ZS8WjzUf7AqSTSqG2C+Fg0fssx3M6s
+         pg242evWRugLADiZyshwRFZk9dBtgBmPZAy3w1r5NOlmeMqaq+cTM9Gk8FGuZbNxRPZS
+         olhc1TNsNORL6InvCTZtZASAIXhnFWMgM3tQSbiS0IRLKjPelrqk7maWczDtH5HTfMYr
+         yXEIn9/NWevxUybTYQ48THuopWHdGWCg6vVmEgx83JRq9+CpFIBG69u49BUnqAO/ZcHs
+         x42Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785184859; x=1785789659;
+        d=1e100.net; s=20251104; t=1785184864; x=1785789664;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=L4xnrxY6hyCblG5rdEl+ABf/Yty/8w8iGAzjnhjNo58=;
-        b=hk0hZddfUIg418OR9b7MSGhalfX0cpdD7uIZUn5fUbZ0EVkhuJv967nNqnyAKQzRrB
-         Tp6jmdCeouAjaIDPAM+MrwMQieyqyjWSkl1IJitHbPN5ChdPrsRpQKwrBQtjF4tIjnbn
-         TpdEjmDXg+u6P2US+AhrV2jzd7dfrGL5yiHnfVOElqCPYl9oGlkk2SmZIpto9Ce+qW2O
-         6mTay1IaijoeuFNZAiFz+DQw3yLe+ptbsZ+xA4IXbY0YbJJkV2xruK/dStPSxd8OIcq8
-         pPZ9EF5ztexYzlNMyRhBmC3ejsmJUiQK3UV1pNkQl6LVCc1T7k5zdpeChNdmHLJ/Rjf3
-         nJhQ==
-X-Forwarded-Encrypted: i=1; AHgh+RoCVTDuQvQpm++/cikf7ic7b/LMM+9gDBHOQyyCCxccQn4YPexZxaCZC+JJqCSxPsK4PcWZpWVq/7A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBdk+XwNL8swzbDGq1JXMctrxjafEFEC8Yc+MaF6H4PdDzROvG
-	vV5t9U5SIik8B0XJ8U8AGn2G02BNJMRb4wM0eHfwd6kge6cJLLLx+XZD
-X-Gm-Gg: AR+sD12b/TVAdBap7Vu+j0DTecbEvSlsgxUu29kjDyTXTfNdSxnQPOEZWi5fmmX8EbQ
-	pf8oZi2HkUvIIqvD4VpLswl7dQjVF0Hf7EK8zGMSb6uKinclYfiGft3diXgHqlmLHQyIJiNZxeR
-	FefDTVBjw58YHef4UCD2WF94cqVIbZ/uz8/0+8i36QKa47oLJ3/Jpqp9gW2tTHd9ddXBzwvrF+X
-	8zPqXeNCK20wYxndIhhhnSRFoiFR1201/T3s3LpJ8VlTflE9jjZmcuv2kYqnmfp04aisHwatum7
-	Oyfp8BLhVohAsEGsjjBWBzIx6kgpSwrgO0gb01M1hC0ugd30NbN+ZRPUsi9fyxDoMfAdDMKCV9k
-	w1OKZMucFuoVcZFeMZPJg8fbX47cI59kWvChzWIkUunRKNtctdLAiHlaj5nOZR83QQ6bT7HmpkS
-	XpWtBxUdz4sBtRXVMM9LSH9hNTrwA14ZaoAzK2CpcTr5jYBK95OrTYMS1ZqKn1+4g=
-X-Received: by 2002:a05:6a00:1790:b0:84e:831:9a1a with SMTP id d2e1a72fcca58-84e594683e4mr8126317b3a.21.1785184859453;
-        Mon, 27 Jul 2026 13:40:59 -0700 (PDT)
+        bh=MoGDnKIkCWUYPRJHysO+SEgLQsJmuE/s2iHiDIk04IE=;
+        b=PAEOHcQqw0zHJ/Iyfrwh83aFLS+BMiToxmi86p3TWrE+65z5RBev7t7bzcj6jVmZZa
+         zqOxTRlQ5/oNWoNqrhoN7mT7NoDEMAXlhvW77iuLwrObV4s/N/56HYrAZ20lDLh1ou6z
+         X85B9v4tNsgf9k4PEcit3pSv3wLdDD5WoSSflz9DNHU4SVWs5ArFwmNWVOWdV43dDv3u
+         tbeqKw+9qhl42np5lYqRHPx0t0C/eYzgO2SkBFjKdX096/W37IjAhboP1Bocu8A/L0IO
+         ppU9iXdVMFA8adLeNITTO7IDutCtiK2Jb5px87yThct5esK0mUSDTBZHia421ZOiDqyU
+         UfCw==
+X-Forwarded-Encrypted: i=1; AHgh+RpP9zvs9EMnMKhV2yuD+s6r1u5BrHMZjjOq2qyAohaqQKY4/G2ERTA2/qmTmKkFA+eiZ8hawdJ3JJM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2PaZTk5ZnDVtExKzNS93WG1iTgRBNop3M9idZ2+66cEJC7EVK
+	kYHmGuuDAYyKwZYOok0oFIYvoJYTJXoOSFSTj/GuS2IkI3rAKyuXTWbu
+X-Gm-Gg: AR+sD12RTb6xn/9TJbxPVQQwNcAxGUUhPx31/pTFdVUf/+1CHiQQj5miJgS0uc7IdN/
+	cVlSAlj5bTO7VNajdsd+Z7w9cWN/a6VzEI13kUxYPnV/AhAh1L2bRZ5W/Kg22X+g352+qCqlyjU
+	5H9NaDGj4GoUw++uS6TZlcx3QqZxzfNL5Lkfa621/C1w536ydQFr7JVo3boRtkOszRNqseFyc7j
+	MNysKe91aia9oW4RDjiD4v+cYfQ6KcKufQl9yZcKdDUCzX+EXmY0WXYy3k1RM1pkiSYoFcl2gTD
+	Ap6C2F45KisD4tbFekP2RBPnEfemnxR47ZgDs/0zrvx3qfqDNwXij+mAH2k66xQCQnhYzpfi/IG
+	1tLK+AJ99wNkIZGkI5IUB9a8VCFNpQmhE6NahhxvoG/dl8UoxsoH9QfELGs5iQx2fNa68+u4Jqc
+	AY6Z6MosqEkF881io=
+X-Received: by 2002:a05:6a00:9283:b0:848:63fb:fd91 with SMTP id d2e1a72fcca58-84e59546fc9mr8715283b3a.41.1785184863402;
+        Mon, 27 Jul 2026 13:41:03 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fab:e200:3789:64f9:8855:c0af])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.40.57
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84e533d1351sm3583338b3a.39.2026.07.27.13.41.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 13:40:58 -0700 (PDT)
+        Mon, 27 Jul 2026 13:41:01 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -66,10 +66,10 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>
-Subject: [PATCH v2 55/64] dmaengine: dma-axi-dmac: use dma_chan_kill_bh
-Date: Mon, 27 Jul 2026 13:39:17 -0700
-Message-ID: <8b42f611df2e037246dbf58d21f3d3bfffe17de1.1785183549.git.allen.lkml@gmail.com>
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH v2 56/64] dmaengine: omap-dma: use dma_chan_kill_bh
+Date: Mon, 27 Jul 2026 13:39:18 -0700
+Message-ID: <152e342e252b9196a372924d76ff3536b4a4bde2.1785183549.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com> <cover.1785183549.git.allen.lkml@gmail.com>
@@ -87,38 +87,22 @@ channel storage is released.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/dma-axi-dmac.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/dma/ti/omap-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index d47ff27e1408..d26bfa852806 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -1195,9 +1195,11 @@ static int axi_dmac_detect_caps(struct axi_dmac *dmac, unsigned int version)
- 	return 0;
+diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+index 55ece7fd0d99..10cdbcd12fe6 100644
+--- a/drivers/dma/ti/omap-dma.c
++++ b/drivers/dma/ti/omap-dma.c
+@@ -1521,7 +1521,7 @@ static void omap_dma_free(struct omap_dmadev *od)
+ 			struct omap_chan, vc.chan.device_node);
+ 
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dma_chan_kill_bh(&c->vc.chan);
+ 		kfree(c);
+ 	}
  }
- 
--static void axi_dmac_tasklet_kill(void *task)
-+static void axi_dmac_kill_bh(void *data)
- {
--	tasklet_kill(task);
-+	struct dma_chan *chan = data;
-+
-+	dma_chan_kill_bh(chan);
- }
- 
- static void axi_dmac_free_dma_controller(void *of_node)
-@@ -1302,8 +1304,8 @@ static int axi_dmac_probe(struct platform_device *pdev)
- 	 * Put the action in here so it get's done before unregistering the DMA
- 	 * device.
- 	 */
--	ret = devm_add_action_or_reset(&pdev->dev, axi_dmac_tasklet_kill,
--				       &dmac->chan.vchan.task);
-+	ret = devm_add_action_or_reset(&pdev->dev, axi_dmac_kill_bh,
-+				       &dmac->chan.vchan.chan);
- 	if (ret)
- 		return ret;
- 
 -- 
 2.43.0
 
