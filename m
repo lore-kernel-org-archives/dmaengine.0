@@ -1,63 +1,63 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CD6422542
-	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3A942BC48
+	for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 20:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785184263; cv=none; b=EMr7nRAkthEbnzd8W/ip6pHxAgFXG3hbm+P5sJJHlf3mWBjwCQBrYhLEO+86Fo4LQjD0WSOaeCoRXWzYwANConhlbUb4q1Zv4m3wK3jmtoZWTa9hT+V4XazQxikuGHqBKwikP0pMwYHSsyZ4jtMyMG5jNbVARWr1zN/xRWdQL+A=
+	t=1785184265; cv=none; b=hofef1k1Py7QBymUmqg2vhmE0TQBsZqy2iVj0gGZiaAcPhSZA9mPHJ/LCpk+3/L+Swx3eBzSD8HCvM+6MK8nvF4mWWNTmNNeUgBqdMOlbDU/LPCT5deK65ekCc0tLjdUcNDMzrcKZosnLFltUJWNgTuGBY/4zVueGirH0S3qvnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785184263; c=relaxed/simple;
-	bh=U4KXLBS3zkStCYfODfSsXYNkUSZw4MyLZbLPLaeLLVA=;
+	s=arc-20240116; t=1785184265; c=relaxed/simple;
+	bh=htPEkRt/wlUc/B5CfMfsVrTbdwmpn7Pc0EUUOX+Q2x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmMKqMZLT8yYtDehOB2yFRbxQa9La2zRG8fTg0PIGLnO5Pr6CWZVxTTltNKra1ucWM/ZdRMeRF17ow890F4bnbvcrO4ISKeASda7kN72dxzwgTscB7Gr88ucZe8z99O3YCHrUDW/HioiHIN+S3s8ggZrfXVOfErxE7pyGE90+xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R1WFCf1h; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=VsN3OeKUmVGxybjYLw+seJKbUeLqXrgB1cJDnK/CCt80jQ1PKogmEnPYUQWbop7iAQhRzsJGf52UC1FgSa5zJqs8M1fVcosNGDlAmwdbHC8CdpBRS76q0IchVZbBiSe9Oa0DVrHZXDnu0mgBJUPCtQmRC6+YkSHHhXowkViOmII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3+FdmP9; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R1WFCf1h"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cf50c6f235so38240135ad.0
-        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:31:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3+FdmP9"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2caea3f742bso38311035ad.0
+        for <dmaengine@vger.kernel.org>; Mon, 27 Jul 2026 13:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785184261; x=1785789061; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785184263; x=1785789063; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xGZ1GOaRsiWh0/W+o9LgId/Souim6C1Eu5Tze1b0ElA=;
-        b=R1WFCf1hDmUQkx0uOzMelPhR92rCP7ES9Vglh5A+wYDlQ6b87HkIxUP+6o9hQj06Jl
-         FgEwB3IgK7ApVK7A4WWbfuHTCMp4fw1otUz6hrZfqL279Rd51znM2ubzuTA0B5v57nfN
-         M4X4w1arjGITWG/UXVNoD8UxIaIYOQ8E+kd/AwDzqQPHrHbV7W0ESlU54avDgNoIFREy
-         NkV2OPO4PRBYLXKbtzUIN58W6Z4MvhsiubZofWyU/bQD8xurH9C2SP3rY13W111U1dGc
-         3SuydPbQzTeeDNIi8gIBoxEss4/wiBMJ+adPPWWX7wZBX2XYivJqaYl8lxGIzExemcOR
-         wfRQ==
+        bh=eL6u4024lYZo08Y4G1gwSt9iJeSU/PAgv8//3iOWwdk=;
+        b=D3+FdmP9V6rsovSMOLDc/rzdoEyDzWHzxgXXJ0fwqmKUKtwrSlbU0S+6s7lKFAygoi
+         g2vfbeVS10E1M8nWvKBLHARFZSHNAiY5OFXZrlOpmRriBOe0VYf/Rr3hjcBi8BAL3nds
+         l16KuR/Xk0ZrO/wnF4SasbPD3/Bg+0oBt9vXlckA8PV33QrsNMf9XppCmJocAe1wBFsa
+         DbpfaxeWvJe3pixOuZYqdaw7KMWh7F7YpZBRnKl19c/sHINtJuey1tnN/T/yJaGd5jQY
+         43wY8D51o/n8XrR2xNmK0BwgvMDnP4mnxQVHDfOZf3SiSkCWbgHYI8NHUfj0Cn3riTpT
+         FcEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785184261; x=1785789061;
+        d=1e100.net; s=20251104; t=1785184263; x=1785789063;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xGZ1GOaRsiWh0/W+o9LgId/Souim6C1Eu5Tze1b0ElA=;
-        b=W5P1SpWPgTtGIiytetIVfr+9VUkgtm7Xgg4BBMFN21hEqpz/uL3miCrONsLam9f/9W
-         Awr9HcPihKZfKlLFmM915R1otRd0qxRnwODxJGsNebamGPp8Z5jUUMOWQhGf6ehs0R0H
-         gJfvMwrMJTfsjqbKhF7WoqpVPcLZ8TgSHmHPQFWRvO5isvxFzwwHArUonxSYdwfmU7EK
-         Rud5nLmUOMPaP5IM6oHoaU+3AJ1FS+gnHibzXtoFu4m+qocsgF1NZLvp+z5fSSMpn602
-         w9E1r0jPwZEpvwgcj3QHNssa4+lGvpYeITWJcjXYSwrZB1QjEgHBd6XDAaDweN34m8B2
-         a/Pg==
-X-Forwarded-Encrypted: i=1; AHgh+RoUjbvmS+MGscm1bN07hvXTLFHBai2rQVchXfTqlS3Ju4FAy2ncz9TAHSTOflp+Uooevfa/MikOFew=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywj+DlIy8IW+wXZuPkq4HyXXTo96KrfYwoT7XloBiN4fFAKNG7h
-	19pVEBKoYptGVR7jv6O40JcOVQKWUdmSBr0uJjGjw2xZR8GMGlFSeMcQ
-X-Gm-Gg: AR+sD11kGMLv5YJzCz1i0kIXOI694OQ/0tq27jubUdeMJhqImjgFfbVdVnx2D2qb77I
-	azL11R3ATfe+K6NrI8Z2IPf7Kx4Lvp912pvo5T7hnoXXyClfU+pAniSknIL5nnXI7p2u+ZmVkHB
-	afHykjeN3Ju92sBQTYoM9fg1TFpXn6080xFI8uV5NMT6ekNC3BmlbRdxjMV/JSt6M76XnWQH46w
-	cs8ONK8Eel0+pB3ubkn0q2SEzFhRTzuWIS2TlL93kb4cNYV++WIUazBGTG6z/8ko2yUVvjD7Dk5
-	ov6HFNyjWUWcMtcZek8WPiOZbovRTX+lxwzApV5nY06qOUkA9OCyWCF8ct/8RQmLUY/W11gu56z
-	MVq4SHL8/oFu2p1/C1uRt1UkENHPcVG9YaAT0JGV3mQNhP46jwI7cOEJrFn4ziiCxpPjAzAJnK/
-	OWMn2E
-X-Received: by 2002:a17:902:ecc1:b0:2c9:97a7:3289 with SMTP id d9443c01a7336-2d00f5c3069mr6752375ad.43.1785184261069;
-        Mon, 27 Jul 2026 13:31:01 -0700 (PDT)
+        bh=eL6u4024lYZo08Y4G1gwSt9iJeSU/PAgv8//3iOWwdk=;
+        b=l1+hCguNNclbzClM7sfdAmXU8Ai+rqQ5flRhvgn0BJCzNaKWQ9Ss/7qcvHD6C+VM+H
+         UMgQhG0BDg+s56qXqGRAiZUAjAXUqZ5EF8VWjcA4+s6ttGNXgdyrwavAV+8YXSFcTAL1
+         nby4nJ8O947aEwnvEDC3qwv/SSoA8LaMJwzfLSADauIohtbjMDWwnbzKrxK3O7ckOlcA
+         1Tl5gmg8ro8DhZ6hG8qzrR0uVVIyevcO8fRIX02y4S6KuxL8zA+lQ+3JTRsbXz4v2yHM
+         4UDd/9Fqe4lnkUFA6hjsBBiJoA/+IWviKxjylfKNGCyIwu7GiFXRb/k7kq0hHZsok5JJ
+         EzUw==
+X-Forwarded-Encrypted: i=1; AHgh+Rqx61EJIv9gO/cpsW4x32myB3YCiY2asnaAB+Jo7xLEvMhmr1heMyWgxWNV5EnRI0LJ8446Hp5fD30=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPqug/3Jf4IR6iYgYv+Mlb87Tkl+uDr4/Qfsbd65NMcocnfelH
+	7K+3xlAepCO/vSjMkvtgy/jJqppbWJDphTwvSuGlogHTFUOfzWT7tOZI
+X-Gm-Gg: AR+sD12+6nzijJN14uERPLTs+AE8Wmmv+Y50e1dIr6F8qTnDuKbp6NFP7AFrIS8uy0e
+	8Y1E4cUBij1RhRqE9z0h+P9pUu+F1/gx/cEMTH/jqH+paA2rI2PoMkNlhXjfJNXFfZSdAD8NrT+
+	So2o0ouWl/LinymVWhwera56ycCX+uFtyav8dy/5quECqzupGkM0fnetY/B6letwidYMO/2aK0M
+	1G5yQ/NG2p6huxSp9+Gf2C7cl/qDPm1otVlAfF56cyFnhQVDFk+mGtHIRhal44o1rxolXFEAH2b
+	6IPRlgOgqRd5eUi6XD4QxnQBxTDAOrORzAkZFFNumAsc/zum6aP4kH30v/0ksCA9igPrYZDC6QQ
+	WkUikr7Ce/3zscZYFftwGs9vR9iRzBW53II0amAmP+Uzbs3MZlR4CwmUVnz7z/Rh+oIE88hbuBI
+	dTnBg94EbPE/1OSQ8=
+X-Received: by 2002:a17:903:2ca:b0:2ca:c411:78a with SMTP id d9443c01a7336-2d00f26a4f0mr7911805ad.3.1785184263356;
+        Mon, 27 Jul 2026 13:31:03 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fab:e200:3789:64f9:8855:c0af])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59b768sm41551805ad.4.2026.07.27.13.31.00
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cfde59b768sm41551805ad.4.2026.07.27.13.31.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jul 2026 13:31:00 -0700 (PDT)
+        Mon, 27 Jul 2026 13:31:02 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -66,9 +66,9 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>
-Subject: [PATCH v2 01/64] dmaengine: add tasklet-backed channel BH helpers
-Date: Mon, 27 Jul 2026 13:28:29 -0700
-Message-ID: <1ffd627be7ac24478efb82f52acbdc80c46ee2e5.1785183549.git.allen.lkml@gmail.com>
+Subject: [PATCH v2 02/64] dmaengine: back channel BH helpers with WQ_BH
+Date: Mon, 27 Jul 2026 13:28:30 -0700
+Message-ID: <dccbdfb0da3283455c72521e918ce1e98b77194b.1785183549.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1785183549.git.allen.lkml@gmail.com>
 References: <20260108080332.2341725-1-allen.lkml@gmail.com> <cover.1785183549.git.allen.lkml@gmail.com>
@@ -80,231 +80,173 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DMAengine drivers commonly use a per-channel tasklet to invoke client
-callbacks. Add helpers that initialize, schedule, and kill a channel
-bottom half, with an initial tasklet-backed implementation that preserves
-the existing execution context.
+Replace the tasklet implementation of the channel BH helpers with a
+dedicated WQ_BH | WQ_PERCPU workqueue. The public dma_chan_*_bh() API and
+its softirq execution context remain unchanged.
 
-Convert virt-dma to the new API and remove its private tasklet. While
-touching the completion handler, avoid forming a result pointer from a
-NULL cyclic descriptor.
-
-This establishes a backend-independent API before changing how channel
-bottom halves are dispatched.
+Keep the workqueue operations internal to dmaengine. Drain scheduled work
+in dma_chan_kill_bh() to preserve the completion semantics of
+tasklet_kill().
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/dmaengine.c   | 42 +++++++++++++++++++++++++++++++++++++++
- drivers/dma/virt-dma.c    | 12 +++++------
- drivers/dma/virt-dma.h    |  7 +++----
- include/linux/dmaengine.h | 28 ++++++++++++++++++++++++++
- 4 files changed, 79 insertions(+), 10 deletions(-)
+ drivers/dma/dmaengine.c   | 59 ++++++++++++++++++++++++++++++++-------
+ include/linux/dmaengine.h | 10 +++----
+ 2 files changed, 54 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 9049171df857..f43aeecb47f9 100644
+index f43aeecb47f9..8b1b17794956 100644
 --- a/drivers/dma/dmaengine.c
 +++ b/drivers/dma/dmaengine.c
-@@ -1428,6 +1428,48 @@ static void dmaengine_destroy_unmap_pool(void)
+@@ -54,6 +54,7 @@
+ #include <linux/rcupdate.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
++#include <linux/workqueue.h>
+ 
+ #include "dmaengine.h"
+ 
+@@ -61,6 +62,7 @@ static DEFINE_MUTEX(dma_list_mutex);
+ static DEFINE_IDA(dma_ida);
+ static LIST_HEAD(dma_device_list);
+ static long dmaengine_ref_count;
++static struct workqueue_struct *dmaengine_bh_wq;
+ 
+ /* --- debugfs implementation --- */
+ #ifdef CONFIG_DEBUG_FS
+@@ -1428,9 +1430,34 @@ static void dmaengine_destroy_unmap_pool(void)
  	}
  }
  
-+static void dma_chan_bh_entry(struct tasklet_struct *tasklet)
-+{
-+	struct dma_chan *chan = from_tasklet(chan, tasklet, bh_tasklet);
-+	dma_chan_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
-+
-+	if (fn)
-+		fn(chan);
-+}
-+
-+void dma_chan_init_bh(struct dma_chan *chan, dma_chan_bh_work_fn fn)
-+{
-+	if (WARN_ON(!fn))
+-static void dma_chan_bh_entry(struct tasklet_struct *tasklet)
++static void dmaengine_destroy_bh_wq(void)
+ {
+-	struct dma_chan *chan = from_tasklet(chan, tasklet, bh_tasklet);
++	if (!dmaengine_bh_wq)
 +		return;
 +
-+	if (WARN_ON(chan->bh_work_initialized))
-+		return;
-+
-+	chan->bh_work_fn = fn;
-+	tasklet_setup(&chan->bh_tasklet, dma_chan_bh_entry);
-+	chan->bh_work_initialized = true;
++	destroy_workqueue(dmaengine_bh_wq);
++	dmaengine_bh_wq = NULL;
 +}
-+EXPORT_SYMBOL_GPL(dma_chan_init_bh);
 +
-+bool dma_chan_schedule_bh(struct dma_chan *chan)
++static bool dmaengine_queue_bh_work(struct work_struct *work)
 +{
-+	if (WARN_ON(!chan->bh_work_initialized))
++	if (WARN_ON(!dmaengine_bh_wq))
 +		return false;
 +
-+	tasklet_schedule(&chan->bh_tasklet);
-+	return true;
++	return queue_work(dmaengine_bh_wq, work);
 +}
-+EXPORT_SYMBOL_GPL(dma_chan_schedule_bh);
 +
-+void dma_chan_kill_bh(struct dma_chan *chan)
++static void dmaengine_flush_bh_work(struct work_struct *work)
 +{
-+	if (!chan->bh_work_initialized)
++	if (!work)
 +		return;
 +
-+	tasklet_kill(&chan->bh_tasklet);
++	flush_work(work);
 +}
-+EXPORT_SYMBOL_GPL(dma_chan_kill_bh);
 +
- static int __init dmaengine_init_unmap_pool(void)
- {
- 	int i;
-diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
-index 7961172a780d..89fcd51ddcab 100644
---- a/drivers/dma/virt-dma.c
-+++ b/drivers/dma/virt-dma.c
-@@ -77,12 +77,12 @@ struct virt_dma_desc *vchan_find_desc(struct virt_dma_chan *vc,
- EXPORT_SYMBOL_GPL(vchan_find_desc);
++static void dma_chan_bh_entry(struct work_struct *work)
++{
++	struct dma_chan *chan = container_of(work, struct dma_chan, bh_work);
+ 	dma_chan_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
  
- /*
-- * This tasklet handles the completion of a DMA descriptor by
-- * calling its callback and freeing it.
-+ * This bottom-half handler completes a DMA descriptor by invoking its
-+ * callback and freeing it.
-  */
--static void vchan_complete(struct tasklet_struct *t)
-+static void vchan_complete(struct dma_chan *chan)
- {
--	struct virt_dma_chan *vc = from_tasklet(vc, t, task);
-+	struct virt_dma_chan *vc = to_virt_chan(chan);
- 	struct virt_dma_desc *vd, *_vd;
- 	struct dmaengine_desc_callback cb;
- 	LIST_HEAD(head);
-@@ -98,7 +98,7 @@ static void vchan_complete(struct tasklet_struct *t)
- 	}
- 	spin_unlock_irq(&vc->lock);
+ 	if (fn)
+@@ -1446,7 +1473,7 @@ void dma_chan_init_bh(struct dma_chan *chan, dma_chan_bh_work_fn fn)
+ 		return;
  
--	dmaengine_desc_callback_invoke(&cb, &vd->tx_result);
-+	dmaengine_desc_callback_invoke(&cb, vd ? &vd->tx_result : NULL);
- 
- 	list_for_each_entry_safe(vd, _vd, &head, node) {
- 		dmaengine_desc_get_callback(&vd->tx, &cb);
-@@ -131,7 +131,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
- 	INIT_LIST_HEAD(&vc->desc_completed);
- 	INIT_LIST_HEAD(&vc->desc_terminated);
- 
--	tasklet_setup(&vc->task, vchan_complete);
-+	dma_chan_init_bh(&vc->chan, vchan_complete);
- 
- 	vc->chan.device = dmadev;
- 	list_add_tail(&vc->chan.device_node, &dmadev->channels);
-diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
-index 59d9eabc8b67..abe2a4475744 100644
---- a/drivers/dma/virt-dma.h
-+++ b/drivers/dma/virt-dma.h
-@@ -21,7 +21,6 @@ struct virt_dma_desc {
- 
- struct virt_dma_chan {
- 	struct dma_chan	chan;
--	struct tasklet_struct task;
- 	void (*desc_free)(struct virt_dma_desc *);
- 
- 	spinlock_t lock;
-@@ -106,7 +105,7 @@ static inline void vchan_cookie_complete(struct virt_dma_desc *vd)
- 		 vd, cookie);
- 	list_add_tail(&vd->node, &vc->desc_completed);
- 
--	tasklet_schedule(&vc->task);
-+	dma_chan_schedule_bh(&vc->chan);
+ 	chan->bh_work_fn = fn;
+-	tasklet_setup(&chan->bh_tasklet, dma_chan_bh_entry);
++	INIT_WORK(&chan->bh_work, dma_chan_bh_entry);
+ 	chan->bh_work_initialized = true;
  }
+ EXPORT_SYMBOL_GPL(dma_chan_init_bh);
+@@ -1456,8 +1483,7 @@ bool dma_chan_schedule_bh(struct dma_chan *chan)
+ 	if (WARN_ON(!chan->bh_work_initialized))
+ 		return false;
  
- /**
-@@ -137,7 +136,7 @@ static inline void vchan_cyclic_callback(struct virt_dma_desc *vd)
- 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
- 
- 	vc->cyclic = vd;
--	tasklet_schedule(&vc->task);
-+	dma_chan_schedule_bh(&vc->chan);
+-	tasklet_schedule(&chan->bh_tasklet);
+-	return true;
++	return dmaengine_queue_bh_work(&chan->bh_work);
  }
+ EXPORT_SYMBOL_GPL(dma_chan_schedule_bh);
  
- /**
-@@ -223,7 +222,7 @@ static inline void vchan_synchronize(struct virt_dma_chan *vc)
- 	LIST_HEAD(head);
- 	unsigned long flags;
+@@ -1466,7 +1492,7 @@ void dma_chan_kill_bh(struct dma_chan *chan)
+ 	if (!chan->bh_work_initialized)
+ 		return;
  
--	tasklet_kill(&vc->task);
-+	dma_chan_kill_bh(&vc->chan);
+-	tasklet_kill(&chan->bh_tasklet);
++	dmaengine_flush_bh_work(&chan->bh_work);
+ }
+ EXPORT_SYMBOL_GPL(dma_chan_kill_bh);
  
- 	spin_lock_irqsave(&vc->lock, flags);
+@@ -1666,15 +1692,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
  
+ static int __init dma_bus_init(void)
+ {
+-	int err = dmaengine_init_unmap_pool();
++	int err;
+ 
++	dmaengine_bh_wq = alloc_workqueue("dmaengine_bh",
++					  WQ_BH | WQ_PERCPU, 0);
++	if (!dmaengine_bh_wq)
++		return -ENOMEM;
++
++	err = dmaengine_init_unmap_pool();
+ 	if (err)
+-		return err;
++		goto err_destroy_wq;
+ 
+ 	err = class_register(&dma_devclass);
+-	if (!err)
+-		dmaengine_debugfs_init();
++	if (err)
++		goto err_destroy_pool;
+ 
++	dmaengine_debugfs_init();
++	return 0;
++
++err_destroy_pool:
++	dmaengine_destroy_unmap_pool();
++err_destroy_wq:
++	dmaengine_destroy_bh_wq();
+ 	return err;
+ }
+ arch_initcall(dma_bus_init);
 diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index b3d251c9734e..c670781b3150 100644
+index c670781b3150..c87974d5048b 100644
 --- a/include/linux/dmaengine.h
 +++ b/include/linux/dmaengine.h
-@@ -12,6 +12,7 @@
+@@ -12,7 +12,7 @@
  #include <linux/scatterlist.h>
  #include <linux/bitmap.h>
  #include <linux/types.h>
-+#include <linux/interrupt.h>
+-#include <linux/interrupt.h>
++#include <linux/workqueue.h>
  #include <asm/page.h>
  
  /**
-@@ -295,6 +296,10 @@ enum dma_desc_metadata_mode {
- 	DESC_METADATA_ENGINE = BIT(1),
- };
- 
-+struct dma_chan;
-+
-+typedef void (*dma_chan_bh_work_fn)(struct dma_chan *chan);
-+
- /**
-  * struct dma_chan_percpu - the per-CPU part of struct dma_chan
-  * @memcpy_count: transaction counter
-@@ -334,6 +339,9 @@ struct dma_router {
+@@ -339,9 +339,9 @@ struct dma_router {
   * @router: pointer to the DMA router structure
   * @route_data: channel specific data for the router
   * @private: private data for certain client-channel associations
-+ * @bh_tasklet: bottom-half tasklet stored per-channel
-+ * @bh_work_fn: callback executed when @bh_tasklet runs
-+ * @bh_work_initialized: indicates whether @bh_tasklet has been initialized
+- * @bh_tasklet: bottom-half tasklet stored per-channel
+- * @bh_work_fn: callback executed when @bh_tasklet runs
+- * @bh_work_initialized: indicates whether @bh_tasklet has been initialized
++ * @bh_work: bottom-half work item stored per-channel
++ * @bh_work_fn: callback executed when @bh_work runs
++ * @bh_work_initialized: indicates whether @bh_work has been initialized
   */
  struct dma_chan {
  	struct dma_device *device;
-@@ -359,6 +367,9 @@ struct dma_chan {
+@@ -367,7 +367,7 @@ struct dma_chan {
  	void *route_data;
  
  	void *private;
-+	struct tasklet_struct bh_tasklet;
-+	dma_chan_bh_work_fn bh_work_fn;
-+	bool bh_work_initialized;
+-	struct tasklet_struct bh_tasklet;
++	struct work_struct bh_work;
+ 	dma_chan_bh_work_fn bh_work_fn;
+ 	bool bh_work_initialized;
  };
- 
- /**
-@@ -1529,6 +1540,9 @@ struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name);
- 
- void dma_release_channel(struct dma_chan *chan);
- int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
-+void dma_chan_init_bh(struct dma_chan *chan, dma_chan_bh_work_fn fn);
-+bool dma_chan_schedule_bh(struct dma_chan *chan);
-+void dma_chan_kill_bh(struct dma_chan *chan);
- #else
- static inline struct dma_chan *dma_find_channel(enum dma_transaction_type tx_type)
- {
-@@ -1576,6 +1590,20 @@ static inline int dma_get_slave_caps(struct dma_chan *chan,
- {
- 	return -ENXIO;
- }
-+
-+static inline void dma_chan_init_bh(struct dma_chan *chan,
-+				    dma_chan_bh_work_fn fn)
-+{
-+}
-+
-+static inline bool dma_chan_schedule_bh(struct dma_chan *chan)
-+{
-+	return false;
-+}
-+
-+static inline void dma_chan_kill_bh(struct dma_chan *chan)
-+{
-+}
- #endif
- 
- static inline int dmaengine_desc_set_reuse(struct dma_async_tx_descriptor *tx)
 -- 
 2.43.0
 
