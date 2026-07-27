@@ -1,89 +1,144 @@
-Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E3C2405EB
-	for <dmaengine@vger.kernel.org>; Sun, 26 Jul 2026 14:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D36487BE;
+	Mon, 27 Jul 2026 00:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.181.231.80
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785076894; cv=none; b=RCqCjm4n60e2+QEAC9kVTct7uWOv5Gt9WwAczTvGJ2HoGagET5SjpQNbvB3Qd4A9guigdnYudn7LSN7YW8mDXTeNsSrC9XhRMc2VfguowJgx97KWYrbt6qYyQg4MYV16mLM4CqYhPAfppgUm/rhwfSd3QmZIQ4rRKk8q/Ns5Vbw=
+	t=1785112393; cv=none; b=NWZVOYGL7CqsKDlB3+prEIfftj9RVM9fzWKG1ezAsfmmkZQhfghdx5lz+kJ+yErdM1vhxWdo9pqklcN0M77RXdEIkn5EC5WXrF1sxQ4LZo/C/sjDY6fIHV6uVYf4gPR3emtm86YN+4oKbdc7cq1fAPb7TpkYcMdljePBpriVFs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785076894; c=relaxed/simple;
-	bh=t00CVuaIfi/20NLrKxxqW6T3Z61lbDc0EndKmd4Gzgo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=nS2ZEpSYZ5zIIABlf6EiKoSdZFUtMYPHad0RZXjy4HFdubePmUlPM/R1SIUNK0N0fOpdiauEffTNck45f+DOY/A2BjfB1EFRyEX7jJp3OwhH8x4UPQIG1wAw4lzGI91Xrb0YPd454VIheHUn1ODslV15isrXZ6W0BcSOIiUuqoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com; dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b=kfibHhMm; arc=none smtp.client-ip=121.127.44.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com
+	s=arc-20240116; t=1785112393; c=relaxed/simple;
+	bh=UY3efD0vkIgCls6go9OLhLVM9zyOHMV4VoR8ZEwJ2IY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qfVZe9feiby/wxElTNUsAV4o+W3m4fdCbLVwlgvsvDkai7+qyEINwEMdEPne5czVTamWhxzjRICYTrWcgTF/2608VvtImvCqAoKsJd1B50TftIndRgvm9EInGI/nzsJFgeXZX/sF22lf1lvxvyHqhnGA9aBw3z/TvtPc55dQbus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=SE48nxfk; arc=none smtp.client-ip=180.181.231.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b="kfibHhMm"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ubuntu.com;
- h=In-Reply-To: References: Subject: Cc: To: From: Message-Id: Date:
- Content-Type: Content-Transfer-Encoding: Mime-Version; q=dns/txt;
- s=fe-953a8a3ca9; t=1785076892;
- bh=wxXmArkr7I9p8OzXN7Q07cbSHLBGjb9XXJaQk/wXaiQ=;
- b=kfibHhMmJyn5DtCHJNNYIZqBdSotZG15rgW2AoxpePQ68CGE2bqbvTd/MaBignuuBnl0PFQfr
- 1VJjny3F3QKC96Vabp/gnc2KaBB/ilHMjT3Nr09XNgcc2DEzVidywp8mbBkED/igxV7dWP4x7De
- nQuqBpeNOQmcGd5hK4zzW2s9WlEqCwhF7n16BPDS0lJeL67qpsu20OsBVfT/1edSkHdWmJWSsh3
- XaWAuNW9l2NJfKXFhj7TXaE0/W7zgK9wYqRcfOuNAqOBL54E1eJFt2RQDXKvE9YhGtnLxm8JU/T
- tcMvN3pqTg49tQNT2WG/tBVKrxGHjeuTYYOsfieOj/og==
-X-Forward-Email-ID: 6a661c98d1c8002293af8ddf
-X-Forward-Email-Sender: rfc822; jpeisach@ubuntu.com, smtp.forwardemail.net,
- 121.127.44.66
-X-Forward-Email-Version: 2.12.3
-X-Forward-Email-Website: https://forwardemail.net
-X-Complaints-To: abuse@forwardemail.net
-X-Report-Abuse: abuse@forwardemail.net
-X-Report-Abuse-To: abuse@forwardemail.net
+	dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b="SE48nxfk"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=71cCBAS8A2hoPA6O2oKeS13s7oPVP5QW2HLk5bUeTeE=; 
+	b=SE48nxfkjA5poAhFHR1/I/OkTgWQB9Z49t37XkjzVEpR13Bj1smE+YZslraCkehB8IgCxhLjgJM
+	5vlfGpDJNG/OYtLjwHHD6/zpZpWGcNYTUFJ95VBuF+ewFdWVW967gxlJiE3ryh6gn/8LyuAtm2rnR
+	jT8DGEZI/7RLNA74REgg3ta3f+0hVZBkwyWYoJ+bK31EdmpBPpAlCotJ5MJtgaxSR3j2sgDeTTCq7
+	FQuBskVr22eJRAaErnQ9NaocEAVv6dlXfsjtB7Y3HMSArfJr0Atm3jkFXY17R+UktYw3lndgINRYK
+	TuH9PHfnlT73S5WB+mbgln1uepF27Z3pamyA==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
+	id 1wo9HH-0000000GywW-1o2q;
+	Mon, 27 Jul 2026 08:33:08 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Mon, 27 Jul 2026 10:33:07 +1000
+Date: Mon, 27 Jul 2026 10:33:07 +1000
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Cc: "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v4 0/6] Shikra: Add DT support for ICE, RNG and QCE
+Message-ID: <amanQ72mRGN2tiVd@gondor.apana.org.au>
+References: <20260714-b4-shikra_crypto_changse-v4-0-06a4ea97c209@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8; format=Flowed
-Date: Sun, 26 Jul 2026 10:41:27 -0400
-Message-Id: <DK8KY15BK9O8.382YX2M15Q0EQ@ubuntu.com>
-From: "Joshua Peisach" <jpeisach@ubuntu.com>
-To: "Sasha Finkelstein" <k@chaosmail.tech>, "Sven Peter" <sven@kernel.org>,
- "Janne Grunau" <j@jannau.net>, "Neal Gompa" <neal@gompa.dev>, "Vinod Koul"
- <vkoul@kernel.org>, "Frank Li" <Frank.Li@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, =?utf-8?q?Martin_Povi=C5=A1er?=
- <povik+lin@cutebit.org>
-Cc: <asahi@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
- <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 0/2] dmaengine: apple-admac: Add support for M3
- generation
-X-Mailer: aerc 0.21.0
-References: <20260725-t603x-admac-v1-0-6a4dec023f02@chaosmail.tech>
-In-Reply-To: <20260725-t603x-admac-v1-0-6a4dec023f02@chaosmail.tech>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260714-b4-shikra_crypto_changse-v4-0-06a4ea97c209@oss.qualcomm.com>
 
-On Sat Jul 25, 2026 at 8:25 AM EDT, Sasha Finkelstein wrote:
-> The ADMACs present in M3 series devices (t8122 and t603x SoCs) need
-> additional register writes in order to function correctly. Add a new
-> compatible chain for those, and change the driver to do the write.
->
-> To simplify the merge strategy, the device tree entries will be sent
-> in a future patch series.
->
-> Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
+On Tue, Jul 14, 2026 at 03:35:11PM +0530, Kuldeep Singh wrote:
+> This patch series enables SDHC ICE, RNG and QCE support on Shikra,
+> aligned with how similar support is modeled on other Qualcomm platforms.
+> 
+> These DT and dt-bindings updates were previously posted as three
+> separate series. Based on review feedback, they are grouped here as one
+> crypto-focused series.
+> Previous threads:
+> QCE: https://lore.kernel.org/lkml/20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com/
+> RNG: https://lore.kernel.org/lkml/20260514-shikra_rng-v1-0-4ea721a1429a@oss.qualcomm.com/
+> ICE: https://lore.kernel.org/lkml/20260515-shikra_ice_ufs-v2-0-2724a54339db@oss.qualcomm.com/
+> 
+> Prequisite patchsets are already merged so no longer tracking.
+> 
+> Validation:
+> - ICE: driver probe at boot
+> - QCE: kcapi tests and driver probe
+> - RNG: validated using rngutils
+> - DT: validated shikra-cqs-evk.dtb with dt_binding_check and CHECK_DTBS=y
+> 
+> Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
 > ---
-> Sasha Finkelstein (2):
->       dt-bindings: dma: apple,admac: Add M3 generation ADMACs
->       dmaengine: apple-admac: Add M3 generation ADMACs
->
->  Documentation/devicetree/bindings/dma/apple,admac.yaml | 10 ++++++++--
->  drivers/dma/apple-admac.c                              | 32 ++++++++++++=
-++++++++++++++++++--
->  2 files changed, 38 insertions(+), 4 deletions(-)
+> Changes in v4:
+> - Update Patch 1/6 commit message to accustom hawi special case.
+> - Collects tags(Krzysztof)
+> - Link to v3: https://patch.msgid.link/20260706-b4-shikra_crypto_changse-v3-0-23b4c2054227@oss.qualcomm.com
+> 
+> Changes in v3:
+> - Fix commit messages.
+> - Collect Ack and Reviewed-by tags.
+> - Link to v2: https://patch.msgid.link/20260702-b4-shikra_crypto_changse-v2-0-66173f2f28b3@qti.qualcomm.com
+> 
+> Changes in v2:
+> - Add fix in ice bindings to specify 2 clocks defauly for non-legacy Soc
+>   compatibles.
+> - Update commit messages.
+> - Link to v1: https://patch.msgid.link/20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com/
+> 
+> To: Herbert Xu <herbert@gondor.apana.org.au>
+> To: "David S. Miller" <davem@davemloft.net>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+> To: Harshal Dev <harshal.dev@oss.qualcomm.com>
+> To: Vinod Koul <vkoul@kernel.org>
+> To: Bartosz Golaszewski <brgl@kernel.org>
+> To: Konrad Dybcio <konradybcio@kernel.org>
+> To: Frank Li <Frank.Li@kernel.org>
+> To: Andy Gross <agross@kernel.org>
+> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-crypto@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: dmaengine@vger.kernel.org
+> 
 > ---
-> base-commit: 0ce37745d4bfbc493f718169c3974898ffec8ee7
-> change-id: 20260725-t603x-admac-a1b07a2ccb54
->
-> Best regards,
-> -- =20
-> Sasha Finkelstein <k@chaosmail.tech>
+> Kuldeep Singh (6):
+>       dt-bindings: crypto: qcom,inline-crypto-engine: Fix legacy/new SoC strictness split
+>       dt-bindings: crypto: qcom,inline-crypto-engine: Document Shikra ICE
+>       dt-bindings: crypto: qcom,prng: Document Shikra TRNG
+>       dt-bindings: crypto: qcom-qce: Document the Shikra crypto engine
+>       dt-bindings: dma: qcom,bam-dma: Increase iommus maxItems to 7
+>       arm64: dts: qcom: shikra: Add ICE, TRNG and QCE nodes
+> 
+>  .../bindings/crypto/qcom,inline-crypto-engine.yaml | 27 +++++++----
+>  .../devicetree/bindings/crypto/qcom,prng.yaml      |  1 +
+>  .../devicetree/bindings/crypto/qcom-qce.yaml       |  1 +
+>  .../devicetree/bindings/dma/qcom,bam-dma.yaml      |  2 +-
+>  arch/arm64/boot/dts/qcom/shikra.dtsi               | 52 ++++++++++++++++++++++
+>  5 files changed, 73 insertions(+), 10 deletions(-)
+> ---
+> base-commit: 49362394dad7df66c274c867a271394c10ca2bb8
+> change-id: 20260701-b4-shikra_crypto_changse-f2d6d5bf04b5
 
-Reviewed-by: Joshua Peisach <jpeisach@ubuntu.com>
+Patches 1-4 applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
