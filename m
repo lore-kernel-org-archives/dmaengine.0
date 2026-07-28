@@ -1,62 +1,63 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012023.outbound.protection.outlook.com [40.93.195.23])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012050.outbound.protection.outlook.com [52.101.48.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093DA3A5E71
-	for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 19:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4963B95EB
+	for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 20:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785268137; cv=fail; b=qeUcX8WZXzdAWQMMNvH/yRXURzsSEr9nQWlMriaLUpAz2GnlAr/9Aq2VPRX9Wg4j0HF1OryG4YH2XmQsw3L7vzOrVicseMsCE179aLeSrBX+Zp5koymnXY/io5VYNFFThggq/sSGEOGrcedJd3YfHaJGWJcR4uXJ/mSd9JrsRes=
+	t=1785268820; cv=fail; b=BGnDPxPV/jGWyBmkOT1my0IMQ1EuIS+wpqerQEuZGzSiVckVnKV2PYDeP6dYEdhwPHSs2UEdUexQ234vz14w9RWcqgFd8uAgcyKh4PDFdatfft5/92xnLjn+sCycXcqERCu0W1xeILykeNhCu2XO3/4o9wABqDXJNhGADXpOOrc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785268137; c=relaxed/simple;
-	bh=4UboG8sQIX22m7KYmJOp7b3y9J2W57x/DatjNapc7hc=;
+	s=arc-20240116; t=1785268820; c=relaxed/simple;
+	bh=UL0PCXAdK4Ihxval4BGk/16aNHXa3FntNDvJLYqs5Tg=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=V5TPFJQEfi39RJedkuEDT1v2ufEYaH65pn891E258l5orRH/YlxRPpOyEBrMojNYMQNhciN4ZPV4wyD9zJb6Rx85PGGRueFpaPmfBiETsCCY6hVKs4UB5KJDHS/HyX04ao/oqT1M1PSUOwyK1dfdI6jleAzNOvfc7llH2wBgZ/Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=CReT8Eib; arc=fail smtp.client-ip=40.93.195.23
+	 Content-Type:MIME-Version; b=NkehBzvtprUSDTWOC/9S/AlI3kxdu28L9atfhOFTQdLyFFNjamLV1wvkueLuugdBRi8OmL3nNsV9GOPM+HHKOsPBHO8f9/Cqw/pvjKzYMbQWWpuhktcXCk/B06GWX7bfQJ6BcHRbSoGOsbeg3TeAhT3139MMlZ6R0uJM2jI/ALs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=0TkEkcE1; arc=fail smtp.client-ip=52.101.48.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="CReT8Eib"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="0TkEkcE1"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=afVtG0Yc/27Jwr1FN0rV6Ws0LoiDcyKAuDv7pknc/39nVzc7YexCRqsRpC2JzHofZgyOrCyYBPEtS9EUh7WVLf4V7vE/Ohr8OFwRBmMJr4qY/51f06OMVMb0o5D6pbpcAMOG0AjYnecnOvdvUyNN7P3ny22kIt4W1Ssx1GPzTuOFmKp83themTbjqgtbdSaKzX3bLeN4i0vHERW3q0g+srqhXCrBakpuXYGRUWr/2ftLl4sco/KBpmNY9eZscj7BS74892hXaZMZ52GWxizMw7As/1FaXJBfv1XoX9lqXLbY0e1I7KW64oJTjY9lehTBbMGEvkxw6NSL7k34Dx8tPw==
+ b=ReC0JNVI5ndj0NDLgh2dD6K+hdnafPlBdLzwjsKix4WGrlbOOQqrB9kBuH74UisncEivpqD3SM+LpL3/mjTJk/oRKC21++pbnc4zMLmt2Bxm1BugOB65WTcj4M49ig555N+HqdAovWFXRuT8TFB9T+znbAhRIKBdkD2gL1WX9Is8z2513HmxMXv+UQ50lBHOfX7/dkN5F9ZtdUTtdNWmuJrfJSr3gAOvDtUJzX4Wr/erhQQxeWMad7QLGubZYXj7CfLTw7SGi5YGrnRT4U647j/OeLCESGfc68GAovla2Y0tCVSttDTUPmlM0QEkFNY50qVI4DRJ6W2OlgHzwqieZA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IWPWzQvvjAim4zPnRQNeBDhsXFXMEDsCdEmlxbdTfj8=;
- b=fM5ySNCfafmLyMseeFuMXIu/+3oK7H7uOPugKFyCLFD41OD/JU4Eg0eiPqPKDSAerfoyguIK2ZIgJ60wX1qWfAOZicZurhhna7uLEZca/Gyc6I3aKZ78662KK2rATyWmssbwe1XtCaP4boxU7i70UZFkAfF6W7EL4iUNpve7PAZtCXYPztoLhhEYo79j1OYSFbRqcWhflfv15p0uh/5loFyxI5AP2jlRjb9a3Kik2xH/YTjh5rkClN1ZjPKvRTLUlSIQ0Mwh7Jq5jNI9mYvVWEkOtC9efzdys2U8oa6dyz/+sqRZFynx9Tu1OHg8baEkZb2RE2OlGgiN4KgqkvjUkg==
+ bh=67ORwT0+c+C50AdVCnZBRk+0DvFJAmkZ5fDn7lGSrtk=;
+ b=FSVSHndd7MJQldYMhmKCmVWGFW+N74cUdQWOHuyVvvWBZNzmeifkweN4DTkfjB5fCOMv2Nynr1Q5dKT/nqIubYcOi3gVHm+Z5YZHY6uzSM8D2ciSG1ZElvdbol72JLQ5iVEcARUpw5WaJS+8m1p1NRkwGQYGiu+lzTMTOUianlf/aWVeHA4vz5MKOC/+VLEniRFOdfEB3Hao/EZnuk72mE4/OLdlc58R+KU2DrS7cN6YeQaG68zvapzqTlFWSZe7k3SE1X08ifG4bp+J8hXddrKaYuPO3/VEoJUEYv1OKsdY5oOZBgS8wxNqtLq0vkt5i+Bdt5cmR3pASsY8NyVvJA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IWPWzQvvjAim4zPnRQNeBDhsXFXMEDsCdEmlxbdTfj8=;
- b=CReT8Eibfg6uwvwCOx6KHw5dHsfxw2XokaVt5hl4Jq4/3vDFNHHBWUdtbzoB60BfUjIo4ByhpnXaTwgKjBU6IbMFgJEqSWWtUwesREK9tahmlp7WB6e75+gKLboTRIMtEXumsMsmgL6TCYWTCYU+OI4IVTvze2uUHTdHps1pX6A=
+ bh=67ORwT0+c+C50AdVCnZBRk+0DvFJAmkZ5fDn7lGSrtk=;
+ b=0TkEkcE1o3QZpDBVu3agyCLPX1Hz4Yt71lq6MQcD5XskWSXND953epZ4S7zBDA6fmJ6PqEl1spfJYZohZqHv8+TBI/W3gohRwoHQsajy5yO5Qx/0z01/NP6d5FQNIgAUa2ckURS6xHPKrKuLg7jrF0yZyEx18r5XoY263wexMPg=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from MW6PR12MB9020.namprd12.prod.outlook.com (2603:10b6:303:240::6)
- by SJ0PR12MB7460.namprd12.prod.outlook.com (2603:10b6:a03:48d::17) with
+ by CH1PPF9C964DBFE.namprd12.prod.outlook.com (2603:10b6:61f:fc00::61e) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 19:48:52 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Tue, 28 Jul
+ 2026 20:00:13 +0000
 Received: from MW6PR12MB9020.namprd12.prod.outlook.com
  ([fe80::879c:bf22:f7a0:e8c8]) by MW6PR12MB9020.namprd12.prod.outlook.com
  ([fe80::879c:bf22:f7a0:e8c8%5]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
- 19:48:52 +0000
-Message-ID: <00d8a82c-2b9c-4ff0-a67e-738349d6f02e@amd.com>
-Date: Tue, 28 Jul 2026 14:48:27 -0500
+ 20:00:11 +0000
+Message-ID: <6efbe8c2-4c90-432a-9cf8-4b9d1498d2e1@amd.com>
+Date: Tue, 28 Jul 2026 15:00:09 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] dmaengine: dmatest: Optionally make test errors fatal
+Subject: Re: [PATCH 1/4] dmaengine: dmatest: Don't forcibly terminate channel
+ in polled mode
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
 References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
- <20260722-dmatest-fixes-and-fatal-errors-v1-4-8287709987ea@amd.com>
- <20260722163327.20F1F1F00A3A@smtp.kernel.org>
+ <20260722-dmatest-fixes-and-fatal-errors-v1-1-8287709987ea@amd.com>
+ <20260722155751.289771F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Lynch, Nathan" <nathan.lynch@amd.com>
-In-Reply-To: <20260722163327.20F1F1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260722155751.289771F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH5PR04CA0018.namprd04.prod.outlook.com
- (2603:10b6:610:1f4::29) To MW6PR12MB9020.namprd12.prod.outlook.com
+X-ClientProxiedBy: CH0P223CA0011.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:610:116::26) To MW6PR12MB9020.namprd12.prod.outlook.com
  (2603:10b6:303:240::6)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -65,120 +66,143 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW6PR12MB9020:EE_|SJ0PR12MB7460:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c05e11a-aeed-494d-2f8b-08deece14001
+X-MS-TrafficTypeDiagnostic: MW6PR12MB9020:EE_|CH1PPF9C964DBFE:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a6354c0-1d6d-44e9-394e-08deece2d512
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|6133799003|4143699003|18002099003|10067099003|22082099003|56012099006|11063799006|3023799007;
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|6133799003|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	lqCmIIuS8n9xDawz46CJv49rR1TqWM5uaRofDRowuifzCOjiuEAMnQMHTnKjVHZbhpCluVv0vH0yILa3CsETXJ6+Dg2LFH9wLXUr07Z8sl/6RJ34K+Y21nuv4Qj+JbFHz06t2QqWnzujXQDaMp1GuoFBAfuk1TYDqDrLi+HJubeAL9gIlnw3YP6Bo+RTs+AWWOLyaopeG0FmqVIuq1xwFgwD8/9lnpMm696fFqrkSVXG2Yq5dUCwY2KF4o4j5B9mCbMoFrZ07vJbhh8v4gx4EuWcUsBGsjmin5T4qksUjPDyTOHEE6JZ2C/7TbtxxMBowqQZQ4E281UIKMTybmtWskX3aDJXJ+ssBMr7Ud3+3qYqziXIiYdlCCuPDUT/q6BBuZ3z188+HUNUG+6CKKVbIfLX/zzhXBHI+p8eP0b4Ua05u/UTWv9lgj6K9xjit58LzIVVqs6nVy1rzZUFNiyQi8mfZ/oJOD8IGTrYOW6zDh68DYRdjKhgXMEGP2Mn3lsGka9t8mEDYwe8jqQpQh/lDieQwVJt3d2fjc6SEgslucZZO6nfjTXqNQ6r2BBemPVSTdAXI7kp/ZIOOUifY3pNwKjwNavN04z9DBp2uZVtEHM=
+	BVwny2hrIVaypdTtP3MBeA8w3Id5pa/KitknczgR4A/Y46LQ+TfPC9Ds4rFByEm2cjsOPo+59yf+HDzORb2MXU3GxlpWJvFz/GohrmzHBZHGyE3XtCoWj9/Lp0t48hzli+WZ6R68LSb4+21TmhoqUOnDEjzTM3J3J5fyc0/sd6Q+f22A3jK/54K0F0v58k7RKO7YFywVvkRRKLIIdTFjDCk/fnYjuUIpRkuZT/8mHqpP/5TGixomS5xLcyRTVjVKxpDivRQYw17TjDB1/9/erQlpoZBezlDOGLC1He0KikoMWXFEuu5vasMKNJEouO16q4r/yAUFHzzIQpFAo9SbJeYaX9bwWNod9H3XK7IBWCbCeBGVcYWb58/ipVBgwJ+k+E4Jc65kL2p/gGGmFQroLom+VPyQ4yRkhoqejttliQ72PQgPPHl4aUkVnyeU0Le44WrkWEGacwYEJsrNuUNKkMqKFNdJAjNT0L9g9FpRSkl2LbJrOibOiVTa2o4CevmVrtL1bLGAYfzhcolKHbPopj0pE+9kSZe7LB2WiWo8NmyVYeaiUwvDw6+D5+4VcoHwwSEhDQHEHIzuipJFg6CyFhC9BNR0FThU7gnnHCzw0mc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW6PR12MB9020.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(6133799003)(4143699003)(18002099003)(10067099003)(22082099003)(56012099006)(11063799006)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW6PR12MB9020.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cUZjK09mRlZCelYzUFZaYXY5Wk5pamxVVlFTTXFkMU9ZVGhIdmtKSkk1NnFZ?=
- =?utf-8?B?UE9OeStLbFJsOGU3TkRDK3ZoeEZrWjl4WGtLNDJNaWtTN0ZWd0E4djc4dHU3?=
- =?utf-8?B?bTNBN24yMnRwUW1DSFQ3TTRKcjM3T2h1ckt0Rm50d1JNQUJNOTRrRUF5Qk84?=
- =?utf-8?B?Z0ozRzNvWG52M1BvYXIzLzhuYStlUG91TnBXUHhWa0UzVVlFTmIwY2NuVVRo?=
- =?utf-8?B?TmcyZ3VRcFFNSStydXhCa1VzNWNlandQOEpzU1c1dG9iSStzYXVVOG41dUZ5?=
- =?utf-8?B?cGxOTXF6Wkt1NnJBUUtBWG9HcHRNMmY0NkkzNHRLek9QcTFjdkk1ZFlPUkZV?=
- =?utf-8?B?Qnk3a0xONGFidU56Z3hqYzlxRU01eGVTMmZoRXp6eDRDV05XNW1zUE9JbkxN?=
- =?utf-8?B?eG9HUWthd3JXaGwySldIMUxKbloySHNveEg0aGs0bjFtZmJOWWRleVN6bDVm?=
- =?utf-8?B?TnpESGFaT1VUUWl3VzluNFBvZjZVT1hHbm42SzFUWWprOXk5N2t3ZEJqbHpH?=
- =?utf-8?B?enU5aFJweHczbHpVWks2MER5OWRXRVpwV3M5aGxSb2VTdmh1WUgybFJ5VFR0?=
- =?utf-8?B?QXNvZEtIRVhhR3BLK3FWazVvWUllcW43MGVhSURrN2RIQnF5WnJqR2ljT1dR?=
- =?utf-8?B?ZWVHZ20yNkJmaDBpS1N1S2laOWZjd2EyVkpWREt1MlN2anpHSmk4emFrektq?=
- =?utf-8?B?ODAzZ0xmaUN6SnF4aVQrUW5ES1JMZ0ViYzZaUGFTdHhGWUNXSll3SVdUTDJ1?=
- =?utf-8?B?WHlsaHMwdHBxeUNsREphTkdTY2NUVFJQYktDZjhuZ0h0dExEVWM0L1AxNHVw?=
- =?utf-8?B?b0IzWkIzZW5uQmlJT2piKytOUlhZeElxMTFISEVnSzJMcEFuNVVjQSs4Snkv?=
- =?utf-8?B?RUp3WU5tRmtBN2grRjRtekZYOEF6Nko0WUROWDhOT1JubmFraUpDcHlhRUx4?=
- =?utf-8?B?TldybDJOSC9QTTZTNXgzS0dMQ1VMU3QvaW8xd2pjL29mTFp4TDdUSjNXN0ds?=
- =?utf-8?B?czJhMmx0UlcxNk9vM1hSUitscXN0aEVpdFhYM3NadFdpMmdzZnFRTTgwNlkz?=
- =?utf-8?B?WUsveWNDTHA4RHU5TnZnUXRxVG4rdzZ0bjF5d0JsbGxyZHpBUHIwLzNpM0R5?=
- =?utf-8?B?ZVJsQi8zOVVmUXc4U3dyNVh5OGdQbDNuay9wdXVpWTFLcVVUNTRyVjZFcjU5?=
- =?utf-8?B?SG14MjhWZGh6VThLcWlGMzNERUU0NXNBWXlraFlkOUVkOGN2cmMxenE4bVhP?=
- =?utf-8?B?T3J3L2xVdDdFczlhTTdHbWJvUHNTZVNFY3hXYnVlNWxZbUUveW5vYW1wMWVj?=
- =?utf-8?B?RnFUckFidjZFSjdlRzZueGx6MERXZGdXSTROa0paVkwyYWkwMFdxTlp0MUs2?=
- =?utf-8?B?cjVDWGlVVURld29sUnVkanQ0ODd5a3phUmFlVXMzMjNldG82VEpMOWNGVkp4?=
- =?utf-8?B?L2tWOEFRNFdqcmEyam02ajNrcWVlanJJUkpiS3ZQaDFYUmdiV3ZqZDVxOXdV?=
- =?utf-8?B?bHc2THFzam5SQXluZ2hHRlByY1NRRlZIa29MNHgvcE9jQ216S1prUEVGOFdj?=
- =?utf-8?B?UURYeUhoamFhaEw4OVh5ajJWKzZNNnVBUjlDejNTK0pETUFLTEt1U2FpbkhH?=
- =?utf-8?B?NU9yb0MrT2Vvais1V3VEUVA3YmtYeTdGQURsZ1huU3JYdEE1Z3ROUGlqeXIy?=
- =?utf-8?B?Tkt3SHZZU2J0Rnp5dXVTTDVwS0t4cVVyQWZwZTJ6TWhNTHdXYklyWkpRZWVn?=
- =?utf-8?B?MjBmNHdqQ3V5QmhsQkhENWNrV2U4QjFnWjY3STlBdDhja0p0MWlXeFVpSTdz?=
- =?utf-8?B?bmVvcFlEQ1FtQzBUdi9nY3EyYWxRTWU3cEZEV3BKRk8yS0o2TlJ3K2UrVHFa?=
- =?utf-8?B?bElPMFlXbUkyOVJ3dFNxZjQvQ1VUNWlYR24xLzdjUnpNeGptNHBuaURMUS8r?=
- =?utf-8?B?R21QUEMxdDRJZDNJR3NGajVablBVVUV6cTBSNlF2bm4yQUcvMXN5REloVGg1?=
- =?utf-8?B?ZmRrYlBBN0REVE91Y3k5aEFnYmZyamZTaDFDQlZlYzhjaU5PWUpoV1lpZ2Zs?=
- =?utf-8?B?dHJkeDlRKzFqSStVYmlJMWtCSnlIQWpvb2RYOHhwNlhuRnpmbGw4djB1aVZY?=
- =?utf-8?B?azRqZkdGVE1UeWp1blVjT3JneE1UajJwc3V2ZVUycjdSbzhTYW5sbEpJdWp2?=
- =?utf-8?B?b3VXbllKM0NwbUprb2ZQcHZMODJFT0ltNkxRZ0U2R3V3eGhEWXB4SUdkaXRu?=
- =?utf-8?B?bm04SlpoaEd3QzRTOTZDdEZyUlhPdlduckNzNGZkMytNWEVpd01qQmVVc25N?=
- =?utf-8?Q?CTrOkMD9Bn61SknRUT?=
+	=?utf-8?B?N0pvaVI4OC9HVEJwQWJzcGhCQXBJM2EwRHovcC9hZGkydzl2cEZaVGFRTE1i?=
+ =?utf-8?B?YktWYTJKdFY4dDJ6c2lKaFJOc3hnaklVVU02RUtMdkhzd2JMdkxseWxSb01n?=
+ =?utf-8?B?K2hjWEZOZEYrYmtId1VLU2JlQjkyQ3YrQ3ZiN0ZkaVhEVk9FUmlqcnRSZDFy?=
+ =?utf-8?B?TUFZSjFDOEEwWldRN1lBYmJwY1JsYXZsQ1p1dTVld1ZMZ3dRMlhoNW5XTGNm?=
+ =?utf-8?B?R0E1MWdTL29GbjEyWDRidTdMQ005Z0NBUXloNGd4RnFzRXBSRzdLQkhGVlVO?=
+ =?utf-8?B?TlRHZFVReFVNTmRoVlU0L0Z0RFI3SXBnWENwcW90Q3RVSmdiUy9TR1pGUy9O?=
+ =?utf-8?B?WG9uODdQcSt3c0U3dkZFaWxRU2ZEMy9BWGtBVWVkN2d6QkRCa25jc2NJbGdS?=
+ =?utf-8?B?V1Jwc28rWnF0c3hrQ3MzQmh5NG40YTdHYnNpbkZKRDVpRGE2b0o1dUFWeFZY?=
+ =?utf-8?B?OHFvM1k0WVJGMnlhUUwvRGhjR0xzVTNOK3M1M3dEdCtPNkhWdTNmM0JIWGVs?=
+ =?utf-8?B?TUJ5Sy93ajhCeTFZdUxPSVBSU1VsWnpiZCtya3RvUTEyZjErSGIvOXN6U1dj?=
+ =?utf-8?B?NUdHUUtHU1BQRWh3TE13RzlRaGtsN21wZzIzNkhLeGpaZ3YxcUowTkxrSjVa?=
+ =?utf-8?B?V2RYVDBadkFHcDdkWGtpWEJSMEpMekliM0poWlVvTk4wMkVKLzBlN3JPU04w?=
+ =?utf-8?B?V1BjNWpxT05YZjRGbGFCemo2N0owOFIydnluWnhvSWRYNkRnU2VLZHhpWWdX?=
+ =?utf-8?B?NCtFanVTKzlSTEZkeHNGUHdwUWZuaFVsZmFqY0toVEJvYWMzbFNvSE44a20x?=
+ =?utf-8?B?NGFHeGFFUUk4ZkdGQklhM0NpWXFzY05TeWNFQkFGWkFISmd2L05lenZmUE1l?=
+ =?utf-8?B?NnVuRmJZSGdKS0JtUHh3TlBmZDFXNFRJanBpaDFydjlDZGJvd2xzY1pRRmFR?=
+ =?utf-8?B?K2hoZ2FZblF0b2N0RzZCY3ZqeTlvVUd4MURQT0RHZTYrN3Zuby9EWkhJMVFt?=
+ =?utf-8?B?L1B6VmhCWTRybG1VRHNyWXJ4WjA4UG1CZEZwN1lNdDdSZCtBUkFuQkFUNnZO?=
+ =?utf-8?B?UzhUTmlUUFN6cXBDbjY5K3JJR2tBNWo5bCtSbHNjNFV3Y216MWhvZ2xuMlMr?=
+ =?utf-8?B?U05KRGhRemhtR1BBejNKd2lRTFRqcXIrcWhabEpDbmdiVGNaS1NPZm5ISUJO?=
+ =?utf-8?B?V243VEo3eHZ4dkwzQWZ4N3pjM1pLRFY5eE9oc20xdy9mQTRTUXhpN28rTWx0?=
+ =?utf-8?B?T09IZkVSRmdGZG81QkpQMlRvSEpZSnFVdDRuZm1rZC83K29QaTMvWWR1dk1I?=
+ =?utf-8?B?S0hiMDc2YjZORHh2UDVqVXdrVjdlVmM0M2NrV1ZQMmV0NkE5RW1DZ0dGZHp2?=
+ =?utf-8?B?V1lhU2g4NzE1UUZSMndqRmdaVjk0ejAwbEtUNTRIaVdmTE5nVlhGbHh1S1Ew?=
+ =?utf-8?B?eUhQUGg4Yll4ZXRmQU9DM3VUSXltcStVdVJPdUhORk1Jd2NFUzBsTnE1YVll?=
+ =?utf-8?B?M2NaSk5walkrUk82OFFtc2pkVXlQcTVJckFyT1FrVFIrbll3OUpzU0puUnRJ?=
+ =?utf-8?B?Rm5YM3B3WjI2YnR4U1V2K0ZJWFpNSEIrZ09kM3l2UG1xMS84dDlwUW1yeEJ2?=
+ =?utf-8?B?RlUza2JZaVZmempPaXExQlROcnVzNTZ2OU9HMnhGcTVEa256c2E5RWQ4aDFx?=
+ =?utf-8?B?bDF5NGIyTGE4Sm9PaHlIdGxSdlRvYVVBaGtQNUE2cDVEVmpmTXhPNFhLTTNB?=
+ =?utf-8?B?RlV3dmpIdFkyWURLSSsrMWdQUE45bzJFdXhkOG9ocHNmMVhFTVVaZEFxa3VP?=
+ =?utf-8?B?bkRIYm9PbnJWTzhoU0RuU0JGQklubGlna2ZoVlNNMHZJRFlYaEhEMkdqNDBC?=
+ =?utf-8?B?dEF0STB0TkdZTXJmY3RIeEFDckFFRmxUWFBsVllvMnRjVW5iVGN0ZEVJMFEr?=
+ =?utf-8?B?ditZVTZud1NOZGJDR1doUkZPZXN0UjYybmIwVFRMS2d0OVBBMld2ZGo1RU5I?=
+ =?utf-8?B?bDgrNGFGMm5DWTZZRUVUQTd1ZzIvQndoL2ZtQ0tTN0FZRUJPOXBrUXVCZ1Nq?=
+ =?utf-8?B?NTRrWDdYQXh2RndUYVVYVlIvQld1aTl0M0lYZHVsQk04YVlyRHV4YU13MkZi?=
+ =?utf-8?B?WVk0ODcxaVNYLzU0cmRiREoyRjQwK1lHcmgrc0M4Yk9kaGNuWWVQNTk3R09O?=
+ =?utf-8?B?TE5oNlJxR25lTlpjZ0RiRUsxRFNOQnhPYzFyNGd1OVg0RFltWjkrS05tTmIr?=
+ =?utf-8?B?OVJHVkFqNGp6ZkNrd1dBNm4wQ29VZWFnS0YzWUpqUXR5R2MyNUdxQllISGtZ?=
+ =?utf-8?Q?WMcfmn6PCKQETg59lz?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c05e11a-aeed-494d-2f8b-08deece14001
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a6354c0-1d6d-44e9-394e-08deece2d512
 X-MS-Exchange-CrossTenant-AuthSource: MW6PR12MB9020.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 19:48:52.1588
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 20:00:11.6076
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zrK/cC3kgDPW/MFX8fk/X6+P4bDQLZ1SOj8uDVX4cwgEjOrttF+XMT6jXp3HeJfyJeY9JQUdnXTs3nvw9Kmdog==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB7460
+X-MS-Exchange-CrossTenant-UserPrincipalName: hQmK04mZZhTGy8J/cq+r4IAVY/bpKQqvhXImiajOw5x87ETl8jQ5CssaWrasyKuXpKCZGNs4myh+/ZmVET8GKg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPF9C964DBFE
 
-On 7/22/2026 11:33 AM, sashiko-bot@kernel.org wrote:
->> +/*
->> + * Record a test error whose details were just logged via result(). When
->> + * fatal_errors is set, panic once that many errors have accumulated in the
->> + * current run.
->> + */
->> +static void dmatest_note_error(struct dmatest_info *info)
->> +{
->> +     unsigned int errors;
->> +
->> +     if (!info->params.fatal_errors)
->> +             return;
->> +
->> +     errors = atomic_inc_return(&info->error_count);
->> +     if (errors >= info->params.fatal_errors)
->> +             panic("dmatest: fatal_errors=%u and %u error(s) encountered\n",
->> +                   info->params.fatal_errors, errors);
+On 7/22/2026 10:57 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Removing dmaengine_terminate_sync(chan) from the polled mode path causes the test to unmap DMA buffers while the hardware might still be actively processing the queued descriptor.
+> 
+> Pre-existing issues:
+> - [High] Test data buffers are freed before pending DMA transfers are terminated at the end of the test thread, creating a race window where active DMA hardware can corrupt freed slab memory.
+> --
+> 
+> --- Patch [1]: [PATCH 1/4] dmaengine: dmatest: Don't forcibly terminate channel in polled mode ---
+> commit ff3488aa5c4eb22b5aa3631448708f7560e37c84
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+> 
+> dmaengine: dmatest: Don't forcibly terminate channel in polled mode
+> 
+> This commit removes the call to dmaengine_terminate_sync() from the
+> main thread loop for polled transfers. This prevents disruptive
+> terminations when multiple threads are concurrently submitting descriptors.
+> 
+>> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+>> index 2ae3469397f37..60bc448f42eeb 100644
+>> --- a/drivers/dma/dmatest.c
+>> +++ b/drivers/dma/dmatest.c
+>> @@ -837,7 +837,6 @@ static int dmatest_func(void *data)
+>>
+>>               if (params->polled) {
+>>                       status = dma_sync_wait(chan, cookie);
+>> -                     dmaengine_terminate_sync(chan);
+>>                       if (status == DMA_COMPLETE)
 > 
 > [Severity: High]
-> Can a concurrent modification of the fatal_errors parameter cause a spurious
-> kernel panic here?
+> By removing the termination here, does this code leave the hardware running
+> if dma_sync_wait() times out?
 > 
-> If a user modifies the fatal_errors parameter to 0 (meaning 'never panic') via
-> sysfs while test threads are executing, info->params.fatal_errors could be
-> concurrently overwritten with 0 via add_threaded_test().
+> If dma_sync_wait() returns DMA_ERROR on a timeout, done->done remains false.
+> The loop then eventually branches to error_unmap_continue without terminating
+> the pending transfer.
 > 
-> If this happens between the initial check and the second read:
-> 
-> CPU1 in dmatest_note_error()
->     if (!info->params.fatal_errors) // reads > 0
->         return;
-> 
->     errors = atomic_inc_return(&info->error_count); // acts as a barrier
-> 
-> CPU2 modifying sysfs
->     info->params.fatal_errors = 0;
+> This error path calls dmaengine_unmap_put(), unmapping the buffers while the
+> hardware might still be actively processing the queued descriptor. Could this
+> lead to active DMA memory corruption?
 
-No I don't think writing to the module parameters in sysfs immediately
-updates the parameters of a running test. The module parameters are
-propagated to the test parameter block only in add_threaded_test(). I
-think this is a false positive.
+Yes, but this change simply makes the synchronous path through the test
+loop consistent with the async path. dmatest treats the buffers
+associated with timed-out transactions as safe to release. Perhaps that
+should change, but it's out of scope.
+
+
+> [Severity: High]
+> This is a pre-existing issue, but does dmatest_func() free test buffers
+> before terminating pending DMA transfers during thread cleanup?
 > 
-> CPU1 in dmatest_note_error()
->     if (errors >= info->params.fatal_errors) // reads 0
+> Looking at the error handling and exit path at the end of the test thread:
 > 
-> Will the condition errors >= 0 evaluate to true and inadvertently trigger the
-> panic? Could we read info->params.fatal_errors into a local variable once to
-> prevent this race?
+> dmatest_func() {
+>     ...
+>     err_dst:
+>         dmatest_free_test_data(dst);
+>     err_src:
+>         dmatest_free_test_data(src);
+>     ...
+>     err_thread_type:
+>         dmaengine_terminate_sync(chan);
+>     ...
+> }
 > 
->> +}
+> If a transfer had timed out and was left running, could the DMA hardware
+> execute the pending descriptor in the window between freeing the slab
+> memory and terminating the channel?
+
+Yes, but see above.
+
 > 
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=1
 
