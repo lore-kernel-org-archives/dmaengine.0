@@ -1,65 +1,64 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011052.outbound.protection.outlook.com [52.101.70.52])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011029.outbound.protection.outlook.com [40.107.130.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E902E1F0E
-	for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 15:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9CB2E06E6;
+	Tue, 28 Jul 2026 15:31:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.29
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785251532; cv=fail; b=GFHhl7Qn1gmnKyKDkNcSvfo4Ysdpta1hWlI8CjK6LBTBiOP5d8xRD1Q4EuSx+vx3UP991dih1JBzZScADt/tSjwRabXbM0n+/hgtSc2k6Uk8EKmYsA5lgxJ5ywcfc02ndecz1h+Y3TASHkWAF+huwVj1BgPPMu9oRS1EPZCxVmc=
+	t=1785252698; cv=fail; b=jkcAFvWadCNuTMiR6a/bCBnWKHLi236uuoC0W3bxDY0mZPPwxORW7dTsAhGZXJDRBEXiZbiOm8RtSRCw1Ot9DnfOdOD2MhDbWZ/xZaiRO4jVLhDYnptpL0RLo2EeRdX108XC5aq/PpKMqftniFQZgGDVAN0LY0HZ20xSkKnoSBc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785251532; c=relaxed/simple;
-	bh=6eKGM8Je7m/IUiPE3AwHv8qTl8QGj3bNLG5x5buEcRI=;
+	s=arc-20240116; t=1785252698; c=relaxed/simple;
+	bh=U4Rl+v8gSBJgapLYzRjsla/RKBHHTJ2A6UnQzL4QeZQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=czbEW+dCvaCWHieQXMAshjNTZ0hfsh81zpZp8dP6gwNCkRzA2Kin/U5wXRODKbDqkrrkm1UiDYDYFBytG15k4ci5DnB9HdW0bt8d43tnKLD7ZfDYENUI//NkSj/OkYDMSANbDZ/TLNPiE2q2OW9sxxEmGcnlHpw6a0shKWLoyJI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=cf4tBCv4 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.52
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lPiFa6WZo3wTUh5XChpljPk/Bd8hUvrV8Ro15MvsphP5wjyUbAujIi0LLSWaVW9DtpPyietGYPlaqQ4prJFGq984/+RcI1hKZu1yHem1U+0LW8NqWblx5XB6BCpfnFX4Js6cRZp8/GMQdWSLMeQlGX4vKiHIW3TkCmyrcHaeTOc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=iWj64Ft1; arc=fail smtp.client-ip=40.107.130.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="cf4tBCv4"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="iWj64Ft1"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nK4bcZUCm2xmLyLhmaoq6Kg6cd0QqZDiSRADNcXSs9cS2qJw70Sf6sYqDV2o8Tpt37mPZ316goNO0QopEohdAx9yjsYQnxLwYcq2zGORbu4dueT+UWcq+m9kW9nSFQUal4zdLA+mS9k728rVaUTBvuHys05fVjFEYqDUGkkCop0vIToURfMR9yR9UPJwb1XwIR2dFhftvEHzztLjAcT/B/Ve+9+cFDKDZwmYHnQcAS5QFLRbh/SMhz008wOFyTentwYY+VoInWbBSlq/56Z4eWO5AvqzRCvPY1Fmo3dWaPq3c+PHggab6kH0gvM7iPGiagQ/w2AKbQ5meu1AaMoQDA==
+ b=cZ0OUoBbheEynu9zbpwcAx1u+H0kqoneM33rMUJsajQwDiS5xal9lFrbPZ8hkKYP+dBsTjcm+w1SdZqtLi5pP28c3lbY6/y7HhEchlfs9UeKlamyBUPVYBL0ExGwte8PB0kzlg5XXP6QLtLboFFGmIa+THdNmnqCU6yJrm7UF2aaLco6B+1uHWd8Eg1/PIF4vQJSm7Ql1+79S6rjak8Nacfo4wkc8wsvOnHSFzqKMKK29jM5TzCsiggtNEPhPGR8RpYVdbe6FmPLipDCZj2SE2ux24wGaBbG4AZx/5Xp2BpzTMsys/ngpKZmI1mQFrw0WYVD0FJFjmn5aR2zfKb40g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
- b=bQRSZ1m7o2TbbQOSRrr40zlKzawY2dGrbF1KTvEvcTEi2A+UYfVv421ric9rRvyOfrmbQsv8sQj9OX6KTL2ehLntX7cUyuv5B/PQf3sUO1xQn3TXyuIvjWVsmreRpygqLHKe4RaJl/CljgbBVfjq82hPdoG7EYf2UHfkBcoW8l7gudRos6RaS9nJGK4NGaIRpbgQqovgaIu53yiguIErGo7DIxZxHzuezTKZTGRKvdUKCW66dF5jH6/Br7u964tCMNV99mQu/aaqiUh9BirnitvmjrJadwTXYPYm2tE9lR+3rMixCtLGSREiPUwam0HtAROJWtWPEeaVNuj/HmPO6A==
+ bh=CQxa4BItQw/KOAIkszoLtV/SwalKOV6+8rjYlr0cTP8=;
+ b=NMVhlBSJEwuytc+S7fYHKawxwjdUfAZVZK3HFLHQXLMUMljZmlxYyt5xRkHQJ3P7Pk+e5IAzgcKbPvon9/Qkn5dNzGZ8LHWOapflUMEPm7JiyIWhKCSkjLlsGfemZG2jKXgjQEvoSGG2Mxz+MjWkq4lOJpfE4oIY/LTb8VVC5g4TlBx6cec0Df6SwzmdoZPzoPzxeNlux/TAh65ChTQG29Jk9Sv9dKSujMMRyRitqFXqTREbkXbO8HdB1ezUqj8o94U7R4X4OdmFQX256HwqFRY2ID5RSVfPsJ5xbpoEU1By9ciQwJ4rifZChBGF1Tcz2o8IFNuR7WbUSGAyqPNQEg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aLBi8S4YX+rglfHwFQ0n/wU582NcUQt2aOxIsyJa+D4=;
- b=cf4tBCv4devoVqSi8CNpKQwoc3xsBvXpMGkyDPMTGcWJjbYWs80ePToPqGVP86aTjexvyFXwd/MALBBDHHdu/jD4NZ6ox+jawk6s3mKOWkO915VX1m/zKGp45jgoNDVky9d4UWjsvho8KOsRznsAxtj+6/hZEgrldkARJMpll1z9nTWUb+YC2Tg5tJHCPgJN3bLvXb+rlAIkQG2/RPVJ/oiR17MBfIUV9qtBpIECfe7vSNGtV32nv8oleejWMtByu+QIYGAe7ilPwTz5eCbMLH1ZvlQzgasG8dnxaTHB1J8m/+zmTsvYAWjoGBmA9tWBunxoJ4riyvtyPD3UnvO8rA==
+ bh=CQxa4BItQw/KOAIkszoLtV/SwalKOV6+8rjYlr0cTP8=;
+ b=iWj64Ft1ABNvPNMPAvw3vRkoXovadV15IFYt4v/usTc/rc/KXZZznO6Cae0z4gvDnvuDbOQ2JPsgU4dGBs2W0DGJNgUFOu8h8xUQ0oX4RBPnyi+yNU/gauZnPHGhxOZPY1TiYbUl83e7yQEpS18+3UVjRZpymvOPk45FSJrlIP+okQ//z1VSSq8FPM7PYwv3hsQQ8PTeIZtYXKOZ60w1L+ruCCj4xbShLq4+ZrEEtKAAMZHyAj9LT1+lYvcZMNGReRinfmBvURPLzQwu7iOSQuLNas0hkQ9fOenS6zD/vgFUyo5tdCqosilxjY9fGZSnJ3Jet07sloP8AAHlE8hBxw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI0PR04MB12640.eurprd04.prod.outlook.com (2603:10a6:800:345::11) with
+ by AM7PR04MB7174.eurprd04.prod.outlook.com (2603:10a6:20b:11a::23) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 15:12:08 +0000
+ 2026 15:31:33 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0270.009; Tue, 28 Jul 2026
- 15:12:07 +0000
-Date: Tue, 28 Jul 2026 10:12:00 -0500
+ 15:31:33 +0000
+Date: Tue, 28 Jul 2026 10:31:25 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
-	imx@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic
- scatter/gather chaining
-Message-ID: <amjGwBcvweTwkvZu@SMW015318>
-References: <20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com>
- <20260728-fsl-edma-dyn-sg-v7-2-10dffb4167c2@bootlin.com>
- <20260728142110.A103D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Devendra K Verma <devverma@amd.com>
+Cc: mani@kernel.org, vkoul@kernel.org, frank.li@kernel.org,
+	den@valinux.co.jp, dmaengine@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	michal.simek@amd.com
+Subject: Re: [PATCH v2 1/3] dmaengine: dw-edma: Make Xilinx Macros Dev Name
+ Agnostic
+Message-ID: <amjLTTa-OYtjiP1W@SMW015318>
+References: <20260728091744.1086942-1-devverma@amd.com>
+ <20260728091744.1086942-2-devverma@amd.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260728142110.A103D1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: SA9PR13CA0062.namprd13.prod.outlook.com
- (2603:10b6:806:23::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260728091744.1086942-2-devverma@amd.com>
+X-ClientProxiedBy: SA1P222CA0146.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:3c2::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,167 +67,202 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB12640:EE_
-X-MS-Office365-Filtering-Correlation-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM7PR04MB7174:EE_
+X-MS-Office365-Filtering-Correlation-Id: 081f190a-7e1a-46d5-0ef1-08deecbd4dbc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|19092799006|6133799003|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|19092799006|1800799024|23010399003|366016|376014|18002099003|22082099003|56012099006|4143699003|11063799006|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	YhNGxhmzqLijJy3u1Lozhw5iyScNoN7cbgIdLFIWyZo+oIE4Qsy+ClHxSeD8RxKLdW/xYy3rzrg0mwj33v6HB4nRsiJFUVt9Bcc4nvhl4lzOk52zppcQyDziLS4SegNJ5NXpUMm9c7FE1BYzu9LbRSKGvp52EdTRGLH1sZW3cs5+rFNAOvqdhI4eShEqGSM/C9Oh4bLcF+443K1RSJRaRgKL/C+mzPmH0h/M7FjK1Ku4aKZKZPF830+3rteLyOCj5kBesmjUI1JV7k2oyF/KIKSARz9zzdpB4pg1/tD0FxbIbD98YnvtjyXJJmjwZdA0lFOfwh87nrwrCXdqRmhEYaOLM8tN9lWxysJvZp/tCisweGAL3wa07GmsGdwK+HlO4/GMG6xMynxLUw7qa2uvtQy0HkhMUJCRCKvBgmM445ZFuqzbdtX1DaGssk8+GmW6cpQnn3Y8ElztuG0sQ4NBwmZ2VrZrsPirOdRpuhY8TE8zMGTYMXtj81faIO8YoorjUr1sc8UPUQV1CRo1FjqlicsBQTtRwtQb9nUVhNkRqsWc7bN/6gykQ1xgYALjvK+GnaQnu6bCNcJq670JWFvnwmo3Q688Yyx9UaO9fj/LUqg=
+	IlUFE7VgHkjntsRcWRvS3DVhXOtPDelehNidl38fM1GlPpcJ32vPGrLrR+Bi/a2mBdbJE2L6/d/Mn6RVitz5jsIzLPRj6EYarW0LuhETDwCMPY4yErX+jf/XwKJDsP/1rfBPGuWhodp8fCMw82ie65mBhPFTS0LAkOqQI9tSPcwkTyonRclMq/osYbZWq67Y/6Ht1ODSta+GbG9lYPs/cwiN5dtxbyfhQXyHQ8Wf48YkSrVcxi1xjRcA6+XM7FajdQZj3buq2h2d7bFtxeCLX7fL0TAhfLZ0gyedG5KIx2M69snROvyKLxn7XL+I0BnYOODBrKtdd4NrYDFWZCVYUhBxQ432kcTuYO9RMfRjeaIR2Vy9H/N4TbndojJtAa4j3xfQHx8aXVgGxVsQL4R1EeMzIHJ61yMCGMGbZRK/ycpJ/iiiaQLIA+h970s7BIuGCPh9nXih787aQCxExS3suu9J28X1tBJW+tOAuBwHqGdPCt0iOwKSdped29DmhDqqHuPD7a6J/31og6Ce/CsoJXYZzcr3ggcQhvCaoR9xhO8aEb6glMaWTipgSQk4ndYkiGvJl1kR5V25ctDZrNQhS6mhuXBMHJDuQfX0d36IGUl8rek6KaCnWivb/DecrSra5LPA6Oe8lSEPUAlJvDYZU4i+FYxe1fP9mukXFRDdvrI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(19092799006)(6133799003)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(23010399003)(366016)(376014)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?qNLgs44pRJAkVE1g7ORlLb6bv1rXEs/4LuRsMO/2zN4VbHGTNwHCqTed9A?=
- =?iso-8859-1?Q?scGS0nofy2sSUd30tE0ytLvE4foXUZqzmlIxuilG8BkhtsJxs9mQd22G8g?=
- =?iso-8859-1?Q?843KWC6dD9bFrNRaX4S3/zOOfLiLCdPw9gsnxefsdWUB0LpGtLm1xLQh5a?=
- =?iso-8859-1?Q?pSTtcDogW3P7Q11WahUYnscA+d9ONU2KnSuQ61Of9NLoQb/n7F3lqn6aoJ?=
- =?iso-8859-1?Q?HzWqKmw9J9eCMHn2evnw9wvWrS+6FQlOM9uQT+HE9XbAQgRSgogZxJ7Xg2?=
- =?iso-8859-1?Q?QjKqZhuhWZ5wVPn1CjmVMSsmbm5idywiHrv5/Dg7q9PirKJ89AbRBInSdv?=
- =?iso-8859-1?Q?YJzXBYj0pdxtWLBhJ0yXbgiCOamcD/d3bnGCzcnIb/KUvqg+SgDMNPVwOt?=
- =?iso-8859-1?Q?7fg/F7PL6svC1h5lbi88YGDUtsiUyY/EJThq8ZZCq9nyzkyKZB0GuAcR/e?=
- =?iso-8859-1?Q?aT0UIPQTrIdggeQj5GDGzlbvv1J/ScDfBmsc1WBiipbJoLU89wkUre1GFc?=
- =?iso-8859-1?Q?7tM9FmZ/iprTfTNtzrgM05SR/8ZeDmOFc2A2akdClg2f4fyVkGK7h1q7+F?=
- =?iso-8859-1?Q?HhRP3AYQYHN15UX82BeQFX8m6jle+HpqSIfeBRWJnr+yJSkJfMZMqx/Cef?=
- =?iso-8859-1?Q?vWalvdsUy8SjdOMK888tT1jngtZi5uDvjfL8uLfccNF3FdfY4hKeFR/UNz?=
- =?iso-8859-1?Q?afmqHaQZJ+NJ0WZV57u6xSWK/qk/1KBR2zQTEJB7QyuWGTD22kwjPchFG5?=
- =?iso-8859-1?Q?jsPC3/Cq3+5quMGoQnmrfGBolsHL0JuiFDqC91ksJM1sXH3q9JvfIeViyL?=
- =?iso-8859-1?Q?N3Dn9ygKsB8v4WQD1L3vBgfu/MamipXaOBvhIXF9iQ915tmyZknz8YL4ZW?=
- =?iso-8859-1?Q?RL4kQW6uRX8cyAmYbPW7kaVlAWXUnx1VTjsh2nWO3PmWIdAELp6DaTSjST?=
- =?iso-8859-1?Q?gb1JXDvMA4wiZ1wzjuTXv0gVVlGQeDA67U01SMeUt3x0BnxVi/2L7phZab?=
- =?iso-8859-1?Q?y8FZabV7yvxMRN9Q26IGtsmro7RtkJugOhUDCuMAbddah+h0/CuHbXDQKk?=
- =?iso-8859-1?Q?hPUggSspNpGDoTe+4YcRKezaOEELnVEkB7DJsrn0K5JYkyiuLC/c3zV5jp?=
- =?iso-8859-1?Q?KJi+pGGAXEYgUS2flEHc1pbvU7xeVVNrbOHJAShFz5yc96YmKOpv6h+Wla?=
- =?iso-8859-1?Q?tFnvEfhoBBRcKgJlqw8W2ZvwRl11N1E0YG2zCqL4T+xRIYPPbCHRlXRSsW?=
- =?iso-8859-1?Q?QieeMoJlXv5w6+xGpDITR0bBQW4/zcO5k9VdVID1p/ikLANPhukLBzi/Ty?=
- =?iso-8859-1?Q?Njbu7bELgEULog1xQYoeBPLPJ4kJyeHodmW06B2FBMJmj2t6TiKg2wCNhz?=
- =?iso-8859-1?Q?b7OxNiMk8tw3Z3XDmJbS9wX4wIirbEoM9J46DX5m2mUdm/UC8Zu9Q2tQa8?=
- =?iso-8859-1?Q?1+BZtdYPq0genCcRiiyumI00t4t4U0jHjc0Dc6pAWuCcB3b5oWlDqobDBt?=
- =?iso-8859-1?Q?DQ5tyIO/LFmj44WxWjRe4erGLywvYxEO12Y7AXaM/A68Gjivn5x+jNP9ED?=
- =?iso-8859-1?Q?X2S5NLbqsr4DEba4SMhphXGQx99l/evq5CD/jgEQYaqA/7j7IMu42OO3dD?=
- =?iso-8859-1?Q?Vq/DIq4G7tNP9ygQls7w4psVjeP59MxMZGg0DOqCUXsFq1f9SCDGEY5lzx?=
- =?iso-8859-1?Q?NiF2w9vCl+xJuiT98FUrP2SyUm8v0V5rvARqJXuy9AHBmfuP2OKu2m8QzU?=
- =?iso-8859-1?Q?QcE3xtZ7rETatO6BNgBu2UKujifzmyNL/MxAB9lg6MOfJ4Tg8BZ86iKr1R?=
- =?iso-8859-1?Q?qo1qVEodOTEyVdkzpGfs/Tf4WNQdS4P1e4ScvduM+dTIjlsnqNbA?=
+	=?us-ascii?Q?C08mNUm0efUBWyN+uUMBO7F37KepwIfDFP5GYs5rHBWajB2bu1Qqe1i0i4qD?=
+ =?us-ascii?Q?G9ci7PjVOzot9RXgGzBjHT9WDgaHuZU5vVkfUpfKKSiZad+pVSI/zr/IxOsT?=
+ =?us-ascii?Q?c5ZZzHYeb1K1LA6ZVx5SnPeSydLSUiFaQHescw2ToSqD9qK5FpkrB9BXqHNR?=
+ =?us-ascii?Q?3WtvgZgfYIUMoPVDB5ISs0O2283NtOFqQZ14X7a2eTvAlds8y6dwbuoU2Bfi?=
+ =?us-ascii?Q?ymeMpElYbfA3iKQX0tp+NY/HMyNU/zPeLzdhEii6d5atlfpGn0jP3cm20LOb?=
+ =?us-ascii?Q?8x6DwBc8+bwdxYzROjBlcySi8viIg0b8bN8kI2uY06MxUh1W6VH0zGnw6ERk?=
+ =?us-ascii?Q?kofvGx2hl2+WqwbDknR9EDQ9IAxh37PjiM7ACe0HRT5+IZyDne2PYXxY+xLF?=
+ =?us-ascii?Q?T83V0frDSMO+VF6Nzr5ybc0J4+JnGumREYfpjyMtPdbDGCKXA1eAhxVuozv7?=
+ =?us-ascii?Q?1o1W11dqnrVyaoPgNGXozpCnyxNuy5+zzkaz+XgjQU4P4jawCCvcEmpDGG8H?=
+ =?us-ascii?Q?/wD0VmGL4PVh2R9SItFmB/x1WEAmotr011nT6cdLuQQ4rVZGWfJUxnEwr6dJ?=
+ =?us-ascii?Q?9YkdAuOeZ9fcyJmRbw7vN5KWvmInX4cRHB+O+N0bVgyRnZVdpD1Go9oloIt0?=
+ =?us-ascii?Q?DCbzjarZA0a6+89ZkWcjURr1L0ibtSlgd2y+iOakVagCHjR6AAb7hBHi4lWQ?=
+ =?us-ascii?Q?mpCDXEQVSNYjqI7UoRF7MRcyb4qOlIHFWm+ViFot78SjUuCAhQOmJUdIVufW?=
+ =?us-ascii?Q?zBxVc18uEXTvzIt+RhN4z4XFzRXC39PzTzCTtuiUcGOjHde+s0uPHSTiysEc?=
+ =?us-ascii?Q?I/BqRO+P5p6irRxjJ7QdKWZ5X2ecPNMNEww30dJi0FRgwylI04/YDf1F+ihP?=
+ =?us-ascii?Q?Iw3KfcLlmWKsabrMuhw7f2dy9Eaz4y8wnkPsL+JKA91E+U7pgAoENktZnln7?=
+ =?us-ascii?Q?7DB1FV4B2o2eKTtY/uUv0iq4VLJqkprve5r5XHBB5ka+hypNqW5342w1R6KN?=
+ =?us-ascii?Q?oQRiHFccb6jafZylR2nUtCh6EL4Arh5xGN/yHbVTEvrS2Fdcww64FvO28j6b?=
+ =?us-ascii?Q?t7zJztTQZc8qcMcGbK4539rv2EbJIpyRCG118/HYRky/hTgJcQKLnvoyjjBy?=
+ =?us-ascii?Q?/DH2riWCD2+lwMQq1+JGLt6++Yq4Q//HpLBVbCM9TGc3L71yxXNpGQ9BRDKK?=
+ =?us-ascii?Q?gN1vevuB3r0ZQY3Jf9XxiBazcixoPoEAzjiz2S8sIh2RuiVAkvRdqLn6NtO7?=
+ =?us-ascii?Q?KVjmnmSZ/pfmyk9O4iOTvH8tsoe+q5TFdFd0ztU2AgexOl+IgE3YJTjrWJlj?=
+ =?us-ascii?Q?86xHdwtTsWkm4dPkPwjlBKJk/Tmj7tlB1QY87Jo4GrO1XVQEkR1DHW51dQyU?=
+ =?us-ascii?Q?Iy6SV2MtAjG4wdgL5RkJhpAbAW5m7FbQvt+qVI2i0DCfeklpIHkRYbiE011h?=
+ =?us-ascii?Q?2GTHVeiLiH1rwTVyV+JGqmTsHLwZc+ZBsTfipcxsTM5DI8g7ymchhK5DW2q3?=
+ =?us-ascii?Q?GATVwZn2Uimvk3BdpJ6lUdQB9pYEnobr6VmzMVItc9t2xeodr4ODZ4bQlLV2?=
+ =?us-ascii?Q?q79kuJpf/l3BFYT0wB9F3AMDTuZf1XRFjRiMjGHfoBUNnBEWm8BeVK0W8cZN?=
+ =?us-ascii?Q?0sR+UmWdBjlfiKGokQpJC9Vedrt/VJm8WpklWMD8xrcY3oLlPTRVFmGuDLyq?=
+ =?us-ascii?Q?8bFmFX4a68FMFpWe4Uo4xkqzAxxbtat949Xo1Esk0fXzneJVPIrr18W0z0qm?=
+ =?us-ascii?Q?Se6cX2FH2RN2VG2dDoflixK+hVGnfFbRtW9KLVMkMKoflgKJMMRk?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 239d6d11-d1f6-42d1-61f7-08deecba9703
+X-MS-Exchange-CrossTenant-Network-Message-Id: 081f190a-7e1a-46d5-0ef1-08deecbd4dbc
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:12:07.8147
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 15:31:33.2849
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cdT2lQa8XKD/IpSJRHS9ANP8oVtV70VAor5xmTwyiH3s2q+VKNmYhXtB47K4XnR2TPD5fpvat9f9nfCudJorqJyJrxfXChSN1tASB+dMBc/wyrN7yHz/IYSyb6et1fBA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB12640
+X-MS-Exchange-CrossTenant-UserPrincipalName: /SYbXalU43eERGy92MUL6pOrZjGxJNJQ2V3TbG1HSopr+dt1qOJmR6J8fRp2D2ZNAd+4L4alJVwWxFFXoS2ZqO9UpqZnXAmMZ7cZ8JD45yPljJk+6yecoteyFF5QooEA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR04MB7174
 
-On Tue, Jul 28, 2026 at 02:21:10PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] A completed dynamically linked scatter/gather descriptor will be erroneously re-issued for execution if its interrupt is delayed, leading to double-execution and memory corruption.
-> - [High] Descriptors can be erroneously marked as completed without execution if channel linking (E_LINK) is configured.
-> --
+On Tue, Jul 28, 2026 at 02:47:42PM +0530, Devendra K Verma wrote:
+> Xilinx specific macros for MDB device can be reused for the
+> Xilinx supported other similar IP such as CPM6.
+> Renamed the Xilinx specific macros in a way that can be
+> reused for Xilinx supported upcoming IP, CPM6.
+> Naming is in accordance with the naming done for Synopsys macros.
+>
+> Signed-off-by: Devendra K Verma <devverma@amd.com>
+> ---
+> Changes in v1:
+>    o No change
+> ---
+>  drivers/dma/dw-edma/dw-edma-pcie.c | 58 +++++++++++++++---------------
+>  1 file changed, 29 insertions(+), 29 deletions(-)
+>
+> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+> index 791c46e8ae4c..ec5e057a0f11 100644
+> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+> @@ -29,21 +29,21 @@
+>  #define PCI_DEVICE_ID_XILINX_B054		0xb054
+>  #define PCI_DEVICE_ID_XILINX_B00F		0xb00f
+>
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_ID		0x6
+> -#define DW_PCIE_XILINX_MDB_VSEC_ID		0x20
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_BAR		GENMASK(10, 8)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_MAP		GENMASK(2, 0)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH	GENMASK(9, 0)
+> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH	GENMASK(25, 16)
+> -
+> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH	0xc
+> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW	0x8
+> -#define DW_PCIE_XILINX_MDB_INVALID_ADDR		(~0ULL)
+> -
+> -#define DW_PCIE_XILINX_MDB_LL_OFF_GAP		0x200000
+> -#define DW_PCIE_XILINX_MDB_LL_SIZE		0x800
+> -#define DW_PCIE_XILINX_MDB_DT_OFF_GAP		0x100000
+> -#define DW_PCIE_XILINX_MDB_DT_SIZE		0x800
+> +#define DW_PCIE_XILINX_VSEC_DMA_ID		0x6
+> +#define DW_PCIE_XILINX_VSEC_ID			0x20
+> +#define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
+> +#define DW_PCIE_XILINX_VSEC_DMA_MAP		GENMASK(2, 0)
+> +#define DW_PCIE_XILINX_VSEC_DMA_WR_CH		GENMASK(9, 0)
+> +#define DW_PCIE_XILINX_VSEC_DMA_RD_CH		GENMASK(25, 16)
 
-please double check above two issues
+v1, you agree keep use old MDB ?
 
 Frank
 
+
+> +
+> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH	0xc
+> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW	0x8
+> +#define DW_PCIE_XILINX_INVALID_ADDR		(~0ULL)
+> +
+> +#define DW_PCIE_XILINX_LL_OFF_GAP		0x200000
+> +#define DW_PCIE_XILINX_LL_SIZE			0x800
+> +#define DW_PCIE_XILINX_DT_OFF_GAP		0x100000
+> +#define DW_PCIE_XILINX_DT_SIZE			0x800
 >
-> --- Patch [2]: [PATCH v7 2/2] dmaengine: fsl-edma: Support dynamic scatter/gather chaining ---
-> commit b8502bf27e9fa2ac70190840a26c1603f5640651
-> Author: Benoît Monin <benoit.monin@bootlin.com>
+>  #define DW_BLOCK(a, b, c) \
+>  	{ \
+> @@ -258,10 +258,10 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>  	u16 vsec;
+>  	u64 off;
 >
-> dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+> -	pdata->devmem_phys_off = DW_PCIE_XILINX_MDB_INVALID_ADDR;
+> +	pdata->devmem_phys_off = DW_PCIE_XILINX_INVALID_ADDR;
 >
-> Implement dynamic linking of scatter/gather transfers to enable
-> chaining multiple DMA descriptors without stopping the channel.
+>  	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
+> -					DW_PCIE_XILINX_MDB_VSEC_DMA_ID);
+> +					DW_PCIE_XILINX_VSEC_DMA_ID);
+>  	if (!vsec)
+>  		return;
 >
-> > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-> > --- a/drivers/dma/fsl-edma-common.c
-> > +++ b/drivers/dma/fsl-edma-common.c
-> [ ... ]
-> > @@ -55,10 +55,29 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
-> >  	}
-> >
-> >  	if (!fsl_chan->edesc->iscyclic) {
-> > -		list_del(&fsl_chan->edesc->vdesc.node);
-> > -		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
-> > +		u8 link_sg_id = FIELD_GET(EDMA_TCD_CSR_LINKCH, edma_read_tcdreg(fsl_chan, csr));
+> @@ -272,18 +272,18 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
 >
-> [Severity: High]
-> Will this misinterpret a hardware channel link ID as a software SG ID if
-> channel linking (EDMA_TCD_CSR_E_LINK) is configured?
+>  	pci_dbg(pdev, "Detected Xilinx PCIe Vendor-Specific Extended Capability DMA\n");
+>  	pci_read_config_dword(pdev, vsec + 0x8, &val);
+> -	map = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_MAP, val);
+> +	map = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_MAP, val);
+>  	if (map != EDMA_MF_HDMA_NATIVE)
+>  		return;
 >
-> If a transfer uses EDMA_TCD_CSR_E_LINK to link to a non-zero channel, the
-> handler appears to unconditionally extract link_sg_id from the CSR. This
-> channel number would be read as the link_sg_id, causing id_match to be false
-> for all pending descriptors (which have link_sg_id == 0).
+>  	pdata->mf = map;
+> -	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_BAR, val);
+> +	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_BAR, val);
 >
-> Does this cause the handler to iterate through the entire desc_issued list,
-> prematurely deleting and completing every queued descriptor without them ever
-> executing?
+>  	pci_read_config_dword(pdev, vsec + 0xc, &val);
+>  	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
+> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH, val));
+> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_WR_CH, val));
+>  	pdata->rd_ch_cnt = min(pdata->rd_ch_cnt,
+> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH, val));
+> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_RD_CH, val));
 >
-> > +		struct virt_dma_desc *vdesc, *tmp;
-> > +
-> > +		list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_issued, node) {
-> > +			struct fsl_edma_desc *fsl_desc = to_fsl_edma_desc(vdesc);
-> > +			bool id_match = (link_sg_id == fsl_desc->link_sg_id);
-> > +
-> > +			if (id_match && fsl_desc != fsl_chan->edesc)
-> > +				break;
+>  	pci_read_config_dword(pdev, vsec + 0x14, &val);
+>  	off = val;
+> @@ -293,16 +293,16 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>  	pdata->rg.off = off;
 >
-> [Severity: High]
-> If multiple dynamically linked descriptors finish before the interrupt handler
-> processes them (e.g., due to system load or interrupt latency), could a
-> completed descriptor be stranded in the queue?
+>  	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
+> -					DW_PCIE_XILINX_MDB_VSEC_ID);
+> +					DW_PCIE_XILINX_VSEC_ID);
+>  	if (!vsec)
+>  		return;
 >
-> When the hardware stops on a later descriptor and sets the DONE flag, this
-> loop will break early when it matches the link_sg_id of the finished
-> descriptor, assuming it is still running because fsl_desc != fsl_chan->edesc.
+>  	pci_read_config_dword(pdev,
+> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH,
+> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH,
+>  			      &val);
+>  	off = val;
+>  	pci_read_config_dword(pdev,
+> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW,
+> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW,
+>  			      &val);
+>  	off <<= 32;
+>  	off |= val;
+> @@ -360,7 +360,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>  		 * address use the non-LL mode or simple mode supported by
+>  		 * the HDMA IP.
+>  		 */
+> -		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_MDB_INVALID_ADDR)
+> +		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_INVALID_ADDR)
+>  			non_ll = true;
 >
-> > +
-> > +			list_del(&vdesc->node);
-> > +			vchan_cookie_complete(vdesc);
-> > +
-> > +			if (id_match)
-> > +				break;
-> > +		}
-> > +
-> >  		fsl_chan->edesc = NULL;
-> > -		fsl_chan->status = DMA_COMPLETE;
-> > +
-> > +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
-> > +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
-> > +			fsl_chan->status = DMA_COMPLETE;
-> > +		}
-> >  	} else {
-> >  		vchan_cyclic_callback(&fsl_chan->edesc->vdesc);
-> >  	}
-> [ ... ]
-> > @@ -931,14 +950,87 @@ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
-> >  	if (!vdesc)
-> >  		return;
-> >  	fsl_chan->edesc = to_fsl_edma_desc(vdesc);
-> > -	fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> > -	fsl_edma_enable_request(fsl_chan);
-> > -	fsl_chan->status = DMA_IN_PROGRESS;
-> > +
-> > +	if (fsl_chan->status != DMA_IN_PROGRESS) {
-> > +		fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> > +		fsl_edma_enable_request(fsl_chan);
-> > +		fsl_chan->status = DMA_IN_PROGRESS;
-> > +	}
-> > +}
+>  		/*
+> @@ -370,10 +370,10 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>  		 */
+>  		if (!non_ll)
+>  			dw_edma_set_chan_region_offset(vsec_data, BAR_2, 0,
+> -						       DW_PCIE_XILINX_MDB_LL_OFF_GAP,
+> -						       DW_PCIE_XILINX_MDB_LL_SIZE,
+> -						       DW_PCIE_XILINX_MDB_DT_OFF_GAP,
+> -						       DW_PCIE_XILINX_MDB_DT_SIZE);
+> +						       DW_PCIE_XILINX_LL_OFF_GAP,
+> +						       DW_PCIE_XILINX_LL_SIZE,
+> +						       DW_PCIE_XILINX_DT_OFF_GAP,
+> +						       DW_PCIE_XILINX_DT_SIZE);
+>  	}
 >
-> [Severity: High]
-> Because the channel status was updated to DMA_COMPLETE in
-> fsl_edma_tx_chan_handler() above, will fsl_edma_xfer_desc() then fetch the
-> stranded descriptor from the queue and erroneously reprogram it to the
-> hardware?
->
-> This seems like it would cause the hardware to re-execute a DMA transfer that
-> has already finished, potentially leading to data corruption for I/O devices
-> (such as duplicated writes or dropped reads).
->
+>  	/* Mapping PCI BAR regions */
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com?part=2
+> 2.43.0
+>
