@@ -1,80 +1,103 @@
-Received: from akranes.kaiser.cx (akranes.kaiser.cx [152.53.16.207])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062BA3E49C1;
-	Tue, 28 Jul 2026 08:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=152.53.16.207
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72A3E0C4A
+	for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 08:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785226772; cv=none; b=UGWmiJCK17MN7Hmy1hYRzr2RhBwDoty/pxPOhv0WgQ5RYGVHU3ZAmMhTtPS81BxAHk7C0bidNKEdDTKk24t3lop8qSdOoN1y/MalCUjSkw8+FShu9AXFlQ61nYnAma0e5BwXbdv3W0iktILdYT8104s00WOLFJlVqTLHDURYYmc=
+	t=1785227916; cv=none; b=TVlWfXVrXmJG3UYNQjg9vMZ7xNnn3AXyiWWNsVPvJYCpKRHDiXNjhkV1B6D/Rjdhq9tJs633ChYOW2rl1ZruTxQ4gVtcYCdksLs4e+CL+zc7Fgu+lQmwS7XLRbXlLdtu9hpYAjjHCfk56pWVqA6+XVIyfG2Jcy/Q/nAhwj3OR4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785226772; c=relaxed/simple;
-	bh=gPcTEODO5QHfXsCrSNwFtFHTNTQUpFzHaQy/9orEqOY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WY4wmNheM3kAKphf3yfjsoTMitFZkxBLAYWKPi0h4FqHWskWPsQbCoZkt0fpUHvTsRvCTKGVrUxDi1xNuZkBy7Nb7qVw9CvvFgXJn6vTwSJU21TSXeNgUKV0Zjj5mNkBS/DysWCsg3Po25ljpMdIpx5msGcvL7Q9uXx4MzNAFj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kaiser.cx; spf=pass smtp.mailfrom=kaiser.cx; arc=none smtp.client-ip=152.53.16.207
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kaiser.cx
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kaiser.cx
-Received: from ipservice-092-209-184-216.092.209.pools.vodafone-ip.de ([92.209.184.216] helo=nb282.user.codasip.com)
-	by akranes.kaiser.cx with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <martin@kaiser.cx>)
-	id 1wod25-00000001A77-3ngN;
-	Tue, 28 Jul 2026 10:19:25 +0200
-Date: Tue, 28 Jul 2026 10:19:24 +0200
-From: Martin Kaiser <martin@kaiser.cx>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, imx@lists.linux.dev,
-	vkoul@kernel.org
-Subject: Re: [PATCH v2] dmaengine: fsl-edma: tracing: no ptr dereference
- during log output
-Message-ID: <amhmDM2DWyL3ngRc@nb282.user.codasip.com>
-References: <20260718130024.341243-1-martin@kaiser.cx>
- <20260718131453.A94821F00A3A@smtp.kernel.org>
+	s=arc-20240116; t=1785227916; c=relaxed/simple;
+	bh=MsE7kWv93Ru2CI/UP8lj5CPPu0bIHQsm0Bgg+ICPJzU=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QIvkohVzzEsaTUuGeLvMXWAZmXUbx1MegmoAYovtz6lguTGzNfzYLIYV6qBgzwSB2erbF4tAUug1FBZrvjMUy8drKh50CVWFFsaUvyHobiB+s+NzAYer8og5/3Xr33Epa6wrTPRMun6fJhnce7/F3iWBwjtMKPwev/rMDZcy5HY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOH94iVm; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOH94iVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5F91F00A3F
+	for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 08:38:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785227913;
+	bh=jZ5KLdFG0Kj7A/1hGVR5FcdyB7fl+ixHwnKCoNYMBoQ=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=bOH94iVmiXTGTMKPJ2FmfAM9t0SowgeInt9/I6ZSV92z7SqJo14ivGOKf37iTZFWo
+	 NAkptJHSNt/XHYRfEPjnYAJOLpAjHWAoLQuOmIwAaycDxXV43XBkeir4r6xl3IN+Dp
+	 KYhslTnUBHsK2n4Vzsr9ljTg6ksadpPvnjg6ozS86BnmjaN+g9cCJlWVcSPf1Y3ZUQ
+	 ZaG+1jgZczVhC++dwkEd85tBsVsTRuESVyZzb2aXUJ7+hLSzQXeSxZQrQBqYhoVBYD
+	 pgCnWcx7RFPw6bgse9Bd48EO/hc7nSK5lHsiSROr1oiz4S0QRfoMwp041/nzH9tGMF
+	 mY19TKoAMJZuQ==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5b28c91fba5so887878e87.1
+        for <dmaengine@vger.kernel.org>; Tue, 28 Jul 2026 01:38:33 -0700 (PDT)
+X-Gm-Message-State: AOJu0Yxx69C/5fZnvp1r+QiXXumSWbr8B3KtgxFsX8JhPW50SDksdNll
+	d1Pagd4DNMrLTcnLDihgDJn8pXhRbnIV0lyKUV8P+CBAP/YhyItb4x5N5eMScP5HLzfLFxL2mIB
+	nUhg3BxjXPr9DJqZirBYYcpqPr/fS2KHBpUpjyuEcvA==
+X-Received: by 2002:a05:6512:2353:b0:5b2:aaa2:1d92 with SMTP id
+ 2adb3069b0e04-5b2d025d23fmr274035e87.25.1785227912591; Tue, 28 Jul 2026
+ 01:38:32 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Jul 2026 01:38:30 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Jul 2026 01:38:30 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <b4d1a1d4b56f548e157a4d9d8bed785f507dc157.1785183549.git.allen.lkml@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260718131453.A94821F00A3A@smtp.kernel.org>
+References: <20260108080332.2341725-1-allen.lkml@gmail.com>
+ <cover.1785183549.git.allen.lkml@gmail.com> <b4d1a1d4b56f548e157a4d9d8bed785f507dc157.1785183549.git.allen.lkml@gmail.com>
+Date: Tue, 28 Jul 2026 01:38:30 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MdDEQ2JcQtJ0AwHq0atv9SJ1Y47W6Djzs_JGVoYkk8zFQ@mail.gmail.com>
+X-Gm-Features: AUfX_mweuV2NQV2gdk5hEPPVqRK6kr4uxF3tef-qVA898oqyarmW2SDHO7pBrzw
+Message-ID: <CAMRc=MdDEQ2JcQtJ0AwHq0atv9SJ1Y47W6Djzs_JGVoYkk8zFQ@mail.gmail.com>
+Subject: Re: [PATCH v2 60/64] dmaengine: bam-dma: use dma_chan_kill_bh
+To: Allen Pais <allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>, 
+	Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, linux-arm-msm@vger.kernel.org, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Thus wrote sashiko-bot@kernel.org (sashiko-bot@kernel.org):
+On Mon, 27 Jul 2026 22:39:22 +0200, Allen Pais <allen.lkml@gmail.com> said:
+> virt-dma now dispatches completion callbacks through per-channel BH
+> work instead of its tasklet. Cancel that work during teardown before
+> channel storage is released.
+>
+> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+> ---
+>  drivers/dma/qcom/bam_dma.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 1bb26af0405f..74bc2fe445b3 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -1387,7 +1387,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>  	dma_async_device_unregister(&bdev->common);
+>  err_bam_channel_exit:
+>  	for (i = 0; i < bdev->num_channels; i++)
+> -		tasklet_kill(&bdev->channels[i].vc.task);
+> +		dma_chan_kill_bh(&bdev->channels[i].vc.chan);
+>  err_tasklet_kill:
+>  	tasklet_kill(&bdev->task);
+>  err_disable_clk:
+> @@ -1413,7 +1413,7 @@ static void bam_dma_remove(struct platform_device *pdev)
+>
+>  	for (i = 0; i < bdev->num_channels; i++) {
+>  		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
+> -		tasklet_kill(&bdev->channels[i].vc.task);
+> +		dma_chan_kill_bh(&bdev->channels[i].vc.chan);
+>
+>  		if (!bdev->channels[i].fifo_virt)
+>  			continue;
+> --
+> 2.43.0
+>
+>
 
-> However, edma_writel() uses iowrite32() which assumes native CPU-endian
-> input:
-
-> drivers/dma/fsl-edma-common.h:edma_writel() {
-
-static inline void edma_writel(struct fsl_edma_engine *edma,
-			       u32 val, void __iomem *addr)
-
-where val is always little-endian
-
->     if (edma->big_endian)
-
-edma->big_endian is configured from a devicetree setting. It's possible that it
-doesn't match cpu endianness.
-
-Could we check __BYTE_ORDER__ instead (or additonally)?
-
-
->         iowrite32be(val, addr);
->     else
->         iowrite32(val, addr);
-
-The potential endianness issue affects only the value that's written to the
-hardware. It's unrelated to the tracing patch that is reviewed here.
-
->     trace_edma_writel(edma, addr, val);
-
-The value that's traced is always little-endian. We might have to use
-le32_to_cpu(val) in the trace event definition. But again, that would be a
-separate patch.
-
-May I ask that we put the sashiko comments asided and merge the trace event
-fix? (I'm happy to submit another patch for le32_to_cpu in the event.)
-
-Thanks,
-Martin
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
