@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4F4CA281
-	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 14:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DF03B0596
+	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 15:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785337018; cv=none; b=RPNYOYR3dimol10e0zQMcWvgh+MkknVoMqB5EVO7yH3URGSwMvPSsRX63AMJ0gfHCAOis8WyO82j7sHIJW30Q8qpQwxqbcr1cS3nfiAriJLz+oAE5iordVMf8qHDcNySb4BzqKAY+cSSxqBOYpAHVjvCtb2pN9iRP2Y1hopsMYE=
+	t=1785337344; cv=none; b=UYTX1/MXBIJ/bZsYefiV1AVwtUXkUKyAIRM0VAvP4vuYM8RBGQgMUSETYVgTK7ESpLbNIVQsb8adzhQpcivdJgBCTy36dkRBas88CHQcxf9ni4C85c2AJsYBS01wRdItGkrpS0coOcNtqCOCkwCU2c/4/Cfst4hptJ8AXja/yWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785337018; c=relaxed/simple;
-	bh=E5QG7Z60FBMnH5Pvh/OEg8zvBzhK4sAGxbye/fAN6ao=;
+	s=arc-20240116; t=1785337344; c=relaxed/simple;
+	bh=u3vtE1AYJGM5BCWTbaAd5CemUXi6PT6Qafk/GJoo/tA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Xmlrv+M8SyLLD1DysXrCtBZD5UdeEjMwucf2t4UnuWigf3w4uDZX8uJToi/laU3HlAZIDbDhF2ZCu9nrASVixkqsqNApN0ysNiRQj/VBAA/NRDO7QlruaDAggXtC1GmZSZFSQEuU9gY/5XkXD6Xvw7qji8h99/40neX3swWQzWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b5UNeQUA; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=CHao2jqmjt4cI6KejUulKHsPOP8/XIkXIy7/iaJcEplyVLemaiZ4bW5mi8gDvt49XjJxIBnNkGr23hl1PE30kzfNHxo2V2nV3m5zxLXyczeYu1acUiHjANIqOXogzwjd3vy8FnE81We+keqttIZ6Hts6ihyIqBRrm4UzZyrTCLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FUXBtOWN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b5UNeQUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45351F00A3E;
-	Wed, 29 Jul 2026 14:56:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FUXBtOWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5F31F000E9;
+	Wed, 29 Jul 2026 15:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785337017;
-	bh=fs+ja1BwVlOJZWYEqwNYfZ0RLE0DHhRac/llLmYE4oM=;
+	s=k20260515; t=1785337343;
+	bh=2SWIsVe0/Q5o+0PiUPhrs/636jzL6CLe8r0kuLsLox4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=b5UNeQUAvym2Py5wsHXxk3pw8TNj2PMbTv8vuP1CooEnGKhgkZDjESJ9M/r3ijRc4
-	 0RbsxB0FI03an8zMhoIcdFqZrbKw2YGPX134AHarpq8nVTkPHWH6AvrCx9YFcBr81C
-	 rFPut4x9olmE0PPXlXGZvfdNY7at85BJ7Gnuhk53v8RETgd9HLl+xlFi2afxrTu2FX
-	 8gXOmYpbfw4F5YO/poUkyG3wjBsRMNOdw97wcDDhll400yuojkD7JVIn65jTx1rQqO
-	 5PMy7eyYkOOAojUeMufeTXKk5vnf3704jeRzN3RpHK7CRaLIxv3o7fXy/2CSIyjDSo
-	 08V+MkOOg+JfQ==
+	b=FUXBtOWNKxP6SgVZAh5pmwk1pHOR8rarCifyoqyQnSHgIOC7eoK1QoYifiWpKWMgW
+	 wdWx4hpfNg0kNKlbrw31PQwyfImmIhgc6LODl/lYeN5qWcmyMoTLALIOak76ExD+qY
+	 XvbGXhOgSDjvxY6NFmbX74Z2V5ChFRCl3sl3QRdJo3ZW+OO8RsqQFrChazsuoD2AWa
+	 mqPVIN6OUqDMSs72bg3msP32r/aM1GXE9ce0JNRJIbA2lQmO4RtTo/BxYydRZKGWB3
+	 cNoeJHKCohlQk0GcKeTf7G617OrqvogZfC+WWYp4WPbcC1elnmhBPNQY2aF72VmKGM
+	 nt+DqlyHnG2rA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 19/24] dmaengine: dw-edma: Drain LL entries for STOP
- and PAUSE
+Subject: Re: [PATCH v4 22/24] dmaengine: dw-edma: Add engine recovery
+ infrastructure
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260729143036.3087722-20-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260729143036.3087722-23-den@valinux.co.jp>
 References: <20260729143036.3087722-1-den@valinux.co.jp>
- <20260729143036.3087722-20-den@valinux.co.jp>
+ <20260729143036.3087722-23-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Jul 2026 14:56:56 +0000
-Message-Id: <20260729145656.B45351F00A3E@smtp.kernel.org>
+Date: Wed, 29 Jul 2026 15:02:22 +0000
+Message-Id: <20260729150222.BB5F31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,74 +47,64 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Infinite loop in dw_edma_wait_termination() leading to hung tasks =
-if hardware stalls or is removed.
+- [High] Hardware engine is left permanently disabled if a stalled transfer=
+ completes spontaneously during the engine_reset retry loop.
 --
 
---- Patch [19]: [PATCH v4 19/24] dmaengine: dw-edma: Drain LL entries for S=
-TOP and PAUSE ---
-commit 7c90dd7ea15ac01e52b8a14ed044dee1a6a2bfde
+--- Patch [22]: [PATCH v4 22/24] dmaengine: dw-edma: Add engine recovery in=
+frastructure ---
+commit d5fd1986862b1ea5049e2ba48c784328b9d2d605
 Author: Koichiro Den <den@valinux.co.jp>
-Subject: dmaengine: dw-edma: Drain LL entries for STOP and PAUSE
 
-This commit changes the channel termination process to wait for the
-hardware to consume all published LL entries when a STOP or PAUSE is
-requested, rather than discarding the ring state immediately.
+dmaengine: dw-edma: Add engine recovery infrastructure
+
+This commit introduces an engine recovery worker for eDMA to coordinate
+resets across all channels in a given direction when a transfer stalls.
+It gates channels, attempts to quiesce active LL channels, resets the
+engine, and rebuilds LL contexts before re-enabling the direction.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
 edma-core.c
-> index b0e3f67d3942f..977392689205f 100644
+> index cbe60bcd4c9a0..616b0658b1ef3 100644
 > --- a/drivers/dma/dw-edma/dw-edma-core.c
 > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-
 [ ... ]
-
-> @@ -1590,18 +1638,21 @@ static void dw_edma_wait_termination(struct dma_c=
-han *dchan)
->  	 * A STOP may be deferred to a later interrupt while the channel is sti=
-ll
->  	 * running. Wait until that handler completes the termination.
->  	 */
-> -	while (time_before(jiffies, timeout)) {
-> +	for (;;) {
->  		scoped_guard(spinlock_irqsave, &chan->vc.lock)
->  			stopping =3D chan->request =3D=3D EDMA_REQ_STOP;
-> =20
->  		if (!stopping)
->  			return;
-> =20
-> +		if (time_after_eq(jiffies, timeout)) {
-> +			dev_warn(chan->dw->chip->dev,
-> +				 "timeout waiting for channel termination; still waiting\n");
-> +			timeout =3D jiffies + msecs_to_jiffies(5000);
-> +		}
+> @@ -785,6 +809,283 @@ static void dw_edma_ll_recheck_work(struct work_str=
+uct *work)
+[ ... ]
+> +static void dw_edma_engine_recovery_work(struct work_struct *work)
+> +{
+> +	struct dw_edma_engine_recovery *rec =3D
+> +		container_of(to_delayed_work(work),
+> +			     struct dw_edma_engine_recovery, work);
+> +	struct dw_edma *dw =3D rec->dw;
+[ ... ]
+> +	if (unlikely(READ_ONCE(dw->teardown)))
+> +		return;
 > +
->  		fsleep(1000);
->  	}
+> +	if (!dw_edma_engine_recovery_needed(rec)) {
+> +		if (READ_ONCE(rec->active))
+> +			dw_edma_engine_recovery_release(rec);
+> +		return;
+> +	}
 
 [Severity: High]
-Does this change introduce a potential infinite loop? By removing the absol=
-ute
-timeout and converting this to an unbounded for (;;) loop, the function will
-hang forever if the hardware stalls, drops an interrupt, or is
-surprise-removed.
+Could the hardware engine be left permanently disabled if a stalled transfer
+completes spontaneously during the engine_reset retry loop?
 
-If chan->request never transitions away from EDMA_REQ_STOP (for example, if
-dw->teardown is set and no further interrupts arrive),
-dmaengine_terminate_sync() will block indefinitely. This could prevent driv=
-er
-unbind, system suspend, or process exit.
+If dw->core->engine_reset() fails later in this worker, it disables the
+engine by writing 0 to ENGINE_EN but may time out waiting for it to read
+back as 0. This returns false and queues a retry.
 
-Is there a fallback mechanism to eventually break out of this loop if the
-hardware never recovers?
+If the hardware unsticks before that retry executes, the next call to
+dw_edma_engine_recovery_needed(rec) will evaluate to false. This triggers
+the early exit path above, calling dw_edma_engine_recovery_release().
 
-> -
-> -	dev_warn(chan->dw->chip->dev,
-> -		 "timeout waiting for channel termination\n");
->  }
-> =20
->  static void dw_edma_device_synchronize(struct dma_chan *dchan)
+While dw_edma_engine_recovery_release() ungates the channels, it never
+calls dw->core->engine_enable(). Because ENGINE_EN was previously written
+to 0 during the failed reset attempt, does this mean the engine remains
+stopped and will drop all future transfers?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729143036.3087=
-722-1-den@valinux.co.jp?part=3D19
+722-1-den@valinux.co.jp?part=3D22
