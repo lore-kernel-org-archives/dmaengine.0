@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09A739794A
-	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 14:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA4F4CA281
+	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 14:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785336946; cv=none; b=jNL5UT9weKSobn5knrAJDezNAO6nhb1U4hKtbhz8D3EfPSdqJQJhFVibrH3KGKHUW2j8Vwr61Lm7wmrggJysPwdLcB6FhrAaT/ugVOD7XX8T3inhpIIo8SckPhgU4rlgv6PQLAwdnXjA558Nlyo+xbEI+sGQYG4yggB0xTYc2Rs=
+	t=1785337018; cv=none; b=RPNYOYR3dimol10e0zQMcWvgh+MkknVoMqB5EVO7yH3URGSwMvPSsRX63AMJ0gfHCAOis8WyO82j7sHIJW30Q8qpQwxqbcr1cS3nfiAriJLz+oAE5iordVMf8qHDcNySb4BzqKAY+cSSxqBOYpAHVjvCtb2pN9iRP2Y1hopsMYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785336946; c=relaxed/simple;
-	bh=9zgQu6KVDoiQVGBOG572u3GxshRR4NqbwwQuHzBZmtA=;
+	s=arc-20240116; t=1785337018; c=relaxed/simple;
+	bh=E5QG7Z60FBMnH5Pvh/OEg8zvBzhK4sAGxbye/fAN6ao=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=RVZuY1X70Cg4f9AtOm+HOyxZv/cSiGVko2bODwkjWr4JYGsOTqwRwXHf0EmHzgnJUQ8FqEDwukWlBsm6pwmYPmD+GgPO0YwmMk2LMkEoD0wikVL4e593iW5KO9qdgBoKo3CsUOVvXvICBW1TzK/doVZTOylciebKehANQ/tEThQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=My2V0nF3; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Xmlrv+M8SyLLD1DysXrCtBZD5UdeEjMwucf2t4UnuWigf3w4uDZX8uJToi/laU3HlAZIDbDhF2ZCu9nrASVixkqsqNApN0ysNiRQj/VBAA/NRDO7QlruaDAggXtC1GmZSZFSQEuU9gY/5XkXD6Xvw7qji8h99/40neX3swWQzWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b5UNeQUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="My2V0nF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0D21F000E9;
-	Wed, 29 Jul 2026 14:55:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b5UNeQUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45351F00A3E;
+	Wed, 29 Jul 2026 14:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785336945;
-	bh=GSErVcWqa+tud6RnfROq2IhiHyu/Bjtbqhkzo2hBWlc=;
+	s=k20260515; t=1785337017;
+	bh=fs+ja1BwVlOJZWYEqwNYfZ0RLE0DHhRac/llLmYE4oM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=My2V0nF3et7TZYQAwHFUqEu7VlHRpey0EF3gGs1i/sq1iAW4Au4KAHaUlDrzrUgOZ
-	 24wJYxrv1tT+ch33POmzXysDiIRyp9jPh6IO94cyz/v8cMu1fnHbaQ3QB9IzWn62Qs
-	 CjZ0Sk+B/eFh7zb6Ni74ZS4FkDv+2dXM+X4yyw8LiglGN/Gfl1wBLw6anp9KV9eF9M
-	 qF6O81HeTfi2JzNTLPgpozuQfc7YCemdduucIBnTclMSHmlu89YXwFdfbkr++XeXXh
-	 xRBryj3dnmq0YDBj391AtwD7K90Enw3hExjbzeCFaQIsBPSLF33JZ/Fn1engexekLn
-	 nHiRrgKmfg4tA==
+	b=b5UNeQUAvym2Py5wsHXxk3pw8TNj2PMbTv8vuP1CooEnGKhgkZDjESJ9M/r3ijRc4
+	 0RbsxB0FI03an8zMhoIcdFqZrbKw2YGPX134AHarpq8nVTkPHWH6AvrCx9YFcBr81C
+	 rFPut4x9olmE0PPXlXGZvfdNY7at85BJ7Gnuhk53v8RETgd9HLl+xlFi2afxrTu2FX
+	 8gXOmYpbfw4F5YO/poUkyG3wjBsRMNOdw97wcDDhll400yuojkD7JVIn65jTx1rQqO
+	 5PMy7eyYkOOAojUeMufeTXKk5vnf3704jeRzN3RpHK7CRaLIxv3o7fXy/2CSIyjDSo
+	 08V+MkOOg+JfQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 24/24] dmaengine: dw-edma: Add trace support
+Subject: Re: [PATCH v4 19/24] dmaengine: dw-edma: Drain LL entries for STOP
+ and PAUSE
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
 Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260729143036.3087722-25-den@valinux.co.jp>
+In-Reply-To: <20260729143036.3087722-20-den@valinux.co.jp>
 References: <20260729143036.3087722-1-den@valinux.co.jp>
- <20260729143036.3087722-25-den@valinux.co.jp>
+ <20260729143036.3087722-20-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Jul 2026 14:55:44 +0000
-Message-Id: <20260729145545.3D0D21F000E9@smtp.kernel.org>
+Date: Wed, 29 Jul 2026 14:56:56 +0000
+Message-Id: <20260729145656.B45351F00A3E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -46,67 +47,74 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] The `edma_irq` tracepoint uses the unexported enum `DW_EDMA_LL_E=
-VENT_STOP` in its `TP_printk()` format string, which breaks offline userspa=
-ce trace parsing.
+- [High] Infinite loop in dw_edma_wait_termination() leading to hung tasks =
+if hardware stalls or is removed.
 --
 
---- Patch [24]: [PATCH v4 24/24] dmaengine: dw-edma: Add trace support ---
-commit 6d716b0a3b3953754ece69188d4e3a952b274f83
-Author: Frank Li <Frank.Li@nxp.com>
+--- Patch [19]: [PATCH v4 19/24] dmaengine: dw-edma: Drain LL entries for S=
+TOP and PAUSE ---
+commit 7c90dd7ea15ac01e52b8a14ed044dee1a6a2bfde
+Author: Koichiro Den <den@valinux.co.jp>
+Subject: dmaengine: dw-edma: Drain LL entries for STOP and PAUSE
 
-dmaengine: dw-edma: Add trace support
+This commit changes the channel termination process to wait for the
+hardware to consume all published LL entries when a STOP or PAUSE is
+requested, rather than discarding the ring state immediately.
 
-This commit adds tracepoints for the circular LL ring's separate producer
-and consumer positions, including LL publication, descriptor operations,
-and engine recovery events. The recovery event records configured LL
-channels before direction resets.
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-trace.h b/drivers/dma/dw-edma/dw=
--edma-trace.h
-> new file mode 100644
-> index 0000000000000..e5b3eb57df065
-> --- /dev/null
-> +++ b/drivers/dma/dw-edma/dw-edma-trace.h
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
+edma-core.c
+> index b0e3f67d3942f..977392689205f 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
 
 [ ... ]
 
-> +TRACE_EVENT(edma_irq,
-> +	TP_PROTO(struct dw_edma_chan *chan,
-> +		 const struct dw_edma_ll_snapshot *snapshot),
-> +	TP_ARGS(chan, snapshot),
+> @@ -1590,18 +1638,21 @@ static void dw_edma_wait_termination(struct dma_c=
+han *dchan)
+>  	 * A STOP may be deferred to a later interrupt while the channel is sti=
+ll
+>  	 * running. Wait until that handler completes the termination.
+>  	 */
+> -	while (time_before(jiffies, timeout)) {
+> +	for (;;) {
+>  		scoped_guard(spinlock_irqsave, &chan->vc.lock)
+>  			stopping =3D chan->request =3D=3D EDMA_REQ_STOP;
+> =20
+>  		if (!stopping)
+>  			return;
+> =20
+> +		if (time_after_eq(jiffies, timeout)) {
+> +			dev_warn(chan->dw->chip->dev,
+> +				 "timeout waiting for channel termination; still waiting\n");
+> +			timeout =3D jiffies + msecs_to_jiffies(5000);
+> +		}
+> +
+>  		fsleep(1000);
+>  	}
 
-[ ... ]
+[Severity: High]
+Does this change introduce a potential infinite loop? By removing the absol=
+ute
+timeout and converting this to an unbounded for (;;) loop, the function will
+hang forever if the hardware stalls, drops an interrupt, or is
+surprise-removed.
 
-> +	TP_printk("chan %u%c event %s head %u done %u total %u idx %d completed=
- %d cookie %d",
-> +		  __entry->id,
-> +		  __entry->dir ? 'R' : 'W',
-> +		  __entry->event =3D=3D DW_EDMA_LL_EVENT_STOP ? "stop" : "progress",
+If chan->request never transitions away from EDMA_REQ_STOP (for example, if
+dw->teardown is set and no further interrupts arrive),
+dmaengine_terminate_sync() will block indefinitely. This could prevent driv=
+er
+unbind, system suspend, or process exit.
 
-[Severity: Medium]
-Does using the unexported enum DW_EDMA_LL_EVENT_STOP directly in the
-TP_printk format string break offline trace parsing?
+Is there a fallback mechanism to eventually break out of this loop if the
+hardware never recovers?
 
-When this tracepoint is exported to userspace via the events format file, t=
-he
-literal string DW_EDMA_LL_EVENT_STOP is included in the output.=20
-
-Since userspace parsers like libtraceevent cannot resolve unexported kernel
-C enums without TRACE_DEFINE_ENUM or __print_symbolic(), they typically fail
-to evaluate the expression and may throw an error when parsing the trace da=
-ta.
-
-> +		  __entry->head,
-> +		  __entry->done,
-> +		  __entry->total,
-> +		  __entry->index,
-> +		  __entry->completed_cookie,
-> +		  __entry->cookie)
-> +);
-
-[ ... ]
+> -
+> -	dev_warn(chan->dw->chip->dev,
+> -		 "timeout waiting for channel termination\n");
+>  }
+> =20
+>  static void dw_edma_device_synchronize(struct dma_chan *dchan)
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729143036.3087=
-722-1-den@valinux.co.jp?part=3D24
+722-1-den@valinux.co.jp?part=3D19
