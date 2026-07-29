@@ -1,47 +1,47 @@
-Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020091.outbound.protection.outlook.com [52.101.228.91])
+Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021094.outbound.protection.outlook.com [40.107.74.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C504C6F09;
-	Wed, 29 Jul 2026 14:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C76E47FAE3;
+	Wed, 29 Jul 2026 14:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.94
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785335453; cv=fail; b=GUjlyWwV+vYgNMBqe3zpCzTCzPXSUxZnU7tkuRcRn/dA+xatzhNx5Tc0pylI/vbA5jfa1HOa+oELsd4F87GZUe+O+e8hZ5DLv/oNKj3nACsi3/cLs3u+AATV3+2y+yvb0bMMR2BN9ieVNNW3mfFCXHWJAIfVn/VvKiIUNYvsW5I=
+	t=1785335454; cv=fail; b=YNQFEmp0My2MJU/l4bbug48o6z4y+koqjrU0n9uKEsHQ2iORzGoD0MeeKAzFKTLu+yIrWdJMUmWxFYZ55mwfVSNqjYK7qh76n/gfs37GYAKQWLTiW/RVFwsSe97FDgVzjbl8Zp3bLBXHl7C4KNVnHz2hr0yKCo4YHU79tD6z1sk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785335453; c=relaxed/simple;
-	bh=vCWyX8k+dyBWLSD7CNsgHWKR3ykFv6pT0Ipx9ZZR69M=;
+	s=arc-20240116; t=1785335454; c=relaxed/simple;
+	bh=riujK5+PpUS2TMCcTavC5y0+IlKFr7w67ix062aCh90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=UPtoK2xqKxuIEbPhPZvVxf7aRdES75V4+UDq0aB/t2B7cKskV/3qGYJlmfMbtwE8BUyKVmkD3oYKYDiUKniMQAXsNHMfnKN95znt1/txgpsbg3xcMr86JyTu/mYX3QM0RpJoftBAUWtb+BlP8vdaCpFYv/Hhmm13SX/0Ctiamy4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=bPGmr3fh; arc=fail smtp.client-ip=52.101.228.91
+	 Content-Type:MIME-Version; b=J31KGdnw366kJ3T8EadMZZ3PoIYL4tCIrJ7mly7b3ofTJftHT32xQUptXROXFApSrhH/R5Vb4Tx/JLeH+uBOajcgAjH8Ux7T5tU1awzX0bmk7uQul+/pAFHvy8/LQh2xOuGBPfqWXoB+dX5Ket2C8jso019OeunUCIUTEAwx1Ag=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=j99Cs5y4; arc=fail smtp.client-ip=40.107.74.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="bPGmr3fh"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="j99Cs5y4"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TtrlcPcYoU+NvHogn6KmxROhckW38RYM0B4oQz2F+pxh1rc9XzidkZ53TOSY0YCAXbmpgWTlh5cwLjzXOzwf3psd0/KHops8UlLh36WAHYqf1ee+JX6guNimAMmzjKU+cBh+bai7wtwWm3M0djb5VjuYOQH/TfNLKsELbNO/+TUsItvWYpxUQaY542c2DJhmwjqwEleNg/BXTYqZ6ou6mWdmqBEGwRU2WZOvso/mTJReU3v30nuwWbhKYWvqB5QLJbqNlDFTXeeMz2WMFdL240yEASc+/1GgWznKHJie5eoGw1POkmFlRabaEhE4k5QrjeNHA1saEeO8Fo44bS428g==
+ b=CWo1mAU6NEBlTYVfd+DVxsbOUUwI0yNjmbCwEZ9cZMmvUda9TlNye7DNZPAEZ/4zmVGu0Lc5WuUUWKXZhJiZPpsrj05gaQ0wFaSOPZZi28cGClM5SJtwpy6e2hF76bubjjdvkcpTm4whahiDf4f9rQ3QW/7xwJgr/tN0JecwcMvWhR1S6jvF6aCcGCXgexIoW1i2uXoSEIGGHJxngmQRtF0oGHSqQSKGzQ0w5ILiE6ufc17HydWtCCLS+Nm4zBMMWBz9w74BNDqxWlPuC4Y2IDOYkVEc+QjYI34EYw5i78lKkI9luBS86hEpj6gCVJM5OPOhbZh0Pkws9E7QuGTD9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7rxWTXD8pM0PXuXoJpReVygqQ/iqcCNEH6H6hE4pwmk=;
- b=NwyslelGWSZyQkdsClDzn0X6pvo6lMVVe4WS08QVhv6dy6q1k9QhDVQI4fUyF2FzyFD6Id9/hglNmPagPGjNAh4vFyJoND69j3TbGxTyknvcJB7Aqj5jUkvH5LW/82/cX7F4oRZmB1pI/xh9KehavmWaFf0sjWx1+l1Wv//GFHjwTm6JbfFNb2kiOZA1XocphQuAyXEFLK17RJ7c0GEEDT7rc4YhMbEcqSddXFe15aZ1aevSWrzYkIHyKDkBnyjN+r1mXgmkHkfqK8+4vqVeXPUqqaYkJiPW2YugcS+6c/a3zp7fF0Pnetd/krVoCBEmsIfTfQSV9rZewWa+8ehT9Q==
+ bh=p02ifURwNZxnpSPeYLOecbFGvyw0jk5+kboHMB+Y8ds=;
+ b=lSnUb1VEahs0oBQwiLnVW9AX1cRgqKYFjpwdgfzenxesy/SszzGAn9hata+bVtNHIjuoa6K/ObWJBKxbwoGkRUglk9zh5b2uDe5eLXq3YneSFR7vtcZEvQY5eqkOQazJ62UOGy4GZIFA1Z3lbiZyCwX0WGz0ejBh8dfbzf6nhn4hlE/v9XqTT9trLjfz+MYP9HptdhaN44BfQ8Pd0izJhB5HThuxc4xPBAFg0McDodZKh+f0o5cFTaF04WoBDlY/HtlWTs2ZMT9IB8C64aaZTHW2jV04Vb2h1WPdPZF7l8Z/H875zRsfcRXNaRKe2Ogk1kjY4t68MQu/1m7J4myzxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7rxWTXD8pM0PXuXoJpReVygqQ/iqcCNEH6H6hE4pwmk=;
- b=bPGmr3fhjPa5tUo6anv4pN6A5feeOsaiWn7NQG0dew+Slyd6XYT2DQXWJMTiDyNgI04xZyrtLV7uc2rlefmFes48QeUUoPJ8rplTbgx+3Q7z0CrH3ZoW3zxoSQvoXOIiF6BlPTEDM0WeuzFIl2+WH824/5cT7aG/jFGpdUyvHtM=
+ bh=p02ifURwNZxnpSPeYLOecbFGvyw0jk5+kboHMB+Y8ds=;
+ b=j99Cs5y4spJUVXnffhlRXlc20wDNUJM2V9k5cZGWWOkC8Qeoxi2zhDYGe19eDIdpv0A9bybQxXtlB2gxlUEHug6p6GrpOFPH9WrxyFpyADjZdqQF3vBs7CAFBSTNOKpCMfG0SSQeNi+5W812/UpSttHgLGUpSl6x4CFGGXsju4k=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
  by TYRP286MB5289.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:112::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.12; Wed, 29 Jul
- 2026 14:30:44 +0000
+ 2026 14:30:45 +0000
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.009; Wed, 29 Jul 2026
- 14:30:44 +0000
+ 14:30:45 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
@@ -58,16 +58,16 @@ To: Vinod Koul <vkoul@kernel.org>,
 Cc: Devendra K Verma <devendra.verma@amd.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 04/24] dmaengine: dw-edma: Make DMA link list work as a circular buffer
-Date: Wed, 29 Jul 2026 23:30:16 +0900
-Message-ID: <20260729143036.3087722-5-den@valinux.co.jp>
+Subject: [PATCH v4 05/24] dmaengine: dw-edma: Move callback result helper before LL helpers
+Date: Wed, 29 Jul 2026 23:30:17 +0900
+Message-ID: <20260729143036.3087722-6-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260729143036.3087722-1-den@valinux.co.jp>
 References: <20260729143036.3087722-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TY4PR01CA0073.jpnprd01.prod.outlook.com
- (2603:1096:405:36c::9) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TYCP286CA0156.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:383::20) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,357 +77,145 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYRP286MB5289:EE_
-X-MS-Office365-Filtering-Correlation-Id: c3319f25-f9bf-4482-a0cb-08deed7df983
+X-MS-Office365-Filtering-Correlation-Id: b23b2942-d0dc-402f-b15c-08deed7df9f4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|10070799003|7416014|366016|1800799024|23010399003|921020|18002099003|56012099006|10067099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	5O+10D9LYnQ6vfj+/fA+wJxrTCdS0FxQDrazk5RlcU5PS/2IcelFFe0cyiEWHSiRs+LPCSx8llTyIJXB6+2alhXDO1XRR/KUQkhGtFTJbd/Y4XW2uL1ghaAb9XR+gsJBbPwYbk+/eSImlKJteAal9lRdaHKinSnNn9CbUi9c8X0dYXxHC6d+XXNyM/44JS60WRQPZUXU0UTWt3ueC46L2KTrM3vTVOJuW0pkSV61pJXZE8sjJKZN7aAhRAC+rNTNayeI1J7Dgn7a1gCKYGEfdp16+5Q0LN3uunSF6efSNhcnOGIU/SWaVVw3uujLvf/mb144waItdOUzRAzhYH3XxQyyH/1ZwcnIYfrHbHKfqQ8XsSbPIdUgie8iAFgSQmLoc311nfn2gCLiBNGfyewx7YoRJ6XTFMMRmUspgKvtP/uNHY93+cEkUyT6wm4me5xFxMw3+lwWmr6l0tuElamdPTAeBbn7WvtW8+WqAe18LHLKiSo5By1Ilwpx3T5YDgGy4pXN3iazA1wXvqvVZAcotXniIkpY0nmVEJ399IbJ1DwZcugTXWY6s3zvo/UzCuqpMElqZpJY9VTjpxzcFU1LJRIXCDifbfB4DlWk8uqD8pkDjCe4xYk/Q5l1bBQxrve6mXC6h41jJU3b8u+FJxayzfJjkcbTJTdOauMXpdYyfjKZZUKcAoVRG2y6zpZjHytbws1e8G+cX+CiNfuEDKNGCw==
+	PqOSp5SY/k+iUQ1uOyVjhW5qtSBGAwTq8D0xQz3TDrrHfLg8vkPbVz8X+qODAnv2qTFN4tlimVJ3AMpZoQDcfZ6HdZdzx5dQ9x00GcNpr64dXO5X4B+fBx4Bu7EHwfxoE7BJELofukxL/aJ0LqtWg/PjcqvUPAv37+E64WLiqnyJc6tZQvsQ2O2Loi9pBFt1mx2xEuQ3WH2tANNWTQnayJZUXlItdzroKB5XyPn9cfT1GiFcHYD9CWPHWVB117LnSK5gxO9tel7jxnoFvs/k07sLK90117e/2tj8qB/MjQTEOaMm6/vu5h1Ns7XXFYBZ05flCA52fxlYcK07T1e/frckTKWCSGCoNUbMCQwSrd/gZXfsER+jgzrdxmiXBeepcfdxXZWE6Yc2Uy4D81YeEWi2sRoACZLZ9pCd+ggB9WcmjrWT22MkrUd4BKPzi5LWTf8YbQ5iEH0BP0/sXlIodTVW1RFQfP7OlWyNULsL/B4UHrbCxCv2AxcjgmQvmtPOSTeiPXmIF86xI/f5W7N4bNDFyxw23khZ/GYqlueCjqy4pbd391YWwvy5IkpdwzbVry0Zj/Ckss3LOkqb32hOEzNqrNB7Xn3VDFlZyzRXYBgqVfF41DQjeFZ8DQgv/ktLCOBEpihUX8Ecf2yVd3dC4XvkNlgfeMdjputOoPRihDgy1HO8fZyxQqP8Oe/jds5eHgMXMbqAM842rstcD6lmGA==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(7416014)(366016)(1800799024)(23010399003)(921020)(18002099003)(56012099006)(10067099003)(22082099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?YGlHSffTox/MfNs10kekY5x2qBcNPxLtAn9+gx1t7ilvOKww8GqYreMop8lE?=
- =?us-ascii?Q?OTHBjc7lcFIWTaGx7CKu3HSF4R89NZ6/J31n7ObwBMtvLqWBHYj980KC1z5J?=
- =?us-ascii?Q?MIo1GfGleRYjleg7geHf+q68ZUU5M4q+QbFboJTG6IljDTbOxm8KtnEfRhNZ?=
- =?us-ascii?Q?L2jy/B5xtiyEejGAfbFd+8TBPdSDuAr3Pj5C4LZVgewNdqmHgMHJ56VbLz8W?=
- =?us-ascii?Q?j4IpJCF6E4n+Q2k0HDkOsgrZ7gx7PBvVi900QkZ76ug0aHCcuESesb7W+diM?=
- =?us-ascii?Q?wYl5aLuXqtXZ9HIP9m1ww8gaWhaSu6WFDmxRC8GfcHvuiuKq30NQonmVTeKh?=
- =?us-ascii?Q?g0+SYxkbUy2Ei1BSpZPbLprbUe8Om4uQhT9tanJ0+vyuonCdO2+HpNNjYElN?=
- =?us-ascii?Q?Qj0ki60A7THqx2kSeuUwofXiJaQBCq7kjSfB8v4tGXIjWBKZIISmzGDZhJ3d?=
- =?us-ascii?Q?m5bI6lY5ox9JxEgUySCD5iM9Mawcf0yQRXyxCtvlyFKJIsh/XBOQI1oX7p4G?=
- =?us-ascii?Q?2vY6il+nd4i1IPovRy+O+ck0csdogmk9dpRP8GdZo/3A4+3Jk95EdYPyXam3?=
- =?us-ascii?Q?7zpc26/SERHQnLF0pLvMgt1RxGx0D8XNOj46yjp1eHF/tLyIKT5wb4fBV7Hq?=
- =?us-ascii?Q?gG4K5GEj4Kalrqa8YGHohMwE4mmM+qF5CxT61u05mRLedt6fSfLZyuJU7n6E?=
- =?us-ascii?Q?ZsYJVhpPckIZAFw2fdiC8DySURVXENJHL4nxZEfXqur499f6t0XJbQW1zj8X?=
- =?us-ascii?Q?lP+BCfrJhHG9/YOnYiI5KeLgjKsBYTDv5FpAQrNeaZ4q3JZMf7rxApKIDx4r?=
- =?us-ascii?Q?pkezJqX48jYX94kooxj1XzmghfrdNrtESPJ0tQzCOOYr4hy6+nTRW0KB6GNA?=
- =?us-ascii?Q?yQX7Crs5L7DudXke2HY2KE0nkStexDLQnUsKtEhRgvCrXVBOdd9IzV0xyDGN?=
- =?us-ascii?Q?GgxU9n7ZI6sRb65kBrFcDv4e0cPpWy9eQd/4LjazltoDx6UihSK0omDDXm8m?=
- =?us-ascii?Q?/dYfZevWUwLdmAETr8oSPni5rIV0rOPIBjnEe3viTWIt05Opw/Gcj1N2pduY?=
- =?us-ascii?Q?jN9T6LErfEg7YCCdUr8bSTdaZd9LHrH5IErlFUZmBifQVfLxqm5UKO/mt/2Z?=
- =?us-ascii?Q?JJbkvHphfmppRoxGFnSMEZzS380jl8fwZi3A44EuIakd+w0ZLUe8W1he/Swl?=
- =?us-ascii?Q?vAkC/2BWbEirAbU1GyVo1lwBFNKVQAeUHdq+9Inc6nhOLpMG95YAuwzSbvMF?=
- =?us-ascii?Q?c65gIOZ53yhBAI4pdTFhtxQ/n8lNgF8sbhojU2YcwDBJXUX85hkpc3+P+qAT?=
- =?us-ascii?Q?9wswua0UbEYp9aTLafnZDs8tPymoGLNoz+doOBR7gaZPbzqKgIMeYVJyE12e?=
- =?us-ascii?Q?rqKKbiuKfXYWQ/A8H1u862OUMydFSg2LtutAtaL/9DFiAti/7LtYo38a9Qkt?=
- =?us-ascii?Q?EPYrIO2yY1FC+Uhh34Yveeo6Jya1Q7EqF38+DVz2ydtnI0ts2W+ScF7z1aGZ?=
- =?us-ascii?Q?LZPi9H2SdqEbNvCRxsEnheOcIBlt/g8LyL7s5WPpbDypUZmg8FXvaeYVXJbY?=
- =?us-ascii?Q?dw7ghLnx87j44L+qRoXvWAeKlnhNmYh5IHb4sHpYQnaEeqkqLnAll5P5zmOJ?=
- =?us-ascii?Q?D9Vfuq6FYcYhKdRY8J9RtCfGQRsYDjmjGv3AgiEax02diVVB5WqKwULgGNvz?=
- =?us-ascii?Q?M3X7zDwtopb0vw4qh7oFhca0zh61GzUYDm//HnJj51dJno5cXAhFtrjypmCm?=
- =?us-ascii?Q?IJ/nLp0NWzHB/CsDmJ3UYAnjstF4LAHjclAKJIyH26bi82nM5iIW?=
+	=?us-ascii?Q?w1+zZJBlri4rvxPWm2koEXwcCxQbzVPecrYn6sCeH8ABTAyopetEwMwP39ii?=
+ =?us-ascii?Q?gSIwBv/3ZBb88nMwRgpJhDI/oKHP9m+GbFcbalNR4+C2ExYwBckrPP/aSY7I?=
+ =?us-ascii?Q?Leh94JjnNj4i2RLjF9DvIAbigRM+d+Lo4ctRRc2jx4yQxuhsWNTmkqetUNCc?=
+ =?us-ascii?Q?WKd/3TWstvNlFNrLoIady8s5Rfx4fBXiJAlOIQ85X7WmVy+W91bGBNkg2IG0?=
+ =?us-ascii?Q?9ZWeW7SBg2HLm3iD0bfLCwlkj7EsUfrOsNXu48n3oYjBN2xy2R+tyFKKqIXc?=
+ =?us-ascii?Q?JvZG7NEPQIbWX1arEN73NTjORrQgZrdZiXI0H/ia24+Sgcs39KyW4fdJFixd?=
+ =?us-ascii?Q?Hgr0C8fcjkZFK7xV1h+LHimRV8rGwf1pXp2vr9qB8qbUzhXcraNecFOe7hM8?=
+ =?us-ascii?Q?V9z+Jfq4RXu+Ol3cTbip7OykRDxhKStuVujEFB/EZqHe6C2aPr3x/iz3jI+q?=
+ =?us-ascii?Q?uaJSsw8PsssHftvkenyxkOsnCtzWqNfJUthr6wKc943JFY6nkg/HY1bYL6sz?=
+ =?us-ascii?Q?rCdWIsOx6mQkFeACwu9hOwUZatdIANTCRoKVqyLTMJwQzifOWvej3LMLy8VO?=
+ =?us-ascii?Q?G8qtafgvw9HLmpCdtk2m3pKylVRshqoQ+qVUSxTAAnZ2vUK9sJ02zkY5CLey?=
+ =?us-ascii?Q?BHfU78h2gCPfCuS1vpogXk0UsR8UtG81Hy2t6ylsSPt6qg+Aw4gSeBKSfqMq?=
+ =?us-ascii?Q?beF2wsw+mGHTO4rUF/Q+9oGADlSzuD9g3Bdf1M+foTdc9RDozCx+h+JJuK98?=
+ =?us-ascii?Q?Gi0z9wcJE90ZZIKbre2zeH5rjgj3OCKPfFR0KFjHYUytJE9j/g0UnQLYiHr+?=
+ =?us-ascii?Q?AjY+bP7I7T1+42ubXsJMzJqmIgy1oUD3r+2ECBJJmuG0GZwVDkVKrKTO5KoY?=
+ =?us-ascii?Q?GBGqiL+5eMzS95tjNGmRdb2p0gs2nl0nb/Wp9y0y0YKLB0otB5d6wrWhL9yS?=
+ =?us-ascii?Q?b0/rQVWWM3Tz8031DgjHU1qBIldwQZg98gA4PvIZJPoEDnzLoebNcQ7xngk7?=
+ =?us-ascii?Q?+9A1n98mRQlVnQTcRSdB58vGcMHJERisLsyzQbBk9rggD9oM1r8Y8MjAxZSE?=
+ =?us-ascii?Q?hq37byslMjIyE4Hx+f8Th7F4rpBYYcUf+X99hxpVrgTwKtqi17k8El3BLRwo?=
+ =?us-ascii?Q?lZDF84twM8sf+Kv9DZmXQ8t+reiEuEBHxBPkyIRuQtEJfwcx01XxAbVZ/cHV?=
+ =?us-ascii?Q?oMYX7CdOAlmL09iEAdq6f7wXvATs9keuvA4xWLbHNkFD6k/RNzZfHuq01kcf?=
+ =?us-ascii?Q?QwPUtmIIaoJPSs6zc5g/pNgXaOfKp+baPwEdF+DLLh7ItjBH3Q21Mxm1QXaO?=
+ =?us-ascii?Q?77EU0bdY4XUonpxTah1hWAaPoCZvyKSg4ABxwv6rOHAE2mSKJx70LuXVtVj2?=
+ =?us-ascii?Q?Jxh+/tlj8tjii7Hfwo3iK3Z5lF2H94b+Xdy7AZLg2TjQ+4UyI5qWhKbjHXR2?=
+ =?us-ascii?Q?8OIWAA8ADOGwbALnzuTgsXTddN4T58pKh/e6iZqe2Zy3iEShLZOU1KHwpO2W?=
+ =?us-ascii?Q?qTdBgvxoeJ0v3KJCZAYSQ8bYQuIe4+A3tVC5R5acWF0sas6BXOCUtR1arrww?=
+ =?us-ascii?Q?I8q7S7Jswm8U2Ls7mdo33tNxPPoyc8zfqkf8lNFSpkIr6TjfW8yaJvljhl8k?=
+ =?us-ascii?Q?9Y8D9GlaZ8Tw0OUbbQw0NuNTQv3QXenOwI+HqIff8zJ4DprgrALPvO2n95gl?=
+ =?us-ascii?Q?Zd/I2VpHkfIZ6QJdv15VW2Shnstr2HwMy5K3adLz7Qzm9iAAkRietPhmEnIh?=
+ =?us-ascii?Q?pmVy06gy1NqS9cl/jCpkyIDh0xQq3DuQFKxJED4z5VkdHmedU8UW?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: c3319f25-f9bf-4482-a0cb-08deed7df983
+X-MS-Exchange-CrossTenant-Network-Message-Id: b23b2942-d0dc-402f-b15c-08deed7df9f4
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2026 14:30:44.6715
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2026 14:30:45.4119
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6JzsoAy5P5/CntJuL8I/i1e3doSWzg70BxMpuD/m/SM1Dv9+RVRvHNE6+0c9ur9FFp0qNNG1c8kbz5AmHjv7bQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: fP6kAOC2NOLjNcIsxZv1gPO44Gi3dEUuQD7NXTMQmwCzBAjRklwnrmZQK+bb1qRh0ACyUSqY7ADIg0YHWnlOJg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYRP286MB5289
 
 From: Frank Li <Frank.Li@nxp.com>
 
-The driver currently rebuilds the whole linked list for every transfer.
+Move dw_hdma_set_callback_result() next to the descriptor helpers so
+linked-list completion and reset code can use it without a forward
+declaration.
 
-Use it as a circular ring instead. Append entries at ll_head with the
-current cycle bit, and reserve the final entry for the link back to the
-start.
-
-Clear control words before first use so stale cycle bits cannot become
-valid entries. Reject rings without usable data slots and, until reclaim
-support lands, descriptors that exceed the usable ring capacity.
-
-Termination and abort can discard descriptors while ll_done still trails
-ll_head. Reset the ring after the channel has stopped so the next transfer
-does not inherit occupied slots.
-
-This prepares the driver for appending requests while the engine runs.
+No functional change.
 
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
 Changes in v4:
   - No changes.
 
- drivers/dma/dw-edma/dw-edma-core.c | 125 +++++++++++++++++++++++------
- drivers/dma/dw-edma/dw-edma-core.h |  27 ++++++-
- 2 files changed, 125 insertions(+), 27 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 50 +++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 6a25a050b89c..d7a8a43b71d6 100644
+index d7a8a43b71d6..6e7d1f7c20f9 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -51,13 +51,19 @@ dw_edma_alloc_desc(struct dw_edma_chan *chan, size_t nburst)
- {
- 	struct dw_edma_desc *desc;
- 
-+	/*
-+	 * For now, a descriptor that does not fit would stall the channel
-+	 * forever: reject it up front.
-+	 */
-+	if (!chan->non_ll && nburst > chan->ll_max - 1)
-+		return NULL;
-+
- 	desc = kzalloc_flex(*desc, burst, nburst, GFP_NOWAIT);
- 	if (unlikely(!desc))
- 		return NULL;
- 
- 	desc->chan = chan;
- 	desc->nburst = nburst;
--	desc->cb = true;
- 
- 	return desc;
- }
-@@ -67,30 +73,75 @@ static void vchan_free_desc(struct virt_dma_desc *vdesc)
+@@ -73,6 +73,31 @@ static void vchan_free_desc(struct virt_dma_desc *vdesc)
  	kfree(vd2dw_edma_desc(vdesc));
  }
  
-+static void dw_edma_core_reset_ll(struct dw_edma_chan *chan)
++static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
++					enum dmaengine_tx_result result)
 +{
-+	u32 i;
++	u32 residue = 0;
++	struct dw_edma_desc *desc;
++	struct dmaengine_result *res;
 +
-+	chan->ll_head = 0;
-+	chan->ll_done = 0;
-+	/* Drop stale CB bits before reusing the circular LL ring. */
-+	for (i = 0; i < chan->ll_max; i++)
-+		dw_edma_core_ll_clear(chan, i);
-+	chan->cb = true;
++	if (!vd->tx.callback_result)
++		return;
 +
-+	dw_edma_core_ll_link(chan, chan->ll_max, chan->cb,
-+			     chan->ll_region.paddr);
++	desc = vd2dw_edma_desc(vd);
++	if (desc) {
++		residue = desc->alloc_sz;
 +
-+	dw_edma_core_ch_enable(chan);
-+	chan->ll_valid = true;
++		if (result == DMA_TRANS_NOERROR)
++			residue -= desc->burst[desc->start_burst - 1].xfer_sz;
++		else if (desc->done_burst)
++			residue -= desc->burst[desc->done_burst - 1].xfer_sz;
++	}
++
++	res = &vd->tx_result;
++	res->result = result;
++	res->residue = residue;
 +}
 +
-+static u32 dw_edma_core_get_ll_dist(struct dw_edma_chan *chan, u32 from, u32 to)
-+{
-+	return (to + chan->ll_max - from) % chan->ll_max;
-+}
-+
-+static u32 dw_edma_core_get_used_num(struct dw_edma_chan *chan)
-+{
-+	return dw_edma_core_get_ll_dist(chan, chan->ll_done, chan->ll_head);
-+}
-+
-+static u32 dw_edma_core_get_free_num(struct dw_edma_chan *chan)
-+{
-+	/* Keep one data entry free so equal indices mean an empty ring. */
-+	return chan->ll_max - 1 - dw_edma_core_get_used_num(chan);
-+}
-+
-+static bool dw_edma_ll_pending(struct dw_edma_chan *chan)
-+{
-+	return chan->ll_head != chan->ll_done;
-+}
-+
- static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
+ static void dw_edma_core_reset_ll(struct dw_edma_chan *chan)
  {
- 	struct dw_edma_chan *chan = desc->chan;
- 	size_t i;
--	bool first = !desc->start_burst;
-+	u32 free;
-+
-+	free = dw_edma_core_get_free_num(chan);
-+	for (i = desc->start_burst; i < desc->nburst && free; i++, free--) {
-+		/*
-+		 * Refresh the link element before filling the last data slot so
-+		 * the next lap has the updated CB value.
-+		 */
-+		if (chan->ll_head == chan->ll_max - 1)
-+			dw_edma_core_ll_link(chan, chan->ll_max, chan->cb,
-+					     chan->ll_region.paddr);
+ 	u32 i;
+@@ -660,31 +685,6 @@ dw_edma_device_prep_interleaved_dma(struct dma_chan *dchan,
+ 	return dw_edma_device_transfer(&xfer, dw_edma_device_get_config(dchan, NULL));
+ }
  
--	for (i = 0; i + desc->start_burst < desc->nburst; i++) {
--		u32 idx = i + desc->start_burst;
-+		dw_edma_core_ll_data(chan, &desc->burst[i],
-+				     chan->ll_head, chan->cb,
-+				     i == desc->nburst - 1 || free == 1);
- 
--		if (i == chan->ll_max)
--			break;
-+		chan->ll_head++;
- 
--		dw_edma_core_ll_data(chan, &desc->burst[idx],
--				     i, desc->cb,
--				     idx == desc->nburst - 1 || i == chan->ll_max - 1);
-+		if (chan->ll_head == chan->ll_max) {
-+			chan->cb = !chan->cb;
-+			chan->ll_head = 0;
-+		}
- 	}
- 
- 	desc->done_burst = desc->start_burst;
--	desc->start_burst += i;
+-static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
+-					enum dmaengine_tx_result result)
+-{
+-	u32 residue = 0;
+-	struct dw_edma_desc *desc;
+-	struct dmaengine_result *res;
 -
--	dw_edma_core_ll_link(chan, i, desc->cb, chan->ll_region.paddr);
+-	if (!vd->tx.callback_result)
+-		return;
 -
--	if (first)
--		dw_edma_core_ch_enable(chan);
-+	desc->start_burst = i;
- 
- 	dw_edma_core_ch_doorbell(chan);
- }
-@@ -123,9 +174,10 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
- 	if (!desc)
- 		return 0;
- 
--	dw_edma_core_start(desc);
-+	if (!chan->non_ll && !chan->ll_valid)
-+		dw_edma_core_reset_ll(chan);
- 
--	desc->cb = !desc->cb;
-+	dw_edma_core_start(desc);
- 
- 	return 1;
- }
-@@ -159,6 +211,19 @@ static void dw_edma_terminate_all_descs(struct dw_edma_chan *chan)
- 	dw_edma_terminate_vdesc_list(&chan->vc.desc_submitted);
- }
- 
-+/* Must be called with vc.lock held after the channel has stopped. */
-+static void dw_edma_finish_termination(struct dw_edma_chan *chan)
-+{
-+	dw_edma_terminate_all_descs(chan);
-+
-+	/* Preserve a clean ring; resync only if entries remain published. */
-+	if (!chan->non_ll && dw_edma_ll_pending(chan))
-+		dw_edma_core_reset_ll(chan);
-+
-+	chan->request = EDMA_REQ_NONE;
-+	chan->status = EDMA_ST_IDLE;
-+}
-+
- static void dw_edma_device_caps(struct dma_chan *dchan,
- 				struct dma_slave_caps *caps)
+-	desc = vd2dw_edma_desc(vd);
+-	if (desc) {
+-		residue = desc->alloc_sz;
+-
+-		if (result == DMA_TRANS_NOERROR)
+-			residue -= desc->burst[desc->start_burst - 1].xfer_sz;
+-		else if (desc->done_burst)
+-			residue -= desc->burst[desc->done_burst - 1].xfer_sz;
+-	}
+-
+-	res = &vd->tx_result;
+-	res->result = result;
+-	res->residue = residue;
+-}
+-
+ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
  {
-@@ -299,17 +364,15 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
- 	if (!chan->configured) {
- 		dw_edma_terminate_all_descs(chan);
- 	} else if (chan->status == EDMA_ST_PAUSE) {
--		dw_edma_terminate_all_descs(chan);
--		chan->status = EDMA_ST_IDLE;
-+		dw_edma_finish_termination(chan);
- 	} else if (chan->status == EDMA_ST_IDLE) {
--		dw_edma_terminate_all_descs(chan);
-+		dw_edma_finish_termination(chan);
- 	} else if (dw_edma_core_ch_status(chan) == DMA_COMPLETE) {
- 		/*
- 		 * The channel is in a false BUSY state, probably didn't
- 		 * receive or lost an interrupt
- 		 */
--		dw_edma_terminate_all_descs(chan);
--		chan->status = EDMA_ST_IDLE;
-+		dw_edma_finish_termination(chan);
- 	} else if (chan->request > EDMA_REQ_PAUSE) {
- 		err = -EPERM;
- 	} else {
-@@ -645,6 +708,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 							    DMA_TRANS_NOERROR);
- 				list_del(&vd->node);
- 				vchan_cookie_complete(vd);
-+				if (!chan->non_ll)
-+					chan->ll_done = chan->ll_head;
- 			}
- 
- 			if (chan->request == EDMA_REQ_PAUSE) {
-@@ -659,9 +724,7 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 			break;
- 
- 		case EDMA_REQ_STOP:
--			dw_edma_terminate_all_descs(chan);
--			chan->request = EDMA_REQ_NONE;
--			chan->status = EDMA_ST_IDLE;
-+			dw_edma_finish_termination(chan);
- 			break;
- 
- 		default:
-@@ -685,6 +748,8 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
-+	if (!chan->non_ll)
-+		dw_edma_core_reset_ll(chan);
- 	chan->request = EDMA_REQ_NONE;
- 	chan->status = EDMA_ST_IDLE;
- 	spin_unlock_irqrestore(&chan->vc.lock, flags);
-@@ -871,6 +936,9 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
- 	if (chan->status != EDMA_ST_IDLE)
- 		return -EBUSY;
- 
-+	/* The hardware context may have been invalidated while unowned. */
-+	chan->ll_valid = false;
-+
- 	return 0;
- }
- 
-@@ -962,6 +1030,13 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
- 		else
- 			chan->ll_region = chip->ll_region_rd[chan->id];
- 
-+		if (!chip->cfg_non_ll && chan->ll_region.sz < 3 * EDMA_LL_SZ) {
-+			dev_err(dev,
-+				"channel %s[%u]: LL region has fewer than 2 data entries\n",
-+				str_write_read(chan->dir == EDMA_DIR_WRITE),
-+				chan->id);
-+			return -EINVAL;
-+		}
- 		chan->ll_max = chan->ll_region.sz / EDMA_LL_SZ - 1;
- 
- 		dev_vdbg(dev, "L. List:\tChannel %s[%u] max_cnt=%u\n",
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 089f913fd247..761a5ab4bbb5 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -60,7 +60,6 @@ struct dw_edma_desc {
- 
- 	size_t				done_burst;
- 	size_t				start_burst;
--	u8				cb;
- 	size_t				nburst;
- 	struct dw_edma_burst            burst[] __counted_by(nburst);
- };
-@@ -72,8 +71,32 @@ struct dw_edma_chan {
- 	enum dw_edma_dir		dir;
- 	u8				func_no;
- 
--	u32				ll_max;
-+	/*
-+	 * New LL entries are appended at ll_head. Entries between ll_done
-+	 * and ll_head, modulo the LL ring, are owned by DMA; the rest are
-+	 * owned by software.
-+	 *
-+	 *   software-owned      DMA-owned       software-owned
-+	 * +---------------+-------------------+---------------+
-+	 * ^               ^                   ^
-+	 * 0             ll_done             ll_head
-+	 *
-+	 * The link entry points back to the region start. ll_head == ll_done
-+	 * means all entries are software-owned and previous DMA work is
-+	 * done.
-+	 *
-+	 * Software always keeps at least one free entry, so the ring is
-+	 * never completely DMA-owned. That keeps a hardware-reported physical
-+	 * LL index unique within the current ll_done..ll_head producer window.
-+	 */
-+	u32				ll_head;
-+	u32				ll_done;
-+
-+	u32				ll_max;		/* Data entries */
- 	struct dw_edma_region		ll_region;	/* Linked list */
-+	bool				ll_valid;	/* LL context programmed */
-+
-+	bool				cb;
- 
- 	struct msi_msg			msi;
- 
+ 	struct dw_edma_desc *desc;
 -- 
 2.51.0
 
