@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E497745D5C7
-	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 14:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18A74C77CA
+	for <dmaengine@vger.kernel.org>; Wed, 29 Jul 2026 14:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785336416; cv=none; b=oPjxMQLao0c4k1/Lb8RNPmhMIlsQoPx5XpIPumvSuLgLdvOx2fla4zUjiFHuweiFSpnCyvhkNAKDKsNdYkqDMc+A8RMr3dUc+7JCNM+0fsgHX4HXxssM6NLoqfvXOF40IvYRUyt0RuLMKsInMF+MhM7jAzUQ82lc8KQ1VZZAt/w=
+	t=1785336673; cv=none; b=EkQEuXA24K1KDG7ndemDayn1Yn1BtiuIbZNiMDo09p055umhNQkIe8zV40PDidO/eg1gyUs2Z1Lmhox0w9P0CPsBMTh0QL52oqC7M/0dY2uJ3RysO0a2OOlgAHziidYBt+N/EPJ3oyIuyffUj8ZzJV7zh3NVEdJXcrNp3V5BS+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785336416; c=relaxed/simple;
-	bh=XzmsX+PPinf28969Skf1dLWoE7WD8IxSa/q3LEFKyZA=;
+	s=arc-20240116; t=1785336673; c=relaxed/simple;
+	bh=GLks2J742vmsyE1qrsOwoFfqPj9ftaOyj6YVHxdzMCk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KZrA2zcSnvHbD1bVP4TCQualXMWF0OPOnLfmTxjgbCjSVzYfOsIHLFPfX5uv4RFdVAo/fMU/b0aSsEZXpF7UEcUeg0rIfgsBUEecFBm4IWW6A078CuGFMoZb3j7otsT3UnzgvMdK8H5D0O2rTOpVacQxD0aSJfX1eKfqEbUdEW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WxNvDMCo; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=IQ7AGWL1ZjCVrRPCB8si4LupdDc6MiNY3td3VfqGuz2kEotzujpjghQmx5OCXaE95kfu5Tk2NLQE/az5/ykKnRbRamFlpg52DjYBC8N3ONQnodRNrpueCzGqulTdNhMzxm59BojEfn15dSIKJhe1JwV7y74B9WeIL8BNa9wEh5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eQTDyeSi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WxNvDMCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3831F000E9;
-	Wed, 29 Jul 2026 14:46:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eQTDyeSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE281F00A3E;
+	Wed, 29 Jul 2026 14:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785336414;
-	bh=omfLcjixWnrZlDjcNn2IlIdnnIpQ1/H6lIGEBjw7+js=;
+	s=k20260515; t=1785336669;
+	bh=quxQMQxHoqLY5Xk7WKkLH6zSIu1dwN7+7OpBil6tB1k=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WxNvDMCopC5cMK4/XbPMDx/IA2gYXgWVISXPtTmc3Z2FH9ASOTvgbO90x09EP4maW
-	 ow/zl0mkDIcomSGeT079lwPN2+Y/9m9pKLGJXQ3Avt4pyC9Bvc2wxQcjIsrZ2ARHQ9
-	 IA0Z+gFyUjGkhLyO3pVOF1cm8PLQ3lUPDu4mOEx0YwshMyve2cEXZ8Gl99va+kRvIL
-	 yVUQwi1rvG58HtjWqFZd3m3m6r9Vx+ExDyEJsmPn+KYyGuyLLhILbkubPY5KKrV+xR
-	 Zorr2oFoQmYuRn85lyM2FB2sAyJ+XCXoFYGKbzLFS3YCGMfL8xpFZD3GshqT+Wkidv
-	 XZ40nAMUBlSTg==
+	b=eQTDyeSiNyKpQs0zSCct3bIw26uCanZBDmaKCvuZF1aSxSAQ17kU4Pt3k6Qcb2bqO
+	 nJbp1W7XHcpAPmSBzO6SUtCe9ABMBBUn/JM5c8jIajk7fbVRVsI9A4V4ladS9Z5FAG
+	 MCixVAbg1ch6rPu95GAebHWnMPdgq2VWobPDTf1aiKrDODxq5RtaxM1gvO1rsIlRFf
+	 uWRG7Xz89xo8w9mphg4Qp3llW3L3G87xqZ3Woz+Y7LGDzsszmYgBQCnF8m9vbpOmUW
+	 k4/jrJLH/fO4LQXiow54XheUtiihU+g970nYr0pScJskSGFmSwTrc5rYwkMGMIdUNJ
+	 k+6tnVhKjS2Ug==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 15/24] dmaengine: dw-edma: Recheck stopped LL
- channels before restart
+Subject: Re: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture
+ with channel kicks
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260729143036.3087722-16-den@valinux.co.jp>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260729143036.3087722-12-den@valinux.co.jp>
 References: <20260729143036.3087722-1-den@valinux.co.jp>
- <20260729143036.3087722-16-den@valinux.co.jp>
+ <20260729143036.3087722-12-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Jul 2026 14:46:53 +0000
-Message-Id: <20260729144654.2D3831F000E9@smtp.kernel.org>
+Date: Wed, 29 Jul 2026 14:51:08 +0000
+Message-Id: <20260729145108.CFE281F00A3E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,71 +47,66 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Double read of volatile `jiffies` variable without a snapshot lead=
-s to a race condition where the timer delay can underflow, causing indefini=
-te stalling.
+- [High] Ringing the doorbell can race with a hardware interrupt, clearing =
+and permanently losing a pending DMA completion event.
 --
 
---- Patch [15]: [PATCH v4 15/24] dmaengine: dw-edma: Recheck stopped LL cha=
-nnels before restart ---
-commit 9769569e17606605660b53b027f9a3d71abb5a3d
+--- Patch [11]: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event cap=
+ture with channel kicks ---
+commit 56231794b3b46dd52a7c7f61f0def40f1fed9890
 Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Recheck stopped LL channels before restart
-
-This commit introduces a delayed recheck mechanism for stopped LL channels.
-It samples DMA_LLP again before restarting a stopped channel to reclaim
-newly visible progress that might have been missed due to an interrupt race.
+dmaengine: dw-edma: Serialize LL event capture with channel kicks
+   =20
+This commit introduces an event lock to serialize interrupt status reads,
+clears, snapshot recording, and LL doorbell writes. It aims to prevent a
+deferred handler from applying an event from a previous hardware run when a
+doorbell starts a new run in between.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
 edma-core.c
-> index 16d3d2a8d1c26..0d1e6f48cac1d 100644
 > --- a/drivers/dma/dw-edma/dw-edma-core.c
 > +++ b/drivers/dma/dw-edma/dw-edma-core.c
 
 [ ... ]
 
-> +static void dw_edma_ll_recheck_work(struct work_struct *work)
-> +{
-> +	struct dw_edma_chan *chan =3D
-> +		container_of(to_delayed_work(work), struct dw_edma_chan,
-> +			     ll_recheck_work);
-> +	unsigned long delay;
+> @@ -269,6 +317,17 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan=
+ *chan)
+>  static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
+>  {
+>  	dw_edma_core_ll_sync(chan);
 > +
-> +	guard(spinlock_irqsave)(&chan->vc.lock);
+> +	guard(spinlock_irqsave)(dw_edma_event_lock(chan));
 > +
-> +	if (unlikely(READ_ONCE(chan->dw->teardown))) {
-> +		chan->ll_recheck_at =3D 0;
-> +		return;
-> +	}
-> +
-> +	if (!chan->ll_recheck_at)
+> +	/*
+> +	 * A recorded event belongs to the current ring and must be consumed
+> +	 * before starting another hardware run.
+> +	 */
+> +	if (chan->ll_irq.event !=3D DW_EDMA_LL_EVENT_NONE)
 > +		return;
 > +
-> +	if (time_before(jiffies, chan->ll_recheck_at)) {
-> +		delay =3D chan->ll_recheck_at - jiffies;
+> +	dw_edma_ll_event_discard_locked(chan);
 
 [Severity: High]
-Could this code suffer from a race condition due to reading jiffies twice?
+Can this race with a hardware interrupt and permanently lose a completion e=
+vent?
 
-Since jiffies is volatile, the compiler will emit two separate memory loads.
-If jiffies advances past chan->ll_recheck_at between the time_before()
-check and the subtraction, delay will underflow to an extremely large
-unsigned value. This would schedule the recheck work indefinitely far into
-the future, potentially hanging the DMA channel.
+If dw_edma_core_ch_doorbell() is called (for example, when appending
+descriptors to a running channel) exactly when the hardware finishes a burst
+and asserts an interrupt, but before the hardirq handler can run,
+chan->ll_irq.event will still be DW_EDMA_LL_EVENT_NONE.
 
-Should jiffies be cached in a local variable (e.g., unsigned long now =3D
-jiffies;) before the check to avoid this TOCTOU race?
+The code will bypass the early return and unconditionally call
+dw_edma_ll_event_discard_locked(), which clears the hardware interrupt
+status.
 
-> +		mod_delayed_work(chan->dw->wq, &chan->ll_recheck_work, delay);
-> +		return;
-> +	}
-> +
-> +	chan->ll_recheck_at =3D 0;
-> +	if (chan->request =3D=3D EDMA_REQ_NONE)
-> +		dw_edma_core_ch_maybe_doorbell(chan);
-> +}
+Does this result in the interrupt being completely lost? If so, the software
+state will permanently trail the hardware, which would cause the DMA channel
+to stall indefinitely.
+
+>  	dw_edma_core_do_ch_doorbell(chan);
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729143036.3087=
-722-1-den@valinux.co.jp?part=3D15
+722-1-den@valinux.co.jp?part=3D11
