@@ -1,92 +1,127 @@
-Received: from chaosmail.tech (chaosmail.tech [77.81.229.115])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78660474279;
-	Wed, 29 Jul 2026 11:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.81.229.115
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6E747A87B;
+	Wed, 29 Jul 2026 11:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785325617; cv=none; b=csOA6Y+5yiuKsHqnKrh1BCSIOfS2gZ5JDB+ALzSLvN1PUeQV/MWj5kD26GK+Nd3blBoqzNWr4ADAcnpyvU3QdvYj1nT3fqo6XHCCS+8x50i93GJOJ1QoyimbA/TZV5+l+TCuU8WKkKWbRiadDdvXSL5YAZ6iPbv0xKTudm9Si9Q=
+	t=1785326174; cv=none; b=rHhNUaSeuY4dWbxhpvU2xwfyx7giJjw5BD11j8Vf6qjyJTPpINhN4WHiH7Iul93L4jKYkHzL0ZQU47Px6qyJrdsuSkZh6YiKW1y33XJz08YkE4EueDL4GESbmTA5AKT+NDgiUsf4hEkuompoZ9c2wBOj2CLVifhOR7N0n6nSAHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785325617; c=relaxed/simple;
-	bh=txob3eI5nMEhztwuDOLSLuf2Y6RtnMZ3xqeQjq/S33U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pB7Bt4D0T+0TstiTBKVobCLNs7OSqwE4RAYnZ9/RETmYVXlvz3TJP1peFhEyjebQuuzSZdGXKEY59wG24pBMXBWLJI9IdpwUKQxG+6KHAVZxKQv1j07aeF/mpSI9Q4S/pl41QdtSd3xi6GUEFWK66tjdqTIB9nh1V5Muig3tmmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech; spf=pass smtp.mailfrom=chaosmail.tech; dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b=wtrklbkI; arc=none smtp.client-ip=77.81.229.115
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chaosmail.tech
+	s=arc-20240116; t=1785326174; c=relaxed/simple;
+	bh=I1BHMnC7gJYXLrkfU7v8e1A0JJJZhj9ZD9vcQ0x2d7Y=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Cmt57jt0Nf1Hsqxx+oFR6Z+VnhvFKagHcRVD1Hu70iyMJG0DQ06hvIltOi6RtKFhbIT5yZq5EW7UlXvAQsppDSUEWtwm79byFFLUmJL+dLlZ3xW35f0WTI4BXUgHgrgC+NjmVKLo5qSSk6aVk/rbskY329+x5500y8Dq5MHTNkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFrdRjrn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b="wtrklbkI"
-Received: by chaosmail.tech (Postfix) id 2066E1C87FF;
-	Wed, 29 Jul 2026 11:46:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chaosmail.tech;
-	s=mail; t=1785325604;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=TJlUQBhAC6aUWtVfrdOpWDSFGGPM9jrCv1lIW27G7s8=;
-	b=wtrklbkInNY2O2TVvp2pOaOLP9KUojp0be8GPyab+8DDL+3xTZEvqSMZCKDnam1BqyCTBW
-	ROlAZG6gk5j5AyknbHiufxAXuTie+2boU9s0khsXPnc7gRlsVEot87Kn3si1kC8zA31fqr
-	htNJjAYlWpYE1we48BeJbs+j/SZ7GW0=
-From: Sasha Finkelstein <k@chaosmail.tech>
-Subject: [PATCH v2 0/2] dmaengine: apple-admac: Add support for M3
- generation
-Date: Wed, 29 Jul 2026 13:46:33 +0200
-Message-Id: <20260729-t603x-admac-v2-0-e4b2bb6ca45e@chaosmail.tech>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFrdRjrn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CC31F000E9;
+	Wed, 29 Jul 2026 11:56:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785326173;
+	bh=pyk3ersoilGzCxngyyl7AHzUGDzKJUpUkOct9+nO+Ow=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=lFrdRjrnzwdjOI+skMMJsRUDdP5IGEKFypKbcHSUioSKVQJZfzi2ml8IPlGJ5jUOM
+	 0JfiPKU/x2q8oJHOioB1+XBD5oCV/8s3fvi7EfRBbEFRlFHaKxCTjVEi1R0+GHFyXs
+	 2a9tSPOQDRKrhbun8eKdMW1th+eHD2F2Hk8uO/lSRUe8zlBjRHN6ISOB4KQMmx8pUu
+	 8GKR8YVV5Pd/tC41Xt8b3ibVKegQM4ZraXgbq8N7tji/tiOHIbzDTZbeokN9Ok0ppS
+	 w0GywNYkJNpcDGhELqIFYKWkFHG0Rct8kYum0VasZApUAXH/92gxzX4HdHJ7Rpc9N5
+	 XXXLq1fgmUpRQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/2] dmaengine: apple-admac: Add M3 generation ADMACs
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sasha Finkelstein" <k@chaosmail.tech>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, conor+dt@kernel.org
+In-Reply-To: <20260729-t603x-admac-v2-2-e4b2bb6ca45e@chaosmail.tech>
+References: <20260729-t603x-admac-v2-0-e4b2bb6ca45e@chaosmail.tech>
+ <20260729-t603x-admac-v2-2-e4b2bb6ca45e@chaosmail.tech>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Jul 2026 11:56:12 +0000
+Message-Id: <20260729115612.C7CC31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22OSw6CQBBEr0J67Zim+SWuvIdh0QyNtBEwMyPBE
- O7ugFuXL6l6VSt4cSoeLskKTmb1Oo0R6JSA7Xm8i9E2MhBSiRUVJpSYLYbbga3htMGKydqmyCE
- 2Xk46XQ7brf6xfzcPsWFX7IlefZjc55ib0z333zynBk3JeSsWKeuQrvHN5AfW5zmI7aHetu0LI
- 34JkL0AAAA=
-X-Change-ID: 20260725-t603x-admac-a1b07a2ccb54
-To: Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- =?utf-8?q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>
-Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Sasha Finkelstein <k@chaosmail.tech>, 
- Joshua Peisach <jpeisach@ubuntu.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785325604; l=1027;
- i=k@chaosmail.tech; s=20241124; h=from:subject:message-id;
- bh=txob3eI5nMEhztwuDOLSLuf2Y6RtnMZ3xqeQjq/S33U=;
- b=R1Zy7hMrACQDUbNj7a7ttlnRCZvyupAqNMGtL61vQLDG/OKvHimLs8au9952OgHa657pgGrqW
- y5tt9YYkhqVAYRSufJRMQ7vXlFbiEUppT8cmJ1m0EprMYGTCxQVGs8O
-X-Developer-Key: i=k@chaosmail.tech; a=ed25519;
- pk=aSkp1PdZ+eF4jpMO6oLvz/YfT5XkBUneWwyhQrOgmsU=
 
-The ADMACs present in M3 series devices (t8122 and t603x SoCs) need
-additional register writes in order to function correctly. Add a new
-compatible chain for those, and change the driver to do the write.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-To simplify the merge strategy, the device tree entries will be sent
-in a future patch series.
+Pre-existing issues:
+- [High] The driver schedules a tasklet for DMA channel completion but fail=
+s to kill it upon driver unbind, leading to a Use-After-Free.
+- [High] Missing memory barrier between CPU writes to the DMA buffer and tr=
+iggering the hardware via MMIO.
+--
 
-Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
----
-Changes in v2:
-- Typo fix
-- Link to v1: https://patch.msgid.link/20260725-t603x-admac-v1-0-6a4dec023f02@chaosmail.tech
+--- Patch [2]: [PATCH v2 2/2] dmaengine: apple-admac: Add M3 generation ADM=
+ACs ---
+commit 3e4665bdfbbc14988e79c929d83bff445def0885
+Author: Sasha Finkelstein <k@chaosmail.tech>
 
----
-Sasha Finkelstein (2):
-      dt-bindings: dma: apple,admac: Add M3 generation ADMACs
-      dmaengine: apple-admac: Add M3 generation ADMACs
+dmaengine: apple-admac: Add M3 generation ADMACs
+   =20
+The admacs present on t8122 and t603x SoCs need additional writes in
+order to operate correctly. The exact purpose of this register
+is unknown
 
- Documentation/devicetree/bindings/dma/apple,admac.yaml | 10 ++++++++--
- drivers/dma/apple-admac.c                              | 32 ++++++++++++++++++++++++++++++--
- 2 files changed, 38 insertions(+), 4 deletions(-)
----
-base-commit: 0ce37745d4bfbc493f718169c3974898ffec8ee7
-change-id: 20260725-t603x-admac-a1b07a2ccb54
+> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+> index 14a5ee14a4815..72ff677c8ce54 100644
+> --- a/drivers/dma/apple-admac.c
+> +++ b/drivers/dma/apple-admac.c
+[ ... ]
+> @@ -935,9 +954,18 @@ static void admac_remove(struct platform_device *pde=
+v)
+>  	reset_control_rearm(ad->rstc);
+>  }
 
-Best regards,
---  
-Sasha Finkelstein <k@chaosmail.tech>
+[Severity: High]
+This isn't a bug introduced by this patch, but I noticed the driver schedul=
+es
+a tasklet for DMA channel completion but fails to kill it upon driver unbin=
+d.
 
+Does this leave the code open to a use-after-free? If an interrupt fires ju=
+st
+before free_irq() and schedules the tasklet, the tasklet may run after
+admac_remove() returns and the devm_kzalloc managed memory (struct admac_da=
+ta)
+is freed.
+
+Could we add a call to tasklet_kill() during the teardown sequence?
+
+[Severity: High]
+This is another pre-existing issue not touched by this patch, but I noticed
+missing memory barriers when the hardware is started via MMIO.
+
+Looking at admac_start_chan() and admac_cyclic_write_one_desc():
+
+drivers/dma/apple-admac.c:admac_start_chan() {
+    ...
+	switch (admac_chan_direction(adchan->no)) {
+	case DMA_MEM_TO_DEV:
+		writel_relaxed(startbit, ad->base + REG_TX_START);
+		break;
+    ...
+}
+
+drivers/dma/apple-admac.c:admac_cyclic_write_one_desc() {
+    ...
+	writel_relaxed(lower_32_bits(addr), ad->base + REG_DESC_WRITE(channo));
+	writel_relaxed(upper_32_bits(addr), ad->base + REG_DESC_WRITE(channo));
+    ...
+}
+
+Could CPU writes to the DMA buffer be delayed and become visible to the DMA
+controller only after it starts fetching data?=20
+
+Since writel_relaxed() does not include a memory barrier on ARM64 architect=
+ures
+and spin_lock only provides ACQUIRE semantics, prior memory stores to the D=
+MA
+buffer might be reordered after the MMIO write. Does this require a memory
+barrier to prevent transmitting stale data?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729-t603x-adma=
+c-v2-0-e4b2bb6ca45e@chaosmail.tech?part=3D2
