@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DB8432E65;
-	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC1E43DA5C;
+	Thu, 30 Jul 2026 14:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421575; cv=none; b=U/sXufS2Rlz7aUfHsIhh84j3SlKpi5WHoHjGHYpxaZi1I8B8Q5a6JGeaz0eb8Qw+RgIUBa39AzV2u/5DtkVe0jcsehDKtYeeMlofHUCxkGTwm7RoqIYPG0H7li8rvTjtx7f+oKICDPr9ubMWNp2u761ySV3jJFbIpliL+/zoTp4=
+	t=1785421575; cv=none; b=XHtN0R5BCs8i1uU0wQfdRrnDVX7dAx7zs+RrgA264ZY96+4YnrXk9HsjvzAAxHPY3EIKGIMOza+viPNlu9tvJdtuz08GICRpxLQUMbmuhJvA0DeIggcJ0nEx9F7OSVhceSuxDRRUf9Q3BsI26hBrUExd+Y06WJfvjE4qEmHoNPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785421575; c=relaxed/simple;
-	bh=pVWG0d2CH+hymp8PpAipS7Eom7czTchJR3IlmtQAX24=;
+	bh=Wjc10zsvUaobD0rqNHgGPX1Q9pasWT6FecRa/87WNOY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=e1x2qDwFLs6yoQlpbkkwVFAZFX0Z+exYmZvKxjrxF+6R01oqvq8g8ftsplNo07sgbhNF3g+2QWwXrjEdqTLJG9H2UimaMnlMeCBWzcuk32qlnR2epfKIQxU2U+KzrI+O0ZORfYbdYL5525Cl1+CSVVrG6J5rD7p04kJciNnaMRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kNBNDj0P; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=lA1w935Yg3aWTNvlFb00fiRBmfnhvcEBhhjzr7m3MuRIHWbtlZlcgnwOl5E8JIauIE7D+qS3lc0Yc0pkk/ItuVM35Kwmqf6t3z54BJgwXWrRFDVjq3ayrWlLtxW00twai+VU9pEn4CoCJtO9W6WU/XwJQwKd4E1Zb3Xw82g1aLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bjWrFOiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kNBNDj0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BA364C2BCFB;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bjWrFOiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CB821C2BCFA;
 	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1785421574;
-	bh=pVWG0d2CH+hymp8PpAipS7Eom7czTchJR3IlmtQAX24=;
+	bh=Wjc10zsvUaobD0rqNHgGPX1Q9pasWT6FecRa/87WNOY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=kNBNDj0PAZpA/4ys6yRVqwT5anD1l3zs8sB/W8BNhsL4OYmBpGeW/q5nYB4olDsrZ
-	 izE4/QSsYZanoZmtK/FqSE1bnsUTNU00KRTkJ/qO+MLanvIFRYqnEvvyyfx/fmt+0Y
-	 QLWJPUGdYVwuoXVug83fAJ2fNOZ6+kRqfqkJ+VVda1pzMfDISKfD/sKjBuaKpmW5Yr
-	 Ve6R/cdCMk7ez1uFUhw8b7vFkXSK4GEuZ0HPxIpTQr0zlrLuOC6O4ysM8DH2C60Sbb
-	 ewzvnKel91Iubo9pXhK8b8DNTlfKrHC7F/dgn5LydOy0VO1CeDYOud07cevmDoP+oS
-	 i8m3tux7u/AaA==
+	b=bjWrFOiIs2857M5+7T5B/B/swql32pfL1ij9GsCq8k/wPgG1i7G28QEeUn/Y4mC7a
+	 rg6/49hgO5a8i4YQZ9T5DIXy+RDj2hkVgOY8id+RyF95tt0xx9XwcmtF7FtsS7Dg3s
+	 gnGBs11BsRq3iRBakBV1HORn4bF/NtV7N/qJHyuLtNHGL3ORQ4SrK5xj2QS4V0OIG3
+	 aYSSzNqp4NtLb0fErFHBAEC907QZrHObXGupuEsV7o7aaMW28XE0a2db7VvWjR5nmn
+	 MfnTZnztUh/cxPnec5kYGKP9jvR/TWaC/Bg3rlVwgoU8L5FAxR9g7kBMdN2Zh9hpWR
+	 7HMJrakt/kbPA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A430DC55168;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8DFCC55160;
 	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Date: Thu, 30 Jul 2026 15:23:11 +0100
-Subject: [PATCH 4/9] dmaengine: qcom: gpi: Use bus width capability helpers
+Date: Thu, 30 Jul 2026 15:23:12 +0100
+Subject: [PATCH 5/9] dmaengine: stm32-dma3: Use bus width capability
+ helpers
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,7 +41,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260730-dmaengine-support-wider-dma-masks-v1-4-3732f1f9d9ca@analog.com>
+Message-Id: <20260730-dmaengine-support-wider-dma-masks-v1-5-3732f1f9d9ca@analog.com>
 References: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
 In-Reply-To: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
 To: dmaengine@vger.kernel.org, linux-iio@vger.kernel.org
@@ -48,11 +49,11 @@ Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
  Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
  David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785421644; l=1388;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785421644; l=3022;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=tNg7tfwKVDF87kBthXLxn0NRVZu5IQgbMepYE1EpLBw=;
- b=ACaF+uQw0XfqhtfHOaeUxJJuuSdrLwUkV6liD/9lutr/Lvqa3ksVN0cUiNSiHwr6WD0p6hfms
- ODk96OkM2tlDeCtvWbfnkOJ8cd9rHgrsyBmcxAaOav/U9wPLBZZ8wpc
+ bh=SrN6pXKgJjq+fgxX4MgjxgcirodN9CnJGtz7jAOK/OY=;
+ b=v7caWRFl4Ub8kTpVPnVN/3TThYbAzokjyKWpzDqQCyK7xAwJjpqxiGaiKfESL94wMGOw/18kz
+ O9qO6GDTCiSAwD6hXFdCOLS0DvJfa3womydBE4ZQOEoGPHQ0agwD24u
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -62,37 +63,79 @@ Reply-To: nuno.sa@analog.com
 
 From: Nuno Sá <nuno.sa@analog.com>
 
-Advertise the single supported source and destination bus width through
-the new dma_set_src_bus_width() and dma_set_dst_bus_width() helpers
-instead of assigning the legacy u32 fields directly.
+Advertise the controller-wide bus width capabilities through the new
+dma_set_src_bus_widths() and dma_set_dst_bus_widths() helpers.
+
+Also update the per-channel capability callback to clear unsupported
+widths through the dma_slave_caps helpers so the bitmap and
+transitional legacy fields stay in sync.
 
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
- drivers/dma/qcom/gpi.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/dma/stm32/stm32-dma3.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index a5055a6273af..fd45cadce91f 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -2265,8 +2265,15 @@ static int gpi_probe(struct platform_device *pdev)
- 	/* configure dmaengine apis */
- 	gpi_dev->dma_device.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
- 	gpi_dev->dma_device.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
--	gpi_dev->dma_device.src_addr_widths = DMA_SLAVE_BUSWIDTH_8_BYTES;
--	gpi_dev->dma_device.dst_addr_widths = DMA_SLAVE_BUSWIDTH_8_BYTES;
-+	ret = dma_set_src_bus_width(&gpi_dev->dma_device,
-+				    DMA_SLAVE_BUSWIDTH_8_BYTES);
+diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
+index 4724e7fa0008..b0365a5b341d 100644
+--- a/drivers/dma/stm32/stm32-dma3.c
++++ b/drivers/dma/stm32/stm32-dma3.c
+@@ -1469,14 +1469,14 @@ static void stm32_dma3_caps(struct dma_chan *c, struct dma_slave_caps *caps)
+ 
+ 	if (!chan->fifo_size) {
+ 		caps->max_burst = 0;
+-		caps->src_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
+-		caps->dst_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
++		dma_slave_caps_clear_src_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
++		dma_slave_caps_clear_dst_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
+ 	} else {
+ 		/* Burst transfer should not exceed half of the fifo size */
+ 		caps->max_burst = chan->max_burst;
+ 		if (caps->max_burst < DMA_SLAVE_BUSWIDTH_8_BYTES) {
+-			caps->src_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
+-			caps->dst_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
++			dma_slave_caps_clear_src_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
++			dma_slave_caps_clear_dst_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
+ 		}
+ 	}
+ }
+@@ -1737,6 +1737,12 @@ static int stm32_dma3_probe(struct platform_device *pdev)
+ 	u32 master_ports, chan_reserved, i, verr;
+ 	u64 hwcfgr;
+ 	int ret;
++	enum dma_slave_buswidth stm32_dma3_buswidths[] = {
++		DMA_SLAVE_BUSWIDTH_1_BYTE,
++		DMA_SLAVE_BUSWIDTH_2_BYTES,
++		DMA_SLAVE_BUSWIDTH_4_BYTES,
++		DMA_SLAVE_BUSWIDTH_8_BYTES,
++	};
+ 
+ 	ddata = devm_kzalloc(&pdev->dev, sizeof(*ddata), GFP_KERNEL);
+ 	if (!ddata)
+@@ -1775,14 +1781,16 @@ static int stm32_dma3_probe(struct platform_device *pdev)
+ 	 * channel, and can only access address at even boundaries, multiple of the buswidth.
+ 	 */
+ 	dma_dev->copy_align = DMAENGINE_ALIGN_8_BYTES;
+-	dma_dev->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
+-	dma_dev->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
+-				   BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
++	ret = dma_set_src_bus_widths(dma_dev, stm32_dma3_buswidths,
++				     ARRAY_SIZE(stm32_dma3_buswidths));
 +	if (ret)
 +		return ret;
 +
-+	ret = dma_set_dst_bus_width(&gpi_dev->dma_device,
-+				    DMA_SLAVE_BUSWIDTH_8_BYTES);
++	ret = dma_set_dst_bus_widths(dma_dev, stm32_dma3_buswidths,
++				     ARRAY_SIZE(stm32_dma3_buswidths));
 +	if (ret)
 +		return ret;
- 	gpi_dev->dma_device.device_alloc_chan_resources = gpi_alloc_chan_resources;
- 	gpi_dev->dma_device.device_free_chan_resources = gpi_free_chan_resources;
- 	gpi_dev->dma_device.device_tx_status = dma_cookie_status;
++
+ 	dma_dev->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV) | BIT(DMA_MEM_TO_MEM);
+ 
+ 	dma_dev->descriptor_reuse = true;
 
 -- 
 2.55.0
