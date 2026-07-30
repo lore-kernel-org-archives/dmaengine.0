@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F6D40B360;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109343E4BA;
 	Thu, 30 Jul 2026 14:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421575; cv=none; b=kDhoKaQeMXPbpHcI29Yk9Wy2pFRQNXLhNDvVOECaDWmVKKtkrAwiqmNgH1/3zxeqypDo9HoeSD+eIp9puNpwaq8s8675/0RzHOnLyXnP18m1h0S7gp+iG3wqAMIGzwJnRCILQVkk40esst0dy/lIlSUhNJOL2sFWMtkcG8BlfOk=
+	t=1785421575; cv=none; b=R3KsWBSDlCIJye7VwpqFrQs4hidK+dHpB+wRmInASk1KTbuC7qc6zysrMZTOVP8VpM3Jb4IqxpVQPsUQVZeIMbOAFFuInm5cXa21UEDQaxuE9t1S1nU9VIHt+3XguAVf3mD29oDYHZF2DzGxeKEjUyP7fAqpBDvBQP944MtUgxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785421575; c=relaxed/simple;
-	bh=WBm4shRjG88RQW0Ld/AlkK/DAXGllqvzcf2au4FwcWY=;
+	bh=WJdEBf6sTD0QgzIHsTE1L9mzK/q55x9OzWifGRQlJOU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iJp7W830ueTzrUJbFc4KnsG2dtV+9UI9r9l312cjd2iyzxcfHHtGPEVUg76XgC9BN4NXnsIFQLyEof7fon0PF/DehY19ykRmlhRnEuy4CJExTwiurcbzGMZnYN0K3yC/EDvaecg5hSUKaXowpZDnsZeI6i4UFPOzOPhPUtYADbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jko937Xo; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=bS2MxzUwJkWQD/TlwA9cFDubq8F3NiaRQhyby6alqMOQZ09TOCK4zsAAT4c12pH1C/ydwYpGps7Ma4CbbJqZecjHCR7VXcWKoHikmd1ZE2oG9YB35Egm2yIoMPegnFFBK8lU8Bf3B7G8DQfwGZRXc6niTWSDfDg64o20alnVtro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMlqhw7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jko937Xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0FB09C2BCF7;
-	Thu, 30 Jul 2026 14:26:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMlqhw7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D9FC7C2BD05;
+	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1785421575;
-	bh=WBm4shRjG88RQW0Ld/AlkK/DAXGllqvzcf2au4FwcWY=;
+	s=k20201202; t=1785421574;
+	bh=WJdEBf6sTD0QgzIHsTE1L9mzK/q55x9OzWifGRQlJOU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Jko937XoJkAvAGGzu3lGr2sDDWUzfoUi8DunsImTmY8CVDAN6wcrk0HWPBnUXjHPD
-	 QZeOB+B70vnYYUQwwdfMT4qt+lmY4BlRuWoinM5ysAyqe/OxkpsR05BzbtB9IcrXaT
-	 jzICboASfI16ziVNuv5q4raklDYwzEHQ2U3yayttNWdKL5kQLx/tGdtoj02MJXjn7d
-	 AR67Av4F+Tthj4PF7nlvKcPCIceaCsRG5970kIVmww+vaBj+v76EhHJ53J+AoMHLWl
-	 E9xJOgrJx5LUvnkEnFyStxsdtsZ6O4DgUHwfL9nDYfxslHyARItionZapVh6TcNT8g
-	 JkfFxSKYvti/w==
+	b=lMlqhw7ptz5PSjqYQAGUZ4uF5Gp3VLnSmFc/G+GZyir7OwG2iE7xdMVhTUonu8d40
+	 HyVTszA4HEd67oGG8zGIno92MmkTo6jaM3onywKaHYUiQPBgFsEaXIUu2SPSeGkRWj
+	 un8LezXhb1rIyrGO20VO/iIBC4o/p254rJwiUlzT+UqjzDcEUPJwFOp57g3jNvWQRh
+	 19FJCv+cIxRtRrEcVJ65yDUHSh4uFjtpGcYcqTDyL9CxzwcR8msHg6AVT2E7DkAcn3
+	 O+BgPHCfcOMoRtuBhgoDAc5MGWwUnZK1e5g1X0dV8408Abpb1e1bP+37ARu9moJYur
+	 zSLGso63j/KxQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0610C5516D;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA360C55167;
 	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
 From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
-Date: Thu, 30 Jul 2026 15:23:15 +0100
-Subject: [PATCH 8/9] spi: dw: Use dma_slave_caps bus width helpers
+Date: Thu, 30 Jul 2026 15:23:13 +0100
+Subject: [PATCH 6/9] iio: buffer-dmaengine: Use dma_slave_caps bus width
+ accessors
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -40,7 +41,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260730-dmaengine-support-wider-dma-masks-v1-8-3732f1f9d9ca@analog.com>
+Message-Id: <20260730-dmaengine-support-wider-dma-masks-v1-6-3732f1f9d9ca@analog.com>
 References: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
 In-Reply-To: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
 To: dmaengine@vger.kernel.org, linux-iio@vger.kernel.org
@@ -48,11 +49,11 @@ Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
  Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
  David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1785421644; l=2124;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785421644; l=1553;
  i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=xOfZPTRVqperUBS/PjyP6dyo86jTJj1kQ2OEqLzOYA4=;
- b=Oz3H58dUS3/UdN8cU0Fc5yd515ijLhxFdYHLsyQurpATZ2HI6jArioARnr2NcpKVACzIDPz8F
- 2+sk1BLTYeWAHEdQVJZyIRL+uxEgabsiOX4J2eElT2thmXvZ4Dn1N8A
+ bh=JvMCDDYBnfyjKcLChBKWpQIo1PWEIQSo/otzGS4zHaw=;
+ b=aAGuVxTk2Z5WizW2pcrAAWRDjddWOAymTX4rQ60Rdl1x4O003mYkk0+HUF9QGSW60b8VGJVIN
+ DvySoI/kB7nDvZEM3Sh2DFL7MaLOJVj3l5fjRFMDZ1IFJj1X+lW325I
 X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
  pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
 X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
@@ -62,66 +63,43 @@ Reply-To: nuno.sa@analog.com
 
 From: Nuno Sá <nuno.sa@analog.com>
 
-Store the common TX destination and RX source bus widths in a
-driver-owned DMA bus width bitmap and populate it through the
-dma_slave_caps helper.
-
-This avoids depending on the legacy src_addr_widths and dst_addr_widths
-masks returned by dma_get_slave_caps().
+Query the minimum supported source and destination bus widths through
+the new dma_slave_caps_get_{src,dst}_width_min() helpers rather than
+decoding the raw legacy u32 width masks. This keeps the buffer working
+with DMA controllers that advertise bus widths via the new bitmap
+representation.
 
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
 ---
- drivers/spi/spi-dw-dma.c | 6 +++---
- drivers/spi/spi-dw.h     | 3 ++-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
-index fe726b9b1780..2e23ead4a94f 100644
---- a/drivers/spi/spi-dw-dma.c
-+++ b/drivers/spi/spi-dw-dma.c
-@@ -100,10 +100,10 @@ static int dw_spi_dma_caps_init(struct dw_spi *dws)
+diff --git a/drivers/iio/buffer/industrialio-buffer-dmaengine.c b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+index 98acce909854..855e3662cd3d 100644
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -229,14 +229,13 @@ static struct iio_buffer *iio_dmaengine_buffer_alloc(struct dma_chan *chan)
+ 		return ERR_PTR(-ENOMEM);
  
- 	/*
- 	 * Assuming both channels belong to the same DMA controller hence the
--	 * peripheral side address width capabilities most likely would be
-+	 * peripheral side bus width capabilities most likely would be
- 	 * the same.
- 	 */
--	dws->dma_addr_widths = tx.dst_addr_widths & rx.src_addr_widths;
-+	dma_slave_caps_intersect_widths(&tx, &rx, dws->dma_bus_widths);
+ 	/* Needs to be aligned to the maximum of the minimums */
+-	if (caps.src_addr_widths)
+-		src_width = __ffs(caps.src_addr_widths);
+-	else
+-		src_width = 1;
+-	if (caps.dst_addr_widths)
+-		dest_width = __ffs(caps.dst_addr_widths);
+-	else
+-		dest_width = 1;
++	src_width = dma_slave_caps_get_src_width_min(&caps);
++	if (src_width == DMA_SLAVE_BUSWIDTH_UNDEFINED)
++		src_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
++	dest_width = dma_slave_caps_get_dst_width_min(&caps);
++	if (dest_width == DMA_SLAVE_BUSWIDTH_UNDEFINED)
++		dest_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
++
+ 	width = max(src_width, dest_width);
  
- 	return 0;
- }
-@@ -253,7 +253,7 @@ static bool dw_spi_can_dma(struct spi_controller *ctlr,
- 
- 	dma_bus_width = dw_spi_dma_convert_width(dws->n_bytes);
- 
--	return dws->dma_addr_widths & BIT(dma_bus_width);
-+	return test_bit(dma_bus_width, dws->dma_bus_widths);
- }
- 
- static int dw_spi_dma_wait(struct dw_spi *dws, unsigned int len, u32 speed)
-diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
-index 9cc79c566a70..9111ffc5e9d7 100644
---- a/drivers/spi/spi-dw.h
-+++ b/drivers/spi/spi-dw.h
-@@ -10,6 +10,7 @@
- #include <linux/scatterlist.h>
- #include <linux/spi/spi-mem.h>
- #include <linux/bitfield.h>
-+#include <linux/dmaengine.h>
- 
- /* Synopsys DW SSI IP-core virtual IDs */
- #define DW_PSSI_ID			0
-@@ -190,7 +191,7 @@ struct dw_spi {
- 	struct dma_chan		*rxchan;
- 	u32			rxburst;
- 	u32			dma_sg_burst;
--	u32			dma_addr_widths;
-+	DECLARE_DMA_BUS_WIDTHS(dma_bus_widths);
- 	unsigned long		dma_chan_busy;
- 	dma_addr_t		dma_addr; /* phy address of the Data register */
- 	const struct dw_spi_dma_ops *dma_ops;
+ 	INIT_LIST_HEAD(&dmaengine_buffer->active);
 
 -- 
 2.55.0
