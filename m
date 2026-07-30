@@ -1,204 +1,424 @@
-Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11021080.outbound.protection.outlook.com [52.101.125.80])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E6E355F5F
-	for <dmaengine@vger.kernel.org>; Thu, 30 Jul 2026 05:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.80
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785388487; cv=fail; b=IE/3kaAquku6M3X3vMPcCGksIzc+qKBod444TukPKFUUYNrT16of58s+D/FFjatTrztB2ATu5/MGLuVpu8cBUyCvAsYJ9zzsC39EiHjAsAwjHLnU/nvCSbHhqMdD+yN0eH7JcDla64WFT4XAPUXNkWdxtOilp6KRHdSqNJF+bDI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785388487; c=relaxed/simple;
-	bh=Z/iG9FBYcNjUAyFHiFgjUYn2ZC+CBcl5jYAvHJl4Pq0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=CUv31WzmAoVHxt6MtHzSZAp+MvRvDLgVGgE3BVAEpazBEM0yUB1tv63WNNzw/qrf+p/+o2Lb/f2N3cFjwpZAJ1bXUPMRhsoKCuyU3/s4d0Wz/HAy1fy9p6kqPMG4XCaGRwJ1qo6CGlWx+ZclzHaljy2DqXq0kk7kfTWzJCjidWc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=lvagCFv5 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.125.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30A940926C;
+	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785421575; cv=none; b=ZXMDeKf8nVtTLqhex0+5HZ7pZ6WCvNB8JP1N3NITTQRJPoOtx8fB2Uy4/RmZkiHsvwO6hDqxuBYC0r4q8eMVB3KigV2FnRWQw5o98e/3FGigOGQ4kWBIlgYOCXa2cRWs0p493sT0FyURQPYkv7c9a+hRcBWPnuWNuvb3H0ZCBpE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785421575; c=relaxed/simple;
+	bh=t1CBZeGoQr8sGgXNHGMrR0BNlkepGUOJIMTldhdjEm8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gK/yVVZI0JeC70LwM6Ehl+WQiCfh13KrZ6TYSxTGw9/dMdz8lG5qPv5jmegL7ZE0R8Oy4s9Ry2tx6am6uoghmMNPBZbv6fWf/62ccqNcgF95OoOhGgisX0oIij8O2u4VdsVhnOO2PlNgQSbrVn42hgIBrFxP3WzZiIeLiawIW0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ErCt1Ktw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="lvagCFv5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vyh0hXepgFn76ms3BBayJejD69Y2o3GrDgIbVN3tDlhHoXnvA41wP9K1mhWtF6OULZtTyeb33n1pwNK6f8KV50kQzrYNEumAqB/p9E31RhrUU46GZcjU2hC9ogTePfM6Uerlf79BlavWDaIp7AStwAzJcPdWNrPGnACcMElonJ4cUA+xnfz8y1sgTIj9yfnoEyE2RmrhDCNCyPySK0mh+9whqN+UZl4nZfyv8/IG0vUHII6qGbLGmJwB7snZ2daFKNunv0y+ySCASNLO7Cedrh/2iKvceq9YRMPHT9hso+fm3Wrb9829MJPNprSkSUAxhmWKUdScuFN+JCaM2yclGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
- b=X/I7d0DqIBnAe1iY03unZuCJ4Rdj6fqd1V9gwT6rzxd4P7Ru4uftAxcC1wMBSOQEkxKHTfbv61bvVj8J4iwFHpObj4cLF29l9dGDHfybFIBmRNENfsFU7efyWQJPb9ORSfS5TYxe8Y5Y6zMCZcMYuJ3N4ZxmKsLToj68A10cQZ4BDm+80Dt/gF53kCreopUiBCil4QyleJhZpCX2434fDlLrp7gClADXEA1CgcSzA206dtKyhZvlzlYst3124CpZoy9nBEjmtpQL1agP/lX4zYZij59MBZrb2QN2XZfOqPELqWRaoZfFPy2Jh/jGhBbyDSQ+tlFHs1BH20PouWKqZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2b7dV2G+BOlcLwDi/A9GanuUkmZ1kaxqKHx2RpXokyU=;
- b=lvagCFv5yE8R0pmbHwwvVY+Jv2LhU301DNtEIQ1x9v3PZ+aHdUbOVRbDry5SuLrUKmU4Rv+Z3hEtpGkLK5eP3pCyR+laEz+uGbQo3jnRHepcMJhpna2MbzQ5Jb2P7Wos52X1gDBwI329U8appJxW/NEULyenGwhx0z3IyomZErc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TY4P286MB7101.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:341::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.14; Thu, 30 Jul
- 2026 05:14:43 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0270.012; Thu, 30 Jul 2026
- 05:14:43 +0000
-Date: Thu, 30 Jul 2026 14:14:41 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture
- with channel kicks
-Message-ID: <keuoh456azgwropu5qvenj2md3fxcmqs4xibc36gs6ix6hxx3q@chcplu4rrrd7>
-References: <20260729143036.3087722-1-den@valinux.co.jp>
- <20260729143036.3087722-12-den@valinux.co.jp>
- <20260729145108.CFE281F00A3E@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260729145108.CFE281F00A3E@smtp.kernel.org>
-X-ClientProxiedBy: TYCPR01CA0195.jpnprd01.prod.outlook.com
- (2603:1096:400:2b0::17) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ErCt1Ktw"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8B34DC19425;
+	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1785421574;
+	bh=t1CBZeGoQr8sGgXNHGMrR0BNlkepGUOJIMTldhdjEm8=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=ErCt1Ktw0ts0xZSXKv3iG33c+/3lEhepF0Qmju2V9wu5Pmb11DO6UH+EA9t1t/56C
+	 /2npdzho0Fl7f8D+oJrBSGrozVMKQneT/pWL3C16b6SvDSwSezLdEf/YDd6XgLeiIB
+	 rHm89F2qKuL4YyprQUTBse2AsDfEEpR3WLvBf4pDKKDuRQnOAT+ca02VJ6w+H98aZF
+	 0jGbD3M5N0kcQtLpybYTsMI9vcZlN3RzvHADSk6Pb1gblcce7oTSczJACtD/uOgTlh
+	 lQvd3fiKf/V9ARUbofWbgzIHNoBGSI8ZJmt3xQu4HwrT44TttSRPSlShVDJz787wcL
+	 T6aD3B+SQ1Ddg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C041C55165;
+	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
+From: =?utf-8?q?Nuno_S=C3=A1_via_B4_Relay?= <devnull+nuno.sa.analog.com@kernel.org>
+Date: Thu, 30 Jul 2026 15:23:08 +0100
+Subject: [PATCH 1/9] dmaengine: Support bus widths of 32 bytes and above
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY4P286MB7101:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|10070799003|366016|23010399003|1800799024|6133799003|56012099006|4143699003|10067099003|55112099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	L1omqkxut3/+U31oLcYwiw8d4mz8iKAdwEmKQR8GEP4MjM1zMWTJ89ePZZpwfw3TB5RZwiJnqMswFKj+RZcAHbHiGdQ3gwZVUsd8g8we/Lcdpapf45U4a3oAOzgR8FKWdRLASzpvJPPR3qyRO1161sU1ZZ9t08IRUZZKyadO3swXJ+1W+veL2VTrKu4sLwpBLn/zMR3pLihZOKzaue/yXbi8eoCiLJD2ouI4wKw2hjXXODlut8qDd4uaHq1yQA31nghQV2C9FAee/G5dOhf59y6Cx1XQcBsuSVfG77Wzp1VU6GA4JMXTn3LWhmeVmaumf+aLGNbEduRyurvyv/bXDjpEF2t0U2aMW3+C4bqn5nxOlmv0naB6ul5/b55kQ/UVwOs5aXcZxVY56sGofn4cX1q1mUILQEC5uALq7+9F5K8jciLg6vYf2/mSx8Sno2um+iQT9JxRLEYGBxpMsz12kgORCjjTJbZPot1GDCnc7RGosyfNJuyRlVZpVCcvTu+ZYVYK+WTcgiyp9DHj3ebOaoffpM1SB4uJw6H8/VJ0neuC00Ce+gsSNOVPI+x025UHKP88U/1nN5awYH5Eu/jxUWqtRUAWatgEoesRj36cz0A=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(10070799003)(366016)(23010399003)(1800799024)(6133799003)(56012099006)(4143699003)(10067099003)(55112099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?T29/uzdyCOoMlkPOD0p9c83pADvYA9zuM+fUC9KVlY3sZ9T/7ysATfsXur?=
- =?iso-8859-1?Q?tTlnt2K9QGuEI8WYukGpa/4ejI2hOzUmt3y9Tl2yf1FK13uAvGPW/nYSr6?=
- =?iso-8859-1?Q?xCrdKYa4CrYYFzpDDUWjDoRrv3yScbmbZOhz12nLZA8ytIiHo6EkaiZs7J?=
- =?iso-8859-1?Q?HMf+eM1nYOcnpe5945g0qx2/ZUub90uLKKjgarWU4nCp8NHXfAQiBG/o33?=
- =?iso-8859-1?Q?4xjD9TqruH/amVqoWCiz9g71lPmeotGn3turPqa3fudcaBd7MGSDuxw6YU?=
- =?iso-8859-1?Q?XNbdrB/+RvBZC8uddq7ZT0oIQ4gzH0hjpqMUWFq/c4wyB6bZTaWjqMQbkr?=
- =?iso-8859-1?Q?aVVJWifhA9ByKSM0+Z9TB7z3hskuwfXA+a69wylFlXy6xzP8dZ2CkvL2Mf?=
- =?iso-8859-1?Q?xTypqAmsDjvMDqlbmPY/9b8heoBn/k7rqOT3jIxrSvbKLhCEH8LRmQZuAB?=
- =?iso-8859-1?Q?+e4GqNS6T2w11LFX4kQAElS/93y/ECren6NlUmBW07T/h7ZL002A40ttpx?=
- =?iso-8859-1?Q?rCAn6IthvY5c6WT/nsdtVX8BZVp49kuzvNf4ywa1iLLhB2dR7jAMHMF6zK?=
- =?iso-8859-1?Q?2SguKyfi5FoyQXuf39qkYAAinneQMsE8pd4fByBQ0W/G6gUNVZMQCwj69x?=
- =?iso-8859-1?Q?eCsoAwRD/a+831xC3iqjI8/whWHugMwwBk1By2zWVUX31FFHJPIjdaqRQ/?=
- =?iso-8859-1?Q?WA2JGdn1g9xKo0QzetyWgd2YMwGA4pIgeB/ZepdvyDY5UN6kJ6H6YdniRB?=
- =?iso-8859-1?Q?kBHuTJMfdXUtilfHlujkgpQAssb8smmMDWsBVU7kzgHXN1nqVmrIjS4MyG?=
- =?iso-8859-1?Q?H8s0QqjeadUgr/Y0JledLhE/AeApGhNhIONOT5j7+zlrrbp6Sgm+rN7LNF?=
- =?iso-8859-1?Q?nCXugSVDtjsxJHQZ1aAyoCysRBXz2LUqegahZpUC0rIal/m16pY8QWxyh9?=
- =?iso-8859-1?Q?4Fns03oL1jeaUkT2JQ4E944CgOeWNszb4a12mcy6DBbEuTQg9uNWOz7BDa?=
- =?iso-8859-1?Q?/7Cx9D7cbFflbemZ/fjZYSXeldpJSALa1kPmNUx0G23Oj8l8Eym3qzkYDF?=
- =?iso-8859-1?Q?oQsDnUM+FOCaTmEkJW2x/Yy7p6q2EDCoNoJgxB30inxtzXiwxw4MkxG2jt?=
- =?iso-8859-1?Q?yE+XdBDbSpzIKGUP+1R+pxrMn4OZNLt1cemwB2lw5fsDIeh1QnY7wN0mte?=
- =?iso-8859-1?Q?M4ZZDdMrAzkk/Ros6081DiN7LrH5S9MjklHizf+iXjdLnHouuuZ8fOSli6?=
- =?iso-8859-1?Q?smppGD0jzCUyCKBaIFdez00T6EYsLI0AhKJMhjzJkbnBN0LYS2xARuJDFR?=
- =?iso-8859-1?Q?esYAn5R9gFf8SZpKUmOt9/3t0fB9U/MNQoiYgcunTbsFf+3WoC+rstDE2k?=
- =?iso-8859-1?Q?UQZ1EzaduMidYDTG6wgVJKyHEZz3znVBtbn7uBAK5kKpJlSx6Vc4496cCi?=
- =?iso-8859-1?Q?0W3fr3ng7EJbQX5e1+/i3vLN0CsQnXB/UMyDafnkGg3NmlEZNMHBuaajVW?=
- =?iso-8859-1?Q?M5IH/rhjYft+hSZhjJXZBMWn0RNf5sGNNSKMzV4/Xm+hhY2adYLKTBqTuV?=
- =?iso-8859-1?Q?tg9i82FqP3sKdhjCsBK853k/kGaa6fFDWH0DfeKdJev0dz/zjljR95wLpG?=
- =?iso-8859-1?Q?8+p+bNmSNF3vvDWiU6CxxatZeJ1IGj+lQ0zPDoC+lY61ZQrBqxHjz+Xo4J?=
- =?iso-8859-1?Q?8yzCyXETGVfA6m3SGyyO+0sXqZxZe63pXVPOBjqYxTqOmvgqNDQv4+Xr0A?=
- =?iso-8859-1?Q?2CmaeTmiuVFEAbRXBXkn61g63wEco2pEF5nfUyfHSbJh0GABCCR4XV8tNF?=
- =?iso-8859-1?Q?ANDiH4Q+oqYCWHa4QRQXnwJ3W1F+JIXaGVJCqxMhatAEa/nB6a9O?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5dc6ad6-3dd5-4183-70b0-08deedf976cb
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2026 05:14:42.9893
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: x6bAIUYAEvKCFZpn58v8kvb+oid+HGnl4kB5jC2AR9+qCl5VPMqvOweokksCx+ALFYVB56u3muWUjXGDE2n5Dg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB7101
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260730-dmaengine-support-wider-dma-masks-v1-1-3732f1f9d9ca@analog.com>
+References: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
+In-Reply-To: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
+To: dmaengine@vger.kernel.org, linux-iio@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
+ David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785421644; l=12568;
+ i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
+ bh=Z5O1BX+XZRBfceKyP5Rlj4DH1uZNddhZBgGcHqoSr1g=;
+ b=X4wwR+ZPt1LLbgzH1BF3ywMF9sWQtnjOkGYiLKKFu9QGbQ8sobaOX2kQ7/WWjsRzFPgYRPu6T
+ l4vziFFZV3TA0xdTVip6kk6kH1AaFDKwG8y8MlX4cm3c4iIPMojhv35
+X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
+ pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
+X-Endpoint-Received: by B4 Relay for nuno.sa@analog.com/20231116 with
+ auth_id=100
+X-Original-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
+Reply-To: nuno.sa@analog.com
 
-On Wed, Jul 29, 2026 at 02:51:08PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Ringing the doorbell can race with a hardware interrupt, clearing and permanently losing a pending DMA completion event.
-> --
-> 
-> --- Patch [11]: [PATCH v4 11/24] dmaengine: dw-edma: Serialize LL event capture with channel kicks ---
-> commit 56231794b3b46dd52a7c7f61f0def40f1fed9890
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> dmaengine: dw-edma: Serialize LL event capture with channel kicks
->     
-> This commit introduces an event lock to serialize interrupt status reads,
-> clears, snapshot recording, and LL doorbell writes. It aims to prevent a
-> deferred handler from applying an event from a previous hardware run when a
-> doorbell starts a new run in between.
-> 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> 
-> [ ... ]
-> 
-> > @@ -269,6 +317,17 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
-> >  static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
-> >  {
-> >  	dw_edma_core_ll_sync(chan);
-> > +
-> > +	guard(spinlock_irqsave)(dw_edma_event_lock(chan));
-> > +
-> > +	/*
-> > +	 * A recorded event belongs to the current ring and must be consumed
-> > +	 * before starting another hardware run.
-> > +	 */
-> > +	if (chan->ll_irq.event != DW_EDMA_LL_EVENT_NONE)
-> > +		return;
-> > +
-> > +	dw_edma_ll_event_discard_locked(chan);
-> 
-> [Severity: High]
-> Can this race with a hardware interrupt and permanently lose a completion event?
-> 
-> If dw_edma_core_ch_doorbell() is called (for example, when appending
-> descriptors to a running channel) exactly when the hardware finishes a burst
-> and asserts an interrupt, but before the hardirq handler can run,
-> chan->ll_irq.event will still be DW_EDMA_LL_EVENT_NONE.
-> 
-> The code will bypass the early return and unconditionally call
-> dw_edma_ll_event_discard_locked(), which clears the hardware interrupt
-> status.
-> 
-> Does this result in the interrupt being completely lost? If so, the software
-> state will permanently trail the hardware, which would cause the DMA channel
-> to stall indefinitely.
+From: Nuno Sá <nuno.sa@analog.com>
 
-Thanks for catching this.
+The src_addr_widths and dst_addr_widths capability masks encode each
+supported width as a bit whose position equals the corresponding
+enum dma_slave_buswidth value (e.g. DMA_SLAVE_BUSWIDTH_4_BYTES sets bit
+4). As these masks are plain u32, widths of 32 bytes and above
+(DMA_SLAVE_BUSWIDTH_32/64/128_BYTES map to bits 32, 64 and 128) cannot
+be represented at all.
 
-That exact race cannot occur at this point (= patch 11), because dynamic append
-is not yet enabled.
+Introduce bitmap-based bus width capabilities that span the full enum
+range. To allow DMA controller producers to be converted incrementally,
+keep the legacy dma_device u32 fields alongside the new bitmaps:
+producers using the new helpers populate the bitmap and mirror the low
+32 bits back into the legacy field, while dma_get_slave_caps() folds a
+legacy-only producer's u32 into the returned bitmap.
 
-In the final tree, however, the race window seems real. The pending DONE status
-can be cleared before the hard IRQ records it. It does not leave the channel
-**permanently** stuck, though, because patch 15 adds a delayed stopped-tail
-recheck which samples the channel state and LLP again.
+Add helpers for producers and consumers so users do not need to depend
+on the bitmap layout directly. Once the remaining producers are
+converted, the legacy dma_device u32 fields can be dropped.
 
-A hardware STOP transition, including DONE status and interrupt assertion, can
-land between the status check and the status clear performed by software. And
-the check and clear cannot be made atomic. So the cleanest fix I see is to
-permit the initial kick after an LL reset, then at most one kick after each STOP
-boundary that software has confirmed as STOP. A quick test showed no obvious
-regression. I'm planning to rework it that way for the next revision.
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+---
+ drivers/dma/dmaengine.c   |  18 ++++
+ include/linux/dmaengine.h | 246 ++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 254 insertions(+), 10 deletions(-)
 
-Best regards,
-Koichiro
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 9049171df857..7be23ba769d0 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -593,7 +593,25 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+ 		return -ENXIO;
+ 
+ 	caps->src_addr_widths = device->src_addr_widths;
++	if (bitmap_empty(device->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX)) {
++		bitmap_zero(caps->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
++		bitmap_from_arr32(caps->src_bus_widths,
++				  &device->src_addr_widths, 32);
++	} else {
++		bitmap_copy(caps->src_bus_widths, device->src_bus_widths,
++			    DMA_SLAVE_BUSWIDTH_MAX);
++	}
++
+ 	caps->dst_addr_widths = device->dst_addr_widths;
++	if (bitmap_empty(device->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX)) {
++		bitmap_zero(caps->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
++		bitmap_from_arr32(caps->dst_bus_widths,
++				  &device->dst_addr_widths, 32);
++	} else {
++		bitmap_copy(caps->dst_bus_widths, device->dst_bus_widths,
++			    DMA_SLAVE_BUSWIDTH_MAX);
++	}
++
+ 	caps->directions = device->directions;
+ 	caps->min_burst = device->min_burst;
+ 	caps->max_burst = device->max_burst;
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index b3d251c9734e..cea57b166dcb 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -5,6 +5,7 @@
+ #ifndef LINUX_DMAENGINE_H
+ #define LINUX_DMAENGINE_H
+ 
++#include <linux/bitops.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/uio.h>
+@@ -391,8 +392,12 @@ enum dma_slave_buswidth {
+ 	DMA_SLAVE_BUSWIDTH_32_BYTES = 32,
+ 	DMA_SLAVE_BUSWIDTH_64_BYTES = 64,
+ 	DMA_SLAVE_BUSWIDTH_128_BYTES = 128,
++	DMA_SLAVE_BUSWIDTH_MAX
+ };
+ 
++#define DECLARE_DMA_BUS_WIDTHS(name) \
++	DECLARE_BITMAP(name, DMA_SLAVE_BUSWIDTH_MAX)
++
+ /**
+  * struct dma_slave_config - dma slave channel runtime config
+  * @direction: whether the data shall go in or out on this slave
+@@ -487,10 +492,12 @@ enum dma_residue_granularity {
+ 
+ /**
+  * struct dma_slave_caps - expose capabilities of a slave channel only
+- * @src_addr_widths: bit mask of src addr widths the channel supports.
++ * @src_bus_widths: bitmap of source bus widths the channel supports.
+  *	Width is specified in bytes, e.g. for a channel supporting
+- *	a width of 4 the mask should have BIT(4) set.
+- * @dst_addr_widths: bit mask of dst addr widths the channel supports
++ *	a width of 4 the bitmap should have bit 4 set.
++ * @src_addr_widths: legacy bit mask of source bus widths the channel supports.
++ * @dst_bus_widths: bitmap of destination bus widths the channel supports.
++ * @dst_addr_widths: legacy bit mask of destination bus widths the channel supports.
+  * @directions: bit mask of slave directions the channel supports.
+  *	Since the enum dma_transfer_direction is not defined as bit flag for
+  *	each type, the dma controller should set BIT(<TYPE>) and same
+@@ -509,8 +516,14 @@ enum dma_residue_granularity {
+  * resubmitted multiple times
+  */
+ struct dma_slave_caps {
+-	u32 src_addr_widths;
+-	u32 dst_addr_widths;
++	struct {
++		DECLARE_DMA_BUS_WIDTHS(src_bus_widths);
++		u32 src_addr_widths;
++	};
++	struct {
++		DECLARE_DMA_BUS_WIDTHS(dst_bus_widths);
++		u32 dst_addr_widths;
++	};
+ 	u32 directions;
+ 	u32 min_burst;
+ 	u32 max_burst;
+@@ -803,10 +816,12 @@ struct dma_filter {
+  * @dev: struct device reference for dma mapping api
+  * @owner: owner module (automatically set based on the provided dev)
+  * @chan_ida: unique channel ID
+- * @src_addr_widths: bit mask of src addr widths the device supports
++ * @src_bus_widths: bitmap of source bus widths the device supports.
+  *	Width is specified in bytes, e.g. for a device supporting
+- *	a width of 4 the mask should have BIT(4) set.
+- * @dst_addr_widths: bit mask of dst addr widths the device supports
++ *	a width of 4 the bitmap should have bit 4 set.
++ * @src_addr_widths: legacy bit mask of source bus widths the device supports.
++ * @dst_bus_widths: bitmap of destination bus widths the device supports.
++ * @dst_addr_widths: legacy bit mask of destination bus widths the device supports.
+  * @directions: bit mask of slave directions the device supports.
+  *	Since the enum dma_transfer_direction is not defined as bit flag for
+  *	each type, the dma controller should set BIT(<TYPE>) and same
+@@ -887,8 +902,14 @@ struct dma_device {
+ 	struct module *owner;
+ 	struct ida chan_ida;
+ 
+-	u32 src_addr_widths;
+-	u32 dst_addr_widths;
++	struct {
++		DECLARE_DMA_BUS_WIDTHS(src_bus_widths);
++		u32 src_addr_widths;
++	};
++	struct {
++		DECLARE_DMA_BUS_WIDTHS(dst_bus_widths);
++		u32 dst_addr_widths;
++	};
+ 	u32 directions;
+ 	u32 min_burst;
+ 	u32 max_burst;
+@@ -1678,4 +1699,209 @@ static inline struct device *dmaengine_get_dma_device(struct dma_chan *chan)
+ 	return chan->device->dev;
+ }
+ 
++static inline enum dma_slave_buswidth
++__dma_slave_caps_get_width_min(const unsigned long *bus_widths)
++{
++	enum dma_slave_buswidth width = find_first_bit(bus_widths,
++						       DMA_SLAVE_BUSWIDTH_MAX);
++
++	if (width == DMA_SLAVE_BUSWIDTH_MAX)
++		return DMA_SLAVE_BUSWIDTH_UNDEFINED;
++
++	return width;
++}
++
++/**
++ * dma_slave_caps_get_src_width_min - get the minimum source bus width
++ * @caps: DMA slave capabilities
++ *
++ * Return: the minimum supported source bus width, or
++ * %DMA_SLAVE_BUSWIDTH_UNDEFINED if no source bus width is advertised.
++ */
++static inline enum dma_slave_buswidth
++dma_slave_caps_get_src_width_min(const struct dma_slave_caps *caps)
++{
++	return __dma_slave_caps_get_width_min(caps->src_bus_widths);
++}
++
++/**
++ * dma_slave_caps_get_dst_width_min - get the minimum destination bus width
++ * @caps: DMA slave capabilities
++ *
++ * Return: the minimum supported destination bus width, or
++ * %DMA_SLAVE_BUSWIDTH_UNDEFINED if no destination bus width is advertised.
++ */
++static inline enum dma_slave_buswidth
++dma_slave_caps_get_dst_width_min(const struct dma_slave_caps *caps)
++{
++	return __dma_slave_caps_get_width_min(caps->dst_bus_widths);
++}
++
++/**
++ * dma_slave_caps_copy_src_widths - copy source bus width capabilities
++ * @caps: DMA slave capabilities
++ * @bus_widths: destination bitmap declared with DECLARE_DMA_BUS_WIDTHS()
++ */
++static inline void
++dma_slave_caps_copy_src_widths(const struct dma_slave_caps *caps,
++			       unsigned long *bus_widths)
++{
++	bitmap_copy(bus_widths, caps->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
++}
++
++/**
++ * dma_slave_caps_copy_dst_widths - copy destination bus width capabilities
++ * @caps: DMA slave capabilities
++ * @bus_widths: destination bitmap declared with DECLARE_DMA_BUS_WIDTHS()
++ */
++static inline void
++dma_slave_caps_copy_dst_widths(const struct dma_slave_caps *caps,
++			       unsigned long *bus_widths)
++{
++	bitmap_copy(bus_widths, caps->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
++}
++
++/**
++ * dma_slave_caps_intersect_widths - intersect destination and source widths
++ * @dst_caps: DMA slave capabilities providing destination bus widths
++ * @src_caps: DMA slave capabilities providing source bus widths
++ * @bus_widths: destination bitmap declared with DECLARE_DMA_BUS_WIDTHS()
++ *
++ * Return: true if the resulting bitmap contains at least one common bus width,
++ * false otherwise.
++ */
++static inline bool
++dma_slave_caps_intersect_widths(const struct dma_slave_caps *dst_caps,
++				const struct dma_slave_caps *src_caps,
++				unsigned long *bus_widths)
++{
++	return bitmap_and(bus_widths, dst_caps->dst_bus_widths,
++			  src_caps->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
++}
++
++/**
++ * dma_slave_caps_clear_src_width - clear a source bus width capability
++ * @caps: DMA slave capabilities
++ * @width: source bus width to clear
++ */
++static inline void
++dma_slave_caps_clear_src_width(struct dma_slave_caps *caps,
++			       enum dma_slave_buswidth width)
++{
++	__clear_bit(width, caps->src_bus_widths);
++	if (width < DMA_SLAVE_BUSWIDTH_32_BYTES)
++		caps->src_addr_widths &= ~BIT(width);
++}
++
++/**
++ * dma_slave_caps_clear_dst_width - clear a destination bus width capability
++ * @caps: DMA slave capabilities
++ * @width: destination bus width to clear
++ */
++static inline void
++dma_slave_caps_clear_dst_width(struct dma_slave_caps *caps,
++			       enum dma_slave_buswidth width)
++{
++	__clear_bit(width, caps->dst_bus_widths);
++	if (width < DMA_SLAVE_BUSWIDTH_32_BYTES)
++		caps->dst_addr_widths &= ~BIT(width);
++}
++
++static inline int __dma_set_bus_widths(unsigned long *bus_widths,
++				       const enum dma_slave_buswidth *widths,
++				       unsigned int n_widths)
++{
++	for (unsigned int i = 0; i < n_widths; i++) {
++		switch (widths[i]) {
++		case DMA_SLAVE_BUSWIDTH_UNDEFINED:
++		case DMA_SLAVE_BUSWIDTH_1_BYTE:
++		case DMA_SLAVE_BUSWIDTH_2_BYTES:
++		case DMA_SLAVE_BUSWIDTH_3_BYTES:
++		case DMA_SLAVE_BUSWIDTH_4_BYTES:
++		case DMA_SLAVE_BUSWIDTH_8_BYTES:
++		case DMA_SLAVE_BUSWIDTH_16_BYTES:
++		case DMA_SLAVE_BUSWIDTH_32_BYTES:
++		case DMA_SLAVE_BUSWIDTH_64_BYTES:
++		case DMA_SLAVE_BUSWIDTH_128_BYTES:
++			break;
++		default:
++			return -EINVAL;
++		}
++
++		__set_bit(widths[i], bus_widths);
++	}
++
++	return 0;
++}
++
++/**
++ * dma_set_src_bus_widths - set supported source bus widths for a DMA device
++ * @device: DMA device
++ * @widths: array of supported source bus widths
++ * @n_widths: number of entries in @widths
++ *
++ * Return: 0 on success, -EINVAL if @widths contains an invalid bus width.
++ */
++static inline int dma_set_src_bus_widths(struct dma_device *device,
++					 const enum dma_slave_buswidth *widths,
++					 unsigned int n_widths)
++{
++	int ret;
++
++	ret = __dma_set_bus_widths(device->src_bus_widths, widths, n_widths);
++	if (ret)
++		return ret;
++
++	device->src_addr_widths = bitmap_read(device->src_bus_widths, 0, 32);
++	return 0;
++}
++
++/**
++ * dma_set_dst_bus_widths - set supported destination bus widths for a DMA device
++ * @device: DMA device
++ * @widths: array of supported destination bus widths
++ * @n_widths: number of entries in @widths
++ *
++ * Return: 0 on success, -EINVAL if @widths contains an invalid bus width.
++ */
++static inline int dma_set_dst_bus_widths(struct dma_device *device,
++					 const enum dma_slave_buswidth *widths,
++					 unsigned int n_widths)
++{
++	int ret;
++
++	ret = __dma_set_bus_widths(device->dst_bus_widths, widths, n_widths);
++	if (ret)
++		return ret;
++
++	device->dst_addr_widths = bitmap_read(device->dst_bus_widths, 0, 32);
++	return 0;
++}
++
++/**
++ * dma_set_src_bus_width - set a single supported source bus width
++ * @device: DMA device
++ * @width: supported source bus width
++ *
++ * Return: 0 on success, -EINVAL if @width is invalid.
++ */
++static inline int dma_set_src_bus_width(struct dma_device *device,
++					enum dma_slave_buswidth width)
++{
++	return dma_set_src_bus_widths(device, &width, 1);
++}
++
++/**
++ * dma_set_dst_bus_width - set a single supported destination bus width
++ * @device: DMA device
++ * @width: supported destination bus width
++ *
++ * Return: 0 on success, -EINVAL if @width is invalid.
++ */
++static inline int dma_set_dst_bus_width(struct dma_device *device,
++					enum dma_slave_buswidth width)
++{
++	return dma_set_dst_bus_widths(device, &width, 1);
++}
++
+ #endif /* DMAENGINE_H */
 
-> 
-> >  	dw_edma_core_do_ch_doorbell(chan);
-> >  }
-> 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20260729143036.3087722-1-den@valinux.co.jp?part=11
+-- 
+2.55.0
+
+
