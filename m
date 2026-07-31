@@ -1,64 +1,65 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010038.outbound.protection.outlook.com [52.101.193.38])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012061.outbound.protection.outlook.com [52.101.53.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7304B239E7F;
-	Fri, 31 Jul 2026 16:24:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47032470431;
+	Fri, 31 Jul 2026 16:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.61
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785515053; cv=fail; b=l02jasGqkpWTNzG1D9F6uZFNBeKqyVOtvr3f+GgkBaANSWVKA6LFoIFDTUVK2uVaLfnP+SdPs28W8IZp+xGZuwYLks2gx1KwBLE68uC6Z261xGTu1OtTs479i++nAZIRNYXQw6FW7z2fLph74gYKObHBcyD1/9A82PQybl/hMao=
+	t=1785515602; cv=fail; b=o0ZtrytH3KLIPvxqEWGSRGlPe0DbiN+6A3DTrPJSj9Va1R85s4iUF4cohgTD7m1cbFWddq+8Uesc8c57XtSoWnc+TI97NPxEhOQavDt1CSTH8m3TB0oBDImSbSSGJkPVGhGhtq3MTTO4Sw/IWNglNhB5672/wjaw2sXFh1JCaNc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785515053; c=relaxed/simple;
-	bh=Q+tPewieBFe5tqDVLqIGJ+4YDpAQogfmGKbf21ngSxs=;
+	s=arc-20240116; t=1785515602; c=relaxed/simple;
+	bh=XUBITGyagN4JGi8svcdAYHJAbevFycWT9zzMURlpD/8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Rj9jJWL9e//9YO3rZlpqz2eDMxBzrwzXhEEtSLtohXldeMuZkKLmkTFSYYBoH/cvLAG7S9pTtga3RvDMkc585rHZJhgDNhKYHzaxSjXBDK7K0kXS9Bc+AcPZJ+pFiCEhbyrDtgVkqVxddQpYlV4phw6C/6mOys92+WQsTeZde/Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=TOfi8bA8; arc=fail smtp.client-ip=52.101.193.38
+	 Content-Type:MIME-Version; b=jXSq9pXhuMaKLUiyk1RW8hGWy5AhWcp2V/bzNOkzr5NYDeg8OLqNEJtaqai6G1jSV+CZZ2Q1HE3EiCSXIhT54yUd/UG2aj6yz2MLzRm9zoRpl25/oBwj4Y7JSTOZTAOlky+qn7g7/Xa5/yTO3yRZu7S/24BaJXcaE47/eHa5XtM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=DE+u5oNU; arc=fail smtp.client-ip=52.101.53.61
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="TOfi8bA8"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="DE+u5oNU"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=atNvdYmqt5psC82WDeAGfyKI6KjrvthFtPdFNrVn0ef8l5CsgWBjPurdDyS9ihQpSHsK/qQa/vPQyvS6Nm7fNp5K5eoj7xo7DNJsrEoQKgzHuUIXTWfFu9HREzWZJgs5HkSjmc7+3E/mQbynUIbH4WiYSVEeb+mfkOR2V+PoBlRF6PxF1aqcp4yKQmf/l3MEbRO6OiUQUP/K5dQm/da8cpg42PyL4ykisPD67ZMi519r1NEGXthe5DM1QqyJ9Rm89WFBQ5x7j7V/AjvW+VcobVq9knCeppJ//Q/mSxTo8maQroCbGD5PIHV3SvFrYpMykLAcPUxuNpoA1zCOM7FrNQ==
+ b=nmrtQl+laICeqFXaZrwhSE9LTkTKO2hqsbLfOqWaQstB06R8ww7AHybsrD/7R+0N8wLWZV5w99Qb091p4bCoRHHBKCWwr05Iloy8llh4fquKTZmwzZ4eBoAOaNIDUp7sCYdVhbKcyjJ7M/FZJRQFnbBm/WnA28zCPyu0VDqb8+Z36oKHYOA8KKYND53dn/dCjI2PTXJKg9ij79f9HkuN1a/9JadhPPVENv3e9wg0VpZMsG4WQiuxAp+Mba0ndg44/46GjaY+GtgBEogBz4QG+Dwv9ca7wnzSeoic0TMp/e9LpELoncCkNm6yHZ1LVFbTdg77eBW1PFQaPM4cD+xvnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XCpNpnBpDgI61YzOsPieX1EIHzgm05xIubpn+I3iOxA=;
- b=FvSImt5bZlibNJYxH4epH2ZMbzDWEeNiv3dZPurBj4WMtwhniwNM6nlA2qqvc1KUgxh++Ttv6keAYaI2ss6aNqWBZawTAPv7ZuLayKOMhIGUUZgPjWaUpUG4kk2p6+yzBbWjfdlJYvSRly3NAa8SEWSBLvvZT18E3dqNabTCcs2hcpaYHQZ1J6zeTr5BgT+I/A3OzHMoEgcjX1e9YHQGOzvNdE0K3ClWGERD8IeM2j/t32aEDitstgGOHVqxd0qdOp98+tpnX95jeSNUJd6n7PiAfvfU7Wcy6Laj96QXYsb9sYhD5SLQu4o4qPykjEY8egQ11S0OOssY5gzTl2E1Yw==
+ bh=QNlNpg50iKiheLNFo/BovJKJjmw6AU4ajBxkCclAMW4=;
+ b=DyGXYRMJK5L2OI4T4w3spVIiQVFXeBRqbKSlABTppuPWml+nwWejDRx5nEeBgyc9qZCtD6DJ4NbfeUf5FIhZ/aTOcgrV2GNwhija3YIQl2lthJVkUTtbMz7CeZEFDqz3wK1MEYumf6J/C87qGyi9uHOnlz2e4Q5TTNMOZMlS73ZjHtfj2XdnCR4AeqnpN2jjhAhazD+KiToOBVJW17CVVVUiY+8EdnX68aL06zvbxWX0erCGD8Nb++4m/4wOkJ48eJ+wmlvKPXvrJ8WcjoMKn8x0K0El+WwX6h/UDPCfR05otDfDTcthzkZIQdMifV8PaVqL5A41+04SGZG679YVbg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XCpNpnBpDgI61YzOsPieX1EIHzgm05xIubpn+I3iOxA=;
- b=TOfi8bA8/zsb66tYt5ijKU6pD/cqn1z1wsBtamGveMG2SYtLXF3bD8UozmYWE646n7cJR8v+uZikpCGj/5XXF20q1bhrbzUCzmpOOdSdTGpK/W2yrvZ6Y987gB7JQCXFSzPvrKnpz9gHGatQlU22PB5ZXJGYD4N3DUdVek42AzU=
+ bh=QNlNpg50iKiheLNFo/BovJKJjmw6AU4ajBxkCclAMW4=;
+ b=DE+u5oNU5Dg0zCeBKGja3FnZG5jOa99UaEPkZOOWG2JXudc/+182CPvFvSAAfWlivtQmRA2WuaqY001hK6RT2ymz85cJjAadDYKk2xeHFq14gfRVmpyXNWCJFIdgfrP1PzVT+GdLtKKj+aFLFuIpu4R5o4pNTe9HfzxFKICm9rE=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from BL4PR12MB9482.namprd12.prod.outlook.com (2603:10b6:208:58d::19)
- by SA3PR12MB8021.namprd12.prod.outlook.com (2603:10b6:806:305::16) with
+ by DS2PR12MB9640.namprd12.prod.outlook.com (2603:10b6:8:27d::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.15; Fri, 31 Jul
- 2026 16:24:09 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.17; Fri, 31 Jul
+ 2026 16:33:16 +0000
 Received: from BL4PR12MB9482.namprd12.prod.outlook.com
  ([fe80::e4cf:3801:9631:2965]) by BL4PR12MB9482.namprd12.prod.outlook.com
  ([fe80::e4cf:3801:9631:2965%5]) with mapi id 15.21.0270.012; Fri, 31 Jul 2026
- 16:24:08 +0000
-Message-ID: <a80a43ce-a291-49f6-baf3-aa1340a3aca2@amd.com>
-Date: Fri, 31 Jul 2026 21:54:01 +0530
+ 16:33:16 +0000
+Message-ID: <d9ab60af-a46c-45e1-829f-72d6815f1946@amd.com>
+Date: Fri, 31 Jul 2026 22:03:10 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dmaengine: dw-edma: Make Xilinx Macros Dev Name
- Agnostic
+Subject: Re: [PATCH v2 2/3] dmaengine: dw-edma: Enable Chan Separation via
+ VSEC
 To: Frank Li <Frank.li@oss.nxp.com>
 Cc: mani@kernel.org, vkoul@kernel.org, frank.li@kernel.org,
  den@valinux.co.jp, dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
  linux-kernel@vger.kernel.org, michal.simek@amd.com, devverma@amd.com
 References: <20260728091744.1086942-1-devverma@amd.com>
- <20260728091744.1086942-2-devverma@amd.com> <amjLTTa-OYtjiP1W@SMW015318>
+ <20260728091744.1086942-3-devverma@amd.com> <amjLxoj9Ut84PDGJ@SMW015318>
+ <e3fa8833-ce85-41dd-8b07-97f85d20b97e@amd.com> <amzAhe-YbGECDCZT@SMW015318>
 Content-Language: en-US
 From: "Verma, Devendra" <devverma@amd.com>
-In-Reply-To: <amjLTTa-OYtjiP1W@SMW015318>
+In-Reply-To: <amzAhe-YbGECDCZT@SMW015318>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5P287CA0117.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1d0::9) To BL4PR12MB9482.namprd12.prod.outlook.com
+X-ClientProxiedBy: MA5P287CA0124.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d0::13) To BL4PR12MB9482.namprd12.prod.outlook.com
  (2603:10b6:208:58d::19)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -67,231 +68,216 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|SA3PR12MB8021:EE_
-X-MS-Office365-Filtering-Correlation-Id: a7027620-f417-44fa-bc99-08deef2025b9
+X-MS-TrafficTypeDiagnostic: BL4PR12MB9482:EE_|DS2PR12MB9640:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44e3d200-c968-47ae-c766-08deef216c65
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|4143699003|11063799006|56012099006|22082099003|18002099003|10067099003;
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|56012099006|22082099003|4143699003|11063799006|10067099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	oPUYYmxggaxLOWNMA9J5Z7rgMwdQYkzNZ/rQxCO9LuLMA1Jbp+pnuJciFsIkDC19fBi8PNJcqxGPh/sfaktOrPEW/INjwhI05plZ+AqPZGBvd9yEwRfwxjQkvnKv0fPmK08RYPIdPpRO7Ri2wFScwr49i7qab6rt0MlV0URHTT1hd3tsjJqwsG5jEXaiQRF12b8IEUffUgVzB/ayg8CPx4A+p6YFy+4A9H5yf7/cyDanGGNhFwUAGDefSp6SBryoIbg/iNE55h+COGvk+IkDjemD8lj3gEiPn1m+X2hQnVH+eqo3PNFChns9FFzpCWvoRawIWHGuk+ymhrWTrT3a+Cpxj34cGrtd011D1w1lMUBaPQRHJOKMXBfESK1i2nltdPZa9g+IavF0Ob/SC98J4Wowyjt/yhdt8fQ2vTqYtaQ9lTNGjayQkUbIDFhBJ7AezdDImull2FvuBhYv91HoRh7CuPOBmLOgOiZurbXIEkY1G4ruu0RLWtACMobC6lTu8TRTlgylGEkfA7Xk6HrRUmzcF1H1u/9tXEmHmdO3do5IilMzdNXOiqNvZeg/JImmKzTG/hqCyjBeZwaWNO2oVhdWBco+Q4ZU35uuQw/w1NRHUphDpHluURzKe9HuyF+pp1KjcjiaLYYjqldeQ7j1qZYfF6A2/o5N9R+oX7Sb6V0=
+	7Iuvq5rOChi+anv5TxZHwaJxZf8E5b9DquU0kKpJnYUVn9HH2H6Jv/2D89VeB2zGKo6D9S5o2vf60riRbd9QiX8ghR905gbR3PQguVI2YHmkD90i4Hxo57ho1FiwqrxkmL5ysehoLPiDR5tKTCQOuE8Q2BIOa5ZdL1aPa86rLukN7O5URXa0kCV5QvrIoPF3E2GCm3udREZ85AiVgHmayKAI9o1+pv2iNwhMRao7+wi7j115mJgkGQjuuvMFNmJLSEPsCwtw6T7QH37fWLB2vjcAx4gvkeCS0zOWTL0ijh/QVZKyIEDBs4vrTt6EaSDmENvTbpv0vQSlv1Rede6KXi86WUSroQoRRyWnpJnFES0GXd+KL12tB+uo8mXx2LuvTp10NwjRt521m7fSECYusbB3esM6MUTLcM8kFMNQMx0HRDHv/83U2hZ4O36REMKUuvcQll8o2g1H0GwiLu3NK37pEy62HvFd192hX7V6VWmHmwRo4pS4SLS1OOV++HeW9Pzb+ysP7ZLw4LCXulGqhvO8hDDQ9w+bmHxLk0h0RKphcYVrrGojZs7f7Dm+g8fuHHjG4AEO6ntIP9h4VdBd5ZIdJj+FpK8C1iZPoTTUmgA35xGsME2FyovYaQesRpkq
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(4143699003)(11063799006)(56012099006)(22082099003)(18002099003)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL4PR12MB9482.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(56012099006)(22082099003)(4143699003)(11063799006)(10067099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?czFLK3BCS1BmcEVRVHF0VlFxUEh6RXBkcWxDNXV2MlZzMlVlM2d2WW1BTnRC?=
- =?utf-8?B?cWExUzczNk8vVTFOSVJKeWYxSEd6RGFGUERUOWVTcy9FNVdpNVZGWVRpNk53?=
- =?utf-8?B?RytHSWhjWnE2UnhaUVk4SmNtZE1JZnhEUnZMekJlY0VkNmR3SGFPdGFiMXRO?=
- =?utf-8?B?dHVHb013cGF3Z284ZHNLVUNrK2hZY0w1TzYvNUFwU0RzTG1pNnoya2FBcHZT?=
- =?utf-8?B?cElxdjZySWo0SVEycXhwY1NyRDNlQ01YdFpianU3TEhmak9IdHVoTXFMbnhm?=
- =?utf-8?B?S05hdUowQ1BQVlY1QldYSUthNWZ6NmIwQ2g3eVJ6cnFQY1BqL0hGWExzNzZB?=
- =?utf-8?B?RWZkV002NndYdjlPL0xyTUhMaHlxWVRXQ2pxVWtGNWl4VlJ5ZzdGUVVWTDM3?=
- =?utf-8?B?SFYyRHRUV2JQc0JSbFFxZGZST1p4aDNxWUxsNUxoc2VFYUc4R1ZIUVIyOGNC?=
- =?utf-8?B?US9PbFVwc0ZYZXhCWHFxK3lnTFVINHhJMFpqcWQ5UnhQSktjUGMwSkN5Sm1r?=
- =?utf-8?B?WUtrWVB4K05OeGtnMDBVK1BwMVlkUUR2eVMvcDQ1SHlSbHBkYnRpcmN4Yk5a?=
- =?utf-8?B?V2Q3VzZTcmVlY2crU3Yxc3l0cmNhZFRBWXFDUExIWUdJQ1hVUklPd3FrSlJi?=
- =?utf-8?B?RE1wSEp4L2tRWkRvd2dmQWIxZUpFNDloaGVJcmpuKzFqTGNqeXlhTjd5YVph?=
- =?utf-8?B?N2hiakhZSUdncTM2S2s0bzl5UjFRVkg5dFpya0haKzhTUElBdG1aYldEVThT?=
- =?utf-8?B?aXFPNHhWNnBaVVU4NnVTY3EwdnNoOTZSODA1S25JS29nOTRxbWNlajFsTjF6?=
- =?utf-8?B?b1JhTFp5YW9MNnp5TW5xdzMzOUdNdWgwbDJ0azd6UW5GQkVMRTV2cTRTSTBy?=
- =?utf-8?B?T0J0VWQvODdWYitwL3J6Y0FOeTRHamxhbUpuRTV1NE8xc2lvZFJiMXdvdWJR?=
- =?utf-8?B?clNsY3hvdk9PR3pkWUJwUEtqOXowZHQyTjc2aUZLQnV6NlFFSldTZlNsa1ZQ?=
- =?utf-8?B?RVN0RUlJcDg1ZUZtNTNOMTFoZlZRb2ZaTzZWUzFHN0pSTUg1MzhZREtDNXZ5?=
- =?utf-8?B?UTFwNVN4TFNiMUZyK0xnamNHeVAxbyt1VUR4M3hzUE5jaEtTa25hVnVPQk92?=
- =?utf-8?B?Y1FrQm5zR3JuaVdhcnYxMlhkNFAyTkhtN0tmRXIxQ3BBQnhtMmJQd1pDbkRY?=
- =?utf-8?B?MjROZTg1cTFmMk5SdXQxejV4WUlBTkhHT1ZVMTJzY0ZUV3NnNkl5enQyTU9a?=
- =?utf-8?B?QUtJZXlETTlWeHhHVzMvRzdiVGpDZndtWXhreWZwOWNoRDdvZjVVQmp4MlVO?=
- =?utf-8?B?Y0wvUFZQWmNuUGFaOHk2L3l5dXlkUHFBcnIxZ2hUU05lVUs3V2tFZ0lwaVla?=
- =?utf-8?B?MC96ZFc3MFRwdzJRSVV4eGEzMmpCdnRkTmVSamNQcVZnaXdDMW9GYmFYVHFX?=
- =?utf-8?B?K0Y2NENrbGo1UGtHdlRTMG9tdUNjSmJWQkc2cUFrVlJyQ0Nna1FzblV5RDRB?=
- =?utf-8?B?TklGNUlzTVNPZm4zWHRLZHRjRHB4Yzl1KzdZTDRXc2NJWFpuaGF5QTRRRndj?=
- =?utf-8?B?UXp3QjhLVGp2S0VHRDE5aWROeGRSa1NKRTRrMDZBQS9KUGltOVdzLzkxZUlT?=
- =?utf-8?B?eFh5b29PaTF3MUtxeThFMUlKcWgxV2tpbUwxKzdhMFRzOC81aE1iQm4wT3A4?=
- =?utf-8?B?cmZGOEZqdlVIZGVHaW5leU1UN3MzUXkwcXpuZmtrSjByenhaTDZQcVROTmlU?=
- =?utf-8?B?Wnc3YmNPVXAzamZyK0Zucm5ycHhadStvWUhrdlNHTmM4SHZDZVFGRXU0NDBj?=
- =?utf-8?B?N282MFBlR0NBQ3BpT0d5N1dHeXBSQks2Ty9YMng2SFVLN0crbVU0aC9VVTNB?=
- =?utf-8?B?ZUt0d3VsVzh1NzhRbklqaGtxMThLS0xRL1JDTkFvWDQwZExVU1I3NVU3N3N3?=
- =?utf-8?B?THdZWjVlSG5ZZDdCeEdua01PbHM4YVgwbVZtN056bFJGSTljQWRYT2RWSXdH?=
- =?utf-8?B?Z1hldURwOFV5QkRqNk9sdVhTcmNwZkJpdGRzYTFxbkpIL1NzSWlsQjRuNTdQ?=
- =?utf-8?B?NWJYRWZpR3VUM3BJb2daU0tLWTBsR0dYZ1YyNVlnclZMRm5JdnRPa2NEMTE0?=
- =?utf-8?B?anZwSXhac0lTcjBxazIwVUc0bE1kcDlpb1hPUlMrTlpoMUMyTHpjUFh0dWxK?=
- =?utf-8?B?ZnFxSFdHazd2ZWN1NFEraEltSFA2ZGphNzYzV0JoTzBZUUJvbWl6dktjMWYr?=
- =?utf-8?B?YkNRdU9Ib3lBakprYU5ZdnRCN1I0THdaWWlDTmR2TUdtcTlaTU9lZ0JaUitE?=
- =?utf-8?B?dkxWWEVWdmJtWk9Iajh4d3VPOG1qaU5uaEJwbC9SNS9YMGg1NlUvUT09?=
+	=?utf-8?B?WllmdjR0ekI3LzFrZnVGMmEzc0J6RE5qbWhuRnBISXVKcWZTL283emN1RVh1?=
+ =?utf-8?B?MDBTUGxNWU9qNXd2NmpZQUgycnhLbkpINDYwM1labGZOL1NkcXF0MUx2VVNE?=
+ =?utf-8?B?RHhja3JIVURBbWUxZjlZcUZsWWJKeXlYZ1NHZ2dpVTlJRlV3QkRiblJLck9i?=
+ =?utf-8?B?b1dVbTBZRGd6cnhmWDdrMFB6NmN6QnRmdnpaZERmQ3oySmtjUzJabzc4b0th?=
+ =?utf-8?B?WHpMSUdRSnM2OGg5S2d5TlZ5RTdObzR2V1JIVUhROWo3WGc2a0t2K3VoeFdY?=
+ =?utf-8?B?WWtLSDBnNTJ4MVpVQ3pxUFBVSlBYTVBjYVU3c3lVWFB1ZVV2blplZUxDZXJX?=
+ =?utf-8?B?bWU0RzJ5dnFqZlEwUWVaZzJOYlRJV1c0NUxIazJRZWQyQUs0UVpIeUh6MFd3?=
+ =?utf-8?B?NHJVeUhYRm1BVWxkMFlrNldNaTVqeFY1ak14WFVvWTZGbllKOHAzQ214WjNw?=
+ =?utf-8?B?Tm1VMzVzWVZFdm8rejA4WUhjMFppcStIREpkVEU3bEVpSzk5N2NnMlhNaDdr?=
+ =?utf-8?B?TStqTUJFZ1NLajNGTlRaYmwvb1U0TXNKckpjcVBLREtGTlk5b3J4a2Zqenps?=
+ =?utf-8?B?N3ZLMlBTT3dzaU9TYTFPVTRqUEVsNjRMRXAxT1hhaTMzWkw3TVBtUVVxdlh6?=
+ =?utf-8?B?dHAreHY4NnA5Sis2eGFZSG9tdmNlTE9IU0taSVZJQy9mV0R0d0MzWUgzWWRk?=
+ =?utf-8?B?UlAxK0lDZmpGZlhIY3pwdGJsYkJ5bEk2RVNSVkxqWENjN09vc0IrRmd4NDM4?=
+ =?utf-8?B?YUk1Ykh3eVVrM0xsb3lhU1FvN3A0TzBjMC92SDJDOVJqa1RrOGoybE52bUI2?=
+ =?utf-8?B?YTVGODVpcWdxZlRyQk1NSGszeEZXVHg3eFNqK0QwL0YxZWp5NVhxZEEyTFpk?=
+ =?utf-8?B?L3lpR0RzSUlyak9vSXpFaVIvbkRWdDA5cjR3UjZScFFXN3IybGVvaDNpSTVo?=
+ =?utf-8?B?d1laNWRmekhNdzA0eVdMVnhJN3Y5azdETXB3VDcvNFZWT0tUSGJScWJQL3po?=
+ =?utf-8?B?UHpJV25DdkZmSmJtNDBpbWI2QVlpT2ttMmhMUUtnNEFDSGxoU2t5MXhhS0dK?=
+ =?utf-8?B?N0VTVmlBTmR1cHA0eWVSdzRuWmtZY3RNMllFV2NYTFJ2Sm5iL1MzTlplbzcw?=
+ =?utf-8?B?c0E3TEdBQW5GNXF6ZTVHM2xjcTUrNWhSc0k1aWhQR3VuM3puVlU5NCs4OW5N?=
+ =?utf-8?B?OS9yWFlFU3ZiVkxJalR3dGV4WFJRbG53Mm5naURoMHRoYkNyaThldmt0T2Zu?=
+ =?utf-8?B?T0xyT042M3paaUVsNmRuU01wdW1CK2RNQU5FNTRXVzBjZDdYN1lVUnRXMXZC?=
+ =?utf-8?B?T0RoL0N5TEJ6L2o5TDRaRjRGWk5uZzQzSlB2aVlpcU01NS9MUUZsMnBFOWpi?=
+ =?utf-8?B?b1BidldITzNJSTNtMjB2d2w3UENvUlZYY2k2TGZPdk5MbGVnQ2RLWkNHaHQ0?=
+ =?utf-8?B?OFE0VkFuZHlGNUMxTDR1anZxSkU1N1ZueE1ia2d0US9tdzhXMUpWaTBSdnJO?=
+ =?utf-8?B?eVBnR01OMFNWbXJJeDJwc3hGZUhEUkpRdW1RSUNkczhYVlJMUkNGSkNvcUxD?=
+ =?utf-8?B?RWhKTzZJRTEyQTdWaVh3bExnb0Eya1lGWHFlNWNMNXU1MmRzSUZNYUJidWl2?=
+ =?utf-8?B?dEZJNkN2VS95TW56MkthdDhqQmhmNWIwV2dhb1JtZ0daSkVUdGRvS3FqRWk1?=
+ =?utf-8?B?MXpoZHYyYW5mZ3VmS2xZczk4TDBTWjlJdEdrZktQUDhCYU5qUWQ1Zlp3ekUv?=
+ =?utf-8?B?ZkhkVEY2YXI0aTUvT045Mm1oV1MwUjFPZTBYZkR4UkxDNFMrSWp0dnYrRVVI?=
+ =?utf-8?B?Z2lvd1gvRE9Za2FMTUtMaHhTZ2VSaytFKzNkWEhaZk1wRVg0SWFLalNSMVkv?=
+ =?utf-8?B?UkRXa2E3WWdyZTdmd2lFL0hiMDJKS0ZOZG9TWkc2UU9JQU11QVVsekljMTRa?=
+ =?utf-8?B?T3BNdjFJeTdzNlJDbk1UTTJ3UWRtZHdoODlaV1JLK1V6eTVsVUF6NTNkYUhM?=
+ =?utf-8?B?VjQ4QzNwRzhzalhqSWV5emNzOXFQTzlORzNTZkJiR2lUMXovTHBSSWcza3Ru?=
+ =?utf-8?B?RVBvT3hqNEc5cjQ1RlhDaDhRRFFzRndpVlVoTVk1dkdOVk1ZYkNMZ29JOWw4?=
+ =?utf-8?B?KzlwRGZuc3g5aWJqUzVTQ08xNEMwd1VkNWVQSWpNQk1UYkNSbHp2Zng4dXYx?=
+ =?utf-8?B?WXJTcytUeUxpZVV0ZmYxMUFVS1VGbUUxY0h2cFBKdEdyQUU4ekFPa3lsTFlr?=
+ =?utf-8?B?Y2tCaGJhSkp2Z3dDVHR6cGcrQlZ4ZzhaNFBSa2Zsa0pLV2RMeTNxd3ZvajRC?=
+ =?utf-8?B?UHBJU0FDWGtES201Q1NIaVpmVXZvYnNPS1piNHM0aThmK2YrMmQvZz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a7027620-f417-44fa-bc99-08deef2025b9
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44e3d200-c968-47ae-c766-08deef216c65
 X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9482.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 16:24:08.7903
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2026 16:33:16.5675
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ndP0jOvj9FdO59ZJIoU28UTRIBsZYsi7CMA6ekJ+IZRbFvmJn7ZdhJ6BGKNvifQr0cHVPE8OIOKnTNVC3nglTA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8021
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0cjxIi8+8uRywba60x1UikIuu71BXaVabWH5ug4PCzwZMtqr0EHopAqQg1eXFzWmYx4WaGWZd6oYpkJYdxvTUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9640
 
-
-
-On 28-Jul-26 21:01, Frank Li wrote:
-> On Tue, Jul 28, 2026 at 02:47:42PM +0530, Devendra K Verma wrote:
->> Xilinx specific macros for MDB device can be reused for the
->> Xilinx supported other similar IP such as CPM6.
->> Renamed the Xilinx specific macros in a way that can be
->> reused for Xilinx supported upcoming IP, CPM6.
->> Naming is in accordance with the naming done for Synopsys macros.
+On 31-Jul-26 21:04, Frank Li wrote:
+> On Fri, Jul 31, 2026 at 04:22:22PM +0530, Verma, Devendra wrote:
 >>
->> Signed-off-by: Devendra K Verma <devverma@amd.com>
->> ---
->> Changes in v1:
->>     o No change
->> ---
->>   drivers/dma/dw-edma/dw-edma-pcie.c | 58 +++++++++++++++---------------
->>   1 file changed, 29 insertions(+), 29 deletions(-)
 >>
->> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
->> index 791c46e8ae4c..ec5e057a0f11 100644
->> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
->> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
->> @@ -29,21 +29,21 @@
->>   #define PCI_DEVICE_ID_XILINX_B054		0xb054
->>   #define PCI_DEVICE_ID_XILINX_B00F		0xb00f
+>> On 28-Jul-26 21:03, Frank Li wrote:
+>>> On Tue, Jul 28, 2026 at 02:47:43PM +0530, Devendra K Verma wrote:
+>>>> As per, 'Designware Cores PCI Express DM Controller - Reference
+>>>> Manual', section 3.2.34.3, VSEC for DEVICE INFORMATION supports
+>>>> the channel separation mechanisms. Basically, the HDMA IP allows
+>>>> the user to configure the separation between DMA channel
+>>>> registers and retrieve it via the VSEC capability mentioned
+>>>> above.
+>>>>
+>>>> HDMA IP supports the channel register space separation from
+>>>> 256B to 32KB. Default supported size is 256B.
+>>>>
+>>>> Signed-off-by: Devendra K Verma <devverma@amd.com>
+>>>> ---
+>>>> Changes in v1:
+>>>>      o Modified dw_edma_get_ch_sep_sz() as per review comment.
+>>>>        The function now supports ch_sep_sz up to 32KB.
+>>>>      o Updated to description to reflect the supported channel
+>>>>        separation sizes.
+>>>>      o Introduced the CPM6 specific macro for VSEC cap.
+>>>> ---
+>>>>    drivers/dma/dw-edma/dw-edma-pcie.c | 21 ++++++++++++++++++---
+>>>>    1 file changed, 18 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+>>>> index ec5e057a0f11..d0f209082878 100644
+>>>> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
+>>>> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+>>>> @@ -31,8 +31,11 @@
+>>>>
+>>>>    #define DW_PCIE_XILINX_VSEC_DMA_ID		0x6
+>>>>    #define DW_PCIE_XILINX_VSEC_ID			0x20
+>>>> -#define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
+>>>>    #define DW_PCIE_XILINX_VSEC_DMA_MAP		GENMASK(2, 0)
+>>>> +#define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
+>>>> +/* AMD CPM6 (Xilinx) supported cap */
+>>>> +#define DW_PCIE_XILINX_CPM6_VSEC_CH_SEP		GENMASK(18, 16)
+>>>> +
+>>>>    #define DW_PCIE_XILINX_VSEC_DMA_WR_CH		GENMASK(9, 0)
+>>>>    #define DW_PCIE_XILINX_VSEC_DMA_RD_CH		GENMASK(25, 16)
+>>>>
+>>>> @@ -73,6 +76,7 @@ struct dw_edma_pcie_data {
+>>>>    	u16				wr_ch_cnt;
+>>>>    	u16				rd_ch_cnt;
+>>>>    	u64				devmem_phys_off;
+>>>> +	u32				ch_sep_sz;
+>>>
+>>> ch_space_sz?
 >>
->> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_ID		0x6
->> -#define DW_PCIE_XILINX_MDB_VSEC_ID		0x20
->> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_BAR		GENMASK(10, 8)
->> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_MAP		GENMASK(2, 0)
->> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH	GENMASK(9, 0)
->> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH	GENMASK(25, 16)
->> -
->> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH	0xc
->> -#define DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW	0x8
->> -#define DW_PCIE_XILINX_MDB_INVALID_ADDR		(~0ULL)
->> -
->> -#define DW_PCIE_XILINX_MDB_LL_OFF_GAP		0x200000
->> -#define DW_PCIE_XILINX_MDB_LL_SIZE		0x800
->> -#define DW_PCIE_XILINX_MDB_DT_OFF_GAP		0x100000
->> -#define DW_PCIE_XILINX_MDB_DT_SIZE		0x800
->> +#define DW_PCIE_XILINX_VSEC_DMA_ID		0x6
->> +#define DW_PCIE_XILINX_VSEC_ID			0x20
->> +#define DW_PCIE_XILINX_VSEC_DMA_BAR		GENMASK(10, 8)
->> +#define DW_PCIE_XILINX_VSEC_DMA_MAP		GENMASK(2, 0)
->> +#define DW_PCIE_XILINX_VSEC_DMA_WR_CH		GENMASK(9, 0)
->> +#define DW_PCIE_XILINX_VSEC_DMA_RD_CH		GENMASK(25, 16)
+>> In the document, Designware Cores PCI Express controller Reference
+>> Manual, it widely referred as channel separation and ch_sep
 > 
-> v1, you agree keep use old MDB ?
+> which version? I only find "Register Wire Channel seperation" at 6.21a
+> Feb 2025.
 > 
 > Frank
-> 
 
-I followed the suggestion you provided at the given link at the end.
-Talking of Xilinx based devices, the channel separation is fixed for MDB
-but not for CPM6. So, I have have renamed the specific functionality
-specific to CPM6 in 2/3 of the same patch series.
+We have the reference from RM - 6.00a June 2022, following sections:
+- Table 1-4
+- Sec 3.2.34.3, Table 3-276 (VSECDMA_DEVICE_INFORMATION)
+refer to channel separation and describe for HDMA
 
-This one cleans up the MDB references and makes the functionality 
-generic for all the Xilinx devices.
-
-Suggestion: https://lore.kernel.org/all/amI09ZcfhX4SEPIH@SMW015318/
-
-CPM6 specific declaration:
-https://lore.kernel.org/all/20260728091744.1086942-3-devverma@amd.com/
-
-- Devendra
+-Devendra
 
 > 
->> +
->> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH	0xc
->> +#define DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW	0x8
->> +#define DW_PCIE_XILINX_INVALID_ADDR		(~0ULL)
->> +
->> +#define DW_PCIE_XILINX_LL_OFF_GAP		0x200000
->> +#define DW_PCIE_XILINX_LL_SIZE			0x800
->> +#define DW_PCIE_XILINX_DT_OFF_GAP		0x100000
->> +#define DW_PCIE_XILINX_DT_SIZE			0x800
+>> has been used so in order to keep the relevance with the document,
+>> I chose it to be ch_sep_sz. The other name used is chaddr_space but
+>> it is not used widely as the ch_sep.
+>> With your suggestion, it can be infered to be same but relevance with
+>> the document may not be established.
 >>
->>   #define DW_BLOCK(a, b, c) \
->>   	{ \
->> @@ -258,10 +258,10 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
->>   	u16 vsec;
->>   	u64 off;
+>> In the past, a similar discussion we had for choosing the non_ll
+>> naming and chose this as it mentioned and has relevance with the
+>> document.
 >>
->> -	pdata->devmem_phys_off = DW_PCIE_XILINX_MDB_INVALID_ADDR;
->> +	pdata->devmem_phys_off = DW_PCIE_XILINX_INVALID_ADDR;
+>> Reference
+>> https://lore.kernel.org/all/20251223162842.GA4022246@bhelgaas/
 >>
->>   	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
->> -					DW_PCIE_XILINX_MDB_VSEC_DMA_ID);
->> +					DW_PCIE_XILINX_VSEC_DMA_ID);
->>   	if (!vsec)
->>   		return;
+>>>
+>>>>    };
+>>>>
+>>>>    static const struct dw_edma_pcie_data snps_edda_data = {
+>>>> @@ -127,7 +131,7 @@ static const struct dw_edma_pcie_data xilinx_mdb_data = {
+>>>>    };
+>>>>
+>>>>    static const struct dw_edma_pcie_data xilinx_cpm6_dma_data = {
+>>>> -	/* MDB registers location */
+>>>> +	/* CPM6 registers location */
+>>>>    	.rg.bar				= BAR_0,
+>>>>    	.rg.off				= SZ_4K,	/*  4 Kbytes */
+>>>>    	.rg.sz				= SZ_8K,	/*  8 Kbytes */
+>>>> @@ -189,6 +193,13 @@ static int dw_edma_pcie_irq_vector(struct device *dev, unsigned int nr)
+>>>>    	return pci_irq_vector(to_pci_dev(dev), nr);
+>>>>    }
+>>>>
+>>>> +static u32 dw_edma_get_ch_sep_sz(u32 ch_sep_val)
+>>>> +{
+>>>> +	if (ch_sep_val > 0 && ch_sep_val <= 7)
+>>>> +		return 256 << ch_sep_val;
+>>>> +	return 256;
+>>>> +}
+>>>> +
+>>>>    static u64 dw_edma_pcie_address(struct device *dev, phys_addr_t cpu_addr)
+>>>>    {
+>>>>    	struct pci_dev *pdev = to_pci_dev(dev);
+>>>> @@ -279,6 +290,10 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>>>>    	pdata->mf = map;
+>>>>    	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_BAR, val);
+>>>>
+>>>> +	if (pdev->device == PCI_DEVICE_ID_XILINX_B00F)
+>>>> +		pdata->ch_sep_sz = dw_edma_get_ch_sep_sz(FIELD_GET(DW_PCIE_XILINX_CPM6_VSEC_CH_SEP,
+>>>> +								   val));
+>>>> +
+>>>>    	pci_read_config_dword(pdev, vsec + 0xc, &val);
+>>>>    	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
+>>>>    			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_WR_CH, val));
+>>>> @@ -324,9 +339,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+>>>>    	struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
+>>>>    	struct device *dev = &pdev->dev;
+>>>>    	struct dw_edma_chip *chip;
+>>>> +	bool non_ll = false;
+>>>>    	int err, nr_irqs;
+>>>>    	int i, mask;
+>>>> -	bool non_ll = false;
+>>>
+>>> unnecesary change
+>>>
+>>> Frank
 >>
->> @@ -272,18 +272,18 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
+>> Yes, it is an unncessary change. It was introduced by me in some patch
+>> series and wanted to maintain the revers x-mas order that's why posted
+>> it. The declration order looks in the patch after this change.
+>> Please suggest is it OK to include changes like this or it is kind of
+>> extra scrutiny for the reviewers? I will make the change accordingly
+>> in next patch.
 >>
->>   	pci_dbg(pdev, "Detected Xilinx PCIe Vendor-Specific Extended Capability DMA\n");
->>   	pci_read_config_dword(pdev, vsec + 0x8, &val);
->> -	map = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_MAP, val);
->> +	map = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_MAP, val);
->>   	if (map != EDMA_MF_HDMA_NATIVE)
->>   		return;
 >>
->>   	pdata->mf = map;
->> -	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_BAR, val);
->> +	pdata->rg.bar = FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_BAR, val);
->>
->>   	pci_read_config_dword(pdev, vsec + 0xc, &val);
->>   	pdata->wr_ch_cnt = min(pdata->wr_ch_cnt,
->> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH, val));
->> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_WR_CH, val));
->>   	pdata->rd_ch_cnt = min(pdata->rd_ch_cnt,
->> -			       FIELD_GET(DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH, val));
->> +			       FIELD_GET(DW_PCIE_XILINX_VSEC_DMA_RD_CH, val));
->>
->>   	pci_read_config_dword(pdev, vsec + 0x14, &val);
->>   	off = val;
->> @@ -293,16 +293,16 @@ static void dw_edma_pcie_get_xilinx_dma_data(struct pci_dev *pdev,
->>   	pdata->rg.off = off;
->>
->>   	vsec = pci_find_vsec_capability(pdev, PCI_VENDOR_ID_XILINX,
->> -					DW_PCIE_XILINX_MDB_VSEC_ID);
->> +					DW_PCIE_XILINX_VSEC_ID);
->>   	if (!vsec)
->>   		return;
->>
->>   	pci_read_config_dword(pdev,
->> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_HIGH,
->> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_HIGH,
->>   			      &val);
->>   	off = val;
->>   	pci_read_config_dword(pdev,
->> -			      vsec + DW_PCIE_XILINX_MDB_DEVMEM_OFF_REG_LOW,
->> +			      vsec + DW_PCIE_XILINX_DEVMEM_OFF_REG_LOW,
->>   			      &val);
->>   	off <<= 32;
->>   	off |= val;
->> @@ -360,7 +360,7 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->>   		 * address use the non-LL mode or simple mode supported by
->>   		 * the HDMA IP.
->>   		 */
->> -		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_MDB_INVALID_ADDR)
->> +		if (vsec_data->devmem_phys_off == DW_PCIE_XILINX_INVALID_ADDR)
->>   			non_ll = true;
->>
->>   		/*
->> @@ -370,10 +370,10 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
->>   		 */
->>   		if (!non_ll)
->>   			dw_edma_set_chan_region_offset(vsec_data, BAR_2, 0,
->> -						       DW_PCIE_XILINX_MDB_LL_OFF_GAP,
->> -						       DW_PCIE_XILINX_MDB_LL_SIZE,
->> -						       DW_PCIE_XILINX_MDB_DT_OFF_GAP,
->> -						       DW_PCIE_XILINX_MDB_DT_SIZE);
->> +						       DW_PCIE_XILINX_LL_OFF_GAP,
->> +						       DW_PCIE_XILINX_LL_SIZE,
->> +						       DW_PCIE_XILINX_DT_OFF_GAP,
->> +						       DW_PCIE_XILINX_DT_SIZE);
->>   	}
->>
->>   	/* Mapping PCI BAR regions */
->> --
->> 2.43.0
+>>>
+>>>>
+>>>>    	if (!pdata)
+>>>>    		return -ENODEV;
+>>>> --
+>>>> 2.43.0
+>>>>
 >>
 
