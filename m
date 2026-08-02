@@ -1,144 +1,138 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from chaosmail.tech (chaosmail.tech [77.81.229.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5522BD587;
-	Sun,  2 Aug 2026 08:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C97639446B;
+	Sun,  2 Aug 2026 09:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.81.229.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785660960; cv=none; b=dKavhWr2G6YCeLmw9RF/olc4MisLTMxYQzk5NfFJfPxsbfvFWaDWMZTiFc46IvQTH7ZhldLyprXdqacy+sS7eZyHPfpfNlqBmVOaCA3B2SSfb542U3RMe0AL51vd6YOA9oZKtnigRgWrxDpmUEPRh7gvsmuN1OSGWErAdAng6f4=
+	t=1785661417; cv=none; b=mRhyvP/cSBMJGjwLmgjkwfVmaAmfsuWLUO+mXIHSmJEnudYo2NiiLyrTG4VisEDr+Las92K5VSFUkkbvGxQTc9Hn54hQwhbsBhfjJ8EVhPL2sBGVGSgvxx4UAIgG/vqv3VwrakC8tcRc3yfG6TqnXa1tG4vDH39xul8jxeGEw+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785660960; c=relaxed/simple;
-	bh=9dHhpjjcsAjgUsmJSz1RZEy7xhFr7YN9m8sDKyrd4jQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T78+Yh0tOR4HOu0R9eCVy9/JQ7OyBFFw9gzSK36RMawtg/a14Og/eCmGVBgLtQVu7mNbZjBbzzTGZmiTe7uxxDirbVP+Kt+ZujFw5Znp7jdUh7AtEyHJgYSfmVB77NpI5cq60qeOdTPRgRRVAncmfUwFlXKSSoNkmK0M8SxXYNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net; spf=pass smtp.mailfrom=jannau.net; dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b=eStjXL4P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZFHg4QFO; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jannau.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jannau.net
+	s=arc-20240116; t=1785661417; c=relaxed/simple;
+	bh=tVFVxLd/XVzU836PdWgXeU6KVTWz9bou5XC4X2akdq8=;
+	h=Content-Type:MIME-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=gl+tsQkfcOq9nUMSmzwxsvKYd4DiYeyOarxvqqWpKJd+pCZMql2wGlihKqZEldqjPbKDM22DMFaeRJ0rn+6Rj0oeMgVKYBknBQ8jvgjGhpU0LovKNTGDVDTnU0o2Qm/KjIbYqlkWXspEeZ+AuL5ZESu9zFTvEQedgLAk3gyoEPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech; spf=pass smtp.mailfrom=chaosmail.tech; dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b=BXWbBUiE; arc=none smtp.client-ip=77.81.229.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chaosmail.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jannau.net header.i=@jannau.net header.b="eStjXL4P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZFHg4QFO"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 46C58EC0179;
-	Sun,  2 Aug 2026 04:55:58 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Sun, 02 Aug 2026 04:55:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jannau.net; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1785660958; x=1785747358; bh=oTSgntEhSg
-	WsAAYTp6KD100cEZiwqoxJhz3o992eaLA=; b=eStjXL4Ps9CwOfzPE0Cg4cAm+k
-	ZL4oucqFhr4yHuu+bJn9QCjCByLL3F67HAHcsNnCPsLFhY1GhaV5MhRvBSInF7KQ
-	M4G/wlwsKQKgVjUNjgkXHFElbm2Y1g6Ev/ROZopQ7G4SSloun7Uu/cl86H4Q+3rf
-	dnRcHO0eGX+RQfUXQ91L+y8SZCkLWEP4RSaLGe/suxLniANPl+0CLzaOiksnPY0o
-	2OLto02BaiXeIgKREqgoUlAERk+X+l7mROdLHHXV9JE0F1jhV40Zyj/PqBNo+95P
-	BWsauUF0H41Kr/RZCZfD9a+M9oM3D5Keje7gNCnxHvckcFHVqDBKZhdPpxnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1785660958; x=1785747358; bh=oTSgntEhSgWsAAYTp6KD100cEZiwqoxJhz3
-	o992eaLA=; b=ZFHg4QFO9YMdD0bMP9A4rC2hyuY9O9GSeSJJinWzKVEhcGeFDWO
-	CqCvx2Tpy6ueH1fwKzePO2ZzF8mOcQJzx32vAKIeYRSeRblnf8dQqlHMSuCH19nV
-	Dn/068PkE2xaKhtEalaRCE8UDDI39/tLeJWJ7FS2B9dsSusuNyacFZxeqz/+ldi8
-	7SVDaK61d3JP2ys0142740zzgxIApdZeV4bY5B5NfKqrhtTLdqNiJ6dGz/XJYSHs
-	D2jmD8tDG5IZDJ9W1P/xY84vBNYTUihCfuCxbjmgTG8vjVcU1B5ZDPmBp9LASljF
-	IRoFIYGzYi7J0v88NVY/sMx50K1u7RnWimg==
-X-ME-Sender: <xms:HQZvarfGsZikdqHgFwp3sXKknf82en-LXoQro9Qoi6aAt27Y2CqsQA>
-    <xme:HQZvatCltEvSHQGqqLtzcJTCnhp7jv__cV7JBGRbrKS0XOb8rAwuKXkinvDoqH0UK
-    G5O5Loc93UGWgo1CecUlvH_nCUMCC3PwkpaVS8sZg0zPJ6XVW5aVA>
-X-ME-Received: <xmr:HQZvaq-dCuDmV1uw6rAdy3qM0E94sdZMMgtG4CRbM6plxVHuNbHQ0q0NUelTfBCjrelr3q0MyIjOwsjNEQX5O9pQl4dXAHPqR50>
-X-ME-Proxy-Cause: dmFkZTG1UE0N2DlUNxsWY7EVfblw8xV1Uq53IGZDVc5JfJgYvhuiA4K+Wbd9VzYSvAY4H2
-    ZdlRzurNW+y/PNikHFY+9wr9wz95bHx/8tG0mlHcYx9HhDhB0h0OEMF2NWcKgE+63h932Z
-    g+FwQvLym/t/+tZaThPh0W/+vydnAL15XYn3Xoj7KugiCjjw822xnY2dr8pLuU8GzIc0N1
-    YA9AQ/SUUDMes4tmHsDJzp/3+DKKO6017of3tv9XnPRqmaVw4tbwSbh3txUvzVID3LCin5
-    hDXyqDoDo+F5qtLhYWjNSc+QFqwBvA+j1E8UC1ulSvHSa9SqhmFTiU7VGYUTpVdVZiwgEn
-    IizRTIED8XjJvWFRzJ3ejmiXtgo80umPfmgqyA6vNWC8YXOqoece4mLSdGrjxzkKEMDCH6
-    W0nGCoy0sWaOe4A4lbf9K1TFlZtT/6RAFnwNgnERErKgB+KBe4x1FQNLm4bZqZMCVOCOpn
-    S8hzoz1f/bRjsfdK2HsPF38lWrbIFFjpzT58DbVFcMFYL//2z+pGG4Aqb6HVbP69fXKugU
-    BnboKr/MNmHzO4yJTHLy0pdBUevcBcrJI70+Y+e19QWPWu3VLvLUMV0QI0tvNVnZNJ+yR1
-    A1KmT7E+zvSZ96HNT6TvQMGznzpvHzZpQLrssrkUF+d/DXMBQEG8VGEre3fA
-X-ME-Proxy: <xmx:HQZvappir6G_xhskWkkT1ntOVvLWsCwnipsPZe7ffIe2YGVFuQbtww>
-    <xmx:HQZvasHK5Q_KTC1tb89MuQrjetE_nbjk0F5utGjWfpOodMA49Xc8HA>
-    <xmx:HQZval8q0OF52NRhlAhoSDb2i-mr2NIINih_Y-EnV4dLnH_AVltduA>
-    <xmx:HQZvahQ02fOYUGS4P_fmZ3AYz1tlHpVtzSsSI_RVCJRH5J51FAGD9A>
-    <xmx:HgZvaluKvcgiE3CwLEOLNVWrK3lc84y8jkCIryJ3nBqPwoAmdaQctb4v>
-Feedback-ID: i47b949f6:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Aug 2026 04:55:57 -0400 (EDT)
-Date: Sun, 2 Aug 2026 10:55:56 +0200
-From: Janne Grunau <j@jannau.net>
-To: Sasha Finkelstein <k@chaosmail.tech>
-Cc: Sven Peter <sven@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Martin =?utf-8?Q?Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Joshua Peisach <jpeisach@ubuntu.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: dma: apple,admac: Add M3 generation
- ADMACs
-Message-ID: <20260802085556.GB806854@robin.jannau.net>
-References: <20260729-t603x-admac-v2-0-e4b2bb6ca45e@chaosmail.tech>
- <20260729-t603x-admac-v2-1-e4b2bb6ca45e@chaosmail.tech>
+	dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b="BXWbBUiE"
+Received: by chaosmail.tech (Postfix) id EDFEB1C878A;
+	Sun, 02 Aug 2026 09:03:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chaosmail.tech;
+	s=mail; t=1785661409;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=85mK8UDi7QBt5jRlKz/7QZeVLFWA6U447/S6wVm/foA=;
+	b=BXWbBUiEb3uVA/1XQUswnLyz+0300SrCRvxedsG2jqHRPfNKGH3RtC3U4RrlCRfdgtDObe
+	HxLo2fxifS0FpMNW51EhEHAkR0LHcXJFkL22Fw4/CBDkC50tGjGtObdLC9sNxtywpEUW/w
+	vskDobfKQ370LfOaAEcM89eOmhYnXuY=
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260729-t603x-admac-v2-1-e4b2bb6ca45e@chaosmail.tech>
+Subject: Re: [PATCH v2 2/2] dmaengine: apple-admac: Add M3 generation ADMACs
+From: Sasha Finkelstein <k@chaosmail.tech>
+In-Reply-To: <20260802085437.GA806854@robin.jannau.net>
+Date: Sun, 2 Aug 2026 11:03:18 +0200
+Cc: Sven Peter <sven@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ =?utf-8?Q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>,
+ asahi@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org,
+ dmaengine@vger.kernel.org,
+ devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <6AC365D2-475C-4DE4-BDFC-C31923A121B6@chaosmail.tech>
+References: <20260729-t603x-admac-v2-0-e4b2bb6ca45e@chaosmail.tech>
+ <20260729-t603x-admac-v2-2-e4b2bb6ca45e@chaosmail.tech>
+ <20260802085437.GA806854@robin.jannau.net>
+To: Janne Grunau <j@jannau.net>
 
-On Wed, Jul 29, 2026 at 01:46:34PM +0200, Sasha Finkelstein wrote:
-> The admacs seen in M3-generation SoCs (t603x, t8122) need additional
-> configuration writes and so are getting a new compatible chain.
+On Aug 2, 2026, at 10:54, Janne Grunau <j@jannau.net> wrote:
 > 
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
-> Reviewed-by: Joshua Peisach <jpeisach@ubuntu.com>
-> Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
-> ---
->  Documentation/devicetree/bindings/dma/apple,admac.yaml | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+> On Wed, Jul 29, 2026 at 01:46:35PM +0200, Sasha Finkelstein wrote:
+>> The admacs present on t8122 and t603x SoCs need additional writes in
+>> order to operate correctly. The exact purpose of this register
+>> is unknown
+>> 
+>> Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
+>> ---
+>> drivers/dma/apple-admac.c | 32 ++++++++++++++++++++++++++++++--
+>> 1 file changed, 30 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
+>> index 14a5ee14a481..72ff677c8ce5 100644
+>> --- a/drivers/dma/apple-admac.c
+>> +++ b/drivers/dma/apple-admac.c
+>> @@ -39,10 +39,14 @@
+>> 
+>> #define FLAG_DESC_NOTIFY BIT(16)
+>> 
+>> +#define T8122_UNK_28_VAL 0x200000
 > 
-> diff --git a/Documentation/devicetree/bindings/dma/apple,admac.yaml b/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> index 6a200cbd7d02..5b4fd8348f99 100644
-> --- a/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> +++ b/Documentation/devicetree/bindings/dma/apple,admac.yaml
-> @@ -10,7 +10,7 @@ description: |
->    Apple's Audio DMA Controller (ADMAC) is used to fetch and store audio samples
->    on SoCs from the "Apple Silicon" family.
->  
-> -  The controller has been seen with up to 24 channels. Even-numbered channels
-> +  The controller has been seen with up to 32 channels. Even-numbered channels
->    are TX-only, odd-numbered are RX-only. Individual channels are coupled to
->    fixed device endpoints.
->  
-> @@ -33,6 +33,12 @@ properties:
->                - apple,t8103-admac
->                - apple,t8112-admac
->            - const: apple,admac
-> +      - items:
-> +          - enum:
-> +              - apple,t6030-admac
-> +              - apple,t6031-admac
-> +          - const: apple,t8122-admac
-> +      - const: apple,t8122-admac
->  
->    reg:
->      maxItems: 1
-> @@ -43,7 +49,7 @@ properties:
->        Clients specify a single cell with channel number.
->  
->    dma-channels:
-> -    maximum: 24
-> +    maximum: 32
->  
->    interrupts:
->      minItems: 4
+> maybe BIT(21)
 
-Reviewed-by: Janne Grunau <j@jannau.net>
+Probably not, this is not in any way related to channel 21. I suspect
+but can't confirm that this is rather an address.
 
-Janne
+> 
+>> #define REG_TX_START 0x0000
+>> #define REG_TX_STOP 0x0004
+>> #define REG_RX_START 0x0008
+>> #define REG_RX_STOP 0x000c
+>> +#define REG_UNK_28 0x0028
+>> +#define REG_UNK_2C 0x002c
+>> #define REG_IMPRINT 0x0090
+>> #define REG_TX_SRAM_SIZE 0x0094
+>> #define REG_RX_SRAM_SIZE 0x0098
+>> @@ -127,6 +131,7 @@ struct admac_data {
+>> struct mutex cache_alloc_lock;
+>> struct admac_sram txcache, rxcache;
+>> 
+>> + bool set_unk28;
+>> int irq;
+>> int irq_index;
+>> int nchannels;
+>> @@ -147,6 +152,10 @@ struct admac_tx {
+>> struct list_head node;
+>> };
+>> 
+>> +struct admac_hw {
+>> + bool set_unk28;
+>> +};
+>> +
+>> static int admac_alloc_sram_carveout(struct admac_data *ad,
+>>      enum dma_transfer_direction dir,
+>>      u32 *out)
+>> @@ -747,6 +756,11 @@ static int admac_device_config(struct dma_chan *chan,
+>> u32 bus_width = readl_relaxed(ad->base + REG_BUS_WIDTH(adchan->no)) &
+>> ~(BUS_WIDTH_WORD_SIZE | BUS_WIDTH_FRAME_SIZE);
+>> 
+>> + if (ad->set_unk28) {
+>> + writel_relaxed(T8122_UNK_28_VAL, ad->base + REG_UNK_28);
+>> + writel_relaxed(T8122_UNK_28_VAL, ad->base + REG_UNK_2C);
+>> + }
+> 
+> can this be done in probe? This writes the same value for every channel
+> without obvious way how the bit in those two registers can reset? If it
+> needs to be done here a comment explaining why would be useful.
+
+Those are getting reset. The AOP-attached ADMAC has it's power
+controlled by the AOP firmware, so I can't even touch any registers
+in probe, as the hw is off at that point and will SError at us.
+device_config is the earliest point when the ADMAC is powered on. There
+is an explanation of this setup in the commit history for this file.
+(8d55e8a16f019211163f1180fd9f9fbe05901900)
+
+
