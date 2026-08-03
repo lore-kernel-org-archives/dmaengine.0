@@ -1,78 +1,77 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CDD4052A7
-	for <dmaengine@vger.kernel.org>; Mon,  3 Aug 2026 12:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4A13932D8
+	for <dmaengine@vger.kernel.org>; Mon,  3 Aug 2026 12:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785760449; cv=none; b=nmCowja6Q7Mjiykb5mBQfmErvyGK5gUDWWFjNVQKnFlEQzefdgKg53RWONw5zdcz6uI3uEWL6qxc0O9yrDJL7oonGbmz4GWwmy5IrDRlOMmPVIVqmsn1e5yXvpRh0npovym3UX+Xrq9OAru+DnmjkUnGpeH7CjO6DYfaF+MbqLQ=
+	t=1785760660; cv=none; b=NB8Nnd8NLkKycFQ1Kc5tALg+R0X0neOmYe9G/dHz8RV+SL5QDLzb96ip6wl1bx47ZIfsvypzjD0mxWzdMapzWxvm6JYaBHQzxFpG6wUt6h0DnRiLgB0JErnblRX9LPeqrgbTX1j218UH0lVqwuxonnCwovu6EfdabUm0z4DKxy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785760449; c=relaxed/simple;
-	bh=AXct+peyhGQRc2kaBjGP1yN0sVFdplmAYVc/6HFqGmo=;
+	s=arc-20240116; t=1785760660; c=relaxed/simple;
+	bh=fGJPO+nSLHdUlfO8yRis7kZEX21FJFWb5OOt1voCBVc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sXdbj5K0Csu53v7dZ8wPxCJ52SGxZpFfl6+uzDEYw7AsHQyPXVxCzqI9nV9To+IK+C1+O/e5WQVZYQaLcrKDrU5yoyZfj7kWLR7E/nLE7BbDFufdh/xSpr9HxaAq6rDfWY6mJSfexthPiMOUFfCsxboRFSrtPrl10WC3T0bpj48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l31AYpsZ; arc=none smtp.client-ip=209.85.128.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=Blojhlwg9jzlYbHN8fDRIl02TgZnVZOxU0VvbG6MMKRzia2BsTi53R6sSQ0IsGzE4c5SWsfh334hfhxGx3+tKur6gcAc4MjVUVC/Ui3cSw9hjM3z4he+7f4JlQiX1DM+TrsmPrUfpMkjYbbAj2/PrlxA9N+03WGVV29PmvZccx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcsRTKaa; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l31AYpsZ"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4953e04ef16so21006155e9.2
-        for <dmaengine@vger.kernel.org>; Mon, 03 Aug 2026 05:34:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcsRTKaa"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-49555a0e68bso9643275e9.2
+        for <dmaengine@vger.kernel.org>; Mon, 03 Aug 2026 05:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785760446; x=1786365246; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1785760657; x=1786365457; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=9WqscRAKEYBt39skofdEcGtg2VLcJdEYES+naCN0pIA=;
-        b=l31AYpsZ/s0Nu5DXh2RzkOmGJhuy3lHKGRnF9JCBmckM/YFqSIbU16GZT70ySInYwN
-         SjK+Ideerp1pR4G7hYxCQmqtKIXiVRtvOOgQREdewNPi6mrRlOX5PNZYZRPRVRVSacB1
-         3P9cQH4joYSHPoxmfxRFUIzK+Hwh8Y88Q23BlwKy4IjhGAVsGoGlDJ88p+HWrwKSkBMu
-         QYECWlPny4WR07c+6tq8SAyynDZXwl9/kixmAl0slUx7rQKeRYVn0z8GTXnw1Cy1eZ3g
-         8FdV7R2j6NSQlCNn3OmtJuBVM+rj+eIHlYnBwGgP76JYu8in3ogqbBD2NsA9H6Alv5JF
-         JDzQ==
+        bh=7CcwBSNwXNz53utbquU56tNtJiKq6TMRrnU9O5srMNU=;
+        b=IcsRTKaaKhFyjD2N6d2aAvBOKF9xuSd6jJZHUdR/WZF+knXbtHRSA01YMxYbz4X55A
+         +Zu1DNk7/BGaXco8wMPl9eTdzXv8JcTniasEfLvqQjyYbLiCGivJOhrCdt1Xiw+fcBWn
+         pGVSjpCs/ZhN5R5xLhWIhrulWHMfLqxc/IgaYaS/Z851zTPbRe6a0LnbI4L8v1KYLrAc
+         jWTmWF+5MKcL663/60+HePuwxGcKloJT+MpVxHy+mRd6PSv9k68j/QcdLI7nHfif913s
+         7SH0VLQbcVr15BJ72PYtiGJVRqiHz0TFmnrKQZAkeTzpzsL9MZHKxWYYGTZTUCatgBTr
+         31WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785760446; x=1786365246;
+        d=1e100.net; s=20251104; t=1785760657; x=1786365457;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=9WqscRAKEYBt39skofdEcGtg2VLcJdEYES+naCN0pIA=;
-        b=N5Ii75MVpWlL3FNszAyMOkuTTpUYK0XTcdCHcE+qEdVlF8edwCSo8696H6wjgxflTo
-         Khtho0WDHDCr03j4xT47Nfzy0YZkqbvwJpXS3I2gSDeTYHWu8OYzo31IBvLcbW0VNLIM
-         XOp8ZaRYbCUmTXNxH7tqPChW54JSmH1MXe96y6aA7BwwiD8OI+bOty/7S1tw4b+BygtQ
-         oi2kGPd1iiJMdZqmf4MiJLGKH85Zlfi8OQODsmSTtSsDxOMo5wpEg6K4LRgEXopcOpKX
-         XDwUzk6LeerX6u0zujSeKsAlpcQRCJ7SCiJBJYsr62+ERDrUL8P1C+BMaxaE9Wg/XLPp
-         yntQ==
-X-Forwarded-Encrypted: i=1; AHgh+RrR8RO3qYlWZxPIVbNugZxcXrl+Ik/nRfHJ8GfJu3o/EhqPcDLb9pxNx/UW+G7/mEndNiA4MVcnCow=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYxYxpYA8iSDLsKVlK7nuje8R7SsswXM0ovZ+GLlCW6jC3oMHb
-	N6o5b6eTF6lPd+sIsX2AdfeRPUfCzD/Fcm24raFxiGxhTF2g+34itxNN
-X-Gm-Gg: AR+sD11+Bdagf0yPKNfNgRziOy/H4MNEeY0hn2WHx852DnKyaD2BkvN1HS6H48TmIvq
-	PUR0/06rgLRTL+Tk0oxYDLRekyA0f/tWBo3NNO9juMJ+68vvCcVozEtzBOIlId0FU1cHgmwPKWe
-	nwGpkPixGSA7e5DSib8wqV/ZXim5poklreRFtKbYgx93pa3eAI89NY3h3DLUNs98fqMujWd5jVY
-	E4oqKUTFtxFidxIqOH3hh9EW7a1XAKeXd3iRgM19s60XpMIhmrrhBmca9HLKvR9DEWNS/s5EGtY
-	WXTV06ZDki6Hy5r/qO3EXaFcPorssA/JScfwFNGSNc9zvudOyspE/czMooYDjmRV6OncPyhKoCY
-	mJD41aXEbCJnENsrJQytvFs7SLel62tzgVrXOP5eKNotBFchZSa/amTsx+NQMpZ6ejGJE7qskZ/
-	veTdydP0D/bCx8otlsLBuXkLmeEjYF9OAHRVs9La9t85oxCC51p2A+
-X-Received: by 2002:a05:600c:e48a:b0:493:c337:db0e with SMTP id 5b1f17b1804b1-4980c69628fmr149527095e9.18.1785760446196;
-        Mon, 03 Aug 2026 05:34:06 -0700 (PDT)
+        bh=7CcwBSNwXNz53utbquU56tNtJiKq6TMRrnU9O5srMNU=;
+        b=Dbx3oYPwQqlrc3HMPSYuQsfyiue9qSFqd5tYBBvYcNLGifLN8X4JCJ/FrhbKG4Yztd
+         MUmx4PqFgTns2wLFW56fs7BoVOP4wR0AXECUCYrtG0ghy3vMVgXW3nBwxMZV2ldw85jX
+         QLIXrJEtjRt0ybXSlQ04PzkEZnUmlU4BHkzD4/m+jMcHsJc9DyhnWxnrDoi59SlsvnGu
+         vCpNA1fJ9b+M5OWopLBsfX2f7LogE/QHutSgh++VRHKw5wnUPliZivOYd2d9HSch+LiS
+         6oRGezTO5DNhOl1bJAjTS88R6iSUGElClh4+PAfwebOhqcCmzy9VDyQL9+VbXgHwIy8Q
+         spPw==
+X-Forwarded-Encrypted: i=1; AHgh+RquPoHePsem8TFN5j4uSVxgt/XbeQ5JF4W5iV0XIMXczdvFqphpT4lmj82M32eb5i0vraCFoKyxws8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxb9L5PNdp/lrwx0tE0rqo9fVkP39jrsFzx6SHXelFoCdVBStjw
+	GBwY68BmCvD0kyqsao+DU+bt8XMCAZ1Q+NzipU1JJUyT9iRudouwGkWD
+X-Gm-Gg: AR+sD12M0RNoV8Da3ZQ6qa0gLHseN0zefncsxje2ffQS0X00zA/vjGq5eXDV4yiP+LX
+	l8558xoV+AQIfaPTmC8AHF1vtIrZ/ARnxf86uG6O3j1H0D6+/iOFsYzw6I5YcCgDyWrxiIjhwuB
+	ToD3WWQdGBT93peTNMAlRQojxzx8dZEvfk+5fyuigbL9j42NQhksZK1HVxM2VoJoGuihhvRmXTl
+	/D5eZdtqtYNnmT1TAbZF2+On/i8112SCb8X/AUergRzxERZ4//pPWV/3c8wTPMj+b6k+GCV4GQO
+	C1JAxC7KC9XU13kuk5QYepGqjy5VcAbbSTCRlAcWl/1ossZ+fZScsj2YuOAhq17KosQkjtmiApC
+	/GoMJOISyjAs5oqciu/JI4o1eOX+cLP9RTOcmrfgdr4shQQFqAfxPXEu9Qi3EYe+f2VRBtyleFR
+	qrSNQKEE5PKyp0sLNQi3huOM52Yfis5WBdgR0FHJ/BDzOTr8iJtz2s
+X-Received: by 2002:a05:600c:871a:b0:498:952:e276 with SMTP id 5b1f17b1804b1-4980c66c991mr261324315e9.8.1785760656734;
+        Mon, 03 Aug 2026 05:37:36 -0700 (PDT)
 Received: from nsa ([148.63.225.166])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b59a33sm228843055e9.1.2026.08.03.05.34.05
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49807b21e66sm203681365e9.0.2026.08.03.05.37.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 05:34:05 -0700 (PDT)
-Date: Mon, 3 Aug 2026 13:35:15 +0100
+        Mon, 03 Aug 2026 05:37:36 -0700 (PDT)
+Date: Mon, 3 Aug 2026 13:38:46 +0100
 From: Nuno =?utf-8?B?U8Oh?= <noname.nuno@gmail.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: Frank Li <Frank.li@oss.nxp.com>, nuno.sa@analog.com, 
-	dmaengine@vger.kernel.org, linux-iio@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: nuno.sa@analog.com, dmaengine@vger.kernel.org, 
+	linux-iio@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Lars-Peter Clausen <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, 
 	David Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>
-Subject: Re: [PATCH 1/9] dmaengine: Support bus widths of 32 bytes and above
-Message-ID: <anCJ_mM_eygMn9ho@nsa>
+Subject: Re: [PATCH 9/9] dmaengine: Drop legacy bus width fields from
+ dma_slave_caps
+Message-ID: <anCLovMjz14Zxyup@nsa>
 References: <20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca@analog.com>
- <20260730-dmaengine-support-wider-dma-masks-v1-1-3732f1f9d9ca@analog.com>
- <amujDsVXJQ8gaCvw@SMW015318>
- <20260801034222.45d4d479@jic23-huawei>
- <20260801034617.5dab3286@jic23-huawei>
+ <20260730-dmaengine-support-wider-dma-masks-v1-9-3732f1f9d9ca@analog.com>
+ <amunW2XsMCC3GmeK@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -82,62 +81,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260801034617.5dab3286@jic23-huawei>
+In-Reply-To: <amunW2XsMCC3GmeK@SMW015318>
 
-On Sat, Aug 01, 2026 at 03:46:17AM +0100, Jonathan Cameron wrote:
-> On Sat, 1 Aug 2026 03:42:22 +0100
-> Jonathan Cameron <jic23@kernel.org> wrote:
+On Thu, Jul 30, 2026 at 02:34:51PM -0500, Frank Li wrote:
+> On Thu, Jul 30, 2026 at 03:23:16PM +0100, Nuno Sá via B4 Relay wrote:
+> > [You don't often get email from devnull+nuno.sa.analog.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> >
+> > From: Nuno Sá <nuno.sa@analog.com>
+> >
+> > All users of dma_get_slave_caps() that inspect bus width capabilities
+> > now use bitmap helpers.
+> >
+> > Remove the legacy fields from struct dma_slave_caps and stop copying the
+> > dma_device legacy masks into them.
+> >
+> > Keep folding legacy dma_device masks into the returned bitmaps so
+> > unconverted DMA controller producers continue to work during the
+> > transition.
 > 
-> > On Thu, 30 Jul 2026 14:16:30 -0500
-> > Frank Li <Frank.li@oss.nxp.com> wrote:
-> > 
-> > > On Thu, Jul 30, 2026 at 03:23:08PM +0100, Nuno Sá via B4 Relay wrote:  
-> > > > [You don't often get email from devnull+nuno.sa.analog.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> > > >
-> > > > From: Nuno Sá <nuno.sa@analog.com>
-> > > >
-> > > > The src_addr_widths and dst_addr_widths capability masks encode each
-> > > > supported width as a bit whose position equals the corresponding
-> > > > enum dma_slave_buswidth value (e.g. DMA_SLAVE_BUSWIDTH_4_BYTES sets bit
-> > > > 4). As these masks are plain u32, widths of 32 bytes and above
-> > > > (DMA_SLAVE_BUSWIDTH_32/64/128_BYTES map to bits 32, 64 and 128) cannot
-> > > > be represented at all.
-> > > >
-> > > > Introduce bitmap-based bus width capabilities that span the full enum
-> > > > range. To allow DMA controller producers to be converted incrementally,
-> > > > keep the legacy dma_device u32 fields alongside the new bitmaps:
-> > > > producers using the new helpers populate the bitmap and mirror the low
-> > > > 32 bits back into the legacy field, while dma_get_slave_caps() folds a
-> > > > legacy-only producer's u32 into the returned bitmap.
-> > > >
-> > > > Add helpers for producers and consumers so users do not need to depend
-> > > > on the bitmap layout directly. Once the remaining producers are
-> > > > converted, the legacy dma_device u32 fields can be dropped.
-> > > >
-> > > > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-> > > > ---    
-> > > 
-> > > Reviewed-by: Frank Li <Frank.Li@nxp.com>  
-> > https://sashiko.dev/#/patchset/20260730-dmaengine-support-wider-dma-masks-v1-0-3732f1f9d9ca%40analog.com 
-> > has a comment on this that smells plausible at least.
-> > Looks like the stm32 driver modifies dst_bus_widths in it's device_caps()
-> > callback.
-> Reading on, you fix it later in series.
-> 
-> This is going to break bisection on that device, but not build
-> so I guess maybe fair enough to do it in this sequence.
+> which one you kept?
 
-This is a bit tricky (with trying to keep things compatible throughout
-the transition). But I think it should be fine because the current patch
-keeps (or at least tries) the old addr_masks and even we then update the
-stm controller we also act on both the new and old variables (so
-consumers still work).
+The one in
+
+https://elixir.bootlin.com/linux/v7.1.5/source/include/linux/dmaengine.h#L890
+
+given that we need to update all controllers in drivers/dma before we
+can get rid of them. I guess I need better working in the commit
+message?
 
 - Nuno Sá
 
 > 
-> J
-> > 
-> > Jonathan
-> > 
+> Frank
 > 
+> >
+> > Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+> > ---
+> >  drivers/dma/dmaengine.c   |  2 --
+> >  include/linux/dmaengine.h | 16 ++--------------
+> >  2 files changed, 2 insertions(+), 16 deletions(-)
+> >
+> > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> > index 7be23ba769d0..ee0b8bfc7c97 100644
+> > --- a/drivers/dma/dmaengine.c
+> > +++ b/drivers/dma/dmaengine.c
+> > @@ -592,7 +592,6 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+> >         if (!device->directions)
+> >                 return -ENXIO;
+> >
+> > -       caps->src_addr_widths = device->src_addr_widths;
+> >         if (bitmap_empty(device->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX)) {
+> >                 bitmap_zero(caps->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
+> >                 bitmap_from_arr32(caps->src_bus_widths,
+> > @@ -602,7 +601,6 @@ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps)
+> >                             DMA_SLAVE_BUSWIDTH_MAX);
+> >         }
+> >
+> > -       caps->dst_addr_widths = device->dst_addr_widths;
+> >         if (bitmap_empty(device->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX)) {
+> >                 bitmap_zero(caps->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
+> >                 bitmap_from_arr32(caps->dst_bus_widths,
+> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> > index cea57b166dcb..f37a0559ec5f 100644
+> > --- a/include/linux/dmaengine.h
+> > +++ b/include/linux/dmaengine.h
+> > @@ -495,9 +495,7 @@ enum dma_residue_granularity {
+> >   * @src_bus_widths: bitmap of source bus widths the channel supports.
+> >   *     Width is specified in bytes, e.g. for a channel supporting
+> >   *     a width of 4 the bitmap should have bit 4 set.
+> > - * @src_addr_widths: legacy bit mask of source bus widths the channel supports.
+> >   * @dst_bus_widths: bitmap of destination bus widths the channel supports.
+> > - * @dst_addr_widths: legacy bit mask of destination bus widths the channel supports.
+> >   * @directions: bit mask of slave directions the channel supports.
+> >   *     Since the enum dma_transfer_direction is not defined as bit flag for
+> >   *     each type, the dma controller should set BIT(<TYPE>) and same
+> > @@ -516,14 +514,8 @@ enum dma_residue_granularity {
+> >   * resubmitted multiple times
+> >   */
+> >  struct dma_slave_caps {
+> > -       struct {
+> > -               DECLARE_DMA_BUS_WIDTHS(src_bus_widths);
+> > -               u32 src_addr_widths;
+> > -       };
+> > -       struct {
+> > -               DECLARE_DMA_BUS_WIDTHS(dst_bus_widths);
+> > -               u32 dst_addr_widths;
+> > -       };
+> > +       DECLARE_DMA_BUS_WIDTHS(src_bus_widths);
+> > +       DECLARE_DMA_BUS_WIDTHS(dst_bus_widths);
+> >         u32 directions;
+> >         u32 min_burst;
+> >         u32 max_burst;
+> > @@ -1789,8 +1781,6 @@ dma_slave_caps_clear_src_width(struct dma_slave_caps *caps,
+> >                                enum dma_slave_buswidth width)
+> >  {
+> >         __clear_bit(width, caps->src_bus_widths);
+> > -       if (width < DMA_SLAVE_BUSWIDTH_32_BYTES)
+> > -               caps->src_addr_widths &= ~BIT(width);
+> >  }
+> >
+> >  /**
+> > @@ -1803,8 +1793,6 @@ dma_slave_caps_clear_dst_width(struct dma_slave_caps *caps,
+> >                                enum dma_slave_buswidth width)
+> >  {
+> >         __clear_bit(width, caps->dst_bus_widths);
+> > -       if (width < DMA_SLAVE_BUSWIDTH_32_BYTES)
+> > -               caps->dst_addr_widths &= ~BIT(width);
+> >  }
+> >
+> >  static inline int __dma_set_bus_widths(unsigned long *bus_widths,
+> >
+> > --
+> > 2.55.0
+> >
+> >
