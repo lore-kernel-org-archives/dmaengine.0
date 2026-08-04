@@ -1,191 +1,165 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DC046D0AC
-	for <dmaengine@vger.kernel.org>; Tue,  4 Aug 2026 15:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B972C46AA81
+	for <dmaengine@vger.kernel.org>; Tue,  4 Aug 2026 15:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785857984; cv=none; b=AiRdntzSb+EUynNWSo1rQgeOCNGsjnzyJnJFcf7mKBKcYxi4u7fwVaqZBP5kYsjI4PMNITYQaWW/qMZMYh0zBUrLCtC4O/JmE1POAwj2ZskylZu+t4qxGNySJaOywOBQvnyejwtzYg2DaJsO9/mnE6nx9fOaAi8PsfvRigDm2nY=
+	t=1785859019; cv=none; b=OClez/heb/PXH9gJSioNto/cx3RFFNoWmvK7r65eO1x9hHNbaI9SqsBnfvgYjpVnG9eZxYsKXhzuHPPOrt1Qf6Tz1hVE9mWxhlsIcKxzRytMM5v4Gfuw35l+2bb8f+GRXgMqKQqbZrY+IEfHvVXcogGhOLXLeZuasqli+91NMBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785857984; c=relaxed/simple;
-	bh=GOzRzWbEhVp1+PxLWp0Tf6FKj+pa/ze+t4q/T24vfNw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7xg9r5RGyxp7lsUhLnYmB3bK9kkXQkHLOsoHTItSNMOxcjxMHd4e4nhx+vrmyyNEnBuO1ODx8Fhm6m27gHBaNXFcl3vQKLAb80A/fC2OvjGFaZAlu44e2gnUDLHVm+GtaIxQBU2Y4iezn8WgG5J9diO3X/IP5d3osnsAoyVvXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ls1c+aFm; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785859019; c=relaxed/simple;
+	bh=80oZzkRdvKw9MDr3oLrfs8yGgzgmm3BnxiwccgS2pYI=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=aNfqG5w4UpTxQIKOeSwVdiMimrF2PhC32uCLRSgmCnr5ROx8F7v2PmqpxHveRN9ZhczM2GpgmqHgoj3i9cSi/wRj4sB979/mVmUydASofrb0cT57E7xxve9QLcSImaiG49EU8ln4IgTCLFQ0Wpt6C2PnXa6my2WPQUFoyFoyiWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jeI/Al+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ls1c+aFm"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-8485ef63b68so5312596b3a.1
-        for <dmaengine@vger.kernel.org>; Tue, 04 Aug 2026 08:39:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785857977; x=1786462777; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GE0WgxrhQlszpq0bFS8ekUeWF2E3M+uVciQ9zYtpewc=;
-        b=ls1c+aFmjSv4+Bmm4ou80M7J54CPqUNwumNM9rNXuZMIxTT0wTjJ+60OA+l6Jvsl6c
-         FXmzZ4vHq7ah63yhExQZfXvxu3WWdN+Q/l653UX1oVqGWRqQegYSz/uwLEY59qoOTRKn
-         DvJRmcQB6OwJ0eSNr3eWkuHsfMZTMaiDkCaObMSvbSED4oIJ9v4Soc5nEpk14XZ1/Wqi
-         OsDwiMJtCN0dauFFSKB9qUo9BZEVcPJAMkCs7IhT/RfRD8iB8QeejMtxUegM3SWoSO0N
-         rEtyvZHZcyzrH/iRgwSC18jQLSR/YNI12FFZUi8MLjXf73ojUzpSNrfDATJ/u3gEvDdN
-         puSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785857977; x=1786462777;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=GE0WgxrhQlszpq0bFS8ekUeWF2E3M+uVciQ9zYtpewc=;
-        b=sj+ZAYBfa9vTPjN0ZaxSYtjKlRAUiEkskB926/Y21JSiLhOAp2fmzaIdW4jm1C60Gy
-         LaCptrYQzhkCky35YsaNo8drN45Us4LrCDtW1jPq7W3xRh3D6TW574uhByzwQyjG/jul
-         /eDUltrjUdn0j91l1lG+bMQKf3Mx0yU+0H5QQvQUkGT/xseyVbCFTaIILCDBC6GVxwnJ
-         Ce72Q2+rlD8X9q6Knx0YH6c7J7T9XzwDi3aEzAVfi7ubMOJv5pFewLDUsQ1n+571SYMv
-         QUHmqjvKO7ICK+Ogh6iGo9RJTAHiUj5pNpZD8oXqTMLBKgQASdnizJFtkjv/BKyHo/pb
-         HHjw==
-X-Gm-Message-State: AOJu0Yxkt34XT02TU9wQYLakjWpJES27DTtqGe7axlw8XbPrlNMMSr9H
-	5PeWAAOG+p0zjoI+DCdBjftfzZGt4GtmrifraqwbEo7fuCL+zp36ZKA=
-X-Gm-Gg: AR+sD13oV5A6qExKHZfC1ssAf8H7KxclGCUQ1+L1V8bviyNjI0kBSJzaEpvclC8Dftp
-	qASxMthHxegPO8C/yTrBkYQboKm7HbojX0ltp4y85lyZJX5FYuaTUtsKLMdHwiOQwp6lDPKi4Li
-	el2VHhVytEHw0bn4zHSzmmUGxOjw7WALECjWmJnQFz60jPhpUamVOXwk6H/d61cT22Y46AsG5Cz
-	CnKclOD2QCDbMMMOesZiSXP2wZUfugkDSjT8LlwmeVz18yypNyhXCcTfDJ7a7OvSbl8hvRp7war
-	I7tkuR8Awm+fPMWkLAfWaM4XrG037Z3Q/hu5Me5MEVwt9ekGtE4rJfqnxuCKJfTZaaqxndQlDyQ
-	iTUVNWYVgJ53Z+mfTFtRCXjJHUgP+VW8yOSTv5ag6YuUFkxxdFnY15QsGyhlyrEprJCAES+2g3c
-	mUh3oqlSqAuxeD/4qr/HJSEVkwcnuWrLHYY+lbXvrSeMt2cXWK0VxpCv29l5ONPsA39RE+0olV9
-	JZx4YCeosIx8apvkSNyMk2jSCkgUOTzRf1zLpIT1JNuan8H2fI4Y5DWm+Nl6sHZ6iY8HPBAlaU4
-	+6i6pXbCbbNgK6lcXea1t2g=
-X-Received: by 2002:a05:6a00:3cd1:b0:847:98ff:4af5 with SMTP id d2e1a72fcca58-84ee47d5328mr14103507b3a.26.1785857976549;
-        Tue, 04 Aug 2026 08:39:36 -0700 (PDT)
-Received: from localhost.localdomain ([1.226.165.54])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84edbd31639sm5581184b3a.9.2026.08.04.08.39.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 04 Aug 2026 08:39:35 -0700 (PDT)
-From: Myeonghun Pak <mhun512@gmail.com>
-To: Sean Wang <sean.wang@mediatek.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ijae Kim <ae878000@gmail.com>
-Subject: [PATCH v2 RESEND] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
-Date: Wed,  5 Aug 2026 00:39:24 +0900
-Message-ID: <20260804153924.49627-1-mhun512@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <aj1RSj5ZXvc-9yu7@lizhi-Precision-Tower-5810>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jeI/Al+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503921F000E9;
+	Tue,  4 Aug 2026 15:56:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785859018;
+	bh=E1Cpnc4DsK2RGe6BhCsHNgysmnQLG3gcgVK6x1u3aNw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=jeI/Al+LeZBRnWtaLtj8Hku4HRUM2GGv3yAkONQG2pI+VjwzMDlxRyeL5Eby6Y94j
+	 Td57RkbvAaeXRWYxV0vtYhJTH7LT50FzIGNlhbSuQVxTCKwqJvjz7um259FWZIjcMP
+	 1Y2YlqDLnIErb5NwkMrhaLrG6vHTVAeF8v0+7vtXo8VrLx5Vkg7eCwFo7WqfuN8Au9
+	 4/440hNNZ6Wz4P99WBQwSN+psM22AQrycnAYdpWDBljn/j95Lhv4T2TeQi1X5Il3jv
+	 EUiqYd/HZb3k3sv/oGOZOep5ZQq04Q/nDUfPu4ksEBkd2D01jz2e2CsfvmfkIu9CzX
+	 TZ4bidMhmbqjw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 RESEND] dmaengine: mediatek: hsdma: fix runtime PM
+ leak on init failure
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Myeonghun Pak" <mhun512@gmail.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260804153924.49627-1-mhun512@gmail.com>
 References: <aj1RSj5ZXvc-9yu7@lizhi-Precision-Tower-5810>
+ <20260804153924.49627-1-mhun512@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 04 Aug 2026 15:56:57 +0000
+Message-Id: <20260804155658.503921F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
-before enabling the HSDMA clock. It currently ignores failures from
-pm_runtime_get_sync(); if runtime resume fails, the usage count remains
-held. If clk_prepare_enable() then fails, the usage count remains held.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
-pm_runtime_resume_and_get() so resume failures do not leak the usage count.
-If clk_prepare_enable() fails after a successful runtime resume, drop the
-runtime PM reference before returning.
+Pre-existing issues:
+- [High] Premature DMA device registration exposes uninitialized hardware, =
+leading to a kernel panic.
+- [High] Devm-managed IRQ causes a race condition during remove, leading to=
+ bus faults.
+- [High] Missing tasklet cleanup on probe failure leads to potential use-af=
+ter-free.
+--
 
-The probe path also ignores the return value from mtk_hsdma_hw_init(), so a
-failed hardware init can continue as a successful probe. Propagate
-mtk_hsdma_hw_init() failures from probe, while keeping a separate unwind
-label so mtk_hsdma_hw_deinit() is only called after hardware init succeeds.
+--- Patch [1]: [PATCH v2 RESEND] dmaengine: mediatek: hsdma: fix runtime PM=
+ leak on init failure ---
+commit 51dcb76c3dfae4c384b90e41e90bc15393906d0e
+Author: Myeonghun Pak <mhun512@gmail.com>
 
-Fixes: 548c4597e984 ("dmaengine: mediatek: Add MediaTek High-Speed DMA controller for MT7622 and MT7623 SoC")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
 
----
-Changes in v2:
-- Use devm_pm_runtime_enable() for runtime PM enablement.
-- Drop manual pm_runtime_disable() calls from init/deinit paths.
+This commit uses devm_pm_runtime_enable and pm_runtime_resume_and_get to fix
+runtime PM usage count leaks on init failures. It also propagates hardware
+init errors out of the probe function.
 
- drivers/dma/mediatek/mtk-hsdma.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+> diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-=
+hsdma.c
+> index a43412ff5eddc..27cb370106c77 100644
+> --- a/drivers/dma/mediatek/mtk-hsdma.c
+> +++ b/drivers/dma/mediatek/mtk-hsdma.c
+[ ... ]
+> @@ -983,7 +992,9 @@ static int mtk_hsdma_probe(struct platform_device *pd=
+ev)
+>  		goto err_unregister;
+>  	}
+> =20
+> -	mtk_hsdma_hw_init(hsdma);
+> +	err =3D mtk_hsdma_hw_init(hsdma);
+> +	if (err)
+> +		goto err_free;
 
-diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
-index a43412ff5e..27cb370106 100644
---- a/drivers/dma/mediatek/mtk-hsdma.c
-+++ b/drivers/dma/mediatek/mtk-hsdma.c
-@@ -848,17 +848,27 @@ static int mtk_hsdma_hw_init(struct mtk_hsdma_device *hsdma)
- {
- 	int err;
- 
--	pm_runtime_enable(hsdma2dev(hsdma));
--	pm_runtime_get_sync(hsdma2dev(hsdma));
-+	err = devm_pm_runtime_enable(hsdma2dev(hsdma));
-+	if (err)
-+		return err;
-+
-+	err = pm_runtime_resume_and_get(hsdma2dev(hsdma));
-+	if (err < 0)
-+		return err;
- 
- 	err = clk_prepare_enable(hsdma->clk);
- 	if (err)
--		return err;
-+		goto err_put_pm;
- 
- 	mtk_dma_write(hsdma, MTK_HSDMA_INT_ENABLE, 0);
- 	mtk_dma_write(hsdma, MTK_HSDMA_GLO, MTK_HSDMA_GLO_DEFAULT);
- 
- 	return 0;
-+
-+err_put_pm:
-+	pm_runtime_put_sync(hsdma2dev(hsdma));
-+
-+	return err;
- }
- 
- static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
-@@ -868,7 +878,6 @@ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
- 	clk_disable_unprepare(hsdma->clk);
- 
- 	pm_runtime_put_sync(hsdma2dev(hsdma));
--	pm_runtime_disable(hsdma2dev(hsdma));
- 
- 	return 0;
- }
-@@ -983,7 +992,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 		goto err_unregister;
- 	}
- 
--	mtk_hsdma_hw_init(hsdma);
-+	err = mtk_hsdma_hw_init(hsdma);
-+	if (err)
-+		goto err_free;
- 
- 	err = devm_request_irq(&pdev->dev, hsdma->irq,
- 			       mtk_hsdma_irq, 0,
-@@ -991,7 +1002,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"request_irq failed with err %d\n", err);
--		goto err_free;
-+		goto err_deinit;
- 	}
- 
- 	platform_set_drvdata(pdev, hsdma);
-@@ -1000,8 +1011,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--err_free:
-+err_deinit:
- 	mtk_hsdma_hw_deinit(hsdma);
-+err_free:
- 	of_dma_controller_free(pdev->dev.of_node);
- err_unregister:
- 	dma_async_device_unregister(dd);
--- 
-2.47.1
+[Severity: High]
+This isn't a bug introduced by this patch, but does the registration order
+expose uninitialized hardware to clients?
+
+In mtk_hsdma_probe(), dma_async_device_register() and=20
+of_dma_controller_register() are called before mtk_hsdma_hw_init().
+This exposes the DMA channels to client drivers before the device clocks
+are enabled. If a client accesses the controller before it is initialized,
+could this trigger a bus fault and a kernel panic?
+
+Similarly, in mtk_hsdma_remove(), mtk_hsdma_hw_deinit() powers down the
+hardware before dma_async_device_unregister() is called, allowing active
+clients to access powered-off hardware.
+
+> =20
+>  	err =3D devm_request_irq(&pdev->dev, hsdma->irq,
+>  			       mtk_hsdma_irq, 0,
+
+[Severity: High]
+This is a pre-existing issue, but does using devm_request_irq() here create
+a race condition during remove?
+
+The IRQ is managed by devres, meaning it remains active throughout the enti=
+re
+mtk_hsdma_remove() function until devres cleanup runs.
+
+However, mtk_hsdma_remove() disables the hardware via mtk_hsdma_hw_deinit():
+
+drivers/dma/mediatek/mtk-hsdma.c:mtk_hsdma_remove() {
+    ...
+    mtk_hsdma_hw_deinit(hsdma);
+    ...
+}
+
+If a spurious interrupt fires after the hardware has been disabled,
+mtk_hsdma_irq() will invoke mtk_dma_clr() and access unclocked registers.
+Could this trigger an external abort and a kernel panic?
+
+> @@ -991,7 +1002,7 @@ static int mtk_hsdma_probe(struct platform_device *p=
+dev)
+>  	if (err) {
+>  		dev_err(&pdev->dev,
+>  			"request_irq failed with err %d\n", err);
+> -		goto err_free;
+> +		goto err_deinit;
+>  	}
+> =20
+>  	platform_set_drvdata(pdev, hsdma);
+> @@ -1000,8 +1011,9 @@ static int mtk_hsdma_probe(struct platform_device *=
+pdev)
+> =20
+>  	return 0;
+> =20
+> -err_free:
+> +err_deinit:
+>  	mtk_hsdma_hw_deinit(hsdma);
+> +err_free:
+>  	of_dma_controller_free(pdev->dev.of_node);
+>  err_unregister:
+>  	dma_async_device_unregister(dd);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the error unwinding path
+miss tasklet cleanup?
+
+Earlier in mtk_hsdma_probe(), vchan_init() initializes a tasklet for each
+virtual channel. Because the DMA controller is registered before=20
+mtk_hsdma_hw_init(), a client can request a channel and start a transfer,
+scheduling the tasklet.=20
+
+If probe subsequently fails (e.g. devm_request_irq() fails) and takes this
+error path, it unregisters the device but fails to call tasklet_kill().
+Devres will then free the hsdma and vc memory while the tasklets may still
+be active or pending. Could this lead to a use-after-free when the tasklet
+executes?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260804153924.4962=
+7-1-mhun512@gmail.com?part=3D1
