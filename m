@@ -1,61 +1,64 @@
-Received: from fsn-vps-1.bereza.email (fsn-vps-1.bereza.email [162.55.44.2])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1806241D12F;
-	Tue,  4 Aug 2026 07:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.55.44.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F6741DEDE;
+	Tue,  4 Aug 2026 07:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785828155; cv=none; b=sG/v4gg8YPjeSz6DTAqRoyV+g050U7LcHJqG1y74JnvCt1IYL99OD/vYhM/qClTbUI41RTqwEz3rmmkxJXisDecdiIwN4kFJuRhnWbp+3uP8leGkZ9ZyvKy3qFNBjCY+Uuht+0wNUvTSOzNocF/K8nb8mBk6tkqhpJToe7E3QqI=
+	t=1785828528; cv=none; b=sQN/CdttFKDBHlBD9zHdzh273UYhK0ukQyRA2NyLtsu1OWJ+xmH5+HVaPLHOlWopB97qYVg/Q1bstwbHvH/IfTVfbYXuBUaTAU72aTM0ZBwzAaGF3mrCV3bJjdRIsBN4bZ3lVs4Gne54bincMiJE2p1mUfMDV2B6YD4zeNncgH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785828155; c=relaxed/simple;
-	bh=za/W1R0ep7nxOntbTWLBzDdMEq25zG+1KoYLZ6nWMzs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Y+F9aeur6mg+uq4QlI0N6c1XYb8Hy4TS5b8F/Blattdoy1udBLIJa4V8au+0S4qyta3zn3nb1Yo0KM33I4QNM4kZ1Ek8y1ZmKS4v8A44D0bftOa+AKwUkm3rNZFYXrAMqX12nahZLPg0q+ahIU9MmREhmZ356aCtDnC7KQj7gCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email; spf=pass smtp.mailfrom=bereza.email; dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b=dQ8wW+YB; arc=none smtp.client-ip=162.55.44.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bereza.email
+	s=arc-20240116; t=1785828528; c=relaxed/simple;
+	bh=1k+t4VolBe0laWMSM35QlxzZTvElA+9xlWizIlipJKk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KG7zKDvqpqJJrwTLK4XgAOERY4TnIO+Kp+hZ6+Sszi0TY74otibpJSwfEbgKxnRrkksheGpxdT702f+T+NXN6eAJbxj4yI6869ble73W3IHHwbpj5psIqVezoGRnK0GY7nrEoQY+UQgcJ72xSYJ8FtK5qPU5kUeJvk7Sqjkj7FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=ikSm3iVo; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b="dQ8wW+YB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bereza.email; s=mail;
-	t=1785827549; bh=za/W1R0ep7nxOntbTWLBzDdMEq25zG+1KoYLZ6nWMzs=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=dQ8wW+YB1GEDP6dYSPPjbGUPbyBM4apdqsxDn77vD5/MrCUWfGI16KSvMXEh/C4qm
-	 Rik+qDja03aS6+EBFqPWcK+uTZdv5XPao/6qkGdxRyelVBDhFpW7TKgY7a0rVvTuQy
-	 vyWn93Olb6jNI6v7bf2dXFTSr1w9km+HOVTNXmq9qb6LG5V6aahOod6+5P+NDp8G4D
-	 Blxx2tO5sh7CbhWUlK5KC0qZJ7JkQxji4DWTk1HkFcK2q5vUAJB+6L0OGSV4AWU94m
-	 o49QOEtE+S7WWO/Wy5olIB2gnyZ52eFG6Qfv6iJVkUkNLiRq6ZKn0XHdbCQbWjOYiJ
-	 MKeRRR6UW6Cag==
-Received: from localhost (pd95bbad8.dip0.t-ipconnect.de [217.91.186.216])
-	by fsn-vps-1.bereza.email (Postfix) with ESMTPSA id E523660085;
-	Tue,  4 Aug 2026 09:12:28 +0200 (CEST)
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="ikSm3iVo"
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 063B9493;
+	Tue,  4 Aug 2026 09:27:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1785828448;
+	bh=1k+t4VolBe0laWMSM35QlxzZTvElA+9xlWizIlipJKk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ikSm3iVo1D6z+cyqqS1JsZ5232679qhOk1We1P5Mvcw5SYW6ivf8PMmAzN9JW4Ery
+	 4wMk98jfC5XOTSgi0lLWZPoO1Yo1h7VG7Xu9vCh/sfPsZzzTzj4SlgkB9j0NNwqROM
+	 cojNekDAdSHknZuL0almOiW5mU5b1mWWStlEuojE=
+Message-ID: <dbc0aa08-fadc-41bc-a8f7-ba39719b6479@ideasonboard.com>
+Date: Tue, 4 Aug 2026 10:28:34 +0300
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 04 Aug 2026 09:12:28 +0200
-Message-Id: <DKFZ162370HZ.2XC8HNVB1DU6H@bereza.email>
-Cc: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-kernel@vger.kernel.org>, "Vishal Sagar" <vishal.sagar@amd.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] dmaengine: xilinx_dma: Use readl_poll_timeout() instead
  of atomic variant
-From: "Alex Bereza" <alex@bereza.email>
-To: "Tomi Valkeinen" <tomi.valkeinen@ideasonboard.com>, "Vinod Koul"
- <vkoul@kernel.org>, "Frank Li" <Frank.Li@kernel.org>, "Michal Simek"
- <michal.simek@amd.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <UR3xiwNn0coPyYguDWjjQi-IWPyN8Surtot50IAldzugiznKwuwlVUScNRaQ1TMK5KEQcdglATeQVSWqQrsOuw==@protonmail.internalid> <20260803-xilinx-dma-poll-fix-v1-1-892302c4847d@ideasonboard.com>
-In-Reply-To: <20260803-xilinx-dma-poll-fix-v1-1-892302c4847d@ideasonboard.com>
+To: Alex Bereza <alex@bereza.email>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, Vishal Sagar <vishal.sagar@amd.com>
+References: <UR3xiwNn0coPyYguDWjjQi-IWPyN8Surtot50IAldzugiznKwuwlVUScNRaQ1TMK5KEQcdglATeQVSWqQrsOuw==@protonmail.internalid>
+ <20260803-xilinx-dma-poll-fix-v1-1-892302c4847d@ideasonboard.com>
+ <DKFZ162370HZ.2XC8HNVB1DU6H@bereza.email>
+Content-Language: en-US
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+In-Reply-To: <DKFZ162370HZ.2XC8HNVB1DU6H@bereza.email>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Tomi,
+Hi,
 
-seems your patch is not based off the current dmaengine tree. Please
-have a look at
-https://lore.kernel.org/dmaengine/20260402-fix-atomic-poll-timeout-regressi=
-on-v4-0-f30d6a6c13cb@bereza.email/
+On 04/08/2026 10:12, Alex Bereza wrote:
+> Hi Tomi,
+> 
+> seems your patch is not based off the current dmaengine tree. Please
+> have a look at
+> https://lore.kernel.org/dmaengine/20260402-fix-atomic-poll-timeout-regression-v4-0-f30d6a6c13cb@bereza.email/
+Thanks, I missed that. Problem solved, ignore this series!
 
-BR
-Alex
+  Tomi
+
