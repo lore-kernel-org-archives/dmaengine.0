@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A473AF656
-	for <dmaengine@vger.kernel.org>; Wed,  5 Aug 2026 21:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD26346AE3
+	for <dmaengine@vger.kernel.org>; Wed,  5 Aug 2026 21:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785965783; cv=none; b=AVcScwNXCTmgWp70146sns8m5bzt67RbCvZVr897NgcGcftgD+Z0Y5foVp4uLA7gT/UthYsQ2xbjQwCevuKsv5olgip7Gl/I91RJZRdQ3f9/aLGKkuyYjy6B4IEFuPTPIDb6HTg7rHDV0wJTSEdXUT6oZSiBOeTmmO8PERVY4EU=
+	t=1785965923; cv=none; b=FPX5DLnnT0bbkCjDCVNlrRII0Uy1PKNE/v6GWepq7cl70x5yS0G1EGHP59VX6gv70gN/ITKBebAzBd7YUnWTJOD1tPJ2A95VIBTwdnmX1eefqxO5Xwr6PffKkTkURBu0SPBfDyXihyjUJdsht85hn/mmPz5ngvJcmOEK3hLXn5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785965783; c=relaxed/simple;
-	bh=FxTIUxf0t0PURoceZJ36fibH1EzYtr/8VChABZCUQVA=;
+	s=arc-20240116; t=1785965923; c=relaxed/simple;
+	bh=tD+po2W+2svJcFK3+wrAQqQzqjC/vJQ5rD1za+65jjo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=li7pk/y7i2G2A0yfR/RvZRBVBjZND3zGkwCrKTybDoRv6Ac+qnF2st+5bJWvhv3eA41Xle1DMDUUyrrZQORDussCGciRgx3JGyul+nwdBTaWKNigy2FvqLJPHOV/zSNyGDHJa38pe//SfIC3VPh686Fhb/E9LuNxk5Gp4+p0ZPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ha+hiVPg; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=SVsbsLJzW6XhnBSHMGSBYoVEHjY6QuI1Nzd9oB+4vk7fboDKxTcmv4DV4YD51lLTQGhpr61oMQvnuvxGYXVk8p9FAAN8M53Ay1nzI4RO5oDfZxE20M+Iqm+eoAVeTYMOXJW51UgQ98y82KMPZhOTKB4u7tgKtrA2spsDqV75GL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lArljkbM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ha+hiVPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8661F000E9;
-	Wed,  5 Aug 2026 21:36:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lArljkbM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA701F000E9;
+	Wed,  5 Aug 2026 21:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785965782;
-	bh=Y10RuMtDWgywnE9NWlTQBxzIx5jwKsDYgUz+R1Gynlk=;
+	s=k20260515; t=1785965921;
+	bh=qwVvccRqP96/ZJawdQgKmmRWqt7KA2YWBODxZRxRhD0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Ha+hiVPgKWxpKySsvfvXvg/9PkmP41+6MMIX5FlAnpLgGR1+WYJUrvo1qXexnBLWG
-	 8h7p+5vuSiwy/U4mhUli3AHim0swaaXONh10TRskvk15KVobouxL5NKf28udDqpO48
-	 yjrxjQ3e08pjCldGF0Xo+yafZtbZa2eN++TrBfLIaT/YMxRNQ9OeGmXJGdgggMkJ+H
-	 3AmEIgYSmV7enBeNlF79DrCh96xOYQaoDdbaAPTRvqeZqV52kgIWFa/9vPlMeyJRNv
-	 nVJpCRMXU3F56OLOz4VsS/X9hlRSlPL6SREvmDRTXheRRGjvqM1TZNcZQ8n9VbsOO2
-	 o6WGBjcW22Q/g==
+	b=lArljkbMsIbT0uhqFV1ZY4RRU2qeFXcqFPKfJ8UlfjRV29w9DJjoLa4W+BmkG3GzG
+	 Z6NZbs83qP/dlDktAVtVv9uJ7kZdH6oHt4o5LdPRJTe3PH9LSsbB8V9lUH1w33LoBu
+	 HiPTyauPCUGUNHALYEAtroT2AAq2HlOkg/mv17G/LuqAJbdHXrosAUji4R/PcAlP/l
+	 3cqNPM7lZOTOYdkglyaSsVns1cbaMuoXaYENSv+1ZqKnBPcfb+epyM3MFzi7dedcvI
+	 wdWSjkpaRHpCtjGEG3mJx9nBJahZ5AUnmyv+2KBPZ0MncyBearMlu7s/KegNQ0O5W6
+	 8HciyD3CyanWA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 4/5] crypto: iaa - use bounce buffer for multi-sg
- decompress input
+Subject: Re: [PATCH v2 2/5] crypto: iaa - fall back to software for
+ multi-entry scatterlists
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260805-iaa-crypto-fixes-zswap-v2-4-55c02694f499@intel.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260805-iaa-crypto-fixes-zswap-v2-2-55c02694f499@intel.com>
 References: <20260805-iaa-crypto-fixes-zswap-v2-0-55c02694f499@intel.com>
- <20260805-iaa-crypto-fixes-zswap-v2-4-55c02694f499@intel.com>
+ <20260805-iaa-crypto-fixes-zswap-v2-2-55c02694f499@intel.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 05 Aug 2026 21:36:21 +0000
-Message-Id: <20260805213622.3A8661F000E9@smtp.kernel.org>
+Date: Wed, 05 Aug 2026 21:38:40 +0000
+Message-Id: <20260805213841.5CA701F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,71 +49,75 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [Critical] Software fallback inside the synchronous `iaa_decompress()` pa=
-th writes to `req->dst` while it remains mapped for DMA, causing data corru=
-ption when unmapped if SWIOTLB is active.
+- [High] Software decompression fallback reads and writes buffers while the=
+y are still DMA-mapped, leading to data corruption on systems using SWIOTLB=
+ (bounce buffers).
 --
 
---- Patch [4]: [PATCH v2 4/5] crypto: iaa - use bounce buffer for multi-sg =
-decompress input ---
-commit 734c3b6227baae1deae54e3c6e85848a75b44265
+--- Patch [2]: [PATCH v2 2/5] crypto: iaa - fall back to software for multi=
+-entry scatterlists ---
+commit 6596711a82477095464512f0a5cfb3f894ac8fad
 Author: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Subject: crypto: iaa - fall back to software for multi-entry scatterlists
 
-crypto: iaa - use bounce buffer for multi-sg decompress input
+This commit routes multi-entry scatterlists to a software deflate
+implementation instead of failing them. It simplifies the DMA mapping
+paths to handle only single entries and falls back to software on mapping
+failures. Counters are added to track the number of software fallback
+compressions.
 
-This commit introduces a pre-allocated bounce page to linearize small=20
-multi-entry sources for IAA hardware decompression. This avoids falling=20
-back to software for multi-entry sources while maintaining the fallback=20
-for multi-entry destinations.
+Cc: stable@vger.kernel.org
 
 > diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/=
 intel/iaa/iaa_crypto_main.c
-> index 9505ca23e6f38..51547c5fcf701 100644
+> index f62b994e18e58..904d9413ba182 100644
 > --- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
 > +++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
 
 [ ... ]
 
-> @@ -1653,7 +1726,7 @@ static int iaa_comp_adecompress(struct acomp_req *r=
-eq)
+> @@ -1639,10 +1650,8 @@ static int iaa_comp_adecompress(struct acomp_req *=
+req)
+>  	if (ret !=3D 0)
 >  		dev_dbg(dev, "asynchronous decompress failed ret=3D%d\n", ret);
 > =20
->  	dma_unmap_sg(dev, req->dst, 1, DMA_FROM_DEVICE);
-> -	dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
-> +	iaa_unmap_src(dev, req);
+> -	dma_unmap_sg(dev, req->dst, sg_nents(req->dst), DMA_FROM_DEVICE);
+> -err_map_dst:
+> -	dma_unmap_sg(dev, req->src, sg_nents(req->src), DMA_TO_DEVICE);
+> -out:
+> +	dma_unmap_sg(dev, req->dst, 1, DMA_FROM_DEVICE);
+> +	dma_unmap_sg(dev, req->src, 1, DMA_TO_DEVICE);
 >  	iaa_wq_put(wq);
+> =20
+>  	return ret;
 
-[Severity: Critical]
-This is a pre-existing issue, but since this patch modifies the unmap
-path here, I noticed a potential data corruption issue when SWIOTLB is
-active.
+[Severity: High]
+This is a pre-existing issue, but can the software fallback logic corrupt
+data on systems using SWIOTLB (bounce buffers)?
 
-If iaa_decompress() fails and falls back to software via
-deflate_generic_decompress(req), the CPU will write valid decompressed
-data directly to req->dst.
+If hardware decompression fails with an analytics error (for example,
+IAA_ANALYTICS_ERROR), the driver falls back to software decompression via
+deflate_generic_decompress(). This fallback executes directly on the CPU,
+modifying the original virtual pages.
 
-However, req->dst is still mapped for DMA (DMA_FROM_DEVICE). When
-iaa_decompress() returns success after the fallback, we reach this
-dma_unmap_sg() in iaa_comp_adecompress():
+In the async completion path, the software fallback is executed while the
+buffers are still actively DMA-mapped:
 
-iaa_comp_adecompress()
-   dma_map_sg(..., req->dst, DMA_FROM_DEVICE);
-   ...
-   ret =3D iaa_decompress(...)
-      -> hardware fails, falls back to deflate_generic_decompress(req)
-      -> CPU writes decompressed data to req->dst
-      -> returns 0
+iaa_crypto_main.c:iaa_desc_complete() {
+        ...
+        if (err =3D=3D IAA_ANALYTICS_ERROR) {
+                ret =3D deflate_generic_decompress(ctx->req);
+        ...
+        dma_unmap_sg(dev, req->dst, 1, DMA_FROM_DEVICE);
+}
 
-   dma_unmap_sg(..., req->dst, DMA_FROM_DEVICE);
+When SWIOTLB is active, this unmap operation syncs the bounce buffer back
+to the original memory. Does this completely overwrite the correct data just
+produced by the software fallback with stale hardware garbage?
 
-If SWIOTLB is active, won't this dma_unmap_sg() copy the unmodified or
-partially modified bounce buffer back over req->dst, overwriting the
-valid CPU-written data with garbage?
-
-Should the software fallback inside iaa_decompress() unmap req->dst before
-calling deflate_generic_decompress(req), similar to how
-iaa_desc_complete() handles its fallback?
+Could the driver unmap the buffers before falling back to software
+decompression to prevent this?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260805-iaa-crypto=
--fixes-zswap-v2-0-55c02694f499@intel.com?part=3D4
+-fixes-zswap-v2-0-55c02694f499@intel.com?part=3D2
