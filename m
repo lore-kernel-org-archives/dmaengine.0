@@ -1,146 +1,252 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FF7203710
-	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 12:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301BD126C02
+	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 12:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786190499; cv=none; b=CIF5UOW/wO8JIXNjrWPW1dxWS7eD51SJ83haq/Jb4WfPzjEPL9uCN2YfdBvsXYTs1p8ll/WVqb3g+piyEcA23BVOCDmDYThsdS3sTnJRVZK5KUieqe64yslMniJFapLDZC9D5OkYY6BA2URRo3NpD1XnvkIpAV7PHQZ05YSGCGk=
+	t=1786191366; cv=none; b=SyY76BhWDHO0eV0EFjSuD/ck90JRYp14Wp7wScLcO6KUJAsv23iRZJC4VVc/yQJXAR780reWvt51bgRHZMSF/tmtJijIlIGs1RfrDGDjE3R70qE8o6Xebn/ildd5STWtm1+hcXUsPdVyAM+fa1CqKWXjUkxaek+Xu1JZOOBwI+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786190499; c=relaxed/simple;
-	bh=VdKmF0MAy9JnfTs0lWJz1o9FwtWgy0AQWX/cZmeJ1i0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nfj9yDmJ5TCxt4Hgpq5ZeLGhs9ZpytnN8MAHIR0rQOuAzAmXuzrtFWYk5zZBcktFBFZURtugCZsyn8XsY+ngfPg61BVGlfBxDf83sjfvVwq1AKspy2eSaRVxdhrggC7632jNg9YduAy+3vtfN/I7NUeOohq5xhIILqOsFPGwU28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=meotUP5x; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786191366; c=relaxed/simple;
+	bh=MeASbPZL7upLJS3T9vm+s6rXyLe/rU7zvpqDa2LgV74=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ghMuexjj2YbSXiPaJJVCmfEqCKvea1npQ1/ROdWSLkNbXShiJsJn5zLiG0+zi4+s2k8pO3h/IbRfiZ99zG1EFVHVmNEz/msSIlkqLN13DJ9cpeGrpevJp4dBR3vZgWuJIlTXxxNkGMPgTb/R41+Z8S07DBznfqC6msTK+d9vLqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bseszlaq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="meotUP5x"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ce87c7e3bbso4688945ad.1
-        for <dmaengine@vger.kernel.org>; Sat, 08 Aug 2026 05:01:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786190497; x=1786795297; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K/VDwU6YKDYusuf3bOyqkfoe3Kms6rSYmSwfDWd4AYg=;
-        b=meotUP5xW9HTCr6QK2vUhrYpiZ1EFmoLxKYtRrahu1TkqLv5+VqSMK5iA1h5Jneceu
-         5FVNZKjkwoYTYTLnwrHb4mhADXsDuplAWFbtJSmaNx6k9+EfYRk8RkQTNmrtD4o8HBON
-         cnl+7BMWdEzh+vIQj8g2NhD2j9iECkDMoYdugWvfZfAMqdDgx/QTct3bF5bFqHVudtbH
-         IChVsTlm3c6Nt/zEgCLwLEpAfeYR9zPAqZiAZiUTHgLUl/c/Axt5S4yBzE19uNIByTH/
-         2+DuyLGr7oOJ4J0IWgKI0gAyBvMNo/cZOSvL3e93G6Dm3+eRgfFqsuXF18//Rl5zWBUN
-         iFIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786190497; x=1786795297;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K/VDwU6YKDYusuf3bOyqkfoe3Kms6rSYmSwfDWd4AYg=;
-        b=DEQi/cLHMM1d9lN4X1cbADbwQvkbxLhPr0QjDWz9X/FO4zRR7H/VBBgDCS6k+LJQsJ
-         wjrfv3Fs6fH6jGUaWRJiz8sEldFWlIAiGfpKn2wJaPcgFnOvrzqdRnY1wdKICzn2YLxc
-         UMC9iys1V7Td0ZPr2ckszB1J+ZMl47sA4XYG2Y2Y7HzQSTb4skHarsvAw4eDB7XDM3Oq
-         TUxz0EUoXgxKJYz0Ca2fn/wQDYCyJnJls7R9hp2BfviUnPgwoiYaCU58XLgrDxiWjnAj
-         5zBuZmWTrGr//PjPELNietgvBxnJ5iojzeSqvDnqLaWVCiUPDhp3oeNqSb1KK4kKGrdv
-         yevw==
-X-Forwarded-Encrypted: i=1; AHgh+RprwhO2nDBlZWeKPwJJWr19k4BjFdEzo/DId2ji49G18/jU2IeaDYgQirdpqsr8TA3XD0E4CRo37qo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz1IBOhE3w4uLx0tCdvkzeS1YOYTXjNlC3nGmPwi/fabHlnCGcP
-	yHO4YHovKcJcIUKbqAt+A7nlwnOVgOHFkGjW6m4pIV2BOgvvKookfh/f
-X-Gm-Gg: AR+sD10tIS6+LyHoe3viiPOC8rPLRQMjsdaeYjv2or2KBCL6a6wINh7uUBmulnUzCV6
-	UijOeFAvM9nlt5Y1NjYNfyxQVSyR5RFVJlH1IKSz6vseMEW21HeBUuRU2D+9SVApc1YzmKPQ+D6
-	SYO61RX+gr2e0JzOA3xnjlNMOOa8NGpPrpvT8qLgrqu5YH5SCj79xpzA7SvGo7c7fJblWWaUU5D
-	/vchrSCeK5vwurSVxvqnFwR8KREyLpWrUNCMfkfX8EzJcToiPZbTBkmraFzF+39pQddDtvUqmA/
-	W9qhSb8uTFETm8PDtLKPrx62TpVqoaJpTAA3Kh1A2Kg2V20heuFwckE014alN13YynWV98bxhg3
-	J/Bljvb1NPgCiUf3SkP6coj9tMdrt3VbqPhZ7IqHb5DXOsBur0qn0fg15uNhM05dUDSwGn4ewY0
-	3XvwNvjCCo7DR7urV5znFYQi1EgC56HJBnui5x+9YFumQ=
-X-Received: by 2002:a17:902:da87:b0:2cf:4c0f:5129 with SMTP id d9443c01a7336-2d0caa03fcfmr299424925ad.17.1786190497182;
-        Sat, 08 Aug 2026 05:01:37 -0700 (PDT)
-Received: from lgs.. ([2001:250:5800:1000::f280])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d14dbeaa88sm18073605ad.39.2026.08.08.05.01.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2026 05:01:36 -0700 (PDT)
-From: Guangshuo Li <lgs201920130244@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Abin Joseph <abin.joseph@amd.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Kees Cook <kees@kernel.org>,
-	Kedareswara rao Appana <appana.durga.rao@xilinx.com>,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Subject: [PATCH] dmaengine: xilinx: zynqmp_dma: fix autosuspend cleanup during teardown
-Date: Sat,  8 Aug 2026 19:52:28 +0800
-Message-ID: <20260808115228.2798481-1-lgs201920130244@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bseszlaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00F41F000E9;
+	Sat,  8 Aug 2026 12:16:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786191363;
+	bh=7tKHGCAanUReWoBzI2Iqe9nIqP1/SnmfO3/+SwwyWcw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=bseszlaqMSS0i3bc9DPZCKD5igXBRrH39dhkqVPnK2vbCh/boN4EGItAuiN/gp6lD
+	 OTmaDHlpYC7BHFWsbYvHaneP0U1ulSeT6Ual5guLQDGnWgzsiBOn8lFikdUHHxXC2T
+	 CY7CGIyfSdE8Jqy4VMlRdsZFxcTP+s+R9UhOIiLUH3mG1TBR5d2LHBm1npFM1qAGaY
+	 2zGX5+BN967PG+R9hd9JZGjighV8YmiakOz+o3J9yWbK3boWsF+k0fPgIpw2SZMyLX
+	 RitgviPreLi0A3B5WCRoM0fWcnP7u4BeNuNP8eufSOp7ibRFhDpOXWCq/0ePt6LS/S
+	 RiIhJ7l5h/Kpg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: xilinx: zynqmp_dma: fix autosuspend cleanup
+ during teardown
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Guangshuo Li" <lgs201920130244@gmail.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260808115228.2798481-1-lgs201920130244@gmail.com>
+References: <20260808115228.2798481-1-lgs201920130244@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 08 Aug 2026 12:16:02 +0000
+Message-Id: <20260808121602.F00F41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-zynqmp_dma_probe() calls pm_runtime_use_autosuspend(), but its failure
-paths and zynqmp_dma_remove() do not call the matching
-pm_runtime_dont_use_autosuspend().
+Thank you for your contribution! Sashiko AI review found 7 potential issue(=
+s) to consider:
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+Pre-existing issues:
+- [High] The probe error path mishandles runtime PM state, leaking the usag=
+e count, leaving clocks enabled, and causing double-disable of PM.
+- [High] Manual invocation of the runtime suspend callback during remove() =
+races with the PM core, potentially leading to double clock disable or leak=
+ed clocks.
+- [High] If pm_runtime_resume_and_get() fails during probe, the success pat=
+h unconditionally calls pm_runtime_put_sync_autosuspend(), which underflows=
+ the usage count and triggers a kernel warning.
+- [High] Fallback manual PM resume in probe is not cleanly undone during de=
+vice removal, leaking clocks.
+- [High] Overriding the return value of platform_get_irq() to -ENXIO breaks=
+ deferred probing.
+- [High] Dropping a spinlock during list traversal in the cleanup tasklet c=
+auses double-free and infinite loops.
+- [High] Memory and PM reference leak in zynqmp_dma_alloc_chan_resources() =
+on failure paths.
+--
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
+--- Patch [1]: [PATCH] dmaengine: xilinx: zynqmp_dma: fix autosuspend clean=
+up during teardown ---
+commit 84d893f1819f6fc2e37ae0cbd28a5db284008c1e
+Author: Guangshuo Li <lgs201920130244@gmail.com>
 
-Add the missing pm_runtime_dont_use_autosuspend() calls to the probe
-failure and remove paths.
+dmaengine: xilinx: zynqmp_dma: fix autosuspend cleanup during teardown
 
-This issue was found by manual code inspection.
+This commit addresses an unbalanced usage_count by adding missing calls
+to pm_runtime_dont_use_autosuspend() in the probe failure and remove paths.
 
-Fixes: 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
----
- drivers/dma/xilinx/zynqmp_dma.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_=
+dma.c
+> index f6a812e49ddca..635c3f6cc5c2f 100644
+> --- a/drivers/dma/xilinx/zynqmp_dma.c
+> +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> [ ... ]
+> @@ -1152,6 +1154,7 @@ static int zynqmp_dma_probe(struct platform_device =
+*pdev)
+>  err_disable_pm:
+>  	if (!pm_runtime_enabled(zdev->dev))
+>  		zynqmp_dma_runtime_suspend(zdev->dev);
+> +	pm_runtime_dont_use_autosuspend(zdev->dev);
+>  	pm_runtime_disable(zdev->dev);
+>  	return ret;
+>  }
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index f6a812e49ddc..635c3f6cc5c2 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -1116,8 +1116,10 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- 	}
- 	if (!pm_runtime_enabled(zdev->dev)) {
- 		ret = zynqmp_dma_runtime_resume(zdev->dev);
--		if (ret)
-+		if (ret) {
-+			pm_runtime_dont_use_autosuspend(zdev->dev);
- 			return ret;
-+		}
- 	}
- 
- 	ret = zynqmp_dma_chan_probe(zdev, pdev);
-@@ -1152,6 +1154,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
- err_disable_pm:
- 	if (!pm_runtime_enabled(zdev->dev))
- 		zynqmp_dma_runtime_suspend(zdev->dev);
-+	pm_runtime_dont_use_autosuspend(zdev->dev);
- 	pm_runtime_disable(zdev->dev);
- 	return ret;
- }
-@@ -1172,6 +1175,7 @@ static void zynqmp_dma_remove(struct platform_device *pdev)
- 	zynqmp_dma_chan_remove(zdev->chan);
- 	if (pm_runtime_active(zdev->dev))
- 		zynqmp_dma_runtime_suspend(zdev->dev);
-+	pm_runtime_dont_use_autosuspend(zdev->dev);
- 	pm_runtime_disable(zdev->dev);
- }
- 
--- 
-2.43.0
+[Severity: High]
+This is a pre-existing issue, but does this error path mishandle runtime
+PM state?
 
+If pm_runtime_resume_and_get() succeeds but a subsequent step like
+zynqmp_dma_chan_probe() fails, execution jumps to err_disable_pm. Because
+pm_runtime_enabled() is true, zynqmp_dma_runtime_suspend() is skipped, leav=
+ing
+hardware clocks on. It also never calls pm_runtime_put_noidle() to drop the
+usage count.
+
+Conversely, if pm_runtime_resume_and_get() initially fails, the driver calls
+pm_runtime_disable() and falls back to manual resume. If probe then fails,
+err_disable_pm calls pm_runtime_disable() a second time, incrementing
+disable_depth to 2 and breaking PM permanently.
+
+[Severity: High]
+This is also a pre-existing issue, but does the success path of probe
+unconditionally underflow the usage count if the fallback manual resume
+path was taken?
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_probe() {
+    ...
+	ret =3D of_dma_controller_register(pdev->dev.of_node,
+					 of_zynqmp_dma_xlate, zdev);
+	if (ret) {
+        ...
+	}
+
+	pm_runtime_put_sync_autosuspend(zdev->dev);
+
+	return 0;
+    ...
+}
+
+If pm_runtime_resume_and_get() fails, it drops its internal reference. The
+failure path handles the error by calling pm_runtime_disable() and falling
+back to manual resume.
+
+If the rest of the probe succeeds, the function reaches
+pm_runtime_put_sync_autosuspend() at the end. Even though runtime PM is
+disabled, this function passes the RPM_GET_PUT flag to the PM core, which
+calls rpm_drop_usage_count(), unconditionally decrementing the count below =
+0.
+
+> [ ... ]
+> @@ -1172,6 +1175,7 @@ static void zynqmp_dma_remove(struct platform_devic=
+e *pdev)
+>  	zynqmp_dma_chan_remove(zdev->chan);
+>  	if (pm_runtime_active(zdev->dev))
+>  		zynqmp_dma_runtime_suspend(zdev->dev);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the manual invocation of
+the runtime suspend callback race with the PM core?
+
+Because runtime PM is still enabled during this manual check and suspend,
+the auto-suspend timer or a PM workqueue can concurrently invoke the suspend
+callback, which can cause unbalanced clk_disable_unprepare() calls.
+
+Should pm_runtime_disable() be called before attempting manual suspend
+management to serialize state and ensure no async operations are running?
+
+[Severity: High]
+This is also a pre-existing issue, but is the pm_runtime_active() check
+bypassing the hardware suspend if the fallback PM path was taken during pro=
+be?
+
+If pm_runtime_resume_and_get() fails during probe, the driver disables PM a=
+nd
+manually calls zynqmp_dma_runtime_resume() to turn on clocks. In this
+fallback state, the PM core's runtime status remains RPM_SUSPENDED.
+
+During zynqmp_dma_remove(), the pm_runtime_active() check returns false,
+so zynqmp_dma_runtime_suspend() is incorrectly skipped and clocks are left
+permanently enabled.
+
+> +	pm_runtime_dont_use_autosuspend(zdev->dev);
+>  	pm_runtime_disable(zdev->dev);
+>  }
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does overriding the return v=
+alue
+of platform_get_irq() break deferred probing?
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_probe() {
+    ...
+	zynqmp_dma_init(chan);
+	chan->irq =3D platform_get_irq(pdev, 0);
+	if (chan->irq < 0)
+		return -ENXIO;
+    ...
+}
+
+platform_get_irq() can return -EPROBE_DEFER if the interrupt controller is
+not yet ready. By swallowing the actual error code and unconditionally
+returning -ENXIO, the driver prevents the kernel from retrying the probe
+later.
+
+[Severity: High]
+This is a pre-existing issue, but can dropping the spinlock during list
+traversal cause an infinite loop?
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_desc_cleanup() {
+    ...
+			spin_unlock_irqrestore(&chan->lock, irqflags);
+			dmaengine_desc_callback_invoke(&cb, NULL);
+			spin_lock_irqsave(&chan->lock, irqflags);
+    ...
+}
+
+The code iterates over chan->done_list using list_for_each_entry_safe().
+To invoke a DMA callback, it drops chan->lock.
+
+While dropped, a concurrent call to zynqmp_dma_device_terminate_all() can
+acquire the lock and call zynqmp_dma_free_descriptors(), which moves all
+descriptors from chan->done_list to chan->free_list.
+
+When the tasklet reacquires the lock, its next pointer now points to an
+element in chan->free_list. The tasklet loop incorrectly continues traversi=
+ng
+free_list until it crashes, never hitting the done_list list head to termin=
+ate
+the loop.
+
+[Severity: High]
+This isn't a bug introduced by this patch, but do these error paths leak
+memory and the PM usage counter?
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_alloc_chan_resources() {
+    ...
+	chan->sw_desc_pool =3D kzalloc_objs(*desc, ZYNQMP_DMA_NUM_DESCS);
+	if (!chan->sw_desc_pool)
+		return -ENOMEM;
+
+	chan->desc_pool_v =3D dma_alloc_coherent(chan->dev,
+					       (2 * ZYNQMP_DMA_DESC_SIZE(chan) *
+					       ZYNQMP_DMA_NUM_DESCS),
+					       &chan->desc_pool_p, GFP_KERNEL);
+	if (!chan->desc_pool_v)
+		return -ENOMEM;
+    ...
+}
+
+pm_runtime_resume_and_get() increments the device's PM usage count earlier =
+in
+this function. If kzalloc_objs() fails, it returns -ENOMEM without dropping
+the PM reference via pm_runtime_put().
+
+If dma_alloc_coherent() fails, it returns -ENOMEM without freeing the
+just-allocated chan->sw_desc_pool and without dropping the PM reference.
+The dmaengine core does not invoke device_free_chan_resources() when
+allocation fails.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808115228.2798=
+481-1-lgs201920130244@gmail.com?part=3D1
