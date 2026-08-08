@@ -1,117 +1,236 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F35367F5E
-	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 09:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AF02C0261
+	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 10:03:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786182431; cv=none; b=tZuBrkPjBZ3m/mSHCv2zz82hsNmTp4p9SYbK01Lxjk+Q2OBhVlx/z0xo5TAEVqQMKDJ1mwwAjbSBixK5Pc8LATPuJJ2VFDIA7LrKD/NJCM5veBSuQOtu4qIJ6f9e0AjYB8Dtbum42HGp4it8LSo0RVykm9b8aU9HoAFRaQtVTCk=
+	t=1786183422; cv=none; b=uhoPrUZqBk2kdryu7iUVPUx/O+KfwwD647Xz1wmiA+PlFutyV5TJfXHLzK7fElYTz9QNtdajRPro9q/C+8GiQ/XsmtqbmfGTIKPqN90GSudu/Z/ptXCUTRGG1hVZyewWFg6E4iFnB3iLs73TEOCB2Vs7o95b3Ubrwogx1O3Vo2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786182431; c=relaxed/simple;
-	bh=n+VHIM10UQAdsOrOgWwVd3HizjL61jNMNdfdNzv9CBg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VuEy9XiS8Yros6tJfC1AicstnSoSlyt9+cCMjJNLkM1uuRdg4DAFnwIu3rOgsZLk98ovRFoVD6+aL73hhFIn1zWgRjHhvSjZqfpOOP0dnB7dKpJdv3a3Du4NWipkCwrmeWg7YgMSg+aGfl3OScsg0K88xrWY7jPQ6vmU8xAgtM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mNPNuTdg; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786183422; c=relaxed/simple;
+	bh=etFjqskW8TPIDZMFHuD4tnvmA6wow1VUe1k1VIVdBW0=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ScGVCdOf70AoPo4sGFAn9F6su2+ezjSFlZlupVvUigs6w5ceZSJKUCpF7ZhxVdOioJTwjJvMoi5aGEyshT5Bi9mbeBA4lvrXY5JxtiAmNJJoTZN/qGs7ixyz97pCoZn0V5rHffTiIn848TxWAkfKvFKfl1QRB95Uh52AZ2xwNeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIi6a0SJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNPNuTdg"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c966b9ee9cbso153161a12.1
-        for <dmaengine@vger.kernel.org>; Sat, 08 Aug 2026 02:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786182429; x=1786787229; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Tyg/k3QHvoAlSDHqgJ9zjC2EsZ+xAbQy3JHE+24858g=;
-        b=mNPNuTdg+jbnrMnh5lFO3AtQXsacgAv7WBq0wgfGs0uoej3WdA6v9hWhoIJ0xK13dk
-         PI9cdzfmCItvjaEcmguNPOgq+BktK9RZF0mK8W/bAJdzv30w+DDas1dLHtQSyjlfXAE+
-         Haapmp3brnJv1Bv4a7hqiRJniSlwyEM3NV9PHesm/w5TBHxECO2XVwfeWTsK4GuXdkV/
-         48C0VH4I+pVZ7EWp1EiZy2Y6epvdXBoZ9Sz6nULX3pWK5hjnk9Ih0J2StYVUEEhRSpfq
-         UNzJ//3GdhBakHSzFWcjMzZseOM1784W6qCxN/CBzWIydJc+C8TlaKS73zmYyGI5Da+r
-         b/TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786182429; x=1786787229;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Tyg/k3QHvoAlSDHqgJ9zjC2EsZ+xAbQy3JHE+24858g=;
-        b=ZRDpjlSW/ZJSKHjiQMhInmIYXX2o0HI/i6QguVwYNzB0DGJRE6RxApNynmGiC+4YSu
-         VmYTiRhO1M71DB6otvdhr/hBZHrijV/vf28w+ROBM9KCvnXOs80HOfuzSJ2XHXcoKi9B
-         R9zI1dJCSlF63e1XwW2UXEAfeSR3vKqdC8vxcy6ZsyP1D2oirlZ+AKT6Zqnd9EQ3Kg0F
-         aV9RM0BaGfa3HbA8zfnGTnRI5JLrLODR6x3qslo3/SO8aefin938liZcZKx2U/8PR5P8
-         mYTC5v5PiSGhCxm5qS/i9qGBONAIqN90eXJVGxESjOFR5riT0vG+OAIly7od6pKccOiX
-         raYA==
-X-Forwarded-Encrypted: i=1; AHgh+RpIQDG0P9mW94cwXDudQIjg1u8Bumc7PRKc52s47apPTJzeUEFpTFA7XrJGWwB3UeoOOeMP8MsYUWw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBTcnJ/2R1UV+tgqqLGaYW4W4KEJjxEJUnwQchuLBzvM71Cfy8
-	vi4F7Rn47xmYtEVmmVdvuZ6aYkQ03S3OXQIaI8EIM7wWccnp7RYlwu9w/IBBE4sI+bI=
-X-Gm-Gg: AR+sD13A253IEnHbA2xkMURo+TSPgd3f2z0ibZOiyssqnt4CiYDa80pa1G1wWQlOmhm
-	nQft5PEmON9VyqtfDqWT3RKo7R84WdQdiC1d9gVwId2qEAHM7ByyfM78srUo6uiMpFHVUVVwTkn
-	5KSpIK3nRx1dTvz0Txh+jtb3xcOpzQ0dBnKn0i/mB0pJUiFF9wE2r59RiyUstxKyeIyO6s0KsK9
-	wLYzOcRQx2pFc1J835fC3a61Hy+32WgsrCaWWVJ9ILU7iPWZptnv/NtTpZw8q6ztWaA1Ki+oV0D
-	Uejg+9bUXlCSKOHvvAoY+MWPqO9fh5ju63EONM26l/w2WT9u3VwbJ9So7lpzRGP4JwoqW3d41+K
-	J3X9Xs+tzwoLjwuRxiZZ+BbgywFfeAODEFCvxNamj3QFQqQaSEKL4DhRn8i8/v9fXDc2N6RD4BV
-	4wO9nmYP3hQa8dx07R7r0hMOkKmaNhvhb7SBianjXM8lM=
-X-Received: by 2002:a05:6a00:4b02:b0:847:8acd:747c with SMTP id d2e1a72fcca58-84f2e022980mr30903415b3a.13.1786182429006;
-        Sat, 08 Aug 2026 02:47:09 -0700 (PDT)
-Received: from lgs.. ([2001:250:5800:1000::f280])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f5a51e9fcsm1983113b3a.36.2026.08.08.02.47.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2026 02:47:08 -0700 (PDT)
-From: Guangshuo Li <lgs201920130244@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
-	Ulf Hansson <ulfh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Guangshuo Li <lgs201920130244@gmail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] dmaengine: pl330: fix autosuspend cleanup during removal
-Date: Sat,  8 Aug 2026 17:44:52 +0800
-Message-ID: <20260808094452.2752443-1-lgs201920130244@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIi6a0SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B781F000E9;
+	Sat,  8 Aug 2026 10:03:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786183421;
+	bh=YR4KCkZ8GaCg3lGwUyMMnTXJQEa77FuvvO33Lvy2ZwA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=MIi6a0SJkRJAc2r4y742hXTgB8uiMnFbiIJ3+w4jko8UFdOIOP+mr/L6LUrHsp1r3
+	 MW92iWa+4TUULmt8YqKGORc4FTGtdRkMfrvPxyuILdcvUDstO43+h2iQyCstT6adzj
+	 a6v/ocG9rRdQTl4utcD9jJjB4XOAVaTpMS+zE6hOHu0Td3SxWV+QB8qkqU9gy5qCKy
+	 O8gA4ld7ZJjFyMna2KZ9RKxIL+M/M0C4MiylnUObGzhik9Y6Co6/OydWwun6BcAoVL
+	 Udqot2rsC6//2CB07IEnK+A6tIozDcgI0SO3ufh4VB+fVuplrYq7c8b7np4jpwo+5h
+	 2H3a89M+ipkGw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: pl330: fix autosuspend cleanup during
+ removal
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Guangshuo Li" <lgs201920130244@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260808094452.2752443-1-lgs201920130244@gmail.com>
+References: <20260808094452.2752443-1-lgs201920130244@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 08 Aug 2026 10:03:40 +0000
+Message-Id: <20260808100340.B4B781F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+
+Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] The IRQ handler accesses hardware registers unconditionally withou=
+t checking if the device is active, risking a kernel panic during suspend.
+- [High] Dynamically allocated `dma_pl330_desc` descriptors in the `desc_po=
+ol` are leaked when the driver unbinds.
+- [High] The `peripherals` array allocated in `pl330_probe()` is never free=
+d during device removal, causing a memory leak.
+- [High] A debugfs file is created in the debugfs root but never removed, l=
+eading to a Use-After-Free upon unbind.
+- [High] The IRQ handler is registered before the driver's synchronization =
+primitives and tasklets are initialized, risking a kernel panic.
+- [High] Casting an offset byte array pointer to `__le32 *` and dereferenci=
+ng it causes an unaligned memory access.
+--
+
+--- Patch [1]: [PATCH] dmaengine: pl330: fix autosuspend cleanup during rem=
+oval ---
+commit e8b4012da1e87845c5bb71ff8b0d6b5e60fae048
+Author: Guangshuo Li <lgs201920130244@gmail.com>
+
+dmaengine: pl330: fix autosuspend cleanup during removal
 
 pl330_probe() calls pm_runtime_use_autosuspend(), but pl330_remove()
 does not call the matching pm_runtime_dont_use_autosuspend() when
-removing the device.
+removing the device. If the autosuspend delay is set to a negative value
+while autosuspend is enabled, the runtime PM core increments usage_count
+to prevent runtime suspend.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
-
-Add the missing pm_runtime_dont_use_autosuspend() call before restoring
-the runtime PM usage reference in the remove path.
-
-This issue was found by manual code inspection.
-
-Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
----
- drivers/dma/pl330.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 25ba84b18704..8baadd104719 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -3204,6 +3204,7 @@ static void pl330_remove(struct amba_device *adev)
- 	struct dma_pl330_chan *pch, *_p;
- 	int i, irq;
- 
-+	pm_runtime_dont_use_autosuspend(&adev->dev);
- 	pm_runtime_get_noresume(pl330->ddma.dev);
- 
- 	if (adev->dev.of_node)
--- 
-2.43.0
+> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+> index 25ba84b187041..8baadd1047193 100644
+> --- a/drivers/dma/pl330.c
+> +++ b/drivers/dma/pl330.c
+> @@ -3204,6 +3204,7 @@ static void pl330_remove(struct amba_device *adev)
+>  	struct dma_pl330_chan *pch, *_p;
+>  	int i, irq;
+> =20
+> +	pm_runtime_dont_use_autosuspend(&adev->dev);
+>  	pm_runtime_get_noresume(pl330->ddma.dev);
+> =20
+>  	if (adev->dev.of_node)
 
+[Severity: High]
+This isn't a bug introduced by this patch, but does the IRQ handler access
+hardware registers unconditionally without checking if the device is active?
+
+drivers/dma/pl330.c:pl330_irq_handler() {
+    if (pl330_update(data))
+        return IRQ_HANDLED;
+    ...
+}
+
+drivers/dma/pl330.c:pl330_update() {
+    ...
+    val =3D readl(regs + FSM) & 0x1;
+    ...
+}
+
+If a spurious interrupt occurs or an interrupt is in-flight while the devic=
+e is
+runtime suspended, pl330_update() unconditionally reads the FSM register. S=
+ince
+the device clock is disabled during suspend, could accessing unclocked regi=
+sters
+result in an asynchronous bus fault on ARM architectures, leading to a syst=
+em
+crash?
+
+[Severity: High]
+This is a pre-existing issue, but are the dynamically allocated dma_pl330_d=
+esc
+descriptors in the desc_pool leaked when the driver unbinds?
+
+drivers/dma/pl330.c:add_desc() {
+    ...
+    desc =3D kzalloc_objs(*desc, count, flg);
+    ...
+}
+
+During probe and normal operation, add_desc() dynamically allocates batches
+of descriptors. However, the driver's teardown functions pl330_remove() and
+pl330_del() completely fail to iterate over the desc_pool or the channel li=
+sts
+to free these dynamically allocated descriptors:
+
+drivers/dma/pl330.c:pl330_del() {
+    ...
+    dmac_free_threads(pl330);
+    dma_free_attrs(pl330->ddma.dev, ...);
+}
+
+Does this cause a permanent memory leak of all descriptors each time the de=
+vice
+is unbound?
+
+[Severity: High]
+This is a pre-existing issue, but is the peripherals array leaked during
+device removal?
+
+drivers/dma/pl330.c:pl330_probe() {
+    ...
+    pl330->peripherals =3D kzalloc_objs(*pch, num_chan);
+    if (!pl330->peripherals) {
+    ...
+}
+
+In pl330_probe(), memory for the pl330->peripherals array is dynamically
+allocated using kzalloc_objs(). However, neither the teardown loop in
+pl330_remove() nor the cleanup function pl330_del() calls
+kfree(pl330->peripherals).
+
+Since the allocation is not managed via devres, is the array permanently le=
+aked
+upon driver unbind?
+
+[Severity: High]
+This is a pre-existing issue, but does a debugfs file creation lead to a
+Use-After-Free upon unbind?
+
+drivers/dma/pl330.c:init_pl330_debugfs() {
+    debugfs_create_file(dev_name(pl330->ddma.dev),
+                        S_IFREG | 0444, NULL, pl330,
+                        &pl330_debugfs_fops);
+}
+
+The debugfs file is created in the debugfs root but never removed during
+pl330_remove(). When the device unbinds, devres frees the pl330 struct, but
+the debugfs file remains.
+
+If userspace reads the file afterwards, does it trigger a Use-After-Free ke=
+rnel
+panic?
+
+[Severity: High]
+This is a pre-existing issue, but is the IRQ handler registered before the
+driver's synchronization primitives and tasklets are initialized?
+
+drivers/dma/pl330.c:pl330_probe() {
+    ...
+    ret =3D devm_request_irq(&adev->dev, irq, pl330_irq_handler, 0,
+                           dev_name(&adev->dev), pl330);
+    ...
+    ret =3D pl330_add(pl330);
+    ...
+}
+
+The hardware is taken out of reset and its IRQ is immediately requested.
+However, the driver's primary spinlock and tasklet are not initialized until
+pl330_add() runs later in the probe sequence:
+
+drivers/dma/pl330.c:pl330_add() {
+    ...
+    spin_lock_init(&pl330->lock);
+    ...
+}
+
+If an interrupt fires during this window (e.g., a pending interrupt from be=
+fore
+kexec), pl330_irq_handler() will lock an uninitialized spinlock and schedul=
+e an
+uninitialized tasklet. Does this risk a kernel panic?
+
+[Severity: High]
+This is a pre-existing issue, but does casting an offset byte array pointer
+to __le32 * and dereferencing it cause an unaligned memory access?
+
+drivers/dma/pl330.c:_execute_DBGINSN() {
+    ...
+    val =3D le32_to_cpu(*((__le32 *)&insn[2]));
+    ...
+}
+
+The code accesses the 3rd byte of the insn byte array. Because insn is a 6-=
+byte
+array allocated on the stack (e.g., in _stop()), &insn[2] is offset by 2 by=
+tes
+from the base pointer.
+
+Does dereferencing this unaligned pointer as a 32-bit value violate C align=
+ment
+rules and trigger an alignment fault on architectures that do not support
+unaligned accesses in hardware?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808094452.2752=
+443-1-lgs201920130244@gmail.com?part=3D1
