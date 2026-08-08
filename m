@@ -1,137 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041E1165F1A
-	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 11:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2B37E30C
+	for <dmaengine@vger.kernel.org>; Sat,  8 Aug 2026 11:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786187798; cv=none; b=aDdQaHEP8O0V3WWR3xroiC4RXU5O0FjC9wx4VrJcwAT3K7yUZ3tch8vpTMWaW+5dZHO3N2+WMF9YJR9EaM7qljTyguhF+BNuut8Fxv/p2Hq0eXi4vUkY8An8bkFFheNZKDZeJhl1qAnyQq1gmn1ctd+o7DOAKpw0SJVaH8YfnHo=
+	t=1786188178; cv=none; b=DDLG7rvoWZ06/9hWMHgRaC2ujAEYDur1qHgV+wCxCMx5hGsrgSzh+zamsuYI0jvXKNeLMfZEVVMFrDFxxXnDkMENGraC8temxK1bKLt5nbXfv3KRY3Uw1BB+x+jWzNcG/HxNeNMaE7mJrbxqM69uWEQTi1ozCuGYalyicnx4FVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786187798; c=relaxed/simple;
-	bh=a0cWqfnyfiAw7xF63zeFhiJmIaX0TcZLa4wRn+LtnpY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=irT1W4PmCmB3IiRQpv9MGCoM8WPSB0QM9r83uUIDbhIjJe/yykCjVSqghz3lQEInMJQ/vyOKTFg281E1DNu7tOQczsIgXgocT1+ipvwZpMVPMCNeWmdDvJo2uMaJYEPb+I91cJhC7Rct0CWVyzxg/A7bfxxA33GUG5TmXi8DEBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IPPWPfBb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786188178; c=relaxed/simple;
+	bh=YmTG5vVK/FTTLwiYHkfLbcJlBmEgt7LnpaAC7mAvf8I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oG5K9y6VuFF8BuWtZgX1Tzl4QabiKKypRpDzD7U8dK4Ty1zCA97k6/6NuCtK+BTb4H1W2EeGKzyEdSRluzBC61be1upsyLsOreJrg6/Hv4YaGFZfzt4CGOe1mnspCu2+/06PRkCQ7ijeQ/dvObALqJO924Jcq7PkQes0xWMYEpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ByaBF6Iv; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IPPWPfBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575E21F000E9;
-	Sat,  8 Aug 2026 11:16:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786187796;
-	bh=4kSbP1r+mMY98n2tgOwS289VJGAkIZXtQtbR5hXau2I=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IPPWPfBb3nRj/oIBQn8F97IliXWKuKKTClmiPEhNq3Xg8joK/yD+W6umLfIrECdMK
-	 Lnh1QachwcWkFCS+VgpqzQwRZ3mVQ2/cY/zSzaDmGro2hvafBpt+p1ReWNK7jBev13
-	 WE89pyxiNL8JP4ZoZ0XkyhjNhN9A14kns52XYhHDOQs+RK6shSedz7mYj8JAydi2Pl
-	 vIq8TylqHQ2SqSBVZId/9rTc3j1/O7PYGcifh0DIbGp85C1xKXeAo978MZd1pbeUWI
-	 cvCVL01BAH+cQlsrGLGvYZNJSt0QzCOUqu1lHj4JS3KTMXGbSLWh8HDwAXeSrl6+4W
-	 Sl4aQb0UlG65g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: qcom-bam-dma: fix autosuspend cleanup during
- removal
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Guangshuo Li" <lgs201920130244@gmail.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260808110642.2770355-1-lgs201920130244@gmail.com>
-References: <20260808110642.2770355-1-lgs201920130244@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 08 Aug 2026 11:16:35 +0000
-Message-Id: <20260808111636.575E21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByaBF6Iv"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ceaf8a1265so6673655ad.2
+        for <dmaengine@vger.kernel.org>; Sat, 08 Aug 2026 04:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786188177; x=1786792977; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=MEwID2P1yRmU8Feq+ODsi1JwIGprGXNdUwcJktuS+tc=;
+        b=ByaBF6Iv7LYHgN28kQY44npWWC3vHDwDY+kSHIWm12IKGjmvgfFjw14t7xqflCi6FP
+         cjWbUjwBMuySXxYhNhql9lS5TQ7ql3sM5CZuR9wjm8gn0jnOXTDrkeWFopmt+HJcmcKt
+         b8CPYMnKP43GBVhK7aXXqc4sWk3dx0qlP86MXq2AfqG+7XN0ffP869YJwDA3oTrC9X6o
+         839TPXdf7bJ0PLT004h3F5O6slPPye8Bj0VH8xS8rWideciyN8y5DVW7uve+TsopUO72
+         lirD5HttjqYCj2o3mc+tCBOoWAXr3S/gxquo+c/dtLR5I0GOitaGnmrUU5IQVikjF9WA
+         0TFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786188177; x=1786792977;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=MEwID2P1yRmU8Feq+ODsi1JwIGprGXNdUwcJktuS+tc=;
+        b=rQ77iM1nK8oyHZfUkBJjneMkuX21aAaL0x+2HV2KN2xcgOn4+6kZRluStoM7Qay6SM
+         mDGfhm1AZ0vJu63Ah90I1675QWQfvxvR0nV8pWL5IZNvLz35fKCndrrBE6N/YYMzU7o7
+         sGj8Wjx/iAn9OcAT0j2ZL48qC2QRFOoRwm5RGwLOOXqivlrD1O1ycWNGVY10sVdKjTvw
+         RnZ4fwaCYjGZga+lsKgxXFCZfEkD93Dz56qjags1vCJ0VRFv/orAh/SNYBxmlbn6CrA7
+         LyHYQKirCV67mvAmtvVesrd5gHuhzqEi6f2HV2PZD9z5DWRJglUgFIwPErsUtDEKu2Sk
+         0Qhw==
+X-Forwarded-Encrypted: i=1; AHgh+RqLiH77E+2vNVqSx56TuW0Ce6G5rzC+SD74x5e24l5wg2mr590WgFcHrlSvQIFC/6ohY9I4wLMFcWQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz30NzLHLQeD6JOsDt8gKDSu5+32cf/goQBS8KpNjQl78FTs00l
+	rkjVeG6RM9a6kWUQ0JwFBKIVU1kwAEC2UUJ62F9RhLYGCGEFZPaC7MU+PIkEAH194q8=
+X-Gm-Gg: AR+sD11NIgEWb6G283cHWzwGywoNNdJ25UWb+X8+zXevT0po48Vbve0nxvwd+3CpWiK
+	bkIVzOY6jjDe6A4PAMccMqTI/1Pm8fTINWewOrZ1Rv3VI2lgmfZvLj5oU7MZiRU8cyC2yUfyAyx
+	3nxr2MWDnjt64MubrhgJjj+wcuVzX7xXL3l+th3J71jXaWRndedqH2JFh1GpImDEFZyiwtrZBtU
+	5Tkv6f+wnQqUiaK4aYeSCzg0T7EUZDSaHYI1YdQ6cHatgxuxTVTpbvsuMDGOnrmTpFxPEAf3dxg
+	4N7UR0y7WfLcLu8e1Pvo/L9i2TtbYwHu8fqoNOUNS1lhjNl8rNv+l0+ckyL3XWiUYqwnQ84X/qE
+	t9aAi/aGuHG3DX6MPkn+OYWctSOqGzaEhdoYKGXa5GbXxSAg7Ct8ocK5heMfF1kCsAKLemqQqSA
+	uhyZwqTu+k/K5olCvwQY1PgilRuTLCV6X5vvtmvYNCjKI=
+X-Received: by 2002:a17:902:ef4e:b0:2cf:b68a:2050 with SMTP id d9443c01a7336-2d0ca775824mr364281175ad.15.1786188176638;
+        Sat, 08 Aug 2026 04:22:56 -0700 (PDT)
+Received: from lgs.. ([2001:250:5800:1000::f280])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d14dbeeda6sm18048745ad.42.2026.08.08.04.22.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 08 Aug 2026 04:22:56 -0700 (PDT)
+From: Guangshuo Li <lgs201920130244@gmail.com>
+To: Sinan Kaya <okaya@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Guangshuo Li <lgs201920130244@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] dmaengine: qcom: hidma_mgmt: fix autosuspend cleanup on probe failure
+Date: Sat,  8 Aug 2026 19:20:43 +0800
+Message-ID: <20260808112043.2781244-1-lgs201920130244@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+hidma_mgmt_probe() calls pm_runtime_use_autosuspend(), but its failure
+path does not call the matching pm_runtime_dont_use_autosuspend()
+before disabling runtime PM.
 
-Pre-existing issues:
-- [High] Incorrect teardown sequence in `bam_dma_remove()` causes unclocked=
- hardware accesses, tasklet races, and unbalanced clock disables.
-- [High] The IRQ handler reads hardware registers before verifying the devi=
-ce is active, risking a crash on spurious interrupts.
---
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during cleanup, this reference is not dropped and usage_count remains
+unbalanced.
 
---- Patch [1]: [PATCH] dmaengine: qcom-bam-dma: fix autosuspend cleanup dur=
-ing removal ---
-commit d2172d870f372599d3763db15e5350f372805ea8
-Author: Guangshuo Li <lgs201920130244@gmail.com>
+Add the missing pm_runtime_dont_use_autosuspend() call to the probe
+failure path before disabling runtime PM.
 
-dmaengine: qcom-bam-dma: fix autosuspend cleanup during removal
+This issue was found by manual code inspection.
 
-This commit adds a missing pm_runtime_dont_use_autosuspend() call in
-bam_dma_remove() to properly drop the autosuspend usage count. This prevents
-unbalanced usage counts if the autosuspend delay is set to a negative value.
+Fixes: 7f8f209fd6e0 ("dmaengine: add Qualcomm Technologies HIDMA management driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+---
+ drivers/dma/qcom/hidma_mgmt.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 1bb26af0405f3..05a3b1f9e0c23 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -1401,6 +1401,7 @@ static void bam_dma_remove(struct platform_device *=
-pdev)
->  	struct bam_device *bdev =3D platform_get_drvdata(pdev);
->  	u32 i;
-> =20
-> +	pm_runtime_dont_use_autosuspend(&pdev->dev);
->  	pm_runtime_force_suspend(&pdev->dev);
+diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+index 4805ce390ffa..470c88f36d25 100644
+--- a/drivers/dma/qcom/hidma_mgmt.c
++++ b/drivers/dma/qcom/hidma_mgmt.c
+@@ -168,7 +168,11 @@ static int hidma_mgmt_probe(struct platform_device *pdev)
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, HIDMA_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_set_active(&pdev->dev);
+-	pm_runtime_enable(&pdev->dev);
++
++	rc = devm_pm_runtime_enable(&pdev->dev);
++	if (rc)
++		return rc;
++
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
+ 	virtaddr = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+@@ -310,7 +314,6 @@ static int hidma_mgmt_probe(struct platform_device *pdev)
+ 	return 0;
+ out:
+ 	pm_runtime_put_sync_suspend(&pdev->dev);
+-	pm_runtime_disable(&pdev->dev);
+ 	return rc;
+ }
+ 
+-- 
+2.43.0
 
-[Severity: High]
-This isn't a bug introduced by this patch, but does calling
-pm_runtime_force_suspend() here break the teardown sequence?
-
-If the device is active, pm_runtime_force_suspend() forcefully disables the
-BAM hardware clock. The driver then immediately accesses hardware via
-writel_relaxed() and bam_dma_terminate_all() in bam_dma_remove(), which
-can trigger a synchronous bus error:
-
-drivers/dma/qcom/bam_dma.c:bam_dma_remove() {
-    ...
-    pm_runtime_force_suspend(&pdev->dev);
-    ...
-    /* mask all interrupts for this execution environment */
-    writel_relaxed(0, bam_addr(bdev, 0, BAM_IRQ_SRCS_MSK_EE));
-    ...
-}
-
-Additionally, does this cause unbalanced clock disables?
-pm_runtime_force_suspend() drops the clock enable count to 0, which would
-cause the subsequent clk_disable_unprepare(bdev->bamclk) at the end of
-bam_dma_remove() to decrement the count to -1 and trigger a clock
-framework warning.
-
-> =20
->  	of_dma_controller_free(pdev->dev.of_node);
-
-[Severity: High]
-This is a pre-existing issue, but does the IRQ handler read hardware regist=
-ers
-before verifying the device is active?
-
-In bam_dma_irq(), process_channel_irqs() is called before pm_runtime_get_sy=
-nc():
-
-drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
-    ...
-    srcs |=3D process_channel_irqs(bdev);
-    ...
-    ret =3D pm_runtime_get_sync(bdev->dev);
-    ...
-}
-
-Inside process_channel_irqs(), it reads hardware registers:
-
-drivers/dma/qcom/bam_dma.c:process_channel_irqs() {
-    ...
-    srcs =3D readl_relaxed(bam_addr(bdev, 0, BAM_IRQ_SRCS_EE));
-    ...
-}
-
-If the IRQ handler executes due to a spurious interrupt or shared line while
-the device is in a runtime-suspended state (and its clocks are off), could
-reading the BAM register cause a bus fault or crash?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260808110642.2770=
-355-1-lgs201920130244@gmail.com?part=3D1
