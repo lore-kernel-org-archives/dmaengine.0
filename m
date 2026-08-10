@@ -1,63 +1,63 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43049435526
-	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046143553D
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786385552; cv=none; b=RGX/z9Re8ZkeXgFXU8a0LINOeZbJdNzmZCoJ/xUB+mI+xR4uvt0Vg8JjwEfs3LcAuagAcjBgIIZLXJf9RxMzbwfN4gKGpmJM2IcElHgsKCsJD+7dG3mg0NffpB0I3GJehwcOFr043wJj7aDGutA6SosgnKhAc9cr8uZlv0i3PqI=
+	t=1786385555; cv=none; b=qDbYA5XKqxGJSw0Zsh8yQcAv+zYI9YNIeBS78C/8ewxCwZc5iim7TZF3oyR3FXcdzj2BRJEkVfysi/J/1ldOHs+VJwVOLljYPyJrgTH58VMr+pAg5jHzRBGZOX9SvP11Z+cJ99aXMitnjxbHjFP0U9HVZ1GzDQfNvk5lsUzzTeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786385552; c=relaxed/simple;
-	bh=wwLFXnu6wU+2q9X0yV+5+Pg9Fs+zv91K8/Zj4nee7yE=;
+	s=arc-20240116; t=1786385555; c=relaxed/simple;
+	bh=NmPTWKWU/XXWJnxBrOM9+TA4gg2maSIZspzw1qRN4Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akVApk8efoZOeL7Ghny7T36rz87xDMzL4ZEmNn0visySeBcSjhX8i9KEJ8Oia5ZXq4MmFJG1YEu4u+l5ezQl9D5QuhjsW4irxmYsytL2MdwyXpdk57nI3kElvzY6vGHV+z90y1cvFkkHC1VZrlObGPbrj4jC1WfTVy+EEBT4Pms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQWDZTMR; arc=none smtp.client-ip=209.85.216.53
+	 MIME-Version; b=WRAWOPQZJX+5rCKmkvbheqjg+THWrsAfzBpdcYBN1Gc6iKKrtzxgJa2mFJ1RZOh1dSrnKLIrhnNbuyzD98Ut4NEgqQvUi6pSaq1Khldr5ADspahDkpyUmXK17iDi8h+PQq+U6X+n7ML+meZsphntIzHi/ZRxcAqfab8/kl7kFOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BNHkPm/O; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQWDZTMR"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-38e58034d05so2302241a91.2
-        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:12:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BNHkPm/O"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38de840f2f0so1560059a91.0
+        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:12:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786385551; x=1786990351; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786385554; x=1786990354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=oxUXaFX3//5gZlFn4j1A0nGnaMNCEpwg1qcm0FpwvYU=;
-        b=eQWDZTMRxit6YRcR+E9FzscKZhSxk+JjnTXHkACryWpjxdFeZ/CbI34GUoDy85MeL7
-         KJYIbIkDh89fV0gncK6b3GYLUZyiLCtzKRciz9HSTDIM605KGQUQ4m32xOqRoxsGjv/1
-         b6vqjfCkxprJCYR9zt7b8zEm7IyjlekiEonG01g5vYO5L8d0OVg0aYJzy7R6wgILeJA7
-         Qlbg70ts9twjvig3itcX9gyyhlHwXhq6IhHhAZDEb7qLCpt24qks30kYvGmV5BF2Jk1P
-         5SK0Vec7I0cnuWKSEof4U2FSP9QX//X3SO92/vnQXT/D8Q5JCDWI+T0MHSrvss4dJJYL
-         bKvw==
+        bh=jhv9jwlBVkN0UhJGwK19V7QRpEro4v/LDfkYXX13aoI=;
+        b=BNHkPm/O4zIhwUS5xEeiTmRXPNG0h2+g6GZK9+Q7ssR01Jk3lNIUPFdv8LFJYfhLdD
+         ORL/9Fp164Cn6LGHaAx2HGVtdSkqMo5vcmnMz0meKOw29cLc/senYqC8XPqM6IWnzl7O
+         wrTA/VXgxuUMIvCkyfYC2+xfCWQ5zkjN3pJo2zt+Fkh8DB4vgraq20cUuIcOpPIX/ToN
+         QbWaksunNRKJ6az5KANT8SR8q69ERwgHTBDFYSzzT8dgXTxRRIhEjX4ovaVDY4LIaxbB
+         x14OPsiPfLhJQG0q2YjqS2/+llxXDir4zIi0/xhpwwFaGkoN7rW5BSYfH0VW/iG3+3D7
+         lAdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786385551; x=1786990351;
+        d=1e100.net; s=20251104; t=1786385554; x=1786990354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=oxUXaFX3//5gZlFn4j1A0nGnaMNCEpwg1qcm0FpwvYU=;
-        b=DR8wRjN0gWLbroloFPifbCTad6Zfe9BEXwy9gR9xJg4FcJalJEzI28k7H528pdZdwt
-         rj0tIGHHabu+oaHI8ilQjhav41ur/Ey/UeUZC5iOBjEQ+5Hdt6Z1jFbpPOFje2uP5Zr4
-         UcuwuC6xnCLu/KwRUGSb3A/P3ZM1ZlaDwtLJc1pmkGAkyEJbJurE/20zfxq2DtkF/rFb
-         xyCqIJAhC2UVZRwNh3hX/iU1GtIjn2ZWX/F4bRXs6JmnqraEdvOvEul+PGHRHLoJN1k+
-         3qOx0a3vqxjdEox+3l89P6/bzjkrIvDM5ZeMuloV5AqKLkdMnvXTKUWFq82eCqV4hkL9
-         JWKw==
-X-Forwarded-Encrypted: i=1; AHgh+Rq8SIEHPLAM0nYqprMKSEAnsj3olY//IMLRQRnYlTzY7vKLHSNV/T71iGhvwm4+1EXsHWToV3++Vb8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEcAKI+qRH6J32ChdxiB/jPaUO7rDP6oIl42jfyEb698GXZXU/
-	gvw6vseXckZkS45ThhPBAEkinxYt5lrwpwyxL9Fcw1OTfA7Yzd/HBuG2
-X-Gm-Gg: AR+sD11Deqqq8eNARQDaIslJdRdBWGEyRnYdjnFvB938SJr3Pb/6k3a5wBdCoT/4FRE
-	r44hUA2mW1zWO8HA1uQxczMAy4dQyy6J6hmaYKqHUF3RGzxG7zHZ9VGfbzObpOiavXYFeembtg3
-	yoUhTH12bu4XFSj1vmNKJpqgnl1Vx9f36XUKqBJL/bdWtJexR5A8bDHyH7CkZhjLy9CNaEsC7SF
-	T7QUYtcDMiNBFLJ5E5HqQQwzoeSDT8GkXSc0RpSKicHfywQhjO8xfY4MjIaUqIYj+xTIVKAzZuQ
-	3wmGJZUHOJhjL7CN//alEUYmZj9MSj4rPwTYUxbg1r0tOGvKVUzRSJIuG6SixvTpx9ZfYJ4Dkug
-	5LZEI5U08usy/DvE4dTrDEN3DhD2XQZ8aXyTQsuS3Q+xCXD1/ds6bSEiVF9HIjAJ7KWSIMXhuHZ
-	vwucYRodfMyhMA/42/LSQvQoD1NsmXs8KRdOFeXlnOpDOh7cPD6ICMv+xSrtrQwY0=
-X-Received: by 2002:a17:90b:28cf:b0:381:11eb:d78e with SMTP id 98e67ed59e1d1-3903c5d321dmr44037109a91.14.1786385550593;
-        Mon, 10 Aug 2026 11:12:30 -0700 (PDT)
+        bh=jhv9jwlBVkN0UhJGwK19V7QRpEro4v/LDfkYXX13aoI=;
+        b=RQr5wERONpqg3I3q9ayvR19sjMyk0mi+xEZ5ge0JohNvE7w9eeln/dVunr3/lz/i31
+         5nKSKKFLUl12X0wKg/9FTNUhx+URJW/NkP7Ep0Z4C9Fj6CpkjbfyEyqwh0ydRJKChW+F
+         itKW6dXfAfZ6vcr+2+kEGIbGVIF9nCUmKfAhwFWkg1he+VkFyAkLyWWsR3l0HpEWkG11
+         47sYBh51cGrlX3o5pIRM2rHBcoxd73Ktjr/ZcTsZyL4l+kEc94deIaASeRjgoPKU5L9e
+         mBhChKTcwtGV7aGLQiq2VuOEr32l4jYawYQtlurkeZttKOH7IETPd1jeYXPZFAoy3NfY
+         /vBw==
+X-Forwarded-Encrypted: i=1; AHgh+RpmDBmo5t1xn4Xufp6poiv2RHueDQ3kkmNVpQ27GCpcAb/+63E8OZu0rtASqOsHPiBTUnpeo73VVCg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDsUxy48fg7i2JpEn+kRSVEd5IcRpp3TwZPeKmAli0wQ6MLbiA
+	mI8QE4TbyJbKe26oKZ1A7SPZtxPu77KXgoVk3MreNv9m6ij7bq59z0cN
+X-Gm-Gg: AR+sD10o3PxJH3voZ4yF0SRZYexR2HOJsgKzafQSnyyFUUuyBFU0mboGp9RboMtR0xc
+	7FbIJ4WyRwCyaruKYe2caZTvOtoQgKcFo2pLXg7Bpv22Rv4ubw9geFMpqaKMdglTwLlFyqmZp6w
+	iGovs5vjKLfO0yelVSSwAk8YPgW8hP1E53vw+5LBZqNbdfULMFybcEVaxPvz9nDRoDqeuwGp/Jm
+	llTDS2s2ipVrR+aixFwnTBhlhs1Tdz7kjdkLXIKJbIkVYpDjc5YBU85vYXT4y3gUrL4PlRpAOSz
+	SuDdCjDoYBIIQfxpAKQdQNVfA7SvgPDhUUEl0VvUFHHwgxstK3JhZYyAtpKFnW/fw4s0DoR83kc
+	9nPo+gLvycwejugD5LF6nUVjhihSRoTxrHtxswacA9MUhPC4T12Gcw3jCORAfXgnukt+Glxsr4H
+	/jbZ/P9gmx9PquQ+eSsVMlMfF9Ao1GUk38rpx834PLoLEnyz1EdX4FU3yydQ+P3Gg=
+X-Received: by 2002:a17:90b:5444:b0:381:1f51:1ff0 with SMTP id 98e67ed59e1d1-392821fc107mr21956496a91.2.1786385553481;
+        Mon, 10 Aug 2026 11:12:33 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fa9:fa00:b1a9:6513:83c6:1d23])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.12.29
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.12.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 11:12:30 -0700 (PDT)
+        Mon, 10 Aug 2026 11:12:32 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -65,12 +65,10 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v3 17/34] dmaengine: ste_dma40: convert per-channel tasklet to dmaengine BH
-Date: Mon, 10 Aug 2026 11:09:18 -0700
-Message-ID: <72495a21d3eb7ef735400e1a52deb24f3e70c944.1786384168.git.allen.lkml@gmail.com>
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH v3 18/34] dmaengine: xgene-dma: wire descriptor cleanup to dmaengine BH
+Date: Mon, 10 Aug 2026 11:09:19 -0700
+Message-ID: <29f97cc894a9c6fcd4aa1f2981850476a963db52.1786384169.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1786384168.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com> <cover.1786384168.git.allen.lkml@gmail.com>
@@ -87,67 +85,93 @@ The handler continues to run in softirq context while dmaengine owns
 the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/dma/xgene-dma.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 0d9ffa3e2663..e6dfa1fc5e5a 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -461,8 +461,6 @@ struct d40_base;
-  * @phy_chan: Pointer to physical channel which this instance runs on. If this
-  * point is NULL, then the channel is not allocated.
-  * @chan: DMA engine handle.
-- * @tasklet: Tasklet that gets scheduled from interrupt context to complete a
-- * transfer and call client callback.
-  * @client: Cliented owned descriptor list.
-  * @pending_queue: Submitted jobs, to be issued by issue_pending()
-  * @active: Active descriptor.
-@@ -489,7 +487,6 @@ struct d40_chan {
- 	bool				 busy;
- 	struct d40_phy_res		*phy_chan;
- 	struct dma_chan			 chan;
--	struct tasklet_struct		 tasklet;
- 	struct list_head		 client;
- 	struct list_head		 pending_queue;
- 	struct list_head		 active;
-@@ -1587,13 +1584,13 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 	}
- 
- 	d40c->pending_tx++;
--	tasklet_schedule(&d40c->tasklet);
-+	dmaengine_schedule_bh(&d40c->chan);
- 
+diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
+index fa1173e49900..bdeed908e37a 100644
+--- a/drivers/dma/xgene-dma.c
++++ b/drivers/dma/xgene-dma.c
+@@ -260,7 +260,6 @@ struct xgene_dma_desc_sw {
+  *	These descriptors have already had their cleanup actions run. They
+  *	are waiting for the ACK bit to be set by the async tx API.
+  * @desc_pool: descriptor pool for DMA operations
+- * @tasklet: bottom half where all completed descriptors cleans
+  * @tx_ring: transmit ring descriptor that we use to prepare actual
+  *	descriptors for further executions
+  * @rx_ring: receive ring descriptor that we use to get completed DMA
+@@ -280,7 +279,6 @@ struct xgene_dma_chan {
+ 	struct list_head ld_running;
+ 	struct list_head ld_completed;
+ 	struct dma_pool *desc_pool;
+-	struct tasklet_struct tasklet;
+ 	struct xgene_dma_ring tx_ring;
+ 	struct xgene_dma_ring rx_ring;
+ };
+@@ -975,9 +973,10 @@ static enum dma_status xgene_dma_tx_status(struct dma_chan *dchan,
+ 	return dma_cookie_status(dchan, cookie, txstate);
  }
  
--static void dma_tasklet(struct tasklet_struct *t)
-+static void dma_tasklet(struct dma_chan *chan)
+-static void xgene_dma_tasklet_cb(struct tasklet_struct *t)
++static void xgene_dma_tasklet_cb(struct dma_chan *c)
  {
--	struct d40_chan *d40c = from_tasklet(d40c, t, tasklet);
-+	struct d40_chan *d40c = container_of(chan, struct d40_chan, chan);
- 	struct d40_desc *d40d;
- 	unsigned long flags;
- 	bool callback_active;
-@@ -1641,7 +1638,7 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	d40c->pending_tx--;
+-	struct xgene_dma_chan *chan = from_tasklet(chan, t, tasklet);
++	struct xgene_dma_chan *chan = container_of(c, struct xgene_dma_chan,
++						   dma_chan);
  
- 	if (d40c->pending_tx)
--		tasklet_schedule(&d40c->tasklet);
-+		dmaengine_schedule_bh(&d40c->chan);
+ 	/* Run all cleanup for descriptors which have been completed */
+ 	xgene_dma_cleanup_descriptors(chan);
+@@ -999,11 +998,11 @@ static irqreturn_t xgene_dma_chan_ring_isr(int irq, void *id)
+ 	disable_irq_nosync(chan->rx_irq);
  
- 	spin_unlock_irqrestore(&d40c->lock, flags);
+ 	/*
+-	 * Schedule the tasklet to handle all cleanup of the current
++	 * Schedule the bottom half to handle all cleanup of the current
+ 	 * transaction. It will start a new transaction if there is
+ 	 * one pending.
+ 	 */
+-	tasklet_schedule(&chan->tasklet);
++	dmaengine_schedule_bh(&chan->dma_chan);
  
-@@ -2815,7 +2812,7 @@ static void __init d40_chan_init(struct d40_base *base, struct dma_device *dma,
- 		INIT_LIST_HEAD(&d40c->client);
- 		INIT_LIST_HEAD(&d40c->prepare_queue);
+ 	return IRQ_HANDLED;
+ }
+@@ -1539,7 +1538,7 @@ static int xgene_dma_async_register(struct xgene_dma *pdma, int id)
+ 	INIT_LIST_HEAD(&chan->ld_pending);
+ 	INIT_LIST_HEAD(&chan->ld_running);
+ 	INIT_LIST_HEAD(&chan->ld_completed);
+-	tasklet_setup(&chan->tasklet, xgene_dma_tasklet_cb);
++	dmaengine_init_bh(&chan->dma_chan, xgene_dma_tasklet_cb);
  
--		tasklet_setup(&d40c->tasklet, dma_tasklet);
-+		dmaengine_init_bh(&d40c->chan, dma_tasklet);
+ 	chan->pending = 0;
+ 	chan->desc_pool = NULL;
+@@ -1556,7 +1555,7 @@ static int xgene_dma_async_register(struct xgene_dma *pdma, int id)
+ 	ret = dma_async_device_register(dma_dev);
+ 	if (ret) {
+ 		chan_err(chan, "Failed to register async device %d", ret);
+-		tasklet_kill(&chan->tasklet);
++		dmaengine_kill_bh(&chan->dma_chan);
  
- 		list_add_tail(&d40c->chan.device_node,
- 			      &dma->channels);
+ 		return ret;
+ 	}
+@@ -1579,7 +1578,7 @@ static int xgene_dma_init_async(struct xgene_dma *pdma)
+ 		if (ret) {
+ 			for (j = 0; j < i; j++) {
+ 				dma_async_device_unregister(&pdma->dma_dev[j]);
+-				tasklet_kill(&pdma->chan[j].tasklet);
++				dmaengine_kill_bh(&pdma->chan[j].dma_chan);
+ 			}
+ 
+ 			return ret;
+@@ -1790,7 +1789,7 @@ static void xgene_dma_remove(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < XGENE_DMA_MAX_CHANNEL; i++) {
+ 		chan = &pdma->chan[i];
+-		tasklet_kill(&chan->tasklet);
++		dmaengine_kill_bh(&chan->dma_chan);
+ 		xgene_dma_delete_chan_rings(chan);
+ 	}
+ 
 -- 
 2.43.0
 
