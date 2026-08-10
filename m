@@ -1,159 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CA038758D;
-	Mon, 10 Aug 2026 18:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6ED431E73
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786386438; cv=none; b=KX4f07he+0DS/sSKyVE5mPi+Y6vrdDMVyEzpBYLwyAjQdkNYm39Iyvt10L6hDHpJkyTyRP7HRKfIg6FeSm7RvgweFhMZ9yjiCP1lOy6Cztd+j+FSGFXkG4sdkOR8m4YpyDznUhYQ7bWXrU8MU/quxO9eMRlK6rpxvs1zzE/JhS4=
+	t=1786386440; cv=none; b=qOAivVCuMiNbrtPiJj2GLMHoel/KECXIj4ZiHhqgk4eakYvXngxKF+pxq0sdiVyN9KeBgXTzZiK5hh4eejhxwlLxXw9gZd7+eZKWBYCLZBQc5j5ofm/bABaethRjbE/qibvNo54nSho+QDLETSGg/J7czSQdJkxdYDCUUxFVOkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786386438; c=relaxed/simple;
-	bh=Trzq/A6TDBBYNMdTbFVtbRQmNnjaQky7Gs/Jb3IVAm8=;
+	s=arc-20240116; t=1786386440; c=relaxed/simple;
+	bh=TxE7/jR4LVQogNcXYvAb2FgrBigLBqbggDW0bJXnp30=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SQl+zuzQbQA92QMnQgbjPT/1nIvVBOJojoCKTdUTD0rIRssDIW7N8IJ8zY75uNfc/O3zv+JWWmGiaFY8o22/9qjlMlebt3blvulzkxJ/gQqiET/LUwoAfUR5bcU89VGl6dbxQXST2pPf2Wi8yW6/jGolzQ8VE3Uj6zDTtHobkaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UezxeJvC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=YPCfOXF+8vSyhKOR0iSWgzdX8Qvkbm5pq02eHNVSt3c0UBvcz4JO+HE5M63Eu53acFZoGL/N7+Y9UC9iEfC6JUZ9NkDpC0b4yfrkuwlza6onjYRDbNrdMaKRA56petCkQk+jmDry/g0z6Byfdy2WrjV3Osla2p0A71UQWaXbx0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AU0sqJ0v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UezxeJvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC14D1F000E9;
-	Mon, 10 Aug 2026 18:27:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AU0sqJ0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BF61F00A3A;
+	Mon, 10 Aug 2026 18:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786386437;
-	bh=LtG/rEnkaVf0pRypD+zveZZn219o5vvfAplNI3WC1Jc=;
+	s=k20260515; t=1786386438;
+	bh=cjnxoMrj81pXugt0pfPrP48nv2Z31W9xBlau2LvyLdo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=UezxeJvCuzfYmYc6HbT5d0H+g7xrEXxE2DFPHLP/ga0MedxdlFeHH5f1mNQVvhnoY
-	 zdJQa5/zIufJu3aDIeU5er9D48zA+BGstFjzxr3wIMXAuqWZvRb/ERsBmOSXFvGfwQ
-	 h6pxbPOX3zBW++2PVl9KaaO9t6NJKJv+BmzPXsYFYnB3p0+cgT4Y6eLxxUUsuycAfj
-	 qNiNrs47YxP2LfoSgQbHEIgNRBCz8r140td53FA/hm6AVozQlwb/zyqRbo+HnqhHam
-	 LYE8S+bwtOEnpeN76y9HWmebL0Aho/S43jKBBubfs5BlbWsdWf3NQSGZGhrpWocp3U
-	 GXIhiS6OZ72hQ==
+	b=AU0sqJ0vBWJTo4L3l/DjGLD/jnhfk8og+F0kHIU0YdEAXiq8IEEB7nZ43z4UOv2x/
+	 +UMfhu62grv5foWvIHUzLDpxUEZ8eANFzmOzDSArGI+0oHUExtcmovsqgU4U9Rb49S
+	 tkKerI0Oc90wYS0gmSNvUJCeS+jR5gvVZ+Appia6sa+1uvs9EDbDc/DhIQ3hDVIvLp
+	 vhOvfq5jB8vmvuuVy1ToFnIUQnFUo9Biap3SDfq1NN5zHW6+14Z52MRdRqJUhKymtP
+	 iktnxoCGO+MUyGYJB1TgLsNQwEESoQg9Zggg3ItVHMRQ16PYhD/NJl8u5NSkV6rnW4
+	 PQtNrI3V5KP1w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 13/34] dmaengine: mxs-dma: use dmaengine BH
- scheduling
+Subject: Re: [PATCH v3 09/34] dmaengine: ioat: convert cleanup tasklet to
+ dmaengine BH
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, imx@lists.linux.dev
-In-Reply-To: <3dec314c8878181bbf9bd8bdf6d222c435643fc0.1786384168.git.allen.lkml@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <00e0c9c2fea2a0b00a2f3a91bcea240c6021648a.1786384168.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com>
  <cover.1786384168.git.allen.lkml@gmail.com>
- <3dec314c8878181bbf9bd8bdf6d222c435643fc0.1786384168.git.allen.lkml@gmail.com>
+ <00e0c9c2fea2a0b00a2f3a91bcea240c6021648a.1786384168.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Aug 2026 18:27:15 +0000
-Message-Id: <20260810182716.DC14D1F000E9@smtp.kernel.org>
+Date: Mon, 10 Aug 2026 18:27:17 +0000
+Message-Id: <20260810182718.33BF61F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] The driver does not kill the deferred bottom-half work during chan=
-nel teardown or error paths, nor does it provide a device_synchronize callb=
-ack, leading to a potential use-after-free.
-- [High] Requesting the IRQ before enabling the device clock can result in =
-a synchronous external abort and bus hang.
+- [High] The channel timer can be inadvertently re-armed during the teardow=
+n sequence in `ioat_stop()`, leading to a use-after-free when the timer fir=
+es after the channel resources are freed.
 --
 
---- Patch [13]: [PATCH v3 13/34] dmaengine: mxs-dma: use dmaengine BH sched=
-uling ---
-commit 84e84c7d902dd9157e789fe8d760954306bc43d6
+--- Patch [9]: [PATCH v3 09/34] dmaengine: ioat: convert cleanup tasklet to=
+ dmaengine BH ---
+commit a9e2b8b1c21fd37939157d4bfd1e3ccc9c58d182
 Author: Allen Pais <allen.lkml@gmail.com>
-dmaengine: mxs-dma: use dmaengine BH scheduling
 
-Replace the per-channel tasklet with the shared dmaengine BH helper.
-The handler continues to run in softirq context while dmaengine owns
-the common scheduling and teardown mechanism.
+dmaengine: ioat: convert cleanup tasklet to dmaengine BH
+   =20
+This commit replaces the per-channel tasklet with the shared dmaengine
+BH helper. The handler continues to run in softirq context while dmaengine
+owns the common scheduling and teardown mechanism.
 
-> diff --git a/drivers/dma/mxs-dma.c b/drivers/dma/mxs-dma.c
-> index 7acb3d29dad30..149ac402f7b4b 100644
-> --- a/drivers/dma/mxs-dma.c
-> +++ b/drivers/dma/mxs-dma.c
+> diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+> --- a/drivers/dma/ioat/dma.c
+> +++ b/drivers/dma/ioat/dma.c
+
 [ ... ]
-> @@ -386,8 +385,8 @@ static irqreturn_t mxs_dma_int_handler(int irq, void =
-*dev_id)
->  		dma_cookie_complete(&mxs_chan->desc);
->  	}
+
+> @@ -161,11 +161,11 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
+>  	/* flush inflight timers */
+>  	timer_delete_sync(&ioat_chan->timer);
 > =20
-> -	/* schedule tasklet on this channel */
-> -	tasklet_schedule(&mxs_chan->tasklet);
-> +	/* schedule BH on this channel */
-> +	dmaengine_schedule_bh(&mxs_chan->chan);
+> -	/* flush inflight tasklet runs */
+> -	tasklet_kill(&ioat_chan->cleanup_task);
+> +	/* flush inflight BH runs */
+> +	dmaengine_kill_bh(&ioat_chan->dma_chan);
 > =20
->  	return IRQ_HANDLED;
+>  	/* final cleanup now that everything is quiesced and can't re-arm */
+> -	ioat_cleanup_event(&ioat_chan->cleanup_task);
+> +	ioat_cleanup_event(&ioat_chan->dma_chan);
+
+[Severity: High]
+This is a pre-existing issue, but can this teardown sequence result in a
+use-after-free by inadvertently re-arming the timer?
+
+In ioat_stop(), we use timer_delete_sync() to stop the timer. However,
+we then manually call ioat_cleanup_event(), which eventually reaches
+ioat_cleanup_preamble(). If there are hardware completions pending, it
+will unconditionally re-arm the timer:
+
+ioat_stop()
+  ioat_cleanup_event()
+    ioat_cleanup()
+      ioat_cleanup_preamble() {
+        ...
+        clear_bit(IOAT_COMPLETION_ACK, &ioat_chan->state);
+        mod_timer(&ioat_chan->timer, jiffies + COMPLETION_TIMEOUT);
+        ...
+      }
+
+Since timer_delete_sync() doesn't permanently prevent re-arming, the
+timer could be re-armed here right before the device is torn down and
+ioat_chan is freed.
+
+Should this code use timer_shutdown_sync() instead to permanently
+deactivate the timer and prevent mod_timer() from succeeding during
+this final cleanup phase?
+
 >  }
-
-[Severity: High]
-This is a pre-existing issue, but since the driver is moving to the BH
-mechanism, should we also ensure the scheduled work is properly flushed dur=
-ing
-teardown and error paths?
-
-Looking at mxs_dma_alloc_chan_resources(), if clk_prepare_enable() fails,
-the error path frees the IRQ and the channel ccw structure:
-
-mxs_dma_alloc_chan_resources() {
-    ...
-err_clk:
-    free_irq(mxs_chan->chan_irq, mxs_dma);
-err_irq:
-    dma_free_coherent(mxs_dma->dma_device.dev, CCW_BLOCK_SIZE,
-            mxs_chan->ccw, mxs_chan->ccw_phys);
-    ...
-}
-
-Because free_irq() waits for the hardirq handler but not the scheduled
-workqueue, if an early interrupt schedules the BH work, can the workqueue
-execute after the channel resources have been freed, leading to a
-use-after-free?
-
-Similarly, mxs_dma_free_chan_resources() frees channel resources without
-calling dmaengine_kill_bh(). The driver also lacks a device_synchronize
-callback, which makes dmaengine_terminate_sync() a no-op.
-
-Should we add dmaengine_kill_bh() and a synchronization callback to prevent
-the scheduled work from running after the client frees the channel?
-
-[ ... ]
-> @@ -781,7 +780,7 @@ static int mxs_dma_probe(struct platform_device *pdev)
->  		mxs_chan->chan.device =3D &mxs_dma->dma_device;
->  		dma_cookie_init(&mxs_chan->chan);
-> =20
-> -		tasklet_setup(&mxs_chan->tasklet, mxs_dma_tasklet);
-> +		dmaengine_init_bh(&mxs_chan->chan, mxs_dma_tasklet);
-> =20
-> =20
->  		/* Add the channel to mxs_chan list */
-
-[Severity: High]
-This isn't a bug introduced by this patch, but I wanted to ask about the
-initialization ordering which can trigger the interrupt handler early.
-
-When a channel is allocated in mxs_dma_alloc_chan_resources(), the IRQ is
-requested before the clock is enabled:
-
-mxs_dma_alloc_chan_resources() {
-    ...
-    ret =3D request_irq(mxs_chan->chan_irq, mxs_dma_int_handler,
-              0, "mxs-dma", mxs_dma);
-    if (ret)
-        goto err_irq;
-
-    ret =3D clk_prepare_enable(mxs_dma->clk);
-    ...
-}
-
-If an interrupt line is asserted early (for example, from a previously
-aborted transaction where the client didn't call terminate_all),
-mxs_dma_int_handler() will fire immediately. It then performs an MMIO read
-on the memory-mapped controller registers (mxs_dma->base + HW_APBHX_CTRL1).
-
-Since accessing device registers with a disabled clock results in a bus hang
-on this platform, would it be safer to enable the clock before requesting
-the IRQ to prevent a synchronous external abort?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1786384168.gi=
-t.allen.lkml@gmail.com?part=3D13
+t.allen.lkml@gmail.com?part=3D9
