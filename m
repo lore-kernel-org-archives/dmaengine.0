@@ -1,63 +1,64 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17A7386C1E
-	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:11:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2C3435A97
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786385487; cv=none; b=JgraGiwHFLFgm1l7S1QjWvPw51nn6vcb8mMoreFttuGHTq7U/8YnNnowGxSEtCTDob1rHa3OF3UKSfURhlkDsO4AL7Ga4sVbtF4Pm8bgvA/klw3R1QyepqFHOrN1sDCz6/30PpKJ4YWw7ozijpD2OKnSHBQeyir8cLPEdRtxJ5U=
+	t=1786385491; cv=none; b=lPNrzuspe/jtOO5SdCqbmHZxWvo5qBpnghn+ic/9dWyjL5O3d/OFYnhT0i1mqHUlb3LPEGbtyL8L9fJB3Exrk0D4QmmdZecuuHxS57mljJzas98l6P2rqd62viBdQ658m8IUMt7DqMCxTTambR+fn1/B4ohKa0zenOpTRN00fzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786385487; c=relaxed/simple;
-	bh=g3kQp8gGQiIXrYX4sT5ueXQYYRV5nEUtIvP3IlYpajE=;
+	s=arc-20240116; t=1786385491; c=relaxed/simple;
+	bh=4tYVT9QqLmwTQUUuN/J5bGbv/2gfEO0sUizgH+taHNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIQisGrizq15BNGmFEG5Kaz5lAKRthFAYPq3lxqYi/q28GeYDoDq+IgD0okO07w4YQP/v2k70uFtCjWQfPL0C9ThnF/LVB277uZTzaWBBlZNQt263/rC0I8KHLcP81gzlaXaL4LdCwonB9ow21wVSSRhJgfmqiaO2ywtScEqL78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TMrFm5ig; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version; b=PvlKxXi9e0iJ03AQcaUMiQA4lkpeDd6fdpKym3F3C0Rmnp+RrQlkfFj9Iw5zx4FdnAGoBzsF9bCgDCKoa0ZOAGkHymDYv0nzY7fHSg9eU6AQIglfA03MWi6kjrqS1CttXIH4c4GMIwA55vKx1j9piCqaP+t8+rWxVN69ULI196k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YA4wzzM+; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TMrFm5ig"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38e07ebd263so1568793a91.1
-        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:11:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YA4wzzM+"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-39266382df6so2371208a91.3
+        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786385486; x=1786990286; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786385489; x=1786990289; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=L4Ymzks64fAO1V7KVTcq+phPVKZh8xNyMzo6gAaHxVg=;
-        b=TMrFm5igAxgUXEyF3crAOJUjARaz4bTWF6sME7E4M5QIWqIgcm+rGYzC1m09vFTDEI
-         dS/k5LlMQ1SoNUneKEN09KjHFMUjBieXy/2OrmhdGVC2R+05kvpEzrLYY8WHcjnOyXV2
-         EjAgWOB4w8rrvV3tqBXcKUH9KErHX2YLID7y2/WQkMlAP5L30exXvMDvZLF8+k8oudZT
-         IkVr6DiO/YcD2mC4USrEKkCcKsJTDkvTQIuEJUccDICb/Iz3PVvkcwN+s9K2xL/8hEyV
-         xzOWJ+g5bNMNlxKPh35FnVDRwP6fP5URAI8bcu5NENSNL7DzMIBYY1tDY8NDi92BvI8b
-         Prhw==
+        bh=xHByj7whypjAGcgXNhTkpT6ldplRWJVWN4PSrjNWnv0=;
+        b=YA4wzzM+vQu+qmHPKraQ34aYBVJZ8PoUv7ht6vjvVrCk8UFZTADDkwykpi5Xcv67pg
+         0AXcH+gWmaQU2+5zQILPKoodkaoGwpQzAMJU+NgygYkSekebXHqhiULD8CHbhNdLslAf
+         NKU7kGLWTmtTB03bYHy48uRRlcOgjSW7yc3+ZjQwrFiwEwMBJ42gpHK/6aPMBsfveTfw
+         P8HA+EpAT1TR4w9+auNGJe6KCf0GZWe4Sah10sb+ZNpmZYmmgtlzZhXe+zXSJgVpe/WN
+         WOV0DEGJY0VymIH8taJyMNhjtr4RY5prT8NbXpqoMLTM0qor+luJS5bTWyl/g6OPjOFP
+         CROA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786385486; x=1786990286;
+        d=1e100.net; s=20251104; t=1786385489; x=1786990289;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=L4Ymzks64fAO1V7KVTcq+phPVKZh8xNyMzo6gAaHxVg=;
-        b=YIrs1myrs0SIb/RClIIQRmH7FMC2+BDtKNMi1XhA06nSmSn9lFn0WDH4HjQ7mT3pgI
-         y2qUnESy12ICOkHyK5KpCn3TxMplpIngQckdWXWg1ijlnBaX1D+oAape+/6JP43T4O8o
-         iX4Ddvst3hV5KS8GyOYCee6nsPR3fCX4IlE3WbH7ygPujuJFMHYaJSH/Rp2f5ZSCtAje
-         9HVEdWy+YUjg9EDaWhe2IUxAQ/p8QXIlw3X0/SawP7Jcc6YPvbrPaVd2kQyPVkomTh2a
-         fQEdIvNZb1l9995pQI1TTLgBe/WGtJsisoTxgAcp3OhSUAqWQiEibjhx3oteNg6iTxpG
-         eLZw==
-X-Forwarded-Encrypted: i=1; AHgh+Rpo5EP+dm7GQ7TtEVruMX90N9l8xvmgZzsvPZ5do9A8xD7cnIQSLSsPNOzRxAyGqIDJooOqsrt7Aro=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlriHanxse2Abor75d4mRPr73JxN7TZWIDRnFuV3eWPlJWzCDu
-	l0HZEgOSqMoBCt4jJsLfz/1v0KWY9swcEmoFBgzoi8ypZhz9+Lz1zjkp
-X-Gm-Gg: AR+sD11FTfAUn69/7kLBh3NP6Kb81DD0lBYWNvdcrZwAG9TMBPmvwx6AVvhwDrk7OkM
-	jv9hDr9zM9aQOQvks00M0Sxcdw8AsrRD6MRECWiKCn2EOntc+m/ZSuBP3DKDQhUlkj1zKEYNL77
-	3Ab7RKqZPQEVy4L03Wxs5reMUoZdyPe/ucTxZf8HXdHKMEcni6X2upTU7JErgnjWNjchNJyyD1P
-	fYK0rtpZRNXuRxZ1Y10BXBgAxYK6jF9UftIRqp3KpfMzoxZH55YKda/GSo3q8FQO5JrTOi9seIt
-	xm7HUpCyTcALps1sBkrvSp8gr3ZDmVNY/8TrKtAIVff8pPY/2t+oFwA2+e0GsIYiT1Tj1NgouVN
-	cB89xa961fd9zveyCzZBJfPhT5PvjIWEoV0Yvm0w2ty67qxVcy+GqQ3zNRXhUQuBIOw65dOw7L2
-	tjQiC38TNF/tOvOOOZ3DoXIZJ2lAxlPvcNQqxQoJfovqxAjWCh1k5jj3E2SkRo3DM=
-X-Received: by 2002:a17:90b:2b8e:b0:38e:2e86:ed02 with SMTP id 98e67ed59e1d1-3909d8c5a4emr31571301a91.14.1786385485962;
-        Mon, 10 Aug 2026 11:11:25 -0700 (PDT)
+        bh=xHByj7whypjAGcgXNhTkpT6ldplRWJVWN4PSrjNWnv0=;
+        b=ruPFPQEE9wfVG4fR80d7vWnNCuqrSYoBfwhMytbyk6z2gAP3cL/6W5Six51WcNQ7sm
+         Tw1OgVsfnp48+2X6ng7bzOTCmHb3pJULsg0dfEKFwW638NK+vJ/w5dJdgDny5VW/dAbq
+         8SLsKn6jr49H/2tjZ3yDeYEcWK0SQSuX7VJtZY+hpPmLR3iqCCOufxld6ss03ovfPFmZ
+         az0apE5TDxpIMy2lP22jQrM6Tp7x6Puo2mTstdCHDi1atmVdhY6W/o9vmX4T6ceuqZev
+         HnF0fUEBvRlIImWUymfiF/EQ1GMFwfLlQn+lWiQMbLTtfcztzNy3FbE9u8/gKN7Gj7e0
+         UI1A==
+X-Forwarded-Encrypted: i=1; AHgh+RrlLdFMZuZ0YL2+gkhyBKoQ9rS76+EEo4jyVAdaalQoHX4eMw1t741CsXuvita64sPC6mKbmb681bk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YztO9HlBpgp+pMNhpQTqvg3IzlrlpCKj3NVWuGv9XliD3t0T2gk
+	nhduS6+M6oLpnM/zuUU4yyyJhv1rToGUJs241BE/Nr2L1k6/pv0SRzpOpDBN5A==
+X-Gm-Gg: AR+sD11VYPcLYvLFwsalxpO9ghYmspKfvpP+NCyavpZg3eNH+2H5P39JVWZL8x5xTxF
+	b+NXmYJ2Tx+5Yfv0g/CW7Rcjn1ITCZfZIDUlvgE2rQsgneRrAYHjWf7Ul5yitQG9Q9brmwnT9ag
+	dIpmT0qimYZlVbU428qmKLzIfMYO62XJWII8LTDKu13pQ9hqv3odKFZ+jypa2Pz9gC9LZLAwmBn
+	jEWsdpM9q7Zlnd3B95Yvxct0IHBqqEPVKq9Ze7Aso8XejacVIZi38BAT6DPcQv8kqMzi2DP/RaA
+	Dtp4I7iGhqzir64xtq8wZgnREuy7uNU1giP7yfoCzYeCYMeSHazZaLq/ssyQ8j31zwMCfZN9EDy
+	eRGehHFNhrkXKJ7roeML8tR17aO4R3sPCWgrW+22bTsxs9JtJ3K5D7Hy3/BZ/Fkt7KEIsuoCvQP
+	8pRi2oFXLc9cZCViNO9s7OK5dJHC0k+GwdK+3TRxTSLXeY8DJHa1jpC3gxfSzRBLeUUN5UiFYgD
+	g==
+X-Received: by 2002:a17:90b:2785:b0:38e:bbf1:de3f with SMTP id 98e67ed59e1d1-3903c5d2f29mr48635260a91.12.1786385489431;
+        Mon, 10 Aug 2026 11:11:29 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fa9:fa00:b1a9:6513:83c6:1d23])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.11.24
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.11.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 11:11:24 -0700 (PDT)
+        Mon, 10 Aug 2026 11:11:28 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -65,10 +66,12 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH v3 05/34] dmaengine: ep93xx: hook callbacks via dmaengine BH
-Date: Mon, 10 Aug 2026 11:09:06 -0700
-Message-ID: <69b17379bf3c78b6af96dbe3b76940520d491417.1786384168.git.allen.lkml@gmail.com>
+	Kees Cook <kees@kernel.org>,
+	Zhang Wei <zw@zh-kernel.org>,
+	linuxppc-dev@lists.ozlabs.org
+Subject: [PATCH v3 06/34] dmaengine: fsldma: migrate tasklet to dmaengine BH
+Date: Mon, 10 Aug 2026 11:09:07 -0700
+Message-ID: <a9c4d258c73c2d7e3c23825db272cdfeacea478e.1786384168.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1786384168.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com> <cover.1786384168.git.allen.lkml@gmail.com>
@@ -86,65 +89,58 @@ the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/ep93xx_dma.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/dma/fsldma.c | 10 +++++-----
+ drivers/dma/fsldma.h |  1 -
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
-index 311e55a97ba9..d79e278fb7ba 100644
---- a/drivers/dma/ep93xx_dma.c
-+++ b/drivers/dma/ep93xx_dma.c
-@@ -167,7 +167,6 @@ struct ep93xx_dma_chan_cfg {
-  * @dma_cfg: channel number, direction
-  * @irq: interrupt number of the channel
-  * @clk: clock used by this channel
-- * @tasklet: channel specific tasklet used for callbacks
-  * @lock: lock protecting the fields following
-  * @flags: flags for the channel
-  * @buffer: which buffer to use next (0/1)
-@@ -196,7 +195,6 @@ struct ep93xx_dma_chan {
- 	struct ep93xx_dma_chan_cfg	dma_cfg;
- 	int				irq;
- 	struct clk			*clk;
--	struct tasklet_struct		tasklet;
- 	/* protects the fields following */
- 	spinlock_t			lock;
- 	unsigned long			flags;
-@@ -801,9 +799,9 @@ static void ep93xx_dma_advance_work(struct ep93xx_dma_chan *edmac)
- 	spin_unlock_irqrestore(&edmac->lock, flags);
+diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
+index 22d62d958abd..f52547611db9 100644
+--- a/drivers/dma/fsldma.c
++++ b/drivers/dma/fsldma.c
+@@ -968,18 +968,18 @@ static irqreturn_t fsldma_chan_irq(int irq, void *data)
+ 		chan_err(chan, "irq: unhandled sr 0x%08x\n", stat);
+ 
+ 	/*
+-	 * Schedule the tasklet to handle all cleanup of the current
++	 * Queue the BH worker to handle all cleanup of the current
+ 	 * transaction. It will start a new transaction if there is
+ 	 * one pending.
+ 	 */
+-	tasklet_schedule(&chan->tasklet);
++	dmaengine_schedule_bh(&chan->common);
+ 	chan_dbg(chan, "irq: Exit\n");
+ 	return IRQ_HANDLED;
  }
  
--static void ep93xx_dma_tasklet(struct tasklet_struct *t)
-+static void ep93xx_dma_tasklet(struct dma_chan *chan)
+-static void dma_do_tasklet(struct tasklet_struct *t)
++static void dma_do_tasklet(struct dma_chan *c)
  {
--	struct ep93xx_dma_chan *edmac = from_tasklet(edmac, t, tasklet);
-+	struct ep93xx_dma_chan *edmac = to_ep93xx_dma_chan(chan);
- 	struct ep93xx_dma_desc *desc, *d;
- 	struct dmaengine_desc_callback cb;
- 	LIST_HEAD(list);
-@@ -858,12 +856,12 @@ static irqreturn_t ep93xx_dma_interrupt(int irq, void *dev_id)
- 	switch (edmac->edma->hw_interrupt(edmac)) {
- 	case INTERRUPT_DONE:
- 		desc->complete = true;
--		tasklet_schedule(&edmac->tasklet);
-+		dmaengine_schedule_bh(&edmac->chan);
- 		break;
+-	struct fsldma_chan *chan = from_tasklet(chan, t, tasklet);
++	struct fsldma_chan *chan = to_fsl_chan(c);
  
- 	case INTERRUPT_NEXT_BUFFER:
- 		if (test_bit(EP93XX_DMA_IS_CYCLIC, &edmac->flags))
--			tasklet_schedule(&edmac->tasklet);
-+			dmaengine_schedule_bh(&edmac->chan);
- 		break;
+ 	chan_dbg(chan, "tasklet entry\n");
  
- 	default:
-@@ -1420,7 +1418,7 @@ static struct ep93xx_dma_engine *ep93xx_dma_of_probe(struct platform_device *pde
- 		INIT_LIST_HEAD(&edmac->active);
- 		INIT_LIST_HEAD(&edmac->queue);
- 		INIT_LIST_HEAD(&edmac->free_list);
--		tasklet_setup(&edmac->tasklet, ep93xx_dma_tasklet);
-+		dmaengine_init_bh(&edmac->chan, ep93xx_dma_tasklet);
+@@ -1152,7 +1152,7 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
+ 	}
  
- 		list_add_tail(&edmac->chan.device_node,
- 			      &dma_dev->channels);
+ 	fdev->chan[chan->id] = chan;
+-	tasklet_setup(&chan->tasklet, dma_do_tasklet);
++	dmaengine_init_bh(&chan->common, dma_do_tasklet);
+ 	snprintf(chan->name, sizeof(chan->name), "chan%d", chan->id);
+ 
+ 	/* Initialize the channel */
+diff --git a/drivers/dma/fsldma.h b/drivers/dma/fsldma.h
+index d7b7a3138b85..cab33d010d51 100644
+--- a/drivers/dma/fsldma.h
++++ b/drivers/dma/fsldma.h
+@@ -173,7 +173,6 @@ struct fsldma_chan {
+ 	struct device *dev;		/* Channel device */
+ 	int irq;			/* Channel IRQ */
+ 	int id;				/* Raw id of this channel */
+-	struct tasklet_struct tasklet;
+ 	u32 feature;
+ 	bool idle;			/* DMA controller is idle */
+ #ifdef CONFIG_PM
 -- 
 2.43.0
 
