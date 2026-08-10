@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7484411F9F;
-	Mon, 10 Aug 2026 15:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B040D3C198D
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786375558; cv=none; b=m+2HNiB2bBlihXhAIsKYqeBy3xY0/cxd23O19CIQbPmYgjqslbKjxmgTy2wXGAIW49o1wzTiMgcLoiq1Oy48LT82rRZRfWL1XROpOMBpEHCO+q/8WGVd1GqYEosfVf2936T+6eVntSWNGdF2cHDWM0ujJi4GBfcSAbHBgfb9Mn4=
+	t=1786375711; cv=none; b=cKZbm5lwkqlWyjpncrJKnJPfMiT1X/mhoiZ8ZHs0pfhUXILEC+wKxr7heLcoMROlMbA3L0EI2WQlEzMhnLbhB/249Wx+/e9/Cun4/ubateINIX/qQsBWxXQHSK5bUlb6FqmHJsySye9y0pvU7BtJ5viver7o8AXlByHdOjKz/s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786375558; c=relaxed/simple;
-	bh=iKUrEXRFKeKirrF1+Q57QVyDO0IwIPFbhE/d3DsnATg=;
+	s=arc-20240116; t=1786375711; c=relaxed/simple;
+	bh=hmT7GzbTlUAgh1nNF7bmKdKOzfh0n0UnxuOD4v3k0cc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JWXmAvFr+6WPfOCillTEZ/AepppFK6gwPRgZi/M1k3tkExtS+rPxD/du2LNaXhT9jxCZzCfxOu32hDICDRg4uGHLXCSyCenGD9yJCiyl7HrJkMHWn7/RBfDL5aSSC84JWmhWbnOvwcdtluxSniu0YQha5H30q6uZ+EDi3gCs17g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KCMW4p8b; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=kqzNTFmr4OaAZQImmJ7H671H5GMzHLM8o0hz03VxXtH6QRdtbrFyz4HIXxPhygjEIf5X1O9iK3f7hrjGsuCnsuM+knp2Z6/Y+5hnPAqEIw7I3U1ix3MPMO497n/fdzQG2WAbNPFma/cPqfM/0eMyjhiX3kyh/zUrexrQp2OipcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MXaySDKP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KCMW4p8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16E21F000E9;
-	Mon, 10 Aug 2026 15:25:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MXaySDKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2971F000E9;
+	Mon, 10 Aug 2026 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786375556;
-	bh=WIiXUtTP17eUpLFZXPnZATuPr2iPiMAMyMXtdr3uMfM=;
+	s=k20260515; t=1786375710;
+	bh=C5+TNLsWBr933MgMidpc1gNPp37vArJnpERfWIqQBGQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=KCMW4p8bkA5nFOKaA2Ia//aX79hhBTCo18oc4HWo2GXD8FuiVYzNFQ+LFLKqz057O
-	 BibSNrW3xnJ97N9DFQJEhnbtX8MO/bojbgkPk1gRdtfKl/kwPnOierFmjNZdWDehao
-	 3yOzJwEDCF1rHjHAzsY6ihjaXm13ZnoEjzPl44sx9yFVnJa7EhgdGKBXEngjVEK8m6
-	 jIXHZ6vt7uh9/T4GPOlWgGipFkZ+InDaCn1lcmQW86cWCYa+ljGqTBsm4mL1GBYv/A
-	 +na8/rTpwN1YsKA3e+lyB47y42auu4yy6vE1lNk9YySB9iEvsHZTNGGZAgdobFk6gh
-	 /RnV/uVYJIREA==
+	b=MXaySDKPvCtjNRf6MK3SChdiF5994kS8TSbZ8HrpM/NgNqIFtqy6O3ABFCAkkMjzj
+	 wqd9hvnEgSSQQxG8hFdzloMtBaVNK7Gh6jBi3sBfNRX+LCfogUwC81uRboG2YI2JYp
+	 e8Rct5vLm/nfzcW8897F6MrWP555WDCh9tUnK3yHo0LU0PFL3B2IhJ3uoQif/ufhZD
+	 FxYmkzWOEVewTDy+gAAPlWwDCDCtEo5MQJNGYfyKIRda4zP8WHmihLe7xnSx2A5ODe
+	 vEFTORFBY2N3+5is3YjJ1eLGGrE9d+X6OZuNbL64GU+2z2qWJ6TRRrjzgRLf3fJyIp
+	 ZNHm6RvRN4GDg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v8 02/19] dmaengine: ti: k3-udma: move macros to header
- file
+Subject: Re: [PATCH v2 8/9] spi: dw: Use dma_slave_caps bus width helpers
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: conor+dt@kernel.org, robh@kernel.org, Frank.Li@kernel.org, devicetree@vger.kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260810151423.1948224-3-s-adivi@ti.com>
-References: <20260810151423.1948224-1-s-adivi@ti.com>
- <20260810151423.1948224-3-s-adivi@ti.com>
+To: =?utf-8?b?TnVubyBTw6E=?= <nuno.sa@analog.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260810-dmaengine-support-wider-dma-masks-v2-8-1f7b798d035f@analog.com>
+References: <20260810-dmaengine-support-wider-dma-masks-v2-0-1f7b798d035f@analog.com>
+ <20260810-dmaengine-support-wider-dma-masks-v2-8-1f7b798d035f@analog.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Aug 2026 15:25:54 +0000
-Message-Id: <20260810152555.D16E21F000E9@smtp.kernel.org>
+Date: Mon, 10 Aug 2026 15:28:28 +0000
+Message-Id: <20260810152829.BC2971F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,62 +48,60 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Failure to handle all MSI controller DT binding variants by direct=
-ly calling `of_msi_get_domain`.
+- [High] `dw_spi_can_dma()` evaluates DMA capabilities using a stale or uni=
+nitialized `dws->n_bytes` value, which can incorrectly accept or reject DMA=
+ mapping.
 --
 
---- Patch [2]: [PATCH v8 02/19] dmaengine: ti: k3-udma: move macros to head=
-er file ---
-commit 602a5738457ed780a012151dd52a59d2064763e4
-Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+--- Patch [8]: [PATCH v2 8/9] spi: dw: Use dma_slave_caps bus width helpers=
+ ---
+commit 4458885866ffec3718df2694d83959e2e55d8975
+Author: Nuno S=C3=A1 <nuno.sa@analog.com>
 
-dmaengine: ti: k3-udma: move macros to header file
+spi: dw: Use dma_slave_caps bus width helpers
    =20
-Move macros defined in k3-udma.c to k3-udma.h for better separation and
-reuse.
+Store the common TX destination and RX source bus widths in a driver-owned
+DMA bus width bitmap and populate it through the dma_slave_caps helper.
 
-> diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-> index 48f4db777d924..a066862e2c699 100644
-> --- a/drivers/dma/ti/k3-udma.c
-> +++ b/drivers/dma/ti/k3-udma.c
-
+> diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
+> index fe726b9b1780d..2e23ead4a94f9 100644
+> --- a/drivers/spi/spi-dw-dma.c
+> +++ b/drivers/spi/spi-dw-dma.c
 [ ... ]
-
-> @@ -5398,12 +5342,6 @@ static enum dmaengine_alignment udma_get_copy_alig=
-n(struct udma_dev *ud)
->  	}
->  }
+> @@ -253,7 +253,7 @@ static bool dw_spi_can_dma(struct spi_controller *ctl=
+r,
 > =20
-> -#define TI_UDMAC_BUSWIDTHS	(BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) | \
-> -				 BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) | \
-> -				 BIT(DMA_SLAVE_BUSWIDTH_3_BYTES) | \
-> -				 BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) | \
-> -				 BIT(DMA_SLAVE_BUSWIDTH_8_BYTES))
-> -
->  static int udma_probe(struct platform_device *pdev)
->  {
->  	struct device_node *navss_node =3D pdev->dev.parent->of_node;
-
-[ ... ]
-
-	dev->msi.domain =3D of_msi_get_domain(dev, dev->of_node,
-					    DOMAIN_BUS_TI_SCI_INTA_MSI);
+>  	dma_bus_width =3D dw_spi_dma_convert_width(dws->n_bytes);
+> =20
+> -	return dws->dma_addr_widths & BIT(dma_bus_width);
+> +	return test_bit(dma_bus_width, dws->dma_bus_widths);
+>  }
 
 [Severity: High]
-This is a pre-existing issue, but does this explicitly fail to support
-msi-map bindings?
+This is a pre-existing issue, but does evaluating the DMA capabilities here
+rely on a stale or uninitialized value for dws->n_bytes?
 
-By calling of_msi_get_domain() during device probe, the driver resolves
-the MSI domain solely by iterating msi-parent phandles.
+The SPI core calls spi_map_msg(), which invokes the can_dma callback for
+each transfer before any transfer_one callbacks are executed. However, it
+looks like dws->n_bytes is not updated based on the current transfer's
+bits_per_word until later:
 
-Will this cause MSI allocation failures and return -EPROBE_DEFER on platfor=
-ms
-that rely on msi-map bindings?
+drivers/spi/spi-dw-core.c:dw_spi_transfer_one() {
+    ...
+    dws->n_bytes =3D spi_bpw_to_bytes(transfer->bits_per_word);
+    ...
+}
 
-	if (!dev->msi.domain) {
-		return -EPROBE_DEFER;
-	}
+Because of this sequence, dw_spi_can_dma() appears to use the n_bytes value
+left over from the last transfer of the previous message (or 0 for the first
+message).
+
+If the previous message used a supported bus width (e.g., 1 byte) but the
+current message uses an unsupported one (e.g., 4 bytes), will
+dw_spi_can_dma() incorrectly return true? This seems like it could force an
+unsupported DMA setup and fail the transfer entirely, rather than gracefully
+falling back to PIO mode.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810151423.1948=
-224-1-s-adivi@ti.com?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810-dmaengine-=
+support-wider-dma-masks-v2-0-1f7b798d035f@analog.com?part=3D8
