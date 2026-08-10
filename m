@@ -1,172 +1,183 @@
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011038.outbound.protection.outlook.com [52.101.52.38])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5653B9610;
-	Mon, 10 Aug 2026 10:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.38
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786356684; cv=fail; b=TSvIzb2OBI05WZmkk5tvL5V5bkXa9GbfGRQMe/SJ95IBDIcu21zfuH4WGPTBeplth4mBgdLYXiD++can8g0aAj4enhmTIoytetqlZBBkNTCgZGfzQUjRwBgSyraDUUFiuKLlj3ioBbbKDMnXqChVDiKZcOxPGwHweoiqKGdeTBY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786356684; c=relaxed/simple;
-	bh=M5AqN6vPDShzT1jOwE1H+GetpyOEe1xxYFDAMIRhkTo=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sVi6Y0Bk7IeCjpPsWqKkLAhEMODslIYSnOBXmrTX7RkKggqxPL0/n66IIkAVxKYXSBYs1cZGYGwqFCWgIWt5xFrWolDuvaNtgaz8Q+GKHRTnSyonlyiEb7DNDW0bynvUA3Rfxca3ZP1lwJfML/OMchrVUVweo4XRkqfQE3frhpA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=kX6Yfjzf; arc=fail smtp.client-ip=52.101.52.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FD33A1683;
+	Mon, 10 Aug 2026 10:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786357211; cv=none; b=bdV4djP+tM1zQiO7kZkZNg/bDURsylnbiONSacfqt6TMk2kI/CivK1lw1akrQfOMs0mLFsmVGR8Z6i5km5ZddndULSmkcdx/Y8A4/ZBLNfdVHSY6yaL7TvjTmbqLK0RIz/zlwGadxJZ0h1kpo2j6au2gF7I4IOZrKf//kd3QsNc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786357211; c=relaxed/simple;
+	bh=R+MfiREWTJoYo6X0hI6hCTT5xNUis+3/j08VJeBJShk=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=tX3T0m2NvFlwGSC/z9daNB105KDZCzJFu4Y1SWiqRDkqJr5fF9W5BtUzqaEo7msqdkskimQS+N6hCV7xDwC64DorXgPbwQc2p1/7kBt6Q0lhHkpP9/yY3MsasEVhLBy0QvxjAQtN0fVnpHXYB0Ul07ZJrme6D64sDVt8YZ4aeRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tbb4Nk29; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="kX6Yfjzf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MiaioyjV7gbSgUxY040Z+QvNC4iKg+NNN/s8LeYO0c6KHbf6aAeEA6H0q7rhAf9oG7A5RsJBKdowFYQMXGBIf4yQU5QiL9zk7cOexIWVRBQgutqtgJ2misAml153TtI0C+zjg1QD+Kg/lSRci8VoRo3exXEI7wGOOYR3FCPXq3e0SA7/Bgjq0u9JxsNDIxF3S0nPG1aZJLHE41sjp3sggawMV++dasVJj+9fU3uSGbeJ26yO5PCdrtwd9M8cAhIdhgAm0HBkUSeL70RJ7wr9tbtL1SGo2nfGs1eqv53l3KA0oNVMi00sZ24jFHGtFkd+OyQEyUHLN2ydNoEYH1XmXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ycyF+5IHRcwkuQwpWz7twlFJJBn/LQbm4NZIln42zJo=;
- b=rPhgE9pR1fH7dnJ8+6HcEZaPBN+aVDHhB4wAeHb0FUbDIWo2XNYcPEWtROjcw8RhEBXktj3M8JtQZtMk1Z+AGcv281fKEP9XYM1C2/gIQxwdssq4tri5OIK0AwJ4UHz7isnNBqaUD+yXwYOZ2OQ0hPISh/8Qzl7Gw2jhu9LghnddN4LBOyrU0qifRqncFDoz+zFbtfgwIvJUf2CaCoDSBI1JJ5N6BfRF3NCQkyYQkrNeJ/6OZKQiaF+1HY27qFDTMTGal8Bj8PVDaNuZ7cQ93w5fRL2JYqBJqSZjrhNh+tul3xm9tdxYFOSCS6w50UjwSQr/SLRdp8z2vQTh1q9aoA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ycyF+5IHRcwkuQwpWz7twlFJJBn/LQbm4NZIln42zJo=;
- b=kX6YfjzfR+/XfVXihi+ZKr2vYkAk8/Jx7uVrL6MKbrw3z+GFFAJB1ADhhNdR7yPRLTX7kNV4xxUwVlQftDd5EtRO+87k9E76FoFJ5kCfCGAD3SHYAgdwuGoXP8O8pW2hAtTeIMabRM2L4EsbRnvg51ToCrDuPOFAouAinBY4QFY=
-Received: from MW4PR03CA0336.namprd03.prod.outlook.com (2603:10b6:303:dc::11)
- by MW4PR12MB6753.namprd12.prod.outlook.com (2603:10b6:303:1ec::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 10:11:17 +0000
-Received: from SJ1PEPF00001CE8.namprd03.prod.outlook.com
- (2603:10b6:303:dc:cafe::21) by MW4PR03CA0336.outlook.office365.com
- (2603:10b6:303:dc::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.25 via Frontend Transport; Mon,
- 10 Aug 2026 10:11:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- SJ1PEPF00001CE8.mail.protection.outlook.com (10.167.242.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Mon, 10 Aug 2026 10:11:16 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 10 Aug
- 2026 05:10:59 -0500
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 10 Aug
- 2026 05:05:20 -0500
-Received: from xhdappanad40.xilinx.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.45 via Frontend
- Transport; Mon, 10 Aug 2026 05:05:16 -0500
-From: Golla Nagendra <nagendra.golla@amd.com>
-To: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <michal.simek@amd.com>,
-	<robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<rafael@kernel.org>
-CC: <git@amd.com>, <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<linux-pm@vger.kernel.org>, <nagendra.golla@amd.com>
-Subject: [PATCH V3 6/6] dmaengine: zynqmp_dma: Add per-channel reset support
-Date: Mon, 10 Aug 2026 15:34:52 +0530
-Message-ID: <20260810100452.426320-7-nagendra.golla@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260810100452.426320-1-nagendra.golla@amd.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tbb4Nk29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B501F000E9;
+	Mon, 10 Aug 2026 10:20:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786357209;
+	bh=oJiVV1bSytCy1oZ2X966uElv6FZ4kcLsEpg8h8Gtx74=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Tbb4Nk291iChp3JTymXCepf0FEhcUY4a6ffwlxJrGBRUG4Sb7KzC4PduaxDXl/uWd
+	 270CSq7qM543BcJjCDacvCnYHUbqYT0gj+TqzRDLdCu3rpAGrlKTNIZV+EA4hqYeAa
+	 z1xdjUVwLg+umSj3WvfxtI06I6a6wGut5D/xzL9CL6GI7+FlHdLwB6FjjqR6EpWrT6
+	 6yQliZsUaZg54hCfg0SlcJDMD3qeJ2mphvm+uxFpua1uwDC1c8syPyB8PUCrxc/eAG
+	 2gd1BP8U2q3FZ0bNPvu2lQj5oLifxRCuoMhGvUpiYjIOxdxP4DyXLM5xOCME40MOzN
+	 wFggWgNbNPBKA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH V3 5/6] dmaengine: zynqmp_dma: Add new compatible string
+ for Versal Net
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Golla Nagendra" <nagendra.golla@amd.com>
+Cc: Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260810100452.426320-6-nagendra.golla@amd.com>
 References: <20260810100452.426320-1-nagendra.golla@amd.com>
+ <20260810100452.426320-6-nagendra.golla@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 10 Aug 2026 10:20:08 +0000
+Message-Id: <20260810102009.39B501F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE8:EE_|MW4PR12MB6753:EE_
-X-MS-Office365-Filtering-Correlation-Id: 88716c31-c584-4f97-22b1-08def6c7b76b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|1800799024|23010399003|82310400026|36860700016|6133799003|11063799006|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	7RnBIL4zU9yw/hLsCC+ArRjbwjgiY8dDb4k9lRs4l1nveOtmzwCtDDQPEON2xffdPsr6wrWlFbvOOkSjyU3k3terS4cvy3a4oVt7G5Lly19nDrNdZVzGWIRvTmn/Ay9Bh//K8gxwwzzCmOH7vfFMlz6NT9nKAsUXu6TD66rF2/xON/aEp3YNvCfqQc5Is1y2KoETDOVICRx/B33vibS+8/4MzbeEw/GLVq0xW9nsDe1S9GKD9FIGAMb+lBSueP9ADoJnkKJKzBAvKNMY24MX4qJVsv3Z9LwD0djTH13ASsKQsAvjSrhZardFeDZsVOEoa0iwySXIx0wKzD4l/tZ/a4jgQVHLj/qfFQiTc20oiJbQy6w5hvxpOTtBqZ8m0YNWbQnLbtAyR9D4Cr1TcaZjhi0eWKpDoW1nHG/Fo5cfDCsAUf2Ipl24A6c8kjmsIVPDsDl16zks1SP5XiNbb4jxcHd4QjYC77tlrzGwMS1s4WN1hWFvus9XXGfTXcJSKAIPIxGx0rD2LuJru7rg24+CJNVk+opovdqV0DM+kqL/oXbkA0DjvZ7cj+TM1I618YtjQPSA1FKFEAMlKPWhAaicGdAt5Q46xLVmqYSArgZzFyVi3Tm2lAKLouzvMg+AiAYroatHhsqujFzpGoFiCpP0p8ALj7Pte040QYnHCzgGgbcAbL09foMp7NbdJkOLKBz0TseflPvgqRzuDf3rxIwPKg==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(82310400026)(36860700016)(6133799003)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	PolPHrNw5Ibvhz6H2+S9JY64fV5zacPSRY2S9iY3wqyIvUPX50o6vSFbPDea5lZCM7d7w5XNcFVMl782dqpznS8aMmxPEgaXW7fI+xyity3+wi4JiU7UyXb3tFmoi14mzNxpjjcy+KD7WOokDp9crrBEEfgGY3cAE9PzGs7lp3Wvp13GKLV+YGQ9O5fLJkDzccKqIfD3j9mwuMZTVnGcxR6qc2tUr1iNuxz8ueyjF+R3R8uxtBPTm5Ci8j2k2/IMzfrs7rqsRuJEW0ORUC8mJTYU9Ibk0ChSbcZGzU+n0G3yna6Sd1v89GpSIQX3OkfK0UXU8oCAq2+3AQH+JMVWHPVuKy8RuutVSgrNJrfFhLiA4+IZHSyP5F61Nx/DuqFgW6jue42EbTHK4/IN/5dTblnOjUJP0CUdW4d0UhVNriebmTxy2bz7nuG7Z/yYd1g0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 10:11:16.7932
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88716c31-c584-4f97-22b1-08def6c7b76b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF00001CE8.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6753
 
-Versal Gen2 and Versal Net expose a dedicated reset line per ZDMA
-channel. Use device_reset() to trigger a mandatory reset pulse on the
-channel during probe when match data indicates reset is supported.
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+s) to consider:
 
-The has_reset field in zynqmp_dma_config controls whether reset is
-performed for a given compatible. For Versal Net and Versal Gen2,
-has_reset is set to true, so device_reset() is called and probe fails
-if the resets property is missing in the device tree. For legacy SoCs,
-match_data is NULL and has_reset defaults to false,so the reset path
-is skipped entirely.
+New issues:
+- [High] The `has_reset` field is introduced but completely unused, missing=
+ the required hardware reset logic.
 
-Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
----
-Changes in V3:
-- Introduce has_reset flag in zynqmp_dma_config to gate the reset path
-  per-compatible instead of calling device_reset() unconditionally
-- Move the of_device_get_match_data() call before the reset block so
-  has_reset can be checked in the same code path that reads irq_offset
----
- drivers/dma/xilinx/zynqmp_dma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+Pre-existing issues:
+- [High] `zynqmp_dma_chan_probe()` hardcodes the `platform_get_irq()` error=
+ return to `-ENXIO`, breaking probe deferral.
+- [High] `zynqmp_dma_reset()` silently drops active and pending DMA descrip=
+tors without invoking their callbacks, causing deadlocks for client drivers.
+- [High] `zynqmp_dma_device_terminate_all()` does not command the hardware =
+to stop, leading to potential memory corruption.
+--
 
-diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 7561416b8e62..7ec6598ea587 100644
---- a/drivers/dma/xilinx/zynqmp_dma.c
-+++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -18,6 +18,7 @@
- #include <linux/clk.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/pm_runtime.h>
-+#include <linux/reset.h>
- 
- #include "../dmaengine.h"
- 
-@@ -928,6 +929,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	if (IS_ERR(chan->regs))
- 		return PTR_ERR(chan->regs);
- 
-+	match_data = of_device_get_match_data(&pdev->dev);
-+	if (match_data && match_data->has_reset) {
-+		err = device_reset(&pdev->dev);
-+		if (err)
-+			return dev_err_probe(&pdev->dev, err,
-+					     "failed to reset channel\n");
-+	}
-+
- 	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
- 	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
- 	chan->src_burst_len = ZYNQMP_DMA_MAX_SRC_BURST_LEN;
-@@ -943,7 +952,6 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 		return -EINVAL;
- 	}
- 
--	match_data = of_device_get_match_data(&pdev->dev);
- 	if (match_data)
- 		chan->irq_offset = match_data->offset;
- 
--- 
-2.43.7
+--- Patch [5]: [PATCH V3 5/6] dmaengine: zynqmp_dma: Add new compatible str=
+ing for Versal Net ---
+commit 93c6838fba5eee0dddf024579d8474fed6b7dee5
+Author: Golla Nagendra <nagendra.golla@amd.com>
 
+dmaengine: zynqmp_dma: Add new compatible string for Versal Net
+
+This patch introduces the amd,versal-net-dma-1.0 compatible string and its
+SoC-specific match data. It also adds a has_reset field to zynqmp_dma_config
+to indicate whether the compatible requires a per-channel reset during prob=
+e.
+
+> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_=
+dma.c
+> index b03171e37e278..7561416b8e626 100644
+> --- a/drivers/dma/xilinx/zynqmp_dma.c
+> +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> @@ -259,13 +259,20 @@ struct zynqmp_dma_device {
+>  };
+> =20
+>  struct zynqmp_dma_config {
+> +	bool has_reset;
+>  	u32 offset;
+>  };
+> =20
+>  static const struct zynqmp_dma_config versal2_dma_config =3D {
+> +	.has_reset =3D true,
+>  	.offset =3D IRQ_REG_OFFSET,
+>  };
+> =20
+> +/* offset =3D 0: Versal Net uses base IRQ register address */
+> +static const struct zynqmp_dma_config versal_net_dma_config =3D {
+> +	.has_reset =3D true,
+> +};
+> +
+
+[Severity: High]
+Does this configuration actually perform a hardware reset?
+
+The patch introduces the has_reset flag and sets it to true for versal2 and
+versal-net, but looking at zynqmp_dma_chan_probe(), the match data is
+retrieved without ever checking this flag or invoking any reset functions:
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_probe() {
+    ...
+	match_data =3D of_device_get_match_data(&pdev->dev);
+	if (match_data)
+		chan->irq_offset =3D match_data->offset;
+    ...
+}
+
+Does the omission of the reset implementation leave the DMA hardware in an
+uninitialized state during probe, potentially causing back-to-back usage
+failures?
+
+While reviewing this patch, I also noticed a few pre-existing issues in the
+same file:
+
+[Severity: High]
+This isn't a bug introduced by this patch, but zynqmp_dma_chan_probe()
+hardcodes the platform_get_irq() error return to -ENXIO, which discards
+probe deferral errors like -EPROBE_DEFER:
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_probe() {
+    ...
+	chan->irq =3D platform_get_irq(pdev, 0);
+	if (chan->irq < 0)
+		return -ENXIO;
+    ...
+}
+
+Does this permanent probe failure prevent the DMA controller from working w=
+hen
+the interrupt controller is not yet ready during boot?
+
+[Severity: High]
+This is a pre-existing issue, but zynqmp_dma_reset() silently drops active =
+and
+pending DMA descriptors without invoking their callbacks:
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_reset() {
+    ...
+	spin_lock_irqsave(&chan->lock, irqflags);
+	zynqmp_dma_complete_descriptor(chan);
+	spin_unlock_irqrestore(&chan->lock, irqflags);
+	zynqmp_dma_chan_desc_cleanup(chan);
+	zynqmp_dma_free_descriptors(chan);
+    ...
+}
+
+Because zynqmp_dma_complete_descriptor() only completes the first descripto=
+r in
+the active_list, the remaining active and pending descriptors are silently
+recycled by zynqmp_dma_free_descriptors(). Could this strand waiting client
+drivers and cause deadlocks when a hardware error occurs?
+
+[Severity: High]
+This is a pre-existing issue, but zynqmp_dma_device_terminate_all() does not
+command the hardware to stop:
+
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_device_terminate_all() {
+    ...
+	writel(ZYNQMP_DMA_IDS_DEFAULT_MASK, chan->regs + ZYNQMP_DMA_IDS);
+	zynqmp_dma_free_descriptors(chan);
+
+	return 0;
+}
+
+The function merely masks interrupts and frees software descriptors, but ne=
+ver
+clears the ZYNQMP_DMA_ENABLE bit or issues a hardware stop command. If a cl=
+ient
+driver calls dmaengine_terminate_all() and frees the DMA buffers, could the=
+ DMA
+controller continue to read/write the in-flight physical memory in the
+background and corrupt memory?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810100452.4263=
+20-1-nagendra.golla@amd.com?part=3D5
