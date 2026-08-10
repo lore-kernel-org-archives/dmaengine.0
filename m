@@ -1,100 +1,171 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2AE3B9D9E;
-	Mon, 10 Aug 2026 10:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DA53AFD1E;
+	Mon, 10 Aug 2026 10:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786357696; cv=none; b=XYrTWNI9tp7ZbunqjvqHmP9oy94NJBplDPgVL9sNaTOYtqDdMGwA3xWbNwim5J8AWc3sOoBSyaZ6Hx+54OXIGNWqvu9d+N1GOtCthLOClZKSs0fOfsIro34fbNUmbRzc+MD9YUShtAxwOXW73YjWizvclS39WGvH9Wtxl2IWsHw=
+	t=1786357937; cv=none; b=hca4Q7TePIbKdXB1C+iUNAkOPuT85JNlzyLoIMeHTMHY/8QVcuXahOAg5V42MDfNXW5ZH8rjC93xxVRb9P6dt056uBQCAKJs1q3UNqS49ndASJSBQiFj+adsCtIMTxDs/BNCQIV0HYEZFjT8Fe0ej63txP2Hv7iyfaxG8Z8JHg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786357696; c=relaxed/simple;
-	bh=MEgxvsVicOqUKKR5UUXnSNBC87ROXUg6AB4ofv41IJY=;
+	s=arc-20240116; t=1786357937; c=relaxed/simple;
+	bh=gcVZYAVVRjiIxWsmvgOz4mjgywzDJGf7DmIfyhj6DV4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QYv5pE3WNtK/zYdsY4W34f4v/67cNDq+deSQDNaVWf+Vc3Di9exjTaE8wEg8QADkA2VIwPfZsFAXVZzyO03aE4KwHL5agOz8fJR+sXU6abORHqvKwiQcXSuc58YWkbL19rbJzh65GDyWtSHqXpVhKGBlX//DfNn3Dc+gs6Wuyr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fwLwwcDC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=kvstnbu2Xa71fFZd0mu4Hv6ySgek8ZdONzJ4EFnykS5aWtJarmkrIPZmE/na0dK8bN8BqEgF5g5AZjXqVzbtQh7h8NsMvdU27MGNMEGS3HoeiQb1X4cGycDQJNNugxDXUUow8klfA2MySzqjAhhvouSx5I79zZvdouxYWaBtu7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BS35+SBm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fwLwwcDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6981F000E9;
-	Mon, 10 Aug 2026 10:28:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BS35+SBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510241F000E9;
+	Mon, 10 Aug 2026 10:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786357694;
-	bh=KOezl1dvLhz0ffpzmNZXd/K0gBC47EJkeM1niLwGGo0=;
+	s=k20260515; t=1786357935;
+	bh=4XLakNdnA12f/Bj9EvdWHTKIxnrNcRr2+AAu2bcS+mg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fwLwwcDCkm/moS0cb7G2mo/9bschaPrtsm0P3HmOEYf/HINaXosp7P/qmPdct2tSo
-	 ZuSTtEvOsEgDhi1lzZReRX/Phx5H2yvvGSust7/a1prBc0SPjtTN/dA+YGwO87jod6
-	 hx1Q7m/9HRrIGmIQNzzRVDOTGPHkKYHnb87aNbH0Wvi99sL5lWLWsF5LKKFEc5D+Oi
-	 ITz8HDjHMrF1mOuLML/t2cJ/n/BuV7ZDmaY7atC1DEXXUU3a7tglMEhZUhxUa1vVXT
-	 KiBLeP1SRcJJmCEpNUXs+ueQ41vP6VaL7bKzD1hpD4tagzTZ5erDxLYvD4gJQn2xlP
-	 VvGdnS31M8Cdw==
+	b=BS35+SBme0naIFryJgDhbyV3lwJiuTma70abK+c17E0CbhYgb5PWf/WJ0Amna3xO0
+	 MYZjFD7T6Rj/W69CUpcSg0CuvqiLT/lCP/WixKHyoRQDh3hy7j3leld9h8ss+7buFs
+	 QFb3R31OXPDJi7stxBYjqkaRdJQoZlJeje5XpzQHAqU7kUZ3ZAddozkkKFRw4n6noW
+	 /vrQU/xk4OWCijpPs1qO4cxKNNZ93asypgvMT60oOWbA9bHRLCUOjI1R8/BRcEnmd9
+	 rx5bmQesZyjt80SL43Wa4Ojn99zVnpY/ko6R7kkE3fKzDFrr4hlH5JINv2iS2pMTpQ
+	 RgyejymG7E8xg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH V3 1/6] dmaengine: zynqmp_dma: Fix PM usage count
- handling in probe error path
+Subject: Re: [PATCH] dmaengine: sun6i: fix use-after-free in descriptor
+ error path
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Golla Nagendra" <nagendra.golla@amd.com>
-Cc: robh@kernel.org, Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-In-Reply-To: <20260810100452.426320-2-nagendra.golla@amd.com>
-References: <20260810100452.426320-1-nagendra.golla@amd.com>
- <20260810100452.426320-2-nagendra.golla@amd.com>
+To: "Chaithanya Lagisetty" <nagachaithanya9911@gmail.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, linux-sunxi@lists.linux.dev, Frank.Li@kernel.org
+In-Reply-To: <20260810102044.1725649-1-nagachaithanya9911@gmail.com>
+References: <20260810102044.1725649-1-nagachaithanya9911@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Aug 2026 10:28:13 +0000
-Message-Id: <20260810102814.4A6981F000E9@smtp.kernel.org>
+Date: Mon, 10 Aug 2026 10:32:14 +0000
+Message-Id: <20260810103215.510241F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [Medium] The introduced pm_runtime_put_sync() fails to synchronously susp=
-end the device because autosuspend is enabled, leaving clocks active.
+
+Pre-existing issues:
+- [High] Missing validation for `period_len` and `buf_len` in `sun6i_dma_pr=
+ep_dma_cyclic` leads to a division by zero or a NULL pointer dereference.
+- [High] Missing validation for `sg_len =3D=3D 0` in `sun6i_dma_prep_slave_=
+sg` leads to hardware being programmed with physical address 0x0.
+- [High] Integer truncation in the interrupt handler loop bound causes inte=
+rrupts from channels >=3D 8 to be permanently ignored on SoCs with non-mult=
+iple-of-8 channels (e.g., sun8i-h3).
 --
 
---- Patch [1]: [PATCH V3 1/6] dmaengine: zynqmp_dma: Fix PM usage count han=
-dling in probe error path ---
-commit 8bb5754b8f17c08d0144740ac308428274806a68
-Author: Golla Nagendra <nagendra.golla@amd.com>
+--- Patch [1]: [PATCH] dmaengine: sun6i: fix use-after-free in descriptor e=
+rror path ---
+commit 815343fddc5f554759b857f782dbda4a7c8b1a7a
+Author: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-dmaengine: zynqmp_dma: Fix PM usage count handling in probe error path
+dmaengine: sun6i: fix use-after-free in descriptor error path
 
-This commit attempts to fix a reference leak on the probe error path. When
-probe fails after successfully waking up the device, it adds a missing
-runtime PM put call to drop the usage count and allow the device to suspend.
+The err_lli_free cleanup loops in sun6i_dma_prep_slave_sg() and
+sun6i_dma_prep_dma_cyclic() free each LLI node with dma_pool_free()
+and then dereference the freed node to obtain v_lli_next and
+p_lli_next for the next loop iteration.
 
-> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_=
-dma.c
-> --- a/drivers/dma/xilinx/zynqmp_dma.c
-> +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+> index a9a254dbf8cb9..2c163ab22af5c 100644
+> --- a/drivers/dma/sun6i-dma.c
+> +++ b/drivers/dma/sun6i-dma.c
+> @@ -720,10 +720,10 @@ static struct dma_async_tx_descriptor *sun6i_dma_pr=
+ep_slave_sg(
+>  	struct sun6i_dma_dev *sdev =3D to_sun6i_dma_dev(chan->device);
+>  	struct sun6i_vchan *vchan =3D to_sun6i_vchan(chan);
+>  	struct dma_slave_config *sconfig =3D &vchan->cfg;
+> -	struct sun6i_dma_lli *v_lli, *prev =3D NULL;
+> +	struct sun6i_dma_lli *v_lli, *v_next, *prev =3D NULL;
+>  	struct sun6i_desc *txd;
+>  	struct scatterlist *sg;
+> -	dma_addr_t p_lli;
+> +	dma_addr_t p_lli, p_next;
+>  	u32 lli_cfg;
+>  	int i, ret;
+> =20
+
+[Severity: High]
+This is a pre-existing issue, but I noticed there is no validation for
+sg_len =3D=3D 0.
+
+If a caller provides an empty scatterlist, the txd is allocated but the
+for_each_sg() loop is skipped:
+
+drivers/dma/sun6i-dma.c:sun6i_dma_prep_slave_sg() {
+    ...
+    for_each_sg(sgl, sg, sg_len, i) {
+        ...
+    }
+    ...
+}
+
+This leaves txd->p_lli as 0 and txd->v_lli as NULL. When this descriptor is
+executed via sun6i_dma_start_desc(), the hardware is programmed with physic=
+al
+address 0x0.
+
+Could this lead to the hardware accessing physical address 0x0?
 
 [ ... ]
 
-> @@ -1152,6 +1152,8 @@ static int zynqmp_dma_probe(struct platform_device =
-*pdev)
->  err_disable_pm:
->  	if (!pm_runtime_enabled(zdev->dev))
->  		zynqmp_dma_runtime_suspend(zdev->dev);
-> +	else
-> +		pm_runtime_put_sync(zdev->dev);
->  	pm_runtime_disable(zdev->dev);
+> @@ -806,9 +809,9 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep=
+_dma_cyclic(
+>  	struct sun6i_dma_dev *sdev =3D to_sun6i_dma_dev(chan->device);
+>  	struct sun6i_vchan *vchan =3D to_sun6i_vchan(chan);
+>  	struct dma_slave_config *sconfig =3D &vchan->cfg;
+> -	struct sun6i_dma_lli *v_lli, *prev =3D NULL;
+> +	struct sun6i_dma_lli *v_lli, *v_next, *prev =3D NULL;
+>  	struct sun6i_desc *txd;
+> -	dma_addr_t p_lli;
+> +	dma_addr_t p_lli, p_next;
+>  	u32 lli_cfg;
+>  	unsigned int i, periods =3D buf_len / period_len;
 
-[Severity: Medium]
-Does this actually suspend the device and disable the clocks?
+[Severity: High]
+This is a pre-existing issue, but is it possible for period_len to be 0 her=
+e,
+leading to a division by zero?
 
-Since autosuspend is enabled for this device earlier in zynqmp_dma_probe():
-pm_runtime_use_autosuspend(zdev->dev);
+Additionally, if buf_len < period_len, periods evaluates to 0, which skips
+the allocation loop. This leaves prev as NULL, and causes a NULL pointer
+dereference later in the function:
 
-Calling pm_runtime_put_sync() will only schedule an asynchronous suspend
-timer. The immediately following pm_runtime_disable() will cancel this
-pending timer before the suspend callback ever runs, leaving the clocks
-permanently enabled.
+drivers/dma/sun6i-dma.c:sun6i_dma_prep_dma_cyclic() {
+    ...
+    prev->p_lli_next =3D txd->p_lli;      /* cyclic list */
+    ...
+}
 
-Should this use pm_runtime_put_sync_suspend() instead to force a synchronous
-suspend and bypass the autosuspend delay before disabling runtime PM?
+Should we validate period_len and buf_len before performing this division?
 
->  	return ret;
->  }
+[ ... ]
+
+While reviewing this code, I also noticed another pre-existing issue in the
+interrupt handler.
+
+[Severity: High]
+This is a pre-existing issue, but I noticed a potential truncation in the
+channel group calculation for the interrupt handler.
+
+drivers/dma/sun6i-dma.c:sun6i_dma_interrupt() {
+    ...
+    for (i =3D 0; i < sdev->num_pchans / DMA_IRQ_CHAN_NR; i++) {
+        ...
+    }
+    ...
+}
+
+For SoCs with non-multiple-of-8 channel counts (like sun8i-h3 with 12
+channels), 12 / 8 evaluates to 1. This causes the handler to only process
+channels 0-7 and completely skip channels 8-11.
+
+Could this result in unhandled interrupts and system hard lockups if a DMA
+transfer completes on channels 8-11?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810100452.4263=
-20-1-nagendra.golla@amd.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260810102044.1725=
+649-1-nagachaithanya9911@gmail.com?part=3D1
