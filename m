@@ -1,260 +1,257 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5C443A819
-	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6434142A7A0
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786387767; cv=none; b=SXqDnpe1jo37xEKJnCex7iSV551Ez6qUFgVlghcB1ep0mdAuQuOPlYzVI/pleJrxlU+MUDIOt00yoO6d1ECtuEWWBt0x9MJna9s5Rs0qFMfMR95izkDXXlJMvwQCaYiA2mEIWIoujdNBJHKNSP0ex5rZKAokwcSMB07mN+cJxQE=
+	t=1786387849; cv=none; b=HL4ishthQGVt705KczqM4NZOXjxRhW2tTI8iS/mCSsC+l9Ki4YqGNHzGVwazd/ta606e5wG+ex6VCPKz3BKjyGRjQp8Em08451OfVYk3fZ0CUeNXpfopK4malQBpcMRx5srQ5dyMHtyCEFfUWi5s7MN1C+TVALIS4NzYnKJFLt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786387767; c=relaxed/simple;
-	bh=7LujZFZJ66L730IhTUxcMiuwmb4OaJ+ZJXbzJ5+C/4U=;
+	s=arc-20240116; t=1786387849; c=relaxed/simple;
+	bh=2CckLYQXY2ppY0sDXFHzST3x0YUSUGDZLYQw6c2Bv7o=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=CTxjZIA48tAuADof4x1vCGCrd0LceTNB8GvMziTMVobn6PYzziWsJvb/OlH33ZAiZTNpaV1Auem3T0nlnE1dksdx/2Eyx47mlKm0Yc73IgjkGQuuaRkumwIX1zqAoI0B9xaQQYpBMY4YCg9qAVghBjgdre3QlH3Ezw348HzIM2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e6tVJLW+; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=fWF9DsDnmVcNhd3opSe7E0urhuT2RtMf4Bcs2hQrz26Cn9Ge4nlil747FJB9kllggFyuGh3FlWinfG8e0VThqJSvD/rTv+F9Ul8bVtcE6T9OHC3OBUS75wCbbxfWarh0OyDirh56WFrsLJMvnJy9cArCBbOiOBoFjb2YpF2O0WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=impG/O6A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e6tVJLW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC241F000E9;
-	Mon, 10 Aug 2026 18:49:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="impG/O6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090CE1F000E9;
+	Mon, 10 Aug 2026 18:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786387765;
-	bh=hFYLuGzer+7lZHWFjluO7P+odHueCxIhNeaPQxB38rU=;
+	s=k20260515; t=1786387846;
+	bh=/BqKD5iPn65g8Wv7ea7S30vfdM6D7+/uE+8AQVh/T3c=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=e6tVJLW+zjofAMlu4zWL2ovEf8c38rhdyekgMjxRNjcKR3b5BR54TmZx4mn0g2p2+
-	 ZqzfhCcQvtOXajdiHX00oOvqgIfo9tPGcUtVUVDIsgKQDZdF2A0LFIOwDQPowQo52w
-	 NvkfkR87220t2xoZFjMgT1sE1AWSI2Tg1Ot+KdPPqWGf9sZchQdAQzHg3+/7nM40qh
-	 8MSeHfpEjO9eBIG9pfEWALKBZJTxOgFmy7FU026BFbZdy2hptmNLXMOozEhrNDSxbx
-	 iHOk3W5UPh0bA0fP0vwIueHYKYRi6iWJEZqnv3+rAN10YT53G7ZmZAUWYMLnAasbAu
-	 DumBZgRd7wxvg==
+	b=impG/O6AV9im+6Wb2yk6/mXy6uonPcGAbxsFqx5h7VrryMykeS4WkLuAps65LEJgE
+	 53KWreUkBDJl895aQ9yyp50BmCyH31kyqyox+FwgtmXLEovydMe75mR30+c0XTCNwt
+	 4jkiqrpXnBDtv9U8PyMkxEoTW5+I4Gl6O15uaxdIonAQOsXHm0hPgeOwL7nWkq62y7
+	 uFcZ9Pwa2a2vkA/m+uRfQw+2TSPqF7FzMb7n8ga659ZslhF6Ps+fVVE1a26RARHaNr
+	 sSclk9ekGfjtFB79GptdMJZtppfVjONc+Q4CeAi9ffrDoufayNFIjwuw2SyPkYuiUh
+	 XaMmD9veKMt9w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 30/34] dmaengine: altera-msgdma: use channel BH
- helpers
+Subject: Re: [PATCH v3 26/34] dmaengine: mpc512x: route callbacks via
+ channel BH
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
 Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <21c92aefc28557597024ee450f1690761ba6d452.1786384169.git.allen.lkml@gmail.com>
+In-Reply-To: <c4ed3eb4259edcb339eb69466aba216d51c93559.1786384169.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com>
  <cover.1786384168.git.allen.lkml@gmail.com>
- <21c92aefc28557597024ee450f1690761ba6d452.1786384169.git.allen.lkml@gmail.com>
+ <c4ed3eb4259edcb339eb69466aba216d51c93559.1786384169.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Aug 2026 18:49:24 +0000
-Message-Id: <20260810184924.DDC241F000E9@smtp.kernel.org>
+Date: Mon, 10 Aug 2026 18:50:45 +0000
+Message-Id: <20260810185046.090CE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 7 potential issue(=
+Thank you for your contribution! Sashiko AI review found 6 potential issue(=
 s) to consider:
 
+New issues:
+- [High] Missing dmaengine_kill_bh() in mpc_dma_remove() leads to Use-After=
+-Free of per-channel BH work upon driver unbind.
+
 Pre-existing issues:
-- [High] The failure path in `msgdma_probe()` does not call `dma_async_devi=
-ce_unregister()` if `of_dma_controller_register()` fails, leading to a Use-=
-After-Free.
-- [High] The IRQ handler is requested before crucial data structures, lists=
-, spinlocks, and the bottom-half worker are initialized, which can cause a =
-kernel panic on an early interrupt.
-- [High] Batching multiple DMA transactions causes dropped transfers due to=
- incorrect list splicing in `msgdma_start_transfer()`.
-- [High] Dropping the spinlock while iterating a list via `list_for_each_en=
-try_safe` enables arbitrary concurrent list destruction, leading to a Use-A=
-fter-Free.
-- [High] Zero-length transfers bypass descriptor limit checking, breaking a=
-ccounting metrics and eventually leading to a NULL pointer dereference.
-- [High] A hardware-induced soft lockup where the driver spins infinitely w=
-ith interrupts disabled if the hardware descriptor FIFO remains full.
-- [High] Missing bitmask application when reading the response fill-level r=
-egister allows undefined upper bits to impose massive computational loops, =
-freezing the kernel.
+- [High] Concurrent execution of completion processing can lead to backward=
+ progression of completed_cookie and out-of-order callbacks.
+- [High] Inline descriptor processing in `prep_` functions executes callbac=
+ks synchronously across all channels, risking deadlocks.
+- [High] Missing `device_synchronize` implementation in dma_device to flush=
+ the deferred completion work.
+- [High] Interrupt handler is requested before tasklet and locks are initia=
+lized, and tasklet cleanup is missing in probe error paths.
+- [High] mpc_dma_device_terminate_all does not clear mchan->completed, lead=
+ing to BUG_ON crash in free_chan_resources.
 --
 
---- Patch [30]: [PATCH v3 30/34] dmaengine: altera-msgdma: use channel BH h=
-elpers ---
-commit 728ca1a7dab7d5ba74ab85afa0d21836b794d564
+--- Patch [26]: [PATCH v3 26/34] dmaengine: mpc512x: route callbacks via ch=
+annel BH ---
+commit a8db08e8595cca1d5c7b07d2e006d85529289c2e
 Author: Allen Pais <allen.lkml@gmail.com>
+Subject: dmaengine: mpc512x: route callbacks via channel BH
 
-dmaengine: altera-msgdma: use channel BH helpers
+This patch modifies the MPC512x DMA driver to handle descriptor completions
+through per-channel bottom halves instead of a global tasklet. It introduces
+workqueue scheduling and cleanup for the channels to process callbacks, whi=
+le
+leaving the tasklet to manage IRQ and error handling.
 
-Replace the device tasklet with the per-channel BH helper so completion
-handling runs via dmaengine_*_bh.
-
-> diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-> index e23e5b441a24e..c8e145cea6d25 100644
-> --- a/drivers/dma/altera-msgdma.c
-> +++ b/drivers/dma/altera-msgdma.c
+> diff --git a/drivers/dma/mpc512x_dma.c b/drivers/dma/mpc512x_dma.c
+> index 0adc8e01057e1..19e0b2f1b2aa3 100644
+> --- a/drivers/dma/mpc512x_dma.c
+> +++ b/drivers/dma/mpc512x_dma.c
 [ ... ]
-> @@ -684,11 +683,12 @@ static int msgdma_alloc_chan_resources(struct dma_c=
-han *dchan)
-> =20
->  /**
->   * msgdma_tasklet - Schedule completion tasklet
-> - * @t: Pointer to the Altera sSGDMA channel structure
-> + * @chan: Pointer to the Altera sSGDMA channel structure
->   */
-> -static void msgdma_tasklet(struct tasklet_struct *t)
-> +static void msgdma_tasklet(struct dma_chan *chan)
+> +static void mpc_dma_process_chan_completed(struct mpc_dma_chan *mchan)
 >  {
-> -	struct msgdma_device *mdev =3D from_tasklet(mdev, t, irq_tasklet);
-> +	struct msgdma_device *mdev =3D container_of(chan, struct msgdma_device,
-> +						  dmachan);
->  	u32 count;
->  	u32 __maybe_unused size;
->  	u32 __maybe_unused status;
+>  	dma_cookie_t last_cookie =3D 0;
+> -	struct mpc_dma_chan *mchan;
+>  	struct mpc_dma_desc *mdesc;
+>  	struct dma_async_tx_descriptor *desc;
+>  	unsigned long flags;
+>  	LIST_HEAD(list);
+> -	int i;
+> =20
+> -	for (i =3D 0; i < mdma->dma.chancnt; i++) {
+> -		mchan =3D &mdma->channels[i];
+> +	/* Get all completed descriptors */
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	if (!list_empty(&mchan->completed))
+> +		list_splice_tail_init(&mchan->completed, &list);
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> =20
+> -		/* Get all completed descriptors */
+> -		spin_lock_irqsave(&mchan->lock, flags);
+> -		if (!list_empty(&mchan->completed))
+> -			list_splice_tail_init(&mchan->completed, &list);
+> -		spin_unlock_irqrestore(&mchan->lock, flags);
+> +	if (list_empty(&list))
+> +		return;
+> =20
+> -		if (list_empty(&list))
+> -			continue;
+> +	/* Execute callbacks and run dependencies */
+> +	list_for_each_entry(mdesc, &list, node) {
+> +		desc =3D &mdesc->desc;
+> =20
+> -		/* Execute callbacks and run dependencies */
+> -		list_for_each_entry(mdesc, &list, node) {
+> -			desc =3D &mdesc->desc;
+> +		dmaengine_desc_get_callback_invoke(desc, NULL);
+> =20
+> -			dmaengine_desc_get_callback_invoke(desc, NULL);
+> +		last_cookie =3D desc->cookie;
+> +		dma_run_dependencies(desc);
+> -		}
+> +	}
+> =20
+> -		/* Free descriptors */
+> -		spin_lock_irqsave(&mchan->lock, flags);
+> -		list_splice_tail_init(&list, &mchan->free);
+> -		mchan->chan.completed_cookie =3D last_cookie;
+> -		spin_unlock_irqrestore(&mchan->lock, flags);
+> -	}
+> +	/* Free descriptors */
+> +	spin_lock_irqsave(&mchan->lock, flags);
+> +	list_splice_tail_init(&list, &mchan->free);
+> +	mchan->chan.completed_cookie =3D last_cookie;
+> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> +}
 
 [Severity: High]
-This isn't a bug introduced by this patch, but there appears to be a missing
-bitmask on the response fill-level read further down in this function:
+This is a pre-existing issue, but can concurrent execution of completion
+processing lead to out-of-order callbacks or backward progression of
+completed_cookie?
 
-	if (mdev->resp) {
-		/* Read number of responses that are available */
-		count =3D ioread32(mdev->csr + MSGDMA_CSR_RESP_FILL_LEVEL);
+If mpc_dma_prep_memcpy() calls mpc_dma_process_completed() synchronously
+while the BH work executes concurrently, both paths take mchan->lock,
+splice a batch of completed descriptors to a local list, and drop the lock
+to execute callbacks.=20
 
-The macro MSGDMA_CSR_RESP_FILL_LEVEL_GET() exists but isn't used here. If t=
-he
-upper 16 bits contain non-zero data, count will be massively inflated. Could
-this cause the subsequent while (count--) loop to iterate excessively and
-cause a CPU stall?
+If Thread A splices older descriptors and Thread B subsequently splices new=
+er
+ones, Thread B might finish first and update completed_cookie. When Thread A
+finishes, could it overwrite completed_cookie with the older value?
 
-[ ... ]
-> @@ -766,7 +766,7 @@ static void msgdma_dev_remove(struct msgdma_device *m=
-dev)
->  		return;
 > =20
->  	devm_free_irq(mdev->dev, mdev->irq, mdev);
-> -	tasklet_kill(&mdev->irq_tasklet);
-> +	dmaengine_kill_bh(&mdev->dmachan);
->  	list_del(&mdev->dmachan.device_node);
+> -/* process completed descriptors */
+> -static void mpc_dma_process_completed(struct mpc_dma *mdma)
+> +/* process completed descriptors */
+> +static void mpc_dma_process_completed(struct mpc_dma *mdma)
+> +{
+> +	int i;
+> +
+> +	for (i =3D 0; i < mdma->dma.chancnt; i++)
+> +		mpc_dma_process_chan_completed(&mdma->channels[i]);
 >  }
 
 [Severity: High]
-This is a pre-existing issue, but I have a question about the cleanup path.
+This is a pre-existing issue, but does iterating over all channels here risk
+cross-channel deadlocks?
 
-If dma_async_device_register() succeeds in msgdma_probe(), but
-of_dma_controller_register() fails, the code jumps to the fail label and ca=
-lls
-msgdma_dev_remove().
+When mpc_dma_prep_memcpy() or mpc_dma_prep_slave_sg() run out of free
+descriptors, they call mpc_dma_process_completed() directly, running
+callbacks inline for all channels.=20
 
-However, msgdma_dev_remove() lacks a dma_async_device_unregister() call. Si=
-nce
-mdev was allocated with devm_kzalloc(), it is automatically freed on probe
-failure. Does this leave the dmaengine core with dangling pointers and cause
-a Use-After-Free?
+If a client calls the prep_ function with a lock held, and a callback for
+another channel attempts to acquire the same lock, could this cause an ABBA
+deadlock?
 
 [ ... ]
-> @@ -852,7 +852,7 @@ static int msgdma_probe(struct platform_device *pdev)
->  	if (ret)
->  		return ret;
+> @@ -551,6 +568,8 @@ static void mpc_dma_free_chan_resources(struct dma_ch=
+an *chan)
+>  	unsigned long flags;
+>  	LIST_HEAD(descs);
 > =20
-> -	tasklet_setup(&mdev->irq_tasklet, msgdma_tasklet);
-> +	dmaengine_init_bh(&mdev->dmachan, msgdma_tasklet);
+> +	dmaengine_kill_bh(&mchan->chan);
+> +
+>  	spin_lock_irqsave(&mchan->lock, flags);
 > =20
->  	dma_cookie_init(&mdev->dmachan);
+>  	/* Channel must be idle */
 
 [Severity: High]
-This isn't a bug introduced by this patch, but I have a question about the
-initialization order here.
+This is a pre-existing issue, but does mpc_dma_device_terminate_all() leave
+completed descriptors on the list, causing a crash here?
 
-Higher up in msgdma_probe(), devm_request_irq() is called before the BH wor=
-ker,
-spinlocks, and lists are initialized.
+mpc_dma_device_terminate_all() disables channel requests and splices
+prepared, queued, and active lists back to the free list, but it completely
+ignores mchan->completed.
 
-If an interrupt fires immediately upon registration, could msgdma_irq_handl=
-er()
-attempt to lock the uninitialized spinlock, access uninitialized lists in
-msgdma_start_transfer(), and schedule an uninitialized BH worker?
+If a hardware completion interrupt fires just before terminate_all is calle=
+d,
+completed descriptors remain in mchan->completed. When the client subsequen=
+tly
+calls dma_release_channel(), will mpc_dma_free_chan_resources() assert
+BUG_ON(!list_empty(&mchan->completed)) and crash the kernel?
 
-I also noticed several other pre-existing issues in this file:
-
-[Severity: High]
-This is a pre-existing issue, but I noticed something concerning in how bat=
-ched
-transfers are handled.
-
-In msgdma_start_transfer():
-
-	desc =3D list_first_entry_or_null(&mdev->pending_list,
-					struct msgdma_sw_desc, node);
-	if (!desc)
-		return;
-
-	list_splice_tail_init(&mdev->pending_list, &mdev->active_list);
-	msgdma_copy_desc_to_fifo(mdev, desc);
-
-When multiple transactions are queued, this takes the first descriptor but =
-moves
-the entire pending_list to active_list using list_splice_tail_init(). Howev=
-er,
-it only copies the first descriptor to the hardware FIFO.
-
-When this transfer completes, subsequent transactions remain trapped in
-active_list because msgdma_start_transfer() only checks pending_list. Does =
-this
-result in dropped transfers when a client driver batches multiple requests?
+[ ... ]
+> @@ -1007,6 +1026,7 @@ static int mpc_dma_probe(struct platform_device *op)
+>  		INIT_LIST_HEAD(&mchan->completed);
+> =20
+>  		spin_lock_init(&mchan->lock);
+> +		dmaengine_init_bh(&mchan->chan, mpc_dma_chan_bh);
+>  		list_add_tail(&mchan->chan.device_node, &dma->channels);
+>  	}
+> =20
 
 [Severity: High]
-This is a pre-existing issue, but the lock dropping pattern seems dangerous.
+Is it possible for per-channel BH work to remain queued after the driver is
+unbound?
 
-In msgdma_chan_desc_cleanup(), the code iterates over mdev->done_list using
-list_for_each_entry_safe and temporarily drops mdev->lock:
+The new workqueue is initialized here, but looking at mpc_dma_remove(), it
+only calls tasklet_kill(&mdma->tasklet) and does not iterate over channels
+to call dmaengine_kill_bh().
 
-		if (dmaengine_desc_callback_valid(&cb)) {
-			spin_unlock_irqrestore(&mdev->lock, irqflags);
-			dmaengine_desc_callback_invoke(&cb, NULL);
-			spin_lock_irqsave(&mdev->lock, irqflags);
-		}
-
-If dma_release_channel() is called concurrently, msgdma_free_chan_resources=
-()
-can acquire the lock, reset all lists, and free the backing array with
-kfree(mdev->sw_desq). When msgdma_chan_desc_cleanup() reacquires the lock, =
-its
-next pointer will reference freed memory. Can this race lead to a
-Use-After-Free?
+Could this cause the workqueue to execute mpc_dma_chan_bh() on freed memory=
+=20
+if the driver is forcefully unbound via sysfs while DMA is active?
 
 [Severity: High]
-This isn't a bug introduced by this patch, but there seems to be an account=
-ing
-flaw for zero-length transfers.
+This is a pre-existing issue, but is the driver missing a device_synchronize
+callback?
 
-In msgdma_prep_memcpy():
+Without this callback implemented in struct dma_device,
+dmaengine_terminate_sync() will return immediately without waiting for
+the bottom-half to finish.
 
-	desc_cnt =3D DIV_ROUND_UP(len, MSGDMA_MAX_TRANS_LEN);
-	...
-	mdev->desc_free_cnt -=3D desc_cnt;
-	...
-	do {
-		/* Allocate and populate the descriptor */
-		new =3D msgdma_get_descriptor(mdev);
-		...
-	} while (len);
-
-If len is 0, desc_cnt is 0. The free count check passes, and desc_free_cnt =
-is
-decremented by 0.
-
-However, the do-while loop executes exactly once, withdrawing a physical
-descriptor from mdev->free_list via msgdma_get_descriptor(). If multiple
-zero-length requests are submitted, won't this drain free_list entirely wit=
-hout
-decrementing desc_free_cnt, eventually causing a NULL pointer dereference in
-msgdma_get_descriptor()?
+If the client frees its DMA buffers immediately after terminate_sync()
+returns, will the pending workqueue execute callbacks that access the
+freed memory?
 
 [Severity: High]
-This is a pre-existing issue, but I am worried about the polling loop in
-msgdma_copy_one():
+This is a pre-existing issue, but is it safe to request the interrupt before
+the tasklet and locks are initialized?
 
-	while (ioread32(mdev->csr + MSGDMA_CSR_STATUS) &
-	       MSGDMA_CSR_STAT_DESC_BUF_FULL)
-		mdelay(1);
+In mpc_dma_probe(), request_irq() is called before tasklet_setup(),
+per-channel list initialization, and spin_lock_init().
 
-Since this function is invoked under a spinlock with local interrupts disab=
-led,
-could a malfunctioning hardware device permanently stall the CPU core and t=
-rigger
-the NMI watchdog?
+If a pending interrupt from the hardware fires immediately, could the ISR
+execute on uninitialized spinlocks and lists, or call tasklet_schedule()
+on a zero-initialized tasklet? Additionally, if probe fails later, the
+error path frees the IRQ but fails to call tasklet_kill(), which could
+allow a pending tasklet to run after devres frees the mdma structure.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1786384168.gi=
-t.allen.lkml@gmail.com?part=3D30
+t.allen.lkml@gmail.com?part=3D26
