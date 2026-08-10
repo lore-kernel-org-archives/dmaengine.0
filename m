@@ -1,243 +1,327 @@
-Received: from mx0b-00128a01.pphosted.com (mx0b-00128a01.pphosted.com [148.163.139.77])
+Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AF43F0AB8;
-	Mon, 10 Aug 2026 15:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.139.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B06405C35;
+	Mon, 10 Aug 2026 15:14:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.150.75
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786374399; cv=fail; b=sATgG2gdj57BtMMkqQZvAwR17M+EhnTdiyFk3LYTX7mGj3j8XoBRAGWhGm2nrJ5s1ta66/CnAfbMweO1nD+ozL221BAj1xm5AtOodqluFplQsBF8zttSdIsPwKNnL8neMt/c9tPgqZmskHKpx9QE28Q21Vtllq1au+K0D0yAUpI=
+	t=1786374889; cv=fail; b=sOVzpgoJIlM8ExFtmATAj5tRkqaeJN+lnqVwZcjRjwYgqyctTBUjJIjJan+NIgcOIGx+9QUwhU/W+VWhpPLsaZggRehLfRnY3fvRpI7vIXwMV0cX73iNbvBJd7by4zS0S7pOq72dqBOEK4lkRBvVENjp7AtjxF8usE9e9TUxiHU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786374399; c=relaxed/simple;
-	bh=tTeDT+KacDLMVRNd1Fjx+G8m6ApDUezZPLGktu3/qBc=;
-	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=rv1wKhrnbltsFGt/O6rNbs7SjWK9dzbTB9+VkkNMi77RszfdVXdJwn3C5d+sfirpAWQ3J6Tinmtd/61J0Iw+EPtaYD2dFZjMIa6/z9ZGlZZDGTVipXFTb5qApdTS/8IpQ/yqM0hBi38AE2evySc5f6wjio8rHRJfkKHswqthtYk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=f6PBKI5o; arc=fail smtp.client-ip=148.163.139.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
+	s=arc-20240116; t=1786374889; c=relaxed/simple;
+	bh=X/psp7MjKuTyC+9yOopc696NhfNiAR0y1OaUiSZ/l5U=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mMSL3i+aYK62osR8kRbRMfw6w8X0LWNvJA/TC0Wv7CXbSZZ7325IENlzcggjveq/f6gOhewMjttEO9FWYyc+BKJvthv6erjytvTz7VhdKhkm0mVL4I/CZAur2tLnIlnagmX3MkGgm3rB9UArCFgMiE/kLpgPjQd0pxDAtBgNCFE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=g7DF+NGH; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=YPjNEZNc; arc=fail smtp.client-ip=148.163.150.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="f6PBKI5o"
-Received: from pps.filterd (m0516786.ppops.net [127.0.0.1])
-	by mx0b-00128a01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67ACsHLI3474289;
-	Mon, 10 Aug 2026 11:06:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=DKIM; bh=5sbSd
-	rq78dAOORMP9YFXgXeoZY3eR+9fIRuAU6uoRZg=; b=f6PBKI5odfQStKe1QGRD0
-	uc9rdEWbiF8Z5h9u1/TOTxpZlH3jyWNaqiMjpE2tf5B+fvA9V/IBReem3o+2Lxc8
-	w9S6g+rZQGhLrMMuJDudwK6+P1Nrmj3U4psBoCS9khET7/XhJYAbMjHsoNd28ihb
-	2d2VENmxU/GmoBAfaS+dGba17qfXEGwsh0YkuUyRTDPGKlQdw5jqzO31oSoxCjQ3
-	lHnZohAoa2Mu/IDGnw9Gg14QtsDpnA5h2yg1FosZslzGjwMadQW9O67CMUGDlRcF
-	njiuq6NTMdUzKnpnuSKlCrCEQpCf6NCfypJjx9iQ5PlNxJleAs5t2t5YkMnIzRQt
-	g==
-Received: from bl0pr03cu003.outbound.protection.outlook.com (mail-eastusazon11012040.outbound.protection.outlook.com [52.101.53.40])
-	by mx0b-00128a01.pphosted.com (PPS) with ESMTPS id 4fxn2jbwfm-7
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="g7DF+NGH";
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="YPjNEZNc"
+Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
+	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 67AEUarE3620346;
+	Mon, 10 Aug 2026 10:14:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=proofpoint-05-2026; bh=4NMsbBLoSpCch
+	MEjSwPBKET6ZbeTYtxaAZRAiIXbFlY=; b=g7DF+NGH1dR/Gr3uwtFC0M+UmLv64
+	qEbzA49ARxIoWmqr37zPGYooMe3ZlyLQ/+3Nx3pBQHnWMS+uXaqy4dXpkH1h51J7
+	NLkuKHzO+SIPj+4CN6FIqlMN+2JS5rs1DAU6DX/O9ynmXd6gxMXgkWsKCwER5qmV
+	axEJXUFPl6kFtKdJawQvJ91BOMO6AIPbTaKD5tM++nLIfbOx6+tSXTt+rc0Vif7L
+	tb+Bwvnv75YoWamTDUE7yY4Gt911vunyr7i4Vih6MehxihgUFgZ7GrT/F4/Fww1D
+	VZLjOeVJpQ6fF96NXn/6Pc2ob1KNarxvqX1cgUzv4gp0WcnRw8lYN9Zag==
+Received: from mw6pr02cu001.outbound.protection.outlook.com (mail-westus2azon11012025.outbound.protection.outlook.com [52.101.48.25])
+	by m0384305.ppops.net (PPS) with ESMTPS id 4fydt79grb-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 10 Aug 2026 11:06:12 -0400 (EDT)
+	Mon, 10 Aug 2026 10:14:40 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yRl3uKVyOCbTjWmaCMWnfi/dpefHSDdFE71xwdLNcW5+yQGmeABpBYQH6ylwd6Mi7nC6bCc8Ao5IrmoJwqeyc/FeuFNe4L3BGGtmbe8N6XfgWyuG5X1cIDHg01KPfZfkUIrtIQKEp6Vn/XOIbndvVxO+TACKU+CqoLtRi8PxspKV10MluCY+IjcPxnkL1ujIF5uWrnRU5y27ge+8OzjhuQ0juJtK0VogJjjY0XAc0G29oxJlr31C7WhLSV9sHd/UvqUXpRtgk2jXVC5HG3xT/lGj2SClRsUz4hLlXSvm3Ng5uV1YzyNjmAVMJs6Xz5l2W1fE/AslSEr6YlqQB6t7bA==
+ b=l0phJJjTdjTqp1OVhq/gSf2xohzecep6VvEdBmDSbMTCDdLz4cXPSb9yqzbSzUcJSMmQs9rDa6gbf3a9UjJMSpE0uMLcPq69SsyIVWB40i/xxY1PCX5DGrvhzzTUE5aMa2sCvoV5OR8C51xWwn+8PXtk0wa8t3RMHt1FyQHozKZr0/4EWacO7c5MnX+Uw94jlg+hoBv38zqFKQ4DLeGemVbDjGBYI0+0OnfPRwJ+YFyXDhQqlseCnBGc+aOWXAiiAU5h8plXxz245Xe3nPsu4gtN/VsfEC1ZrfCNCfX2nExZuzA0YTeS24fXpDddg7B0d7i48LXct57YCooqFGCMvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5sbSdrq78dAOORMP9YFXgXeoZY3eR+9fIRuAU6uoRZg=;
- b=ZFOSfX9iz4jZ2f0LsxmjzIxNcVffFO46TT1OJOvRrIOhWWZqQh1DQDgt035V1kXQo81q5aExqweUXux9piKv/UjxWTTIJDkf1Gp5qNIp9moKjt5vWTKUgjU91LqC7XAqCt0F4hK7SlBqdV89DkRVIha7ZM4x97VjorczetlZ5+ejDSOns6gKdMCtKuZilcOygrCGubCbAxH1pC3XlQRGdi4ArXUGNerH+ccw3E8SyGymhDSVLFL0otBeLmhcogoREqrhDjA3NX4qr/VBZuQxigL2L1pie+qDxaJ5InofQBjb3KYuZtm/aiKW+I3OvW0VCxuoOaipseP0HWt6LkSVJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
- dkim=pass header.d=analog.com; arc=none
-Received: from SJ0PR03MB5469.namprd03.prod.outlook.com (2603:10b6:a03:28a::17)
- by DS7PR03MB8170.namprd03.prod.outlook.com (2603:10b6:8:266::5) with
+ bh=4NMsbBLoSpCchMEjSwPBKET6ZbeTYtxaAZRAiIXbFlY=;
+ b=j+QysVhpX4ddQw6WfpCtI+U/9QobIAzldo5NgCo0S8j1dQx1KDMxJSqVJmemo6uWhVCG1AKIgKfKywhJGZfTc/dCGZWEHFJRqBICfKRH/hLC1RYtmreUW2hEDFvmi4AF/n22nCqEZN/1gXmYyY+rLteR9EgSmG58R2SVqtngR1ifBPkbifjHYOi1xLclCs5/Ylk8GPz2U956CDTDmnBd59e5BDFwjfdAIWe8vIftLmgwFB9Z8WvExXvPNtlQWI8S2iR3NiYQa0yPm5I0OV2wC2dPU1ZZfglFTdHtRUE5ScboDrW7LtmJjjJX1Fplo/hAXyKqso/0bGerCZFU+CQOww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.21.195) smtp.rcpttodomain=lists.infradead.org smtp.mailfrom=ti.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4NMsbBLoSpCchMEjSwPBKET6ZbeTYtxaAZRAiIXbFlY=;
+ b=YPjNEZNcCTymDmbElg2F5WoKJiGGU0kjGh2v7aZsSFmMaBlv3CXT9AraJq4nG9TF/1enau25ltdRpJfYAHM20BFCjlO+Wc1qz3LLLcsPtnF4MVbiXiBRlaHqK9ZamxdWttpvDt+F2scwlGgjUhb725AaFChL6xqiIbuEKXx6ERc=
+Received: from BY5PR04CA0017.namprd04.prod.outlook.com (2603:10b6:a03:1d0::27)
+ by SAWPR10MB997855.namprd10.prod.outlook.com (2603:10b6:806:54d::23) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 15:06:02 +0000
-Received: from SJ0PR03MB5469.namprd03.prod.outlook.com
- ([fe80::2a19:76b2:e731:8c5a]) by SJ0PR03MB5469.namprd03.prod.outlook.com
- ([fe80::2a19:76b2:e731:8c5a%6]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
- 15:06:02 +0000
-From: =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>
-Date: Mon, 10 Aug 2026 16:06:48 +0100
-Subject: [PATCH v2 7/9] ALSA: pcm_dmaengine: Use dma_slave_caps bus width
- helpers
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260810-dmaengine-support-wider-dma-masks-v2-7-1f7b798d035f@analog.com>
-References: <20260810-dmaengine-support-wider-dma-masks-v2-0-1f7b798d035f@analog.com>
-In-Reply-To: <20260810-dmaengine-support-wider-dma-masks-v2-0-1f7b798d035f@analog.com>
-To: dmaengine@vger.kernel.org, linux-iio@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Jonathan Cameron <jic23@kernel.org>,
-        David Lechner <dlechner@baylibre.com>,
-        Andy Shevchenko <andy@kernel.org>, Frank Li <Frank.Li@nxp.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1786374404; l=1998;
- i=nuno.sa@analog.com; s=20231116; h=from:subject:message-id;
- bh=tTeDT+KacDLMVRNd1Fjx+G8m6ApDUezZPLGktu3/qBc=;
- b=Ep/t/vMV7YMHbxSd8IVVMyw+8LzypHPxTi/r+sinJNVdbjHUpBmx1LN9CVzIKgAfwbplZim8e
- O+F7pB/cjRjCO47R3ug7ELxYF64ds1YNHbjHXFzCvO3NYKccpKMP1N5
-X-Developer-Key: i=nuno.sa@analog.com; a=ed25519;
- pk=3NQwYA013OUYZsmDFBf8rmyyr5iQlxV/9H4/Df83o1E=
-X-ClientProxiedBy: MR1P264CA0137.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:501:51::21) To SJ0PR03MB5469.namprd03.prod.outlook.com
- (2603:10b6:a03:28a::17)
+ 2026 15:14:37 +0000
+Received: from CO1PEPF00012E7D.namprd03.prod.outlook.com
+ (2603:10b6:a03:1d0:cafe::79) by BY5PR04CA0017.outlook.office365.com
+ (2603:10b6:a03:1d0::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.25 via Frontend Transport; Mon,
+ 10 Aug 2026 15:14:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 198.47.21.195)
+ smtp.mailfrom=ti.com; dkim=none (message not signed) header.d=none;dmarc=pass
+ action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.21.195 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.21.195; helo=flwvzet201.ext.ti.com; pr=C
+Received: from flwvzet201.ext.ti.com (198.47.21.195) by
+ CO1PEPF00012E7D.mail.protection.outlook.com (10.167.249.52) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.315.6 via Frontend Transport; Mon, 10 Aug 2026 15:14:36 +0000
+Received: from DFLE203.ent.ti.com (10.64.6.61) by flwvzet201.ext.ti.com
+ (10.248.192.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Mon, 10 Aug
+ 2026 10:14:32 -0500
+Received: from DFLE208.ent.ti.com (10.64.6.66) by DFLE203.ent.ti.com
+ (10.64.6.61) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Mon, 10 Aug
+ 2026 10:14:32 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE208.ent.ti.com
+ (10.64.6.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37 via Frontend
+ Transport; Mon, 10 Aug 2026 10:14:31 -0500
+Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [10.24.51.254])
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 67AFERVt2648613;
+	Mon, 10 Aug 2026 10:14:28 -0500
+From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+To: <peter.ujfalusi@gmail.com>, <vigneshr@ti.com>, <vkoul@kernel.org>,
+        <Frank.Li@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <nm@ti.com>, <ssantosh@kernel.org>,
+        <s-adivi@ti.com>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <r-sharma3@ti.com>,
+        <gehariprasath@ti.com>
+Subject: [PATCH v8 00/19] dmaengine: ti: Add support for BCDMA v2 and PKTDMA v2
+Date: Mon, 10 Aug 2026 20:43:54 +0530
+Message-ID: <20260810151423.1948224-1-s-adivi@ti.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR03MB5469:EE_|DS7PR03MB8170:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6eb4da7-eb5b-4bb4-7beb-08def6f0e4e4
-X-LD-Processed: eaa689b4-8f87-40e0-9c6f-7228de4d754a,ExtAddr
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7D:EE_|SAWPR10MB997855:EE_
+X-MS-Office365-Filtering-Correlation-Id: b2eb05cc-8806-4d84-c2d9-08def6f21785
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
- BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|6133799003|10067099003|56012099006|11063799006|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|7416014|36860700016|1800799024|82310400026|23010399003|13003099007|921020|6133799003|10067099003|56012099006|18002099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
- xn/YK9px6gNV7NJNprMOs937MykecBf0Mxg0WgwWUeob4UlNqRoSoJtdkJfDCbEKOqYw9A5mfNnWHY/JiRujLF3L1us8BrQpUZycMR4MYjLu5RG7xmifUYhOBN100VzSgZT9TFxzbkBU8c8x16+oUhkkUNldwQiTlOJuy5D7RL8pPgG57aMOdIXAsNUbOWnHB3hV6LUofrS8b03eANtJ6clZOdRln3vBQGMG7hYgWj5zP3Omb53SEBciZNVDQOsDcKEGMZ2Ryg5FneijwTU0s26KxtWYFOYXqpW7rq5p1FLroODJ/FZD2Zq3GzIQArmG5dY1bM1AZ6ds+dRV4O8xL7XDgja/x4Qy0LOdWxrznAB5wH3SyrunyvCUYweIbiLZYXOOkgMXDLr/I2E63JNbKNx6TguMXy8Z960g1oOF3hLp8dGUkIM8rDhBdeqWXiay9YRFR8b86JXNKqHjpyK9kQjCuBYVFXynDKbWWvYmYPmUDerTAuVuZqXsi1JwbaJjawtH7K7rpN358F3kDIiD6YqiNvX56CsbEgqTtMkAdPcfWUsvng8rLOCPZBzPYu5+OA76vs3CMOL9EBmyQrbLRk1odTrb9c9v0ShpaNKTQrGxjONAKjGY8X1zkydQaRBLRTFpRwgb/7pSKRv2lpSLCKyLLHaaIMT0e+6/U7e9vF4=
+	C46aNKNy4Ht3JVCxZb9PXbodlH/8ELs3BFnZxYTvOwPdTLPjpDWguXyGTm8ievS8CCTpbfNirg7228KBE7XkA7doWch+KAA2QPWHUZXqr9ikVAeZB2u4Q0oDqBb/723m8aRcZo3qG7aRuz8r78UxYclJST9r6GOdi245aAU2qFO91XgmSyU51KO16RBO5e6UDrDw4OLHxnKF3mFKgvgsXpEAFy0s4y8Ez0OCh4HmfR7plzBSzAuemXlpRctctEyfAmQjj7Eo+i/tfkOCmIkNqpcFB/eIRVW9anNfGSoxXurXXomjCT75xrn0NMkL2lef8kbGFf4rqTYo/AzJJNFf8SsUsNc8RoWMFknoBmPpzAUtqwj0KkvZbaqCoH8Bu0D+OXNbD9RBqcRlPaxTsGX232a40bdKeuRxQlnGOP4EDo4m3p5WD1ZVtn/M8SJvUJg0GILjn5z4M29WFS2uYmJ4TElYV0VPv9D6nIRBxFiAfYzGYFLUyv6wwi18XGbADr8+0REKwTD0lbaVpljbnXBwNTqX1Ql/0cldWTyVnRwciImqU1r7y2RmlZKdv+w/g2KLLNMeNGpHdysXei3EDpAgCahjDesIEDR8liB0547ekKB45Tj2KW50pzbcNhGbCeB7yJQC5gRCEihUlvo3XTr18fk7zpXkkF5cGvzbqqKs4bCHkCoBmjOfCg6zKv3d2Cxi
 X-Forefront-Antispam-Report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5469.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:198.47.21.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet201.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(376014)(7416014)(36860700016)(1800799024)(82310400026)(23010399003)(13003099007)(921020)(6133799003)(10067099003)(56012099006)(18002099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
- =?utf-8?B?Wjl6eWxGeU9rSGF4UGxmYW0wQ29RbXpGUWxUbFkyK2lvbU8xa09wRjFhUEp1?=
- =?utf-8?B?OGpONDR1NTJ2eHJZOFpCV2Q5N3g3WU5QbVZBeXRXdFdJaFh5Ujg2RFcrYnpO?=
- =?utf-8?B?a2syTmd1cStya1dCVHNYOFdGYytEdU81VXdLb0xSZlFnTnN5Wm9PMHNUZmJv?=
- =?utf-8?B?RCtJMTR4VXE5NFhvQzFhSnBnN2orbVg4N25rd3MyUGJWTjJ2eWIxWW5XNlhJ?=
- =?utf-8?B?RnNIaEVycWgrTVZYV3ZEVGdUVzlFR1RjNW92NDJHNzlCelpXSUdJb2k5M0dM?=
- =?utf-8?B?Z2hZcHQzVDd4MTlKV3Q1MWI3VGZaaHlwSEkwaWxTdHIwVmlNZEJWREJGeGNK?=
- =?utf-8?B?clN6cjkwa1hhRDVpY3BkQlV4KzQ5S0VaWmpxYXp4L3BoeUFMTEpGaFRpM1VS?=
- =?utf-8?B?andGTHVQOTl4TGtJbmxpYWY1cXFVYlh3S0h3S0Z1T1hhUnRZYnNXWWhldEpC?=
- =?utf-8?B?bmhESFpacUhzMEpFYklSMDdSYlFtdVRySllXSTArOHo3T3Jjejd4OEtDeXpZ?=
- =?utf-8?B?RUowNkk2MHJaN0RpMDFiQkxPZEVQRE43UEQrK2NzQnYwdW4zQ1BkeDljOEpS?=
- =?utf-8?B?bXpUS1ZKNDJKL29DWFdxVEw4WlY3RzhLOXBreUJRb2RmWjVBaUFReWVkMW5y?=
- =?utf-8?B?d2dBTHo4SWpOQkpMbXFINmRHZ0Zwb05JK3VWdXNPRVNMbm5Cb01HQldaNFlk?=
- =?utf-8?B?Q1NzaFI5NG9kTnVUdGdOTFM2VTJMR29FZEZQRXI4VytrV0dVcERPWWgzN3Bt?=
- =?utf-8?B?M2xPSkc2MG5BMXRyazFvaGVKMUxSZWNhK2VvaXRuM2VuTUJFNGFweHVORm9I?=
- =?utf-8?B?ODdEaWxCdE1Rc0MyMk9ycVUxbHgyZ3I2YWJicXh0NVlud0RNUlR1MHozcUFK?=
- =?utf-8?B?OXZremx5U0NtSzY3U3F1YUprck10QjVJTGJlcjRBa0VLa3VEZVdyZlJtWXYy?=
- =?utf-8?B?SkNTZk9zVThpWWd0RDNBV05TK1hwYjNUUWVLRU1UN09Rb0xuSkxrd1N6ZElj?=
- =?utf-8?B?cllsejNwVWNMaXF6WWdEV1F2YWVIaVNrNVNKYzVFYlh4MUcwbW0xMGZYWVFK?=
- =?utf-8?B?cU9vbkNoSWt6dHRZUlB2Wkp0amdsVGF5Wkh3VEpMQUJwbTJxT1hSS0tHV1ZR?=
- =?utf-8?B?U2pIWWxyZTluZE94bVJBV3V6MjhiS2hqV3RRYkJlNnFmeVJZUk4yVGJ3Uk5F?=
- =?utf-8?B?RzBpRVBVRmp5andkUXlscU05YnU3YXBWRi9jZVBKSTVPenpTRlJ4ZTF1VnQz?=
- =?utf-8?B?L3Yvc2RnRjFhYUErcDhWazdOTjdiZVBBOFFRWFZJdFk3aENoaXc2eVBPT21J?=
- =?utf-8?B?L3phd1gwb1MvdmI4Qk9xZUdFUGlGUmxQT2VuTm43dTZuSWszRjRrVHpDcnli?=
- =?utf-8?B?MHp2UHRDa0tSbERHV1pxcUZCL3czUldqSm41a003aE8zRDg5R2dtYWwzVkNn?=
- =?utf-8?B?M1AzeWdzbHBpNk1VUG55Zkc2NnpSZmVpTSs3VlhIWWVKek5tTSt1MlI3NVha?=
- =?utf-8?B?bHlzbkg1bTNTSXVPUkIybllyRSswUGh4TUVSbGNCdXUvd2NmWW9rU1d6dmU5?=
- =?utf-8?B?ZGQzaHZoSXdyRDhkcnNwSnhXOTJWekRHbnh3anVYeFBTZlFYTXpPVjM4OE85?=
- =?utf-8?B?WTlMQ0RmZDNwUUQzZ1NSelBJN2RRMVJicGhRcEhNeERIVWt1VUpRNWFGME5o?=
- =?utf-8?B?UHNVU3kzNnpvTThJSEFPcExudTJNM3BXeVRQVWh3aVVNbWZyWmt4eFcwemJn?=
- =?utf-8?B?SEZBcmp6SUFWVm5VS21sU0pKOHVTVkVMdlh2bUNzOWI5WnBlRC9KazFQdGtP?=
- =?utf-8?B?NTFlR2hpVmVLbVpGcmpUR1lVVEkvRWtONXYxWUY2ZUMwY055RUlXQnVwUVpJ?=
- =?utf-8?B?Y1d1S0t3ejBmczBwdFdva0s1dnIrV1V2LzljWDlRUXp0N0RTVmJLcGp3cG1O?=
- =?utf-8?B?dEFSQ3RTMGxpNGhqaHpheHZFMGlLZy8wYzI2NWNtODY1T3dVTXZydmtGZFhq?=
- =?utf-8?B?cVFBTk16TXFxbjF4TTAxR0ZzUWlNUFZ1RERTbTZLUkpVbUgwQzF5aVdhcjJM?=
- =?utf-8?B?R3A3MmZtUGU0czU1M0JzNm40aG9ITzZvdWJwTTRGYXVvb2VrTithcUg1YklW?=
- =?utf-8?B?dlZka25lc0pkRE45dmpGUHNGQ21vc2xHL1d5ZjZKeE5iRThYWUJ2UzdET1VU?=
- =?utf-8?B?MjRqSmVTcU9oelplRElLbFA0TTd6SGJlYjZycnZiRGVEOFlWeW8rWTdlVG44?=
- =?utf-8?B?U2RmYjJ0N0ZwdkxaRTdUVmZ4NHZKdDgyUVpMdXNQVCtXanh5K3F2V0l0Tmln?=
- =?utf-8?B?ajVYcTRMMTNkQjJUazB5SXg4K3BIdHlRNUwxWDhURXQvdDA1UG1tUT09?=
+	xHiKo0ji1etOyWfaC/rGfLmBuYVNi3N5XIn135QBX/9riRKPh1l7rqdCpNL4hwPgkOIOgXTWew7BHNbo+X9TRHpnV5MGixv5CBiAJ/AaHxiYpdcQiF+MzGTtEc4Hyt5TdpXiUOC1AtrgAGtWEKX1RMqSZBdSSxuvF/pfj91C/JlnEgtvW8NngA+gHuNpfh1SRXQmFbTDOxie1hoLMhcAn/WGSpbx+u9/m7cgk1NQtYxrH7PluaDlmM5hb1vVFCx8apJ9MvC7OpBjpsxT5AsEPl6HJOEkKXpjC0nTJ7Mw57SykkpJUWNyBC8+yXM0q1TT/ul2Wc5/cLEThW3K3UashjidzotPg/p3kutppStxsaCk5XoU4nqJJSNVMHTS/8fPytVUvRPETlnitYyYLxSOMTcj579pNuN7vnDPleg2nFJoEvyowE/DVrWtK5ht+bvr
 X-Exchange-RoutingPolicyChecked:
-	i0Ro2eWMAn6jACE2U7wsJCNXoinerCa1cR76L1C0VZ7f8yP/YP/s+ULBdeGU7eErHgohIKDrE6VfuXUfKU1rvprhE8W/EogOjD3LNSBtzlQHq8uAUIXldkrIUG2//+vh7REVcVagXOeluvmoxI5LO/z5tATds8aN6Pl14dZmiSxwcnVQ7ME6euxiXUErpLgdPLrD7wR06BTzg3uOOebHNJAJVYWJ1b5BfDzllUWduX8HI2BtjIzzanfoIWeGzUGskX978+rSSM33kbqM4ka3/sHiNkJQYYMhcsOGRo1ZjI7FBGTF2vuqBtdkOCWVk9zghXNEsdCI4DKuMhPgsz08wQ==
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6eb4da7-eb5b-4bb4-7beb-08def6f0e4e4
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB5469.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 15:06:02.7288
+	AmhKgMFVE/5i7RYhC6aT+uviEjsCmNkLeaoyTjJwp+oR/ea0zm5UHxG0HpjFTZDwu8D38W/aBaqac64dVi/bqxH3maGd41Fq9NkHLq/DGhFyPeAH3vvyR8oeCnxHHOJBT3GFP+6ZiP8t4L1C4i6/IEMCCRWK6LZbquSUM9LXfxV9VbpPDxgzLWxn3vyD4lBYtdngFgJNZCQQp1yE1wm4Ey2N2FSJdc4m3DaGVmUiae2iycmv09htxLSCtK8r9BRv56fqgY0VGB42Iu+6LsefKec8pAPi0IXS1c42WoyJUc8u35XC0bfXZZi7Scb74lAVJ5WaNLFknbgzbDsC0H3qAQ==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 15:14:36.9035
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LAX5tApcXFihqhJuy28Gv87/AAbZU2dCD6z5dNv2BBM3c5yfpP9TeO2ztDiCRXAKFMiAuVdoB8Q96jbi0IzC7Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR03MB8170
-X-Proofpoint-ORIG-GUID: 8FYVRas-NSMjoFmciUI0-vWQ3U3E2yEG
-X-Authority-Analysis: v=2.4 cv=SJ1ykuvH c=1 sm=1 tr=0 ts=6a79e8e4 cx=c_pps
- a=94FLU6K3oGZrB1XHaeOsDA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=0sLvza09kfJOxVLZPwjg:22 a=ZQxX5BWu6Z8IJBb2zLX7:22
- a=8AirrxEcAAAA:8 a=gAnH3GRIAAAA:8 a=9ik93NakFGnP5mR--uMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=ST-jHhOKWsTCqRlWije3:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDEzMCBTYWx0ZWRfX6lz7ecu/ccvU
- ZSkwJ5YRGyX7QRmWVJBRFnCmRzqT1uFe2HgGc6+F5gZe/7US+Mb1ANh9zw/ITWkGQOUy3sLftPD
- rgDpdyPINB0nY4TSOrmUDZlkh3iZfjsZhUmVapcf0tpQhjnijieo9udsLRRcputS2suCa30oDuD
- gneu+9ATAy/yvInxFbF2qyLC8I3RMQVb786w8l0bVjBmCEdEBh5q/3VfvSToNxkRuXlqS9E+4Lh
- 4RRWNZB8V+xbUOMe2wfakXtC6S6lrX/9zUMLdTguzf3vXiV6DFGBoy1j0nwfaSD9ubGErXSpp5T
- a2uT0uOPeGbnVqt2yqqWoLalBqAdwyIMtfldzyffQdjozUQNRYSZNcb+NHVLbqoFOSYP17HFwYV
- qFko0ESvqi4IMK+BMyHn55vTXHBW4UOwgWyst7mYrfZhzoDC4Qita+opD+17DAhOqF5YR9MB2x9
- ajAJCkAHDujZtMymN7g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDEzMCBTYWx0ZWRfXzKG73Xn6EoMK
- uvWLTv9740fcp7DPCEhoYb0k/skRUcBeDyvRlAo4xgvpIfFvGOyUtKtjXY78VXGGtegY6TjM8BY
- 68ZHPBWAAK8JK0tTyfTcBDS15X102j/PbXC0yudht+1wiypOnOhL
-X-Proofpoint-GUID: 8FYVRas-NSMjoFmciUI0-vWQ3U3E2yEG
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2eb05cc-8806-4d84-c2d9-08def6f21785
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.195];Helo=[flwvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF00012E7D.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR10MB997855
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDEzMSBTYWx0ZWRfX3vQlxGt+nzRq
+ hrrFEoDWXhvodrOjWdn6PMN5WMMQfPz/PcK70lTErbphX0opKI9tS+lXNGG4yJclEU/2vE+mRjM
+ TbxOawRMFl9gGjS7KSK4sHSTD9Fm1jXRdwIk62kjyBV7MJ/ikM2qr3vVAY136Q5K55ZgmMNzAW0
+ IRx6bCnwP+ln8Sbs96UFEJxcfBs2WXEApat9pSbtb9IvioBw89nUdsBNhdB4a9co+AXTWtXTf5b
+ o4HS0eOEAUjb/JufVW601IbB1dJykv4g44+EKfYhxNcBleAyPy+oIN5Qgbyp4gyg4A0arsZWN9M
+ bgIevqLgrWi7H5mX7hzpfAdbXt80tDVKEU5LWi+nrsBXyr3QtrBmwl/xW+acIdl6bwCLh9iKb8M
+ vOaAar+3B+VVnJ/Sw7uQ38l4KXK0iE194lWuIlSnCN/0QmGIoUni8b9SUqI1Ge2ci/vHG4LoJFc
+ X/Gntmz/jp4Ha9Edc0g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDEzMSBTYWx0ZWRfX3e0l+Dv4C1AC
+ qLuSA7now7IlkcS2IhrJJ624h09YeLB5KuIujHovD5IqhTu3ciUgmGZ7hWDvqFhXG0zUt1fAHkL
+ Bo+rlmJFSwoMxPYnRbZhJEk/6/aPW4A=
+X-Proofpoint-GUID: QZknFYOuoEKanK0U931vclS1ecEAmqnL
+X-Proofpoint-ORIG-GUID: QZknFYOuoEKanK0U931vclS1ecEAmqnL
+X-Authority-Analysis: v=2.4 cv=F85nsKhN c=1 sm=1 tr=0 ts=6a79eae0 cx=c_pps
+ a=fLgsFiGMcCN2bMhaTK1NuA==:117 a=tJyPKKxUohctrY4NYmUjkA==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=Sv0fKeRqtYgA:10 a=V5UXEbMT0ywA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22 a=taLDd7a_hP9WKsMzeGRc:22
+ a=NEAV23lmAAAA:8 a=c92rfblmAAAA:8 a=sozttTNsAAAA:8 a=VwQbUJbxAAAA:8
+ a=8zHKEGWhLnqdY6mmISQA:9 a=GvGzcOZaWPEFPQC_NcjD:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-10_03,2026-08-07_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 spamscore=0 adultscore=0 priorityscore=1501
- suspectscore=0 clxscore=1015 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1011 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100130
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100131
 
-Use the dma_slave_caps bus width helpers instead of reading the legacy
-src_addr_widths and dst_addr_widths masks directly.
+This series adds support for the BCDMA_V2 and PKTDMA_V2 which is
+introduced in AM62L.
 
-Keep the existing default assumption of 1, 2 and 4 byte widths when the
-DMA channel does not report slave capabilities.
+The key differences between the existing DMA and DMA V2 are:
+- Absence of TISCI: Instead of configuring via TISCI calls, direct
+  register writes are required.
+- Autopair: There is no longer a need for PSIL pair and instead AUTOPAIR
+  bit needs to set in the RT_CTL register.
+- Static channel mapping: Each channel is mapped to a single peripheral.
+- Direct IRQs: There is no INT-A and interrupt lines from DMA are
+  directly connected to GIC.
+- Remote side configuration handled by DMA. So no need to write to PEER
+  registers to START / STOP / PAUSE / TEARDOWN.
+- Unified Channel Space: Tx and Rx channels share a single register
+  space. Each channel index is specifically fixed in hardware as either
+  Tx or Rx in an interleaved manner.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
----
- sound/core/pcm_dmaengine.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+Full tree with device tree patches can be reviewed at:
+https://github.com/sskartheekadivi/linux/tree/dma-upstream-v8
 
-diff --git a/sound/core/pcm_dmaengine.c b/sound/core/pcm_dmaengine.c
-index 1306b04be171..37468f4643bc 100644
---- a/sound/core/pcm_dmaengine.c
-+++ b/sound/core/pcm_dmaengine.c
-@@ -409,15 +409,17 @@ int snd_dmaengine_pcm_refine_runtime_hwparams(
- 	struct dma_chan *chan)
- {
- 	struct dma_slave_caps dma_caps;
--	u32 addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
--			  BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
--			  BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
-+	DECLARE_DMA_BUS_WIDTHS(bus_widths) = {};
- 	snd_pcm_format_t i;
- 	int ret = 0;
- 
- 	if (!hw || !chan || !dma_data)
- 		return -EINVAL;
- 
-+	__set_bit(DMA_SLAVE_BUSWIDTH_1_BYTE, bus_widths);
-+	__set_bit(DMA_SLAVE_BUSWIDTH_2_BYTES, bus_widths);
-+	__set_bit(DMA_SLAVE_BUSWIDTH_4_BYTES, bus_widths);
-+
- 	ret = dma_get_slave_caps(chan, &dma_caps);
- 	if (ret == 0) {
- 		if (dma_caps.cmd_pause && dma_caps.cmd_resume)
-@@ -426,9 +428,9 @@ int snd_dmaengine_pcm_refine_runtime_hwparams(
- 			hw->info |= SNDRV_PCM_INFO_BATCH;
- 
- 		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--			addr_widths = dma_caps.dst_addr_widths;
-+			dma_slave_caps_copy_dst_widths(&dma_caps, bus_widths);
- 		else
--			addr_widths = dma_caps.src_addr_widths;
-+			dma_slave_caps_copy_src_widths(&dma_caps, bus_widths);
- 	}
- 
- 	/*
-@@ -460,7 +462,7 @@ int snd_dmaengine_pcm_refine_runtime_hwparams(
- 			case 24:
- 			case 32:
- 			case 64:
--				if (addr_widths & (1 << (bits / 8)))
-+				if (test_bit(bits / 8, bus_widths))
- 					hw->formats |= pcm_format_to_bits(i);
- 				break;
- 			default:
+Changes from v7 to v8:
+- Fix issues reported by Sashiko which are introduced by this series
+  https://sashiko.dev/#/patchset/20260724102115.2854-1-s-adivi@ti.com
+- Remove minItems for interrupts entry in both BCDMA and PKTDMA
+  dt-bindings
+- Update interrupt-names pattern for pktdma from tflow-<n>/rflow-<n> to
+  tx-<n>/rx-<n>.
+link to v7:
+https://lore.kernel.org/all/20260724102115.2854-1-s-adivi@ti.com/
+
+Changes from v6 to v7:
+- Rebase to next-20260721
+- [03/19]: Add missing includes
+- Fix incorrect register bits used when configuring rx flows.
+  Add correct UDMA_CHAN_CFG_FILT_EINFO/PSWORDS and
+  UDMA_FLOWRT_RFA_RX_EINFO/PSINFO_PRESENT bit definitions.
+- Update AM62L BCDMA and PKTDMA dt bindings to remove address cells,
+  redefine dma-cells semantics (mapped channel id for bcdma, hardware
+  flow id for pktdma) and fully enumerate interrupts/interrupt-names
+  with restricted naming patterns.
+- Add fifo select register write support for XYMF channels in the BCDMA
+  v2 driver. Update udma_v2_filter_param to use channel id instead of
+  remote thread id and resolve it via psil_get_ep_config_by_id().
+- Switch channel resource bitmap allocation to devm_bitmap_zalloc() and
+  ring IRQ registration to request_irq()+IRQF_SHARED (channels can now
+  share a PSI-L/IRQ line); fix the ring IRQ handler to return IRQ_NONE
+  for spurious/foreign interrupts instead of unconditionally claiming
+  them.
+link to v6:
+https://lore.kernel.org/all/20260428085202.1724548-1-s-adivi@ti.com/
+
+Changes from v5 to v6:
+- Switch from interrupt-map to interrupts and interrupt-names in the
+  dt-bindings.
+- Reverse the if DMA version checks to check for v1 and else v2.
+- Add new patch [01/19] before refactoring to fix sporadic crash
+  observed on AM62x.
+link to v5:
+https://lore.kernel.org/all/20260218095243.2832115-1-s-adivi@ti.com/
+
+Changes from v4 to v5:
+- Introduce a new version variable in udma_match_data to differentiate
+  between K3 UDMA V1 and K3 UDMA V2. This simplifies the approach for
+  adding any future possible variants avoiding complex if conditions.
+- Fix both K3 BCDMA V2 and PKTDMA V2 dt bindings as per the comments
+  from previous versions.
+- Fix minor nitpicks like following the reverse christmas tree order for
+  variable declarations.
+- Remove the patch [v4 19/19] that switches to synchronous descriptor
+  freeing. With this patch, dma_free_coherent gets called in irq
+  context and hence a WARN().
+link to v4:
+https://lore.kernel.org/all/20260130110159.359501-1-s-adivi@ti.com/
+
+Changes from v3 to v4:
+- Rename the dt-binding files to add "ti," prefix.
+- Update cell description in dt-bindings and add client examples.
+- Update k3_ring_intr_regs reg names
+- Rename soc specific data to bcdma_v2_data and pktdma_v2_data to
+  bcdma_v2_am62l_data and pktdma_v2_am62l_data.
+- Add a new patch [18/19] to fix a null pointer dereference issue when
+  trying to reserve a channel id that is out of bounds in
+  udma_reserve_##res macro. Also fix logging issues in this macro.
+- Add a new patch [19/19] to switch to synchronous descriptor freeing to
+  avoid running out of memory during stress tests.
+- Fix checkpatch warnings.
+link to v3:
+https://lore.kernel.org/linux-arm-kernel/20250623053716.1493974-1-s-adivi@ti.com
+
+Changes from v2 to v3:
+- Fix checkpatch errors & spellings.
+link to v2:
+https://lore.kernel.org/linux-arm-kernel/20250612071521.3116831-1-s-adivi@ti.com
+
+Changes from v1 to v2:
+- Split refactoring of k3-udma driver into multiple commits
+- Fix bcdma v2 and pktdma v2 dt-binding examples
+- Fix compatibles in k3-udma-v2.c
+- move udma_is_desc_really_done to k3-udma-common.c as the difference
+  between k3-udma and k3-udma-v2 implementation is minor.
+- remove udma_ prefix to function pointers in udma_dev
+- reorder the commits to first refactor the existing code completely and
+  then introduce k3-udma-v2 related commits.
+- remove redundant includes in k3-udma-common.c
+- remove ti_sci_ dependency for k3_ringacc in Kconfig
+- refactor setup_resources functions to remove ti_sci_ code from common
+  logic.
+link to v1:
+https://lore.kernel.org/linux-arm-kernel/20250428072032.946008-1-s-adivi@ti.com
+
+Sai Sree Kartheek Adivi (18):
+  dmaengine: ti: k3-udma: move macros to header file
+  dmaengine: ti: k3-udma: move structs and enums to header file
+  dmaengine: ti: k3-udma: move static inline helper functions to header
+    file
+  dmaengine: ti: k3-udma: move descriptor management to k3-udma-common.c
+  dmaengine: ti: k3-udma: move ring management functions to
+    k3-udma-common.c
+  dmaengine: ti: k3-udma: Add variant-specific function pointers to
+    udma_dev
+  dmaengine: ti: k3-udma: move udma utility functions to
+    k3-udma-common.c
+  dmaengine: ti: k3-udma: move resource management functions to
+    k3-udma-common.c
+  dmaengine: ti: k3-udma: refactor resource setup functions
+  dmaengine: ti: k3-udma: move inclusion of k3-udma-private.c to
+    k3-udma-common.c
+  drivers: soc: ti: k3-ringacc: handle absence of tisci
+  dt-bindings: dma: ti: Add K3 BCDMA V2
+  dt-bindings: dma: ti: Add K3 PKTDMA V2
+  dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL and PDMA data
+  dmaengine: ti: k3-udma-v2: New driver for K3 BCDMA_V2
+  dmaengine: ti: k3-udma-v2: Add support for PKTDMA V2
+  dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
+  dmaengine: ti: k3-udma: Validate resource ID and fix logging in
+    reservation
+
+Vignesh Raghavendra (1):
+  dmaengine: ti: k3-udma: Fix sporadic crash on AM62x
+
+ .../bindings/dma/ti/ti,am62l-dmss-bcdma.yaml  |  211 ++
+ .../bindings/dma/ti/ti,am62l-dmss-pktdma.yaml |  189 +
+ drivers/dma/ti/Kconfig                        |   21 +-
+ drivers/dma/ti/Makefile                       |    5 +-
+ drivers/dma/ti/k3-psil-am62l.c                |  169 +
+ drivers/dma/ti/k3-psil-priv.h                 |    5 +
+ drivers/dma/ti/k3-psil.c                      |   78 +-
+ drivers/dma/ti/k3-udma-common.c               | 2605 ++++++++++++++
+ drivers/dma/ti/k3-udma-glue.c                 |  205 +-
+ drivers/dma/ti/k3-udma-private.c              |   37 +-
+ drivers/dma/ti/k3-udma-v2.c                   | 1515 ++++++++
+ drivers/dma/ti/k3-udma.c                      | 3126 +----------------
+ drivers/dma/ti/k3-udma.h                      |  602 ++++
+ drivers/soc/ti/k3-ringacc.c                   |  191 +-
+ include/linux/dma/k3-psil.h                   |    3 +
+ include/linux/soc/ti/k3-ringacc.h             |   20 +
+ 16 files changed, 5916 insertions(+), 3066 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+ create mode 100644 Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml
+ create mode 100644 drivers/dma/ti/k3-psil-am62l.c
+ create mode 100644 drivers/dma/ti/k3-udma-common.c
+ create mode 100644 drivers/dma/ti/k3-udma-v2.c
 
 -- 
-2.55.0
+2.54.0
 
