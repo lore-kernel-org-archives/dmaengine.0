@@ -1,64 +1,63 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE80435A9E
-	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C07143634B
+	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786385620; cv=none; b=DXQ30/5C6u2kgXA4uDWwRZHqKxXa8aYOA2iBrGeCB9xWbRMA2mL1YjggM7PRP2DEo8kpDxKPpBh/wu2qlSIcYZJ2Z+Nsq1ErcOGJwkm91OPazXngHUvI/xMlyAR6kU0++r5hmNfFm6m1vi79CqyyA++a7jGl0VpuJnN83UGXt4Y=
+	t=1786385625; cv=none; b=mw4k2fzeDS2tcZCzdj0ou4VLrbBaZPYNYwjZrUEeqK+7JQWvxQpDvcdCN654iX0Xkk4bGTBJjBRlj2ur+P4ld6idxMKwRAshmjzhogW3Gv4HOQTdkK9OXZn0kDnlJqtS3SfgZSrYlBIRb3K4kG9J4C9I3RgRHUq6ARlKI1kwBz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786385620; c=relaxed/simple;
-	bh=LxqzrTJv5Eqx3zrr8cQAwC8hTp+RGnUBOHgB8lVvAQw=;
+	s=arc-20240116; t=1786385625; c=relaxed/simple;
+	bh=0Eb8GRKvMJHasoh02hWFih058UEYzEaV5ZwlBwnYodA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chQj1Gf+ZCHyP7LYxJwKJtoPL1uGBQohzLktww0qHbLjltUu82uzF+PAOhEb0yArMvbeTgMLS+ftffmiLYXJZ6/SFpqMaaTpM9LVQrLFY4YgNYjzqNL5M/KLS0I+B0VTKv1mrdeMWurG3vQu5ZD35FimAuiCg6r6hyaNFaBuNnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVgnK1NT; arc=none smtp.client-ip=209.85.216.50
+	 MIME-Version; b=JF7vl3w9deUY6fWszNYocxNrLR56AOW3627FnItmwxDAyRRqWHKYLyY5pmNN607bCzRnWs8hf0YHSxWfDc0PMnuP8S6qjjZdwkrK6BvvxOJSXtWHzAW8XwbdZeHORrnqmvNNnQ9fcnpKuT8m3XGpMfjf5l0Z0iKOKtGEIlNYht4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G6gQg008; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVgnK1NT"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3810c5d691bso1893337a91.1
-        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:13:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6gQg008"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-38a0c7e841fso2827500a91.2
+        for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 11:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786385618; x=1786990418; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1786385624; x=1786990424; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=jUm5zg635IdCfrd8nRe9kr7IONoPkdCFzJRsBETaklg=;
-        b=QVgnK1NTnbE75IvaAwReUBn/f7Wet+iX690147bgGdoPwm1Hq2oOkHpB02YPEjrP9I
-         iTdx9WCRHBZmpk/kQBDT2zWmYj1fWjw/aLkTOsW4NIKXP7l2ZduMzStIyfKnjl5KcYuJ
-         0+CgVjb7N9Rh9lsRyy0YJ0wb5NoOQ/6CvQCH2WFG1Q62RItrcvViha/twwURJOPXvt/A
-         i5tzplxHtJwyFYNIm8kidFKhlun7O2NJeRv55uTn4sTD2N03WsBmvbGdq7L9yLd0lkmF
-         VfVEZA3aHRNQ1RxBZf9v2m3Q0anEffhdEd5j8cLdcHUZRfuvz3njNxWNXdVwI9ens7WT
-         +t4g==
+        bh=CwhhaAGdCkcDIiyyyywufIBhF9Feu3uUwtXlOqQT0nU=;
+        b=G6gQg008M+lMrX8Dw493FoxwK4Mygi9p2lRudqQFKpeo0nZUCzrBeQeTM6YoduEJ1j
+         DuuUvelujl3MXjd4LW+C+V0q0PDIRqm/UVylvIKomn3LubWg+RIxcTx3JYOyOb4vLdFI
+         2MYs10r0B7U6+bwznivU+9kyhIrMaKf5wLqELXUR/bZkle4zy2J+kokPdBati1Mm4Dli
+         Y++oHEsBBCxNpvF1bCdLxxHBz7QaYVPqwiyxg3E2hxrNBiYMM7X+UUPGL7dIZ+2QEr4E
+         4HkgEY2BnAVPPg/nFTIJSOGM2Y2DU2MscqoQtEN8+U0sR0AYSLlT9i2P0QQnTUWbvDDj
+         9iuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786385618; x=1786990418;
+        d=1e100.net; s=20251104; t=1786385624; x=1786990424;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jUm5zg635IdCfrd8nRe9kr7IONoPkdCFzJRsBETaklg=;
-        b=jkxwgi7ya4E/XLZtVzyRJIewG2bOfgC/X3kP3mXN9dogzr/K1UaUpq0wqv/2oS/SLw
-         /ZEBZOIN27WUab1SxI9Ju8/rKR00zP+tj6r9Q41S96euYQagVsxTkjUgFbN1O5maExAQ
-         RyTKW2CNAzd7HOsR7CgEw6z48LV+biJZpht3ZCGuepc+dz+FMNgAS/651/mC2ez6YAS7
-         72g+V2CeasDjvh/AQnW5+1xjMdiJKLrS1Qha++cr7pBCYBYu9q0zQNZvKXpffA0SCz0u
-         DMe4K78kvErumCZMwAiUegX95VRTg1S9rQpIs6FBf0FmYrBqTcfixe0z2WdTKc9uGSf2
-         mhAA==
-X-Forwarded-Encrypted: i=1; AHgh+RrnJ0/s5BSIrLSrFBeRxvWhbx92blC2WIsK7802ApUen3qRRZD6hGh+Fh5B/epW22ny5ZN6Brye3gs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyw6N2VWQpyO9QofRWrjiTkk5Xj6/RvYr20v6ZQkfZKIAj67mTq
-	e/GpGwv0Tg5Tg9vgG8X6BHhtfZztTY6aOwZkCVD8noT7Aj9cy1XKyCN7
-X-Gm-Gg: AR+sD12hOUBcNb8vzlfOXs+aJMH2J9RkzyBS5EaKatCfEftDp3vwLKHQb4+UH4bGqwB
-	ON27eLOFViEL8qtTfm8Tgi2SeaQbVPxu9lSyXvqxaS1hOYfL/bSGACeIKApK4SGGO2nJzFeyLVm
-	rBQCyN/MDh/ZGZVqYqCNhc/8sTThMrddQEgmztNcvgK4RBdMTRIB79ZX8MtRwRaDgENHp7UXkI6
-	YD0r5WETbdCz+k3ypcVl2Ikk1XtSXK7iorwJNLvhgasyrxze572ZzN75CQp8ZqHu7rTHywPx2/u
-	Cm9dWYEv8v5CaYzuZ6XMFN0I1cJOzHqAUCGiQak4tTTO2E6NAaicN2Q/T13BPQSlvrfAX6NA1Hj
-	OtEkQJwOpdaQIh836CVDImCdZUfraFFLaWXR9RMhAM98p1qRZr/YKGsXi2XX6EOw1MCqtsXAXgV
-	OLm4soMOQKioUn9KP925POr/oB7iQ+ntdH6s+7rPSYJtv3qBy6xJGMtqdmAqT3Nd0ZXlzbaeAHf
-	Q==
-X-Received: by 2002:a17:90b:2785:b0:38e:bbf1:de3f with SMTP id 98e67ed59e1d1-3903c5d2f29mr48647797a91.12.1786385618336;
-        Mon, 10 Aug 2026 11:13:38 -0700 (PDT)
+        bh=CwhhaAGdCkcDIiyyyywufIBhF9Feu3uUwtXlOqQT0nU=;
+        b=V4cE7JRm0iEjpWwlSKJNiS/okK/l2gYt0aDj3F8I3U76P+YZiWD6BhwynKYeHU8z3x
+         AGXA0UIWbqEFe9ZkwRhD9Qj5GadQK8RuZXuc7q4PAVnDM7NHxZ1bxAyRcJdbY6KJGm89
+         +FTF6clFq0qqadeoBsLT+vWOMtnFZ+S6sbx4cQex27tL39hIGdWCvkTVM86nLQoliBT4
+         VkfBU5gy7iL9AED/eeekewqOvUIGxg7G6c2Yw2c9xufhkSH/0Wp5TEaIfmJS4buP5O3C
+         TXY+sOu8JZB9YvHYo6Nmp2qx8tdgs7Wq1haDPnXFt+nF5KtOfBeBZXMmB4oXJFIIfJTc
+         EeHQ==
+X-Forwarded-Encrypted: i=1; AHgh+Roh3P/qjA662HAKXiAhEV0FhwxVSuugM6Dg8mS4/88draq3mjvOnToLRX2yl6MJGzdXmhrUsnwTx+A=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyx1Bkz9YGCL/kDixd0Q2DokH8tXp1ha7/DzlHlGJzpu72soCyJ
+	zGu4IYkd4NIjCTaBjQCxu31ikPcm9UN8/AJgEPdCdtykx99cE2A742k3
+X-Gm-Gg: AR+sD10YXqHSaAfq7ZgkSRsKIRB4dxO7MSk/rygzry0F7FevBGcZcMJ+sFaRFDL793s
+	lXCBJMknGtOAvdsvTV+11qS4yVV+Y34oZ31IDEEjxR4mGIGrn7zR35F1xBNAm/fappzoW7E4FIn
+	LHSQqxi0WHRKPDrlKEPnRQn4lAJ7rbZctUidaZ84xdmSTPpBM5bI25B0v2O3x3BvmHQuCywJUwu
+	5DFPc/1GYEVZUICnUSjs9igW2iyGTQJxF1KTELqT40KcZtcXYFe6RhhGlFjlaXJjRRmk09puYR1
+	4qN/XkHuRh4vunMSW2tGr2GEkFpPXL9mXIXsL4/7t/wCziafdgc8D20XdGj8IJZmPzZeVK2NUVs
+	lg3jTZW9n92Mq3aJCHocTqSDwiKemT5TWJ3/rwV5q4MrCEi6aewJWS03lk2CIXen8ULMQ73XXvw
+	znyMNhf6yBA4UopjhPw/BtvGDHiJRiaaFV5ZDtwXY5VYAco3ZnTpppBu4Nm+hS3s8=
+X-Received: by 2002:a17:90b:288d:b0:38f:26c7:165e with SMTP id 98e67ed59e1d1-39261ff3945mr30245873a91.9.1786385623771;
+        Mon, 10 Aug 2026 11:13:43 -0700 (PDT)
 Received: from cryptic.lan ([2001:569:7fa9:fa00:b1a9:6513:83c6:1d23])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.13.37
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392d53b873asm472795a91.17.2026.08.10.11.13.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Aug 2026 11:13:37 -0700 (PDT)
+        Mon, 10 Aug 2026 11:13:43 -0700 (PDT)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
@@ -67,14 +66,11 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Kees Cook <kees@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 33/34] dmaengine: qcom-gpi: defer callbacks via vchan
-Date: Mon, 10 Aug 2026 11:09:34 -0700
-Message-ID: <c575a24c789317a5ec330a4be0a6ea1ece60b5ae.1786384169.git.allen.lkml@gmail.com>
+	Logan Gunthorpe <logang@deltatee.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>
+Subject: [PATCH v3 34/34] dmaengine: switchtec: use channel BH helpers
+Date: Mon, 10 Aug 2026 11:09:35 -0700
+Message-ID: <c91231fb254131d62306600a19d8f97231b3158f.1786384169.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1786384168.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com> <cover.1786384168.git.allen.lkml@gmail.com>
@@ -86,57 +82,92 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Complete descriptors through virt-dma instead of invoking callbacks
-directly from event processing. This preserves the transfer result for
-the shared vchan BH, which invokes the callback and frees the descriptor;
-drain that BH before releasing channel resources.
+Replace the per-channel descriptor completion tasklet with the shared
+dmaengine BH helpers. Client callbacks remain in softirq context while
+using the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 ---
- drivers/dma/qcom/gpi.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/dma/switchtec_dma.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index a5055a6273af..2bc3a07ef092 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -981,8 +981,12 @@ static void gpi_process_imed_data_event(struct gchan *gchan,
- 		result.result = DMA_TRANS_NOERROR;
- 	result.residue = gpi_desc->len - imed_event->length;
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index 71d9868ce613..849f1f2f8105 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -133,8 +133,6 @@ struct switchtec_dma_chan {
+ 	/* Serialize hardware control register access */
+ 	spinlock_t hw_ctrl_lock;
  
--	dma_cookie_complete(&vd->tx);
--	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
-+	spin_lock_irqsave(&gchan->vc.lock, flags);
-+	list_del(&vd->node);
-+	vd->tx_result = result;
-+	vchan_cookie_complete(vd);
-+	spin_unlock_irqrestore(&gchan->vc.lock, flags);
-+	return;
+-	struct tasklet_struct desc_task;
+-
+ 	/* Serialize descriptor preparation */
+ 	spinlock_t submit_lock;
+ 	bool ring_active;
+@@ -584,6 +582,7 @@ static void switchtec_dma_synchronize(struct dma_chan *chan)
  
- gpi_free_desc:
- 	spin_lock_irqsave(&gchan->vc.lock, flags);
-@@ -1060,8 +1064,12 @@ static void gpi_process_xfer_compl_event(struct gchan *gchan,
- 	result.residue = gpi_desc->len - compl_event->length;
- 	dev_dbg(gpii->gpi_dev->dev, "Residue %d\n", result.residue);
+ 	int rc;
  
--	dma_cookie_complete(&vd->tx);
--	dmaengine_desc_get_callback_invoke(&vd->tx, &result);
-+	spin_lock_irqsave(&gchan->vc.lock, flags);
-+	list_del(&vd->node);
-+	vd->tx_result = result;
-+	vchan_cookie_complete(vd);
-+	spin_unlock_irqrestore(&gchan->vc.lock, flags);
-+	return;
++	dmaengine_kill_bh(chan);
+ 	switchtec_dma_abort_desc(swdma_chan, 1);
  
- gpi_free_desc:
- 	spin_lock_irqsave(&gchan->vc.lock, flags);
-@@ -2009,6 +2017,7 @@ static void gpi_free_chan_resources(struct dma_chan *chan)
+ 	rc = enable_channel(swdma_chan);
+@@ -820,9 +819,10 @@ static int switchtec_dma_resume(struct dma_chan *chan)
+ 	return ret;
+ }
  
- 	/* free all allocated memory */
- 	gpi_free_ring(&gchan->ch_ring, gpii);
-+	dmaengine_kill_bh(&gchan->vc.chan);
- 	vchan_free_chan_resources(&gchan->vc);
- 	kfree(gchan->config);
+-static void switchtec_dma_desc_task(unsigned long data)
++static void switchtec_dma_desc_task(struct dma_chan *chan)
+ {
+-	struct switchtec_dma_chan *swdma_chan = (void *)data;
++	struct switchtec_dma_chan *swdma_chan =
++		container_of(chan, struct switchtec_dma_chan, dma_chan);
+ 
+ 	switchtec_dma_cleanup_completed(swdma_chan);
+ }
+@@ -832,7 +832,7 @@ static irqreturn_t switchtec_dma_isr(int irq, void *chan)
+ 	struct switchtec_dma_chan *swdma_chan = chan;
+ 
+ 	if (swdma_chan->comp_ring_active)
+-		tasklet_schedule(&swdma_chan->desc_task);
++		dmaengine_schedule_bh(&swdma_chan->dma_chan);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -1041,6 +1041,7 @@ static void switchtec_dma_free_chan_resources(struct dma_chan *chan)
+ 	spin_unlock_bh(&swdma_chan->complete_lock);
+ 
+ 	switchtec_dma_chan_stop(swdma_chan);
++	dmaengine_kill_bh(chan);
+ 	switchtec_dma_abort_desc(swdma_chan, 0);
+ 	switchtec_dma_free_desc(swdma_chan);
+ 
+@@ -1067,8 +1068,6 @@ static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
+ 	spin_lock_init(&swdma_chan->hw_ctrl_lock);
+ 	spin_lock_init(&swdma_chan->submit_lock);
+ 	spin_lock_init(&swdma_chan->complete_lock);
+-	tasklet_init(&swdma_chan->desc_task, switchtec_dma_desc_task,
+-		     (unsigned long)swdma_chan);
+ 
+ 	swdma_chan->mmio_chan_fw =
+ 		swdma_dev->bar + SWITCHTEC_DMAC_CHAN_CFG_STS_OFFSET +
+@@ -1116,6 +1115,7 @@ static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
+ 	chan = &swdma_chan->dma_chan;
+ 	chan->device = dma;
+ 	dma_cookie_init(chan);
++	dmaengine_init_bh(chan, switchtec_dma_desc_task);
+ 
+ 	list_add_tail(&chan->device_node, &dma->channels);
+ 
+@@ -1138,7 +1138,7 @@ static int switchtec_dma_chan_free(struct pci_dev *pdev,
+ 	spin_unlock_bh(&swdma_chan->complete_lock);
+ 
+ 	pci_free_irq(pdev, swdma_chan->irq, swdma_chan);
+-	tasklet_kill(&swdma_chan->desc_task);
++	dmaengine_kill_bh(&swdma_chan->dma_chan);
+ 
+ 	switchtec_dma_chan_stop(swdma_chan);
  
 -- 
 2.43.0
