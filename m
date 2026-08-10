@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD1CCA6F
-	for <dmaengine@vger.kernel.org>; Mon, 10 Aug 2026 18:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA82B43710B;
+	Mon, 10 Aug 2026 18:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786386562; cv=none; b=hUHBt69yjemAoWxvbrsDMkCG8bom0iSDk7qZ3If7K+kyNmsRA+dbUnVSUi0mhV1/WH9O8+iIj/shPCP4PX8XFye0QyBS5W3Wrvtf0yGJaYbbl1wzZMDWdh2RLHuYXEc3nC32XLlPTSRbU+C1XrR/ruTIKO2KCte/rlk2c1lLqXA=
+	t=1786386649; cv=none; b=Acv3iFLaZGi5T2fd/7w1NdO9SuNb+0ftoWMWbbLiNttp1gze7Rsz92I3mrI1N7PLL5kPdgAn/oDtGWaM89hfE4dS7lommc0NshzLXX4MRZUtr01IiqHj5BVWSKkgDgwUPhSJRA1AA1Y32UnP3m+dLe5XKUICrfhLqzCV8I4L0ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786386562; c=relaxed/simple;
-	bh=1eyaksgtsUp1zxBBIjkHnU780EbFxZGaZaSmWDtfrAU=;
+	s=arc-20240116; t=1786386649; c=relaxed/simple;
+	bh=3MTznWCBHcuD28TJVXemw0xZGW/L27e1+DqmNPRzul8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=u+vFHASteNXS5szzhIXXJRof3KtYb4cdxfnDt5n3Xs0RifgsfWVdFR9jur04u0LH30sHAnMW76n1KhoWl1P67OdEsFsWe8hFjy0c21Tiv9w6uc/cYgxPd8aw2UwsOVC3jL22ZNjTXd0vc8jBJ3pa6CqEp8Ei/rXZgB+06emoZPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jqcmitSa; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=oIuORGdgSWKL2cAx1QZ717bTpzvfi8F9/NUPMxacDLD+o3ZRYm3N/XyOxYnGC98VAOOPnHc/jOgV6h3VHbWzT1t/ZOL0S+8EiMsE3gT5ixxajm85quhWWLotm4CiI+NICm6iQeUrZhudnCDP+kC8t5uMMGcAPKqimwDfBYT2blo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NZC4SdcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jqcmitSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27BB1F000E9;
-	Mon, 10 Aug 2026 18:29:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NZC4SdcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDBF1F000E9;
+	Mon, 10 Aug 2026 18:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786386561;
-	bh=4YTb44XmwyBkeDPWujSm+gPNlSdqN/tqxgV/97HV0cc=;
+	s=k20260515; t=1786386648;
+	bh=Wdb8s0ReChtry1TvBeLFzaW/OTCXpDHpqN8sXotSyys=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=jqcmitSaQS0+voQ3xmx9LPreinC9426bQABVg/9f31/LfKmGcrBmAFmcLic8BxBy2
-	 KVTYSqKGDmJhsQmMU/0S3w+WR/XPO4kV+wB7CZjgei7NhVzlCQ/jPvwaQM447lynhi
-	 P55vHOnUqiAbyqPdYeXDwd/YznA/M/PNx0/73xddbkMne6AlG2nxr9+2iaArFX+I1f
-	 g/sdpYn9/h9Qt6HZI/R63uH/bnQzcZs0Ct1gCsknsg2rCWzH0MrV6S8sXuNsxSSTkG
-	 emh3fNbgs1lQrszy8ZGQX1wD5gPE0M9OKtrbdOsJtkTIk0+g4YVi3AyoVERnc3yt5u
-	 z5qWzgsCYHrTg==
+	b=NZC4SdcPR9sJcXWtEn1inmGJZKHGem/KCKbKYh44DpzVwSkrCirNAu0UEKD//Xi1I
+	 CmR2l33oS6OyHDAiV4gs4rXLVsY20zrlmyCGlTLi1+sxLd76E1vU+j9KYzYQoxaNKy
+	 cFa5ZAz/kYA6endnAF+oNqG/pIJ1sV6gdTZgmuYrt0INuH0DS1w7IymhufUfLvZOpl
+	 24OFzXIkyfS0QY3qbuBwxqDPZxSGs+lAznMyouxLxs3B7Iw3dnCUhhAZBri8EuDV1g
+	 AU/SvO8qhS7/z75z7fRPH1W90q9zfkwOaXbfd2BCJ5gQ75E8In2pX36Pc9cr4tnkZf
+	 Bpgh+DjtBRSnQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 03/34] dmaengine: apple-admac: use dmaengine BH
- callback
+Subject: Re: [PATCH v3 01/34] dmaengine: add tasklet-backed channel BH
+ helpers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <cc5172b8779e4cd15f2c1c7fa93174aaf09dbffd.1786384168.git.allen.lkml@gmail.com>
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, linux-sunxi@lists.linux.dev
+In-Reply-To: <2c62c39cafc0df59eb5381d3da82b1616a58fa20.1786384168.git.allen.lkml@gmail.com>
 References: <cover.1785183549.git.allen.lkml@gmail.com>
  <cover.1786384168.git.allen.lkml@gmail.com>
- <cc5172b8779e4cd15f2c1c7fa93174aaf09dbffd.1786384168.git.allen.lkml@gmail.com>
+ <2c62c39cafc0df59eb5381d3da82b1616a58fa20.1786384168.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Aug 2026 18:29:20 +0000
-Message-Id: <20260810182920.C27BB1F000E9@smtp.kernel.org>
+Date: Mon, 10 Aug 2026 18:30:46 +0000
+Message-Id: <20260810183047.DBDBF1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,68 +50,103 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing cancellation of the bottom half (BH) work in the driver's =
-remove path (`admac_remove`) can lead to Use-After-Free if the driver is un=
-bound via sysfs while channels are in use.
+- [High] Use-After-Free due to channel bottom-half (tasklet) being killed b=
+efore hardware interrupts are disabled and synchronized during device remov=
+al.
 --
 
---- Patch [3]: [PATCH v3 03/34] dmaengine: apple-admac: use dmaengine BH ca=
-llback ---
-commit 6eb12029fd22d727d6a26b7c59c7dfc98c07ffa3
+--- Patch [1]: [PATCH v3 01/34] dmaengine: add tasklet-backed channel BH he=
+lpers ---
+commit 552ba608049b66637e1d6db5b616db6c9c33204d
 Author: Allen Pais <allen.lkml@gmail.com>
 
-dmaengine: apple-admac: use dmaengine BH callback
+dmaengine: add tasklet-backed channel BH helpers
 
-This patch replaces the per-channel tasklet with the shared dmaengine BH
-helper. The handler continues to run in softirq context while dmaengine
-owns the common scheduling and teardown mechanism.
+This commit introduces backend-independent helpers to initialize, schedule,
+and kill channel bottom halves. It converts virt-dma and updates various
+drivers to use the new API instead of directly overriding or killing
+tasklets.
 
-> diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-> index 14a5ee14a4815..c5d4fb96d3c4e 100644
-> --- a/drivers/dma/apple-admac.c
-> +++ b/drivers/dma/apple-admac.c
+> diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-=
+cqdma.c
+> --- a/drivers/dma/mediatek/mtk-cqdma.c
+> +++ b/drivers/dma/mediatek/mtk-cqdma.c
+> @@ -895,7 +895,7 @@ static void mtk_cqdma_remove(struct platform_device *=
+pdev)
+>  		vc =3D &cqdma->vc[i];
+> =20
+>  		list_del(&vc->vc.chan.device_node);
+> -		tasklet_kill(&vc->vc.task);
+> +		dmaengine_kill_bh(&vc->vc.chan);
+>  	}
+> =20
+>  	/* disable interrupt */
+
+[Severity: High]
+This is a pre-existing issue, but could this teardown sequence result in a
+use-after-free?
+
+In mtk_cqdma_remove(), the channel bottom-halves are killed before the
+physical channel interrupts are masked and synchronized. If an interrupt fi=
+res
+within this window, the interrupt handler processes descriptors and can
+reschedule the BH via dmaengine_schedule_bh().=20
+
+Since the device is being removed, devres will subsequently free the channel
+memory, potentially causing the recently scheduled BH to execute on freed
+memory.
 
 [ ... ]
 
-> @@ -886,7 +882,7 @@ static int admac_probe(struct platform_device *pdev)
->  		INIT_LIST_HEAD(&adchan->issued);
->  		INIT_LIST_HEAD(&adchan->to_free);
->  		list_add_tail(&adchan->chan.device_node, &dma->channels);
-> -		tasklet_setup(&adchan->tasklet, admac_chan_tasklet);
-> +		dmaengine_init_bh(&adchan->chan, admac_chan_bh);
+> diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-=
+hsdma.c
+> --- a/drivers/dma/mediatek/mtk-hsdma.c
+> +++ b/drivers/dma/mediatek/mtk-hsdma.c
+> @@ -1020,7 +1020,7 @@ static void mtk_hsdma_remove(struct platform_device=
+ *pdev)
+>  		vc =3D &hsdma->vc[i];
+> =20
+>  		list_del(&vc->vc.chan.device_node);
+> -		tasklet_kill(&vc->vc.task);
+> +		dmaengine_kill_bh(&vc->vc.chan);
 >  	}
 > =20
->  	err =3D reset_control_reset(ad->rstc);
+>  	/* Disable DMA interrupt */
 
 [Severity: High]
-This is a pre-existing issue, but should the teardown path in admac_remove()
-explicitly terminate active hardware channels and flush the asynchronous wo=
-rk
-items?
+This is a pre-existing issue, but is it safe to kill the BH here before
+disabling and synchronizing the DMA interrupts?=20
 
-If the driver is unbound via sysfs while channels are in use, admac_remove()
-returns without stopping the hardware or killing the BH work:
+Similar to mtk_cqdma_remove() above, this opens a window where an incoming
+interrupt in mtk_hsdma_remove() can reschedule the BH just before the device
+is torn down.
 
-drivers/dma/apple-admac.c:admac_remove() {
-	struct admac_data *ad =3D platform_get_drvdata(pdev);
+[ ... ]
 
-	of_dma_controller_free(pdev->dev.of_node);
-	dma_async_device_unregister(&ad->dma);
-	free_irq(ad->irq, ad);
-	reset_control_rearm(ad->rstc);
-}
+> diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+> --- a/drivers/dma/pxa_dma.c
+> +++ b/drivers/dma/pxa_dma.c
+> @@ -1215,7 +1215,7 @@ static void pxad_free_channels(struct dma_device *d=
+madev)
+>  	list_for_each_entry_safe(c, cn, &dmadev->channels,
+>  				 vc.chan.device_node) {
+>  		list_del(&c->vc.chan.device_node);
+> -		tasklet_kill(&c->vc.task);
+> +		dmaengine_kill_bh(&c->vc.chan);
+>  	}
+>  }
 
-The devres framework then automatically frees the admac_data memory which
-contains the bh_work struct.
+[Severity: High]
+This is a pre-existing issue, but does pxad_free_channels() suffer from a
+similar race?=20
 
-If an interrupt fires immediately before free_irq(), it will schedule the BH
-work item via dmaengine_schedule_bh(). The workqueue would then execute
-admac_chan_bh() after the memory has been freed, potentially leading to a
-use-after-free.
+This function is called from pxad_remove(). The driver relies entirely on
+devres to free the IRQ after the remove function returns, meaning interrupts
+remain fully active during and after the BH is killed.=20
 
-Could a loop be added to call dmaengine_kill_bh() for each channel in
-admac_remove() before letting devres free the memory?
+A triggered interrupt could reschedule the BH right before devres tears down
+the channel structures.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1786384168.gi=
-t.allen.lkml@gmail.com?part=3D3
+t.allen.lkml@gmail.com?part=3D1
