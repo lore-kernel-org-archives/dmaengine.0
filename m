@@ -1,74 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51903E2ADF;
-	Tue, 11 Aug 2026 18:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786474337; cv=none; b=a84+0DLa26qAf3MJDjmEuaQV+suZqV93xTGXghV2a1CJ0WEbpWNJGVC+00DCbKC6aTvF29n5cfgqhpGOD9nwezjDfIPyEpplZVrcDcKjom7BChgFcxBbKibGKI13oZDz5GopjKoscGopseGZzxVIng4qDJbxyRoMxszuq2eke+k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786474337; c=relaxed/simple;
-	bh=zaU4omkA+nHWFR2rQUdaFQWbVMYuk1tfeiYbHRe7dXs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=c/hjL5LjnrVd4ZcX34v+HeItZD1RtYb3nPwXumQ06UIJ+SDHcTy2fznz4jWG674XasYWxlJKfcNbIn7h1+qBGkiJULS+0zYyOa84Rr08Lh0BDOeaB7Bc80v0aeSlARP05Q0IkBXN0kgQm9hnVxIOoO4I9zVGCowsOBh94MN1q38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q37gr/bc; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AFA30566B
+	for <dmaengine@vger.kernel.org>; Tue, 11 Aug 2026 20:45:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.177
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786481105; cv=pass; b=IJYW9dOQFxy15dK4G/mGFVS/AfpU7z//xZohFKx7C4qxibaGLDw5Tt7n9OQrLcxWpJHqRafBiCQrISco1ArJJSi1z4f+QbcncHqmNQBWvnn001uH8ciQc2fW0eKeOAMXSicIuejv6kXpYyFZ1Oi3M48sE2guQFxxA+CLTmwDmrI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786481105; c=relaxed/simple;
+	bh=ebBozNdmAkIjmVYbImV5EG4YbkTEF+TNKKLKSPoVW3I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rbaRLzN+8XvWgwZ2WTffLWHZ2T++QOgb/qqHWjcNWJ0xrEgoVisEbPRLPo5BXVq776GGz8MUtlMMQbmK7zagA+qZdqMA5xFW+5NT0D0gsmIUojuOnUk0PyN3U6Pvp41aimhSKpLbjxW1WLL+HN3S+1o52lmBo1FV5D2bx+im4FE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=et9iJObO; arc=pass smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q37gr/bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C178C1F00A3D;
-	Tue, 11 Aug 2026 18:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786474336;
-	bh=DfbEBgPG5NzSwKbyGKiPlrHFzhe/gLJGThxh9aTj2UE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=Q37gr/bcSKIg3lS9NxlHqf5gkv4YktvfMTZuNKOqwZDQAEc/tOpQUI1etsO7sOfwT
-	 ixvdb6WsjIcDs+Op7g9ME6WN9n1vTOOHc8T4DIujCMFANwcImxIC1ba2lMiUClLWO1
-	 St5D44RXwJ8+9FdQP5IFi+X+M/Wp9swKw+31Eg0pASC5ctr8zjXaU88PLmykfhwMwS
-	 TC8aFgzyYm9dWj1tc+5Rq7F/sCrQC8b4ck9ws6bgtVIi+Kpvmc3sIV0XuG9iXcQTOO
-	 kfF6kO807kHDai1okeliDS2qp5bvCGYV9jqDlVNljhlZHix1KTrPlt/DBE1kjEZv/N
-	 119OTuLI2DvCw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Koichiro Den <den@valinux.co.jp>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260730160701.3550710-1-den@valinux.co.jp>
-References: <20260730160701.3550710-1-den@valinux.co.jp>
-Subject: Re: [PATCH] dmaengine: dw-edma: Mark emulated IRQ as
- level-triggered
-Message-Id: <178647433438.1113716.16199804095421718813.b4-ty@kernel.org>
-Date: Wed, 12 Aug 2026 00:22:14 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="et9iJObO"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cacb8416a1so4646185ad.1
+        for <dmaengine@vger.kernel.org>; Tue, 11 Aug 2026 13:45:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786481103; cv=none;
+        d=google.com; s=arc-20260327;
+        b=hMi1FJ9fgX+osOeKJDprrI40JVXRUpBChLYqkYnXceosayyp3YBBwaC3c/F/QIRmRj
+         FXjhBzMe8x4y3dIepMj7m7nm+ZSTmwvu1m1FZE78Lcu7bw4aVMFQG9haHVU/cFysnTFw
+         y/catvSrOmt/x87egr/uiHspd1mXnemqPM3GESjqEugkhXLa/KfS2vhX/Nu32pJdqBUk
+         FynxMibrxttu055WG3NvXi4UDllROM12DpnEIrhxSIzJQSgIEQLTMM82dV6oprcwIXzV
+         LiO/4sV8o1Yw1oKavJWPsbhChxCa7cQS7W7JO9/eejsXGdPQlZWDHEpgH9KB1yRkkCz4
+         FPjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=wqbaQUnQzBGC3bfWkeUGkpxMuvGFVYsWyDUh0SAIiX0=;
+        fh=/+1MSBBUVNo7ZlqblRwDGzPz8e7VDA6d/Wxfb+pe2OI=;
+        b=nA0FFM2/mxOdOX0EhQlHuKA6OaMaGgCtoM6XE+td6EoYFE0FC0x4/GrB0esAqpJUbL
+         qhZYqSh2lUn4v7npFhFiKOrbA/2CNCYlRR9E8Ofp3MwWROTZB6m9WodXhzMXt+SE82Mn
+         FrOBiaabdm7XSLyCz5FQqzg1UowyX+TAvRAun7r6MSrfTzjoN5eoOxdEsOjiCC9yD/wr
+         UOzCXCuLtIu3gHw17leqxArRXoaiGiR2GZ8SFw8ICn5SrTpAOpB0b4PbGS+SM+lzWX3L
+         5a/upz8A0mU/EosFFiWKJlHC2mWaFw8zJoyoB/W1g6iwNH7dnIiV7EPekHc/kFMnTizX
+         F2vQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786481103; x=1787085903; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wqbaQUnQzBGC3bfWkeUGkpxMuvGFVYsWyDUh0SAIiX0=;
+        b=et9iJObOlguBO2zex591WtdpvhBe3j9E8fC/UN1zKlg/bTMSq92WJsiM0IKdkbxfK5
+         zLFw+6y6tXKsAhPkq6l48ZebWd3F/KC9V9uYTntDIEB1IFYVY0mBe5T9hK86LomM8IsX
+         ZrqeVfd3qbGdY4oqL/5are/oO+83B+DdPI7Sp8q0L2or5AXXxLBHG/CAD4zuD6qdC/k6
+         rz9EgcLyPhvqMp0TJyX9QbvUsfQ/Rj1j6YVCN5JY/2u6lScIJdUOmvQXjLIZvS7aD11N
+         4ozmfohNnrPI034uCgBbL8mRovM2drBqAak5PGYIzQN5wHRIh5G46ygKxasxEMLYjSzr
+         MNWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786481103; x=1787085903;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wqbaQUnQzBGC3bfWkeUGkpxMuvGFVYsWyDUh0SAIiX0=;
+        b=Lk4Dsp2esrVBPlIPOCE1wuyKT/RXNcMC9bgBbph40wtY8ICQPo/PftytJSaR3RSLv6
+         UGUYxor1wpeMCPKsZJXcF4BcQ7gfQbqRdwB2gepGJZxKYygVybTWBHjf98VyEqhpYVRH
+         jdGkUwquLgSCGJQo9O0noFnl2auRgTl/4EYf0O8QPSgYvE/WInUhXFPFgbAi/D5tmd4e
+         lxD2YzEaQ1sQ0IrMrOhn04CnZ+RA/OMzzfwfK4rlJNbUNMD1gB6JM9CgWjfcrfPYGx+V
+         Hi1qLT7dAiwNP9U2zwotXuIzRXV0iGfO9sQPm7lLhHLORTbZnLBDtQSmWciLS72CY752
+         VH6Q==
+X-Forwarded-Encrypted: i=1; AHgh+RqwtVQyccykvQxvuNiEDWc+O51zyYbdHrRlXj2sjfQPDB20e/11wp5ipFs9DHS2aZ2r64kQUWTjNJw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJEGoKAqDFH0OlE4EYo+UZ2sTWYFAp/xyQtaikRJN23cDa4UVf
+	dGu4Vw+edCCUJsR0aKBGM+6hZqqXz18oWagHN1z/ZUYFt+okrqIUATz7XlH1liEgSTzPu42WfQB
+	7LAACsLpHyCCKtkFhfUH/TbqzV/sZyUg=
+X-Gm-Gg: AR+sD10BrG0nvrKR2F/LX/JNzPJRHUIpZ7WWRFyocis3UqrVTHmm6tyN/F/wHfZDZfq
+	C4bvm+rwr3tyNEo+U3V5QuQ/g/wFyZSmzS/EBZYhULDALAUfrCRqVsSB34xv81+mYGww8mHQakn
+	SAprpPlRGUCHVYIR9k5A7ryj1kqzhlEAwe9uZ0MUZO4rELrpPC6YXm8fAqAultFeDHi1vJ6tgEH
+	drC+1QQbCgE28qNemU8yhizd/sdvuMBrBLCv0fB3lnDA1LZqb+Rja4CLlFvAm245nU5lRDfYAl2
+	RgXO3YhsAVm+wyFJM/4QEKFaiLU05Gjgl5hTORcDSG+/o8NLI0gbF376zR+6uHyb68RBLtBw2UQ
+	rsQ==
+X-Received: by 2002:a17:902:d552:b0:2ca:ed57:8586 with SMTP id
+ d9443c01a7336-2d345713a25mr1935985ad.23.1786481103129; Tue, 11 Aug 2026
+ 13:45:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+References: <cover.1785183549.git.allen.lkml@gmail.com> <cover.1786384168.git.allen.lkml@gmail.com>
+ <anr-hAQN5-jGoRp6@ashevche-desk.local>
+In-Reply-To: <anr-hAQN5-jGoRp6@ashevche-desk.local>
+From: Allen <allen.lkml@gmail.com>
+Date: Tue, 11 Aug 2026 13:44:49 -0700
+X-Gm-Features: AUfX_mxHcMoGgmljEHPHJV94zyVLIIoNYewI02G3Dpg4Ea21-WF-yo-zSmxvz-g
+Message-ID: <CAOMdWSJyTovoEvokaHeOZEu2Z7UVhF8X2_uetcKn0_FySgtn9A@mail.gmail.com>
+Subject: Re: [PATCH v3 00/34] dmaengine: migrate channel tasklets to WQ_BH
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+
+> > This series moves DMAengine client completion bottom halves from private
+> > tasklets to a common per-channel API backed by WQ_BH.
+> >
+> > The first patch introduces the dmaengine_*_bh() API with a tasklet backend
+> > and converts virt-dma to it. It also updates every driver that directly
+> > accesses the removed virt_dma_chan tasklet, keeping the patch buildable on
+> > its own. This separates the driver-facing API from its implementation
+> > without changing callback context.
+> >
+> > The second patch switches that backend to a dedicated WQ_BH | WQ_PERCPU
+> > workqueue. WQ_BH keeps callbacks in softirq context, while the common API
+> > centralizes initialization, scheduling, and synchronization. The
+> > workqueue helpers remain internal to DMAengine, and dmaengine_kill_bh()
+> > drains scheduled callbacks to preserve tasklet_kill() semantics.
+> >
+> > The remaining patches convert driver-owned channel completion tasklets.
+> > Tasklets used for controller-level processing, recovery, or other
+> > non-client-callback work are deliberately left alone because the
+> > appropriate replacement may differ by driver.
+>
+> Right, I would actually expect that virt-dma (and others will follow the
+> example) will switch to threaded IRQ instead of tasklets.
+
+Thanks, Andy.
+
+  I had not considered a full virt-dma conversion for this series. Looking
+  at the driver, that would also involve its descriptor pool, queue and
+  active lists, software LLP and cyclic handling, and residue reporting. It
+  would therefore be a substantially broader change than moving callback
+  delivery to the common channel BH.
+
+  My intention here was to leave the existing descriptor lifecycle and
+  scheduling unchanged and only move callback invocation out of the
+  controller tasklet. I think converting the driver to virt-dma would be
+  better handled as a separate series with hardware testing.
+
+  If you would prefer not to add the completed list ahead of such a
+  conversion, I can drop this patch from the current series and leave the
+  DW driver unchanged for now.
+
+  Regards,
+  Allen
 
 
-On Fri, 31 Jul 2026 01:07:01 +0900, Koichiro Den wrote:
-> The interrupt-emulation virtual IRQ uses handle_level_irq(), but the IRQ
-> descriptor has not been marked with IRQ_LEVEL.
-> 
-> The interrupt emulation is somewhat unusual: the eDMA interrupt handlers
-> dispatch the virtual IRQ for every edma_int[] interrupt because software
-> cannot reliably tell an interrupt-emulation event from one caused solely
-> by DONE/ABORT status. If an interrupt arrives before the doorbell
-> handler is registered for the virtual IRQ, the IRQ core marks it
-> pending. When the IRQ is later started, check_irq_resend() treats it as
-> non-level and replays the pending interrupt, causing the newly
-> registered handler to run for a stale event.
-> 
-> [...]
+>
+> > As agreed in the RFC discussion, selecting hardirq callback delivery is a
+> > separate API change and is not part of this series.
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
-Applied, thanks!
 
-[1/1] dmaengine: dw-edma: Mark emulated IRQ as level-triggered
-      commit: 0d995da5fb97e8c312834575604d4423eb6225b7
-
-Best regards,
 -- 
-~Vinod
-
-
+       - Allen
