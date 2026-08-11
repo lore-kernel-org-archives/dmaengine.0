@@ -1,64 +1,64 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010006.outbound.protection.outlook.com [52.101.46.6])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011055.outbound.protection.outlook.com [40.107.208.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C1334A3BF;
-	Tue, 11 Aug 2026 10:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AF3434E29;
+	Tue, 11 Aug 2026 10:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786445550; cv=fail; b=tNuJxuLsHO5RW4RoDuZ5npS8FrY43pyTXspIbwWaCDRk8Em6yszNcDX5kEnuE0ClqBQ6Cj9f1ikrrgKByRCFhuvkzH6R3Dg3VKSGWAGIqAG8MRwOj4+gGf07WV9J3C/kNIgXoJ5or6SDbj5Xg67aUgQpDZrsBCLCFmMfyKGrahA=
+	t=1786445666; cv=fail; b=FjPep23HVveHT7nDXJmXkcoeGz4O7qkXNoB5qN0QeNXHn1vtyG565jX5Ixx7DVVBW34nbW4uh7GW1W52d8DzgmzLp4z2vvAvDLpvCg2hdxlDGmW3G+1T9ptGEJAAAkG55kjgMs/2Wp6oMewmZRJ6z7BpU1G7bDAfxfq5x8onHg4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786445550; c=relaxed/simple;
-	bh=TOWBhrYxurpSbS9+MhHU5Lvx2BL3SXlr9i2bLGl+Ck0=;
+	s=arc-20240116; t=1786445666; c=relaxed/simple;
+	bh=pXdnIFUj9Wh3WKDHQ1+VoobQuymR8nQVyCARSB4MwdE=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=LpoaRG2eOvEH/0/9k+Kea3wLx9f3G5uRmrSkttMlGIOqVJGB+D8sUA/wiXXlc7gmI5UMtdLHbYvWCWQbA5ylugOcxgArroGRwL5NOvWLBigeQLaPciM6blYKeOZIpmTvPpKw6VLH9Vhsmk3Yb3VDpDgTDsMmj87nyJwFaoHGBp4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=UsqFGLBA; arc=fail smtp.client-ip=52.101.46.6
+	 Content-Type:MIME-Version; b=hFVddXbCsUTMQR+DeYmFdwFIESBOkKcK3rqWA1CdRxRWjMPi8ljeZR0zwbutPlZoFSRVha0segPVUJQTp9UjIQl5Zmpi1YOnGfFdXfyE/ZajSSZwnrV88EWGlxoqlmI0Gllsh6fLXokbGJdGISYidc3uRhDpDvVP+1vyOz7QeGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=B6B+F/DH; arc=fail smtp.client-ip=40.107.208.55
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="UsqFGLBA"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="B6B+F/DH"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PaRE8rFz9zZ1NIZ8FhZBRz1y7+Xm4dl30VN8+2T4vdg564SHUOL8m/+pSCWGfSaSQLyUSGeVUWTnVm7mBrULnXl2yNUod9yjJDeKBwFLcJIc9ooKTYfCSbchcfXJin9e3rRtf5jiMnxndtn+fY4rEnZY1G0khbWfUxkG437RrHGBlzjZ7vbVsp4LipMMPX7NNZ/+5vSqhodlgn4WM/C3mcD0yVWcyhDhPpuGqbz/chNN1lavbSw3JVWg5DMoqUgovrIUCQuGGrUYuyK3GSAgL07ZFMtBNISw6woGJ5TMLkMhX2/pyLBFkx7wvHD8qOcQYu8HjpgKfTsJuWWkeLzGPw==
+ b=FuQz1gXoPMZI+MvBPoDazRhL9+sqXfmo2E71d7yk59mOWzfjHpDHbPtwb6HrFmnXrblTd/vNAmRDksAee5bTLA/4kRy2Wg5IB+hGMhCHjXD9VCDcF66U4OXGa8qsSDXdlfHN0dQShwSRWVQESn1F7H7uZVwVb82SLwm9CjorSgYdim3R6LCRDX7HrQTb49ExDEdVY+7iFc9dET4L/055nBYQ5ci4NzAb+3v22WhfPC+mDS1XxkuRLWcbSELbh4QiQeMs/r9uunK3RFy2TAjpTdPeZgdyxsjvWURktYiAbi8BiXez6DSMrG+QyKbAC3BKdAIcItxdf4sCSpBvrvqkCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=egm12ggNbji2234OGWMCdd2CEdoJI3XapLLz5Hjzbns=;
- b=dEpMWD2ftT9bZCzqwpx0XKvgxi4hkBTxuxZrEHBqinYEMl+SgI4rLw91HqviXOG+bfSMcqATdsowNwqCyjbv3G2SoDkJ0XvMPqig1ub5PtVdDGwz3aM1I87jgAgBOtjs2NJtW7OeDGEjfK7/y9ruoCWJw3giFmFuH99YSqxlek70GA9MYvCtLpRQLwwaXIxMYXlPs8rMzCEsB14yGG2sZsxT015AFA9oztErtybcVCp7WvMTrViLciAQ2MP40HgRuKUdLhAKKCFYNcieUIQheDbRzV9wTlIGR7hdbx4arv0xFuvCHHkF2m+hIRGmHPfjyu0GlMMtFkUAFrqrFTO0gg==
+ bh=Abz5yyYB0xJ5ger/2+lgXt3ETFWpBjGAzeslwxGjY4w=;
+ b=yh5Rkjr7KXjbqgJY9zYXA12N3QYektVgI98kTT6ej5BIBfcxEl7yPeYH2y0n3qkZcbYbIWH3cl74iiloIf1kL2u0jkASvL7D62IeJeobuLqp5+VHKrNUvLLtZF1par/mC+QTYn0YMq5Ou8mNmvWIHCGhC6DOFOFnMP0kfIbJvciKhK5IRU83pEatpk8hooImXxzjoiUEuOM/0yk9Pcg6K46wUzWnpDSVommFnBriGo8JsQYDzPDuub7qrrIfMVqsd6oNOf8v6rZ2aZZZopfvXaiQ8UWfW57jNWbVlb66QW2EajcuAZmbioFPSh1EiQ2qZ0T6IkNaBICVPCa0wPLznQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=egm12ggNbji2234OGWMCdd2CEdoJI3XapLLz5Hjzbns=;
- b=UsqFGLBA6Y0hQLdVJ+cNsZuU0uhicD4fc888WrYgeYGxiCDDr+zV57XHcSBKI9kwBuW6iTawRwpzNlIZIixx0wL6GmP/HSLYffU6LWKn0vKToK2s3acO8Fl3mKFo1jAIWMkMZz+42u+MUIaMiva/jA/lUKzQkxuOKioODnWzF8Q=
+ bh=Abz5yyYB0xJ5ger/2+lgXt3ETFWpBjGAzeslwxGjY4w=;
+ b=B6B+F/DHWL2q7ZgB0jFEn23Sxe386Z2wy7w+NbGkRfP62V4/VsAf+eeAetxsBowtdp9qEUUdGUbZb47yaC2ttJRDW3+XcZV9tmZ/CaQZcughaWQ9eXEI/50rRnE2a+rcvwFCo/VTgNjuSTva+WnwTEI5dDSCJ72u186oSMfK5qA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from DS4PR12MB999075.namprd12.prod.outlook.com (2603:10b6:8:2fc::20)
  by SA3PR12MB8804.namprd12.prod.outlook.com (2603:10b6:806:31f::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
- 2026 10:52:25 +0000
+ 2026 10:54:22 +0000
 Received: from DS4PR12MB999075.namprd12.prod.outlook.com
  ([fe80::4c9d:851d:3f44:800f]) by DS4PR12MB999075.namprd12.prod.outlook.com
  ([fe80::4c9d:851d:3f44:800f%6]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
- 10:52:25 +0000
-Message-ID: <67bb1e42-c202-415c-9f04-15a5eddfa5f3@amd.com>
-Date: Tue, 11 Aug 2026 16:22:17 +0530
+ 10:54:22 +0000
+Message-ID: <7e2a3899-b44b-4c04-af6d-b4299938f76e@amd.com>
+Date: Tue, 11 Aug 2026 16:24:14 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 5/6] dmaengine: zynqmp_dma: Add new compatible string
- for Versal Net
+Subject: Re: [PATCH V3 2/6] PM: runtime: Add pm_runtime_if_active guard and
+ conditional variant
 To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org,
+ vkoul@kernel.org, Frank.Li@kernel.org, conor+dt@kernel.org
 References: <20260810100452.426320-1-nagendra.golla@amd.com>
- <20260810100452.426320-6-nagendra.golla@amd.com>
- <20260810102009.39B501F000E9@smtp.kernel.org>
+ <20260810100452.426320-3-nagendra.golla@amd.com>
+ <20260810102501.9F8321F000E9@smtp.kernel.org>
 Content-Language: en-US
 From: "Golla, Nagendra" <Nagendra.Golla@amd.com>
-In-Reply-To: <20260810102009.39B501F000E9@smtp.kernel.org>
+In-Reply-To: <20260810102501.9F8321F000E9@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4P287CA0075.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:26b::14) To DS4PR12MB999075.namprd12.prod.outlook.com
+X-ClientProxiedBy: PN0PR01CA0006.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:4f::11) To DS4PR12MB999075.namprd12.prod.outlook.com
  (2603:10b6:8:2fc::20)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,199 +68,148 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DS4PR12MB999075:EE_|SA3PR12MB8804:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7b80034b-d625-4742-9f2b-08def796a0d5
+X-MS-Office365-Filtering-Correlation-Id: e710de63-5c0c-4ed6-2a6f-08def796e6ef
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|56012099006|11063799006|4143699003|6133799003|18002099003|22082099003;
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|56012099006|11063799006|4143699003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	bcb/Lwunz/ga2sllfYKpjGHqLMWO+QwpMEumW/55PqxCtsfgb4+t5Yz+c5nAQLlk5qkwR94NcTOSW4LHVIvUI/LHCySrFuYZvNklz5MTLBgf/wTx7RzAyaLdK16lMe6XuaU24ctzSog6mJTMQmqzsnBXv/vO3dItwht2rLQQPvxxi+ejsouWZqUFjUyxlkSkMJXTSRAQp9hkXV+1ZYVEABTlsgYM02++nqvTBiQVXSIX+tJ92ZqxkkKWov/0rbne6lsDBry9zRxyMo4/b5iLwneXElKk1TLDHtfr5t2p+dNdnG8VPn+O8I+Tpb1MWr9I5w0xlephTcKu9WESMjaqnBBMqP53p1jWg6yz7qyIDpdxcpYh7pnbBRa6JnWi4qtkjELXyq1omd5JHF7KsMTVP2J0fFXCvRvinXrMgSTDYdgtiz2mlD2pardE2twNrJc/XINrCo1slMdRfjS6+QlnROvXtbXddPgVMtNHnQBaO4KEOKa8qqMDH+qL+rBJIyxuh6XTxTjadH03qJ4DyVG/4yVcNYPcFRKY9KtQg4w9LXklnzleW/CSFZYIELuTHmr6FW9RhVEDqw4/EnAifzy3zHH0RO0xuDeLkuIPAr6uPgpiSDrpJjnpfFEmfsNl2lbQPD3JmoabaeagZTuM0KxRBD8YadbJaV3pu4q9dFxHSXk=
+	GPPWTU1HHVCz1tlQlanN4xgZFe9S2BZKLpl4xbPl1/nLYArFBeRlt4rDwsKP7EBh0PQg96nSSgCKw6r315HHug1R/z4h/9sXsdeJRxsFFTtcsnWjiRAp1sMkLcf4AeqV0fQE6PnpnTVLMiU0yJgsmtBhukcHgocgXPAAeyTl0fH+K7l+XC13ss1etj/k2kPyLmvZgAiY8aXEr4mItgihYd6r3bEBl0RGtmkZbKkDeYaQzmYDqFvQ5CGfF73cw3SI0ybgUNvtAqoqn1vb8UCHKEFRfSr1jMuXx1E1nQbcStlRMp8BtXzMLpvv/ziW2GTP+RFtMupEN1XtgmIobrg+GV2cR97qhdr5VYszWO49lVE0yquMMBNeySfnxBHPvb+moZ18O+nfzO2eAwcjh8G0wgD75cSw/ISKDOi2yitpoTZjS/DXfxrVrFb6VOZ+AQD9jxc2nP3lE/FJ1r5feo0/niPKiUqrhUzaaWOO6blWlIiAjBheoLrgGvqv3Jgd8IFmOOQQaFii8qyuFrYsoGDZ1JZ5w8wzdsCqy7ggeQxso80ylUmmraqx4zfh8WQP81ZpZzHJ0O6XQdXrb3XbKGyFQBXzc5P38l6R5bUZtkyYYiGWeR5dveeRfLPQWGz7QZGBJDqg6CMY/UVBy8NzoxMHsPMpm5RLQUCaB1vw1O2Q18M=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999075.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(11063799006)(4143699003)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999075.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VkliRkVYdUNvRmFUZGVidDY0VUdpNmhxUWp6SGZXMnIzeGxVNVp2NzkyNUNV?=
- =?utf-8?B?MUtEQTFSSENML1lOOEdmbFpZZW50ejA0TGJOL2czcDVXNktPMWpqTXJSMWJW?=
- =?utf-8?B?Z0I5RTBJQUhyTWR4bVhVQnY3cHJHNHBtck0vWjhPMlJpS0IrYmc0emhhWVN6?=
- =?utf-8?B?ZS94UThrT2MwdzA1bFNWbWJvTTE4TmtrcFlpMEptRURsdnd1U2FZUzhpQzBj?=
- =?utf-8?B?QlBKZVJlNXErRi9lTXlwWVY2Nko2bnBXVnRhbFZXSTI3VUVpNkJ0Mm4xN1NN?=
- =?utf-8?B?QTdqQWUveG1LcFJDL2xObEM2NUpTaExUM3FpMHZ5c29oQmtuaWZ2U0tDN0FX?=
- =?utf-8?B?VWpSazRxdzk4QWRiaCtkWVd2WVlhSDZJeERYYmhoZWRxWXBRVHdNbVRnVFpX?=
- =?utf-8?B?c2prRDREMWxOSkgyeWpaaHVoZjdTbjh3a2JvOUtUNUZrWGVUelZ3c1RMMGFp?=
- =?utf-8?B?dGpXUTdCY1FNVVZ0NzdFZDN6T3hGcmVUVENKNVZiTDJZMXRCQkRtNnVuYU5P?=
- =?utf-8?B?M3JoWDRNcTgwTlhqOTZvZGRnbXlNeWZnRCtwb3FWeUJ4WTJyRnhDUjNOWGRL?=
- =?utf-8?B?M09oaFRZR2hDVjdYNmQrQWVtaDlYRmQ2dnhJV2hTdmo2dW1YZmMzRUNsbEh5?=
- =?utf-8?B?a0NLbi9iRys1OUpFUG5PQ3Y1VVR0TUdTQ0lXTEF1SnRkUnFwRGRBRXo0ZDJ6?=
- =?utf-8?B?VzBicmZxckM4VmRWZE91RmpnNXBwZWpiTkh3L1lvbWcwVE1TaGpGTHRObEJX?=
- =?utf-8?B?TnlUMzd6Q0JGcTluRFZHdkFBNFFhVlFLQm1OSHFTTUNsTHFPL1pyajhjWnRw?=
- =?utf-8?B?ei9Oa1liU3c3M3hoT3h2K3hLdm9hakppU295S0FGKzRLVStZU0QycjVaMUhs?=
- =?utf-8?B?dURuTHUrYTBoNEI4eUY5WEpGbCttL2hDbkphOEhaeGhjK1Zmcms5OUQvMU00?=
- =?utf-8?B?U2l0S0lWZ2NWcnlPR0I4allTenhPUkVObk9sZHVubjJIR2FQdml5L0F3Mm5o?=
- =?utf-8?B?WGN1azYrU0F0cGdxeHhRV2pQSEJUZ1R5cUhVV2ppWUl4T3E4NUVUczFreGRs?=
- =?utf-8?B?UW5FV3lUenhtRU41SVdhWE5taXVBd0orR3hVVExGTnl6OStvNmhZcFhLcjhN?=
- =?utf-8?B?RU1aWmJrcm1tV3VCcUw2UWU1cG9SMjN3WUdGbVFscGtubG41a21MV1pOL0pF?=
- =?utf-8?B?cldYR0lrMVBaQTRXdnIyaDVYNjFOMEdvL3NITlJ3d0plVlZGQ2pibGVGZkFn?=
- =?utf-8?B?NjFKNCtRbVVrSGhvMGdTd3hjQlNWaStjUSs4NUFQNEoySE9INjExZTV0MzRs?=
- =?utf-8?B?SURubEN5UXZtUW94cHV2Q0xUYVBGdktrZzY0T2dvME5XeUE4TW9BU213U1pI?=
- =?utf-8?B?RHpJNTdQa0VUMVRZeVg2NVpxSWp5R0drRFgwYjB6eHFtRzVmZEtPNFpsY2dY?=
- =?utf-8?B?aCtlRHcvNHkreHNFM21nVkszTk93Ylg4WUlhVnZyV21PTTkzSzFmcVl0b1U1?=
- =?utf-8?B?dE1RK0FJa2N0dkRKa1dzTGNTKzYybDVUTnBzVmFYMytLdUgvOFRNa0wyYU9Q?=
- =?utf-8?B?emM5V09maVRtMDNUL0FYMlVQL2VvZVAwOHFWZHZFMlZ6UFFIQ01qVm5aOUda?=
- =?utf-8?B?Z1QwN0I4UjhsdzBGTDVQTjhUUEZ3SFQrdlBMVGVxMFRudUJycFRmVFVlNkhO?=
- =?utf-8?B?bHJkaC96WUhiSEMvYS9xNHZuZUJFeFpzR1hWTE5uSUsvdCtZUjAvQVJ0SUQ5?=
- =?utf-8?B?MnlWWGpZZnZDLzJTVkpjRmxwS3oxK1R3UDNscmFudFYvRzdidUpCZFlWWHVG?=
- =?utf-8?B?Sk5sMFhxR2FKQVBDQldHbEVibGlWREhrRjgycHlHeWM0MysrcnlHYmZuOGt4?=
- =?utf-8?B?RnNkNjB5dnZYNFoxcmE2cVJnV2ZqTUdJZ2VpMlhKWm1HZlV3dk1CNGVXdFZx?=
- =?utf-8?B?VStkdTlkdWZnMllOMGw2VGVhTmVhZGdLZ2hWVkRuQTFMRitpd21Zb3FMZHdS?=
- =?utf-8?B?aXB4Q0diSkdjSXZoY1NINzh5V1o2WDMzY1pSL00rYi9rRkxTRUMwT0E0a051?=
- =?utf-8?B?Vk5ndk9ac2NnTnpWdnN2ZlEwVXlNOEFZWDYwR2FrUFloVTJreEsyZVU4SnpB?=
- =?utf-8?B?RmVpSUNvZmsvcVhqbWxzMjhHd0dqU0xtSXR3dSsrYmo4UDhPbjFIUi9XVUJm?=
- =?utf-8?B?Zy9sM1hyQTluNnRmMTk2T0lwaCtLMGc0TVBEYUREM2lwcVNmUEFMdWZYWmlV?=
- =?utf-8?B?T1ZtbW1rL0psNnVuZ3E3RUgvK3VhdytESlU3dmZKTU5kbngxcXlzdEI5YU1j?=
- =?utf-8?B?TkhEaUZoZ0c5Wjk2YnFiOUxrczFKajMwa3J2czRCNTNSazczdHI5Zz09?=
+	=?utf-8?B?UWRoc3p3TFl1SG82ZmJvRklqdUtDVEZWbHFkRFZBTS9BaWdnSmV0NjQ3NFps?=
+ =?utf-8?B?dGYvYTcrZ1FKUExCZEN3eEpHMi92OFpFUjROK1lSSE1jQzR0dUtYZldpNWd2?=
+ =?utf-8?B?dE5QSmxVWTZJQVQ4ZnFMOWV6Ky9pQlVCTlNrWlFBNjRNVGxOd0IyUFFjUFB4?=
+ =?utf-8?B?RmFXTWh4Z0E3RUxwZnVXU0xTU0c1V05PUVZ5Ym5TZUZPU0R1Zlp5ZytMN0Y3?=
+ =?utf-8?B?NkplV01lMXBHbWtVVHlBbUxWNnNmTGlKRmlpSkJGTC9vdWU0LzErZDA4MGZk?=
+ =?utf-8?B?NTRoQy9iRW1EVVpZUEpvQlVGRk9OM0FIVFU4WXBRVFpDUVRER3ZqK3JJOFhR?=
+ =?utf-8?B?SkRXWkR0STlyYkJ1bnYxRkE2WUI3L2VFMTRKVzBqNThqNU1GcmZ1UWJ6ZS9C?=
+ =?utf-8?B?blBQakk5MklrOE8ydllyUFNNbGJMRzdjQ1ZNaDRDQWV4WmxYUG5kT29MUHZI?=
+ =?utf-8?B?eG1ydTIwWFhXVDhZR09jUWZUNHdqaGlwWU9mWFBQRm96ZlBDYW1ZaXI2Y0ZY?=
+ =?utf-8?B?aFJyK3JmSUFWWTBGOGJEYnM4Uml5cGdVQkdQU3hIb2plSEsyeTdwaTJhNmR0?=
+ =?utf-8?B?OU1Yb09BWHRMT0dmNk9LR2lZMCtpNk5tbjcxTkVUTHA1a29NZEc2K1BWMDBL?=
+ =?utf-8?B?MnUrVGNISks3QlJKMUlpM3RHUEVvSXJqWjFJMGM0MTZJMTFpelJ5OUlaQkZC?=
+ =?utf-8?B?RHRlWmFjcG9OWHhkWER3VnlQOThub3cxN2V1TjllTXgxb0Z0dERJT3MrczVh?=
+ =?utf-8?B?a0xDRVM5U0xnYU5NalVwVEI0dHRIeUI0TGorNm9nWlhqVWVSd0tzQnVkRXRF?=
+ =?utf-8?B?YW5GdFI4TTBFYThkSzVoRzRhblNIb0F0MWpyS0UrS1YxUlEyYk13OG52Sngx?=
+ =?utf-8?B?bk9STDk4TE9TODgzbEJiMnYvUU5BZ25uT3R6dHNrVWFWQ2hkMHB4UlNRRWlL?=
+ =?utf-8?B?QUVSd1oxWTJIVW5pRnVvMXhjMDFYVGxFRFFHaEhaZ0lrdnh1TVI0VVU2Z2Qy?=
+ =?utf-8?B?T2dGcEpHNzlIRmNHbFYrM3VmZVNEd0k3cElJaCtNY1ByK1JBWHVrNGZGMC9m?=
+ =?utf-8?B?Q05RbkxZWHdTV1pDVkZXclgzNXNwSDMvVXE2WU1QU3J2UEppWGlkdjdiZHI1?=
+ =?utf-8?B?REc3SmtMc2NqZnZXN20yRGxLeHNnbTVXK0tyUS9UVDV0VVBZYkh6RUFlV3p1?=
+ =?utf-8?B?cHVjMHRFeDBXdGgvK1RoamY4N0VGdDVUaWRWRnMzUGpiNVBKQUZiQ0hsemNT?=
+ =?utf-8?B?SnY2ZUVuS1gyb0x3LzhsR2ljMzNQNEVmdzNqbzZsbTBld0d2VmJHWWMzM1Bx?=
+ =?utf-8?B?clFBdlVZODdRYWlFQ1c2RE1lZDRwVjA2V3ZzMzk0MkFDWnVrL0VuV2gwTHhD?=
+ =?utf-8?B?MWlwYUlvNGdEWlY1dGtBekNGcnMrTkVzc09zZU5vTTF1WFJPUWlISHR4WEkw?=
+ =?utf-8?B?VXBVd011Y3pLTGpUcGdiZkY0TnBPS1AvNmpsTUpZTDA4Z2FkSjcrQ1lpRnlV?=
+ =?utf-8?B?Q2JSL0ZtSnVyenRMWEdMdUxoV0tXM0xSNEtNQVhzcDNobjRkUCtPUVRNWFNN?=
+ =?utf-8?B?QjJGMUhwa09jcnd0U21hSXM3blhkR1JPb3FCUldZdEJncDZpMSs3WEVqcnVB?=
+ =?utf-8?B?dWxzYjdWeFNaMUtkaUhxZS9IWlZTMS9RdmNWS25lNTNCOFNrbFIyeVVtUDR0?=
+ =?utf-8?B?UzF5ZzNPYmFac1BkVjBEMmJISVZvam1pWWdPaWswQTg0a2UxTCtnTml4WUtm?=
+ =?utf-8?B?UVN4MUNPQnB4S2RJazNmRFFsMmZZTjZxc1o4b04yV2puc1UydndBSDBQUGtO?=
+ =?utf-8?B?UDZhSDBXb2d5dmwyOVFOd1hFWGpIYnlFTjAzdnNoY2FhcDRhcFI1ZTVnVzJS?=
+ =?utf-8?B?a3Z2eU4xVTVzci9Ia29namsrRGxOQ2hxVkE0U0U3L1k3NU9reE1qS1hKN09x?=
+ =?utf-8?B?RjNoeFZuUmg0d3ZYbnRnUDVkcFpLMElXWUo5UmRwTUd1MXJjd2loZHVLbGJM?=
+ =?utf-8?B?NlhNdmJnTEtrYk1GKzhmTThDRXVLOUJselNybjZyR3Q2b0h3SVNhZ2JMWmtz?=
+ =?utf-8?B?TWZEZmZYZ2MzM0Y3b0ZINWNJb1ZMNTNqWElpNzFtNlpIRDlkUEo0WXhaNWNM?=
+ =?utf-8?B?azlJRGtYd2dEVDFTSU9odERlUGpBM0VZTUNGMlNMR3hrOUNNUUpKMGJzbXR1?=
+ =?utf-8?B?V25Ub01HOGl1cWZCMUw2UXNwUXEvdTlFTzRtT1JJa2MzNjBzSHFUSldHU1U2?=
+ =?utf-8?B?YUxHQnlLQ2JJUFdkUjhWZlR3YktaNDREWU1WVmRvaVMwYUlBOUtwc29wL0lJ?=
+ =?utf-8?B?cmF5Zy8zYVZEWVBuOSthZXVXYXJrWTllQStwTjN6WWtBLzBjTFVaZz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b80034b-d625-4742-9f2b-08def796a0d5
+X-MS-Exchange-CrossTenant-Network-Message-Id: e710de63-5c0c-4ed6-2a6f-08def796e6ef
 X-MS-Exchange-CrossTenant-AuthSource: DS4PR12MB999075.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 10:52:24.9696
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 10:54:22.5400
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EK4/yT4MajxKTqSZ0oFyVzxbBs+X8T7N19T/am7MHLQsOsh72zvjkIbDSAg4DRz+YHobWtIea3LBctNvPr/2XA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: DnysJQuvxxlNdruCLJZ0JYoMTz5/cwvP2MZVgDskPB7KUzBvuvPlVhxRDCWfE6jKkyOe31RwnU3tdAB5iD6emA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8804
 
 
 Hi,
-On 8/10/2026 3:50 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+On 8/10/2026 3:55 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The `pm_runtime_if_active_try` guard evaluates to an error when runtime PM is disabled, violating the API contract and breaking IRQ handlers.
+> - [Medium] The conditionally defined base guard `guard(pm_runtime_if_active)` silently corrupts the runtime PM usage counter if used directly.
+> --
 > 
-> New issues:
-> - [High] The `has_reset` field is introduced but completely unused, missing the required hardware reset logic.
+> --- Patch [2]: [PATCH V3 2/6] PM: runtime: Add pm_runtime_if_active guard and conditional variant ---
+> commit 57173006d8cc8596d1863023936dfd41e4325af1
+> Author: Golla Nagendra <nagendra.golla@amd.com>
+> 
+> PM: runtime: Add pm_runtime_if_active guard and conditional variant
+> 
+> Add a pm_runtime_if_active base guard and its _try conditional variant
+> to pm_runtime.h for drivers that need to conditionally acquire a runtime
+> PM reference only when the device is already active.
+> 
+>> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+>> --- a/include/linux/pm_runtime.h
+>> +++ b/include/linux/pm_runtime.h
+>> @@ -609,6 +609,13 @@ DEFINE_GUARD(pm_runtime_active, struct device *,
+>>   	     pm_runtime_get_sync(_T), pm_runtime_put(_T));
+>>   DEFINE_GUARD(pm_runtime_active_auto, struct device *,
+>>   	     pm_runtime_get_sync(_T), pm_runtime_put_autosuspend(_T));
+>> +/*
+>> + * Do not use directly -- the destructor calls pm_runtime_put()
+>> + * unconditionally, which underflows if no reference was acquired.
+>> + * Use only via the _try variant below.
+>> + */
+>> +DEFINE_GUARD(pm_runtime_if_active, struct device *,
+>> +	     pm_runtime_get_if_active(_T), pm_runtime_put(_T));
+> 
+> [Severity: Medium]
+> While the comment warns against direct usage, does exposing this base
+> guard via DEFINE_GUARD in include/linux/pm_runtime.h create a risky API
+> footgun?
+> 
+> If a developer uses guard(pm_runtime_if_active)(&dev) directly and the
+> device is not active, pm_runtime_get_if_active() returns 0 without
+> incrementing the usage counter. At scope exit, the destructor
+> unconditionally calls pm_runtime_put(), which would underflow the usage
+> counter and could prevent the device from suspending.
+> 
+> Could a lock-tracking guard like DEFINE_LOCK_GUARD_1 be used instead to
+> avoid defining an unsafe base guard?
+> 
+>>   /*
+>>    * Use the following guards with ACQUIRE()/ACQUIRE_ERR().
+>>    *
+>> @@ -624,6 +631,8 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try,
+>>   		  pm_runtime_get_active(_T, RPM_TRANSPARENT), _RET == 0)
+>>   DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
+>>   		  pm_runtime_resume_and_get(_T), _RET == 0)
+>> +DEFINE_GUARD_COND(pm_runtime_if_active, _try,
+>> +		  pm_runtime_get_if_active(_T) ?: -EAGAIN, _RET == 1)
+> 
+> [Severity: High]
+> Does this strict condition break interrupt handlers when runtime PM is
+> disabled?
+> 
+> If CONFIG_PM is disabled (or runtime PM is not enabled for the device),
+> pm_runtime_get_if_active() returns -EINVAL. With the _RET == 1 check
+> in DEFINE_GUARD_COND, the guard condition fails and evaluates to
+> ERR_PTR(-EINVAL).
+> 
+> If a driver uses PM_RUNTIME_ACQUIRE_IF_ACTIVE() in an interrupt handler
+> on such a system, the handler will bail out instead of servicing the valid
+> interrupt. This can lead to an unhandled IRQ storm that permanently
+> disables the device's interrupt line.
+> 
+> The documented API contract for _try guards states they do not produce
+> an error when runtime PM is disabled. Should this handle the -EINVAL
+> case to safely bypass the guard when PM is disabled?
 
-Thanks for the review
-
-The has_reset field is intentionally introduced in this patch without 
-usage. It is consumed in the next patch (6/6) where 
-zynqmp_dma_chan_probe() checks match_data->has_reset and conditionally 
-calls device_reset(). The series is split this way to keep the data 
-structure change separate from the reset logic.
+Thanks for catching this
+Will address this in the next version.
 
 Thanks,
 Nagendra
-> 
-> Pre-existing issues:
-> - [High] `zynqmp_dma_chan_probe()` hardcodes the `platform_get_irq()` error return to `-ENXIO`, breaking probe deferral.
-> - [High] `zynqmp_dma_reset()` silently drops active and pending DMA descriptors without invoking their callbacks, causing deadlocks for client drivers.
-> - [High] `zynqmp_dma_device_terminate_all()` does not command the hardware to stop, leading to potential memory corruption.
-> --
-> 
-> --- Patch [5]: [PATCH V3 5/6] dmaengine: zynqmp_dma: Add new compatible string for Versal Net ---
-> commit 93c6838fba5eee0dddf024579d8474fed6b7dee5
-> Author: Golla Nagendra <nagendra.golla@amd.com>
-> 
-> dmaengine: zynqmp_dma: Add new compatible string for Versal Net
-> 
-> This patch introduces the amd,versal-net-dma-1.0 compatible string and its
-> SoC-specific match data. It also adds a has_reset field to zynqmp_dma_config
-> to indicate whether the compatible requires a per-channel reset during probe.
-> 
->> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
->> index b03171e37e278..7561416b8e626 100644
->> --- a/drivers/dma/xilinx/zynqmp_dma.c
->> +++ b/drivers/dma/xilinx/zynqmp_dma.c
->> @@ -259,13 +259,20 @@ struct zynqmp_dma_device {
->>   };
->>   
->>   struct zynqmp_dma_config {
->> +	bool has_reset;
->>   	u32 offset;
->>   };
->>   
->>   static const struct zynqmp_dma_config versal2_dma_config = {
->> +	.has_reset = true,
->>   	.offset = IRQ_REG_OFFSET,
->>   };
->>   
->> +/* offset = 0: Versal Net uses base IRQ register address */
->> +static const struct zynqmp_dma_config versal_net_dma_config = {
->> +	.has_reset = true,
->> +};
->> +
-> 
-> [Severity: High]
-> Does this configuration actually perform a hardware reset?
-> 
-> The patch introduces the has_reset flag and sets it to true for versal2 and
-> versal-net, but looking at zynqmp_dma_chan_probe(), the match data is
-> retrieved without ever checking this flag or invoking any reset functions:
-> 
-> drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_probe() {
->      ...
-> 	match_data = of_device_get_match_data(&pdev->dev);
-> 	if (match_data)
-> 		chan->irq_offset = match_data->offset;
->      ...
-> }
-> 
-> Does the omission of the reset implementation leave the DMA hardware in an
-> uninitialized state during probe, potentially causing back-to-back usage
-> failures?
-> 
-> While reviewing this patch, I also noticed a few pre-existing issues in the
-> same file:
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but zynqmp_dma_chan_probe()
-> hardcodes the platform_get_irq() error return to -ENXIO, which discards
-> probe deferral errors like -EPROBE_DEFER:
-> 
-> drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_chan_probe() {
->      ...
-> 	chan->irq = platform_get_irq(pdev, 0);
-> 	if (chan->irq < 0)
-> 		return -ENXIO;
->      ...
-> }
-> 
-> Does this permanent probe failure prevent the DMA controller from working when
-> the interrupt controller is not yet ready during boot?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but zynqmp_dma_reset() silently drops active and
-> pending DMA descriptors without invoking their callbacks:
-> 
-> drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_reset() {
->      ...
-> 	spin_lock_irqsave(&chan->lock, irqflags);
-> 	zynqmp_dma_complete_descriptor(chan);
-> 	spin_unlock_irqrestore(&chan->lock, irqflags);
-> 	zynqmp_dma_chan_desc_cleanup(chan);
-> 	zynqmp_dma_free_descriptors(chan);
->      ...
-> }
-> 
-> Because zynqmp_dma_complete_descriptor() only completes the first descriptor in
-> the active_list, the remaining active and pending descriptors are silently
-> recycled by zynqmp_dma_free_descriptors(). Could this strand waiting client
-> drivers and cause deadlocks when a hardware error occurs?
-> 
-> [Severity: High]
-> This is a pre-existing issue, but zynqmp_dma_device_terminate_all() does not
-> command the hardware to stop:
-> 
-> drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_device_terminate_all() {
->      ...
-> 	writel(ZYNQMP_DMA_IDS_DEFAULT_MASK, chan->regs + ZYNQMP_DMA_IDS);
-> 	zynqmp_dma_free_descriptors(chan);
-> 
-> 	return 0;
-> }
-> 
-> The function merely masks interrupts and frees software descriptors, but never
-> clears the ZYNQMP_DMA_ENABLE bit or issues a hardware stop command. If a client
-> driver calls dmaengine_terminate_all() and frees the DMA buffers, could the DMA
-> controller continue to read/write the in-flight physical memory in the
-> background and corrupt memory?
+
 > 
 
