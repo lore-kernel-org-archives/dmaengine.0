@@ -1,227 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E6633556D;
-	Tue, 11 Aug 2026 17:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C9E3546CA;
+	Tue, 11 Aug 2026 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786470596; cv=none; b=D921czaIAlXmqk8kdwEVJFUB4twgUTHdWUo1L6uKj6z/HT722QpUr1VrsboFTq14w9c+2t0HlNioznCt9wIcBLj37UYFhNJYP9VREBXTRnrDXnsEAaIEi7kYyJL/4Q4WTrCceuOBDHLc2lDn/VpMUa1Qo+0p28rcCoxw5QMAeV4=
+	t=1786471089; cv=none; b=IpVDfZPD9phZC8NRIA5NsIoHpFW8N7Pvc4OyzKY+NkGjGzF9qCeVaPnHsudEZzoCo27sQo2a1jgfwRcpHVtKeZXCVnJpbxK9m+UYjCYdxBbcPVrGGen+4xK3fqSD6bhaSNEe3INQ7lLGqZsmdj32pV3UQZjVNMjhNxpjctL61hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786470596; c=relaxed/simple;
-	bh=Y6ijU6heLtNsNMF5Owm9xErDWTQFc24Fg7EgNsGzdVc=;
+	s=arc-20240116; t=1786471089; c=relaxed/simple;
+	bh=1Ec/ChQnkVdkPDPSEk2JwWXt668yO1n8wyIVBJoPQKI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n3+7zexfWR56laB1tNZJcimzIOkPpEMlZFMlvLjne7BiQc5i/FB2NKm2T4jtiNty/evf+b6aVeU8/cTVjLb/NqkMzSKFXWI1MpqLgki27uH1lHVa20TSNeHzDWNYkIET9XtGJl6CVq5XjTKhZ5xNThZQzqK1jcsP7h3NTW1vKiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CNNusXlQ; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=WFjfeYwUXaod10NjXvsq8vjSakzMVwFcfjDnp4kPShgTWJ/aTS2UeNWs6XuOz7kuzSlyfO6GeZ8HX71m0EkZRkF08B2WrjEYRTCaawA8twe+wYIizAad/3yJs1aAWK9n/pMjE00X15S9cnEHfnssWcbWlNqjmhJtzOKBWvZYPsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MUNwRiIG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNNusXlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492651F000E9;
-	Tue, 11 Aug 2026 17:49:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MUNwRiIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404B21F00A3A;
+	Tue, 11 Aug 2026 17:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786470595;
-	bh=UGXIFB1Wf3r6c2EOpgMJ+G5aqA2QpstTWpzHJL+oBKw=;
+	s=k20260515; t=1786471088;
+	bh=HXNqTyE1ZMcxJir2v/wPOUu0IvyuOxUPn/K4gd/wx+Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CNNusXlQu8z1SLg/XJ0n4W5OBtE5I3SR/+6NwJCR3745DdP4mHtyF+yD9yqt2MyC/
-	 15cl1zYt6LxkhnO3ysAUDSjPfaoTqSdhT1ubHHGFo+s6siVI5rHImD5RLL9XzBKhw6
-	 lRuT+rNHov2hb5vP/DFFjSNRPOcc8eudGf9choFUvpp7o/Sqj3T6NT7NFgGD4lst0E
-	 leFmqYhhPYF7hfR28JdtRJ63zSN+5w4fGUqHUppLsXNpkKb/JUwRypjIqRsuJYFePj
-	 AB3fTsBloSxgOnZSbFuqdS6eB/oqM/AApaW66UdRh0urOPIlGG1nJcywk7DwdfOpEr
-	 iGWvsCxEZEOUA==
-Date: Tue, 11 Aug 2026 23:19:50 +0530
+	b=MUNwRiIGPT3j2zmIjubDQmngzgFKNyadDsTnWNQE/Bnj/o1LQvxZHoxV038u/RXyW
+	 p1nthapctWE3KL4oGi1fO4UbxI4HdMlDzg5LSUpZ+rGyEofsPegZz8FCV3pwRss3yN
+	 epnPIfLdb3tX0jkXfPR5W/EuxgViw/IHPGvmaBKSa9SewQmHog6RnkivfA0gTSlsNS
+	 C2Mc+I3C4HnAlsAYDfMPVJhzkx/2s4n0WEJApG3rN65BwkgHXQxhlzW8kNtwo7+Lna
+	 oVk84eTi5qr9iacquMNURdVWm82AfahJhm3fWAwnmRXVR81jMR4im15CM34/LHAKfs
+	 AknhK+HdglEWQ==
+Date: Tue, 11 Aug 2026 23:28:04 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Allen Pais <allen.lkml@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>
-Subject: Re: [PATCH v3 02/34] dmaengine: back channel BH helpers with WQ_BH
-Message-ID: <antgvm7jj7eBtDjR@vaman>
-References: <cover.1785183549.git.allen.lkml@gmail.com>
- <cover.1786384168.git.allen.lkml@gmail.com>
- <442747fea2d831d2d6257e15a984a494bd7ad6ec.1786384168.git.allen.lkml@gmail.com>
+To: Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>
+Cc: Andy Shevchenko <andriy.shevchenko@intel.com>,
+	dmaengine@vger.kernel.org, linux-iio@vger.kernel.org,
+	Frank Li <Frank.Li@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andy@kernel.org>, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v2 1/9] dmaengine: Support bus widths of 32 bytes and
+ above
+Message-ID: <antirKIhG8iaMqNv@vaman>
+References: <20260810-dmaengine-support-wider-dma-masks-v2-0-1f7b798d035f@analog.com>
+ <20260810-dmaengine-support-wider-dma-masks-v2-1-1f7b798d035f@analog.com>
+ <anoHMANpRU744hPp@ashevche-desk.local>
+ <anrgDskNdV7PG-T-@nsa>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <442747fea2d831d2d6257e15a984a494bd7ad6ec.1786384168.git.allen.lkml@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <anrgDskNdV7PG-T-@nsa>
 
-On 10-08-26, 11:09, Allen Pais wrote:
-> Replace the tasklet implementation of the channel BH helpers with a
-> dedicated WQ_BH | WQ_PERCPU workqueue. The public dmaengine_*_bh() API and
-> its softirq execution context remain unchanged.
+On 11-08-26, 09:46, Nuno Sá wrote:
+> On Mon, Aug 10, 2026 at 08:15:28PM +0300, Andy Shevchenko wrote:
+> > On Mon, Aug 10, 2026 at 04:06:42PM +0100, Nuno Sá wrote:
+> > > The src_addr_widths and dst_addr_widths capability masks encode each
+> > > supported width as a bit whose position equals the corresponding
+> > > enum dma_slave_buswidth value (e.g. DMA_SLAVE_BUSWIDTH_4_BYTES sets bit
+> > > 4). As these masks are plain u32, widths of 32 bytes and above
+> > > (DMA_SLAVE_BUSWIDTH_32/64/128_BYTES map to bits 32, 64 and 128) cannot
+> > > be represented at all.
+> > > 
+> > > Introduce bitmap-based bus width capabilities that span the full enum
+> > > range. To allow DMA controller producers to be converted incrementally,
+> > > keep the legacy dma_device u32 fields alongside the new bitmaps:
+> > > producers using the new helpers populate the bitmap and mirror the low
+> > > 32 bits back into the legacy field, while dma_get_slave_caps() folds a
+> > > legacy-only producer's u32 into the returned bitmap.
+> > > 
+> > > Add helpers for producers and consumers so users do not need to depend
+> > > on the bitmap layout directly. Once the remaining producers are
+> > > converted, the legacy dma_device u32 fields can be dropped.
+> > 
+> > ...
+> > 
+> > > +++ b/include/linux/dmaengine.h
+> > 
+> > >  #ifndef LINUX_DMAENGINE_H
+> > >  #define LINUX_DMAENGINE_H
+> > >  
+> > > +#include <linux/bitops.h>
+> > 
+> > Ah, this is unfortunate, this is a wrong header, the correct one is bitmap.h
+> > and I think we may not include it here (see below on why).
+> > 
+> > >  #include <linux/device.h>
+> > >  #include <linux/err.h>
+> > >  #include <linux/uio.h>
+> > 
+> > ...
+> > 
+> > > +static inline enum dma_slave_buswidth
+> > > +__dma_slave_caps_get_width_min(const unsigned long *bus_widths)
+> > > +{
+> > > +	enum dma_slave_buswidth width = find_first_bit(bus_widths,
+> > > +						       DMA_SLAVE_BUSWIDTH_MAX);
+> > 
+> > This is from find.h which is internals of bitmap.h.
+> > 
+> > > +	if (width == DMA_SLAVE_BUSWIDTH_MAX)
+> > > +		return DMA_SLAVE_BUSWIDTH_UNDEFINED;
+> > > +
+> > > +	return width;
+> > > +}
+> > 
+> > The (big) problem is quite a header dependencies hell we have. All my cleanup
+> > work of kernel.h I started on the simplest thing I wanted, id est to make
+> > bitmap_zalloc() and similar to be static inlines. But it's impossible to achieve
+> > (and I think that no one, except may be Ingo, see his 2000+ patch series a few
+> >  years back, is capable of fix that at once). That's why having bitmap.h in the
+> > kernel wide public _header_ is bad, bad idea (at least at the current state of
+> > affairs). So, make it exported function instead and keep bitmap.h in dmaengine.c.
+> > 
+> > ...
+> > 
+> > > +/**
+> > > + * dma_slave_caps_copy_src_widths - copy source bus width capabilities
+> > > + * @caps: DMA slave capabilities
+> > > + * @bus_widths: destination bitmap declared with DECLARE_DMA_BUS_WIDTHS()
+> > > + */
+> > > +static inline void
+> > > +dma_slave_caps_copy_src_widths(const struct dma_slave_caps *caps,
+> > > +			       unsigned long *bus_widths)
+> > > +{
+> > > +	bitmap_copy(bus_widths, caps->src_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
+> > > +}
+> > 
+> > > +/**
+> > > + * dma_slave_caps_copy_dst_widths - copy destination bus width capabilities
+> > > + * @caps: DMA slave capabilities
+> > > + * @bus_widths: destination bitmap declared with DECLARE_DMA_BUS_WIDTHS()
+> > > + */
+> > > +static inline void
+> > > +dma_slave_caps_copy_dst_widths(const struct dma_slave_caps *caps,
+> > > +			       unsigned long *bus_widths)
+> > > +{
+> > > +	bitmap_copy(bus_widths, caps->dst_bus_widths, DMA_SLAVE_BUSWIDTH_MAX);
+> > > +}
+> > 
+> > As per above.
+> > 
+> > ...
+> > 
+> > Another (compromise approach) is to split the header that includes bitmap.h to
+> > something like dmaengine-width.h, but I don't know how spread this use is. Do
+> > we have all the users of the current dmaengine.h to use these APIs? If not,
+> > split, if yes, then comment on this in the cover letter and perhaps that will
+> > justify including bitmap.h in the dmaengine.h (but personally I am fully
+> > against that).
+> > 
 > 
-> Keep the workqueue operations internal to dmaengine. Drain scheduled work
-> in dmaengine_kill_bh() to preserve the completion semantics of
-> tasklet_kill().
+> Hmm I don't think all dmaengine.h will use this API. Maybe on the
+> producer side but even in that case I don't think so. These are all tiny
+> wrappers that make sense to be inlined but OTOH, I don't think any of
+> these needs to be called in any fastpath. And I do understand the header
+> pain in here but honestly, no strong feelings. So, I'll pretty much
+> defer this to Frank or Vinod.
+> 
+> Frank, Vinod any preference?
 
-Thanks Allen, this lgtm. I am asking for to test the series and report
-any issues. If all is good, I plan to pick this up in 3 weeks time after
-rc1. 
-
-> 
-> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-> ---
->  drivers/dma/dmaengine.c   | 59 ++++++++++++++++++++++++++++++++-------
->  include/linux/dmaengine.h | 10 +++----
->  2 files changed, 54 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index d8fc7eb71b48..e00f73a18e99 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -54,6 +54,7 @@
->  #include <linux/rcupdate.h>
->  #include <linux/slab.h>
->  #include <linux/spinlock.h>
-> +#include <linux/workqueue.h>
->  
->  #include "dmaengine.h"
->  
-> @@ -61,6 +62,7 @@ static DEFINE_MUTEX(dma_list_mutex);
->  static DEFINE_IDA(dma_ida);
->  static LIST_HEAD(dma_device_list);
->  static long dmaengine_ref_count;
-> +static struct workqueue_struct *dmaengine_bh_wq;
->  
->  /* --- debugfs implementation --- */
->  #ifdef CONFIG_DEBUG_FS
-> @@ -1428,9 +1430,34 @@ static void dmaengine_destroy_unmap_pool(void)
->  	}
->  }
->  
-> -static void dma_chan_bh_entry(struct tasklet_struct *tasklet)
-> +static void dmaengine_destroy_bh_wq(void)
->  {
-> -	struct dma_chan *chan = from_tasklet(chan, tasklet, bh_tasklet);
-> +	if (!dmaengine_bh_wq)
-> +		return;
-> +
-> +	destroy_workqueue(dmaengine_bh_wq);
-> +	dmaengine_bh_wq = NULL;
-> +}
-> +
-> +static bool dmaengine_queue_bh_work(struct work_struct *work)
-> +{
-> +	if (WARN_ON(!dmaengine_bh_wq))
-> +		return false;
-> +
-> +	return queue_work(dmaengine_bh_wq, work);
-> +}
-> +
-> +static void dmaengine_flush_bh_work(struct work_struct *work)
-> +{
-> +	if (!work)
-> +		return;
-> +
-> +	flush_work(work);
-> +}
-> +
-> +static void dma_chan_bh_entry(struct work_struct *work)
-> +{
-> +	struct dma_chan *chan = container_of(work, struct dma_chan, bh_work);
->  	dmaengine_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
->  
->  	if (fn)
-> @@ -1446,7 +1473,7 @@ void dmaengine_init_bh(struct dma_chan *chan, dmaengine_bh_work_fn fn)
->  		return;
->  
->  	chan->bh_work_fn = fn;
-> -	tasklet_setup(&chan->bh_tasklet, dma_chan_bh_entry);
-> +	INIT_WORK(&chan->bh_work, dma_chan_bh_entry);
->  	chan->bh_work_initialized = true;
->  }
->  EXPORT_SYMBOL_GPL(dmaengine_init_bh);
-> @@ -1456,8 +1483,7 @@ bool dmaengine_schedule_bh(struct dma_chan *chan)
->  	if (WARN_ON(!chan->bh_work_initialized))
->  		return false;
->  
-> -	tasklet_schedule(&chan->bh_tasklet);
-> -	return true;
-> +	return dmaengine_queue_bh_work(&chan->bh_work);
->  }
->  EXPORT_SYMBOL_GPL(dmaengine_schedule_bh);
->  
-> @@ -1466,7 +1492,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
->  	if (!chan->bh_work_initialized)
->  		return;
->  
-> -	tasklet_kill(&chan->bh_tasklet);
-> +	dmaengine_flush_bh_work(&chan->bh_work);
->  }
->  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
->  
-> @@ -1666,15 +1692,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
->  
->  static int __init dma_bus_init(void)
->  {
-> -	int err = dmaengine_init_unmap_pool();
-> +	int err;
->  
-> +	dmaengine_bh_wq = alloc_workqueue("dmaengine_bh",
-> +					  WQ_BH | WQ_PERCPU, 0);
-> +	if (!dmaengine_bh_wq)
-> +		return -ENOMEM;
-> +
-> +	err = dmaengine_init_unmap_pool();
->  	if (err)
-> -		return err;
-> +		goto err_destroy_wq;
->  
->  	err = class_register(&dma_devclass);
-> -	if (!err)
-> -		dmaengine_debugfs_init();
-> +	if (err)
-> +		goto err_destroy_pool;
->  
-> +	dmaengine_debugfs_init();
-> +	return 0;
-> +
-> +err_destroy_pool:
-> +	dmaengine_destroy_unmap_pool();
-> +err_destroy_wq:
-> +	dmaengine_destroy_bh_wq();
->  	return err;
->  }
->  arch_initcall(dma_bus_init);
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index a1437bdbda9b..9f1a5405f6b0 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-> @@ -12,7 +12,7 @@
->  #include <linux/scatterlist.h>
->  #include <linux/bitmap.h>
->  #include <linux/types.h>
-> -#include <linux/interrupt.h>
-> +#include <linux/workqueue.h>
->  #include <asm/page.h>
->  
->  /**
-> @@ -339,9 +339,9 @@ struct dma_router {
->   * @router: pointer to the DMA router structure
->   * @route_data: channel specific data for the router
->   * @private: private data for certain client-channel associations
-> - * @bh_tasklet: bottom-half tasklet stored per-channel
-> - * @bh_work_fn: callback executed when @bh_tasklet runs
-> - * @bh_work_initialized: indicates whether @bh_tasklet has been initialized
-> + * @bh_work: bottom-half work item stored per-channel
-> + * @bh_work_fn: callback executed when @bh_work runs
-> + * @bh_work_initialized: indicates whether @bh_work has been initialized
->   */
->  struct dma_chan {
->  	struct dma_device *device;
-> @@ -367,7 +367,7 @@ struct dma_chan {
->  	void *route_data;
->  
->  	void *private;
-> -	struct tasklet_struct bh_tasklet;
-> +	struct work_struct bh_work;
->  	dmaengine_bh_work_fn bh_work_fn;
->  	bool bh_work_initialized;
->  };
-> -- 
-> 2.43.0
+This header is where we push stuff in, so I would try to keep it clean,
+so I guess better to go with Andy suggestion here
 
 -- 
 ~Vinod
