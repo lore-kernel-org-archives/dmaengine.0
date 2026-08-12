@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C83A48165C
-	for <dmaengine@vger.kernel.org>; Wed, 12 Aug 2026 16:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DD1385D9D
+	for <dmaengine@vger.kernel.org>; Wed, 12 Aug 2026 16:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786551251; cv=none; b=b6zL0btqDyd1acDIiUf0nI/gNw5xPFwSLxVGDNNdavZm9D7X3det7c85ArJzmEcXMDBDsZR6cDk6bnwaKXu6oH1utQHbRf8XATOEhRxYByi2P1H8kysBEl60F4aECZN8bkkKoozHRgrfoLZ6blclP5NeiWvIOJoKtYpuLrX50p0=
+	t=1786552157; cv=none; b=fxXSacL3qop5UbLLUHgIaPUBu59bn1X+u3ce9BL+bdMIaL4oHn0V/HZFVLGaVF+TV98xN2E88PUUCfJFn6BUsUduBx+eyIcg7v9cxnakjhyea8wrs8w6F7r1eoeoyIuc5D+Qdb+nCpy9rFo0R+p/sCHg6weGGgw6df4xMyVM07w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786551251; c=relaxed/simple;
-	bh=tdnbQWGuOv6ASsV761RGJQfneBZRqqHlvh0Mel+DiTE=;
+	s=arc-20240116; t=1786552157; c=relaxed/simple;
+	bh=nXgilpP5xOnt+DjZOcGG/c+VyX53XJKEsWontvOHqnU=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nBeW1VIiYAqPyrvn1DUShKOlBBS0uZEqW3nG90adeYSh9ni8XnIfsB/iRg1W9Hhx/BVe7IVhOuC5xHC94ylG8F+x0r/sDGC/2OsgOLhOpWk8SnqZQ0+PqyCiUdofujJ+BrblMDht8dCNVnA9qJcTMYw3NtiuF7qcYxP/CWNd4cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BHhcQBCO; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=hMLwGGSua3KQK5nYsUoXXVL8GTuL1GyPhCF3HlgTRGrZsEcI8OMWZcTkwaNpaHDsoXVlna8Cl2ZcEbe7EclD5viQG9fTfy0bSeMxyt6Qt4701RQX3fyUas+LSg29ySkJNbWQalINO9IBT3x37fEnaT9P9QYYY9fGWDeT60hPKTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OdnKfD3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BHhcQBCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD751F000E9;
-	Wed, 12 Aug 2026 16:14:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OdnKfD3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB5C1F000E9;
+	Wed, 12 Aug 2026 16:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786551249;
-	bh=nyw8exlQgGB+i2xUtDt7DV/ErJC/9OMQajCZz9aRz6U=;
+	s=k20260515; t=1786552155;
+	bh=2wMFCW/1ykTdrGqd+SmgdLnLweLH4vGouRehoqAJ/EA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BHhcQBCOMSk6gebPKR1vAGwo3KEZT30Ya+tLiMC0EajT02STXO332inhLwstYGkA/
-	 9ZZ9WDnq8iq6I5KrnnkopB2M4Cb4EKpMIqFLHr+YH4VKsqiw/nrto9JvGsbbUwqCjr
-	 7wMWF3jpvmxinjnVhgXOQIB0chkXGKiB+GxlnWrE+77RRYtUIpDWkerLPDmEE2Vryj
-	 Vzs5bBlg3qEuq7rZq10KtRMRHuDPEBYYYzUfCuofmIk6xHcPS3yAhJsDXNWL7Xj+JH
-	 gsmIAKBqyJsmQ7yNLOs+ZrkiDFFeG1TOD0jLNYRW3E4QrWGu6IbWPSoM3Yw02l0ZOF
-	 plsXrKOkWI65A==
+	b=OdnKfD3WKjo9GY4J81m4MU3hhQ7M4+5K3D0DUZiJMldRE0vY27dhlDBaL9SKCofVp
+	 Qda+BKHlawWdYrafSJeWaHrmRWaRB598qrkkiLN7XaS1/oMw4WTShb3GDxZbAn29xd
+	 bpSc7FUWtXEBJT+gbJnkUe0rfN4dUK8w6j7EcYIq3pUKyxgrxz9YeEhcue01TlciUQ
+	 bLuj+Iw18ZAqgFFrVLGMrkyraFZ6E8O4Xk2FiqoD2uVi1pa2V0xHygmoyFX6V0hLJ4
+	 1PZGGsxZ5Ac8umnpQbh430iISHuV4pav+5+nZuzuOCOxTyLzSoIqtp5wMMHQUyKJKo
+	 zjJ1o75gVAE6w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 04/24] dmaengine: dw-edma: Make DMA link list work as
- a circular buffer
+Subject: Re: [PATCH v5 19/24] dmaengine: dw-edma: Drain LL entries for STOP
+ and PAUSE
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260812155721.2807506-5-den@valinux.co.jp>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260812155721.2807506-20-den@valinux.co.jp>
 References: <20260812155721.2807506-1-den@valinux.co.jp>
- <20260812155721.2807506-5-den@valinux.co.jp>
+ <20260812155721.2807506-20-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 12 Aug 2026 16:14:08 +0000
-Message-Id: <20260812161409.5CD751F000E9@smtp.kernel.org>
+Date: Wed, 12 Aug 2026 16:29:15 +0000
+Message-Id: <20260812162915.6FB5C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,57 +47,85 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] The driver now outright rejects DMA descriptors that exceed the ha=
-rdware linked-list (LL) ring capacity, breaking support for large scatter-g=
-ather (SG) lists.
+- [High] `dw_edma_wait_termination()` loops infinitely when the hardware is=
+ undergoing teardown (e.g., driver unbind) because interrupts and rechecks =
+are suppressed and the stop request is never completed.
 --
 
---- Patch [4]: [PATCH v5 04/24] dmaengine: dw-edma: Make DMA link list work=
- as a circular buffer ---
-commit 4de65eea41cbb28142107d984aea6044ff700244
-Author: Frank Li <Frank.Li@nxp.com>
+--- Patch [19]: [PATCH v5 19/24] dmaengine: dw-edma: Drain LL entries for S=
+TOP and PAUSE ---
+commit 1e80fd5741b43db059b6d11175c2e35c684806f3
+Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Make DMA link list work as a circular buffer
+dmaengine: dw-edma: Drain LL entries for STOP and PAUSE
 
-This commit converts the DMA linked list to operate as a circular ring buff=
-er
-instead of rebuilding the entire list for every transfer. It also adds logic
-to clear control words before first use and rejects descriptor requests that
-exceed the usable ring capacity.
+An EDMA_REQ_STOP or EDMA_REQ_PAUSE can arrive while hardware still owns
+published LL entries. Keep the request pending until hardware consumes
+them instead of discarding the ring state immediately.
 
 > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
 edma-core.c
-> index a6bb68ffdfe26..1af262b6e881e 100644
+> index eb0fc73a4f475..1cc9fa4866b9d 100644
 > --- a/drivers/dma/dw-edma/dw-edma-core.c
 > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> @@ -51,13 +51,19 @@ dw_edma_alloc_desc(struct dw_edma_chan *chan, size_t =
-nburst)
->  {
->  	struct dw_edma_desc *desc;
+
+[ ... ]
+
+> @@ -1598,19 +1646,27 @@ static void dw_edma_wait_termination(struct dma_c=
+han *dchan)
+>  	/*
+>  	 * A STOP may be deferred to a later interrupt while the channel is sti=
+ll
+>  	 * running. Wait until that handler completes the termination.
+> +	 *
+> +	 * dmaengine_synchronize() cannot report an error. Returning while
+> +	 * EDMA_REQ_STOP remains pending would let callers release transfer
+> +	 * resources even though hardware access cannot be ruled out. Warn
+> +	 * periodically, but keep waiting.
+>  	 */
+> -	while (time_before(jiffies, timeout)) {
+> +	for (;;) {
+>  		scoped_guard(spinlock_irqsave, &chan->vc.lock)
+>  			stopping =3D chan->request =3D=3D EDMA_REQ_STOP;
 > =20
-> +	/*
-> +	 * For now, a descriptor that does not fit would stall the channel
-> +	 * forever: reject it up front.
-> +	 */
-> +	if (!chan->non_ll && nburst > chan->ll_max - 1)
-> +		return NULL;
+>  		if (!stopping)
+>  			return;
 
 [Severity: High]
-Does this cause a functional regression for DMA clients submitting large
-scatter-gather lists?
+Could this infinite loop cause a soft lockup during device teardown?
 
-Previously, large transfers were handled by chunking them into batches and
-restarting the channel on each completion interrupt. By transitioning to a
-circular buffer and returning NULL for descriptors that exceed the usable r=
-ing
-capacity outright, dmaengine_prep_slave_sg() will now fail for those client=
-s.
+If a client calls dmaengine_terminate_sync() concurrently with or just
+before the DMA controller is unbound, dw_edma_remove() sets
+chan->dw->teardown =3D true.
 
-Since the commit message notes this rejection is in place "until reclaim
-support lands," will this break existing users who depend on handling large=
- SG
-lists in the meantime?
+When teardown is set, background workers and IRQ handlers exit early without
+clearing the channel status:
+
+drivers/dma/dw-edma/dw-edma-core.c:dw_edma_queue_irq_work() {
+        if (unlikely(READ_ONCE(chan->dw->teardown)))
+                return;
+        ...
+}
+
+Since these handlers are the only paths that clear EDMA_REQ_STOP,
+the stop request is never cleared and this loop might never exit.
+
+> +
+> +		if (time_after_eq(jiffies, timeout)) {
+> +			dev_warn(chan->dw->chip->dev,
+> +				 "timeout waiting for channel termination; still waiting\n");
+> +			timeout =3D jiffies + msecs_to_jiffies(5000);
+> +		}
+> +
+>  		fsleep(1000);
+>  	}
+> -
+> -	dev_warn(chan->dw->chip->dev,
+> -		 "timeout waiting for channel termination\n");
+>  }
+> =20
+>  static void dw_edma_device_synchronize(struct dma_chan *dchan)
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812155721.2807=
-506-1-den@valinux.co.jp?part=3D4
+506-1-den@valinux.co.jp?part=3D19
