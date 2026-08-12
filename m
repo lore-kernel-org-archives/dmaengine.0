@@ -1,177 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383821C8FB1
-	for <dmaengine@vger.kernel.org>; Wed, 12 Aug 2026 06:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273663403E1;
+	Wed, 12 Aug 2026 07:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786514642; cv=none; b=K7hDxz/tIwbZrxZPwmE0RoO12oJgZi0vzlgIb86FYn3jraw9X6w0oJSZ+1jQtgm92WU2Xn8BIvwBKVRTxvXm2fiLnxg4evZuDDgoCCJPECCJW8Ww3KnMcOQt3Yq+uFcDIMrgPvLRljG0IRiGaNz2QFba3zUJ8fLjr9hIgwlHRUw=
+	t=1786519450; cv=none; b=F1h7aE0x8JJhInCyw0oCh1zLfb5SAOz2ge+Q83k6JWvEGX7oSgqD+fnlPVgdevVBZhxpmlRtbkDLsaT/XIX6M2lthHQABRy7spRiitNzbpORzLylv+svHmu4SPppBiK+NLgXGXd7uFFk3Ucua1igndpYfb4cenRFulmyONa1wv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786514642; c=relaxed/simple;
-	bh=jc9+RXFYmCYJOSWusajnzwFqlPfwnPO4Z2ALTWBqL0Q=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uaMzC2BXb3LDNG04vRcopQ46v+5jnNvM+Wosi0aFUSxuoINK2X+eLWu3mXW2M1PiTsL010DWbg3N+r+C6vcFFaAwlK7VRE5rX+tg1tTpvS+Zx26hvqwRHoiY3JoSmxlme1KtSCS/PBdft/YWhgbmb0hMr8W2RX1omGDmk/OdGXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8QrQnHT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786519450; c=relaxed/simple;
+	bh=hvklKzrXYrQ52MrsuKWJZ7yff1f3FuCoojOnMb9Lrlk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jAWjrv08EHOfI83Au19cXJKf1kk4sblZ1HW9uy2Yd2OJWVlIDkd//p6sqf2gJeCf5BwAprZrESF2HAY5Ldw3iEYsFA0HdSi7gJg3lWFQUpYbMv3IRi5eE3hXSLEEUpKrlHFeL7uepftDV1GMMhiRGSof7Xta96YO3PvQ+5r4Z9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DEpJx80v; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8QrQnHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFD21F000E9;
-	Wed, 12 Aug 2026 06:04:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786514640;
-	bh=1sgIgI/gN+TcNRj4UviK8q5e1u0spg4P8VczKjUvflI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=A8QrQnHTIr3jBvnZv1cv+3ZCKx7wDxpxwmDIf3tDmQ6SZsboCwunR79lTJpge0we9
-	 FlWKsMTlQdHzxOFV8s5zgnuu2AXRD4job9i/P6af+N93fs85KSngD7yJHt2aZO6nU9
-	 KQ9on1IIcvAgN1KYmrdoQ3WoRpE0eExxALB8rKFz44Q4fYfL6UGjdGxjx9bCk/76l2
-	 gb7AyZmfgIZhRbPsNBWSCF2VYfHjp7X1vsWg3bePtoFbMkrkiZiMadAZzXISXOIIUU
-	 nb6EFzRFmSAJqh6DtNc+SKuMyIfcIkNc8SwWevX2K49Ol6iVZQg/OQm37CtXqPwFJk
-	 di/EIgpy4sh7Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference in
- k3_udma_glue_release_rx_chn()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: Alexander.Chesnokov@kaspersky.com
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
-References: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 12 Aug 2026 06:04:00 +0000
-Message-Id: <20260812060400.7CFD21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DEpJx80v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1786519448; x=1818055448;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hvklKzrXYrQ52MrsuKWJZ7yff1f3FuCoojOnMb9Lrlk=;
+  b=DEpJx80vB+qSxskBFM5CjjzoluzNkB2URK6eRetXqOSJ4Y0iMfjoU/wQ
+   D6s+2s9Cg+W0l473P8d3sH2BmBcDehFAocraaf7XVYZyWv4SlL4hw4Qiw
+   xd83LiGb/BLFipCc90x9zoKU8igEs3W/zUzvk0mWlD2LKZn6nmuzvt+Rt
+   fDT5NmP693QnuZsaJ8e6e7hPI8QdPMGXwYgwbVMm+qT3w+aerg/boqUnO
+   WcHr0vvrsOSY8yD+TTwZHKG2k5Tv7T4eSbS55ilk6Lx0MKzMloNDxkymx
+   /FrXEMmgTPCKAb+S3WDmfhS3q386dv/fnfhHrbZ/jxNQq4tI4SLqY30/I
+   A==;
+X-CSE-ConnectionGUID: I5sOOfUtS3S5Y+fTsFn/Xw==
+X-CSE-MsgGUID: 0QoC2W5AQ1+API1c+0kxQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11872"; a="90875867"
+X-IronPort-AV: E=Sophos;i="6.25,218,1779174000"; 
+   d="scan'208";a="90875867"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2026 00:24:07 -0700
+X-CSE-ConnectionGUID: XnZFETg6S4GBvdzkBdNynw==
+X-CSE-MsgGUID: ByHVJu9dSxStM/bpisNqYQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,219,1779174000"; 
+   d="scan'208";a="264151433"
+Received: from rvuia-mobl.ger.corp.intel.com (HELO localhost) ([10.245.245.92])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2026 00:24:05 -0700
+Date: Wed, 12 Aug 2026 10:24:02 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Allen <allen.lkml@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 00/34] dmaengine: migrate channel tasklets to WQ_BH
+Message-ID: <anwfkhYop3TlDC6h@ashevche-desk.local>
+References: <cover.1785183549.git.allen.lkml@gmail.com>
+ <cover.1786384168.git.allen.lkml@gmail.com>
+ <anr-hAQN5-jGoRp6@ashevche-desk.local>
+ <CAOMdWSJyTovoEvokaHeOZEu2Z7UVhF8X2_uetcKn0_FySgtn9A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOMdWSJyTovoEvokaHeOZEu2Z7UVhF8X2_uetcKn0_FySgtn9A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+On Tue, Aug 11, 2026 at 01:44:49PM -0700, Allen wrote:
 
-Pre-existing issues:
-- [High] The error cleanup path in `k3_udma_glue_release_rx_chn()` can read=
- memory out of bounds (causing a kernel panic) and incorrectly free unowned=
- General Purpose (GP) RX flows (causing resource corruption).
-- [High] Integer overflow in the GP flow range boundary check allows an out=
--of-bounds bitmap clearance, leading to massive memory corruption.
-- [High] Double free of `tx_chn->ringtx` occurs on failure of `k3_ringacc_r=
-equest_rings_pair`.
---
+...
 
---- Patch [1]: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference=
- in k3_udma_glue_release_rx_chn() ---
-commit 7e8964856380a3ca6be40518b2b7b3a48d46e4be
-Author: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
-dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_r=
-x_chn()
+> > > The remaining patches convert driver-owned channel completion tasklets.
+> > > Tasklets used for controller-level processing, recovery, or other
+> > > non-client-callback work are deliberately left alone because the
+> > > appropriate replacement may differ by driver.
+> >
+> > Right, I would actually expect that virt-dma (and others will follow the
+> > example) will switch to threaded IRQ instead of tasklets.
+> 
+>   I had not considered a full virt-dma conversion for this series. Looking
+>   at the driver, that would also involve its descriptor pool, queue and
+>   active lists, software LLP and cyclic handling, and residue reporting. It
+>   would therefore be a substantially broader change than moving callback
+>   delivery to the common channel BH.
+> 
+>   My intention here was to leave the existing descriptor lifecycle and
+>   scheduling unchanged and only move callback invocation out of the
+>   controller tasklet. I think converting the driver to virt-dma would be
+>   better handled as a separate series with hardware testing.
+> 
+>   If you would prefer not to add the completed list ahead of such a
+>   conversion, I can drop this patch from the current series and leave the
+>   DW driver unchanged for now.
 
-This commit fixes a NULL pointer dereference in the error cleanup path of
-rx channel request functions. It skips the flow release loop in
-k3_udma_glue_release_rx_chn() when the flows array is not allocated.
+I think this is unneeded churn for DW DMA driver. It requires a much bigger
+refactoring and cleaning up.
 
-> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-> index 686dc140293eb..70eaf7ee57e68 100644
-> --- a/drivers/dma/ti/k3-udma-glue.c
-> +++ b/drivers/dma/ti/k3-udma-glue.c
-> @@ -1243,8 +1243,9 @@ void k3_udma_glue_release_rx_chn(struct k3_udma_glu=
-e_rx_channel *rx_chn)
->  		rx_chn->psil_paired =3D false;
->  	}
-> =20
-> -	for (i =3D 0; i < rx_chn->flow_num; i++)
-> -		k3_udma_glue_release_rx_flow(rx_chn, i);
-> +	if (rx_chn->flows)
-> +		for (i =3D 0; i < rx_chn->flow_num; i++)
-> +			k3_udma_glue_release_rx_flow(rx_chn, i);
-> =20
->  	if (xudma_rflow_is_gp(rx_chn->common.udmax, rx_chn->flow_id_base))
+-- 
+With Best Regards,
+Andy Shevchenko
 
-[Severity: High]
-This isn't a bug introduced by this patch, but can this error path lead to =
-an
-out-of-bounds read or an incorrect free of unowned General Purpose (GP) RX
-flows?
 
-If an early failure occurs (such as devm_kcalloc() returning NULL for
-rx_chn->flows) and flow_id_base is -1 (used to request dynamic allocation),
-calling xudma_rflow_is_gp() will execute:
-
-drivers/dma/ti/k3-udma-private.c:xudma_rflow_is_gp() {
-    ...
-	return !test_bit(id, ud->rflow_gp_map);
-}
-
-Since test_bit() expects an unsigned long, passing -1 will cast to ULONG_MA=
-X,
-causing an out-of-bounds memory read.
-
-Additionally, if flow_id_base is a valid GP flow ID that was not yet alloca=
-ted
-by this channel, is it possible for xudma_free_gp_rflow_range() to
-unconditionally free a GP flow range that might be actively used by another
-driver?
-
-[Severity: High]
-This is also a pre-existing issue, but does __udma_free_gp_rflow_range()
-contain a signed integer overflow vulnerability in its bounds check?
-
-If the cleanup path calls xudma_free_gp_rflow_range() with an abnormally la=
-rge
-channel flow count (cnt), the bounds check in __udma_free_gp_rflow_range():
-
-drivers/dma/ti/k3-udma.c:__udma_free_gp_rflow_range() {
-    ...
-	if (from + cnt > ud->rflow_cnt)
-		return -EINVAL;
-
-	bitmap_clear(ud->rflow_gp_map_allocated, from, cnt);
-    ...
-}
-
-could overflow the signed integer addition (from + cnt) to a negative value.
-Since a negative value is not greater than ud->rflow_cnt, this would bypass=
- the
-bounds check and pass the huge cnt to bitmap_clear(), potentially clearing =
-bits
-across out-of-bounds kernel memory.
-
->  		xudma_free_gp_rflow_range(rx_chn->common.udmax,
->  					  rx_chn->flow_id_base,
->  					  rx_chn->flow_num);
-
-[Severity: High]
-This is another pre-existing issue unrelated to the rx_chn changes, but does
-the TX channel error handling contain a double free if completion ring
-allocation fails?
-
-If k3_ringacc_request_rings_pair() fails to allocate the completion ring, it
-frees the forward ring but leaves the pointer dangling:
-
-drivers/soc/ti/k3-ringacc.c:k3_ringacc_request_rings_pair() {
-    ...
-	*compl_ring =3D k3_ringacc_request_ring(ringacc, compl_id, 0);
-	if (!(*compl_ring)) {
-		k3_ringacc_ring_free(*fwd_ring);
-		ret =3D -ENODEV;
-	}
-    ...
-}
-
-Because *fwd_ring is not set to NULL, the caller's tx_chn->ringtx still hol=
-ds
-the dangling pointer. When k3_udma_glue_release_tx_chn() runs during cleanu=
-p:
-
-drivers/dma/ti/k3-udma-glue.c:k3_udma_glue_release_tx_chn() {
-    ...
-	if (tx_chn->ringtx)
-		k3_ringacc_ring_free(tx_chn->ringtx);
-    ...
-}
-
-will it mistakenly free the same ring a second time, potentially causing
-use-after-free and ring allocator state corruption if another process reuses
-the ring ID?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812053426.3521=
-589-1-Alexander.Chesnokov@kaspersky.com?part=3D1
