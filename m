@@ -1,168 +1,177 @@
-Received: from mailhub16-fb.kaspersky-labs.com (mailhub16-fb.kaspersky-labs.com [5.79.125.29])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677038E8B1
-	for <dmaengine@vger.kernel.org>; Wed, 12 Aug 2026 05:42:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.79.125.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383821C8FB1
+	for <dmaengine@vger.kernel.org>; Wed, 12 Aug 2026 06:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786513357; cv=none; b=IHGG4tUVv+2XWIN1+0C+liYBBOfHCeP8KMyk9fWAc4vEtE/tva3jDyWMzYt17HK54YfVokDofnaCKQr25y63m6KJXxRoIAewCinUKq/l7nl2ubAH912ZD7WGqca78mPAk3hudG/cF7F0EF0fb061DBTtFuQ1aXi1D7GBnKGxeTE=
+	t=1786514642; cv=none; b=K7hDxz/tIwbZrxZPwmE0RoO12oJgZi0vzlgIb86FYn3jraw9X6w0oJSZ+1jQtgm92WU2Xn8BIvwBKVRTxvXm2fiLnxg4evZuDDgoCCJPECCJW8Ww3KnMcOQt3Yq+uFcDIMrgPvLRljG0IRiGaNz2QFba3zUJ8fLjr9hIgwlHRUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786513357; c=relaxed/simple;
-	bh=voZpAkFs/pYrbWE7SLKpnqGIyf16jhQRdcvQqrXtdv4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sSjmC/2YgXe9HUdmKpADozECkNdaO+8RBZeOIgsxtOKXLzqQ+Oj71sJvElX/FmGr6BWQoiNdG6UmZQqhbt8BHMT0eyO52KRMVOlrAF2yBG7VOBhxRWCwLuW/nODc4WxL2lOxH+iHcnZQM7E208bGuMV3lSPo5WeKQUvtEhXAaRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kaspersky.com; spf=pass smtp.mailfrom=kaspersky.com; dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b=RB5P3zgF; dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b=m87Cfgy0; arc=none smtp.client-ip=5.79.125.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kaspersky.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kaspersky.com
+	s=arc-20240116; t=1786514642; c=relaxed/simple;
+	bh=jc9+RXFYmCYJOSWusajnzwFqlPfwnPO4Z2ALTWBqL0Q=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=uaMzC2BXb3LDNG04vRcopQ46v+5jnNvM+Wosi0aFUSxuoINK2X+eLWu3mXW2M1PiTsL010DWbg3N+r+C6vcFFaAwlK7VRE5rX+tg1tTpvS+Zx26hvqwRHoiY3JoSmxlme1KtSCS/PBdft/YWhgbmb0hMr8W2RX1omGDmk/OdGXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8QrQnHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b="RB5P3zgF";
-	dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b="m87Cfgy0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
-	s=mail202505; t=1786512876;
-	bh=142kpY8nbLE4y5wJsRPfIKMXuQYACzheH8tURmpk3Zg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=RB5P3zgFXGb9d4KhNcPdTzAXGO/0yZU7Rx880jIj/+KfEsaeNeXjYlbhdxns0MOqN
-	 KIUEOU7YKehowtjdqgbbUEvvO5yWfhi91gG1ceXd0bo7+mxIwWHbApogBmTYZYW5Z/
-	 AXWFoxiWMozGzrFHoXCQsc2Fs3zhhccAMfRsmKUn9/uN/cuuU8O8R5WQjYq8YPKiUc
-	 wzuH2kzf99H+lgVh6AEVg94qlU2NoQ0Nto/iltNtbmJAqm5yDMBDeXYzsPmbTZxFVF
-	 KMe5YBxITYhEKfJrxKp8xXSkbApzSEOHgT8QMEFgbIbYKu7kPA4UK0oXCkLOPms8Yd
-	 klZqpAbmdWwTg==
-Received: from mailhub16-fb.kaspersky-labs.com (localhost [127.0.0.1])
-	by mailhub16-fb.kaspersky-labs.com (Postfix) with ESMTP id CE6FBC09DCE;
-	Wed, 12 Aug 2026 08:34:36 +0300 (MSK)
-Received: from mx16.kaspersky-labs.com (mx16.kaspersky-labs.com [5.79.125.27])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "mx16.kaspersky-labs.com", Issuer "Kaspersky MailRelays CA G3" (verified OK))
-	by mailhub16-fb.kaspersky-labs.com (Postfix) with ESMTPS id A5429C08CA1;
-	Wed, 12 Aug 2026 08:34:36 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
-	s=mail202505; t=1786512869;
-	bh=142kpY8nbLE4y5wJsRPfIKMXuQYACzheH8tURmpk3Zg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=m87Cfgy0YBOfyej+8zFJ84dDY4fQQ+xYbciuyYXaHS0jIfCUceYHlbuwih5Q6rj/y
-	 vJ3woDl0FbWgPZ92aOvj8R0sZX75L2i6kBnPZcRU1QGX/+inyToMaT7BymNQbPGKy+
-	 /inUjB5kFK2KFCljmw7dUhRbatUcGsqonsCrIAbateJTdAb8vi5q13kHIsJZQPuZOY
-	 ZlaIabXxgz+eOkAfcoL2N9wTowRTWsvYuBSkobXplGrBsygPp4V5GPL1sh7tvPpqRZ
-	 KnTJSy945ZQgEOQvaNwYM6gZo86nVJ+R98JF2qo6xm9+8GhN3ZkZ/Kq6QG3uuxfy3Q
-	 QSVSkF5zwUIwg==
-Received: from relay16.kaspersky-labs.com (localhost [127.0.0.1])
-	by relay16.kaspersky-labs.com (Postfix) with ESMTP id 9601DC09CBD;
-	Wed, 12 Aug 2026 08:34:29 +0300 (MSK)
-Received: from mail-hq2.kaspersky.com (unknown [91.103.66.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(Client CN "mail-hq2.kaspersky.com", Issuer "Kaspersky MailRelays CA G3" (verified OK))
-	by mailhub16.kaspersky-labs.com (Postfix) with ESMTPS id 4A46DC08376;
-	Wed, 12 Aug 2026 08:34:28 +0300 (MSK)
-Received: from chesnokov.avp.ru (10.16.105.7) by HQMAILSRV2.avp.ru
- (10.64.57.52) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 12 Aug
- 2026 08:34:27 +0300
-From: <Alexander.Chesnokov@kaspersky.com>
-To: <peter.ujfalusi@gmail.com>
-CC: <vkoul@kernel.org>, <grygorii.strashko@ti.com>,
-	<dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<lvc-project@linuxtesting.org>, <Pavel.Zhigulin@kaspersky.com>,
-	<Oleg.Kazakov@kaspersky.com>, <Alexander.Chesnokov@kaspersky.com>
-Subject: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_rx_chn()
-Date: Wed, 12 Aug 2026 08:34:26 +0300
-Message-ID: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8QrQnHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFD21F000E9;
+	Wed, 12 Aug 2026 06:04:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786514640;
+	bh=1sgIgI/gN+TcNRj4UviK8q5e1u0spg4P8VczKjUvflI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=A8QrQnHTIr3jBvnZv1cv+3ZCKx7wDxpxwmDIf3tDmQ6SZsboCwunR79lTJpge0we9
+	 FlWKsMTlQdHzxOFV8s5zgnuu2AXRD4job9i/P6af+N93fs85KSngD7yJHt2aZO6nU9
+	 KQ9on1IIcvAgN1KYmrdoQ3WoRpE0eExxALB8rKFz44Q4fYfL6UGjdGxjx9bCk/76l2
+	 gb7AyZmfgIZhRbPsNBWSCF2VYfHjp7X1vsWg3bePtoFbMkrkiZiMadAZzXISXOIIUU
+	 nb6EFzRFmSAJqh6DtNc+SKuMyIfcIkNc8SwWevX2K49Ol6iVZQg/OQm37CtXqPwFJk
+	 di/EIgpy4sh7Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference in
+ k3_udma_glue_release_rx_chn()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: Alexander.Chesnokov@kaspersky.com
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
+References: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 12 Aug 2026 06:04:00 +0000
+Message-Id: <20260812060400.7CFD21F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: HQMAILSRV5.avp.ru (10.64.57.55) To HQMAILSRV2.avp.ru
- (10.64.57.52)
-X-KSE-ServerInfo: HQMAILSRV2.avp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.1, Database issued on: 08/12/2026 05:16:05
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 0
-X-KSE-AntiSpam-Info: Lua profiles 205193 [Aug 11 2026]
-X-KSE-AntiSpam-Info: Version: 6.1.1.22
-X-KSE-AntiSpam-Info: Envelope from: Alexander.Chesnokov@kaspersky.com
-X-KSE-AntiSpam-Info: LuaCore: 114 0.3.114
- e27389a6c5d460ad26321fd0e0409b926c7b28a0
-X-KSE-AntiSpam-Info: {Tracking_ml_letters}
-X-KSE-AntiSpam-Info: {Tracking_cluster_exceptions}
-X-KSE-AntiSpam-Info: {Tracking_real_kaspersky_domains}
-X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
-X-KSE-AntiSpam-Info: {Tracking_black_eng_exceptions}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: 127.0.0.199:7.1.2;chesnokov.avp.ru:7.1.1,5.0.1;kaspersky.com:7.1.1,5.0.1;lore.kernel.org:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
-X-KSE-AntiSpam-Info: {Tracking_white_helo}
-X-KSE-AntiSpam-Info: FromAlignment: s
-X-KSE-AntiSpam-Info: Rate: 0
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Deterministic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 08/12/2026 05:18:00
-X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
- rules found
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 8/12/2026 2:11:00 AM
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
-X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
- rules found
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
-X-KSMG-AntiPhishing: NotDetected, bases: 2026/08/12 04:54:00
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310, bases: 2026/08/12 01:51:00 #28674521
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected, bases: 2026/08/12 04:54:00
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 52
 
-From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-If devm_kcalloc() for rx_chn->flows fails in a channel request function,
-the error path calls k3_udma_glue_release_rx_chn(), which dereferences
-the NULL rx_chn->flows pointer in k3_udma_glue_release_rx_flow().
+Pre-existing issues:
+- [High] The error cleanup path in `k3_udma_glue_release_rx_chn()` can read=
+ memory out of bounds (causing a kernel panic) and incorrectly free unowned=
+ General Purpose (GP) RX flows (causing resource corruption).
+- [High] Integer overflow in the GP flow range boundary check allows an out=
+-of-bounds bitmap clearance, leading to massive memory corruption.
+- [High] Double free of `tx_chn->ringtx` occurs on failure of `k3_ringacc_r=
+equest_rings_pair`.
+--
 
-Skip the flow release loop in k3_udma_glue_release_rx_chn() when
-rx_chn->flows is not allocated.
+--- Patch [1]: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference=
+ in k3_udma_glue_release_rx_chn() ---
+commit 7e8964856380a3ca6be40518b2b7b3a48d46e4be
+Author: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_r=
+x_chn()
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This commit fixes a NULL pointer dereference in the error cleanup path of
+rx channel request functions. It skips the flow release loop in
+k3_udma_glue_release_rx_chn() when the flows array is not allocated.
 
-Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
-Cc: stable@vger.kernel.org
-Reported-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
----
+> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+> index 686dc140293eb..70eaf7ee57e68 100644
+> --- a/drivers/dma/ti/k3-udma-glue.c
+> +++ b/drivers/dma/ti/k3-udma-glue.c
+> @@ -1243,8 +1243,9 @@ void k3_udma_glue_release_rx_chn(struct k3_udma_glu=
+e_rx_channel *rx_chn)
+>  		rx_chn->psil_paired =3D false;
+>  	}
+> =20
+> -	for (i =3D 0; i < rx_chn->flow_num; i++)
+> -		k3_udma_glue_release_rx_flow(rx_chn, i);
+> +	if (rx_chn->flows)
+> +		for (i =3D 0; i < rx_chn->flow_num; i++)
+> +			k3_udma_glue_release_rx_flow(rx_chn, i);
+> =20
+>  	if (xudma_rflow_is_gp(rx_chn->common.udmax, rx_chn->flow_id_base))
 
-v3: guard the flow release loop in k3_udma_glue_release_rx_chn() instead
-of reordering the flow_num assignment. Covers all error paths in both
-request functions.
-v2: https://lore.kernel.org/all/20251006124258.1132312-1-Pavel.Zhigulin@kaspersky.com/
+[Severity: High]
+This isn't a bug introduced by this patch, but can this error path lead to =
+an
+out-of-bounds read or an incorrect free of unowned General Purpose (GP) RX
+flows?
 
- drivers/dma/ti/k3-udma-glue.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+If an early failure occurs (such as devm_kcalloc() returning NULL for
+rx_chn->flows) and flow_id_base is -1 (used to request dynamic allocation),
+calling xudma_rflow_is_gp() will execute:
 
-diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-index 4f1aeb81e9c7..a739e60b0764 100644
---- a/drivers/dma/ti/k3-udma-glue.c
-+++ b/drivers/dma/ti/k3-udma-glue.c
-@@ -1103,8 +1103,9 @@ void k3_udma_glue_release_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
- 		rx_chn->psil_paired = false;
- 	}
- 
--	for (i = 0; i < rx_chn->flow_num; i++)
--		k3_udma_glue_release_rx_flow(rx_chn, i);
-+	if (rx_chn->flows)
-+		for (i = 0; i < rx_chn->flow_num; i++)
-+			k3_udma_glue_release_rx_flow(rx_chn, i);
- 
- 	if (xudma_rflow_is_gp(rx_chn->common.udmax, rx_chn->flow_id_base))
- 		xudma_free_gp_rflow_range(rx_chn->common.udmax,
--- 
-2.43.0
+drivers/dma/ti/k3-udma-private.c:xudma_rflow_is_gp() {
+    ...
+	return !test_bit(id, ud->rflow_gp_map);
+}
 
+Since test_bit() expects an unsigned long, passing -1 will cast to ULONG_MA=
+X,
+causing an out-of-bounds memory read.
+
+Additionally, if flow_id_base is a valid GP flow ID that was not yet alloca=
+ted
+by this channel, is it possible for xudma_free_gp_rflow_range() to
+unconditionally free a GP flow range that might be actively used by another
+driver?
+
+[Severity: High]
+This is also a pre-existing issue, but does __udma_free_gp_rflow_range()
+contain a signed integer overflow vulnerability in its bounds check?
+
+If the cleanup path calls xudma_free_gp_rflow_range() with an abnormally la=
+rge
+channel flow count (cnt), the bounds check in __udma_free_gp_rflow_range():
+
+drivers/dma/ti/k3-udma.c:__udma_free_gp_rflow_range() {
+    ...
+	if (from + cnt > ud->rflow_cnt)
+		return -EINVAL;
+
+	bitmap_clear(ud->rflow_gp_map_allocated, from, cnt);
+    ...
+}
+
+could overflow the signed integer addition (from + cnt) to a negative value.
+Since a negative value is not greater than ud->rflow_cnt, this would bypass=
+ the
+bounds check and pass the huge cnt to bitmap_clear(), potentially clearing =
+bits
+across out-of-bounds kernel memory.
+
+>  		xudma_free_gp_rflow_range(rx_chn->common.udmax,
+>  					  rx_chn->flow_id_base,
+>  					  rx_chn->flow_num);
+
+[Severity: High]
+This is another pre-existing issue unrelated to the rx_chn changes, but does
+the TX channel error handling contain a double free if completion ring
+allocation fails?
+
+If k3_ringacc_request_rings_pair() fails to allocate the completion ring, it
+frees the forward ring but leaves the pointer dangling:
+
+drivers/soc/ti/k3-ringacc.c:k3_ringacc_request_rings_pair() {
+    ...
+	*compl_ring =3D k3_ringacc_request_ring(ringacc, compl_id, 0);
+	if (!(*compl_ring)) {
+		k3_ringacc_ring_free(*fwd_ring);
+		ret =3D -ENODEV;
+	}
+    ...
+}
+
+Because *fwd_ring is not set to NULL, the caller's tx_chn->ringtx still hol=
+ds
+the dangling pointer. When k3_udma_glue_release_tx_chn() runs during cleanu=
+p:
+
+drivers/dma/ti/k3-udma-glue.c:k3_udma_glue_release_tx_chn() {
+    ...
+	if (tx_chn->ringtx)
+		k3_ringacc_ring_free(tx_chn->ringtx);
+    ...
+}
+
+will it mistakenly free the same ring a second time, potentially causing
+use-after-free and ring allocator state corruption if another process reuses
+the ring ID?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260812053426.3521=
+589-1-Alexander.Chesnokov@kaspersky.com?part=3D1
