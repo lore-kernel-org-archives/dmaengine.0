@@ -1,124 +1,141 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5772448BD2B
-	for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 15:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CE133FE15
+	for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 15:45:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786635118; cv=none; b=W6iaCxKjSdGCvTYssawcS4Y7iduwCbn9t5Ovh1/m+sRB8QQl8vLhglIRxpinGesQB3aROLT5IUw5xeMtLg9C9aoBIA3mQBil5+ITYEFzzxgA/6NcqhOrCsw1nQW6irHdzdNOHFQ7YAlBGcETKmkL8643FEyS20RfNqx53ngAV9k=
+	t=1786635910; cv=none; b=Y0sOqUy2rO2cOwVKsR1GrMmu/tJwR0UjrMgDsp8JT2motHVwfumJfw9EQxpHGljbRoOrpRbrhOvJsvIbPR7PW3Pc54ls3dGGE++81vKwVrsa13y3xjGB13yMcBiPBLAWRsdhsixNgZFCDuM/CB8SNjJOrWJZ5SOiCoumv/yKAjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786635118; c=relaxed/simple;
-	bh=uwjEgmG3Mz4miCS0i07ALdjGmAM8jU1gtnrd0zTRvTs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=b4cfHVaANaP6bf6lCJZgDs1ih5HBUfNvXsGtojkO0gODyuq16mTa9q3YW5F9RnlBg6rc2l3ZokAIuzHKK3r62pk5zwKY1/V6rhL+MhV1WBMqbvS9wyZ3/GBI3Ge3uWIRoc4BLhkBd6Ow5CR7hS0bguBeNgsptx5lYGSOR8AuqgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PUdmGrEk; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786635910; c=relaxed/simple;
+	bh=IkbMjJ2ke/8G74gAKGeZRHOb0BsLHP0S9FADrAjbFOo=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=rIh8uIOp7DIE8ws6Wot8dS/0mFzsdybWAW7AVdkxUv+B0/ttdUWp3wtDqZr0URoaYCoxdgR+5HlvmILzyvpQogXNxM9Pm0Ljtj9Sr60rBM1woeX4WHHuMmBgFJA04VnqFmvOn32HbDAd4Sh17mBGBPhfaKlzmHp0pMb48F/g1nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jHB9/xXM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PUdmGrEk"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cedda2ce6fso518065ad.1
-        for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 08:31:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786635115; x=1787239915; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=CETj+p+UlhsMV5+bA2H7EPmo/n9prPFe/iRhtcp6S0Q=;
-        b=PUdmGrEkTKFzqEpEBhZTc27IQXS8rXJlHojLQrzO3BU767qUz2uzshqbOAuAIDmIXc
-         7S6BNgxVUE5mGkxtdLnXi/Jg0c9igHRSDCl6ks4t8sJvs9RVssyBEpY3XlMQXULujG3s
-         kBqLTfpTV26Qx+tC36t7lVp5MzG8el98LSDFeVejhavvhjamWB23LNhoH5kjIsSMrQ8d
-         Tqf8bGIvBD3y6G7uJ2wOarDrdOBFFpmiwEQ7eYLXFT7oTitsMdNduPBSSWqWudKHu89O
-         o6iKeb1MrOiCfOLWncxCFrxLXhIiRQ36XR2D5i7Gi8IjxSGS1TTZUEguzlN7BCap2F+G
-         S4NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786635115; x=1787239915;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=CETj+p+UlhsMV5+bA2H7EPmo/n9prPFe/iRhtcp6S0Q=;
-        b=D2xjvTXJkTXO8T5dXqQosYhfJDXAthoFQMMbYME26QPiAK53zJIn1h/zjK3RjBfbXF
-         C0L4tWQKVrq0HJ67xA5gVXopgVxRMoJv9YxFUpJa5zIE6seJp+dVSqf1jreYgmg4t76a
-         7M0vSx2dqUTEzsBHwoPHwcTliUNdkbTiIQypPjG5+lFcIB1Vbeqgn+vcAEmwbUW8Mtzw
-         /6v/5puAgWeGSpCvNMPO5efCld9xxCRmCpe+y4HCAZhs6iwW2+SBCX8xTp4uRw6aX01+
-         vRh48HmLmMYqq5bMWRL+VgXJC3nBF5/ayWgI2IaUH5bZMkrCWIswrYBzaZngRXSlNJW8
-         mIGQ==
-X-Gm-Message-State: AOJu0YwfLEObFMGWB/H1XBpcsEsg/pZJigB2K8bWyeU09FnS20fyygRx
-	prmarRWDYiqVn/UvjbP1dJEWK0fQWyH8K76FwvqywVowGCGZzpeINo9WF4iTggyZfoI=
-X-Gm-Gg: AR+sD114KtT4RSMfnqhYsErggloNlL8PtNM8PJQ6nUjGfsrcCD9q+q+JFN8fPBHA/84
-	XlbXLt7HbaXTS8iz/a2vQMusFkxOp/kjdndrnTWIjaMkg7vb6f7QbNisRMphBqP1I6ZMKNNMHev
-	EAlbqUXd540nTaxfKFOGx5Z7RTUWWhlQoY1b93KB1kB+Gh3NB2FcsEHBBWKOLQUIk89LsLUAMZn
-	n1GMYQVHahGZp0dT2m7+9w9nlno3NnYJnoz59BK2M4quq3iDUwrVyEuzlOAZaSgw3CfNoGCEgqg
-	OrFhPKMbjrKtvDWAcHKlyVXKWrNqIswXt5LldgVi6fET2UwhVWuitSjUTeHcl2JPsxufVU3SPPT
-	z0ouHbv7MoJKuyQvlciOaTRVnuqTua4ByffCAJm97Z08/wuSVqG0MbWo0a0My6Wvfr+u+e2shUs
-	6noxzlb/asTvATuOvRaLgOVwjwW0TRjhbXzRyDuyc0aWDzuY0388C3oxP78dvUjtjzVYf+Fzqg4
-	HmhBZ4=
-X-Received: by 2002:a17:903:19e3:b0:2cc:9179:32e with SMTP id d9443c01a7336-2d37d88d72bmr83848385ad.10.1786635115377;
-        Thu, 13 Aug 2026 08:31:55 -0700 (PDT)
-Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:3b7:6da1:c188:d14f])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d37c200029sm12037965ad.6.2026.08.13.08.31.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 08:31:54 -0700 (PDT)
-From: Ruoyu Wang <ruoyuw560@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	orsonzhai@gmail.com,
-	baolin.wang@linux.alibaba.com,
-	zhang.lyra@gmail.com,
-	linux-kernel@vger.kernel.org,
-	Ruoyu Wang <ruoyuw560@gmail.com>
-Subject: [PATCH] dmaengine: sprd: Fix runtime PM reference leak in probe
-Date: Thu, 13 Aug 2026 23:31:49 +0800
-Message-ID: <20260813153149.3953497-1-ruoyuw560@gmail.com>
-X-Mailer: git-send-email 2.51.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jHB9/xXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FC21F000E9;
+	Thu, 13 Aug 2026 15:45:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786635909;
+	bh=kFgXUe0ia+ZZAhITIDgTHjWeOLGChUkn6aulK9k4IW0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=jHB9/xXMcdsTpmONQVfSYgfA1b1KHXmDmWRuJeW5TnLVkkwUGKFbt+9AYXczEa27h
+	 jDSAJvqfgZE+rjzo+qwK6O4FWb4h8lfRGvU77Kkgr2nWNZOgvvDcnmksdwzrL6cGNd
+	 6rOFliY64tbeou3V3c/9T7PFv1pL38Dz+J6uDNCJcREpvmyq1/2ojGB5C8DHIpdn6k
+	 BVRJOru3WbZ3Avahc6xk8l3FXmknPjULvrQKArGaW3WyWu5UXWnVrGRoNlYqE2Mmod
+	 iWVQ5xgpwkuPL3UCt8WGhtcNxf0hX3V0YehmewZ8+L58zeWzwvXIoDwS9oBXpNMfIh
+	 rTHocVQo+ZuvA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: img-mdc: Fix runtime PM usage counter leak
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Ruoyu Wang" <ruoyuw560@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260813153143.3953303-1-ruoyuw560@gmail.com>
+References: <20260813153143.3953303-1-ruoyuw560@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 13 Aug 2026 15:45:08 +0000
+Message-Id: <20260813154508.E5FC21F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-pm_runtime_get_sync() increments a device's usage counter even when it
-fails. sprd_dma_probe() currently jumps directly to controller clock
-cleanup on that error, bypassing both pm_runtime_put_noidle() and
-pm_runtime_disable(). This can happen if the preceding unchecked
-pm_runtime_set_active() fails and the following runtime-resume attempt
-also returns an error.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-Enter the existing runtime-PM unwind path instead. This drops the
-reference without idling the partially initialized device, disables
-runtime PM, and then releases the controller clocks. The success path
-and propagated error code are unchanged.
+Pre-existing issues:
+- [High] Hardware register access before clock enablement during device pro=
+be.
+- [High] NULL pointer dereference when calculating residue for cyclic trans=
+fers.
+--
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
+--- Patch [1]: [PATCH] dmaengine: img-mdc: Fix runtime PM usage counter lea=
+k ---
+commit ab74c845981a8cdefe6ab65f16f64bbdc3a65623
+Author: Ruoyu Wang <ruoyuw560@gmail.com>
 
-Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
----
- drivers/dma/sprd-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+dmaengine: img-mdc: Fix runtime PM usage counter leak
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index 087fea3af2e411..19b32a23c882de 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -1212,7 +1212,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
- 
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
--		goto err_rpm;
-+		goto err_register;
- 
- 	ret = dma_async_device_register(&sdev->dma_dev);
- 	if (ret < 0) {
-@@ -1234,7 +1234,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
- err_register:
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
--err_rpm:
- 	sprd_dma_disable(sdev);
- 	return ret;
- }
--- 
-2.51.0
+pm_runtime_get_sync() leaves the IMG MDC device's usage counter
+incremented when runtime resume fails. This patch replaces it with
+pm_runtime_resume_and_get() so a failed resume does not retain a usage
+reference, preventing runtime PM usage counter leaks.
 
+> diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+> index b3765ba158030..a3192d49b6c86 100644
+> --- a/drivers/dma/img-mdc-dma.c
+> +++ b/drivers/dma/img-mdc-dma.c
+> @@ -738,7 +738,7 @@ static int mdc_alloc_chan_resources(struct dma_chan *=
+chan)
+>  	struct mdc_chan *mchan =3D to_mdc_chan(chan);
+>  	struct device *dev =3D mdma2dev(mchan->mdma);
+> =20
+> -	return pm_runtime_get_sync(dev);
+> +	return pm_runtime_resume_and_get(dev);
+>  }
+> =20
+>  static void mdc_free_chan_resources(struct dma_chan *chan)
+
+[Severity: High]
+This is a pre-existing issue, but I noticed a potential hardware register
+access before clock enablement during device probe:
+
+drivers/dma/img-mdc-dma.c:mdc_dma_probe() {
+    ...
+	mdma->clk =3D devm_clk_get(&pdev->dev, "sys");
+	if (IS_ERR(mdma->clk))
+		return PTR_ERR(mdma->clk);
+
+	dma_cap_zero(mdma->dma_dev.cap_mask);
+	dma_cap_set(DMA_SLAVE, mdma->dma_dev.cap_mask);
+	dma_cap_set(DMA_PRIVATE, mdma->dma_dev.cap_mask);
+	dma_cap_set(DMA_CYCLIC, mdma->dma_dev.cap_mask);
+	dma_cap_set(DMA_MEMCPY, mdma->dma_dev.cap_mask);
+
+	val =3D mdc_readl(mdma, MDC_GLOBAL_CONFIG_A);
+    ...
+}
+
+In mdc_dma_probe(), MDC_GLOBAL_CONFIG_A is read to determine hardware
+capabilities immediately after fetching the clock, but before the clock is
+ever enabled. The clock is explicitly enabled only later via
+img_mdc_runtime_resume() or by PM runtime.=20
+
+If the bootloader has not left the clock enabled, could accessing the
+unclocked peripheral's registers cause a system hang or synchronous external
+abort?
+
+[Severity: High]
+This is also a pre-existing issue, but is it possible to encounter a NULL
+pointer dereference when calculating the residue for cyclic transfers?
+
+drivers/dma/img-mdc-dma.c:mdc_tx_status() {
+    ...
+		bytes =3D mdesc->list_xfer_size;
+		ldesc =3D mdesc->list;
+		for (i =3D 0; i < cmds; i++) {
+			bytes -=3D ldesc->xfer_size + 1;
+			ldesc =3D ldesc->next_desc;
+		}
+    ...
+}
+
+In mdc_tx_status(), the cmds variable is computed by adding unhandled hardw=
+are
+completions to mdesc->list_cmds_done. In cyclic mode, the CPU-side descript=
+or
+list is not circular, so the last descriptor's next_desc is NULL.
+
+If the interrupt handler is delayed due to high system load, cmds might exc=
+eed
+the list length. Under these conditions, wouldn't the loop traverse past the
+end of the list, causing ldesc to become NULL and dereferencing it on the
+subsequent loop iteration's ldesc->xfer_size read?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260813153143.3953=
+303-1-ruoyuw560@gmail.com?part=3D1
