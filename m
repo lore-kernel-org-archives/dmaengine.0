@@ -1,219 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B00374E5B;
-	Thu, 13 Aug 2026 14:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38BE48CD4B
+	for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 15:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786630804; cv=none; b=sPhD116mQTD/bnsxesE3YME2YMhfucePmSWnC8D+Bi3VjOghRSPG73dsHjx9LC95CZzvqp6UpeDy90YU0VG8LoPL3G2se63QxuWKgATmJU10KVMEnKPlvHQnt3IQymW/qLYgrnSlIWBXvyk8lC/tfF37bHs2KXWKacv8QSepmW4=
+	t=1786635111; cv=none; b=KGL7b8Q+6tNzwYCsKRDY262MKPuek2J53lTgMwfGAS+A78E49WmNzlKSLt6zMs5RbExt42DdKai7xSGK64bdvceGBx0vh97CfIkX5+KqCZqg4t4irKKnuen4B4LIyUjsoKf3qQzDUc2JyjQgsikWf1iw7vzjICo+tL7Cafb4xRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786630804; c=relaxed/simple;
-	bh=n7oi25iCKuVqPGymJNIROauY956TTJ67rNY2jdhha/Y=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WuMVcov/5YKOxwYhc3qYvxj9rfsP8NypBTeneBbHOdoIzFPbL6YDPgrMy3LvSIGwWBbYm3jyXFKkXe1nBJ6GTjE3ffejV3dYViILFpRlNJ2CDFvIJF16u5Pfwg/0C/hZyQ7vFL9IMMY7+zgRaOqXVJ/s8DRrkKyNpUHv02JV9hU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j5UWHK11; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786635111; c=relaxed/simple;
+	bh=jZxyxU5u8sBykomTeSI+V7SOB5yOkTTJqrCunzVau44=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OVVOm8Tx4wg/6VGg8+5Rj+cu5n6Ax0gcFm9isLY4/9RYM6OKF0vLj/68FOMAI4vbnJCPKs6Wxn7a0/wb26LrXNkC8PE4rK2TvidrLAc/awKHq9uVbaTsySFG8XP9azY9COmFB1peSOiQWn8tKgivEfNi7nFWvzxfjQDi3JvaHbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gy9Ejj08; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j5UWHK11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7466B1F000E9;
-	Thu, 13 Aug 2026 14:19:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786630795;
-	bh=lXF3hVVcCNoFKsGvkopsSNbMFlEQCRiB9PbysDlekjg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=j5UWHK11IhwCWHjH4ymDvmjb4hvFK0TIqJ+a/c/3lwDqiAo22iOGxZDvKVGZSILVw
-	 RP3zWNZYwTR6U0FUbo1QdFXdBn/6QWrUL8wmUcQ8yiTl9zeQWitWuIJV0Cj2K/QN1q
-	 /b9y0UwzC3Tc915wCxkEILVNc7RjaextoQi3xVHRLkIu7DfhHTdIb8k4bzB67I+iTj
-	 pb+l3+6nePKy945ppWZ4De4gsqL1qY3AWOB77oIccdWrsVghRd7JDFpB+k7ABFzn7N
-	 aXezRzxpxRgALucsbxYqbDSEjh81vxBWIty5Ev2u9xS05fJjU+L9eDWr4jk3CGaN1N
-	 TuTsZJO0vPOXQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for
- multi-owner I2C transfers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Mukesh Kumar Savaliya" <mukesh.savaliya@oss.qualcomm.com>
-Cc: robh@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, conor+dt@kernel.org
-In-Reply-To: <20260813140047.1006478-3-mukesh.savaliya@oss.qualcomm.com>
-References: <20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com>
- <20260813140047.1006478-3-mukesh.savaliya@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 13 Aug 2026 14:19:55 +0000
-Message-Id: <20260813141955.7466B1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gy9Ejj08"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2cacf197759so935365ad.2
+        for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 08:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786635109; x=1787239909; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=sdfZ1MM3xM7GKAmsObtE+j5gvMl87cGr/Gcwg3tTC/g=;
+        b=Gy9Ejj08EmjlWg1nlmcPARlERg80r5oypdby6FIu82e1pMx849g95vPJq5vuVLSolW
+         /ccT/c5rDRiyJk+EewwiAN/kiwrLBE55Aa7ZMfa+HQ2TDZH5W1ENWPoKDhSM66MQfDGv
+         ySl29w1uaZchwWKXD1ZgRRjSVzbCvAiwGMxoK/JWU3yzPXDUD9gd+jFzrMF3dRO0atkc
+         uJVk7HxHsjy4QUWh7NcLS43nfKvORsfkI7OIMzWc6MUxwnVhZJxyMBFiQVNACqyzCvAr
+         GUTXMOW1W8TcRGdOdP+Ewwp8HqpH0wHs6ZM4L4C6j53cQwDGs+d7sp+r9+kd3bv9g1fe
+         Y3Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786635109; x=1787239909;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=sdfZ1MM3xM7GKAmsObtE+j5gvMl87cGr/Gcwg3tTC/g=;
+        b=M3g6jTHv2uHBE3SQC5Dt2LCdoiDEdRjai0xte12UOsSzKXNGHgm/kGbVt5QIOytowR
+         m7oXhp5mvYMf7sXcR4Fz3bsd/CjvfMglqd0LMCcv4BFNCh+LMxrZm+BmyUtDUOdyg0dj
+         YqZpaqiBgU3Eysh/6loguwbEMH7Yvva7HgC02CfPhVfRTB3XtwbifjlKru1MH5txRPzY
+         6nMg1QJc/0+s0QCqKPpbVEECtlWSlElRzL4/JbA6/ctM/OfxIzM2nPTAd4uK919Urm0h
+         ZGHUMq2FUa6RGRWPzsGy3+GgvcUjKN0S4ufuMZV5NDh/zHNFZflG4bc1LQ03gVpkJxGx
+         NycQ==
+X-Gm-Message-State: AOJu0YzgnyeuW9IC4AhWg1lk0pf75wjbJjESH2UugosjrSBbf+kQm8N/
+	5Uiq7cm/0t27LA7ksK38p1QEsgX5TQdOgi43Imixe+fBnFAjTTtU1sCEJyO8tNamyM8=
+X-Gm-Gg: AR+sD12XSOwvCyEBv5O14TqHEW37Ox7hJtPOPPzxd6anU6whdmSIWHceHybVgVkL0eL
+	Isw69D7WmJQS0Z1IVxi0YhkOpSLg//WXFaE7bWOmLP/1zFZM8y3bV4honIifnblHxPRTI5D8wge
+	hLi46eP5XwXYZ3oUWZSodNnF8SRYkA0FoSCgVGxnOkQsK0iEs83jCvi3LXwcZj22/XINHLsR/SC
+	UgAPFZw8ZKIT4MOFUpXQP7Cy2XccOL9FG0c2D38YTM3TeXDNU9gL4h/n91vjATd4xiWm1NW4hpG
+	ujTOZ+njrXmg7Oi4rH1maxq5SlSZ4aI96MfSzlhgi53DQEDwHIuugc7vJFM4WiOMcwTmYFncgG7
+	jwX63iYUdpMpVZdAAjDXcVia4PJMmuvQgNoflv+nEnWgZ085j9tid4/a+qD0+nkJvF9X9W8VqME
+	Mg21su2zalMBM5wJQryF4J5CTKGHHrbhXxcmR8+dRuWr/HDohhOT/lDSYcRxMVoTYqs+SuQtTVR
+	xViWn8=
+X-Received: by 2002:a17:903:1b06:b0:2c8:1c05:16aa with SMTP id d9443c01a7336-2d37e8a6026mr85074095ad.19.1786635109161;
+        Thu, 13 Aug 2026 08:31:49 -0700 (PDT)
+Received: from haichao.tail057a43.ts.net ([2001:da8:e000:1206:3b7:6da1:c188:d14f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d37c200199sm11985545ad.5.2026.08.13.08.31.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 08:31:48 -0700 (PDT)
+From: Ruoyu Wang <ruoyuw560@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org,
+	Frank.Li@kernel.org,
+	ed.blake@sondrel.com,
+	linux-kernel@vger.kernel.org,
+	Ruoyu Wang <ruoyuw560@gmail.com>
+Subject: [PATCH] dmaengine: img-mdc: Fix runtime PM usage counter leak
+Date: Thu, 13 Aug 2026 23:31:43 +0800
+Message-ID: <20260813153143.3953303-1-ruoyuw560@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+pm_runtime_get_sync() leaves the IMG MDC device's usage counter
+incremented when runtime resume fails. mdc_alloc_chan_resources() returns
+that error to the DMA core, so the channel's client count is not
+incremented and mdc_free_chan_resources() is not called to drop the
+reference. Repeated allocation attempts can therefore accumulate usage
+references and prevent runtime suspend.
 
-New issues:
-- [Critical] Setting `TRE_FLAGS_IEOB` on LOCK and UNLOCK TREs causes multip=
-le completion events per descriptor, leading to Use-After-Free and queue co=
-rruption.
-- [High] The driver prematurely drops the hardware lock in Write-then-Read =
-multi-message transfers due to misinterpreting `DMA_PREP_INTERRUPT`.
-- [High] Failure to reset `gchan->lock_pending` during channel reset or ter=
-mination permanently bypasses hardware locking for subsequent transactions.
-- [High] `gpi_prep_slave_sg()` blindly hardcodes the maximum TRE requiremen=
-t to 3, failing to account for the newly added LOCK and UNLOCK TREs, causin=
-g ring buffer overflow.
+Use pm_runtime_resume_and_get() so a failed resume does not retain a
+usage reference while successful allocations remain paired with
+mdc_free_chan_resources(). DMA core only treats negative return values as
+allocation failures, so the helper's zero success return preserves
+behavior.
 
-Pre-existing issues:
-- [High] Dangling pointer in `gchan->config` leads to Use-After-Free during=
- channel reallocation.
---
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
---- Patch [2]: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs fo=
-r multi-owner I2C transfers ---
-commit b6883d50c999f402ed4f7be119614262119be22d
-Author: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Fixes: 56d355e6f586 ("dmaengine: img-mdc: Add runtime PM")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+---
+ drivers/dma/img-mdc-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers
+diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+index b3765ba1580308..a3192d49b6c860 100644
+--- a/drivers/dma/img-mdc-dma.c
++++ b/drivers/dma/img-mdc-dma.c
+@@ -738,7 +738,7 @@ static int mdc_alloc_chan_resources(struct dma_chan *chan)
+ 	struct mdc_chan *mchan = to_mdc_chan(chan);
+ 	struct device *dev = mdma2dev(mchan->mdma);
+ 
+-	return pm_runtime_get_sync(dev);
++	return pm_runtime_resume_and_get(dev);
+ }
+ 
+ static void mdc_free_chan_resources(struct dma_chan *chan)
+-- 
+2.51.0
 
-This commit adds support for emitting lock and unlock Transfer Ring Elements
-(TREs) around I2C transfers on QUP-based controllers shared with other
-processors. The GPI driver autonomously determines the placement of these
-TREs based on transaction boundaries and latches a multi-owner flag during
-initial configuration.
-
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index a5055a6273af6..25fe7410bee2e 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-
-[ ... ]
-
-> @@ -518,7 +529,7 @@ struct gpii {
->  	bool ieob_set;
->  };
-> =20
-> -#define MAX_TRE 3
-> +#define MAX_TRE 5
-
-[Severity: High]
-While MAX_TRE is increased to 5 here, does gpi_prep_slave_sg() still
-hardcode the maximum TRE requirement to 3 when checking if the ring buffer
-has enough elements available via gpi_ring_num_elements_avail()?
-
-If the ring buffer only has 3 or 4 slots available, could this pass the
-check but fail to enqueue the remaining elements like the UNLOCK TRE,
-potentially locking the hardware bus?
-
->  struct gpi_desc {
-
-[ ... ]
-
-> @@ -1617,6 +1629,17 @@ gpi_peripheral_config(struct dma_chan *chan, struc=
-t dma_slave_config *config)
->  	gchan->config =3D new_config;
->  	memcpy(gchan->config, config->peripheral_config, config->peripheral_siz=
-e);
-> =20
-
-[Severity: High]
-This isn't a bug introduced by this patch, but when
-gpi_free_chan_resources() frees this memory with kfree(gchan->config), it
-leaves gchan->config as a dangling pointer.
-
-Since gchan elements are statically allocated arrays reused across DMA
-channel requests, if the channel is requested again, will this call to
-krealloc() receive the freed pointer and cause a slab use-after-free?
-
-> +	/*
-> +	 * Latch the multi_owner flag from the initial config call so the GPI
-
-[ ... ]
-
-> @@ -1627,10 +1650,33 @@ static int gpi_create_i2c_tre(struct gchan *chan,=
- struct gpi_desc *desc,
-> +	/*
-> +	 * Insert a LOCK TRE before the first transfer of a multi-owner
-> +	 * transaction.  The GPI driver detects the transaction start
-> +	 * autonomously: if multi_owner is set and no lock has been issued
-> +	 * since the last unlock (lock_pending =3D=3D false), this is the first
-> +	 * descriptor in a new transaction.
-> +	 */
-> +	if (chan->multi_owner && !chan->lock_pending) {
-> +		tre =3D &desc->tre[tre_idx];
-> +		tre_idx++;
-> +
-> +		tre->dword[0] =3D 0;
-> +		tre->dword[1] =3D 0;
-> +		tre->dword[2] =3D 0;
-> +		tre->dword[3] =3D u32_encode_bits(1, TRE_LOCK);
-> +		tre->dword[3] |=3D u32_encode_bits(1, TRE_FLAGS_IEOB);
-
-[Severity: Critical]
-Adding TRE_FLAGS_IEOB to the LOCK and UNLOCK TREs means a single transaction
-produces an EOB event (from Lock), an EOT event (from DMA), and another EOB
-event (from Unlock).
-
-In gpi_process_xfer_compl_event(), EOB events fall through to the success
-path which pops the active descriptor from gchan->vc and frees it. Since a
-single descriptor generates multiple events, could the event handler pop and
-free unrelated descriptors from the queue, causing a use-after-free?
-
-> +		tre->dword[3] |=3D u32_encode_bits(0, TRE_MINOR_TYPE);
-> +		tre->dword[3] |=3D u32_encode_bits(3, TRE_MAJOR_TYPE);
-> +
-> +		chan->lock_pending =3D true;
-
-[Severity: High]
-If a transaction errors out after a LOCK TRE is generated and the client
-calls gpi_terminate_all() to abort the transfer, gchan->lock_pending is not
-reset to false.
-
-On the next transaction, will gpi_create_i2c_tre() evaluate lock_pending as
-true and skip inserting the necessary LOCK TRE, causing transactions to run
-on the shared bus without acquiring the hardware lock?
-
-> +	}
-> +
->  	/* first create config tre if applicable */
->  	if (i2c->set_config) {
-
-[ ... ]
-
-> @@ -1690,6 +1736,35 @@ static int gpi_create_i2c_tre(struct gchan *chan, =
-struct gpi_desc *desc,
-
-[ ... ]
-
-> +	/*
-> +	 * Insert an UNLOCK TRE after the last write transfer of a multi-owner
-> +	 * transaction.  DMA_PREP_INTERRUPT marks the final descriptor in the
-> +	 * batch; reads carry their own completion event so the unlock follows
-> +	 * the write leg of each read message.
-> +	 */
-> +	if (chan->multi_owner && is_last && i2c->op !=3D I2C_READ) {
-> +		tre =3D &desc->tre[tre_idx];
-> +		tre_idx++;
-> +
-> +		tre->dword[0] =3D 0;
-> +		tre->dword[1] =3D 0;
-> +		tre->dword[2] =3D 0;
-> +		tre->dword[3] =3D u32_encode_bits(1, TRE_UNLOCK);
-
-[Severity: High]
-If the i2c-qcom-geni client driver executes Write-then-Read sequences by
-setting DMA_PREP_INTERRUPT on the write leg to wait for its completion, will
-this logic equate the flag with the absolute end of the I2C transaction?
-
-Could this prematurely append an UNLOCK TRE between the write and read,
-destroying the I2C bus stretch and allowing other owners to interleave
-transactions and corrupt the bus state?
-
-> +		tre->dword[3] |=3D u32_encode_bits(1, TRE_FLAGS_IEOB);
-> +		tre->dword[3] |=3D u32_encode_bits(1, TRE_MINOR_TYPE);
-> +		tre->dword[3] |=3D u32_encode_bits(3, TRE_MAJOR_TYPE);
-> +
-> +		chan->lock_pending =3D false;
->  	}
-> =20
->  	for (i =3D 0; i < tre_idx; i++)
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260813140047.1006=
-478-1-mukesh.savaliya@oss.qualcomm.com?part=3D2
