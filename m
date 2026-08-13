@@ -1,195 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4B83A872C
-	for <dmaengine@vger.kernel.org>; Thu, 13 Aug 2026 11:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80CD13B5B3;
+	Thu, 13 Aug 2026 11:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786619264; cv=none; b=sOQwi9b8qMA0TIAV0g+fB65q9Ciqe6oKiVrvOeRQ263wSJJ08vORaFIFikxCisGDNMiuiLg6P0wzpCY0tRsKx1WrZXBB8/Z5lICf8h/4vVN85OGjKR1CwJczlfxNgG4dQSOv1eQQm73UomlhA3eMLiXoh6MVKq1kbxGdfjSmF1o=
+	t=1786621575; cv=none; b=ARLu1e/lrwXRCJvFRRkqVrRw6Hvh1ogQ6S2PrJpEfUvjF+gG/9MAsUKrr5vP0uvzuH7vYXNpPgvF4fLfZa9/GQnxbrX2HDLAgIB5er1/TwJTcNG41i0cEcognSDrRyGTVHXg9vpF5GhF2O3dHg3YNJcYKhA3yKLw6vMQ8flHIew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786619264; c=relaxed/simple;
-	bh=wB6T7WOaeuZAY6oDVaNfMlIdxqLpZsWxUiAKCWyHEOU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JCiTQQzo6PdD9W7DzAZDErFKkkAF+jl1sahHrXhp9/TBAgRAWni7NWUAdH9hpVDYA5uTXTo6XTjq3Wnp0U27hwyk6hQ8BMbm4zzSDZkeBBUpthkVKICTgsULMgY+Dth/daUsG2Z2CpQ7vdKmOIC6FUlL7M+/KzjBO00Nh9JI3gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1G/D+5j; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786621575; c=relaxed/simple;
+	bh=ejCu1aTC2wcFIfrCGz4OYhU+SLf8uyUQhr3ScQ5NJKs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oi5AEq4s8Z8MHtsKA4YUe94OwNUNTcJCBVEIXAX52Ynj2YTssHoyX7OABlgphgKTCnzBTHNdgb1F5UJ+kJbcbkGBLuOk8ZoMMjoQjMKDdF2GAheBuzjeDtRf2xBIrzx6+Y9zsU9dw3rPLlad7GkMrF4KwpDU67vDYYBrr6rKLVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T8z91kM8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1G/D+5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40161F000E9;
-	Thu, 13 Aug 2026 11:07:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T8z91kM8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1C11F000E9;
+	Thu, 13 Aug 2026 11:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786619260;
-	bh=EclKJkXsCOzzP1rTTKYZoP+hN18UiCjsoQGSZ3szoFk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=N1G/D+5jfjTGMPJWGaFBP8ZSgxqv5DnfAXXYbHtWsBIiMkg4vpa+vcrlFigqi8GwT
-	 Zmep9iWhCkDLu8JBTHpR/qW9XD6OHqxtPvlXFbBSDIv6QJ4QKDntiFJgvrfU94g/sx
-	 GkNxso+olwPUWO5G7QtT2honOHF/uCKOJHt3o6BhqmyWmztyO0ODGJlyRQiZuWduWk
-	 W2D4dOVh3aDbsNKsKnR48xhnrOEQXopI6O23NHLH/9FevugA//0PNLtWgGnHgse5nH
-	 iHeD3yrjj7mGO/eoQZ0Z4YBudgTVZM5sIeL41/dWyRCv/LlASR9vWfcQgs8E+3ltY3
-	 PoP8Z8/gNbx+w==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: dw-axi-dmac: fix clock imbalance in resume
- error path
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Chaithanya Lagisetty" <nagachaithanya9911@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260813105432.2577322-1-nagachaithanya9911@gmail.com>
-References: <20260813105432.2577322-1-nagachaithanya9911@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 13 Aug 2026 11:07:39 +0000
-Message-Id: <20260813110739.C40161F000E9@smtp.kernel.org>
+	s=k20260515; t=1786621574;
+	bh=ejCu1aTC2wcFIfrCGz4OYhU+SLf8uyUQhr3ScQ5NJKs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=T8z91kM8Vi62PkPE28D7Fyo9z16LHW1xkoX0JNwyTnDH/4JVRIIwJQAtwqCjK8T8l
+	 z0kmLaxf1UifYq4mognRvz49YYceHW2U/UQC1qEfKaPLXsunemvzX20HwWRVobNv4n
+	 9ieV1kCbxWun8wTU3BbmLleeV91VnMWmUVUmnPaykcMydMoSwcjYmzTj0CJGD8qFUv
+	 TvQKEhJrGxcO0/l6JzfW3+3BdPGcUh5S/wnJga1jL2lgOzkoKBlAgDQMjTjP47Tpxv
+	 rdled9kLROdBtfv5OCprIoZmqRdOHXUz7XcMg1oS/50N8+Zhz5/J2P+Q7aRukLZtok
+	 uioX7qFrZh6/g==
+Date: Thu, 13 Aug 2026 13:46:07 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>, Vinod Koul <vkoul@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Damien Le Moal <dlemoal@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	linux-pci@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v7 00/10] PCI: endpoint: Add PCI DMA endpoint function
+Message-ID: <an2uf5mXzGq1Q7cj@ryzen>
+References: <20260813063757.3131865-1-den@valinux.co.jp>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260813063757.3131865-1-den@valinux.co.jp>
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
-s) to consider:
+Hello Koichiro,
 
-Pre-existing issues:
-- [High] The driver requests a shared interrupt before device clocks are en=
-abled and channel registers are initialized, risking a kernel panic if a sh=
-ared interrupt fires early.
-- [High] Unbalanced PM runtime usage counter and hardware clock leaks on `d=
-w_probe` error paths.
-- [High] `dw_remove` leaks clock reference counts if the device was runtime=
- active, leaving clocks permanently enabled.
-- [High] Ignored return values from `clk_prepare_enable()` in `dw_remove()`=
- can lead to fatal bus faults.
-- [High] The driver shuts down hardware and kills tasklets in `dw_remove()`=
- before unregistering the DMA engine, exposing it to fatal race conditions.
-- [High] Bypassing dmaengine channel unregistration in `dw_remove()` causes=
- resource leaks.
---
+On Thu, Aug 13, 2026 at 03:37:47PM +0900, Koichiro Den wrote:
+> This is v7, the remaining patch set for PCI endpoint DMA.
+> Parts 2 and 3 were merged per Frank's suggestion.
 
---- Patch [1]: [PATCH] dmaengine: dw-axi-dmac: fix clock imbalance in resum=
-e error path ---
-commit c0653e2ca540837590c802ab80fc07b1689246e9
-Author: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+(snip)
 
-dmaengine: dw-axi-dmac: fix clock imbalance in resume error path
+> One open question is how to support endpoint controllers with only one
+> PF. Keeping DMA in a separate EPF requires multi-function endpoint
+> support. Folding it into vNTB would work on single-function
+> controllers, but would also couple the two implementations. This series
+> keeps the separate EPF model.
 
-This commit addresses a clock imbalance in the resume error path of the
-dw-axi-dmac driver. It ensures the configuration clock is properly
-disabled if the core clock fails to enable.
+I see all the work you are putting in and I admire the effort.
 
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index bcefaff03b5c6..9db8993e0bc6a 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -1335,8 +1335,10 @@ static int axi_dma_resume(struct axi_dma_chip *chi=
-p)
->  		return ret;
-> =20
->  	ret =3D clk_prepare_enable(chip->core_clk);
-> -	if (ret < 0)
-> +	if (ret < 0) {
-> +		clk_disable_unprepare(chip->cfgr_clk);
->  		return ret;
-> +	}
-> =20
->  	axi_dma_enable(chip);
->  	axi_dma_irq_enable(chip);
+This is now v7. I think it is time that we close the open question by
+waiting for a reply from the PCI endpoint maintainers' opinion on the
+design before continuing. (I am not a PCI endpoint maintainer.)
 
-[Severity: High]
-This is a pre-existing issue, but does this sequence in dw_probe() risk a
-NULL pointer dereference if a shared interrupt fires early?
+I understand that you want a common DMA abstraction, that can represent
+different (embedded) DMA controllers on the endpoint side.
 
-dw_probe() {
-    ...
-    ret =3D axi_req_irqs(pdev, chip);
-    ...
-}
+But if vNTB is the only consumer of this, then why not simply embed this
+DMA abstraction in some BAR exposed by the vNTB EPF?
 
-Interrupts are requested here before chan_regs initialization and clock
-enablement. If an interrupt fires early, dw_axi_dma_interrupt() calls
-axi_dma_irq_disable() which accesses unclocked registers and subsequently
-dereferences chan->chan_regs.
+Looking at the host side driver that goes with the (v)NTB driver:
+drivers/ntb/hw/epf/ntb_hw_epf.c
 
-[Severity: High]
-This is a pre-existing issue, but does dw_probe() leave the PM runtime
-usage count unbalanced on error paths?
+The BAR layouts are hard coded, and it only supports three different
+layouts. Would it not be possible to add a fourth layout that has the
+DMA abstraction somewhere in one of the BARs? ('BAR_DMA' ?)
 
-dw_probe() {
-    ...
-    goto err_pm_disable;
-    ...
-err_pm_disable:
-    ...
-}
 
-If axi_dma_resume() fails, the execution jumps to err_pm_disable but fails
-to call pm_runtime_put_noidle(). If dmaenginem_async_device_register()
-fails, it jumps to err_pm_disable calling pm_runtime_disable() before the
-scheduled pm_runtime_put() executes, leaving hardware clocks permanently
-enabled.
+Right now, I wonder if it is not a bit premature optimization to create a
+DMA EPF, if vNTB will be the only (ever?) user.
 
-[Severity: High]
-This is a pre-existing issue, but does dw_remove() leak clock reference
-counts if the device was runtime active?
+I didn't follow all the details, but I know that you want to control the
+DMA controller on the endpoint from the host side. Is this really a
+normal use case outside of vNTB? I would imagine that most endpoints
+will read some ring buffer of descriptors, perform some validation on
+those descriptors, and then decide if it will do DMA to/from the host.
 
-dw_remove() {
-    ...
-    clk_prepare_enable(chip->cfgr_clk);
-    clk_prepare_enable(chip->core_clk);
-    ...
-    axi_dma_suspend(chip);
-    ...
-}
 
-If the device is active, PM runtime holds a clock reference. Calling
-clk_prepare_enable() unconditionally increments it. axi_dma_suspend()
-decrements it, but pm_runtime_disable() prevents PM runtime from dropping
-the remaining reference, permanently leaving the clocks enabled.
+If the host side driver want to make use of your "generic DMA registers",
+then you are basically creating another DMA controller? Shouldn't you
+then create a new host side driver specifically for this "generic DMA
+controller"? It would be nice if you could explain a bit better why you are
+bothering to create a "generic DMA layout", but then you are reusing the
+dw-edma-pcie driver. This seems a bit weird to me.
 
-[Severity: High]
-This is a pre-existing issue, but can ignoring these return values lead to
-fatal bus faults?
+Right now you seem to "unpack" the "generic DMA layout" in a dw-edma specific
+function: dw_edma_pcie_validate_ep_dma_metadata().
 
-dw_remove() {
-    ...
-    clk_prepare_enable(chip->cfgr_clk);
-    clk_prepare_enable(chip->core_clk);
-    ...
-}
+If you want this encapsulation, shouldn't the de-encapsulation be done by a
+host side "DMA EPF" driver, and then this generic driver will then call
+e.g. dw_edma_probe(). (Seems wrong to add de-encapsulation code in dw-edma
+for your own made up format. And then all DMA drivers would need to do this
+same de-encapsulation.)
 
-If clock enablement fails here, the driver proceeds to access hardware
-registers via axi_dma_irq_disable() and axi_chan_disable(), which will
-trigger a fatal bus error.
 
-[Severity: High]
-This is a pre-existing issue, but does this tear down the hardware while
-the DMA engine is still fully registered and accessible to clients?
+Currently, I know R-Car 4 has an EPC controller that supports multi-function,
+but I personally don't know any other. If you could embed your DMA abstraction
+somewhere in one of the vNTB BARs, that would avoid the multi-function problem,
+so your solution would not be limited to EPC controllers that only supports
+multi-function.
 
-dw_remove() {
-    ...
-    list_del(&chan->vc.chan.device_node);
-    tasklet_kill(&chan->vc.task);
-    ...
-}
 
-Since dw_probe() uses dmaenginem_async_device_register(), the actual DMA
-engine unregistration is deferred until after dw_remove() returns. The
-hardware is aggressively shut down here while clients can still submit
-transactions, potentially causing use-after-free or bus faults.
-
-[Severity: High]
-This is a pre-existing issue, but does bypassing dmaengine channel
-unregistration cause resource leaks?
-
-dw_remove() {
-    ...
-    list_del(&chan->vc.chan.device_node);
-    ...
-}
-
-Manually emptying the channel list breaks the subsequent deferred devres
-unregistration loop. When dma_async_device_unregister() finally runs, the
-list is empty, preventing __dma_async_device_channel_unregister() from
-being called and leaking sysfs device nodes and IDAs for every channel.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260813105432.2577=
-322-1-nagachaithanya9911@gmail.com?part=3D1
+Kind regards,
+Niklas
