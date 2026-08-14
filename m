@@ -1,100 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577B933F5BC
-	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 05:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE47353A80;
+	Fri, 14 Aug 2026 05:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786684486; cv=none; b=lB0EZrKwmWzCpEU6MJRjT48q7EFXyL5EsPlr78+6pvWfDw60VSCWqBAJPOQdJcaP6bHkBDCz17AqQrHQ6Oy6qKSKhI+tcZjwDBZjS5O1cIU/6n8BKX6K0R69whSVnRXxMZ3h90RVXdXsQk5gLZpXHW+t/QXEtAF4J+nWhi0bBZc=
+	t=1786685242; cv=none; b=ewgVcI1p1Ii3pm+s7bFAt+cSzcD1Pz1D/B4eQTjYySZEfrU4ZHZM9h5kp54xL8EkLSj6ZraVtxvRytt9pjVwbkmZI6PaqjryuTz8bWn6PKtcMuVQPzdDWEEAe73jAnOgNLPg6EDPTc3k1vkEj9UmdLt06AqIwH6TLDXw/bBCrRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786684486; c=relaxed/simple;
-	bh=fNsbuRoHpYZDSn5iUk8R4JWd2L2mI3N0KmfehScZfLA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=NmUAeesnzlBl1/IKhsjqH3sOpCtHwk77+9rVzwVizqlEt3G00EPQWrlqyFXgub0QTOs1L8o+3MqfQ1k4BNvJl57GHF2rd+qGcuwv2MdjQ2jTJBaFFmKX6jt2RTG+ALkThaJnQHtGB8or5V1Ze1RjP8naPsrNycDM0YKN3nJSElY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KCShpNDX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786685242; c=relaxed/simple;
+	bh=NK1m/1D6M3jTBQ5nmDeHBnnlRlutP5/R8we9pihbVw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=azanEUdI7kUM1C5iJrOvniIVdOCOsxGtSNitfABnQro4UXWCl0MXuqBZY++OtflyrGPTn9rHngbWSBRjPO11kw/2MIymm6v/SDp1dx90ndLK2rApyMkbWqCHWK6Suy+SAE3rM1oBzSxwCTaE4O0T8j/zSjzzdvp3//iyo6ympnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jLrlbxeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KCShpNDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A594A1F000E9;
-	Fri, 14 Aug 2026 05:14:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jLrlbxeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7741F000E9;
+	Fri, 14 Aug 2026 05:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786684484;
-	bh=uUpRtmDwsMUW5vKcigP73V4qej8nw1KlVzCsvD12DUs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=KCShpNDXE7oei/BxuKQAd7LMSik8PRnuHVBOCGzcZM2IZtEe273fSzmQIkPoblJcC
-	 lvmAKB/MrXD1qWQvh0XAB+JmNEXaF3d4gCMsxLF58bXnGNsb85dcRv//OMvfW7VRz8
-	 1LzxohBqchrjTLoJXQoGV0C7iyk/TKygqM1YYmjFDVljXpA8ZJ9QJJi24iSBuVy9NF
-	 MiFWVa3IeOt46TRTwrhXJBmu71CIbCWiqOTxY+LJtXLGw1M7Y3r0QgK40Iz0qFoDTI
-	 OfGAE36n84bCfPD/sWZ0uxI8ntQB/6QISc5qPZLWbj8DIJlrXlwgjReVphl5qatQNR
-	 I9QOOfYuIgLww==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH V2 2/8] dmaengine: zynqmp_dma: Free sw_desc_pool on
- desc_pool_v alloc failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Golla Nagendra" <nagendra.golla@amd.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260814045616.1661199-3-nagendra.golla@amd.com>
-References: <20260814045616.1661199-1-nagendra.golla@amd.com>
- <20260814045616.1661199-3-nagendra.golla@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 05:14:44 +0000
-Message-Id: <20260814051444.A594A1F000E9@smtp.kernel.org>
+	s=k20260515; t=1786685241;
+	bh=Jf4qaFJl5b1RUI0wYv6hr0/sFhbHSCSEjQXks3a/Nmw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jLrlbxeJb5NiD3FSgZ3yWUtjrXZZwHWaqk0QFZpLzuZhsURouAxHs+iURFcjt/smV
+	 c7H1xveeY3DORgBZqoKgjOM/SQXJ22ojaZo3pMrPqxMKVtrBbl2MWP/rsGOKkmLO4T
+	 VDR35FAFQeyyfYcks5ByGVTBxOLRsoV+ZmbNO7jDRYn/MurRTpncH1U+fLfrWP7kgo
+	 YIV7vDh6QSJqq7/7LwjKWUaiHYJnwA8+ywImESocLGIt9p6fJtyE6P+FaR1qnulM2+
+	 tVvx5/NGB0N5AN9wHJ8IqyKOtLVH2LhDzhgOTuwM2KG+TrLxZCGccgjvwafMvmcZ94
+	 gtfFLXvyecOPg==
+Date: Fri, 14 Aug 2026 07:27:10 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Koichiro Den <den@valinux.co.jp>, Niklas Cassel <cassel@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Randy Dunlap <rdunlap@infradead.org>, Vinod Koul <vkoul@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Damien Le Moal <dlemoal@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Marek Vasut <marek.vasut+renesas@mailbox.org>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+	linux-pci@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v7 00/10] PCI: endpoint: Add PCI DMA endpoint function
+Message-ID: <7kzvkrbc6w7yojufwekzjubndgg4ao2o65gnla6mjwhwn5ji2d@vhrj4kg6uia2>
+References: <20260813063757.3131865-1-den@valinux.co.jp>
+ <an2uf5mXzGq1Q7cj@ryzen>
+ <zoed4wtc4oxiyni4o5qpj3li3cmlyy5kfutp4r5g4d63u52625@j6rvbbehjgov>
+ <ztn47y23ctbjrbkmgyyhc6d5x3i2lzz5txotpgtbjtcsvbsvf4@fzadsvt5fl4d>
+ <an3p_j-F10e9x0vM@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <an3p_j-F10e9x0vM@SMW015318>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Thu, Aug 13, 2026 at 10:59:58AM -0500, Frank Li wrote:
+> On Thu, Aug 13, 2026 at 11:15:31PM +0900, Koichiro Den wrote:
+> > On Thu, Aug 13, 2026 at 02:50:59PM +0200, Manivannan Sadhasivam wrote:
+> > > On Thu, Aug 13, 2026 at 01:46:07PM +0200, Niklas Cassel wrote:
+> > > > Hello Koichiro,
+> > > >
+> > > > On Thu, Aug 13, 2026 at 03:37:47PM +0900, Koichiro Den wrote:
+> > > > > This is v7, the remaining patch set for PCI endpoint DMA.
+> > > > > Parts 2 and 3 were merged per Frank's suggestion.
+> > > >
+> > > > (snip)
+> > > >
+> > > > > One open question is how to support endpoint controllers with only one
+> > > > > PF. Keeping DMA in a separate EPF requires multi-function endpoint
+> > > > > support. Folding it into vNTB would work on single-function
+> > > > > controllers, but would also couple the two implementations. This series
+> > > > > keeps the separate EPF model.
+> > > >
+> > > > I see all the work you are putting in and I admire the effort.
+> > > >
+> > > > This is now v7. I think it is time that we close the open question by
+> > > > waiting for a reply from the PCI endpoint maintainers' opinion on the
+> > > > design before continuing. (I am not a PCI endpoint maintainer.)
+> > > >
+> > > > I understand that you want a common DMA abstraction, that can represent
+> > > > different (embedded) DMA controllers on the endpoint side.
+> > > >
+> > > > But if vNTB is the only consumer of this, then why not simply embed this
+> > > > DMA abstraction in some BAR exposed by the vNTB EPF?
+> > > >
+> > > > Looking at the host side driver that goes with the (v)NTB driver:
+> > > > drivers/ntb/hw/epf/ntb_hw_epf.c
+> > > >
+> > > > The BAR layouts are hard coded, and it only supports three different
+> > > > layouts. Would it not be possible to add a fourth layout that has the
+> > > > DMA abstraction somewhere in one of the BARs? ('BAR_DMA' ?)
+> > > >
+> > > >
+> > > > Right now, I wonder if it is not a bit premature optimization to create a
+> > > > DMA EPF, if vNTB will be the only (ever?) user.
+> > > >
+> > >
+> > > Yeah, I feel the same. I haven't seen an usecase to program the DMA controller
+> > > from the host outside of vNTB. This feature is supported mostly because it
+> > > exists in hardware and someone wants to tick the checkbox.
+> > >
+> > > Though, I'm not against doing it within vNTB as Niklas suggested, but
+> > > generalising it in the form of a new EPF driver just for the sake of a single
+> > > driver sounds like an overkill and maintenance burden.
+> > >
+> > > Sorry for saying this in v7. I've been meaning to say it, but somehow ended up
+> > > procrastinating too much.
+> >
+> > No bother. Since Frank has given a lot of feedback on this series, I'd also like
+> > to hear his view.
+> >
+> > I'm fine with either direction, and can revisit the earlier vNTB-embedded
+> > approach:
+> > https://lore.kernel.org/r/sn67hi7kljh7cgmgodatb3naz2astlaklqfobdbxyyzgoohxqb@4nnetbhqwba4/
+> 
+> One of the important value is test dw-edma-pcie.c, which generally depend
+> on some fpga hardware. If there are epf driver work as fpga hardware, it
+> will help cover edma remote user case. So more user can test it.
+> 
 
-Pre-existing issues:
-- [High] The IRQ handler accesses hardware registers without checking if th=
-e device is active, violating Runtime PM guidelines.
---
+Testing is one thing, but using is what matters. Are there any products or
+use case based on remote eDMA? Or even dw-edma-pcie.c?
 
---- Patch [2]: [PATCH V2 2/8] dmaengine: zynqmp_dma: Free sw_desc_pool on d=
-esc_pool_v alloc failure ---
-commit fa41ac69883ca2ff4e5d238f73142e53f1ec3b68
-Author: Golla Nagendra <nagendra.golla@amd.com>
-Subject: dmaengine: zynqmp_dma: Free sw_desc_pool on desc_pool_v alloc fail=
-ure
+Most of the time, dw-edma-pcie.c driver feels like a dead code to me which no
+one actively uses or tests. So unless a real justification is put forward, I
+don't want to add a whole new EPF driver for it.
 
-This commit fixes a memory leak in zynqmp_dma_alloc_chan_resources() by
-freeing the allocated sw_desc_pool if the subsequent desc_pool_v coherent
-allocation fails. It adds a dedicated error label to ensure the software
-descriptor pool is cleaned up before falling through to the runtime PM
-rollback path.
+- Mani
 
-> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_=
-dma.c
-> index 9f1e69700dd02..b7c5612806948 100644
-> --- a/drivers/dma/xilinx/zynqmp_dma.c
-> +++ b/drivers/dma/xilinx/zynqmp_dma.c
-
-[ ... ]
-
-> static irqreturn_t zynqmp_dma_irq_handler(int irq, void *data)
-> {
-> 	struct zynqmp_dma_chan *chan =3D (struct zynqmp_dma_chan *)data;
-> 	u32 isr, imr, status;
-> 	irqreturn_t ret =3D IRQ_NONE;
->=20
-> 	isr =3D readl(chan->regs + ZYNQMP_DMA_ISR);
-> 	imr =3D readl(chan->regs + ZYNQMP_DMA_IMR);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this interrupt handler
-need to check the device's power state before accessing hardware registers?
-
-During runtime suspend, the APB clock is disabled. If a spurious or
-unexpected interrupt fires while the device is in this suspended state,
-the handler executes and immediately reads ZYNQMP_DMA_ISR without calling
-pm_runtime_get_if_active() to verify or resume the power state.
-
-Could reading these registers while the clock is disabled cause a
-synchronous external abort and lead to a system crash?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814045616.1661=
-199-1-nagendra.golla@amd.com?part=3D2
+-- 
+மணிவண்ணன் சதாசிவம்
