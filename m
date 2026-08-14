@@ -1,65 +1,64 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAD3470451
-	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 13:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614FD471437
+	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 13:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786714184; cv=none; b=NkvigulJpPNhggYTB7eiyRPFyV3E7+54IEXea5Z9nTwYSNOgGJM2fCqFArb71iBQOShbC/1up8uxcpKYb3BC3mKCFikrb3Bnjps1+5DCLTsOAE97gPC6ABLsrTyv7hmbu9hUBcCx4GNqu/anZx0PNbELzp36YQ1WrJj+F048wJY=
+	t=1786714188; cv=none; b=T1M2cIcihRJ5LMqPijr6zBYnUpcPiFPFkwE5XWBCnbawd3zbnA1VYrTIO3k/Y3n2b/WpVGN3a1hmktP05miMe7TSIdlpG60iOty3CgWTu1a7amvNcMma4Wwm/bmXn9PbeSL/C3OkiIBRT/1InT3PO2iPfdFX4KicUmWJjODcn5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786714184; c=relaxed/simple;
-	bh=bAEWJXpWzPUhQYzyuDT8PPZLPevp6bNC7oyuUisHQ4M=;
+	s=arc-20240116; t=1786714188; c=relaxed/simple;
+	bh=Z0VrxfrQOACZu83EOUXJrOYZAwJOj58+oO60WgCClXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CJxtT/eDejE3ihhbRgMgjADFjgkkC9+Wg2FcHp9G0hdGYEgxgmRj9L8+BfOKrFEOCtlg5UR289vvp/5Qm2pduAxbMp2q6DcuCfXzZl/YyzTtVQdPMtOKwlLJ4NPbardTRn2FPljFhmB3G6bM0kMJLh8PJwvAGbwjCMcUX4Gep/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io; spf=pass smtp.mailfrom=soundtrack.io; dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b=KdnhGeAk; arc=none smtp.client-ip=209.85.208.44
+	 MIME-Version; b=NKUXGUtl+yqReQQuNa2sI2FdmuUa2lgLCocqT3DU/Q3CuId7uhP34eM9sv3ilOra41XR4XBIm5v2woIKVyC01u+WRmthw9wlVJA2aEr0tLyjfIxgAEai568ssikdHOqk/Vehvdm0ReO9AFECmeG7LYGI4CCvhrDLjZqbPKtL6/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io; spf=pass smtp.mailfrom=soundtrack.io; dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b=mkkNGFOR; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=soundtrack.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b="KdnhGeAk"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-6a18af264f9so209981a12.0
-        for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 06:29:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b="mkkNGFOR"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6a18af264f9so209993a12.0
+        for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 06:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=soundtrack.io; s=google; t=1786714181; x=1787318981; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7YukWWHI9wYIN19FTJID+eUyg7sERpWkqr51k3rjwMM=;
-        b=KdnhGeAkNTx7+k+h24Eo8EURKnbYW0NimO2PY5sC2V6IJzQYCYb+2nuoolLM81XhGT
-         ul3Z0zOxzVMq2JOCXgCjrJbATa6MoAqan2PqzewZ0MTUiFP2hg1T/Be5ZEmEFdqPhxaG
-         jUthOK+70LiCok/5/89QsoPnCrVtpffjaerLIB4VemLOhyaBVCpVGgwPJ0GCKkT3hSR5
-         5XatUcfnW7toY8WT0+Qr7R1p0HFa9iqYYsRSTUCKFsQNOBdwVu4bI8b78aeU0a01Na72
-         SamZnWWcGVnQhWATeWhS2N95M8OFU7tWPA2m84sWGkTU93vwHGX4jjmVlc4pzgiCSEYg
-         uv8w==
+        d=soundtrack.io; s=google; t=1786714185; x=1787318985; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Ctx57rLzTDeEjtgOib9aUyoQxqr6yVBe4ltDl2pGqk0=;
+        b=mkkNGFOREuXai3iI7Q06uuOc15j2r4vG61uOPFAIYtI8yZB2T47KxbOcw4FDz6pTAF
+         TaOdLVTF4M3XBR/FxDvITpIrIvbxrSjddeJTjUi0SmGKBxzeFmkJWiGyQC2QCD+DcqHK
+         plsneJVBV5sS2+i/0lQc4HpVp0+qxwDDVFNb34/0mcCIhR7xfFroabVmxsdC+qHPRZpR
+         N0+6UxoS3E1XgXZbo2NqUrcirUo7X9kcUB8SSkYiB4INVDDqvpnHJYXekpiHfcZ/iYqK
+         zPcfBP3otkr1deRzp7sUuaIVly6D0J3xSuRU3MjYc5yAL4c6p2otrJ7jhtZ6kbV/2jOL
+         Bd0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786714181; x=1787318981;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7YukWWHI9wYIN19FTJID+eUyg7sERpWkqr51k3rjwMM=;
-        b=KKvfZjYbSlPCDVnJ5I2cyuofWb7aea7Iud+aQ1K3EsF6Ejh5Go7XS+jEvm12RRedui
-         iHBd57rwefzqxAQHq7rRmQuu+Pa+ylTp2HRsNcx+zzt/Fy3ikJqprfUGB4j1VSv5pi2o
-         rc+JVIejbAjSOricLhYuYOJJgP46vXFcMk+rAYlrvK44BMhu3cL68W8faPWcOHANF4Tr
-         /lJW5mcrGxL0bXsGo2xPB4vPdI4akEwHNOjsP/1IKFQjSUbxYZ/hT4/Ka3oE+ZnmyTq/
-         AvNx0aZ4T3uEsCnpMXQi+FGZ8I6q8IcDAY3gbjxVT6N4b6BI+frqgMWhPFSImwKlhTnK
-         t+/A==
-X-Forwarded-Encrypted: i=1; AHgh+Rr98kA+fH86bidbA4r3LC5wnmJBdWSVyAPmYhoWXrVkgrW7hAVQ2JUhmCJ0cR8FdedWeIWNQio/p1U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWFYkuESay43rziocTNOk2G+rp/lFX/FqXOGcNZny5LEhvuKRP
-	0jQhS8btMaW3pcmQqgyBYo+QQ2FhXuB8mkguOXow+9cBGndkCWvEUgvnRSQ2PZDW6E0=
-X-Gm-Gg: AR+sD11+Br/ka7mKSux3kvYs4y3erZYS3hkZrnkGB/4cKxugdgsH3IFuseQR7JIBOlS
-	xj/l8uh1UmIhs/D4wR544F4PGUQuiU++2ygW7WyknMkQ4oW2CGGUQLzJGgE3We2cEJp+rlG7bf6
-	KFT0o5r3JRxKy1msdr/+L7A5TivobjKA3+TeA/P7aAXRdmEFqilZWRyG2n9jR5PFWxzhh9zrggu
-	XEAE+0flC9/g5YF6xYD1CvMoFgG25+yqmYkbpSIIHMTmA0OhXh/c2v8Zvx+l89hS4tltBg2KRgM
-	ykUkMF7uA4/9MPJUes9xLvGBYf7QQRgIWj8kdWxcXN2VgwnioJEU3R+dl7lnTkjo2VNmF5COMa+
-	an9giESPUT4Y+mL6vL5oalOI403QmtPgGZf0IPQ9kdffckyNEzq2VhaDC1Z0N9k/SU7gu1m7PIi
-	DavD37AlGmCze0kbT+GKwN88+afErnKr/OXE05i3J8skzECxzGFHXh8e1mOXCJaNRFp0bRKQE+B
-	U7rfKRUN07wZU2b9tTD78BE8Jk2l0YpLwonGNnL/cmztVhsARIEsrOoEA==
-X-Received: by 2002:a05:6402:1cc4:b0:6a1:d68:338a with SMTP id 4fb4d7f45d1cf-6a38a83ce95mr1450030a12.0.1786714180850;
-        Fri, 14 Aug 2026 06:29:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1786714185; x=1787318985;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Ctx57rLzTDeEjtgOib9aUyoQxqr6yVBe4ltDl2pGqk0=;
+        b=Pf+00OoukP8XaC/lE4IbItnAAfdPUfaqY8IEwCy87wLDovi1M598y6K6smRbqfr2vw
+         2NE0mwTXrz1jWTN6d2K5Qj5cCbbdOJyFBiB7mh9dMcQwEWEaznzwvncbmCPP8ZkJl8HI
+         uqMG/fYKNSwnAYsQDBianfbs8NXMrpJz95642SnudetvdkhAu110+bkEFb5euaLSLZG3
+         er3yuXKqX10zyidyH76Vr+zsO7ANVx5B/Xdeeqa2i1JKr+UlE1Dc/Kt0Q2YJDz56fFrm
+         Ruus5DP/UK6JyNCcTzDnbbXevLq0cXfqm4zq7hAYrAAdQoiGQTT3XKXcSwrE+BaFM/Bn
+         Pk0w==
+X-Forwarded-Encrypted: i=1; AHgh+RoQbUnqUCWZJ0/FPMpCuM7Q3/LXwBPGxYKJAa1CjUnLWFbEo3PDxi+YQC92WmFrQIQOTRjzE3M4gr8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsXruqi3RB9H/nGfwfWPMHF1TEKBWLdJKzg+6Xce5a7juzlpHo
+	7FJAlCF5VbeGacTCnwMYFLkBAJoCBKuG2qBFoRcMK/LuOiMYD16p8Ntd7dnGbLiqN3U=
+X-Gm-Gg: AR+sD109AYKqfMN/BSXuKAeLbTV/Qm45so12SBA0JOQhzwzKXfJxC9wOs8akXshTXQt
+	vc2Jnz+s4FmnjpQZhnxgMImMqJyA8pYNdLLM7/GddpcHClcy5HJi+dQZW6OaFNVgwi8+1sxLe2Q
+	MZHLBMN5/aoI3pl2R8r4zyiuB0mvjlrdY11iBXc2M2UCxxcQ5EJVPCNbti2CxXDRexm+RI6OD+U
+	1j5AAupyPS+KspUb6ho4EeWd5bSUrkd38zP6+zZnrU/A+fWN0bKUFavT4wvGcUd73ECmljtYUxN
+	A+dpsoa2ctpGPAjCnxO79akJBgYwuBMaX+f20Rgy4zkW9Bjz/ZO9DZBFMXhQFKhdyRZbB/0OY4F
+	J9ff87/eIzXirnLq9+7Wjkc54IvDIvDXzN1BVEv2OxcJ0v/F9kLH/4FwxG2+tvLtQY+k2nVqI9x
+	xnPYOJt782tNmgH3BG6J1zwTcwPT12ZYrirRNLRtt8vh6DX22XxKxfsxlseOLOxqL0ges8MHdHS
+	GAVj44grhQ75yQm8DlvrmUePgkKQcthCJBAysEJ2Wenz8QIYoJBOoV7ZYk/z5jLQsca
+X-Received: by 2002:a05:6402:3881:b0:6a1:faeb:c519 with SMTP id 4fb4d7f45d1cf-6a38a97752amr1392217a12.3.1786714184680;
+        Fri, 14 Aug 2026 06:29:44 -0700 (PDT)
 Received: from Christians-MBP (31-209-40-223.cust.bredband2.com. [31.209.40.223])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a38c9d5eb2sm841941a12.5.2026.08.14.06.29.38
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a38c9d5eb2sm841941a12.5.2026.08.14.06.29.42
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 14 Aug 2026 06:29:40 -0700 (PDT)
+        Fri, 14 Aug 2026 06:29:44 -0700 (PDT)
 From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 To: vkoul@kernel.org
 Cc: Frank.Li@kernel.org,
@@ -72,9 +71,9 @@ Cc: Frank.Li@kernel.org,
 	linux-kernel@vger.kernel.org,
 	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
 	stable@vger.kernel.org
-Subject: [PATCH 1/2] dmaengine: sun6i: fix non-atomic read of DMA position registers
-Date: Fri, 14 Aug 2026 15:28:29 +0200
-Message-ID: <20260814132906.70322-2-christian.lugnberg@soundtrack.io>
+Subject: [PATCH 2/2] dmaengine: sun6i: fix null pointer dereference in sun6i_dma_tx_status
+Date: Fri, 14 Aug 2026 15:28:30 +0200
+Message-ID: <20260814132906.70322-3-christian.lugnberg@soundtrack.io>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260814132906.70322-1-christian.lugnberg@soundtrack.io>
 References: <20260814132906.70322-1-christian.lugnberg@soundtrack.io>
@@ -84,103 +83,63 @@ List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-sun6i_get_chan_size() reads DMA_CHAN_LLI_ADDR and DMA_CHAN_CUR_CNT in two
-separate readl() calls with no synchronisation between them:
+sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
+descriptor for a given cookie, then unconditionally dereferences the
+result via to_sun6i_desc() before checking whether the pointer is NULL:
 
-    pos   = readl(pchan->base + DMA_CHAN_LLI_ADDR);
-    bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
 
-DMA_CHAN_LLI_ADDR holds the physical address of the *next* descriptor the
-engine will load once the current one completes. DMA_CHAN_CUR_CNT holds the
-remaining byte count for the *current* descriptor. If the DMA engine
-advances to the next LLI entry between the two reads, pos becomes stale: it
-still points to what was the next descriptor at the time of the first read,
-but that descriptor is now the current one and CUR_CNT reflects its initial
-(full) byte count. The subsequent virtual-chain walk starts one entry too
-early and accumulates an extra full period's worth of bytes into the
-residue estimate.
+    if (vd) {
+        for (lli = txd->v_lli; ...)
 
-For ALSA cyclic buffers the over-counted residue can reach the full buffer
-size, causing the computed playback position to appear to jump backward to
-near zero. The ALSA PCM core treats such a backward discontinuity in hw_ptr
-as evidence that the buffer has underrun and declares an xrun.
+vchan_find_desc() returns NULL when the descriptor has already been
+completed or is in-flight on a physical channel and no longer present
+in the virtual channel's descriptor list. Dereferencing NULL via
+to_sun6i_desc() in that case is undefined behaviour and will oops on
+any architecture that faults on NULL pointer access.
 
-On the Barix IPAM400 (Allwinner H3, kernel 6.12) this manifests as audible
-glitches accompanied by spurious xrun log entries, confirmed by two
-independent observations:
+Move the to_sun6i_desc() call inside the if (vd) block so it is only
+reached when vd is known to be non-NULL:
 
-First, the ALSA buffer in the affected configuration is 2 seconds deep with
-a 500 ms refill period (the interval at which the player software wakes up
-to top up the buffer). For a real underrun to occur the player would have
-to stall for the full 2 seconds without writing any audio — effectively
-impossible under normal scheduling conditions. Yet xruns are observed
-regularly.
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    if (vd) {
+        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+        for (lli = txd->v_lli; ...)
 
-Second, the underrun duration reported by the kernel at xrun time is
-~30 µs, roughly one audio sample at 44100 Hz. A genuine drain of a 2
-second buffer cannot resolve in 30 µs; only a phantom position jump
-caused by a register read race can produce such a number.
-
-Observed on a 44100 Hz stereo S16_LE stream:
-
-  $ cat /proc/asound/Codec/pcm0p/sub0/status
-  state: XRUN
-  delay: 0
-  avail: 88200
-  avail_max: 22514
-
-The avail_max of 22514 frames (511 ms) matches exactly one ALSA period —
-the amount added by starting the LLI chain walk one entry too early.
-
-The race window itself is narrow. Each DMA descriptor covers approximately
-88 samples (~2 ms at 44100 Hz), so the engine advances to a new descriptor
-roughly every 2 ms. The two readl() calls must straddle that exact boundary
-for the corruption to occur, which explains why the bug is intermittent.
-
-The bug is further confirmed by the xrun_debug bit 2 toggle (jiffies
-position validation). With it enabled xruns cease immediately and do not
-return; clearing it causes xruns to reappear within minutes. This on/off
-reproducibility isolates the fault to the hw_ptr position reporting path;
-the DMA engine itself is functioning correctly, as evidenced by hw_ptr
-advancing at a steady 44100 frames/sec between events:
-
-  $ echo 4 > /proc/asound/Codec/pcm0p/xrun_debug  # xruns stop
-  $ echo 0 > /proc/asound/Codec/pcm0p/xrun_debug  # xruns return
-
-Fix this by re-reading DMA_CHAN_LLI_ADDR after DMA_CHAN_CUR_CNT and
-retrying if the value changed. This double-read pattern guarantees that
-both registers were sampled during the same descriptor interval. The cost
-is at most one extra readl() pair per call in the racy case, which occurs
-only at descriptor boundaries (~every 2 ms) and is negligible.
-
-Fixes: a90e173f3faf ("dmaengine: sun6i: Add cyclic capability")
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-sonnet-4-6
 Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 ---
- drivers/dma/sun6i-dma.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/sun6i-dma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index f47a326dd7ff..04fe1f5042e9 100644
+index 04fe1f5042e9..7704b016aed8 100644
 --- a/drivers/dma/sun6i-dma.c
 +++ b/drivers/dma/sun6i-dma.c
-@@ -354,8 +354,10 @@ static size_t sun6i_get_chan_size(struct sun6i_pchan *pchan)
- 	size_t bytes;
- 	dma_addr_t pos;
+@@ -981,7 +981,6 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
+ 	struct sun6i_pchan *pchan = vchan->phy;
+ 	struct sun6i_dma_lli *lli;
+ 	struct virt_dma_desc *vd;
+-	struct sun6i_desc *txd;
+ 	enum dma_status ret;
+ 	unsigned long flags;
+ 	size_t bytes = 0;
+@@ -993,9 +992,9 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
  
--	pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
--	bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
-+	do {
-+		pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
-+		bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
-+	} while (pos != readl(pchan->base + DMA_CHAN_LLI_ADDR));
+ 	vd = vchan_find_desc(&vchan->vc, cookie);
+-	txd = to_sun6i_desc(&vd->tx);
  
- 	if (pos == LLI_LAST_ITEM)
- 		return bytes;
+ 	if (vd) {
++		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+ 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
+ 			bytes += lli->len;
+ 	} else if (!pchan || !pchan->desc) {
 -- 
 2.54.0 (Apple Git-156)
 
