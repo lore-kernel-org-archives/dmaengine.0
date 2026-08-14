@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698B326FA60
-	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 05:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCB733F5BC
+	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 05:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786684252; cv=none; b=Gu3YyPCPGUKw9zCZRsdAlDblQqgFxI4eGpYVzaaUM6QxRiwffoJWSdzh6W0dQkWGoH5U8ZjuwI5/P8tn8+rQRS7TvJDrvqoq5j93QLhtoTmfzur4yaSLLZpRbYAA8FwPI0mp2poXSyjkP5bCx9Pr4iPSb9ejEn4FESG7sjTIq8w=
+	t=1786684352; cv=none; b=bUAwaXSEyJZZdzN9YWEVKc0Js2vBKWrL6ehQVg0XEqiVnvnwZtEAl1NqmJoJWlcZjDZKOo+w+uniljkQIC9IdIA4UvTXwfVsMmgBhsevMK2Z3WcXDIstr3b7o7t+H23AoWn20KhICyngqDrTIz50s1ULUF4mKBAE7rEIldVjdXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786684252; c=relaxed/simple;
-	bh=nQ8jFePROpMbjkfNpckcckBmPNqPtMJy3/NNyW7iaK0=;
+	s=arc-20240116; t=1786684352; c=relaxed/simple;
+	bh=I8hbI9zrafhvmXtSjeuBVNDDOi1FR2J1TLKit+8jGL4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=UkQjXK/wOsLh89d4+us2gamlzivuYQOpU3EPIqi3ud6j+hhEBuhhuSMVOLEp0i3mnRFE3T7UKFkX3uPVpo4UZw640La1sRSEKW2CTNsVu7YRI+wUlxLX2+u1Ok2krCCxZG/mFQgFp8kEDSqZuSmTpeAK1dL9IN/KblPCx9gLrOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hmZz+0Nr; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=nAZDWhM3I4u03LS7buMLr4TjNoQ2lmZAL50CDFbOmSg3CCFzpx+dwjG8GxJRWXz0GTKI9SQrLTB8rDbj3alNragBL30eBBcxyHsvbLVZT2wj/rPqrd2ftvxhrO1KXBv2EioDpjWRKnG6CC2ymptqfWHkFmIBC4CJm4INnHwWcuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlbASAIZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hmZz+0Nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B685F1F000E9;
-	Fri, 14 Aug 2026 05:10:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlbASAIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471271F000E9;
+	Fri, 14 Aug 2026 05:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786684251;
-	bh=I9oQxfowTe/OxSp9iEyH1C/BxkL21aJAY9jamzdszfk=;
+	s=k20260515; t=1786684350;
+	bh=YHb9FHobju+T18xVqqipjMsIxrwQBBO50UL3WFSxe3w=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=hmZz+0Nrun1+k6R10CrtlWnPtp+FaumdI0dDTg3iAzF+jmoSdlX/fcgAmDX1LWVrb
-	 7UNPTc3pk8Gzm9O0FNGhdjDfkOXeq/9yCApsllk+yWpioPduOozYvZRdTvxKwtN44u
-	 //rZZqA65aVhYiUFTjndHSc6rhOYzSvujeIiVPrlfgwcejIP6TwAXPYdfX7ceW2Eja
-	 nl1mBsyv3aVaJjYc3Cdhd7aXxEA50M95BiICNg4ILNkwfPbDdIoLOdSW65xb9y+Onw
-	 m1TJwdMLYwYsN/CWnmXII7ug0L/MfROMwCO5F9IAnWfjsxxYZ0x1pPVqW4JAqHKj7T
-	 uXF4Yrwzg/bvw==
+	b=SlbASAIZ2g/e0JMD8pjtZf4SHQSVvG2p4jmnEOBtpPRxRXhORj2OSkzW/oda/DLxk
+	 p3ACiMppzU/A21paIWPqIT2OLuecdfTVvJA6Y9l9JlONgOhtf0qk/4rbgtvtHyQZAy
+	 g0jy16N2vjYzOBGGUQgU+Xd53UMZOxDina2pIzp3u+E4xg/rX0vgtRAiuvB0zFr6qN
+	 WmpORC6R0kW+4dI4PVx0TU0b0KFFcbDSUW0sH4/+hwwwDejoDyFVgNtof9xM5jmR/w
+	 5QSlUpAX2nAebI/Juns5wWBGbU9GPWgjckeScknwtMEXulrOmqit6vLXc0lNiAvp5G
+	 5iLAzV8xHsMrA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH V2 6/8] dmaengine: zynqmp_dma: Use of_dma_is_coherent
- for dma-coherent
+Subject: Re: [PATCH V2 4/8] dmaengine: zynqmp_dma: Fix stale kerneldoc
+ comments
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Golla Nagendra" <nagendra.golla@amd.com>
 Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260814045616.1661199-7-nagendra.golla@amd.com>
+In-Reply-To: <20260814045616.1661199-5-nagendra.golla@amd.com>
 References: <20260814045616.1661199-1-nagendra.golla@amd.com>
- <20260814045616.1661199-7-nagendra.golla@amd.com>
+ <20260814045616.1661199-5-nagendra.golla@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 05:10:50 +0000
-Message-Id: <20260814051050.B685F1F000E9@smtp.kernel.org>
+Date: Fri, 14 Aug 2026 05:12:29 +0000
+Message-Id: <20260814051230.471271F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,95 +49,81 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing hardware context restore on system resume leads to DMA dat=
-a corruption.
-- [High] DMA descriptor structures lack explicit little-endian types, break=
-ing on big-endian kernels.
+- [High] Race condition causing list corruption and double-frees in `zynqmp=
+_dma_chan_desc_cleanup()` when client callbacks terminate transfers.
+- [High] PM runtime usage counter leak in `zynqmp_dma_probe()` error paths.
 --
 
---- Patch [6]: [PATCH V2 6/8] dmaengine: zynqmp_dma: Use of_dma_is_coherent=
- for dma-coherent ---
-commit 85ed10a27c3d9299f4dbcb91c70a55052ad9638d
+--- Patch [4]: [PATCH V2 4/8] dmaengine: zynqmp_dma: Fix stale kerneldoc co=
+mments ---
+commit 50bd84a068af6c47ff8d29181173cde44baa590d
 Author: Golla Nagendra <nagendra.golla@amd.com>
 
-dmaengine: zynqmp_dma: Use of_dma_is_coherent for dma-coherent
+dmaengine: zynqmp_dma: Fix stale kerneldoc comments
 
-Use of_dma_is_coherent() instead of parsing the common dma-coherent
-device-tree property directly.
+Correct kerneldoc comments that no longer matched the code.
 
 > diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_=
 dma.c
-> index 5e81e0d950e8f..194abfd6cb25d 100644
+> index 22b517c570038..a2fbefbb43b65 100644
 > --- a/drivers/dma/xilinx/zynqmp_dma.c
 > +++ b/drivers/dma/xilinx/zynqmp_dma.c
 
 [ ... ]
 
-> @@ -947,7 +948,7 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_de=
-vice *zdev,
->  	if (match_data)
->  		chan->irq_offset =3D match_data->offset;
+> @@ -617,7 +617,6 @@ static void zynqmp_dma_start_transfer(struct zynqmp_d=
+ma_chan *chan)
+>  	zynqmp_dma_start(chan);
+>  }
 > =20
-> -	chan->is_dmacoherent =3D  of_property_read_bool(node, "dma-coherent");
-> +	chan->is_dmacoherent =3D of_dma_is_coherent(node);
+> -
+>  /**
+>   * zynqmp_dma_chan_desc_cleanup - Cleanup the completed descriptors
+>   * @chan: ZynqMP DMA channel
 
 [Severity: High]
-This is a pre-existing issue, but does the system resume path fail to
-restore the DMA hardware register context?
+This is a pre-existing issue, but could there be a race condition in
+zynqmp_dma_chan_desc_cleanup() if the client callback terminates the transf=
+er?
 
-A system suspend-to-RAM cycle causes the PM domain to power off, which
-wipes the DMA register context. Upon resume, zynqmp_dma_resume() calls
-pm_runtime_force_resume():
+When iterating over chan->done_list with list_for_each_entry_safe(), the lo=
+ck
+is dropped before invoking the callback:
 
-drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_resume() {
-    ...
-    if (!device_may_wakeup(dev))
-        return pm_runtime_force_resume(dev);
-    ...
-}
+	spin_unlock_irqrestore(&chan->lock, irqflags);
+	dmaengine_desc_callback_invoke(&cb, NULL);
+	spin_lock_irqsave(&chan->lock, irqflags);
 
-This re-enables clocks but doesn't call zynqmp_dma_init() to restore
-critical registers like ZYNQMP_DMA_DSCR_ATTR and ZYNQMP_DMA_DATA_ATTR.
+If the client callback calls dmaengine_terminate_all(), it acquires the loc=
+k,
+empties the done_list, and moves pending descriptors to the free_list.
 
-Will subsequent DMA transfers proceed with non-coherent hardware defaults
-and silently bypass CPU cache snooping?
+When zynqmp_dma_chan_desc_cleanup() resumes, it will continue iterating usi=
+ng
+the stale next pointer which now points into free_list. This could lead to a
+double-free when zynqmp_dma_free_descriptor() is called.
 
+[ ... ]
 
 [Severity: High]
-This is also a pre-existing issue, but are the hardware descriptor fields
-missing explicit little-endian types?
+This is another pre-existing issue, but does zynqmp_dma_probe() leak a PM
+runtime usage counter in its error paths?
 
-The hardware descriptor layout uses native C types instead of __le32 and
-__le64:
+If initialization fails after pm_runtime_resume_and_get(zdev->dev) succeeds,
+the error path jumps to err_disable_pm:
 
-struct zynqmp_dma_desc_ll {
-    u64 addr;
-    u32 size;
-    u32 ctrl;
-    u64 nxtdscraddr;
-    u64 rsvd;
-};
-
-When the driver is built on a big-endian architecture (like ARM64 with
-CPU_BIG_ENDIAN), the native assignments in zynqmp_dma_config_sg_ll_desc()
-will store values in big-endian format:
-
-drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_config_sg_ll_desc() {
+drivers/dma/xilinx/zynqmp_dma.c:zynqmp_dma_probe() {
     ...
-    sdesc->size =3D ddesc->size =3D len;
-    sdesc->addr =3D src;
-    ddesc->addr =3D dst;
-    ...
+err_disable_pm:
+	if (!pm_runtime_enabled(zdev->dev))
+		zynqmp_dma_runtime_suspend(zdev->dev);
+	pm_runtime_disable(zdev->dev);
+	return ret;
 }
 
-Could the little-endian ZynqMP DMA hardware misinterpret these swapped
-sizes and addresses, leading to corrupted DMA transfers and memory corrupti=
-on?
-
->  	zdev->chan =3D chan;
->  	tasklet_setup(&chan->tasklet, zynqmp_dma_do_tasklet);
->  	spin_lock_init(&chan->lock);
+It calls pm_runtime_disable(), but it doesn't seem to call
+pm_runtime_put_noidle() to drop the usage counter acquired earlier.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814045616.1661=
-199-1-nagendra.golla@amd.com?part=3D6
+199-1-nagendra.golla@amd.com?part=3D4
