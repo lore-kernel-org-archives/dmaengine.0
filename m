@@ -1,161 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877174749FD;
-	Fri, 14 Aug 2026 13:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC2414883F;
+	Fri, 14 Aug 2026 13:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786714897; cv=none; b=mIZJ1I2cw/Ajt4nhxfOcoPx7maKk1dxLTIPj6XTdMS48FNd1y6ORlHRurN4KdlLdblLdASWy6egxSdsP/HUpVSMYLIxIQUYQeB257yoyP//NyECWKUBrRNQvLUj7L33fbqZydhioUpklRVm0e5LQT7neQnaWMKVopRGmX+mOrRI=
+	t=1786715942; cv=none; b=LheQ9n2gc659qDh03lqaCjxzrkZEC5Q1Rk1gEzIEZUbnwLdSQDkNZpOyvC9fsgDJzwbCNPOreDXMhlO+ImT91Ok0X0HPyRTAVNOd3ENV4zgXTt+/5JymSH20Qqtk1EXlDI9nznsDBxVVrSaNwx374kXQVDIldDVEomNKaCxTP5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786714897; c=relaxed/simple;
-	bh=5SUNg3N1/3brsypI8WNQ+FAr89N4r9zgXj/8TE/SUNE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=mZyYNQg+b4OwlmKyR28VM089j1xZIDVM19fEf4pkRcSw8splivdvhcUcSD/Is69fJgYzCrLXDQBBimZg3xRwurr32sIM+1YFch3+6zo6uGK69hMuPoA4+DcBtiqFVH7e9Oo0Iv6QLVkboHiwzZvmx7vTWuhjfM3UDMBkJimEuhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NSgAuVsH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786715942; c=relaxed/simple;
+	bh=7PFhye8VRUBjy6LOyYDfsOK00U7TUS4JwpDlrBFMbRA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qxz4CLOyWYKqhblLJv47xXl5r8ChRZFdsi1ERRNI1Z2+yuOfisW5Pagu2mUdC2RxW5CogNPXaHj9TcdlcmQGglwmVFjLXYLpXgW8gJAS/Kd9LkZOyZ8wCM2fC0f3B9SmV5LQ36Q8RQFsUXbdUN2wt6N6MrO7wv4WjQSavs9ujb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dxRQbI2H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NSgAuVsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02C01F000E9;
-	Fri, 14 Aug 2026 13:41:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dxRQbI2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146EB1F000E9;
+	Fri, 14 Aug 2026 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786714895;
-	bh=mHt869e8TqmWIIaDV0Mn9pbafD8PjpTQUGAPMqVUJTA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=NSgAuVsHZdl+6fqYF+/UhcCsdnrwxyjssvvB2eugF7hAH0/n0MCgmfOSWAg0cICia
-	 QjYEDGdedQXDm/w0RhoByjZL2+Y114/pMVH2vDNMguO7Aw+L9oE3+PR2oTaoMQZBu6
-	 2sbQ2DlTMPatAVX9/3A1FLstLk2Z4h+BDImggUIsDZZIc7tQ+xvifQlZlATKN23Q2H
-	 O08LQozKWIzmxHoRWrF66U/en5XkWtOACkY3G0Hd6XMGmvxxRaQ9wuUA9a3aiBUYdQ
-	 VmJpVq/jYV/454LzVMkVlNpExjzPc52/0QmKtvL/7ghCV/Z21rR7er2T9f1oxBc58a
-	 F2wB+Qn3eCKIg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] dmaengine: sun6i: fix non-atomic read of DMA
- position registers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Christian Lugnberg" <christian.lugnberg@soundtrack.io>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, linux-sunxi@lists.linux.dev
-In-Reply-To: <20260814132906.70322-2-christian.lugnberg@soundtrack.io>
-References: <20260814132906.70322-1-christian.lugnberg@soundtrack.io>
- <20260814132906.70322-2-christian.lugnberg@soundtrack.io>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 13:41:34 +0000
-Message-Id: <20260814134134.C02C01F000E9@smtp.kernel.org>
+	s=k20260515; t=1786715940;
+	bh=sAnqX8NIR8uxSY/uxEI7i3Lm2Ex9D5/7ReWwF0MgyEA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dxRQbI2HAPcW2ipcS3K2SwL+HuYmE5U4dU0SfHBknVKwlvyO8dxaQjVbAXLgWhV0d
+	 RUFtN77k5OKtuewexNYXkLBwFg96wgEXngs52ow9uXktYy/Bspv74tv3TqkmqVFoTd
+	 q6+AbAdoVSPoz9HYxyVEskYHLX5O39FWZMbuaW/gCEpPF2GH+T/96k7hywm152kh2/
+	 CfZoty2zXslI8IenB/i8nJg1ZZGNAJNeTLcRrAd282rnLvn8H1hzJKvZXUm2w36ZM+
+	 58G7Mpw+YmpuySQOlt1Y2oakSnsHrGEozoc/0xVb2pABtI5xtNjxVhhAP4UuN2WxDD
+	 zEHeM6ZuG8qFQ==
+Date: Fri, 14 Aug 2026 15:58:48 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Shuah Khan <skhan@linuxfoundation.org>, Jeff Hugo <jeff.hugo@oss.qualcomm.com>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] dmaengine: dw-edma: Add DMA_SG support
+Message-ID: <ye4bue5a2uq65d5befelyhs3cbezpjytbni4mtnge42ijmaqny@3bijtktlvyrj>
+References: <20260803-dma_multi_sg-v2-0-c12bb05e42d6@oss.qualcomm.com>
+ <20260803-dma_multi_sg-v2-2-c12bb05e42d6@oss.qualcomm.com>
+ <anTbNsOQ02V6umXf@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <anTbNsOQ02V6umXf@SMW015318>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+On Thu, Aug 06, 2026 at 02:06:30PM -0500, Frank Li wrote:
+> On Mon, Aug 03, 2026 at 04:01:44PM +0530, Sumit Kumar wrote:
+> > [You don't often get email from sumit.kumar@oss.qualcomm.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> >
+> > Synopsys DesignWare eDMA supports a linked-list mode where each list item
+> > carries independent source and destination addresses, letting multiple
+> > independent memory transfers be described in one linked list and submitted
+> > to the hardware as a single DMA transaction. The IP processes list items
+> > strictly in order, so paired scatter-gather entries are never reordered.
+> >
+> > Implement the DMA_SG capability by adding a new EDMA_XFER_DUAL_SG transfer
+> > type and a corresponding struct dw_edma_dual_sg carrying the paired source
+> > and destination SG lists. dw_edma_device_transfer() walks both lists in
+> > lockstep, building a single hardware linked-list; a per-entry length
+> > mismatch or premature list end fails the whole request.
+> 
+> It is not as simple as it.  for example, if you want to transfer 9k data
+> from src to dest
+> 
+> src virtual addr 0x1004,        dest 0xA0001008
+> 
+> when map_sg, src's sg maybe
+> 
+> 0x1000  .. 4k   offset 4,
+> 0x9000  .. 4k   offset 0
+> 0xA000  .. 4k   offset 0
+> 
+> or
+> 0x1000 .. 8k  offset 4
+> 0xA000 .. 4k  offset 0
+> 
+> which totally depend on physical address allocation although most likely
+> first case happen
+> 
+> dest sg
+> 0xA001000 .. 4k offset 8
+> 0xA008000 .. 4k offset 0
+> 0xA00E000 .. 4k offset 0
+> 
+> descriptors
+> 1 	transfer 4k-8
+> 2       transfer tail 4 byte
+> 3 	transfer 4k-8
+> 4       transfer tail 4 byte
+> ...
+> 
+> the start address of src and dest is highly possible differences. So it
+> is very hard to match your requirement, both sg's structure is the same.
+> 
 
-Pre-existing issues:
-- [Critical] A race condition between two asynchronously scheduled tasklets=
- can lead to a Use-After-Free when calculating the residue of a completed D=
-MA transfer.
-- [Critical] The hardware DMA descriptor (`struct sun6i_dma_lli`) uses nati=
-ve `u32` fields instead of `__le32` and lacks `cpu_to_le32()` conversions, =
-which will cause data corruption on big-endian systems.
-- [High] Lockless reading of `vchan->phy` before acquiring `vchan->vc.lock`=
- allows a race condition where `tx_status` can report the residue of a comp=
-letely unrelated transfer.
---
+That's the API limitation, isn't it? The callers have to supply the same length
+src/dst pairs to work with this API. But they don't necessarily need to use
+dma_map_sg() which can provide fragmented mappings as you described. They can
+use dma_map_single() or even the bus addresses directly as the MHI client is
+already doing.
 
---- Patch [1]: [PATCH 1/2] dmaengine: sun6i: fix non-atomic read of DMA pos=
-ition registers ---
-commit 6f389dcb6ffcfcb91977e76e00d8063e17e3119f
-Author: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+- Mani
 
-dmaengine: sun6i: fix non-atomic read of DMA position registers
-
-This commit fixes a race condition when reading DMA_CHAN_LLI_ADDR and
-DMA_CHAN_CUR_CNT in sun6i_get_chan_size(). It implements a double-read
-pattern to ensure both registers are sampled during the same descriptor
-interval. This prevents inaccurate residue calculations that caused
-phantom position jumps and false xrun reports.
-
-> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-> index a9a254dbf8cb9..eb060ba2d4738 100644
-> --- a/drivers/dma/sun6i-dma.c
-> +++ b/drivers/dma/sun6i-dma.c
-> @@ -354,8 +354,10 @@ static size_t sun6i_get_chan_size(struct sun6i_pchan=
- *pchan)
->  	size_t bytes;
->  	dma_addr_t pos;
-> =20
-> -	pos =3D readl(pchan->base + DMA_CHAN_LLI_ADDR);
-> -	bytes =3D readl(pchan->base + DMA_CHAN_CUR_CNT);
-> +	do {
-> +		pos =3D readl(pchan->base + DMA_CHAN_LLI_ADDR);
-> +		bytes =3D readl(pchan->base + DMA_CHAN_CUR_CNT);
-> +	} while (pos !=3D readl(pchan->base + DMA_CHAN_LLI_ADDR));
-> =20
->  	if (pos =3D=3D LLI_LAST_ITEM)
->  		return bytes;
-
-[Severity: High]
-This is a pre-existing issue, but can sun6i_get_chan_size() be called with
-a stale pchan?
-
-Looking at sun6i_dma_tx_status(), the pchan pointer is read locklessly:
-
-    struct sun6i_pchan *pchan =3D vchan->phy;
-    ...
-    spin_lock_irqsave(&vchan->vc.lock, flags);
-
-If the sun6i_dma_tasklet() reallocates this physical channel to a different
-virtual channel before the lock is acquired, pchan becomes stale. Once the
-lock is held, sun6i_dma_tx_status() fails to find the original descriptor,
-falls back to using the stale pchan, and calls sun6i_get_chan_size().
-
-Will this result in calculating the residue based on a completely unrelated
-transfer?
-
-[Severity: Critical]
-This is another pre-existing issue, but is it safe to trust pchan->desc when
-calculating the size?
-
-In sun6i_dma_tx_status(), if the descriptor is no longer in the active list=
-s:
-
-    } else if (!pchan || !pchan->desc) {
-        bytes =3D 0;
-    } else {
-        bytes =3D sun6i_get_chan_size(pchan);
-    }
-
-If the vchan tasklet has just run, it might have already freed the descript=
-or.
-When sun6i_get_chan_size() is called, it dereferences this dangling pointer:
-
-    struct sun6i_desc *txd =3D pchan->desc;
-    ...
-    for (lli =3D txd->v_lli; lli; lli =3D lli->v_lli_next) {
-
-Could this race condition between the asynchronously scheduled tasklets lead
-to a use-after-free?
-
-[Severity: Critical]
-This is also a pre-existing issue, but does the hardware descriptor layout
-properly account for CPU endianness?
-
-In struct sun6i_dma_lli, the fields are defined as native u32 rather than
-__le32:
-
-    struct sun6i_dma_lli {
-        u32         cfg;
-        u32         src;
-        ...
-    };
-
-And in sun6i_dma_set_addr(), values are assigned directly without
-cpu_to_le32() conversions:
-
-    v_lli->src =3D lower_32_bits(src);
-    v_lli->dst =3D lower_32_bits(dst);
-
-Since the DMA controller reads these values from memory, won't this cause
-data corruption and DMA faults on big-endian systems?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814132906.7032=
-2-1-christian.lugnberg@soundtrack.io?part=3D1
+-- 
+மணிவண்ணன் சதாசிவம்
