@@ -1,254 +1,165 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020132.outbound.protection.outlook.com [52.101.229.132])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010043.outbound.protection.outlook.com [52.101.193.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156112882CD;
-	Fri, 14 Aug 2026 02:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.132
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F1234A773;
+	Fri, 14 Aug 2026 04:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786674682; cv=fail; b=OR3lpQAwytD8M4lkrOAH5Blbhb2fCB0+GofgvsoK8IkZJNvfqVuoHCmWv4nzwf+IyoG+81aLakjUsmP0EHqbw7nq4SrN3eyr3IkhsymB4TVdIqVfbEv35vakzaKJ5BJiHhBbs9a59qXXwKNPZNv+mOF21oXx9ohbLzBFW/+ZV+k=
+	t=1786683393; cv=fail; b=mXGMbpMf0btf/im46EvvX/GUJ3ab67CU1juOTzekzEXT3aJzYDCdBfcS9JQ4Wl2UG1C7VsT5mJsphvtfjspMPDP4dNrhedXPl/T0CmcaaDCbgM9KAbgkNQ6h4Qfg6y6rgmGgKOdpWClBnu8r5kIp97f81rByBUyeCXMp8jl56Z8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786674682; c=relaxed/simple;
-	bh=aVdZONhU8cd5GStzz9Kz4XYJ8L26giBgKWcP/LoDJQc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=igs6KnjIBDR7den2Z11LtQymGBfnB6RdxhDTHwtkdItsPcSIpG+zn1VgIAvysHyViGFkov7bBrOcBUoVzuM2Qe5N7wWKm5LNjSAyPunh6NQobU/UkohfQ/+yOdJ7nssteCYwxXh8A8+uQcrivWchRDUUdHBtwmSnoMKwSGDEvw4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=abRnxN45; arc=fail smtp.client-ip=52.101.229.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	s=arc-20240116; t=1786683393; c=relaxed/simple;
+	bh=Ut8z95Ox743MpwB00zExTdYMwiC6AnHAq2Fo93zY7Ro=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DkMQz6bXGFBaYf/DZWwWWgnKP0hiQLNHoT3bGcfMatdSE6pSNJFvuo4Pg9ttAh7xre96ULNx9wGCq9vN0npkGlZnsQNhawAUzIzzfPOzGitHP9wnCxQC3PRY19mCjk/hsDpJQHeYFDPqvxIollY52QiQxIZP4CXZV0F9XOJowdk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=VEnePk79; arc=fail smtp.client-ip=52.101.193.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="abRnxN45"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="VEnePk79"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jI0V1QExiC0m7T1JtDAB2OqwWKYQ8bZO31Bn77ZX8GMaEs26o/919NQhJcVfq+su4gDIZlS6eUpE9Tf5Ttqys2PkqvKCeuL4aTcNCWbgZlACEmlLtgoxOe8qIXa1jCCvMsZ45WHh+7sr5yUI+BE7mUuSJjix2OMLpNSCdGQPvs9Gl027XEmzr2BwC5G6apfX/7VvG3fZjtimW6LLZ+VkVOb6dwjDL5I+3woLjp2UN5FmWOE7ef4ji8kuaZ3xni6pZ7z7fn5nRFx15KanW9G+teWm44VffFtAlXy7sF8mUgf8K9Iw88R/g6iEpGmzsuVZbMsrShEcmKyAeM13iKTnPg==
+ b=BZIqVFgd3Am5RDaZ3jp9jxl4n0hCl2EiF3buE3LL8ypgliNNBimXnbo9P15t3nYIlrWyUfYU//rKv181BqSPqmCod5659LvZKDfGm3WPxprg9L3alq8ai6nf4XG3/GkgJAU5J8cMLXsgQrTjN8dA6+lJ+ynVFSeclKGDFJ8oxIGZHhsTpQCH5tTbYh7d7s8jrw5t5jiRjwSVXeHDin8R4l8NfpOcy1BTx4nOM3udeA2RsVVvzQXLag+uOOawMvP9yCnAkMAQausQFjyJK/3zjalVP/BGdeA1YVtxrFgjNeKOWB2HnwdGaO7D/FhhbB7gqdni8NYuIyQuf6+kERGKaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Oskkx3//QqW481C12Tb7vH3Z3pdSzgMKdCcMZf0K8uY=;
- b=NYicEKLuRb1dkhxSkNNQVjg28GpUTtzZ8vlXw5UA59jorKlcTH4SR1j1jnjOeZdI5Ky0CbS39ARTlToRwNHTwJa04LG4wv0NCBJDWsSv1G1ajL68G0wYtR+yPCsKUyZhyFNyKd12wt+JLToQ+kOyXMy6sWqIXlFN25XmZUsxNigfMnRiupV9m3Llcwk35c65fi3NJxP5go9l/Ne0tPbDTZXOuD4BJl03khgwStzE/92/xRUBHEcU817qYhLRBKeOn1ZIFwbYKPXvklSdZ8wjoq3WDcVRWKMqCMRMnJiRyYf//qX5Uhw/F640ZLEP8MXUMU72if18TM147b5/3NVZyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
+ bh=pUiY/TxexoB8QCeqahFlrpDUmazXn4r/4F6sg0if3Ok=;
+ b=lrlYuA23xXHS1/J908FHIZgkRg1JbYZOs5MLv76jYpGccQpQFb2pC4xCeYesrT/ii1VwUzW8wAjdb+gUT4UAiySpsna4o+gV6jP4ZswkuzwWAaOBCIOyTNzx2kJl5WDUok+bTl0pdf6qddefY8rUTFsvD2OS0HML1+RSljxqk07QWG+AycJ2Qm3QRtu/8+Vnz0DE9ddUFVvJA1A/dbbZ8jL7ww/E+W+0F0I2+g4bEWvwdFt9ImWh1svHR3svVFFZ8cKw0/y9YNF7ezAA9LnByj3iwOPOtCH2E5SuvyK4mjmEULaK+Z0WVJ3Xayk3ZLRUgWB93fIwL9ag/WUPO0Y9yA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Oskkx3//QqW481C12Tb7vH3Z3pdSzgMKdCcMZf0K8uY=;
- b=abRnxN45usQHNmNNjXcaYZ+P5Sb2memJLhRcvT6p9TWIQHid3GssvqNu+9McNGQfSCiJmfI8datshXRf7L9wtYLGCOqcveHARWf9k7gGRveS341qwUncrA3d5slmOJpOByAngd7LcBtKDIYgoeGD9OKBC2Kh457QuHMnLnJWNc4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TY6P286MB7916.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:3a5::5) with
+ bh=pUiY/TxexoB8QCeqahFlrpDUmazXn4r/4F6sg0if3Ok=;
+ b=VEnePk79jguUnebwlrzCcWmzgOAMX3/Z9bwaatOz0I8bLiKh1HzeKByS26a37MmAMenWXz3CTEaAYjTGKABQcDsZng8Yi4lQeflL1ldv21R7+K1gNAAdmGx1IrokV2/6Ma0GS0htHfWJMhNT5dgvpPUbMtmjg+QVtp7bhN1z2tc=
+Received: from DS1P222CA0003.NAMP222.PROD.OUTLOOK.COM (2603:10b6:8:454::10) by
+ SJ0PR12MB6925.namprd12.prod.outlook.com (2603:10b6:a03:483::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 02:31:17 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%3]) with mapi id 15.21.0315.011; Fri, 14 Aug 2026
- 02:31:17 +0000
-Date: Fri, 14 Aug 2026 11:31:16 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Randy Dunlap <rdunlap@infradead.org>, Vinod Koul <vkoul@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
-	Damien Le Moal <dlemoal@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Marek Vasut <marek.vasut+renesas@mailbox.org>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
-	linux-pci@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v7 01/10] dmaengine: Allow drivers to assign static
- channel IDs
-Message-ID: <e25tfpz2yupm2mvhc2npr22uh2lvbhjioie7uv6ehruaxplyvg@qp62dlnvcyig>
-References: <20260813063757.3131865-1-den@valinux.co.jp>
- <20260813063757.3131865-2-den@valinux.co.jp>
- <an4TXwT37vWYEzCn@SMW015318>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <an4TXwT37vWYEzCn@SMW015318>
-X-ClientProxiedBy: TY4P286CA0089.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:369::11) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Fri, 14 Aug
+ 2026 04:56:28 +0000
+Received: from CH3PEPF00000013.namprd21.prod.outlook.com
+ (2603:10b6:8:454:cafe::85) by DS1P222CA0003.outlook.office365.com
+ (2603:10b6:8:454::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.16 via Frontend Transport; Fri,
+ 14 Aug 2026 04:56:27 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH3PEPF00000013.mail.protection.outlook.com (10.167.244.118) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.339.0 via Frontend Transport; Fri, 14 Aug 2026 04:56:27 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 13 Aug
+ 2026 23:56:25 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 13 Aug
+ 2026 23:56:24 -0500
+Received: from xhdappanad40.xilinx.com (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.45 via Frontend
+ Transport; Thu, 13 Aug 2026 23:56:22 -0500
+From: Golla Nagendra <nagendra.golla@amd.com>
+To: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <michal.simek@amd.com>
+CC: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>, <git@amd.com>, <nagendra.golla@amd.com>
+Subject: [PATCH V2 0/8] dmaengine: zynqmp_dma: Fix error paths and follow-up cleanups
+Date: Fri, 14 Aug 2026 10:26:08 +0530
+Message-ID: <20260814045616.1661199-1-nagendra.golla@amd.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY6P286MB7916:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2737148a-7897-4d8b-c3f8-08def9ac1e58
+X-MS-TrafficTypeDiagnostic: CH3PEPF00000013:EE_|SJ0PR12MB6925:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75728702-93f7-456a-151e-08def9c0664c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|1800799024|23010399003|366016|10070799003|22082099003|18002099003|56012099006|4143699003|10067099003;
+	BCL:0;ARA:13230040|36860700016|82310400026|1800799024|23010399003|376014|18002099003|56012099006|11063799006|6133799003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	fl/Ng36H1eokINR3d+CllGeAjLPAKZW82KJdINCaMnyl2l2cMzwUi7GzCgPUC915gtpfCKsOzNQ/D8guUdfx0MX2YlcwH/l6ZkGl0Y7eIeICV8oRXq0UzE5t5GOuki2jb4ndlb6WGns7GHtj7AJsdvaO4sItsD1r532dAyJSnKyBsQ9HrK+Jhz9sS9RlrzhP8JiNjgNYsnfCae7YEaUfzVWTWc/rsZlEokpGWYUa5PP4IGDuRZz2XnAz5L3ClN7obJa/sSjIHLIAI0Z2B0mCOvtvushYHBXOHmB89Lj6P4RbFx/dmxqiNI4p8sYXokdWM+1wqVOkNYniMBqpIeX4fzZrsfiz+jb4zYwZWEOdXBxMZSlppgzeHWHXri/gL45WgAN0C752zRB6ZqceQw0zFTrFjxo6mhZeZmMUsQLsRACjYvnf3HdHEqS6WZtwce24lNeAuEo6k/F28/+k+wdvaDWpkgZnecCm57BrWyl3PC/F1C8k8AIOXb/CwrYb7+wEC7RCPP8z+1JwnOTYMazE6q8fGAKlBE6OgvomIVk/WXNWHTpYxHTwcE1EmwOhTppLZwf1Ttn/wFNaqukU/0Tay6iuqEX2QY0SoJfvaEGkKvLrtBUr4tqPFMRKjuwTHXO4q4qpPXqhTPDZgYawaNz+2H28BG2y0TFofBPY6ZKJbhI=
+	b+HUC8Smw39F1/doFqRMPDsUuVxHkuTW05sJHNuhwjDqpGt9UYRlR+GZH6ms22JSRT9prVE3pukVSU97KQVjouNziFxv+TjescXqExr6nVRJhlMS4pACFmOhQIwmZ91o+TPYZkqVyyesJWPJ3igVGS2hvU/8ngIEOftiMkEpVoldkOWpKQ2ftduUKfD7/DAFcHk5ci9kkkNaABFk+BOeIMdzwUe4EthJSd/3m/ZjOyc6ajI9ACK8H/FxXEtgZRQ5oJIvZuRWGSq9dUhc2UG2s7TvFBNxd1rHnQEV74OYY9tGIavVQzDLXCYJIOUTqfYN8PUHPfydSsnWPcUFZEF6ychjn36++WBEtyeOd0o5AMyqRRbTaeKNDVivJk7AJxaT4r1CzEO6+wYizzFRWzFUae+Gw2/OkfPslTAzKDf76uXBKE8blS96aYGgwjY5wUlLJYtPtBfAK2wj6uMTRDGCGbf8cDEw16GCsSgr2QhvzmYaHW47iRUJLJeyADFXPbTGfvrZ5A8QuhQ6skV3jd+ezBn70fuZh6WBF3tfGGFDERpWGwJNy/P8bVHddsm5jpFMNt4QgwLW0AR68iqGVRbY8A+porTS4GV5PA3cMx2iERTmGKn2VM8um1OnOo6ofjYkZDZP7nkpBoWY6oggu0LEWUhQHvuCMC34x3x3aP/7bDStEM5/L3UBJoKFzsGmNXIv8IosHUu9PXAvkRntYRpIMQ==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(10070799003)(22082099003)(18002099003)(56012099006)(4143699003)(10067099003);DIR:OUT;SFP:1102;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(1800799024)(23010399003)(376014)(18002099003)(56012099006)(11063799006)(6133799003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Pr6GGHysSJPUIJyLXhPqZzc030U71GuF3ersD2HjHiHNgNpoVO0ncumXssP7?=
- =?us-ascii?Q?FYOUSn/5rEa03QLrOZp0YePkfr/hRREF4fUABhXGVsF85Bl5n5aF/v+IriHI?=
- =?us-ascii?Q?2z5n1MMveOyJbO1kXMkzfy1dei+i71wcT0Ew+ZY/mS8xHzO4hV6tpSn1/QRr?=
- =?us-ascii?Q?TsfuQ4kQo6TgUTpHutNMJZAyNjz/O5GrI3ufwpKgwS8iZMFfGKzYURuZYjUq?=
- =?us-ascii?Q?f33Ms7kSwF3oDPAaxS6ejwKjq2yJd7U63OaVmxYOs7f/def4JzfgOnAnqRLd?=
- =?us-ascii?Q?/Nc+rlhO2X31+SNf40zqvGAQAF1OR3OeegCmQjyGnjr7yr8NyFhRoQ0Dk4Vd?=
- =?us-ascii?Q?WUqgxZexlZxqw6bQtcUgTeH39FBgICg4HwEk5slErm+OCjWa4x/fMBM9236h?=
- =?us-ascii?Q?PCYIMes8dHnQXv4sHdkfysnhAhQRwKZgHx44Kxg9XqpNff2d0+avki+nfWxx?=
- =?us-ascii?Q?BwdlSHcEuYbf6dkMT7MntDlvn3mq5anAmc+uEyfHuXCegd47ny6dtCthzD24?=
- =?us-ascii?Q?wyqknqscuAMEptfleSxP5jYuaVJsydTB9TNouc051VFuLYYFnKb36bJsD4La?=
- =?us-ascii?Q?AfR55WCKDMMl6xHXAQrna3Gtljo40dvTCVPYN9uMO2odyoz2J42Ub7UymRiS?=
- =?us-ascii?Q?5nibKF1cqGm8LGQUQBVH5ig3xQm6/E5SfBDoIrw2Tbhol2vYBJ7BK5bMqcRW?=
- =?us-ascii?Q?Xer4LVHv5MDdSU+o8ocwREdHoUAZSgD8UVk6B2UXgZaI4Tfa3/W8bvWmxV5p?=
- =?us-ascii?Q?NgE9fwhS3z1iMEUzB2i4q8A4Fihr5CyMOzQnduaDPLg0bVoHoBt0wFz0b/ZQ?=
- =?us-ascii?Q?qQNw0US+sRX8jKPzTjywr33W7TuvE+l8l1rfD2xfXSdxVMf3zSuI51gYT2BK?=
- =?us-ascii?Q?1wgCcgDQw2xPze5X7wgu5b1sLR0SrwjpOvHfmsWnp34eJJBYBoTg3c+9D+q6?=
- =?us-ascii?Q?lceIh/j2+e94R34oErFU2qCohdAnS0C3lQr9+ji9MSloFEQM/Fmk7rMz0MYO?=
- =?us-ascii?Q?Jc0khAARBV+B0JQ1PobLY8Gix3951BKizDuvYdfr/Kt9m8lwb9cMnank0luJ?=
- =?us-ascii?Q?TcG9hh/N056NAigoYc82+/W1vxJi+Aktr+A7LDHO5a4v1O0vkEPrpJp3NgUs?=
- =?us-ascii?Q?ZFFuNxV1DlCdZ4LMAMqOhQ31Nst11B7ncFf7qKnN/lvjSI1uYe0EtQli2a6S?=
- =?us-ascii?Q?KThvWQ+FqRPk9WhLeeVjS+RswJoe1QWeD/5HDC4IKvhq1qoEf8ZQGy3M9sVH?=
- =?us-ascii?Q?tZKOU0SC5V0VIXYwHrDAjiSkds10F9f4c1ojXwEYeEE1plIx70Nm6GVO07IH?=
- =?us-ascii?Q?KU9KpePvI38XR4gg6ZzKUTYKU7aXZQmSsQ9pu6zOTRdm5lEZTVwZcxvwVD46?=
- =?us-ascii?Q?n5el2P+C5LXlUlax7WPoibnS+JkRt1BwxXFhUPN1eXeGTcI9betVwByyBRwb?=
- =?us-ascii?Q?KKl53zPzQWsnQIUV5eQyXUbGNYgBLINPUAUdOhoVnupErwmt+8J3KfywiMTS?=
- =?us-ascii?Q?bbVceiVrNU9eW2lNo6rbjFMVDJh9q/8eiQEUkpAI7rITREL4QdII3Vs7NMqu?=
- =?us-ascii?Q?JClY/fsUE+4OylMEVWtWLEkCjjWVjAUGecL15skCou1vlstHijdg6vU7k8p7?=
- =?us-ascii?Q?dPPceRzhn/Q30gqZ3wubV8iqW5x9sSSRQVlHB1NVxHRB+qzj/XDrJJs4aFiA?=
- =?us-ascii?Q?VcdeXmCbCrmYh/3XuG+/PHnUxf6NrMzFHvzQJMY3ZscD9a2jnfaeMHe7Sy8M?=
- =?us-ascii?Q?JtRhbJGaktIjrloI5JLMYmgVp8M0UfgMGVIO4wfGxK9GaGB61Q2L?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2737148a-7897-4d8b-c3f8-08def9ac1e58
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 02:31:17.3401
+	nfxPsgZedstadsAdPNqVfxOOxpTUUJ29Z1CKCkLgVHHMJ0V0+cBo+ulyLkQgd+7ccWB87POpfIiC6KY4fOwVc2rd4SVfux5Vt4JrB4HXs1EoWG4iWSaFZiHEBlCwT7n2Fed6TjArPG7ks3PWvqeukylBNbVLH5mTinM8Z0j+OHlJJTjBsuqOIfDnP8aW521lKiGhA8oCQpcMoABR14qiPlXD+YS1hzyu4dD9f+hFIj5pGW1C3YGjCPKatSUxrX9MGLeVXJRV9roVcYQL/5sO/Al9ywURQQPKs++UdIUr9Gyc/E2EGWSM6J5dMGPdSpQ0Jg0HRIYHK6EUczuo+zizNfCS1t5iGHansFKJ+6IjVpl622OBphFvwQmpe0mEvdXnfCnwgyBSfBwU9pIGXbUeQOj4vTcASCTGHwAqC+pI47MR5n5OW4XYUrYv3QLlyyfV
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 04:56:27.7945
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: L70pSvhJ9bc1vMhJ3MtLuartL9I3mz406g44nG0JA9MsBEnkQqGY3rZlwsg5s2Z5sthTEsqaR161PlYdoU3C0Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY6P286MB7916
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75728702-93f7-456a-151e-08def9c0664c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH3PEPF00000013.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6925
 
-On Thu, Aug 13, 2026 at 01:56:31PM -0500, Frank Li wrote:
-> On Thu, Aug 13, 2026 at 03:37:48PM +0900, Koichiro Den wrote:
-> > The dmaengine core assigns channel IDs in registration order. If a driver
-> > skips a hardware channel, chan_id can differ from the hardware numbering
-> > and a client cannot reliably correlate a requested channel with hardware
-> > resources.
-> 
-> Provide an example, show DMA enginee use chan_id to locate DMA Channel
-> hardware resource.
+This series fixes error-path cleanup issues in alloc/probe flows and
+applies follow-up cleanups in the Xilinx ZynqMP DMA driver.
 
-Got it, I'll add something like:
+This series fixes error-path cleanup issues in alloc/probe flows and
+applies follow-up cleanups in the Xilinx ZynqMP DMA driver.
 
-  For example, idma32 uses chan_id to select DMA_CTL_CH() and DMA_XBAR_SEL(),
-  and therefore implicitly relies on its fixed ascending registraion order to
-  keep chan_id aligned with the hardware channel number.
+Patch 1 fixes runtime PM rollback when sw_desc_pool allocation fails
+after pm_runtime_resume_and_get().
 
-If you meant something different, please let me know.
+Patch 2 frees sw_desc_pool when desc_pool_v allocation fails after
+sw_desc_pool has already been allocated.
 
-Best regards,
-Koichiro
+Patch 3 fixes channel probe/remove error handling by preserving
+platform_get_irq() errors, initializing/staging chan->irq safely, and
+registering the channel node only after IRQ setup succeeds.
 
-> 
-> other look good
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> 
-> >
-> > Let a driver request an exact channel ID before device registration.
-> > Reserve static IDs through the existing IDA so they remain unique, while
-> > retaining automatic IDA allocation as the default.
-> >
-> > Use direction-flattened IDs for dw-edma channels. Unlike the
-> > direction-local hardware channel number, these IDs are unique within the
-> > DMA device.
-> >
-> > Suggested-by: Frank Li <Frank.Li@nxp.com>
-> > Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> > ---
-> > Changes in v7:
-> >   - New patch. (Frank)
-> >     https://lore.kernel.org/r/lm7tadnxsyrypu4mypptlkx5qkytex4qxsijdr5ydud2n3anvf@yakjfjg5ng4u/
-> >
-> >  drivers/dma/dmaengine.c            | 13 ++++++++-----
-> >  drivers/dma/dw-edma/dw-edma-core.c |  1 +
-> >  include/linux/dmaengine.h          | 20 ++++++++++++++++++++
-> >  3 files changed, 29 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> > index 6ffd8bd82154..cc64a4679e6f 100644
-> > --- a/drivers/dma/dmaengine.c
-> > +++ b/drivers/dma/dmaengine.c
-> > @@ -1078,6 +1078,7 @@ static int __dma_async_device_channel_register(struct dma_device *device,
-> >  					       struct dma_chan *chan,
-> >  					       const char *name)
-> >  {
-> > +	unsigned int id;
-> >  	int rc;
-> >
-> >  	chan->local = alloc_percpu(typeof(*chan->local));
-> > @@ -1089,11 +1090,13 @@ static int __dma_async_device_channel_register(struct dma_device *device,
-> >  		goto err_free_local;
-> >  	}
-> >
-> > -	/*
-> > -	 * When the chan_id is a negative value, we are dynamically adding
-> > -	 * the channel. Otherwise we are static enumerating.
-> > -	 */
-> > -	chan->chan_id = ida_alloc(&device->chan_ida, GFP_KERNEL);
-> > +	if (chan->chan_id & DMA_CHAN_ID_STATIC) {
-> > +		id = chan->chan_id & ~DMA_CHAN_ID_STATIC;
-> > +		chan->chan_id = ida_alloc_range(&device->chan_ida, id, id,
-> > +						GFP_KERNEL);
-> > +	} else {
-> > +		chan->chan_id = ida_alloc(&device->chan_ida, GFP_KERNEL);
-> > +	}
-> >  	if (chan->chan_id < 0) {
-> >  		pr_err("%s: unable to alloc ida for chan: %d\n",
-> >  		       __func__, chan->chan_id);
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index 1f893dc54c79..d214df55da3c 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > @@ -987,6 +987,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
-> >  					&dw->chip->dt_region_rd[chan->id];
-> >
-> >  		vchan_init(&chan->vc, dma);
-> > +		dmaengine_set_static_chan_id(&chan->vc.chan, i);
-> >
-> >  		dw_edma_core_ch_config(chan);
-> >  	}
-> > diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> > index fe33a20abc61..f669b79d7731 100644
-> > --- a/include/linux/dmaengine.h
-> > +++ b/include/linux/dmaengine.h
-> > @@ -369,6 +369,26 @@ struct dma_chan {
-> >  	void *private;
-> >  };
-> >
-> > +#define DMA_CHAN_ID_STATIC	BIT(30)
-> > +
-> > +/**
-> > + * dmaengine_set_static_chan_id - request an exact DMA engine channel ID
-> > + * @chan: DMA channel
-> > + * @id: channel ID, unique within the DMA device
-> > + *
-> > + * Drivers may call this after initializing @chan and before registering its
-> > + * DMA device. The dmaengine core reserves @id from the device IDA instead of
-> > + * assigning the next available ID.
-> > + */
-> > +static inline void dmaengine_set_static_chan_id(struct dma_chan *chan,
-> > +						unsigned int id)
-> > +{
-> > +	if (WARN_ON_ONCE(id >= DMA_CHAN_ID_STATIC))
-> > +		return;
-> > +
-> > +	chan->chan_id = DMA_CHAN_ID_STATIC | id;
-> > +}
-> > +
-> >  /**
-> >   * struct dma_chan_dev - relate sysfs device node to backing channel device
-> >   * @chan: driver channel device
-> > --
-> > 2.51.0
-> >
+Patch 4 updates stale kerneldoc comments to match current behavior.
+
+Patch 5 applies minor whitespace formatting cleanup in
+zynqmp_dma_chan_probe().
+
+Patch 6 switches dma-coherent detection to of_dma_is_coherent() instead
+of parsing the common device-tree property directly.
+
+Patch 7 rejects zero-length memcpy preparations and documents the return
+behavior.
+
+Patch 8 removes an unused define and drops a duplicate interrupt enable
+bit from the default IRQ mask.
+
+Changes in v2:
+- Split the previous alloc_chan_resources cleanup into two focused
+  patches:
+  - Patch 1 for runtime PM rollback on sw_desc_pool allocation failure.
+  - Patch 2 for sw_desc_pool release on desc_pool_v allocation failure.
+- Reworked channel probe failure teardown to use the existing
+  free_chan_resources goto path instead of adding direct tasklet kill in
+  the outer probe failure block.
+- Kept the whitespace-only change as a standalone patch and moved
+  dma-coherent handling to a dedicated patch using
+  of_dma_is_coherent().
+- Updated commit descriptions to match exact per-patch behavior.
+
+Golla Nagendra (8):
+  dmaengine: zynqmp_dma: Fix PM rollback on sw_desc_pool alloc failure
+  dmaengine: zynqmp_dma: Free sw_desc_pool on desc_pool_v alloc failure
+  dmaengine: zynqmp_dma: Fix chan probe/remove error handling
+  dmaengine: zynqmp_dma: Fix stale kerneldoc comments
+  dmaengine: zynqmp_dma: Fix minor whitespace
+  dmaengine: zynqmp_dma: Use of_dma_is_coherent for dma-coherent
+  dmaengine: zynqmp_dma: Reject zero-length memcpy transfers
+  dmaengine: zynqmp_dma: Remove unused define and duplicate IRQ bit
+
+ drivers/dma/xilinx/zynqmp_dma.c | 73 +++++++++++++++++++++------------
+ 1 file changed, 46 insertions(+), 27 deletions(-)
+
+-- 
+2.44.4
+
