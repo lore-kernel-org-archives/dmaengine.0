@@ -1,74 +1,73 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013021.outbound.protection.outlook.com [52.101.83.21])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010070.outbound.protection.outlook.com [52.101.69.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357C52DA756;
-	Fri, 14 Aug 2026 15:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD4D471427;
+	Fri, 14 Aug 2026 16:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786722470; cv=fail; b=Xln4Hhr6IxV5ByiZu4JVC9Vnpafd6snzwwuRLWA2Ddg7jaCfJxK7lCNF2sfaFvaHgJWIYNefsHklQh6qJXU2JMWDLEDdntAeyem26Kt//706UgGRrXDZOBcl5rDoWg8yhrpWqTGcmyqCw7wPp+yfmnMF3zas16XXUqhL8rlYgJM=
+	t=1786723739; cv=fail; b=oG+P2DIatIe8gkk+5P0lpa/ziB2w7vp7AZSPJNVYzdASO/wnJxQrqNILovjldT2D9ptSvksjYf8hPgOxNSByuG8P4n/01pi004lQSl2tpKS75WkhU1wJ2T3Uxbl1oN69ZNvPoMa8WweYsTDxZMSpFzKP8Pk1K4YK6/m9CwXDRco=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786722470; c=relaxed/simple;
-	bh=73cnDszZdzHdt5PBfYjKbcLbivwT7VjmOv/VxakQz4A=;
+	s=arc-20240116; t=1786723739; c=relaxed/simple;
+	bh=n0Av9xC8g2dKe4FC/hnenCGHpGvUMVB5bGRu0mRv1Vo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Dp8Mdi8LRrx9uut+WE7zwyhqikyqgdXiYbxJq3oUfIaq7z9P/bwNn72TgZ/bpKJUrINim70r0BqEQGTWQs1g6aP4Ey1vq/1KlrZwoz7VPFgRXwMyUAnRJ06HLCpSP1GfSBxDhPx/6/lkhn+LoEr6O1Eu0jrj6kHYbAoAOS0KcGY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=MCmgOcuR; arc=fail smtp.client-ip=52.101.83.21
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lXu98e4+n16FjO7Q3CDarkjGz4D1OafZi+tQROJDqOcssMmx+iFi9BDh6qgElPc4wWHLh6PGPKdBiY2AcFulKJekWrGPofYN73KQHVi0dDTTTAsfBsxirQBnOcKGNKbyuaHUdNbTxyLGGajq/aaYhlE5Ad7W/bAmI2seOQ/tQpo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YLqDmZ1+; arc=fail smtp.client-ip=52.101.69.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="MCmgOcuR"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YLqDmZ1+"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=itkOFmsALZVazGmOG/rTn7V0MWdLaDLkHFQvyJqQ8K/7djxIk6fNAmBL3A84Ne5/3MLBw20vH5+Eg2ktXu64Bpqclpq7zl+l4KgloMSfMduoW+0SCtj3pRABRk2liS/mt5RSZ20R8lrZ5C+RrfwyN9TyHWnhBTHtlaSYP+eI0ZmVV6vIcjJXT9QNyue5KJ2P0JPakww5BbfF5umChYQyd/piCPuYA6ByNvl5W9626q5gT2hbl8us/su9wC3Ar+KmERkxM4QBiZD5YBSdlN9Sfk/F3+Hzoug2uafjJOD+h68ihxQqk0fOayh2ootmHIaRYWlpLWH60Ax6uoF//4gIlw==
+ b=pscZSoiKBo8XiCfQ7e5UdAm8W8X7cr41UVwSKp3PENdvMSzjZNDTjdDxLmD+1DHRfwBFzlQmEfZgH8OfEE3tcw7f/V0fftmEVL5ixl75/KPc0oaLxsdteuVJ+I6CBwxaylcelLYFWlxOqxyapudUu9TB3PWcfKJbse6CAFH5lCPu/4IGDpolYXnV5zUROoUrh4N9ZEoAPFXOW5CKDumTmkkiOESmmYO93LITZPgx8+eauxWlJTTbbT/1YZtLakXED5HWSAaTUZIlRLRRhAAJqQEUTWTy0QJD/f2kjQvbOy1h4rI50/e8kTAI1OAl29L0GDjXiQZ+/J26jmu8v6JbnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m49FVPjGWUmwBS1OsQh5dipdLLbP+rf6g78p/z4MWV8=;
- b=kMpXny2Q2g5fAbi3YSZXfKsrD+TBH7DCkc1CGEd9q03zo6OlArOEmZ3KYQN54s9Qu4WU5KoIG01icHuIctx8pTIf/mlOvnqtWg/H1xFw1n1go/qmwvr4nLPv8UGumurwwHOIkAxotDlrYeA6t+Kh8Dlju7YZbtJx8GGj6frJS2haippUxsXjYsuGAVrX1V+3k0w2CEcmstTdPXS2xxYv0V0AeifhdYrYnTGWzvCyqzT6O0fX8A8y0CfRmP+2no4vQONwRZ05gQGN9TNe2LJm+x6WlbNH5AX1f9X63eEobuGwPQuzcPU3+OnjBwaLurqZu0yXbWn9Gc5Bf6wpUghRyQ==
+ bh=qIYFTuWcetMkp02/7n8Xksd1zMNgGFujeIaX+zSNr3Q=;
+ b=LH8GWOsbAbfzZn4mK9xmgfkhrRkxdsnNGYThMUFu3CLtlgK9AQI0kmuWrx5BQYRjGZOXoRc7Goy0fUsgpefN0lnBkhxUC4dZ0q7g15OxECez+y2xs6gJM7Bi07nzjnFhs0XbR0Eek5uXz4kMO144Uoso6r4MOkL/sU5eoOrvwlF+/+NQlOzQuJ1pSBHpGDMrlfWEPTmffMxcnUHQDsXmBqWkBeN2LM+QqOjTkSQKe4rJbdFI1R+ITITepg4hp4Zk5czmE3kvkhjuCi17nRoNJ4afAPiqnZKIrc/RHmFqYsyhIyIvKDsdGX6xQYbj19SYuxIMyVDMheEymVc4llhcfA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m49FVPjGWUmwBS1OsQh5dipdLLbP+rf6g78p/z4MWV8=;
- b=MCmgOcuRzC6legk8OhStYzev6DjuONXrjYqqwX5TuD+uo+sShPTerW59VxLRrJGJ0Qb2A/7rHCrtJKld5ubfoBXm2dZ9cE/DSRRXJ5+FMfvEc01DBPMNkH6VcGL/7tecOunWpsFnogCSuA+jQcNGu/IgzsVKAQLfmPHC6/q9CMev7wg05hrDqDvvdi7n+cMP3w5CGtrAd/qkx9QIx3VTjs55ao67EpnBktzqCuAOvYrowY6YETMiRTdBVmNOW5SzR9u4avik9yDxVdBxJD0eK+mbNS4H19thSTeoBFseORXOL2/v/Qh/Xw6qmy+YjOcxkI2wsZOA/egUJVTkvJ+viw==
+ bh=qIYFTuWcetMkp02/7n8Xksd1zMNgGFujeIaX+zSNr3Q=;
+ b=YLqDmZ1+aatomrSNFL0yQ2BeQqiHZzps9U+6z7hnylO3h/PnnnB1Hb7mWukwkjJ4lgoRvkasBuPB2eMaTvcyQhhNoKSTIdeyd2rboSUYir4PLK6gUhq64WTOi2mko4tjROI9Swns0rkORLmfUwA2Y9Ek6jc8PUiMbuxaCg2+kedkBp4Y+2LjhEKk/OxuUkRRZwpAzwhJfeOUx0nzZ8VYwaAlu51YaXE9UN8dVII0cdxcCFuLfpgztW0Q8+diTsI9vFEQogtL1yiYTM2xaiOAVLcjclzW7691+QoIUtbv0upGZNaNR18YPXZb9yyrWnpEco5ghspeDMb8NPDcRFYiyg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV4PR04MB11822.eurprd04.prod.outlook.com (2603:10a6:150:2d8::12) with
+Received: from DU4PR04MB11791.eurprd04.prod.outlook.com (2603:10a6:10:623::11)
+ by AS8PR04MB8451.eurprd04.prod.outlook.com (2603:10a6:20b:347::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 15:47:42 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 15:47:42 +0000
-Date: Fri, 14 Aug 2026 10:47:30 -0500
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 16:08:48 +0000
+Received: from DU4PR04MB11791.eurprd04.prod.outlook.com
+ ([fe80::11ca:6b74:3234:d7de]) by DU4PR04MB11791.eurprd04.prod.outlook.com
+ ([fe80::11ca:6b74:3234:d7de%5]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 16:08:47 +0000
+Date: Fri, 14 Aug 2026 11:08:37 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Koichiro Den <den@valinux.co.jp>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-	Kees Cook <kees@kernel.org>,
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Cai Huoqing <cai.huoqing@linux.dev>,
-	Niklas Cassel <cassel@kernel.org>,
-	Devendra K Verma <devendra.verma@amd.com>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 13/24] dmaengine: dw-edma: Reclaim issued descriptors
- from IRQ-paired LL progress
-Message-ID: <an84kpKLfr8ACBEQ@SMW015318>
-References: <20260812155721.2807506-1-den@valinux.co.jp>
- <20260812155721.2807506-14-den@valinux.co.jp>
- <anzdd9kAxBHvuzpo@lizhi-Precision-Tower-5810>
- <hi4ani63qjhwihylkpbensfb27u6kaqtl53mjnqpzcfbabdhgt@p6k4x5vabtph>
-Content-Type: text/plain; charset=us-ascii
+	Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] dmaengine: dw-edma: Add DMA_SG support
+Message-ID: <an89hXJm2wY8Owry@SMW015318>
+References: <20260803-dma_multi_sg-v2-0-c12bb05e42d6@oss.qualcomm.com>
+ <20260803-dma_multi_sg-v2-2-c12bb05e42d6@oss.qualcomm.com>
+ <anTbNsOQ02V6umXf@SMW015318>
+ <ye4bue5a2uq65d5befelyhs3cbezpjytbni4mtnge42ijmaqny@3bijtktlvyrj>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <hi4ani63qjhwihylkpbensfb27u6kaqtl53mjnqpzcfbabdhgt@p6k4x5vabtph>
-X-ClientProxiedBy: PH7PR17CA0049.namprd17.prod.outlook.com
- (2603:10b6:510:325::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ye4bue5a2uq65d5befelyhs3cbezpjytbni4mtnge42ijmaqny@3bijtktlvyrj>
+X-ClientProxiedBy: SA1PR03CA0020.namprd03.prod.outlook.com
+ (2603:10b6:806:2d3::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,762 +76,146 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV4PR04MB11822:EE_
-X-MS-Office365-Filtering-Correlation-Id: 39f7a68b-539f-435d-1155-08defa1b6029
+X-MS-TrafficTypeDiagnostic: DU4PR04MB11791:EE_|AS8PR04MB8451:EE_
+X-MS-Office365-Filtering-Correlation-Id: 386df9ff-af8d-4c02-2899-08defa1e5212
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|7416014|1800799024|56012099006|5023799004|11063799006|6133799003|4143699003|10067099003|18002099003|22082099003;
+	BCL:0;ARA:13230040|366016|376014|7416014|19092799006|1800799024|23010399003|18002099003|56012099006|22082099003|10067099003|4143699003|11063799006|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	1l41FXlj/eD2xezpM6EMEVlNs3z0PXMVLBAkUSmPG9XRRTtmHoJDSLhSo6pRwohoxq0YT4w4qbFOqUEb2BcukoQgo1O5WOS0jLs61BMnar8vuaI01dSDG2NF6cG5DIJSO7XFOt8pBrfrnmXhwVUkIOgiC5DsHhH4UGjMCRlxtFdIbDPk/Db/LYyoZtx6VD+50xeOJXWagoeErLuOK9bQTDT8SPwYJmSEbr/dh44WMTaluu7foqg54I1bUtzA3j8FV5d6+BQVwDwsnLfEQl9Sicu1amF2Eapr75L/lfUClTbVHMCNL27mciH82FfCZnkM4YueUUkg9ZWWHdetsATIN/NjRMhmjYOplIfsqMdCY+Cxx+LbU1CvRgBOthgnUzpKEs4E1EbR156AaM3jCUDsQJ4EHBb+3l37r/0qvAv7oWh91gXnpHmYZCjvvsm95cmxGEIIu0/uZizgT7dwVQQui1wx0G2zudOuuMtJ0Ve3iDmZLhQ3jVQQzpBExRx/uTe5tCpZik67IA6mOi00jE6GY7TlOCSmRaXDZh8XKk8WwmmsdAp9hUdmzc97PvULPqDV705KBrWzizayvCg54L9zXA3caYK9kfxJohcbZPwcynf+qrtA6bijXRcf4vPCdqa/m1woBqreUwLUyEdd6/iMtl3bOCCOg++bpTojtbFRDks=
+	iZEDBhJ87OMPtnJx635d/91ceYFeMkjF4BEi7ooJSseOn1fx2EwYk8Sr1wYK6B2b87OiR28FqEK0Rfs+QDLnQm2LCkKo3lYM+/qWpBI+sZSTtquatrvCqUHOwMkMn94heHtezxD+17RWtZVP1hsnJ9Pa2TFdFMkDp1DYkCfRasw4EVsiDRvlM2ayNnZUr/hwj2ZT4qbZ080+RwPf94rCXFYFayyz/Rl4EOTu4e47qlgGgTg7SYG1foC5EDw76fcF+1X7DSfxisGap7ZQIKmyqO93/pn1HqWR0zclNRXugqJV9EHzgwdFbH3NvGGjoCByUXNigar/C3PhAQgAJAjOR8oj2RJR/qDTKzuNANyzw63dP9mvGW0h5J8cbaCYuo8Zn7ku+rwQrUe7pTex49HGfuv7zcwssw38sMMS8P9p+5tP35rvjac56ME+eCHct3FTRSBaaEPp8gjaEx4TXUdDLTw9gM3iXbDtYhbTncEMtUTP6XoBUMhSqhSmP1EYWQ/Y6F8kl9as6tUPnuvz2Tw5m8Yln1yDxSU6da8UkUFbl4i4HLQI0V5ALBBXgfhufGBGFzXwBs8bByIeSL3g2Kgm6HzhfHKoa+AUztMXXZs4qNPVaTx0XJ/KnpcOAq9UPM9IdE+RBOub1DrRKYp9W47GeKKjfIGN+I12VaQVhxUHVeE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(7416014)(1800799024)(56012099006)(5023799004)(11063799006)(6133799003)(4143699003)(10067099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU4PR04MB11791.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(19092799006)(1800799024)(23010399003)(18002099003)(56012099006)(22082099003)(10067099003)(4143699003)(11063799006)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pOii3OBsruoSWKcUIGfzGy0viQFslDjJehs8CdI22Rwd0o5pLfLY+CsR9xRu?=
- =?us-ascii?Q?zS5RzjQcbTlx+XY/6Idt4pjuDje0h2rWD69q1k61XDZytifxLihrctsVLl/T?=
- =?us-ascii?Q?MR5JZPJsvQlqH6kDuqokY/Oex9BFo+tPlOpuvew5/+4cfYq+ehm2lmC7P1ur?=
- =?us-ascii?Q?vudW5L0lpx2EKSwXrHL7JZr7X53dFuERnlgh4Vsrel2LWyRqkvhaHRDrqjOZ?=
- =?us-ascii?Q?Thfz52/UaYSneWtrywovOkjmQClMwAhNYpPLOqWH/M9wcckwVlWdoteRCM3y?=
- =?us-ascii?Q?8ItCBZ9CYJ/mt2O8TCpPe727qcAFim1hGPsnOHmYG0PsTwrgX3Sh5lsB57sg?=
- =?us-ascii?Q?kC1ZX2em+tKXfiddJNf2d/CeTKaJq7Xz+AatJxw7g1emj8Ng3g9Ag6eWTomH?=
- =?us-ascii?Q?k4CO1Rqf+YErczw4JjRsd32w/DIOffqT6tspjjiRI5pABEbBHNqPvjI71jAB?=
- =?us-ascii?Q?b+D8VTV+1WOkBp6GVsJs/00cMJuuM3s2J88bRZvJQW5oF7SoBGRZ9BwiIZ4k?=
- =?us-ascii?Q?+AQbBsquxYZX2e5hozeW9pIQMWKzxLORZET/46t5C/LERgCnTL4XEpyEHV6E?=
- =?us-ascii?Q?fqR/bUXegrC9b6OBEOHB3vEWieapdIbsUiJsYG2TZH8tMrd5LlunNQqBLyTs?=
- =?us-ascii?Q?j4BslBpqNgg2RGlHnkR7gXfVRXwOE8BcVIEaWziNXMhz9oYsD+h7LEG6Sbce?=
- =?us-ascii?Q?C49AlNyCupFfoCyc2qxSgYw7cYd9OgI03MfagloFlpKVZ2NV16Xejzi/riFa?=
- =?us-ascii?Q?RYUzc4kAIyBbGcsV8PD8XFjblgzXzzyBH47ju6/YxG55ol8ZZhHr+sWSUiis?=
- =?us-ascii?Q?RZHnerZ1/dXYmr0WzYD4ZZ8GwhUlisFpinRbrfIz3wEQWbvaViYAjmcry2De?=
- =?us-ascii?Q?5RPFnbgtXO1uFp59xG94fSTNG0S124wXlc6Nf8wvwZ48arZE8JcCmESSaiFS?=
- =?us-ascii?Q?h8XiakL75Q4Z4BFvXfv9qtAATcoqt52dF1tNkWywv58xkP2iFseu5k782kHJ?=
- =?us-ascii?Q?bP4jtQMi3Z8uOioUuoZmExG9DfXDwP7xF5+kU2OWex04ovV3GALUi/SxQ2Gw?=
- =?us-ascii?Q?7Qt/4pnp/Vz444gmSpDGogwHddvLUaxW+VqID2kqC4V6xWsU6lvo+MO1cK/w?=
- =?us-ascii?Q?aY3aV5GmC0//YZrvmz8aA+7QLmit6CIRUeDBFsFzMFFBRZZmhQd1PNMt8QbA?=
- =?us-ascii?Q?b7eYXVNmS6h8gfpExctSq82Lxe7BQoahsvnlsaZ/Nk0n/KvUAS+NiW0vzWp2?=
- =?us-ascii?Q?TDDjyNICGXvwH2hVv0wzGLQf6iMdG+Sb5ZGtN/9HhE+z/GLgefMAZqRjsLsR?=
- =?us-ascii?Q?gkNNr+eeZlnHNupZutxsG0GxsasBiIQ0E4Tmgsp15wUFSUsuCBRNc3fUqYDF?=
- =?us-ascii?Q?PINNrg4ghyV3mB9Wr1Ps1Y7N2ntXGQQtsdXzbzJ8PayYdvN+TLIzf75UbSdE?=
- =?us-ascii?Q?lcXvEXmB4nZxeceZnCPU9jLUsqekdYjfCfEFqPt+JWvlZ5RSUkgHbhuE7YPD?=
- =?us-ascii?Q?Lf3G5vYwaaww2lXION+veTHtblv0U3FHoZA3QzStuASbWtA0m9BWPTElAgbA?=
- =?us-ascii?Q?1UgNKn8GJVmdNnxr4KOuAfgcFg66M045av5gtCrXGTHqeijKnQ8l4zyb1vV3?=
- =?us-ascii?Q?7tn7TukA/mDZGI31lGfMGVT4Zi/GPhFv4z+emBK1kaTdIusy9pavmS2sLwtg?=
- =?us-ascii?Q?mRjnGa0DnODI1liqIFBaYXPqEYr6XFxstxpHXgTo+qyUuDXIvxq4N6v/qB0c?=
- =?us-ascii?Q?zlo4BVdwctLezAoULsWtm6t3A72AzO5Hz4EkWz49awDXxIpQEKt+?=
+	=?utf-8?B?a3ZNQkVzUTBBVzB3V2R3c0s3Sjc5eU44ZEh6TmEybWtFbDh4UUFEcFo5Vkov?=
+ =?utf-8?B?bjVreENxRzBpek1pT05VRkxZckRnMDVFYUl1Yy9ZTE1XbFZrVGo4OSs4eVd4?=
+ =?utf-8?B?MjFrY2U3VzR5MVNOY0N0bUh1Z0pxT3ZYREhpUzBhQ1h0ckRaN3hHekZXVksz?=
+ =?utf-8?B?Q2p0VFNtK1RQbno3Y04xMHlqbDZubzRxdGRGV09CTDdtOWVNalMxczB3SjJX?=
+ =?utf-8?B?bzF4NW5yc3RLU0FRNFp3YVZBUDNuZzdqd1Y2bktBZHNURUM5VWpSbG5rYXJj?=
+ =?utf-8?B?UlpaTWEvb1hWUGFMZ2VMMkV4N0twMGJmOXhWWHJKZEZ6MTBlTE10UDY5cFVJ?=
+ =?utf-8?B?NkhIcmx5VmQxQTNoNzA3cjRGSHhQdDZoK0pBcmczOHJPejRjT2dmblBRVG8x?=
+ =?utf-8?B?REcraUJtbitDeDZVSjRJeXlzTUNHSWhwbXJBVktxMzJZb3g2VFRjL0ZLY2pj?=
+ =?utf-8?B?aVlvUlNpN0ZDQ3BpQVJWeTFBTjdYKytIV2hHQlJjMmRZOGNFUzVaT29tcjF1?=
+ =?utf-8?B?UHdDTU53eSsyNE55S0pPb1pZaWdvN0xtTU12YVRKSTRmclMxOVBJUnUzTzZD?=
+ =?utf-8?B?MFRVL0VYUGozQmU3dmxUcGdmejVXMlVFOVYyVDJHemsrMDQ1aHFQL2dPdkV4?=
+ =?utf-8?B?Z1l4NXB3NDJUc2Z5RnZMNnZUTzFJNi9zNVU3TS84RDN1cW9qWktLU1lBdnNl?=
+ =?utf-8?B?K1MxdjhYTzV6SWI0Q0hxc1hFSUFBZ0prSHFwaDZwR1Q2eEFBd1diNEQraXhv?=
+ =?utf-8?B?Z0EvamM4VnJDOGNXMUhSME1QcUs3RnRQUHA3QVBGdnduYzUwcldrbkllTlVF?=
+ =?utf-8?B?QUxFQ1UvTDNhazNsdUp6b3QrOGtKdGNZTDZrb0hOeGN1L2dtYUw5S1M1eGFa?=
+ =?utf-8?B?MnJBU2NvaHFaTkhKdEw2VGF6MlZSOHdVbi92M3ZoaXlCMnh5b092V2hMOGJJ?=
+ =?utf-8?B?SHpXVld1cmZWbFltRFFJcm5iVVVLaktJK25rT0JIditWdDQ1NndnRFBVUFg1?=
+ =?utf-8?B?WWI4a1d1VEtJRGNEdU1YWDRLZkI2dEQ3T1N6MExwZFFRaUF2UHRRSVI4bERI?=
+ =?utf-8?B?eE5lRzhCZ0xGS1NrVkNzNUg2U0RBL3Q5UElwSGVBT2xqclFDMjZlb0tCeXd6?=
+ =?utf-8?B?Y2JpdmhrQWdUTEgxcVFacklXU0JZQjM0blV1Wnd2UkpyaHFYTmdiUTh5NklW?=
+ =?utf-8?B?Um50ZU90NGxzL0FpOEtESEdtY3JSWW1QQnJMQ1B5ZWtyYnZxRm5yNVFlZkdU?=
+ =?utf-8?B?OXVpWXR0NlEzMS8yRlhWVTlhV0hidktQdE1lVTBJOTg4QmxvQ0V0aXRPRWdq?=
+ =?utf-8?B?SWxNM3VSdnAwV0tFQXNLc1hIZVlYWDA2QU5WUXVXU1hEam5wRS9vRVFSVlNa?=
+ =?utf-8?B?Uzk3MXBNTWJrdVZqNFp6eTZCc1NadnJGeFpscTVNZ3VUQkVUNy9oTlJxSE5h?=
+ =?utf-8?B?VzJxZUtGV2QvYVltbjZ3akFmektPUlBNNXk4TGxLTzVYeWo4RG5pSWZ3NEhS?=
+ =?utf-8?B?VlFsekRSNUZDbXZPZHVnU2FVZTR1cjU0UlVKYnA4elV3TVloay8zMlYrK0xa?=
+ =?utf-8?B?S1U4K1VoQkI4RWpWeUdvYnNnY256Ryt3amY2N1pzZHhNUnpPWDhHdlh6TUpy?=
+ =?utf-8?B?ODJKbnAyaHhBVmRxQll2SjJNQVFZSVRxMVhLUExJOS9RdTlHQzVwWE5LcE8v?=
+ =?utf-8?B?UHhUcVhOcHhNZzB5aGYySE5BUnhMeTJ1UStzWllZSlJXZzFNK2tOUUNGTFpU?=
+ =?utf-8?B?cG5YUVJVRDNNTFpJc3NvZW4zMkxnTEhySFFkRUVUcFBmSGx0OU5IaXczZnVU?=
+ =?utf-8?B?ckhxTmwvRFRSMjNkTFQzVG1SSmVlQW1qNFRqRUtCc25zZWJFbFk2TWxFcFpD?=
+ =?utf-8?B?MTZ2bm9nTUUvak1uK2FrNUptVDdKNGxwK3FKL2Z6L2s4TTVRdUZoTDFvL0wr?=
+ =?utf-8?B?Sk05SWhKOEYxK0RJTDhPVzhDZWt4d0wwbm41Y3EwK1p4MTF6T25ySFkxVE1M?=
+ =?utf-8?B?WTROSkZuYlVJSnArK3grWGt3eXdSRElRZk5KOXRCUjczKzB4Vmk4eVB0Q2pi?=
+ =?utf-8?B?YW1sRThaR29YWFowRHRLZktjbnZ3STczdi92NUliZ3BEandZVW5ERmlzOXZ4?=
+ =?utf-8?B?MzdCNFl0SjM2QSt6c1hMWE1HSUsxaXFqcDlFR1lNNzB3czlnNVc0eHM3Ykxu?=
+ =?utf-8?B?NWJNU1VIRVFObHBGbjV5cmZGWk1tN1J5dHdtRExOM29ZRitrb01Gb3FHaGQ0?=
+ =?utf-8?B?UWVRSHNvanZlZjZYZXg4QW81MnRlQjJtWUx4ZzhPbTM5V2pTQmNsUVl5cjdL?=
+ =?utf-8?B?R3NjY3crSU1aUG0ydEhpYnYzZ3JMdUs0R2w0NGNSc0J2ZnQ2aHlrQVdIcit4?=
+ =?utf-8?Q?m1I3Aui8f/mPB3xVqPUM7QI5kK85SFXc12wep?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 39f7a68b-539f-435d-1155-08defa1b6029
+X-MS-Exchange-CrossTenant-Network-Message-Id: 386df9ff-af8d-4c02-2899-08defa1e5212
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 15:47:42.1772
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 16:08:47.7040
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ptd7Wsyq1zqRjLpMNSap+Lr3oPkE1wWyrM/kCyS3kJwxtBmaaop3VOo0QKO8uFfnuMiaVw3L+veP85swaJ+hxj8uovE7gE52ERm+0sjsCGvMjuuwL92dgoSuMNHQtchE
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR04MB11822
+X-MS-Exchange-CrossTenant-UserPrincipalName: lFF9HVENKFjOkAHT6YC0FnEyn3zTMZmTiuSw8U5V1v9cvqHWM1P5iXdNZ160dEA0XIBq95FXwiZxHLABLvh/fkOdZ5sxdlRPhPhg4eF9eq29XIqbb16+a23VSsilS5zV
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8451
 
-On Fri, Aug 14, 2026 at 05:48:16PM +0900, Koichiro Den wrote:
-> On Wed, Aug 12, 2026 at 04:54:15PM -0400, Frank Li wrote:
-> > On Thu, Aug 13, 2026 at 12:57:10AM +0900, Koichiro Den wrote:
-> > > Dynamic append can place entries from several descriptors in one LL
-> > > ring. Track the consumed boundary in ll_done, reuse entries behind it,
-> > > and complete descriptors in issue order as done_burst advances.
+On Fri, Aug 14, 2026 at 03:58:48PM +0200, Manivannan Sadhasivam wrote:
+> On Thu, Aug 06, 2026 at 02:06:30PM -0500, Frank Li wrote:
+> > On Mon, Aug 03, 2026 at 04:01:44PM +0530, Sumit Kumar wrote:
+> > > [You don't often get email from sumit.kumar@oss.qualcomm.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 > > >
-> > > Normalize each IRQ-paired LLP sample to the exclusive boundary used by
-> > > ll_done. A stopped sample points to the next entry. Keep a running
-> > > sample one entry behind the raw LLP so an entry is not recycled before
-> > > payload completion is established. For the eDMA-compatible interrupt
-> > > interface, treat DONE as a stopped boundary only when channel status is
-> > > complete and transfer size is zero.
+> > > Synopsys DesignWare eDMA supports a linked-list mode where each list item
+> > > carries independent source and destination addresses, letting multiple
+> > > independent memory transfers be described in one linked list and submitted
+> > > to the hardware as a single DMA transaction. The IP processes list items
+> > > strictly in order, so paired scatter-gather entries are never reordered.
 > > >
-> > > Record the first outstanding physical LL entry in each descriptor and
-> > > verify that it matches ll_done before consuming that descriptor. On a
-> > > mismatch, warn and resynchronize only if the sampled boundary has
-> > > reached the descriptor; otherwise stop without completing it.
-> > >
-> > > Reclaiming entries as they are consumed also lets a descriptor larger
-> > > than the ring advance. Keep one data entry free so a physical index
-> > > remains unambiguous in the active producer window. Clear any published
-> > > ring state on termination or abort before starting another transfer.
-> > >
-> > > LL progress now has its own completion path, so fold the temporary
-> > > lock-held DONE helper back into its only caller.
-> > >
-> > > Suggested-by: Frank Li <Frank.Li@nxp.com>
-> > > Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> > > ---
-> > > Changes in v5:
-> > >   - Adjust context after moving the issue_pending() snapshot discard to
-> > >     patch 11. dw_edma_ll_snapshot_discard() is no longer re-added here.
-> > >   - Fold dw_edma_ll_clean_pending() into
-> > >     dw_edma_ll_consume_progress(), removing the one-line wrapper
-> > >     (pure refactoring).
-> > >
-> > >  drivers/dma/dw-edma/dw-edma-core.c    | 273 +++++++++++++++++++++-----
-> > >  drivers/dma/dw-edma/dw-edma-core.h    |   4 +
-> > >  drivers/dma/dw-edma/dw-edma-v0-core.c |   6 +
-> > >  3 files changed, 238 insertions(+), 45 deletions(-)
-> > >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > > index 1deaf2d0da91..363993c64c44 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > > @@ -53,13 +53,6 @@ dw_edma_alloc_desc(struct dw_edma_chan *chan, size_t nburst)
-> > >  {
-> > >  	struct dw_edma_desc *desc;
-> > >
-> > > -	/*
-> > > -	 * For now, a descriptor that does not fit would stall the channel
-> > > -	 * forever: reject it up front.
-> > > -	 */
-> > > -	if (!chan->non_ll && nburst > chan->ll_max - 1)
-> > > -		return NULL;
-> > > -
-> > >  	desc = kzalloc_flex(*desc, burst, nburst, GFP_NOWAIT);
-> > >  	if (unlikely(!desc))
-> > >  		return NULL;
-> > > @@ -79,6 +72,7 @@ static void dw_edma_ll_snapshot_discard_locked(struct dw_edma_chan *chan)
-> > >  {
-> > >  	lockdep_assert_held(dw_edma_event_lock(chan));
-> > >
-> > > +	chan->ll_irq.idx = -1;
-> > >  	chan->ll_irq.event = DW_EDMA_LL_EVENT_NONE;
-> > >  }
-> > >
-> > > @@ -128,6 +122,7 @@ dw_edma_ll_snapshot_take(struct dw_edma_chan *chan,
-> > >  	if (dw_edma_abort_latch_locked(chan))
-> > >  		return false;
-> > >
-> > > +	/* Consume each snapshot once, even if its boundary is later rejected. */
-> > >  	*snapshot = chan->ll_irq;
-> > >  	dw_edma_ll_snapshot_discard_locked(chan);
-> > >
-> > > @@ -215,7 +210,13 @@ static u32 dw_edma_core_get_used_num(struct dw_edma_chan *chan)
-> > >
-> > >  static u32 dw_edma_core_get_free_num(struct dw_edma_chan *chan)
-> > >  {
-> > > -	/* Keep one data entry free so equal indices mean an empty ring. */
-> > > +	/*
-> > > +	 * ll_done is the consumer boundary, so only the distance from ll_done
-> > > +	 * to ll_head is occupied. Descriptor completion is tracked separately
-> > > +	 * with done_burst.
-> > > +	 *
-> > > +	 * Keep one data entry free so equal indices mean an empty ring.
-> > > +	 */
-> > >  	return chan->ll_max - 1 - dw_edma_core_get_used_num(chan);
-> > >  }
-> > >
-> > > @@ -224,6 +225,25 @@ static bool dw_edma_ll_pending(struct dw_edma_chan *chan)
-> > >  	return chan->ll_head != chan->ll_done;
-> > >  }
-> > >
-> > > +static u32 dw_edma_core_ch_transfer_size(struct dw_edma_chan *chan)
-> > > +{
-> > > +	if (!chan->dw->core->ch_transfer_size)
-> > > +		return U32_MAX;
-> > > +
-> > > +	return chan->dw->core->ch_transfer_size(chan);
-> > > +}
-> > > +
-> > > +static bool dw_edma_ll_done_is_stopped(struct dw_edma_chan *chan)
-> > > +{
-> > > +	/*
-> > > +	 * Native HDMA reports STOP separately. The eDMA-compatible interrupt
-> > > +	 * interface uses DONE for both progress and stop, so confirm a stopped
-> > > +	 * boundary with channel status and transfer size.
-> > > +	 */
-> > > +	return dw_edma_core_ch_status(chan) == DMA_COMPLETE &&
-> > > +	       dw_edma_core_ch_transfer_size(chan) == 0;
-> > > +}
-> > > +
-> > >  static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
-> > >  {
-> > >  	struct dw_edma_chan *chan = desc->chan;
->
-> Hi Frank, thanks for the review.
->
-> > > @@ -231,6 +251,9 @@ static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
-> > >  	u32 free;
-> > >
-> > >  	free = dw_edma_core_get_free_num(chan);
-> > > +	if (free && desc->start_burst == desc->done_burst)
-> > > +		desc->ll_start = chan->ll_head;
-> > > +
+> > > Implement the DMA_SG capability by adding a new EDMA_XFER_DUAL_SG transfer
+> > > type and a corresponding struct dw_edma_dual_sg carrying the paired source
+> > > and destination SG lists. dw_edma_device_transfer() walks both lists in
+> > > lockstep, building a single hardware linked-list; a per-entry length
+> > > mismatch or premature list end fails the whole request.
 > >
-> > should always set ll_start = chan->ll_head, always record current fit into
-> > which ll index.
->
-> This was intentional.
->
-> I added a source comment in this patch (i.e. patch 13/24):
->
->   struct dw_edma_desc {
->       [...]
->       ll_start;       /* First outstanding LL entry */
->       [...]
->   }
->
-> So desc->start_burst == desc->done_burst means that no currently published LL
-> entries for the descriptor remain outstanding. Updating ll_start to ll_head
-> during a partial refill after some ring entries have been reclaimed breaks
-> things. ll_start is a descriptor-local moving consumer boundary.
->
-> For example, assume ll_max=8 and descriptor entries were published into data
-> slots 0..6. After progress has consumed slots 0..2,
->
->   desc->start_burst = 7
->   desc->done_burst = 3
->   ll_done = desc->ll_start = 3
->   ll_head = 7
->
-> If we updated desc->ll_start to chan->ll_head in this situation, slots 3..6
-> would be skipped even though they have not been consumed yet.
->
-> However, in hindsight, desc->ll_done might have been a better name. Perhaps
-> desc->ll_done is more suitable.
->
+> > It is not as simple as it.  for example, if you want to transfer 9k data
+> > from src to dest
 > >
-> > >  	for (i = desc->start_burst; i < desc->nburst && free; i++, free--) {
-> > >  		/*
-> > >  		 * Refresh the link element before filling the last data slot so
-> > > @@ -252,7 +275,6 @@ static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
-> > >  		}
-> > >  	}
-> > >
-> > > -	desc->done_burst = desc->start_burst;
-> > >  	desc->start_burst = i;
-> > >  }
-> > >
-> > > @@ -352,6 +374,127 @@ static void dw_edma_finish_termination(struct dw_edma_chan *chan)
-> > >  	chan->status = EDMA_ST_IDLE;
-> > >  }
-> > >
-> > > +/*
-> > > + * Must be called with vc.lock held. Consume an LL progress boundary,
-> > > + * advance ll_done and complete descriptors covered by the consumed range.
-> > > + * Return true if ll_done advanced.
-> > > + */
-> > > +static bool dw_edma_ll_consume_progress(struct dw_edma_chan *chan, int idx)
-> > > +{
-> > > +	struct virt_dma_desc *vd, *_vd;
-> > > +	bool advanced = false;
-> > > +	u32 done, gap;
-> > > +
-> > > +	/* Ignore invalid, duplicate or stale progress. */
-> > > +	if (idx < 0 || (u32)idx >= chan->ll_max)
-> > > +		return false;
-> > > +
-> > > +	done = dw_edma_core_get_ll_dist(chan, chan->ll_done, idx);
-> > > +	if (!done || done > dw_edma_core_get_used_num(chan))
-> > > +		return false;
-> > > +
-> > > +	list_for_each_entry_safe(vd, _vd, &chan->vc.desc_issued, node) {
-> > > +		struct dw_edma_desc *desc = vd2dw_edma_desc(vd);
-> > > +		u32 consumed;
-> > > +
-> > > +		if (!done)
-> > > +			break;
-> > > +
-> > > +		if (WARN_ON_ONCE(desc->done_burst > desc->start_burst ||
-> > > +				 desc->start_burst > desc->nburst))
-> > > +			return advanced;
-> > > +
-> > > +		/*
-> > > +		 * start_burst is the next burst to append. done_burst counts
-> > > +		 * bursts already consumed by hardware.
-> > > +		 */
-> > > +		consumed = desc->start_burst - desc->done_burst;
-> > > +		if (!consumed)
-> > > +			break;
-> > > +
-> > > +		/*
-> > > +		 * ll_start ties the descriptor counters to the physical ring.
-> > > +		 * If accounting lost entries before this descriptor, skip them
-> > > +		 * only after the sampled boundary has reached ll_start.
-> > > +		 */
-> > > +		if (WARN_ON_ONCE(desc->ll_start != chan->ll_done)) {
-> > > +			gap = dw_edma_core_get_ll_dist(chan, chan->ll_done,
-> > > +						       desc->ll_start);
-> > > +			if (gap > done)
-> > > +				return advanced;
-> > > +
-> > > +			chan->ll_done = desc->ll_start;
-> > > +			done -= gap;
-> > > +			advanced = true;
-> > > +			if (!done)
-> > > +				break;
-> > > +		}
-> > > +
-> > > +		consumed = min(done, consumed);
-> > > +		desc->done_burst += consumed;
-> > > +		desc->ll_start = (desc->ll_start + consumed) % chan->ll_max;
+> > src virtual addr 0x1004,        dest 0xA0001008
 > >
-> > It'd better update ll_start when fill ll from desc. Here should only
-> > update ll_done.
+> > when map_sg, src's sg maybe
 > >
-> > chan->ll_done = (chan->ll_done +  consumed) % chan->ll_max.
->
-> Same here, this was intentional. ll_start points to the first outstanding LL
-> entry.
->
-> For the first issued descriptor, desc->ll_start and chan->ll_done represent the
-> same exclusive consumer boundary, so they must advance together. Updating only
-> chan->ll_done would leave the descriptor-local boundary stale and fail the
-> consistency check on the next sample.
->
-> BTW, using ll_start as the descriptor's immutable base is another possible
-> design. I guess that's what you have in mind. In that case, the first
-> outstanding entry could be calculated as:
->
->   (ll_start + done_burst) % ll_max
->
-> but I'm not yet sure it would simplify the implementation. The other choice
-> would be just renaming desc->ll_start to desc->ll_done, as I commented above.
->
+> > 0x1000  .. 4k   offset 4,
+> > 0x9000  .. 4k   offset 0
+> > 0xA000  .. 4k   offset 0
 > >
-> > > +		chan->ll_done = desc->ll_start;
-> > > +		done -= consumed;
-> > > +		advanced = true;
-> > > +
-> > > +		/*
-> > > +		 * Descriptors are published and retired in strict list order. A
-> > > +		 * later descriptor cannot complete until this one is fully consumed.
-> > > +		 */
-> > > +		if (desc->done_burst != desc->nburst)
-> > > +			break;
-> > > +
-> > > +		/* Hardware has consumed this descriptor's LL entries. */
-> > > +		dw_hdma_set_callback_result(vd, DMA_TRANS_NOERROR);
-> > > +		list_del(&vd->node);
-> > > +		vchan_cookie_complete(vd);
-> > > +	}
-> > > +
-> > > +	WARN_ON_ONCE(done);
-> > > +
-> > > +	return advanced;
-> > > +}
-> > > +
-> > > +static int
-> > > +dw_edma_ll_recycle_idx(struct dw_edma_chan *chan, int idx,
-> > > +		       enum dw_edma_ll_event event)
-> > > +{
-> > > +	if (idx < 0 || (u32)idx > chan->ll_max)
-> > > +		return -EINVAL;
-> > > +
-> > > +	/*
-> > > +	 * Convert the raw LLP index to the exclusive boundary used by ll_done.
-> > > +	 * For both eDMA and HDMA, once the engine has stopped, LLP points to
-> > > +	 * the next element. ll_max is the link element, hence the following
-> > > +	 * data boundary is 0.
-> > > +	 */
-> > > +	if (event == DW_EDMA_LL_EVENT_STOP)
-> > > +		return idx == chan->ll_max ? 0 : idx;
+> > or
+> > 0x1000 .. 8k  offset 4
+> > 0xA000 .. 4k  offset 0
 > >
-> > regardless state. we can always treat link element as 0. ll_max have not
-> > include link entry.
->
-> Right, ll_max is the number of data entries, and the physical link element is at
-> index ll_max. In the modulo-distance calculation, the link index and data index
-> 0 are equivalent after normalization.
->
-> The reason the code keeps the two raw values distinguishable is the running
-> prev(idx) conversion (pls see below). A raw physical link index of ll_max can be
-> moved back to ll_max - 1. A raw data index of 0, however, may be a stale or
-> no-progress sample, so blindly wrapping it to ll_max - 1 could report almost one
-> full ring of progress.
->
+> > which totally depend on physical address allocation although most likely
+> > first case happen
 > >
-> > in calculate distance between two point A, B.  (B - A) % ll_max.
+> > dest sg
+> > 0xA001000 .. 4k offset 8
+> > 0xA008000 .. 4k offset 0
+> > 0xA00E000 .. 4k offset 0
 > >
-> > It is the same when A or B is ll_max or 0.
+> > descriptors
+> > 1 	transfer 4k-8
+> > 2       transfer tail 4 byte
+> > 3 	transfer 4k-8
+> > 4       transfer tail 4 byte
+> > ...
 > >
+> > the start address of src and dest is highly possible differences. So it
+> > is very hard to match your requirement, both sg's structure is the same.
 > >
-> > > +
-> > > +	/*
-> > > +	 * Moving a running index one entry back cannot represent index 0
-> > > +	 * without wrapping it to ll_max - 1. That could falsely consume a full
-> > > +	 * producer window, so wait for another sample or STOP.
-> > > +	 */
-> > > +	if (!idx)
-> > > +		return -EINVAL;
-> > > +
-> > > +	/*
-> > > +	 * A running eDMA LLP can move ahead of payload completion, so keep the
-> > > +	 * boundary one entry behind it.
-> > > +	 *
-> > > +	 * DWC PCIe Controller Databook 6.10a-lca06, Section 7.2.1, Table 7-3
-> > > +	 * describes an HDMA watermark LLP as an inclusive LLE recycling
-> > > +	 * boundary, which would normally translate to idx + 1. During testing
-> > > +	 * on a DWC HDMA 6.30a integration, using that boundary for DMAengine
-> > > +	 * completion let clients release DMA mappings while hardware still
-> > > +	 * accessed them, causing IOMMU faults. Keep the boundary one entry
-> > > +	 * behind the raw LLP for HDMA as well. Stopped samples continue to use
-> > > +	 * the next-entry boundary above.
-> > > +	 */
-> > > +	return idx == chan->ll_max ? chan->ll_max - 1 : idx - 1;
-> >
-> > LLP should point current DMA working LL, always stop at which controller bit
-> > have not set yet.
-> >
-> > If your logic always treat idx as unfinished, you needn't idx - 1 here.
-> >
-> > [ll_done, idx)
 >
-> I agree that [ll_done, idx) could be used when idx identifies the first
-> unfinished LLE. That is already how a confirmed STOP sample is handled. For an
-> HDMA watermark, the databook gives raw idx a different meaning, but it can still
-> be used as a conservative exclusive boundary. The idx - 1 retreat is used only
-> for a running progress sample.
->
->     state/event              meaning of raw LLP                  current v5
->                                                                  boundary
->     -----------------------  ---------------------------------  ------------
->     eDMA, confirmed STOPPED  Points to the next entry to be      idx
->                              processed.
->
->     HDMA, STOPPED            Points to the next entry to be      idx
->                              processed.
->
->     HDMA, running at         Points inclusively to the last      prev(idx) (*)
->     WATERMARK                LLE that may be recycled,
->                              according to the databook.
->
->     eDMA, running at DONE    Was observed to advance with        prev(idx)
->                              descriptor fetch before payload
->                              completion.
->
->     (*) The documented HDMA LLE-recycling boundary would normally be
->         next(idx). v1 used idx as the exclusive dmaengine completion
->         boundary. The current code deliberately uses the same conservative
->         prev(idx) rule for all running progress samples.
+> That's the API limitation, isn't it? The callers have to supply the same length
+> src/dst pairs to work with this API. But they don't necessarily need to use
 
-Thank you for good summary. The key problem is that it is hard to know
-DMA running or STOP. Espcially use polling mode.
+Define API is memcpy, not memory to peripherail Or peripherail to memory
 
-	assume a bus loop
+dmaengine_prep_dma_sg() - Prepare a memory-to-memory scatter-gather DMA descriptor.
 
-	while(1) {
-		if (condition) { 	1
-			do_action()     2
-		}
-	}
+Most memcpy user need call dma_map_sg() to get sg.  And most likely two
+virutal address offset to page is difference.
 
-1, Generally read some register status or software state.
-2. Read idx
+So most likely return failure by this API.
 
-between 1 and 2, if 1 test is running, after test and before do action,
-dma may be already stopped.
+What next, if failure,  fallback other DMAengine API or return user?
 
-DMA engine is totally async with cpu.
-
->
-> For a running eDMA sample, I observed that DMA_LLP can advance with descriptor
-> fetch before the corresponding payload transfer has completed. Therefore raw idx
-> does not by itself prove that the payload for the entry immediately before idx
-> has finished. Using [ll_done, idx) could complete that entry and release its DMA
-> mapping too early.
-
-
-This is bad hardware design. Pre Fetch should not show in register leave.
-
-Maybe a workaround, dma driver create pre allocated memory.
-
-When prep sg, append an extra LL, which write/read to this pre allocate
-memory, we can check this pre allocated memory to know current dma working
-status.
-
-This is embeded DMA, one side have to be remote side memory, which make work
-around complex.
-
->
-> For HDMA, the databook describes the watermark LLP as an inclusive LLE recycling
-> boundary, which would normally translate to next(idx). I first implemented it
-> that way. On a DWC HDMA 6.30a integration (SpacemiT K3), however, this let the
-> client unmap memory while hardware was still accessing it, causing IOMMU faults.
-> Moving the completion boundary back to prev(idx) stopped the faults.
->
-> For completeness, v1 used raw idx as the exclusive HDMA completion boundary,
-> [ll_done, idx), and completed the HDMA fio test set reliably. So raw idx itself
-> is not known to be unsafe.
->
-> After next(idx) caused the IOMMU faults, however, I deliberately aligned HDMA
-> with the conservative eDMA handling (pls. see the comment block in
-> dw_edma_ll_recycle_idx()). All running progress samples use the same prev(idx)
-> conversion, while confirmed STOP samples use the exact next-entry boundary. This
-> keeps the common normalization simple and avoids engine-specific handling. For
-> HDMA, the trade-off is that completion stays one additional entry behind raw idx
-> until later progress or STOP catches it up.
-
-So DMA engine move idx advance even though current LL still working.
-It is quite common at some modem dmaengine to improve dma preforamce, but
-it should be hidden in hardware internal, like CPU's PC pointer.
-
->
-> I think this is related to the fact that HDMA LL mode decouples descriptor
-> fetching, data processing, completion processing, and interrupt handling. That
-> explains why the documented LLE-recycling boundary cannot automatically be used
-> as the dmaengine completion boundary, although it does not by itself tell us
-> whether idx or prev(idx) is required.
->
-> The idx == 0 handling is also a consequence of the current prev(idx) retreat.
-> For example, with data entries 0..7 and the physical link element at index 8,
-> moving raw index 8 back gives boundary 7. Blindly moving raw data index 0 back
-> would also wrap to 7. If that raw 0 was a no-progress sample, it could then look
-> like almost one full ring of progress. Therefore raw 0 is rejected while the
-> physical link index remains distinguishable.
->
-> In other words, without the prev(idx) retreat, the link index could simply be
-> normalized to 0, as you mentioned. The current prev(idx) handling was
-> nevertheless intentional, not an oversight. It trades one-entry delayed HDMA
-> completion for one conservative rule shared with eDMA. Unless there is a
-> concrete reason to reclaim that extra entry at each HDMA watermark, I would
-> prefer to keep the common handling.
-
-let me read document again.
+If fallback to other APIs, code logic become more complex. If return to
+user, user will be strange why failure at some time, but success at
+some time.
 
 Frank
 
+> dma_map_sg() which can provide fragmented mappings as you described. They can
+> use dma_map_single() or even the bus addresses directly as the MHI client is
+> already doing.
 >
-> Best regards,
-> Koichiro
+> - Mani
 >
-> >
-> > > +}
-> > > +
-> > >  static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
-> > >  {
-> > >  	/*
-> > > @@ -834,31 +977,30 @@ dw_edma_device_prep_interleaved_dma(struct dma_chan *dchan,
-> > >  	return dw_edma_device_transfer(&xfer, dw_edma_device_get_config(dchan, NULL));
-> > >  }
-> > >
-> > > -/* Must be called with vc.lock held. */
-> > > -static void dw_edma_done_interrupt_locked(struct dw_edma_chan *chan)
-> > > +static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
-> > >  {
-> > >  	struct dw_edma_desc *desc;
-> > >  	struct virt_dma_desc *vd;
-> > > +	unsigned long flags;
-> > >
-> > > -	lockdep_assert_held(&chan->vc.lock);
-> > > -
-> > > -	if (chan->status == EDMA_ST_PAUSE)
-> > > +	spin_lock_irqsave(&chan->vc.lock, flags);
-> > > +	if (chan->status == EDMA_ST_PAUSE) {
-> > > +		spin_unlock_irqrestore(&chan->vc.lock, flags);
-> > >  		return;
-> > > +	}
-> > >
-> > >  	switch (chan->request) {
-> > >  	case EDMA_REQ_NONE:
-> > >  	case EDMA_REQ_PAUSE:
-> > >  		vd = vchan_next_desc(&chan->vc);
-> > > -		if (!vd)
-> > > -			break;
-> > > -
-> > > -		desc = vd2dw_edma_desc(vd);
-> > > -		if (desc->start_burst >= desc->nburst) {
-> > > -			dw_hdma_set_callback_result(vd, DMA_TRANS_NOERROR);
-> > > -			list_del(&vd->node);
-> > > -			vchan_cookie_complete(vd);
-> > > -			if (!chan->non_ll)
-> > > -				chan->ll_done = chan->ll_head;
-> > > +		if (vd) {
-> > > +			desc = vd2dw_edma_desc(vd);
-> > > +			if (desc->start_burst >= desc->nburst) {
-> > > +				dw_hdma_set_callback_result(vd,
-> > > +							    DMA_TRANS_NOERROR);
-> > > +				list_del(&vd->node);
-> > > +				vchan_cookie_complete(vd);
-> > > +			}
-> > >  		}
-> > >
-> > >  		if (chan->request == EDMA_REQ_PAUSE) {
-> > > @@ -871,25 +1013,12 @@ static void dw_edma_done_interrupt_locked(struct dw_edma_chan *chan)
-> > >  		break;
-> > >
-> > >  	case EDMA_REQ_STOP:
-> > > -		vd = vchan_next_desc(&chan->vc);
-> > > -		if (!vd)
-> > > -			break;
-> > > -
-> > >  		dw_edma_finish_termination(chan);
-> > >  		break;
-> > >
-> > >  	default:
-> > >  		break;
-> > >  	}
-> > > -	dw_edma_core_ch_maybe_doorbell(chan);
-> > > -}
-> > > -
-> > > -static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
-> > > -{
-> > > -	unsigned long flags;
-> > > -
-> > > -	spin_lock_irqsave(&chan->vc.lock, flags);
-> > > -	dw_edma_done_interrupt_locked(chan);
-> > >  	spin_unlock_irqrestore(&chan->vc.lock, flags);
-> > >  }
-> > >
-> > > @@ -902,7 +1031,37 @@ static void dw_edma_ll_interrupt(struct dw_edma_chan *chan)
-> > >  	if (!dw_edma_ll_snapshot_take(chan, &snapshot))
-> > >  		return;
-> > >
-> > > -	dw_edma_done_interrupt_locked(chan);
-> > > +	if (chan->status == EDMA_ST_PAUSE)
-> > > +		return;
-> > > +
-> > > +	dw_edma_ll_consume_progress(chan, snapshot.idx);
-> > > +
-> > > +	if (snapshot.event == DW_EDMA_LL_EVENT_PROGRESS &&
-> > > +	    chan->request != EDMA_REQ_NONE)
-> > > +		goto out;
-> > > +
-> > > +	switch (chan->request) {
-> > > +	case EDMA_REQ_NONE:
-> > > +		dw_edma_start_transfer(chan);
-> > > +		chan->status = dw_edma_ll_pending(chan) ?
-> > > +			       EDMA_ST_BUSY : EDMA_ST_IDLE;
-> > > +		break;
-> > > +
-> > > +	case EDMA_REQ_PAUSE:
-> > > +		dw_edma_set_request(chan, EDMA_REQ_NONE);
-> > > +		chan->status = EDMA_ST_PAUSE;
-> > > +		break;
-> > > +
-> > > +	case EDMA_REQ_STOP:
-> > > +		dw_edma_finish_termination(chan);
-> > > +		break;
-> > > +
-> > > +	default:
-> > > +		break;
-> > > +	}
-> > > +
-> > > +out:
-> > > +	dw_edma_core_ch_maybe_doorbell(chan);
-> > >  }
-> > >
-> > >  static bool dw_edma_abort_interrupt(struct dw_edma_chan *chan)
-> > > @@ -965,21 +1124,44 @@ static void dw_edma_queue_irq_work(struct dw_edma_chan *chan,
-> > >  static void dw_edma_record_irq(struct dw_edma_chan *chan, unsigned int events)
-> > >  {
-> > >  	struct dw_edma_ll_snapshot snapshot = {
-> > > -		.event = events & DW_EDMA_IRQ_STOP ?
-> > > -			 DW_EDMA_LL_EVENT_STOP : DW_EDMA_LL_EVENT_PROGRESS,
-> > > +		.idx = -1,
-> > > +		.event = DW_EDMA_LL_EVENT_NONE,
-> > >  	};
-> > >  	unsigned int pending = 0;
-> > >
-> > >  	lockdep_assert_held(dw_edma_event_lock(chan));
-> > >
-> > > +	/*
-> > > +	 * Classify the LL event before normalizing its LLP sample to the
-> > > +	 * exclusive consumer boundary. Keep STOP even without a valid
-> > > +	 * boundary so deferred handling still sees that the run ended.
-> > > +	 */
-> > > +	if (!chan->non_ll &&
-> > > +	    (events & (DW_EDMA_IRQ_DONE | DW_EDMA_IRQ_PROGRESS |
-> > > +		       DW_EDMA_IRQ_STOP))) {
-> > > +		if ((events & DW_EDMA_IRQ_STOP) ||
-> > > +		    ((events & DW_EDMA_IRQ_DONE) &&
-> > > +		     dw_edma_ll_done_is_stopped(chan)))
-> > > +			snapshot.event = DW_EDMA_LL_EVENT_STOP;
-> > > +		else
-> > > +			snapshot.event = DW_EDMA_LL_EVENT_PROGRESS;
-> > > +
-> > > +		snapshot.idx = dw_edma_ll_recycle_idx(chan,
-> > > +						      dw_edma_core_ll_cur_idx(chan),
-> > > +						      snapshot.event);
-> > > +		if (snapshot.idx < 0 &&
-> > > +		    snapshot.event != DW_EDMA_LL_EVENT_STOP)
-> > > +			snapshot.event = DW_EDMA_LL_EVENT_NONE;
-> > > +	}
-> > > +
-> > >  	if ((events & DW_EDMA_IRQ_ABORT) && chan->abort_pending)
-> > >  		pending |= DW_EDMA_DEFERRED_ABORT;
-> > >
-> > > -	if (chan->non_ll) {
-> > > -		if (events & (DW_EDMA_IRQ_DONE | DW_EDMA_IRQ_STOP))
-> > > -			pending |= DW_EDMA_DEFERRED_DONE;
-> > > -	} else if (events & (DW_EDMA_IRQ_DONE | DW_EDMA_IRQ_PROGRESS |
-> > > -			     DW_EDMA_IRQ_STOP)) {
-> > > +	if (chan->non_ll &&
-> > > +	    (events & (DW_EDMA_IRQ_DONE | DW_EDMA_IRQ_STOP)))
-> > > +		pending |= DW_EDMA_DEFERRED_DONE;
-> > > +
-> > > +	if (snapshot.event != DW_EDMA_LL_EVENT_NONE) {
-> > >  		/* STOP is final for this run; do not replace it with progress. */
-> > >  		if (chan->ll_irq.event != DW_EDMA_LL_EVENT_STOP ||
-> > >  		    snapshot.event == DW_EDMA_LL_EVENT_STOP)
-> > > @@ -1227,6 +1409,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
-> > >  		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
-> > >  		INIT_WORK(&chan->irq_work, dw_edma_irq_work);
-> > >  		atomic_set(&chan->irq_pending, 0);
-> > > +		chan->ll_irq.idx = -1;
-> > >  		chan->ll_irq.event = DW_EDMA_LL_EVENT_NONE;
-> > >  		chan->abort_pending = false;
-> > >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-> > > index d709aa274300..27cab6ca5e67 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.h
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.h
-> > > @@ -71,6 +71,7 @@ struct dw_edma_desc {
-> > >
-> > >  	u32				alloc_sz;
-> > >
-> > > +	u32				ll_start;	/* First outstanding LL entry */
-> > >  	size_t				done_burst;
-> > >  	size_t				start_burst;
-> > >  	size_t				nburst;
-> > > @@ -78,6 +79,7 @@ struct dw_edma_desc {
-> > >  };
-> > >
-> > >  struct dw_edma_ll_snapshot {
-> > > +	int				idx;
-> > >  	enum dw_edma_ll_event		event;
-> > >  };
-> > >
-> > > @@ -113,6 +115,7 @@ struct dw_edma_chan {
-> > >  	 * LL event recorded by the hard IRQ handler. The event lock
-> > >  	 * serializes its capture with a new hardware run; vc.lock serializes
-> > >  	 * its consumption with LL state.
-> > > +	 * Valid indices use the exclusive boundary convention of ll_done.
-> > >  	 */
-> > >  	struct dw_edma_ll_snapshot	ll_irq;
-> > >  	/* ABORT is terminal and remains pending across LL state changes. */
-> > > @@ -189,6 +192,7 @@ struct dw_edma_core_ops {
-> > >  	enum dma_status (*ch_status)(struct dw_edma_chan *chan);
-> > >  	/* Called with dw_edma_event_lock(chan) held. */
-> > >  	bool (*ch_abort_int_pending)(struct dw_edma_chan *chan);
-> > > +	u32 (*ch_transfer_size)(struct dw_edma_chan *chan);
-> > >  	irqreturn_t (*handle_int)(struct dw_edma_irq *dw_irq, enum dw_edma_dir dir,
-> > >  				  dw_edma_handler_t handler);
-> > >  	void (*non_ll_start)(struct dw_edma_chan *chan, struct dw_edma_burst *child);
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > > index 20dff21a0603..b9d6205157b3 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> > > @@ -318,6 +318,11 @@ static enum dma_status dw_edma_v0_core_ch_status(struct dw_edma_chan *chan)
-> > >  		return DMA_ERROR;
-> > >  }
-> > >
-> > > +static u32 dw_edma_v0_core_ch_transfer_size(struct dw_edma_chan *chan)
-> > > +{
-> > > +	return GET_CH_32(chan->dw, chan->dir, chan->id, transfer_size);
-> > > +}
-> > > +
-> > >  static bool dw_edma_v0_core_ch_abort_int_pending(struct dw_edma_chan *chan)
-> > >  {
-> > >  	u32 sts = GET_RW_32(chan->dw, chan->dir, int_status);
-> > > @@ -677,6 +682,7 @@ static const struct dw_edma_core_ops dw_edma_v0_core = {
-> > >  	.ch_count = dw_edma_v0_core_ch_count,
-> > >  	.ch_status = dw_edma_v0_core_ch_status,
-> > >  	.ch_abort_int_pending = dw_edma_v0_core_ch_abort_int_pending,
-> > > +	.ch_transfer_size = dw_edma_v0_core_ch_transfer_size,
-> > >  	.handle_int = dw_edma_v0_core_handle_int,
-> > >  	.ll_data = dw_edma_v0_core_ll_data,
-> > >  	.ll_link = dw_edma_v0_core_ll_link,
-> > > --
-> > > 2.51.0
-> > >
+> --
+> மணிவண்ணன் சதாசிவம்
