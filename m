@@ -1,143 +1,109 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA8A3CCFCC
-	for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 14:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CC535E95C;
+	Fri, 14 Aug 2026 14:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786717673; cv=none; b=cDnYofIcx1C4bXmeHCyvm07v1zqWYTiQmRDTupj95LQi5bBpjAwwH7k4+HasWsxumZpBpLPlz2jNfvmJ3uAd2IWOqqM1Pg09leXPafy/q/gZ8sFzdWDmyQFetbx50BgGL+XoGwLZBNp4QXOta0bKjINydGEfVbsyBJgo5lBjaOg=
+	t=1786717974; cv=none; b=tU3txDsQcLwEEkOaUt9BY32HGMYv+sR8P5pwgkHF4h5LuRxXqW3xrjPVKrWhsP3APmYKJgPN011CxV25d8ZpXBnlBg4yGWVOyAaBXQiADvysF2CJH5pVuUQDUxTD6C0DS5rlVLvIWikfUak3h7ZUR43tjlMr60P1SwTBDbR6slE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786717673; c=relaxed/simple;
-	bh=k0KzLk/Py5MfNs6v0LG2pawI7nCHX5oUhShrr2VzixE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/VatZFFVHfyQetMTSislxB4cFtPW/awaeFThmOjhKDhZQfwjtuzMfyzXdwpxNeDnQeMl9xouCZNyfd60jzaI6k8y4mlaZp59vwPTOJ/yNS4N0QLKbal0Mr8+d+KEk69EGktBYPpT441reD098ASjlCVt9bmzXReQzJdCCz8gho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io; spf=pass smtp.mailfrom=soundtrack.io; dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b=Abk8hbO3; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=soundtrack.io
+	s=arc-20240116; t=1786717974; c=relaxed/simple;
+	bh=Ppe4zWINCcH5b2f6yoDphv64Qrb/dTMrYEddNH7Huf0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HO9JVoUMAxlBDq5ZsOhBRsA4XfqpjoRY3n3anOKkq/4fu/vf3TgdwRHKjq0rWP97525sxmoHCCZJ93yUki/EX5Uv7bpex41FPZAdW8nL0NsXldA7RW9W2TNJNqohV6mLajgnViQgGWwgizksyvvXEVliShYTh0CC7lwuvW57t5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQMgfzLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b="Abk8hbO3"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c15e62c695cso8252466b.1
-        for <dmaengine@vger.kernel.org>; Fri, 14 Aug 2026 07:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=soundtrack.io; s=google; t=1786717660; x=1787322460; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=t8f5UJCABHvmBw6dzoHdGzw6KbaLnhVEoCCS6jqmRT4=;
-        b=Abk8hbO3uhyHVYxm90lWMY7m0s1iBE3oGJKs2XJgQJ09dUKp5u+hpy8pMULNG3S4N0
-         e9pukQFGcMYrj866rPOzzYuIRgTQHxq+VgrHhKSqHqIV4NL2KQwI4Z0BD8Mp1sTvz3LM
-         1Ugb3Rn3Np/3gUXKg/NOKV7OmW7VFrLGUsUcLUxd8plGza8ue3UV3u23tsXSj4kYYawL
-         J7kC1N/xMNaSSysLroGs/baRvrSRAS7FQHZwZLnkac4pqIUoF3KegUu+PaJm01xPISTf
-         vwVFJoGrz90CFCe49XxKrtsGC/cUUE0svJth8QhQWh6/8afjYQ7ikvKEydsyEdCZOV/0
-         g3Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786717660; x=1787322460;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=t8f5UJCABHvmBw6dzoHdGzw6KbaLnhVEoCCS6jqmRT4=;
-        b=EDOAW8X8Qf1iQPq4KrqG8nARb4HYr4Pd1yvyzGRawiwbu7ai5M6uF1D7DkuAIlnAgY
-         qR1WAONht++l5y+4z6UlhSa7wfKOq8uFXA3nXemcenfcVX50lVUHYUKrNo+2jP8KzV/e
-         PmMK95b//4UhPas4SoufoiNuYHDvM83wuhgZ0+qs5h4BVq+4T9SATgfmIUVO3GsDos+R
-         kW0vsroWiLzwkNVzI7TKL3/YzbUAJf7UTss+1xxWrBQrU0OtbRaDTLs8maepeosCaLn/
-         +7V4OgPfHjuiBrANP20fcLf3gbLKcFFKaWlgoHvNlCGDTp6AzHgL4EueqN/loIyT9Mbq
-         cBHg==
-X-Forwarded-Encrypted: i=1; AHgh+Ro6HUF+z85n/J0TV4ijP9GuJKazMxr8ywVtoxRgR3oQPC1kCZA6PLPbOzGzrJgLh4j2WM15NcsClfc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznmLQdUhjHz0QX3HmnwnSxKtd8Hi8ElPXzl2KuF4t/ztsWVfIf
-	7VGrxWLzCoH9YjhEtBMTqT/PhBCyx8bcOm9rdJIarXTmD0zFbOPHgUWeKiQpIfX4Gjo=
-X-Gm-Gg: AR+sD13dv8KF79GsXYyH/hg6GCGz4hBUltSH8Lgsfn0k191qPWmR6pydWbUHwsYfpcm
-	+5TckV+4Irz03AL9A1L6I6X9FeMmWGuZeIdDeFUdntgB8eE9JWpJrO+p0b7T01ewGbdczVjYrmm
-	dvsqiOX8lqikUwG77NHWg8xKEJDuFY8it5JfLZ0MNyUif6tstNkiYY70TwqDCNWnZfc1+XIdgTa
-	U1m3aikyGEK40KV8XfEMoMlAFq9/55WVCECt6OusUfleD1cBRVqzzKBsNsJMtqFKrowVj53AxM2
-	cdLgXCejmGYVRQdOwkvDaq9WM4n98hVsx8I63CotFzlNjfKuD2ws0w0QmCDNnnum2fl2Cztt9dP
-	PBDyajuKdZcJNIby+SxCoUfoyFV/tZyfcPdubsogGwKE7DlLhdQt+mvpHq5KK3wLwprprMqibVe
-	leL6gg5GNp5fwxOnfInaJOoQCyeHiU1c7tLcKycaWhl4B/Ra2UFHOtHNvlGW44e+fviyqHmxfw4
-	n9/ZRbpoD6006gyq7BJ5hPD6NcFhPDp5zuBLqPHwYMqtX8s80KIrnGUHA==
-X-Received: by 2002:a17:907:9403:b0:c1c:4ae9:b935 with SMTP id a640c23a62f3a-c212a22e029mr175852366b.3.1786717659858;
-        Fri, 14 Aug 2026 07:27:39 -0700 (PDT)
-Received: from Christians-MBP (31-209-40-223.cust.bredband2.com. [31.209.40.223])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c21234c45ffsm106308866b.19.2026.08.14.07.27.38
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 14 Aug 2026 07:27:39 -0700 (PDT)
-From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
-To: vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	wens@kernel.org,
-	jernej.skrabec@gmail.com,
-	samuel@sholland.org,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
-	stable@vger.kernel.org
-Subject: [PATCH v2 2/2] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
-Date: Fri, 14 Aug 2026 16:21:11 +0200
-Message-ID: <20260814142708.79120-3-christian.lugnberg@soundtrack.io>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260814142708.79120-1-christian.lugnberg@soundtrack.io>
-References: <20260814142708.79120-1-christian.lugnberg@soundtrack.io>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQMgfzLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358251F000E9;
+	Fri, 14 Aug 2026 14:32:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786717961;
+	bh=4/uPK4MDzXDsQYo1tVaREhQkVYakh1u6OLghkiUo2DE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=QQMgfzLCKklFwTf93WC6lT7fFnkQk14voJvliD4BqjTtKs7O+VtzUY8wDdwUAVOPV
+	 kPWKayUm8ivWJiFHqlBMH5gY+90aFiQQ98RIc6bJwwxjWnqSKUGtyYIO7cXu+bgQ7Q
+	 a0eO2rDMaqPTZ2672sqwj2s8/h6jEMx5ynYoMBC2hj9aDlK1zyTQQN4T6Z1Ogsry6L
+	 WHbRkFnt8oWP+rYiIU6f6ASuvU4cV+NYj1+C307I4RQ/cfb9PFn2kGpohEfk0RF4zj
+	 Coyyg8zqlTD4WYnfrPk3zbEBhY/u6jbaY6S6rcyItBv8zvcPYhwlUjjeZkRoky0HBj
+	 BqCVfy4gCvvsA==
+Date: Fri, 14 Aug 2026 16:32:31 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, mhi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] PCI: epf-mhi: Add batched DMA read support
+Message-ID: <b6sdjiqzqibgahny4mkfpwytwz4lsjfvgi2fmcyptzd3rbbbwf@tcitu5fjj2kg>
+References: <20260803-dma_multi_sg-v2-0-c12bb05e42d6@oss.qualcomm.com>
+ <20260803-dma_multi_sg-v2-4-c12bb05e42d6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260803-dma_multi_sg-v2-4-c12bb05e42d6@oss.qualcomm.com>
 
-sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
-descriptor for a given cookie, before checking whether the pointer
-vd is NULL:
+On Mon, Aug 03, 2026 at 04:01:46PM +0530, Sumit Kumar wrote:
+> Add support for batched DMA transfers in the PCI EPF MHI driver to
+> improve performance when reading multiple buffers from the host.
+> 
+> Implement two variants of the read_batch() callback:
+> pci_epf_mhi_edma_read_batch() is a DMA-optimized implementation that uses
+> dmaengine_prep_dma_sg() to transfer multiple buffers in a single DMA
+> transaction, while pci_epf_mhi_iatu_read_batch() serves as a CPU-copy
+> fallback for platforms without DMA support by sequentially processing each
+> buffer via IATU mapping. Wire up read_batch() to the eDMA variant only
+> when the RX DMA channel advertises the DMA_SG capability, falling back to
+> the IATU variant otherwise.
+> 
+> On a successful batch, notify completion for every buffer via its
+> caller-supplied buf_info->cb, mirroring the read_sync/read_async
+> completion semantics so the MHI stack can free each buffer and raise its
+> transfer completion event. Make read_batch() a mandatory callback in
+> mhi_ep_register_controller(), alongside read_sync/write_sync/read_async/
+> write_async.
+> 
+> This enables the MHI endpoint stack to cache ring data efficiently,
+> particularly for wraparound scenarios where ring data spans two
+> non-contiguous memory regions.
+> 
+> Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+> ---
+>  drivers/bus/mhi/ep/main.c                    |   3 +-
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c | 159 +++++++++++++++++++++++++++
+>  include/linux/mhi_ep.h                       |   7 ++
+>  3 files changed, 168 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index 21bc2c50170ff7f0181c0d0d4eefd51db30f34c8..c45240fc481dc3260a61b546c223b6be8e105587 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -1459,7 +1459,8 @@ int mhi_ep_register_controller(struct mhi_ep_cntrl *mhi_cntrl,
+>  		return -EINVAL;
+>  
+>  	if (!mhi_cntrl->read_sync || !mhi_cntrl->write_sync ||
+> -	    !mhi_cntrl->read_async || !mhi_cntrl->write_async)
+> +	    !mhi_cntrl->read_async || !mhi_cntrl->write_async ||
+> +	    !mhi_cntrl->read_batch)
 
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
+No, this looks like a broken client-provider contract. You don't necessarily
+need a new callback. Just rework read_sync/async callbacks to accept
+'num_buffers' argument and let the EPF deal with however it wants to transfer
+the buffers.
 
-    if (vd) {
-        for (lli = txd->v_lli; ...)
+If the num_buffers is 1, it can use the existing path and if it is > 1, it can
+use the new dmaengine API. Or to simplify further, you can use the new API for
+all buffer lengths. Only caveat is that you need to check whether the dmaengine
+supports relevant capabilities like DMA_SG.
 
-vchan_find_desc() returns NULL when the descriptor has already been
-completed or is in-flight on a physical channel and no longer present
-in the virtual channel's descriptor list. When vd is NULL,
-to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
-check, which is undefined behaviour. Move the call inside the if (vd)
-guard to ensure it is only reached with a valid pointer.
+- Mani
 
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    if (vd) {
-        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-        for (lli = txd->v_lli; ...)
-
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
----
- drivers/dma/sun6i-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 04fe1f5042e9..7704b016aed8 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -981,7 +981,6 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
- 	struct sun6i_pchan *pchan = vchan->phy;
- 	struct sun6i_dma_lli *lli;
- 	struct virt_dma_desc *vd;
--	struct sun6i_desc *txd;
- 	enum dma_status ret;
- 	unsigned long flags;
- 	size_t bytes = 0;
-@@ -993,9 +992,9 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
- 
- 	vd = vchan_find_desc(&vchan->vc, cookie);
--	txd = to_sun6i_desc(&vd->tx);
- 
- 	if (vd) {
-+		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
- 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
- 			bytes += lli->len;
- 	} else if (!pchan || !pchan->desc) {
 -- 
-2.54.0 (Apple Git-156)
-
+மணிவண்ணன் சதாசிவம்
