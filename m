@@ -1,142 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out30-124.freemail.mail.aliyun.com (out30-124.freemail.mail.aliyun.com [115.124.30.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD54625;
-	Fri, 14 Aug 2026 00:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279DA1E2614;
+	Fri, 14 Aug 2026 00:35:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786666196; cv=none; b=rfAz02MwXkEEdY0RNghxYQf50YhzmGaGLYAxuarCXF1dm9NPn8TLNrQHt9lfB9+pbkrllJsY1aJdnmfCLx2xr/fHLiAcjzGrYBJJFLdaxtee1leDLw+Mmk7/CedOChcvsDXQ+3FKEfpitzznBrwZGo1BUravXCME285FFBO1E6k=
+	t=1786667761; cv=none; b=E+KvaWaizltSfuV8paH98u0kk+kadX7fC+Y7YKOcsdWJsCM7WYqO6qk7SQaF0JfDjgXic82/U03RiiYDgjVAAf+wB9lixk5o0DYKwCKFgsgB0T0Dj+kEF8dllIlkd81sTiHDLG4aUMf+wyXZX2XhXkx3JNMmJQSse9XgmeF8eZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786666196; c=relaxed/simple;
-	bh=HgAD51W3RnV/dPqo5nifdH1Lmq0VqaNBfJyblj8ss/Y=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=s7y06oUSEh75Zba93Ol5RQ3g0jNqPzQLr6oaIDSpVJmsKbBY5G2EjmPfWWeJ52IGmQqZ+csAbGtGtTKDk+DsYTo9NNN2ZxhDUuGk/dyya2OBXK3fbIOYXplntj9hm5qfKHA5NsFTs6sp5RmT2fZ/ZuwMTnJu6X7rKBcV6nH/7mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kAOSkzGr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786667761; c=relaxed/simple;
+	bh=bf5nppdkHE+pe2Fz4Cm07YiLQ1mRTTsu0VcC2Q4g+j8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wo1u2Kj8xw7QQlNsPUhLJrkyKoQtk1Az+xSF2PZGnsJDQoFs4PEUNioZCEhN+Uv9Ve2IWx4e7mOAC2VjkIo6O4YLBx8k9ajklcYealhsm8PP3BiuntZ+9VGsG2nVaeq7WLWHR8gs/CI8lvaZB36JmFpQehwwpp10j8uNJGkUtJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=QJj9f9F5; arc=none smtp.client-ip=115.124.30.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kAOSkzGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73141F000E9;
-	Fri, 14 Aug 2026 00:09:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786666195;
-	bh=PIe8Q6g3Q5bovhCq4SpUmj282PlM040MCNrypQMkBPQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kAOSkzGrCM82oux9ohO/65Sa3mpSkpYMXOyAtvb7s0PWviu27vHVgm5nogozPBoSL
-	 yfE0P78o+PNQO2l5ApWsQpBbcTo27ZGqABDv0tK7fDFu3E+y4ofjeOUNRzaa5CuiCO
-	 oJudJEaLbF9boJ1juFF2htok5A9pK0jfUfmxmCDicrTeM6mb2x9LIwFYOweADPh4pv
-	 l0pUmJn2nk0Zv4QmdyLkx9zMjde/j+Hi+jrthZcXP+c3VcUSl7ZORAC/Z3kfAPvt5V
-	 Ln9JeQwVKU6V8mZux0vYdzP6+/7WvgO2s821tKiSH32RgHAtWrNe1v1/FwqgNrGb3H
-	 iNa0WI48zSzig==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 08/23] dmaengine: sdxi: Install administrative context
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Nathan Lynch via B4 Relay" <devnull+nathan.lynch.amd.com@kernel.org>
-Cc: linux-pci@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260410-sdxi-base-v1-8-1d184cb5c60a@amd.com>
-References: <20260410-sdxi-base-v1-8-1d184cb5c60a@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 00:09:50 +0000
-Message-Id: <20260814000950.C73141F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="QJj9f9F5"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1786667750; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=XJnVVf1j8t6EWr3rE41qTk2gXwoNoOsf5/elgYezZR8=;
+	b=QJj9f9F5fWn9kmeT/ijfGRiYJBPjVm5QCzu0DzSW5SBfOcehuoCAoCI7lXCSrqmJ4l5/RqGyvuNjlL/KgOvFXOEvnpV7HYT7ONf2uxsvXHiCPDt8GS538038F7IWwUqhH3p1Ktcjivzivz7tWh2OUlk7gxr5k5HvNKJkwUaWUZ4=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R931e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=baolin.wang@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0X8vXo.v_1786667749;
+Received: from 30.74.144.118(mailfrom:baolin.wang@linux.alibaba.com fp:SMTPD_---0X8vXo.v_1786667749 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Fri, 14 Aug 2026 08:35:49 +0800
+Message-ID: <fa32c930-3a1a-4967-935a-44156cb24b10@linux.alibaba.com>
+Date: Fri, 14 Aug 2026 08:35:48 +0800
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: sprd: Fix runtime PM reference leak in probe
+To: Ruoyu Wang <ruoyuw560@gmail.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, orsonzhai@gmail.com,
+ zhang.lyra@gmail.com, linux-kernel@vger.kernel.org
+References: <20260813153149.3953497-1-ruoyuw560@gmail.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
+In-Reply-To: <20260813153149.3953497-1-ruoyuw560@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Hardware retains access to freed DMA memory due to missing L1 entr=
-y invalidation during teardown.
-- [Medium] Incorrect error check for `dma_pool_zalloc` allocation of `cxt->=
-cxt_ctl`.
---
 
---- Patch [8]: [PATCH 08/23] dmaengine: sdxi: Install administrative contex=
-t ---
-commit 17401dc26aa25b16b19cf4cf87900b7c0d64a889
-Author: Nathan Lynch <nathan.lynch@amd.com>
 
-dmaengine: sdxi: Install administrative context
+On 8/13/26 11:31 PM, Ruoyu Wang wrote:
+> pm_runtime_get_sync() increments a device's usage counter even when it
+> fails. sprd_dma_probe() currently jumps directly to controller clock
+> cleanup on that error, bypassing both pm_runtime_put_noidle() and
+> pm_runtime_disable(). This can happen if the preceding unchecked
+> pm_runtime_set_active() fails and the following runtime-resume attempt
+> also returns an error.
+> 
+> Enter the existing runtime-PM unwind path instead. This drops the
+> reference without idling the partially initialized device, disables
+> runtime PM, and then releases the controller clocks. The success path
+> and propagated error code are unchanged.
+> 
+> This issue was found by a static analysis checker and confirmed by manual
+> source review.
+> 
+> Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
+> Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+> ---
 
-Serialize the context control block, akey table, and L1 entry for the
-admin context, making its descriptor ring, write index, and context
-status block visible to the SDXI implementation once it is activated.
+LGTM. Thanks.
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-> diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
-> index 0a6821992776c..097d871e530fd 100644
-> --- a/drivers/dma/sdxi/context.c
-> +++ b/drivers/dma/sdxi/context.c
+>   drivers/dma/sprd-dma.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+> index 087fea3af2e411..19b32a23c882de 100644
+> --- a/drivers/dma/sprd-dma.c
+> +++ b/drivers/dma/sprd-dma.c
+> @@ -1212,7 +1212,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
+>   
+>   	ret = pm_runtime_get_sync(&pdev->dev);
+>   	if (ret < 0)
+> -		goto err_rpm;
+> +		goto err_register;
+>   
+>   	ret = dma_async_device_register(&sdev->dma_dev);
+>   	if (ret < 0) {
+> @@ -1234,7 +1234,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
+>   err_register:
+>   	pm_runtime_put_noidle(&pdev->dev);
+>   	pm_runtime_disable(&pdev->dev);
+> -err_rpm:
+>   	sprd_dma_disable(sdev);
+>   	return ret;
+>   }
 
-[ ... ]
-
-> @@ -115,13 +267,23 @@ static void free_admin_cxt(void *ptr)
-> =20
->  int sdxi_admin_cxt_init(struct sdxi_dev *sdxi)
->  {
-> +	int err;
-> +	struct sdxi_sq *sq;
-> +
->  	struct sdxi_cxt *cxt __free(sdxi_cxt) =3D sdxi_alloc_cxt(sdxi);
-
-[Severity: Medium]
-In sdxi_alloc_cxt() called here, the code handles allocation as follows:
-
-drivers/dma/sdxi/context.c:sdxi_alloc_cxt() {
-    ...
-    cxt->cxt_ctl =3D dma_pool_zalloc(sdxi->cxt_ctl_pool, GFP_KERNEL,
-                                   &cxt->cxt_ctl_dma);
-    if (!cxt->cxt_ctl_dma)
-        return NULL;
-    ...
-}
-
-Is this the correct check for dma_pool_zalloc() failure? DMA address 0 can =
-be
-a valid address returned by the DMA API on some platforms, which would cause
-this check to falsely treat a successful allocation as a failure. Should it
-check if (!cxt->cxt_ctl) instead?
-
->  	if (!cxt)
->  		return -ENOMEM;
-> =20
-> +	sq =3D cxt->sq;
-> +	/* SDXI 1.0 4.1.8.4.b: Set CXT_STS.state to CXTV_RUN. */
-> +	sq->cxt_sts->state =3D FIELD_PREP(SDXI_CXT_STS_STATE, CXTV_RUN);
->  	cxt->id =3D SDXI_ADMIN_CXT_ID;
->  	cxt->db =3D sdxi->dbs + cxt->id * sdxi->db_stride;
-> =20
-> +	err =3D sdxi_publish_cxt(cxt);
-> +	if (err)
-> +		return err;
-> +
->  	sdxi->admin_cxt =3D no_free_ptr(cxt);
-> =20
->  	return devm_add_action_or_reset(sdxi_to_dev(sdxi), free_admin_cxt, sdxi=
-);
-
-[Severity: High]
-When an administrator unbinds the driver via sysfs or unloads the module, t=
-he
-devres teardown path calls free_admin_cxt(). This ultimately calls
-sdxi_free_cxt() which frees the DMA memory back to the kernel.
-
-Since sdxi_publish_cxt() now writes the VL=3D1 bit and makes the memory vis=
-ible
-to the hardware, does the driver need to clear this bit in the L1 table ent=
-ry
-and stop the hardware before freeing the memory?
-
-The driver also lacks a .remove callback in sdxi_driver (in
-drivers/dma/sdxi/pci.c) to safely stop the PCI device and its DMA operations
-before devres cleanup begins.
-
-Will the active hardware continue to fetch descriptors and write statuses to
-the now-freed memory pages, causing a DMA use-after-free and potential kern=
-el
-memory corruption?
-
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260410-sdxi-base-=
-v1-0-1d184cb5c60a@amd.com?part=3D8
