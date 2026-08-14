@@ -1,67 +1,69 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013012.outbound.protection.outlook.com [40.107.162.12])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011050.outbound.protection.outlook.com [52.101.65.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF9C34A791;
-	Fri, 14 Aug 2026 19:06:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA1346A07;
+	Fri, 14 Aug 2026 19:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786734403; cv=fail; b=gmoYzew4yCuQHDmjQP7Bzu9iMgc9Yelvuwe9QueFu8BNUHAzoP7oqEO5i47V1k//I7D3xQYfM+ePokQIE2b/odTtUEjvzX3yF/xiR0mLm5OyXv8DMPM7eAu/T2YSq0iYC0Qvy0NEwCsJb684lJ2KxsrGnpiylzZPisMmT7Ox3QM=
+	t=1786734760; cv=fail; b=Vgh6vll577TdVn8ZVWF5zfF2Z9tRgx1pmZsuSn+xQ0Yjo8KueQS1UpwvCbWPSATsLzuU1nmVEJgkThj9AFUxCDYyKNKakpU2Pz5QIPB+HATqRS1HVhs9tKhXTHv6iIetNdQJuhW92fz56VstavRZ6qdHO5FXkj0n+2ByM6zIsTs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786734403; c=relaxed/simple;
-	bh=+hZZM7l5wLB+qHD7L2QZFEFSmMWjK5UDrpRYE1qprk0=;
+	s=arc-20240116; t=1786734760; c=relaxed/simple;
+	bh=9t54OnrVrTJp5U4AA4Xc8Y+0Jn0rGQCPUXNPImogE4s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=QQGyEdsdQP0Ir+4RnGxTasUiUTCDX41TXG+x7tXfYHwExq1FKxxpybSjM/QOXxu/1izp/X2S3j1RbA3zjKhxg0wNO7kvKbwSS/w6ErC/tjJXI48I0LkGoNQWJOdkXFE56i1MOAXhCCR6mEZTegAat4spvcztOU3pxV2DbQgBxmQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=VVtuxO4r; arc=fail smtp.client-ip=40.107.162.12
+	 Content-Disposition:In-Reply-To:MIME-Version; b=N8iwCRzlddfiATW/Vf1AFi+vFRJSfyOvCdvp1YZD2vSJCOlJ0dtXdPX4cG9HYWde65CXCm+Z/zoj2Ci8Gein6YGz2gwwKwhsvllQs+85F0adQ0SO4RC5wLww8eLz858EFl+zgGKiiRyrVGp3z5UmAQ0mLeRo8iWgS0zRHBhrnRQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=sOihlhYO; arc=fail smtp.client-ip=52.101.65.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="VVtuxO4r"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="sOihlhYO"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qOVLd8Dj6aL3CfYrYj8ReMIczjHXO3qjvXwNBLesXLeeGigPLcSt1+kygC5kWFTeWrdDPnWqFU5fHahZp6ubc8vAI2Q5h/M8LHZ8aKPsZhuSq/6l/feR3iCXAw5KeOxYm6U+0XasiiYk1vlhvgpm/eyTKqduV/ThkPOJC6tRQ/EaZBvpKPMCetN/xhMOFTveTUe046pLYl9IL7jY5Z8QWpXzjiSvl5QqpeQiE95jb2ecq1cUznnxHJFtoJXCvs6UG85aS92CcNS8GwMszA6OhGimKc/zsDl3P7MNdxaT0jaWOxe99Ta3I1oIPypKo+uCLsXNTuVVj/XiyFgw3mL6gA==
+ b=j7FrX+0yeplqUHPESF0B0Rn3RO+WvQURsWtLFboSAieBQ5KhMlWzcWoQK8YcE27eKe4vy1YHTTr+XXrokYqM8eJ1xu7uibucee65ZcJPfaR8od0ZeoaaNtSDHJiJRKDNYZTzWeEMJxda3wR4q8UCsxTy3S1VaakBZQK53GaSDlsEelxCVZwIb2uiJ+YROBr6n7gpq5A9oRsDu+xXzb+YGDKMT3Kq6Lb+MT8O7hMos6rrpl+XrqWbjHqZ87IbwJ+krIIPk6NoqtAeDo9yhVnQU6Ryc7OH8eZFn+hZBAj9Oc21GfV8xnKMM2/bbhDIhFcoXfE+30/TBymaibM4G8pYHg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XtK/RWs3yFSqZ70xYzGAPnDJzdpXuja1IFe7aLf+eZw=;
- b=KeWMDbVmvWuG0GkRxJwTBVv4mIOXohmKJY9jnvG8/JxI6ELLxAlgc6pTgxfoEn+194VLYUlhdMVJTv2w1Jo0mI4exn8BY4o6rAn3pL3+WlBKdvLoMbng/puN5gvEUtWb0ngdTOmvWAg2/7msNuwzgsJn5dcBNyItbZSbOCEAAQbm5hVL4AzoOExyQOF35x9xPGCD3wKKC3vv/Jv1tr1EkL1sx+0ihghgxl9OVKRUS66k89IDItsZC+zziaCoJ9xTbm+auNmTJPW5i3JOYZMBLz1eoLw7k/A5/yoPfym0Y2htLEaGjqbFrNhR+Fowm7U3SiI66yZT6/Q9sJrhX9HP/Q==
+ bh=0Kj1XzaSx60wd/EWSGfJNg5MAZkwm1MmqAXTaN39Wmk=;
+ b=YNRHLeVZ7hdk2dxFRjbX54Pg8WLaK6Uj4FVGNdKzuawTn4IkgwMvZCcxYI2qaIxaoFS4BMke4u99n5wDCAN10vZFD3XF8R0c0J2EVxPyiSqexsz0r7nzDh9hdQLiq39rYLuKegVdnB7X5O8HyqKvW1l3BW8ZYqsE75BPzJK7cg2RQsAqXrjGKAi7KEryYxaZSvWS+s68AiIBsF7IB89Aq8qWTRXFnmXLtbNN7OGi6eyPa6MPz/GANBBAcfZDJnlfZdbEZsyaIJJx7qQrtGJfGANBxTBssdwic+yx6i+NjHPkyjMaSJAau707yYVxVWMnTKe/5qnDsnurXT3J0LRcRQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XtK/RWs3yFSqZ70xYzGAPnDJzdpXuja1IFe7aLf+eZw=;
- b=VVtuxO4rokCJbosJ93AqSgi81uQ10xosePXYlZD/16+4F8b+bJUxBWOz3SL2hlu6QwftvHz+qai9QcurJg608aVc7djSOn+6MXE8ZFoBCJjDlZ/309KiFHw0IQ3+RW5MZtqhIcq8vjS60drdFS6jtOO04CNr8V7Wt6yhMKSiRmp3Odb6fQoRUJmCAmuxB6W1lEtk6dwOukVuUj+zp7tN1Hv9zbX2jsMz6WQndY6kv8BKzim2nBRMA5tS+ww7GJioH+dXDou0jYDsjNFHFAAnmOhhTShwjGLUC35b8qN/xMBj/JrGI3P0ducHNLo+t8fIBgiPfXkYt1F+NOXpTMrs/g==
+ bh=0Kj1XzaSx60wd/EWSGfJNg5MAZkwm1MmqAXTaN39Wmk=;
+ b=sOihlhYOaxv+I54nXdSdy78XiFe8sZeiCH5xX8SKwAQ+ikobqQ06U2BzzTrGplJEE8y1kkgqbpyVhwn0YD4d+0+v7rPwCwg4XdEaOIew+t2vrsZejdGXc9nTXd0ojHO6x1Ym/FHXhlAwxokCH75zzp89giWCpuzO6HOIEyOf/ZivEPvQLJl5qm9LN5oQ9IXxXWHXKpI2pdyqYqxWI5r68Gf73oEVtXtlVH0FySVqXZZdGgX/0gUOfHq1pLqYaymc8lwg7XdI83FfjHPv8IDwaoCQLMIw7ze1Vx9rg92miG2t224ZUmvWeixPIgP+ZGFkxKiRIlLz7mvhu3lnjZnQjg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by MRWPR04MB11489.eurprd04.prod.outlook.com (2603:10a6:501:78::7) with
+ by VI0PR04MB10949.eurprd04.prod.outlook.com (2603:10a6:800:26c::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 19:06:38 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 19:12:34 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 19:06:38 +0000
-Date: Fri, 14 Aug 2026 15:06:30 -0400
+ 19:12:34 +0000
+Date: Fri, 14 Aug 2026 15:12:25 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>, Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: sun6i: fix use-after-free in descriptor error
- path
-Message-ID: <an9nNnRMAzhHcjlS@lizhi-Precision-Tower-5810>
-References: <20260810102044.1725649-1-nagachaithanya9911@gmail.com>
+To: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	Abin Joseph <abin.joseph@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
+	Kedareswara rao Appana <appana.durga.rao@xilinx.com>,
+	dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: xilinx: zynqmp_dma: fix autosuspend cleanup
+ during teardown
+Message-ID: <an9omZerM77tgWXJ@lizhi-Precision-Tower-5810>
+References: <20260808115228.2798481-1-lgs201920130244@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260810102044.1725649-1-nagachaithanya9911@gmail.com>
-X-ClientProxiedBy: SA1P222CA0089.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:35e::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+In-Reply-To: <20260808115228.2798481-1-lgs201920130244@gmail.com>
+X-ClientProxiedBy: PH7P221CA0002.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:32a::13) To DU4PR04MB11791.eurprd04.prod.outlook.com
+ (2603:10a6:10:623::11)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -69,133 +71,132 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MRWPR04MB11489:EE_
-X-MS-Office365-Filtering-Correlation-Id: a538f101-0b35-4a52-0f0b-08defa372a91
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB10949:EE_
+X-MS-Office365-Filtering-Correlation-Id: bd828f1f-9555-41c0-6ad3-08defa37feda
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|19092799006|376014|7416014|23010399003|56012099006|10067099003|11063799006|18002099003|22082099003;
+	BCL:0;ARA:13230040|7416014|366016|376014|23010399003|1800799024|19092799006|56012099006|10067099003|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	ViGPnyQhH9rYmX4vNalKsEqo24WXg1B2mb9IyEGdnYN/ZfBeYaEamSCIBRjsLugjGwqFSG3is0xINCGXQrzzu3wq5qUxqIhRn0mKENATqGoiEz2zNpeeN5HIODPGyl4pJjemVDg7DsUNAlOavSat0A8Fw9js7+1GtCJaacHKvH9GmSuRXcamYyXdZ2R+wsOeheKU4j6aB5LwXhCZ27q+zx6UAHnr+WntL6bIN8POwZTBaHspl40y8l4aALr9gEws9E3bSHj0pI3//TvGhppzur6f1hzMz2/5jOz+ekpHHTWbK0TbGn+JpMQnFWUOBCTwWNgLE1+ZAt0DHQ5GqDb1l199koIoUiZpmqLm5ER0rv997y8Yam4gCiuUbq4i4kpJsGNWYgiaDm2H9IrjKKuQY+LhZUk/j94/eLDv/YhoJ4B4g7E10chZWrpbzrjGmokdtKMDgsCfAjrscLS9ty+Nqd8/5cO6uUxPsg64llKeHDofD9FA/GQaMTL9XXrbb0t2F/pHmkdtrqM0YbGfYqZk7eG22VlIIMdsrd3YdugYyYEkrkYNbVuK95wJuFM/7IpAKgi/KzeQwEmZP8FlaX/nS5iMUNY7YpiNqHeT/CA1aZAYx3NcJqybpnVADQ1nzO2V8FBfq+XWnWSetg8t1R2em5R+zV1tOlhkvxjeLbTuoNw=
+	o1u2mUXmWvzexsYmY7sZBnw4o0YAU00ZnQ99O0x90UJS6/zS7FbQ/yyhQlWbxeL3h4+z8Wcd8xBhI7JvJcPbaPmovMWWrTPFaYMkddaGB4mp8tsoWezlp4FrLwyRSrWlvNhE7y2aLJYFFfsg1oOtgThg9cJzOXGXdcIMWUkDEzvnwRL2VyLgX3JxdxOsdYZ4uj6Zv6wqpFxHYMIVmHCpM1F1COyp2lCsaGhMiwVX3jp2NMDqgcRyhYZxJZBp3TbtwIIVbRmPeokbMoATuncusQaFfDGJ5viO383Lt19nocDfBn7E/miksN+eA+AmCLMAtE9jqhN5f4WMOSLfI2XER9bgZC+xzLwInxMjd3BBfd48pEr8J6kcWLPqngtqNOUNYFIzpy6cVBadAQ14mCOzUrrja3yBpS4o/X7Pp21XvLQMdehXlvc8OjH1EpEUGxpfdOWxynsHiozloVtsvj8BwRQeANMw5dVWYu2MzxVpEj9XIETv3IY/2vOPPMilXZMxVKXcf/hEVu2NvM51YYIsN0Lj7CVDqVG8aQj7QSsqQ/om90HjXwy6jIUXr/1vioPpMETpY363eDc5D9Abj8VGLNERBS7SjhfALYWAE26axB+6rdnAmLa+Oyg3cz1oH4ldRd5xgEIYCvdXXZGwEx2fyrMR5jLkv0LM84WG2UlusmQ=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(19092799006)(376014)(7416014)(23010399003)(56012099006)(10067099003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(376014)(23010399003)(1800799024)(19092799006)(56012099006)(10067099003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3zrEVKgTco+LdYj1gfG0jEqzBo1vF7NYGAhUdUcr0T9UdLsjb5G8fTpqUEWb?=
- =?us-ascii?Q?7HvB92ZG4cYVusKK9NGm0icphZ53YmElutScbto20OENFkPBV7PeUQOnC59i?=
- =?us-ascii?Q?iqKcSAFvjyofooq4M7bC53z3ha0YDU/FAjN8RyLyNzo8tqTH10+d4oTtzss/?=
- =?us-ascii?Q?Z7OaGuFpDqz+GPX/6F6pBwlofXJx7ouA2F86wezvEt+hzntFzbJIar9IY5yX?=
- =?us-ascii?Q?FUzODti1AVR5IfWIvKA/I50PCugxWQiQ3pZvHEH/GfVDgUGwazna34mTBy9d?=
- =?us-ascii?Q?io7lQqKtAlnu4i67/9x6xrhl+HdMKvlVsMlj3ighe25TSc6WJGvFeI4PDQIy?=
- =?us-ascii?Q?3BG6x9MKdXEHgjdvIGLBVL4yj8AfB1A7LmOXQ1YoZblPZlQ8eQ6dvKZ5UMYq?=
- =?us-ascii?Q?ran8K+9kk57L/HHR/wbzBjg09b/Nxoky4ckzQuEUcrDau5CFB9YUe4sxjuMu?=
- =?us-ascii?Q?2mh7E6BHqFjxaiY+VQpzalsGibj+dj9dJ8Fg9NkKSRGAhMvvumQ76uTae19q?=
- =?us-ascii?Q?jbOs4lJSwuOwkmj+sqFLGLr1MU9rqWaiQzQrKIqShvYKaOiZaP6uvSSHSFU8?=
- =?us-ascii?Q?Pilgb2YHqvuRpeZGVkKXyevG/OOBgvzn6IX4zOyHBrzMDCMr9jXIKw4juHET?=
- =?us-ascii?Q?zqge0Jcw3j8yb16fRDZ1GDl940X6Xw8xLzkI9kTNbQvJxRAAVM9hpJJpJIjv?=
- =?us-ascii?Q?eo8KBh+B+c7iS4cPUEFGuofXldfQRBS7alaonaffQcXHn2cyrqfO9fhvoYry?=
- =?us-ascii?Q?ZwyJ+9452yAGp2ad4LRP7/ehtkncXf2WUivYK10AXN6agG9L3KgPWqktBGfc?=
- =?us-ascii?Q?xPavBh7gbS1jsASYbbUUd8GaXDVTO7oSnUNDkheGCyGX0PxqrB+m1M+ooaY0?=
- =?us-ascii?Q?pXFy+IoCqMisW4kOk+96EpSkcWtvkykWQyMZAZ8keFU7sLYpntqOiGD8TACu?=
- =?us-ascii?Q?9nOWv9+Kuco7uVKdNfi5eaiYBM8CieS+ORYXEHIXfX0/j/mSqqXAie2nyR/5?=
- =?us-ascii?Q?G6VNzOJbGByUGZoojC7Ri+xjkBq+flnjDfZtJxXSq2WiEAuJnPhv9Gy0roo9?=
- =?us-ascii?Q?Cm7WCzkS4mji8PaODEYo08QnQqLNDfGBmxtFBfxkzr3mU/3PJTbofbaSolzj?=
- =?us-ascii?Q?77jKAdSiX28kI+FHSWz5Y8W7pmqMyohE2S/rSMICetCucwxp1MHwP3g5d4Ns?=
- =?us-ascii?Q?ugY2aYHfudjWTsG7LWg5rQK27Pw+gjS97PM2b8htxSBUHOPIy/XGTvlu0k5J?=
- =?us-ascii?Q?ExaVwtLWfcdEO7yXyGQ84C4W4SewMXgszdcff+K1gY67bPG8WoOzq5V+Y7KC?=
- =?us-ascii?Q?4HZRKl7ZQfttmPtK7K2fXgR+k7sbKPlHauI0GkHtvxfDO6oMi86BPKow2a4s?=
- =?us-ascii?Q?FJ1aJfraYYkC1MPYjW0LNcwFnYVNSxj1/i3JIsVRDbxr2bJCQ43YR9uoIafL?=
- =?us-ascii?Q?hg2oqkTHq5x+7PszgC6OHRPcA7e70Gfi/zfsZK2vDd6NGNOXZnpiP7GBFa7Z?=
- =?us-ascii?Q?rpt3iFBKEdqQW9q8GhXxZoCDFEIfvxUtVIaPzreVHUMn1lyBihKowj8oonod?=
- =?us-ascii?Q?JTnbuvgfePueiPpPDxmO+h/WbvffBybxFunW5rDCl14/bjP9fofrbEI+HPRs?=
- =?us-ascii?Q?FdEkvoAOrFeSmzt7f75y1eEF/hRDuWXnNTt+W6uJc0yWWetBYCEyJ19ovq8j?=
- =?us-ascii?Q?W0jcmEaSiuYz7rm/C6ZqjCnjLhjsGSSoQH35sbUwQRrCaV2bMw6MlUnK6OsY?=
- =?us-ascii?Q?eadXHKPsbvkk0giov1jDvgQAV6he4N4dua12JzIHrPVbpH+ka1E1?=
+	=?us-ascii?Q?FOqq61Ukq7MCuWhKn2jsjGch85oRrvnTklt0qXGJmNv2RD59w9jgA7jpp2ZK?=
+ =?us-ascii?Q?LxlrWCuGkrT8GFOG90sT5vbP08zEZs4RoKdNEZlPmPsspZ6FYV+3mdKY0cgb?=
+ =?us-ascii?Q?iWR4EiF+le6jzE5Ya2X1SXR+4kHV9xpLHP+vJrDPKmQmlKp02WEVhhF2KPIk?=
+ =?us-ascii?Q?NAZwOzOiAh1M/OqcdDi33zH5f3/iHVqzrFJX2HwUED5X4lHuJ8nfyJeOEcnF?=
+ =?us-ascii?Q?Znna7hFQxLtBv6FfAeLqkoYWgVUrkxl/AWB5fNLG6CYofnVidGlzMfR9fWoV?=
+ =?us-ascii?Q?vc5wqel+4eO1e+qGFPaAPAU9ItUVxpuNNRQJTP6kjqrntPNFPi51he76hHbq?=
+ =?us-ascii?Q?f0TxhjLlDMpZnKKWzdDpCAEJOAxlR5C/wFpppA/zuqcmS6RUzCtd5njKe8+x?=
+ =?us-ascii?Q?VAk/TRaOVgH40hd9mylFU/SQIX9CRH8iS4jVtvXPAn6fn/5UIV9ItyK3qPPl?=
+ =?us-ascii?Q?swKbV1vG1PnX3Dg85ivSXvwDUwcbpkt0Lcz1O8LLO2jmB11Zk9UO9UaZiUtH?=
+ =?us-ascii?Q?yknGnXUGrLgLVfej2hOtAEftbbWbTqltjRTNjdtzldQTIEbnz3+zOk2W/RPk?=
+ =?us-ascii?Q?MDz8d5ceJzj8/YYR4Jea2mQ97zsKujTi5ggX4dBKx/QjCbQnlNpSMrfNmsUJ?=
+ =?us-ascii?Q?SkZEUOZu8xoYq5vPzBInQceC0osOjcondBYaDXGGgSJEF4IOLEOB456uv25j?=
+ =?us-ascii?Q?KxGUhAYooSTR3d/Rf3UQ9CcB81iqTbBzJS43jLCL2YtMPDGttgxZeea1jjnm?=
+ =?us-ascii?Q?lh1fYrfRQ1C9ShiEJ6VmTkpWypBXpZ8IpTxt59Inw07ZhbHnUU0NWfAOvRw3?=
+ =?us-ascii?Q?uKQ/AsWXXOq4dXpysjBJkufuDXHeGcbP6wqteCleT7Ac5X9Ae3hFkMVVPf97?=
+ =?us-ascii?Q?C6ko7Oosr5NHrEpx0jygRaUnLmCTNIalF2ATs1/FQqQ6zYd4zVvkUAXm9DmK?=
+ =?us-ascii?Q?rHU4NhyU9THCsczKIrOctC+pP2Nv0Cj7nRxCgnqLsukQf4aqNlGNNKs+b0g+?=
+ =?us-ascii?Q?mJnq+Cio6jkYbYtVvg+d8yr1XIbYxGYq4Kr5HQBxmFryjvpe0sed8VOyDoTT?=
+ =?us-ascii?Q?/qOe4OMGwRzTw+evC0j0x9sgeZ9sZnlli1gnXReupvo8R6d/z7SoV4ASNRbN?=
+ =?us-ascii?Q?tJ6L/Vxd76o/LECknZOeMcvGr8ngZZJ5NolRoiFPtqcnoTsWKiBsZUvier3a?=
+ =?us-ascii?Q?DjoAFbRbCfSbeT9MZ35DbZjGH1tl/c8WahQzVQh3trqCTVmS2SD84jxKzrp4?=
+ =?us-ascii?Q?QxX5FngxYxQep778AaVY3cTgPZ8xLi7QwZQ/SZCCx+AkzXTA2ikQyzVS3Ytm?=
+ =?us-ascii?Q?fdUNdCAvNLU0reG2/MHqhGnjhnyLELel7E0QP2fC6EVxBVOZCNVBwnrDBUU3?=
+ =?us-ascii?Q?Y5PTSi61D0eNdxpqQ3XvcUNwecfmbTjej6NUFD3KJQntHa6FLgiXzLuRPgzz?=
+ =?us-ascii?Q?NuCMGMgOmYhx+HekeRLti6gHxfRDTm7M5wycs52dfQlx2xVdkfIVayQFGAS7?=
+ =?us-ascii?Q?q/vR8NjirY973K4PoZdRmgUH2oB0lpnQ7662GlzPJj0H2lEeFNAdBqi4eHHG?=
+ =?us-ascii?Q?9W5srdpO9mZd54hlZDHpFneaoP9Xbz/gZP6ua9Ny/Jm6jQGXp4QHcn3WrsZA?=
+ =?us-ascii?Q?1UvIHWocpjqEE+4zMepiYW2Pv5DDpQW/6JuNgScWUyb/YnuiZA+DI88JPC7W?=
+ =?us-ascii?Q?dyZpbddhUmsgjxXBXDJRf0W9Qk+Y/5Z5JXNy3sW/SIrj3XJiUkKRzLprcyBk?=
+ =?us-ascii?Q?UqWsSKvLYDfRgQdqc4xoGhE7r8MBAEYl9G+ipFQgECJRyGUS1rtG?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a538f101-0b35-4a52-0f0b-08defa372a91
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd828f1f-9555-41c0-6ad3-08defa37feda
+X-MS-Exchange-CrossTenant-AuthSource: DU4PR04MB11791.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 19:06:37.9522
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 19:12:34.7507
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BF1iYdEK57p82AmE4O7bmNttdtw0+eIxJ4/xPYzQwfMfR00MK2MbU61Wu61FkrAO5q5yU+FOdhB0YoldlWd8hNzXvceHa/y8wi0LteVbQTfGtDtQZ5WhPUxWjRae1gN2
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MRWPR04MB11489
+X-MS-Exchange-CrossTenant-UserPrincipalName: akVn0N2oYafUvYhbD2RqR1LD/ZdlqRFkwIZr/z6ayf3D70T+RMEBph0nkTU2HHs/5kj8+HNPptRV6V9FXFSAhSarFZFSLCnm/2o3FL6Atrw2DfkivHcQHxwc3D7Br8Mp
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10949
 
-On Mon, Aug 10, 2026 at 10:20:44AM +0000, Chaithanya Lagisetty wrote:
-> The err_lli_free cleanup loops in sun6i_dma_prep_slave_sg() and
-> sun6i_dma_prep_dma_cyclic() free each LLI node with dma_pool_free()
-> and then dereference the freed node to obtain v_lli_next and
-> p_lli_next for the next loop iteration.
+On Sat, Aug 08, 2026 at 07:52:28PM +0800, Guangshuo Li wrote:
+> zynqmp_dma_probe() calls pm_runtime_use_autosuspend(), but its failure
+> paths and zynqmp_dma_remove() do not call the matching
+> pm_runtime_dont_use_autosuspend().
 >
-> Save the next pointers before freeing, matching the pattern already used
-> in sun6i_dma_free_desc().
+> If the autosuspend delay is set to a negative value while autosuspend
+> is enabled, the runtime PM core increments usage_count to prevent
+> runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+> during teardown, this reference is not dropped and usage_count remains
+> unbalanced.
 >
-> Fixes: 9aa48806edb8 ("dmaengine: sun6i: Do not use virt_to_phys")
-> Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+> The documentation for pm_runtime_use_autosuspend() also notes that it
+> is important to undo it with pm_runtime_dont_use_autosuspend() at
+> driver exit time, unless runtime PM was initially enabled with
+> devm_pm_runtime_enable().
+>
+> Add the missing pm_runtime_dont_use_autosuspend() calls to the probe
+> failure and remove paths.
+>
+> This issue was found by manual code inspection.
+>
+> Fixes: 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 > ---
+>  drivers/dma/xilinx/zynqmp_dma.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+> index f6a812e49ddc..635c3f6cc5c2 100644
+> --- a/drivers/dma/xilinx/zynqmp_dma.c
+> +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> @@ -1116,8 +1116,10 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+>  	}
+>  	if (!pm_runtime_enabled(zdev->dev)) {
+>  		ret = zynqmp_dma_runtime_resume(zdev->dev);
+> -		if (ret)
+> +		if (ret) {
+> +			pm_runtime_dont_use_autosuspend(zdev->dev);
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Please use devm_runtime_enable() to fix this problem, auto tear down already
+include it
 
->  drivers/dma/sun6i-dma.c | 18 ++++++++++++------
->  1 file changed, 12 insertions(+), 6 deletions(-)
+static void pm_runtime_disable_action(void *data)
+{
+	pm_runtime_dont_use_autosuspend(data);
+	pm_runtime_disable(data);
+}
+
+Frank
+
+>  			return ret;
+> +		}
+>  	}
 >
-> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-> index f47a326dd7ff..2439fa6564f2 100644
-> --- a/drivers/dma/sun6i-dma.c
-> +++ b/drivers/dma/sun6i-dma.c
-> @@ -720,10 +720,10 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
->  	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(chan->device);
->  	struct sun6i_vchan *vchan = to_sun6i_vchan(chan);
->  	struct dma_slave_config *sconfig = &vchan->cfg;
-> -	struct sun6i_dma_lli *v_lli, *prev = NULL;
-> +	struct sun6i_dma_lli *v_lli, *v_next, *prev = NULL;
->  	struct sun6i_desc *txd;
->  	struct scatterlist *sg;
-> -	dma_addr_t p_lli;
-> +	dma_addr_t p_lli, p_next;
->  	u32 lli_cfg;
->  	int i, ret;
->
-> @@ -789,8 +789,11 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
->
->  err_lli_free:
->  	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
-> -	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-> +	     p_lli = p_next, v_lli = v_next) {
-> +		v_next = v_lli->v_lli_next;
-> +		p_next = v_lli->p_lli_next;
->  		dma_pool_free(sdev->pool, v_lli, p_lli);
-> +	}
->  	kfree(txd);
->  	return NULL;
+>  	ret = zynqmp_dma_chan_probe(zdev, pdev);
+> @@ -1152,6 +1154,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+>  err_disable_pm:
+>  	if (!pm_runtime_enabled(zdev->dev))
+>  		zynqmp_dma_runtime_suspend(zdev->dev);
+> +	pm_runtime_dont_use_autosuspend(zdev->dev);
+>  	pm_runtime_disable(zdev->dev);
+>  	return ret;
 >  }
-> @@ -806,9 +809,9 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
->  	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(chan->device);
->  	struct sun6i_vchan *vchan = to_sun6i_vchan(chan);
->  	struct dma_slave_config *sconfig = &vchan->cfg;
-> -	struct sun6i_dma_lli *v_lli, *prev = NULL;
-> +	struct sun6i_dma_lli *v_lli, *v_next, *prev = NULL;
->  	struct sun6i_desc *txd;
-> -	dma_addr_t p_lli;
-> +	dma_addr_t p_lli, p_next;
->  	u32 lli_cfg;
->  	unsigned int i, periods = buf_len / period_len;
->  	int ret;
-> @@ -870,8 +873,11 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
->
->  err_lli_free:
->  	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
-> -	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-> +	     p_lli = p_next, v_lli = v_next) {
-> +		v_next = v_lli->v_lli_next;
-> +		p_next = v_lli->p_lli_next;
->  		dma_pool_free(sdev->pool, v_lli, p_lli);
-> +	}
->  	kfree(txd);
->  	return NULL;
+> @@ -1172,6 +1175,7 @@ static void zynqmp_dma_remove(struct platform_device *pdev)
+>  	zynqmp_dma_chan_remove(zdev->chan);
+>  	if (pm_runtime_active(zdev->dev))
+>  		zynqmp_dma_runtime_suspend(zdev->dev);
+> +	pm_runtime_dont_use_autosuspend(zdev->dev);
+>  	pm_runtime_disable(zdev->dev);
 >  }
+>
 > --
 > 2.43.0
 >
