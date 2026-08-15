@@ -1,102 +1,100 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from chaosmail.tech (chaosmail.tech [77.81.229.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74E13D810F
-	for <dmaengine@vger.kernel.org>; Sat, 15 Aug 2026 07:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A64C25B091;
+	Sat, 15 Aug 2026 10:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.81.229.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786778680; cv=none; b=bB6dv5cQcKGwCThFOvh33x+c9oCKlMQ+Wcj8+K+ef5eZ4NVhT4T3joFFXfEFMWvlUg7hGpPx+4FEdOSimV3k6UDprNr7WJ79SLGfjx6SpHq4ghDAvt7aDnoYZ/lgXqLSlDxnJNRRVgUI21hdFydIexNZxQado7lN8lMFE5IXp1Q=
+	t=1786790516; cv=none; b=kJeH/jabT1a0k8qUC1BRQyKSMakou5MdpmwCY56UX1XlWsdmuSlKbRo94VmwSyZ7MSMQwsVnHO9GmkQNu1wm7DXxn0CoIbeDyhbkZLM1TsdYfGRThTv42G4tDhYEp/9a0BDlmsmpriCCfdzn5dSsszdMukEDA+ZSSXaElXaTTd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786778680; c=relaxed/simple;
-	bh=d81zRYCsqoH4yC+fFuwiOVWQ7sGjNnHCn37vF9eBXco=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLMM3KHVpmrEW9HUG5VbrrA/EaL7d+zZwO7IDjbb37NyHItm38yOD08i9RIxJh1gmuf1vCtDvBCRF1mVS/Nqgyxepyac4bd7G+naaxTfMgebBQTOU8fXZs21Tl8OKw+oKiozZJLEPNyAmiof2r12zMx50onIoO6ZhceZKq2WEXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZsL0tb23; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786790516; c=relaxed/simple;
+	bh=gUpTW8ChxtDggBwLocbC7PiTUaahIfyT04dtaB20q38=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ChAcoeRhRLSzDj5ppwX/0CkTwWH9oRHbUGg0el7RlFqJRuG6hf+jwllI79SxzdIu9wWICZkttIT7ek3K3U0t+xNinJJp7VNOKMD4s4tO7NRJOH/crvdU/z5LwcfDVIA32lpPeg6dwJgcxibeyq7cVpF/owYHTIkhBNwmRUgYJ0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech; spf=pass smtp.mailfrom=chaosmail.tech; dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b=r40Fx8Cy; arc=none smtp.client-ip=77.81.229.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=chaosmail.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chaosmail.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZsL0tb23"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3856d6fbcb3so1587504a91.2
-        for <dmaengine@vger.kernel.org>; Sat, 15 Aug 2026 00:24:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786778678; x=1787383478; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=d81zRYCsqoH4yC+fFuwiOVWQ7sGjNnHCn37vF9eBXco=;
-        b=ZsL0tb23F9G19dj6CH+UHYuRyAMJfzv6fSvaUG3FKX40bNYtFwAuNli7kAJ+8rR5Mz
-         qbFNzY/4bi8W9AJrYQf83MhYecA26UtDQIlnUpiB4nRiK/ND4KU/IrLmtrkBKNy2P0Lc
-         6MxRi8oHQqXHnxtYwBJ5uP4/+e/6BEvxWESsH/dXcith0DACNBh4B3g755YAJGAx6bZ6
-         Mithco37bRTEciZnbAVbofGbtVkbfMbGF3TyBTAxeneHvWtpnrjJLxUxRL1nn/k/JQi6
-         8JdOS4mABVjkvtIwvaVAqtxlhFJ81U3I/HzVDmgDG3GSicTAUxy0peGngyZA3cJ/N+yQ
-         71JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786778678; x=1787383478;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=d81zRYCsqoH4yC+fFuwiOVWQ7sGjNnHCn37vF9eBXco=;
-        b=K5aayHqE1/zg29dyNxKMoR+wsUJfANC+HrahqvBSQsRgVCNnhlkfv4BKED4CeGrmxr
-         LlHDslqW6yfoGTrUNZY0NWtQ27356hJBOxSRvtuekPOEg0kuERUr9qgIzQEPPNo1FZy8
-         LCQjG4LOE2mCA2wcJSsYlTtlC5HvISATmmCq4PeCJWs1m/miUQXDoDZL/foZfGwuE4Dr
-         IqntL7qf1P+XTRy7idudFaavHFSrQ6ogvJJNPwk/IoA/mLvyv7HcKxZuED1ns4uszBFU
-         mtSubxD33FTr4RvuIG9U5RejoZgB7mXCu0zE2lTpHab8+6Y2Do1WQDz1x4uMFtpmj+sv
-         AOvg==
-X-Forwarded-Encrypted: i=1; AHgh+RpLGtLSv49uGktcVv0175+xy2iCBEjdNz6T0cCBKzs1UJ4p6GExpL9+q1LRNXrEDhnTh4ktmDcmcfk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxqd2DLEEU3E8N9Oo5u2tCZyRmQtdsFosNz8Br6eV+aNnHh5JbW
-	ZcuwdnZmk5rrPfzlal/TKHmJMl5r1adZH39Lu94x+7A213cQQXtKz8v8RLV6jfL6
-X-Gm-Gg: AR+sD103w1ZB2u9fh0HkeZQ35sQalqJFRPOxTU15ABb3ZpjMyRU0N++vSFuQKXVOaPQ
-	K9kpBOyQgmWqdv3xrqK/0Sss5MeZBZfxldJlCWHXYNuJddCDBTS/3ylPdShu62O76GlYKGV9UFn
-	wQBE3uc6YQ+Cvyp8vg29IdYfHLtoLsTDriicOpI7BKIlU2mHcpiJxmWlqE5DppbmBHs5MrHcg2k
-	hLFlAvR4fakZPz7JbIFSYW/ONw4ERv5XhbdBhfAMXp9avtA3cRyvzn+s9kFO5QfaPWs8fsAjvtN
-	LspXByg/qf0VYTOMojgl+3hKfgEu01VNybn3Wm3XPHTpMGcUIVcIIYk8JIMJibokMOkvzYKvEk/
-	QRx78/kAC+8xqTePrX+W96zEKJR0hoxdXqOlAjzbZRxNRf5ni8dxsD9RnqNsutt7oBA0izfcJ1J
-	WCKpjpxOzF+gylCx9StXqZaa4q3lIfZu2xugrV7Fn0CRyWreyGncm1Z1NcQrILeCff9GUDuQat7
-	W5s+Ci+nQaI
-X-Received: by 2002:a17:90a:da8f:b0:380:21b7:e727 with SMTP id 98e67ed59e1d1-3933b95e327mr12509086a91.14.1786778678185;
-        Sat, 15 Aug 2026 00:24:38 -0700 (PDT)
-Received: from amd.ban-spse ([165.204.217.251])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-141387ed5b1sm27142118c88.8.2026.08.15.00.24.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Aug 2026 00:24:37 -0700 (PDT)
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-To: frank.li@oss.nxp.com
-Cc: Frank.Li@kernel.org,
-	vkoul@kernel.org,
-	wens@kernel.org,
-	jernej.skrabec@gmail.com,
-	samuel@sholland.org,
-	mripard@kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: sun6i: fix use-after-free in descriptor error path
-Date: Sat, 15 Aug 2026 07:24:17 +0000
-Message-ID: <20260815072417.2636042-1-nagachaithanya9911@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <an-B5SdpGfsJoudH@lizhi-Precision-Tower-5810>
-References: <an-B5SdpGfsJoudH@lizhi-Precision-Tower-5810>
+	dkim=pass (1024-bit key) header.d=chaosmail.tech header.i=@chaosmail.tech header.b="r40Fx8Cy"
+Received: by chaosmail.tech (Postfix) id E76F91C975B;
+	Sat, 15 Aug 2026 10:41:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chaosmail.tech;
+	s=mail; t=1786790509;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QirL5FKN/2t0jHFpC8PFoZ9D0UWW7b92xqp9wz3wT6w=;
+	b=r40Fx8CybGZdbtQlvJRS6vqtk2xzQheD4l/LpCrZyn48Axr/ykokbCq6XEWwqvXa2TCSfa
+	WRc4uSrmENuRLgmoc5K1Gag/XsOxKMpqxwVb73JD3/cAnwzXzoSizHBnzjZ0fZJqfqcMWY
+	am1qIpPkLGarTKdUSNVYe83UzlWnFEs=
+From: Sasha Finkelstein <k@chaosmail.tech>
+Subject: [PATCH v4 0/2] dmaengine: apple-admac: Add support for M3
+ generation
+Date: Sat, 15 Aug 2026 12:41:37 +0200
+Message-Id: <20260815-t603x-admac-v4-0-1149e342dcb0@chaosmail.tech>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23Oyw6CMBAF0F8hXVvTTstDV/6HcdHHIDUChiLBE
+ P7dFhdKZHmTO+fORDx2Dj05JhPpcHDetU0IcpcQU6nmitTZkAkwyFgOKe0zJkaqbK0MVVyzXIE
+ xOpUkXDw6LN24aOfLJ/unvqHpIxEblfN9272WuYHH3rY8cMpopqRFw0CUDE7hm9bXyt33PZqKR
+ H6AX+CwBiAAKDVonRklU9wExBcoOKwBEQDLSy7ysmAC+R8wz/MbdjY47j8BAAA=
+X-Change-ID: 20260725-t603x-admac-a1b07a2ccb54
+To: Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>
+Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Sasha Finkelstein <k@chaosmail.tech>, 
+ Joshua Peisach <jpeisach@ubuntu.com>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1786790508; l=1308;
+ i=k@chaosmail.tech; s=20241124; h=from:subject:message-id;
+ bh=gUpTW8ChxtDggBwLocbC7PiTUaahIfyT04dtaB20q38=;
+ b=tozvc+d4nHbhxUlhjey4KOadNqu1jnonm2ocdhCV+Q1b6haoJDrrIhCERmWAOKiupWpcgCkAa
+ frU50DS+KzrCJr+XP6KJwk609S+xThfBfJwqXB2BR2xs8eSMutsdO4m
+X-Developer-Key: i=k@chaosmail.tech; a=ed25519;
+ pk=aSkp1PdZ+eF4jpMO6oLvz/YfT5XkBUneWwyhQrOgmsU=
 
-On Fri, Aug 14, 2026 at 05:00:21PM -0400, Frank Li wrote:
-> Drop review-by, I prefer use below method to fix
->
-> https://patchwork.kernel.org/project/linux-dmaengine/patch/20260727061142.44195-1-zenghongling@kylinos.cn/
+The ADMACs present in M3 series devices (t8122 and t603x SoCs) need
+additional register writes in order to function correctly. Add a new
+compatible chain for those, and change the driver to do the write.
 
-Thanks Frank, agreed. Hongling Zeng's series is the better fix since it
-reuses the existing sun6i_dma_free_desc() helper instead of open-coding
-the save-next-pointer logic in each error path, and it removes the
-duplicated cleanup loops entirely.
+To simplify the merge strategy, the device tree entries will be sent
+in a future patch series.
 
-Please drop this patch in favour of that series; no v2 needed from my
-side.
+Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
+---
+Changes in v4:
+- Use the entire hw data struct
+- Link to v3: https://patch.msgid.link/20260812-t603x-admac-v3-0-d1f137f803e1@chaosmail.tech
 
-Thanks,
-Chaithanya
+Changes in v3:
+- Use t8013 hw data as default
+- Link to v2: https://patch.msgid.link/20260729-t603x-admac-v2-0-e4b2bb6ca45e@chaosmail.tech
+
+Changes in v2:
+- Typo fix
+- Link to v1: https://patch.msgid.link/20260725-t603x-admac-v1-0-6a4dec023f02@chaosmail.tech
+
+---
+Sasha Finkelstein (2):
+      dt-bindings: dma: apple,admac: Add M3 generation ADMACs
+      dmaengine: apple-admac: Add M3 generation ADMACs
+
+ Documentation/devicetree/bindings/dma/apple,admac.yaml | 10 ++++++++--
+ drivers/dma/apple-admac.c                              | 24 ++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+---
+base-commit: 0ce37745d4bfbc493f718169c3974898ffec8ee7
+change-id: 20260725-t603x-admac-a1b07a2ccb54
+
+Best regards,
+--  
+Sasha Finkelstein <k@chaosmail.tech>
+
