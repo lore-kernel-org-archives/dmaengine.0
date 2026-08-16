@@ -1,316 +1,146 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011046.outbound.protection.outlook.com [40.93.194.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A7C81AA8
-	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 12:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786884982; cv=none; b=Y4ndtAydpixKJD94ZGV7AF2HY5fWxjs7Wvb/0QpWQsBKR8jqjnEsKlRlPnmReW3PAI/6tJelEVg3+HUYK6rr9i6MrKd2bPwzD3HHEu0tKDYDnPZuLavGmCX4KoPWfVyokHn4oJRakAyMj7tVYW74zK0xQdszeZspQ/Ov2qLUIkY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786884982; c=relaxed/simple;
-	bh=XmbiCSUSDiVAiNmSRbJ2PxwSgZsTdKwWMDpotU+cRFQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LBsvlUlkTAyMBaqAYwuw4VRZ35VdJg9fU2c/AV/EQ4L7fE2rFXPu1GAJAYYfIQYeIXH3ZYJjUWVHMHpj8UcM/gAJvV3cWpU0dXtwiMeoDR+SjdeWNS/qkxYvzdBYLK1UaUJhTIolYk5TOCr9+9WqwGmOJR1OlRhVh86NJnIbX0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4EX4hnG; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0191F936;
+	Sun, 16 Aug 2026 15:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786895383; cv=fail; b=Xm5HjTgjFIe2edq64vkcv4k0QFPUnA+j7OIrcVlhHwqU9/AtK3IZRS8q9cRXVhMOH7FADpxkuJD/h6x5fF9NlSqkoCSha5gfcThBT5ZV9ArPoG6MppEI5gDNqF4EFYnWTVCnlfXFgvG+Zv9JG1Uj/URu02O7OF4mCcmNtgN6uK4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786895383; c=relaxed/simple;
+	bh=5Bu8UNOUn/yQ5RyaUnqS5SJhjhsfHQrzs3brCkwb/g4=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=AgVnSwSLJb75cGe2gSnV6AktDur6Pguar2+wzp9fLc3ejTBEuGGbx7vpcla4AuCnemRkJk6ExheL655YkD0qRFuqyPZkugAs8DWHq/hO9yqnbthSRsOCEw0xVFPd/DQslSkoicZWKkWaTSAy/6lGPqd74f6Js+zaMYxboOV7BmQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nOKXdTZ9; arc=fail smtp.client-ip=40.93.194.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4EX4hnG"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4953e04ef16so27499135e9.2
-        for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 05:56:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786884979; x=1787489779; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Vrd+QFouPQzWgEI6eWzCwSjjj2vAhx5C8gTbTzA/yUI=;
-        b=F4EX4hnGSTuLpEoNJxspMedlkC/ntvu9Cd1HWdksL5UUcLMvjyCC/76DNTYFDWfM4M
-         qh2MYUPf1bQeBqEwDtk207PUE+1binTNFXYkvfthRYOHOAnjWyeRiZ7WoBGZB+31KidT
-         bx+JvN72AvZf+j/D87jJAJssKXWWBjARAUmN44BPo6WGkUFRp7joW+LzEmG+05DBRm2l
-         GhBvl+9hQtUXWP171jofz5yNKMmyAHqCihs44dLS1hA1dGUNwdc1QkV0VsuosB8P9qZw
-         /XMfXUWACuCQuiAb36J40breuV5m4yT6+PWCg/nXAvA8PFcMHitq5Z7c+EKaw+DCayxt
-         cRqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786884979; x=1787489779;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Vrd+QFouPQzWgEI6eWzCwSjjj2vAhx5C8gTbTzA/yUI=;
-        b=Gmx3BZzy2C5IkZk90meCiKr3UPJxjBCOoEJpXyUUEtAfWCE3ybjqEye0xRtv3Wr7or
-         TBfbBRv8IrSDyF9XHnGSINljEYqIwWEIR+pMkvBQ0JJZk7eTHn56xpCFHUw7R5xrh4Gv
-         dg71n8PKfrGasvP4ZdCGkzF+vBlYGhuZGBKFX/ojltgnY4UicGij8sD3lUTTjJFPEFFj
-         T4rd3c1BVo5s5nfxipQHOvyV83bvYl4NVGRZyhKMcorLkFLFkkbL2mcsyh1ZJ2DOb7yJ
-         /5NnvEBEH3mLEzlz/C54ggMi9Au6P2hm2D+/dZ1J0mQKBOW4LR9e+migk1OVyi4VcuLq
-         bUPg==
-X-Forwarded-Encrypted: i=1; AHgh+RoCOjX8sisxjrXU9v1vDC4qXWwKxSPueAXBJn6ejJGHzAtF9I1mCZsE7e28y/L0813JysxZcWcBvM8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN1RLqEaLWytxiUzKphnNyBLYIZnBiXklD6HWT+FtU8UcYVuLt
-	JmJfQZCZcQWOcJGtM69Dy+/TLgiP6Jzf6bn6h/+LhGMKrGT2h070Uk7F
-X-Gm-Gg: AR+sD11tn3xQwrIKZLrTTRd2mRtHosWcmHBvM35QRKV9wFKAB05keyV8LfRHY8gdXUG
-	faQTIddo1mzHnB8hGDJBggvI7XU2uAkJrPjBAQ4sndz84r0I21N8pfgQr3Q+xb9nzZlvO6a5JIn
-	DqfF22JQcSp+I1jDCIBPxtsHpK6N6RtgVgtmKqeX35SSv7R/c7SjP1xRzpQ6mlaNPyaikKP1Iu9
-	hwhFcPzxmIdSxEw2SQZRtqyH8HrEpVK0wsj8dU7w1MnLSlgRnpT/z6dl+VZksjSlyHR384tQXHr
-	WxqxkJOwiJyHtjgi5D9vUxwXtdPXrI/8gjiwdR0BFQiS9vu5n3SP3YSsSrl61qPx248Wbb5PKtF
-	yLOrMDgnT3nm3HdvfvZGED3K/QR80lYJeTXy9iQGSTcAJFB/5ZqGc1m9n+M5EpcgLRdLnaXN08V
-	oeqhDeO+BTSR6tOdMbA5ViyVV91gO39TIWngx7GT6/hbHkgbuF9o2yV8nqXXqB8f841m9bWcB1v
-	ydsGYT5AfnC+hYkkqaGbLUkwz2eJYFaE1tv14u+LAOYGX0aXNfA
-X-Received: by 2002:a05:600c:17d1:b0:495:7a04:b006 with SMTP id 5b1f17b1804b1-49987948adamr180850505e9.8.1786884979064;
-        Sun, 16 Aug 2026 05:56:19 -0700 (PDT)
-Received: from nixos-office (195-23-151-163.net.novis.pt. [195.23.151.163])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4999610e381sm63085105e9.9.2026.08.16.05.56.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Aug 2026 05:56:18 -0700 (PDT)
-Sender: Julian Braha <julian.braha@gmail.com>
-From: Julian Braha <julianbraha@gmail.com>
-To: maddy@linux.ibm.com,
-	mpe@ellerman.id.au,
-	npiggin@gmail.com,
-	chleroy@kernel.org,
-	Frank.Li@kernel.org,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com
-Cc: linusw@kernel.org,
-	kees@kernel.org,
-	colin.i.king@gmail.com,
-	rosenp@gmail.com,
-	joao@joaoff.com,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	netdev@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Julian Braha <julianbraha@gmail.com>
-Subject: [PATCH] powerpc: remove dead 440SP code
-Date: Sun, 16 Aug 2026 13:56:15 +0100
-Message-ID: <20260816125615.985387-1-julianbraha@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nOKXdTZ9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q6IS4ewqZu/QPgMPNdLJ6zPzwzc10Hb69He+VIIexx3KWnfaOBdh0AIfNFI81OZlWXKQ8CVdHo3znCwRy9aV1OroNue5zh4iSjjOlWNx4yyqCKi/sCNQvnz1prf5T9Ww9GNaAaVbdloTb7u9ni46RlZXK9nqmfEZqb/Vt30WYltNwUgMy3/5GFPlV+PqqXNcwbaEyTuFsCJCsBBlMnW6vE5/6L5UxtVXOfe5pwULvqr12bsnc7QLLYeC84AUg++gcLRVSKtX3/wfJ3M8SKGMQpx/sXOqxnu9sgW6meFyzYrxHCj4BLjPB2etZTTWNcrl4dbpTWL5HA3WZJYD5OTLrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g5GCrBCx387mmAmsPHobU1xgY88VHyME/cbH8vg0FSQ=;
+ b=ynPbGEHzqKoNYP50pYj/qRL72ctzj+TSDNWXZ7nzZnd/aJFglGDJem9Ge5OUMwxvsAbdYK5uomftPF6C4+teelNbRI78ZzyJtPB6J8kHDNLvuu4te8EEerAs3MIOUNYoCR0KZonFRKM42PASIE8XDCNRFR9G7Tcob4f34JvEgBoLDMMcXvwqAmMRup0+USgjr5FVdhtUIwTaJzz/n69c/Qt3A/wcJLbK/ocxBQKa/qnu2o7zvbUeZ25LjuyelW62kRBqk7bPvbWRr1sOaZ5pcdcTQwjIT51VkB5aRqp3RQAoyCYuocDp1diuesKXG/mkqijjODL7Z2mJVrRnldZs+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=g5GCrBCx387mmAmsPHobU1xgY88VHyME/cbH8vg0FSQ=;
+ b=nOKXdTZ9QfVMDaocbW4FKzlSac61K8CcwE5MTXZ18IB5kksIF8hZpzu4DH9J9x33XhClJR1DQeTZibch2arAL9ye0IxWNshq3wvOXxYYaXSljJVRRUZx0SQ3mvZ86J0p485U9rkzr1xU9okjlkadX52RnT1DDbJlEnYXbupiTK0=
+Received: from CH2PR14CA0040.namprd14.prod.outlook.com (2603:10b6:610:56::20)
+ by DS7PR12MB8230.namprd12.prod.outlook.com (2603:10b6:8:ed::5) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.315.17; Sun, 16 Aug 2026 15:49:36 +0000
+Received: from CH1PEPF0000AD7B.namprd04.prod.outlook.com
+ (2603:10b6:610:56:cafe::9a) by CH2PR14CA0040.outlook.office365.com
+ (2603:10b6:610:56::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.17 via Frontend Transport; Sun,
+ 16 Aug 2026 15:49:36 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CH1PEPF0000AD7B.mail.protection.outlook.com (10.167.244.58) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.339.3 via Frontend Transport; Sun, 16 Aug 2026 15:49:36 +0000
+Received: from [127.0.1.1] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Sun, 16 Aug
+ 2026 10:49:33 -0500
+From: Shivank Garg <shivankg@amd.com>
+Subject: [PATCH v3 0/3] dmaengine: fix kref underflow and UAF in
+ dma_chan_put()
+Date: Sun, 16 Aug 2026 15:49:24 +0000
+Message-ID: <20260816-dmaengine-kref-fix-v3-0-7e76187145df@amd.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAATcgWoC/33NSw7CIBCA4as0rB0DtNDqynsYF5RHOzEFA4bUN
+ L27tBtdGJf/TOabhSQb0SZyrhYSbcaEwZeoDxXRo/KDBTSlCadcUsE6MJOyfkBv4R6tA4cztD1
+ nSvf01AhByuGjLHDe0eut9IjpGeJr/5HZNv3LZQYMGiMZF7TpXN9e1GSOOkxkwzL/Arj8CXCgU
+ BsnqXJKU2Y+wLqub3VGKSbzAAAA
+X-Change-ID: 20260518-dmaengine-kref-fix-7b21acb09455
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, "Logan
+ Gunthorpe" <logang@deltatee.com>, Andrew Morton <akpm@linux-foundation.org>
+CC: <stable@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, Shivank Garg <shivankg@amd.com>, Sashiko
+	<sashiko-bot@kernel.org>
+X-Mailer: b4 0.15-dev-47d62
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1786895373; l=1135;
+ i=shivankg@amd.com; s=20260518; h=from:subject:message-id;
+ bh=5Bu8UNOUn/yQ5RyaUnqS5SJhjhsfHQrzs3brCkwb/g4=;
+ b=qrw1vs88uyTspBgKK8+gMP1G0rNpoUMs4M/9M98YXDMA3Kmo6s6ZldE7qAmNXwVhtDv43sQIe
+ klrS6VUDh+TB8IYm/U1iyGjrwGZiQFkPTFcVjEB4B6K9nvwoXYb3TD5
+X-Developer-Key: i=shivankg@amd.com; a=ed25519;
+ pk=2l2QGTeXuGkZTtfmx0nPQU8iFZfjYmX/ymMojitevx4=
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7B:EE_|DS7PR12MB8230:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7fda872-bb09-435a-20d5-08defbadf984
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700016|23010399003|1800799024|376014|13003099007|10067099003|56012099006|11063799006|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	gTXyZqpqps4mHcW9kdWw69lWLwTkawlxCuAUhTI8s04/mEShOrh1v3oa33HfsotwtzJU9tHG7zaq4Kc5j+kJLMGs4YdEJ+4YPWHFC1PWfIbr81xaeh/NM49gyPdPWuDiId/MV3FHgZz9210twtOcwoLuXWD6GeehhFNEZj5inaeyIvy9+jIxZxXM7w/J2tNk687hgJJBy4wohQoGQcTo4bLIdVLCEafBoEIDpojZ2w25dSavOXj64U6PO4UbPT9x6SxZxecpq25UslIHjsdBqsGsYhoLsKrSVBdtu/myLulqurF3B11YF6Oiyy9EL3MiCCvfK7N5pwDOGPMmuN5XygMQ3JWiXQ/788NEV2PWWK38husjZUpyVQz4jCYCyhDPgG9YRKMQ0oNatGpeylDGREv4egGYcv5c9hAr+LvmJmVp5wD3+cwsSudDJq3fubtd4ntYRXM3Vowqomtosr9LxSTRQj680BO6J4HXkcjkaUPpkGE4k/7h0OkVjwYik1vFGwMIqEeVEMpoCxOwfYf0zUvQZ9nBoOetTzeec16w1MzuPUmXH2WiL19AjApLgUYm1d8muVJMJTFZ1TrLSUL/cF516duiVKQpiO28HmZ+kXitBvyWdZJIzv40sL4vqm4Ucpc/WNaZb7LGbC2vcMmJXEa1uRLfDxC91ksDD5W1xJoPDMWb/bYBBF2+PETvrhgWfTwY/TpIFpEdOdLTcVVBbw==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(36860700016)(23010399003)(1800799024)(376014)(13003099007)(10067099003)(56012099006)(11063799006)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	vH/CeA/XO1xQ0jvI1n8hYWryb8jsxJdC3Vuc0nEdxBj40LSgWdK5v8rtGX7JwWRUmSWZMtLceoWd+uDscQsfFNjslNbalQPehSoMdR0amFMIlDBwZtrZ6PnTk9UUmUQLOwEGqxyquxkfgwpqP5RnSzEziKMSXTuRV2G82SjAMQSA/ZUXKdd0/wsQuJUbR/f1iHj78Y503lCldQZpnaqnqKaGcKuHp6PU0I0oC5d2Vuxa31cq6kLqeJv5U21rRBE9JbGvkqzSR4tcJ/gV2mqV9Jv3WMb456lDYk8eVVMNtu2jrUkVmzoMXWkKS7KpYwRG8fEBJHEwdjgOfJE2ZEXup3ArEVFEgNapMQPFBmieVrqCR3au8yLQevx829Uxp7slYo/xbtYLbrGCYwbJW7BixIv9qo+QD/EQpyb4VaPCXIgTA/vB6UjKeVr0vKMdgenV
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 15:49:36.6729
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7fda872-bb09-435a-20d5-08defbadf984
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH1PEPF0000AD7B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8230
 
-The 440SP config option can never be enabled, making all references to it
-dead code.
+Fix bugs related to dma_chan_put(), found while testing with SDXI[1].
 
-Let's remove support for 440SP, since nobody can be using it anyway.
+[1]: https://lore.kernel.org/dmaengine/20260605-sdxi-base-v3-0-4d38ca2bdffe@amd.com
 
-This dead code was found by kconfirm, a static analysis tool for Kconfig.
-
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Signed-off-by: Shivank Garg <shivankg@amd.com>
 ---
- arch/powerpc/boot/cuboot-katmai.c   |  2 +-
- arch/powerpc/include/asm/async_tx.h |  2 +-
- arch/powerpc/include/asm/dcr-regs.h | 10 +++++-----
- arch/powerpc/kernel/cpu_specs_44x.h | 12 ------------
- arch/powerpc/platforms/44x/Kconfig  |  3 ---
- drivers/dma/Kconfig                 |  2 +-
- drivers/dma/ppc4xx/adma.c           |  9 ---------
- drivers/dma/ppc4xx/adma.h           |  2 +-
- drivers/dma/ppc4xx/dma.h            |  9 ---------
- drivers/net/ethernet/ibm/emac/mal.h |  2 +-
- 10 files changed, 10 insertions(+), 43 deletions(-)
+Changes in v3:
+- Add patch 3: add synchronize_rcu() to wait for RCU readers to prevent
+  use-after-free. (Sashiko)
+- Link to v2: https://lore.kernel.org/r/20260526-dmaengine-kref-fix-v2-0-3df60afac01d@amd.com
 
-diff --git a/arch/powerpc/boot/cuboot-katmai.c b/arch/powerpc/boot/cuboot-katmai.c
-index 034a748fde24..fcd71e76309f 100644
---- a/arch/powerpc/boot/cuboot-katmai.c
-+++ b/arch/powerpc/boot/cuboot-katmai.c
-@@ -31,7 +31,7 @@ static void katmai_fixups(void)
- {
- 	unsigned long sysclk = 33333000;
- 
--	/* 440SP Clock logic is all but identical to 440GX
-+	/* 440SPe Clock logic is all but identical to 440GX
- 	 * so we just use that code for now at least
- 	 */
- 	ibm440spe_fixup_clocks(sysclk, 6 * 1843200, 0);
-diff --git a/arch/powerpc/include/asm/async_tx.h b/arch/powerpc/include/asm/async_tx.h
-index a14758426dd5..1ff5b2ca3ed1 100644
---- a/arch/powerpc/include/asm/async_tx.h
-+++ b/arch/powerpc/include/asm/async_tx.h
-@@ -7,7 +7,7 @@
- #ifndef _ASM_POWERPC_ASYNC_TX_H_
- #define _ASM_POWERPC_ASYNC_TX_H_
- 
--#if defined(CONFIG_440SPe) || defined(CONFIG_440SP)
-+#if defined(CONFIG_440SPe)
- extern struct dma_chan *
- ppc440spe_async_tx_find_best_channel(enum dma_transaction_type cap,
- 	struct page **dst_lst, int dst_cnt, struct page **src_lst,
-diff --git a/arch/powerpc/include/asm/dcr-regs.h b/arch/powerpc/include/asm/dcr-regs.h
-index 5c1a4973f46a..e39a55e527da 100644
---- a/arch/powerpc/include/asm/dcr-regs.h
-+++ b/arch/powerpc/include/asm/dcr-regs.h
-@@ -25,11 +25,11 @@
-  * of the driver main register set
-  */
- 
--/* CPRs (440GX and 440SP/440SPe) */
-+/* CPRs (440GX and 440SPe) */
- #define DCRN_CPR0_CONFIG_ADDR	0xc
- #define DCRN_CPR0_CONFIG_DATA	0xd
- 
--/* SDRs (440GX and 440SP/440SPe) */
-+/* SDRs (440GX and 440SPe) */
- #define DCRN_SDR0_CONFIG_ADDR 	0xe
- #define DCRN_SDR0_CONFIG_DATA	0xf
- 
-@@ -159,18 +159,18 @@
- #define  L2C_SNP_ESR		0x00000800
- 
- /*
-- * DCR register offsets for 440SP/440SPe I2O/DMA controller.
-+ * DCR register offsets for 440SPe I2O/DMA controller.
-  * The base address is configured in the device tree.
-  */
- #define DCRN_I2O0_IBAL		0x006
- #define DCRN_I2O0_IBAH		0x007
- #define I2O_REG_ENABLE		0x00000001	/* Enable I2O/DMA access */
- 
--/* 440SP/440SPe Software Reset DCR */
-+/* 440SPe Software Reset DCR */
- #define DCRN_SDR0_SRST		0x0200
- #define DCRN_SDR0_SRST_I2ODMA	(0x80000000 >> 15)	/* Reset I2O/DMA */
- 
--/* 440SP/440SPe Memory Queue DCR offsets */
-+/* 440SPe Memory Queue DCR offsets */
- #define DCRN_MQ0_XORBA		0x04
- #define DCRN_MQ0_CF2H		0x06
- #define DCRN_MQ0_CFBHL		0x0f
-diff --git a/arch/powerpc/kernel/cpu_specs_44x.h b/arch/powerpc/kernel/cpu_specs_44x.h
-index 69c4cdc0cdee..41ed2c16d8cc 100644
---- a/arch/powerpc/kernel/cpu_specs_44x.h
-+++ b/arch/powerpc/kernel/cpu_specs_44x.h
-@@ -172,18 +172,6 @@ static struct cpu_spec cpu_specs[] __initdata = {
- 		.machine_check		= machine_check_440A,
- 		.platform		= "ppc440",
- 	},
--	{ /* 440SP Rev. A */
--		.pvr_mask		= 0xfff00fff,
--		.pvr_value		= 0x53200891,
--		.cpu_name		= "440SP Rev. A",
--		.cpu_features		= CPU_FTRS_44X,
--		.cpu_user_features	= COMMON_USER_BOOKE,
--		.mmu_features		= MMU_FTR_TYPE_44x,
--		.icache_bsize		= 32,
--		.dcache_bsize		= 32,
--		.machine_check		= machine_check_4xx,
--		.platform		= "ppc440",
--	},
- 	{ /* 440SPe Rev. A */
- 		.pvr_mask               = 0xfff00fff,
- 		.pvr_value              = 0x53400890,
-diff --git a/arch/powerpc/platforms/44x/Kconfig b/arch/powerpc/platforms/44x/Kconfig
-index 150813cea945..b481ef2b0f4c 100644
---- a/arch/powerpc/platforms/44x/Kconfig
-+++ b/arch/powerpc/platforms/44x/Kconfig
-@@ -260,9 +260,6 @@ config 440GX
- 	select IBM_EMAC_ZMII if IBM_EMAC #test only
- 	select IBM_EMAC_TAH if IBM_EMAC  #test only
- 
--config 440SP
--	bool
--
- config 440SPe
- 	bool
- 	select IBM_EMAC_EMAC4 if IBM_EMAC
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index ae6a682c9f76..f0f61b4932f5 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -77,7 +77,7 @@ config AMBA_PL08X
- 
- config AMCC_PPC440SPE_ADMA
- 	tristate "AMCC PPC440SPe ADMA support"
--	depends on 440SPe || 440SP
-+	depends on 440SPe
- 	select DMA_ENGINE
- 	select DMA_ENGINE_RAID
- 	select ARCH_HAS_ASYNC_TX_FIND_CHANNEL
-diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-index 279a431ccae3..ecbf4c84a318 100644
---- a/drivers/dma/ppc4xx/adma.c
-+++ b/drivers/dma/ppc4xx/adma.c
-@@ -4349,14 +4349,9 @@ static ssize_t poly_show(struct device_driver *dev, char *buf)
- 	ssize_t size = 0;
- 	u32 reg;
- 
--#ifdef CONFIG_440SP
--	/* 440SP has fixed polynomial */
--	reg = 0x4d;
--#else
- 	reg = dcr_read(ppc440spe_mq_dcr_host, DCRN_MQ0_CFBHL);
- 	reg >>= MQ0_CFBHL_POLY;
- 	reg &= 0xFF;
--#endif
- 
- 	size = sysfs_emit(buf, "PPC440SP(e) RAID-6 driver "
- 			"uses 0x1%02x polynomial.\n", reg);
-@@ -4368,10 +4363,6 @@ static ssize_t poly_store(struct device_driver *dev, const char *buf,
- {
- 	unsigned long reg, val;
- 	int err;
--#ifdef CONFIG_440SP
--	/* 440SP uses default 0x14D polynomial only */
--	return -EINVAL;
--#endif
- 
- 	if (!count || count > 6)
- 		return -EINVAL;
-diff --git a/drivers/dma/ppc4xx/adma.h b/drivers/dma/ppc4xx/adma.h
-index f8a5d7c1fb40..0ec35382d274 100644
---- a/drivers/dma/ppc4xx/adma.h
-+++ b/drivers/dma/ppc4xx/adma.h
-@@ -19,7 +19,7 @@
- #define tx_to_ppc440spe_adma_slot(tx) \
- 		container_of(tx, struct ppc440spe_adma_desc_slot, async_tx)
- 
--/* Default polynomial (for 440SP is only available) */
-+/* Default polynomial */
- #define PPC440SPE_DEFAULT_POLY	0x4d
- 
- #define PPC440SPE_ADMA_ENGINES_NUM	(XOR_ENGINES_NUM + DMA_ENGINES_NUM)
-diff --git a/drivers/dma/ppc4xx/dma.h b/drivers/dma/ppc4xx/dma.h
-index b5725481bfa6..17cbb2d1ee1c 100644
---- a/drivers/dma/ppc4xx/dma.h
-+++ b/drivers/dma/ppc4xx/dma.h
-@@ -70,20 +70,11 @@
- 
- #define DMA_CUED_XOR_BASE	(0x10000000)
- #define DMA_CUED_XOR_HB		(0x00000008)
--
--#ifdef CONFIG_440SP
--#define DMA_CUED_MULT1_OFF	0
--#define DMA_CUED_MULT2_OFF	8
--#define DMA_CUED_MULT3_OFF	16
--#define DMA_CUED_REGION_OFF	24
--#define DMA_CUED_XOR_WIN_MSK	(0xFC000000)
--#else
- #define DMA_CUED_MULT1_OFF	2
- #define DMA_CUED_MULT2_OFF	10
- #define DMA_CUED_MULT3_OFF	18
- #define DMA_CUED_REGION_OFF	26
- #define DMA_CUED_XOR_WIN_MSK	(0xF0000000)
--#endif
- 
- #define DMA_CUED_REGION_MSK	0x3
- #define DMA_RXOR123		0x0
-diff --git a/drivers/net/ethernet/ibm/emac/mal.h b/drivers/net/ethernet/ibm/emac/mal.h
-index e0ddc41186a2..6cdd40bca2cd 100644
---- a/drivers/net/ethernet/ibm/emac/mal.h
-+++ b/drivers/net/ethernet/ibm/emac/mal.h
-@@ -26,7 +26,7 @@
-  * We call MAL 1 the version in 405GP, 405GPR, 405EP, 440EP, 440GR and
-  * NP405H.
-  *
-- * We call MAL 2 the version in 440GP, 440GX, 440SP, 440SPE and Axon
-+ * We call MAL 2 the version in 440GP, 440GX, 440SPE and Axon
-  *
-  * The driver expects a "version" property in the emac node containing
-  * a number 1 or 2. New device-trees for EMAC capable platforms are thus
+Changes in v2:
+- Add patch 2 fixing the dma_chan_put()/dma_release_channel() use-after-free (sashiko) 
+- Link to v1: https://lore.kernel.org/r/20260518-dmaengine-kref-fix-v1-1-4d6125048fb7@amd.com
+
+---
+Shivank Garg (3):
+      dmaengine: Fix device kref underflow in dma_chan_put()
+      dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel()
+      dmaengine: wait for RCU readers before releasing dma_device
+
+ drivers/dma/dmaengine.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+---
+base-commit: 0d995da5fb97e8c312834575604d4423eb6225b7
+change-id: 20260518-dmaengine-kref-fix-7b21acb09455
+
+Best regards,
 -- 
-2.55.0
+Shivank Garg <shivankg@amd.com>
 
