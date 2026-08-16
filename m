@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F9D3451CF
-	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 05:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F413321A2
+	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 06:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786859953; cv=none; b=Mh+QUwMdUhQ/XXo8Gy7MrhDuHw6Q96q4qpAzVpdaoU0DRKfD1+d1QTcJk5PWXz3NHQbH8tFiKhNLNnXorKWt1wbT8M65Z7pI4JPCGGhgGjeHmGOw0CEIH+B6UYHev8XzUUDMirKSCaVmQeRy/GGa6Z+njJj1pfklTZuv+WFxgbc=
+	t=1786860306; cv=none; b=Fjh6RE7mPQLtqJ3ac2w0j8JT+xpArPWNXlNGSjjXeGUEKNWRP3ki1IMJ8Aaq5U9OJZiPtfCAxL63FSlqKI3/iagMGSSB1/gmjnXhoX4Gxp4iL5SwP4HG1t3DtHFtDKQOENbICQWGzKFN9F7noj6YcS9E61vNuK2B6CZImFrfTk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786859953; c=relaxed/simple;
-	bh=m/O7DoC+fIDm3Ul0Wz8l77V/9MPWM1FHtjl/I7Sm300=;
+	s=arc-20240116; t=1786860306; c=relaxed/simple;
+	bh=xbTovxc3kp11DQ9iYcZaJZXoPZef4Ifd0qzp5yfVft4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=oXjCoYWPL/mN9dw0ku4vFNTFIn/4fRb50fzDgQEzAED/UEeMvhlHTdbZstf2ciQUfBZ8eRmhCbpHIb5RwQ8i10UV2oQ067e2D9myxmYw+SMFoKFkBCrHmcGODck+qhKb9EBBNNLoaH7bj0QS4d83nWd88y9aowAUT+vt/aWydPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHDsonGM; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=iv8APu064CxTxEHKb86ib/rbdtfgjz2bLRrRknP1xtvvJ9rFYDhm86xLyjLJC5q+2O3HwrzkGJGnFD2LVyu289Vc3avoEUFLCpLjIeXRsurxzyXGaUPc3KhWX2X1h/uYIhOqqvscRTd/S2Hg/XtytbthNtYlgxXHAqntn11WK5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHP5w+Yu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHDsonGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205381F000E9;
-	Sun, 16 Aug 2026 05:59:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHP5w+Yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475F51F000E9;
+	Sun, 16 Aug 2026 06:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786859952;
-	bh=nJl3EVNmNuCQiSgCpb1+XSyP4eveNK5Xj1SL5v1w0QY=;
+	s=k20260515; t=1786860304;
+	bh=+IFh9zFTwTPDMcFQC0z72grumBdKzpXyyjzTUorar24=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=KHDsonGMR0Dv3A2DO+BPoYfEm9a1A4r3Z6IZlcIHnmH6WBX4TUZEKKD4cs7iNKGr3
-	 55y9w4Q+7ceDgc+8JxNBBWnZTNB+Li3k8kCDXnP6s7b1dK/xxe9xdwt6Q+e12uLI3L
-	 luqzgfDEDlMZXuFOdA24StvK16u5R/sA6XCBLQXKroj8cYbcx+Yv7BvQK4yOsFpcij
-	 aF/z/URuLMZL8tMMOQBfr/DY5DNMpui3I8LMZh1yzpQW8DxTXd2G331/nXk9WF1zr6
-	 ReuKOUBem/b6SF6CuiW12vKm/ZKP0PpQ1rKlL1Qk6j5M2g/4n4e4Fd1MOwd9k+aj3U
-	 b8q8JT9vNFZ9w==
+	b=iHP5w+YumXpC4z3e5aZyWuvBVFljoW7mGqCVGy7gKfA/XYnDgVWPsA61GrDMX0SbI
+	 vdLtfElEUye9JhyREwZ8sLmhrrGE6oXGWJ11n22yvDxylLGndl41oQ/IvMtQwQAsTZ
+	 gi9CywNHqlhFt3zuaLSCjq1PtSM1wo73fFVTrqvD1ptl7/uXySEc7jbZBZY80WNYA8
+	 BsBMF2ybIUMHHIH1P1iEN0iJCCg86Xa+bc4VPYR3ijZLdhAowjlAVPlsUgq+9M7njd
+	 M9SmwfJF1YXqziTv1NJlcHwLqRV57XTyaHwZKuNS4fHq9eoiInHHUpxf7Fr2z4sAI8
+	 EI2ZaPvbv+CJg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] dmaengine: sprd: use clk_bulk API to fix clock
- imbalance
+Subject: Re: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to
+ clk_bulk API
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Chaithanya Lagisetty" <nagachaithanya9911@gmail.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260816055005.2667930-1-nagachaithanya9911@gmail.com>
-References: <an3zMHoaxx4XzvpK@SMW015318>
- <20260816055005.2667930-1-nagachaithanya9911@gmail.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
+References: <an3y4lS-ZE4CdJ7R@SMW015318>
+ <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 16 Aug 2026 05:59:11 +0000
-Message-Id: <20260816055912.205381F000E9@smtp.kernel.org>
+Date: Sun, 16 Aug 2026 06:05:03 +0000
+Message-Id: <20260816060504.475F51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,122 +48,99 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
+New issues:
+- [High] The patch silently reverses the required clock enable and disable =
+order, which can cause hardware initialization failures.
+
 Pre-existing issues:
-- [High] Runtime PM usage counter and enablement state leak on error paths.
-- [High] Device interrupt requested before hardware IO memory is mapped and=
- spinlocks are initialized.
+- [High] The interrupt handler unconditionally accesses unclocked device re=
+gisters if an interrupt fires on a shared line while the device is in PM ru=
+ntime suspend.
 --
 
---- Patch [1]: [PATCH v2] dmaengine: sprd: use clk_bulk API to fix clock im=
-balance ---
-commit ed070633d7ec91a8fe862c830443d077ba0540c0
+--- Patch [1]: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to=
+ clk_bulk API ---
+commit 9a52e2da75664a18bf3bb34d3bc595717db1bddc
 Author: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Subject: dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
 
-dmaengine: sprd: use clk_bulk API to fix clock imbalance
+This commit converts the driver to use the clk_bulk API for managing its two
+mandatory clocks. It consolidates the clock getting, enabling, and disabling
+logic to simplify error handling and fix a clock refcount imbalance.
 
-This patch converts the driver to use the clk_bulk API to handle clock
-enabling and disabling. It simplifies error paths and fixes a clock
-imbalance issue where sdev->clk was leaked if the optional ashb_clk failed
-to enable.
+Link: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya99=
+11@gmail.com/
 
-> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-> index 087fea3af2e41..ac6fe6118ad19 100644
-> --- a/drivers/dma/sprd-dma.c
-> +++ b/drivers/dma/sprd-dma.c
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
+/dw-axi-dmac/dw-axi-dmac-platform.c
+> index bcefaff03b5c6..254167a558ff7 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+
 [ ... ]
-> @@ -1140,16 +1120,18 @@ static int sprd_dma_probe(struct platform_device =
-*pdev)
->  	if (!sdev)
->  		return -ENOMEM;
+
+> @@ -1524,13 +1519,11 @@ static int dw_probe(struct platform_device *pdev)
 > =20
-> -	sdev->clk =3D devm_clk_get(&pdev->dev, "enable");
-> -	if (IS_ERR(sdev->clk)) {
-> -		dev_err(&pdev->dev, "get enable clock failed\n");
-> -		return PTR_ERR(sdev->clk);
-> -	}
-> +	sdev->clks[0].id =3D "enable";
-> +	sdev->clks[0].clk =3D devm_clk_get(&pdev->dev, "enable");
-> +	if (IS_ERR(sdev->clks[0].clk))
-> +		return dev_err_probe(&pdev->dev, PTR_ERR(sdev->clks[0].clk),
-> +				     "get enable clock failed\n");
+>  	chip->dw->hdata->use_cfg2 =3D !!(flags & AXI_DMA_FLAG_USE_CFG2);
 > =20
->  	/* ashb clock is optional for AGCP DMA */
-> -	sdev->ashb_clk =3D devm_clk_get(&pdev->dev, "ashb_eb");
-> -	if (IS_ERR(sdev->ashb_clk))
-> -		dev_warn(&pdev->dev, "no optional ashb eb clock\n");
-> +	sdev->clks[1].id =3D "ashb_eb";
-> +	sdev->clks[1].clk =3D devm_clk_get_optional(&pdev->dev, "ashb_eb");
-> +	if (IS_ERR(sdev->clks[1].clk))
-> +		return dev_err_probe(&pdev->dev, PTR_ERR(sdev->clks[1].clk),
-> +				     "get ashb_eb clock failed\n");
-> =20
->  	/*
->  	 * We have three DMA controllers: AP DMA, AON DMA and AGCP DMA. For AGCP
+> -	chip->core_clk =3D devm_clk_get(chip->dev, "core-clk");
+> -	if (IS_ERR(chip->core_clk))
+> -		return PTR_ERR(chip->core_clk);
+> -
+> -	chip->cfgr_clk =3D devm_clk_get(chip->dev, "cfgr-clk");
+> -	if (IS_ERR(chip->cfgr_clk))
+> -		return PTR_ERR(chip->cfgr_clk);
+> +	chip->clks[0].id =3D "core-clk";
+> +	chip->clks[1].id =3D "cfgr-clk";
 
 [Severity: High]
-This is a pre-existing issue, but does this code request the interrupt too
-early?
+Does this array initialization unintentionally reverse the clock enable and
+disable sequence?
 
-Looking at the sequence further down in sprd_dma_probe():
+The old driver correctly enabled cfgr_clk before core_clk in axi_dma_resume=
+(),
+and disabled core_clk before cfgr_clk in axi_dma_suspend().
 
-	sdev->irq =3D platform_get_irq(pdev, 0);
-	if (sdev->irq > 0) {
-		ret =3D devm_request_irq(&pdev->dev, sdev->irq, dma_irq_handle,
-				       0, "sprd_dma", (void *)sdev);
-		...
-	}
+Because clk_bulk_prepare_enable() iterates forwards and
+clk_bulk_disable_unprepare() iterates backwards, mapping core-clk to index 0
+and cfgr-clk to index 1 applies the reverse hardware sequence for both.  Can
+this cause hardware lockups or bus faults?
 
-	sdev->glb_base =3D devm_platform_ioremap_resource(pdev, 0);
+> +	ret =3D devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks=
+);
+> +	if (ret)
+> +		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
 
-The interrupt is requested before sdev->glb_base is mapped and before the
-virtual channels are initialized. If an interrupt is pending (for example,
-left over from a bootloader or kexec), could the IRQ handler dma_irq_handle=
-()
-fire immediately?
+[Severity: High]
+This is a pre-existing issue, but does the interrupt handler unconditionally
+access unclocked device registers if an interrupt fires on a shared line
+while the device is in PM runtime suspend?
 
-If it fires early, the handler will attempt to read from sdev->glb_base:
+In dw_probe(), the IRQs are requested using IRQF_SHARED:
 
-drivers/dma/sprd-dma.c:dma_irq_handle() {
+dw-axi-dmac-platform.c:axi_req_irqs() {
 	...
-	u32 irq_status =3D readl(sdev->glb_base + SPRD_DMA_GLB_INT_MSK_STS);
+	ret =3D devm_request_irq(chip->dev, chip->irq[i], dw_axi_dma_interrupt,
+			       IRQF_SHARED, KBUILD_MODNAME, chip);
 	...
 }
 
-Since sdev was allocated with devm_kzalloc(), sdev->glb_base is still NULL,
-which would lead to a NULL pointer dereference. The handler might also lock
-schan->vc.lock before it has been initialized by vchan_init(). Would it be
-safer to request the interrupt after all necessary resources are mapped and
-initialized?
+If the DMA controller is idle, runtime PM suspends the device, which disabl=
+es
+the clocks. If another device sharing the same IRQ line triggers an
+interrupt, the handler is called:
 
-
-[Severity: High]
-This isn't a bug introduced by this patch, but is there a PM usage counter
-leak on the error path further down in sprd_dma_probe()?
-
-When pm_runtime_get_sync() fails, the code jumps to err_rpm:
-
-	ret =3D pm_runtime_get_sync(&pdev->dev);
-	if (ret < 0)
-		goto err_rpm;
-...
-err_rpm:
-	sprd_dma_disable(sdev);
-	return ret;
-
-This skips calling pm_runtime_put_noidle() and pm_runtime_disable(), which
-could leave the runtime PM state unbalanced and prevent the device from ever
-suspending if the probe is retried.
-
-A similar issue appears to exist in sprd_dma_alloc_chan_resources(), where
-it directly returns the result of pm_runtime_get_sync():
-
-drivers/dma/sprd-dma.c:sprd_dma_alloc_chan_resources() {
+dw-axi-dmac-platform.c:dw_axi_dma_interrupt() {
 	...
-	return pm_runtime_get_sync(chan->device->dev);
+	/* Disable DMAC interrupts. We'll enable them after processing channels */
+	axi_dma_irq_disable(chip);
+	...
 }
 
-Could this also leak the usage counter if pm_runtime_get_sync() fails?
+Since axi_dma_irq_disable() accesses DMAC_CFG without checking if the device
+is active, can this unclocked register read trigger a synchronous external
+abort (kernel panic)?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260816055005.2667=
-930-1-nagachaithanya9911@gmail.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260816054858.2667=
+380-1-nagachaithanya9911@gmail.com?part=3D1
