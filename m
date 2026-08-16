@@ -1,146 +1,316 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F413321A2
-	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 06:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A7C81AA8
+	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 12:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786860306; cv=none; b=Fjh6RE7mPQLtqJ3ac2w0j8JT+xpArPWNXlNGSjjXeGUEKNWRP3ki1IMJ8Aaq5U9OJZiPtfCAxL63FSlqKI3/iagMGSSB1/gmjnXhoX4Gxp4iL5SwP4HG1t3DtHFtDKQOENbICQWGzKFN9F7noj6YcS9E61vNuK2B6CZImFrfTk0=
+	t=1786884982; cv=none; b=Y4ndtAydpixKJD94ZGV7AF2HY5fWxjs7Wvb/0QpWQsBKR8jqjnEsKlRlPnmReW3PAI/6tJelEVg3+HUYK6rr9i6MrKd2bPwzD3HHEu0tKDYDnPZuLavGmCX4KoPWfVyokHn4oJRakAyMj7tVYW74zK0xQdszeZspQ/Ov2qLUIkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786860306; c=relaxed/simple;
-	bh=xbTovxc3kp11DQ9iYcZaJZXoPZef4Ifd0qzp5yfVft4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iv8APu064CxTxEHKb86ib/rbdtfgjz2bLRrRknP1xtvvJ9rFYDhm86xLyjLJC5q+2O3HwrzkGJGnFD2LVyu289Vc3avoEUFLCpLjIeXRsurxzyXGaUPc3KhWX2X1h/uYIhOqqvscRTd/S2Hg/XtytbthNtYlgxXHAqntn11WK5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHP5w+Yu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786884982; c=relaxed/simple;
+	bh=XmbiCSUSDiVAiNmSRbJ2PxwSgZsTdKwWMDpotU+cRFQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LBsvlUlkTAyMBaqAYwuw4VRZ35VdJg9fU2c/AV/EQ4L7fE2rFXPu1GAJAYYfIQYeIXH3ZYJjUWVHMHpj8UcM/gAJvV3cWpU0dXtwiMeoDR+SjdeWNS/qkxYvzdBYLK1UaUJhTIolYk5TOCr9+9WqwGmOJR1OlRhVh86NJnIbX0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4EX4hnG; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHP5w+Yu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475F51F000E9;
-	Sun, 16 Aug 2026 06:05:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786860304;
-	bh=+IFh9zFTwTPDMcFQC0z72grumBdKzpXyyjzTUorar24=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=iHP5w+YumXpC4z3e5aZyWuvBVFljoW7mGqCVGy7gKfA/XYnDgVWPsA61GrDMX0SbI
-	 vdLtfElEUye9JhyREwZ8sLmhrrGE6oXGWJ11n22yvDxylLGndl41oQ/IvMtQwQAsTZ
-	 gi9CywNHqlhFt3zuaLSCjq1PtSM1wo73fFVTrqvD1ptl7/uXySEc7jbZBZY80WNYA8
-	 BsBMF2ybIUMHHIH1P1iEN0iJCCg86Xa+bc4VPYR3ijZLdhAowjlAVPlsUgq+9M7njd
-	 M9SmwfJF1YXqziTv1NJlcHwLqRV57XTyaHwZKuNS4fHq9eoiInHHUpxf7Fr2z4sAI8
-	 EI2ZaPvbv+CJg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to
- clk_bulk API
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Chaithanya Lagisetty" <nagachaithanya9911@gmail.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
-References: <an3y4lS-ZE4CdJ7R@SMW015318>
- <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 16 Aug 2026 06:05:03 +0000
-Message-Id: <20260816060504.475F51F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4EX4hnG"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4953e04ef16so27499135e9.2
+        for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 05:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786884979; x=1787489779; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Vrd+QFouPQzWgEI6eWzCwSjjj2vAhx5C8gTbTzA/yUI=;
+        b=F4EX4hnGSTuLpEoNJxspMedlkC/ntvu9Cd1HWdksL5UUcLMvjyCC/76DNTYFDWfM4M
+         qh2MYUPf1bQeBqEwDtk207PUE+1binTNFXYkvfthRYOHOAnjWyeRiZ7WoBGZB+31KidT
+         bx+JvN72AvZf+j/D87jJAJssKXWWBjARAUmN44BPo6WGkUFRp7joW+LzEmG+05DBRm2l
+         GhBvl+9hQtUXWP171jofz5yNKMmyAHqCihs44dLS1hA1dGUNwdc1QkV0VsuosB8P9qZw
+         /XMfXUWACuCQuiAb36J40breuV5m4yT6+PWCg/nXAvA8PFcMHitq5Z7c+EKaw+DCayxt
+         cRqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786884979; x=1787489779;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Vrd+QFouPQzWgEI6eWzCwSjjj2vAhx5C8gTbTzA/yUI=;
+        b=Gmx3BZzy2C5IkZk90meCiKr3UPJxjBCOoEJpXyUUEtAfWCE3ybjqEye0xRtv3Wr7or
+         TBfbBRv8IrSDyF9XHnGSINljEYqIwWEIR+pMkvBQ0JJZk7eTHn56xpCFHUw7R5xrh4Gv
+         dg71n8PKfrGasvP4ZdCGkzF+vBlYGhuZGBKFX/ojltgnY4UicGij8sD3lUTTjJFPEFFj
+         T4rd3c1BVo5s5nfxipQHOvyV83bvYl4NVGRZyhKMcorLkFLFkkbL2mcsyh1ZJ2DOb7yJ
+         /5NnvEBEH3mLEzlz/C54ggMi9Au6P2hm2D+/dZ1J0mQKBOW4LR9e+migk1OVyi4VcuLq
+         bUPg==
+X-Forwarded-Encrypted: i=1; AHgh+RoCOjX8sisxjrXU9v1vDC4qXWwKxSPueAXBJn6ejJGHzAtF9I1mCZsE7e28y/L0813JysxZcWcBvM8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzN1RLqEaLWytxiUzKphnNyBLYIZnBiXklD6HWT+FtU8UcYVuLt
+	JmJfQZCZcQWOcJGtM69Dy+/TLgiP6Jzf6bn6h/+LhGMKrGT2h070Uk7F
+X-Gm-Gg: AR+sD11tn3xQwrIKZLrTTRd2mRtHosWcmHBvM35QRKV9wFKAB05keyV8LfRHY8gdXUG
+	faQTIddo1mzHnB8hGDJBggvI7XU2uAkJrPjBAQ4sndz84r0I21N8pfgQr3Q+xb9nzZlvO6a5JIn
+	DqfF22JQcSp+I1jDCIBPxtsHpK6N6RtgVgtmKqeX35SSv7R/c7SjP1xRzpQ6mlaNPyaikKP1Iu9
+	hwhFcPzxmIdSxEw2SQZRtqyH8HrEpVK0wsj8dU7w1MnLSlgRnpT/z6dl+VZksjSlyHR384tQXHr
+	WxqxkJOwiJyHtjgi5D9vUxwXtdPXrI/8gjiwdR0BFQiS9vu5n3SP3YSsSrl61qPx248Wbb5PKtF
+	yLOrMDgnT3nm3HdvfvZGED3K/QR80lYJeTXy9iQGSTcAJFB/5ZqGc1m9n+M5EpcgLRdLnaXN08V
+	oeqhDeO+BTSR6tOdMbA5ViyVV91gO39TIWngx7GT6/hbHkgbuF9o2yV8nqXXqB8f841m9bWcB1v
+	ydsGYT5AfnC+hYkkqaGbLUkwz2eJYFaE1tv14u+LAOYGX0aXNfA
+X-Received: by 2002:a05:600c:17d1:b0:495:7a04:b006 with SMTP id 5b1f17b1804b1-49987948adamr180850505e9.8.1786884979064;
+        Sun, 16 Aug 2026 05:56:19 -0700 (PDT)
+Received: from nixos-office (195-23-151-163.net.novis.pt. [195.23.151.163])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4999610e381sm63085105e9.9.2026.08.16.05.56.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Aug 2026 05:56:18 -0700 (PDT)
+Sender: Julian Braha <julian.braha@gmail.com>
+From: Julian Braha <julianbraha@gmail.com>
+To: maddy@linux.ibm.com,
+	mpe@ellerman.id.au,
+	npiggin@gmail.com,
+	chleroy@kernel.org,
+	Frank.Li@kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com
+Cc: linusw@kernel.org,
+	kees@kernel.org,
+	colin.i.king@gmail.com,
+	rosenp@gmail.com,
+	joao@joaoff.com,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	netdev@vger.kernel.org,
+	kernel-janitors@vger.kernel.org,
+	Julian Braha <julianbraha@gmail.com>
+Subject: [PATCH] powerpc: remove dead 440SP code
+Date: Sun, 16 Aug 2026 13:56:15 +0100
+Message-ID: <20260816125615.985387-1-julianbraha@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+The 440SP config option can never be enabled, making all references to it
+dead code.
 
-New issues:
-- [High] The patch silently reverses the required clock enable and disable =
-order, which can cause hardware initialization failures.
+Let's remove support for 440SP, since nobody can be using it anyway.
 
-Pre-existing issues:
-- [High] The interrupt handler unconditionally accesses unclocked device re=
-gisters if an interrupt fires on a shared line while the device is in PM ru=
-ntime suspend.
---
+This dead code was found by kconfirm, a static analysis tool for Kconfig.
 
---- Patch [1]: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to=
- clk_bulk API ---
-commit 9a52e2da75664a18bf3bb34d3bc595717db1bddc
-Author: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Subject: dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+---
+ arch/powerpc/boot/cuboot-katmai.c   |  2 +-
+ arch/powerpc/include/asm/async_tx.h |  2 +-
+ arch/powerpc/include/asm/dcr-regs.h | 10 +++++-----
+ arch/powerpc/kernel/cpu_specs_44x.h | 12 ------------
+ arch/powerpc/platforms/44x/Kconfig  |  3 ---
+ drivers/dma/Kconfig                 |  2 +-
+ drivers/dma/ppc4xx/adma.c           |  9 ---------
+ drivers/dma/ppc4xx/adma.h           |  2 +-
+ drivers/dma/ppc4xx/dma.h            |  9 ---------
+ drivers/net/ethernet/ibm/emac/mal.h |  2 +-
+ 10 files changed, 10 insertions(+), 43 deletions(-)
 
-This commit converts the driver to use the clk_bulk API for managing its two
-mandatory clocks. It consolidates the clock getting, enabling, and disabling
-logic to simplify error handling and fix a clock refcount imbalance.
+diff --git a/arch/powerpc/boot/cuboot-katmai.c b/arch/powerpc/boot/cuboot-katmai.c
+index 034a748fde24..fcd71e76309f 100644
+--- a/arch/powerpc/boot/cuboot-katmai.c
++++ b/arch/powerpc/boot/cuboot-katmai.c
+@@ -31,7 +31,7 @@ static void katmai_fixups(void)
+ {
+ 	unsigned long sysclk = 33333000;
+ 
+-	/* 440SP Clock logic is all but identical to 440GX
++	/* 440SPe Clock logic is all but identical to 440GX
+ 	 * so we just use that code for now at least
+ 	 */
+ 	ibm440spe_fixup_clocks(sysclk, 6 * 1843200, 0);
+diff --git a/arch/powerpc/include/asm/async_tx.h b/arch/powerpc/include/asm/async_tx.h
+index a14758426dd5..1ff5b2ca3ed1 100644
+--- a/arch/powerpc/include/asm/async_tx.h
++++ b/arch/powerpc/include/asm/async_tx.h
+@@ -7,7 +7,7 @@
+ #ifndef _ASM_POWERPC_ASYNC_TX_H_
+ #define _ASM_POWERPC_ASYNC_TX_H_
+ 
+-#if defined(CONFIG_440SPe) || defined(CONFIG_440SP)
++#if defined(CONFIG_440SPe)
+ extern struct dma_chan *
+ ppc440spe_async_tx_find_best_channel(enum dma_transaction_type cap,
+ 	struct page **dst_lst, int dst_cnt, struct page **src_lst,
+diff --git a/arch/powerpc/include/asm/dcr-regs.h b/arch/powerpc/include/asm/dcr-regs.h
+index 5c1a4973f46a..e39a55e527da 100644
+--- a/arch/powerpc/include/asm/dcr-regs.h
++++ b/arch/powerpc/include/asm/dcr-regs.h
+@@ -25,11 +25,11 @@
+  * of the driver main register set
+  */
+ 
+-/* CPRs (440GX and 440SP/440SPe) */
++/* CPRs (440GX and 440SPe) */
+ #define DCRN_CPR0_CONFIG_ADDR	0xc
+ #define DCRN_CPR0_CONFIG_DATA	0xd
+ 
+-/* SDRs (440GX and 440SP/440SPe) */
++/* SDRs (440GX and 440SPe) */
+ #define DCRN_SDR0_CONFIG_ADDR 	0xe
+ #define DCRN_SDR0_CONFIG_DATA	0xf
+ 
+@@ -159,18 +159,18 @@
+ #define  L2C_SNP_ESR		0x00000800
+ 
+ /*
+- * DCR register offsets for 440SP/440SPe I2O/DMA controller.
++ * DCR register offsets for 440SPe I2O/DMA controller.
+  * The base address is configured in the device tree.
+  */
+ #define DCRN_I2O0_IBAL		0x006
+ #define DCRN_I2O0_IBAH		0x007
+ #define I2O_REG_ENABLE		0x00000001	/* Enable I2O/DMA access */
+ 
+-/* 440SP/440SPe Software Reset DCR */
++/* 440SPe Software Reset DCR */
+ #define DCRN_SDR0_SRST		0x0200
+ #define DCRN_SDR0_SRST_I2ODMA	(0x80000000 >> 15)	/* Reset I2O/DMA */
+ 
+-/* 440SP/440SPe Memory Queue DCR offsets */
++/* 440SPe Memory Queue DCR offsets */
+ #define DCRN_MQ0_XORBA		0x04
+ #define DCRN_MQ0_CF2H		0x06
+ #define DCRN_MQ0_CFBHL		0x0f
+diff --git a/arch/powerpc/kernel/cpu_specs_44x.h b/arch/powerpc/kernel/cpu_specs_44x.h
+index 69c4cdc0cdee..41ed2c16d8cc 100644
+--- a/arch/powerpc/kernel/cpu_specs_44x.h
++++ b/arch/powerpc/kernel/cpu_specs_44x.h
+@@ -172,18 +172,6 @@ static struct cpu_spec cpu_specs[] __initdata = {
+ 		.machine_check		= machine_check_440A,
+ 		.platform		= "ppc440",
+ 	},
+-	{ /* 440SP Rev. A */
+-		.pvr_mask		= 0xfff00fff,
+-		.pvr_value		= 0x53200891,
+-		.cpu_name		= "440SP Rev. A",
+-		.cpu_features		= CPU_FTRS_44X,
+-		.cpu_user_features	= COMMON_USER_BOOKE,
+-		.mmu_features		= MMU_FTR_TYPE_44x,
+-		.icache_bsize		= 32,
+-		.dcache_bsize		= 32,
+-		.machine_check		= machine_check_4xx,
+-		.platform		= "ppc440",
+-	},
+ 	{ /* 440SPe Rev. A */
+ 		.pvr_mask               = 0xfff00fff,
+ 		.pvr_value              = 0x53400890,
+diff --git a/arch/powerpc/platforms/44x/Kconfig b/arch/powerpc/platforms/44x/Kconfig
+index 150813cea945..b481ef2b0f4c 100644
+--- a/arch/powerpc/platforms/44x/Kconfig
++++ b/arch/powerpc/platforms/44x/Kconfig
+@@ -260,9 +260,6 @@ config 440GX
+ 	select IBM_EMAC_ZMII if IBM_EMAC #test only
+ 	select IBM_EMAC_TAH if IBM_EMAC  #test only
+ 
+-config 440SP
+-	bool
+-
+ config 440SPe
+ 	bool
+ 	select IBM_EMAC_EMAC4 if IBM_EMAC
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index ae6a682c9f76..f0f61b4932f5 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -77,7 +77,7 @@ config AMBA_PL08X
+ 
+ config AMCC_PPC440SPE_ADMA
+ 	tristate "AMCC PPC440SPe ADMA support"
+-	depends on 440SPe || 440SP
++	depends on 440SPe
+ 	select DMA_ENGINE
+ 	select DMA_ENGINE_RAID
+ 	select ARCH_HAS_ASYNC_TX_FIND_CHANNEL
+diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+index 279a431ccae3..ecbf4c84a318 100644
+--- a/drivers/dma/ppc4xx/adma.c
++++ b/drivers/dma/ppc4xx/adma.c
+@@ -4349,14 +4349,9 @@ static ssize_t poly_show(struct device_driver *dev, char *buf)
+ 	ssize_t size = 0;
+ 	u32 reg;
+ 
+-#ifdef CONFIG_440SP
+-	/* 440SP has fixed polynomial */
+-	reg = 0x4d;
+-#else
+ 	reg = dcr_read(ppc440spe_mq_dcr_host, DCRN_MQ0_CFBHL);
+ 	reg >>= MQ0_CFBHL_POLY;
+ 	reg &= 0xFF;
+-#endif
+ 
+ 	size = sysfs_emit(buf, "PPC440SP(e) RAID-6 driver "
+ 			"uses 0x1%02x polynomial.\n", reg);
+@@ -4368,10 +4363,6 @@ static ssize_t poly_store(struct device_driver *dev, const char *buf,
+ {
+ 	unsigned long reg, val;
+ 	int err;
+-#ifdef CONFIG_440SP
+-	/* 440SP uses default 0x14D polynomial only */
+-	return -EINVAL;
+-#endif
+ 
+ 	if (!count || count > 6)
+ 		return -EINVAL;
+diff --git a/drivers/dma/ppc4xx/adma.h b/drivers/dma/ppc4xx/adma.h
+index f8a5d7c1fb40..0ec35382d274 100644
+--- a/drivers/dma/ppc4xx/adma.h
++++ b/drivers/dma/ppc4xx/adma.h
+@@ -19,7 +19,7 @@
+ #define tx_to_ppc440spe_adma_slot(tx) \
+ 		container_of(tx, struct ppc440spe_adma_desc_slot, async_tx)
+ 
+-/* Default polynomial (for 440SP is only available) */
++/* Default polynomial */
+ #define PPC440SPE_DEFAULT_POLY	0x4d
+ 
+ #define PPC440SPE_ADMA_ENGINES_NUM	(XOR_ENGINES_NUM + DMA_ENGINES_NUM)
+diff --git a/drivers/dma/ppc4xx/dma.h b/drivers/dma/ppc4xx/dma.h
+index b5725481bfa6..17cbb2d1ee1c 100644
+--- a/drivers/dma/ppc4xx/dma.h
++++ b/drivers/dma/ppc4xx/dma.h
+@@ -70,20 +70,11 @@
+ 
+ #define DMA_CUED_XOR_BASE	(0x10000000)
+ #define DMA_CUED_XOR_HB		(0x00000008)
+-
+-#ifdef CONFIG_440SP
+-#define DMA_CUED_MULT1_OFF	0
+-#define DMA_CUED_MULT2_OFF	8
+-#define DMA_CUED_MULT3_OFF	16
+-#define DMA_CUED_REGION_OFF	24
+-#define DMA_CUED_XOR_WIN_MSK	(0xFC000000)
+-#else
+ #define DMA_CUED_MULT1_OFF	2
+ #define DMA_CUED_MULT2_OFF	10
+ #define DMA_CUED_MULT3_OFF	18
+ #define DMA_CUED_REGION_OFF	26
+ #define DMA_CUED_XOR_WIN_MSK	(0xF0000000)
+-#endif
+ 
+ #define DMA_CUED_REGION_MSK	0x3
+ #define DMA_RXOR123		0x0
+diff --git a/drivers/net/ethernet/ibm/emac/mal.h b/drivers/net/ethernet/ibm/emac/mal.h
+index e0ddc41186a2..6cdd40bca2cd 100644
+--- a/drivers/net/ethernet/ibm/emac/mal.h
++++ b/drivers/net/ethernet/ibm/emac/mal.h
+@@ -26,7 +26,7 @@
+  * We call MAL 1 the version in 405GP, 405GPR, 405EP, 440EP, 440GR and
+  * NP405H.
+  *
+- * We call MAL 2 the version in 440GP, 440GX, 440SP, 440SPE and Axon
++ * We call MAL 2 the version in 440GP, 440GX, 440SPE and Axon
+  *
+  * The driver expects a "version" property in the emac node containing
+  * a number 1 or 2. New device-trees for EMAC capable platforms are thus
+-- 
+2.55.0
 
-Link: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya99=
-11@gmail.com/
-
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index bcefaff03b5c6..254167a558ff7 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-
-[ ... ]
-
-> @@ -1524,13 +1519,11 @@ static int dw_probe(struct platform_device *pdev)
-> =20
->  	chip->dw->hdata->use_cfg2 =3D !!(flags & AXI_DMA_FLAG_USE_CFG2);
-> =20
-> -	chip->core_clk =3D devm_clk_get(chip->dev, "core-clk");
-> -	if (IS_ERR(chip->core_clk))
-> -		return PTR_ERR(chip->core_clk);
-> -
-> -	chip->cfgr_clk =3D devm_clk_get(chip->dev, "cfgr-clk");
-> -	if (IS_ERR(chip->cfgr_clk))
-> -		return PTR_ERR(chip->cfgr_clk);
-> +	chip->clks[0].id =3D "core-clk";
-> +	chip->clks[1].id =3D "cfgr-clk";
-
-[Severity: High]
-Does this array initialization unintentionally reverse the clock enable and
-disable sequence?
-
-The old driver correctly enabled cfgr_clk before core_clk in axi_dma_resume=
-(),
-and disabled core_clk before cfgr_clk in axi_dma_suspend().
-
-Because clk_bulk_prepare_enable() iterates forwards and
-clk_bulk_disable_unprepare() iterates backwards, mapping core-clk to index 0
-and cfgr-clk to index 1 applies the reverse hardware sequence for both.  Can
-this cause hardware lockups or bus faults?
-
-> +	ret =3D devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks=
-);
-> +	if (ret)
-> +		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
-
-[Severity: High]
-This is a pre-existing issue, but does the interrupt handler unconditionally
-access unclocked device registers if an interrupt fires on a shared line
-while the device is in PM runtime suspend?
-
-In dw_probe(), the IRQs are requested using IRQF_SHARED:
-
-dw-axi-dmac-platform.c:axi_req_irqs() {
-	...
-	ret =3D devm_request_irq(chip->dev, chip->irq[i], dw_axi_dma_interrupt,
-			       IRQF_SHARED, KBUILD_MODNAME, chip);
-	...
-}
-
-If the DMA controller is idle, runtime PM suspends the device, which disabl=
-es
-the clocks. If another device sharing the same IRQ line triggers an
-interrupt, the handler is called:
-
-dw-axi-dmac-platform.c:dw_axi_dma_interrupt() {
-	...
-	/* Disable DMAC interrupts. We'll enable them after processing channels */
-	axi_dma_irq_disable(chip);
-	...
-}
-
-Since axi_dma_irq_disable() accesses DMAC_CFG without checking if the device
-is active, can this unclocked register read trigger a synchronous external
-abort (kernel panic)?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260816054858.2667=
-380-1-nagachaithanya9911@gmail.com?part=3D1
