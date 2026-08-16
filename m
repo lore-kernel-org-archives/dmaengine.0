@@ -1,155 +1,186 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97E132B104
-	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 05:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270E11448E0
+	for <dmaengine@vger.kernel.org>; Sun, 16 Aug 2026 05:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786856905; cv=none; b=jPl/mf5THEEaI9OUMOtG2/t6nFmDdc/LltBRWgt2WpmgguLf/7pDHnFgpUY/HgY6zqG57w3/oxf/27N2rmh6TLwP5I0pOWX7JGie9T9x63DZtdX3iTnpvI8arhk1XGA5JJlkzTVHEHQGeu1QVdAkJ8nOug8apmYQHgTm0q6wRjY=
+	t=1786859359; cv=none; b=VtKzELCVe7VjgncHAl0+RPeEgmOrwrTxKB7/V87CIyWnnx1jWuZQNdaitnm68G1ziJqJIicmA8XuryY0KP2GUhR+lC944KKgKzmSPKTpbWCEh4cah/6BtbKzNIR2miJJw2PIxMAYrSR6fEg9AuioAMExVREQenwZmgdkuecIZDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786856905; c=relaxed/simple;
-	bh=K1+6ZfM3X7b1ZXo4/aHurUoKhIdCkiaITB6aDZA59gM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type; b=F/jDwAn3XVylWWZbyrR2lxD+3FPR43tKcYctZcwschupvxl8jw8CtVbo83m3AsKHuhujEXf/0os+cLVGFIYv6CLbAFTFFe0F43MR98sHj9RFnxoYxJaicQjRe7KyLhIB2/M4nE8Tn9nmAkfj7QF3wKHcL4jKJRkDWtMeD7DLJIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MwOOpWC0; arc=none smtp.client-ip=209.85.208.53
+	s=arc-20240116; t=1786859359; c=relaxed/simple;
+	bh=2JGZN/bcZkgUT2cy6m3JA9clVX3O5g3+WE+aGb+GMjk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=P+/92IoFZRHK2aE0saVWEk5jnu7MH0iCcXuZOjIjjVjZyTGPN6i1t0zmmz7alR5Q8k7zK2ax7DT/Dv00aPAafFdjDJ5jo1a38egTjKQTGhERxhxFjCtgVcmoju+ZtQ5ocnfm/Lxq0BfSrlmw21KBxifx7+fDCOajeMB29P6+Ino=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObXJBOz1; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwOOpWC0"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6a18840e2abso3721299a12.0
-        for <dmaengine@vger.kernel.org>; Sat, 15 Aug 2026 22:08:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObXJBOz1"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2d01663d816so20326215ad.1
+        for <dmaengine@vger.kernel.org>; Sat, 15 Aug 2026 22:49:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786856902; x=1787461702; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:mime-version:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1786859357; x=1787464157; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=S3EGv/bCwZGVn5e0LnVQX15hxgKZ01RYRO4qrI6Efvk=;
-        b=MwOOpWC0Go75EC4WJgPeqetZgu0/tHAyJuIzkOdMuHbfqsxP994NGYsfPclztgOTZn
-         vvbyOoxudHpsxlVb3KvrFW2EIRp5Mxwop11xz1rkC3gTexh/78UY8k+XDn+z2bMHQIHg
-         pVXGyf9qrgtO4/pQfQmYXzmpnxqPy4N7hVtKWTzksuEz9gKAJWTbYocXK7qTxNfrrSEx
-         IZIlFPLMG9WMDTkrsN4Xqj8YVllJ36/8rZW7Ords0NT7r6VZQ44+gqaZH4cW+KA2J+tB
-         /U60rGFR87Mbs4VeNINetfxHXRPZWnwlu+aXKnUo66cfbs5JYHEHdG1lDeMrZh/VJvA4
-         ML6g==
+        bh=EAc8h9QXMDqHRVrTd33Qb8q+njfWz9973Xm3PD36pg8=;
+        b=ObXJBOz1rKNTauNYKhCWSfz/SGyhPlvu4kSSEoBfkgfbSVxf4/0ni9OrT2U5O54qRO
+         LZX9olHQUxtmr8ZqPSxIeBBou6au62vyB8IHHSyadt/uQAEBzlHjivzMclPuZkFpyZYV
+         k6E20hFGW29P6LgTcryyCWa+RdViaCwB/ZtXp9iI+2cs9nYxdVZP3FYVWRj3F/z9fLVU
+         uzj0WiAaXHk5HJmipplQ1UMrGHnUxRBaaEqWeFzQMjr4ULmsM+wnWaHOXy64ZvE/YB/y
+         8Nk7mVcpVJNwKSHkL0Biw4ugthjYkIGSxcP5oC6fe9im7jQMP9BEdJ5t9/FxhpO/Zi3A
+         jqMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786856902; x=1787461702;
-        h=content-transfer-encoding:content-type:mime-version:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1786859357; x=1787464157;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=S3EGv/bCwZGVn5e0LnVQX15hxgKZ01RYRO4qrI6Efvk=;
-        b=k7zIXzVfy6kpk92qSpr/X6fzr3q6BxeiXKLRKitEdKeg5l1gRpvtzkMCFi1vns3A+5
-         CIt4l2kR17JwEhsdCe9+fe8COYFOT4mtOzLG+XaBh6XiGbapOfbR+/EYk4FZSeFAdtWQ
-         f9N6XknCr9myJngdsRUHf3td6HF7KBS7tQSsE/AYzAExypll2AEb3IA4umQKSQjEea8h
-         1fknW/zU1as5Qo0uJv9Yr3w+tYORJR1oeoFmWH2higdMPAaHpSFe1vZOwW5beH1B8AkK
-         RfDxPnqZF6ejdoLY2QZOY+HaCQgcPgt/UOkdaZPm16unVl+adagXzf9dK3E+4z+VYJdK
-         Ai2A==
-X-Forwarded-Encrypted: i=1; AHgh+Ro9lgPhxG8opz5SZpEmjbZDs1D0Udtl55UKcdi3jsyHcBa2Hgy5G2Wu0O0NKst0PAHTCLChH44Z45E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUnp80S8PpmmZH02ySYOvqylx72SAucTrX+AXBRP1qc3Y1OtWj
-	mTwHA0uazQflib42GGWBhZcfGrSp2R9YTWC9Ljfdsin6SADvR/75eh0S
-X-Gm-Gg: AR+sD13TZTzhEXVa2m37ArIsqnPaWirxfB8JjF9PM9kwgSypNXWvKl3BYuMqF2C0iDN
-	a87P2U+e/Nu+YNoqSPmYiHdgcBApLSgPXu+W287b5oanaO1xHixbGy5748yVkMopxb/DsmcIQKn
-	n9Xs3m5noQMRGXYjH1UkzP5QWTCWQcxbCfML5o0ImMy31dqVbFQ1/xUcM+fz99npfAJnCoLzZQ+
-	WotXj7m3wq44IoG1x+clChuFoorlF/v8JCUmBxTcGG07DngwK09vqW6OaG3TJp+P2XhfWgzpTfu
-	8ctRZsCsxuJUq9vvELJpW+q6SV79wRMm3+DhJxFXI/zj7JVfobrDmjQAQubz3M1PFVVXsuKIybV
-	AMQB8RF1/2kjbZCrPaqa+y81Da06Uli2DSvhVysTfh0XTX2uBRhibpVJx2LgtosMl3jRT6/4UVL
-	3TIICVMrjZJLZvhGOdXUAOQRrUjTTkSYZRakxpPbNxHVnQ9Drm6fS+dy9S1YLx6RS4CCo=
-X-Received: by 2002:a17:907:ea93:b0:c20:f871:1018 with SMTP id a640c23a62f3a-c212a127aebmr838653266b.21.1786856901726;
-        Sat, 15 Aug 2026 22:08:21 -0700 (PDT)
-Received: from foxbook (bfg7.neoplus.adsl.tpnet.pl. [83.28.44.7])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c21238700aesm296472666b.63.2026.08.15.22.08.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 15 Aug 2026 22:08:20 -0700 (PDT)
-Date: Sun, 16 Aug 2026 07:10:44 +0200
-From: Michal Pecio <michal.pecio@gmail.com>
-To: frank.li@nxp.com
-Cc: corbet@lwn.net, dmaengine@vger.kernel.org, hch@infradead.org,
- imx@lists.linux.dev, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- lizhijian@fujitsu.com, mst@redhat.com, rdunlap@infradead.org
-Subject: Re: [PATCH v2 1/1] docs: dma: correct dma_set_mask() sample code
-Message-ID: <20260816071044.331a2c51.michal.pecio@gmail.com>
-In-Reply-To: <20240401174159.642998-1-Frank.Li@nxp.com>
+        bh=EAc8h9QXMDqHRVrTd33Qb8q+njfWz9973Xm3PD36pg8=;
+        b=JTeQEMRc0S4u3h4WLIj/Q9+KU/PPccpv2usgHnK4SfMBMmCXMtFjfcVwWuXEAsiIdp
+         dk7Zx2i4zFkf1pQ3f0smpMokf8enjCawILjeHsq0B61Y/IgbYPmtyR0MwRlLTgoGx7//
+         m1R4T0FAefTSQ75RFPMmuB0ijLA2dh3UylHuaxEo068v6wFlFeg5VwPeqGFlZ/LJf/yk
+         uj3aKmGpcVs9rliHgBN1fd64ePkgXenRVp3H0m6CdoWM0JAOWvMpUliokwEWxQEQ0+/M
+         9rv0dDzeZa9vBNrm4y96Fxe+AFylMlR6NcnM6iOa7GRzs39RM9zL/QIYI0gb6+24CCS0
+         Ghiw==
+X-Forwarded-Encrypted: i=1; AHgh+Ro9VWsDnXP3A/K1vpN/aBLikDewvdnnnJ5A+NiGKFWAOEwqY0BwI6xlZeE4ipj6N//xQlCeQT7WWs8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGBZK/3TUbtfGi+iujQJeoSPn4TtCs/8DyMBisvqS89ovdzSif
+	Rpawaf7jNylZY1jOrgxVrl3ctyZmPVElIpIRaNfx70nteiwvp+4TEfMt
+X-Gm-Gg: AR+sD13ANkD5AHMLsveju2clc3gLz07KcBF4DOG0MplFrOJVhiTtaUxWrYavqc9rYXN
+	AX6Kx+GZiuj5kk36MCYeyBhQz/AwUji0cAkkurnmCz9P2ijEzEiaVvFwj2JYr5YJ8vecIzQQgCa
+	6wZ+mgF8rr/kn6hAzAffQE06bCiWzdcJtbGC5QpewLzZS/fCDCo5Od41pcLhoIWFOzf0zTwkXSr
+	A/Hq418jrGsDAk+7GslqeB7t0fUmDjyD2umyNPbMsGEGIgRyJPPe/Ni5WUOuU7gdmz8uXs/EglD
+	jA9J1sCC0EddbH5r6G81Ztgk85pD72yiFnCYp44xvKvaKHczoV+6VEU4m4txF4CM0CHIIqwDFbI
+	sWNan/0Qa/TcqExkxt0SwYzPjy3ipHR7bC7hRDZj9hk4aFHXtnQ169c+MvNKP0vNCJBbzhzS0m2
+	Cug33WcCYf5KSuRLYtRoPq/Ucx6+xmClDbVhAfczITTVHWxt/sdUMdMGywfKnSbF+NUGLyHISg3
+	VOLmqEcyluY
+X-Received: by 2002:a17:90b:264c:b0:38d:ddc2:7ccb with SMTP id 98e67ed59e1d1-3933b714f34mr17660377a91.1.1786859357310;
+        Sat, 15 Aug 2026 22:49:17 -0700 (PDT)
+Received: from amd.ban-spse ([165.204.217.251])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1413889bca5sm37201058c88.12.2026.08.15.22.49.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Aug 2026 22:49:16 -0700 (PDT)
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+To: vkoul@kernel.org
+Cc: Frank.Li@kernel.org,
+	Frank.li@oss.nxp.com,
+	Eugeniy.Paltsev@synopsys.com,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Subject: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
+Date: Sun, 16 Aug 2026 05:48:58 +0000
+Message-ID: <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <an3y4lS-ZE4CdJ7R@SMW015318>
+References: <an3y4lS-ZE4CdJ7R@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
+The driver managed its two mandatory clocks (core-clk and cfgr-clk)
+individually. This was error prone: axi_dma_resume() enabled cfgr_clk
+and then core_clk, and if enabling core_clk failed it returned the
+error without disabling cfgr_clk, leaving the clock refcount
+unbalanced.
 
-> There are bunch of codes in driver like
->
->        if (dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
->                dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32))
->
-> Actually it is wrong because if dma_set_mask_and_coherent(64) fails,
-> dma_set_mask_and_coherent(32) will fail for the same reason.
+Convert the driver to the clk_bulk API. The two clocks are always
+acquired, enabled and disabled together, so a clk_bulk_data array
+expresses this naturally and shrinks the get/enable/disable paths.
+clk_bulk_prepare_enable() also unwinds any clock it already enabled
+when a later one fails, which fixes the resume imbalance.
 
-I encountered similar driver code and found it similarly suspicious.
-I arrived here searching for reasons to convince myself (and relevant
-maintainers) that removing this is indeed the right thing to do.
+Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+---
+Changes since v1:
+- Convert the driver to the clk_bulk API instead of manually disabling
+  cfgr_clk on the error path, as suggested by Frank Li.
+- v1: https://lore.kernel.org/all/20260813105432.2577322-1-nagachaithanya9911@gmail.com/
 
-But I have a few remaining questions and remarks.
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 28 ++++++++-----------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  3 +-
+ 2 files changed, 13 insertions(+), 18 deletions(-)
 
-> And dma_set_mask_and_coherent(64) never returns failure.
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index bcefaff03b5c..254167a558ff 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1320,8 +1320,7 @@ static int axi_dma_suspend(struct axi_dma_chip *chip)
+ 	axi_dma_irq_disable(chip);
+ 	axi_dma_disable(chip);
+ 
+-	clk_disable_unprepare(chip->core_clk);
+-	clk_disable_unprepare(chip->cfgr_clk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(chip->clks), chip->clks);
+ 
+ 	return 0;
+ }
+@@ -1330,11 +1329,7 @@ static int axi_dma_resume(struct axi_dma_chip *chip)
+ {
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(chip->cfgr_clk);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -1524,13 +1519,11 @@ static int dw_probe(struct platform_device *pdev)
+ 
+ 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
+ 
+-	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
+-	if (IS_ERR(chip->core_clk))
+-		return PTR_ERR(chip->core_clk);
+-
+-	chip->cfgr_clk = devm_clk_get(chip->dev, "cfgr-clk");
+-	if (IS_ERR(chip->cfgr_clk))
+-		return PTR_ERR(chip->cfgr_clk);
++	chip->clks[0].id = "core-clk";
++	chip->clks[1].id = "cfgr-clk";
++	ret = devm_clk_bulk_get(chip->dev, ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		return dev_err_probe(chip->dev, ret, "failed to get clocks\n");
+ 
+ 	ret = parse_device_properties(chip);
+ 	if (ret)
+@@ -1640,10 +1633,13 @@ static void dw_remove(struct platform_device *pdev)
+ 	struct dw_axi_dma *dw = chip->dw;
+ 	struct axi_dma_chan *chan, *_chan;
+ 	u32 i;
++	int ret;
+ 
+ 	/* Enable clk before accessing to registers */
+-	clk_prepare_enable(chip->cfgr_clk);
+-	clk_prepare_enable(chip->core_clk);
++	ret = clk_bulk_prepare_enable(ARRAY_SIZE(chip->clks), chip->clks);
++	if (ret)
++		dev_warn(chip->dev, "failed to enable clocks before remove: %d\n",
++			 ret);
+ 	axi_dma_irq_disable(chip);
+ 	for (i = 0; i < dw->hdata->nr_channels; i++) {
+ 		axi_chan_disable(&chip->dw->chan[i]);
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index 67cc199e24d1..039316c42f05 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -69,8 +69,7 @@ struct axi_dma_chip {
+ 	int			irq[DMAC_MAX_CHANNELS];
+ 	void __iomem		*regs;
+ 	void __iomem		*apb_regs;
+-	struct clk		*core_clk;
+-	struct clk		*cfgr_clk;
++	struct clk_bulk_data	clks[2];
+ 	struct dw_axi_dma	*dw;
+ };
+ 
+-- 
+2.43.0
 
-No realistic chance of the dev->dma_mask check (below) giving -EIO?
-
-> According to the definition of dma_set_mask(), it indicates the width
-> of address that device DMA can access. If it can access 64-bit
-> address, it must access 32-bit address inherently. So only need set
-> biggest address width.
->
-> See below code fragment:
->
-> dma_set_mask(mask)
-> {
-> 	mask = (dma_addr_t)mask;
-> 
-> 	if (!dev->dma_mask || !dma_supported(dev, mask))
-> 		return -EIO;
-> 
-> 	arch_dma_set_mask(dev, mask);
-> 	*dev->dma_mask = mask;
-> 	return 0;
-> }
->
-> dma_supported() will call dma_direct_supported or iommux's
-> dma_supported call back function.
-
-Aapparently, it may also use some 'dma_map_ops' and there is a bunch
-of those spread over drivers/ and arch/. But I gather they are expected
-to behave similarly as the functions named above?
-
-> --- a/Documentation/core-api/dma-api-howto.rst
-> +++ b/Documentation/core-api/dma-api-howto.rst
->
-> +The standard 64-bit addressing device would do something like this::
-> +
-> +	dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64))
-> +
-> +dma_set_mask_and_coherent() never return fail when DMA_BIT_MASK(64). Typical
-> +error code like::
-> +
-> +	/* Wrong code */
-> +	if (dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
-> +		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32))
-> +
-> +dma_set_mask_and_coherent() will never return failure when bigger then 32.
-> +So typical code like::
-> +
-> +	/* Recommended code */
-> +	if (support_64bit)
-> +		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
-> +	else
-> +		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-> +
-
-This text is unclear. Two sentences begin with "Typical error code",
-then some code is quoted, and the sentences are cut abruptly without
-actually making any statement about the code in question.
-
-Thanks,
-Michal
