@@ -1,156 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4182235B631
-	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 20:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60393B47C3;
+	Mon, 17 Aug 2026 20:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786998310; cv=none; b=fUSNNQA56E6UekyK1V2twlxamOrgU91zZkMv2FoUQ8qZLshRSCdIVzA4D4apBlQWPIy9/q6UQWtrOBIP3LZG+dgz35CFP5K6va9pyXeTmkzuAYrvoxONy3CqqJaafV04BrmMFh/njLUJDcJUJoMSXDDwd5NyDlp5n22jPd9oTjk=
+	t=1786999494; cv=none; b=grhPG2h3o85TbClDkoAVo5CcZsSnKwT6v21KunBqFPmPDfy714pAnjlK6fXCrqKN3iuc5lxkSn9MsROZrfx25d6VEehj6YdgPnWQatnZsBim3QBPSWmH/p+c7vs9igL7BhkvoCDVTlg5Js9/Mq4VgUj5JkGya/o9i8/FE0popbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786998310; c=relaxed/simple;
-	bh=txVCzu61sdHp5V2/RfZbTb4mznsvFUnORKG1elksQR8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=RiLmczzHUiBDKKVq7XJIXs3a4KoudGAbsUJPoWRCrAiCZZnuPd0JKyqMiEKQ3GnQrjHwqZmIoMOtnrbHACLHl3Oeiji1ujFpGGg9xdgXYyqQgNNp+nH1UY1SWoZqdSRcr4GIMr94xWtqJXhYdNDGNWhokX/muPbx/nR8yQs1S58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQa+D8up; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQa+D8up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F8A1F000E9;
-	Mon, 17 Aug 2026 20:25:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786998308;
-	bh=cMomrpFyXL6gOoBUmAQ2hUj2WKLOj4HI0ZqcCAyFb5U=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fQa+D8upkeGd9UQgM7fq7iQ0wa5iV50vCo4/pQeyh51pF9ZbW2crOESJljdK8Uxt8
-	 l6YEjSafYC/XV/dcyg+gtzK3Eoj4C/lWE0SUEYTCJa0zz29YDMmJixb/8Ck4nPNx/L
-	 dG7hXOBzH54Wd/sP+1yZ9oVAMZDjEHgFHCuWuLxYN4XdYk+vrdWSJHJMbTmcRduNIW
-	 tAW8vcXFwlP3d+YFFg8V3Adm34klEuQU5s0f9DRcIiVpX8AE85lLskQDeFuTdgFLbg
-	 6DKlJRa5eRNPZ9pui2zi1n2jMClIkBFpnpnSSwkcCjC+m8m0ZmLcCKmAswBQjMeD6+
-	 30qHyqGy7oGpg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv3] dmaengine: at_hdmac: use devm APIs in probe()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260817201200.10952-1-rosenp@gmail.com>
-References: <20260817201200.10952-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Aug 2026 20:25:08 +0000
-Message-Id: <20260817202508.98F8A1F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1786999494; c=relaxed/simple;
+	bh=OymTM1oQLQsal+qNBkUI4yVe4s/AFlcuq3qvVCmg53k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=IxItN12TjbC1k1vIsrXcH4fhFlw0gBgbEozhs9q5QiBitt/urYEnJpsjTHT1t7+i5V6OoSFONPNRaJRlbEV6Lqf73cnosm6wWPDerpMKNegmBTqz7Rd5rsgYNNyvIqP4fbZgbOzuBkPk08hssyQdWhHOJtRZpbYPb4+VFVF60zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 79B9A201514;
+	Mon, 17 Aug 2026 22:44:44 +0200 (CEST)
+Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <s.hauer@pengutronix.de>)
+	id 1ww4CK-0020mx-1F;
+	Mon, 17 Aug 2026 22:44:44 +0200
+Received: from [::1] (helo=dude02.red.stw.pengutronix.de)
+	by dude02.red.stw.pengutronix.de with esmtp (Exim 4.98.2)
+	(envelope-from <s.hauer@pengutronix.de>)
+	id 1ww4CK-0000000GTDG-1EOv;
+	Mon, 17 Aug 2026 22:44:44 +0200
+From: Sascha Hauer <s.hauer@pengutronix.de>
+Date: Mon, 17 Aug 2026 22:44:33 +0200
+Subject: [PATCH v2] dmaengine: pxa: fix double counting of the hw
+ descriptors
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
+X-B4-Tracking: v=1; b=H4sIALByg2oC/3WMQQ6CMBBFr0JmbQ1TaEVX3sOwKGWEWViaFhsM6
+ d2t7F2+//PeDpECU4RbtUOgxJEXV0CeKrCzcRMJHguDrKWuO7yI8WXITexI+M0I3aKSw9C0DTZ
+ QHB/oydvRe/SFZ47rEj5HPuFv/VdKKFB0qrYSlUW86rsv73sNi+PtPBL0OecvN9yV2q8AAAA=
+X-Change-ID: 20260817-dmaengine-pxa-64152bb34313
+To: Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ Sascha Hauer <s.hauer@pengutronix.de>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1786999484; l=2837;
+ i=s.hauer@pengutronix.de; s=20230412; h=from:subject:message-id;
+ bh=OymTM1oQLQsal+qNBkUI4yVe4s/AFlcuq3qvVCmg53k=;
+ b=NnDXohUgWy3bkWKUxwEGJxUFYxlIDRPwojdF/IDz3k+6+8+ZOQbHy9h118+bsylfC30yq+iaf
+ uDRZOzKQuFtDBTY2c6iKNlh92MGbWvmsDZGfulFL3ovC3epd9WV6D0E
+X-Developer-Key: i=s.hauer@pengutronix.de; a=ed25519;
+ pk=4kuc9ocmECiBJKWxYgqyhtZOHj5AWi7+d0n/UjhkwTg=
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+pxad_alloc_desc() was converted from
 
-Pre-existing issues:
-- [High] The driver fails to kill `vchan` tasklets during driver removal an=
-d probe error paths, risking a use-after-free.
-- [High] Devres reverse-cleanup order destroys DMA pools before freeing the=
- IRQ, risking a use-after-free with concurrent ISRs.
---
+        kzalloc(struct_size(sw_desc, hw_desc, nb_hw_desc), GFP_NOWAIT)
 
---- Patch [1]: [PATCHv3] dmaengine: at_hdmac: use devm APIs in probe() ---
-commit 100916adb459d4781232f09cf49ed4747fa5f88a
-Author: Rosen Penev <rosenp@gmail.com>
+to kzalloc_flex(), which sets the __counted_by() counter sw_desc->nb_desc
+itself - but only where the compiler has __builtin_counted_by_ref(), so
+from gcc 15.1 or clang 22.1 on. The loop below it still increments
+nb_desc, which makes it come out doubled there and correct elsewhere.
 
-dmaengine: at_hdmac: use devm APIs in probe()
+nb_desc is what pxad_free_desc() iterates over and what
+set_updater_desc() indexes from, so set it explicitly and drop the
+increment. The error path has to lower it to the number of descriptors
+allocated so far, otherwise pxad_free_desc() would free entries that were
+never allocated.
 
-Convert resource allocation and setup in probe() to use devm-managed APIs.
-Simplify the error handling path and removes explicit cleanup code.
+Fixes: 69050f8d6d075 ("treewide: Replace kmalloc with kmalloc_obj for non-scalar types")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+---
+pxad_alloc_desc() was converted from
 
-> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-> index e5b30a57c477a..f16cf29ca5487 100644
-> --- a/drivers/dma/at_hdmac.c
-> +++ b/drivers/dma/at_hdmac.c
-> @@ -1980,40 +1980,34 @@ static int __init at_dma_probe(struct platform_de=
-vice *pdev)
->  	atdma->dma_device.cap_mask =3D plat_dat->cap_mask;
->  	atdma->all_chan_mask =3D (1 << plat_dat->nr_channels) - 1;
-> =20
-> -	atdma->clk =3D devm_clk_get(&pdev->dev, "dma_clk");
-> +	atdma->clk =3D devm_clk_get_enabled(&pdev->dev, "dma_clk");
->  	if (IS_ERR(atdma->clk))
->  		return PTR_ERR(atdma->clk);
-> =20
-> -	err =3D clk_prepare_enable(atdma->clk);
-> -	if (err)
-> -		return err;
-> -
->  	/* force dma off, just in case */
->  	at_dma_off(atdma);
-> =20
-> -	err =3D request_irq(irq, at_dma_interrupt, 0, "at_hdmac", atdma);
-> +	err =3D devm_request_irq(&pdev->dev, irq, at_dma_interrupt, 0, "at_hdma=
-c", atdma);
+        kzalloc(struct_size(sw_desc, hw_desc, nb_hw_desc), GFP_NOWAIT)
 
-[Severity: High]
-This isn't a bug introduced by this patch, but requesting the IRQ here befo=
-re
-the DMA pools are created establishes an unsafe devres cleanup order.
+to kzalloc_flex(). hw_desc[] is annotated with __counted_by(nb_desc), so
+__alloc_flex() now initializes sw_desc->nb_desc to nb_hw_desc itself.
+The loop below it still increments nb_desc for every descriptor it
+allocates though, so nb_desc ends up being twice the number of
+descriptors that are actually there.
 
-Because devres destroys resources in reverse order, devm will destroy the
-DMA pools before freeing the IRQ.
+Drop the now redundant increment. The error path has to set nb_desc to
+the number of descriptors allocated so far, otherwise pxad_free_desc()
+would free entries that were never allocated.
+---
+Changes in v2:
+- assign sw_desc->nb_desc manually as it is only automatically assigned
+  for compilers supporting __builtin_counted_by_ref()
+- Link to v1: https://lore.kernel.org/r/20260817-dmaengine-pxa-v1-1-850c215c1196@pengutronix.de
+---
+ drivers/dma/pxa_dma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-If an ISR is actively running on another CPU during driver unbind and enters
-an error path, could it dereference the already-freed pool memory, leading =
-to
-a use-after-free?
+diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+index fa2ee0b3e09f8..fc43124fefa89 100644
+--- a/drivers/dma/pxa_dma.c
++++ b/drivers/dma/pxa_dma.c
+@@ -744,6 +744,7 @@ pxad_alloc_desc(struct pxad_chan *chan, unsigned int nb_hw_desc)
+ 	sw_desc = kzalloc_flex(*sw_desc, hw_desc, nb_hw_desc, GFP_NOWAIT);
+ 	if (!sw_desc)
+ 		return NULL;
++	sw_desc->nb_desc = nb_hw_desc;
+ 	sw_desc->desc_pool = chan->desc_pool;
+ 
+ 	for (i = 0; i < nb_hw_desc; i++) {
+@@ -752,10 +753,10 @@ pxad_alloc_desc(struct pxad_chan *chan, unsigned int nb_hw_desc)
+ 			dev_err(&chan->vc.chan.dev->device,
+ 				"%s(): Couldn't allocate the %dth hw_desc from dma_pool %p\n",
+ 				__func__, i, sw_desc->desc_pool);
++			sw_desc->nb_desc = i;
+ 			goto err;
+ 		}
+ 
+-		sw_desc->nb_desc++;
+ 		sw_desc->hw_desc[i] = desc;
+ 
+ 		if (i == 0)
 
->  	if (err)
-> -		goto err_irq;
-> +		return err;
-> =20
->  	platform_set_drvdata(pdev, atdma);
-> =20
->  	/* create a pool of consistent memory blocks for hardware descriptors */
-> -	atdma->lli_pool =3D dma_pool_create("at_hdmac_lli_pool",
-> +	atdma->lli_pool =3D dmam_pool_create("at_hdmac_lli_pool",
->  					  &pdev->dev, sizeof(struct at_lli),
->  					  4 /* word alignment */, 0);
+---
+base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
+change-id: 20260817-dmaengine-pxa-64152bb34313
 
-[ ... ]
+Best regards,
+-- 
+Sascha Hauer <s.hauer@pengutronix.de>
 
-> @@ -2121,22 +2103,12 @@ static void at_dma_remove(struct platform_device =
-*pdev)
->  	struct dma_chan		*chan, *_chan;
-> =20
->  	at_dma_off(atdma);
-> -	if (pdev->dev.of_node)
-> -		of_dma_controller_free(pdev->dev.of_node);
-> -	dma_async_device_unregister(&atdma->dma_device);
-> -
-> -	dma_pool_destroy(atdma->memset_pool);
-> -	dma_pool_destroy(atdma->lli_pool);
-> -	free_irq(platform_get_irq(pdev, 0), atdma);
-> =20
->  	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
->  			device_node) {
->  		/* Disable interrupts */
->  		atc_disable_chan_irq(atdma, chan->chan_id);
-> -		list_del(&chan->device_node);
->  	}
-
-[Severity: High]
-This is a pre-existing issue, but this driver unbind path does not synchron=
-ously
-kill pending vchan tasklets before returning.
-
-If an interrupt fires during or just before unbind, the IRQ handler might
-schedule the channel's tasklet.
-
-While at_dma_remove() masks interrupts, it doesn't wait for or kill already
-scheduled tasklets via tasklet_kill(). Is there a risk that devres will free
-the memory while the tasklet continues executing, resulting in a use-after-=
-free?
-
-> -
-> -	clk_disable_unprepare(atdma->clk);
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817201200.1095=
-2-1-rosenp@gmail.com?part=3D1
