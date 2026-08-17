@@ -1,138 +1,131 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60393B47C3;
-	Mon, 17 Aug 2026 20:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59013BE168
+	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 20:55:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786999494; cv=none; b=grhPG2h3o85TbClDkoAVo5CcZsSnKwT6v21KunBqFPmPDfy714pAnjlK6fXCrqKN3iuc5lxkSn9MsROZrfx25d6VEehj6YdgPnWQatnZsBim3QBPSWmH/p+c7vs9igL7BhkvoCDVTlg5Js9/Mq4VgUj5JkGya/o9i8/FE0popbw=
+	t=1787000145; cv=none; b=vA3+zAKG6D2Ov3zNWrSCvy1nNwcWy+I05XRtiXuDHXHCk/QGcSSLvAkI9FMcTCdm+wBHXSrriL7nXWMEhdM0q8xk3wuJiRQIDFaeYgNWkhepsz/xryCfJZMI+yWFLZIUlcL3LEa8O/o01wNgeAva3otjQyKAefEX5o9Y6Rhn9u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786999494; c=relaxed/simple;
-	bh=OymTM1oQLQsal+qNBkUI4yVe4s/AFlcuq3qvVCmg53k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=IxItN12TjbC1k1vIsrXcH4fhFlw0gBgbEozhs9q5QiBitt/urYEnJpsjTHT1t7+i5V6OoSFONPNRaJRlbEV6Lqf73cnosm6wWPDerpMKNegmBTqz7Rd5rsgYNNyvIqP4fbZgbOzuBkPk08hssyQdWhHOJtRZpbYPb4+VFVF60zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
-	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 79B9A201514;
-	Mon, 17 Aug 2026 22:44:44 +0200 (CEST)
-Received: from dude02.red.stw.pengutronix.de ([2a0a:edc0:0:1101:1d::28])
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <s.hauer@pengutronix.de>)
-	id 1ww4CK-0020mx-1F;
-	Mon, 17 Aug 2026 22:44:44 +0200
-Received: from [::1] (helo=dude02.red.stw.pengutronix.de)
-	by dude02.red.stw.pengutronix.de with esmtp (Exim 4.98.2)
-	(envelope-from <s.hauer@pengutronix.de>)
-	id 1ww4CK-0000000GTDG-1EOv;
-	Mon, 17 Aug 2026 22:44:44 +0200
-From: Sascha Hauer <s.hauer@pengutronix.de>
-Date: Mon, 17 Aug 2026 22:44:33 +0200
-Subject: [PATCH v2] dmaengine: pxa: fix double counting of the hw
+	s=arc-20240116; t=1787000145; c=relaxed/simple;
+	bh=CuLzQ8A8r7+A6EgL22kWY6FfAaX7msvBuiL4JOHspxY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=SYSjfuzzyZ+usHEMFwICQg+BSHt8VD4JGwYTUpZCtt8+KfsYDFLtRnPFZNl1GY1NG8EnRPm9bW3+dPZUlwKsoTaTxyEfj62KT2YdtWXmaQ09rBUMiR1fJ7F0VybL5qQmhrf7RUNQXd3mh/VRKtPAp50UFaFCICSkg2Ycx/XnxQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hEaQynLS; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hEaQynLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253191F00A3A;
+	Mon, 17 Aug 2026 20:55:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787000144;
+	bh=zFu3MfinwnzMMi2otUpRWVGEXnH4AEQuVIyfb8lSxTY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=hEaQynLSgjOc5D5USy8/CNX9XwRLlTzfQ7tlkOlViHMU7z2DrYzyQxEIL5OEP0AWZ
+	 gPPrfiykayiYc8ZSV5ar+BVaVsOX4s/UBRdmAKehImAvK9skD7ahUQkhHvVIki9E8r
+	 8dIT9D9gqG4Ey22r5rfmPJWH3NSsAfgxAWi2KLcK6DLn443BCB2pM1iFZ8Ge4MCS07
+	 NlpXSOo6YaH0qRuJS2jyzb/ZWwIhTOSSOGBf5tZS/RxJJmRLA234QwVyOj3C98YE5Z
+	 7nl2QKm1/ZFw/6gAf5H4HAIhXHAj0baSFqBeFK/x1twxsLZrRecSVSNvV0S8EJiT1z
+	 8KyWuxiwMpuqQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] dmaengine: pxa: fix double counting of the hw
  descriptors
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sascha Hauer" <s.hauer@pengutronix.de>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
+References: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Aug 2026 20:55:43 +0000
+Message-Id: <20260817205544.253191F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
-X-B4-Tracking: v=1; b=H4sIALByg2oC/3WMQQ6CMBBFr0JmbQ1TaEVX3sOwKGWEWViaFhsM6
- d2t7F2+//PeDpECU4RbtUOgxJEXV0CeKrCzcRMJHguDrKWuO7yI8WXITexI+M0I3aKSw9C0DTZ
- QHB/oydvRe/SFZ47rEj5HPuFv/VdKKFB0qrYSlUW86rsv73sNi+PtPBL0OecvN9yV2q8AAAA=
-X-Change-ID: 20260817-dmaengine-pxa-64152bb34313
-To: Daniel Mack <daniel@zonque.org>, 
- Haojian Zhuang <haojian.zhuang@gmail.com>, 
- Robert Jarzmik <robert.jarzmik@free.fr>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
- Sascha Hauer <s.hauer@pengutronix.de>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1786999484; l=2837;
- i=s.hauer@pengutronix.de; s=20230412; h=from:subject:message-id;
- bh=OymTM1oQLQsal+qNBkUI4yVe4s/AFlcuq3qvVCmg53k=;
- b=NnDXohUgWy3bkWKUxwEGJxUFYxlIDRPwojdF/IDz3k+6+8+ZOQbHy9h118+bsylfC30yq+iaf
- uDRZOzKQuFtDBTY2c6iKNlh92MGbWvmsDZGfulFL3ovC3epd9WV6D0E
-X-Developer-Key: i=s.hauer@pengutronix.de; a=ed25519;
- pk=4kuc9ocmECiBJKWxYgqyhtZOHj5AWi7+d0n/UjhkwTg=
 
-pxad_alloc_desc() was converted from
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-        kzalloc(struct_size(sw_desc, hw_desc, nb_hw_desc), GFP_NOWAIT)
+Pre-existing issues:
+- [High] For cyclic DMA transfers, the updater descriptor's DMA address is =
+leaked, and the first descriptor's DMA address is double-freed in the DMA p=
+ool.
+--
 
-to kzalloc_flex(), which sets the __counted_by() counter sw_desc->nb_desc
-itself - but only where the compiler has __builtin_counted_by_ref(), so
-from gcc 15.1 or clang 22.1 on. The loop below it still increments
-nb_desc, which makes it come out doubled there and correct elsewhere.
+--- Patch [1]: [PATCH v2] dmaengine: pxa: fix double counting of the hw des=
+criptors ---
+commit 5e37421334e2f54f86d40ee190a04a05eb99596b
+Author: Sascha Hauer <s.hauer@pengutronix.de>
 
-nb_desc is what pxad_free_desc() iterates over and what
-set_updater_desc() indexes from, so set it explicitly and drop the
-increment. The error path has to lower it to the number of descriptors
-allocated so far, otherwise pxad_free_desc() would free entries that were
-never allocated.
+dmaengine: pxa: fix double counting of the hw descriptors
 
-Fixes: 69050f8d6d075 ("treewide: Replace kmalloc with kmalloc_obj for non-scalar types")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
----
-pxad_alloc_desc() was converted from
+This commit fixes a double counting issue with sw_desc->nb_desc in
+pxad_alloc_desc() caused by the transition to kzalloc_flex(). It explicitly
+sets nb_desc and removes the redundant increment in the allocation loop.
 
-        kzalloc(struct_size(sw_desc, hw_desc, nb_hw_desc), GFP_NOWAIT)
+Link: https://lore.kernel.org/r/20260817-dmaengine-pxa-v1-1-850c215c1196@pe=
+ngutronix.de
 
-to kzalloc_flex(). hw_desc[] is annotated with __counted_by(nb_desc), so
-__alloc_flex() now initializes sw_desc->nb_desc to nb_hw_desc itself.
-The loop below it still increments nb_desc for every descriptor it
-allocates though, so nb_desc ends up being twice the number of
-descriptors that are actually there.
+> diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+> index fa2ee0b3e09f8..fc43124fefa89 100644
+> --- a/drivers/dma/pxa_dma.c
+> +++ b/drivers/dma/pxa_dma.c
 
-Drop the now redundant increment. The error path has to set nb_desc to
-the number of descriptors allocated so far, otherwise pxad_free_desc()
-would free entries that were never allocated.
----
-Changes in v2:
-- assign sw_desc->nb_desc manually as it is only automatically assigned
-  for compilers supporting __builtin_counted_by_ref()
-- Link to v1: https://lore.kernel.org/r/20260817-dmaengine-pxa-v1-1-850c215c1196@pengutronix.de
----
- drivers/dma/pxa_dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+[ ... ]
 
-diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
-index fa2ee0b3e09f8..fc43124fefa89 100644
---- a/drivers/dma/pxa_dma.c
-+++ b/drivers/dma/pxa_dma.c
-@@ -744,6 +744,7 @@ pxad_alloc_desc(struct pxad_chan *chan, unsigned int nb_hw_desc)
- 	sw_desc = kzalloc_flex(*sw_desc, hw_desc, nb_hw_desc, GFP_NOWAIT);
- 	if (!sw_desc)
- 		return NULL;
-+	sw_desc->nb_desc = nb_hw_desc;
- 	sw_desc->desc_pool = chan->desc_pool;
- 
- 	for (i = 0; i < nb_hw_desc; i++) {
-@@ -752,10 +753,10 @@ pxad_alloc_desc(struct pxad_chan *chan, unsigned int nb_hw_desc)
- 			dev_err(&chan->vc.chan.dev->device,
- 				"%s(): Couldn't allocate the %dth hw_desc from dma_pool %p\n",
- 				__func__, i, sw_desc->desc_pool);
-+			sw_desc->nb_desc = i;
- 			goto err;
- 		}
- 
--		sw_desc->nb_desc++;
- 		sw_desc->hw_desc[i] = desc;
- 
- 		if (i == 0)
+> @@ -744,6 +744,7 @@ pxad_alloc_desc(struct pxad_chan *chan, unsigned int =
+nb_hw_desc)
+>  	sw_desc =3D kzalloc_flex(*sw_desc, hw_desc, nb_hw_desc, GFP_NOWAIT);
+>  	if (!sw_desc)
+>  		return NULL;
+> +	sw_desc->nb_desc =3D nb_hw_desc;
 
----
-base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
-change-id: 20260817-dmaengine-pxa-64152bb34313
+[Severity: High]
+This isn't a bug introduced by this patch, but since this patch corrects the
+nb_desc tracking used by set_updater_desc() and pxad_free_desc(), is there a
+pre-existing double-free for cyclic transfers?
 
-Best regards,
--- 
-Sascha Hauer <s.hauer@pengutronix.de>
+When a cyclic transfer is set up, set_updater_desc() creates a hardware loop
+by overwriting the ddadr of the second-to-last descriptor:
 
+drivers/dma/pxa_dma.c:set_updater_desc() {
+    ...
+    if (sw_desc->cyclic)
+        sw_desc->hw_desc[sw_desc->nb_desc - 2]->ddadr =3D sw_desc->first;
+    ...
+}
+
+Later, pxad_free_desc() relies on this overwritten field to retrieve the DMA
+address to free the next descriptor in the chain:
+
+drivers/dma/pxa_dma.c:pxad_free_desc() {
+    ...
+    for (i =3D sw_desc->nb_desc - 1; i >=3D 0; i--) {
+        if (i > 0)
+            dma =3D sw_desc->hw_desc[i - 1]->ddadr;
+        else
+            dma =3D sw_desc->first;
+        dma_pool_free(sw_desc->desc_pool,
+                      sw_desc->hw_desc[i], dma);
+    }
+    ...
+}
+
+Because ddadr was overwritten with sw_desc->first, doesn't pxad_free_desc()
+read sw_desc->first instead of the original DMA address when freeing the
+updater descriptor?
+
+Could this lead to double-freeing the first descriptor's DMA address and
+permanently leaking the updater descriptor's original address in the DMA po=
+ol?
+
+>  	sw_desc->desc_pool =3D chan->desc_pool;
+> =20
+>  	for (i =3D 0; i < nb_hw_desc; i++) {
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817-dmaengine-=
+pxa-v2-1-f42ab0569a48@pengutronix.de?part=3D1
