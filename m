@@ -1,258 +1,152 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011044.outbound.protection.outlook.com [40.107.130.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B52F190462;
-	Mon, 17 Aug 2026 21:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787002694; cv=fail; b=rKhBndDE5B17z+r3Su1vOKFlI7/ZZqDRAM8xVqbPDqshykfQCKKkbMO92GGgDweEmrxjsVhe/dhPv+di6euc1uYPBw6ulFNx5fYUezOEpP4331Azv4uZdPTIOkJT0swJFePcOMGukOBgBtuZzT1n9wCFqoeMTG0+uThNd+jdquI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787002694; c=relaxed/simple;
-	bh=fA/EuG+Jwi4BIsho506fxp0ueGwXiInrEo+6tsGsy6A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ltR7IUQ4VILHsVo/CQlF+Siwvaeh7AD0drhgUArSCysT6j0IS8QzjEQnofa9stwdzyPse67JUO3M6aRT4L1S9Cfxy/r+pEkYwcIC31uDczz+LPzHGq0a3k2gSAJYIxrjaRiX93XsPiY054r5jXaGaKkZo2ymilOafDOlDNrLNkA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=lK0e5Oj1; arc=fail smtp.client-ip=40.107.130.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720A13A9620
+	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 21:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787003223; cv=none; b=DFh08UZgPWuXMKTsfvaw3vm9i7RzOSnsROXjSsq4xR+mEHHB92M6T3NmOB92fWFRZRWSpJwqfRBdADiAGKe5+RrWY2Umlu1nswTEFnJqdxGA3APwltzmmrUYjxAnctmrh6R1Acs2EaYmmpuMH7DNgzEErWXnXhMx1ozANssTFw0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787003223; c=relaxed/simple;
+	bh=Xykw9kWsK+/kb/51/R5V3OJ/XpnN89GBPUTt9ZGEA7A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AmmQU6Pz5S1w4cJpd2BTMqMh6R1RU6myodFkz9Z2YjTnE5jwsqa/DyiifxIOr8t0k8iggjEnNEirRX71hFyxw9pOR5ACPH06sKuszujZYcV6mvGqFM4HdvqiMcnVOa86vc3xkWbxJ1IrtuFxtg5hKWlcMAaBRL1nc3USTqNoCqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2Q83R+i; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="lK0e5Oj1"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HOpm2FNc3A86oFWlmdXxwMO/ywPBIDes98uXRf6kQzH4piLNNNqDBWSm551irkJtikoku8nmi744uyYvfcaIEfDfu3A1+w0Vwa7jRKTOZeYOZhBhQ18SGi7/dnrs61K6fbHOPJgwPYkUZUsyCrhZ2RlxMTW3yiJ/MB/YXXk3y/MPQqPN91rAibnhHivgEh74yPEyVGngUP0pLyR88W8Jlmt3kLtZH7f3VewaB9e8v70YyM0Nhx3/EMNh/hIkd+7lMGiNS+w9Zlj/mOi3oLIbNeM4yqvCQAdZNve5WluWwbGSK+4oxrvCoCgLrSQ4KUUoWE62oyAM0LqT2ZoNoYBvpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Tl6qZluDNVD0XJHBfRo/3IHu/mfCL6sV0OHSIRwpFco=;
- b=NH+r/sTcUMExIxFIRjzOlMB7IaYS+xMG5LXBjq2bLrub2DK2TK01jxAl8CFVFpzsl2X+SWELFk6vtoujqsxFJVlDniNuNBfsWxYzGde2kplVVYVXuhTpJFqJHLWtBdWsNTJo1bKvCwykPGj8g4pkpaiurEB0rS0nnbU1BI6pl89Jh/rrjQC7XElQJOh8cOwE92JZRNfrkFRUw6xH+N6/JpLL4Mlx00A9blUt/62bWLTDhKi2iygVJFKQC1T/EkUKW2+VDTGBVRdudFq33MyG3rxfHhD1bizqAZ7T94vq9X8GL4KyF41pKoHyIQiDkhPpSdNp9/tPkvrBhd8/cvWluQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Tl6qZluDNVD0XJHBfRo/3IHu/mfCL6sV0OHSIRwpFco=;
- b=lK0e5Oj1y5LOZIhWFELjbosQw4HuymxQsn//jldnI598Azotkf6S72ho9miqYMI8qTE74mmmKrx7DNRaOo6rwFeHAAQ3y4kX3sHlaz6BJI+KKwBjT5nw6lCgafDTD9mu6usfZN16eBF1XpYErM5VNKwyD+64LQFhjvA/f1/DqSCMcEcf6snNd2Ddqz3iUrmcTuexewU6dWr1VhJbMQpcwgvzCR5GhJ5R1P6r2mHoHIInUyf2GB1z0eCewfrd3UchvuJ9ROwRTBoHSCf5D5D7vZac+CYtfQcTfU52Nnnm2zfhgJEzgrrViEKLwYvniJ54XqgLHaZbO4fQofQ58E9dHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI2PR04MB10954.eurprd04.prod.outlook.com (2603:10a6:800:278::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 21:38:07 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 21:38:07 +0000
-Date: Mon, 17 Aug 2026 16:37:57 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Rosen Penev <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	"moderated list:MICROCHIP AT91 DMA DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCHv3] dmaengine: at_hdmac: use devm APIs in probe()
-Message-ID: <aoN_NUzODjRb-IDd@SMW015318>
-References: <20260817201200.10952-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260817201200.10952-1-rosenp@gmail.com>
-X-ClientProxiedBy: PH8P220CA0057.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:2d9::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2Q83R+i"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ceeee8c46bso9722555ad.2
+        for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 14:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787003222; x=1787608022; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=p5z2OWZb+kR4j38zraZnYUeMrgnpIkqim6Dck0G9t6U=;
+        b=c2Q83R+iJjgsAdK5GJY5rnpja/vEbHAcESfkhvBrAFOaXwNLexhu4fWWNShP25CI11
+         HJX3IKpP+wKRUBmkMKC3F4ZFSJCcQ9kkBYBPeEFV7lRF/OtJ/rOXCh0sbNKpAEj1GkdF
+         jfWcpqF5VxEv+jXvEigAOHj5KVEJPcTjFwPtqhoqUvqy4QA2wlkjjCzaD6uinn1KI+Cs
+         FbrDjBLCqbf2gyh0EQlSE/6sLF02M8ZTWyttwaB/cvxuudF+kt/POC21xSZuPfNKZnUN
+         N6tc/G8pBMXsXDFTEiT9zYNhL3ZS1VC2YbYL8+IFDqW3uSeZJKefxIdUsmqYpV8/QI+3
+         d+nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787003222; x=1787608022;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=p5z2OWZb+kR4j38zraZnYUeMrgnpIkqim6Dck0G9t6U=;
+        b=SHsJhOqLicd6uw9p1dPT0CqLiLF1YDX40ESC1hAzfBBo5m2HtCXcfWeUOGGew5763O
+         O1d8ghk2PlPZYED1QOgC/Z61aJa8L94kRBjmstzC1ByE2EWqqy5oxi4pzv3cN2JR5Lzy
+         JykjqxVgaxwNMqR6pqm0gVwyZ7yMleo0uIVWtTOuM/VYGtiqOq8HbTjha3t0utlzRQEt
+         tMR8tDrbcsXtVQfS0pJ8oiUkk78aAXcgt6nSUX4FDDngdtTfx2j4IDhEBe4z9sb77Oqx
+         V118HXK81yB+HdLKCsZah629ICLOo4fs3UH6htrzyZHOibw4FsNXDzeXYht9XGtxJZGy
+         kuTQ==
+X-Gm-Message-State: AOJu0Yz2lYLkt/2oKhH2uFaV5ppJ3iPPFffYA68axUMbUWAnVb1pVJ5o
+	ZAWQddZVoOsS136Y380SW8Js8AjOKzGXZlG9V6RyAryt1GYlDvvS8P29
+X-Gm-Gg: AR+sD11rwM5Y0zbeMvn7L/Gs9i/9Jb60bGhVLP6PJpDDqOQrXGA5hlkSNOemg91qg9M
+	BSiHNaCZDzvweAn5mc5AgUS0DkIGrE6OfIKOG16rzV6xi6oCzp4cZ1f+QmoALYOwWH/ofNHqFzt
+	b8h4DODVBhvnvbXBCIiBuwnkU9nwUSP6+VAaCJuxXw/pMbHRJv+LGuqXp9wOpmm+VCPDgXfd7NT
+	be6qeIW49J8SbdntweoF69rDDWY9z8E5DSSTBw9BiJdpYLWBsLIs/FMJLDTo4OOOGFUA5e9UyHZ
+	Pqy9W/iHqtMr0bCGPk/Df19Vra2gayYoRKZtQZD3shG5w69Jry45JFKVGAZOQfmBWq13Cs16vQL
+	/kwT95hWmRQbBbUAMJRJXXgYLJ3ZlOAQOtjQpJMd5HX0u+RzJHaM7DtNCeYLVvfxbDfaCpYCFSl
+	7C5vSJuxxhs9eU0oRu+5OAz+HMOnaDFTT5eUyhMrX4AgKrv1a+DUdQ2cAzmu/ibQ+wYlClmSPE+
+	MSmJxpCOzPH
+X-Received: by 2002:a17:903:1b2b:b0:2ca:de3:15eb with SMTP id d9443c01a7336-2d3b0739429mr214351025ad.0.1787003221574;
+        Mon, 17 Aug 2026 14:47:01 -0700 (PDT)
+Received: from [10.112.173.252] ([2409:40c2:5053:3384:1c8f:aa2d:e07e:6d3d])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3267c388e3csm10153024eec.21.2026.08.17.14.46.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2026 14:47:01 -0700 (PDT)
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
+Subject: [PATCH 0/7] dt-bindings: usb: ti: Convert AM33xx/DA8xx MUSB
+ bindings to DT schema
+Date: Tue, 18 Aug 2026 03:16:30 +0530
+Message-Id: <20260818-ti-am33-usb-v1-0-69ac5f92df45@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI2PR04MB10954:EE_
-X-MS-Office365-Filtering-Correlation-Id: c08ca25a-0694-4f5c-ce2e-08defca7d3b7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|19092799006|1800799024|366016|18002099003|22082099003|56012099006|6133799003|11063799006|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	h+GiEe79FwvY5ytOKuAyp2wLEAnXx+BfihYPL6XlXT4QAwb5Hn3iQiskHqvWf5jpHdngiXY4P4pcGpwl9v80m5ljONFlHebqcUhbU1Fa17DXWQ8Sp6+c5j+RNoueamXHAzdx3gBkD4So56z+MiyCTkrExtuHmLY1bMOCuLM78lXM/aAW7dq1e6Dnpv/GleMpaKGv2NJrIgDMYZGaNozN7fNG+knpG3QOtFrQZ22XJ6/8f18ViS8W7sL+v0SnQw9k3inTCeFgXMzmXga5yqTdtF2Vk/AWeIaKD43vfwfVp8uqkMHTkUpeyZXQ1EWL4UK5uCamAuPUVx5ugPqgSipQy73EEAUBgFV0MV4zVXGRxFUas1rYFoV3NR+Ro0B3eTJRgTnatfdtK9V9bVqzELzJPIjljIR0i/zTaiscWz10pO2rDn/nyzMN7zbdkYx7ZPijQdRfjfHPFbAZsguVYPgHFnZesJxesYXOrtxdLfSfC8NNBpq8HHGITxFy+4YB102mUK+0SF7ZqRhnws6PTsv7F91mWQoPmUueBVTidritkBg8bcU/K825vX2duMgBfuHulQPguj/gQZEvMrA4Krz+0tkBuMDE+CZ9Y2CJqv4TzDnpkz3/VO1ybXkra4m5t9Q6T7vs5pQhIKlhgkEDMsU7w8At475xlhxAAub0SxgpRyg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(1800799024)(366016)(18002099003)(22082099003)(56012099006)(6133799003)(11063799006)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?NdQOzG6hncNl7lhvfc6GDwuN3w/o2z9VSfmU9wb90a7FZF5TVsdgob9LDfIm?=
- =?us-ascii?Q?p3uaWtMG+tOHQO/6fOF8/9FQJb8K1+a177xeO/Sx621OS9QH4VI9uL+cUPsd?=
- =?us-ascii?Q?KXSwMdo5QMDCddI+Kki/LOm0BxRsZd6h1Nb3xIK9vTtL06gg3d3swFLI2D9i?=
- =?us-ascii?Q?+VLqlCObkxU12QDXrDboYtHBWk7TP006XNqwyhEsGRfAujiTDNvGV7p6oYYH?=
- =?us-ascii?Q?njfYcfXXdaUVXLptqMK2QdB5aQJhyyfp0HiE9AzpP/L8oFD3+2kS10xMMbMN?=
- =?us-ascii?Q?LnpXizBEwIaXInWrcsCB9qP0FdDXaiki5R40Rqga/9K8/cs17VEvLL0r5iDy?=
- =?us-ascii?Q?1zEZkl4jyPg6JXCk0ZZZueomUyyCJdGjMXUqn/tBsiJET0nVVw3UHHSK/NhO?=
- =?us-ascii?Q?pVXNc+jYN8jZh4C4+ZNX4XF96fk9xVMZOEa7U/uofRJXaP/lhtnoE+Pn6Ihy?=
- =?us-ascii?Q?amweB88UHARV5rT7l1CCQDrg0NI2Ij2bBZ73NK0pzyK4mGKs7/1Id0vZolRf?=
- =?us-ascii?Q?K14Sq3qcryDNelAhR5IOqLqdZ6W+SRdFg3KhQgVCAXynZHvmYQNjIAviFQLT?=
- =?us-ascii?Q?/pVnsMUEUTIoqOMHprwnxqryOIRvR64pQUgq4lCijHXqdWtQS/5qgoMfaBhf?=
- =?us-ascii?Q?yYurr/zmR03ZGwpQvBodF6FroJJK72QX9NJBxZva18sjTSUtjZQwaDnExEHS?=
- =?us-ascii?Q?7LYq4eS7Gj7SKCGs4LAQoycyNc9iXzBzlAdiiRgTakw7sVkfaVEEQSR127AL?=
- =?us-ascii?Q?N8vH0xdxz2SLCE2RG/XKyeNP/i/1s03lCYmY+cPT5gwypXDaPHPfcK67iWbp?=
- =?us-ascii?Q?5qutzHBKMozRvOTVzdroakVvLR0AgJb+QYShsEzjAC1Dx/s9oxIZKkwAYsYK?=
- =?us-ascii?Q?Bx8aumbySl023fKlep3eGXxEpghv7xOiQO7dTGDppfhXEw9T5KmtE88cToc5?=
- =?us-ascii?Q?pxUGK9UeRrRB7X9IKRI9XW2sBOlzZ6J75QF7KeAPWBfpyZRwlEQaNVOO+8S3?=
- =?us-ascii?Q?nvaknDMEQ94ILYlac7Uv4UUqFKG5v6q1hVmwuH5RjoKpMiqFXN2Tw84CJvM8?=
- =?us-ascii?Q?PuaucCWv/TvHPl6SNOV/6tLSGav33P7X5m9rtGSEB2+OSdHCNE/JIlY3E8LZ?=
- =?us-ascii?Q?tANxbsoFodozX4kC2+j89psrWtV3W1PAjq/p744huvHC/F/8Y4afDaoica+h?=
- =?us-ascii?Q?z+xXDD9s7PHF+t7ne9xCSHgSDZ3L2KSOnM4YoBeuy6iveoiJFC9HOeKB7Fak?=
- =?us-ascii?Q?QLUG41PTAm4rF7Pyo+L7FI0vHpac6VqAR8HykcdRJXe8WRBlbOfOm5aqo2um?=
- =?us-ascii?Q?0CsgDFuHgJ+Re7ZbAyqcU968BGenrQoAvKdK2ukZQdos4OYoeyl4aIhTRK53?=
- =?us-ascii?Q?kFFvdKTn15w8fJPktQbCHodb/WeBIlyKlyD5wX0VsiU4cP7dGjsm7vfBplS+?=
- =?us-ascii?Q?ouMmGcvdf3GsdtagICsUqFfkkcBjGNK/zlkVFVUtPY0ddqkn9DfZEbhJUDTm?=
- =?us-ascii?Q?xdV3tHLKc9ym7UElKat/lwX74vxq4/0r5Y+5sWsfeghJFlGoWhYuAp1HNFMF?=
- =?us-ascii?Q?d2xC3fP2KcF/rMe5i+AXOM3pFnQfPFCyEbje6ndd9ITCT+ahcB44SlHxawN0?=
- =?us-ascii?Q?7PXnyrPglvHGV4cqy9abcKiwBgf5zquxU2bfE7uA3fDRvW3/JMi5VLePrQ5P?=
- =?us-ascii?Q?T+6qwRPOUjmeK2z+ED3EdbYOzrIGcvaOEojf4J3i7uhyv28S4LLRU7keO6aM?=
- =?us-ascii?Q?NbUlhJYyCoQ1BexXtwlobWWVNAvMDFHqdqr/34c4HDZggvrNBB2y?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c08ca25a-0694-4f5c-ce2e-08defca7d3b7
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 21:38:07.7723
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eW4Zz6zFAXlc0jZ+V448F8mXORMRtvsnZtrgXY7XfT8/aMyajTGmmzWsRiCvRZdQGhGVjFaYvdZNltY/9qW9mTWhRpIaKmIUQrz9jimmY7whhA3IQhsj2FoAYRXdhn2k
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB10954
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMSQqAMAxA0atI1gZqHfEq4sIh1QgONFUE8e5WX
+ b7F/xcIWSaBMrjA0sHC6+IRhQF0Y7MMhNx7g1Y6U0WUo2Ns5jjGXVpM0qQwmtJckQFfbJYMn9+
+ tqn/L3k7UuXcB9/0Aaq4XU28AAAA=
+X-Change-ID: 20260817-ti-am33-usb-4548f2e570ef
+To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Andrzej Siewior <bigeasy@linutronix.de>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Aaro Koskinen <aaro.koskinen@iki.fi>, 
+ Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>, 
+ Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>, 
+ Ravi B <ravibabu@ti.com>, Kumar Gupta <ajay.gupta@ti.com>, 
+ Sergei Shtylyov <sshtylyov@ru.mvista.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-omap@vger.kernel.org, 
+ goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
+ simona.toaca@nxp.com, j.bhargav.u@gmail.com
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787003201; l=2463;
+ i=j.bhargav.u@gmail.com; h=from:subject:message-id;
+ bh=Xykw9kWsK+/kb/51/R5V3OJ/XpnN89GBPUTt9ZGEA7A=;
+ b=PSDiwjCRSgF8tyLL58sgaor0uFp4NOH2lPKDimPZXXZyXBiNYyX/1dUSdCEXV8ObgPylbuCI+
+ pKkQcZo2p37BxtEFJZgFjDL7yQXIyz8lq+tWA0sJ/b3S6y3sMZrDDcE
+X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
+ pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-On Mon, Aug 17, 2026 at 01:12:00PM -0700, Rosen Penev wrote:
-> Convert resource allocation and setup in probe() to use devm-managed APIs.
-> Simplify the error handling path and removes explicit cleanup code.
->
-> Assisted-by: opencode:big-pickle
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> ---
+This patch series converts the legacy TI AM33xx, DM816, and DA8xx
+USB/MUSB text bindings to modern DT schema.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+The legacy am33xx-usb.txt and da8xx-usb.txt bindings was historically
+structured as a single, monolithic file that documented the entire USB
+subsystem (the wrapper, core MUSB controller, PHY, and control module)
+all together. This series converts that monolithic text binding into
+proper, distinct DT schema files for each hardware component.
 
->  v3: fix subject and description
->  v2: remove list_del
->  drivers/dma/at_hdmac.c | 50 ++++++++++--------------------------------
->  1 file changed, 11 insertions(+), 39 deletions(-)
->
-> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-> index 971f8bc9ec48..49a85ac66e83 100644
-> --- a/drivers/dma/at_hdmac.c
-> +++ b/drivers/dma/at_hdmac.c
-> @@ -1986,40 +1986,34 @@ static int __init at_dma_probe(struct platform_device *pdev)
->  	atdma->dma_device.cap_mask = plat_dat->cap_mask;
->  	atdma->all_chan_mask = (1 << plat_dat->nr_channels) - 1;
->
-> -	atdma->clk = devm_clk_get(&pdev->dev, "dma_clk");
-> +	atdma->clk = devm_clk_get_enabled(&pdev->dev, "dma_clk");
->  	if (IS_ERR(atdma->clk))
->  		return PTR_ERR(atdma->clk);
->
-> -	err = clk_prepare_enable(atdma->clk);
-> -	if (err)
-> -		return err;
-> -
->  	/* force dma off, just in case */
->  	at_dma_off(atdma);
->
-> -	err = request_irq(irq, at_dma_interrupt, 0, "at_hdmac", atdma);
-> +	err = devm_request_irq(&pdev->dev, irq, at_dma_interrupt, 0, "at_hdmac", atdma);
->  	if (err)
-> -		goto err_irq;
-> +		return err;
->
->  	platform_set_drvdata(pdev, atdma);
->
->  	/* create a pool of consistent memory blocks for hardware descriptors */
-> -	atdma->lli_pool = dma_pool_create("at_hdmac_lli_pool",
-> +	atdma->lli_pool = dmam_pool_create("at_hdmac_lli_pool",
->  					  &pdev->dev, sizeof(struct at_lli),
->  					  4 /* word alignment */, 0);
->  	if (!atdma->lli_pool) {
->  		dev_err(&pdev->dev, "Unable to allocate DMA LLI descriptor pool\n");
-> -		err = -ENOMEM;
-> -		goto err_desc_pool_create;
-> +		return -ENOMEM;
->  	}
->
->  	/* create a pool of consistent memory blocks for memset blocks */
-> -	atdma->memset_pool = dma_pool_create("at_hdmac_memset_pool",
-> +	atdma->memset_pool = dmam_pool_create("at_hdmac_memset_pool",
->  					     &pdev->dev, sizeof(int), 4, 0);
->  	if (!atdma->memset_pool) {
->  		dev_err(&pdev->dev, "No memory for memset dma pool\n");
-> -		err = -ENOMEM;
-> -		goto err_memset_pool_create;
-> +		return -ENOMEM;
->  	}
->
->  	/* clear any pending interrupt */
-> @@ -2086,10 +2080,10 @@ static int __init at_dma_probe(struct platform_device *pdev)
->  	  dma_has_cap(DMA_SLAVE, atdma->dma_device.cap_mask)  ? "slave " : "",
->  	  plat_dat->nr_channels);
->
-> -	err = dma_async_device_register(&atdma->dma_device);
-> +	err = dmaenginem_async_device_register(&atdma->dma_device);
->  	if (err) {
->  		dev_err(&pdev->dev, "Unable to register: %d.\n", err);
-> -		goto err_dma_async_device_register;
-> +		return err;
->  	}
->
->  	/*
-> @@ -2098,27 +2092,15 @@ static int __init at_dma_probe(struct platform_device *pdev)
->  	 * dma_request_channel().
->  	 */
->  	if (pdev->dev.of_node) {
-> -		err = of_dma_controller_register(pdev->dev.of_node,
-> +		err = devm_of_dma_controller_register(&pdev->dev, pdev->dev.of_node,
->  						 at_dma_xlate, atdma);
->  		if (err) {
->  			dev_err(&pdev->dev, "could not register of_dma_controller\n");
-> -			goto err_of_dma_controller_register;
-> +			return err;
->  		}
->  	}
->
->  	return 0;
-> -
-> -err_of_dma_controller_register:
-> -	dma_async_device_unregister(&atdma->dma_device);
-> -err_dma_async_device_register:
-> -	dma_pool_destroy(atdma->memset_pool);
-> -err_memset_pool_create:
-> -	dma_pool_destroy(atdma->lli_pool);
-> -err_desc_pool_create:
-> -	free_irq(platform_get_irq(pdev, 0), atdma);
-> -err_irq:
-> -	clk_disable_unprepare(atdma->clk);
-> -	return err;
->  }
->
->  static void at_dma_remove(struct platform_device *pdev)
-> @@ -2127,22 +2109,12 @@ static void at_dma_remove(struct platform_device *pdev)
->  	struct dma_chan		*chan, *_chan;
->
->  	at_dma_off(atdma);
-> -	if (pdev->dev.of_node)
-> -		of_dma_controller_free(pdev->dev.of_node);
-> -	dma_async_device_unregister(&atdma->dma_device);
-> -
-> -	dma_pool_destroy(atdma->memset_pool);
-> -	dma_pool_destroy(atdma->lli_pool);
-> -	free_irq(platform_get_irq(pdev, 0), atdma);
->
->  	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
->  			device_node) {
->  		/* Disable interrupts */
->  		atc_disable_chan_irq(atdma, chan->chan_id);
-> -		list_del(&chan->device_node);
->  	}
-> -
-> -	clk_disable_unprepare(atdma->clk);
->  }
->
->  static void at_dma_shutdown(struct platform_device *pdev)
-> --
-> 2.55.0
->
+Patches in this series:
+1. dt-bindings: dma: ti,cppi41: Convert to DT schema
+2. dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
+3. ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
+4. dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
+5. dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
+6. dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
+7. dt-bindings: usb: ti,da830-musb: Convert to DT schema
+
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+---
+Bhargav Joshi (7):
+      dt-bindings: dma: ti,cppi41: Convert to DT schema
+      dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
+      ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
+      dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
+      dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
+      dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
+      dt-bindings: usb: ti,da830-musb: Convert to DT schema
+
+ .../devicetree/bindings/dma/ti/ti,cppi41.yaml      | 108 +++++++++++
+ .../devicetree/bindings/phy/ti,am335x-usb-phy.yaml |  49 +++++
+ .../devicetree/bindings/usb/am33xx-usb.txt         | 200 ---------------------
+ .../devicetree/bindings/usb/da8xx-usb.txt          |  81 ---------
+ .../bindings/usb/ti,am335x-usb-ctrl-module.yaml    |  38 ++++
+ .../devicetree/bindings/usb/ti,am33xx-usb.yaml     | 104 +++++++++++
+ .../devicetree/bindings/usb/ti,da830-musb.yaml     | 111 ++++++++++++
+ .../devicetree/bindings/usb/ti,musb-am33xx.yaml    | 111 ++++++++++++
+ arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi  |   1 +
+ arch/arm/boot/dts/ti/omap/am335x-boneblue.dts      |   1 +
+ arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts |   1 +
+ .../arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts |   1 +
+ 12 files changed, 525 insertions(+), 281 deletions(-)
+---
+base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
+change-id: 20260817-ti-am33-usb-4548f2e570ef
+
+Best regards,
+-- 
+Bhargav
+
