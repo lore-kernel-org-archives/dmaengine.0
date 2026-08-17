@@ -1,203 +1,180 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416E023D7CE
-	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 02:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2BD31A6823;
+	Mon, 17 Aug 2026 02:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786932472; cv=none; b=jk3gmjAl18ym7Ly1NRodyenLw2bnGJFozcMtLphD0lLznEKp8UHlfPKim7eFL9YcNSJvoXTHcYZ6k3ZcmGYDuEF8SNGDPhNl11uMbmFAserp1OaWApkGp7VzRsAc98kBa18jUtqbgdOT4JytSiPjU1EelvRvMg8NXiZsdt9Jbco=
+	t=1786932501; cv=none; b=cLvSJtIsweNmjl3veXs9sxbCXuc7Y0cG2gUfxpJ7MAQIR4mEszmvB3glzMO/sovV3XQtZKq68AjdEGUlqMw5ZN1A4IEY+bt506iKc5uO/o8MbbmGAqjMT2vjQ3pOPSLs6TTssomX3lwhFOrU6RkR/G3ynCJ/QVbkUugfEwTGdvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786932472; c=relaxed/simple;
-	bh=C8huVUTwS5qilegYgTrq63fYz6w9Qv8XAa2NnsBgL2U=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QQCClYB1aEnNXJpwwUy5JkKLZ2aNRuNLTQUC5268xUXRAmUNmQy5FRsYZH6nrONNBiY2HSKJl+ONlSGIwVh01qET0N4vpX9a4gO9L0oPewV37/uN56iPtZ826B1EPeQeJTI66M34rpmk8Sfl7+omTN1XheznNB97Emx12VK7asY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qv/t30UT; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qv/t30UT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9C41F000E9;
-	Mon, 17 Aug 2026 02:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786932470;
-	bh=UjODMVrcDz2rWAL56Q1yCAJtNrugtgeQrYwZfRjlH0M=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Qv/t30UT0k8XUGh9OA7/yXg9I1cpvoc07YE5kAl+VB/o+3Jt4CRq3x3eT0GO+k3f/
-	 xG+BGlBPMGzwcB6cbsU3m1LIsdl/o4I58eowsIcabDhn7lYI4TZ5GPRDJUEbGUs9g8
-	 I6sPCvEICcGK9IuW4yTq8LdY9G8PxGQuBnWDR1vds3vSxKIwIPBAEpfyeOiODAGSxS
-	 TLRdQvEJpZtYfoOv8DxRRBmBZ2zVedU2S77h6+jZkZDjmkzdaVST7I+pPjuVwF/UkA
-	 SPmO6p4xF70TIYN1fOo2zioYn+XUoUQnTzylH27FW2ItSvaJRoHmXOWkbXd0WXFHvL
-	 BQv3AW3fsX/KA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: bestcomm: set bcom_eng to NULL on probe
- failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260817015442.136038-1-rosenp@gmail.com>
-References: <20260817015442.136038-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Aug 2026 02:07:50 +0000
-Message-Id: <20260817020750.9D9C41F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1786932501; c=relaxed/simple;
+	bh=cUHXnEFb0DPT0cP8sQAYf526pNBm/FM6F6+YWEZkqWE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YfF8D31rQI0g7Wji1SP84CXoeaG0sEm3egdFZBjZIxaHtrI5CWBAfU9ypSGa/xyaPGi0LrS8Mu14MHqTJnlcl6cI+tzgbNZ6bAxccFwLTFJPXYPfY6hzdhHX2O4mSQTfB8ao4qBdjaEYvoDc15pPebVoysZfyj5zNR4a1kVd+kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.87])
+	by gateway (Coremail) with SMTP id _____8CxQNEDbYJqnbYBAA--.5127S3;
+	Mon, 17 Aug 2026 10:08:04 +0800 (CST)
+Received: from [10.161.0.102] (unknown [223.64.68.87])
+	by front1 (Coremail) with SMTP id qMiowJAx2c3_bIJqU28HAA--.48469S2;
+	Mon, 17 Aug 2026 10:08:02 +0800 (CST)
+Message-ID: <735044e7-07e8-462e-b94f-4fea1b5b1838@loongson.cn>
+Date: Mon, 17 Aug 2026 10:07:59 +0800
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: loongson1-apb-dma: avoid using iterator
+ variable after list_for_each_entry()
+To: Frank Li <Frank.li@oss.nxp.com>,
+ Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Cc: Keguang Zhang <keguang.zhang@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, linux-mips@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260720142538.2766-1-mahad.ibrahim.dev@gmail.com>
+ <20260729143247.6111-1-mahad.ibrahim.dev@gmail.com>
+ <an9teadkgwUsmMnQ@lizhi-Precision-Tower-5810>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+In-Reply-To: <an9teadkgwUsmMnQ@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qMiowJAx2c3_bIJqU28HAA--.48469S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgECCGqBKnQHswAAsI
+X-Coremail-Antispam: 1Uk129KBj93XoWxGrW5XrWkZw1DGr1UWw48AFc_yoWrGrWkpF
+	WfG3ZFka1kJF4av3ZFgw1FyFs0yFZ7Gry7urZIgw1xuryqyryqvw17Ga4rWF9rAa93X3WS
+	qay0ga43CF4UAacCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUU9Kb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
+	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWU
+	AwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMx
+	kF7I0En4kS14v26r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4U
+	MxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI
+	0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE
+	14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20x
+	vaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWU
+	JVW8JbIYCTnIWIevJa73UjIFyTuYvjxUcTKZDUUUU
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+Hi Frank:
 
-Pre-existing issues:
-- [High] Mismatch between request_mem_region() and release_mem_region() siz=
-es causes a permanent resource leak.
-- [High] The global pointer `bcom_eng` is published before its fields are i=
-nitialized, creating a race condition where concurrent API calls can use un=
-initialized state. The error path also has a Use-After-Free window.
-- [High] Missing `IS_ERR` check for `rh_create()` return value causes a ker=
-nel panic on failure.
-- [High] SRAM memory allocated for microcode descriptors is leaked when a t=
-ask is freed.
-- [Medium] The `stop` field used to track task allocation is cleared withou=
-t holding the required lock, causing a data race and potential premature re=
-allocation.
---
+Sorry for the late reply.
 
---- Patch [1]: [PATCH] dmaengine: bestcomm: set bcom_eng to NULL on probe f=
-ailure ---
-commit 92a145656e579b67978a7c55621b1c807ffdc1c7
-Author: Rosen Penev <rosenp@gmail.com>
+On 2026/8/15 03:33, Frank Li wrote:
+> On Wed, Jul 29, 2026 at 02:32:47PM +0000, Mahad Ibrahim wrote:
+>> ls1x_dma_tx_status() locates the descriptor actively being processed by
+>> walking the LLI list and comparing the hardware reported next descriptor
+>> pointer against each element's next-descriptor pointer.
+>>
+>> A list_for_each_entry macro is used in the comparison phase. Which at
+>> the end of the loop leaves the lli pointer at the currently executing LLI.
+>> However this also subsequently runs for a non-match lli, in which it
+>> points at the head. This causes a type confusion bug which treats the
+>> head, which is a ls1x_dma_desc, as a ls1x_dma_lli object. Additionally it
+>> goes forwards and prints garbage via the dev_dbg.
+>>
+>> Fix the type confusion bug by only allowing matched LLI descriptor chains
+>> to print the current LLI and residue calculation, as failing to match
+>> should be treated as an unexpected condition.
+>>
+>> Found by the following Coccinelle check:
+>>
+>>    scripts/coccinelle/iterators/use_after_iter.cocci
+>>
+>>    drivers/dma/loongson/loongson1-apb-dma.c:461:6-9: ERROR: invalid
+>>    reference to the index variable of the iterator on line 450
+>>
+>> I did not see a bug upstream detailing this error, nor do I have the
+>> hardware to confirm this bug or error, all this is from a pure code
+>> examination.
+>>
+>> As I do not possess the hardware, I cannot test the patch. Compile tested
+>> only with mips64-linux-gnu-gcc.
+> 
+> Avoid post new patch on old email thread.
+> 
+> Just simple said
+> 
+> Compile test only.
+> 
+>>
+>> Signed-off-by: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+>> ---
+>>
+>> v2:
+>> - encapsulate residue calculation and dev_dbg inside the
+>>    list_for_each_entry() macro. Treat non-matching LLI as an unexpected
+>>    case.
+>>
+>>
+>>   drivers/dma/loongson/loongson1-apb-dma.c | 27 ++++++++++++++----------
+>>   1 file changed, 16 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+>> index 89786cbd20ab..8658d5377795 100644
+>> --- a/drivers/dma/loongson/loongson1-apb-dma.c
+>> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
+>> @@ -446,22 +446,27 @@ static enum dma_status ls1x_dma_tx_status(struct dma_chan *dchan,
+>>
+>>   			/* locate the current lli */
+>>   			next_phys = chan->curr_lli->hw[LS1X_DMADESC_NEXT];
+>> -			list_for_each_entry(lli, &desc->lli_list, node)
+>> -				if (lli->hw[LS1X_DMADESC_NEXT] == next_phys)
+>> -					break;
+>> +			list_for_each_entry(lli, &desc->lli_list, node) {
+>> +				if (lli->hw[LS1X_DMADESC_NEXT] != next_phys)
+>> +					continue;
+>>
+>> -			dev_dbg(chan2dev(dchan), "current lli_phys=%pad",
+>> -				&lli->phys);
+>> +				dev_dbg(chan2dev(dchan), "current lli_phys=%pad\n",
+>> +					&lli->phys);
+>>
+>> -			/* count the residues */
+>> -			list_for_each_entry_from(lli, &desc->lli_list, node)
+>> -				bytes += lli->hw[LS1X_DMADESC_LENGTH] *
+>> -					 chan->bus_width;
+>> +				/* count the residues */
+>> +				list_for_each_entry_from(lli, &desc->lli_list, node)
+>> +					bytes += lli->hw[LS1X_DMADESC_LENGTH] *
+>> +						 chan->bus_width;
+>> +
+>> +				dma_set_residue(state, bytes);
+>> +				return status;
+>> +			}
+>> +
+>> +			dev_warn(chan2dev(dchan),
+>> +				 "unable to locate current lli.\n");
+> 
+> most likely logic is correct, it is not obvious, hope some one who have
+> hardware help test it.
+> 
+> Binbin Zhou just add add this driver recently, he should have hardware to
+> test it.
 
-dmaengine: bestcomm: set bcom_eng to NULL on probe failure
+Emm, sorry, I don't have any test equipment available right now. As far 
+as I know, Keguang is the maintainer of this driver, and he has the 
+necessary test equipment.
+> 
+> Frank
+>>   		}
+>>   	}
+>>
+>> -	dma_set_residue(state, bytes);
+>> -
+>>   	return status;
+>>   }
+>>
+>> --
+>> 2.54.0
+>>
 
-Functions like bcom_task_alloc() use if (!bcom_eng) as a safety readiness
-check. If the probe fails and hits this error path, subsequent or
-concurrent API calls will bypass the check and dereference the freed memory.
+-- 
+Thanks.
+Binbin
 
-> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestc=
-omm.c
-> --- a/drivers/dma/bestcomm/bestcomm.c
-> +++ b/drivers/dma/bestcomm/bestcomm.c
-[ ... ]
-> @@ -445,6 +445,7 @@ static int mpc52xx_bcom_probe(struct platform_device =
-*op)
->  	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
-
-[Severity: High]
-This is a pre-existing issue, but does this mismatch in size during release
-cause a permanent resource leak?
-
-The memory region is requested earlier in mpc52xx_bcom_probe() using the
-device tree node size:
-
-    if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
-                            DRIVER_NAME)) {
-
-However, the error path above attempts to release the region using a fixed
-compile-time size: sizeof(struct mpc52xx_sdma). Since __release_region()
-strictly verifies the boundaries of the requested resource, if these sizes
-differ, the check fails and the I/O memory region is never freed. Driver
-unbinding in mpc52xx_bcom_remove() also uses this same fixed size.
-
->  error_sramclean:
->  	kfree(bcom_eng);
-> +	bcom_eng =3D NULL;
-
-[Severity: High]
-This is a pre-existing issue, but by assigning bcom_eng early, do we expose
-uninitialized state to concurrent accessors?
-
-In mpc52xx_bcom_probe(), the global pointer is published immediately after
-allocation:
-
-    bcom_eng =3D kzalloc_obj(struct bcom_engine);
-    if (!bcom_eng) {
-
-Concurrent API calls like bcom_task_alloc() rely on the pointer not being
-NULL as a safety check:
-
-    if (!bcom_eng)
-        return NULL;
-    spin_lock(&bcom_eng->lock);
-
-Because the pointer is published before bcom_engine_init() sets up the lock
-and structures, a concurrent client could dereference uninitialized fields.
-While adding bcom_eng =3D NULL closes the use-after-free window during
-cleanup, the early publication race still exists.
-
->  	bcom_sram_cleanup();
->  error_ofput:
->  	of_node_put(op->dev.of_node);
-
-
-[Severity: High]
-This is a pre-existing issue, but is there a missing check for an error
-pointer from rh_create() that could cause a kernel panic?
-
-In drivers/dma/bestcomm/sram.c:bcom_sram_init(), the result of rh_create()
-is directly used without validation:
-
-    /* Create an rheap (defaults to 32 bits word alignment) */
-    bcom_sram->rh =3D rh_create(4);
-
-    /* Attach the free zones */
-    regaddr_p =3D NULL;
-    psize =3D 0;
-
-    if (!regaddr_p || !psize) {
-        /* Attach the whole zone */
-        rh_attach_region(bcom_sram->rh, 0, bcom_sram->size);
-
-If memory allocation fails under pressure, rh_create() returns
-ERR_PTR(-ENOMEM). Passing this directly to rh_attach_region() will cause
-a crash when it accesses internal fields.
-
-
-[Severity: Medium]
-This is a pre-existing issue, but does locklessly clearing the stop marker
-create a data race and risk premature reallocation?
-
-In drivers/dma/bestcomm/bestcomm.c:bcom_task_free(), the task marker state
-is cleared without holding the required lock:
-
-    /* Clear TDT */
-    bcom_eng->tdt[tsk->tasknum].start =3D 0;
-    bcom_eng->tdt[tsk->tasknum].stop  =3D 0;
-
-The same happens on the allocation error path in bcom_task_alloc():
-
-    bcom_eng->tdt[tasknum].stop =3D 0;
-
-Since bcom_task_alloc() enforces a lock to safely locate free tasks, if
-stop is cleared locklessly before task teardown completes, a concurrent
-allocator might identify the task as available and reallocate it while
-resources are still being freed.
-
-
-[Severity: High]
-This is a pre-existing issue, but does freeing a task leak the dynamically
-allocated SRAM used for microcode image descriptors?
-
-When loading an image, drivers/dma/bestcomm/bestcomm.c:bcom_load_image()
-dynamically allocates SRAM and tracks it via tdt->start:
-
-    desc =3D bcom_sram_alloc(hdr->desc_size * sizeof(u32), 4, &start_pa);
-    if (!desc)
-        return -ENOMEM;
-
-    tdt->start =3D start_pa;
-
-However, when the task is torn down, bcom_task_free() simply discards this
-physical address without freeing the block:
-
-    /* Clear TDT */
-    bcom_eng->tdt[tsk->tasknum].start =3D 0;
-    bcom_eng->tdt[tsk->tasknum].stop  =3D 0;
-
-Because SRAM is extremely limited on the MPC5200, repeatedly bringing a
-network interface up and down could exhaust SRAM and break bestcomm
-functionality. Should bcom_sram_free() be called here before zeroing the
-marker?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817015442.1360=
-38-1-rosenp@gmail.com?part=3D1
