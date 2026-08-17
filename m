@@ -1,143 +1,167 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011029.outbound.protection.outlook.com [52.101.65.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D24043C07E
-	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 13:57:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975059; cv=none; b=gQUc8wQD1aowaPIOkcWeqMPebwUr/Y7qn9XtKh/2kc5wlDc/Aaet6WwzmJbXAtyu5wfzbPXGBmIpq+S++iEa30Qilz6Ap6COtN3Jz5Fi4SkGo3/q2/D7AuGcnTb5PMTeUxRHkoxT3L2zT7F+OacBk6XpaFD9TypH10H1Zze69yI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975059; c=relaxed/simple;
-	bh=k0KzLk/Py5MfNs6v0LG2pawI7nCHX5oUhShrr2VzixE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mH31N6jxeDgkKHHRTgJghOzlIfhUjv0fFpASIoPWDfBg5zKM830sMFST2Af3hHTSbTCqh4oInNA3Qsjvmj+DoBGWdYEWGoLocDcExs4b0L/BCyhgpvft64z3Rf6bmDkUco38ByPLYUlMR3N2xoJmP50Xkxf2SMAvBa1zh6h7Gew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io; spf=pass smtp.mailfrom=soundtrack.io; dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b=hdJx5niR; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=soundtrack.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=soundtrack.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC180317144;
+	Mon, 17 Aug 2026 13:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.29
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786975138; cv=fail; b=tPhxFN5fUwOBLjd0HB7Mo8P/ovF+Ww5b4XI3NuOndZRhXm8T8DpXfbkqXYlUtchCGEOQItNJ8NGi7pAD3h6wIdFQ+Tox87VaIt9jOI7M/lx6cr2e7vs8iheNU2HTcXIE6TTG6UBl+zcEVFvQW6LVkONHHgD5Qct87jl2CuN4JkA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786975138; c=relaxed/simple;
+	bh=QmIwAPW2HpKw0rWXQ0PU8vcnpYomSNIfpbLO2KubmLc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=AD8Ept6Gc0A0A5S1PQRg/DIxVilwcZY9Lc/M/dK8znH8fpjkYLyegZqEeNXQGifYvoRNAzjeUPAQHpsFOZ/TcZIA4OmLgqFZSSiKsndSMuHGkdHO0+fxBy6J3H0nCKlhbkAEQ/KBLAYT3/Yie6q4u1j9VAGoOxJH40oX+Ebh9Vw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=tSN6NXdn; arc=fail smtp.client-ip=52.101.65.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=soundtrack.io header.i=@soundtrack.io header.b="hdJx5niR"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6a1541ea780so562900a12.1
-        for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 06:57:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=soundtrack.io; s=google; t=1786975057; x=1787579857; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=t8f5UJCABHvmBw6dzoHdGzw6KbaLnhVEoCCS6jqmRT4=;
-        b=hdJx5niR0E94H+nb8qraeXqUsnG1zW9Iefn8aVEaWVoNUVi73xHl4faMuaxtHbGUVv
-         1+iCpJGw85dX1UB/Utz6R5p81h0HWeAgBnKulOzx46iLMMVclrPROTxuCJjwVZbQlJEj
-         BsFKfCFzXNP15fGR7XUuOv2fbOj2V83Mb3824LpUbW5w/4wBhAdlzeSMKPDZ1Xtd4clT
-         ggRJT6JrvD+zzX0n9vfH26bOkZZ1GSbFewlYrx6QCgvgjWK1K5vrVFE7fV99XilpOOK1
-         NJU4h+agtuSxVBcROd5IQ7P/hSI8GGLF5sAQs1lXVHhcS7XZHv+aldPuC9d162N8hFq8
-         fXuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786975057; x=1787579857;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=t8f5UJCABHvmBw6dzoHdGzw6KbaLnhVEoCCS6jqmRT4=;
-        b=Bl21j5GChV9OOy/tRAtGMRV5Kn0/BeZcYXYgcApnzFTdFYvIJJIDDmkhKMeNd/4mkH
-         ne+YDYs039572+MdOkj/3qSL5YZy3+/rKNB7+m6hvEXf14vVGqrdbkq2/jx5OLN7gV3Y
-         82IZ+86aX/hZpV//xHmhEywXuf0yk7+dWGRWtSHheNbPdNUugqJ+mIA5syLliWCNh2cU
-         5qNqAqNcDw2iu+0Ja+zax+YwTKP8RAzOV4575Z90FDF+vFQFNajY5ibQLfv8qxS7nh+l
-         1TMSwqUBU9keCG73MnaYEphMvViNxwLIRtOD+0BIBRjdo40HFErOmAntHAzuccOaK/Ia
-         7oBA==
-X-Forwarded-Encrypted: i=1; AHgh+RposFNv2q1O0nHo63qjJcDOx4x2DLnIQRUquWveJhBDt0To94k2CSTD+fmws1o0cp24K5leIHcybrM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3Bhvu+4x0wwS5uBqLHJXCGJbc2Lavi3s50DVIsYSp17Xv+vRi
-	oMPoltmyT5TG9uxErlzT5g6vBlh3V78ARSEWsWYgL7etN7SZZGtmV7THk27o0x/LkEE=
-X-Gm-Gg: AR+sD10nLWT/fI9T1a6qJ+3FsNBLWLQfiQXpX9pHID5ixJ1bj8q2Ek/ttogKF2BMZRo
-	R3FUfUDmNYEymmG+huQTlBzuAjoQQn59+0Oncr0tM3jw8Zgxs47efxZ5vU2S1g/xEMdEFZjHvSW
-	RG5FdF124VZVuWzR2ooHSzRgTwsC7APEAU1PKAC3Mg6RuHPVHEGdqir4X0TqaUMkO/izsNtEnmo
-	qQEh0aPFdqk11aRxK9vmWOgcfA+2fb8ng8qe728FKiOApMGnrfro4vtP+UwQXIF3s2b4UWd8puw
-	GZO2+Oeu+OizIVs9aLUdjswRBaQoEwSayEl+HPcwSiqv90IAXZzgtbo7rSLHENRoDC6+cfdcCLV
-	FNgTVEQZIVTqstVK5C6ph4FACWC34bFVl9g/jPmbmvve98lBuFBe05HIuyN1EPbFB4dsH5wz/oO
-	XEgaqv/SRMETaNNPt8L1e0OZbhxr/MdQ1r9SIB5BTtK6dppTgjVuMTt1s4p5H2C/WVRbe6fdF+K
-	zT4IvPGpQhtVBAibrs5x8P/l/VTx6PJOl+Pr2a1MkUj8MGVqsPn/xsfar4=
-X-Received: by 2002:a05:6402:2812:b0:6a3:8446:c56b with SMTP id 4fb4d7f45d1cf-6a38a8bf430mr6474052a12.1.1786975056608;
-        Mon, 17 Aug 2026 06:57:36 -0700 (PDT)
-Received: from Mac.localdomain (31-209-40-223.cust.bredband2.com. [31.209.40.223])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6a3d85319b1sm810238a12.13.2026.08.17.06.57.35
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 17 Aug 2026 06:57:36 -0700 (PDT)
-From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
-To: vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	wens@kernel.org,
-	jernej.skrabec@gmail.com,
-	samuel@sholland.org,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
-	stable@vger.kernel.org
-Subject: [PATCH v3 2/2] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
-Date: Mon, 17 Aug 2026 15:51:23 +0200
-Message-ID: <20260817135723.12807-3-christian.lugnberg@soundtrack.io>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260817135723.12807-1-christian.lugnberg@soundtrack.io>
-References: <20260817135723.12807-1-christian.lugnberg@soundtrack.io>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="tSN6NXdn"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Bc8EAGUBZqaFE6tSrn6rVodD/L+08NkGHCwp3ilK/9WbM1r57uqNQRLrlqSKXln0UbjnKa7ieLkKQzA98Q/O8EoJiqnxJ6goRrFPt3HvknqSN/yKWjpZNsO/YyiapcKkuvgNIj01v00vpwN6NJQmxNzT0glaFwPOPZ62ofPsaijwV8r+1DgEgFmRFi49tY2X6ss6aHiGNchm8wpXMrw3RLzR8Ud39DX4+AE8psReU6TCbnt7774Tg3grpEhnTtNcXF0EngluxvKB42QOohJg7JtJpC67dE98NZh+1v0hYUT4PjiGfBKYMaEZlU6AboD1zXPfCV3BBaTi1ZwNa/nbtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9N+hA1WSk1Utk/DQrG8kzSglI9KMh+12k6xq0HIUKts=;
+ b=SolPKW2vp65Ngz68H0DkTgWRvjlgp0m6vle1E9f4jxtCZO/CQvHATI4V8p4jG6T7r8KGZumErLD8Ujsua/qLpPbnE2ve/V7zeFl5D5uR/X36oquwfRkWTI/D0ZGxvfx3eScjr+zys7VNNgug9QHaPsCG7HFZ+6Qq62GL0AtowYYbRWPYmaBYjcIKT/eFVdy/TgCbd3X/JBMETAfdo37cPCdh5fEVQ+PH/E/ygn+wYFicCGNkonMVX191pSxV4/psE6QsE6AMwkO0SewbaH7FFkCY3JpZa/A6x7S6QeejCrTzcFSwgEL+ROmRra563n+3IARNEb+SWmxfLvtsxPkz2g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9N+hA1WSk1Utk/DQrG8kzSglI9KMh+12k6xq0HIUKts=;
+ b=tSN6NXdnlZoPm9FBP9BSYFr+xxPg3xdIzalwlmgpowG7yjgr+g6q3Wr6MCMkk2DIoERXr3t+gmeaVY8zMh3fjyeqt5SXpht9vukWLMjHaSV7k5MJX616WNsr2vp2PxKqdJpH/gkhhs7XX73f0tuT2lkMnS5fOYkBIT4ThRV0T09a97ItaSuB4SfJc8IiGCwCU/d3QsZNNpVXr2Raj2QSujrrH0DDurzyg2iJ+JaSfRj6rnHaTuvrLBTrNDPyJqS2yaTKiqjcDNjpHAfyIHxSK8Ny/OXCDlPJjSN2kzE9HLgaw+uXD8KjowuU+TEvLvPtZbsjWhGdoE58NDO+sy5yiA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by GV2PR04MB11399.eurprd04.prod.outlook.com (2603:10a6:150:2b2::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
+ 2026 13:58:53 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
+ 13:58:53 +0000
+Date: Mon, 17 Aug 2026 08:58:42 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:CLANG/LLVM BUILD SUPPORT:Keyword:b(?i:clang|llvm)b" <llvm@lists.linux.dev>
+Subject: Re: [PATCH] dmaengine: bestcomm: ata: drop unused inc local
+Message-ID: <aoMTkukPXAD03CD1@SMW015318>
+References: <20260817015747.136689-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260817015747.136689-1-rosenp@gmail.com>
+X-ClientProxiedBy: PH8P221CA0014.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d8::32) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV2PR04MB11399:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76810fcf-7004-46be-98e8-08defc67ac32
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|19092799006|23010399003|366016|10067099003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	xasgTZxC2X0bieh32n0mC7jHrwBuDpizmkAKTJQr8s32bmZIu9zxmBHjYtaV/5OCKK8ueE6ImmJoKg833nNEeZmoRTmheeuys3sksuNDzjLFHYxwu1PMk5+reO7dev3u5Ui884cOPr7MbMqX1myujvptPa6N9gAXzkGJPDqCqgnnOH9njdGeDhKvHET0rnrN/+KBb2TZLLALcBAlt/rG+1epoyEypaOEglKe2Nm8NByxxpLkQVlS6owggZxxn2sUMKQhDFtwsVdrHKQ58rn9dU2fPrZBluHe3HclhGx7RdhWKMYHKY2ahy/yRvAkd/01C+iTMFKXqjM8OpgUgO7Hx4IcAnQcuTvKojeGhms/mH07+4huIJH/b1pXRIWHUIcxGxYr6byWAn9NkAguJ+s87zeFHxEG1S5+57FKqDeCTtdqsCI6PVLG2yIbEU/MTAGfQe/RxkuyTRl9QVX4yEgIZcgKk5sfJ78w6oUgVOBJb5U38dDkqeHHU2Bn1htCm2WAb9XaxGNdE7fFzR6H/eK2Mkzc3vSjxPfjFdJnEan4+vQ0EjZPlGihQHifIDiJp3dZfdYZSEJNBFBPac4MTRjR+nhnYd4e0Iw24JJKRsZvNG/XugtHMmLUBpvE2KW3rutMkoQvEYLzq2bfYJx0AWkZCIlPopRB1KtOjdQHzxkJLs4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(19092799006)(23010399003)(366016)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?R4/oFxpFyMsSh6KjWlV1GI/GiRRc6M8JDG0C2dO4wRbr3tBQxnfQQwpqHGhs?=
+ =?us-ascii?Q?tmocC5lXktVKiH2m1DT1Xdbd46BvPHz/G4WowYA3Awvig6MRk6f5+N0vNZTu?=
+ =?us-ascii?Q?YQ8GOEW+5g0DcL9qT9rlZoJg+mtv0e7EcVDfVYRkHeQANt5IcqGM8WyYoBSC?=
+ =?us-ascii?Q?bNSzaTNAePCF0dh59d3s/dKNdtaR6vH50hebbOPKnHQkjuVDT7Dp2SRWDg2h?=
+ =?us-ascii?Q?BgLaYWvI0FIBMI1G9W1RPM51b79YELa1tCXtWV5rDwzZZ9ke/fyhWNrntgS/?=
+ =?us-ascii?Q?7HN/7X742Vs8hJwDhQ4yDwC4vtPIjtzHjYuigZ3GUKqXteGJqPo0uM26Eyy3?=
+ =?us-ascii?Q?jjYBJV1nTMvazJMj9Nw5ESHYpKKrmxctfMfsIijgK23FJzUUByRYfCvc/knR?=
+ =?us-ascii?Q?0DxVh2Rqz2Y2i1FrTvMEkETQIziB3Wq1mRcrYH4rinMQo/cxbKmHAbl38HWA?=
+ =?us-ascii?Q?gxDyPNU+FRG6H5NvApR3tZqkX0TGjD023B8qD8HWCqzCdF5i28q2pzzNRI7o?=
+ =?us-ascii?Q?spHkcSnvakMIBRrk2KvApkiJ0w/FaehfyzuLPU0po0c4uD24hoMzwEH+IShc?=
+ =?us-ascii?Q?VGE64JTQokE4QdKfvI+QKgPPv0nALm4Boz5TK8c6Nb7g0QPKLkZ4wJuOVMLP?=
+ =?us-ascii?Q?cANqSmVDgRPzbzI/wTK44plkdcx0xkOdRX5yN97sUSBHluQSTBL4on4vlMOl?=
+ =?us-ascii?Q?kT5KrjjFizkW7X8kuYeeCAYTyf1wiVE9KaETeCPX9T2+23uqmSODmqrQeq0p?=
+ =?us-ascii?Q?8fvss1OtdbsYSFiRSUhT3hQVswSWrR6WBGtjcZiJckGqqHsJzIZwULvetqxA?=
+ =?us-ascii?Q?ry0jSxFlnA2G2RuCFF8zRqkodyVGmKxL7JK00jd1JHn/YJp1pqrLvw16P1we?=
+ =?us-ascii?Q?JrqCHwsf2PO4rUP6Beb1TWbkD3aXk2Wy+keUO4/qVGpyxaehkfBucaXavDJl?=
+ =?us-ascii?Q?mZrkwWeyTskR6zaXNE5+QaKp72I/C1E9t+SHSgcMjPmTlhgaLwEcTIah3okl?=
+ =?us-ascii?Q?YAIwq2oHB2iGShumtY6wN4gKklfkGgmvfkf8r9vph6qXOQZS+Z/wAZS/FZcq?=
+ =?us-ascii?Q?EVO6xRooLXZbArwC16Yj3iHhh989WD7xLtlteHMav4UEKcve7HvFEeCWGt01?=
+ =?us-ascii?Q?i0FI0sleCijvDTC/vs4obsraJ5etiUTgYRfitZNskGDr7n2peu6Csvb40WRu?=
+ =?us-ascii?Q?ezI+kp84Og0J802tIVRtUlaGv0n+yvnJslQ4RYCsphDW/gr1LoUIfvzEplkE?=
+ =?us-ascii?Q?A52ejuyX3UXvNzV2SEQzKGy2yuw8O64g7O8kFxN/e5duoKFy1IApKRGuUyC6?=
+ =?us-ascii?Q?/RjOb7ed8YoUvkfIXQ2ibMp1RaR3DZCYe92SCSsOOMcxyS+xMwOc22b8wuXH?=
+ =?us-ascii?Q?EMqJbjoVr6pjn1VyEJ+nUdurETupZo+AtwcP1U08G8AY0zv+2gDXSWijYJn3?=
+ =?us-ascii?Q?yx86frAyPfxdq/PKNWl1o8xHtsloDHBXRuskxwZ6EQAH6yArFQTp7wxKvEoG?=
+ =?us-ascii?Q?Bgb7YLUW6I+4A9Xg9UVl+Rtyn2abkr0ZfwJBdEHlxfAgLNJEmrUoaOQIezP5?=
+ =?us-ascii?Q?vdJztNz9R6KQkJj0Be7dmc7rjyA6nun1lHD4VZGlrVSv+k4IkIHtnS2W9j6Y?=
+ =?us-ascii?Q?pCsRbyKfENyjnwFlo/6WLcaKJRypQKgH06IcUWP/rZ5pJuVhsgahmTc27N+G?=
+ =?us-ascii?Q?9lH/1FKdXSIYd8/PSTLz9m6Dg8Ia54wYQw9tXwvkqxRwdOk4Q/W6OisAMw63?=
+ =?us-ascii?Q?iz8MAAWJ4L/FhHG7vjVJYNj4mkPgJT+wY/d8HSSy29DolD3x/8CH?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76810fcf-7004-46be-98e8-08defc67ac32
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 13:58:53.7225
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GhbcwnzXYvfzUp7A7vuo6SvWItthc6StqQMJSQgvPkkKlhw/RBij7M0Gd0RQXIb72GJW7umubICeNIHCbqDI/9RgpMFmIipmalrXZapR25lpxD5J5TDXGhEAq47CM1Md
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB11399
 
-sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
-descriptor for a given cookie, before checking whether the pointer
-vd is NULL:
+On Sun, Aug 16, 2026 at 06:57:47PM -0700, Rosen Penev wrote:
+> bcom_ata_init() declared and assigned a struct bcom_ata_inc *inc that
+> was never read, tripping clang -Wunused-but-set-variable:
+>
+>   drivers/dma/bestcomm/ata.c:58:23: error: variable 'inc' set but not
+>   used [-Werror,-Wunused-but-set-variable]
+>      58 |         struct bcom_ata_inc *inc;
+>         |                              ^
+>
+> Drop the declaration and the bcom_task_inc() call that fed it.
+>
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> ---
 
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-    if (vd) {
-        for (lli = txd->v_lli; ...)
-
-vchan_find_desc() returns NULL when the descriptor has already been
-completed or is in-flight on a physical channel and no longer present
-in the virtual channel's descriptor list. When vd is NULL,
-to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
-check, which is undefined behaviour. Move the call inside the if (vd)
-guard to ensure it is only reached with a valid pointer.
-
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    if (vd) {
-        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-        for (lli = txd->v_lli; ...)
-
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
----
- drivers/dma/sun6i-dma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 04fe1f5042e9..7704b016aed8 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -981,7 +981,6 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
- 	struct sun6i_pchan *pchan = vchan->phy;
- 	struct sun6i_dma_lli *lli;
- 	struct virt_dma_desc *vd;
--	struct sun6i_desc *txd;
- 	enum dma_status ret;
- 	unsigned long flags;
- 	size_t bytes = 0;
-@@ -993,9 +992,9 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
- 
- 	vd = vchan_find_desc(&vchan->vc, cookie);
--	txd = to_sun6i_desc(&vd->tx);
- 
- 	if (vd) {
-+		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
- 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
- 			bytes += lli->len;
- 	} else if (!pchan || !pchan->desc) {
--- 
-2.54.0 (Apple Git-156)
-
+>  drivers/dma/bestcomm/ata.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/drivers/dma/bestcomm/ata.c b/drivers/dma/bestcomm/ata.c
+> index 502a45d76adc..40126f3f189e 100644
+> --- a/drivers/dma/bestcomm/ata.c
+> +++ b/drivers/dma/bestcomm/ata.c
+> @@ -55,7 +55,6 @@ bcom_ata_init(int queue_len, int maxbufsize)
+>  {
+>  	struct bcom_task *tsk;
+>  	struct bcom_ata_var *var;
+> -	struct bcom_ata_inc *inc;
+>
+>  	/* Prefetch breaks ATA DMA.  Turn it off for ATA DMA */
+>  	bcom_disable_prefetch();
+> @@ -69,7 +68,6 @@ bcom_ata_init(int queue_len, int maxbufsize)
+>  	bcom_ata_reset_bd(tsk);
+>
+>  	var = (struct bcom_ata_var *) bcom_task_var(tsk->tasknum);
+> -	inc = (struct bcom_ata_inc *) bcom_task_inc(tsk->tasknum);
+>
+>  	if (bcom_load_image(tsk->tasknum, bcom_ata_task)) {
+>  		bcom_task_free(tsk);
+> --
+> 2.55.0
+>
