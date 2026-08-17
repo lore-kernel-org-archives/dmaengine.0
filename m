@@ -1,137 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEAA2405EB
-	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 02:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B8D23741;
+	Mon, 17 Aug 2026 06:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786932528; cv=none; b=Rk5FkloGpx80asCzpiH6BMrEn99mv0PHmA8q9zHCHIGkK6IG+CtbWhaDFl//9iBSH43OfD8j940cPnLkL3STTMFV1nWD6j1WPm/thnlWPX3pUnpljGFw4+KeHWyOKZrweFfkeGctJBG/VFSiKXrLUHWADaGY/xmO4zYxCVhfVv0=
+	t=1786948157; cv=none; b=XCe4xQQyjhEmI5e9l7e6mW2QIWEYdgmoNVE/GJFs1Ke6qjYhEAm0zvKTc1PsaLgsQaNVytMizbaz6TLLUQ0AxqJCespnmpJlQS0J7A8EtKjmE5nQP2ZaimjzH8FicMvntjmyKcOTjH0rBME/u11ll1n19k2lf+SdQCHbOpHCkOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786932528; c=relaxed/simple;
-	bh=SPkBg9U7Xk5JZPN7PRTbCnUCVm4/aF8yhVJoan8M4u0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=K7d5feO7B0WeW9H5jH+eVFrDs6Uvm6gXlYGqm9uEBzhUgAP41T0Evax+fk2fn3Sg9GZ7jlieuDWfQcA5VtQiA/+VYR4Z5oYauS6+C/9+jLNDmjHpoVnwZsrdF52aoj343AyWYHo48ygfzS6TGyxHsbAdTodSHf5VwtJqEwxg9rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YhJP+W2I; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786948157; c=relaxed/simple;
+	bh=clA6b7CxVK7l7rzUdRiE/LMIJ5I5D3XfzVfbVR0kge8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TbBjeuGEDaew4mrV+tvfuLUwIGmcpsfsUb/Stwu4Z9rrh8P0QT+Srbbv8pWtUE+hwxsWuWwz4yU3ILMhRc2gb9AUz+65b2Jet3bnirEoyVfJnvMdAz8MX/ARqFzqWG1fa0F5I2d0BojJoAtbVWtjNdvstg8DdgQ1lrzn+invrAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NBaxSAM6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YhJP+W2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED201F000E9;
-	Mon, 17 Aug 2026 02:08:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBaxSAM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08B21F000E9;
+	Mon, 17 Aug 2026 06:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786932526;
-	bh=XWpG7SHssUhIJmyFVDWGckUPtXS/+5eL7OENkrwfx50=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=YhJP+W2IWeZOoJU1KcsMxYLn17zW8jTUF9O0Ywctud1v8ABF8B8XZjogydttWsfk0
-	 utXMuYnDOAWxGSK3kIWKN9jTNqvJvMRohQKBAZ4gn4fq2jNnd0Sqa8mCP0v8GRMxA1
-	 Dh3GjiVnDOorpJMpmTsDinmqjw4mHYwWiQzv4tXRSGoXUDZbGHMkiyz/lbH9n3MdLW
-	 yDwLjn5/4tYlTIDAbi2KNrsI9sYAgouoU2niwQixS7K+jRQyJd8hWXne7xUoUsZNeq
-	 gt7vae9xwbomK/MhZti5/vk7f4hwcZlaoPzL6eXm1aQhUcVnH/9mLgshGJE5SQayDY
-	 Ddi0mvsV4TiHQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: bestcomm: gen_bd: split struct
- bcom_psc_params from array definition
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260817015903.137062-1-rosenp@gmail.com>
-References: <20260817015903.137062-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Aug 2026 02:08:45 +0000
-Message-Id: <20260817020846.6ED201F000E9@smtp.kernel.org>
+	s=k20260515; t=1786948155;
+	bh=rGuj0TXK9Gf4jbd/TaHIlwxx+1Y0rd7UNGo7CFHlOds=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=NBaxSAM6+kK0DZi4AgsTCW4O+0vUgMKJLfr82V1GQevh/KKAQ3oNzLc4d0DXIDbga
+	 tkB+OhMMbdhVT0j/eB34tNPgkhIol+kppyLyW+drC/7n4tp3HO3lKk/yOD9bTelq22
+	 3jXsQP1lKfOVpVFJnqLgf7oBHt0FOctRPeNzplWCVYamcuBVjB8Mep70zAURHOmd/x
+	 xhJnU57pPsonxSYrMMI7P5790/8SxNfTrW9/AV0SCh6aPpxQ1Qa9+aEg1sNROgI0eg
+	 MZj3KXqPGHW48iWEE6BAkpP1sOcc9D9rMlFNrAMXMddVsrlpCAjvHGmEukd39j76Dm
+	 iuPVpOYhE0CMA==
+Message-ID: <c4d970dd-cb54-4530-9491-01b6d90e4a2b@kernel.org>
+Date: Mon, 17 Aug 2026 08:29:06 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] powerpc: remove dead 440SP code
+To: Julian Braha <julianbraha@gmail.com>, maddy@linux.ibm.com,
+ mpe@ellerman.id.au, npiggin@gmail.com, Frank.Li@kernel.org,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com
+Cc: linusw@kernel.org, kees@kernel.org, colin.i.king@gmail.com,
+ rosenp@gmail.com, joao@joaoff.com, linuxppc-dev@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+ netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <20260816125615.985387-1-julianbraha@gmail.com>
+Content-Language: fr-FR
+From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+In-Reply-To: <20260816125615.985387-1-julianbraha@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
 
-Pre-existing issues:
-- [High] The function `bcom_psc_gen_bd_tx_init` lacks bounds checking for `=
-psc_num` before using it as an index into the `bcom_psc_params` array.
-- [High] The bounds check in `bcom_psc_gen_bd_rx_init` uses a macro (`MPC52=
-xx_PSC_MAXNUM`) that can exceed the actual size of the `bcom_psc_params` ar=
-ray.
---
 
---- Patch [1]: [PATCH] dmaengine: bestcomm: gen_bd: split struct bcom_psc_p=
-arams from array definition ---
-commit 2de5fbd01540d512aabb05b4b1f3cc916af97378
-Author: Rosen Penev <rosenp@gmail.com>
+Le 16/08/2026 à 14:56, Julian Braha a écrit :
+> The 440SP config option can never be enabled, making all references to it
+> dead code.
+> 
+> Let's remove support for 440SP, since nobody can be using it anyway.
+> 
+> This dead code was found by kconfirm, a static analysis tool for Kconfig.
 
-dmaengine: bestcomm: gen_bd: split struct bcom_psc_params from array defini=
-tion
+It would be good to include history in the commit description:
 
-This commit separates the bcom_psc_params struct definition from its array
-initialization to fix kernel-doc parsing issues. It also adds documentation
-for missing members and marks the array as const so it can be moved to
-read-only memory.
+As far as I can see, users of CONFIG_440SP were commented out by commit 
+f65573314e4e ("[POWERPC] Re-organize Kconfig code for 4xx in 
+arch/powerpc") and removed by commit ff5f483f3091 ("powerpc: 4xx: remove 
+commented out Kconfig entries")
 
-> diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_bd.c
-> index 8a24a5cbc2633..61b5746e1a972 100644
-> --- a/drivers/dma/bestcomm/gen_bd.c
-> +++ b/drivers/dma/bestcomm/gen_bd.c
 
-[ ... ]
+> 
+> Signed-off-by: Julian Braha <julianbraha@gmail.com>
+> ---
+>   arch/powerpc/boot/cuboot-katmai.c   |  2 +-
+>   arch/powerpc/include/asm/async_tx.h |  2 +-
+>   arch/powerpc/include/asm/dcr-regs.h | 10 +++++-----
+>   arch/powerpc/kernel/cpu_specs_44x.h | 12 ------------
+>   arch/powerpc/platforms/44x/Kconfig  |  3 ---
+>   drivers/dma/Kconfig                 |  2 +-
+>   drivers/dma/ppc4xx/adma.c           |  9 ---------
+>   drivers/dma/ppc4xx/adma.h           |  2 +-
+>   drivers/dma/ppc4xx/dma.h            |  9 ---------
+>   drivers/net/ethernet/ibm/emac/mal.h |  2 +-
+>   10 files changed, 10 insertions(+), 43 deletions(-)
+> 
+> diff --git a/arch/powerpc/boot/cuboot-katmai.c b/arch/powerpc/boot/cuboot-katmai.c
+> index 034a748fde24..fcd71e76309f 100644
+> --- a/arch/powerpc/boot/cuboot-katmai.c
+> +++ b/arch/powerpc/boot/cuboot-katmai.c
+> @@ -31,7 +31,7 @@ static void katmai_fixups(void)
+>   {
+>   	unsigned long sysclk = 33333000;
+>   
+> -	/* 440SP Clock logic is all but identical to 440GX
+> +	/* 440SPe Clock logic is all but identical to 440GX
+>   	 * so we just use that code for now at least
+>   	 */
+>   	ibm440spe_fixup_clocks(sysclk, 6 * 1843200, 0);
+> diff --git a/arch/powerpc/include/asm/async_tx.h b/arch/powerpc/include/asm/async_tx.h
+> index a14758426dd5..1ff5b2ca3ed1 100644
+> --- a/arch/powerpc/include/asm/async_tx.h
+> +++ b/arch/powerpc/include/asm/async_tx.h
+> @@ -7,7 +7,7 @@
+>   #ifndef _ASM_POWERPC_ASYNC_TX_H_
+>   #define _ASM_POWERPC_ASYNC_TX_H_
+>   
+> -#if defined(CONFIG_440SPe) || defined(CONFIG_440SP)
+> +#if defined(CONFIG_440SPe)
 
-> -static struct bcom_psc_params {
-> +struct bcom_psc_params {
->  	int rx_initiator;
->  	int rx_ipr;
->  	int tx_initiator;
->  	int tx_ipr;
-> -} bcom_psc_params[] =3D {
-> +};
-> +
-> +static const struct bcom_psc_params bcom_psc_params[] =3D {
+Replace by #ifdef CONFIG_440SPe
 
-[Severity: High]
-This is a pre-existing issue, but does the bounds check in
-bcom_psc_gen_bd_rx_init() adequately protect this 6-element array?
-
-drivers/dma/bestcomm/gen_bd.c:bcom_psc_gen_bd_rx_init() {
-    if (psc_num >=3D MPC52xx_PSC_MAXNUM)
-        return NULL;
-
-    return bcom_gen_bd_rx_init(queue_len, fifo,
-                               bcom_psc_params[psc_num].rx_initiator,
-                               bcom_psc_params[psc_num].rx_ipr,
-                               maxbufsize);
-}
-
-If a multi-platform kernel has CONFIG_PPC_MPC512x enabled,
-MPC52xx_PSC_MAXNUM evaluates to 12.
-
-Since this array explicitly only contains 6 elements (indices 0 to 5), a
-cell-index between 6 and 11 from a malformed device tree parsed in
-mpc5200_audio_dma_create() would bypass the check and read out-of-bounds.
-
-This could cause bcom_gen_bd_rx_init() to write out-of-bounds to the IPR
-register array.
-
-[Severity: High]
-This is also a pre-existing issue, but is there a missing bounds check when
-using psc_num to index this array in bcom_psc_gen_bd_tx_init()?
-
-drivers/dma/bestcomm/gen_bd.c:bcom_psc_gen_bd_tx_init() {
-    ...
-    return bcom_gen_bd_tx_init(queue_len, fifo,
-                               bcom_psc_params[psc_num].tx_initiator,
-                               bcom_psc_params[psc_num].tx_ipr);
-}
-
-An unvalidated psc_num from a device tree cell-index parsed in
-mpc5200_audio_dma_create() could cause an out-of-bounds read here.
-
-The resulting garbage data passed to bcom_gen_bd_tx_init() could then lead
-to an out-of-bounds write to the IPR register array, potentially causing
-memory corruption.
-
->  	[0] =3D {
->  		.rx_initiator =3D BCOM_INITIATOR_PSC1_RX,
->  		.rx_ipr =3D BCOM_IPR_PSC1_RX,
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817015903.1370=
-62-1-rosenp@gmail.com?part=3D1
+>   extern struct dma_chan *
+>   ppc440spe_async_tx_find_best_channel(enum dma_transaction_type cap,
+>   	struct page **dst_lst, int dst_cnt, struct page **src_lst,
