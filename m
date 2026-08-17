@@ -1,67 +1,67 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720A13A9620
-	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 21:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BC63AC0CE
+	for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 21:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787003223; cv=none; b=DFh08UZgPWuXMKTsfvaw3vm9i7RzOSnsROXjSsq4xR+mEHHB92M6T3NmOB92fWFRZRWSpJwqfRBdADiAGKe5+RrWY2Umlu1nswTEFnJqdxGA3APwltzmmrUYjxAnctmrh6R1Acs2EaYmmpuMH7DNgzEErWXnXhMx1ozANssTFw0=
+	t=1787003243; cv=none; b=Ejg1DFQ3JdmjV27w5SUMLl0hL/HvbwlxLHFPcWUuAiepSjzpTK7VFFEzSeN93aLwKWgffjzZWPVd6rePcqu6bNrPf0GeTcmT23gk5ubNG9DflINynAWrS/VMnlhCVHMPDpSRhv219TJ5oXn/oy/6yUzJd7/WPMRObXTRI6a5BrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787003223; c=relaxed/simple;
-	bh=Xykw9kWsK+/kb/51/R5V3OJ/XpnN89GBPUTt9ZGEA7A=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AmmQU6Pz5S1w4cJpd2BTMqMh6R1RU6myodFkz9Z2YjTnE5jwsqa/DyiifxIOr8t0k8iggjEnNEirRX71hFyxw9pOR5ACPH06sKuszujZYcV6mvGqFM4HdvqiMcnVOa86vc3xkWbxJ1IrtuFxtg5hKWlcMAaBRL1nc3USTqNoCqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2Q83R+i; arc=none smtp.client-ip=209.85.214.177
+	s=arc-20240116; t=1787003243; c=relaxed/simple;
+	bh=F21VF5WZIFeBDrvSp00yu7wITz+jK3eO7gUtavE26gU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=opPCReDgTFhMpKzDdMtOJ4UGFJ6w+Nc5sczXVCs4j72m29u9/qt72oGFtVctX97YFVQjIsM3kbp17FUSd75sgPdOMDmJ3x4TXdBe2nZqIpfSWo9f//tOdx9Wzv4IkrO9bfMDjyDw3HFgWi4tBbo36tbYGOv/kH7V36GUe2Av92s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NpszVG3v; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2Q83R+i"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ceeee8c46bso9722555ad.2
-        for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 14:47:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NpszVG3v"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d5862bc921so4225125ad.1
+        for <dmaengine@vger.kernel.org>; Mon, 17 Aug 2026 14:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787003222; x=1787608022; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=p5z2OWZb+kR4j38zraZnYUeMrgnpIkqim6Dck0G9t6U=;
-        b=c2Q83R+iJjgsAdK5GJY5rnpja/vEbHAcESfkhvBrAFOaXwNLexhu4fWWNShP25CI11
-         HJX3IKpP+wKRUBmkMKC3F4ZFSJCcQ9kkBYBPeEFV7lRF/OtJ/rOXCh0sbNKpAEj1GkdF
-         jfWcpqF5VxEv+jXvEigAOHj5KVEJPcTjFwPtqhoqUvqy4QA2wlkjjCzaD6uinn1KI+Cs
-         FbrDjBLCqbf2gyh0EQlSE/6sLF02M8ZTWyttwaB/cvxuudF+kt/POC21xSZuPfNKZnUN
-         N6tc/G8pBMXsXDFTEiT9zYNhL3ZS1VC2YbYL8+IFDqW3uSeZJKefxIdUsmqYpV8/QI+3
-         d+nA==
+        d=gmail.com; s=20251104; t=1787003241; x=1787608041; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=zOOkvXfOzPtXa3REAJ+vIHNnVAQOzE4LMS85Pw6e9+0=;
+        b=NpszVG3vKdF96MZFsvwBlbN4zwj1eAzR1BYqK750p0AX3VjZIJ35b4wmh5Uq6eemdj
+         RLkk1DM4VBoFxPBGHf0P/zhXmQcrV8C36rCnnZGIuOozxwztnwOQAhq3mZjqyxJl4VMS
+         By36HZhBWidNVdXtYKukyHRtNZ3aSu3ljkuFDzdX0UG6nbrKdXFCyEEP7BJrc9ZoDyjp
+         YQ325EV7Rf/Hv/EODxkaUfRZt0ad0ViwVwIbCnKj6zmyKxSdp6BS80Z/wE0to2mOKD+w
+         jER4Z2EfrqnS2ehAzCHNhw2HQROL/RRk+5XLxR3gma4kPti19Hin307/bT/HKg6hCnL5
+         xVVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787003222; x=1787608022;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=p5z2OWZb+kR4j38zraZnYUeMrgnpIkqim6Dck0G9t6U=;
-        b=SHsJhOqLicd6uw9p1dPT0CqLiLF1YDX40ESC1hAzfBBo5m2HtCXcfWeUOGGew5763O
-         O1d8ghk2PlPZYED1QOgC/Z61aJa8L94kRBjmstzC1ByE2EWqqy5oxi4pzv3cN2JR5Lzy
-         JykjqxVgaxwNMqR6pqm0gVwyZ7yMleo0uIVWtTOuM/VYGtiqOq8HbTjha3t0utlzRQEt
-         tMR8tDrbcsXtVQfS0pJ8oiUkk78aAXcgt6nSUX4FDDngdtTfx2j4IDhEBe4z9sb77Oqx
-         V118HXK81yB+HdLKCsZah629ICLOo4fs3UH6htrzyZHOibw4FsNXDzeXYht9XGtxJZGy
-         kuTQ==
-X-Gm-Message-State: AOJu0Yz2lYLkt/2oKhH2uFaV5ppJ3iPPFffYA68axUMbUWAnVb1pVJ5o
-	ZAWQddZVoOsS136Y380SW8Js8AjOKzGXZlG9V6RyAryt1GYlDvvS8P29
-X-Gm-Gg: AR+sD11rwM5Y0zbeMvn7L/Gs9i/9Jb60bGhVLP6PJpDDqOQrXGA5hlkSNOemg91qg9M
-	BSiHNaCZDzvweAn5mc5AgUS0DkIGrE6OfIKOG16rzV6xi6oCzp4cZ1f+QmoALYOwWH/ofNHqFzt
-	b8h4DODVBhvnvbXBCIiBuwnkU9nwUSP6+VAaCJuxXw/pMbHRJv+LGuqXp9wOpmm+VCPDgXfd7NT
-	be6qeIW49J8SbdntweoF69rDDWY9z8E5DSSTBw9BiJdpYLWBsLIs/FMJLDTo4OOOGFUA5e9UyHZ
-	Pqy9W/iHqtMr0bCGPk/Df19Vra2gayYoRKZtQZD3shG5w69Jry45JFKVGAZOQfmBWq13Cs16vQL
-	/kwT95hWmRQbBbUAMJRJXXgYLJ3ZlOAQOtjQpJMd5HX0u+RzJHaM7DtNCeYLVvfxbDfaCpYCFSl
-	7C5vSJuxxhs9eU0oRu+5OAz+HMOnaDFTT5eUyhMrX4AgKrv1a+DUdQ2cAzmu/ibQ+wYlClmSPE+
-	MSmJxpCOzPH
-X-Received: by 2002:a17:903:1b2b:b0:2ca:de3:15eb with SMTP id d9443c01a7336-2d3b0739429mr214351025ad.0.1787003221574;
-        Mon, 17 Aug 2026 14:47:01 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787003241; x=1787608041;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=zOOkvXfOzPtXa3REAJ+vIHNnVAQOzE4LMS85Pw6e9+0=;
+        b=MDUrGfKDYj+LbjSvg7RBIufrQTodXUOyr71w38eU0dQqbI3W+G0YuIpKqwEbAVshxO
+         EJC2zT81aKVDigzCdt6nM2T/IYTGEjBa//H+VpgM209yO2zSQrGfmzuFhSi9lk6zR9CV
+         2TjnYsUluLGLhWAqqms8teKGZOihsbV+ynAJ7Ximh6wtYOyKEnQuVh9fbafXynUEvWg0
+         BLPjM3cv7RLipAOvxGnPN2rK42p9TP1UJkS0GnfR/bKh7wWsLzq8o86E3tieuhkId8T7
+         amb3yFA2GtxV/c4drFPgwPLVzJFDDnqo4AhuHFcATKRX+Kq+WMNn6XO8rLdxf+v+wVQj
+         I7MQ==
+X-Gm-Message-State: AOJu0YxAneha++12K9VkoOL4949v8YfdpV1fm2lNYBnMsj2xsjhNM3FD
+	WfVHUkRG4qqIfqEtLn32rUqpBQe+LNLuUpQRAAsVMZPLtjcjOfIIu28C
+X-Gm-Gg: AR+sD13kTY7I1vTpjlap6zo3pU/61yhjzEV0vNiGroHTy34PjWwCArtL9gDxL37Gxfl
+	2grAtCFfHSHTuAQg/oCCy30Vt4JQq97IY/NUJJcEtcKd/FJAO6MCh6iTu8qogxS1nn/nk5/u4S7
+	ST4XbyvGVLzCIA0pgcQhxPVN7iMqtv/tc+A397f9/weLESQqEQtYYuAIii3L6nkk/wqLLtoIIap
+	MFOh9AwzhfMDJ8+5sMT2ek/ktK7u+wUOe6N6DIgxF+9YRUCjzQwiQguOvO18gu1UR1zl7C5jSMO
+	engqtDQTAVvbOSHPjjddnhKeIoeI0LBOScWeFoBe6TPIsNOB0myGlLcU/n3gCBNZJXkqx/rDVRY
+	qKtxBgUFfvkxQxGNiv+cGkobZyQ1fvvgiq9amDlgLt505avxqdZVSZwv7FGJA/qw4TOJxQH4ixI
+	3BpmiO/zEoPEqfqHxWW+wrzFUvAodYk7MZ8QMbANcSaFR9WtxWPR2vKG80LP1mjf+YnHkKm0GFh
+	g==
+X-Received: by 2002:a17:902:f785:b0:2c9:8287:fd0d with SMTP id d9443c01a7336-2d3b0c9fa62mr234832805ad.3.1787003241426;
+        Mon, 17 Aug 2026 14:47:21 -0700 (PDT)
 Received: from [10.112.173.252] ([2409:40c2:5053:3384:1c8f:aa2d:e07e:6d3d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3267c388e3csm10153024eec.21.2026.08.17.14.46.41
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3267c388e3csm10153024eec.21.2026.08.17.14.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2026 14:47:01 -0700 (PDT)
+        Mon, 17 Aug 2026 14:47:20 -0700 (PDT)
 From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Subject: [PATCH 0/7] dt-bindings: usb: ti: Convert AM33xx/DA8xx MUSB
- bindings to DT schema
-Date: Tue, 18 Aug 2026 03:16:30 +0530
-Message-Id: <20260818-ti-am33-usb-v1-0-69ac5f92df45@gmail.com>
+Date: Tue, 18 Aug 2026 03:16:31 +0530
+Subject: [PATCH 1/7] dt-bindings: dma: ti,cppi41: Convert to DT schema
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -69,11 +69,10 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMSQqAMAxA0atI1gZqHfEq4sIh1QgONFUE8e5WX
- b7F/xcIWSaBMrjA0sHC6+IRhQF0Y7MMhNx7g1Y6U0WUo2Ns5jjGXVpM0qQwmtJckQFfbJYMn9+
- tqn/L3k7UuXcB9/0Aaq4XU28AAAA=
-X-Change-ID: 20260817-ti-am33-usb-4548f2e570ef
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260818-ti-am33-usb-v1-1-69ac5f92df45@gmail.com>
+References: <20260818-ti-am33-usb-v1-0-69ac5f92df45@gmail.com>
+In-Reply-To: <20260818-ti-am33-usb-v1-0-69ac5f92df45@gmail.com>
 To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
  Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -92,61 +91,189 @@ Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
  goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
  simona.toaca@nxp.com, j.bhargav.u@gmail.com
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787003201; l=2463;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787003201; l=5423;
  i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=Xykw9kWsK+/kb/51/R5V3OJ/XpnN89GBPUTt9ZGEA7A=;
- b=PSDiwjCRSgF8tyLL58sgaor0uFp4NOH2lPKDimPZXXZyXBiNYyX/1dUSdCEXV8ObgPylbuCI+
- pKkQcZo2p37BxtEFJZgFjDL7yQXIyz8lq+tWA0sJ/b3S6y3sMZrDDcE
+ bh=F21VF5WZIFeBDrvSp00yu7wITz+jK3eO7gUtavE26gU=;
+ b=HvBPE2YFgPKs1xpfA4//8wMC2+0JImWTrf+vPM4dpDHJnioYai6vZ+YntmxTM5KSe7QMI5+Cy
+ KB4isr3/y85CaLXnWXDnMqbKCE4jJcMoQeu46l6lnifgbNCKHhV7fuY
 X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
  pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-This patch series converts the legacy TI AM33xx, DM816, and DA8xx
-USB/MUSB text bindings to modern DT schema.
-
-The legacy am33xx-usb.txt and da8xx-usb.txt bindings was historically
-structured as a single, monolithic file that documented the entire USB
-subsystem (the wrapper, core MUSB controller, PHY, and control module)
-all together. This series converts that monolithic text binding into
-proper, distinct DT schema files for each hardware component.
-
-Patches in this series:
-1. dt-bindings: dma: ti,cppi41: Convert to DT schema
-2. dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
-3. ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
-4. dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
-5. dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
-6. dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
-7. dt-bindings: usb: ti,da830-musb: Convert to DT schema
+Convert TI CPPI 4.1 DMA controller text bindings to DT schema. Add
+ti,am3359-cppi41 and ti,da830-cppi41 into single schema since they share
+the same hardware IP block and driver. Add undocumented #dma-requests
+and power-domains properties to match existing DTS usage.
 
 Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
 ---
-Bhargav Joshi (7):
-      dt-bindings: dma: ti,cppi41: Convert to DT schema
-      dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
-      ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
-      dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
-      dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
-      dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
-      dt-bindings: usb: ti,da830-musb: Convert to DT schema
+ .../devicetree/bindings/dma/ti/ti,cppi41.yaml      | 108 +++++++++++++++++++++
+ .../devicetree/bindings/usb/am33xx-usb.txt         |  14 ---
+ .../devicetree/bindings/usb/da8xx-usb.txt          |  12 ---
+ 3 files changed, 108 insertions(+), 26 deletions(-)
 
- .../devicetree/bindings/dma/ti/ti,cppi41.yaml      | 108 +++++++++++
- .../devicetree/bindings/phy/ti,am335x-usb-phy.yaml |  49 +++++
- .../devicetree/bindings/usb/am33xx-usb.txt         | 200 ---------------------
- .../devicetree/bindings/usb/da8xx-usb.txt          |  81 ---------
- .../bindings/usb/ti,am335x-usb-ctrl-module.yaml    |  38 ++++
- .../devicetree/bindings/usb/ti,am33xx-usb.yaml     | 104 +++++++++++
- .../devicetree/bindings/usb/ti,da830-musb.yaml     | 111 ++++++++++++
- .../devicetree/bindings/usb/ti,musb-am33xx.yaml    | 111 ++++++++++++
- arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi  |   1 +
- arch/arm/boot/dts/ti/omap/am335x-boneblue.dts      |   1 +
- arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts |   1 +
- .../arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts |   1 +
- 12 files changed, 525 insertions(+), 281 deletions(-)
----
-base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
-change-id: 20260817-ti-am33-usb-4548f2e570ef
+diff --git a/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml b/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml
+new file mode 100644
+index 000000000000..110cf62c66d2
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml
+@@ -0,0 +1,108 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/ti/ti,cppi41.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: TI CPPI41 DMA Controller
++
++maintainers:
++  - Sebastian Andrzej Siewior <bigeasy@linutronix.de>
++
++properties:
++  compatible:
++    enum:
++      - ti,am3359-cppi41
++      - ti,da830-cppi41
++
++  reg:
++    minItems: 3
++    maxItems: 4
++
++  reg-names:
++    minItems: 3
++    maxItems: 4
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-names:
++    const: glue
++
++  "#dma-cells":
++    const: 2
++
++  dma-channels:
++    description: Number of DMA channels supported.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
++  dma-requests:
++    description: Number of DMA requests supported.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
++  power-domains:
++    maxItems: 1
++
++  "#dma-channels":
++    description: Deprecated, use dma-channels instead.
++    deprecated: true
++
++  "#dma-requests":
++    description: Deprecated, use dma-requests instead.
++    deprecated: true
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - "#dma-cells"
++  - dma-channels
++
++allOf:
++  - $ref: /schemas/dma/dma-controller.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: ti,am3359-cppi41
++    then:
++      properties:
++        reg:
++          minItems: 4
++        reg-names:
++          items:
++            - const: glue
++            - const: controller
++            - const: scheduler
++            - const: queuemgr
++        power-domains: false
++      required:
++        - interrupt-names
++        - dma-requests
++    else:
++      properties:
++        reg:
++          maxItems: 3
++        reg-names:
++          items:
++            - const: controller
++            - const: scheduler
++            - const: queuemgr
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    dma-controller@7402000 {
++        compatible = "ti,am3359-cppi41";
++        reg = <0x47400000 0x1000>,
++              <0x47402000 0x1000>,
++              <0x47403000 0x1000>,
++              <0x47404000 0x4000>;
++        reg-names = "glue", "controller", "scheduler", "queuemgr";
++        interrupts = <17>;
++        interrupt-names = "glue";
++        #dma-cells = <2>;
++        dma-channels = <30>;
++        dma-requests = <256>;
++    };
+diff --git a/Documentation/devicetree/bindings/usb/am33xx-usb.txt b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+index 654ffc62d013..8431de346129 100644
+--- a/Documentation/devicetree/bindings/usb/am33xx-usb.txt
++++ b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+@@ -51,20 +51,6 @@ USB
+ The controller should have an "usb" alias numbered properly in the alias
+ node.
+ 
+-DMA
+-~~~
+-- compatible: ti,am3359-cppi41
+-- reg: offset and length of the following register spaces: USBSS, USB
+-  CPPI DMA Controller, USB CPPI DMA Scheduler, USB Queue Manager
+-- reg-names: glue, controller, scheduler, queuemgr
+-- #dma-cells: should be set to 2. The first number represents the
+-  endpoint number (0 … 14 for endpoints 1 … 15 on instance 0 and 15 … 29
+-  for endpoints 1 … 15 on instance 1). The second number is 0 for RX and
+-  1 for TX transfers.
+-- dma-channels: should be set to 30 representing the 15 endpoints for
+-  each USB instance.
+-- #dma-channels: deprecated
+-
+ Example:
+ ~~~~~~~~
+ The following example contains all the nodes as used on am335x-evm:
+diff --git a/Documentation/devicetree/bindings/usb/da8xx-usb.txt b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
+index fb2027a7d80d..00320d92d3bb 100644
+--- a/Documentation/devicetree/bindings/usb/da8xx-usb.txt
++++ b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
+@@ -27,18 +27,6 @@ Optional properties:
+ ~~~~~~~~~~~~~~~~~~~~
+  - vbus-supply: Phandle to a regulator providing the USB bus power.
+ 
+-DMA
+-~~~
+-- compatible: ti,da830-cppi41
+-- reg: offset and length of the following register spaces: CPPI DMA Controller,
+-  CPPI DMA Scheduler, Queue Manager
+-- reg-names: "controller", "scheduler", "queuemgr"
+-- #dma-cells: should be set to 2. The first number represents the
+-  channel number (0 … 3 for endpoints 1 … 4).
+-  The second number is 0 for RX and 1 for TX transfers.
+-- dma-channels: should be set to 4 representing the 4 endpoints.
+-- #dma-channels: deprecated
+-
+ Example:
+ 	usb_phy: usb-phy {
+ 		compatible = "ti,da830-usb-phy";
 
-Best regards,
 -- 
-Bhargav
+2.55.0
 
