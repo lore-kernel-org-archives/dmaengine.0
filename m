@@ -1,309 +1,122 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A33344036
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DF537FF70;
+	Tue, 18 Aug 2026 14:35:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787063502; cv=none; b=u0TCjFwYWTsxSqU72uRasYnjRBGXvDGUidqEYLMXjKk5n2KgSE/zS2lK6LR0Z3oe69b/4O7qJXBN1MzsIIdmyrjMjLxtObA9KiX43NA2lCyWGRzAFHe7sQVNIUqnNCfx4+j4do/oz4chw/1Vun2KlfKFBpkAJdoGJf3+PpaE6/o=
+	t=1787063751; cv=none; b=WMoAmUGvJuFCln0eTxlSyFw75G7Gnjydc9QDsu98ohb4jelfWEeu7Exq00LU3toPx6QAfxF8qc/af7REpBvwqwDlGCEntGtQvLIbcttygczcyE0xCKJqxeJAbYKEgsUPGM7DXb9jHGn1hBqJluN+kaBkR3JZJToFWVJXccyQ2VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787063502; c=relaxed/simple;
-	bh=bJqIbElUcpqQLiMeMmTF1fWVKJqAYL76gZjzfUU7oAc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LTRGTASIvXWFvdzxCWevFDnfP9TzOPcFiFO37NPSjd8Owl6Vz54avNbTzYYKh3D9W1K6KHGvr2Q9g/jb4HWsv2FlwDU0wEHvgp8Q9r5tfeqIpZQJQzyvdPQ7q4TtKNr1EFP9AzX+ULEDGTVl4Oef24Y+GUv6PYqf/xeclpfgs/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bd1YM4ww; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787063751; c=relaxed/simple;
+	bh=1rcjz9ODtWAA1RxHvn2Ov42kIOTHRR/N3GanX0R9dO4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=mOfwu74r3S9AePSfGLRxJzOBoeXirG/CR/emKrhAFiERmX6Z5qfSQvrAOQURECyYGCH7nrSZivVfs+sWSHDbbjrpf5jSKGJJj8ZMVpS8GxogWDsohRG3fh6iEdYPYofHlwWbLJvAmuJHMxtqsPplCMFILHA1T+rsgC25h+Dt21s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icRAha+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bd1YM4ww"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-384c94c9423so554560a91.2
-        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787063500; x=1787668300; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=RE21JFz7XFYmP4oZ5LDGVF5TCaoOBdwIPAfKGxU/5ig=;
-        b=Bd1YM4ww4z9ihbH0kiibqxjOxVk+86ussTA4NNVhMAtYoadrhNgGsBoZGwNhZMOHol
-         qo6pQw3u7IFPRTlHSbKVwpz0tabRtLuEygayJdCqj0abBkaAlUbwLscOJBvJhcHW5iPE
-         N8L1QnJxhZVUG1lq/NEP7e7m0WeIXfoJQNLNQA/lJaUnJC2xPrHvCWAvnOZZ+zXMqxlx
-         qjX3aH/WpW4KMHHy7uzU5PC7wlUDLFgoH6V2zsa7ewTCzqe1PDWBya6j5ExGyNQK+8G2
-         08FjTYn4qMPgduhZRCQb7KXuB5OSJDa3gFsa0AQL2YwYgcDpy+jc+IOOAHV0Jd25ubT3
-         h+og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787063500; x=1787668300;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=RE21JFz7XFYmP4oZ5LDGVF5TCaoOBdwIPAfKGxU/5ig=;
-        b=b3Okn7fSPl5MTA9A8elpIeZ3l+Ytd+q7TYFpU6dvle3fVUlJfTJyEZmvbb/38kCjHK
-         aWu5J8uxU8G5Nht9a1ToMwzZaIpEz0sHRL7czeXSJ6yfmcme/mwy0I5XcdFdPDCpHPvh
-         f1zq3n/Wsj4OIUv6GI+yYiNfhi9u90v0IHZBNnmQ9+Di6Y4V2ReQhwI8s1DlmgGrdsvt
-         fjyJWDrgBFhAm5SKJv/7fW+WndIRGb66f/GPSqIE058gtuqE9AyME4OvWt2qlAdDkvEf
-         8TZoQadpUcW04tpKEPPTBxOOA+FvygMU+YpCdkt0loaH5FTL1Scg7rFiC8x20DJybw0C
-         sdUA==
-X-Gm-Message-State: AOJu0Yx+EkHydvC/94uSU5JJlmb1pvQ/G4Ef/8HEgr7vErqVjIJSavG1
-	BzC6MNo69W0qmdCSLRrueQ4SO1jl0UdaVUuIYLomn0DpnuUiODND/N7E
-X-Gm-Gg: AR+sD13qS5AuTFNVkxa4ac9QBxRf0XgOxUtZeSEjQk5RwNm6MsbdQwiQ/+6BkYKs2f2
-	fqjU8u1iMaT7i5N3sJjI21sPqldWKV66inmsRgbk6PYWhjrSwwmPe/0IXKOlcpcNqhcQsITcLMT
-	Q4DQIQRXVGhtNbjQ9vy/sVF/50+k8GzsAnS6plFzFVcBNxYNhCdT0WklKP31EOxYxHJct8sHGMd
-	XNHJCEFjt6LkIk2rLAaqZLKe/NE/UXhUnNRZutdr8YAV0GdmmDe6nYBlMeU9UsNmHuhBXfeuj0b
-	WdjqXec4nnfD67Hz3BTSAp2R4xKx+NxUPe2XtdcPt3Exa2HYhliJtXB++ZQMX86wioHwi6P+oSQ
-	8nKN5frVUuKG4zu64wyOtz9N6BhZTUz2BbmDdYKdbnM30K229JfDUI4g2tYqejYrX6ubgd5TYWx
-	T0ftX/sOdzJ6pZHprU7d6A8nJexLShogbovyf0ed3sI7rlHV78s+1WMJgKWjvP34Ga09qyLlL/
-X-Received: by 2002:a17:90b:164b:b0:38e:76f8:fcbb with SMTP id 98e67ed59e1d1-3933b95a6b0mr24932418a91.4.1787063499757;
-        Tue, 18 Aug 2026 07:31:39 -0700 (PDT)
-Received: from [10.90.163.252] ([2409:40c2:501a:6e15:dc3f:c23f:e55e:d03d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.31.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 07:31:39 -0700 (PDT)
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Tue, 18 Aug 2026 19:58:49 +0530
-Subject: [PATCH v2 7/7] dt-bindings: usb: ti,da830-musb: Convert to DT
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icRAha+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941D81F000E9;
+	Tue, 18 Aug 2026 14:35:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787063750;
+	bh=JB3LTQdUzexXJbGLFEoPVsFN3Sk3Yfq0VeSSpzHMggs=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=icRAha+Gi55pC9f7y5416UaAT6IaQup9VLsBBexRgXIF8f0y9pi5M9MIPE1rqPvAi
+	 Fj/HDikzsAdZhBoiu0+9rR2z3lJ66zMhHJ1T12g8PZqryv5WVunpmzx1PurwLv/k2h
+	 4ysvs2wVoPo7x9jsJ75wVjm+EokTGSZ6GYyzCdYKJVECXVfPtn0KbkpSY81y6yUNgR
+	 vFdTp+uCTb1J1enfJdkFXIbRD5ta2r8e/XpoXtPNCL4YadTuQa8ksA8luEf9FY7zBV
+	 dSZbGI/lYxZ0s4OayfICmdBEk9XcCrnEowLWX/kGxzukeLpXvyLrWFp1GekrbYzktj
+	 asP5ML/hYuabQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 6/7] dt-bindings: usb: ti,am33xx-usb: Convert to DT
  schema
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Bhargav Joshi" <j.bhargav.u@gmail.com>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com, linux-phy@lists.infradead.org, dmaengine@vger.kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260818-ti-am33-usb-v2-6-66fd44d66824@gmail.com>
+References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
+ <20260818-ti-am33-usb-v2-6-66fd44d66824@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 18 Aug 2026 14:35:49 +0000
+Message-Id: <20260818143549.941D81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-ti-am33-usb-v2-7-66fd44d66824@gmail.com>
-References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
-In-Reply-To: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
-To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Andrzej Siewior <bigeasy@linutronix.de>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Aaro Koskinen <aaro.koskinen@iki.fi>, 
- Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>, 
- Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>, 
- Ravi B <ravibabu@ti.com>, Kumar Gupta <ajay.gupta@ti.com>, 
- Sergei Shtylyov <sshtylyov@ru.mvista.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-omap@vger.kernel.org, 
- goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
- simona.toaca@nxp.com, j.bhargav.u@gmail.com
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=5232;
- i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=bJqIbElUcpqQLiMeMmTF1fWVKJqAYL76gZjzfUU7oAc=;
- b=ajK8gPvHZukbS3OTmoaPWtiAJLKyEZ4GPUFMq/CpE/Is60UY8/yuYcdWqrtu0dzz4DNm5f3F8
- Xln7lr2e1j+Bnn0KSAPjfBGJwlj+o/H8ZUzSgbPQCIDrSgByE2tgdsM
-X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
- pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-Convert the TI DA8xx/OMAP-L1x MUSB text bindings to DT schema. Since
-DA8xx MUSB node acts as a parent bus for the CPPI41 DMA controller add
-required #address-cells, #size-cells, and ranges properties.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] The YAML example contains unresolved phandle references (`&ctrl_mod=
+` and `&usb0_phy`), which will cause `dt_binding_check` compilation to fail.
+--
 
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
----
- .../devicetree/bindings/usb/da8xx-usb.txt          |  69 -------------
- .../devicetree/bindings/usb/ti,da830-musb.yaml     | 113 +++++++++++++++++++++
- 2 files changed, 113 insertions(+), 69 deletions(-)
+--- Patch [6]: [PATCH v2 6/7] dt-bindings: usb: ti,am33xx-usb: Convert to D=
+T schema ---
+commit e44cab46abc4f9978c722895c49e454a5ad807d6
+Author: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-diff --git a/Documentation/devicetree/bindings/usb/da8xx-usb.txt b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-deleted file mode 100644
-index 00320d92d3bb..000000000000
---- a/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-+++ /dev/null
-@@ -1,69 +0,0 @@
--TI DA8xx MUSB
--~~~~~~~~~~~~~
--For DA8xx/OMAP-L1x/AM17xx/AM18xx platforms.
--
--Required properties:
--~~~~~~~~~~~~~~~~~~~~
-- - compatible : Should be set to "ti,da830-musb".
--
-- - reg: Offset and length of the USB controller register set.
--
-- - interrupts: The USB interrupt number.
--
-- - interrupt-names: Should be set to "mc".
--
-- - dr_mode: The USB operation mode. Should be one of "host", "peripheral" or "otg".
--
-- - phys: Phandle for the PHY device
--
-- - phy-names: Should be "usb-phy"
--
-- - dmas: specifies the dma channels
--
-- - dma-names: specifies the names of the channels. Use "rxN" for receive
--   and "txN" for transmit endpoints. N specifies the endpoint number.
--
--Optional properties:
--~~~~~~~~~~~~~~~~~~~~
-- - vbus-supply: Phandle to a regulator providing the USB bus power.
--
--Example:
--	usb_phy: usb-phy {
--		compatible = "ti,da830-usb-phy";
--		#phy-cells = <0>;
--	};
--	usb0: usb@200000 {
--		compatible = "ti,da830-musb";
--		reg = <0x00200000 0x1000>;
--		ranges;
--		#address-cells = <1>;
--		#size-cells = <1>;
--		interrupts = <58>;
--		interrupt-names = "mc";
--
--		dr_mode = "host";
--		vbus-supply = <&usb_vbus>;
--		phys = <&usb_phy 0>;
--		phy-names = "usb-phy";
--
--		dmas = <&cppi41dma 0 0 &cppi41dma 1 0
--			&cppi41dma 2 0 &cppi41dma 3 0
--			&cppi41dma 0 1 &cppi41dma 1 1
--			&cppi41dma 2 1 &cppi41dma 3 1>;
--		dma-names =
--			"rx1", "rx2", "rx3", "rx4",
--			"tx1", "tx2", "tx3", "tx4";
--
--
--		cppi41dma: dma-controller@201000 {
--			compatible = "ti,da830-cppi41";
--			reg =  <0x201000 0x1000
--				0x202000 0x1000
--				0x204000 0x4000>;
--			reg-names = "controller", "scheduler", "queuemgr";
--			interrupts = <58>;
--			#dma-cells = <2>;
--			dma-channels = <4>;
--		};
--
--	};
-diff --git a/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml b/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml
-new file mode 100644
-index 000000000000..0faf2a1a17c7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml
-@@ -0,0 +1,113 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/usb/ti,da830-musb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: TI DA8xx MUSB
-+
-+maintainers:
-+  - Sergei Shtylyov <sshtylyov@ru.mvista.com>
-+
-+allOf:
-+  - $ref: /schemas/usb/usb-drd.yaml#
-+
-+properties:
-+  compatible:
-+    const: ti,da830-musb
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: mc
-+
-+  phys:
-+    maxItems: 1
-+
-+  phy-names:
-+    const: usb-phy
-+
-+  dmas:
-+    minItems: 1
-+    maxItems: 8
-+
-+  dma-names:
-+    minItems: 1
-+    maxItems: 8
-+    items:
-+      pattern: "^(rx|tx)[1-4]$"
-+
-+  vbus-supply:
-+    description: Phandle to a regulator providing the USB bus power.
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-ranges: true
-+
-+  ranges: true
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 1
-+
-+patternProperties:
-+  "^dma-controller@[0-9a-f]+$":
-+    $ref: /schemas/dma/ti/ti,cppi41.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - phys
-+  - phy-names
-+  - ranges
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    usb@200000 {
-+        compatible = "ti,da830-musb";
-+        reg = <0x00200000 0x1000>;
-+        ranges;
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        interrupts = <58>;
-+        interrupt-names = "mc";
-+
-+        dr_mode = "host";
-+        vbus-supply = <&usb_vbus>;
-+        phys = <&usb_phy 0>;
-+        phy-names = "usb-phy";
-+
-+        clocks = <&psc1 1>;
-+        clock-ranges;
-+
-+        dmas = <&cppi41dma 0 0>, <&cppi41dma 1 0>,
-+               <&cppi41dma 2 0>, <&cppi41dma 3 0>,
-+               <&cppi41dma 0 1>, <&cppi41dma 1 1>,
-+               <&cppi41dma 2 1>, <&cppi41dma 3 1>;
-+        dma-names = "rx1", "rx2", "rx3", "rx4",
-+                    "tx1", "tx2", "tx3", "tx4";
-+
-+        dma-controller@201000 {
-+            compatible = "ti,da830-cppi41";
-+            reg = <0x201000 0x1000>,
-+                  <0x202000 0x1000>,
-+                  <0x204000 0x4000>;
-+            reg-names = "controller", "scheduler", "queuemgr";
-+            interrupts = <58>;
-+            #dma-cells = <2>;
-+            dma-channels = <4>;
-+        };
-+    };
+dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
 
--- 
-2.55.0
+This commit converts the TI AM33xx USB Wrapper text binding to DT schema.
+It drops the USB control module from child nodes, allows standard phy node
+names alongside legacy ones, and deprecates the ti,hwmods property.
 
+> diff --git a/Documentation/devicetree/bindings/usb/ti,am33xx-usb.yaml b/D=
+ocumentation/devicetree/bindings/usb/ti,am33xx-usb.yaml
+> new file mode 100644
+> index 0000000000000..0b36b9ddfb4a9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/ti,am33xx-usb.yaml
+[ ... ]
+> +examples:
+> +  - |
+> +    usb@47400000 {
+> +        compatible =3D "ti,am33xx-usb";
+> +        reg =3D <0x47400000 0x1000>;
+> +        ranges;
+> +        #address-cells =3D <1>;
+> +        #size-cells =3D <1>;
+> +        ti,hwmods =3D "usb_otg_hs";
+> +
+> +        usb-phy@47401300 {
+> +            compatible =3D "ti,am335x-usb-phy";
+> +            reg =3D <0x47401300 0x100>;
+> +            reg-names =3D "phy";
+> +            ti,ctrl_mod =3D <&ctrl_mod>;
+
+[Severity: Low]
+Will this cause a compilation failure during make dt_binding_check?
+
+The example references the &ctrl_mod phandle here, but since the control
+module node was removed from the child nodes during the conversion, this
+reference appears to be undefined.
+
+> +            #phy-cells =3D <0>;
+> +        };
+> +
+> +        usb@47401000 {
+> +            compatible =3D "ti,musb-am33xx";
+> +            reg =3D <0x47401400 0x400>,
+> +                  <0x47401000 0x200>;
+> +            reg-names =3D "mc", "control";
+> +            interrupts =3D <18>;
+> +            interrupt-names =3D "mc";
+> +            dr_mode =3D "otg";
+> +            mentor,multipoint =3D <1>;
+> +            mentor,num-eps =3D <16>;
+> +            mentor,ram-bits =3D <12>;
+> +            mentor,power =3D <500>;
+> +            phys =3D <&usb0_phy>;
+
+[Severity: Low]
+Does this also leave an undefined reference in the example?
+
+The phys property references &usb0_phy, but the usb0_phy label was dropped
+from the usb-phy@47401300 node in this example schema.
+
+> +        };
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-ti-am33-us=
+b-v2-0-66fd44d66824@gmail.com?part=3D6
