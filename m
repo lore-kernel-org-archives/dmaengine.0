@@ -1,188 +1,159 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0A84749FF
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 12:52:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038F637882E
+	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:29:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787057563; cv=none; b=SlcjqwQUiR3wRP2v0HC6b+FNAWp+5DA6SI0VD5O5kyaiYNKY8QWEJXSjRXZ4R+LscBxUyct+JOWr7TS8FXdxN8AR44CfsMiGGAPpz/7kh8ntOtz0vX616hdqvQFu3lGU7TD38zYA017diBpFopy3/e38Ajfz+1MsXcu7rST8RpI=
+	t=1787063359; cv=none; b=jciM9i7ldmHT8Dak7afIVQdnd7iYwMNk3Gtayz3AFHGEqwe2psrojsI7VbeK0MdCkX6E1607ZiXycMcxdFnntSlYwooAcHaTMqNirTrcxkC5AeQ5b8HfWkg3+8FnNrbl5eA4v8JVl3HG4nhVvO0kYNqPpyIAZ68b9osAR/f6PLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787057563; c=relaxed/simple;
-	bh=oTEgsdS3BWDIJ6mNWRIXYmuo2OSR1at3K9VGEDhVycg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=I48oGL2B3VQCrjdcMN0YTFD4iXbYfXfzKeCt7bTMUvrg45VPuzeP0JNFuvLbmAs4gQPqEz+Yod/3h74m1Fj6NhcOZ3unvQTuIguYOAk4afZbH3Xnuqp5deRfRekkKi1FiFGOg6XZKISJDZ38fCaYR7o08rAgkGIVi22ext3Wjhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IpGs0HnA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787063359; c=relaxed/simple;
+	bh=JGfyrv6YsEMW3ySMnbJnC0enIp8myRb40Fox7M1f5A8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Dsi/UlNB2BbGRxp6q7RRKLW2hlMWkz0VWIKdslPPTwXQz1vgcB9voz3tcne9sBvE5iuVbXmNXZA40EZKv06vhlxKALjAH08iIvWuYf2IQfC4EWBWo8dTOyNWIL1gQ2EPKu8a/ikcPdn/O+8GSCqFcb/TSto5xxRrGX/xPWdaEFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jc0QgWIQ; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpGs0HnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E431F000E9;
-	Tue, 18 Aug 2026 12:52:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787057560;
-	bh=98KPLXXHPTi8xR/nbL+9JUQ0RuhJsVOA4ejNHf+GXBc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IpGs0HnAVS3FJOE2dE9GwRBsreeg+dqW9uK2hkwfnoyWwfH4/JipnD6hnK9WbkULv
-	 JSUnZyg7D+CZeqmoreuNqBfgilRu0X/ROr51Mn4A4gUZZVpF08ZnhLjTqseJVgBcck
-	 wC/rTreNex/YDsxdPnbIYdYU/rH9bVab1lqZF+PII1wLRa/9m+pqk9Qw7ccVirvZOs
-	 wW1I+isWNUaHTzzAQX2JtV5n1B0dee0TEUlEGXdx1a5o5SxK9ibW7jdHYE3beiiRjL
-	 79FyoJ9x6eKOEykTXbyLse/2u8iqsa6n8DFE2tMeqZ++3+wYiHmYilp2vHf/mKEPgo
-	 YnN8kuxQv5xEw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dma: jz4780: handle clk_prepare_enable() failure in
- probe
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jiawen Liu" <1298662399@qq.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <tencent_BE00B17EBF2A95EADD8B80203B745B9C7609@qq.com>
-References: <tencent_BE00B17EBF2A95EADD8B80203B745B9C7609@qq.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 18 Aug 2026 12:52:39 +0000
-Message-Id: <20260818125239.E4E431F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jc0QgWIQ"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cbedf082ba2so23813a12.1
+        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787063357; x=1787668157; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ODrlCcCoU3q8OoWZI3Z+F20E6MLxBbiDOF0rGC7y2kc=;
+        b=Jc0QgWIQ1qh0dGxyvqNcvcmURorFEdKsFq+o6AL2zUuNr531JGFlcGJFkITbjpHNNS
+         4ZF5k0tvEr217kStjZIS1GbAYGJxUIUfLQHmsKQfhqKgMWHYbhHbaLNq9ZcN9eLANTTJ
+         DRea0GLJ/ucGSSsYaWwu5M5bP6fV8j/iZvLDENnbjO0tJfoh2dGHpQWcw0iBnXD2GR8m
+         MHUsdwXvV2/eSlmV2mj2siOYj81RUOlEaua+7Er8znISt/Ow1rVv0ZM0PDfn+ba9WM2d
+         M6C3YeblQpowXbMG+kZibdElKVzlBUfsVHoTN2wWO1B+H5SGNki0iKCfXeZdIhPnVA5H
+         xgXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787063357; x=1787668157;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ODrlCcCoU3q8OoWZI3Z+F20E6MLxBbiDOF0rGC7y2kc=;
+        b=hYbMmlu2jblPleQ2gMgAiiKzqALlvUjGG7+yjYmlBjGXPZXBwq2pkQVMgwJrRzdiHJ
+         ue7P8sZkBH8QnNCnqStj3AUSqUUsXxkwKqYwgixcCWcXzRgICDVD5UlYrdcTMmMfDzvS
+         lM0kYX9zLw++SX+PrBlopcYLldEMkd/kfaSgdZQ2e0BKzb1XVIDhc+NH4qBVlVsh1krB
+         PUQ1wtljE6UTMwR71CrgJtaML3gqNo+ACae/+zf6iJLhdxFqf8LHVrj7qxXkFoBgc7/e
+         snWBvUrbCbNMCqI6ohTMND4Za08jEOODlQS6Lp1bDV7/Akw1B/2wA2FUUjAQ4pu4M1gf
+         jvzA==
+X-Gm-Message-State: AOJu0Yy0/zP1Bo92y3eNv2Mcmjtjd/+0VjF7XAIocPDYIuo1NlTKi6nA
+	CSebF2Y3w9OSoxb65UoNtlZd09qpju4r34KYdF7SAgnDzb2IS+psp/cK
+X-Gm-Gg: AR+sD12EBiRlcBMwwkLKHBGlaxXCMfqXD8vJxjcLNo4WgGefxfblO+8/vqR7SL7Xi9s
+	qh6K+3WrxB1hm/42UZCzKlN1rE9HGlHgHvFKn+Dt789lCbpc0dEsFowvwB9umOvY2E4lVMC3GPR
+	/R0I+0/9ZZdbIb4umt46RGqrN6KAmcA6WD9N473RlJZEerKUEVHYiZj2jy2Od7FnN6r6s+gri9r
+	FsvCk6AfxlaIOLF1hKl4mGxH8oN2qU7BJkmjLZnTB/Ld0/r5WfFkTXa/IMgq1RTF4to0yXqTHNe
+	O7KYgS/ieUOEjDuAZOpQxK9uq1zedEE7oxD45uZYBh/GTdeRLR70qDfggJxWEITkvYbadNx8yNF
+	bM1V9oy9wLsEF3451g9Qeam4AtfmbwJ5q8bxngSlp+OwcT2ZuMN16KbsuBlh9os1th/o5Xnlsp+
+	xLN6B+8DpJXEyUlyWcEtsrlMFMjVsENrF3+JS3UpyWNlNjIxjngEIFhEcQWwag80ldUtPyB3jV
+X-Received: by 2002:a17:902:850b:b0:2d5:cbd3:8eb1 with SMTP id d9443c01a7336-2d5cbd38f48mr47861085ad.3.1787063357187;
+        Tue, 18 Aug 2026 07:29:17 -0700 (PDT)
+Received: from [10.90.163.252] ([2409:40c2:501a:6e15:dc3f:c23f:e55e:d03d])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.28.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Aug 2026 07:29:16 -0700 (PDT)
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
+Subject: [PATCH v2 0/7] dt-bindings: usb: ti: Convert AM33xx/DA8xx MUSB
+ bindings to DT schema
+Date: Tue, 18 Aug 2026 19:58:42 +0530
+Message-Id: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WNyw6CMBBFf4XM2jGlUB6u/A/DopQpjBFqWiAaw
+ r8LGBcuT3LuuQsE8kwBLtECnmYO7IYN5CkC0+mhJeRmY5BCZqKIcxwZdZ8kOIUaU5UWVpLKBVn
+ YFk9Pll9H7VZ9OUz1ncy4J3aj4zA6/z7u5nj3fuXirzzHKDArtVG2lI1N1bXtNT/OxvVQrev6A
+ bHjDQi4AAAA
+X-Change-ID: 20260817-ti-am33-usb-4548f2e570ef
+To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Andrzej Siewior <bigeasy@linutronix.de>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Aaro Koskinen <aaro.koskinen@iki.fi>, 
+ Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>, 
+ Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>, 
+ Ravi B <ravibabu@ti.com>, Kumar Gupta <ajay.gupta@ti.com>, 
+ Sergei Shtylyov <sshtylyov@ru.mvista.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-omap@vger.kernel.org, 
+ goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
+ simona.toaca@nxp.com, j.bhargav.u@gmail.com
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=2756;
+ i=j.bhargav.u@gmail.com; h=from:subject:message-id;
+ bh=JGfyrv6YsEMW3ySMnbJnC0enIp8myRb40Fox7M1f5A8=;
+ b=9giuNSenfwjusCj/dLjQXYCk5quKNspVE/tzT8aHCiTbMgmU5VX0Hd6wozCgezLFxIvzYRC+m
+ ezTX+JHv/U7C/ZWvHRReZiDvw2g5pyp+tdnBTdHyWcA5zP/tKO+xt+a
+X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
+ pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+This patch series converts the legacy TI AM33xx, DM816, and DA8xx
+USB/MUSB text bindings to modern DT schema.
 
-Pre-existing issues:
-- [High] Incorrect teardown ordering in `jz4780_dma_remove()`: `clk_disable=
-_unprepare()` is called before `free_irq()`, which can lead to a bus fault.
-- [High] The driver mixes devm-managed dmaengine registration with manual t=
-eardown in `remove()`, causing the dmaengine to be unregistered after hardw=
-are is disabled.
-- [High] When descriptor setup fails, the driver erroneously frees the curr=
-ently active descriptor instead of the newly allocated descriptor, causing =
-memory leaks and a NULL pointer dereference.
-- [High] Checking the status of a submitted but unissued transaction while =
-the channel is idle causes a NULL pointer dereference.
---
+The legacy am33xx-usb.txt and da8xx-usb.txt bindings was historically
+structured as a single, monolithic file that documented the entire USB
+subsystem (the wrapper, core MUSB controller, PHY, and control module)
+all together. This series converts that monolithic text binding into
+proper, distinct DT schema files for each hardware component.
 
---- Patch [1]: [PATCH] dma: jz4780: handle clk_prepare_enable() failure in =
-probe ---
-commit 15ac33e185449fe2ef9ed06622c4c9792fca2767
-Author: jiawen <1298662399@qq.com>
+Patches in this series:
+1. dt-bindings: dma: ti,cppi41: Convert to DT schema
+2. dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
+3. ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
+4. dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
+5. dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
+6. dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
+7. dt-bindings: usb: ti,da830-musb: Convert to DT schema
 
-dma: jz4780: handle clk_prepare_enable() failure in probe
+Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
+---
+Changes in v2:
+- patch 1: add interrupts as required property for am335x-cppi41
+- patch 4,7: add pattern constraint for dma-names
+- patch 6: remove deprecated property ti,hwmods from required
+- Link to v1: https://lore.kernel.org/r/20260818-ti-am33-usb-v1-0-69ac5f92df45@gmail.com
 
-jz4780_dma_probe() ignores the return value of clk_prepare_enable(). If
-the clock fails to enable, the driver continues and may later attempt to
-disable an unprepared clock on error paths, leading to unbalanced clock
-operations. Check the return value and propagate the error immediately,
-avoiding the erroneous cleanup.
+---
+Bhargav Joshi (7):
+      dt-bindings: dma: ti,cppi41: Convert to DT schema
+      dt-bindings: phy: ti,am335x-usb-phy: Convert to DT schema
+      ARM: dts: ti: am335x: Fix redundant interrupts property in USB nodes
+      dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
+      dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
+      dt-bindings: usb: ti,am33xx-usb: Convert to DT schema
+      dt-bindings: usb: ti,da830-musb: Convert to DT schema
 
-> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-> index 6070dfdb7114c..2547fa229a835 100644
-> --- a/drivers/dma/dma-jz4780.c
-> +++ b/drivers/dma/dma-jz4780.c
-> @@ -903,7 +903,9 @@ static int jz4780_dma_probe(struct platform_device *p=
-dev)
->  		return ret;
->  	}
-> =20
-> -	clk_prepare_enable(jzdma->clk);
-> +	ret =3D clk_prepare_enable(jzdma->clk);
-> +	if (ret)
-> +		return ret;
-> =20
->  	/* Property is optional, if it doesn't exist the value will remain 0. */
->  	of_property_read_u32_index(dev->of_node, "ingenic,reserved-channels",
+ .../devicetree/bindings/dma/ti/ti,cppi41.yaml      | 109 +++++++++++
+ .../devicetree/bindings/phy/ti,am335x-usb-phy.yaml |  49 +++++
+ .../devicetree/bindings/usb/am33xx-usb.txt         | 200 ---------------------
+ .../devicetree/bindings/usb/da8xx-usb.txt          |  81 ---------
+ .../bindings/usb/ti,am335x-usb-ctrl-module.yaml    |  38 ++++
+ .../devicetree/bindings/usb/ti,am33xx-usb.yaml     | 103 +++++++++++
+ .../devicetree/bindings/usb/ti,da830-musb.yaml     | 113 ++++++++++++
+ .../devicetree/bindings/usb/ti,musb-am33xx.yaml    | 113 ++++++++++++
+ arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi  |   1 +
+ arch/arm/boot/dts/ti/omap/am335x-boneblue.dts      |   1 +
+ arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts |   1 +
+ .../arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts |   1 +
+ 12 files changed, 529 insertions(+), 281 deletions(-)
+---
+base-commit: 8d3ae59288f1e7d58d76558a6ee96d533bc5019f
+change-id: 20260817-ti-am33-usb-4548f2e570ef
 
-[Severity: High]
-This isn't a bug introduced by this patch, but while reviewing the probe
-error handling, I noticed an issue with devm-managed dmaengine registration
-mixed with manual teardown in jz4780_dma_remove().
+Best regards,
+-- 
+Bhargav
 
-probe() uses dmaenginem_async_device_register(), which defers unregistering
-the DMA engine to the devres cleanup phase, occurring after remove() return=
-s.
-
-However, in jz4780_dma_remove(), the driver manually kills tasklets, frees =
-the
-IRQ, and disables the clock:
-
-jz4780_dma_remove() {
-    ...
-	clk_disable_unprepare(jzdma->clk);
-	free_irq(jzdma->irq, jzdma);
-
-	for (i =3D 0; i < jzdma->soc_data->nb_channels; i++)
-		tasklet_kill(&jzdma->chan[i].vchan.task);
-    ...
-}
-
-Does this create a critical window where the DMA controller is still
-registered and accessible to dmaengine clients, but its hardware is
-shut down? If a client accesses the controller (e.g., via
-dmaengine_terminate_all()) during this window, could it access
-unclocked registers and cause a bus fault?
-
-[Severity: High]
-This is a pre-existing issue, but I also noticed a teardown ordering
-problem in jz4780_dma_remove().
-
-clk_disable_unprepare() is called before free_irq():
-
-jz4780_dma_remove() {
-    ...
-	clk_disable_unprepare(jzdma->clk);
-	free_irq(jzdma->irq, jzdma);
-    ...
-}
-
-If a DMA interrupt fires or is pending after the driver calls
-clk_disable_unprepare() but before free_irq() completes, the
-jz4780_dma_irq_handler will execute and attempt to read the DMA
-controller's registers. Could accessing these registers with the clock
-disabled cause an imprecise abort or bus timeout?
-
-[Severity: High]
-This isn't a bug introduced by this patch, but I found a potential issue
-when descriptor setup fails in jz4780_dma_prep_slave_sg() and
-jz4780_dma_prep_dma_cyclic().
-
-The error path frees the channel's active descriptor instead of the newly
-allocated local desc:
-
-jz4780_dma_prep_slave_sg() {
-    ...
-		if (err < 0) {
-			jz4780_dma_desc_free(&jzchan->desc->vdesc);
-			return NULL;
-		}
-    ...
-}
-
-jzchan->desc points to the currently executing transfer, not the newly
-allocated desc. If the channel is idle, jzchan->desc is NULL, wouldn't
-this lead to an immediate NULL pointer dereference? If active, could it
-free a running descriptor (causing a use-after-free and DMA pool
-corruption) while the newly allocated desc is leaked entirely?
-
-[Severity: High]
-This is a pre-existing issue, but checking the status of a submitted but
-unissued transaction while the channel is idle appears to cause a NULL
-pointer dereference in jz4780_dma_tx_status().
-
-If a client driver submits a DMA transaction but has not yet called
-dma_async_issue_pending(), the descriptor sits on vchan->desc_submitted.
-
-If the client queries the status via dmaengine_tx_status(),
-vchan_find_desc() returns NULL because it only searches the desc_issued
-list. The code then evaluates:
-
-jz4780_dma_tx_status() {
-    ...
-	} else if (cookie =3D=3D jzchan->desc->vdesc.tx.cookie) {
-    ...
-}
-
-If the channel is idle, jzchan->desc is NULL. Could this fallback check
-dereference jzchan->desc without verifying it is not NULL, leading to a
-kernel panic?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/tencent_BE00B17EBF2=
-A95EADD8B80203B745B9C7609@qq.com?part=3D1
