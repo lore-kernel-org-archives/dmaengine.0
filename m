@@ -1,162 +1,150 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010060.outbound.protection.outlook.com [52.101.69.60])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF91A47D451
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 16:39:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787071174; cv=fail; b=thTNIfULzmtib0bjE7F5I5fOS19kLgS+cLZz2txV5oAQeqLe4HbBGHtrEBTL4eG4yviaaVOwv2JV+jQDPk1TMoihOLw2OboVXrmi9oJNV87dVkISGqZ9m/ToXFWPd6FVmnRrSqrRQvDtbHV2ufij7CA0uu3vjXpKF6s6rbK17EI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787071174; c=relaxed/simple;
-	bh=6Ji/YTeQNX0WKWvEi6x08j73aBFcoODDl16GlOfxfeY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Y93Lt8lMO5Yd62/vhJR9PgYhIqZITU8xEq27C2CJFvL7ZCxrYSwxlEuM3xg5moYzCmHLGx54wcIivRn4wdHb5h5oIVItzDPpJLkTwt0vRNkd+bEoVQmX3qpmYJ8vjoWcyFh7q97kZ/EO7A9w886h51/ds2Zme1jfOryTUqNGIBc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=mxW8McBq; arc=fail smtp.client-ip=52.101.69.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CDC47ACF7;
+	Tue, 18 Aug 2026 16:40:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787071238; cv=none; b=fEutDriDeQBqD1QMSgLLyQt++B5uRRshmp+qYFrTYFZ4PkPnTBmQTs06lY0b00VUDoWWoSRTUYgVyJQU6rK9FXVYWomVkRZ8uYzYCAq0hLG1RoTd66UyCKQ+yBAsto7iQ1c4GJS8spmjorX/T+wkGaIMvYtcbS2xD0KAqkzlgtg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787071238; c=relaxed/simple;
+	bh=ab+BzBqTiN5cy70DgdsFmeOQ0UN7uyR3m/ojNB3J5Hk=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Subject; b=dqAbYetlz+jn/EsV6PjGE69Rc6SZY8H43VCOpW8EO8NQGUNhM0IWaYcphV0Vl6FPWcTJAU1TIhhC28VweyELLNw9X8Ku2pMWepM76RLeN8Plxvi4jOPWjEkAkHLL01z+5AOPCK5ZcpJ+u/kJIZrTmJbSmZ7Kg37Nv4mzVd1BTes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=T59p0QXZ; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="mxW8McBq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WKcEfLlL3LPqLkUZ4XsY+8tJsYwRhUWL9HMNYouCRHNzPKI8G4fHnzgCuFWeCnEtfOvnvTCQNmKYxO4hCK3XRaNrRHNtnlWRnEICCwaz4x/itB1L8Tvpq1MgXielXDWwhy7Vdt0aRo2qGo1LO9DBxNsEf1jR6qcdw4yRAojU4jEVomvzJDPdED+AA/STjsl8GhcSKKppb67Z+YTNCg0132nhww/uIDymDFdnWFWWI0KnhlP993LwTcVPLLarAMQ8p6TJKfwuLhpwkjGGIZoei1/SX8i99sHRB3qzEH2avhmjMSeJwtmiKLjZjPOkXgkJH5hQ5RzyaBrU0gdci/CRNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=89VF7PIkU1JCeVILIQyALvHYfFKwwvhBN9XTZR7Ddvw=;
- b=q1LIOgn0YzjVgq3aDbbPJKEjiQpVpD1vVlzy9oLyE9Mu9JLyMMk9T1xwMOj1z2Hw+jRyOpw7Lw8Duv1mWLQHkzUBTnFWpeJ35y6JWWh7BQ8wtVnH9u1HZ88iFxKystCtjV4u9HBFowMHUADhpj8qeXPKgh7ncSAsTEmrICx06cUoZX/B7+la4IdEr+JpLm770+QFl0lDf7eH+ztiOnQqTpVFxf8Jjrf+kunXSFMHnsLhGqAP3PZD8/NyV8qD41TmHoYtQ/bQlNL6OwqpUJw1GiBEuYMRKCzplAEwdmfBjjuGp9gdfRlbvcxIIvs5cXaOTP2g3SP8vs2Vq/WbAzfmOw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=89VF7PIkU1JCeVILIQyALvHYfFKwwvhBN9XTZR7Ddvw=;
- b=mxW8McBqnE12rV0evN1HLqgVsC//k9Vt44VLxtXpLGpyCtz22Sn1G6KRdevkAvN/c23vDB1/Lqx4cgrOGIyrhrC2qUBlMSGbq1EoAjqp6W8ce/GTccHkzM46paXmscxIGCIpWLIg+HjgjYu+YHCE3UR6rVSQ0iimEvXGeQyZmK31GH+40MQvhF7wpGSmlDeleTdbEAq8zqeNSi0BxY/q4uOCAvg/l8KEM7pg97EjAUtoifbznMCFMgWegcZ+9sVuOOjFTOd46IIbCYnazxZ9RAPtleKcRW/4BykEHVu91NwjuYM4har5J2K3WxhHTHIJOz/TAxtc1WINZj0pCco4OQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA6PR04MB11806.eurprd04.prod.outlook.com (2603:10a6:102:526::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Tue, 18 Aug
- 2026 16:39:29 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.016; Tue, 18 Aug 2026
- 16:39:29 +0000
-Date: Tue, 18 Aug 2026 11:39:21 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] dmaengine: loongson: loongson2-apb-cmc: Fix signedness
- bug in irq handling
-Message-ID: <aoSKufd0kvtx0LQH@SMW015318>
-References: <20260818093448.3597016-1-zhoubinbin@loongson.cn>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260818093448.3597016-1-zhoubinbin@loongson.cn>
-X-ClientProxiedBy: SA9P223CA0018.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:806:26::23) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="T59p0QXZ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=JjzeprFssd1MD6zaUxfKcI0AWHywnUdKArgN9WwhQ5g=; b=T59p0QXZ21pgjuu6ZPEqzslveJ
+	08dliXsCB1a+OSJQTuGKE5Y/jH8xuVOuPjhFNedpC4N2MSfx+p+UXwMAms/tnOhCZ4+/oOITc1jIi
+	Hp3IxgcNXL3euOmpoHzoEwiH3wR8hhod90n8P9ZbfDxNZ8NjGUPNEf0DMjHBiIer7K2ecnsvffhEd
+	xkHIM//OCRHbIRPdN+aIGWxksqp4cwtwGMnwTISuyIR+IKWAUAjY7TTHT8xWXESff7qeg4ziAjPA2
+	Px4JgfnEA2g9KUntHgqB+g5roIRXAgneuInxynNpdluIXVtowpyiTzj+QGNHMLTwzYQMZCBWCMUOo
+	Bgod5A1A==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1wwMrb-00000000qEK-14kO;
+	Tue, 18 Aug 2026 10:40:36 -0600
+Message-ID: <89993112-bcda-4617-b3e7-36a974c27c5d@deltatee.com>
+Date: Tue, 18 Aug 2026 10:40:23 -0600
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA6PR04MB11806:EE_
-X-MS-Office365-Filtering-Correlation-Id: f93a307e-72c4-456c-7df8-08defd474614
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|19092799006|366016|56012099006|11063799006|10067099003|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	BPm+CWD4TNb7o5RkxF+pBNdxxKCh8Dfg1y9yev5jPmE2/xpOZ0W1LEbDsFv/l/WI4jOHdnnPZpgxWVbDz5AO2TdL+GjoDZt72ZCeFgn7zOXYMTJGk3v/uIOp552Fy5NcK/2s83RD1Di0JYU5q91ryt4aNAjESsTyF3nYpmRIlJr6nYkEQr6UMd5IHO4ws6jgzGVCEaIGbJ2iMrdjGyFQE+fiquq7vdOCdtYUQ5AH+nAYzUIeQF/+3pbKqL+URtcyCATuWSu2uY0l++lFipR2Ai4fvkSC+IAqapynxFZYGEynFSR4hrC/ZcuIMF8u4VyG8f9a42TcuFY8I01ue2qisdx4ycj61vg3lkV9w6wzNZnMIRBGRr+ftxwOTdpHfCweM17Ep38BiEc0bAKz3v+NkgNPK0m/9YwuRGq685Mxzkr9da3aWONqpZq8tvpredhj1KheHz5iJ64ePejBXm6LduysLYcK7+i/+U3Iq+mFkGH7cLZbPWckm3ij67QG1/DXGOgIMTTRUl9HrZBBiqdzxAk/v/yDs7yuHrJaICEnNNSVa1WwnoGWdqFQhnFZsfFTLApzctNNxun+IVuhac06blW8sl1vuJDvkLZA34MNZDgBqEbviMekEaRAiyOQ6vCKEhaOA9SrCbexhl1FnHUS7xXrcrT33eSbSMUtlQ7cmZk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(19092799006)(366016)(56012099006)(11063799006)(10067099003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nUDfw8ZtPbs4edu6fG99UydUzhdDSX1Z+NgBPDyNAeVHAVundNxxcRcgWvnk?=
- =?us-ascii?Q?Oao0/tCr4CehavzS/OFf+7XveK3M9Cc9k8imZNpjUKWFrkwJtZ3FcTG666ML?=
- =?us-ascii?Q?mnlPyfwl0BwG+xNNNNJhrPV11Py0H8bOISCoGxvPFIws4QegP2YTkFAuYiB/?=
- =?us-ascii?Q?J6QmzQHGw8zlTmO8zd+xpro84UjYfEfLS23Z4HLs2lII21STZmvvkwlpGeOJ?=
- =?us-ascii?Q?0/JP+FLEEelT2disBZqZUncLLq5CZUnS7YDoMrcWhx1Z2BdH3nprZFQaXKWi?=
- =?us-ascii?Q?UMWHhvUr5mgrADhpeBIROMOFxQ2zn/2bWMBXoV6egCYmCpLWWogW1V2IbA5M?=
- =?us-ascii?Q?OR+0Dxv8GpyIpcunZ4DMkZErdDlSQmXU304iNpiPZl7WxtSruYi4luVciEYE?=
- =?us-ascii?Q?zK9ObllOgBwrHDAJvCSYiw9EwUn+jLU/HaSYMU6+//JeKpoD8hB3zGg3qwI2?=
- =?us-ascii?Q?5lRIKa4Q+Ehu8Xp3U7PypZlT5pY/4fU2GSpkWkzKnU/2xm77H6IIVwbuOuCf?=
- =?us-ascii?Q?ZgMRnzhFqBH3pIfNhMew0DEQad3dZ5W/MY0tJGatqgEM3VE5nDGnlNtiopPz?=
- =?us-ascii?Q?AxxIr7rKROgfrRtZvHBUSqNO/pTOG9Kr3se+ljlUOAq2i7AkOyoNtVtWezno?=
- =?us-ascii?Q?28GdBE4j4mlqhoSDKl356K0pKe5ij/ATVl6ZFUsXAv428yhNUS+qvPWSN/2A?=
- =?us-ascii?Q?REFcubbOAU4nwECQ2gZZbO9WBGolaZVFds4+6LKM5ftAoaBv3urezIorgUHU?=
- =?us-ascii?Q?EXbu7nLRWp0fMz0ODeNhAdqe977ez6H5lJ3kgoCAMhz4pH+XQUIdhoCbkvn8?=
- =?us-ascii?Q?/6clBy1eC/N+p3hJMfFnQpW+zFdBiuv5vEoNCrugMlFhh3X0Pwxzi0emVTi2?=
- =?us-ascii?Q?slqF5hfa7Mc1oWYxVPWqkDYx6EKl9YBItrL8pT5msiVM2DaVZvvWVSBLTgzV?=
- =?us-ascii?Q?yG4a52u4FFHrAqh+3gJsgicWDR00B0lOdwgVI7w/AQ/53p0iCWA0M4z+gCG9?=
- =?us-ascii?Q?nohDTr7DmbmUGofrmXcvnshJBDxPv9IdMxQCBHwF/j/ae1j1MOqDlFyqzepb?=
- =?us-ascii?Q?usY3/KnYbCkanG4bmxuaNgwIHlW03lPjswsl//ZBdxZnns10zl49SN0egn2d?=
- =?us-ascii?Q?AA4P7ZB6eKS/5rflUV6mt8zEptO/r/Hix8nsP9urLP/MCxEpNGLZg+H0TxqL?=
- =?us-ascii?Q?KHA6AgAbYZB1LCwjJMr8dC4nMletFkAmj8bPielnjgYPW6jsPCQGh1ocu5CH?=
- =?us-ascii?Q?EKynUCQzgyFnQvjzJOabKTUGZYJ2AbNwW0UZ4RDi9pN1eWAVx6vZUjd/XkIB?=
- =?us-ascii?Q?Qvfnx/x/yNtU1R+14i5HtCWAXCwwyo682fWWNdNG+e3S1UDX1W+YbvLbFDOj?=
- =?us-ascii?Q?rceeGHMG0xMTeDPFtofMsFdM8DEoBb6ZiXSUCEJQazsMeYvjglbUbgckp8tZ?=
- =?us-ascii?Q?NO3KoPzuNQP6Jooo0gy9o4Oqlxaj5wBJ9Bc/Ib0vzETVB9NcWIQehZMJdwO0?=
- =?us-ascii?Q?15IgfpQQt0kQ4DPo/+Nk+BpWR1T5DsxbJEh50+uogtQk3bFNnBho4wFfgjRh?=
- =?us-ascii?Q?07iTOS+lw+dgqL5p7m4LC/cO2Aa+j2Y0FY0yoT3mv42NkRWgqfNOikWRRGcp?=
- =?us-ascii?Q?ThPv0wHljlT+g6zU+/6gcDnR3rRfiYGon4t3dW8SWz3p65Cp6HM0B3G4IVM3?=
- =?us-ascii?Q?EwZSDsa49sJwHQJXtBIpNW5pXJJNUYArjNT/ahQvZFuIbpHHi3DHQAwbs6Pt?=
- =?us-ascii?Q?C+5RoYS75HtugzP2Vnd0SXF7y1z6PLfnVfVabs/g69nLhrp5lwei?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f93a307e-72c4-456c-7df8-08defd474614
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 16:39:29.6523
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LD52Nf4SfiHjm8C4xTKb/iP5rvUlS/lugJS2zAiyR1IxmR8R+mIC7FW7nTdMoHXHGHWzU17DOJD6eauZ0vFIFl/d7B3y1/LCeBDati3x6tAgD34LOyG+Hroj2BrKyJnP
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR04MB11806
+User-Agent: Mozilla Thunderbird
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.li@nxp.com>,
+ Christoph Hellwig <hch@infradead.org>,
+ Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+ Dave Jiang <dave.jiang@intel.com>, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?=
+ <linux@weissschuh.net>, Kelvin Cao <kelvin.cao@microchip.com>
+References: <20260727184844.12647-1-logang@deltatee.com>
+ <20260727184844.12647-2-logang@deltatee.com>
+ <an91kOBKJuPtllP0@lizhi-Precision-Tower-5810>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <an91kOBKJuPtllP0@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: Frank.li@oss.nxp.com, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v2 1/4] dmaengine: add per-channel sysfs attribute groups
+ via chan_groups
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-On Tue, Aug 18, 2026 at 05:34:48PM +0800, Binbin Zhou wrote:
-> Storing that negative value into an unsigned variable makes the check
-> `if (lchan->irq < 0)` always false, so probe errors are not correctly
-> detected and propagated.
->
-> Fix this by changing the type of `irq` to `int`, which allows proper
-> signed comparison and error handling.
->
-> Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson Multi-Channel DMA controller")
-> Reported-by: Julia Lawall <julia.lawall@inria.fr>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/r/202608152230.p20WPlS0-lkp@intel.com/
-> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-> ---
+Thanks for the feedback!
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+On 2026-08-14 14:07, Frank Li wrote:
+> New dma API should start from dmaengine
 
->  drivers/dma/loongson/loongson2-apb-cmc-dma.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> index 1c9a542edc85..969dbc5dabe7 100644
-> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> @@ -90,7 +90,7 @@ struct loongson2_cmc_dma_chan {
->  	struct dma_slave_config	dma_sconfig;
->  	struct loongson2_cmc_dma_desc *desc;
->  	u32 id;
-> -	u32 irq;
-> +	int irq;
->  	u32 next_sg;
->  	struct loongson2_cmc_dma_chan_reg chan_reg;
->  };
->
-> base-commit: 075b74841bd0065a3bda3440873c747938e69b68
-> --
-> 2.52.0
->
+Will do -- when I send v3 (probably after the next merge window).
+
+> Any one outside dmaengine need access dma_list_mutex? I'd like use
+> dma_list_mutex directly.
+
+This does need to be exported so it may be used in both ioat and
+switchtec-dma. It's used indirectly via the dma_chan_from_dev class
+helper so it's use may not have been entirely obvious.
+
+>> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h>>
+index b3d251c9734e..f4e7861b2507 100644
+>> --- a/include/linux/dmaengine.h
+>> +++ b/include/linux/dmaengine.h
+>> @@ -803,6 +803,9 @@ struct dma_filter {
+>>   * @dev: struct device reference for dma mapping api
+>>   * @owner: owner module (automatically set based on the provided dev)
+>>   * @chan_ida: unique channel ID
+>> + * @chan_groups: optional NULL-terminated array of sysfs attribute groups
+>> + *	added to each channel's struct device, for driver-specific per-channel
+>> + *	attributes
+>>   * @src_addr_widths: bit mask of src addr widths the device supports
+>>   *	Width is specified in bytes, e.g. for a device supporting
+>>   *	a width of 4 the mask should have BIT(4) set.
+>> @@ -886,6 +889,7 @@ struct dma_device {
+>>  	struct device *dev;
+>>  	struct module *owner;
+>>  	struct ida chan_ida;
+>> +	const struct attribute_group **chan_groups;
+> 
+> It is per channel group, why not put into dma_chan struct.
+
+I'd like to push back on this lightly. While it may be a per-channel
+group, each channel would almost certainly be the same in all cases. So
+it's wasting a pointer for every channel that will always be the same.
+And the switchtec driver will need to add a new for-loop to set them
+all. A snippet of a patch below shows how this would affect both
+drivers. I'd personally perfer to leave it, but if you still think it's
+better the other way please let me know and I'll change it for v3.
+
+Thanks,
+
+Logan
+
+
+
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -1164,6 +1164,7 @@ static int ioat3_dma_probe(struct ioatdma_device
+*ioat_dma, int dca)
+      list_for_each_entry(c, &dma->channels, device_node) {
+              ioat_chan = to_ioat_chan(c);
++             c->chan_groups = ioat_groups;
+              writel(IOAT_DMA_DCA_ANY_CPU,
+                     ioat_chan->reg_base + IOAT_DCACTRL_OFFSET);
+      }
+@@ -1183,7 +1184,6 @@ static int ioat3_dma_probe(struct ioatdma_device
+*ioat_dma, int dca)
+              goto err_disable_interrupts;
+      }
+
+-     dma->chan_groups = ioat_groups;
+      err = dma_async_device_register(&ioat_dma->dma_dev);
+      if (err)
+              goto err_disable_interrupts;
+
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -1769,7 +1769,9 @@ static int switchtec_dma_create(struct pci_dev
+*pdev, ...)
+      dma->device_synchronize = switchtec_dma_synchronize;
+      dma->device_release = switchtec_dma_release;
+-     dma->chan_groups = switchtec_groups;
++
++     list_for_each_entry(chan, &dma->channels, device_node)
++             chan->chan_groups = switchtec_groups;
+
+      rc = dma_async_device_register(dma);
+      if (rc) {
+
