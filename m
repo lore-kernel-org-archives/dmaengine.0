@@ -1,123 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF8738D3F4;
-	Tue, 18 Aug 2026 08:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65F99442386
+	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 09:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787042598; cv=none; b=fKxglJJLGQWRMeu60eQqPPfyIkTIEfb6Cbm8a0Pcnz7PYDdYyLDBZuwDo5b32gJK15Py5L1ySZZ1hRTisZ16VhWJjPV6SS7U2EImMjCv9krCNkOmz1JsVvkmRGv43RHOopKJp+ps7Cy2YUZrztu2PzX6/rmOcut2pLoNfBJdSZo=
+	t=1787045710; cv=none; b=ET1/646FkvgrMWCzKek6L8jcKNFcHI+rMnSazJDfa06jOmo5+nZRRCKIVRyvdfA6eq8vl9Z28B01dBSDXwYDl/Yon0h1d3wDOxnT3ikOXohBeyzpxh4rNHa4TLWF2w3l7UOhMNlYLK157xkNf8AjPV0qHWqZwsKcud9Fbr+4vmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787042598; c=relaxed/simple;
-	bh=6/a8pRJPQs1GJ0D3hyPeewektteeyecNnKq4nGyZ8aQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KPTIGkCj/VevwnzyX5hhdo/h2gGDTLD+/2/LEOug0aM2u/J1zKct2SvTVPT6GeBxjUza5s2hwtPSKbvSXi2J9sks7fliVWgebTgOnklDX7ZPD+EbTdHVxXKKm3Vyq4DdVsSQB9FtoIHPegHjlef5NHdOnaduF0QJ/z2lM7hIo7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52F1F000E9;
-	Tue, 18 Aug 2026 08:43:12 +0000 (UTC)
-Message-ID: <8a4dd0ef-79ec-4295-9f01-24239edf99cf@kernel.org>
-Date: Tue, 18 Aug 2026 10:42:40 +0200
+	s=arc-20240116; t=1787045710; c=relaxed/simple;
+	bh=h1ji/DFaRBKCv3TV9qSC2ZG65IgqxtAHA26FR7NThG0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dv+s8FIi51xZiPLJqUVHeBRinkvU5DDWt3U+WmCbWkg+UTBtDNCeyFiPZ4G8HBJDrTyP9TZ5bbVvedk9b2VqE9HAC5bszoRsvYFEZFFKWU+UPXtfbO0jv3grW9jK0NBwoYKc52gBY7JkvUTZY/cOg5CCxyARpgxIYTAf/pYNJN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.87])
+	by gateway (Coremail) with SMTP id _____8DxjdJJJ4RqlTwCAA--.6606S3;
+	Tue, 18 Aug 2026 17:35:05 +0800 (CST)
+Received: from kernelserver (unknown [223.64.68.87])
+	by front1 (Coremail) with SMTP id qMiowJAx3c5GJ4RqKBsJAA--.58294S2;
+	Tue, 18 Aug 2026 17:35:03 +0800 (CST)
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+To: Binbin Zhou <zhoubb.aaron@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] dmaengine: loongson: loongson2-apb-cmc: Fix signedness bug in irq handling
+Date: Tue, 18 Aug 2026 17:34:48 +0800
+Message-ID: <20260818093448.3597016-1-zhoubinbin@loongson.cn>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: pl330: fix autosuspend cleanup during removal
-To: Johan Hovold <johan@kernel.org>, Guangshuo Li <lgs201920130244@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Russell King <rmk+kernel@arm.linux.org.uk>, Ulf Hansson <ulfh@kernel.org>,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20260808094452.2752443-1-lgs201920130244@gmail.com>
- <aoQZX1h-9vobiHev@hovoldconsulting.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <aoQZX1h-9vobiHev@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJAx3c5GJ4RqKBsJAA--.58294S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQEDCGqDvW8JkwAAsq
+X-Coremail-Antispam: 1Uk129KBj93XoW7uFy7GryxuFW5GrW8Zr15KFX_yoW8Gr1xpF
+	y3Z34rGFWUtFy3Zas8XFy8WF13Jr98XrZF9a17Z34fur9rZw1Dur1rKF1DXF47AryYgFya
+	vFyvgrW5GF1DG3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+	0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+	7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcV
+	C0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
+	04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
+	CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZUUUUU=
 
-On 18/08/2026 10:35, Johan Hovold wrote:
-> On Sat, Aug 08, 2026 at 05:44:52PM +0800, Guangshuo Li wrote:
->> pl330_probe() calls pm_runtime_use_autosuspend(), but pl330_remove()
->> does not call the matching pm_runtime_dont_use_autosuspend() when
->> removing the device.
->>
->> If the autosuspend delay is set to a negative value while autosuspend
->> is enabled, the runtime PM core increments usage_count to prevent
->> runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
->> during teardown, this reference is not dropped and usage_count remains
->> unbalanced.
-> 
-> As I've explained elsewhere, this is just misleading. There is no usage
-> count leak here as the count is balanced whenever the user re-enables
-> autosuspend through sysfs (by writing a non-negative timeout).
-> 
-> Drivers should clean up after themselves and disable autosuspend, but
-> this is more of a clean up than a fix and should not be backported.
-> 
-> You've sent upwards of 60 of these in the matter of a just a few days,
-> some which have even been picked up. Please send follow-ups (replies or
-> v2s) as soon as possible to prevent further of these from getting
-> merged.
-> 
->> Add the missing pm_runtime_dont_use_autosuspend() call before restoring
->> the runtime PM usage reference in the remove path.
->>
->> This issue was found by manual code inspection.
->>
->> Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Storing that negative value into an unsigned variable makes the check
+`if (lchan->irq < 0)` always false, so probe errors are not correctly
+detected and propagated.
 
+Fix this by changing the type of `irq` to `int`, which allows proper
+signed comparison and error handling.
 
-So EVERY patch was sent separately, even when targeting the same subsystem:
-https://lore.kernel.org/all/?q=f%3Algs201920130244%40gmail.com
+Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson Multi-Channel DMA controller")
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202608152230.p20WPlS0-lkp@intel.com/
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+---
+ drivers/dma/loongson/loongson2-apb-cmc-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-making it IMPOSSIBLE to respond in efficient way. This is just unacceptable.
+diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+index 1c9a542edc85..969dbc5dabe7 100644
+--- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
++++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+@@ -90,7 +90,7 @@ struct loongson2_cmc_dma_chan {
+ 	struct dma_slave_config	dma_sconfig;
+ 	struct loongson2_cmc_dma_desc *desc;
+ 	u32 id;
+-	u32 irq;
++	int irq;
+ 	u32 next_sg;
+ 	struct loongson2_cmc_dma_chan_reg chan_reg;
+ };
 
-Best regards,
-Krzysztof
+base-commit: 075b74841bd0065a3bda3440873c747938e69b68
+-- 
+2.52.0
+
