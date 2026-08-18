@@ -1,177 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fsn-vps-1.bereza.email (fsn-vps-1.bereza.email [162.55.44.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480F23B774A
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 04:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B01039DBF5;
+	Tue, 18 Aug 2026 07:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.55.44.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787025617; cv=none; b=CV7bXa9nzccP+eqYWTuucBKy2lZ5HPuJCLF1OKt7SeFNdIC9hH4DedDcLylp712FWr35s7HpjYTsw5iXoTuzxxi+RfH+K43qLk81zeFKvv3fUSmmClU+gnszUPx7f4vxLa258j1poBL/tHVnOW3YvwiY7ncHe+bV8hFQXjS1hxg=
+	t=1787038615; cv=none; b=q0iLDcnxzch6jBfyY6G0oWkWV9z7OVJtP50VS9yC/k9VPxi0D7Jzs+ilZOeeUoi0gIDRtS29c7xckaQRBmpCD8Rm0B9FgudeyiQoejbgvUx69p8z3oY0MlDcM7GtN0JUOPjEWnpkIn76h04q+W8FDltZgvg2kByeT+5vPthsfD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787025617; c=relaxed/simple;
-	bh=fb4xkXmTEIOjKSy5ic8q1bX7xBbcrmyVaEyIaj2Il84=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=EvMhA9KyJY8DS2rIjaWlvMYQFlsoDbAYPBSPCXR8SBIAhr4t9kg2xP1TgdhiLJQQSvWoqvXfyOpWKNVdl58/3+RKigjPH8vuazSbxCN6DjS7z/nzDcDZi9TKaI2+SeBqYgx9JXnQp46PyzSdxOVg4bl7+dL9GG9A71BBGlNjXWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DHQ97NqB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787038615; c=relaxed/simple;
+	bh=doyszLS/JeBqn3eOxUcYgttaAt25EhFLmRESRf01uzM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hIqkjiwaMvDNfbSY1BFp5JCbqzGKFU47bdR3MHS4CEdOsUH4NGSx1pzcGJ8dJso2OM8OIyrTWdBeM3azFTHG0P08xdLDm3x9CvURTWT+b4HyUz1Cug5zDQaOBXEp4TJqSfVnSa3unziIVc/xrDwGvgJJI1ACJMy+VSfa6iwyDmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email; spf=pass smtp.mailfrom=bereza.email; dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b=E0P2hKAb; arc=none smtp.client-ip=162.55.44.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bereza.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bereza.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DHQ97NqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B8B1F000E9;
-	Tue, 18 Aug 2026 04:00:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787025615;
-	bh=YbrZqmHoAC81Xf7tx/xkX92vLaLkEbang79QVUOXRkI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=DHQ97NqBkUqYJ5uarVQ9FE7m3pb2pQUPV7nQg7ir6CVChHUV6L42Jdstj/qyb2wP7
-	 UP+v6zttCHb5jc40zIcbPaAd7tniPRnufyygKz6DViw/IvcF+kZU32aekv1ZiIZLji
-	 EeIx/fpU3SdmvIoW6yzbzGCcaTpZQ3eCU5IKF9jU3pTtA89W1INgBVjHeJeEfH96SM
-	 aBExAWdjViaI4TBJj2Sqchw4/P9zc0cj9X0TSMhfn5gVGg1hbSxttFRCbQnuI//JW1
-	 9R4rMWWHesUvvoQa9v6err3kYMLJ3xJ7eKlDP956Xk6snd7ey9WLhk+XrEYcZWKhJx
-	 JZvwp1Q2smFgg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 1/4] dmaengine: add dma_device_get() helper
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Shivank Garg" <shivankg@amd.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260818-dmaengine-kref-fix-v4-1-c6ef991462a0@amd.com>
-References: <20260818-dmaengine-kref-fix-v4-0-c6ef991462a0@amd.com>
- <20260818-dmaengine-kref-fix-v4-1-c6ef991462a0@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 18 Aug 2026 04:00:15 +0000
-Message-Id: <20260818040015.95B8B1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bereza.email header.i=@bereza.email header.b="E0P2hKAb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bereza.email; s=mail;
+	t=1787038609; bh=doyszLS/JeBqn3eOxUcYgttaAt25EhFLmRESRf01uzM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=E0P2hKAbaRCKq192Wz5OtnCPzSbzePLIbaeKcLNaI0WViksm7mPDAxrGPXXz0ORPZ
+	 Gti/i2B6UKjaJzGAStHlbPdY8vvGdi0I1XmsR8xltU717ZYaLBWG7iXh4c2mk+ckbG
+	 MCNgIxYRdiw9j9X3Whfzx5B7An8JH+BMYso94mSb63zhKPJiaqRzNmfDg8NPGBbqTO
+	 tBDykLkKHrVj4svt/bUsBPjZZHG6iiXyNmtaibkBEOo5BDq2AS6JKhGpuN//kCSLNM
+	 olFxdEQZ2pTFvsVjN9QUVqFPXCUXF8GCNLZp6Yx4trctTYsopwNG8t44hVSs123Ga9
+	 oPlnjq9ZY9qtQ==
+Received: from [127.0.1.1] (pd95bbad8.dip0.t-ipconnect.de [217.91.186.216])
+	by fsn-vps-1.bereza.email (Postfix) with ESMTPSA id E1D786027C;
+	Tue, 18 Aug 2026 09:36:48 +0200 (CEST)
+From: Alex Bereza <alex@bereza.email>
+Date: Tue, 18 Aug 2026 09:36:29 +0200
+Subject: [PATCH v2] dmaengine: xilinx_dma: Fix hardware buffer descriptor
+ chain after cyclic DMA
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5WOSw6CMBCGr0K6dkxBpMSV9zAs2ulUxvAwLaBIu
+ LsFT2D+1Zf8r0UE8kxBXJJFeJo4cN9FyA6JwFp3dwK2kUUms0KWqQLHb6hfYEYHlgKCdgN5wBk
+ bRmh7S4BOalWecm3OUsSep6cY2jdu1Y/DaB6Ew1a8OWoOQ+/n/cSUbr5/9qYUohzlipRMbYFXQ
+ 54++kit5kZU67p+AQcjqTvnAAAA
+X-Change-ID: 20260817-fix-hw-buf-desc-after-cyclic-mode-cf0a7834ab50
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Michal Simek <michal.simek@amd.com>, 
+ Kedareswara rao Appana <appana.durga.rao@xilinx.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Alex Bereza <alex@bereza.email>
+X-Mailer: b4 0.16.0
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+Using the DMA in cyclic mode modifies the hardware buffer descriptor
+chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
+the cyclic transfer points back to the first descriptor, but it never
+restores the original descriptor ring. This breaks using non-cyclic mode
+after cyclic mode with an error like:
 
-Pre-existing issues:
-- [Critical] Double list_del_rcu() on device->global_node causing kernel pa=
-nic.
-- [High] Use-after-free in dma_chan_put() when dereferencing chan->device->=
-owner.
-- [High] Unbalanced dma_device_put() in dma_chan_put() causes kref underflo=
-w.
---
+  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
 
---- Patch [1]: [PATCH v4 1/4] dmaengine: add dma_device_get() helper ---
-commit bb05480fd3a83327685100c3fb961c2f1ceadfda
-Author: Shivank Garg <shivankg@amd.com>
+The only way to get out of this error state is to rebuild the hardware
+buffer descriptor ring by releasing and re-acquiring the channel.
 
-dmaengine: add dma_device_get() helper
+Fix using non-cyclic mode after cyclic mode by always restoring the
+original buffer descriptor ring in the same manner as it is set up by
+xilinx_dma_alloc_chan_resources().
 
-This commit adds a dma_device_get() helper function to pair with the existi=
-ng
-dma_device_put() for symmetry. It wraps the open-coded kref_get_unless_zero=
-()
-and adds a lockdep assertion to ensure dma_list_mutex is held.
+Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
+Signed-off-by: Alex Bereza <alex@bereza.email>
+---
+Changes in v2:
+- Use pointer arithmetic instead of potential 64 bit division in
+  xilinx_dma_clean_hw_desc() as suggested by Frank Li
+  <Frank.Li@kernel.org> and sashiko-bot - Thanks!
+- Link to v1: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
 
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index 6ffd8bd82154a..77638dc16e71d 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -433,6 +433,12 @@ static void dma_device_release(struct kref *ref)
->  		device->device_release(device);
->  }
+To: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>
+To: Michal Simek <michal.simek@amd.com>
+To: Kedareswara rao Appana <appana.durga.rao@xilinx.com>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+---
+ drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-[Severity: Critical]
-This is a pre-existing issue, but can this lead to a double free causing a
-kernel panic?
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index bef2b031dba1..650e078fcdb7 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -756,15 +756,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
+ 	return segment;
+ }
+ 
+-static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
++static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
++				     struct xilinx_axidma_tx_segment *segment)
+ {
+-	u32 next_desc = hw->next_desc;
+-	u32 next_desc_msb = hw->next_desc_msb;
++	dma_addr_t next;
++	u32 i;
+ 
+-	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
++	/*
++	 * Restore the buffer descriptor's next descriptor pointer to the value
++	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
++	 * in cyclic mode leaves the next descriptor pointer altered and
++	 * prevents subsequent non-cyclic transfers.
++	 */
++	i = segment - chan->seg_v;
++	next = chan->seg_p +
++	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
+ 
+-	hw->next_desc = next_desc;
+-	hw->next_desc_msb = next_desc_msb;
++	memset(&segment->hw, 0, sizeof(segment->hw));
++	segment->hw.next_desc = lower_32_bits(next);
++	segment->hw.next_desc_msb = upper_32_bits(next);
+ }
+ 
+ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+@@ -786,7 +796,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+ static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
+ 				struct xilinx_axidma_tx_segment *segment)
+ {
+-	xilinx_dma_clean_hw_desc(&segment->hw);
++	xilinx_dma_clean_hw_desc(chan, segment);
+ 
+ 	list_add_tail(&segment->node, &chan->free_seg_list);
+ }
 
-If a module is concurrently unloaded while a client queries for DMA channel=
-s,
-try_module_get() can fail. When it fails, callers like dmaengine_get() remo=
-ve
-the device from the list:
+---
+base-commit: 0d995da5fb97e8c312834575604d4423eb6225b7
+change-id: 20260817-fix-hw-buf-desc-after-cyclic-mode-cf0a7834ab50
 
-drivers/dma/dmaengine.c:dmaengine_get() {
-    ...
-    if (err =3D=3D -ENODEV) {
-        /* module removed before we could use it */
-        list_del_rcu(&device->global_node);
-        break;
-    }
-    ...
-}
+Best regards,
+--  
+Alex Bereza <alex@bereza.email>
 
-The concurrent module unregistration will subsequently call
-dma_async_device_unregister(), which drops the device reference and eventua=
-lly
-invokes dma_device_release().=20
-
-However, dma_device_release() unconditionally calls
-list_del_rcu(&device->global_node) again on the already unlinked node. Does
-this need a check to prevent dereferencing the poisoned list pointers?
-
-> =20
-> +static bool dma_device_get(struct dma_device *device)
-> +{
-> +	lockdep_assert_held(&dma_list_mutex);
-> +	return kref_get_unless_zero(&device->ref);
-> +}
-> +
->  static void dma_device_put(struct dma_device *device)
->  {
->  	lockdep_assert_held(&dma_list_mutex);
-> @@ -460,8 +466,7 @@ static int dma_chan_get(struct dma_chan *chan)
->  	if (!try_module_get(owner))
->  		return -ENODEV;
-> =20
-> -	ret =3D kref_get_unless_zero(&chan->device->ref);
-> -	if (!ret) {
-> +	if (!dma_device_get(chan->device)) {
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this create a kref
-underflow?
-
-In dma_chan_get(), if a channel already has clients, it skips acquiring the
-device reference but still increments the client count:
-
-drivers/dma/dmaengine.c:dma_chan_get() {
-    ...
-    /* The channel is already in use, update client count */
-    if (chan->client_count) {
-        __module_get(owner);
-        chan->client_count++;
-        return 0;
-    }
-    ...
-}
-
-However, dma_chan_put() appears to call dma_device_put() unconditionally for
-every decrement of client_count. Will a shared channel drop the device
-reference multiple times while only acquiring it once?
-
-
-[Severity: High]
-This is also a pre-existing issue, but can this sequence result in a
-use-after-free?
-
-In dma_chan_put(), the device reference is dropped:
-
-drivers/dma/dmaengine.c:dma_chan_put() {
-    ...
-    dma_device_put(chan->device);
-    module_put(dma_chan_to_owner(chan));
-    ...
-}
-
-If this is the final reference, the device struct could be freed by
-dma_device_put(). The very next line expands dma_chan_to_owner(chan) into
-chan->device->owner, dereferencing the potentially freed chan and chan->dev=
-ice
-pointers.
-
-Should the owner pointer be cached locally before dropping the device
-reference?
-
->  		ret =3D -ENODEV;
->  		goto module_put_out;
->  	}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-dmaengine-=
-kref-fix-v4-0-c6ef991462a0@amd.com?part=3D1
