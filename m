@@ -1,101 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A33383992;
-	Tue, 18 Aug 2026 14:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6738847988D;
+	Tue, 18 Aug 2026 15:44:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787064002; cv=none; b=RDxLLEy1PY5oLYfyrkV0EGKlNKwPegLzjFjiMqSHMKkG1ru7tDHoq2unE/x4Mryg7wwnZ1nCjEFoNIvEPZDj+mYIX+4hz/ietTpG10y4/pShYxyhbC8QsrJld8tZZwqmhym79Kwc5JhRM9KtIgqc3rtQvOhVucjolHc8T0Dd+Ak=
+	t=1787067872; cv=none; b=qXlvxIDaBo5sru1/rmEV6kSWIOBmwMwsG6fRSu2Xy3GVHJb8Kzj4vNmAYHvrWstZH0es8246fRtGBeLB7goXej0OwhWkKPnVdHppfbc9Q/zX6fdz3j/K1TyBxf2kDSKRQNZNNW7Dy5n13j+JdBhVbw2JLnqlRv7GmCV4YvLbDew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787064002; c=relaxed/simple;
-	bh=jJRy33Qw7gjf5VazTIiKnqGCkIY94g82CDMejK8skQM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=begTS3t6kFEhf5tGRtmaom4mvqtff8VlWXAwyJmbCupX1asLDRi3p5/XhbTJIRQBglyfef2hDjjMLN9noP5msRJL0hlfEI2SZRo+fCBU+27ezJP8/575eASKdgoDP4N00maT9eOuMWr2NVEoxrfbsEHElr8nrVLmvVZyUR4IgCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVr6at1Z; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787067872; c=relaxed/simple;
+	bh=j6a/TKo4wzYXeE/XNpP/Oj/MaS7md7ltgCNAvg9SZrM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Subject; b=PrCgpyh8AyUHlAGof6n3Ayi+Xv37nu4UdRdNI5aTxSY6azwJ5kL05j+Wp0x+UHLmulJY3P7OLPqCfJjBnQPmslgI4NqY+Y3Jq/slC9ztvSro+nSIUsuY37nu8USdiHCQ6SSZXGLrid1VcRvEg8Xk+52dEQ99ORKK/3HRz+vjAZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=NH9954Hp; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVr6at1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EDD1F000E9;
-	Tue, 18 Aug 2026 14:39:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787063997;
-	bh=er/0nV7w+oGeRHh6AqEbsRwMsWqcUWi2VR+u+1xufFo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BVr6at1ZWynlzycbyMfW5uRRkUD2T6Rm0TBEyd8rxIIqqw74GzM2QQxPWnjjuXHTu
-	 ZHTIjbYy4gnz72PsVGGziqzbtbVtPeUm3EHiqkaIqnMZ9KTz7cF2+1SuMIgtkdMKm5
-	 U1X5y1frj6Kmww7FuXXz6eCx17cpoUzoZVC4sH6sMk5rjbVViMvbeh1srqjbekWIq2
-	 TCdy1Mw/4TEH60cCCOt7fmi9SFWPMFxVUjbnnPs+nBHsazKUFL1ZDdXDiEfAAUko6y
-	 HwOitv1LstV/zXB9d/yu6JpQcnqFum9e0toO10DM27J8VsFOnYR4ftBCaKNceQIdmc
-	 pEVBT19WTsBKw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 4/7] dt-bindings: usb: ti,musb-am33xx: Convert to DT
- schema
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Bhargav Joshi" <j.bhargav.u@gmail.com>
-Cc: neil.armstrong@linaro.org, vkoul@kernel.org, robh@kernel.org, conor+dt@kernel.org, dmaengine@vger.kernel.org, olteanv@gmail.com, devicetree@vger.kernel.org, Frank.Li@kernel.org, linux-phy@lists.infradead.org
-In-Reply-To: <20260818-ti-am33-usb-v2-4-66fd44d66824@gmail.com>
-References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
- <20260818-ti-am33-usb-v2-4-66fd44d66824@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 18 Aug 2026 14:39:56 +0000
-Message-Id: <20260818143957.62EDD1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="NH9954Hp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=KsD2i9Ar8nxuH1dWYfEoPuU/VRqu8QuRIlcqAWHF43c=; b=NH9954HpkDIFFwD8pXXtVMgye6
+	AmmV53d1rMy4anmDuFkEUOxTUG9ROjBXQqS8dCzqm9L+rgNYe38rjKwrmmsOSEkhXmxqeE90cBpSH
+	+fe6TbmiMBCkcOu+9zBBrdpbwmkNw0IfvlHt12g8fnN0YtF6k9mIVGu3EUj9wkTpmfPzud0EAwu+1
+	ok+ul8IXJ2ObQK64LImKJy1eCiD3vWQdFfSrnU3r9F39yziKYE9ebQp+h/9SrYhGFdjK0AO5m2ZqQ
+	AbfRzYfeKVVv3JI/XW3LXVh0SpCsY0lnCT+DSSKAzuDKoDPD+DfUsT47s2wiO12A+sSn2esUZ3j75
+	DJCX7a1w==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1wwLzH-00000000pSu-456J;
+	Tue, 18 Aug 2026 09:44:28 -0600
+Message-ID: <8b8979bc-a56b-4a3d-a7ec-5b32d225eda9@deltatee.com>
+Date: Tue, 18 Aug 2026 09:44:26 -0600
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Shivank Garg <shivankg@amd.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
+References: <20260818-dmaengine-kref-fix-v4-0-c6ef991462a0@amd.com>
+ <20260818-dmaengine-kref-fix-v4-1-c6ef991462a0@amd.com>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <20260818-dmaengine-kref-fix-v4-1-c6ef991462a0@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: shivankg@amd.com, vkoul@kernel.org, Frank.Li@kernel.org, akpm@linux-foundation.org, stable@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Frank.Li@nxp.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v4 1/4] dmaengine: add dma_device_get() helper
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Missing type reference for `mentor,ram-bits` vendor property in DT =
-schema.
---
 
---- Patch [4]: [PATCH v2 4/7] dt-bindings: usb: ti,musb-am33xx: Convert to =
-DT schema ---
-commit cf3529cd6795cb99eba5fc624b9972e24548b4e8
-Author: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-dt-bindings: usb: ti,musb-am33xx: Convert to DT schema
+On 2026-08-17 21:43, Shivank Garg wrote:
+> Add dma_device_get() helper to match dma_device_put() to make code
+> symmetric. It wraps open-coded kref_get_unless_zero() and asserts that
+> dma_list_mutex is held, matching its put counterpart.
+> 
+> No functional change intended.
+> 
+> Suggested-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Shivank Garg <shivankg@amd.com>
 
-This commit converts the TI AM33xx MUSB text bindings to DT schema. It
-also introduces several updates during the conversion, such as allowing an
-optional vbus interrupt and adding interface-type and phy-names properties
-natively used by the dm816x hardware.
+Makes sense to me:
 
-> diff --git a/Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml b/=
-Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml
-> new file mode 100644
-> index 0000000000000..cc01edc75d11e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml
-[ ... ]
-> +  mentor,num-eps:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: Specifies the number of endpoints.
-> +    const: 16
-> +
-> +  mentor,ram-bits:
-> +    description: Specifies the ram address size.
-> +    const: 12
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 
-[Severity: Low]
-Will this cause schema validation to fail during make dt_binding_check?
-
-Without a type reference, the array <12> in device trees might be validated
-as a matrix against const: 12 instead of a scalar integer, causing a type
-mismatch error.=20
-
-Should this include a $ref to /schemas/types.yaml#/definitions/uint32
-similar to mentor,num-eps?
-
-> +
-> +  mentor,power:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: Controller supply capacity (in mA) when operating in ho=
-st mode.
-> +    const: 500
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260818-ti-am33-us=
-b-v2-0-66fd44d66824@gmail.com?part=3D4
