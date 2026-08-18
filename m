@@ -1,67 +1,67 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1924389E07
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6409139E6CD
+	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787063419; cv=none; b=ZxtfuJYyIXHfFBXhUeB9z2tjmVtz4PH9wDWkJqdzphmsC8MI8RGR6BBWrqTWQkm16u4aXkGf0yhPdTxEKGwbWvDl2S6huISxQukr6+x5aTJw/Q6KJ08oIBFIC+j0vE9n2G3bRpa8Eb8Azrcd8iAa/sHYlC+gvTf+sAOavSxTjMk=
+	t=1787063442; cv=none; b=SQAHBRPFjQaQ4PicQZYK41z3rZ6uSZTYKXU2lBhlYU4+kJuBjzRvlC1EjnwN/1v/RP9DOie8ra4e3gwwggruHIR++QCtnprijtKIdSBGzalQdz+V5OBhgFRvheAY3VyKDPQhuULqvy2hoCZ/SXtsYtYMpwrNJHZILT0uAQE6K9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787063419; c=relaxed/simple;
-	bh=2zGPgT53nMyKtGN4bplmgmbVd+Cg1WvfyXIJuEqowq8=;
+	s=arc-20240116; t=1787063442; c=relaxed/simple;
+	bh=RjKB54fZ+ycZa3KNSkC+6RK1Py5Hy0qRNAElwR43XCo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=msOKQGFXYoLgq6CmgQs5mgVcW2qv8RyBZ4KRhDLzPjuxQZiYGszFDHWCllZ00NPs8v0N9A+HMF0Qyedpp2cM32GpNlSx2f1t8u4PDl/xTzLYj2tLmblw1jkEaxuzb7ejY65vygxVDcsbXtGvXLthR76kcOqpSuBbCuMsn3HtKzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nYoyPS+Z; arc=none smtp.client-ip=209.85.215.173
+	 In-Reply-To:To:Cc; b=P47xM+mzLO5ffMwLXBoWLKtBRR6e0V+W8Jc2uq6+sqAwYE4oGXso0kpWzr483zPLoMb2aYHB0W7MTEJNJRMUlASeBWPsrF6TK9XQsVM/AzehTCqCB+bo22jztmAcb3SV5bYiqg6rsufKhy1ybFlctclydgA8+nY9sb71RMyKPrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RSDRrgr3; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYoyPS+Z"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-ca5b707b78aso282627a12.0
-        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:30:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSDRrgr3"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-cbe4592c193so268798a12.3
+        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787063416; x=1787668216; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787063439; x=1787668239; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Shib2rntu2e/Z5UR8HQqW2K03GJsazba3W0OpgQm6G4=;
-        b=nYoyPS+ZMPPvddDFZE8AG33Q+GktB9s4k8cTI4i3nqoa81DTZPRP+sA4Yy17Sb4olC
-         k7/tuVZOV1YEhnxwKVGdAcgT6wrvuoBocG25AFto7CKMEFdInSbjtDLKghlkOJQqetpG
-         4NwbmzajPVH45HpJMRgOwrfH1AHyxRXSXSZFLRBbp3BRqrsyV5hJ2tj0IXjF2TWnZwup
-         CBsYEHIn4WtJvpYFwRrDplNz3WnqajPaakG1itnhVEOEQI8EbKmG0SgxEl7WMceUELzF
-         NrP5sOyrUedVkVnvWS1A/X4EF6LqZt9zHPbhrjFWOnMBcIpVtVXXgKgqjm6cQn9iQhDK
-         u2AQ==
+        bh=sTsQwO4vbh3rP+YLndWD6GA/YwGvOBXmACUttpnYLcY=;
+        b=RSDRrgr3439lXQXSCDZPISBhQj6FVcdX5rlpKBAErvi1wvX/sJqcRGngbAQYTF7pFX
+         r2qc4iZIn2021MEi1UiXmb4kWufIdTVKqHP91Ui892ewTyYqSAD8PWndsv6PXjLeXyRk
+         LsrHsuWhTiTG/EFY42pzG8ABCL/4bCYBOTuwxspr+0NdsQ8w3J9IbiGoorX4uD3n/D3O
+         HjiFAYu6TpPzYT/PJG5nTC+rELGyomxHIEJDGxuwMb7+gfTUCJdhP5D2mcIQZ76hxz9n
+         ngWhNKxCQhNvFwWMFz+HgEAQMqAtSRbLDzKK4F7YydQjpTdWJdu4thupvlbozsj8P6TK
+         PDhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787063416; x=1787668216;
+        d=1e100.net; s=20251104; t=1787063439; x=1787668239;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Shib2rntu2e/Z5UR8HQqW2K03GJsazba3W0OpgQm6G4=;
-        b=e18IRyjcpmNro+DOVw5JDSmTrwOYJ4ve8ij9ZaogzI0FsThj9zOHcVmTX+FLnHifMp
-         JsyjDq06AnkNdttxzOpZ3MMOcQ+IoFPCdgi2FCKv34ueJYZspaKt/5beWNS/eLtdt3Jr
-         5bpS0qJpUKHSf7wLjYFao4VZqZXGZdXO5s1eldWsFPrsQMZlrMNOSI75MRK7q6zrxK2D
-         +MwpdF2sePBmOBQqer48Vyo2afVgz4bSwEVeCdF9aUa2/g0G+VVHCD0EONQ2XFi0qWAO
-         C6rPbTr24kpPC/jDPXvI20FngJoOHeljTz5xQzcQZBTE61MyZ8PkhHH4v+xTM3TUMZpO
-         qmeQ==
-X-Gm-Message-State: AOJu0YxPktaTdll267lUqsF5aHqI1DfmdSqPw19H0Ku2/kOBSqH9EFNP
-	plZPPl2Me8Ea74zjJIFIFDVIU3q1TjVUtVk/NnT3+8VO23xg9rwP8cU+
-X-Gm-Gg: AR+sD101hwI67LfnpTUd7TSasrC8MByHde+5wauXNTxNUJPJbFGm+lL1DSpsF30wbIl
-	uoYW5cPGvNGB4oxYfzP5yRAAiICGyzIAlwLPbde/ekTuZGN5xOjnX9EfrV3qUeTxIgTOc8Msrit
-	PlBtyDzS9JaOFqrELfun3PlKsODaU503QCFkKc2QguXzwJ9nAYsye+SDocRmJCMghQuu4g/Wr01
-	d9jKUzWwkr0mEr5F7m3DLtMmiuy0tmlxkBjPIZDZVVU6v84SGYTgVnGDR5xyFh4u7C+4ACVe2Gl
-	Jh6QLVa4rGdp6pO+IHnb7LXUrFskLOjJtGvcGf8YCQDHymHNkOuLXoKKIZ8/twq9rrMf6UQNReM
-	OOydhGjFaHulr2MOR/T5Z/S8ZgI5QesGdnuL7qCss1pBanXCeQTCNcpzx0cxKdgw+17tP6NVAfh
-	+6F3USYMKDjmKMDxFOnanKD6zuhBf0+lLyrqs8hmG5RtEaBk9opWcKw4oSI1m4NeonXLWDeNZx
-X-Received: by 2002:a17:903:3847:b0:2cc:f4d4:29a0 with SMTP id d9443c01a7336-2d3b0c9938cmr295090215ad.3.1787063416121;
-        Tue, 18 Aug 2026 07:30:16 -0700 (PDT)
+        bh=sTsQwO4vbh3rP+YLndWD6GA/YwGvOBXmACUttpnYLcY=;
+        b=BzL9MBPS4Nu2V7GSm7YX+oBh0jBCAEEQjavdKcDGrsujDdgYuyzirVTLtX1vyXBc/B
+         sqCGymWMxg22IHalOpU6V9Vjg8XD114oS/q9rdUyOQvWm56wCBVR9xnuVySrM4f4algI
+         moKE+6y3Zm+p4eSuNEfB4a0/R0jZNi20guw/QaY6yWWud90oTuCyoIZcKuVOX8dXPaNU
+         dBlRo97N0p0petVe/Tz0mqs9Qz5mR1l6Uput1z1/F2cO2P+Ws6B+UbkNNQDZcQDSTcd7
+         gHSThPPMGxqs/LBGxSDN4C5mTeMuSxRwf99DTUZM6GK7P5n09BBoAx97Y1WgQwWuygnO
+         gnaw==
+X-Gm-Message-State: AOJu0YzrMfFqjUlQmksXZluMPqYXRU3AlW3CK4Houy3kC/Lbs5YOixe6
+	tHEEOtJj999fZZQCYF/XIYZLBa0UgTPJ3bde/pEvLkWGIeJ+HHKD0NJA
+X-Gm-Gg: AR+sD13q+99864YFfg0tHr6/CmittZlp588/SrhYpjFq4yAaZQloXPK11OkhbH9aHkI
+	S8Di2ON/pOzxYffTBbJrlMJhDWIDSp07i0rqgL7FVPUrgdjtSTlpPx33kT3XHoNYmSZCuD2JMMT
+	ujPvhtQLmueOholQBiBeVdnKGCVVBi/4bU5uMTUrtznAjKQcv3qh07GTwB/62vTu4O1PMyEp2ky
+	LQdmz8gzChM/Zjp73G3PEfnyEfU1ZqOM1uFT57GAnXej0dtw3cy+Bqotv5I3LyX5sehF6a6dBNI
+	UyIPR9p/Nxo2izBKARA8DAhcjhNHvhet7WcTQIMpxI8S9PUBEBk+OMEFgqe4n8zOMsBO2gHRAdy
+	pDTmVc7+NALRrQoapwDleGmBYDu8N+Hh1MTy7mZxzfV+fHvfxrZeZ5gZgt3/+BoaWkykW32tqiK
+	a6x9hM8pc7mbgMfh690SXD4kvPhpkNl7rHUDElzsJ1BwVw+SKZoaHgwsqSmcVpu3nqtLNAb8oD
+X-Received: by 2002:a17:903:2ce:b0:2c7:ef84:c58e with SMTP id d9443c01a7336-2d3b0827041mr272587835ad.1.1787063437133;
+        Tue, 18 Aug 2026 07:30:37 -0700 (PDT)
 Received: from [10.90.163.252] ([2409:40c2:501a:6e15:dc3f:c23f:e55e:d03d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.29.56
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 07:30:15 -0700 (PDT)
+        Tue, 18 Aug 2026 07:30:36 -0700 (PDT)
 From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Tue, 18 Aug 2026 19:58:45 +0530
-Subject: [PATCH v2 3/7] ARM: dts: ti: am335x: Fix redundant interrupts
- property in USB nodes
+Date: Tue, 18 Aug 2026 19:58:46 +0530
+Subject: [PATCH v2 4/7] dt-bindings: usb: ti,musb-am33xx: Convert to DT
+ schema
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-ti-am33-usb-v2-3-66fd44d66824@gmail.com>
+Message-Id: <20260818-ti-am33-usb-v2-4-66fd44d66824@gmail.com>
 References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
 In-Reply-To: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
 To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -91,78 +91,184 @@ Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
  goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
  simona.toaca@nxp.com, j.bhargav.u@gmail.com
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=2514;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=5174;
  i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=2zGPgT53nMyKtGN4bplmgmbVd+Cg1WvfyXIJuEqowq8=;
- b=U44CBfLq+mbjkIIztglKnpvX2Szjq/KUNnCaHfRupVE20B/nuOBZ8VDQDiniFFo7nOR6ojcl5
- a0qkQIOtaOKCZggjOaSYj5Lei+aZaYsAaMkpyryBk3CoRhEFxzruH3X
+ bh=RjKB54fZ+ycZa3KNSkC+6RK1Py5Hy0qRNAElwR43XCo=;
+ b=xyff7burBnQ3TJ4gTsz8zLFzT2xvB6mMe4FZPf2B7MbG+j43SU7iw690LvBHMXGhE6aIvVMwM
+ sOYdWZ5iyImDzIKs5OFddLrsXwU39r6CsBJIu3aXckV7pRwOL0zNEyT
 X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
  pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-The am33xx.dtsi defines a single interrupts property for the MUSB nodes.
-Several board-level files override the usb0 node to use
-interrupts-extended instead to include vbus interrupt.
-
-Since both interrupts and interrupts-extended cannot be used
-simultaneously, Add /delete-property/ interrupts to the overriding
-nodes to resolve the schema warnings.
+Convert the TI AM33xx MUSB text bindings to DT schema.
+Changes during conversion:
+- Allow an optional vbus interrupt used in am335x-bone-common.
+- Add the interface-type and phy-names properties natively used by the
+  dm816x hardware.
+- Allow 0 or 1 for mentor,multipoint. While the text binding mandated 1,
+  the Mentor USB IP natively supports both single and multipoint
+  configurations as used in existing DTS.
 
 Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
 ---
- arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi   | 1 +
- arch/arm/boot/dts/ti/omap/am335x-boneblue.dts       | 1 +
- arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts  | 1 +
- arch/arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts | 1 +
- 4 files changed, 4 insertions(+)
+ .../devicetree/bindings/usb/am33xx-usb.txt         |  25 -----
+ .../devicetree/bindings/usb/ti,musb-am33xx.yaml    | 113 +++++++++++++++++++++
+ 2 files changed, 113 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi b/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
-index 1d83fc116b66..c436edd98e10 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
-@@ -197,6 +197,7 @@ &uart0 {
+diff --git a/Documentation/devicetree/bindings/usb/am33xx-usb.txt b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+index 8832843c7d7c..5973f88bcc65 100644
+--- a/Documentation/devicetree/bindings/usb/am33xx-usb.txt
++++ b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+@@ -17,31 +17,6 @@ Reset module
+ - reg-names: "phy_ctrl" for the "USB control registers" and "wakeup" for
+   the USB wake up control register.
  
- &usb0 {
- 	dr_mode = "peripheral";
-+	/delete-property/ interrupts;
- 	interrupts-extended = <&intc 18 &tps 0>;
- 	interrupt-names = "mc", "vbus";
- };
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-boneblue.dts b/arch/arm/boot/dts/ti/omap/am335x-boneblue.dts
-index d430f0bef165..7da2fb782ab2 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-boneblue.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-boneblue.dts
-@@ -304,6 +304,7 @@ &uart5 {
- 
- &usb0 {
- 	dr_mode = "peripheral";
-+	/delete-property/ interrupts;
- 	interrupts-extended = <&intc 18 &tps 0>;
- 	interrupt-names = "mc", "vbus";
- };
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts b/arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts
-index d21118cdb6c2..6bf388c4abbf 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-bonegreen-eco.dts
-@@ -35,6 +35,7 @@ v3v3: regulator-v3v3 {
- };
- 
- &usb0 {
-+	/delete-property/ interrupts;
- 	interrupts-extended = <&intc 18>;
- 	interrupt-names = "mc";
- };
-diff --git a/arch/arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts b/arch/arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts
-index 23caaaabf351..068ea23bbc0c 100644
---- a/arch/arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts
-+++ b/arch/arm/boot/dts/ti/omap/am335x-osd3358-sm-red.dts
-@@ -376,6 +376,7 @@ &uart0 {
- 
- &usb0 {
- 	dr_mode = "peripheral";
-+	/delete-property/ interrupts;
- 	interrupts-extended = <&intc 18 &tps 0>;
- 	interrupt-names = "mc", "vbus";
- };
+-USB
+-~~~
+-- compatible: ti,musb-am33xx
+-- reg: offset and length of "USB Controller Registers", and offset and
+-  length of "USB Core" register space.
+-- reg-names: control for the ""USB Controller Registers" and "mc" for
+-  "USB Core" register space
+-- interrupts: USB interrupt number
+-- interrupt-names: mc
+-- dr_mode: Should be one of "host", "peripheral" or "otg".
+-- mentor,multipoint: Should be "1" indicating the musb controller supports
+-  multipoint. This is a MUSB configuration-specific setting.
+-- mentor,num-eps: Specifies the number of endpoints. This is also a
+-  MUSB configuration-specific setting. Should be set to "16"
+-- mentor,ram-bits: Specifies the ram address size. Should be set to "12"
+-- mentor,power: Should be "500". This signifies the controller can supply up to
+-  500mA when operating in host mode.
+-- phys: reference to the USB phy
+-- dmas: specifies the dma channels
+-- dma-names: specifies the names of the channels. Use "rxN" for receive
+-  and "txN" for transmit endpoints. N specifies the endpoint number.
+-
+-The controller should have an "usb" alias numbered properly in the alias
+-node.
+-
+ Example:
+ ~~~~~~~~
+ The following example contains all the nodes as used on am335x-evm:
+diff --git a/Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml b/Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml
+new file mode 100644
+index 000000000000..cc01edc75d11
+--- /dev/null
++++ b/Documentation/devicetree/bindings/usb/ti,musb-am33xx.yaml
+@@ -0,0 +1,113 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/usb/ti,musb-am33xx.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: TI AM33xx/DM816 MUSB
++
++maintainers:
++  - Ravi B <ravibabu@ti.com>
++  - Ajay Kumar Gupta <ajay.gupta@ti.com>
++
++allOf:
++  - $ref: /schemas/usb/usb-drd.yaml#
++
++properties:
++  compatible:
++    enum:
++      - ti,musb-am33xx
++      - ti,musb-dm816
++
++  reg:
++    maxItems: 2
++
++  reg-names:
++    items:
++      - const: mc
++      - const: control
++
++  interrupts:
++    minItems: 1
++    maxItems: 2
++
++  interrupt-names:
++    minItems: 1
++    items:
++      - const: mc
++      - const: vbus
++
++  mentor,multipoint:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Indicates the musb controller supports multipoint.
++    enum: [0, 1]
++
++  mentor,num-eps:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Specifies the number of endpoints.
++    const: 16
++
++  mentor,ram-bits:
++    description: Specifies the ram address size.
++    const: 12
++
++  mentor,power:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Controller supply capacity (in mA) when operating in host mode.
++    const: 500
++
++  phys:
++    maxItems: 1
++
++  dmas:
++    minItems: 1
++    maxItems: 30
++
++  dma-names:
++    minItems: 1
++    maxItems: 30
++    items:
++      pattern: "^(rx|tx)([1-9]|1[0-5])$"
++
++  phy-names:
++    const: usb2-phy
++
++  interface-type:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Describes the type of interface between the controller and the PHY.
++    enum: [ 0, 1 ]
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - interrupts
++  - interrupt-names
++  - dr_mode
++  - mentor,multipoint
++  - mentor,num-eps
++  - mentor,ram-bits
++  - mentor,power
++  - phys
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    usb@47401000 {
++        compatible = "ti,musb-am33xx";
++        reg = <0x47401400 0x400>,
++              <0x47401000 0x200>;
++        reg-names = "mc", "control";
++        interrupts = <18>;
++        interrupt-names = "mc";
++        dr_mode = "otg";
++        mentor,multipoint = <1>;
++        mentor,num-eps = <16>;
++        mentor,ram-bits = <12>;
++        mentor,power = <500>;
++        phys = <&usb0_phy>;
++        dmas = <&cppi41dma 0 0 &cppi41dma 1 0>;
++        dma-names = "rx1", "tx1";
++    };
++
 
 -- 
 2.55.0
