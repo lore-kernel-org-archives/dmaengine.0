@@ -1,66 +1,67 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56D237DAAE
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B925938642A
+	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 14:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787063377; cv=none; b=a0R+ztCwzOdiw33VywGqfBKRnf3cQ4O9rcirOjYjeMHE9MsmG1lgFHVYR+yxJwCHMS2tuh3+g/XRUo3EIN84i0aFvU4GcqDhtiRW0O1Mv8k4RUgr/+/8NoGblCS/k2U0rOuLd6SlymPOVhuLMlQ+sUgDbWaQHGlWuOeG2wBWwJY=
+	t=1787063398; cv=none; b=d1koGD0nR0UuYvZNz+uB7Ipg+pkKT1cv+tzrwMKliixppj3KQIxuiVoU5iPPU6tsZF2Qj3u7CzbkGtCdNaVlkvGjakd+JMf9/boU1JHSMxMbX36Cn2y5sTH2olv+AN13Y+Dqy9JsNQv8w6bMXs7PduAyRJ630tn2gGefJjnDqCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787063377; c=relaxed/simple;
-	bh=GN8OC0qmWePc65/nVwGP+m4XJ9TN93CBwZAGUXRbCQA=;
+	s=arc-20240116; t=1787063398; c=relaxed/simple;
+	bh=x82f2rFO1TTjFpVekp+USEIM8EAiJutd+tABMnyaNHw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HQaKGxySZ2pzjVrJAzfxLgAqmrGz8EahrpM5e1cdQqoihkf+dy771MmvwJY0tCz8KgzgslgKH3rNNGFA/m/vvHkY6nVao/X2m30M4ZXKZ44OO0iaJuIgS0LvSSFN5mzoI5Dkrb5fyuDj3GdQedTVQb2rfr7H9m/SOvspVuxZPXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k5PqPSVL; arc=none smtp.client-ip=209.85.214.176
+	 In-Reply-To:To:Cc; b=aPvG7lngRZ8ichSNcY6oO4Tq0MS7J+uQQeyp+WxSk3YSnq7HLzM055NispYxaO3IBBMMI0l+KykpNywjK6e1Ba2PMm0sb92dEGIDaHoxRG3M/znx/tqZc3kM+tbZvCdcNaGVQ5pcLFggOQDp62wmNyvCPLtNDDFlIEIY2gizi7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bI0ZQg1L; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5PqPSVL"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2d03fcd26a6so7462965ad.2
-        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:29:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bI0ZQg1L"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2d027b7c8easo11392245ad.3
+        for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 07:29:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787063375; x=1787668175; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787063396; x=1787668196; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mwa35nuSoG/2eGYsft3L6cCp2RsoUxnaTuzWFFhRxOA=;
-        b=k5PqPSVLyyYH1xsLakWQzA4rWS4P8582oVCP/+2auRdnIjLAJxPiz5pffEM+sY+Mof
-         l9cTf6RUPK5qHHfLPIofWG64HJo8IuNy6Ex5R1trMgBUi+mgG/eDe+0Yhcv1JqRz2JuT
-         pGKbHvW7CP6RQwK76uHIzWI8IY2oQpYAZcBNaE38MGID+88+vaSx0nUq7YV0Xtx3g42X
-         T7U3ARwcSdvzCXoI/solBUuubKhp3KXqLLp5fdZxoAoG0MmkzzssvlDQs+1ONTEiQWMQ
-         43l8aaW4q4lQUKfiVJNXOP5w9CIDarxDyaMWdrj8PRVi69plaLHk1Pf2dizsam043u7x
-         Ol/A==
+        bh=AbV7RIHYMEgMD35kCL1q43FBlvr9xDn3Pi9g2Kfmf8I=;
+        b=bI0ZQg1LQ5SeEZaOlzPm9AzZ5T75sshhhzLFD6tShHglSZYq+rXdpfTG80JJ4/Pcum
+         zmPq3ScbI0AjfMucicRPNrwFUS1P+nCSkr4E1uBAeJSUrdc3/CM7Y1Fe2sgVa8whZo2Q
+         WzjqmGcCHDlozg0Xqx7wf/LjMA0yy9wi51y9ws4HMMFwBjzVem1pgawrsY/K7l8NoWoq
+         rqjAcBWQODy9w3Z+VuPiHEFTaOBLe+eR3pwTGtyxOGYtY7hNGZiZvh3lRShu/liEbXn/
+         i04y21Xxq6T/3Ba12Zj/m2xn7FGztkhl9jkUyXcNlFVZRlRCR8lPExB6JV0aBRG7MuCv
+         J6eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787063375; x=1787668175;
+        d=1e100.net; s=20251104; t=1787063396; x=1787668196;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=mwa35nuSoG/2eGYsft3L6cCp2RsoUxnaTuzWFFhRxOA=;
-        b=eptXa0Dj18LFe8V7IJ2DFK/0X6N33lTXBp3DpZnyBVilPJED/BDIGXpOP2Zwbcisx/
-         SPf61LGLoohMe4BpxziBgv12Kq9tucVdu3MI2YEj4VUxTSr3tiUfO6YKmSoi1VpdV0rJ
-         E7ifJE5WAML2NCj4zionK/UXm3SCyJeVmeSgGPEhmrJ6Wt88W47f3sZBNjRNgbcNkkJ3
-         eutyy33gnx/B1PD96Spipk0RD/z7JqAGZoTw6zaN7+x1n3ZqoPGnikSF28f5DvUNJ9UF
-         epBapW+EpBD5mr/yzHjBqKe4br9IIrPhxvc13Fc/9L1XfHU+m61OFz1XXVVXrd+ROVMV
-         DVCw==
-X-Gm-Message-State: AOJu0YzsJyd5exM1G/Off3ZtebdYXnIgkWZmdqH9W75P3uyFJTfCzAAo
-	srIvDTFfQ1ko6F34t3l3s0S/UH9gh+WZgYojWHFA8dpoa7g+Bz0f+wTd
-X-Gm-Gg: AR+sD12eCb7YgxvuXJY/3BJezQse/pT32sU6lF7dRW1h8877yKqwMRaAKbo4jZxkQeq
-	98ZTNSM+EvDVcdpEj1XCcC+QR7JyOmToc7zp/MxrGkZBMLCfxASZ/sa9CVcq++AZBCUou8VIXwi
-	54UIdAnyNGOVwUJxe/ZvdzGW/t4dV2U2Qr6FR45FpYu7mwO1j9zBdekxsj5CN6LmfgbNTS4C8z9
-	/4UaFHCALnD2Jw9naIImyHx7CW8JbtzuyLtZo+7O7AeOkE7CwoTzRFtk9qihd9TK4eZtNshfQf8
-	64QpijCv9MKaWt0twsRGLIwjDsY0Zwt+QNvdLhqIu1VN59VTtk5cIQhaK4UzgXgxCUdHzQIieGg
-	wNzKth82gca1DVb+qhpzJyBWFEXNRUy1ZlYdDZTtMxuQugreByUVmmuSk3YyBKyu1uK3SVblHM6
-	644W5tTlQZO/Y4v8d02ztSL3ucqjRhN/JTl126kd5coYr9VzNFtje7BW0Ucu7+TAfPJeL08ZUP
-X-Received: by 2002:a17:903:4585:b0:2cf:9e90:8be with SMTP id d9443c01a7336-2d3b0cd96a6mr307749475ad.4.1787063374733;
-        Tue, 18 Aug 2026 07:29:34 -0700 (PDT)
+        bh=AbV7RIHYMEgMD35kCL1q43FBlvr9xDn3Pi9g2Kfmf8I=;
+        b=gEpGS5ZklBpIyy3oXXyruNDKJjy8hKZP+LR+81eaNCTpJnZREmUyWyDe9DqbYsWm9l
+         g78bHxpvk0IMizGjMWLj3mbAPl1ym1WkfuqNqNLJYu58kExh7uYQCOmcbzgFlMxbShGB
+         h1yjQCHSbE/URmBZliU8X0eDYSO3a/iCdY1uVRdZucMfbbTYccyaYOMaCFN3It2D7wsX
+         5LMUZs34xHvLKwBWvlOALn6ovbGvcpIWPp4fwR4OXYpMqElvNu4mKXjpRMhfwecA9oc6
+         kRAZQ5/24qpF4TzezlCkKJ+0jeH2+FgeE7olGRZdHGFvncr/JNLGItmOiPnR0BM7Z4Uo
+         4+pg==
+X-Gm-Message-State: AOJu0Ywr6GtO9JDHpLAT4dcBxMQKquIpix0Yfq2rXD3ibyLsxfI2Qthu
+	rAsFqFa2lVPBG4V1YmHkw4HEe2E7XMiHPsWZx41Ada/V9S9uQmSs8IzB
+X-Gm-Gg: AR+sD12/ACmjA4Iq8uR9hlfSUgLRvCH7h5Z8JYUJi4W/YBIWImtsEGuXkzJKVhlvQ6S
+	Q9Z4jhTpMX790WDXtDx4TNeE/9xM43HQg1kvfNcxI2JQV2VkSSQFy4atmkNjNWOSAyjO7Tt9Fim
+	6fl3PN8nsaHXGLMBE0ccwMx9T3hwopeHxd+aCPAmj+n/k7w6kNLlMvpugulvLF7OUZ7AWs/oc/4
+	uu5NkON9o9uJYzhrcjOCWAB8AC/R3cowC3tSQoN5qlbu95+l7TPfsgiOk3HX9KmvFq8sJoUC1lt
+	Hmg09uYtbunPbK67KtuKw4B3VZ0OcmuM0BuNyocCKYhq/P97lWC5xLFFk30pf8/KCI2P/UiOmHj
+	+EQeSrP6uRCooAVQJphYHSivcWyF8/+xTsA2B+k6jsrRGYl7MfmnBEcjhr8W8pXBg/cW+uSnaLg
+	3PqWYO9V2T3Bv1XXAC+iubQScMBrK2/RoXe2lZAZLnx26PNiEMjaXfWZD7swW4SjkKoRyoIxu8
+X-Received: by 2002:a17:903:2451:b0:2c9:d298:6c0a with SMTP id d9443c01a7336-2d3b0d7af99mr259247595ad.2.1787063395970;
+        Tue, 18 Aug 2026 07:29:55 -0700 (PDT)
 Received: from [10.90.163.252] ([2409:40c2:501a:6e15:dc3f:c23f:e55e:d03d])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.29.17
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-327b43d488dsm9043527eec.29.2026.08.18.07.29.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 07:29:34 -0700 (PDT)
+        Tue, 18 Aug 2026 07:29:55 -0700 (PDT)
 From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Tue, 18 Aug 2026 19:58:43 +0530
-Subject: [PATCH v2 1/7] dt-bindings: dma: ti,cppi41: Convert to DT schema
+Date: Tue, 18 Aug 2026 19:58:44 +0530
+Subject: [PATCH v2 2/7] dt-bindings: phy: ti,am335x-usb-phy: Convert to DT
+ schema
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -68,8 +69,8 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-ti-am33-usb-v2-1-66fd44d66824@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260818-ti-am33-usb-v2-2-66fd44d66824@gmail.com>
 References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
 In-Reply-To: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
 To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -90,189 +91,98 @@ Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
  goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
  simona.toaca@nxp.com, j.bhargav.u@gmail.com
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=5446;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787063337; l=2477;
  i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=GN8OC0qmWePc65/nVwGP+m4XJ9TN93CBwZAGUXRbCQA=;
- b=/ICcEratZ3o2rpqEdLfMo+aQDlLKJjcSt5vgcEdD+6hRQzXd+n584IbHXRbjb3nvO6Zd16Afc
- gyQClNz1JY3AIE+fwrKHNSLQmXV0KSnbXKrPyKXfsHd7uaHpIO+dQOx
+ bh=x82f2rFO1TTjFpVekp+USEIM8EAiJutd+tABMnyaNHw=;
+ b=sEuhDNSAfdBHS5mDJZE37ho8OYAT2uqjvOXGzw1LAuvfii4SuSCLU7ba2h4sAFx31yOczsJ2D
+ G/PaEK37gq3Aq50W06wrpN9eRGRBiRUA1FB4xK1Gl2W6MS2H+4a/Ekj
 X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
  pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-Convert TI CPPI 4.1 DMA controller text bindings to DT schema. Add
-ti,am3359-cppi41 and ti,da830-cppi41 into single schema since they share
-the same hardware IP block and driver. Add undocumented #dma-requests
-and power-domains properties to match existing DTS usage.
+Convert the TI AM335x USB PHY text bindings to DT schema.
+Add undocumented vcc-supply property to match existing DTS usage.
 
 Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
 ---
- .../devicetree/bindings/dma/ti/ti,cppi41.yaml      | 109 +++++++++++++++++++++
- .../devicetree/bindings/usb/am33xx-usb.txt         |  14 ---
- .../devicetree/bindings/usb/da8xx-usb.txt          |  12 ---
- 3 files changed, 109 insertions(+), 26 deletions(-)
+ .../devicetree/bindings/phy/ti,am335x-usb-phy.yaml | 49 ++++++++++++++++++++++
+ .../devicetree/bindings/usb/am33xx-usb.txt         |  9 ----
+ 2 files changed, 49 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml b/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml
+diff --git a/Documentation/devicetree/bindings/phy/ti,am335x-usb-phy.yaml b/Documentation/devicetree/bindings/phy/ti,am335x-usb-phy.yaml
 new file mode 100644
-index 000000000000..a8c28e8ada07
+index 000000000000..b28cd42ece5e
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/dma/ti/ti,cppi41.yaml
-@@ -0,0 +1,109 @@
++++ b/Documentation/devicetree/bindings/phy/ti,am335x-usb-phy.yaml
+@@ -0,0 +1,49 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
-+$id: http://devicetree.org/schemas/dma/ti/ti,cppi41.yaml#
++$id: http://devicetree.org/schemas/phy/ti,am335x-usb-phy.yaml#
 +$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+title: TI CPPI41 DMA Controller
++title: TI AM335x USB PHY
 +
 +maintainers:
 +  - Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 +
 +properties:
 +  compatible:
-+    enum:
-+      - ti,am3359-cppi41
-+      - ti,da830-cppi41
++    const: ti,am335x-usb-phy
 +
 +  reg:
-+    minItems: 3
-+    maxItems: 4
++    maxItems: 1
 +
 +  reg-names:
-+    minItems: 3
-+    maxItems: 4
++    const: phy
 +
-+  interrupts:
-+    maxItems: 1
++  ti,ctrl_mod:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: Reference to the reset module node.
 +
-+  interrupt-names:
-+    const: glue
++  "#phy-cells":
++    const: 0
 +
-+  "#dma-cells":
-+    const: 2
-+
-+  dma-channels:
-+    description: Number of DMA channels supported.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  dma-requests:
-+    description: Number of DMA requests supported.
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  "#dma-channels":
-+    description: Deprecated, use dma-channels instead.
-+    deprecated: true
-+
-+  "#dma-requests":
-+    description: Deprecated, use dma-requests instead.
-+    deprecated: true
++  vcc-supply:
++    description: Phandle to the regulator that provides power to the PHY.
 +
 +required:
 +  - compatible
 +  - reg
 +  - reg-names
-+  - "#dma-cells"
-+  - dma-channels
++  - ti,ctrl_mod
++  - "#phy-cells"
 +
-+allOf:
-+  - $ref: /schemas/dma/dma-controller.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: ti,am3359-cppi41
-+    then:
-+      properties:
-+        reg:
-+          minItems: 4
-+        reg-names:
-+          items:
-+            - const: glue
-+            - const: controller
-+            - const: scheduler
-+            - const: queuemgr
-+        power-domains: false
-+      required:
-+        - interrupt-names
-+        - interrupts
-+        - dma-requests
-+    else:
-+      properties:
-+        reg:
-+          maxItems: 3
-+        reg-names:
-+          items:
-+            - const: controller
-+            - const: scheduler
-+            - const: queuemgr
-+
-+unevaluatedProperties: false
++additionalProperties: false
 +
 +examples:
 +  - |
-+    dma-controller@7402000 {
-+        compatible = "ti,am3359-cppi41";
-+        reg = <0x47400000 0x1000>,
-+              <0x47402000 0x1000>,
-+              <0x47403000 0x1000>,
-+              <0x47404000 0x4000>;
-+        reg-names = "glue", "controller", "scheduler", "queuemgr";
-+        interrupts = <17>;
-+        interrupt-names = "glue";
-+        #dma-cells = <2>;
-+        dma-channels = <30>;
-+        dma-requests = <256>;
++    usb-phy@47401300 {
++        compatible = "ti,am335x-usb-phy";
++        reg = <0x47401300 0x100>;
++        reg-names = "phy";
++        ti,ctrl_mod = <&ctrl_mod>;
++        #phy-cells = <0>;
 +    };
 diff --git a/Documentation/devicetree/bindings/usb/am33xx-usb.txt b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
-index 654ffc62d013..8431de346129 100644
+index 8431de346129..8832843c7d7c 100644
 --- a/Documentation/devicetree/bindings/usb/am33xx-usb.txt
 +++ b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
-@@ -51,20 +51,6 @@ USB
- The controller should have an "usb" alias numbered properly in the alias
- node.
+@@ -17,15 +17,6 @@ Reset module
+ - reg-names: "phy_ctrl" for the "USB control registers" and "wakeup" for
+   the USB wake up control register.
  
--DMA
--~~~
--- compatible: ti,am3359-cppi41
--- reg: offset and length of the following register spaces: USBSS, USB
--  CPPI DMA Controller, USB CPPI DMA Scheduler, USB Queue Manager
--- reg-names: glue, controller, scheduler, queuemgr
--- #dma-cells: should be set to 2. The first number represents the
--  endpoint number (0 … 14 for endpoints 1 … 15 on instance 0 and 15 … 29
--  for endpoints 1 … 15 on instance 1). The second number is 0 for RX and
--  1 for TX transfers.
--- dma-channels: should be set to 30 representing the 15 endpoints for
--  each USB instance.
--- #dma-channels: deprecated
+-USB PHY
+-~~~~~~~
+-compatible: ti,am335x-usb-phy
+-reg: offset and length of the "USB PHY" register space
+-ti,ctrl_mod: reference to the "reset module" node
+-reg-names: phy
+-The PHY should have a "phy" alias numbered properly in the alias
+-node.
 -
- Example:
- ~~~~~~~~
- The following example contains all the nodes as used on am335x-evm:
-diff --git a/Documentation/devicetree/bindings/usb/da8xx-usb.txt b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-index fb2027a7d80d..00320d92d3bb 100644
---- a/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-+++ b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-@@ -27,18 +27,6 @@ Optional properties:
- ~~~~~~~~~~~~~~~~~~~~
-  - vbus-supply: Phandle to a regulator providing the USB bus power.
- 
--DMA
--~~~
--- compatible: ti,da830-cppi41
--- reg: offset and length of the following register spaces: CPPI DMA Controller,
--  CPPI DMA Scheduler, Queue Manager
--- reg-names: "controller", "scheduler", "queuemgr"
--- #dma-cells: should be set to 2. The first number represents the
--  channel number (0 … 3 for endpoints 1 … 4).
--  The second number is 0 for RX and 1 for TX transfers.
--- dma-channels: should be set to 4 representing the 4 endpoints.
--- #dma-channels: deprecated
--
- Example:
- 	usb_phy: usb-phy {
- 		compatible = "ti,da830-usb-phy";
+ USB
+ ~~~
+ - compatible: ti,musb-am33xx
 
 -- 
 2.55.0
