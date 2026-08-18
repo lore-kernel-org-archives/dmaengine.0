@@ -1,106 +1,188 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11EF46EC8E
-	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 12:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0A84749FF
+	for <dmaengine@vger.kernel.org>; Tue, 18 Aug 2026 12:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787057472; cv=none; b=TN7/KsOcP8BrRwyJ+UUUSVYbe32MYBEbEs/iIfcJahYYEysDHwCcVxb6k8AUrk7nTVQ00zo/fORuNyIiC1HoiG05POVeacMs3KTJH+EZquNssZ/fqXGkOWO9/dSLxiW2moQHx3LmBlcSlU5aWFcV2GVdKDlcPo0V6z8Ohs9nnPQ=
+	t=1787057563; cv=none; b=SlcjqwQUiR3wRP2v0HC6b+FNAWp+5DA6SI0VD5O5kyaiYNKY8QWEJXSjRXZ4R+LscBxUyct+JOWr7TS8FXdxN8AR44CfsMiGGAPpz/7kh8ntOtz0vX616hdqvQFu3lGU7TD38zYA017diBpFopy3/e38Ajfz+1MsXcu7rST8RpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787057472; c=relaxed/simple;
-	bh=LNQQoE/FhZu5JrJeITRdDYQQsKHlmoBjRYImoAZ8CZU=;
+	s=arc-20240116; t=1787057563; c=relaxed/simple;
+	bh=oTEgsdS3BWDIJ6mNWRIXYmuo2OSR1at3K9VGEDhVycg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=F0LNJzei2M/8LYgi/A/v3eebDoImODp8lNUlDzBWNz65O/TlKCjTjl3UvGKbVyNu/Uw6vZioiMuHhsuOQzXnfzw9/8+kfusastbhQCSxKvufUdkYuP2DGx89TB6UJ3Nbzhww31Ii6PmHO7ur/6vGFT3fZSG+SSSO/IF8AtlbbN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OlKpEmuB; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=I48oGL2B3VQCrjdcMN0YTFD4iXbYfXfzKeCt7bTMUvrg45VPuzeP0JNFuvLbmAs4gQPqEz+Yod/3h74m1Fj6NhcOZ3unvQTuIguYOAk4afZbH3Xnuqp5deRfRekkKi1FiFGOg6XZKISJDZ38fCaYR7o08rAgkGIVi22ext3Wjhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IpGs0HnA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OlKpEmuB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1398E1F00A3A;
-	Tue, 18 Aug 2026 12:51:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IpGs0HnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E431F000E9;
+	Tue, 18 Aug 2026 12:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787057464;
-	bh=29ZvMkahCvoCUTA+zrHNZsmbFrEzIKRoAnYaFJmraec=;
+	s=k20260515; t=1787057560;
+	bh=98KPLXXHPTi8xR/nbL+9JUQ0RuhJsVOA4ejNHf+GXBc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OlKpEmuB9RbxOe/DUT1H1q+tv+tujBISDu0PnSWuZYJ9fuuGrqWaZJ5ZWfZzMo2PR
-	 zw9RKY0tzDsmL/lmDgg78MXo9Trp/Q1eUYR5bD9/fV3yT6gq7NOeDmz7n34K20Thur
-	 KuStKMCQpX3LbLn6WFs5NPp/hhBFcEAdB9RiGVDRBbbZzUKPaSLhx0GKGlg5GRjmad
-	 0Dc7SmwD04fcJMVUCRow1Ny2N+x7FuwU70t9P2aWRWhNPrbEgZ3fgarwaWIhxJRrZZ
-	 EgU/Log5+lqHLDW5Jfz8STLMfbA5EwCERLNTh7f1HQNbuS0NvQZryN3ADdh/gW+Ctm
-	 rXRKw7f3ckzNQ==
+	b=IpGs0HnAVS3FJOE2dE9GwRBsreeg+dqW9uK2hkwfnoyWwfH4/JipnD6hnK9WbkULv
+	 JSUnZyg7D+CZeqmoreuNqBfgilRu0X/ROr51Mn4A4gUZZVpF08ZnhLjTqseJVgBcck
+	 wC/rTreNex/YDsxdPnbIYdYU/rH9bVab1lqZF+PII1wLRa/9m+pqk9Qw7ccVirvZOs
+	 wW1I+isWNUaHTzzAQX2JtV5n1B0dee0TEUlEGXdx1a5o5SxK9ibW7jdHYE3beiiRjL
+	 79FyoJ9x6eKOEykTXbyLse/2u8iqsa6n8DFE2tMeqZ++3+wYiHmYilp2vHf/mKEPgo
+	 YnN8kuxQv5xEw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: sprd-dma: handle runtime PM get failure
+Subject: Re: [PATCH] dma: jz4780: handle clk_prepare_enable() failure in
+ probe
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Jiawen Liu" <1298662399@qq.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <tencent_72CAD47A90A208C873DD65A726C0A15FC107@qq.com>
-References: <tencent_72CAD47A90A208C873DD65A726C0A15FC107@qq.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <tencent_BE00B17EBF2A95EADD8B80203B745B9C7609@qq.com>
+References: <tencent_BE00B17EBF2A95EADD8B80203B745B9C7609@qq.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 18 Aug 2026 12:51:03 +0000
-Message-Id: <20260818125104.1398E1F00A3A@smtp.kernel.org>
+Date: Tue, 18 Aug 2026 12:52:39 +0000
+Message-Id: <20260818125239.E4E431F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] IRQ handler is registered before IO memory is mapped and virtual c=
-hannels are initialized.
+- [High] Incorrect teardown ordering in `jz4780_dma_remove()`: `clk_disable=
+_unprepare()` is called before `free_irq()`, which can lead to a bus fault.
+- [High] The driver mixes devm-managed dmaengine registration with manual t=
+eardown in `remove()`, causing the dmaengine to be unregistered after hardw=
+are is disabled.
+- [High] When descriptor setup fails, the driver erroneously frees the curr=
+ently active descriptor instead of the newly allocated descriptor, causing =
+memory leaks and a NULL pointer dereference.
+- [High] Checking the status of a submitted but unissued transaction while =
+the channel is idle causes a NULL pointer dereference.
 --
 
---- Patch [1]: [PATCH] dmaengine: sprd-dma: handle runtime PM get failure -=
---
-commit 7b4114d448d81c577f92d85ac8c943dc9f9107c9
+--- Patch [1]: [PATCH] dma: jz4780: handle clk_prepare_enable() failure in =
+probe ---
+commit 15ac33e185449fe2ef9ed06622c4c9792fca2767
 Author: jiawen <1298662399@qq.com>
 
-dmaengine: sprd-dma: handle runtime PM get failure
+dma: jz4780: handle clk_prepare_enable() failure in probe
 
-Route failed runtime-PM acquisition through its existing cleanup path.
+jz4780_dma_probe() ignores the return value of clk_prepare_enable(). If
+the clock fails to enable, the driver continues and may later attempt to
+disable an unprepared clock on error paths, leading to unbalanced clock
+operations. Check the return value and propagate the error immediately,
+avoiding the erroneous cleanup.
 
-Release and disable runtime PM before continuing with the hardware
-teardown, so an unsuccessful pm_runtime_get_sync() does not leave
-runtime PM enabled.
-
-> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-> index 087fea3af2e41..19b32a23c882d 100644
-> --- a/drivers/dma/sprd-dma.c
-> +++ b/drivers/dma/sprd-dma.c
-> @@ -1212,7 +1212,7 @@ static int sprd_dma_probe(struct platform_device *p=
+> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+> index 6070dfdb7114c..2547fa229a835 100644
+> --- a/drivers/dma/dma-jz4780.c
+> +++ b/drivers/dma/dma-jz4780.c
+> @@ -903,7 +903,9 @@ static int jz4780_dma_probe(struct platform_device *p=
 dev)
+>  		return ret;
+>  	}
 > =20
->  	ret =3D pm_runtime_get_sync(&pdev->dev);
+> -	clk_prepare_enable(jzdma->clk);
+> +	ret =3D clk_prepare_enable(jzdma->clk);
+> +	if (ret)
+> +		return ret;
+> =20
+>  	/* Property is optional, if it doesn't exist the value will remain 0. */
+>  	of_property_read_u32_index(dev->of_node, "ingenic,reserved-channels",
 
 [Severity: High]
-This isn't a bug introduced by this patch, but I noticed a pre-existing
-issue earlier in sprd_dma_probe() where the IRQ handler is registered
-before sdev->glb_base is mapped:
+This isn't a bug introduced by this patch, but while reviewing the probe
+error handling, I noticed an issue with devm-managed dmaengine registration
+mixed with manual teardown in jz4780_dma_remove().
 
-    ret =3D devm_request_irq(&pdev->dev, sdev->irq, dma_irq_handle,
-                   0, "sprd_dma", (void *)sdev);
+probe() uses dmaenginem_async_device_register(), which defers unregistering
+the DMA engine to the devres cleanup phase, occurring after remove() return=
+s.
+
+However, in jz4780_dma_remove(), the driver manually kills tasklets, frees =
+the
+IRQ, and disables the clock:
+
+jz4780_dma_remove() {
     ...
-    sdev->glb_base =3D devm_platform_ioremap_resource(pdev, 0);
+	clk_disable_unprepare(jzdma->clk);
+	free_irq(jzdma->irq, jzdma);
 
-If an interrupt is pending from a previous kernel (e.g. kexec) or a
-bootloader, the unmasked interrupt could cause dma_irq_handle() to
-execute immediately.
+	for (i =3D 0; i < jzdma->soc_data->nb_channels; i++)
+		tasklet_kill(&jzdma->chan[i].vchan.task);
+    ...
+}
 
-Because the handler attempts to read from glb_base:
+Does this create a critical window where the DMA controller is still
+registered and accessible to dmaengine clients, but its hardware is
+shut down? If a client accesses the controller (e.g., via
+dmaengine_terminate_all()) during this window, could it access
+unclocked registers and cause a bus fault?
 
-    u32 irq_status =3D readl(sdev->glb_base + SPRD_DMA_GLB_INT_MSK_STS);
+[Severity: High]
+This is a pre-existing issue, but I also noticed a teardown ordering
+problem in jz4780_dma_remove().
 
-could this cause a NULL pointer dereference and subsequent kernel panic
-if the hardware asserts an interrupt before initialization completes?
+clk_disable_unprepare() is called before free_irq():
 
->  	if (ret < 0)
-> -		goto err_rpm;
-> +		goto err_register;
-> =20
->  	ret =3D dma_async_device_register(&sdev->dma_dev);
-[ ... ]
+jz4780_dma_remove() {
+    ...
+	clk_disable_unprepare(jzdma->clk);
+	free_irq(jzdma->irq, jzdma);
+    ...
+}
+
+If a DMA interrupt fires or is pending after the driver calls
+clk_disable_unprepare() but before free_irq() completes, the
+jz4780_dma_irq_handler will execute and attempt to read the DMA
+controller's registers. Could accessing these registers with the clock
+disabled cause an imprecise abort or bus timeout?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but I found a potential issue
+when descriptor setup fails in jz4780_dma_prep_slave_sg() and
+jz4780_dma_prep_dma_cyclic().
+
+The error path frees the channel's active descriptor instead of the newly
+allocated local desc:
+
+jz4780_dma_prep_slave_sg() {
+    ...
+		if (err < 0) {
+			jz4780_dma_desc_free(&jzchan->desc->vdesc);
+			return NULL;
+		}
+    ...
+}
+
+jzchan->desc points to the currently executing transfer, not the newly
+allocated desc. If the channel is idle, jzchan->desc is NULL, wouldn't
+this lead to an immediate NULL pointer dereference? If active, could it
+free a running descriptor (causing a use-after-free and DMA pool
+corruption) while the newly allocated desc is leaked entirely?
+
+[Severity: High]
+This is a pre-existing issue, but checking the status of a submitted but
+unissued transaction while the channel is idle appears to cause a NULL
+pointer dereference in jz4780_dma_tx_status().
+
+If a client driver submits a DMA transaction but has not yet called
+dma_async_issue_pending(), the descriptor sits on vchan->desc_submitted.
+
+If the client queries the status via dmaengine_tx_status(),
+vchan_find_desc() returns NULL because it only searches the desc_issued
+list. The code then evaluates:
+
+jz4780_dma_tx_status() {
+    ...
+	} else if (cookie =3D=3D jzchan->desc->vdesc.tx.cookie) {
+    ...
+}
+
+If the channel is idle, jzchan->desc is NULL. Could this fallback check
+dereference jzchan->desc without verifying it is not NULL, leading to a
+kernel panic?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/tencent_72CAD47A90A=
-208C873DD65A726C0A15FC107@qq.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/tencent_BE00B17EBF2=
+A95EADD8B80203B745B9C7609@qq.com?part=3D1
