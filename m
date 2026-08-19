@@ -1,219 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013070.outbound.protection.outlook.com [40.93.201.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B658363096
-	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 05:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787118432; cv=none; b=lx99khRijPSyaWTLvSwWvolBqkyHWuN5aiwsYDuC5YrAe2AX6ALLh0K0k1TEQKgqvWdBfVKZbFvbSoUVRQqVH9CpX2mRo2crhupFJlfPEEdu3K1+PkY8SPTz6clw30sxH8tAMTwkxbr1XIiPB4pFnQ4dvdy1iy5vjkJKHKKiw+Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787118432; c=relaxed/simple;
-	bh=we6RcMSrtHjIDJuF5ZxvFhG+LKhV80qxkgSWiegXPPI=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=XB0fndTkQAxBTqG6r2VwpYT6Sze4Op9QGV1er7ZzgzLqbrIYprsZKTa1m6MwY/JHLRUHiMtf08wTtNrFBB+VCBysXRxyzqhsvVgbPPBMvGSVirYpeSIw8+RG8bs1kHkNizjbLERpT/10zcBxu2XgztdMmmQW1fmVP9PZFX9iKeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fwuYLahD; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9532128B4FA;
+	Wed, 19 Aug 2026 07:10:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787123404; cv=fail; b=VNK3y7tiN/U75RI7EYu8SdCCwE+VexvPEEBlmCnbPKNO+/gNqbjeGC0rFB2GyknZS1yAyct3jzTqftE2Mboj8DLRflfXwbH74HWf9HBz7PLpL66VL2FMBRPyfH86XTzGoMi8tC3nhn7mHHn7pGL0pvcTDUnLhuwc/HP+R4czmwM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787123404; c=relaxed/simple;
+	bh=HM9TrhCCjLdljc4DIQjiDNqadIFTGnr8GsOQuL7n1mE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Ztz5pfU1CEtiLHcq5Uwf2oHmCTQ/tfEtjEr8VzNaYScCmDI0wcNm1yVQPYVOUdCGegiEhJJQhiwVh5XoxeQukKHc2XpyZ0YLiSu6NbJAFkvH81xb7VQK4E80O1t9TqC1L4lcVFx3MrFNl3zfD/vCgWXZkU4XEk/DeaFTYqn/LcQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=XyB5fDat; arc=fail smtp.client-ip=40.93.201.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fwuYLahD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4D71F000E9;
-	Wed, 19 Aug 2026 05:47:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787118431;
-	bh=0FRXhgJLPToavwJyDcOzfwd3Ncb1tLkCbg0q9Oro41o=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fwuYLahDdXzJL12c9C8LHdt0KiPt9+Q750Kq3t/AkjeZtx/lxiwAPj6YNC1h4M8qP
-	 fRccQ89BIreEOs+EBKRrxsJDhsqmMEuQASUSYyYN4OHuBLft6UoGiMFgdqxUq0yy24
-	 vyuFXa9PqB4Ly99D1YWhieO3uzXDEAaCHl83sUrjjldEgBbLvfWekWZeOBerGiIJSp
-	 7b5qF7Vca8o8M1x7l5nWwueqFqdhMgAnUFr6plCqD1r4SY9YbI5TUYb/UWEETz4a1M
-	 hpwohymWXBcOVvnYxtkwDph+jOpUgkrF/gyupPFLEAicHzNMdU4p3zJXLRTAx0XmLt
-	 ZJU63ocfsKxwQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] dmaengine: sprd: use clk_bulk API to fix clock
- imbalance
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Chaithanya Lagisetty" <nagachaithanya9911@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260819053518.2825514-1-nagachaithanya9911@gmail.com>
-References: <aoMfW_TVbzkuGZeU@SMW015318>
- <20260819053518.2825514-1-nagachaithanya9911@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 19 Aug 2026 05:47:10 +0000
-Message-Id: <20260819054710.DD4D71F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="XyB5fDat"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pOJNK5OFPIYhAc6JENDiePi8iQQxVS8X6Gk3+7jxbV4QC2qmR52n+iqF2nmHkbAtbytvZg4fxU79pD+5vwZ3N3hIHdF9c+8jacPaXYaOtpCkbhOtauT7aL/z+zmScLOCaj+0kS7gw0FXZVOmsfRQ/UQ20bcEawwZGO9PhGJdEbl21ZmzWS0BV1aKmMTHdvqpvrndT7m9+hzTYigkmiyS9RdLrTHa/jjrgeXQWlfqcQKfnlkLHK9Pp1yZWOCUevUgIcpcsfj69itRSYbDlG/V5rHzKQMGKFrqI0eSl6GPNYYXxYgPOCx4aa02HGa78+UqvhTM5vs1YJrelYQcdgt45Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9zT5aBq2yTyYPf4OusyTnyI7mbidNwbqOD6Abvt1218=;
+ b=tSb1uUHM2ayPGoxZJb60OmkmgmfW6L2eYR3ddYSlGqb/9iMqZ76uAvcFbO+rKqr+x03v0m2PVvUSHKlOrRVpbVK/y0CZBmv52WLkh5lgxyLH9JlzvdYBIBdXczGxbIOGsePdVcMX3SjbuFsgsvSIxk+jzwjb+PT9kETFjlE/XPJM7vjjzGRe5+2P/0KOlYcSO83HKzv1JZXnf17RQ6F4pWYGAcwyPXWyHNx71bSSkTR8/u0ChlvxTRiRtZP7YXZm7d2m4buZocDRTfJdqjSw3M5dnQYHaH9+UYzhqu8V0O0+ABSllAGs3pcC5Jw5C37lN2k4x4yCblh82UviTumMqg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9zT5aBq2yTyYPf4OusyTnyI7mbidNwbqOD6Abvt1218=;
+ b=XyB5fDatrT4PTwLcjI6j+pJn9WwyJ5HbhjloyI9JHRjTFqvL/VxDnx5LaDkUWdm9A+D6yxLANuf6ixV5FzDgASQUCzlSQ75i2sTmUWOUyuTg+aNJ7Jty+Wj0tKB5v1OzL19N+dyTwPLuyiOonKRBsYedH0okQwkpZPa/MAwiRyU=
+Received: from BLAPR03CA0018.namprd03.prod.outlook.com (2603:10b6:208:32b::23)
+ by DS0PR12MB9726.namprd12.prod.outlook.com (2603:10b6:8:226::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Wed, 19 Aug
+ 2026 07:09:57 +0000
+Received: from BL02EPF0001A102.namprd05.prod.outlook.com
+ (2603:10b6:208:32b:cafe::89) by BLAPR03CA0018.outlook.office365.com
+ (2603:10b6:208:32b::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.8 via Frontend Transport; Wed, 19
+ Aug 2026 07:09:56 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BL02EPF0001A102.mail.protection.outlook.com (10.167.241.134) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.339.3 via Frontend Transport; Wed, 19 Aug 2026 07:09:56 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 19 Aug
+ 2026 02:09:56 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 19 Aug
+ 2026 02:09:56 -0500
+Received: from xhddevverma40x.xilinx.com (10.180.168.240) by
+ satlexmb08.amd.com (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.45
+ via Frontend Transport; Wed, 19 Aug 2026 02:09:53 -0500
+From: Devendra K Verma <devverma@amd.com>
+To: <mani@kernel.org>, <vkoul@kernel.org>, <frank.li@kernel.org>,
+	<den@valinux.co.jp>
+CC: <dmaengine@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <michal.simek@amd.com>, <devverma@amd.com>
+Subject: [PATCH v4 0/2] CPM6 Channel Separation Support
+Date: Wed, 19 Aug 2026 12:39:45 +0530
+Message-ID: <20260819070947.4080389-1-devverma@amd.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A102:EE_|DS0PR12MB9726:EE_
+X-MS-Office365-Filtering-Correlation-Id: b9d4b767-d4de-431a-daa8-08defdc0dfff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|376014|23010399003|1800799024|82310400026|6133799003|10067099003|11063799006|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	wdJYNN6tV6KzAJ19A/0wP4MJknGRr4E0++V13u+ocDUU9lWTG4U+TRh6S96i5d7w1ul/vNXptdUbPtZY7REXLAYKU8MBE+dTFZ97RG7dEsZJDVoDNn0jJwkdxatyvZV3W4NTciwxL7/7pziZTv/BV7O17tcRlnwFhSPrAJaLcpSWHvCpprCwd41TOihxCVgCE3Zn+enpTaCWcZ7cyK4vxSXmOxbUREr0Vp+WzNrO0ziVMSdRxQMlY/qNMvSJ99zGFw55rgreFCfypse/dzL4D1w076uGV6sBoqM3yJYiv7DmTSo/tTKfI/cQZZEj2tbLeKu44OXnpR1O9P+3xtKQv3Sxvt6pBx6CoLPQ/NEx9s8DJHsPwi5ICIENVnpWUrdImb595lcIgnu0GG9zecVxeBz8qifpXWH+J3G0F0PbVGZFQjVuBkim6JKAyAIA6KXFnzcRDAJCmMJnKwjRXbw6/bF4Bn9bV2QS/ABq8LAUJdjqee2+nvRGEKPy2/3gfZy2PS1G5N0SVDpfKrLvqCKoqSmlwbW1MIcjjngJ4NJl13aR1nQAWbrUjwistTTfrbLMCHVaj6iiOtFZolsMD3eHfCyiSkAqL/wUXo5ZeBsb/CkmAsBnvBggtGCxREO90qstAHyqpZ98LxZpAWkIiimCqldJ6vzt4UYtZz0S13RfwLIfbMyIO2bL22GnKshq9CR4+oA7lg/PB28++jvkjn8Fng==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(376014)(23010399003)(1800799024)(82310400026)(6133799003)(10067099003)(11063799006)(56012099006)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	+aNaNFrnJwQTXL884LbaoFI6iIEED0AV6cVjcimsQTSB5radka74tDKizgMS+G245UYoLOP6RrqvModAaMnSzjZkjBXoFXDpygtV/EGQuKvPK90qHDrcoToX5hgUFp5gB6/s14MzaDddAH+vI/Z9HqeR/bpMP2plJj+Srbf7OzhjAbL+8z9A0YxC3zKLGsznLfuc+t9Kkpkiids+ybtzRpgMinCzYNMnImbpAWCgxF6jj57/WV0UM4tPT/0O4eYc4srEvAVw4+PYw696UeCh63N+Ztnmauqco+ZkSoi2SogGhbb33GYtRmL4bNYh6tNRN1ky98CCKscr2wQ8ejU13flKF1OMpGghi9l/asbTYKdAAC99Uatpst3Odddrj2SoE2V7SvxmwlIDDEQ/YilK5lcM5duIOpndEh/4BPRl/Vc1OYydmmFsBpmutVQoA5HK
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2026 07:09:56.6479
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b9d4b767-d4de-431a-daa8-08defdc0dfff
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF0001A102.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9726
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+'Designware Cores PCI Express DM Controller - Reference
+Manual', section 3.2.34.3, VSEC for DEVICE INFORMATION supports
+the channel separation mechanisms. Basically, the HDMA IP allows
+the user to configure the separation between DMA channel
+registers and retrieve it via the VSEC capability mentioned
+above.
+In order to use the VSEC functionality following changes have
+been made:
 
-New issues:
-- [High] The driver incorrectly enforces a mandatory clock using the option=
-al `clk_bulk` API, breaking probe for `!CONFIG_HAVE_CLK` configurations and=
- systems using dummy clocks.
+o Utilize the existing VSEC implementation to retrieve
+  the channel separation and translate it to correct size.
+o Modify the structs and functions to calculate correct
+  DMA channel register base using the channel, direction
+  and channel separation selected.
 
-Pre-existing issues:
-- [High] The runtime PM usage counter is leaked and PM runtime is left enab=
-led if `pm_runtime_get_sync()` fails in `sprd_dma_probe()`.
-- [High] The interrupt handler `dma_irq_handle` can be invoked before `sdev=
-->glb_base` is mapped, leading to a NULL pointer dereference.
-- [High] The driver improperly unlinks DMA channels before calling `dma_asy=
-nc_device_unregister()`, breaking the DMA engine core cleanup.
-- [High] Failing `pm_runtime_get_sync()` calls do not decrement the usage c=
-ount in `sprd_dma_alloc_chan_resources()`, leading to PM runtime counter le=
-aks.
---
+Devendra K Verma (2):
+  dmaengine: dw-edma: Enable Chan Separation via VSEC
+  dmaengine: dw-edma: Add changes to support Channel Separation
 
---- Patch [1]: [PATCH v3] dmaengine: sprd: use clk_bulk API to fix clock im=
-balance ---
-commit b974e2961641a4c2c3cf6810facb62f07deec1e8
-Author: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Subject: dmaengine: sprd: use clk_bulk API to fix clock imbalance
+ drivers/dma/dw-edma/dw-edma-pcie.c           | 18 +++++++++++++++
+ drivers/dma/dw-edma/dw-hdma-v0-core.c        | 23 ++++++++++++--------
+ drivers/dma/dw-edma/dw-hdma-v0-debugfs.c     | 17 +++++----------
+ drivers/dma/dw-edma/dw-hdma-v0-regs.h        | 10 ---------
+ drivers/pci/controller/dwc/pcie-designware.c |  1 +
+ include/linux/dma/edma.h                     |  1 +
+ 6 files changed, 40 insertions(+), 30 deletions(-)
 
-The commit converts the driver to use the clk_bulk API for managing its clo=
-cks
-to fix a clock imbalance. This ensures both clocks are properly disabled on
-failure paths. The optional ashb_eb clock is fetched alongside the mandatory
-enable clock via devm_clk_bulk_get_optional().
+-- 
+2.43.0
 
-> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-> index 087fea3af2e41..749cabd984ebd 100644
-> --- a/drivers/dma/sprd-dma.c
-> +++ b/drivers/dma/sprd-dma.c
-
-[ ... ]
-
-> @@ -1140,16 +1120,17 @@ static int sprd_dma_probe(struct platform_device =
-*pdev)
->  	if (!sdev)
->  		return -ENOMEM;
-> =20
-> -	sdev->clk =3D devm_clk_get(&pdev->dev, "enable");
-> -	if (IS_ERR(sdev->clk)) {
-> -		dev_err(&pdev->dev, "get enable clock failed\n");
-> -		return PTR_ERR(sdev->clk);
-> -	}
-> +	/* The ashb_eb clock is optional and only present for AGCP DMA */
-> +	sdev->clks[0].id =3D "enable";
-> +	sdev->clks[1].id =3D "ashb_eb";
-> +	ret =3D devm_clk_bulk_get_optional(&pdev->dev, ARRAY_SIZE(sdev->clks),
-> +					 sdev->clks);
-> +	if (ret)
-> +		return dev_err_probe(&pdev->dev, ret, "get clocks failed\n");
-> =20
-> -	/* ashb clock is optional for AGCP DMA */
-> -	sdev->ashb_clk =3D devm_clk_get(&pdev->dev, "ashb_eb");
-> -	if (IS_ERR(sdev->ashb_clk))
-> -		dev_warn(&pdev->dev, "no optional ashb eb clock\n");
-> +	if (!sdev->clks[0].clk)
-> +		return dev_err_probe(&pdev->dev, -ENOENT,
-> +				     "get enable clock failed\n");
-
-[Severity: High]
-Does this manual NULL check break probe for systems without CONFIG_HAVE_CLK=
- or
-when dummy clocks are used?
-
-When using devm_clk_bulk_get_optional(), if CONFIG_HAVE_CLK is disabled, the
-API returns 0 but sets the clock pointer to NULL. The previous IS_ERR() che=
-ck
-would safely ignore this, but the new strict NULL check will unconditionally
-fail with -ENOENT.
-
->  	/*
->  	 * We have three DMA controllers: AP DMA, AON DMA and AGCP DMA. For AGCP
-
-
-While reviewing this patch, I also noticed a few pre-existing issues in the=
- file.
-
-In sprd_dma_probe():
-
-> 	sdev->irq =3D platform_get_irq(pdev, 0);
-> 	if (sdev->irq > 0) {
-> 		ret =3D devm_request_irq(&pdev->dev, sdev->irq, dma_irq_handle,
-> 				       0, "sprd_dma", (void *)sdev);
-[ ... ]
-> 	sdev->glb_base =3D devm_platform_ioremap_resource(pdev, 0);
-
-[Severity: High]
-This is a pre-existing issue, but could this cause a NULL pointer dereferen=
-ce
-if the interrupt fires immediately?
-
-The interrupt handler dma_irq_handle() dereferences sdev->glb_base to read
-SPRD_DMA_GLB_INT_MSK_STS. Because devm_request_irq() is called before
-devm_platform_ioremap_resource(), an early interrupt would access the unmap=
-ped
-glb_base which is still NULL.
-
-
-Also in sprd_dma_probe():
-
-> 	pm_runtime_set_active(&pdev->dev);
-> 	pm_runtime_enable(&pdev->dev);
->=20
-> 	ret =3D pm_runtime_get_sync(&pdev->dev);
-> 	if (ret < 0)
-> 		goto err_rpm;
-[ ... ]
-> err_register:
-> 	pm_runtime_put_noidle(&pdev->dev);
-> 	pm_runtime_disable(&pdev->dev);
-> err_rpm:
-> 	sprd_dma_disable(sdev);
-> 	return ret;
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this error path leak the
-runtime PM usage counter?
-
-If pm_runtime_get_sync() fails, it still increments the usage count.
-Jumping directly to err_rpm skips pm_runtime_put_noidle() and
-pm_runtime_disable(), leaving PM runtime enabled and the counter unbalanced.
-
-
-In sprd_dma_alloc_chan_resources():
-
-> static int sprd_dma_alloc_chan_resources(struct dma_chan *chan)
-> {
-> 	return pm_runtime_get_sync(chan->device->dev);
-> }
-
-[Severity: High]
-This is a pre-existing issue, but does this leak the PM usage count if it f=
-ails?
-
-Because pm_runtime_get_sync() increments the counter even on failure, direc=
-tly
-returning its negative error code without calling pm_runtime_put_noidle() l=
-eaves
-the usage count permanently elevated, preventing the device from suspending.
-Should this use pm_runtime_resume_and_get() instead?
-
-
-In sprd_dma_remove():
-
-> 	list_for_each_entry_safe(c, cn, &sdev->dma_dev.channels,
-> 				 vc.chan.device_node) {
-> 		list_del(&c->vc.chan.device_node);
-> 		tasklet_kill(&c->vc.task);
-> 	}
->=20
-> 	of_dma_controller_free(pdev->dev.of_node);
-> 	dma_async_device_unregister(&sdev->dma_dev);
-
-[Severity: High]
-This is a pre-existing issue, but does explicitly removing the channels from
-the list here break the DMA engine core cleanup?
-
-The channels are unlinked with list_del() before calling
-dma_async_device_unregister(). When the core DMA engine loops over the
-channels to free resources (such as sysfs entries), the list is empty, resu=
-lting
-in leaked channel resources.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260819053518.2825=
-514-1-nagachaithanya9911@gmail.com?part=3D1
