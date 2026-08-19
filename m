@@ -1,187 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0B544C513
-	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 11:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1903AD538
+	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 13:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787140621; cv=none; b=a8U/uDYb/AJjF4ejOeR0C06cYdI//Hs5BJdAqqSyRmYtf/mIQjMWW0dFSenshEy85TjbLgBAe+iTMmYei/YmcGR2A6tEHRMZ1FywgN9PyGe1niuQbGUT91P1N/Mx3pdcgUx4bE0WXhlwZ92YNITy34p0uAWrNFLD1ubB5mMejEE=
+	t=1787146246; cv=none; b=UcCdi6UUdz5xkkw8AHbebsZVZnwF/ilIiKLOjw9W0ZcdZ9AEXFETyKiNnLj2tXbgzwkcJ2YQMRxEJtAAHCBNKaQ3+t+jMu37tPuhY0xhPNEkFW3zLpJ9F6amp09BNDKHy2KmCEXdfs2a8S9HxeXxnzja0+yJQc9+FG4gqpmwTEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787140621; c=relaxed/simple;
-	bh=GXEi3xpxU5y74AzuvKPEHecNo0+NQTkzi7oYYF8MiZI=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JxH04GyWREcZrq0HGfpgpkNz6ZRvNgfcV/XJW3muigrkWJlbojjBWPEJKmKr5DQxGUsjs99eJ2JMKXf0eyhCtz0VtJBixk633FGxhQQ6zf1zqXPEd4VY3nkNkxA9668vqpq9F5TpgkY7tBH+LKN/g6UdxK7JQAvYfPhrOfNRwyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdEdUAh9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787146246; c=relaxed/simple;
+	bh=4gSwkan2L6CEisBgarTBd82x+gm9pt9Nh/78UILyg5A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fSp3sBEqSFOorBXMZkzMyQuldBkox3z+dBUEDfrVCbKzw2B2gxX02raqLKU/4YFi6N3BP+5hSAxWBwqWryx+LSYmu6EnId4MjUIkIK4ej/WY8RPnNkaQBWCBsRFODMHtp7NvhPBi1lzSM2gLFp8FvMmy5k/3X9yyuGo45CwCTA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aPUasIj9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdEdUAh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689001F000E9;
-	Wed, 19 Aug 2026 11:56:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aPUasIj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24341F00A3D
+	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 13:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787140619;
-	bh=8yKTBcLFnBYh3nuvaQfS5482RkUJQl45M/d1Pxx/rkg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XdEdUAh9zH2HuPBIbc0ctFlsQ7kY5a3gZHg3DU3zUzM0D2a13Vfp8tQzHS94NEokR
-	 tLLjk6/74hcVM+TPeAWJA3ysdHMkKhbHyVkxBe0kEeOU9FFnGWUb4JpfvONA6sPvWD
-	 GdJr7XfSQWVnrMtPD90ENyb2aFg89Kx1op7dvDRvb1JGfg+EBmhx79PI6sZnbSeuzR
-	 5eQsBz+SO0KtlIStvYjqd4k1O79wsABxnEYuT8b2g1Ou7fA9V8nQ6myU3hVJ41uwye
-	 1dOaZ1vswsroYSQtPQL9+BCGNtrLCOC1FUpTifPUcQk+5L4Ay2bL7wozzlsHLsR2G+
-	 6q+PFr3L2zwQw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] dmaengine: qcom: gpi: Fix resource leaks as part of
- channel clean up
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Aniket Randive" <aniket.randive@oss.qualcomm.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260819-gpi_bug_fix-v3-1-4c97333e6f5b@oss.qualcomm.com>
-References: <20260819-gpi_bug_fix-v3-1-4c97333e6f5b@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 19 Aug 2026 11:56:58 +0000
-Message-Id: <20260819115659.689001F000E9@smtp.kernel.org>
+	s=k20260515; t=1787146243;
+	bh=Wy+D+ESTTq/dSV8mhmm+rhMC+Crd5u0rz0n4yla+hGs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=aPUasIj9J9ETAKkXY+xz3TK125/aXZYjKzFmuOkfbiiU6/19xiRkGoYKKBAsT8WxR
+	 QBKYCqbs49DV3cgMcXgHT6zGootPM+lszjhmfFD9fcpQYefWkk1lRr56QoIqqH6iEN
+	 rC6xB0mB9mkb1GOgRBaXc5IY5EMSRj8qW60VDICji5wM+RBJQog6XmfZXcVUfrNZVL
+	 tI0TyZHQ+3I+wgbDVL/bPi+wsJQha090rSdqoQfAnpwtw64dUr2Wd12xOYZ93ECvLT
+	 4oLbcbZ+qzeRb0Yb/VtQi4oH7EvFBO6jE2r5JxA6u49vhaerF/9ndVpaKe6aShnILS
+	 GQJEhWHiA5uGg==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5b021916bd3so1526884e87.3
+        for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 06:30:42 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RpozVBJyboKIzZZZ3N+Gkpb5LQJDj0/ryv3+uBE74NMJZNpDmtH+e6BulNYo+hnNlXDZg4nw22XrlA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVO6O5m4QrEsWNvFugVLJHGOUMVvE9uysQT72WuJejsJ0FirWw
+	WaGqQCDfCf2FzyhbAqjhDlWRIGpEH79ITsGoVRbWpC8aMBzDUigF0kZU3kWOB5unTHnHC9erWRF
+	01p/7Jl8KrQfr7ryzyhDUzpSXrN+UDp4=
+X-Received: by 2002:a05:6512:6d1:b0:5aa:5ef9:a33 with SMTP id
+ 2adb3069b0e04-5b478bdb85fmr1801632e87.25.1787146241774; Wed, 19 Aug 2026
+ 06:30:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260618-ux500-power-domains-v7-1-v1-0-eb5e50b1a588@kernel.org>
+ <20260618-ux500-power-domains-v7-1-v1-10-eb5e50b1a588@kernel.org> <CAPx+jO-ow2vo2wMxERLGse88wLoaR=HLdOWk6Qwv97ZdbE4R5Q@mail.gmail.com>
+In-Reply-To: <CAPx+jO-ow2vo2wMxERLGse88wLoaR=HLdOWk6Qwv97ZdbE4R5Q@mail.gmail.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Wed, 19 Aug 2026 15:30:29 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnzDmxW_SoJ9H1tS2_r+jd7A7FpLVp37nK=dOEPj=GExA@mail.gmail.com>
+X-Gm-Features: AcwNN1VzmKR08mtjCfHfPMShMvTxNHeVOcLQxu2aSZ4UbCwVZegKiNNfpCmjf24
+Message-ID: <CAD++jLnzDmxW_SoJ9H1tS2_r+jd7A7FpLVp37nK=dOEPj=GExA@mail.gmail.com>
+Subject: Re: [PATCH 10/11] regulator: db8500: Add power domain regulators
+To: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Lee Jones <lee@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+On Wed, Jul 8, 2026 at 5:53=E2=80=AFPM Ulf Hansson <ulf.hansson@oss.qualcom=
+m.com> wrote:
 
-New issues:
-- [Medium] Inconsistent software state after channel rollback causes duplic=
-ate shutdown commands and timeouts during client teardown.
+> On Thu, Jun 18, 2026 at 7:01=E2=80=AFAM Linus Walleij <linusw@kernel.org>=
+ wrote:
+> >
+> > Add a DB8500 regulator driver for the VAPE and VSMPS2 compatibility nod=
+es.
+> >
+> > Back the regulator enable state with the corresponding power domains.
+> >
+> > This is done for off-chip consumers: the corresponding voltage rails ar=
+e
+> > routed out so they are used for powering different peripherals using
+> > these voltages as supplies.
+> >
+> > Assisted-by: Codex:gpt-5-5
+> > Signed-off-by: Linus Walleij <linusw@kernel.org>
+(...)
+> > @@ -673,6 +673,7 @@ db8500-prcmu-regulators {
+> >                                 // DB8500_REGULATOR_VAPE
+> >                                 db8500_vape_reg: db8500_vape {
+> >                                         regulator-always-on;
+> > +                                       power-domains =3D <&pm_domains =
+DOMAIN_VAPE>;
+>
+> Hmm, isn't this the other way around? The power-domains node should
+> have a regulator supply?
 
-Pre-existing issues:
-- [Critical] gpi_free_chan_resources() unconditionally frees ev_ring, causi=
-ng a double-free crash when an initialization failure occurs.
-- [Critical] Hardware event ring is not deallocated in the gpi_ch_init() er=
-ror path, causing a permanent DMA Use-After-Free.
-- [High] Event processing tasklet is not killed before freeing ev_ring in t=
-he error path, leading to a Use-After-Free.
---
+They probably have that, but that is not what this is about,
+it's the other way around.
 
---- Patch [1]: [PATCH v3] dmaengine: qcom: gpi: Fix resource leaks as part =
-of channel clean up ---
-commit f50a0a6a0fc075e17ad27e65c7651c6aa5bb6a12
-Author: Aniket Randive <aniket.randive@oss.qualcomm.com>
+> We may even consider to skip to model the regulator altogether and
+> make the power domain operate directly on the prcmu instead.
 
-dmaengine: qcom: gpi: Fix resource leaks as part of channel clean up
+That is what the series tries to do, as a whole. Sorry if that was unclear.=
+..
 
-This commit fixes the gpi_ch_init() and gpi_alloc_chan_resources() error
-handling paths to properly iterate over the sibling channels, release
-the ch_ring when channel initialization fails, and restore the event ring
-state after freeing the ring.
+What we do in this patch is to deal with the fact that two of the power
+domains, when enabled, also turn on two external power rails outside
+of the SoC.
 
-Link: https://patch.msgid.link/20260810-gpi_bug_fix-v2-1-60555394cbf9@oss.q=
-ualcomm.com
+Since external components such as I2C devices cannot really be
+claimed as "being inside a power domain" they take a regulator.
 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index a5055a6273af6..c41bfac65ddf3 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
+This is based on my understanding that power domains is an
+SoC-internal concept only, so there is a clear boundary if something
+outside of the SoC starts to use such an externalized power rail.
 
-[ ... ]
+All this regulator does is to make sure the corresponding power domain
+is enabled when the regulator is enabled.
 
-> @@ -1965,16 +1965,19 @@ static int gpi_ch_init(struct gchan *gchan)
->  error_start_chan:
->  	for (i =3D i - 1; i >=3D 0; i--) {
->  		gpi_stop_chan(&gpii->gchan[i]);
-> -		gpi_send_cmd(gpii, gchan, GPI_CH_CMD_RESET);
-> +		gpi_send_cmd(gpii, &gpii->gchan[i], GPI_CH_CMD_RESET);
->  	}
+I will repost all the patches once v7.3-rc1 is out.
 
-[Severity: Medium]
-Does this sequence leave the sibling channel's software state inconsistent?
-
-When gpi_start_chan() fails for the second channel, this loop correctly
-rolls back the sibling channel in hardware by sending the STOP, RESET, and
-DE_ALLOC commands.
-
-However, it appears to leave the sibling's pm_state as ACTIVE_STATE.
-During client teardown, gpi_free_chan_resources() observes ACTIVE_STATE
-and incorrectly re-issues these commands to the hardware:
-
-gpi_free_chan_resources() {
-    ...
-    if (cur_state =3D=3D ACTIVE_STATE) {
-        ...
-        gpi_send_cmd(gpii, gchan, GPI_CH_CMD_STOP);
-    }
-}
-
-Because the hardware is already deallocated, do the commands time out
-in wait_for_completion_timeout() and cause a blocking delay regression?
-
->  	i =3D 2;
->  error_alloc_chan:
->  	for (i =3D i - 1; i >=3D 0; i--)
-> -		gpi_reset_chan(gchan, GPI_CH_CMD_DE_ALLOC);
-> +		gpi_reset_chan(&gpii->gchan[i], GPI_CH_CMD_DE_ALLOC);
->  error_alloc_ev_ring:
->  	gpi_disable_interrupts(gpii);
-
-[Severity: High]
-This is a pre-existing issue, but does this error path need to kill the
-event processing tasklet before proceeding to free the ring?
-
-If an error occurs after gpi_alloc_ev_chan() succeeds, a hardware
-interrupt could fire and schedule ev_task. A concurrently executing
-tasklet might read from the freed ev_ring DMA memory before pm_state is
-updated.=20
-
-Would calling tasklet_kill(&gpii->ev_task) before freeing the ring prevent
-this regression where memory is used after being freed?
-
->  error_config_int:
->  	gpi_free_ring(&gpii->ev_ring, gpii);
-> +	write_lock_irq(&gpii->pm_lock);
-> +	gpii->pm_state =3D DISABLE_STATE;
-> +	write_unlock_irq(&gpii->pm_lock);
-
-[Severity: Critical]
-This is a pre-existing issue, but is the hardware event ring deallocated
-before we free its memory here?
-
-If the error path frees ev_ring without sending the GPI_EV_CMD_DEALLOC
-command, the hardware might continue writing events to the freed memory.
-
-Additionally, does setting pm_state to DISABLE_STATE bypass the fallback
-cleanup in gpi_free_chan_resources()?
-
-gpi_free_chan_resources() {
-    ...
-    if (cur_state =3D=3D ACTIVE_STATE)
-        gpi_send_cmd(gpii, NULL, GPI_EV_CMD_DEALLOC);
-}
-
-By forcing the state to DISABLE_STATE, it seems the fallback DEALLOC
-is prevented when the sibling channel is cleaned up, potentially making what
-was previously a race window into a permanent regression of the event ring.
-
-[Severity: Critical]
-This is another pre-existing issue, but does freeing the event ring here
-cause a regression by freeing the resource twice later?
-
-When gpi_free_ring() is called, it zeroes the ring structure:
-
-gpi_free_ring() {
-    dma_free_coherent(...);
-    memset(ring, 0, sizeof(*ring));
-}
-
-Later, when the client handles the probe failure and releases the
-previously initialized sibling channel, gpi_free_chan_resources()
-observes no remaining active channels and unconditionally executes:
-
-    gpi_free_ring(&gpii->ev_ring, gpii);
-
-Since the ring properties are now 0 and NULL, does this cause the dma layer
-to attempt to free an invalid page?
-
->  exit_gpi_init:
->  	return ret;
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260819-gpi_bug_fi=
-x-v3-1-4c97333e6f5b@oss.qualcomm.com?part=3D1
+Yours,
+Linus Walleij
