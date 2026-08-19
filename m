@@ -1,139 +1,199 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B54B440627
-	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 22:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E693368A5
+	for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 22:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787179588; cv=none; b=A2G/ZO7l7esyCvIa7HTga32TKIt/Tlg1Hl/GZGsTaYMI7r9XvWYvD1VQC7vE8THNOOT/3w611ebjqkZs8GPftZnyg+SBHMdYkNGJPIuVQVo3RVd5rWndaa2UwwIcIqDjHD0wjiwkcWoMdwNru+4EIrBfbfyFZAJIZBbX01cP7n0=
+	t=1787179810; cv=none; b=Qgbve4fgsHrguBHUmTLCyJVYauTBXLNAmIz6WuC4Wfn5u06ngfMQkRDA67KOsFLXQkHrJExTlcqIPzk70e1CFVovqnQ6MEasnoAamP9a55ObJ2koW4zSboOf4Oc3b0SbP/A86Pw8fyKqF/rLNtsV+P31OVR1c70vC5dmkSllho8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787179588; c=relaxed/simple;
-	bh=njmLRSE8JJHD24thMGV1v1DDnxNbWTQrBKmqa/euBKA=;
+	s=arc-20240116; t=1787179810; c=relaxed/simple;
+	bh=YgE5R5awWR81QpuKFCibRRwmnkca6md3Yxmeej0wmPk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=XzZyGW0lmPFMtY/85pVjkks2ir8upLYifHnZkYjNTtC+ECVmXGzlkzu/W5imNYpbj5cLUzapY7r3wJNZDrK7lbrQVQw7M95bqxx9L5OJfQLm/ZTHNGXwo7u2fD4PsoNaN1TFV6rAMx5e+WcEcGK5N+vKoMP/AVk4MyVHWSaT7Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xh7Vk3+p; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=ZGkwYQ/4JXAAtlyUEpyrz7BjPZtoF+bKd27mujm5kzmtbRHioAHyF1lGve8KYqR+2zE1LKnlr64Wn1kmGcTcOW5kGnFd5m7pOpvDCarpOw7+NtWaqB6mePxY6XEDcoqgZKvcEq0GYrcdoM3dAjVobYzf4Mx8cyLXhmRGPAZ1NJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D83QDN0Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xh7Vk3+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C151F000E9;
-	Wed, 19 Aug 2026 22:46:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D83QDN0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9651F000E9;
+	Wed, 19 Aug 2026 22:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787179586;
-	bh=FDM3p7xh1b1J2iNikEXyQ2ju7VoKZI7D7DviavcpNgs=;
+	s=k20260515; t=1787179808;
+	bh=fvIyEr5iBz/m0vpmDg9w2Vruw8XYySbFxeGt1lRD8wc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Xh7Vk3+pjjx1XqkcUQULufCUTs3t0o+bKOc+uNb5OOzH7eYYlUYnhkLxkLLhepZcw
-	 zgkuUPZpezYiI8i7f71cdQfagjuBc6EbALckGhpn2dKoF5vnOXuZuyMKlFhreu7ONZ
-	 IjmCbwTQ+kvnVV9RUzOkF5wFo/W45m9M1aYoLigdAjMyhlCNOrUrmNjYFHuN46d8r2
-	 1bdTb9NIDjXGFhQ2+m2TaAPBnpyz0m5CgQH0CFVq0X1x9LAOROV/NLwhtCq4s6xxUS
-	 qQEJfeUr2eZpRLKVOgVCYXEu77EIvzPUmHwiM422+FciXPV3y7g00tY2kqdv5N/X9b
-	 mNU7iTqWJGV8A==
+	b=D83QDN0Qi4wt+JCbIsGgI1MoaFHmSrbEwKzuDsbynYu8keMDkbmNCzA+btHTuJ+oh
+	 gBMYzV2ab95RIuf+3liGgNyVb1XX6Zq+jFhdL4R/tlnUaMAtMKJ2TILJkxed/biPez
+	 UUqfxGtNZGb6tux9beKLLqlveYc68uDdoUlLijE73G7exFDA0BhLExGokY5kNf3Vw4
+	 jRpZns7P+cwo7kV8dlaQvZAQNacHloV7RwaRbbZXcXKMQuswBJVhdvNfz0ZBuvETJ1
+	 9Sc3LFlS/+YMi5HJ8Of+OoxVnB39wTjIJqJwumcZiZb43ppBYp1SEACvX/eD+d/v/k
+	 l5mvi7IOo7new==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/4] dmaengine: ste_dma40: Fix failed start cleanup
+Subject: Re: [PATCH 4/4] dmaengine: ste_dma40: Fix logical channel bounds
+ check
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Linus Walleij" <linusw@kernel.org>
 Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260820-dma40-fixes-v1-1-5e14815ad689@kernel.org>
+In-Reply-To: <20260820-dma40-fixes-v1-4-5e14815ad689@kernel.org>
 References: <20260820-dma40-fixes-v1-0-5e14815ad689@kernel.org>
- <20260820-dma40-fixes-v1-1-5e14815ad689@kernel.org>
+ <20260820-dma40-fixes-v1-4-5e14815ad689@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 19 Aug 2026 22:46:26 +0000
-Message-Id: <20260819224626.83C151F000E9@smtp.kernel.org>
+Date: Wed, 19 Aug 2026 22:50:07 +0000
+Message-Id: <20260819225008.5F9651F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] Returning ERR_PTR(err) from d40_queue_start() introduces a PM runt=
-ime reference leak and breaks caller logic in dma_tc_handle().
-- [High] Freeing a submitted descriptor directly on error bypasses the DMA =
-framework, causing the client to hang.
+
+Pre-existing issues:
+- [High] Out-of-bounds access on the `phys` array and potentially arbitrary=
+ MMIO writes during channel allocation due to unconstrained `event_group`.
+- [High] The out-of-bounds write fix for `lookup_log_chans` is bypassed for=
+ memcpy channels configured via the Device Tree.
+- [High] Global buffer overflow when reading `memcpy-channels` from Device =
+Tree.
 --
 
---- Patch [1]: [PATCH 1/4] dmaengine: ste_dma40: Fix failed start cleanup -=
---
-commit 0baedf8f0f8ca2b28e1d6d6a6bce21f2db82302b
+--- Patch [4]: [PATCH 4/4] dmaengine: ste_dma40: Fix logical channel bounds=
+ check ---
+commit 53c98a760123837b647fa917a72020a724b5f32f
 Author: Linus Walleij <linusw@kernel.org>
-Date:   Wed Aug 19 22:35:57 2026 +0000
 
-dmaengine: ste_dma40: Fix failed start cleanup
+dmaengine: ste_dma40: Fix logical channel bounds check
+   =20
+d40_validate_conf() checks the raw dev_type against num_log_chans,
+but d40_allocate_channel() derives the lookup_log_chans index as either
+2 * dev_type or 2 * dev_type + 1.
 
-If d40_start() fails after a queued descriptor has been moved to the active
-list, d40_queue_start() currently returns NULL without unwinding the
-descriptor state or clearing the channel busy flag. This commit attempts
-to fix the error path by freeing the descriptor and returning an error poin=
-ter.
+Validate the dev_type against the derived logical channel index limit so
+channel allocation cannot write past lookup_log_chans.
+   =20
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.=
+kernel.org/
 
-Link: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.ke=
-rnel.org/
-
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index a723133d096ec..eda3f91741ed5 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -1531,8 +1531,12 @@ static struct d40_desc *d40_queue_start(struct d40=
-_chan *d40c)
->  		/* Start dma job */
->  		err =3D d40_start(d40c);
+> @@ -1727,15 +1727,26 @@ static int d40_validate_conf(struct d40_chan *d40=
+c,
+>  {
+>  	int res =3D 0;
+>  	bool is_log =3D conf->mode =3D=3D STEDMA40_MODE_LOGICAL;
+> +	bool invalid_dev_type =3D conf->dev_type < 0;
 > =20
-> -		if (err)
-> -			return NULL;
-> +		if (err) {
-> +			d40_desc_remove(d40d);
-> +			d40_desc_free(d40c, d40d);
+>  	if (!conf->dir) {
+>  		chan_err(d40c, "Invalid direction.\n");
+>  		res =3D -EINVAL;
+>  	}
+> =20
+> -	if ((is_log && conf->dev_type > d40c->base->num_log_chans)  ||
+> -	    (!is_log && conf->dev_type > d40c->base->num_phy_chans) ||
+> -	    (conf->dev_type < 0)) {
+> +	if (!invalid_dev_type && is_log) {
+> +		int max_dev_type;
+> +
+> +		if (conf->dir =3D=3D DMA_DEV_TO_MEM)
+> +			max_dev_type =3D DIV_ROUND_UP(d40c->base->num_log_chans, 2);
+> +		else
+> +			max_dev_type =3D d40c->base->num_log_chans / 2;
+> +
+> +		invalid_dev_type =3D conf->dev_type >=3D max_dev_type;
+> +	}
 
 [Severity: High]
-Does silently freeing the submitted descriptor here cause the DMA client to
-hang?
+This is a pre-existing issue, but does this bounds check fully protect the
+phys array during channel allocation?
 
-The descriptor has already been submitted to the DMA framework, which means=
- the
-client holds a cookie and expects a completion callback. Bypassing the
-framework and freeing the memory directly prevents the framework from compl=
-eting
-the cookie, meaning the client will wait indefinitely for a callback that w=
-ill
-never arrive.
+In d40_allocate_channel(), phy_num is calculated as j + event_group * 2,
+where event_group is derived from dev_type / 16.
 
-> +			d40c->busy =3D false;
-> +			return ERR_PTR(err);
+If num_log_chans is heavily scaled compared to num_phy_chans, could an
+allowed logical dev_type produce an event_group that causes
+event_group * 2 to greatly exceed the physical channel count?
 
-[Severity: High]
-Does returning ERR_PTR(err) here introduce a PM runtime reference leak?
-
-Earlier in d40_queue_start(), a PM runtime reference is acquired:
-
-	if (d40d !=3D NULL) {
-		if (!d40c->busy) {
-			d40c->busy =3D true;
-			pm_runtime_get_sync(d40c->base->dev);
-		}
-
-This error path returns ERR_PTR(err) and sets busy to false without dropping
-that newly acquired reference.
-
-Additionally, changing the return value breaks the caller logic in
-dma_tc_handle(), which explicitly checks for a NULL return to drop the PM
-reference:
-
-drivers/dma/ste_dma40.c:dma_tc_handle() {
+drivers/dma/ste_dma40.c:d40_allocate_channel() {
     ...
-		if (d40_queue_start(d40c) =3D=3D NULL) {
-			d40c->busy =3D false;
-			pm_runtime_put_autosuspend(d40c->base->dev);
-		}
+            for (i =3D phy_num; i < phy_num + 2; i++) {
+                if (d40_alloc_mask_set(&phys[i], ...
     ...
 }
 
-Because ERR_PTR(err) is not NULL, this condition evaluates to false, skippi=
-ng
-pm_runtime_put_autosuspend() and leaking the reference.
+Could this cause out-of-bounds accesses on the phys array, as well as
+arbitrary MMIO writes later in __d40_set_prio_rt() which uses the
+unvalidated group multiplier?
 
-> +		}
+drivers/dma/ste_dma40.c:__d40_set_prio_rt() {
+    ...
+        writel(bit, d40c->base->virtbase + rtreg + group * 4);
+    ...
+}
+
+[Severity: High]
+This is also a pre-existing issue, but is the validation in
+d40_validate_conf() bypassed for memcpy channels configured via the
+Device Tree?
+
+In the fallback configuration path d40_config_memcpy(), the driver
+assigns dev_type directly from the dma40_memcpy_channels array without
+calling d40_validate_conf():
+
+drivers/dma/ste_dma40.c:d40_config_memcpy() {
+    ...
+        d40c->dma_cfg.dev_type =3D dma40_memcpy_channels[d40c->chan.chan_id=
+];
+    ...
+}
+
+If the device tree supplies an arbitrarily large ID for a memcpy channel
+via the memcpy-channels property, could this unvalidated dev_type cause
+an out-of-bounds write into lookup_log_chans during allocation, subverting
+this patch's fix?
+
+drivers/dma/ste_dma40.c:d40_allocate_channel() {
+    ...
+        d40c->base->lookup_log_chans[d40c->log_num] =3D d40c;
+    ...
+}
+
+[Severity: High]
+Another pre-existing issue, but is there a risk of a global buffer overflow
+when reading memcpy-channels from the Device Tree?
+
+The dma40_memcpy_channels array is statically sized with exactly 6 elements:
+
+drivers/dma/ste_dma40.c:
+static int dma40_memcpy_channels[] =3D {
+    DB8500_DMA_MEMCPY_EV_0,
+    ...
+    DB8500_DMA_MEMCPY_EV_5,
+};
+
+However, in d40_probe(), the DT parsing logic reads memcpy-channels up to
+D40_MEMCPY_MAX_CHANS (which is 8) via of_property_read_u32_array():
+
+drivers/dma/ste_dma40.c:d40_probe() {
+    ...
+        of_property_read_u32_array(np, "memcpy-channels",
+                                   dma40_memcpy_channels,
+                                   num_memcpy);
+    ...
+}
+
+If a Device Tree blob provides 7 or 8 elements in the memcpy-channels
+property, will the driver write past the end of the 6-element array during
+initialization?
+
+> +
+> +	if (invalid_dev_type ||
+> +	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
+>  		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
+>  		res =3D -EINVAL;
 >  	}
-> =20
->  	return d40d;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820-dma40-fixe=
-s-v1-0-5e14815ad689@kernel.org?part=3D1
+s-v1-0-5e14815ad689@kernel.org?part=3D4
