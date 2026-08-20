@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49583448CF9;
-	Thu, 20 Aug 2026 13:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485CD443AAB;
+	Thu, 20 Aug 2026 13:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787231708; cv=none; b=TLbt8qeNFBgGX6DCH+2p1IcDQDfcd6hTxDrmd2VNbR0dahJpZn//00W1yZNw5PBp6AE5s98NAPzLDOZwHHLSqy8/Cuv1m2I9nX+Ho3VsYOZJDwL83wOMdv2tLAAym4c2lsOc6TWymxG7k7Fi4UvFfdnEPwLrPKwKtIBydFzyR6M=
+	t=1787231710; cv=none; b=YCD8YP/WUPpveigiu9bNOFIRDk/1FPDUpJeecp1/zg0rCr8Q7T+Pf8lz3+4rM16Pv2ElsvTV7Ep6GCUOlMYoShrqgltCScdyxmLFwH3E6CWcrrojYcWH8a3Ib5csZwQs65BT5Yjx4+lYSvxXSYtMTWzRkta9sx4OBMxrtnONUns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787231708; c=relaxed/simple;
-	bh=jjAxoAqHssriRxiXA2GzXTUaqUlwtN6mei8tJb02mD8=;
+	s=arc-20240116; t=1787231710; c=relaxed/simple;
+	bh=LG1VWxZMO0UQ/RWpEPzB8+q0R5mxApVeLI7357iymFM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VnfFrn+/CeyVX15dxWinyd/OpNoVxDGsbxDWk8gyOgHykfP3VtzWMOv9SFWYS6203isPlyXRfmuJSIQWHOHBF2oFvNboEI5+gyCA41YBQGADvwfcIAXL47qQ6wiGsoOAmXPKzNQCLq4UGS5s7l2hifVcR5jCaD1tD64j56L07aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WSYwSSaf; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=B9g04M+rCOIgJTrLgritj/DR0WJr64iKtCRqvUbgnwcv/xd0tIG6U4+HYn/B6ifNBHs9anXTVtmylWWl/xkQi6r4lflcgHr+K3oyhtggwj5Mqrc6TOItZ0L1RbkKi65dxGMaXjrJa0NuyoyGuL4YIdLPJmhB3fiHVLRN+QeH8+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qm7QJ2IE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WSYwSSaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F294C1F000E9;
-	Thu, 20 Aug 2026 13:15:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qm7QJ2IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5BE1F00A3A;
+	Thu, 20 Aug 2026 13:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787231707;
-	bh=OzpBWCpcW2evZzXubZCFNJ9z7uXPVmOVOhtjy8ek4a8=;
+	s=k20260515; t=1787231708;
+	bh=0EjxOPzVMm3B6X7kgOBdU57fR1sqX55VKYOum+MEuZ0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=WSYwSSafeNqkOZNuyl12jgLSLErTUST5D3axQ3uUD6du2LxRWOb9XUCSMKtD4Ogm8
-	 X0tbvgVcKmuYSI3zGi99PdN+aryjS1b0p3AE3Oab33HB+1jmYd7KrIXaX6S2GZD+c3
-	 5GuB7b4/+eiOo/C2/sjGtRaOHD3xlT3P/hS9PpN78NZJCWF9abKORaRKDk45YAvlkN
-	 eW9iUhgAK4ypXtZQoxeqpv587DJPonHfSzlUA48MCu329kpXgojIUh+2YTYs95IcgK
-	 ywjeUH2aUnofhwCdvsSXDpgmV+5eP/Q2hpvAxzhH4yxuHzN85XknscVrQG9Bh7DxzB
-	 JKX1y8TFYH0ww==
+	b=Qm7QJ2IEyk79x6wWf2b8U7CXTc2ypvW7rCSZcv+ixPnqGykVX6GNJKDzZ/lDgCPuz
+	 T73O1UBGbG9JjXypjdBt8/2OxXxEQQi30mMqZgFTOuNUfFYpxjIWyq7dZq0zOj5Bec
+	 rFXi2iPzZoL+OJHi67sIp8zOG/iWCIefgK97BYIUoikJjG7RU8p8ASLFyHQdpmd5tm
+	 ITHqRtdmYboZ4JuUOehxsBXRQQ2rQCh8v140/b5XhKjo/0Ff2mgBSGabQphQ5hCVWm
+	 fal4QHG4y9In0ReJyfaSFEfEcPheDktqpmILE0E+ogSSgCNh4EJTwmVs2+IFBCMET+
+	 Wu/wUDeP5NWEg==
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 20 Aug 2026 15:14:59 +0200
-Subject: [PATCH v2 05/13] dmaengine: ste_dma40: Fix LCLA allocation order
+Date: Thu, 20 Aug 2026 15:15:00 +0200
+Subject: [PATCH v2 06/13] dmaengine: ste_dma40: Fix probe LCLA free
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,7 +37,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260820-dma40-fixes-v2-5-63238334c707@kernel.org>
+Message-Id: <20260820-dma40-fixes-v2-6-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 In-Reply-To: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -45,122 +45,35 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-d40_lcla_allocate() calculates the number of pages needed for LCLA, but
-passes that raw page count as the allocation order to __get_free_pages().
-The same value is later passed to free_pages().
+When LCLA is placed in ESRAM, d40_probe() stores a devm_ioremap()
+address in lcla_pool.base and leaves base_unaligned unset. The
+destroy_cache error path can then pass the ioremap address to
+free_pages().
 
-Store the allocation order with get_order() instead, and use a separate
-byte size for allocation diagnostics, fallback kmalloc() sizing and DMA
-mapping.
+Only free lcla_pool.base with free_pages() when the driver allocated the
+LCLA pool from normal memory. The ESRAM mapping is devm-managed.
 
 Reported-by: sashiko-bot@kernel.org
 Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
 Assisted-by: Codex:gpt-5-5
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ drivers/dma/ste_dma40.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 384c2f3805b0..804eb5eab06b 100644
+index 804eb5eab06b..739e47941d0c 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -411,8 +411,8 @@ struct d40_desc {
-  * @dma_addr: DMA address, if mapped
-  * @base_unaligned: The original kmalloc pointer, if kmalloc is used.
-  * This pointer is only there for clean-up on error.
-- * @pages: The number of pages needed for all physical channels.
-- * Only used later for clean-up on error
-+ * @alloc_order: Order used for the LCLA page allocation.
-+ * Only used later for clean-up on error.
-  * @lock: Lock to protect the content in this struct.
-  * @alloc_map: big map over which LCLA entry is own by which job.
-  */
-@@ -420,7 +420,7 @@ struct d40_lcla_pool {
- 	void		*base;
- 	dma_addr_t	dma_addr;
- 	void		*base_unaligned;
--	int		 pages;
-+	unsigned int	 alloc_order;
- 	spinlock_t	 lock;
- 	struct d40_desc	**alloc_map;
- };
-@@ -3372,6 +3372,7 @@ static void __init d40_hw_init(struct d40_base *base)
- static int __init d40_lcla_allocate(struct d40_base *base)
- {
- 	struct d40_lcla_pool *pool = &base->lcla_pool;
-+	size_t lcla_size = SZ_1K * base->num_phy_chans;
- 	unsigned long *page_list;
- 	int i, j;
- 	int ret;
-@@ -3387,20 +3388,20 @@ static int __init d40_lcla_allocate(struct d40_base *base)
- 	if (!page_list)
- 		return -ENOMEM;
+@@ -3667,7 +3667,8 @@ static int __init d40_probe(struct platform_device *pdev)
+ 				 SZ_1K * base->num_phy_chans,
+ 				 DMA_TO_DEVICE);
  
--	/* Calculating how many pages that are required */
--	base->lcla_pool.pages = SZ_1K * base->num_phy_chans / PAGE_SIZE;
-+	base->lcla_pool.alloc_order = get_order(lcla_size);
- 
- 	for (i = 0; i < MAX_LCLA_ALLOC_ATTEMPTS; i++) {
- 		page_list[i] = __get_free_pages(GFP_KERNEL,
--						base->lcla_pool.pages);
-+						base->lcla_pool.alloc_order);
- 		if (!page_list[i]) {
- 
--			d40_err(base->dev, "Failed to allocate %d pages.\n",
--				base->lcla_pool.pages);
-+			d40_err(base->dev, "Failed to allocate %zu bytes.\n",
-+				lcla_size);
- 			ret = -ENOMEM;
- 
- 			for (j = 0; j < i; j++)
--				free_pages(page_list[j], base->lcla_pool.pages);
-+				free_pages(page_list[j],
-+					   base->lcla_pool.alloc_order);
- 			goto free_page_list;
- 		}
- 
-@@ -3410,7 +3411,7 @@ static int __init d40_lcla_allocate(struct d40_base *base)
- 	}
- 
- 	for (j = 0; j < i; j++)
--		free_pages(page_list[j], base->lcla_pool.pages);
-+		free_pages(page_list[j], base->lcla_pool.alloc_order);
- 
- 	if (i < MAX_LCLA_ALLOC_ATTEMPTS) {
- 		base->lcla_pool.base = (void *)page_list[i];
-@@ -3420,10 +3421,9 @@ static int __init d40_lcla_allocate(struct d40_base *base)
- 		 * alignment, try with allocating a big buffer.
- 		 */
- 		dev_warn(base->dev,
--			 "[%s] Failed to get %d pages @ 18 bit align.\n",
--			 __func__, base->lcla_pool.pages);
--		base->lcla_pool.base_unaligned = kmalloc(SZ_1K *
--							 base->num_phy_chans +
-+			 "[%s] Failed to get %zu bytes @ 18 bit align.\n",
-+			 __func__, lcla_size);
-+		base->lcla_pool.base_unaligned = kmalloc(lcla_size +
- 							 LCLA_ALIGNMENT,
- 							 GFP_KERNEL);
- 		if (!base->lcla_pool.base_unaligned) {
-@@ -3435,8 +3435,7 @@ static int __init d40_lcla_allocate(struct d40_base *base)
- 						 LCLA_ALIGNMENT);
- 	}
- 
--	pool->dma_addr = dma_map_single(base->dev, pool->base,
--					SZ_1K * base->num_phy_chans,
-+	pool->dma_addr = dma_map_single(base->dev, pool->base, lcla_size,
- 					DMA_TO_DEVICE);
- 	if (dma_mapping_error(base->dev, pool->dma_addr)) {
- 		pool->dma_addr = 0;
-@@ -3670,7 +3669,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 
- 	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
+-	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
++	if (!base->plat_data->use_esram_lcla &&
++	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
  		free_pages((unsigned long)base->lcla_pool.base,
--			   base->lcla_pool.pages);
-+			   base->lcla_pool.alloc_order);
- 
- 	kfree(base->lcla_pool.base_unaligned);
+ 			   base->lcla_pool.alloc_order);
  
 
 -- 
