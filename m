@@ -1,164 +1,123 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E6D353A8D
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 18:38:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787251114; cv=pass; b=UjrBBSjhmnMzOgxw1OfpuQ1MhgvXTg9tVyqzgDEXWIm3y/MY9lstfp1kc3M7668I6XMak8FdaaI6jE0BwhD150ULVVtZGbUikBraj8t106e5ovbZ+IqdAka1o82Et51sjGa4A7ZmpUwQzSM+BXdXFk5XUHvemS6pqJz9bmkR8tE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787251114; c=relaxed/simple;
-	bh=ySgPgfv05Yd25g+jC4eHkSz8Sx3TC893Dq5u7CSXQOw=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DAD3D6491
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 20:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787258141; cv=none; b=mKTXR4xKf21t+8ZCspG8zTj20JVlbq3jCX1mQk997oJRxq/NYz2k3UT/hM1pJbprm6NMMsrFPEQwMvGkAZEMCMsdB8laqpwEq3P775mA1LXhzuMhta+JtEUTtpXVxH57t3yr+NpM8IQn6Q96NqCLWRoDTQy++ZRWdlH7BPSfwkc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787258141; c=relaxed/simple;
+	bh=i7Ql33ixi0sAp+Eyd6k0oHoZUzox/mt7rZrrQhw+QUs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QFD+DG+ZpqvVrz2tM3J7EpQyWEHvdkUPDMqpScKlzpEq6mZz8UtW7fNpXhP2YPDjtwC6oyP6ZiS/tajjVbTPHOeckBfaFzxvbrPfHRCtJURbs8qygUNhlpkiV5yH6lajQKREVGVnUMc0xeB8Sn5oAtlMmV6W7vR2z3yqrUg6XFY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIBd+D90; arc=pass smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=Cvo6cW/UQjKCSgopEovqDz6sN617CUVBumHJ/vIYNOQb1pXKbi8dVOUkv94uYIjQhwG6O0YICWzD6hCsIJ/7y7Zt8e7kaTqylkkAFbNULB+D9sf0RPqlDDGxYpyK8efvgtBE/ME5Ex3UqfGMtS7B/R+ShcfF57FkpnVzizg1Krw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hOg4onsl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIBd+D90"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a20319d030so382054a12.2
-        for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 11:38:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787251111; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YitlFO4sOcosBEYqvEkoiXX8BseIjPJbGV6yyyCG4DtgxO0CFv1wmY8MJFjhYcOi1F
-         G5lfUY3gjbpRS3SpMoutsP4hTKy7VeY3fHpbyoOQXxOZpt8MN1bNWxv8+QaJ4PnlK1v5
-         SyxT6x6lIN6nHwMD+B+DzWi1+jPfn5N+i/n4jrXJcBRWza6oYESatmFfvY6fFTyYBDlT
-         SUzT0s4Yb/+AEJG+uO+MOfCNIvGO5ekEWGeFFxO+vwlLIoECYhR3DxNtic9IED6zQqY4
-         o79QQq5QIJirXRIyIA4Bmnc1sZDQnm4jsEYcbkUzQIlPgFhaK6wYkUgmrIYAUYUjmWv3
-         YOjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
-        fh=cbH6eCr1n2DxrSvAgxpWoYBigkc/hGYfxwnS2wUooGY=;
-        b=h4KOhdwy8rG06R+XmgY+cuLxN0zPMCdDmPBbLZSZbLznujWA1VDs6r0kieopJvPxoj
-         bXCozISnB20L8hsLVKrHZ8lgkeTm2M/4+ux6ktHJPEAfv3rU6MRH4sZqcgZ0/1bbG8DU
-         YRnRiVB9PbOIOxVgiCRexXCQCOlq2L4uM1D+XbYjNyv23R8W7B2vCQTaYa36Nq++AYK9
-         e/edciuR6yRyvnJQAN42tEmAYeL6p3K6Xezp4lOmZF8/BU0nf1Qd7t3fF2W2xJ8AOJav
-         WsUS5lMLmmMB7o1JGAZvuK0HhQzEFeydz5SPkBW+rk/Bq+32DUKLSPwASJMx1+xFjFqs
-         6BQA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787251111; x=1787855911; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
-        b=BIBd+D90MSadaN0krbeNu+BHa8C9Ym9aQSDgkOMyJrJJPSTvULN5KF4UAsyk3fLja0
-         HR+wGZlhQf4sv3OoDKJRgVcSusdT+caFv7P7TKjBHTFlV09LMrClgs0GmplpS2gzcrBQ
-         Kja9yp5UNp+uMxNLcUhB7nZbg21i1itHA+j+OJpL4HcuAUFMFehThM+t1J1Vvw4p2nWq
-         mlDlIi25aMi6qVGhnSZPouJAjaA4hQKCAm/TEuWAvrWDiClhq8eNzinyCbOGcPjsxWIg
-         QS3OmXAlo+8uOXFk6NFZYFNLe4Rp8Ml+arsV6JWpjI6i47uHhqSNrF7n5wPYJeSMpLdM
-         PuXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787251111; x=1787855911;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
-        b=U2mCF7Uf+1aZiqzQSDtfkwiLjmD86cTQcG2xOPBNnIRi5FKpgV2TUuEQlOVw6c/V5j
-         JOp9ieHUKAH5mKQIVCcNd8DZlB3Nji5qVOH4W9G+ZU2wzRZihp3FFg0A0qKtJafAJsxn
-         7oBsUDfALOoTCfJsN4ejn88Na0TNWQrQYcZqSo1+fs42Z35LwYX7jglDjd2FpTQcMecP
-         1XmnCYMeD/QRD9yeE7oDB7Rn0NsSuRPxhLfn2phgr9y3CiU3jnJr88ojb2M0zyv+iPJo
-         x6UOZVf+Qy5QGh88XetuZiHGFqE6LNDUaQUZRXh3LhwQL27tRf+a1nLFhBJT9Fq74CKA
-         RDAA==
-X-Gm-Message-State: AFuF++mpL/C7TDnHuCi/l8kfwGsqm+mFxiVQiPpOp035qieMxA75cmYb
-	Dw5YMy9KNuzxwMLWmH+vgLCPpjjPZA1cfzmGUWD4mY8hl/6huKheXnWeM4OiEN79NeHqZ5Rln9W
-	wryZh7QRgdX0cGoZk4HGFbJg14BEnhCFeVgmF
-X-Gm-Gg: AR+sD136PR42oRW6QsvzV8QeFqsgPw2p45lQa4L4QfnOW0Ptdpu6dhBm0O17sQG8GHa
-	5d8IFrF3HUmqzp+OBYGnIJxeKekdIv4Um2kxuU86Qq6GtPxkNXdpmu/ZDPS3THdz5d7NA3OeYBw
-	wrULDearM+uvCCHHdeDLvk7IzXw8Y7YdR9leMfnq1nZWcS5xqAw/rZIhrL4nfvm+gAectUeb4Pm
-	Aj5v44+CfmcdF4wxAXuBHu52DDwb067vaYzNbiIBlyciqmdLh5vXYxLFTAZpTX+ukJDJE/Bv883
-	VpHFGZLgh2ZB8P/2tkfus92mZx2na2yYqP03CbS8oCZqZigQxhn4yJUOUu0SxlspbxRt9LiBN/0
-	h0xBjh6sY2tblSew+cnagYlP1piXWCNlElXPV2Soy0qbexatr8eERqLdhkZAL8srripElsO9TDF
-	KyvDZTfy8p43BV72RC4kkNPMwjCP2YKPcXdgeXu6xkbP8ng9HLjwNRIkY=
-X-Received: by 2002:a05:6402:190a:b0:698:663d:d7bd with SMTP id
- 4fb4d7f45d1cf-6a42f1df94emr504720a12.11.1787251111224; Thu, 20 Aug 2026
- 11:38:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hOg4onsl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7D71F0155D
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 20:35:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787258137;
+	bh=LVEvLIPEcNpWvW+7WYHdCYmT4bTuxYZ+a3551AYtS/Q=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=hOg4onslcA38Hz1lx6d7G5Xr6jcrVkEEcFnoBs0zHrSlWtT5X5iddGpl09CaduWzo
+	 PecB+yoWN/lPyN3F2hfFNxAS5JyU4onRiaKBNGmdN56nHSdPjjSc6UGl/gNhQeHgEW
+	 QvI1FXqLJSl3wSwPJCd3jBLgliEx6yzqnEXgta8QhxMp9bezyA9acP4uB88mIp5A6i
+	 /xBVDLen4o25gAGmhPTdGmZ66F0cGfTI2zVZRhNe+55Cgbxya6uSf9yeG4bd5CTgra
+	 dbJBBxEhRBJSDTdf+xrPnCSvjXEQOzizXW8YCJtRteyJEkZXMOcbaCbwboXY+n08/e
+	 Qsw9X5HhGW88w==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5b0f19bea2fso268646e87.1
+        for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:35:37 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RodDPfGq3nXuzVX/jOI0qra5svSIe/EgF3NfHL5hLFU5JUFY2k131VnkHyxB/yNFhQpeTqKSfifRZ0=@vger.kernel.org
+X-Gm-Message-State: AFuF++mr9A2ImVbptWG8NGNh7KWaHxUOlbc8hggPBCcBFhY/72/efQKv
+	0SgB3p+8jm9j3ZFPHBv00AL7WIIr1Fw03KxladkP3h56yYUGNNXoZcOtixmV5ttOfR4OjYioOKG
+	iSVIEpgE2nxQ4P9tBfBXrd5Bgf36lZAM=
+X-Received: by 2002:a05:6512:8346:b0:5ae:9c19:165c with SMTP id
+ 2adb3069b0e04-5b4841e27d3mr252495e87.7.1787258136265; Thu, 20 Aug 2026
+ 13:35:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260723050606.283453-1-rosenp@gmail.com> <aoYJGXfDciTLTZx4@lizhi-Precision-Tower-5810>
-In-Reply-To: <aoYJGXfDciTLTZx4@lizhi-Precision-Tower-5810>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Thu, 20 Aug 2026 11:38:19 -0700
-X-Gm-Features: AcwNN1WadOkdQETjHY5aKJw3lWDWX0-S7dat9vSR7J9yhC3maiVC2GsEIfMKG3c
-Message-ID: <CAKxU2N8SvNqQB6g-esc-+KpO0sNKHAB7EiE9FWbg7Dv41=5MGQ@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: at_hdmac: ioremap and get irq early
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: dmaengine@vger.kernel.org, 
-	Ludovic Desroches <ludovic.desroches@microchip.com>, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, 
-	"moderated list:MICROCHIP AT91 DMA DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>
+References: <20260618-ux500-power-domains-v7-1-v1-0-eb5e50b1a588@kernel.org>
+ <20260618-ux500-power-domains-v7-1-v1-10-eb5e50b1a588@kernel.org>
+ <CAPx+jO-ow2vo2wMxERLGse88wLoaR=HLdOWk6Qwv97ZdbE4R5Q@mail.gmail.com>
+ <CAD++jLnzDmxW_SoJ9H1tS2_r+jd7A7FpLVp37nK=dOEPj=GExA@mail.gmail.com> <CAPx+jO-+hLsAdDC9Ep16cO52cA2c=xKeXvngkGqzoC0FyxXj+A@mail.gmail.com>
+In-Reply-To: <CAPx+jO-+hLsAdDC9Ep16cO52cA2c=xKeXvngkGqzoC0FyxXj+A@mail.gmail.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Thu, 20 Aug 2026 22:35:24 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnVsYhHjY5XB1kU8c-1bH4PGkR3quiEGVgkb_0_X-7hjw@mail.gmail.com>
+X-Gm-Features: AcwNN1VO70LvbVfj0Q2UgJnPHtAU9I9kBvApsB1ktj4CqAz_-IVL1-eYcTJPSeg
+Message-ID: <CAD++jLnVsYhHjY5XB1kU8c-1bH4PGkR3quiEGVgkb_0_X-7hjw@mail.gmail.com>
+Subject: Re: [PATCH 10/11] regulator: db8500: Add power domain regulators
+To: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Lee Jones <lee@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	dmaengine@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 19, 2026 at 12:50=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wr=
-ote:
+On Thu, Aug 20, 2026 at 12:24=E2=80=AFPM Ulf Hansson
+<ulf.hansson@oss.qualcomm.com> wrote:
+> On Wed, Aug 19, 2026 at 3:30=E2=80=AFPM Linus Walleij <linusw@kernel.org>=
+ wrote:
+
+> > > > @@ -673,6 +673,7 @@ db8500-prcmu-regulators {
+> > > >                                 // DB8500_REGULATOR_VAPE
+> > > >                                 db8500_vape_reg: db8500_vape {
+> > > >                                         regulator-always-on;
+> > > > +                                       power-domains =3D <&pm_doma=
+ins DOMAIN_VAPE>;
+> > >
+> > > Hmm, isn't this the other way around? The power-domains node should
+> > > have a regulator supply?
+> >
+> > They probably have that, but that is not what this is about,
+> > it's the other way around.
+> >
+> > > We may even consider to skip to model the regulator altogether and
+> > > make the power domain operate directly on the prcmu instead.
+> >
+> > That is what the series tries to do, as a whole. Sorry if that was uncl=
+ear...
+> >
+> > What we do in this patch is to deal with the fact that two of the power
+> > domains, when enabled, also turn on two external power rails outside
+> > of the SoC.
+> >
+> > Since external components such as I2C devices cannot really be
+> > claimed as "being inside a power domain" they take a regulator.
 >
-> On Wed, Jul 22, 2026 at 10:06:06PM -0700, Rosen Penev wrote:
-> > The functions can return -EPROBE_DEFER. Call them before anything else
-> > to avoid doing extra work.
+> So with I2C devices you are not referring to the I2C controllers, right?
 >
-> just move before one devm_kalloc(), I have not seen much beanfit for it.
-Not sure I follow. devm_platform_ioremap_resource() and
-platform_get_irq() just need a platform_device pointer.
+> Are you saying that these external I2C devices consume the same
+> regulator as the power-domain DOMAIN_VAPE uses?
 >
-> Frank
->
-> >
-> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> > ---
-> >  drivers/dma/at_hdmac.c | 17 ++++++++++-------
-> >  1 file changed, 10 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-> > index e5b30a57c477..2f6f5877fc3c 100644
-> > --- a/drivers/dma/at_hdmac.c
-> > +++ b/drivers/dma/at_hdmac.c
-> > @@ -1943,11 +1943,20 @@ static void at_dma_off(struct at_dma *atdma)
-> >  static int __init at_dma_probe(struct platform_device *pdev)
-> >  {
-> >       struct at_dma           *atdma;
-> > +     void __iomem            *regs;
-> >       int                     irq;
-> >       int                     err;
-> >       int                     i;
-> >       const struct at_dma_platform_data *plat_dat;
-> >
-> > +     regs =3D devm_platform_ioremap_resource(pdev, 0);
-> > +     if (IS_ERR(regs))
-> > +             return PTR_ERR(regs);
-> > +
-> > +     irq =3D platform_get_irq(pdev, 0);
-> > +     if (irq < 0)
-> > +             return irq;
-> > +
-> >       /* setup platform data for each SoC */
-> >       dma_cap_set(DMA_MEMCPY, at91sam9rl_config.cap_mask);
-> >       dma_cap_set(DMA_INTERLEAVE, at91sam9g45_config.cap_mask);
-> > @@ -1968,13 +1977,7 @@ static int __init at_dma_probe(struct platform_d=
-evice *pdev)
-> >       if (!atdma)
-> >               return -ENOMEM;
-> >
-> > -     atdma->regs =3D devm_platform_ioremap_resource(pdev, 0);
-> > -     if (IS_ERR(atdma->regs))
-> > -             return PTR_ERR(atdma->regs);
-> > -
-> > -     irq =3D platform_get_irq(pdev, 0);
-> > -     if (irq < 0)
-> > -             return irq;
-> > +     atdma->regs =3D regs;
-> >
-> >       /* discover transaction capabilities */
-> >       atdma->dma_device.cap_mask =3D plat_dat->cap_mask;
-> > --
-> > 2.55.0
-> >
+> I thought these types of external devices in general use a different
+> voltage range. Moreover, do note that DOMAIN_VAPE also has
+> corresponding OPPs (performance states) that change the voltage level
+> based on the requested OPP. I am not sure an external I2C would be
+> able to cope with that.
+
+I did the mistake to trust the device trees :(
+
+It seems all the device trees are buggy, because components
+that should be connected to VSMPS2 from the AB8500 PMIC
+have been instead connected to the DB8500 VSMPS2 power
+domain... The one instance of VARM being used outside of the
+SoC was a bug as well.
+
+OK I go and fix this, worst case I add a fixed regulator for it,
+it's an "always on except during sleep" type of thing.
+
+We should be able to drop this patch entirely!
+
+Yours,
+Linus Walleij
