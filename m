@@ -1,126 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD13215075
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 17:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248211; cv=none; b=TdmftBvfpKVCDL/swHUGBtwY8kI23t0NmzhMTganEAtGzO1qB/9a8RLr4XymMOYSgZMWqA3VJeaUz5FXl4mHDavKkwaZh7p+/bHSJt9eV9bngicJe6UwOEgtjT8rjxY6AT0DvMT63jwe4w+tV+O0M3GgwOjfpftItT/7THfjRJc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248211; c=relaxed/simple;
-	bh=AizFlzdtIftuCKyZxHSYt6Ep76DwotgAbwAibwy0gxM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=cpojoJFVgdr65gPy7I33Xk9Kl3kOaNaoVSNWa76Idk99CFQQpR/KaJtfxZ5bth2pbiiE1sJ7QSCZcyky26yCeX8OXUbbQeqar1jph+ed0jKD8vn3oryBH7cJww09GnO/Y+shl0J5J1e2KjD0SzkyRgkORbIIcMtkagaw7q0KAQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmEnU5u5; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E6D353A8D
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 18:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787251114; cv=pass; b=UjrBBSjhmnMzOgxw1OfpuQ1MhgvXTg9tVyqzgDEXWIm3y/MY9lstfp1kc3M7668I6XMak8FdaaI6jE0BwhD150ULVVtZGbUikBraj8t106e5ovbZ+IqdAka1o82Et51sjGa4A7ZmpUwQzSM+BXdXFk5XUHvemS6pqJz9bmkR8tE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787251114; c=relaxed/simple;
+	bh=ySgPgfv05Yd25g+jC4eHkSz8Sx3TC893Dq5u7CSXQOw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QFD+DG+ZpqvVrz2tM3J7EpQyWEHvdkUPDMqpScKlzpEq6mZz8UtW7fNpXhP2YPDjtwC6oyP6ZiS/tajjVbTPHOeckBfaFzxvbrPfHRCtJURbs8qygUNhlpkiV5yH6lajQKREVGVnUMc0xeB8Sn5oAtlMmV6W7vR2z3yqrUg6XFY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIBd+D90; arc=pass smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmEnU5u5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ED01F00A3A;
-	Thu, 20 Aug 2026 17:50:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787248209;
-	bh=0x1ZRfo39zuS2fZPdbIGgpRniMM0+trf7U+HR8tQib4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HmEnU5u5/tK1n7XbFWr6oGAkRvw0EHLex64Hh/YL86WS5O0BEA/PKoPFt3Eyx+vuT
-	 1V4zGDXZ/YyfJNK+41N2xFMKq8zY2rgMmZ7IkT3zbPS/TFpTg4sWarb5C31LIttqel
-	 Ki6Z2jIrpODVo6Gw7Ad3uSDo7xDSKwhX/bOpihDFDcx7NGJKzie2Vfew5qyMCmw34k
-	 O8Do+KyO4ja8le7NduKxcvQjGLfoOb2FoBzhXOUqjFirCwoiS6miIqRF4OHyQ314Cb
-	 Qv1cu5/FGtWu3wlv++JTGSSuTXzzzFkYZabcncQmwm+YfQmDlVFuc80lkFbLHwTbvV
-	 oKDZovcWPtn3A==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 04/10] dmaengine: dw-edma: Make DMA link list work as
- a circular buffer
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Koichiro Den" <den@valinux.co.jp>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260820173439.2004068-5-den@valinux.co.jp>
-References: <20260820173439.2004068-1-den@valinux.co.jp>
- <20260820173439.2004068-5-den@valinux.co.jp>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 17:50:09 +0000
-Message-Id: <20260820175009.70ED01F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIBd+D90"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a20319d030so382054a12.2
+        for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 11:38:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787251111; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YitlFO4sOcosBEYqvEkoiXX8BseIjPJbGV6yyyCG4DtgxO0CFv1wmY8MJFjhYcOi1F
+         G5lfUY3gjbpRS3SpMoutsP4hTKy7VeY3fHpbyoOQXxOZpt8MN1bNWxv8+QaJ4PnlK1v5
+         SyxT6x6lIN6nHwMD+B+DzWi1+jPfn5N+i/n4jrXJcBRWza6oYESatmFfvY6fFTyYBDlT
+         SUzT0s4Yb/+AEJG+uO+MOfCNIvGO5ekEWGeFFxO+vwlLIoECYhR3DxNtic9IED6zQqY4
+         o79QQq5QIJirXRIyIA4Bmnc1sZDQnm4jsEYcbkUzQIlPgFhaK6wYkUgmrIYAUYUjmWv3
+         YOjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
+        fh=cbH6eCr1n2DxrSvAgxpWoYBigkc/hGYfxwnS2wUooGY=;
+        b=h4KOhdwy8rG06R+XmgY+cuLxN0zPMCdDmPBbLZSZbLznujWA1VDs6r0kieopJvPxoj
+         bXCozISnB20L8hsLVKrHZ8lgkeTm2M/4+ux6ktHJPEAfv3rU6MRH4sZqcgZ0/1bbG8DU
+         YRnRiVB9PbOIOxVgiCRexXCQCOlq2L4uM1D+XbYjNyv23R8W7B2vCQTaYa36Nq++AYK9
+         e/edciuR6yRyvnJQAN42tEmAYeL6p3K6Xezp4lOmZF8/BU0nf1Qd7t3fF2W2xJ8AOJav
+         WsUS5lMLmmMB7o1JGAZvuK0HhQzEFeydz5SPkBW+rk/Bq+32DUKLSPwASJMx1+xFjFqs
+         6BQA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787251111; x=1787855911; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
+        b=BIBd+D90MSadaN0krbeNu+BHa8C9Ym9aQSDgkOMyJrJJPSTvULN5KF4UAsyk3fLja0
+         HR+wGZlhQf4sv3OoDKJRgVcSusdT+caFv7P7TKjBHTFlV09LMrClgs0GmplpS2gzcrBQ
+         Kja9yp5UNp+uMxNLcUhB7nZbg21i1itHA+j+OJpL4HcuAUFMFehThM+t1J1Vvw4p2nWq
+         mlDlIi25aMi6qVGhnSZPouJAjaA4hQKCAm/TEuWAvrWDiClhq8eNzinyCbOGcPjsxWIg
+         QS3OmXAlo+8uOXFk6NFZYFNLe4Rp8Ml+arsV6JWpjI6i47uHhqSNrF7n5wPYJeSMpLdM
+         PuXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787251111; x=1787855911;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=y399UwJ+HCYN54RYrd1HkabMCMMPg6Wkn/Pg5u47ll8=;
+        b=U2mCF7Uf+1aZiqzQSDtfkwiLjmD86cTQcG2xOPBNnIRi5FKpgV2TUuEQlOVw6c/V5j
+         JOp9ieHUKAH5mKQIVCcNd8DZlB3Nji5qVOH4W9G+ZU2wzRZihp3FFg0A0qKtJafAJsxn
+         7oBsUDfALOoTCfJsN4ejn88Na0TNWQrQYcZqSo1+fs42Z35LwYX7jglDjd2FpTQcMecP
+         1XmnCYMeD/QRD9yeE7oDB7Rn0NsSuRPxhLfn2phgr9y3CiU3jnJr88ojb2M0zyv+iPJo
+         x6UOZVf+Qy5QGh88XetuZiHGFqE6LNDUaQUZRXh3LhwQL27tRf+a1nLFhBJT9Fq74CKA
+         RDAA==
+X-Gm-Message-State: AFuF++mpL/C7TDnHuCi/l8kfwGsqm+mFxiVQiPpOp035qieMxA75cmYb
+	Dw5YMy9KNuzxwMLWmH+vgLCPpjjPZA1cfzmGUWD4mY8hl/6huKheXnWeM4OiEN79NeHqZ5Rln9W
+	wryZh7QRgdX0cGoZk4HGFbJg14BEnhCFeVgmF
+X-Gm-Gg: AR+sD136PR42oRW6QsvzV8QeFqsgPw2p45lQa4L4QfnOW0Ptdpu6dhBm0O17sQG8GHa
+	5d8IFrF3HUmqzp+OBYGnIJxeKekdIv4Um2kxuU86Qq6GtPxkNXdpmu/ZDPS3THdz5d7NA3OeYBw
+	wrULDearM+uvCCHHdeDLvk7IzXw8Y7YdR9leMfnq1nZWcS5xqAw/rZIhrL4nfvm+gAectUeb4Pm
+	Aj5v44+CfmcdF4wxAXuBHu52DDwb067vaYzNbiIBlyciqmdLh5vXYxLFTAZpTX+ukJDJE/Bv883
+	VpHFGZLgh2ZB8P/2tkfus92mZx2na2yYqP03CbS8oCZqZigQxhn4yJUOUu0SxlspbxRt9LiBN/0
+	h0xBjh6sY2tblSew+cnagYlP1piXWCNlElXPV2Soy0qbexatr8eERqLdhkZAL8srripElsO9TDF
+	KyvDZTfy8p43BV72RC4kkNPMwjCP2YKPcXdgeXu6xkbP8ng9HLjwNRIkY=
+X-Received: by 2002:a05:6402:190a:b0:698:663d:d7bd with SMTP id
+ 4fb4d7f45d1cf-6a42f1df94emr504720a12.11.1787251111224; Thu, 20 Aug 2026
+ 11:38:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260723050606.283453-1-rosenp@gmail.com> <aoYJGXfDciTLTZx4@lizhi-Precision-Tower-5810>
+In-Reply-To: <aoYJGXfDciTLTZx4@lizhi-Precision-Tower-5810>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Thu, 20 Aug 2026 11:38:19 -0700
+X-Gm-Features: AcwNN1WadOkdQETjHY5aKJw3lWDWX0-S7dat9vSR7J9yhC3maiVC2GsEIfMKG3c
+Message-ID: <CAKxU2N8SvNqQB6g-esc-+KpO0sNKHAB7EiE9FWbg7Dv41=5MGQ@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: at_hdmac: ioremap and get irq early
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: dmaengine@vger.kernel.org, 
+	Ludovic Desroches <ludovic.desroches@microchip.com>, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, 
+	"moderated list:MICROCHIP AT91 DMA DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] The driver explicitly rejects linked-list DMA descriptors larger t=
-han the ring size, breaking support for large DMA transfers.
---
-
---- Patch [4]: [PATCH v6 04/10] dmaengine: dw-edma: Make DMA link list work=
- as a circular buffer ---
-commit afa3e356ba74dbd5874af4d32f4fd3abdf7cbf7c
-Author: Frank Li <Frank.Li@nxp.com>
-
-dmaengine: dw-edma: Make DMA link list work as a circular buffer
-
-This patch converts the DMA link list into a circular buffer instead of
-rebuilding it for every transfer. It clears control words before first use,
-rejects descriptors that exceed the usable ring capacity, and resets the
-ring after termination or abort.
-
-> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
-edma-core.c
-> index a6bb68ffdfe26..1af262b6e881e 100644
-> --- a/drivers/dma/dw-edma/dw-edma-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> @@ -51,13 +51,19 @@ dw_edma_alloc_desc(struct dw_edma_chan *chan, size_t =
-nburst)
->  {
->  	struct dw_edma_desc *desc;
-> =20
-> +	/*
-> +	 * For now, a descriptor that does not fit would stall the channel
-> +	 * forever: reject it up front.
-> +	 */
-> +	if (!chan->non_ll && nburst > chan->ll_max - 1)
-> +		return NULL;
-> +
-
-[Severity: High]
-Does this change break support for large DMA transfers?
-
-By explicitly rejecting linked-list DMA descriptors larger than the ring
-size, any client driver (such as storage or networking) that submits a
-scatter-gather transfer larger than chan->ll_max - 1 will fail
-unconditionally.
-
-While the commit message acknowledges this as a limitation "until reclaim
-support lands", that support appears to be completely missing from this
-patch series.
-
-Could this cause functional regressions for subsystems relying on this DMA
-engine to submit moderately large transfers?
-
-[ ... ]
-
-> @@ -645,6 +708,8 @@ static void dw_edma_done_interrupt(struct dw_edma_cha=
-n *chan)
->  							    DMA_TRANS_NOERROR);
->  				list_del(&vd->node);
->  				vchan_cookie_complete(vd);
-> +				if (!chan->non_ll)
-> +					chan->ll_done =3D chan->ll_head;
->  			}
-> =20
->  			if (chan->request =3D=3D EDMA_REQ_PAUSE) {
-
-[Severity: High]
-Since ring space is only reclaimed here when an entire descriptor completes,
-does this structural change prevent incrementally chunking large descriptor=
-s?
-
-Without the ability to reclaim space as partial transfers complete, this
-seems to be the reason why large transfers can no longer be supported.
-
-Could partial completions be handled here to prevent the functional regress=
-ion
-before the full reclaim support lands?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820173439.2004=
-068-1-den@valinux.co.jp?part=3D4
+On Wed, Aug 19, 2026 at 12:50=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wr=
+ote:
+>
+> On Wed, Jul 22, 2026 at 10:06:06PM -0700, Rosen Penev wrote:
+> > The functions can return -EPROBE_DEFER. Call them before anything else
+> > to avoid doing extra work.
+>
+> just move before one devm_kalloc(), I have not seen much beanfit for it.
+Not sure I follow. devm_platform_ioremap_resource() and
+platform_get_irq() just need a platform_device pointer.
+>
+> Frank
+>
+> >
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > ---
+> >  drivers/dma/at_hdmac.c | 17 ++++++++++-------
+> >  1 file changed, 10 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+> > index e5b30a57c477..2f6f5877fc3c 100644
+> > --- a/drivers/dma/at_hdmac.c
+> > +++ b/drivers/dma/at_hdmac.c
+> > @@ -1943,11 +1943,20 @@ static void at_dma_off(struct at_dma *atdma)
+> >  static int __init at_dma_probe(struct platform_device *pdev)
+> >  {
+> >       struct at_dma           *atdma;
+> > +     void __iomem            *regs;
+> >       int                     irq;
+> >       int                     err;
+> >       int                     i;
+> >       const struct at_dma_platform_data *plat_dat;
+> >
+> > +     regs =3D devm_platform_ioremap_resource(pdev, 0);
+> > +     if (IS_ERR(regs))
+> > +             return PTR_ERR(regs);
+> > +
+> > +     irq =3D platform_get_irq(pdev, 0);
+> > +     if (irq < 0)
+> > +             return irq;
+> > +
+> >       /* setup platform data for each SoC */
+> >       dma_cap_set(DMA_MEMCPY, at91sam9rl_config.cap_mask);
+> >       dma_cap_set(DMA_INTERLEAVE, at91sam9g45_config.cap_mask);
+> > @@ -1968,13 +1977,7 @@ static int __init at_dma_probe(struct platform_d=
+evice *pdev)
+> >       if (!atdma)
+> >               return -ENOMEM;
+> >
+> > -     atdma->regs =3D devm_platform_ioremap_resource(pdev, 0);
+> > -     if (IS_ERR(atdma->regs))
+> > -             return PTR_ERR(atdma->regs);
+> > -
+> > -     irq =3D platform_get_irq(pdev, 0);
+> > -     if (irq < 0)
+> > -             return irq;
+> > +     atdma->regs =3D regs;
+> >
+> >       /* discover transaction capabilities */
+> >       atdma->dma_device.cap_mask =3D plat_dat->cap_mask;
+> > --
+> > 2.55.0
+> >
