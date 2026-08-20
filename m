@@ -1,137 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3105A4570C4
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD74646E00D
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787232711; cv=none; b=Q85zZ9QjbLY+485rILp3UG1wJCJqDwjtg/9gymtULOYB1N6qyz8YtiSwUZ8H5hXVPSIFseB9h9A4wlZWtu+SWAindiywAvyIiMZHPFJI1SxamF9wf94qWo/2oqNWgZTMzCNqpue5EOG4MVDk/Th+cI6yjYj6fuoOuhii7g6VeCc=
+	t=1787232730; cv=none; b=MJxXOLXLY2ucBFeW3IVGPOGUhun6ggPaGwMPW2GSvnkMcbvZvrHSDFZoEXyt0G2Gi/oYF1xW9hcJCcV7E0WqDtP2DRkdrG34WE7iJJYGbfF0f37PcaTERBNHed+v5rr5A0keOmtPRC7GQ0a2YlTgV/GTyf2iGeRBH7c6/1LQloE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787232711; c=relaxed/simple;
-	bh=tJeCcaF6/JuNDsunjnQjMkF6m7p+HL7o6OMJtD/9JzE=;
+	s=arc-20240116; t=1787232730; c=relaxed/simple;
+	bh=UJLLvQq6NL1irY/XjpInWqkhvAi7YfMk0ZBngg7yQNc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WMwLsoH/KZYcTHgqZycd7jIsTozT/qjwkuokfFxnOmMjjNgQXFRVbTVF0IUOELiBLkJy8L8/c++EwUk9E4Ez2BbqzH7ne6NxPesjPLPLAbV1zl7brpacujETvNdxMQ9LL10AQNDLHxF3oPZoa1tCBKB2ClOpKgSOTxbb62F/1sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zcjihq6G; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=JDJ2ithCv7QAN+60nGrg9dh/fpR4Brr/0cdXwVRUq/9XKsDdl2mpaugS381Y2fleU7VJkkvwM6LDcmp7losKuB3QEjPBKxXFvIZtT2MEroosB6y5ZuJvJDrJnAQnsV8N/vFhl8Ewj7/ttAnPl6fUbuy2S8tgd2GJhgkiwVXe2Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LubM+Edd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zcjihq6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7CB1F00A3A;
-	Thu, 20 Aug 2026 13:31:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LubM+Edd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33F31F000E9;
+	Thu, 20 Aug 2026 13:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787232701;
-	bh=y7rvP50ZUwYL6X6lzErnwgt9CpLoxqXRZa/TXtpn94w=;
+	s=k20260515; t=1787232728;
+	bh=ERgEsQNpCg1Rdph5YiAjwUoXi+iyND/SNkPgW75PIzw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Zcjihq6Gnqy2YKytYT9QRl9nV5Ae0W/UjO+gU9d9Fn2P3tDDHuy0PX7wV/WE9hsz7
-	 FyEYJ3epX9Okx6Jv5hLdrwVV9LZ0s5HD8aNZZc+LrDw7G2AFTqkp+lOiVY+aiUAJY3
-	 YGVYCV2Gjw2S9RBCAHIROzBzTTdYeRj/IaFR34FxRVNhof/RXIv/uJ9QKIZ/texD/A
-	 SqLzNvDvEnSBddSncOL10vK/3WBh/kSUVrF1AeLd3fRW1Nw4Z3+xSgTMRmxPzJvihH
-	 0jmOyA8ruFFnWW+WFCR+RblRUh512Pk/RnN/j6FbrAW6dAPgHQijXZuFzzTP3X0cm/
-	 eliB9ZSd/AhTw==
+	b=LubM+EddDIvjX3s+z6qmFVfaGQd59nvJ21sondkFuMNa5RyL9gNoCx1F57jLwXesP
+	 lsMVYnmYH6znb0jufv/CqWM0Qq20xGJxwTnzNNS/tcqsyeIYra5OnM3spR2z9dP1un
+	 z3aLcYvcwShK4QOj+PrnApehgVBmscmRTnmSLpPgs6fFpSCZAFA2fchI39ITeLypUK
+	 847bU/7AgNDSpb63EokLSgdgSBazFtKKOfZnxY9RzzFLzoAmEN4lHZLdnoqCRKaTWV
+	 lBP7EqvFAYJKUUIMDuNIJdgQp5FXKWSBt/ZG8+rnUWleNhxLlJmbKValHveSY/TFUj
+	 bhKo8gq5AkA4Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 02/13] dmaengine: ste_dma40: Check runtime PM in IRQ
+Subject: Re: [PATCH v2 10/13] dmaengine: ste_dma40: Fix logical channel
+ bounds check
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Linus Walleij" <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260820-dma40-fixes-v2-2-63238334c707@kernel.org>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260820-dma40-fixes-v2-10-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
- <20260820-dma40-fixes-v2-2-63238334c707@kernel.org>
+ <20260820-dma40-fixes-v2-10-63238334c707@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 13:31:41 +0000
-Message-Id: <20260820133141.9E7CB1F00A3A@smtp.kernel.org>
+Date: Thu, 20 Aug 2026 13:32:07 +0000
+Message-Id: <20260820133207.B33F31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
-New issues:
-- [High] Checking `ret <=3D 0` from `pm_runtime_get_if_active` unconditiona=
-lly returns IRQ_NONE when Runtime PM is disabled, causing a deterministic i=
-nterrupt storm.
-
 Pre-existing issues:
-- [High] The interrupt handler unconditionally returns IRQ_HANDLED even if =
-no interrupt status bits were found, defeating spurious interrupt detection=
- and causing CPU lockups.
+- [High] Changing DMA transfer direction after channel allocation corrupts =
+allocation masks and leaks logical channels.
 --
 
---- Patch [2]: [PATCH v2 02/13] dmaengine: ste_dma40: Check runtime PM in I=
-RQ ---
-commit a32adbd5256a0eee9c50c9b0d29d46183f86ef06
+--- Patch [10]: [PATCH v2 10/13] dmaengine: ste_dma40: Fix logical channel =
+bounds check ---
+commit 77f491852f9c4972a650574c4a045eadf10238f0
 Author: Linus Walleij <linusw@kernel.org>
 
-dmaengine: ste_dma40: Check runtime PM in IRQ
-   =20
-d40_handle_interrupt() reads DMA40 interrupt registers unconditionally. A
-spurious interrupt can arrive while the device is runtime suspended, after
-dma40_runtime_suspend() has disabled the GCC clock.
+dmaengine: ste_dma40: Fix logical channel bounds check
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.=
+d40_validate_conf() checks the raw dev_type against num_log_chans, but
+d40_allocate_channel() derives the lookup_log_chans index differently. This
+commit validates the dev_type against the derived logical channel index lim=
+it
+so channel allocation cannot write past lookup_log_chans.
+
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.=
 kernel.org/
-Assisted-by: Codex:gpt-5-5
-Signed-off-by: Linus Walleij <linusw@kernel.org>
 
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index facc1bcf42a03..dd449d4285efb 100644
+> index 4e840846466b8..7c777e410c104 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -1674,6 +1674,11 @@ static irqreturn_t d40_handle_interrupt(int irq, v=
-oid *data)
->  	u32 *regs =3D base->regs_interrupt;
->  	struct d40_interrupt_lookup *il =3D base->gen_dmac.il;
->  	u32 il_size =3D base->gen_dmac.il_size;
-> +	int ret;
+> @@ -1737,15 +1737,26 @@ static int d40_validate_conf(struct d40_chan *d40=
+c,
+>  {
+>  	int res =3D 0;
+>  	bool is_log =3D conf->mode =3D=3D STEDMA40_MODE_LOGICAL;
+> +	bool invalid_dev_type =3D conf->dev_type < 0;
+> =20
+>  	if (!conf->dir) {
+>  		chan_err(d40c, "Invalid direction.\n");
+>  		res =3D -EINVAL;
+>  	}
+> =20
+> -	if ((is_log && conf->dev_type > d40c->base->num_log_chans)  ||
+> -	    (!is_log && conf->dev_type > d40c->base->num_phy_chans) ||
+> -	    (conf->dev_type < 0)) {
+> +	if (!invalid_dev_type && is_log) {
+> +		int max_dev_type;
 > +
-> +	ret =3D pm_runtime_get_if_active(base->dev);
-> +	if (ret <=3D 0)
-> +		return IRQ_NONE;
+> +		if (conf->dir =3D=3D DMA_DEV_TO_MEM)
+> +			max_dev_type =3D DIV_ROUND_UP(d40c->base->num_log_chans, 2);
 
 [Severity: High]
-If the kernel is compiled with CONFIG_PM=3Dn, pm_runtime_get_if_active() re=
-turns
--EINVAL. Doesn't checking ret <=3D 0 mean that valid interrupts will be
-rejected with IRQ_NONE when Runtime PM is disabled?
+This is a pre-existing issue, but does changing the DMA transfer direction
+after channel allocation corrupt allocation masks and leak logical channels?
 
-This would leave the hardware interrupt line asserted and cause a
-deterministic interrupt storm until the kernel's spurious interrupt detector
-disables the IRQ line.
+If a DMA client allocates a channel configured for one direction (e.g.,
+DMA_MEM_TO_DEV), and then prepares a transfer with the opposite direction,
+drivers/dma/ste_dma40.c:d40_set_runtime_config_write() updates the internal
+direction:
 
-[ ... ]
+    cfg->dir =3D DMA_DEV_TO_MEM;
 
-> @@ -1722,6 +1727,8 @@ static irqreturn_t d40_handle_interrupt(int irq, vo=
-id *data)
-> =20
->  	spin_unlock(&base->interrupt_lock);
-> =20
-> +	pm_runtime_put_autosuspend(base->dev);
+Later, during channel release, drivers/dma/ste_dma40.c:d40_free_dma() relies
+on this mutated direction to determine which allocation mask to free:
+
+    else if (d40c->dma_cfg.dir =3D=3D DMA_DEV_TO_MEM)
+        is_src =3D true;
+    ...
+    d40_alloc_mask_free(phy, is_src, chan_is_logical(d40c) ? event : 0);
+
+Could this clear the bit in the wrong resource mask, leaking the originally
+allocated resource and inadvertently freeing a mask that may be actively us=
+ed
+by another client?
+
+> +		else
+> +			max_dev_type =3D d40c->base->num_log_chans / 2;
 > +
->  	return IRQ_HANDLED;
->  }
-
-[Severity: High]
-This isn't a bug introduced by this patch, but the interrupt handler
-unconditionally returns IRQ_HANDLED even if no interrupt status bits were
-found earlier in the function:
-
-	/* No more set bits found? */
-	if (chan =3D=3D BITS_PER_LONG * il_size)
-		break;
-
-If a hardware glitch asserts the DMA interrupt line without setting any bit=
-s,
-the loop breaks without clearing any interrupts. By unconditionally returni=
-ng
-IRQ_HANDLED here at the end of the function, does this prevent the kernel's
-spurious interrupt detector from counting the unhandled interrupt and
-gracefully disabling the faulty IRQ line?
-
-This could cause the CPU to enter an infinite loop of servicing the
-unacknowledged hardware interrupt.
+> +		invalid_dev_type =3D conf->dev_type >=3D max_dev_type;
+> +	}
+> +
+> +	if (invalid_dev_type ||
+> +	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
+>  		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
+>  		res =3D -EINVAL;
+>  	}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820-dma40-fixe=
-s-v2-0-63238334c707@kernel.org?part=3D2
+s-v2-0-63238334c707@kernel.org?part=3D10
