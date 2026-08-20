@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485CD443AAB;
-	Thu, 20 Aug 2026 13:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529D6449985;
+	Thu, 20 Aug 2026 13:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787231710; cv=none; b=YCD8YP/WUPpveigiu9bNOFIRDk/1FPDUpJeecp1/zg0rCr8Q7T+Pf8lz3+4rM16Pv2ElsvTV7Ep6GCUOlMYoShrqgltCScdyxmLFwH3E6CWcrrojYcWH8a3Ib5csZwQs65BT5Yjx4+lYSvxXSYtMTWzRkta9sx4OBMxrtnONUns=
+	t=1787231713; cv=none; b=NLy1Lh9+9qUB14caYQx1jjCN5ocZsZEq+76CtLoRMUwZPzM89RtYo3a63rayF35/qa/X/jLZY9I7VD3kDuLMD4WYwDtr/nwMchULhxGQS6O/PcWOBJ54NA9xrNAXDMyrZCK/Zq/JlJqAucclEbA275/E6Yd/KUGrCiOp7YS3Fsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787231710; c=relaxed/simple;
-	bh=LG1VWxZMO0UQ/RWpEPzB8+q0R5mxApVeLI7357iymFM=;
+	s=arc-20240116; t=1787231713; c=relaxed/simple;
+	bh=MW3rv5GzBQrSs03B0zRUaHhRnoXhG4x6QRSc5fXFLt0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B9g04M+rCOIgJTrLgritj/DR0WJr64iKtCRqvUbgnwcv/xd0tIG6U4+HYn/B6ifNBHs9anXTVtmylWWl/xkQi6r4lflcgHr+K3oyhtggwj5Mqrc6TOItZ0L1RbkKi65dxGMaXjrJa0NuyoyGuL4YIdLPJmhB3fiHVLRN+QeH8+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qm7QJ2IE; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=cu5QBC2oDa51XZQpJyN8j4zCa5TLHQCLGSGP+IeQKS5/ZFwhBMVI7jYrFY6DyPXmWq+UCvbs2/06vGIgTzkOzRH2OE7ffVxnvsvoPLk+i/f1oFxDpxQDEE74EawBncZCy3fNU1OsNkJD+AHAtGPEyYJ3+qdmlRwmHidfj9IEG04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ah3wEL1N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qm7QJ2IE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5BE1F00A3A;
-	Thu, 20 Aug 2026 13:15:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ah3wEL1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D731F00A3F;
+	Thu, 20 Aug 2026 13:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787231708;
-	bh=0EjxOPzVMm3B6X7kgOBdU57fR1sqX55VKYOum+MEuZ0=;
+	s=k20260515; t=1787231710;
+	bh=FS+JAXouZhTNc23harbB2umNLx+SPjao7IOIsUkxWWA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Qm7QJ2IEyk79x6wWf2b8U7CXTc2ypvW7rCSZcv+ixPnqGykVX6GNJKDzZ/lDgCPuz
-	 T73O1UBGbG9JjXypjdBt8/2OxXxEQQi30mMqZgFTOuNUfFYpxjIWyq7dZq0zOj5Bec
-	 rFXi2iPzZoL+OJHi67sIp8zOG/iWCIefgK97BYIUoikJjG7RU8p8ASLFyHQdpmd5tm
-	 ITHqRtdmYboZ4JuUOehxsBXRQQ2rQCh8v140/b5XhKjo/0Ff2mgBSGabQphQ5hCVWm
-	 fal4QHG4y9In0ReJyfaSFEfEcPheDktqpmILE0E+ogSSgCNh4EJTwmVs2+IFBCMET+
-	 Wu/wUDeP5NWEg==
+	b=ah3wEL1Nt14WadyxQeKB6DJaxN9w4Hc13qXosXwWV70NgX8VrYo5AKdg/YOmZ7HXm
+	 66NDKhEFhzgnf/3w/BrxE3xtpI+oxNUjSr08f1COX7+zjUfe/sHjohwcLGi4LcDvbA
+	 DBYl3ndQk4Ax7v1+3Jm8ZX8Sk1WSvcAw1WhEVnAIQRqSBBTeqwEOKbtZcY3JxbpHGy
+	 Kv+C2KDKt63fKKufTyUggb4BlsoRoM5q+S1/M+jL+/umh139Z9DeHg/rARZF0c+z6X
+	 XipWFeyACxPwCPOsV016rPZcdcDoFMju5j+AEWXbZZ41QsIHZBdmzF0x/8AeJVOabz
+	 dWX0M6x+NweuQ==
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 20 Aug 2026 15:15:00 +0200
-Subject: [PATCH v2 06/13] dmaengine: ste_dma40: Fix probe LCLA free
+Date: Thu, 20 Aug 2026 15:15:01 +0200
+Subject: [PATCH v2 07/13] dmaengine: ste_dma40: Fix probe runtime PM
+ disable
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,7 +38,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260820-dma40-fixes-v2-6-63238334c707@kernel.org>
+Message-Id: <20260820-dma40-fixes-v2-7-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 In-Reply-To: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -45,36 +46,54 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-When LCLA is placed in ESRAM, d40_probe() stores a devm_ioremap()
-address in lcla_pool.base and leaves base_unaligned unset. The
-destroy_cache error path can then pass the ioremap address to
-free_pages().
+Some d40_probe() error paths jump to destroy_cache before runtime PM has
+been enabled for the DMA controller device. The label unconditionally
+calls pm_runtime_disable(), which increments disable_depth even though
+this probe attempt never enabled runtime PM.
 
-Only free lcla_pool.base with free_pages() when the driver allocated the
-LCLA pool from normal memory. The ESRAM mapping is devm-managed.
+Track whether this probe attempt enabled runtime PM before disabling it on
+the error path. This is not about a later deferred-probe retry, since the
+driver is registered with platform_driver_probe(); it keeps the probe
+unwind balanced.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Assisted-by: Codex:gpt-5-5
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 804eb5eab06b..739e47941d0c 100644
+index 739e47941d0c..0c9094b4c4ad 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3667,7 +3667,8 @@ static int __init d40_probe(struct platform_device *pdev)
- 				 SZ_1K * base->num_phy_chans,
- 				 DMA_TO_DEVICE);
+@@ -3512,6 +3512,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	struct resource res_lcpa;
+ 	void *dmaenginem_reg_group;
+ 	int num_reserved_chans;
++	bool runtime_pm_enabled = false;
+ 	u32 val;
+ 	int ret;
  
--	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
-+	if (!base->plat_data->use_esram_lcla &&
-+	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
- 		free_pages((unsigned long)base->lcla_pool.base,
- 			   base->lcla_pool.alloc_order);
+@@ -3633,6 +3634,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	pm_runtime_mark_last_busy(base->dev);
+ 	pm_runtime_set_active(base->dev);
+ 	pm_runtime_enable(base->dev);
++	runtime_pm_enabled = true;
  
+ 	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+ 
+@@ -3678,7 +3680,8 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		regulator_disable(base->lcpa_regulator);
+ 		regulator_put(base->lcpa_regulator);
+ 	}
+-	pm_runtime_disable(base->dev);
++	if (runtime_pm_enabled)
++		pm_runtime_disable(base->dev);
+ 
+  report_failure:
+ 	d40_err(dev, "probe failed\n");
 
 -- 
 2.55.0
