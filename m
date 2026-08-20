@@ -1,146 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCF6470102
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E70331EA7;
+	Thu, 20 Aug 2026 14:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787233031; cv=none; b=TXsvxq/rzYrFIJA0+Jkak3dzuBaOXWEuYPh5qAFrNSNAHbU1F3jDPIQRvsoAWEJlsz81AW6ZRSt1ADgqBDWGpsJ+gx4uD4rXrASEfVh8LnkfNieQPy85vJZX/+LOIZ09sGqyOfgProxyGeQWovX4Jd/vtqbthJGAKqqW/ooh/CM=
+	t=1787234610; cv=none; b=BfjwUCnbuv1JIzAaznSjgI1bf1v9hteA4EiJxxE2ogILDn9b8GUdYnKBhe6017o1flvL8Vozx/qD1zE+O4Cta70sFIYghjg2qi6pyLnBF7W0vZFOkdqu9E+mznt1HkBOmuNqfMgtoW1fqmPWUKRLLqSQyVPWebC/wavYUnOVqFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787233031; c=relaxed/simple;
-	bh=R9SUXIxoD4sYzb4un6Wi4YfRdh9iw/SnJeVXnBOMm6w=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QR5POKOE9/R8mcKPf2xGNkvcnUAwXUrJ7fy74vA4M52ubzb9M4f16OsZf9lxcOcSicA0Yt6xQlJgDKRCJEOMziKmoaip5cM6QrNGZAwYElkdpdUypN3EGyE2Iw7kUj5NqHD6dly0GxqZFRtrqlluJZ9Zrt/mshsduO4E7Qjkb1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tlrbelqy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787234610; c=relaxed/simple;
+	bh=tCCqlZyWdyh63TRc8+dGM9WfTi5BiwIaLvVMXxwzsYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S5gF/5L3shGh09M+HO7dWVPiG6kaHzjw+8rPajOex5Ao5u8wNeL0MA1L364INy9sdLJGBgurTlD7mjBOIPfISwWeRA7hkSW1H3pNrhYq+YrUpJH4Q0TT3iGrVGIz+dhVubK/oAjQnMrv9kl8+z0tJ7zOmupW5TgyYzyn6X0j9Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1ffXdaT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tlrbelqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9027C1F000E9;
-	Thu, 20 Aug 2026 13:37:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1ffXdaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D40F1F00A3A;
+	Thu, 20 Aug 2026 14:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787233029;
-	bh=vQugHnt04XDqYQ4vuGvZqRS0tmO3g/hAklSBouNvgAA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TlrbelqyyFB+h703HwYopJsEvxlHv5b+3IZvbKu6o0tDCcnHjGb2OJm3CtxPLGktK
-	 FCli5aAM7nXhnCf57+f2C55B4v2o+GKybMPyTglfQ7KIR2HB0SCaBVxKfj/uea1Vde
-	 Pz7yJ6vWwVJ9PwZSVJ6g/RfUwODoVHjZIf0yahDOFqxPlrDmIXLY1V5O/YBKwb0qtp
-	 3CgzLOj60gUMGbGMA6SDFlmqGSMderJbxEa7luTUAdGwvI5vMTUcKaZDUw/jy3MNmd
-	 fPDb8GDmbFDprr8UxuDceluV+iCrH+4V5kjeSYYmydFADzxWx4RiNGYUbrtCa5PbKz
-	 uqAmLKdmI5b5w==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 12/13] dmaengine: ste_dma40: Validate memcpy
- configuration
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Linus Walleij" <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260820-dma40-fixes-v2-12-63238334c707@kernel.org>
-References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
- <20260820-dma40-fixes-v2-12-63238334c707@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 13:37:09 +0000
-Message-Id: <20260820133709.9027C1F000E9@smtp.kernel.org>
+	s=k20260515; t=1787234609;
+	bh=1pP8q2KxBJVDEMogvb2LKf+VAT3Bwq0uMd2eAm1GmWI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Q1ffXdaTl4qLXiUJYsCj25Cp9QBB2rZw5CZZFk9NlkBvz2tRwtc8klTF1ZEae3sUB
+	 cjorIBg1XW8Ah+uORZdrRmEj+FXim/5LmmertFtZ0EC+pmZlSuYkwAfoLNWXjt5MqX
+	 PXe2/cg1m8ho4rH7Qc9O8VS5GWml+GcVhV3MRJFOGvyOi2IoSV7t4+PsajucSx/L3t
+	 rUvKC11k3J3T9jXb1lC9mPx49t/cCjptP7G/oLo35Pss1gzg856McuQ/DKYPw44Gjf
+	 3vImftj7pahcXUfcVvfU6Kqh9d6kOZ29pNirm0qx+hsp9q0tIMWbv42TLawi692ALw
+	 KN95591X6sWkw==
+Message-ID: <578653c4-a7c7-498b-a283-f3b17f3d4191@kernel.org>
+Date: Thu, 20 Aug 2026 16:03:25 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: qcom: hidma: fix autosuspend cleanup during
+ teardown
+To: Guangshuo Li <lgs201920130244@gmail.com>, Sinan Kaya <okaya@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Andy Shevchenko <andy.shevchenko@gmail.com>,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+References: <20260808112551.2786782-1-lgs201920130244@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGPBBMBCgA5AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJp2mE8AAoJEBuTQ307QWKbeaIP
+ /ihHTkTW4KsN/DQ945JJbyu5tI0J80Wue7QyyLPglyKfhgb5cLLNPpOC8cCIJsc7+W3i2P38
+ s2c1cOH6CYGE7E9ur3Vfme8NW2S2I/Z8VC7bZnzyS23wT17LrsdS/qCpx4o8U+pt/xdXDKph
+ EGRYrIEmMpUWvyYzyYKGIe25FtaayIIKpq8eZYyFcp2f/sG5IkOW5uZzHPMPdcm87jU7fyuQ
+ rAU2vx9r+ulUfQ/q9Z2roC/ode3l7t2pN7BCBCsUDp6JCrUyZrtT1e7EbA0ZRP3aOBNk2P2E
+ DQOgJGjGdO5Yx2Y9LFtltu6JbsBJHi1syGRX3AtQYOMc4Y1WGoeZJmMlvKj2ZqqXNkcWi2DS
+ IQEWB0uW6CqFsBBIMGDa+6OzdaVO/uAVXWDWml02Men3CILdI1MbVjoh8ECqYUY7OQ+JJvNN
+ vnliuq5WM3Ghd3jg/LZZrxXjdIginRHFQCjIJYLKpLZWm1/iDFedcfzqRNYmTtqscdCNHW41
+ oT3Z7BmO9xwdjuwBS6nmS6JJwkbf5Ot2QR4pB/DRU7ZwjT1qHe+9r9gF32wXVQatHNGK/VVu
+ sfwOnkdxCWkp/qb2gdQRmZh+SedStWshigH6sNfuHBloF/q+hjMRc8b2m326OZdrbSHwY1Sz
+ vti8Hn7n8NjdHO9LKB7BIdjkA9DA5WsqOuVCzsFNBFVDXDQBEADNkrQYSREUL4D3Gws46JEo
+ Z9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLueMNsWLJBv
+ BaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6eiOMheesVS
+ 5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wAGldWsRxb
+ f3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA6z6lBZn0
+ WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9YegxWKvX
+ XHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt91pFzBSO
+ IpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gUBLHFTg2h
+ YnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/JoFzZ4B0
+ p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu4vXVFBYI
+ GmpyNPYzRm0QPwARAQABwsF2BBgBCgAgAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtBYpsFAmna
+ YUkACgkQG5NDfTtBYptX+BAApg32CkxwNucNEi8WfWA8oKkW0y8YDuY6ORMo9FWNGiT/OTy0
+ vyJrLocrpn86zwfjVp+eCrssPYh8eqJfnWqmYv6ACQtHPYzPZQ3mSo8H97Z01oUxITzCxpXm
+ ZkLgPIqtDPcC2E3dPM/fVxcyowM8XsaMA9wcsaUYrta8toOq2b9tKcjleKMfMrm0gQ9u7wUc
+ QbLkwj6TCLOwucb07GXzLTNF9PZmaDUpKAZjMjmrW+le+SFvQbhamx0rxLWPR0NWntXpbCn+
+ +ACch03p/JyTBVktxFsFyCt7pTPE1kEaeuXBTe/a2D9iQvRxRW19LvuO2e59/u1wYUiH/orz
+ wbIC2S4dBsPAPihL3ztOU1yE86GPyQtSE0kU+/7snnLt4QGi6PChf3t5gnNjAzjUUovO8rgI
+ c+5yN5heq5loYHgK6OQ9OlHzsPHO9e9MOQcKlFycs1pyijFGzDwdNUm/SchK8iWT2QApTx4A
+ K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
+ n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
+ qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <20260808112551.2786782-1-lgs201920130244@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+On 08/08/2026 13:25, Guangshuo Li wrote:
+> hidma_probe() calls pm_runtime_use_autosuspend(), but neither the probe
+> failure path nor hidma_remove() calls the matching
+> pm_runtime_dont_use_autosuspend() before disabling runtime PM.
+> 
+> If the autosuspend delay is set to a negative value while autosuspend
+> is enabled, the runtime PM core increments usage_count to prevent
+> runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+> during teardown, this reference is not dropped and usage_count remains
+> unbalanced.
+> 
+> Add the missing pm_runtime_dont_use_autosuspend() calls to both the
+> probe failure and remove paths before disabling runtime PM.
+> 
+> This issue was found by manual code inspection.
+> 
+> Fixes: 67a2003e0607 ("dmaengine: add Qualcomm Technologies HIDMA channel driver")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 
-New issues:
-- [High] d40_validate_conf() unconditionally rejects memcpy configurations.
+You sent vast amount of patches, all separate, making it very difficult
+to track and respond in efficient way. Do not do that.
 
-Pre-existing issues:
-- [High] Error paths in d40_alloc_chan_resources() underflow PM runtime ref=
-erence count.
---
+Group your work per subsystem.
 
---- Patch [12]: [PATCH v2 12/13] dmaengine: ste_dma40: Validate memcpy conf=
-iguration ---
-commit 19f873d8b80c96a75bea7cfedde33c6486eb34af
-Author: Linus Walleij <linusw@kernel.org>
+You were asked to clarify and respond to incorrect fixes statement. I do
+not see how you clarified and responded at all.
 
-dmaengine: ste_dma40: Validate memcpy configuration
-
-This patch validates the generated memcpy configuration before deriving
-logical channel registers or allocating the channel. This ensures that
-a dev_type supplied through the memcpy-channels device tree property
-cannot bypass the bounds checks.
-
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.=
-kernel.org/
-
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index e0c694a1fc8b0..49bca706b638f 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
-> @@ -2013,11 +2013,16 @@ static int d40_allocate_channel(struct d40_chan *=
-d40c, bool *first_phy_user)
->  static int d40_config_memcpy(struct d40_chan *d40c)
->  {
->  	dma_cap_mask_t cap =3D d40c->chan.device->cap_mask;
-> +	int ret;
-> =20
->  	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
->  		d40c->dma_cfg =3D dma40_memcpy_conf_log;
->  		d40c->dma_cfg.dev_type =3D dma40_memcpy_channels[d40c->chan.chan_id];
-> =20
-> +		ret =3D d40_validate_conf(d40c, &d40c->dma_cfg);
-> +		if (ret)
-> +			return ret;
-> +
-
-[Severity: High]
-Does this unconditionally reject memcpy configurations?
-
-In the framework, DMA_MEM_TO_MEM has an integer value of 0. When this calls
-d40_validate_conf() for the memcpy configurations (which have a direction of
-DMA_MEM_TO_MEM), it hits this check in d40_validate_conf():
-
-drivers/dma/ste_dma40.c:d40_validate_conf() {
-	...
-	if (!conf->dir) {
-		chan_err(d40c, "Invalid direction.\n");
-		res =3D -EINVAL;
-	}
-	...
-}
-
-Because conf->dir is 0, this evaluates to true, resulting in validation alw=
-ays
-returning -EINVAL and completely breaking memcpy functionality for this
-driver.
-
-[Severity: High]
-This is a pre-existing issue, but returning an error here uncovers a
-PM runtime reference underflow in the caller.
-
-If d40_config_memcpy() fails, d40_alloc_chan_resources() jumps to its error
-handler before the PM runtime reference is acquired:
-
-drivers/dma/ste_dma40.c:d40_alloc_chan_resources() {
-	...
-	if (!d40c->configured) {
-		err =3D d40_config_memcpy(d40c);
-		if (err) {
-			chan_err(d40c, "Failed to configure memcpy channel\n");
-			goto mark_last_busy;
-		}
-	}
-	...
-mark_last_busy:
-	pm_runtime_put_autosuspend(d40c->base->dev);
-	spin_unlock_irqrestore(&d40c->lock, flags);
-	return err;
-}
-
-The error handler unconditionally calls pm_runtime_put_autosuspend(),
-decrementing the reference count without it having been incremented.
-
-Could this lead to the device being prematurely suspended while actively
-in use?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820-dma40-fixe=
-s-v2-0-63238334c707@kernel.org?part=3D12
+Best regards,
+Krzysztof
