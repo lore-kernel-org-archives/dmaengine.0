@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6131C256C84;
-	Thu, 20 Aug 2026 13:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CFD27732;
+	Thu, 20 Aug 2026 13:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787231719; cv=none; b=gPaNfgO5roESZe1zHtwL1/CWojCbf2GE05GsQCFB8s6PgN2QjPtD7Xgm5E+Z2DQfZfjvVKoMiCCOm2TtwCTqFJEtMXO9AhMAcIb1e9/8T2cK9iNfiK8OTrMHKv8fk+SJtaWlohwtc1Uv5cbNp1brj/jQyyjFUNzUYs4TmeQTLfs=
+	t=1787231720; cv=none; b=bUvwLKlZsMc71YRASQXuUZWh+X8ZO+sAuHTSchlozMw4gzOtkYPfQBt/Oa2gys9TYeFsTZdRh/NYRj5sTOGR4CQbNqgApzoFh/Cvn8h2FFhfmVzwHqbUwAiR7v8jnpNqnvJAI2EHOf2xq7h+fQhShZuMOjjWjxRmYB52b+mdXjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787231719; c=relaxed/simple;
-	bh=Kr0SdhcA2grV2YBGggNFCU3co20SleYuCJ1BEIecRjg=;
+	s=arc-20240116; t=1787231720; c=relaxed/simple;
+	bh=rhOL1AY4IcmhF8Kae/21cj+fW2dGjChJDZ7vLC3Yw94=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s/JFD3BAHCWvvXUVfbOA6CZ4Oxdd5P+DKo8YCBA9ZDXEkJ3rBy2fTLqWork2r9CX29pWWYp/NUywl8gkcBm2J6pDKJQmwsNdZ96NqaEoybArHQBrfo57/nNORooQX9ehLq8iEC6Ja+Ul+VnO/ZBIemNBAGKelSAxDMIh0NBqesY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ns5kjY66; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=LPN8VbiifwTRxPvTK4umXsNxwbzLMmIZr4dUxit+EN1rd6MTvIi55zXP5aiDlg2bgjRaOcAz6O9Geufq7WPsSfp0PKyMFgXEuVw9NCuPgPd0w8fNpftmSfuKXAK43l5eK75mID0d1gwPvFPfuomaMipxISH4FjZwXSYouZ7QpIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dv6foLNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ns5kjY66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F671F000E9;
-	Thu, 20 Aug 2026 13:15:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dv6foLNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9577D1F00A3D;
+	Thu, 20 Aug 2026 13:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787231718;
-	bh=qQOY9horgD4H4HtJSP1z02q+GGmJGvFyimIDZfaWJuA=;
+	s=k20260515; t=1787231719;
+	bh=H3xR9fM5wwx0FcB/CFTlp7EZZ649OcTISiEB3mg/BoQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Ns5kjY66wa7w/jEWBRIDaTCeleTo1gb27w0+s9g4OuGVrS/G1fdPmerpJpxN2roSS
-	 YmlwZDkqSYAbjWYX+v+PEW/JHOMJyE1YaQ0z1rUUbqPeqHecLumxWbqd7tw4W3RZ7d
-	 8XHm1F/ad/xIhHYZEqgaJ5ZHCnahhduMiKPmdVpsuV5rXyXX1nw3f1Cxb6/NCVZEBZ
-	 agdOhNPV1aqJhXwqUehWlndQJ39P9iGRfcTIY1pogG4QmTWdnLiHReSIh6W2O4Yhtl
-	 hxWI8+FblBotGhTV+iTs/VHPBCKWSdfsijGgNI8b6RdN4dIFSrdTKZLftg88Lw1hjT
-	 mrqf2CphCetqQ==
+	b=Dv6foLNVukqaTB+p0/LysdLzyWW5YHl7CF+cjAOfvW4r4eBU48hR8850phkYyZLyW
+	 KtcMk18x4SaIkR/xlbBg+nT2z5c0qmnJrxpv98E5UpHypKbjwgMVgrEopcnD5Z01BA
+	 1LhaZK49cTS15U0knx0UOcvTRzH3pmrlpuBkwDOzgiBZS1Y+wbkqQ3cvwA4yBlrnEm
+	 rYisL9U4nbN2CNn85I5DvbXFS0GdP2W6kyAkHq0yZKih1g3Men9CEd9UsonNOEX+/e
+	 sJUK7VuhvGvZBbCQwG2VWl+B2NhGBL91ls7QwbcKYRJIYY4ss/lsmWt85HAVlUKSrE
+	 YfQbQFYW2D7xA==
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 20 Aug 2026 15:15:06 +0200
-Subject: [PATCH v2 12/13] dmaengine: ste_dma40: Validate memcpy
- configuration
+Date: Thu, 20 Aug 2026 15:15:07 +0200
+Subject: [PATCH v2 13/13] dmaengine: Use unique debugfs names
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -38,62 +37,66 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260820-dma40-fixes-v2-12-63238334c707@kernel.org>
+Message-Id: <20260820-dma40-fixes-v2-13-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 In-Reply-To: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
 Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org, 
- Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
+ Linus Walleij <linusw@kernel.org>
 X-Mailer: b4 0.14.3
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+DMA40 registers multiple dma_device instances for the same platform
+device. The DMAengine debugfs code uses dev_name(dma_dev->dev) as the
+directory name, so the second and third registrations try to create the
+same directory and print duplicate-name warnings.
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+Keep the existing device-name directory for the first registration, but
+use a dev_id-suffixed fallback when that name already exists.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: Codex:gpt-5-5
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/dma/dmaengine.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index e0c694a1fc8b..49bca706b638 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -2013,11 +2013,16 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 6ffd8bd82154..a1c388def67a 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -33,6 +33,7 @@
+ 
+ #include <linux/acpi.h>
+ #include <linux/acpi_dma.h>
++#include <linux/dcache.h>
+ #include <linux/device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+@@ -70,8 +71,24 @@ static struct dentry *rootdir;
+ 
+ static void dmaengine_debug_register(struct dma_device *dma_dev)
  {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type = dma40_memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
+-	dma_dev->dbg_dev_root = debugfs_create_dir(dev_name(dma_dev->dev),
+-						   rootdir);
++	const char *name = dev_name(dma_dev->dev);
++	struct dentry *dentry;
++	char *uniq;
 +
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2025,6 +2030,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
++	dentry = debugfs_lookup(name, rootdir);
++	if (dentry) {
++		dput(dentry);
 +
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
++		uniq = kasprintf(GFP_KERNEL, "%s.%d", name, dma_dev->dev_id);
++		if (!uniq)
++			return;
++
++		dma_dev->dbg_dev_root = debugfs_create_dir(uniq, rootdir);
++		kfree(uniq);
++	} else {
++		dma_dev->dbg_dev_root = debugfs_create_dir(name, rootdir);
++	}
++
+ 	if (IS_ERR(dma_dev->dbg_dev_root))
+ 		dma_dev->dbg_dev_root = NULL;
+ }
 
 -- 
 2.55.0
