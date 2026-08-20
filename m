@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625CD47D949
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 17:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD13215075
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247901; cv=none; b=AHhtn+ut9GretR49kVgyR+SMK5TpyLPu9jJH4aG9uaXhATtdBkpGdF7xfmTnaIPqIqm1IzETgCpaLUlqhmvd06nFdBk+v6j0+E3srunOwAa9WboCQNgDyP6kqX5FXjg9VxBcyjD3xz3QTVsu28OE0fHb/EqxDOlDwFbMrVsq75g=
+	t=1787248211; cv=none; b=TdmftBvfpKVCDL/swHUGBtwY8kI23t0NmzhMTganEAtGzO1qB/9a8RLr4XymMOYSgZMWqA3VJeaUz5FXl4mHDavKkwaZh7p+/bHSJt9eV9bngicJe6UwOEgtjT8rjxY6AT0DvMT63jwe4w+tV+O0M3GgwOjfpftItT/7THfjRJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247901; c=relaxed/simple;
-	bh=L9rC5rRge5CgzHdu4AbAIY1enUd7IzTFODct4n23RKg=;
+	s=arc-20240116; t=1787248211; c=relaxed/simple;
+	bh=AizFlzdtIftuCKyZxHSYt6Ep76DwotgAbwAibwy0gxM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WyGpo1nFqcVeHcoToGhONnSHNiBXhXtOGwHrF0Bl7ADWILW6UM2gcC3HcwkO6bnQcq0sXBgDb+qRN1gJwV7m7Djb7l6SXPqPXYFzsny6TdC64jdYYnuyJ0bqODt4Dz2VXmvz0dCs8nVQ7bQAlhivvRtgDqoLn5kifAbQ9td7i1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oFnFYHBC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=cpojoJFVgdr65gPy7I33Xk9Kl3kOaNaoVSNWa76Idk99CFQQpR/KaJtfxZ5bth2pbiiE1sJ7QSCZcyky26yCeX8OXUbbQeqar1jph+ed0jKD8vn3oryBH7cJww09GnO/Y+shl0J5J1e2KjD0SzkyRgkORbIIcMtkagaw7q0KAQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmEnU5u5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oFnFYHBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1831F000E9;
-	Thu, 20 Aug 2026 17:44:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmEnU5u5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ED01F00A3A;
+	Thu, 20 Aug 2026 17:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787247899;
-	bh=/+uyGgeCGwCWQmW/HxAh/HO6uqIrkN7XofpO/0qbKKo=;
+	s=k20260515; t=1787248209;
+	bh=0x1ZRfo39zuS2fZPdbIGgpRniMM0+trf7U+HR8tQib4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=oFnFYHBCulOBgmd8tCSVVSB+ndfNdaKJNqV6KBeeU1r3Qc9ePf90rDqbXu42cn8Fc
-	 UTWOXrOKaFJ+NRRzUhk3buUUcusx84WZIER9oY7gOHD1LX0FMgBEGrQgMz8a+s9xNc
-	 tL0oTAy89j+ax4rrCJ0rt9SREn3Tk0NBTJYWart6qUXpRB2tIb3CNN5ZR+xscbYHWF
-	 ebW2AAkd8RppVxNlhKu69SYbjH9TJ9YT++CtIs5WwNIvMgOldLRz7VUyJDM5dFgA6M
-	 0nq0epy6dWnLmPhy/rjx1pUNWUqTl2iAr1tTKTwV9l6LkvLSLh0OcAMt1qJaP6yn5u
-	 F6xTuu6iZgPyQ==
+	b=HmEnU5u5/tK1n7XbFWr6oGAkRvw0EHLex64Hh/YL86WS5O0BEA/PKoPFt3Eyx+vuT
+	 1V4zGDXZ/YyfJNK+41N2xFMKq8zY2rgMmZ7IkT3zbPS/TFpTg4sWarb5C31LIttqel
+	 Ki6Z2jIrpODVo6Gw7Ad3uSDo7xDSKwhX/bOpihDFDcx7NGJKzie2Vfew5qyMCmw34k
+	 O8Do+KyO4ja8le7NduKxcvQjGLfoOb2FoBzhXOUqjFirCwoiS6miIqRF4OHyQ314Cb
+	 Qv1cu5/FGtWu3wlv++JTGSSuTXzzzFkYZabcncQmwm+YfQmDlVFuc80lkFbLHwTbvV
+	 oKDZovcWPtn3A==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 01/10] dmaengine: dw-edma: Add
- dw_edma_core_ll_cur_idx() to get current LL entry index
+Subject: Re: [PATCH v6 04/10] dmaengine: dw-edma: Make DMA link list work as
+ a circular buffer
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260820173439.2004068-2-den@valinux.co.jp>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260820173439.2004068-5-den@valinux.co.jp>
 References: <20260820173439.2004068-1-den@valinux.co.jp>
- <20260820173439.2004068-2-den@valinux.co.jp>
+ <20260820173439.2004068-5-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 17:44:59 +0000
-Message-Id: <20260820174459.BC1831F000E9@smtp.kernel.org>
+Date: Thu, 20 Aug 2026 17:50:09 +0000
+Message-Id: <20260820175009.70ED01F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,107 +47,80 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] Unsigned subtraction underflow causes out-of-bounds hardware poi=
-nter values to return a large positive index instead of a negative error co=
-de.
+- [High] The driver explicitly rejects linked-list DMA descriptors larger t=
+han the ring size, breaking support for large DMA transfers.
 --
 
---- Patch [1]: [PATCH v6 01/10] dmaengine: dw-edma: Add dw_edma_core_ll_cur=
-_idx() to get current LL entry index ---
-commit a5cf77298fa28da8c44ef71a7e3da99c79085cf7
+--- Patch [4]: [PATCH v6 04/10] dmaengine: dw-edma: Make DMA link list work=
+ as a circular buffer ---
+commit afa3e356ba74dbd5874af4d32f4fd3abdf7cbf7c
 Author: Frank Li <Frank.Li@nxp.com>
 
-dmaengine: dw-edma: Add dw_edma_core_ll_cur_idx() to get current LL entry i=
-ndex
+dmaengine: dw-edma: Make DMA link list work as a circular buffer
 
-This commit introduces the dw_edma_core_ll_cur_idx() function to retrieve
-the current linked list entry index. This prepares the driver for the
-dynamic addition of DMA requests while the DMA engine is running.
+This patch converts the DMA link list into a circular buffer instead of
+rebuilding it for every transfer. It clears control words before first use,
+rejects descriptors that exceed the usable ring capacity, and resets the
+ring after termination or abort.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-v0-core.c b/drivers/dma/dw-edma/=
-dw-edma-v0-core.c
-> index abc1bd4c0be2e..cc80591829403 100644
-> --- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-> @@ -616,6 +616,25 @@ static void dw_edma_v0_core_ch_doorbell(struct dw_ed=
-ma_chan *chan)
->  		  FIELD_PREP(EDMA_V0_DOORBELL_CH_MASK, chan->id));
->  }
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-=
+edma-core.c
+> index a6bb68ffdfe26..1af262b6e881e 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> @@ -51,13 +51,19 @@ dw_edma_alloc_desc(struct dw_edma_chan *chan, size_t =
+nburst)
+>  {
+>  	struct dw_edma_desc *desc;
 > =20
-> +static int dw_edma_v0_core_ll_cur_idx(struct dw_edma_chan *chan)
-> +{
-> +	u32 base, val;
-> +
-> +	val =3D GET_CH_32(chan->dw, chan->dir, chan->id, llp.lsb);
-> +	base =3D lower_32_bits(dw_edma_core_get_ll_paddr(chan));
-> +
 > +	/*
-> +	 * LL regions stay within one 4 GiB address window. Reject an all-ones
-> +	 * MMIO value. If the low word is zero, use the high word to distinguish
-> +	 * a nonzero boundary address from an unprogrammed all-zero context.
+> +	 * For now, a descriptor that does not fit would stall the channel
+> +	 * forever: reject it up front.
 > +	 */
-> +	if (val =3D=3D U32_MAX ||
-> +	    (!val && !GET_CH_32(chan->dw, chan->dir, chan->id, llp.msb)))
-> +		return -EINVAL;
+> +	if (!chan->non_ll && nburst > chan->ll_max - 1)
+> +		return NULL;
 > +
-> +	return (val - base) / EDMA_LL_SZ;
 
-[Severity: Medium]
-Is it possible for val to be less than base if the channel context is
-uninitialized and holds a stale linked-list pointer from a previous
-allocation at a lower physical address?
+[Severity: High]
+Does this change break support for large DMA transfers?
 
-Since val and base are unsigned 32-bit integers, if val < base, the operati=
-on
-val - base underflows to a large unsigned integer. Dividing this by
-EDMA_LL_SZ yields a massive positive index that fits into the signed int
-return type, rather than returning a negative error code as intended.
+By explicitly rejecting linked-list DMA descriptors larger than the ring
+size, any client driver (such as storage or networking) that submits a
+scatter-gather transfer larger than chan->ll_max - 1 will fail
+unconditionally.
 
-Would it make sense to verify that val is >=3D base, or to bounds check the
-resulting index against chan->ll_max to prevent potential out-of-bounds
-reads or writes?
+While the commit message acknowledges this as a limitation "until reclaim
+support lands", that support appears to be completely missing from this
+patch series.
 
-> +}
-> +
+Could this cause functional regressions for subsystems relying on this DMA
+engine to submit moderately large transfers?
 
 [ ... ]
 
-> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
-dw-hdma-v0-core.c
-> index 36ee72efcd317..19da1c8fd6159 100644
-> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
-> @@ -384,6 +384,25 @@ static void dw_hdma_v0_core_ch_doorbell(struct dw_ed=
-ma_chan *chan)
->  	SET_CH_32(dw, chan->dir, chan->id, doorbell, HDMA_V0_DOORBELL_START);
->  }
+> @@ -645,6 +708,8 @@ static void dw_edma_done_interrupt(struct dw_edma_cha=
+n *chan)
+>  							    DMA_TRANS_NOERROR);
+>  				list_del(&vd->node);
+>  				vchan_cookie_complete(vd);
+> +				if (!chan->non_ll)
+> +					chan->ll_done =3D chan->ll_head;
+>  			}
 > =20
-> +static int dw_hdma_v0_core_ll_cur_idx(struct dw_edma_chan *chan)
-> +{
-> +	u32 base, val;
-> +
-> +	val =3D GET_CH_32(chan->dw, chan->dir, chan->id, llp.lsb);
-> +	base =3D lower_32_bits(dw_edma_core_get_ll_paddr(chan));
-> +
-> +	/*
-> +	 * LL regions stay within one 4 GiB address window. Reject an all-ones
-> +	 * MMIO value. If the low word is zero, use the high word to distinguish
-> +	 * a nonzero boundary address from an unprogrammed all-zero context.
-> +	 */
-> +	if (val =3D=3D U32_MAX ||
-> +	    (!val && !GET_CH_32(chan->dw, chan->dir, chan->id, llp.msb)))
-> +		return -EINVAL;
-> +
-> +	return (val - base) / EDMA_LL_SZ;
+>  			if (chan->request =3D=3D EDMA_REQ_PAUSE) {
 
-[Severity: Medium]
-Could this suffer from the same underflow issue as the v0 core implementati=
-on
-if val is less than base?
+[Severity: High]
+Since ring space is only reclaimed here when an entire descriptor completes,
+does this structural change prevent incrementally chunking large descriptor=
+s?
 
-> +}
-> +
+Without the ability to reclaim space as partial transfers complete, this
+seems to be the reason why large transfers can no longer be supported.
+
+Could partial completions be handled here to prevent the functional regress=
+ion
+before the full reclaim support lands?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820173439.2004=
-068-1-den@valinux.co.jp?part=3D1
+068-1-den@valinux.co.jp?part=3D4
