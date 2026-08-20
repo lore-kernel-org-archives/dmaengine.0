@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0CE449B0D;
-	Thu, 20 Aug 2026 13:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6131C256C84;
+	Thu, 20 Aug 2026 13:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787231718; cv=none; b=qWm3qsMUeDZkyAJUA+mzLwbhkTTtvc0L51LKkVn3yQZuQAZLtAVMKl3Q2dAWFgtN1PWTRU+f1advb5RSGDxV9Os4LUHQBQYv4W6osFGSLCkI93NCntrJ1dyUczyWgRtY2urs5VMJ+9Cw1TFkse0RH6YwZ3T5F93+idr1HpEBi+k=
+	t=1787231719; cv=none; b=gPaNfgO5roESZe1zHtwL1/CWojCbf2GE05GsQCFB8s6PgN2QjPtD7Xgm5E+Z2DQfZfjvVKoMiCCOm2TtwCTqFJEtMXO9AhMAcIb1e9/8T2cK9iNfiK8OTrMHKv8fk+SJtaWlohwtc1Uv5cbNp1brj/jQyyjFUNzUYs4TmeQTLfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787231718; c=relaxed/simple;
-	bh=SJGrfiGu9oZftzAbdLrPaiqdE027jWQNi1PAF5vSPIA=;
+	s=arc-20240116; t=1787231719; c=relaxed/simple;
+	bh=Kr0SdhcA2grV2YBGggNFCU3co20SleYuCJ1BEIecRjg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NWReoi7SAsZy5hgesHODGtwNWEalprJ8q3T0rmteIPoL+Hc5LrZhta9GSA8ZdZev8kdn+kNqI8UDWrxzRMLNux3Nqp54PCLcBazBY6c6hEvYkmMcL1MWMs5UPkSh/H94Ti8XLYqfagHnZOD4LzsHvdnHpFpHy0q/u4D9e2bKhJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5D7/vdD; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=s/JFD3BAHCWvvXUVfbOA6CZ4Oxdd5P+DKo8YCBA9ZDXEkJ3rBy2fTLqWork2r9CX29pWWYp/NUywl8gkcBm2J6pDKJQmwsNdZ96NqaEoybArHQBrfo57/nNORooQX9ehLq8iEC6Ja+Ul+VnO/ZBIemNBAGKelSAxDMIh0NBqesY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ns5kjY66; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5D7/vdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707721F00A3F;
-	Thu, 20 Aug 2026 13:15:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ns5kjY66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F671F000E9;
+	Thu, 20 Aug 2026 13:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787231716;
-	bh=MJbVkidE81swqfrdTllXRH1sKjMnZrHWBpz8893tdAI=;
+	s=k20260515; t=1787231718;
+	bh=qQOY9horgD4H4HtJSP1z02q+GGmJGvFyimIDZfaWJuA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=G5D7/vdDjWf5ijggwqv2Y3hTwxK7aT0sflPulEzj/iOPAzYbrqCbJb3TVUg1U8L3A
-	 BgHb/l/ivWPGP1GaARRTH2iXHO63Vw1D2zknagkIxsAkCCPPE0C0PzJCaeTHeQcnIY
-	 KAuRo93nSbAGBDyWO7HypskKmkhnagC82l2kjeW+lSlVTYzy5lxXVmpZY7IcUht5mJ
-	 qXkH2/1r74t2atkhYHjyXhcjsJ8XqBE/LMAeiYJkNsF532+QHJ4TKNV9qObJmkYzeP
-	 X6V28L1dG1T+dz1s/T7d8IxDe0s1AQU2GVzHwY935ffGq9jZeMXZ44K1qpv+xVGIT8
-	 f/16ig42LM1Jw==
+	b=Ns5kjY66wa7w/jEWBRIDaTCeleTo1gb27w0+s9g4OuGVrS/G1fdPmerpJpxN2roSS
+	 YmlwZDkqSYAbjWYX+v+PEW/JHOMJyE1YaQ0z1rUUbqPeqHecLumxWbqd7tw4W3RZ7d
+	 8XHm1F/ad/xIhHYZEqgaJ5ZHCnahhduMiKPmdVpsuV5rXyXX1nw3f1Cxb6/NCVZEBZ
+	 agdOhNPV1aqJhXwqUehWlndQJ39P9iGRfcTIY1pogG4QmTWdnLiHReSIh6W2O4Yhtl
+	 hxWI8+FblBotGhTV+iTs/VHPBCKWSdfsijGgNI8b6RdN4dIFSrdTKZLftg88Lw1hjT
+	 mrqf2CphCetqQ==
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 20 Aug 2026 15:15:05 +0200
-Subject: [PATCH v2 11/13] dmaengine: ste_dma40: Fix event group bounds
+Date: Thu, 20 Aug 2026 15:15:06 +0200
+Subject: [PATCH v2 12/13] dmaengine: ste_dma40: Validate memcpy
+ configuration
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,7 +38,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260820-dma40-fixes-v2-11-63238334c707@kernel.org>
+Message-Id: <20260820-dma40-fixes-v2-12-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 In-Reply-To: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -45,64 +46,54 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-The dev_type validation can allow values whose derived event group has no
-matching physical channel pair. d40_allocate_channel() then indexes
-phy_res with j + event_group * 2, and __d40_set_prio_rt() uses the same
-group to select priority and realtime registers.
+d40_config_memcpy() builds a default memcpy configuration without passing
+it through d40_validate_conf(). A dev_type supplied through the
+memcpy-channels device tree property can therefore bypass the bounds
+checks added for client configurations.
 
-Reject dev_type values outside the hardware event-group range, and stop
-the physical-channel search before a partial final channel group can index
-past phy_res.
+Validate the generated memcpy configuration before deriving logical
+channel registers or allocating the channel.
 
 Reported-by: sashiko-bot@kernel.org
 Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
 Assisted-by: Codex:gpt-5-5
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/dma/ste_dma40.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 7c777e410c10..e0c694a1fc8b 100644
+index e0c694a1fc8b..49bca706b638 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -1739,6 +1739,10 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
- 	bool invalid_dev_type = conf->dev_type < 0;
+@@ -2013,11 +2013,16 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ static int d40_config_memcpy(struct d40_chan *d40c)
+ {
+ 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
++	int ret;
  
-+	if (!invalid_dev_type &&
-+	    D40_TYPE_TO_GROUP(conf->dev_type) >= D40_GROUP_SIZE / 2)
-+		invalid_dev_type = true;
+ 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_log;
+ 		d40c->dma_cfg.dev_type = dma40_memcpy_channels[d40c->chan.chan_id];
+ 
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
 +
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
-@@ -1921,8 +1925,12 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 				}
- 			}
- 		} else
--			for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+			for (j = 0; j < d40c->base->num_phy_chans;
-+			     j += D40_GROUP_SIZE) {
- 				int phy_num = j  + event_group * 2;
-+				if (phy_num + 1 >= num_phy_chans)
-+					break;
+ 		d40_log_cfg(&d40c->dma_cfg,
+ 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
+ 
+@@ -2025,6 +2030,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ 		   dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_phy;
+ 
++		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
++		if (ret)
++			return ret;
 +
- 				for (i = phy_num; i < phy_num + 2; i++) {
- 					if (d40_alloc_mask_set(&phys[i],
- 							       is_src,
-@@ -1942,8 +1950,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		return -EINVAL;
+ 		/* Generate interrupt at end of transfer or relink. */
+ 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
  
- 	/* Find logical channel */
--	for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
- 		int phy_num = j + event_group * 2;
-+		if (phy_num + 1 >= num_phy_chans)
-+			break;
- 
- 		if (d40c->dma_cfg.use_fixed_channel) {
- 			i = d40c->dma_cfg.phy_channel;
 
 -- 
 2.55.0
