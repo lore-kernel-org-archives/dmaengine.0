@@ -1,147 +1,154 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15CA4582C7
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A8F459AF8
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 13:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787232605; cv=none; b=O3+R0KV9EZxwE8kNSYyVt0FJwFGtOul4cwpvgwM3EEF5+xAxJ1xjMoLdFqB3LTo3ejepGHkVBnNRiCfRc5MISagcnQW89hyo+JSzo91ucQHNMtDRcGNzmhyLsVvMMdXzR9Fk3o6n8hamWXMk46vRe4HZvTs5zW6ZODYUZJG58BQ=
+	t=1787232636; cv=none; b=fESeaitLtQsoz/ZK5i+3nmc/qGlv5XJep6bWzVbapkwfvokh54MQkA/eGQ91aqKIK7aZ6Xz+JpiaQYgicFFM9tXJIfrFpS0SggfaL3pwhqzn8GiwTjwx+nXpR3vUbU0B7wLaEPSwhBaoFBmrp6iNRUcaIp45MyJWsdN5cLMZ6os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787232605; c=relaxed/simple;
-	bh=cjWJdEiLvEiwGLCePBLCJaTgmG8KDmmt9/vFYyzbyj8=;
+	s=arc-20240116; t=1787232636; c=relaxed/simple;
+	bh=oyPjcMsbFogFAkZFyt6nSjpjkpdXxpvbl+4cMK+5ETw=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Gwt5TKPUckm6zYchvqR3BkyKK85og8YLpu4oxCidmbX895/TGaSR/X7sXUdm8pyfItNJ9s/TY9pUx9W5U6kgWdLUem9+4Uoxv0mnsglG35W/fnja/P8wZf7V3vNl+oLDO9wt73QkIFvDv6jhXQ+YIvC8UhvUrwr8nqxBVPaAafc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lld3zE31; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=EcEeeNPW2Fb9erM05Q0MdhLGbc4rtlxkwgeksOv9WuPBTRAzrq63G8SpyFEMBbtvwBZak+jrvrILBfzKiiZdqig66mNl47VwvBV3PNL6rYNCujwoxb29hQiZ+FJKGoraHGxAMw1kudW/1SJYUxUf4w2mDcAWukbEHbVgFTrDqdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mp12wIT3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lld3zE31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A9F1F00A3E;
-	Thu, 20 Aug 2026 13:30:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mp12wIT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA281F000E9;
+	Thu, 20 Aug 2026 13:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787232604;
-	bh=Okpi/gbkjxG7Sz10doU0vD8M9R17ctz7ApZdFUNCpDA=;
+	s=k20260515; t=1787232630;
+	bh=Di6D7eYiKAr2aHz48PJWMp3NfyhOhHiIuLfeVTTRwxg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lld3zE31eA7ayHDcU+Ud3y2n5BAD+gJogiXlxCIZ3asoTbA07/sTmyAAUHW0Lbjlv
-	 TIlWxOfrdyOYD0u5iw/NZRetdPV/SeLI5XQ3w4YVL+fH683wp/dprt2hTU7ey/4wgf
-	 hw7TpIa0rWGZhOYVb7JfpAzCjXdXHgwGKEY5t3D1pI7VilNeuLPYxHL6cgf5NzzYZf
-	 ZjNXGfB7eMkDYSbt0QxwMpnX/lxW+NNaf8jlp1k/essJw/Mb9eerVDT/sg3WRHHmzI
-	 4ietdDSkJANrGQtaMJsHekOUN8Xbe0iq+yPwcELHysklldnQ89s4G+5QckCGx2ZQuR
-	 2a+4oHgmNZY4A==
+	b=Mp12wIT3nxcvRc4IF6kIkSv31VIsfJn7PknsoVwHrloxItm61OoDRl+Yq9w8RRY0m
+	 8d4qqFupkN8nSiZMasdE88odeGozWXNJBDD4YSlKXduYTumIJSYXk5aafgqDWmsERv
+	 tA+Iouw9glmtdF8U5kCczbxElMsQjT7zQLncYu+GsAaTPYZm2gXkIbowqer7mBYyzU
+	 Q30yffWWeuzYKNGUKjEx8MYrxwUM2FX/4lXr/+bzrcIJctOAiz0GAx/4boH7i5xC6U
+	 L5S90iVC+8n3BV2J6xpOPdDWcAkRcsWtGXdX6XAGEKKiWJg9B9KfL/otooVB56UukD
+	 PwAKwRPB5cZFA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 01/13] dmaengine: ste_dma40: Fix failed start cleanup
+Subject: Re: [PATCH v2 04/13] dmaengine: ste_dma40: Fix DMA registration
+ unwind
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Linus Walleij" <linusw@kernel.org>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260820-dma40-fixes-v2-1-63238334c707@kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260820-dma40-fixes-v2-4-63238334c707@kernel.org>
 References: <20260820-dma40-fixes-v2-0-63238334c707@kernel.org>
- <20260820-dma40-fixes-v2-1-63238334c707@kernel.org>
+ <20260820-dma40-fixes-v2-4-63238334c707@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 13:30:03 +0000
-Message-Id: <20260820133004.49A9F1F00A3E@smtp.kernel.org>
+Date: Thu, 20 Aug 2026 13:30:29 +0000
+Message-Id: <20260820133030.3AA281F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
-New issues:
-- [Medium] Out-of-order descriptor completion corrupts dmaengine cookie tra=
-cking.
-- [Medium] Failed cyclic descriptors are moved to the `done` list, causing =
-a permanent tasklet soft-lock.
-
 Pre-existing issues:
-- [High] The return value of pm_runtime_get_sync() is ignored, risking hard=
-ware access on a powered-off device.
+- [High] The DMA_CYCLIC capability is incorrectly applied to dma_slave inst=
+ead of dma_both during dma_both setup.
+- [High] The channel tasklets are not explicitly killed on the probe error =
+path, which can result in a Use-After-Free if a tasklet is scheduled before=
+ the probe fails.
 --
 
---- Patch [1]: [PATCH v2 01/13] dmaengine: ste_dma40: Fix failed start clea=
-nup ---
-commit b33a3592aafc5e2714045326450fe12077ee3161
+--- Patch [4]: [PATCH v2 04/13] dmaengine: ste_dma40: Fix DMA registration =
+unwind ---
+commit b477f2730e0cab6c69890c774c76310e0edd988b
 Author: Linus Walleij <linusw@kernel.org>
 
-dmaengine: ste_dma40: Fix failed start cleanup
+dmaengine: ste_dma40: Fix DMA registration unwind
 
-This commit addresses a bug where d40_queue_start() returned NULL on start
-failure without unwinding the transfer state or clearing the busy flag. It
-introduces an error path to complete the descriptor through the tasklet and
-balance the runtime PM reference.
+d40_dmaengine_init() registers DMAengine devices using devres-managed
+unregister actions. This commit wraps the registration in a temporary
+devres group, releasing it if probe fails to prevent DMAengine devices
+from staying visible until devres unwinds.
 
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.=
+Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.=
 kernel.org/
 
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index 145f7105218ce..384c2f3805b02 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -1531,8 +1531,15 @@ static struct d40_desc *d40_queue_start(struct d40=
-_chan *d40c)
->  	if (d40d !=3D NULL) {
->  		if (!d40c->busy) {
->  			d40c->busy =3D true;
->  			pm_runtime_get_sync(d40c->base->dev);
+[ ... ]
+> @@ -3638,20 +3639,29 @@ static int __init d40_probe(struct platform_devic=
+e *pdev)
+> =20
+>  	d40_hw_init(base);
+> =20
+> +	dmaenginem_reg_group =3D devres_open_group(dev, NULL, GFP_KERNEL);
+> +	if (!dmaenginem_reg_group) {
+> +		ret =3D -ENOMEM;
+> +		goto destroy_cache;
+> +	}
+> +
+>  	ret =3D d40_dmaengine_init(base, num_reserved_chans);
 
 [Severity: High]
-This is a pre-existing issue, but is it safe to ignore the return value of
-pm_runtime_get_sync() here?
+This isn't a bug introduced by this patch, but does the configuration of
+base->dma_both in d40_dmaengine_init() incorrectly set the DMA_CYCLIC
+capability on base->dma_slave instead of base->dma_both?
 
-If the power domain fails to resume, the driver might proceed with hardware
-register accesses like d40_desc_load() and d40_start() while the device is
-powered off, which could trigger a synchronous external abort.
+Looking at d40_dmaengine_init():
 
-[ ... ]
-> =20
->  		/* Start dma job */
->  		err =3D d40_start(d40c);
-> =20
-> -		if (err)
-> -			return NULL;
-> +		if (err) {
-> +			d40_desc_remove(d40d);
-> +			d40_desc_done(d40c, d40d);
-
-[Severity: Medium]
-Does calling d40_desc_done() here break dmaengine cookie tracking by
-completing descriptors out-of-order?
-
-If dma_tc_handle() calls d40_queue_start() and this new descriptor fails to
-start, it is placed into the done list. Then dma_tc_handle() proceeds to
-place the successfully completed old descriptor into the done list. Since it
-is a FIFO queue, the newly failed descriptor gets processed before the old
-successful one, which could cause the channel's completed cookie to go
-backwards.
-
-[Severity: Medium]
-Also, if the descriptor is cyclic, could moving it to the done list upon
-failure cause a permanent tasklet soft-lock?
-
-The dma_tasklet() deliberately skips removing cyclic descriptors from the
-done list:
-
-dma_tasklet() {
-        ...
-        if (!d40d->cyclic) {
-                if (async_tx_test_ack(&d40d->txd)) {
-                        d40_desc_remove(d40d);
-        ...
+drivers/dma/ste_dma40.c:d40_dmaengine_init() {
+    ...
+    dma_cap_zero(base->dma_both.cap_mask);
+    dma_cap_set(DMA_SLAVE, base->dma_both.cap_mask);
+    dma_cap_set(DMA_MEMCPY, base->dma_both.cap_mask);
+    dma_cap_set(DMA_CYCLIC, base->dma_slave.cap_mask);
+    ...
 }
 
-If a failed cyclic descriptor is forced into the done list, it looks like it
-would never be dequeued, causing the tasklet to infinitely loop and starve
-other DMA jobs.
+Should the last line be setting DMA_CYCLIC on base->dma_both.cap_mask so th=
+at
+physical channels managed by dma_both advertise cyclic support?
 
-> +			d40c->pending_tx++;
-> +			d40c->busy =3D false;
-> +			pm_runtime_put_autosuspend(d40c->base->dev);
-> +			tasklet_schedule(&d40c->tasklet);
-> +			return ERR_PTR(err);
-> +		}
->  	}
+>  	if (ret)
+> -		goto destroy_cache;
+> +		goto release_dmaenginem;
 > =20
->  	return d40d;
+>  	ret =3D of_dma_controller_register(np, d40_xlate, NULL);
+>  	if (ret) {
+>  		dev_err(dev,
+>  			"could not register of_dma_controller\n");
+> -		goto destroy_cache;
+> +		goto release_dmaenginem;
+>  	}
+> +	devres_remove_group(dev, dmaenginem_reg_group);
+> =20
+>  	dev_info(base->dev, "initialized\n");
+>  	return 0;
+> =20
+> + release_dmaenginem:
+> +	devres_release_group(dev, dmaenginem_reg_group);
+
+[Severity: High]
+This is a pre-existing issue, but does this error path need to explicitly
+kill the channel tasklets initialized during probe?
+
+During d40_probe(), tasklets are initialized for all channels in
+d40_chan_init(). Then d40_dmaengine_init() exposes the DMA devices via
+dmaenginem_async_device_register().
+
+At this point, a client could request a channel and submit a transfer,
+causing a hardware interrupt to schedule the tasklet. If probe subsequently
+fails here at of_dma_controller_register(), the driver unwinds and returns
+an error, causing devm to free the base structure containing the tasklets.
+
+Since tasklet_kill() is never called in the error path, could a scheduled
+tasklet execute after the memory is freed, leading to a Use-After-Free cras=
+h?
+
+>   destroy_cache:
+>  	if (base->lcla_pool.dma_addr)
+>  		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820-dma40-fixe=
-s-v2-0-63238334c707@kernel.org?part=3D1
+s-v2-0-63238334c707@kernel.org?part=3D4
