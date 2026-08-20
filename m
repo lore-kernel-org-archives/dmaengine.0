@@ -1,233 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29591D416C
-	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 00:40:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A0C248896
+	for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 03:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787186411; cv=none; b=fPVQul1zDe9vM0H/pXtogTe4jgephMnOJRyGChO+xGhVtO3rTDxzlDyYCIqPo91+dJ/crjAGU102iY5APOeksJj4JOcPXexW/b2FhMG9wUk70ZAuRFYi2dpzw79aJSMcM0TD+lLIKjQaulLwQIBmsPHxCU950EWFSTzVvFe0SRA=
+	t=1787195818; cv=none; b=QA/c96j0Y3yJSdpZL+d4dgRjYRmtj4W2Roz2hFv3cUighjl62XjX0R2lSISCd2z7/a+DTrf1p2hM8wH1q2QiGH+IWZlS4vDt1AnfxZ4rdcMLCicbRppdrVhexCv0zSvgnCAATVLOQdwyNGSh4ZwXUG+m4MtQwDxZ8OksMd0/r6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787186411; c=relaxed/simple;
-	bh=aHwkiP8j1e2M5GXt8jB5Ugf2b4EC4icK/EIIcRx35dQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=vBWSaiA0CeP5T7rwzt8Fdcm/zQ2aES3gXbpHeHvMquqJlqli6jnnR6rZUj7Ef8e70+8A2brjdWsKqSLfauBg41oAkUR6fiU+XY8SNmY0USOkcKxk3G5/ufUZJw2VwnYnIlEDrH4ozKUYQvM3OQZSRUmIOkoXgBwRwjZwGPz+N68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cKtfM1t9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787195818; c=relaxed/simple;
+	bh=pjCz7HHh6XbVA6D8sqtcBOTJ7pG6hrBkEgJ82H0Rfhk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EFKlVtDFohxi9qcIy40Zo0xc95/qvpznVogacz5U72p56IkNnIHu9cENYbqbuLZFTAjf3h6E5gN95Y+1phP022BxNFTG6ys3OWWLRz+EWmeqvyFnRT+nhQrr2T8wQPFoC16ZlbEW3fYlaMbMDahAeYijnApCFHVztXe4QF5XLnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZGS5UF6; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cKtfM1t9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5961F000E9;
-	Thu, 20 Aug 2026 00:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787186407;
-	bh=fqPnGYdNHregBSEYpiLZ7P/t2LYdqsOwypTb+vc73YY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cKtfM1t9k8Q5Mv0r4mhOXLerOxCkNslroAr86UeGg5pwl27ZOZAxYNusaRwhTpl7+
-	 Ugmg+9XYo9LuI+SsN0GZjBcKKKCfmqO9DlKaq/odqor/yPvoEoq/TEYh62/I1dBnV4
-	 1teQ8WZ0+v9uyTBcs92CnOdOzdsjDnlzUiSBY9C+HsehP0zvRBIh0uUeFtmabYLbic
-	 IBPfs1YXx9YDPOlosmedrDBEfnzUuNDoCHenYmYANaKzSFfNwVIJ2tmPRp6g+ElzVE
-	 O48RN8mMQYkRoUJmoPE/8+83HP9lP9D70WqTxMAySe0nnHq8cnmlNZv0eup1EWNNa9
-	 AttycWHrIdgww==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: fsl_raid: fix sparse warnings
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260820002816.17382-1-rosenp@gmail.com>
-References: <20260820002816.17382-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 20 Aug 2026 00:40:06 +0000
-Message-Id: <20260820004007.1C5961F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZGS5UF6"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ce87c7e3bbso20081515ad.1
+        for <dmaengine@vger.kernel.org>; Wed, 19 Aug 2026 20:16:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787195816; x=1787800616; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=lUGyoUQMT++FV9NxhdPbZqYYCYX7x6pMitnI1ewBzQ8=;
+        b=gZGS5UF60gZJLWwvv5amVtOG85h+6h94qy9nbKNyzSO14ju3SQ8C2EKHN/e3yBWxu3
+         tyVdNu92rUHbN0E/EgL8aRwYSGoauOuXPzNwMNyeCwW+P00lceO34fE/asRzH6YLwrzr
+         ZfYXx7poXbCalfRDej+yKou8rumfaQ0HFk9znThVnGjxJVd/7EATUPQ32vE3l4i4XF8K
+         TXAfSKs+7vQrUuVrIL5pDXkdQ9pBAfqIAr/Ykg1YLeGMDp97mibX38+LlbRpHB2BuplI
+         ObaObOjsRVqVcmHkdvSRQnmvATjkbnXs0DuvHuGzK6mNS1vrITbxQx7xNKRj2bdrJnAN
+         k+Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787195816; x=1787800616;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lUGyoUQMT++FV9NxhdPbZqYYCYX7x6pMitnI1ewBzQ8=;
+        b=Ug0kAd7fCGDXCWI2Uoa0wVV4x+h9WWFwwvc9aD+ApVp00WgiTkzcrz43FUGldnWmAb
+         XHBU8R0/H8Q3IRf81tnNzvXWaX5mMn3ZzKVS0+W4Io4OObThwNqKJ0fffBhrNh5orrno
+         gBhwRFKGXLfGc85878IynmCEEzGavI9Se4GK5OLiXOx5PTwPbnpoHwfBgPMJ1QpA5BDw
+         lmP0dteTkzvJlIwq6z2UpTIf/1QFl2F3vKueHQdeXZxs6bpekkqFBHtt+cJNzMEoGOrE
+         69yVb8lssAh+rOYr2J6hoFhp7ptT1d1VL7u2sFadeKLZYLs9Ii+1cUZayib48MKaHpkK
+         wAqQ==
+X-Gm-Message-State: AFuF++nO1r4e9ALkXOkT5Xf8HyeXjYBWbMLRvrj1J4miwQ4NyFKKlxc4
+	CXxecUw5cVwsMRCjiUlKzcU8J95/ol1GjuxwNGq/jLef+SyZDGhiVgQCU8runA==
+X-Gm-Gg: AR+sD11SpJcyAB4OU7jnQv22jS1XdxAvJJPpg1n9D/1W0X5aAJb4TS294xQK42VEIY2
+	GEotYmxwZllEoO6so6ucNv3LZqLCRdL0IVkGo0gDyz+sRgIyuzEB6wxgp+tGpsRGhrQMc0dxPry
+	qesztkYMm9gXJh750yu16Plo8F8QXsrjO4n+s/QFGyKw6jdbEqgb0wDZyYoXXejoAz1Zu3v2vQr
+	c1de53TCUPAeXytWSPRlfEltHMksOzoQVyJtm80tEUjOBukRW5emg2mE+WNlJEX7TAByFUxrLP5
+	k5ddNt3Qila0/griN9geRqQjs4unEMWpolHDTWwnb8S3V8GPABN8WaJdO9mjVCc2Od8DQIpQmEQ
+	WM6DmI2RTNCi/2V+/xYsjWKkUzrkwN82HDkn0v4JM/xtzBfZ/2ek148oHkvYQIM+6Ovh5FoV3E8
+	DbsLpuK9bCv7ZpV81Ewtsx1AJZVnhn7H1u+vygRq9sgQZ6FpwSsD3btzOiEmMwHAWpOJjzYOYt+
+	I8A4E0XBi8aLk+CnMsVM3g8ootPq4Y+oUA68BqkAllfahRxBAuYaO+88gTzKJiWDVmHiDShHV5j
+	K8627iq9s9c0a179ijkGUTOEaIPL1voM1O01bg==
+X-Received: by 2002:a17:902:ef43:b0:2d5:e9d5:8ae with SMTP id d9443c01a7336-2d5fd62ae4fmr183115805ad.5.1787195815996;
+        Wed, 19 Aug 2026 20:16:55 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d62d5ae494sm1332405ad.34.2026.08.19.20.16.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Aug 2026 20:16:55 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Harninder Rai <harninder.rai@freescale.com>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] dmaengine: fsl_raid: zero CF descriptor pool allocations
+Date: Wed, 19 Aug 2026 20:16:54 -0700
+Message-ID: <20260820031654.28450-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 7 potential issue(=
-s) to consider:
+The compound frame descriptors and embedded CDBs are allocated from the
+cf_desc_pool with dma_pool_alloc(), which does not zero the memory. Only
+cdb32, the gfm coefficients and the frame address/length fields are
+programmed; the dpi_dest_spec/dpi_src_spec fields in the CDBs and the
+rbro32 field of each frame are left uninitialized. The hardware reads
+the whole block (frame 0 length is sizeof(struct fsl_re_xor_cdb) or
+sizeof(struct fsl_re_pq_cdb)), so uninitialized heap contents are
+exposed to the device on each new descriptor.
 
-Pre-existing issues:
-- [High] Incomplete Endianness Fix
-- [High] Use-After-Free / Resource Leak
-- [High] Incorrect teardown ordering in `fsl_re_remove()`
-- [High] Memory Corruption due to unconditional pop in `fsl_re_free_chan_re=
-sources()`
-- [High] Deadlock during client callback invocation
-- [High] NULL Pointer Dereference on probe failure
-- [Medium] Uninitialized DMA Memory Leak
---
+Use dma_pool_zalloc() in both fsl_re_chan_alloc_desc() and
+fsl_re_alloc_chan_resources() so the descriptor and CDB memory is
+zeroed before it is handed to the RAID engine.
 
---- Patch [1]: [PATCH] dmaengine: fsl_raid: fix sparse warnings ---
-commit 736f7849012b086f7c1f995cc45ee838fbb53650
-Author: Rosen Penev <rosenp@gmail.com>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:deepseek-v4-flash-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/fsl_raid.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-dmaengine: fsl_raid: fix sparse warnings
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 2d86f61105e5..1c316d85cfec 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -295,8 +295,8 @@ static struct fsl_re_desc *fsl_re_chan_alloc_desc(struct fsl_re_chan *re_chan,
+ 		if (!desc)
+ 			return NULL;
+ 
+-		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
+-				    &paddr);
++		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
++				     &paddr);
+ 		if (!cf) {
+ 			kfree(desc);
+ 			return NULL;
+@@ -584,8 +584,8 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
+ 		if (!desc)
+ 			break;
+ 
+-		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
+-				    &paddr);
++		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
++				     &paddr);
+ 		if (!cf) {
+ 			kfree(desc);
+ 			break;
+-- 
+2.55.0
 
-The register maps in fsl_raid.h annotate every field as __be32, but
-they are accessed only through ioread32be()/iowrite32be(), which
-already perform the byte swap and take plain u32 __iomem pointers.
-The __be32 annotation therefore makes sparse reject each access.
-
-Closes: https://lore.kernel.org/oe-kbuild-all/202608200637.ro1CqMxi-lkp@int=
-el.com/
-
-> diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 99945845d8b5e..97103c84dd70b 100644
-> --- a/drivers/dma/fsl_raid.c
-> +++ b/drivers/dma/fsl_raid.c
-> @@ -334,7 +334,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dm=
-a_genq(
->  	}
-> =20
->  	desc =3D fsl_re_chan_alloc_desc(re_chan, flags);
-> -	if (desc <=3D 0)
-> +	if (!desc)
-
-[Severity: Medium]
-This is a pre-existing issue, but does this allocation leak uninitialized
-kernel memory to the device?
-
-Looking at fsl_re_chan_alloc_desc():
-
-drivers/dma/fsl_raid.c:fsl_re_chan_alloc_desc() {
-    ...
-    cf =3D dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT, &paddr=
-);
-    ...
-}
-
-Since the compound frame descriptors are dynamically allocated without zero=
-ing
-(__GFP_ZERO), could the uninitialized dpi and trailing gfm array fields exp=
-ose
-kernel heap state to the device?
-
->  		return NULL;
-> =20
->  	if (scf && (flags & DMA_PREP_CONTINUE)) {
-> @@ -349,7 +349,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dm=
-a_genq(
->  	cdb |=3D FSL_RE_INTR_ON_ERROR << FSL_RE_CDB_ERROR_SHIFT;
->  	cdb |=3D FSL_RE_DATA_DEP << FSL_RE_CDB_DEPEND_SHIFT;
->  	xor =3D desc->cdb_addr;
-> -	xor->cdb32 =3D cdb;
-> +	xor->cdb32 =3D cpu_to_be32(cdb);
-
-[Severity: High]
-This is a pre-existing issue, but does swapping only cdb32 here leave the
-driver broken on little-endian platforms?
-
-Looking at fill_cfd_frame() which is called shortly after:
-
-drivers/dma/fsl_raid.c:fill_cfd_frame() {
-    cf[index].efrl32 =3D efrl;
-    cf[index].addr_high =3D upper_32_bits(addr);
-    cf[index].addr_low =3D lower_32_bits(addr);
-    ...
-}
-
-It appears native u32 values are still assigned to __be32 fields without
-swapping. Will this incomplete endianness conversion cause issues on
-little-endian hosts?
-
-[ ... ]
-
-[Severity: High]
-This is a pre-existing issue, but does the driver leak the IRQ resource or
-cause a use-after-free on unbind?
-
-Looking at fsl_re_chan_probe():
-
-drivers/dma/fsl_raid.c:fsl_re_chan_probe() {
-    ...
-    ret =3D request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-    ...
-}
-
-The IRQ is requested here but appears to lack cleanup in error paths and the
-remove function. Upon device unbind, could the IRQ remain active while the
-channel structure is freed, leading to a use-after-free on the next interru=
-pt?
-
-[Severity: High]
-This is a pre-existing issue, but does the teardown order in fsl_re_remove()
-violate DMA engine lifecycle constraints?
-
-Looking at fsl_re_remove():
-
-drivers/dma/fsl_raid.c:fsl_re_remove() {
-    ...
-    for (i =3D 0; i < re_priv->total_chans; i++)
-        fsl_re_remove_chan(re_priv->re_jrs[i]);
-
-    dma_async_device_unregister(&re_priv->dma_dev);
-    ...
-}
-
-Since it destroys channel resources before unregistering the DMA device, do=
-es
-this race condition permit concurrent client requests to operate on freed
-memory?
-
-[Severity: High]
-This is a pre-existing issue, but can the loop in fsl_re_free_chan_resource=
-s()
-cause memory corruption?
-
-Looking at fsl_re_free_chan_resources():
-
-drivers/dma/fsl_raid.c:fsl_re_free_chan_resources() {
-    ...
-    while (re_chan->alloc_count--) {
-        desc =3D list_first_entry(&re_chan->free_q, struct fsl_re_desc, nod=
-e);
-        list_del(&desc->node);
-        ...
-    }
-    ...
-}
-
-The cleanup routine loops blindly based on alloc_count. If descriptors are
-currently active or submitted, could free_q run out early and cause
-list_first_entry() to pop invalid pointers?
-
-[Severity: High]
-This is a pre-existing issue, but could fsl_re_dequeue() deadlock during cl=
-ient
-callback invocation?
-
-Looking at fsl_re_dequeue():
-
-drivers/dma/fsl_raid.c:fsl_re_dequeue() {
-    spin_lock_irqsave(&re_chan->desc_lock, flags);
-    ...
-    if (found) {
-        fsl_re_desc_done(desc);
-    ...
-}
-
-The client callback is triggered while a non-recursive spinlock is held. Wi=
-ll
-this self-deadlock if the callback immediately submits a new transaction?
-
-[Severity: High]
-This is a pre-existing issue, but does fsl_re_probe() risk a NULL pointer
-dereference on probe failure?
-
-Looking at fsl_re_probe():
-
-drivers/dma/fsl_raid.c:fsl_re_probe() {
-    ...
-    if (rc) {
-        fsl_re_chan_probe(ofdev, child, ridx++, off);
-        re_priv->total_chans++;
-    ...
-}
-
-Since the return code of fsl_re_chan_probe() is ignored and total_chans is
-incremented unconditionally, will failed channel allocations leave re_jrs[q]
-as NULL, causing them to be blindly dereferenced on module removal?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260820002816.1738=
-2-1-rosenp@gmail.com?part=3D1
