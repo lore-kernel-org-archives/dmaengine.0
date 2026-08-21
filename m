@@ -1,233 +1,218 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010048.outbound.protection.outlook.com [52.101.201.48])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC24351C22;
-	Fri, 21 Aug 2026 04:37:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787287026; cv=fail; b=XQNcir3Txcbk2hqS9XROVGOk0GQUWxB0pP7SyLaF71k4QKy/RW3QvYK0Cg5EbdP7XQ7Z2od08hGvfKaSfLVeenRNilFgXAMMCtRx+Qij6oBN9ivNzrY91I9Hb56iTFnXjt9ohRWTNHG3t5qXWF6/Oyi9KgQEs3H7RoOfQc8k+Z4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787287026; c=relaxed/simple;
-	bh=+otythzThWO3X2jmpBdaB4baMyJmy3ZqoYgJxIG0ZgM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=LADFN+VoGrkWiWyX2adRgLUOllZIx7gfjAkwCVn5/cWLukVaxwoYdIqy/aQKGLrKyvdat0TlmGUbe9gxu1QVZ4XwNEmvzvzY5HvadaIyxqN9PGZvSYqO+sACtwffFJnLwsUlSYnCF3m2X8Y8mWMHWVfxMEXp5UycNLnEM5oCeZs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=2cNPV0KV; arc=fail smtp.client-ip=52.101.201.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A07235CB87
+	for <dmaengine@vger.kernel.org>; Fri, 21 Aug 2026 05:07:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787288861; cv=none; b=XydAutqMYk1b727Jp0nG3MEQuC3YLCSh8HqXcgYlw9qh6IMXQMxeBzHAHFyQhCkgILuEg1fCY10xuRfHmqWMhX3JwSh9vw5J5Bd3UMR3NJ0t9b0OCGoB7D6OB6/O68dvTC7I1GfJLrXdS9DZS7hs0BN1CVToreb+J4Elzqj/twI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787288861; c=relaxed/simple;
+	bh=hX0xMl1RocF2QCivBcji9cjijZkMYUqq+bU/WzaVaYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XUQqE765BE7VL0wDvg/ldDdMybgBmwCXeM8NTvQTRFbwpQu17CY54IFfj3zNfFj+8Rr1q4BuobWTS9C6f5+39dUAHlUpJ6aWXFxaBsk5HD73xCvpej20xcZAcoQLXuNKnzf1pYPTDUsxdtdSFPm4fo/DQ2xTFvCdBJy0H6WV1LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fTgdELoI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OqMnWhiB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="2cNPV0KV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V6FuLObCoo9S/RE51MAMoVGrn+CPkDtmtWPlQNbptNPscgzql06NRP6gcIIKbO/VD4RUaZxB4XM71NdHjSBlJd/YkEbJr2DT2o/kTNF/d50EBHe+5TjSM5ViXWdHilTED3g3lCpVnCSzgyKNPkOr31oxhszCmqnLHbVahnS0JktWszNdVmmBUOW0sSYTF0BD3lL+98yLcFJMLB5rVAZTBHyhf8ZFyrcjyfs2r4cSppFacjrx4mX+79PsHuACO5Kl8RjwGfay5Vvy3Z/Ew7bSz64jvZsYZsIE93pFUd+23AVlCqn9t/Mke5TVZAYq9Nq7209ZTUx2jWelMQHCLo4O9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=43wavXFd2W0yCmQfZPP8z9f1TJ6ckUJTrKkUig5dr6s=;
- b=eW/KA/sPkAPEmHxiOwynMgWm/YQWTw33sKPzS1LWjDDLsQGpfulS6TlUS5Os776O60S55iMgHTWsdInyddHSrEfNY5kPMKMeVSRE4LHHOE03lR7UmeMrG5/Rz602IAeFHBnYBySEOiHkG8UOlnAxCehAE3BJMybLkZeTVHVMFxJkGG/7vLCJn5Ym2bBJSUIYoSdiNzgnJ7CSBYojXNh4rFcddOI74L4wpkAMQsl7zhfiLRuRHNekIRDnEEG25J9FELnywcuqrnp/eUauptfWNLpcKm4yFAzSX91TNU6t9RlMOHD6qMSfj9KeGbfLUHigMdSzXRgFz32Sv1biPD/HRQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=43wavXFd2W0yCmQfZPP8z9f1TJ6ckUJTrKkUig5dr6s=;
- b=2cNPV0KVlqA3iAW45naFT9AZ4TzeESFZDdqqqDKlotAhVyovFS1PW+v/97+eiqlcuNo3vHEZfkZaTDlh4mMLlgYT5bn+qblqx+eIaB/ys0SEXNuNU3k+a4nq7UkKO7oSn6ZR07rHALyt9JZa0gFKbMZeSYHHHTdWgF/UgNxr918=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS4PR12MB999075.namprd12.prod.outlook.com (2603:10b6:8:2fc::20)
- by CH2PR12MB4245.namprd12.prod.outlook.com (2603:10b6:610:af::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Fri, 21 Aug
- 2026 04:37:00 +0000
-Received: from DS4PR12MB999075.namprd12.prod.outlook.com
- ([fe80::4c9d:851d:3f44:800f]) by DS4PR12MB999075.namprd12.prod.outlook.com
- ([fe80::4c9d:851d:3f44:800f%6]) with mapi id 15.21.0339.008; Fri, 21 Aug 2026
- 04:36:59 +0000
-Message-ID: <f3b91b66-238b-41bf-9c11-4b27314807d8@amd.com>
-Date: Fri, 21 Aug 2026 10:06:52 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/6] dt-bindings: dma: xlnx,zynqmp-dma: Add Versal Net
- compatible support
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, michal.simek@amd.com,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
- git@amd.com, dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20260810100452.426320-1-nagendra.golla@amd.com>
- <20260810100452.426320-5-nagendra.golla@amd.com>
- <20260812-benevolent-ammonite-of-mathematics-5dcafc@quoll>
-Content-Language: en-US
-From: "Golla, Nagendra" <Nagendra.Golla@amd.com>
-In-Reply-To: <20260812-benevolent-ammonite-of-mathematics-5dcafc@quoll>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5PR01CA0232.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1f4::6) To DS4PR12MB999075.namprd12.prod.outlook.com
- (2603:10b6:8:2fc::20)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fTgdELoI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OqMnWhiB"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67L4FpSo2347409
+	for <dmaengine@vger.kernel.org>; Fri, 21 Aug 2026 05:07:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GgVJks6rWjz9+JEM9GtoFAYqpjJvbvWBn2zqOGuRKzo=; b=fTgdELoIOlRmwcHw
+	hBYPtxNqZLcZJBODPvcRKDZzAzVxjeYrsfLsOYLgclP/KsHQvmMmUC4hAxb2X4eO
+	xLNPQ3n5yIRXlLEI2jvqHTC5AAJY1vwouWXtT2fSmX8bV/6HhHVYc52XjZGXcP0u
+	2MOg37Bw1ep0O+j0gpSFZn3EEH0nbLs8/4HpSf9AsJPWoLOwGHHAx32AAIn8kLPg
+	BbvMBaZnAASeG1iJDWuPhM6OQS0K8kzg92WNxpr5T7m5Hx/XSIjVcu0X06Xbh3nc
+	N0npLKHxwVm7fFBG8Ss9DP/KClOsQtPUHs6jw5PX2OFyJIl5e3Gu760yfngghtH/
+	XoSRDw==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6fg9r4f9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 21 Aug 2026 05:07:39 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-ca124bf0189so1459411a12.0
+        for <dmaengine@vger.kernel.org>; Thu, 20 Aug 2026 22:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1787288859; x=1787893659; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GgVJks6rWjz9+JEM9GtoFAYqpjJvbvWBn2zqOGuRKzo=;
+        b=OqMnWhiBF1ILKXFhDbHEJOb94/0pq3PrhiKdoUJz8EqdioY7r/MACDb1Tcla3cJh0u
+         t3BA3Pd+w4Vo7zmJM9d+GoCuite2Xos4db2gHbWyieUt/hMg4ss3VPnNL/7zX+7w2J5i
+         ZCYFj4x3GLg6aeHDCwmrWLDjWIhY4wCwdxF1vx/wX3O/gO7W0u4UZC3CYlxpK58Vq9Nl
+         I+Uln1PoC4whu3ahQZ6u+lBzy794HrLHMzWUv0UcYTmAS48slFZuYKGpyxzzScKlb6JK
+         eWoYua+Qz6j1XlVFHxOSSkYs0imHJmn0c/6rdqe4ESmZPkA+v9QPEZ/CSpEcZ9Gf0bbW
+         MTyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787288859; x=1787893659;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GgVJks6rWjz9+JEM9GtoFAYqpjJvbvWBn2zqOGuRKzo=;
+        b=eCGVSQpjMGTDQ+5lEs4WG3GaIEmCZwHeAerR1fqePaQUiW0pFRxE0JS8vIUcd1I9hg
+         Q2dAmnFLbyNSdHKV6xWMQ7P8OrrnLc/K75RqfKvUz6BKPIcyE1pJReVwNdZxfIpTRFg5
+         SurdHKqR3zgg2FzsJksNoMmj7ShxZjVZeXrgcG26Sgn/EiWJmkuYB+WbqgjwwyZPTOuu
+         LQEtd5Z4pMBURmn+WlH3UxK67ofWRuKBH03ugTlQVY/MyT4D/VCyUCZ/jRivh88vRTVP
+         gXA6Dp7eApZwY8VcN3R8dTwxJI1F5ktqW499CXW7+TkfMJNTGcD71h5z+edsP5RDWQjQ
+         FiKQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rrbm9Qn93fsxWJDRdpc6Osaa89USTz/2P53xSybgzxH2OSjJllkldhTPQHtQCFK+OnMRp4DAy/KkD4=@vger.kernel.org
+X-Gm-Message-State: AFuF++kpQpLy23ChJKBfeC7xDRwir20YL0MWK3xG0YUl89Ns9TbZ1Yit
+	c4uv+DnRL9U6YZUpBh9TFDbXlyF/f3XEZPUDhniiAFjkYth2JOW3koroUp3b8fYlgLSlWG+dbsN
+	KhQ5EhiOXWpbT65iazFyP1pKSUvcXtsCXH0//0c4JtW89apGJ9ttL3ZrIIXdHaaQN5oa3gEA=
+X-Gm-Gg: AR+sD10TfG6syvygVV7ISrxztChLwgfLBtemQTJj9a9JzyV5wvLNskpTwJInIKtT5x1
+	gEOqfLcOPKYoU8TjDSvFIZnVlzybO6UUy1MpBrwaQzjOU7XDEA6uan4XOxxjtuC0bXlCoebSkJa
+	GXv7EddFuL0hjsAHAh4qVplqpig1UxLKl9RUwX+/SmGeyR7H8FWtT7lmP81Nae2rrm+lGZk1ecL
+	k1eG6LiQHZwV3rEkQ1rXb1Hd/Jwb+EIaENR+8Kj7ZvAI/zHas3nf6nn9Hqsvek+zB9ok07RWpN6
+	lp8IVAcPfm7nP/BXcfKIx6zyaIZv4vkBI0diOEThsS+mZasAei9uAadZ6vDsnfCs2P2hHPp7UmA
+	U8F6tmgZ12SZMlUOEB1T+oxsNxERGazo=
+X-Received: by 2002:a17:90b:4488:b0:38e:7297:a92e with SMTP id 98e67ed59e1d1-395c5114895mr2616793a91.9.1787288858861;
+        Thu, 20 Aug 2026 22:07:38 -0700 (PDT)
+X-Received: by 2002:a17:90b:4488:b0:38e:7297:a92e with SMTP id 98e67ed59e1d1-395c5114895mr2616772a91.9.1787288858347;
+        Thu, 20 Aug 2026 22:07:38 -0700 (PDT)
+Received: from [10.218.14.97] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395c8fd34d9sm386285a91.1.2026.08.20.22.07.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Aug 2026 22:07:37 -0700 (PDT)
+Message-ID: <39b33f3e-08bb-42eb-bc02-9de9810e0058@oss.qualcomm.com>
+Date: Fri, 21 Aug 2026 10:37:33 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PR12MB999075:EE_|CH2PR12MB4245:EE_
-X-MS-Office365-Filtering-Correlation-Id: b24fbbe9-c535-4375-675a-08deff3dd6ed
-X-LD-Processed: 3dd8961f-e488-4e60-8e11-a82d994e183d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|7416014|22082099003|56012099006|18002099003|3023799007|6133799003|4143699003|10067099003|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	ckz0XftzmfMuU4e4r/htf2Pm/aKLupxKI2HJeUX/tzJ+CmoU8nmYBf0hKObkgtkfSqlaCfVVASTZ6NwdUnNtDta6j3E18DrrnQZv6lV7doHyWuuDLtBclHxKWjun4DMquJibCOf8D96BFMp1ffd+CesvApVXez/2HIkApWhQ1kJCcRJWO9cWDYU+ZrOhFI9vFS3Xg8r+zcczXIT6gmGylAOp9eYlm0YkC4YJqDaNSrib4qIvp1Kkgxil8NFemzv6aISO/Bkz+X9zYtqksfBubbpxeD72IQ+WHx5gzIPI8pcCNJGnz9wJ8+oL2+kc5gufG2JwQ1+MSq6WlwAkAYi9VdfQ6CBKCItiYiaMH2h7qOudbhXoHNOD6WqAoqPD6dx6AwyqbruEZ9HjbzX4yxJSEaDEAospvRYH0Hy/gKlPTUoeiSNySCGgym7rDyxGIXhlX2Oq1KpBf0CmRltAmO3E5MUIYAfHXhtyW9W9LpCrz6BKcPJR5ykZQC0ZdX0Pc49opDeYAPZLkTlH5evXL1ZaqFXcfS5veenUWwBhShPEhvjvvJYPHp3jJbEDNvgEr9DicxU597R8Xn2EEBmfYM3aFVUKo9OCYAhiNXZ9OcLEvJgCr6j+mAwyQ8B4h6Dvq8wvJx3nUhlVOZ08cLgS65OIrv70prWuH4O/yiXFnzEEASE=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PR12MB999075.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(7416014)(22082099003)(56012099006)(18002099003)(3023799007)(6133799003)(4143699003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?anBmMGQ4NUhPekVPK09sQmFJTkxST3IvYU5Ucm9DSXZpVkU0RWo3aUQrOXNQ?=
- =?utf-8?B?Uk1CTVdVYzZIbXV3eWR1ZTJOUjNkUldaM3ltTGFGV0dXa05KY0RkUkNWOWdL?=
- =?utf-8?B?cWxmNkdrZDVvcDVyZ0YyUEhkTDhOWmhwcVBFaHJxNXdDN3dNaC9FWTQ4cFJn?=
- =?utf-8?B?NG9ibll2RlN4SG5aSUZLdTZSeG9SZFZlS1dkTllORkcxTmVYUkxyTDBiM3JC?=
- =?utf-8?B?Qnl6djZvZ0RESXVLcmo0RzFmdlY1aDYyNTVSanJyYSs0Y1VCNnVVTm5lMWVl?=
- =?utf-8?B?RldWQnhuT3Y3cGtDUTNZWG5nbzFZTzdyZXh1a2ZpejhBUkpVc2JLT3dJeTlW?=
- =?utf-8?B?b0J1WFJSSWtuYTdBaTh6akZWT1RkN25ISzVYYldwcERCQ1VhM2hsMkZ2czgv?=
- =?utf-8?B?OHFCb3BsUk9HVmEzaFU3b3NmUWpqVmxoVHBLWXE2K2YwWkhiWVBVQXhvUjBC?=
- =?utf-8?B?N2UrMWRMOUxhRXlURjhsS1ZJaDF4RjFCNVhPNVVGTHQxOUxVQkFXVmE1NS80?=
- =?utf-8?B?R21QUXhnMFZRTERsejNmZHRoYlltMldTVUthMlltY1YwWStZSTlBZkF1SGpT?=
- =?utf-8?B?UUJNcnhDeXBxTTByT05WWlBVQmNYS3pxcVBiZGtPbGlsSGdmRFhBdEptOHk1?=
- =?utf-8?B?MUlXenRTelpubDlVcVFBbDYyb1FYeDdRQlpkRUh0SkhCT0h5V1dtWWc3QTZL?=
- =?utf-8?B?NUdmT2ZxZlRGMit4U2tUSi9LZ3JTT3p0ZkZTeFNCM3ZZMGRiQlNISkI1TlRV?=
- =?utf-8?B?c0hzUkpSZ3c4RnNPYUYzK1VKeXNtUDg5SWV3S0R1eU1SU3V3RG5CUFh3ajQ2?=
- =?utf-8?B?enJ6NGFud0I1LzdLZG40ZVJtbXBmN2dkMTJPNXV3b2ZaSWZPRGNSWE1tdTlL?=
- =?utf-8?B?aWd5eFhpd3ZGWEdmd0lJNkp0L2RIYWFnSFVXcHBjeWE1VUdpNGV1M0NDeTBI?=
- =?utf-8?B?Q2RCMVhaS1lqRHl1bjNENWt4S0ZMVnd1YUVoNWJZS0pNaXZ0cjh1elM2dk1i?=
- =?utf-8?B?K3hFMlBSOXhlZU5lQW5OKzhMUW5rZ0hhaGdnQU1uQWZidkFOR3k5VTc5WUJt?=
- =?utf-8?B?MzlnMWpaNVREMjVYMkpGS0NPem9WYTNrR01nY01YSm9TRDB2YkFiYk5PVFd4?=
- =?utf-8?B?TDNiQWdPRjI4cTNha1k4YlE5Zi9uYm1SV2kvRWtROVN3cE1uS3NHb3hnU3VL?=
- =?utf-8?B?RDJBUmtmMjVVcDJXV1ZRUjFXSG4zVUFTTitCTG1aSGtVTVNiRkpZUm50OW5n?=
- =?utf-8?B?aEQxRFZGSDQ3MlVGNE5JVFRiZi83dzlIVWFWTlJJVXN3dGo3N3Q5L1lJTUpM?=
- =?utf-8?B?dkV3Y0FMVTJMa0ZiVUMzSlJvaDN1K0JuaHl3bzVGekFidXc3WVJFTUhOSm4r?=
- =?utf-8?B?MytjRTNpdVI3ZEQ2UmMzbXVMa3ovUTlLbW5JdEhEMnBKb2hJU0NPRlhxTWcw?=
- =?utf-8?B?S3NqOEd5akNINXd3WWIybWR1cmdNKzB2OUs2L3RqbUdHWm5OY2xTcUZ2MUJR?=
- =?utf-8?B?djBST2wzME11V0xnOWR3dDFhcmlYNWJ4Q29xU05keUt0ZFVhOUw2cWlZQ3Rj?=
- =?utf-8?B?WCtOU0treit6eTBUemJMbzhiUnlCR2Q2emNSc256a1dqRWZOYmdNTk9hTjFE?=
- =?utf-8?B?RkRVc3BaRE5NZGlCSWxDT0lUZW9vNG52OXpNRU1kREpJSS80SEtNZWRTZlg2?=
- =?utf-8?B?NnhlWXRMRlZpY0ljajJWdXNkeTJic2JZMWdLWUsvNjJGLzVPQlh1TW5xcTFM?=
- =?utf-8?B?bGx4SlcwTk51L1NvSE5rKzN6dXcyN3JxWXRjSjVDTTUrVDhtZitqaVE4aGFM?=
- =?utf-8?B?N2szTFh5OUNCMThXMUdVK1YvZm53aW9HNG1ZL2pIMWZjQ2wrK0FiZG1YNUEv?=
- =?utf-8?B?cjRmd3lSVUhRRjhQK3BTOWVJS0hlV0llUnZ4Z29pcDliL2E2N1A0eVRka0Ew?=
- =?utf-8?B?dmlJU0orMURCU096a3pEUUQ0R0ZpLy82ZU5KSkl3MVM3dVhFVUYxZ1UwYTIr?=
- =?utf-8?B?MmRnNmdXTG1YR3FXek5hanMrSlhXSHlCazluYnVtWEdldHhKR0hFaDFzaDFE?=
- =?utf-8?B?dEJZelR0MGd4OXdZYjN5YUJTaTVUS0h6RE9NdU5uRzVPdVBjUlpiVnhOYklP?=
- =?utf-8?B?Y3NRY1pMUGd0NTllYUpEMDEvNlVxbGNSL2JreENnNjYxbWwvd3ZEUnBSWDJK?=
- =?utf-8?B?ckhRWTVZTjFnRWRBRXFadHJ5Tm8zWW1uUytBOFhJRU13ejNRb0hlUk02dWp6?=
- =?utf-8?B?dVZWaXZtUjJFNlVQS0Vta0JTRXJyeUk1cEU4cnJqbHhOa3BqS3JqUlpIM3NO?=
- =?utf-8?B?blB1c2FSWGxQaTc2M2ZpY3ZINjhhRU0zaXAvL0dnU29JejJlOHd2Zz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b24fbbe9-c535-4375-675a-08deff3dd6ed
-X-MS-Exchange-CrossTenant-AuthSource: DS4PR12MB999075.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 04:36:59.8142
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uDmbVQsB58t46KIxLLbPHcT1bYjj+W+VwxJtEHmKzRFaNrZPbYqAwCotEuedD1jAyHz8mwhoewlKhgohKQDnuQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4245
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] dmaengine: qcom: gpi: Fix resource leaks as part of
+ channel clean up
+To: Aniket Randive <aniket.randive@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260819-gpi_bug_fix-v3-1-4c97333e6f5b@oss.qualcomm.com>
+Content-Language: en-US
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20260819-gpi_bug_fix-v3-1-4c97333e6f5b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDAzMyBTYWx0ZWRfX7ysoCP7rAygQ
+ AtcAwIJNRkl24C6TTYWjWVuwOKQ/9oQ9b92X5EjoGxwA7xwduPIBYu69kRU9P4qXl1yaEYXBKeN
+ A1v2ooHZIEF46h3Fts5Zm2OG2T1WwkueDMgOJjQC40cNhYC85+qJMqdFzSsmlOh2C1qDzeLKXQh
+ QgBK7irWiRlA5GEvw+5cf7gmhadHwrLZcJF7Z9M6rY18GXjj3oPJyV655SiTL8acYnUjduzKhoo
+ HhM1FIlCDat2wOrXo+shHRQgScULBXN2q0WAbz+FvRJOrPKn1h9KXbSnowtU0b6cF3NdApG3Yt5
+ hu72cfOBSz54vtnUPhIQMgw6u09zmmlKOzjdBfVYjRk/uVNd/3hD5Kr1wFSmCeAW9xuc3g3rsnZ
+ MPlzUGjsvSHKLStu7w2zvRVkDibGrZD/OeIiVzIgaDJm4hiVdz13cqt0fWte6wiuyweGMtqrkCP
+ OTFBhe3M7xiHwyadfNQ==
+X-Proofpoint-ORIG-GUID: G0jkCdHGCIP6PRFiuy0LGYDMEwUcWD8M
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDAzMyBTYWx0ZWRfX71vumhk9pyGt
+ poZDtrS12vPFaK13rAW+6lEuPHivNlzEZ8fPkkl9KwMehhuhYzlyx1rj3qpbZpytDrDr/fw8p0r
+ 0qk8WrGxIKYFajQ1jKV8EDNrgJzSU70=
+X-Authority-Analysis: v=2.4 cv=Av/eGu9P c=1 sm=1 tr=0 ts=6a87dd1b cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=6mmPj426WQFTegYL:21 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=SC794FZWIIagycjiN0UA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-GUID: G0jkCdHGCIP6PRFiuy0LGYDMEwUcWD8M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_01,2026-08-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210033
 
-Hi Krzysztof
 
-On 8/12/2026 4:13 PM, Krzysztof Kozlowski wrote:
-> On Mon, Aug 10, 2026 at 03:34:50PM +0530, Golla Nagendra wrote:
->> From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
->>
->> Introduce a new compatible string amd,versal-net-dma-1.0 for
->> Versal Net ZDMA.The new compatible requires xlnx,zynqmp-dma-1.0 as a
->> fallback.
->>
->> Add a reset property to describe the per-channel reset line exposed
->> on Versal Gen2 and Versal Net. Mark the resets property as required
->> for both Versal Gen2 and Versal Net, and not applicable for other
->> platforms.
-> 
-> I cannot find previous discussion in my inbox and cover letter has no
-> links to previous versions (when finally will you start using b4?), so
-> you might get the same review over and over.
+On 19-08-2026 17:09, Aniket Randive wrote:
+> The gpi_ch_init() error handling paths do not fully clean up resources
+> when channel initialization fails.
+>
+> The unwind paths iterate over the original channel pointer instead of
+> the channels stored in gpii->gchan[], preventing previously initialized
+> sibling channels from being properly reset and deallocated.
+>
+> In addition, gpi_alloc_chan_resources() allocates ch_ring before calling
+> gpi_ch_init(), but does not release it when initialization fails,
+> resulting in a memory leak.
+>
+> The event ring cleanup path also leaves the PM state unchanged after
+> freeing the ring. As a result, subsequent cleanup may incorrectly assume
+> that the ring is still allocated, leading to a redundant EV_CMD_DEALLOC
+> command and an attempt to deallocate an already released ring.
+>
+> Fix the unwind paths to operate on the correct channels, release
+> ch_ring when channel initialization fails, and restore the event ring
+> PM state after freeing the ring.
+>
+> Signed-off-by: Aniket Randive <aniket.randive@oss.qualcomm.com>
+> ---
+> Changes in v3:
+> - Updated the commit message as per Mukesh suggestion.
+> - Link to v2: https://patch.msgid.link/20260810-gpi_bug_fix-v2-1-60555394cbf9@oss.qualcomm.com
+>
+> Changes in v2:
+> - Updated the commit message as per Mukesh suggestion.
+> ---
+>   drivers/dma/qcom/gpi.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index a5055a6273af..c41bfac65ddf 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1965,16 +1965,19 @@ static int gpi_ch_init(struct gchan *gchan)
+>   error_start_chan:
+>   	for (i = i - 1; i >= 0; i--) {
+>   		gpi_stop_chan(&gpii->gchan[i]);
+> -		gpi_send_cmd(gpii, gchan, GPI_CH_CMD_RESET);
+> +		gpi_send_cmd(gpii, &gpii->gchan[i], GPI_CH_CMD_RESET);
+>   	}
+>   	i = 2;
+>   error_alloc_chan:
+>   	for (i = i - 1; i >= 0; i--)
+> -		gpi_reset_chan(gchan, GPI_CH_CMD_DE_ALLOC);
+> +		gpi_reset_chan(&gpii->gchan[i], GPI_CH_CMD_DE_ALLOC);
+>   error_alloc_ev_ring:
+>   	gpi_disable_interrupts(gpii);
+>   error_config_int:
+>   	gpi_free_ring(&gpii->ev_ring, gpii);
+> +	write_lock_irq(&gpii->pm_lock);
+> +	gpii->pm_state = DISABLE_STATE;
+> +	write_unlock_irq(&gpii->pm_lock);
+>   exit_gpi_init:
+>   	return ret;
+>   }
+> @@ -2065,6 +2068,8 @@ static int gpi_alloc_chan_resources(struct dma_chan *chan)
+>   		goto xfer_alloc_err;
+>   
+>   	ret = gpi_ch_init(gchan);
+> +	if (ret)
+> +		gpi_free_ring(&gchan->ch_ring, gpii);
 
-Thanks for the review
-
-Please fin the previous version lore links below
-https://lore.kernel.org/all/20260525105042.2249542-2-nagendra.golla@amd.com/
-
-https://lore.kernel.org/all/20260618071056.2024286-2-nagendra.golla@amd.com/
-> 
->>
->> Note that making resets required for Versal Gen2 results in an ABI
->> break but this is unavoidable. When DMA is used by two software components
->> back to back (e.g., firmware before Linux boot), DMA functionality fails
->> due to configuration differences or the DMA being left in a bad state by
->> the previous user. The channel can only be cleanly re-configured after
->> a DMA channel reset,making it essential.
-> 
-> So this was never working? What exactly is unavoidable?
-
-It does work in many scenarios when there was no other FW using the DMA 
-prior to Linux boot. But there's no guarantee that the channel is left 
-in a clean state and we have observed error scenarios where a reset is 
-necessary before Linux can reconfigure the IP. We added the reset to fix 
-this and hence making it a required property is unavoidable. We are only 
-doing this for Versal Gen2 and Versal Net where this provision is 
-available. We are unable to enforce this for older devices because there 
-is no per-channel reset there.
+Reviewed-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
 Thanks,
-Nagendra
 
-> 
->>
->> Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
->> Co-developed-by: Golla Nagendra <nagendra.golla@amd.com>
->> Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
->> ---
->> Changes in V3:
->> - Use allOf:if:then: to restrict the resets property per-compatible,
->>    making it required for amd,versal2-dma-1.0 and amd,versal-net-dma-1.0
->>    and explicitly setting resets: false for all other platforms
->> - Add amd,versal-net-dma-1.0 compatible string with xlnx,zynqmp-dma-1.0
->>    as fallback
->> - Switch compatible from enum to oneOf to accommodate the new multi-item
->>    entry for Versal Net
->> - Add ABI break justification
->> ---
->>   .../dma/xilinx/xlnx,zynqmp-dma-1.0.yaml       | 25 ++++++++++++++++---
->>   1 file changed, 22 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
->> index 2da86037ad79..87c65aef5c7d 100644
->> --- a/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
->> +++ b/Documentation/devicetree/bindings/dma/xilinx/xlnx,zynqmp-dma-1.0.yaml
->> @@ -18,15 +18,31 @@ maintainers:
->>   
->>   allOf:
->>     - $ref: ../dma-controller.yaml#
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - amd,versal2-dma-1.0
->> +              - amd,versal-net-dma-1.0
-> 
->> +    then:
->> +      required:
->> +        - resets
->> +    else:
->> +      properties:
->> +        resets: false
-> 
-> Entire allOf goes after "required:" block, by convention, see
-> example-schema.
-> 
+Praveen Talari
+
+>   
+>   	mutex_unlock(&gpii->ctrl_lock);
+>   
+>
+> ---
+> base-commit: 415606a7be939835db9b0d6b711887586646346d
+> change-id: 20260803-gpi_bug_fix-b0b80ef315b5
+>
 > Best regards,
-> Krzysztof
-> 
-
+> --
+> Aniket Randive <aniket.randive@oss.qualcomm.com>
+>
+>
