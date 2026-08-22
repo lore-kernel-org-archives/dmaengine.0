@@ -1,128 +1,183 @@
-Received: from mail-lr2-f11.google.com (mail-lr2-f11.google.com [74.125.230.75])
+Received: from mail-oi1-f205.google.com (mail-oi1-f205.google.com [209.85.167.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640711E5B70
-	for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 00:16:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27EC2475D0
+	for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 03:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787357820; cv=none; b=q+hsAUG9CyEqc03URpLnrDntlL99CIdjk1OPGcHP3omps8OVT2pD7kNCDcdB+JpDFthtV+oLklAQ5qrge8tJE67rbvSbvjSgBdTAOCl2kSVtnl72djp7vh4ZS6gJLULV4Ax8uNyAwSiRRFTmMxn/73RNTZMozzyQCdUCGjvy5mg=
+	t=1787370031; cv=none; b=GsAMXMht3Hnmh3q6LtqEhOvc5STrcVJbB9doWItbTFabBEKq1S5K5+7RuL8j7V+wKNRYNRPZK/liCgxoLfVbUu5GNju/j9e8PSQ3teufHzTXQn5DFTZ9gjgLoY+DnJpz9qh0PsQgJpopHWFht7GuERk467lm30vRDqYFtGYsxAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787357820; c=relaxed/simple;
-	bh=IxEt7BDjtzyDUmVsxRlklsBGCBNYJ6lAlCSy5VOxDko=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IwqiVjE8NnEzFN2cK421xipriHmS578pPHLubhjACLSl5DLLQ60l/pnHtiMtwZcgU0wIq+juDqTjspFK4r9GsmN4guQ9iHFPcdZFxktAYJvS8kwUD/v9K0/pxo1WhDl1pA8fxNkVgV0EIsllOP1ows813KeInKx1bD4HPz6ilRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aDmZuzxM; arc=none smtp.client-ip=74.125.230.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aDmZuzxM"
-Received: by mail-lr2-f11.google.com with SMTP id 38308e7fff4ca-39c6d9f787eso8560371fa.0
-        for <dmaengine@vger.kernel.org>; Fri, 21 Aug 2026 17:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787357816; x=1787962616; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yVY8hRFoiccR/YtKB1yMr7nRzRejkXLDMckSsUDxezU=;
-        b=aDmZuzxM/Dt3gNeXphTxjqNNGRQ7FLvmbYrj/a8IImYb3zB5AygAoCUXJ5PIQ+0f5P
-         3M5828BM0g29Aggd9+nfIuwjs9JGVPFxfwv9oHco6EqhuDFfj/rEGrVQaDAg10AFYx4C
-         Hjgm2zfIZRjjYEQ4J2yvO6NH5P4KV72JiEhyVwKpwyDx4/rJ4Jl8oSkHIWD/tScB71tZ
-         Tf6uFqF0d9VbFLSL2ugVn509mjZgrAv2mShhcFhjMMT2JfDOE4zKrDTWpqZYsRQs98rg
-         f+s1W1VUU49i8Xz9C2pcz6avCSjPHsDVa6fmTvGvqabYkfKNNN7Z15UaDzpiP4wxK2nf
-         dl7A==
+	s=arc-20240116; t=1787370031; c=relaxed/simple;
+	bh=dL617nEPT8ioHmvc1J6OH6tc8kFnZOpQGscbM8a3980=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=Nbg7AHOgmSGdHc9UNllYuUqTdX2sN8zaPkmoYQ6TWo3CLuSN03mJQ4cKOxULEVHCsK0VNL+59CoSjQaZjMFWtBK9Jf5Qi2LBxvJdv0If/r6DG6MvBr4AqsynVn0cEQEzlXxo8YIqKqL5SniXIOVDl6hZX4dEf5EVwucBYz8uBco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.167.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-oi1-f205.google.com with SMTP id 5614622812f47-4ab7bb257bbso2492165b6e.0
+        for <dmaengine@vger.kernel.org>; Fri, 21 Aug 2026 20:40:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787357816; x=1787962616;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yVY8hRFoiccR/YtKB1yMr7nRzRejkXLDMckSsUDxezU=;
-        b=cBW4eZSwUWWdT7y+kCF9H6zk8ZwXKIcXnF9YA83verEEe+rvXRTrslfLIt1kBxrTCr
-         WYKiX2MSRe30IGdTjujwyoKmraxx/rXqbfaqZDFH28wqyMWj//kMCAUMdnde8cLeT56v
-         RT9sHkWXF02ffURQoikrcfe/jvU03zjW3toFUuNT+g722DCZlWqXfh7ROm1dksAACCHV
-         QhKMvBNI3n0upTtA7wpTSzAdKeZ3HRGo5GW973YXJowligWIDAgW/wjiB4x5rOrL/h4F
-         XCTPiMpAnp9VcSeBOCbIS5Qu2gSODfBkFCaVbpMttLulOye80iU6I8cEhoDv8jdwFq6L
-         R3Iw==
-X-Forwarded-Encrypted: i=1; AHgh+RrGRaVviIcB1tjUF8uDw0hf8cxvGhACoUxIAMcfLxJny0IUc1fqcQiUczxT0RUyuCfHrdFN2mASJs8=@vger.kernel.org
-X-Gm-Message-State: AFuF++mGj/3wKPK6SIb5HOrH/FFWaXW0ve/ZzSiKp0tdpGI5qO6I5FUU
-	9rgm4slTG0xQuE7uG1DQqChKKm6CromIHSAt90uQFK3xgFxMXPkk7Ku/
-X-Gm-Gg: AR+sD13Ci7WvICV+e7Pszzd9mMaVvCV7hXGTsiexdK/7B4DrNM2Gz+Cwwk34PFlVD7H
-	JWfrCPfKPQLdmhI53Ue/cT3M6qjVAZ1ywbWlh35ZjG60XYuyqx7fTLMPXiz8+QhK8Pdbg/tOZSx
-	UzNkgTrudSgdSshQ7X7so8Iy+WJf0ZQTg08ZCvJC/o++nb2dvftkpFr4xQ+tdxzCWsEpVDcioFY
-	UTsk7tdWrOtsGCF8RMQBCRdwwmwwX6uRvHwRIsRlY/FatGjcq8CtORBPhH8IFbGs9UibPsDTLJR
-	aXnTa+yuD6PBdk3Jgal5ml89NkJT4iXddDj2yjJOQ0MrgnR1DNl7N6FrvoP/1Drz0oM19WtQRR9
-	xdigv9STYTZ+zEh20oNeUzwUKDdgIFLO99x+Oo27wwG2r3J9oYDNzmNGFXqir6ztoMyHa5mD8Mi
-	P36fSO6PuFanIBkH6pJh9odTmqMJ9KbuEUN06pQ2/Pg2n26yan
-X-Received: by 2002:a05:6512:a350:b0:5ae:c201:c3d7 with SMTP id 2adb3069b0e04-5b48421a5a3mr2390836e87.8.1787357816210;
-        Fri, 21 Aug 2026 17:16:56 -0700 (PDT)
-Received: from arch ([185.177.190.25])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b48cd9aae8sm31035e87.9.2026.08.21.17.16.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 17:16:54 -0700 (PDT)
-From: Bogdan Mahomet <bogdan.mahomet.dev@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bogdan Mahomet <bogdan.mahomet.dev@gmail.com>
-Subject: [PATCH] docs: dmaengine: document ownership of the descriptor flags field
-Date: Sat, 22 Aug 2026 03:15:30 +0300
-Message-ID: <20260822001536.29269-1-bogdan.mahomet.dev@gmail.com>
-X-Mailer: git-send-email 2.55.0
+        d=1e100.net; s=20251104; t=1787370029; x=1787974829;
+        h=content-type:to:from:subject:message-id:date:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Cft9icu08OLwZM9CC0RUQx2uKAT6q7QigSmcbIJB6Y4=;
+        b=D8rJB162ne804QfgKf9PFtZk+JuQgWCihsEAVhyWmAl8N+w0xxqgInn2SrvTaG3j/N
+         95hCSb2CpmkDn7o074fLEUjXFl/NaM2y2tJeboRxvsycjyXyNHHa/txX1z14eocq+95y
+         6az18JlvQEMMFKz4TgEjCSNocB6kFIn9wIsfplRx7AHG7tHeACd1G+g3xOf2jdlIA/OG
+         V80luxpdR3a48Sg1qkdp9IYiKBPiiNSdeDEFMTuTiBpdMdBEAbj3NWMKQd/U/qFdSIQd
+         +ckr9X9YhGSkuFRrlOYkzz6GDpnwAdyesKYntineOOIrhUMAQvSJUgQhWVCFeHec+Nkr
+         w55A==
+X-Forwarded-Encrypted: i=1; AHgh+RqLH3R4Mm3RmwLZnIQ9yg+EbxhWHN7Z4BimJ1RYMxZarsUSXgoxq35/0H8C7aJmaoxwP5JoxaY2nu8=@vger.kernel.org
+X-Gm-Message-State: AFuF++mfuBtW1o9Omue71y3Td/FFoL1+Hxm44oxY5+9JUZVL2EEETxp0
+	XWj/bpwSpUE7V8qFIQqadjHqCiorDEOoJpp+Niubye/CnUPc3RqwWvON46ssUuAqkU9D+BfzxCB
+	i62nbpFyjUpHwzLGBQjufeTqnLnj0LfwtYjJMv/WA5WrK8zFaJCDbOYpgJrA=
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a05:6808:6d90:b0:4ab:230c:5faa with SMTP id
+ 5614622812f47-4b2ef3ff502mr12757433b6e.18.1787370028872; Fri, 21 Aug 2026
+ 20:40:28 -0700 (PDT)
+Date: Fri, 21 Aug 2026 20:40:28 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <6a891a2c.91706f20.16b6e3.02b1.GAE@google.com>
+Subject: [syzbot] [dmaengine?] BUG: unable to handle kernel paging request in ioat_pci_probe
+From: syzbot <syzbot+79a6b3f7a8df01f58774@syzkaller.appspotmail.com>
+To: Frank.Li@kernel.org, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, syzkaller-bugs@googlegroups.com, 
+	vkoul@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The flags field of struct dma_async_tx_descriptor has carried a TODO
-since the provider documentation was added in 2014, asking whether a
-driver may modify the field itself or whether it must always hold the
-flags passed in the arguments.
+Hello,
 
-The field belongs to the client. dma_async_tx_descriptor_init() does
-not touch it, so the provider has to set it, and providers store the
-flags they were given verbatim; vchan_tx_prep() does this for every
-driver built on top of virt-dma. Afterwards providers only read the
-field: the DMA_PREP_* bits are consumed while the descriptor is being
-prepared, and DMA_CTRL_ACK and DMA_CTRL_REUSE are tested with
-async_tx_test_ack() and dmaengine_desc_test_reuse() before a
-descriptor is recycled or freed.
+syzbot found the following issue on:
 
-Once a descriptor has been prepared, nothing in the tree changes the
-field except the client helpers in include/linux/dmaengine.h:
-async_tx_ack(), async_tx_clear_ack(), dmaengine_desc_set_reuse() and
-dmaengine_desc_clear_reuse().
+HEAD commit:    9d2ed026f031 Merge tag 'sysctl-7.03-rc1' of git://git.kern..
+git tree:       upstream
+console output: https://syzkaller.appspot.com/x/log.txt?x=11837a25580000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=54b748b029440e0b
+dashboard link: https://syzkaller.appspot.com/bug?extid=79a6b3f7a8df01f58774
+compiler:       gcc (Debian 14.2.0-19) 14.2.0, GNU ld (GNU Binutils for Debian) 2.44
+userspace arch: i386
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10830415580000
 
-Document that rule in place of the TODO.
+Downloadable assets:
+disk image (non-bootable): https://storage.googleapis.com/syzbot-assets/d900f083ada3/non_bootable_disk-9d2ed026.raw.xz
+vmlinux: https://storage.googleapis.com/syzbot-assets/6c5c2e657d2b/vmlinux-9d2ed026.xz
+kernel image: https://storage.googleapis.com/syzbot-assets/4d4c9e33af49/bzImage-9d2ed026.xz
 
-Signed-off-by: Bogdan Mahomet <bogdan.mahomet.dev@gmail.com>
+IMPORTANT: if you fix the issue, please add the following tag to the commit:
+Reported-by: syzbot+79a6b3f7a8df01f58774@syzkaller.appspotmail.com
+
+BUG: unable to handle page fault for address: 000000000001c0a8
+#PF: supervisor read access in kernel mode
+#PF: error_code(0x0000) - not-present page
+PGD 5523b067 P4D 5523b067 PUD 4c5b0067 PMD 0 
+Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 5910 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full) 
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:readb arch/x86/include/asm/io.h:57 [inline]
+RIP: 0010:ioat_pci_probe+0x169/0x2880 drivers/dma/ioat/init.c:1365
+Code: 4d 2f d3 ff 48 89 c3 48 85 c0 0f 84 de 1f 00 00 e8 cc 50 7c fc 48 89 d8 48 c1 e8 03 42 80 3c 28 00 0f 85 ec 25 00 00 48 8b 03 <44> 8a 68 08 bf 2f 00 00 00 44 89 ee e8 b6 4a 7c fc 41 80 fd 2f 0f
+RSP: 0018:ffffc90002daf7c8 EFLAGS: 00010246
+RAX: 000000000001c0a0 RBX: ffff888028961238 RCX: 0000000000000000
+RDX: ffff888029bc8000 RSI: ffffffff858deac4 RDI: 0000000000000001
+RBP: ffff888021572000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: dffffc0000000000 R14: ffffffff858de970 R15: ffff888021572130
+FS:  0000000000000000(0000) GS:ffff8880969bd000(0063) knlGS:00000000571be480
+CS:  0010 DS: 002b ES: 002b CR0: 0000000080050033
+CR2: 000000000001c0a8 CR3: 0000000055268000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ local_pci_probe+0xdd/0x1b0 drivers/pci/pci-driver.c:332
+ pci_call_probe+0x176/0x800 drivers/pci/pci-driver.c:394
+ __pci_device_probe drivers/pci/pci-driver.c:455 [inline]
+ pci_device_probe+0x1cd/0x370 drivers/pci/pci-driver.c:489
+ call_driver_probe drivers/base/dd.c:628 [inline]
+ really_probe+0x241/0xa60 drivers/base/dd.c:706
+ __driver_probe_device+0x210/0x460 drivers/base/dd.c:868
+ device_driver_attach+0xd1/0x220 drivers/base/dd.c:1203
+ bind_store+0xf4/0x190 drivers/base/bus.c:267
+ drv_attr_store+0x74/0xb0 drivers/base/bus.c:125
+ sysfs_kf_write+0xf2/0x150 fs/sysfs/file.c:145
+ kernfs_fop_write_iter+0x3e0/0x5f0 fs/kernfs/file.c:345
+ new_sync_write fs/read_write.c:595 [inline]
+ vfs_write+0x6af/0x1050 fs/read_write.c:687
+ ksys_write+0x12a/0x250 fs/read_write.c:739
+ do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:79 [inline]
+ __do_fast_syscall_32+0x13a/0x8b0 arch/x86/entry/syscall_32.c:291
+ do_fast_syscall_32+0x32/0x70 arch/x86/entry/syscall_32.c:316
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+RIP: 0023:0xf709efec
+Code: Unable to access opcode bytes at 0xf709efc2.
+RSP: 002b:00000000ff94267c EFLAGS: 00000292 ORIG_RAX: 0000000000000004
+RAX: ffffffffffffffda RBX: 0000000000000005 RCX: 0000000080000600
+RDX: 000000000000000d RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+Modules linked in:
+CR2: 000000000001c0a8
+---[ end trace 0000000000000000 ]---
+RIP: 0010:readb arch/x86/include/asm/io.h:57 [inline]
+RIP: 0010:ioat_pci_probe+0x169/0x2880 drivers/dma/ioat/init.c:1365
+Code: 4d 2f d3 ff 48 89 c3 48 85 c0 0f 84 de 1f 00 00 e8 cc 50 7c fc 48 89 d8 48 c1 e8 03 42 80 3c 28 00 0f 85 ec 25 00 00 48 8b 03 <44> 8a 68 08 bf 2f 00 00 00 44 89 ee e8 b6 4a 7c fc 41 80 fd 2f 0f
+RSP: 0018:ffffc90002daf7c8 EFLAGS: 00010246
+RAX: 000000000001c0a0 RBX: ffff888028961238 RCX: 0000000000000000
+RDX: ffff888029bc8000 RSI: ffffffff858deac4 RDI: 0000000000000001
+RBP: ffff888021572000 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000000
+R13: dffffc0000000000 R14: ffffffff858de970 R15: ffff888021572130
+FS:  0000000000000000(0000) GS:ffff8880969bd000(0063) knlGS:00000000571be480
+CS:  0010 DS: 002b ES: 002b CR0: 0000000080050033
+CR2: 00000000f709f000 CR3: 0000000055268000 CR4: 0000000000352ef0
+----------------
+Code disassembly (best guess):
+   0:	4d 2f                	rex.WRB (bad)
+   2:	d3 ff                	sar    %cl,%edi
+   4:	48 89 c3             	mov    %rax,%rbx
+   7:	48 85 c0             	test   %rax,%rax
+   a:	0f 84 de 1f 00 00    	je     0x1fee
+  10:	e8 cc 50 7c fc       	call   0xfc7c50e1
+  15:	48 89 d8             	mov    %rbx,%rax
+  18:	48 c1 e8 03          	shr    $0x3,%rax
+  1c:	42 80 3c 28 00       	cmpb   $0x0,(%rax,%r13,1)
+  21:	0f 85 ec 25 00 00    	jne    0x2613
+  27:	48 8b 03             	mov    (%rbx),%rax
+* 2a:	44 8a 68 08          	mov    0x8(%rax),%r13b <-- trapping instruction
+  2e:	bf 2f 00 00 00       	mov    $0x2f,%edi
+  33:	44 89 ee             	mov    %r13d,%esi
+  36:	e8 b6 4a 7c fc       	call   0xfc7c4af1
+  3b:	41 80 fd 2f          	cmp    $0x2f,%r13b
+  3f:	0f                   	.byte 0xf
+
+
 ---
- Documentation/driver-api/dmaengine/provider.rst | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
-index f4ed98f701c9..c10d8ab8fdbd 100644
---- a/Documentation/driver-api/dmaengine/provider.rst
-+++ b/Documentation/driver-api/dmaengine/provider.rst
-@@ -413,9 +413,11 @@ supported.
- 
-   - You'll also need to set following fields in this structure:
- 
--    - flags:
--      TODO: Can it be modified by the driver itself, or
--      should it be always the flags passed in the arguments
-+    - flags: this field belongs to the client. The driver stores the
-+      flags passed in the arguments and must not modify them. It reads
-+      the DMA_PREP_* bits while preparing the descriptor, and must only
-+      test DMA_CTRL_ACK and DMA_CTRL_REUSE, which the client may change
-+      after the descriptor has been prepared.
- 
-     - tx_submit: A pointer to a function you have to implement,
-       that is supposed to push the current transaction descriptor to a
--- 
-2.55.0
+syzbot will keep track of this issue. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
 
+If the report is already addressed, let syzbot know by replying with:
+#syz fix: exact-commit-title
+
+If you want syzbot to run the reproducer, reply with:
+#syz test: git://repo/address.git branch-or-commit-hash
+If you attach or paste a git patch, syzbot will apply it before testing.
+
+If you want to overwrite report's subsystems, reply with:
+#syz set subsystems: new-subsystem
+(See the list of subsystem names on the web dashboard)
+
+If the report is a duplicate of another one, reply with:
+#syz dup: exact-subject-of-another-report
+
+If you want to undo deduplication, reply with:
+#syz undup
