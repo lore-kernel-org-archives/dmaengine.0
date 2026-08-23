@@ -1,180 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D443632AAA8
-	for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 19:37:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787427450; cv=none; b=eQTsVw6Dksdk8XYXC8SNxlD2cGYS6x3mwyNw1rC+/WA2D+SgEO11zfKp/vFFdbqWTt9HssirTP9ai6dcJoou97erKSCGx4s7yyp9YNLW9nYorGfFXD9/eMDbWvoztLsk9R/SC9eOGsgwrvsiZCH0oAmafUv9VfJwrx7MJ43dM3o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787427450; c=relaxed/simple;
-	bh=Eu4FomL2jFTqXnltOpNqR7zZe+bTkkZzbTXJOXWDpes=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=kq4YaU1s7t3IrOMP1fUnpWHxwq5lHTO5w/jxP7pshZ1HyLhYNgxG1dfLqnKdOsM9Aw5iJhAHAAUgc69qcmOz16aEAld+e12NU2aC2u4eI/KvroljYTVgUt+pZQLHQzmfD4do97TVQ6ICZBVSfQqzcZlv+FNFarqkXd71ziMaByM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ER6dZhIj; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2D39DBD0
+	for <dmaengine@vger.kernel.org>; Sun, 23 Aug 2026 04:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787460282; cv=pass; b=qU/cJ8gfQ9J0KwO44FbBaKrgzVQF34LWtC7jWquJUMEDZ5Bg0PG/zGrvi4LjQXUPZnJR3l/Q6vJo361SH6AlHMYjDAQPY2RkzfcrGkTfOUCojESVS047lzfE4RVmIskdAZFszeABUF/qE22+J9W2Vd4TSI/S+QRNDnovEPurRNc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787460282; c=relaxed/simple;
+	bh=rUA8STlsYFYQiRvYWCdYW5+b5xiB+c/F92/ZCn93/g8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pBWc+kNgPfJ1EaEl3xFQwRZxyd9++FXBJd3DvzMwpdLHqAm4fw2davKnyltfXnL1LIrBvoKS7OjavucHxGTFN+FJ6y6mTAW4bM1PeuRZMfWimFf5WKaBvT5qmwybKcfPoDftCKIQJ5+39E9coyrhtdfcu/My+OrGd3UgktIkHto=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c1q/tc0S; arc=pass smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ER6dZhIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424F21F000E9;
-	Sat, 22 Aug 2026 19:37:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787427448;
-	bh=0S3k4hru0h1768x1fbJJmuaK/L//DVZxFMdFYNt0b5Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ER6dZhIjTb3Tg8XQwRpH9YS3keXmEWFHrx0gUZSVPe3viwhuO7PICkbKN0d1Sek6P
-	 M6kCqO8zoP/X9OBP0dHfEyemPNcuTtVQr1cxuBcvXINmBxued0zqD8BMvt1rK+uWiX
-	 RUQcbuXnYhmUNfqtFOcSHA5hGlH2Lr9yg+Ge30y4YDegH8NSHH//HNepPNoM8ejtvf
-	 kWGTIAaXl1haQxWf8aB2dUuXBVbMGR4UXBtYgDyksI0v4Cn92fhBYiTaKGhFmOXJTm
-	 A/+RhgQW2UPrwsz9VYIAS3he4opZkW5fK0/z/VkZitwFu6WMG/5Yoa1ibZDICX5lcc
-	 sq5yUyaq6PWYw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 3/4] dmaengine: fix use-after-free in dma_chan_put()
- and dma_release_channel()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Shivank Garg" <shivankg@amd.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260822-dmaengine-kref-fix-v5-3-d4a4ee47d927@amd.com>
-References: <20260822-dmaengine-kref-fix-v5-0-d4a4ee47d927@amd.com>
- <20260822-dmaengine-kref-fix-v5-3-d4a4ee47d927@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 22 Aug 2026 19:37:27 +0000
-Message-Id: <20260822193728.424F21F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c1q/tc0S"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6a15d54ac95so4111216a12.0
+        for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 21:44:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787460280; cv=none;
+        d=google.com; s=arc-20260327;
+        b=lfkHmVg5VLOPWwW/PehffW2zN/wi7AggV3X0U+N7dKgZwhApcscWR7lNEAbaQGmNS9
+         k7NKHgQlKc9GBTXEUUmh8B8on28qkrqgZc5KIz+vrcbjydaSrSSTztz8oySAbF4TEyWB
+         xi9GjIw/EWSMCarxLSaAB5ZZxiILaFLItElMTPbnLWoMzOX/42jvu0MFqkiH48VW58/i
+         7vOVDqZr45xBOCTRm3t3p2cNnO9aiOqcr7PhrZBD6F9dikzUnasbzoj3ad+t9VxpEoEZ
+         nZEcJsk25RfLGJfC7ruS3l8oqS8HVguY0yzH76njxxGZnHEFl2JzKubwxNPRa4cNn96r
+         JMNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
+        fh=R58UPJfnjpFD+Mu+qx+W109JiL86gsXdBZ9UpuirA8Q=;
+        b=bar1sITuhNHiC1ya2gBHfGAmw0G4nTH/MoP+U59tSHs/7IczEKKEtTGkUbJdFKGnMM
+         CHh0qKypNIBvW29qnnFSby33+kEqu4ABcH8mqEbRWHZ2hHqvh6WnRt+A6MKOGtMJzUHE
+         SD0hz3hzrRHmfwQ6PVIWlBrFUvE+Hrdo2FqBnpX0h4ji1dIMpscqsP55naOo/a4b2ukn
+         naBPugJdpp1mETY39LOeuLmO+wz+T8tmpGoI6C0gDt9OX0edo/0xd4EpZt4EHGj0H1qq
+         UBamxK6NG5raKj+szRmP9D5rKGuvjnutzRWPgO8ptqbnj1GPwQFouqqIP0nbwlAbpKrp
+         WibQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787460280; x=1788065080; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
+        b=c1q/tc0SF6zdK84DnOsm398gjIRp2zwOqHqvWFDxhL5H3RdCoS7UVWxog13Yh47NdK
+         xqYsQln3oDUELzBzegsotci+ihhYGHxRL4aU0dOPQDEGibtfnFeXmLkbbfRd+FKqOd1k
+         7mKtAv5a4tDzzVScjeB+5Xs6AoeNLHRFkdCiOMPR6N+MA+DpPk5IdQiP7uB9kUaD7wy9
+         dy8a80RaSe82u/+4JJpmBtxP8eVxSLLWCG5qf7U1D5BWIhnXjQGXQjbTi0bFuN7QYGM6
+         AyXa13YtswoCxd5m4GfEFc8qa9wJhGTHrkvaFU1v7HbzzeT6dILzQysp5Dk6zNhkjMsO
+         Ze1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787460280; x=1788065080;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
+        b=r5Q0yW/DMVE5PV/UL+MTX/Caa6goUzEciIAOW720WAk++VOmzjmUiQRjLMkoet8C7q
+         r375j0n6dloOUQu+GMgRRTQrJrad+zX+0WezTodusUR/dImbEzkLM/HCGAQR2zNjjhbT
+         xPFQHkYJGg5DIwkZ6k9VWUZ6XSvaGQGY0MS/UiA0gVHxbfBBztiV9jIv1/3kEK6H2dp6
+         riYB7eZyKtq2dL1EySGAYk54tesRyWTMhi0jxMq71rW/rQ+iltZOXix64pGVXAU6HHVl
+         eHSKUZTh3VDarQKyuQ8G9ELxgiqe3R3zqu0iDVCP/qqi2OdxJSbzFFMJIqqk3bTPaijT
+         soiA==
+X-Gm-Message-State: AFuF++lV9MxjMYIqy1Yq5oAMyUrcbsP3FTG3R+4g/bQLHehJvPQt/tRW
+	si3fw9vao5Xa4BwJHg6p6ojruU6o8tlRRkiVDpKuBN+xhMDdlm2g8vRrV8jeyIoHyZm8rlF2P9Z
+	FbyWRaCRJEqkZx4KXE6ACD1LjFV5qk+S2LN+w
+X-Gm-Gg: AR+sD11YHgVXRQk5FXvI/+qqoHkQUfd/9E5Tpbi+9F0gNpjEL8YdnbfyO9rb2wRcgW9
+	CROdXd2ym2H22YT9W1Om/lMR3l/n0+UW9hSOJ2CZv3okP6hxowFYPEFMMt73z8tuKexMxfx16cw
+	FnV2XjohwdD86ivPDf+nLFJ4HvxyI6j7GJX2ZbM09zES9guTiDQalsU9+OydD9Lf+PnITwifbOM
+	kM++wgvvRmCTDkV8K/ckhdAIPYrDORiuzOIz+RJ3CNAmVrWRZNq+i8N6M6tkk1UkMDP3TpuXrNC
+	t1WysY8xhuDY4Rh0OxAK3NJiLew+YBwBMYUrJXCqFCPYpOHaz/4l1eWjBF5HnYE0qF5CotPC+A4
+	dTlG1OViLZnErM6SVCQ4wm9xYqpKFC11eYDG2hJL7SvvqriMY5mfWk68hxNhCV+DWu6T/Vdli+y
+	JG54GqH/ZwzFNi2/uGdUntFX5DciO10NcRWzF5MNJL+05jFWLAhSVCih7B
+X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id
+ a640c23a62f3a-c24925eb3ffmr1126262966b.10.1787460279494; Sat, 22 Aug 2026
+ 21:44:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260504031209.618949-1-rosenp@gmail.com> <20260506110910.su2s6ncsi2xfdiwm@pureblood>
+ <CAKxU2N8PUdxo54oHtcroqe+Q88k0obxPg_9OCRsNsoOwvcS25Q@mail.gmail.com> <20260630123029.ozveska7eoenci3s@unturned>
+In-Reply-To: <20260630123029.ozveska7eoenci3s@unturned>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Sat, 22 Aug 2026 21:44:27 -0700
+X-Gm-Features: AcwNN1WOqpjNvvrbFuuZdDr0EWOQvQOz6eBeeTVou_Zk_7DEeqlQ6lYFj7PXzJE
+Message-ID: <CAKxU2N9wE48D2WLPvta98kB6xXciOdvpOzgGrnS9kkBHYfUwXA@mail.gmail.com>
+Subject: Re: [PATCHv2] firmware: ti_sci: simplify resource allocation
+To: Nishanth Menon <nm@ti.com>
+Cc: dmaengine@vger.kernel.org, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+	Vignesh R <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Tero Kristo <kristo@kernel.org>, Santosh Shilimkar <ssantosh@kernel.org>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-
-Pre-existing issues:
-- [High] Unpatched Use-After-Free in dma_release_channel() due to dereferen=
-cing the channel after dma_chan_put().
-- [High] Leaked channel, device, and module references in dmaengine_put() f=
-or unregistered public devices.
-- [High] Double list_del_rcu() on device->global_node causes list corruptio=
-n and kernel panic.
---
-
---- Patch [3]: [PATCH v5 3/4] dmaengine: fix use-after-free in dma_chan_put=
-() and dma_release_channel() ---
-commit f921c2034a3380b885abc856562df23d25421487
-Author: Shivank Garg <shivankg@amd.com>
-
-dmaengine: fix use-after-free in dma_chan_put() and dma_release_channel()
-
-When dma_device_put() drops the last reference on chan->device->ref,
-dma_device_release() runs and may free the dma_device along with its
-channels. This patch caches the module owner in dma_chan_put() before the
-put so the trailing module_put() does not need chan->device, preventing
-a use-after-free caught by kasan.
-
-Link: https://sashiko.dev/#/patchset/20260518-dmaengine-kref-fix-v1-1-4d612=
-5048fb7@amd.com
-
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index f2760b039d932..9214b9272a552 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-[ ... ]
-> @@ -523,7 +526,7 @@ static void dma_chan_put(struct dma_chan *chan)
->  	/* This channel is not in use anymore, drop the device ref */
->  	if (!chan->client_count)
->  		dma_device_put(chan->device);
-> -	module_put(dma_chan_to_owner(chan));
-> +	module_put(owner);
->  }
-
-[Severity: High]
-This isn't a regression introduced by this patch, but since this commit
-addresses a use-after-free involving dma_chan_put(), does
-dma_release_channel() have a similar issue?
-
-If dma_async_device_unregister() was called earlier, dropping the base devi=
-ce
-reference, calling dma_release_channel() will invoke dma_chan_put(). This
-decrements the client count to zero, calls dma_device_put(), and drops the
-final reference, freeing the device and its embedded channel structure.
-
-However, immediately after dma_chan_put(), dma_release_channel() dereferenc=
-es
-the freed channel:
-
-drivers/dma/dmaengine.c:dma_release_channel() {
-	...
-	dma_chan_put(chan);
-
-	if (chan->slave) {
-		sysfs_remove_link(&chan->dev->device.kobj, DMA_SLAVE_NAME);
-	...
-}
-
-Does this cause a use-after-free when accessing chan->slave, chan->dev,
-and chan->name?
-
-[Severity: High]
-This is a pre-existing issue, but I noticed a potential resource leak in
-how unregistered public devices are handled.
-
-When dmaengine_get() allocates public channels, it increments
-chan->client_count and takes device and module references. If the device is
-subsequently unregistered, dma_async_device_unregister() sets the
-DMA_PRIVATE flag to hide it:
-
-drivers/dma/dmaengine.c:dma_async_device_unregister() {
-	...
-	dma_cap_set(DMA_PRIVATE, device->cap_mask);
-	...
-}
-
-When dmaengine_put() runs later, it explicitly skips any device with
-DMA_PRIVATE set:
-
-drivers/dma/dmaengine.c:dmaengine_put() {
-	...
-		if (dma_has_cap(DMA_PRIVATE, device->cap_mask))
-			continue;
-		list_for_each_entry(chan, &device->channels, device_node)
-			dma_chan_put(chan);
-	...
-}
-
-Since dma_chan_put() is never called for the channels of the unregistered
-device, does this permanently leak chan->client_count, the module reference,
-and the device kref?
-
-[Severity: High]
-This is a pre-existing issue, but is there a risk of list corruption due to=
- a
-double list deletion?
-
-In find_candidate() and dmaengine_get(), if dma_chan_get() fails with -ENOD=
-EV
-(such as when the backing module is being unloaded), they proactively remove
-the device from the list:
-
-drivers/dma/dmaengine.c:find_candidate() {
-	...
-			if (err =3D=3D -ENODEV) {
-				...
-				list_del_rcu(&device->global_node);
-	...
-}
-
-When the driver's exit routine subsequently executes
-dma_async_device_unregister(), it drops the device reference and eventually
-invokes dma_device_release(). This unconditionally deletes the node again:
-
-drivers/dma/dmaengine.c:dma_device_release() {
-	...
-	list_del_rcu(&device->global_node);
-	...
-}
-
-Can this double list_del_rcu() on device->global_node corrupt the
-doubly-linked list?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260822-dmaengine-=
-kref-fix-v5-0-d4a4ee47d927@amd.com?part=3D3
+On Tue, Jun 30, 2026 at 5:30=E2=80=AFAM Nishanth Menon <nm@ti.com> wrote:
+>
+> On 18:42-20260629, Rosen Penev wrote:
+> > On Wed, May 6, 2026 at 4:09=E2=80=AFAM Nishanth Menon <nm@ti.com> wrote=
+:
+> > >
+> > > For some reason, replying drops the CC list. manually added them in.
+> > Found the issue:
+> >
+> > https://lore.kernel.org/lkml/20260630014129.1548147-1-rosenp@gmail.com/=
+T/#u
+>
+>
+> Please repost with additionally CC LAKML and the TISCI maintainers for
+> the patch, this would go through my tree.
+https://lore.kernel.org/dmaengine/20260630013917.1537819-1-rosenp@gmail.com=
+/
+>
+> --
+> Regards,
+> Nishanth Menon
+> Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DD=
+B5 849D 1736 249D
+> https://ti.com/opensource
