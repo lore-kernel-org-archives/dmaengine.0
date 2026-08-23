@@ -1,126 +1,203 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2D39DBD0
-	for <dmaengine@vger.kernel.org>; Sun, 23 Aug 2026 04:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787460282; cv=pass; b=qU/cJ8gfQ9J0KwO44FbBaKrgzVQF34LWtC7jWquJUMEDZ5Bg0PG/zGrvi4LjQXUPZnJR3l/Q6vJo361SH6AlHMYjDAQPY2RkzfcrGkTfOUCojESVS047lzfE4RVmIskdAZFszeABUF/qE22+J9W2Vd4TSI/S+QRNDnovEPurRNc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787460282; c=relaxed/simple;
-	bh=rUA8STlsYFYQiRvYWCdYW5+b5xiB+c/F92/ZCn93/g8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pBWc+kNgPfJ1EaEl3xFQwRZxyd9++FXBJd3DvzMwpdLHqAm4fw2davKnyltfXnL1LIrBvoKS7OjavucHxGTFN+FJ6y6mTAW4bM1PeuRZMfWimFf5WKaBvT5qmwybKcfPoDftCKIQJ5+39E9coyrhtdfcu/My+OrGd3UgktIkHto=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c1q/tc0S; arc=pass smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F132A2F5A06
+	for <dmaengine@vger.kernel.org>; Sun, 23 Aug 2026 04:49:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787460544; cv=none; b=Jke0JtMIHM+iLx7GG6mpOnj6HdbuZX25IrQb9iUMJeqlrAb9EPHMLLKHIe+H1ed2WN+WK16gB0/urXxXLJpxhiuzzTYQo+8T+5Tc/5yojV5amsHKdv0S/Flj9ghQBx54JY3WBAjF5LHgAjgnxC93EQ4qC+vLg5oBBGYTOZg9jmA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787460544; c=relaxed/simple;
+	bh=F+0vuiycaJvFPWmw//1urs2k2rOSC8DbaT8Oh+hH1FM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gNOGhwcs0SrXzVpPBYR6TUbHbl1LJ/3wA18U4JrSIJX18cUnmFGdpcDdcF6o3GVhJahitkEU6L1jdrcSeoyzT+CUK6VK62tmOf+I9LismbEZa+Y6jT1tL659JFeFDEgJ6gRWr7Luxv0gfpr810OSy94aOWwPO9t+5THPo5LzHLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoO6GZfz; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c1q/tc0S"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6a15d54ac95so4111216a12.0
-        for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 21:44:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787460280; cv=none;
-        d=google.com; s=arc-20260327;
-        b=lfkHmVg5VLOPWwW/PehffW2zN/wi7AggV3X0U+N7dKgZwhApcscWR7lNEAbaQGmNS9
-         k7NKHgQlKc9GBTXEUUmh8B8on28qkrqgZc5KIz+vrcbjydaSrSSTztz8oySAbF4TEyWB
-         xi9GjIw/EWSMCarxLSaAB5ZZxiILaFLItElMTPbnLWoMzOX/42jvu0MFqkiH48VW58/i
-         7vOVDqZr45xBOCTRm3t3p2cNnO9aiOqcr7PhrZBD6F9dikzUnasbzoj3ad+t9VxpEoEZ
-         nZEcJsk25RfLGJfC7ruS3l8oqS8HVguY0yzH76njxxGZnHEFl2JzKubwxNPRa4cNn96r
-         JMNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
-        fh=R58UPJfnjpFD+Mu+qx+W109JiL86gsXdBZ9UpuirA8Q=;
-        b=bar1sITuhNHiC1ya2gBHfGAmw0G4nTH/MoP+U59tSHs/7IczEKKEtTGkUbJdFKGnMM
-         CHh0qKypNIBvW29qnnFSby33+kEqu4ABcH8mqEbRWHZ2hHqvh6WnRt+A6MKOGtMJzUHE
-         SD0hz3hzrRHmfwQ6PVIWlBrFUvE+Hrdo2FqBnpX0h4ji1dIMpscqsP55naOo/a4b2ukn
-         naBPugJdpp1mETY39LOeuLmO+wz+T8tmpGoI6C0gDt9OX0edo/0xd4EpZt4EHGj0H1qq
-         UBamxK6NG5raKj+szRmP9D5rKGuvjnutzRWPgO8ptqbnj1GPwQFouqqIP0nbwlAbpKrp
-         WibQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoO6GZfz"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-38101f85591so2758944a91.1
+        for <dmaengine@vger.kernel.org>; Sat, 22 Aug 2026 21:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787460280; x=1788065080; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
-        b=c1q/tc0SF6zdK84DnOsm398gjIRp2zwOqHqvWFDxhL5H3RdCoS7UVWxog13Yh47NdK
-         xqYsQln3oDUELzBzegsotci+ihhYGHxRL4aU0dOPQDEGibtfnFeXmLkbbfRd+FKqOd1k
-         7mKtAv5a4tDzzVScjeB+5Xs6AoeNLHRFkdCiOMPR6N+MA+DpPk5IdQiP7uB9kUaD7wy9
-         dy8a80RaSe82u/+4JJpmBtxP8eVxSLLWCG5qf7U1D5BWIhnXjQGXQjbTi0bFuN7QYGM6
-         AyXa13YtswoCxd5m4GfEFc8qa9wJhGTHrkvaFU1v7HbzzeT6dILzQysp5Dk6zNhkjMsO
-         Ze1Q==
+        d=gmail.com; s=20251104; t=1787460542; x=1788065342; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=/QF2AuM00HE391Q4c/R+W2Bvyni/B/dT5eEtEIhGwlY=;
+        b=hoO6GZfzq9DVod38Lap/G3aY5seiEGu/4cjmrKL1J9Ge3lsk6gCvgB0vLr6YlHPFQR
+         XJW/SEDdBAcMjYGSuuvz3ZribBLKeVJLd12bL0fpkpAhG9ZTxlQBj01WNAdf096A3636
+         Fk3wAwd4SUD4ojk+Dn1XldXe+hm5LVm9rLQ/SPHDq76ikO7BYQMLXasPXD+O0lqo0SXf
+         ni23J61PPLEQIaQC7FVnHdtesyk5CmnwrFjmG5IwKTI0+EXjTi0kVXIlcmMcAriDaOGf
+         foj4Cyb089qRRqN+He+rSboWVe/sVDyjIP2lLXuwZAiJZHaEEZwRY/BuHh+71AoBu9w/
+         x+sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787460280; x=1788065080;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZSqjSSah5KBgALutr0hY72c4Zb4Ws8WYQo3Q/l3ach8=;
-        b=r5Q0yW/DMVE5PV/UL+MTX/Caa6goUzEciIAOW720WAk++VOmzjmUiQRjLMkoet8C7q
-         r375j0n6dloOUQu+GMgRRTQrJrad+zX+0WezTodusUR/dImbEzkLM/HCGAQR2zNjjhbT
-         xPFQHkYJGg5DIwkZ6k9VWUZ6XSvaGQGY0MS/UiA0gVHxbfBBztiV9jIv1/3kEK6H2dp6
-         riYB7eZyKtq2dL1EySGAYk54tesRyWTMhi0jxMq71rW/rQ+iltZOXix64pGVXAU6HHVl
-         eHSKUZTh3VDarQKyuQ8G9ELxgiqe3R3zqu0iDVCP/qqi2OdxJSbzFFMJIqqk3bTPaijT
-         soiA==
-X-Gm-Message-State: AFuF++lV9MxjMYIqy1Yq5oAMyUrcbsP3FTG3R+4g/bQLHehJvPQt/tRW
-	si3fw9vao5Xa4BwJHg6p6ojruU6o8tlRRkiVDpKuBN+xhMDdlm2g8vRrV8jeyIoHyZm8rlF2P9Z
-	FbyWRaCRJEqkZx4KXE6ACD1LjFV5qk+S2LN+w
-X-Gm-Gg: AR+sD11YHgVXRQk5FXvI/+qqoHkQUfd/9E5Tpbi+9F0gNpjEL8YdnbfyO9rb2wRcgW9
-	CROdXd2ym2H22YT9W1Om/lMR3l/n0+UW9hSOJ2CZv3okP6hxowFYPEFMMt73z8tuKexMxfx16cw
-	FnV2XjohwdD86ivPDf+nLFJ4HvxyI6j7GJX2ZbM09zES9guTiDQalsU9+OydD9Lf+PnITwifbOM
-	kM++wgvvRmCTDkV8K/ckhdAIPYrDORiuzOIz+RJ3CNAmVrWRZNq+i8N6M6tkk1UkMDP3TpuXrNC
-	t1WysY8xhuDY4Rh0OxAK3NJiLew+YBwBMYUrJXCqFCPYpOHaz/4l1eWjBF5HnYE0qF5CotPC+A4
-	dTlG1OViLZnErM6SVCQ4wm9xYqpKFC11eYDG2hJL7SvvqriMY5mfWk68hxNhCV+DWu6T/Vdli+y
-	JG54GqH/ZwzFNi2/uGdUntFX5DciO10NcRWzF5MNJL+05jFWLAhSVCih7B
-X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id
- a640c23a62f3a-c24925eb3ffmr1126262966b.10.1787460279494; Sat, 22 Aug 2026
- 21:44:39 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787460542; x=1788065342;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/QF2AuM00HE391Q4c/R+W2Bvyni/B/dT5eEtEIhGwlY=;
+        b=BfBv8QEixjl9csCMcOBd4vIfPl6CHhvXgvHG9H6LpPTWC0RQjO4OFuunmW4gp9GcbU
+         ByMhpxCWkqaGQlUM3UazplRhyv7GomZ1BnZLDVyU6XRTTwF/hA8OEjO8hi575FU57Hva
+         rbROGGP+MgmUcOHPmaWIy0AAcvJKvoqm7RZW8voB16UzRmnTShPDnJTOb/d7hcj0XyHh
+         +bRFy+3IaBaPehOay1J5L9qD5nIU5ANx21dpk8ClCAc4e0gMnmu+cnzlKQR6oZWSPGdg
+         yl46bkC1xvAXW7N6nAXeFFroUoO1G/wJ3UVTQwSBfTdlr2ojO5wvq5WlTFvwN8tecFn3
+         IlPg==
+X-Gm-Message-State: AFuF++mbq0lgXKfKx+++V4+LwlBiKisYO7TLNLuWcPYyDPkovTnckjOf
+	aTMbC7+IpMUvJQUiW/dLOW6lOPRefVbqFEJgpLFaGKqdjEaXuqrA9YHuhZwvYA==
+X-Gm-Gg: AR+sD10xx/iB4xO6LGO6ynxJOeBMMJZzTlzadDDAbi5NE9a+7DrG0UtYRtfVTVkdpFo
+	vPlaCCFkjAy1xSp/+V0V08mFTcasmcQACc8sNCMMgIRETdxty9asCzWTBpHfos86wsE1+7HCNMd
+	i1Ba1GU9WPIXVqmuhnXju1QgcQMR+QuPr4Gt8vg34lEumsfkuTDCXxaqvrFaq6E1RhSfGeFldB+
+	jpiyr5J6ezw6DJlNtE1nMXrJJ6lMnPhJOptanWETL746aVgY74LGX00dkjw6X1Pp3A4NIOd6QrI
+	SNLl23prJSkcmXJfKQRPNVX3/q5KjsqPzwENWexAy/B/cIDZlg9A4tGDFLBpNkjSlQHMdO+d1QR
+	FJV/ZyXSNYQucF1Wuage63SJt5hv3lJ+hkdtm5ba0aJvQkJ1rmgLydg9xa+k8ANb1b4St/s8+eR
+	mmM+NqEMrgitmlEuuZyEv3xIYf/SO2xXzVR8SCJTqXUqvrkRlPQabc2/p7QlxAqVRZFIRstni66
+	PX+BBbhu0VapjWKe7wsNaQEV487LUIfDoE/037axra6YJBciU0ICaiKeKkht0Y0ZvjdLO3LXmZu
+	dzhXO6JkTh9IuWDC7T7C4J7RjzEL3imFPdgV9w==
+X-Received: by 2002:a17:90b:39a3:b0:384:927f:3db9 with SMTP id 98e67ed59e1d1-395c4bdddaemr12910103a91.1.1787460542163;
+        Sat, 22 Aug 2026 21:49:02 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395e49d8d26sm4824412a91.10.2026.08.22.21.49.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Aug 2026 21:49:01 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] dmaengine: bestcomm: ioremap early
+Date: Sat, 22 Aug 2026 21:49:00 -0700
+Message-ID: <20260823044900.11466-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260504031209.618949-1-rosenp@gmail.com> <20260506110910.su2s6ncsi2xfdiwm@pureblood>
- <CAKxU2N8PUdxo54oHtcroqe+Q88k0obxPg_9OCRsNsoOwvcS25Q@mail.gmail.com> <20260630123029.ozveska7eoenci3s@unturned>
-In-Reply-To: <20260630123029.ozveska7eoenci3s@unturned>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Sat, 22 Aug 2026 21:44:27 -0700
-X-Gm-Features: AcwNN1WOqpjNvvrbFuuZdDr0EWOQvQOz6eBeeTVou_Zk_7DEeqlQ6lYFj7PXzJE
-Message-ID: <CAKxU2N9wE48D2WLPvta98kB6xXciOdvpOzgGrnS9kkBHYfUwXA@mail.gmail.com>
-Subject: Re: [PATCHv2] firmware: ti_sci: simplify resource allocation
-To: Nishanth Menon <nm@ti.com>
-Cc: dmaengine@vger.kernel.org, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
-	Vignesh R <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Tero Kristo <kristo@kernel.org>, Santosh Shilimkar <ssantosh@kernel.org>, Kees Cook <kees@kernel.org>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jun 30, 2026 at 5:30=E2=80=AFAM Nishanth Menon <nm@ti.com> wrote:
->
-> On 18:42-20260629, Rosen Penev wrote:
-> > On Wed, May 6, 2026 at 4:09=E2=80=AFAM Nishanth Menon <nm@ti.com> wrote=
-:
-> > >
-> > > For some reason, replying drops the CC list. manually added them in.
-> > Found the issue:
-> >
-> > https://lore.kernel.org/lkml/20260630014129.1548147-1-rosenp@gmail.com/=
-T/#u
->
->
-> Please repost with additionally CC LAKML and the TISCI maintainers for
-> the patch, this would go through my tree.
-https://lore.kernel.org/dmaengine/20260630013917.1537819-1-rosenp@gmail.com=
-/
->
-> --
-> Regards,
-> Nishanth Menon
-> Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DD=
-B5 849D 1736 249D
-> https://ti.com/opensource
+Doing so allows handling potential -EPROBE_DEFER before any work gets
+done.
+
+Replace the open-coded resource lookup, request_mem_region, ioremap and
+the manual iounmap/release_mem_region cleanup in probe/remove with the
+managed devm_platform_get_and_ioremap_resource() helper. This removes the
+now-unused error-unmap/release paths and simplifies probing.
+
+This also fixes a resource size mismatch between allocating and freeing.
+From sashiko:
+
+>  	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+
+This is a pre-existing issue, but does this mismatch in size during release
+cause a permanent resource leak?
+The memory region is requested earlier in mpc52xx_bcom_probe() using the
+device tree node size:
+    if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
+                            DRIVER_NAME)) {
+However, the error path above attempts to release the region using a fixed
+compile-time size: sizeof(struct mpc52xx_sdma). Since __release_region()
+strictly verifies the boundaries of the requested resource, if these sizes
+differ, the check fails and the I/O memory region is never freed. Driver
+unbinding in mpc52xx_bcom_remove() also uses this same fixed size.
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
+ 1 file changed, 10 insertions(+), 35 deletions(-)
+
+diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
+index 432b43520ddc..44ff4a42376b 100644
+--- a/drivers/dma/bestcomm/bestcomm.c
++++ b/drivers/dma/bestcomm/bestcomm.c
+@@ -13,7 +13,6 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
+-#include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <linux/platform_device.h>
+ #include <asm/io.h>
+@@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
+ static int mpc52xx_bcom_probe(struct platform_device *op)
+ {
+ 	struct device_node *ofn_sram;
+-	struct resource res_bcom;
++	struct resource *res_bcom;
++	void __iomem *regs;
+ 
+ 	int rv;
+ 
+ 	/* Inform user we're ok so far */
+ 	printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
+ 
++	/* Get, reserve & map io */
++	regs = devm_platform_get_and_ioremap_resource(op, 0, &res_bcom);
++	if (IS_ERR(regs))
++		return PTR_ERR(regs);
++
+ 	/* Get the bestcomm node */
+ 	of_node_get(op->dev.of_node);
+ 
+@@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	/* Save the node */
+ 	bcom_eng->ofnode = op->dev.of_node;
+ 
+-	/* Get, reserve & map io */
+-	if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't get resource\n");
+-		rv = -EINVAL;
+-		goto error_sramclean;
+-	}
+-
+-	if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
+-				DRIVER_NAME)) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't request registers region\n");
+-		rv = -EBUSY;
+-		goto error_sramclean;
+-	}
+-
+-	bcom_eng->regs_base = res_bcom.start;
+-	bcom_eng->regs = ioremap(res_bcom.start, sizeof(struct mpc52xx_sdma));
+-	if (!bcom_eng->regs) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't map registers\n");
+-		rv = -ENOMEM;
+-		goto error_release;
+-	}
++	bcom_eng->regs = regs;
++	bcom_eng->regs_base = res_bcom->start;
+ 
+ 	/* Now, do the real init */
+ 	rv = bcom_engine_init();
+ 	if (rv)
+-		goto error_unmap;
++		goto error_sramclean;
+ 
+ 	/* Done ! */
+ 	printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
+@@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	return 0;
+ 
+ 	/* Error path */
+-error_unmap:
+-	iounmap(bcom_eng->regs);
+-error_release:
+-	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+ error_sramclean:
+ 	kfree(bcom_eng);
+ 	bcom_sram_cleanup();
+@@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
+ 	/* Cleanup SRAM */
+ 	bcom_sram_cleanup();
+ 
+-	/* Release regs */
+-	iounmap(bcom_eng->regs);
+-	release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdma));
+-
+ 	/* Release the node */
+ 	of_node_put(bcom_eng->ofnode);
+ 
+-- 
+2.55.0
+
