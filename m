@@ -1,238 +1,156 @@
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010035.outbound.protection.outlook.com [52.101.193.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C89F2D7398;
-	Sun, 23 Aug 2026 11:15:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787483757; cv=fail; b=K9ifu5ojB1fDd/hi/7jVHX5qKZ57GnjvxbpzIc1XaNJBNNEeBC20yVjzgAca85UIbKftLdMrXlvyzrVfZT2huY4LqfFb56grKvFaWYXFO/+uuHlVF0l2Kc/Grj99sMcUXwth7vPGfExhkhCio6yZBl9iZHaegUzpc/YP1ib0L7c=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787483757; c=relaxed/simple;
-	bh=+EdWVOBOgAbv1f1fqPR1ViyamAt8EFJIskb06IUdTYg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=KK7su2+6y2mRdSdWcYPZC9yyk+L4JQmnrYqesqUl8nk0KYgDihO/bb6VIXsZD2sTOT2YGDv4HYiyx80AwCyz8YZQlDQ39GeP5GanKB/8jzadSD9/SNHRmB4Q1O6JToEj76BLt94Q7YlgTYE71ZBhsI4lZOanMndXFyBmS1MTyeQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=o6cRBE5w; arc=fail smtp.client-ip=52.101.193.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103102F1FED
+	for <dmaengine@vger.kernel.org>; Sun, 23 Aug 2026 14:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787495827; cv=none; b=MvzN0hL5hh31W7ZHZ+jwAc7+2oWSm2AL8MinJ6cSRlAA4Azfbwm/RUcp3xV4rO9ISSQgN6RszElcMRcMWTyYrN4O910W72bEg18evoJ3h/sdk6z4PS5jtyNA3f9tYEwDv7YdATYtY/f2zugLzr6J5dpqu7lWn9jgWjGAGGpSJTI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787495827; c=relaxed/simple;
+	bh=qZZWn22YQl20SjyVdcx7nzk3Bsd1rFBGXKmPjvWGvSI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZBW9rpt59d3vyGeI9V8Ahu5EyE5/ynI/ivuCvugUkwDCMAzIDe1NPvz3RgZCYqtSFbjouXBmaiZ4fI82Buxr5E/lN6pawMoy6bN2YMJKfq7Hi1UX05soWyK5s6gyJwiQA2i2xuP4UIizx26VCn4B7ils3zZWrUr9CXBC9Hjp3fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GD++IGa9; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="o6cRBE5w"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HZKa2mIGxHF9iyCzOd7qutwjVcV8sjFJvsZbCyutyFplWy+eqRo/RTp2sbXuW+gPvB/Gw2k5ra/j9rV4bVoAEoWRO5N6/5EphnRF52PZO2Lyx5+VlQkVu5qzNNkzncsJ+DqO3OfCfQhLI9dJ6B8v/BHIeFdJKmLJO+mjrVPlunZrZY1dEcVYa9fB9EOb7hfPuniU3yZ1TSqymYmC9UmLhUDoleYtMO2M+BCr5+vQcxbRP1bbo3aIkrl4pK/1ygTwXgxuUKnS58eLyRX46XomKIemZBc3ZFLzgxJ60OxFjfW1gPWu8xBuv8dSE6c3u2jhF23Uw5KkjqUhsS2ea/3hdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ouuGFnsKjQNpuwoM6dF1Y+jtDqYejK1GOyVqd3Z99ks=;
- b=vFsILYgs/bR1eokhsOLLKBG04wNpcit7hwN6DvzUDi1j0r1HZeYm5SI68dFYAfP9ocVHRxe94ZEGAnnZtf09YoXT10H17PvDq/ZtDDc0H4eOt+vw8ye69GAmbxPaDs/oa2ZPICIyHzN3Mc9D8TrOKNY6cVVTpEJc87KEcOk2uQc+KaYxmEbCr/ZFL9H7DMnH6lTTnDJbKMzqKaD7Bojyb8YNhI/aYHjV4ZeZG2lKWsBue6s4EI/Yx9OAZ0Z24R6RhE+zMexegNs5j/ArSsgMfbKS6Q1ghEUSK7WKHqemR6/2c9ja8TZcjNNdItOyAsL3iSEDTXYjPIsifPgo2C7HBw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ouuGFnsKjQNpuwoM6dF1Y+jtDqYejK1GOyVqd3Z99ks=;
- b=o6cRBE5wsVxBkoTu09tG5m4TAEJHe1YQJFeNz/GYaEJDehsrP5d9PF0jQQqMfjbZ86aRUzjjQlDJ+FqzWzppcqJyvUuBTtVipzHzcglKypvbx9KlEYrUF6F0D3D48aEo2yGghqr2OmeI5p3ADL273gsupQ96XEbU4QAVrjL8Vrk=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SA1PR12MB6798.namprd12.prod.outlook.com (2603:10b6:806:25a::22)
- by LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sun, 23 Aug
- 2026 11:15:53 +0000
-Received: from SA1PR12MB6798.namprd12.prod.outlook.com
- ([fe80::e317:e4a3:6ae9:8c54]) by SA1PR12MB6798.namprd12.prod.outlook.com
- ([fe80::e317:e4a3:6ae9:8c54%2]) with mapi id 15.21.0315.011; Sun, 23 Aug 2026
- 11:15:53 +0000
-Message-ID: <a0512e2e-f570-4b42-bd3c-0091bcfe1c04@amd.com>
-Date: Sun, 23 Aug 2026 16:45:47 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: xilinx_dma: Fix hardware buffer descriptor
- reuse order
-To: Alex Bereza <alex@bereza.email>, "Pandey, Radhey Shyam"
- <radheys@amd.com>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>,
- Kedareswara rao Appana <appana.durga.rao@xilinx.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20260817-fix-hw-buf-desc-reuse-v1-1-d79827a844c7@bereza.email>
- <QjUGg1to3KFvzKpfc2FoL0vjidDyRPAjT3cURLYpXEfdqk7LPzrRq6dCkhEROkPP47rIdqQYBa-BYKkdSV-oGQ==@protonmail.internalid>
- <e2877b7e-eb3f-4a4c-aa94-ed0907578e6f@amd.com>
- <DKS25RPXGPXB.2I0LD9EHK9GAP@bereza.email>
-Content-Language: en-US
-From: "Gupta, Suraj" <suraj.gupta2@amd.com>
-In-Reply-To: <DKS25RPXGPXB.2I0LD9EHK9GAP@bereza.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PNYP287CA0103.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:2bb::10) To SA1PR12MB6798.namprd12.prod.outlook.com
- (2603:10b6:806:25a::22)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GD++IGa9"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-47ddf7b09e5so2355854f8f.1
+        for <dmaengine@vger.kernel.org>; Sun, 23 Aug 2026 07:37:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787495824; x=1788100624; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IjVwgap47YOeIukz8yw67SDCadu22oFRx+M5RlZB4jk=;
+        b=GD++IGa9pYcoFWRdE3RHolqCSG0lblSQw1MsJHHGf4BS3EcF4zSSsNaTKc6KSXwHZM
+         nUSrVtHeadufgS9HBiGZhmZZFvu+d0u87acz4CYS+8Z26PBJl3vHwA+JauKDovU/XeVE
+         44sSZbXozsFGkdRFZRy4RjKHjEUtb8D/JEGiySlQ6BcHP6re8caqVRbKrb71ixqSXBC3
+         q2IO60fTDPQj/BsPAFtIy//qFF41N44vbPWUqZGB92IMENx+/ZD78M0A1hT/T9xjTtIX
+         u+j4wJXMgWPd8Bgfq6JJ7BrpvqSq3zxHcxzunHRO/b5J28guxXxk9YWZprjTXPakzmQr
+         Hfiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787495824; x=1788100624;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=IjVwgap47YOeIukz8yw67SDCadu22oFRx+M5RlZB4jk=;
+        b=l3YfgZoBgN9AA9pPNCIv+T3siPYkCJ5ikf6daq9IsAnST2BJVCicztVF8LI6oL/gLs
+         OtbzeZNKgB97B4XcWweHmtouFLuGMCLN03AUvAg0QxXoc28gN5txYdyTg8jCY2fm6asL
+         h9pbkMOHEaJzMVKg9MPgiovU+u/Oo7j3Wn2sgMQ1mOR6RG96Q5Z+SIT0Y85H26Xpn5Up
+         Eg+4c6SU1v3f2t3rXd0ls402pN40tkJ8PTPuZjtFcdWetu4yETQ5C8naqJR1F+/E1cJl
+         C5Xf7RIiTk/YRZaqfVxzrkMf9xlv/ncDFKoeoM/ChrgxUiBwSUmnnLV4tnpa0WDd7cpG
+         kf5w==
+X-Forwarded-Encrypted: i=1; AHgh+RqEZ+mi7kyNG0+V0JrXS78j2Pd86FUJcJWB+k/Fi5AYvg7NyLRyjyUzhT5pysf8cqME5XBV4+bz7sQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++nzpBMfxJaRdwOym8IM8W8w4aaEtghaXDLP8EpSU2TnF5BmhnZi
+	5uu0Rb9RLzV36WVgtFXNMiZsqTmGHDzSXsN7x+DlcYVAd0goJeFUGTTY
+X-Gm-Gg: AR+sD10Gcp4oo2v32l81IK9BpfogF4UrOBfpmYDkTBdbRkMT9o1I41taP8HHMKWTRpb
+	CPRt6sebNQRYpa9bsD6VN44/Ivx+Ddv5O3PTKRJGsm/VnUxFj1/elABx7LkFeVkM13nx8vF0AJl
+	2QKl8bDjz8f7EF3X1Oi5iZLZRlxkos0Oi3tvlwxFyE3KlHG7ap8Q7hnIhqVpFXImwvF6T28eMWc
+	fLdmXohaZYFSD17bTdlimPyyG1pJnVtLVwYxi5RwiQVbnBYxVdyJn6DiwLYGiloZV66U8c4gLj+
+	8GIdMT1EBqU2vZZI/31Ew13GbBoPSG2vGSpYppw4RQITQPkhrnyaiTmXC12VyqUwGU4lPn/+3re
+	k7WCAo3qxOqqa+FxL714mXnvTrD3ypjw8xf+tEHAck1fTdl0Q28y46OCP80R5h8en9hqz5d5lUD
+	MRjXWBkfvF+qIjfAEkqJ1YVwXtk/JK3oMsSvXOjU4IaU6ovUJRV+eI0lJpyEa7/8Ul/j0upDp/g
+	uvjf/yoQg0q8vypfnMHZvlt3g8T7JD7P7dtQPvyEKLJipKKlIP/iAk9HA==
+X-Received: by 2002:a05:6000:46c2:b0:482:c650:8c89 with SMTP id ffacd0b85a97d-482c6508d4emr12735930f8f.9.1787495824002;
+        Sun, 23 Aug 2026 07:37:04 -0700 (PDT)
+Received: from [10.128.10.232] (195-23-151-163.net.novis.pt. [195.23.151.163])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-482c9b69b3csm5404807f8f.3.2026.08.23.07.37.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Aug 2026 07:37:03 -0700 (PDT)
+Sender: Julian Braha <julian.braha@gmail.com>
+Message-ID: <f66f3199-df76-4158-9ddd-23e9096a1fd4@gmail.com>
+Date: Sun, 23 Aug 2026 15:37:01 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA1PR12MB6798:EE_|LV2PR12MB6014:EE_
-X-MS-Office365-Filtering-Correlation-Id: 426b62e8-3c5b-4d95-7f43-08df0107e55a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|56012099006|18002099003|4143699003|11063799006|22082099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	taAtzvOZbJpq9GleRaTLn08t9Mtup1iJbx2rGW78XbeVC4UPh47O5kGlChBkiL0V1O2rNd4XeSyCdw98kkIRJHvNCZMdxyvOzbH6yn2YA7Z2fHdNxmPGy0JxR3u1e5qQD1KdM84TI+7ZuceYym/i+Rpj8Ba6TkfJW5i88DH3igKY3BwJ1js4p/QQaOeJmpkUizT1zbhlzo7EyEyGtURi5mNDriXdYMQy+bx213opesBbFLgV/2EnWNCDjtPhE1U566mFIIqFZiwuvtqR7d0bfliO9E2NHl3LhFMKrp33jXRqCt7lF56FRDPa5gp5RNFfe4F9QYEsduyPK5pCGNB1aPOaUdlT7ipQzxkj6QDFQ/nUJ914IQc1MycjX1qYAfkz4LhuJa+RXR40DYb7QrD2BkY9d8YHL7Becwgi1utrw5WK8yJ35xqNu4fqO/Qxwm3B3lX4gF6HHeWJG3WaH7jLlSYkjrgdQMsZnmgbxL7H+OZUvPmWOlOFAmwvxAqsDglkmVhacy2+UtZX1Bsy7u7jCjTNfVkH5Ay1Hpu2SfDr1qSs6Oq5f4FhJBPF61fsN7OIiuy4lmGy1C9xNEbo2LVWQcqaaJiQlsoBJ0oximD7NIO5TJqE7Dv+DEEEU3qVCi9Wcz+A5NN5rvRr4YNOYmeBV+iNIvDcrNi5fSp9Xa6U80s=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB6798.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(18002099003)(4143699003)(11063799006)(22082099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?QmNIdndZbEQ0YzlGT0tLcHNsRXZ4YjV0WU9McW5NczlTUW5LaTJMTFk5dzZm?=
- =?utf-8?B?V1lIT3IvOStmTC9oTUVnTzdRT3A5VGFxOFAvcUVjQVFYZUJDSmN6QkNyUFlh?=
- =?utf-8?B?clRHY2ZGSlR5bktENWtqRDZYc0lWQkhLbjFzd1FMakQzR3Z3cmIwQk5Zc1Uw?=
- =?utf-8?B?V05maGVxK1FHZjVwMlpjUnF6NVQ5eWdaM3QxSU1mWTRyN2ZvK01lVVloZnht?=
- =?utf-8?B?UkMvc1VxQ1VQRUFxd0JNRU00cVpKNTdnWFg0ZDEwME9ZY3BYcVVQNFdHYVhl?=
- =?utf-8?B?Um5CUnJFcUpBdVpxdmNJc1dMNnFnR1pEQytJZVNCM3hheGV0NVNHamt6OGR6?=
- =?utf-8?B?d1l2dFBlOHYxOENRb1NreTBCRmUwd1NDRm9WOFErdnlJN0Z6T0lCc2RwaktQ?=
- =?utf-8?B?dy82SytzZG9tMmE2eUVTRU1EQk5TT2loRjM0TFBlZHVYQ2F3VFpnY1E0V1VX?=
- =?utf-8?B?Z3krSnFJaWRjUUU2OW9yVHNSZm1iMHNiQ2ZJMndra1ROWG80ZHdkcmo0VjJC?=
- =?utf-8?B?dkpsYnpTZThzUndsV2pSTDVQcGRVaTBUaWJyNmJGOVpRUFNOTnpMR0lra3FY?=
- =?utf-8?B?U25sS3pldnMwSHFZZXQxakFENzRLMGFYSHFyV3FMVDNhb3FsaGlJQzcyVzNw?=
- =?utf-8?B?TlJHV0ZXak9aRWJVRTNlclZpT004QURVTTV1WG1rb2tSa1FZUEI1aVhObTFq?=
- =?utf-8?B?MGl3aHhjblExM0owRXJCWGhIQUxEcnh6TTlUZytrK0tDb3JwazJIVGxQZEx6?=
- =?utf-8?B?K2ZLZE9yYmFnalpHSS8wNENVK1RmdzJNczlydy9BdmdJb2IxT1FUWHl1Rk5S?=
- =?utf-8?B?ekFFS0M4ZUtmRUlYZkF2MEh3ZUppVFd6VnkrV2xZYnVYM05PbnU4eFZ6UDFz?=
- =?utf-8?B?cXhlU1JmeEhXU1RZek8rNG1LaVBnNi9RbXBuRVN5QXV0cjQzY3lSdVNvRkk2?=
- =?utf-8?B?L3YrYkVNVzJGSjR6KytyWmpha2RJeGMrS0pEZlR0ZVJqOW5xRUlhU0h6a1hO?=
- =?utf-8?B?eDBrQ3lCUTNwOGpXajcvWGdhSU5zNmd0SlFOMXZYMzhkM3hYd1ExcURsdXdj?=
- =?utf-8?B?aUFpZkpoQVJCbVZSUlYyZ2F5VTcyOWZLcXNNajdFeUtTanI1L3N4RjZLV2NN?=
- =?utf-8?B?aE1ZQjdDblRRVk1FWDJ6Vjh5aUhFZVdMam9pZjFlY3h4dmQ3dHE3RVJEckM2?=
- =?utf-8?B?SVpMNFc3SjdJWkNlRmtWRzNXT2d1N1FoOEFQMlJLR0VxUVJSUDRUVndlbVpl?=
- =?utf-8?B?QTc0dnAyTnZSbzFzMUFZYkNIVWMyV0orMTJMclVxamNTRVZxa05wZXl5WVNR?=
- =?utf-8?B?YTZWRFc3YkRxaUgyNUZhYlYyR0k1VXBGdkZTRllsaU1BYkpKeGdDWktYTmtr?=
- =?utf-8?B?YjVwTlhoL1lRVHYyaUFacEJqY2JVbzI0NEgwN0xCRGg3QThxYjRLUncwdWxa?=
- =?utf-8?B?Z3hIUUg3cDNhMHkwZENsMUJZbWxOVC90OVJqazlNTjhDVGtpT2xFQkVCNk5i?=
- =?utf-8?B?dHNCOTlXb0tUcytTZU95Uzh6ekp5cW91aURvUW5IOHdicjl5eVhZLy9wSlM0?=
- =?utf-8?B?ejM2SU1LaWtSbnk0T0VLN2g0dW9EMGZDbGZ6cS9YakRqaG9oNEdoSU04dE5X?=
- =?utf-8?B?aDBsV1NuRUNrM2UvRk1VS0VveXhKWWdpVGxBU3FJaGJNZVBoWlFqckhkdGpY?=
- =?utf-8?B?ZkszMTROdEc2ak80Y3FLWEt4REdyaEMxOEtteDRQb2JxUWtYUlc3V1BYUk41?=
- =?utf-8?B?THlLQUQyM2xsbGpTdXRDU1lOekMxSHkvUEJoYll3MlZVekZ0eHNib3pFeUUx?=
- =?utf-8?B?elU2MXE5OGwvMHBXY3RqRWlMMGtYSG1kb2haTUx0NXRFcGRCaVJ6Qk51d1FL?=
- =?utf-8?B?cmJjOG5PUHhQL1ZvRnNwcXU0RVVQeWRUWmhmZjZOLzlnVk85anVZTWpsSnBI?=
- =?utf-8?B?T1lUazBhZ1YyZ2pkMVZjVUNEN3pYaWM3RFJtb0ExTHhMVnFhalJKZWNodHRL?=
- =?utf-8?B?bktUd3BlbEJEbjRFeDlUWlM4NkJ1NUR4TW9VR0pQT2g0bUhrN3RXMmtwMWhT?=
- =?utf-8?B?b0FtQ1lzbTlzN0ExR3NQMjlrbDJrSHB1SFNjL3NoNDRra1FTNTNjeGJIVzly?=
- =?utf-8?B?d1VvUmdENzRlREVScjRyV0tPd1Y4d2R5TVRRcjJzamRrWXBKbnJ3VTNlTS9L?=
- =?utf-8?B?dUxCRjJTQUpEZXc1MS9NN0g1OW1zWlh0VkxJbVZjMTcrVERXeng0QTArM3pp?=
- =?utf-8?B?cWVndTZFQ2hGenQ4blJIc0tqVVVYMzBZYlgva29NT2FTSGhrbDdQbDZZeGtZ?=
- =?utf-8?B?RHZzdDZSMmhRNzB3dHc1cEprQ1FVK0tVSDRlNzdzc0JoUkJuRGZLZz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 426b62e8-3c5b-4d95-7f43-08df0107e55a
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB6798.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Aug 2026 11:15:53.5211
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sjkW51DlXrGLAxMQn2KSj0QELJ2gRQjP6+cWaNiZmArKCrcPAfYj+/kyBQSDEAh+XMkqGKaty0+vpxwB39KxbA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB6014
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] powerpc: remove dead 440SP code
+To: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, maddy@linux.ibm.com,
+ mpe@ellerman.id.au, npiggin@gmail.com, Frank.Li@kernel.org,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com
+Cc: linusw@kernel.org, kees@kernel.org, colin.i.king@gmail.com,
+ rosenp@gmail.com, joao@joaoff.com, linuxppc-dev@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+ netdev@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <20260816125615.985387-1-julianbraha@gmail.com>
+ <c4d970dd-cb54-4530-9491-01b6d90e4a2b@kernel.org>
+Content-Language: en-US
+From: Julian Braha <julianbraha@gmail.com>
+In-Reply-To: <c4d970dd-cb54-4530-9491-01b6d90e4a2b@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Hi Christophe,
 
-
-On 8/18/2026 5:41 PM, Alex Bereza wrote:
-> On Tue Aug 18, 2026 at 12:58 PM CEST, Radhey Shyam Pandey wrote:
->>
->> + Suraj
->>
->> On 8/17/2026 2:53 PM, Alex Bereza wrote:
->>> xilinx_dma_alloc_chan_resources() builds a static ring of hardware
->>> buffer descriptors once and the driver uses this ring throughout the
->>> lifetime of a channel. This requires the allocation order of hardware
->>> buffer descriptors from chan->free_seg_list to stay in sync with the
->>> hardware buffer descriptor ring built at channel allocation time by
->>> returning oldest descriptors to chan->free_seg_list first.
->>>
->>> When chan->pending_list is not empty e.g. during
->>> xilinx_dma_terminate_all() the chan->free_seg_list and the order of the
->>> static hardware buffer descriptor ring get out of sync. Descriptors age
->>> in this order: pending -> active -> done. So freeing pending_list first
->>> returns the newest buffer descriptors to the chan->free_seg_list first
->>> and thus breaks the order required by the static hardware buffer
->>> descriptor ring. Then when the channel is reused, after a wrap around of
->>> the free_seg_list the DMA will find a hardware buffer descriptor with a
->>> length field that is still zeroed and stop with something like this:
->>>
->>>     xilinx-vdma 86000000.dma: Channel 000000003a21d7b8 has errors 10, cdr 6de4c000 tdr 6de4c000
->>>
->>
->> Just to understand - can you share steps on how are seeing this issue ?
->> During terminate_all hw is in reset so how is free ordering matter?
->> Want to ensure that change of order in not masking a real corruption.
+On 8/17/26 07:29, Christophe Leroy (CS GROUP) wrote:
 > 
-> To reproduce, pending_list must not be empty when
-> xilinx_dma_terminate_all() is called. For example by calling
-> dmaengine_submit without calling dma_async_issue_pending and then
-> terminating.
 > 
-> Since pending_list was freed first, the newest descriptors were appended
-> to the tail of the free_seg_list. Then when you continue to use the
-> channel and allocate new descriptors from free_seg_list you will
-> eventually cause the hardware to walk into a buffer descriptor with
-> length 0. This happens after a lap of free_seg_list, when you get the
-> descriptor freed from the pending_list previously. The hardware buffer
-> descriptor ring reads a different descriptor than what you "allocated"
-> from free_seg_list and fails, since the read descriptor's length field
-> is still 0. This is because the hardware ring order is different from
-> the order in free_seg_list, caused by the wrong freeing order.
-> 
-> The reset does not help to prevent this, because the hardware advances
-> along the hardware buffer descriptor ring via the next pointer. But the
-> driver hands out the descriptors in free_seg_list order, which no longer
-> matches hardware buffer descriptor ring order. The reset only re-syncs
-> the starting point, but not the order of the two.
-> 
-
-Looks fine to me.
-
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-
-Thanks,
-Suraj
+> Le 16/08/2026 à 14:56, Julian Braha a écrit :
+>> The 440SP config option can never be enabled, making all references to it
+>> dead code.
 >>
->>> After this no more descriptors are completed and a consumer potentially
->>> blocks and waits forever. The only way to get out of this error state is
->>> to rebuild the static hardware buffer descriptor ring and the
->>> free_seg_list by releasing and re-acquiring the channel.
->>>
->>> Fix the order in which hardware buffer descriptors are returned to
->>> free_seg_list to ensure the mentioned requirement holds.
->>>
->>> Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
->>> Signed-off-by: Alex Bereza <alex@bereza.email>
->>> ---
->>>    drivers/dma/xilinx/xilinx_dma.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
->>> index bef2b031dba1..0817b74f7450 100644
->>> --- a/drivers/dma/xilinx/xilinx_dma.c
->>> +++ b/drivers/dma/xilinx/xilinx_dma.c
->>> @@ -920,9 +920,9 @@ static void xilinx_dma_free_descriptors(struct xilinx_dma_chan *chan)
->>>
->>>    	spin_lock_irqsave(&chan->lock, flags);
->>>
->>> -	xilinx_dma_free_desc_list(chan, &chan->pending_list);
->>>    	xilinx_dma_free_desc_list(chan, &chan->done_list);
->>>    	xilinx_dma_free_desc_list(chan, &chan->active_list);
->>> +	xilinx_dma_free_desc_list(chan, &chan->pending_list);
->>>
->>>    	spin_unlock_irqrestore(&chan->lock, flags);
->>>    }
->>>
->>> ---
->>> base-commit: 0d995da5fb97e8c312834575604d4423eb6225b7
->>> change-id: 20260817-fix-hw-buf-desc-reuse-b730e9e02185
->>>
->>> Best regards,
->>> --
->>> Alex Bereza <alex@bereza.email>
->>>
->>>
+>> Let's remove support for 440SP, since nobody can be using it anyway.
+>>
+>> This dead code was found by kconfirm, a static analysis tool for Kconfig.
+> 
+> It would be good to include history in the commit description:
+> 
+> As far as I can see, users of CONFIG_440SP were commented out by commit
+> f65573314e4e ("[POWERPC] Re-organize Kconfig code for 4xx in arch/
+> powerpc") and removed by commit ff5f483f3091 ("powerpc: 4xx: remove
+> commented out Kconfig entries")
+> 
+> 
+>>
+>> Signed-off-by: Julian Braha <julianbraha@gmail.com>
+>> ---
+>>   arch/powerpc/boot/cuboot-katmai.c   |  2 +-
+>>   arch/powerpc/include/asm/async_tx.h |  2 +-
+>>   arch/powerpc/include/asm/dcr-regs.h | 10 +++++-----
+>>   arch/powerpc/kernel/cpu_specs_44x.h | 12 ------------
+>>   arch/powerpc/platforms/44x/Kconfig  |  3 ---
+>>   drivers/dma/Kconfig                 |  2 +-
+>>   drivers/dma/ppc4xx/adma.c           |  9 ---------
+>>   drivers/dma/ppc4xx/adma.h           |  2 +-
+>>   drivers/dma/ppc4xx/dma.h            |  9 ---------
+>>   drivers/net/ethernet/ibm/emac/mal.h |  2 +-
+>>   10 files changed, 10 insertions(+), 43 deletions(-)
+>>
+>> diff --git a/arch/powerpc/boot/cuboot-katmai.c b/arch/powerpc/boot/
+>> cuboot-katmai.c
+>> index 034a748fde24..fcd71e76309f 100644
+>> --- a/arch/powerpc/boot/cuboot-katmai.c
+>> +++ b/arch/powerpc/boot/cuboot-katmai.c
+>> @@ -31,7 +31,7 @@ static void katmai_fixups(void)
+>>   {
+>>       unsigned long sysclk = 33333000;
+>>   -    /* 440SP Clock logic is all but identical to 440GX
+>> +    /* 440SPe Clock logic is all but identical to 440GX
+>>        * so we just use that code for now at least
+>>        */
+>>       ibm440spe_fixup_clocks(sysclk, 6 * 1843200, 0);
+>> diff --git a/arch/powerpc/include/asm/async_tx.h b/arch/powerpc/
+>> include/asm/async_tx.h
+>> index a14758426dd5..1ff5b2ca3ed1 100644
+>> --- a/arch/powerpc/include/asm/async_tx.h
+>> +++ b/arch/powerpc/include/asm/async_tx.h
+>> @@ -7,7 +7,7 @@
+>>   #ifndef _ASM_POWERPC_ASYNC_TX_H_
+>>   #define _ASM_POWERPC_ASYNC_TX_H_
+>>   -#if defined(CONFIG_440SPe) || defined(CONFIG_440SP)
+>> +#if defined(CONFIG_440SPe)
+> 
+> Replace by #ifdef CONFIG_440SPe
+
+Thanks for your feedback, will send a v2!
+
+- Julian Braha
 
