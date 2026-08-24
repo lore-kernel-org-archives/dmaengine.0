@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E135745A284;
-	Mon, 24 Aug 2026 16:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E110146D2D2;
+	Mon, 24 Aug 2026 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787589362; cv=none; b=Msck+VpuP/RhyOqCbZYxtArHKzrhVLsz5wRUB5PokUWmmGXv3DhpXSB/1yK93iUnlBl/4thXMp3hHhYxP12DooJ2orv2MMw5s50hbKTZ20aFhjDqrXDyTv1vhQEa6yTfah6I5hHsKLw3/SrwyIajZiGv/NQN7Fii7pgG3ZF3Qvk=
+	t=1787590984; cv=none; b=ZgkzkCl7QbtUlw+8A0j3zxs/cpqTirXqvYmsf82GEuof65crNotHP3QtxpLsZuKOHzMzhesLufAXt7pcRs6i0SwhTeX+ebbQvmwiGyZFcyGn+YpFVTmDNPE3UpzugxFuJIeVf4//iWOTidPUnIG5k1ncum6+H94fSLQYoKSg/FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787589362; c=relaxed/simple;
-	bh=+ZW1hMJjctBtwALiC5du66462Lu1h+TE1aq1uFtvCzs=;
+	s=arc-20240116; t=1787590984; c=relaxed/simple;
+	bh=Sn3NQoSJzme6L36GWmLFTgLStTVci8FzNomPEM0B8kA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mJGvnfszi7goJFCO9cAtl56pvkd1sVygeOcm36MLz4UmTJ7A6W/+OlR4tZ+939ZWL2uwZs0vmzh1tQZ+7yeNKdH4Sxr6SWQWn2ViCVMAWj5QnKYEs70zLQa1p27ZM/HEgJE+bXQO7ulYEnhfdSegUQR5JflZlGkcwSo7tJEVSzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/0tXVws; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=DPNsdpiLb1AQE/RXKne2J8ChJPJWWbf0omoZ8MwX92QH2xnRkXEb2azpe2vpZnZSOGWXWu703MgedDS2NuyII/I/NaZ4WrGinlyr9rnDAQaE0upbaOXmtLWZ1sWmpIGe71cm/Fjvp9PsaJip3SV0EqTZozjG8QX89SmXYOkiMw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNgdcvcI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/0tXVws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7ED1F000E9;
-	Mon, 24 Aug 2026 16:35:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNgdcvcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EACA1F00A3F;
+	Mon, 24 Aug 2026 17:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787589361;
-	bh=+ZW1hMJjctBtwALiC5du66462Lu1h+TE1aq1uFtvCzs=;
+	s=k20260515; t=1787590982;
+	bh=Sn3NQoSJzme6L36GWmLFTgLStTVci8FzNomPEM0B8kA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=f/0tXVwsKq25OehT4aF6oByzoBr+fUQgx8jEPl9VcGEMUgdrDwSA+5eTPy8oG5eZ0
-	 0bF4stDY4TtdQ6oY4oFpgEXlbOShy6myLj9OmTIn0IIVoRB8lH4yluP+hpN/lUh/wt
-	 VbZ7/YoGWPjVm1OVSz2oWvKe5DwYiMk21moAaFy8CNg8njIbJfCiReY2PMeB35Ezvm
-	 bu66QZs1GdSZ2gSFkxu7bmbDaSt8Gkh8ZpaG/4Oxet0EQx31rRgMWuKtuby9X2krqJ
-	 W+EemDg7WvgATo8HDfl/YDKzJ2aDTuMhig28BH8syvUH7T+fWR5WHh4vdC7l7WpULX
-	 geMzR54f7i0rw==
-Date: Mon, 24 Aug 2026 17:35:53 +0100
+	b=gNgdcvcIx8a+a5bYeU8B+fnCWUfUncnAfuZiekiUAceIeDGDCFrW3N6hWSGkZJal8
+	 N7zzKfe3co6R2YMKW38IE/yyX1yUx0RNgAbKV9H5gf2vUSPQsvPlXiuHNFqd/rdoCv
+	 jOQV8xOUfI8Py+cHAniffUfVAQZrDWaqoEqFxCYf7TWJXgBJdIP4ejXV3sVKu2svob
+	 poU8QxyvF4VQzWLEjlsY1mWNXUrzXI3P9ryT7y0zE8wOc2AzGgwDmBeYxc/P/l5e+R
+	 rf6SeUUFaMMh2kcrsgmnUpHe8t/zCQeOjp5aabgxkGivsHn/PehKN/Ip/sNw0SRnv8
+	 lUmjVHFv2mjgQ==
+Date: Mon, 24 Aug 2026 18:02:54 +0100
 From: Conor Dooley <conor@kernel.org>
 To: wangjia@ultrarisc.com
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -53,10 +53,11 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
 	linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
 	netdev@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 01/12] dt-bindings: riscv: cpus: Fix yamllint style issues
-Message-ID: <20260824-outpost-mandarin-532989726b7d@spud>
+Subject: Re: [PATCH 03/12] dt-bindings: riscv: cpus: Add UltraRISC CP100
+ compatible
+Message-ID: <20260824-retry-line-91ca75e4697b@spud>
 References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
- <20260824-ultrarisc-dts-v1-1-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-3-61ab7aebe9e5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -64,28 +65,26 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8v5dm5XnVj40MIRJ"
+	protocol="application/pgp-signature"; boundary="ZxiAF7oUeylrgdrp"
 Content-Disposition: inline
-In-Reply-To: <20260824-ultrarisc-dts-v1-1-61ab7aebe9e5@ultrarisc.com>
+In-Reply-To: <20260824-ultrarisc-dts-v1-3-61ab7aebe9e5@ultrarisc.com>
 
---8v5dm5XnVj40MIRJ
+--ZxiAF7oUeylrgdrp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
 Acked-by: Conor Dooley <conor.dooley@microchip.com>
 pw-bot: not-applicable
 
-Or I can take it if needs be.
-
---8v5dm5XnVj40MIRJ
+--ZxiAF7oUeylrgdrp
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaoxy6QAKCRB4tDGHoIJi
-0vb9AQDtUF9H8kkJH+6QKRQJH8iwwdaldMbo3HPU6yiA6vWiuwD9H2afICo0iqA0
-++arQAoMF3AH3z4DdOsNWb0Fnh+g2gA=
-=5zz5
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaox5PgAKCRB4tDGHoIJi
+0sDrAP9XKwIBEaR3MpxaxdfbOGBHs01AvWxiZMtJrBwMXqdaIAEAipE1uMvHlsAh
+TWL/wBRbELQlrVyX37Va7BNMl5rYxAM=
+=EULM
 -----END PGP SIGNATURE-----
 
---8v5dm5XnVj40MIRJ--
+--ZxiAF7oUeylrgdrp--
