@@ -1,136 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BC94611CA
-	for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 16:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E135745A284;
+	Mon, 24 Aug 2026 16:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787588365; cv=none; b=EurAQ3vGE/p4I5otI1BZgNZzRJLcEgBuMJYtDIGciruJd4J1Xl3Ya1SPHkl50bcZ/1QuwE7gf2S8j29X4b+yAbxENTrVT4Szp8pMogBo6KEKQ1L9NW2prfDEb48eaCWQz88b8Mu/P9dUfZB5hS6be044maxk7XEVZBAuUI++Guk=
+	t=1787589362; cv=none; b=Msck+VpuP/RhyOqCbZYxtArHKzrhVLsz5wRUB5PokUWmmGXv3DhpXSB/1yK93iUnlBl/4thXMp3hHhYxP12DooJ2orv2MMw5s50hbKTZ20aFhjDqrXDyTv1vhQEa6yTfah6I5hHsKLw3/SrwyIajZiGv/NQN7Fii7pgG3ZF3Qvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787588365; c=relaxed/simple;
-	bh=rNdDtFDU2axzuWfQoyDcTdmbEp2bNS83R5Xa4ajWivY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nVkuqJUekj77y2LhgrZ9633igfwnZC2njhFC/cWydbiPBdOT+IhNPobcaQIifm3NX17MvQ8GJzhI5waVRrahKVbBtGZ7uwdAf2ufhJtq/wZUR1earrrVAXaz9RJ80+y8WSilHuPO8l6gPhW+SbIMyv6CnaROyp61hR3w1WVNy2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e2zx3Q+D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787589362; c=relaxed/simple;
+	bh=+ZW1hMJjctBtwALiC5du66462Lu1h+TE1aq1uFtvCzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJGvnfszi7goJFCO9cAtl56pvkd1sVygeOcm36MLz4UmTJ7A6W/+OlR4tZ+939ZWL2uwZs0vmzh1tQZ+7yeNKdH4Sxr6SWQWn2ViCVMAWj5QnKYEs70zLQa1p27ZM/HEgJE+bXQO7ulYEnhfdSegUQR5JflZlGkcwSo7tJEVSzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/0tXVws; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e2zx3Q+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE861F00AC4
-	for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 16:19:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/0tXVws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7ED1F000E9;
+	Mon, 24 Aug 2026 16:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787588362;
-	bh=8lJZ+v1tQE+7fXGv9gG2/kR5WGSGWGubrkKIdBQfjbg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=e2zx3Q+DaSkTKQzibxEcudcXsl5ipdlSV+bIEg6UXND2/I0uEFHbnBB6iwQfKU0WB
-	 M+T27rCEJhOr0vHHt+3LbEDUe3aVyTEoWNaSnQTtGnDBJkLJh+vljtQ+xMRted2fm2
-	 mUnQ3ft56/wO426SMGDX7BK6/6o3NT+yZRWcyS5JEGmpVXpZ4sD2yOSYzX7quX6+IA
-	 QmjSXGB1xKkOguoL6DW+TiGgYnnBKxQ9exXoPyoVic9VNro61PLSUKt32xDg6wdsty
-	 MuYofxM79HiaDFwYuwuzRhvek2/1pVV8DFbU5mDu26TljRrFRoUJNsclHUpefZvn/Q
-	 RU+84vR0H7HYg==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-39c74722e27so877651fa.0
-        for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 09:19:22 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RoK+ySQSXhaFXOw3W45Z0do/AwZy9ohk3xKWOQX4tfartAF+EUEy1Cm+uTlP3SuNmFYL7qvgwtUFDI=@vger.kernel.org
-X-Gm-Message-State: AFuF++mIZGRZHr4+WzeG7JDJUciK+4LdUTXk5Sl+79ufCUugb03WGd26
-	f6dKmhivrnDmXZ0Zt2wRu3E/ViKAJLJR20XBXLV4MWxUVpOIPPgNN3YntdklDsLVWNLWOUVpB05
-	h22XBW/IVMqmD8HNxMy+tGVUcL49d9LM=
-X-Received: by 2002:a2e:be2b:0:b0:3a1:749:3031 with SMTP id
- 38308e7fff4ca-3a1ed8e6121mr897261fa.0.1787588360914; Mon, 24 Aug 2026
- 09:19:20 -0700 (PDT)
+	s=k20260515; t=1787589361;
+	bh=+ZW1hMJjctBtwALiC5du66462Lu1h+TE1aq1uFtvCzs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=f/0tXVwsKq25OehT4aF6oByzoBr+fUQgx8jEPl9VcGEMUgdrDwSA+5eTPy8oG5eZ0
+	 0bF4stDY4TtdQ6oY4oFpgEXlbOShy6myLj9OmTIn0IIVoRB8lH4yluP+hpN/lUh/wt
+	 VbZ7/YoGWPjVm1OVSz2oWvKe5DwYiMk21moAaFy8CNg8njIbJfCiReY2PMeB35Ezvm
+	 bu66QZs1GdSZ2gSFkxu7bmbDaSt8Gkh8ZpaG/4Oxet0EQx31rRgMWuKtuby9X2krqJ
+	 W+EemDg7WvgATo8HDfl/YDKzJ2aDTuMhig28BH8syvUH7T+fWR5WHh4vdC7l7WpULX
+	 geMzR54f7i0rw==
+Date: Mon, 24 Aug 2026 17:35:53 +0100
+From: Conor Dooley <conor@kernel.org>
+To: wangjia@ultrarisc.com
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org,
+	netdev@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH 01/12] dt-bindings: riscv: cpus: Fix yamllint style issues
+Message-ID: <20260824-outpost-mandarin-532989726b7d@spud>
+References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-1-61ab7aebe9e5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260810100452.426320-1-nagendra.golla@amd.com> <20260810100452.426320-3-nagendra.golla@amd.com>
-In-Reply-To: <20260810100452.426320-3-nagendra.golla@amd.com>
-From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Date: Mon, 24 Aug 2026 18:18:39 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gKwxBp=Ajm5_iJEP0GTY5J7SJnHJGCQjfKYgmOHqE0xg@mail.gmail.com>
-X-Gm-Features: AcwNN1Vm_R3byA4Vsfe3EkAk1m9zCfndN3eNtueRTEDziUufHrE5YCmoodKHCrI
-Message-ID: <CAJZ5v0gKwxBp=Ajm5_iJEP0GTY5J7SJnHJGCQjfKYgmOHqE0xg@mail.gmail.com>
-Subject: Re: [PATCH V3 2/6] PM: runtime: Add pm_runtime_if_active guard and
- conditional variant
-To: Golla Nagendra <nagendra.golla@amd.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, michal.simek@amd.com, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org, 
-	git@amd.com, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="8v5dm5XnVj40MIRJ"
+Content-Disposition: inline
+In-Reply-To: <20260824-ultrarisc-dts-v1-1-61ab7aebe9e5@ultrarisc.com>
 
-On Mon, Aug 10, 2026 at 12:11=E2=80=AFPM Golla Nagendra <nagendra.golla@amd=
-.com> wrote:
->
-> Add a pm_runtime_if_active base guard and its _try conditional variant
-> to pm_runtime.h for drivers that need to conditionally acquire a runtime
-> PM reference only when the device is already active.
->
-> The base guard must not be used directly via guard()/scoped_guard()
-> because pm_runtime_get_if_active() only acquires a reference when it
-> returns 1; the destructor unconditionally calls pm_runtime_put(), which
-> would underflow usage_count on a suspended or RPM-disabled device. The
-> base guard exists solely to back the DEFINE_GUARD_COND _try variant.
+--8v5dm5XnVj40MIRJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Which is not nice and confusing IMV.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+pw-bot: not-applicable
 
-Is there anything like that anywhere else in the kernel?
+Or I can take it if needs be.
 
-> The _try variant (used via PM_RUNTIME_ACQUIRE_IF_ACTIVE) checks the
-> return value and only runs the destructor when the reference was
-> actually acquired. This is useful in interrupt handlers where the
-> device may be runtime-suspended and MMIO accesses must be avoided.
->
-> Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
-> ---
-> Changes in V3:
-> - New patch: add PM_RUNTIME_ACQUIRE_IF_ACTIVE() guard and backing
->   infrastructure to pm_runtime.h so that drivers
->   can use a structured guard instead of an open-coded
->   pm_runtime_get_if_active()/pm_runtime_put() pair
-> ---
->  include/linux/pm_runtime.h | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
-> index 64921b10ac74..bc6de97e6111 100644
-> --- a/include/linux/pm_runtime.h
-> +++ b/include/linux/pm_runtime.h
-> @@ -609,6 +609,13 @@ DEFINE_GUARD(pm_runtime_active, struct device *,
->              pm_runtime_get_sync(_T), pm_runtime_put(_T));
->  DEFINE_GUARD(pm_runtime_active_auto, struct device *,
->              pm_runtime_get_sync(_T), pm_runtime_put_autosuspend(_T));
-> +/*
-> + * Do not use directly -- the destructor calls pm_runtime_put()
-> + * unconditionally, which underflows if no reference was acquired.
-> + * Use only via the _try variant below.
-> + */
-> +DEFINE_GUARD(pm_runtime_if_active, struct device *,
-> +            pm_runtime_get_if_active(_T), pm_runtime_put(_T));
->  /*
->   * Use the following guards with ACQUIRE()/ACQUIRE_ERR().
->   *
-> @@ -624,6 +631,8 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try,
->                   pm_runtime_get_active(_T, RPM_TRANSPARENT), _RET =3D=3D=
- 0)
->  DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
->                   pm_runtime_resume_and_get(_T), _RET =3D=3D 0)
-> +DEFINE_GUARD_COND(pm_runtime_if_active, _try,
-> +                 pm_runtime_get_if_active(_T) ?: -EAGAIN, _RET =3D=3D 1)
->
->  /* ACQUIRE() wrapper macros for the guards defined above. */
->
-> @@ -639,6 +648,9 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enable=
-d,
->  #define PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND(_dev, _var)  \
->         ACQUIRE(pm_runtime_active_auto_try_enabled, _var)(_dev)
->
-> +#define PM_RUNTIME_ACQUIRE_IF_ACTIVE(_dev, _var)       \
-> +       ACQUIRE(pm_runtime_if_active_try, _var)(_dev)
-> +
->  /*
->   * ACQUIRE_ERR() wrapper macro for guard pm_runtime_active.
->   *
-> --
-> 2.43.7
->
+--8v5dm5XnVj40MIRJ
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaoxy6QAKCRB4tDGHoIJi
+0vb9AQDtUF9H8kkJH+6QKRQJH8iwwdaldMbo3HPU6yiA6vWiuwD9H2afICo0iqA0
+++arQAoMF3AH3z4DdOsNWb0Fnh+g2gA=
+=5zz5
+-----END PGP SIGNATURE-----
+
+--8v5dm5XnVj40MIRJ--
