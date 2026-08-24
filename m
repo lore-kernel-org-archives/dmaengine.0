@@ -1,111 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFED3F20FA
-	for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 11:39:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F008841E6C5;
+	Mon, 24 Aug 2026 13:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787571601; cv=none; b=eLNdAljTeOCV1pSy367pHGSWZKCdz19u3/dcDw2RzWIKHto8I3dKJkh7Pk/tMnEu678WUCcDGVM9JMR36VyjeamrKCNTikJXaV6XziqKMk2JFiW/3nm6n4wU8A+j/kcDJ36EjzXj2f5hNIMGXMakcnpcsIm8cMZUubmDDnVAy5k=
+	t=1787576585; cv=none; b=p325RQsek/TtCzYndq5lYPhKJSeKjsBB7a8u+Er/pVCBHn1UzQJx9yMIXMApMENa/MIz1xklXjZg+n6D30XSS9/RW6XvqIp0k36UI9PMUWnNptcmrb910i3l+qD6MwviGBVk52hW8GBpQFapl7y/SBJ6DydOQjMXPA4nqOOXH+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787571601; c=relaxed/simple;
-	bh=26HxvGNK9DVTU4YC0T0WVmCnuuzpSawPprXNbpF3BAg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=UFeLwJ2HqUqS8Si1bjBr+Ckpjpz8VDt75P6RDx81DCZq8ZfHmPkbE6Q3rw7lrAUYLPqt8tgTbeUxBkpq1pU5HAtEN6Q1ohs12Nslccb/SVldWVTPg+f+o0WkvxdvnEdz+FdQfAn55qWHKKrLc/1gRX93qVg2jcdZNvHk/Ypr9TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eqlpsH6P; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787576585; c=relaxed/simple;
+	bh=rISoIGcu3acgHcr6u7ATXSnlDoqloOptU3VnGEGcGZs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S/BAq2B46Ye7rGEbZ1bQSqTjHU5DakMA7Y2oiknZZ/gRVsX2P6K+/4e/AbORSiQC4bUHcihQqMBHwxxQlX/q+8JFwQD64d3TnIByM1TweNBHrBLWkeN2YWXEa2fScVq3QgAuvDQG89DL5avsO3h5m8Js01dAuwvthIs8YyIhjNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=lsPC+KZc; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eqlpsH6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D64D1F000E9;
-	Mon, 24 Aug 2026 11:39:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787571599;
-	bh=zRVPJY3WE1BMmgpvb8OWW5cagiRXpNtADqZZgXRUpbQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=eqlpsH6Pyf4VS5XVgEqKzkJb8NTs05rG39TdxeMJUi8QnWTWtTbJY9w7bw/5wvo+V
-	 w9+sGm42OqCzJ9jZueoxuIY0nZF1ZIRUBsq2qcSI3Ra+uAXUH7qg30F3cp7baWJFMx
-	 N6mkQSbWtiJ0ufP7XZdqCHJfsnbG4eQOFPlEVzevMLuYradvNz8YZX8QkRNYjjiHXB
-	 LsNKlE7tsa88iAPHsN6mQe+aSqSfoK2B27GQblQiOOxqI2UtrW9FwJMOHPLru4w2q5
-	 cU1q5xTOv/SlBwA3MKhB4gcqSuQN3fpxDwixwgi3pf+lIqYRz3ulhlew/gY0ukgsfd
-	 c6SDZwmyUoysQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] i2c: qcom-geni: Add support for I2C High-Speed mode
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jyothi Kumar Seerapu" <jyothi.seerapu@oss.qualcomm.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260824-i2c-hs-v1-2-8dd94e5c6113@oss.qualcomm.com>
-References: <20260824-i2c-hs-v1-0-8dd94e5c6113@oss.qualcomm.com>
- <20260824-i2c-hs-v1-2-8dd94e5c6113@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 24 Aug 2026 11:39:58 +0000
-Message-Id: <20260824113959.2D64D1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="lsPC+KZc"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=3ct6506Qb0sPYJHueF+mC3+i6CnJwRsT9BxuFgK8Ljg=; b=lsPC+KZcrkWtq8gMhRbGTgoNAI
+	kleVUabpmWsgOIq1Jwv2A8PwZJBW62DsUJVBQaCB5XEKQLWKEMi21Tn9q0F1yMcSDa89PyDKzCLSf
+	RoLqks98BL8ePQk2JTnnzAx6++qHOGYl9KGqsMds/wkIei86ik3W4WZUH+9riybmlh4s=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1wyUJy-001EfO-OB; Mon, 24 Aug 2026 15:02:38 +0200
+Date: Mon, 24 Aug 2026 15:02:38 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: wangjia@ultrarisc.com
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-i2c@vger.kernel.org, netdev@vger.kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH 11/12] riscv: dts: ultrarisc: Add Shenzhen Rongda M0
+ board device tree
+Message-ID: <d93868e7-00c7-4251-9b23-8b3ed0535185@lunn.ch>
+References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-11-61ab7aebe9e5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260824-ultrarisc-dts-v1-11-61ab7aebe9e5@ultrarisc.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Missing I2C_HS_WRITE checks in geni_i2c_gpi() cause unintended TX =
-DMA mapping for read messages and out-of-bounds array accesses.
---
+> +&ethernet {
+> +	phy-handle = <&phy0>;
+> +	/*
+> +	 * YT8531 RGMII timing on this board requires no PHY internal delays.
 
---- Patch [2]: [PATCH 2/2] i2c: qcom-geni: Add support for I2C High-Speed m=
-ode ---
-commit 010ffaa50c8bd9bb0e57a40b999e343cea742bb8
-Author: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+Please extend this sentence with an explanation why it needs no delay?
 
-i2c: qcom-geni: Add support for I2C High-Speed mode
+There are times this is correct, but it is also mostly wrong. Without
+an explanation, i cannot say if this is correct or not.
 
-Implement I2C High-Speed (HS) mode for the Qualcomm GENI I2C controller.
-Detect HS mode requests based on 3.4 MHz frequency and configure the
-hardware accordingly.
-
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-=
-qcom-geni.c
-> index 658636c1ee0e2..3712e0dd9e68d 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-[ ... ]
-> @@ -700,7 +756,7 @@ static int geni_i2c_gpi(struct geni_i2c_dev *gi2c, st=
-ruct i2c_msg msgs[],
->  		goto out;
->  	}
-> =20
-> -	if (op =3D=3D I2C_WRITE)
-> +	if (op =3D=3D I2C_WRITE || op =3D=3D I2C_HS_WRITE)
->  		map_dirn =3D DMA_TO_DEVICE;
->  	else
->  		map_dirn =3D DMA_FROM_DEVICE;
-
-[Severity: High]
-Will this cause unintended TX DMA mapping and out-of-bounds array accesses
-for High-Speed mode read messages?
-
-It looks like op =3D=3D I2C_HS_WRITE was added here for map_dirn, but it wa=
-sn't
-added to the check that skips TX DMA mapping for read messages earlier in
-this function:
-
-    if (op =3D=3D I2C_WRITE && msgs[msg_idx].flags & I2C_M_RD) {
-            peripheral->multi_msg =3D true;
-            goto skip_tx_dma_map;
-    }
-
-Because I2C_HS_WRITE isn't checked here, High-Speed reads will fail to skip
-the TX DMA mapping.
-
-Additionally, it appears the same omission happens later in the function
-when incrementing msg_idx_cnt:
-
-    if (!((msgs[msg_idx].flags & I2C_M_RD) && op =3D=3D I2C_WRITE))
-            gi2c_gpi_xfer->msg_idx_cnt++;
-
-Since I2C_HS_WRITE is missing, the counter will be prematurely incremented
-for HS reads. When the subsequent RX call processes the read message with
-I2C_HS_READ, it will use the incremented msg_idx_cnt, potentially pointing
-out of bounds of the msgs array.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260824-i2c-hs-v1-=
-0-8dd94e5c6113@oss.qualcomm.com?part=3D2
+   Andrew
