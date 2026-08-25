@@ -1,260 +1,263 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020093.outbound.protection.outlook.com [52.101.229.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B76138839D
-	for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 20:24:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17A72EEE75;
+	Tue, 25 Aug 2026 02:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.93
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787603061; cv=pass; b=Ggi3W4yG4dae9TaSja/HALt2OXJZva3TUgKadLyh5+OPSAygJgXE/LFC4If9x/4EvPbR7eCPn5N3O1uKVS+Owr5I8J8E1HK1AjU05R04w/HVHQ456vCZ8Md0xTudYcnlhEc610meaol/yS9fs+mQIIcI6SbTS68Ha9OVgWAkxJA=
+	t=1787625422; cv=fail; b=VzXkV59nBmCQPiJLH5SAfHKXrKQT3bBWLSjjOcTvDO2CT9YQU+hA4ls9fkg0OK8VPwA213+75eLKWC3akW7qiU5Ozesf2IlzQOvba1HkhoG4mKTnZoGrodwiPH/w2Bq8TUIpm1dq/EBDn8TRHkgv/LZD7Bf3qSPtcObtezNUEGA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787603061; c=relaxed/simple;
-	bh=NRos0QdouQhmcr4VKKCe6wuLpj9sJreDcMARIW7wl8w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ag0jKyJffmdH0a//rxXjxdU8uXW8JMaqB8P6iSsnFxlgG2W+y/172APnRydbZ4U4H1cr/zwv2bjGYbAYUaakfIdk9VPWp8jpd8zDZiVlHQRP9WEMID296J6o4spCeS0cc4LwGRepMkg+tdRqGlDzjjH24vGf41kSPqWLEDO/qNU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lwqs1dM6; arc=pass smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787625422; c=relaxed/simple;
+	bh=GMQAzrtGpgtvBHpGJSg+YzdEGhnYyYVaei15JDrcyVM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=YmJYbxKVi05LPQOlJv0EZKZ9pm7kX3I8JbinKzawzWiQEtZHScs8fn5pTJbNNG7gsPXed9FJZ2OHafwZ/9ULzjprWDedEGiFS1WaTScHnmJ2TCfmhX6YPmch/RYLMrZbiAcCxfvz471j23VYqGwB1Gxy5XwgHCACv5qSN6zuIJg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=q1rL/Mrt; arc=fail smtp.client-ip=52.101.229.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwqs1dM6"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6a17cb94b26so7465254a12.3
-        for <dmaengine@vger.kernel.org>; Mon, 24 Aug 2026 13:24:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787603058; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XNtk/gJAOmmMoaR/47+8c4brlHoQL3ovpFdNaDwwxjEaCWh8uCVZVfPxhNLAOIqrlZ
-         P6HIbBAe3JPJ8QNObTIxInd5HZ8FbpZhNIm22YTiRZ6xShYkDbkp93plPZbB79Pe7EQM
-         GJqAaVBKPX25Cmv+4FNbviQJFNhEWbLMmiOt0cFReKwoKSWFR4VQknjLXEYgs3Vof4GH
-         5bqYgUiFEmrspn6YKpu7kJ0+S/CkU/MeE4A/oMt+ziqdA6umt+987pKPsWpjEi3BuiaU
-         VcihQ1haB/9zLtT85P6MeddM/A4J1nN2kSWUP3v+ilVRmGLEYD3JSM+vk6WNH3K7P1wR
-         7rnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+Ae8n7e2LG5AISEZM+Kf8LPJGt1FwWYvYnAfYa7Gl4o=;
-        fh=qfuWBQ7eQ4UUv7HDrLQXFhxUKbyAroUFqYScBhqYvdU=;
-        b=SYgvRYa0G8LtU0uRFjl9bTuYxJQvlnL9uE5V63PlasW4PTRMlzu1cC6w39aNvHqAZ2
-         8wNiI2CoaaQi2OIPhITiddvAgZxJfzsPnkTPR04anNjJrHneIqO7+naCJLHFBI6ZTbxh
-         3khLvkdE9LCAxQibrKSN1bBKnfH0k6kb+PHt4F3IHut3a+gDcPLhNWiZ9GN2WG/+jHZv
-         axmxjc/3SI02V4t4tr7Hn3UKqcL1HK5RyYAaaDcF7/XLg/OlPmSofE1aMm2Ncy1c9FL0
-         bNoTiWlEEWrJsO+7K884yf6PiT0B4SkxqwfwXkZdUMi+VVx4xPC8CeOyEUCeyyLI2nvY
-         tcow==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787603058; x=1788207858; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+Ae8n7e2LG5AISEZM+Kf8LPJGt1FwWYvYnAfYa7Gl4o=;
-        b=lwqs1dM6XU47RpZ1kPpPSP7X5QBwEfGzxlht8N7Yet6TXJqgYVXL3krjbJPXjSQPzH
-         RNoF3wCrM6Em294CtueshQK3mAflw/szBTKNieBKdGhvI/Fy9D3DI/9z67MFXUyv6NYF
-         +qN/xPyg/s8m6Jh9krvzWib+l8+jiCTXeTWuE+G7pRGqh558c8Uv0qoGzpVwKXEP87vq
-         I4+8kkR7XqvincwnFlPD5Co3Rjo8MUuNEM7KL00OaBluRs5Yw+NH7G0mfygTYKN8L5rE
-         bprHsTbIuhirvL+W+bL/d6O5r1JOPFEBiloArergtwGs0omLKrclHUKLlQt2oThl4hPv
-         P/ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787603058; x=1788207858;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+Ae8n7e2LG5AISEZM+Kf8LPJGt1FwWYvYnAfYa7Gl4o=;
-        b=stn0QHPYcsTYL82UK6qRT2esRQmxe1ZeM9qE4qOYVP6J/pQEjmTBP9mE3tRh7SnDzL
-         0aer/e+H0qIr1+wUh/Lx1hNstCT3pQ+mCZvPUuDK6m5NR8g4u6ecG1FMFRU2zY+wkgou
-         1CvKqd7N+6ZsP0piHvNnq65sTxL9AM9+HFZT5YqES9qN1DQYe8YM2yPICjPW6fwntED1
-         3pD+t9b12oaT51sk69OYNVrmKE6EsxX5Sor60D+zmJtomw+Ol4nwmVZVshqU/YabtZNy
-         RKwYCM0Q50+5iTPkUX5Ju0146PaL0tJn2dNL0jBBbm54PUMPHziE6ls4cUIoEzQJV8pE
-         aeBw==
-X-Gm-Message-State: AFuF++mKAM3QVDNvx/8eX7b/w1aibv83gbcUYEXOxrOrMY/IHT2nf2WE
-	sq5IRd3fy3WpXDBpmC4fudEhcL/g2/Nc+XgsGLT5HrQ5LP/mxzCZ44IshQV3wIJcWPUSkw9uopy
-	SCIWtxXUSa0zWIg0vVq5AQHHnOorjgWQ=
-X-Gm-Gg: AR+sD12LgaV+JjgfTBWaZ8CExncoOhu9jPlW6MIfA4y6Lbjh1FyMqRAX5iyLFkUpBXR
-	3ddWmJD4Y0dmXjfvfrFQZJznUzZlWHVjQ1UkqjoiCjEjiR+nAXJVqhFLck8r8izQ8p5044a5QBS
-	R97aPO1yOwHY3/MsjKRNHyEPjnlkE+hNNJVI9Mc6wHwfILnZf1fn2x14uHU3PgOK2hSw8nDttA8
-	tnEcoDfENREBbyj2FVH0mfjNGH7P7mh5om2jAokwHnPqhQirG5J5HapbF8EGsVOOWVUDlfG/25z
-	qf+VS9g4rfN3gpiuhMUfbh2gq9xxZkNVIwg/GFI/Vfne8V7Yk01gxTih3QASZx3gc3fffrN9dXB
-	kYtzHHn6U09XzyaogVukt7QFRJpnGZnanTSzuY/igT8ACiZsmv8AMl70rSiMI3Qp/KmGlKnolUz
-	1TZDWQUOjF5Bs0Q60+2Egxo2ikGhT0gNPIlBkA8BeV46axdcRHFT2WHaw=
-X-Received: by 2002:a05:6402:2553:b0:6a3:f63a:4978 with SMTP id
- 4fb4d7f45d1cf-6a5c412b2d1mr1099611a12.8.1787603057629; Mon, 24 Aug 2026
- 13:24:17 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="q1rL/Mrt"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OrT0FHgjSrwZ4OHWihLcG/nzCrkAE/ORzPdyCuFBjujQUH2RMvPYoWkBDZZW7xkF8TwtQZ+v/bBVL4849ilV3yRL7HCVxN+7oXv/SGTgrH6i75eEjKIYkFaVYRL5QkZm5j8fVAR54WXd/JvU7ayYmwS4xtptlIznQZNO4sw4ws/jYXq+66qcKHA+sEZ7rP4S2tqdCFFQrIFA2nnXGQOSUiw8WLVraA+y3TO71pY+3DU2/b038c1s37BabE6ORv4ow2pJ8th9SOycZOypCXT7iza6SXVdOJu19Pw7kJeL2NEBSyX5e1etYlm73+H567m+hMaFHeb+rMh0GMFWBTqiVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aTmN3U29eeOurhp36bJlCQ5P5rePPyWLZ8JLhQ0R9/s=;
+ b=XqSdd+lReZex3dhbwrKEwEoJkcVGMEXZ5ng7oB6FofmdDcIPvUNgy97TREu126D0HhbwORSmo1IRiDpX7jtmujwFcnYLrDA5PhGj3TyrI5FonT6lk7xIKO4ahnFnJEEkiM2NauIvtJb7l+fEDhyp6mXSO35nubuP7Whzx86SKo4ecGVxzFHVhbMBGHk5sv1Jl27ZFP8fmoVTdaqZwcEwFDpQI5e1aaT2BJ0e3ebRe3tyNIhWhDK5exh62WoHTKA4DFCPOSeEi5mLiHNJaUNXD07QwUKbWQbB7n6jlHZpiysAEP4vVDz4UlOc8kgO+pVEzTRXDYcSfqH2c9o70NDgtw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aTmN3U29eeOurhp36bJlCQ5P5rePPyWLZ8JLhQ0R9/s=;
+ b=q1rL/Mrt2weJ0yFEv4JL2pyAb0mTG9qV5PEF3dOy7xCsJNnjGZGGmtifIWybIsxBnmh1h8TMkWIoxjWtODcBV4R2PHjlkm8Hj5OzKH9E38UfwstU1hQjjXA6a/H1iD73/3JuU51u46F+AIEKTNREcufmI073Gm1o868Z+owRQEw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
+ by TY3P286MB2887.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:312::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
+ 2026 02:36:55 +0000
+Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::2305:327c:28ec:9b32%4]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
+ 02:36:55 +0000
+Date: Tue, 25 Aug 2026 11:36:54 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Randy Dunlap <rdunlap@infradead.org>, Vinod Koul <vkoul@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Rob Herring <robh@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
+	Damien Le Moal <dlemoal@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Marek Vasut <marek.vasut+renesas@mailbox.org>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
+	linux-pci@vger.kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v7 06/10] PCI: dwc: Implement endpoint DMA channel
+ delegation
+Message-ID: <oiozls3u4bubqzfk4hqjgauzmuka2ixs4b44rvmrmosdqyxa2v@crlid6rfy6v6>
+References: <20260813063757.3131865-1-den@valinux.co.jp>
+ <20260813063757.3131865-7-den@valinux.co.jp>
+ <an4WZkoIxCZ456Pb@SMW015318>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <an4WZkoIxCZ456Pb@SMW015318>
+X-ClientProxiedBy: TYCPR01CA0183.jpnprd01.prod.outlook.com
+ (2603:1096:400:2b0::19) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260823044900.11466-1-rosenp@gmail.com> <aoxiYtuTC3dULO06@SMW015318>
-In-Reply-To: <aoxiYtuTC3dULO06@SMW015318>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Mon, 24 Aug 2026 13:24:06 -0700
-X-Gm-Features: AcwNN1XpJbkOrkqlApIM67Pwt6WmF7_o1I_0iuQSJDmjWmSaJcuhbYbz5bz12YI
-Message-ID: <CAKxU2N_tmhkqh=wW82zrsHh56LuMKro-MzOFzJk5ETDx61xprw@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: bestcomm: ioremap early
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TY3P286MB2887:EE_
+X-MS-Office365-Filtering-Correlation-Id: d26eb167-1575-4b2c-ee1b-08df0251ba80
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|376014|7416014|1800799024|23010399003|366016|6133799003|56012099006|10067099003|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	uIy6SPDqG4OXw0lRyUWwxZICVB7BzdVb3hLFHqsFIU3O5I8EEOv3g3h/rB9awKGE6BSIW4NwVyzMTCIxB5cbFPwbpyljDZ1oSy4KUl1nTrACXjox+I2Izbul0d41XaR+p6+BlBrEGNNyTwD/1f4m5o6h0uzpM6wLzchNC6INZjdbiUzkdURerxv7R90U9r1wv/l1drWRYNDxn00D9Ba+4M7Ra+wPr9aO0nziw2+24qowJ3A/T7uk0aWzKS2kt//DglGG6Vhmkv9xn3c3lG2R9o93shmqOmilIaUfAG7f6podZwS5I/NHGVykEHs/8DLqhGkFRG2ronxTcCLQ/Cx4JyxfFMNGEIkbkW+wwcsgYG8yqR6YOCCtXt34Y5gnAOubXlYJwh4r884pH1w1MgrAlabEa6oj38WPZBCluQ8qKyqCdzl1SvIk7IDfPqFnTmriSXP9EOz2XlayN/M0cuxn48hBBX5Zb34dZ/odPELQjuYaEWaqX3k190OFGyvDTtQ5X9n6mVxsEgIHpS4NB7Bm6kwt/7f2YE1j4bi8hchGmQ8hswDAQgR/LOs0zVR4f0YWICsnC8MlOuZHDH1Qdoant2FZMkgiDb+ney0U9H7r5OZ1Pzab6DhsvvE5lqt96lve6CQa+xi2T29mlqXjUyER950xeD39vemuKwsmbHoJ0HA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(7416014)(1800799024)(23010399003)(366016)(6133799003)(56012099006)(10067099003)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?3jQC4yKiRvYWNPoqkSUq4aiMtF8nYVw/1YmVk91OlwqDueBmi4YrGogVZLXY?=
+ =?us-ascii?Q?Dc3TSa2zYmEqKzbicgTouX6m/UQ+inckCWD6o5alR1CARgrrfLWkmXA4EwjN?=
+ =?us-ascii?Q?7e894U6rC34jS683Hrl0a0w2pXTbpo6o+u44E5MN1mNSiHYpJ+AbnfFwq8ez?=
+ =?us-ascii?Q?9bOtwsPw1bYh5kHPdh3cVUuiFoJkAi/FzGctHtOQ8+L8eRa6OBCasDCcYjqL?=
+ =?us-ascii?Q?XSmIqdn+w2C9Uk400Hc7cezOyOOXgJShmyH9j/N1TjPcNx829WsKlk4o2uRv?=
+ =?us-ascii?Q?Xnad3ZyDH+AtM6NzJ4xI3383qLUO+0KsKbood+SaJT+2qd5V1Rr4yn4QMAxe?=
+ =?us-ascii?Q?rnTJgEceMluETuJDdu7cIiz6B4JPNeQe4uHPIkqnE45W/oxMNW2GQZLlIxBU?=
+ =?us-ascii?Q?Rl8xnywKjBHrmeQoK9Zs6/o6QSCH0Yt5dcULT98vwT8QHvG223sp48xfz3w8?=
+ =?us-ascii?Q?RSlWSKx/9igBlYhmvvDri+seksw5thOtnywdnSSOv5uCwYSEMZ9HOtJyH7Q9?=
+ =?us-ascii?Q?FC70TWbrEI9tI0x92iRmAF3RnMuRnxu4xPctWBOieM0q7ArV4uu5xWHPctFk?=
+ =?us-ascii?Q?KW8kul8UAXnAQbw550qhZkrp0nL/OVZchpeKYO0uob+PFycrnb1JgIW2pHID?=
+ =?us-ascii?Q?Ifs5n55ysj1SD0QC8bbYW0olpt7NAdziOZvLlD1HRrpwzjaNS83RaE0MHnkK?=
+ =?us-ascii?Q?29quCz7X4X1YDpJRhbLOP+7S710/B4JwKwvJ22O5YmVLBg514hxS62NXDrZg?=
+ =?us-ascii?Q?TJuhSBh2DcBKDVB0VdElMFO6BSIYbIT+r+6QO1wdyxthew+5i361uf9oqumx?=
+ =?us-ascii?Q?nIeJ7lWBu+DUgbrgnJuSSFvIJpT48v8yxbCHAZCJzguKDf4hnT1xJtt7eUgL?=
+ =?us-ascii?Q?D+RiCCbTyAQTP2Gq1rI7bR4DYpy/2k2224C2A/1BUw6/XmZNBoxzaPXlrY5I?=
+ =?us-ascii?Q?T++hj2+npRciFaYH7rSUB8A1Hrckn90z0MuU2p8JKPWf+882frATyJhG0A6N?=
+ =?us-ascii?Q?eH3sfyf7+rWNDBrRuv/3irpWBAtuwzORsTw9OQo+pe7vkzuPpxu9obuff5av?=
+ =?us-ascii?Q?3eY1zMEBjV5feGFJYNuteRwELQDOnGOyN6/VW4pqPb7KUKfnAAleAcMPS3fR?=
+ =?us-ascii?Q?eXnTjUUbDVPxMMjN5IDpJzVzv/BxJhf0mV77M+wfonvbJAmmNtPrUo3nZlTO?=
+ =?us-ascii?Q?ilcdpMNQSDmcUAKTprkfock0Q+qCaMTRm826JISXAmMyhq5xycYZHEP2DBMf?=
+ =?us-ascii?Q?2ZjR2ZoY1j06M/MugaI1Z8Ggak9asglNgCzZTWZnQHre/R58WKmtWWaasORf?=
+ =?us-ascii?Q?nq1PNaXRZ8sqHca4N1BpV6oTJaSngidFSj5Pk46x0Fyr8RghYDDn+2nRBk8p?=
+ =?us-ascii?Q?JP4FfDn/DRE7N+Im53hVsfXxH8qgEYrb3IZopGYsSprgxoq+IVYNTTtDoQ4Y?=
+ =?us-ascii?Q?oGfxyaf1mBllStHJfAZOB6yIzwLokNpsztwakAJCz5kUDf9MhCceHwFOHRf5?=
+ =?us-ascii?Q?B1TiFe9ZfiO9WSQKiQwxgCw/Q73Ov8CrWexUciXwDGvfgJ5DVfD9OgtZnxxF?=
+ =?us-ascii?Q?AckbKFjr27ScMeuH6eBRsGarXMTegntWA+R9NK13mXvTxxVO+5OFLqDcG3cu?=
+ =?us-ascii?Q?7MsL+GPU+fMnfpxVm3ruX4OiMdyFHkMAlSJRs+P7rqoqpkSU13wAbx//cmDK?=
+ =?us-ascii?Q?o2eU3cHA/59d2fWNAUyk+z2nJfrlrr9aZrViGHPCmYhhef0Ae1DaRQoBVkVS?=
+ =?us-ascii?Q?HdApQ61GvJjrm6DCqdQrmG/Ki50QeA+z0v7+a2LoAb/T9N4GIzt6?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: d26eb167-1575-4b2c-ee1b-08df0251ba80
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 02:36:55.6030
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3acvTWpVx0E4FiGVKDsLF8uFDdMnRTVU7fXMVlRC9+DgK2cBEozm0wqdpcB6EhuCQo/zcNwk6XtxJP67xwzAOg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY3P286MB2887
 
-On Mon, Aug 24, 2026 at 8:25=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wro=
-te:
->
-> On Sat, Aug 22, 2026 at 09:49:00PM -0700, Rosen Penev wrote:
->
-> subject: dmaengine: bestcomm: use devm_platform_get_and_ioremap_resource(=
-) to simplify code
->
->
-> > Doing so allows handling potential -EPROBE_DEFER before any work gets
-> > done.
+On Thu, Aug 13, 2026 at 02:09:26PM -0500, Frank Li wrote:
+> On Thu, Aug 13, 2026 at 03:37:53PM +0900, Koichiro Den wrote:
+> > Implement the EPC DMA channel delegation operations for DesignWare
+> > endpoint controllers. Verify that the DMA engine channel reserved by the
+> > endpoint function belongs to the integrated DesignWare eDMA instance,
+> > then hand its interrupt routing to the host.
 > >
-> > Replace the open-coded resource lookup, request_mem_region, ioremap and
-> > the manual iounmap/release_mem_region cleanup in probe/remove with the
-> > managed devm_platform_get_and_ioremap_resource() helper. This removes t=
-he
-> > now-unused error-unmap/release paths and simplifies probing.
+> > The DWC eDMA/HDMA engine generates DMA requests with a programmable
+> > requester function number. For delegated channels, the host-side
+> > dw-edma-pcie instance bound to the exposed DMA function programs its own
+> > PCI_FUNC() into the per-channel requester field; the endpoint-side chip
+> > func_no does
+> > not participate in that handoff.
 > >
-> > This also fixes a resource size mismatch between allocating and freeing=
-.
-> > From sashiko:
+> > Reject VF requests because the RC-programmable DWC eDMA/HDMA register
+> > window is assigned to a PF BAR only.
 > >
-> > >     release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+> > Reclaim returns interrupt routing to endpoint ownership. Propagate the
+> > EPC quiesce request so bind failure paths can reclaim unexposed channels
+> > without quiescing the DMA engine.
 > >
-> > This is a pre-existing issue, but does this mismatch in size during rel=
-ease
-> > cause a permanent resource leak?
->
-> %s/?/.
->
-> > The memory region is requested earlier in mpc52xx_bcom_probe() using th=
-e
-> > device tree node size:
-> >     if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
-> >                             DRIVER_NAME)) {
-> > However, the error path above attempts to release the region using a fi=
-xed
-> > compile-time size: sizeof(struct mpc52xx_sdma). Since __release_region(=
-)
-> > strictly verifies the boundaries of the requested resource, if these si=
-zes
-> > differ, the check fails and the I/O memory region is never freed. Drive=
-r
-> > unbinding in mpc52xx_bcom_remove() also uses this same fixed size.
->
-> Needn't this paragraph, "devm_platform_get_and_ioremap_resource..." alrea=
-dy
-> clear enough.
-This section is generated from Sashiko. Same as the above.
->
-> Frank
->
-> >
-> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > Signed-off-by: Koichiro Den <den@valinux.co.jp>
 > > ---
-> >  drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
-> >  1 file changed, 10 insertions(+), 35 deletions(-)
+> > Changes in v7:
+> >   - Delegate the DMA engine channel already reserved by the endpoint
+> >     function, matching the API and helper changes in patches 4 and 5.
 > >
-> > diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bes=
-tcomm.c
-> > index 432b43520ddc..44ff4a42376b 100644
-> > --- a/drivers/dma/bestcomm/bestcomm.c
-> > +++ b/drivers/dma/bestcomm/bestcomm.c
-> > @@ -13,7 +13,6 @@
-> >  #include <linux/kernel.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/of.h>
-> > -#include <linux/of_address.h>
-> >  #include <linux/of_irq.h>
-> >  #include <linux/platform_device.h>
-> >  #include <asm/io.h>
-> > @@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
-> >  static int mpc52xx_bcom_probe(struct platform_device *op)
-> >  {
-> >       struct device_node *ofn_sram;
-> > -     struct resource res_bcom;
-> > +     struct resource *res_bcom;
-> > +     void __iomem *regs;
+> >  .../pci/controller/dwc/pcie-designware-ep.c   | 42 +++++++++++++++++++
+> >  1 file changed, 42 insertions(+)
 > >
-> >       int rv;
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > index 0b915824963a..a74d3896e436 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> > @@ -858,6 +858,18 @@ dw_pcie_ep_find_bar_rsvd_region(struct dw_pcie_ep *ep,
+> >  	return NULL;
+> >  }
 > >
-> >       /* Inform user we're ok so far */
-> >       printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
-> >
-> > +     /* Get, reserve & map io */
-> > +     regs =3D devm_platform_get_and_ioremap_resource(op, 0, &res_bcom)=
-;
-> > +     if (IS_ERR(regs))
-> > +             return PTR_ERR(regs);
+> > +static int dw_pcie_ep_check_edma_vfunc(u8 vfunc_no)
+> > +{
+> > +	/*
+> > +	 * The DWC endpoint databook says it is not possible to assign the
+> > +	 * DMA/HDMA registers to any Virtual Function.
+> > +	 */
+> > +	if (vfunc_no)
+> > +		return -EOPNOTSUPP;
 > > +
-> >       /* Get the bestcomm node */
-> >       of_node_get(op->dev.of_node);
+> > +	return 0;
+> > +}
+> > +
+> >  static int
+> >  dw_pcie_ep_get_aux_resources_count(struct pci_epc *epc, u8 func_no,
+> >  				   u8 vfunc_no)
+> > @@ -933,6 +945,34 @@ dw_pcie_ep_get_aux_resources(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+> >  	return 0;
+> >  }
 > >
-> > @@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_dev=
-ice *op)
-> >       /* Save the node */
-> >       bcom_eng->ofnode =3D op->dev.of_node;
+> > +static int dw_pcie_ep_delegate_dma_chan(struct pci_epc *epc, u8 func_no,
+> > +					u8 vfunc_no, struct dma_chan *chan)
+> > +{
+> > +	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+> > +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> > +	struct dw_edma_chip *edma = &pci->edma;
+> > +	int ret;
+> > +
+> > +	ret = dw_pcie_ep_check_edma_vfunc(vfunc_no);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	if (!edma->dw)
+> > +		return -ENODEV;
+> > +
+> > +	if (!chan || chan->device->dev != edma->dev)
+> > +		return -EINVAL;
+> > +
+> > +	return dw_edma_delegate_chan(chan);
+> > +}
+> > +
+> > +static void dw_pcie_ep_reclaim_dma_chan(struct pci_epc *epc, u8 func_no,
+> > +					u8 vfunc_no, struct dma_chan *chan,
+> > +					bool quiesce)
+> > +{
+> > +	dw_edma_reclaim_chan(chan, quiesce);
+> > +}
+> > +
+> 
+> After use fixed chan_ids, needn't these functins. EPF driver already
+> find expected dma channel and config it remote only by standard API.
+
+(I've been somewhat holding this thread, sorry. I'm still unsure whether the
+separate PCI DMA EPF idea will survive, or whether making it much smaller and
+initially limiting it to a test endpoint for dw-edma-pcie would make it
+acceptable. AFAICT, Mani has not answered that point yet. Still, I think I
+should reply here in case the idea survives in some form and v8 becomes much
+simpler.)
+
+I agree fixed chan_id removes the private channel lookup. In v7, the EPF already
+reserves the channels to delegate through dma_request_channel(), so Patch 4 may
+look like a leftover. Its remaining benefit is to hide dw-edma-specific
+interrupt-routing semantics from the generic EPF.
+
+The EPF could instead do something like this in pci_epf_dma_claim_channel()
+after extending dw-edma to accept the setting:
+
+  config.peripheral_config = ... DW_EDMA_CH_IRQ_REMOTE ...;
+  dmaengine_slave_config(chan, &config);
+
+That would make the EPF depend on dw-edma-specific interrupt routing. However,
+if the goal is to make the PCI DMA EPF as small as possible and accept that it
+initially only serves the dw-edma-pcie path, I think that is fine. I think
+that's your point, but if not, please correct me.
+
+Thanks for reviewing.
+Koichiro
+
+> 
+> Frank
+> 
+> >  static const struct pci_epc_ops epc_ops = {
+> >  	.write_header		= dw_pcie_ep_write_header,
+> >  	.set_bar		= dw_pcie_ep_set_bar,
+> > @@ -950,6 +990,8 @@ static const struct pci_epc_ops epc_ops = {
+> >  	.get_features		= dw_pcie_ep_get_features,
+> >  	.get_aux_resources_count	= dw_pcie_ep_get_aux_resources_count,
+> >  	.get_aux_resources	= dw_pcie_ep_get_aux_resources,
+> > +	.delegate_dma_chan	= dw_pcie_ep_delegate_dma_chan,
+> > +	.reclaim_dma_chan	= dw_pcie_ep_reclaim_dma_chan,
+> >  };
 > >
-> > -     /* Get, reserve & map io */
-> > -     if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
-> > -             printk(KERN_ERR DRIVER_NAME ": "
-> > -                     "Can't get resource\n");
-> > -             rv =3D -EINVAL;
-> > -             goto error_sramclean;
-> > -     }
-> > -
-> > -     if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
-> > -                             DRIVER_NAME)) {
-> > -             printk(KERN_ERR DRIVER_NAME ": "
-> > -                     "Can't request registers region\n");
-> > -             rv =3D -EBUSY;
-> > -             goto error_sramclean;
-> > -     }
-> > -
-> > -     bcom_eng->regs_base =3D res_bcom.start;
-> > -     bcom_eng->regs =3D ioremap(res_bcom.start, sizeof(struct mpc52xx_=
-sdma));
-> > -     if (!bcom_eng->regs) {
-> > -             printk(KERN_ERR DRIVER_NAME ": "
-> > -                     "Can't map registers\n");
-> > -             rv =3D -ENOMEM;
-> > -             goto error_release;
-> > -     }
-> > +     bcom_eng->regs =3D regs;
-> > +     bcom_eng->regs_base =3D res_bcom->start;
-> >
-> >       /* Now, do the real init */
-> >       rv =3D bcom_engine_init();
-> >       if (rv)
-> > -             goto error_unmap;
-> > +             goto error_sramclean;
-> >
-> >       /* Done ! */
-> >       printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
-> > @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_devi=
-ce *op)
-> >       return 0;
-> >
-> >       /* Error path */
-> > -error_unmap:
-> > -     iounmap(bcom_eng->regs);
-> > -error_release:
-> > -     release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
-> >  error_sramclean:
-> >       kfree(bcom_eng);
-> >       bcom_sram_cleanup();
-> > @@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_de=
-vice *op)
-> >       /* Cleanup SRAM */
-> >       bcom_sram_cleanup();
-> >
-> > -     /* Release regs */
-> > -     iounmap(bcom_eng->regs);
-> > -     release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdm=
-a));
-> > -
-> >       /* Release the node */
-> >       of_node_put(bcom_eng->ofnode);
-> >
+> >  /**
 > > --
-> > 2.55.0
+> > 2.51.0
 > >
