@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA763AA19B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345143BAD8B;
 	Tue, 25 Aug 2026 06:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787638576; cv=none; b=m4GLnFMLtTk5A/BbgMu4MrW/6mi8b7KBjhJ9xaBf6mJROWlI+frtKxf/Tal+Gx3NquqUeTq6oCmR3/3GlubIopIH9+qxGxoVL3CKgtZTYxHs05TJLyiX9Tp/6xhsES6fgaXdca4udlszh41b+jYN550TyrdwmA/SCTKjYd6boE0=
+	t=1787638577; cv=none; b=c5K6HtayFJgIOgDLLH/xNAN7jsDZGG0lDeqY6zUAEca6zUY+QBJ91rGhNm5He5iFisQS+staQ31R2JfUA2C5xjfgG0CJc8c86eB2Lwl4phq+vBTe4wcBcWPh9H/M3T5oTSeWEdE97moqL6xRwAoPXnUEy4AaY2hbTkH5440Y1hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787638576; c=relaxed/simple;
-	bh=oQNt/785+fnKRsRc9YXHaiTbd1VGvmrG4Bdj8jPRH4c=;
+	s=arc-20240116; t=1787638577; c=relaxed/simple;
+	bh=S3DbMKYYshsNqS05DYOCtR/2o1y+6G01hOX/dn6RIwk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=XCAe31tBlYp3aZyDKJ4JfJZAamvcQE5GfWRHj8cfVC4M0NbISM3XxwJ6XEw0gVv5/27hb5NlP+2p9mBy/gSWI+yWS/VJ3ubPi29AV+lcqfbt/6c+HKP8S7q4DXYqJyXd2so9lw/5ivZyje3OWBnx8k7W7Fq1NPYxSSyXPKgC5no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/CdZjko; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Oli3/YHMzTt+946t4Zje5snC+3S5+u1Xg9NMHu7l9DJZXbpF2K1JBUjELUpSZYgSP6+dqJ6y1zQhwUpgRraw3OMX5VQ3iInNv6pv2NoCiBYS/y3SXWjYKBCBfO3QisOD5MrTJz7cA9cbPnwOtfVyevT3Xt1RMRQyjamrjjyhS2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8WxW5Yu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/CdZjko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3691F00A3A;
-	Tue, 25 Aug 2026 06:16:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8WxW5Yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732861F00A3D;
+	Tue, 25 Aug 2026 06:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1787638575;
-	bh=vDpmy+dZgikZnS6rinlz8UfiI2aV9fGb3cEZ7vwr9Tg=;
+	bh=ouRIdEdH8wqmj3o/0kmJqI1yTxkWRrRMWjOeQ1uMchQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=I/CdZjko9Fdof7wGXfGoP/SnIPxhMJ4XjlO1SPKfJzDtfqze/krQVSpmdbm8l/DNa
-	 gaVxMvFy6l9NDCMyfdjOlO61+HJ8098ZBz42JAXiBVoxaIkBrLHggZxhPfhGrEKFdD
-	 ElgG1R1oz4/YoATqiJ15iek5jacR3DJrJkSZ0AYUq5m1FxqqKY5IxdSoxFz6VVFQvk
-	 jluDPgsah13MdZzcOuAJu/tpD4375JfOMQGPD0VoNWnOctZaGqDQ30/mADNTp4+c0B
-	 4F0UrJbuFfk661fbc0JIIFOelIgTXdKUvPAHTA/l8g9LugdzZHkESrEox/QUJKXAlR
-	 V6CqlB2FR3zcA==
+	b=V8WxW5YujWh4qR9VJD3Pob06vsnvvRI2ukLMX08qNlqazN5I+FNVHeBJYgi2/DiY3
+	 Oy4dDxHsWCStp1usnS/tu84C/7uELuEbSEeE29rxWhRV27gASQOncihYlMKRW2Ovlc
+	 8OgyjVV6IAgeNLFuPs6aucxIRevTxk5MSqN0+FlBYOnkCk2660mEKz1jtxDIyw8PC7
+	 s61WEoQajFCQzdPyB72w+8Pe6w6D81df09o9d4s0p9X7ex4maRC4d5Fvo2qRqcv1+c
+	 Yn/BAKJMsGryRcS6MAlcSKHI/4GkA57KF0pbhC423ubdNjJTdtjQuDq8Zjt/yTPgeG
+	 hfKuXaSEwbduA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 10/12] riscv: dts: ultrarisc: Add initial device tree
- for UltraRISC DP1000
+Subject: Re: [PATCH 11/12] riscv: dts: ultrarisc: Add Shenzhen Rongda M0
+ board device tree
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Jia Wang" <wangjia@ultrarisc.com>
-Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, robh@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260824-ultrarisc-dts-v1-10-61ab7aebe9e5@ultrarisc.com>
+Cc: conor+dt@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260824-ultrarisc-dts-v1-11-61ab7aebe9e5@ultrarisc.com>
 References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
- <20260824-ultrarisc-dts-v1-10-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-11-61ab7aebe9e5@ultrarisc.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 25 Aug 2026 06:16:14 +0000
-Message-Id: <20260825061614.8D3691F00A3A@smtp.kernel.org>
+Date: Tue, 25 Aug 2026 06:16:15 +0000
+Message-Id: <20260825061615.732861F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,61 +47,71 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] Missing clock header and device tree binding for the clock controll=
-er.
+- [Low] Device tree binding header is placed in the local architecture dire=
+ctory instead of the standard include/dt-bindings/ path.
 --
 
---- Patch [10]: [PATCH 10/12] riscv: dts: ultrarisc: Add initial device tre=
-e for UltraRISC DP1000 ---
-commit 5358a00c38b708f59bdaeb5f8358a7078053a24a
+--- Patch [11]: [PATCH 11/12] riscv: dts: ultrarisc: Add Shenzhen Rongda M0=
+ board device tree ---
+commit 67b0db49374b5791844e1a3b66fc62faab120bb7
 Author: Jia Wang <wangjia@ultrarisc.com>
 
-riscv: dts: ultrarisc: Add initial device tree for UltraRISC DP1000
-   =20
-Add the base device tree for the UltraRISC DP1000 SoC. It describes
-eight CP100 CPU cores, their cache topology, and essential peripherals
-including CLINT, PLIC, the clock controller, pinctrl, GPIO, UART, SPI,
-I2C, PCIe, GMAC, and the DMA controller.
+riscv: dts: ultrarisc: Add Shenzhen Rongda M0 board device tree
 
-> diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000.dtsi b/arch/riscv/boot/=
-dts/ultrarisc/dp1000.dtsi
+Adds the device tree and pinctrl configurations for the Shenzhen Rongda M0
+mATX motherboard, which is based on the UltraRISC DP1000 SoC.
+
+> diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000-pinctrl.h b/arch/riscv/=
+boot/dts/ultrarisc/dp1000-pinctrl.h
 > new file mode 100644
-> index 0000000000000..470ab01e33b8a
+> index 0000000000000..4668e45d2335d
 > --- /dev/null
-> +++ b/arch/riscv/boot/dts/ultrarisc/dp1000.dtsi
-> @@ -0,0 +1,899 @@
+> +++ b/arch/riscv/boot/dts/ultrarisc/dp1000-pinctrl.h
+> @@ -0,0 +1,63 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (C) 2026 UltraRISC Technology (Shanghai) Co., Ltd.
+> + */
+> +
+> +#ifndef _DP1000_PINCTRL_H
+> +#define _DP1000_PINCTRL_H
+> +
+> +#define PA0		0
+> +#define PA1		1
+
+[Severity: Low]
+Should this device tree binding header be placed in the standard
+include/dt-bindings/pinctrl/ directory instead of the local architecture
+directory?
+
+Keeping it here might prevent the pinctrl driver from naturally sharing the=
+se
+hardware ABI constants without violating include paths or duplicating
+definitions.
+
+[ ... ]
+
+> diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000-shenrongda-m0-pinctrl.d=
+tsi b/arch/riscv/boot/dts/ultrarisc/dp1000-shenrongda-m0-pinctrl.dtsi
+> new file mode 100644
+> index 0000000000000..ab927c6cd6146
+> --- /dev/null
+> +++ b/arch/riscv/boot/dts/ultrarisc/dp1000-shenrongda-m0-pinctrl.dtsi
+> @@ -0,0 +1,79 @@
 > +// SPDX-License-Identifier: GPL-2.0
 > +/*
 > + * Copyright(C) 2026 UltraRISC Technology (Shanghai) Co., Ltd.
 > + */
 > +
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/clock/ultrarisc,dp1000-clk.h>
+> +#include "dp1000.dtsi"
+> +#include "dp1000-pinctrl.h"
 
 [Severity: Low]
-Does this header exist in the tree or this patch series?
-
-Without this header file, compiling the device tree using make dtbs will
-result in a preprocessor build failure.
+If the header is moved to the standard include/dt-bindings/ path, would this
+inclusion need to be updated to use the standard <dt-bindings/...> format?
 
 [ ... ]
 
-> +		clkc: clock-controller@11080000 {
-> +			compatible =3D "ultrarisc,dp1000-clk";
-
-[Severity: Low]
-Is there a corresponding YAML binding schema for this compatible string?
-
-Validating the device tree using make dtbs_check will fail due to the missi=
-ng
-schema for the clock controller.
-
-> +			reg =3D <0x0 0x11080000 0x0 0x1000>;
-> +			clocks =3D <&osc_24m>;
-> +			#clock-cells =3D <1>;
-> +		};
-
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260824-ultrarisc-=
-dts-v1-0-61ab7aebe9e5@ultrarisc.com?part=3D10
+dts-v1-0-61ab7aebe9e5@ultrarisc.com?part=3D11
