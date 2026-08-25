@@ -1,122 +1,100 @@
-Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B5F63E8685;
-	Tue, 25 Aug 2026 08:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19153E3D92;
+	Tue, 25 Aug 2026 09:14:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787647564; cv=none; b=N1x/cBtsrqm7WJKJ+OpkyDPsnJdfiSLSTfR/VvoHSzFJXXW20WFvVfXBzxA9k9zKXU3l28QptVhTF3P8uOK7LpSzF2P2q0b+drUZg7HIS/YBwsoxnUPTSgOhAkaQk6SPP6HqomttEcvgO3/1LpEhuYm3J1aDQg1219oAC+9TuF0=
+	t=1787649266; cv=none; b=J2NjyKj5vcoFcwslkw/JBtD6OOXhDyPDHsFohyNA3QXVPgcHVRSj6OnnolTkPbMftULNEpsbCKCx8zuRA8wNS2w8MIkgGpNrgPxhNPHPUOtqZrN7yIjNzjl+cgrjo4Y3BIKoeyhMOrBY9BOP5W/CPPXrWIy9d2dGOsZxbksSNW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787647564; c=relaxed/simple;
-	bh=WrJtVbLSM8GbkbAn64EbEX8lLAe/w4MbK7EWpFSxYw0=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=QckX1HqQ+KVMKT48AnNPQLZK6W6Cmo0ltC+tU9fhoOgxBgoqdUIkeBXN1Xakle+h9C17PNCWqScZuo8ZEKWx9G12mXBYmV91ilOyLMum+Pm0e4ioMKfUT2AAJu8oHy5lFpoEP7e75cEw5XQCvgIHwyR+AIp/5mqsKTI1dJwAES0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=UJLQyy0c; arc=none smtp.client-ip=218.76.62.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+	s=arc-20240116; t=1787649266; c=relaxed/simple;
+	bh=WQ4K727RmnRurI4h8eDfDrxORI1rM8ohIIdhGZ40I8U=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=gj9rIKYrn5bN6DwTJPVkWNIvuDjUMM8KFr5S/63nRfN32dwiGLFS0Z0U8Tyh99bTaof24iPdA+fHrltfk3aKmyvovnye3ODWz879E9tvdYyADcDmmRerhpjodQMRE6k3iMu9ZCFjeLcNv72ExdIVZQOONT6+y+uRLuhtN1n61HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=YsQ3+j7a; arc=none smtp.client-ip=162.62.58.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="UJLQyy0c"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	References:Date:Message-Id; bh=Y5OfRGX5nb3vPgvkisInJ84mcEX6LHgXS
-	SdtcBu0E6s=; b=UJLQyy0c/aSzoDyUBvs8rCWvLWp87i51EdbbuFNUUBKMVgsLH
-	ULLWeO7vGwcTfLhPQiN9STfKz2hNBdHeZvcYMfCuX/VA1ehYO3QPzAWLJWYIUqDC
-	suqelmdwWv8u381pXK3WZnHrA4UHlBhmeteSTB7waVf2RzAXjcEm0svTfk=
-Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwCn1s05Vo1qWzEBAA--.296S2;
-	Tue, 25 Aug 2026 16:45:45 +0800 (CST)
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="YsQ3+j7a"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1787649260; bh=WQ4K727RmnRurI4h8eDfDrxORI1rM8ohIIdhGZ40I8U=;
+	h=Date:To:Cc:From:Subject;
+	b=YsQ3+j7a8aTQciZVdtLA5bL4ZBeRZFTwUa+Goo/tFeRFwDO6Hkq/nm0/foUGVwjHe
+	 uukHy4otVhK7IW9nPJZdaKwjGH0yY36R2SNam8KPTfW/MAawyeKa0cPmiwgOuArEBE
+	 Y7WWn/GJy3c3KM+5Q2zkQ0Ag+zNA7jKKjBVATfZk=
+Received: from [192.168.255.10] ([111.206.145.19])
+	by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+	id 3919EA8F; Tue, 25 Aug 2026 17:14:17 +0800
+X-QQ-mid: xmsmtpt1787649257t7qbkovhk
+Message-ID: <tencent_629A33A5198254C3EC75AF7CB18050796F07@qq.com>
+X-QQ-XMAILINFO: MhK4DKsBP06iig66I255AbmhcKRkArSQhMtJikEdJwTdjUVSVQ4gppjeYY3Irm
+	 +HZRXKtmCl6IZBPjahAuKmYW3L8+0rD1GjSWNUzPPtY2O5pyHh2Jj15/Ssl6TOnBbtrziJrXkEuz
+	 HEKeuRt2Uu3CsinLwn0oTxNnCXKOZ8d8USm2itSjcxxH2a7VaLfP4Eu2h5Sr5049bMHz9vZGn6ft
+	 Ektrx+lbSudGBpvs/tcJjYC+bD06eLMPjgoNTzyul0fcUNdfLT0zmMxERgKKgUaAW28Tv+qZ7aEB
+	 sbU9QMOJZnhm76p4hguGiEDJ+3rCsEspYX/fos55LVObJwOz0HZJ2lrHvy74nkuSYgIYpUcqCFWI
+	 UCg+VCY43i9gXUol0QHv9Sgj4k9JOU3T+MEn3GH6GnQIdFi3krqXOUw/fx4gvI5ft1/yyaCgTrZJ
+	 GdRlKgfNQOAaPnLrLJQZ+Wy1IhDujrGk+i2MoDTxwvvLxdFXIpnsocK7qSiS8SbsASFtWW/nrDus
+	 eqXaKK7B+1SlU5HyqAgYf3qkcjd0bf8qbyuSKZ80+200P31yoZz8yn7ZTcRA57djIfQ2Pqzfhkks
+	 +DFB8xOOn6gGHEdLwYW/65tcw+2kYdLxZu1t3xu6VN2zfHth20RNKtr1uAQugbjvKgf4Eqh84n6E
+	 9gm9BvOUDseGuxq82ecHaKivs1b0oE6+Mw/d5MoqgnvaVUv4GI+e14LrtZHhtpvGrSxZL+mjQiY2
+	 bLrKjaKcccfTOmC82AN0bVeDYVeKYfqx2vogkzT78m8ny+2zcTT6EEQtyc9/4JqK/ADP3jkDQEk0
+	 h1htqKrS5uSqCEb8Q3+AHYsDNg4HNGGdcREC8iALpagDUfO/7CqdfgfjC5Uvl3jTyNzIAuLv68G8
+	 8X8sYFKNo2K777GeNe2Y/yXjYGsvqwFONQ0qrcuCeyjYZxpW4sIZSythtb+BGba4msF2U0aB8208
+	 sqgrROf34fyQ8qZIuMniwsk5bWm2OgQoSZInZTctapEt0I6LLKkuC+aEsYvNUn/8GqManDnC9zkb
+	 rQu58qu9GjXIn1Swm838BVXVchTPYyY8c88pXe9G4cgQe81vyFn2ubwvU8cyUGoHrWYFRzaMbQHd
+	 sVNtbTh60yTk6ufcv3gRqeoJ9vOg==
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-OQ-MSGID: <a50048e9-ae07-4775-a6c7-55c44ce73385@qq.com>
+Date: Tue, 25 Aug 2026 17:14:16 +0800
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 07/12] dt-bindings: i2c: dw: Add compatible for
- UltraRISC DP1000 SoC
-From: Jia Wang <wangjia@ultrarisc.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: wangjia@ultrarisc.com, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thomas Gleixner <tglx@kernel.org>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>, 
- Andi Shyti <andi.shyti@kernel.org>, 
- Mika Westerberg <mika.westerberg@linux.intel.com>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
- Jose Abreu <joabreu@synopsys.com>, 
- Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@sifive.com>, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org, 
- netdev@vger.kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260824-aging-umbilical-8e68cfcea468@spud>
-References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
- <20260824-ultrarisc-dts-v1-7-61ab7aebe9e5@ultrarisc.com>
- <20260824-oppressed-jogging-5b055ca274b1@spud>
- <20260824-aging-umbilical-8e68cfcea468@spud>
-Date: Tue, 25 Aug 2026 16:45:31 +0800
-Message-Id: <178764753153.744215.13628356455140662072.b4-reply@b4>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787647531; l=854;
- i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=WrJtVbLSM8GbkbAn64EbEX8lLAe/w4MbK7EWpFSxYw0=;
- b=h1QFd/geJ3eCnvfmWE8MCcEuTL/3WBAshWGKokJSW5v7Y342aTIZNXVyNJFCAnwmJzvTTSSz4
- VabtmlcOV21DQ+pv1nlrXSy7xqd4zrKSpl7e8nDQc1SjJu3Iax0A8mE
-X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
- pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-CM-TRANSID:AQAAfwCn1s05Vo1qWzEBAA--.296S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GF18Aw4Dtry5JFyxuF4rZrb_yoW3uFg_ur
-	Z7Ar97AF1UZFy7Kws8AFsIy3sY9F4DWrZxGr45XF4UJ3s5Kry8Wwn2grySvw13JrW8try7
-	Cr1Sva4DtrnI9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb6kYjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Wr0E3s1l1xkIjI8I
-	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
-	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
-	cI8IcVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z2
-	80aVCY1x0267AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAG
-	YxC7M4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS14v26rWY6Fy7MxkIecxEwVCm-w
-	CF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j
-	6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Wrv_Gr1UMIIYrxkI7V
-	AKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42
-	IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjTRjg43UUUUU
-X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAHEWqJFPsACQAwsi
+User-Agent: Mozilla Thunderbird
+To: dave.jiang@intel.com, vkoul@kernel.org, dmaengine@vger.kernel.org
+Cc: Frank.Li@kernel.org, linux-kernel@vger.kernel.org
+From: Yang Zi <2959243019@qq.com>
+Subject: [PATCH] dmaengine: ioatdma: Fix NULL pointer dereference in
+ ioat_alloc_chan_resources()
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2026-08-24 18:14 +0100, Conor Dooley wrote:
-> On Mon, Aug 24, 2026 at 06:07:29PM +0100, Conor Dooley wrote:
-> > On Mon, Aug 24, 2026 at 01:54:20PM +0800, Jia Wang via B4 Relay wrote:
-> > > From: Jia Wang <wangjia@ultrarisc.com>
-> > > 
-> > > Add the SoC-specific compatible string and use the generic one as fallback
-> > > for the UltraRISC DP1000 I2C controller.
-> > > 
-> > > Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
-> > 
-> > Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> > pw-bot: not-applicable
-> 
-> Same here, I was too hasty - please add some constraints like clocks
-> being required etc.
->
+ioat_alloc_chan_resources() performs MMIO accesses using
+ioat_chan->reg_base without validating that the device's BAR mapping
+(ioat_chan->ioat_dma->reg_base) is valid.  If the PCI BAR is not
+properly mapped, reg_base is NULL and the channel's reg_base is computed
+as NULL plus a small channel offset, so the first writew() touches an
+address near NULL and faults.
 
-Thanks for the review.
+KASAN/Oops report:
 
-The existing schema already limits each DP1000 I2C controller to one
-register range. In the next version, I will require two clocks and the
-corresponding clock names.
+    BUG: kernel NULL pointer dereference, address: 0000000000000181
+    #PF: supervisor write access in kernel mode
+    #PF: error_code(0x0002) - not-present page
+    RIP: 0010:ioat_alloc_chan_resources+0x40b/0x1ff0 [drivers/dma/ioat/init.c:679]
 
-Best regards,
-Jia Wang
+Validate the MMIO base before any register access and return -ENODEV if
+it is not mapped.
 
+Signed-off-by: Yang Zi <2959243019@qq.com>
+---
+ drivers/dma/ioat/init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index 737496391109..80dc8f36c346 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -677,6 +677,10 @@ static int ioat_alloc_chan_resources(struct dma_chan *c)
+     if (ioat_chan->ring)
+         return 1 << ioat_chan->alloc_order;
+ 
++    /* Validate the MMIO base before any register access. */
++    if (!ioat_chan->ioat_dma->reg_base)
++        return -ENODEV;
++
+     /* Setup register to interrupt and write completion status on error */
+     writew(IOAT_CHANCTRL_RUN, ioat_chan->reg_base + IOAT_CHANCTRL_OFFSET);
+ 
 
