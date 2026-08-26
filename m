@@ -1,122 +1,129 @@
-Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC9C3B6C1D
-	for <dmaengine@vger.kernel.org>; Wed, 26 Aug 2026 08:11:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72783822A9
+	for <dmaengine@vger.kernel.org>; Wed, 26 Aug 2026 08:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787731908; cv=pass; b=i4A18dBQZY/bmEGP5gCJlig/GSPHNoXy5ZnOY9Mhvf4gVx0t3rRJTsv9mPR3muaZEUI1W7bHmlGJKGxcb5IBKNAcg3xMTbzrlVAOnE3gfKkBI4Ve5imziCpnVaWULl305fR7NHenEBkyg3P/1OeDYPNxI29pfvCX6fHNy4UVx+c=
+	t=1787732109; cv=pass; b=evUNspXp9ZVDfst8NRjbAGFZhjr3PiT12U3ROdXVd81k2M6r2/zk/ej+n0sigJYREaYez+mXdwQVVErPSgJ9+5MPdiA/CWU/W6e6j1LtBnhvuxC9yvI8vX0o0FKpD/FO/u124UfkvR3MUuJL85IO4xjR2NgIXHJ1vTCihWtQMmg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787731908; c=relaxed/simple;
-	bh=aNXvnIajDX/7w3x9F5uELFST7rm/QC00IWx5n1LjaBY=;
+	s=arc-20240116; t=1787732109; c=relaxed/simple;
+	bh=J+6xXHiRfdSp6lX3gT2enC0bPRKFuLA/vpd3A/BvOkk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VeEFYf4bniQnkcXZJvGvtNWCUUXXd4Vbq8pzNUOg7UeoKzzUTmrVih+esITe7HNpX0qJL/qE68hKFH+3PYDDB9WTHQZN3soIuJCcH1HXX5gFivYPNy1riOevkeqdj+9S+LPKO9NBTgmlt7X1GmoAwkOI+JNbpnvYEND5cLK5oUk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nG8HDe6H; arc=pass smtp.client-ip=74.125.224.44
+	 To:Cc:Content-Type; b=CwRO/MMnCV0xBGO/dapsvDHkJhFd3duaG/jlkWEaAeZyBWknhEwZcdrxf8Xp41uDjoFuH4PMRD5xrueYYFE2zT8b02uIsIn3/Xj8gJOjJr5pVKtLrwt98fc/6dcmKbT8wnLRjtN1nDflNqbz6uaOyQ8/vTTeZUpA0Ep0zubMzkQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l37JN7HK; arc=pass smtp.client-ip=74.125.224.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nG8HDe6H"
-Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-66c82b32121so1120496d50.1
-        for <dmaengine@vger.kernel.org>; Wed, 26 Aug 2026 01:11:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787731906; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l37JN7HK"
+Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-66d1bd30d27so1097550d50.0
+        for <dmaengine@vger.kernel.org>; Wed, 26 Aug 2026 01:15:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787732107; cv=none;
         d=google.com; s=arc-20260327;
-        b=B62++dUxY+d0eP+4SBnifJC8g1EWy+fPOvzd7YVxO2rtCrSYAQCYcTbzZbczJpcZ/E
-         QUIzlUuDmHP3WW9h360Pz0BonZkOF5flHFNt5+2lwDzEk+4uaPBnFIjNXFV9ui7Bp4p/
-         47timVhPkO8ON0ISxfiS4bvIc+/wdNVLv9+EpIuGNvAuV2zmWg6P9mQhNzOHWShPzTOp
-         8tcMd7mzs1VItgDkdwI1J6J+muZFGRMndGNnFEjSyaT2y1CWZ8xTfwJ4dcWLqbPC7iwO
-         Jj+H8KHhvFXzvUgbKomMhlxRBHcnTARF4L4R5jyzAMVv8WMcdjF79j4JbhaQGOmZ+eRw
-         /9gg==
+        b=kUQROGdxgOwqaeKZrDc7njZzffycOaBqlbYkWLRFhWklZvwZtiUmBsmOAh5hquFgJi
+         c/0yx9TTY40EAuP7TUFlP8YzX6V7d0h/doMEAYNYOTDLvHxjd1Rnfx7QWG8y/XcM3ZUM
+         jy7BU7XAuOJXuF6M5WQDcGWuYpW3AFHH3TTfGREfslJglluF18FjtW0hi5EIXkBkcVGT
+         Xgjva0VWUyIn3veEl/XgNd4Uy/wOIM5Yl0ce5pqbm9kZkZqvEWxU0GxJVdsQ8MZ6cYwz
+         ubxx3nx3d1ODdUSaVPppkaDlqiIYUda/emwj70krzsC0Y9d+sprRFxEyiVJ1ReGjTf5A
+         Jkog==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:dkim-signature;
-        bh=aNXvnIajDX/7w3x9F5uELFST7rm/QC00IWx5n1LjaBY=;
-        fh=OzhWogebtETXJMfq0eXzs80O/vmW+R3e3Szrg0458/s=;
-        b=is9etUYJLnU8x4+G14qSPxcCO8bnyzdwkkGFgfce4UKE+Q+/0c2P3wFJn1B8PB7rOo
-         O6NfXIrD/+XX5z9RMlejWZb1K400ocVDDGQdqsXnZTl2jCg2j8fPaWxo6IYCJf9bIU5r
-         cKExyeplPV+TlqaUI+nBFthQ4Awy9RQHruSHm+nuUoJ+H1XnkgKoSZXHxevCxPiUHJn4
-         lmiMSKOWEmOr0RvqdzbXKSJgTFPWKNkgHZYia/Ia2AcnowcLmVjky5H8NYXyhTPBPao5
-         T58fCgv9UCrWAw70iPS2FH0Y17S7bvKuT5+PJYshzh36TBQvWDoTEYv0haC2Hfn1rUpV
-         OAGA==;
+        bh=J+6xXHiRfdSp6lX3gT2enC0bPRKFuLA/vpd3A/BvOkk=;
+        fh=l/MR47/S2nwSi87e2e0SjjgrLL12+CPdRp+5FQCf/3A=;
+        b=MnAJxfjTNV6wgUJ9f627uBuhym6dRVQA7U5vZq2vMY7g+lhKNXBaCAxRP4nsA9kd7K
+         NRCJPbPfbPboGPc116Opk+IIprFw2aP95lFT8rBNtT2hmNwvp95MM50DD5LZ+GKpXGe2
+         yWVbu3pxumdFAqPLJ0YM1HgQ6EF/rlraIy7v9Rjmkrv+eKFFtyCVrK58QWWLlzU6v3AC
+         4cqazeCadcl0q0JDjlUKaKmlu7+YkTjAfSdfIDU+hqgesUkqpIh24aISteoDpVDfbm3n
+         Wxqme2n0j0YIPDmT2X6KP8nJYtPc2HDLvoMpoT3RsnuLcjh4euuf9RRDzDYlrEdWs4iK
+         mdpw==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787731906; x=1788336706; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1787732107; x=1788336907; darn=vger.kernel.org;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=aNXvnIajDX/7w3x9F5uELFST7rm/QC00IWx5n1LjaBY=;
-        b=nG8HDe6H7yQKf+Z7gSfhzhb72HSTQS5eyrn0cx+Kjw4xszZu9MNITo89LRuioKnoU8
-         OrG9kKBey0viKyvAqgK9B68SGFQawGC6dbeZMdYQf3AOn4dlzBd6nfFiv2EPFq4k9le7
-         Iu6ImBrCW6XZSN/GAWnnopAj1hYR4MMTlpjIg0b82zB1jn3mvICHEZiOxoheGoMWO/C7
-         lDbXXqDsNh7X7Z11O0hXvIK7BJvMx9BvwlU2IfDV9+RkX/RbYzwba9c6U9hdNGkPvDn6
-         Mp5uQc4P17T9/nsT1P1CcdT75hmzH9NqFOSsvfLeScM303FMoIpPXX/5Cs0QgODij2cn
-         VNVw==
+        bh=J+6xXHiRfdSp6lX3gT2enC0bPRKFuLA/vpd3A/BvOkk=;
+        b=l37JN7HKqsL0jz5C62YuWOoBr1w7teWTsW2D3/Y3Rroxp7CFI3w0udcv1OgM4pmrpp
+         P7oMQz61l5BcUVxBytHBNbhrnq+ea/n65Y01LzQqjy9GiiPIY5eVbQs1y5p5TtyZ6xgm
+         dk0UOstpumGechd0+VdjyxCxGOF4SuQFR3W7vR78lM05cS+gPY0+PF0F7cP1dMBMMImw
+         dEC/9hgBfEGk5lVNSKjepFRjV1EXxTrULS13ekkD8y2rUDjz9CJvwJqNsHTQqE4/xVT3
+         cj/+qm1lG/1SNnrp3f1S0UXnp0v9yws9dK5vuMHL/bzR+oAx7CKU5f3KBIAE0zEc0pLf
+         bzlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787731906; x=1788336706;
+        d=1e100.net; s=20251104; t=1787732107; x=1788336907;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=aNXvnIajDX/7w3x9F5uELFST7rm/QC00IWx5n1LjaBY=;
-        b=jafVR+en0tXcyGJfXEsCDQxPS6i1UUty6CtzBXQmUv9hY5pHJoAB3ncBHgHVIXqiZL
-         zSYpTYj0TOzVBimjFvnk4/E5ecBTMGCSISFdkAVbMpEpameZIzdTXNrSjL0pUkaKrFC0
-         kZsEUPcbyfVUKHCBTaFVvkjKlejc8QGPo5NcsRJRETAU3KX/hVpZgYPTiFTrZWFTyipt
-         63pnyOsVSFuhcf0Mt4BnBypUh5nnmjm2ctaOLdYUhPcR7RxMysM5X+mCyZT0wjXsB8sl
-         e/t2Q46UwkxhmbXSc6dumyTo5ynPRs/MPh1C4zv6RBflOwjunfvuWl2nW0z7pCO2VbgA
-         ZaTA==
-X-Forwarded-Encrypted: i=1; AHgh+Rpcofd1HvfkrjQnmYrJUr8myGjjqKDTqt9p4qRrDU3lHB/eLF6HYU8LKrf59P/8Pqsosj+OLgFj31U=@vger.kernel.org
-X-Gm-Message-State: AFuF++mXfMDOF15OIpcqi8vN4isLowthpS49266h11suYHJ+vJ6LtQfH
-	5V4J07QjAOVIEeXZnG9UVTOL4Ar//iKqGUd6dNvKii+Q5kg+w6pph6ZTwX49XD9wdnP9FHd9DM+
-	aNXkPNGmYiD7u5VZ8UsTzReIu8CN2AZg=
-X-Gm-Gg: AR+sD11J1kM3hmIX5dnUpjTDvIdX0wgGWb8IYIbxvp0CRcZ7yO+Mi+KuEhAkBxJS2+9
-	ki5NigTvuWYm/S5J8d1WGIsVtxBRklk8/WYaNPNMAkSJ9pgutou1paxIOD+ErLlFDeWUuu2ssIJ
-	nt66gjgX/x5WUa1TwZ0CBuOEVWYRHTbjwzv+fb4S+IV4uqi65FnTxVS1MUULArttzMeaaUGHu67
-	9ekTJlrpT3M0zr6tvtTvktpxpFz8RasouERTBBTT5pJsWHjW1lccs0fmyPEs1hAxqFMSdc/abEq
-	yG1MCivBe3eCEAEt40VUAOpVXBUmK2UARoeZBw+OIb8lBkI=
-X-Received: by 2002:a05:690e:1188:b0:66d:149e:a901 with SMTP id
- 956f58d0204a3-66d256c264dmr1479589d50.21.1787731905567; Wed, 26 Aug 2026
- 01:11:45 -0700 (PDT)
+        bh=J+6xXHiRfdSp6lX3gT2enC0bPRKFuLA/vpd3A/BvOkk=;
+        b=ecjaHzKBNjyfbTUjUtcNChbaTcghJHgtl4EjVtmaosrpltn0AT00o4+k0vpBavu0Xb
+         zxV+lZ0uKTBOueTk5OUOd3KbGLAjvFOnCeEYFPeRk/al1n3i1RRpvdhxHXDUA6YsrHeS
+         1N1pZa7jw0OSy0NA8MCet/E/2QJnlpzsi92TLc/oFmtgZtzYmf+yHbQ0qgoLdr6PexkW
+         jzl0xIwhqnlJLVGkCqoRxrI45bLgKQM8ZBdDjJ+JNbJEVqdp/MDkMN1DvoyJzGgKy0vz
+         0YDz08Wg/aTYyDlUClPKt+9skdH9MKAFfEZGN9GP55RiAkpkan667ekKX7JKaNKpw2/O
+         l7Zw==
+X-Forwarded-Encrypted: i=1; AHgh+RpYv2EsrJdIMwrbLgUt9N5RUHZXUJv4SUnyoXhn2BwkVqTR8IEC1I6rXMA7c37R6WL8gtUFw9IYA78=@vger.kernel.org
+X-Gm-Message-State: AFuF++k0DxNnV0W/SqVKshBbQgpfUq6XlFdMPGKpGquzzQFYZzkfboze
+	+ksEB0HtwEZVDUVLmmsjDI0sLiqyyqB8gI9MGZs92ov6ejYLUJQ6HL56huPvIZPkMXoui952hIC
+	xZonh1SIBftKjOujdrYOS5W9d085PS3s=
+X-Gm-Gg: AR+sD10JBJzP7AcAGBp8TLrBn0omNUCBqCT9q5KZUZ6vtcJr25gaVCP65kvJkWW/Xgi
+	bC/bQ/lGqSVoaawvo/ltgnmhOG95N4gT+GkDHrTEW1emEItvCok6asjIgQE6OKREAFQzoze63Iy
+	GscVJP1hNkj5/S1nKySJ7ZW6/QUqsTpqn3oZbNLde8/7Y+ENGcm8l8BQMKvKo9Matck9voWAqlp
+	pvSGfOlWaF8r5/u3TzI3mD4zo7E4oMmtkf2oXFXqnBDv0ffHq+4YjGNh0Bm/wfFArhjmx1f1E43
+	UHYLuCdzlGc/L6HjLFH8UqpsGnRnFUqZkYMSfQgKObdTRVZ0Esrmrshlqw==
+X-Received: by 2002:a05:690e:454b:10b0:66d:273e:117a with SMTP id
+ 956f58d0204a3-66d273e1bf5mr798137d50.39.1787732106713; Wed, 26 Aug 2026
+ 01:15:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260808105657.2762974-1-lgs201920130244@gmail.com> <3ae8e5d0-4677-48de-bd2a-3315f99650c2@kernel.org>
-In-Reply-To: <3ae8e5d0-4677-48de-bd2a-3315f99650c2@kernel.org>
+References: <20260808115228.2798481-1-lgs201920130244@gmail.com> <e0a9f6dd-f32d-4ca9-b907-51d8893ecbe9@kernel.org>
+In-Reply-To: <e0a9f6dd-f32d-4ca9-b907-51d8893ecbe9@kernel.org>
 From: Guangshuo Li <lgs201920130244@gmail.com>
-Date: Wed, 26 Aug 2026 16:11:33 +0800
-X-Gm-Features: AcwNN1X38av1r3fQHAr6_E215JsX9BX5UoU7-6ID8IrKi7kZhsgC4YYykT0ACvY
-Message-ID: <CANUHTR9GnWwDbPK-Hmnc8TY1Hrn5tnV81ytb=wpxogCZY9XTNw@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: ste_dma40: fix autosuspend cleanup on probe failure
+Date: Wed, 26 Aug 2026 16:14:54 +0800
+X-Gm-Features: AcwNN1XvjLCGn-p4IXW7KpCPSyocF03h16h7C3wgzdyHtcsVEfehoAO06tMV-5o
+Message-ID: <CANUHTR88n4vtE1_nvaAf2Fpp9u8szu72o+z3O4hefP0C5LySCg@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: xilinx: zynqmp_dma: fix autosuspend cleanup
+ during teardown
 To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Linus Walleij <linusw@kernel.org>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Srinidh Kasagar <srinidhi.kasagar@stericsson.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Dan Williams <djbw@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Michal Simek <michal.simek@amd.com>, Abin Joseph <abin.joseph@amd.com>, 
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Kees Cook <kees@kernel.org>, Kedareswara rao Appana <appana.durga.rao@xilinx.com>, dmaengine@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
 	stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Krzysztof,
 
-On Thu, 20 Aug 2026 at 22:50, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On Thu, 20 Aug 2026 at 22:03, Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >
-> On 08/08/2026 12:56, Guangshuo Li wrote:
-> > d40_probe() calls pm_runtime_use_autosuspend(), but its error path does
-> > not call the matching pm_runtime_dont_use_autosuspend() before
-> > disabling runtime PM.
+> On 08/08/2026 13:52, Guangshuo Li wrote:
+> > zynqmp_dma_probe() calls pm_runtime_use_autosuspend(), but its failure
+> > paths and zynqmp_dma_remove() do not call the matching
+> > pm_runtime_dont_use_autosuspend().
 > >
 > > If the autosuspend delay is set to a negative value while autosuspend
 > > is enabled, the runtime PM core increments usage_count to prevent
 > > runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-> > during cleanup, this reference is not dropped and usage_count remains
+> > during teardown, this reference is not dropped and usage_count remains
 > > unbalanced.
 > >
-> > Add the missing pm_runtime_dont_use_autosuspend() call to the probe
-> > failure path before disabling runtime PM.
+> > The documentation for pm_runtime_use_autosuspend() also notes that it
+> > is important to undo it with pm_runtime_dont_use_autosuspend() at
+> > driver exit time, unless runtime PM was initially enabled with
+> > devm_pm_runtime_enable().
+> >
+> > Add the missing pm_runtime_dont_use_autosuspend() calls to the probe
+> > failure and remove paths.
 > >
 > > This issue was found by manual code inspection.
 > >
-> > Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+> > Fixes: 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
 > > Cc: stable@vger.kernel.org
 > > Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 >
