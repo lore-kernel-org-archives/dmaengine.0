@@ -1,133 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613332475F7;
-	Wed, 26 Aug 2026 02:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EAD535975;
+	Wed, 26 Aug 2026 05:31:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787713040; cv=none; b=ApT0X+2RHQLxlY6I57T3/bWMM/Vn4UCpw7qnxSn+a7Hoz+TaIc4rDkIRG7nXvHXEyP9lJCp0y0C0Q8azPlcRrdDj6MbQEfDgLnhZLJzyTrU83fEDlTAwyePZIibTGvn/LHVfAqRU0RI5mfv5szN2YzYaKZhSeMrQOhLQfxjq2P0=
+	t=1787722307; cv=none; b=pODTcl/oCXC7S0DsbOCyq4dEUPqcxa2G0JzKZrGbkiUXwCQ+ppjmus9dMBdyiYuFcVjO11eCcEsjmj5MyaSAUe9eAo2d1fonyqh0VhVvtyarxywxl7yHwmenkbq+OKsPoFMemLZGAI3PVGsgcoTbqEvU7I/+uJu7hhZklMGUDmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787713040; c=relaxed/simple;
-	bh=HzoXLhpv88+e6DArySxtD3hpa6ZYEbiaxtb53KZ9zfI=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=DhCtEkXFu1SbuQaeN2dSyLmi7oxeDfCBQpOUpUkHaUYoeuTLuXpK+sZ7wCWABkUlfyIj6SH80FcQUmARAyoFTNuWm0pBo4Onoq92bz1G6WGJvO7Dc477XRUe1PyaxefWqM6NDMcW8xJjc5aUGtu8T90nT8VPtvwmYjLbr15bK5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RMwyXDnn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787722307; c=relaxed/simple;
+	bh=KYYT+/PQ4xcJVd8Wmai5v72T0IDhA620QIZm052UeOc=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=pzTnHybm3rXDC8wN0u+wZwUVUW3lz97GckfASHPK4a3eo3Now5FUUYGaE2zUSxCflsk/Ph2TYkBbLspgYThJQ8EMM/4uY9jjAmRwZgAAtjqlDuxkXMJL9ZdPgKt+jxh12o87tIAqghkD3RI6TvBCMskISm0CdjsHvPa7017lBDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=R2Jl4SJC; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RMwyXDnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFB81F000E9;
-	Wed, 26 Aug 2026 02:57:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787713037;
-	bh=SQgVba5awJSvFnBRi53X6mD445bT/TKglLPLlOBNNBg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=RMwyXDnnOznQI1/7cxZvwcTXoiHiM04yUEzNgPB8ZaAy24aqZDgkPn4sc4BTXx2tr
-	 riqWI20Veq6ExnErJfw+YWSYY0sGB4Sho+fb2qQYZN+Cm9c/+asBnTO6vPZdCmarZZ
-	 LpySDleQAi7hSjEXTjRQg017vwBDfrPLc//Ic/WAIfNkCc56ssxkrUq3wT1vtnwaws
-	 0Nry46f0mcRfr93281B+RQBIn/YSYwJnAMOp5B89RdqMNQdQlbxwdqkoXHpGTxpnI0
-	 MccHPuOc1K1CISbQnuyg/D/VdKNpuUP82UUTnRpmGp5yXAqvUhBUM2mbuk5fyAvtiI
-	 63QH8CNQyXVIQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 4/5] dt-bindings: dmaengine: sun50i-a64-dma: Add
- allwinner,sun60i-a733-dma compatible string
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Yuanshen Cao" <alex.caoys@gmail.com>
-Cc: robh@kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, linux-sunxi@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260826-sun60i-a733-dma-v5-4-abc5229b441e@gmail.com>
-References: <20260826-sun60i-a733-dma-v5-0-abc5229b441e@gmail.com>
- <20260826-sun60i-a733-dma-v5-4-abc5229b441e@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 26 Aug 2026 02:57:16 +0000
-Message-Id: <20260826025717.0BFB81F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="R2Jl4SJC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=Qn1K5uZcsjIXg5afIwVEwPEUZMEcJXFBf
+	xRn3HuhEcM=; b=R2Jl4SJCzKDArYGiy4rCDXjo0P9VUuAaKL6vbdPLl+cVY6evq
+	llUgG+RQePIqOYJo8Cdc2IsurArNLyODjRrqe2dPFjinC7du8A5Tbf9abbiCbCzl
+	IdTMS92ZQZcdhSPGKTa4fLUFei7p4asIjevCHQOwWDQ9tNktwsldTboYJ8=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwCn1s0teo5qc04BAA--.336S2;
+	Wed, 26 Aug 2026 13:31:26 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 09/12] dt-bindings: dma: snps,dw-axi-dmac: Add
+ UltraRISC DP1000 compatible
+From: Jia Wang <wangjia@ultrarisc.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: wangjia@ultrarisc.com, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, 
+ Samuel Holland <samuel.holland@sifive.com>, 
+ Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, 
+ Mika Westerberg <mika.westerberg@linux.intel.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+ Jose Abreu <joabreu@synopsys.com>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@sifive.com>, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-spi@vger.kernel.org, linux-i2c@vger.kernel.org, 
+ netdev@vger.kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260824-throat-arguably-779a75446a81@spud>
+References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-9-61ab7aebe9e5@ultrarisc.com>
+ <20260824-moneywise-magician-50d8e6ff79ea@spud>
+ <20260824-throat-arguably-779a75446a81@spud>
+Date: Wed, 26 Aug 2026 13:31:12 +0800
+Message-Id: <178772227234.2049162.4715674009458678447.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787722272; l=492;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=KYYT+/PQ4xcJVd8Wmai5v72T0IDhA620QIZm052UeOc=;
+ b=ZF4bncxtlyzP5EpRsjS7n7l91oiZzzea5cJ3tGDPIYOG5k7bhC2NAKb/MHRfByrSQ9QA2oNC0
+ 96SjQtEw5x1Co0DN6ydYssZfQRyPQVOf7uP3tEi0o2lguU/blniQRpL
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwCn1s0teo5qc04BAA--.336S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYX7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E
+	6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28Cjx
+	kF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8I
+	cVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aV
+	CY1x0267AKxVW8JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE
+	5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeV
+	CFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1l
+	FIxGxcIEc7CjxVA2Y2ka0xkIwI1lc2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxAqzxv26x
+	kF7I0En4kS14v26rWY6Fy7MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_
+	Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWrXVW8Jr1lIxkGc2
+	Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_
+	Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMI
+	IF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUd8n5UUUUU
+	=
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQALEWqOWvsABAABsb
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+On 2026-08-24 18:11 +0100, Conor Dooley wrote:
+> On Mon, Aug 24, 2026 at 06:03:21PM +0100, Conor Dooley wrote:
+> > Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> > pw-bot: not-applicable
+> 
+> Actually no, please add constraints for your device.
 
-Pre-existing issues:
-- [High] Loop bounds calculation in `sun6i_dma_interrupt` truncates unalign=
-ed channel counts, causing interrupts for higher channels to be permanently=
- missed.
-- [High] Incorrect indexing of the physical channel array in `sun6i_dma_int=
-errupt` maps status bits from subsequent interrupt registers to the wrong p=
-hysical channels.
---
+In the next version, I will add DP1000-specific constraints for the
+controller resources and hardware configuration, including its channel
+and AXI master counts, data width, and per-channel properties.
 
-commit 42af4e68ee14f82cbb1311fbd3ef28760a3616bc
-Author: Yuanshen Cao <alex.caoys@gmail.com>
+Best regards,
+Jia Wang
 
-dt-bindings: dmaengine: sun50i-a64-dma: Add allwinner,sun60i-a733-dma compa=
-tible string
-   =20
-Add allwinner,sun60i-a733-dma to the list of compatible strings for the
-sun50i-a64-dma dtbinding documentation.
 
-> diff --git a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-d=
-ma.yaml b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.ya=
-ml
-> index c3e14eb6cfff9..1cc3304b74149 100644
-> --- a/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/allwinner,sun50i-a64-dma.yaml
-> @@ -25,6 +25,7 @@ properties:
->            - allwinner,sun50i-a64-dma
->            - allwinner,sun50i-a100-dma
->            - allwinner,sun50i-h6-dma
-> +          - allwinner,sun60i-a733-dma
-
-[Severity: High]
-This isn't a bug introduced by this patch, but adding a new compatible
-string here might expose existing issues in the driver if the A733 DMA
-controller uses unaligned channel counts or more than 8 channels.
-
-Looking at sun6i_dma_interrupt() in drivers/dma/sun6i-dma.c, does this loop
-condition fail to round up unaligned channel counts?
-
-drivers/dma/sun6i-dma.c:sun6i_dma_interrupt() {
-...
-	for (i =3D 0; i < sdev->num_pchans / sdev->cfg->num_channels_per_reg; i++)=
- {
-		status =3D sun6i_read_irq_stat(sdev, i);
-...
-}
-
-If a device tree specifies a dma-channels value that is not a multiple of
-num_channels_per_reg (8), this loop bound evaluates incorrectly. For exampl=
-e,
-with 12 channels, it evaluates to 1 instead of 2.
-
-Will this cause interrupts for the trailing physical channels (e.g., 8-11)
-to be permanently ignored, resulting in DMA transfers on those channels
-hanging? This pattern was fixed with DIV_ROUND_UP in
-sun6i_dma_dump_com_regs(), but appears to be missed here.
-
-[Severity: High]
-This is a pre-existing issue, but I also noticed a potential problem with h=
-ow
-the physical channel array is indexed in the inner loop of the same functio=
-n:
-
-drivers/dma/sun6i-dma.c:sun6i_dma_interrupt() {
-...
-		for (j =3D 0; (j < sdev->cfg->num_channels_per_reg) && status; j++) {
-			pchan =3D sdev->pchans + j;
-...
-}
-
-Since this inner loop index 'j' is added directly to 'sdev->pchans' without
-the '(i * sdev->cfg->num_channels_per_reg)' offset, will status bits from
-subsequent interrupt registers (where i > 0) be mapped to the wrong physical
-channels (0-7)?
-
-Could this cause premature completion of DMA requests on low-numbered chann=
-els
-while the actual high-numbered channels hang forever?
-
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260826-sun60i-a73=
-3-dma-v5-0-abc5229b441e@gmail.com?part=3D4
