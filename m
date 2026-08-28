@@ -1,218 +1,156 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011068.outbound.protection.outlook.com [52.101.70.68])
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11010020.outbound.protection.outlook.com [52.101.229.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067C044CF4A;
-	Fri, 28 Aug 2026 12:40:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FFD36E49B;
+	Fri, 28 Aug 2026 15:11:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.20
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787920828; cv=fail; b=qmqOtCv9TK5LzERsPjiOz3QzpkJSUFAhQEN3D4f6TZyzVQTBDfPrTZrzKZsSkjso+XcDYt9sVu5SbPW7jtW6A65rhRe6cx5Za2gSB2Tq1O6MsTobkJmbJoQZLx+WhoDvWJWrZUJ5hzH1zYRIVpgr9Z86+VxKZ8lyEGz4J13Ffzw=
+	t=1787929893; cv=fail; b=GhzPyciWtAVqq0FQqA727arACZ+HzxPWddbe9VF0ksvDzLAUWA0p1weNuOIEWE/0suf+y6Y735Lzp12KwH1CbsjfZTiHPePr6P69OfxVkC2jziV8/3Yk7Q+aLX0SKT+SA6qMr6QegiJl+TC7UYeTkifVYi2O2E4i0V+peFFSiIY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787920828; c=relaxed/simple;
-	bh=WzCNX7c+iNTpbBXBJ0HDykZMHPkm+0DVmrgo+4u9Mpk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=l2eztl9o7VscRlC5vIcuWu03eH6PcXRVRDf88CzTEtUv792kYJHaKbydz9yO8S/pMbWqgMbZ0BE7o38VKPxM+Akkm2jrNLVnUGhald8zjXjJr+OiBU2wLjxPkCLw6eunGBq8AV5vFXv8roYyYl9IHgz2CaEtAzNkTYWGx+zMpvQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=MP7XZ9uL; arc=fail smtp.client-ip=52.101.70.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+	s=arc-20240116; t=1787929893; c=relaxed/simple;
+	bh=eHc7PwISImydJTemRTkQnIF2EgFY+GKkc3amWIpQy64=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Fc2QQxGaJrbWnd/FKGOCj6Ryax/AJCzsmZTm4+M6M0SKbV9roohCWYk8ZVOtKMv3XcyFsN496Qg8epm4XReZA9x2JrZDiKTu6nU9lPXyKd5Qzo/09MF/E45Y3Oh15BnunhLhkvSO9Sg09W9YrVhnTHMNKQqhcu+Cts5i3FYTU3o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com; spf=pass smtp.mailfrom=renesas.com; dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b=l4H+wSvv; arc=fail smtp.client-ip=52.101.229.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=renesas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="MP7XZ9uL"
+	dkim=pass (1024-bit key) header.d=renesas.com header.i=@renesas.com header.b="l4H+wSvv"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aAYU/BE/r33NZ/tkFeRiMvz9ZEfiWk7LL+vmsKMIYE83SEMx/hCiT2Wf/A9GBQ91k4+a5YqNmYjSotSyOJlTu0i4AX/ENOrjrdlwKhbteAQRAx6BggtR46M6Ul0rBkt9l6O0fGKgX/gQuSA6CcO8RYNaDUyUZvxgqADqLvsMkK2URPzR/R8ocswysbAXzDbQoADwZGtOGdsi9XiemmRN0zeKIaorJMla0wUTrHLt+E9+PJWnwjw6ct/w56dXjYxyU6baL2ayi7s27H3nluEjRPITl9+8zZkzl6nUZqeo1kdSG/XLRdIcd+/3SjkwgnsU3m9ps9cbdpB/zgiSVc1jew==
+ b=ZmmCeNvxfgAU6lKNGYX0FCqxoLXPjM7WmBcWIUTVe+yqAfWYjwQXMCETF2r1q8x5IEI1G0+wbCb/c7FGqdEPa+iUQdTKo23c6wSTZAF+wGfTzQuRkdw8OePYhZ4tdNoJWZPxAno77bgvrJiHA1kNw1D9Y8W9rp0sJYzsCv10gBIi7YipDJou9CIKe1E8y65ZoiWXgiSvHMlRZVaBx/eD8nU40Qywse8O04YwSO4dGpoMES3JF2g9RGs0hMWvhP3lQz+fdoWSxyA9bL0S/fo6VOXgG4GzjhZ0yAQTmt3DySBy6dUiqWk/10v1XEImZrQYVIKJZiRLiSrDLoS6MiXEAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u4Fxhss1JNO6PqQ5GDL5VDo+3QTXlZiRgvpe3nB6hcQ=;
- b=ChzHvw33FjdZeq3c1z6RYBxWy3yo7Os4wscGzEUzVPCvKGBSIeprjFPvHQgXh/6TbGzFsrIDWxZVD86nCKhcQiw/mlvKN0ffWcUaSACCVpfT5bQexMgotdrmnKUUQcK4lhKTMHHQFja9ws5xz8LwdsENduNZSDTrJE2GidCtn87qp2XDYyDZ46TMeXUpsVDVHQ+8iEtZ0jROmC/0yBO/0ar0xeDde35TNq+EFwNQom1QEuuNWui54PHrvm0t01UwpiQs2aUdQCUWRDRKGpMRP717aw9/RRxX07y1amFKFFXo4dzDt6xmOGq8iKJTOC4hW6dPAYG0eP2X6W05Bzp3BA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 164.130.1.59) smtp.rcpttodomain=analog.com smtp.mailfrom=foss.st.com;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ bh=9YWwAG66g4/5kprFAgwLoUWD1q0j+qw6AqWV+HnWtQ0=;
+ b=oR4r7Tox0BnlvitBP0LYTrHWanUNwCdK/P5mYL1iG30BbqNvtrVavf93+7xXj45Y9HlilvlL+7RVC5h7KWHthq0fY049tPIc11q2t7TMlN+PT4OejS/ORMpJP8nkppDVUcVZbgP9Cm+epOuRSvrm9dP/imEVtvvkl4anyPMfk+aWbav2s7cayFvCrFzRoggRfkSrArXxWRBY2trf8LENW/oSqxU+qRI8PiOlglRefW8lHJojDOblthMSW/+/cObuiZoKxH3ijXV3iagTShn6NsF02PN1qkE6uljth1owLIkyPmkd5NDc4EU5Ry9fIBA5iH6vqxfF7nhVbCRYkAq4uA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 8.62.32.50) smtp.rcpttodomain=kernel.org smtp.mailfrom=renesas.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=renesas.com;
  dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
- s=selector2;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u4Fxhss1JNO6PqQ5GDL5VDo+3QTXlZiRgvpe3nB6hcQ=;
- b=MP7XZ9uLp42Lihru4RhE+3luBpzLkM4RpMlC9oSLCnASDEhZXX7BN7N+Zoh6zHSW18t1CHBUAmTYq0skL8xs6B3Whu59QG7kDHRd0/uPr5GT6PC3QNcqUWeBRhxNVOhNGIQ0AB1M5FrKJsnUqX8S9Ud/yvBMkvGnP7gQYOhcXXFHqYRRMskURwdifUYZdhzJUFGKJeIYetgE+HBy3jlWfgT38qMsiNinROgKolZmb5E0/bDD5aM8ead4CKNFXTfUpdSl5pWy6hJFn+8zKrkmjLBIUIyBg7RN9foocIyiS3kfOlyVTVs/bNwygSUdvLfZDWON6rAgu2Xltn0k6zrFdA==
-Received: from DUZPR01CA0002.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:3c3::8) by GV1PR10MB9159.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:150:1d6::5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.10; Fri, 28 Aug
- 2026 12:40:08 +0000
-Received: from DU2PEPF00028D11.eurprd03.prod.outlook.com
- (2603:10a6:10:3c3:cafe::43) by DUZPR01CA0002.outlook.office365.com
- (2603:10a6:10:3c3::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.10 via Frontend Transport; Fri,
- 28 Aug 2026 12:40:08 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 164.130.1.59)
- smtp.mailfrom=foss.st.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=foss.st.com;
-Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
- designate 164.130.1.59 as permitted sender) receiver=protection.outlook.com;
- client-ip=164.130.1.59; helo=smtpO365.st.com;
-Received: from smtpO365.st.com (164.130.1.59) by
- DU2PEPF00028D11.mail.protection.outlook.com (10.167.242.25) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.3 via Frontend Transport; Fri, 28 Aug 2026 12:40:07 +0000
-Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpo365.st.com
- (10.250.44.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Fri, 28 Aug
- 2026 14:46:02 +0200
-Received: from [10.48.87.20] (10.48.87.20) by STKDAG1NODE2.st.com
- (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Fri, 28 Aug
- 2026 14:40:06 +0200
-Message-ID: <286d173b-4fd4-475c-bc49-eb0c9047ca2f@foss.st.com>
-Date: Fri, 28 Aug 2026 14:40:05 +0200
+ bh=9YWwAG66g4/5kprFAgwLoUWD1q0j+qw6AqWV+HnWtQ0=;
+ b=l4H+wSvvxSnzA2EMP0+o33GMrSkhgHWJ4vzPR5aewy7cJxbsQi9bobk6jEzvZKdPL7Pz535or1VRVHHjsKSktugkVkhVTKBZYPi44WfPch+Q81mbbTr9BtoeB925S4nfQLOTvb2AnD63raJDxDOY2F6h9rrT4rK00dDvbp7Qbug=
+Received: from TYWP286CA0019.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:262::6)
+ by TYCPR01MB11621.jpnprd01.prod.outlook.com (2603:1096:400:3b8::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.11; Fri, 28 Aug
+ 2026 15:11:26 +0000
+Received: from TY2PEPF00005621.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:262:cafe::a5) by TYWP286CA0019.outlook.office365.com
+ (2603:1096:400:262::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.11 via Frontend Transport; Fri,
+ 28 Aug 2026 15:11:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 8.62.32.50)
+ smtp.mailfrom=renesas.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=renesas.com;
+Received-SPF: Pass (protection.outlook.com: domain of renesas.com designates
+ 8.62.32.50 as permitted sender) receiver=protection.outlook.com;
+ client-ip=8.62.32.50; helo=ejcrelay004p.adwin.renesas.com; pr=E
+Received: from ejcrelay004p.adwin.renesas.com (8.62.32.50) by
+ TY2PEPF00005621.mail.protection.outlook.com (10.167.240.52) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.8
+ via Frontend Transport; Fri, 28 Aug 2026 15:11:26 +0000
+Received: from demon-pc (REE-0055761.adwin.renesas.com [10.226.92.7])
+	by ejcrelay004p.adwin.renesas.com (Postfix) with ESMTP id 9F41530001E6;
+	Sat, 29 Aug 2026 00:11:24 +0900 (JST)
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Seraj Alijan <seraj.alijan@sondrel.com>
+Cc: dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Subject: [PATCH v2] dmaengine: dmatest: fix race between wait for thread and thread start
+Date: Fri, 28 Aug 2026 18:10:24 +0300
+Message-ID: <20260828151024.2081478-1-cosmin-gabriel.tanislav.xa@renesas.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] dmaengine: stm32-dma3: Use bus width capability
- helpers
-To: =?UTF-8?Q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
-	<dmaengine@vger.kernel.org>, <linux-iio@vger.kernel.org>
-CC: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, "Lars-Peter
- Clausen" <lars@metafoo.de>, Jonathan Cameron <jic23@kernel.org>, David
- Lechner <dlechner@baylibre.com>, Andy Shevchenko <andy@kernel.org>, Frank Li
-	<Frank.Li@nxp.com>, "moderated list:ARM/STM32 ARCHITECTURE"
-	<linux-stm32@st-md-mailman.stormreply.com>
-References: <20260810-dmaengine-support-wider-dma-masks-v2-0-1f7b798d035f@analog.com>
- <20260810-dmaengine-support-wider-dma-masks-v2-5-1f7b798d035f@analog.com>
-Content-Language: en-US
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-In-Reply-To: <20260810-dmaengine-support-wider-dma-masks-v2-5-1f7b798d035f@analog.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: STKCAS1NODE1.st.com (10.75.128.134) To STKDAG1NODE2.st.com
- (10.75.128.133)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU2PEPF00028D11:EE_|GV1PR10MB9159:EE_
-X-MS-Office365-Filtering-Correlation-Id: a5c8d909-fb48-4a82-e5ab-08df05017de4
+X-MS-TrafficTypeDiagnostic: TY2PEPF00005621:EE_|TYCPR01MB11621:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: fb3fc89a-0f05-4dd4-1496-08df0516a198
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|7416014|376014|10067099003|6133799003|22082099003|18002099003|11063799006|5023799004|4143699003|56012099006;
+	BCL:0;ARA:13230040|82310400026|1800799024|23010399003|376014|36860700016|18002099003|56012099006|11063799006|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	zcLLKFOQX2ZN7cOddsMMz/dTZhXuVzpOXVyyR0zHqvVBTjA4GKdBNaYTaYV+xRpJrYYzmJSqd7uVvuLKi2rXw516sf0Z7rUiiHf4YhrerkMectsIc0pej8T/NLyq+ZUukrcccNOO8tBPUkYbfdp7cYxAMbOb/gokcBOkAKVATxDYF/tWqtk6/wCp+XNYpy1CrfkeUkvLZiRKn4ZQ0/uIMVenymRX1Ji9WpxmTDfy1OQ0WEAIKIlcK5fyH3JSUBNMTltWpDwbMpkjnIyK7OVWzWcEpVh676itVzc6IhdQNaqx2ZM+BL7a/l4O6MzG7p7mYw8+eAAajmMfgkrdrTnCaFDo60AYRYyCQkuQofR754u0UQcCQAtlWTBNlIUHlrbkIUXKekyfBUfZQztcFULCjpM3DEXGjVmkG1YcEq0+eCswqVM3sUEmxIHpbR3SvTcy0aJ0itS4lwj6HyY2NJ+ScxfNxRaI1SzHwr6OCD93h98tc8VKD8OII6xm0jAiHo/sEzKLaa3u7HtRBpcchGmw2A/0L2eMsD1sFPyf8rCYE8VKjjpLbY/tl2lxiNSx9/zlADI/8fFkRNeHUTfkyhn8MxzIosDrfUe+PsFWtzOQkntidSgp9nsUICeLbyiUg1Tb8BtbJbqolQ6UGkm46CtKJG7h9DvCwkahhe8Jt9hkV9ONO8mkQaI30Su3Ev6UgQWElcaYLnTMIq6zo8Yl+Wy6YA==
+	2wxmhUwMdy7tyCcxylGYjfHikLHSuJMTqb8ajVwPQ8+ajupRWu1a4SgTpn0kaee5U+91mLaI48/WctK66vtz2sN/iZ4u3FKJWrvszHo88dIejVc8HHMrs8zPvavDNo3k0LL0slJUiE1/ZaQGj6TfUI36p52zUErWtDZ/X8zSAP7Ksrtsl1KNuMP9ykbNdXtEpssHNKtxcpTMLd6R2TChC2hTJ4xOOCPBqX7M0c/7dOfRgyC2wr+beRX2ouxLVlceQKqa+DNQ/orYe602wykQlMKpsYqKPacy3B1B0ZDSzRaKtLBRyX04IeGIzl1EHU2ut+bahoGpKmSpOXDifqfry4loC4w+7N+PMEfqFDLvAuz2TKqcmyYfrKDOGdxDRCyoW2XoFVFzueUF2iu3RtTDQJhM/5+Y278escXxJE0zSX4eJvayb57k6mGjkg50vH57YOpaV85EP6FiuzC57NuVbRuwlRI9iSFybEMZs4TAiDUPYrttblvu7h60BuH33RpmO9kpoMen1Bg19Ldru1uBfty6h5OWiFDdy0nSKaqQGCs/conbNaCKWYCtqgfNmzetk1EpCKLM4lbAJSBOOvDhxB1GedWHoWsBCG1eFOzbFuaLyZnxGiEnnR4b/8nl3+ls0zwYv1F3KY2AARrq4CzDUTmj0ln9F7espBlT5bs4c7/njnS6mldzi8HK/NWQRDauiwlA1hjFxesHqb3RRJlUmw==
 X-Forefront-Antispam-Report:
-	CIP:164.130.1.59;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(7416014)(376014)(10067099003)(6133799003)(22082099003)(18002099003)(11063799006)(5023799004)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:8.62.32.50;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:ejcrelay004p.adwin.renesas.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(23010399003)(376014)(36860700016)(18002099003)(56012099006)(11063799006)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	lHfCEB4ER9RaS+4TJ+kd2POrxgPlRMOKCmfURBYrxcHSN8Nx2zWb1K170US1dPRkNICbfy+Yos0eze5m+hwh16q9ydYElyQpDbHvFbNgZWnQBaTCszAi9gn2Z5Tq2M7v93cxdFsJATa9aQnK/vxs5JyTs5WhxQkMQdsKqfy39FmDiSICmCeBzeXRDjPIoV33HZAIXRcIb2QWfC5bYXCdI5zAVwP3IlKKoSnIlB6iOfeeT3mKYoKuZ1ROFDefKT42nOcfSjXmUmYcM2lD1LnugvH56+6EKbCvETsLs73hLqYMYTwwj8Rv1UsaCmlhlpB36YulyU9HX7zklMXcVbRvJqkdJRNhbc6aw59cJLv5jShiEyPr+p3FU4FdgDItc/6OxsbR5W5PtnaEzrHGgZ3TcwXMT1BE5j5QGlIE6tBIRn+UlOX4p1NBOAug9/2/OWe0
-X-OriginatorOrg: foss.st.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2026 12:40:07.4026
+	yTj0UjdhPVOXoMR1fXjSLexDLc4v5DO3xI+qiDUDHwjmLZpvCG644QYHA+kgU0eSHNeOsSfoMea2lz9kiKOqNNfPjhUXTwAcBQ792Y4H2OASN2cd5DE58rxq8/DQWC4P8TYfIKRC++Wf6MvB6ITzSs8m3NHBZSNFHqRQVesDVv0/Q0fds+/PcMzlJoRLnXKkgZCsJvgjARpSK3vRciPHKLZAUssQpBzQ6+1NtsLMFPY1DPhrQ2AWjA1WhtyhOZ7snd/zDolPT3cUneUG/cfabJh88ZeWNcLq6zvSqDQK4dAw3ECjC6qK8G1XKHHOIawUa4ErcPEpjl/yQUbcB2dB7sqFRdJhWBQcN05gwcp3iDZN3tNcwWz7Qr9FW+TqupOrx+k06Z9R8iDseeY6HsBv3rgq4A0JECr0wPEEUGiJlDyiCLHJj3vVmZ8prIbQT4vI
+X-OriginatorOrg: renesas.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2026 15:11:26.7915
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5c8d909-fb48-4a82-e5ab-08df05017de4
-X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.59];Helo=[smtpO365.st.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU2PEPF00028D11.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fb3fc89a-0f05-4dd4-1496-08df0516a198
+X-MS-Exchange-CrossTenant-Id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=53d82571-da19-47e4-9cb4-625a166a4a2a;Ip=[8.62.32.50];Helo=[ejcrelay004p.adwin.renesas.com]
+X-MS-Exchange-CrossTenant-AuthSource: TY2PEPF00005621.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR10MB9159
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB11621
 
-Hi Nuno,
+Each dmatest worker thread has a pending and a done flag which describe
+the thread's lifecycle.
 
-Thanks for the update to the stm32-dma3 driver. It's good to see that it 
-helps demonstrate the dma_slave_caps_clear_xxx API.
+pending is initialized to true when the thread is added to the threads
+list. pending is set to false once the thread is actually running. done
+is set to true once the thread has finished its testing.
 
-For future patches touching STM32-related drivers, please CC the 
-linux-stm32 mailing list, as this one went unnoticed on our side.
+When the wait module parameter is set to true, dmatest_init() waits for
+the !is_threaded_test_run() condition to become true.
 
-On 8/10/26 17:06, Nuno Sá wrote:
-> Advertise the controller-wide bus width capabilities through the new
-> dma_set_src_bus_widths() and dma_set_dst_bus_widths() helpers.
-> 
-> Also update the per-channel capability callback to clear unsupported
-> widths through the dma_slave_caps helpers so the bitmap and
-> transitional legacy fields stay in sync.
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-> ---
->   drivers/dma/stm32/stm32-dma3.c | 32 ++++++++++++++++++++------------
->   1 file changed, 20 insertions(+), 12 deletions(-)
-> 
-> diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-> index 4724e7fa0008..f0781fb1b66f 100644
-> --- a/drivers/dma/stm32/stm32-dma3.c
-> +++ b/drivers/dma/stm32/stm32-dma3.c
-> @@ -1469,14 +1469,14 @@ static void stm32_dma3_caps(struct dma_chan *c, struct dma_slave_caps *caps)
->   
->   	if (!chan->fifo_size) {
->   		caps->max_burst = 0;
-> -		caps->src_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> -		caps->dst_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +		dma_slave_caps_clear_src_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +		dma_slave_caps_clear_dst_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
->   	} else {
->   		/* Burst transfer should not exceed half of the fifo size */
->   		caps->max_burst = chan->max_burst;
->   		if (caps->max_burst < DMA_SLAVE_BUSWIDTH_8_BYTES) {
-> -			caps->src_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> -			caps->dst_addr_widths &= ~BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +			dma_slave_caps_clear_src_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +			dma_slave_caps_clear_dst_width(caps, DMA_SLAVE_BUSWIDTH_8_BYTES);
->   		}
->   	}
->   }
-> @@ -1737,6 +1737,12 @@ static int stm32_dma3_probe(struct platform_device *pdev)
->   	u32 master_ports, chan_reserved, i, verr;
->   	u64 hwcfgr;
->   	int ret;
-> +	enum dma_slave_buswidth stm32_dma3_buswidths[] = {
-> +		DMA_SLAVE_BUSWIDTH_1_BYTE,
-> +		DMA_SLAVE_BUSWIDTH_2_BYTES,
-> +		DMA_SLAVE_BUSWIDTH_4_BYTES,
-> +		DMA_SLAVE_BUSWIDTH_8_BYTES,
-> +	};
->   
+If the worker thread is not started and running by the time
+dmatest_init() waits, the !is_threaded_test_run() condition will be true
+and the wait will stop early, before the worker thread is even started.
+dmatest_init() exits, defeating the whole purpose of the wait.
 
-I'm not fond of having this large block after the "shortest" declaration 
-(reversed christmas tree order), and since it is not a global variable, 
-I think you can remove the `stm32_dma3` prefix.
+If then we try to remove the module, kthread_stop() will try to cleanup
+the worker threads, interrupting wait_event_freezable_timeout(), which
+will return -ERESTARTSYS, causing the "test timed out" message to be
+printed.
 
-By removing the `stm32_dma3` prefix, you could place it after the struct 
-declarations, below struct dma_device *dma_dev;
+Clear the pending flag once we wake up the worker thread to avoid this
+race.
 
->   	ddata = devm_kzalloc(&pdev->dev, sizeof(*ddata), GFP_KERNEL);
->   	if (!ddata)
-> @@ -1775,14 +1781,16 @@ static int stm32_dma3_probe(struct platform_device *pdev)
->   	 * channel, and can only access address at even boundaries, multiple of the buswidth.
->   	 */
->   	dma_dev->copy_align = DMAENGINE_ALIGN_8_BYTES;
-> -	dma_dev->src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> -	dma_dev->dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_4_BYTES) |
-> -				   BIT(DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +	ret = dma_set_src_bus_widths(dma_dev, stm32_dma3_buswidths,
-> +				     ARRAY_SIZE(stm32_dma3_buswidths));
+Fixes: d53513d5dc28 ("dmaengine: dmatest: Add support for multi channel testing")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+---
 
-By using `buswidths` instead of `stm32_dma3_buswidths`, this can fit on 
-a single line.
+V2:
+ * move pending = false before wake_up_process() as suggested by Sashiko
 
-> +	if (ret)
-> +		goto err_clk_disable;
-> +
-> +	ret = dma_set_dst_bus_widths(dma_dev, stm32_dma3_buswidths,
-> +				     ARRAY_SIZE(stm32_dma3_buswidths));
+ drivers/dma/dmatest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Ditto
-
-> +	if (ret)
-> +		goto err_clk_disable;
-> +
->   	dma_dev->directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV) | BIT(DMA_MEM_TO_MEM);
->   
->   	dma_dev->descriptor_reuse = true;
-> 
-
-Regards,
-Amelie
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 2ae3469397f3..f654a00e0040 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -610,7 +610,6 @@ static int dmatest_func(void *data)
+ 	ret = -ENOMEM;
+ 
+ 	smp_rmb();
+-	thread->pending = false;
+ 	info = thread->info;
+ 	params = &info->params;
+ 	chan = thread->chan;
+@@ -1141,6 +1140,7 @@ static void run_pending_tests(struct dmatest_info *info)
+ 
+ 		thread_count = 0;
+ 		list_for_each_entry(thread, &dtc->threads, node) {
++			thread->pending = false;
+ 			wake_up_process(thread->task);
+ 			thread_count++;
+ 		}
+-- 
+2.55.0
