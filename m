@@ -1,118 +1,64 @@
-Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B1EA3AFCF0;
-	Fri, 28 Aug 2026 09:35:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE233783B4;
+	Fri, 28 Aug 2026 10:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787909717; cv=none; b=EHw4aMsAFbHeDtk+UKxFIb7v1r7WwpwW7nlkqcnfWy3ILGefIRwkyJn1qvmBU71gn3pMOhCtNpiV14Dwgx/W33nsUzDYSgNiiXCwQUgqx4LXfYTlSXJT3BeHH2cVQ7JWGrz4+Penhn/SqH8bRJnMnhHA0rrXdDfqWSynNSFp57g=
+	t=1787911935; cv=none; b=oZaRJtFwTu2Nlvs7Zh7XVBVnf0xGsORmarFFHtMxhlbJ0Y0lBOzSL0+EZJz3AB/vf0fUYfNmPnBFijR80HZ+cTqpJVJd9lcXIdPiEKg/xgYycxHYcmKcrljVVZxl3g0LuQY0iMPZvMTcQGyQMnvgIB3diJs8BaxZYpnmFOCySok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787909717; c=relaxed/simple;
-	bh=2GRJ1RHDOJWyELR9rwDbxFyngjy0bVk/VdMyjJkk11Y=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=q+aE4k5H8NrftEqXkIXF3hCg7t57U4ptkYnfbzA9spkSoSRdlFReG1CoDzxnRoF+EN9vpinyN7HwNwizElAEAIuuarRAEy5Z6nzSFKDYi/FU8Ker5pb2xJL0RV2WG7tP2XgqjuKJE80mB+gAtD3IQtoPLcj5x11cqrsHmNkw/lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=Q/qPSyPy; arc=none smtp.client-ip=218.76.62.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+	s=arc-20240116; t=1787911935; c=relaxed/simple;
+	bh=l6Cs1HqLMja34fVqSpG8q2hb6XHTfmt70otBo7dZnrQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SfNMRPCvf8VCX4AzJwmSrT88R3l8VmfFCeXDhHmL5rvADzZQSstKodWxPEHoIIn5xjgFnXWahe/hL8mXdLqe4oE8v8Rw9irPE1/qMeX8HgEU1zVitBl2ZLFm4w5jDbd8C1EeyiLJ21ZxTg+tQAzH4ybINd7OdKyzMQ1OezbJLxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gs5e8ctH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="Q/qPSyPy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	References:Date:Message-Id; bh=gqj796rglebLooFM91re1gYWvE2vRl4JT
-	g2ttyIVpII=; b=Q/qPSyPydMeGojGqwZyq8bCbnQ1IOmGfuoK8ajVQjENFMl3E0
-	VwML90/SluC6wpCPaq0bqcwU4+2LhY1Gp7WSsV/gVXk2ec/eQa3+njl8hRoB1KAG
-	qgG6M9HFzXsHp2W3yg92tDcgAySma82O1Z8SjD1afjBzBfEPC0ssUGzW94=
-Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwB3V85QVpFqpGoBAA--.604S2;
-	Fri, 28 Aug 2026 17:35:12 +0800 (CST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gs5e8ctH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0191F000E9;
+	Fri, 28 Aug 2026 10:12:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787911934;
+	bh=pTqaHcxSoMIpsNUS2kJWMDjPrtB98h8ByxoQCkcbefs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Gs5e8ctHzFUf+nIZDJQqMETXg2b/nAqcqoWJNvAVNnrrlbThEfjwG0TP9UaN9ovgC
+	 x0er9romxmMu+pAusk4nHMiyP5EgarNcZUZstayAncRHDJh1aH+pDAY/xtmNVTPwGN
+	 dIlc9506j6fdyzbN4E0Sw1vnvBxkyJhNMHje/JJs2R0umTjMvlr6M0bQ+0nxlO1qvU
+	 2k4fx2reJNyEs8fxlDbyGtEWe5UOl+pNFOrcIWqquIYgsX4EF0L69z1d9KuJ5kHbr7
+	 DuKt2OJLWdxzLYc5cCm8MvurXSMf0klHcsOisB2y2TZvdew7tGe0fPQNAo/+/n+Xjb
+	 iyksKbdAVKQYw==
+Date: Fri, 28 Aug 2026 12:12:11 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-renesas-soc@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/4] dt-bindings: renesas,rcar-dmac: Add support for
+ R-Car X5H SoC
+Message-ID: <20260828-proficient-tasteful-shrimp-0bf503@quoll>
+References: <20260825141542.30901-6-wsa+renesas@sang-engineering.com>
+ <20260825141542.30901-9-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 2/2] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds
- access
-From: Jia Wang <wangjia@ultrarisc.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Jia Wang <wangjia@ultrarisc.com>, 
- Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Pandith N <pandith.n@intel.com>, Sia Jee Heng <jee.heng.sia@intel.com>, 
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <apEyX4mTTMiSE4_0@ashevche-desk.local>
-References: <20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com>
- <20260828-dma-fix-v1-2-a6947f487e07@ultrarisc.com>
- <apEyX4mTTMiSE4_0@ashevche-desk.local>
-Date: Fri, 28 Aug 2026 17:34:59 +0800
-Message-Id: <178790969949.157024.12722626804390466513.b4-reply@b4>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787909699; l=1008;
- i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=2GRJ1RHDOJWyELR9rwDbxFyngjy0bVk/VdMyjJkk11Y=;
- b=Y4mYayODiuxTUfN07+MAm9wUSRrF9qhV1NEOq74AApcT+9Ojs5YG5EylMuTbNNWuUiiYVjIta
- QTXDRe7WvviA3iKpr5CJ3UKqT9yIEx5UaHd9jaQO5pfS5YPJAIPGFze
-X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
- pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-CM-TRANSID:AQAAfwB3V85QVpFqpGoBAA--.604S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrZFy5trWfGr4UKFW5trWrXwb_yoWfZrg_ur
-	W2vrnrur45ZFWUXa15KryUGwnFk3WUXFZ8Kr95ZanYvF1vya909w4vgrs3Zw1rX39IyrnI
-	kF1Sqay7Cr429jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbIkFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
-	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
-	6r43MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s
-	026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_
-	Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20x
-	vEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE
-	14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf
-	9x0JUpwZcUUUUU=
-X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAMEWqPrHsAIwAZsU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260825141542.30901-9-wsa+renesas@sang-engineering.com>
 
-On 2026-08-28 10:01 +0300, Andy Shevchenko wrote:
-> On Fri, Aug 28, 2026 at 08:48:27AM +0800, Jia Wang wrote:
-> > axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
-> > walk the hw_desc[] array of a single transaction. If multiple
-> > transactions have allocated LLIs, the channel count can exceed the
-> > transaction-local nr_hw_descs and make the DMA error path read past the
-> > end of hw_desc[].
-> > 
-> > Use the descriptor-local nr_hw_descs count when dumping LLIs.
+On Tue, Aug 25, 2026 at 04:15:45PM +0200, Wolfram Sang wrote:
+> Also add the familiy compatible because X5H is the first R-Car Gen5 SoC.
 > 
-> ...
-> 
-> >  {
-> > -	int count = atomic_read(&chan->descs_allocated);
-> >  	int i;
-> >  
-> > -	for (i = 0; i < count; i++)
-> > +	for (i = 0; i < desc_head->nr_hw_descs; i++)
-> 
-> While at it,
-> 
-> 	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
-> 
-> and drop that 'int i;' as well.
-> 
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> ---
+>  .../devicetree/bindings/dma/renesas,rcar-dmac.yaml          | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-Will update it in v2, thanks.
-
-> >  		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
-> >  }
-> 
-> -- 
-> With Best Regards,
-> Andy Shevchenko
-> 
-> 
-> 
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
-Jia Wang
-
+Krzysztof
 
