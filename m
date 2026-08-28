@@ -1,102 +1,167 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC0A3749E8;
-	Fri, 28 Aug 2026 07:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A1A339A07C
+	for <dmaengine@vger.kernel.org>; Fri, 28 Aug 2026 09:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787900518; cv=none; b=rxvn/aWAlK8Pmqjy3ver/NqNKngkmLuQk/eEjlfUPin2lR+pRLHKeUk0z7OyAUEwsZ5jW8bR7Mr6fAHlROiLAJf9DaLpB2p8zPeKKV/tPnVu3NEwRBQ1g12u8uaWa0veCz0XaWV0pC04UT/YELpcVWaUmut05foNwd6uBH52oIo=
+	t=1787909062; cv=none; b=cmaxbwqphy5ne8QUwdmlGzpoLaRnMM3r3Xk7JZVPabXLlvOwkyt6D2cOGHmmIC87YPUrH3YEZO8ejcVXtXtiuRABzL1q9rfYw98qp6++zJ7eg3U48V0KUONoGzDbgD+TlOuqfFPvMKRlG70umHo4GpAUCwNRjGyarSu3dk2uG+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787900518; c=relaxed/simple;
-	bh=4jXzHVfk6onz6MLCfIF4eccIsIjSibkxZeNK9blm0JY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NTYbCeUULmk+ZUMsFhId9JQN94FKUFG0acy5bF7Z+i9z0JowH90sp1vWOMQqd1b3Wo80kaYHikwdQus2Ecg392CQn3hBXOMylGJGiH0cQJWZEiiF7Xi+njtpSzq13QMr81KDzUerYhEUeXLWYk2EQZkYqdGCEBOYt6ETrnb7vwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QzGj3+Nl; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1787909062; c=relaxed/simple;
+	bh=EfFkWn5Ea9fb3/vBlRDSbeB2qRbCKw1lZeGp5o1jUxU=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=QecYdFW1JHF9faGFTCsNeViORwXMLzrnVJLAh7mJ2En9qXiZM7iiZdOloMibVShXwItHyZ3UXNqnrNPCKSj89omQh/hbY0NLmP3BQWuy2mls9xhm0p0OjObweXPQRn8iMgTwGwodU7s42yF/5HDIIw+UI7jUfQpnhthi/imhqGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=W0oA2ujG; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QzGj3+Nl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787900516; x=1819436516;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4jXzHVfk6onz6MLCfIF4eccIsIjSibkxZeNK9blm0JY=;
-  b=QzGj3+NlDTeZIlT8QYzHXGMwv5RCobkLM8/4L6u+O1Te/tP6DwiC2fzD
-   lwk0R0RjdsjMRjpnKrFtm0oQ/PybsidetwP1CXv4RQtFklseOMiB3qrwe
-   A2g9WvKRuPe2mlQL7gE1gFNRFK1Ke+/bZt9nLgO5OeLYTSZteR9/qIkCH
-   GVMOa8OtJeylEqOwdbl27y8fU+9XKUXOqgyBk6swV/p/hRMwdE112QoPd
-   wKaeqFUbTeblPdLVc0YmpIrYNqILyXyJ9Nhrzm3kCy01nerI4MdH/fD/M
-   1xezoVYeB/2q0yOvqxmXsNmpOIUEdqZTOqkdmjMLESFLHnhocau/OFP6S
-   Q==;
-X-CSE-ConnectionGUID: 60MtdSj+REmLi7qwwltTsg==
-X-CSE-MsgGUID: sEbvQsqYTBOHXC5+7lN8LQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11888"; a="88171220"
-X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="88171220"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 00:01:56 -0700
-X-CSE-ConnectionGUID: l00rTkhSSNGvUe2pX1CNyg==
-X-CSE-MsgGUID: Bm5I9lqkTb6V16WhEy+GMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="266775124"
-Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.34])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Aug 2026 00:01:53 -0700
-Date: Fri, 28 Aug 2026 10:01:51 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Jia Wang <wangjia@ultrarisc.com>
-Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Pandith N <pandith.n@intel.com>,
-	Sia Jee Heng <jee.heng.sia@intel.com>, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds
- access
-Message-ID: <apEyX4mTTMiSE4_0@ashevche-desk.local>
-References: <20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com>
- <20260828-dma-fix-v1-2-a6947f487e07@ultrarisc.com>
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="W0oA2ujG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=b3JYRN3m8NMiKBzPnAZQCZuNlnzhkxP/E
+	l487CcLr0Q=; b=W0oA2ujGxZN1Q8ySVaWAQ2x+FViDQ2VB0s0P+GnPVxFNIsBi2
+	aYIMM3K7L3pKHLWZeKjZksAulkLcWYPkv2DhaUrFzIApuqYWsZ/oCLGxYP0GDvkx
+	A+ln5I1HXakf9eaEfebQ4hG+j7eS1VAKHuDicYvSY+NCPp9gvluBHmvQ/I=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwBHds3DU5FqjmoBAA--.217S2;
+	Fri, 28 Aug 2026 17:24:19 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260828-dma-fix-v1-2-a6947f487e07@ultrarisc.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 1/2] dmaengine: dw-axi-dmac: Fix AXI burst length
+ encoding
+From: Jia Wang <wangjia@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, dmaengine@vger.kernel.org, 
+ Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260828005905.03C3C1F000E9@smtp.kernel.org>
+References: <20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com>
+ <20260828-dma-fix-v1-1-a6947f487e07@ultrarisc.com>
+ <20260828005905.03C3C1F000E9@smtp.kernel.org>
+Date: Fri, 28 Aug 2026 17:24:05 +0800
+Message-Id: <178790904597.157024.15514368863692379180.b4-reply@b4>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787909046; l=4031;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=EfFkWn5Ea9fb3/vBlRDSbeB2qRbCKw1lZeGp5o1jUxU=;
+ b=MqRt5cd4xOzGp/uizX968CWaKGy5jGUlTJEPgwe4PPJgTAitJ1dYFnm6MUnaUgWaOYbRc+yG4
+ EXgcxGSaK9CA+xLWAsKHAzY3lA3Ncx433uhY3zWf24mS0AZp8/IVlxI
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwBHds3DU5FqjmoBAA--.217S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXF1UKryruF4rZw4UJFyxKrg_yoWrWF1UpF
+	W5Ka1YyFyrtrnIya1kGw1xZry0va15GFWUuF4jvw1fua43Zw1vkrnxK3yrWF9rur1Fya40
+	qF4jv34fAF1jva7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUva14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
+	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
+	6r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
+	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
+	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyT
+	uYvjfUehL0UUUUU
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAMEWqPrHsAIwAVsY
 
-On Fri, Aug 28, 2026 at 08:48:27AM +0800, Jia Wang wrote:
-> axi_chan_list_dump_lli() uses the channel-wide descs_allocated count to
-> walk the hw_desc[] array of a single transaction. If multiple
-> transactions have allocated LLIs, the channel count can exceed the
-> transaction-local nr_hw_descs and make the DMA error path read past the
-> end of hw_desc[].
+On 2026-08-28 00:59 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> Use the descriptor-local nr_hw_descs count when dumping LLIs.
+> Pre-existing issues:
+> - [High] The error handling path for descriptor allocation failures calls `dma_pool_free` with NULL pointers and underflows the `descs_allocated` counter.
+> - [High] Missing validation of transfer lengths (`len`, `buf_len`, `period_len`) in DMA prep functions leads to division-by-zero panics and out-of-bounds array accesses.
+> --
+> 
+> commit 1edc02c6412e562b16e650ad23de4b1395cbcb68
+> Author: Jia Wang <wangjia@ultrarisc.com>
+> 
+> dmaengine: dw-axi-dmac: Fix AXI burst length encoding
+> 
+> The snps,axi-max-burst-len property describes the number of beats in an
+> AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
+> 
+> The driver keeps axi_rw_burst_len as the actual burst length so that
+> dma_device.max_burst reports the correct value. However, it also programs
+> that unencoded value directly into the hardware fields. A value of 256
+> therefore overflows the 8-bit fields and can cause AXI decode errors.
+> 
+> Subtract one only when constructing hardware descriptors, while keeping
+> the actual value for dma_device.max_burst.
+> 
+> > diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > index eebed2474210d..742e08cfab435 100644
+> > --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> 
+> [ ... ]
+> 
+> > @@ -975,7 +975,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+> >  
+> >  		reg = CH_CTL_H_LLI_VALID;
+> >  		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+> > -			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
+> > +			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does the error handling in this
+> function cause a kernel panic if descriptor allocation fails?
+> 
+> If axi_desc_get() fails to allocate a descriptor (e.g., due to memory
+> exhaustion), the code jumps to err_desc_get and calls axi_desc_put(desc):
+> 
+> 	hw_desc->lli = axi_desc_get(chan, &hw_desc->llp);
+> 	if (unlikely(!hw_desc->lli))
+> 		goto err_desc_get;
+> 
+> axi_desc_put() unconditionally loops over all requested descriptors and calls
+> dma_pool_free() with hw_desc->lli. For elements that were not successfully
+> allocated, hw_desc->lli is NULL, which causes dma_pool_free() to dereference
+> a NULL pointer.
+> 
+> Additionally, axi_desc_put() subtracts the full requested number of
+> descriptors from chan->descs_allocated instead of the successfully allocated
+> count, which could underflow the counter:
+> 
+> 	atomic_sub(descs_put, &chan->descs_allocated);
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but does this function lack validation for
+> transfer lengths?
+> 
+> If a DMA client driver provides a len of 0 in dma_chan_prep_dma_memcpy(),
+> num evaluates to 0 and the transfer setup loop is skipped. The function then
+> attempts to write to index -1, causing memory corruption:
+> 
+> 	/* Set end-of-link to the last link descriptor of list */
+> 	set_desc_last(&desc->hw_desc[num - 1]);
+> 
+> Similarly, in dw_axi_dma_chan_prep_cyclic(), can a period_len of 0 cause an
+> unhandled division-by-zero panic when calculating num_periods?
+> 
+> 	num_periods = buf_len / period_len;
+> 
+> And if buf_len is 0 in dw_axi_dma_chan_prep_cyclic(), making total_segments 0,
+> does this access out of bounds on the 0-length allocation?
+> 
+> 	llp = desc->hw_desc[0].llp;
+> 
 
-...
+I checked these paths and confirmed that the issues are pre-existing and
+not introduced by this series. To keep this dmatest-driven fix series
+scoped, I will address them in a separate follow-up series.
 
->  {
-> -	int count = atomic_read(&chan->descs_allocated);
->  	int i;
->  
-> -	for (i = 0; i < count; i++)
-> +	for (i = 0; i < desc_head->nr_hw_descs; i++)
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260828-dma-fix-v1-0-a6947f487e07@ultrarisc.com?part=1
+> 
 
-While at it,
-
-	for (unsigned int i = 0; i < desc_head->nr_hw_descs; i++)
-
-and drop that 'int i;' as well.
-
->  		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
->  }
-
--- 
-With Best Regards,
-Andy Shevchenko
+Best regards,
+Jia Wang
 
 
