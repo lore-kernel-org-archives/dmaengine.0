@@ -1,310 +1,148 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3090B3D6CCF
-	for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2026 23:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82013DA5DB;
+	Mon, 31 Aug 2026 23:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788218745; cv=none; b=d6hqbiQkqsXCjrYgMdmMN/LiR75PFCK0XVYmAw8621pACYQVOFonAExhtZkYXf2umSwENpfQWQQBxZc/dYB3NC5I9DEfmdx11J/HLuPTi24ghoC0jkH6mwrfxlyU2g6TrWQ6c99NSlx33+HITU40ikUBzcHu/42RAILfya7zZp0=
+	t=1788219046; cv=none; b=A25UTlNmPGlUlYCzosccD1PdbsnbQYv/mf/QSNbkYx3tfm48qDz3uDDbToHcu0ZtnCdCzj0memt2sRg4eOiV8CLYYkdcdMyw46JGiB9xkLMRCyjYQwC4dKII6Rky6x8LnVW1nEM0lwZ0VLIXpmhstqIybQQhdC00DFeHHMYDtRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788218745; c=relaxed/simple;
-	bh=uM708j09j6nSOP7IiMsV0ytTgwnrzIZATjME+J7mX5E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LQNtGvaWSZiDbWMlEwU9ybN3OyBZHiD+b589Nh4mPcqwa94Ah+TTeEq9eq0TQwJRR79w9nCZCMKuAxw5CHKsXsy9rkm8qs+Jz6fJ3ky0NkQM6mW3Wth9bx1agTloNsXxnuMaxBhH7Q4zAEKeBm9qpZCxhbuJm15LVXOJOMwv2y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YCzMOjMl; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788219046; c=relaxed/simple;
+	bh=U+KH953cSuE5VOPSZIj9eaAT5gjuEAmb7gPVaoiemZY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Qdt2RgPECbMD2+Iij46Td2a3x1e6Xt7Kdo4h70VoDQKY5pELP3LBCUsRLbIgoqxCZVZfd9Rpo0Odxv2JROsCU5H1rTOQRqi8O2DSERvuPHR/F/8GexaeWGL6YVRak38L5RkRLPx6f6zIwCrMe60dV9GRp8KCRoqmEmOZCfepDyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ABKiNgQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YCzMOjMl"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-398fb0feb91so168383a91.0
-        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2026 16:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788218742; x=1788823542; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=l6om3FeFy+vwSp6+A3N9tIRqD8PcybsChQtR5r/26Do=;
-        b=YCzMOjMlKIBbxKGQfyIXJL0wDV3XHrwSaJm9IsE9msTMi+1ComUtL3RMPHg8jblMsS
-         i9SZFQqPSv2T47iC9xdTy4z9S2WnwK3pTOzzWIEUnAxMvxyeOYrxrQ/HsoQQj09MjX6T
-         gFiJtMWERQ9/rdQ85YVJtJAyqW84k6QJkPl00Q1d7n1fBpnNRt/ggOd2ALxTQWTTz7jY
-         sEYR686A341tVY3Qb0JPYj60mgn+RDvZH9EYYCyieqWyS6dW4J487WpmKHAWBpt4wEUc
-         Oku5ADBYL1K6CREiqURAV+415iweRG3GJlQ4bX1sS6TDtQttbuEHYbKYuYc0QF6EFYrl
-         ImjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788218742; x=1788823542;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=l6om3FeFy+vwSp6+A3N9tIRqD8PcybsChQtR5r/26Do=;
-        b=KLAoEI6NZha5X9CQpVZCrRDRHOEA7k/d1Ge3Ss4D/63RlAqEyfnkfdP3/gKJ7UeaVf
-         UAgf7X6v688w1hiKZckP7X4NxBeLxM6Mr81jZuYWu6NFqeIFLzLvxkAJZcQLYi1wa1BQ
-         T9+cukpqWGiCi5h1vZz4tcAH9wpnA5RORGauxK4/Xoch91XuyZv+VaAz7OPIgg9GlLkm
-         B7dAcB1nlmjh/2GMmi07GOAE4lDHg6dxnpuhGfyDpv3T7WmxYy4t2aDbjiulkqTXG06s
-         q9a3LQsAySQ0y55AQ5IfvB5tauur0UYy2qYPuje1vmbeZgPZlT4jv+ego9A7jmawWpCX
-         cJhA==
-X-Gm-Message-State: AFuF++mvyXGgOSCWpxVikopbW1Q2DCnEXbRfv2UlR4lMBhYUNhVT6cms
-	iYR2a7/d8ovSUs44NtJwN+JiUHBiN7k4N2FHCqihkmYqkGA9OHNKQDwU
-X-Gm-Gg: AYBFou2sP0AoS4ZvrmP60yNDZBr+/He0hupuWZPhmydSjCpkGinOC8i0TiZQaCk0tHb
-	oHGUUZUh16cyRy+yrjUw7A4OJLpzz+mOR5bVwNYJcSFEMc7NyIOs2gzzoRPFqnF5qDRfBjpZeZG
-	bjvEIgv5S1m9WUqOhnvOtwz9hyiJGx7q4oKlO6YHhYVlYN/gKHqScmn8vmAbSClToEooYYuVOka
-	N9KNKIaGSnL+tXKYDTIqwYXiSWUkvBhMNnEi4dsf9wBNwlUG/eqdpoSIHeWQkcHnutEd9ptGCjl
-	vp9LYoVPmjgtBgxNpS9giPSqVJEk7YAFcG2Qo4ZCH+AKO9/z/u+gOwDAvIpE7j8JrSBM75q7XiI
-	HkmCH58syx4xa9EUbdiMWbbzq8ZtpNIBBjnLXwcmPZ+wVe3BZEXk5nrZrz7sJeAIn87jPBKf+c/
-	3u+ICJMFFU/mbEKTrmN+uSMdOtnzQnErAvYD1VByYpD8xAJBAxeRd21ycU35k91crXpW+2Q0U=
-X-Received: by 2002:a17:90a:e7cb:b0:398:bac0:238e with SMTP id 98e67ed59e1d1-398bac026b0mr15204624a91.6.1788218741556;
-        Mon, 31 Aug 2026 16:25:41 -0700 (PDT)
-Received: from [10.60.78.252] ([2409:40c2:5002:4362:354a:8f21:7ceb:c8a6])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3990d75fc49sm1963213a91.12.2026.08.31.16.25.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Aug 2026 16:25:41 -0700 (PDT)
-From: Bhargav Joshi <j.bhargav.u@gmail.com>
-Date: Tue, 01 Sep 2026 04:53:10 +0530
-Subject: [PATCH v3 6/6] dt-bindings: usb: ti,da830-musb: Convert to DT
- schema
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ABKiNgQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCB01F000E9;
+	Mon, 31 Aug 2026 23:30:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788219044;
+	bh=ZOhGd2zZP7oigzcpyJCpddYJWQZ73IjNrIvdhiuSqkw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ABKiNgQKBvV+LVJN3lzwrjv6HYBYgyvRvZqHPYkhj99YTlxctopbBD3K7DX2O13Fi
+	 RL+VYhl1ECd8lo+jgMcpSlsL+1UyQxTFK3579DxzoZ9UrOl9skOjestB3EO+pCXr5o
+	 ZVHy4tHOveh4ynbYJpwgGUa2bJx+0NZEp0hSD1DcmRBIL0xiW/Y00KHiiCofBDdI48
+	 i7I2Ao3KJ2GY1UnVUsgP77/PZVIeT+tmeyPWaYdfjJQjLFJLphv3kNdRih6PIXtdXy
+	 uU6V0WL2QOrdpGGQvFPal8xWC1bIQumk6baep03S3dUv3v3hgfrop13zNV7C08THL/
+	 rHHW7GscMZYrg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 12/12] dmaengine: plx_dma: fix NULL pointer deref in
+ plx_dma_isr()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Logan Gunthorpe" <logang@deltatee.com>
+Cc: linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260831191403.207631-13-logang@deltatee.com>
+References: <20260831191403.207631-1-logang@deltatee.com>
+ <20260831191403.207631-13-logang@deltatee.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 31 Aug 2026 23:30:43 +0000
+Message-Id: <20260831233044.3CCB01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260901-ti-am33-usb-v3-6-5e15c617d2e9@gmail.com>
-References: <20260901-ti-am33-usb-v3-0-5e15c617d2e9@gmail.com>
-In-Reply-To: <20260901-ti-am33-usb-v3-0-5e15c617d2e9@gmail.com>
-To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Andrzej Siewior <bigeasy@linutronix.de>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Aaro Koskinen <aaro.koskinen@iki.fi>, 
- Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>, 
- Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>, 
- Ravi B <ravibabu@ti.com>, Kumar Gupta <ajay.gupta@ti.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, Bin Liu <b-liu@ti.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
- linux-phy@lists.infradead.org, linux-omap@vger.kernel.org, 
- goledhruva@gmail.com, m-chawdhry@ti.com, daniel.baluta@gmail.com, 
- simona.toaca@nxp.com, j.bhargav.u@gmail.com
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788218595; l=5263;
- i=j.bhargav.u@gmail.com; h=from:subject:message-id;
- bh=uM708j09j6nSOP7IiMsV0ytTgwnrzIZATjME+J7mX5E=;
- b=3rKnxP+0ubnqPfB1KGJfmvBJbDtMtM57d7hApu3Tc/BQkJgnnS2cvdQ9c2FKRUcp3mct7jCXb
- bSBnPJPSyxvANvstRgX8Nl2s+b9M+nb2iECTqjA9qQdy6JJ//qSvH5L
-X-Developer-Key: i=j.bhargav.u@gmail.com; a=ed25519;
- pk=IqNDwUZKECEA+n8wXctFLBbYL9NhFstZNbOznm/nX1k=
 
-Convert the TI DA8xx/OMAP-L1x MUSB text bindings to DT schema. Since
-DA8xx MUSB node acts as a parent bus for the CPPI41 DMA controller add
-required #address-cells, #size-cells, and ranges properties.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Bhargav Joshi <j.bhargav.u@gmail.com>
----
- .../devicetree/bindings/usb/da8xx-usb.txt          |  69 -------------
- .../devicetree/bindings/usb/ti,da830-musb.yaml     | 113 +++++++++++++++++++++
- 2 files changed, 113 insertions(+), 69 deletions(-)
+Pre-existing issues:
+- [High] Softirq preemption deadlock in `plx_dma_process_desc()` due to usi=
+ng `spin_lock()` instead of `spin_lock_bh()`.
+- [High] Recursive deadlock in `plx_dma_process_desc()` when a client callb=
+ack submits a new DMA transaction.
+- [High] `plx_dma_prep_memcpy()` acquires a spinlock and returns without re=
+leasing it, violating the DMA API contract.
+--
 
-diff --git a/Documentation/devicetree/bindings/usb/da8xx-usb.txt b/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-deleted file mode 100644
-index 00320d92d3bb..000000000000
---- a/Documentation/devicetree/bindings/usb/da8xx-usb.txt
-+++ /dev/null
-@@ -1,69 +0,0 @@
--TI DA8xx MUSB
--~~~~~~~~~~~~~
--For DA8xx/OMAP-L1x/AM17xx/AM18xx platforms.
--
--Required properties:
--~~~~~~~~~~~~~~~~~~~~
-- - compatible : Should be set to "ti,da830-musb".
--
-- - reg: Offset and length of the USB controller register set.
--
-- - interrupts: The USB interrupt number.
--
-- - interrupt-names: Should be set to "mc".
--
-- - dr_mode: The USB operation mode. Should be one of "host", "peripheral" or "otg".
--
-- - phys: Phandle for the PHY device
--
-- - phy-names: Should be "usb-phy"
--
-- - dmas: specifies the dma channels
--
-- - dma-names: specifies the names of the channels. Use "rxN" for receive
--   and "txN" for transmit endpoints. N specifies the endpoint number.
--
--Optional properties:
--~~~~~~~~~~~~~~~~~~~~
-- - vbus-supply: Phandle to a regulator providing the USB bus power.
--
--Example:
--	usb_phy: usb-phy {
--		compatible = "ti,da830-usb-phy";
--		#phy-cells = <0>;
--	};
--	usb0: usb@200000 {
--		compatible = "ti,da830-musb";
--		reg = <0x00200000 0x1000>;
--		ranges;
--		#address-cells = <1>;
--		#size-cells = <1>;
--		interrupts = <58>;
--		interrupt-names = "mc";
--
--		dr_mode = "host";
--		vbus-supply = <&usb_vbus>;
--		phys = <&usb_phy 0>;
--		phy-names = "usb-phy";
--
--		dmas = <&cppi41dma 0 0 &cppi41dma 1 0
--			&cppi41dma 2 0 &cppi41dma 3 0
--			&cppi41dma 0 1 &cppi41dma 1 1
--			&cppi41dma 2 1 &cppi41dma 3 1>;
--		dma-names =
--			"rx1", "rx2", "rx3", "rx4",
--			"tx1", "tx2", "tx3", "tx4";
--
--
--		cppi41dma: dma-controller@201000 {
--			compatible = "ti,da830-cppi41";
--			reg =  <0x201000 0x1000
--				0x202000 0x1000
--				0x204000 0x4000>;
--			reg-names = "controller", "scheduler", "queuemgr";
--			interrupts = <58>;
--			#dma-cells = <2>;
--			dma-channels = <4>;
--		};
--
--	};
-diff --git a/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml b/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml
-new file mode 100644
-index 000000000000..fefae735b34d
---- /dev/null
-+++ b/Documentation/devicetree/bindings/usb/ti,da830-musb.yaml
-@@ -0,0 +1,113 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/usb/ti,da830-musb.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: TI DA8xx MUSB
-+
-+maintainers:
-+  - Bin Liu <b-liu@ti.com>
-+
-+allOf:
-+  - $ref: /schemas/usb/usb-drd.yaml#
-+
-+properties:
-+  compatible:
-+    const: ti,da830-musb
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  interrupt-names:
-+    const: mc
-+
-+  phys:
-+    maxItems: 1
-+
-+  phy-names:
-+    const: usb-phy
-+
-+  dmas:
-+    minItems: 1
-+    maxItems: 8
-+
-+  dma-names:
-+    minItems: 1
-+    maxItems: 8
-+    items:
-+      pattern: "^(rx|tx)[1-4]$"
-+
-+  vbus-supply:
-+    description: Phandle to a regulator providing the USB bus power.
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-ranges: true
-+
-+  ranges: true
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 1
-+
-+patternProperties:
-+  "^dma-controller@[0-9a-f]+$":
-+    $ref: /schemas/dma/ti/ti,cppi41.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - phys
-+  - phy-names
-+  - ranges
-+  - "#address-cells"
-+  - "#size-cells"
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    usb@200000 {
-+        compatible = "ti,da830-musb";
-+        reg = <0x00200000 0x1000>;
-+        ranges;
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        interrupts = <58>;
-+        interrupt-names = "mc";
-+
-+        dr_mode = "host";
-+        vbus-supply = <&usb_vbus>;
-+        phys = <&usb_phy 0>;
-+        phy-names = "usb-phy";
-+
-+        clocks = <&psc1 1>;
-+        clock-ranges;
-+
-+        dmas = <&cppi41dma 0 0>, <&cppi41dma 1 0>,
-+               <&cppi41dma 2 0>, <&cppi41dma 3 0>,
-+               <&cppi41dma 0 1>, <&cppi41dma 1 1>,
-+               <&cppi41dma 2 1>, <&cppi41dma 3 1>;
-+        dma-names = "rx1", "rx2", "rx3", "rx4",
-+                    "tx1", "tx2", "tx3", "tx4";
-+
-+        dma-controller@201000 {
-+            compatible = "ti,da830-cppi41";
-+            reg = <0x201000 0x1000>,
-+                  <0x202000 0x1000>,
-+                  <0x204000 0x4000>;
-+            reg-names = "controller", "scheduler", "queuemgr";
-+            interrupts = <58>;
-+            #dma-cells = <2>;
-+            dma-channels = <4>;
-+        };
-+    };
+commit eba3f5594a9491de8ee08b096a4a7e95dd48da19
+Author: Logan Gunthorpe <logang@deltatee.com>
 
--- 
-2.55.0
+dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
 
+This commit prevents a NULL pointer dereference in the interrupt handler.
+It achieves this by moving the assignment of plxdev->bar ahead of
+request_irq() during hardware initialization.
+
+Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.=
+kr
+
+> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+> index 84941a918b01f..409898e92c320 100644
+> --- a/drivers/dma/plx_dma.c
+> +++ b/drivers/dma/plx_dma.c
+[ ... ]
+> static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
+> {
+> 	struct dmaengine_result res;
+> 	struct plx_dma_desc *desc;
+> 	u32 flags;
+>=20
+> 	spin_lock(&plxdev->ring_lock);
+
+[Severity: High]
+This is a pre-existing issue, but does using spin_lock() here instead of
+spin_lock_bh() leave us vulnerable to a softirq preemption deadlock?
+
+If plx_dma_tx_status() is called from process context, it will call
+plx_dma_process_desc() and acquire this lock while leaving softirqs enabled.
+If a hardware interrupt occurs on the same CPU while the lock is held,
+plx_dma_isr() will schedule the plx_dma_desc_task tasklet.
+
+Upon return from the interrupt, the softirq executes the tasklet, which cal=
+ls
+plx_dma_process_desc() again. Can this result in a recursive deadlock when =
+it
+attempts to acquire the already-held ring_lock?
+
+[ ... ]
+> 		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does invoking the client
+callback while holding the internal spinlock expose us to a recursive deadl=
+ock?
+
+It is a common DMA engine pattern for client callbacks to chain descriptor
+submissions. If the callback submits a new DMA transaction, it will call:
+plx_dma_prep_memcpy() -> spin_lock_bh(&plxdev->ring_lock)
+
+Since the lock is already actively held by plx_dma_process_desc() on the sa=
+me
+CPU, will this cause an immediate deadlock?
+
+[ ... ]
+> static struct dma_async_tx_descriptor *plx_dma_prep_memcpy(struct dma_cha=
+n *c,
+> 		dma_addr_t dma_dst, dma_addr_t dma_src, size_t len,
+> 		unsigned long flags)
+> 	__acquires(plxdev->ring_lock)
+> {
+> 	struct plx_dma_dev *plxdev =3D chan_to_plx_dma_dev(c);
+> 	struct plx_dma_desc *plxdesc;
+>=20
+> 	spin_lock_bh(&plxdev->ring_lock);
+[ ... ]
+> 	/* return with the lock held, it will be released in tx_submit */
+>=20
+> 	return &plxdesc->txd;
+
+[Severity: High]
+This is a pre-existing issue, but does returning to the caller with the
+spinlock held and bottom halves disabled violate the DMA API contract?
+
+If a client driver prepares multiple descriptors sequentially, such as call=
+ing
+dmaengine_prep_dma_memcpy() twice before submitting, won't it deadlock on t=
+he
+second call?
+
+Additionally, if the client encounters an error between preparation and
+submission and never calls tx_submit(), will the lock be permanently leaked,
+leaving softirqs disabled on that CPU?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831191403.2076=
+31-1-logang@deltatee.com?part=3D12
