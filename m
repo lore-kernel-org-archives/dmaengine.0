@@ -1,220 +1,490 @@
-Received: from mx0b-00128a01.pphosted.com (mx0b-00128a01.pphosted.com [148.163.139.77])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00A23D45DF;
-	Mon, 31 Aug 2026 12:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.139.77
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788180030; cv=fail; b=uLOSRFXbJ08xtPW4DNYzm1wgUJbZgo+f0ALvmyBuAXk3xB195gHZtG0fbx2P8zRZMcINXwZqBdcxTjcHh7VSL/CU8+NG0TGUNC7ljf6WTOTwHh03sQao6fCR2BrOffwRxtLX7AhgFAZxOkUG4FbpXfzbijL/XZmsoVsoHNIREnU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788180030; c=relaxed/simple;
-	bh=wO8uDB0Af/qCP30MsAQQTYa0tJglpwilFIrjw/Dqz8U=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=l+Y7CTn1WsTeyvtlMH0gGJ4A4kDKkvKqQxzyC0fsRIHAVV43cBCeXycafIu7IajjgLT1P59/796BNBeyssII30tPI78alADpoQbHYh5qOJrBWHt9zfk3WTCZ2sNjXlyQzcaRVjKfnR5vAtRx9mGQMSHj5GfWR4lAd+np5sJKOOM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com; spf=pass smtp.mailfrom=analog.com; dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b=xkDjDXhd; arc=fail smtp.client-ip=148.163.139.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=analog.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=analog.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99184EC671;
+	Mon, 31 Aug 2026 13:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788183633; cv=none; b=HgUggIlA4G/YDtUHaCOIRi0aF9MMx35OTIQN6J6Zrrssvix45lA36iro/6qqSX6UwgBhNWo0/AwsAMGFZD2MejaUflwHluFLQo6BGz2aawEr0cm8lXHe1rvcha26bKd8dqlYvTWV+LdHje5Slsd9QABg0NKhs2VpAQ/3pzXa72A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788183633; c=relaxed/simple;
+	bh=f7ARD/JSgRRn0qndMM9M2KzYQj3p3zyUQpk6bmX4PCE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=l3bVbxzqYwiIlBsu0hxaLDX7+8v5ieH3m+o2q+Dj6XW0EJ6Scf1FjUL3smi72y6gFbryZTtutl8HXMihECICdpEekHGJ1ItPcVfS7aXYqmkZiaVkPKIFsP9xvxQQUSpADespJeuWLnxCnD+Zbb6v2YUwnAWECmXKtEHBHV8fT3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTDV5hJT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=analog.com header.i=@analog.com header.b="xkDjDXhd"
-Received: from pps.filterd (m0375854.ppops.net [127.0.0.1])
-	by mx0b-00128a01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 67VB9nDr3721441;
-	Mon, 31 Aug 2026 08:40:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=analog.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=DKIM; bh=C0k+j
-	LOlkLpC57a1uuuC0p0cwZKlMpzv+0Vm9qSAbBw=; b=xkDjDXhdCVZO2L0f4E2NM
-	lDco5Yr1xMEnLFNXR1k2ucEtFqmGD342HcfTMtaj9YTR+2CWQFDfafnNR24QoIvM
-	y6OpA52iu7N6/PUD5lGleaGihTYag9wHmPLycwCjkISFvDR4hHi/gjgISTIYHOEL
-	QITB0dXTA4nJDKR5CQNrhqsbPp8V8pQVn34+hR32oVvN3515f/cy/tBPgzxzbpz3
-	g3wJRGKQffcqcX7dI5mQtaMqDFKsLuROG6DQ270PSnAww2swj0rYboNzeH33rrzG
-	UK0I73ILEUk1Rmj0nItkVnHcslWc73eXAX6yudTLB2JBN6UNR3LNHXiQVByEZo+N
-	A==
-Received: from ch1pr05cu001.outbound.protection.outlook.com (mail-northcentralusazon11010033.outbound.protection.outlook.com [52.101.193.33])
-	by mx0b-00128a01.pphosted.com (PPS) with ESMTPS id 4gchfdb8c1-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 31 Aug 2026 08:40:25 -0400 (EDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cZ2eu8z6NIvkF5ln85c8C8X8axMH3R7PV2hISLRbw6jjvVpoIbt49WjBsD2e4CcuRXLjKI8tsh5xx2P7iJKUF2IrgJN+L90sAQMOidFVB8pbxA1L63sDFa54Mo7e2zYpV0ii6kMKyo/RABMVurm/YqJL4DOQkx/9RLZzGJeC+lIv3QbKek1DI3RbD/M9Ku5zkjtYUGRxU7xusDG869QBHHmReR8bY5ng33vj1Zupav6AT1SKxfv/Kc6L9Sd76m4F5lvIrgO4yTozOlpkxsg22NnoeEQpabppt5VrCwuMYagljtKuWQ09q2JSKMW/5CF8W7uVy3+d0vZZnvlbVG3JTA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C0k+jLOlkLpC57a1uuuC0p0cwZKlMpzv+0Vm9qSAbBw=;
- b=cD2bAv1x9/bwzd8UzPXxo3XJCX+X6KiNhwSQVmJt70OO5ULbYfjUVghxYyT+fgNhoPviiJuG1PH6sDRMrUSzvY6tLpf8qfqilucYKcMCXTPdDOwjOkyE//sZVmEBSCXlmRleeiYx9Zwy/ip4T0TiCX5Fa6Qaa5oRL31iMHwjizpv8UYjMgV3DwSiH2wFE7c7MPrE3wJ/RAwjnwT+XYchKzGd7KKLNwQ7kov+G/U449X1x1u61XgvLmRg7uTqOeD+rZYx6dpdlmsKWel9nhPrOGh5icBP/4tHoQsOdRjdHolRiKwStM7Nbe36e7VXv19Z4M6lGNAl4Oqr73fTjFJB6A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=analog.com; dmarc=pass action=none header.from=analog.com;
- dkim=pass header.d=analog.com; arc=none
-Received: from SJ0PR03MB5469.namprd03.prod.outlook.com (2603:10b6:a03:28a::17)
- by CO1PR03MB5700.namprd03.prod.outlook.com (2603:10b6:303:6e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Mon, 31 Aug
- 2026 12:40:23 +0000
-Received: from SJ0PR03MB5469.namprd03.prod.outlook.com
- ([fe80::2a19:76b2:e731:8c5a]) by SJ0PR03MB5469.namprd03.prod.outlook.com
- ([fe80::2a19:76b2:e731:8c5a%6]) with mapi id 15.21.0360.008; Mon, 31 Aug 2026
- 12:40:23 +0000
-From: nuno.sa@analog.com
-Date: Mon, 31 Aug 2026 13:41:36 +0100
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v3 3/9] dmaengine: dw-axi-dmac: Use bus width capability
- helpers
-Message-ID: <apV2bCpCub1gBSQA@nsa>
-Fro: Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>
-References: <20260831-dmaengine-support-wider-dma-masks-v3-0-507d97496f2d@analog.com>
- <20260831-dmaengine-support-wider-dma-masks-v3-3-507d97496f2d@analog.com>
- <20260831115819.F17781F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260831115819.F17781F000E9@smtp.kernel.org>
-X-ClientProxiedBy: MA3P292CA0064.ESPP292.PROD.OUTLOOK.COM
- (2603:10a6:250:49::16) To SJ0PR03MB5469.namprd03.prod.outlook.com
- (2603:10b6:a03:28a::17)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTDV5hJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DC11F00A3F;
+	Mon, 31 Aug 2026 13:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788183630;
+	bh=YO/xuJqUcR0pEeTfiWPZjVxw0FykHPSMfwSXJ6Qd2uw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=XTDV5hJT7Su+1FTKRnhP4ZWnTqpUPFK7Nr52zDwvuWrtR+MdgfqbMmKnubHXbEJFG
+	 JXwk2MGYHLHQOc0FuYEwWMrrmmjhuUcQwFwMDb9nUrq5R9I0ONjGJvGKzW2K8TchWH
+	 FvilU3Puc1mEnEf9yCwLfjBX0prB+v8qcYWyD2Zg5VmyL34QaeaFHWJUwuD1hlnPE8
+	 KIXC7myjjagH0b+XXUaLDG52daK4vRa6q1kpcIBgDMiu0mNRhmKJorJi+VqNLAwg2h
+	 6CpaMsn11rGmN07yRF5CulgmMeum+ozQdPikYDcfybRMN/XhSh5dc+g8FLgS4JLhPV
+	 9T0GtFlAHqqlA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Tze Yee Ng <tze.yee.ng@altera.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Eugeniy.Paltsev@synopsys.com,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.15] dmaengine: dw-axi-dmac: fix PM for system sleep and channel alloc
+Date: Mon, 31 Aug 2026 09:23:57 -0400
+Message-ID: <20260831133314.4125787-209-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260831133314.4125787-1-sashal@kernel.org>
+References: <20260831133314.4125787-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR03MB5469:EE_|CO1PR03MB5700:EE_
-X-MS-Office365-Filtering-Correlation-Id: 17b10fa2-8539-4593-956f-08df075d06a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|6133799003|10067099003|4143699003|11063799006|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	SdfSqHy+5k4576dIdHV9C9hd38CfN0WF6lGinH9XDc/+4qT85wJyESxZpGfdqinU0RcSB36xdVK8hZ3ECHzPs80FXp/8Li5WxekIuuT+0VWYauJdMMmJFW6pjAoBQZT2zj0GWlh6zGSP+g8ER6Ohzb1Xb4A0SuFdQU6V5EepIlr8fCbcsXJD9tbgkbF/B77+f/bPdoDSgYKQCpuMMZ9XE/6CnKNBm/i76a8rQK70CEU6DI77Lk7Yho/rsiOw2eudeRA0SW37G2XVmmW1pAq1jwB8Vh9ArcmEvhNi741PCUcrTM2PWerMRN8LJVSc1eoJaMcM3iPbAdwTu8IcDua10q42UiWieNsrJKLuqQrvU8nyw1gpbjX9DMa07bAXVjUky4NU2f9tDFmdbI+LK+GLs9MITXjyAHbD6zsyafDIQCy4DPTGm3L9sEL4lh+zOo07QSq9MmlwMMJUJicrGlHloRTuojZ1NVlXwG4xdjbMohFLjiTEzhugD5MjS6AO0/bM0WZUxvyOXG99kzco0WiHulvJbYR+Uvp74CN6gzKA4MrzuxnJKH6ZWyl/qeEYBMQVsgXLsDbMt2zPAmWUHbXmsSRfRRAlGP9q7V4c9OhDKF8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB5469.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(6133799003)(10067099003)(4143699003)(11063799006)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Q3lTeE8wdjFzRGdkMEF4ZmF2MGorYzZpNEpjUW5Jd1hwT0tTK0RKVVhoQU1T?=
- =?utf-8?B?Q05hVlhCMTVCZFRXMVQvUkxjWThQM1MyV3h5eEtHU3BYaXNURXN4SWhmaHdT?=
- =?utf-8?B?UjNzcEc0TG9Vd0hYMEVVbU1GUGdOWlJ4eW5UcDRBdHF3d3pGTUFnRDRZV1gw?=
- =?utf-8?B?ZXd4NHdYRmJPL2paM1ZmUUVGVGRwckRIYlMvM0IrUTNhNGRyeE9VWlBIWndN?=
- =?utf-8?B?U2Y3Sndja2ZoMVpwS2lERUg2Q3kxY1BtSzlmNkdZYjYyM3QrTDluN24xT1Ra?=
- =?utf-8?B?U0dnU3pQbzhCNnAyRjRjTVJlRStva3N5eU1DUWpJZTNIWEo2WmJZYnFDeE9m?=
- =?utf-8?B?WUxSaEd1R2ZCL1FuaDJtZERVZ0pWVWVxRGFJeUlJUGxPNWRBOWtSNXZjWVAz?=
- =?utf-8?B?V3JpNFlnVlZNMGpzTXNtcTRERmJiTjlxdThVakE0WnpYZER6M2ZNckxQY08y?=
- =?utf-8?B?N2UrY2oxaVVTdE1oeGZHTjNKWVo4QUkwWmNoTk1sRnYrN1ZDMjQ2b2tHd2V5?=
- =?utf-8?B?VWFIVWVXQkdveHN5VnBJY24xV1NMV2MvTGh2aVZzaW9jOXRKM2FVNmRNTmxn?=
- =?utf-8?B?K2k3MXBjbC95cW5WMkF2eUQwNC9Menp0ejgwc0NacHIrMlZHbUNoU3EvYnZP?=
- =?utf-8?B?OG13R254RnlEdHkxSWk1Q1B0bWJYaUg1cGo2a1o2YXBWeEk1ZHY4Ri9tZmpw?=
- =?utf-8?B?SWYwbFQwV3JEeTFFbW9OL0Q1TVRlU1gwQkl2WDNJWkZYYTBCOHVXSlV2M1Zt?=
- =?utf-8?B?eUZKb2UydEo3bCt5REVaUDBGUE1SOHBvQ3ltRVc2eHovZEpsSzlMMXNEdnpz?=
- =?utf-8?B?dmt4NTAxb0dnWFNTS0dwbEdIUzRGcFJNbWptaVYwbExERmZGOXJZYlBrK1lZ?=
- =?utf-8?B?QUxobVdOL1YwVnp5S0laYjBJV0xLdHJJcHNhU2s0WjBsY05ubU84Q3NmUDgx?=
- =?utf-8?B?QldXaU5Ya0pCV0NsOG54Ui9aYmdwQ1ZCWXJrZDJ1RWFpa25vd0pSQ2pYaW5w?=
- =?utf-8?B?Y0FFT08zU090UWdSUUR5N0lyWlo3Si96ai9ob09sMmZObEpJb1paelNwYjVL?=
- =?utf-8?B?WURrZ0RuUUx3K0NnT0F2cEpSTmxHaTJhYTNUQlVYOEk1RmRWUUxoUWVCUDJq?=
- =?utf-8?B?OFRvbTM2TUt0SXd2dWppdVNDWlFnWnBGeDQxbXFrR25tcFFveVdjSWpmdU9E?=
- =?utf-8?B?anJ4NTZTVkZHNkd5S2d5S1dTMjRjUmZLOU5PKzVxS1BqdDlJN3RsMHdvMWE1?=
- =?utf-8?B?T1hJYlBTK05nTTgzcDBmYkl4dUc2VlFkSXBSTlFZSDc5NVR6Nmxtd29DbFM4?=
- =?utf-8?B?WWxqNEU5dU5WaHZTWmkvU1ZZazBTd3pXZFl0Qy9LWEtBYjdXUzZsUkdCZE9O?=
- =?utf-8?B?Q3VzVzBSdnJMcXorNkNueXA5MU1LbkROQ1B4QkhaRkN0V0F2dENZTnVNczdr?=
- =?utf-8?B?Z0Qrb29WU0F3eG5lU3ZKbkxsN3BHeDNUVnBjR3VzZ1Y2eVI0OStFa3lKV1pC?=
- =?utf-8?B?RVYzWXNrUSsraHp0dE84WkVvWi94Q1J1STdudXJIVWtoY1VyRDVlWUp4Q1ho?=
- =?utf-8?B?RXRRVm5QVEp5V09sNE5SeTdmS2ZSQzd6VXV6NjUydDNjaFpFNStRV1VldXN0?=
- =?utf-8?B?emNReUdlSE55RWxGQ2cwOXM3UnhpWVdIblVXdWxyYUxyWjNHZ3BNbitmQmtZ?=
- =?utf-8?B?ZnZYMW9IbURwWTRPNnNCZHlLN2p5MDBtSGhiK0xyMTFyK2RkZlU2NjYrLzdN?=
- =?utf-8?B?alVjQXZWbHcyWG1sKzNVL0c5MWVhVDZXRmoyODYzNUk0YnZ5MVhBQmVoMkNG?=
- =?utf-8?B?WS9DT3QzZUZ5eWhXdTZrZUdJWDFOaDdXeCtFNnVvZzRKNXJPSFRyY3JXbWFu?=
- =?utf-8?B?WFJsbktFdDNmQWE1TFRXMzdXUU5LOTExYmRuajBub0E5cllVMHhJWFA0L25z?=
- =?utf-8?B?NnlxOFBlekUwbHR0NWtMVEkzZ3hodnhjUkhTZTNOc1JLZXV4SXA3OFBZMU1L?=
- =?utf-8?B?dG9BNytuSlB6K0ZST3JqMmRTRG10cUUzQ3ZPbjdPeFpHdi9JVHp3N0phd1pN?=
- =?utf-8?B?NXpFRkh5TG9SSG81SlNmK1FIY01tSmI5TG9VTVgyM3d6UGdHQm9KTG84RWVr?=
- =?utf-8?B?bWlKb1pFblZtMFdoVzBuUk5lTks0OHZRZDhWd2hYc1lYTTJFeUpsa1g2VTRD?=
- =?utf-8?B?NEFiYUxzVHphbVpURkFzUzlHVWk4Zk11aU5tOFN1bC9lL3c2czlwMzJnV0Fi?=
- =?utf-8?B?VWpYWVZubC9XdndDSm9Ea01xc0R1R0Y4Mjg1R3MyKzNQMVk0dkM4UG9HLzFl?=
- =?utf-8?B?WUhiaVdZUkYrSHVUd0dXbDJpU2RHdlNoV2JPbDdCYll2SnhrNTRsQT09?=
-X-Exchange-RoutingPolicyChecked:
-	d95vw0f4aa8DaPekmfAvDFiwAhN6a69o02z+pma9Fllkpj8gLsmlQa8eTcPiVbW4DLjb2T3jzccDbVJKSe4RaEPPOPqmWABvb5wJ0FmJMWNQcCE+CNOkOpUeTzjbccARIQ9/r1B14JhMUUll9+SxxnvA+KTnZ9ma7Ng7m358NbeM69ZfXlYaGEzk/0S2ezMimEoXjKT6oZaSF6nWkRwkbMaNpV1x+hsd/SJUQqQ3O+LfzyOyYtlpBzeOVfH2h3n5u4yzMCalXwpfUBW+6qKttBamyZ9IZYclYWTp02C1Ddy9zJ8A0e6hgaIJ+6s03IdL5YL1N5nMKkOPhm1dQ/84Nw==
-X-OriginatorOrg: analog.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17b10fa2-8539-4593-956f-08df075d06a2
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB5469.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Aug 2026 12:40:23.8061
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: eaa689b4-8f87-40e0-9c6f-7228de4d754a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aAkOIzcofvyTvBwgmfzPJ79gNpAR44ymkdoQipFGCvTX2/PtsEZOmqcmChgwpUOfJAACXROBGqYnWlq/ISlnQw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR03MB5700
-X-Proofpoint-ORIG-GUID: 2zSjVneu5X_9ce-QikMQTgNZ8j6JQs4m
-X-Proofpoint-GUID: 2zSjVneu5X_9ce-QikMQTgNZ8j6JQs4m
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODMxMDEwOSBTYWx0ZWRfXxLnDtxW48wRe
- N1v4jHZK0y6G5bRT+9yWHeAGc1nPg991d521J9aB9JexY4BcdY2Mkjrh/UtYbDWL8406hHCa4Cd
- MyxvgG2mFlLBcg5QpPutPQSGzet8QYXegTQf2wLTXW3skLpWozLl
-X-Authority-Analysis: v=2.4 cv=D4x37PRj c=1 sm=1 tr=0 ts=6a957639 cx=c_pps
- a=s4741YMcG+xsu4HPw1GdWw==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=0sLvza09kfJOxVLZPwjg:22 a=iZSIUCweCk2Oy3QsdGPA:22
- a=c92rfblmAAAA:8 a=gAnH3GRIAAAA:8 a=VwQbUJbxAAAA:8 a=dL0ckso7EaYV1oeGENcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODMxMDEwOSBTYWx0ZWRfX394dEL6eQEpy
- jegmOeFtM1zcXwJ/yaZZ5/WT7pLORa8RmZ1vUnLHii2PNr6J1C9MqH7e5mX18DAaAkxYp1IoBAf
- 92mEGxzblLUvoK9G3I1yskVbEOLbZPi7lpSLa0ryuLgTSdhY/WUHzd8hOOpZXzPOKynt3kRV64l
- 6hRuPQ1G8cwOs8hXtddBlnsH3ewVhiKJhgmL9W3hH6LqTwrjUqUdBGxkBCpFIuyTLHU0wGVMPfY
- PN/Bo5PQXuUE6xneb1y+mrkCbqMBPgOBSp7RdQolNSLJCFR3E/ib7J/zeAwDj82yfbrDlw1yjGy
- Zd8sFS7T+G/caxbC4AkZ047IRfmnfVHCvk+/vcQwUeDsQ8qApbrHieYBuAQDKoKFF+Rz5n4urOx
- WnTX5L7EU63uVbN9jxTBdI20gQ6vz4PBaeeE7Xzt4OS57Q6vQ++Utu/bVbyDUBEv3ByIhuM54e2
- 9/koa2Pbme2h81Nceqg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-31_04,2026-08-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608310109
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.48
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 31, 2026 at 11:58:19AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Mismatch between commit message claims and actual function calls.
-> --
-> 
-> commit d65f8f1318d2325009bb83a6877e70b0e20de0ed
-> Author: Nuno Sá <nuno.sa@analog.com>
-> 
-> dmaengine: dw-axi-dmac: Use bus width capability helpers
-> 
-> This commit updates the dw-axi-dmac driver to advertise supported bus widths
-> using capability helpers instead of assigning legacy u32 masks directly.
-> 
-> > Advertise the supported bus widths through dma_set_src_bus_widths()
-> > and dma_set_dst_bus_widths() instead of assigning the legacy u32 masks
-> > directly. This keeps the driver using the new bitmap representation
-> > while preserving legacy fields during the transition.
-> 
-> [Severity: Medium]
-> Is this description accurate regarding the functions being used?
-> 
-> The commit message explicitly states that the patch uses
-> dma_set_src_bus_widths() and dma_set_dst_bus_widths(), but the actual
-> implementation in dw_probe() uses dma_bus_width_set_many():
-> 
-> > diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> > --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> > +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> [ ... ]
-> > @@ -1565,8 +1566,13 @@ static int dw_probe(struct platform_device *pdev)
-> >  
-> >  	/* DMA capabilities */
-> >  	dw->dma.max_burst = hdata->axi_rw_burst_len;
-> > -	dw->dma.src_addr_widths = AXI_DMA_BUSWIDTHS;
-> > -	dw->dma.dst_addr_widths = AXI_DMA_BUSWIDTHS;
-> > +	ret = dma_bus_width_set_many(dw->dma.src_bus_widths, buswidths, ARRAY_SIZE(buswidths));
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = dma_bus_width_set_many(dw->dma.dst_bus_widths, buswidths, ARRAY_SIZE(buswidths));
-> 
-> Could the commit message be updated to match the API that is actually called
-> in the driver?
+From: Tze Yee Ng <tze.yee.ng@altera.com>
 
-Yes! It should!
+[ Upstream commit df0c2dc68770cf43f15df40b184df030b850ea05 ]
 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260831-dmaengine-support-wider-dma-masks-v3-0-507d97496f2d@analog.com?part=3
+The driver only had runtime PM callbacks. If a channel stayed allocated
+across system suspend/resume, the runtime usage count could remain
+non-zero while hardware state (DMAC_CFG, clocks) was lost, and
+axi_dma_runtime_resume() would not run to restore it.
+
+Add system-sleep PM ops that use pm_runtime_force_suspend() and
+pm_runtime_force_resume() so suspend/resume reuses the existing
+axi_dma_suspend() and axi_dma_resume() paths.
+
+Replace pm_runtime_get() with pm_runtime_resume_and_get() in
+dma_chan_alloc_chan_resources() so clocks are enabled before a client
+can immediately submit a transfer and touch MMIO.
+
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+Link: https://patch.msgid.link/18bf778a3a1cc2f377ef8eb0d1508d8ac6371896.1779688569.git.tze.yee.ng@altera.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+# Stable Backport Analysis: `dmaengine: dw-axi-dmac: fix PM for system
+sleep and channel alloc`
+
+**Local tree:** `v6.18.44` (`stable/linux-6.18.y`, detached HEAD)
+**Mainline commit:** `df0c2dc68770c` (merged by Vinod Koul, 2026-06-11)
+**Status in this tree:** Buggy code is present; fix is **not** yet
+applied (`NOT_IN_TREE`)
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Parse the subject line
+**Record:** `[dmaengine: dw-axi-dmac]` `[fix]` — Correct power-
+management handling for system sleep and DMA channel allocation.
+
+### Step 1.2: Parse all commit message tags
+**Record:**
+- **Fixes:** — absent (expected for manual review)
+- **Reported-by:** — absent
+- **Tested-by:** — absent
+- **Reviewed-by / Acked-by:** — absent in commit message
+- **Link:** https://patch.msgid.link/18bf778a3a1cc2f377ef8eb0d1508d8ac63
+  71896.1779688569.git.tze.yee.ng@altera.com
+- **Cc: stable:** — absent (not a negative signal)
+- **Signed-off-by:** Tze Yee Ng (author), Vinod Koul (subsystem
+  maintainer, committer)
+- **Notable:** Merged by dmaengine maintainer; patch 2/2 in a reviewed
+  series
+
+### Step 1.3: Analyze commit body
+**Record:**
+- **Bug:** Driver registered only runtime PM callbacks. With a channel
+  allocated across system suspend/resume, runtime usage count can stay
+  non-zero while hardware state (DMAC_CFG, clocks) is lost;
+  `axi_dma_runtime_resume()` is then skipped.
+- **Symptom:** DMA controller left with clocks off and/or DMAC_CFG not
+  restored after resume; subsequent DMA/MMIO can fail or hang.
+- **Second bug:** `pm_runtime_get()` in
+  `dma_chan_alloc_chan_resources()` bumps the usage counter without
+  resuming; a client can submit a transfer immediately and touch MMIO
+  before clocks are enabled.
+- **Root cause:** Missing system-sleep PM ops; incorrect runtime PM API
+  usage on channel allocation.
+- **Version info:** None stated; driver has had this pattern since 2018.
+
+### Step 1.4: Detect hidden bug fixes
+**Record:** Not disguised — explicitly described as a PM bug fix. The
+`pm_runtime_resume_and_get()` change also adds missing
+`pm_runtime_put()` on error paths (refcount balance), which is proper
+error-path cleanup tied to the fix.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory the changes
+**Record:**
+- **File:** `drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c` (+9 / -2)
+- **Functions modified:** `dma_chan_alloc_chan_resources()`,
+  `dw_axi_dma_pm_ops`
+- **Scope:** Single-file, surgical fix
+
+### Step 2.2: Code flow change per hunk
+
+**Hunk 1 — `dma_chan_alloc_chan_resources()`:**
+- **Before:** Check idle → allocate descriptor pool → `pm_runtime_get()`
+  (counter only, no resume) → return 0. Error paths did not balance
+  runtime PM.
+- **After:** `pm_runtime_resume_and_get()` first (resume + increment);
+  on `-EBUSY` / `-ENOMEM`, `pm_runtime_put()` before return.
+- **Path affected:** Normal DMA client channel allocation (common
+  client-driver path).
+
+**Hunk 2 — `dw_axi_dma_pm_ops`:**
+- **Before:** Only `SET_RUNTIME_PM_OPS(axi_dma_runtime_suspend,
+  axi_dma_runtime_resume, NULL)`.
+- **After:** Adds `SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+  pm_runtime_force_resume)`.
+- **Path affected:** System suspend/resume (S3/hibernate on affected
+  SoCs).
+
+### Step 2.3: Bug mechanism
+**Record:**
+- **Category (a):** Error-path refcount fix — `pm_runtime_put()` on
+  allocation failure after `resume_and_get`.
+- **Category (b):** PM / suspend-resume correctness — system sleep now
+  forces runtime suspend/resume regardless of usage count.
+- **Category (c):** Reference-counting / PM API misuse —
+  `pm_runtime_get()` does not resume; `pm_runtime_resume_and_get()`
+  does.
+- **Specific mechanism:** After system sleep, hardware is reset but
+  software refcount says device is "active," so runtime resume is
+  skipped and `axi_dma_resume()` (clocks + DMAC enable) never runs.
+
+### Step 2.4: Fix quality
+**Record:**
+- **Quality:** High. Uses the standard kernel pattern documented in
+  `DEFINE_RUNTIME_DEV_PM_OPS()` / `pm_runtime.h` comments.
+- **Minimal:** 9 lines, no API changes.
+- **Regression risk:** Very low. `pm_runtime_force_suspend/resume` are
+  well-tested core PM helpers; error-path `pm_runtime_put()` is correct
+  pairing.
+- **Red flags:** None.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame changed lines
+**Record:**
+- `dma_chan_alloc_chan_resources()` and `pm_runtime_get()`: introduced
+  in `1fe20f1b84548` (2018-03-06, "Introduce DW AXI DMAC driver").
+- `dw_axi_dma_pm_ops` with runtime-only ops: same commit, 2018.
+- Bug has been present since driver introduction in this tree.
+
+### Step 3.2: Follow Fixes: tag
+**Record:** No `Fixes:` tag. N/A.
+
+### Step 3.3: File history for related changes
+**Record:**
+- Recent stable-tree changes: StarFive JH8100/JH7110 support, per-
+  channel IRQ, array overrun fix.
+- Patch 1 of series (`dc6d681e1571c` — "drop redundant DMAC enable in
+  block start") is **not** in this tree (`PATCH1_NOT_IN_TREE`).
+- This commit (patch 2) is **standalone**; it does not depend on patch
+  1. Patch 1 without patch 2 would expose the PM gap more; patch 2 alone
+  is sufficient and correct for 6.18.y.
+
+### Step 3.4: Author's other commits
+**Record:** Tze Yee Ng — Altera/Intel contributor; author of
+stratix10-svc fixes. Vinod Koul committed and is dmaengine maintainer.
+
+### Step 3.5: Prerequisites
+**Record:** No prerequisites. `pm_runtime_force_suspend`,
+`pm_runtime_force_resume`, and `pm_runtime_resume_and_get` all exist in
+this tree's `include/linux/pm_runtime.h`. Patch applies cleanly (`git
+apply --check` exit 0).
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: Original patch discussion
+**Record:**
+- **b4 dig URL:** https://patch.msgid.link/18bf778a3a1cc2f377ef8eb0d1508
+  d8ac6371896.1779688569.git.tze.yee.ng@altera.com
+- **Series:** v2 0/2 "clean up DMAC enable and PM" (2026-05-25)
+- **Revisions:** v2 only found by b4 dig `-a`
+- **Key feedback:** Patch 2 added per review feedback from Sashiko
+  Watanabe (AI review bot flagged issues; patch 2 addresses PM gap
+  identified in review)
+- **Maintainer:** Vinod Koul replied "Applied, thanks!" applying both
+  patches
+- **Stable nomination in thread:** None found
+- **NAKs:** None found
+
+### Step 4.2: Reviewers from b4 dig -w
+**Record:** CC'd: Eugeniy Paltsev (Synopsys, original driver author),
+Vinod Koul, Frank Li, dmaengine@vger.kernel.org, linux-
+kernel@vger.kernel.org.
+
+### Step 4.3: Bug report
+**Record:** No external bug report or syzbot link. Bug identified
+through code review / PM analysis during series review.
+
+### Step 4.4: Related patches / series
+**Record:** 2-patch series. Only patch 2 is needed for this backport
+decision. Patch 1 is optional cleanup not present in 6.18.y.
+
+### Step 4.5: Stable mailing list
+**Record:** Not searched separately; no stable discussion found in
+downloaded thread.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Key functions
+**Record:** `dma_chan_alloc_chan_resources()`,
+`dma_chan_free_chan_resources()` (unchanged, has matching
+`pm_runtime_put`), `axi_dma_suspend()`, `axi_dma_resume()`,
+`axi_dma_runtime_suspend/resume()`, `dw_axi_dma_pm_ops`.
+
+### Step 5.2: Callers
+**Record:** `dma_chan_alloc_chan_resources` is registered as
+`device_alloc_chan_resources` in the dmaengine device ops (line 1565).
+Called by any DMA client requesting a channel — SDHCI, SPI, audio, etc.
+on affected SoCs.
+
+### Step 5.3: Callees
+**Record:** `pm_runtime_resume_and_get()` → `pm_runtime_get_active()` →
+`__pm_runtime_resume()`; system sleep uses
+`pm_runtime_force_suspend/resume` → existing `axi_dma_suspend/resume`
+(clock disable/enable, `axi_dma_disable/enable`).
+
+### Step 5.4: Call chain / reachability
+**Record:**
+1. **Suspend/resume:** Platform system sleep → driver
+   `.suspend`/`.resume` → force runtime suspend/resume → restore clocks
+   and DMAC.
+2. **Channel alloc:** Userspace/driver → `dma_request_channel()` →
+   `alloc_chan_resources()` → must have clocks before any transfer.
+- **Userspace reachable:** Yes, indirectly via drivers using DMA on
+  StarFive, Intel KMB, Altera/Intel FPGA platforms.
+
+### Step 5.5: Similar patterns
+**Record:** Other DMA drivers in this tree already use
+`pm_runtime_resume_and_get()` in alloc paths (e.g. `zynqmp_dma.c`,
+`tegra20-apb-dma.c`, `stm32-dma.c`) and/or
+`SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+pm_runtime_force_resume)` (e.g. `dw_mmc-pltfm.c`, `idma64.c`). This fix
+aligns dw-axi-dmac with established practice.
+
+---
+
+## PHASE 6: CROSS-REFERENCE AGAINST LOCAL TREE
+
+### Step 6.1: Does buggy code exist?
+**Record:** **Yes.** Current tree at `v6.18.44` has:
+- `pm_runtime_get()` at line 538 in `dma_chan_alloc_chan_resources()`
+- Runtime-only `dw_axi_dma_pm_ops` at lines 1654–1656
+- Affected platforms in OF table: `snps,axi-dma-1.01a`, `intel,kmb-axi-
+  dma`, `starfive,jh7110-axi-dma`, `starfive,jh8100-axi-dma`
+
+### Step 6.2: Backport complications
+**Record:** Clean apply expected. `git apply --check` on mainline patch
+succeeded. No structural divergence in the changed regions.
+
+### Step 6.3: Related fixes already present?
+**Record:** No equivalent fix found. `git merge-base --is-ancestor
+df0c2dc68770c HEAD` → `NOT_IN_TREE`.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: Subsystem criticality
+**Record:** `drivers/dma/dw-axi-dmac` — **IMPORTANT** (DMA engine for
+multiple embedded SoC platforms; suspend/resume and DMA are core to I/O
+on those systems).
+
+### Step 7.2: Subsystem activity
+**Record:** Actively maintained in 6.18.y (StarFive JH8100, per-channel
+IRQ, overrun fix in recent history).
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: Who is affected
+**Record:** Users of dw-axi-dmac on Intel KMB, StarFive JH7110/JH8100,
+and Synopsys/Altera AXI DMA platforms — embedded boards, FPGA SoCs.
+Config: `CONFIG_DW_AXI_DMAC` (or built-in on those platforms).
+
+### Step 8.2: Trigger conditions
+**Record:**
+1. DMA channel allocated, system enters suspend (S3/hibernate), then
+   resumes — **common** on laptops/embedded devices.
+2. Device runtime-suspended, client allocates channel and immediately
+   submits transfer — **plausible** under autosuspend.
+- **Unprivileged trigger:** Indirectly yes (e.g., triggering suspend or
+  I/O that uses DMA).
+
+### Step 8.3: Failure mode severity
+**Record:**
+- DMA failures after resume (broken I/O: storage, network, audio)
+- MMIO with clocks disabled → bus hang, timeout, or oops
+- **Severity: HIGH** (system-level I/O breakage; potential hang)
+
+### Step 8.4: Risk-benefit
+**Record:**
+- **Benefit:** HIGH — fixes real suspend/resume breakage on shipping
+  hardware
+- **Risk:** LOW — 9-line, standard PM pattern, maintainer-merged
+- **Ratio:** Strongly favors backport
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: Evidence summary
+
+**FOR backport:**
+- Fixes real PM bug present since driver introduction (2018)
+- Affects multiple platforms in this stable tree
+- Can break DMA and cause hangs after suspend/resume
+- Small, obviously correct, maintainer-merged fix
+- Applies cleanly to v6.18.44
+- Uses established kernel PM APIs/patterns
+- Standalone — does not require patch 1 of the series
+
+**AGAINST backport:**
+- No syzbot/user crash report (review-found bug)
+- Driver-specific, not core kernel (but suspend/resume is critical for
+  affected users)
+
+**Unresolved:** No explicit `Tested-by` on hardware; no `Cc: stable`
+nomination in thread.
+
+### Step 9.2: Stable rules checklist
+1. Obviously correct and tested? **PASS** — standard PM pattern; merged
+   by maintainer after review
+2. Fixes a real bug? **PASS** — suspend/resume state desync and alloc-
+   without-resume
+3. Important issue? **PASS** — HIGH: post-resume DMA failure / potential
+   hang
+4. Small and contained? **PASS** — 9 lines, one file
+5. No new features/APIs? **PASS** — only PM ops wiring and correct API
+   usage
+6. Can apply to local tree? **PASS** — verified clean apply
+
+### Step 9.3: Exception categories
+**Record:** None (not a quirk/ID/DT/docs fix) — qualifies on straight
+bug-fix merits.
+
+### Step 9.4: Decision rationale
+
+For **linux-6.18.y (v6.18.44)**, the buggy code is present and the fix
+is absent. The commit addresses a longstanding power-management defect:
+without system-sleep PM ops, suspend/resume can leave the DMAC with
+clocks off and hardware unconfigured while the runtime PM counter
+indicates the device is still active. The `pm_runtime_resume_and_get()`
+change fixes a second, independently valid bug where channel allocation
+does not ensure the device is resumed before clients can use it. The
+change is minimal, follows patterns already used elsewhere in
+`drivers/dma/`, and applies cleanly. This is appropriate stable
+material.
+
+---
+
+## Verification
+
+- **[Phase 1]** `git describe HEAD` → `v6.18.44`; parsed commit message
+  from user query and `git show df0c2dc68770c`
+- **[Phase 2]** Read current `dw-axi-dmac-platform.c` lines 516–564,
+  1315–1356, 1654–1656; confirmed diff matches missing fix
+- **[Phase 3]** `git blame` lines 516–540, 1654–1656 → `1fe20f1b84548`
+  (2018); `git merge-base --is-ancestor df0c2dc68770c HEAD` →
+  `NOT_IN_TREE`; patch 1 also `NOT_IN_TREE`
+- **[Phase 3]** `git apply --check` on `df0c2dc68770c` patch → exit 0
+  (clean apply)
+- **[Phase 4]** `b4 dig -c df0c2dc68770c` → lore URL; `b4 dig -a` → v2
+  series; `b4 dig -w` → maintainers CC'd; mbox → Vinod "Applied,
+  thanks!"
+- **[Phase 4]** WebFetch lkml.iu.edu cover letter → patch 2 addresses
+  Sashiko Watanabe review feedback
+- **[Phase 5]** `grep pm_runtime_resume_and_get drivers/dma/` → pattern
+  used in peer drivers; read `axi_dma_enable/suspend/resume` code
+- **[Phase 6]** Confirmed buggy `pm_runtime_get` and runtime-only PM ops
+  in tree; OF compatibles present
+- **[Phase 7]** `git log --oneline -20 -- drivers/dma/dw-axi-dmac/` →
+  active maintenance
+- **[Phase 8]** Failure mode derived from verified code paths
+  (`axi_dma_suspend` disables clocks; `pm_runtime_get` does not resume
+  per `pm_runtime.h` docs)
+
+**YES**
+
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index b0e689f48bb67..ea4e47ee0d710 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -516,11 +516,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
+ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(chan->chip->dev);
++	if (ret < 0)
++		return ret;
+ 
+ 	/* ASSERT: channel is idle */
+ 	if (axi_chan_is_hw_enable(chan)) {
+ 		dev_err(chan2dev(chan), "%s is non-idle!\n",
+ 			axi_chan_name(chan));
++		pm_runtime_put(chan->chip->dev);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -531,12 +537,11 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 					  64, 0);
+ 	if (!chan->desc_pool) {
+ 		dev_err(chan2dev(chan), "No memory for descriptors\n");
++		pm_runtime_put(chan->chip->dev);
+ 		return -ENOMEM;
+ 	}
+ 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
+ 
+-	pm_runtime_get(chan->chip->dev);
+-
+ 	return 0;
+ }
+ 
+@@ -1652,6 +1657,8 @@ static void dw_remove(struct platform_device *pdev)
+ }
+ 
+ static const struct dev_pm_ops dw_axi_dma_pm_ops = {
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ 	SET_RUNTIME_PM_OPS(axi_dma_runtime_suspend, axi_dma_runtime_resume, NULL)
+ };
+ 
+-- 
+2.53.0
+
