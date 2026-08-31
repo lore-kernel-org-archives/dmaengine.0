@@ -1,119 +1,175 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D0E38DC5C;
-	Mon, 31 Aug 2026 19:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C04836E46F;
+	Mon, 31 Aug 2026 19:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788203672; cv=none; b=QQy+WwSOvcrG9uJ/fqsX77sX5Nl7fblELQ6yS7SoZv78cLvXkftn0y0Pe6f1fNv640r3gBwSXG3LJwroh1ukVxH56GzkPmvWL9VMyQt/MJzWpKi+otd1vso/1nnzyxxsYZKfuCHfheTf9qthDrt+U3FD2lWHK+tieeqDGg+EeZQ=
+	t=1788203972; cv=none; b=hjFLl6XGaTxHHNrNRzmI58RRFtQceJ3N3XkysNVqipJnezYgHbIONcv0uzPUxzKl7oJwL3lGPBBLEYFbvJeHiYg+dZ2lqWmWH710r4tnaTpcgZVP4PQNSdtUr5Zqq3JzuSNle0cMLQaIZlHxQT+uQjclPZ80o2ve5Ki5/wR5lp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788203672; c=relaxed/simple;
-	bh=J5Z+negq9t0hkOPhOevbAhPTgwWt6tQSntxeoP4sOG4=;
-	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
-	 Subject; b=IwYbQmgss8rz4fEorTjJKLFMhbEc5f/S9S2WALpMOvHn0RdNOYCGzp6ZfRcx56YOILM4X21q+OMku2ZdY4K60mLFBZezZ9vcTcxTV3vJ4KuGqMwDwNSZaSucHrLjB7JvjadIVVKGmQnIP22c8lErAQdFGCCqeqVJsxYSdcx4xm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=Yxk60JSH; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1788203972; c=relaxed/simple;
+	bh=oADQxERzCWV3nFLA3R1Zlv+1tuHJEIeVrQmZSHeoF1k=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=IeK2UsUKssXX3o7hzcdZO5z8lsvy2PicAo9r+7HShvHXcQuCGJnuBuILHq1R7uwdm0xjW1DhZs95tYXC0cZOcHIxg6QSbgXR8rUZm3vhYeoDmBdeK5sDtkzcOHiywaazsxwnmubybOthFtBT/EtGd88TfvXs3M6kAWu+N5J7yak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e+c5F2QV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="Yxk60JSH"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=RnnO1NNcjLe9HNz+vfdGpNqTtaHUrE/25DnSIreOxdA=; b=Yxk60JSHW8Qzbn10IR5B1ZoEA5
-	pL2EtJqGqkgA//b7DbBZzzsFDMQoP20RZW+t9QTWhh0mu0qdW/LG1ZMCoN5kh7iWc6hqDEkoLjwdv
-	DoCt4PZqEhCFM1Zkl6Y2ENCTh4kCu4FXQjycvkfEyVZu9fRld07brSqfGfEVhxGZNimufB6CanZ3m
-	qKmwO0hK9VsG2Thd+UWhcqKR//1RNzSG6bKMxpMlEsZ/J2hxZNfbCtD53gDHVF6bZW0spbrlJe6QF
-	tFsdyRSfErKlYVez/oqmMttLKswlc6PYFZA+PmDvhrc5dXKhVgkTluu/Ww5ChIVJ9VakAVkGT0Gl0
-	52R+cO5A==;
-Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
-	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1x17Se-000000007Eg-4246;
-	Mon, 31 Aug 2026 13:14:29 -0600
-Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
-	(envelope-from <gunthorp@deltatee.com>)
-	id 1x17SJ-00000000s1r-0Ltr;
-	Mon, 31 Aug 2026 13:14:07 -0600
-From: Logan Gunthorpe <logang@deltatee.com>
-To: linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	George Ge <george.ge@microchip.com>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>
-Date: Mon, 31 Aug 2026 13:14:02 -0600
-Message-ID: <20260831191403.207631-13-logang@deltatee.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831191403.207631-1-logang@deltatee.com>
-References: <20260831191403.207631-1-logang@deltatee.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e+c5F2QV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C921F000E9;
+	Mon, 31 Aug 2026 19:19:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788203970;
+	bh=FN+0js56QVS79ROQbKL4+wxx4QQ8rzCAZKUO6JQCGaU=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=e+c5F2QV/odCrqL6tw9PB+Df61wvFNvyhymWXJRwwYRRNKHWfCC6jDyEB01lr4dn7
+	 NnpS/S/UEsfBdH7qnF+0FaJOyTdMtbfxHSGhcqiNXuwniz2pCYnhH4YMuuvBeurOmG
+	 R8OZmsllbOSkIPC/AOLCn1SbXVrT704/8bGnt7aak658/f8fdnFE+k/nUi26t6WJNo
+	 N8obnjcvHraUNqreqhHBNlBi9C7g+xJSb6jeFkoiA4MTxb1lWE+zKd9o5DNotFSqtH
+	 6TqR4SWBKnfsK9tRPdo2QHG0VpJzpkW4OHl4rYnGqD8TmrFgZmNN2VjVAnDHgLEdf2
+	 EFafBIMLW05SA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/3] dmaengine: qcom: gpi: Add trace event support
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, linux-trace-kernel@vger.kernel.org
+In-Reply-To: <20260831-add-trace-support-gpio-v1-2-7b0fd0d0ddb3@oss.qualcomm.com>
+References: <20260831-add-trace-support-gpio-v1-0-7b0fd0d0ddb3@oss.qualcomm.com>
+ <20260831-add-trace-support-gpio-v1-2-7b0fd0d0ddb3@oss.qualcomm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 31 Aug 2026 19:19:29 +0000
+Message-Id: <20260831191929.F2C921F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, linux@weissschuh.net, dave.jiang@intel.com, kelvin.cao@microchip.com, george.ge@microchip.com, logang@deltatee.com, jjy600901@snu.ac.kr, sangyun.kim@snu.ac.kr, bookyungwook@gmail.com, Frank.li@nxp.com, Frank.Li@nxp.com
-X-SA-Exim-Mail-From: gunthorp@deltatee.com
-X-Spam-Level: 
-Subject: [PATCH v5 12/12] dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-plx_dma_create() registered the interrupt handler with request_irq()
-before initializing plxdev->bar. If the device raised an interrupt in
-that window, plx_dma_isr() would dereference the still-NULL bar.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Move the bar assignment ahead of request_irq() so everything the
-handler can touch is initialized before it can run.
+Pre-existing issues:
+- [High] gpi_issue_pending only queues the last submitted descriptor to har=
+dware, abandoning earlier batched descriptors and causing data corruption/h=
+angs.
+- [High] The tasklet `gpi_ev_tasklet` acquires a read_lock without disablin=
+g interrupts, leading to a 3-way rwlock deadlock with hardirq and writers.
+- [High] Tasklet is killed prematurely during channel teardown, allowing an=
+ in-flight IRQ to reschedule it after its resources are freed.
+--
 
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
-Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.kr
-Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initialization and cleanup")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
----
- drivers/dma/plx_dma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+commit 174e7255a0bfd5a904a8fadea83aa5cb881dc7b3
+Author: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-index 84941a918b01..409898e92c32 100644
---- a/drivers/dma/plx_dma.c
-+++ b/drivers/dma/plx_dma.c
-@@ -504,17 +504,17 @@ static int plx_dma_create(struct pci_dev *pdev)
- 	if (!plxdev)
- 		return -ENOMEM;
- 
--	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
--			 KBUILD_MODNAME, plxdev);
--	if (rc)
--		goto free_plx;
--
- 	spin_lock_init(&plxdev->ring_lock);
- 	tasklet_setup(&plxdev->desc_task, plx_dma_desc_task);
- 
- 	RCU_INIT_POINTER(plxdev->pdev, pdev);
- 	plxdev->bar = pcim_iomap_table(pdev)[0];
- 
-+	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
-+			 KBUILD_MODNAME, plxdev);
-+	if (rc)
-+		goto free_plx;
-+
- 	dma = &plxdev->dma_dev;
- 	INIT_LIST_HEAD(&dma->channels);
- 	dma_cap_set(DMA_MEMCPY, dma->cap_mask);
--- 
-2.47.3
+dmaengine: qcom: gpi: Add trace event support
 
+This patch wires up qcom_gpi tracepoints into the GPI DMA engine driver.
+It supplements existing debug logs with tracepoints for better runtime
+visibility into driver behavior.
+
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index a5055a6273af6..b09354a73b46e 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+[ ... ]
+> @@ -841,6 +846,7 @@ static irqreturn_t gpi_handle_irq(int irq, void *data)
+> =20
+>  	offset =3D GPII_n_CNTXT_TYPE_IRQ_OFFS(gpii->gpii_id);
+>  	type =3D gpi_read_reg(gpii, gpii->regs + offset);
+> +	trace_gpi_irq_status(gpii->gpi_dev->dev, gpii_id, type);
+> =20
+>  	do {
+>  		/* global gpii error */
+
+[Severity: High]
+This is a pre-existing issue, but does gpi_ev_tasklet() risk a 3-way rwlock
+deadlock with gpi_handle_irq() and writers?
+
+gpi_ev_tasklet() acquires the rwlock in softirq without disabling local
+interrupts:
+
+	read_lock(&gpii->pm_lock);
+
+If a writer calls a function like gpi_pause() and takes
+write_lock_irq(&gpii->pm_lock), it spins and blocks new readers due to
+qrwlock fairness.
+
+If an interrupt then arrives on the tasklet's CPU, gpi_handle_irq() will ru=
+n:
+
+	read_lock_irqsave(&gpii->pm_lock, flags);
+
+The hardirq spins waiting for the writer, the writer spins waiting for the
+tasklet, and the tasklet is preempted by the hardirq, causing a total system
+deadlock. Should gpi_ev_tasklet() use read_lock_irqsave() instead?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but is the tasklet killed too
+early in gpi_free_chan_resources(), allowing it to be rescheduled?
+
+In gpi_free_chan_resources(), the tasklet is killed before disabling
+interrupts:
+
+	tasklet_kill(&gpii->ev_task);
+
+	/* send command to de allocate event ring */
+	if (cur_state =3D=3D ACTIVE_STATE)
+		gpi_send_cmd(gpii, NULL, GPI_EV_CMD_DEALLOC);
+
+	gpi_free_ring(&gpii->ev_ring, gpii);
+
+	/* disable interrupts */
+	if (cur_state =3D=3D ACTIVE_STATE)
+		gpi_disable_interrupts(gpii);
+
+If a final interrupt arrives (e.g., from the GPI_EV_CMD_DEALLOC command),
+gpi_handle_irq() can process it and call tasklet_hi_schedule(&gpii->ev_task=
+).
+
+Meanwhile, gpi_free_chan_resources() frees and zeroes the event ring. The
+rescheduled tasklet will then run gpi_process_events(), dereferencing the
+zeroed ev_ring->rp pointer and causing a kernel panic. Should interrupts be
+disabled before killing the tasklet?
+
+[ ... ]
+> @@ -1887,6 +1897,7 @@ static void gpi_issue_pending(struct dma_chan *chan)
+>  	}
+> =20
+>  	gpi_desc =3D to_gpi_desc(vd);
+> +	trace_gpi_queue_xfer(gpii->gpi_dev->dev, gchan->chid, gpi_desc->num_tre=
+);
+>  	for (i =3D 0; i < gpi_desc->num_tre; i++) {
+>  		tre =3D &gpi_desc->tre[i];
+>  		gpi_queue_xfer(gpii, gchan, tre, &wp);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does gpi_issue_pending()
+handle batched descriptors correctly?
+
+If a client driver batches two or more descriptors using vchan_tx_submit()
+before calling dma_async_issue_pending(), vchan_issue_pending() moves all
+submitted descriptors (e.g., A and B) to desc_issued.
+
+gpi_issue_pending() fetches only the last submitted descriptor:
+
+	vd =3D list_last_entry(&gchan->vc.desc_issued,
+			     struct virt_dma_desc, node);
+	gpi_desc =3D to_gpi_desc(vd);
+	trace_gpi_queue_xfer(gpii->gpi_dev->dev, gchan->chid,
+			     gpi_desc->num_tre);
+
+This queues B to the hardware, abandoning A.
+
+When B completes, gpi_process_xfer_compl_event() completes the first
+descriptor in the list:
+
+	vd =3D vchan_next_desc(&gchan->vc);
+
+Thus, A is erroneously reported as completed successfully (though it never
+ran), and B remains in the list forever without completion, leading to sile=
+nt
+DMA data corruption and channel hangs. Can this logic be fixed to support
+DMA batching properly?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831-add-trace-=
+support-gpio-v1-0-7b0fd0d0ddb3@oss.qualcomm.com?part=3D2
