@@ -1,86 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7F739891E;
-	Mon, 31 Aug 2026 20:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584783624B8;
+	Mon, 31 Aug 2026 21:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788207706; cv=none; b=kSko+xz3cNM6kdEJX+1oXNuoSIYFlGag9vJqiG/3Fj9bYxJCd13TzaTD4CDPwMcYQWTZDurt2pq832aK1zChSM+QdK+w+0kTh3fpY3LWhovDujMRxP+bA7fN+p6lyIAQwJuV8om8NvFc10NX+AdZnKGBOc6PxO4wd4p4uCbwwrs=
+	t=1788211643; cv=none; b=UJZLAysjn3yEsu8xROSZZlDFHYc+2LS6axtYWqCc3gxLdWXZFysknThzD3lMWhpC/SGabTu5hPS9olNd+zQRHgOly/YY3pdFz0S8Q3S01Gp/nOAKAOyh2QxoFMCzHURTWjfI1tcZf3R2MIQCtiX9PtiHEaYhqeNNz5fO8p9HwTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788207706; c=relaxed/simple;
-	bh=/Y3EZxW6g7d5B/VNknmDyKXeSC0mAN9v2XpLzeh5uDY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OAxvT/belk6O8DWvUV/6HNm1G8RTfHFG+SyW7XC1vWSDgE4KaSpHaxPVIx1osAX4HA4xKiL760R1Tg3BJoXzyM3J4N0jqe6dNw8Qr2V/4byqDc3E6W3nwp4zwlcmiLGPcJEgBRLU3CLhpXu6JB/hn9jg3ViHPxbNdDE700DrAlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W/T3s8o5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788211643; c=relaxed/simple;
+	bh=UWkAB/0UN0jAczMe5AfSqL0s1dlXiU0QWMONLCr0qvE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wum9iAuT0peKd7s2ZWJek6/SWOIfwF7iZYkQIS3mJxXHNrwRnJ96wG0Hpi6ONMWV+aUx9o3iIVhsLjeGedMTLJLzvD0MVa2fkhubyITcqndS+vvVXaSeR/Frg31ehbI2vX7PtTbLRlpgvHdP3O/v79O6RdCxj6UhqNJDGIZxAQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5Wg3vRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W/T3s8o5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FE31F00A3D;
-	Mon, 31 Aug 2026 20:21:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5Wg3vRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A7B1F000E9;
+	Mon, 31 Aug 2026 21:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788207704;
-	bh=TallvL90aPVr5j44xFEumLaFjCEv1DwUjfW0ndv9IbM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/T3s8o5zidjbRKvHEyU6mwUFGaEa9/KjMdmRdtOdtFstKF49TDCNT/zvyEaTMsHK
-	 OyaDYfyhDF6eJDm7tSUNytn9WeMlCFmondevUoLEa0m0EkLVFZa87UujizO7hDRcYR
-	 7Udq7LnK/5ppodkROlqfDrjNPiSk+5fTjHzehO3KkwFr6JfWg8gaohQnsLcWs8qkEK
-	 V5akRTnnDs7veo7ewgDy2+0RW7RVFC9Va9szEeBHn7zrkaO6lf+ivwxvlh4zxLtfN/
-	 h1QNQ1kMCUgTYRZl7h0q38T/VZMV/oM/wAdL8SASCn+XyJscWP4KR0FaoGt6EiajSC
-	 AmYbgwk0W0y6w==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Herbert Xu <herbert@gondor.apana.org.au>,
+	s=k20260515; t=1788211641;
+	bh=UWkAB/0UN0jAczMe5AfSqL0s1dlXiU0QWMONLCr0qvE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=B5Wg3vRFGUo/ZoMi0Kd9Mepopts3nZTxI9uo7amXP04TaiWeNf9eDNLC4CyNIlO01
+	 Jr883+5+GPQ9HhKM/TaroYUonHwy4Ok6GcinzJznQEeLkRlpewaXwfivVhiTW9U/Mq
+	 Il76JpGMDjl37kEOvVRN0uBpp46GqKnx0zAAv93tUSeGcpKlaOJcugX0zpJ+QhlElM
+	 s6p4S3wckoXM0VPhh5+tfCAOSuoiZ8OafEGWcbxg9EEzN6dlrTfGsboCwxX86argFz
+	 HRMTWQNva1hq2bjmlEl4q16uN5PGThW/1wMTTPnyrBZIRtQiZOHB3+lvU8kkfSVjwM
+	 qfiyp9r3K7J2w==
+Date: Mon, 31 Aug 2026 22:27:13 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Jia Wang <wangjia@ultrarisc.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Anup Patel <anup@brainfault.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v4 0/6] Shikra: Add DT support for ICE, RNG and QCE
-Date: Mon, 31 Aug 2026 15:21:21 -0500
-Message-ID: <178820768643.1699313.2761481849387372250.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260714-b4-shikra_crypto_changse-v4-0-06a4ea97c209@oss.qualcomm.com>
-References: <20260714-b4-shikra_crypto_changse-v4-0-06a4ea97c209@oss.qualcomm.com>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-i2c@vger.kernel.org, netdev@vger.kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH 06/12] spi: dt-bindings: snps,dw-apb-ssi: Add compatible
+ for UltraRISC DP1000 SoC
+Message-ID: <9bd5a17a-43a8-4e3b-bd12-ddde9265c2f0@sirena.org.uk>
+References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
+ <20260824-ultrarisc-dts-v1-6-61ab7aebe9e5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="q+7g5Wbpwns/c8Jq"
+Content-Disposition: inline
+In-Reply-To: <20260824-ultrarisc-dts-v1-6-61ab7aebe9e5@ultrarisc.com>
+X-Cookie: Chocolate chip.
 
 
-On Tue, 14 Jul 2026 15:35:11 +0530, Kuldeep Singh wrote:
-> This patch series enables SDHC ICE, RNG and QCE support on Shikra,
-> aligned with how similar support is modeled on other Qualcomm platforms.
-> 
-> These DT and dt-bindings updates were previously posted as three
-> separate series. Based on review feedback, they are grouped here as one
-> crypto-focused series.
-> Previous threads:
-> QCE: https://lore.kernel.org/lkml/20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com/
-> RNG: https://lore.kernel.org/lkml/20260514-shikra_rng-v1-0-4ea721a1429a@oss.qualcomm.com/
-> ICE: https://lore.kernel.org/lkml/20260515-shikra_ice_ufs-v2-0-2724a54339db@oss.qualcomm.com/
-> 
-> [...]
+--q+7g5Wbpwns/c8Jq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Applied, thanks!
+On Mon, Aug 24, 2026 at 01:54:19PM +0800, Jia Wang wrote:
+> Add the SoC-specific compatible string and use the generic one as fallback
+> for the UltraRISC DP1000 SPI controller.
 
-[6/6] arm64: dts: qcom: shikra: Add ICE, TRNG and QCE nodes
-      commit: 099cd05d200ba241bcc7497c4384b8d657a5632e
+This doesn't apply against current code, please check and resend.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+--q+7g5Wbpwns/c8Jq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqV8bAACgkQJNaLcl1U
+h9DI8wf/eSvMfTYF0nSWOpBbx64lahzK6gdu0QfgliH0pyXLXPkDKM/MJk8BN5Mn
+h1/EIUG8xEEzzOTWbycIU1gyEVN1BSPELOL8mSJJg+5YS4SCKHjPLUvzHJUb+Tiv
+I41ubInBfOHEb15rEuP04UQovZYMvLCr/Grw4crXMM/hZW5RjdT48QhaltrjdbNT
+UOhg1ybDz4UzhD9ys7VACQ+U/cjjhbNezZZR4PaUST3pbURHoE9WFpohUbBhK5xT
+esoGPKe+DYO0LkRQ+SGGTekeE0q5hhwDGNp5F2rqqoz/8jUv5/iFlNsmUGvJQQAR
+0/8l/S9EqYMPbSKL1NQDqYdfFKPZQQ==
+=u+gt
+-----END PGP SIGNATURE-----
+
+--q+7g5Wbpwns/c8Jq--
