@@ -1,148 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82013DA5DB;
-	Mon, 31 Aug 2026 23:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F563B7B71;
+	Mon, 31 Aug 2026 23:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788219046; cv=none; b=A25UTlNmPGlUlYCzosccD1PdbsnbQYv/mf/QSNbkYx3tfm48qDz3uDDbToHcu0ZtnCdCzj0memt2sRg4eOiV8CLYYkdcdMyw46JGiB9xkLMRCyjYQwC4dKII6Rky6x8LnVW1nEM0lwZ0VLIXpmhstqIybQQhdC00DFeHHMYDtRA=
+	t=1788219137; cv=none; b=C7L2hlS2hLYGfh6js3OuxCvtLZD4aFrP33KK/0IJR9+gQ/gdYiO9UFFBMaeEzu5WP7lIbUCFy2537Niq/TkhEhRUJq8KtgloE81rTSGsGw++4fxbq9yB25ZxlOEe8OxMi0tt3kR2R02sULKvx4g+VEaCAOGA69WwxNlifD1hnh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788219046; c=relaxed/simple;
-	bh=U+KH953cSuE5VOPSZIj9eaAT5gjuEAmb7gPVaoiemZY=;
+	s=arc-20240116; t=1788219137; c=relaxed/simple;
+	bh=H8m7hLWKCW2lO8V5sUz/lIGy2s8rLSIV4Py4XcQzRqA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Qdt2RgPECbMD2+Iij46Td2a3x1e6Xt7Kdo4h70VoDQKY5pELP3LBCUsRLbIgoqxCZVZfd9Rpo0Odxv2JROsCU5H1rTOQRqi8O2DSERvuPHR/F/8GexaeWGL6YVRak38L5RkRLPx6f6zIwCrMe60dV9GRp8KCRoqmEmOZCfepDyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ABKiNgQK; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=aF+zBVdGcQO6vAmHBkMb2JXhks2gtsPJYoRrOf7UsjieVBkAXtuIloDcibhvyji9Lqxay/SghB9Qo5PPexAPS9QgaBC5ArFhHDrP6hdx+6xGXhX8MJuPPt+GjsFA7GUYUfSjb+UnaK/ZIWn+dXI9XcKPic/k90AJ7/ZBgcyV1fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WC4S8XCw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ABKiNgQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCB01F000E9;
-	Mon, 31 Aug 2026 23:30:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WC4S8XCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43E41F000E9;
+	Mon, 31 Aug 2026 23:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788219044;
-	bh=ZOhGd2zZP7oigzcpyJCpddYJWQZ73IjNrIvdhiuSqkw=;
+	s=k20260515; t=1788219136;
+	bh=j/VcSlVg/OvNiOWLEeg70xYa2uunFQ7jKdvNXkHVm2A=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ABKiNgQKBvV+LVJN3lzwrjv6HYBYgyvRvZqHPYkhj99YTlxctopbBD3K7DX2O13Fi
-	 RL+VYhl1ECd8lo+jgMcpSlsL+1UyQxTFK3579DxzoZ9UrOl9skOjestB3EO+pCXr5o
-	 ZVHy4tHOveh4ynbYJpwgGUa2bJx+0NZEp0hSD1DcmRBIL0xiW/Y00KHiiCofBDdI48
-	 i7I2Ao3KJ2GY1UnVUsgP77/PZVIeT+tmeyPWaYdfjJQjLFJLphv3kNdRih6PIXtdXy
-	 uU6V0WL2QOrdpGGQvFPal8xWC1bIQumk6baep03S3dUv3v3hgfrop13zNV7C08THL/
-	 rHHW7GscMZYrg==
+	b=WC4S8XCwQDNLmJG2k4N6zfzyi2QPrmfXIh4HUJseFovinEbTF0Hs2axnITwP+60OI
+	 aJ3Yh9i2+0ecExvF7j8uuUCCjN0QAV3PJfNUmu2lNsNhOqTbUPTo+FWPvMbNzK0anB
+	 42i4mwrIJ/2zj5gZVH21irJ7Hbr0OpPiK3qoHUME515P5okuk8GBR+y5hDXVw61Llx
+	 RUq7INwFXWurNwCVXNgyN0cOEJFKQrIpMrtM+BdR6DRKo7fXB0oXzfG7M6aNdgk00v
+	 umCPEgZY4Djsv/JQTGyWCcgYwIEPIOt/S+5IHtvPsSjyWa5etu+lT7vKFgTs7591zs
+	 DvSPOS6ftCDIA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 12/12] dmaengine: plx_dma: fix NULL pointer deref in
- plx_dma_isr()
+Subject: Re: [PATCH v3 4/6] dt-bindings: usb: ti,am335x-usb-ctrl-module:
+ Convert to DT schema
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260831191403.207631-13-logang@deltatee.com>
-References: <20260831191403.207631-1-logang@deltatee.com>
- <20260831191403.207631-13-logang@deltatee.com>
+To: "Bhargav Joshi" <j.bhargav.u@gmail.com>
+Cc: conor+dt@kernel.org, robh@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, neil.armstrong@linaro.org, Frank.Li@kernel.org, linux-phy@lists.infradead.org, olteanv@gmail.com, devicetree@vger.kernel.org
+In-Reply-To: <20260901-ti-am33-usb-v3-4-5e15c617d2e9@gmail.com>
+References: <20260901-ti-am33-usb-v3-0-5e15c617d2e9@gmail.com>
+ <20260901-ti-am33-usb-v3-4-5e15c617d2e9@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 23:30:43 +0000
-Message-Id: <20260831233044.3CCB01F000E9@smtp.kernel.org>
+Date: Mon, 31 Aug 2026 23:32:15 +0000
+Message-Id: <20260831233215.E43E41F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Softirq preemption deadlock in `plx_dma_process_desc()` due to usi=
-ng `spin_lock()` instead of `spin_lock_bh()`.
-- [High] Recursive deadlock in `plx_dma_process_desc()` when a client callb=
-ack submits a new DMA transaction.
-- [High] `plx_dma_prep_memcpy()` acquires a spinlock and returns without re=
-leasing it, violating the DMA API contract.
+- [Low] Documentation loss for `reg` property entries during dt-schema conv=
+ersion.
 --
 
-commit eba3f5594a9491de8ee08b096a4a7e95dd48da19
-Author: Logan Gunthorpe <logang@deltatee.com>
+commit c1a1061abb654fbffdeb37f5a8ae9d8c5c5596f0
+Author: Bhargav Joshi <j.bhargav.u@gmail.com>
 
-dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
+dt-bindings: usb: ti,am335x-usb-ctrl-module: Convert to DT schema
 
-This commit prevents a NULL pointer dereference in the interrupt handler.
-It achieves this by moving the assignment of plxdev->bar ahead of
-request_irq() during hardware initialization.
+Convert the TI AM335x USB Control Module text bindings to DT schema. No
+functional changes.
 
-Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.=
-kr
-
-> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-> index 84941a918b01f..409898e92c320 100644
-> --- a/drivers/dma/plx_dma.c
-> +++ b/drivers/dma/plx_dma.c
-[ ... ]
-> static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
-> {
-> 	struct dmaengine_result res;
-> 	struct plx_dma_desc *desc;
-> 	u32 flags;
->=20
-> 	spin_lock(&plxdev->ring_lock);
-
-[Severity: High]
-This is a pre-existing issue, but does using spin_lock() here instead of
-spin_lock_bh() leave us vulnerable to a softirq preemption deadlock?
-
-If plx_dma_tx_status() is called from process context, it will call
-plx_dma_process_desc() and acquire this lock while leaving softirqs enabled.
-If a hardware interrupt occurs on the same CPU while the lock is held,
-plx_dma_isr() will schedule the plx_dma_desc_task tasklet.
-
-Upon return from the interrupt, the softirq executes the tasklet, which cal=
-ls
-plx_dma_process_desc() again. Can this result in a recursive deadlock when =
-it
-attempts to acquire the already-held ring_lock?
+> diff --git a/Documentation/devicetree/bindings/usb/am33xx-usb.txt b/Docum=
+entation/devicetree/bindings/usb/am33xx-usb.txt
+> index 5973f88bcc65d..94312ad8ec8cd 100644
+> --- a/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+> +++ b/Documentation/devicetree/bindings/usb/am33xx-usb.txt
+> @@ -8,15 +8,6 @@ The glue layer contains multiple child nodes. It is requ=
+ired to have
+>  at least a control module node, USB node and a PHY node. The second USB
+>  node and its PHY node are optional. The DMA node is also optional.
+> =20
+> -Reset module
+> -~~~~~~~~~~~~
+> -- compatible: ti,am335x-usb-ctrl-module
+> -- reg: offset and length of the "USB control registers" in the "Control
+> -  Module" block. A second offset and length for the USB wake up control
+> -  in the same memory block.
+> -- reg-names: "phy_ctrl" for the "USB control registers" and "wakeup" for
+> -  the USB wake up control register.
+> -
 
 [ ... ]
-> 		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
 
-[Severity: High]
-This isn't a bug introduced by this patch, but does invoking the client
-callback while holding the internal spinlock expose us to a recursive deadl=
-ock?
-
-It is a common DMA engine pattern for client callbacks to chain descriptor
-submissions. If the callback submits a new DMA transaction, it will call:
-plx_dma_prep_memcpy() -> spin_lock_bh(&plxdev->ring_lock)
-
-Since the lock is already actively held by plx_dma_process_desc() on the sa=
-me
-CPU, will this cause an immediate deadlock?
+> diff --git a/Documentation/devicetree/bindings/usb/ti,am335x-usb-ctrl-mod=
+ule.yaml b/Documentation/devicetree/bindings/usb/ti,am335x-usb-ctrl-module.=
+yaml
+> new file mode 100644
+> index 0000000000000..f8ac0af745c6c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/ti,am335x-usb-ctrl-module.yaml
+> @@ -0,0 +1,38 @@
 
 [ ... ]
-> static struct dma_async_tx_descriptor *plx_dma_prep_memcpy(struct dma_cha=
-n *c,
-> 		dma_addr_t dma_dst, dma_addr_t dma_src, size_t len,
-> 		unsigned long flags)
-> 	__acquires(plxdev->ring_lock)
-> {
-> 	struct plx_dma_dev *plxdev =3D chan_to_plx_dma_dev(c);
-> 	struct plx_dma_desc *plxdesc;
->=20
-> 	spin_lock_bh(&plxdev->ring_lock);
-[ ... ]
-> 	/* return with the lock held, it will be released in tx_submit */
->=20
-> 	return &plxdesc->txd;
 
-[Severity: High]
-This is a pre-existing issue, but does returning to the caller with the
-spinlock held and bottom halves disabled violate the DMA API contract?
+> +properties:
+> +  compatible:
+> +    const: ti,am335x-usb-ctrl-module
+> +
+> +  reg:
+> +    maxItems: 2
 
-If a client driver prepares multiple descriptors sequentially, such as call=
-ing
-dmaengine_prep_dma_memcpy() twice before submitting, won't it deadlock on t=
-he
-second call?
+[Severity: Low]
+Does this YAML conversion lose some of the documentation details from the
+original text binding?
 
-Additionally, if the client encounters an error between preparation and
-submission and never calls tx_submit(), will the lock be permanently leaked,
-leaving softirqs disabled on that CPU?
+The previous text binding included explicit descriptions for the two reg
+entries ("USB control registers" and "USB wake up control"). While reg-names
+are provided below, should an items list under reg be included to preserve
+these explicit descriptions?
+
+> +
+> +  reg-names:
+> +    items:
+> +      - const: phy_ctrl
+> +      - const: wakeup
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831191403.2076=
-31-1-logang@deltatee.com?part=3D12
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901-ti-am33-us=
+b-v3-0-5e15c617d2e9@gmail.com?part=3D4
