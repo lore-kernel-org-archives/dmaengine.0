@@ -1,100 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584783624B8;
-	Mon, 31 Aug 2026 21:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7434CCDCE;
+	Mon, 31 Aug 2026 21:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788211643; cv=none; b=UJZLAysjn3yEsu8xROSZZlDFHYc+2LS6axtYWqCc3gxLdWXZFysknThzD3lMWhpC/SGabTu5hPS9olNd+zQRHgOly/YY3pdFz0S8Q3S01Gp/nOAKAOyh2QxoFMCzHURTWjfI1tcZf3R2MIQCtiX9PtiHEaYhqeNNz5fO8p9HwTE=
+	t=1788211687; cv=none; b=k2JS51GVKQHg79xJ3MYTvR71+yPASh4RyhNzcPdDJCkKTZF/HfgiUCt7GoM3E4OMnYRIRQtN+zD9lKg/vKY2YWk2i9yUT/XrwpvIfeuuvl8R7pIQu1e9sgM4f2jE2dp+j10kSLCo74n/cwtJIUbjAABrH89SD2SJI2yOFAxDdzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788211643; c=relaxed/simple;
-	bh=UWkAB/0UN0jAczMe5AfSqL0s1dlXiU0QWMONLCr0qvE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wum9iAuT0peKd7s2ZWJek6/SWOIfwF7iZYkQIS3mJxXHNrwRnJ96wG0Hpi6ONMWV+aUx9o3iIVhsLjeGedMTLJLzvD0MVa2fkhubyITcqndS+vvVXaSeR/Frg31ehbI2vX7PtTbLRlpgvHdP3O/v79O6RdCxj6UhqNJDGIZxAQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5Wg3vRF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788211687; c=relaxed/simple;
+	bh=Nw6XTmxC8xAvWpS/9X/vHFFYc0uFZdlzfT3+ufHsN2Q=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=fyI/QJPWnjJ69YP8MpmDwVTKvVpEY0ri/n3FMi5olDkS2w1gW10fwPgcNp9KUO6AjMiqpjl6fbNFiWNO6SdJPKSlY3jBJ+EHR83Iv5+ung8EN7F5sgL4aIFaOwz3AXHSsoJ1u1ZuHtfT/zVG85WOz8HcW0oWtF0znJhylCvaGaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aSJD1vVP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5Wg3vRF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A7B1F000E9;
-	Mon, 31 Aug 2026 21:27:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aSJD1vVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07EB1F000E9;
+	Mon, 31 Aug 2026 21:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788211641;
-	bh=UWkAB/0UN0jAczMe5AfSqL0s1dlXiU0QWMONLCr0qvE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=B5Wg3vRFGUo/ZoMi0Kd9Mepopts3nZTxI9uo7amXP04TaiWeNf9eDNLC4CyNIlO01
-	 Jr883+5+GPQ9HhKM/TaroYUonHwy4Ok6GcinzJznQEeLkRlpewaXwfivVhiTW9U/Mq
-	 Il76JpGMDjl37kEOvVRN0uBpp46GqKnx0zAAv93tUSeGcpKlaOJcugX0zpJ+QhlElM
-	 s6p4S3wckoXM0VPhh5+tfCAOSuoiZ8OafEGWcbxg9EEzN6dlrTfGsboCwxX86argFz
-	 HRMTWQNva1hq2bjmlEl4q16uN5PGThW/1wMTTPnyrBZIRtQiZOHB3+lvU8kkfSVjwM
-	 qfiyp9r3K7J2w==
-Date: Mon, 31 Aug 2026 22:27:13 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Jia Wang <wangjia@ultrarisc.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-	linux-i2c@vger.kernel.org, netdev@vger.kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH 06/12] spi: dt-bindings: snps,dw-apb-ssi: Add compatible
- for UltraRISC DP1000 SoC
-Message-ID: <9bd5a17a-43a8-4e3b-bd12-ddde9265c2f0@sirena.org.uk>
-References: <20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com>
- <20260824-ultrarisc-dts-v1-6-61ab7aebe9e5@ultrarisc.com>
+	s=k20260515; t=1788211685;
+	bh=5HDEIQ3W7sMc1LOSALNk2fbz2x9ECVrHLVy423m6kJc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=aSJD1vVPuuNbDzCaRJ6uTRRppOTkpkEFNwx9stD5UjE/XrN1krme1UnNg7iGL3SaI
+	 ZSWktkqJB38MYG3GG/8AbXu3Dmg+YnCi2rzyHDf8zBMmNzeqGmLiaLiLh5zNITfhvm
+	 7+zKwj5NBR/rmvsf8ruTG8Aj6PZgRjIv/VdVJo3u6p5eogE+T650F899EncvoRhtfL
+	 ORZRc76tj3AEnOIIHWUbKm2iVpD/P2PWZDwxbq2HX6YC38IBVYXiUszvcaZf3CkwoJ
+	 HU4B2+Vxf10h43rXNxY+/k358Hy7aR+w26cSezxIZp1xt9auVlPWaVIU8pq73XyS+7
+	 pHxNfD6efLD5A==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 01/12] dmaengine: switchtec-dma: fix double-free in
+ switchtec_dma_free_desc()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Logan Gunthorpe" <logang@deltatee.com>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260831191403.207631-2-logang@deltatee.com>
+References: <20260831191403.207631-1-logang@deltatee.com>
+ <20260831191403.207631-2-logang@deltatee.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 31 Aug 2026 21:28:04 +0000
+Message-Id: <20260831212804.F07EB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="q+7g5Wbpwns/c8Jq"
-Content-Disposition: inline
-In-Reply-To: <20260824-ultrarisc-dts-v1-6-61ab7aebe9e5@ultrarisc.com>
-X-Cookie: Chocolate chip.
 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
---q+7g5Wbpwns/c8Jq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Pre-existing issues:
+- [High] switchtec_dma_prep_desc() acquires and returns with a spinlock hel=
+d, violating the dmaengine API and causing inevitable deadlocks.
+--
 
-On Mon, Aug 24, 2026 at 01:54:19PM +0800, Jia Wang wrote:
-> Add the SoC-specific compatible string and use the generic one as fallback
-> for the UltraRISC DP1000 SPI controller.
+commit 35f30174e5a3e6b3e6f62a9f94873f8da95cfc36
+Author: Logan Gunthorpe <logang@deltatee.com>
 
-This doesn't apply against current code, please check and resend.
+dmaengine: switchtec-dma: fix double-free in switchtec_dma_free_desc()
 
---q+7g5Wbpwns/c8Jq
-Content-Type: application/pgp-signature; name="signature.asc"
+This commit prevents a double-free in switchtec_dma_free_desc() by setting
+hw_sq, hw_cq, and desc_ring entries to NULL after freeing them. This fixes
+an issue during channel resource allocation failures where unwind paths
+could attempt to free already-released pointers.
 
------BEGIN PGP SIGNATURE-----
+> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+> index c133535d37656..a10818efba4e5 100644
+> --- a/drivers/dma/switchtec_dma.c
+> +++ b/drivers/dma/switchtec_dma.c
+> @@ -886,14 +886,18 @@ static void switchtec_dma_free_desc(struct switchte=
+c_dma_chan *swdma_chan)
+>  	if (swdma_chan->hw_sq)
+>  		dma_free_coherent(swdma_dev->dma_dev.dev, size,
+>  				  swdma_chan->hw_sq, swdma_chan->dma_addr_sq);
+> +	swdma_chan->hw_sq =3D NULL;
+> =20
+>  	size =3D SWITCHTEC_DMA_CQ_SIZE * sizeof(*swdma_chan->hw_cq);
+[ ... ]
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqV8bAACgkQJNaLcl1U
-h9DI8wf/eSvMfTYF0nSWOpBbx64lahzK6gdu0QfgliH0pyXLXPkDKM/MJk8BN5Mn
-h1/EIUG8xEEzzOTWbycIU1gyEVN1BSPELOL8mSJJg+5YS4SCKHjPLUvzHJUb+Tiv
-I41ubInBfOHEb15rEuP04UQovZYMvLCr/Grw4crXMM/hZW5RjdT48QhaltrjdbNT
-UOhg1ybDz4UzhD9ys7VACQ+U/cjjhbNezZZR4PaUST3pbURHoE9WFpohUbBhK5xT
-esoGPKe+DYO0LkRQ+SGGTekeE0q5hhwDGNp5F2rqqoz/8jUv5/iFlNsmUGvJQQAR
-0/8l/S9EqYMPbSKL1NQDqYdfFKPZQQ==
-=u+gt
------END PGP SIGNATURE-----
+While reviewing this file, I noticed a separate issue in
+switchtec_dma_prep_desc():
 
---q+7g5Wbpwns/c8Jq--
+drivers/dma/switchtec_dma.c:switchtec_dma_prep_desc() {
+	spin_lock_bh(&swdma_chan->submit_lock);
+
+	if (!swdma_chan->ring_active)
+		goto err_unlock;
+	...
+	/* return with the lock held, it will be released in tx_submit */
+
+	return &desc->txd;
+}
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does returning with the
+submit_lock held violate the dmaengine API contract and cause deadlocks?
+
+The dmaengine API allows clients to batch multiple descriptor preparations
+before submitting them. If a client calls the prep function consecutively,
+would the second call attempt to re-acquire the same non-recursive spinlock
+and deadlock the CPU?
+
+Additionally, the dmaengine API allows aborting and dropping descriptors
+on error before submission. If a prepared descriptor is discarded on a
+client error path, would the lock remain permanently held?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831191403.2076=
+31-1-logang@deltatee.com?part=3D1
