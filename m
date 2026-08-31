@@ -1,95 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D4833F5B6;
-	Mon, 31 Aug 2026 19:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A391725B093;
+	Mon, 31 Aug 2026 19:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788203147; cv=none; b=HvX0UCyDuWzPvInpGcjB9IB7aq5NOB3/Z0vlQEZbiF5X3OFTG+a0nnRmimRP1VjDmD37GKqDYBiHJrHyTOZiNUS/dfUp4t4HkIAy1QJpkjYWJJUwoogY7pgvGHRlfgqJZ7X7j2vK6ZF1uXhdrxaH5OJLMC3Bk91nRxRcwQo2y6U=
+	t=1788203667; cv=none; b=AjdaWS/5m/hrZejOXqlO9OlSH3+7MeaIuTGl65EEtYZqlStyYg8y+MycsyGnopuwGjY4Rr708YlqHAF21e+unf2iTw+sH/5kkrG8uPQDuxsDLZLRQ2iZ1NSZGVf0uQdJ5QlifrWtO1V9fRdWoTG6W6PMS2kQBTgDSGx7yfKyRWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788203147; c=relaxed/simple;
-	bh=Csthy57ktccSc+0KQm5MmKKsegOe8otP4rT6EneUY6w=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=clZKzvzcjuX4FI9TorO9hh6y9R21QJPeGaHwBnbtPvO2F/xBrYgEC0uMyNZhClmtpmRiPzhFGZFJw/9dxefPfBEkNcrJfwFFh9simCinoUbNfEHVyYSN1jMNiTAsymBn1RNyC6GHBW8oqPfeIasYYas5wxjNMzTp3UoVNef3Ib4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdaN+1y6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788203667; c=relaxed/simple;
+	bh=fwbTZ3apAl3oLnTJWw6uVx2cNmrHtHK5g+g6qJg1YW4=;
+	h=From:To:Cc:Date:Message-ID:In-Reply-To:References:MIME-Version:
+	 Subject; b=tpERaxvixquMb5O65ASyJuIfn+KXG5nL+V8EDAGUBOJ1TLbPLyrtjVnKzEIPxOIfmohpCKDpJZDU0Y8OPAVP+GUILH/jg81Hq3wn3qjhFGzs4bgDWcFY514X+rBAtfULw2/W+mc8/zB1JYqd5d5e5rjyes//rebcUzALfImO+JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=pqWIXZEG; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdaN+1y6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AC01F000E9;
-	Mon, 31 Aug 2026 19:05:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788203146;
-	bh=Csthy57ktccSc+0KQm5MmKKsegOe8otP4rT6EneUY6w=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WdaN+1y6JQeNL5e02wVeGr/0Dx99rQxuRa2y0tX5oqNEA5kPqYgB4zzNNjxUDnmq1
-	 /41IORqEfbyPNY53YS5PrSqnB0nQxLs2TNSJ27oHELry2tUCfkPklZGXbrEoBrB1tf
-	 A9MvgPwrmtGitbpK4ovY7OibTV+CioKqvKvJ3+FgXK2snceOfFgzo//sKGlr4Vrd6Q
-	 UjKaLDOxIT+T4N+ZrjUQiUZ8WZBdvY6snXaPPaBW111d3At6vQQ89aH6z5BaZJ8inr
-	 l4tBybMV3q5cjL7drmOCwmzxREylzUuPOv1hi67RkcjTVEmqXDfpvqSdc9vk8O/Dgq
-	 jUefY68iyP88w==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] dmaengine: qcom: gpi: trace: Add trace events
- header for Qualcomm GPI DMA
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, linux-trace-kernel@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260831-add-trace-support-gpio-v1-1-7b0fd0d0ddb3@oss.qualcomm.com>
-References: <20260831-add-trace-support-gpio-v1-0-7b0fd0d0ddb3@oss.qualcomm.com>
- <20260831-add-trace-support-gpio-v1-1-7b0fd0d0ddb3@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 19:05:45 +0000
-Message-Id: <20260831190545.D4AC01F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="pqWIXZEG"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=n5UMSOAnxi8lEsvumILEQPHwqv8UDuy4NqR+CvapaUk=; b=pqWIXZEGXqBAnvAMr9dXTIAuKN
+	WADihEqtNmECU0oBw2H8Kmmqttptq2jhHAztOzp5cgsJ/I46Au2cRGjCRJpV2cxxTcimKhjQXa29v
+	mESlkRx7EJR3hdw3aD/KrNjsXZ1IYVX0gUb+JaxJgm/V5QfuiYpnHrUUKVqgHmpX/57RD2ZgE5pH4
+	XHvn+gZRhJMIL4GJZsGPpuIWGQZhGAcjBnyTe7njEiYEapdvrLjB1AqJr31V0QsSf6ZSfofPgikpv
+	7zxPl4DzMQNd/tZzWimxo7LTUEfRarxGxBC3sAc2fqk/yvuLsHTJMsjNmCLmTh6q9MZ7gWudX+/qY
+	i8isqyhg==;
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1x17Sa-000000007DK-22G0;
+	Mon, 31 Aug 2026 13:14:25 -0600
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1x17SI-00000000s1h-1UN9;
+	Mon, 31 Aug 2026 13:14:06 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	George Ge <george.ge@microchip.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Date: Mon, 31 Aug 2026 13:13:57 -0600
+Message-ID: <20260831191403.207631-8-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260831191403.207631-1-logang@deltatee.com>
+References: <20260831191403.207631-1-logang@deltatee.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, linux@weissschuh.net, dave.jiang@intel.com, kelvin.cao@microchip.com, george.ge@microchip.com, jjy600901@snu.ac.kr, logang@deltatee.com, vkoul@kernel.org, sashiko-bot@kernel.org, Frank.li@nxp.com, Frank.Li@nxp.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v5 07/12] dmaengine: switchtec-dma: fix chan_status_irq cleanup on create() error
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Tracepoint names violate the `subsystem_event` naming convention.
---
+chan_status_irq stores an MSI-X vector index, but err_exit freed it
+with plain free_irq() instead of pci_free_irq(), which would free the
+wrong Linux IRQ. The guard also treated a valid vector index of 0 as
+unset, skipping the free entirely in that case and leaving the handler
+registered against soon-to-be-freed swdma_dev.
 
-commit 247e0c64dd13ba460fb185bdf6a4727ca8e574bd
-Author: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Initialize chan_status_irq to -1 and use the value being non-negative
+to signal when to free it with pci_free_irq().
 
-dmaengine: qcom: gpi: trace: Add trace events header for Qualcomm GPI DMA
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/switchtec_dma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-This commit adds a tracepoint header for the Qualcomm GPI DMA engine driver.
-The events provide runtime visibility into the driver's behavior, replacing
-former debug logging.
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index c30530ba78ca..3068d9de4e6d 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -1262,6 +1262,8 @@ static int switchtec_dma_create(struct pci_dev *pdev)
+ 	if (!swdma_dev)
+ 		return -ENOMEM;
+ 
++	swdma_dev->chan_status_irq = -1;
++
+ 	swdma_dev->bar = ioremap(pci_resource_start(pdev, 0),
+ 				 pci_resource_len(pdev, 0));
+ 
+@@ -1336,8 +1338,8 @@ static int switchtec_dma_create(struct pci_dev *pdev)
+ 	switchtec_dma_chans_free(swdma_dev);
+ 
+ err_exit:
+-	if (swdma_dev->chan_status_irq)
+-		free_irq(swdma_dev->chan_status_irq, swdma_dev);
++	if (swdma_dev->chan_status_irq >= 0)
++		pci_free_irq(pdev, swdma_dev->chan_status_irq, swdma_dev);
+ 
+ 	iounmap(swdma_dev->bar);
+ 	kfree(swdma_dev);
+-- 
+2.47.3
 
-> diff --git a/include/trace/events/qcom_gpi.h b/include/trace/events/qcom_=
-gpi.h
-> new file mode 100644
-> index 0000000000000..5474e762f4b64
-> --- /dev/null
-> +++ b/include/trace/events/qcom_gpi.h
-> @@ -0,0 +1,313 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM qcom_gpi
-> +
-> +#if !defined(_TRACE_QCOM_GPI_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_QCOM_GPI_H
-> +
-> +#include <linux/tracepoint.h>
-> +
-> +TRACE_EVENT(gpi_send_cmd,
-
-[Severity: Low]
-Should this tracepoint name be prefixed with the subsystem name to match the
-subsystem_event naming convention?
-
-Since TRACE_SYSTEM is defined as qcom_gpi above, defining the event as
-gpi_send_cmd instead of qcom_gpi_send_cmd creates namespace inconsistencies=
- in
-tracing tools and debugfs. This naming pattern appears to be repeated for t=
-he
-other TRACE_EVENT definitions in this file.
-
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831-add-trace-=
-support-gpio-v1-0-7b0fd0d0ddb3@oss.qualcomm.com?part=3D1
