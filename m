@@ -1,154 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D32EEE76;
-	Mon, 31 Aug 2026 22:50:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788216629; cv=none; b=t568W/mUB0yd9sVa9tNJWX0WWMoQzhPOb5b2o15ArW7+ebH6O42V3+9h8HmBfkD+b308EO7jk/iWqxcdoEpRI90yD365x8pJjY+Mw24rxUOmkSx5P7LPPwA9h2D6xSinbyD9P18Gtd6NjBfdSmjq5MnpqEtHs1V50R93N3nqXAc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788216629; c=relaxed/simple;
-	bh=uveMO3+C2Eu4PkKQ7BijaP721tcaey5Q6y+/NvRAbiY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uJvRnzPHaHwG+YOd4h2IpXIFAQ85VSJFf+c/3ZbO0aqgKGX2m7saV5DoWCxKNb85Dkdw9B213GLcVT87qx/acxNCFvUOOEBi/D+ryjUFx9wvnpbBKYAdGXcdcczUqA9kidB1CROt7ac2FDqNY2XTqBBMsuBFAJzxiOBBvSQdqSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UfmRmlzP; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E493C4172
+	for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2026 23:02:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788217349; cv=pass; b=k2NhTycSV3vTNPKicD/ryHTT/Aky7zhM8dddzU+Hi9E2/ROlD9G51I0EqZ3USLuDZKdt2rHfM9Oh1U7NrAneeA38yuxh9iBCDE0ToIjEi3Alxz+OWv5CLzqiM8QhKqGpg2W+VO6F85qEdUtUvQixnfHs2CfIQ/Ptv+SP7eMGUUk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788217349; c=relaxed/simple;
+	bh=QPDBNzw+KWCEMD9k4Xi8uOYkWevA+MR4K4kPjQL2HXg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l+BWDwKCCCmRl5n8JYWfiHLCUNjTPH7MhlkiBQAhPw+cRZL3zoiaK6T7IinI3LfGME//rJI5OSHUPPmztf5Ab9YX1uxlzT+T0n88v9G49Y+IQ2guqUEOqwGRJfH9WVvxmNUXhvyiWAwRT/17gliC1s/Uf0cwZDWNWEc/gGsAWe0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ifAx9q3R; arc=pass smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UfmRmlzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C782E1F000E9;
-	Mon, 31 Aug 2026 22:50:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788216626;
-	bh=bHzzKL8igDHzV5B8l83Vzi3U1M8j8hR6lSDXOjMgMhI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=UfmRmlzPY5ZUWZXTx33zP3RNnjBJQfem2Orhn2M1opAVRbP5gPvypcz0slxEe6mAl
-	 ChXEd6vADt//7sDa/YjHaQoAF+Y9TF6EZo3XQ+wZv/e5e9XnFsrKhF7spDyYQKISQ2
-	 6OW7PUIALYidU7S9NfH/8JglMtQHejcS50OFygTaSIs0GPjCJF6lyIAWi4tBE0D+4X
-	 0oSldEfGEgEHve/iEp7Hoi2U74m5ijXD6281FlVxC+rUHGPUOC/7ata8n+/8RB7RJp
-	 5A8V2oq9AiepvnZNp+eI1w9luuCTVVolqlb0OpBJpxkeBHkQruQu3S3QzjoERGxaCM
-	 IWbH9BiXCwjxA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 08/12] dmaengine: switchtec-dma: disable channels
- before freeing on registration failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260831191403.207631-9-logang@deltatee.com>
-References: <20260831191403.207631-1-logang@deltatee.com>
- <20260831191403.207631-9-logang@deltatee.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 22:50:25 +0000
-Message-Id: <20260831225025.C782E1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifAx9q3R"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6a6010a7234so444536a12.1
+        for <dmaengine@vger.kernel.org>; Mon, 31 Aug 2026 16:02:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1788217346; cv=none;
+        d=google.com; s=arc-20260327;
+        b=gR84Sf49sGPZ0GZhGM9CYgmoWskNrQlfecLvlYbsU8egeKKTpQ+MuVcgauWZbwDrdw
+         FYjkH6DHfLVsaaDqhjPTFJEJa83zsKdYe894phYro6U3xOVTcWrgGBVFKi1vPkVqlAnO
+         prQO2UaNA+4UT6ZFxKlyfv08ooemdKxVbsEPsx3rhaJRtdfasPmQK/5b2mjyhU0Pi//f
+         tRR08bupaOqOEatvP5fr5Wd8PxbYKNxmP7OYLMYxnrr6k5OpVYyWYfDIm9JbxED8XgX3
+         y1T2Rqo0bJWyjnini5rJVFKk7ZE5osJvPeXLQltIZTaaHR8GTyJ5jZiqorncGM2o1ktW
+         9pfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QPDBNzw+KWCEMD9k4Xi8uOYkWevA+MR4K4kPjQL2HXg=;
+        fh=YDdD/ruX8qzTPNpNTr4q1QgXvODvGenT2KiGa5TBCZM=;
+        b=EBdy91MNzd3A0Q6irQXXcgSKTjZ7L/PDObOiMYowKIh1ahu0VIcy/cXwUm4n01BQEr
+         3yUaBSQlstzV2xM0AahRU48XfvUTDfdQ00pdmUYdtcEFHFLoAekcmy0VUwuultLJ5CoZ
+         lgHZYwgE7L9P66BI3XIKPj223Yva6H9IluN58VW6wHiGD4FajIydpmOBmTCP9BHhO8Yy
+         237hzg8zynzKrZn7MkGDCcNYVSsfN92Mo/u0Mt02C9CmIoLI4jClA2sCg1OAkvGRhDAd
+         Ffe5wEUsMFAioF2h5JONYPgI9SvIGRf+fRC6QPT3XI6pGuKW4Lq+wACGZ3LQ6FZx7QUU
+         qtMQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788217346; x=1788822146; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QPDBNzw+KWCEMD9k4Xi8uOYkWevA+MR4K4kPjQL2HXg=;
+        b=ifAx9q3RlC6ARp0ztxGHiYF8R3lsuyHdfd75Sqji3lFJLwP1kpmViWwvQmd3/yfyf0
+         KDR7P0k+mJVSuHGHi9j+Cp30NtYgS7RSnqe/9mj1DIQapHsSAYDHRdYi6QCDWPEegnva
+         Q1LwIQMU5eX65XkPV6ONsYL0ILxwlwxtBIK+OrdH40x7apHzJpTM1vL5jLVuDjgf/RRe
+         1NXEWoMdp1XPBhOzgUnNUuOqrnuNNC2zkwvQDdXHa+XolulBwfBR49ADVuqUlZ74oufe
+         uwWazj5+wpTOwCjT5pOhOa/vx2mfBAyq4Od3vJjLrSSh844fV1Y8S5U5wifmNeX2Ees5
+         0RHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788217346; x=1788822146;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QPDBNzw+KWCEMD9k4Xi8uOYkWevA+MR4K4kPjQL2HXg=;
+        b=e4y/vKRkCmJKnw5m03YFheUKunHTpYWX5Pr6cckEUuDBzPJK+rEQLmCuxp8P8FbY9+
+         B9SRvo2TWy1f/tFUgS7nRzI7PmGqNUb3Acm+TYle8UiCG57JZCr71iNZsMkdurA91Mdx
+         B3hKIBuz6p1DC4wvY730ww5Shap0nLCSiSQKoNhs9Opr4dGwTHElcS23hA5Midzrp3+H
+         MZf8F4FUa+vI/cxDrEHQeUspXkaJq2dxtGWvJPmwysc3vdNpjML9/slC/x4MFn49hW4L
+         iygkuLFUwVlj4MkxUJwZzWqh0bUgo5FxPJVfzPVoEjsn7oCHGztN2Y2qgK0g69g7dsRc
+         emcg==
+X-Forwarded-Encrypted: i=1; AKwUvByb8Ei28p2UcTuu/4DLW322fraBigytI3BES+YOAjp1dsobkdQbZsG+nxp4r2f2QdrigGJZaksvkhk=@vger.kernel.org
+X-Gm-Message-State: AFuF++mfYo7Pzrztiao9GIT9cfQEWdYVswvfw4ZjrkNKZEKHpVH1/MFp
+	B1pa/QfDSbuG/Mp6FpobrXQMmuvSOb5ltB8X3QyqiX5xs0E2SlJvzUeKClfUacSRjZD3TmO5alw
+	jmAIV6XK0Hl8GBuzyjXD++Rjl45L2m3k=
+X-Gm-Gg: AYBFou3mBvIxslFfbhAPmz4LGjrXjqbAW4plZMW40IDmxOLBBRx5D0zi+Bxn1semgtS
+	3j+WC6Ar3Q5BU2yFnXO69p5FOx55UE49DZG7xqTDlEDZpWV2VXoWd6wabH/F40OGb2FWPO7/yE1
+	Tem7nYuMxaIG9fLkCOsmn7Kel9/z5OAT27T0UOupqmvl95DGOY3iV8zcJCOXRwh+lXgxF19V1EJ
+	qtpRCQ/veu0BrOprpd7wCXubA8Y01o/QTmnmctSuv64CzY2rJC+v+5hEv5yQTaP5T0sfK9dwgIm
+	So5Qj4jeyuoKDjg0Bgr0daq3PC7IhHC7x7Y2sctYSdlwIGDBvhuG0jlfFB1FX+wcN6CKBhBVuCP
+	/nzk=
+X-Received: by 2002:a05:6402:43c6:b0:6a0:d411:930d with SMTP id
+ 4fb4d7f45d1cf-6a60d36c8ddmr8084948a12.2.1788217345227; Mon, 31 Aug 2026
+ 16:02:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260818-ti-am33-usb-v2-0-66fd44d66824@gmail.com>
+ <20260818-ti-am33-usb-v2-3-66fd44d66824@gmail.com> <20260831134643.GA733140-robh@kernel.org>
+In-Reply-To: <20260831134643.GA733140-robh@kernel.org>
+From: Bhargav Joshi <j.bhargav.u@gmail.com>
+Date: Tue, 1 Sep 2026 04:32:13 +0530
+X-Gm-Features: AcwNN1X3HOOhqJKkqX2zS7vFMQd-QWtG1Ec31OOg1tzrgRf7iaa2sG06AC-hKII
+Message-ID: <CAOWyW_4RpTD9zAmFDr41sFOj5LtRaGdad7M8QCvQNAQDtamYMA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/7] ARM: dts: ti: am335x: Fix redundant interrupts
+ property in USB nodes
+To: Rob Herring <robh@kernel.org>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andrzej Siewior <bigeasy@linutronix.de>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, 
+	Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>, 
+	Roger Quadros <rogerq@kernel.org>, Tony Lindgren <tony@atomide.com>, Ravi B <ravibabu@ti.com>, 
+	Kumar Gupta <ajay.gupta@ti.com>, Sergei Shtylyov <sshtylyov@ru.mvista.com>, dmaengine@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-omap@vger.kernel.org, goledhruva@gmail.com, m-chawdhry@ti.com, 
+	daniel.baluta@gmail.com, simona.toaca@nxp.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+On Mon, Aug 31, 2026 at 7:16=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
+:
+>
+> On Tue, Aug 18, 2026 at 07:58:45PM +0530, Bhargav Joshi wrote:
+> > The am33xx.dtsi defines a single interrupts property for the MUSB nodes=
+.
+> > Several board-level files override the usb0 node to use
+> > interrupts-extended instead to include vbus interrupt.
+> >
+> > Since both interrupts and interrupts-extended cannot be used
+> > simultaneously, Add /delete-property/ interrupts to the overriding
+> > nodes to resolve the schema warnings.
+>
+> Actually, both should be allowed. In theory, an OS version not support
+> 'interrupts-extended' and 'interrupts' is also needed for compatibility.
+> Though in reality, we've now had 'interrupts-extended' defined for a
+> long time. I'll look into what's causing this warning.
 
-Pre-existing issues:
-- [High] Missing check for ioremap failure in switchtec_dma_create() leads =
-to NULL pointer dereference.
-- [High] The channel status IRQ handler dereferences uninitialized structur=
-es if the IRQ fires before dma_async_device_register() completes.
-- [High] Missing bounds check on untrusted `chan_cnt` read from the PCI dev=
-ice allows out-of-bounds MMIO pointer arithmetic and memory writes.
---
-
-commit 9d90eebe0f109c6aab9cf75114365b10451e1028
-Author: Logan Gunthorpe <logang@deltatee.com>
-Subject: dmaengine: switchtec-dma: disable channels before freeing on regis=
-tration failure
-
-When switchtec_dma_create() fails after channels have been added to
-dma_dev->channels, the channel status IRQ is still live while the channels
-are released and freed. Add switchtec_dma_chans_disable() to free the
-channel status IRQ before releasing and freeing channels in both error path=
-s.
-
-Link: https://lore.kernel.org/dmaengine/20260717223431.625EE1F000E9@smtp.ke=
-rnel.org
-Link: https://lore.kernel.org/dmaengine/20260721162822.05CDD1F000E9@smtp.ke=
-rnel.org
-
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-
-[ ... ]
-
->  	swdma_dev->bar =3D ioremap(pci_resource_start(pdev, 0),
->  				 pci_resource_len(pdev, 0));
-> =20
->  	RCU_INIT_POINTER(swdma_dev->pdev, pdev);
-> =20
->  	nr_vecs =3D pci_msix_vec_count(pdev);
->  	rc =3D pci_alloc_irq_vectors(pdev, nr_vecs, nr_vecs, PCI_IRQ_MSIX);
->  	if (rc < 0)
->  		goto err_exit;
-> =20
->  	irq =3D readw(swdma_dev->bar + SWITCHTEC_REG_CHAN_STS_VEC);
-
-[Severity: High]
-This is a pre-existing issue, but does this code cause a NULL pointer
-dereference if ioremap() fails? The swdma_dev->bar pointer does not appear
-to be checked before being unconditionally dereferenced by readw() during
-device probe.
-
->  	pci_dbg(pdev, "Channel pause irq vector %d\n", irq);
-> =20
->  	rc =3D pci_request_irq(pdev, irq, NULL, switchtec_dma_chan_status_isr,
->  			     swdma_dev, KBUILD_MODNAME);
->  	if (rc)
->  		goto err_exit;
-
-[Severity: High]
-This is a pre-existing issue, but does this request the IRQ too early? If
-the hardware asserts the IRQ immediately, the ISR will run before the
-channels are fully initialized.
-
-Looking at switchtec_dma_chan_status_isr():
-
-	list_for_each_entry(chan, &dma_dev->channels, device_node) {
-		swdma_chan =3D container_of(chan, struct switchtec_dma_chan,
-					  dma_chan);
-		chan_dev =3D &swdma_chan->dma_chan.dev->device;
-		chan_hw =3D swdma_chan->mmio_chan_hw;
-
-Could this dereference an invalid pointer if the channels list is empty or
-if chan->dev is not yet initialized by dma_async_device_register()?
-
->  	swdma_dev->chan_status_irq =3D irq;
-> =20
->  	chan_cnt =3D readl(swdma_dev->bar + SWITCHTEC_REG_CHAN_CNT);
->  	if (!chan_cnt) {
->  		pci_err(pdev, "No channel configured.\n");
->  		rc =3D -ENXIO;
->  		goto err_exit;
->  	}
-> =20
->  	chan_cnt =3D switchtec_dma_chans_enumerate(swdma_dev, pdev, chan_cnt);
-
-[Severity: High]
-This is a pre-existing issue, but is there a missing upper bounds check on
-chan_cnt? Since chan_cnt is read directly from hardware, an untrusted
-device could provide a very large count.
-
-In switchtec_dma_chan_init(), this unvalidated count is used for pointer
-arithmetic:
-
-	swdma_chan->mmio_chan_fw =3D
-		swdma_dev->bar + SWITCHTEC_DMAC_CHAN_CFG_STS_OFFSET +
-		i * SWITCHTEC_DMA_CHAN_FW_REGS_SIZE;
-	swdma_chan->mmio_chan_hw =3D
-		swdma_dev->bar + SWITCHTEC_DMAC_CHAN_CTRL_OFFSET +
-		i * SWITCHTEC_DMA_CHAN_HW_REGS_SIZE;
-
-Could this allow out-of-bounds MMIO pointer arithmetic and memory writes
-outside the valid bar resource window?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831191403.2076=
-31-1-logang@deltatee.com?part=3D8
+Sure will drop this patch in the next version. I also opened pull request t=
+o
+dt-schema fixing this warning
+https://github.com/devicetree-org/dt-schema/pull/206
+>
+Best Regards,
+Bhargav
