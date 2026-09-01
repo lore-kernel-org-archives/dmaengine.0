@@ -1,162 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF6835A3BF
-	for <dmaengine@vger.kernel.org>; Tue,  1 Sep 2026 06:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851B23A3E97;
+	Tue,  1 Sep 2026 07:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788244184; cv=none; b=Y6NVT0IHc1ZiOLEPhe3yT9grKs5cxeo/zRKl0XfoCaTV5YIAQuf6XtawsSsrLYDzLInFYir+rt1jfe7bBTV3g4FZSFyU1nOi2S19Me7lC0ktr49ck9OXEuGZGi9jLOdh//66GVFGGtYWyy5+jXJqtwqMAYZUlhW97EabMkf3OTg=
+	t=1788246136; cv=none; b=M+qtsn2DT5b354p12zCAetpmMD73TStEyzVpi4jeF/yfGV2Cih7mlCZbOxn7YQ0ijwaBQdY7O43gG0lXIYUwfxFVvSkmrm7Fwu0FEzQvEVLm1yX2ZOfjpEBxmga+a9pb452mDSXpiO8VFR75c/NgxzKDIEdzTmHXiVSRyLgWEXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788244184; c=relaxed/simple;
-	bh=Uq/XjCGSQK174YdCEEEYuXTDSZZ0YZUgzD+IKTA77JA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=MG4VxEedcjCBnPCugVpWPHi2miY7dNCpqENIPkfoRCdy9kL8QdSsg4o4vkuVGWsz8927ukbOAlnXcw5rFBGSkjDUnhyuMb0bvEsCvueQoZL+ik16zwDiI95jZt9zCAWbotrvVYRPaNHqUb7YN7SdkpfYObYf8ot88+hZs7t91II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KWWJVNYB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788246136; c=relaxed/simple;
+	bh=8NfANyTxN0qCY8pJXcvVvItKtncE2L/XnfaVfiWLtY0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L9bDF7djjnz38E6lsDblC7vi4fzgSW6sh3YGJQOsE6EJlbkg0AbPVeoKH2MGB42s9d3rdGK8Hmw6ZpGPHwPWS/I95iv5sYzx7jkUTC56ybur6N4IDmwX8isQGOB8CBacJmRFW0wPYC92+gi+Wr0UeDc0IAH/DvYyx+vNvNUw1yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Nyf6Y7q5; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KWWJVNYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2431F000E9;
-	Tue,  1 Sep 2026 06:29:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788244183;
-	bh=GyOJH4CAf7Vi86WwN7SSBWYkCke1+8nTNb0y4MvR0/8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=KWWJVNYB6D/G/kOiuoMJ47MIYuEMb9l0eYYJvPTBmy+LZT92zmBRf/KDUCRaIm4/G
-	 hXu8v9OheZPEYUJymLiTRg9Xip4dbnpj5aVxS0RBWl+D2eFWYU3NBFiXg/fwk/H3Rp
-	 Vk9sYeQGW01/c63B2SAhbtTzGU7c11xWICGHohrGkfWeuDbseD0EfYHD41TPtAgsia
-	 ftzE9PEkb4CXlxz/oXeNwAZbuld2r0zcjOR+R8t+19dD8iV3arsIhmIjF7yfdp5obJ
-	 8OwM0B79BXkdl1wsByXE2qiH5j7YWyA7JqLdCqTk9VUdOlzrB3xL83DljhMptrZioX
-	 QaAca5GoMOzRQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 2/4] dmaengine: dw-axi-dmac: Fix LLI dump
- out-of-bounds access
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jia Wang" <wangjia@ultrarisc.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260901-dma-fix-v2-2-d7f0459ebb14@ultrarisc.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Nyf6Y7q5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788246135; x=1819782135;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=8NfANyTxN0qCY8pJXcvVvItKtncE2L/XnfaVfiWLtY0=;
+  b=Nyf6Y7q59o2hd+mtXzt7MU7u8DUu1cvBAPD5icPke4yEbx9VNxP/eyH1
+   ctscnopKKOJxGSrsj0AbD90OPeV4Lx6lx9OfjQFVJbW/UQBOQoUheACdO
+   azDXb8ii2q66Ez8RTb1DhjvqXeWFuxdkQcAIs7TkPlazuh6PMuwNgg6yf
+   IzUMJx3d5TpMnmJixVv5UTe1VFUN0tB1w/+ShQYTHbzWyxI/jEUqLFGRr
+   5vwJvgpWqalChG8ppmUzyrftIb04cgjIKfqbnixuq4m6X0crn5HyBQMtn
+   G45sAdT5uV2s06O08dGmCXjPaYRwarfIn9VkhONiPZmXtQfYqDU5UoBNQ
+   w==;
+X-CSE-ConnectionGUID: vnMS5AspS4CWmL+bFaEl3g==
+X-CSE-MsgGUID: icpozkzZSqav67qjMsdX0g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11892"; a="88591753"
+X-IronPort-AV: E=Sophos;i="6.25,255,1779174000"; 
+   d="scan'208";a="88591753"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2026 00:02:14 -0700
+X-CSE-ConnectionGUID: 8h1Dogs5TeWOtcOF/vj75g==
+X-CSE-MsgGUID: RCy8PT+NRRKz5S8J5E1DMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,255,1779174000"; 
+   d="scan'208";a="265765738"
+Received: from ettammin-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.222])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Sep 2026 00:02:12 -0700
+Date: Tue, 1 Sep 2026 10:02:09 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Jia Wang <wangjia@ultrarisc.com>
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Pandith N <pandith.n@intel.com>,
+	Sia Jee Heng <jee.heng.sia@intel.com>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v2 4/4] dmaengine: dw-axi-dmac: Use bitfield helpers for
+ registers
+Message-ID: <apZ4cTZUHWruo828@ashevche-desk.local>
 References: <20260901-dma-fix-v2-0-d7f0459ebb14@ultrarisc.com>
- <20260901-dma-fix-v2-2-d7f0459ebb14@ultrarisc.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 06:29:42 +0000
-Message-Id: <20260901062942.DF2431F000E9@smtp.kernel.org>
+ <20260901-dma-fix-v2-4-d7f0459ebb14@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260901-dma-fix-v2-4-d7f0459ebb14@ultrarisc.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+On Tue, Sep 01, 2026 at 02:16:07PM +0800, Jia Wang wrote:
+> The driver open-codes several channel configuration and descriptor
+> control bitfield writes with left shifts. Define masks for those fields
+> and use FIELD_PREP() when programming the registers.
+> 
+> Valid field values keep the same encoding. FIELD_PREP() confines values
+> to their respective fields, but does not validate handshake numbers
+> supplied through DMA specifiers.
 
-Pre-existing issues:
-- [Critical] The patch fixes an out-of-bounds access in `axi_chan_list_dump=
-_lli()` by using the transaction-local `desc->nr_hw_descs` instead of the c=
-hannel-wide `chan->descs_allocated`. However, it completely misses the exac=
-t same bug in `axi_chan_block_xfer_complete()` which can lead to memory cor=
-ruption.
-- [Critical] Flawed calculations for `segment_len` and loop bounds in both =
-`dw_axi_dma_chan_prep_slave_sg` and `dw_axi_dma_chan_prep_cyclic` lead to d=
-ata truncation, DMA overruns, and NULL pointer dereferences when buffer len=
-gths are not perfectly divisible by the calculated `segment_len`.
---
+...
 
-commit 5ff010f18efeeec7fde7f85a181da39448ad009d
-Author: Jia Wang <wangjia@ultrarisc.com>
-
-dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
-
-This commit fixes an out-of-bounds access in axi_chan_list_dump_lli() by
-using the transaction-local descriptor count instead of the channel-wide
-count.
-
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index 742e08cfab435..61230d2b1c561 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -1052,10 +1052,7 @@ static void axi_chan_dump_lli(struct axi_dma_chan =
-*chan,
->  static void axi_chan_list_dump_lli(struct axi_dma_chan *chan,
->  				   struct axi_dma_desc *desc_head)
 >  {
-> -	int count =3D atomic_read(&chan->descs_allocated);
-> -	int i;
-> -
-> -	for (i =3D 0; i < count; i++)
-> +	for (unsigned int i =3D 0; i < desc_head->nr_hw_descs; i++)
->  		axi_chan_dump_lli(chan, &desc_head->hw_desc[i]);
->  }
+>  	u32 cfg_lo, cfg_hi;
+>  
+> -	cfg_lo = (config->dst_multblk_type << CH_CFG_L_DST_MULTBLK_TYPE_POS |
+> -		  config->src_multblk_type << CH_CFG_L_SRC_MULTBLK_TYPE_POS);
+> +	cfg_lo = FIELD_PREP(CH_CFG_L_DST_MULTBLK_TYPE, config->dst_multblk_type) |
+> +		 FIELD_PREP(CH_CFG_L_SRC_MULTBLK_TYPE, config->src_multblk_type);
 
-[Severity: Critical]
-This is a pre-existing issue, but does axi_chan_block_xfer_complete() have
-the same out-of-bounds access regression?
+Personally I would duplicate this to make each branch self-contained.
 
-If multiple transactions are prepared, chan->descs_allocated can exceed the
-transaction-local desc->nr_hw_descs:
+>  	if (chan->chip->dw->hdata->reg_map_8_channels &&
+>  	    !chan->chip->dw->hdata->use_cfg2) {
+> -		cfg_hi = config->tt_fc << CH_CFG_H_TT_FC_POS |
+> -			 config->hs_sel_src << CH_CFG_H_HS_SEL_SRC_POS |
+> -			 config->hs_sel_dst << CH_CFG_H_HS_SEL_DST_POS |
+> -			 config->src_per << CH_CFG_H_SRC_PER_POS |
+> -			 config->dst_per << CH_CFG_H_DST_PER_POS |
+> -			 config->prior << CH_CFG_H_PRIORITY_POS;
 
-drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:axi_chan_block_xfer_complete=
-() {
-    ...
-    int count =3D atomic_read(&chan->descs_allocated);
-    ...
-    if (chan->cyclic) {
-        desc =3D vd_to_axi_desc(vd);
-        if (desc) {
-            llp =3D lo_hi_readq(chan->chan_regs + CH_LLP);
-            for (i =3D 0; i < count; i++) {
-                hw_desc =3D &desc->hw_desc[i];
-                if (hw_desc->llp =3D=3D llp) {
-                    axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
-                    hw_desc->lli->ctl_hi |=3D cpu_to_le32(CH_CTL_H_LLI_VALI=
-D);
-    ...
-}
+		cfg_lo = FIELD_PREP(CH_CFG_L_DST_MULTBLK_TYPE, config->dst_multblk_type) |
+			 FIELD_PREP(CH_CFG_L_SRC_MULTBLK_TYPE, config->src_multblk_type);
 
-Could this cause an out-of-bounds read on the desc->hw_desc array, and
-corrupt memory when writing to hw_desc->lli->ctl_hi?
+> +		cfg_hi = FIELD_PREP(CH_CFG_H_TT_FC, config->tt_fc) |
+> +			 FIELD_PREP(CH_CFG_H_HS_SEL_SRC, config->hs_sel_src) |
+> +			 FIELD_PREP(CH_CFG_H_HS_SEL_DST, config->hs_sel_dst) |
+> +			 FIELD_PREP(CH_CFG_H_SRC_PER, config->src_per) |
+> +			 FIELD_PREP(CH_CFG_H_DST_PER, config->dst_per) |
+> +			 FIELD_PREP(CH_CFG_H_PRIORITY, config->prior);
+>  	} else {
+> -		cfg_lo |= config->src_per << CH_CFG2_L_SRC_PER_POS |
+> -			  config->dst_per << CH_CFG2_L_DST_PER_POS;
+> -		cfg_hi = config->tt_fc << CH_CFG2_H_TT_FC_POS |
+> -			 config->hs_sel_src << CH_CFG2_H_HS_SEL_SRC_POS |
+> -			 config->hs_sel_dst << CH_CFG2_H_HS_SEL_DST_POS |
+> -			 config->prior << CH_CFG2_H_PRIORITY_POS;
+> +		cfg_lo |= FIELD_PREP(CH_CFG2_L_SRC_PER, config->src_per) |
+> +			  FIELD_PREP(CH_CFG2_L_DST_PER, config->dst_per);
 
-[Severity: Critical]
-This is also a pre-existing issue, but can the segment loop bounds cause
-data truncation or memory overruns?
+		cfg_lo = FIELD_PREP(CH_CFG_L_DST_MULTBLK_TYPE, config->dst_multblk_type) |
+			 FIELD_PREP(CH_CFG_L_SRC_MULTBLK_TYPE, config->src_multblk_type) |
+			 FIELD_PREP(CH_CFG2_L_SRC_PER, config->src_per) |
+			 FIELD_PREP(CH_CFG2_L_DST_PER, config->dst_per);
 
-In dw_axi_dma_chan_prep_slave_sg(), if len is not perfectly divisible by
-segment_len, the loop terminates prematurely:
+> +		cfg_hi = FIELD_PREP(CH_CFG2_H_TT_FC, config->tt_fc) |
+> +			 FIELD_PREP(CH_CFG2_H_HS_SEL_SRC, config->hs_sel_src) |
+> +			 FIELD_PREP(CH_CFG2_H_HS_SEL_DST, config->hs_sel_dst) |
+> +			 FIELD_PREP(CH_CFG2_H_PRIORITY, config->prior);
+>  	}
 
-drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:dw_axi_dma_chan_prep_slave_s=
-g() {
-    ...
-    do {
-        hw_desc =3D &desc->hw_desc[loop++];
-        status =3D dw_axi_dma_set_hw_desc(chan, hw_desc, mem, segment_len);
-        ...
-        len -=3D segment_len;
-        mem +=3D segment_len;
-    } while (len >=3D segment_len);
-    ...
-}
+...
 
-Does this drop the remainder bytes and leave trailing descriptors
-uninitialized, causing a NULL dereference when set_desc_last() is called?
+> -		reg = (DWAXIDMAC_BURST_TRANS_LEN_4 << CH_CTL_L_DST_MSIZE_POS |
+> -		       DWAXIDMAC_BURST_TRANS_LEN_4 << CH_CTL_L_SRC_MSIZE_POS |
+> -		       xfer_width << CH_CTL_L_DST_WIDTH_POS |
+> -		       xfer_width << CH_CTL_L_SRC_WIDTH_POS |
+> -		       DWAXIDMAC_CH_CTL_L_INC << CH_CTL_L_DST_INC_POS |
+> -		       DWAXIDMAC_CH_CTL_L_INC << CH_CTL_L_SRC_INC_POS);
+> +		reg = (FIELD_PREP(CH_CTL_L_DST_MSIZE, DWAXIDMAC_BURST_TRANS_LEN_4) |
+> +		       FIELD_PREP(CH_CTL_L_SRC_MSIZE, DWAXIDMAC_BURST_TRANS_LEN_4) |
+> +		       FIELD_PREP(CH_CTL_L_DST_WIDTH, xfer_width) |
+> +		       FIELD_PREP(CH_CTL_L_SRC_WIDTH, xfer_width) |
+> +		       FIELD_PREP(CH_CTL_L_DST_INC, DWAXIDMAC_CH_CTL_L_INC) |
+> +		       FIELD_PREP(CH_CTL_L_SRC_INC, DWAXIDMAC_CH_CTL_L_INC));
 
-Similarly, in dw_axi_dma_chan_prep_cyclic():
+Unneeded parentheses.
 
-drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:dw_axi_dma_chan_prep_cyclic(=
-) {
-    ...
-    for (i =3D 0; i < total_segments; i++) {
-        hw_desc =3D &desc->hw_desc[i];
-        status =3D dw_axi_dma_set_hw_desc(chan, hw_desc, src_addr, segment_=
-len);
-        ...
-        src_addr +=3D segment_len;
-    }
-    ...
-}
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Can this unconditionally program the DMA to transfer segment_len for each
-segment, exceeding the requested period_len and reading or writing past the
-end of the provided DMA buffer?
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901-dma-fix-v2=
--0-d7f0459ebb14@ultrarisc.com?part=3D2
