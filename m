@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6771220687;
-	Tue,  1 Sep 2026 12:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1873B05A3;
+	Tue,  1 Sep 2026 14:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788265160; cv=none; b=ZPWoglxhXqFOjyncGmAvNDr+lrB0Vx2apnOZU5UaRH3li14k/AQo4BP54lF5DzF2a+WNvqniYBpaOxN9OvpxETPIjxLVqLUyQ2jNXefRXYdOBL9lCwTsUqJ++wQ2SJH1/cXEuqDopI9YeFrPvmuvXFmcBQAmZZsqfJAcMmkDc64=
+	t=1788273331; cv=none; b=DSa5nnIA1coJW0G4NRJueHZQdyo4wLBfxXwLp4ePIGra4i3xNlHufjRQEuyD5YIQKCB8TN88QA/OKAwaDlGLgjU77IzYuSwHrjhQiNjELwaEMZWqwZ5SaXc+mQyaNbezdjsOljOCeJ3pD4ZlundMdLPiXT3KToMhtv82F2ueb/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788265160; c=relaxed/simple;
-	bh=0noFde3zGfUsqmruiJjybtClQanznrxoEUsR5y4F4cM=;
+	s=arc-20240116; t=1788273331; c=relaxed/simple;
+	bh=vufRXJ01BTUJlLwmXt4PlX/hW7twEPT3z39AfLUnXMs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LsXNIkyMHSsSvBKAe6ALWAWFIYsTfGE1A4ro2niShE7GLpvRANfw2/yj6vsBAvFkvom02FRFxnt1DreIWmeKFOsy9tdVC5pGwld3W1+kbPozPx8zjCot6D14hupJu1rbh3+28xtvr2fahlHaiduihIl3v9k1g8x9xU+Yq62Szhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vc63cB67; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=fu01QFU+eJNW3Z2dYbnlmRY/vah/x3tX7pWS+f8969TuLmL3wp0Er9PkjkbF/5u/3roVPiFfUX5gq0oChUtw+BUXehIR6G1tw8DBAFJdEpaxyYqPQQ8lUqHz1zSPB9+Hzy5tPI8s+oKs5uZss1cah+ODDIBX9SnRe+yoYHtCuzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYnuXRbZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vc63cB67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0ED1F000E9;
-	Tue,  1 Sep 2026 12:19:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYnuXRbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944D61F00A3D;
+	Tue,  1 Sep 2026 14:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788265159;
-	bh=as4Tmo3cFo1ViIaVNX6sWSjmrWTBeB8V0y9+kZYu61g=;
+	s=k20260515; t=1788273329;
+	bh=Hx37cjE67OI773W79ogB4Hh5MXNOEETSnbXyWOUlMVY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vc63cB67Vz/jl3Lf46PQSP+HA3We+q5o0KAfW/lRfhRslKTHQKtbpnGp/rnGhcHIv
-	 xNUU5idYv49T9lg/dDrUXVCCfGU3Zk/zOAR4SerMOX4IRIyHwa4h9YGc2CH6E4UQpo
-	 1i41SIQTPlHaGDUoHHzvTycuxUTF2Iy5AceXEpf59iOoT3GItrDON+IsTtl+dzuOjv
-	 zaemLL4R5SkFniRCwG9I+Py5I0i8Q/ZjyCN9gmc6+Bgqyg7AH8NzaxvtGNXmMMGaAK
-	 f8tO5g3TF/oPR+qydMmEaRK78aLEiOYyF/LdBowaVCPj9ngZtugjYQndLq6FhKIv06
-	 stwv3/wg+X1LQ==
-Date: Tue, 1 Sep 2026 14:19:01 +0200
+	b=oYnuXRbZ1cPaxiyS8r6G07kFiP0Bafl+nijzXo738e1IBWUljRd8TncTasjS6+fLO
+	 QX0GY3d00VhQ/0QL+8AO3ulpfVKaoIQW1PK9OqEawMmn4HnPMpXJbjW1MyqED3g99G
+	 wv6I8Ut7d7Pe9rl4ZbrOxbJuiAX/PMN2K2v+dKJnd2dv9qInH574t1uuWq3cZsSUwZ
+	 HGwBSeKfEXCPWo2dzIzYA1Zr8CKKtJmx7AteAkRi0kqv6V1kQat8Jk8ASqU/8LsIYq
+	 ieykBFfA5IzE/9gXiekpnMk8wdh/WnKJbqJEOncDwE7GsFVksye+XJ3Miovnp6uNYq
+	 nKffGYN6UPR/w==
+Date: Tue, 1 Sep 2026 16:35:18 +0200
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Devendra K Verma <devverma@amd.com>
-Cc: vkoul@kernel.org, frank.li@kernel.org, den@valinux.co.jp, 
-	dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	michal.simek@amd.com
-Subject: Re: [PATCH v2] dmaengine: dw-edma: Cosmetic Changes
-Message-ID: <dx5jvko7ygrqugzkt3k74l3d7lk7iauikmxrzuhvn2b4bdv5ub@s2l6zl3alx3z>
-References: <20260820091314.684871-1-devverma@amd.com>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: Frank Li <Frank.Li@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH 09/15] PCI: endpoint: Add pci-ep-dma helper for exported
+ DMA ABI v1
+Message-ID: <bgzesn4sqdlqdb3n3djkyed6g7l3ebi6ljbteqhirk2ip2ieou@t4xsvdmcjhdv>
+References: <20260312165005.1148676-1-den@valinux.co.jp>
+ <20260312165005.1148676-10-den@valinux.co.jp>
+ <3ef3b7wdwpf364teperxcjc2leycxwke77cejjfzd5w4pnbmik@vlcbizvbxv4m>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -44,19 +46,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260820091314.684871-1-devverma@amd.com>
+In-Reply-To: <3ef3b7wdwpf364teperxcjc2leycxwke77cejjfzd5w4pnbmik@vlcbizvbxv4m>
 
-On Thu, Aug 20, 2026 at 02:43:14PM +0530, Devendra K Verma wrote:
-> o Arranging macros in ascending order as per the bits represented
-> o Cosmetic changes, typo corrections
-
-Nit: Reword the commit message as a single sentence in imperative tone.
-
+On Sat, Aug 22, 2026 at 12:41:32AM +0900, Koichiro Den wrote:
+> On Fri, Mar 13, 2026 at 01:49:59AM +0900, Koichiro Den wrote:
+> > Add a generic helper that packages controller-owned DMA resources into a
+> > peer-visible BAR slice described by exported DMA ABI v1.
+> > 
+> > pci_epf_alloc_dma() queries EPC auxiliary resources, delegates the
+> > requested DMA read channels, builds an ABI header in coherent memory,
+> > and assembles the BAR region list covering the header, controller
+> > register window, and per-channel descriptor windows. If the controller
+> > control window is not already BAR-backed, map it into the exported slice
+> > so the peer still sees a self-contained layout.
+> > 
+> > The first ABI is designed based on the DesignWare unrolled eDMA model,
+> > but it is intended to be vendor-neutral. It exports delegated READ
+> > channels only, which are the channels the host uses to send data from
+> > host memory into the endpoint.
+> > 
+> > Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> > ---
+> >  drivers/pci/endpoint/Makefile     |   2 +-
+> >  drivers/pci/endpoint/pci-ep-dma.c | 342 ++++++++++++++++++++++++++++++
+> >  include/linux/pci-ep-dma.h        | 130 ++++++++++++
+> >  3 files changed, 473 insertions(+), 1 deletion(-)
+> >  create mode 100644 drivers/pci/endpoint/pci-ep-dma.c
+> >  create mode 100644 include/linux/pci-ep-dma.h
+> > 
+> > diff --git a/drivers/pci/endpoint/Makefile b/drivers/pci/endpoint/Makefile
+> > index b4869d52053a..94824f3ed5a1 100644
+> > --- a/drivers/pci/endpoint/Makefile
+> > +++ b/drivers/pci/endpoint/Makefile
+> > @@ -5,5 +5,5 @@
+> >  
+> >  obj-$(CONFIG_PCI_ENDPOINT_CONFIGFS)	+= pci-ep-cfs.o
+> >  obj-$(CONFIG_PCI_ENDPOINT)		+= pci-epc-core.o pci-epf-core.o\
+> > -					   pci-epc-mem.o functions/
+> > +					   pci-epc-mem.o pci-ep-dma.o functions/
+> >  obj-$(CONFIG_PCI_ENDPOINT_MSI_DOORBELL)	+= pci-ep-msi.o
+> > diff --git a/drivers/pci/endpoint/pci-ep-dma.c b/drivers/pci/endpoint/pci-ep-dma.c
+> > new file mode 100644
+> > index 000000000000..2a996f9b1424
+> > --- /dev/null
+> > +++ b/drivers/pci/endpoint/pci-ep-dma.c
 > 
-> Signed-off-by: Devendra K Verma <devverma@amd.com>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> ---[snip]---
+> 
+> > diff --git a/include/linux/pci-ep-dma.h b/include/linux/pci-ep-dma.h
+> > new file mode 100644
+> > index 000000000000..0ef6f9eb8593
+> > --- /dev/null
+> > +++ b/include/linux/pci-ep-dma.h
+> 
+> Hi Mani, (Cc: Frank, Niklas)
+> 
+> Perhaps it's time to reincarnate this series, with much of it reworked.
+> 
+> Following the discussion here:
+> https://lore.kernel.org/r/fg7cma2ccvdgjgcref7qa4q7ocvvume5dteekedikszebkq7rd@uhrjfp3nmmwh/
+> I am now thinking of dropping the generic pci-ep-dma helper and
+> include/linux/pci-ep-dma.h altogether, as I understand the direction is to keep
+> the DMA export within the vNTB/ntb_hw_epf path *as much as possible*.
+> 
+> The old wire layout was consumed by pci-epf-vntb.c, ntb_hw_epf.c, and
+> dw-edma-aux.c (see patch 13). That is why I put pci-ep-dma.h under
+> include/linux/. For the rework, I am thinking ntb_hw_epf should decode it and
+> pass only the resulting resources to dw-edma-aux. This keeps the wire format
+> between pci-epf-vntb and ntb_hw_epf. At that point, defining the same small
+> layout in both files might even be preferable to adding another shared header in
+> include/linux/.
+> 
+> Mani, does this direction look acceptable to you? I would also appreciate your
+> view on the linked discussion when you have a chance.
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Sounds good to me. My only concern is exposing the remote DMA functionality as a
+new EPF driver. As long as you keep the changes within the NTB drivers, I'm fine
+with it.
 
 - Mani
 
