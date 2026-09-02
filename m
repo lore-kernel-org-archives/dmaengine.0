@@ -1,65 +1,64 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013051.outbound.protection.outlook.com [40.107.162.51])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010001.outbound.protection.outlook.com [52.101.84.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB533438A9;
-	Wed,  2 Sep 2026 15:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549103D9DCC;
+	Wed,  2 Sep 2026 15:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.1
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788364087; cv=fail; b=Zx4BHQuCJWOCMeCYcYymDB/bTFJ/HweZElPJfp2DrucMBw7F4x0Om2LKNaBFfd5p8xuZ/Rn/FZE8vYPrA7Qi4fcpnzVdcwJCAVZ0X/pKLPFyuMKeOhwc84nyPTrmpCcnEgZeuWjzv/AE18FwZQ+eJELRjHkyD7lQcsa66XrLFVU=
+	t=1788364181; cv=fail; b=VkFaQINNTkZ0pFykupQfiepqu2mxln2k12qLI1+P1JWIBovbglY6K6Yz6M4bEWgMkU2No1fgyjl7w6oQBX+CIMZIaxuC6OOM2k+qVFoP+dZryCA//vhQEerAQgzI21GgIjqM5KIS5+Xk/HTM3YNjrXmaRG1WIKCgp5wl/wby0jQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788364087; c=relaxed/simple;
-	bh=F9XFVOHVX5xNj1CX1J5/1tbeP8LTJ4NVKIz6UO2EYgA=;
+	s=arc-20240116; t=1788364181; c=relaxed/simple;
+	bh=sYRIa5E+HetCu1TR/Ih9oqLFu06+/d39WbYZYqmOhm4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=eNBM1+rBOBInZBXbD0ugplbLhKum/RLnx3VKiV9O+oLsvNADuQCesZzLVxt+Cqtue1SlOG211cM5xFK3N33MLLO6oRxfXp15JqeOM2t5kqMSgN4irYS+Oxg0jWD59b0aHgac2+w9kEchNMLT/Et9TA2mQf8EQZ1/I0ylEjCSMzs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=lTTJ2wJf; arc=fail smtp.client-ip=40.107.162.51
+	 Content-Disposition:In-Reply-To:MIME-Version; b=W0pRsiEVgiTTgEHFXfz4xVk+TSUL0XNXmhAg5QOXKnqaUFq2cg3iHNXpkE2ohxQYb0YkR1QPo0TFrFGBix9QLmM9JxLFP7hOOkBP5ePajU1TLS2Z5ifPc2nIzdqnGRbTx4gufEHfEO8DxbQ9oe4idgC3S6AVDJPJlZrSjkd+Y9Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=cZbyE5qe; arc=fail smtp.client-ip=52.101.84.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="lTTJ2wJf"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="cZbyE5qe"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yZAckbMK+/xecMdnoVZymAba8Ci0fBIBvDMry2j7NQjAok9a9vGRQICJ9gJPux6vEjRNoAtCYqbzcZYyXZxPPimrF4B6mtwoWjjmq2C5eVMYHEfw+VP+QFTb7MeoXXz3oqFiWvuzxHidwlSSDEshV0mqHukWgjoOAYB1JcxvzW8Ngc/bHfU5X50zPZJyqh0S464yaKeJ4FmGdWtbfi/l1rtJxzv+ZJBI7u8hWNhBxgFJBKFLkUZDhVdp7YVEbx64GozYiYgQg1+ecOjauF6lmSXgPi7lAmXRFA3DfN1D22QTaiSpOP19+S3F/p1OYyxqQi4lsxXfFI7F5DSQT+RYTg==
+ b=vgITeIjWn8tx3GxptRM0cSlH77rBDoFCxotVncIqOsyU7SO6IZHmrA5azZsr9JwhnCsjwMo/Y9m9bOFWv6phrvo1BVNYgpmQFzz82k7vPxQ5I+dKDIluHp0FfcfMx5FTUi6oJb/esM5uEq3pq/KWFQ5O00Hz4rUOISdRn27TFU7w90cAklXj5Yp8MUKxQGkrvE9id9lMx+svtPD+hWCdm/txDgvzfBtBJfUbbDwjK7WJ+HF21yI3ZqbKnDiZ+dHhzQWqFD1s39CAQnZCiG81iCDwk5/kN5pmnAooepZx437cSYNuwC3NaPzTCHhEwp5PrRGti2whPAE2hnA5PRTnrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VpVxjIgh1sJ8siH4MabXOeI7ltH2TIrh04kKBHSBaFM=;
- b=I7mmHJGUdF4QC1BERfEo55bL3+q1PdZvUBfSJNTXzK6zGG/itQ/DpJDCDI3GrZwskVOBR+wIXyUKZGLKXgu91etxUsgN6G7XstOu/N3KeQ0DkuvmCLLq8RkAt/cBaOw6TKL5BqDSOXTEZU8z3qUaMenLX+viwRKk/QYh4DQmO3a2eQ9ne8nuKzDJfRjjsnh5MzRQSnpoMArOXt/NxAyb1nGgYiq+kL1gW5U8SbImebYxbnItuv9FvqaEI/mW/PwQTYfDy725tj+fYCQs6M4p/IS04EeeauVBgwYxIr278jvVV21WwrrXCYf4NqqSgynhCHDCcun+o3bTESdaVDTZyw==
+ bh=HmNo1KMOhClFLvMcrHuBS1dWT2xiiQVwtuczTcoMaUM=;
+ b=CvjDJ0NUa/UpcCl8MIuENW9iDn0FDdv7ZNTqZJOA3w7blkRMsdnnMOhGH/XYfrkEGghjmU3ZjMjcl8Alvk0FoR0Tv09fIuIkSjhua77NcWZLSJi8T3TrdrESkkRUTVOuIMV39CDJ0N0wM1RX47xNZEtqu2uRV9d/sNDF5XktM04kZojcrsZ1dkzKlktwnEArcYveeun7KzpO7pMAyjxEp65QwvstA21qFwuCV2+fRVqY9ivgT5pLimfVegygB6dYPnrHZcwWUWPoTyeaZ3JLhJaiL8t06QJNRJhGEjRhKYNS+L1cAmbchYOMEgpg0heIc9r4nYohECvjBWj07rNkPQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VpVxjIgh1sJ8siH4MabXOeI7ltH2TIrh04kKBHSBaFM=;
- b=lTTJ2wJf/zD6XwEPZ5DB4eYnOcFaOZFNOnuBJhMTYZDlKvLFhrv1y5VIyljpDMgzrix/fW3c9kC9yjiZBFxHu4t55dl6c3BqsaHf2ayexdywoq0BuJ566s/WD5AIMCHx7j/7jr70sKk/gwD/5hX3oumrUE2uNlyLzLj0fekbZIozfZnuoTgs0yogptxNIPbcej+yF9qO/v+qQ5Yqw4hj0/Gjdwb0D/J3czJiJrr5WnozIksrViv/OV4kxagnEUuyRQJS60dS2q3raLdiNRcKcOXewwuac2ZW4xYRjX4DbmbY3ZsKGTyXXe5W4hFi13f2OwmuGbAmZkC9+oUgDAT7kg==
+ bh=HmNo1KMOhClFLvMcrHuBS1dWT2xiiQVwtuczTcoMaUM=;
+ b=cZbyE5qeG2c8jB70teiV4ueZ7/WYy02i4R5N9HCsAEGZW9spTUVsDuT4lKCxw5JQ7XVcV+HGPx64Hl1tCUO2rudNTleXqOSpevAWSsJ5EfRrWVNAtZXh7CJJjCDnpXcbhHc6ZF6oM2H95JXZl++bgSIMbp/HlvD+tCOcSmTmWgbief1NVCJTF7T+eVkTq7QTJbOqj0mYik1mbq3yVbsgnvQty+0H5V3N38Zhds2eep3rtNc+HGz2EtXnP3SLJVa3ddT5BLTBPS0p9Q2dcmvIP+xzqcFan//qjcS6/wEOQ3nFPI5jqk4ebxwjwsg/Ko8gqPylitPYYOzZPLtPADB73w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM0PR04MB7124.eurprd04.prod.outlook.com (2603:10a6:208:1a0::15) with
+ by VI1PR04MB7198.eurprd04.prod.outlook.com (2603:10a6:800:126::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 15:48:01 +0000
+ 2026 15:49:33 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 15:48:00 +0000
-Date: Wed, 2 Sep 2026 11:47:52 -0400
+ 15:49:32 +0000
+Date: Wed, 2 Sep 2026 11:49:24 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Allen Pais <allen.lkml@gmail.com>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>,
-	Sinan Kaya <okaya@kernel.org>, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 32/34] dmaengine: hidma: defer callbacks via channel BH
-Message-ID: <aphFKIkJXWCO5ixx@lizhi-Precision-Tower-5810>
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v3 00/34] dmaengine: migrate channel tasklets to WQ_BH
+Message-ID: <aphFhDMOmtTtmoeY@lizhi-Precision-Tower-5810>
 References: <cover.1785183549.git.allen.lkml@gmail.com>
  <cover.1786384168.git.allen.lkml@gmail.com>
- <702687c28f440bf017c6e57f630bb65d22d3b217.1786384169.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <702687c28f440bf017c6e57f630bb65d22d3b217.1786384169.git.allen.lkml@gmail.com>
-X-ClientProxiedBy: PH7P221CA0018.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:32a::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <cover.1786384168.git.allen.lkml@gmail.com>
+X-ClientProxiedBy: PH5P220CA0008.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:34a::6) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,124 +67,236 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM0PR04MB7124:EE_
-X-MS-Office365-Filtering-Correlation-Id: f6863f44-7c82-4d24-1c97-08df0909911e
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI1PR04MB7198:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3a391715-3e02-4e7a-8287-08df0909c789
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|19092799006|1800799024|23010399003|7416014|376014|10067099003|11063799006|4143699003|18002099003|22082099003|56012099006;
+	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|366016|11063799006|6133799003|10067099003|4143699003|22082099003|18002099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	Q6t7kWsbqVTTy5e9bxhdJNjKoUUnt/59zuPwOhTgGCKHCFqadYdotf3ERQ19E4liEBPaTOzByYvRiAuGibF8ganV35petjK76uefz1ySQKwgd9KSutvsGSzepD4ts+WRf1BonBtm5bTh0FqJzDzrgoqAgyRuWDyIAt9WH7ysxSQmcgLoFmJYGCE8w3A2Z4oFfjCMZWUr0XqnZMxmCpIhmM5B9ScVrNaGlueYmOST0XlJU9WB8WhsAlbNJRdD4TCGrcecSFQfhDq/Ki7g3RlnRa/4n04a32VoZtb/V7cOC1860ZYBfhyg+zwgxOfEOZz/CCPYWR7dHia6vRJqatbq+ea/0X5Ps0XdhtP8xZMQAyGVrLHmrNDQN7C4cHJqOdu31NdU9uq5emJQJvpwEeUNEz+LZ3c2HJ7s9wVzR4IXBs9+K9AnrosVldC8OV/QP20lBM/IGTOYik2AA6d6uyHsOovoaKOq4ltXJ6vtPbkPYYEgfAcmr1L5vJgUtc3MBRepN7/aYCpQkv+FCJbwE07CPscD6Pp/mAgT/sGpfq774PYvzRgWUsPXivf8mHoErK8GXVRore6pQc7ZXtEHO07grdexxxCMRXSSwWKD757Q5ukIjT/5csvsihQzRWsrdKMzRN4dlQzCfX63CdJuojdcfOGtnxuz+5k4BsSIui5Rz78=
+	t9qulI2gVfa+Fpg4KtiJ1Y4hbrxGfZBwhid+KcjwLD80ZEQYIdRnLMCw95J1MTMCpK4uEUbaQCXT0ltaJNmdvXwryZ7pgBTrXlRcCkQo5s1nXcw8d5zfRUTgtZXFpHWZaDHlnq8NaRwGMz3F6Wey86oUpLQP6sdec+uVk1PTfL867ELogQki66WGKt4nhZYxgHQXKurgZ2Ce3fsI2lqbdtmIx0xx8QltNN3tHYkuumXOh9O4/wjZYLJ+bFDZ8FW9d+M04LCTIXbka3D871yPLc4EqmuI5Tijs6Ys5mZTt+8awvnCVPCoSQTH1hkoMcX+azVJgfa2ih4BdbeALDrpiZGldgHyU1Th72xzVtnX9/2U7LjMSzartg7uaOIVwhhx33h0/rJwexcOnUkySdsGQcSdw3c0o+S98f/IBPXzC1nRMbeE1pSt877gH/icP4N+Y59bFvMxNkmtGGf9Fa2tkIZZIAwM+B4caUXPgcPD8yvbFpjfrIaQ1+XIm8YLpegOJ0y3fjEQ4nt0gubWVSvizw2u7gkXGFh/n6Y4jkTIbC7prQuOXKxAj0XQWZNlynOoDhwmZ9S6mwDwBr0BinVAVaAJcfQ7e2A4DuMAW+3tCZ47rdcGOE9EE9h8KaTfGC2rx/ZY3tZ8U0Q0RS5Upph/Pm24zU2XWLHDiZJ92EgSnaM=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(1800799024)(23010399003)(7416014)(376014)(10067099003)(11063799006)(4143699003)(18002099003)(22082099003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(366016)(11063799006)(6133799003)(10067099003)(4143699003)(22082099003)(18002099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KGkYBUHztWZiF1RYl6AMK/EfJs58AbSO7gyz55aeAYaVw3bYlEX28xYQCA6U?=
- =?us-ascii?Q?wr4B6MeUNbCCWo1eU4hs6HkBa/fymH1hRqlfVuvP21TvEO10kngu9qtt/79/?=
- =?us-ascii?Q?SVm+DJy+/EVRnrlXVd5QvvYEBEFIK8Ezhl6tTtwpgy/MVFfo2qqN8RhjMl0a?=
- =?us-ascii?Q?ZeibivXnW8fz0zzFkogXpybc/dPEkdGfGVPh2OCXQXQWukxMRR6iYW2iZupE?=
- =?us-ascii?Q?lQ9KezfOdqwhOrZVGsyzhEHVNHE0OB2EMb9T39DibC9b8MJK0PyCNcdyuwNR?=
- =?us-ascii?Q?v+EDUph7Xn1l+N9uMWEoGvD8WhurvRZ26EdW4R8Bu4E/f6HE+5sxsYovV2Tv?=
- =?us-ascii?Q?+yrz4SiDRe5CDGiKLf5fZBP9XuHAhHkmZRsuoQiw+knSPBVzDHbwy5p0wO2g?=
- =?us-ascii?Q?4c3MpK0vdd+OI5+hKHyZjn747bqezYiPqUfON3e0yzcXULoKqsydBAyxX0zk?=
- =?us-ascii?Q?aWVKJBXMFOqXEMjJDTJlXr1Fj4ZFwKVzC/dU4UbXsNRjcPdzb0LmLtSD5bYU?=
- =?us-ascii?Q?vIowlILalFerFJ1myU0Swr5C6NQyN6YRBXldnuhLYGGzqg4PLDYz/mTmSvBe?=
- =?us-ascii?Q?kgqrNrC0Won49lEzlUvc3iFw/QWkUm3UBa+6AuXs76GJUSVtiV9TATMF2lZg?=
- =?us-ascii?Q?TWbYR3IFkHDTFjcyMMWp6DEDI5urw44LfqkDtxEgNpfUvt36m0U7tq31LShs?=
- =?us-ascii?Q?Q5PM5nQr9BlWUdvKOKvNPAKgwuVlWosdTeA+ICYHn4yVs63FowM4XZ0TTthu?=
- =?us-ascii?Q?M+Tu0J0DNHjsJmIicx0CYH0jsmlLThvxUGWLrcqoA0VbgusleKxzlHlX4Euc?=
- =?us-ascii?Q?Njt00TNsdwoqW+dJ+Z4f4cOCO1o3SZCrQAqcM2z61bRelmw98kKTCD8Cn1n5?=
- =?us-ascii?Q?xMW7Q5q2NMDkuHCMRJU9sM2WqfE82p9HNT+8yAC8clrHbz99PidtCGZ27gvC?=
- =?us-ascii?Q?+S+um9Pq8xLPUaDLEcjKexQJC3l3MTPwrx1AcucwySPYN6CStQZ8j5YwSEg9?=
- =?us-ascii?Q?HwsGaiTYXfMrYdn06krrJeQwYEnTJefpMHTIe97KPp8PzhEDDLo7U6DapSym?=
- =?us-ascii?Q?vUjP+GK6hv6yFAhJROKHn5VT0SCp2bkQUMYTeuUqHXSx+/B2QjZ3/L+KuxKZ?=
- =?us-ascii?Q?/GWhhGrER1e1OFHKvRq/eaNA9TiqwLmasZ7ewStlfKNPH3I5RqqkcQS7M/mY?=
- =?us-ascii?Q?YBwNYIhx6niNXJLPqlyKW2TUiYGB/dqHODiTfoMszB1v+XtXCKzkB2s5ffv3?=
- =?us-ascii?Q?vBTqArYNdumsUcChagp+vzb2DGt1EDmrWJGMveZW9DSvVtD8um4qJgsYTnje?=
- =?us-ascii?Q?6aHQq3FSr7QhSgjUXzUhQbX87A+0v6uyg6j2DB0JsaD4eyWGb8zFaRD+GxwA?=
- =?us-ascii?Q?gwlWnZihaLtYO3A6RPQr0FNchHkLMA4TI5gsJCpjgcI0UCmXHHDP/2khgGW7?=
- =?us-ascii?Q?b4+KieNn8ow8SWkk6tlquD8YwZQANfwX1Ym06leQ0VxipFg25jQutPRnsL2a?=
- =?us-ascii?Q?XNWWoI4/en5cPbma4ssI8SgH5sygfA/4bJD1DDxNhpa92ShpM1r1nr7ZUIQi?=
- =?us-ascii?Q?Jhg6bjJnAynMl7PnPPsc1I3YcxoL5zwyawOlO9bQ2x19gCSEcaRGpImcvgXP?=
- =?us-ascii?Q?3w8Ei1Kt6AqhXMgZX+q9S5/7LuuqfCkWqJY5uZP7xd2hU/EHj2mwaTf4HgYF?=
- =?us-ascii?Q?HY/Js4kbsYKl+jO2hZcNOTJMP1/fMBVe4wHXH+2jDre52S1vtyLAvJWt8di7?=
- =?us-ascii?Q?l4soPU0ARDFC9ecWHs5Rv43RZaFnN67AWWB+O5lITlBjHo4IfGtD?=
+	=?us-ascii?Q?QsTrZIpPJVG3wY8aV3StfQnW3GVi/XzLc9uK4t3v6RSo7sJ+pxBpZV7l4xXB?=
+ =?us-ascii?Q?oJg61556FukSahxfDb+g1iiTXj82cGqu7R8+yDL7qK9cjdEhxOWRd9t4Qu2b?=
+ =?us-ascii?Q?eK3OqfPD8M71pwEiWNhpqvbVEObVNOrnrh8sXGmAJln3bFOEfR9DsF7SltTh?=
+ =?us-ascii?Q?N+JusU8ikDBQPveRbiX1QOZiKvAypiTljtUnNsJJNSSNpCMN86KemFdWxlGY?=
+ =?us-ascii?Q?flER/13O+jnDIX6/OwWGKLtutLp5vx6v8kjijhHr5NT5r4LSiUWVrJWCOGNM?=
+ =?us-ascii?Q?5csY+vxLclwdYSSlubeBoyxRo9kPWqpPpch+Yai/fed+8JLPmk68SfjHfgM6?=
+ =?us-ascii?Q?b7QFAzIe30572PuGQYmFBfMEBXv/6ZQkgayanuxRq926G6F23XjKqxt/w2Ga?=
+ =?us-ascii?Q?MXrv8NNixV58BL16Y1aU93oKhtZauoKWMsQVKO3RDy4llzApesAhxk13gfEo?=
+ =?us-ascii?Q?4EAEFQgc/V8CT4Dz2e1cmpn8BSLCCVPG3m66mvHZ+wDCHu/jGA8OLOBesUHn?=
+ =?us-ascii?Q?bWyzWZoAezk5gr9SuhEglsFNm9RNJnL2PvHKvQ1RDKFR0XiU/AXhRRyIyuuX?=
+ =?us-ascii?Q?yN1qaLt8NO/1fis2+UhMNDfhAP3VPA7/ToreVK8pETbWC//IfIJhuOuorRta?=
+ =?us-ascii?Q?Opx1L+I3nacdfUptnTJPkrIrUSd75nW0eQ7ogUx6hHiSMZkhPePYwdqoA9Lf?=
+ =?us-ascii?Q?3mBN45tUeEWxR73lUnZ7C+aTgdRrntp4N9hytX3ecgsXlbrxDR+caj4dE5sL?=
+ =?us-ascii?Q?ylCk1H6nqfBw2Wt/Dph5whNB55siyvOHnnIzMMcvcqNF6d2DeIpk22euVO36?=
+ =?us-ascii?Q?sSGQtSzROVg9hEfvkcsvJ7DMKr9K7nmQ6RA5g4RraxC+24azCYiSSfbPrwvn?=
+ =?us-ascii?Q?O1b2R3exA/XLPxwImSVgNt+dbViU7vJF4Am0ZtW/A6xyqb48zqt7azNI/MPc?=
+ =?us-ascii?Q?yxlLY8JzVrzQctWRtL4E1wDKLEBLwZn8K3FGf6ht77bKQauzoNIJJh3TEBRL?=
+ =?us-ascii?Q?AxlNjq6I3AOAu4VccK+g35cijC8CA9kOItTdcJ4VuhVUXmDfTMSSZBU7sse4?=
+ =?us-ascii?Q?Gq9cpiLew0wPrOkreiQkQUB3e8zSxf3affj+GBSPoWTmzNiaV8nm+MxPMbnM?=
+ =?us-ascii?Q?rHx6a4HS5oKcKSbZb7mPC+l+LJU1scCYidZXsWED8rDjo9CJKAPtQjIAR4Vf?=
+ =?us-ascii?Q?jagmVN/lVqn5QJWPaM2mqA6j7bdA19rGdHDqyF8zD8ipaohSySTX2sHnpPSg?=
+ =?us-ascii?Q?9xdKXeFOPS6TX1KOn8wsLIRxZOoevpO9BuvBqixHtM9j8zOViHwc3Qbq5UmQ?=
+ =?us-ascii?Q?ZGwWjnP2Ky1I7fE0V3npr3XCe6SKOAX5eX7lcFgS5/qB0AJEgkI0lTddOBrh?=
+ =?us-ascii?Q?vV1GhU/jEvo3xlMo0IW27Bt+PqBx5jl0FplL19Pd2RB3SIxEKHzLPzzbcH7X?=
+ =?us-ascii?Q?mMZYZlytIDLn6Hex/PS4QpI9ao3ck6pYCaPOkNbx5XJkN6od7eQXi+Pk+2JD?=
+ =?us-ascii?Q?5A683gOfLYEBFUxaeB69qpa0zUS6GnoRAo6TWfAmSII3oRmJa+E8KeRZ3APu?=
+ =?us-ascii?Q?u4rGBSEZl3f/sr3AJGt5IVK8fgxLyzNPRQvJPPH1vZuWjvSCeRoOE+gBL/Gp?=
+ =?us-ascii?Q?yZ1WlLvM7Ji4saqqm1BWkl692vJ2S7QQcweEmssv7m+3qybJFL4yauio+HCA?=
+ =?us-ascii?Q?9YAN5pw67uruZi0nebyGibY7HONrrEoi2XYPOukVZMHumBXyDW3i9MQ/fPHN?=
+ =?us-ascii?Q?RZp1EIntC19k91vMiCvASJ8u/Rg+dlpdRL6USKTghIqA0cWwMnhw?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6863f44-7c82-4d24-1c97-08df0909911e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a391715-3e02-4e7a-8287-08df0909c789
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 15:48:00.6906
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 15:49:31.9226
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gKw1RkPMiysfahI8UEqtwa3fZCx+0Rbu+d4A1vBHqbsOOQJIKsc7Ms40uqRj52WSqQVapSFrMfHp0R+aHo4HpH7juIpfrXJHR5iIeugZUD07pGd+61tCrti6EVV/4Dd5
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7124
+X-MS-Exchange-CrossTenant-UserPrincipalName: KoBO1Q2nA0KreRRaFj7tMiTUchs+PPwwx7Is3FtPKaUAHX7Z4OOSnqebDlspvEh+MiBByUPpvtID6AwSt4h5kYrUCNXckFVtU2YD1B59sfMHCcMmeMeiLQVr/BW/CFLu
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB7198
 
-On Mon, Aug 10, 2026 at 11:09:33AM -0700, Allen Pais wrote:
-> Move descriptor callback processing out of the low-level completion
-> path and schedule it through per-channel BH work. Drain that work while
-> freeing channels so callbacks cannot outlive channel storage.
+On Mon, Aug 10, 2026 at 11:09:01AM -0700, Allen Pais wrote:
+> Hi Arnd, Vinod and Frank,
 >
-> Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-> ---
->  drivers/dma/qcom/hidma.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
+> This series moves DMAengine client completion bottom halves from private
+> tasklets to a common per-channel API backed by WQ_BH.
 >
-> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-> index c939635be21d..486a2c61a9fb 100644
-> --- a/drivers/dma/qcom/hidma.c
-> +++ b/drivers/dma/qcom/hidma.c
-> @@ -90,7 +90,13 @@ static inline struct hidma_chan *to_hidma_chan(struct dma_chan *dmach)
+> The first patch introduces the dmaengine_*_bh() API with a tasklet backend
+> and converts virt-dma to it. It also updates every driver that directly
+> accesses the removed virt_dma_chan tasklet, keeping the patch buildable on
+> its own. This separates the driver-facing API from its implementation
+> without changing callback context.
 >
->  static void hidma_free(struct hidma_dev *dmadev)
->  {
-> -	INIT_LIST_HEAD(&dmadev->ddev.channels);
-> +	struct hidma_chan *mchan, *next;
-> +
-> +	list_for_each_entry_safe(mchan, next, &dmadev->ddev.channels,
-> +				 chan.device_node) {
-> +		dmaengine_kill_bh(&mchan->chan);
-> +		list_del(&mchan->chan.device_node);
+> The second patch switches that backend to a dedicated WQ_BH | WQ_PERCPU
+> workqueue. WQ_BH keeps callbacks in softirq context, while the common API
+> centralizes initialization, scheduling, and synchronization. The
+> workqueue helpers remain internal to DMAengine, and dmaengine_kill_bh()
+> drains scheduled callbacks to preserve tasklet_kill() semantics.
+>
+> The remaining patches convert driver-owned channel completion tasklets.
+> Tasklets used for controller-level processing, recovery, or other
+> non-client-callback work are deliberately left alone because the
+> appropriate replacement may differ by driver.
+>
+> As agreed in the RFC discussion, selecting hardirq callback delivery is a
+> separate API change and is not part of this series.
+>
+> Earlier discussion:
+> https://lore.kernel.org/all/20260108080332.2341725-1-allen.lkml@gmail.com/
+>
+> v2:
+> https://lore.kernel.org/all/cover.1785183549.git.allen.lkml@gmail.com/
+>
+> Changes since v2:
+> - rename the new public helpers and callback type from dma_chan_* to
+>   dmaengine_* as requested by Vinod
+> - update all direct virt_dma_chan tasklet users in patch 1, fixing the
+>   intermediate build failures reported by Sashiko
+> - fold the resulting 30 empty teardown patches, reducing the series from
+>   64 to 34 patches without dropping any driver changes
+> - rebase from Linux 7.2-rc5 to d58772d8520c (latest Linus master)
+>
+> Review tags retained on unchanged standalone patches:
+> - 09/34 IOAT: Acked-by Dave Jiang
+> - 17/34 STE DMA40: Reviewed-by Linus Walleij
+> - 27/34 PLX DMA and 34/34 Switchtec: Reviewed-by Logan Gunthorpe
+>
+> Review tags received on v2 patches now folded into 01/34:
+> - v2 41/64 HSU: Reviewed-by Andy Shevchenko
+> - v2 60/64 BAM DMA: Acked-by Bartosz Golaszewski
+>
+> The HSU and BAM DMA changes remain in 01/34, but those patch-specific
+> trailers are not attached to the substantially broader 35-file patch.
+> Andy and Bartosz are copied here and on 01/34 for visibility.
+>
+> Testing:
+> - x86_64 olddefconfig, make -j$(nproc) W=1 drivers/dma/
+> - the same DMA build with patch 1 applied independently
+> - scripts/checkpatch.pl --strict on all 34 patches
+>
+> Allen Pais (34):
+>   dmaengine: add tasklet-backed channel BH helpers
+>   dmaengine: back channel BH helpers with WQ_BH
+>   dmaengine: apple-admac: use dmaengine BH callback
+>   dmaengine: at_xdmac: move irq bottom half to dmaengine BH
+>   dmaengine: ep93xx: hook callbacks via dmaengine BH
+>   dmaengine: fsldma: migrate tasklet to dmaengine BH
+>   dmaengine: fsl_raid: run completions via dmaengine BH
+>   dmaengine: imx-dma: flip per-chan tasklet to dmaengine BH
+>   dmaengine: ioat: convert cleanup tasklet to dmaengine BH
+>   dmaengine: mmp_pdma: replace per-chan tasklet with dmaengine BH
+>   dmaengine: mmp_tdma: hook completions to dmaengine BH
+>   dmaengine: mv_xor: convert irq tasklet to dmaengine BH
+>   dmaengine: mxs-dma: use dmaengine BH scheduling
+>   dmaengine: nbpfaxi: switch callbacks to dmaengine BH
+>   dmaengine: pch_dma: convert tasklet to dmaengine BH
+>   dmaengine: ppc4xx: replace irq tasklet with dmaengine BH
+>   dmaengine: ste_dma40: convert per-channel tasklet to dmaengine BH
+>   dmaengine: xgene-dma: wire descriptor cleanup to dmaengine BH
+>   dmaengine: xilinx-dma: use dmaengine BH instead of tasklets
+>   dmaengine: xilinx-dpdma: kill vchan BH on remove
+>   dmaengine: zynqmp-dma: switch completion tasklet to dmaengine BH
+>   dmaengine: tegra20-apb: use channel BH helpers
+>   dmaengine: timb_dma: route callbacks via channel BH
+>   dmaengine: txx9dmac: route callbacks via channel BH
+>   dmaengine: mv_xor_v2: use channel BH helpers
+>   dmaengine: mpc512x: route callbacks via channel BH
+>   dmaengine: plx_dma: use channel BH helpers
+>   dmaengine: sf-pdma: route error callbacks through channel BH
+>   dmaengine: pl330: route callbacks via channel BH
+>   dmaengine: altera-msgdma: use channel BH helpers
+>   dmaengine: dw: defer callbacks via channel BH
+>   dmaengine: hidma: defer callbacks via channel BH
+>   dmaengine: qcom-gpi: defer callbacks via vchan
+>   dmaengine: switchtec: use channel BH helpers
+>
+>  drivers/dma/altera-msgdma.c                   | 14 +--
+>  drivers/dma/apple-admac.c                     | 16 ++--
+>  drivers/dma/at_xdmac.c                        | 13 ++-
+>  drivers/dma/bcm2835-dma.c                     |  2 +-
+>  drivers/dma/dma-axi-dmac.c                    | 10 ++-
+>  drivers/dma/dma-jz4780.c                      |  2 +-
+>  drivers/dma/dmaengine.c                       | 89 ++++++++++++++++++-
+>  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  2 +-
+>  drivers/dma/dw-edma/dw-edma-core.c            |  2 +-
+>  drivers/dma/dw/core.c                         | 42 +++++++--
+>  drivers/dma/dw/regs.h                         |  1 +
+>  drivers/dma/ep93xx_dma.c                      | 12 ++-
+>  drivers/dma/fsl-edma-common.c                 |  2 +-
+>  drivers/dma/fsl-qdma.c                        |  2 +-
+>  drivers/dma/fsl_raid.c                        | 11 +--
+>  drivers/dma/fsl_raid.h                        |  1 -
+>  drivers/dma/fsldma.c                          | 10 +--
+>  drivers/dma/fsldma.h                          |  1 -
+>  drivers/dma/hisi_dma.c                        |  2 +-
+>  drivers/dma/hsu/hsu.c                         |  2 +-
+>  drivers/dma/idma64.c                          |  4 +-
+>  drivers/dma/img-mdc-dma.c                     |  2 +-
+>  drivers/dma/imx-dma.c                         | 26 +++---
+>  drivers/dma/imx-sdma.c                        |  4 +-
+>  drivers/dma/ioat/dma.c                        | 14 +--
+>  drivers/dma/ioat/dma.h                        |  3 +-
+>  drivers/dma/ioat/init.c                       |  2 +-
+>  drivers/dma/k3dma.c                           |  2 +-
+>  drivers/dma/loongson/loongson1-apb-dma.c      |  2 +-
+>  drivers/dma/mediatek/mtk-cqdma.c              |  2 +-
+>  drivers/dma/mediatek/mtk-hsdma.c              |  2 +-
+>  drivers/dma/mediatek/mtk-uart-apdma.c         |  4 +-
+>  drivers/dma/mmp_pdma.c                        | 13 ++-
+>  drivers/dma/mmp_tdma.c                        |  9 +-
+>  drivers/dma/mpc512x_dma.c                     | 74 +++++++++------
+>  drivers/dma/mv_xor.c                          | 12 +--
+>  drivers/dma/mv_xor.h                          |  2 -
+>  drivers/dma/mv_xor_v2.c                       | 20 ++---
+>  drivers/dma/mxs-dma.c                         | 11 ++-
+>  drivers/dma/nbpfaxi.c                         | 13 ++-
+>  drivers/dma/owl-dma.c                         |  2 +-
+>  drivers/dma/pch_dma.c                         | 14 +--
+>  drivers/dma/pl330.c                           | 18 ++--
+>  drivers/dma/plx_dma.c                         | 12 +--
+>  drivers/dma/ppc4xx/adma.c                     | 14 +--
+>  drivers/dma/ppc4xx/adma.h                     |  2 -
+>  drivers/dma/pxa_dma.c                         |  2 +-
+>  drivers/dma/qcom/bam_dma.c                    |  4 +-
+>  drivers/dma/qcom/gpi.c                        | 17 +++-
+>  drivers/dma/qcom/hidma.c                      | 18 +++-
+>  drivers/dma/qcom/qcom_adm.c                   |  4 +-
+>  drivers/dma/sa11x0-dma.c                      |  2 +-
+>  drivers/dma/sf-pdma/sf-pdma.c                 | 14 ++-
+>  drivers/dma/sprd-dma.c                        |  2 +-
+>  drivers/dma/st_fdma.c                         |  2 +-
+>  drivers/dma/ste_dma40.c                       | 13 ++-
+>  drivers/dma/sun6i-dma.c                       |  2 +-
+>  drivers/dma/switchtec_dma.c                   | 16 ++--
+>  drivers/dma/tegra186-gpc-dma.c                |  2 +-
+>  drivers/dma/tegra20-apb-dma.c                 | 18 ++--
+>  drivers/dma/tegra210-adma.c                   |  2 +-
+>  drivers/dma/ti/edma.c                         |  2 +-
+>  drivers/dma/ti/k3-udma.c                      | 12 +--
+>  drivers/dma/ti/omap-dma.c                     |  2 +-
+>  drivers/dma/timb_dma.c                        | 21 +++--
+>  drivers/dma/txx9dmac.c                        | 12 +--
+>  drivers/dma/txx9dmac.h                        |  1 -
+>  drivers/dma/virt-dma.c                        | 12 +--
+>  drivers/dma/virt-dma.h                        |  7 +-
+>  drivers/dma/xgene-dma.c                       | 19 ++--
+>  drivers/dma/xilinx/xilinx_dma.c               | 20 ++---
+>  drivers/dma/xilinx/xilinx_dpdma.c             |  1 +
+>  drivers/dma/xilinx/zynqmp_dma.c               | 19 ++--
 
-origial code have not list_del(), is it fix other problem?
+There are some dmaengine code out of drivers/dma tree. Do you plan to
+convert it also
 
 Frank
-> +	}
->  }
+
+>  include/linux/dmaengine.h                     | 28 ++++++
+>  74 files changed, 482 insertions(+), 311 deletions(-)
 >
->  static unsigned int nr_desc_prm;
-> @@ -155,6 +161,13 @@ static void hidma_process_completed(struct hidma_chan *mchan)
->  	}
->  }
->
-> +static void hidma_chan_bh(struct dma_chan *chan)
-> +{
-> +	struct hidma_chan *mchan = to_hidma_chan(chan);
-> +
-> +	hidma_process_completed(mchan);
-> +}
-> +
->  /*
->   * Called once for each submitted descriptor.
->   * PM is locked once for each descriptor that is currently
-> @@ -181,7 +194,7 @@ static void hidma_callback(void *data)
->  	}
->  	spin_unlock_irqrestore(&mchan->lock, irqflags);
->
-> -	hidma_process_completed(mchan);
-> +	dmaengine_schedule_bh(&mchan->chan);
->
->  	if (queued) {
->  		pm_runtime_mark_last_busy(dmadev->ddev.dev);
-> @@ -203,6 +216,7 @@ static int hidma_chan_init(struct hidma_dev *dmadev, u32 dma_sig)
->  	mchan->dmadev = dmadev;
->  	mchan->chan.device = ddev;
->  	dma_cookie_init(&mchan->chan);
-> +	dmaengine_init_bh(&mchan->chan, hidma_chan_bh);
->
->  	INIT_LIST_HEAD(&mchan->free);
->  	INIT_LIST_HEAD(&mchan->prepared);
 > --
 > 2.43.0
->
