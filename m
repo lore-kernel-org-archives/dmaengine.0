@@ -1,222 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C3938D686;
-	Wed,  2 Sep 2026 06:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D74417BE2;
+	Wed,  2 Sep 2026 09:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788331233; cv=none; b=hEDmttDVNzFYAYTAH4zAhAqxy1aJADtMXRgS9TzvLguU1Vv5mWrOB+sEsKMTn3+v21avPMFrtCqAi1/w1+9Vfrxaxbe0HCocQws7Tcj0xbsi5dW8QhR0cMERwJ0H7MSxkHSUdTHvK+ZNu4wtDYIFJc30hdn5jM3Sfj0m6aeailM=
+	t=1788341215; cv=none; b=jNUG4CBRH6IoefGJy3GzCeD2jzZ835j1Z3g08I5VGjYo/a9QNOr+dRWuT433aSxNeqUw10ut51251IG77saG0K4B8ifu1wIVkmpzVBzJmhpj/gT7Jg+4bHWWVQWps/BAgW0EbPjZgKoTgcAP2Fkz3VJuWRp0XMiFcX+qG0Z/ic8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788331233; c=relaxed/simple;
-	bh=5r0Hfqz1r/cQkfXyVRiCnnbVEtTuOK1jGhTyRa6vowg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=n8KQPZG18F5dA77dJ/KegWIBNhZb3CJU6ZVWQhSST5F0vkficxlU3qfjs4uDdfwTbOy0BNBrp6OrGgcSS3R+GA/9bEnpOwz8t3V9L0BryqgzhoxuufP9W8crYOz/wk1L4k8Q5Qw9PKqyOjllAzKzYaoG2qVEiVSf8VvwBy1m4gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCSo2UwH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788341215; c=relaxed/simple;
+	bh=bOofOIoyu7nVYi6NenUtKXuZTckxrh/YWOiFdf8W5n4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=TnaQuYgGJAIC3ZaaS4MQIbkJNruflQpEBoMN79vtgnXecmW0KeCEhhS2Yt8uhSsUEp2VVcQvsECaS6h+cl2gi+8p2AnhcJZ/9WagxGNDL5c3GJvQ4d448sTqeqFXqplhSGiLUOWyJus9MOx4UZSOVacT6ZMsdGakb+/Dz63EnFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=KOCmd/Fq; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCSo2UwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFDA1F000E9;
-	Wed,  2 Sep 2026 06:40:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788331229;
-	bh=XaZ8RKhh9AxleUR4Vju55gkgqThrBoS3YTrN5pk6xH0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VCSo2UwHrqoYDVGGK7w1SgwPvEn5l3pE2v/tww/1sW/BSValVm23uIcrS+J0cZouy
-	 USebYwgJiLavsxrvKWc3Qjeku1aB3yb7pYYSWIxvNZRf3eEYxXB+9hep4yPW/DotW6
-	 UZgVsY9ZsKqs2Da5/wZ+yUydINPLlV8nZJ/fwhYgWDF7K0ioohGGAHZFHVZtK45l11
-	 AFX/sFe8waxRvEfD+XlkGVUm8q/i9+XrlqRhwtpf1esZAef0FOYIwuI66jEyIC5vGG
-	 oikaRtvsN2oU9Be2yrBD1bbeL6QQdPgexB2zq8W0MrbKDqi79Wd5sTHuvoSo1DbewS
-	 hVKa8SCgkqn9Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 10/10] dmaengine: plx_dma: fix NULL pointer deref in
- plx_dma_isr()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260902062153.31048-11-logang@deltatee.com>
-References: <20260902062153.31048-1-logang@deltatee.com>
- <20260902062153.31048-11-logang@deltatee.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 06:40:28 +0000
-Message-Id: <20260902064029.7BFDA1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="KOCmd/Fq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:From:Date:Subject:
+	MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	References:In-Reply-To:To:Cc; bh=NMLRxRJLMK5HDpwcoJZdra6d5ORXjPE
+	RdZnGUWgsmkA=; b=KOCmd/FqSArVov9bTIqOH0Cs3YbhLO1a9+g1RPQHbkzaxdT
+	uUle1jJTBs0OTYu9c4XfJUzMqYxEyzVZr5celDBzwGq1ghCRUl8vaG9IZ1kb2uo+
+	lEhhdKhaTr5MRjCjp3eKZhYMKgwCGKMXaZQsLnZ4ize5v/DR1d63piybG5iM=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDHQAfU65dqiy0AAA--.195S3;
+	Wed, 02 Sep 2026 17:26:47 +0800 (CST)
+From: Jia Wang <wangjia@ultrarisc.com>
+Date: Wed, 02 Sep 2026 17:26:11 +0800
+Subject: [PATCH v3 1/4] dmaengine: dw-axi-dmac: Fix AXI burst length
+ encoding
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260902-dma-fix-v3-1-414c6449fbcc@ultrarisc.com>
+References: <20260902-dma-fix-v3-0-414c6449fbcc@ultrarisc.com>
+In-Reply-To: <20260902-dma-fix-v3-0-414c6449fbcc@ultrarisc.com>
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Pandith N <pandith.n@intel.com>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Sia Jee Heng <jee.heng.sia@intel.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Jia Wang <wangjia@ultrarisc.com>, Frank Li <Frank.Li@nxp.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788341193; l=1915;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=bOofOIoyu7nVYi6NenUtKXuZTckxrh/YWOiFdf8W5n4=;
+ b=ebT7NhzYQlERNwALzx1s6tl15BIFs0Gtnud6R72IlV4RTDyVjPNOJlsrrfc2E4BJZ+5La4sTz
+ jQEZtOjMFDJBobd35ZoxgoXymjXO2ScYUl0dbaNYfW69fb+XQo+6AW7
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwDHQAfU65dqiy0AAA--.195S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZF1rKryfZFy7CFy3tr1fJFb_yoW8Zryfpa
+	n5Kw4rJFyDtw1qka1kJa47uFyUtFy5KrWIvFW8Zw1S9rZ8X34Svr1kKw1F9r1kAF4rJr4f
+	tF4fJFyrZF1kZrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmm14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
+	x26xkF7I0E14v26r1I6r4UM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
+	ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AI
+	xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
+	vE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
+	r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
+	v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCF
+	s4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r
+	1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWU
+	JVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r
+	1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1U
+	YxBIdaVFxhVjvjDU0xZFpf9x0JUk3ktUUUUU=
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQAREWqVJKMAYAA5sg
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+The snps,axi-max-burst-len property describes the number of beats in an
+AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
 
-Pre-existing issues:
-- [High] Potential deadlock in `plx_dma_process_desc()` due to missing bott=
-om-half disabling.
-- [High] `plx_dma_prep_memcpy()` acquires a spinlock and returns with it he=
-ld, breaking the DMA Engine API contract.
-- [High] Unbounded busy-wait loop spanning up to 1000ms inside an RCU read-=
-side critical section.
-- [High] Missing `dma_rmb()` in `plx_dma_process_desc()` before processing =
-completion data.
-- [Medium] Memory leak of `desc_ring` and its inner descriptor objects in t=
-he `plx_dma_alloc_chan_resources()` error path.
---
+The driver keeps axi_rw_burst_len as the actual burst length so that
+dma_device.max_burst reports the correct value. However, it also programs
+that unencoded value directly into the hardware fields. A value of 256
+therefore overflows the 8-bit fields and can cause AXI decode errors.
 
-commit dbf39b912829e6113fcfa314a5a4384936eccf12
-Author: Logan Gunthorpe <logang@deltatee.com>
-Subject: dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
+Subtract one only when constructing hardware descriptors, while keeping
+the actual value for dma_device.max_burst.
 
-plx_dma_create() registered the interrupt handler with request_irq()
-before initializing plxdev->bar. If the device raised an interrupt in
-that window, plx_dma_isr() would dereference the still-NULL bar.
-This commit moves the bar assignment before request_irq() to fix the issue.
+Fixes: c454d16a7d5a ("dmaengine: dw-axi-dmac: Burst length settings")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Link: https://lore.kernel.org/all/20260610112121.676561-1-jjy600901@snu.ac.=
-kr
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index eebed2474210..742e08cfab43 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -706,7 +706,7 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
+ 	ctlhi = CH_CTL_H_LLI_VALID;
+ 
+ 	if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-		burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++		burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+ 		ctlhi |= CH_CTL_H_ARLEN_EN | CH_CTL_H_AWLEN_EN |
+ 			 burst_len << CH_CTL_H_ARLEN_POS |
+ 			 burst_len << CH_CTL_H_AWLEN_POS;
+@@ -975,7 +975,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
+ 
+ 		reg = CH_CTL_H_LLI_VALID;
+ 		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+ 
+ 			reg |= (CH_CTL_H_ARLEN_EN |
+ 				burst_len << CH_CTL_H_ARLEN_POS |
 
-> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-> index 84941a918b01f..409898e92c320 100644
-> --- a/drivers/dma/plx_dma.c
-> +++ b/drivers/dma/plx_dma.c
-> @@ -504,17 +504,17 @@ static int plx_dma_create(struct pci_dev *pdev)
->  	if (!plxdev)
->  		return -ENOMEM;
-> =20
-> -	rc =3D request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
-> -			 KBUILD_MODNAME, plxdev);
-> -	if (rc)
-> -		goto free_plx;
-> -
->  	spin_lock_init(&plxdev->ring_lock);
->  	tasklet_setup(&plxdev->desc_task, plx_dma_desc_task);
-> =20
->  	RCU_INIT_POINTER(plxdev->pdev, pdev);
->  	plxdev->bar =3D pcim_iomap_table(pdev)[0];
-> =20
-> +	rc =3D request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
-> +			 KBUILD_MODNAME, plxdev);
-> +	if (rc)
-> +		goto free_plx;
-> +
->  	dma =3D &plxdev->dma_dev;
->  	INIT_LIST_HEAD(&dma->channels);
->  	dma_cap_set(DMA_MEMCPY, dma->cap_mask);
+-- 
+2.34.1
 
-While reviewing this file, I noticed a few pre-existing issues in other
-functions that might need attention.
-
-> static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
-> {
-[ ... ]
-> 	spin_lock(&plxdev->ring_lock);
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-[Severity: High]
-This is a pre-existing issue, but does using spin_lock() here instead of
-spin_lock_bh() create a deadlock vulnerability? plx_dma_tx_status() calls
-this function from process context. If an interrupt fires and triggers the
-plx_dma_desc_task tasklet on the same CPU, wouldn't it attempt to acquire
-this same lock, deadlocking the system?
-
-[ ... ]
-> 	while (plxdev->tail !=3D plxdev->head) {
-> 		desc =3D plx_dma_get_desc(plxdev, plxdev->tail);
->=20
-> 		flags =3D le32_to_cpu(READ_ONCE(desc->hw->flags_and_size));
->=20
-> 		if (flags & PLX_DESC_FLAG_VALID)
-> 			break;
-            ^^^^^
-
-[Severity: High]
-This isn't a bug introduced by this patch, but should there be a dma_rmb()
-inserted directly after this break statement? Without a read memory barrier,
-weakly-ordered CPUs might speculatively read the destination buffer before
-the status read completes, which could cause data corruption.
-
-[ ... ]
-
-> static struct dma_async_tx_descriptor *plx_dma_prep_memcpy(struct dma_cha=
-n *c,
-> 		dma_addr_t dma_dst, dma_addr_t dma_src, size_t len,
-> 		unsigned long flags)
-> 	__acquires(plxdev->ring_lock)
-> {
-[ ... ]
-> 	spin_lock_bh(&plxdev->ring_lock);
-[ ... ]
-> 	/* return with the lock held, it will be released in tx_submit */
->=20
-> 	return &plxdesc->txd;
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does returning with a
-spinlock held break the DMA Engine API contract? The API allows clients to
-prepare multiple descriptors before submission. If a client prepares two
-descriptors sequentially, won't the second call deadlock trying to acquire
-ring_lock? Also, if a client prepares a descriptor but aborts without
-calling submit, wouldn't the lock leak and permanently leave softirqs
-disabled on that CPU?
-
-[ ... ]
-
-> static void plx_dma_stop(struct plx_dma_dev *plxdev)
-> {
-> 	rcu_read_lock();
-[ ... ]
-> 	__plx_dma_stop(plxdev);
-[ ... ]
-> }
-
-and __plx_dma_stop() does:
-
-> static void __plx_dma_stop(struct plx_dma_dev *plxdev)
-> {
-> 	unsigned long timeout =3D jiffies + msecs_to_jiffies(1000);
-[ ... ]
-> 	while (!time_after(jiffies, timeout)) {
-> 		val =3D readl(plxdev->bar + PLX_REG_CTRL);
-> 		if (val & PLX_REG_CTRL_GRACEFUL_PAUSE_DONE)
-> 			break;
->=20
-> 		cpu_relax();
-> 	}
-        ^^^^^^^^^^^
-
-[Severity: High]
-This is a pre-existing issue, but this performs an unbounded delay of up to
-1000ms inside the RCU read-side critical section established by
-plx_dma_stop(). Could spinning for such a long duration block RCU grace
-periods and severely degrade system stability?
-
-[ ... ]
-
-> static int plx_dma_alloc_chan_resources(struct dma_chan *chan)
-> {
-[ ... ]
-> 	rc =3D plx_dma_alloc_desc(plxdev);
-> 	if (rc)
-> 		goto out_free_hw_ring;
->=20
-> 	rcu_read_lock();
-> 	if (!rcu_dereference(plxdev->pdev)) {
-> 		rcu_read_unlock();
-> 		rc =3D -ENODEV;
-> 		goto out_free_hw_ring;
-                ^^^^^^^^^^^^^^^^^^^^^
-
-[Severity: Medium]
-This isn't a bug introduced by this patch, but does this error path leak
-the desc_ring array and its 2048 dynamically allocated descriptor objects?
-It jumps to out_free_hw_ring, which frees hw_ring but skips the cleanup
-loop needed to destroy desc_ring.
-
-[ ... ]
-> out_free_hw_ring:
-> 	dma_free_coherent(plxdev->dma_dev.dev, ring_sz, plxdev->hw_ring,
-> 			  plxdev->hw_ring_dma);
-> 	return rc;
-> }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902062153.3104=
-8-1-logang@deltatee.com?part=3D10
