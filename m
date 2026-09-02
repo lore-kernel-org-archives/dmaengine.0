@@ -1,64 +1,64 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011067.outbound.protection.outlook.com [52.101.70.67])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011057.outbound.protection.outlook.com [52.101.70.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8573F4A3F1A;
-	Wed,  2 Sep 2026 14:48:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF124A441A;
+	Wed,  2 Sep 2026 14:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.57
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788360536; cv=fail; b=BwDMN7JXDa+R1nztN8kAkv3xagrQ5w3wuVwLHKsQj73tVCrYiiB764jDzh6kKcTpYv3nyTvYiKIIDG9taQZF9FHGR7GCY5sho/2JNKzuDh3AdXwHgyriNRPzxbqn/sx+NVs6I8LGxBgd4/6AlOHz5d+W3uN91VOI+3S0OkPuGNk=
+	t=1788360695; cv=fail; b=kaPcn8w+WDolwxgcsq1XvIGZpIRlq9DM2NJhYoaF058fT1yJEFPhsXUNENJex7JAxF/XYW3rFayd63nVKE7XvPZKrFunVuKcqgBo89kCENIOD0t0uU+q77McwUrzEK0+PY14Mj9JsMsKjgABmpLuSj2ng06zmucRJtB3Ap3fO2E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788360536; c=relaxed/simple;
-	bh=J8u8guVmQSLW/0HUQ6ttsyWy6NmeUcOReW+bfTfi8OM=;
+	s=arc-20240116; t=1788360695; c=relaxed/simple;
+	bh=kwCxFrsMEvpuTUxQ3iYkkJgkovQsuajW2iXriO58U+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=A1xhGw1l81b8pj3A8a7ghu0tu89gMypbOaA2iONdtbDZzs/3FRDxPTWsiw4zdF/5riU0cMMUFQn2NotsAzkgh5aaL+eJZBQUZKUJQwaMr2b5+WK7z3orDmqmk05xOqDja1GUj4GpUxmKAni4SZ8zcTs5HdUNdSywBN0MLm5Smhc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=uKlEdc80; arc=fail smtp.client-ip=52.101.70.67
+	 Content-Disposition:In-Reply-To:MIME-Version; b=I3Fqf5T7wF1bee0zl9zOb8U3btDTG++KRdSR9pM0E/6pMaG4ibeF1MIvW543l1ZEHPvpVLK23rSZjx25Od/lF5Fdy6g2/JSee8iBiFW5aezioMtcALoyAoW5ED/BeOhBvC2m/edS4ZUYdnw9hfkayMAe2sLuKkxnZ0HdJg7ilqo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=bYrzwo5g; arc=fail smtp.client-ip=52.101.70.57
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="uKlEdc80"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="bYrzwo5g"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JT1JV8VO0NQxDFJUVsD7rKbfXVJ50Dr6rSPPg416Dv45fKRVIqk/nAobFgcM559GGkZqdBbUCiy8aHtzLyJObPHqtWu8iNuMWGQXtEET6qEWBQErd7NuwJuQtGSAldSd9q3FERekp9JdRGBatTGUDQ9vsvS8s9u1UqZ0qSH0o2mtrXGNB0m5bE+d8gxQXufUiXSNQGjXR7TfMTZQUB/PnAXCCAXq9GqN4GRGz4goLA595BKBkcHVoEw5QJDZKmjH48epZQoXHx0vIn4kegpP/L7bPQa6dt7W/9bhkh6suZ47zuopN9vjyS2/hSNKNc0u9a+6VGxp4KBShS1kNPpRvA==
+ b=j7wTL3I7A4DbWrYVr8JZrZrthKOF37WkRg2f9YUgr6fVNvNQlLpC1J3nyey9+wWA/LpO0GUFZKfEomGCzcHmZjNwPcoKSAiblZwlrFc1Yd3JJbrFjXpe/jvDw4A1WDXhXfImPYyQwPclqMVldbQXC8yJTnq/gu6TvF5ALrC4G4E/yv2AscS7COVjATkOky5xgr3/mZJmA9yRE+s+0gskwRiKjMNwS3FEh47AskhykYUJIN6kohVNwU+OzCuX/CGHNJuJpwzALEf82D/lYsIn8scLuiyqrjAIVMqeY0sSt3Lnp80416702gpbJaR6HRZqcL5RDbw0Hu/XJ9KXqn0N1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5yyjwWmkTl1Hj2j9a21ufe6R7DoxsW9s9HV32U6m+vE=;
- b=oNMYTeI/qFG7yINNu7buGG1XIYFNzj/PQFkifzYipw7Qf818UKZKpBXj1Lj0RNVl/9sSANhdGkELG4EVLbN10ww/OGtovY3dpVklj2IYBaRMKsDYnIogazAKMDWd2zcV1euM9oN9RW63S8VoqJgwNA26tcVzIfUvZlOJK+E8dxirVTFNHTgKRHfHObq3VmsmP8uer9sE6HKkLGUUo3l+BmyeF/l+c28yvyKqPJ8srUDKvom+YMDg5sTF911dqJlUv+ug6DmR3cJxwK56f5AtwtOrZ8tnZX6IaGzrB7K154dc3OEcTW5/mesAJPleMdodQzOaNwRfpoSVk0n3HJnORw==
+ bh=RyLLyKvOeWKbwS8dlw75js1N7Yf0W8U07XYVcMAoRKM=;
+ b=dReWDuiFvG4MBg/uRAFQkw3IZpehS8ua8zt5oj1qEXbIXNg7aaYDYNcHsb2vq8UsFAtXdNJG9FZWRMCStjt528jj3MJRrx93WhzKbeZewOThStjgNQem2DrI9We6mznk/XIA5aY9tw/OR+Ym8kAtBu2aCPu6JUhThJC7H5Vkv/u4o6SFzE/VqMXBz4shtrBj8U68W+aByIir3BFynvBTy80HzEiWnmQV5jUPm7THA6PlfqWVjq+xbzhUO7ExdiXjLNUZH4ZKATdlHzbFLFnHkOPEMTarqn70HZsqfOzaQtoBoYQKD9FC0qlkn3lK1fh33pU3L8Y9WB1OFWO6Dy5bZg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5yyjwWmkTl1Hj2j9a21ufe6R7DoxsW9s9HV32U6m+vE=;
- b=uKlEdc80T4FNTVorr5qqLFl+5gfQVcSfAUa07yiISkgBm4rdhqehgF4Zj3V4nLySW75aFvHpeGd95k5ENhLhlrf71rEIvAnoY6DhPQxm/a3ugZIRs8PYW6mjoCwJNDlgwywkbHhcLgbfIFuSV+UAYy1p52tzXRawDJBvxVhSb6VSf9BvEiwPe6i2i4uSQd27WgHLCn0raTA7P6XHPeAO24G1T30lJ7ifK5JwRFK4J51cJ540GmpR+ce8/nE1wykrsP08rEb5U7s1X3xbgXMq68XiSq9DTQO323yc+4MLxWjiznBYDCliD/EK2gJH8Lki9RIfUrKP+s0wVPwRhfcrMg==
+ bh=RyLLyKvOeWKbwS8dlw75js1N7Yf0W8U07XYVcMAoRKM=;
+ b=bYrzwo5g89m7ZhS8A/BiX/rR3MMOeaG+38ynImSAFf1dCoLKJg4HuSvUnqb8cUqO7Fk7SmvdDVIDTgc86EReN4y3Cs7GEYRSh2cSgaHQBF9lnCzIKa7TCwIXCqPvHueWh1+gU034MfhM1qdWUDOsC2ia83imLm77s7F/S536kEfrXQDpECGCJS/RnDPHp+NGvU3bnP1KPdu1x6AB2nUTmnjR5m+G9tmNAClasTjvrYSpck2W+b6+Z4an+qKG75mgq3nswKiOpHQFz6zRV8babw2iz1F26s4L1XP/BhXmOZq5S+fH7IBsUltmh8uzv/lUyQeCKl62g4JkoiKtT98JHg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by DB9PR04MB10011.eurprd04.prod.outlook.com (2603:10a6:10:4c4::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.12; Wed, 2 Sep
- 2026 14:48:50 +0000
+ 2026 14:51:30 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Wed, 2 Sep 2026
- 14:48:49 +0000
-Date: Wed, 2 Sep 2026 10:48:42 -0400
+ 14:51:30 +0000
+Date: Wed, 2 Sep 2026 10:51:23 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Allen Pais <allen.lkml@gmail.com>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>, Kees Cook <kees@kernel.org>
-Subject: Re: [PATCH v3 26/34] dmaengine: mpc512x: route callbacks via channel
- BH
-Message-ID: <apg3Siuuhsk4Xptz@lizhi-Precision-Tower-5810>
+Subject: Re: [PATCH v3 24/34] dmaengine: txx9dmac: route callbacks via
+ channel BH
+Message-ID: <apg36_8LMPl1srqy@lizhi-Precision-Tower-5810>
 References: <cover.1785183549.git.allen.lkml@gmail.com>
  <cover.1786384168.git.allen.lkml@gmail.com>
- <c4ed3eb4259edcb339eb69466aba216d51c93559.1786384169.git.allen.lkml@gmail.com>
+ <c98a32a57c3e295c79806859547756e70bb3f1a4.1786384169.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c4ed3eb4259edcb339eb69466aba216d51c93559.1786384169.git.allen.lkml@gmail.com>
-X-ClientProxiedBy: PH0PR07CA0092.namprd07.prod.outlook.com
- (2603:10b6:510:4::7) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <c98a32a57c3e295c79806859547756e70bb3f1a4.1786384169.git.allen.lkml@gmail.com>
+X-ClientProxiedBy: CY5PR22CA0090.namprd22.prod.outlook.com
+ (2603:10b6:930:65::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,196 +68,139 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB10011:EE_
-X-MS-Office365-Filtering-Correlation-Id: e1b5cbb4-0987-4cdc-2adb-08df09014cbd
+X-MS-Office365-Filtering-Correlation-Id: d52e23ab-5e31-41b0-d5a7-08df0901ac43
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|23010399003|19092799006|366016|6133799003|10067099003|4143699003|56012099006|11063799006|5023799004|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|19092799006|366016|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	T8q9KxEo1f4C/Kl/bARoJYLyY8Yf+zpkjJtTkQmG82JIIw3yoAQpUKaJgylo8E6ueSlFDHYI2KRRh2HX34L0wvamuaVnfcsvArRBw5Rf9ACkdXaAHI0c9lsSwmIo6UfOntcVmLUSd97wr6beELg69aq1gZHbi+fCJaMBTgYfTILFl4021qYPi63AHRSfoIuJ2Py8pSKeMzp64PcO9PMxS0hof6JSp/AG5xxboo+DLCI6+0ls7jPQIqlLI3Bto32kpCgu3TfiOWetYayQKuO9COhdxAMHo8/jzEyL8N1FaNyuEUe5+aHDZ8B0bMfGOREzIqHaDRDxHS705J37nXLGVefOw9bti5+o8mano9i+Gy0ULrkTVd09kD+ZhZDEGzJBGi1YcGPo1Vtiv+24e6AfIOUcnUl61amxpZr8C7J8Ls/bKEPX0aBl2hqDoywaq21/3Oxp31SQ9jRmgee3fak+rVJRvNXDlLU+hI9mlr/rbMUP33rqmds1j+QjNfGwGGLFan3MkEaN2OM5ah7i9PDmXj19CP+qskSFnKHI3Ae8UbdBFGDG6uS4R+r89m0UYO38JZhtt4siWHvGleGXCjdbaRSTgEqD9z0uAxD3v8+xKwRZWTkhroStRotltPI+5zB3A+KUAhlVh6vs8gNvTA9TCOfhnVczbWp/B1/sQfx+y9E=
+	0eFh40WWOm4QYx+IAVF2CK0HJxIIR5hySvOX3DuMx1/Kdng6ZCQoXpAVsQtae6BKY635Riy+zzuPnpwuaeLZqw7+vPrCQljw6eUiM7QU4BVpY6iHaJHiEw1hKYMi6fh1JsyGmh+D6qb5nOdBb+JSd8cshXeipf9ijR9Ny07apCBxpzzRbWA+5OUwk1eZaV5BCvt8H4IgMsrXd4Qfuj+XRd52vckpJFeExoMeyUpBnnSTIPM/q1ZD5732KdyAr9nfkIUhkWYp20YtOB0rp9XRy2hG1cMshU79zil1FSEmhJh/sWEL0lGlIP607BTZawjQMHpDo4JqKyMo0d+9DeRZ/g1ORmqy38O4geaVCO9rDkv0a9D+PE9vfkxmxLL0suBIUksoM02RU36LRdSrVyj7hTSdZYamsukzyiDB+iZt6bruKRew6CoZUX2X+y3cdB2sCanng2OBhwnYbZ4dMPWAfxIWUSaNs/osc+Iy7TBlyRkOY8xSHUBUM8Q6WId88phdWaIqyt2+pe91sQc16pTj3ljwO/n+8c8RN9u+N6bcfGU7fYTYNro7dK+uqrdAMyCFFghA6A6VQXbPZVPlQ+YZ5Kmsr4YRn7cbXDv7kkBiwZW6pwAE4C33VJ2hZgczf/GHXyDB1gckqk/dcJY+MOlUpwVLB9CWRchMxim5R/grCKU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(19092799006)(366016)(6133799003)(10067099003)(4143699003)(56012099006)(11063799006)(5023799004)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(19092799006)(366016)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?VSq0HB8Q9g9rIDTw+ah8ktjzdaY0yJ5xrGKLaUFHY/xWutnDCzQTbylQKZcO?=
- =?us-ascii?Q?2cvLRY/3HmSyXgcTHhErKxjZ93WHXlzWMeY/9xQ7IFPWkrkXwxQnBMkh1yfz?=
- =?us-ascii?Q?96K5Whfd4rU2i2AHBNBKgXTWwA/DDQFCeR7S9SwjNtIoYxINJ6AdANF6SJkv?=
- =?us-ascii?Q?XJY/Gb/HQGZLOOFBZI0lHHwj4eRqiwKq6BsgQ6T+YxwLeJYZl4mPmtZZLW5r?=
- =?us-ascii?Q?saLJ7Qwj9xDPox7EfpCyLro5tr81TNX8dOlhq61a/6ySrAL5uUe8oYzty18Y?=
- =?us-ascii?Q?crCekTaNXvH6zeI5PggxlD+SsoAnqdn3eU7h8ZCDzXjkSk+KGjbGfUqt/Ys+?=
- =?us-ascii?Q?/l2ImXJi+dDpM2gjkAYL3kzIBURg2/1r6FxDv3ReFbrw8GEUHtaV1+TmnO5b?=
- =?us-ascii?Q?jSardRnau/CgMzBYfNfXjo51BjZWuOp1Qk2SseSQNckWgDtKHBPqcEfpmL/+?=
- =?us-ascii?Q?3oYDj0PwNpFlDhUKQpomFTQyGpB/me88G5Povy9Tr1EIdMILXXy3l/WiHe9f?=
- =?us-ascii?Q?AWDuWaHTIII3atfhg/1rWeE7h3Zsj7CIayLug0pxGwVGzxkZXP5Vqb52ym7A?=
- =?us-ascii?Q?/lrkOY/IubRkQ89w2CWR+uwQTh+uVkBTiqA5new3VnvE+N6hwi4jAlOwgsNo?=
- =?us-ascii?Q?0jIvf6dmgutgH42aXFZmQhGb1M/fAQJI4y4VZDwmNSzTpnI+pCNNCZy+FI1p?=
- =?us-ascii?Q?4a4TAGJeYMKRhAnuqF5tt+uQYHovUJY/FaeEY12HtKPGi6L3ckFI21Gd7dj7?=
- =?us-ascii?Q?zPqaL7i7tNkz/42JbWmfzgiNvPZEGJAKBR1821HlmhB3jEZreQereH6GmcMg?=
- =?us-ascii?Q?A5lNFqwq4pn+XEN3j53w+0hjFyMxZmg93fmJ4FgpnsNZtu1pSmYGFQ76NsjK?=
- =?us-ascii?Q?YnwLj/bFpI5PdF/qWlJf6126etPH6o1cDLCM8uElGrKVcQjy2vp7cTS1mSl7?=
- =?us-ascii?Q?s+K+8hqqG90kQnBDTGYNsMzTntUcmHb3hqiPPs6xEe8oT4cT3eC5dOEVtcjm?=
- =?us-ascii?Q?Agl8Uzz/x2930Zri6wwBNdQsGE9sftCA+xqFXxo1ib4Af65dA0t0vvP0wpIA?=
- =?us-ascii?Q?rohtUnLeU/vRiybYToDpLO8Pwz9BscMUPh9Gh+oLLXjdfN+SL2nThPOIAWXc?=
- =?us-ascii?Q?axVLfoOXIqunEJFLSlhTa2OYcTgvmpJQQGMjhyye4g+v3sGuJDKskd3K3wzB?=
- =?us-ascii?Q?wI+wNxIt33qk6O8XzcC+wLfyPo+iWlKqhVzpv8tv4umfHzA+5CJjQVdUAsmo?=
- =?us-ascii?Q?ZZ2fPmAb6GMz72e/F4SmkgsgHGLMTt5avQF6s85IGUvfJBYgfhGVL5GrXNJm?=
- =?us-ascii?Q?44rte37EHZ469lRvFSctgIzGBL9ZbXAHkdP0HbC6p0NlJraBO7lIp8T93ncP?=
- =?us-ascii?Q?E/ASTp+lNRjBs4Uwo/HFRTQaJ81bV75EixdqcyqU0SPJe0Qyf9jsUEoxP1uS?=
- =?us-ascii?Q?ECb9fqoRDU+M4qhGlv9ksDZUP4lD4JJS6mEOWGdEMeMsKCD7kodPhm0kFEBe?=
- =?us-ascii?Q?f2MAGAntsR779k7JHQCrBimJn7gOhQPIrf3s/vnwRZWFupvev/ON7UjtpGVw?=
- =?us-ascii?Q?xmh/2hrUHYhi9Fbzk+O5q8eaKujqRUTd7tLWObs+gzCht0z0i23lsVM5ZK5Y?=
- =?us-ascii?Q?85MMll5/OZqrctU+Z5XSY8SbfjFi9z1aF8qcUf7BfFqX3saCVFlKSBmkKwNa?=
- =?us-ascii?Q?yzxyO7ONc7SNau3VjJkXB/Cyhu1qKTOM49+sN1HMhU2jtf9phR6c7tMfuYiK?=
- =?us-ascii?Q?6ZCmj5gTTY0ys+oYBYvlLi6L2z63MnKOQdTSMgebXc0zuxTvZuFQ?=
+	=?us-ascii?Q?CAX+PqQIIqwgIPTiNbtEZVafce5GI5MJKeA7PRQrRXPcPj04LbwpiNaEehSQ?=
+ =?us-ascii?Q?bdv2I9/hLk8wDbv3PirmfnPflCzTV52VYGaLXGZMr270W2dA0I8meXx/p3Zo?=
+ =?us-ascii?Q?mSDq8Oh8h/yYs4hWm+weDnR//NPB+fw0uZvyUuhluEGkkkfbxtlZrJkXrV7n?=
+ =?us-ascii?Q?ETpYf1NXTSzcHQxgM0/nKnIZ8M+oW3KJ/s0SN/X2tYD77gMdD7lV25FZWYDZ?=
+ =?us-ascii?Q?kvHOALUeFg0alBO4haKDAPMsFBjhXQGLExHJuaipGi2jj0JVaIhyyLzGzQDF?=
+ =?us-ascii?Q?1mwq+lktB+cE70/Wk0ZjaFSJ68YmECcQThZZXGImIMwy3lNgET9WJWzvlOSU?=
+ =?us-ascii?Q?VecOiIf9wKNSA7q7kCUJPt7gcG6S3nGYUpa1WTxDX6q4b8zuoNbgUWcqKqBS?=
+ =?us-ascii?Q?UrkGfPGe63CaBmi2Bhto8/sC1/IoeGI30z1k7T5vaZMclSGXTFbSkE8O85RC?=
+ =?us-ascii?Q?xYiLlw6UASrIjpocw+T+Xlk6jeGIpL7lThtpMEj9Gz6LF81kF8x/cshN6A9o?=
+ =?us-ascii?Q?UZ1afUlYVml3CN0ABL9C7wzfG21C2o0hf/3vIWcKNaGTZEPKqqR2BAZ5dYtZ?=
+ =?us-ascii?Q?W3P/GmEO2QMEQZyCov9bxwmttmmFmYCVfTe/43yCx6RBjre3FMpinkVzmp8X?=
+ =?us-ascii?Q?Q8oPiqEWRpWdoJaKCoAOG2cEGSoUMO043yOp6sAHmaBJusXaD27J6ReAZhqS?=
+ =?us-ascii?Q?Law/HmR0b+nB0nlweRKeuAq2KM0a3qfJ2heQ5FTsshgsqbo0kMHwEpXVhNvz?=
+ =?us-ascii?Q?RmQKOC5ghuKVbP9VB416NVbHHpZzW0iamYrE03+Y4Y7QpZIYM2BA2eBIsFxn?=
+ =?us-ascii?Q?N8RoGnGq4wVzsyMMrVr4h+pLWwcQsIP+7v3hQxlBvIwi5Hy1w95ocveC1Bui?=
+ =?us-ascii?Q?9vdTnjsvkWbi/Sw3n5NTOivGuwOUD08JgzKh+g4lOBKkUxggE+TeCzVLAJuw?=
+ =?us-ascii?Q?ZIwmcEtv+Y/IdnD8VSWw7GT1omWTN14ZGlj6Cd97pQoiIYK3R1X5+Z6BAnrs?=
+ =?us-ascii?Q?8KxIgiDxB+RBcYNBNAtxI3qF19ib7pOgILA3iUz8sXsfrsCiOAFuccdWFU8L?=
+ =?us-ascii?Q?qDMEvMccEmXDqS26KY/kpOQ7E8McZC2/FtzagGB78x2J1kdlBVu3/VWez07C?=
+ =?us-ascii?Q?ImzTqKEGkjyWoUgtyOz12jy+ZM5ySf8tJ5dzxKGve31oIn+1Y5mZNSMoQtzL?=
+ =?us-ascii?Q?3HdTqUVaFXe30rE2ke3V79wlCPe2yA54OvUt4KEQNLxKLytmJ8b7zE5Zu2Tf?=
+ =?us-ascii?Q?YbO6lMk7snzJG65nQ9JVt3jV7rXkHIphdKbmFQfzC1aYI0AkalQ/6j1E6n3o?=
+ =?us-ascii?Q?AjTwf+hsRe1cdw97YgavKZSZAs/+qvgoc+hSZPBGRgCuwQojHDXwQVOfhxwo?=
+ =?us-ascii?Q?wCngl9Gqa14F7PRhxq1DKDLd3vAgUFc5EBFuulHA+uycG4ipcv92yFwl4f08?=
+ =?us-ascii?Q?5Avqp1KkUxp+1grNIi69Ow1il69WHMFPmm/69U3En16SFGdb8Mt5lzQ43Iwj?=
+ =?us-ascii?Q?R3KvllJgw8iJZxcYdogB3D68FBq1rZdBFv+zLTgTtKULS95A0YhAgQF2g1/s?=
+ =?us-ascii?Q?CtB4DkdSspc5iX3F/b5sH7wBKCe1+yL2tR7DJy7l9OvOkU0FD9LqeXuipyck?=
+ =?us-ascii?Q?L19PKDDqfbRw/8JPEwFJifhdsx8iN+Fro+S/fuAypJh2x6tx7fmbp5liBiJY?=
+ =?us-ascii?Q?SexIscE++jL9Ou9Q5U0+3CMZ7qe3DxMGMWV7ojaeZ9xX9f1GSlFYRaV42tMF?=
+ =?us-ascii?Q?07Nson2p8liJp3uKpQ50mPnhJp5kOEQGKeVRzVDKtEcON62WEW+8?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1b5cbb4-0987-4cdc-2adb-08df09014cbd
+X-MS-Exchange-CrossTenant-Network-Message-Id: d52e23ab-5e31-41b0-d5a7-08df0901ac43
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 14:48:49.8980
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 14:51:30.1069
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lSq0tfoTj2CfWqy1akpdIbqSg9jji4nzB12pBZ4oaMsjiabnZ29M1U/SdKaiwuvRSQe6Kqw1kGgTTN7btgO7sZ/CEt+2wQtiBK+PUqQtqu2E3WchRDEygvyRC4yP/F+/
+X-MS-Exchange-CrossTenant-UserPrincipalName: /H6wfEfEdEusw+D8tmbCSf+t4exsdw3W1G4aKXM0OpWYqavaM8LVSkCW0dtZLULKxddStXA/yjqpEcvvFZTvBzYMrf4EHSoYL0QbkTVQ22T5uLik8vmyD0hlsEyh6AjU
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB10011
 
-On Mon, Aug 10, 2026 at 11:09:27AM -0700, Allen Pais wrote:
-> Schedule per-channel BH work for completions and process callbacks there,
-> leaving the controller tasklet for IRQ/error handling.
+On Mon, Aug 10, 2026 at 11:09:25AM -0700, Allen Pais wrote:
+> Use the per-channel BH helpers for descriptor completion handling and
+> schedule per-channel work from both channel and controller IRQ paths.
 >
 > Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 > ---
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
->  drivers/dma/mpc512x_dma.c | 74 +++++++++++++++++++++++++--------------
->  1 file changed, 47 insertions(+), 27 deletions(-)
+>  drivers/dma/txx9dmac.c | 12 ++++++------
+>  drivers/dma/txx9dmac.h |  1 -
+>  2 files changed, 6 insertions(+), 7 deletions(-)
 >
-> diff --git a/drivers/dma/mpc512x_dma.c b/drivers/dma/mpc512x_dma.c
-> index 0adc8e01057e..19e0b2f1b2aa 100644
-> --- a/drivers/dma/mpc512x_dma.c
-> +++ b/drivers/dma/mpc512x_dma.c
-> @@ -372,45 +372,47 @@ static irqreturn_t mpc_dma_irq(int irq, void *data)
->  	return IRQ_HANDLED;
+> diff --git a/drivers/dma/txx9dmac.c b/drivers/dma/txx9dmac.c
+> index 05622b68a936..0547f645b51c 100644
+> --- a/drivers/dma/txx9dmac.c
+> +++ b/drivers/dma/txx9dmac.c
+> @@ -601,13 +601,13 @@ static void txx9dmac_scan_descriptors(struct txx9dmac_chan *dc)
+>  	}
 >  }
 >
-> -/* process completed descriptors */
-> -static void mpc_dma_process_completed(struct mpc_dma *mdma)
-> +static void mpc_dma_process_chan_completed(struct mpc_dma_chan *mchan)
+> -static void txx9dmac_chan_tasklet(struct tasklet_struct *t)
+> +static void txx9dmac_chan_tasklet(struct dma_chan *chan)
 >  {
->  	dma_cookie_t last_cookie = 0;
-> -	struct mpc_dma_chan *mchan;
->  	struct mpc_dma_desc *mdesc;
->  	struct dma_async_tx_descriptor *desc;
->  	unsigned long flags;
->  	LIST_HEAD(list);
-> -	int i;
+>  	int irq;
+>  	u32 csr;
+>  	struct txx9dmac_chan *dc;
 >
-> -	for (i = 0; i < mdma->dma.chancnt; i++) {
-> -		mchan = &mdma->channels[i];
-> +	/* Get all completed descriptors */
-> +	spin_lock_irqsave(&mchan->lock, flags);
-> +	if (!list_empty(&mchan->completed))
-> +		list_splice_tail_init(&mchan->completed, &list);
-> +	spin_unlock_irqrestore(&mchan->lock, flags);
+> -	dc = from_tasklet(dc, t, tasklet);
+> +	dc = container_of(chan, struct txx9dmac_chan, chan);
+>  	csr = channel_readl(dc, CSR);
+>  	dev_vdbg(chan2dev(&dc->chan), "tasklet: status=%x\n", csr);
 >
-> -		/* Get all completed descriptors */
-> -		spin_lock_irqsave(&mchan->lock, flags);
-> -		if (!list_empty(&mchan->completed))
-> -			list_splice_tail_init(&mchan->completed, &list);
-> -		spin_unlock_irqrestore(&mchan->lock, flags);
-> +	if (list_empty(&list))
-> +		return;
+> @@ -628,7 +628,7 @@ static irqreturn_t txx9dmac_chan_interrupt(int irq, void *dev_id)
+>  	dev_vdbg(chan2dev(&dc->chan), "interrupt: status=%#x\n",
+>  			channel_readl(dc, CSR));
 >
-> -		if (list_empty(&list))
-> -			continue;
-> +	/* Execute callbacks and run dependencies */
-> +	list_for_each_entry(mdesc, &list, node) {
-> +		desc = &mdesc->desc;
->
-> -		/* Execute callbacks and run dependencies */
-> -		list_for_each_entry(mdesc, &list, node) {
-> -			desc = &mdesc->desc;
-> +		dmaengine_desc_get_callback_invoke(desc, NULL);
->
-> -			dmaengine_desc_get_callback_invoke(desc, NULL);
-> +		last_cookie = desc->cookie;
-> +		dma_run_dependencies(desc);
-> +	}
->
-> -			last_cookie = desc->cookie;
-> -			dma_run_dependencies(desc);
-> -		}
-> +	/* Free descriptors */
-> +	spin_lock_irqsave(&mchan->lock, flags);
-> +	list_splice_tail_init(&list, &mchan->free);
-> +	mchan->chan.completed_cookie = last_cookie;
-> +	spin_unlock_irqrestore(&mchan->lock, flags);
-> +}
->
-> -		/* Free descriptors */
-> -		spin_lock_irqsave(&mchan->lock, flags);
-> -		list_splice_tail_init(&list, &mchan->free);
-> -		mchan->chan.completed_cookie = last_cookie;
-> -		spin_unlock_irqrestore(&mchan->lock, flags);
-> -	}
-> +/* process completed descriptors */
-> +static void mpc_dma_process_completed(struct mpc_dma *mdma)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < mdma->dma.chancnt; i++)
-> +		mpc_dma_process_chan_completed(&mdma->channels[i]);
->  }
->
->  /* DMA Tasklet */
-> @@ -419,6 +421,7 @@ static void mpc_dma_tasklet(struct tasklet_struct *t)
->  	struct mpc_dma *mdma = from_tasklet(mdma, t, tasklet);
->  	unsigned long flags;
->  	uint es;
-> +	int i;
->
->  	spin_lock_irqsave(&mdma->error_status_lock, flags);
->  	es = mdma->error_status;
-> @@ -453,7 +456,21 @@ static void mpc_dma_tasklet(struct tasklet_struct *t)
->  			dev_err(mdma->dma.dev, "- Destination Bus Error\n");
+> -	tasklet_schedule(&dc->tasklet);
+> +	dmaengine_schedule_bh(&dc->chan);
+>  	/*
+>  	 * Just disable the interrupts. We'll turn them back on in the
+>  	 * softirq handler.
+> @@ -659,7 +659,7 @@ static void txx9dmac_tasklet(struct tasklet_struct *t)
+>  			spin_lock(&dc->lock);
+>  			if (csr & (TXX9_DMA_CSR_ABCHC | TXX9_DMA_CSR_NCHNC |
+>  				   TXX9_DMA_CSR_NTRNFC))
+> -				txx9dmac_scan_descriptors(dc);
+> +				dmaengine_schedule_bh(&dc->chan);
+>  			spin_unlock(&dc->lock);
+>  		}
 >  	}
->
-> -	mpc_dma_process_completed(mdma);
-> +	for (i = 0; i < mdma->dma.chancnt; i++) {
-> +		struct mpc_dma_chan *mchan = &mdma->channels[i];
-> +
-> +		spin_lock_irqsave(&mchan->lock, flags);
-> +		if (!list_empty(&mchan->completed))
-> +			dmaengine_schedule_bh(&mchan->chan);
-> +		spin_unlock_irqrestore(&mchan->lock, flags);
-> +	}
-> +}
-> +
-> +static void mpc_dma_chan_bh(struct dma_chan *chan)
-> +{
-> +	struct mpc_dma_chan *mchan = dma_chan_to_mpc_dma_chan(chan);
-> +
-> +	mpc_dma_process_chan_completed(mchan);
->  }
->
->  /* Submit descriptor to hardware */
-> @@ -551,6 +568,8 @@ static void mpc_dma_free_chan_resources(struct dma_chan *chan)
->  	unsigned long flags;
->  	LIST_HEAD(descs);
->
-> +	dmaengine_kill_bh(&mchan->chan);
-> +
->  	spin_lock_irqsave(&mchan->lock, flags);
->
->  	/* Channel must be idle */
-> @@ -1007,6 +1026,7 @@ static int mpc_dma_probe(struct platform_device *op)
->  		INIT_LIST_HEAD(&mchan->completed);
->
->  		spin_lock_init(&mchan->lock);
-> +		dmaengine_init_bh(&mchan->chan, mpc_dma_chan_bh);
->  		list_add_tail(&mchan->chan.device_node, &dma->channels);
+> @@ -1113,7 +1113,7 @@ static int __init txx9dmac_chan_probe(struct platform_device *pdev)
+>  		irq = platform_get_irq(pdev, 0);
+>  		if (irq < 0)
+>  			return irq;
+> -		tasklet_setup(&dc->tasklet, txx9dmac_chan_tasklet);
+> +		dmaengine_init_bh(&dc->chan, txx9dmac_chan_tasklet);
+>  		dc->irq = irq;
+>  		err = devm_request_irq(&pdev->dev, dc->irq,
+>  			txx9dmac_chan_interrupt, 0, dev_name(&pdev->dev), dc);
+> @@ -1159,7 +1159,7 @@ static void txx9dmac_chan_remove(struct platform_device *pdev)
+>  	dma_async_device_unregister(&dc->dma);
+>  	if (dc->irq >= 0) {
+>  		devm_free_irq(&pdev->dev, dc->irq, dc);
+> -		tasklet_kill(&dc->tasklet);
+> +		dmaengine_kill_bh(&dc->chan);
 >  	}
+>  	dc->ddev->chan[pdev->id % TXX9_DMA_MAX_NR_CHANNELS] = NULL;
+>  }
+> diff --git a/drivers/dma/txx9dmac.h b/drivers/dma/txx9dmac.h
+> index aa53eafb1519..f2abedb73d49 100644
+> --- a/drivers/dma/txx9dmac.h
+> +++ b/drivers/dma/txx9dmac.h
+> @@ -162,7 +162,6 @@ struct txx9dmac_chan {
+>  	struct dma_device	dma;
+>  	struct txx9dmac_dev	*ddev;
+>  	void __iomem		*ch_regs;
+> -	struct tasklet_struct	tasklet;
+>  	int			irq;
+>  	u32			ccr;
 >
 > --
 > 2.43.0
