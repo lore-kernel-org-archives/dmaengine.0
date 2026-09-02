@@ -1,137 +1,192 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C676F3C09E7
-	for <dmaengine@vger.kernel.org>; Wed,  2 Sep 2026 19:49:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C0F4AD4AE
+	for <dmaengine@vger.kernel.org>; Wed,  2 Sep 2026 21:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788378550; cv=none; b=Dhz6fOUIJGeUbr1yImZDQtd4n92nQggwNzLLvv/SoMDTxZy+5H9jDfcGKDaST5h6+Li2NUzq8BfWOUgN3/CXHRJ0CwnX+2vJYsvcp5KmdwFvEQjFbTDf8kETm2Fh+ZFlObtXGpxthav9Aezw3x9Bp14mHoL5rF3XIWay7OWrt/g=
+	t=1788385584; cv=none; b=FKXKiTKusdyRJ17Q5vmsntP0oLYygB14ttef5S/2QG0quZ5VWMqPl7SkDl3o4O8U/F2X+ze/jKYkQ+HTY9jkBunCH61lsTpzMt4n4eKL11w3YaHxZuQSPdAT7nY3bQ5aE+k5iyG+MVhRTUqJ4wKZ4lwcUwK6P0nhU7DCmJ6i3Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788378550; c=relaxed/simple;
-	bh=PqONomyjOqjqkvONvcbxns6QfCa4tWnfoco/vQp0RX8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLwNp5aw2jb3wSL+HR79T2taEJ0GkrgD4+HanEd3JsAU674m6gCYFUQWaSD8ilyiUKSNoNYZ8ApzmyaSlgfIJkqiqcWI9XcnfY1PTYTeN3d+C1bnfqxQ+AZIHuYdPF+4wQ/IzMKzCRlcmt5FFfgjPa9U6RzUCqAGyZbBn3x4sXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gnf2GBqE; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1788385584; c=relaxed/simple;
+	bh=5JwzSsfz0aQCzNb5RvVhNxFL9Ur0OR3IWCI47dZbe4U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BJYYLClFSUxNWj/tbPbwlrytZDG23A4pE1hiIgCoKmIAAKBcuJH+Y5y+HEPixSsJLatNmQgAcnxXlMbNpnJswTlpD4vd/f2EPmAOXkSic5A6+r+E32l93edW+uah/WeIbnIFKZbur/OqanqsV/5SCWTToSNlLZhF/q2O2xTNyg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KwmbJp+I; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gnf2GBqE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788378544; x=1819914544;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=PqONomyjOqjqkvONvcbxns6QfCa4tWnfoco/vQp0RX8=;
-  b=gnf2GBqEw+rBVs6OfAlFcBzKEhljR0akqZouVfjY4b18AF4x8tJtTCCd
-   qAgRhjXiGibAzfd2bl9h8EyaAa9IivBdIbznMt1Hq4LlrM/An8X7C1JTc
-   ZnlqBu5Byw6efzCb8Uy0nR7vs2UXKuqNj52iU/x+GGHu8HD7O2UKVOlfw
-   qpsxeV/4NrSqEIw7SYUeUBrSc+dS81pzWuz227U9+iPP43rEMfzKKuBE6
-   PgNYf//M/3z9oA6C3+5FWb03L2GumWZxnSQcXwx6P7RBVpN7y2sJeWuUx
-   EcisuCoCQ/gCIC7I0eLgOv0E0jrqVk3/jBt1irq0RiRuChQnEXKl0bvuu
-   w==;
-X-CSE-ConnectionGUID: NLFzAKPeTmm0orhYDTwT4g==
-X-CSE-MsgGUID: H2Cu5WrrTDmD3maeTJJgbQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11894"; a="111623245"
-X-IronPort-AV: E=Sophos;i="6.25,258,1779174000"; 
-   d="scan'208";a="111623245"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2026 12:48:56 -0700
-X-CSE-ConnectionGUID: ybu/weRnTVqAQJqu94/Pbw==
-X-CSE-MsgGUID: qazrVWkARIOUkQCDIRrzpQ==
-X-ExtLoop1: 1
-Received: from lkp-server01.sh.intel.com (HELO bfac249b2189) ([10.239.97.150])
-  by fmviesa003.fm.intel.com with ESMTP; 02 Sep 2026 12:48:54 -0700
-Received: from kbuild by bfac249b2189 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1x1qx0-000000003GI-2haC;
-	Wed, 02 Sep 2026 19:48:50 +0000
-Date: Thu, 3 Sep 2026 03:48:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Li Youhong <dayou5941@163.com>, Eugeniy.Paltsev@synopsys.com,
-	vkoul@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Frank.Li@kernel.org, dmaengine@vger.kernel.org,
-	Li Youhong <liyouhong@kylinos.cn>, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v3] dmaengine: dw-axi-dmac: convert to clk bulk APIs
-Message-ID: <202609030325.ALAaghFW-lkp@intel.com>
-References: <20260902013016.3381788-1-dayou5941@163.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KwmbJp+I"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cc891373e0so16821945ad.2
+        for <dmaengine@vger.kernel.org>; Wed, 02 Sep 2026 14:46:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788385574; x=1788990374; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=n7K3SDtPyUG4Mgptm2ekLrg2N2MmRQSuElIMP3BqTu0=;
+        b=KwmbJp+IX76yHoV8z38i+7ItXdZONlyEPeVdaZ1SIF1bxuehNgOub3+4fR/Xamk+lL
+         sZyALfCNheStCfA56LV04rg535WXYNI8YBgIkZST/Sp02AZOylS+AWI7KM5va2V526Pe
+         vN9IX0CJ+qGmVlvIbaskthWmfZnONga3tziQ2hiXH9GuKD53cOQnBR1y/BhaB/oTVwq2
+         C3EAcpjiL/CB8K5iBfLr+w++bP/z1yTBJlt8NsPK0hzpWpDeaYHXOo+7mYOjiWCq6M8r
+         HJq3/9FzrSqa9fVDNF8B4tfXH44r0hZ3ttCzTM5kYfR3utKIPuTGUFl2ghXW95tdEsA4
+         Bkww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788385574; x=1788990374;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=n7K3SDtPyUG4Mgptm2ekLrg2N2MmRQSuElIMP3BqTu0=;
+        b=aMegI2sl2RybVrjgwU/LXEJpaNDI/gIS9Cer84ElCJ51t1LpKmU6bIZj7o4zpmBhE4
+         YTYA7y2U+jEfKAi8QlNQwvrpqMgtah+y9Zf6QHiNZoPz15GjFLNgfU9UEHgJHN+DQWCw
+         yLVJFEJSXW2LAjywI8o9S6V6u4fJqHSAvIzXvM6NAHRbUR6+eLxp9s6n7GoW/Srb+vow
+         tiArorIheykJFdUzVjqd8p1BZsKGzoHILr/FsC2ZVaPwMoHfgKUU5ySgCwyiOv2cr0e4
+         zoGqm4TIMQSA2JZ0PlTCRcQ9YxjFSFgejf1WMQZwGn9AZsszYw8mDVawebZyo01YzBeT
+         94zg==
+X-Gm-Message-State: AFuF++mI20AknFw5DL213Z00SrFBBYEWIZ0pzz6Fja1dMi2aULjPfNM1
+	y+IhEPIx1l+QOh0PiGlwyAcfJvZszhP8PyTdDRXG1NJRpVba8fPpwjj0yqYvCA==
+X-Gm-Gg: AYBFou2DXkdboaCHRaU151lDEX3agGwJ5m+hLQa5FAkCwvyMx+HApGUGcLklq3rwv8n
+	Di2/W7KQmTXQ4ms2+Q+SP7iMf2+iDc33RS2j1oxrH83PfDlUcHxSWtrT96f/udq4aut/AXznve7
+	JQSu3d6lNsB2e/B91zmqsn6uwvf7ndXJTMe6D3ix/PlesGtHRUqBIRkZXsaVczaDzSAu9uU/Agy
+	mZyQNZ1nmErfW8ATFevBhB+9LqtnRYx6aCgZwPfl7Bp10T1mBKnF+7/XyV8OFZy+2fViO3ETCHp
+	OebPcaeeIe5zGO/aiZPmHWaRV8YRXz7gUD0gCw6JzUmmwVBDalp0mdnfkrFyRBte5EyVJOW6DMe
+	jhCmLaxvg/ACO0cjoWyEaEVCAX2h2cFWwkqilP/ghW+P1GU3xGNTNnhitP/oq6gYQdml/zmuMr9
+	fISpITyKwiROYNvPDM//Ewj45nvaOTgwZ2FGVncaCPGYcVyuhUKY61Tdl/z+OvWVsHHA06MxZZO
+	wugBSuxn2dgdfe11KxG9pxIC8wXBoI7miiEWOmG7C1VhGPpOCr6J0GlqCXM2Hg65IO+qtyS1VA8
+	tINLdVQFQDQPgvFElq0gE8scl9eJuLQoluVTOw==
+X-Received: by 2002:a17:903:1a2e:b0:2d9:438e:b70d with SMTP id d9443c01a7336-2daec5f3489mr109411475ad.1.1788385574314;
+        Wed, 02 Sep 2026 14:46:14 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e34])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dafec3becesm919285ad.58.2026.09.02.14.46.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 14:46:13 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv2] dmaengine: bestcomm: ioremap early
+Date: Wed,  2 Sep 2026 14:46:12 -0700
+Message-ID: <20260902214612.311207-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260902013016.3381788-1-dayou5941@163.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Li,
+ioremap early as devm_platform_get_and_ioremap_resource() only needs a
+platform_device pointer. Also avoid doing work before alllocating the main
+ struct.
 
-kernel test robot noticed the following build warnings:
+Replace the open-coded resource lookup, request_mem_region, ioremap and
+the manual iounmap/release_mem_region cleanup in probe/remove with the
+managed devm_platform_get_and_ioremap_resource() helper. This removes the
+now-unused error-unmap/release paths and simplifies probing.
 
-[auto build test WARNING on vkoul-dmaengine/next]
-[also build test WARNING on linus/master v7.3-rc1 next-20260902]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+This also fixes a resource size mismatch between allocating and freeing
+where request_mem_region() and release_mem_region() hopefully use the
+same size but is not guarenteed.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Li-Youhong/dmaengine-dw-axi-dmac-convert-to-clk-bulk-APIs/20260902-093016
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
-patch link:    https://lore.kernel.org/r/20260902013016.3381788-1-dayou5941%40163.com
-patch subject: [PATCH v3] dmaengine: dw-axi-dmac: convert to clk bulk APIs
-config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20260903/202609030325.ALAaghFW-lkp@intel.com/config)
-compiler: clang version 24.0.0git (https://github.com/llvm/llvm-project ed1626b9d0eaf7c406f44da5fb595ad94559f54b)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260903/202609030325.ALAaghFW-lkp@intel.com/reproduce)
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v2: remove Sashiko generated description. Reword description.
+ drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
+ 1 file changed, 10 insertions(+), 35 deletions(-)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202609030325.ALAaghFW-lkp@intel.com/
+diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
+index 432b43520ddc..44ff4a42376b 100644
+--- a/drivers/dma/bestcomm/bestcomm.c
++++ b/drivers/dma/bestcomm/bestcomm.c
+@@ -13,7 +13,6 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
+-#include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <linux/platform_device.h>
+ #include <asm/io.h>
+@@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
+ static int mpc52xx_bcom_probe(struct platform_device *op)
+ {
+ 	struct device_node *ofn_sram;
+-	struct resource res_bcom;
++	struct resource *res_bcom;
++	void __iomem *regs;
+ 
+ 	int rv;
+ 
+ 	/* Inform user we're ok so far */
+ 	printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
+ 
++	/* Get, reserve & map io */
++	regs = devm_platform_get_and_ioremap_resource(op, 0, &res_bcom);
++	if (IS_ERR(regs))
++		return PTR_ERR(regs);
++
+ 	/* Get the bestcomm node */
+ 	of_node_get(op->dev.of_node);
+ 
+@@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	/* Save the node */
+ 	bcom_eng->ofnode = op->dev.of_node;
+ 
+-	/* Get, reserve & map io */
+-	if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't get resource\n");
+-		rv = -EINVAL;
+-		goto error_sramclean;
+-	}
+-
+-	if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
+-				DRIVER_NAME)) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't request registers region\n");
+-		rv = -EBUSY;
+-		goto error_sramclean;
+-	}
+-
+-	bcom_eng->regs_base = res_bcom.start;
+-	bcom_eng->regs = ioremap(res_bcom.start, sizeof(struct mpc52xx_sdma));
+-	if (!bcom_eng->regs) {
+-		printk(KERN_ERR DRIVER_NAME ": "
+-			"Can't map registers\n");
+-		rv = -ENOMEM;
+-		goto error_release;
+-	}
++	bcom_eng->regs = regs;
++	bcom_eng->regs_base = res_bcom->start;
+ 
+ 	/* Now, do the real init */
+ 	rv = bcom_engine_init();
+ 	if (rv)
+-		goto error_unmap;
++		goto error_sramclean;
+ 
+ 	/* Done ! */
+ 	printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
+@@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	return 0;
+ 
+ 	/* Error path */
+-error_unmap:
+-	iounmap(bcom_eng->regs);
+-error_release:
+-	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+ error_sramclean:
+ 	kfree(bcom_eng);
+ 	bcom_sram_cleanup();
+@@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
+ 	/* Cleanup SRAM */
+ 	bcom_sram_cleanup();
+ 
+-	/* Release regs */
+-	iounmap(bcom_eng->regs);
+-	release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdma));
+-
+ 	/* Release the node */
+ 	of_node_put(bcom_eng->ofnode);
+ 
+-- 
+2.55.0
 
-All warnings (new ones prefixed by >>):
-
->> drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:1638:2: warning: ignoring return value of function declared with 'warn_unused_result' attribute [-Wunused-result]
-    1638 |         clk_bulk_prepare_enable(DW_AXI_DMA_MAX_CLKS, chip->clks);
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1 warning generated.
-
-
-vim +/warn_unused_result +1638 drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-
-  1629	
-  1630	static void dw_remove(struct platform_device *pdev)
-  1631	{
-  1632		struct axi_dma_chip *chip = platform_get_drvdata(pdev);
-  1633		struct dw_axi_dma *dw = chip->dw;
-  1634		struct axi_dma_chan *chan, *_chan;
-  1635		u32 i;
-  1636	
-  1637		/* Enable clk before accessing to registers */
-> 1638		clk_bulk_prepare_enable(DW_AXI_DMA_MAX_CLKS, chip->clks);
-  1639		axi_dma_irq_disable(chip);
-  1640		for (i = 0; i < dw->hdata->nr_channels; i++) {
-  1641			axi_chan_disable(&chip->dw->chan[i]);
-  1642			axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
-  1643		}
-  1644		axi_dma_disable(chip);
-  1645	
-  1646		pm_runtime_disable(chip->dev);
-  1647		axi_dma_suspend(chip);
-  1648	
-  1649		for (i = 0; i < DMAC_MAX_CHANNELS; i++)
-  1650			if (chip->irq[i] > 0)
-  1651				devm_free_irq(chip->dev, chip->irq[i], chip);
-  1652	
-  1653		of_dma_controller_free(chip->dev->of_node);
-  1654	
-  1655		list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
-  1656					 vc.chan.device_node) {
-  1657			list_del(&chan->vc.chan.device_node);
-  1658			tasklet_kill(&chan->vc.task);
-  1659		}
-  1660	}
-  1661	
-
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
