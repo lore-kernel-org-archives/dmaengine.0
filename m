@@ -1,192 +1,98 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C0F4AD4AE
-	for <dmaengine@vger.kernel.org>; Wed,  2 Sep 2026 21:46:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C339D42902E
+	for <dmaengine@vger.kernel.org>; Wed,  2 Sep 2026 21:54:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788385584; cv=none; b=FKXKiTKusdyRJ17Q5vmsntP0oLYygB14ttef5S/2QG0quZ5VWMqPl7SkDl3o4O8U/F2X+ze/jKYkQ+HTY9jkBunCH61lsTpzMt4n4eKL11w3YaHxZuQSPdAT7nY3bQ5aE+k5iyG+MVhRTUqJ4wKZ4lwcUwK6P0nhU7DCmJ6i3Xs=
+	t=1788386104; cv=none; b=dFc1kw9cS0NhDWKwcFsxqs5peIKH9B5/dBuBD6kIEzGan0JpC4RsHIqZRcAWemvgK9e6rd+65Z41Xuyg8NMVl3Uumd9p9HJRI8VIk+ZW56fwZiMwOFRxp4L7vnCv3iq6cZdbkYwotu1Yw4tkxCuR6b9qr1SRNLKx9C+tierfYco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788385584; c=relaxed/simple;
-	bh=5JwzSsfz0aQCzNb5RvVhNxFL9Ur0OR3IWCI47dZbe4U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BJYYLClFSUxNWj/tbPbwlrytZDG23A4pE1hiIgCoKmIAAKBcuJH+Y5y+HEPixSsJLatNmQgAcnxXlMbNpnJswTlpD4vd/f2EPmAOXkSic5A6+r+E32l93edW+uah/WeIbnIFKZbur/OqanqsV/5SCWTToSNlLZhF/q2O2xTNyg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KwmbJp+I; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788386104; c=relaxed/simple;
+	bh=zAOPgcFI2i84cOx3MewgHPVoIVXF7gp8Ld61iw+0DIM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=bGn05p1jiaJXb61iekl/2uXqaONg4CKGnB1uCkPfk3by8p8wnY1eP3h/VtiUp9OLFgtlfd+8DTFrGMv5BFqC6dODb+D/9m9k0HKvEUUgQeMMeQZ7Ftz6ZT+V/m99zYEqnCtqeLRC710TOAzycQUUrkgbcATtOZouuAgLJNL2Ims=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PAOCVBLG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KwmbJp+I"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cc891373e0so16821945ad.2
-        for <dmaengine@vger.kernel.org>; Wed, 02 Sep 2026 14:46:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788385574; x=1788990374; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=n7K3SDtPyUG4Mgptm2ekLrg2N2MmRQSuElIMP3BqTu0=;
-        b=KwmbJp+IX76yHoV8z38i+7ItXdZONlyEPeVdaZ1SIF1bxuehNgOub3+4fR/Xamk+lL
-         sZyALfCNheStCfA56LV04rg535WXYNI8YBgIkZST/Sp02AZOylS+AWI7KM5va2V526Pe
-         vN9IX0CJ+qGmVlvIbaskthWmfZnONga3tziQ2hiXH9GuKD53cOQnBR1y/BhaB/oTVwq2
-         C3EAcpjiL/CB8K5iBfLr+w++bP/z1yTBJlt8NsPK0hzpWpDeaYHXOo+7mYOjiWCq6M8r
-         HJq3/9FzrSqa9fVDNF8B4tfXH44r0hZ3ttCzTM5kYfR3utKIPuTGUFl2ghXW95tdEsA4
-         Bkww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788385574; x=1788990374;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=n7K3SDtPyUG4Mgptm2ekLrg2N2MmRQSuElIMP3BqTu0=;
-        b=aMegI2sl2RybVrjgwU/LXEJpaNDI/gIS9Cer84ElCJ51t1LpKmU6bIZj7o4zpmBhE4
-         YTYA7y2U+jEfKAi8QlNQwvrpqMgtah+y9Zf6QHiNZoPz15GjFLNgfU9UEHgJHN+DQWCw
-         yLVJFEJSXW2LAjywI8o9S6V6u4fJqHSAvIzXvM6NAHRbUR6+eLxp9s6n7GoW/Srb+vow
-         tiArorIheykJFdUzVjqd8p1BZsKGzoHILr/FsC2ZVaPwMoHfgKUU5ySgCwyiOv2cr0e4
-         zoGqm4TIMQSA2JZ0PlTCRcQ9YxjFSFgejf1WMQZwGn9AZsszYw8mDVawebZyo01YzBeT
-         94zg==
-X-Gm-Message-State: AFuF++mI20AknFw5DL213Z00SrFBBYEWIZ0pzz6Fja1dMi2aULjPfNM1
-	y+IhEPIx1l+QOh0PiGlwyAcfJvZszhP8PyTdDRXG1NJRpVba8fPpwjj0yqYvCA==
-X-Gm-Gg: AYBFou2DXkdboaCHRaU151lDEX3agGwJ5m+hLQa5FAkCwvyMx+HApGUGcLklq3rwv8n
-	Di2/W7KQmTXQ4ms2+Q+SP7iMf2+iDc33RS2j1oxrH83PfDlUcHxSWtrT96f/udq4aut/AXznve7
-	JQSu3d6lNsB2e/B91zmqsn6uwvf7ndXJTMe6D3ix/PlesGtHRUqBIRkZXsaVczaDzSAu9uU/Agy
-	mZyQNZ1nmErfW8ATFevBhB+9LqtnRYx6aCgZwPfl7Bp10T1mBKnF+7/XyV8OFZy+2fViO3ETCHp
-	OebPcaeeIe5zGO/aiZPmHWaRV8YRXz7gUD0gCw6JzUmmwVBDalp0mdnfkrFyRBte5EyVJOW6DMe
-	jhCmLaxvg/ACO0cjoWyEaEVCAX2h2cFWwkqilP/ghW+P1GU3xGNTNnhitP/oq6gYQdml/zmuMr9
-	fISpITyKwiROYNvPDM//Ewj45nvaOTgwZ2FGVncaCPGYcVyuhUKY61Tdl/z+OvWVsHHA06MxZZO
-	wugBSuxn2dgdfe11KxG9pxIC8wXBoI7miiEWOmG7C1VhGPpOCr6J0GlqCXM2Hg65IO+qtyS1VA8
-	tINLdVQFQDQPgvFElq0gE8scl9eJuLQoluVTOw==
-X-Received: by 2002:a17:903:1a2e:b0:2d9:438e:b70d with SMTP id d9443c01a7336-2daec5f3489mr109411475ad.1.1788385574314;
-        Wed, 02 Sep 2026 14:46:14 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dafec3becesm919285ad.58.2026.09.02.14.46.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 14:46:13 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2] dmaengine: bestcomm: ioremap early
-Date: Wed,  2 Sep 2026 14:46:12 -0700
-Message-ID: <20260902214612.311207-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PAOCVBLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2079E1F000E9;
+	Wed,  2 Sep 2026 21:54:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788386092;
+	bh=/SIv8Vcedir9UTBZvWVYwauwCii8lAPbJcgLKyLdgxI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PAOCVBLGYBUwEwEWCaiPNmeOKzcptMjFA5dvgxwFBsSKkXkLFpXtbMLGZS8IbVmbN
+	 mfWFP61Vji6m52W03HMBMAtFJiN0nQmuyWN5vMXuTPgE6X/MPiu5wa4n9A4vnzRa1g
+	 B1wfxK1xWwh/mkT061i4f8U4+aGNA8O77D4J0jMU2+U4pj7+oEEVdPeqiAxbUeM/Cz
+	 3wHSbFV5RQr1a1R3bhy5MZE8W999A0qFHEJMPMOvsxNiPf2I5ba9l0qKmuELlqnLXj
+	 JT1eOqtOF0MMCNRTRZr1v9whrkztlXnVEa8Q4sC73Pp1VDhILKX6hXYCXSLK11Ro7J
+	 6Ahqkm8daZqxQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv2] dmaengine: bestcomm: ioremap early
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260902214612.311207-1-rosenp@gmail.com>
+References: <20260902214612.311207-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 02 Sep 2026 21:54:51 +0000
+Message-Id: <20260902215452.2079E1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-ioremap early as devm_platform_get_and_ioremap_resource() only needs a
-platform_device pointer. Also avoid doing work before alllocating the main
- struct.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Replace the open-coded resource lookup, request_mem_region, ioremap and
-the manual iounmap/release_mem_region cleanup in probe/remove with the
-managed devm_platform_get_and_ioremap_resource() helper. This removes the
-now-unused error-unmap/release paths and simplifies probing.
+Pre-existing issues:
+- [High] The globally exported `bcom_eng` pointer is freed but not nullifie=
+d on the probe error path, leaving a dangling pointer.
+--
 
-This also fixes a resource size mismatch between allocating and freeing
-where request_mem_region() and release_mem_region() hopefully use the
-same size but is not guarenteed.
+commit c9ef17db56df7b3bc923fc0c2ee2b7acf55e223b
+Author: Rosen Penev <rosenp@gmail.com>
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- v2: remove Sashiko generated description. Reword description.
- drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
- 1 file changed, 10 insertions(+), 35 deletions(-)
+dmaengine: bestcomm: ioremap early
 
-diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
-index 432b43520ddc..44ff4a42376b 100644
---- a/drivers/dma/bestcomm/bestcomm.c
-+++ b/drivers/dma/bestcomm/bestcomm.c
-@@ -13,7 +13,6 @@
- #include <linux/kernel.h>
- #include <linux/slab.h>
- #include <linux/of.h>
--#include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
- #include <asm/io.h>
-@@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
- static int mpc52xx_bcom_probe(struct platform_device *op)
- {
- 	struct device_node *ofn_sram;
--	struct resource res_bcom;
-+	struct resource *res_bcom;
-+	void __iomem *regs;
- 
- 	int rv;
- 
- 	/* Inform user we're ok so far */
- 	printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
- 
-+	/* Get, reserve & map io */
-+	regs = devm_platform_get_and_ioremap_resource(op, 0, &res_bcom);
-+	if (IS_ERR(regs))
-+		return PTR_ERR(regs);
-+
- 	/* Get the bestcomm node */
- 	of_node_get(op->dev.of_node);
- 
-@@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	/* Save the node */
- 	bcom_eng->ofnode = op->dev.of_node;
- 
--	/* Get, reserve & map io */
--	if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
--		printk(KERN_ERR DRIVER_NAME ": "
--			"Can't get resource\n");
--		rv = -EINVAL;
--		goto error_sramclean;
--	}
--
--	if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
--				DRIVER_NAME)) {
--		printk(KERN_ERR DRIVER_NAME ": "
--			"Can't request registers region\n");
--		rv = -EBUSY;
--		goto error_sramclean;
--	}
--
--	bcom_eng->regs_base = res_bcom.start;
--	bcom_eng->regs = ioremap(res_bcom.start, sizeof(struct mpc52xx_sdma));
--	if (!bcom_eng->regs) {
--		printk(KERN_ERR DRIVER_NAME ": "
--			"Can't map registers\n");
--		rv = -ENOMEM;
--		goto error_release;
--	}
-+	bcom_eng->regs = regs;
-+	bcom_eng->regs_base = res_bcom->start;
- 
- 	/* Now, do the real init */
- 	rv = bcom_engine_init();
- 	if (rv)
--		goto error_unmap;
-+		goto error_sramclean;
- 
- 	/* Done ! */
- 	printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
-@@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	return 0;
- 
- 	/* Error path */
--error_unmap:
--	iounmap(bcom_eng->regs);
--error_release:
--	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
- error_sramclean:
- 	kfree(bcom_eng);
- 	bcom_sram_cleanup();
-@@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
- 	/* Cleanup SRAM */
- 	bcom_sram_cleanup();
- 
--	/* Release regs */
--	iounmap(bcom_eng->regs);
--	release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdma));
--
- 	/* Release the node */
- 	of_node_put(bcom_eng->ofnode);
- 
--- 
-2.55.0
+This commit replaces the open-coded resource lookup and cleanup in the
+bestcomm driver probe and remove paths with the managed
+devm_platform_get_and_ioremap_resource() helper, simplifying error handling.
 
+> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestc=
+omm.c
+> index 432b43520ddc9..44ff4a42376b1 100644
+> --- a/drivers/dma/bestcomm/bestcomm.c
+> +++ b/drivers/dma/bestcomm/bestcomm.c
+[ ... ]
+> @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device=
+ *op)
+>  	return 0;
+> =20
+>  	/* Error path */
+> -error_unmap:
+> -	iounmap(bcom_eng->regs);
+> -error_release:
+> -	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+>  error_sramclean:
+>  	kfree(bcom_eng);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but is it possible for the global
+bcom_eng pointer to be left dangling here?
+
+On the error path when mpc52xx_bcom_probe() fails (e.g., if
+bcom_engine_init() returns an error), kfree(bcom_eng) is called but bcom_eng
+is not explicitly reset to NULL.
+
+Could local system drivers (like those in drivers/net/ethernet/freescale/)
+calling exported functions such as bcom_task_alloc() bypass safety checks
+since bcom_eng is not NULL, and proceed to dereference freed memory
+(for instance, when attempting to acquire bcom_eng->lock)?
+
+>  	bcom_sram_cleanup();
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902214612.3112=
+07-1-rosenp@gmail.com?part=3D1
