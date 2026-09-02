@@ -1,220 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0886348C66
-	for <dmaengine@vger.kernel.org>; Wed,  2 Sep 2026 01:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD04D33F5A8;
+	Wed,  2 Sep 2026 06:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788313516; cv=none; b=Zx+kOvMd1st07kETXyKZByvQGWtUcV80NKAhO+zwpDoYwhz0cZiGtJluOFWArP0DZknyFM1Dyr7M80dqWj/w1Lo2qAqOi7uBqHyrRYPZAoNdh8xWDU1p4ZKj5iyNFRT2bxbAAWLATCRMLgR6rAOVhYdZ/HyC03NjlTFgLS2SNa0=
+	t=1788330157; cv=none; b=NDgD8EH/AeQoeYVxVwAY/uEGboYrB6dqFt5dGsVF7Ooc/278qJkG28ztbQ4h0i8o3f73eudj6lKPYryFWruCgYxLUs6l9FVpwnd+acnDNagyUARrqd5zJ88lxAaot3HO6QcBtKMfav3EO5s2v+ked/7cYFF3pfHpuWJPQdf6EXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788313516; c=relaxed/simple;
-	bh=OWAG+J80mwZk8J0SFruc6twTQmkHs+gf25sH1OmL3l4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=fzkKTxuoJY1XmEhc58BxjsrEmXO5tdkAoW/xd51IPo1x2eB5KII33hkxIdhDsOf/03/xM76OjGSxFiNzwhrdDgTV8ixTt858d/sIuEsaL31X+h3jaoWgy76/uuueO9BfRjctplSQxXdjgR3608d934pPlCSfOqx0FDSYde5xVWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rjv/B0Xc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788330157; c=relaxed/simple;
+	bh=s3E4svhSaFMCHxliB+uZvkdxtpUrahDalPnU0+iiXTk=;
+	h=From:To:Cc:Date:Message-ID:MIME-Version:Subject; b=YFJTrI9BJMvyCIde+1HauRmBc7NC9UW0IBDrRtgOkjqh07R1ClTsSIVgLfdvqFIJOwVnVemDQLatiEDZ3G6I5xYmQZIpH3i7QNfhYnLzHP9nRA163CDHvn+0CsR8jlNKA19Ukf9ARowlwuA0ZrQ4yoeXYqTfsNrxGrUZD0y72Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=eo8QEagI; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rjv/B0Xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065151F000E9;
-	Wed,  2 Sep 2026 01:45:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788313504;
-	bh=W+XH2OZoBhd3yYfQAKdpZY9xvta0RvFPPLFk/o9wp4M=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Rjv/B0XcH8wSH+LVpESesbDSNlCToT+X/gRXrlAPGbiswUxSgUV8mtUEZA1qY9bnw
-	 CwANdYqQJouWz4XgB/XpdVkE2eRG+IJTDlH0AwxI8opuobv9V3BEA7JNOZ4i36/F5Z
-	 T97wH0s1v4Ch01riyPRHI9w9W7QHSKlH2y/Acihv55kR2V7tcNX2tvF/IiYBDC110d
-	 4yWFWuqTjOgIDSSAo9n32msQ3k/4+UEFVEtEvCOG1C/1pXsKwDHE2iP+hAt3PeQPkg
-	 gbcePbg8Nh3Z2+zYu7OJlIwBmA2HpkE4y9HYff7doOS4D1GQPlCMJrZDZX7t/uTKGk
-	 46VRfU8D4o3LQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] dmaengine: dw-axi-dmac: convert to clk bulk APIs
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Li Youhong" <dayou5941@163.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260902013016.3381788-1-dayou5941@163.com>
-References: <20260902013016.3381788-1-dayou5941@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 01:45:03 +0000
-Message-Id: <20260902014504.065151F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="eo8QEagI"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
+	:references:content-disposition:in-reply-to;
+	bh=suOI9cCCK5FZsq5KNu4J2BKlthDMDSPrEUK7qKt28RM=; b=eo8QEagINtu3bY43F0+Jv3RWlj
+	eN6ChmUXIo5kb1kOHQRoYDMYlEyhODIFGccbuhKVPStYMYPe6Uu/+0nA0hLd+PMXdroBjy12uIFbh
+	QZQGCyig+y7dQk52kOWfJRzD4O35hAYfC5qmrbMqi+eTkP7H2QjO+Bsz4qDX+lsEckc+8JGmzeHj0
+	fkfzsAgp0r/h68GPdUplJcn2vMG7YA+6CXbIxBuPjyHTvj9OSG1KUDEsgswo48XhH5w9fasqmZxc9
+	GvZYgGtCNSVWmzGtVFfws4jtW+ikLlDbaODLGN8fsVownbLNxyqZ2TjhpDKqYvomwavtooTAgafy7
+	VQ+4k4gg==;
+Received: from cgy1-donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1x1eMe-00000000LqM-24Xm;
+	Wed, 02 Sep 2026 00:22:29 -0600
+Received: from gunthorp by cgy1-donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <gunthorp@deltatee.com>)
+	id 1x1eMA-0000000085J-1Zzc;
+	Wed, 02 Sep 2026 00:21:58 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	George Ge <george.ge@microchip.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Logan Gunthorpe <logang@deltatee.com>
+Date: Wed,  2 Sep 2026 00:21:42 -0600
+Message-ID: <20260902062153.31048-1-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, linux@weissschuh.net, dave.jiang@intel.com, kelvin.cao@microchip.com, george.ge@microchip.com, jjy600901@snu.ac.kr, logang@deltatee.com
+X-SA-Exim-Mail-From: gunthorp@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v6 00/10] dmaengine: miscellaneous fixes for ioat, switchtec_dma and plx_dma
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+This is the latest series of fixes that has been rebased onto v7.3-rc1.
 
-New issues:
-- [High] Unchecked clk_bulk_prepare_enable() in dw_remove() introduces a re=
-gression where a partial clock failure guarantees an external abort.
+After getting more Sashiko feedback on the two problematic patches I
+have to eat crow and appologize. Frank was correct about them and I
+was a bit too stubborn. Sorry about that. I have dropped those two
+patches in this series so hopefully it can go in quickly.
 
-Pre-existing issues:
-- [High] Virt-dma tasklets are not killed on probe error paths, risking Use=
--After-Free if scheduled.
-- [High] Premature IRQ registration before channel registers are mapped and=
- clocks are enabled risks NULL pointer dereference and bus faults.
-- [High] `dw_remove()` modifies per-channel hardware state without holding =
-the required `chan->vc.lock`, allowing concurrent DMA operations to unsafel=
-y re-enable channels.
-- [High] The driver relies on devres to unregister the DMA engine asynchron=
-ously after `dw_remove()` completes, exposing suspended hardware to concurr=
-ent DMA clients.
+Please note: I'm going to be on vacation starting Friday the 4th until
+the 15th so if there is any feedback in that window I'll respond when
+I get back.
+
+Thanks,
+
+Logan
+
+Changes since v5:
+ * Dropped the two patches that skipped freeing the descriptor rings
+   when the channel could not be confirmed halted ("always clear DMA
+   base registers on chan_stop()" and "halt channel on
+   alloc_chan_resources error"), per Frank's recommendation. All
+   remaining patches are unchanged.
+
+Changes since v4:
+ * Rebased onto v7.3-rc1.
+ * Added paragraph to patches 3 and 4 to make clear that they are
+   leaking memory in favour of preventing theoretically buggy hardware
+   from trashing re-used memory. I think this is the best thing to do.
+
+Changes since v3:
+ * Add a patch (3) making switchtec_dma_chan_stop() clear the DMA base
+   registers even when halt_channel() times out, and return the halt
+   result. switchtec_dma_free_chan_resources() (patch 3) and the
+   alloc_chan_resources() error path (patch 4) now skip freeing the
+   descriptor rings when the halt wasn't confirmed. This will leak some
+   memory on tear down but that avoids broken hardware from scribbling
+   on memory that may have been freed and reallocated. (Per Sashiko)
+ * Remove each channel's list entry in switchtec_dma_chans_free()
+   (patch 5), immediately before the memory is freed, instead of in
+   switchtec_dma_chans_disable() (patch 8), which now only frees the
+   channel status IRQ. (Per Sashiko)
+ * Collected Reviewed-by tags from Frank and applied one of his
+   commit message suggestions.
+
+Changes since v2:
+
+ * Fixed a race when unlisting the channels in the error path.
+   The interrupt needed to be disabled before hand. (Per Sashiko)
+ * Picked up Acked-by from Dave Jiang on the two ioat patches.
+
+Changes since v1:
+
+ * Added a fix for switchtec_dma_alloc_chan_resources()'s error path
+   calling disable_channel() instead of properly halting the channel
+   before freeing the descriptor rings. (Per Sashiko)
+ * Added a fix for switchtec-dma channel structs being freed without
+   being removed from dma_dev->channels on a registration failure,
+   while the channel status IRQ is still live. (Per Sashiko)
+ * Added a fix for switchtec_dma_remove() using swdma_dev after it may
+   already have been freed by dma_async_device_unregister(). (Per
+   Sashiko)
+ * Added a fix for chan_status_irq being freed with the wrong API, and
+   a valid vector index of 0 being incorrectly treated as unset.
+   (Per Sashiko)
+ * Made switchtec_dma_chans_release() void, since nothing checked its
+   return value. (Noticed while reviewing the code for these changes).
+
+Logan Gunthorpe (10):
+  dmaengine: switchtec-dma: fix double-free in switchtec_dma_free_desc()
+  dmaengine: switchtec-dma: fix resource leak in alloc_chan_resources
+  dmaengine: switchtec-dma: fix channel leak on registration failure
+  dmaengine: switchtec-dma: make switchtec_dma_chans_release() void
+  dmaengine: switchtec-dma: fix chan_status_irq cleanup on create()
+    error
+  dmaengine: switchtec-dma: disable channels before freeing on
+    registration failure
+  dmaengine: switchtec-dma: fix use-after-free of swdma_dev in remove()
+  dmaengine: ioat: disable relaxed ordering before registering the
+    device
+  dmaengine: ioat: use sysfs_emit() in per-channel sysfs show()
+  dmaengine: plx_dma: fix NULL pointer deref in plx_dma_isr()
+
+ drivers/dma/ioat/init.c     | 18 ++++-----
+ drivers/dma/ioat/sysfs.c    | 22 +++++-----
+ drivers/dma/plx_dma.c       | 10 ++---
+ drivers/dma/switchtec_dma.c | 80 +++++++++++++++++++++++++++----------
+ 4 files changed, 84 insertions(+), 46 deletions(-)
+
+
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
 --
-
-commit 40975e504ffaf6727d542d4c2cde656ef32bc7dc
-Author: Li Youhong <liyouhong@kylinos.cn>
-
-dmaengine: dw-axi-dmac: convert to clk bulk APIs
-   =20
-axi_dma_resume() enables cfgr_clk then core_clk. If enabling
-core_clk fails, return without disabling cfgr_clk, leaking the
-already-enabled clock.
-
-Switch both clocks to the clk bulk helpers so prepare/enable
-failures roll back automatically, and update probe/remove/
-suspend/resume accordingly.
-
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index eebed2474210d..cf743450f629e 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-
-[ ... ]
-
-> @@ -1524,13 +1519,11 @@ static int dw_probe(struct platform_device *pdev)
-> =20
->  	chip->dw->hdata->use_cfg2 =3D !!(flags & AXI_DMA_FLAG_USE_CFG2);
-> =20
-> -	chip->core_clk =3D devm_clk_get(chip->dev, "core-clk");
-> -	if (IS_ERR(chip->core_clk))
-> -		return PTR_ERR(chip->core_clk);
-> -
-> -	chip->cfgr_clk =3D devm_clk_get(chip->dev, "cfgr-clk");
-> -	if (IS_ERR(chip->cfgr_clk))
-> -		return PTR_ERR(chip->cfgr_clk);
-> +	chip->clks[0].id =3D "cfgr-clk";
-> +	chip->clks[1].id =3D "core-clk";
-> +	ret =3D devm_clk_bulk_get(chip->dev, DW_AXI_DMA_MAX_CLKS, chip->clks);
-> +	if (ret)
-> +		return ret;
-
-[Severity: High]
-This isn't a bug introduced by this patch, but are the virt-dma tasklets
-properly cleaned up if probe fails?
-
-Later in dw_probe(), vchan_init() initializes a tasklet for each channel:
-
-	vchan_init(&chan->vc, &dw->dma);
-
-If a subsequent step like dmaenginem_async_device_register() fails, the dri=
-ver
-returns without calling tasklet_kill().
-
-Since devm_request_irq() was called earlier with IRQF_SHARED, a shared
-interrupt could fire and schedule the tasklet before the error path complet=
-es,
-leading to a use-after-free when devres frees the channel memory.
-
-[Severity: High]
-This is also a pre-existing issue, but does requesting the shared IRQ early
-risk a NULL pointer dereference or bus fault?
-
-In dw_probe(), devm_request_irq() is called with IRQF_SHARED:
-
-	ret =3D axi_req_irqs(pdev, chip);
-
-This happens before the hardware clocks are enabled and before chan->chan_r=
-egs
-is populated later in dw_probe():
-
-	chan->chan_regs =3D chip->regs + COMMON_REG_LEN + i * CHAN_REG_LEN;
-
-If a shared interrupt fires immediately, dw_axi_dma_interrupt() executes and
-calls axi_dma_irq_disable(), which reads DMAC_CFG while clocks are off, cau=
-sing
-a bus fault. It also reads chan->chan_regs + CH_INTSTATUS, which is NULL,
-resulting in a crash.
-
-[ ... ]
-
-> @@ -1642,8 +1635,7 @@ static void dw_remove(struct platform_device *pdev)
->  	u32 i;
-> =20
->  	/* Enable clk before accessing to registers */
-> -	clk_prepare_enable(chip->cfgr_clk);
-> -	clk_prepare_enable(chip->core_clk);
-> +	clk_bulk_prepare_enable(DW_AXI_DMA_MAX_CLKS, chip->clks);
->  	axi_dma_irq_disable(chip);
-
-[Severity: High]
-Does this unchecked bulk prepare/enable create a regression where a partial
-clock failure leads to a bus fault?
-
-During driver removal, if cfgr-clk enables successfully but core-clk fails,=
- the
-clk_bulk API automatically rolls back and disables cfgr-clk. Because the re=
-turn
-value isn't checked, the code unconditionally proceeds to call
-axi_dma_irq_disable().
-
-axi_dma_irq_disable() reads the DMAC_CFG APB register while the APB clock is
-disabled, causing a bus fault.
-
-Before this patch, the individual clk_prepare_enable() calls did not roll b=
-ack
-cfgr-clk on core-clk failure, allowing the APB access to succeed safely.
-
->  	for (i =3D 0; i < dw->hdata->nr_channels; i++) {
->  		axi_chan_disable(&chip->dw->chan[i]);
-
-[Severity: High]
-This is a pre-existing issue, but does this loop unsafely modify hardware
-state without holding chan->vc.lock?
-
-In dw_remove(), axi_chan_disable() and axi_chan_irq_disable() are called
-without acquiring the lock. Concurrently, a virt-dma tasklet or client can =
-call
-axi_chan_start_first_queued(), which acquires the lock and writes to DMAC_C=
-HEN
-to enable the channel.
-
-This race could allow a channel to be re-enabled after dw_remove() attempte=
-d to
-disable it. When dw_remove() subsequently suspends the clocks, it could cra=
-sh
-the bus if the channel is actively transferring.
-
->  		axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
->  	}
->  	axi_dma_disable(chip);
-> =20
->  	pm_runtime_disable(chip->dev);
->  	axi_dma_suspend(chip);
-> =20
->  	for (i =3D 0; i < DMAC_MAX_CHANNELS; i++)
->  		if (chip->irq[i] > 0)
->  			devm_free_irq(chip->dev, chip->irq[i], chip);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this driver leave
-suspended hardware exposed to concurrent DMA clients during unbind?
-
-Because dw_probe() uses dmaenginem_async_device_register() (devm), the DMA
-engine is only unregistered asynchronously by devres after dw_remove() fully
-returns.
-
-During dw_remove(), the hardware clocks are manually turned off via
-axi_dma_suspend(). Since the DMA engine remains visible to clients througho=
-ut
-this process, a concurrent DMA request invoking dma_chan_issue_pending() wi=
-ll
-attempt to write to hardware registers with disabled clocks, leading to a b=
-us
-fault.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902013016.3381=
-788-1-dayou5941@163.com?part=3D1
+2.47.3
