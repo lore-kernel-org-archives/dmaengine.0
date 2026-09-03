@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32D736B910;
-	Thu,  3 Sep 2026 16:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6474EBAE4;
+	Thu,  3 Sep 2026 16:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788452967; cv=none; b=UZnC2oN/0Eyw/9+km8RslAGwCi1/04i6mmqEWgAX3A+yPN76adLPbG1e/yBzVda0USDmjnr8dESuG8p8Kg7rbGweFa7YUTFvgU8oFl2BGDFetxD5Yf2rDsIGAPromco5BtEl1oDQ3/DKI7aeK9E7iM8vYS+HXrXw+NNODa/aM+U=
+	t=1788452971; cv=none; b=OaH0aj+wtSukkq+aHhXqfmIMkJLCjVWlJT5iKpPBzYujj1TCWCbynniynLt5blcqS1oTiJLCxB7KeeecdWmfHBrKJ8ZeahwkOxIp/lWfL9ASYUMsFt2+YDn9r5fN9gYpcbmHkmVjsPEPZyfYABK1Upwlap0lg+3fL79vQoy+dUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788452967; c=relaxed/simple;
-	bh=URwc2WaXEk7sHvA8iTN/N7OCzQa7/xrni0fWLoz0LPQ=;
+	s=arc-20240116; t=1788452971; c=relaxed/simple;
+	bh=gOOOo4f67uVX77koQgzwDwtjK5GcuceCL/+VkKsglZc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=IxAbubAc6HeXtaa8Fapm85j19ztHwVxyZ4+oYJZ5NZK/y9RsD7Ef9pPHPsupCRkcFFVaVGcINXZG02kirh3NkWvob7IE4uIZ1jy/9zJRXRdDMjgemx4zjfpSOsfdKD/qATQsC76GkUbJwim6AOdsATI/PWhqQP8tjsvgKJXGWCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owWrTvcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FDC5BHCECIJrQUzoT/rqthnFMDJxLTn+AkJotWNsiMOycqt4k5qF6l+nzY2im0RnN8A2shxVDj05YvA7NVmrbDDCKuWebhwEvh0s6Eax7lJLkOL3zJbJaCPfzLyGQmtV90kHlGqACkBNJn34Cz9z12o0tgZNQlKPqw+6GFDcWaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ah6E04XH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owWrTvcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5391F000E9;
-	Thu,  3 Sep 2026 16:29:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ah6E04XH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830411F00A3D;
+	Thu,  3 Sep 2026 16:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788452966;
-	bh=cfSjg9mYPeipAFTfWafkpUPGHsGkJcChBkU88AONxrA=;
+	s=k20260515; t=1788452970;
+	bh=20cLuCtv35nOGPSp26GXCtWQz+978Py2wpVagRLEtn4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=owWrTvcHaaMVBQz0yIU2NpcrGuguWiwBZTGUVFQ0ZFUSnmfTGWIGq+p9biUqiODWH
-	 cZ44Uz+/THd7Vv4jmtP3GNtw/0YSAyrEdRMWDNkvSx6hX6McW7Sjiw3TJVRweiqqGF
-	 74AyXYJiBbR/g/Dca2Exuh+HmHvAhOFPpLM5Zio9sIDWZmgYgLKTFEYPh2D4j9O8kA
-	 obatEXDz6FjrSxl+xiAXA2oTzqaQvNUm1dwWhw+kV0B5rVqvIBGGnIn9WCWkRbOq/W
-	 w2PPc0DHEsby3+zbGlIU7r4qsgW0cC1imIlhg4E6K6GWpBnconCjSQF4QeNMAjTLXK
-	 /mZWznQ4oINzA==
+	b=ah6E04XHemqWcnZfWagifjVqcghM6INsm42PLIDDpydX5wPdFijKsvk9v/hjQnEy1
+	 9zo4dtqnjSYwRRDfi6+3ExT0vKCily1ZBiDApw1urEP2v1TWzgERyCrKcQkiS2Mr9L
+	 zDQ8aFdl3NRrrHXpsowrdKwyz8Mtl6rALXRyCTOgkngw1+Siusgd1LBjwUItMIo6PT
+	 VPE9CTWWcCNXhqa3E1yp5dbiv7SNJqvHSFjJ2oyi40j+cfZxcWaZeydXqo4t9B1tH+
+	 ibVjJdaeoaJPZkWZRijkQPMsbRsTx6ka7TdGze7+e8sF841IbwHOVNBQNfFIJGwqhl
+	 TUY4uGC+Aj7LA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Guodong Xu <docular.xu@gmail.com>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-In-Reply-To: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
-References: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
-Subject: Re: [PATCH v2] dmaengine: mmp_pdma: fix wrong extended DRCMR base
- for SpacemiT K3
-Message-Id: <178845296259.1679748.15919618755814250880.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 21:59:22 +0530
+To: peter.ujfalusi@gmail.com, Alexander.Chesnokov@kaspersky.com
+Cc: grygorii.strashko@ti.com, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org, 
+ Pavel.Zhigulin@kaspersky.com, Oleg.Kazakov@kaspersky.com
+In-Reply-To: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
+References: <20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com>
+Subject: Re: [PATCH v3] dmaengine: ti: k3-udma-glue: fix NULL dereference
+ in k3_udma_glue_release_rx_chn()
+Message-Id: <178845296708.1679748.8016722423700487739.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 21:59:27 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -51,22 +48,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 27 Jul 2026 01:26:15 -0700, Troy Mitchell wrote:
-> The extended DRCMR window on SpacemiT K3 starts at 0x1100. Commit
-> 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support") incorrectly
-> set it to 0x1000, causing DRCMR accesses for request IDs >= 64 to target
-> offsets 0x100 too low.
+On Wed, 12 Aug 2026 08:34:26 +0300, Alexander.Chesnokov@kaspersky.com wrote:
+> If devm_kcalloc() for rx_chn->flows fails in a channel request function,
+> the error path calls k3_udma_glue_release_rx_chn(), which dereferences
+> the NULL rx_chn->flows pointer in k3_udma_glue_release_rx_flow().
 > 
-> The 0x1100 base has been verified on K3 silicon using real SPI and QSPI
-> DMA transactions. The K3 DMA documentation [1] was updated on June 24,
-> 2026, to reflect the corrected register addresses.
+> Skip the flow release loop in k3_udma_glue_release_rx_chn() when
+> rx_chn->flows is not allocated.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: mmp_pdma: fix wrong extended DRCMR base for SpacemiT K3
-      commit: d1fc569fcbc7be6de06b034cf954a95e30ca1fb2
+[1/1] dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_rx_chn()
+      commit: 0294b6dd515256c03ea2dbf508ddd3826d788579
 
 Best regards,
 -- 
