@@ -1,226 +1,313 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020097.outbound.protection.outlook.com [52.101.229.97])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E6C4AA00A;
-	Thu,  3 Sep 2026 16:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.97
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788451759; cv=fail; b=Z1G6+W5gd5/y3v/yk6X3m+jYuSczvc6ePOnjlo7KB4jU5T45kfVDkobnaeh5URPtylF9MA4nmY44ECxaX95Get0Ni0yCaYLl0wv7h7+frtwNoeYKkGZKlK6wkBuHZqg/dcW5DQ+lh5pKAtMy9+mc/UKmVLXhEhjrMrMAnPBnyfM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788451759; c=relaxed/simple;
-	bh=AZCZlLnvvyUKKTK563OtRgmweb1RQr40WZb/Jd7oOl0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ZEiux4aaRgEGJaGrW/fGdYW7SGW5gwJ60tYgR5xmIOlCmygYSXlvmjJiRxFRIYI3YjqwzA9QetVpbmMsSWBRdxhFhQQF8GMJe2EuBdkzzK8OIpl15NUrmz8oMjbJonKjos4MUsp/FBGrnzhx50Gviggp+Qii6z2fYhn8iXm4Wno=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=H0uk78iL; arc=fail smtp.client-ip=52.101.229.97
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8604B66D2
+	for <dmaengine@vger.kernel.org>; Thu,  3 Sep 2026 16:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788452085; cv=none; b=GS5Yfx3vhKNg1WqZtQXM4WBlL8c8Zq7LyIdYKmfYbh2rbfb28V8gPxg+uWLkZAw1M14Bj5PLf/oRskzNHdj4d8i6b/WTBi4nJcGrqyBw+H0Ji1RMyySyqN3glnwc548vjwhVGE8eQKnSY2Vd1ddoQrpUkEJVClnNhx18WzQBAuQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788452085; c=relaxed/simple;
+	bh=KpUgVbJEJhauXlCo2ElxjoeTHrdPvZ44Y93fb41JCkg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PW/RdlFw3wLxwR0P4VinfnA9yfhwZ5XgcVUdUflX/jtAsHSJGXJaVkHifMUrF39psMyi/TqV5N+Jj37XcTE/LJz0N4xuI+2csaYK8uHItMZZBNQyzdavog1KaLjICpKygYBGpKvHzjv/yzCHrHrDCYDYqLZAmGCE7VN9JQCXOXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X6q5atdo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DmR5ReLf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="H0uk78iL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F7NojOEa6WnfNR2jjQBtIWX6tn/d5vaELhTx2Vh43WEBNgXsjF4Ne758EzjW/+MYwrd7j1JN0y7otHVVUjGXAf1JrG3Fr+Of8FOFEvKeIOR3NJpunzrh7LUOuLq91D4os+TRGX7Ymv4twpk1oBg+FOjF0JHBeAgZrGyQzFdOBT4lLbG0prgRQ3l3NJoFZdTa0At4o1NhUXAqxgPQYG2SSm0b77S1T7qOpL05VK3MNcyc9iMx60DcU5BRmiHJNdkLJOtICHX6FIEnBfWHaLwRiSGLd9LGmnVgO4XUO3R3BhHwkvRiPX57GQ0v/cKTajClVWva047AY8EXBDuWABPUSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q8yBKgc4GoxTt/K3HTCojYpj3zVtdbgzckKfoAUO5W8=;
- b=cAqDZiu18E0hLjuUCZ0T1Qm4U2vnDN594haofi4p6SajOmpX+53Z9VUYhOkQoOltu/M2mSerYoGCA86F/d2s1Ebx/rrbq5N55lLTxK+bJ3x6GWQhvVsROWeRw13qRcNCl09xz8kFOikoL/Dqvcv7cd+VJOp531ArB7FDdUdiL7/rF23KFDRJE2wuEGfwdEw7sTS1MPOorf8Oz7gDiXXd7Q+ps/s04mumd741sXmci3VvSB1zDjaRvs97AtCmHoNpEGYs6Yg/wJ9WOZVjJRTmcrwq+qLlIjiFLuY55gZwbsN52k/EFcjs5/gm1b5ae3g/52FvyuPIlnfLXoj1x/ICDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q8yBKgc4GoxTt/K3HTCojYpj3zVtdbgzckKfoAUO5W8=;
- b=H0uk78iL80BKGCFRY6drJC3ESQJfpBpVuO2ecVktiR1Vh1/6W04OvSXhiiIkrDN4EJ3dliUaXsF22KLxwqo7ZSIX43xKbtHoLJtPvMSZWGlN1Q+Gcre4i9HbCWOJ6RXuwSWc1U789WC9XEXqlh7qRD4wDoTDr3DMjifdt8v431s=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by OSCP286MB4810.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:343::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Thu, 3 Sep
- 2026 16:09:13 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%4]) with mapi id 15.21.0360.008; Thu, 3 Sep 2026
- 16:09:13 +0000
-Date: Fri, 4 Sep 2026 01:09:12 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, Niklas Cassel <cassel@kernel.org>, 
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 09/15] PCI: endpoint: Add pci-ep-dma helper for exported
- DMA ABI v1
-Message-ID: <liix6im6iqrmbxby4jlxfx427p66dzylvad6mkm2wbk5l3upid@e3ro4lzb2nl5>
-References: <20260312165005.1148676-1-den@valinux.co.jp>
- <20260312165005.1148676-10-den@valinux.co.jp>
- <3ef3b7wdwpf364teperxcjc2leycxwke77cejjfzd5w4pnbmik@vlcbizvbxv4m>
- <bgzesn4sqdlqdb3n3djkyed6g7l3ebi6ljbteqhirk2ip2ieou@t4xsvdmcjhdv>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bgzesn4sqdlqdb3n3djkyed6g7l3ebi6ljbteqhirk2ip2ieou@t4xsvdmcjhdv>
-X-ClientProxiedBy: TYWPR01CA0002.jpnprd01.prod.outlook.com
- (2603:1096:400:a9::7) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X6q5atdo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DmR5ReLf"
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 683G3ZWj1091209
+	for <dmaengine@vger.kernel.org>; Thu, 3 Sep 2026 16:14:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dUUQa3IhWuf5ncDuuq5tVYRMx6lHsZYcTMpZH45yYcI=; b=X6q5atdo043c0aI3
+	fl5u/axFQrGR5VP6gXKytSsYT5MFMQj5S/iZxd47gAQzx97F6jypceq/WY19jvEh
+	PnnonKOGoWaCgZowS4Ky25PNwuDbU3RTWVZDmrpebzvpXGUumm/pzmwtO16LLj+x
+	3eVoUh5JwWlVry+toGcevuiOtc7ejFAWL9DP0+P2gSTWQDv76uhhMscouti/G++4
+	6or19FaGOSNfPR9dgwV65VekJY4hO8ZqLjK2jZMo4NSHnGWE6+tIn/EtBlKOz39X
+	5A7vIB0NhkRILL7P89fwwYEBl14X68er5lW9Wc3Zaz7xi+OroYdIEEQx7A/kSKRB
+	y0anSA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gf4ekja2c-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Thu, 03 Sep 2026 16:14:41 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2cfa55c9430so38725ad.0
+        for <dmaengine@vger.kernel.org>; Thu, 03 Sep 2026 09:14:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1788452080; x=1789056880; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dUUQa3IhWuf5ncDuuq5tVYRMx6lHsZYcTMpZH45yYcI=;
+        b=DmR5ReLfTwGQPeSKuC16q37i0kPzfcE7DVm+nYk9CFB88PX7eNU4W4uwiGOzkukmOm
+         XLwXyCOI8EQUUoBbz2pBEnWZdm1gp62ECNkO4aQpcSxSqqRqjkq93xNkuD5j1YdenRub
+         +480/g/kNQDFDBOfPvO0Me/RJo8lLJaqgrnNiTbKCy7itCn9RSnOjHom+r/WVz/5XLrq
+         l01HICwCPCBMkiaM9LT1xN/5m4bSB6nbCMkWSNVWN43xaM+6NTOyAS5Nqq4lTz9xXtAa
+         VNThohHlbemHYXUlVIWjlDSg5hhQHPfEUbfJ4MRsRWEGzxLkwtBw9g0mtI4kWRG7XqRi
+         l6tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788452080; x=1789056880;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dUUQa3IhWuf5ncDuuq5tVYRMx6lHsZYcTMpZH45yYcI=;
+        b=WttY49agUSHF63LCcJoqO0Y2xCv3jzL6Xuu729tUGLtsX5zqUGgCJb9Sam12Hr73Jd
+         0bKmcFbkrxVmXcmNkM3ZnZ5Nxd9Wnd13+hhpg/iCfPacppCV/4a5tFaZioi5WPCbOuZf
+         BBebwNwauEPaeWpbMqqaJuMDATCeJQG/+c/qvJTbs/v/fWyGhtE2l1T6jdGh6dAEwM+c
+         0vaUp7EptUBTzUtVLEO8OIlklbAV8rbi9hXzPdBDUxCB9udI+pIBdi0mtLFUerbWnrIP
+         DUg3w2ebVM/co6QWh6o/a2XPoFjKnwUV2zUpVYpS5qhz8TZ/hsPGlF5zlThdeuSGZteq
+         dOew==
+X-Forwarded-Encrypted: i=1; AKwUvBwpYZQB26MrmVaro6Z2jog0j0E7epgV5/elsc9tx8VVRlV0QOISBXb9yMTgb0uuhZFCPzFj/Lz0Y5Y=@vger.kernel.org
+X-Gm-Message-State: AFuF++ltVyTx0cjPhJ175U+ZSstneyFQnMFuHNyc/7+gVRyjXIzcWu4X
+	TU7tWwI1QUgBNFQZVknLZKm27pk6LBhhIgNAoUZHPmh+tm3tmiH2TKrptJZNDTU1Cf4YninnpQs
+	QgXbqyg+uiekbJqbASJ52rdjPraqI/OAsHStVz2GbflWtjlWJGOPnTyoq7C56+hs=
+X-Gm-Gg: AYBFou10tZexIoQZSifRr4bw5hCLCKS3eaVS9Sow8izhXrBezVPH6TojibfRwGtA+AY
+	LXtldKr5Xs8ExYYbzutkZvr3vf02NE1nd02r54lUsJ9K9OrK8VK8r2XuCY8z2RRlnaXoCADMNoG
+	CQ2Mu63s/ul5piOv7p3bX6pR5xfjjdLbemHv/xj/epeRpVlSrcVJ5QQvF0CEbUj/MAS+Wmp6QIO
+	0JnXslfnbagq/85M4tL+mkpGKZwQetHzswZdHcnkT1jPDlh8vgLUWqJiVC0050ItuKy4tRsvPTA
+	UWLCCzm+9r05rKeVODrxhxe2gP/7Pki7M/GuRALnAe3B3XNeQZeUB0fe0cDpw7RajyUv0s5QnhZ
+	QUaEM4rY6doZ0ptHt8YjGdgXzCSKDhAnqDuT8d7iDaeG+
+X-Received: by 2002:a17:90b:134f:b0:396:41d1:cbc7 with SMTP id 98e67ed59e1d1-39b22c5ae4dmr1137797a91.3.1788452080448;
+        Thu, 03 Sep 2026 09:14:40 -0700 (PDT)
+X-Received: by 2002:a17:90b:134f:b0:396:41d1:cbc7 with SMTP id 98e67ed59e1d1-39b22c5ae4dmr1137690a91.3.1788452079818;
+        Thu, 03 Sep 2026 09:14:39 -0700 (PDT)
+Received: from [192.168.1.66] ([103.172.4.43])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08d0d845sm6255076a91.17.2026.09.03.09.14.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Sep 2026 09:14:39 -0700 (PDT)
+Message-ID: <7cc05c51-811f-4949-9fe6-10580ff90eea@oss.qualcomm.com>
+Date: Thu, 3 Sep 2026 21:44:32 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OSCP286MB4810:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1124e12d-641a-4ff6-9456-08df09d5b260
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|376014|23010399003|366016|6133799003|10067099003|4143699003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	hP7IcpagPWxi64EHSTKaCD1JtilGmvcmHEQbme/KCOpE4B6cKgTyqW4q64igb7k2wcupMxHsZVPwD+XBMO86CS9UgfpAoyMf1p48WAPrSEPJ5tvc37W3904m7Du27nSaWG7tyA8YQgyI+7RSVaj+SmRfABLgNdAAERmHqMKpusDp/nRE1b/Rbjmb3Wk+b6nq2csIv3hRDpSE4SnOXfhR6rD3es/DCY1zEu44EuDV9flCMGmLy8me9klEhcWgTU/o68KtlOrI6/onb9nGZH76KdFyHN2fhkXJ2X5vWVPX3dbzH5m/+mD3WjXw89JQ1RpAfcDx8W2hbZIGA3RtkS73RMHG5wr4FYuTa53rLnG8SQmiWh9Y6pIijc22L/ff9LfMiwoJbKhSJK8BFIaYRJtgavxNVD+caiG8WBHT1qR0S0FGz45Ligb3m4/Mlx/CHLvkjznaviEriFrzW+n3zwhPk9HJFvfwB4HTzi/qVs4f7IJvvV6jkY6Kthq+eF59zr+GUPxppAg9Q5R4ByLGy9l6c3LTM3kBcoSjgfNVM21OGsF1vxJr9EmqqONUyeQwi4Wy27yvqYn7BMIdU55YHJ7ot2thCcrJdLurkumDfSm4/aab/SMYsBVguLhdkrmgE4Xi
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(376014)(23010399003)(366016)(6133799003)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?c1Ird0dxUHc0RFl0N2FTeGxCeWt6U0RVL3dRUStSU242b2ptcSsvNnBpaXZ1?=
- =?utf-8?B?YmlUS1V0YTdjMjhCWnVMWXFoQzFYRFUycktqbVMyUmxrYkxVOGtQc2Y2Y3lW?=
- =?utf-8?B?TzhrWkpoUDh6VXJ5eXFqU1p4bmtTempXaDlwT1FuZmlSV25YbDRLbmZaU2tS?=
- =?utf-8?B?T2Voc05sOGxTMWpremkvVk5sZ2VqSWFtQ1Uzc085TytTQWlGVnN1Z2lhSnph?=
- =?utf-8?B?bVVxZnlsTENnbzFJcnpRa0JuSGZjMzhFTTBYTGRLdnJyOE1IMTJIQW5vbitV?=
- =?utf-8?B?cW16dUtHaFBFQWZ6NW1VOFQ2bmxMeHpwT2luQ1JsNU5lRk4zaUw4dlFLTVNW?=
- =?utf-8?B?QWhuNWJycko3Y253QVNoQk9GWUhGUzkyYTgweXNKTkcyMnpqalUzeTBWRWNl?=
- =?utf-8?B?Y2kxMW1DTTJwOVFZa1hFcm1FSy9od2JhWnQyMzc2OVliYk5YS2QvS3BqaDVl?=
- =?utf-8?B?V0ZiNFFxQVNJT3BaUkxYTk1oQ1RPWDNmK3cxNi8xcG9lbEFpWkxXd2RadkVp?=
- =?utf-8?B?c3FGM2RIaFJLcU45OWZkMUhIMXU2aWErNWkybzBqS1g2Uy9UQXA0VFZUTkZs?=
- =?utf-8?B?WVAwYzkrWjhVSjRydW00b2ZUTXpuQk03ZzRwVHRLMGRmK2s2ZXEwTlM5eC82?=
- =?utf-8?B?SXFYY3NIY2YvRWNkUDhaMHVhTmVtM3NjSlUwdi8xL3BoemZMelRIVUl2MVBn?=
- =?utf-8?B?cFB2SnVyZkM3VUFkeis5NTVQangvbnBNdm1WaUdTNnJ0b2ZWNmNKbkR1UDB6?=
- =?utf-8?B?ZWRMZHVjNUpMa2RFSjFMM3ArVW9MUmFLUGM3bkJsWnNBWEJLSXZzanVvR1d6?=
- =?utf-8?B?Umx6WmNIS2NBNGI0NWliL2RiUXlzRlR2eGlSTUJJcDZuSjIvR002a1hWYjZK?=
- =?utf-8?B?ZVppUzZMMFU3QU4rV0wyU3N6RTNBaVpHMEQxa1I3M0lDam1OOWNLMkV3d29a?=
- =?utf-8?B?NjRLbDllOTdJeUdHKzFRbXI0OXFheDEwM1VnZlZoSnNwNTZRaDVza1BqSkk3?=
- =?utf-8?B?TVBHNkN4M0RrK0tUTVI1U0dhQW5sOGRzNjhwYi9MQis1WTVRYjdOM1lZdDRX?=
- =?utf-8?B?MFVzL1BRSDdYQVczc3pYVWtrWi9GT3RwbHpyREhNSGZJdjN2d1Z2bklLbU5o?=
- =?utf-8?B?SFkxK0Q0dFFEa3VEdHllTWFZVks2bXRpeVZXMjVKZ3JCOWVtVWNFZEZVOWVX?=
- =?utf-8?B?OFpmbTU4MXlScldEYURwdTFyYVZ5Q045U0VZZ1RMZEYvOWNOU09ZOTQ0Vnk2?=
- =?utf-8?B?RVN4VWJVbG5HNFZ2czBWQUE2TkVIZzM4ZmZnZ1liVTB1UjhxT0FwMlhYMUo0?=
- =?utf-8?B?Z2w2RllwblRQaFNjY0tuL0wzNy91LzUxaXVBVFRSelhtNWVWckdYL1BOWi9C?=
- =?utf-8?B?NFBUNWpQeUZuTzBPRk5iUDF1akluUUdwNXI1dWtQaWJhclBuRGdReEM4ak1q?=
- =?utf-8?B?a2Q0NTgxUlFUcGRYTmM5M01qVFV3SEpDTmw4NEpBUTBicjZ2OC9QU2dOWHhM?=
- =?utf-8?B?UzZNVFBDcVhDeVE3VzFmZVlycmhMNzNyWFBFeWZyZDJoSFhnM3E4bHNIVmtV?=
- =?utf-8?B?SnhHdnh5M0x1NjR4UkRFcUMybk9OZkhwa0JWRVB5bEwxMVpXVWNydDMrdkEx?=
- =?utf-8?B?V25zdEk1ekJWZDU2T2NjMHRXWW5taGdaS3o5OVNzMGpGb3pUcVF6bnBXaEJa?=
- =?utf-8?B?dHg3bS9HK3lEUVlxcFFyN3lKUVJNK2I4YlM0c0JHbEpPamszZ1NEdzYvdlV2?=
- =?utf-8?B?dmdROWxIZC9FT0RicWxnTHNDSE9BcElKOFc0NXdNQUlRSUwrNzVsWmFzYzlB?=
- =?utf-8?B?eEJnM2xZdG1zbndGdHNIamdTWkd0TWJQUWpzU0RFandiY0cxQzd5aDVwNUYx?=
- =?utf-8?B?TTZ0cW4xelJyZ0djOUdKZ0FrRnVocFcyYjB1dDV4MmFjVHUzZUl6VFRVTHgw?=
- =?utf-8?B?RXdvdGI4RjdUWWIycklYOE9jbW9EK2JzeDJYQWdSd2xSUGlBQjBnQjZrMjdP?=
- =?utf-8?B?Zy9ZMExxOXN5cHRVY0YyTGpIYndKRmpPUThpOTdLc1F2My82MVp5b1lqTU1x?=
- =?utf-8?B?UEhCUnZyekVJYk5kS082VFlmSzlBSk5HNXFYSEJHcUQxbUpQOGN4Z0FpYWhj?=
- =?utf-8?B?eUNDSGhFQ1gzZVpUOTdsM1I5S0ZpdTJKT2ZHRXVDMm1CUGQxMSt6YVZ0T25K?=
- =?utf-8?B?a3pCQzlHUkh1Ny83UGxXRUlzaWthL0p1SzNkVldDWE53d0VKTDJydjJPUVZO?=
- =?utf-8?B?Y0RteTBUWnU4cmM1aUZpeE5SSEdCVlhEVVFWN1Jud08zeWdDV0dkdXVGVzlz?=
- =?utf-8?B?UlUwbTBIQjFGZWJZOEEzNUYvUE11aU94b1IyNXZOQnhiTC9EcVhlK1k2WUhO?=
- =?utf-8?Q?RVHfsufk4KlTvapPQMgTgtDR5W4xijoP2NnEc?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1124e12d-641a-4ff6-9456-08df09d5b260
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Sep 2026 16:09:13.6527
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4tyC4Ub0iz96iIyCEl014hYzr53SHl6tWBZ0qo43EOWorZqYLyZNVx9OqgOMN1bPnu3UmbELu8KwDIL26q+sOg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSCP286MB4810
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] i2c: qcom-geni: Add bus recovery support for GPI
+ DMA mode
+To: Aniket Randive <aniket.randive@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+        Andi Shyti <andi.shyti@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+References: <20260826-i2c_bus_recovery-v1-0-203f0ec76f84@oss.qualcomm.com>
+ <20260826-i2c_bus_recovery-v1-3-203f0ec76f84@oss.qualcomm.com>
+Content-Language: en-US
+From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+In-Reply-To: <20260826-i2c_bus_recovery-v1-3-203f0ec76f84@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: hYDyxqKL9vQL92ixtdKb_y1gvh6SudJn
+X-Proofpoint-GUID: hYDyxqKL9vQL92ixtdKb_y1gvh6SudJn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTAzMDE0MSBTYWx0ZWRfX864wuy+JcCN9
+ lONkRBJvVLmtBhMtDadB9oo+UluEjgWNTmYPdaTxQUFgV3EUcUDSjFguPZd5GsA+VhT2FPhMlvN
+ P04yfEgPZtyEyM1/gTHxg06rEeKIU7MuHkWXW6/GMhGXktvCwozJaBhpYdcDcc9INZstgz2onLX
+ sbLowwhTFz4Vl4PHE4uvxkGNvCKvmFjuMx5LZlyPb2Xjuqn1FyT+daMCLNAZYsQ7pAwYUSZW7Id
+ qKuZSRdsPDvfhAWZ336NBdkYEU0TAEaTfexLI9h7+Wzxj8o4YJvWcquct3FHhTopSehUY+jypDc
+ lSg4+tDRdY4i2++CmaIF0LwORxBt1MxdWQvOQDINfwto5ff1s440fP0zOP+ksg5o7sKOgE9n1Lg
+ QvzY0ztb/CHiu47LrNLMw+f8VNvEi6hVlGXEEDrC91tbfkuXFpcsSm68hLgcVgx11CEkl3V3YZ/
+ 3QJ0yiGHBiPy/kd4PEg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTAzMDE0MSBTYWx0ZWRfX5kpDP71+suxC
+ fLsNi9QXid1jri8IBnYYX1ff2HSv/WARZN9hzvw/x5PIQ8u5JGGyjS0XwA9S0MREo3Q/K/x8Q2t
+ j3djkT7uxUvWj+3xHLJ6PdWxjNayOFQ=
+X-Authority-Analysis: v=2.4 cv=PKc/P/qC c=1 sm=1 tr=0 ts=6a999cf1 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=EcXJGs5vVKLEW0aY/poVLA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=84XQMU3cwwySlwIbdQEA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-03_05,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609030141
 
-On Tue, Sep 01, 2026 at 04:35:18PM +0200, Manivannan Sadhasivam wrote:
-> On Sat, Aug 22, 2026 at 12:41:32AM +0900, Koichiro Den wrote:
-> > On Fri, Mar 13, 2026 at 01:49:59AM +0900, Koichiro Den wrote:
-> > > Add a generic helper that packages controller-owned DMA resources into a
-> > > peer-visible BAR slice described by exported DMA ABI v1.
-> > > 
-> > > pci_epf_alloc_dma() queries EPC auxiliary resources, delegates the
-> > > requested DMA read channels, builds an ABI header in coherent memory,
-> > > and assembles the BAR region list covering the header, controller
-> > > register window, and per-channel descriptor windows. If the controller
-> > > control window is not already BAR-backed, map it into the exported slice
-> > > so the peer still sees a self-contained layout.
-> > > 
-> > > The first ABI is designed based on the DesignWare unrolled eDMA model,
-> > > but it is intended to be vendor-neutral. It exports delegated READ
-> > > channels only, which are the channels the host uses to send data from
-> > > host memory into the endpoint.
-> > > 
-> > > Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> > > ---
-> > >  drivers/pci/endpoint/Makefile     |   2 +-
-> > >  drivers/pci/endpoint/pci-ep-dma.c | 342 ++++++++++++++++++++++++++++++
-> > >  include/linux/pci-ep-dma.h        | 130 ++++++++++++
-> > >  3 files changed, 473 insertions(+), 1 deletion(-)
-> > >  create mode 100644 drivers/pci/endpoint/pci-ep-dma.c
-> > >  create mode 100644 include/linux/pci-ep-dma.h
-> > > 
-> > > diff --git a/drivers/pci/endpoint/Makefile b/drivers/pci/endpoint/Makefile
-> > > index b4869d52053a..94824f3ed5a1 100644
-> > > --- a/drivers/pci/endpoint/Makefile
-> > > +++ b/drivers/pci/endpoint/Makefile
-> > > @@ -5,5 +5,5 @@
-> > >  
-> > >  obj-$(CONFIG_PCI_ENDPOINT_CONFIGFS)	+= pci-ep-cfs.o
-> > >  obj-$(CONFIG_PCI_ENDPOINT)		+= pci-epc-core.o pci-epf-core.o\
-> > > -					   pci-epc-mem.o functions/
-> > > +					   pci-epc-mem.o pci-ep-dma.o functions/
-> > >  obj-$(CONFIG_PCI_ENDPOINT_MSI_DOORBELL)	+= pci-ep-msi.o
-> > > diff --git a/drivers/pci/endpoint/pci-ep-dma.c b/drivers/pci/endpoint/pci-ep-dma.c
-> > > new file mode 100644
-> > > index 000000000000..2a996f9b1424
-> > > --- /dev/null
-> > > +++ b/drivers/pci/endpoint/pci-ep-dma.c
-> > 
-> > ---[snip]---
-> > 
-> > > diff --git a/include/linux/pci-ep-dma.h b/include/linux/pci-ep-dma.h
-> > > new file mode 100644
-> > > index 000000000000..0ef6f9eb8593
-> > > --- /dev/null
-> > > +++ b/include/linux/pci-ep-dma.h
-> > 
-> > Hi Mani, (Cc: Frank, Niklas)
-> > 
-> > Perhaps it's time to reincarnate this series, with much of it reworked.
-> > 
-> > Following the discussion here:
-> > https://lore.kernel.org/r/fg7cma2ccvdgjgcref7qa4q7ocvvume5dteekedikszebkq7rd@uhrjfp3nmmwh/
-> > I am now thinking of dropping the generic pci-ep-dma helper and
-> > include/linux/pci-ep-dma.h altogether, as I understand the direction is to keep
-> > the DMA export within the vNTB/ntb_hw_epf path *as much as possible*.
-> > 
-> > The old wire layout was consumed by pci-epf-vntb.c, ntb_hw_epf.c, and
-> > dw-edma-aux.c (see patch 13). That is why I put pci-ep-dma.h under
-> > include/linux/. For the rework, I am thinking ntb_hw_epf should decode it and
-> > pass only the resulting resources to dw-edma-aux. This keeps the wire format
-> > between pci-epf-vntb and ntb_hw_epf. At that point, defining the same small
-> > layout in both files might even be preferable to adding another shared header in
-> > include/linux/.
-> > 
-> > Mani, does this direction look acceptable to you? I would also appreciate your
-> > view on the linked discussion when you have a chance.
-> > 
+
+
+On 8/26/2026 3:21 PM, Aniket Randive wrote:
+> I2C transfers in GPI DMA mode can fail with -EIO when a target holds
+> SDA low, leaving the bus stuck and preventing subsequent transactions.
+> The GPI completion callback reports a NACK and a genuine bus error
+> alike as -EIO, and the existing recovery path switches the SE to FIFO
+> mode which is not valid in GPI DMA mode.
 > 
-> Sounds good to me. My only concern is exposing the remote DMA functionality as a
-> new EPF driver. As long as you keep the changes within the NTB drivers, I'm fine
-> with it.
-
-Thanks for the confirmation!
-
-Note: the latest (as of today) is v4:
-https://lore.kernel.org/r/20260903082327.2345602-1-den@valinux.co.jp/
-The series title is unchanged.
-
-Best regards,
-Koichiro
-
+> Add bus recovery support using the I2C_BUS_CLEAR and I2C_STOP_ON_BUS
+> opcodes issued via the GPI TX DMA channel. Guard the -EIO recovery
+> trigger with a SE_GENI_IOS RX_DATA_IN check to skip recovery when SDA
+> is already released. Extend the recovery callback to dispatch through
+> the GPI DMA path when gi2c->gpi_mode is set.
 > 
-> - Mani
+> Signed-off-by: Aniket Randive <aniket.randive@oss.qualcomm.com>
+> ---
+>   drivers/i2c/busses/i2c-qcom-geni.c | 104 +++++++++++++++++++++++++++++++------
+>   1 file changed, 88 insertions(+), 16 deletions(-)
 > 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 9fa1a8ac400c..85cb1367958c 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -34,8 +34,6 @@
+>   #define I2C_READ		0x2
+>   #define I2C_WRITE_READ		0x3
+>   #define I2C_ADDR_ONLY		0x4
+> -#define I2C_BUS_CLEAR		0x6
+> -#define I2C_STOP_ON_BUS		0x7
+>   /* M_CMD params for I2C */
+>   #define PRE_CMD_DELAY		BIT(0)
+>   #define TIMESTAMP_BEFORE	BIT(1)
+> @@ -1003,6 +1001,70 @@ static int geni_i2c_fifo_bus_cmd(struct geni_i2c_dev *gi2c, u32 cmd)
+>   	return gi2c->err;
+>   }
+>   
+> +static int geni_i2c_gpi_bus_cmd(struct geni_i2c_dev *gi2c, enum i2c_op cmd)
+> +{
+> +	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+> +	struct dma_async_tx_descriptor *desc;
+> +	struct gpi_i2c_config peripheral = {};
+> +	struct dma_slave_config config = {};
+> +	unsigned long time_left;
+> +	unsigned long flags;
+> +	dma_cookie_t cookie;
+> +
+> +	config.peripheral_config = &peripheral;
+> +	config.peripheral_size = sizeof(peripheral);
+> +
+> +	peripheral.set_config  = 1;
+> +	peripheral.pack_enable = I2C_PACK_TX | I2C_PACK_RX;
+> +	peripheral.cycle_count = itr->t_cycle_cnt;
+> +	peripheral.high_count  = itr->t_high_cnt;
+> +	peripheral.low_count   = itr->t_low_cnt;
+> +	peripheral.clk_div     = itr->clk_div;
+> +	peripheral.op          = cmd;
+> +
+> +	if (dmaengine_slave_config(gi2c->tx_c, &config)) {
+> +		dev_err(gi2c->se.dev, "dma config error for bus cmd %u\n", cmd);
+> +		return -EIO;
+> +	}
+> +
+> +	desc = dmaengine_prep_slave_single(gi2c->tx_c, 0, 0, DMA_MEM_TO_DEV,
+> +					   DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+> +	if (!desc)
+> +		return -EIO;
+> +
+> +	desc->callback_result = i2c_gpi_cb_result;
+> +	desc->callback_param = gi2c;
+> +
+> +	cookie = dmaengine_submit(desc);
+> +	if (dma_submit_error(cookie))
+> +		return -EIO;
+> +
+> +	/*
+> +	 * cur and err are shared with geni_i2c_irq() and the GPI callback
+> +	 * i2c_gpi_cb_result(); both write err (the IRQ handler under
+> +	 * gi2c->lock). Reset them under the lock before issuing the transfer.
+> +	 */
+> +	spin_lock_irqsave(&gi2c->lock, flags);
+> +	gi2c->cur = NULL;
+> +	gi2c->err = 0;
+> +	spin_unlock_irqrestore(&gi2c->lock, flags);
+> +	reinit_completion(&gi2c->done);
+> +	dma_async_issue_pending(gi2c->tx_c);
+> +
+> +	time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+> +	if (!time_left) {
+> +		dev_err(gi2c->se.dev, "timeout waiting for GPI bus cmd %u\n", cmd);
+> +		dmaengine_terminate_sync(gi2c->tx_c);
+> +		return -ETIMEDOUT;
+> +	}
+> +
+> +	/* ARB_LOST and BUS_PROTO may be expected during recovery; treat as success */
+> +	if (gi2c->err == -EAGAIN || gi2c->err == -EPROTO)
+> +		return 0;
+> +
+> +	return gi2c->err;
+> +}
+> +
+>   static int geni_i2c_recover_bus(struct i2c_adapter *adap)
+>   {
+>   	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+> @@ -1021,15 +1083,23 @@ static int geni_i2c_recover_bus(struct i2c_adapter *adap)
+>   		return 0;
+>   	}
+>   
+> -	ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_BUS_CLEAR);
+> -	if (!ret)
+> -		ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_STOP_ON_BUS);
+> +	if (gi2c->gpi_mode) {
+> +		ret = geni_i2c_gpi_bus_cmd(gi2c, I2C_BUS_CLEAR);
+> +		if (ret)
+> +			dev_dbg(gi2c->se.dev, "GPI bus clear returned %d, issuing stop anyway\n",
+> +				ret);
+> +
+> +		ret = geni_i2c_gpi_bus_cmd(gi2c, I2C_STOP_ON_BUS);
+> +	} else {
+> +		ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_BUS_CLEAR);
+> +		if (!ret)
+> +			ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_STOP_ON_BUS);
+> +	}
+>   
+>   	/*
+> -	 * Recovery succeeds only once the slave releases SDA, so the bus
+> -	 * state is the authority: RX_DATA_IN high means the bus is free,
+> -	 * while a clean opcode status with SDA still low is a failed
+> -	 * recovery.
+> +	 * Recovery succeeds when SDA is released. RX_DATA_IN high means the
+> +	 * bus is free; trust this over the opcode return path, which cannot
+> +	 * flag a benign recovery event in GPI mode.
+>   	 */
+>   	if (readl_relaxed(gi2c->se.base + SE_GENI_IOS) & RX_DATA_IN)
+>   		ret = 0;
+> @@ -1066,14 +1136,18 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+>   	else
+>   		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
+>   
+> -	if (!gi2c->gpi_mode &&
+> -	    (ret == -EPROTO || ret == -ETIMEDOUT || ret == -EAGAIN)) {
+> +	if (ret == -EPROTO || ret == -ETIMEDOUT || ret == -EAGAIN ||
+> +	    (gi2c->gpi_mode && ret == -EIO)) {
+>   		/*
+>   		 * Only attempt recovery if SDA is stuck low. -EPROTO and
+>   		 * -ETIMEDOUT indicate bus errors where the target may be
+>   		 * holding SDA low. ARB_LOST (-EAGAIN) on a single-controller
+>   		 * bus indicates a stuck target, not a real arbitration loss.
+> -		 * GPI DMA mode extends this trigger separately.
+> +		 * In GPI DMA mode the completion callback reports NACK,
+> +		 * BUS_PROTO and ARB_LOST alike as -EIO, so the SE_GENI_IOS
+> +		 * RX_DATA_IN check below is what distinguishes a genuinely
+> +		 * stuck bus from a benign NACK: a NACK leaves SDA released
+> +		 * (high) after the STOP, so recovery is skipped.
+>   		 */
+>   		if (!(readl_relaxed(gi2c->se.base + SE_GENI_IOS) & RX_DATA_IN)) {
+>   			int recovery_ret = i2c_recover_bus(adap);
+This does not appear to handle scenarios such as an I2C multi-message 
+transfer where the stretch bit is set during the first message, but an 
+error occurs while preparing the second message (for example, during 
+memory allocation or DMA descriptor preparation). In such cases, the SCL 
+line may remain asserted low and impact subsequent transfers.
+  > @@ -1292,10 +1366,8 @@ static int geni_i2c_probe(struct 
+platform_device *pdev)
+>   	if (ret < 0)
+>   		return ret;
+>   
+> -	if (!gi2c->gpi_mode) {
+> -		gi2c->rinfo.recover_bus = geni_i2c_recover_bus;
+> -		gi2c->adap.bus_recovery_info = &gi2c->rinfo;
+> -	}
+> +	gi2c->rinfo.recover_bus = geni_i2c_recover_bus;
+> +	gi2c->adap.bus_recovery_info = &gi2c->rinfo;
+>   
+>   	ret = i2c_add_adapter(&gi2c->adap);
+>   	if (ret)
+> 
+
