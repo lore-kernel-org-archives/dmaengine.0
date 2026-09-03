@@ -1,69 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841D14EC66C;
-	Thu,  3 Sep 2026 16:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205624137A8
+	for <dmaengine@vger.kernel.org>; Thu,  3 Sep 2026 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788452974; cv=none; b=F176fHUPTmJYibbI8ptdrr9qDdvdi4UwQm0OIIjtp4BRjEj4Wt+2CfOpMgSiF6YgZeAwYTy6j9FuvBeuaU75xhvmqoa0tFhAPtL4q3406Odfd4+rT5vBMV2UIQ2SxtPzVcTTpbS/KXSq5Lhm+VBpCIKIJ+H8UX8woi3k8nziW0w=
+	t=1788455045; cv=none; b=ndM5yNhhUx+NGbv3kBf13ZkHzyM400BORNyH2MYXMiPRiTw/P8DaXtohvGPQiZsS1YQgra2h+Ik2YkWnCkC95SvKA9PYyKi2q56ttpXBr4LUbp4sjd16IvSgLM0wmikG3W6yY4Iw+d9aLunjNtIWdhYC2up0exvvWvgEDk2LaiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788452974; c=relaxed/simple;
-	bh=GHdMxXhpt/f2xcL1eGNyB4/iMa5i1iZwnf3eipotpwc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=INiuXaNKHNYG1uyrlay2HGiSmRTjyslJIUJk/N01TvO5cUB+eSe0pasHs9bC+45w7Z92QAep6ks4q58Sdx7BMFccy/MZs8Tn56gbAnqasbpwlD1xGSnpELIVF6J6KWx7lIRLvvpWcgw+biONpiZLRonL/8RQfVxZO4aH7Bcn480=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g4Dc7aDz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788455045; c=relaxed/simple;
+	bh=FS3OhERTjTzyvcU/kx1ye+J3hBr7Q2tT8Fc0SMLWCvY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e6Gdn5NglrSXSrNSG4R1Sy2LiTsDy3a+pVYc49IGqpaZo1hEai/GZ5xUQquDChF2ub3QGGbD/e39m/4zCTO3QOadX4bev8NuOuPKwVFNImoBpmRBI0dSEGwGpIon45eXrotpsAEl6bANK1Uki51O7jy+D7Af4C1i/WSRr2RelXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eDUXlxZ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g4Dc7aDz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB911F000E9;
-	Thu,  3 Sep 2026 16:29:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eDUXlxZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE0E1F00A3D;
+	Thu,  3 Sep 2026 17:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788452973;
-	bh=LRMNrFp5oyG03PXJEJtG731mEFzWgSM8xfjF3tnbMsE=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=g4Dc7aDz2FYmVlEsJCVpdUuO1Bjcy5LYXAfOEujr213p/vveO6i/fBhQJsGCk9bJi
-	 9vsNPymhUGIhFddu3xFzvEN5ltyPjm9bn6x7YpPl4H2HwPkxfCbQCLzENhnE+LIz8u
-	 ulaPzW1SUWYNAN5OQGy1jT7fIgT/l/i7tW9+/RWQcnhXE/i4qidTrHMrHzMLNQktMv
-	 3nnZ/hhelqpwBdsGn5fFMiNOeIXzFof3e2GkoLvMGILlyok8BI2c1eNEtMRNQL5KFA
-	 y32DKj1kOCa1S8VQTXpDRNXlu529uDPrDc13Tg71Mt9rRBXU2kmZnSTF9XyBgPtL+j
-	 UtKjQVb8laggA==
+	s=k20260515; t=1788455043;
+	bh=uvW0Rn5tv5z5oDlhBa4FezYOUEe5Mbq8Z1Ac7V51BkE=;
+	h=From:To:Cc:Subject:Date;
+	b=eDUXlxZ/5ka52sMJaHWV1NXSc2V+eDYfW8IHu9ldL/UNrZPh8uFuqh3PKO1yACykC
+	 WVareJiTSp3NqF+uNEiBv+/t5cYYX0wy+6dbW7CgH2JVMQsKUl9uy06tDIbnPwIeWa
+	 T8ZqPtRivzqDxvCaqLxuQeUu1w3DWahPIKi7Z+JH9Gu3K0L3Cs2oCn2i/Xjts61DLN
+	 l5ZnPVJccCL8HEMxRMOtH+OOC14ZSCgHEU4W6ePMXnacN88eJZBCR+YM3N/R9x/spC
+	 3sj/ysTqfkDu7GYZDWYQIModT16VTNHMhQDJYhzhjeICgTOLRDJX+RAclEjKSwnN7/
+	 nN2gtiuB9e+BQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Ruoyu Wang <ruoyuw560@gmail.com>
-Cc: Frank.Li@kernel.org, orsonzhai@gmail.com, baolin.wang@linux.alibaba.com, 
- zhang.lyra@gmail.com, linux-kernel@vger.kernel.org
-In-Reply-To: <20260813153149.3953497-1-ruoyuw560@gmail.com>
-References: <20260813153149.3953497-1-ruoyuw560@gmail.com>
-Subject: Re: [PATCH] dmaengine: sprd: Fix runtime PM reference leak in
- probe
-Message-Id: <178845297038.1679748.17132954988792576970.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 21:59:30 +0530
+To: dmaengine@vger.kernel.org
+Cc: Frank Li <Frank.Li@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH] dmaengine: zynqmp_dma: drop redundant label
+Date: Thu,  3 Sep 2026 22:33:57 +0530
+Message-ID: <20260903170357.1711462-1-vkoul@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Commit 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
+dropped the use of err_disable_pm label causing warning:
 
-On Thu, 13 Aug 2026 23:31:49 +0800, Ruoyu Wang wrote:
-> pm_runtime_get_sync() increments a device's usage counter even when it
-> fails. sprd_dma_probe() currently jumps directly to controller clock
-> cleanup on that error, bypassing both pm_runtime_put_noidle() and
-> pm_runtime_disable(). This can happen if the preceding unchecked
-> pm_runtime_set_active() fails and the following runtime-resume attempt
-> also returns an error.
-> 
-> [...]
+drivers/dma/xilinx/zynqmp_dma.c: In function ‘zynqmp_dma_probe’:
+drivers/dma/xilinx/zynqmp_dma.c:1171:1: error: label ‘err_disable_pm’ defined but not used [-Werror=unused-label]
+ 1171 | err_disable_pm:
 
-Applied, thanks!
+Drop it
 
-[1/1] dmaengine: sprd: Fix runtime PM reference leak in probe
-      commit: a7df136ec529ee49a789c5029bc37b98b0d4bedd
+Fixes: 64c6f7da8c2c ("dmaengine: zynqmp_dma: Add runtime pm support")
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/dma/xilinx/zynqmp_dma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Best regards,
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index d1ee51dde3d1..3b7dfa53f972 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -1168,7 +1168,6 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+ 
+ free_chan_resources:
+ 	zynqmp_dma_chan_remove(zdev->chan);
+-err_disable_pm:
+ 	if (!pm_runtime_enabled(zdev->dev))
+ 		zynqmp_dma_runtime_suspend(zdev->dev);
+ 	pm_runtime_disable(zdev->dev);
 -- 
-~Vinod
-
+2.43.0
 
