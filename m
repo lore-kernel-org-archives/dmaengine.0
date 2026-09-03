@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FF94F55DB;
-	Thu,  3 Sep 2026 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA11F4F55B1;
+	Thu,  3 Sep 2026 17:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788455100; cv=none; b=ZPbj5niL3XQYFNttbrDv+rwalM0CSgthKkLk6Fv9Htb0rJlyGDaO7QsDJa2cMkBmVhZeSk5emR5yCwwwopGRPTltFmcLVHScEj1dmCY4TAqytOccYI54OfpZ5tECqYH4kLqtjWt1lzkSR72fKs+C7TIjy66ik3vIR6+D3WEd6ow=
+	t=1788455104; cv=none; b=kEwyBD4a9Gpd+PwmzcrWIlUx0s6afYOfUAWnSt0b01UQVITGyIn443eufEYTEW20euXH5Lc7I36ZhYLr6TLJrPcTpfEN44MPSWF7hpBUM3cEiI1l0uDeVZdsGIY9vaGhhM/SNdUig0zIK3L0ABRmBfZZBgl/jufsTkkMnfOs//E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788455100; c=relaxed/simple;
-	bh=EzEbSQ0Sz5OBojozL/be6ahJbK77uZ955dHzodA8Qdg=;
+	s=arc-20240116; t=1788455104; c=relaxed/simple;
+	bh=GdiaDF7/pVaDnZdmT0wFDgSYTZ5oEoOufJSiwn4IpDY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=U/uC2XrK5BmKUrz1lYmycDVsohzP6QxYbkeVOmzV73kqjtIqr+OnmfNBmTTMhGzZKjbv7ze9ZNqlZFq4jAwbiR0M6gRgbSbIwkpdvvo4UIP2c5eX3MnzvjwkcC3bMqJ5H8Fn54BU1smgDn5qzQQqKQcC2Ia0BpjN5YkSVDKPduU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRlf0DDq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Til5nGeEI1jfzTQK9WwcJOwVh7l75vhGRzLjQp+SDiI2spZCGXYkt23JM6QRgcOhFdXePzWHs/ob6MRGnKX1UE7Yx0oJtl2q6Xj2hcex0qG44XWOqlVpq6zH6/fQnLiDZrR6Z9DNb75Siun8L41TDgL0aL2MAu+4RJyse/+nxmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kpa0PuKT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRlf0DDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834C31F00A3E;
-	Thu,  3 Sep 2026 17:04:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kpa0PuKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA1F1F000E9;
+	Thu,  3 Sep 2026 17:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788455098;
-	bh=vYNQ8VX97EaCI8U1DSIB17rVPQxvYw0f7K2FluDPZoA=;
+	s=k20260515; t=1788455103;
+	bh=PWg9hCOLqFxOrA4F6TdJHIMFdDYu5fIc3xaiM79wORA=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=fRlf0DDq8TN6EgULfeOX0yIZMBB7GUdK+mj9D9bekyGgEh2BNMC1L7IJekf/p2DVq
-	 Pn3NvubYZgZHRUvymmmiYJnqeKh59Eqr4nkN4bDQV/JEUcKjo6pUf+5+Ynkm3Zqlus
-	 Z64xrDe2tcaQTNYeeEFyClqxVEZ1K5kSJ8Gwip2isGTt6mXVOwT1jHRkCr6hozdwuk
-	 bVln045yaTHz6nG7MtBU1Kf2jrA+O6ST7p4vY03P6yO5x8Ck91GNeD/TybBN5Rwt+t
-	 UMgerG8ngVxK6aqaed3bcvATkbjJa6QHvR4RCR1mGFd7ixY4eQmN3c79w2A1xln/+d
-	 VrJce9NYZ9uTA==
+	b=Kpa0PuKTgQmLiHG9kdJoZKCepP4pUgtmDC2oADbYk+GTYSUs+YgarBcUcP7s+4XP4
+	 qqKHXCcEtUHLbqb7U2aawCpajPW0ycWyGDUWfGTMju1434BIpbEs8UabeY2zDO/3z5
+	 4/8Tlf/bu7i5mPePS2ZpTUq/938qA5u4mdrTNvKFRRPfCYPiEKchNshfYS5x3Y+Y/p
+	 KLvwyAuFTrjbL3nE3lG4p/clKKlCAKwuQkR1LjKPjG03Ek0gl6mw5zxUGMMIiuQEQk
+	 z6WZ3Wl08HlBH4TGeglIjmKxDmdZyGU123ztGrmB4M8ag5HUkobFXbUp5bobR4KLgL
+	 oZMr+t0nwcSNA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank.Li@kernel.org, michal.simek@amd.com, 
- Golla Nagendra <nagendra.golla@amd.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, git@amd.com
-In-Reply-To: <20260814045616.1661199-1-nagendra.golla@amd.com>
-References: <20260814045616.1661199-1-nagendra.golla@amd.com>
-Subject: Re: [PATCH V2 0/8] dmaengine: zynqmp_dma: Fix error paths and
- follow-up cleanups
-Message-Id: <178845509608.1711546.18424966399852946639.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 22:34:56 +0530
+To: Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+ Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>, 
+ Sasha Finkelstein <k@chaosmail.tech>
+Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Joshua Peisach <jpeisach@ubuntu.com>
+In-Reply-To: <20260815-t603x-admac-v4-0-1149e342dcb0@chaosmail.tech>
+References: <20260815-t603x-admac-v4-0-1149e342dcb0@chaosmail.tech>
+Subject: Re: [PATCH v4 0/2] dmaengine: apple-admac: Add support for M3
+ generation
+Message-Id: <178845509899.1711546.15996486451264669043.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 22:34:58 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,36 +53,22 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 14 Aug 2026 10:26:08 +0530, Golla Nagendra wrote:
-> This series fixes error-path cleanup issues in alloc/probe flows and
-> applies follow-up cleanups in the Xilinx ZynqMP DMA driver.
+On Sat, 15 Aug 2026 12:41:37 +0200, Sasha Finkelstein wrote:
+> The ADMACs present in M3 series devices (t8122 and t603x SoCs) need
+> additional register writes in order to function correctly. Add a new
+> compatible chain for those, and change the driver to do the write.
 > 
-> This series fixes error-path cleanup issues in alloc/probe flows and
-> applies follow-up cleanups in the Xilinx ZynqMP DMA driver.
-> 
-> Patch 1 fixes runtime PM rollback when sw_desc_pool allocation fails
-> after pm_runtime_resume_and_get().
+> To simplify the merge strategy, the device tree entries will be sent
+> in a future patch series.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/8] dmaengine: zynqmp_dma: Fix PM rollback on sw_desc_pool alloc failure
-      commit: a073a5796b3b95062f2c1ecf6ab446cb2596f38e
-[2/8] dmaengine: zynqmp_dma: Free sw_desc_pool on desc_pool_v alloc failure
-      commit: 25cfbf610a7277e0b08195953fb6aaf8b64cf845
-[3/8] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
-      commit: 3f30db282c28cc35a502aa1cec34fb642854b057
-[4/8] dmaengine: zynqmp_dma: Fix stale kerneldoc comments
-      commit: 584f033c5c7954a412781e9089247cd6f47ae73e
-[5/8] dmaengine: zynqmp_dma: Fix minor whitespace
-      commit: 5089056bf050e3231313d873e0bc1ed0c63e5418
-[6/8] dmaengine: zynqmp_dma: Use of_dma_is_coherent for dma-coherent
-      commit: ce71cd145014d50ce4f9358c23c933b60f205cdd
-[7/8] dmaengine: zynqmp_dma: Reject zero-length memcpy transfers
-      commit: fec4a5a61945e641eb9ce89e24598ee19a78cebc
-[8/8] dmaengine: zynqmp_dma: Remove unused define and duplicate IRQ bit
-      commit: 868457a86a585d0ff04f03ecca2a5737561f23e7
+[1/2] dt-bindings: dma: apple,admac: Add M3 generation ADMACs
+      commit: b16c2ef38cc45fa73a68aefa769c0139f6a53006
+[2/2] dmaengine: apple-admac: Add M3 generation ADMACs
+      commit: 40c92b5df91f5b4a7bf562a6829f044f1a748375
 
 Best regards,
 -- 
