@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD3A1531C8;
-	Thu,  3 Sep 2026 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411D74F647F;
+	Thu,  3 Sep 2026 17:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788455094; cv=none; b=JuGxDql7UMFVdDUVmPuxFRkE2b6tDTuTW0Wi+JH6vw0fjCR5lphdRjs8pjfiVWad6lh4+zLkSVRVHKJyKR4D/Iwhq663J0NsjCW+ZAlD8MJYU9pWK+7Wx4T2UZhO7pcckYgrvV48b+st1679/DLcCcS4c3craj7F6+KWqqu9Fsg=
+	t=1788455097; cv=none; b=B9s2oATaca+GWHOrjcfLa+rrjbN6OMAmDBYIKReOYsMtMwqZnigMPUNMLEAzzJzZKaQCcadxYBdlh/Wafm1BcsDIdS80CfQjaRxLtHdDhCfmjEPq/leHOKX3aIfPggT/eN4YdRW/vUORNrSIXf32JRFbrUPl1s/QwXEWWSLkbP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788455094; c=relaxed/simple;
-	bh=odN4C05I7BsurnbJgb+yDqra3AUbbVShIBlWyLvEPjM=;
+	s=arc-20240116; t=1788455097; c=relaxed/simple;
+	bh=LzG1gTIjJeOWNjoMgrbmHuIiUUsxXoPBLQ/Jl1vtNa4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=NFq+c39lIizQzsMFik6R5y/O/fBwB53d7/2bda4+9VV7Yf8rWpo+O9YPlwyERqfVFhUNLvuuACks5OOKMTFRHCXP1/ozVsh8i7Wt28r+0jX18UfSweaazrloqBOiMQSisEWmgLbmF24D5DHIkiMQQmxuXVyDyv4JzvjUsl+TLAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jtOJsKw1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qqJdy5BjA5z+zkoe2CSnvZTjYnl/ZLgSLw/B+hoYdfsYJBFxjsa+52hTSA4ll9XFQpRg++kOhp+Pe7fHy4nJSKBm8hcmj4zxO6yFXiDnVwcXkRgYVzNSjq8DVj669XeoO/EsgYtRqiJnLvJnma0YZVaFz1FwBnFp9w5XVGAk5Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBTQZtzt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jtOJsKw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A211F00A3D;
-	Thu,  3 Sep 2026 17:04:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBTQZtzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339121F000E9;
+	Thu,  3 Sep 2026 17:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788455093;
-	bh=DilgdbLi0RvprvJJDhqDDjROWxRbnzwuVzagfLzpeH4=;
+	s=k20260515; t=1788455095;
+	bh=wFQh8fOfETsrW69vOOjUQvO4A/piFS2eM2eusnqqIn0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=jtOJsKw1Z6E1n2jwe18GTnTVkKTS2vbKwew94YlpSdbjnegpMFp+73VObcU5yL9bq
-	 gAeS1O+aFWl4/HN1uL0kpq5C+u5SuWU4kB8prn8W9P860OGN4r2HTW4LyXWYscsQIL
-	 yiZvFWdcZazUZgQqvdp1pzQJDUvnEx1cPS6mmXOP22X/vzE9ozU0SZEXM7hN7Ut9dL
-	 n/4gZsX6OeMhdgiUqpO+An/opUPBNL4Cp5uRcb+JumsjijOMhT57j8+Qz0xO/sUn6n
-	 5aeZPXM1JaA0uLv+trQFkCSSb8dHuFoqD3Ol2mGG48048P59DSLu16ZydCP/WdUYCJ
-	 P2WZaoZQCsMQQ==
+	b=aBTQZtztLAWAr7CxLgHUbJfDLpXCISC7w0MHG26Ftvu//QdMFdWlNO+vBPmz9FgpS
+	 hGxhXUt2oyYyeVIp44/ykQQZV0IPAEHy8LClFgADTJl9YrV+EVt8zVx7caMnTmj4Zx
+	 sNd2GwBD0N8EZUGvOgWYZl1TxS6CffLTCN7cGFB/ofbmCKv12o3nj+Pt69jVYGsxNw
+	 Ghamy7xLj0MUNXK2+uKEBBRkQOTMpeLHdmnzFqg3x/2sE6aykzDUnfpBU4xoJ9UheP
+	 XcFZXh3z+TbkAFXHWWLAFkQJolXrrgrpahxrQfqEUP7Aau9zKdxiXTBA3eGW7rDn2a
+	 hiTqvgn/NKqCg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Sean Wang <sean.wang@mediatek.com>, Frank Li <Frank.Li@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Myeonghun Pak <mhun512@gmail.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Ijae Kim <ae878000@gmail.com>
-In-Reply-To: <20260804153924.49627-1-mhun512@gmail.com>
-References: <aj1RSj5ZXvc-9yu7@lizhi-Precision-Tower-5810>
- <20260804153924.49627-1-mhun512@gmail.com>
-Subject: Re: [PATCH v2 RESEND] dmaengine: mediatek: hsdma: fix runtime PM
- leak on init failure
-Message-Id: <178845509001.1711546.16011623641876129813.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 22:34:50 +0530
+To: dmaengine@vger.kernel.org, Ruoyu Wang <ruoyuw560@gmail.com>
+Cc: Frank.Li@kernel.org, ed.blake@sondrel.com, linux-kernel@vger.kernel.org
+In-Reply-To: <20260813153143.3953303-1-ruoyuw560@gmail.com>
+References: <20260813153143.3953303-1-ruoyuw560@gmail.com>
+Subject: Re: [PATCH] dmaengine: img-mdc: Fix runtime PM usage counter leak
+Message-Id: <178845509375.1711546.3886618816582313442.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 22:34:53 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -52,23 +45,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Wed, 05 Aug 2026 00:39:24 +0900, Myeonghun Pak wrote:
-> mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
-> before enabling the HSDMA clock. It currently ignores failures from
-> pm_runtime_get_sync(); if runtime resume fails, the usage count remains
-> held. If clk_prepare_enable() then fails, the usage count remains held.
-> 
-> Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
-> pm_runtime_resume_and_get() so resume failures do not leak the usage count.
-> If clk_prepare_enable() fails after a successful runtime resume, drop the
-> runtime PM reference before returning.
+On Thu, 13 Aug 2026 23:31:43 +0800, Ruoyu Wang wrote:
+> pm_runtime_get_sync() leaves the IMG MDC device's usage counter
+> incremented when runtime resume fails. mdc_alloc_chan_resources() returns
+> that error to the DMA core, so the channel's client count is not
+> incremented and mdc_free_chan_resources() is not called to drop the
+> reference. Repeated allocation attempts can therefore accumulate usage
+> references and prevent runtime suspend.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
-      commit: b616eb4ef1e9358296a88a2fa7230dcfac52b53e
+[1/1] dmaengine: img-mdc: Fix runtime PM usage counter leak
+      commit: d8dfd04faeb9b49663bd268090df5c7df6bdbae6
 
 Best regards,
 -- 
