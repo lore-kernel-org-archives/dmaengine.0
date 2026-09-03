@@ -1,131 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B9E4B66EC
-	for <dmaengine@vger.kernel.org>; Thu,  3 Sep 2026 14:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462414B8DC3
+	for <dmaengine@vger.kernel.org>; Thu,  3 Sep 2026 14:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788445633; cv=none; b=tg+K/GmJYGxAW2veZ54JdDjnlOBgFpVtI998Lbn1h1g5ycK4F1C52lgkTkxnJlNwJMOwAgT2eR0MRczFZqwB7ihHpNQ0OYxyehMO1p5t16xD9GSSbeVT+L9odOu/WAucVyIIXnZzNyRps7AJws398CjKJciAMci9pTWhHfQRleI=
+	t=1788445773; cv=none; b=T2PvS8S3jfhvLopvDKCBW1SL60hSzGTrj4lMVDZSOvA/efM2z+DEBBIe4ig0+SnyIEVnwUNskqQFi0RNyZeRrFOOvLwH6lvcEXxcOkOVHfg9hk4J/flrzrFc7iG7gHVKs7dTAu5fUtHcaKJoyuR4FYNkNoBxt+peNERySainXck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788445633; c=relaxed/simple;
-	bh=rKiXXNFBoMcVaZiS0cRHFDQj8bVU3bMiANcA+fljVxY=;
+	s=arc-20240116; t=1788445773; c=relaxed/simple;
+	bh=/hJPIuvYLBhyjRCYDjrKVQuhAJJXpqKujuUmSpsEn3U=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=aypPDvw/U4V1upE5nCyOf4FzFe6JSYXBc87hVyhu9emMSNnP8J/bZ4d7fB1NqMak6tfBCSQvobmqdMZ/4kgvPZVRSysOc40wawUi/SPrIlGupxnXlFKXja/HxS6QLGziAKJGQZDml2XNvFLPEe7LDxgPg5OG57oWtE6OVLCaBiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lN/1h3ht; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=U16AldpiJHyxpNiqyUhuy/QzV/wJ+0eQXOfLAirDgex6137AUdohOAquXXa9BH5X8HTpWijMtDWF3Nfg7XI15ngnNwsF9uN1S3LQjOarL+V0CX150guw3DsdDa+eidB2I1gegbgVB11vxy2dMAwO07QHsj5oRpeqohSqHaWPzAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODCZu/Ab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lN/1h3ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D9D1F00AC4;
-	Thu,  3 Sep 2026 14:26:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODCZu/Ab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527961F00ACA;
+	Thu,  3 Sep 2026 14:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788445613;
-	bh=jvrims6ydidqMygf6x/N2/H+WkQxviWJJP9wW6juhb8=;
+	s=k20260515; t=1788445766;
+	bh=zfoIX2IReUKxBCh0UMs82nS2cLdGjQHHbmzp6daM0XI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lN/1h3htrExV8pfrAyo+U8OLLW7WN3pv6HJ7ilrmtXJ1+wojzwHxcT2uuddG7E+By
-	 iilEhdTBTSClE18BOJZYTQ/ZeRzoYobgvxv0vJcD1iCNpI+HTmXv5rPCHVYm+jwp1u
-	 iF1PwVPCydop45Qu6McGfmwN+geMAXSMkPL+gBa/1rDMVp8PIFIctfV3iUOss68kDt
-	 UIdZBw0gwtyuxZUHKMwKhnozBcuriHFCRZBsVakkDCImwqO0ToMemxt+OfP0AETJM5
-	 dooygY3CHNarj6O5ONRkc6C7GmpS99P1tBkNiStFC/Je+4q2s3rq+v3CSNRquiqGka
-	 NdKr0hxYe+y7w==
+	b=ODCZu/AbWUddHZ0+YQPZnur9Pk2YzOlB+lVyLY/x+XU8mkWGreEqNMralWVBXidHJ
+	 5r+1SUDNItXSvvCvJ+OnpH78gF+2WQ/FEB26V8QMf6bS8HW+F9BMIYtdnxhVQQB96R
+	 Y9vV/ILJL4pnN3VvUfKsi3mvqhmbIBY9hIo6FCWasjq2taa7dDx+P8N6eZqb4tHTE3
+	 etgOalN8q4b1RDvIdfwQgTDimCohfFS7wTRO13sNAOu7D0fW8tOPkDX2DVUYQMhExl
+	 FCWYgRglRyG5X4db/cfboGttJgrycs/0Xdusjgnz+uHaftKZtjsQG/NHb/mQ+nfq7/
+	 xbNYbarnn9C8w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 3/3] dmaengine: sprd: Remove obsolete 32-bit DMA mask
+Subject: Re: [PATCH 2/3] dmaengine: plx_dma: Remove obsolete 32-bit DMA mask
  fallback
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Ruizhe Zhou" <zhouruizhe@resnics.com>
 Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20260903115441.912500-4-zhouruizhe@resnics.com>
+In-Reply-To: <20260903115441.912500-3-zhouruizhe@resnics.com>
 References: <20260903115441.912500-1-zhouruizhe@resnics.com>
- <20260903115441.912500-4-zhouruizhe@resnics.com>
+ <20260903115441.912500-3-zhouruizhe@resnics.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 03 Sep 2026 14:26:52 +0000
-Message-Id: <20260903142653.52D9D1F00AC4@smtp.kernel.org>
+Date: Thu, 03 Sep 2026 14:29:24 +0000
+Message-Id: <20260903142925.527961F00ACA@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Premature IRQ request leading to potential NULL pointer dereferenc=
-e and uninitialized spinlock access.
-- [Medium] PM runtime usage counter and enabled state leak on the `pm_runti=
-me_get_sync()` error path.
+- [High] Potential NULL pointer dereference in plx_dma_isr() because the in=
+terrupt handler is registered before plxdev->bar is initialized.
 --
 
-commit 323a1a8d4f9b18f09fa8dd3e9872da5d0d05321b
+commit ebe0c3fecaf3a5fe091d793b49cde50217868ab8
 Author: Ruizhe Zhou <zhouruizhe@resnics.com>
 
-dmaengine: sprd: Remove obsolete 32-bit DMA mask fallback
+dmaengine: plx_dma: Remove obsolete 32-bit DMA mask fallback
 
-This commit removes the obsolete 32-bit DMA mask fallback from
-sprd_dma_probe(), relying solely on the 36-bit DMA mask request, while
-retaining the error check to report genuine DMA setup failures.
+The DMA API guarantees support for masks of 32 bits or wider. This commit
+removes the obsolete 32-bit DMA mask fallback while retaining the error
+check so that a genuine DMA setup failure is still propagated.
 
-> diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-> index 087fea3af2e41..b9f705dd80e52 100644
-> --- a/drivers/dma/sprd-dma.c
-> +++ b/drivers/dma/sprd-dma.c
-> @@ -1117,11 +1117,8 @@ static int sprd_dma_probe(struct platform_device *=
-pdev)
+> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+> index 84941a918b01f..ad9187448ed20 100644
+> --- a/drivers/dma/plx_dma.c
+> +++ b/drivers/dma/plx_dma.c
+> @@ -562,8 +562,6 @@ static int plx_dma_probe(struct pci_dev *pdev,
+>  		return rc;
 > =20
->  	ret =3D dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(36));
->  	if (ret) {
-> -		ret =3D dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-> -		if (ret) {
-> -			dev_err(&pdev->dev, "unable to set coherent mask to 32\n");
-> -			return ret;
-> -		}
-> +		dev_err(&pdev->dev, "unable to set 36-bit DMA mask\n");
-> +		return ret;
->  	}
+>  	rc =3D dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(48));
+> -	if (rc)
+> -		rc =3D dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>  	if (rc)
+>  		return rc;
 > =20
->  	/* Parse new and deprecated dma-channels properties */
 
 [Severity: High]
-This isn't a bug introduced by this patch, but looking further down in
-sprd_dma_probe(), could the premature IRQ request lead to a NULL pointer
-dereference or uninitialized spinlock access if an interrupt fires immediat=
-ely?
+This is a pre-existing issue, but is there a potential NULL pointer
+dereference in plx_dma_isr() due to the order of initialization in
+plx_dma_create()?
 
-If an interrupt is pending at the controller level, the handler dma_irq_han=
-dle()
-will execute as soon as it is requested:
+When plx_dma_probe() calls plx_dma_create(), the interrupt handler is
+registered before plxdev->bar is initialized:
 
-	ret =3D devm_request_irq(&pdev->dev, sdev->irq, dma_irq_handle,
-			       0, "sprd_dma", (void *)sdev);
+drivers/dma/plx_dma.c:plx_dma_create() {
+    ...
+    rc =3D request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
+                     KBUILD_MODNAME, plxdev);
+    if (rc)
+        goto free_plx;
 
-The interrupt handler will then dereference sdev->glb_base, which is mapped
-later:
+    ...
+    plxdev->bar =3D pcim_iomap_table(pdev)[0];
+    ...
+}
 
-	sdev->glb_base =3D devm_platform_ioremap_resource(pdev, 0);
+If an interrupt triggers immediately after request_irq() (e.g., from a
+spurious interrupt or a pending interrupt left by a previous kernel/kexec),
+the handler will execute:
 
-And it will attempt to acquire the spinlock, which is initialized even late=
-r:
+drivers/dma/plx_dma.c:plx_dma_isr() {
+    ...
+    status =3D readw(plxdev->bar + PLX_REG_INTR_STATUS);
+    ...
+}
 
-	vchan_init(&dma_chn->vc, &sdev->dma_dev);
-
-[Severity: Medium]
-This is a pre-existing issue, but does the pm_runtime_get_sync() error path
-leak the PM runtime usage counter and leave PM runtime enabled?
-
-	ret =3D pm_runtime_get_sync(&pdev->dev);
-	if (ret < 0)
-		goto err_rpm;
-
-If pm_runtime_get_sync() fails and returns a negative error code, it jumps
-to the err_rpm label:
-
-err_rpm:
-	sprd_dma_disable(sdev);
-	return ret;
-
-Since pm_runtime_get_sync() increments the usage counter even on failure,
-shouldn't this path call pm_runtime_put_noidle() to drop the usage counter,
-and balance the earlier pm_runtime_enable() call with pm_runtime_disable()?
+Since plxdev is zero-allocated and plxdev->bar is initialized only after
+the IRQ is registered, could this cause a kernel panic due to a NULL
+pointer dereference? Should the driver state be fully initialized before
+unmasking the interrupt?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903115441.9125=
-00-1-zhouruizhe@resnics.com?part=3D3
+00-1-zhouruizhe@resnics.com?part=3D2
