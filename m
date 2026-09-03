@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E294F55D2;
-	Thu,  3 Sep 2026 17:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697394F6464;
+	Thu,  3 Sep 2026 17:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788455108; cv=none; b=sG+uvIcjwQz+FaY1fDxNupGjNEm4NVxpanmM/afZ+xfjWyQV1vvOfs8mA6OPKSwPr5l2ksSQJ7aLT2IPcDUUat6IzNYkNY5I/03T2hhQjXtT+TxUnvSrNVG1S7hidKQ5uPFnXjKn2c2hhcKVp1Tm8+o74HuVifN+LyTALLOQ2z0=
+	t=1788455114; cv=none; b=mL44+VG7e5ibupw3V/ITJaVf8ohZXov84m1iH0GzgES1KwHe211zhIgUkrQj6mauIiLv8Am3L9BjC1X1n0ElJcty6ijLoml+IpK3Ch4zHrLjvRmkVmqHXPXZ1+7BBResOyMe/wM1/nrVJKCxgCPIJop/Gjr2MYsoAoDErKhi6o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788455108; c=relaxed/simple;
-	bh=p07uZ7FKygNIF6DAQDrb9RUIZ0n99bow+JTgwGbYj4w=;
+	s=arc-20240116; t=1788455114; c=relaxed/simple;
+	bh=Ph+9VEGprm8NQG1M6GgZRh6GQ9iNq4QZ5pzrsFkoX+M=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=QocHLhUEsGbClGfewc1a9z2W4Yj3zK31pIRWgUjHJlbwwA+AcJD1OwhFGqsniadrF2Nt9TqG58ihnxea71HgQs5lsAHQQJW0tugHTYmjkOT0rHOISj5jixfg4B3aIU+oJQLgzzPctQ0/3LgFYzf8hdYIE3RR/1Xs0Hr3P8KOS2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YQkFDoZp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YfTkHipBPqQGGDZTTJ4fzNINBFou4QuKnPAlPYkCH/2ebwVb365w+J0AIfd3CtkKeI6ZZ2+UyX9fX/JUdqY+5MtPt00VE4sAPeIk8nN88kQxcdnkAgnBYZsqlhndxa06KgBr+vO50XNB6zgmWzqnMYUgrq+0dsAGLQjQgqFZ6uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IxISMyqa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YQkFDoZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BFBB1F00A3D;
-	Thu,  3 Sep 2026 17:05:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IxISMyqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1541D1F000E9;
+	Thu,  3 Sep 2026 17:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788455106;
-	bh=OCn8oBmYiFHJMBFXjevxwqL0vd5Yzx7QLGHyDzpjsyg=;
+	s=k20260515; t=1788455112;
+	bh=+Dl5feE32R5YSmycpNB7tG4kFg0khyu/BjlzmNR2MYc=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=YQkFDoZpWRDi/qx56Wyt7xkjZVgqDI0Hc6qvApGwrxssCENvXScZJo7W9H4XpIFYo
-	 n5tfDtDGn2SER0qJg+5wdsp5sSrrVWb6OjeyHfG3XTQ0iNF/yDmKPhdGdNN/4E3ddm
-	 53zsVz/5xiemr4tBQ61ieR0IYqwuvz82DWK1EwOkMKBMeZ34yODwQf+cMZ6yPEMqtv
-	 PY7jxothmg+PBPUgE0okws4phn2w90nc5D82OS7QFJXCd48rePiS6Lc6wqhT48W9c3
-	 FjAOQufgXyoAUaOvu2eIU1Oh+elTuwz94+3tiFo48sF/Aoib/FF52/nWYrPBx93fTE
-	 WMngL+WbXCIRA==
+	b=IxISMyqa6Z8ZHxKuew18kV8M5NNd8ulFRT+m7YnpSgtr14GjWN/4S/FCcL44vxkyX
+	 LwzUNohC53hI8u36l4uovyz1FloKZZy7u7QDJ0x3SJRfFnkAFvq8A30oZULKFtr2FP
+	 rDb3Ke0ersoEH5/p2u5koqgkm9lUikSmKsbZ+l+Xt2iDnmXpvEt+cRqgl8DtWnKJT8
+	 oSWUX8cZ1vZnxyR/1JRg8bOQVRH75nczJrVd5F73VcYp7aAUeEiEtxlcufGW+IQ/Is
+	 jV58d/1ZX/NQetnwxHxrJbuPaNXJw6c3R24L8IXL4TO1ZKKqxRQKuG5enJ1cE+fnGM
+	 Y0JW1wQxUXTGg==
 From: Vinod Koul <vkoul@kernel.org>
-To: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Cc: Frank.Li@kernel.org, Frank.li@oss.nxp.com, Eugeniy.Paltsev@synopsys.com, 
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
-References: <an3y4lS-ZE4CdJ7R@SMW015318>
- <20260816054858.2667380-1-nagachaithanya9911@gmail.com>
-Subject: Re: [PATCH v2] dmaengine: dw-axi-dmac: convert clock handling to
- clk_bulk API
-Message-Id: <178845510398.1711546.13415827033389675878.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 22:35:03 +0530
+To: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, 
+ Srinivas Neeli <srinivas.neeli@amd.com>
+Cc: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S . Miller" <davem@davemloft.net>, 
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+ Paolo Abeni <pabeni@redhat.com>, Suraj Gupta <suraj.gupta2@amd.com>, 
+ Marek Vasut <marex@nabladev.com>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Alex Bereza <alex@bereza.email>, 
+ Folker Schwesinger <dev@folker-schwesinger.de>, dmaengine@vger.kernel.org, 
+ netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, git@amd.com
+In-Reply-To: <20260818174151.1608971-1-srinivas.neeli@amd.com>
+References: <20260818174151.1608971-1-srinivas.neeli@amd.com>
+Subject: Re: (subset) [PATCH V6 0/4] dmaengine: xilinx_dma: MCDMA
+ descriptor and metadata handling improvements
+Message-Id: <178845510663.1711546.3081841181501985033.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 22:35:06 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,25 +57,28 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Sun, 16 Aug 2026 05:48:58 +0000, Chaithanya Lagisetty wrote:
-> The driver managed its two mandatory clocks (core-clk and cfgr-clk)
-> individually. This was error prone: axi_dma_resume() enabled cfgr_clk
-> and then core_clk, and if enabling core_clk failed it returned the
-> error without disabling cfgr_clk, leaving the clock refcount
-> unbalanced.
+On Tue, 18 Aug 2026 23:11:47 +0530, Srinivas Neeli wrote:
+> This series improves the Xilinx AXI DMA and MCDMA driver's descriptor
+> handling and metadata reporting. It fixes direction-specific descriptor
+> field usage, ensures completion is based on the hardware completion bit
+> (important with interrupt coalescing), and extends metadata handling to
+> expose status and sideband fields alongside APP fields.
 > 
-> Convert the driver to the clk_bulk API. The two clocks are always
-> acquired, enabled and disabled together, so a clk_bulk_data array
-> expresses this naturally and shrinks the get/enable/disable paths.
-> clk_bulk_prepare_enable() also unwinds any clock it already enabled
-> when a later one fails, which fixes the resume imbalance.
+> The axienet driver is updated to derive RX frame length from the standard
+> dmaengine residue mechanism rather than descriptor APP fields, making it
+> work on designs where the AXI4-Stream status/control interface is not
+> present.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: dw-axi-dmac: convert clock handling to clk_bulk API
-      commit: 110126f425c34a2b189e10e74eec7644e1b47827
+[1/4] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+      commit: c791d22ddd7b4940fa3c211b5ee7c5d4ce2d1dc3
+[2/4] dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
+      commit: 5af3ac5de34f9f7a4ae81c690d8dea5dcb523ab0
+[4/4] dmaengine: xilinx_dma: Extend metadata handling for AXI DMA and MCDMA
+      commit: 37c44606eaac6f600fe2c602372bb02ef5ec0c53
 
 Best regards,
 -- 
