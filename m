@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD73B4F55DC;
-	Thu,  3 Sep 2026 17:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0342D4F6461
+	for <dmaengine@vger.kernel.org>; Thu,  3 Sep 2026 17:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788455074; cv=none; b=u27jPHc92E6dV+a30NlPVj6kmgYoYkG+U+QsbWgRWZRjTDO8bmyOFkRtXbEoWncpldGwNyAPiwPSDdpioV7u23j/W/+Fcob1l2dNory9uApxiHxhzhseN/193Eazv5u7ux0mTmqkiYjUdh6VbYrghUQP8UY04Hv80AEWtO5FDj0=
+	t=1788455076; cv=none; b=bqRd/Q45ckGP42a2Htg+ICDoYY04SSMbfuJckwyxxU7KL4aeXzdJI1DhB4d5YLKcYYG2Ju5G1xmt4vRtihjSwInA1D43m/nnkT98n5EIXKKakTw1Cn2zDZTut2rcIAHQn0adMUtfQNPnXK5JLuM6c00t+HUuZ/6yns0XexSX01k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788455074; c=relaxed/simple;
-	bh=X2VryrLfGXrW1SfVo+b55sti0YlJA348GbYlDpm9EPY=;
+	s=arc-20240116; t=1788455076; c=relaxed/simple;
+	bh=p1YsUagwAPMqhnB+yGRUM8empGvVo9m80mlJpn27zhg=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=rinR6ZDUlH9y+Ir/cQK5dbmvJiTjo/7dVJ3fvN9u4s8xniFfL4S9RhfCKJxyJcKKsZxhPqm9s+LAtTdwf0/NWV5h+3cbyrZJrchMRImKh/lBPB+l3QA5I1y/dQ75w7r0WpMENFptgYT23Lmh+iTnWZFOTWNZnmgycljfiAEfQV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXr0mG4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T9fP390zXh+mrafVrEYOJqnkzQxNFy17xrWISsVtyNXVhQeRUmsNErJsNAPkKSvpzlARL+HezP4VEUDlSylKAjhnzxQoJvxFSYl2aKUhBxoG3JqgICiWNJJGW/BtI2Cf9IRpepzQITOaWlFYN8gYTEa0wdC9d5kpFkzm9S3KBUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ki8bKt6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXr0mG4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4D91F00A3D;
-	Thu,  3 Sep 2026 17:04:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ki8bKt6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E9A1F000E9;
+	Thu,  3 Sep 2026 17:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788455072;
-	bh=LZiAV52RXDf9JNv3eWNabRO2S8ojqaaHKEbseO6JITU=;
+	s=k20260515; t=1788455074;
+	bh=GwRoiW+HdZ1wHfqxToXxJHXW5UReBsYWCdEHfsjlbOI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=RXr0mG4hKlQlbjXzwrpGilppMChl7pCmG/J93JekPdtUYOIRj5R2Pb8pUZTeuW3rY
-	 lxrbx/y4mKtbcepTwZ5IHr49daDGy5O/3dA1kC3P9gvvY3WzqQSzWn+k+symlZZ6lm
-	 O1xi+6geFbUiwTfvxCZMghnG2VB35+lGsuAe9d7GytFApj578Iul+eOT66Lla7uXcH
-	 Npr2oYhbYfcxHfH8idYnoVZl3bsLn//kfMpDfZWjBeSDc0JadzjL5uWCPnzut1D5bh
-	 Wx3xVWIHIrSXZStQTIb1Q6z2O6VSFZG5cjKQ+pXw0h8D8GcILtaUpnnLiDgorkJjMu
-	 f31rbCNwcUDLw==
+	b=Ki8bKt6a6vSDPDQUv/LZEuCdZIGMyqZ539NNz5Y4AMNZc3DFfOgFUjg9vVoOVbbXy
+	 Ixeus1+H/ZyQk2z2/PNqs5iOboyQHeqAztdCRZXSPOpK18bgEbFMF8Fc9Oi4c+JvN9
+	 y6Qjr13M7LRjHdhoa8Ex+0f9Yhblsvbf9tAhtN0oplyKpXlS2/5yU3WIMaPu5azWNQ
+	 8OPFG69nNRpoxIVlamKkrqGk9F1rOOMUONq5I4JZwbAD343coFjXVmKC4zcWm7IYR5
+	 1jRi6Na1rjAnqdM9q6z5BAJ0W2Gw7sICbYl6VpCLujsi6qjDEUjoFm1VwbaMlGGrpE
+	 AVLwu1GY1IFjw==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, 
- Frank Li <Frank.Li@kernel.org>, Eugen Hristev <ehristev@kernel.org>, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260724225958.43925-1-rosenp@gmail.com>
-References: <20260724225958.43925-1-rosenp@gmail.com>
-Subject: Re: [PATCHv2] dmaengine: at_hdmac: fix sparse '__iomem' cast
- warning in memset helpers
-Message-Id: <178845507006.1711546.1241811743699948076.b4-ty@kernel.org>
-Date: Thu, 03 Sep 2026 22:34:30 +0530
+To: Vladimir Zapolskiy <vz@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org
+In-Reply-To: <20260725194343.494973-1-vz@kernel.org>
+References: <20260725194343.494973-1-vz@kernel.org>
+Subject: Re: [PATCH] dmaengine: pl330: Move device specific debugfs file to
+ its directory
+Message-Id: <178845507294.1711546.1705927078852351178.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 22:34:32 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,22 +46,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Fri, 24 Jul 2026 15:59:58 -0700, Rosen Penev wrote:
-> Both atc_prep_dma_memset() and atc_prep_dma_memset_sg() declare vaddr
-> as 'void __iomem *' but assign the return of dma_pool_alloc(), which
-> returns 'void *' (not iomem memory). This causes sparse to warn about
-> a cast removing the __iomem address space at the dereference site.
-> 
-> The struct field memset_vaddr is also typed as 'int *', which is
-> neither the type returned by dma_pool_alloc() nor the type used for
-> the actual writes.
+On Sat, 25 Jul 2026 22:43:43 +0300, Vladimir Zapolskiy wrote:
+> Under DMA framework every DMA device gets its dedicated directory
+> dmaengine/$device_name in debugfs to store any supplementary data
+> accessible from userspace. This change moves a single registered
+> debugfs file of each PL330 device from debugfs top directory to the
+> device specific directory, the file is renamed to "stats" to match
+> the most popular name among all DMA device debugfs files.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: at_hdmac: fix sparse '__iomem' cast warning in memset helpers
-      commit: fdae0d0f096c92dd05d3722759fd614ea341e0dc
+[1/1] dmaengine: pl330: Move device specific debugfs file to its directory
+      commit: d2d5b3dbd97e50261c1ad6a5f0eb09963f421848
 
 Best regards,
 -- 
