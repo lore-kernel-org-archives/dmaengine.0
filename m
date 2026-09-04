@@ -1,155 +1,120 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8B742124D;
-	Fri,  4 Sep 2026 11:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD8C47729B
+	for <dmaengine@vger.kernel.org>; Fri,  4 Sep 2026 12:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788521934; cv=none; b=L8IOl4mpkKc4pt5V7Lquz8TP2s13u/O2+m8kmqPitIP720O7/xzyy9uTDXfz5TXylBcI+a5uXHreGGjgAnFGUIcjQ+I9DSQHDWSxvrEeOKitCNHxySt502jkZ6ram2oppgLix4K2i57IXMBtPlF45LIUHUAyqFh+i8zkLJ3bQ00=
+	t=1788525006; cv=none; b=JnlQgiGqwsGhadZMBtLvzkiqMRlgY3QevVuMe9sG3Rci1ryz4ZsX7BcX1V13838P0/18JaMZT1AzXzkEZpGStfr/yecSSPDZVydishH5vSKY5TSWtMP23N3eJD+TlKl/Fe4JXbU9j4C8RM5oBlE1BP87jTXJACe6yqPslVbolME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788521934; c=relaxed/simple;
-	bh=sI88re9mQH9GGvNdQuqSOyqwac+FJGSZRs1mUIUeR4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GkUg4QPwqdho71NNwlSd+UcvqD0WpduP81hdnGUbVZdoeAdKs9Y9ZDunqmkZQkwVo1f9u+WEmsi+imm2RYgwwoHTeP7nMozglc7qnByFnoqOHFuGhDdb2kQNWLHfRa/kCw2upGn3a/vcFpILSFlOy+b7KbM5JoNaSXlp/5D6hQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UqaD9GhP; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UqaD9GhP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788521931; x=1820057931;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sI88re9mQH9GGvNdQuqSOyqwac+FJGSZRs1mUIUeR4w=;
-  b=UqaD9GhPIW/SEAoEvQoN/3I3/quz0Twf58glhUF4UbcXAPhfSIYEFom8
-   asi/GlcCJpRE4/DOAHGUgb+lzY83/2fJFiSVHp3kIyLRaB6hWCpIa8k8q
-   2t2iYNFuw9Dr7Hk9t/y1vRxsLA5OJ2KRzi9R+3Red0tuBJTXGQyPFVZnm
-   1d+aS26JkqiJQKkrpvB8p2z/WALCvpkcItvZe9BoKVWDKKGJnpx8a3gNZ
-   XYXsb57cpHTJlPkVqGh9f8Pow1nOt4cx7pZ/9pUxOGI7HKrGZcjEOjNDs
-   UUsJEjk6FIPLMA3G8Trl1a4ffLKBe9mI1SCtb+QVB9iwP4XBRbXs88tcv
-   Q==;
-X-CSE-ConnectionGUID: LatcrKqzSN2OAwTI6oWWHw==
-X-CSE-MsgGUID: FFbvIKOaRBitth8s6SHZTw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11895"; a="92720050"
-X-IronPort-AV: E=Sophos;i="6.25,262,1779174000"; 
-   d="scan'208";a="92720050"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 04:38:50 -0700
-X-CSE-ConnectionGUID: ObP9eg0VQSCbRIFJ00EGKA==
-X-CSE-MsgGUID: UlijwXHGRmWAqOZ/7kly8w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,262,1779174000"; 
-   d="scan'208";a="268698798"
-Received: from slindbla-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.224])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2026 04:38:42 -0700
-Date: Fri, 4 Sep 2026 14:38:38 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: Frank.Li@oss.nxp.com, Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-trace-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v2 1/3] dmaengine: vchan: add vchan_chan_name() to get
- channel device name
-Message-ID: <apqtvq2Xov1LKBPN@ashevche-desk.local>
-References: <20260903-dma-chan_dev-rename-v2-0-0db305b6c716@nxp.com>
- <20260903-dma-chan_dev-rename-v2-1-0db305b6c716@nxp.com>
- <apqKgda7dW_JXolJ@ashevche-desk.local>
- <be376690-5219-4bf3-8ed7-02a49cee0e30@foss.st.com>
+	s=arc-20240116; t=1788525006; c=relaxed/simple;
+	bh=2DtpMsYpyVYksuw1OGOXVQZ0XVIysiiC9LDRS8naQq8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HSUuJykP6hpAXU2mdnSTRfwo81q3D4VHzR1L4FKTAxbLYgs7nXq88VaSKRFX6Ut/4Nto9wcIsch3gQUR6AYz2R4IhOY91PUoKNbih1l30VRpmWtb2aFDJie/+vChTie1lTf662/vJZay75NICoPV2Tfy0g1Nr3rl7t/qLQhRr/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-98089686ee7so636282241.0
+        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:30:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788525003; x=1789129803;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=wBhQA37E1Xf0Mr+HPKFsdlUMfZuU0RFIBB/KUd4dqqE=;
+        b=FboADL9K+sOjLwMEeKXmfZLRoEB3LN0N+yx4bj8qPtut79U3p/DmF5WkCOGvl5RBOU
+         w1bEGG01RIg0eJQzrDj3hBeCQ5ENPMoZA5VQ6Id41D/ovvsiC87pKsp4yQgviOGvqAB1
+         qYGj6zkRXD08SC3TlTnYG/0EKZiCebA6+k5HktI/yTxHWTVkSjbC5FZKrBAlEtff7ALp
+         XknlbiQK22ZjFljMXnti+zGRtSvo3FL3khmwptVH2+BPsz3tpMT/glzyoNhHlgATvaPC
+         bY/yfK4ElFqio9x3lgJDqTqv1AYUjpMEJYJ75Kk8QzXmnAqR5Wrjk0HqfkVmD81jT4qg
+         j1Rw==
+X-Forwarded-Encrypted: i=1; AKwUvBw8+FRwXkPiVrOC+4MNF4lF8hrHF5XDx9Me/xNhT+n6BO8SQH03PiJzfuXGjCZxuh+eNAN7QJ3hk7Q=@vger.kernel.org
+X-Gm-Message-State: AFuF++mZ+gtcsX2vy+99Gk+Q2H9k/4mNGEIOG8ZUeyjWGbF82agtfPCw
+	xzWs1QbeI+2Ps5DT247wRq6szjISe4sLNennb0FGM3XBuh6kJLedxiepWD1tl+QxNzU=
+X-Gm-Gg: AYBFou0oEj0ZXBtHJbUB9IiCoYr2K5mH+L9QtAd4NicmzHvtE7BUOncItBS3D1Z+V1c
+	Q86JB69o3Gzs7GoHYh5GQxHXGZjVM4aNIg0llsi7swVVNYidPGZwQxm6qmkt+wqOIpQqVKgYkxa
+	QE1gm2jNn7Orqg1ZYme299K5P5cc4u7Ue9Z0cXC9ETt58Db+Pr0eIx/+kJE81nG9mHQX0oUpZdC
+	gtC05xTBO7zEImEIH4j9GHyiqskUFrB1HK7zLari/ZawnmVy/SqS47Vj9N0Ro9JGOFwPYxuX0+v
+	D/EpJXQDZGCLdoEUky4NnQCnEsQ4PWgc2D5Jps3p9XYdOzXP+q9G4F2ufzYApOU8zRsM2YKEBvN
+	9tVRiEx5oMum7SEc64Phu2m+pwmUxiV83ZUgi0YpIMVyDMgw3OKOCgbcnfnhLikPXdYCdW5NFe+
+	LjoFSTGHhoN2tG+wzjHhZuFwvwvNWKWw70W0SZWa3NZl2GPHc+YBuEWeB1uzuvajFP/Mkm+Q+uh
+	B+Z2SP7mLRiFhCtoU61Oj22ChRbVw==
+X-Received: by 2002:a05:6102:6447:b0:778:f972:32eb with SMTP id ada2fe7eead31-78a4aa9259cmr2013943137.12.1788525003196;
+        Fri, 04 Sep 2026 05:30:03 -0700 (PDT)
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9808ee4d743sm1409129241.9.2026.09.04.05.30.02
+        for <dmaengine@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Sep 2026 05:30:03 -0700 (PDT)
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5c2c46a428eso805411e0c.2
+        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:30:02 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBy9vTpZQIADPAenniFQSd4kdMcOQ4pNyw+sGgdYuUldE3WccPD9dcuKSYhldJJDsd6eOYoxCRR7Ojo=@vger.kernel.org
+X-Received: by 2002:a05:6102:578e:b0:778:4fe0:8297 with SMTP id
+ ada2fe7eead31-78a4aa70e09mr2345087137.11.1788525002767; Fri, 04 Sep 2026
+ 05:30:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <be376690-5219-4bf3-8ed7-02a49cee0e30@foss.st.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+References: <20260825141542.30901-6-wsa+renesas@sang-engineering.com> <20260825141542.30901-7-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260825141542.30901-7-wsa+renesas@sang-engineering.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 4 Sep 2026 14:29:51 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXavMv7hAnd0WHXuThGemifD8G38Tg2GwvkCjoy3_jzKA@mail.gmail.com>
+X-Gm-Features: AcwNN1Uk-vpOhRjUqifYExzXweIhzAcoCntgx4xcaaEfdAuYllug8_vrtZCfUzs
+Message-ID: <CAMuHMdXavMv7hAnd0WHXuThGemifD8G38Tg2GwvkCjoy3_jzKA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] dmaengine: sh: rcar-dmac: fix style in struct initialization
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-renesas-soc@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Sep 04, 2026 at 11:26:37AM +0200, Amelie Delaunay wrote:
-> On 9/4/26 11:08, Andy Shevchenko wrote:
-> > On Thu, Sep 03, 2026 at 04:53:11PM -0400, Frank.Li@oss.nxp.com wrote:
-> > 
-> > > Introduce vchan_chan_name() to obtain the DMA channel device name.
-> > > 
-> > > Use a dedicated helper instead of directly accessing dma_chan::dev
-> > > so callers remain unaffected by an upcoming rename of the struct member.
-> > 
-> > LGTM,
-> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > 
-> > ...
-> > 
-> > >   		ret = devm_request_irq(&pdev->dev, chan->irq,
-> > >   				       stm32_dma_chan_irq, 0,
-> > > -				       dev_name(chan2dev(chan)), chan);
-> > > +				       vchan_chan_name(&chan->vchan), chan);
-> > >   		if (ret) {
-> > >   			dev_err(&pdev->dev,
-> > >   				"request_irq failed with err %d channel %d\n",
-> > 
-> > This one...
-> > 
-> > > +++ b/drivers/dma/stm32/stm32-dma3.c
-> > 
-> > >   		ret = devm_request_irq(&pdev->dev, chan->irq, stm32_dma3_chan_irq, 0,
-> > > -				       dev_name(chan2dev(chan)), chan);
-> > > +				       vchan_chan_name(&chan->vchan), chan);
-> > >   		if (ret) {
-> > >   			dev_err_probe(&pdev->dev, ret, "Failed to request channel %s IRQ\n",
-> > > -				      dev_name(chan2dev(chan)));
-> > > +				      vchan_chan_name(&chan->vchan));
-> > >   			goto err_clk_disable;
-> > 
-> > ...and this one are duplicate messages as devm_request*irq() printsr
-> > most of the information.
-> > 
-> > Not sure if there will be a patch to simply drop them.
-> 
-> It was the purpose of this series:
-> https://lore.kernel.org/dmaengine/20260709135846.97972-1-panchuang@vivo.com/
+Hi Wolfram,
 
-Yes, thanks. My point is (independently on who contributes that patch) that
-the piece above may be an unneeded churn due to messages are going to be
-removed. It all relies if that series (a.k.a. patch that removes messages)
-goes first.
+On Tue, 25 Aug 2026 at 16:16, Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+> A new member will be added to the struct. Before that, adhere to coding
+> style by using a single space when assigning values.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+
+Thanks for your patch!
+
+> --- a/drivers/dma/sh/rcar-dmac.c
+> +++ b/drivers/dma/sh/rcar-dmac.c
+> @@ -1998,13 +1998,13 @@ static void rcar_dmac_shutdown(struct platform_device *pdev)
+>  }
+>
+>  static const struct rcar_dmac_of_data rcar_dmac_data = {
+> -       .chan_offset_base       = 0x8000,
+> -       .chan_offset_stride     = 0x80,
+> +       .chan_offset_base = 0x8000,
+> +       .chan_offset_stride = 0x80,
+>  };
+>
+>  static const struct rcar_dmac_of_data rcar_gen4_dmac_data = {
+> -       .chan_offset_base       = 0x0,
+> -       .chan_offset_stride     = 0x1000,
+> +       .chan_offset_base = 0x0,
+> +       .chan_offset_stride = 0x1000,
+>  };
+>
+>  static const struct of_device_id rcar_dmac_of_ids[] = {
+
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+
+Note that rcar_dmac_driver below has a few more violations,
+which you are indeed not modifying in this series ;-)
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 -- 
-With Best Regards,
-Andy Shevchenko
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
