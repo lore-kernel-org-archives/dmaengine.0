@@ -1,66 +1,101 @@
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020075.outbound.protection.outlook.com [52.101.229.75])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011021.outbound.protection.outlook.com [40.107.130.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9DD4B26FA;
-	Fri,  4 Sep 2026 17:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.229.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EBF3BCD3D;
+	Fri,  4 Sep 2026 21:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.21
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788544018; cv=fail; b=OqHouw/pxnalcqPagO/60bAFGq/ZcXPhuMj5HxMw8+vXaKoOjFMwPTlYhwD4HC7CFejYVjRkw3PvwSo+gijQSR1OgAJvjmS2c2jIhsNJkcr+bF4/3E9Q1/oeUkqgMU+dsmUIGJKVpTndz3q3ulkFLBKGU+VRQDCM52nGuNUZKfQ=
+	t=1788558609; cv=fail; b=knBhDzzHF3l7Zb2hOrnTey+Z9lj0e+pHmqfDlbetcr9mkmgbTgSkVniyHT6iQ0wsmDDkuc8Y2vmH8tBclN+DGpj7aLMmxlYJCra7o0sccEewr1nrh4y2/j1gFjvNC9GwbR4Rt9BeBgkyoXkq6Wqia+0/YcNEUTF5yswAiG/rBoE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788544018; c=relaxed/simple;
-	bh=K84mxxgC2T5Ye3Qx7PkTV2VyDUgA300w+f/4OYfYkQs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=pS/UcH+8downCqyIsOEMKrV6ohOg05PWKGd2Iy804wvR2ZDorEDSCMbDX8t0L4CQCO5Iqdn7vDpHCxBiwoeWXK1cUjMVkOY2yAww05k/DnndVb5T5vSL9tQlFcIJqEMuazjsLNgqlnnM4gm+KVOjEFKetnWeJ257LX62Jswp5JM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=I2Xwy/Xe; arc=fail smtp.client-ip=52.101.229.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	s=arc-20240116; t=1788558609; c=relaxed/simple;
+	bh=Iz18q3YPb98fKzkmx1z2iPR386MGdkbCyCjNkYrVyAg=;
+	h=From:Subject:Date:Message-Id:Content-Type:To:Cc:MIME-Version; b=qJkHZ6Tl6ReoRDEVSvFvC4WKE22VAr3gg8Cu7+mdsGx4icD0C+ebPH73jBOxmdekg/v3/V0z3/gqcr/FKncrOugF75QY5r/FRLwM9aHbohDpdhWQxRzlfjNgONIC3f+JBQeFRviCBJ6tc8wVoP1oKNz7WjmwjAeHESsFlRDb88k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=XwY/4JAw; arc=fail smtp.client-ip=40.107.130.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="I2Xwy/Xe"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="XwY/4JAw"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dw2iIiyULmZosN4dvh4Gta01AyyGb9kSIwxiY61hj1mJl4ML74YAh/jkEF0+69r2+nHLmfLn3/s+S7y7DJKeH+grYmwU1YaVSCKZv20ahrbrcuQfwQsslb6ccKhk16Oh7OtmawqyUOCSHkDd/XInSNuejjpGYHcrEiIR0MTwrns8DZF01En0LeAw2Op6rwqbT6gZNQJhZkAoo+hGkP+RCbmHgVoL28Ao3tQdAyoAmAE9mOqR+mEoiH1E6kuDgToiSdoNtPbAAD1mMYgNbnIPSbhPtfXDPtk7gxQzel+3FW93Nvg6ryz0FKQqZ/iANO/LF20OZ1x7A572Vc3XsTC+Uw==
+ b=kadPSMffQCebe7AFKBidnFNt9r0s2Wuh/Gm0QcQhym+Xj4/Z6pZ19zx/UPnFz9hV/hZz6ZGUw4RZ5PqN6d0mGm1Xgd2fYEb/x5NdaawZCE1joW98LjlehKsrh64DMEK8vVYDgFTJy0z93x5Xi/H/DhoRkOMPl+UWIF+fRf+wNYzew58f+z9jsUMxw0Flss1wax4X3otABjalk1XrJpYK6HNMr8HguIQCS2YywJY7dlPmTcks6BO3GavxJ3BWbNB8o7LwVTqmXtMyOpwxDGWedjsYWruvRXEPo+iyqDlbjGbI4JLKzNRxDwsJOzj/pSkPdJ/msFFjf7t3cHD6nvB/sw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lHeYmyshb+GFuAQrLFb3HLBZCtIskjG0wPxpMWJbD6s=;
- b=WJmgfA4OZ8DF7GXE5dDnmnfH2kCpH6KyR5aqnQ4zLgZ9vWnMaZ8Zul3TwML2rACfVfYfvKJcaqNxLh80+/Ir04EFfesYvnL5Vp4RbcE+DhMCotbtEL4sM6eNYyETY98ljAbCsoVX3wA95OsXEYFV3OOYa2CDUov8hrDtRpVdf4G2/pFEQbv8KzXohdMP5IwDkDIqFupowAif5mHinodtv8OnYrOpSDtyBDh1h2uZYIr8NJAVjX5fNxni2Qdhyyh8AbfLplrWOitMs+zwMACUyy4EAf1dk6VxTc8eua93aMVdAOC6AviUyVKK1vMQ6+b6T/I3Jr/Rr5RmjVwV/nCClg==
+ bh=lTl/9uc6WiU9isqcRUkabGsmk3gnyr5Plk0Jxx4ED0Q=;
+ b=JbYfTeVWKqlUGiy3JgYY+P61TuvO3E2PklV7Q6d8I68an6BHOf9kGRcvDgCouqnckBqPTs3OI75/kbQ3k9feJD141fFn8F0xzdkmWTgcICwXOESBMXmPjtyxLoRPYGChKJTUzFAUivxSoWtwVYNUfRSzX7t7ABK/dpoUkbKX+IaV8PNzN2TQ/ShuP8IHFTQb7wgQBVHZ2xoYF56Z6GCv/Av8U7p8ovxm5FArOM69dYueInhAfsmJg3SNocJJVChlBf7eFSSfbqLX9UjP/XGztPuxN8KyDd2AsvLCVXMQkWiMcWVUxMr7sSjfhldben4iEW8oJ+sxULQwiS8UUswrsA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lHeYmyshb+GFuAQrLFb3HLBZCtIskjG0wPxpMWJbD6s=;
- b=I2Xwy/XemM7BrQR4/yQJfR1d48Yjn/vgRjFudOPOeMMvr7w/cIa+LwcIEl+AKVq5grlSY452snbMNnkAzhLCwm172dYVUyLa2u8SZl1CCUxIEczhksyMqi6FuZ5/4XSjc2RGRqojdNLphQH54VqIelGTGPOVn7N/rjeJsHsTr1M=
+ bh=lTl/9uc6WiU9isqcRUkabGsmk3gnyr5Plk0Jxx4ED0Q=;
+ b=XwY/4JAw+Xv9/OIjO//eQN229W+t3e/CnOZT0bssnoXIb1ClkgDwzO1gUdWFVq/Tglnwi3y4agPpKj7HMxYun89s9ZE2sp2sT5FsFlWms32UNrFfD2ql5mA0ZKMPlVF2/vGBYnCom0BlgLhujW0/PVFv+cXf9TpdTTHJW62NeNatTKZlJdlDkZ0szUBZu0sZ6v6frQdg7CN9rERvVsfP7UzfCZDJ6VjW7fvoO6Ce521SO2E6AddJwmOvrd5unkHYaqYZEGdiFPmOvTl74rTKA8CaD7jhSeGa/NEA3Z9WiQly+wkLimqD/lzP+otsewR6+z/GDRbI1g8jMsfdlDgG4w==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
- by TYTP286MB3579.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:3a0::12) with
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB8932.eurprd04.prod.outlook.com (2603:10a6:20b:42f::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 17:46:53 +0000
-Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- ([fe80::2305:327c:28ec:9b32%4]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 17:46:53 +0000
-Date: Sat, 5 Sep 2026 02:46:52 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Devendra K Verma <devverma@amd.com>, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] dmaengine: dw-edma: Configure remote interrupt
- routing
-Message-ID: <5pbvoqpu3ww42x65q2v4ing2tcqyx2inlc2aqxx2npfirc26y6@nmxylqdvpow4>
-References: <20260903064533.2269557-1-den@valinux.co.jp>
- <20260903064533.2269557-3-den@valinux.co.jp>
- <aprmu6McROxJrDLW@SMW015318>
- <75noofzi2u3gc4gyjgiiuprhth6zesufqtytbpun2ew45bewda@nhu24spu2cyw>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <75noofzi2u3gc4gyjgiiuprhth6zesufqtytbpun2ew45bewda@nhu24spu2cyw>
-X-ClientProxiedBy: TY4P286CA0081.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:36d::13) To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:38f::10)
+ 2026 21:50:03 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0382.007; Fri, 4 Sep 2026
+ 21:50:02 +0000
+From: Frank.Li@oss.nxp.com
+Subject: [PATCH v3 0/4] dmaengine: rename dma_chan::dev to
+ dma_chan::chan_dev for clarity
+Date: Fri, 04 Sep 2026 17:49:42 -0400
+Message-Id: <20260904-dma-chan_dev-rename-v3-0-685601b0b788@nxp.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPY8m2oC/33NQQ6CMBAF0KuQrq1pp6GIK+9hjCntIDWhkBYbD
+ OHutrhgY1z+zJ/3FxLQWwzkXCzEY7TBDi4FcSiI7pR7ILUmZQIMJDtxoKZXNF/uBiP16FSPVEq
+ QQukSla5J+hw9tnbe1Ovtm8OreaKeMpUbnQ3T4N/bbOS5938hcsqokhUXvK1MqeHi5vGoh55kP
+ 8Iu1Ez8FiAJzDSClY3UFZe7sK7rB36BfGkIAQAA
+X-Change-ID: 20260812-dma-chan_dev-rename-66263ac5eac9
+To: Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Paul Cercueil <paul@crapouillou.net>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Binbin Zhou <zhoubinbin@loongson.cn>, 
+ Patrice Chotard <patrice.chotard@foss.st.com>, 
+ =?utf-8?q?Am=C3=A9lie_Delaunay?= <amelie.delaunay@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Steven Rostedt <rostedt@goodmis.org>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+ Thierry Reding <thierry.reding@kernel.org>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Ludovic Desroches <ludovic.desroches@microchip.com>, 
+ Viresh Kumar <vireshk@kernel.org>, Keguang Zhang <keguang.zhang@gmail.com>, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, Chen-Yu Tsai <wens@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, Kelvin Cao <kelvin.cao@microchip.com>, 
+ Logan Gunthorpe <logang@deltatee.com>, 
+ Laxman Dewangan <ldewangan@nvidia.com>, 
+ Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-trace-kernel@vger.kernel.org, linux-tegra@vger.kernel.org, 
+ linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+ imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788558597; l=4241;
+ i=Frank.Li@nxp.com; s=20240130; h=from:subject:message-id;
+ bh=Iz18q3YPb98fKzkmx1z2iPR386MGdkbCyCjNkYrVyAg=;
+ b=99EnACD20tdz5KQPldkdQ5SDCnj6rFMhLv7TXzNPcnmZtoWOhjqQd1m4M/TWlwfGVgQ2i+e4T
+ ASsDGvoap+VAFThvwO4GMazPdn3oIGLAbBl390Pq8rDXtO+j9VfIlj/
+X-Developer-Key: i=Frank.Li@nxp.com; a=ed25519;
+ pk=I0L1sDUfPxpAkRvPKy7MdauTuSENRq+DnA+G4qcS94Q=
+X-ClientProxiedBy: CY8PR12CA0047.namprd12.prod.outlook.com
+ (2603:10b6:930:49::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -68,369 +103,157 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|TYTP286MB3579:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e515ffc-25b1-4a73-92af-08df0aac8179
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8932:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1e80f738-9b55-4123-1e90-08df0ace7932
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|10070799003|366016|56012099006|4143699003|6133799003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|19092799006|23010399003|366016|7416014|376014|1800799024|921020|10067099003|11063799006|18002099003|56012099006|41080700001;
 X-Microsoft-Antispam-Message-Info:
-	/dJwEQASPP7vVJYzeI3KSY5JM5dmraRpMT87YtLrCbQ+wJ8PRcz2tGRVbdANrjGY535HM361eow9vJihMtBgsBfme4P/j5jZE9UahFtUNaZeCc/Y1wA2fomMddJ2bfBr5RT09OAV0X685IHLctACOMZ42MswUnXXY0ttf9Db/nIfPk2xn5H1aPdRuXjz0Alh6YQQ3fgX/8/B01VHpsu0/LcohY5kfYXSJyvDfGqM9OCf6Yy3xYfBbshGLMLpTjv5oIhbWCVdEr77auO2UqHIpjRLdrfyZEqAR+Q2HUUYCrUPmR+yR+EhJcCcB2lqw1gsIh2z+A7CImU/40PGMp4fNnVT1depuq2dqjTkU6Io1HjAQOcJeG4+vd8ntOMnHuM6C/OdCjOMEpDxo24SOy3BnP9LhrHLqobO1w1lQcB4KgrcaUaUjDfVx8c/nAZPykCYJrKbYfvt7RTJtuJ4rK4XMo845ZZadhVSfiL2QTDrYJV8dVLi56fXJX413PKDpPd38fsdGyBOUNX55u2mqPqn2xPDbfa5MvfCwSfb9Ko6LCV0wq7qssMfxesh70iUN3oV2wJIDo9zAru7oLiqVVXXczzM8gCmymhd9jLuYBohtOs=
+	wstk0lSvTtZRBxfJMUKvdTlh/zPAekIDhC71tt6mb0pOXtwlpdIAN2u+nZNjF329LFb6IW5SsgfgpCAhmpvWclckLbkyvR3w6ivgciqyC3UieyZpCkmgG/tkEXrQ9qlX+SQPxA6nLMw2t4kzOkGj/0tIzBGes/CVD8T9M8AGDWIudgxpR//IH8Y1o/McosA+yciwKlRoggjTz6NOoYj4ZoMHyulSnnjOKmU5ZAW6DWRB03ypJmyCqasxy8rUC7YSTJjZykqJLgt+5yEJP3BCLA+HRtncRuGOhhZy4o+sfawd1WwlpOb1XToxNnB4cxHbcDU9DU1/+Xzj190Gh8kwcFlIZQi8jmveD4TpKeokowuCSkvMyrFeKuZIWszGCZ9AXjUfXIiRi3djVP03JHgn8MPeGYWW6G1SjGFw2h+DCDFghVDCMO3KLALttbpYHn/31L1iM+LwGH5MlK4RRqADMRWgAjC9aOZkzIIEyqmfukSHY1zYoiLizvzc56vJVP3OkYd8GKijCsOmLSqqii+9VbcvcyGQQ5nU7E7f8PxknT4mrguxOPDRfW4fJi1Eh08y6ffh+aUSSl7uscFE2t5EsV7T38211YO/1xQ0kPI6lxBKiV1+hb/0y2nLr1JGTnqogJ8pJAYVk0CafJ+pU11cmYtJcDTW+tNXRmspjsnIcUN1JkfYu1uOlQKZ05rAoJ4B
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(10070799003)(366016)(56012099006)(4143699003)(6133799003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(7416014)(376014)(1800799024)(921020)(10067099003)(11063799006)(18002099003)(56012099006)(41080700001);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?tHjsldEBmau/XN5Yz2BHV/TNfYNOQoUlL0N5gu82KdmKdmRtF0H8iA5pHjz0?=
- =?us-ascii?Q?Cbrk0IheKuj/MMC7jJozlOHnVAzUZkDUjU5sRALzAJBWNR0heGq4/kAua74Z?=
- =?us-ascii?Q?oXWzKlahaD73P/Bee0WatwGV/eAnSnipTPIEIDN8DogGCN/mdXgo08Yqr9PU?=
- =?us-ascii?Q?WVr0YUxGcI8cPfsdbtcoT431u2CZrxDEKcchuGny6/f66tsfX6LuPg/BpW9J?=
- =?us-ascii?Q?Y61qV5wwDrU4V8wYzfSq0J2jVLt7Xl+zeRqRW21wgFs2fex0ZYubtTkgQvit?=
- =?us-ascii?Q?AXhzYK3c4ByKvJKJhd+x1thHSo22aWsIh5rrHhB41YsoXyQnSZbsZa0DGUyY?=
- =?us-ascii?Q?TOmu7fBAxSngLACzkFpg+No5nBOqQFBPOVAIyhXSAjdq78jTgyaQZgVHySu/?=
- =?us-ascii?Q?ycOd/PfQ/HJOdxDeLNUYJ5eGMEsg+mRGChe6dOSuKnEJJ3RJY6GTs6oFL+oH?=
- =?us-ascii?Q?9ohRqHuUpzxtfRPe7WVdeVuW92x593GAx7MioyTuZwfWLluOySgXe/BeENN6?=
- =?us-ascii?Q?QPMFRsuOeDLmqxkpkQqrM8RHY7frj7YeAxOGPahuSSRTAGeTpnHRShySwbmp?=
- =?us-ascii?Q?BZrd+S2/AfDwt1SVgGFk1B6h34Hk7p/nU+37ajyqhVkfalJRQw1H8VlzxkfQ?=
- =?us-ascii?Q?ddSKdKaNoStN3oP50gic2I7/t1Ekd3++z9hAqnOkmBMJViZcSUArq0lE2bQa?=
- =?us-ascii?Q?+klYx5R8Vh9qP8hMWdVYZLthbU1YCArU3+jWSodhtzYnUfrUmyzSMuZYfkaN?=
- =?us-ascii?Q?dJfBOoegmSIUCaXi1uOB226xwXmX29Jwdj8eWntMHiXNS0OWPCWeQ//PJMkS?=
- =?us-ascii?Q?OVxcaWl/ZtMX7IhXau4MLTPKw43/vljnOoNW6CkArI7MCNXqC/I3nxBLGjW2?=
- =?us-ascii?Q?Qwi0/NwABKtCNuqU6DthZ6edWrL3txh75UW2rgft2KHOktvUfs/eFdA9DAEB?=
- =?us-ascii?Q?kJmDAiDXf1nm4diC33dMOQ3gM2/LW4sYtKHl8PjHvtXQrbgGBN+v9cd2xUJO?=
- =?us-ascii?Q?tTnBr8P7NH66Z2FXalg6d8TTB9bOT+32rqyGVTgeDJAfNoFNm4xNygDV0o6e?=
- =?us-ascii?Q?mHlQ0vBu7RYHWvKOcPHX+rEjzmBNQDskPBzR42qQtWoni1zp81rLLDrZcQXb?=
- =?us-ascii?Q?p1TDY7Jg8M85UAbRqeSK4CA8NO0Qk/t2JiRJjmHZp03IUxTffLaCS/KQsaHT?=
- =?us-ascii?Q?+rf1ObC9dNDkahbRi2O89xYKIgMUzm3aWDzgaksm7c3nhHEqpVmm3d9YaqZc?=
- =?us-ascii?Q?woMx4zdommozufWROs/kUOAwKFYx6hS1S3fC3sJ3mlHKbbQlSSbVRwjniU08?=
- =?us-ascii?Q?dfOezKzHFHyFBHFFlpMzwQLMGxXMHRZW84VedFsvhrgfcPK81waJhEZrkYq7?=
- =?us-ascii?Q?VUnxsz/xvVcbzDCixKgxJ+WqKnbmD7NYSspwb48QPc589w9ecdebfYLUqOmx?=
- =?us-ascii?Q?kyntDIvAHWWuZTgyO49DhcxsKFR9t+EpaRLGjySlbYo/Y9aBbDdvPu3mIPTU?=
- =?us-ascii?Q?I5FP2bOd/nyyDJzqEROt6O4MYDJdE2lN3y2A8tA/7Lcx5SGe5cacnGzQIAjT?=
- =?us-ascii?Q?OstaAC+wafQ3Tc83Yby01pEzmEAyjjan6K5EA5wuLG5ZW+zNpW+TQAnnabPz?=
- =?us-ascii?Q?LxzlVcm8a3cqa25TyP217rKUlbPbNbgCrSQXeNqXiMGLbZYEwbUQKWq2kUSl?=
- =?us-ascii?Q?E/y0dMkap6xP5ZatNbfz47H78CWZ1JKALfYpYhYz/v8wMXqkm7D252Dd4mnx?=
- =?us-ascii?Q?j2poXu8Uy40QNJ8jGri2z1+YLDpcSGmxn8q0hzvknu6SrSqnRCqG?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e515ffc-25b1-4a73-92af-08df0aac8179
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
+	=?utf-8?B?NnVNRDF4Kzk5T2lRalh5ell0RTk0b01KdmphSHQwdzBKRmVjT0JkWU05S1Yw?=
+ =?utf-8?B?S3E1SDRkV3YyRkJza08wMkx6dmRpVTFJNC9TSU1SYzBvVXppbnJNblZ4ODdj?=
+ =?utf-8?B?bHJDZkVFa0hFY1MyWVRtZVBmdmRlSDF4aCthL0tiUHgvdGxhdnlKS09iZ1Zs?=
+ =?utf-8?B?bG5CMXRBRTdUOFVETjBXdEdVcXF4cy9yVGZ2UEZHK0oxR3grdXdkM214TlV3?=
+ =?utf-8?B?ZUw1U2ltdXJkcHl6RC9kc1p2M3QrMlVSeU9wTFRTQ3RJTnJIeURaTFlPbGY5?=
+ =?utf-8?B?WkVTbWVoUHRFd1dDM3BSbkZ0L2haamIrRkhHMmdOb2xOVEFjQXFsTFFtbWxL?=
+ =?utf-8?B?YnZLZDEwVUMvTm5VWGV1RGlRZ2x4QklaeG9lVFh3SkJtUDY1eDh4UTJEc3Ro?=
+ =?utf-8?B?dmxqV3NudXFJSUlkVHJ0ZXZtbmJmSmxxS0NTM0N1N2dLWXZXWVh5WCswS2Ra?=
+ =?utf-8?B?Z2ZGM1gwMG0xaGdReEd0Z0VoaXFjMHhmTDljdWZUZnZEYzl6OWRUUCtEQnVF?=
+ =?utf-8?B?c2dyeWU2MjUwNWYrMW0rWUlYNUtOanhHQ1UwK29RdTI3Y05WUmhpMmlsLytX?=
+ =?utf-8?B?UitMazdVSlFiR1g3TDkrQWhmWTdtQXBpSFNDblZ5V2pwd3BvRHJBcFZXOW0r?=
+ =?utf-8?B?Ym05YUtqMUJFVzNvZWVIQUVGNnVCSFBrWDVjZGlSbG9UM243bWNSSlljck1G?=
+ =?utf-8?B?K3N6cUhhbFBMQ0Q3ZGo1N0oyMG5Kdy80RVhVRVJweE9GajhZVUt1M21WYW5W?=
+ =?utf-8?B?R2NtWGNDTUdHelQrb0d0RnczeW5zTGpKSndYaFBSTUV4SHNrN2E5eWdQV0d3?=
+ =?utf-8?B?RUxZaThVSWxzbGE0L1liQ1RUUXhWUWp5Y2t6TFl1dFBhcXp6bUtoQ3VQR2RK?=
+ =?utf-8?B?MkFEcFVFU20wVmwxZ25YSDlrUnBCRVNTZCsvU0hSU2hTTTltR0pFeW9wckNQ?=
+ =?utf-8?B?UGM3R3RUalZSMXZoMGliSW9obGVNNVRWOGNvMmtSTWJJNldhYWNJSWpEQzhL?=
+ =?utf-8?B?TzZwMk9XemJlYThJd2tSOGF1aElVNEFnKzNHUXUya3pmMGNRZHUzbVpQZUtF?=
+ =?utf-8?B?bEhkRmVPRUc0MFFOSGNrcXRoUTgrQkhMMGVGdDB6cDZRK0RJRkpWZlhVUndy?=
+ =?utf-8?B?VGtBb1d0SVhESFBIU1ZxVWx6eEc4SEU5c2MyYlVNd0NXMTRaZVJSRWIya2FB?=
+ =?utf-8?B?MEJIVllsWGF2eHVzSjE3d3lXMnRvR0dWNDVJb050ZEVCWFdrT3hjN1NhbXRY?=
+ =?utf-8?B?bkZEWUFhcFZsa1U0ZWMrWi9oQmRhNW53cFQ3Rys1TitENmRTUW9TdFFuZHBq?=
+ =?utf-8?B?V2VCQ0prRmZjOTRUcXEzMlU2L3pxN0dYUzVQeDF5RmFHc25sSUowWDFGSXpp?=
+ =?utf-8?B?b0loYkpEcUFrSEo3dkpidTFjdzdaWTlpVWZxN0VhWmJpUUhWV1B2WS9ld2lB?=
+ =?utf-8?B?azZvQnpzY1c2R0lnUVBJN09uYWtzMEprZFZRajJxejhDMkIyVFlpV2diUjQx?=
+ =?utf-8?B?dlduUFFNQzVCUE44Q1BzSDlodTZ2eUx2U2JITkFCMkpQcitIK2FtWmMranF5?=
+ =?utf-8?B?NTljNkdIQ0lobWNXWUt6bHNDZ0VvM0x5UUJ6NXU0TzMrWlp4Ylg5b05WbHJ3?=
+ =?utf-8?B?TTFZUStVZzN5YVZHZ003Nng1Ym5hSy9LZTRrY3NEN3UrSHFQZVlSMW5XdHla?=
+ =?utf-8?B?YnlJcDU0YUJyaFA3WkZ4WG0yd3k3UUwzU2F4QlBpZjZ6b1NzbVFrRDFzVmg4?=
+ =?utf-8?B?MTZvVDc5RTVQYmh6TVpTQ0tuT3I4OEN5U2t2YnNEbUprZ2hFQzR4NGx2cGov?=
+ =?utf-8?B?NWhsNzc4eDk4TTg5d1JTWGpvanpHMnZIV2pWdDB1UnpKQnl2ZkNhM1d3bWZ6?=
+ =?utf-8?B?YXNsNFVWbkNCQVl3QUg2a0VKbzl6cCtHTnJUazg3VnhDU1lRRXNZYkptTDR4?=
+ =?utf-8?B?WGpCcEpYUGswVVZZSTBmaXZXd1lLVFNzQVlwTHRrOEIvb2RhOUlYcXByREZL?=
+ =?utf-8?B?NTdJb1lPWGZZT0RFeXhPbUhqZi90WGhhTUx1ZWJKZTZuYW1ZT2FmampBSHJ1?=
+ =?utf-8?B?ZHBVdFV3MXREYWNKVnd0ZVNoY2FIUkh1dmlYZ2NGOCtjYVowVkY0NE40aXpP?=
+ =?utf-8?B?L3NoMDJpUjRpYXBXUjhLN1FjTlNNNmlTeUNtblpXamFnbGkwS0dOTlVhUHVL?=
+ =?utf-8?B?N29TWWFSZVkwSlJOK0Vkb2l1WFlXaWJ6SHVXdjlXWmxaOFBhNkZUUlFFRFhq?=
+ =?utf-8?B?S0x0SWtPMW10Q2RFcmRoQW1iVDVIR3g2ZWxlTVZ6cm5hRTFVSGhGMFVtZjNH?=
+ =?utf-8?B?SFlyaDROUnZjWjUyNEpjMmRUQ0xBVUIzNldmQzNzNU1FcEZSM0hVRE1MOWgv?=
+ =?utf-8?Q?+wYtESNuvZqxov20VjE4CXEIzPFq7Kf0qHH6m?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e80f738-9b55-4123-1e90-08df0ace7932
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 17:46:53.3313
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 21:50:02.6530
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: b2z6mp7L4OnxPBETv1YX0hQI35a9QTrhhPxvOsQya9rmLuBBquv27l2vb903bmXhIE9pZc/FQVSj4Dx72VPj6A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYTP286MB3579
+X-MS-Exchange-CrossTenant-UserPrincipalName: LmvgexrAMc0CaLAQM8fwvE5NTvti7hbc4jzXaPs04B6+Wo/Ot9K9LKG4ZdaRhMCtzi2ZLnoK23mxQ9E8EmQzFoFPc13alAuW6CcYWWe81LhMndEBUOctq/xlxThHtspK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8932
 
-On Sat, Sep 05, 2026 at 02:15:38AM +0900, Koichiro Den wrote:
-> On Fri, Sep 04, 2026 at 10:41:47AM -0500, Frank Li wrote:
-> > On Thu, Sep 03, 2026 at 03:45:32PM +0900, Koichiro Den wrote:
-> > > An endpoint function can reserve an endpoint-local channel while the RC
-> > > programs it through an exposed register window. Such a channel must route
-> > > interrupts remotely and ignore them on the endpoint.
-> > >
-> > > Use dma_slave_config to set per-channel interrupt routing on idle channels
-> > > of a local eDMA-compatible instance. Releasing a remote-routed channel
-> > > quiesces the hardware and drains its local IRQ before restoring the default
-> > > routing.
-> > >
-> > > The eDMA quiesce may stop a complete direction. The caller must own every
-> > > channel in that direction and stop remote programming first.
-> > >
-> > > Suggested-by: Frank Li <Frank.Li@nxp.com>
-> > > Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> > > ---
-> > > Changes in v3:
-> > >   - Add struct dw_edma_chan_config with validity flags for non-LL mode and
-> > >     interrupt routing. (Frank)
-> > >     https://lore.kernel.org/r/apWj7zzAw57U2r4F@SMW015318/
-> > >   - Do not skip generic dma_slave_config fields when private settings are
-> > >     supplied. (Sashiko)
-> > >     https://lore.kernel.org/r/20260828164950.61AE51F000E9@smtp.kernel.org/
-> > >   - Use READ_ONCE()/WRITE_ONCE() for IRQ mode accessed by shared handlers
-> > >     and drain the channel IRQ before restoring local routing. (Sashiko)
-> > >
-> > >  drivers/dma/dw-edma/dw-edma-core.c | 135 ++++++++++++++++++++++-------
-> > >  drivers/dma/dw-edma/dw-edma-core.h |   5 +-
-> > >  include/linux/dma/edma.h           |  19 ++++
-> > >  3 files changed, 126 insertions(+), 33 deletions(-)
-> > >
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > > index a678c70a78fe..e3786d960a43 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.c
-> > > @@ -177,48 +177,79 @@ dw_edma_get_default_irq_mode(struct dw_edma_chan *chan)
-> > >  						  DW_EDMA_CH_IRQ_REMOTE;
-> > >  }
-> > >
-> > > +static int dw_edma_device_config_irq_mode(struct dw_edma_chan *chan,
-> > > +					  enum dw_edma_ch_irq_mode mode)
-> > > +{
-> > > +	if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) ||
-> > > +	    (mode != DW_EDMA_CH_IRQ_LOCAL && mode != DW_EDMA_CH_IRQ_REMOTE))
-> > > +		return -EINVAL;
-> > > +
-> > > +	guard(spinlock_irqsave)(&chan->vc.lock);
-> > > +
-> > > +	if (chan->configured || chan->status != EDMA_ST_IDLE ||
-> > > +	    chan->request != EDMA_REQ_NONE)
-> > > +		return -EBUSY;
-> > > +
-> > > +	WRITE_ONCE(chan->irq_mode, mode);
-> > > +
-> > > +	return 0;
-> > > +}
-> > > +
-> > >  static int dw_edma_device_config(struct dma_chan *dchan,
-> > >  				 struct dma_slave_config *config)
-> > >  {
-> > > +	const struct dw_edma_chan_config *dw_config = config->peripheral_config;
-> > >  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > > -	bool cfg_non_ll;
-> > > -	int non_ll = 0;
-> > > -
-> > > -	chan->non_ll = false;
-> > > -	if (chan->dw->chip->mf == EDMA_MF_HDMA_NATIVE) {
-> > > -		if (config->peripheral_config &&
-> > > -		    config->peripheral_size != sizeof(int)) {
-> > > -			dev_err(dchan->device->dev,
-> > > -				"config param peripheral size mismatch\n");
-> > > +	bool non_ll = false;
-> > > +	u32 flags = 0;
-> > > +	int ret;
-> > > +
-> > > +	if (dw_config) {
-> > > +		if (config->peripheral_size != sizeof(*dw_config) ||
-> > > +		    dw_config->flags & ~(DW_EDMA_CH_CONFIG_NON_LL |
-> > > +					 DW_EDMA_CH_CONFIG_IRQ_MODE))
-> > > +			return -EINVAL;
-> > > +		flags = dw_config->flags;
-> > > +	}
-> > > +
-> > > +	/*
-> > > +	 * When there is no valid LLP base address available then the
-> > > +	 * default DMA ops will use the non-LL mode.
-> > > +	 *
-> > > +	 * When LL mode is the default, clients can request non-LL mode
-> > > +	 * through DW_EDMA_CH_CONFIG_NON_LL.
-> > > +	 */
-> > > +	non_ll = chan->dw->chip->mf == EDMA_MF_HDMA_NATIVE &&
-> > > +		 chan->dw->chip->cfg_non_ll;
-> > > +
-> > > +	if (flags & DW_EDMA_CH_CONFIG_NON_LL) {
-> > > +		if (chan->dw->chip->mf != EDMA_MF_HDMA_NATIVE)
-> > > +			return -EINVAL;
-> > > +
-> > > +		if (chan->dw->chip->cfg_non_ll && !dw_config->non_ll) {
-> > > +			dev_err(dchan->device->dev, "invalid configuration\n");
-> > >  			return -EINVAL;
-> > >  		}
-> > >
-> > > -		/*
-> > > -		 * When there is no valid LLP base address available then the
-> > > -		 * default DMA ops will use the non-LL mode.
-> > > -		 *
-> > > -		 * Cases where LL mode is enabled and client wants to use the
-> > > -		 * non-LL mode then also client can do so via providing the
-> > > -		 * peripheral_config param.
-> > > -		 */
-> > > -		cfg_non_ll = chan->dw->chip->cfg_non_ll;
-> > > -		if (config->peripheral_config) {
-> > > -			non_ll = *(int *)config->peripheral_config;
-> > > +		non_ll = dw_config->non_ll;
-> > > +	}
-> > >
-> > > -			if (cfg_non_ll && !non_ll) {
-> > > -				dev_err(dchan->device->dev, "invalid configuration\n");
-> > > -				return -EINVAL;
-> > > -			}
-> > > +	if (flags & DW_EDMA_CH_CONFIG_IRQ_MODE) {
-> > > +		switch (chan->dw->chip->mf) {
-> > > +		case EDMA_MF_EDMA_LEGACY:
-> > > +		case EDMA_MF_EDMA_UNROLL:
-> > > +		case EDMA_MF_HDMA_COMPAT:
-> > > +			break;
-> > > +		default:
-> > > +			return -EINVAL;
-> > >  		}
-> > >
-> > > -		if (cfg_non_ll || non_ll)
-> > > -			chan->non_ll = true;
-> > > -	} else if (config->peripheral_config) {
-> > > -		dev_err(dchan->device->dev,
-> > > -			"peripheral config param applicable only for HDMA\n");
-> > > -		return -EINVAL;
-> > > +		ret = dw_edma_device_config_irq_mode(chan, dw_config->irq_mode);
-> > > +		if (ret)
-> > > +			return ret;
-> > >  	}
-> > >
-> > > +	chan->non_ll = non_ll;
-> > >  	memcpy(&chan->config, config, sizeof(*config));
-> > >  	chan->configured = true;
-> > >
-> > > @@ -890,11 +921,48 @@ static void dw_edma_wait_termination(struct dma_chan *dchan)
-> > >  		 "timeout waiting for channel termination\n");
-> > >  }
-> > >
-> > > +static void dw_edma_synchronize_chan_irq(struct dw_edma_chan *chan)
-> > > +{
-> > > +	struct dw_edma *dw = chan->dw;
-> > > +	unsigned long *mask;
-> > > +	int i;
-> > > +
-> > > +	/*
-> > > +	 * With nr_irqs == 1, the common handler can enter for the other direction
-> > > +	 * and retain a status snapshot for the remotely owned direction across
-> > > +	 * quiesce. With multiple IRQs, the handler covering this channel can likewise
-> > > +	 * enter for another IRQ sharer. Drain the IRQ whose mask contains the channel
-> > > +	 * before restoring local routing.
-> > > +	 */
-> > > +	for (i = 0; i < dw->nr_irqs; i++) {
-> > > +		mask = chan->dir == EDMA_DIR_WRITE ? dw->irq[i].wr_mask :
-> > > +						     dw->irq[i].rd_mask;
-> > > +		if (!test_bit(chan->id, mask))
-> > > +			continue;
-> > > +
-> > > +		synchronize_irq(dw->chip->ops->irq_vector(dw->chip->dev, i));
-> > > +		return;
-> > > +	}
-> > > +}
-> > > +
-> > >  static void dw_edma_device_synchronize(struct dma_chan *dchan)
-> > >  {
-> > >  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > > +	bool remote;
-> > > +
-> > > +	scoped_guard(spinlock_irqsave, &chan->vc.lock)
-> > > +		remote = chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL &&
-> > > +			 chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE;
-> > > +
-> > > +	if (remote && dw_edma_core_ch_quiesce(chan))
-> > > +		dev_warn(chan->dw->chip->dev,
-> > > +			 "failed to quiesce remote-routed %s channel %u\n",
-> > > +			 chan->dir == EDMA_DIR_WRITE ? "write" : "read",
-> > > +			 chan->id);
-> > >
-> > >  	dw_edma_wait_termination(dchan);
-> > > +	if (remote)
-> > > +		dw_edma_synchronize_chan_irq(chan);
-> > >  	cancel_work_sync(&chan->irq_work);
-> > >  	atomic_set(&chan->irq_pending, 0);
-> > >  	vchan_synchronize(&chan->vc);
-> > > @@ -903,12 +971,17 @@ static void dw_edma_device_synchronize(struct dma_chan *dchan)
-> > >  static void dw_edma_free_chan_resources(struct dma_chan *dchan)
-> > >  {
-> > >  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
-> > > +	enum dw_edma_ch_irq_mode default_mode =
-> > > +			dw_edma_get_default_irq_mode(chan);
-> > >
-> > >  	dw_edma_device_terminate_all(dchan);
-> > >  	dw_edma_device_synchronize(dchan);
-> > >
-> > > -	scoped_guard(spinlock_irqsave, &chan->vc.lock)
-> > > +	scoped_guard(spinlock_irqsave, &chan->vc.lock) {
-> > >  		chan->configured = false;
-> > > +		if (chan->irq_mode != default_mode)
-> > > +			WRITE_ONCE(chan->irq_mode, default_mode);
-> > > +	}
-> > >
-> > >  	vchan_free_chan_resources(&chan->vc);
-> > >  }
-> > > diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-> > > index f6a5ad317567..275d362d1805 100644
-> > > --- a/drivers/dma/dw-edma/dw-edma-core.h
-> > > +++ b/drivers/dma/dw-edma/dw-edma-core.h
-> > > @@ -280,11 +280,12 @@ static inline bool
-> > >  dw_edma_core_ch_ignore_irq(struct dw_edma_chan *chan)
-> > >  {
-> > >  	struct dw_edma *dw = chan->dw;
-> > > +	enum dw_edma_ch_irq_mode mode = READ_ONCE(chan->irq_mode);
-> > >
-> > >  	if (dw->chip->flags & DW_EDMA_CHIP_LOCAL)
-> > > -		return chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE;
-> > > +		return mode == DW_EDMA_CH_IRQ_REMOTE;
-> > >  	else
-> > > -		return chan->irq_mode == DW_EDMA_CH_IRQ_LOCAL;
-> > > +		return mode == DW_EDMA_CH_IRQ_LOCAL;
-> > >  }
-> > 
-> > does this tunk fix something, you make this change later.
-> 
-> I added this for a possible race with the shared IRQ handler, especially when
-> nr_irqs == 1.
-> 
-> ... but after carefully thinking about this again, the hunk seems unnecessary.
-> 
-> - Before undelegating (changing the irq_mode from REMOTE to LOCAL), the client
->   must stop remote programming, and the driver quiesces the direction and
->   synchronizes the local IRQ.
->   At that point, no-one is supposed to issue any transfer for the channel
-> - Conversely, remote routing is configured while the channel is idle, before the
->   peer starts programming it.
-> 
-> If the peer continued programming during either transition, it just breaks
-> things. READ_ONCE()/WRITE_ONCE() would not make the handoff safe.
-> 
-> I will drop this hunk and the corresponding WRITE_ONCE() use.
-> 
-> > 
-> > >
-> > >  #endif /* _DW_EDMA_CORE_H */
-> > > diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
-> > > index 3c8e2ef9dee0..93f866d57987 100644
-> > > --- a/include/linux/dma/edma.h
-> > > +++ b/include/linux/dma/edma.h
-> > > @@ -101,6 +101,25 @@ enum dw_edma_ch_irq_mode {
-> > >  	DW_EDMA_CH_IRQ_REMOTE,
-> > >  };
-> > >
-> > > +#define DW_EDMA_CH_CONFIG_NON_LL	BIT(0)
-> > 
-> > you need update other non_ll user to set DW_EDMA_CH_CONFIG_NON_LL.
-> 
-> Ugh, I missed updating the existing non-LL user. I will respin.
+The current dma_chan structure contains both "device" and "dev". So
 
-Sorry, I spoke too soon here. I now remember checking this while preparing v3
-and finding no existing in-tree non-LL peripheral_config user.
+    chan->device->dev refers to the DMA engine device.
+    chan->dev->device refers to the per-channel device instance.
 
-I just rechecked the dmaengine remote branches (and also Devendra's recent
-submissions just in case), but still could not find one.
-Did you have a particular user in mind?
+Their similar naming makes the distinction unclear and increases reader
+confusion.
+
+Add union dma_chan::chan_dev to make its purpose explicit and clearly
+identify it as the per-channel device. After all user switch to chan_dev,
+union and dma_chan::dev will be removed.
+
+Update the kernel-doc accordingly. Besides its sysfs usage, the per-channel
+device is also used by some DMA engine drivers for IOMMU mapping and
+therefore deserves a more accurate description.
+
+1st patch add help vchan_chan_name()
+2nd patch use existing helper dma_chan_name() to reduce rename difference.
+3rd patch add (dmaengine|vchan)_chan_dev() helper
+4th patch add union chan_dev for dma_chan::dev for clarity
+
+Need following patch to clean other dma engineer driver, which is not
+in drivers/dma
+
+After complete all rename work, dma_chan::dev can be removed.
+
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+---
+Changes in v3:
+- add new helper function dmaengine_chan_dev() and vchan_chan_dev() to
+make clear.
+- some reduntant error message will be addressed by new patches.
+- Link to v2: https://patch.msgid.link/20260903-dma-chan_dev-rename-v2-0-0db305b6c716@nxp.com
+
+Changes in v2:
+- rebase to dmaengine/next
+- add vchan_chan_name() help function for vchan case.
+- Link to v1: https://patch.msgid.link/20260812-dma-chan_dev-rename-v1-0-a67131f7d5c2@nxp.com
+
+---
+Frank Li (4):
+      dmaengine: vchan: add vchan_chan_name() to get channel device name
+      dmaengine: use dma_chan_name() helper to get per-channel device name
+      dmaengine: add (dmaengine|vchan)_chan_dev() helper
+      dmaengine: add union chan_dev for dma_chan::dev for clarity
+
+ drivers/dma/arm-dma350.c                       |   2 +-
+ drivers/dma/at_hdmac.c                         |  81 ++++++-------
+ drivers/dma/at_xdmac.c                         | 159 ++++++++++++-------------
+ drivers/dma/dma-jz4780.c                       |  10 +-
+ drivers/dma/dmaengine.c                        |  34 +++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  38 +++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  10 --
+ drivers/dma/dw/core.c                          |  47 ++++----
+ drivers/dma/ep93xx_dma.c                       |  37 +++---
+ drivers/dma/idma64.c                           |   9 +-
+ drivers/dma/loongson/loongson1-apb-dma.c       |  23 ++--
+ drivers/dma/loongson/loongson2-apb-cmc-dma.c   |  17 +--
+ drivers/dma/loongson/loongson2-apb-dma.c       |   9 +-
+ drivers/dma/mmp_pdma.c                         |   2 +-
+ drivers/dma/moxart-dma.c                       |  23 ++--
+ drivers/dma/nbpfaxi.c                          |   2 +-
+ drivers/dma/owl-dma.c                          |  21 ++--
+ drivers/dma/pch_dma.c                          |  41 +++----
+ drivers/dma/pxa_dma.c                          |  52 ++++----
+ drivers/dma/st_fdma.c                          |   2 +-
+ drivers/dma/ste_dma40.c                        |  15 +--
+ drivers/dma/stm32/stm32-dma.c                  |  69 +++++------
+ drivers/dma/stm32/stm32-dma3.c                 |  99 ++++++++-------
+ drivers/dma/stm32/stm32-mdma.c                 |  95 +++++++--------
+ drivers/dma/sun4i-dma.c                        |  17 +--
+ drivers/dma/sun6i-dma.c                        |  31 ++---
+ drivers/dma/switchtec_dma.c                    |  14 +--
+ drivers/dma/tegra186-gpc-dma.c                 |   4 +-
+ drivers/dma/tegra20-apb-dma.c                  |   2 +-
+ drivers/dma/ti/k3-udma.c                       |   6 +-
+ drivers/dma/timb_dma.c                         |  63 +++++-----
+ drivers/dma/txx9dmac.c                         |  73 ++++++------
+ drivers/dma/virt-dma.h                         |  16 +++
+ include/linux/dmaengine.h                      |  23 +++-
+ include/trace/events/tegra_apb_dma.h           |   6 +-
+ 35 files changed, 538 insertions(+), 614 deletions(-)
+---
+base-commit: 5c7962210474adbd9874227bc5096dbc11501d34
+change-id: 20260812-dma-chan_dev-rename-66263ac5eac9
 
 Best regards,
-Koichiro
+--  
+Frank Li <Frank.Li@nxp.com>
 
-> 
-> Thanks for the review.
-> 
-> Best regards,
-> Koichiro
-> 
-> > 
-> > Frank
-> > 
-> > > +#define DW_EDMA_CH_CONFIG_IRQ_MODE	BIT(1)
-> > > +
-> > > +/**
-> > > + * struct dw_edma_chan_config - dw-edma channel configuration
-> > > + * @flags: fields selected by DW_EDMA_CH_CONFIG_*
-> > > + * @non_ll: use HDMA non-linked-list mode
-> > > + * @irq_mode: interrupt routing mode
-> > > + *
-> > > + * Pass this structure through dma_slave_config.peripheral_config. Before
-> > > + * synchronizing a remote-routed channel, the client must stop remote
-> > > + * programming and own every channel affected by the hardware quiesce.
-> > > + */
-> > > +struct dw_edma_chan_config {
-> > > +	u32 flags;
-> > > +	bool non_ll;
-> > > +	enum dw_edma_ch_irq_mode irq_mode;
-> > > +};
-> > > +
-> > >  /**
-> > >   * struct dw_edma_chip - representation of DesignWare eDMA controller hardware
-> > >   * @dev:		 struct device of the eDMA controller
-> > > --
-> > > 2.51.0
-> > >
