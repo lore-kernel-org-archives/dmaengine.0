@@ -1,61 +1,61 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012038.outbound.protection.outlook.com [52.101.66.38])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013059.outbound.protection.outlook.com [52.101.83.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2F33B19CF
-	for <dmaengine@vger.kernel.org>; Fri,  4 Sep 2026 15:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAB73BE623;
+	Fri,  4 Sep 2026 15:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.59
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788536755; cv=fail; b=CMPjIPTL+3NZXhXr2Ye92JQQQsR9OEy3IyMANxBX9F2YFfPHUlPvOf95sUYd7scYdJ7O+TPbHd42J/xFOnyfF2nNzLUkPmz3PdE6iD+J/L8SiQEEcWmfZug4AeCEWzwmyG1DURW2JGbvC+jWxKS3Vx9CHIcLRaolGhiwNAC+AGQ=
+	t=1788537032; cv=fail; b=gKUCTAw0LO3CkOVauU5mMwBqmYRto/+gXATxpFAkZbPgTnJOogWMqA6s9hIlrUBG5AF1xb4XOZcsmeHh2vEblKNXBJpIdFAUnlDpgvxkEUos5sD2roEsJQkLKz9jA9mzBHwtjYJfTYLbMv2xiglkYKJ/Mtoa71AG129kbYbIJMk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788536755; c=relaxed/simple;
-	bh=ySX3Yj6D69K7tTQ4AwGa6tf4XqKphVzVbmHpBxRa13k=;
+	s=arc-20240116; t=1788537032; c=relaxed/simple;
+	bh=Pqx1BdhBhs18RKtdCGSamKWStHUvCru14Dz52pF0okA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EhfCK1r9L3Er3Ay6NKv5wAuaA+55Vxt8Q+2zo37au15EZGN+USH+7T3D3bG1H57NqKPHHXOec6eq6UizbcG29fzKkvcV/nrwjoFkGD9wLLgauhxeNRgVKI9SsjvKsHT0WxNoyBvGRBav6j08yWAsadVnKd3p2E8ntRFwmv5vZL8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=t/ryZ/Yy; arc=fail smtp.client-ip=52.101.66.38
+	 Content-Disposition:In-Reply-To:MIME-Version; b=DbbS4phpdC1h9WhUlDa5nW6wqStHXCqckmuyJTz1GLFpSZQBTYlwDvdJWu3xbOJfoSz9+ayJyKYjAF3WWvtOlkjUGDvJE9A6I488jBc0rNrb7PGRIYtmIfNcvykam9C1KGeFAt2oeQV18ZS4gG9ogusrVabOZ45oNMjjAJIVKrU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=eGjjOJbB; arc=fail smtp.client-ip=52.101.83.59
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="t/ryZ/Yy"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="eGjjOJbB"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q0G80p8PSQl6wNOVL2C3hNOffBlIy6KjktVThmWNKSQBzoRuml8Aosj7f+4q4jLJZ4cAwysSwjMuYkRNKKfae//vUX25NO3dr5VLsa+KviyTIa9spZLql+2MIiv96inIHgSTGicNh9A4Hp8tim17NdbJg8hSzRR5Df6KTUu3YZxWTL7pp/DySAfmwOlk53p4A33geU+7nyqlDLS87HpHt8hJSMb7bqBuMp5+6dSHyT/+ZwwqIMEtkuUmTHopqwnGLTp01XM42mlRiv1cICB7N+MVQJXEwmsc+Kxw3CiltZbzTHdeRYtQ+Yd/gkm3QTq9T83yVilTEKFcuFewyXxp8Q==
+ b=H1pcaBfCfcRqBPrpdA2S5y7CjbZMMxan/7lkyyNny3UzCS+X5UWkO0JaEVnTq7SrPPXtk3apDNllQch8W6myOTGbj40YZs4cxWk9ttXWYal6oE2TIZV0jFJZvF1sKSxrhLDmakLnnZmywXBRIOZCrTa7owDbcGzmNyuxfHuoJ4TD0zdLOZpF37wIZ0zOus1WczMTvtHtXXWwTMoTIswglimrZofwreh4q/lX4uX73MXFR46BUw4QPRthef1KbmydughJK841sEgyOm7BWoOQuzfNZ+eRE6GdBAtDGFlR7fXOfdIEg4ghP87bkLjqMoN/Xf/rF4pdOKrUoUSxPVDlzA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v150Wx3dFe9NZjXrPvS1AG6THJ4YRLn+iY61g6GD6ws=;
- b=m5yzx701EPU7MxpEu3Q5zUgTF94CjXssCnXyoqo0PTipiC6QlJF6QROEYIL3z0db0FXJjF9rRd5nO7sXFj7ksm5LGTJCCr3aSMHYgW0ot18y2ON3wjXCxU5s4kBI4Zy2dN/YBIp3vP4uU+As0RbjsFKbQ6KXAcvLAIp+VFUzv2B/5x10r0c4xk4DiY3HC7smuugFHni4lJfg7rdo19n3bI3BfyvvpQyMdD5jrsdAAkfAyW8M6zme2H+sP+TexlssqEalevOYISjy1Cpy959NzfOz+1Y5reKxCtxIslCqL4KcbxE5lCvvrH/CWFczcXJUaARHGuI002G/T7i8hoO3Dw==
+ bh=nMwc1rfDY9fplLjE5z12ua6bQcqhII0HStNDIxiFOEo=;
+ b=fwcwYEAQjdZxBi/5tstpriGWc0ja1EScGAQcKuVp/9oMMOyEgXC4jmSqrz+yXybRe1Qp93HvCkVfPtmdF8A93apZHDTQMgeOowLdKbtcvYLOGKLaUbcditfghNDHNCtqoUeuYhjNRaBxoE3kUc2p1T7nZIjKHND9EpWcEKDQucIXe9G5Dn8knAZgQZKrDjLbTYhFQKRE87lmU4QflPGVMNb6g4JfS/w4XVqxkb+UqyOgdNCGsrw8duDEXxcL4qE4oqGMAXDOVOnLJ0nTbnuPvkdNEMgBxhAlEQCf4yyxOVgIQOnSqJzpg2xHcflo5JBuy1JzgmGXt/GtbDYdYjYbEQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v150Wx3dFe9NZjXrPvS1AG6THJ4YRLn+iY61g6GD6ws=;
- b=t/ryZ/Yy8AGfs8sqbs4IVwNQ2MHPKMZfQdxW6pXt0Wa5DJaN5etspYWB+w3LzqBUpCSikurdChpP9npzwIrhY3m+mnn38oJePn/V1cF4zb41B2/niOK3itxIOoQnTdULqBttdx7kujY9m8v3Bjm1syCwo/sg/sHtbPwuZiJPmd5aZztELMmbfzmlAbcSc91P2lx+DekQQWQdP/+LfPw0sYH2hZVyTxcMJv5IomQE2g2Y3iWJVXhR4JdYMGDX3UQM8tk7CkZiRn8p4Wz/ax5vcptA4gIZvA2tI9HsE8KweJZ854IfU7aFfrbpYYLJHajYkqXV6UURsksnBLgNhfgm4A==
+ bh=nMwc1rfDY9fplLjE5z12ua6bQcqhII0HStNDIxiFOEo=;
+ b=eGjjOJbBMSR6py4K5HlSg/hG2pZnKJHLeqZO4ifCWP1asBZCUrjlwSCi2irUsbIjOFXkPu+D4IAnVxIgiIE/PVZ66EiVsmAzNFOXg7SWvj8DWCfp8quOfTUtgq1yI9yU0zi1pyKlQk4dz0H2rYMjcs5YfAPqsrFOIwMVggEqspOxEY4YItSMn1jaJorGqN1AYw7ohrrwoTvSfZCw1cdltowKZxmPLeGUPJohDU3tuI/4AErZPnxH84SitVlOBK0zotfyJVUHYiM42uTVMfpgSzNsxKJTiEijHCH6Z/x+9lmktL6VNRO3xU9qw/AMru7wi5I9zNAH4i8FyMqZBljV3w==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by MI9PR04MB574041.eurprd04.prod.outlook.com (2603:10a6:290:c1::18) with
+ by VE1PR04MB7296.eurprd04.prod.outlook.com (2603:10a6:800:1aa::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Fri, 4 Sep
- 2026 15:45:50 +0000
+ 2026 15:50:22 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0360.008; Fri, 4 Sep 2026
- 15:45:50 +0000
-Date: Fri, 4 Sep 2026 10:45:41 -0500
+ 15:50:22 +0000
+Date: Fri, 4 Sep 2026 10:50:15 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Li Youhong <dayou5941@163.com>
-Cc: Eugeniy.Paltsev@synopsys.com, vkoul@kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, Li Youhong <liyouhong@kylinos.cn>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v4] dmaengine: dw-axi-dmac: convert to clk bulk APIs
-Message-ID: <aprnpU4sR9nLNBDb@SMW015318>
-References: <20260903015438.2514100-1-dayou5941@163.com>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCHv2] dmaengine: bestcomm: ioremap early
+Message-ID: <aprot0laCjaI3-Cr@SMW015318>
+References: <20260902214612.311207-1-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260903015438.2514100-1-dayou5941@163.com>
-X-ClientProxiedBy: PH3PEPF000040A3.namprd05.prod.outlook.com
- (2603:10b6:518:1::57) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260902214612.311207-1-rosenp@gmail.com>
+X-ClientProxiedBy: CY8PR12CA0014.namprd12.prod.outlook.com
+ (2603:10b6:930:4e::16) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -64,187 +64,184 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MI9PR04MB574041:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d6b628c-3174-4d9c-c288-08df0a9b982c
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VE1PR04MB7296:EE_
+X-MS-Office365-Filtering-Correlation-Id: 880f060f-1d89-456a-ad6c-08df0a9c3a8c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|19092799006|1800799024|366016|10067099003|11063799006|22082099003|18002099003|56012099006;
+	BCL:0;ARA:13230040|19092799006|366016|23010399003|1800799024|376014|10067099003|56012099006|11063799006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	tP9T3zK9p2J9apW7NKYZlUIVW5kZsJQQJDxEh2OjyksUUFgc1b7OG1rhwslyoT9BqII7B5AlIqQNxotfvPd+B3PJEQox1ozs0D+t5c4RVFhUVyLKyuW9Zh5KrZQjES7yGtRqkLuEO28nTWPUu/03mKiLb9rG5uNzZqLShLKumMS1SlF4MZZXARAP3Ttpi3aorMi2El3g0fH9rthW3Dl5iZkoWKXaLxSJS3o00wpV6L0cw5RXtEG1LN8yeV+qd48j2VB85641Vfxj3o9S1IaSYNMtHgk2nmmZA1LVk8IxkIByng/IeE8uLkrbi46HDYIxLROzxoFDEKiucR0yYOrItVz4KmybIFo6Q3V3IYUEfUoVo+CeHD5op6nmPYR27mRr80/UqGtzmfaSU6wGEe381WHj+B8GuZCpItL076ZmGOT92dM3HZk2NnpsOkCGIFSDb9tzghDbUSdVsll6y64WbtXFXSRsQOodMqYl5xdN8aazCCJHCFuz+Gi/f7+0/ib22MqUdDPZfkNfzTwZER/svCe9Hy5lxMNB9P0ETQ4FLkekw3GXzoA3Chn5/E2WCueBwgI3RhU/gXp/PZDGdLKkHGBSubsUk1zyHXcJgLYxxOMio8O0zQ17NJughKXnUMAQTAbLPjj4PraSEUm64XeNxE7ahjfOMC6H2oCQnScDW5E=
+	gB/wlMReuhbFenrn7hnpC/59C41w0JPnmMMwKukIBYLks347HYZQXBRzDAzUmY3KcQWpzS4buQ5LzdJCeOoh1xWE8x0755ZgrRhRGPTCx+9tN3vr8wmyNZuOefFuerqz24ijZnWN33irE7WUrzEWNZwm5/lkm4pX85ab5MrYrch5VVZfTt+oM7nmV5eu2haL4eu0t7XFvPKcNnOXNtBeGKZvY2eAtcw5ejCsgqRQCJZ5drdNAnWqTWWmyLLqlOFngVUej35kLB5SEVbPCUqCcbfRgDZJ0qvUb+qQX8uxYEVMWjTcwToL+ulWrF0kAM6u1Ivcefzy0UXMG0IQhO95jC48s9/tkKXLog02snSE5MVMtuD0da/wACftMec8J3D1ciFyPU46kbLuSikDYgSnsRaa/sXt6Kj1BmPWbbT6WQUlBMpNE82swaQhFtTHq6CrzNnSJpp1POvIxteFV/B+aOA8dCy9vW7+nn8TcjvxP5gfVlfRfYLcR2evrJFJvi6CXBi1OXBVgku0gnZVb8RlO3OXZEy43ugCN5LZkFtijcRNq43Cyq/bEQNxyzl+uv6wIXeb4h9MJSQaLg69y6CGcYufQ2OfpBTrDEfnwGMA+yveqfUTwZl+voVLtiFMeND2b2W/NxecaKMOVCxbc2lZxxHsr982UncuiN92MHpakRA=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(1800799024)(366016)(10067099003)(11063799006)(22082099003)(18002099003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(1800799024)(376014)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?sIvaNmlwODuweulwrxwEl3xGXmC9PCEeBseO8rzxSsoaLBjZlWLTO2WDTyza?=
- =?us-ascii?Q?DBcgoow9JYKFKhUONLM37sxP0q1Pgo6PsVAcz88Ti7P8Ub9zr+kpEoUwi4zF?=
- =?us-ascii?Q?A8QT42mQRMaPFfyLmETWShOp0PrBCCEatA2/B3/2+CicSsruVd5+l6JZkOlr?=
- =?us-ascii?Q?LMpCjfFw4xDdRYJzMvJQXkIOWi8L3x8xNufPzHumvXvXZpgvroWlesHDZpSs?=
- =?us-ascii?Q?6SLYKILVNZ1waq4oGs+HB6OpBmgQKYcbYF8bNL8QwU8yjgoB0bns8oxNJS3n?=
- =?us-ascii?Q?IYI/9dUEsGkzpBajHZB1Es5Af8mWWs6dMTSy5Nc4lAR71miFc0h0D6wJCTUP?=
- =?us-ascii?Q?IJV1u+1sX9pr5BsAJ33UJQKcYK2fyiBPu8+GMXaGEbE/WZzm9hkOrmOM9jvK?=
- =?us-ascii?Q?+nDO4XGBCi7+njm/xRnBVQjPPByruA0T8yArTAolHFfgj0b5YtMFYbZenf4A?=
- =?us-ascii?Q?lSPhp5XQ+eNmJKHrmzpdr2rZnKiaERG18hlyWrHR+id0Hw99qisj+Tk03uti?=
- =?us-ascii?Q?Wp3WgWPVeIh383NqUg90Vfah26O2pUdoO3lyCO35a+GSQ3QkH5QqL4LVGbal?=
- =?us-ascii?Q?10foyTL3t4KidkAmPgl//vLPHac7kMK697GvbQ2b8C7nzwEz718j8OKa+5C0?=
- =?us-ascii?Q?xtM4yykPuTx6cB4Umme5UMpAF0ml5mLFcptcHHchMKwE3su7N4Vo/Ee3mRCc?=
- =?us-ascii?Q?VwzcP+p2NwOY05IMwfsdr9q4n5qjAdZPhg+GJNqGDe5kOK4gXb6oAr/kIAGN?=
- =?us-ascii?Q?MCfwUN+x+FwmjDBUZ+ksQK9Iy3aqSSI03i2iSxQBZLfStqQuS2y+hsHlCahs?=
- =?us-ascii?Q?ejjDaorq0TQeyAiUVKl3cVwa6WWm4rIZTrg63t8RyNbXjozhcBIRLpdtZ/ql?=
- =?us-ascii?Q?RLFjuzcSh7Sfg6Lme7ZV2VFza2vyleVUjWahx3Rhm8unE9WuapOU+DC25gh4?=
- =?us-ascii?Q?fmb3y7T9RwVoPfsl3icx0ITjKJCEfPOvLZli1/IyMB0gzxa8VFHatvEHeBpA?=
- =?us-ascii?Q?YKe55Ho+FmZjT5rYZPFrOPfXst8UYQlpVwWw6nx8tkhPdDq9aEiKrVEfw46z?=
- =?us-ascii?Q?h47MWeAiU2f+19IN8x4Q1ZKvvBlTU+c3fsOd7cnJ/qQzFV/HzNPkvmTH9VI4?=
- =?us-ascii?Q?nmQ2IY+ORGoGZGpYvRfJcbgCECAqgZbHhnZ2GPkDEuY+qz9AHBePvw5CoSwI?=
- =?us-ascii?Q?aE6s+MINFoPV9kPAhhSh3XWLaoyCemB9DJP4dOVod2K2M+9h0VNJh8rwEQql?=
- =?us-ascii?Q?nWCceckFxJRV6nB+QLiD1gemUotnqSid3qBopmFK2xcgBPRB6DI8akiywOJo?=
- =?us-ascii?Q?zrnC24QGkt6EY4K2tb2ccM6EPHNHQ22xrBYfyOfw71sqqeOKv7oJTx41abeK?=
- =?us-ascii?Q?v0J9fQKnP8dH8UF0mn3kWXk01fqrZJ6uR9St1jYMWz73rYdMUwmHdhAyuR4Z?=
- =?us-ascii?Q?0TmkuNUkMij/WT56ULJaHBasVclF6CGsqrGUd0ryXOZ+git0pE1D0Jku7jsV?=
- =?us-ascii?Q?Y95M50i4MsYj9WwycmUx9RLCD62OSwfKxBLCpfRrfd89Vkey5kHyWURmLf/I?=
- =?us-ascii?Q?zhwqXhdDLbS7QlG347NFvXzlJj+B5QMaIkItUY8cAQX4xQ97x32pn5DTUrDs?=
- =?us-ascii?Q?mciSk8gMxDNFsS3qsf7ACK9ulJ4nHXUzpjseLh3aMc1CRkDQ42O8yKKlHkAX?=
- =?us-ascii?Q?OClmk6pp5SBLyb4h8SZjXAs/hEA+MAbtKSXV5fRkHZHgzGkHqu5lATpeC3L1?=
- =?us-ascii?Q?JjHLyOvjUWMu9zdDKvynOhcFdVxVoXH7nxqYOuLaeosAUb87WMxj?=
+	=?us-ascii?Q?XFq1gm/CaKS3y5SpSJwPXs9i8GgcJPomFkEVlwRJ4dW9euHp+okwLTUxaLpA?=
+ =?us-ascii?Q?gB3UVBfp1IiDHFV1Y9QtJHb1Za5/Mn1nJ0974uWHANiKy8F+WLf+741X/dRN?=
+ =?us-ascii?Q?afWU2FHGz3I4y0EQRLEzmn4GYGJepT4pJwLyrliI++cmVgF/HlY+h+t1HBOU?=
+ =?us-ascii?Q?ig50rQE3Nw2SFar+kkilO4JPkjnRqr8VOl8yx05i8RUkLk8b5k3iq2EVq9iZ?=
+ =?us-ascii?Q?t0rO83O/Cq9YCttnuSzaBp+pqhToSXDqKdJe7b4yiqydeNUqZ1YU4LLAlCfk?=
+ =?us-ascii?Q?MSFG/3DPksHVzla9gesk39SqE50CG2vwSLzxpHs3zn3rWy+q/ZI+9mM1U0WK?=
+ =?us-ascii?Q?4RsnZJWSNHOTwtmq02dCdfNUQckF51cp7bCLINF8wDOrFyAalOtJMrQhCiUG?=
+ =?us-ascii?Q?ZZrn8anCB1tI1vvHAJ9XB1yKdVhE+ZWXIzazqP/MSC6RvvN9P+lwSe3e9BS7?=
+ =?us-ascii?Q?kYjbmEV4dkRGlgOiPz7VVRflKqBkndSLwRGAzHWNdMsO9PhCWnwPYnUv2CEW?=
+ =?us-ascii?Q?463gLNOZsZOxDH25GGmllRrVa7V//aMW8cZd1U9iauXAVfvprybWxIwlo6tU?=
+ =?us-ascii?Q?UdmtNxIc8UPFMHdFa6NTGsGjVJiEaSJ95InpX6h8A+PQrnJxPyWHMDayyWAl?=
+ =?us-ascii?Q?hPGRra46hSwfaWsepa9C5rt0BaLh98i3N1QY4oI4KEBzUp5YvQGzLwPhm0it?=
+ =?us-ascii?Q?v5Y/1L+5szs3jap1doWyO2brXaVLDgV4BE+5xWVexk9feWTnzuHSeimj7S6G?=
+ =?us-ascii?Q?wkNPX59X2whoDM76c4xmlX63JW7BROgs9s7wa2quF+Hws6qSeyx3RnkUyg9w?=
+ =?us-ascii?Q?kugHIx/YPWRaPSQXx9zIiZ+p7oWFb52e2SqVYX1QtiI0RG+koTNlCLtwXZkF?=
+ =?us-ascii?Q?2rfHaLaISKS9ogq4dl/bGJ6Y66hDs6lHi8Sj7AXKSi2Z8/EDmzgkKidjgl5D?=
+ =?us-ascii?Q?j0hyNPYmNVVQeRQhGdn/TWM4ZZAijH5Z48yubcAUnYA5Ns3bQt+ov1ba0hqo?=
+ =?us-ascii?Q?nsnv4rMe3dZ4nmYPsmMUbDR/q9dPgenary0Q10RkF0p970Zx11y7BR5dy3V4?=
+ =?us-ascii?Q?aVyCQZ4SFBFbwds2wqVIeiFsZkHMUC5ObXok8DEvQ/saN2nMXcVMMFYvWnnW?=
+ =?us-ascii?Q?+gWMcHNM45ezODWuHDLrvw2phfC80p/PYXy6DryvjF4w44n8mPuA96hADg/v?=
+ =?us-ascii?Q?PWmGkyn8IQuYvJodbWEwuvkqaj25SZVzFM9kbti4mUq3vQ4QSo/jJmlltAOe?=
+ =?us-ascii?Q?TxkKbZwMJqnqkQ7Tx9KvRXQ3f5SP+EXZFJZLBPCnUvUBVtE/743wsC0stJHh?=
+ =?us-ascii?Q?0ugpD3DMsG6CUrSg2LgjBZVbsJQMM7yT7tyJdN028JDIzQ5Hp7zV1tMR+rJT?=
+ =?us-ascii?Q?33a3CLumGYVWZSAEjBevhCJKdJhMEeDZcwk23a1/WHWXz6/LEBWxIRKETNMC?=
+ =?us-ascii?Q?Nq7U1sa6CKE8grqQ0vxkLE4BvTrHF/PMbwiXTv6wdMyGBChPJva/Q7g5lyNH?=
+ =?us-ascii?Q?MGAW/ihwpm8Q72yskPqFmTrG4LwnlWu22ypPFgOGCtoOsbicNyQB/LOrjLQM?=
+ =?us-ascii?Q?ypTKibzsNKYPgjWee92SpQeJNWd87jZYMRRg/h/NO64jcj0th2Tt6J4d+/0Q?=
+ =?us-ascii?Q?I6+ZC9c55p2WyChkFu/k2JC8V2ZYKr0A1WpefQFD1sJFiVrMrH92x9YEoJnH?=
+ =?us-ascii?Q?cqcr3X1MUlek7jub87TwhGk7WIFsFkaK54z+HcMqQt2mBqQonvvxtbXJZbt7?=
+ =?us-ascii?Q?yKTte8W3968acyyId6QLjWPvU0kCmgPkhXxFuEQuGthSOG9ygfwT?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d6b628c-3174-4d9c-c288-08df0a9b982c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 880f060f-1d89-456a-ad6c-08df0a9c3a8c
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:45:50.3347
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 15:50:22.6374
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: w9UZBikXfMTpiKYbJq8rOWJYE27VflRRhsiLLnGAOXnHzjbht12LFLwQ4nYsWQrkKbrkadnBkjaPdwbJ97Op9ug0yjdWrpRJogA4ta6+4hCkljKZhgdQRbvuXrVgo+oS
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI9PR04MB574041
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6uMswrNoAzycazFPVWzmcXtCVnBiJd3TAHc5TbTbaQ+8FlzRYEWqqDQdrk032YaoKpp6wHe2U955ARk4xrOxvAFDQQPeIlYZ/R7mzbGTJt2jIuZrcwsnGlxxZJA6jUAr
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR04MB7296
 
-On Thu, Sep 03, 2026 at 09:54:38AM +0800, Li Youhong wrote:
-> From: Li Youhong <liyouhong@kylinos.cn>
+On Wed, Sep 02, 2026 at 02:46:12PM -0700, Rosen Penev wrote:
+
+subject: dmaengine: bestcomm: use devm_platform_get_and_ioremap_resource() to simplify code
+
+> ioremap early as devm_platform_get_and_ioremap_resource() only needs a
+> platform_device pointer. Also avoid doing work before alllocating the main
+>  struct.
+
+needn't this paragraph.
+
 >
-> axi_dma_resume() enables cfgr_clk then core_clk. If enabling
-> core_clk fails, return without disabling cfgr_clk, leaking the
-> already-enabled clock.
+> Replace the open-coded resource lookup, request_mem_region, ioremap and
+> the manual iounmap/release_mem_region cleanup in probe/remove with the
+> managed devm_platform_get_and_ioremap_resource() helper. This removes the
+> now-unused error-unmap/release paths and simplifies probing.
 >
-> Switch both clocks to the clk bulk helpers so prepare/enable
-> failures roll back automatically, and update probe/remove/
-> suspend/resume accordingly.
+> This also fixes a resource size mismatch between allocating and freeing
+
+Fix a ...
+
+Frank
+> where request_mem_region() and release_mem_region() hopefully use the
+> same size but is not guarenteed.
 >
-> In dw_remove(), check clk_bulk_prepare_enable(). On failure skip
-> MMIO and the matching disable to avoid unbalanced clk disable;
-> always continue with IRQ/OF/tasklet teardown.
->
-> Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
-> Suggested-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 42 +++++++++----------
->  drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  4 +-
->  2 files changed, 22 insertions(+), 24 deletions(-)
+>  v2: remove Sashiko generated description. Reword description.
+>  drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
+>  1 file changed, 10 insertions(+), 35 deletions(-)
 >
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> index eebed2474210..413be7dce5fc 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -1320,8 +1320,7 @@ static int axi_dma_suspend(struct axi_dma_chip *chip)
->  	axi_dma_irq_disable(chip);
->  	axi_dma_disable(chip);
->
-> -	clk_disable_unprepare(chip->core_clk);
-> -	clk_disable_unprepare(chip->cfgr_clk);
-> +	clk_bulk_disable_unprepare(DW_AXI_DMA_MAX_CLKS, chip->clks);
->
->  	return 0;
->  }
-> @@ -1330,11 +1329,7 @@ static int axi_dma_resume(struct axi_dma_chip *chip)
+> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
+> index 432b43520ddc..44ff4a42376b 100644
+> --- a/drivers/dma/bestcomm/bestcomm.c
+> +++ b/drivers/dma/bestcomm/bestcomm.c
+> @@ -13,7 +13,6 @@
+>  #include <linux/kernel.h>
+>  #include <linux/slab.h>
+>  #include <linux/of.h>
+> -#include <linux/of_address.h>
+>  #include <linux/of_irq.h>
+>  #include <linux/platform_device.h>
+>  #include <asm/io.h>
+> @@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
+>  static int mpc52xx_bcom_probe(struct platform_device *op)
 >  {
->  	int ret;
+>  	struct device_node *ofn_sram;
+> -	struct resource res_bcom;
+> +	struct resource *res_bcom;
+> +	void __iomem *regs;
 >
-> -	ret = clk_prepare_enable(chip->cfgr_clk);
-> -	if (ret < 0)
-> -		return ret;
+>  	int rv;
+>
+>  	/* Inform user we're ok so far */
+>  	printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
+>
+> +	/* Get, reserve & map io */
+> +	regs = devm_platform_get_and_ioremap_resource(op, 0, &res_bcom);
+> +	if (IS_ERR(regs))
+> +		return PTR_ERR(regs);
+> +
+>  	/* Get the bestcomm node */
+>  	of_node_get(op->dev.of_node);
+>
+> @@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+>  	/* Save the node */
+>  	bcom_eng->ofnode = op->dev.of_node;
+>
+> -	/* Get, reserve & map io */
+> -	if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't get resource\n");
+> -		rv = -EINVAL;
+> -		goto error_sramclean;
+> -	}
 > -
-> -	ret = clk_prepare_enable(chip->core_clk);
-> +	ret = clk_bulk_prepare_enable(DW_AXI_DMA_MAX_CLKS, chip->clks);
->  	if (ret < 0)
->  		return ret;
->
-> @@ -1524,13 +1519,11 @@ static int dw_probe(struct platform_device *pdev)
->
->  	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
->
-> -	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
-> -	if (IS_ERR(chip->core_clk))
-> -		return PTR_ERR(chip->core_clk);
+> -	if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
+> -				DRIVER_NAME)) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't request registers region\n");
+> -		rv = -EBUSY;
+> -		goto error_sramclean;
+> -	}
 > -
-> -	chip->cfgr_clk = devm_clk_get(chip->dev, "cfgr-clk");
-> -	if (IS_ERR(chip->cfgr_clk))
-> -		return PTR_ERR(chip->cfgr_clk);
-> +	chip->clks[0].id = "cfgr-clk";
-> +	chip->clks[1].id = "core-clk";
-> +	ret = devm_clk_bulk_get(chip->dev, DW_AXI_DMA_MAX_CLKS, chip->clks);
-> +	if (ret)
-> +		return ret;
+> -	bcom_eng->regs_base = res_bcom.start;
+> -	bcom_eng->regs = ioremap(res_bcom.start, sizeof(struct mpc52xx_sdma));
+> -	if (!bcom_eng->regs) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't map registers\n");
+> -		rv = -ENOMEM;
+> -		goto error_release;
+> -	}
+> +	bcom_eng->regs = regs;
+> +	bcom_eng->regs_base = res_bcom->start;
 >
->  	ret = parse_device_properties(chip);
->  	if (ret)
-> @@ -1640,19 +1633,24 @@ static void dw_remove(struct platform_device *pdev)
->  	struct dw_axi_dma *dw = chip->dw;
->  	struct axi_dma_chan *chan, *_chan;
->  	u32 i;
-> +	int ret;
+>  	/* Now, do the real init */
+>  	rv = bcom_engine_init();
+>  	if (rv)
+> -		goto error_unmap;
+> +		goto error_sramclean;
 >
->  	/* Enable clk before accessing to registers */
-> -	clk_prepare_enable(chip->cfgr_clk);
-> -	clk_prepare_enable(chip->core_clk);
-> -	axi_dma_irq_disable(chip);
-> -	for (i = 0; i < dw->hdata->nr_channels; i++) {
-> -		axi_chan_disable(&chip->dw->chan[i]);
-> -		axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
-> +	ret = clk_bulk_prepare_enable(DW_AXI_DMA_MAX_CLKS, chip->clks);
-> +	if (ret)
-> +		dev_err(&pdev->dev, "Failed to enable clocks\n");
-> +	else {
-> +		axi_dma_irq_disable(chip);
-> +		for (i = 0; i < dw->hdata->nr_channels; i++) {
-> +			axi_chan_disable(&chip->dw->chan[i]);
-> +			axi_chan_irq_disable(&chip->dw->chan[i], DWAXIDMAC_IRQ_ALL);
-> +		}
-> +		axi_dma_disable(chip);
->  	}
-> -	axi_dma_disable(chip);
+>  	/* Done ! */
+>  	printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
+> @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+>  	return 0;
 >
->  	pm_runtime_disable(chip->dev);
-> -	axi_dma_suspend(chip);
-> +	if (!ret)
-> +		axi_dma_suspend(chip);
+>  	/* Error path */
+> -error_unmap:
+> -	iounmap(bcom_eng->regs);
+> -error_release:
+> -	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+>  error_sramclean:
+>  	kfree(bcom_eng);
+>  	bcom_sram_cleanup();
+> @@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
+>  	/* Cleanup SRAM */
+>  	bcom_sram_cleanup();
 >
->  	for (i = 0; i < DMAC_MAX_CHANNELS; i++)
->  		if (chip->irq[i] > 0)
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-> index 67cc199e24d1..681dd6162baf 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-> @@ -21,6 +21,7 @@
->  #define DMAC_MAX_CHANNELS	32
->  #define DMAC_MAX_MASTERS	2
->  #define DMAC_MAX_BLK_SIZE	0x200000
-> +#define DW_AXI_DMA_MAX_CLKS	2
->
->  struct dw_axi_dma_hcfg {
->  	u32	nr_channels;
-> @@ -69,8 +70,7 @@ struct axi_dma_chip {
->  	int			irq[DMAC_MAX_CHANNELS];
->  	void __iomem		*regs;
->  	void __iomem		*apb_regs;
-> -	struct clk		*core_clk;
-> -	struct clk		*cfgr_clk;
-> +	struct clk_bulk_data	clks[DW_AXI_DMA_MAX_CLKS];
->  	struct dw_axi_dma	*dw;
->  };
+> -	/* Release regs */
+> -	iounmap(bcom_eng->regs);
+> -	release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdma));
+> -
+>  	/* Release the node */
+>  	of_node_put(bcom_eng->ofnode);
 >
 > --
-> 2.25.1
+> 2.55.0
 >
