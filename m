@@ -1,82 +1,84 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD8C47729B
-	for <dmaengine@vger.kernel.org>; Fri,  4 Sep 2026 12:30:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68843D7D8E
+	for <dmaengine@vger.kernel.org>; Fri,  4 Sep 2026 12:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788525006; cv=none; b=JnlQgiGqwsGhadZMBtLvzkiqMRlgY3QevVuMe9sG3Rci1ryz4ZsX7BcX1V13838P0/18JaMZT1AzXzkEZpGStfr/yecSSPDZVydishH5vSKY5TSWtMP23N3eJD+TlKl/Fe4JXbU9j4C8RM5oBlE1BP87jTXJACe6yqPslVbolME=
+	t=1788525870; cv=none; b=cEAPlSVFAUE4BWJMn7J5PcYx0nHy4/rVsDGt0z6Q1ue+3fFX7R2Lp/L+JN2MK2A530oVJw8CdISW6J9xGhrsqwKhsHAqTtZYWm/nUfM5J2E5lu7P8DBqobmroil4uAYLNA2N7YVFK2ykgpZiY8eayr8TMqv+WyrUN6wWetyEVsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788525006; c=relaxed/simple;
-	bh=2DtpMsYpyVYksuw1OGOXVQZ0XVIysiiC9LDRS8naQq8=;
+	s=arc-20240116; t=1788525870; c=relaxed/simple;
+	bh=rHB7rehoOlZbxstD6lbTIinMurFJh6tn3L0YtYVOH+M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HSUuJykP6hpAXU2mdnSTRfwo81q3D4VHzR1L4FKTAxbLYgs7nXq88VaSKRFX6Ut/4Nto9wcIsch3gQUR6AYz2R4IhOY91PUoKNbih1l30VRpmWtb2aFDJie/+vChTie1lTf662/vJZay75NICoPV2Tfy0g1Nr3rl7t/qLQhRr/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.50
+	 To:Cc:Content-Type; b=FMD7W8xil2NLnXg4eyvQqgrdjcAgrEqw12kk/Rkj3VOZe1POEqUZEVwblzP4norWRuE+5WrsWRgOqWAgVTkKTjkxjmxvuVj6AYewbIneT/Lk3q831syT7Ub+4mU1/7NzuOIoidP61k4Np+uKkCh8FYNo6xSnizZcbuF/E975V1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-98089686ee7so636282241.0
-        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:30:04 -0700 (PDT)
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-97c441e66f0so661677241.1
+        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:44:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788525003; x=1789129803;
+        d=1e100.net; s=20251104; t=1788525867; x=1789130667;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=wBhQA37E1Xf0Mr+HPKFsdlUMfZuU0RFIBB/KUd4dqqE=;
-        b=FboADL9K+sOjLwMEeKXmfZLRoEB3LN0N+yx4bj8qPtut79U3p/DmF5WkCOGvl5RBOU
-         w1bEGG01RIg0eJQzrDj3hBeCQ5ENPMoZA5VQ6Id41D/ovvsiC87pKsp4yQgviOGvqAB1
-         qYGj6zkRXD08SC3TlTnYG/0EKZiCebA6+k5HktI/yTxHWTVkSjbC5FZKrBAlEtff7ALp
-         XknlbiQK22ZjFljMXnti+zGRtSvo3FL3khmwptVH2+BPsz3tpMT/glzyoNhHlgATvaPC
-         bY/yfK4ElFqio9x3lgJDqTqv1AYUjpMEJYJ75Kk8QzXmnAqR5Wrjk0HqfkVmD81jT4qg
-         j1Rw==
-X-Forwarded-Encrypted: i=1; AKwUvBw8+FRwXkPiVrOC+4MNF4lF8hrHF5XDx9Me/xNhT+n6BO8SQH03PiJzfuXGjCZxuh+eNAN7QJ3hk7Q=@vger.kernel.org
-X-Gm-Message-State: AFuF++mZ+gtcsX2vy+99Gk+Q2H9k/4mNGEIOG8ZUeyjWGbF82agtfPCw
-	xzWs1QbeI+2Ps5DT247wRq6szjISe4sLNennb0FGM3XBuh6kJLedxiepWD1tl+QxNzU=
-X-Gm-Gg: AYBFou0oEj0ZXBtHJbUB9IiCoYr2K5mH+L9QtAd4NicmzHvtE7BUOncItBS3D1Z+V1c
-	Q86JB69o3Gzs7GoHYh5GQxHXGZjVM4aNIg0llsi7swVVNYidPGZwQxm6qmkt+wqOIpQqVKgYkxa
-	QE1gm2jNn7Orqg1ZYme299K5P5cc4u7Ue9Z0cXC9ETt58Db+Pr0eIx/+kJE81nG9mHQX0oUpZdC
-	gtC05xTBO7zEImEIH4j9GHyiqskUFrB1HK7zLari/ZawnmVy/SqS47Vj9N0Ro9JGOFwPYxuX0+v
-	D/EpJXQDZGCLdoEUky4NnQCnEsQ4PWgc2D5Jps3p9XYdOzXP+q9G4F2ufzYApOU8zRsM2YKEBvN
-	9tVRiEx5oMum7SEc64Phu2m+pwmUxiV83ZUgi0YpIMVyDMgw3OKOCgbcnfnhLikPXdYCdW5NFe+
-	LjoFSTGHhoN2tG+wzjHhZuFwvwvNWKWw70W0SZWa3NZl2GPHc+YBuEWeB1uzuvajFP/Mkm+Q+uh
-	B+Z2SP7mLRiFhCtoU61Oj22ChRbVw==
-X-Received: by 2002:a05:6102:6447:b0:778:f972:32eb with SMTP id ada2fe7eead31-78a4aa9259cmr2013943137.12.1788525003196;
-        Fri, 04 Sep 2026 05:30:03 -0700 (PDT)
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com. [209.85.221.174])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9808ee4d743sm1409129241.9.2026.09.04.05.30.02
+        bh=X7GYFb8ObjcCzbJF1jAT3MEmY5+IWm6xkKfaRZugkok=;
+        b=LuzK/mi51NM+UixY1S/FR/qcN5auU5ZUivuFkaknXVYnOFUoo5E77484+COiJJCmdW
+         85U4h99sKkQTYEbM4GgvIQTFhFLW9XRqlNtgNQvX4/2qLBZdmgepGI1vTJX3A9wsNfNg
+         1VtfMB2lk93JjZWKIJor9Y4KOfZXjjLsq6VUXrX+BGHN8zJc9iUsAqm0zOAkwOY0V95u
+         N4aqKfG6s3nFmdq9WkiTt5oxM9R4tVFNm16ARCScQuaQEjUGnpQWobQjn8w16htLXhxt
+         iP8PEXZTazhMsaBfzwHFFM6Sy8JVXfV+2NacSeQYhVdNmqbIWVDFKXAiDdeFDhUqBpPH
+         OLVQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxr7RPPNcszy6zOAtXNIEmoOlR2A6AZrBpQ5CZo89gnh5oRjRAIRULt2jBGNJwUJZZFK8aEMFJH150=@vger.kernel.org
+X-Gm-Message-State: AFuF++mhQmNceCqlh1mgCJLE81GrInTQU+ceg9/pyTmKyRt4zjy+Fh1o
+	6n9U7JRFsHqmeikeW8jcJNz7pVYaUVg81WEY7CJfvPSJZEuCXosx7RbKNHiPIUQaHQI=
+X-Gm-Gg: AYBFou09hjNYuhcCnhphJ/4LCY5aFSkDYPSKYkmZyuhoITzC/4+c2jBQvXZWDE7bYyF
+	ie3jzPbX/+fzUiwkLmk8iTrmxpIN9SPNr++S3q2EiQq086ai7nr5p6uzBg+VG2sw60lkF12PV5a
+	4+Rif/Odm2VmNYcw3GbqdS7eYwEeT2cFrR2mXZReSHKnFDKwgcr5CtFBBn65XwrZ6r6hzIciWwH
+	q/l6Omb0uqPpoM3DWzJEzkXMesJjJEPTY9bgjnywoio6je8B17INqBarrDnl1YvzPc8TFzkzkAU
+	aNts3k/84hLB70hezlTDh1aJ+FiWimzFRGyswuF+I0MHejnXf2DwwBG1Z4pRVC6DZ8xAgHmk67R
+	PzSKBO0ZpH472aMqmq2XlT1bTFTnFTW0AUQQZ8L67j0CuAlvmUttM8/0p21TvK9l40WscB3TZkx
+	uczXWfa3RAWnZ1HxONZ/WPFAZWUSv7HcmtqT0f4ObIltzDO8QgaQz1zskSilMdXxHt4StWGvCB5
+	04kZho6RziazPWg699vAcmEcno8rI4Bguv0
+X-Received: by 2002:a67:e045:0:b0:77f:fb50:8820 with SMTP id ada2fe7eead31-78a52c86b64mr751071137.11.1788525867319;
+        Fri, 04 Sep 2026 05:44:27 -0700 (PDT)
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com. [209.85.222.51])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9808ee1c0cdsm1458960241.8.2026.09.04.05.44.26
         for <dmaengine@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Sep 2026 05:30:03 -0700 (PDT)
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5c2c46a428eso805411e0c.2
-        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:30:02 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AKwUvBy9vTpZQIADPAenniFQSd4kdMcOQ4pNyw+sGgdYuUldE3WccPD9dcuKSYhldJJDsd6eOYoxCRR7Ojo=@vger.kernel.org
-X-Received: by 2002:a05:6102:578e:b0:778:4fe0:8297 with SMTP id
- ada2fe7eead31-78a4aa70e09mr2345087137.11.1788525002767; Fri, 04 Sep 2026
- 05:30:02 -0700 (PDT)
+        Fri, 04 Sep 2026 05:44:27 -0700 (PDT)
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-97ea365dd5cso652494241.2
+        for <dmaengine@vger.kernel.org>; Fri, 04 Sep 2026 05:44:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBzrNYuje0MmdxTYaJpZKnXDnFpz1cJdAFdj75EsRtUmz75uGFmAmQvloqqVrFVNHYWUxDMxBRkacXc=@vger.kernel.org
+X-Received: by 2002:a05:6102:5e8e:b0:786:e7a0:603e with SMTP id
+ ada2fe7eead31-78a4a8b86demr2120669137.7.1788525866617; Fri, 04 Sep 2026
+ 05:44:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260825141542.30901-6-wsa+renesas@sang-engineering.com> <20260825141542.30901-7-wsa+renesas@sang-engineering.com>
-In-Reply-To: <20260825141542.30901-7-wsa+renesas@sang-engineering.com>
+References: <20260825141542.30901-6-wsa+renesas@sang-engineering.com> <20260825141542.30901-8-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260825141542.30901-8-wsa+renesas@sang-engineering.com>
 From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Fri, 4 Sep 2026 14:29:51 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXavMv7hAnd0WHXuThGemifD8G38Tg2GwvkCjoy3_jzKA@mail.gmail.com>
-X-Gm-Features: AcwNN1Uk-vpOhRjUqifYExzXweIhzAcoCntgx4xcaaEfdAuYllug8_vrtZCfUzs
-Message-ID: <CAMuHMdXavMv7hAnd0WHXuThGemifD8G38Tg2GwvkCjoy3_jzKA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dmaengine: sh: rcar-dmac: fix style in struct initialization
+Date: Fri, 4 Sep 2026 14:44:15 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXj14sZXrcPhNA7HZ8+nB9FYypcOhNEYpkhYj7YZsMQhg@mail.gmail.com>
+X-Gm-Features: AcwNN1XPYwq96qhQmx4WPVu51XNqxvA6TQNjfaLRuNelQJUi_vPdQl2bb7NiYmg
+Message-ID: <CAMuHMdXj14sZXrcPhNA7HZ8+nB9FYypcOhNEYpkhYj7YZsMQhg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] dmaengine: sh: rcar-dmac: SMMU doesn't need IPMMU workaround
 To: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Cc: linux-renesas-soc@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
+	Frank Li <Frank.Li@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Wolfram,
 
 On Tue, 25 Aug 2026 at 16:16, Wolfram Sang
 <wsa+renesas@sang-engineering.com> wrote:
-> A new member will be added to the struct. Before that, adhere to coding
-> style by using a single space when assigning values.
+> R-Car Gen5 doesn't use an IPMMU anymore, but a SMMU. So, the workaround
+> for the IPMMU becomes optional. Add a flag to distinguish. No functional
+> change.
 >
 > Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
@@ -84,29 +86,58 @@ Thanks for your patch!
 
 > --- a/drivers/dma/sh/rcar-dmac.c
 > +++ b/drivers/dma/sh/rcar-dmac.c
-> @@ -1998,13 +1998,13 @@ static void rcar_dmac_shutdown(struct platform_device *pdev)
->  }
+> @@ -219,10 +219,12 @@ struct rcar_dmac {
+>   * struct rcar_dmac_of_data - This driver's OF data
+>   * @chan_offset_base: DMAC channels base offset
+>   * @chan_offset_stride: DMAC channels offset stride
+> + * @has_ipmmu: flag telling if DMAC is connected to an IPMMU
+>   */
+>  struct rcar_dmac_of_data {
+>         u32 chan_offset_base;
+>         u32 chan_offset_stride;
+> +       unsigned int has_ipmmu:1;
+
+broken_ipmmu_microTLB_0?
+
+>  };
 >
+>  /* -----------------------------------------------------------------------------
+> @@ -1877,8 +1879,9 @@ static int rcar_dmac_probe(struct platform_device *pdev)
+>          * can't use it with the IPMMU. As the IOMMU API operates at the device
+>          * level we can't disable it selectively, so ignore channel 0 for now if
+>          * the device is part of an IOMMU group.
+> +        * Not applicable if system uses something else than IPMMU like SMMU.
+>          */
+> -       if (device_iommu_mapped(&pdev->dev))
+> +       if (data->has_ipmmu && device_iommu_mapped(&pdev->dev))
+>                 dmac->channels_mask &= ~BIT(0);
+>
+>         dmac->channels = devm_kcalloc(&pdev->dev, dmac->n_channels,
+> @@ -2000,11 +2003,13 @@ static void rcar_dmac_shutdown(struct platform_device *pdev)
 >  static const struct rcar_dmac_of_data rcar_dmac_data = {
-> -       .chan_offset_base       = 0x8000,
-> -       .chan_offset_stride     = 0x80,
-> +       .chan_offset_base = 0x8000,
-> +       .chan_offset_stride = 0x80,
+>         .chan_offset_base = 0x8000,
+>         .chan_offset_stride = 0x80,
+> +       .has_ipmmu = 1,
+
+The issue this fixes was seen on R-Car H2 and M2-W.
+R-Car H3 ES1.0 already existed at that time, so R-Car Gen3 might be
+affected or not.
+
 >  };
 >
 >  static const struct rcar_dmac_of_data rcar_gen4_dmac_data = {
-> -       .chan_offset_base       = 0x0,
-> -       .chan_offset_stride     = 0x1000,
-> +       .chan_offset_base = 0x0,
-> +       .chan_offset_stride = 0x1000,
+>         .chan_offset_base = 0x0,
+>         .chan_offset_stride = 0x1000,
+> +       .has_ipmmu = 1,
+
+Let's hope this issue was fixed in R-Car Gen4.  Perhaps someone can
+verify this using the test Laurent shared[1] a long time ago?
+
 >  };
 >
 >  static const struct of_device_id rcar_dmac_of_ids[] = {
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-
-Note that rcar_dmac_driver below has a few more violations,
-which you are indeed not modifying in this series ;-)
+[1] https://lore.kernel.org/1422137953-30156-1-git-send-email-laurent.pinchart+renesas@ideasonboard.com
 
 Gr{oetje,eeting}s,
 
