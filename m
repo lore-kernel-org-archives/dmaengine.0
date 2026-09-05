@@ -1,90 +1,59 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DF035E1CB;
-	Sat,  5 Sep 2026 08:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7053D5673;
+	Sat,  5 Sep 2026 08:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788595254; cv=none; b=oiFKfvDhZim4jMbuZJzVZq0GaCthHv3742Dwxpt/lOtKzQqsmD701V8Q2ZV51/GBXQQRt96e9pHrJp39U1y+b2yZwTO+nXKWe6oxazPeZSSiS+rOHEJAdOXnLatE4dls1k57uN/ewmOkUWkdcBcj69w+pD6oBRyLirGlJ8pTUbk=
+	t=1788595951; cv=none; b=grkpx4V7nt6EbrnbUm6CRdngjguo0vXFi/OgkPmOR8K+xxR27F4Ba7URJ9k29j5BysRW0qeCY/1IASc4vMQkMBvyMtFf680g822cLqZ8LgcqZV7gscyOj3aXfO1vGWGTqbIZoadHoe4m1k1DXOzAiVZR6YgR70au/gmCpPe6ZpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788595254; c=relaxed/simple;
-	bh=DZFfBMrRtiY/73SGDh0XULVSppgU/RJ7ThjUIl3cq4s=;
+	s=arc-20240116; t=1788595951; c=relaxed/simple;
+	bh=twGdAWZBZ05fb4+QLfejbwpApFgNt4hwjf7CHvu6qnY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P3dYcA17Cq+8DY9U3bI/4jl0a3bzTxTKV1BgQmRQQCbMsLPShZy9RvA9zUPi4FPcCsQi8gCpPVK+ErgpY/m/l+7fNSTbrHZbibGV3/rNREjlIlYbIo+UaB3M3S9GZ5kYDbw6LPT9RRXWV9QUUWhJOZRmoOP7vXunqWi+oVAO87A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Om3qZEmH; arc=none smtp.client-ip=198.175.65.17
+	 Content-Type:Content-Disposition:In-Reply-To; b=Iswq06ExHVtxYwu6jYrHibXFvpdYzMaRH2Y7HbfyC2e1J3n6jHXaVvia6f8Yh/ElGZWSLDjmq4+BeWQV9s7YSR5/z+sd5mWN6VVkd+LV6YT3ISkrdrRPkld/luaz6Xqw2CdweiZsZpk0w0qi0Eyi1kWg1YVdb7MjMJilVwtUOOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AbnplSVq; arc=none smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Om3qZEmH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AbnplSVq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788595253; x=1820131253;
+  t=1788595942; x=1820131942;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=DZFfBMrRtiY/73SGDh0XULVSppgU/RJ7ThjUIl3cq4s=;
-  b=Om3qZEmHtBMxTj8aSZntr5knFq6x4V/3MV3cePZY87dgfbqi7cnnOGlb
-   2EumNmW53gO2tVcLKo3Oiaux+UX8cK76/CQ5pFmkB9TZNjaM8PuF9HnCn
-   WgNL3qqvLBw/xKAVa8+2HTmCj7gpWVWSyVz2PEChWw3xtlj37R9yor4zQ
-   qb14U0l/ijuv7YKpDC8F7nqo+0mlQctVcgKY+R0PfGWlGCeJlkRxKrrHr
-   Iz5HeMGu17kbbKz6cm46RWTcf7wrIcZ/Wh9xY395kdUyTCdNFZEzNVcVN
-   sNCJ3y+4taMHVJWUfIBmpvYmVUorrkSH95qvuH/0iJ1ZfJ9g/hsi4nC0z
+  bh=twGdAWZBZ05fb4+QLfejbwpApFgNt4hwjf7CHvu6qnY=;
+  b=AbnplSVqQ689m501/qJXshCtuq0i+eidVki+x2vGJF3VEroHGSldazYu
+   RE58XCM6xzi+HbXKz5ysODSxobv6NZbt6PPJfW0K7pipvyvR8HAWeAJ22
+   G8747V90OKFWCJw+vvpE1qKvC2my21wdBf+yWU3ZI7gWGZMGIARWPpFBo
+   Y3yb97dEMxqlh4UAsQL++E6Gvkq9TGeGGCvGcHp8veI/4lBwEoQErE1Yl
+   gXvsCaD7FjaTIN9ZGeddWYfw2olJ5lyf3OkJ+pDU1aFPvXVSXWmFzZBfX
+   wJE/yVffrvVe3lcHhIxDcVeSd9GoPVD5dlASLqmFRRlok8HHM3SmlICQZ
    A==;
-X-CSE-ConnectionGUID: 9qcNXG6CSxCxxmP0CulemA==
-X-CSE-MsgGUID: oTsHyvV1THKQp5V9hyN9Ug==
-X-IronPort-AV: E=McAfee;i="6800,10657,11896"; a="89119573"
+X-CSE-ConnectionGUID: 0daAvsPXR6qt9dw76SwmIQ==
+X-CSE-MsgGUID: GvtCCwVgT0OicypuYPmFgw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11896"; a="88963854"
 X-IronPort-AV: E=Sophos;i="6.25,263,1779174000"; 
-   d="scan'208";a="89119573"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2026 01:00:52 -0700
-X-CSE-ConnectionGUID: 9JbBadgHQ7SEjpVvHYYgmw==
-X-CSE-MsgGUID: bwhdz7ZKSjWLvCde1OANJA==
+   d="scan'208";a="88963854"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2026 01:12:19 -0700
+X-CSE-ConnectionGUID: d2AoCfycRCqiwUVlTWIAKA==
+X-CSE-MsgGUID: u75Jy/s6RFWx2r+1s2JyTg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.25,263,1779174000"; 
-   d="scan'208";a="270230591"
+   d="scan'208";a="274067004"
 Received: from fpallare-mobl4.ger.corp.intel.com (HELO localhost) ([10.245.245.105])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2026 01:00:43 -0700
-Date: Sat, 5 Sep 2026 11:00:41 +0300
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2026 01:12:16 -0700
+Date: Sat, 5 Sep 2026 11:12:14 +0300
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Frank.Li@oss.nxp.com
-Cc: Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-trace-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v3 0/4] dmaengine: rename dma_chan::dev to
- dma_chan::chan_dev for clarity
-Message-ID: <apvMKWQhTn5Kf8Sq@ashevche-desk.local>
-References: <20260904-dma-chan_dev-rename-v3-0-685601b0b788@nxp.com>
+To: Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
+Cc: Viresh Kumar <vireshk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Binbin Zhou <zhoubinbin@loongson.cn>, Sinan Kaya <okaya@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/4] dma: use designated initializers for acpi_device_id
+Message-ID: <apvO3uWUEYX-I2pp@ashevche-desk.local>
+References: <20260904-acpi-dma-v1-0-0fcc63d65d4b@thegoodpenguin.co.uk>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -93,41 +62,46 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260904-dma-chan_dev-rename-v3-0-685601b0b788@nxp.com>
+In-Reply-To: <20260904-acpi-dma-v1-0-0fcc63d65d4b@thegoodpenguin.co.uk>
 Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
  krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Fri, Sep 04, 2026 at 05:49:42PM -0400, Frank.Li@oss.nxp.com wrote:
-> The current dma_chan structure contains both "device" and "dev". So
+On Fri, Sep 04, 2026 at 03:10:39PM +0100, Pawel Zalewski wrote:
+> This series is converting lists that contain the acpi_device_id
+> struct, which is defined in the include/linux/device-id/acpi.h
+> to make use of named initializers (which they do not use currently).
+> This work is part of the on going effort in the kernel associated
+> with device-ids [1]
 > 
->     chan->device->dev refers to the DMA engine device.
->     chan->dev->device refers to the per-channel device instance.
+> The plan is to convert acpi_device_id::driver_data to have an anonymous
+> union, similarly to what was introduced for PCI and I2C device ID tables.
+> The goal is to increase type-safety (as most of the existing casts are gone),
+> to improve readability and to make use intent a bit more clear:
 > 
-> Their similar naming makes the distinction unclear and increases reader
-> confusion.
+> ```
+> union {
+> 	kernel_ulong_t driver_data;
+> 	const void *driver_data_ptr;
+> }
+> ```
 > 
-> Add union dma_chan::chan_dev to make its purpose explicit and clearly
-> identify it as the per-channel device. After all user switch to chan_dev,
-> union and dma_chan::dev will be removed.
+> But for that to work all lists containing the structs need to use named
+> initializers first to avoid triggering -Wmissing-braces. I already have
+> patches that implement this and touching a lot of kernel subsystmes that
+> use the acpi_device_id struct and that list keeps on growing. Therefore,
+> I have decided to split the series per every subsystem into:
+> - pre-clean-ups that convert the lists to use named initializers (this series)
+> - actual implementations that make some of the modules use the new driver_data_ptr
 > 
-> Update the kernel-doc accordingly. Besides its sysfs usage, the per-channel
-> device is also used by some DMA engine drivers for IOMMU mapping and
-> therefore deserves a more accurate description.
+> That way the task can be fragmented into manageable and independent
+> chunks of work and makes this effort easier to review.
 > 
-> 1st patch add help vchan_chan_name()
-> 2nd patch use existing helper dma_chan_name() to reduce rename difference.
-> 3rd patch add (dmaengine|vchan)_chan_dev() helper
-> 4th patch add union chan_dev for dma_chan::dev for clarity
-> 
-> Need following patch to clean other dma engineer driver, which is not
-> in drivers/dma
-> 
-> After complete all rename work, dma_chan::dev can be removed.
+> Tested builds on x86-64 and a64 in Yocto using 7.3-rc1.
 
-Nice work!
-I have one comment against patch 4/4, after addressing that feel free to add
+All good to me (with what Frank suggested)
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-to the entire series.
+
+> [1] https://lore.kernel.org/all/cover.1780048925.git.u.kleine-koenig@baylibre.com/
 
 -- 
 With Best Regards,
