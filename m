@@ -1,164 +1,217 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010033.outbound.protection.outlook.com [52.101.84.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8F143CE4D;
-	Mon,  7 Sep 2026 09:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788771712; cv=fail; b=XaPmXFfv62vyycMKq3x/ZQpasrObyylMPLZb6MKgTx71Y8uReHUNKsUyNhHblg++BNJNtOdGwHcFDDE/27ELkv1ohIbqNXol7GM3wb8aKyPwI/XnSgDbCtQ1uauPhXZDOFviabAoNMnsQwPVgOiKr+CzEUmEYmofF/FkINiQomc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788771712; c=relaxed/simple;
-	bh=4iSVgwh1kcNMe4irm3+oVDDr15dmn9aB8vIQz18X6T0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=N6mCwHOLTKOtq0dnW6tXKqmcaUlupkb7W4dMcLTIPW39BMqNhkesHVQtd6qxVGOt1kY6FqQ2UpK4ADxo/ML902c++vg7Oz2Jklsd/1hcJBdkEwuM4jFgXiX0gSjazxOp/rebERBIIzl7LuPXOLC549SC14gvL/9V3msj3z2BEy0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=NttP/N0e; arc=fail smtp.client-ip=52.101.84.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508984503ED;
+	Mon,  7 Sep 2026 09:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788775106; cv=none; b=uGgPUBpK2uiqqGhMQL1s5M1TirvwzavDFqyQBbN+6m+rX71rKCa0ig1tAx09DM8xLPVy3koC4EeeLO/+k1Q8oJJpy++lFP+vVftU4dbgLu8DyJun1LxghTuFAtWgde+RbYG0GPZs4J4U/jKivqdgwuUGf7uuDNbLnZFLWhFvlCE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788775106; c=relaxed/simple;
+	bh=fs8d6nkh6D5RmIxH1uT+pAod8jqHIlEnS5dHbN7H6fI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DPC3PrawPjSCAZj63FNnigCtuiEGLqyMPYovr8NCfpSKh0kZTUk+Gq3YgXmYXgUqpbRx3I4kqZOyCKXBx9mckG6Z/V3lzVoorEGMDLt0qYxaxw/72Ca+TxhmJjpXUJb9+y5Jtz3aUvSx+P5EW+DMcWlaaxANtjfvRsPHxDB7M2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fuCmIk48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="NttP/N0e"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Isogk23a+qvXuQLbs66nuJ3HE4oyfOeKYO1pDHSDPZMCwMoUEQp6SRcuS8GcQzVtQgoKici64destgqyKoHLczKHskLV5Xga7AK3y5AQbjUe2G/6+jRkwW6sZndhUNWH7cij2I3h2n7xVLVPRNSP3p8qEUAFIVk+jwmuc9+CcAMqBdjeAuup8eDqOgo0bKwYPLCeK9pW5eY3LPkBkdMbQro0IJI64ZYhpPoDnM+CmuBxKnWuQWPdr5CzS4CI6Od3bQh56FAgEfKs317Q21Z0w6/N1qCvsyWuxq3EAHcRACP4iT/vOt4IQFATQAe6KHzckDCoxOZcLFmYOSfRaqb4QQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LnrwOfgYgRlI+zWAvJf9CXsDtvn5c6P8CIXhZ6Xbbfw=;
- b=YJU66/qex5PAGl89nmM1u3Bo76jfNP7dxW8AZUwg/FaKfrPI9O+PRJBj9QOQbVfUpjhTs80LGLL4K42e01u6TLNpw+gTHZPVXAiC108GUYzlhedr4k+X2RFV3t/nhD0vLubO2qj9E6x6EywORVskAyPvJni/TMUH3Y461C7Zkq2Ohj6EwciOoh9qNHnMBwMjIUeKVRTb4oEEJDN8eLCANseBnt7Vt4S+Ud8xtx2FGE7imMJkeXmuyr1JIKCiQgUm5XtEQUS3SbX27cnkP+Rn+EODCSjjSJJ1x2ZkFhBT5DPzkg7zk65tK4yAhnJOlrWs1idEF7pedywXNsIBm7ra7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 164.130.1.60) smtp.rcpttodomain=oss.nxp.com smtp.mailfrom=foss.st.com;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LnrwOfgYgRlI+zWAvJf9CXsDtvn5c6P8CIXhZ6Xbbfw=;
- b=NttP/N0e9SjBYHQ4KbNbFzQcNwIjObOk2ESNS+UITuXrpvwdzYXJT/zytU08RjP+3RucZwokBN53t8EdwjSix7hRatTJoIkqExoq7alLmEQk7fOU90VexNoMutfCtrtqULTCqw0mIkpzHiaqnNtOaVXwdyPuuQlSEgtszN6nqDqR79PlL24HiwuJZNKuNDPlCuKhwlpT4kHe8XTBK7/wOT2O1YdHVTuf6E6LHDVBz9t+4j3zSKBixWyYMtDpRq5/HvyZHKPiDx5m183usGGo15GKWC6Ie7YcnMqSexQMu71Sftwk0Ilp/uW7Wf8frmUCXYVm9HmCYmsgdorJSXuItQ==
-Received: from OS6P279CA0142.NORP279.PROD.OUTLOOK.COM (2603:10a6:e10:3a::16)
- by GV1PR10MB6660.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:86::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
- 2026 09:01:44 +0000
-Received: from WA1PEPF000099CF.eurprd04.prod.outlook.com
- (2603:10a6:e10:3a:cafe::64) by OS6P279CA0142.outlook.office365.com
- (2603:10a6:e10:3a::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.15 via Frontend Transport; Mon, 7
- Sep 2026 09:01:44 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 164.130.1.60)
- smtp.mailfrom=foss.st.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=foss.st.com;
-Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
- designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
- client-ip=164.130.1.60; helo=smtpO365.st.com;
-Received: from smtpO365.st.com (164.130.1.60) by
- WA1PEPF000099CF.mail.protection.outlook.com (10.167.242.23) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.5 via Frontend Transport; Mon, 7 Sep 2026 09:01:44 +0000
-Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
- (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Mon, 7 Sep
- 2026 11:07:09 +0200
-Received: from [10.48.87.20] (10.48.87.20) by STKDAG1NODE2.st.com
- (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Mon, 7 Sep
- 2026 11:01:41 +0200
-Message-ID: <ef4dfc0c-3215-4e21-b1a4-1a55a1cf55ca@foss.st.com>
-Date: Mon, 7 Sep 2026 11:01:41 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fuCmIk48"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CEF45C2BCC7;
+	Mon,  7 Sep 2026 09:58:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1788775105;
+	bh=fs8d6nkh6D5RmIxH1uT+pAod8jqHIlEnS5dHbN7H6fI=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=fuCmIk48j2vavcBHuUKAeNWOJB8zLWsz0+9nN3tn6ZQvQpK+A8Fgvkz7VqjALdf2e
+	 0IDMHl0xztJpGXUe3p32EbSFZzT7thRSVdKnEuo2w1ZxVjxxT7obSxc3yPpg94y0LH
+	 lqPSxBsjwYECw7t9dvoP85wVameTgyhl/99hIzfK5S4z2zrdmrJf/QMuiAcmZfpue5
+	 PeP4nRGRNvGFBGoW6+xXZzMPJ+RFQTd9eNfxtzEbf34cTJG10pL6ubsaiIQ8N+3bLt
+	 n1/jIMJtfVPHWnL3SYauGpkQNW/CADv72SqXVPgFK/5rHmmxl1xrRhKdUvyqO0ks69
+	 iPANNpLq5XELQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7988C79F99;
+	Mon,  7 Sep 2026 09:58:25 +0000 (UTC)
+From: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>
+Subject: [PATCH v2 00/10] riscv: Add device tree support for UltraRISC
+ DP1000
+Date: Mon, 07 Sep 2026 17:54:39 +0800
+Message-Id: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dmaengine: use dma_chan_name() helper to get
- per-channel device name
-To: <Frank.Li@oss.nxp.com>, Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung
-	<schung@nuvoton.com>, Vinod Koul <vkoul@kernel.org>, Frank Li
-	<Frank.Li@kernel.org>, Paul Cercueil <paul@crapouillou.net>, Eugeniy Paltsev
-	<Eugeniy.Paltsev@synopsys.com>, Andy Shevchenko
-	<andriy.shevchenko@linux.intel.com>, Binbin Zhou <zhoubinbin@loongson.cn>,
-	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Thierry Reding
-	<thierry.reding@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>, "Ludovic
- Desroches" <ludovic.desroches@microchip.com>, Viresh Kumar
-	<vireshk@kernel.org>, Keguang Zhang <keguang.zhang@gmail.com>,
-	=?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, Manivannan Sadhasivam
-	<mani@kernel.org>, Daniel Mack <daniel@zonque.org>, Haojian Zhuang
-	<haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, "Chen-Yu
- Tsai" <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, "Samuel
- Holland" <samuel@sholland.org>, Kelvin Cao <kelvin.cao@microchip.com>, "Logan
- Gunthorpe" <logang@deltatee.com>, Laxman Dewangan <ldewangan@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-CC: <linux-arm-kernel@lists.infradead.org>, <dmaengine@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-mips@vger.kernel.org>,
-	<linux-stm32@st-md-mailman.stormreply.com>,
-	<linux-trace-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-	<linux-actions@lists.infradead.org>, <linux-sunxi@lists.linux.dev>,
-	<imx@lists.linux.dev>, Frank Li <Frank.Li@nxp.com>
-References: <20260904-dma-chan_dev-rename-v3-0-685601b0b788@nxp.com>
- <20260904-dma-chan_dev-rename-v3-2-685601b0b788@nxp.com>
-Content-Language: en-US
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-In-Reply-To: <20260904-dma-chan_dev-rename-v3-2-685601b0b788@nxp.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: STKCAS1NODE1.st.com (10.75.128.134) To STKDAG1NODE2.st.com
- (10.75.128.133)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: WA1PEPF000099CF:EE_|GV1PR10MB6660:EE_
-X-MS-Office365-Filtering-Correlation-Id: 80f4cbc4-bfd6-45b6-a631-08df0cbea3e8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|1800799024|7416014|376014|82310400026|23010399003|921020|10067099003|11063799006|4143699003|56012099006|18002099003|22082099003|41080700001;
-X-Microsoft-Antispam-Message-Info:
-	e3C1zsUIWNyMzCv4LKvCbYoE5pkmU4iJN0iaC7BNecxBtmaMdqawunJFOS+j8gyudAvw2Wlcg5OaxS7ugMtShsubFn3co+2usj777JRQyreFP6GV5TbIYMyG0xB8/UAwFTHZJnZsSyWuEMfY1N0fF+26BZC8XnN3EFNEWi4ZMO68CzU+RlQq0Qt/RaAkg35ajY8U0rwKUtEm3gxWMPI5LtCguHorkeSx6o4+eSQbJaQCiryk1PHXxfmkEo3iw6AvMbU9xKhjKZ9c0pibV4Iix9pokADUbaAXp+jyy0y7CVpvG2G6BhfFdz/nHJCfqTDXkW4gRRY8uxaFoS8rvKebd651AmbkYcnzFA70C4nIvCfj3TmW+s1lhDIAyNYUVaOrXJ3xwC7Jrc79n6rJVIdpudxMkY84rtxwVxQRe+a35Rtp+n6t/zCLo6nt36RsW1+V66S0GDOWCXtdX8C1E4IYZOpUVIp2MkId23A36mWBg1diFB9kl3n25QVxEB1AGRzGChYiMo9qk9ynNonCJGNJviyzmuQl6yFo5wfmxn6rDGx/NdrjhO8bG6ppCzAHDlsGsvRYmNOYf/Iqzph6DVltu+P7Vg6cN0iDc3oKbqvwdXKOGZyYzcvo+Qc5PwROv0lb9WnSNq/KqVcMJ9d+GX/9oytvYyGt2K1yUijfWLVtxCnETvIKfJQQqUsvrb0FeaMMznwLw15IL4Erp5MK3ulsd4ktw1vzzkHdteDOPeTVmvUPJGoKGTxAVEGrjgNhaC98Cctar/wYF4hd86R29iL+ZQ==
-X-Forefront-Antispam-Report:
-	CIP:164.130.1.60;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(7416014)(376014)(82310400026)(23010399003)(921020)(10067099003)(11063799006)(4143699003)(56012099006)(18002099003)(22082099003)(41080700001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	XKmYppqmDMnVTG2wDJT/8rrTofE4i8l11vRfEKu46pAMZZwPoPppssTJXdm8TknF6w24D8kwsL0m9G+BjU4EnsDDtgB6ioZMrrYLVpzzI3EOOXZrArCHZzG11vNTDctvjmLANBtgc5w6cYAhjyHwIJBK1T5uKg97RS1AfLZ16ErmEpEnC3H5i0xgk08/QhdpBqwQ4Hxp+pv3dYhuUvp79uatd9JJm4Unz1dCbnfJF2H8aGN01CKUmH/xff/FThdBAMVIVvw6D6Tf3KtGE5S4QUUER0uNhonwsEtLCbECz5OzgVA0+kn6IX6MkYDhaoGAdDTQ6ok5gNTLmYvySF4UYObFmuIBY3S3j6XK+UvWAQYP3JAKygS9GrPPljtsncP2VyzwR23geWayUukgZTEr3KC6pS2T8QF6I6XZzxD6LlyJP3+NBL+sqbygh2843//9
-X-OriginatorOrg: foss.st.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 09:01:44.2395
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 80f4cbc4-bfd6-45b6-a631-08df0cbea3e8
-X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.60];Helo=[smtpO365.st.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	WA1PEPF000099CF.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR10MB6660
+X-B4-Tracking: v=1; b=H4sIAOCJnmoC/12Q3U4DIRCFX2XDtRh+CiwbY3wP04sZmLUYt1Wgq
+ 6bpu0upMerlycx855w5sUI5UWHTcGKZ1lTSYd+EuhlY2MH+iXiKTTMllBVGKX58qRlyKoHHWri
+ PgBqUlhYtazevmeb00XmP26suR3ymUC+Q741Mb8dmVK9rbKFSoBtNw1338cLx+L5A+OW2Ki64B
+ +1xHiNqqR9+ZrfhsNx3NtSw6xwIXmtpJBrQIjrro9MWSVuHGxODjTI2EJrLFUIh3hBLqtMQZ+X
+ F2BKECNqOKOQ8b7QTfjZy9EI4G4yVxrFLu10q9ZA/+/NW2cv0/KPa/PvTKlt6KwEdEJIn8zc92
+ 57P5y9vvEKZjAEAAA==
+X-Change-ID: 20260522-ultrarisc-dts-9dab3a2316b6
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Jia Wang <wangjia@ultrarisc.com>, 
+ Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, 
+ Samuel Holland <samuel.holland@sifive.com>, 
+ Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, 
+ Mika Westerberg <mika.westerberg@linux.intel.com>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>, 
+ linux-riscv@lists.infradead.org, linux-spi@vger.kernel.org, 
+ linux-i2c@vger.kernel.org, dmaengine@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788775103; l=6572;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=fs8d6nkh6D5RmIxH1uT+pAod8jqHIlEnS5dHbN7H6fI=;
+ b=c33tukVmX93oP4g3h9Le0+lad+GXnTWwtk8+w9sK0qXF3luHh3Az/VxkVWq+KbB4u7uZTw2jd
+ FkOBSxEHfmrA5jzgiXGtD20f7qmOJ/K/SCxhOLwIx2wptCxmA47T27T
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-Endpoint-Received: by B4 Relay for wangjia@ultrarisc.com/20260515 with
+ auth_id=779
+X-Original-From: Jia Wang <wangjia@ultrarisc.com>
+Reply-To: wangjia@ultrarisc.com
 
+Add Devicetree support for the UltraRISC DP1000 RISC-V SoC and two
+DP1000-based motherboards: Shenzhen Rongda M0 and Milk-V Titan.
 
+DP1000 integrates eight UltraRISC CP100 CPU cores.  The SoC description
+includes the CPU and cache topology, CLINT, PLIC, clock controller,
+pinctrl, GPIO, four UARTs, two SPI controllers, four I2C controllers,
+three PCIe root complexes, GMAC, and the DMA controller.
 
-On 9/4/26 23:49, Frank.Li@oss.nxp.com wrote:
-> From: Frank Li<Frank.Li@nxp.com>
-> 
-> Use the existing dma_chan_name() helper to obtain the per-channel device
-> name instead of open-coding: dev_name(chan->dev->device) /
-> dev_name(chan2dev())
-> 
-> Simplify the code and improve consistency.
-> 
-> No functional change intended.
-> 
-> Reviewed-by: Logan Gunthorpe<logang@deltatee.com>
-> Signed-off-by: Frank Li<Frank.Li@nxp.com>
+The Shenzhen Rongda M0 and Milk-V Titan device trees add their
+board-specific pin multiplexing, RTC devices, and Ethernet PHY
+configuration.  Both boards enable the three PCIe root complexes and
+the GMAC described as disabled by default in the SoC DTS.  The Titan
+description also provides its GPIO wakeup keys.
 
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com> # For STM32
+The binding patches add the vendor, CPU, board, and peripheral compatible
+strings consumed by the new device trees.  The SPI, I2C, and AXI DMA nodes
+use their respective generic DesignWare compatible strings as fallbacks.
 
-> ---
->   drivers/dma/dma-jz4780.c                       | 2 +-
->   drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 +-
->   drivers/dma/idma64.c                           | 2 +-
->   drivers/dma/loongson/loongson2-apb-dma.c       | 2 +-
->   drivers/dma/mmp_pdma.c                         | 2 +-
->   drivers/dma/st_fdma.c                          | 2 +-
->   drivers/dma/stm32/stm32-dma3.c                 | 2 +-
->   drivers/dma/stm32/stm32-mdma.c                 | 2 +-
->   include/trace/events/tegra_apb_dma.h           | 6 +++---
->   9 files changed, 11 insertions(+), 11 deletions(-)
+An earlier version of the DP1000 SoC and board Devicetree support was
+posted as part of a combined Devicetree and pinctrl series. The pinctrl
+binding and driver were subsequently split out and merged separately.
+This series carries the updated Devicetree portion.
+
+Link: https://lore.kernel.org/all/20260515-ultrarisc-pinctrl-v1-0-bf559589ea8a@ultrarisc.com/
+
+This series depends on the UltraRISC DP1000 GMAC support series:
+
+net: stmmac: Add common RGMII delay handling and DP1000 support
+https://lore.kernel.org/netdev/20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com/
+
+Testing:
+- Built dp1000-shenrongda-m0.dtb and dp1000-milkv-titan.dtb with
+  ARCH=riscv and W=1.
+- Ran dt_binding_check for the modified bindings and the prerequisite
+  DP1000 GMAC binding.
+- Validated both DTBs against the relevant Devicetree schemas with
+  CHECK_DTBS=y and the prerequisite GMAC series applied.
+- Boot-tested both DTBs on Shenzhen Rongda M0 and Milk-V Titan. Verified
+  the CPU topology and CBO selftests, UART, SPI, I2C/RTC, system memory,
+  and all three PCIe root complexes. The expected PCIe endpoints were
+  enumerated on both boards.
+- With the prerequisite GMAC series applied, ultrarisc-dwmac established
+  1000 Mb/s full-duplex links with the YT8531S PHY on M0 and the RTL8211F
+  PHY on Titan.
+
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+---
+Changes in v2:
+- Remove the dependency on the DP1000 clock series, which has since
+  been merged.
+- Drop the generic DWMAC compatible patch; DP1000 GMAC support is handled
+  by a separate prerequisite series.
+- Drop the RISC-V CPU binding yamllint fix, which has been applied.
+- Add DP1000-specific resource constraints and hardware descriptions to
+  the SPI, I2C and DMA bindings.
+- Correct the native chip-select count of SPI1 from three to four.
+- Describe all eight per-channel DMA interrupts.
+- Update the DP1000 GMAC nodes for the separate GMAC support series:
+  remove the generic DWMAC fallback, use "rgmii-id" for both boards, and
+  clarify the fixed MAC-side RGMII delays.
+- Link to v1: https://patch.msgid.link/20260824-ultrarisc-dts-v1-0-61ab7aebe9e5@ultrarisc.com
+
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+To: Jia Wang <wangjia@ultrarisc.com>
+To: Daniel Lezcano <daniel.lezcano@kernel.org>
+To: Thomas Gleixner <tglx@kernel.org>
+To: Samuel Holland <samuel.holland@sifive.com>
+To: Anup Patel <anup@brainfault.org>
+To: Mark Brown <broonie@kernel.org>
+To: Andi Shyti <andi.shyti@kernel.org>
+To: Mika Westerberg <mika.westerberg@linux.intel.com>
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+To: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@sifive.com>
+Cc: Conor Dooley <conor@kernel.org>
+Cc: linux-riscv@lists.infradead.org
+Cc: linux-spi@vger.kernel.org
+Cc: linux-i2c@vger.kernel.org
+Cc: dmaengine@vger.kernel.org
+
+---
+Jia Wang (10):
+      dt-bindings: vendor-prefixes: Add shenrongda
+      dt-bindings: riscv: cpus: Add UltraRISC CP100 compatible
+      dt-bindings: riscv: Add UltraRISC DP1000 board compatibles
+      dt-bindings: timer: Add UltraRISC DP1000 CLINT
+      spi: dt-bindings: snps,dw-apb-ssi: Add compatible for UltraRISC DP1000 SoC
+      dt-bindings: i2c: dw: Add compatible for UltraRISC DP1000 SoC
+      dt-bindings: dma: snps,dw-axi-dmac: Add UltraRISC DP1000 compatible
+      riscv: dts: ultrarisc: Add initial device tree for UltraRISC DP1000
+      riscv: dts: ultrarisc: Add Shenzhen Rongda M0 board device tree
+      riscv: dts: ultrarisc: Add Milk-V Titan board device tree
+
+ .../devicetree/bindings/dma/snps,dw-axi-dmac.yaml  |  22 +
+ .../bindings/i2c/snps,designware-i2c.yaml          |  15 +
+ Documentation/devicetree/bindings/riscv/cpus.yaml  |   1 +
+ .../devicetree/bindings/riscv/ultrarisc.yaml       |  27 +
+ .../devicetree/bindings/spi/snps,dw-apb-ssi.yaml   |  16 +
+ .../devicetree/bindings/timer/sifive,clint.yaml    |   1 +
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ MAINTAINERS                                        |   8 +
+ arch/riscv/boot/dts/Makefile                       |   1 +
+ arch/riscv/boot/dts/ultrarisc/Makefile             |   3 +
+ .../dts/ultrarisc/dp1000-milkv-titan-pinctrl.dtsi  | 108 +++
+ .../boot/dts/ultrarisc/dp1000-milkv-titan.dts      | 203 +++++
+ arch/riscv/boot/dts/ultrarisc/dp1000-pinctrl.h     |  63 ++
+ .../ultrarisc/dp1000-shenrongda-m0-pinctrl.dtsi    |  79 ++
+ .../boot/dts/ultrarisc/dp1000-shenrongda-m0.dts    | 113 +++
+ arch/riscv/boot/dts/ultrarisc/dp1000.dtsi          | 899 +++++++++++++++++++++
+ 16 files changed, 1561 insertions(+)
+---
+base-commit: df2908090cda368b01ff43709f51890076c56157
+change-id: 20260522-ultrarisc-dts-9dab3a2316b6
+prerequisite-message-id: <20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com>
+prerequisite-patch-id: 92e6cf1352d54e283d7721dc1542b580b8a41be1
+prerequisite-patch-id: 875c2058e9d8a983d785d7447374758f994dc847
+prerequisite-patch-id: 060a9b129c32c623a52ab1ba66f7a357e54575ff
+prerequisite-patch-id: 9aafbac6d2531a378b2057bf57787c814523f9d3
+prerequisite-patch-id: d75120a112276bd966d37441bd4d631e1539d0e8
+prerequisite-patch-id: ac933151b5a30d769d736be367b45dc6d1d9bfb5
+
+Best regards,
+--  
+Jia Wang <wangjia@ultrarisc.com>
+
 
