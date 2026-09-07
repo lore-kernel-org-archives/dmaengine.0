@@ -1,424 +1,133 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012010.outbound.protection.outlook.com [52.101.53.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA4E4582C7;
-	Mon,  7 Sep 2026 09:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788775107; cv=none; b=AMQjqzgQ948mna6Tzl/Z+H2Oj4mwJH8hAfcreMAy0owAqbXOHj3NKEzvDJzgYfvkTNuF27vheGRiO/jz1tjd/fdlVuPWrLIK+bJ7noDsUDNUDlFuM1ylln+1vRsn3GNmBK0O1YEUFf6c/hqGxOPZbVtbqI5eP96SyYnYhoJf/bA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788775107; c=relaxed/simple;
-	bh=stFWnGr8qituroDzzylkIvteQb6/v1UMCo2xAmzSvDs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VlJeByHPxVnmEQxQXKs8ItW0DKo8y90hYQX4VBkQia1P7veHYsFHLFC1UvQNfYJY3VUeuxp19x4u0ECI7hD26WZjkIkgZnIUWhP1M7/8NlpbmRN8dVTl5Yy0TPBIH8RdSHOdI90dq8+nX83Emxc3eGPcvGpiydo/+fNkAkw8siU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m4TyiU7T; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1827944AB84;
+	Mon,  7 Sep 2026 10:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788775943; cv=fail; b=a1P+/jqD8FGVL4nZ7HMuO4cJTHCIb4vUZomW9Dzow7/aJ+7llgh96T4E+63hWoS/CxL1rJG6lEjfOS4hneTs8mCuX8mhO7HKsG22Q5Qw7WFd1C3YdCtvTgNnswYJTj8JzEOCJ41x8VEkJtdEaz4WckTIMX/l/KPWEHVFIOwsxnM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788775943; c=relaxed/simple;
+	bh=HM9TrhCCjLdljc4DIQjiDNqadIFTGnr8GsOQuL7n1mE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n37ad7XTxu/BrdRMNIgbAfU7+ibghhXzsFHpJ+UcpaSb7FWPnTyZ6cyFU0VXr6YDKKJr0owpT5oBTDJOLLV32yOdwHydWP+nvg4X2LFoOfTxXB/fQeN1ZBHuikLkB0NnES0yZMT7N7hd1Fg6UWx0fTHIqrJQ6lIRH5mTuxFZhD4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=lpcPStTj; arc=fail smtp.client-ip=52.101.53.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m4TyiU7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8AB6DC4AF1A;
-	Mon,  7 Sep 2026 09:58:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1788775106;
-	bh=stFWnGr8qituroDzzylkIvteQb6/v1UMCo2xAmzSvDs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=m4TyiU7TwJ+ifibBW0Zkb4Hf+zypQ0r4ecQslRWV8KChBMBY0R25JHqmrwYKtjKVA
-	 YNEguJmMhqlHLh2vgu1Ttc4wGHY7267eABjlDm0qeaLJQaoPKq3dqheCv8GMCpo5ye
-	 ZjMjEedu5l0bSxJP5vy7flCkWh/DzAFL0fBz28F7IA4hIjL8xD0ol59MFn2Fizli11
-	 NWjTfDubEr3hA9AR4Th9M2oMHv6OYTEGuzYIVUhuUww5hTMrTHHCkuh+ZDpyYSH8LC
-	 BrxJ3z3fJwWNhg0z4eYG3DtNft1noH1s7lWqDpHEJKgm+GsmYTS75C/+VjlpVttivk
-	 dyG8zJd6u8JSg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76834C79F89;
-	Mon,  7 Sep 2026 09:58:26 +0000 (UTC)
-From: Jia Wang via B4 Relay <devnull+wangjia.ultrarisc.com@kernel.org>
-Date: Mon, 07 Sep 2026 17:54:49 +0800
-Subject: [PATCH v2 10/10] riscv: dts: ultrarisc: Add Milk-V Titan board
- device tree
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="lpcPStTj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QhgLzxNead4aaqefHl/RbeXibK+T+VuT5VY5TBnboLPJVyBgqrH65SQjz4ceoxgbvoCFEZyUQiyE77YJcLAFQZR8STkXb13uqnsVRi4DqRarceOlYkdgwcjY5mAGOyuZTfbG2DjpblO83XgcV3Q5L+HEGBxQrL75R6z8gDa7sXHP/d9xubWMElDGBbPhadgFCy3IukWjNMbd1v8gxsgYOKbJ/TGwq6i0msCzjAOkp0w1ILe1V+ifpd4c9y9ZHh3p374Z4W0xJO7Rv9LXL1/3bUej/tr0Tz7L7qiF7Yyb3zqc3J7qX9bJ6eSDQEgEIB0UeO/m9/8YtSIVkFMsLFdt2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9zT5aBq2yTyYPf4OusyTnyI7mbidNwbqOD6Abvt1218=;
+ b=Y9oAj1bar7No27i+WlFTiBqI74PhfdPjUSl0A6t6xoyDbhUXMeDmxFGYMRhWqj4+nid4TtNMDgZEs+LwcTzrkH69RrAU8Xs1qSXQsVYfFQYXF0AlF8PoY6b6tQFuX6//OalAmaPFqyquC8tXg8nYWHGgSTgH3ncAarxN9/SgM29q/SPIEwRQj9Y1DtRF/b94PNbEaXhTz4mC9VUHmFM4J8Q91nxOPb/Ipnzs5tdc0BzWXJi6h6h9LnIIqTkrcM+vFfk3/WHIOd+GKhuVdAmClO7rtbYxjmVmbjEVD1mcx9WcpyhytpS1VxOtLPyAzL6ERi9BWteUs7htRzGrv+yvDA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9zT5aBq2yTyYPf4OusyTnyI7mbidNwbqOD6Abvt1218=;
+ b=lpcPStTjsGCdCkn0PTD8frcQpYw3jqAeqgA7BIlhgDw5CuTLGYeNMa2k/9jTz0ewq7uv8IBuiMCALlv1w5ivBbbzcmFSSwWrIq6ClOCXKy7RGf1axMbBmtvnT20B9nrK4Pza0B1w1TD2hALqQFsnwXlJIdmXgp0SNZqOkUACkrg=
+Received: from DS2PEPF00004559.namprd21.prod.outlook.com
+ (2603:10b6:f:fc00::512) by BN3PR12MB9571.namprd12.prod.outlook.com
+ (2603:10b6:408:2ca::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Mon, 7 Sep
+ 2026 10:12:18 +0000
+Received: from DS1PEPF0001709D.namprd05.prod.outlook.com
+ (2603:10b6:2c:400:0:1007:0:b) by DS2PEPF00004559.outlook.office365.com
+ (2603:10b6:f:fc00::512) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.7 via Frontend Transport; Mon, 7
+ Sep 2026 10:12:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ DS1PEPF0001709D.mail.protection.outlook.com (10.167.18.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.406.5 via Frontend Transport; Mon, 7 Sep 2026 10:12:17 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 7 Sep
+ 2026 05:12:16 -0500
+Received: from xhddevverma40x.xilinx.com (10.180.168.240) by
+ satlexmb08.amd.com (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.46
+ via Frontend Transport; Mon, 7 Sep 2026 05:12:14 -0500
+From: Devendra K Verma <devverma@amd.com>
+To: <mani@kernel.org>, <vkoul@kernel.org>, <frank.li@kernel.org>,
+	<den@valinux.co.jp>
+CC: <dmaengine@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <michal.simek@amd.com>, <devverma@amd.com>
+Subject: [PATCH RESEND v5 0/2] CPM6 Channel Separation Support
+Date: Mon, 7 Sep 2026 15:42:11 +0530
+Message-ID: <20260907101213.1917064-1-devverma@amd.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-ultrarisc-dts-v2-10-5eb4c97477c5@ultrarisc.com>
-References: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
-In-Reply-To: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Jia Wang <wangjia@ultrarisc.com>, 
- Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thomas Gleixner <tglx@kernel.org>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>, 
- Andi Shyti <andi.shyti@kernel.org>, 
- Mika Westerberg <mika.westerberg@linux.intel.com>, 
- Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>, 
- linux-riscv@lists.infradead.org, linux-spi@vger.kernel.org, 
- linux-i2c@vger.kernel.org, dmaengine@vger.kernel.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788775103; l=7334;
- i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=dAtkSFZr6AV1hMUKbe3Hu73EzYFoZ2u8+96QxJOEsCA=;
- b=yiRYYozF6HckWerWPKKZ2H+6+zbHMo+ifuvwcDW8yRYvlrtHo+QDOPpQFDR53zeLCFz8j8EQg
- aAkJEqwaT8RDt/2foEZMiwYIBbE6mWhYR+i05lAfc2VHQk+Nl3iAbWw
-X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
- pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-Endpoint-Received: by B4 Relay for wangjia@ultrarisc.com/20260515 with
- auth_id=779
-X-Original-From: Jia Wang <wangjia@ultrarisc.com>
-Reply-To: wangjia@ultrarisc.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF0001709D:EE_|BN3PR12MB9571:EE_
+X-MS-Office365-Filtering-Correlation-Id: ed2a6d49-9a9d-4864-d49c-08df0cc87f17
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|36860700016|82310400026|23010399003|376014|10067099003|6133799003|18002099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	tXuAjHb3DlpbSV9NHOOPiiJUCgoLyA5715hcLLXis3qQ4hxBgniSHaOGjoevxG6+IcjnjjkYZPzExi8Jmy6eogCLuhvswv3svQgOEdPNoBB9YvF36LQ3Hw1aHwDL5hnNxKz3LJG3BxbI3qzg2wRT4qfFrJ+t45naukNRUdF/0M/W3WoiUH5PHIdCnufWzgQfbKqg4bVbsHA0wSVbEmGmOfe54i+kG5ziI0rAhGCQFzjAG3Lf2ujjx5Iedavu4bBBxMCk3ftvze6rNQ8GdXPsaceSuKCgrtZHiCR0ypz7JgwnekeqYIc6cjk2zxhYbpIFYWHZCWCqpdqwFcE6QyAtiiHn6ZIdMEvZhTPqzi+B3lBDLJBpo3bfFXd8y8sv/9wGVaZOdIc3Oz8mFCZCUM6aWjpUs/KQ4tktBfAAz6zw82kOWudxpsAGzqMd4i29a5biojegICJwuAESKamKxt72VIuXTyMZduK0m4QNrKGD7vEBcnDmZBH2Upur8Is0EY4/8tiNFKAI97al9rlSbbCVcEnwF4mvv1EcIQ+zWpKvQO0qCZD2L0KOeobuShj9znB6G/B1Zid8y2+O1mWXpTt07wzctp5J+rDtIqTaI28jlid0a015RT5atd18LMmB5z5EGU1n2uld47wWnN30OZnFwSyUgCSYAcU/4/OUaQQfPxV0dXpuAlPiCk61XIe7IKUbkEC65twtifDOKLJTpzE8PA==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(82310400026)(23010399003)(376014)(10067099003)(6133799003)(18002099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	ZqLFoRIM1loP7qWjp9m3AT136NERWopUwyIBGUC7SlKVMKqCwM1yV4rBPRwk6etWXA7kjQtUEt/JBTWLeis7eBsPB7hPeBa/hTLs66BoDORXqX676jM42X7LgS+4yCIv97qP3e1kyx4GAkw7fuTGoGlMGZe2RZ3AXQbZsLOZ95HdG+IHB57HRVK8Siqt+sYcu+bQU4aD7O++upLOA9K23g4mO5p1ZiXD3J46NHHFbfmRwU1kSIyggGMxIt8zb7AtAabak1ZxwpdYGt8UvstrSHNZFlIEJzY2Qw0KHRPXB67/l9LSQS8VFGx6xhoBQlvnV9Qdur6AV4lxWXuPUhsBZJBhT8USaVTLh/qyP+xQz6273ZX8CL5CCLlcoT9fC8+yfCUjeT9vAj7/Bz7kU67EAFCjE5SY3cdXRlfOIZ3PP9YirZcZSHiADjiE+P02Pa4N
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2026 10:12:17.4373
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed2a6d49-9a9d-4864-d49c-08df0cc87f17
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS1PEPF0001709D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN3PR12MB9571
 
-From: Jia Wang <wangjia@ultrarisc.com>
+'Designware Cores PCI Express DM Controller - Reference
+Manual', section 3.2.34.3, VSEC for DEVICE INFORMATION supports
+the channel separation mechanisms. Basically, the HDMA IP allows
+the user to configure the separation between DMA channel
+registers and retrieve it via the VSEC capability mentioned
+above.
+In order to use the VSEC functionality following changes have
+been made:
 
-Milk-V Titan is an ITX motherboard based on the UltraRISC DP1000 SoC.
+o Utilize the existing VSEC implementation to retrieve
+  the channel separation and translate it to correct size.
+o Modify the structs and functions to calculate correct
+  DMA channel register base using the channel, direction
+  and channel separation selected.
 
-Link: https://milkv.io/docs/titan/overview
-Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
----
- arch/riscv/boot/dts/ultrarisc/Makefile             |   1 +
- .../dts/ultrarisc/dp1000-milkv-titan-pinctrl.dtsi  | 108 +++++++++++
- .../boot/dts/ultrarisc/dp1000-milkv-titan.dts      | 203 +++++++++++++++++++++
- 3 files changed, 312 insertions(+)
+Devendra K Verma (2):
+  dmaengine: dw-edma: Enable Chan Separation via VSEC
+  dmaengine: dw-edma: Add changes to support Channel Separation
 
-diff --git a/arch/riscv/boot/dts/ultrarisc/Makefile b/arch/riscv/boot/dts/ultrarisc/Makefile
-index 454d849a6ce4..dfd15c064d07 100644
---- a/arch/riscv/boot/dts/ultrarisc/Makefile
-+++ b/arch/riscv/boot/dts/ultrarisc/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
-+dtb-$(CONFIG_ARCH_ULTRARISC) += dp1000-milkv-titan.dtb
- dtb-$(CONFIG_ARCH_ULTRARISC) += dp1000-shenrongda-m0.dtb
-diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan-pinctrl.dtsi b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan-pinctrl.dtsi
-new file mode 100644
-index 000000000000..7a812e40a249
---- /dev/null
-+++ b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan-pinctrl.dtsi
-@@ -0,0 +1,108 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright(C) 2026 UltraRISC Technology (Shanghai) Co., Ltd.
-+ */
-+
-+#include "dp1000.dtsi"
-+#include "dp1000-pinctrl.h"
-+
-+&pinctrl {
-+	i2c0_pins: i2c0-pins {
-+		pins = <PA12 PA13>;
-+		function = "i2c";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	i2c1_pins: i2c1-pins {
-+		pins = <PB6 PB7>;
-+		function = "i2c";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	i2c2_pins: i2c2-pins {
-+		pins = <PC0 PC1>;
-+		function = "i2c";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	i2c3_pins: i2c3-pins {
-+		pins = <PC2 PC3>;
-+		function = "i2c";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	io_pins: io-pins {
-+		pins = <PA10 PA15 PB0 PB1 PB2 PD6 PD7>;
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	gpio_keys_pins: gpio-keys-pins {
-+		pins = <PA4 PA11 PA14>;
-+		function = "gpio";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	mux_dcdc_i2c_pins: mux-dcdc-i2c-pins {
-+		pins = <PA5>;
-+		function = "gpio";
-+	};
-+
-+	mux_i2c3_pins: mux-i2c3-pins {
-+		pins = <PA6>;
-+		function = "gpio";
-+	};
-+
-+	mux_uart0_pins: mux-uart0-pins {
-+		pins = <PA7>;
-+		function = "gpio";
-+	};
-+
-+	spi0_pins: spi0-pins {
-+		pins = <PD0 PD1 PD2 PD3 PD4 PD5>;
-+		function = "spi";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	spi1_pins: spi1-pins {
-+		pins = <PA0 PA1 PA2 PA3>;
-+		function = "spi";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	uart0_pins: uart0-pins {
-+		pins = <PA8 PA9>;
-+		function = "uart";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	uart1_pins: uart1-pins {
-+		pins = <PB4 PB5>;
-+		function = "uart";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	uart2_pins: uart2-pins {
-+		pins = <PC4 PC5>;
-+		function = "uart";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+
-+	uart3_pins: uart3-pins {
-+		pins = <PC6 PC7>;
-+		function = "uart";
-+		bias-pull-up;
-+		drive-strength = <33>;
-+	};
-+};
-diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts
-new file mode 100644
-index 000000000000..59edd8157221
---- /dev/null
-+++ b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts
-@@ -0,0 +1,203 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright(C) 2026 UltraRISC Technology (Shanghai) Co., Ltd.
-+ */
-+
-+#include "dp1000-milkv-titan-pinctrl.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+	model = "Milk-V Titan";
-+	compatible = "milkv,titan", "ultrarisc,dp1000";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		serial1 = &uart1;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&gpio_keys_pins>;
-+
-+		key-wakeup-0 {
-+			label = "Wake-Up";
-+			gpios = <&gpio_a 14 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_WAKEUP>;
-+			linux,input-type = <EV_KEY>;
-+			debounce-interval = <10>;
-+			wakeup-source;
-+			wakeup-event-action = <EV_ACT_ASSERTED>;
-+		};
-+
-+		key-wakeup-1 {
-+			label = "Power";
-+			gpios = <&gpio_a 11 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_POWER>;
-+			linux,input-type = <EV_KEY>;
-+			debounce-interval = <10>;
-+			wakeup-source;
-+			wakeup-event-action = <EV_ACT_ASSERTED>;
-+		};
-+
-+		key-wakeup-2 {
-+			label = "Wake-Up-by-USB";
-+			interrupts-extended = <&gpio_a 4 IRQ_TYPE_EDGE_FALLING>;
-+			linux,code = <KEY_WAKEUP>;
-+			linux,input-type = <EV_KEY>;
-+			debounce-interval = <10>;
-+			wakeup-source;
-+		};
-+	};
-+};
-+
-+&i2c0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c0_pins>;
-+};
-+
-+&i2c1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c1_pins>;
-+};
-+
-+&i2c2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c2_pins>;
-+
-+	rtc@68 {
-+		compatible = "st,m41t11";
-+		reg = <0x68>;
-+	};
-+};
-+
-+&i2c3 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c3_pins>;
-+};
-+
-+&spi0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&spi0_pins>;
-+};
-+
-+&spi1 {
-+	num-cs = <1>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&spi1_pins>;
-+};
-+
-+&uart0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart0_pins>;
-+};
-+
-+&uart1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart1_pins>;
-+};
-+
-+&uart2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart2_pins>;
-+};
-+
-+&uart3 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart3_pins>;
-+};
-+
-+&pcie_x16 {
-+	status = "okay";
-+};
-+
-+&pcie_x4a {
-+	status = "okay";
-+};
-+
-+&pcie_x4b {
-+	status = "okay";
-+};
-+
-+&gpio {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&io_pins &mux_dcdc_i2c_pins &mux_i2c3_pins &mux_uart0_pins>;
-+};
-+
-+&gpio_a {
-+	dcdc-i2c-mux-hog {
-+		gpio-hog;
-+		gpios = <5 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "dcdc-i2c-mux";
-+	};
-+
-+	i2c3-mux-hog {
-+		gpio-hog;
-+		gpios = <6 GPIO_ACTIVE_HIGH>;
-+		output-low;
-+		line-name = "i2c3-mux";
-+	};
-+
-+	uart0-mux-hog {
-+		gpio-hog;
-+		gpios = <7 GPIO_ACTIVE_HIGH>;
-+		output-high;
-+		line-name = "uart0-mux";
-+	};
-+};
-+
-+&ethernet {
-+	phy-handle = <&phy0>;
-+	/*
-+	 * The PCB does not add RGMII TX or RX clock delays. The DP1000
-+	 * integration adds fixed delays in both directions.
-+	 */
-+	phy-mode = "rgmii-id";
-+
-+	status = "okay";
-+
-+	mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		phy0: phy@0 {
-+			reg = <0>;
-+
-+			leds {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				led@1 {
-+					label = "eth-link";
-+					reg = <1>;
-+					color = <LED_COLOR_ID_YELLOW>;
-+					function = LED_FUNCTION_INDICATOR;
-+					default-state = "keep";
-+					linux,default-trigger = "netdev";
-+				};
-+
-+				led@2 {
-+					label = "eth-activity";
-+					reg = <2>;
-+					color = <LED_COLOR_ID_GREEN>;
-+					function = LED_FUNCTION_ACTIVITY;
-+					default-state = "keep";
-+					linux,default-trigger = "netdev";
-+				};
-+			};
-+		};
-+	};
-+};
+ drivers/dma/dw-edma/dw-edma-pcie.c           | 18 +++++++++++++++
+ drivers/dma/dw-edma/dw-hdma-v0-core.c        | 23 ++++++++++++--------
+ drivers/dma/dw-edma/dw-hdma-v0-debugfs.c     | 17 +++++----------
+ drivers/dma/dw-edma/dw-hdma-v0-regs.h        | 10 ---------
+ drivers/pci/controller/dwc/pcie-designware.c |  1 +
+ include/linux/dma/edma.h                     |  1 +
+ 6 files changed, 40 insertions(+), 30 deletions(-)
 
 -- 
-2.34.1
-
+2.43.0
 
