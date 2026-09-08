@@ -1,121 +1,98 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80E04968EF
-	for <dmaengine@vger.kernel.org>; Tue,  8 Sep 2026 21:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7DE3DBD76
+	for <dmaengine@vger.kernel.org>; Tue,  8 Sep 2026 21:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788903220; cv=none; b=dlmg4rzAkcICzuRB/dze4ZBndy0/F4Kl68l2whHzN6yGs6KzI1vgbesRUrIZcGdS3iSG4FY6nUp10pTu/hTN6B64GUxoEqpveg1dDfVmT9t12LilGQgwtyQDy5Ool2ykvzUil2mOUH95y+6BKA51MjDD0NB/+LwXVBglZJj7Byc=
+	t=1788903621; cv=none; b=jaA7A3QSs4WE3vlurmh4D03q+BaDGMOuIs3+rjrbn6nMewHEwzV/nWSneRVZKvFX1PZsAJ2U6noK8lETb5dcBR4ucRad+DDdck3mE+KChNPvwyh/lvKtLMCeKai4A7mkeyqvVsWyn72dY6cg4nhHVlcSMM/aIBJlUaGRp9imZok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788903220; c=relaxed/simple;
-	bh=gQYMQIZ0a0qQpuJQGl9sxe6tSFIiwDa+pVKYc1H04vk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EVCsHJ+YMXhVdUgj2ub/9sHTqWe994+MS18/dtvpjYP4F0kfPC/zuPOIIH8thk6e1fOsRggAVNDREso6zpNQi2b4gemvqJfcdvy4V8qxMfBYRiTgEv5Q2yYY2kgocGf3l+ZoRaPUJd76eKpxOexlAoKbU2jfCmLjE1EW7LzSQVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mnxykDN6; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788903621; c=relaxed/simple;
+	bh=lYNCsml68QVyCK3HVXsZwp9Wuh/p/f+gg2SAkT7S7bA=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=mUHkmIrdl2+tgabn4GJ42wvFqow43NLr0JKvMoK/dYKhiCl2mUF7mPhyCgRCv4BSQK9DqS27eZSKCos8lO9ddnUqtQSol9enMHaUXnDWPsKtFZyq+U+hHaZijcVxZGCXsDLvJqUo9Tf2c9FtN+u2tAJGTuZ1iH3SdZUasI1nhWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dus9htxH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mnxykDN6"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d94c868ea5so51421955ad.3
-        for <dmaengine@vger.kernel.org>; Tue, 08 Sep 2026 14:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788903218; x=1789508018; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=yHiWJUkqXIHHnljOBGvidp4XfKDa865c5NPgCl6nJgk=;
-        b=mnxykDN6MG7lKokO4lIuXto15ET5eg4fZ+6tV2sglQPz2txkLps9M06CHFBSVsXupR
-         EX6t+pZA37xFldmE7Yt3XCEATvl5kAmL0cpMGuhNVkv+aa8LSrce9OEwVfr88cEhoX7w
-         mCJ4Ld4F8BeWPwkVV5agP1SQRw7k61LIA0C3pn2qx2GpfWYixWteqodoJub28k+/ngt7
-         402sNcEr4EV9hMj9nasdR0fM1ID0MUX/J0nAgURSN/epn5reO8GBu40Z0M50Xnbx/2ot
-         yRZ95c4j0rFNqXyy4VI351vl28RSXOUHiCqkklJIR44SwitSzw0cvicTGDPAUptMUcz3
-         0vtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788903218; x=1789508018;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=yHiWJUkqXIHHnljOBGvidp4XfKDa865c5NPgCl6nJgk=;
-        b=GHu4aqWvGmoVbWlCDYEy2aL5gnPUde4oVELtLV3gqi2NJKhpjB+LrABuW5ukWdKIN5
-         ddZyi+Yrq5XOagCnaYMyw8qW1WczHKoM59eWR8BrdEWcLvyzCg4AFxXq8kdRNJ+aAzr9
-         bwpkrkXN9pc1fyTGWFIxaPEmGoInbSozzcjHnkuJsxAeus3g3oJ8y7/USQcy+J/B2eKw
-         vXUYQ6Y4WbaSNhQhrykrMd1cSqyQjtiNCVOQN6xYSsCJ4JoFBA0NKt4o/zndpPIGj0Ss
-         O3rExXjimFs+jRspoTEHNfE3aA9PVG4R/l2LmAO5AWF6UfWZO/jK/m+XOYLQaQpe67dW
-         pm/w==
-X-Gm-Message-State: AFuF++k5BvD1EnXKD60jI+L4oehuhi4VJeIXMqdHI7boGLyICAM4g2jB
-	gLf7xLLdCcvtIrYG1U23N6gS7glfcD2bJ0LiYRZGfOXzNo1BP3cGzuKAFy2nvg==
-X-Gm-Gg: AYBFou1F+HFVKy60iysf5pr4YRW7yDGp8hXkkSQv6rBmHx6ra6wAxMFUdu3OWHYbKCI
-	9UnT9QrEqm2t3cJed1bDe03y70xrqY3UkD71emHnZYy8P4B4qBkVU49oM1X8xKP6/mMg1PIbk4g
-	zRAFv8Il7Tcn6f5WPgOZYRxnhbfMNy0zj8nVtzFm1LNQi/75hVuyNddTxKHu+yj6CZKQc/lN0cM
-	L0I+rm3fW6A/5OiHoDK4VGX8tktTJiBJ84xBPotAVoScQrkMCx4kgAFL6iTCUjBI+cRNJX/k5Fi
-	/pP3UC3hzRh4+dzVfnW6xzehhA5VQnrAa4yR93pa5DZQAoPYKY6WcXalxIkpTw2wlbgTeVIVNkO
-	BzNvzVgbtICMtmX16DCRTa5pldkBRqRxo3Tnf8kVZI7fydLcs7vFZTcI1H+8XMF0/PVANdxqpQe
-	i+z2214HtnTXi6anP/m1gz2P7DUbTqNTNz/ywAJUKeZSjkKdJSjG17srpotVDVnXbXS7O/HqbT7
-	OXTu5LEG0C458z/fU1zuiivHg5MHGrbX0Q20N8rKtkyEuitB7bd1bTzD8qi8i2XthgEj591s/M7
-	RH/yy7HYqDAwYs92B4dj/VIFOc+iceIR6D3eQQ==
-X-Received: by 2002:a17:90b:4c41:b0:398:9bd5:490e with SMTP id 98e67ed59e1d1-39b2623ac0fmr46132348a91.21.1788903217940;
-        Tue, 08 Sep 2026 14:33:37 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e34])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b25f8d2c5sm28700771a91.2.2026.09.08.14.33.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Sep 2026 14:33:37 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	linux-kernel@vger.kernel.org (open list),
-	llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCHv2] dmaengine: bestcomm: ata: drop unused local variable 'inc'
-Date: Tue,  8 Sep 2026 14:33:34 -0700
-Message-ID: <20260908213334.593584-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dus9htxH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368631F00A3D;
+	Tue,  8 Sep 2026 21:40:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788903620;
+	bh=ZJUDxuS8eukW6FbjfA6DxE7hHfJz1avRJsuf5kqquw4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Dus9htxH8zi6XZTPvtd0G/DjfSC351qf/Z5GwFAa2OuEqQsM1BsiL9gBaqZDN4GCq
+	 Q12rCe28YnLcXMq5odk7MWCZ8eKsROM132HX5xbzMYoa0LLLwwvNPxsNX9GvR3+Pm6
+	 hncc2a3ghqLYcklCriEJzyvKCYiw2tXQvxPIB3aRX4HEyEJaTitPo38sarG4sZJOz8
+	 1kDh0oobW41a2gGuA77f/O6DguEMD8Vpsb53eTXY7wMErLdB6rSXxsBRFJqsli114Y
+	 9GSdBZXvjrfodgvv/fg0me4+DZOK00yRs4yBgMZF7la/CFHkQqez4tOKo8BmcVBhfj
+	 OFxb+6DtP+iSQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv3] dmaengine: bestcomm: ioremap early
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260908213049.592138-1-rosenp@gmail.com>
+References: <20260908213049.592138-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 08 Sep 2026 21:40:18 +0000
+Message-Id: <20260908214019.368631F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-bcom_ata_init() declared and assigned a struct bcom_ata_inc *inc that
-was never read, tripping clang -Wunused-but-set-variable:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-  drivers/dma/bestcomm/ata.c:58:23: error: variable 'inc' set but not
-  used [-Werror,-Wunused-but-set-variable]
-     58 |         struct bcom_ata_inc *inc;
-        |                              ^
+Pre-existing issues:
+- [High] The global pointer `bcom_eng` is freed on the probe error path but=
+ not set to `NULL`, leaving a dangling pointer that can cause a Use-After-F=
+ree.
+--
 
-Drop the declaration and the bcom_task_inc() call that fed it.
+commit 0501c17dd28799067260abc5f8abeeda8383de19
+Author: Rosen Penev <rosenp@gmail.com>
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
----
- v2: use suggested title
- drivers/dma/bestcomm/ata.c | 2 --
- 1 file changed, 2 deletions(-)
+dmaengine: bestcomm: ioremap early
 
-diff --git a/drivers/dma/bestcomm/ata.c b/drivers/dma/bestcomm/ata.c
-index 502a45d76adc..40126f3f189e 100644
---- a/drivers/dma/bestcomm/ata.c
-+++ b/drivers/dma/bestcomm/ata.c
-@@ -55,7 +55,6 @@ bcom_ata_init(int queue_len, int maxbufsize)
- {
- 	struct bcom_task *tsk;
- 	struct bcom_ata_var *var;
--	struct bcom_ata_inc *inc;
- 
- 	/* Prefetch breaks ATA DMA.  Turn it off for ATA DMA */
- 	bcom_disable_prefetch();
-@@ -69,7 +68,6 @@ bcom_ata_init(int queue_len, int maxbufsize)
- 	bcom_ata_reset_bd(tsk);
- 
- 	var = (struct bcom_ata_var *) bcom_task_var(tsk->tasknum);
--	inc = (struct bcom_ata_inc *) bcom_task_inc(tsk->tasknum);
- 
- 	if (bcom_load_image(tsk->tasknum, bcom_ata_task)) {
- 		bcom_task_free(tsk);
--- 
-2.55.0
+This commit replaces the open-coded resource lookup, allocation, and mapping
+in the mpc52xx_bcom_probe() function with
+devm_platform_get_and_ioremap_resource(). It also simplifies the error
+handling by removing the manual unmap and release paths.
 
+> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestc=
+omm.c
+> index 432b43520ddc9..44ff4a42376b1 100644
+> --- a/drivers/dma/bestcomm/bestcomm.c
+> +++ b/drivers/dma/bestcomm/bestcomm.c
+[ ... ]
+> @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device=
+ *op)
+>  	return 0;
+> =20
+>  	/* Error path */
+> -error_unmap:
+> -	iounmap(bcom_eng->regs);
+> -error_release:
+> -	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+>  error_sramclean:
+>  	kfree(bcom_eng);
+
+[Severity: High]
+This is a pre-existing issue, but does this error path leave a dangling
+global pointer?=20
+
+If bcom_engine_init() fails during mpc52xx_bcom_probe(), the global
+pointer bcom_eng is freed here but is not reset to NULL. Could
+subsequent calls to exported functions like bcom_task_alloc() by
+consumer drivers bypass their safety checks (e.g., if (!bcom_eng)) and
+attempt to acquire bcom_eng->lock, resulting in a use-after-free and a
+kernel crash?
+
+>  	bcom_sram_cleanup();
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908213049.5921=
+38-1-rosenp@gmail.com?part=3D1
