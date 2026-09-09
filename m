@@ -1,118 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05822559CA1;
-	Wed,  9 Sep 2026 12:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DEC563FC2;
+	Wed,  9 Sep 2026 12:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788957600; cv=none; b=XxWcWdsKywu47qQHDrzwAlgJwm7wr82ojYm4YO9+1QjUJXWOWgPrO/h/7Fng85j4SMidtT/bvg56Xqy55rHn8ehv/Nwox8zZfzTQU94qQwz3cd+xLaEWc42E4fbcTKiK8vCcF4yVcIsBoNpDtUUJZicTCH+uCmu05PTJ5sJ3p+k=
+	t=1788957674; cv=none; b=DRQgXceDKwc+AL7CnnRgOe+2LRzgOdecURWui6r8q6vGn12/gWYHkr1Jhsw6/CiZUV+luyDEeB+jrtr74+Rk4WAro8Kw7CIPRc46uC3ml/DLCwrZdiDWsgDgu8AYIPH9IWDCRumipgS40SrXe1XDN0pEiaj3MuB/53Ela88JlRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788957600; c=relaxed/simple;
-	bh=xbYe82dXs9fCME0YyCdgSfK0I2LWsvQv0NiGKLBhX6s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qldur3VqFqnsLfShCIIj2V2g10xv3XnWSJtmQhsBKDXX0wezP6LPf1Nxk7kCAw9Oxib537ZlMQOSvQwc0GAJ+X1mQq9Wo8BLRm+LDwB8T1g3F2xB6zFGdNhO0gdIHj3tkx5MDCdEosY3f6KQC0hrrQ05J6t5PtIfZ/b1roURoUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rj1IrIP4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788957674; c=relaxed/simple;
+	bh=4lsaT0u9w8XeBJhgopqfdNtYcP8lp4cHeKsKtic3Co4=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=MYuxUWWcVra7dhh0ZHLOs71uxXQ1LEN5wDH4xnXA8+cxhfpP/0xpGHhI0C+KXdYjIy9OJtUF9I3f/oTMMfoHOJnIpj+YPdDXGjHyOL/Xk5hZo5yjQYezEua62zocY+sOck4Bx+6pWNroMiEN2a/8+2ugASCX1fMDQwXziE9IFM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QFQ/xCjJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rj1IrIP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780A31F00A3A;
-	Wed,  9 Sep 2026 12:39:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QFQ/xCjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66621F00A3A;
+	Wed,  9 Sep 2026 12:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788957598;
-	bh=4wjDBD4eTQIvB0n0DbUPkYQj15kwWSjuBDp4QqdtW1U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Rj1IrIP44mOF3Q6zyOQy+1mwdi2cS/MrkriYAymLSDMvvPBZjd2BSJywkaPirWg8+
-	 jv/pq79HZ+t8lNaivmIEMURx7xVM9uZRHBtyl4CZpzxBScOgkPil862x8VRJkZQ8yw
-	 vzXO0wfO/FidAIalJo0eqfh/4Ta6rD6cqcF/nQN2DB91B/G/QVs7KEZaIaVmSft2A6
-	 tYZ4I43+QPYvVgApIkob6jsUrdpDLGK+t9Fq+CdwgOTVg0a++n811WNpc6Z9csJTwe
-	 ppUYxVQ62KkGkRjhIUVlKTSDS0Ho258mO1pXA2cLr1XatH7NSfmBlCr9xQZXP4MaiG
-	 6/OplGs7fuUMQ==
-Date: Wed, 9 Sep 2026 18:09:54 +0530
+	s=k20260515; t=1788957671;
+	bh=eea7Tw/rKYWMs597FSDSjSw6xQI7sFewc43KlItmITs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=QFQ/xCjJcZHynRxe3uihPCU1hGFQdaAEFbcn76EkIFlJFA8kVhhyoWdulJjY3IoFE
+	 xZ4jj/w7RbuvRbZLBkFw0/mRHkJXAoiuxVe/xDqE9KK4IN01NEotAbMFZKy4KAPAB0
+	 jrWnZrkPepUsSCHaSlHPheHmMPyGRQxX+uWchWNhcqjIT5IxekaSGKsfjUomRw3dFl
+	 24iGdCIz2T/Bs262dY6zyqolUxRwwzr0ocGqL/V5csNNCKucosPq0Ql8v2FVkYoa7x
+	 Z6OQaM2oFcFgEV7My2j5vrVyF5BPEaf5nR3i7tXqyoIbdlS/zcnBUa/ZG76gRBWBqn
+	 ozsJ5pYXnPSWQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: Frank.Li@oss.nxp.com, Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>, Frank Li <Frank.Li@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Viresh Kumar <vireshk@kernel.org>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-trace-kernel@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-actions@lists.infradead.org, linux-sunxi@lists.linux.dev,
-	imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v3 3/4] dmaengine: add (dmaengine|vchan)_chan_dev() helper
-Message-ID: <aqFTmjUCysJWmy-P@parshuram>
-References: <20260904-dma-chan_dev-rename-v3-0-685601b0b788@nxp.com>
- <20260904-dma-chan_dev-rename-v3-3-685601b0b788@nxp.com>
- <c79f42cf-43c4-4b5a-a6da-217052d40284@foss.st.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, 
+ Samuel Holland <samuel.holland@sifive.com>, 
+ Anup Patel <anup@brainfault.org>, Mark Brown <broonie@kernel.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, 
+ Mika Westerberg <mika.westerberg@linux.intel.com>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Frank Li <Frank.Li@kernel.org>, Jia Wang <wangjia@ultrarisc.com>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>, 
+ linux-riscv@lists.infradead.org, linux-spi@vger.kernel.org, 
+ linux-i2c@vger.kernel.org, dmaengine@vger.kernel.org, 
+ Conor Dooley <conor.dooley@microchip.com>
+In-Reply-To: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
+References: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
+Subject: Re: (subset) [PATCH v2 00/10] riscv: Add device tree support for
+ UltraRISC DP1000
+Message-Id: <178895766221.2174329.15770056766507822412.b4-ty@kernel.org>
+Date: Wed, 09 Sep 2026 18:11:02 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c79f42cf-43c4-4b5a-a6da-217052d40284@foss.st.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 
-On 07-09-26, 10:55, Amelie Delaunay wrote:
-> Hi Frank,
+
+On Mon, 07 Sep 2026 17:54:39 +0800, Jia Wang wrote:
+> Add Devicetree support for the UltraRISC DP1000 RISC-V SoC and two
+> DP1000-based motherboards: Shenzhen Rongda M0 and Milk-V Titan.
 > 
-> On 9/4/26 23:49, Frank.Li@oss.nxp.com wrote:
+> DP1000 integrates eight UltraRISC CP100 CPU cores.  The SoC description
+> includes the CPU and cache topology, CLINT, PLIC, clock controller,
+> pinctrl, GPIO, four UARTs, two SPI controllers, four I2C controllers,
+> three PCIe root complexes, GMAC, and the DMA controller.
+> 
 > [...]
-> 
-> I don't think removing chan2dev() function from the STM32 DMA drivers is an
-> improvement, since the parameter is a `stm32` chan, not a `dma_chan`.
-> chan2dev() was meant to expose the channel device behind the `stm32` wrapper
-> and keep logging concise.
-> 
-> > diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
-> > index 3e8151e2ad75a..4688cebaf7f7a 100644
-> > --- a/drivers/dma/stm32/stm32-dma.c
-> > +++ b/drivers/dma/stm32/stm32-dma.c
-> > @@ -248,11 +248,6 @@ static struct stm32_dma_desc *to_stm32_dma_desc(struct virt_dma_desc *vdesc)
-> >   	return container_of(vdesc, struct stm32_dma_desc, vdesc);
-> >   }
-> > -static struct device *chan2dev(struct stm32_dma_chan *chan)
-> > -{
-> > -	return &chan->vchan.chan.dev->device;
-> > -}
-> > -
-> 
-> I would rather keep it as:
-> 
-> static struct device *chan2dev(struct stm32_dma_chan *chan)
-> {
-> 	return vchan_chan_dev(&chan->vchan);
-> }
-> 
-> and then drop all further updates.
 
-I would say better to use a common macro than keep one for yours
+Applied, thanks!
 
+[07/10] dt-bindings: dma: snps,dw-axi-dmac: Add UltraRISC DP1000 compatible
+        commit: 09149a59a6aef7853a3750e4b303f20637cf7a8a
+
+Best regards,
 -- 
 ~Vinod
+
+
