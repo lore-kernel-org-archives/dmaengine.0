@@ -1,135 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4657655295D;
-	Wed,  9 Sep 2026 12:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4B02CCB9
+	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 13:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788958218; cv=none; b=osjZMGPN+LXh0tpHAJyV97arC/I4s45pIWLI/H8KBLp6sTkS4KYhP13RSeNBEQ7Kr0VhVd4Uy6hM+f8zNKpLbPYcxLq6RbEiR9o/8QpwNbDgkbGPUCXjauTFw8ayU9jsa8LsFbFQXeMFwCNsXFeRLKVQTiaxXbU4ruh5xJVzPh4=
+	t=1788958948; cv=none; b=IjZRx8a1VRLmpPwsRcXfQvrqa8ZRi9pIKdlyoNQLLsIkt0tRH8JH4IR2of7Wrkw2NVe+Tz8xmNaRp5bth2d6TO257A8TmJGvxR8AV+qUyy4pP15RKJXQ9KNOiJQBmS+wFmqiyP5Ou48xUzm0FqgO3Ij3mOlPB8onao6taD97dr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788958218; c=relaxed/simple;
-	bh=8S/e2+uC6E4iux8m3+K0fEvecNGMydkW7kj446cWzSo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SCVHgFzfTAkqkzouSJ+WREqFwa8+2Xyuwk7Gq+Qs+a+/H/S8eybNoUFIZy757O1bzWLP61x1hNcDX1KEmlQToIFYMfLez63iUxrbzx69+MCVvY4e/vcgSeZ1eY1ePnxP+CnvFwl99WjZl24p8yokyo61y2n0xnU6vFc2SI0MB5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BqBArHfm; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BqBArHfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C6C1F00A3D;
-	Wed,  9 Sep 2026 12:50:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788958216;
-	bh=yDyJPqAaAdYyb6ktGL9kZgXGogHf4ynFWClRe1eBMzM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BqBArHfmQUuBPCscfB518rlnf5qSKhrNQt27TUAufkpsgusOk8kMaoLAMtJeZ8v3q
-	 MOfkDuzwdWE3sqaJ8vBqnwXC/covxgCsI7If481RkUf3Xn+FpGl/DsQkmhV5drQGgQ
-	 Aqp6BHteOiBADXWl6gRRQ0VAA+Jx+j1iHGDzFzsSlQH2ixJ7zld+RWYHPfNbEXwyv+
-	 pyTwS9hkanD75QgaZqAeCVYZ/4puockT3g7QddrcT0Xm1ZTVxbMzjjCqnUUEJ4vigR
-	 fa5B/v+pnlLjVKMPbU1YeHY+VRww+D4G4yFyzszgTjBaa9B9fYl7UojF27vw564qmO
-	 mWSE3kFLns0Fw==
-Date: Wed, 9 Sep 2026 18:20:12 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: "Gupta, Suraj" <suraj.gupta2@amd.com>
-Cc: "andrew+netdev@lunn.ch" <andrew+netdev@lunn.ch>,
-	"davem@davemloft.net" <davem@davemloft.net>,
-	"kuba@kernel.org" <kuba@kernel.org>,
-	"pabeni@redhat.com" <pabeni@redhat.com>,
-	"Simek, Michal" <michal.simek@amd.com>,
-	"Pandey, Radhey Shyam" <radhey.shyam.pandey@amd.com>,
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
-	"Katakam, Harini" <harini.katakam@amd.com>
-Subject: Re: [PATCH V2 1/4] dmaengine: Add support to configure and read IRQ
- coalescing parameters
-Message-ID: <aqFWBEct9AoIR9KC@parshuram>
-References: <20250710101229.804183-1-suraj.gupta2@amd.com>
- <20250710101229.804183-2-suraj.gupta2@amd.com>
- <aICPiS1_ITwELrxq@vaman>
- <BL3PR12MB65713879CB569E3B330C1E76C95FA@BL3PR12MB6571.namprd12.prod.outlook.com>
- <aKxJQLx6yprNdU03@vaman>
- <3369241a-b591-415a-9f40-36f95bdd6a9d@amd.com>
+	s=arc-20240116; t=1788958948; c=relaxed/simple;
+	bh=/C6xrd9DbZMudWsoB9J5FkarnDq/7auYeoCE6cSV8gs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HJ8Qx73Et9tx/zFcqAh4ONRISeWeYreC2mFHi0Qik7bpoYofeLngTqhjEfOgwkC+vC3mcj8kJkoOGQ8r7sVsZc3afNICJ9I85kN0IHhm/14TYGWaS3R4LQO+VN5V50tQvDwxrRQhKT+qyQBI95C0kq/3nfX/3eMkqcf4MTWt6H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.227.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs2-f12.google.com with SMTP id ada2fe7eead31-786c3d55c99so436992137.0
+        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 06:02:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788958945; x=1789563745;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nJR6HyF8ZJeLa/LqcU4N2hRWBO69asEjLiBxq381+d4=;
+        b=o2OgdMtzJkA/3hrQEWE9R8LoAqAaQE8snp3UVShvpxyjfUHEzg43AXSfk0Cha3/CX1
+         VDAUahT/6o8stSWudaaDIaugTPqcMZVA0Icc2HBkdAbvpOpo/20UBoInhueYBNTvMSga
+         wHYDFJMpDsOSFlHoMdUfB7OmQZsCyE4Gj2yytaaG/IfE3ZWoyN7yWgbHZb1gbx2cafTe
+         8iOIZngIN2WMxKGF58Z3773Wq75r0+DFzaIWQFosGe4iT9sQPKMWOT8m4CyXh8ckF4d2
+         0H3XzrO1YIT7djmx9hTjS5qPKFJnAtdfB2mhjJGydAQAbWHGHMvnw4m2Y0/N9gBHA3CO
+         zGyQ==
+X-Forwarded-Encrypted: i=1; AKwUvBy8K7gldFCLDJ/vvIBu5odlOoKGXqyVaTIDgGPWFMd3BckULMhlKm+sWY69DaNFwWjH2fc51XnX2eQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++lm5vDgC2BCQYUnGHCl/5Nvy7N8boPVgh6Xaa/oMBkERHF32QER
+	sgpjxEB47o6H/D+QtWPp+gsEXS8mQF/IA5n08AnJe+v8j8JNyJOBQOBMHKr6X2SSG6A=
+X-Gm-Gg: AYBFou197cNb/2gZ2ldMf5dgpCIbm/RWQSelhMXHpWWcRby4/NiGKLifP2uI4IkiNZT
+	QB42iv/9C8j1SfIphYh5IZtSLNr7WXNl2SCe6byKoczPT0A28sDq5yLHOZi2HMvTN4dqCXz1emR
+	XEFZbGffReRz2c6mnqbb/o+Z/cmNBtBBwcLBBy51rzFMihFRv7u4CYW2TI9L/u2TFKJoNUq7wVc
+	Fr1fa44evV7VHeF7+l6nY455K9VFHgJzV5Y61nLPrbHLAfgsDhisAKWGKLcwE2PM5ks6DryVcs4
+	XbAL1f/S29LfdmSHXMxvNNNg2g6g5BEytQcOQhLFN8V1qay2NxM4LMuxUDqLI+a3FME5GnZnq1C
+	wuuR8MdLZ7P1i0E8ASV/9WEz4zZGWf6AR5J/lpIRL0c5pARdq1bXB6bSbaExMadDYyyK88VROEK
+	Nwv98zARLKHLH1pWMSWsdfzFW5jPgXg0DarSInFnwmayvLTFUBBgYkbJCwdWwXquSEpxUus4LM3
+	hw/J8tX3KU0SnQuFeDA2alitbOM6/lcs9eJ
+X-Received: by 2002:a05:6102:2c0d:b0:786:56ab:910b with SMTP id ada2fe7eead31-78dd1a1299bmr3486418137.3.1788958944179;
+        Wed, 09 Sep 2026 06:02:24 -0700 (PDT)
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-78a47ae8dd2sm11131557137.8.2026.09.09.06.02.23
+        for <dmaengine@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Sep 2026 06:02:23 -0700 (PDT)
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-78a66ef3468so2942756137.0
+        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 06:02:23 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBwtT6oJh4PNTVvKLacS5T94q/e8F3HOKWpnoDeiJtC2NrXk4QxiJHB8C/o9ha26Ba3gMlYFGsz8qDc=@vger.kernel.org
+X-Received: by 2002:a05:6102:8345:20b0:777:2e1b:1e2e with SMTP id
+ ada2fe7eead31-78a2ed7ca4fmr9262680137.3.1788958943502; Wed, 09 Sep 2026
+ 06:02:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3369241a-b591-415a-9f40-36f95bdd6a9d@amd.com>
+References: <20260909094009.2167-6-wsa+renesas@sang-engineering.com> <20260909094009.2167-8-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260909094009.2167-8-wsa+renesas@sang-engineering.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 9 Sep 2026 15:02:12 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdVJxYsnaenSicPah3cSNXuB3GgQGhZEMcrpeTmmZ73E0w@mail.gmail.com>
+X-Gm-Features: AcwNN1UzAXJ6JxDGHbzclDkC6NkeZ4YlTjwaw2VNH8RHPjBoi3xfLyeksmcDlLU
+Message-ID: <CAMuHMdVJxYsnaenSicPah3cSNXuB3GgQGhZEMcrpeTmmZ73E0w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] dmaengine: sh: rcar-dmac: SMMU doesn't need IPMMU workaround
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-renesas-soc@vger.kernel.org, Frank Li <Frank.Li@nxp.com>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 07-09-26, 20:23, Gupta, Suraj wrote:
-> 
-> Hi Vinod,
-> On 8/25/2025 5:00 PM, Vinod Koul wrote:
-> > Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
-> > 
-> > 
-> > On 23-07-25, 11:49, Gupta, Suraj wrote:
-> > > > >   struct dma_slave_caps {
-> > > > >        u32 src_addr_widths;
-> > > > > @@ -520,6 +528,8 @@ struct dma_slave_caps {
-> > > > >        bool cmd_terminate;
-> > > > >        enum dma_residue_granularity residue_granularity;
-> > > > >        bool descriptor_reuse;
-> > > > > +     u32 coalesce_cnt;
-> > > > > +     u32 coalesce_usecs;
-> > > > 
-> > > > Why not selectively set interrupts for the descriptor. The dma descriptors are in order,
-> > > > so one a descriptor is notified and complete, you can also complete the descriptors
-> > > > before that. I would suggest to use that rather than define a new interface for this
-> > > > 
-> > > 
-> > > The reason I used struct dma_slave_config to pass coalesce and delay information to DMA driver is that the coalesce count is configured per channel in AXI DMA channel control register[1].
-> > > AXI DMA IP doesn't have provision to set interrupt per descriptor[2].
-> > > I can explore other ways to pass this information via struct dma_async_tx_descriptor or metadata, or any other way.
-> > > Please let me know your thoughts.
-> > 
-> > dma_async_tx_descriptor has dma_ctrl_flags and one of them is
-> > DMA_PREP_INTERRUPT which you can set for a descriptor and control when
-> > you get the interrupt
-> > 
-> > I am not a fan of adding custom interfaces.
-> > 
-> > --
-> > ~Vinod
-> 
-> Apologies for reviving this old thread. I got pulled onto other work and am
-> now picking this back up.
-> Reposting the context below so we can converge on the interface direction.
-> 
-> As mentioned earlier, interrupt coalescing on AXI DMA/MCDMA is a per-channel
-> configuration (IRQThreshold + IRQDelay), not a per-descriptor attribute.
-> Because of this, DMA_PREP_INTERRUPT does not map cleanly to the underlying
-> hardware model:
-> 
-> - The coalescing delay is a per-channel timeout expressed in microseconds,
-> whereas a boolean flag cannot represent a time-based value.
-> - Linux Dynamic Interrupt Moderation (DIM) adjusts both the coalescing
-> threshold and delay at runtime, requiring an atomic per-channel update.
-> Flags on already queued descriptors cannot provide this capability.
-> 
-> DIM is important for modern Ethernet drivers because it balances throughput,
-> latency, and CPU overhead at high speeds.
-> 
-> If adding a new interface to configure interrupt moderation parameters for
-> networking clients using DMAEngine is not preferred, would either of the
-> following approaches be acceptable?
-> 
-> - Passing the coalescing parameters through per-descriptor metadata, or
-> - Using the existing Xilinx-specific struct xilinx_vdma_config from
-> include/linux/dma/xilinx_dma.h, which already provides coalesce and delay
-> fields.
-> 
-> I initially avoided the latter in favor of a standard dmaengine interface
-> that could be used by other networking clients utilizing DMAEngine. However,
-> I'm open to either approach if it aligns better with the subsystem's
-> direction.
+On Wed, 9 Sept 2026 at 11:40, Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+> R-Car Gen5 doesn't use an IPMMU anymore, but a SMMU. So, the workaround
+> for the IPMMU becomes optional. Add a flag to distinguish. No functional
+> change.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> ---
+>
+> Changes since v1:
+> * tags added (Thanks Frank)
+> * renamed the flag-variable (Thanks Geert)
+> * added a comment that Gen4 might not be affected
 
-Given the above description, I somehow didnt feel that you can use
-existing flags. It is setting the flag per descriptor applies for that
-channel imo...
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 -- 
-~Vinod
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
