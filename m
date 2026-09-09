@@ -1,101 +1,169 @@
-Received: from mail-vs2-f12.google.com (mail-vs2-f12.google.com [74.125.227.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4B02CCB9
-	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 13:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4974C352008;
+	Wed,  9 Sep 2026 15:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788958948; cv=none; b=IjZRx8a1VRLmpPwsRcXfQvrqa8ZRi9pIKdlyoNQLLsIkt0tRH8JH4IR2of7Wrkw2NVe+Tz8xmNaRp5bth2d6TO257A8TmJGvxR8AV+qUyy4pP15RKJXQ9KNOiJQBmS+wFmqiyP5Ou48xUzm0FqgO3Ij3mOlPB8onao6taD97dr8=
+	t=1788967200; cv=none; b=hjjLuGzUwVxxvYxTc7gFFGh35blMVwZnjL9C/cBVyaBZLuyuw9P15Zf4tcUw1l4Bg+j0YQ1SBWqYrBD8USBMY/tSIt9mWpJupv686v0OWOInqx1idn/GT+0dmpz22IJLmnvRU8x1oc/L3PoIJWLJ4c2bfgVpiIEN8N6CZw5GyJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788958948; c=relaxed/simple;
-	bh=/C6xrd9DbZMudWsoB9J5FkarnDq/7auYeoCE6cSV8gs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HJ8Qx73Et9tx/zFcqAh4ONRISeWeYreC2mFHi0Qik7bpoYofeLngTqhjEfOgwkC+vC3mcj8kJkoOGQ8r7sVsZc3afNICJ9I85kN0IHhm/14TYGWaS3R4LQO+VN5V50tQvDwxrRQhKT+qyQBI95C0kq/3nfX/3eMkqcf4MTWt6H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.227.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs2-f12.google.com with SMTP id ada2fe7eead31-786c3d55c99so436992137.0
-        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 06:02:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788958945; x=1789563745;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nJR6HyF8ZJeLa/LqcU4N2hRWBO69asEjLiBxq381+d4=;
-        b=o2OgdMtzJkA/3hrQEWE9R8LoAqAaQE8snp3UVShvpxyjfUHEzg43AXSfk0Cha3/CX1
-         VDAUahT/6o8stSWudaaDIaugTPqcMZVA0Icc2HBkdAbvpOpo/20UBoInhueYBNTvMSga
-         wHYDFJMpDsOSFlHoMdUfB7OmQZsCyE4Gj2yytaaG/IfE3ZWoyN7yWgbHZb1gbx2cafTe
-         8iOIZngIN2WMxKGF58Z3773Wq75r0+DFzaIWQFosGe4iT9sQPKMWOT8m4CyXh8ckF4d2
-         0H3XzrO1YIT7djmx9hTjS5qPKFJnAtdfB2mhjJGydAQAbWHGHMvnw4m2Y0/N9gBHA3CO
-         zGyQ==
-X-Forwarded-Encrypted: i=1; AKwUvBy8K7gldFCLDJ/vvIBu5odlOoKGXqyVaTIDgGPWFMd3BckULMhlKm+sWY69DaNFwWjH2fc51XnX2eQ=@vger.kernel.org
-X-Gm-Message-State: AFuF++lm5vDgC2BCQYUnGHCl/5Nvy7N8boPVgh6Xaa/oMBkERHF32QER
-	sgpjxEB47o6H/D+QtWPp+gsEXS8mQF/IA5n08AnJe+v8j8JNyJOBQOBMHKr6X2SSG6A=
-X-Gm-Gg: AYBFou197cNb/2gZ2ldMf5dgpCIbm/RWQSelhMXHpWWcRby4/NiGKLifP2uI4IkiNZT
-	QB42iv/9C8j1SfIphYh5IZtSLNr7WXNl2SCe6byKoczPT0A28sDq5yLHOZi2HMvTN4dqCXz1emR
-	XEFZbGffReRz2c6mnqbb/o+Z/cmNBtBBwcLBBy51rzFMihFRv7u4CYW2TI9L/u2TFKJoNUq7wVc
-	Fr1fa44evV7VHeF7+l6nY455K9VFHgJzV5Y61nLPrbHLAfgsDhisAKWGKLcwE2PM5ks6DryVcs4
-	XbAL1f/S29LfdmSHXMxvNNNg2g6g5BEytQcOQhLFN8V1qay2NxM4LMuxUDqLI+a3FME5GnZnq1C
-	wuuR8MdLZ7P1i0E8ASV/9WEz4zZGWf6AR5J/lpIRL0c5pARdq1bXB6bSbaExMadDYyyK88VROEK
-	Nwv98zARLKHLH1pWMSWsdfzFW5jPgXg0DarSInFnwmayvLTFUBBgYkbJCwdWwXquSEpxUus4LM3
-	hw/J8tX3KU0SnQuFeDA2alitbOM6/lcs9eJ
-X-Received: by 2002:a05:6102:2c0d:b0:786:56ab:910b with SMTP id ada2fe7eead31-78dd1a1299bmr3486418137.3.1788958944179;
-        Wed, 09 Sep 2026 06:02:24 -0700 (PDT)
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com. [209.85.217.45])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-78a47ae8dd2sm11131557137.8.2026.09.09.06.02.23
-        for <dmaengine@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Sep 2026 06:02:23 -0700 (PDT)
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-78a66ef3468so2942756137.0
-        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 06:02:23 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AKwUvBwtT6oJh4PNTVvKLacS5T94q/e8F3HOKWpnoDeiJtC2NrXk4QxiJHB8C/o9ha26Ba3gMlYFGsz8qDc=@vger.kernel.org
-X-Received: by 2002:a05:6102:8345:20b0:777:2e1b:1e2e with SMTP id
- ada2fe7eead31-78a2ed7ca4fmr9262680137.3.1788958943502; Wed, 09 Sep 2026
- 06:02:23 -0700 (PDT)
+	s=arc-20240116; t=1788967200; c=relaxed/simple;
+	bh=xUVTXe6fcSqGxYpF5BIGmxHrPBDcGknOFxELk2ezG6s=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Iaq+Uwh0r7CjPp2ssS3tPN3jUMWqyp+57svgnWn1vstDSjq0UHmcJLW5MzcDF550Y/ZxvGqDWsdAsGpSKFn1wMl86RwAUVAGXTzbnyk/ZB9/rfZvhca4Cl3lL0lvR5Hj6dxxwv6/hIsUt0ShMmdIktp7uUbE2EyGZFf5gPYwOV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=vDBAKXbu; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="vDBAKXbu"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id BFF421A1A65;
+	Wed,  9 Sep 2026 15:19:56 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 8672A60448;
+	Wed,  9 Sep 2026 15:19:56 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8FA5B11C7AF57;
+	Wed,  9 Sep 2026 17:19:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1788967195; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding; bh=UHZeJNkyvW20erAKfgi/DtAyQWbftngLV/c7LNNk5bI=;
+	b=vDBAKXbuqvZsCgbrufpD9Rx6zqiIGkegUpKtT8CdAL8DFe5Bnu2VKFuC2QSDyp53FdRwlW
+	gTXP76SQDCpUza0axHtYPmkP+u+ses7t4yatd7aC79Ygl7z8xQlf6P8mzpFCiYArv0zqXq
+	1hZ0PSG6PnGuGCI4chEUsTbJqjubnWvUI5eBSDL766FH8Y/dcFAZPq/BSnsm8woi7iWCLQ
+	HJBXJ/SKmVYV3jPsyP9uognqtW0d0viRD0esHEJWRGNG8jYbhlCAdANzGf3xPXhD7LlRm/
+	Wmr/IIXGD61V4HFkvGrW4k7vH2q5rJ8MlheycSArZObKl+dtcStqFQVEQ7NOWQ==
+From: =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>
+Subject: [PATCH v9 0/2] dmaengine: fsl-edma: Scatter/gather improvements
+Date: Wed, 09 Sep 2026 17:19:44 +0200
+Message-Id: <20260909-fsl-edma-dyn-sg-v9-0-60bb2e678e8f@bootlin.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260909094009.2167-6-wsa+renesas@sang-engineering.com> <20260909094009.2167-8-wsa+renesas@sang-engineering.com>
-In-Reply-To: <20260909094009.2167-8-wsa+renesas@sang-engineering.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 9 Sep 2026 15:02:12 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVJxYsnaenSicPah3cSNXuB3GgQGhZEMcrpeTmmZ73E0w@mail.gmail.com>
-X-Gm-Features: AcwNN1UzAXJ6JxDGHbzclDkC6NkeZ4YlTjwaw2VNH8RHPjBoi3xfLyeksmcDlLU
-Message-ID: <CAMuHMdVJxYsnaenSicPah3cSNXuB3GgQGhZEMcrpeTmmZ73E0w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] dmaengine: sh: rcar-dmac: SMMU doesn't need IPMMU workaround
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org, Frank Li <Frank.Li@nxp.com>, 
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABB5oWoC/23RTW7DIBAF4KtErEvF8E9XvUfVhYFxQpXYlXGtR
+ pHvXkgrxRVePmn4eJq5kYxTwkxeDjcy4ZJyGocS3NOBhFM3HJGmWDLhjGsmuaV9PlOMl47G60D
+ zkTrNjAAUJnaclFefE/bp+y6+vf/m/OU/MMyVqROnlOdxut6/XKDO/emCNfoClFGJDINHHnutX
+ /04zuc0PIfxQqq/8IegmG4FXgStpXAhRgkSW0FsBIBWEEVwtgMLxqjY7QhyK7Q7WmQRbEATnfI
+ Q0LWCegiG8VZQRQBtrAGrPModQW8E2Nmkrh0EeKc9il5AK5iNsHPpxdQOLPa9l6VK4K1gH4Jlo
+ hVsEWLgngkwnOn4X1jX9Qc+vme0kAIAAA==
+X-Change-ID: 20260428-fsl-edma-dyn-sg-960731e37da2
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+ Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>
+X-Mailer: b4 0.16.0
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, 9 Sept 2026 at 11:40, Wolfram Sang
-<wsa+renesas@sang-engineering.com> wrote:
-> R-Car Gen5 doesn't use an IPMMU anymore, but a SMMU. So, the workaround
-> for the IPMMU becomes optional. Add a flag to distinguish. No functional
-> change.
->
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> ---
->
-> Changes since v1:
-> * tags added (Thanks Frank)
-> * renamed the flag-variable (Thanks Geert)
-> * added a comment that Gen4 might not be affected
+This series adds support for scatter/gather DMA transfers via dma_vec
+and dynamic descriptor chaining to the Freescale eDMA controller driver.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The first patch implements the .device_prep_peripheral_dma_vec() callback,
+enabling the DMA engine to accept an array of dma_vec structures. This
+callback supports both regular and cyclic transfer modes.
 
-Gr{oetje,eeting}s,
+The second patch introduces dynamic scatter/gather chaining, which allows
+multiple DMA descriptors to be linked together without stopping the channel.
+This optimization eliminates idle periods when back-to-back transfers are
+submitted, improving throughput and reducing latency. The implementation
+carefully preserves cyclic transfer semantics and respects hardware
+constraints on platforms with split register layouts.
 
-                        Geert
+I tested it on the i.MX93. The dynamic scatter/gather chaining should
+work with other eDMA controller with split register layout.
 
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+---
+Changes in v9:
+- Rebased and retested on v7.3-rc1.
+- Drop the check on CSR E_LINK flag as it is never set in the driver.
+- Add FSL_EDMA_DRV_CSR_LINKCH flag for eDMA3 and eDMA4 to indicate which
+  controllers can link SG descriptors.
+- Count and limit the number of linked SG descriptors once per
+  issue_pending() call, instead of O(n^2).
+- Link to v8:
+https://patch.msgid.link/20260803-fsl-edma-dyn-sg-v8-0-dc2b0317206d@bootlin.com
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Changes in v8:
+- Enforce that major channel linking in not used when linking a descriptor
+  in fsl_edma_link_sg() by checking all TCD, not just the first one.
+- Don't compare the descriptor link_sg_id with the CSR LINKCH field
+  if major channel linking is enabled, to avoid completing unfinished
+  descriptors in fsl_edma_tx_chan_handler().
+- Handle the completion of the last transaction of a linked SG chain if
+  the previous interrupt was missed by checking for the channel completion.
+- Add comments to clarify the assumptions I made.
+- Link to v7: https://patch.msgid.link/20260728-fsl-edma-dyn-sg-v7-0-10dffb4167c2@bootlin.com
+
+Changes in v7:
+- In fsl_edma_prep_peripheral_dma_vec(), make sure that CITER/BITER
+  values fit in their registers.
+- Add the identifier to all TCD of a linked transaction so that we can
+  always identify it when handling the end-of-transfer interrupt.
+- Handle missed/coalesced end-of-transfer interrupt even when the transfer
+  is completed.
+- Link to v6: https://patch.msgid.link/20260710-fsl-edma-dyn-sg-v6-0-831b96be3f31@bootlin.com
+
+Changes in v6:
+- Link DMA transactions in fsl_edma_issue_pending() when they are issued,
+  not when submitted.
+- Add an identifier to linked transactions to handle missed/coalesced
+  end-of-transfer interrupt.
+- Link to v5: https://patch.msgid.link/20260702-fsl-edma-dyn-sg-v5-0-16787185be49@bootlin.com
+
+Changes in v5:
+- Rebased on v7.2-rc1.
+- Add a call to dma_wmb() to ensure that dlast_sga is updated
+  before csr when linking scatter/gather transactions.
+- Don't update TCD registers if updating csr requires clearing the
+  channel DONE bit to avoid a status mismatch in fsl_edma_tx_chan_handler().
+- Link to v4: https://patch.msgid.link/20260518-fsl-edma-dyn-sg-v4-0-8ce7d95b1ce9@bootlin.com
+
+Changes in v4:
+- To keep transactions in order, link DMA transaction to the end of
+  submitted list first, only lookup the issued list is the submitted
+  list is empty.
+- Link to v3: https://patch.msgid.link/20260511-fsl-edma-dyn-sg-v3-0-98a181775dae@bootlin.com
+
+Changes in v3:
+- Fix formatting errors reported by Frank Li.
+- Add fsl_edma_tx_submit() to link the DMA transactions
+  when they are submitted, not when they are prepared.
+- Link to v2: https://patch.msgid.link/20260506-fsl-edma-dyn-sg-v2-0-66439cdd414e@bootlin.com
+
+Changes in v2:
+- Drop the RFC prefix, as asked by Frank Li
+- No code change
+- Link to v1: https://patch.msgid.link/20260430-fsl-edma-dyn-sg-v1-0-4e0ecbe2df66@bootlin.com
+
+To: Frank Li <Frank.Li@nxp.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Cc: Frank Li <Frank.Li@kernel.org>
+Cc: imx@lists.linux.dev
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+---
+Benoît Monin (2):
+      dmaengine: fsl-edma: Implement device_prep_peripheral_dma_vec
+      dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+
+ drivers/dma/fsl-edma-common.c | 254 +++++++++++++++++++++++++++++++++++++++++-
+ drivers/dma/fsl-edma-common.h |  34 ++++--
+ drivers/dma/fsl-edma-main.c   |   2 +
+ drivers/dma/fsl-edma-trace.h  |   5 +
+ 4 files changed, 277 insertions(+), 18 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260428-fsl-edma-dyn-sg-960731e37da2
+
+Best regards,
+--  
+Benoît Monin, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
