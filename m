@@ -1,114 +1,140 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD4A3BBFD8
-	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 23:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0602852FE5A
+	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 23:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788997768; cv=none; b=BWfZbSlk3h5ogau/ugWXo256PzTrfJ4CXRTobv+z/BOindPizMYd9+w1JcMBVtL/78tb82FL80x5bde0adHXAwbSXQdUnQXcgwYUtIMAw9TOdLRyglcwn+4nfTIO8m6nfT2OhBAbyim82susRH8dO2JrRhVAAy7sYcaGfN/yJog=
+	t=1788998267; cv=none; b=PNQzDIrTmdZvn5apC2mMaGQeNBbKDLvoVz8AzB52h6oBS94ztzWUFezPQ4pUGvNmfWxYWvSB+gn+AcpocKaAwMAZ5Y/Pc/e7wz+VnveEuaXrKNOFbo59eDPCxNsdIlktHuDtcvYl/GOoZ4MuTSuxEE2hh0mmAkZF8h3xRkqLoWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788997768; c=relaxed/simple;
-	bh=b3B8qTwazD/WqjAEKg6c/DeHJmjZWB1dq6RUMXStfec=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OYpA6Uwoc7j+dpo2PPwCQvjKYwUqtZprT8FqnK9/0rv3KIDCZ4wGjow+8y0dlKhC8mn9QuO+iqSwSN/VQFGyy02/f7X2mR6I4Wg9vA/LWKsW/cN0yLFtcnboWDz7mX5Nnr0pc7m3XB/43sNnJiIhn8x3hLYgij5WEDM+A6wAxLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=boHUNPqi; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788998267; c=relaxed/simple;
+	bh=nRjqoLb9vWzJe0+NlhHh+N4TxOjwmZislJjsbZaMmhw=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=BxamwmERUX3660bupUWgqqp2ZyIxKfELWxMOnxohnI4EOckVmxBs+bhl36AFkz4ilpP2X37/qsBrPDdLpLrKUOSxrQLWGx1tmBcR6q7BLqx/MeoXXr7cSyyvGKlalSBRfqrdjApct3umef4TMywXPDj5jkLNKLe2RwyFgt5NB9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AqPAUXlE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="boHUNPqi"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3964e480f76so7567848a91.1
-        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 16:49:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788997766; x=1789602566; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mBdqkn+MZjqTmKgHL9Xc2cmRqSPJ6h7jxkX6xeYpsAs=;
-        b=boHUNPqiavlH/DZ+kb+TP++WKWlZi1DFWNgbuSDgzgE2FXtx/CPJ1qttEJby61v6XE
-         8+5DvJckSkq22YQkGYE+cQWDrrw4G18USCcrjYxHuNqfZYPEiPOksmGGWSOvDrWrphn+
-         5LdtmHMoTXfIVX2Hx3+F4xn8scMLQ7PZMFRJHu8VvlYODJ/W6/W0/hb+wAn2ddOyPgzw
-         vZvOBRDtbL4BWtgQxXF854AIDOM1TlV0i+MpnuVabIibdeFeigh92h0ZdL6dk1a6Hs4M
-         TZxYJZfs7mZTeqpXY1o0GZrnpWA+Xw2nAnbjPt539MGsIJBWhUD03olqmgswwEe3RDih
-         c/DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788997766; x=1789602566;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mBdqkn+MZjqTmKgHL9Xc2cmRqSPJ6h7jxkX6xeYpsAs=;
-        b=qNoFk4TyzKk2igM2ToggibpqIL0Aiu7q0wjdIPrrhmIhauDaBBGaLvvW74/kapPZAn
-         qUxXWotlV/z5sqR43/VUeHEKmHShYLDwStze7nYU3bQ/Cjs2cBgSYk41Aat9XAHIUBOG
-         FRUk7BJvr9nzbmFVISEV40XD2y7ceRibmjthLC014pVkASEDC22GYp9/6Yp2umEqTs3p
-         hqBSUXn/uUeGTtQlsZqk+URqVd4EiMmAeXNQltzIEFTmM4UDyJnTHRpUBRlMiRXgi+om
-         fWdBtmihLVAMm3KC8D1XP8NsN6dvXR5iV+vLkk+aLRml8tBMAXzRt4dTCE/usMK62XLw
-         hnmw==
-X-Gm-Message-State: AFuF++m9Kgdsi7JueKx28EunQkFzLrBYZk/GNCsxJQMgFwzpOWH1JC+K
-	uWUvEp44EiQPzogPQKA4x1wo1cnacAlA7NQq0vs5D/r2lPA3RsEr1wugXkPr2g==
-X-Gm-Gg: AYBFou1sr1LVbRrSRrsxYdxN11TjyuRefnvslYrVe/CbqO2gNRctEsoMPx56DR9o036
-	BDMtmkQe3r3LzPM3EpA+2c+haxvP5VmEARNPZlcBQasJbLZwbpcn2a08kaAjo2XusIYsMkExvwq
-	kGI7kbJry0rUReiaGshpS/rPZpJ0nshtruEiIQ5X6/Y8ZlSXPu2rotnYn7FTsBG5+Zh3Z1bbR6T
-	u80LRR5g4DTGUMKyXg2G+qeRAx8/gEUd9Pqspqhz5zp7/bBOkF4p9cIC6q5vwVEfdwTNyC49vl8
-	mq3KEJjm7xQC6iRIOeTmvmcWug15gkAAYwgAZeZUePqLviqiLCKjWbC/MkU+LIf0FvBATdj1f+l
-	I5trmsNmKmhGfCUlL8YSGZCnmiIYixY62Yc0f2K5hGewXSnJMeBDPkCsyb5AUcA8tw9Byo/Sq1z
-	9de10fBX5YRpx9e1FII46dz2xIBd23V7dubMJhDAtbUt+Ks+IlV8oHk2MF4O2ZDbIKg5gCecEdb
-	kOkLY+SWnUloof8NxtdfQ12RxqnW5ITRIcLLxE7jVXxKkiHh6vpiU6Q8kDF57/U78X9PEMsoE6t
-	Vd/6jvQ2A9x+V8sP2cVUugG5ca4RcHYVKU55YCFIKqjGBwOP
-X-Received: by 2002:a17:90a:c106:b0:398:e1f4:bda1 with SMTP id 98e67ed59e1d1-39b2624cf3fmr58816699a91.21.1788997766466;
-        Wed, 09 Sep 2026 16:49:26 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d7e3f5f1esm581449a91.1.2026.09.09.16.49.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 16:49:25 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Stefan Roese <sr@denx.de>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dmaengine: mv_xor: return descriptor to free pool on io_win failure
-Date: Wed,  9 Sep 2026 16:49:24 -0700
-Message-ID: <20260909234924.103418-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AqPAUXlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5798F1F00893;
+	Wed,  9 Sep 2026 23:57:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788998265;
+	bh=86AJbGAb6wbSm+ZmfcNsRVvNwtwNUBnP0F1lJENRLmI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=AqPAUXlEFPxwJbY7fZvAuMNWJ7S29Pjt64cMl8e7a07GPJwYEbRROCY164uzVL5LB
+	 siwHl4v2X+ygPEp4G4zLDtCFjc26jCDEftCvhhMwyohubr7iy5YO0Yb4eiS/LJKp85
+	 26A3OKhpnJIzB5S2YGXMcPIwlwG1H6l2OId0odEb/7v8xioBld9d9mfjnG50enUKhb
+	 4KiC/AjAZJ6fYFLruZQ3W4ioQ5uyUa+tifTtm4rKrunOOszI5vDBW5vmCrKVh3QH6D
+	 xDKkCFPsOh6o8fDmVRmfLCcUtLEjTtsySP4IwKDU2S0UHtWWHyakBuuq1Bqhxmzdfh
+	 5GL2YkTkBtKzw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: mv_xor: add missing dma_wmb() barriers
+ before descriptor chain start
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260909234646.102344-1-rosenp@gmail.com>
+References: <20260909234646.102344-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 23:57:44 +0000
+Message-Id: <20260909235745.5798F1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-When mv_xor_prep_dma_xor() allocates a descriptor slot and then
-mv_xor_add_io_win() fails in the source-address loop, the slot
-stays on the allocated list and is never reclaimed, leaking a
-descriptor resource.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Return the slot to the free pool under the channel lock before
-returning NULL on failure.
+New issues:
+- [High] dma_wmb() is insufficient to enforce Store-Load ordering between t=
+he memory write and MMIO read in mv_xor_tx_submit().
+- [Medium] dma_wmb() is incorrectly used to order a coherent memory write a=
+gainst a subsequent MMIO write in mv_chan_start_new_chain().
 
-Fixes: 77ff7a706f01 ("mv_xor: Add support for IO (PCIe) src/dst areas")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- drivers/dma/mv_xor.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Pre-existing issues:
+- [High] Missing memory barrier before linking a new descriptor to an activ=
+e hardware chain in mv_xor_tx_submit().
+--
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 25ed61f1b089..dd4f150d5fb1 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -583,8 +583,13 @@ mv_xor_prep_dma_xor(struct dma_chan *chan, dma_addr_t dest, dma_addr_t *src,
- 		while (src_cnt--) {
- 			/* Check if a new window needs to get added for 'src' */
- 			ret = mv_xor_add_io_win(mv_chan, src[src_cnt]);
--			if (ret)
-+			if (ret) {
-+				spin_lock_bh(&mv_chan->lock);
-+				list_move_tail(&sw_desc->node,
-+					       &mv_chan->free_slots);
-+				spin_unlock_bh(&mv_chan->lock);
- 				return NULL;
-+			}
- 			mv_desc_set_src_addr(sw_desc, src_cnt, src[src_cnt]);
- 		}
- 	}
--- 
-2.55.0
+commit a54d735383cc294f5f7387dfea7d5abca9cdec6f
+Author: Rosen Penev <rosenp@gmail.com>
 
+dmaengine: mv_xor: add missing dma_wmb() barriers before descriptor chain s=
+tart
+
+This commit adds dma_wmb() barriers in the DMA submission and chain starting
+paths to ensure descriptor data written to coherent memory is visible to the
+DMA engine before the hardware registers that trigger processing are writte=
+n.
+
+> diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+> index 25ed61f1b0899..8e7c7a6c5c5d0 100644
+> --- a/drivers/dma/mv_xor.c
+> +++ b/drivers/dma/mv_xor.c
+> @@ -181,6 +181,7 @@ static void mv_chan_start_new_chain(struct mv_xor_cha=
+n *mv_chan,
+>  	dev_dbg(mv_chan_to_devp(mv_chan), "%s %d: sw_desc %p\n",
+>  		__func__, __LINE__, sw_desc);
+> =20
+> +	dma_wmb();
+>  	/* set the hardware chain */
+>  	mv_chan_set_next_descriptor(mv_chan, sw_desc->async_tx.phys);
+
+[Severity: Medium]
+Does this incorrectly use the memory-to-memory barrier API here?
+
+According to Documentation/memory-barriers.txt, dma_*() barriers do not
+provide ordering guarantees for accesses to MMIO regions. Here, we are
+trying to order a coherent memory write against a subsequent relaxed MMIO
+write inside mv_chan_set_next_descriptor().
+
+Should this use wmb() instead to properly enforce memory-to-MMIO ordering?
+
+[ ... ]
+
+> @@ -409,6 +410,7 @@ mv_xor_tx_submit(struct dma_async_tx_descriptor *tx)
+> =20
+>  		/* fix up the hardware chain */
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the descriptor link
+pointer update need a preceding memory barrier?
+
+Before this function is called, the descriptor is initialized with
+operational parameters. The spin_lock_bh() acquired at the start of
+mv_xor_tx_submit() only acts as an acquire barrier, which doesn't prevent
+preceding stores from being reordered after the link write.
+
+Should there be a dma_wmb() placed immediately before
+mv_desc_set_next_desc() to guarantee that the hardware doesn't follow the
+new next-descriptor pointer and read an uninitialized descriptor?
+
+>  		mv_desc_set_next_desc(old_chain_tail, sw_desc->async_tx.phys);
+> +		dma_wmb();
+> =20
+>  		/* if the channel is not busy */
+>  		if (!mv_chan_is_busy(mv_chan)) {
+
+[Severity: High]
+Is dma_wmb() sufficient to enforce store-load ordering here?
+
+The patch adds dma_wmb() after mv_desc_set_next_desc() to order the memory
+store before the MMIO load in mv_chan_is_busy(), which uses readl_relaxed().
+
+However, dma_wmb() strictly guarantees store-store ordering and does not
+prevent the CPU from executing a subsequent load before a preceding store
+is globally visible.
+
+If the CPU reorders its MMIO load of the status register to happen before
+its memory write is globally visible, it could incorrectly read 'busy',
+causing the CPU to skip kicking the hardware. If the hardware simultaneously
+fetches the next descriptor right before the CPU writes the new link, it
+will see a null pointer and stop, leaving the channel stalled indefinitely.
+
+Does this sequence require a full memory barrier like mb() instead?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909234646.1023=
+44-1-rosenp@gmail.com?part=3D1
