@@ -1,98 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7DE3DBD76
-	for <dmaengine@vger.kernel.org>; Tue,  8 Sep 2026 21:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA95030D3E5
+	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 03:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788903621; cv=none; b=jaA7A3QSs4WE3vlurmh4D03q+BaDGMOuIs3+rjrbn6nMewHEwzV/nWSneRVZKvFX1PZsAJ2U6noK8lETb5dcBR4ucRad+DDdck3mE+KChNPvwyh/lvKtLMCeKai4A7mkeyqvVsWyn72dY6cg4nhHVlcSMM/aIBJlUaGRp9imZok=
+	t=1788925133; cv=none; b=jX7Wuh3QEMbzEjXcNiLL/VNca/NlpwV83ypItDFL/SaMvkazwhSI1/5q6sOuec+FfsTpYtr7mj/GHnfOlwAXD5aRct8lcDEQHhm1nwkOG7VqjqV6kbrx/Im62UgtsWg68T8B8U+arSFPMo+6SdsYpv75/IecrGvpjX6a2iG5O0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788903621; c=relaxed/simple;
-	bh=lYNCsml68QVyCK3HVXsZwp9Wuh/p/f+gg2SAkT7S7bA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=mUHkmIrdl2+tgabn4GJ42wvFqow43NLr0JKvMoK/dYKhiCl2mUF7mPhyCgRCv4BSQK9DqS27eZSKCos8lO9ddnUqtQSol9enMHaUXnDWPsKtFZyq+U+hHaZijcVxZGCXsDLvJqUo9Tf2c9FtN+u2tAJGTuZ1iH3SdZUasI1nhWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dus9htxH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788925133; c=relaxed/simple;
+	bh=v/nPjsQOCEIKEWJ77rJZFCnUUARPwNEBAmiHhVHNtSw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TRm7CCyrNWiC+1Yq7LCvITeBJ+dnZ+TL4LnAF62vy2Mppu/XraMa2uBlE7cDlP2kpLDrx6mOq0e8I+IOM77WxeQQ0mchpltb7L53GjGTWIeQhOCfaU2da6Kh+b+tmgRC829qpwfMRT9NtMGEb1pH/NxBreWFZORo4Nv2sUAK2Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnUysI1h; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dus9htxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368631F00A3D;
-	Tue,  8 Sep 2026 21:40:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788903620;
-	bh=ZJUDxuS8eukW6FbjfA6DxE7hHfJz1avRJsuf5kqquw4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Dus9htxH8zi6XZTPvtd0G/DjfSC351qf/Z5GwFAa2OuEqQsM1BsiL9gBaqZDN4GCq
-	 Q12rCe28YnLcXMq5odk7MWCZ8eKsROM132HX5xbzMYoa0LLLwwvNPxsNX9GvR3+Pm6
-	 hncc2a3ghqLYcklCriEJzyvKCYiw2tXQvxPIB3aRX4HEyEJaTitPo38sarG4sZJOz8
-	 1kDh0oobW41a2gGuA77f/O6DguEMD8Vpsb53eTXY7wMErLdB6rSXxsBRFJqsli114Y
-	 9GSdBZXvjrfodgvv/fg0me4+DZOK00yRs4yBgMZF7la/CFHkQqez4tOKo8BmcVBhfj
-	 OFxb+6DtP+iSQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv3] dmaengine: bestcomm: ioremap early
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260908213049.592138-1-rosenp@gmail.com>
-References: <20260908213049.592138-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 08 Sep 2026 21:40:18 +0000
-Message-Id: <20260908214019.368631F00A3D@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnUysI1h"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-396ccdaea76so717074a91.0
+        for <dmaengine@vger.kernel.org>; Tue, 08 Sep 2026 20:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788925132; x=1789529932; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=CBiLqTkQaNBb/2DBOx2xL3ycZ7GO8eo7KWlmm4z4Kzo=;
+        b=jnUysI1hv/orHZPOUyqwAHIiYHu/gy5V3VY9H0e5hu5TOuna+//FDlYKYidFsW1R9m
+         auIy0qQY5j7mVwPyMhpUxxB7+/yqgwveNn46UyKs+DcFF+YLhmC8w9p8Hb3Eu7R2KAUu
+         YMmfHHahBnSukFzoNJa7kOyo7BXNFVjRR1XLSrnwYmCZ7gqumvr/jtNrl8Ynn9XWvreZ
+         RAJ1ZquioSgXsp/W2T1k5yd4piOj0T8LY82+WTDaMqOa8tGTykbJIhLsLFOquBlmSe+G
+         +vB/B/dE3BgxjiyIdWSV1CHqCGGK1Khfb/LhjTFvG+ApVs+U4MmExE8JNPm4/rxtr5/U
+         rgAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788925132; x=1789529932;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CBiLqTkQaNBb/2DBOx2xL3ycZ7GO8eo7KWlmm4z4Kzo=;
+        b=nFdgT+7c8QhVMjzCq4opBO1ytfnSZt437N9gcwnYf2ThHmz5bIJgb/q/FeR1j3jOYK
+         eX7VUBS61xmNTcRhQMxg0qo44SL0vPdVXU7GvVF3rgaTlbi4Oke6UG/5Fv9t7Lepd3T5
+         d2vD5GN209f0p1dEiOA6+VLqZ6QIoJWBCl2jIxvxWsM+Lqc9nxNGTgokWcujddQJnni0
+         3OVH1Hxtzqb5nfREyPdlLrAuT3yr5ePU8L6o1oPgsWCx7TnuFbYvMqDOfGwiVWsH9jeR
+         pkZg2Ls64gQWtMkCBH5KfaPTxPMVYQO/bdMnFELZ5mYgFdNJ7lcF7rw9U0WZM7dvwMur
+         qVxw==
+X-Forwarded-Encrypted: i=1; AKwUvBxGPCHTWDFjIdF2Pz9AiUO7VNpk7hrqnA4v+mGm5LlR7VAl37M3Ma7VhmRKnLeBYaAbQVcFKBXDLjY=@vger.kernel.org
+X-Gm-Message-State: AFuF++nS2f5e3Yc+hUElq+44MDMwnZPz8AkUDtPVR1qq+wYxxaWsCS8+
+	5vZjw04aitwpGLG5vnlP3w0e4M+SKZfNNDvr/pikyjGhmFTqMhb8RGdJ
+X-Gm-Gg: AYBFou2JvL3Ak/k/8+Vt3KrqgQ05rTOVEAYi3SgcqaqbsatkDXNN6sLgtWEtP557Emy
+	jcVYPYpT8RAFGIXusTS6cLV3S6pkv4s6zDLUv9nZeHiPLGMMKzD4kJfRqQ396HborCqAmOg1g2r
+	IXsuGny352YNYI/EQ0mJEtMr+usTy8awnTRbcRA6+Iw1aRtVqrni5O7bu6FwaEyJoFV2E1kZGCm
+	k95sgUypKwXxpJ74w280vnwENxq+MyOcTgpzdIL/74Y4LzeICLKJK5M16x3J7jyuJqcXGDl8e2V
+	b1BNMEB8XqBgQHV0HFW+JijAjte62t/PqTLXqz+xzF4cLVEnbwgigwUZdh3vm04C4GK0HyRvFCw
+	rvARfg60o4e29xvvFlVqEquxpq9tTrHGwvSdP4Xoc8yymCDW5hXKu+Imz70pA+lk6dcwG7vwY/4
+	i7APVvrxj1SIBU57so3wQrLJcF+ruPnCkxBuxentCfoRCf/GrZtJL9a0nWdtxk6zWwDFYkgQ86g
+	dU=
+X-Received: by 2002:a17:90b:4405:b0:398:9bd3:d6d4 with SMTP id 98e67ed59e1d1-39b8bf0ce55mr7805843a91.14.1788925131938;
+        Tue, 08 Sep 2026 20:38:51 -0700 (PDT)
+Received: from baineng-pc.. ([117.133.183.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b25f88475sm29419266a91.1.2026.09.08.20.38.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 20:38:51 -0700 (PDT)
+From: Baineng Shou <shoubaineng@gmail.com>
+To: vkoul@kernel.org
+Cc: Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Baineng Shou <shoubaineng@gmail.com>
+Subject: [PATCH] dmaengine: mmp_pdma: fix wrong sg length in mmp_pdma_prep_slave_sg
+Date: Wed,  9 Sep 2026 11:38:41 +0800
+Message-Id: <20260909033841.1395793-1-shoubaineng@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+In mmp_pdma_prep_slave_sg(), for_each_sg() iterates the scatterlist
+putting each entry into 'sg', but the entry length is read from 'sgl'
+(the list head) instead of 'sg' (the current entry):
 
-Pre-existing issues:
-- [High] The global pointer `bcom_eng` is freed on the probe error path but=
- not set to `NULL`, leaving a dangling pointer that can cause a Use-After-F=
-ree.
---
+    for_each_sg(sgl, sg, sg_len, i) {
+        addr = sg_dma_address(sg);
+        avail = sg_dma_len(sgl);   /* should be 'sg' */
 
-commit 0501c17dd28799067260abc5f8abeeda8383de19
-Author: Rosen Penev <rosenp@gmail.com>
+Consequently 'avail' is always the length of the first entry. For
+multi-sg lists this causes out-of-bounds reads when a later entry is
+shorter than the first, and silent data loss when it is longer.
+Single-sg or uniformly-sized lists happen to mask the issue.
 
-dmaengine: bestcomm: ioremap early
+Fixes: c8acd6aa6bed3 ("dmaengine: mmp-pdma support")
+Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
+---
+ drivers/dma/mmp_pdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This commit replaces the open-coded resource lookup, allocation, and mapping
-in the mpc52xx_bcom_probe() function with
-devm_platform_get_and_ioremap_resource(). It also simplifies the error
-handling by removing the manual unmap and release paths.
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index 386e85cd4882..e90fd2023af7 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -713,7 +713,7 @@ mmp_pdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 
+ 	for_each_sg(sgl, sg, sg_len, i) {
+ 		addr = sg_dma_address(sg);
+-		avail = sg_dma_len(sgl);
++		avail = sg_dma_len(sg);
+ 
+ 		do {
+ 			len = min_t(size_t, avail, PDMA_MAX_DESC_BYTES);
+-- 
+2.34.1
 
-> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestc=
-omm.c
-> index 432b43520ddc9..44ff4a42376b1 100644
-> --- a/drivers/dma/bestcomm/bestcomm.c
-> +++ b/drivers/dma/bestcomm/bestcomm.c
-[ ... ]
-> @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device=
- *op)
->  	return 0;
-> =20
->  	/* Error path */
-> -error_unmap:
-> -	iounmap(bcom_eng->regs);
-> -error_release:
-> -	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
->  error_sramclean:
->  	kfree(bcom_eng);
-
-[Severity: High]
-This is a pre-existing issue, but does this error path leave a dangling
-global pointer?=20
-
-If bcom_engine_init() fails during mpc52xx_bcom_probe(), the global
-pointer bcom_eng is freed here but is not reset to NULL. Could
-subsequent calls to exported functions like bcom_task_alloc() by
-consumer drivers bypass their safety checks (e.g., if (!bcom_eng)) and
-attempt to acquire bcom_eng->lock, resulting in a use-after-free and a
-kernel crash?
-
->  	bcom_sram_cleanup();
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908213049.5921=
-38-1-rosenp@gmail.com?part=3D1
