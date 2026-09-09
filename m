@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F365476D7
-	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 12:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7914F55A5;
+	Wed,  9 Sep 2026 12:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788956708; cv=none; b=khTbyNH/HEVnYdLkhfIB/+Sk7YytIlQItxzg/rEkvAs9Xl6vG4fqtxhL5asy4Iuy6VWVPGXRmaSI6X7cg+xWPa6bqqz9pnNDgGG49kBeIRERn+8D7LDG3S6EXHJMUZKrHgJbMehr4BwW0b222THuoG1euRnXz4nr52WJ9yzjcn0=
+	t=1788956795; cv=none; b=WdM8sZ4fa2buhjaaGavZbOPGHpU7pHLtEFs/rciR/ZzaivCxjHFD+SUSTsXD2jBK6DbqVxp4Le1IdUhXsulvxouovcx8rAnt9kVWg9qwS1xdi/w4bIOuq47yxk2zpFFYartHKkaLXHByEMqSSRE+09NXBf5ShU1V7wu3InQVHFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788956708; c=relaxed/simple;
-	bh=yXJuTs2uVsx6LsTP9c7zQvEiB1jsC3OOUVhxrQUTVpA=;
+	s=arc-20240116; t=1788956795; c=relaxed/simple;
+	bh=0TbyH+rh4akQYkM5LbNFbyY/gsn/1tw5vANT2Pt74Z4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MNGJ+ktHqfqXSuHHQX/qyfcPsd2jPF2MP1/xb91B/VS/Gui2NotKRPCRBND26WIMIYRH9W6ly0c950rcGtJYt9zWYqjJ5qg2pT4jUg8atQm9kpLKhy9o3IA4/9e9P8h9OBGQvKAh745T/7qRXalFTV04NrkG52q5ypa4ItaQN0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HJZiUblC; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=OsShXoQeJjVsikKJ9MB3Y7bZTxyukAJf+0s+I0zU+AJ/FqZUzzoOmvSF3UlDPac9SlXZNAlS2o3Xr+ockr+BwitXmMlhZ8ywesbTw84m3815r5KZ38bbD0dWSNPLv2LNqI2etfVmpyx3C0WfB0pQn7ELvzMqHNJUjUKqdS7MwlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e0Ofhry1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HJZiUblC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358871F00A3A;
-	Wed,  9 Sep 2026 12:25:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e0Ofhry1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1061F00A3A;
+	Wed,  9 Sep 2026 12:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788956707;
-	bh=0SQQtWIkIZDC2011m84iMIIDzmrUsKcCzn55hMdNjMU=;
+	s=k20260515; t=1788956794;
+	bh=bJ2V5EWvwotfrF2ZEOvBFpXNDKLZNXu8G+Uh6SNV/Nc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HJZiUblCsDvQzhOhAKSeQvItY4tExlEM9mMPM4TBrWIX+YnpXInjoJQpMHMIrVSNF
-	 TZ/b/SlcgZ4nuPgXEZpCJmIntnSJKkszoogE2RFB+MA8EUA5n8r8ae4vIX2it8zYiB
-	 y7tK5T7X8yrrFeBS5N9oceOIFXMi+24U1jR0CyMMLjCY5Ky6ihn1XfIqVhp/xB5ClT
-	 cEixY8NaXaLPBu/Vx1y1w3YksTsqc1gRfNR+APCXrMqn9NpZbKm4i7k3fJ06Gq0NzT
-	 IzN4scrBvoM1ViEv3Oq2RC+ldqN+pBDYZaGRue4DrNtqa6mEcEqECwAHxW0f8qsQLk
-	 4nEbqubgmXApQ==
-Date: Wed, 9 Sep 2026 17:55:02 +0530
+	b=e0Ofhry1Xd3do2WaMauv4+hyJpq1Q9slFclLImJanlG8X36fIY7Fh3U2P8VbpGz/D
+	 XbW9mqdf/k1igD0dUr2faIKYzFH5KGUXm9CV9o3TPr1dWdDAuoa8rZu3qMni0iIsX3
+	 lSTl5grWPets+t30kTTGUZUcytcU48xXIzewBpt62VDdpOUkqTzZWlB3u1hxJUUKRD
+	 FsEBIDcOIkvbipd0Fyc7XJGCaecxtQ6cuG2ZLzRdpsVBpua+++ylq6U/XFgcRgnk5A
+	 WohU45V01NIGqVnMbmgOHXwDXSIF6L0GFXF8GyNGljeVovFutO2HMERISlm18OytuV
+	 2oscAy+deQv2A==
+Date: Wed, 9 Sep 2026 17:56:30 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Li Youhong <dayou5941@163.com>
-Cc: Eugeniy.Paltsev@synopsys.com, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, Li Youhong <liyouhong@kylinos.cn>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v4] dmaengine: dw-axi-dmac: convert to clk bulk APIs
-Message-ID: <aqFQHtOhhPOEmh8E@parshuram>
-References: <20260903015438.2514100-1-dayou5941@163.com>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Frank Li <Frank.Li@kernel.org>,
+	"moderated list:MICROCHIP AT91 DMA DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCHv4] dmaengine: at_hdmac: use devm APIs in at_dma_probe()
+Message-ID: <aqFQdomiOg3h1dTM@parshuram>
+References: <20260823050303.17725-1-rosenp@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -43,29 +45,13 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260903015438.2514100-1-dayou5941@163.com>
+In-Reply-To: <20260823050303.17725-1-rosenp@gmail.com>
 
-On 03-09-26, 09:54, Li Youhong wrote:
-> From: Li Youhong <liyouhong@kylinos.cn>
-> 
-> axi_dma_resume() enables cfgr_clk then core_clk. If enabling
-> core_clk fails, return without disabling cfgr_clk, leaking the
-> already-enabled clock.
-> 
-> Switch both clocks to the clk bulk helpers so prepare/enable
-> failures roll back automatically, and update probe/remove/
-> suspend/resume accordingly.
-> 
-> In dw_remove(), check clk_bulk_prepare_enable(). On failure skip
-> MMIO and the matching disable to avoid unbalanced clk disable;
-> always continue with IRQ/OF/tasklet teardown.
+On 22-08-26, 22:03, Rosen Penev wrote:
+> Convert resource allocation and setup in probe() to use devm-managed APIs.
+> Simplify the error handling path and remove explicit cleanup code.
 
-Hey, this doesnot apply against current code, can you rebase and send
-
-> 
-> Fixes: 1fe20f1b8454 ("dmaengine: Introduce DW AXI DMAC driver")
-
-why is this a fix?
+Hey, this does not apply against current code, can you please rebase
 
 -- 
 ~Vinod
