@@ -1,75 +1,71 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01232492E32
-	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 23:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD4A3BBFD8
+	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 23:49:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788997610; cv=none; b=MovDfzHFsj4t5gZMo38vJKGTwGXi+Ka+w4OdCwjEtfEwhgmgC1iOou33OxniXpzF3dDaxHo85XX/6LqPkVURDTdXyzeQByzwuFk4B/MMgnqjG2WQkcfTL37Zhy+UvI3we8CmFag/bfztZHxZUJBw10m09dC04fI+USYM22goKPE=
+	t=1788997768; cv=none; b=BWfZbSlk3h5ogau/ugWXo256PzTrfJ4CXRTobv+z/BOindPizMYd9+w1JcMBVtL/78tb82FL80x5bde0adHXAwbSXQdUnQXcgwYUtIMAw9TOdLRyglcwn+4nfTIO8m6nfT2OhBAbyim82susRH8dO2JrRhVAAy7sYcaGfN/yJog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788997610; c=relaxed/simple;
-	bh=Sscmd3mS4LasaTyJ4M41HjM04N+ZXT2HpQr3bsigrUE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L4FIPBAxAk4VusSMqWY7LaLWRp3zk89Ds0UWcyhHiYJdtxWWfzVAnbyqYc9BJZgnFog1X9EbW8yTpQonAMcdZx7PB2o36WpZP6u81pmy+E9prhI2BCM6hJ2WkqPXBvSm8tujy45Ptv0X8/IvKQJWFJQW/glxSK0DNTNw5sIrKtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FYkZqpcR; arc=none smtp.client-ip=74.125.227.140
+	s=arc-20240116; t=1788997768; c=relaxed/simple;
+	bh=b3B8qTwazD/WqjAEKg6c/DeHJmjZWB1dq6RUMXStfec=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OYpA6Uwoc7j+dpo2PPwCQvjKYwUqtZprT8FqnK9/0rv3KIDCZ4wGjow+8y0dlKhC8mn9QuO+iqSwSN/VQFGyy02/f7X2mR6I4Wg9vA/LWKsW/cN0yLFtcnboWDz7mX5Nnr0pc7m3XB/43sNnJiIhn8x3hLYgij5WEDM+A6wAxLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=boHUNPqi; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FYkZqpcR"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398c066106cso692230a91.1
-        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 16:46:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="boHUNPqi"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3964e480f76so7567848a91.1
+        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 16:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788997608; x=1789602408; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1788997766; x=1789602566; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=7JUqDOxqGhCJmzOn0HWNBT33LeSwOGc990LCLjInaIo=;
-        b=FYkZqpcRQ/HimpdS/vP5PFXtv5f9GLv9v+CbaHRrObxaNbkToX3kw2Z4p4F9wb64AH
-         cDoEIHui6odtW/e+V+OICl88vMd5qurGk+dP3SxDNEEuimN6fKo59C7GsH0QVduaxm+H
-         omxGGkPw1ivZd5T4gbyi5kRs6ZQ7oGbh9ynJX2LDPkqapUSU+ouIvi50Ps/SZS6Z7ksW
-         MS55PW5q8/yHXJVbXH6ttKX3BJHy4QmCJj2tC0bGYs358czGhMA+di4kVQzK1k3VNcWv
-         HTxLgWi4x43FELUKpEQEd+9Vjny63uI+Zdt/fvfpcQ6JxXbEfCL652nIJyynjsD87DFT
-         cegg==
+        bh=mBdqkn+MZjqTmKgHL9Xc2cmRqSPJ6h7jxkX6xeYpsAs=;
+        b=boHUNPqiavlH/DZ+kb+TP++WKWlZi1DFWNgbuSDgzgE2FXtx/CPJ1qttEJby61v6XE
+         8+5DvJckSkq22YQkGYE+cQWDrrw4G18USCcrjYxHuNqfZYPEiPOksmGGWSOvDrWrphn+
+         5LdtmHMoTXfIVX2Hx3+F4xn8scMLQ7PZMFRJHu8VvlYODJ/W6/W0/hb+wAn2ddOyPgzw
+         vZvOBRDtbL4BWtgQxXF854AIDOM1TlV0i+MpnuVabIibdeFeigh92h0ZdL6dk1a6Hs4M
+         TZxYJZfs7mZTeqpXY1o0GZrnpWA+Xw2nAnbjPt539MGsIJBWhUD03olqmgswwEe3RDih
+         c/DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788997608; x=1789602408;
+        d=1e100.net; s=20251104; t=1788997766; x=1789602566;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=7JUqDOxqGhCJmzOn0HWNBT33LeSwOGc990LCLjInaIo=;
-        b=XhLjsAGFRXv7u/BBKZlbgI71gg4zA8XvcUQorKiJ5Hzaq41iavsqKGMGrPV9J89xTI
-         jirsoT0xv4if+HWLDmgxv/af8GhAAJM/cqTlT2rlIuvwCtSIi1VR/mIAM1+WoWg/0DoD
-         NT8TnKEAoImTvIN51BUwDEizUtSejGOR+zxBTwoAy4V3WzIMC4VZeEPigwlPO1poTGok
-         r9iVSiaR98ksHTIRN6Bg69xV4tE1u34YAkhQ+1Yhwz9wtIXfCqK9l2hdQllAMT65k0UF
-         5hjZ/bg5aHeK6EUoZIa6htqNZ4iH87Xv2q9rHI0uYEIOC61i9znwbTF91Ddruf91clkK
-         HD1A==
-X-Gm-Message-State: AFuF++n+YGG3lwqo5SDXyYk8B70xXLHr/u6kpXuPOQWBB2jlCIrA66mA
-	1Z687A7IueWdyASBKAf74zDBORPAlffeBmQ7Zcd4ao8XewzYle+9Lwd7P4TIfw==
-X-Gm-Gg: AYBFou3sCvFinGACaoGSo9yIR1NoZ+G8VWRnGKO0/MmWzzpXupQdQy8ST9yEU9SMRrI
-	gTo9qeMnQmeVF1FpVSVGZt88UygReTXhlw+K3+gg+7nY07Kzv+ekjt7G9kPcfxKUlCVSrDh9OlF
-	dBkkyhwR+tFCYdRpBbUAFWaKroqwPRiaOmyVvniAvMOh1HVV7y9uGHEc0/G93T4AsSzkOPMhtV5
-	SrxytpiOaOlTxSH87QDHAqAFM3TShowSe6Y95FucTF5UTC8eodurwA5+Q2+nYO3CrXhCxV44fyF
-	1It0XJ2WWM/ZylASmQ+m0jGsgVcIBBnYS+6sg7dWi2ckVF48zLfZZDyIOMYJxlkmgtv0hcTbwoH
-	J20xclHtK7qzl7daU5wBm7+omIt1FfR+//PDj1MNyUK5LyZxaho3KEH2kACjdAPvIbXjaWpMtvl
-	74lgDmQ0xg25OMnzu1CmI4UmA6aEzctdQZUF/dpQuHbMEEUmsXCEZ9CR+cA4nPDNlegMzlnClYR
-	A0mqO4hap5WW8tMDtRYWEH275u6Pf4jkk7phbz5iszGAFG9C5+kf3wnCln3L0XnJnEA4p6kVhCO
-	6PzB+PG/s0AOAtKhOG/t8fgTYM2Da95+6ow6mISw8uOHgfqa
-X-Received: by 2002:a17:90b:3c06:b0:398:e6b6:acc1 with SMTP id 98e67ed59e1d1-39d70b4a2b6mr6049609a91.15.1788997608266;
-        Wed, 09 Sep 2026 16:46:48 -0700 (PDT)
+        bh=mBdqkn+MZjqTmKgHL9Xc2cmRqSPJ6h7jxkX6xeYpsAs=;
+        b=qNoFk4TyzKk2igM2ToggibpqIL0Aiu7q0wjdIPrrhmIhauDaBBGaLvvW74/kapPZAn
+         qUxXWotlV/z5sqR43/VUeHEKmHShYLDwStze7nYU3bQ/Cjs2cBgSYk41Aat9XAHIUBOG
+         FRUk7BJvr9nzbmFVISEV40XD2y7ceRibmjthLC014pVkASEDC22GYp9/6Yp2umEqTs3p
+         hqBSUXn/uUeGTtQlsZqk+URqVd4EiMmAeXNQltzIEFTmM4UDyJnTHRpUBRlMiRXgi+om
+         fWdBtmihLVAMm3KC8D1XP8NsN6dvXR5iV+vLkk+aLRml8tBMAXzRt4dTCE/usMK62XLw
+         hnmw==
+X-Gm-Message-State: AFuF++m9Kgdsi7JueKx28EunQkFzLrBYZk/GNCsxJQMgFwzpOWH1JC+K
+	uWUvEp44EiQPzogPQKA4x1wo1cnacAlA7NQq0vs5D/r2lPA3RsEr1wugXkPr2g==
+X-Gm-Gg: AYBFou1sr1LVbRrSRrsxYdxN11TjyuRefnvslYrVe/CbqO2gNRctEsoMPx56DR9o036
+	BDMtmkQe3r3LzPM3EpA+2c+haxvP5VmEARNPZlcBQasJbLZwbpcn2a08kaAjo2XusIYsMkExvwq
+	kGI7kbJry0rUReiaGshpS/rPZpJ0nshtruEiIQ5X6/Y8ZlSXPu2rotnYn7FTsBG5+Zh3Z1bbR6T
+	u80LRR5g4DTGUMKyXg2G+qeRAx8/gEUd9Pqspqhz5zp7/bBOkF4p9cIC6q5vwVEfdwTNyC49vl8
+	mq3KEJjm7xQC6iRIOeTmvmcWug15gkAAYwgAZeZUePqLviqiLCKjWbC/MkU+LIf0FvBATdj1f+l
+	I5trmsNmKmhGfCUlL8YSGZCnmiIYixY62Yc0f2K5hGewXSnJMeBDPkCsyb5AUcA8tw9Byo/Sq1z
+	9de10fBX5YRpx9e1FII46dz2xIBd23V7dubMJhDAtbUt+Ks+IlV8oHk2MF4O2ZDbIKg5gCecEdb
+	kOkLY+SWnUloof8NxtdfQ12RxqnW5ITRIcLLxE7jVXxKkiHh6vpiU6Q8kDF57/U78X9PEMsoE6t
+	Vd/6jvQ2A9x+V8sP2cVUugG5ca4RcHYVKU55YCFIKqjGBwOP
+X-Received: by 2002:a17:90a:c106:b0:398:e1f4:bda1 with SMTP id 98e67ed59e1d1-39b2624cf3fmr58816699a91.21.1788997766466;
+        Wed, 09 Sep 2026 16:49:26 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d7e92b776sm512885a91.17.2026.09.09.16.46.46
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d7e3f5f1esm581449a91.1.2026.09.09.16.49.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 16:46:47 -0700 (PDT)
+        Wed, 09 Sep 2026 16:49:25 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Maciej Sosnowski <maciej.sosnowski@intel.com>,
-	Lennert Buytenhek <buytenh@marvell.com>,
-	Dan Williams <djbw@kernel.org>,
-	Saeed Bishara <saeed@marvell.com>,
-	Nicolas Pitre <nico@marvell.com>,
+	Stefan Roese <sr@denx.de>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dmaengine: mv_xor: add missing dma_wmb() barriers before descriptor chain start
-Date: Wed,  9 Sep 2026 16:46:46 -0700
-Message-ID: <20260909234646.102344-1-rosenp@gmail.com>
+Subject: [PATCH] dmaengine: mv_xor: return descriptor to free pool on io_win failure
+Date: Wed,  9 Sep 2026 16:49:24 -0700
+Message-ID: <20260909234924.103418-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -79,45 +75,40 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The descriptor data written to coherent memory must be visible to the
-DMA engine before the HW registers that trigger processing are written.
+When mv_xor_prep_dma_xor() allocates a descriptor slot and then
+mv_xor_add_io_win() fails in the source-address loop, the slot
+stays on the allocated list and is never reclaimed, leaking a
+descriptor resource.
 
-Add a dma_wmb() before mv_chan_set_next_descriptor() in
-mv_chan_start_new_chain() to order descriptor fields before the
-descriptor-pointer write.
+Return the slot to the free pool under the channel lock before
+returning NULL on failure.
 
-Add a dma_wmb() after mv_desc_set_next_desc() in
-mv_chan_handle_chain_append() to order the chain link write before
-the subsequent check of the current-descriptor register. Without the
-barrier the hardware may observe stale descriptor data.
-
-Fixes: ff7b04796d98 ("DMA engine driver for Marvell XOR engine")
+Fixes: 77ff7a706f01 ("mv_xor: Add support for IO (PCIe) src/dst areas")
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/mv_xor.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/mv_xor.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 24f22db5dfa1..6db7dafac9c8 100644
+index 25ed61f1b089..dd4f150d5fb1 100644
 --- a/drivers/dma/mv_xor.c
 +++ b/drivers/dma/mv_xor.c
-@@ -181,6 +181,7 @@ static void mv_chan_start_new_chain(struct mv_xor_chan *mv_chan,
- 	dev_dbg(mv_chan_to_devp(mv_chan), "%s %d: sw_desc %p\n",
- 		__func__, __LINE__, sw_desc);
- 
-+	dma_wmb();
- 	/* set the hardware chain */
- 	mv_chan_set_next_descriptor(mv_chan, sw_desc->async_tx.phys);
- 
-@@ -409,6 +410,7 @@ mv_xor_tx_submit(struct dma_async_tx_descriptor *tx)
- 
- 		/* fix up the hardware chain */
- 		mv_desc_set_next_desc(old_chain_tail, sw_desc->async_tx.phys);
-+		dma_wmb();
- 
- 		/* if the channel is not busy */
- 		if (!mv_chan_is_busy(mv_chan)) {
+@@ -583,8 +583,13 @@ mv_xor_prep_dma_xor(struct dma_chan *chan, dma_addr_t dest, dma_addr_t *src,
+ 		while (src_cnt--) {
+ 			/* Check if a new window needs to get added for 'src' */
+ 			ret = mv_xor_add_io_win(mv_chan, src[src_cnt]);
+-			if (ret)
++			if (ret) {
++				spin_lock_bh(&mv_chan->lock);
++				list_move_tail(&sw_desc->node,
++					       &mv_chan->free_slots);
++				spin_unlock_bh(&mv_chan->lock);
+ 				return NULL;
++			}
+ 			mv_desc_set_src_addr(sw_desc, src_cnt, src[src_cnt]);
+ 		}
+ 	}
 -- 
 2.55.0
 
