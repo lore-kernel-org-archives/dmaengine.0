@@ -1,175 +1,255 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2263A9611
-	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 19:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5A33BED7A
+	for <dmaengine@vger.kernel.org>; Wed,  9 Sep 2026 19:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788981206; cv=none; b=Dwjx1xTy7hygFhoFBUiSo8Q9SPyuqiXcntZ0u2yjEaF8dRyUGyXRsoWMEYvQYlndtswike5uTrS1L/D43Ge0JbbqGoSO/AO3bRlWEtSVgrtvTzccaO77hhJ677GCmu86EVzHpRA9APNviVa4w9r5glbwLbuF4CUFoBWCgewYmCQ=
+	t=1788982650; cv=none; b=SGOqhzFfx3uUx//VYcUF1hZITHoYEguiBfYGNSfA4e+UiUsd4mmiBTCEVTGEiEmUtJ7TSsi/y8PmdnUXIVCYt32ob8plMG1Kw5dfNVCs8uMZlLz3rKLfrRO4Fxll8MdhASvqGW3TIew3CAtHs2ECOCKdHEILI5/0+1IWEL3SIVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788981206; c=relaxed/simple;
-	bh=VrH+00iPXFzilbQSp/OlOVbtUbGy1K9mPgMOEwjgBvA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jpVzOX90aL8LQZVEEvjL/2glTrxxYRNxgu1SJKmYuGnn2HfBZo6b5cKij7tk8qgofSG6h0+SHT3eleBiblsHr9MV5dCj8OJN63bOtqgQsBFyopD1nmyp6XMte3KOBzJyDCGvgUKrcsL4waSs5ZpqyniyFxJxI1AGRLOsMhoo1eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F5J7J56O; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cDnqvfhN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1788982650; c=relaxed/simple;
+	bh=W6elITVW+fgqHlsz574xVSedWEx1ljCkHQGGPON+6dA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=boxsEbIfuYpYfaqRqHFsq4oeTdsoYyzu46ksji8vGpL2l3UH3SiIVwgxhxnFUDMjAgHnE/fG+1Cr/mPfKPK7ZfP7nL4pNeVFyRsPk7ySZVP5vDLW4urQ03gWKDZugI9wWZeT9/RREfR9ocDblCRZP1xQxwY3Ldux4FaVEmjTcz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jSlz83Sg; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F5J7J56O";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cDnqvfhN"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 689IgZMk2687409
-	for <dmaengine@vger.kernel.org>; Wed, 9 Sep 2026 19:13:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=MF1vp434/T33eDhqwTtDmkQh
-	9Dqky4UNrblzSAUjYFk=; b=F5J7J56ObCks3lNBuHn4iwjTlTxnrp606lpb8XnP
-	jSaznjpa6IX4NfFtfD91MZ37HQ/t9wFSwLFoyJIaYJ8MAju9vmVt1QDtYiJSQ5bf
-	TFZ+oBEu/bZAfTq6fcJtYpUXBcjNov8V4eJs59pS6nZ+p+WRVPJQpY157FDFRxTo
-	2P4UvJkVyzwP1bMCUYi3Ef1h3B0AHqHVIa2Da1QiZMp1DX4BVo9RPL7QC8ki5xVG
-	pA1TWpQuO1GBXoizA2ARIFwd5UXuVxXvOhsrfVKnhnwTuniE/M0lnP/L3uG7ivf7
-	4EMy/BLVtiB5aEprli83cMTNNrAL+ypvCi1qV7VQSc5kZw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gkcyfr7cg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 19:13:23 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-97cc09260a3so160287241.0
-        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 12:13:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSlz83Sg"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49cd6185db7so15413635e9.1
+        for <dmaengine@vger.kernel.org>; Wed, 09 Sep 2026 12:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1788981203; x=1789586003; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=MF1vp434/T33eDhqwTtDmkQh9Dqky4UNrblzSAUjYFk=;
-        b=cDnqvfhNR2h8nhvsia7BdFAKgwqqgVTGN/CLtS7YJQAxmUkMeKVG+3jaQOuOUJ4ZAi
-         OtWxee9pvsnZB4L0EBCYRF2CS1Kdy3QS5vL5E0IUkMqaZWoeIDxFflkuETuBTSRZ9Eyk
-         O2j1jKbqWn0QK99/snTQzXV8cCxZdIpVHttx6XcZ6AsC9Jt1/rnSl3EVUHAvcQeNSoJm
-         G4ggCpltk6lErA1VAxCfKptRMw/QUwzJ+sf7LJQmNNzo4KICLSsmOcx5Zn2rLZuVdcKp
-         7ksxJFEWgZqzlloquD2BDicZHJhsGjWgM5hx4kmJt6U2dDNaWHI5vJE3aXPA6mjNKDB5
-         OqZQ==
+        d=gmail.com; s=20251104; t=1788982646; x=1789587446; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=g0uOGw37DdE82nU6QUlJPa/gKDAK3HdlyhewoX5a9k8=;
+        b=jSlz83SgvXKlNYn4ZYygcu7NmKRFIOgCuVePzFHygumIc/S8jbGEBt5lvcx0hAvpgS
+         /jvZtd+dqslGSngyZjjecXrtbZmiHOCzMB+o88eq6uOVLl4w03HVnx2KqQtEpv0WfNzq
+         Onuuzq5IBssGT2J7Bw8teZcafDYuvvEHwxWFegwUapd4fVJI+4yKIs0YdM5Jbprd/iDU
+         LvuNqRYnldwSRI0/3j2nXBFvghgsFzTT6Gp6IAUirswqjb3cbhtcPpxkVj/S9Tji1UJ+
+         VjR6UanDcRPGcqmIkdEl3s6AuHMyrw5SsK8hH7MYconpLR8ArIU7IGty2lXdRCT0fC+Q
+         P/dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788981203; x=1789586003;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=MF1vp434/T33eDhqwTtDmkQh9Dqky4UNrblzSAUjYFk=;
-        b=LWz7QkfkAOB7/6TXisc7xMfPVtgfs0KWfBBDv8nh+IRg7AtbQjbQVZaqGdLzy4y/X2
-         Qvqf0djMmmUymjSsmAuQSquJZDWerNY072vsttYgR4YcNE5FNYVau8VkH3Le4TePDo+C
-         HtNYYFMdAt9CJ9jqzjL5qQgxp/5nS263e9DfVR7nOIb5SC3r1n6lzBNbb/vzz/d8BDdh
-         4gNqC5Sxelf2HbJ88zhiCKMyjbPLzWHa4/uBsQFNd5SI/n6Zz2XB17R7y5ZPiMXpcht1
-         RuIPnnOuQQu6mW9Y7gbA2vAg8QVrVff/5SwS4qERXLVU4wnBmnISmXw/nwuCk10pOTIC
-         oeTw==
-X-Forwarded-Encrypted: i=1; AKwUvBz5UUcEu11QFrqdbCUPXlA2LxG1OEgaJXvs43mBY6oao/PCnODItp2uu1H0it2kQJ4uzKd59v+iRv0=@vger.kernel.org
-X-Gm-Message-State: AFuF++kvrk9j6btpKjQK9325kXw5vC7hKB6HBsf/ATDwJXb1s6DRJ7CS
-	sDRuejhMl1NTr4XKVJb7jAndO6N1AxrOJKi7pA8EIwQo5dNEszVDeixjW2NYyWMtZyOiYXz0FAR
-	y774JjakSzNhzPir26Gw5uB9zA33/aVKnyZZaMss3He5LrZ9m0AYrqVtCMsldj7Y=
-X-Gm-Gg: AYBFou0kjLkvVpzM8ju/600WRaR23yFilvgCXnvU8X5D4TsHLFi08ykRQ+MDIHF+9Ea
-	37em/BgJlRC91h+J8LowWU9zbEnL287gKUod1io6P8MZUU7uo/DHC/v5AaHJZ95UmdBaPrHAA45
-	9bIUlSLFNemOO+Q0LNnnQeruL+MtnhUKQvqoSKvE5tlLd7U0eDocgMS2I05VEQ5EZVMmhF1V4t0
-	bpj9m1cplckQCIMgiC5dDnLmUhcvxC774QFloP6Ed1kNsVvgwEmRHQizqJwoHQR66bBqlbbktKm
-	yJZddwmHaUDRWMi7ob4IFMFLhAs7DeQ1M8NEF37RUqmfi08O2jgDGEH0JerOtgpLxs3aGGPI7c8
-	PtIrdZRzkvPgwLl25rE3VJQuQjDeGpFqgu2sQgdxLSF+6Jjn5ZnECZexhXR+XY+A47bMwd3JTJk
-	TSiMKGL7IaQ+e8
-X-Received: by 2002:a05:6102:a06:b0:78a:4dff:7b3e with SMTP id ada2fe7eead31-790dabbf9dcmr241398137.15.1788981203127;
-        Wed, 09 Sep 2026 12:13:23 -0700 (PDT)
-X-Received: by 2002:a05:6102:a06:b0:78a:4dff:7b3e with SMTP id ada2fe7eead31-790dabbf9dcmr241378137.15.1788981202584;
-        Wed, 09 Sep 2026 12:13:22 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b74f2ec6f6sm3198485e87.44.2026.09.09.12.13.19
+        d=1e100.net; s=20251104; t=1788982646; x=1789587446;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=g0uOGw37DdE82nU6QUlJPa/gKDAK3HdlyhewoX5a9k8=;
+        b=m/CW7eJYXz8+iOpPZLt3XrGDqxSRA2qS12Y8RCl0XiomCZOCUajrVdRhuS+CL8Yi9Z
+         UjkE0AX1/cJAu63OCtd2ht7puZlR+mid/iXFuF2wjMdGfvw+oQuAF+OMWVxTZefB90jJ
+         b7atCkiJarxlo604mQwrdtdg4N+cBDjceQVGlo6uq2baCKVi/tElp0Ib4Cz5KJEHuV6Z
+         m5NUaYgE4Xd+UhSr43kEcVU5vE/CbklWjXCQjpUURkIub9LKfrbA1vD1UwxqoOLVfUb/
+         yJC1luGqI6fjHBEPXG5RngxsxTkMLQ9eTYyV/2ghQJtc012rOgt52luweloh94bPGFwa
+         So0w==
+X-Forwarded-Encrypted: i=1; AKwUvBwZYPJvsFk1CvCVVFa0Uwi5g3lJE+1M2UwnIWJJjUUt03Omm67d5JKWJV/RN6jpYRhFAf2RP9YZM9U=@vger.kernel.org
+X-Gm-Message-State: AFuF++nUv7YKuqi9xp8YYC5IoQxYqGK4ixMbiZrogHvjTFvnlOVvrERu
+	OcooOzStn9AXYtiHiwCzqrQh2ny9hPhUBPzX1dc5w4dh67dSGHNM6UVF
+X-Gm-Gg: AYBFou11zUiR1vghfTqVJ432ykkMHytJxfKxLrbPgr9uNec1lvS9U2svaHKJspMzkhh
+	Qr+dQbSfAumeYNj1ErA8kT+yI6vd5n8NXX5SXl28qIuzWVHvLFMOAXLof/axrwNw1uVFx4QlINh
+	N/wXp8RLto/XuzoGcZfGgBoDljfFHtSFqlxfba0dNTo9itZpWawwxHRKM0PV+ywAXBlyeE91QpT
+	nuta5Kr2D3zH3jXn1WaJOL+pWhOlhrZeBfFY9ib1J8QvCHzj6CYNc/oXZKAWb0JFB67bwJBilbq
+	K+5ZKSkFSQuKWsJ7S/28U4Z9zagzeVvONz8niufDtNlSy8sdKkMgFjAPith+iYPZYOftbwU12p0
+	VFV0+XaYideNM6JvOYSeWSSBMmQ/5aJEuc15TQsv7PEJOPKZBucSei8D1GQgY08y8vorOOHw3Bt
+	3rrhWeKyA3D2wTYkzw3WvNof+4ocvhiFOb5mU7KgiQO9vkhAg4HYSjs0gCxOXK7Gc8LIuQhXz7u
+	86rX9wT+aixbQIkwqM5vj99HANczDNDVcI0r0wesYazRt3NscVjlIXrhgXt7bzrWouyKGoWuJWw
+	auFG2Ga/3w==
+X-Received: by 2002:a05:600c:c4b8:b0:49c:f13e:e52 with SMTP id 5b1f17b1804b1-49d26dcbc5emr9770855e9.15.1788982645812;
+        Wed, 09 Sep 2026 12:37:25 -0700 (PDT)
+Received: from iku.Home ([2a06:5906:61b:2d00:d357:e592:d56c:d3b5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26be64a5sm13123995e9.6.2026.09.09.12.37.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 12:13:20 -0700 (PDT)
-Date: Wed, 9 Sep 2026 22:13:18 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vsevolod Nevorotov <sevanevorotov29@gmail.com>
-Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org,
-        andi.shyti@kernel.org, mukesh.savaliya@oss.qualcomm.com,
-        naresh.maramaina@oss.qualcomm.com, aniket.randive@oss.qualcomm.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: gpi: Set IEOB on linked I2C GO TRE to
- retire TX descriptor
-Message-ID: <gibyui67mjkf6fxgodg2uzwyiio6d75boien64f2fpfjpkvwno@jtmsqwh6zmzx>
-References: <20260909175332.304767-1-sevanevorotov29@gmail.com>
+        Wed, 09 Sep 2026 12:37:25 -0700 (PDT)
+From: Prabhakar <prabhakar.csengg@gmail.com>
+X-Google-Original-From: Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+To: Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-renesas-soc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Prabhakar <prabhakar.csengg+renesas@gmail.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [RFC PATCH 0/3] soc: renesas: Add address extension support for RZ/V2H
+Date: Wed,  9 Sep 2026 20:36:36 +0100
+Message-ID: <20260909193640.8069-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909175332.304767-1-sevanevorotov29@gmail.com>
-X-Proofpoint-GUID: YupL9TDI_QmjHKmW7cSAV9GhH6qfNPf0
-X-Authority-Analysis: v=2.4 cv=GNqdgeNK c=1 sm=1 tr=0 ts=6aa1afd3 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=7ZfXIp-WeeTcKSKqBWEA:9 a=CjuIK1q_8ugA:10
- a=1WsBpfsz9X-RYQiigVTh:22
-X-Proofpoint-ORIG-GUID: YupL9TDI_QmjHKmW7cSAV9GhH6qfNPf0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA5MDIxMyBTYWx0ZWRfX6qsZxspnVn6L
- EwOmLzOZcsAqWHjiXEMh5PT+4jdkfjKXOT68qPhIH9LFHJQsnP81y5KyLQwS7gRf6wZ2DUjwhfh
- UNJInTv4LidXGVOZwhlbSmUgNSWEDsMB+OcYhiB3rjHd4MGQqmFtFivl1QTgucNB7vZBgTZWJxq
- fv5lRm3F1sI64YgAYuodAoQDaHbs540znd0V8jWbrwQNh9+zWlETHgJpDIEXtuwmYlC59c8qVnm
- h22ZesefqRvFtWAaVkhVkX691L292Gho2h6yPMEGH7WuN72NCHc0CSiZ5WvAOWfygWFfzOZWANM
- Y1gW6nu0muJWt11z1YkVm+BwZ3tBm7PgPUIztk1LdAYP4uZpqjBOQIBo1NLSjwC3z4U5M4Stsvt
- 7hkEBY3hd25lJPwj1sEDkla76Hu7wswZuy4+Kyl2C4MxjWgMfHIpakbor7qn/ZI6yWGJO3R+eY1
- qCPumASuVMln8gqH/sg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA5MDIxMyBTYWx0ZWRfX5m7UXJlrYyON
- +4yvy8ZwJPtQMxqIj3W3hbxFersWFryRPFRiL+1qTRLC0nxVVI39WUXTb7Re9xbQlx6UMIeq4Ng
- ld3fCyI8rCIrS3RkYboJ2bz1uvYKk4U=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-08_03,2026-09-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 phishscore=0
- malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609090213
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 10, 2026 at 12:53:32AM +0700, Vsevolod Nevorotov wrote:
-> In GPI mode, an I2C read transaction consists of a command phase on the
-> TX channel (issuing CONFIG0 and GO TREs) linked to a data phase on the RX
-> channel (issuing the DMA TRE to receive data).
-> 
-> Commit 656147fb1d4c ("i2c: qcom-geni: Avoid extra TX DMA TRE for single
-> read message in GPI mode") avoided programming a dummy TX DMA TRE for read
-> messages, leaving only the GO TRE on the TX channel with the TRE_FLAGS_LINK
-> flag set.
-> 
-> However, gpi_create_i2c_tre() did not set TRE_FLAGS_IEOB (Interrupt on End
-> of Block) on the linked GO TRE. Because no TRE on the TX channel has an
-> interrupt flag set, GSI hardware never generates a completion event on
-> the TX channel when the GO command finishes. As a result, the TX transfer
-> ring read pointer is never advanced and TX descriptors are never retired.
-> 
-> Under sustained or high-frequency traffic (such as touchscreen controllers
-> operating at 120-240 Hz), the TX transfer ring quickly runs out of slots:
->   gpi 900000.dma-controller: not enough space in ring, avail:1 required:3
->   geni_i2c 990000.i2c: prep_slave_sg failed
->   geni_i2c 990000.i2c: GPI transfer failed: -5
-> 
-> Fix this properly by setting TRE_FLAGS_IEOB on the GO TRE when multi_msg
-> is true (matching Qualcomm's hardware specification and the existing SPI
-> implementation in gpi_create_spi_tre). When the hardware finishes executing
-> the GO command block, it generates an MSM_GPI_TCE_EOB event on the TX
-> channel. In gpi_process_xfer_compl_event(), handle MSM_GPI_TCE_EOB for
-> linked I2C command descriptors without a subsequent TX DMA TRE by
-> retiring the descriptor and updating the cookie without invoking the
-> client callback, allowing the linked RX channel's DMA completion
-> (MSM_GPI_TCE_EOT) to signal final transfer completion to the client.
-> Other EOB events fall through to the default transfer completion path.
-> 
-> Fixes: 656147fb1d4c ("i2c: qcom-geni: Avoid extra TX DMA TRE for single read message in GPI mode")
-> Signed-off-by: Vsevolod Nevorotov <sevanevorotov29@gmail.com>
-> ---
->  drivers/dma/qcom/gpi.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
-> 
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Hi all,
 
+This series adds support for the SYS_AOF (Address Offset Function)
+address extension mechanism on RZ/V2H, and enables it for the SDHI
+internal DMAC so SD/eMMC DMA buffers are no longer confined to the
+low 4 GiB of physical memory.
+
+Background
+==========
+
+RZ/V2H contains bus masters (SDHI, USB, GBETH, VCD, DSI, LCDC, ISP,
+DMAC, ...) that can only generate a 32-bit address on their own
+bus. The SYS controller's SYS_AOFn registers let bits [31:30] of the
+address such a master issues select one of four independently
+configurable 6-bit fields; the selected field supplies the
+corresponding upper bits ([34:30] or [35:30]) actually driven onto
+the AXI interconnect, with bits [29:0] passed straight through. This
+splits each master's native 4 GiB space into four relocatable 1 GiB
+windows, letting it reach a 35-bit (DDR0/DDR1) or 36-bit (+PCIe0/
+PCIe1) physical address space. See RZ/V2H Group Hardware User's
+Manual, Figure 1.7-2 and Sections 1.7.3.2 and 4.3.3.2.88-90,
+reproduced here in text form:
+
+                     +--------------------+
+                     |       Master       |
+                     |  32-bit address    |
+                     |      [31:0]        |
+                     +----------+---------+
+                                |
+              +-----------------+-------------------+
+              | bits [31:30]                        | bits [29:0]
+              | select field                        | passed through
+              v                                     |
+    +---------------------------------+             |
+    |         SYS_AOFn register       |             |
+    |  +------+------+------+------+  |             |
+    |  | Reg3 | Reg2 | Reg1 | Reg0 |  |             |
+    |  |  11  |  10  |  01  |  00  |  |             |
+    |  +--+---+--+---+--+---+--+---+  |             |
+    +-----|------|------|------|------+             |
+          +------+------+------+ supplies           |
+                     |    [35:30] or [34:30]        |
+                     v                              v
+              +-------------------------------------+
+              |          AXI interconnect           |
+              |        35- or 36-bit address        |
+              +--------------------+----------------+
+                                   |
+                                   v
+     +-----------------------------------------------------+
+     |               Physical address space                |
+     |  F_FFFF_FFFFh +-----------------------------------+ |
+     |               |          PCIe1 - 23 GiB           | |
+     |  A_4000_0000h +-----------------------------------+ |
+     |               |          PCIe0 - 24 GiB           | |
+     |  4_4000_0000h +-----------------------------------+ |
+     |               |           DDR1 - 8 GiB            | |
+     |  2_4000_0000h +-----------------------------------+ |
+     |               |           DDR0 - 8 GiB            | |
+     |  0_4000_0000h +-----------------------------------+ |
+     |               |  SRAM, peripheral, xSPI - 1 GiB   | |
+     |  0_0000_0000h +-----------------------------------+ |
+     +-----------------------------------------------------+
+
+     Four 1 GiB windows, each independently redirectable to
+     any 1 GiB-aligned target above; 35-bit-limited masters
+     must keep bit [5] of every field clear (1.7.3.2.1).
+
+In case the image isnt formatted correctly please refer the link
+https://raw.githubusercontent.com/prabhakarlad/img/refs/heads/main/Screenshot%202026-08-12%20162004.png
+
+Without this, SDHI (and other masters in the same category) are
+limited to buffers in the low 4 GiB.
+
+Approach
+========
+
+Rather than hardcoding SYS_AOFn programming per board, this series
+derives it from the devicetree dma-ranges property already used to
+describe DMA address translation:
+
+ - Patch 1 adds generic AOF parsing/programming infrastructure to
+   the rz-sysc driver. Each SoC lists its AOF-capable masters as
+   (MMIO base, SYS_AOFn index, address width) tuples; at probe time,
+   the driver walks "simple-bus" wrapper nodes carrying a dma-ranges
+   property, matches the wrapped device against that table by MMIO
+   base, and programs the corresponding SYS_AOFn fields directly
+   from the dma-ranges translation. Devices with status = "disabled"
+   are skipped. Malformed or out-of-range entries (misaligned,
+   exceeding the master's own 4 GiB space, or requiring bit [5] on a
+   35-bit-limited master) are rejected.
+
+ - Patch 2 moves the SDHI nodes in r9a09g057.dtsi into per-instance
+   simple-bus wrapper nodes with a default, no-op (DDR0-targeting)
+   dma-ranges -- no functional change for boards that don't further
+   override it.
+
+ - Patch 3 demonstrates a non-default window on the RZ/V2H EVK:
+   SDHI1's dma-ranges is pointed at an 8-12 GiB DDR1 window, backed
+   by a restricted-dma-pool reserved-memory region so buffers handed
+   to SDHI1 are guaranteed to physically land inside the range the
+   programmed SYS_AOF17 fields can actually reach.
+
+Boards that do not override an SDHI instance's dma-ranges see no
+functional change: the default wrapper mapping added in patch 3 is
+an identity remap onto DDR0's native address.
+
+Trade-offs
+==========
+
+- Attaching a restricted-dma-pool to a device makes every DMA transfer
+for that device bounce unconditionally (is_swiotlb_force_bounce()),
+regardless of whether the buffer's physical address would otherwise
+have been directly usable.
+- Each master will require a restricted-dma-pool.
+
+Testing
+=======
+
+Tested on the RZ/V2H EVK (r9a09g057h44-rzv2h-evk) with SDHI1 remapped
+to an 8-12 GiB DDR1 window, running repeated large-file dd read/write
+and mmc_test against an SD card, with no functional errors observed.
+While running mmc_test a loss of ~4% was seen for read/write tests as
+the mmc_test module allocated the memory using GFP_DMA flag.
+
+This series does not yet cover the remaining AOF-capable masters
+(USB, GBETH, VCD/DSI/LCDC/ISP, DMAC channels).
+
+Request for feedback
+=====================
+The ~4% loss above comes from restricted-dma-pool's unconditional
+bounce policy (is_swiotlb_force_bounce()): every SDHI transfer is
+copied through the pool, even when the source buffer's physical
+address would already have been usable without any copy at all.
+This is a direct consequence of using restricted-dma-pool as the
+correctness mechanism for a device whose real addressing constraint
+doesn't map onto the flat dma_mask/dma-ranges model the generic DMA
+layer otherwise assumes.
+
+Before optimizing this further, I'd like inputs on whether
+restricted-dma-pool is the right tool here. Suggestions and pointers
+to prior art for similar SoC address-extension/aperture hardware would
+be very welcome.
+
+Thanks for reviewing.
+
+Cheers,
+Prabhakar
+
+Lad Prabhakar (3):
+  soc: renesas: rz-sysc: Configure AOF registers from dma-ranges
+  arm64: dts: renesas: r9a09g057: Move SDHI nodes into bus nodes
+  arm64: dts: renesas: r9a09g057h44-rzv2h-evk: Move SDHI1 dma range from
+    8-12 GiB
+
+ arch/arm64/boot/dts/renesas/r9a09g057.dtsi    | 123 +++++++++++-------
+ .../dts/renesas/r9a09g057h44-rzv2h-evk.dts    |  16 +++
+ drivers/soc/renesas/r9a09g057-sys.c           |   9 ++
+ drivers/soc/renesas/rz-sysc.c                 | 118 +++++++++++++++++
+ drivers/soc/renesas/rz-sysc.h                 |  22 ++++
+ 5 files changed, 240 insertions(+), 48 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.55.0
+
