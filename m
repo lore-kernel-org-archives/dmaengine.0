@@ -1,113 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712155D865;
-	Wed,  9 Sep 2026 16:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C50F569F0F;
+	Wed,  9 Sep 2026 16:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788971803; cv=none; b=uZBPMifcqjqNPRjVIDlQKsBLK77D79/e7QeTgdf9bciLVwgaxsLGeZdx9lKsDDQU5qQG+QSSJRUDDzny151R5iKHaZ45XLywwtqi9j3PmBdexefWnPTekeR4cPnPUQOnelIG3Nz9p63yFtDLVfnQx5JU6Qw+ug2ee+8xoyIgDMM=
+	t=1788972903; cv=none; b=UEMQFoDXINjrdoOrsfIGT4FinSuMqHQlaYGy4/rJewv5tYZFAlUU7N5z7yBv8FdYua2MYA97bbMgIbpVJ/t9xJc+pHzFInf2YjMreUIzDQrh48gaMgLJ0SHh94Qgwot1G8sfSl6K2At4M26tEfDQJ/4cNLTmHXLpA/Sxr14xvaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788971803; c=relaxed/simple;
-	bh=ivQODqGc8KFRbT+CDhnacTUmIisuYelCOQ7C8DxNKCM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=j2uIUfN4r9fEKL1vK8q0P/sfasC170plCnZGFVgaByDwi+e3aszxCDQzvLZaIi3hviI2MOZtNLhVI6deBcXAzIycyRH6h9O1gxkT53SiB/dy/XM+v6dly3axnvJ9sLHEoYlknSDu/bW6xlImtzgFG1HiOjWMiAJ/pVgxiK0LWD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dx70I1I+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788972903; c=relaxed/simple;
+	bh=nqpDu2o3hK3qr20tvru4ckpxujP1K23ZlO4JGYYlMdM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RIhpdVXVOigigZueeAtQIkG5Gh7rOerz/pW+bnQC+VrXGiUZwo76nK0Vq+3O2hy3rzJU5HHwuOX31bBAeiA0jmVQ2vqWC4rAxkjDTst1Cb4nQdimQ3rSkS2Tw/ePcC7tN7RX8lflVZzEn7kGgeqwNMRR/Kz8gG/QBBcjQuFUQRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jBayZFm0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dx70I1I+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26281F00893;
-	Wed,  9 Sep 2026 16:36:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jBayZFm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C401F000FF;
+	Wed,  9 Sep 2026 16:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788971801;
-	bh=nDQ3BlVROek4PxaLywwCvD6/LeA/synqwhaOMOah7lE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dx70I1I+8UJyr/VBOxcjZH9n5kihC+kb27i9VnPrDp1ipyea5JH6DRYBTXNJ3aHJY
-	 tK/lTlLld6Mvv7CaO7FT8M6c5n1GYf9rlDfs9yhitsA/IXKiamVj7l1M3n8UHZJ5IL
-	 m7z4Moz1bEehf5qcj1SHdImqffS1Cu1dM14AYN4P9z184AZ+ga7ltA5bZ1z3wI57G4
-	 EeU31nzGMeRyayLgVWtVu4tewA7jtJa5PaPmpdPh8+X2MyFDHES2XPpzl75tdtpAMC
-	 vqtNyPXNE76OqzpHTp0UaEJFZjHyS0j1zW12o+fRCKt/82SUkmevuYH1JhPAXvRx1u
-	 xAViDSWb1GEHA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 1/4] dmaengine: vchan: add vchan_chan_name() to get
- channel device name
-Reply-To: sashiko-reviews@lists.linux.dev
-To: Frank.Li@oss.nxp.com
-Cc: linux-sunxi@lists.linux.dev, imx@lists.linux.dev, linux-trace-kernel@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260909-dma-chan_dev-rename-v4-1-d8fb6892a70f@nxp.com>
-References: <20260909-dma-chan_dev-rename-v4-0-d8fb6892a70f@nxp.com>
- <20260909-dma-chan_dev-rename-v4-1-d8fb6892a70f@nxp.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 16:36:40 +0000
-Message-Id: <20260909163640.E26281F00893@smtp.kernel.org>
+	s=k20260515; t=1788972901;
+	bh=xrZiWkO/Cig928w3Hg0lcA4NQRdYMH+CxvejqzEbOxo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=jBayZFm0zOZtOV/v6V/j6XvGE/wtPFLdi3lhON81fWBU5akr3AmKRrbF+wFpvFRiN
+	 otWfZbXcUpKbpH8HJyQj2s1imtaqHlKCdXs38ur0R8US9enl32LAU4a0qPiWw/Tach
+	 HNqNB3KObm3DaMxItwekuERLPTFf6I1ViX5eni75KKQ2tevrSdH5CkSCAgG9Up4qrE
+	 X/uXCSH0sVRMNWIWAhH4uzv2+Y9H0+w2fNviIGzldWpiLDTGMw+RI4GzqiX0bIWrpq
+	 fg+tbFAf82bSYRVS+b+YF7JsD4vaYYnwpnzp4pJWfILi5jNFO1HfKCNi17jfxoQ5hq
+	 xTJpYrRVFYsTA==
+Date: Wed, 9 Sep 2026 18:54:54 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: wangjia@ultrarisc.com
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Daniel Lezcano <daniel.lezcano@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Samuel Holland <samuel.holland@sifive.com>, Anup Patel <anup@brainfault.org>, 
+	Mark Brown <broonie@kernel.org>, Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@sifive.com>, 
+	Conor Dooley <conor@kernel.org>, linux-riscv@lists.infradead.org, linux-spi@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2 06/10] dt-bindings: i2c: dw: Add compatible for
+ UltraRISC DP1000 SoC
+Message-ID: <aqGOXnv2meGnCKzh@zenone.zhora.eu>
+References: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
+ <20260907-ultrarisc-dts-v2-6-5eb4c97477c5@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907-ultrarisc-dts-v2-6-5eb4c97477c5@ultrarisc.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+Hi Jia,
 
-Pre-existing issues:
-- [High] Use-After-Free of DMA channel name in probe error path due to devm=
-/manual cleanup mismatch
---
+On Mon, Sep 07, 2026 at 05:54:45PM +0800, Jia Wang via B4 Relay wrote:
+> From: Jia Wang <wangjia@ultrarisc.com>
+> 
+> The DP1000 integrates four DesignWare APB I2C controllers. I2C1 supports
+> SMBus, while I2C0, I2C2, and I2C3 support standard I2C transfers. Each
+> controller has one register range and uses separate reference and APB
+> interface clocks.
+> 
+> Add the DP1000-specific compatible string with the generic one as a
+> fallback.
+> 
+> Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 
-commit 6477701933e50dc5df4ddb73cea43b46ef1b83f8
-Author: Frank Li <Frank.Li@nxp.com>
+Just this patch, pushed to i2c/i2c.
 
-    dmaengine: vchan: add vchan_chan_name() to get channel device name
-   =20
-    Introduce vchan_chan_name() to obtain the DMA channel device name.
-   =20
-    Use a dedicated helper instead of directly accessing dma_chan::dev
-    so callers remain unaffected by an upcoming rename of the struct member.
-
-[ ... ]
-
-> diff --git a/drivers/dma/stm32/stm32-dma.c b/drivers/dma/stm32/stm32-dma.c
-> index d3ad78562a140..3e8151e2ad75a 100644
-> --- a/drivers/dma/stm32/stm32-dma.c
-> +++ b/drivers/dma/stm32/stm32-dma.c
-> @@ -1668,7 +1668,7 @@ static int stm32_dma_probe(struct platform_device *=
-pdev)
-> =20
->  		ret =3D devm_request_irq(&pdev->dev, chan->irq,
->  				       stm32_dma_chan_irq, 0,
-> -				       dev_name(chan2dev(chan)), chan);
-> +				       vchan_chan_name(&chan->vchan), chan);
->  		if (ret) {
->  			dev_err(&pdev->dev,
->  				"request_irq failed with err %d channel %d\n",
-
-[Severity: High]
-This is a pre-existing issue, but in drivers/dma/stm32/stm32-dma.c at
-stm32_dma_probe(), devm_request_irq() stores the dynamically allocated DMA
-channel name (vchan_chan_name()) as the IRQ name.
-
-If a subsequent initialization step fails, such as a failure in
-of_dma_controller_register(), the code jumps to err_unregister:
-
-drivers/dma/stm32/stm32-dma.c:stm32_dma_probe() {
-    ...
-err_unregister:
-	dma_async_device_unregister(dd);
-    ...
-}
-
-Because dma_async_device_unregister() is called manually, it frees the DMA
-device and its associated channel name string immediately. However, since t=
-he
-IRQ is managed by devm, its cleanup is deferred until devres runs after pro=
-be
-returns.
-
-Could this create a use-after-free window where the IRQ subsystem retains a
-dangling pointer to the freed string? If an interrupt fires or if a user
-reads /proc/interrupts concurrently during this window, could this lead to =
-an
-oops or memory corruption?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909-dma-chan_d=
-ev-rename-v4-0-d8fb6892a70f@nxp.com?part=3D1
+Thanks,
+Andi
