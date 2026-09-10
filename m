@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F0849EC47;
-	Thu, 10 Sep 2026 14:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1533349EC53;
+	Thu, 10 Sep 2026 14:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789049434; cv=none; b=EFcgEe2mspNeb2BgxXq9pJN9sOfaO4ZaMkweD66agsLwVX+FU42//ZlQHa4dTw5V+PZlSyh69OVWES+jsRw9CBNv96FylAOHLD8QeZQt+Lu/BECJ4tYBud+tykVLduZOJnHehhBe8sktwiThftM+s13M3I2NpoRilVBFNJ5g/V0=
+	t=1789049437; cv=none; b=EdpMf1gqoOavFYpijnCmgNb3dRumKq6ngjMydfjxpsBmxCfntXQPm72lZt+VGukha/Sfp/FKeezqOLOzpehqIojI3lRUpPQv2mI/XmK/Lq2MBWGec5OLE07YC4OqXXyEGcz3IvVzonMfuC8UAKPnT43cK4TJ/tFLkd3WpAtG2+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789049434; c=relaxed/simple;
-	bh=W8J7o2tGrE8bmJt/NQdfhPyMM2tGAexIb7zF5l1uoks=;
+	s=arc-20240116; t=1789049437; c=relaxed/simple;
+	bh=sX9VeMgxaJUZbm7FWjKscwxyqETUZ8S9kmOxgSFhNjU=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=jpW1RamPoyiaQEafnrO6myerOp6/2mENHbF+TCsA1nTkZpHHB4Yd2cdb5wzs68By0FVap0FbgyjYoW+AFxPIbbUIeEsjVxAsTZ+oU88pjdgE62mL8E68+LFPcpD3F82gTMCsyJx2vt2djWR5sTwS2yw5t2/0iUUv6ClAo9GJ4Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lpeecQ2w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gr+pfdToseoNYAf0aT4UnWcT5CoL53bt4LkYP/UEa7Bj0LGkuSafS7J5Uc6SJOkLhA2eHCRl3XI4BN/Cmq4Yy15buQzGenrJV6eJcNk47gShuUMoii6IOYCbcE84vEx17jj5Z/3XPPrta6ZGbileOLEK2n4qqqIpM76Z4Xx44Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WOEp4x1+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lpeecQ2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D1E1F00893;
-	Thu, 10 Sep 2026 14:10:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WOEp4x1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62FC1F000FF;
+	Thu, 10 Sep 2026 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789049433;
-	bh=aSJlejv5iaVbiAkyqv/b7LzmZwHxLBshA8S4am7+R1k=;
+	s=k20260515; t=1789049435;
+	bh=9sR4iCDNmPmuLycqrtaPoXOdVxq9vF8KjjQ+eF2z45Y=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=lpeecQ2wpwuZt/sWvQVBRcnB2QZwFn/wq4oKIe5zbYhl1wcVEBZXQjk4ePLRlVUcu
-	 Ilg7t4kzmrveL41SnHAo5hv8OT9TIZIa1PdAS2jelQt0ZTjU+Ih0iZUYxd72XHelPH
-	 eeiORp5BzR3g7FqIpL1y8D3ejO6L1yd7/2rN4h7lp3pJNGnOtjS2eOMR4ZZKmBPD5E
-	 F4jiUfa0FHgnOn/jrfsaEsYGqK9m23oSPd6Cw9q5FFVPNqsG02X0fgGH7dVUDzBY4f
-	 Gv4XBe7ZFYinLce4NCEOTQiBpqQAMX50W66uq6/FDb9HVYqXzlk4yhRSpPZ59Dzzt0
-	 otEzkKjBzL1VA==
+	b=WOEp4x1++BsXDfyTPXTDS4gmVFX7J2ksk9lukdERrQLJxB2SKNofdAWP9wGSvBEhO
+	 tC3006JjZtardegEGy/OALXz/UR69TACxhMazYNtw7lbQIKz8dlbIU71FndxUDL4p0
+	 ixr1puTbO/JgAXIAScwYvUVOSuARgamABHJqdNGNgcvJzNXK4tmDvb/0ng2b3dy2Pi
+	 v/ll+G0ZwlY/SweT7j1HKshx0ckV+E4JzVL2pXyvgVilgz5qfRbFPGz04Gbc7Wb/A4
+	 mpnQYfbefzYMV8A8IthZxOBWhS98UqiJC+jmceoouDnnNmDcwDNVKaJ0j1UXx9SI+R
+	 xp7jmkf/jq3ow==
 From: Vinod Koul <vkoul@kernel.org>
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
- Frank Li <Frank.Li@kernel.org>, Pandith N <pandith.n@intel.com>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Sia Jee Heng <jee.heng.sia@intel.com>, Jia Wang <wangjia@ultrarisc.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Frank Li <Frank.Li@nxp.com>
-In-Reply-To: <20260902-dma-fix-v3-0-414c6449fbcc@ultrarisc.com>
-References: <20260902-dma-fix-v3-0-414c6449fbcc@ultrarisc.com>
-Subject: Re: [PATCH v3 0/4] dmaengine: dw-axi-dmac: Fix burst encoding, LLI
- dump and priority
-Message-Id: <178904942953.118320.924635574169760656.b4-ty@kernel.org>
-Date: Thu, 10 Sep 2026 19:40:29 +0530
+To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>, 
+ Frank Li <Frank.Li@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260908212607.590224-1-rosenp@gmail.com>
+References: <20260908212607.590224-1-rosenp@gmail.com>
+Subject: Re: [PATCH] dmaengine: at_hdmac: use devm_clk_get_enabled()
+Message-Id: <178904943321.118320.1490189042723625622.b4-ty@kernel.org>
+Date: Thu, 10 Sep 2026 19:40:33 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,30 +47,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Wed, 02 Sep 2026 17:26:10 +0800, Jia Wang wrote:
-> This series fixes AXI burst length encoding, an out-of-bounds access in
-> the error-path LLI dump, and the CH_CFG2 channel priority field position.
+On Tue, 08 Sep 2026 14:26:07 -0700, Rosen Penev wrote:
+> Replace the devm_clk_get() + clk_prepare_enable() pair with
+> devm_clk_get_enabled(), which handles enable/disable and the
+> unprepare on driver detach automatically.  This lets us drop the
+> err_irq cleanup label and the clk_disable_unprepare() calls in
+> probe error paths and at_dma_remove().
 > 
-> It also converts register field definitions and programming to GENMASK()
-> and FIELD_PREP().
-> 
-> The series was tested with dmatest on all eight channels using
-> snps,axi-max-burst-len = <256>. All channels completed without errors. It
-> was also build-tested on RISC-V with CONFIG_DW_AXI_DMAC as both a module
-> and built-in.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] dmaengine: dw-axi-dmac: Fix AXI burst length encoding
-      commit: 0d59891c42e11c3840276d8a632dbc355d6ddc4f
-[2/4] dmaengine: dw-axi-dmac: Fix LLI dump out-of-bounds access
-      commit: e6b49f8016ee8b642e8e495d1704342ee0b35d72
-[3/4] dmaengine: dw-axi-dmac: Fix CH_CFG2 channel priority position
-      commit: 2a9013c20c46216b92ff09e2283b5244a91c59da
-[4/4] dmaengine: dw-axi-dmac: Use bitfield helpers for registers
-      commit: a72f75e1f5552df8765920b678a9037b7f31a91c
+[1/1] dmaengine: at_hdmac: use devm_clk_get_enabled()
+      commit: d882935a2ca4457f6f446b02d7d08134cd9d4582
 
 Best regards,
 -- 
