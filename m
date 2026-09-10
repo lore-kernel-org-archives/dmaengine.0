@@ -1,72 +1,72 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0884915B7
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B457D397329
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789070801; cv=none; b=Y8GkcTeIgUv7ga4vWcfolcw39ZjWhgdN54bDTSdirGHQefFQAucovef/FABx4g8qF4bAswWz8V/MD778wteOK1BqaGD4vP3FoffGC/8nAN4sOfIbmaURwPYVfUm5eTu6zzI38H6SUKv3/smGYUrKjKBReksnGCSGelYGkmKZhw0=
+	t=1789071364; cv=none; b=nlJidPi6/dGtYNH36myRFnzhfse/rNzmuglARe/XRyDhVOxARTVjY6+HxfcWCkqVfH9mpKwiREv9wqmHadvU+mS5Vbsu0gjE0W+Ru+f2T4Url9bpr+EtyeCCYB+x85Ect9vBTAPq+Q/5rtn5uZNyiXXd0GXgPBriRk0WfDmvWCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789070801; c=relaxed/simple;
-	bh=bIekzr/acASAo8pLqBfoGXi82QPpe9AW/HLpSxdjKu0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WgwBjZGTkxLgU8pyfQCOf+4p4MUXGZrXwZVIGKssQIGqECH15cEMkRidMS3bJhk41WbWAvPOrnWtZLKtWT2atBHC9RE5zmdUz7JX5u4pPuAWoxWsSJfKBFlZYuNFJEZnoivLcrWKZdlVcHFWvRh2Ums5qmzDsvviEbNekcx9SmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbDeXDsX; arc=none smtp.client-ip=74.125.227.140
+	s=arc-20240116; t=1789071364; c=relaxed/simple;
+	bh=2t6iEDA7zf3AOayYdwXK0SOCLfzvJ3STyo7Hy22ZSX0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qs5LWUPePecrg5uqU1zjQlsft/7QauCXs96XHJSGATQBXmu2FGi5rjP0LGEWeUYlJsJ68HkdhaJ3ocIOgdu27YZHNj4aCDviH8xlR/HA99fo+yNeiptyFY/37kTnqhxc1LpH1TQJjl0D4GGC7JmDOfNO3yVDoSjMSIG/oPKyl0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkojnT5M; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbDeXDsX"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39b31b4281eso133358a91.2
-        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 13:06:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkojnT5M"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-939d917fee3so7970585a.3
+        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 13:16:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789070800; x=1789675600; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789071361; x=1789676161; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Pw223cD4yf9W0em0F6VzM2Cty/ImT+5nXI2srqsFOi0=;
-        b=jbDeXDsXw+Uec4UjxAbQuevSOKPNPz4x7bO5lVnNfsIGFwY3YxcfgSjwVMp5AnJbkI
-         NBJONACzfzHiwJvhBFU+Jyl1icap1sUMdk/cbMu6mx5MCEWMT904IYIP3O3IPaHrUo7e
-         feEjQfrTx4bCYc0IvoLiylNYl5BiOU29VPt+LFlXTTz4r9BO3o5FjS9k3XkbVLkoGCSV
-         kLCM9QD6dPn45UsC+uEHaW/xyKCsZhVN4kw5eT+DbEyuCJ72JEPTDbWgpv25gMWBEMJk
-         7zHjKIMudYcHbBUcjzz0+io9kc/S+G5tA6kZeZj4sjSybDqbEXOxXrVd4FXNWJdXie0F
-         ejmg==
+        bh=Xp9c7LyaPvV/qIFnSXfT0Qk+bTOQ/yY3E+O4DTcTZiY=;
+        b=BkojnT5MQMJEkDnbqVBwXXkDPTHbwN8zZz0KFPbNf+jCBkljbgepeVCC1XUchsDeUo
+         N+XJlThYA23yz9JWk/mENaUIe47grYIcVygFDjRj/R/Ng3xk1YrwXXStCwkn5ZMLaYh0
+         3v8P42Sx+RxluB/HYEYsd/4yWhP9jngIgLqOjXbggqOwZPrGnjZbKDJq5LcM1Rt00z03
+         Jfpt3A7pWQqGwh2tBKrVEh/4WChosGAnb8opFQOJm4PPxKJQMtISnpJA4rALYMdyejlD
+         PJLEqy+uSdcbB/ts5Hy+S+rUTe5Y7A1WEi7d/yZWzSwLhHYjoIaRruy6OYJy8lPj+CYM
+         9pFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789070800; x=1789675600;
+        d=1e100.net; s=20251104; t=1789071361; x=1789676161;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Pw223cD4yf9W0em0F6VzM2Cty/ImT+5nXI2srqsFOi0=;
-        b=YknyYAWqEPClX6FVzoyOVE3PWUaOhIr5E3X+hsRMxozjBaY5VkMxglI7VQKmpl3pW8
-         2GkWzWE9OIMMDEWC7H0mYwU7pCImvcvk/VvMTXsWrpd8SfAJdV0L6eQghW6UHoq7B3El
-         HJ6qlS/LM2Lx1E6ZWj7qY22KvvciLdW0u4kyC3kE5BUsM5daq1a5TynUlTqrnDW9gNM8
-         OdHfV5EEmQuV9iWPpcHsYxE/+3OSG0eCtqWeB9NSpSHDotuQQUNkfcA2PXlomJdklxjI
-         z724BM2EQ7iEKkEuC2isVJ/xor1PlVdro/2C0zmj096GLhLrZTuPEuT/qamQ8lM/B3vz
-         J3uA==
-X-Gm-Message-State: AFuF++mVUvgWuZEOZiRDWdQwDXnkQtqzBOvJaIDjPGwo+d25iG3Z40M8
-	uzEcj3PtSxRph/NUJb06nQ4fQoaMxsqKWpG5ACP4fIgcZ01eIj/Ww6LMzrulEw==
-X-Gm-Gg: AYBFou2NMi3PTVRfPDbfbDQyNL9BBDMwgqvwwTqd44/J0B2n1QhyKr2x7mjMdLkG9LD
-	u35g/OPlJk8fjFM4buvR1qRRe/teGi7VKSjDmwhKuLIfGmsHuZorYSvJagvWSv7K8cnt+t4clZa
-	CJyzhV9Rho3o9bu6YU/q2zYGKpzdwPsMXGEATCfDJZP/CSZeM8d5JHAXEf053YfjWy7fiCh8CV4
-	gt3NAbWQfd5fCdzfVN2CGtXKX5cMJ5qktrLtH4sZHeieiLU2EFDUyemJGjN2pdvsWu+shpk5hTw
-	Te99dW7jqioSkigsFMEvg/OTXjdtocQOJV/9HCIyMWBoTkVKkjMmu2WdWunSxWBL64Jz1B83jZz
-	NQPVEHKlZb9JWhpBka09Z5snzE7Bir0Rf1MZlUa/7Nw+7Ik0sWUeU+pyNjAiVPnvMCHaJ8pBMUV
-	xX+HmR2ODeudyHD0kUDB+JnVDy+HF2uNQVlPPfJrzAkeW+jNJa55anrSkmutWESKUk8M1yDm6xk
-	OSl3vZmG2sqa5w1ogyIV09pKVA0PwEdEUME8GOOZPSRXG/hY1wwaoQxccdOOyVhY2VO8voBqx68
-	bLSbVN5MFYBnsRFTjE5m3b4SBRK/W+5YsaRK33Y0l+2zbO/jPA==
-X-Received: by 2002:a17:90b:3dcd:b0:399:ea1:5a82 with SMTP id 98e67ed59e1d1-39d9bc66ab9mr689655a91.3.1789070799543;
-        Thu, 10 Sep 2026 13:06:39 -0700 (PDT)
+        bh=Xp9c7LyaPvV/qIFnSXfT0Qk+bTOQ/yY3E+O4DTcTZiY=;
+        b=JKOXVndrhU5LIrVi6Df9Gs9Ymzm3bhneuHDcuJ1FWELYs5dHw/3zpjtF9cTIbiCqXn
+         qmLvs/H3CVb1872hmVBOmgxPaK2N1NzlFDMS4ow96itMYNxM2YSU6hF2GgPvQYp3PpC3
+         t9I/JNL7Gdz5Ylmofxlqmy7QKfQ6crI0LaDqVLBGzEmLgfno4MLe4CbXH3cq1w2oGoQn
+         bO3AZwnYq3n4Bg+96P68rKHXZpNNe/7FJObgI/4247H4v3Woc+Mf/PlS3DCn+8/gLxv/
+         vHuc6+932ypqPlSSJ8dwfQ1B9PTkHkLQMm2trmCdgQNacNgvxolRDH2IJ478LHUQ5pEe
+         6eOQ==
+X-Gm-Message-State: AFuF++mQ/yuLCGPAHtgvb0wWCmyL5YIj2Z2MmGh44RszkrXjoowj/OQe
+	bkjkfnFrJUEqL5F4H/KQUPpXZEuUIQ3szgY1RwNgumXi5cJvmdRHlL/JwsIW7A==
+X-Gm-Gg: AYBFou39drJIQK0Kgcxml4WuqKBAhnl2KH4FJ2h77QcNpAdsiULZJrBldEBbe5D7uNO
+	+awrm4EYjRa8BYgjuU46U1N1lcu2MJfrRySr+w0jcDyJEmxwV8XnYBFAIl9Q1+79yGc9W/UAXWa
+	T9x4haOSityGWb8zcVVF/Woh0vE5MzgiRsTVu4+04QwrZOajZRICANFVLgPOqlQQn6SEhDpcR2N
+	KIoRk0WIPx76iYEC6bbjNay/JXrP3ejpsyoK8LNXHxLYPzxzyKRBAFIBFfq2S65z+LbPCx5CakH
+	t50oW3N1Fvx14T8vsS+xofLjJy0eNGEXkBcxlaXHso3sRwvv5LMXHa5mzKaFnWWZ6gLiQdbx0fg
+	SdkrMGUwxQCmnGNk3R+N7I9N4icJT4TDA1z9hShLI4lHPZqbzLppZY6etq8PolvLoNucTYZtLOa
+	X285ETOyOxDKG4DD42Y6tcU45dzxLrdTLJ2w1mrllMEh817cs6eJp2n7zZh7B+4G0Zpe97vN9vc
+	HZ05DHLX+hocEX7SXRoeEoMPimi6GutP3J5zK1Q4xnTGT86zJqY/xy+/B4LNiKdh7bkc72+lcu1
+	QXDRATmcWie8NNToIzkbYhtXd5AMDr4M9j0JKkHGnKYZsgmO
+X-Received: by 2002:a05:620a:260f:b0:939:4a44:5f99 with SMTP id af79cd13be357-939ea012e39mr79672685a.10.1789071358621;
+        Thu, 10 Sep 2026 13:15:58 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d994cc978sm690227a91.9.2026.09.10.13.06.38
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-939e80f5791sm66868385a.42.2026.09.10.13.15.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 13:06:39 -0700 (PDT)
+        Thu, 10 Sep 2026 13:15:58 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Xuelin Shi <xuelin.shi@freescale.com>,
 	Harninder Rai <harninder.rai@freescale.com>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv4] dmaengine: fsl_raid: check fsl_re_chan_probe() return value
-Date: Thu, 10 Sep 2026 13:06:37 -0700
-Message-ID: <20260910200637.41512-1-rosenp@gmail.com>
+Subject: [PATCHv3] dmaengine: fsl_raid: free resources in probe
+Date: Thu, 10 Sep 2026 13:15:56 -0700
+Message-ID: <20260910201556.44207-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -76,77 +76,113 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
-unconditionally increments total_chans. When a channel fails to probe
-(for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
-total_chans still advances, so fsl_re_remove_chan() later dereferences the
-NULL pointer during device removal.
+Add free_irq() in the error unwind of fsl_re_chan_probe() and in
+fsl_re_remove_chan() so the interrupt is always released.
 
-Check return value and only count successfully probed channels, and guard
-fsl_re_remove() against NULL entries.
+Also add tasklet_kill(). Present in _remove but not _probe.
+
+Also add of_platform_device_destroy() on failure as
+of_platform_device_create() increases the reference count and needs
+of_platform_device_destroy() on failure. Requires placing the pointer in
+the struct for the _remove function.
 
 Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
 Assisted-by: opencode:hy3-free
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- v4: use break;
- v3: fix sashiko review
- v2: fix description
- drivers/dma/fsl_raid.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ v3: pass chan to irq handler
+ v2: split platform_get_data change
+ drivers/dma/fsl_raid.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 9cc289f7129e..6167fa652e96 100644
+index befb4bb69d54..b931bcc06ff2 100644
 --- a/drivers/dma/fsl_raid.c
 +++ b/drivers/dma/fsl_raid.c
-@@ -836,18 +836,32 @@ static int fsl_re_probe(struct platform_device *ofdev)
- 		}
- 		/* Find out the Job Rings present under each JQ */
- 		for_each_child_of_node(np, child) {
-+			if (ridx >= FSL_RE_MAX_CHANS) {
-+				dev_warn(dev,
-+					"too many job rings, max %d\n",
-+					FSL_RE_MAX_CHANS);
-+				of_node_put(child);
-+				break;
-+			}
-+
- 			rc = of_device_is_compatible(child,
- 					     "fsl,raideng-v1.0-job-ring");
-+			if (!rc)
-+				continue;
-+
-+			rc = fsl_re_chan_probe(ofdev, child, ridx, off);
- 			if (rc) {
--				fsl_re_chan_probe(ofdev, child, ridx++, off);
--				re_priv->total_chans++;
-+				dev_err(dev,
-+					"job ring %d probe failed: %d\n",
-+					ridx, rc);
-+				continue;
- 			}
-+			ridx++;
-+			re_priv->total_chans++;
- 		}
+@@ -212,11 +212,9 @@ static void fsl_re_dequeue(struct tasklet_struct *t)
+ /* Per Job Ring interrupt handler */
+ static irqreturn_t fsl_re_isr(int irq, void *data)
+ {
+-	struct fsl_re_chan *re_chan;
++	struct fsl_re_chan *re_chan = data;
+ 	u32 irqstate, status;
+ 
+-	re_chan = dev_get_drvdata((struct device *)data);
+-
+ 	irqstate = in_be32(&re_chan->jrregs->jr_interrupt_status);
+ 	if (!irqstate)
+ 		return IRQ_NONE;
+@@ -653,10 +651,11 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 	chan_ofdev = of_platform_device_create(np, NULL, dev);
+ 	if (!chan_ofdev) {
+ 		dev_err(dev, "Not able to create ofdev for jr %d\n", q);
+-		ret = -EINVAL;
+-		goto err_free;
++		return -EINVAL;
  	}
  
--	dma_async_device_register(dma_dev);
--
--	return 0;
-+	return dma_async_device_register(dma_dev);
++	chandev = &chan_ofdev->dev;
++
+ 	/* read reg property from dts */
+ 	rc = of_property_read_u32(np, "reg", &ptr);
+ 	if (rc) {
+@@ -677,14 +676,13 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 
+ 	snprintf(chan->name, sizeof(chan->name), "re_jr%02d", q);
+ 
+-	chandev = &chan_ofdev->dev;
+ 	tasklet_setup(&chan->irqtask, fsl_re_dequeue);
+ 
+-	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
++	ret = request_irq(chan->irq, fsl_re_isr, 0, chan->name, chan);
+ 	if (ret) {
+ 		dev_err(dev, "Unable to register interrupt for JR %d\n", q);
+ 		ret = -EINVAL;
+-		goto err_free;
++		goto err_free_tasklet;
+ 	}
+ 
+ 	re_priv->re_jrs[q] = chan;
+@@ -704,7 +702,7 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 	if (!chan->inb_ring_virt_addr) {
+ 		dev_err(dev, "No dma memory for inb_ring_virt_addr\n");
+ 		ret = -ENOMEM;
+-		goto err_free;
++		goto err_free_irq;
+ 	}
+ 
+ 	chan->oub_ring_virt_addr = dma_pool_alloc(chan->re_dev->hw_desc_pool,
+@@ -746,7 +744,12 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ err_free_1:
+ 	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
+ 		      chan->inb_phys_addr);
++err_free_irq:
++	free_irq(chan->irq, chan);
++err_free_tasklet:
++	tasklet_kill(&chan->irqtask);
+ err_free:
++	of_platform_device_destroy(chandev, NULL);
+ 	return ret;
  }
  
+@@ -852,6 +855,8 @@ static int fsl_re_probe(struct platform_device *ofdev)
+ 
  static void fsl_re_remove_chan(struct fsl_re_chan *chan)
-@@ -872,7 +886,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
+ {
++	free_irq(chan->irq, chan);
++
+ 	tasklet_kill(&chan->irqtask);
  
- 	/* Cleanup chan related memory areas */
- 	for (i = 0; i < re_priv->total_chans; i++)
--		fsl_re_remove_chan(re_priv->re_jrs[i]);
-+		if (re_priv->re_jrs[i])
-+			fsl_re_remove_chan(re_priv->re_jrs[i]);
+ 	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
+@@ -859,6 +864,8 @@ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
  
- 	/* Unregister the driver */
- 	dma_async_device_unregister(&re_priv->dma_dev);
+ 	dma_pool_free(chan->re_dev->hw_desc_pool, chan->oub_ring_virt_addr,
+ 		      chan->oub_phys_addr);
++
++	of_platform_device_destroy(chan->dev, NULL);
+ }
+ 
+ static void fsl_re_remove(struct platform_device *ofdev)
 -- 
 2.55.0
 
