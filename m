@@ -1,62 +1,62 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011026.outbound.protection.outlook.com [52.101.70.26])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013014.outbound.protection.outlook.com [40.107.162.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095EB3546F4;
-	Thu, 10 Sep 2026 01:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4E33655FC;
+	Thu, 10 Sep 2026 01:47:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.14
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789004764; cv=fail; b=JMVUo68W88pkpdQ7J81jbLM92blhD22rxhbPC+zp74DaZcm/pvaSKdV3U+powDW6S6BjLh/lucLX5tNsM7jwDiyoWzdBuA+yXx5BdRycZkC3rDyDZuIHJEgRpCsdOFjViN+fxhq6SAn2Uo2SKCLOmCf2USRpQ5ROYZTzu+A8kfo=
+	t=1789004867; cv=fail; b=PRqiYEct64W1kNx9fd22gZkAD1MwKQxGeaQ4SsrGrxNDcPoT1FPKhT4gbbIu7knUz5zqMAfxTGAdtHIq30CKUj2OOjbA2pLzrCHZC6p4pdVBKtgvXZxLXCrEv1cvPN3NjX9WytLyKHFj+5oUVw2FUiz5bAo31yBBjUFBxHCY5mk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789004764; c=relaxed/simple;
-	bh=+MzCfGYkWFF0nnFfrMxnRehFa2o9bwOSY4wnUL5YPSE=;
+	s=arc-20240116; t=1789004867; c=relaxed/simple;
+	bh=8RDcaiA7LScr/PiM/fNg8h6LYVqUGHLsIdoz1LD+4IA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TbIrkQQ+X/lhdHQ9zMOSA9+GJgaH5So2cmq5ZlztVzCFLe+vGq952Iit0yHtrb7pAr9SP+99VYkQYeUnDrNf1XmFwo5/Cu6RBVJ9mOYLvHBMj2oq4TkIs6RT5Poqs6If3iSzMpRxm1poBvR5Wyb5C9Efp8R5admyexcrfAQRYZg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=JaxF8Mbw; arc=fail smtp.client-ip=52.101.70.26
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Sahhihomc3TT4BPQutz1f4zguFgNtkgoZw3S2TK0yRfD9YNShtZFCVnAqNWE11gGmtYXypYx6NOlj066laPS3hXAPiIV5/KmpN1l9yECvlrIizGEDO1gBVjGadD6DbKDKDB2RgM/1qMYd8BHLSk1zyzG7yLQ5DRT/EosX6WKld8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=QY86Hwkw; arc=fail smtp.client-ip=40.107.162.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="JaxF8Mbw"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="QY86Hwkw"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lxde0H0Dbyyy8iRKP3dU6aiAXmfj0QfqCO74TtMVPOv5qnOVhqmuYU+uWRoI0agedlYv01T92HUY8hlZt9P1M/xeWo9ka8u4pPiFDpypbGZWO0N1Gvm4YwHoWpnpKU8OoY4OORhl5Ol4JRKVd7+jC7algcSKLl9Q5yjxFRGBOnaWScoF2mqhmOHuR3/+OUcfwqPMtOEqZr9RX90UlBsFhlB7m9lCogtPMvXgr4OUtZKuVU6HZLrpicqR8BFmfuwxcVkbXtR7s/zafgORlr/G2hEllOJEnRAe+r/YgcsGR0k9SzgGRVulmTZkoNTIfVrpxqAVNFkk6lNa1HBbJOV5cA==
+ b=BoA6/u3w63IFsMY6j5GWQqnUm/wNbGF/3XpieidSjSOE5ZbSNWxqUaqael+SWFd6nqmKz6cNCPPPu6Nb1+5YhXoagSEycHNCHQUsceHV/2LFQvwYD3M0cBDHPtzfyG43WXWD5oalGIA7xdLYsYWFF2+ykFc7hQvUaITfW1KOg+IFzQw3Qoyv1re1Dyv8q/4NBdxeoAENZaSpb6r/jPUkfAr7fNPWLUW1EMCmJDp0H8IJ4cNbFEmV3TwqgQjF8sPY461pZHLWRzrmMhyRvgEfC0CXX0yorxpdALVtwE5uWkXEwQswGF4A37vqUoh3IqUT8TL4doKbT8n+wOKOSCco9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dAagwQN0KNiDUHGrQ2DbiW8Ww2CWDQzSxZZPO4DWo4s=;
- b=io/fv3MdZ5bI2AQaQNuHmj+zgOV/TM/xp3SpUeiZZM4Ti19lQe4gY1arIJpmBDoWc6bGAuymrDClBI9qQ+ndlikpiIQ2r5XsrxCMTYKWRnvTqGFbOpyFsIZgIxSpHb4T9CKxOZJIYMJ9oFnsYxhZq1C9gR4BZNtx8oLWN1dtH709fsxfF6D40iJxFD7qdUdzKjqPmuayxUjJaNzcdBaER0dYAL41m3piqAp78UpJ8nozsAoruHSLm6fyLo/iYock45f1SmT1aQFJZSPGMmg4q8hITYYVmczn/35jeHrW0G11vlExJ6J3PMZ9K5Oncu309/EDBSiHkNADa4w7bjId2w==
+ bh=lGKlYdlrzvp3WTjLkdCO0gZWlgzBQcc+W33aWSIErdI=;
+ b=aq9tsBreUXA2shG6TDRqozQ5SfWLqx1862yq8kAaqPFnPRXOVhxPQC93QtJuPziQXPDupbJwzswTJRDRmuP/wspAYsDLvGI+uXbdGBi8IWg4W0H+k1N/1FAm+UAfbN8ENCwLaLIYe7ecfgluWDmjynIYcUGx63YNloevN2rxwLKSTqDmlqXt310HFRSTIU9BLHvCuAm6yQHlmZPH9TSkqbjXh2pDXDf4bdgJKAbaLCzc82Okb8q4MU+fJhJEDxoBmkiTiwkWVdLiFotOlCUe8pSixok0CdBbAw28Pm/f2Q5sFTpD7vN3WDCdIZ1g5X4AVFzQkAp6dJ0uqB/8jPuq3A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dAagwQN0KNiDUHGrQ2DbiW8Ww2CWDQzSxZZPO4DWo4s=;
- b=JaxF8Mbw73XBkZDUCxhTcIiTNiikLyZYpPePNS7yUq1qBAONoF/iTigpyEtsi3sx5/GGLImGI6QHQ8PFESFuW5ItQFlHI+nYx3DT5vI9eg5ONiK1Tuia8w0Gs6k796UevlODyJQx1IDD4GEVzClsy4ReA1rYAITi7rkCfPy9NZ+UiYz3ynO6fbTcITLTxyW0Z1wNTiVDsM3f2J8TP/sq4mCiOfp0HQOjxQfBo4/BM/bmFRX8GOylYkIdecdgKSOOB2H9EyxLedF2pDtthFzxaXNXw2LsiNn4FUqBBNTSLY4eIriRIvXn/mgZJDbHeylmKdalhc1taAeFYXu129+tSg==
+ bh=lGKlYdlrzvp3WTjLkdCO0gZWlgzBQcc+W33aWSIErdI=;
+ b=QY86Hwkw90zh9K1UIa4IeH1yfcCjXT1JAMGw4A/SjJMjOsDc4S/dGqOVsH0OItn5xlsjJTD7kj2ol1pKjsFFzZI9RGcbCQnt1bFNTCrP4OZ4djEL6xSHttatgCHmeI8PTDeWQpXnGnIMwGZlxPQYfa9ncjPQXekGw46gknBCO/GlwVyjsJKN/Cy6QSAkSJK9QVCjLS7aZVUry2+vsRBbVzVNbTPGWpPP9/w0J1BK5m0X4OcbSJsLt7IE17cy35py25GnclebLRyRKqv8tYTCogj3g9XE7Al6/DGoga7xCQAP6tnHeL9qVyEziSkrVatxf+Fpf0X8UUS1znwHSZ6sWw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by FRWPR04MB11224.eurprd04.prod.outlook.com (2603:10a6:d10:173::8) with
+ by PA4PR04MB7934.eurprd04.prod.outlook.com (2603:10a6:102:ca::23) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.8; Thu, 10 Sep
- 2026 01:45:59 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.9; Thu, 10 Sep
+ 2026 01:47:36 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.005; Thu, 10 Sep 2026
- 01:45:59 +0000
-Date: Wed, 9 Sep 2026 20:45:49 -0500
+ 01:47:36 +0000
+Date: Wed, 9 Sep 2026 20:47:26 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Rosen Penev <rosenp@gmail.com>
 Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Stefan Roese <sr@denx.de>,
+	Frank Li <Frank.Li@kernel.org>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: mv_xor: return descriptor to free pool on
- io_win failure
-Message-ID: <aqILzde0y_CTT8gM@SMW015318>
-References: <20260909234924.103418-1-rosenp@gmail.com>
+Subject: Re: [PATCH] dmaengine: bestcomm: use
+ devm_platform_get_and_ioremap_resource() to simplify code
+Message-ID: <aqIMLkvCXOK4n-KK@SMW015318>
+References: <20260909232623.89321-1-rosenp@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260909234924.103418-1-rosenp@gmail.com>
-X-ClientProxiedBy: PH8PR20CA0018.namprd20.prod.outlook.com
- (2603:10b6:510:23c::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260909232623.89321-1-rosenp@gmail.com>
+X-ClientProxiedBy: CY5PR19CA0118.namprd19.prod.outlook.com
+ (2603:10b6:930:64::22) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -65,98 +65,177 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|FRWPR04MB11224:EE_
-X-MS-Office365-Filtering-Correlation-Id: cef69758-fb88-4fe2-ffe3-08df0edd4378
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB7934:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0d15225-1fa4-471b-5c12-08df0edd7d08
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|366016|10067099003|56012099006|11063799006|18002099003|22082099003;
+	BCL:0;ARA:13230040|1800799024|23010399003|19092799006|366016|376014|18002099003|56012099006|22082099003|10067099003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	2Mc2/ZVqhQIZL8u8vbSQbEXUZQM1oey81dO4lv4UrJI0P2Am1H0acKuyEXSnHm0bfR/dXvKHTX+uIVXXp6ysNlvWQ0dDUo39uartTiBvNdQFVcTpoSOGH949gRRANGqMBObkhfAM9F7sST6oEFM5Cgj4uz2LH+w14yMgOo8yTiESJO3pHPDdYEkmpSm26tPZLznnhnWimzKTNdZcJQ7LV0v0LmM9PdUF/X8YETEDGoXIVWzQZn4p/jMtQIxiCC3oxI8vY2VlkjQP2+LUS7Hi+NRC++NcczZYfagMXrqQK4l8RM3kSgmnj3OgoFta7wie1GDBRpbGRSc1qUdxO4ELhMxCV0EZ2dyqseNP9qY1D+eLkIUQwHRpDf0GDVnfEwiRqkdAf/f/4jFgAK3KqvSh3Yu3K42PRIwz5u0gwwJYEmskR8EL+XwbOlXByJdMW0dOcZl0+4KlwDo/dJS2xptmlcqAFdbFr7EHMvcZRaSUKDhgRzySy3MW6MdH1pXwC8dYHBrPMWD2HSEZlKPyGy1jsI/Kf5Cu7yNoQjXBT6HQV8R92jDbrQ9IVCZk7Uv6e4ttK5qGXG2V5xJozSgfqMmnWwZC0fFwCMewg8Nfsr0VTVpSOT6L/gtVGVw51WvwaOrrTeXav7pQ4mD7y08SlzAyVsgFNCREygvPaF5q2DeK4Ts=
+	mD3daIkHCuRvSpttmi3Cx9EjRj0sEzscv0N9AAfV4d1e1Re4k/1iVHwnWfo+mXJtAujJUbNPDlN6AHp6BPxrHZhP+//mhJytmGxPjzT16lvaN5XsJQpCGV0rLHX8Vw/4buUTDhKkdFDxJt0LHv1mJ11LkayKBTyzBDLQg6RpvLtmFb+ZJtWpO2I3059r8FdKKqnGuvotg58Eb4IJsfYB5Q3UqUwnrI64lmfCH63mpZ7sSVPWSrpbRlB338Ss+tSX+JJwzYmu9nw8H/ZtptasjzqHfVnTrT9AHKurGqW8ptUwhrKPYQlZYFTPDhavlE3KYcNgTO2U2XBRbzAQEdHZvfgF1ktGXjl+ltS/1V9tuY5X4enEGSdPAdJIYyrrgRIBm/4l8m+rIEHo5Nv+9UpBeGlUE55/Q/BCXjMR0zHzBEgYOx6VonPyVMmDaCBl8GlpxUsfITLg56ew19iJ1/DK990zKbO3qw17CSlOkmAdAI6yELgvs0DDKZjmjSZ+XJAC+7pVOKsO0en1Gw8/RGppQxMWLfRm+4VTBbskEx3uEjc9A9+RHmzczvIga1X8kUcIrOxhWAtw8sutQACptdInUpTaE8reE4F9EZdFbDqERnNbfuZeemu1/yuvvkpVgQnx5R7jdMQMyh+1N1WcSyz+5Mg/jTeRooilNDjtDumuVa8=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(366016)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(19092799006)(366016)(376014)(18002099003)(56012099006)(22082099003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?bSUmAQrzZkDjrmZrDZLb6Rq0aRURuLu+TlbM449HLEIUYl94F2/8tDjSBnmE?=
- =?us-ascii?Q?auAkxbIDNedcV3lH5cVOFTI2zJ/VIiV4htgoODrdb9Aq7ESrAgdjbneNUPFE?=
- =?us-ascii?Q?IuAV7lldivQLF4ih533LlwxRPDM80lgjnZQ6gk9dy+NwtDncOViTrnIkEFj/?=
- =?us-ascii?Q?Ocb4bDxK0BinOQBZHdKcX78HyG6b4JARVfLa3d39UBeFw7tXNonflBDQyEFW?=
- =?us-ascii?Q?Xnwi/vIaxAy91mqsb0CvN+dsRzKxrOjOwPEJbpPDh+Gfi6da1gi3yWJgVFKF?=
- =?us-ascii?Q?nqRwE3ZD91SGUzv0cmJEIDd4r2UdoIb0fqLSzkCa7WBpNCU/6/GW1STOMMcZ?=
- =?us-ascii?Q?BeLf8pmcjGUqHyu9Z51/pjca6IwAK6qvzhdTokkTmEs3kYR2TzgnXVwjz5hd?=
- =?us-ascii?Q?0hgPnPjDItVGSJ3zAVjGCLLIJm9mBlF2jff65nlB+QESSjc1DYEZ3flZ1tQw?=
- =?us-ascii?Q?4i2kTJzICdWPQciQ5+6bp4BujVkICEI/AKwEsOpIpk+OluTtFQiyqGHVSnDu?=
- =?us-ascii?Q?WRiOtqwaoTp+6TXVtM339Bx8pM5rVPPGqSCl9rOWwKa+AeoaZcO0GmVBQjbd?=
- =?us-ascii?Q?iivD+rk8kNVOXLvdWSrAcnkgNE8jkmhGvO9XZFrF96XU0cNLUboBEOXoRGIn?=
- =?us-ascii?Q?AE+3OSFu14X+zDzHJz0JH8LzKE/AwnKbagfxXk9drLBvv63sbTa1UX+CW75P?=
- =?us-ascii?Q?1OzcOW7/tTKM+OdSxkq5n7KGpAjWjN0+KbQCGqCYu2QYizhk7KX0kN6NH1p0?=
- =?us-ascii?Q?CSM6INcU92QYj3P59ANr72lfgHGSjpV0x9WXt5O4CAU8rSNZDz2Et2KvwYnW?=
- =?us-ascii?Q?R1NqUpMRAXRAnX641mXoqyR8s6oiB6r8QREStrdL/u/KIR4mMizA+oplDtlV?=
- =?us-ascii?Q?3aPk1mh+DI+HRA6BCEhwaREs/NbIyfPgLcx34XpbZ5vSaVledU0EGYcZYl5a?=
- =?us-ascii?Q?D9224F0Gg5t8LobvHlk4qfets5sRu8ifdllCIEEctKAONC6SfkteBtVciPVn?=
- =?us-ascii?Q?ySwqYIvS6x+Wpbn05Xoxhs3N9RIabZrqKmXJIcOya2cR6e9vdq9tU2PBO540?=
- =?us-ascii?Q?IxV9jxcvl4NWVEvdnxIxKY/mj28DQV6wVQhuTySYjUUW6ZOY3SHmLXi1zSRW?=
- =?us-ascii?Q?cpgJzqbe3VggVk9S78IDDEnzANksKINnvq0Lc9c1iehw0IjMD0F0W1N7i6bC?=
- =?us-ascii?Q?4TEUzM9zX5j/mJPU38XU3C4buC/vib7eM0MUsdQxAC92CSRt7HeCqrp0Gvrw?=
- =?us-ascii?Q?2jfe6cbxZY2JHYghIFDMMlGlXlhLIdinfa4HSav/CvIuPV897iy6UBSUijPL?=
- =?us-ascii?Q?+qe8e8Mhist3aX/e4eb0LKz1/bVh9NwItIq46id2p9r44OjM5QN9GY24x3Kd?=
- =?us-ascii?Q?v5S1sd1EglBa+hty/metIQa3JiQpSqSqqolFQn1WzmcIzuUvBx1mYSqPiHBW?=
- =?us-ascii?Q?SKlB2L+gTkHwj0FIHk8EnXev40snrCYB2YnKD6ZThLMUhymh4vvKd7Peghux?=
- =?us-ascii?Q?ttPiRFzCQPNQeh0r8Qh1SWZHAFWgkEHpdElmgWpacS7q/38nRhcA4qehER+J?=
- =?us-ascii?Q?oiZtYCeBuKsQzDbCrxdsPzCu+jaHs2A0HKEiWnSL7WunhvDhzcxYHRYul04G?=
- =?us-ascii?Q?yC9HxFacGZ4Z8QBkCd8i411bzyT/y1iqxgNPdwrxyR1iOoLKBqB82YupNUKa?=
- =?us-ascii?Q?2AOLxVal32NOQNrHFYC6EGG7a5ZiaJSuSNE3tHfc1c/eWDOZwrSJayYuC5Wl?=
- =?us-ascii?Q?/fP8qtgJ/lSFN072+drAaLU8zXrYWGe0HdAXa7kSmSZB3Q9MOZLq?=
+	=?us-ascii?Q?iNH6diObcXAbTrFgrvgVGEekO4yO8hA+cfywA3+c7YqguEBNpHWjIAL7WyoY?=
+ =?us-ascii?Q?i6I+nIPgL4/S+cZBgI91JSvffH+L85PmaPVyU47gzWOq9ElGx2WiZgkpykEA?=
+ =?us-ascii?Q?xlj0MSihvuSXzEm+afKii31giSWKE/jpwiDrIBuPCwaWtfM27/sH1vdSLPse?=
+ =?us-ascii?Q?IoEenZz5Nay8zwGGa0lr3Bv79XHMC2owl/VkY0BbKBhz8Drbm2sR5/dnIbj3?=
+ =?us-ascii?Q?SXQySpSCeQZFQiV0HNNmKl9ntJcbDVdO8SJkgMpO3utABL6QVcxS+J6qi15W?=
+ =?us-ascii?Q?kDzfuJO39CAtxxIC6Bc8NeOEX7ckdSwQRVTM2kg9v1PYzJJmuZSyOioUDWRa?=
+ =?us-ascii?Q?LOm9uWvLD1VDkp2rabPb+3jWMOc2DsLXs8mW7brPqvucY5ipEx43H/Vnha2X?=
+ =?us-ascii?Q?O44xRQUk27Fm2dM59R2v32IpnTAI8v0NswfPZ/unttJBX9bCKG/oPHwOBJYC?=
+ =?us-ascii?Q?wbBPxuzIxPkoUTTm53Hpm74swLo5SLYqeyb9HeQcZL/F6BajlWiEuFSTDWth?=
+ =?us-ascii?Q?UEuWxszWStq5TWCZnk4uATnyjQhCZGfe38beOAuSFPTdH92A4ubzbVnAu9xN?=
+ =?us-ascii?Q?BYV5Ec+9fbOR44u26zM+QOVBCGV5DfEUbZvUOlOqGyEayDsR3n8D7P9LcL+9?=
+ =?us-ascii?Q?Q3qf3XZ01DnV74T0E72vX6AG016f20/Bg/k15owBOTHpn73bdxHb4cexsYNL?=
+ =?us-ascii?Q?bkpGa5YM7hKwVZoE2V6aEA322ndDtYGeieCDeDrR2B+iktGxWc+Iwz1JBCVK?=
+ =?us-ascii?Q?COxNHe9jAS4rmRG4tWyTDKBFfCmEINaWdP2aCrscvPeA6qAlfkrq/2pdYedk?=
+ =?us-ascii?Q?qt+CNWPlMdp4OlOOfabByKRzeILR8WqLj6WGK2B1zHlrhrTdEIs7ZxMRaK98?=
+ =?us-ascii?Q?eP/it2MdJ1Q1soY0mWRTU1Ou95TKdw67oH6bWSgqlgX5Xfq224WfcUJoi5o4?=
+ =?us-ascii?Q?9qynMf+MWtar7FRESr802ZEvvUdx29SSqHgrD32AsfJjmBuY0nhxLHl3P2rl?=
+ =?us-ascii?Q?e7oe3+l006zz907soANcuxqtg6bqeGlXaYPyAOZK0CWN/vakpofS7rfuuu2u?=
+ =?us-ascii?Q?RfmC+NSFqIlX716MiCRtacTtWJ8EKH/sLmo7UQJOdtmfH6HkaJrZCoAimR3W?=
+ =?us-ascii?Q?/b5DzHRfR1Q7kl8hDlViF+jaKRuYlvwAIbEFRODJQ9rJD1tpZa6MBq///vvU?=
+ =?us-ascii?Q?liiLj937E0W0WAUoa+coHuy1asuDNqgp3qw4XjIRAu5kYS9VMPvy1DHFOAo0?=
+ =?us-ascii?Q?ShYQ+P+c53kPvI6hKlFtMGBSSYjBNqy0XY6Wu7h6zaezA6/FfgarfSRdWgnn?=
+ =?us-ascii?Q?zbEFer+1WeaWz51nGdnyq8iXod6kKuJB60W2/D5Ji7D4+BkIp+Eovvv4yMSz?=
+ =?us-ascii?Q?sl11qUUNu8bLgtflanE1IY2rx+LBwoKistGCHA8BU4izDXmTdDe5GY1AUtYa?=
+ =?us-ascii?Q?a8/3reSJ3l30++GpseIFlrn3pyKz724ZL63JjK0vX9AxgVjBHImikXBvijkT?=
+ =?us-ascii?Q?GCQP3xl64PjYA789lve7p4rs9VY4B1Igv1vBsB9E2CHxjBzJ+Dg39TEqSxd8?=
+ =?us-ascii?Q?3YzRmNcQcs0BEVFaqIUO2Kh50Kj4zLL+iKMTeVrz6L2E5WfKiZ8+W++M0/Yz?=
+ =?us-ascii?Q?A508HIMOZ1f5Y4L5pAdOcKtx33VlXPq0w1x9WA5RmBXYuoBjEdB8yprdQw82?=
+ =?us-ascii?Q?gKPSHj87fLGWO4qRYjpNxh1RXZ8bMjguwWHyvcrmUgBNyISJgaO21I5nXSu/?=
+ =?us-ascii?Q?BGR2KvW6e1FDHtT/ii0keNqux+RT9br2Z08OOLjpoS6noNQy0DOA?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cef69758-fb88-4fe2-ffe3-08df0edd4378
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0d15225-1fa4-471b-5c12-08df0edd7d08
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2026 01:45:59.5427
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2026 01:47:36.0746
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2h4Z4hSEl8TSKlQFb9dHolHgsl61LiCvfAGPFUywkCvztPeWErt6qPSVA18QvUIlb3LKhGNKB5GppHp4YfIPiK3iauq1rePHnQ0GmL8mNwwfAN7JBRqRhm+EFrVWxUXl
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRWPR04MB11224
+X-MS-Exchange-CrossTenant-UserPrincipalName: AEe6/1bmm3N6a0KbtFp71sTyZ+rJBQwjNkgcSmm8KcAFwej2tQoxLdGLOLvlnPC+TS7P+yq9YsoEySW5Y+8BQ4ryVhCqvqPju/y/t+LqI/4we1mt5CRZeP8qW6qA8qIH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7934
 
-On Wed, Sep 09, 2026 at 04:49:24PM -0700, Rosen Penev wrote:
-> When mv_xor_prep_dma_xor() allocates a descriptor slot and then
-> mv_xor_add_io_win() fails in the source-address loop, the slot
-> stays on the allocated list and is never reclaimed, leaking a
-> descriptor resource.
+On Wed, Sep 09, 2026 at 04:26:23PM -0700, Rosen Penev wrote:
+> Replace the open-coded resource lookup, request_mem_region, ioremap and
+> the manual iounmap/release_mem_region cleanup in probe/remove with the
+> managed devm_platform_get_and_ioremap_resource() helper. This removes the
+> now-unused error-unmap/release paths and simplifies probing.
 >
-> Return the slot to the free pool under the channel lock before
-> returning NULL on failure.
+> Fix a resource size mismatch between allocating and freeing where
+> request_mem_region() and release_mem_region() hopefully use the same size
+> but is not guarenteed.
 >
-> Fixes: 77ff7a706f01 ("mv_xor: Add support for IO (PCIe) src/dst areas")
-> Assisted-by: opencode:big-pickle
 > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > ---
 
+Missed v4 at subject.
+
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
->  drivers/dma/mv_xor.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+>  v4: fix subject
+>  v3: reword again
+>  v2: remove Sashiko generated description. Reword description.
+>  drivers/dma/bestcomm/bestcomm.c | 45 ++++++++-------------------------
+>  1 file changed, 10 insertions(+), 35 deletions(-)
 >
-> diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-> index 25ed61f1b089..dd4f150d5fb1 100644
-> --- a/drivers/dma/mv_xor.c
-> +++ b/drivers/dma/mv_xor.c
-> @@ -583,8 +583,13 @@ mv_xor_prep_dma_xor(struct dma_chan *chan, dma_addr_t dest, dma_addr_t *src,
->  		while (src_cnt--) {
->  			/* Check if a new window needs to get added for 'src' */
->  			ret = mv_xor_add_io_win(mv_chan, src[src_cnt]);
-> -			if (ret)
-> +			if (ret) {
-> +				spin_lock_bh(&mv_chan->lock);
-> +				list_move_tail(&sw_desc->node,
-> +					       &mv_chan->free_slots);
-> +				spin_unlock_bh(&mv_chan->lock);
->  				return NULL;
-> +			}
->  			mv_desc_set_src_addr(sw_desc, src_cnt, src[src_cnt]);
->  		}
->  	}
+> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
+> index 432b43520ddc..44ff4a42376b 100644
+> --- a/drivers/dma/bestcomm/bestcomm.c
+> +++ b/drivers/dma/bestcomm/bestcomm.c
+> @@ -13,7 +13,6 @@
+>  #include <linux/kernel.h>
+>  #include <linux/slab.h>
+>  #include <linux/of.h>
+> -#include <linux/of_address.h>
+>  #include <linux/of_irq.h>
+>  #include <linux/platform_device.h>
+>  #include <asm/io.h>
+> @@ -365,13 +364,19 @@ bcom_engine_cleanup(void)
+>  static int mpc52xx_bcom_probe(struct platform_device *op)
+>  {
+>  	struct device_node *ofn_sram;
+> -	struct resource res_bcom;
+> +	struct resource *res_bcom;
+> +	void __iomem *regs;
+>
+>  	int rv;
+>
+>  	/* Inform user we're ok so far */
+>  	printk(KERN_INFO "DMA: MPC52xx BestComm driver\n");
+>
+> +	/* Get, reserve & map io */
+> +	regs = devm_platform_get_and_ioremap_resource(op, 0, &res_bcom);
+> +	if (IS_ERR(regs))
+> +		return PTR_ERR(regs);
+> +
+>  	/* Get the bestcomm node */
+>  	of_node_get(op->dev.of_node);
+>
+> @@ -402,35 +407,13 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+>  	/* Save the node */
+>  	bcom_eng->ofnode = op->dev.of_node;
+>
+> -	/* Get, reserve & map io */
+> -	if (of_address_to_resource(op->dev.of_node, 0, &res_bcom)) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't get resource\n");
+> -		rv = -EINVAL;
+> -		goto error_sramclean;
+> -	}
+> -
+> -	if (!request_mem_region(res_bcom.start, resource_size(&res_bcom),
+> -				DRIVER_NAME)) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't request registers region\n");
+> -		rv = -EBUSY;
+> -		goto error_sramclean;
+> -	}
+> -
+> -	bcom_eng->regs_base = res_bcom.start;
+> -	bcom_eng->regs = ioremap(res_bcom.start, sizeof(struct mpc52xx_sdma));
+> -	if (!bcom_eng->regs) {
+> -		printk(KERN_ERR DRIVER_NAME ": "
+> -			"Can't map registers\n");
+> -		rv = -ENOMEM;
+> -		goto error_release;
+> -	}
+> +	bcom_eng->regs = regs;
+> +	bcom_eng->regs_base = res_bcom->start;
+>
+>  	/* Now, do the real init */
+>  	rv = bcom_engine_init();
+>  	if (rv)
+> -		goto error_unmap;
+> +		goto error_sramclean;
+>
+>  	/* Done ! */
+>  	printk(KERN_INFO "DMA: MPC52xx BestComm engine @%08lx ok !\n",
+> @@ -439,10 +422,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+>  	return 0;
+>
+>  	/* Error path */
+> -error_unmap:
+> -	iounmap(bcom_eng->regs);
+> -error_release:
+> -	release_mem_region(res_bcom.start, sizeof(struct mpc52xx_sdma));
+>  error_sramclean:
+>  	kfree(bcom_eng);
+>  	bcom_sram_cleanup();
+> @@ -463,10 +442,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
+>  	/* Cleanup SRAM */
+>  	bcom_sram_cleanup();
+>
+> -	/* Release regs */
+> -	iounmap(bcom_eng->regs);
+> -	release_mem_region(bcom_eng->regs_base, sizeof(struct mpc52xx_sdma));
+> -
+>  	/* Release the node */
+>  	of_node_put(bcom_eng->ofnode);
+>
 > --
 > 2.55.0
 >
