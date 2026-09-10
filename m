@@ -1,67 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C581488DB6;
-	Thu, 10 Sep 2026 14:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B634A3D21;
+	Thu, 10 Sep 2026 14:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789048863; cv=none; b=lvVY2dRwineTa+MJcFRd+XVbCtuwwzlYaXly1sQCXQ5E5O+c5gNf0KUuM5frS/kJ1g13URlH+sbOg+zfp8m0INLqV49dJ1zXRBSfaSO7KJ/xv2Vcj70ldLc7mqxDA5tURuKN2yjxyEp+cwn4FJuGP/slJ/P/hTaPNs1hNwdYg5A=
+	t=1789049213; cv=none; b=XvYRBycK4GzEprkoY8SLOiH//7VUwHSHbMu1dmz3g4why/4TsIMdg65eXf7Zl/PxrwPKnOp+Ez29DaIUM6qdxr9PU3Sj3IBzMtCkOfmLTWGFgAIp8oBB3Gi0vycoakKlO6KPpT2QLiDKiSbF34R2w4/+xkYC0LVDlvSC0lbIv4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789048863; c=relaxed/simple;
-	bh=jlM46+TuRhEr40sN7rYV6RWx8Dmue6LPAvGY05a8VL0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hWouQmMDuMS5QMcvAjYGmZuAsjCPm52FLv3JuImcLCwA6FWt71iHQWUU7wzZ3o8fzMuhJVKaRcMNq5YpNHyj7uRxIFUMYLIMHjQWSHYN1XZOXxAOOnHpO2Qeccwn4fIXNFj6GREGKaadKFh9ui7eTBWpiO2mTGRZKY77Rri/ddI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B+UmGzv1; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789049213; c=relaxed/simple;
+	bh=gHmmDFYXcl4BFQ6ooprpIeIdGlWv/6M3F6KrXoLY4AY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=pifZvMd9hPdmM9MLnmDB2swt5EHoKxn8n3V87n/SUS+SHMG3iOIjzXw3e1uXWuRgTeZDiy82+OxMgVOF5VBpc7w+Fg/pjTt8Kw4Lyxjm7UkslEyKDvuEpPeaX+38tdk+eW1wjaL6kpJJmQRFIaJbR0QhUfghl+q88d9IZLHVKrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+OhKHMj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B+UmGzv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7F41F000FF;
-	Thu, 10 Sep 2026 14:01:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+OhKHMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724A81F000FF;
+	Thu, 10 Sep 2026 14:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789048861;
-	bh=AcgYlwaqPlFnoddhUIMNGVmSmineEfv5TPAqOmCmHEI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=B+UmGzv1cYK7yH6bI+GgE5UwojwXWKTTuM5d/WtRKUN3TFHEmvfab2EYj1iaa1IKV
-	 vu3rSYF6XSW9DxskVNSxTWoCj1YsB2+277+cj2sM1NgRxsZgnKm5fLYzT1P7RkaW/4
-	 U0f7zheVESkWRKJ/3qHeGHg3vcuaUVUaQsNSxHV1vyw9BHcf6dyJYviHZxvTtIdGG0
-	 TxAr36WQwRx8ThTsDf+9PIijI6nBizZ9ZnTsCtg1IrCogwypYNXfEKj2pLNco+Wu1v
-	 lLxmAANnlmIUA/aLaKka2L0wE8c0cZvsk/hfzqkS3++ki31e0apZDXUEaIF1AlzvO0
-	 AVzRyc6X2U2jQ==
-Date: Thu, 10 Sep 2026 19:30:57 +0530
+	s=k20260515; t=1789049211;
+	bh=CBqu5VqU+X7aB+8c5EeB4WIxVldGwxAwHMHbFNnCBOI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=k+OhKHMjvkpwfk9wSOyKmv6Z+oyVQipOnoqJhhShlmbZqLluZUAa19j0d/WXM+Xhx
+	 Bg9zv76j7tpgWZfTX/LVpjMbWEAFG74APsmo3Aoc+3D6aCEMepvoXgajNX/qmeXIpz
+	 nbfRhJx8z7nySUq2weHJVtF5FLVlW6PnPVfxXybMzroCQfPtQsNrsSDUiM1SOKjTY5
+	 KaZ2e+jzxCYDMH1PBDVP9kg2X9Bq895+fVDrGLbO92Yon4RKmoZudD363uT73XzHaZ
+	 /M9zMXs0VxgsgRbTupQwqtq1k2IqaumkRuH549jPJKL/laolSC0FdqyjRHh/e5S5nW
+	 /1bzpuWEFo8Ww==
 From: Vinod Koul <vkoul@kernel.org>
-To: Rosen Penev <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org, Frank Li <Frank.Li@kernel.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: bestcomm: use
- devm_platform_get_and_ioremap_resource() to simplify code
-Message-ID: <aqK4Gd1LvImmVPUi@parshuram>
-References: <20260909232623.89321-1-rosenp@gmail.com>
+To: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>, 
+ Kedareswara rao Appana <appana.durga.rao@xilinx.com>, 
+ Alex Bereza <alex@bereza.email>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260817-fix-hw-buf-desc-reuse-v1-1-d79827a844c7@bereza.email>
+References: <20260817-fix-hw-buf-desc-reuse-v1-1-d79827a844c7@bereza.email>
+Subject: Re: [PATCH] dmaengine: xilinx_dma: Fix hardware buffer descriptor
+ reuse order
+Message-Id: <178904920902.109109.8238525405953023415.b4-ty@kernel.org>
+Date: Thu, 10 Sep 2026 19:36:49 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909232623.89321-1-rosenp@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 
-On 09-09-26, 16:26, Rosen Penev wrote:
-> Replace the open-coded resource lookup, request_mem_region, ioremap and
-> the manual iounmap/release_mem_region cleanup in probe/remove with the
-> managed devm_platform_get_and_ioremap_resource() helper. This removes the
-> now-unused error-unmap/release paths and simplifies probing.
+
+On Mon, 17 Aug 2026 11:23:55 +0200, Alex Bereza wrote:
+> xilinx_dma_alloc_chan_resources() builds a static ring of hardware
+> buffer descriptors once and the driver uses this ring throughout the
+> lifetime of a channel. This requires the allocation order of hardware
+> buffer descriptors from chan->free_seg_list to stay in sync with the
+> hardware buffer descriptor ring built at channel allocation time by
+> returning oldest descriptors to chan->free_seg_list first.
 > 
-> Fix a resource size mismatch between allocating and freeing where
-> request_mem_region() and release_mem_region() hopefully use the same size
-> but is not guarenteed.
-> 
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> ---
->  v4: fix subject
+> [...]
 
-Where is v4 in the subject..
+Applied, thanks!
 
-Nevertheless this fails for me, can you please rebase
+[1/1] dmaengine: xilinx_dma: Fix hardware buffer descriptor reuse order
+      commit: cee9c863ee68cb27d66745eb03f60e357f4f8ad2
 
+Best regards,
 -- 
 ~Vinod
+
+
