@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CB44A3D3A;
-	Thu, 10 Sep 2026 14:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475924A64D4;
+	Thu, 10 Sep 2026 14:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789049216; cv=none; b=jyO6i949aV72ZrDUq59il1f7z5bdcq4ohkVCJo9/N//mnuSXyWqfFgFBFdRRQuiQzn6r3xbcg8sR0prB3VmQtfKRed3a8f1AQREIMom/kZ8YU9rwKOC/CX1qdBJQV9L1GMtRNG4VpmSX3Xp95OJ4MBiAGosaAM8LonVZFmiMHBw=
+	t=1789049220; cv=none; b=udW3kdxXsq3j9a6inO3n0oJTkO+UvFw677wUlhKdikRlZ6vyxoS6OJbzHj9qUSz+IHE/tve3Ml19bFkT2CQ8i+vhSTecFVtDVfIgxlGutcTiTaiMHwC4rM1NxF7DgHdmkzMWYVzys5JtdBXaUq5ZZdzbanhGxPcXvTcO+HeFWFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789049216; c=relaxed/simple;
-	bh=pBr2Wslr/OBvg9qHQYOJVOBcUgvKRbCd/2uvc/bLd8g=;
+	s=arc-20240116; t=1789049220; c=relaxed/simple;
+	bh=0phZ0QDUsMUc6X9QwEMFuur8sUoxHmFRmv2fALjG+7w=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=BHdLQFSzICzV/L0ZZHQ7o2Z9J5XQZHkUzy9LdvklEe4eIp4Zd5oP7ViO/41PhbdEQ5urBJ91AU4/DWOwXGTa1/IgA6ry5MFvVMDHEBGDgBlIvuE6miuhGLQ6cxnS1Y9gvNMamPqE8HIthw0SZ7fZBjGvPP8wQ2KzPq4CiYkx/18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fooDFSDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NR4ehpxXxA2VCrJvq3UPbDTp5v9AHmWk4Y3y4sRQ4KOx5cdiuS6ULOpOa3H48aMUpWHoD5SGfG3o8SpWgAzl3g8csdYy14qUUuYqL4djLNPpfYrIm16g/nV4nvC3g+ebA9tHLl+tBNIR8JiWfUoXnHXjuO/rJrwqbi0Y9c5pVpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WskmYreA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fooDFSDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589461F00893;
-	Thu, 10 Sep 2026 14:06:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WskmYreA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4821F0089C;
+	Thu, 10 Sep 2026 14:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789049215;
-	bh=ktQ/mCzljVKF0hvcEfd4hDNXCpVqMxkORMTuXMwuaFE=;
+	s=k20260515; t=1789049219;
+	bh=9s3dbjpQkzsiVVJyqVDj2DYOx7r7jEs5RAl7koa46/0=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=fooDFSDCRbGIyectMaPvdLe4BSe0Xeb/ACL9L3ltDh7dVCBTLG+jKdQ4Y8+rvx1Ez
-	 IDDgl4dfmKSNrXfQxDGAJp+d0UsNL20qagyQkzCytVD6FeYlYuBG8hZpval3Xt9PMe
-	 pGjcj4kkKb5zOF6dr+UIIEpXyAdNsCF7DiHKMVWgkxCxlSksETReJVCF1fP6uos6qm
-	 muxg7TaQhDjvw6wsm0KWNi+dFnVlbBGtZgx+JeQTJz31ZIHfdOXSKQyb2M3Vn2Ggsb
-	 +6LF6m9+9k0J+/OpKW9l3Bw8zBiLVJ66u2XmV4YGK5OrVj9zDEYQ8iuW9uikZSw4ss
-	 lNBZmWoUKoPrw==
+	b=WskmYreAF4fUUx0w9aQ7KU9ip/RwqHAMgCarp2hhnSv+5/AuLtIxnvhlFLlQM2jvu
+	 Qbk1O8JA2RW8JgdSpvFvgOQXw2tYkkIJj8tMYM/q3t4XpKa/ZLwCGB7QsQkeaqT+TO
+	 s8Fkvqzg8wm7FfvgiO6dhooCkQQSq5bOC4UFzJJsRfhk2BkJYWgIfu8x50be9gikkB
+	 Sm4njabqa1Md2c6v0llvrlkcJoSPDS5ddh2pSwb4UCxYpVLe6xOutBe7DDLU/3Qp8i
+	 6d7d5MvMOumrobWJzgOWOUIT9RVlCLPOgSM2kyM2D0RlgjqCQhz2U6NRssgn9JxCLw
+	 cdlBnTKWtA9gA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Christian Lugnberg <christian.lugnberg@soundtrack.io>
-Cc: Frank.Li@kernel.org, wens@kernel.org, jernej.skrabec@gmail.com, 
- samuel@sholland.org, dmaengine@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260817135723.12807-1-christian.lugnberg@soundtrack.io>
-References: <20260817135723.12807-1-christian.lugnberg@soundtrack.io>
-Subject: Re: [PATCH v3 0/2] dmaengine: sun6i: Fix two bugs in the DMA
- status path
-Message-Id: <178904921191.109109.5746892619101559603.b4-ty@kernel.org>
-Date: Thu, 10 Sep 2026 19:36:51 +0530
+To: Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, Frank Li <Frank.Li@kernel.org>, 
+ Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+In-Reply-To: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
+References: <20260817-dmaengine-pxa-v2-1-f42ab0569a48@pengutronix.de>
+Subject: Re: [PATCH v2] dmaengine: pxa: fix double counting of the hw
+ descriptors
+Message-Id: <178904921538.109109.3118643113304356856.b4-ty@kernel.org>
+Date: Thu, 10 Sep 2026 19:36:55 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -49,22 +51,22 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Mon, 17 Aug 2026 15:51:21 +0200, Christian Lugnberg wrote:
-> Thank you for the review, Frank.
+On Mon, 17 Aug 2026 22:44:33 +0200, Sascha Hauer wrote:
+> pxad_alloc_desc() was converted from
 > 
-> Changes in v3:
->   - Patch 1: trim commit message to the root-cause explanation and fix
->     description, dropping the debug/reproduction part per feedback
->   - Patch 2: unchanged since v2
+>         kzalloc(struct_size(sw_desc, hw_desc, nb_hw_desc), GFP_NOWAIT)
+> 
+> to kzalloc_flex(), which sets the __counted_by() counter sw_desc->nb_desc
+> itself - but only where the compiler has __builtin_counted_by_ref(), so
+> from gcc 15.1 or clang 22.1 on. The loop below it still increments
+> nb_desc, which makes it come out doubled there and correct elsewhere.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] dmaengine: sun6i: fix non-atomic read of DMA position registers
-      commit: c90b6973daa37f4c283342dff881ae001dea4fe6
-[2/2] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
-      commit: 9096bdc8d930147f7c39a493a859acbd3a8485d8
+[1/1] dmaengine: pxa: fix double counting of the hw descriptors
+      commit: f6504be006aa4bb4bd26285f410a885c17920d65
 
 Best regards,
 -- 
