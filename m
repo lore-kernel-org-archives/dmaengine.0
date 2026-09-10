@@ -1,223 +1,136 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD79738F624
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:18:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370633AB29D
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789071488; cv=none; b=tnAFA3Ab6s53hRpwIQ6lG5ejbaSXbTfY3JxlY3kh0EGcd2Wrmu82v8gVtSOXQBwoLzhhOZlWDhntEg2vMD4sX6+0LE7kiINYZdjMknsCoRVdTEBrXO78A3B609uEL+LkyFATWbdFQ8/OkJ4wjq3wf0i9UyI/o4qBkXOlp9wvgjs=
+	t=1789071902; cv=none; b=cxZp8UPntfukvIPB7/Jnp6BvB2ax08F/40sks6geFOplbBKMtVcHJd1V2Bar2zk7a0H4ayp+BV5cIYEtvqIQ38Q88mAlpbmoQx0zaDfKyGsuL0u3TE3FFnxgZJthHqoAxHkfSV0eyGJfuCqEZlSPLxvEwXY2z0GcCKV5zcgczKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789071488; c=relaxed/simple;
-	bh=dnU+NXZ1HJz/AdNhBfiSDDrR+t2vgIugwDXWCxSD3AQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nqhQW5/cgcxWetP8Y4mMQWWzLwoEwFyLEpmPwMFQvwKuxwqWS3XEJX8yXpqWSTR0MObrPq/Jiw4ySTRxa7YWrUxSGbXC4diz8wCEYDKtnHZMliWRVAzFTgNGJ2alFnPlXORuE4sP3bCr+KsFIkrGPyIPWMUgAOnjaGihJnGAzkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IovMArhb; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789071902; c=relaxed/simple;
+	bh=crUU4hqfzWmg1FxOzOMfiI90weFHQvv57LQbmKwL7Yw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aYyL5lDepqS1r2IUwU/TVqhMopVsqNUzNmFobtFc5ye0PJgTMZ1Wh1353qwzCs6G+r50fxZ2laQntSrpPb7Ay3lnP7bNPKoGe/72julgXc4yIef5Dp1H1Fd03EFU3ZaOQKxrf0Uc7Rg2X7iNaPpsc+3I2D4z9tASmVkMoSh9fHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQCWkfPj; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IovMArhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6601F000FF;
-	Thu, 10 Sep 2026 20:18:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789071486;
-	bh=ObA8kVnaGaafAZB9jQPZknlPpQeeJdtx+17rvoo0oGc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IovMArhbe6YCOGFyY/uZd7n4XDCtvMpuF2fqHdJNi3wUXNIHxWPA5eo6XO0+aiQqL
-	 t/5h8S9HDJyRw8393eoiwFpB/HCekKcMsgNuDvONqAIC0qwyUF5s4b+0tpPGwJThrO
-	 HYhgI2dOG+gSIvmoGqP2+o8F40QTV1/yF5yLMgnMzs9do8YxJtX6Strzcsi2hjldh4
-	 1koELtFDFq7Pq1DsAe7E322o1+zHRioeZEirmeJsH1TQzpJ2hG0HAkKtzpnv0tKsC/
-	 KE9JU0VrO9pcwDLJE1HGmh/oE3ep28dCHXouvKCVIUcdNyrAdCkxi1lTywj3kNCcKs
-	 a9eKc+ZP/3ZcA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv4] dmaengine: fsl_raid: check fsl_re_chan_probe() return
- value
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260910200637.41512-1-rosenp@gmail.com>
-References: <20260910200637.41512-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 20:18:05 +0000
-Message-Id: <20260910201806.0D6601F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQCWkfPj"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-5306baf6b53so2821211cf.1
+        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 13:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789071896; x=1789676696; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=5fAMAx/mtgGUhEgU04FWSZ/Setac6qTqsovVdgc29/U=;
+        b=nQCWkfPjTNUt6F2uPmDrzaazyiYjLK+H5XqAZBgfcki2pvq9YncI1c0R+DT9NYgxdJ
+         lqPxeXFDwNPcLcZHktp7UYCkxi8CpwI8t+OHSL9HqqUgwr/bSoDvF8WNfVlmO13byOi1
+         dzIETdeYzI/oBkOTtQggHs8s5/UvlLyIe4k+WEe15AiMoaKIwtYJKTB8XSWALj/SIxZf
+         HmzXoVRBIOTDbvfshpBOlCNbeHwCObufM/VtFL7Yqthq0mA/XbX5ILYCAv6vCdCcF6em
+         p9MHC+35YI3tvnY1VqMkvc+9QjPvOs37r9kLz2wsiXETpwmmUehOMKhMyFoB//qMUo1c
+         /vfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789071896; x=1789676696;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=5fAMAx/mtgGUhEgU04FWSZ/Setac6qTqsovVdgc29/U=;
+        b=sPVROJNC8+fzVcSdkUVgCghPV75rhmFj9U1w/qYzMDUyDktRp1CKxvsuUM7cU7pjyQ
+         Vzktsh4SexktGYscixyLUq10g27V7XpL09N5WlldGyOzncLGuU2b/Cva8gXjgzuxFUBM
+         whwRCLj8un5yUg6UMy73GvCn4qao79G/MW7J44mmNw2DZdYoFemQzrHE5lG5K8lLvjk3
+         fcXHa6i1E6zllAWrbX1pV8lwUKTgOc7W3KM6A6dE7l1IDN99WrdNHMh+zD1Lr+Ze+cJY
+         ObPASDFGMRAuaRocF6EXilC5Zq6k+qZNfKz4Q0MRaxbRoWixxhQeknUnChUqLHtVKF1q
+         eOEw==
+X-Gm-Message-State: AFuF++lVc1vKRuskQAux8MQMlGqo2cU4fPt9u6US9RS0ZrJZBGZJIvz7
+	8m72GjxSD8RMXqK/Wr1N0ffiKKY9qsn2EqfqX3l5OtTDPWdtvC15GlsZAcyzEw==
+X-Gm-Gg: AYBFou2wtL7FCM3o0SZNxAzhtfIdshCAcuCQ3Co7v9ujB5Z2lvirFrkuyfWqDZj2Lxf
+	YY4aTDlSs+OWhUYmqd/bmosz4iqhKi9/S3jYm8EwjavC211P+9UGRezydnqIZTni/10XRDQn16q
+	Rp+3JXQ3YTf2a+zVf+AghQ/AzwcGxv8P7ZudDlTfJVzp4hGqnFgpx+NLmj5vHhfL2ZRCRuLnGnT
+	JeRKplsMOSjqXPtYqJwlHHy8ZeLwHDr+/c7E0h6kch0vbo9ktk5H/2TeX6G5fDjTJHaSaSaNbaL
+	nawM8Pr0Q4sV9v7mHeuY9avHi4IXuqhcKCOCy9oNLF4mgveTNkQuVbJ9A7IM1EA3JNg24CYGCmK
+	dfdhwJ5rg3bFlePUDIJmLxHYGoW040a89l6ZxsSSGLOhYyv27vWaz9TSJ30DMfuITGl6oYiB+Q9
+	NhiBpYtI7FkxFpxZRANq9chYCSLco0dOjxXMLWPVsfEbBkw38lbcYSfT5TXzmyqz+wLB0mZb1aI
+	M9hNwXy/8uSXIIsfa362Hfc7RjZEUFCrFxa8e53x5sszeMb50WG8UBiYKIdEvN6nt0vNOFJBB+0
+	xtaYtjLxyE3Qng5gk8hYkQOedcttKbIINNt6bmqAhsTi2hayBg==
+X-Received: by 2002:ac8:5a0f:0:b0:527:809c:f9cf with SMTP id d75a77b69052e-530c85979bcmr17636911cf.21.1789071896008;
+        Thu, 10 Sep 2026 13:24:56 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-530ca489107sm2035371cf.14.2026.09.10.13.24.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 13:24:55 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Zhang Wei <zw@zh-kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE DMA DRIVER),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv2] dmaengine: fsldma: fix kernel-doc param names to match function signatures
+Date: Thu, 10 Sep 2026 13:24:53 -0700
+Message-ID: <20260910202453.47887-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+Fix kernel-doc warnings where the documented parameter names
+(@chan) no longer match the actual function signatures (@dchan),
+and add the missing @cookie and @txstate parameters to
+fsl_tx_status.
 
-Pre-existing issues:
-- [High] The driver never frees requested IRQs or unregisters child platfor=
-m devices, causing resource leaks and use-after-free on error paths and dri=
-ver unbind.
-- [High] Returning an error from `dma_async_device_register()` or early ret=
-urns in `fsl_re_probe()` fail to unwind successfully probed channels, causi=
-ng resource leaks and UAF.
-- [High] DMA channels are never added to the DMA device channels list, rend=
-ering the driver non-functional.
-- [High] Interrupt is requested before private data and hardware are fully =
-initialized, risking a NULL pointer dereference in the interrupt handler.
-- [High] Channel resources are destroyed before the DMA device is unregiste=
-red, allowing concurrent use-after-free.
---
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+---
+ v2: split up from series
+ drivers/dma/fsldma.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-commit df14fae70b7983f30255454748eb310d0c4f9ad9
-Author: Rosen Penev <rosenp@gmail.com>
+diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
+index 22d62d958abd..6ce0e5668dc2 100644
+--- a/drivers/dma/fsldma.c
++++ b/drivers/dma/fsldma.c
+@@ -681,7 +681,7 @@ static void fsldma_cleanup_descriptors(struct fsldma_chan *chan)
+ 
+ /**
+  * fsl_dma_alloc_chan_resources - Allocate resources for DMA channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  *
+  * This function will create a dma pool for descriptor allocation.
+  *
+@@ -738,7 +738,7 @@ static void fsldma_free_desc_list_reverse(struct fsldma_chan *chan,
+ 
+ /**
+  * fsl_dma_free_chan_resources - Free all resources of the channel.
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_free_chan_resources(struct dma_chan *dchan)
+ {
+@@ -873,7 +873,7 @@ static int fsl_dma_device_config(struct dma_chan *dchan,
+ 
+ /**
+  * fsl_dma_memcpy_issue_pending - Issue the DMA start command
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
+  */
+ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
+ {
+@@ -886,7 +886,9 @@ static void fsl_dma_memcpy_issue_pending(struct dma_chan *dchan)
+ 
+ /**
+  * fsl_tx_status - Determine the DMA status
+- * @chan : Freescale DMA channel
++ * @dchan : Freescale DMA channel
++ * @cookie : DMA transaction identifier
++ * @txstate : DMA transaction state
+  */
+ static enum dma_status fsl_tx_status(struct dma_chan *dchan,
+ 					dma_cookie_t cookie,
+-- 
+2.55.0
 
-dmaengine: fsl_raid: check fsl_re_chan_probe() return value
-
-The commit fixes a potential NULL pointer dereference in fsl_re_remove_chan=
-()
-by checking the return value of fsl_re_chan_probe() during device probe and
-guarding against NULL entries during removal.
-
-> diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 2d86f61105e52..66b7ff0f31f70 100644
-> --- a/drivers/dma/fsl_raid.c
-> +++ b/drivers/dma/fsl_raid.c
-> @@ -828,18 +828,32 @@ static int fsl_re_probe(struct platform_device *ofd=
-ev)
->  		}
->  		/* Find out the Job Rings present under each JQ */
->  		for_each_child_of_node(np, child) {
-> +			if (ridx >=3D FSL_RE_MAX_CHANS) {
-> +				dev_warn(dev,
-> +					"too many job rings, max %d\n",
-> +					FSL_RE_MAX_CHANS);
-> +				of_node_put(child);
-> +				break;
-> +			}
-> +
->  			rc =3D of_device_is_compatible(child,
->  					     "fsl,raideng-v1.0-job-ring");
-> +			if (!rc)
-> +				continue;
-> +
->  			rc =3D fsl_re_chan_probe(ofdev, child, ridx, off);
-
-[Severity: High]
-This is a pre-existing issue, but does fsl_re_chan_probe() leak resources on
-failure and driver unbind?
-
-In fsl_re_chan_probe(), a platform device is created and an interrupt is
-requested without devres management:
-
-    chan_ofdev =3D of_platform_device_create(np, NULL, dev);
-    ...
-    ret =3D request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-
-The error path just returns without unwinding these:
-
-err_free:
-    return ret;
-
-Furthermore, fsl_re_remove_chan() destroys the tasklet but does not free the
-interrupt or unregister the child device. Since devres will automatically f=
-ree
-the chan structure on unbind, wouldn't the leaked active interrupt cause a
-use-after-free if it fires and accesses the freed chan structure?
-
-[Severity: High]
-This is another pre-existing issue, but are the channels ever linked to the
-device's channels list?
-
-fsl_re_chan_probe() sets the device pointer:
-
-    chan->chan.device =3D dma_dev;
-    chan->chan.private =3D chan;
-
-However, it seems to miss linking the channel into the parent device's
-channel list. When dma_async_device_register() is called later, wouldn't it
-see an empty channels list and register zero channels, rendering the driver
-non-functional?
-
-[Severity: High]
-This is a pre-existing issue, but is there a race condition between request=
-ing
-the interrupt and setting the driver data?
-
-fsl_re_chan_probe() requests the interrupt before setting the driver data:
-
-    ret =3D request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-    ...
-    dev_set_drvdata(chandev, chan);
-
-If the interrupt fires in this window, fsl_re_isr() will read a NULL pointer
-from dev_get_drvdata() and unconditionally dereference it:
-
-    re_chan =3D dev_get_drvdata((struct device *)data);
-    irqstate =3D in_be32(&re_chan->jrregs->jr_interrupt_status);
-
-Can this lead to a NULL pointer dereference panic?
-
->  			if (rc) {
-> -				fsl_re_chan_probe(ofdev, child, ridx++, off);
-> -				re_priv->total_chans++;
-> +				dev_err(dev,
-> +					"job ring %d probe failed: %d\n",
-> +					ridx, rc);
-> +				continue;
->  			}
-> +			ridx++;
-> +			re_priv->total_chans++;
->  		}
->  	}
-> =20
-> -	dma_async_device_register(dma_dev);
-> -
-> -	return 0;
-> +	return dma_async_device_register(dma_dev);
-
-[Severity: High]
-This is a pre-existing issue, but if dma_async_device_register() fails, are
-the successfully probed channels abandoned?
-
-When dma_async_device_register() returns an error, the function exits witho=
-ut
-calling fsl_re_remove() to clean up any channels initialized during earlier
-job queue iterations.
-
-Since the interrupts for these channels are not devres-managed, they would
-remain active. Once devres frees the associated chan memory, could an
-interrupt firing trigger a use-after-free crash?
-
->  }
-> =20
->  static void fsl_re_remove_chan(struct fsl_re_chan *chan)
-> @@ -864,7 +878,8 @@ static void fsl_re_remove(struct platform_device *ofd=
-ev)
-> =20
->  	/* Cleanup chan related memory areas */
->  	for (i =3D 0; i < re_priv->total_chans; i++)
-> -		fsl_re_remove_chan(re_priv->re_jrs[i]);
-> +		if (re_priv->re_jrs[i])
-> +			fsl_re_remove_chan(re_priv->re_jrs[i]);
-> =20
->  	/* Unregister the driver */
->  	dma_async_device_unregister(&re_priv->dma_dev);
-
-[Severity: High]
-This is a pre-existing issue, but are channel resources destroyed premature=
-ly
-during driver unbind?
-
-fsl_re_remove_chan() is called for each channel, killing tasklets and freei=
-ng
-dma pools:
-
-    for (i =3D 0; i < re_priv->total_chans; i++)
-        if (re_priv->re_jrs[i])
-            fsl_re_remove_chan(re_priv->re_jrs[i]);
-
-Afterward, the device is unregistered:
-
-    dma_async_device_unregister(&re_priv->dma_dev);
-
-Since the subsystem still considers the device active until unregistration
-completes, could concurrent or pending requests attempt to use the already
-freed pools or schedule the killed tasklets?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910200637.4151=
-2-1-rosenp@gmail.com?part=3D1
