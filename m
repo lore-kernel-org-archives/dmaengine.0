@@ -1,225 +1,152 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF0853359D
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 21:20:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5293B457E72
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 21:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789075236; cv=none; b=m6lNjzTofnAaPMOrLO2JVSX1jUgXlTvuVo8e2qhsbTBiZxI3dWNhOpm43jd0nXUTPYntv6qID9UxxgoVSm56UV21TZTZ38u/zR+X9ou7jFx2Fn+WCqOU25dnL8c3J2BiykFPnXdGFx3Wy29vz70rLoK7lejHqy6wcz4Gv3VKx4o=
+	t=1789075643; cv=none; b=izc4JLduhuYgPafEaMY8d5u+rAJBLJlcLLwR1S7zG2QpjDFzY+Tf1fhHxjugL5+SYAwfAoxdYBjCYmH/cqj28dktmxRsfD9DZhsd1UxQ8n7EWXXnAbfHlsLS+yNJOGCRg6Noa7e2BNp2p8fS++W19dpBKCPIvbKr2lGmj378u58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789075236; c=relaxed/simple;
-	bh=dIpPv2LDgNjkqLCjQTco+SsfikFQw6to+dKf+3PmTkw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NGRmb0yk2Bx5ZGSOJnEXTWH23EWkvJukzzWkVaJCzJN3yaN4xoSb0anOGm0WeCeDpNeS8gC4MMIsgh9pB32S2KMgi6EyN3LoEjpKwnTND/EHNLthkCwsvG1hNFhg/GiT1lwJr8t4jOtNFGRBQadsemZC5avEO5u+xSUSyYzhscw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jUuk10hi; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789075643; c=relaxed/simple;
+	bh=n86bb0jlN8OHuQ51PPzeG3kBFeDtIJXp96QKrtelbEs=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=tUXW7baTI4JW/FLqRjxRWdaJbNHd33pQFfCx9YPcOkitNT3TrIXaHXXSVPXgIL71jCCERPe3Ww75NMCgwJHVW6bDr6OUhONbogSjJABGJLN/Pse+1XeZnBsxzCn4TVZ2x1lR5FOilP9wCQ3ZrjnIgSLA3z+j9oGvS47O9M6odZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvDigolL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jUuk10hi"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-853f8c34ba4so225408b3a.0
-        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 14:20:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789075221; x=1789680021; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WcaRkjFLJlQ6IrC07cf6523DmJ46vlkl5Xth5RPErjY=;
-        b=jUuk10hi71DWKjBkJdBjHpbLkA31mE9n5trbOgwLTS1RcmudiPnAn8CF6wX7kcHThC
-         SThez5aXJEixt2F12BScnEfiDzaHtHH60mKSQ8HgbprKZ6xGxBeSMxrMetpvQFk8Bpfu
-         GTAZVzaUDu/6aeOIA/X1lwNKwctlwvJyZ7gBHcn48OO5aaiHB0ELOaj3TiFYS37fe4R7
-         FIaJMhOPT1yAmq0T+r0qzYWnEjIY0sg3CPr+2YzRPE49fdCKdn7nhS8E9GplcoYPa/eZ
-         uiaZCm3yW6lb51U6pcxA47wsCPw0wjFOwf7usSVPx1A2viVmgF5i2usbACQnQzoteyuT
-         YeLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789075221; x=1789680021;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=WcaRkjFLJlQ6IrC07cf6523DmJ46vlkl5Xth5RPErjY=;
-        b=YrzkCG8BOoeDxf5Ig5ifRvyUUsr3VWYYW1vIu+0jwCf1nyGqZaHZsevkVIF6GENNe1
-         z+KlZRspJ7f1l066mM9vI6SZ/LQ482kl9tQZGYs03/jaIpszX5/qxbsdfgTlvvowrnSJ
-         AbUQWUs6f8cVDVKW5mocV6nZkBJVg1+YZVNh8daPmHHH+poxrt6cU+nHbm6N2igod/XD
-         ZY8LMblOrti91UaKa8LcHAJT94CMqy5W3Ic3dfqcCjyG41Myo6RiLZs9YF+EoxAnqhPY
-         YsV+raoswpcTJkYYw8Scxor/mUqTguMBF6O688/Rhiu/iPjA+8slDQbPY/Ic0XhI0/uk
-         7E/A==
-X-Gm-Message-State: AFuF++kN/gOg2xFf7604ryRWfFnXoUIi6pFRZdHju0etBisfSfXtDXqf
-	0FhAxC2ZwMg6p5SF9wPFnPnVjKSTKipMZKfiJO0hC2uZ3nusuAR0LHRyx6XJxA==
-X-Gm-Gg: AYBFou1G7FA+hEDeFQnZ0dz6CskmQJ7ugmIaCC8fvm4HXmoSIhceSGqb76Uiz0rNk3O
-	WANXymal7PRsz8Kr1rhKS9L3pL3PGbEdMiXgSleYAu0MGw1q9G3+GuEOMai7AfJpaTZFQ/eEuFg
-	gMnAkDU3Df+VMKjv6wzJDk0yvM3bTXhEsweaKJ6z82oDpQoPAk3w5z2oXU1BLZV68G3goNs/jD3
-	an2+nnkKHlTIe4V5S9hYfQSsYw/wt48qBHMhEXOXko9uGp84wKnEYSACNZmf+jwf+7cSRs/mgiv
-	BNRvSbKiE/Q9WJqB1bvJgHBKS8+LOLySwtDYLh5/NvOOVTbN1f7+g1hNcrQrm3DHRxaGcGNxeCJ
-	0e5fUclRwymtSuJ923r1AbEZtXuHSic5hh5dK+sm2smELTr6ugloL2QPtjaIbftb2sOadJ8UdT/
-	kjDBU086KOCZQJF3HJbJoRC53TwqZdQuv2h7ZyDZHsi0in0Qq+GdjZRqNrcB+6wR61tzcVYYqRU
-	WXEIHKKxSmjZVap+r/jR0dyYDze6TG8+Rc86QI8sNurPVetxKBfgT9hlUg40dMe/EE7DwchfSd8
-	GFpanOsnCkiO+RnmiEUElbo1dQ9ec02hNPKkpK6ZnZsVHoxd
-X-Received: by 2002:a05:6a00:348f:b0:84e:7ec:aa42 with SMTP id d2e1a72fcca58-86b30122689mr1431259b3a.10.1789075220699;
-        Thu, 10 Sep 2026 14:20:20 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b2a3c2ce7sm138814b3a.56.2026.09.10.14.20.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 14:20:20 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dmaengine: ppc4xx: use devm_platform_ioremap_resource()
-Date: Thu, 10 Sep 2026 14:20:18 -0700
-Message-ID: <20260910212018.67728-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvDigolL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6381F000FF;
+	Thu, 10 Sep 2026 21:27:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789075642;
+	bh=e+aX0AIDGryN9+kABdO6wtfRBFxcWnmq2siL+XDnFGg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=SvDigolL4xECZjHoAYTFkdQwKaRze4yqxfixFIu+MM+pjyHVMs6Xma+hAoPleBHFe
+	 4EbzkHG24e8yqUfUxEU9/1RM4N8mE3Lub4zGja9cnmiyGH05zag8zRqeKKIMmLszWw
+	 YxDQFhStJz+yVBJJNUM8DfUzFBrcd56FWFFLvRhpX0rTySDcz8czns/xVsUqyk3mlo
+	 e91jPKUU6VuAl0It7TLZOETDwkfp0LAZJozMpiHsN5GuzFHgjnldheS45iNf5JCATM
+	 CyUecuuUBKk3BQTD760uB4FYyR7zu1aC6zK0FnCUQ+l82mHb4VW3DMx8iBYYQSQC0I
+	 cyNbX6fePeefA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: ppc4xx: fix format specifiers for size_t
+ arguments
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260910211440.65618-1-rosenp@gmail.com>
+References: <20260910211440.65618-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Sep 2026 21:27:21 +0000
+Message-Id: <20260910212721.BB6381F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Replace the open-coded sequence of of_address_to_resource(),
-request_mem_region(), and ioremap() with devm_platform_ioremap_resource().
-This eliminates error-path cleanup for both the memory region and the
-ioremap, and lets the devm framework handle automatic release on probe
-failure or device removal.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-The two separate initcodes PPC_ADMA_INIT_MEMRES and PPC_ADMA_INIT_MEMREG
-are collapsed into PPC_ADMA_INIT_MEMRES since the combined call covers
-both steps.
+Pre-existing issues:
+- [High] Missing check for dma_map_page() failure in device probe.
+- [High] Calling dma_free_coherent() with an uninitialized (NULL) device po=
+inter in the ioremap error path.
+- [High] Missing free_irq() for adev->err_irq in the error path of ppc440sp=
+e_adma_setup_irqs.
+--
 
-Also emove unused PPC_ADMA_INIT_MEMREG enum value
+commit 6506d0727c09a20b6e812b6d3009a7ffe42bfacf
+Author: Rosen Penev <rosenp@gmail.com>
 
-The PPC_ADMA_INIT_MEMREG error code is no longer used after converting
-to devm_platform_ioremap_resource().  Remove it from the enum and the
-corresponding error string.
+dmaengine: ppc4xx: fix format specifiers for size_t arguments
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- drivers/dma/ppc4xx/adma.c | 46 +++++----------------------------------
- 1 file changed, 6 insertions(+), 40 deletions(-)
+Several dev_err, dev_dbg, pr_debug, and printk calls use %d or %u format
+specifiers for size_t arguments. Fix them to use %zu to avoid warnings
+on 64-bit builds.
 
-diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-index bcc54d584e2b..9decdd04a51e 100644
---- a/drivers/dma/ppc4xx/adma.c
-+++ b/drivers/dma/ppc4xx/adma.c
-@@ -37,7 +37,6 @@
- enum ppc_adma_init_code {
- 	PPC_ADMA_INIT_OK = 0,
- 	PPC_ADMA_INIT_MEMRES,
--	PPC_ADMA_INIT_MEMREG,
- 	PPC_ADMA_INIT_ALLOC,
- 	PPC_ADMA_INIT_COHERENT,
- 	PPC_ADMA_INIT_CHANNEL,
-@@ -49,7 +48,6 @@ enum ppc_adma_init_code {
- static char *ppc_adma_errors[] = {
- 	[PPC_ADMA_INIT_OK] = "ok",
- 	[PPC_ADMA_INIT_MEMRES] = "failed to get memory resource",
--	[PPC_ADMA_INIT_MEMREG] = "failed to request memory region",
- 	[PPC_ADMA_INIT_ALLOC] = "failed to allocate memory for adev "
- 				"structure",
- 	[PPC_ADMA_INIT_COHERENT] = "failed to allocate coherent memory for "
-@@ -4003,7 +4001,6 @@ static void ppc440spe_adma_release_irqs(struct ppc440spe_adma_device *adev,
- static int ppc440spe_adma_probe(struct platform_device *ofdev)
- {
- 	struct device_node *np = ofdev->dev.of_node;
--	struct resource res;
- 	struct ppc440spe_adma_device *adev;
- 	struct ppc440spe_adma_chan *chan;
- 	struct ppc_dma_chan_ref *ref, *_ref;
-@@ -4046,28 +4043,12 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- 		pool_size <<= 2;
- 	}
- 
--	if (of_address_to_resource(np, 0, &res)) {
--		dev_err(&ofdev->dev, "failed to get memory resource\n");
--		initcode = PPC_ADMA_INIT_MEMRES;
--		ret = -ENODEV;
--		goto out;
--	}
--
--	if (!request_mem_region(res.start, resource_size(&res),
--				dev_driver_string(&ofdev->dev))) {
--		dev_err(&ofdev->dev, "failed to request memory region %pR\n",
--			&res);
--		initcode = PPC_ADMA_INIT_MEMREG;
--		ret = -EBUSY;
--		goto out;
--	}
--
- 	/* create a device */
- 	adev = kzalloc_obj(*adev);
- 	if (!adev) {
- 		initcode = PPC_ADMA_INIT_ALLOC;
- 		ret = -ENOMEM;
--		goto err_adev_alloc;
-+		goto out;
- 	}
- 
- 	adev->id = id;
-@@ -4087,10 +4068,10 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- 	dev_dbg(&ofdev->dev, "allocated descriptor pool virt 0x%p phys 0x%llx\n",
- 		adev->dma_desc_pool_virt, (u64)adev->dma_desc_pool);
- 
--	regs = ioremap(res.start, resource_size(&res));
--	if (!regs) {
--		dev_err(&ofdev->dev, "failed to ioremap regs!\n");
--		ret = -ENOMEM;
-+	regs = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(regs)) {
-+		ret = PTR_ERR(regs);
-+		initcode = PPC_ADMA_INIT_MEMRES;
- 		goto err_regs_alloc;
- 	}
- 
-@@ -4127,7 +4108,7 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- 	if (!chan) {
- 		initcode = PPC_ADMA_INIT_CHANNEL;
- 		ret = -ENOMEM;
--		goto err_chan_alloc;
-+		goto err_regs_alloc;
- 	}
- 
- 	spin_lock_init(&chan->lock);
-@@ -4206,19 +4187,12 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- 	}
- err_page_alloc:
- 	kfree(chan);
--err_chan_alloc:
--	if (adev->id == PPC440SPE_XOR_ID)
--		iounmap(adev->xor_reg);
--	else
--		iounmap(adev->dma_reg);
- err_regs_alloc:
- 	dma_free_coherent(adev->dev, adev->pool_size,
- 			  adev->dma_desc_pool_virt,
- 			  adev->dma_desc_pool);
- err_dma_alloc:
- 	kfree(adev);
--err_adev_alloc:
--	release_mem_region(res.start, resource_size(&res));
- out:
- 	if (id < PPC440SPE_ADMA_ENGINES_NUM)
- 		ppc440spe_adma_devices[id] = initcode;
-@@ -4232,8 +4206,6 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- static void ppc440spe_adma_remove(struct platform_device *ofdev)
- {
- 	struct ppc440spe_adma_device *adev = platform_get_drvdata(ofdev);
--	struct device_node *np = ofdev->dev.of_node;
--	struct resource res;
- 	struct dma_chan *chan, *_chan;
- 	struct ppc_dma_chan_ref *ref, *_ref;
- 	struct ppc440spe_adma_chan *ppc440spe_chan;
-@@ -4270,12 +4242,6 @@ static void ppc440spe_adma_remove(struct platform_device *ofdev)
- 
- 	dma_free_coherent(adev->dev, adev->pool_size,
- 			  adev->dma_desc_pool_virt, adev->dma_desc_pool);
--	if (adev->id == PPC440SPE_XOR_ID)
--		iounmap(adev->xor_reg);
--	else
--		iounmap(adev->dma_reg);
--	of_address_to_resource(np, 0, &res);
--	release_mem_region(res.start, resource_size(&res));
- 	kfree(adev);
- }
- 
--- 
-2.55.0
+> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+> index 279a431ccae38..bcc54d584e2bf 100644
+> --- a/drivers/dma/ppc4xx/adma.c
+> +++ b/drivers/dma/ppc4xx/adma.c
+[ ... ]
+> @@ -4077,7 +4077,7 @@ static int ppc440spe_adma_probe(struct platform_dev=
+ice *ofdev)
+>  					adev->pool_size, &adev->dma_desc_pool,
+>  					GFP_KERNEL);
+>  	if (adev->dma_desc_pool_virt =3D=3D NULL) {
+> -		dev_err(&ofdev->dev, "failed to allocate %d bytes of coherent "
+> +		dev_err(&ofdev->dev, "failed to allocate %zu bytes of coherent "
+>  			"memory for hardware descriptors\n",
+>  			adev->pool_size);
+>  		initcode =3D PPC_ADMA_INIT_COHERENT;
 
+[Severity: High]
+This isn't a bug introduced by this patch, but while looking at
+ppc440spe_adma_probe(), I noticed we map the destination pages without
+checking for mapping errors:
+
+    chan->pdest =3D dma_map_page(&ofdev->dev, chan->pdest_page, 0,
+                               PAGE_SIZE, DMA_BIDIRECTIONAL);
+    chan->qdest =3D dma_map_page(&ofdev->dev, chan->qdest_page, 0,
+                               PAGE_SIZE, DMA_BIDIRECTIONAL);
+
+If the mapping fails, it returns an error address. Does this mean the
+hardware might be configured with an invalid DMA destination, potentially
+causing memory corruption or IOMMU faults?
+
+Should we be validating the return values with dma_mapping_error()?
+
+[Severity: High]
+This is another pre-existing issue in ppc440spe_adma_probe(), but I'm
+curious about the error handling if ioremap() fails:
+
+    regs =3D ioremap(res.start, resource_size(&res));
+    if (!regs) {
+        dev_err(&ofdev->dev, "failed to ioremap regs!\n");
+        ret =3D -ENOMEM;
+        goto err_regs_alloc;
+    }
+
+This jumps to err_regs_alloc before adev->dev is initialized, where we do:
+
+err_regs_alloc:
+    dma_free_coherent(adev->dev, adev->pool_size,
+                      adev->dma_desc_pool_virt,
+                      adev->dma_desc_pool);
+
+Since adev->dev is still NULL at this point, could this cause a crash
+in dma_free_coherent() when trying to resolve the DMA operations?
+
+[Severity: High]
+A third pre-existing issue I noticed is in the error path of
+ppc440spe_adma_setup_irqs(), which is called from this probe function.
+
+If we fail to find the device tree node after successfully registering
+adev->err_irq:
+
+    np =3D of_find_compatible_node(NULL, NULL, "ibm,i2o-440spe");
+    if (!np) {
+        pr_err("%s: can't find I2O device tree node\n", __func__);
+        ret =3D -ENODEV;
+        goto err_req2;
+    }
+
+We jump to err_req2, which frees adev->irq but misses freeing adev->err_irq:
+
+err_req2:
+    free_irq(adev->irq, chan);
+err_req1:
+    irq_dispose_mapping(adev->irq);
+err_irq_map:
+    if (adev->err_irq > 0) {
+        if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref))
+            irq_dispose_mapping(adev->err_irq);
+    }
+
+Since the probe function later frees the chan structure on failure,
+could this leave a dangling interrupt handler pointing to the freed
+chan pointer?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910211440.6561=
+8-1-rosenp@gmail.com?part=3D1
