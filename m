@@ -1,177 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB4C39A4CF
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 19:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BB258598C
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 19:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789068895; cv=none; b=LrdSk4clB5caAcOxQO2a3R9hDmu6Q5W4n/VFvaGn+cWxBWHGeZKThQjD+JyrB8W5FGwnzwwMtseY0bCmIekR6jq/H7HRVPZQkor2aSu0hvGUm+e6gSqv5MzuPOqT4M/Okaqm0JCznuY8ZchjHvUjVm01/decj7QYPklehHffT3E=
+	t=1789069414; cv=none; b=Tdt/RkGxmEQYbmmCzBhzuiPTS3Z5oTXWqi6RyAQbZMhWFwsoD7a6bZ49mu7hxfxjq3pCYMyfMzbFdtPspooUL0cnhM6aiBTvxsQVZ0gIkTyan9G15sEt+xlYFA31PE+kcWuK4+m1Jp2IIMLgSQvReYiW4cTgzJRMSPQOKKbdGwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789068895; c=relaxed/simple;
-	bh=PnGAfZqrjQoy2HRYK68cucXe01lJPC3VYPn+wyimTfg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SB+F0cjcFA5lH+rvOFyriCE8CWeJGwgg64G9DSlIetMye07nr3EBjqdvQEtbkaDPHghkzL7UhT6gkP0JXRhly62w6JiE8F/f4imiCGp/PD+bwh06QHH8H5ZDQFCIjXb0RXUkMvzgrL80ycWMEqzwwoqEmv4belYbfnh98Ef+T0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SpUjRGt7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789069414; c=relaxed/simple;
+	bh=Sp8gG2vlOGXtsjCYlvwHWPR+QaRAqVPPCEHp04Izc/8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iGC+ubPzs0Y/TwKWJ2Pq/uQ0TsS45FTkGkrdjDuqqTWVI172dj5mLGANOftl0TYsXpuVTgiU8Bf/2ozsa8tjPB/WviVWmDs8lTQmLH7nlXL2RHLRBG0JwBMqrlR4ZCzd8zr8Wk6iFtTA+TP0i3efS5c+fBUx8gl2VWE9gtqw/dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JOanRM7/; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SpUjRGt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B881F000FF;
-	Thu, 10 Sep 2026 19:34:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789068889;
-	bh=1phwQB97tZMH0e44K8D4RzoShXFSH7DPQYJmeOseTJU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SpUjRGt70u4qJNPIODd5LAeP5nPzf8sdKnc0M+JZKO7mDqvzkkVW6D5ibc+AVmq5Z
-	 1a86AeSY/lQ3KILZakuGuAzeKJZ8091lwDbuIlxFju0XasO2bEYl50IWCYqnRP1P5i
-	 G7RTuLSCOAOCmYECzjSy+dzLkzabVMRClRHHc8eQOYcL6zceNywJu8E9m5Tja2EP30
-	 tg3gERUkmUzICUkH62YWA2CXz6yafluymznl45heR06S2icQhMom1Sj8OXI4DXv5ML
-	 viq3rtuyCIbDAHNAA3iOiXSZWWeeHyr3AC8b3iMjhZ405TcgtEAR6BJY7eGusk9+QR
-	 2vb8iS4EAo2Jg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCHv2] dmaengine: bestcomm: gen_bd: fix out-of-bounds access
- in PSC parameter lookup
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260910192404.21809-1-rosenp@gmail.com>
-References: <20260910192404.21809-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 19:34:49 +0000
-Message-Id: <20260910193449.A3B881F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JOanRM7/"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-52de50e77ffso1745851cf.2
+        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 12:43:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789069411; x=1789674211; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Aei3ERTJbJiVkzOQ138W6pWKQKh4OREM0CyTUlBnrDc=;
+        b=JOanRM7/hlZh2RL256r4mEBQn3Neibi9K1iFamYZmLs+yItYW1O1AMXXid4SW4EZHu
+         y1Pll+zdVxPXyJzwIMG4fP77OKPnmTWe+Rgqdajj87yIwOMaJpok7osnJgrPn05bdm10
+         9RHlIqUICtM1hLAzBfGqRxjCsTu4xFr2b2prYNh9IRH86VsNnAK4eMIV5gU4eS+hQCBq
+         hd1/cePuIhrKj6LDuEi8SARQy3XLj4Yxoqv20v9XxRrq5fIN7JdVT2RdVmIPBEFiI/iN
+         5NmQRzYrEPIp9BRNTIBJklqnls6d255Zb2Z4TGvP9dba3KYAzYjKgqbcrGi/m8hBF4Ww
+         dx2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789069411; x=1789674211;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Aei3ERTJbJiVkzOQ138W6pWKQKh4OREM0CyTUlBnrDc=;
+        b=JdeTMGPkIj92gFfNNtKUAIPgtmzFk4zjk48QA5FjdGqwF3nQwBqgNZKeL2jfGkqJSq
+         +sGhULV5g0hkGx6eyADkIBZsfKEdT2CdDNpczUcEvlDD9MpTGIbelJkQ5/F9cbJiaHvv
+         4r97CRuKM0cCM5dIMVpih27eL0P9ylXmnIDC3NSNJEN6H3R43brEqUwQyf/8eI8XiE51
+         waQ8XI9/Ub7ouGJHBi6Ek5CHwMW7ha28PAjNNgUmBjJmWBAOrWFAtl+sJft+T5n9eumT
+         QlTf7ShqjPGOnQ/cyh3LIPsk+RBhGkbD+6Ce7uY6bNA56oWMytAi5ASZVcg3sHq23/Ro
+         g3rw==
+X-Gm-Message-State: AFuF++kmAHtlToVB22iKXh/7qN+tWI/fN5/RAPq0Q7B6zxW5wVPFqXUv
+	EoHiEk2CUZXIKlWNmdHZBJzxdE6dBcU+R0YDZK9k1EBvK1uT1vxD2+R+1XHt+Q==
+X-Gm-Gg: AYBFou37SRzGdpbkbwj2Sg/wreyDlJK34wxQdmAH70+g9q0qvcwAcN2+JbZcInZiCJU
+	02G5lroc9g4JE48XmE5oL8wCqVyVSzvBNsVqJkJJbeoEeoLj8cNlOQAAPTbvV0ZXZXgJVUcVSh8
+	aJImSKeokmgay0XmYAv5yDwNUvWTHvs5mRPQgDg6+Y5UhCdHkEc5mWC1IHMRPl9HDfOuZUKm2EC
+	hvAm5DCNelLfXgNDYGEujdLkdvANBkC+RLtaAzoYaD6DKU0L1pXWkYZNoNluQc49UyQezTMTnIu
+	NEOcdl8qjOQtPTnR3dk+tuZpHKAYAEYLkJaG32B81BvU4M8Esk1eNBYySQlpiCpnD+ylgImgzap
+	df0AS4rLZvFwksGAYuZ9ImmlezpKZrQ0YViB8o5Hfz7sboFxrzBLRwJBj0RAO4x/qNi/XiOpzjy
+	hxW2dTzW0XYUr29uTCT669duHgLtSaimcaMVj4YjeOjKZTOP0HWleImuzcstC+OvyUrMREwoNjQ
+	q13zkSi0yNq8wlnbw1X3CdJgRzwo1RPP4Y3n1+Hs2OahO9R6iclVd4VUHf2Tkwo2IWmWDaeLkhU
+	6Wc0C23pNsgUD4c3aZwa9lOJbQRPNAB8kbbdmFdsJH3j/nfF
+X-Received: by 2002:a05:622a:301:b0:530:4155:1935 with SMTP id d75a77b69052e-530c8565ee3mr15509471cf.15.1789069406721;
+        Thu, 10 Sep 2026 12:43:26 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f47e800sm3573726d6.27.2026.09.10.12.43.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 12:43:26 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Harninder Rai <harninder.rai@freescale.com>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] dmaengine: fsl_raid: byte-swap cdb32 when programming CDBs
+Date: Thu, 10 Sep 2026 12:43:24 -0700
+Message-ID: <20260910194324.33697-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+The three prep functions write the first word of the command descriptor
+block (cdb32) with a plain u32 assignment, while every other CDB/CF
+descriptor field is written with cpu_to_be32(). The RAID Engine expects
+big-endian descriptors, so the plain assignment produces a corrupted CDB
+on little-endian hosts. Use cpu_to_be32() for cdb32 to match the
+surrounding code.
 
-Pre-existing issues:
-- [High] Pre-existing memory and resource leak of BestComm tasks on error p=
-aths during DMA creation.
-- [High] Pre-existing memory leak of BestComm task microcode (desc) in SRAM=
- on task release.
---
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/fsl_raid.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-commit 151ed4c77a710a40a6d4463f6c561df7caf80bcc
-Author: Rosen Penev <rosenp@gmail.com>
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index befb4bb69d54..9cc289f7129e 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -361,7 +361,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_genq(
+ 	cdb |= FSL_RE_INTR_ON_ERROR << FSL_RE_CDB_ERROR_SHIFT;
+ 	cdb |= FSL_RE_DATA_DEP << FSL_RE_CDB_DEPEND_SHIFT;
+ 	xor = desc->cdb_addr;
+-	xor->cdb32 = cdb;
++	xor->cdb32 = cpu_to_be32(cdb);
+ 
+ 	if (scf) {
+ 		/* compute q = src0*coef0^src1*coef1^..., * is GF(8) mult */
+@@ -481,7 +481,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_pq(
+ 	cdb |= FSL_RE_DATA_DEP << FSL_RE_CDB_DEPEND_SHIFT;
+ 
+ 	pq = desc->cdb_addr;
+-	pq->cdb32 = cdb;
++	pq->cdb32 = cpu_to_be32(cdb);
+ 
+ 	p = pq->gfm_q1;
+ 	/* Init gfm_q1[] */
+@@ -564,7 +564,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_memcpy(
+ 	cdb |= FSL_RE_DATA_DEP << FSL_RE_CDB_DEPEND_SHIFT;
+ 
+ 	move = desc->cdb_addr;
+-	move->cdb32 = cdb;
++	move->cdb32 = cpu_to_be32(cdb);
+ 
+ 	/* Filling frame 0 of CFD with move CDB */
+ 	cf = desc->cf_addr;
+-- 
+2.55.0
 
-dmaengine: bestcomm: gen_bd: fix out-of-bounds access in PSC parameter look=
-up
-
-This commit fixes out-of-bounds accesses in bcom_psc_gen_bd_rx_init() and
-bcom_psc_gen_bd_tx_init() by using ARRAY_SIZE() for bounds checking. It also
-removes an unused forward declaration.
-
-> diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_bd.c
-> index 8a24a5cbc2633..75d1a6f543df9 100644
-> --- a/drivers/dma/bestcomm/gen_bd.c
-> +++ b/drivers/dma/bestcomm/gen_bd.c
-> @@ -315,7 +315,7 @@ static struct bcom_psc_params {
->  struct bcom_task * bcom_psc_gen_bd_rx_init(unsigned psc_num, int queue_l=
-en,
->  					   phys_addr_t fifo, int maxbufsize)
->  {
-> -	if (psc_num >=3D MPC52xx_PSC_MAXNUM)
-> +	if (psc_num >=3D ARRAY_SIZE(bcom_psc_params))
->  		return NULL;
-> =20
->  	return bcom_gen_bd_rx_init(queue_len, fifo,
-> @@ -336,7 +336,9 @@ EXPORT_SYMBOL_GPL(bcom_psc_gen_bd_rx_init);
->  struct bcom_task *
->  bcom_psc_gen_bd_tx_init(unsigned psc_num, int queue_len, phys_addr_t fif=
-o)
->  {
-> -	struct psc;
-> +	if (psc_num >=3D ARRAY_SIZE(bcom_psc_params))
-> +		return NULL;
-> +
->  	return bcom_gen_bd_tx_init(queue_len, fifo,
->  				   bcom_psc_params[psc_num].tx_initiator,
->  				   bcom_psc_params[psc_num].tx_ipr);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but there appears to be a
-pre-existing memory and resource leak of BestComm tasks on error paths
-during DMA creation.
-
-If mpc5200_audio_dma_create() fails during devm_request_irq() or
-devm_snd_soc_register_component(), it returns an error without freeing the
-successfully allocated bcom_task structures:
-
-sound/soc/fsl/mpc5200_dma.c:mpc5200_audio_dma_create() {
-	if (!psc_dma->capture.bcom_task ||
-	    !psc_dma->playback.bcom_task) {
-		dev_err(&op->dev, "Could not allocate bestcomm tasks\n");
-		return -ENODEV;
-	}
-
-	/* ... */
-=09
-	if (rc)
-		return -ENODEV;
-
-	/* ... */
-
-	return devm_snd_soc_register_component(&op->dev,
-					&mpc5200_audio_dma_component, NULL, 0);
-}
-
-Additionally, if snd_soc_set_ac97_ops() fails after mpc5200_audio_dma_creat=
-e()
-succeeds, it returns without calling mpc5200_audio_dma_destroy(), leaking t=
-he
-tasks:
-
-sound/soc/fsl/mpc5200_psc_ac97.c:psc_ac97_of_probe() {
-	/* ... */
-	rc =3D snd_soc_set_ac97_ops(&psc_ac97_ops);
-	if (rc !=3D 0) {
-		dev_err(&op->dev, "Failed to set AC'97 ops: %d\n", rc);
-		return rc;
-	}
-	/* ... */
-}
-
-Repeated deferred probes or driver bind/unbind cycles could exhaust the 16
-BestComm task slots, preventing further DMA operations. Are we missing clea=
-nup
-steps on these error paths to ensure the allocated tasks are freed?
-
-[Severity: High]
-This is a pre-existing issue, but there seems to be a memory leak of BestCo=
-mm
-task microcode in SRAM on task release.
-
-When bcom_load_image() allocates a chunk of SRAM for task microcode, it sto=
-res
-its physical address in tdt->start:
-
-drivers/dma/bestcomm/bestcomm.c:bcom_load_image() {
-	/* ... */
-		desc =3D bcom_sram_alloc(hdr->desc_size * sizeof(u32), 4, &start_pa);
-	/* ... */
-}
-
-When the task is freed, the physical address is zeroed out without explicit=
-ly
-freeing the underlying SRAM chunk:
-
-drivers/dma/bestcomm/bestcomm.c:bcom_task_free() {
-	/* ... */
-	/* Clear TDT */
-	bcom_eng->tdt[tsk->tasknum].start =3D 0;
-	bcom_eng->tdt[tsk->tasknum].stop  =3D 0;
-	/* ... */
-}
-
-Since the SRAM chunk is not freed using bcom_sram_free(), repeated unbinding
-and binding of BestComm drivers could eventually exhaust all available on-c=
-hip
-SRAM. Does bcom_task_free() need to free the SRAM before clearing tdt->star=
-t?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910192404.2180=
-9-1-rosenp@gmail.com?part=3D1
