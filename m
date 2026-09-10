@@ -1,245 +1,152 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B1E41443D
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:01:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0884915B7
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 20:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789070497; cv=none; b=KfyImaPXUUvSiPVKyMweEwNg9oXCUNTtCJMNQ6FrrftTCRbqnp6J79pLcRCBppfYmkeJqXwxwMO+7syHV/KC2AMLx4APIVEYfqd1BjMBnkaHMmwzHFwjAEiq0J0w8YBk7JqmWiTlZxEcNbdiAPPWOEPC0dGo6Xc9zMcEpGjfnJI=
+	t=1789070801; cv=none; b=Y8GkcTeIgUv7ga4vWcfolcw39ZjWhgdN54bDTSdirGHQefFQAucovef/FABx4g8qF4bAswWz8V/MD778wteOK1BqaGD4vP3FoffGC/8nAN4sOfIbmaURwPYVfUm5eTu6zzI38H6SUKv3/smGYUrKjKBReksnGCSGelYGkmKZhw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789070497; c=relaxed/simple;
-	bh=afmROAyALL3wgUNsm3/SFy55wxM5nwge6kO8nKqhC4w=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gMco+3EfOzMl2CD9v7sZbRvzzhuT/+rcFmyY7Q5bTMOTGoH2IL5izxGeZ2wSsCoDpkWZo2rRXN6ZXVgWzbb4//BopbuitDU+KlhUioIn9mUy133QvM9Xw2aI555rbPOMN5dEVS3w4tos6xE/5EM+83JneMXYHTYx0ldV8PPmOo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OXg+A8GS; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789070801; c=relaxed/simple;
+	bh=bIekzr/acASAo8pLqBfoGXi82QPpe9AW/HLpSxdjKu0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WgwBjZGTkxLgU8pyfQCOf+4p4MUXGZrXwZVIGKssQIGqECH15cEMkRidMS3bJhk41WbWAvPOrnWtZLKtWT2atBHC9RE5zmdUz7JX5u4pPuAWoxWsSJfKBFlZYuNFJEZnoivLcrWKZdlVcHFWvRh2Ums5qmzDsvviEbNekcx9SmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbDeXDsX; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OXg+A8GS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4603C1F000FF;
-	Thu, 10 Sep 2026 20:01:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789070496;
-	bh=Pb9PiQcvS2HFJAsF+6cwKeQEjnblkUKqfdgtrbG9t1M=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OXg+A8GSsquL563RILz1KXdskhBzkC7f15T4GCXFbu5I/gGfj5ij2i3qidO1vRirz
-	 qV51ZuSG+EScupXHMLtCwJFDD1+C/4rA6+G1Hl8FtdrUHWNCaO3kFkJtmxDoQ8l//P
-	 szoSUlLKSmfyGB3aRaPcEdl8HS8wEu5O+v9EBLNcDWDVasoFgzitPB7Y2rI6A0cgp+
-	 L6ko7TgVoM5Hfdtqia4ely2YWBf1B76Gi0lwGkDsnRLUMzwI4iwhMiBRkh27byylbi
-	 unvUm/BUIXWTex3E4STHK0C6Y0JhgWaRL0g66VZ2kNP9uDMrHnX63QtJxFuqCt4tY/
-	 K8As1RxDidmqg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: fsl_raid: byte-swap cdb32 when programming
- CDBs
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rosen Penev" <rosenp@gmail.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260910194324.33697-1-rosenp@gmail.com>
-References: <20260910194324.33697-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 20:01:35 +0000
-Message-Id: <20260910200136.4603C1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbDeXDsX"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39b31b4281eso133358a91.2
+        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 13:06:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789070800; x=1789675600; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Pw223cD4yf9W0em0F6VzM2Cty/ImT+5nXI2srqsFOi0=;
+        b=jbDeXDsXw+Uec4UjxAbQuevSOKPNPz4x7bO5lVnNfsIGFwY3YxcfgSjwVMp5AnJbkI
+         NBJONACzfzHiwJvhBFU+Jyl1icap1sUMdk/cbMu6mx5MCEWMT904IYIP3O3IPaHrUo7e
+         feEjQfrTx4bCYc0IvoLiylNYl5BiOU29VPt+LFlXTTz4r9BO3o5FjS9k3XkbVLkoGCSV
+         kLCM9QD6dPn45UsC+uEHaW/xyKCsZhVN4kw5eT+DbEyuCJ72JEPTDbWgpv25gMWBEMJk
+         7zHjKIMudYcHbBUcjzz0+io9kc/S+G5tA6kZeZj4sjSybDqbEXOxXrVd4FXNWJdXie0F
+         ejmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789070800; x=1789675600;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Pw223cD4yf9W0em0F6VzM2Cty/ImT+5nXI2srqsFOi0=;
+        b=YknyYAWqEPClX6FVzoyOVE3PWUaOhIr5E3X+hsRMxozjBaY5VkMxglI7VQKmpl3pW8
+         2GkWzWE9OIMMDEWC7H0mYwU7pCImvcvk/VvMTXsWrpd8SfAJdV0L6eQghW6UHoq7B3El
+         HJ6qlS/LM2Lx1E6ZWj7qY22KvvciLdW0u4kyC3kE5BUsM5daq1a5TynUlTqrnDW9gNM8
+         OdHfV5EEmQuV9iWPpcHsYxE/+3OSG0eCtqWeB9NSpSHDotuQQUNkfcA2PXlomJdklxjI
+         z724BM2EQ7iEKkEuC2isVJ/xor1PlVdro/2C0zmj096GLhLrZTuPEuT/qamQ8lM/B3vz
+         J3uA==
+X-Gm-Message-State: AFuF++mVUvgWuZEOZiRDWdQwDXnkQtqzBOvJaIDjPGwo+d25iG3Z40M8
+	uzEcj3PtSxRph/NUJb06nQ4fQoaMxsqKWpG5ACP4fIgcZ01eIj/Ww6LMzrulEw==
+X-Gm-Gg: AYBFou2NMi3PTVRfPDbfbDQyNL9BBDMwgqvwwTqd44/J0B2n1QhyKr2x7mjMdLkG9LD
+	u35g/OPlJk8fjFM4buvR1qRRe/teGi7VKSjDmwhKuLIfGmsHuZorYSvJagvWSv7K8cnt+t4clZa
+	CJyzhV9Rho3o9bu6YU/q2zYGKpzdwPsMXGEATCfDJZP/CSZeM8d5JHAXEf053YfjWy7fiCh8CV4
+	gt3NAbWQfd5fCdzfVN2CGtXKX5cMJ5qktrLtH4sZHeieiLU2EFDUyemJGjN2pdvsWu+shpk5hTw
+	Te99dW7jqioSkigsFMEvg/OTXjdtocQOJV/9HCIyMWBoTkVKkjMmu2WdWunSxWBL64Jz1B83jZz
+	NQPVEHKlZb9JWhpBka09Z5snzE7Bir0Rf1MZlUa/7Nw+7Ik0sWUeU+pyNjAiVPnvMCHaJ8pBMUV
+	xX+HmR2ODeudyHD0kUDB+JnVDy+HF2uNQVlPPfJrzAkeW+jNJa55anrSkmutWESKUk8M1yDm6xk
+	OSl3vZmG2sqa5w1ogyIV09pKVA0PwEdEUME8GOOZPSRXG/hY1wwaoQxccdOOyVhY2VO8voBqx68
+	bLSbVN5MFYBnsRFTjE5m3b4SBRK/W+5YsaRK33Y0l+2zbO/jPA==
+X-Received: by 2002:a17:90b:3dcd:b0:399:ea1:5a82 with SMTP id 98e67ed59e1d1-39d9bc66ab9mr689655a91.3.1789070799543;
+        Thu, 10 Sep 2026 13:06:39 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d994cc978sm690227a91.9.2026.09.10.13.06.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 13:06:39 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
+	Harninder Rai <harninder.rai@freescale.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv4] dmaengine: fsl_raid: check fsl_re_chan_probe() return value
+Date: Thu, 10 Sep 2026 13:06:37 -0700
+Message-ID: <20260910200637.41512-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 5 potential issue(=
-s) to consider:
+fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
+unconditionally increments total_chans. When a channel fails to probe
+(for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
+total_chans still advances, so fsl_re_remove_chan() later dereferences the
+NULL pointer during device removal.
 
-Pre-existing issues:
-- [High] Buffer overflow in the compound frame descriptor array overwrites =
-the Command Descriptor Block (CDB) during PQ continuation operations.
-- [High] Out-of-bounds array read on the caller-provided `scf` coefficients=
- array in `fsl_re_prep_dma_pq` when `DMA_PREP_CONTINUE` is set.
-- [High] Deadlock from calling client DMA callbacks while holding the chann=
-el descriptor spinlock.
-- [High] List corruption and kernel panic in `fsl_re_free_chan_resources` d=
-ue to blind extraction from `free_q`.
-- [High] Missing IRQ cleanup on probe error, causing IRQ resource leak and =
-potential NULL pointer dereference in the ISR.
---
+Check return value and only count successfully probed channels, and guard
+fsl_re_remove() against NULL entries.
 
-commit 35b8359a749c05ccda3b77bf570e1ce40a818eb4
-Author: Rosen Penev <rosenp@gmail.com>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v4: use break;
+ v3: fix sashiko review
+ v2: fix description
+ drivers/dma/fsl_raid.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-    dmaengine: fsl_raid: byte-swap cdb32 when programming CDBs
-   =20
-    The three prep functions write the first word of the command descriptor
-    block (cdb32) with a plain u32 assignment, while every other CDB/CF
-    descriptor field is written with cpu_to_be32(). The RAID Engine expects
-    big-endian descriptors, so the plain assignment produces a corrupted CDB
-    on little-endian hosts. Use cpu_to_be32() for cdb32 to match the
-    surrounding code.
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 9cc289f7129e..6167fa652e96 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -836,18 +836,32 @@ static int fsl_re_probe(struct platform_device *ofdev)
+ 		}
+ 		/* Find out the Job Rings present under each JQ */
+ 		for_each_child_of_node(np, child) {
++			if (ridx >= FSL_RE_MAX_CHANS) {
++				dev_warn(dev,
++					"too many job rings, max %d\n",
++					FSL_RE_MAX_CHANS);
++				of_node_put(child);
++				break;
++			}
++
+ 			rc = of_device_is_compatible(child,
+ 					     "fsl,raideng-v1.0-job-ring");
++			if (!rc)
++				continue;
++
++			rc = fsl_re_chan_probe(ofdev, child, ridx, off);
+ 			if (rc) {
+-				fsl_re_chan_probe(ofdev, child, ridx++, off);
+-				re_priv->total_chans++;
++				dev_err(dev,
++					"job ring %d probe failed: %d\n",
++					ridx, rc);
++				continue;
+ 			}
++			ridx++;
++			re_priv->total_chans++;
+ 		}
+ 	}
+ 
+-	dma_async_device_register(dma_dev);
+-
+-	return 0;
++	return dma_async_device_register(dma_dev);
+ }
+ 
+ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
+@@ -872,7 +886,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
+ 
+ 	/* Cleanup chan related memory areas */
+ 	for (i = 0; i < re_priv->total_chans; i++)
+-		fsl_re_remove_chan(re_priv->re_jrs[i]);
++		if (re_priv->re_jrs[i])
++			fsl_re_remove_chan(re_priv->re_jrs[i]);
+ 
+ 	/* Unregister the driver */
+ 	dma_async_device_unregister(&re_priv->dma_dev);
+-- 
+2.55.0
 
-> diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-> index 2d86f61105e52..9845b6f1bb2c0 100644
-> --- a/drivers/dma/fsl_raid.c
-> +++ b/drivers/dma/fsl_raid.c
-[ ... ]
-> @@ -470,7 +470,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dm=
-a_pq(
->  	cdb |=3D FSL_RE_DATA_DEP << FSL_RE_CDB_DEPEND_SHIFT;
-> =20
->  	pq =3D desc->cdb_addr;
-> -	pq->cdb32 =3D cdb;
-> +	pq->cdb32 =3D cpu_to_be32(cdb);
-
-While reviewing this patch, I noticed a few pre-existing issues in the
-surrounding driver code.
-
->  	p =3D pq->gfm_q1;
->  	/* Init gfm_q1[] */
->  	for (i =3D 0; i < src_cnt; i++)
->  		p[i] =3D 1;
->=20
->  	/* Align gfm[] to 32bit */
->  	gfmq_len =3D ALIGN(src_cnt, 4);
->=20
->  	/* Init gfm_q2[] */
->  	p +=3D gfmq_len;
->  	for (i =3D 0; i < src_cnt; i++)
->  		p[i] =3D scf[i];
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this loop read out of
-bounds of the caller-provided scf array?
-
-When DMA_PREP_CONTINUE is set, src_cnt is artificially inflated by 3 earlier
-in the function to account for continuation buffers:
-
-	if (flags & DMA_PREP_CONTINUE)
-		src_cnt +=3D 3;
-
-However, this inflated count is then used as the loop boundary when reading
-from the caller's strictly-sized scf array. Can this cause a KASAN
-out-of-bounds read panic or disclose unrelated adjacent memory?
-
-[ ... ]
-> 	/* PQ computation continuation */
-> 	if (flags & DMA_PREP_CONTINUE) {
-> 		if (src_cnt - save_src_cnt =3D=3D 3) {
-> 			p[save_src_cnt] =3D 0;
-> 			p[save_src_cnt + 1] =3D 0;
-> 			p[save_src_cnt + 2] =3D 1;
-> 			fill_cfd_frame(cf, i++, len, dest[0], 0);
-> 			fill_cfd_frame(cf, i++, len, dest[1], 0);
-> 			fill_cfd_frame(cf, i++, len, dest[1], 1);
-
-[Severity: High]
-This is a pre-existing issue, but does this continuation sequence cause a
-buffer overflow that overwrites the Command Descriptor Block (CDB)?
-
-The CDB is allocated exactly at the end boundary of the compound frame arra=
-y:
-
-static struct fsl_re_desc *fsl_re_init_desc(...)
-{
-    ...
-	desc->cdb_addr =3D (void *)(cf + FSL_RE_CF_DESC_SIZE);
-    ...
-}
-
-The compound frame descriptor array holds exactly 20 frames (320 bytes / 16
-bytes per frame). If a caller invokes fsl_re_prep_dma_pq() with the maximum
-16 sources (FSL_RE_MAX_PQ_SRCS) and the DMA_PREP_CONTINUE flag is set, the
-driver writes 1 CDB frame, 2 destination frames, 16 source frames, and 3
-continuation frames (22 frames total).
-
-Does this sequence push the frame index i to 20 and 21, overflowing the
-bounds at the end of the array and directly corrupting the CDB residing
-immediately after it?
-
-[ ... ]
-> static void fsl_re_dequeue(struct tasklet_struct *t)
-> {
-[ ... ]
-> 	spin_lock_irqsave(&re_chan->desc_lock, flags);
-> 	count =3D	FSL_RE_SLOT_FULL(in_be32(&re_chan->jrregs->oubring_slot_full));
-> 	while (count--) {
-[ ... ]
-> 		if (found) {
-> 			fsl_re_desc_done(desc);
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does calling
-fsl_re_desc_done() with the desc_lock held cause a deadlock?
-
-Inside fsl_re_desc_done():
-
-static void fsl_re_desc_done(struct fsl_re_desc *desc)
-{
-	...
-	dmaengine_desc_get_callback_invoke(&desc->async_tx, NULL);
-}
-
-This invokes the client's callback synchronously. A standard pattern in DMA
-clients (like MD RAID) is to immediately chain the next request inside the
-completion callback. The fsl_re_tx_submit() function unconditionally tries
-to acquire the same desc_lock:
-
-static dma_cookie_t fsl_re_tx_submit(struct dma_async_tx_descriptor *tx)
-{
-    ...
-	spin_lock_irqsave(&re_chan->desc_lock, flags);
-
-Can this trigger an immediate spinlock recursion deadlock?
-
-[ ... ]
-> static void fsl_re_free_chan_resources(struct dma_chan *chan)
-> {
-> 	struct fsl_re_chan *re_chan;
-> 	struct fsl_re_desc *desc;
->=20
-> 	re_chan =3D container_of(chan, struct fsl_re_chan, chan);
-> 	while (re_chan->alloc_count--) {
-> 		desc =3D list_first_entry(&re_chan->free_q,
-> 					struct fsl_re_desc,
-> 					node);
->=20
-> 		list_del(&desc->node);
-
-[Severity: High]
-This is a pre-existing issue, but can this cause list corruption and a kern=
-el
-panic if there are pending transactions?
-
-The driver loops exactly alloc_count times calling list_first_entry()
-without checking list_empty(). If any allocated descriptors are absent from
-free_q (for example, if they are active, in ack_q, or leaked), the list will
-be empty before the loop finishes. This would cast the list head itself to a
-descriptor, call list_del() and kfree(), and corrupt kernel memory.
-
-[ ... ]
-> static int fsl_re_chan_probe(struct platform_device *ofdev,
-> 		      struct device_node *np, u8 q, u32 off)
-> {
-[ ... ]
-> 	ret =3D request_irq(chan->irq, fsl_re_isr, 0, chan->name, chandev);
-> 	if (ret) {
-[ ... ]
-> 	chan->inb_ring_virt_addr =3D dma_pool_alloc(chan->re_dev->hw_desc_pool,
-> 		GFP_KERNEL, &chan->inb_phys_addr);
-> 	if (!chan->inb_ring_virt_addr) {
-> 		dev_err(dev, "No dma memory for inb_ring_virt_addr\n");
-> 		ret =3D -ENOMEM;
-> 		goto err_free;
-> 	}
-[ ... ]
-> err_free:
-> 	return ret;
-> }
-
-[Severity: High]
-This isn't a bug introduced by this patch, but does this leak the active IRQ
-handler if memory allocation fails?
-
-If a step like dma_pool_alloc() fails, the code jumps to err_free without
-calling free_irq(). Additionally, dev_set_drvdata() is only called at the
-end of the probe. If a spurious interrupt fires after the error return,
-fsl_re_isr() will fetch NULL from dev_get_drvdata() and immediately
-dereference it.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910194324.3369=
-7-1-rosenp@gmail.com?part=3D1
