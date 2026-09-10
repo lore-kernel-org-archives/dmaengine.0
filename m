@@ -1,73 +1,70 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035EE414DDB
-	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 21:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF0853359D
+	for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 21:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789074895; cv=none; b=HL+g7NJgYMRJdZ3tOTjBFZoJ2A54xyv2HTlVkOwLBzIJzq/ilAzqilLiZ1xS6fZ5U14GcWEMekRJGygW2GktSu5EdwLB6ZHNZLUWhoyH73sozt9nUuGubpLgMYP7jiEBOpd2zatoYzoaVW1LJemVkh9aegcozYwmMhRiU1dHiRo=
+	t=1789075236; cv=none; b=m6lNjzTofnAaPMOrLO2JVSX1jUgXlTvuVo8e2qhsbTBiZxI3dWNhOpm43jd0nXUTPYntv6qID9UxxgoVSm56UV21TZTZ38u/zR+X9ou7jFx2Fn+WCqOU25dnL8c3J2BiykFPnXdGFx3Wy29vz70rLoK7lejHqy6wcz4Gv3VKx4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789074895; c=relaxed/simple;
-	bh=MH2yDJ/tFnb+zFtp0k+CRfg+1XKdo8LeVSAM8XFURV4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ftZKEnm0dJtwUY0Z3moSIUbmV37j6yk2Ud05iUzQCwwlSlyG50pxYDumFd63DVGxGN0P8r0GWUd8I7IEc2O3P+x1Io9oDu71CNzrYqXSZeW6NYNd7rdZJ7qVEU8z0SyWZRTpb6/NC88/zWXRQNrleN+DyWeizv1UtyoNbQI0pvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R7zXX9+4; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1789075236; c=relaxed/simple;
+	bh=dIpPv2LDgNjkqLCjQTco+SsfikFQw6to+dKf+3PmTkw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NGRmb0yk2Bx5ZGSOJnEXTWH23EWkvJukzzWkVaJCzJN3yaN4xoSb0anOGm0WeCeDpNeS8gC4MMIsgh9pB32S2KMgi6EyN3LoEjpKwnTND/EHNLthkCwsvG1hNFhg/GiT1lwJr8t4jOtNFGRBQadsemZC5avEO5u+xSUSyYzhscw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jUuk10hi; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7zXX9+4"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38e42560ebcso193005a91.1
-        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 14:14:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jUuk10hi"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-853f8c34ba4so225408b3a.0
+        for <dmaengine@vger.kernel.org>; Thu, 10 Sep 2026 14:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789074883; x=1789679683; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789075221; x=1789680021; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Fw41YnGlMHWt+H96gIB8JgQsPZ3KBZUxezlstkenKvw=;
-        b=R7zXX9+4wrlJasf7HV7EQoGKl8s/C154vY76IHyvxJQvrb/f9bqwRiyo/kgL3Z/NyV
-         cQvov0vA4SNFK4ZunMRO5uHX2mcyEIqxX7uOiu7sD4LYQvR3QT3AddTAD0xyx2OQiYwd
-         LTm+U9dWAMtX1KSRpdeoaReoJgiO/OQFlhOs9YJkIqfdTntuEZKfCI3KNMeTGGBhdDqZ
-         r7IfcnijMRlv+ok7FKyF5hCoUp2NNz+E3/7PP7cweHIUJZXEeF363IMUvPieruvdmuAe
-         RoDVmFqTQEpaZgdyCvPTs6NbJ3fADsG8++rTwxXoHhLI8A3WgIiX4NILujUwL5NUZRBb
-         KZPA==
+        bh=WcaRkjFLJlQ6IrC07cf6523DmJ46vlkl5Xth5RPErjY=;
+        b=jUuk10hi71DWKjBkJdBjHpbLkA31mE9n5trbOgwLTS1RcmudiPnAn8CF6wX7kcHThC
+         SThez5aXJEixt2F12BScnEfiDzaHtHH60mKSQ8HgbprKZ6xGxBeSMxrMetpvQFk8Bpfu
+         GTAZVzaUDu/6aeOIA/X1lwNKwctlwvJyZ7gBHcn48OO5aaiHB0ELOaj3TiFYS37fe4R7
+         FIaJMhOPT1yAmq0T+r0qzYWnEjIY0sg3CPr+2YzRPE49fdCKdn7nhS8E9GplcoYPa/eZ
+         uiaZCm3yW6lb51U6pcxA47wsCPw0wjFOwf7usSVPx1A2viVmgF5i2usbACQnQzoteyuT
+         YeLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789074883; x=1789679683;
+        d=1e100.net; s=20251104; t=1789075221; x=1789680021;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Fw41YnGlMHWt+H96gIB8JgQsPZ3KBZUxezlstkenKvw=;
-        b=oD8yN+PdcR2c9A12AT57z21qNiAqG2Ede3T/FjJr+cCbFsa05+cwjgLQUj9BGb3JAv
-         cEVLjSH5aTiaSWEG/+z2d/kbgt+xX0pTUF2eptYE2//1tgf28Vf1Kt/TIwpxXNQ99G/B
-         eDGrjNzQKirF0fYpvC+ilr1G25dLdGE/ZNZDiYM/HJeb5qqJdAhVZPT/NWsURw+6OffE
-         0RLW9hQmlcwGGNvtYtemK3spv+zWD8bVADATYQTR/aSOz9Io5lkQcdAqOnHch4PVFmTx
-         T5QbfK912hfSHfz55PMahuyexNsTBaa+x4eYcSVD/Ur1LcQNyJuhmt3V9xc3b4otO3jV
-         C8sQ==
-X-Gm-Message-State: AFuF++lsmUEtkCnR7QbpekbDWKIgDm+O7OpiuneP2y1RSwxjFTyiJf4p
-	a8Pu8+YQQy1aWMBZgkJyd77JH63w9dwpMBKXj9VQjFOgTgMol6UBH6HxtN8Vx9Fu
-X-Gm-Gg: AYBFou3QpazAeE+R5aDwF23lyy6mpszJ9IcjOVSjo5juDBn4w16sQ45WnoAoQUHKakZ
-	BxaE0PE27cqCJEcCUcGWe/kaeboWdhXyp4xZ8PW+Ll5JXje6BGsObTa23jAI3/5Dohm2ZkpHByX
-	/qqLWStNX8p+drVyoznQPXKH6fgQtUyZG1E/mddJqFLfBJJsIe/3JVVvz3IHK0Wqo3l6hLwh8UP
-	4F8BskP4T+9x0f33QZpCkMcEbH0w5YNgT1jYoHihytnIJQC8cDr1lg0MdzTC1KPpDCqTwxv0gpG
-	A5SJaVwQDITvutjtY558rOHtcUJ1S4bD0HiKlzn1ezm2HEe9QivRCF/QNw2RZhbhksM/LDcKRMg
-	6AoyPzaelFHCd9+XAy2S56AlwBIdNlRNRg5H/gQSFHgYQxIpkbTcuBOZg1rSe5+4AiitFnd9Ikl
-	UAxEAs6gas/AyGolMZbWpZT8FizWTX40y8PKJyx3sZRy7A6EfisMIP+QOPyE7pN/QkllS66atKc
-	ZvTlbDS3h6vQ3fdU6IJl0d1e4bMId2TleHbkyh51/Cd6kjbo56x/XlJBuN4f3vFhyRanwB7aUwK
-	D+qkru46TsTNH43pJ7T6jZKwx8w4aSQBi47oXN2p5zB9J63/
-X-Received: by 2002:a17:90b:39a7:b0:398:9bd1:3214 with SMTP id 98e67ed59e1d1-39d9c223eb3mr998245a91.21.1789074882649;
-        Thu, 10 Sep 2026 14:14:42 -0700 (PDT)
+        bh=WcaRkjFLJlQ6IrC07cf6523DmJ46vlkl5Xth5RPErjY=;
+        b=YrzkCG8BOoeDxf5Ig5ifRvyUUsr3VWYYW1vIu+0jwCf1nyGqZaHZsevkVIF6GENNe1
+         z+KlZRspJ7f1l066mM9vI6SZ/LQ482kl9tQZGYs03/jaIpszX5/qxbsdfgTlvvowrnSJ
+         AbUQWUs6f8cVDVKW5mocV6nZkBJVg1+YZVNh8daPmHHH+poxrt6cU+nHbm6N2igod/XD
+         ZY8LMblOrti91UaKa8LcHAJT94CMqy5W3Ic3dfqcCjyG41Myo6RiLZs9YF+EoxAnqhPY
+         YsV+raoswpcTJkYYw8Scxor/mUqTguMBF6O688/Rhiu/iPjA+8slDQbPY/Ic0XhI0/uk
+         7E/A==
+X-Gm-Message-State: AFuF++kN/gOg2xFf7604ryRWfFnXoUIi6pFRZdHju0etBisfSfXtDXqf
+	0FhAxC2ZwMg6p5SF9wPFnPnVjKSTKipMZKfiJO0hC2uZ3nusuAR0LHRyx6XJxA==
+X-Gm-Gg: AYBFou1G7FA+hEDeFQnZ0dz6CskmQJ7ugmIaCC8fvm4HXmoSIhceSGqb76Uiz0rNk3O
+	WANXymal7PRsz8Kr1rhKS9L3pL3PGbEdMiXgSleYAu0MGw1q9G3+GuEOMai7AfJpaTZFQ/eEuFg
+	gMnAkDU3Df+VMKjv6wzJDk0yvM3bTXhEsweaKJ6z82oDpQoPAk3w5z2oXU1BLZV68G3goNs/jD3
+	an2+nnkKHlTIe4V5S9hYfQSsYw/wt48qBHMhEXOXko9uGp84wKnEYSACNZmf+jwf+7cSRs/mgiv
+	BNRvSbKiE/Q9WJqB1bvJgHBKS8+LOLySwtDYLh5/NvOOVTbN1f7+g1hNcrQrm3DHRxaGcGNxeCJ
+	0e5fUclRwymtSuJ923r1AbEZtXuHSic5hh5dK+sm2smELTr6ugloL2QPtjaIbftb2sOadJ8UdT/
+	kjDBU086KOCZQJF3HJbJoRC53TwqZdQuv2h7ZyDZHsi0in0Qq+GdjZRqNrcB+6wR61tzcVYYqRU
+	WXEIHKKxSmjZVap+r/jR0dyYDze6TG8+Rc86QI8sNurPVetxKBfgT9hlUg40dMe/EE7DwchfSd8
+	GFpanOsnCkiO+RnmiEUElbo1dQ9ec02hNPKkpK6ZnZsVHoxd
+X-Received: by 2002:a05:6a00:348f:b0:84e:7ec:aa42 with SMTP id d2e1a72fcca58-86b30122689mr1431259b3a.10.1789075220699;
+        Thu, 10 Sep 2026 14:20:20 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d95091214sm1359226a91.3.2026.09.10.14.14.41
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b2a3c2ce7sm138814b3a.56.2026.09.10.14.20.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 14:14:41 -0700 (PDT)
+        Thu, 10 Sep 2026 14:20:20 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Yuri Tikhonov <yur@emcraft.com>,
-	Anatolij Gustschin <agust@denx.de>,
-	Dan Williams <djbw@kernel.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dmaengine: ppc4xx: fix format specifiers for size_t arguments
-Date: Thu, 10 Sep 2026 14:14:40 -0700
-Message-ID: <20260910211440.65618-1-rosenp@gmail.com>
+Subject: [PATCH] dmaengine: ppc4xx: use devm_platform_ioremap_resource()
+Date: Thu, 10 Sep 2026 14:20:18 -0700
+Message-ID: <20260910212018.67728-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,75 +74,152 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Several dev_err, dev_dbg, pr_debug, and printk calls use %d or %u
-format specifiers for size_t arguments (len, pool_size).  Fix them
-to use %zu to avoid warnings on 64-bit builds.
+Replace the open-coded sequence of of_address_to_resource(),
+request_mem_region(), and ioremap() with devm_platform_ioremap_resource().
+This eliminates error-path cleanup for both the memory region and the
+ioremap, and lets the devm framework handle automatic release on probe
+failure or device removal.
 
-Fixes: 12458ea06efd7 ("ppc440spe-adma: adds updated ppc440spe adma driver")
+The two separate initcodes PPC_ADMA_INIT_MEMRES and PPC_ADMA_INIT_MEMREG
+are collapsed into PPC_ADMA_INIT_MEMRES since the combined call covers
+both steps.
+
+Also emove unused PPC_ADMA_INIT_MEMREG enum value
+
+The PPC_ADMA_INIT_MEMREG error code is no longer used after converting
+to devm_platform_ioremap_resource().  Remove it from the enum and the
+corresponding error string.
+
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- drivers/dma/ppc4xx/adma.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/ppc4xx/adma.c | 46 +++++----------------------------------
+ 1 file changed, 6 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-index 279a431ccae3..bcc54d584e2b 100644
+index bcc54d584e2b..9decdd04a51e 100644
 --- a/drivers/dma/ppc4xx/adma.c
 +++ b/drivers/dma/ppc4xx/adma.c
-@@ -799,7 +799,7 @@ static int ppc440spe_chan_xor_slot_count(size_t len, int src_cnt,
- 	if (likely(len <= PPC440SPE_ADMA_XOR_MAX_BYTE_COUNT))
- 		return slot_cnt;
+@@ -37,7 +37,6 @@
+ enum ppc_adma_init_code {
+ 	PPC_ADMA_INIT_OK = 0,
+ 	PPC_ADMA_INIT_MEMRES,
+-	PPC_ADMA_INIT_MEMREG,
+ 	PPC_ADMA_INIT_ALLOC,
+ 	PPC_ADMA_INIT_COHERENT,
+ 	PPC_ADMA_INIT_CHANNEL,
+@@ -49,7 +48,6 @@ enum ppc_adma_init_code {
+ static char *ppc_adma_errors[] = {
+ 	[PPC_ADMA_INIT_OK] = "ok",
+ 	[PPC_ADMA_INIT_MEMRES] = "failed to get memory resource",
+-	[PPC_ADMA_INIT_MEMREG] = "failed to request memory region",
+ 	[PPC_ADMA_INIT_ALLOC] = "failed to allocate memory for adev "
+ 				"structure",
+ 	[PPC_ADMA_INIT_COHERENT] = "failed to allocate coherent memory for "
+@@ -4003,7 +4001,6 @@ static void ppc440spe_adma_release_irqs(struct ppc440spe_adma_device *adev,
+ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ {
+ 	struct device_node *np = ofdev->dev.of_node;
+-	struct resource res;
+ 	struct ppc440spe_adma_device *adev;
+ 	struct ppc440spe_adma_chan *chan;
+ 	struct ppc_dma_chan_ref *ref, *_ref;
+@@ -4046,28 +4043,12 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ 		pool_size <<= 2;
+ 	}
  
--	printk(KERN_ERR "%s: len %d > max %d !!\n",
-+	printk(KERN_ERR "%s: len %zu > max %d !!\n",
- 		__func__, len, PPC440SPE_ADMA_XOR_MAX_BYTE_COUNT);
- 	BUG();
- 	return slot_cnt;
-@@ -1989,7 +1989,7 @@ static struct dma_async_tx_descriptor *ppc440spe_adma_prep_dma_memcpy(
- 	spin_lock_bh(&ppc440spe_chan->lock);
+-	if (of_address_to_resource(np, 0, &res)) {
+-		dev_err(&ofdev->dev, "failed to get memory resource\n");
+-		initcode = PPC_ADMA_INIT_MEMRES;
+-		ret = -ENODEV;
+-		goto out;
+-	}
+-
+-	if (!request_mem_region(res.start, resource_size(&res),
+-				dev_driver_string(&ofdev->dev))) {
+-		dev_err(&ofdev->dev, "failed to request memory region %pR\n",
+-			&res);
+-		initcode = PPC_ADMA_INIT_MEMREG;
+-		ret = -EBUSY;
+-		goto out;
+-	}
+-
+ 	/* create a device */
+ 	adev = kzalloc_obj(*adev);
+ 	if (!adev) {
+ 		initcode = PPC_ADMA_INIT_ALLOC;
+ 		ret = -ENOMEM;
+-		goto err_adev_alloc;
++		goto out;
+ 	}
  
- 	dev_dbg(ppc440spe_chan->device->common.dev,
--		"ppc440spe adma%d: %s len: %u int_en %d\n",
-+		"ppc440spe adma%d: %s len: %zu int_en %d\n",
- 		ppc440spe_chan->device->id, __func__, len,
- 		flags & DMA_PREP_INTERRUPT ? 1 : 0);
- 	slot_cnt = slots_per_op = 1;
-@@ -2030,7 +2030,7 @@ static struct dma_async_tx_descriptor *ppc440spe_adma_prep_dma_xor(
- 	BUG_ON(len > PPC440SPE_ADMA_XOR_MAX_BYTE_COUNT);
+ 	adev->id = id;
+@@ -4087,10 +4068,10 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ 	dev_dbg(&ofdev->dev, "allocated descriptor pool virt 0x%p phys 0x%llx\n",
+ 		adev->dma_desc_pool_virt, (u64)adev->dma_desc_pool);
  
- 	dev_dbg(ppc440spe_chan->device->common.dev,
--		"ppc440spe adma%d: %s src_cnt: %d len: %u int_en: %d\n",
-+		"ppc440spe adma%d: %s src_cnt: %d len: %zu int_en: %d\n",
- 		ppc440spe_chan->device->id, __func__, src_cnt, len,
- 		flags & DMA_PREP_INTERRUPT ? 1 : 0);
+-	regs = ioremap(res.start, resource_size(&res));
+-	if (!regs) {
+-		dev_err(&ofdev->dev, "failed to ioremap regs!\n");
+-		ret = -ENOMEM;
++	regs = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(regs)) {
++		ret = PTR_ERR(regs);
++		initcode = PPC_ADMA_INIT_MEMRES;
+ 		goto err_regs_alloc;
+ 	}
  
-@@ -2279,7 +2279,7 @@ static struct ppc440spe_adma_desc_slot *ppc440spe_dma01_prep_pq(
- 	unsigned long op = 0;
- 	unsigned char mult = 1;
+@@ -4127,7 +4108,7 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ 	if (!chan) {
+ 		initcode = PPC_ADMA_INIT_CHANNEL;
+ 		ret = -ENOMEM;
+-		goto err_chan_alloc;
++		goto err_regs_alloc;
+ 	}
  
--	pr_debug("%s: dst_cnt %d, src_cnt %d, len %d\n",
-+	pr_debug("%s: dst_cnt %d, src_cnt %d, len %zu\n",
- 		 __func__, dst_cnt, src_cnt, len);
- 	/*  select operations WXOR/RXOR depending on the
- 	 * source addresses of operators and the number
-@@ -2553,7 +2553,7 @@ static struct dma_async_tx_descriptor *ppc440spe_adma_prep_dma_pq(
- 	BUG_ON(!dst_cnt);
+ 	spin_lock_init(&chan->lock);
+@@ -4206,19 +4187,12 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ 	}
+ err_page_alloc:
+ 	kfree(chan);
+-err_chan_alloc:
+-	if (adev->id == PPC440SPE_XOR_ID)
+-		iounmap(adev->xor_reg);
+-	else
+-		iounmap(adev->dma_reg);
+ err_regs_alloc:
+ 	dma_free_coherent(adev->dev, adev->pool_size,
+ 			  adev->dma_desc_pool_virt,
+ 			  adev->dma_desc_pool);
+ err_dma_alloc:
+ 	kfree(adev);
+-err_adev_alloc:
+-	release_mem_region(res.start, resource_size(&res));
+ out:
+ 	if (id < PPC440SPE_ADMA_ENGINES_NUM)
+ 		ppc440spe_adma_devices[id] = initcode;
+@@ -4232,8 +4206,6 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
+ static void ppc440spe_adma_remove(struct platform_device *ofdev)
+ {
+ 	struct ppc440spe_adma_device *adev = platform_get_drvdata(ofdev);
+-	struct device_node *np = ofdev->dev.of_node;
+-	struct resource res;
+ 	struct dma_chan *chan, *_chan;
+ 	struct ppc_dma_chan_ref *ref, *_ref;
+ 	struct ppc440spe_adma_chan *ppc440spe_chan;
+@@ -4270,12 +4242,6 @@ static void ppc440spe_adma_remove(struct platform_device *ofdev)
  
- 	dev_dbg(ppc440spe_chan->device->common.dev,
--		"ppc440spe adma%d: %s src_cnt: %d len: %u int_en: %d\n",
-+		"ppc440spe adma%d: %s src_cnt: %d len: %zu int_en: %d\n",
- 		ppc440spe_chan->device->id, __func__, src_cnt, len,
- 		flags & DMA_PREP_INTERRUPT ? 1 : 0);
+ 	dma_free_coherent(adev->dev, adev->pool_size,
+ 			  adev->dma_desc_pool_virt, adev->dma_desc_pool);
+-	if (adev->id == PPC440SPE_XOR_ID)
+-		iounmap(adev->xor_reg);
+-	else
+-		iounmap(adev->dma_reg);
+-	of_address_to_resource(np, 0, &res);
+-	release_mem_region(res.start, resource_size(&res));
+ 	kfree(adev);
+ }
  
-@@ -4077,7 +4077,7 @@ static int ppc440spe_adma_probe(struct platform_device *ofdev)
- 					adev->pool_size, &adev->dma_desc_pool,
- 					GFP_KERNEL);
- 	if (adev->dma_desc_pool_virt == NULL) {
--		dev_err(&ofdev->dev, "failed to allocate %d bytes of coherent "
-+		dev_err(&ofdev->dev, "failed to allocate %zu bytes of coherent "
- 			"memory for hardware descriptors\n",
- 			adev->pool_size);
- 		initcode = PPC_ADMA_INIT_COHERENT;
 -- 
 2.55.0
 
