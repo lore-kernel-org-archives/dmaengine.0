@@ -1,145 +1,137 @@
-Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EDC387348
-	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 18:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D113EFFD7
+	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 18:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789150222; cv=none; b=KuLpmX1IXixTKuML86RTLw5JPXXxjRnLUnnY8dWVNkOI0c8MJTjaafdy10MgO1TeJogKFJMq10uc5+lpIgG7KT/bEYHX1L/LBUAR7OXO/d5gvi/VjZcZd03wUOn2NgbaqoLqoFM3ukFV6S/SILp03iGwDxmNCc3ZqKUDdyrVOVc=
+	t=1789152531; cv=none; b=tA+J6JKF/KEJOA9GAH77Nt8Wjaset3fOrJwkNTIqAig7I41JJ8m4jjbS6mdaXuL2cB10hHAp6T5ifJaX6ZlxrhLbQ/7kE1WaF88xqn9HsY/S77wbNo2gHg5fLQ9R2AqkiSQ3RZPxYEjCKUWMpirtsGoe+cSqlYT8EdhecW2kuHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789150222; c=relaxed/simple;
-	bh=pFoLIhtHfUm14OpIGSbvqjL40AJBmN4Y3fFmZiUfOIM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Bz69CwX8w4UPxy6+Zx0HigIrDAR9QnFZn8oV0uuDjL5F8/sW8TPaFXUbMQdU7AkQKKdP99Q/Wsp3bAmqBQZSNQI26iLO90S7On4PIFEv1wgSf+YCvvJN2dnEZiEr6y1yBT/oNQfcbrH8JIVXVdmdc7jdIHUNPJ7bAhS5UDGK3L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z9egalCr; arc=none smtp.client-ip=74.125.228.42
+	s=arc-20240116; t=1789152531; c=relaxed/simple;
+	bh=gZ5i0XgbuKsA6Uj95jN4pnPRMbKgY9tYTi/l34huXSA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FZHP24aHIt3oPrvsVgEsMcOQlpLjIrrjVXthqfNK3CUS3KdN8fVGQ3McqC4QMCpfWesCujeF86IL2HXRfh+RFnDuTVwWPTWRrilaINMfwoyQqvEWbKYUpNprFEmbYe0w2ATx5MLfdmkKuLP6yxrKNhdFnIbC1kuyrMTc0zHvR2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UCdVkWK4; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z9egalCr"
-Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc1cebad4adso286358a12.1
-        for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 11:10:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UCdVkWK4"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-52fa6005224so13434191cf.1
+        for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 11:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789150214; x=1789755014; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3cxa3dW2rb8gMN+b8Efg94ssh5+KCVrUeOlRH+bN32g=;
-        b=Z9egalCrHikkPZ/IcF01BEvdZ7/DMiTGNGDHvO1rHXBqHb8OLhjzBISaAYl0JeF+/Q
-         kP4CjbE5uEyV4m/pVDLtkJqusJSxspRP6nSSqan5av3EpcV0WiIbVEnyWmwNohMW57nF
-         1OD7CymakQ6aDYC3po2sxLxQVsrVTJhb7WnNrPKYXdGBm0xy1Ei4qLHiV2+XeqQybIgj
-         yvT7Yv/T1LlKZRjnfc5XA806RAHFKvpyhl5+6FSRwkmlKDCW2H251YYYiXBvIHFZivBr
-         yeWpZNeclqUw0SZ0JkO2vreDD41vzQbdEHPW52MhuKecI3RiXF5JU07BZ0s+lFvqWyd5
-         yPbQ==
+        d=gmail.com; s=20251104; t=1789152528; x=1789757328; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=TZZuyrKf50eYXDMR9/RtxPhzJQSYHI855hdGibW04Pg=;
+        b=UCdVkWK4Hxy2ssWWsTfBdYeL+WVSZE5IVrV4ghqiepijBWx2m35e2/sG7eGNGZSruV
+         FSnNbzCXgi8n0AWYPoYffqhxgdXU9szHC85yRaHaMKI04439xAfEgT4/IkPeaMUIYE6o
+         autT5i8jiTl1nMSqZaXsJTssn7cmoTd/oIVVjLfCSb2ECOdD2CWIyavyMol1K4EdeCKe
+         RkwhpyFB42oOpOTOVVD3zaq2dNoQVFbZm4ALM0UjcLEa+ZxH9J+npdGJD4V9LvEqBDG6
+         AA6p3VQXi7rgHdkui3ga+8V8V+i522jztAlor08DRmV1i6rgJifP3Kug1+fJwnQDUs3a
+         tQjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789150214; x=1789755014;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3cxa3dW2rb8gMN+b8Efg94ssh5+KCVrUeOlRH+bN32g=;
-        b=XOA8/ZilrS9vBowxXrQxO67trc86ejtRC/aQR1Vb7orSmcQW4yS7oWt33dBlD3MAXG
-         T517AOLyMmENBeZdLa/DPU5hfe8O96fgDQKG4eN8ajQl+mHAy58RS1j6DxeOFQmVW6g9
-         +aTObehnViiRdBgaTTpn67mnakcO+/dJo0/SjHkI1B1I0xbN9vdUMNvw5QL4T22evamz
-         V+lF1L3h1sVOfbncZOPfgu05nA1JT8Gi6C+Hm8OTwlQsDYa4IYg1td8EnX0Bzm2+A/Fy
-         5TyaTUyege1u/fPix0m3/8Ynzu/z8/uKhdDCnk7uW7hq5SDSsvPlJo3HFl4sR/rR+QmK
-         t8eA==
-X-Gm-Message-State: AFuF++k40+dmf5YyNu7qDAkW+dNJYTAAcg5Q0Oq48bY3WC+R94oMsu0I
-	U07E2Jk7XE6mwEw3xknZukbopkyUkk+N0yCh0hBRK2x0ya88i0CV+EMb
-X-Gm-Gg: AYBFou3Eul6wJPYq4bl2tomXISO3zy4FKb0AXUdu4x8c8bUfzXqA436v2U9Mzv2iRmT
-	+ilcIEEZWDNbglqsRT7cHpIdpKumILPn/StNDT9nmb2LvMeACWM34ixJF9+5BqysITiyO5fSpdQ
-	QsVmqBSLh0wakmpm6ky9Zae9XJgOpoPr6BB5loZkj8hekGygUyyzwvYIpnfs12B/1O1oAmSegnl
-	qrIm3ZYGhDyQbXhBAaBM4DEhFM0vbe+S44/HXYCNpOpnnrH6x6G9/o5Ej4g4XVyGB1Qyr/BJ6p6
-	q4mMyZ6XTpUk8r3+pMvbFUPtAS45+jrQM3xX6rN9Xfk0+JrHz9hgZRh5+uM+SS5l7HQnf0W+LkO
-	OL/oyQCshrQzvkhXlaZB4VKqD0g7hPgL9O8fXCqtv7bmE/+/awHQEWhKj3d4A8biae1qiwSagQK
-	vbHkoflGKCzLjeVCQCBeC2dfS9ZlJHze+MZE9SbLnmaXR0ldjeVjYORwvqoa6DRdld6t2Tlreck
-	Vq0ZnOsC08IGRx3ufk8CbKh0aeZ+pRrqltsjhM5mSR56uh7K7TBz8m6YHAB2CL2rjSreXN+A/CI
-	yhTzqIjFwcNvgcu6TJOfApxRTDnV7p8T2s7lAxj9zpVfiTDe
-X-Received: by 2002:a17:90b:278f:b0:398:e73e:5a0c with SMTP id 98e67ed59e1d1-39d9bbe47b2mr10254399a91.1.1789150214007;
-        Fri, 11 Sep 2026 11:10:14 -0700 (PDT)
-Received: from localhost ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d95752809sm6212701a91.13.2026.09.11.11.10.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2026 11:10:13 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1789152528; x=1789757328;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=TZZuyrKf50eYXDMR9/RtxPhzJQSYHI855hdGibW04Pg=;
+        b=rrALVvCyJ9tEhHkaz8KlO3qOpVvC4dQGZoIzyyKHSCBNdfuizJNDI1VGSBTilQTTk3
+         vUvQETWaZ6CJSqTfbSEiARlATZowtjFoQdb1ffzCqIauLjFE49b5HNf6f5RBYKGieb/Y
+         OG8l3b6JTYN9gJ6rrslR6Bh5k6Ety/YNsTI13WopfKIciEEr1k7jlge3nqRkbPh/Q8DJ
+         9ZE325TjvW4l3HQrTAcwiuAW9xyF9+4KQ3TzoqMsh2ea6UgPyvUXuu1RAwQZC2aLEYJE
+         2MkKNQ94alTEjM7hukzKcOCosgYB68yYkhsa2/QGl2caB3/VKftH6RcbmtgjwCTI3HWs
+         dEvg==
+X-Forwarded-Encrypted: i=1; AKwUvBwvIUU/4mQzmWZFxqy2m85vHYUpxGdHoVYznxgshbVhJiUy8CwNF7dTc0Idh5RAnegSq+Fp9L4lQ+M=@vger.kernel.org
+X-Gm-Message-State: AFuF++nfp4IwWBfUH/esEr9eImduIpWQmWyB+vtzB2tVgaMJl/rXbJaC
+	VUQmC0Rns/rPJudo1qYAgKnBKz+/cFscUgEyMtvlQZrO37n0Er3Tu/0=
+X-Gm-Gg: AYBFou2WYRbistLX5cUc8YOriFo21Z2jMY87rGhnYargGf0TaovX7EhVzACF3SnOLgG
+	VILdmrmBV3Mz4v3AOp5Z8JSGRjlC8xwdRBqCL5ARjS3PPxr7ypbcMQwofwIec8UCNCPbZovacnj
+	S0/Nu7cdD75nDxvuUA6k27MGBm4lyT3pxuWtTxnjgQfH0QJxESimkv1yUqsFG9RDC+MnEv0DylW
+	3zHBZoNmpEu+72MDLbO7vlS1DufGV/+OcbsBvpXKwshRDwl4fdAyMonmgoCo5r19TMGjt++CI4j
+	2kYM8kFwCog7HYMS9FkTj4gUzAz4j4DMN9dUR/+2g8jidRs8Wal9tc8tmK39mtkXYwdONXJNbCk
+	uwsG0jfVuX2PzcD+LF6lO6adde6TabFsMT/EN9paihZRUZZvob21b24Vyh84PNvQytN6xDfyPGP
+	1gjXfTZXuAf7C0Fahud8xWpq/o6gQwub14rC5JJZYal/HGyass8daHIHPZvswWz0KqqveeGz373
+	MfR+QwCVmQX4ReWMBSnDSgXEb9ZKvVlYHS5XL0UOpSRMp5TUwgDtu6rtzq/4GERZV8W9sug60E9
+	HjDPykW7f7eh1sMxlOAtoku6wXsstKz3OlQ=
+X-Received: by 2002:a05:622a:4006:b0:530:b2e4:d598 with SMTP id d75a77b69052e-530c8754c05mr79942701cf.51.1789152528459;
+        Fri, 11 Sep 2026 11:48:48 -0700 (PDT)
+Received: from localhost.localdomain ([104.39.73.78])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f4d389esm26707086d6.42.2026.09.11.11.48.47
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 11 Sep 2026 11:48:47 -0700 (PDT)
+From: Myeonghun Pak <mhun512@gmail.com>
+To: Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	dmaengine@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Ijae Kim <ae878000@gmail.com>
+Subject: [PATCH] dmaengine: stm32-dma3: disable the active clock on removal
+Date: Fri, 11 Sep 2026 14:48:41 -0400
+Message-ID: <20260911184841.34222-1-mhun512@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 11 Sep 2026 11:10:12 -0700
-Message-Id: <DLCOTGSJIKI9.2U1ISL32HW8C7@gmail.com>
-Cc: <dmaengine@vger.kernel.org>, "Vinod Koul" <vkoul@kernel.org>, "Frank Li"
- <Frank.Li@kernel.org>, "Anatolij Gustschin" <agust@denx.de>, "Yuri
- Tikhonov" <yur@emcraft.com>, "Dan Williams" <djbw@kernel.org>, "open list"
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: ppc4xx: check dma_map_page() errors in probe
-From: "Rosen Penev" <rosenp@gmail.com>
-To: "Frank Li" <Frank.li@oss.nxp.com>, "Rosen Penev" <rosenp@gmail.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260910214334.86689-1-rosenp@gmail.com>
- <aqQmw0j8-s5DEv9v@SMW015318>
-In-Reply-To: <aqQmw0j8-s5DEv9v@SMW015318>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Fri Sep 11, 2026 at 9:05 AM PDT, Frank Li wrote:
-> On Thu, Sep 10, 2026 at 02:43:34PM -0700, Rosen Penev wrote:
->> In ppc440spe_adma_probe() the helper pages are mapped with
->> dma_map_page() but the returned DMA address is never validated with
->> dma_mapping_error(). On 440SPe the mapping goes through the
->> SWIOTLB/direct map, which can fail under memory pressure or with an
->> IOMMU, returning DMA_MAPPING_ERROR. The bogus address would then be
->> programmed into the CDBs used by the async validation and
->> mult/sum_product operations, causing the engine to DMA to or from
->> arbitrary memory and corrupt data.
->>
->> Fail the probe when either mapping fails, freeing the pages and
->> unmapping the first page if the second mapping fails.
->>
->> Fixes: 12458ea06efd7 ("ppc440spe-adma: adds updated ppc440spe adma drive=
-r")
->> Assisted-by: opencode:big-pickle
->> Signed-off-by: Rosen Penev <rosenp@gmail.com>
->> ---
->>  drivers/dma/ppc4xx/adma.c | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
->> index 279a431ccae3..89e778896d7a 100644
->> --- a/drivers/dma/ppc4xx/adma.c
->> +++ b/drivers/dma/ppc4xx/adma.c
->> @@ -4156,8 +4156,22 @@ static int ppc440spe_adma_probe(struct platform_d=
-evice *ofdev)
->>  		}
->>  		chan->pdest =3D dma_map_page(&ofdev->dev, chan->pdest_page, 0,
->>  					   PAGE_SIZE, DMA_BIDIRECTIONAL);
->> +		if (dma_mapping_error(&ofdev->dev, chan->pdest)) {
->> +			__free_page(chan->pdest_page);
->> +			__free_page(chan->qdest_page);
->
-> put these to lable out
-Problem there is this is in an if statement. It's not as clean to handle
-here directly.
->
-> Frank
->
->> +			ret =3D -ENOMEM;
->> +			goto out;
->> +		}
->>  		chan->qdest =3D dma_map_page(&ofdev->dev, chan->qdest_page, 0,
->>  					   PAGE_SIZE, DMA_BIDIRECTIONAL);
->> +		if (dma_mapping_error(&ofdev->dev, chan->qdest)) {
->> +			dma_unmap_page(&ofdev->dev, chan->pdest,
->> +				       PAGE_SIZE, DMA_BIDIRECTIONAL);
->> +			__free_page(chan->pdest_page);
->> +			__free_page(chan->qdest_page);
->> +			ret =3D -ENOMEM;
->> +			goto out;
->> +		}
->>  	}
->>
->>  	ref =3D kmalloc_obj(*ref);
->> --
->> 2.55.0
->>
+Probe enables the controller clock and runtime suspend disables it.
+The remove callback only disables runtime PM, which does not itself
+invoke runtime suspend. If the controller is still active, its clock
+prepare and enable references therefore remain held after removal.
 
+Remove the OF DMA provider and disable runtime PM, then release the
+channel IRQs before disabling the clock. The IRQ handler reads controller
+registers, so wait for it to finish rather than leaving IRQ release to
+the managed cleanup that runs after remove returns.
+
+Disable the clock only if the device is not already suspended, then mark
+it suspended. This avoids a second clock disable for a runtime-suspended
+device and also covers CONFIG_PM=n.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: f561ec8b2b33 ("dmaengine: Add STM32 DMA3 support")
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+---
+ drivers/dma/stm32/stm32-dma3.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
+index 4724e7fa0008e177160d085172cb89d6bc483c4f..b4d68be5a46b8aa1751dd32234d42f6e6b470335 100644
+--- a/drivers/dma/stm32/stm32-dma3.c
++++ b/drivers/dma/stm32/stm32-dma3.c
+@@ -1926,7 +1926,21 @@ static int stm32_dma3_probe(struct platform_device *pdev)
+ 
+ static void stm32_dma3_remove(struct platform_device *pdev)
+ {
++	struct stm32_dma3_ddata *ddata = platform_get_drvdata(pdev);
++	struct dma_chan *c;
++
++	of_dma_controller_free(pdev->dev.of_node);
+ 	pm_runtime_disable(&pdev->dev);
++
++	list_for_each_entry(c, &ddata->dma_dev.channels, device_node) {
++		struct stm32_dma3_chan *chan = to_stm32_dma3_chan(c);
++
++		devm_free_irq(&pdev->dev, chan->irq, chan);
++	}
++
++	if (!pm_runtime_status_suspended(&pdev->dev))
++		clk_disable_unprepare(ddata->clk);
++	pm_runtime_set_suspended(&pdev->dev);
+ }
+ 
+ static int stm32_dma3_runtime_suspend(struct device *dev)
+-- 
+2.53.0
