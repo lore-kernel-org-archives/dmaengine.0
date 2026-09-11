@@ -1,35 +1,36 @@
 Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FE1450415;
-	Fri, 11 Sep 2026 07:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E9F448CE6;
+	Fri, 11 Sep 2026 07:42:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789112547; cv=none; b=PtOBF6J8GKdmNHgWWdvzBYb+LK94bIM4Q8xJr8LvQ3YdhoQkzcTjN15zbE2nHGG5A2oxecYtfOVvbfP3A25Qit9xJhoFtjTqh8vZxlBEakWDbpeRS0ETF7y2FEbW6Wlgcy0zqYcuX6F+FC4+0jCqFCrkzM311q8HNmfIXw4DsfE=
+	t=1789112562; cv=none; b=g7sHdXRzxH7iV/4yXtjuDucGS9qd6Oqn7iGxVxiOJBdw5pdHdQeXvtODcL3Bzjj2k/54hK3yr2sN4wzNRhZ53kjUP+ZcymqPEVBLhp6G3RLcxKwQxZfZJsHFm0CXLopn8sc813W+LE3AFwC79TE8c497f9MGfV8/d+Nb67EteZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789112547; c=relaxed/simple;
-	bh=BMkgbPKviKHC4rd29McGJoIAKL4ZtGWMSuVQcHUw27I=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=X9EKQh/c+soYs3ejAms/J7JW08ogfF9cyEoev41aTmVfqB1vkWoXbEAQXFm5BUrwJfsogffXd80I8+8e781Huk3+IlgFpErPeNrY8gKBIEhY5vfi+XGMLeWvxeigEMT2WtKKu2ztAFau4TdRLgbBDlLk3zC5IkE9/+32GAVwCII=
+	s=arc-20240116; t=1789112562; c=relaxed/simple;
+	bh=muxODD1niwzljlOtd8iFf5Z19qc+FyKKexUQAn68bzo=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YEU84cRicYydtTvj6hIilbtRb0UhScLAQ7084ThuUxxie3aTzRF9hTVXWc+jSSBRr6aaBE+3XySpQwRSZDspvis49DPHtbl0R4/GWnZPnyLuquknYz/cx5JzHzB9ZKatHA9YTKuOfocph3hDWT8iz6rw/VkiY9jjyXPDP8J91Yg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
 Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
-	by Atcsqr.andestech.com with ESMTP id 68B7PxDH008840;
-	Fri, 11 Sep 2026 15:25:59 +0800 (+08)
+	by Atcsqr.andestech.com with ESMTP id 68B7Q9RI008863;
+	Fri, 11 Sep 2026 15:26:09 +0800 (+08)
 	(envelope-from cl634@andestech.com)
-Received: from mail.andestech.com (atcpcs53.andestech.com [10.0.1.153])
-	by Atcsqr.andestech.com with ESMTPS id 68B7PY1v008516
+Received: from mail.andestech.com (atcpcs55.andestech.com [10.0.1.155])
+	by Atcsqr.andestech.com with ESMTPS id 68B7Pa2M008517
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 11 Sep 2026 15:25:34 +0800 (+08)
+	Fri, 11 Sep 2026 15:25:36 +0800 (+08)
 	(envelope-from cl634@andestech.com)
-Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs53.andestech.com
- (10.0.1.153) with Microsoft SMTP Server (version=TLS1_2,
+Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs55.andestech.com
+ (10.0.1.155) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.43; Fri, 11 Sep
- 2026 15:25:34 +0800
+ 2026 15:25:36 +0800
 Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
  (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 11 Sep
- 2026 15:25:33 +0800
+ 2026 15:25:36 +0800
 From: CL Wang <cl634@andestech.com>
 To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
         "Krzysztof
@@ -40,11 +41,14 @@ CC: Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>,
  R . Silva" <gustavoars@kernel.org>,
         <tim609@andestech.com>, <cl634@andestech.com>,
         <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v6 0/2] dmaengine: atcdmac300: Add Andes ATCDMAC300 DMA driver
-Date: Fri, 11 Sep 2026 15:25:22 +0800
-Message-ID: <20260911072524.1297406-1-cl634@andestech.com>
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v6 1/2] dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
+Date: Fri, 11 Sep 2026 15:25:23 +0800
+Message-ID: <20260911072524.1297406-2-cl634@andestech.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260911072524.1297406-1-cl634@andestech.com>
+References: <20260911072524.1297406-1-cl634@andestech.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,68 +59,114 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
  ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs53.andestech.com; dkim=none;
+X-DKIM-Results: atcpcs55.andestech.com; dkim=none;
 X-DNSRBL: 
 X-SPAM-SOURCE-CHECK: pass
-X-MAIL:Atcsqr.andestech.com 68B7PxDH008840
+X-MAIL:Atcsqr.andestech.com 68B7Q9RI008863
 
-This patch series adds support for the Andes ATCDMAC300 DMA controller,
-a memory-to-memory and peripheral DMA controller that provides
-scatter-gather, cyclic, and slave transfer capabilities.
+Document devicetree bindings for Andes ATCDMAC300 DMA engine
 
-The ATCDMAC300 IP is embedded in AndesCore-based platforms or SoCs
-such as AE350 and Qilai.
+ATCDMAC300 is the IP name, which is embedded in AndesCore-based
+platforms or SoCs such as AE350 and Qilai.
 
-Changes in v6:
-  - Rebase onto dmaengine/next; no functional changes from v5
-  - Fold the MAINTAINERS entry into the driver patch instead of carrying
-    it as a separate patch (series is now 2 patches)
+Signed-off-by: CL Wang <cl634@andestech.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-Changes in v5:
-  - Update copyright year to 2026
-  - Remove redundant headers (init.h, iopoll.h, mod_devicetable.h)
-  - Move atcdmac_init_iocp() before of_dma_controller_register() in probe
-  - Change builtin_platform_driver() to module_platform_driver()
-  - Implement .remove callback to support safe module unloading
-  - Update Kconfig entry from bool to tristate
-  - Add MODULE_AUTHOR, MODULE_DESCRIPTION, MODULE_LICENSE macros
+---
+  Changes for v6:
+    - Rebase onto dmaengine/next; no changes from v5
 
-Changes in v4:
-  - Use items list format with descriptions for reg property in DT binding
-    as suggested by Conor Dooley
-  - Re-add Acked-by from Conor Dooley for DT binding patch
+  Changes for v5:
+    - No changes from v4
 
-Changes in v3:
-  - Rename DT binding file from andestech,qilai-dma.yaml to
-    andestech,ae350-dma.yaml
-  - Deprecate IP-core-based compatible usage and align with
-    SoC/platform-based strings
-  - Dropped Acked-by from Conor Dooley due to the above binding change
-  - Remove "andestech,atcdmac300" from of_device_id table
-  - Replace deprecated tasklet with threaded IRQ using
-    devm_request_threaded_irq() and IRQF_ONESHOT
-  - Update locking from spin_lock_bh() to spin_lock_irqsave()
-  - Use builtin_platform_driver() instead of module_platform_driver()
-  - Remove "select DMATEST" from Kconfig
-  - Add separate MAINTAINERS patch (patch 3/3)
+  Changes for v4:
+    - Use items list format with descriptions for reg property
+      as suggested by Conor Dooley
 
-Please kindly review.
-
-CL Wang (2):
-  dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
-  dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
-
- .../bindings/dma/andestech,ae350-dma.yaml     |   67 +
- MAINTAINERS                                   |    6 +
- drivers/dma/Kconfig                           |   11 +
- drivers/dma/Makefile                          |    1 +
- drivers/dma/atcdmac300.c                      | 1518 +++++++++++++++++
- drivers/dma/atcdmac300.h                      |  296 ++++
- 6 files changed, 1899 insertions(+)
+  Changes for v3:
+    - Rename DT binding file from andestech,qilai-dma.yaml to
+      andestech,ae350-dma.yaml.
+    - Deprecate IP-core-based compatible usage and align with
+      SoC/platform-based strings.
+    - Dropped Acked-by tag from Conor Dooley due to the above change.
+---
+ .../bindings/dma/andestech,ae350-dma.yaml     | 67 +++++++++++++++++++
+ 1 file changed, 67 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
- create mode 100644 drivers/dma/atcdmac300.c
- create mode 100644 drivers/dma/atcdmac300.h
 
+diff --git a/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
+new file mode 100644
+index 000000000000..f040a2bf7d4b
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
+@@ -0,0 +1,67 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/andestech,ae350-dma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Andes ATCDMAC300 DMA Controller
++
++maintainers:
++  - CL Wang <cl634@andestech.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    oneOf:
++      - items:
++          - enum:
++              - andestech,qilai-dma
++          - const: andestech,ae350-dma
++      - const: andestech,ae350-dma
++
++  reg:
++    minItems: 1
++    items:
++      - description: DMA controller register range
++      - description: cache control in IOCP controller
++
++  reg-names:
++    minItems: 1
++    items:
++      - const: dma
++      - const: iocp
++
++  interrupts:
++    maxItems: 1
++
++  "#dma-cells":
++    const: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - "#dma-cells"
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    soc {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        dma-controller@f0c00000 {
++            compatible = "andestech,ae350-dma";
++            reg = <0x0 0xf0c00000 0x0 0x1000>,
++                  <0x0 0xe8000000 0x0 0x10>;
++            reg-names = "dma", "iocp";
++            interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
++            #dma-cells = <1>;
++        };
++    };
++...
 -- 
 2.34.1
 
