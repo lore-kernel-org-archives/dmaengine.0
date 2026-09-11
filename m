@@ -1,126 +1,203 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F72488762;
-	Fri, 11 Sep 2026 13:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005E0472068;
+	Fri, 11 Sep 2026 13:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789132988; cv=none; b=Rndu1Gst6SVaa/TzEjLa1lDOe0NoUkOMtQJovcm+kIREe6Ksj+kSp1LWgjt1bCg3/ZHThdXbYEOFcwUqFXkKS9fbh8nT0v3jZMPxcWA6GQQbH8WY11nsPmVvJ1xMsHpO6MPbkEk7+4DXylaCKp2CAidea6Cy3rkD8ZRLKPxOeEs=
+	t=1789133278; cv=none; b=KNGTx9G6wlNeXBUHs2bItvHKR1HXAiLIaidhTpav/bM0up84WknNcCaDrB2wxsBWX+hhrlpWGFxslQRxq57BlIw4sqpIHgVl01Kn75OE9P9rRFDE3PZfN50sIUaL/QoVpN4SQMvWtgSwlagNHzO1EEasszzp0nxCZBWo40n4oxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789132988; c=relaxed/simple;
-	bh=gh0Xi78NBOYrWoEb6fcomr0tChm+mbhsB1n/V/AYo18=;
+	s=arc-20240116; t=1789133278; c=relaxed/simple;
+	bh=bb6254xgmnei3js2vLHLK4MFg1wcNIcHE7bFdEPvxDk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=tNn79/JWz0T2qEIZPUYaBavyMfP+4oXTbEm0cEVfR8lMyRvIeygbc2pbwdXUT2AuNeZsxdJ40xq5Wcx9TwjBxIXlQoVVz7ClXbJ4PlW2cRiG+1j92bpjxM3BJZBPsUoGqJzIgOx/eeexpjmlr4GtrQkuiHgILUm82IhkvP8/fHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZLj66oW1; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=myD0iS0FlCyf5HnuWoazH7Ss/JzJfIt5sB+CEvi/bFUI96+BMLGP7zvZymsxHO+VEID9tFHijBYCiPe4NqMw3nEl3RMI+wnVe67WE/QVRdKzjcoq3tnsvrAqqKeoXF81mW6oC4sqxnxpoJhfeKWIKLcw1YMFwm+pPcKmbt4QpQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G60mzJvf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZLj66oW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295731F000FF;
-	Fri, 11 Sep 2026 13:23:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G60mzJvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B36F1F000FF;
+	Fri, 11 Sep 2026 13:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789132983;
-	bh=kqc803EcYbqjZYEYF4fjdtnsWRP/BBnmXZJkarUTSc8=;
+	s=k20260515; t=1789133276;
+	bh=AJ9tjRqEMdSdtFBQhF1d3Qho63O4SNqmDyHex4MFdhI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZLj66oW1wf/Xy7uYp34JboYGvPcgsB87W9/IQRoxG6TWZGT1jfD7z5uYFFv+cJKZB
-	 LtUAFbs+clixbPEOn35A3zMROsdXGGql43QmiCg/xFS4nEqvzFwdITqd7/yXMIs8Sj
-	 Tv9P/QCPQUoGPFBF4rRSr2za40sN0BDlmz21k/sOkcIJx2vrRgaHTHEk84unhv2bAn
-	 PWXMwny3Jo2JQgth3kYZfJkdTwxBl4id6EDCf0PbFZBslymBIINSB3dLHbKm0mXcuH
-	 Qng8Z3yn88BcyrtIQ08/Un8d7hDBRkNp2iUIKnRnNirQH2XaHCJJeaAGhsGCOlYEMD
-	 AVNzGOI260L8g==
+	b=G60mzJvfAF4BQKVx0EVnASsCGPHdG04pNGTG2wjYWQ1by8s89DXhtLYkjVq4oxG71
+	 aQNjL5qKLfJZUdn0RRwoGZ6hqf4fRYin4csGNaRFiJZvwoT6xHJ1skxmJEgiyuKP1q
+	 7BlsnyfTisBsLMU5t8xgaRFJHZ+M+UK7mEa79EVRrvh7D80JNAu/KDevrLv1DNnbP4
+	 OiAGFWQU/QmYPlohLldIu6Mxq7WLVWU86iuNE+ucgkhZfVwf/tMthFStOUpyLQdjHl
+	 8W/DCVX204+pUXWDMv/v0AB47ofVHwmAqcCey5zY6V1UT6/vArJoYFU5eoaK0qE9FC
+	 eCBS4ZA4CRm7Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v10 2/2] dmaengine: fsl-edma: Support dynamic
- scatter/gather chaining
+Subject: Re: [PATCH v10 1/2] dmaengine: fsl-edma: Implement
+ device_prep_peripheral_dma_vec
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?QmVub8OudCBNb25pbg==?= <benoit.monin@bootlin.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, imx@lists.linux.dev, vkoul@kernel.org
-In-Reply-To: <20260911-fsl-edma-dyn-sg-v10-2-700eb72def57@bootlin.com>
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260911-fsl-edma-dyn-sg-v10-1-700eb72def57@bootlin.com>
 References: <20260911-fsl-edma-dyn-sg-v10-0-700eb72def57@bootlin.com>
- <20260911-fsl-edma-dyn-sg-v10-2-700eb72def57@bootlin.com>
+ <20260911-fsl-edma-dyn-sg-v10-1-700eb72def57@bootlin.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 11 Sep 2026 13:23:02 +0000
-Message-Id: <20260911132303.295731F000FF@smtp.kernel.org>
+Date: Fri, 11 Sep 2026 13:27:56 +0000
+Message-Id: <20260911132756.8B36F1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
 s) to consider:
-- [High] The completion handler erroneously completes and drops pending des=
-criptors if hardware channel linking (E_LINK) is used.
+
+New issues:
+- [Critical] Kernel panic: Modulo by zero during unaligned DMA_DEV_TO_DEV b=
+urst calculation.
+- [Critical] Arbitrary DMA Execution: 0-length vector triggers out-of-bound=
+s read at tcd[0].
+- [High] Data corruption: Missing multi-FIFO offset causes negative address=
+ drift.
+- [Medium] Logic Error: Unreset burst size artificially breaches FIELD_MAX =
+limit.
+
+Pre-existing issues:
+- [High] Kernel panic: DMA_NONE direction mapping triggers BUG_ON.
 --
 
-commit 1703b2e67fb35f2931ebc1bf4444955c605a74fd
+commit 084b4b0f402eb171d6adefd8fa18c7fa25e129fb
 Author: Beno=C3=AEt Monin <benoit.monin@bootlin.com>
 
-dmaengine: fsl-edma: Support dynamic scatter/gather chaining
+dmaengine: fsl-edma: Implement device_prep_peripheral_dma_vec
 
-This commit implements dynamic linking of scatter/gather transfers to allow
-chaining multiple DMA descriptors without stopping the channel. It adds
-fsl_edma_link_sg() to link descriptors and updates the transfer completion
-handler to reap issued descriptors using the EDMA_TCD_CSR_LINKCH field.
+This commit adds the implementation of the .device_prep_peripheral_dma_vec()
+callback to setup a scatter/gather DMA transfer from an array of dma_vec
+structures. It also supports cyclic transfers if the DMA_PREP_REPEAT flag
+is set.
 
 > diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-> index c5f5951c988be..76fbd2bc5154f 100644
+> index bb7531c456dfa..c5f5951c988be 100644
 > --- a/drivers/dma/fsl-edma-common.c
 > +++ b/drivers/dma/fsl-edma-common.c
-> @@ -55,10 +55,36 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *f=
-sl_chan)
+> @@ -673,6 +673,122 @@ struct dma_async_tx_descriptor *fsl_edma_prep_dma_c=
+yclic(
+>  	return vchan_tx_prep(&fsl_chan->vchan, &fsl_desc->vdesc, flags);
+>  }
+> =20
+> +struct dma_async_tx_descriptor *
+> +fsl_edma_prep_peripheral_dma_vec(struct dma_chan *chan, const struct dma=
+_vec *vecs,
+> +				 size_t nb, enum dma_transfer_direction direction,
+> +				 unsigned long flags)
+> +{
+> +	struct fsl_edma_chan *fsl_chan =3D to_fsl_edma_chan(chan);
+> +	dma_addr_t src_addr, dst_addr, last_sg;
+> +	struct fsl_edma_desc *fsl_desc;
+> +	u16 soff, doff, iter;
+> +	u32 nbytes;
+> +	int i;
+> +
+> +	if (!is_slave_direction(direction))
+> +		return NULL;
+> +
+> +	if (!fsl_edma_prep_slave_dma(fsl_chan, direction))
+> +		return NULL;
+
+[Severity: High]
+This is a pre-existing issue, but does passing DMA_DEV_TO_DEV to
+fsl_edma_prep_slave_dma() cause a kernel panic?
+
+If a driver requests a DMA_DEV_TO_DEV transfer, fsl_edma_prep_slave_dma()
+handles it by mapping the resource with dma_dir =3D DMA_NONE. The core DMA
+mapping API (dma_map_phys via dma_map_resource) asserts
+BUG_ON(!valid_dma_direction(dir)), which leads to an intentional kernel
+crash.
+
+> +
+> +	fsl_desc =3D fsl_edma_alloc_desc(fsl_chan, nb);
+> +	if (!fsl_desc)
+> +		return NULL;
+
+[Severity: Critical]
+Is it possible for a caller to pass nb =3D=3D 0 here?
+
+If nb is 0, fsl_edma_alloc_desc() allocates an empty descriptor with
+n_tcds =3D 0. When the transfer is subsequently submitted via
+fsl_edma_xfer_desc(), the engine unconditionally dereferences
+fsl_chan->edesc->tcd[0].vtcd. Since tcd[0] is out-of-bounds, this will
+result in a heap out-of-bounds read, potentially leading to arbitrary
+DMA programming or a crash.
+
 [ ... ]
->  	if (!fsl_chan->edesc->iscyclic) {
-> -		list_del(&fsl_chan->edesc->vdesc.node);
-> -		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
-> +		u16 csr =3D edma_read_tcdreg(fsl_chan, csr);
-> +		u8 link_sg_id =3D FIELD_GET(EDMA_TCD_CSR_LINKCH, csr);
+
+> +	for (i =3D 0; i < nb; i++) {
+> +		if (direction =3D=3D DMA_MEM_TO_DEV) {
+> +			src_addr =3D vecs[i].addr;
+> +			dst_addr =3D fsl_chan->dma_dev_addr;
+> +			soff =3D fsl_chan->cfg.dst_addr_width;
+> +			doff =3D 0;
 
 [Severity: High]
-When hardware channel linking is used (the E_LINK bit is set in the CSR),
-doesn't the EDMA_TCD_CSR_LINKCH field represent the MAJORLINKCH target
-channel rather than a software scatter/gather ID?
+Can this hardcoded offset cause memory corruption for multi-FIFO endpoints?
 
-If fsl_edma_link_sg() explicitly skips assigning dynamic SG IDs to
-descriptors with E_LINK set, their software fsl_desc->link_sg_id will
-remain 0. If this interrupt handler extracts a target channel number
-(e.g., 15) into link_sg_id here, it will fail to match the software ID of 0.
+When fsl_chan->is_multi_fifo is true, fsl_edma_fill_tcd() automatically
+applies a negative Minor Loop Offset (MLOFF) equal to -burst. Because doff
+is set to 0 here, the destination address does not advance during the minor
+loop, but is still incorrectly pulled backwards by -burst at the end of
+each minor loop. This causes the destination address to drift negatively.
 
-> +		struct virt_dma_desc *vdesc, *tmp;
-> +
-> +		/* Channel is DONE when a TCD with D_REQ set completes */
-> +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
-> +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
-> +			fsl_chan->status =3D DMA_COMPLETE;
+[ ... ]
+
+> +		} else {
+> +			/* DMA_DEV_TO_DEV */
+> +			src_addr =3D fsl_chan->cfg.src_addr;
+> +			dst_addr =3D fsl_chan->cfg.dst_addr;
+> +			soff =3D 0;
+> +			doff =3D 0;
 > +		}
 > +
-> +		list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_issued, nod=
-e) {
-> +			struct fsl_edma_desc *fsl_desc =3D to_fsl_edma_desc(vdesc);
-> +			bool id_match =3D (link_sg_id =3D=3D fsl_desc->link_sg_id);
+> +		/*
+> +		 * Choose the suitable burst length if dma_vec length is not
+> +		 * multiple of burst length so that the whole transfer length is
+> +		 * multiple of minor loop(burst length).
+> +		 */
+> +		if (nbytes && vecs[i].len % nbytes) {
+> +			u32 width =3D (direction =3D=3D DMA_DEV_TO_MEM) ? doff : soff;
+> +			u32 burst =3D (direction =3D=3D DMA_DEV_TO_MEM) ?
+> +						fsl_chan->cfg.src_maxburst :
+> +						fsl_chan->cfg.dst_maxburst;
+> +			int j;
 > +
-> +			/*
-> +			 * If the transfer is still running,
-> +			 * don't mark as complete the current descriptor
-> +			 */
-> +			if (id_match && fsl_chan->status !=3D DMA_COMPLETE)
-> +				break;
-> +
-> +			list_del(&vdesc->node);
-> +			vchan_cookie_complete(vdesc);
-> +
-> +			if (id_match)
-> +				break;
+> +			for (j =3D burst; j > 1; j--) {
+> +				if (!(vecs[i].len % (j * width))) {
+
+[Severity: Critical]
+Could this result in a modulo by zero for DMA_DEV_TO_DEV transfers?
+
+For DMA_DEV_TO_DEV, both soff and doff are 0, which means width evaluates
+to 0. If the vector length is unaligned, the modulo operator will evaluate
+vecs[i].len % 0, causing an immediate kernel panic via division by zero.
+
+> +					nbytes =3D j * width;
+> +					break;
+> +				}
+> +			}
+> +			/* Set burst size as 1 if there's no suitable one */
+> +			if (j =3D=3D 1)
+> +				nbytes =3D width;
 > +		}
+> +
+> +		if (!nbytes || vecs[i].len / nbytes > FIELD_MAX(EDMA_TCD_ITER_MASK))
+> +			goto err_free_desc;
 
-[Severity: High]
-Following from the E_LINK mismatch above, if id_match evaluates to false
-for a descriptor using hardware channel linking, will this loop erroneously
-continue deleting and completing all subsequent pending descriptors in the
-desc_issued list?=20
+[Severity: Medium]
+Will this erroneously reject valid transfers if nbytes is shrunk during an
+earlier loop iteration?
 
-Since their software IDs will also fail to match the extracted hardware
-channel number, it looks like these pending descriptors will be silently
-dropped and completed without ever being submitted to the hardware.
+When a vector length isn't a multiple of nbytes, nbytes is reduced to a
+suitable factor. However, nbytes is never restored to its optimal value at
+the start of the loop for the next vector. If a later vector in the array
+is large, it will be divided by this artificially reduced nbytes, causing
+the calculation to exceed FIELD_MAX(EDMA_TCD_ITER_MASK) and falsely aborting
+the transfer setup.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911-fsl-edma-d=
-yn-sg-v10-0-700eb72def57@bootlin.com?part=3D2
+yn-sg-v10-0-700eb72def57@bootlin.com?part=3D1
