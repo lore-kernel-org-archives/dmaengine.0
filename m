@@ -1,125 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D92B4F5E0
-	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 17:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4CC4AA3FE
+	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 17:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789148412; cv=none; b=rR0q8HUgXdCER3619KolHvl7qkJ+Q13OZAg9U4DIOE6PWBlRJJ4J0GAuawT3StSuCYE+G5U4EMV8YhutEuWin+nYWnUCjuQkODaUN+82eoEYD26y8g1lZGGZB/6SqzFIy5MYLP/QkOMmv23X1yrr/iqHMD99dIOkAUe2EMqTZ7E=
+	t=1789148423; cv=none; b=etYQ8ShlbOybKcH9y/KtQT17Q4XO53+fQVa+kdkEwL2kwwVYGpbGRAgG+gdIYjxuqYT+7FuLE7BwgdrRucfqnz9NPc/6rHQGEaXrxNgdsZ+XX4bUwDBtHiDk5YoPY0bIZmDS45Qxt+wXOKcuJNbcMi56VwoEwCVfuQ2jRKeadbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789148412; c=relaxed/simple;
-	bh=M9/SqIucHAmGxzvTomJ7xqcLC7tIgoD25q225s637SY=;
+	s=arc-20240116; t=1789148423; c=relaxed/simple;
+	bh=5hapq4zU2xCArAcHQovvxdS1xHgPn4ZWld/Z+fmr3HY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KaUax14eg4l1mQj3ovKtkYo5inFWrkTTeAo+nQ9fNdYFmpF/xzr2jA3r9rJQfovkS+SUppPA6t4iU4zXG6f9/KNR83TN8Gmj7MYY/cXNZNxuU6iDvqOLJ3y96ugoM7egjLnBLEEybhc6Yj08hyhs353Y0hKonI8KrV2VstlwYAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLAeT1Mu; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=EaPU+W56oDKcxnAZQTHaQ8B4KTH7SnoODitpVeYCcZ9wpfBF1nEwPJz8MGmzKZ9k7eak+10dQgoE9iBCtgR4M9rtJrCT/laz3whiZnM8nKuIgbYeXTicA2G78asUc/uyKG8+jB8FnCf2LB68jqk/JsXpqvDxvYFMAO3096LYZa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TKlVk3VK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLAeT1Mu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919C31F000FF;
-	Fri, 11 Sep 2026 17:40:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TKlVk3VK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7A71F00898;
+	Fri, 11 Sep 2026 17:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789148400;
-	bh=XwHK2zdr5/d4+bjlFH2dT86OIR0awhczBnfaxis+DCU=;
+	s=k20260515; t=1789148412;
+	bh=kT4TMRLCBPXIyy3190t0+xnOJptzRIP95OpmM9Fx0HA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=DLAeT1Mu/xbhEaehP3IdBTno/k4jxHDwahGnIktJXJgJ7utQ6yG8xb5PwyexcWuR2
-	 O6EaS2/gttwAE7wYL6Tk9mNzBg1zcHiQjVshpe/KFHuPNJTNjTYQmyee3Rr0SWXuoY
-	 tmu/Ar8Td2unJ3x+sWa9LXpINhorIdSxL5isU5FJcvvFKeU/GABcfK5F8UC2ZFaH3p
-	 C1vPBUoV5VR543baIfFCYFYqWN3A7AqYIUUsbus6FTmStCtcpTEhoLCXMtiefajyvN
-	 39ZbAiOhmEcmhbAOImS0rgr8drxeojwKAhAneaeq7jVuMaCbPonX4FJANJkGJiq/tb
-	 /QppaERJqURuA==
+	b=TKlVk3VKgbc82CT1FRQpz9DVmK3KEB3l/sXn178O1ttRteytuLciN32951krEjN50
+	 46dfniFcVzFLpc4GCdQ2lDSotYOUXeqAg18I17OsUAyiLdDBw510qyg2ZshYrMQGfh
+	 wMigWgGoxSczq4ONoQEaA49u1mqceZfOK+mblnu8s2/Brz4wktsAAZHD0JAenjxS/C
+	 TTBGWR9/OVpRCgJiXTLU24xK2IoICTWSwfxbaalSpk0AbhnO6At1MZYujtDikrRZIJ
+	 n52UyCs4ksoPvq3+LUjCCNidt5o0DP+YE2BIa4aF5L3Isn2w2vEmw2xJiEDU4qi4oQ
+	 SHcXFrxBNEd+Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 05/10] dmaengine: qcom: gpi: Use bus width capability
- helpers
+Subject: Re: [PATCH v4 04/10] dmaengine: dw-axi-dmac: Use bus width
+ capability helpers
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?TnVubyBTw6E=?= <nuno.sa@analog.com>
 Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260911-dmaengine-support-wider-dma-masks-v4-5-72b8fd4cc78e@analog.com>
+In-Reply-To: <20260911-dmaengine-support-wider-dma-masks-v4-4-72b8fd4cc78e@analog.com>
 References: <20260911-dmaengine-support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com>
- <20260911-dmaengine-support-wider-dma-masks-v4-5-72b8fd4cc78e@analog.com>
+ <20260911-dmaengine-support-wider-dma-masks-v4-4-72b8fd4cc78e@analog.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 11 Sep 2026 17:40:00 +0000
-Message-Id: <20260911174000.919C31F000FF@smtp.kernel.org>
+Date: Fri, 11 Sep 2026 17:40:11 +0000
+Message-Id: <20260911174012.0E7A71F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Missing cleanup for DMA controller and async device registration i=
-n error paths and missing .remove method lead to UAF.
+- [High] The interrupt handler is registered with IRQF_SHARED before channe=
+l registers are initialized, risking a fatal NULL pointer dereference.
+- [High] Out-of-bounds write in axi_req_irqs due to unbounded irq_count fro=
+m platform metadata.
+- [High] Missing check for negative error code from platform_irq_count sile=
+ntly aborts IRQ registration but falsely returns success.
 --
 
-commit bbcb7726e80023f035efafba93cea9b1b9a4a1c3
+commit 547df6badf50a7c40c7c108bf82e51bb78feaed7
 Author: Nuno S=C3=A1 <nuno.sa@analog.com>
 
-dmaengine: qcom: gpi: Use bus width capability helpers
+dmaengine: dw-axi-dmac: Use bus width capability helpers
 
-This commit uses the new dma_bus_width_set helper to advertise supported
-bus widths, replacing legacy assignments.
+Advertise the supported bus widths through dma_bus_width_set_many()
+instead of assigning the legacy u32 masks directly. This keeps the
+driver using the new bitmap representation while preserving legacy
+fields during the transition.
 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index a5055a6273af6..3a35bf4c33978 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
+/dw-axi-dmac/dw-axi-dmac-platform.c
+> index eebed2474210d..ca0ab8dc5f596 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
 [ ... ]
-
-> @@ -2265,8 +2266,15 @@ static int gpi_probe(struct platform_device *pdev)
->  	/* configure dmaengine apis */
->  	gpi_dev->dma_device.directions =3D BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO=
-_DEV);
->  	gpi_dev->dma_device.residue_granularity =3D DMA_RESIDUE_GRANULARITY_DES=
-CRIPTOR;
-> -	gpi_dev->dma_device.src_addr_widths =3D DMA_SLAVE_BUSWIDTH_8_BYTES;
-> -	gpi_dev->dma_device.dst_addr_widths =3D DMA_SLAVE_BUSWIDTH_8_BYTES;
-> +	ret =3D dma_bus_width_set(gpi_dev->dma_device.src_bus_widths,
-> +				DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret =3D dma_bus_width_set(gpi_dev->dma_device.dst_bus_widths,
-> +				DMA_SLAVE_BUSWIDTH_8_BYTES);
-> +	if (ret)
-> +		return ret;
+> @@ -1482,6 +1469,20 @@ static int dw_probe(struct platform_device *pdev)
+>  	unsigned int flags;
+>  	u32 i;
+>  	int ret;
+> +	/*
+> +	 * The set of bus widths supported by the DMA controller. DW AXI DMAC
+> +	 * supports master data bus width up to 512 bits (for both AXI master
+> +	 * interfaces), but it depends on IP block configuration.
+> +	 */
+> +	enum dma_slave_buswidth buswidths[] =3D {
+> +		DMA_SLAVE_BUSWIDTH_1_BYTE,
+> +		DMA_SLAVE_BUSWIDTH_2_BYTES,
+> +		DMA_SLAVE_BUSWIDTH_4_BYTES,
+> +		DMA_SLAVE_BUSWIDTH_8_BYTES,
+> +		DMA_SLAVE_BUSWIDTH_16_BYTES,
+> +		DMA_SLAVE_BUSWIDTH_32_BYTES,
+> +		DMA_SLAVE_BUSWIDTH_64_BYTES,
+> +	};
+> =20
+>  	chip =3D devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+>  	if (!chip)
 
 [Severity: High]
-This is a pre-existing issue, but while looking at the changes in
-gpi_probe, I noticed a potential memory corruption issue on the error
-path and during driver unbind.
+This is a pre-existing issue, but does axi_req_irqs() properly handle a
+negative error code from platform_irq_count()?
 
-If of_dma_controller_register fails later in gpi_probe, it returns an
-error without unregistering the previously registered async DMA device:
+If platform_irq_count() returns a negative error (like -EPROBE_DEFER):
 
-gpi_probe() {
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:axi_req_irqs() {
     ...
-    ret =3D dma_async_device_register(&gpi_dev->dma_device);
-    if (ret) {
-        dev_err(gpi_dev->dev, "async_device_register failed ret:%d", ret);
-        return ret;
-    }
+    int irq_count =3D platform_irq_count(pdev);
 
-    ret =3D of_dma_controller_register(gpi_dev->dev->of_node,
-                                     gpi_of_dma_xlate, gpi_dev);
-    if (ret) {
-        dev_err(gpi_dev->dev, "of_dma_controller_reg failed ret:%d", ret);
-        return ret;
+    for (i =3D 0; i < irq_count; i++) {
+        ...
     }
+    return 0;
+}
+
+The loop will evaluate to false immediately, and the function falsely
+returns 0. This silently aborts IRQ registration and causes dw_probe() to
+continue without deferring probe or registering interrupts.
+
+
+[Severity: High]
+This is a pre-existing issue, but can the loop in axi_req_irqs() cause an
+out-of-bounds write?
+
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:axi_req_irqs() {
+    ...
+    int irq_count =3D platform_irq_count(pdev);
+
+    for (i =3D 0; i < irq_count; i++) {
+        chip->irq[i] =3D platform_get_irq(pdev, i);
+        ...
+    }
+}
+
+The chip->irq array has a fixed size of DMAC_MAX_CHANNELS (32). If
+platform_irq_count() returns an unbounded value greater than 32 from the
+platform metadata, this will write past the end of the array and corrupt
+adjacent memory.
+
+
+[Severity: High]
+This is a pre-existing issue, but could there be a NULL pointer dereference
+if a shared interrupt fires early during dw_probe()?
+
+In axi_req_irqs(), the interrupt is registered with IRQF_SHARED:
+
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:axi_req_irqs() {
+    ...
+        ret =3D devm_request_irq(chip->dev, chip->irq[i], dw_axi_dma_interr=
+upt,
+                               IRQF_SHARED, KBUILD_MODNAME, chip);
     ...
 }
 
-Additionally, the platform driver gpi_driver completely lacks a remove
-callback. If the driver is manually unbound via sysfs, devres will free
-the driver's memory while leaving the DMA device and OF controller globally
-registered.
+However, the channel registers are initialized after this call returns,
+in dw_probe():
 
-Could this lead to a use-after-free if the dangling dma_device pointer is
-accessed by other subsystems? Should the error path and driver teardown
-clean up these registrations?
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:dw_probe() {
+    ...
+    ret =3D axi_req_irqs(pdev, chip);
+    if (ret)
+        return ret;
+
+    INIT_LIST_HEAD(&dw->dma.channels);
+    for (i =3D 0; i < hdata->nr_channels; i++) {
+        struct axi_dma_chan *chan =3D &dw->chan[i];
+        ...
+        chan->chan_regs =3D chip->regs + COMMON_REG_LEN + i * CHAN_REG_LEN;
+    ...
+}
+
+If another device sharing the same IRQ line triggers an interrupt before
+the channel registers are initialized, dw_axi_dma_interrupt() will read
+from the uninitialized (NULL) chan->chan_regs:
+
+drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c:dw_axi_dma_interrupt() {
+    ...
+    for (i =3D 0; i < dw->hdata->nr_channels; i++) {
+        chan =3D &dw->chan[i];
+        status =3D axi_chan_irq_read(chan);
+        ...
+    }
+}
+
+Will this cause a panic if the handler tries to access chan->chan_regs?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911-dmaengine-=
-support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com?part=3D5
+support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com?part=3D4
