@@ -1,65 +1,65 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013033.outbound.protection.outlook.com [40.107.159.33])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010035.outbound.protection.outlook.com [52.101.69.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A740134389C;
-	Fri, 11 Sep 2026 14:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43783537CD;
+	Fri, 11 Sep 2026 14:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.35
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789136113; cv=fail; b=e7ptwvRRBclfkmr22uncA1/4SmV7RUx9jB5HzNaOkS5W8EYqbchPYX+nB1KrK3ND5p7vZPQxh+5IDdtKqv+79SeVaoO9ypVxHsRkeQtMQV/w+mH1FRg6V3REUDlHXJs8ZDp+8c+CBO9Go/8De2JSXYNfrcKeAqIKOhH3gethvA8=
+	t=1789137394; cv=fail; b=cIKvznlu8VPKOF5ZBg1sOaAfOUIi4IKNgPgggP6VHJS0MW/D0QkyTj7LSd+2ymN/3yxR92Yp39LMdqwugH7AVUvRrb2SrV/A7WWAztT+sQy2ZfKxmc7KlYMoXpM0nVZ1rcK98Cm2uSmYwoR5jozAc+sEHCCKDaXwuD+LH46ibsQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789136113; c=relaxed/simple;
-	bh=1LV40/2CX5/x54shHa7Hz7TlzWA7rMMkshsVJVwU6HY=;
+	s=arc-20240116; t=1789137394; c=relaxed/simple;
+	bh=zVPlQ3mBcom+xfqMGmqj+34E74k7rvPZ/iqKAj1VlP4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=XuU9Or61ba6U+7xTwbkYIt8c0gDmveJJ0UVMPRPjazfCifFdOo68Dt6VeSGPaDKqyGiq6uZKOpqAmbAu5oHysBo238Y+/vs4NKjvLRF/IG0sAxldGNSu+bmn35MtTpY7OBjGwZZcyAVSWxtOeVUljVjiPGliFLIMsCfAdG6+boo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YQsZnM7x reason="signature verification failed"; arc=fail smtp.client-ip=40.107.159.33
+	 Content-Disposition:In-Reply-To:MIME-Version; b=JeOF2yeCxlw2J+CnlR0V+KQ0y8nDz3+EzyJ9FN7igZuky1Qw+xs4hp3b2wqlHu6qkomIKEN99HuAQARRl50CwDrpHqejQcLAeVrzRxe0M8nfldMS6V3rByEAuHhUCJrJed6FYYZCKGhgFRTFcDtDUf8eliVdveXy266Zc5861Qg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ni99ewv7 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.35
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YQsZnM7x"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ni99ewv7"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EZWJKO4jzEEq85L53Dgu8ZRtINxI8ANhMZqbxRTQZLDRdfEwor6ZGu4L6rJVmQYCrvlJSrIoEyB1QcfOLHv/+YaXUMECc8VyBHZOmUhIOvcvsMGw05BI+4q6+/MtbvCfT+WDl/URvFkj7sI+m+bf2/Q1l9EjxkYNWMqD8Ho6SZrX9muTolbZg0J7hfExKoUM0isnPGUlF9lHJBrUJQHNe9UWnfYoS71LBneNFSQhjxEhggcWAdLdWAlHhXcp2qQNm8cFGwxx3IQ1LQdvl+Z78XvuOOwmoXsfbiV3eIlueRW7L4ke7syqmnCnx6LyMQHnW+5VqHkpMxLgRRmYb8MdDA==
+ b=F4TeIPy0kncmnzqijUN3v2X5s0ZD+21LYqjRluYMP/avMpk5f5NDNtSJv7fHfwdfiLaYGn7UMfa0C22yTKZzFzsQVykDESbbAfn/W02sL4OJy/26DQuEybM4P6jXvGzzAbjGK5Vn2L696HWnTA/jRUHoaCPU8/OWBi0LC5iBxDNDWOJhVTFAIqj4k9yb+ousbfm2fj8GfLabkpu37lnUFSBKh8jhFKY8NolPO1fN2A6vfdw3zZlsHyoectUOQlP92yODRx21mu5OQlLHMj+brTksXox+lCI+A3cbwkdoL4Z9TO4kI7Zbzv8nny7GEjo7TtFbOM4YRnI0iblTSYx1OA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w+Wy32D9URzEZVDOOiywHbeCfKr+x4Fzz0uiC9/Mmbw=;
- b=SrvW/r0EkZgeBzbWc5yieeoQfDTg6ftUdnaBqKvbxEdmW4cY0JiEyRyOeeJFzqeYCkVvU40d+frltVtLG27Y+D+IM920rIP9PYvbDEdU5F5pR4lVYuSW+gx5MfYvCGjCJpVn1SH/5bqAlyWUuaqn/qIfVoGmlqxyQhCGCGOak45vsHfkLZ+2h6XG7sJAzomW+gKA2ycsnyVVxd4S0bYZSYWSg6JEcQAOnU3IkrV+J3BN9jsgTeRicBsCz6fCtJ/0PEEhE44NRz1raMhWznY+TM+ogdtqbCQaNJBaB+IEXGnTdHaR91WIOdB3WN0Y96a+lVMQsx3+9OOhRTgvgWJM0w==
+ bh=ZI+r+Tx/CLSnS1uEy6/dzlA7XPEc7UoVO/cp80pI/hQ=;
+ b=ggp1elmMlHHTtybPrQz6uslkb/nTY0YLzEVpflTzI5CWsQsUCOpwV5jddNhDpeyTNhGZrrOVGleTwEWK+2mS4o7Bw3G/R5DY46IV1cHb/e9/OKGtLKSgjD9606wTER7LP50ho2+Fjo/5uOeO+SwRNHQ1dZZ45mwvM8STyUdBXMZZjFjwAZFpjmKDkPhqywu1Wa08T1H0pXmPcAqid1dDk0JaPd7Fdpa9ucL2+eqxZSv6K210CPMXvcNOoD/bkkt8USOmd4XTSeAsCRXd/+MQ/V8kKAXrOkHF4/jKta7zLqbFgeUn3EUOdV+Rx4LMuFlH7MU8xepDLgr0ZZf8S/Ab1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w+Wy32D9URzEZVDOOiywHbeCfKr+x4Fzz0uiC9/Mmbw=;
- b=YQsZnM7xwAdcRQ5NHufTguLSY+3w9OSiJZBq79R7XeEX/WUNXsqS9vlYohAU9TGqsSMNxGsnwcRPcwyfdo2TLoH4B82ZY8OWnjB4maRXfiVnfehvRulEZdozK8OhSdJt31Wl2tHYz1kNDGhUp2Z5KWkgNQ6T4uGzmTwY7JrmbbVfH6/mzwycMbnvWXgQ4Bd/rJskmWzvPhKMU/nqBO2Du0aNPabAhDvUvYuj8CNDEr+IfxCZ4+uyyA1wAbBGPOkjWfe6BLMm/MSRtjWr9Onx7OzzoRAKjD2Qz2Sje6vaknoR/AKqss1vmXcx/FoCZJ0EW/TA286YvQFvmXMfpZFwvw==
+ bh=ZI+r+Tx/CLSnS1uEy6/dzlA7XPEc7UoVO/cp80pI/hQ=;
+ b=ni99ewv73AvY0yAenxueTTj4M5BS6Jlzat4DMdMcepbItQQOoFHWph72GzpfTUmNJJchA5gbhh+wWt0m/2sry1/9tdV5POOtAOfZJSFYehSg7GqxDYdlOEj8kzR7vcEyD5HAQvxD6EOzQsSgC3owNQPIaVhp5TD6yAyYXvEY+oASVrnCpouGG3nvfgzA71YyCKjh8DuVvzqemJzkzz65HagsCLHyknjxPv+CG4kQrVvi/HtsDqmWuhSDJh6lYkyCEgB/6ogIASVO2Ph3dH59klEQfman8k593KUV2gNfr5dLihb1HGCVOOaarf0vPKzWMJ4dr1Loqj26tG+Yxwy/Ew==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by MA6PR04MB496254.eurprd04.prod.outlook.com (2603:10a6:250:50::9) with
+ by AM9PR04MB8164.eurprd04.prod.outlook.com (2603:10a6:20b:3ea::24) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Fri, 11 Sep
- 2026 14:15:08 +0000
+ 2026 14:36:29 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
- 14:15:07 +0000
-Date: Fri, 11 Sep 2026 09:14:58 -0500
+ 14:36:28 +0000
+Date: Fri, 11 Sep 2026 09:36:19 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>
-Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 2/2] dmaengine: fsl-edma: Support dynamic
- scatter/gather chaining
-Message-ID: <aqQM4rC18SoAA_KH@SMW015318>
-References: <20260911-fsl-edma-dyn-sg-v10-0-700eb72def57@bootlin.com>
- <20260911-fsl-edma-dyn-sg-v10-2-700eb72def57@bootlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: CL Wang <cl634@andestech.com>, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org, robh@kernel.org, vkoul@kernel.org
+Subject: Re: [PATCH v6 2/2] dmaengine: atcdmac300: Add driver for Andes
+ ATCDMAC300 DMA controller
+Message-ID: <aqQR4-yt6eeqldxI@SMW015318>
+References: <20260911072524.1297406-1-cl634@andestech.com>
+ <20260911072524.1297406-3-cl634@andestech.com>
+ <20260911075712.A4D361F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911-fsl-edma-dyn-sg-v10-2-700eb72def57@bootlin.com>
-X-ClientProxiedBy: PH7PR17CA0052.namprd17.prod.outlook.com
- (2603:10b6:510:325::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260911075712.A4D361F000FF@smtp.kernel.org>
+X-ClientProxiedBy: PH7PR17CA0055.namprd17.prod.outlook.com
+ (2603:10b6:510:325::16) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,360 +68,338 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MA6PR04MB496254:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8eed4f1c-e088-4bf2-45ff-08df100f14f7
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8164:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4be9e6c0-edbf-46ec-6b3d-08df10121075
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|1800799024|376014|11063799006|10067099003|18002099003|56012099006|4143699003|22082099003;
+	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|366016|6133799003|4143699003|5023799004|22082099003|10067099003|18002099003|56012099006|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	HJI/YUnUoM7kU5EacQU7NrdmQKs+VtbT8OOltfrsKkgIt3vwquont9cKzWoFxPOIrcJpZaFe3wc7YKn7QXUlvG3BTOq3+h24u+KcTuKxUrXRdMIGCvuYLxTnnzhwwX+a/oL2GrOxV915z+OtyiJEINBmf+7/5rgwhkOZkZTNSWGy/Sg9CU9PiVm7DfgiSfljb82le31MQNiTDMVR8uWN7/p0A/ytkCiy6fzUlRFdrCeaDfFvsyPIHdXK6Z9cSBIbXV9SO6Rm3uo0xJ32dMLVTXmPquBHoZbadIf5feshoc3bWsPgNTPTGT6QIOD/BsRoQY200yY23SJdrYYAv1eQlXkhI///NFTxb95mQsJ2hf7ZnoKOKt2b7+XFEUSfsVEgsrV7taOeEncD0US2fER35QzWPKnBimVrzkx/gYte3ze4gC1LbXkdjMvIqYZXYnV1e6vUgrQf/6Hw/eWMCbVljBs8jXa18LMj+uzmURHdTaTcW25DxmizXwv7r8mFIOv1RL99OIGVoSF2jPGBWKrOZFwxCJYsah4j5B0Vakl5Sq9C4+ddUZCNYF+tWjUNp6kp9u6yZdpwbI9UoV2d0qml6lbmTCubWqBQm5WTRWXz68axlEKvAhxTxPYeJ7ihLyd+Ru7IzfZHkad+hwVXVtrt8XHOlJ1ihCtI+qquiUvlyd4=
+	jGXegiA1Xc39wYCWv76zsDSz1S6t7KclRm8+VEF+L1Fh+lyuXe0ZcMn9d1kFDI8p7Czsy525PasQWZztJHe5fVgaaeseJsZfILbaWAQNH7c1CPc/52onwOGKc8SyfsanxKBsFCLHFeo/Qfuu5drzJvDQm6+cOFTMuJan/5kswRf8rTEWDMW3pwLEs8WMZsOLM395EZVM8v9VCScEAjV7sEUYwlG+yAGrs8XwHLnslMHfx70l/JckTijNV+CaBogM3SlBDjZpivZebGjdA7VVdZrq87UGDFVGRAL4Oh1HWzOz5Mn/HYblxOlRxx4xS2XTN/Y3HQivcV63Ln1qrHE4c+afJ1Rmr5gstgD+bqwGr6pUSIiTl3g2bP5mfdaWtFPDmn4kT1/tj+i9lTfDJL8SisUKLv1dy3FIZRWyQ7LLNYXYlh+99a54WY4iHNvgXf1H2DtUa0stueje7/Fa3QwH3i5/1hzGn5rv8tvXuC0xmc7qk+mWOMw0IcLjeaohcMKJmKtAufIjH57xnrnDwrp0unoxMJd+EeO9+1rSt4dVae4DmZrsTYyUPndNeRujhhVKS2IOYxUOCaaygQAKEYv3nazVktvp5vU+c+Mjn5osc+Q=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(1800799024)(376014)(11063799006)(10067099003)(18002099003)(56012099006)(4143699003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(366016)(6133799003)(4143699003)(5023799004)(22082099003)(10067099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?uwHJOOhKHAVJLAEcUL9LJ7hlwgX5i6vSZdD0S8a3YArSwz98LBAEYYvlzj?=
- =?iso-8859-1?Q?ecMuG9f9SpKfy7QhUasJzIqLlihY6qR/KHPWbVW2wME87aikeVtMlYS5UG?=
- =?iso-8859-1?Q?gLxdFjEy6H8A9sY7a1DnEHtP4YauBT/dhkkmnOJ9F0LE+SDvSnLF9M4bnA?=
- =?iso-8859-1?Q?u2NcpdTOz69+NXcrki2Caa/XsaLkyK8O2OSi7VRxRlgDzyMn+fZkC4RyXC?=
- =?iso-8859-1?Q?cTvcprIGpjqFXhRlR5dcotkRl6lwfLnAn8xyfkjqObDug5ckOOwBmnn4jb?=
- =?iso-8859-1?Q?XTsSUjmtDyP/YZAUIoi55wipV2hnmM8htHj55dtgV75laL/RLqKBHFRHqs?=
- =?iso-8859-1?Q?CB465Nexw0rBlYi+O9k/sBMXdEjxnHtJRQAfHPQduxUKS4FqFL6Fdfhvog?=
- =?iso-8859-1?Q?LK5k+AnADqRbPuBg3RZBbi4frImuusnzjhYiAYNE2yK4IyxFHL64/0I/et?=
- =?iso-8859-1?Q?frBOhysBuEpWnB/tZuMG2c7ccUtGl4NClSMm1qjAQe13N5uhVFQ1I2yhun?=
- =?iso-8859-1?Q?eFQ+V7Rql4OHdvkoz72EO2enTdODz/ww7sKgstwgQSTLk1ssxpNsY6ZNEe?=
- =?iso-8859-1?Q?IX0+W3VSuV4vJROSR1F2lpMASZtI2JQuOXIgHSbnByRY3cgLebH2sW20Nx?=
- =?iso-8859-1?Q?pimAyuT6Ws8LDZsVkBGdTdQ2oZgjw3JoqsfW5BaAVfWwwnUqFYdjTn9xxu?=
- =?iso-8859-1?Q?EFmQssSQBJthHUG28INtLTMfib/pjwvmZ09iEnGkK/TAgHkjc6Q7yNtmws?=
- =?iso-8859-1?Q?YxUJtQp7j+R+OpOlRMMgEcQzz6gGZM842XhcaU7QHgJfUeN+suOV+HG5Ww?=
- =?iso-8859-1?Q?X51gv+ySvjdRuw2H/1uvWMHqv+XKVrDUWYOfAwhJaQTj/dCxuY8OTgXG+Z?=
- =?iso-8859-1?Q?OnML4TyogUqUB6GsYkraaPxATl1WxRS53n5MSYFMAdLJUM+yEgBw7fJzuf?=
- =?iso-8859-1?Q?HHV419yi61v2yBZB6cnVhr9a7l/QjS40JJs/rZ7dfwOJfFWwttRzyyUync?=
- =?iso-8859-1?Q?Ccmqb+EbMkwe6csIcLXGvsnxWKC4+6mrd1NvamOJs8YExPoujagMNtQN4Z?=
- =?iso-8859-1?Q?kOItl6YTYqXx1+9KGg8B5ICZ0Y9CRdHmAfFYYfrH/2lARsnlSf1gKHFlW+?=
- =?iso-8859-1?Q?hghkED5N0nTqNV2tATeDWkvcK4CQkq2bWQl/WtN6wEy5RYDzTplDYIlZgj?=
- =?iso-8859-1?Q?I1LrzDAw4L6nHL2HLMGuK69llM3m1mFD3hv4Ua50j95F+ZUqhj3RjlchyV?=
- =?iso-8859-1?Q?sWWAIcM4ieM5YW5yMVlkxzT/pKjcFZeaHjxcYKHyUHaR+w/vaajsHLXByP?=
- =?iso-8859-1?Q?URNAwgzvQB2VNg/p05NhQdMWRw0iaM1EPwx36k2iLP35dWDeZ9dpb87Ar9?=
- =?iso-8859-1?Q?O1lIFLP6N4ipHef2INru4W/Tmy+rILXuYMb4VBdFidwox2/mlphiwKjb+k?=
- =?iso-8859-1?Q?iDK+tOssBo36Iv6ZekGonN+LGz2q+IGeatPbH6ZsOEv8fTe4k0uoQLz4Zo?=
- =?iso-8859-1?Q?rnSdlul65GHtOcEWOU4ZxhBxg+Dq5897xonDKOjfgnuG+L7hX5x1UhSxtB?=
- =?iso-8859-1?Q?jESSS8xNFIYMZCEAYIFqHPJwEUUErVUmcsMo5ntkxBdL2D9DDitYtlNEuH?=
- =?iso-8859-1?Q?9jCAHoweaTJ5rpx04me7ROYx1YtCEw1a0GOmueuD/McMFUjAk3SX4C1jk6?=
- =?iso-8859-1?Q?RCDSCFro0Yj1g0u9drsML6IQeANtIQNDlHWX7H5OQq25F7iZ2axuc/rkUU?=
- =?iso-8859-1?Q?lO5ptwl+bHoeYL9hte1H/Glcvp3S4Ly8IjSOtWgIMFVzTjxQHQRk3xwmBC?=
- =?iso-8859-1?Q?WgAZodTHsXqdV0ijZ1HFn+t9OeSSPC3WJiV793wj7lAo4wjiAqFM?=
+	=?iso-8859-1?Q?ZSab9L95hNdS8nA6QrjUTK4qTPDv4zm8NrkM9OysfU/gYWWAYgsQzUuF1U?=
+ =?iso-8859-1?Q?wwh/Fo0yD0zE16tfp8Ry3wA/Ki4GwGckwP/L9EMVyWiE29LpI4lRC1HELM?=
+ =?iso-8859-1?Q?HDusTNmcfSdo9mrjlz8RTFmxg8VvmDdfJ6yZtNliGhCBW1j9Vz6RRgFrqx?=
+ =?iso-8859-1?Q?W42g+l7bzPTGE1mNLSMmFJhn63EJCNaw92JUTxXlCS2fGg9F8laBb3Y4yV?=
+ =?iso-8859-1?Q?gwXS7wdj1FTqQ9LByR0XbpYPnzaa91paTXNFn0ry9fIzTry/GawxMfIb1J?=
+ =?iso-8859-1?Q?Dk2dJc2WxW6zjYe6QtkoQ0uuOsNDDJqqdQWPepBuFs/pteTeZWPX61ydKW?=
+ =?iso-8859-1?Q?z6T5OChuCgVxu0w/ED65U9qxFRxrBDsZO85y9mtIuSUJnBWbU26dLZn6/Y?=
+ =?iso-8859-1?Q?4c5L2IXzMVFimPrL2tJC/1y3esSzV+EHK/HKlNR0xKY3Tkx6+YKdlwDyfk?=
+ =?iso-8859-1?Q?3NPpjdmx9EA+WrrEHoi3vipSQ0XPf5RNlbWT3tNpz36eaX8RJd1cgZlR+J?=
+ =?iso-8859-1?Q?af2TwDtwugLSvcvKY1s2hgnnCURONe3BgnDwGc1Z1eXPv45WTgpHpduXNF?=
+ =?iso-8859-1?Q?rRz0H4qvicPbuc3YsOPBxbcUuGCiS2GRv4RsZcaytKQGsOz33D7gi/CZsk?=
+ =?iso-8859-1?Q?guqbGXBCq5b9S7vCjBJsGbfRMD6L3K99q9GiFKbymIYbEsIKY8GQy1EJTN?=
+ =?iso-8859-1?Q?0ikConAhIb7WNSEMgTJ2jjkU05BZ8Lzp/iqMaCwpbZV+54h4G/7shHgV0y?=
+ =?iso-8859-1?Q?UWHUxhaQ4BFS8iwlJE/ksbdEA2O4bTEnoLBvflDlhhvs1AGB3hilepnKWC?=
+ =?iso-8859-1?Q?8gHj0je8iBtyWIT/OoltH92IDkZqxmek6FvS1DJEr5IxIQFwwn0Uc1PPs2?=
+ =?iso-8859-1?Q?nrGxGRSDUus3gKWLtjkHGzS6O+qYVgU0fyf1RtquTuXPLEhm0jMIVqq6Ys?=
+ =?iso-8859-1?Q?OWDg7xgs5QxD3APhuegIVgIMx56+WghdS/HMDjyQDJx9QHuoCmrXKBHft2?=
+ =?iso-8859-1?Q?0SvFCcYJ7maVYKNpP03GaFvwjGBG789EzDBtjqcFRO13KskU2B6/hEQQ5P?=
+ =?iso-8859-1?Q?WC4eT2zj0Ei86EI0DGiicnwHF8P0GX2ovWllIHF1HViTCQwIjDjeR7Xz2E?=
+ =?iso-8859-1?Q?hch2UUTl8U7nPkqRvk1WNxPDK1oAMoj3obP4FIPItOTGXKBfMTGpGQjY35?=
+ =?iso-8859-1?Q?8CYuo7Kx4lJX/xXjemtUNaEtGJ4sgjmWiSOoIIZ1RM9IeyCLIs2kbHeGUq?=
+ =?iso-8859-1?Q?Wsn8SxAgMGssqA912T3uBQMRrQO1wTvUxupGuOu42HWmqsplAga6TjPUzq?=
+ =?iso-8859-1?Q?FYvW9G7P77FvkWhSmtbGqm2uHx7+ig8xgMTDZV4ZhwlU2z+kzQ0nSeEbo+?=
+ =?iso-8859-1?Q?oZmEI2ZmBF+eFCwKpKbaRknhQEct7EiBD4SmT4831LIbaDLdG6FjXy+ffO?=
+ =?iso-8859-1?Q?NZccXGBT4X1CebR69HXR0UkBKf3tpwfaoYHp+TPmUrRYNGxqDXjiJT1qIo?=
+ =?iso-8859-1?Q?iTFnCmfLpL/Oi367oo3W/eNGq9TO22FgMPQpAgoAZ8StIXvPioajV6GJc1?=
+ =?iso-8859-1?Q?imJ0tNFCEx4aH5g7nXWc3YWKQupRejDxmDZxRPNcOXamP4HjP3GgVk5zXs?=
+ =?iso-8859-1?Q?xcKn0VmQWfrTg9AXuZRJJHzo2QaHy915vZ42tbTkJv42a4rWGkbl+lJcGw?=
+ =?iso-8859-1?Q?zMgRWXfCCH7vfH1bwSA6fH/hwpf1hHFDg4uOzYeWGCkTUtlZrZllN/G86C?=
+ =?iso-8859-1?Q?BECg9+ohlxNxbm/3DNeIek17fmsi+yaZZYwlNJap6iNYB1ZLNm4kK5Dwgh?=
+ =?iso-8859-1?Q?Z2/GoLXnOFqpDMiuY7Rf1PnSwuNP48hfHss3DodP/ykF8Es5Flnc?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8eed4f1c-e088-4bf2-45ff-08df100f14f7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4be9e6c0-edbf-46ec-6b3d-08df10121075
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 14:15:07.5557
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 14:36:28.4783
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AiB5SepIjyBpcxNQcvUFGAsLzwxRVMu4Yhkye6ipr9FQ+cI+dwEVG4a3+IG0Wa141mRmv3kmK04ASausDs9IruKxPJay/CTKRNU6u/8QATDP6jm1aj8EGcBxiC8KU5oo
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA6PR04MB496254
+X-MS-Exchange-CrossTenant-UserPrincipalName: zV/g9k3FZFdd8TCjtE/zuk8IXAmruwr650UL8ZiUKsZdKqy0MvbLiXbeXoHoynOt+vMVXeZep/lwtQB8HdILVqBJm1yi1oBz7nezKDhV6i3QqbJ/RUai4GWr1CTn+5F6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8164
 
-On Fri, Sep 11, 2026 at 03:11:37PM +0200, Benoît Monin wrote:
-> Implement dynamic linking of scatter/gather transfers to enable
-> chaining multiple DMA descriptors without stopping the channel.
-> This avoids waiting for the channel to go idle if there is another
-> transaction already issued.
->
-> Add fsl_edma_link_sg() to dynamically link the last TCD of a previously
-> issued descriptor to the first TCD of a new descriptor by setting the
-> scatter/gather address and the E_SG flag, and keeping the channel active
-> by clearing the DREQ bit.
->
-> Also in fsl_edma_link_sg(), assign a non-zero identifier to the new
-> descriptor that is stored in the EDMA_TCD_CSR_LINKCH field of the CSR
-> of each TCD, after checking that the descriptors are not using channel
-> linking. The use of this field (MAJORLINKCH in the datasheet) as an
-> identifier for dynamic scatter/gather is suggested in the i.MX93 datasheet.
->
-> When the last issued descriptor is the one currently active on the
-> channel and has a single TCD, the scatter/gather address and CSR are
-> also written directly to the hardware registers to ensure the link
-> takes effect immediately, unless the DMA controller requires the DONE
-> bit to be cleared for the CSR change to take effect. Clearing the DONE
-> bit would disrupt the interrupt handler.
->
-> Linking is done in fsl_edma_issue_pending(), which iterates over the
-> submitted descriptors, links each one to the previously issued
-> descriptor via fsl_edma_link_sg(), and then moves it to the issued
-> list. This ensures that transactions are linked in the order they were
-> issued. Linking of a descriptor is limited to 31 outstanding descriptors
-> on the issued list so the identifier fits in the LINKCH field of the CSR
-> register. The value of zero is left to identify non-linked descriptors.
->
-> Update fsl_edma_xfer_desc() to avoid re-initializing the hardware when a
-> transfer is already in progress, allowing seamless chaining of descriptors.
->
-> Modify the transfer completion handler to check the DONE flag in the
-> channel CSR before marking the transfer complete. Since this flag is only
-> available on SoC with the split registers layout, only link transactions
-> for DMA controllers flagged with newly added FSL_EDMA_DRV_CSR_LINKCH. This
-> flag is set for eDMA3 and EDMA4 controllers which are able to perform
-> dynamic scatter/gather linking.
->
-> The completion handler also reaps issued descriptors whose link channel ID
-> (EDMA_TCD_CSR_LINKCH) has already been passed by the hardware, marking
-> them as completed even if their corresponding interrupt has been missed.
->
-> Add trace event for scatter/gather linking operations.
->
-> Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
-> ---
+On Fri, Sep 11, 2026 at 07:57:12AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 11 potential issue(s) to consider:
+> - [Critical] Double-callback and Use-After-Free race in cyclic transfer completion during channel termination.
+> - [High] Masking pending hardware interrupts with software state (`used_chan`) causes an unacknowledged IRQ storm.
+> - [High] The DMA device is exposed to clients before its IRQ handler and cache coherency (IOCP) are fully initialized.
+> - [High] Polling for up to 100ms with interrupts disabled in `atcdmac_terminate_all` causes soft lockups.
+> - [High] The channel-wide `cyclic` flag is sticky, and unconditional resume restarts cause arbitrary DMA execution or kernel panics.
+> - [High] Suspend/resume race with the threaded IRQ causes transfer desynchronization and hardware corruption.
+> - [High] dmaengine API violation in `atcdmac_terminate_all`: invoking completion callbacks for aborted transfers.
+> - [High] System suspend times out and fails if a slave DMA channel is actively waiting for peripheral data.
+> - [High] Sleep-in-atomic bug on PREEMPT_RT due to using `spinlock_t` in hardirq context.
+> - [High] Kernel panic due to list_del_init() on an uninitialized list_head in error paths.
+> - [Medium] Writing a blanket clear mask to `REG_INT_STA` clears unhandled interrupts, permanently losing them.
+> --
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Please fix these problems. I will start review after fix sashiko report
+issues.
 
->  drivers/dma/fsl-edma-common.c | 138 ++++++++++++++++++++++++++++++++++++++++--
->  drivers/dma/fsl-edma-common.h |  11 +++-
->  drivers/dma/fsl-edma-trace.h  |   5 ++
->  3 files changed, 146 insertions(+), 8 deletions(-)
+Frank
+
 >
-> diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
-> index c5f5951c988b..76fbd2bc5154 100644
-> --- a/drivers/dma/fsl-edma-common.c
-> +++ b/drivers/dma/fsl-edma-common.c
-> @@ -55,10 +55,36 @@ void fsl_edma_tx_chan_handler(struct fsl_edma_chan *fsl_chan)
->  	}
+> commit e06d7bd262ebaa03646e2e3ac2876918f25083d4
+> Author: CL Wang <cl634@andestech.com>
 >
->  	if (!fsl_chan->edesc->iscyclic) {
-> -		list_del(&fsl_chan->edesc->vdesc.node);
-> -		vchan_cookie_complete(&fsl_chan->edesc->vdesc);
-> +		u16 csr = edma_read_tcdreg(fsl_chan, csr);
-> +		u8 link_sg_id = FIELD_GET(EDMA_TCD_CSR_LINKCH, csr);
-> +		struct virt_dma_desc *vdesc, *tmp;
-> +
-> +		/* Channel is DONE when a TCD with D_REQ set completes */
-> +		if (!(fsl_edma_drvflags(fsl_chan) & FSL_EDMA_DRV_SPLIT_REG) ||
-> +		    (edma_readl_chreg(fsl_chan, ch_csr) & EDMA_V3_CH_CSR_DONE)) {
-> +			fsl_chan->status = DMA_COMPLETE;
-> +		}
-> +
-> +		list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_issued, node) {
-> +			struct fsl_edma_desc *fsl_desc = to_fsl_edma_desc(vdesc);
-> +			bool id_match = (link_sg_id == fsl_desc->link_sg_id);
-> +
-> +			/*
-> +			 * If the transfer is still running,
-> +			 * don't mark as complete the current descriptor
-> +			 */
-> +			if (id_match && fsl_chan->status != DMA_COMPLETE)
-> +				break;
-> +
-> +			list_del(&vdesc->node);
-> +			vchan_cookie_complete(vdesc);
-> +
-> +			if (id_match)
-> +				break;
-> +		}
-> +
->  		fsl_chan->edesc = NULL;
-> -		fsl_chan->status = DMA_COMPLETE;
-> +
->  	} else {
->  		vchan_cyclic_callback(&fsl_chan->edesc->vdesc);
->  	}
-> @@ -931,14 +957,99 @@ void fsl_edma_xfer_desc(struct fsl_edma_chan *fsl_chan)
->  	if (!vdesc)
->  		return;
->  	fsl_chan->edesc = to_fsl_edma_desc(vdesc);
-> -	fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> -	fsl_edma_enable_request(fsl_chan);
-> -	fsl_chan->status = DMA_IN_PROGRESS;
-> +
-> +	if (fsl_chan->status != DMA_IN_PROGRESS) {
-> +		fsl_edma_set_tcd_regs(fsl_chan, fsl_chan->edesc->tcd[0].vtcd);
-> +		fsl_edma_enable_request(fsl_chan);
-> +		fsl_chan->status = DMA_IN_PROGRESS;
-> +	}
-> +}
-> +
-> +static void fsl_edma_link_sg(struct fsl_edma_chan *fsl_chan, struct fsl_edma_desc *fsl_desc)
-> +{
-> +	u32 flags = fsl_edma_drvflags(fsl_chan);
-> +	struct fsl_edma_hw_tcd *last_tcd;
-> +	struct fsl_edma_desc *prev_desc;
-> +	struct virt_dma_desc *vdesc;
-> +	u16 last_csr;
-> +
-> +	lockdep_assert_held(&fsl_chan->vchan.lock);
-> +
-> +	if (!(flags & FSL_EDMA_DRV_CSR_LINKCH) || fsl_desc->iscyclic)
-> +		return;
-> +
-> +	vdesc = list_last_entry_or_null(&fsl_chan->vchan.desc_issued,
-> +					struct virt_dma_desc, node);
-> +	if (!vdesc)
-> +		return;
-> +
-> +	prev_desc = to_fsl_edma_desc(vdesc);
-> +	if (prev_desc->iscyclic)
-> +		return;
-> +
-> +	last_tcd = prev_desc->tcd[prev_desc->n_tcds - 1].vtcd;
-> +	last_csr = fsl_edma_get_tcd_to_cpu(fsl_chan, last_tcd, csr);
-> +
-> +	for (unsigned int i = 0; i < fsl_desc->n_tcds; i++) {
-> +		struct fsl_edma_hw_tcd *tcd = fsl_desc->tcd[i].vtcd;
-> +
-> +		if (fsl_edma_get_tcd_to_cpu(fsl_chan, tcd, csr) & EDMA_TCD_CSR_E_LINK)
-> +			return;
-> +	}
-> +
-> +	if (!(last_csr & EDMA_TCD_CSR_D_REQ) ||
-> +	    last_csr & EDMA_TCD_CSR_E_LINK)
-> +		return;
-> +
-> +	/* Set a non-zero linked SG identifier to all TCD of the new descriptor */
-> +	fsl_chan->link_sg_id++;
-> +	if (fsl_chan->link_sg_id > FIELD_MAX(EDMA_TCD_CSR_LINKCH))
-> +		fsl_chan->link_sg_id = 1;
-> +
-> +	fsl_desc->link_sg_id = fsl_chan->link_sg_id;
-> +
-> +	for (unsigned int i = 0; i < fsl_desc->n_tcds; i++) {
-> +		struct fsl_edma_hw_tcd *tcd = fsl_desc->tcd[i].vtcd;
-> +		u16 csr = fsl_edma_get_tcd_to_cpu(fsl_chan, tcd, csr);
-> +
-> +		csr |= FIELD_PREP(EDMA_TCD_CSR_LINKCH, fsl_chan->link_sg_id);
-> +		fsl_edma_set_tcd_to_le(fsl_chan, tcd, csr, csr);
-> +	}
-> +
-> +	/*
-> +	 * Set DLAST_SGA before enabling E_SG in CSR: if the DMA engine
-> +	 * only picks up the former, it updates DADDR at end of transfer,
-> +	 * which is not reused.
-> +	 */
-> +	fsl_edma_set_tcd_to_le(fsl_chan, last_tcd, fsl_desc->tcd[0].ptcd, dlast_sga);
-> +
-> +	dma_wmb();
-> +
-> +	last_csr &= ~EDMA_TCD_CSR_D_REQ;
-> +	last_csr |= EDMA_TCD_CSR_E_SG;
-> +	fsl_edma_set_tcd_to_le(fsl_chan, last_tcd, last_csr, csr);
-> +
-> +	/*
-> +	 * Update the registers if the engine already loaded the TCD,
-> +	 * unless doing so requires clearing the DONE bit, as that could
-> +	 * lead to lost completion.
-> +	 */
-> +	if (prev_desc == fsl_chan->edesc &&
-> +	    prev_desc->n_tcds == 1 &&
-> +	    !(flags & FSL_EDMA_DRV_CLEAR_DONE_E_SG)) {
-> +		edma_cp_tcd_to_reg(fsl_chan, last_tcd, dlast_sga);
-> +		edma_cp_tcd_to_reg(fsl_chan, last_tcd, csr);
-> +	}
-> +
-> +	trace_edma_link_sg(fsl_chan, last_tcd);
->  }
+> dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
 >
->  void fsl_edma_issue_pending(struct dma_chan *chan)
->  {
->  	struct fsl_edma_chan *fsl_chan = to_fsl_edma_chan(chan);
-> +	struct virt_dma_desc *vdesc, *tmp;
-> +	size_t issued_count = 0;
-> +	struct list_head *pos;
->  	unsigned long flags;
+> This patch adds support for the Andes ATCDMAC300 DMA controller.
+> The ATCDMAC300 is a memory-to-memory and peripheral DMA controller
+> that provides scatter-gather, cyclic, and slave transfer capabilities.
 >
->  	spin_lock_irqsave(&fsl_chan->vchan.lock, flags);
-> @@ -949,6 +1060,21 @@ void fsl_edma_issue_pending(struct dma_chan *chan)
->  		return;
->  	}
+> > diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
+> > new file mode 100644
+> > --- /dev/null
+> > +++ b/drivers/dma/atcdmac300.c
+> [ ... ]
+> > +static struct atcdmac_desc *atcdmac_alloc_desc(struct dma_chan *chan,
+> > +					       gfp_t gfp_flags)
+> > +{
+> > +	struct atcdmac_dmac *dmac = atcdmac_dev_to_dmac(chan->device);
+> > +	struct atcdmac_desc *desc;
+> > +	dma_addr_t phys;
+> > +
+> > +	desc = dma_pool_zalloc(dmac->dma_desc_pool, gfp_flags, &phys);
+> > +	if (desc) {
+> > +		INIT_LIST_HEAD(&desc->tx_list);
+> > +		dma_async_tx_descriptor_init(&desc->txd, chan);
 >
-> +	/* Count the issued desc up to the maximum number of linked SG id */
-> +	list_for_each(pos, &fsl_chan->vchan.desc_issued) {
-> +		if (++issued_count > FIELD_MAX(EDMA_TCD_CSR_LINKCH))
-> +			break;
-> +	}
-> +
-> +	/* Link the SG descriptors with the available identifiers */
-> +	list_for_each_entry_safe(vdesc, tmp, &fsl_chan->vchan.desc_submitted, node) {
-> +		if (++issued_count > FIELD_MAX(EDMA_TCD_CSR_LINKCH))
-> +			break;
-> +		fsl_edma_link_sg(fsl_chan, to_fsl_edma_desc(vdesc));
-> +		list_move_tail(&vdesc->node, &fsl_chan->vchan.desc_issued);
-> +	}
-> +
-> +	/* Issue the rest of the descriptors unlinked */
->  	if (vchan_issue_pending(&fsl_chan->vchan) && !fsl_chan->edesc)
->  		fsl_edma_xfer_desc(fsl_chan);
+> [Severity: High]
+> Does this code leave desc_node uninitialized?
 >
-> diff --git a/drivers/dma/fsl-edma-common.h b/drivers/dma/fsl-edma-common.h
-> index 0d028048701d..cbb077e98f55 100644
-> --- a/drivers/dma/fsl-edma-common.h
-> +++ b/drivers/dma/fsl-edma-common.h
-> @@ -42,6 +42,7 @@
->  #define EDMA_TCD_CSR_E_LINK		BIT(5)
->  #define EDMA_TCD_CSR_ACTIVE		BIT(6)
->  #define EDMA_TCD_CSR_DONE		BIT(7)
-> +#define EDMA_TCD_CSR_LINKCH		GENMASK(12, 8)
+> dma_pool_zalloc zeroes out the descriptor, leaving the pointers for desc_node
+> as NULL since INIT_LIST_HEAD is not called for it. If a subsequent descriptor
+> allocation fails (for instance, in atcdmac_prep_device_sg), the error path
+> calls atcdmac_put_desc on the first descriptor.
 >
->  #define EDMA_V3_TCD_NBYTES_MLOFF_NBYTES(x) ((x) & GENMASK(9, 0))
->  #define EDMA_V3_TCD_NBYTES_MLOFF(x)        (x << 10)
-> @@ -169,6 +170,7 @@ struct fsl_edma_chan {
->  	struct dma_slave_config		cfg;
->  	u32				attr;
->  	bool                            is_sw;
-> +	u8				link_sg_id;
->  	struct dma_pool			*tcd_pool;
->  	dma_addr_t			dma_dev_addr;
->  	u32				dma_dev_size;
-> @@ -199,6 +201,7 @@ struct fsl_edma_desc {
->  	struct virt_dma_desc		vdesc;
->  	struct fsl_edma_chan		*echan;
->  	bool				iscyclic;
-> +	u8				link_sg_id;
->  	enum dma_transfer_direction	dirn;
->  	unsigned int			n_tcds;
->  	struct fsl_edma_sw_tcd		tcd[];
-> @@ -225,6 +228,8 @@ struct fsl_edma_desc {
->  #define FSL_EDMA_DRV_TCD64		BIT(15)
->  /* All channel ERR IRQ share one IRQ line */
->  #define FSL_EDMA_DRV_ERRIRQ_SHARE       BIT(16)
-> +/* Major link channel in CSR used for linking SG descriptors */
-> +#define FSL_EDMA_DRV_CSR_LINKCH		BIT(17)
+> This descends into atcdmac_put_desc_nolock, which performs list_del_init on
+> desc_node, potentially causing a NULL pointer dereference on the
+> uninitialized list head.
 >
+> [ ... ]
+> > +static void atcdmac_put_desc_nolock(struct atcdmac_chan *dmac_chan,
+> > +				    struct atcdmac_desc *desc)
+> > +{
+> [ ... ]
+> > +		list_del_init(&desc->desc_node);
 >
->  #define FSL_EDMA_DRV_EDMA3	(FSL_EDMA_DRV_SPLIT_REG |	\
-> @@ -232,13 +237,15 @@ struct fsl_edma_desc {
->  				 FSL_EDMA_DRV_DEV_TO_DEV |	\
->  				 FSL_EDMA_DRV_ALIGN_64BYTE |	\
->  				 FSL_EDMA_DRV_CLEAR_DONE_E_SG |	\
-> -				 FSL_EDMA_DRV_CLEAR_DONE_E_LINK)
-> +				 FSL_EDMA_DRV_CLEAR_DONE_E_LINK |	\
-> +				 FSL_EDMA_DRV_CSR_LINKCH)
+> [Severity: High]
+> Can this trigger a NULL pointer dereference as described above?
 >
->  #define FSL_EDMA_DRV_EDMA4	(FSL_EDMA_DRV_SPLIT_REG |	\
->  				 FSL_EDMA_DRV_BUS_8BYTE |	\
->  				 FSL_EDMA_DRV_DEV_TO_DEV |	\
->  				 FSL_EDMA_DRV_ALIGN_64BYTE |	\
-> -				 FSL_EDMA_DRV_CLEAR_DONE_E_LINK)
-> +				 FSL_EDMA_DRV_CLEAR_DONE_E_LINK |	\
-> +				 FSL_EDMA_DRV_CSR_LINKCH)
+> [ ... ]
+> > +static void atcdmac_start_next_trans(struct atcdmac_chan *dmac_chan)
+> > +{
+> > +	struct atcdmac_desc *next_tx = NULL;
+> > +	struct atcdmac_desc *dma_desc;
+> > +
+> > +	if (dmac_chan->cyclic) {
+> > +		/* Get the next DMA descriptor from tx_list. */
+> > +		dma_desc = atcdmac_get_active_head(dmac_chan);
+> > +		dma_desc->at = dma_desc->at->next;
 >
->  struct fsl_edma_drvdata {
->  	u32			dmamuxs; /* only used before v3 */
-> diff --git a/drivers/dma/fsl-edma-trace.h b/drivers/dma/fsl-edma-trace.h
-> index 45d964a3726d..f4b0021d2bd0 100644
-> --- a/drivers/dma/fsl-edma-trace.h
-> +++ b/drivers/dma/fsl-edma-trace.h
-> @@ -121,6 +121,11 @@ DEFINE_EVENT(edma_log_tcd, edma_fill_tcd,
->  	TP_ARGS(chan, tcd)
->  );
+> [Severity: High]
+> Could this dereference an invalid pointer if the active_list is empty?
 >
-> +DEFINE_EVENT(edma_log_tcd, edma_link_sg,
-> +	     TP_PROTO(struct fsl_edma_chan *chan, void *tcd),
-> +	     TP_ARGS(chan, tcd)
-> +);
-> +
->  #endif
+> The channel-wide cyclic flag is sticky and is never cleared when a transfer
+> is terminated. If atcdmac_start_next_trans is called (for example, during
+> system resume) on a previously cyclic channel that is now idle, active_list
+> will be empty.
 >
->  /* this part must be outside header guard */
+> Using list_first_entry via atcdmac_get_active_head on an empty list returns
+> a bogus pointer, leading to a fault when dma_desc->at is accessed.
+>
+> [ ... ]
+> > +static void atcdmac_advance_work(struct atcdmac_chan *dmac_chan)
+> > +{
+> [ ... ]
+> > +	if (dmac_chan->cyclic) {
+> > +		if (!stop)
+> > +			atcdmac_start_next_trans(dmac_chan);
+> > +
+> > +		spin_unlock_irqrestore(&dmac_chan->lock, flags);
+> > +		res.result = DMA_TRANS_NOERROR;
+> > +		dmaengine_desc_get_callback_invoke(&dma_desc->txd, &res);
+>
+> [Severity: Critical]
+> Is there a use-after-free race here if atcdmac_terminate_all runs
+> concurrently?
+>
+> dma_desc remains in the unlocked active_list while the channel lock is dropped
+> to invoke the client callback. If another thread calls atcdmac_terminate_all,
+> it will splice active_list, abort the channel, manually run the callback on
+> dma_desc again, and return it to the free_list.
+>
+> Another CPU can then immediately reallocate the descriptor and overwrite the
+> callback pointers while the first CPU is still reading them to execute, which
+> could lead to arbitrary code execution.
+>
+> [Severity: High]
+> Can this delayed threaded IRQ cause a double-start race with system resume?
+>
+> If a transfer finishes right before suspend, the hardware interrupt fires
+> but the threaded IRQ handler may not execute before the system freezes. On
+> resume, stop_mask is cleared and the transfer is restarted. When normal
+> operations resume, this delayed threaded IRQ runs, finds stop cleared, and
+> erroneously double-starts the transfer while it is already actively running.
+>
+> [ ... ]
+> > +static irqreturn_t atcdmac_interrupt(int irq, void *dev_id)
+> > +{
+> > +	struct atcdmac_dmac *dmac = dev_id;
+> > +	struct atcdmac_chan *dmac_chan;
+> > +	unsigned int status;
+> > +	unsigned int int_ch;
+> > +	int ret = IRQ_NONE;
+> > +	int i;
+> > +
+> > +	regmap_read(dmac->regmap, REG_INT_STA, &status);
+> > +	int_ch = READ_ONCE(dmac->used_chan) & DMA_INT_ALL(status);
+>
+> [Severity: High]
+> Does masking hardware interrupts with the software used_chan state risk an
+> unacknowledged IRQ storm?
+>
+> If an interrupt fires for a channel where the software used_chan bit is 0
+> (such as an abort interrupt triggered by atcdmac_terminate_all on an idle
+> channel), int_ch evaluates to 0.
+>
+> The handler bypasses the clear routine and returns without acknowledging the
+> hardware interrupt, potentially causing an infinite loop of interrupts.
+>
+> > +
+> > +	while (int_ch) {
+> > +		spin_lock(&dmac->lock);
+>
+> [Severity: High]
+> Is it safe to use a standard spinlock_t in hardirq context here?
+>
+> On PREEMPT_RT kernels, spinlock_t is implemented as an RT mutex which can
+> sleep. Locks acquired in genuine hardware interrupt context typically need
+> to be typed as raw_spinlock_t to avoid scheduling while atomic.
+>
+> > +		dmac->used_chan = READ_ONCE(dmac->used_chan) & ~int_ch;
+> > +		spin_unlock(&dmac->lock);
+> > +		regmap_write(dmac->regmap, REG_INT_STA, DMA_INT_CLR(int_ch));
+>
+> [Severity: Medium]
+> Does writing a blanket clear mask erase unhandled interrupts?
+>
+> The DMA_INT_CLR macro writes 1s to the TC, ABT, and ERR bits for the given
+> channel, regardless of which interrupts were actually set in the status read.
+> If a new interrupt (like ERR) asserts after the status read but before this
+> clear write, it gets cleared but never handled.
+>
+> [ ... ]
+> > +static int atcdmac_terminate_all(struct dma_chan *chan)
+> > +{
+> [ ... ]
+> > +	spin_lock_irqsave(&dmac_chan->lock, flags);
+> > +	atcdmac_abort_chan(dmac_chan);
+> > +	atcdmac_enable_chan(dmac_chan, 0);
+> > +	ret = regmap_read_poll_timeout_atomic(dmac_chan->dma_dev->regmap,
+> > +					      REG_CH_EN,
+> > +					      val,
+> > +					      !(val & BIT(dmac_chan->chan_id)),
+> > +					      10,
+> > +					      ATCDMAC_CHAN_TIMEOUT_US);
+>
+> [Severity: High]
+> Can this cause a soft lockup by polling for up to 100ms with interrupts
+> disabled?
+>
+> Calling regmap_read_poll_timeout_atomic with a 100,000us timeout while
+> holding a spinlock in hardirq-disabled context can trigger the NMI watchdog
+> and create extreme system latency spikes.
+>
+> [ ... ]
+> > +	list_for_each_entry_safe(desc_cur, desc_next, &list, desc_node) {
+> > +		atcdmac_run_tx_complete_actions(desc_cur, DMA_TRANS_ABORTED);
+>
+> [Severity: High]
+> Is it permissible to invoke completion callbacks for aborted transfers?
+>
+> The dmaengine API explicitly prohibits executing callbacks for aborted
+> descriptors because clients (such as ALSA) typically call terminate_all with
+> their own stream locks held. Invoking the callback here can cause a deadlock
+> when the client attempts to acquire the exact same lock.
+>
+> [ ... ]
+> > +static int atcdmac_probe(struct platform_device *pdev)
+> > +{
+> [ ... ]
+> > +	ret = dma_async_device_register(&dmac->dma_device);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = atcdmac_init_irq(pdev, dmac);
+> > +	if (ret)
+> > +		goto err_dma_async_register;
+> > +
+> > +	ret = atcdmac_init_iocp(pdev, dmac);
+>
+> [Severity: High]
+> Are the DMA channels exposed to clients before the IRQ handler and cache
+> coherency (IOCP) are fully initialized?
+>
+> dma_async_device_register makes the DMA channels immediately available to
+> kernel clients. If a client immediately requests a channel and starts a
+> transfer before atcdmac_init_irq and atcdmac_init_iocp execute, the transfer
+> will run without cache snooping configured, which could lead to memory
+> corruption.
+>
+> [ ... ]
+> > +static int atcdmac_resume(struct device *dev)
+> > +{
+> [ ... ]
+> > +	list_for_each_entry_safe(chan,
+> > +				 chan_next,
+> > +				 &dmac->dma_device.channels,
+> > +				 device_node) {
+> > +		dmac_chan = atcdmac_chan_to_dmac_chan(chan);
+> > +		spin_lock_irqsave(&dmac_chan->lock, flags);
+> > +		atcdmac_start_next_trans(dmac_chan);
+>
+> [Severity: High]
+> Could this improperly restart idle cyclic channels?
+>
+> This unconditionally calls atcdmac_start_next_trans for every channel
+> regardless of its active software state. If a channel was previously cyclic
+> but is currently idle, it will cause a fault as described earlier when
+> dereferencing the empty active_list.
+>
+> [ ... ]
+> > +static int atcdmac_suspend(struct device *dev)
+> > +{
+> > +	struct atcdmac_dmac *dmac = dev_get_drvdata(dev);
+> > +	int ret;
+> > +	unsigned long flags;
+> > +
+> > +	spin_lock_irqsave(&dmac->lock, flags);
+> > +	dmac->stop_mask = BIT(dmac->num_ch) - 1;
+> > +	spin_unlock_irqrestore(&dmac->lock, flags);
+> > +	ret = atcdmac_wait_chan_idle(dmac,
+> > +				     dmac->stop_mask,
+> > +				     ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
+>
+> [Severity: High]
+> Will system suspend time out and fail if a slave DMA channel is actively
+> waiting for peripheral data?
+>
+> The suspend sequence sets a stop_mask that prevents software from chaining the
+> next descriptor, but does not pause actively running transfers. It then blocks
+> waiting for all channels to report idle.
+>
+> If a DEV_TO_MEM slave channel is waiting for hardware flow control or
+> incoming data, it will never complete. The polling loop will eventually time
+> out, aborting the entire system sleep transition.
+>
+> [ ... ]
 >
 > --
-> 2.55.0
->
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911072524.1297406-1-cl634@andestech.com?part=2
