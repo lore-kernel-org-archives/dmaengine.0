@@ -1,65 +1,61 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010035.outbound.protection.outlook.com [52.101.69.35])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011009.outbound.protection.outlook.com [52.101.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43783537CD;
-	Fri, 11 Sep 2026 14:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3611145B27;
+	Fri, 11 Sep 2026 14:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.9
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789137394; cv=fail; b=cIKvznlu8VPKOF5ZBg1sOaAfOUIi4IKNgPgggP6VHJS0MW/D0QkyTj7LSd+2ymN/3yxR92Yp39LMdqwugH7AVUvRrb2SrV/A7WWAztT+sQy2ZfKxmc7KlYMoXpM0nVZ1rcK98Cm2uSmYwoR5jozAc+sEHCCKDaXwuD+LH46ibsQ=
+	t=1789138610; cv=fail; b=mCr1eYBB/IghqKd7tBRbnKN9mNsVWr4XXJsQuWX06E9IcYCFtaBCNp8Y8gTlC+igyLv0m3cjYvOmAeJleWQ2i8G0LjvSR4VOrt4ctkzPq+yNJ73FAC5saL8ZRRBPkwapsvulseX/34MfBGb6Qo+srMDmPDc5rvI6WCh6lZd+WPs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789137394; c=relaxed/simple;
-	bh=zVPlQ3mBcom+xfqMGmqj+34E74k7rvPZ/iqKAj1VlP4=;
+	s=arc-20240116; t=1789138610; c=relaxed/simple;
+	bh=0hjdb0SBOEOgxMgFw+bkm4scTiK75momA7YnyIV+I7A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JeOF2yeCxlw2J+CnlR0V+KQ0y8nDz3+EzyJ9FN7igZuky1Qw+xs4hp3b2wqlHu6qkomIKEN99HuAQARRl50CwDrpHqejQcLAeVrzRxe0M8nfldMS6V3rByEAuHhUCJrJed6FYYZCKGhgFRTFcDtDUf8eliVdveXy266Zc5861Qg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ni99ewv7 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.35
+	 Content-Disposition:In-Reply-To:MIME-Version; b=HvZIRepcm5++6dpqEypvY4DgXf1FsVxBAwixKCSrJToyMx+/7hdmXPfx2CxloChk6rbIYD9cU4oM0Y6J0lD9FARFn65R8ea/Q0IfdQkZN7qdnvWNPFesnDtCvfgkzEmAXcP/S6hvf7vdu8R2bTcN6C8toKsUH5P1pIU7AQJEkz0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=pZAXWvbg; arc=fail smtp.client-ip=52.101.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ni99ewv7"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="pZAXWvbg"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F4TeIPy0kncmnzqijUN3v2X5s0ZD+21LYqjRluYMP/avMpk5f5NDNtSJv7fHfwdfiLaYGn7UMfa0C22yTKZzFzsQVykDESbbAfn/W02sL4OJy/26DQuEybM4P6jXvGzzAbjGK5Vn2L696HWnTA/jRUHoaCPU8/OWBi0LC5iBxDNDWOJhVTFAIqj4k9yb+ousbfm2fj8GfLabkpu37lnUFSBKh8jhFKY8NolPO1fN2A6vfdw3zZlsHyoectUOQlP92yODRx21mu5OQlLHMj+brTksXox+lCI+A3cbwkdoL4Z9TO4kI7Zbzv8nny7GEjo7TtFbOM4YRnI0iblTSYx1OA==
+ b=ho9uKuoiO8e1/U2zamkIrbGaGJJCPlrX5Lhq8LFue+2Lcg1yo5s1aka7MP/8LN6cwpjLnmAABJ9yE0l/DseoorzJ6Zk7mWvVcyxp7L7ceo9Q/h8+tCPfpafo1d69fllVABrMOcd9rsTkwJ+ssWl9ND9AM8NViRiER7MorR097wDfh3mKAz6eb3MYk8ylzGEb9yz8qwca+nXIItF58Fs4fP7cMjWRor0T7x1fHYbnDodyeIhyG6+xsasj6QPj7iCfmnFYZsawNKl/C1Ybvwlp+nFSbZ1Jy0ffZsG2jb0IOIMMGurqM4b505KGbJTg74nMPAoOqF64r7SY2nueF/g7kw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZI+r+Tx/CLSnS1uEy6/dzlA7XPEc7UoVO/cp80pI/hQ=;
- b=ggp1elmMlHHTtybPrQz6uslkb/nTY0YLzEVpflTzI5CWsQsUCOpwV5jddNhDpeyTNhGZrrOVGleTwEWK+2mS4o7Bw3G/R5DY46IV1cHb/e9/OKGtLKSgjD9606wTER7LP50ho2+Fjo/5uOeO+SwRNHQ1dZZ45mwvM8STyUdBXMZZjFjwAZFpjmKDkPhqywu1Wa08T1H0pXmPcAqid1dDk0JaPd7Fdpa9ucL2+eqxZSv6K210CPMXvcNOoD/bkkt8USOmd4XTSeAsCRXd/+MQ/V8kKAXrOkHF4/jKta7zLqbFgeUn3EUOdV+Rx4LMuFlH7MU8xepDLgr0ZZf8S/Ab1A==
+ bh=yi85cTHZAVUKFIlkMjNGInUWoVZnevaAuXpsPgRoq+w=;
+ b=xnm+bYcJeojzL1egnV76QdJ4UFTydXt3BId8nNXC/3haslZfDzVcHJ0ODpE7TQ5Xa9iLAPWDPeNlIAk31BH9+b8A9p/4F0ubgUiRm04ASSJE+x2oY+J+wIsunFXyjMQFEB+FWVVQNbwTBZx/+4k1pptdy6xBhRje1RK15pdNfQzKAAaCqj37ki0pK+UTxbnvWF3UPkogNifyEjVV2G+Nzy/AGr09DKq7yYF6mCDfNMXgqERe2jNzd3tdP4FyBUKXF3pEM6Y8Lq6BDqYqrrGfdllzqASzv0jAzTR2Io3r6iWOuao9GZ03yD3O0EfeMLh5mPgEVWAY8+jqj+5xQkH3FA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZI+r+Tx/CLSnS1uEy6/dzlA7XPEc7UoVO/cp80pI/hQ=;
- b=ni99ewv73AvY0yAenxueTTj4M5BS6Jlzat4DMdMcepbItQQOoFHWph72GzpfTUmNJJchA5gbhh+wWt0m/2sry1/9tdV5POOtAOfZJSFYehSg7GqxDYdlOEj8kzR7vcEyD5HAQvxD6EOzQsSgC3owNQPIaVhp5TD6yAyYXvEY+oASVrnCpouGG3nvfgzA71YyCKjh8DuVvzqemJzkzz65HagsCLHyknjxPv+CG4kQrVvi/HtsDqmWuhSDJh6lYkyCEgB/6ogIASVO2Ph3dH59klEQfman8k593KUV2gNfr5dLihb1HGCVOOaarf0vPKzWMJ4dr1Loqj26tG+Yxwy/Ew==
+ bh=yi85cTHZAVUKFIlkMjNGInUWoVZnevaAuXpsPgRoq+w=;
+ b=pZAXWvbgr1i9Ntfwu4N5S02QBUg+DjfW+9GFqhP7Ggs9lkvKJI0LzekMvquSWWyOfcP16SC1LoUB9WEFEeorfEOO7pyJfx7hX+e8C2pJK2NpxVdXUvuDKbzwW6yUwEzI43ZPlwMjXyXTmjDbVor568nVNzuDSQu+BXf6mn2DUrdr6MDoyQG5G8Y9kPNQriiXoM81sF9ozXe211rjD8v0r9268LF7uLXMlGL0L5zjlDZzEIFzeYqlpH82pasr7vHtF1dELmfFsygEgGTA1Az/osAzKBfaaeFiyVZUHJo0dmGVomuofef1sLi98X6nGVCpUV14HlQWja0asBUa+RLaVw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM9PR04MB8164.eurprd04.prod.outlook.com (2603:10a6:20b:3ea::24) with
+ by DB9PR04MB8480.eurprd04.prod.outlook.com (2603:10a6:10:2c6::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Fri, 11 Sep
- 2026 14:36:29 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.7; Fri, 11 Sep
+ 2026 14:56:46 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.007; Fri, 11 Sep 2026
- 14:36:28 +0000
-Date: Fri, 11 Sep 2026 09:36:19 -0500
+ 14:56:46 +0000
+Date: Fri, 11 Sep 2026 09:56:38 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: CL Wang <cl634@andestech.com>, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, robh@kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH v6 2/2] dmaengine: atcdmac300: Add driver for Andes
- ATCDMAC300 DMA controller
-Message-ID: <aqQR4-yt6eeqldxI@SMW015318>
-References: <20260911072524.1297406-1-cl634@andestech.com>
- <20260911072524.1297406-3-cl634@andestech.com>
- <20260911075712.A4D361F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Slavin Liu <bolin.liu@seu.edu.cn>, Joy Zou <joy.zou@nxp.com>
+Cc: frank.li@nxp.com, vkoul@kernel.org, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] dmaengine: fsl-edma: check channel acquisition
+ before use
+Message-ID: <aqQWpnGmv1NxUGcr@SMW015318>
+References: <20260911060902.94153-1-bolin.liu@seu.edu.cn>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911075712.A4D361F000FF@smtp.kernel.org>
-X-ClientProxiedBy: PH7PR17CA0055.namprd17.prod.outlook.com
- (2603:10b6:510:325::16) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260911060902.94153-1-bolin.liu@seu.edu.cn>
+X-ClientProxiedBy: PH8PR02CA0017.namprd02.prod.outlook.com
+ (2603:10b6:510:2d0::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,338 +64,113 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8164:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4be9e6c0-edbf-46ec-6b3d-08df10121075
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB8480:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68742226-cd99-4daa-1020-08df1014e63a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|23010399003|1800799024|366016|6133799003|4143699003|5023799004|22082099003|10067099003|18002099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|19092799006|10067099003|3023799007|11063799006|56012099006|22082099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	jGXegiA1Xc39wYCWv76zsDSz1S6t7KclRm8+VEF+L1Fh+lyuXe0ZcMn9d1kFDI8p7Czsy525PasQWZztJHe5fVgaaeseJsZfILbaWAQNH7c1CPc/52onwOGKc8SyfsanxKBsFCLHFeo/Qfuu5drzJvDQm6+cOFTMuJan/5kswRf8rTEWDMW3pwLEs8WMZsOLM395EZVM8v9VCScEAjV7sEUYwlG+yAGrs8XwHLnslMHfx70l/JckTijNV+CaBogM3SlBDjZpivZebGjdA7VVdZrq87UGDFVGRAL4Oh1HWzOz5Mn/HYblxOlRxx4xS2XTN/Y3HQivcV63Ln1qrHE4c+afJ1Rmr5gstgD+bqwGr6pUSIiTl3g2bP5mfdaWtFPDmn4kT1/tj+i9lTfDJL8SisUKLv1dy3FIZRWyQ7LLNYXYlh+99a54WY4iHNvgXf1H2DtUa0stueje7/Fa3QwH3i5/1hzGn5rv8tvXuC0xmc7qk+mWOMw0IcLjeaohcMKJmKtAufIjH57xnrnDwrp0unoxMJd+EeO9+1rSt4dVae4DmZrsTYyUPndNeRujhhVKS2IOYxUOCaaygQAKEYv3nazVktvp5vU+c+Mjn5osc+Q=
+	roeOnoANYe/CT5y6zFCS9HUvH76d5fRG5vukRMRjEdDnerMD6CCx49ORN1XzVT4+BR2Z2zBPKKFVT9RmokDwJWUpx0XiCBrF2r7Mke6HvIaRJtUJNw83ovcek8EpGHGhTML1N7rc5j11dHeonN8yc0/4sw7kL/YuJsInk41eTMoZQVzfkpaL+qratCCcal79g/NPmN9onRz32nhhRsqiaOhADmd5A5g7K2lOHYpxZ8X5qbnxV66675AoRpNEDulnb7RftBc8HbWouLz+9qppGtDcXwQr7TCFqjX5dY5X21DPy2OOyKLtDAdZ8t2UVg82Qg/e39LezLmtJFVWbuSE2YaMaiz+vfm4oGZcQMGPvPdRX65BJ3WeL7n1IxCrZB8OFs/enueupLNaNHZTvgx1OQN0sekE49gzkSRoSdAXofL+SCDEg4rI+vj20AOTyqf6MmkUUbpLc4CCU0p2RfVAJWzxDeXGNoeRtahzA8nN4Pz930v8U6unqFZuoZNvo5uSgt+AxEBB4lNSGU6MLIHfAjBOuE/7CO4wGHzOJ47ckb4wv4vgI5A+XtVbJxGMGWNHzQ1LTqlgfxwxigFDE+nIovo+uB29EY/KqJJcJxNWPFYorrbg+gXYJGGxiHwTewTNrP2eBD8o1bZvUunBPg5NWf6dm9oG6xIdm6wGkawDVLI=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(23010399003)(1800799024)(366016)(6133799003)(4143699003)(5023799004)(22082099003)(10067099003)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(19092799006)(10067099003)(3023799007)(11063799006)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?ZSab9L95hNdS8nA6QrjUTK4qTPDv4zm8NrkM9OysfU/gYWWAYgsQzUuF1U?=
- =?iso-8859-1?Q?wwh/Fo0yD0zE16tfp8Ry3wA/Ki4GwGckwP/L9EMVyWiE29LpI4lRC1HELM?=
- =?iso-8859-1?Q?HDusTNmcfSdo9mrjlz8RTFmxg8VvmDdfJ6yZtNliGhCBW1j9Vz6RRgFrqx?=
- =?iso-8859-1?Q?W42g+l7bzPTGE1mNLSMmFJhn63EJCNaw92JUTxXlCS2fGg9F8laBb3Y4yV?=
- =?iso-8859-1?Q?gwXS7wdj1FTqQ9LByR0XbpYPnzaa91paTXNFn0ry9fIzTry/GawxMfIb1J?=
- =?iso-8859-1?Q?Dk2dJc2WxW6zjYe6QtkoQ0uuOsNDDJqqdQWPepBuFs/pteTeZWPX61ydKW?=
- =?iso-8859-1?Q?z6T5OChuCgVxu0w/ED65U9qxFRxrBDsZO85y9mtIuSUJnBWbU26dLZn6/Y?=
- =?iso-8859-1?Q?4c5L2IXzMVFimPrL2tJC/1y3esSzV+EHK/HKlNR0xKY3Tkx6+YKdlwDyfk?=
- =?iso-8859-1?Q?3NPpjdmx9EA+WrrEHoi3vipSQ0XPf5RNlbWT3tNpz36eaX8RJd1cgZlR+J?=
- =?iso-8859-1?Q?af2TwDtwugLSvcvKY1s2hgnnCURONe3BgnDwGc1Z1eXPv45WTgpHpduXNF?=
- =?iso-8859-1?Q?rRz0H4qvicPbuc3YsOPBxbcUuGCiS2GRv4RsZcaytKQGsOz33D7gi/CZsk?=
- =?iso-8859-1?Q?guqbGXBCq5b9S7vCjBJsGbfRMD6L3K99q9GiFKbymIYbEsIKY8GQy1EJTN?=
- =?iso-8859-1?Q?0ikConAhIb7WNSEMgTJ2jjkU05BZ8Lzp/iqMaCwpbZV+54h4G/7shHgV0y?=
- =?iso-8859-1?Q?UWHUxhaQ4BFS8iwlJE/ksbdEA2O4bTEnoLBvflDlhhvs1AGB3hilepnKWC?=
- =?iso-8859-1?Q?8gHj0je8iBtyWIT/OoltH92IDkZqxmek6FvS1DJEr5IxIQFwwn0Uc1PPs2?=
- =?iso-8859-1?Q?nrGxGRSDUus3gKWLtjkHGzS6O+qYVgU0fyf1RtquTuXPLEhm0jMIVqq6Ys?=
- =?iso-8859-1?Q?OWDg7xgs5QxD3APhuegIVgIMx56+WghdS/HMDjyQDJx9QHuoCmrXKBHft2?=
- =?iso-8859-1?Q?0SvFCcYJ7maVYKNpP03GaFvwjGBG789EzDBtjqcFRO13KskU2B6/hEQQ5P?=
- =?iso-8859-1?Q?WC4eT2zj0Ei86EI0DGiicnwHF8P0GX2ovWllIHF1HViTCQwIjDjeR7Xz2E?=
- =?iso-8859-1?Q?hch2UUTl8U7nPkqRvk1WNxPDK1oAMoj3obP4FIPItOTGXKBfMTGpGQjY35?=
- =?iso-8859-1?Q?8CYuo7Kx4lJX/xXjemtUNaEtGJ4sgjmWiSOoIIZ1RM9IeyCLIs2kbHeGUq?=
- =?iso-8859-1?Q?Wsn8SxAgMGssqA912T3uBQMRrQO1wTvUxupGuOu42HWmqsplAga6TjPUzq?=
- =?iso-8859-1?Q?FYvW9G7P77FvkWhSmtbGqm2uHx7+ig8xgMTDZV4ZhwlU2z+kzQ0nSeEbo+?=
- =?iso-8859-1?Q?oZmEI2ZmBF+eFCwKpKbaRknhQEct7EiBD4SmT4831LIbaDLdG6FjXy+ffO?=
- =?iso-8859-1?Q?NZccXGBT4X1CebR69HXR0UkBKf3tpwfaoYHp+TPmUrRYNGxqDXjiJT1qIo?=
- =?iso-8859-1?Q?iTFnCmfLpL/Oi367oo3W/eNGq9TO22FgMPQpAgoAZ8StIXvPioajV6GJc1?=
- =?iso-8859-1?Q?imJ0tNFCEx4aH5g7nXWc3YWKQupRejDxmDZxRPNcOXamP4HjP3GgVk5zXs?=
- =?iso-8859-1?Q?xcKn0VmQWfrTg9AXuZRJJHzo2QaHy915vZ42tbTkJv42a4rWGkbl+lJcGw?=
- =?iso-8859-1?Q?zMgRWXfCCH7vfH1bwSA6fH/hwpf1hHFDg4uOzYeWGCkTUtlZrZllN/G86C?=
- =?iso-8859-1?Q?BECg9+ohlxNxbm/3DNeIek17fmsi+yaZZYwlNJap6iNYB1ZLNm4kK5Dwgh?=
- =?iso-8859-1?Q?Z2/GoLXnOFqpDMiuY7Rf1PnSwuNP48hfHss3DodP/ykF8Es5Flnc?=
+	=?us-ascii?Q?PvPciiFhuXqEN0l/eTi/ctR/UCFV7RSvhbNRh/74tfEelkZtykorAEGYIBld?=
+ =?us-ascii?Q?6vZYJcriVbK3elfPb9u8U1pCnzFyckcViyMQmiE2tyKo6BNVXMkB9bWm9UOr?=
+ =?us-ascii?Q?BTxxTYY/jQ6j0FVbKHMb7X4pU9Ru+7J65lEiurID36Mgv4AvElIaRs5nHB11?=
+ =?us-ascii?Q?2KqzJqULJTWZt+j9oFZ+5QQc5JofkQjOT+PKpboWU5KCQQtg1TZXKy7xGnns?=
+ =?us-ascii?Q?Z9py31nJ61xAHL5nA3GLneCkoCHMIg4/B1yzTYQw1/ROzcDUlvJAIgKnw1aN?=
+ =?us-ascii?Q?pUGKqayZphrkZbW5d7950g7iWwXEQE/+0XPAfQUIzw/LtDd45LX6gZ9FZ+hW?=
+ =?us-ascii?Q?30A43vZmJ90EWoIzFO/O9hrYY1Kssx0RXQgORi702tTYYyX+ETg7oCmVDMsV?=
+ =?us-ascii?Q?b4ULCA7o+kCgHhgOaBBYNp68ctIQyC5H0nWxdrm+mgItKODOjzUfbUa93qbS?=
+ =?us-ascii?Q?KANOnb05yFixY066bzRgB0zGoTIXYLNZVCtpz0bd+tdB1/1yzPShozzzuruN?=
+ =?us-ascii?Q?c7Ko14DyqaxwCW7M9lHJaQeNJG7V/OS0fA32zapgk9PnkLrVD8UojNAzCCJr?=
+ =?us-ascii?Q?ty4fP+5gIN/bDadHIF/1gbKCqv6LU0X2ukaVvn6u1+xwuT2VN+uNyqClTSWa?=
+ =?us-ascii?Q?JYhebzZOBfsu8/g3PAjNISiD7mq1/wGbzcAAVX95IMCo2GaPz9NUSXQ440yL?=
+ =?us-ascii?Q?9MwaggQWbuD2z3PgU5LQVbRUhtvMf5hXTxzuGOVhJe74ZvjVruz02Esebcm8?=
+ =?us-ascii?Q?jgAmwYb9tb0ZY3L689aJVVRoUOOH61HV2mCXED/85qYp1+rCs2GBfyL5Sca/?=
+ =?us-ascii?Q?5EuLkm3YO4I1+7y3Du2TGqMYJ/aXyaDRohQXQo03oTp177rPJKy0dJLf8Lxr?=
+ =?us-ascii?Q?LUlBD4Yrm/MmSUAxq/oc/lbFm1JjvqTMWznPoYN0cnPG8clEcjDw46lw7I1+?=
+ =?us-ascii?Q?QcHdVeoAm/8AJY4deBc0DDNLMtuDPj43xZmmS+FjHNpbo+lgH3rrG5iJsmlL?=
+ =?us-ascii?Q?l3bZFGDOrK6kSCjoYqBagFreDsMchSxvnldunDyecYh7SmEej70aQXp5Utl4?=
+ =?us-ascii?Q?WoH80tymolv9ihRlvSytql4tuk7pbkbO8ej0QdtSjbNAjr36QLNwAkMeX/Vd?=
+ =?us-ascii?Q?GV21/Re9QleTJXfek5Kq3EFtJ4rgjgdxdXd0rGLsKGnp0ysC8nsk4rBh7YV0?=
+ =?us-ascii?Q?sgt4iz772CZnm0D+0i6wtP7DH49t6VN1o8LNbcXcOIA9pDBd3FH0bVP3FYcC?=
+ =?us-ascii?Q?0WNLdyNoqoTwhm0Xmy4vlzSAsriVK5ZFtlz4nh3ONDaOT1ZPrE8kLH3lS9kc?=
+ =?us-ascii?Q?A3DwVQDNeqdqw1Vy5fKGLesw0aTnnEwBnChsK14oYM/I+2mhzcpn2RvJpeV7?=
+ =?us-ascii?Q?JRJHIeVzMWQyl+6TQkqIp7ZcUnkhzigB3fTRywZ7+6pbF0iNbyDSQwFzOD3v?=
+ =?us-ascii?Q?Wj1jJR6cmPIiVL0HATqekLI7GqbLNH1FIKxNxkNcVJIR228VOAjtBajpAij3?=
+ =?us-ascii?Q?HEyH5e7mVwelkoIDOrzlS92NQGgR4VWIwhbJ2VZTc7gl05qK+UDvMOy9Vugp?=
+ =?us-ascii?Q?Af1pACkCpfi+z7peLcydA8T7SpVxsNJZeYry9B9YSihf9kjDaN5ztDYL/Mln?=
+ =?us-ascii?Q?s6pvbzdNN6yq9f9aEZ20PAmUc63+K8/miPQncLC9b1B739LU51bLdH0tzgPo?=
+ =?us-ascii?Q?ElzFbeiA1al/y0IkOqyiNJ3q9uJgw1C+yrQgbOSvUpRiVxtKOC+39r6dmKh7?=
+ =?us-ascii?Q?AggJAL8VUzSDDIdlOicUNp98ljjAED1j/aIFdNOYNgWcGGcZbmbp?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4be9e6c0-edbf-46ec-6b3d-08df10121075
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68742226-cd99-4daa-1020-08df1014e63a
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 14:36:28.4783
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2026 14:56:46.0920
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zV/g9k3FZFdd8TCjtE/zuk8IXAmruwr650UL8ZiUKsZdKqy0MvbLiXbeXoHoynOt+vMVXeZep/lwtQB8HdILVqBJm1yi1oBz7nezKDhV6i3QqbJ/RUai4GWr1CTn+5F6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8164
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3LiGc/Vk1YOV5s9Unkp0S/Zsqx6cO89CrUHYY/irvamRNdwhcTaOBku20xqzkDQNRbaIlbs59BhKgMqomePulSRIoEUW3FlhggjZzYaXmvWHQDyRJm6ij4MJKsEm8q/J
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8480
 
-On Fri, Sep 11, 2026 at 07:57:12AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 11 potential issue(s) to consider:
-> - [Critical] Double-callback and Use-After-Free race in cyclic transfer completion during channel termination.
-> - [High] Masking pending hardware interrupts with software state (`used_chan`) causes an unacknowledged IRQ storm.
-> - [High] The DMA device is exposed to clients before its IRQ handler and cache coherency (IOCP) are fully initialized.
-> - [High] Polling for up to 100ms with interrupts disabled in `atcdmac_terminate_all` causes soft lockups.
-> - [High] The channel-wide `cyclic` flag is sticky, and unconditional resume restarts cause arbitrary DMA execution or kernel panics.
-> - [High] Suspend/resume race with the threaded IRQ causes transfer desynchronization and hardware corruption.
-> - [High] dmaengine API violation in `atcdmac_terminate_all`: invoking completion callbacks for aborted transfers.
-> - [High] System suspend times out and fails if a slave DMA channel is actively waiting for peripheral data.
-> - [High] Sleep-in-atomic bug on PREEMPT_RT due to using `spinlock_t` in hardirq context.
-> - [High] Kernel panic due to list_del_init() on an uninitialized list_head in error paths.
-> - [Medium] Writing a blanket clear mask to `REG_INT_STA` clears unhandled interrupts, permanently losing them.
-> --
+On Fri, Sep 11, 2026 at 02:09:02PM +0800, Slavin Liu wrote:
 
-Please fix these problems. I will start review after fix sashiko report
-issues.
+Remove RFC
+
+dmaengine: fsl-edma: check channel acquisition before mark it used.
+
+>
+> dma_get_slave_channel() can return NULL when acquiring a channel fails,
+> for example if fsl_edma_alloc_chan_resources() cannot request an IRQ.
+> fsl_edma3_xlate() dereferences that return value to update privatecnt.
+>
+> Acquire and check the channel before publishing its source ID and
+> request parameters. A NULL-only check after the existing source-ID
+> assignment would leave the failed request marked as in use, causing
+> fsl_edma_srcid_in_use() to reject a subsequent request for that source.
+> The channel resource-allocation callback does not consume these request
+> parameters, so set them only after acquisition succeeds. The existing
+> scoped mutex release and successful-channel return are preserved.
+>
+> Detected by static analysis and reviewed with AI-assisted source auditing.
+
+Add Joy Zou, who change this logic recently
 
 Frank
 
 >
-> commit e06d7bd262ebaa03646e2e3ac2876918f25083d4
-> Author: CL Wang <cl634@andestech.com>
+> Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+> Assisted-by: LLM
+> Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+> ---
+>  drivers/dma/fsl-edma-main.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
+> diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+> index d9fb717b5b53..6934ac882697 100644
+> --- a/drivers/dma/fsl-edma-main.c
+> +++ b/drivers/dma/fsl-edma-main.c
+> @@ -326,13 +326,16 @@ static struct dma_chan *fsl_edma3_xlate(struct of_phandle_args *dma_spec,
+>                 if ((dma_spec->args[2] & FSL_EDMA_ODD_CH) && !(i & 0x1))
+>                         continue;
 >
-> This patch adds support for the Andes ATCDMAC300 DMA controller.
-> The ATCDMAC300 is a memory-to-memory and peripheral DMA controller
-> that provides scatter-gather, cyclic, and slave transfer capabilities.
+> +               chan = dma_get_slave_channel(chan);
+> +               if (!chan)
+> +                       return NULL;
+> +
+>                 fsl_chan->srcid = dma_spec->args[0];
+>                 fsl_chan->priority = dma_spec->args[1];
+>                 fsl_chan->is_rxchan = dma_spec->args[2] & FSL_EDMA_RX;
+>                 fsl_chan->is_remote = dma_spec->args[2] & FSL_EDMA_REMOTE;
+>                 fsl_chan->is_multi_fifo = dma_spec->args[2] & FSL_EDMA_MULTI_FIFO;
 >
-> > diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/drivers/dma/atcdmac300.c
-> [ ... ]
-> > +static struct atcdmac_desc *atcdmac_alloc_desc(struct dma_chan *chan,
-> > +					       gfp_t gfp_flags)
-> > +{
-> > +	struct atcdmac_dmac *dmac = atcdmac_dev_to_dmac(chan->device);
-> > +	struct atcdmac_desc *desc;
-> > +	dma_addr_t phys;
-> > +
-> > +	desc = dma_pool_zalloc(dmac->dma_desc_pool, gfp_flags, &phys);
-> > +	if (desc) {
-> > +		INIT_LIST_HEAD(&desc->tx_list);
-> > +		dma_async_tx_descriptor_init(&desc->txd, chan);
+> -               chan = dma_get_slave_channel(chan);
+>                 chan->device->privatecnt++;
+>                 return chan;
+>         }
 >
-> [Severity: High]
-> Does this code leave desc_node uninitialized?
->
-> dma_pool_zalloc zeroes out the descriptor, leaving the pointers for desc_node
-> as NULL since INIT_LIST_HEAD is not called for it. If a subsequent descriptor
-> allocation fails (for instance, in atcdmac_prep_device_sg), the error path
-> calls atcdmac_put_desc on the first descriptor.
->
-> This descends into atcdmac_put_desc_nolock, which performs list_del_init on
-> desc_node, potentially causing a NULL pointer dereference on the
-> uninitialized list head.
->
-> [ ... ]
-> > +static void atcdmac_put_desc_nolock(struct atcdmac_chan *dmac_chan,
-> > +				    struct atcdmac_desc *desc)
-> > +{
-> [ ... ]
-> > +		list_del_init(&desc->desc_node);
->
-> [Severity: High]
-> Can this trigger a NULL pointer dereference as described above?
->
-> [ ... ]
-> > +static void atcdmac_start_next_trans(struct atcdmac_chan *dmac_chan)
-> > +{
-> > +	struct atcdmac_desc *next_tx = NULL;
-> > +	struct atcdmac_desc *dma_desc;
-> > +
-> > +	if (dmac_chan->cyclic) {
-> > +		/* Get the next DMA descriptor from tx_list. */
-> > +		dma_desc = atcdmac_get_active_head(dmac_chan);
-> > +		dma_desc->at = dma_desc->at->next;
->
-> [Severity: High]
-> Could this dereference an invalid pointer if the active_list is empty?
->
-> The channel-wide cyclic flag is sticky and is never cleared when a transfer
-> is terminated. If atcdmac_start_next_trans is called (for example, during
-> system resume) on a previously cyclic channel that is now idle, active_list
-> will be empty.
->
-> Using list_first_entry via atcdmac_get_active_head on an empty list returns
-> a bogus pointer, leading to a fault when dma_desc->at is accessed.
->
-> [ ... ]
-> > +static void atcdmac_advance_work(struct atcdmac_chan *dmac_chan)
-> > +{
-> [ ... ]
-> > +	if (dmac_chan->cyclic) {
-> > +		if (!stop)
-> > +			atcdmac_start_next_trans(dmac_chan);
-> > +
-> > +		spin_unlock_irqrestore(&dmac_chan->lock, flags);
-> > +		res.result = DMA_TRANS_NOERROR;
-> > +		dmaengine_desc_get_callback_invoke(&dma_desc->txd, &res);
->
-> [Severity: Critical]
-> Is there a use-after-free race here if atcdmac_terminate_all runs
-> concurrently?
->
-> dma_desc remains in the unlocked active_list while the channel lock is dropped
-> to invoke the client callback. If another thread calls atcdmac_terminate_all,
-> it will splice active_list, abort the channel, manually run the callback on
-> dma_desc again, and return it to the free_list.
->
-> Another CPU can then immediately reallocate the descriptor and overwrite the
-> callback pointers while the first CPU is still reading them to execute, which
-> could lead to arbitrary code execution.
->
-> [Severity: High]
-> Can this delayed threaded IRQ cause a double-start race with system resume?
->
-> If a transfer finishes right before suspend, the hardware interrupt fires
-> but the threaded IRQ handler may not execute before the system freezes. On
-> resume, stop_mask is cleared and the transfer is restarted. When normal
-> operations resume, this delayed threaded IRQ runs, finds stop cleared, and
-> erroneously double-starts the transfer while it is already actively running.
->
-> [ ... ]
-> > +static irqreturn_t atcdmac_interrupt(int irq, void *dev_id)
-> > +{
-> > +	struct atcdmac_dmac *dmac = dev_id;
-> > +	struct atcdmac_chan *dmac_chan;
-> > +	unsigned int status;
-> > +	unsigned int int_ch;
-> > +	int ret = IRQ_NONE;
-> > +	int i;
-> > +
-> > +	regmap_read(dmac->regmap, REG_INT_STA, &status);
-> > +	int_ch = READ_ONCE(dmac->used_chan) & DMA_INT_ALL(status);
->
-> [Severity: High]
-> Does masking hardware interrupts with the software used_chan state risk an
-> unacknowledged IRQ storm?
->
-> If an interrupt fires for a channel where the software used_chan bit is 0
-> (such as an abort interrupt triggered by atcdmac_terminate_all on an idle
-> channel), int_ch evaluates to 0.
->
-> The handler bypasses the clear routine and returns without acknowledging the
-> hardware interrupt, potentially causing an infinite loop of interrupts.
->
-> > +
-> > +	while (int_ch) {
-> > +		spin_lock(&dmac->lock);
->
-> [Severity: High]
-> Is it safe to use a standard spinlock_t in hardirq context here?
->
-> On PREEMPT_RT kernels, spinlock_t is implemented as an RT mutex which can
-> sleep. Locks acquired in genuine hardware interrupt context typically need
-> to be typed as raw_spinlock_t to avoid scheduling while atomic.
->
-> > +		dmac->used_chan = READ_ONCE(dmac->used_chan) & ~int_ch;
-> > +		spin_unlock(&dmac->lock);
-> > +		regmap_write(dmac->regmap, REG_INT_STA, DMA_INT_CLR(int_ch));
->
-> [Severity: Medium]
-> Does writing a blanket clear mask erase unhandled interrupts?
->
-> The DMA_INT_CLR macro writes 1s to the TC, ABT, and ERR bits for the given
-> channel, regardless of which interrupts were actually set in the status read.
-> If a new interrupt (like ERR) asserts after the status read but before this
-> clear write, it gets cleared but never handled.
->
-> [ ... ]
-> > +static int atcdmac_terminate_all(struct dma_chan *chan)
-> > +{
-> [ ... ]
-> > +	spin_lock_irqsave(&dmac_chan->lock, flags);
-> > +	atcdmac_abort_chan(dmac_chan);
-> > +	atcdmac_enable_chan(dmac_chan, 0);
-> > +	ret = regmap_read_poll_timeout_atomic(dmac_chan->dma_dev->regmap,
-> > +					      REG_CH_EN,
-> > +					      val,
-> > +					      !(val & BIT(dmac_chan->chan_id)),
-> > +					      10,
-> > +					      ATCDMAC_CHAN_TIMEOUT_US);
->
-> [Severity: High]
-> Can this cause a soft lockup by polling for up to 100ms with interrupts
-> disabled?
->
-> Calling regmap_read_poll_timeout_atomic with a 100,000us timeout while
-> holding a spinlock in hardirq-disabled context can trigger the NMI watchdog
-> and create extreme system latency spikes.
->
-> [ ... ]
-> > +	list_for_each_entry_safe(desc_cur, desc_next, &list, desc_node) {
-> > +		atcdmac_run_tx_complete_actions(desc_cur, DMA_TRANS_ABORTED);
->
-> [Severity: High]
-> Is it permissible to invoke completion callbacks for aborted transfers?
->
-> The dmaengine API explicitly prohibits executing callbacks for aborted
-> descriptors because clients (such as ALSA) typically call terminate_all with
-> their own stream locks held. Invoking the callback here can cause a deadlock
-> when the client attempts to acquire the exact same lock.
->
-> [ ... ]
-> > +static int atcdmac_probe(struct platform_device *pdev)
-> > +{
-> [ ... ]
-> > +	ret = dma_async_device_register(&dmac->dma_device);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = atcdmac_init_irq(pdev, dmac);
-> > +	if (ret)
-> > +		goto err_dma_async_register;
-> > +
-> > +	ret = atcdmac_init_iocp(pdev, dmac);
->
-> [Severity: High]
-> Are the DMA channels exposed to clients before the IRQ handler and cache
-> coherency (IOCP) are fully initialized?
->
-> dma_async_device_register makes the DMA channels immediately available to
-> kernel clients. If a client immediately requests a channel and starts a
-> transfer before atcdmac_init_irq and atcdmac_init_iocp execute, the transfer
-> will run without cache snooping configured, which could lead to memory
-> corruption.
->
-> [ ... ]
-> > +static int atcdmac_resume(struct device *dev)
-> > +{
-> [ ... ]
-> > +	list_for_each_entry_safe(chan,
-> > +				 chan_next,
-> > +				 &dmac->dma_device.channels,
-> > +				 device_node) {
-> > +		dmac_chan = atcdmac_chan_to_dmac_chan(chan);
-> > +		spin_lock_irqsave(&dmac_chan->lock, flags);
-> > +		atcdmac_start_next_trans(dmac_chan);
->
-> [Severity: High]
-> Could this improperly restart idle cyclic channels?
->
-> This unconditionally calls atcdmac_start_next_trans for every channel
-> regardless of its active software state. If a channel was previously cyclic
-> but is currently idle, it will cause a fault as described earlier when
-> dereferencing the empty active_list.
->
-> [ ... ]
-> > +static int atcdmac_suspend(struct device *dev)
-> > +{
-> > +	struct atcdmac_dmac *dmac = dev_get_drvdata(dev);
-> > +	int ret;
-> > +	unsigned long flags;
-> > +
-> > +	spin_lock_irqsave(&dmac->lock, flags);
-> > +	dmac->stop_mask = BIT(dmac->num_ch) - 1;
-> > +	spin_unlock_irqrestore(&dmac->lock, flags);
-> > +	ret = atcdmac_wait_chan_idle(dmac,
-> > +				     dmac->stop_mask,
-> > +				     ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
->
-> [Severity: High]
-> Will system suspend time out and fail if a slave DMA channel is actively
-> waiting for peripheral data?
->
-> The suspend sequence sets a stop_mask that prevents software from chaining the
-> next descriptor, but does not pause actively running transfers. It then blocks
-> waiting for all channels to report idle.
->
-> If a DEV_TO_MEM slave channel is waiting for hardware flow control or
-> incoming data, it will never complete. The polling loop will eventually time
-> out, aborting the entire system sleep transition.
->
-> [ ... ]
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911072524.1297406-1-cl634@andestech.com?part=2
