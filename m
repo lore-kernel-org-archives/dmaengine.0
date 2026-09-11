@@ -1,65 +1,65 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F634A3D28
-	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 18:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EDC387348
+	for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 18:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789150094; cv=none; b=oI1jXGOnB9RSeaaYm+VE6+lLYrhRs0Xpeyb88CjGWJTHmd6Jg2BzNpGFnmzIPqZkqLpdPpIDYc8nuIUqWBiaLopTXYvLvYjggts+NLoMlFGoq42bZch4xkjeG8KoFH/Rrc++1dcGBDD0rHE5VZtwKyLCPyVmH7m+yIl9uhWBUEQ=
+	t=1789150222; cv=none; b=KuLpmX1IXixTKuML86RTLw5JPXXxjRnLUnnY8dWVNkOI0c8MJTjaafdy10MgO1TeJogKFJMq10uc5+lpIgG7KT/bEYHX1L/LBUAR7OXO/d5gvi/VjZcZd03wUOn2NgbaqoLqoFM3ukFV6S/SILp03iGwDxmNCc3ZqKUDdyrVOVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789150094; c=relaxed/simple;
-	bh=5q6RzS9P+QCHEJ6QonOuHfBSp8x2DpnHbW5+cuLhzdg=;
+	s=arc-20240116; t=1789150222; c=relaxed/simple;
+	bh=pFoLIhtHfUm14OpIGSbvqjL40AJBmN4Y3fFmZiUfOIM=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=dw6/fl9wRFUG6jGw8GibsjCLFf106qvBJDpMm4PR+gP97H/oGYsDK5AW27MkF2znPOVkWxAvGkBg13Q8sTCBkHMfV30mmtxOQiiLcG6yuKsCIeiRUpbzf0w9BcD1xeDFjkQlInAM9SfnGuLRhgvB2V6jV3Cj8hAXy+Elx04fhrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ofb9+bY6; arc=none smtp.client-ip=209.85.216.53
+	 References:In-Reply-To; b=Bz69CwX8w4UPxy6+Zx0HigIrDAR9QnFZn8oV0uuDjL5F8/sW8TPaFXUbMQdU7AkQKKdP99Q/Wsp3bAmqBQZSNQI26iLO90S7On4PIFEv1wgSf+YCvvJN2dnEZiEr6y1yBT/oNQfcbrH8JIVXVdmdc7jdIHUNPJ7bAhS5UDGK3L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z9egalCr; arc=none smtp.client-ip=74.125.228.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ofb9+bY6"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-39b2ad862bdso1653418a91.2
-        for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 11:08:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z9egalCr"
+Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc1cebad4adso286358a12.1
+        for <dmaengine@vger.kernel.org>; Fri, 11 Sep 2026 11:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789150089; x=1789754889; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789150214; x=1789755014; darn=vger.kernel.org;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=bFQyaHFSe7NbqtGnmovgEQo/OOpNNeM1Djaojhppr5M=;
-        b=Ofb9+bY6mxaKX1hjL5KlIBqstgl8mzbR56VpkJQBwM6GJvghAPbtE3+XHf+aN+Eq+q
-         ryOIG5JCeWKM8QX9B1+v4ZWlp2x3x8YGUHtKLF9wttIHG/WvS9HtO7nZUhotE8tRrgwe
-         uEoFoFGpiePP9/iwS7kv99zu/w4pvJWcYX8KEMwN62V8N1npLki6cf86U6GV1g/Jrc+/
-         nXQ+E6GKoTzrtCdld6R8Ew3/YRIuyCsyZ4nRLYixivSqhYXV5t8eJyqo0PyevgmCPAH5
-         75b3YESb/XnrT9Ie3F36zL3gqm8hQG5/VPV9OakSdXDOdfZQ5NoVkuyiQtayE40MzeFG
-         BYbw==
+        bh=3cxa3dW2rb8gMN+b8Efg94ssh5+KCVrUeOlRH+bN32g=;
+        b=Z9egalCrHikkPZ/IcF01BEvdZ7/DMiTGNGDHvO1rHXBqHb8OLhjzBISaAYl0JeF+/Q
+         kP4CjbE5uEyV4m/pVDLtkJqusJSxspRP6nSSqan5av3EpcV0WiIbVEnyWmwNohMW57nF
+         1OD7CymakQ6aDYC3po2sxLxQVsrVTJhb7WnNrPKYXdGBm0xy1Ei4qLHiV2+XeqQybIgj
+         yvT7Yv/T1LlKZRjnfc5XA806RAHFKvpyhl5+6FSRwkmlKDCW2H251YYYiXBvIHFZivBr
+         yeWpZNeclqUw0SZ0JkO2vreDD41vzQbdEHPW52MhuKecI3RiXF5JU07BZ0s+lFvqWyd5
+         yPbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789150089; x=1789754889;
+        d=1e100.net; s=20251104; t=1789150214; x=1789755014;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bFQyaHFSe7NbqtGnmovgEQo/OOpNNeM1Djaojhppr5M=;
-        b=I1GlnRbhppKEUJv83XXAGFVYuGWqINs8QHGgS+WAWcSQF70dpZ7IlnCuXLL20nXN/F
-         Xiouri6w5aZRVQhmhcBavnTeQ5X0zpnKt8oZlSiMWtmEVJfR+J4OL+1P85TIfWevesAU
-         P1ftQKdTqf1yP+t4+7y0n0D7h7WQFOUCM9q6BZzc31A8p6N8kwhTJAQD6UO3Eb4J/ojM
-         CSdF9RYcpk2MD8WhbyiA8Ry2onan1MusRmSwDIrX1xpbBw7B/n6JaVbB3yUaoD5rhTDL
-         8zp70rKI/sw6Fbxs3t7Y0ylby/U9ak6yiQs7hYQPISaqjzthPhLtLSzsVTSXq3oMvyOB
-         PMEg==
-X-Gm-Message-State: AFuF++lDfxsTcIvtn9fSsJ5/nLg8/UlSk0v6TJKSX+LJBxtMPfn8a1Y8
-	/UcsLtTKUa8c+l8SdsdjF/biV2LsBcyvIBj7EtCtv6A2h2JTr80o/YNI
-X-Gm-Gg: AYBFou2XI7UfItXOSOBnED6yq5w6zvC+M1Nz89o7I4lDbK7/8KrngCLnvjN6lldAu7V
-	Lk4HaS7bXEQ3XuAeYFsV6a19gFE/iztpq4uTqxcEcMTId4oThrrUldzemQNYoBfoUTTWx+6N/3T
-	u1SPYx+7kEyFPDimWM8BBKmt5nl3HUw3A5Kyb+/mw1ova1hAclc8MnKgX8IRTYY+kHYCPLFssCN
-	vcpWur51jIrqbFwIuAdCRQD843xofVpXctGb1SeIbPD/5rzyjFyFE/Zk2XSPkl65zN8dunP7err
-	hIy/F3miHkWBe1aKVdARVNINGXWzNrHLurbkfLCb9KAVPeQBb2v8C/PE70+zTCtmjgghJ+l4d6/
-	g94NZ3/gNcPn5B08s8j6vbz+VGOQ/2vvTqOc5GIo2p7kqeJz2g+TuDwcetniASz19c9vKN9mv9G
-	GUs2rjKRDn5X5Znd2EsjTLy+wZy3SUPMmDT7xCGE4cX49t/SUVzWK0g0c6veow6YT7PTD1s3j+u
-	ae4TKMUFK1zOKB/qkLKg92TsVRq4QdMuiP2oha9N0nS2QfLWdH8VlQV83VwRhydHPKbrnVud7X1
-	m8qNpqKmwYgDKgC/AHuGDlknK6yTdF81vQxSTnT3Dg3Bsvre
-X-Received: by 2002:a17:90b:560e:b0:39b:2c55:365 with SMTP id 98e67ed59e1d1-39d9c1dbb26mr8543491a91.12.1789150088659;
-        Fri, 11 Sep 2026 11:08:08 -0700 (PDT)
+        bh=3cxa3dW2rb8gMN+b8Efg94ssh5+KCVrUeOlRH+bN32g=;
+        b=XOA8/ZilrS9vBowxXrQxO67trc86ejtRC/aQR1Vb7orSmcQW4yS7oWt33dBlD3MAXG
+         T517AOLyMmENBeZdLa/DPU5hfe8O96fgDQKG4eN8ajQl+mHAy58RS1j6DxeOFQmVW6g9
+         +aTObehnViiRdBgaTTpn67mnakcO+/dJo0/SjHkI1B1I0xbN9vdUMNvw5QL4T22evamz
+         V+lF1L3h1sVOfbncZOPfgu05nA1JT8Gi6C+Hm8OTwlQsDYa4IYg1td8EnX0Bzm2+A/Fy
+         5TyaTUyege1u/fPix0m3/8Ynzu/z8/uKhdDCnk7uW7hq5SDSsvPlJo3HFl4sR/rR+QmK
+         t8eA==
+X-Gm-Message-State: AFuF++k40+dmf5YyNu7qDAkW+dNJYTAAcg5Q0Oq48bY3WC+R94oMsu0I
+	U07E2Jk7XE6mwEw3xknZukbopkyUkk+N0yCh0hBRK2x0ya88i0CV+EMb
+X-Gm-Gg: AYBFou3Eul6wJPYq4bl2tomXISO3zy4FKb0AXUdu4x8c8bUfzXqA436v2U9Mzv2iRmT
+	+ilcIEEZWDNbglqsRT7cHpIdpKumILPn/StNDT9nmb2LvMeACWM34ixJF9+5BqysITiyO5fSpdQ
+	QsVmqBSLh0wakmpm6ky9Zae9XJgOpoPr6BB5loZkj8hekGygUyyzwvYIpnfs12B/1O1oAmSegnl
+	qrIm3ZYGhDyQbXhBAaBM4DEhFM0vbe+S44/HXYCNpOpnnrH6x6G9/o5Ej4g4XVyGB1Qyr/BJ6p6
+	q4mMyZ6XTpUk8r3+pMvbFUPtAS45+jrQM3xX6rN9Xfk0+JrHz9hgZRh5+uM+SS5l7HQnf0W+LkO
+	OL/oyQCshrQzvkhXlaZB4VKqD0g7hPgL9O8fXCqtv7bmE/+/awHQEWhKj3d4A8biae1qiwSagQK
+	vbHkoflGKCzLjeVCQCBeC2dfS9ZlJHze+MZE9SbLnmaXR0ldjeVjYORwvqoa6DRdld6t2Tlreck
+	Vq0ZnOsC08IGRx3ufk8CbKh0aeZ+pRrqltsjhM5mSR56uh7K7TBz8m6YHAB2CL2rjSreXN+A/CI
+	yhTzqIjFwcNvgcu6TJOfApxRTDnV7p8T2s7lAxj9zpVfiTDe
+X-Received: by 2002:a17:90b:278f:b0:398:e73e:5a0c with SMTP id 98e67ed59e1d1-39d9bbe47b2mr10254399a91.1.1789150214007;
+        Fri, 11 Sep 2026 11:10:14 -0700 (PDT)
 Received: from localhost ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d9d8aa131sm1695083a91.2.2026.09.11.11.08.07
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d95752809sm6212701a91.13.2026.09.11.11.10.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Sep 2026 11:08:08 -0700 (PDT)
+        Fri, 11 Sep 2026 11:10:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -68,54 +68,77 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 11 Sep 2026 11:08:06 -0700
-Message-Id: <DLCORV3V97BJ.2PEIXFVVVAI95@gmail.com>
+Date: Fri, 11 Sep 2026 11:10:12 -0700
+Message-Id: <DLCOTGSJIKI9.2U1ISL32HW8C7@gmail.com>
 Cc: <dmaengine@vger.kernel.org>, "Vinod Koul" <vkoul@kernel.org>, "Frank Li"
- <Frank.Li@kernel.org>, "Yuri Tikhonov" <yur@emcraft.com>, "Dan Williams"
- <djbw@kernel.org>, "Anatolij Gustschin" <agust@denx.de>, "open list"
+ <Frank.Li@kernel.org>, "Anatolij Gustschin" <agust@denx.de>, "Yuri
+ Tikhonov" <yur@emcraft.com>, "Dan Williams" <djbw@kernel.org>, "open list"
  <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: ppc4xx: use assigned variable for
- dma_free_coherent()
+Subject: Re: [PATCH] dmaengine: ppc4xx: check dma_map_page() errors in probe
 From: "Rosen Penev" <rosenp@gmail.com>
 To: "Frank Li" <Frank.li@oss.nxp.com>, "Rosen Penev" <rosenp@gmail.com>
 X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260911035941.200551-1-rosenp@gmail.com>
- <aqQYk44DLfkT8w4l@SMW015318>
-In-Reply-To: <aqQYk44DLfkT8w4l@SMW015318>
+References: <20260910214334.86689-1-rosenp@gmail.com>
+ <aqQmw0j8-s5DEv9v@SMW015318>
+In-Reply-To: <aqQmw0j8-s5DEv9v@SMW015318>
 
-On Fri Sep 11, 2026 at 8:04 AM PDT, Frank Li wrote:
-> On Thu, Sep 10, 2026 at 08:59:41PM -0700, Rosen Penev wrote:
->> In some goto paths, adev->dev is unassigned. Use &ofdev->dev to cover
->> those cases.
+On Fri Sep 11, 2026 at 9:05 AM PDT, Frank Li wrote:
+> On Thu, Sep 10, 2026 at 02:43:34PM -0700, Rosen Penev wrote:
+>> In ppc440spe_adma_probe() the helper pages are mapped with
+>> dma_map_page() but the returned DMA address is never validated with
+>> dma_mapping_error(). On 440SPe the mapping goes through the
+>> SWIOTLB/direct map, which can fail under memory pressure or with an
+>> IOMMU, returning DMA_MAPPING_ERROR. The bogus address would then be
+>> programmed into the CDBs used by the async validation and
+>> mult/sum_product operations, causing the engine to DMA to or from
+>> arbitrary memory and corrupt data.
 >>
->> Fixes: 12458ea06efd7b44281e68fe59c950ec7d59c649 ("ppc440spe-adma: adds u=
-pdated ppc440spe adma driver")
+>> Fail the probe when either mapping fails, freeing the pages and
+>> unmapping the first page if the second mapping fails.
+>>
+>> Fixes: 12458ea06efd7 ("ppc440spe-adma: adds updated ppc440spe adma drive=
+r")
+>> Assisted-by: opencode:big-pickle
 >> Signed-off-by: Rosen Penev <rosenp@gmail.com>
 >> ---
+>>  drivers/dma/ppc4xx/adma.c | 14 ++++++++++++++
+>>  1 file changed, 14 insertions(+)
+>>
+>> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+>> index 279a431ccae3..89e778896d7a 100644
+>> --- a/drivers/dma/ppc4xx/adma.c
+>> +++ b/drivers/dma/ppc4xx/adma.c
+>> @@ -4156,8 +4156,22 @@ static int ppc440spe_adma_probe(struct platform_d=
+evice *ofdev)
+>>  		}
+>>  		chan->pdest =3D dma_map_page(&ofdev->dev, chan->pdest_page, 0,
+>>  					   PAGE_SIZE, DMA_BIDIRECTIONAL);
+>> +		if (dma_mapping_error(&ofdev->dev, chan->pdest)) {
+>> +			__free_page(chan->pdest_page);
+>> +			__free_page(chan->qdest_page);
 >
-> Please use dmam_alloc_coherent() to fix this problem.
-I did just that in a future patch. Might be worthwhile to have this
-first for potential backport purposes.
+> put these to lable out
+Problem there is this is in an if statement. It's not as clean to handle
+here directly.
 >
 > Frank
 >
->>  drivers/dma/ppc4xx/adma.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> +			ret =3D -ENOMEM;
+>> +			goto out;
+>> +		}
+>>  		chan->qdest =3D dma_map_page(&ofdev->dev, chan->qdest_page, 0,
+>>  					   PAGE_SIZE, DMA_BIDIRECTIONAL);
+>> +		if (dma_mapping_error(&ofdev->dev, chan->qdest)) {
+>> +			dma_unmap_page(&ofdev->dev, chan->pdest,
+>> +				       PAGE_SIZE, DMA_BIDIRECTIONAL);
+>> +			__free_page(chan->pdest_page);
+>> +			__free_page(chan->qdest_page);
+>> +			ret =3D -ENOMEM;
+>> +			goto out;
+>> +		}
+>>  	}
 >>
->> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
->> index 279a431ccae3..d0863394c723 100644
->> --- a/drivers/dma/ppc4xx/adma.c
->> +++ b/drivers/dma/ppc4xx/adma.c
->> @@ -4212,7 +4212,7 @@ static int ppc440spe_adma_probe(struct platform_de=
-vice *ofdev)
->>  	else
->>  		iounmap(adev->dma_reg);
->>  err_regs_alloc:
->> -	dma_free_coherent(adev->dev, adev->pool_size,
->> +	dma_free_coherent(&ofdev->dev, adev->pool_size,
->>  			  adev->dma_desc_pool_virt,
->>  			  adev->dma_desc_pool);
->>  err_dma_alloc:
+>>  	ref =3D kmalloc_obj(*ref);
 >> --
 >> 2.55.0
 >>
