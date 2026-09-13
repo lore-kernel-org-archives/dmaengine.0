@@ -1,145 +1,153 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B913C33ADA7
-	for <dmaengine@vger.kernel.org>; Sun, 13 Sep 2026 04:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A604282F21
+	for <dmaengine@vger.kernel.org>; Sun, 13 Sep 2026 05:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789275015; cv=none; b=tQ6o0DoYa10osWXCzzAeyGFJP2INv0tTn8JUsQL8qvYUDKYArCisfWZj6AWdKYIaYagKOTEQ7ZwCSEwpp3rZ1h8B7H+uGn3LdY8Vi8EWfWzzhHfX0obYhINEvaS24+w3sdJH0Izy6rFugMB1NEZSB+InHaBdbFhzHUgNBnHRTJc=
+	t=1789275744; cv=none; b=kjI7GcoOUrRQFOvzz4lTa6H7uB3r4REDsbIed6RFF8JSiLv37snsa9A0Rt7x/sEZT2TrUfGq/K7mUgATgQtVsDrltyAtCjnhtmkJkHevLppWGduj29FJ3cKhdVc/QkSSTkn66adK6hmPClFeXzF+Oz4agmG1ar6MDLjeWOZu2a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789275015; c=relaxed/simple;
-	bh=jiBek9fBBVmga54FLaDSIboQGEfdZWeiLHQR6tbPb3M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gsjUp2VsXyN/+WShgiF2eGSfBG0JU1pET2uqTRB0/ZvTKUZQvQOn9xY1o93uvE+GPtRkWCUwf+am82g5T8myjCF8I23bvGfM43fXpkNTOHiNOTERiUWTPiMOXUCyuBLoGjkQnZGwpc8to7bn+jBdkJ40Xgi+VvDNxsXzRmNtI78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krRxM2B3; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789275744; c=relaxed/simple;
+	bh=GgHddRlY9bfRnJf2PT+1xEHCmPKnQ+lImlSZoOEUKBU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=keCitVROy85iFdcbqzozQ0KLEVwxBU9qyhQDN6Ae8S9PK9co9Dvdo436qbQ5pEcjlMQGiftWY6GQB2OBEP+6771uR+e9aGSxc4LonNnZGCQc3I/OJMhMDaUqzEjQbZRcZnqlw57lGElP2rCfV5l1f9PTQ9Iww+x7P0S4rUtESes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KcGvhxhi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krRxM2B3"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d8fb334e72so10921965ad.1
-        for <dmaengine@vger.kernel.org>; Sat, 12 Sep 2026 21:50:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789275013; x=1789879813; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=IcspykAp8b/TAa5Da1Y1EJbB5NATcWKA3cjbFzlW/ok=;
-        b=krRxM2B3d7h8nG+kxu9QxzOMG/updkTHgHw/0T1IeNsoHQDLUsmZENNnTBruGjO7JF
-         +DjgwdKTZv6HmD/QON8Cmb7OSPO1ad5F/bIO43j9/tyo5/q10Y+6EEo61RVdrQi4LoJr
-         dgIhZ5R5R6J7YdswZIcRKzG2Ke2FB+2p1nunApljq4yWlTRZnzetEukodBvDLrekdLPd
-         cHM/glQTAxMDIDp7GIyqUU4TLyfJTn6kxH0K1WG6+ba5hfXUEQzzL3F+4albtyUnwaQV
-         2mWziu0eH7nJzB6jS+xO42XeF2ad4hVvR1yg9m1nYZ2ohws/QgDUk6FctUjUPDYD1fag
-         cczw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789275013; x=1789879813;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=IcspykAp8b/TAa5Da1Y1EJbB5NATcWKA3cjbFzlW/ok=;
-        b=csnFhfMcV5yzYvNFvTz4uhC91U2uMQfqWv/i7eHT5F4UuvZL1H8KDy77h1RjoaMOVR
-         1ik4LXwg2mZdBU9DluxLPrhjtWtZF2oBi4/Tv6+ZWkrPpCPB8+LI96iNHJ7d5LuUhpFa
-         t+w/vpFMrHv3Q2tSQ2YU0EWDqyo/pi6FnpEz58eZE7KPFjlXDdY2J+EJ+yaRYeia9y5G
-         8OAe6kolRLcUlGW5MJxyClR00MVjwua/rCW3KSrag+A9j5QwzZG9q0tLiHpISwFtSTth
-         ReldKTyZqVYw0e7U6eAt6dr90qezvuXQjkR3mA3ZyIZ23Q1VfeDFd+8+ToRNYnn4lmmX
-         7Skw==
-X-Forwarded-Encrypted: i=1; AKwUvBwPrlb5SA7FXZTMUj07h+324uTFTZgFqFDXmSLBikecvepqUmDPFV3UU2Y66MTsbQhMw89BJC7a8S0=@vger.kernel.org
-X-Gm-Message-State: AFuF++nbMde2MNJRskvfYpqlc8iag81juml96CdrZUWFidyatrh4fVUZ
-	bR0eeRRlMwjPct4/DZov/HUTBS1NTkMoq03SuURzCNG7f3HCQXZgyBD/r2+EEdh1
-X-Gm-Gg: AYBFou3eZ1lP/nG40f2D+M+zQ8IAw30NSObU+EwAajPg3GDFt1Hs6FINI9bAgAyZWOc
-	SgvsnbRy1ktOhN6wk6qW5XlstK7jEYV0IwObdoalfsqeTpStH5c6ngPbCxI3JKKcby7Igm9MQ++
-	pY3ihye2ro7pzRkn5f5c1YQwP2r2ymoJ9P1CZYoVRDbnPHlDuT4v1eFUjy+X7JH71mOCwY7em5D
-	7chS8AaHzuNksvBby/PcV30mRjuxJjzdF7o8zKw8mdb4Dg7d1PSpKdR+UbumnIZ2EfJwJoGmJrh
-	nLJJjjmIpO7hyoLoQw54q/4vbxDcJfnyE6yP+TQwpOcATbXwvRoVBSONOayKxz/jdyFzZEogp+O
-	MmH5IxiCDy1kn8TsQWTmFjwHAWNVRU+pxOaZpTq+b8WmlGaKP2GXPhYdmAhA+7NJIXykEdDlRD3
-	2BcnFpqqPNzbCztq7OLoqlc97cGGlP+CNb7jzJ6zXcswcYiZMkxFqO5Go=
-X-Received: by 2002:a17:902:d549:b0:2db:56da:6a0b with SMTP id d9443c01a7336-2dd2a34638bmr217738655ad.13.1789275013002;
-        Sat, 12 Sep 2026 21:50:13 -0700 (PDT)
-Received: from lgs.. ([2001:250:5800:1002::de93])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ceb1c94sm29276815ad.31.2026.09.12.21.50.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Sep 2026 21:50:12 -0700 (PDT)
-From: Guangshuo Li <lgs201920130244@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Peng Ma <peng.ma@nxp.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Subject: [PATCH] dmaengine: fsl-dpaa2-qdma: fix ppriv memory leaks
-Date: Sun, 13 Sep 2026 12:50:01 +0800
-Message-ID: <20260913045001.1126563-1-lgs201920130244@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KcGvhxhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C621D1F000FF;
+	Sun, 13 Sep 2026 05:02:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789275743;
+	bh=W2Wm9sNAZtOdgx83/NRsPhmmg6eS5nBdztVNaim3z6g=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=KcGvhxhi2Asjifvk1f4QRBLEfFkzh3JAI7vHAbsVasdIiCp6DePBTZ0bDjVcVDlKg
+	 fWCqztiGxZzxRDi8M/e2vEggW1YHYG1/iNUOelmIvQigS4gMQMbKz8iQl3aENTzxHa
+	 hvJjhQ2YsprCVzT29CmWkktEJVPAUHQ/6git8g114p0H7G4ScGBK1gOao2ATGNokMo
+	 C7dDMS4W2Z6sZOoJi/4wcE8N2duKSZLQ+T55B0se6f/t9VkjbHbVEnrHSAAi25GMBe
+	 JQtxp58ObYbjsMTTbAKs7lQJy0K+AAq+BAij9vPS6aoZ69iTRUVW1Gr+hu2214flbR
+	 YuPGfDSYv6wyw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: fsl-dpaa2-qdma: fix ppriv memory leaks
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Guangshuo Li" <lgs201920130244@gmail.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20260913045001.1126563-1-lgs201920130244@gmail.com>
+References: <20260913045001.1126563-1-lgs201920130244@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 13 Sep 2026 05:02:22 +0000
+Message-Id: <20260913050222.C621D1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+s) to consider:
+
+Pre-existing issues:
+- [High] Double free of DMA pools (`fd_pool`, `fl_pool`, `sdd_pool`) during=
+ driver removal if channels were previously used.
+- [High] Incorrect teardown sequence in `dpaa2_qdma_remove()` destroys hard=
+ware state and channel resources before unregistering the DMA device.
+- [High] Missing `tasklet_kill()` leads to Use-After-Free on the tasklet st=
+ructures during driver removal.
+- [High] Race condition in `dpaa2_qdma_remove()` leading to Use-After-Free =
+in concurrent DPIO notifications.
+--
+
+commit 7bbc2b15c0a3c76af93c56c1e6c4036a65094cf2
+Author: Guangshuo Li <lgs201920130244@gmail.com>
+
+dmaengine: fsl-dpaa2-qdma: fix ppriv memory leaks
 
 dpaa2_qdma_setup() allocates priv->ppriv separately from priv, but the
-allocation is not released on all teardown paths.
+allocation is not released on all teardown paths. This commit frees
+priv->ppriv on setup failures and during driver removal.
 
-If dpdmai_get_rx_queue() or dpdmai_get_tx_queue() fails after
-priv->ppriv has been allocated, dpaa2_qdma_setup() returns through the
-error path without freeing it.
+> diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c b/drivers/dma/fsl-dp=
+aa2-qdma/dpaa2-qdma.c
+> index bf771251264d9..0f0fe0291a06f 100644
+> --- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
+> +++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
+[ ... ]
+> @@ -787,6 +790,7 @@ static void dpaa2_qdma_remove(struct fsl_mc_device *l=
+s_dev)
 
-The normal remove path has the same issue. dpaa2_qdma_remove() frees
-priv without first releasing priv->ppriv, losing the only reference to
-the separately allocated array.
+[Severity: High]
+This is a pre-existing issue, but is there a risk of a use-after-free
+in the DPIO hardware notification callback during unbind?
 
-Free priv->ppriv on setup failures that occur after its allocation and
-during normal driver removal before freeing priv.
+Earlier in dpaa2_qdma_remove(), the DPIO store memory is freed:
 
-This issue was found by manual code inspection.
+    dpaa2_dpmai_store_free(priv);
+    dpaa2_dpdmai_dpio_free(priv);
 
-Fixes: 7fdf9b05c73b ("dmaengine: fsl-dpaa2-qdma: Add NXP dpaa2 qDMA controller driver for Layerscape SoCs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
----
- drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+If a hardware notification triggers dpaa2_qdma_fqdan_cb() concurrently
+between these two calls, it will heavily access the freed ppriv->store
+memory. Should the DPIO service be deregistered before the memory it
+depends on is destroyed?
 
-diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-index bf771251264d..0f0fe0291a06 100644
---- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-+++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-@@ -365,7 +365,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
- 					  i, 0, &priv->rx_queue_attr[i]);
- 		if (err) {
- 			dev_err(dev, "dpdmai_get_rx_queue() failed\n");
--			goto exit;
-+			goto err_free_ppriv;
- 		}
- 		ppriv->rsp_fqid = priv->rx_queue_attr[i].fqid;
- 
-@@ -373,7 +373,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
- 					  i, 0, &priv->tx_queue_attr[i]);
- 		if (err) {
- 			dev_err(dev, "dpdmai_get_tx_queue() failed\n");
--			goto exit;
-+			goto err_free_ppriv;
- 		}
- 		ppriv->req_fqid = priv->tx_queue_attr[i].fqid;
- 		ppriv->prio = DPAA2_QDMA_DEFAULT_PRIORITY;
-@@ -382,6 +382,9 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
- 	}
- 
- 	return 0;
-+
-+err_free_ppriv:
-+	kfree(priv->ppriv);
- exit:
- 	dpdmai_close(priv->mc_io, 0, ls_dev->mc_handle);
- 	return err;
-@@ -787,6 +790,7 @@ static void dpaa2_qdma_remove(struct fsl_mc_device *ls_dev)
- 	dpaa2_dpdmai_free_channels(dpaa2_qdma);
- 
- 	dma_async_device_unregister(&dpaa2_qdma->dma_dev);
-+	kfree(priv->ppriv);
- 	kfree(priv);
- 	kfree(dpaa2_qdma);
- }
--- 
-2.43.0
+>  	dpaa2_dpdmai_free_channels(dpaa2_qdma);
 
+[Severity: High]
+This isn't a bug introduced by this patch, but is it possible for
+dpaa2_dpdmai_free_channels() to cause a double free of the DMA pools here?
+
+When a client releases a DMA channel, dpaa2_qdma_free_chan_resources()
+destroys the pools but leaves the pointers intact:
+
+drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c:dpaa2_qdma_free_chan_resources() {
+    ...
+    dma_pool_destroy(dpaa2_chan->fd_pool);
+    dma_pool_destroy(dpaa2_chan->fl_pool);
+    dma_pool_destroy(dpaa2_chan->sdd_pool);
+    ...
+}
+
+If the driver is later unbound, dpaa2_qdma_remove() unconditionally calls
+dpaa2_dpdmai_free_channels(), which iterates over the channels and calls
+dma_pool_destroy() on these same pointers again. Could this lead to a
+panic or memory corruption in the SLUB allocator?
+
+> =20
+>  	dma_async_device_unregister(&dpaa2_qdma->dma_dev);
+
+[Severity: High]
+This is a pre-existing issue, but does this teardown sequence destroy
+hardware state and channel resources while the device is still exposed to
+clients?
+
+Because dma_async_device_unregister() is called after
+dpaa2_dpdmai_free_channels(), the DMA device is still registered with the
+DMA core during hardware teardown. Couldn't concurrent clients still submit
+operations or request channels, attempting to access already-destroyed pools
+or freed portals?
+
+> +	kfree(priv->ppriv);
+>  	kfree(priv);
+>  	kfree(dpaa2_qdma);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does freeing dpaa2_qdma
+here cause a use-after-free for pending tasklets?
+
+The driver initializes a tasklet for each channel during setup:
+
+drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c:dpaa2_dpdmai_init_channels() {
+    ...
+    vchan_init(&dpaa2_chan->vchan, &dpaa2_qdma->dma_dev);
+    ...
+}
+
+During removal, kfree(dpaa2_qdma) frees the structure containing these
+channels and their embedded tasklets, but tasklet_kill() is never called.
+If a tasklet is scheduled when the module unbinds, could this lead to a
+use-after-free when the pending tasklet executes?
+
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260913045001.1126=
+563-1-lgs201920130244@gmail.com?part=3D1
