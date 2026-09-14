@@ -1,62 +1,64 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012053.outbound.protection.outlook.com [52.101.66.53])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011008.outbound.protection.outlook.com [40.107.130.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF7943D4F7;
-	Mon, 14 Sep 2026 15:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9210477294;
+	Mon, 14 Sep 2026 15:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789398771; cv=fail; b=f3K2E/aZXrZNqcjq20n/XiB9ao3Ld2/jNPW488F6pah7uTLGKYdh5yv74DtIUT9wi1MEO0mItMQsm3VGg0W14pAg/f6Ebi1eXxrVQ2IiTbW+bGxnHC5drzK2I2748DnoGSNHKhJUzjHsWwHGe8Xnqz2Tcb7nUTCIh6O1odbNGzA=
+	t=1789399384; cv=fail; b=fGYbLrHtEo5axQvYLjU+bZMyaJoQmu1eJoMsC/Ufq47QZKIvzMWNqXvHv1JKgrqY61RIbfjpwrbvGgz4MEc1zHIpZ/FyB7fiz8JvQlhDCsJXw4YK+LZanFb2uG/FodKij94pmxv5kaSrovB+2QNuyXswfMwshIUxDMmwraM58KE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789398771; c=relaxed/simple;
-	bh=93Kwl3+iOwTDkKREEzmjoHWdu6adrv58Z19JyagcEkw=;
+	s=arc-20240116; t=1789399384; c=relaxed/simple;
+	bh=umwoItAYkZVr2JaOEjDi7AsOAxERRmKoZr2rKqYS/hs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=boxf//0iUW6UqtkotqQ0wI2B2tjg02A9mRxP9VhfPucMNuPohPGvJ4UTh/87hUlmYQpBvh/qp+Cl7FAk58K6gmkdQK2aC79dhBV+MSaM5McVqI/1EkiyEtiLxNqutpFsoojp52oQn160SyQhJhHBNS7g9oQE6rBC1G7GhsxgvhE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=b/g7WfV8; arc=fail smtp.client-ip=52.101.66.53
+	 Content-Disposition:In-Reply-To:MIME-Version; b=G018Q5LZyrvE6nxXh1Ch1f1Bqq0dn6G6LzD1lZV9H8vgmdlLFKTbloq9zLC+xvM5vWpb2Q02q6cXvI36EwHtnV6Un7slkMI26mEEO9TwoJV7VNIWGtaJezbqaeIzTBWvEtFSh4lhNE6l5NLyhV6/hcU2P5PUSiSsmFWBv+R9fSc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NA6F4Vya; arc=fail smtp.client-ip=40.107.130.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="b/g7WfV8"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NA6F4Vya"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Kj4XCU1tZHbbf1GYgL7Q5LYyB8qaJhsG6aajWJ2vet29nd7UZgOf30c8SZYry1t7EwoCa8FvbEyK02uty6QNQiL1qJTQNpd/duADcWOMpn/ymPp094UGTYXCsVWO1XuntzObJXf020/DY7/d/FG19is2BEtZBp7+UTz87RmIgKxNH/iXOwETf5Dos2MZaP65OMYVzARfBTiYXIen5m3ISjdNL2D5vyqH3hz4kWLx2B7XMPRPScE/ZExYgXDvqJg7qhP1k32z0pYbCxpO1nEjzw0RFwARTgwbqUYiAE8w+3dSkjiocpVvd+uKQ1cICBYFAIz+0+LmYZaPtb7s7KVZAw==
+ b=NvstL4inkdNEKKB5hCFB2vmb0Iz/zrJBy3aJK1bVCPoq7sAKsqOx0v3j6ib6RZum+Ma5UsPqyE4bqE6C2xeDTVC/biLTo2DHsJgD0KvNCwE8sZuTB/v++F5k9fkU4xGEeG2mfyA2tc7Fqj3wbdQZbaWfNpFT2fd1luXvIZhC0r5eLRyUYcwzW9vFM0kZynGPfiBH6tQNZTzbOPSqvxKj6MqRAuUONtZ6S5Yswr1GFtJlhp5vkfIXPyFFV8hTjkU+/3tUMxcBl7d5At5W99fmeklTWD1XGdGrQ8kvDazPUvGdaAMOoxjc/l+6z0UP5t3eXYuWZf8DgT15/n5CvFDjRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KAfF85wqHVSwdawC+QtRXfkNA0B5eDKCG8CczImeeUw=;
- b=DZ/qoc1d2vE+MrwfBePBRSu7o+HrlUsIstoS2+q3/1byHr0h/asjnvh7Pv1ZMyUtLK3CmFtFgVu2gTb+0DvxnWVkn63qaY+zhjSEGGLZCEKGXUHjBMrnd18obh2jg+sRoeOo6Tz/NlS2okP+s5rcUUja5tHKE7KiPLm2yKWO0ksZwWQ045k+ETXcL9lsUK9WAeB0g19GcnUWhy7BZyvwvj/XTuGnpBfY7zfbMLz8tHUZH74Cbrq/uimkQvRl2ggWXtqMuCl/7SB6KgUvAeJNAb33xUy+MTp3SJ+c2Gg6TaTs4Vwq1Tou8t1vWne5ofb5RLReihkEv7ptEe/Jotw0wQ==
+ bh=y5eS+xK9+YODs+D6P9HmjXSz3LXh4E+fZU+5jnLw4Hc=;
+ b=APlDdrfFMVydqd2SPcewPhM+5rrJ43/+8NKKqiKaQtX/COUelv3f4oPpeZj4EvdIORjn4PSEknTaXJZP9PzJDNfoYrBjxaneFmWol4mBTkxlWsdPrQwIo3LMkbot916/k+2E+wc7mgp0/u2tRun11xtsleED2pUdRKoc3VUERg3GY+q7ikPTdA7zNzIUJWeXti00RAn45ulLS2/Vapfdy1yilinp09w3J8IF1ZD/IHbIDpqLZei0DMAOx5K1p4rFnJrH4wxwQ/XS6nhNGYv9fwTQuCVFXwQ6Eu5efD5JfA8+4zA+FGRIJqcaXLUOsON5dmQdfaQ3nzrYd/fOodxpZA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KAfF85wqHVSwdawC+QtRXfkNA0B5eDKCG8CczImeeUw=;
- b=b/g7WfV8qQDbq4FNZBU1Q41IB5DmVpV458pCZkq/lm0cSuuWYWIT5ozONa7/Z2CWRsAsL6JZpGSfIhf8fzMNpNQSP1A8TS255ypxqwSTutfqcgackd12QIsnGYelrQ2Kkg3suqakFdE/yWeY7urfdo9hTv0yGQdwf8C2CMJQA0bs0UhYWafjKl7SCmkHuhy7Jo34DnuBSJBEWV5PeYiqQna/Yoewm2xIoYFs4j2G9KE2nSEHd3sD3DvnMCiWhvLv3MZ664/GMF6g6hzt6Vs5USFQPqrgBJI0CoPuXUvd58MFUQ6EA9bEuHPlsw+tqGwt+F1uYQncZorIEhnGF5aa5A==
+ bh=y5eS+xK9+YODs+D6P9HmjXSz3LXh4E+fZU+5jnLw4Hc=;
+ b=NA6F4VyauloB3Xe6Wxn0uK6f5IMZG8F+O9qJFAA4moJAv3SQ8dUhaZSADkupkD43HvwRH5h8Iwpjpq5lq8Go6PsmUZeALZj7RySUKUp5dNj7kopXtbESO3Wb25ZvQdP/PVBI09xfxZr8w2HdzTB/eRVo8mgL9mlkGU5sX4OC65rzBnlw8k6TRuXa/rTWM5ju8gYzqptuHIbGSKnIWiihHOrKpklKs8Cgg0ORPDZAJPORiwQsdzYt4mxmhXkW/UWbbBJL1OH4EcUAebhUgCX7glcgmL0mH3Co0ofXPWGt+fJzmHNBBboeei/Laxna7k/DmKDanxUvgqCZXBFQDDisbA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by GVXPR04MB11691.eurprd04.prod.outlook.com (2603:10a6:150:2e5::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Mon, 14 Sep
- 2026 15:12:45 +0000
+ 2026 15:22:58 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.007; Mon, 14 Sep 2026
- 15:12:45 +0000
-Date: Mon, 14 Sep 2026 10:12:36 -0500
+ 15:22:58 +0000
+Date: Mon, 14 Sep 2026 10:22:49 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Guangshuo Li <lgs201920130244@gmail.com>
+To: Koichiro Den <den@valinux.co.jp>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Kees Cook <kees@kernel.org>, Peng Ma <peng.ma@nxp.com>,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: fsl-dpaa2-qdma: fix ppriv memory leaks
-Message-ID: <aqgO5PfShs5FG--f@SMW015318>
-References: <20260913045001.1126563-1-lgs201920130244@gmail.com>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Devendra K Verma <devverma@amd.com>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] dmaengine: dw-edma: Configure remote interrupt
+ routing
+Message-ID: <aqgRSbIFDuMOKkzF@SMW015318>
+References: <20260912174023.1227397-1-den@valinux.co.jp>
+ <20260912174023.1227397-3-den@valinux.co.jp>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260913045001.1126563-1-lgs201920130244@gmail.com>
-X-ClientProxiedBy: CY8P220CA0041.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:930:47::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260912174023.1227397-3-den@valinux.co.jp>
+X-ClientProxiedBy: PH8PR07CA0022.namprd07.prod.outlook.com
+ (2603:10b6:510:2cd::21) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,128 +68,303 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GVXPR04MB11691:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27a99f59-9eeb-4c1f-0c12-08df1272a14e
+X-MS-Office365-Filtering-Correlation-Id: d3f19dd1-3af2-45ac-a3e7-08df12740ec5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|376014|19092799006|1800799024|22082099003|18002099003|10067099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|23010399003|366016|376014|19092799006|1800799024|6133799003|22082099003|18002099003|4143699003|10067099003|56012099006|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	Lp6FSlVW+Vx7N5OlfZREK4tDsl8NZASAkOfNzqkmk6UjdbvDm3XSO5zYj/vRCVWljhViCDh5QITIPbEoKUViPbObOC7NMBCx63QdQd76XFtCU/6egdMX8NeU9SJkEtjdcv9od0EgNFyV9jMMzuIWzPe6R/788yzIven74TwaSmxF2w2adPaN/RqxFpoVADelI4LFkhlZWxX6SuG7ghD6wvlY4XFaU/SnzRmeLi1C3T44hj230Yr3D52zvwg2mxh96bhGZlBNnlNJNYbBRYjD0fqJDPPbB2GBLGcHU7+dxz2cROXA3FvMl109/UNX6jWSqBVmjuh+rWBWaLqN9Xm83dVnHLgzbivxoBGDbFiyQSfV2CecbkBys18UzJRrXemTx/6+DlUwyvvyotOWZZrOF/UzwW1btb4oe+UMSI6Ve3sedIuxv2xFw42yruUbNYNoclUU8cALeKRHHwSAB5CCX7AtJMgyzA1HYr3ijsD0rvkPL4pSVDzrg/NCzrkOHTTHNGtxOo3OMQP4oKYzudoV9g2vS0/5FY4a97tc/LSdVdlS2LFF9Y/ylqhM+fuaWbxynqXqBnndBqKfUxUthFf6Bgo6UMr7U1Efn7SKx8JgodZ65zc5uR/+M5Pjq2HX8MN6vX2h/GCz77/f5lculF9bOt8IjpC/Q7Z9TL+yRfmU6yg=
+	HRXhB5irwDT3qqBw/yFeqwuiEhodB81aD9sJ5I5HOheYhxoYWZdLc8i5l/VI8L617nHupR1Oe/eL3dwYCRQ1Bbkv3rY6qqexkscgmbR53ZX0m5ElEP0675Shl8yX3fMX9b9i8sWIYy+XSIwgeSpID5pGXl3Sgr+4D0tVm/tKtiZzBONU5CgdAhg8BvbZ3X37scGdRJalgXm7FNpzrD1Gb+Lk17ojdoGevEfKDA5GsvPq4XTJDWCHH3omx5BNhn3nLD9jzRkPs8PwNzs2mGBhrpMXihfV/PYWi8suGLvPY/73b94I5v0mLNDnRY6l7Y1yW7TE5GTG0v73TI4zO+TD0jJHPrHzVhNF9GLYQMAQ0x/nIP7uqg1RaMt+P5kSwYsY6sOHTHkYJfhZe6w2bIZCcMoepL0vGYEVSnZiNczZIDMdMHlrMPLeC9IEbMwP9wO+ga+DGuPSI9WUcNM38nPoxgLY6Sm0zMl63dMHITwyYTuyxZ/gFTPJbRr4dLMTLE4fJDWPaMG6eTr5xAm5LF2jnEyeNT2l5WlOJWamPNkDB/ZMkqT8RPVw0JVCw0F7d5bi4Lza+0+1bOQPP44QqLHPOaqmvY86t9iEO4rNz2WSA8NFTFqWpLHUYvwuLWPt1YjvAg7gDiutth24SdglccZejsjcR5hfAQfug9LqfJpx0JM=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(19092799006)(1800799024)(22082099003)(18002099003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(19092799006)(1800799024)(6133799003)(22082099003)(18002099003)(4143699003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?dC1LUc82citwxbA2anF/vuTGBR/K19voKCjrtthGbtMZFcgtC//lbfuIGIiH?=
- =?us-ascii?Q?2FbVHzUV3mNlD+JiOh+Yd3h5xdm0Hv37p+EDG1Yy09+B1jinengWpzqOoTL+?=
- =?us-ascii?Q?r7Wt9/zTrVPcXnOKzY2kwUURQGJm/6ex8/j8KghUH7hd4aYHkcDFMFrkGiAs?=
- =?us-ascii?Q?OWQiXwYE7oJ+PKDWn39JDy4atXtoZfjt+rNmJeR7vQdMltfy/i/TaIdJOwtB?=
- =?us-ascii?Q?gT2bXJecUtORH0LuWZxYK3Vnah+yJwnTDlowtJOKHs4ebKg6V0xXCO9syFLu?=
- =?us-ascii?Q?XyAYjK4OhHrODaLyPdhCmk6E2iPCMP9zlvgRG9kmGefUc9YiZ0cfJ3l5AoBe?=
- =?us-ascii?Q?8QdYOr7bjwS9iRZGaRS6hQPepvPaYfcA/jrFWi7ZT/XH4WE3Wd+c2MA9T7zj?=
- =?us-ascii?Q?/xVBlk8cwWk3GbEP0eXZjupednfkC2g7cC/S/wV/d8unv9k+vO5L9U3dFro+?=
- =?us-ascii?Q?z+w/S34py36Ar+pdLqfzXVysh5efPKnASrjMkyry47DAiRuCXhQurPt0sCIn?=
- =?us-ascii?Q?ZuWKmQgG6lN5UveOoxvPZ2mtlH3i+AXpPiMEfDYXEkBtdGQzdFgx+VZEbGiE?=
- =?us-ascii?Q?8kivJQ04+5gPmXDDK7CLYLICsrSYc8eeED4NxT+h6PY2w0btmbn03P6ufHLs?=
- =?us-ascii?Q?aTtZ8uWe2wwUQZwXQukyRu5ExYQ5E9PPJJ++wEKAyt1c1JcTxeUBiKWWJNzl?=
- =?us-ascii?Q?NH3kq4AUYiKSSRt75AygDDljL7qoS0Ke/8LB6fnbAz+K2y1OIUnUEZpPvoA3?=
- =?us-ascii?Q?uNGs2EkxB3+XnJul9MFGUHrQGAMQGHOV1I/0pCS4Tt1C4hjq8c2sz0XFl11b?=
- =?us-ascii?Q?p225KuFKTAD/AjRACSF7KDgU9RkaZrOrraSb/EJA2D0UDR+g2Kno7kYFlPLI?=
- =?us-ascii?Q?Y5vGOpGseUFkDGhGZ1Nfdj4pgwcssK/ee1vB4GZfiwZfBvvQOZtq2jAmJTPS?=
- =?us-ascii?Q?wbraY15fnLfv6itfpWI3c5Ot+peFEYBALHQKk0pTyFLKr6og77NzTgj2G1j+?=
- =?us-ascii?Q?RQPMuYJDTITM0wtmFVXKhJlrl44vEVbM6Yd8aAQDdy556iHP0THngtRuxKEr?=
- =?us-ascii?Q?i2C2d2Wf687fWFgLF19kO+rfAN1M7+hS3izPTg5g/7VANAo9qxIgUIuNQnfi?=
- =?us-ascii?Q?NQrB65GcDpR0EE/9tpoPquq4LgJF66CFMHT4Moap/hc0Kzb6dBvCeVEgTQSm?=
- =?us-ascii?Q?eEfXyNu0+lq38C1QzSFskLhDc9xQN1+FZpp7uIwMbz2zLsXcQqjISYi+ScH1?=
- =?us-ascii?Q?0Dgyisq3ZC51Ye5s3rCcX3GlhAgtNpvymDUI16oidkyiiSWdnIhv4z2oFqU6?=
- =?us-ascii?Q?9PQLkjftS7ricC6J4ldmzWkTQqRxlrbA1gfZfUomJHbbRaui7aVi/u9dyyEs?=
- =?us-ascii?Q?VcZ5XDZQ/P2LG8Rb1Pys5SHWpravdfB38zG4rQ0jSdLnbVliMaQGGwOZPYXH?=
- =?us-ascii?Q?8/WlHqKW33lBq0UucygTC/Hqb5+do9v4JMQGqnnCMO/qbox8YBRVa4etGdhq?=
- =?us-ascii?Q?J3rpWvfTj7lQn3B51k8fB2rCx1E8Kwk+/iVYBhMiE/XW/m9ynckY5pwAovIN?=
- =?us-ascii?Q?lG9i8UYf0nU1l7G1yUzHf81bWrgBN4OdPYBWlOx9CqEk/saW2aq6ot42p0u+?=
- =?us-ascii?Q?2rEdVYSSwhKnR1yNvBeVKtp8S3/VErJZxzMUfzesPNQ9HcXXHbZXZqhqljKM?=
- =?us-ascii?Q?DExUHNKw5RNB5AodyLSBlZXYr03JV0wz1cd2F6J6iS8K8pyoDHpoq2v1Cyq+?=
- =?us-ascii?Q?14BENIkYSBXHf1O/dA2CPurrbxR58F+SKuLx04V9iQiTuytXPQkk?=
+	=?us-ascii?Q?6UoKBKlaKQdiKhcOBwKfaT+av8Q1XZWivkVr0FxibsWDqmtVONIoPJwbvAWp?=
+ =?us-ascii?Q?u6agfeL2VxZb7+rCIl6+l8HNf7NDA9zxvDSobftLRd5MS+BREtzhDs0wDtq9?=
+ =?us-ascii?Q?g15D11SaUTy+YiwPHPAhaVkau5mDw0i6hF8TV1vakSyqDpD0/HapVjlYzc1P?=
+ =?us-ascii?Q?ahdDrzz/5JA6q8VEH6zcjpwa5iZho4SMKYBog8tIHxXxgLdyeTuNWvFGR+2d?=
+ =?us-ascii?Q?axYqXNfUTjoge+cAcSpuwtTWXCWg9AmtyttrKW2Se3bre+gw3g5oa3//W6TQ?=
+ =?us-ascii?Q?dUi2yCMeEaBh5ml8FkjwSVVmfiDq1UeQ3sxKtiJ6HSeH8B1mwoq0VWejoHKz?=
+ =?us-ascii?Q?LopsdCNwtFAjxcTALkRLWUcLRxw6xgM6t3vuFZZD9xOZ5b/i4ixo1go/Sycg?=
+ =?us-ascii?Q?N0fHQYkuWL1NaY/9rNrLjXNcxL5cZnCHwQinIWVpEUoSr8Ec61O7iE+RWWKj?=
+ =?us-ascii?Q?QJ8gtFe1SRND10jCFG8B4WrFZl3iJ7ubN3W4eWM54/Cl7BafnRtaK4ViP02X?=
+ =?us-ascii?Q?9lwm8FvYhd5gvDDBV3Rz9GwZwQLgpIMAPktZvdoR9BRMLHhEXMk+fNMNOyR+?=
+ =?us-ascii?Q?9MeAuQAOMRvlZjUn2xz2pByb5mdCMA92ZxWuvAQ3ILNrXD1mw66JYLwrAjaR?=
+ =?us-ascii?Q?6BFdPoDX0reIqir9kYkpSPAfvoR/XTUy82VwuGJXRx33meUf34Ifv3mavl66?=
+ =?us-ascii?Q?41ApFaiei1omIs6/o5YPZZa9qHR4XYYSUlhe9nvsXGVAsDT0Uw7PtmO+pf7U?=
+ =?us-ascii?Q?9Gq6EbdZeNsLt86D81C+zNw0JHhKm9Eztf8Coq6/oPEIvCegg82kRvlG95pY?=
+ =?us-ascii?Q?nYxXA6TYX5xa/6XRfffrxmCvcK3VQBIHAjjKQFPZ0747NwB5QlhkSsyJx0Rw?=
+ =?us-ascii?Q?0TXWvHh1FtGA3MVK2ex1/IIqq+DKdZEogAwdtbiUUUQa4phYSKssj3qP1Ibn?=
+ =?us-ascii?Q?cX0pyKpTkLJy/tdFKXrym4JTpGee1e67RhL5a2StP8DXDU/p4VVSs3DTDl4z?=
+ =?us-ascii?Q?53aI1L5LVTy5BA0CHnB1wriwldunBKiG67AZpqdYWIk7GZcxPb4Y1lEZ5li+?=
+ =?us-ascii?Q?Ct5IGQLLAs25PANeG4MTv1a1Tlg5kgIhJ5OrKQXVkF0icfQYAuzXjq6vuxke?=
+ =?us-ascii?Q?HmdTM+jPuX5Iq0SoK63QTzzXmTLepQwEgauEtGWD9jFzKVPjdGMpDaQZZaSC?=
+ =?us-ascii?Q?nZ69v9PMWmJ+qiNSRDspSY8Q3FjMZ5EHvabxpiFymYcXdi6LQ5bsELvjlBOh?=
+ =?us-ascii?Q?87VTCK0RhOA3/JmYu+J1WTHpenM7Jqz17Hy0iV0hrQsrs3Tfl42o58//jD1S?=
+ =?us-ascii?Q?EXOTtjUnJtnbdpGaQEpVqk6LX+CfRS9FgNW1A4rklKFVSYOZ8eu2XS71SzGq?=
+ =?us-ascii?Q?ZJNbWh149to0JvFnY8KwdGnwRTX3GFzW8TTRKPwpKJXoomZQtZbLmdC4OApg?=
+ =?us-ascii?Q?+AS+kcQRZmHnMgcnrqYh2RhcpqKV/Ip1cDST/Xa+pBxHdgdMJT97dnhEDgXx?=
+ =?us-ascii?Q?Tm5MgYUpPTHcHCFfFxdRVVNMeqSTcPi48i9RlupQTzaCVzLFhOtK/EDRhfjy?=
+ =?us-ascii?Q?uFrfhrqZ0qUaIQ7AXMhJmiDag3TiV3W2iUxD3oEDJo0H3Acn/gw+dVD8ZJGZ?=
+ =?us-ascii?Q?zIoYoz1IYtDN+BXIYKMGdbhW65Zyz/CAzSwJFqSHcwIfAFWZHZGnH8xpSycd?=
+ =?us-ascii?Q?g6OHrqaoJas65PIvFAjBoIGhkQ91i89R78jMyL/xtDw9UXtJuwuC3oOp2+H4?=
+ =?us-ascii?Q?3s/l8xQoe+m2+FGR8o2vZpPxYJE0upCi5tgk0pkZkHapRszEFr5o?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27a99f59-9eeb-4c1f-0c12-08df1272a14e
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3f19dd1-3af2-45ac-a3e7-08df12740ec5
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 15:12:45.4500
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Sep 2026 15:22:58.7118
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: foylxteNJQrww79NYd6DMLiWfsxNXXNymZVmfD4/cY7tsyGaYA7ZePdd+VU0iZ94/2CU9mAj05g+9FofWFJotfjOmJkoVRISJ0ZU2jxJP74wxSZnsxUxs9iNyN9h2Rvd
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9Xgont3u6aD3WTlX4tOh/xDJmv+y6KkOzN5ghqSCTnFMqyILSo3dbMTRPTXpbikwcROgW933rRZSI2w9RMdwZWQZNFYIeXMc7KD41CVGGiRERzb9F5qGkuRLmAT++HT8
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB11691
 
-On Sun, Sep 13, 2026 at 12:50:01PM +0800, Guangshuo Li wrote:
-> dpaa2_qdma_setup() allocates priv->ppriv separately from priv, but the
-> allocation is not released on all teardown paths.
+On Sun, Sep 13, 2026 at 02:40:22AM +0900, Koichiro Den wrote:
+> An endpoint function can reserve an endpoint-local channel while the RC
+> programs it through an exposed register window. Such a channel must route
+> interrupts remotely and ignore them on the endpoint.
 >
-> If dpdmai_get_rx_queue() or dpdmai_get_tx_queue() fails after
-> priv->ppriv has been allocated, dpaa2_qdma_setup() returns through the
-> error path without freeing it.
+> Use dma_slave_config to set per-channel interrupt routing on idle channels
+> of a local eDMA or HDMA instance. Releasing a remote-routed channel
+> quiesces the hardware and drains its local IRQ before restoring default
+> routing.
 >
-> The normal remove path has the same issue. dpaa2_qdma_remove() frees
-> priv without first releasing priv->ppriv, losing the only reference to
-> the separately allocated array.
+> The eDMA quiesce may stop a complete direction. The caller must own every
+> channel in that direction and stop remote programming first.
 >
-> Free priv->ppriv on setup failures that occur after its allocation and
-> during normal driver removal before freeing priv.
->
-> This issue was found by manual code inspection.
->
-> Fixes: 7fdf9b05c73b ("dmaengine: fsl-dpaa2-qdma: Add NXP dpaa2 qDMA controller driver for Layerscape SoCs")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+> Suggested-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Koichiro Den <den@valinux.co.jp>
 > ---
+> Changes in v4:
+>   - Drop unnecessary READ_ONCE()/WRITE_ONCE() for irq_mode. (Frank)
+>   - Allow repeated dmaengine_slave_config() calls on idle channels
+>     when the IRQ mode is unchanged. (Sashiko)
+>   - Simplify IRQ mode handling, assuming the channel has no pending
+>     interrupt status when its mode changes. Treat racing reads by
+>     shared IRQ handlers and same-value stores on release as harmless.
+>   - Support native HDMA.
+>
+>  drivers/dma/dw-edma/dw-edma-core.c | 136 ++++++++++++++++++++++-------
+>  include/linux/dma/edma.h           |  21 +++++
+>  2 files changed, 125 insertions(+), 32 deletions(-)
+>
+> diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> index a678c70a78fe..c978da30bac5 100644
+> --- a/drivers/dma/dw-edma/dw-edma-core.c
+> +++ b/drivers/dma/dw-edma/dw-edma-core.c
+> @@ -177,48 +177,76 @@ dw_edma_get_default_irq_mode(struct dw_edma_chan *chan)
+>  						  DW_EDMA_CH_IRQ_REMOTE;
+>  }
+>
+> +static int dw_edma_device_config_irq_mode(struct dw_edma_chan *chan,
+> +					  enum dw_edma_ch_irq_mode mode)
+> +{
+> +	if (!(chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL) ||
+> +	    (mode != DW_EDMA_CH_IRQ_LOCAL && mode != DW_EDMA_CH_IRQ_REMOTE))
+> +		return -EINVAL;
+> +
+> +	guard(spinlock_irqsave)(&chan->vc.lock);
+> +
+> +	if (chan->status != EDMA_ST_IDLE || chan->request != EDMA_REQ_NONE)
+> +		return -EBUSY;
+> +
+> +	/* IRQ routing cannot change after the initial configuration. */
+> +	if (chan->irq_mode == mode)
+> +		return 0;
+> +
+> +	if (chan->configured)
+> +		return -EBUSY;
+> +
+> +	chan->irq_mode = mode;
+> +
+> +	return 0;
+> +}
+> +
+>  static int dw_edma_device_config(struct dma_chan *dchan,
+>  				 struct dma_slave_config *config)
+>  {
+> +	const struct dw_edma_chan_config *dw_config = config->peripheral_config;
+>  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> -	bool cfg_non_ll;
+> -	int non_ll = 0;
+> -
+> -	chan->non_ll = false;
+> -	if (chan->dw->chip->mf == EDMA_MF_HDMA_NATIVE) {
+> -		if (config->peripheral_config &&
+> -		    config->peripheral_size != sizeof(int)) {
+> -			dev_err(dchan->device->dev,
+> -				"config param peripheral size mismatch\n");
+> +	bool non_ll = false;
+> +	u32 flags = 0;
+> +	int ret;
+> +
+> +	if (dw_config) {
+> +		if (config->peripheral_size != sizeof(*dw_config) ||
+> +		    dw_config->flags & ~(DW_EDMA_CH_CONFIG_NON_LL |
+> +					 DW_EDMA_CH_CONFIG_IRQ_MODE))
+>  			return -EINVAL;
+> -		}
+> +		flags = dw_config->flags;
+> +	}
+>
+> -		/*
+> -		 * When there is no valid LLP base address available then the
+> -		 * default DMA ops will use the non-LL mode.
+> -		 *
+> -		 * Cases where LL mode is enabled and client wants to use the
+> -		 * non-LL mode then also client can do so via providing the
+> -		 * peripheral_config param.
+> -		 */
+> -		cfg_non_ll = chan->dw->chip->cfg_non_ll;
+> -		if (config->peripheral_config) {
+> -			non_ll = *(int *)config->peripheral_config;
+> +	/*
+> +	 * When there is no valid LLP base address available then the
+> +	 * default DMA ops will use the non-LL mode.
+> +	 *
+> +	 * When LL mode is the default, clients can request non-LL mode
+> +	 * through DW_EDMA_CH_CONFIG_NON_LL.
+> +	 */
+> +	non_ll = chan->dw->chip->mf == EDMA_MF_HDMA_NATIVE &&
+> +		 chan->dw->chip->cfg_non_ll;
+>
+> -			if (cfg_non_ll && !non_ll) {
+> -				dev_err(dchan->device->dev, "invalid configuration\n");
+> -				return -EINVAL;
+> -			}
+> +	if (flags & DW_EDMA_CH_CONFIG_NON_LL) {
+> +		if (chan->dw->chip->mf != EDMA_MF_HDMA_NATIVE)
+> +			return -EINVAL;
+> +
+> +		if (chan->dw->chip->cfg_non_ll && !dw_config->non_ll) {
+> +			dev_err(dchan->device->dev, "invalid configuration\n");
+> +			return -EINVAL;
+>  		}
+>
+> -		if (cfg_non_ll || non_ll)
+> -			chan->non_ll = true;
+> -	} else if (config->peripheral_config) {
+> -		dev_err(dchan->device->dev,
+> -			"peripheral config param applicable only for HDMA\n");
+> -		return -EINVAL;
+> +		non_ll = dw_config->non_ll;
+> +	}
+> +
+> +	if (flags & DW_EDMA_CH_CONFIG_IRQ_MODE) {
+> +		ret = dw_edma_device_config_irq_mode(chan, dw_config->irq_mode);
+> +		if (ret)
+> +			return ret;
+>  	}
+>
+> +	chan->non_ll = non_ll;
+>  	memcpy(&chan->config, config, sizeof(*config));
+>  	chan->configured = true;
+>
+> @@ -890,11 +918,53 @@ static void dw_edma_wait_termination(struct dma_chan *dchan)
+>  		 "timeout waiting for channel termination\n");
+>  }
+>
+> +static void dw_edma_synchronize_chan_irq(struct dw_edma_chan *chan)
+> +{
+> +	struct dw_edma *dw = chan->dw;
+> +	unsigned long *mask;
+> +	int i;
+> +
+> +	/*
+> +	 * A shared handler may retain this channel's status across quiesce.
+> +	 * With nr_irqs == 1, it scans both directions even if routing and
+> +	 * delegation are direction-wide. Drain it before allowing a routing change.
+> +	 */
+> +	for (i = 0; i < dw->nr_irqs; i++) {
+> +		mask = chan->dir == EDMA_DIR_WRITE ? dw->irq[i].wr_mask :
+> +						     dw->irq[i].rd_mask;
+> +		if (!test_bit(chan->id, mask))
+> +			continue;
+> +
+> +		synchronize_irq(dw->chip->ops->irq_vector(dw->chip->dev, i));
+> +		return;
+> +	}
+> +}
+> +
+>  static void dw_edma_device_synchronize(struct dma_chan *dchan)
+>  {
+>  	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+> +	bool remote;
+> +
+> +	/*
+> +	 * irq_mode is fixed after initial configuration. The free path
+> +	 * restores it only after synchronization.
+> +	 */
+> +	remote = chan->dw->chip->flags & DW_EDMA_CHIP_LOCAL &&
+> +		 chan->irq_mode == DW_EDMA_CH_IRQ_REMOTE;
+> +
+> +	/*
+> +	 * Peer-driven transfers bypass local descriptor tracking, so quiesce
+> +	 * the hardware explicitly.
+> +	 */
+> +	if (remote && dw_edma_core_ch_quiesce(chan))
+> +		dev_warn(chan->dw->chip->dev,
+> +			 "failed to quiesce remote-routed %s channel %u\n",
+> +			 chan->dir == EDMA_DIR_WRITE ? "write" : "read",
+> +			 chan->id);
+>
+>  	dw_edma_wait_termination(dchan);
+> +	if (remote)
+> +		dw_edma_synchronize_chan_irq(chan);
+>  	cancel_work_sync(&chan->irq_work);
+>  	atomic_set(&chan->irq_pending, 0);
+>  	vchan_synchronize(&chan->vc);
+> @@ -907,8 +977,10 @@ static void dw_edma_free_chan_resources(struct dma_chan *dchan)
+>  	dw_edma_device_terminate_all(dchan);
+>  	dw_edma_device_synchronize(dchan);
+>
+> -	scoped_guard(spinlock_irqsave, &chan->vc.lock)
+> +	scoped_guard(spinlock_irqsave, &chan->vc.lock) {
+>  		chan->configured = false;
+> +		chan->irq_mode = dw_edma_get_default_irq_mode(chan);
+> +	}
+>
+>  	vchan_free_chan_resources(&chan->vc);
+>  }
+> diff --git a/include/linux/dma/edma.h b/include/linux/dma/edma.h
+> index 3c8e2ef9dee0..43831fa57357 100644
+> --- a/include/linux/dma/edma.h
+> +++ b/include/linux/dma/edma.h
+> @@ -101,6 +101,27 @@ enum dw_edma_ch_irq_mode {
+>  	DW_EDMA_CH_IRQ_REMOTE,
+>  };
+>
+> +#define DW_EDMA_CH_CONFIG_NON_LL	BIT(0)
+> +#define DW_EDMA_CH_CONFIG_IRQ_MODE	BIT(1)
+> +
+> +/**
+> + * struct dw_edma_chan_config - dw-edma channel configuration
+> + * @flags: fields selected by DW_EDMA_CH_CONFIG_*
+> + * @non_ll: use HDMA non-linked-list mode
+> + * @irq_mode: interrupt routing mode
+> + *
+> + * Pass this structure through dma_slave_config.peripheral_config. Before
+> + * synchronizing a remote-routed channel, the client must stop remote
+> + * programming and own every channel affected by the hardware quiesce: the
+> + * entire direction for eDMA-compatible layouts, or the individual channel for
+> + * native HDMA.
+> + */
+> +struct dw_edma_chan_config {
+> +	u32 flags;
+> +	bool non_ll;
+> +	enum dw_edma_ch_irq_mode irq_mode;
+> +};
+> +
 
-qdma_setup() is called by probe() only use devm_ allocate function
+Do you have any user in kernel tree use non_ll?
 
 Frank
 
->  drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-> index bf771251264d..0f0fe0291a06 100644
-> --- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-> +++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-> @@ -365,7 +365,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
->  					  i, 0, &priv->rx_queue_attr[i]);
->  		if (err) {
->  			dev_err(dev, "dpdmai_get_rx_queue() failed\n");
-> -			goto exit;
-> +			goto err_free_ppriv;
->  		}
->  		ppriv->rsp_fqid = priv->rx_queue_attr[i].fqid;
->
-> @@ -373,7 +373,7 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
->  					  i, 0, &priv->tx_queue_attr[i]);
->  		if (err) {
->  			dev_err(dev, "dpdmai_get_tx_queue() failed\n");
-> -			goto exit;
-> +			goto err_free_ppriv;
->  		}
->  		ppriv->req_fqid = priv->tx_queue_attr[i].fqid;
->  		ppriv->prio = DPAA2_QDMA_DEFAULT_PRIORITY;
-> @@ -382,6 +382,9 @@ static int __cold dpaa2_qdma_setup(struct fsl_mc_device *ls_dev)
->  	}
->
->  	return 0;
-> +
-> +err_free_ppriv:
-> +	kfree(priv->ppriv);
->  exit:
->  	dpdmai_close(priv->mc_io, 0, ls_dev->mc_handle);
->  	return err;
-> @@ -787,6 +790,7 @@ static void dpaa2_qdma_remove(struct fsl_mc_device *ls_dev)
->  	dpaa2_dpdmai_free_channels(dpaa2_qdma);
->
->  	dma_async_device_unregister(&dpaa2_qdma->dma_dev);
-> +	kfree(priv->ppriv);
->  	kfree(priv);
->  	kfree(dpaa2_qdma);
->  }
+>  /**
+>   * struct dw_edma_chip - representation of DesignWare eDMA controller hardware
+>   * @dev:		 struct device of the eDMA controller
 > --
-> 2.43.0
+> 2.51.0
 >
