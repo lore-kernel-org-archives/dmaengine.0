@@ -1,127 +1,201 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4431E5B88;
-	Mon, 14 Sep 2026 08:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E603D813E;
+	Mon, 14 Sep 2026 11:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789373538; cv=none; b=osWmjWIFYb71SwzgtKBecNJAxJLIROyz2COvGxYHwL9Dcc2x4FsqqQh6zpe/Me2ZrDoGc96bwIHhp/09bZBWBd98ppCDb4rSiaoFZgD6RVw1o/craNId+5nTtN4awTGzCc4OkyRFwWr1LU2XlxswEN0e9LmDbjZDwjufVnhRCwY=
+	t=1789386878; cv=none; b=sNfwoqUXTkjeEUQTN2/hlucWSJ5qyg75lHeV4TAeUkRJT5gw7gYsVNmWma5IPIjsG76bYH9HMr0aqiQ8rjsb9wqO6S04e6o3edH3VfKJ5C9Hqt73VG11gdNM/qzelY/t+CtfWbOJ9v1v0L7xOHLs2AXbiHZMVVSUgPqyUH5n00Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789373538; c=relaxed/simple;
-	bh=1OQgv3CLoOAvRHFXo8obITZm5ME7dKxVV+fENPflSNs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M5wjr4FBrQWO3QIQJS8GgRynwtVj2xWQdtbRGImGetL4cZP6kaTjxtzzx6D0dv2CiCI97ybN5Z/LOBsqzrC1fnb928+N+dDwJ4dfKoatmYYXYnhvBbCl+2ywVGmePVBdP5smpHyDT6zDCIQoi0Vx83AArib405wqbm9qryYogGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XHeiFAea; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789386878; c=relaxed/simple;
+	bh=qIqLny9tepBEf/HjIMYQVL7ybpIsmoTSzbmXgB63JJg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RsFYsEP2jyaQctQ+YthThgh8hZTLLLUbxvMtTFoBhG1wl88OoIRHpKy8qr3eWDD0zHR3HtzAGervz1olVmnxlmRuYqJIbB7+XJDZ4hsEmCG1UAcVXvsVtzomczjWZJawESwZl0fHAA7ptCt82U4FBnQuYJe69XFX44BvFn/+s2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQepjeCi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XHeiFAea"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789373537; x=1820909537;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=1OQgv3CLoOAvRHFXo8obITZm5ME7dKxVV+fENPflSNs=;
-  b=XHeiFAeaSByI4sh3XEnuRNpAKyoGkKknvT0NfSCT8k/E+r/ioWBAR9Sf
-   6jW6c/+0/Mls/ThsLk5rlUOZOS0V0f7iheOSfZoc4RzbafmhIKwtGlDvC
-   tmqZqv+p/0aJnUWqYQzRAefl8ciJvOE/mZTLHY1jpIn6QsuxPYm23Tzz5
-   jR2JZqtSll7JyX22nzbTUOu2hadwWLuuwNF8h0kWilrEPl4brTYqh/FcX
-   VUrfpV2YP5ruIw0CXSBo5iTFYfu3RM8c0W7sBARY0sKBcPXpIMRr7naiw
-   WQnDsclAUExYtFrEzHXEgoNGlrPCtqh998iKQZwoRHtL4fUiQUKuwq9MC
-   Q==;
-X-CSE-ConnectionGUID: lnn62VZWTRSmHi+VtrqtDg==
-X-CSE-MsgGUID: NMmViMFURRyVNgg3bEA2Iw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11904"; a="89930525"
-X-IronPort-AV: E=Sophos;i="6.27,102,1787036400"; 
-   d="scan'208";a="89930525"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 01:12:16 -0700
-X-CSE-ConnectionGUID: Pk3tLVsuSq+B8gP2yd78ag==
-X-CSE-MsgGUID: j+X708W/Q1mtQ7SjumjlBw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,102,1787036400"; 
-   d="scan'208";a="269292406"
-Received: from ettammin-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.29])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 01:12:11 -0700
-Date: Mon, 14 Sep 2026 11:12:09 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>
-Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-iio@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andy@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v4 08/10] ALSA: pcm_dmaengine: Use dma_slave_caps bus
- width helpers
-Message-ID: <aqesWfdIsiR31sql@ashevche-desk.local>
-References: <20260911-dmaengine-support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com>
- <20260911-dmaengine-support-wider-dma-masks-v4-8-72b8fd4cc78e@analog.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQepjeCi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF4A1F000FF;
+	Mon, 14 Sep 2026 11:54:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789386876;
+	bh=aP8EWaxJ8YclgzGeNnOXFKi/SYtV4Lu4pF6yBNZunAk=;
+	h=From:Subject:Date:To:Cc;
+	b=QQepjeCiPrn9OsVCGWBlEXtRJVEtCYCIOrfNoRL85odxkHs4b5hWu8MRcozCA80dr
+	 zD2O/sxsaPdpTHA1auQKKbQVhJdTYfKkt4TtCsDyjavUZsmLwVShJVQL7/DAKRQK/q
+	 UtwynsVbQTXTEed4Z0FTqFl+i5+dRYwH9bkJf352Y8ftkx/ei5+NG7r9EuIG6kGgIh
+	 ZRw8Z10ZsNOlrYYfA0K8hPJ+4C0CYp4me4udkx7a0cgYuPCv1izFfYOS2jHqVpqyOf
+	 d9IWSCthQKDWgbj2z/ZwMzyJqADsjsNvtEST5uq9GNsWt0iRht1VECYFJ/87JyuQpA
+	 pnvSWyEpe3kxQ==
+From: Linus Walleij <linusw@kernel.org>
+Subject: [PATCH v2 00/20] pmdomain: st: ux500: Implement ux500 power
+ domains
+Date: Mon, 14 Sep 2026 13:54:28 +0200
+Message-Id: <20260914-ux500-power-domains-v7-1-v2-0-9d0c17e1f816@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911-dmaengine-support-wider-dma-masks-v4-8-72b8fd4cc78e@analog.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/42NTQ6CMBBGr0K6dsy0plhceQ/Dgp8RJmpLploxh
+ LtbOYHL95LvfYuKJExRnYpFCSWOHHwGsytUNzZ+IOA+szJoSiy1g9dsEWEKbxLow6NhHyEdQcO
+ hq3qsrDOuMyrPJ6Erz1v6UmceOT6DfLanpH/2j2jSgECtJYutbqxz5xuJp/s+yKDqdV2/51lS3
+ MEAAAA=
+X-Change-ID: 20260618-ux500-power-domains-v7-1-3c9d095828c2
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>, 
+ Mark Brown <broonie@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Lee Jones <lee@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ dmaengine@vger.kernel.org, Linus Walleij <linusw@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Frank Li <Frank.li@oss.nxp.com>
+X-Mailer: b4 0.14.3
 
-On Fri, Sep 11, 2026 at 06:25:43PM +0100, Nuno Sá wrote:
-> Use the dma_slave_caps bus width helpers instead of reading the legacy
-> src_addr_widths and dst_addr_widths masks directly.
-> 
-> Keep the existing default assumption of 1, 2 and 4 byte widths when the
-> DMA channel does not report slave capabilities.
+This series pays off technical debt from the beginning of the device
+tree for ARM initiative in the early 2010s.
 
-...
+Today the Ux500 SoC specifically DB8500 is using what is called "EPOD
+regulators" (EPOD = Electric POwer Domain) to control its power domains.
+This was done like this because at the time, power domains did not exist
+as a concept in the Linux kernel.
 
-> int snd_dmaengine_pcm_refine_runtime_hwparams(
->  	struct snd_pcm_hardware *hw,
->  	struct dma_chan *chan)
->  {
-> +	enum dma_slave_buswidth default_widths[] = {
-> +		DMA_SLAVE_BUSWIDTH_1_BYTE,
-> +		DMA_SLAVE_BUSWIDTH_2_BYTES,
-> +		DMA_SLAVE_BUSWIDTH_4_BYTES,
-> +	};
->  	struct dma_slave_caps dma_caps;
-> -	u32 addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE) |
-> -			  BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) |
-> -			  BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+This patch series completes the ambitious work started in commit
+cd931dcfda5e ("ARM: ux500: Initial support for PM domains") which added
+a dummy domain driver for Ux500 in the following steps:
 
-> +	dma_buswidth_mask_t bus_widths = {};
+- Convert the old Ux500 power domain text DT bindings to YAML schema.
 
-Do you really need the zeroing?
+- Extend the bindings with all the 16 power domains actually existing in
+  the hardware.
 
->  	snd_pcm_format_t i;
->  	int ret = 0;
+- Add these domains to the existing ux500 power domain driver (still as
+  dummy domains).
 
->  	if (!hw || !chan || !dma_data)
->  		return -EINVAL;
->  
-> +	ret = dma_bus_width_set_many(bus_widths, default_widths,
-> +				     ARRAY_SIZE(default_widths));
-> +	if (ret)
-> +		return ret;
+- Add the power domains to the DB8500 SoC DTSI file.
 
-I assume that if ret == 0, bus_widths should be set accordingly.
+- Move code over from the EPOD regulators to the actual power domain
+  driver. Since the two drivers now control the same hardware, make the
+  drivers mutually exclusive.
 
+- Modify the MCDE display driver to use the power domain instead of the
+  EPOD regulators.
+
+- Modify the DMA40 DMA controller to use the power domain instead of the
+  EPOD regulators.
+
+- Delete the old EPOD regulators.
+
+- Delete the references to the unused EPOD regulators from the device
+  tree.
+
+The series is ordered so binding updates and compatibility glue precede
+the DTS and driver changes that depend on them.
+
+MERGE STRATEGY:
+
+1. Device tree bindings need review, before that the series is a
+   no-go.
+
+2. For simplicity, the series can be merged in separate paths and
+   subsystems as there are no build-time dependencies, as long as the
+   result ends up in kernel v7.4.
+
+   Once the concept and patches are ACKed by the power domain folks, I
+   will send the patches that can be split out individually to each
+   maintainer and it can all be merged in parallel. I will send a
+   pull request to the SoC tree with bindings and DTS changes.
+
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+---
+Changes in v2:
+- Went on a detour clean-up job relating to buck regulators.
+  Rebased on kernel v7.3-rc1 and the regulator re-works in this
+  mail thread:
+  https://lore.kernel.org/mfd/20260901-ux500-dts-snowball-regulator-v2-0-fe88b01829bf@kernel.org/
+- Drop the PM domain "regulators" entirely, the external components
+  now use their actual buck regulators.
+- Fix the DB8500 pin controller power domain to use VAPE.
+- Allow power-domain references in the l2c2x0, arm,pmu,
+  stericsson,u8500-clks, arm,twd-timer, arm,twd-wdt and ste,mcde
+  schemas used by the DB8500 DTS additions.
+- Treat only negative pm_runtime_put_sync_suspend() returns as errors.
+- Fix the MCDE probe error path to disable the main clock after reset.
+- Fix Ux500 PM-domain probe error cleanup for domains and provider data.
+- Drop the unused Ux500 power-state activity counter.
+- Describe Ux500 subdomains in DT and use OF child ID helpers.
+- Move DMA40 LCLA power-domain get out of atomic transfer paths.
+- Enable runtime PM in the generic SRAM driver so SRAM power domains
+  are managed by their owner before DMA40 takes LCLA references.
+- Add a DMA40 device link so system PM orders the LCLA SRAM supplier.
+- Add binding fixes for the DB8500 PRCMU regulator child nodes.
+- Add an MCDE binding update for the new power-domain reference.
+- Fix up the DB8500 DTS changes for the remaining VAPE and VSMPS2
+  compatibility regulators.
+- Link to v1: https://lore.kernel.org/r/20260618-ux500-power-domains-v7-1-v1-0-eb5e50b1a588@kernel.org
+
+---
+Linus Walleij (20):
+      dt-bindings: power: Convert Ux500 PM domains to schema
+      dt-bindings: arm: ux500: Drop NR_DOMAINS
+      dt-bindings: arm: Add the actual power domains on U8500
+      dt-bindings: mfd: db8500-prcmu: Relax EPOD regulators
+      dt-bindings: display: ste,mcde: Allow power domains
+      pmdomain: st: ux500: Implement more power domains
+      ARM: dts: ux500: Rename power domains node
+      dt-bindings: cache: l2c2x0: Document power domain
+      dt-bindings: arm: pmu: Allow power domains
+      dt-bindings: clock: stericsson,u8500-clks: Allow power domains
+      dt-bindings: timer: arm,twd-timer: Allow power domains
+      dt-bindings: watchdog: arm,twd-wdt: Allow power domains
+      ARM: dts: ux500: Add power domains
+      pmdomain: st: ux500: Control DB8500 EPODs
+      drm/mcde: Use power domain for display power
+      misc: sram: Enable runtime PM
+      dmaengine: ste_dma40: Use power domain for LCLA SRAM
+      mfd/regulator: db8500-prcmu: Remove EPOD regulators
+      dt-bindings: display: ste,mcde: Deprecate EPOD supply
+      ARM: dts: ux500: Remove DB8500 EPOD regulators
+
+ Documentation/devicetree/bindings/arm/pmu.yaml     |   3 +
+ .../devicetree/bindings/arm/ux500/power_domain.txt |  35 --
+ .../devicetree/bindings/cache/l2c2x0.yaml          |   2 +
+ .../bindings/clock/stericsson,u8500-clks.yaml      |   3 +
+ .../devicetree/bindings/display/ste,mcde.yaml      |  10 +-
+ .../bindings/mfd/stericsson,db8500-prcmu.yaml      |  24 +-
+ .../power/stericsson,ux500-pm-domains.yaml         |  46 ++
+ .../devicetree/bindings/timer/arm,twd-timer.yaml   |   3 +
+ .../devicetree/bindings/watchdog/arm,twd-wdt.yaml  |   3 +
+ MAINTAINERS                                        |   1 +
+ arch/arm/boot/dts/st/ste-dbx5x0.dtsi               | 144 +++---
+ arch/arm/mach-ux500/Kconfig                        |   2 +-
+ drivers/dma/ste_dma40.c                            | 130 ++++--
+ drivers/gpu/drm/mcde/mcde_clk_div.c                |   4 +-
+ drivers/gpu/drm/mcde/mcde_display.c                |  11 +-
+ drivers/gpu/drm/mcde/mcde_drm.h                    |   2 -
+ drivers/gpu/drm/mcde/mcde_drv.c                    |  68 +--
+ drivers/gpu/drm/mcde/mcde_dsi.c                    |   1 -
+ drivers/mfd/db8500-prcmu.c                         | 239 ----------
+ drivers/misc/sram.c                                |   5 +
+ drivers/pmdomain/st/ste-ux500-pm-domain.c          | 330 ++++++++++++--
+ drivers/regulator/Kconfig                          |  11 -
+ drivers/regulator/Makefile                         |   2 -
+ drivers/regulator/db8500-prcmu.c                   | 501 ---------------------
+ drivers/regulator/dbx500-prcmu.c                   | 155 -------
+ drivers/regulator/dbx500-prcmu.h                   |  55 ---
+ include/dt-bindings/arm/ux500_pm_domains.h         |  17 +-
+ include/linux/regulator/db8500-prcmu.h             |  38 --
+ 28 files changed, 566 insertions(+), 1279 deletions(-)
+---
+base-commit: 67aa45aae7efe0162f198f26714f668b759468c4
+change-id: 20260618-ux500-power-domains-v7-1-3c9d095828c2
+
+Best regards,
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Linus Walleij <linusw@kernel.org>
 
