@@ -1,84 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B506423645D;
-	Tue, 15 Sep 2026 17:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D41C4A2600;
+	Tue, 15 Sep 2026 17:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493518; cv=none; b=WUjMVWOLZc37PomBS7nfXdKTGi1qT16+48imZ01usmq1cnkkaGbHDKf/YpiWL22ovtrEZ6eNxLfoADqaSn8wlX5vPd6cUQ6irY+I2EBmt7BY8UMXewpi2O5PXrYG2NVw+DN860WK6eiuadOWc6cunuAWLdG69MjjsAIMMdNEdSE=
+	t=1789493749; cv=none; b=VG1KqTmHmYDMhHDmN/011RlnOMJl6mhA3tMY1D85JpLYxxbVKHU7Qe7n0i6sZuJ2EO8sdeHnF/8PGyMwqyexxNNpY38C9lKB76lneYKl5aBaGSHt6ln8C+bt+q6unmp/6h8Nj10qfEJ03KpMD6dSQILuiQBdjOvUlEYWhNeYCp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493518; c=relaxed/simple;
-	bh=COL+eeLxqw5NTAJ2YIlB4B9vdfhxDmT/atOwnDq2bI4=;
+	s=arc-20240116; t=1789493749; c=relaxed/simple;
+	bh=9FRkHww2ti28VKaHWgA/wFWWs7kgq0/5c9Bhsrzirik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iJDlZFASfORkBXuBA9yk/Tv5KT1HnUvNyIrt7Q1WV0w+9b4rsZWQKEQIZhFfk5LOaw2Z+5ESXv0pbQMwg8+/azKKUl02YuCceuhlqUB8a+6G3SzSJWmsYyZ7g6SqbA/4j86u/tZZ2NApm0i3NPF5tStPlwUFIGVgoaXmynEXVfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lIQhufCg; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=O5rkdPnBNg31+aA/986gyNcMwSASBtfuGqFF3HXYZoQqUij6vcdRONMQUu2Kc3ZW47o5Wz6pzH4hk9vcP+gTVnwnXOh9O/FS7vk6IGnGnMUTiyjpb3Of62CGVDFnEk+hkNZW2j+VGfncSQ+5mKR9I0SS6PdgpFbAuAfs6YL9lxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pgaj2bP5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lIQhufCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4E11F000FF;
-	Tue, 15 Sep 2026 17:31:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pgaj2bP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EB11F000FF;
+	Tue, 15 Sep 2026 17:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789493517;
-	bh=iFo2sfXq+Vmx91S6RId8JHf6RX8qogWnl0ZNBXPfgk8=;
+	s=k20260515; t=1789493746;
+	bh=39FDW1iBleAYEn7xhDFenbNL76Y5Vr3j48V/WMdQHms=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lIQhufCgxDUfqD04F3wR0FvLT5Dp/oZd1f4za8hLykQV+EpTbG9q/nno/1zrqal+F
-	 FJTxs9W0xcKDyG2kLT8kFseb4ZtoaKXC22h9tjUzrgPb89vjcSGuuYMvaIP+pAxXEz
-	 CQ0iwwtoYWihNv1mt3QFlBkHYkLuHBw9EwFbxdnsINLBer1bPCJfkMf/BcGlZHNG2i
-	 c9YyMbgesw/+3bFgD4ZaQpGx5WQya2ExLC3a2OqbfrSbJZ4Aea1fXU0Oha54nuZ8vq
-	 jfLNfRtkO0McneH1VoqLa0oM76uFPfHImbXRy48gdahZqB3RfjfKOGAUY/KDbBG/IS
-	 wlOFcFaasmHjA==
-Date: Tue, 15 Sep 2026 23:01:52 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: =?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>
-Cc: Frank Li <Frank.Li@nxp.com>,
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-	Frank Li <Frank.Li@kernel.org>, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 0/2] dmaengine: fsl-edma: Scatter/gather improvements
-Message-ID: <aqmBCMb8JbYsjpTX@parshuram>
-References: <20260911-fsl-edma-dyn-sg-v10-0-700eb72def57@bootlin.com>
+	b=Pgaj2bP5DrqGvx/3WqSGLRb/PQIcCCAc7m4hinrbcCyI2uUaLsCYHyY20o0qiWe9E
+	 3RHqreO0iOHfl4AZoje9x9PeFfbrmV0KeHC5JKTvLEwtj4Lg5me7bz+rBmF6BtRhSy
+	 AY9N7DIXo+XAZrcm7WgGeeLwC6EshU9/ROmHHy7QnE1Z7Gj9LyqSY5ptG89X1ynQpO
+	 wjnAtxFFUXRLjFNTRcc5KFPCFDZFUFM8xN9GsK9CTgoi6PIwPgyjRS3SvqKAnoilEZ
+	 YTY18zhIQwLsgIFNwpHPj3dWyNhJDY9/BroRpgJEmcXu9n2SAUZkZJ/3P8j1Zk14rh
+	 lOg+hT20tfAkw==
+Date: Tue, 15 Sep 2026 18:35:38 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Shengjiu Wang <shengjiu.wang@nxp.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Tianchu Chen <flynnnchen@tencent.com>, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-sound@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Dave Penkler <dpenkler@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
+	Nicolin Chen <nicoleotsuka@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: Re: [PATCH v1 2/7] ASoC: sprd: Replace dma_request_slave_channel()
+ by dma_request_chan()
+Message-ID: <444f1340-f690-440d-85e7-4fa7d66644d5@sirena.org.uk>
+References: <20260915100931.3593242-1-andriy.shevchenko@linux.intel.com>
+ <20260915100931.3593242-3-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Eev+jrxCI2X+PyJ/"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911-fsl-edma-dyn-sg-v10-0-700eb72def57@bootlin.com>
+In-Reply-To: <20260915100931.3593242-3-andriy.shevchenko@linux.intel.com>
+X-Cookie: Void where prohibited by law.
 
-On 11-09-26, 15:11, Benoît Monin wrote:
-> This series adds support for scatter/gather DMA transfers via dma_vec
-> and dynamic descriptor chaining to the Freescale eDMA controller driver.
-> 
-> The first patch implements the .device_prep_peripheral_dma_vec() callback,
-> enabling the DMA engine to accept an array of dma_vec structures. This
-> callback supports both regular and cyclic transfer modes.
-> 
-> The second patch introduces dynamic scatter/gather chaining, which allows
-> multiple DMA descriptors to be linked together without stopping the channel.
-> This optimization eliminates idle periods when back-to-back transfers are
-> submitted, improving throughput and reducing latency. The implementation
-> carefully preserves cyclic transfer semantics and respects hardware
-> constraints on platforms with split register layouts.
-> 
-> I tested it on the i.MX93. The dynamic scatter/gather chaining should
-> work with other eDMA controller with split register layout.
 
-This fails to build for me, needs bitfield header
+--Eev+jrxCI2X+PyJ/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-drivers/dma/fsl-edma-common.c: In function ‘fsl_edma_tx_chan_handler’:
-drivers/dma/fsl-edma-common.c:59:33: error: implicit declaration of function ‘FIELD_GET’ [-Wimplicit-function-declaration]
-   59 |                 u8 link_sg_id = FIELD_GET(EDMA_TCD_CSR_LINKCH, csr);
-      |                                 ^~~~~~~~~
-drivers/dma/fsl-edma-common.c: In function ‘fsl_edma_prep_peripheral_dma_vec’:
-drivers/dma/fsl-edma-common.c:784:55: error: implicit declaration of function ‘FIELD_MAX’ [-Wimplicit-function-declaration]
-  784 |                 if (!nbytes || vecs[i].len / nbytes > FIELD_MAX(EDMA_TCD_ITER_MASK))
-      |                                                       ^~~~~~~~~
-drivers/dma/fsl-edma-common.c: In function ‘fsl_edma_link_sg’:
-drivers/dma/fsl-edma-common.c:1015:24: error: implicit declaration of function ‘FIELD_PREP’ [-Wimplicit-function-declaration]
- 1015 |                 csr |= FIELD_PREP(EDMA_TCD_CSR_LINKCH, fsl_chan->link_sg_id);
-      |                        ^~~~~~~~~~
+On Tue, Sep 15, 2026 at 12:04:23PM +0200, Andy Shevchenko wrote:
+> Replace dma_request_slave_channel() by dma_request_chan() as suggested
+> since the former is deprecated.
 
--- 
-~Vinod
+> @@ -171,13 +171,12 @@ static int sprd_pcm_request_dma_channel(struct snd_=
+soc_component *component,
+>  	for (i =3D 0; i < channels; i++) {
+>  		struct sprd_pcm_dma_data *data =3D &dma_private->data[i];
+> =20
+> -		data->chan =3D dma_request_slave_channel(dev,
+> -						       dma_params->chan_name[i]);
+> -		if (!data->chan) {
+> +		data->chan =3D dma_request_chan(dev, dma_params->chan_name[i]);
+> +		if (IS_ERR(data->chan)) {
+>  			dev_err(dev, "failed to request dma channel:%s\n",
+>  				dma_params->chan_name[i]);
+>  			sprd_pcm_release_dma_channel(substream);
+> -			return -ENODEV;
+> +			return PTR_ERR(data->chan);
+
+sprd_pcm_release_dma_channel() does:
+
+                if (data->chan) {
+                        dma_release_channel(data->chan);
+                        data->chan =3D NULL;
+
+so this won't DTRT with propagating the return code.
+
+--Eev+jrxCI2X+PyJ/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqpgekACgkQJNaLcl1U
+h9Dv6wf8DIt782FfFomog7Ok5wncm/S0jGMUale3g0wtB7TmjZWZulho4w/W+9Op
+NQdoSarIoFdY4G5RQQaXN9YY/+b3euC8guuyXq2oU9Qzl25W2xTey7eh/bLshP0D
+RC7HQG5RWrDTvJYpyglVFP7TWTTVXtoP7c+2ZMjTps1+Ou6UvJvt/XYuFtS74beB
+ol+eLO6z606nI9p3R2rCyMrZhDQUUzAe90WEtBgyAaN/obA4Wi6K0/itsLBIn0xu
+9AFytXi9/IsoSIZ+BmgOkN29ZdtHW9dTM6Lo0w2d4YC718HywHRkqRPDcLagd8qc
+Wgz7Rz3kFsOpWXRBzsrpPBjNQUUafg==
+=1aFq
+-----END PGP SIGNATURE-----
+
+--Eev+jrxCI2X+PyJ/--
