@@ -1,70 +1,70 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765FA468C10
-	for <dmaengine@vger.kernel.org>; Tue, 15 Sep 2026 07:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A331F368D5E
+	for <dmaengine@vger.kernel.org>; Tue, 15 Sep 2026 07:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789456832; cv=none; b=ulmDG354HFEbk87W9Wo/hm+6om+B+lY66hsM/SWMTV3ExbBmVme+TylhE0QRPe/u4OU1Z+dY6kSQPWX+hQ5B2bNMykCGN3kDpmgCgB2xRGqQNKa+76uvV9ZpxEVAcPRnUEtoWLtXKIRganOZftKIdk7meUIrDdL5/QL3GqSVq+0=
+	t=1789457173; cv=none; b=nsKgaACq9WyhKtpqx5Gwa9VyIC+8RkKo2LXDZeStVzyzUDOgUAF+qIIIrik2v+xa+e3is723kcWFUyGm+zROsbQ4vGsni8a3LAQlUSlmFZfXNC6OurSw3NwZbgYHZDKKxmFG19EXQot44zEbPyBBMLruaOgwAgmrsCL5qJWiI4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789456832; c=relaxed/simple;
-	bh=F6QeRzEDWK5t1xhcyR513pNWKh1fKRnRhF3y+a++YlU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TWtSAXcumUShVw4h/E17o+/CWIWlPYWDFMVmUjYrMn1q8fROwpsTD7a8miwczu7LY9Lvhl1m2/NEqqfoK5JftvGC0/xj2vPcGwGPYfq77cy0pSVzl9cBUmU+KpobmreKs1A4TU6kb2yBtthyWraKe7vMKa9339KW/fuPBvo+ESc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iw8aaud1; arc=none smtp.client-ip=74.125.230.204
+	s=arc-20240116; t=1789457173; c=relaxed/simple;
+	bh=EITwAMi94+L/rAtKaV6SFtQcSSqz9GoIdJNwb5xLs7w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XQ99iIRChhSN5KFmQPP/dv97FJTPyEOK+FFW7JvNCLqU97ROthySaP8BYKUIawX8abpsKsRYrcqWVN5m/fWGT0r0Dsl7JBzsJxPnhy3jDUBsQUw/OUt8zRtO3jki2MMGxgdk8NRMV9lbxk9YJSxU/2LulOQWrph1Sco6hOR51UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H8V6xl6y; arc=none smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iw8aaud1"
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93a0fd41a7bso271203085a.1
-        for <dmaengine@vger.kernel.org>; Tue, 15 Sep 2026 00:20:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8V6xl6y"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2db18fe433fso19888775ad.2
+        for <dmaengine@vger.kernel.org>; Tue, 15 Sep 2026 00:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789456829; x=1790061629; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789457172; x=1790061972; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NMRsbHWbqWxYa7/sB3UvfZ4V+AdJ5sViuPlZizxgnu4=;
-        b=iw8aaud1s8C16xdDTCRF49TY1ifSNf/SrQQz3QR5zJM56w/SPGexi3tsRxGuX8Kpso
-         j9GTr4iCJx6zcJpueDmApQ1wpSU4vpJ4cvoVNgpIh3odHdCcN/ijqOxfAkfP4RLXI0zg
-         wsXs9/F+WBn1GS44Mwt1R6Bl8TlqvBW8fYoUcM0GJQmzmcBgLc19btHMX3pw5glW1NzY
-         CV7tgZdNvgrUE9QKoldsQpiymU8BQUS4fC/4XnWlJ4PlVuWM748OanjKvd2uTJKHpSCw
-         pUWMHyIgliSm/rrPjroHw7gceihCRyWZWBZ5XNs4rEqF01L+23DhoTArVDGpJuJRX/YS
-         GnUw==
+        bh=c5/n9buj4EljOW9mw9PWRJPUglpJ6jbEEIafd9TEaCs=;
+        b=H8V6xl6ydoQRNGb8BY7JJ/943mLRjLOdGfsMzo941VL76sKa1gVCELR7urQB48a/Ng
+         KMNwBOJOj19fAn+/IzuIthPb7OSyxWqzb3HxIgYxS09CYieK9UyHGdWGkVrxZvUJkzr6
+         NIVuPIf2u6rmoTH0NaX3Pyq4pGrd9Hb2sMijR4eCH9FGTppToYALY114OmwGlgktB0rA
+         CjZLxblflPTlpW/4MxgYvtFcrvdWsi1R+MsDCRTxX92Clf6F27WV0jYWfVG8eSgiB6V3
+         sQQcGYdxe3MGj1JfzurSEVaNZV0imaAxlhLijpFt5rLoGzGM8cRiyivvpOsVs5w6m14w
+         cd8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789456829; x=1790061629;
+        d=1e100.net; s=20260707; t=1789457172; x=1790061972;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=NMRsbHWbqWxYa7/sB3UvfZ4V+AdJ5sViuPlZizxgnu4=;
-        b=SevEMxWLV1ir8y0qsR6jJ8oEBs1JiJA9hPvzTeCA2qJ+GWRA5BvSyxCOxIyWjlT6SP
-         qirAOni0sS6PNX3+Cxk3jVYhVyd64p3PZPao6DXn39kDIZYiZU9621aNEHzjccQwv38H
-         b1asA31A3tc9ls9TtMDD1cv9UtY8Ev4IDrx+t2lnmL6ImxK1VFxQDUQpfcLqnzRL9oyR
-         s2qlUgbsLqJuKcGl1lW8Dz6jIZfJFjmkVmJEulNiDTWV2za0BPZEqQf9q9u0Zix0PrHa
-         T/F4m/PWOtJba7J/PaUPMEm4QhEzHWn1kW3PtMgRmM+EjmFU89opceGGqBe2W4Kk/NFU
-         +R5g==
-X-Gm-Message-State: AFuF++mfSEkTa5bWJD5C4JguALFmxXzk7GFW4DWOx0brVoMKlv9GIhJc
-	zf4yI4UO2Z7aDTh4XuPMW5MAlWSUaVuGKmILnF+z2vNU049ABwkfSEG3Z00RQQ==
-X-Gm-Gg: AYBFou3pmiub2ClPXRAq+1zydr+kvYwiJcdScuFDwFhnN27pG4a9DBbzWIs87SYitv3
-	xiHHjzRm0o9+buoRsUMOymXuEWpRhLTnRbJROo4zGDL5XXLJPdlk+LpmmIVfMO0RR7JERW2mALF
-	ZsN6nAoJTv7MgI5OmS2UpW8m54+x3TMe7SD0/hm65JhnOOT0NpmWEuNixyl4pq35Khdrl8YEovo
-	GVvM0H6KwZ2GfK7hbK138L3vKQ/zm+/gc4/WtNOTsAdZNP63aMkLihZ5Z0SGkYg9Kh+3nKT5VTE
-	b5C/YkC9FwHWXuysnbZWZWpbutExhIVt8YQa/U1NDnPk3YoqC7JVGmjmgyYRqROnmQJ8WhW8VyV
-	jujFwls1dDd+FKGuHmoSdGrg0F1v7djdKEfv2EgemWBASCS3UnBMIG/tmwGXP7Y2XHEOICHrnqE
-	J8gvtPc3g575dFgnSgQipUsAuzA0XuzHPu/ycEMwFakqbD4VUU+54eC9heUqqhEQ+x9LKjtzX0R
-	f/jB0xOmE1s5Lq6orx67vieTa4OoL1547qm9r9bE484+GrNHJde68mYSp5h3HHyCD/5/8lFd3pq
-	jzfiTRoHPEeghWcE5x5U+Vr9X61aBLckqkZeCYzkJvc4JrCwtg==
-X-Received: by 2002:a05:620a:4455:b0:939:6dea:374a with SMTP id af79cd13be357-93a29be35a4mr904680985a.46.1789456829104;
-        Tue, 15 Sep 2026 00:20:29 -0700 (PDT)
+        bh=c5/n9buj4EljOW9mw9PWRJPUglpJ6jbEEIafd9TEaCs=;
+        b=qCL1S092tPgV8ZJhjAZIRwNRkYnfgRrHjlJJPbvbp+1SLaUDB4xnp5Oh1B05OABOqN
+         FrXK7sh1HBqJLSmr1ph0RlaK8XlejxGG5fwfisXIB7tZDwAxlF1teO9RF+JHiBpwbjQ2
+         bm0o6fOxLCz5fn7aO6HpzVOgHkbJUEfNLo41VaTbIDgzrCdu69T1hbotb4ZH1UNnnjtj
+         vB8HCgIjjpFpU4zREQxr6gBTlm7/Nnh9Cc4GWeXCHvUg4n2Eg9YpqcbcJQNvYn0scjEK
+         uqD98/bRPI9FOZaawQugfS4r3GrYm5dD9iOrWfpWjW3yh8ey/f0x+8jYZ+COaxiyvvCO
+         /y0Q==
+X-Gm-Message-State: AFuF++mmzRAct91lMCXAyBqc8BJfqTcIxr1EgnmCWQ4IO0Lr+b8/8FtM
+	DFJKDnTOlF+l19fHdANaQp1IrtQcju0pXtTppF8e3ROJGKXO9B/G2HJ1n3q2ZA==
+X-Gm-Gg: AYBFou1WPGGTcr1ios3MzZ62iicCJTVAWfptM0VjWXhbWKUuuE8lO9DnXTpkxBASyB2
+	Vc3xs8ioS7tlJm3CMJoPx4oUH4cPN9SlJtJCkb0X0QvzPerPkLQrWu3npWaXnDxyuKKcopwLNnp
+	Dhdk49mlG0uhaQWB+0R44zI68akJvnVSmCn9jERTZlq1mBqarhvi30iFhjIh04InOZmhtjL70iM
+	MSX1UQGAQ4fpThDI+e5WVsKvLVuUCQAbAtAa6ChniCj7uTuQc9LW94khls980pemAbMvIY9cJ2w
+	CzK45fclJYNO0g10gYZI7Gel38eT5xlKMpog4YHkAdpki7MU+SCz310EbP9+Rti7LOIB5R78AEQ
+	TQ3Atax9BGKNGN1wp9XBWhSkaNV50M0NqyWi6wa3J9yWBn24XiFqUvPbKwuL5USMjD9+LweGvX+
+	aSnec12TtoXnC53GC7miKsNQBtI5FBAe9YOpZK5/lwfT0TryCrSXwv/qOIHF/6r9KrkNZUZnRHi
+	4z2XLAAagw8asK4L9FmouiIWOrykm5g12iWru/fA8grxgVKSRn42vSnswofRx8RYwdCnxyEIMSp
+	ytfrBYVQily0avofMkFtcNlFSFsfLt83gwsb3x9K98qGtOiw
+X-Received: by 2002:a17:903:32cb:b0:2db:39dc:48af with SMTP id d9443c01a7336-2dd6c757b6bmr116752735ad.17.1789457170179;
+        Tue, 15 Sep 2026 00:26:10 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-939ec337d23sm1126447185a.2.2026.09.15.00.20.27
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ccadb4fsm61248325ad.2.2026.09.15.00.26.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 00:20:28 -0700 (PDT)
+        Tue, 15 Sep 2026 00:26:09 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv4] dmaengine: ppc4xx: convert irq_of_parse_and_map to platform_get_irq
-Date: Tue, 15 Sep 2026 00:20:26 -0700
-Message-ID: <20260915072026.54904-1-rosenp@gmail.com>
+Subject: [PATCHv4] dmaengine: bestcomm: gen_bd: fix out-of-bounds access in PSC parameter lookup
+Date: Tue, 15 Sep 2026 00:26:08 -0700
+Message-ID: <20260915072608.57887-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -74,129 +74,49 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace irq_of_parse_and_map() with platform_get_irq(), which is the
-preferred way to obtain IRQ resources from platform devices.  This
-eliminates the corresponding irq_dispose_mapping() calls since the
-framework manages the mapping. Also allows dealing with -EPROBE_DEFER.
+The bcom_psc_params[] array has 6 entries (indices 0-5), but
+bcom_psc_gen_bd_rx_init() checked against MPC52xx_PSC_MAXNUM which can
+be 12 when CONFIG_PPC_MPC512x is set, allowing indices 6-11 to pass
+and read past the array. The tx init function had no bounds check at
+all.
 
-While here, fix a latent bug in the err_req2 error path: the error IRQ
-was not freed when a subsequent step (I2O setup) failed.
+A malformed device tree with a large cell-index could therefore trigger
+an out-of-bounds read. The garbage initiator and ipr values would then
+be used for MMIO writes via out_8(&bcom_eng->regs->ipr[...], ...),
+potentially causing out-of-bounds MMIO accesses.
 
-The struct device_node *np declaration is moved to the scope where
-it is still needed (I2O register lookup).
-
-Assisted-by: opencode:big-pickle
+Assisted-by: LLM
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- v4: handle -EPROBE_DEFER
- v3: use _optional
- v2: fix missing free_irq in remove and fix description
- drivers/dma/ppc4xx/adma.c | 39 ++++++++++++++++++---------------------
- 1 file changed, 18 insertions(+), 21 deletions(-)
+ v4: actually bcom_psc_gen_bd_tx_init is still needed.
+ v3: reduce bounds check to single function. It's not used anywhere anyway.
+ v2: fix title
+ drivers/dma/bestcomm/gen_bd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-index 279a431ccae3..0b4ba9a2fe88 100644
---- a/drivers/dma/ppc4xx/adma.c
-+++ b/drivers/dma/ppc4xx/adma.c
-@@ -3865,28 +3865,28 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
- 				     int *initcode)
+diff --git a/drivers/dma/bestcomm/gen_bd.c b/drivers/dma/bestcomm/gen_bd.c
+index 61b5746e1a97..7bbe9cd7b39c 100644
+--- a/drivers/dma/bestcomm/gen_bd.c
++++ b/drivers/dma/bestcomm/gen_bd.c
+@@ -321,7 +321,7 @@ static const struct bcom_psc_params bcom_psc_params[] = {
+ struct bcom_task * bcom_psc_gen_bd_rx_init(unsigned psc_num, int queue_len,
+ 					   phys_addr_t fifo, int maxbufsize)
  {
- 	struct platform_device *ofdev;
--	struct device_node *np;
- 	int ret;
+-	if (psc_num >= MPC52xx_PSC_MAXNUM)
++	if (psc_num >= ARRAY_SIZE(bcom_psc_params))
+ 		return NULL;
  
- 	ofdev = container_of(adev->dev, struct platform_device, dev);
--	np = ofdev->dev.of_node;
- 	if (adev->id != PPC440SPE_XOR_ID) {
--		adev->err_irq = irq_of_parse_and_map(np, 1);
--		if (!adev->err_irq) {
-+		adev->err_irq = platform_get_irq_optional(ofdev, 1);
-+		if (adev->err_irq == -EPROBE_DEFER) {
-+			ret = adev->err_irq;
-+			goto err_irq_map;
-+		}
-+		if (adev->err_irq <= 0) {
- 			dev_warn(adev->dev, "no err irq resource?\n");
- 			*initcode = PPC_ADMA_INIT_IRQ2;
--			adev->err_irq = -ENXIO;
- 		} else
- 			atomic_inc(&ppc440spe_adma_err_irq_ref);
- 	} else {
- 		adev->err_irq = -ENXIO;
- 	}
- 
--	adev->irq = irq_of_parse_and_map(np, 0);
--	if (!adev->irq) {
--		dev_err(adev->dev, "no irq resource\n");
-+	adev->irq = platform_get_irq(ofdev, 0);
-+	if (adev->irq < 0) {
- 		*initcode = PPC_ADMA_INIT_IRQ1;
--		ret = -ENXIO;
-+		ret = adev->irq;
- 		goto err_irq_map;
- 	}
- 	dev_dbg(adev->dev, "irq %d, err irq %d\n",
-@@ -3899,7 +3899,7 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
- 			adev->irq);
- 		*initcode = PPC_ADMA_INIT_IRQ1;
- 		ret = -EIO;
--		goto err_req1;
-+		goto err_irq_map;
- 	}
- 
- 	/* only DMA engines have a separate error IRQ
-@@ -3917,7 +3917,7 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
- 				adev->err_irq);
- 			*initcode = PPC_ADMA_INIT_IRQ2;
- 			ret = -EIO;
--			goto err_req2;
-+			goto err_req1;
- 		}
- 	}
- 
-@@ -3927,6 +3927,7 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
- 			    XOR_IE_ICIE_BIT | XOR_IE_RPTIE_BIT,
- 			    &adev->xor_reg->ier);
- 	} else {
-+		struct device_node *np;
- 		u32 mask, enable;
- 
- 		np = of_find_compatible_node(NULL, NULL, "ibm,i2o-440spe");
-@@ -3956,14 +3957,13 @@ static int ppc440spe_adma_setup_irqs(struct ppc440spe_adma_device *adev,
- 	return 0;
- 
- err_req2:
--	free_irq(adev->irq, chan);
-+	if (adev->err_irq > 0)
-+		free_irq(adev->err_irq, chan);
- err_req1:
--	irq_dispose_mapping(adev->irq);
-+	free_irq(adev->irq, chan);
- err_irq_map:
--	if (adev->err_irq > 0) {
--		if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref))
--			irq_dispose_mapping(adev->err_irq);
--	}
-+	if (adev->err_irq > 0)
-+		atomic_dec(&ppc440spe_adma_err_irq_ref);
- 	return ret;
- }
- 
-@@ -3987,13 +3987,10 @@ static void ppc440spe_adma_release_irqs(struct ppc440spe_adma_device *adev,
- 		iowrite32(mask, &adev->i2o_reg->iopim);
- 	}
- 	free_irq(adev->irq, chan);
--	irq_dispose_mapping(adev->irq);
- 	if (adev->err_irq > 0) {
- 		free_irq(adev->err_irq, chan);
--		if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref)) {
--			irq_dispose_mapping(adev->err_irq);
-+		if (atomic_dec_and_test(&ppc440spe_adma_err_irq_ref))
- 			iounmap(adev->i2o_reg);
--		}
- 	}
- }
- 
+ 	return bcom_gen_bd_rx_init(queue_len, fifo,
+@@ -342,6 +342,9 @@ EXPORT_SYMBOL_GPL(bcom_psc_gen_bd_rx_init);
+ struct bcom_task *
+ bcom_psc_gen_bd_tx_init(unsigned psc_num, int queue_len, phys_addr_t fifo)
+ {
++	if (psc_num >= ARRAY_SIZE(bcom_psc_params))
++		return NULL;
++
+ 	struct psc;
+ 	return bcom_gen_bd_tx_init(queue_len, fifo,
+ 				   bcom_psc_params[psc_num].tx_initiator,
 -- 
 2.55.0
 
