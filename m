@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD944BB7E2;
-	Tue, 15 Sep 2026 17:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11334BE42D;
+	Tue, 15 Sep 2026 17:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493787; cv=none; b=i1iC6CoX+iIHtWEEWEPu23CNvUG+Bg2sFlPcrWj/4cZzoeHTd0648YDcSRQlxNK5211eKVARNSr3hI9qfiwuazJd0StyKzYQS9Lil/BUadNplN5AGlFaSGiUVP7/VqHp0hDOEupDRdtP7Ne6Al3OUmsiLJdS3KymjEf098tNfUM=
+	t=1789493788; cv=none; b=l4GBbzJ9v2E+y73diAqrjomybVSnsw9vQeD74JN3RcM9LmU0PqrjzOqGoog5PwdwnQkZb+W6PDUTmzuVI9P5gH4pfYeCVil/cYt5QP+XCiADveZVbrfe7/FUbgFPwz5JJdQJlwtqOLAwIHPxYnZTy4z5pbEmF+Gq0Q8QQjCy+xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493787; c=relaxed/simple;
-	bh=nacLeUxb4kMgv/hJKMzSScv98ZbXFSkeHm1r7UL0TDI=;
+	s=arc-20240116; t=1789493788; c=relaxed/simple;
+	bh=Fp525D72toGhFGYQslhQM3RtxH/dCa7bkNWqSjCk4Q4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=K8BXLhH4ucQUM6oHYr5O6ocXsA4Uiwt2KASrzhzJQnvdrzgL2U/zwP/kEKRjURAJP4QDo29Y+HCveBQIUxcBJobPqhBKLwN0RE9FM8cUOgZbJRdwRgOYx82rs3sDzvcsnDFpskzRkW/Zz18ygYbbtPSXurR+6lYFuHmPZKVBI7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CG0UL3Jy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G6IxHn1hZNNvX4JqRM6rSyA9e3WEoA0y8R/N2mVUeTR7PmdK6CJVJ6rqqrYr2SUAiA002qkgBc6X7b3+cISOxH9jJNWe5Z7kfdZYpvQeUWoBGwa2dw9zkZTdKEY2jBaHZ2173q93TwhQfenGhDkS65EfC5w0xy29SM0z26g+J9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cwy+Beo2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CG0UL3Jy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED491F00893;
-	Tue, 15 Sep 2026 17:36:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cwy+Beo2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1CC1F00898;
+	Tue, 15 Sep 2026 17:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789493784;
-	bh=GfOztx6bTifHyuZnfSYdYoqfWnHstV08fV39dJMhPuw=;
+	s=k20260515; t=1789493787;
+	bh=sAoxuO3iAByJo3LDo/x990fqPW2xFJNLK8uSau4nVZI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=CG0UL3JyT8lTVtvJXwKT2RahrhVwgS0ioc8VVytFp1pl002+72RfC6H/lZePuvo3e
-	 oe5T7xCkrdzH/1yX9yZpKH953kBXfMpyk1TT1tOwyMkxNRLcEPqZfqSNVzKnwWAk26
-	 f+e0MwjQjxObBiM81oItU2Oj6DvEiZxyKcLZLXmhO/anDGjzYBLGq7mZFc/b26E+CH
-	 mHf6oR9VuTBE84usSNo+PHvhdd155s1cqiSg78JGuXemBeBFWlu/BUvJ32YdTgpuQi
-	 OplMGQ+YVC45NAKxdtimzuUf8slu1nXkG5iaa4HpIdM4hWytUm9wdID4iD53tAQTyx
-	 hwTYol2Y11M+A==
+	b=cwy+Beo2Q98jNjJd7kKQNhI0DoWOJ+0z7jL1nhxi/lXEkhJ04riepLmQN1DV8k39z
+	 zWuZTguIOa1rkzBPNO1hrWCO6N2C2VWaOKN/r0rI+Vk7ckybsQU3/3VT/fO8S+2+48
+	 95+NgddmzLKSaJK9xbnFgPYCjQo6z2vYJXbDShKBYzlwwlt86C6KnlJkhI0M1tKZP9
+	 S2ErnGV/bHIBqKlHXYrSM+w7Z7pmrUJLWU/1wjjoV4/nyehm8be4iSSDuv304UbuL/
+	 idXOVShNgvL3jiH77GT9gTqmn7OS8+RixFPHmbEqxuxJVJom2VSZk2haxZ6r9CIRkf
+	 5Vfof7LNCD1kQ==
 From: Vinod Koul <vkoul@kernel.org>
 To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, Saeed Bishara <saeed@marvell.com>, 
- Dan Williams <djbw@kernel.org>, 
- Maciej Sosnowski <maciej.sosnowski@intel.com>, 
- Nicolas Pitre <nico@marvell.com>, Lennert Buytenhek <buytenh@marvell.com>, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260909234601.101883-1-rosenp@gmail.com>
-References: <20260909234601.101883-1-rosenp@gmail.com>
-Subject: Re: [PATCH] dmaengine: mv_xor: kill tasklet on channel add error
- path
-Message-Id: <178949378183.248239.15139864627876288604.b4-ty@kernel.org>
-Date: Tue, 15 Sep 2026 23:06:21 +0530
+Cc: Frank Li <Frank.Li@kernel.org>, 
+ Harninder Rai <harninder.rai@freescale.com>, 
+ Xuelin Shi <xuelin.shi@freescale.com>, linux-kernel@vger.kernel.org
+In-Reply-To: <20260910194324.33697-1-rosenp@gmail.com>
+References: <20260910194324.33697-1-rosenp@gmail.com>
+Subject: Re: [PATCH] dmaengine: fsl_raid: byte-swap cdb32 when programming
+ CDBs
+Message-Id: <178949378514.248239.6603688959758210230.b4-ty@kernel.org>
+Date: Tue, 15 Sep 2026 23:06:25 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -50,20 +48,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Wed, 09 Sep 2026 16:46:01 -0700, Rosen Penev wrote:
-> If request_irq() succeeds but a later step (self-test or device
-> registration) fails, the error path at err_free_irq frees the IRQ
-> but does not kill the tasklet.  A previously scheduled tasklet can
-> still run after the channel is freed, accessing freed memory.
-> 
-> Add tasklet_kill() after free_irq() on the error path.
+On Thu, 10 Sep 2026 12:43:24 -0700, Rosen Penev wrote:
+> The three prep functions write the first word of the command descriptor
+> block (cdb32) with a plain u32 assignment, while every other CDB/CF
+> descriptor field is written with cpu_to_be32(). The RAID Engine expects
+> big-endian descriptors, so the plain assignment produces a corrupted CDB
+> on little-endian hosts. Use cpu_to_be32() for cdb32 to match the
+> surrounding code.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: mv_xor: kill tasklet on channel add error path
-      commit: bcb4d469b19d53dc21e4a1da12d4438e7489e150
+[1/1] dmaengine: fsl_raid: byte-swap cdb32 when programming CDBs
+      commit: 8b641810905cba4eb200d72adde386bca380c0df
 
 Best regards,
 -- 
