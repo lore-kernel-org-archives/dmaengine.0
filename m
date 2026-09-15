@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978144BFE78;
-	Tue, 15 Sep 2026 17:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6B53BA225;
+	Tue, 15 Sep 2026 17:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493794; cv=none; b=B8hkm3Oz7/mqsnPGkXLfbd2nkSChy2JadhL+ZQiMkmmqNnvCUo/mjmSY9715JNOzZP8bPP/CVljIIbF1LUu1CP4sR9aWI6Gz0Tj40D6t2W2T1f95X7P3Ytbci6MwGZLAZ3wYaTJRE6gCc3tN00UQJNdU+xqVb0j0BZTASDXhtlc=
+	t=1789493796; cv=none; b=s5Nr4CvJCHv2umpbqYjVNeHl9hYyI39LkXaPEf0fIPl8DDRl+f+p/yNafocTa0pUUizLG7KtmlirnIyJuJNC0NCqLVV2cUTf2f+AUxrffqXoWyPThMtu+NYx/PZ43ChI3DYLFGhPtjlR+Os0U+NsgoXxXFrv/dIdKRqOdEsMlNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493794; c=relaxed/simple;
-	bh=VdEHGVqakceA30ibKfWLrLkrYGmQTQMtsf1/cQuEh4E=;
+	s=arc-20240116; t=1789493796; c=relaxed/simple;
+	bh=NhdSsQ4ingVjVrK2juJuET+d3pv7JHxJjQDy8tLTOd4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=u9j9X7S4Lo5UUuvoxIlAc2S88r/dcbzO2blPY5gjT52Mr9NLEv4FEtztCOwph2QMCSDtImpp6L0TElbOa2+WLwgHrQw2m/fJ9i2LJtLpV6DDdU7p5CXx02rndd+wdcKuQmHLA8vNVXCp8IbqPrljhdY8eICk6SSulFfIf94VAOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYCjdh1e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=H+K0LoxvoscLISnIUrTzrkbo0vbee+Xu/OBezK/oi7203vT+efmBqt6qaFv2iBbJvrww2XOt3jy8h7q3nk3rfbc+AxWeMX35V2SVnd61oHMjnou+0vnfmnJm55bsBtpv5vkUo5QHA9uDvw/ClWBwElIqRCl6zfrmr4Gj5Vmoipc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQOAcNMo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYCjdh1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAF01F00898;
-	Tue, 15 Sep 2026 17:36:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQOAcNMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE2B1F000FF;
+	Tue, 15 Sep 2026 17:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789493792;
-	bh=FnLmeYIQPAAgZAXOCOf2VNKKiWote+e9JLjawzWka4Q=;
+	s=k20260515; t=1789493794;
+	bh=1JyX64dsNGnurU1C9rEoj0vZTLpcO1EQVLIs2Y0KcBY=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=hYCjdh1eHRYYE/giaeiVwVAAN7Grmep6NWmTu/EfTZ1VRqjb8MNwkBoahrZdrkqGE
-	 vdWJ1VmACNvzykGU2kRHMkCZBPsJL0OwZAoXieuoQawaoE08VgFF6Yof3mj1Ryo/i4
-	 aPer0R1/wEwhya2O5zy7O9OUhitpFfs/rJ5083su9dwmSX1cZmJQXBJTkFDS0sGPSh
-	 qAUJpB2b2g8NYlyn2FnTB0g6n0aNeByQlNsBc5jQuHi2HE3mOnBZvbGZNST2JElCLS
-	 PHmxL+Kafqg5HfWILWizuW9IKIHOqNuoPa+Hvhxj+GaCXcPavQZKl4TsLx3FpqWGLe
-	 gRjj5EFMbDc2Q==
+	b=XQOAcNMoxlFwdN3vBzRaryF/OV14+ZMHMMs1qi0Q63bs+imbFTmP+J4ReG358hpUL
+	 nwd+onUxAldMZnXxHrU6VwyoGrPkDP7QLeGAQ1jMNFqiOCNdbPPtawmmZO0YMfGPjZ
+	 ncX9tOaEbCxulaHzobogssneLBh/syVbcrpWxgT71VpcfwnIxhPE6JXcQj450DF8cG
+	 m7iQFzFs9UXxRLfOGl7G7+SovN36wJKSGf0LgtnZD2A76c67S5YsGS9xbxyTqr1eVQ
+	 DZ8u4d8YM3OxpDS0Xx/YotE33OrltGcOpNVJF0eNeMsb5BI/oF0v2pK0IJJDe9tAmr
+	 VFDI3ynlEeqOw==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Zhang Wei <zw@zh-kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260910202846.48941-1-rosenp@gmail.com>
-References: <20260910202846.48941-1-rosenp@gmail.com>
-Subject: Re: [PATCHv2] dmaengine: fsldma: kill tasklet before removing
- channel
-Message-Id: <178949379014.248239.9161202230659885240.b4-ty@kernel.org>
-Date: Tue, 15 Sep 2026 23:06:30 +0530
+To: frank.li@nxp.com, Slavin Liu <bolin.liu@seu.edu.cn>
+Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260911060902.94153-1-bolin.liu@seu.edu.cn>
+References: <20260911060902.94153-1-bolin.liu@seu.edu.cn>
+Subject: Re: [PATCH RFC] dmaengine: fsl-edma: check channel acquisition
+ before use
+Message-Id: <178949379263.248239.2249782721178774310.b4-ty@kernel.org>
+Date: Tue, 15 Sep 2026 23:06:32 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,17 +47,25 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Thu, 10 Sep 2026 13:28:46 -0700, Rosen Penev wrote:
-> Add tasklet_kill() in fsl_dma_chan_remove() to prevent a race where the
-> tasklet is scheduled by the IRQ handler and runs after the channel has been
-> freed.
+On Fri, 11 Sep 2026 14:09:02 +0800, Slavin Liu wrote:
+> dma_get_slave_channel() can return NULL when acquiring a channel fails,
+> for example if fsl_edma_alloc_chan_resources() cannot request an IRQ.
+> fsl_edma3_xlate() dereferences that return value to update privatecnt.
 > 
+> Acquire and check the channel before publishing its source ID and
+> request parameters. A NULL-only check after the existing source-ID
+> assignment would leave the failed request marked as in use, causing
+> fsl_edma_srcid_in_use() to reject a subsequent request for that source.
+> The channel resource-allocation callback does not consume these request
+> parameters, so set them only after acquisition succeeds. The existing
+> scoped mutex release and successful-channel return are preserved.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: fsldma: kill tasklet before removing channel
-      commit: 32ac4723e5526c44e5a1f3b1586578c17647f2ef
+[1/1] dmaengine: fsl-edma: check channel acquisition before use
+      commit: bfd958664fccd794377a8adb74b492498c824643
 
 Best regards,
 -- 
