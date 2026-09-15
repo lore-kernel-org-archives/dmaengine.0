@@ -1,70 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8294BC029;
-	Tue, 15 Sep 2026 17:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BA04BA1E8;
+	Tue, 15 Sep 2026 17:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789493807; cv=none; b=tL9O0Lq4YYf8vjNYeFvAGj680wcqMpND6eFN5QsYMFCZNzmzDaOZkvRj51BUhB0mzvCKIAALtaTyjSJXASXYgj7ton9+kgQYyGoNLLjR971wuL5Sxp6IxA38Mt2797IUeQgFmOgFu2CRI5w5GD/u4HGf/3TcaYdTlWb50QRgusk=
+	t=1789493880; cv=none; b=rhJ7dqi6awZUNUe9o/pT1emKe4K8IOjn5Pai977EalJvUvsupaVpD2SaoP3VhjJNBkIAr+cUE37N7xVb16+2Z9cSrW/gLqkMi3i1xC7u0OeRE90k3blwgipfISX9zz8vw73rPsGH8OQHQQPDZAbifcIrKpfSyVs2l62lemRbZNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789493807; c=relaxed/simple;
-	bh=fAKi8r4snWuASdbBpGbKQFoYFIDADCaPlGQhokqyFIA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=sw3t+gO2hSG5ZcZZS1FO6g2BFyG4f8Ve0H6jzRfbOhWkzCaFj+smWE1Mb8++UW+S7cGAfrtKSPU8EtSTUpkOWPo0XXCE6nPPpvYpCtKXL+ZsmHdHtrQK9hWOwgZaAxorgARwZyeQxr5Vb70172lnmgGnD7dAhsjtsnirRAqb6iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJW5gwL/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789493880; c=relaxed/simple;
+	bh=vqM+loLbVQ49Pio2gJlkeeQf7kRbEE26cSbGvNtSZPA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XygMW6C+4v5skxyG6+MQJKGAq1INKQawoZTOVEoiHBx4g1AyW7LjDIxClWqFPvGj+x/sZWeXGhTfkdg9fOxf1s15T3Qh0IoMxJ8DZqRubKHtmB0cGUjI6DVb06BDvL8zbHlo7POsepBBIdkXRtSfQStmwEOOWiAA0OiZWc64YDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BamemBGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJW5gwL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7307D1F000FF;
-	Tue, 15 Sep 2026 17:36:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BamemBGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F081F000FF;
+	Tue, 15 Sep 2026 17:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789493803;
-	bh=roMxPJ54U61xMdFOXy95/J6fQcHW787Tm+FXBJbUVkY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=XJW5gwL/1OisvlbV1Tvzd14L3d6w9hFqSHxyOQiWy4uc8qTjqGUFeKqBQVXSEX4se
-	 +GSyha7AzkhqyWcTQeC8XbWVN1/QfB2/z/kWZwhHLX2lb9VpuY9LGgCL0Xzj72tmPj
-	 0LhvM0gFF+0PzcdDSVtbY99gVp8OtqwJfjbdFIFBuwYKgAks0tsQeMTSBMN0NyeJDe
-	 UKZmtyeCh9yy1gyTi684It4yGs4/5CGZSYqlD5dSvZZlsxLqrm6TUymAM3lnytVnS9
-	 A8HVGcn9W18T7gRVhUnV+V8Pa4rrACKvUjmI5ekzXtjURvOat2y9rYVZvzC6aTI/dU
-	 refT0XGwvhd0w==
+	s=k20260515; t=1789493878;
+	bh=lNOmklwMT3+8WwCRItuHkffYh/JkNHAawYZ2FWhI2k0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BamemBGZLZEiNhzMEf53sH0aaBEGi/k7AS44kJ1lRb72jC2kMNobzBmsJjmYi4HPs
+	 B3BxYdYFv/95wWGhWlLtkqBX084LIjizXy765ex13o62PZFGhuQviruML7X3jHwNl9
+	 0pBZowc7i0vXoSJ36xFtqKoLH+7c4x2aqEU7AkRvQm/QJ8Z+CuVFktxBjV6HHmU4Am
+	 SNP34f0gL9dnEuASoKHV0rsWJZA9AnRTZfio88imGgIc0sdlsWCvj7RHjEONeIg+/P
+	 jmiGOUetPwMRYR6sordYsfjRBHVv/2mvRiomODvdIsnUBQPIotj1bZ6YcTKlGPOz3o
+	 UbkETCel8UBVA==
+Date: Tue, 15 Sep 2026 23:07:53 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20260915072853.58587-1-rosenp@gmail.com>
-References: <20260915072853.58587-1-rosenp@gmail.com>
-Subject: Re: [PATCHv5] dmaengine: bestcomm: use
- devm_platform_get_and_ioremap_resource() to simplify code
-Message-Id: <178949380204.248239.15012767548995542976.b4-ty@kernel.org>
-Date: Tue, 15 Sep 2026 23:06:42 +0530
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Mark Brown <broonie@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Tianchu Chen <flynnnchen@tencent.com>, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-sound@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Dave Penkler <dpenkler@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
+	Nicolin Chen <nicoleotsuka@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: Re: [PATCH v1 7/7] dmaengine: Remove deprecated
+ dma_request_slave_channel()
+Message-ID: <aqmCcXRa3EIsIU6k@parshuram>
+References: <20260915100931.3593242-1-andriy.shevchenko@linux.intel.com>
+ <20260915100931.3593242-8-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260915100931.3593242-8-andriy.shevchenko@linux.intel.com>
 
-
-On Tue, 15 Sep 2026 00:28:53 -0700, Rosen Penev wrote:
-> Replace the open-coded resource lookup, request_mem_region, ioremap and
-> the manual iounmap/release_mem_region cleanup in probe/remove with the
-> managed devm_platform_get_and_ioremap_resource() helper. This removes the
-> now-unused error-unmap/release paths and simplifies probing.
+On 15-09-26, 12:04, Andy Shevchenko wrote:
+> No more users.
 > 
-> Fix a resource size mismatch between allocating and freeing where
-> request_mem_region() and release_mem_region() hopefully use the same size
-> but is not guarenteed.
-> 
-> [...]
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-Applied, thanks!
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
-[1/1] dmaengine: bestcomm: use devm_platform_get_and_ioremap_resource() to simplify code
-      commit: 0a8dda0a15d3926422d286567f945a05328a4ac6
-
-Best regards,
 -- 
 ~Vinod
-
-
