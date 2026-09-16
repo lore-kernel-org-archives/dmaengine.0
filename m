@@ -1,236 +1,112 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-qv2-f40.google.com (mail-qv2-f40.google.com [74.125.230.168])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BDB36493A
-	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 03:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C6B456E00
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 07:38:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.168
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789529445; cv=pass; b=qO68xy4fUATj7Z/Zo3+AF6A9GoJaMhQ7DIlG+wLddProHsu4X2/JpU5Wb92Ruimd4L2e7BqFQ1jLCKJETVNcBABSilO0VUICdHWQh9Xb+u6+1lJrmmZGY/4VnFUT5itNHa1rCB49JWqnu1W9ilebCC6Lsp+wnjL7UcVzt8Ba7VI=
+	t=1789544320; cv=pass; b=qKYxM91AwlxFy3qniAZs2AN5uP7bXBW5pw68VfH+fd0kI5b06UT7j+81/sjQYHKxZoC6pwrXHyIBqY9dkfgiLxW6CylFvj6DSRr+WAJxUFrcSbOkspkwn2fOp3KQTcEd6yWlKapCfJXPNgN9ECq3pAKarDRqpOpqk2yNGCgTY8o=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789529445; c=relaxed/simple;
-	bh=K9IGp7wMzcm0ipHMR8TG9YSgdmNh9Pwyoo0H/rmFIBg=;
+	s=arc-20240116; t=1789544320; c=relaxed/simple;
+	bh=hQYBSbI5ZDykG/tHrbEEtWawqAnT4ZwcW8GfIYLRIEU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tzYKvPly5EwlfmyGjdl7sBjcz0yIXdCenO+XXgv1kzXVHIfwIAK77hE8RIkrpwCOKTfytrD/NPZHruywhcAvGFYsGuUvSQ4xPWHnkWI50He7L0mco+mWJ1qc8lGpfoDhI7xCOCDxhxRdX2UpQ5bw0NuDEsO098OAXaLQjav9lNc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YE7t3A/y; arc=pass smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=b2BS6HzInlEhU+4MDIApqynMReKFE64Bd8Igq58yY5vmZSAYjBjY62ipxaSjPSzeqgsx05+R2ucG7GFsYZiBz0nrHaY7SRdIvqzzOrZAESqY82Kf5pyUwl7+vyvnIP086cSAv3nB5GI5IZOXPwyfGq2Vy2/Iib/Z2j8oOJ6Ra5w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk; spf=pass smtp.mailfrom=thegoodpenguin.co.uk; dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b=b32oWsj1; arc=pass smtp.client-ip=74.125.230.168
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thegoodpenguin.co.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thegoodpenguin.co.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YE7t3A/y"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2dd88a115c1so4900395ad.3
-        for <dmaengine@vger.kernel.org>; Tue, 15 Sep 2026 20:30:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789529443; cv=none;
+	dkim=pass (2048-bit key) header.d=thegoodpenguin-co-uk.20251104.gappssmtp.com header.i=@thegoodpenguin-co-uk.20251104.gappssmtp.com header.b="b32oWsj1"
+Received: by mail-qv2-f40.google.com with SMTP id 6a1803df08f44-90cdfe57a3bso5418046d6.1
+        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 00:38:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789544310; cv=none;
         d=google.com; s=arc-20260327;
-        b=rzesY0cHhkK8+KsUkvrqpJ5Qe07XyIhIvTkproc73gyVV6YVqMMfpq0IK6bvX8FTGB
-         /rvfc5eczKALuViJ3rPSOXOLd85xQaHSB83jo0xaKfVkuVo7dsh36kZPW3XIS1L7/5jt
-         QEJpKs7s7+yLf2+TX5mDJETX4ZNeDQcgAu644unqQYkGcbxchywDeqkNE2o2Y43Baq/3
-         UW3NczU8LroW9CY7ZuO0LQOhCJtzfpwjLPhZQnrvuVItltOPTakQ1u3A+pZc9Au5yO5w
-         wRoynrlAH0NpI5WjQDQUbf74PKjNl02al9Dx4n5xGaV6Ga4ZnlvpDepoQfRZrRpgU3MS
-         mq6A==
+        b=WwQvwqiwUansZfhKPCgiP+urtuDjPRXq79e3VcHHVbdl2FZJB5vUaifUAeUcaRKC6u
+         BQq6QwzDximOAGaB7k8uB/PfPC+ic4xSf0k3eN5VNgY0h2vasmShOErGyKsS4NXEuR6G
+         myn0qA0TZQFL3P6DCbsYIpgBmMh/P3thE8bx5GYTh4vfUno0ULho1lrgX2JjdFb3mUib
+         K23dMqe4q6zOOncDEyobv76faqfn/LNAud8S6m3A2/+3wk0yC2EqOiT2JNvNnoVsrgnL
+         cuSeChzls02AzvbW2lp7C5dKnfuVnr3FOMpo9gyCGE0aAyaxu9cfi1hMh6DRzOT5kaBX
+         DPFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=oQBcZLRQSJNhtU+t6MQeVLZ2u/wOeujIUGm2gsEJiuY=;
-        fh=zGZBPYMc9W0j65Dv0RobByLEl8523MOb+tR7dC0a43g=;
-        b=nXpr7OyTUXULx1NsonpOyC/Ht3A7jvCYZX7omZDALw6PejoZcf08EoOAtnembQAIOo
-         gaJZzS3Vjn7mNq1ytUWFLEa5HwV/a1lFrs9DVkuRmaCkiYsejmKUlE0aQcpA6iIh4opy
-         ChYgIdb/1oP2AGde4M9RaLiwZ0mzKWmn0ffOCkAVLjeTaQfSsTSLMVprOrpfx7lnsORM
-         B97Zvj1NaMp9XdKRLA9qIO9XktrFRk7vrr431nf6J8f7EA609YFPitsZFEENw7YmoIqq
-         rdFor1PqWIHCq+i1piSgVb1PsIP28gKIKLNMa3xJdsFUiJUj9kMu1jE5bOUwkP64e3YW
-         OMJQ==;
+        bh=hQYBSbI5ZDykG/tHrbEEtWawqAnT4ZwcW8GfIYLRIEU=;
+        fh=QCFvEOAGZKvricLzVhdMkM311lspggK+leGurs9v6Ks=;
+        b=nUoI8irvIyveq7mKy4kkHC8nDjXJEmhRzjQfGrc46BXXZO/FOEk8oaIrXZiJmUEfGS
+         EGC/RCRXHOOlOwzZcZm6aVfd+Stxou31G8p8CdT/lQUYaEl7UYd6xwecQzjPyhK6bArp
+         Ybuy4qafVC4Dfc5wSli+uLoLLYtL5lZoNKgHyZnPYm4iQ023VUxw+XB45f8/bRSwFx8b
+         lcGnx+WhC6FJIjf1qQJkZPofMW33OLXh2kChIyJxPAIsE2L8ikwknSBMUGi77BAR+wKk
+         nCzalJRyxQ6iDD2jxhCgEkyG0AUk5/x8IJ5MA9RKn+u2YDgQ6jqqKWM2qsnEksUXv97z
+         Q63w==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789529443; x=1790134243; darn=vger.kernel.org;
+        d=thegoodpenguin-co-uk.20251104.gappssmtp.com; s=20251104; t=1789544310; x=1790149110; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=oQBcZLRQSJNhtU+t6MQeVLZ2u/wOeujIUGm2gsEJiuY=;
-        b=YE7t3A/yJ+mdGE+CO3NN+3g6tybzbT+gL9pQ6Tufy2EGD0TqLgdSnO/XbmA/0oELAO
-         mWY04psHGsKYlCCEXn4CD9BVJrsKv/e8vVgVvPdR6juGWHN4upxe/hKdEGB2TJYKuu0A
-         psQNSM+F6A1x9k7HI+GqgjPwcza2JGxSN4HculNIWktPAWjkYz0kDJV9n0DakY9r+dVz
-         Wjw1Wkkzs7JBix61EypUze3lVK4onQ+eWN/BDxyDj5remMHi8OeFEpCZha58ESb6chUN
-         bWhNAe06E5lSW73NrUUxG65jsP6GW+2W5P1GyoLfbkcgDI19KybfF7FWkrqMnfKc+yCh
-         KVqQ==
+        bh=hQYBSbI5ZDykG/tHrbEEtWawqAnT4ZwcW8GfIYLRIEU=;
+        b=b32oWsj16mxTGEh19RvHUbkJHkIwah2h4TxsF7HLpV77run0DEsVR+XTo1qDJ8oa4T
+         Euveeympooh5Xdh/tx8nLhieBUztvkwi59ZmqrtrstKXcuKX/8HePXbWUDJtk92OnJ0t
+         RYQo1azCxSMHljt+rD4MxrYz6cmXmi/Bjp3FCAwU9TDBzeVW6U0Mp83DglrETsfFfhIj
+         12oLXDWMbFw+aK5Bo76A4EtvXuW/tG46PvDMTssINITG81T4a6/Z3vmpa5g9Ymldbh5X
+         uYuSzKKtasN/Rd2D6iNOLKOddvvF8PRXU9zZFFzLa36hHU6vF767LIHV+9f3RHeqFu5X
+         An0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789529443; x=1790134243;
+        d=1e100.net; s=20260707; t=1789544310; x=1790149110;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=oQBcZLRQSJNhtU+t6MQeVLZ2u/wOeujIUGm2gsEJiuY=;
-        b=zUbxGgEr5HEsyOT7cLYdcWZAQY7F8x0efRFoZ4edBPfPN1ixRGAFW5yk+9c+p5kZMF
-         tfFLJUFE6EGKzxYl8CMDSpUBIeCSAvD8Ih8OsomkWShZ5a83B41INoGKw4kyh5D87oYQ
-         iogOrZZdGmrCmrfc+trPXpwr2uB9SHCB6HBeGMLAF8UU6cf95fgDO4S8bv3G5oZGrzAZ
-         NzKvwqjHM56VM6D7XRB2ei4jneJ2vWn55zgebgPtnOz3AITzH3PHK1sxJCE3HdWZKqfi
-         B8gglPlHszSKo4ZNNOHg3Wr/AxICY5fwfSCWt3lNjMoV800ns85yzhrl9RoPWlKDEYcB
-         DwoA==
-X-Forwarded-Encrypted: i=1; AKwUvBzPgzCXW3Uk5AAOGoG4Sgz0991bJlEtJ61zedDFMuXw0LUqy+b2/+UxC/YczorZGg+GLqORgBayd6A=@vger.kernel.org
-X-Gm-Message-State: AFuF++ly4jq3QFgiXdJVuSIboEP+60YTR7Z+thCCwExkzyno/gvPp2Us
-	oXuEvjxfu/CNk2WJ8r+Hztt91y4w7vRz2tpubIzMIBCae1SpBM/gPkGkMeC0L77NnNiY/do/e6k
-	kv53h1vasdsPHYKO54uE6AylRoC4CcMs=
-X-Gm-Gg: AYBFou3IJggxK5Rx5iIzjQ1fMnOA+QT6Ijddim2nH3BMcRhG+xKXb5KTcxX5qU8GNYb
-	NFWfrHicaSX4Xb+sAKmZdRWUOdSzw5L7LUiR7rQWui2t5kf5LeD5EjB28w8d5luOuxGzX1+i4Bh
-	6w4P8KS95bp5JY9zrOWs+3G9wuGyKswXlvJ7uK35io2ruHQRr37rpa7NrVHRTCjI7ECfy+3MseK
-	iNExtugZn0/czRm9Z98l0T3rIwAfQrv8ccngwMbKyZhOGQ6cVCPh8m9vNMU7d5orZM67Da1bOhN
-	i6iMXqCDvrtizGINAMPyGH++IOkJhwotzXAYmmxmKQMEH1GYgyIItsSCYmUUGfPNzZk=
-X-Received: by 2002:a17:903:1ac5:b0:2cc:864b:539 with SMTP id
- d9443c01a7336-2dd8e003302mr22506815ad.6.1789529443281; Tue, 15 Sep 2026
- 20:30:43 -0700 (PDT)
+        bh=hQYBSbI5ZDykG/tHrbEEtWawqAnT4ZwcW8GfIYLRIEU=;
+        b=VwAuhJ3e1/+jv9E8Sz77ShuogJ8pchdPRR2LVz7awfs0RTgb233wAdvibl57qHrOXl
+         0PRRE8AxvWVDZiGFH9KpVNKdyxU0sCCNRnyvHk4OWHhkF55msKNnpKqcsBTJtNTsWdzJ
+         b2bWhxgLgWvSyLxFjduR/fTJPCkGTMbJx4NaPLfOZ5nzdEdP0CblwP4IuC8HO4WoQaGJ
+         dAL3che5jgAhORySjtXuBYzbrXzzqnrFW8MuJtq2kJ2hC6HXKNt5DtcCL/TIpOr9Fyj1
+         blweCpeAOF3T85Y+u0PuFRrFqhQ9L7Bkzgg2v616dxtrGfxeESWY1Ms/2YqC9uVeo/0o
+         LX3w==
+X-Forwarded-Encrypted: i=1; AKwUvBxxwDu/FjGY5EwY6YBO0s4F5ZFpIL3l0jz8N+buPA7UTqx6NxOa0b4CGGF/V0Bb7TEZs9nFCd9ETD8=@vger.kernel.org
+X-Gm-Message-State: AFuF++kk8bAZNJ/6caVAB0SROO1KZSQ+OJoPthyXyKda2twWWwtyOnmW
+	q4uJyAzNZtxJctYKNOQ5XJDAaFXj0ejeWQy+Cm9ZDtXJ0gsz3r1RegQJIwBHCR+jQ6B/b5D9Wn8
+	PJtFJbszfDLq8RLeRZuwyD3FJG01DLYSenWE92E+01w==
+X-Gm-Gg: AYBFou3C71meGhXdik+1OLiMwxosLoz57Y//bIHKn0cVqR1VYal2QNquRYFFY58CJg8
+	7bX3inODWeWDESfiHJ+33/pqZCmBLvMUJzquXmzyBUuVNwY4ZBERXFe21kQ3gZzJeoj+VPexuUw
+	COmRgxlTCrwcTfnWY8Qbv0J2/C+f3Wwu53f9++ZRne7oDFt3A2jrhLtYZP7NDPzHtEWAg5C9FGO
+	yxy816jUGyCw48J2mZifBpZZtE41ubqGPPf/YeVAnRbiYBrszRyf9unyHK0f/Kx9+Wk9rBfiXAm
+	O618OlLDmYQmWPxDR8Qh1SdYFhjYH0zVg0r8uxrevISi8bJrFr9rXKe3UZWixT5WhSSO5s3Ary7
+	Lz7Qm9uf4CaNr
+X-Received: by 2002:a05:6214:500c:b0:910:6ffd:a941 with SMTP id
+ 6a1803df08f44-9123d721985mr29575576d6.5.1789544309746; Wed, 16 Sep 2026
+ 00:38:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260915100931.3593242-1-andriy.shevchenko@linux.intel.com> <20260915100931.3593242-6-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20260915100931.3593242-6-andriy.shevchenko@linux.intel.com>
-From: Shengjiu Wang <shengjiu.wang@gmail.com>
-Date: Wed, 16 Sep 2026 11:30:15 +0800
-X-Gm-Features: AcwNN1XutB8iZg2AF0p02q4kvkV9mnifXUYQQ4fzj9LiCitjAIk_rhIx4BZpDsc
-Message-ID: <CAA+D8APje43K1vNagzzH4yX=q1fx0Ntwa28fuFfyhYt5MRCkbg@mail.gmail.com>
-Subject: Re: [PATCH v1 5/7] ASoC: fsl_asrc: Replace dma_request_slave_channel()
- by dma_request_chan()
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Frank Li <Frank.Li@nxp.com>, Mark Brown <broonie@kernel.org>, 
-	Shengjiu Wang <shengjiu.wang@nxp.com>, bui duc phuc <phucduc.bui@gmail.com>, 
-	Tianchu Chen <flynnnchen@tencent.com>, linux-kernel@vger.kernel.org, 
-	dmaengine@vger.kernel.org, linux-sound@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Dave Penkler <dpenkler@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, Xiubo Li <Xiubo.Lee@gmail.com>, 
-	Fabio Estevam <festevam@gmail.com>, Nicolin Chen <nicoleotsuka@gmail.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, 
-	Robert Jarzmik <robert.jarzmik@free.fr>, Lars-Peter Clausen <lars@metafoo.de>, 
-	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, Olivier Moysan <olivier.moysan@foss.st.com>, 
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
+References: <20260907-acpi-dma-v2-0-0ffe4a007992@thegoodpenguin.co.uk>
+ <20260907-acpi-dma-v2-3-0ffe4a007992@thegoodpenguin.co.uk> <aqlzjZigicrtyh7o@lizhi-Precision-Tower-5810>
+In-Reply-To: <aqlzjZigicrtyh7o@lizhi-Precision-Tower-5810>
+From: Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
+Date: Wed, 16 Sep 2026 08:38:17 +0100
+X-Gm-Features: AcwNN1Vn5ljoRLzFV2GiG-9S0jHlKDZRzXLPscawH2jK-lpFtONtbul3vK317do
+Message-ID: <CAA6zWZ+tBBWdsZFGySWFsRKFq-FYy36QAYVQtUOPZ4GVGDYudA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] dma: qcom: use named initializers for acpi_device_id
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Viresh Kumar <vireshk@kernel.org>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Binbin Zhou <zhoubinbin@loongson.cn>, Sinan Kaya <okaya@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2026 at 6:09=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+> Please update subject, correct tag is dmaengine
 >
-> Replace dma_request_slave_channel() by dma_request_chan() as suggested
-> since the former is deprecated.
+> dmaengine: qcom: ....
 >
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> Frank
 
-Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-
-Best regards
-Shengjiu Wang
-> ---
->  sound/soc/fsl/fsl_asrc.c     |  2 +-
->  sound/soc/fsl/fsl_asrc_dma.c | 13 +++++++------
->  sound/soc/fsl/fsl_asrc_m2m.c |  8 ++++----
->  sound/soc/fsl/fsl_easrc.c    |  2 +-
->  4 files changed, 13 insertions(+), 12 deletions(-)
->
-> diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-> index b24737add001..ae682bf450f6 100644
-> --- a/sound/soc/fsl/fsl_asrc.c
-> +++ b/sound/soc/fsl/fsl_asrc.c
-> @@ -638,7 +638,7 @@ static struct dma_chan *fsl_asrc_get_dma_channel(stru=
-ct fsl_asrc_pair *pair,
->
->         sprintf(name, "%cx%c", dir =3D=3D IN ? 'r' : 't', index + 'a');
->
-> -       return dma_request_slave_channel(&asrc->pdev->dev, name);
-> +       return dma_request_chan(&asrc->pdev->dev, name);
->  }
->
->  static int fsl_asrc_dai_startup(struct snd_pcm_substream *substream,
-> diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
-> index 2f662bdf14d0..5cd12781c604 100644
-> --- a/sound/soc/fsl/fsl_asrc_dma.c
-> +++ b/sound/soc/fsl/fsl_asrc_dma.c
-> @@ -191,9 +191,10 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_com=
-ponent *component,
->         dma_params_fe->maxburst =3D dma_params_be->maxburst;
->
->         pair->dma_chan[!dir] =3D asrc->get_dma_channel(pair, !dir);
-> -       if (!pair->dma_chan[!dir]) {
-> +       ret =3D PTR_ERR_OR_ZERO(pair->dma_chan[!dir]);
-> +       if (ret) {
->                 dev_err(dev, "failed to request DMA channel\n");
-> -               return -EINVAL;
-> +               return ret;
->         }
->
->         ret =3D snd_dmaengine_pcm_prepare_slave_config(substream, params,=
- &config_fe);
-> @@ -404,9 +405,9 @@ static int fsl_asrc_dma_startup(struct snd_soc_compon=
-ent *component,
->
->         /* Request a dummy dma channel, which will be released later. */
->         tmp_chan =3D asrc->get_dma_channel(pair, dir);
-> -       if (!tmp_chan) {
-> +       ret =3D PTR_ERR_OR_ZERO(tmp_chan);
-> +       if (ret) {
->                 dev_err(dev, "failed to get dma channel\n");
-> -               ret =3D -EINVAL;
->                 goto dma_chan_err;
->         }
->
-> @@ -497,9 +498,9 @@ static int fsl_asrc_dma_pcm_new(struct snd_soc_compon=
-ent *component,
->
->         /* Request a dma channel, which will be released later. */
->         chan =3D asrc->get_dma_channel(pair, IN);
-> -       if (!chan) {
-> +       ret =3D PTR_ERR_OR_ZERO(chan);
-> +       if (ret) {
->                 dev_err(dev, "failed to get dma channel\n");
-> -               ret =3D -EINVAL;
->                 goto dma_chan_err;
->         }
->
-> diff --git a/sound/soc/fsl/fsl_asrc_m2m.c b/sound/soc/fsl/fsl_asrc_m2m.c
-> index 4bc40f328f58..e440cc083ebb 100644
-> --- a/sound/soc/fsl/fsl_asrc_m2m.c
-> +++ b/sound/soc/fsl/fsl_asrc_m2m.c
-> @@ -503,16 +503,16 @@ static int fsl_asrc_m2m_comp_task_create(struct snd=
-_compr_stream *stream,
->
->         /* Request dma channels */
->         pair->dma_chan[IN] =3D asrc->get_dma_channel(pair, IN);
-> -       if (!pair->dma_chan[IN]) {
-> +       ret =3D PTR_ERR_OR_ZERO(pair->dma_chan[IN]);
-> +       if (ret) {
->                 dev_err(dev, "[ctx%d] failed to get input DMA channel\n",=
- pair->index);
-> -               ret =3D -EBUSY;
->                 goto err_dma_channel_in;
->         }
->
->         pair->dma_chan[OUT] =3D asrc->get_dma_channel(pair, OUT);
-> -       if (!pair->dma_chan[OUT]) {
-> +       ret =3D PTR_ERR_OR_ZERO(pair->dma_chan[OUT]);
-> +       if (ret) {
->                 dev_err(dev, "[ctx%d] failed to get output DMA channel\n"=
-, pair->index);
-> -               ret =3D -EBUSY;
->                 goto err_dma_channel_out;
->         }
->
-> diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-> index aced16d1228a..d30cc3e90215 100644
-> --- a/sound/soc/fsl/fsl_easrc.c
-> +++ b/sound/soc/fsl/fsl_easrc.c
-> @@ -1433,7 +1433,7 @@ static struct dma_chan *fsl_easrc_get_dma_channel(s=
-truct fsl_asrc_pair *ctx,
->         /* Example of dma name: ctx0_rx */
->         sprintf(name, "ctx%c_%cx", index + '0', dir =3D=3D IN ? 'r' : 't'=
-);
->
-> -       return dma_request_slave_channel(&easrc->pdev->dev, name);
-> +       return dma_request_chan(&easrc->pdev->dev, name);
->  };
->
->  static const unsigned int easrc_rates[] =3D {
-> --
-> 2.50.1
->
+I checked the history of all files touched in this series and all
+existing commits are tagged with the dmaengine tag=E2=80=94I'll have to
+correct all of them. Usually the tag/list name matches the in-tree
+directory name, which caused my confusion. Thanks.
