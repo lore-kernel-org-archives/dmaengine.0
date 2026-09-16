@@ -1,96 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lr2-f4.google.com (mail-lr2-f4.google.com [74.125.230.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB41B4A9D61
-	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 09:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE75A3A5E91
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 12:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789551824; cv=none; b=CGsATu4cPqh78TWan4g26dOi+5L4ii4p2q5xvUYwSIWQ/zlkPox+wtBu40qgcEuVrP2EyKE3MP/V1PLO6s2rDZ7rV8DPvJA66ozNG7BIDyAXLOJql0a/4UgZtChoRYytu09986BcyonJEnQECeK5n5WMjcWVR0cp73I3hTFZ/ZU=
+	t=1789560290; cv=none; b=nbgYGo+M/BP82E1zbLWGoGIfwtDcOslBO9lSM43suQB695KQowwx57/N4x4auvJkL5k+H12iHubNxw5975uVlE4/G7D5/j2MS1wPatsElT45N1+biUCK52YDuZVbwIgZM0dx91TIdmjSxo1Kmg679VoVXf7OfTuvW7QpcNnBspM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789551824; c=relaxed/simple;
-	bh=ZRuXNBYHExOE3/RH8bx2JfjKK/5sPYfX4JWZeRJEFug=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iUOhl/yBpc5WmQ7OZjOoZTJIQlwK0F7EpQW16FxJSLqgmL6o3Z6jdr+bhieaj7T/g5OxzscQyBVjcQQxahUgZI1fzyTjF9oZ0Z0Tfh046ZzsdcqQBp2TWjK/9CPQXPZ9HriK42fu+o2nosMu9bIxbfxf4RsjOvRy9ilvJlqYwiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M7ObG/wn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789560290; c=relaxed/simple;
+	bh=3zmL3ewY1kdparMjXtYd5YfgrB/htIhzolzkpwgWTug=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=np+RvoeYyBdcZUCKnZZIp1vyxczCU9Mh9M3tJknjNNkY+xfzR8gbSqKN+63dAu5futx7GEQQs0TF4q8Ia24HNwGG4UtRmSBzmU4+X0HlrMxv+ER32J+casSX3VxVvJfRoNdVr1gt3WyzNnMNXiFVKvlwuHnT98pZDxE0q27xZU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sN+p7ZKp; arc=none smtp.client-ip=74.125.230.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M7ObG/wn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E304B1F000FF;
-	Wed, 16 Sep 2026 09:43:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789551815;
-	bh=8Ua4t0HO4UQC/kzDkPtBs+qbnhLlLuBvgYZ4qn31FrI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=M7ObG/wnocL7dZMRkKafsw5Omr3CN/YdS35bJiXgtoSHi1tjg7pGwZXQ0WJSoCYTP
-	 IY5jYFUUMSPSXqFKKFwLfwru+zinTkrY6Ig1tj4yb9FLEJl+xO55nLKenHGupFER9Z
-	 n6wJa1cj0MnsMHjIG9UNxoUErQf/mmtXhKsZhbBVi+PZb1lB8RaIfXI0NGIxlatbAx
-	 zGDRBXJ6USnbqSm6KRByPJOyb3fRZTXObEfTiCVy5gHFRRbcjsHxMpixiHMqtAxdpX
-	 P9OCbPp6Sjtt18Tt01rS/mSApQPTqj6s3+/SXVPkGAfUxjIsdyX/IjTCp411qHYXez
-	 I7E3u6UwLFENw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: qcom_hidma: Fix runtime PM leak in
- hidma_issue_task()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Wentao Liang" <vulab@iscas.ac.cn>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260916093032.2003397-1-vulab@iscas.ac.cn>
-References: <20260916093032.2003397-1-vulab@iscas.ac.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 16 Sep 2026 09:43:34 +0000
-Message-Id: <20260916094334.E304B1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sN+p7ZKp"
+Received: by mail-lr2-f4.google.com with SMTP id 38308e7fff4ca-3a49bfe419aso14248651fa.0
+        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 05:04:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789560273; x=1790165073; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dmdeb4lnNoJH7OwXB9Rluaec5aBqbfZHRKlp2w9jCKQ=;
+        b=sN+p7ZKp9bCgL7VATsMW94k9bC1dZX8SmkLo5Oiq+Br5hgeHG1nkXECrtZKy0URCsj
+         9RuV0QurShCZTjz8Ros9NwKAQBjCiS/YXdQQw/qykGEBfXf3K+R8PFuLfkoa6+D1t7L9
+         uLYSlAX+ThTLLZhZFcR5hU6TRL0u/OZL/ndyXsVOiqWZL5a3dR+OEAr8S4hO42ACp0sV
+         Jip2Na1rOBw+R7kdv9EDiF55eWBOlMdGcLMFnqrkVeFjKqDpFr3XvS/l2Ks0RUcU6Lsw
+         Cb6mSZoqdoJF1o9Wr0jk4zCKlM7r7w2gc8/p/0bfaFcCz86T0OtHhm5iqZSecRU7/7l8
+         2U2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789560273; x=1790165073;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dmdeb4lnNoJH7OwXB9Rluaec5aBqbfZHRKlp2w9jCKQ=;
+        b=WUXsEMN36iC521mqVVWUAuh28XrdDVub5OirvBSBTiMTLPFhj/DLxUH8F70d70amLr
+         kzjoOAfra+WuzjthrB2AWYsFEkeFSssMEAiRlpf0d6gt6KyyKvvZWPBW0/c9u5ysvNwT
+         OowP32DoGOBltdCT5mC3CkyB4dZI1wmmIUjw5xnsti70XMsbcO+i+xJImo3DEQT+Vr4o
+         O1C2BtqvruIQJESzmQtJyuAKAEltcQMt/d7ERGkGfLDwbzEMCB3+rriHZbViKMvBsDkN
+         z4/fLOiCtNd18hpKPHW6yfvA9pIVWW1BTlub+1n4MHJ3tZKpGTKCTm5fTgjMxI2CHwZt
+         AeNQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwrMRq1pyWQsqBT+W7BAXhCKaCL2Ba4C3bzgR4cJAQwDzjOoYbZcfi2h/Kp4iYuw8K9cV4c83eLZyk=@vger.kernel.org
+X-Gm-Message-State: AFuF++mvXOJOoCRNCMwnLsb6ayYFJD7GKgfR+0xlWJt0TR0TcbQ6txgq
+	uSFTNvdmCqh9ut4aTaNwZK8Pl/8XosDWMzxBK6Psm5F9pPSUtrAHcCfx
+X-Gm-Gg: AYBFou1fau1tr72WJ3fs+sJ9Wf254hrAqGaYn/IRnnE4uFsxM9Xl5G3+MTNhdv3o6nW
+	OzHme+k7iNfjTayRP5e1ZCJ8kGqffJ154awWXqEIm/VKjJyigcO3MWGMF//rlBvdTN/LJLwjTmK
+	AWqZdDFhAJvtQiLtvdfeb/SDGLhglDlQIv+Ac26XkL0f7r3vD1FX4wFMSLl3R7RAn6tVmYWSmdQ
+	6Io/1mbkYxMzkrb4Nm8XDNAcw7Gg3jbQqrScxkS/t7r34VA1h0vust4Xqlv2eS1/94jYcGzoc35
+	kSbENz7+2P9Kq0TTBT2x0ATZjchysl0C4NtSu1uJQachUUu921aA8+bDhmISZQ/LCiGtJLscaRI
+	X1CQUyFHKj//JsIb7biS+s81wjL5vEMpL5kFyMPFe5T+pkoR3lY6qOQHBPdIXWbMTu6Gh0QDfgx
+	y0Rr9cRAI4SHVWf39oVHVh89D2dt5v8eq1YVsGRsLolJSHbNpO22w/vsR11ardCyLohJndP18xk
+	xxnrhq6bGmTgfyk
+X-Received: by 2002:a05:651c:41d6:b0:3a5:b0a5:3ff2 with SMTP id 38308e7fff4ca-3a5dca291e4mr10260111fa.12.1789560273060;
+        Wed, 16 Sep 2026 05:04:33 -0700 (PDT)
+Received: from localhost.localdomain ([78.40.184.2])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a5dafee366sm5974541fa.42.2026.09.16.05.04.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 05:04:32 -0700 (PDT)
+From: Roman Demidov <roman.demidov.nn@gmail.com>
+To: stable@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Roman Demidov <roman.demidov.nn@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	lvc-project@linuxtesting.org,
+	Koichiro Den <den@valinux.co.jp>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 5.15] dmaengine: dw-edma-pcie: Reject devices without driver data
+Date: Wed, 16 Sep 2026 15:04:06 +0300
+Message-ID: <20260916120408.145211-1-roman.demidov.nn@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] dmaengine: qcom_hidma: stranded active descriptors on pm_runtime=
-_get_sync() failure
---
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 77de19698670459fd2543b487a29198a77d2c2e6
-Author: Wentao Liang <vulab@iscas.ac.cn>
+commit 11d7cfe0c119691b2dafbb699bbca90258c678aa upstream.
 
-dmaengine: qcom_hidma: Fix runtime PM leak in hidma_issue_task()
+dw_edma_pcie_probe() treats the PCI device ID driver_data as the
+template for the controller layout and copies it unconditionally. A
+device bound dynamically via sysfs can match the driver without that
+data, which leads to a NULL pointer dereference.
 
-This commit fixes a runtime PM usage counter leak in hidma_issue_task() by
-checking the return value of pm_runtime_get_sync(). If it fails, it drops
-the counter with pm_runtime_put_noidle() and returns early to avoid starting
-the transfer.
+Reject such matches before enabling the device.
 
-> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-> index c939635be21d2..5ed6c77e2b212 100644
-> --- a/drivers/dma/qcom/hidma.c
-> +++ b/drivers/dma/qcom/hidma.c
-> @@ -219,7 +219,10 @@ static void hidma_issue_task(struct tasklet_struct *=
-t)
->  {
->  	struct hidma_dev *dmadev =3D from_tasklet(dmadev, t, task);
-> =20
-> -	pm_runtime_get_sync(dmadev->ddev.dev);
-> +	if (pm_runtime_get_sync(dmadev->ddev.dev) < 0) {
-> +		pm_runtime_put_noidle(dmadev->ddev.dev);
-> +		return;
+Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260521142153.2957432-3-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+---
+Backport fix for CVE-2026-72147
 
-[Severity: Medium]
-Does this early return leave active descriptors stranded without cleaning
-them up?
+ drivers/dma/dw-edma/dw-edma-pcie.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-When a DMA client queues a transaction, the descriptors are moved to the
-active list before hidma_issue_task() is scheduled. Aborting the state
-machine here without initiating the hardware transfer or failing the
-descriptors can leave them permanently stuck.
+diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
+index 2c1c5fa4e9f2..84d5a1d1b2a8 100644
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -151,6 +151,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
+ 	int err, nr_irqs;
+ 	int i, mask;
+ 
++	if (!pdata)
++		return -ENODEV;
++
+ 	/* Enable PCI device */
+ 	err = pcim_enable_device(pdev);
+ 	if (err) {
+-- 
+2.53.0
 
-This could cause DMA clients to hang indefinitely while waiting for
-completion callbacks that will never arrive.
-
-> +	}
->  	hidma_ll_start(dmadev->lldev);
->  }
->
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260916093032.2003=
-397-1-vulab@iscas.ac.cn?part=3D1
