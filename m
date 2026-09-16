@@ -1,247 +1,218 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B642547F3DA;
-	Wed, 16 Sep 2026 14:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29B937AA8B
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 15:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789567282; cv=none; b=OaisuVk6Zr1cfZUeIbh4a2TSp5eWec0qrpyVYhy4husiOTssOP8OimiE4kNH/xrjMEoJmi7U6+COngHuZVCEKf94wBKYBE2lWSyHRDmhXpPnDkkh9Q4R/2iGWhR28JBPt2mpt70zyigmEpfDMYdo6Zkk3EwpKsg16eTpwObKyuU=
+	t=1789570866; cv=none; b=smlOwx8XcK9hxy0/bYuICQ6hfKnltuEw5lqssRv2luN8vthiqdBsr5Sscj8zRQ1SpK+nD4L5la7YoFy4lneh0Ca5wefhbKtwNlmEsJRnujtJhNgMX0DBne6uZ27gJLs7KvaZBp6M12ZzAeWRsqMCEUJJKhzHspgSTFqzf/yjsLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789567282; c=relaxed/simple;
-	bh=35WvrnphmQ+0YDenDXBRONafnNX0qIaqsdvHsoZDA/M=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Zct/TICz/576DINSpoMZMRMZ3CbC/b4uv+f7eoMNrk9zx1iTF6wc/QpKyTrt8hPqc6+NywaZI+IF77pBG3nt4jQRukksjvJ5+bE4N7SwrfUfgoDYyZLQ565baoxhhTC81pB36tsBV18KqcP4954OR2CEnrpXMkpsQtKDln846+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owoEpIp0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789570866; c=relaxed/simple;
+	bh=bB/7vhXoE0ykCnHM97CE7sp1Ib7yxq2wNHywlTv0Aa4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fH0SBDYAPY2inAVFbPGLItU6kZUMe9VoHuqVF8meIcPOz3tyat9JlYXZyEa1BC71V4qo83RgmTVrOJsTMLq53kAwpxXK8jfB8k8+PuRXTR03S8FJ3eh3OOd4YyFjQ+72+XB218wX8HXUE/feqAnV0DLtQ6vOiOgp5oUX78mDs1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vy/KB4PM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GR/ICxBB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owoEpIp0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3112D1F000FF;
-	Wed, 16 Sep 2026 14:01:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789567280;
-	bh=FIupthtjkkJAVGCVvE/mrlhzHpdxDVIyJydDd7xHHEk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=owoEpIp0SByxMDJry2bC9DPFVXKINRgdLj6AeNW3nIU5AdXeKGI/s99MgMNvU5A1p
-	 GxuwDcMfaqX1pDUUN1NK7RadyiTjg8ts1bPK2C1lFs3Ri4hDj3kPUnaVTQzMpRqX+Y
-	 RQUpSUXX/94NztTfIWrwv0vnY8Ups1dWZcHGIIUI1Uoc/RLzRXXAT4A6XzuqhVgJQH
-	 r+dCnHsgG0LJDQSXkAq3uZ5syAv/TKbomIq4a848ZxRg0ixC8h1zbWgOw1MCKNWbjh
-	 88Er4ylnMbZX8ZWL5GEx4Dzw7qP8PZa2/TP0TgwPyK7bmfbe2XEa6Cas2W/8InY2aw
-	 QRdOmChhNUPMA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 2/2] dmaengine: atcdmac300: Add driver for Andes
- ATCDMAC300 DMA controller
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "CL Wang" <cl634@andestech.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, robh@kernel.org, Frank.Li@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20260916134258.2178081-3-cl634@andestech.com>
-References: <20260916134258.2178081-1-cl634@andestech.com>
- <20260916134258.2178081-3-cl634@andestech.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 16 Sep 2026 14:01:19 +0000
-Message-Id: <20260916140120.3112D1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vy/KB4PM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GR/ICxBB"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68GEYlA03556163
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 15:01:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fJRqo4fa5r8K+BgNujQkH+UdzXPRZZmUzCKYh3BrEjM=; b=Vy/KB4PMrSnE4YBP
+	uhs6xA+rnTaPv4eiMrIhJBSsNN4Eb7gDqLx56+cwHpnrYnFXKw4i4X50qfayKr+9
+	GrcK/NoR56LaRU+jLnZNci+q28XlCssQUgo2umCirws3wKMinXfS3RtxGKXm8ab0
+	QRQ+tKircg2puofY9y5V+G+On9bcEUnBoE42w4En1ywHl8Hfdr65kPdZwt3jLiTJ
+	wl0BKn54B89Q9wJiNUJmwrve+8woMTmVLSN3tYvVZnxLUlEYRG8uavvGZNBZAd/4
+	lQS3eHfkqMdMjI6Kdy//dQMEZ729UGXdhGg3LxlDyQAzlJSzB2TrU3TytJrbPbe0
+	NPT5DQ==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqfvfke3h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 15:01:03 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-86a43fc3527so3285771b3a.1
+        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 08:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1789570863; x=1790175663; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fJRqo4fa5r8K+BgNujQkH+UdzXPRZZmUzCKYh3BrEjM=;
+        b=GR/ICxBBO8LsaS0CX6AyFq4tQiyNXtRQM6/AlNRGotF3wErZqFCFwYnTM1CfioeFpp
+         fkp1nXFyt+fR5ggaakN/0tbxOIgPq7nzlnwgpBGz6AOORTN7vCxuRzc0fjd0BWUVte/c
+         0EytlYtOBR6Gy7cwq9gkOGIlcuGzZLbdoMaqFmru0XUdUSjVUdFaX2TIcnlr6Nhh627z
+         miTscoFvy8mYWWvDux2+SL8C8DLSij7SxbFPrdCWW1m7RBaAbgIk7sT/2HL4K28V6tEW
+         6b0cm1BCq8atp+tC/jDCfx4oYoMWqhxpmts/7ySUamaZgRn5pZU1GpL9Kto9iSX0lx7A
+         mruA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789570863; x=1790175663;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=fJRqo4fa5r8K+BgNujQkH+UdzXPRZZmUzCKYh3BrEjM=;
+        b=uyCzgQ9EmFD3Q/gYoiaBDSRuGwU7UfYR95JNMd8sKnA2g7RQ8ofHHjBX2hnpIggytK
+         hzKiJzsti8uo9x8e/HytDaP+d8yX567nRKaAuGg5OdkLxVRRZjN6c9K7FZADNHKCaQoa
+         gEQTDtpLXFAGnX5c301bNWJVzp34w56KlLBnHzQY5y4SZ1ESdJ3ksE0batzDmlE/cHfX
+         mG57lzfoyOMfL6hkAVtPoO+ILvKPwdoOAt+/doKByzAhiBCpsrG8vmNSurHj6Uca2Dtc
+         M0blXskjhnSN0JhFi9LQVyaQ/KwZBKu7z3wr3ov46JEOkhtGH2GWCZC/yIWEe9dnufd4
+         27fQ==
+X-Forwarded-Encrypted: i=1; AKwUvByk7C3AnQdiLZTLwBqjXCtQwsXZNvtcCuidKciAwTI/FI2jgNWA6xMhVoaSfpKSk+5GFuYZhz89OVM=@vger.kernel.org
+X-Gm-Message-State: AFuF++lfvuQ247YiVGi1BUDFMmB7MCVoQzNGBAUOkJ9Aa1p4EM7sy5Nn
+	R8tZ8VRgS4jpMo8SnJ9jBbYHMsVTG4qULaiU9dMeEfdeyywhOs9mAnL2Gdxl9DZeVW8Hw2YgdCR
+	9CNKA/9c9IK4yqtTOx2uL3fwr8esV8faBo9QXiPIRaS4LPO8jX/pgdfs/E/76bS0=
+X-Gm-Gg: AYBFou3TmHocR6KUEMHHdxnlzR5ASj0qDu85kmbtGf86W5+OR9u3M4Ov4Raz6zYJ22/
+	LHIKqp4Y+x9sCyV5ryTgcfvRHRxQH7frBHfb0Mv52zGzNXf1cw/ecqKsvuebVNSwwCCIth6qtOD
+	PYQAAR/e0wuzasJrlW+FE9pWTu8np5MOtNp+YGV3AXgtEPd5if+dz1dTnyyB1URljH8CFTSgbxf
+	DIUDF/dT2CmPfXAiCFWJXf42t2m2+Yjcme84V9yT/uT4uEywHXqRKWY66iwKOszzf/4GOv81sah
+	PbSuyjQNp6+LL4K14Lo9S9f8+X9yxu6lIf6TxH8QnWpeZsNDn+b2mRJF6UGYmd6rsp1UgKohTeF
+	yVfqtb/OQuIjRz5gFDc8YHYN18NTJIfwwq/b4TA==
+X-Received: by 2002:a05:6a00:8089:b0:84f:6f7e:493 with SMTP id d2e1a72fcca58-8723208dcb6mr4375231b3a.3.1789570862324;
+        Wed, 16 Sep 2026 08:01:02 -0700 (PDT)
+X-Received: by 2002:a05:6a00:8089:b0:84f:6f7e:493 with SMTP id d2e1a72fcca58-8723208dcb6mr4375119b3a.3.1789570861619;
+        Wed, 16 Sep 2026 08:01:01 -0700 (PDT)
+Received: from [192.168.0.116] ([124.123.146.251])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8720172b13esm1419604b3a.33.2026.09.16.08.00.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Sep 2026 08:01:01 -0700 (PDT)
+Message-ID: <64fc0855-3dd5-4668-9d4d-bd82be246de8@oss.qualcomm.com>
+Date: Wed, 16 Sep 2026 20:30:55 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] dmaengine: qcom: bam_dma: Defer IRQ trigger type
+ to device tree
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Andy Gross <agross@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+References: <20260717-qcom-bam-dma-irq-trigger-v1-1-6405eac86f00@oss.qualcomm.com>
+ <aqlQ_y-um0yqo6jj@SMW015318>
+Content-Language: en-US
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+In-Reply-To: <aqlQ_y-um0yqo6jj@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=JYkpPkKV c=1 sm=1 tr=0 ts=6aaaaf2f cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=K/78aEDNEn2Q/Yuv7mVN5Q==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=8k-RipbJOExq7qeMm_4A:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDIwMyBTYWx0ZWRfX2a0PuQzWTjJ2
+ YLIc4/T70WrJy1oslXSNmbNpffsadmU3BvlUaQMl0ygf1WLLmIfvBdpVwldvm/+zVJzhdFp6nc9
+ oBa4Jq9Dany8Xqf2fe5D5YzMuq4VmqwBtSwcQTqJQYUeiCCLZyXcrM/Iv/AGzcy24yBw7Jnu+j1
+ Veahy2zivYGvJZeFDUL0fWNFK4PB4J7rEbs/ax/ARQkf9sDA9uZT/hoC8QL4rvKrPUhDKpRlG3K
+ jx9uOhYCB3iV9P5FhG3WDOcENFsAmuNxgKm03Mt/pjOjHE3Oqkq8OJChvWO/9um8bWT9YJvhjtg
+ x2xOFoIISyMNDO7HnB4/kqmQbF0t2Slt0vzYb3qUCA1e7BueI2S9U+VGm1wzs1zz/CYYgVb+Vnp
+ ARjEqHGHxi7Qu0WB/3NNFj89vI1np3o2ilWYPA0971MgnZ4SHMIt7L5hlPM17iG1dy1W39OpfKD
+ TW+ndsMtjegdfO0d3ZQ==
+X-Proofpoint-GUID: xjXopzReJriTXnge2dEC0knUOojZEKW8
+X-Proofpoint-ORIG-GUID: xjXopzReJriTXnge2dEC0knUOojZEKW8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDIwMyBTYWx0ZWRfX4xE85Qf3O9Mi
+ iaUuAPXhCF8y1Mn8TeccbHn/RhfldiJpf4icoMu/rHiffqG3l8VWE5omtTYSkMRlENdukR74V7N
+ eSRvuq3S8HGMtt+cd2PtZRpe84u06dM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-16_02,2026-09-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609160203
 
-Thank you for your contribution! Sashiko AI review found 8 potential issue(=
-s) to consider:
-- [High] dmaengine: atcdmac300: UAF on driver unbind due to devres lifecycl=
-e mismatch
-- [High] dmaengine: atcdmac300: permanent controller halt if suspend times =
-out
-- [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic and =
-non-cyclic transfers
-- [High] dmaengine: atcdmac300: cross-transfer corruption on simultaneous T=
-C and ERR interrupts
-- [Medium] dmaengine: atcdmac300: memory leak of unsubmitted descriptors
-- [Medium] dmaengine: atcdmac300: silent truncation of DT req_num exceeding=
- 15
-- [Medium] dmaengine: atcdmac300: transfers queued during suspend are stran=
-ded on resume
-- [Low] dmaengine: atcdmac300: missing endianness conversions for DMA descr=
-iptors
---
 
-commit 94fd62b6d9e6afc2cf50f8dff89eedcdc57f24c9
-Author: CL Wang <cl634@andestech.com>
-Subject: dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA control=
-ler
+On 15-09-2026 07:36 pm, Frank Li wrote:
+> On Fri, Jul 17, 2026 at 10:30:28AM +0530, Vishnu Santhosh wrote:
+>> The driver hardcodes IRQF_TRIGGER_HIGH when registering the BAM
+>> interrupt, which overrides the trigger type specified in the device
+>> tree. On Qualcomm Shikra SoC, the A2 BAM signals an edge interrupt
+>> to the apps processor; registering it as level-high causes the
+>> interrupt to not fire, resulting in missed DMA completions.
+>>
+>> Use IRQF_TRIGGER_NONE instead, which causes the kernel to use the
+>> trigger type already configured by platform_get_irq() when it parsed
+>> the device tree interrupts property. This makes the driver
+>> platform-agnostic.
+> where show this? can you point me doc or code?
+>
+> Frank
 
-This patch adds support for the Andes ATCDMAC300 DMA controller. It provides
-scatter-gather, cyclic, and slave transfer capabilities.
+Hi Frank,
 
-> diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
-> index 0000000000000..e0a8a980e2fe8
-> --- /dev/null
-> +++ b/drivers/dma/atcdmac300.c
-[ ... ]
-> @@ -82,9 +82,6 @@ static struct atcdmac_desc *atcdmac_alloc_desc(struct d=
-ma_chan *chan,
->  		INIT_LIST_HEAD(&desc->desc_node);
->  		INIT_LIST_HEAD(&desc->tx_list);
->  		dma_async_tx_descriptor_init(&desc->txd, chan);
->  		desc->txd.flags =3D DMA_CTRL_ACK;
->  		desc->txd.tx_submit =3D atcdmac_tx_submit;
->  		desc->txd.phys =3D phys;
->  	}
+The BAM driver obtains the IRQ through platform_get_irq():
 
-[Severity: Medium]
-The desc_free callback is omitted from the transaction descriptor here.
-If a client prepares a descriptor but aborts and frees it before
-submission, the DMA engine core won't be able to free it.
+bdev->irq = platform_get_irq(pdev, 0);
 
-[ ... ]
-> @@ -494,11 +494,11 @@ static irqreturn_t atcdmac_irq_thread(int irq, void=
- *dev_id)
->  	for (i =3D 0; i < dmac->num_ch; i++) {
->  		dmac_chan =3D &dmac->chan[i];
-> =20
->  		if (test_and_clear_bit(ATCDMAC_STA_TC, &dmac_chan->status)) {
->  			atcdmac_advance_work(dmac_chan);
->  			handled =3D true;
->  		}
-> =20
->  		if (test_and_clear_bit(ATCDMAC_STA_ERR, &dmac_chan->status)) {
->  			atcdmac_handle_error(dmac_chan);
->  			handled =3D true;
->  		}
+in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1270
 
-[Severity: High]
-The lack of mutual exclusivity allows both conditions to execute if both
-status bits are asserted simultaneously by the hardware. In this case,
-atcdmac_advance_work() would complete the current descriptor and start the
-next one, followed immediately by atcdmac_handle_error() wrongly aborting
-the newly started, innocent descriptor. Should these checks be mutually
-exclusive?
+It then registers the same IRQ with:
 
-[ ... ]
-> @@ -911,10 +911,8 @@ atcdmac_prep_dma_cyclic(struct dma_chan *chan,
->  		if (!desc)
->  			goto err_desc_get;
->  		atcdmac_chain_desc(&first, &prev, desc, true);
->  	}
-> =20
->  	first->txd.flags =3D flags;
->  	dmac_chan->cyclic =3D true;
+ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+                          IRQF_TRIGGER_HIGH, "bam_dma", bdev);
 
-[Severity: High]
-This modifies the channel-wide state during descriptor preparation.
-If a client prepares a cyclic transfer, does not submit it, and
-subsequently prepares and submits a non-cyclic transfer, this global
-flag remains set. When the non-cyclic transfer completes, could this
-cause atcdmac_advance_work() to treat it as cyclic and attempt to
-dereference dma_desc->at->next in atcdmac_start_next_trans(), leading
-to a kernel panic?
+in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1335
 
-[ ... ]
-> @@ -1144,10 +1144,8 @@ static void atcdmac_free_chan_resources(struct dma=
-_chan *chan)
->  	spin_lock_irqsave(&dmac_chan->lock, flags);
->  	list_for_each_entry_safe(desc,
->  				 desc_next,
->  				 &dmac_chan->free_list,
->  				 desc_node) {
->  		list_del(&desc->desc_node);
->  		dma_pool_free(dmac->dma_desc_pool, desc, desc->txd.phys);
->  	}
+The comment above IRQF_TRIGGER_NONE in include/linux/interrupt.h
+states that when no trigger flag is specified, the interrupt uses the trigger type already
+configured by the machine or firmware.
 
-[Severity: Medium]
-This loop only frees descriptors currently sitting in the free_list.
-Combined with the missing desc_free callback above, does this mean any
-prepared but unsubmitted descriptors are permanently leaked and never
-returned to the dma_desc_pool?
+https://elixir.bootlin.com/linux/v7.3-rc3/source/include/linux/interrupt.h#L25
 
-[ ... ]
-> @@ -1189,8 +1189,8 @@ static struct dma_chan *atcdmac_dma_xlate_handler(s=
-truct of_phandle_args *dmac,
->  	if (!chan)
->  		return NULL;
-> =20
->  	dmac_chan =3D atcdmac_chan_to_dmac_chan(chan);
->  	dmac_chan->dev_chan =3D true;
->  	dmac_chan->req_num =3D dmac->args[0] & 0xff;
+Therefore, IRQF_TRIGGER_HIGH overrides the trigger type associated with the IRQ during
+DT/IRQ-domain mapping, while IRQF_TRIGGER_NONE preserves it.
 
-[Severity: Medium]
-The request number is extracted and masked to 8 bits. However, the hardware
-request selection registers (SRC_REQ_SEL_MASK, DST_REQ_SEL_MASK) are only
-4 bits wide. Since FIELD_PREP silently truncates values, a device tree
-req_num of 16 will be programmed into hardware as 0 without warning.
-Should this value be explicitly validated against the 4-bit maximum?
+The Shikra DTS which is still under review describes the BAM interrupt as edge-triggered:
 
-[ ... ]
-> @@ -1305,9 +1305,9 @@ static int atcdmac_init_ioremap_and_regmap(struct p=
-latform_device *pdev,
->  	regmap_read(regmap, REG_CFG, &val);
->  	num_ch =3D val & CH_NUM;
->  	size =3D sizeof(*dmac) + num_ch * sizeof(struct atcdmac_chan);
->  	dmac =3D devm_kzalloc(&pdev->dev, size, GFP_KERNEL);
->  	if (!dmac)
->  		return -ENOMEM;
+interrupts = <GIC_SPI 74 IRQ_TYPE_EDGE_RISING 0>;
 
-[Severity: High]
-The DMA controller structure is allocated using devres, tying its
-lifetime to the device binding rather than the dma_device refcount.
-If a client driver still holds a channel reference when the device is
-unbound, could this lead to a use-after-free when the client later
-releases the channel and atcdmac_free_chan_resources() accesses the
-freed dmac structure?
+This driver change is needed so that the DT-specified trigger type remains effective once
+the Shikra DTS change is accepted.
 
-[ ... ]
-> @@ -1543,9 +1543,8 @@ static int atcdmac_resume(struct device *dev)
->  	list_for_each_entry_safe(chan,
->  				 chan_next,
->  				 &dmac->dma_device.channels,
->  				 device_node) {
->  		dmac_chan =3D atcdmac_chan_to_dmac_chan(chan);
->  		spin_lock_irqsave(&dmac_chan->lock, flags);
->  		if (!list_empty(&dmac_chan->active_list))
->  			atcdmac_start_next_trans(dmac_chan);
 
-[Severity: Medium]
-This condition actively prevents queue_list items from being serviced if
-the active_list is empty during resume. Since transfers submitted during
-suspend are placed into queue_list (because stop_mask prevents them from
-starting), won't they remain stranded indefinitely unless issue_pending
-is also called here?
+Thanks,
+Vishnu
 
-[ ... ]
-> @@ -1568,9 +1568,9 @@ static int atcdmac_suspend(struct device *dev)
->  	synchronize_irq(dmac->irq);
-> =20
->  	ret =3D atcdmac_wait_chan_idle(dmac,
->  				     chan_mask,
->  				     ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
-> =20
->  	return ret;
->  }
 
-[Severity: High]
-If atcdmac_wait_chan_idle() times out, the function returns the error code
-without reverting dmac->stop_mask back to 0. Since the PM core would abort
-the system suspend and resume normal operations, wouldn't this permanently
-prevent any new transfers from starting?
-
-> diff --git a/drivers/dma/atcdmac300.h b/drivers/dma/atcdmac300.h
-> index 0000000000000..3d2d07effc26d
-> --- /dev/null
-> +++ b/drivers/dma/atcdmac300.h
-[ ... ]
-> @@ -148,10 +148,10 @@ enum dma_sta {
->   * @ll_ptr_hi: Linked List Pointer Register (high 32-bit).
->   */
->  struct atcdmac_regs {
->  	unsigned int ctrl;
->  	unsigned int trans_size;
-
-[Severity: Low]
-The hardware descriptor layout uses native unsigned int instead of
-explicitly sized __le32 types. When these fields are populated in
-atcdmac_build_desc(), values are assigned directly without cpu_to_le32().
-Does this lack of endianness conversion break portability if this driver
-is ever used on a big-endian system?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260916134258.2178=
-081-1-cl634@andestech.com?part=3D2
+>
+>> Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+>> Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+>> Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+>> Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+>> ---
+>>   drivers/dma/qcom/bam_dma.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>> index 19116295f8325767a0d97a7848077885b118241c..6c3e2ca8a572fd04c925de0adbd5cc0616b361ef 100644
+>> --- a/drivers/dma/qcom/bam_dma.c
+>> +++ b/drivers/dma/qcom/bam_dma.c
+>> @@ -1303,7 +1303,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+>>   		bam_channel_init(bdev, &bdev->channels[i], i);
+>>
+>>   	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+>> -			IRQF_TRIGGER_HIGH, "bam_dma", bdev);
+>> +			IRQF_TRIGGER_NONE, "bam_dma", bdev);
+>>   	if (ret)
+>>   		goto err_bam_channel_exit;
+>>
+>>
+>> ---
+>> base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
+>> change-id: 20260601-qcom-bam-dma-irq-trigger-0366e7e86f17
+>>
+>> Best regards,
+>> --
+>> Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+>>
