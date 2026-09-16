@@ -1,211 +1,256 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011063.outbound.protection.outlook.com [40.107.130.63])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F228E3C3F4E;
-	Wed, 16 Sep 2026 22:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.63
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789598030; cv=fail; b=BGrO37jr4s1dQEzlDHc3+WR2wXyzyQ/muhfTDF9DZ9zyGP0ICl5LhTxQrExESAsg24PIi6NfPokYtXC4vA0xZX7iwHN12NZbWFEX+N3Zxc9PYBPYkMtCSbVgfMA8YPQGW86QnkXQUTCx5qqqCB+px4hDdyQsJoWvhTpl4L14rOU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789598030; c=relaxed/simple;
-	bh=GTRyfWtIlDexhOoQLVm1erDuF8RvwBKDMr2UnMqnsv0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=oiA3e/6v11WKZGbHDMRfG5QWemm1dXxa2pVAeIIrYz6tlxKTb15c87o/uqOoDHqo0NgmvfIXOxp1oGScraOSnI9+sLuwlw/d0uCkop3tU3lVZRYXtzFVwz5T0AzJAah0K9PzYZIge1GNWNg3sGKZ8obCTsevVeCZUwDCj4s9OUY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=U/zllTc0; arc=fail smtp.client-ip=40.107.130.63
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A260F3C10AF
+	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 22:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789598533; cv=none; b=aFOh9Vp7+ifbI5GF/e9HZWs7Iv7u42dcg6g49kNqD2bpPWRX8ZeQF34e+ld29fnKQ84YdwUYFvfmErsS3J1ISE9N9RmFhfQALL9pBo2q/WPBF32oydrcokqYd0WYXpp7UQV0jEKQrU6cbzEnAGGfDUqjjzF013Z68ioMEg7I72k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789598533; c=relaxed/simple;
+	bh=hHZxIDfTTXE3RHk4SVGuQUCFQzj7YuaDChZ/jubhCR8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KxJrw/X84ifKKMkK1XJQfPyR/10n251M9ufodQn9UbM3mkxOZ2r2GDwFm0fo7GBe29wZQC+dHhWWbBJ0aDh1cPtqoL9Slo9P7ViMPT+yNHpA1Tqex+6Om4oFwOYJG+s+lPx+rjI5yi9Rzbdf2IQq74AxwaaL0vPjl6BwxS5Vm8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WB43xwvO; arc=none smtp.client-ip=74.125.227.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="U/zllTc0"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IfK0u6DhTvVmcSYVn9Tv0J8RiKyVdvkAmoc3FK4lfwH+kCIGbQcThLvXkvz11A5cYCrkUqoaVj1M+aJGCLcx8WijUFgqEMrHGEZpYpihrxNxiufo+zyf7feemAWS1gfxYgGS8gR6fcEq9gWr0t1lSAXYUo+3IOCcJ3fU8lhDV8BU+04VDDY9VWBkIJxv297WxRLxaVkoEdxChT9to6p9SHsP/O4gtjTbC62HGUOnTN3vHakKI8uiEFG5lhcDuGIMotTzAZpVofWFLj962PGF3pe+n+SMwD3i+meOvRhkpdbfLvDc/NfZAPMFS7fdVW7aAXatxDM8L1GPlSFjAS8vtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f+NfPLCGMHH0pgMn59ElsgFjwQjX8vE3FA5Iv/ailpw=;
- b=xL0nOfV209CXe4sKgUwO3vbn95+PdCg+yxAvS5yEP4cRl/ZJmc/K0ZreGKyQlUIdllG7f+PHr/oM2L+jv3o60WfmsVpPsgoobUv3zAALd43SfMAuBosQNHn0b+l9lwlryzalRPkII1LTjbuGCp+2NQZzLWhSui1oayYYhR7BkgBOdw5f4U46BoGhkljAzDbdxvar/UoXA8PwNlEwE/FDthshD25C/io9qMJyWOgHLVAQbHzqWiBagGO/L07sPJtpULH+FIFSsrS40+N44WGm1q+SYFlW7aO2WHSzSk7jd0w8I68IOTJu4fZbhJ2R78CtkRFYkdI1Yc73HVtY/jvrXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f+NfPLCGMHH0pgMn59ElsgFjwQjX8vE3FA5Iv/ailpw=;
- b=U/zllTc0kiKtgOOXrxi2PSAE/PPQMVSooz01Ydgvd8j6UFRItjXm2In3NVRE0dRZYomM+3Elqzc0wJgsqKezN8LJH74is5RcsJQ9fDRmfBozqyqlWpZS5x0OGNozVK30jHHUgAvnIFLCLKEwNhdPgUSDVEORCYy4r9fy95ejUhDOQoV3nrVUbTUgmEUEmxCVFeUI4Z30SFG8VH2TuhwD9c/6BwrUOoBGqnLRdl2AYUZOPc/vuGtg+mfr40lv3Ondv1q9j2I2kMu1JKF0ho1hJNMQRkzqNlU5PCOITymUrDeux5ZwDHc5JKFFhEtygFnO2IffTw0WbS1oqBIKWaODyQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PAXPR04MB8390.eurprd04.prod.outlook.com (2603:10a6:102:1c2::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Wed, 16 Sep
- 2026 22:33:32 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.012; Wed, 16 Sep 2026
- 22:33:31 +0000
-Date: Wed, 16 Sep 2026 17:33:21 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Rosen Penev <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Saeed Bishara <saeed@marvell.com>,
-	Lennert Buytenhek <buytenh@marvell.com>,
-	Maciej Sosnowski <maciej.sosnowski@intel.com>,
-	Dan Williams <djbw@kernel.org>, Nicolas Pitre <nico@marvell.com>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] dmaengine: mv_xor: use writel() instead of relaxed
- variant
-Message-ID: <aqsZMeDZShMpCVj_@SMW015318>
-References: <20260916182405.12985-1-rosenp@gmail.com>
- <aqrowa1TFhIDA-17@SMW015318>
- <CAKxU2N-zLp3612KRsdmWKjm2hMBOikBZDBEqvpLOxpg44J4Fwg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKxU2N-zLp3612KRsdmWKjm2hMBOikBZDBEqvpLOxpg44J4Fwg@mail.gmail.com>
-X-ClientProxiedBy: PH2PEPF0000385D.namprd17.prod.outlook.com
- (2603:10b6:518:1::6b) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WB43xwvO"
+Received: by mail-pj2-f43.google.com with SMTP id d9443c01a7336-2d747ee1f9bso1946075ad.3
+        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 15:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789598519; x=1790203319; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=wqgRj8Zu/oLhBcm8V6wCiIRsYY69FuThlNcNP+a4SnE=;
+        b=WB43xwvOFQXKyCtk4CbeeisHyQMEpJ37kTc6qrBserLKkEJ+JSBJVsaECsZXxPHvyz
+         f1LKiNm422G6ok3ezdi0SHD2Rfo5IN7RAvc1mm9cOXpJ52qnczDg9AGXLsrwpzebJNU3
+         vmgdIOz1gZgZaINwpnmk0ZDDeXvYxollmVWLBPfyfmcBG2EaRMc4+Dwj3gVu40OI0RBS
+         7aN+lKAWAaxudruPgicfkuJAqDmE5JQpUQCqoYKdXxoYYhhjkSQww7zVcg76PEqDmZu8
+         CI8/vU3LJDRA9vZIWLvlZcDhosja1MTMPs3zIGUuhDwRnHfCXLeSNhZkDAgR849hkRJL
+         IQ1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789598519; x=1790203319;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=wqgRj8Zu/oLhBcm8V6wCiIRsYY69FuThlNcNP+a4SnE=;
+        b=SmsSiU8SmIQgeXB71lRYZ+jvt1U6m0rtT3cw7cNG5SOlb9l4rVk6knQ4o1ZpvIpu3q
+         X/rWm+Qa5gHvWwP2ZmBqn0UIV1iU2gTlN/68Zfqa6LMaQXH5XzD9RpV2LRqs4hOBl9Fa
+         eM0N3ZGrkMGy4KdVs0udFoCORS9NxD6uiO8LHK1X2H7LIq4xyMe0qgyKn+x/UmKlxof6
+         N+2s34pRLnsdhkdGKRoOTB7PJh35KMgoKF/qpLee1Kf4uqsMuUgzrH9w1kEbn+hS+BmB
+         hgyX1U1AE59ehF4uXEEeeYUVI30teJcaaJdEtAR1EgAvGpNRCr2afsjoCcuwEIcPI7mQ
+         gXWw==
+X-Gm-Message-State: AFuF++laD6fXWp8xL3S4sbZ0MuQiD6BKDBEK71j6UTDEOGSTSywLn9k+
+	Z6BBoRWZiTZKKvmfYwjNkX2EnjRBmc7PTduEPwm7/AP89WkdXOfilWB7lpqzU1ja
+X-Gm-Gg: AYBFou3YVkC9yRgtyGTwa31ePYOZMTBxHm0C7uvFdqkChbCwINOzpK3FStsZuFSUjzN
+	+0S/KrSWOGNhyxFJJFTs3slUxsyeltmB5eI8CGKwn4aNF+zKSYAqVJh8/dgxxct9B+l7ABl0JkS
+	unbTHF9DOy2o71BXGveTFcjFjmpABMWQSPrFmcLzxnTV24Zr634pI0fwh4+qhZu6CLrq1wEt9IS
+	wfD29TMyf1m7jxx5wB3KjeQkr4tI2aJlE9Y7MEk/bP+vlJNTxMSRwqfdieF+QgV7yejWj9WI4LY
+	Uzy57ENW78ZJvtUkX138J0oWan36N6pp1YBrig2JCY4FWXH4GQyXtnhDv96gkXSkdSBNWdIeEYN
+	KMbnH0zMaXp6SDV0a/KIlLjs4rOfR319aKEm34XcGpnmtqgkkmZ/bhURwMwU40LP37H0kBLIm++
+	GzLGuE2+0QjzHqVoPooQCHgpSoFr1FmPxYkxWWuHOwfV31GVKOLvnAZPDhHdEEIVha7v4ssiLjc
+	p59pnPErY6Ur7N82WEhxrrCReCX1MJxFP1Eft6XU55nX/g+fx63WlB+usYuEgj3BAy+Mnc5OJYN
+	+IMMP9nF+34yeFkoLgpJpix/PBzNWUi5xRCbRcUDxZJz2mD4
+X-Received: by 2002:a17:90b:560e:b0:39e:3bd2:8998 with SMTP id 98e67ed59e1d1-39e3bd28b84mr1304054a91.22.1789598519204;
+        Wed, 16 Sep 2026 15:41:59 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14395caccf1sm8260106c88.2.2026.09.16.15.41.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 15:41:58 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	linux-kernel@vger.kernel.org (open list),
+	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE SOC DRIVERS),
+	linux-arm-kernel@lists.infradead.org (moderated list:FREESCALE SOC DRIVERS)
+Subject: [PATCHv2] dmaengine: bestcomm: use platform machinery to get irq
+Date: Wed, 16 Sep 2026 15:41:56 -0700
+Message-ID: <20260916224156.276511-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PAXPR04MB8390:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9cb94eaa-5036-405a-aed9-08df14428943
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|366016|19092799006|7416014|376014|10067099003|4143699003|6133799003|22082099003|18002099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	Il7lb7Fz/Xveo5Iyq8ViDoK2gVypfI3Ew3xQ8gUKG6boYQ2P/V6PqQ6PJIEWyFQFJ8QwkIN0bev1rLV5O449DAy2gc0xxpwBNdcVOSz9Fvv5G690hj5wSze7fnQMpxW+NMA2agVHA+k5z1wbel7LUGkkt2EwlrW/xaj8Obw2EOSrZPJbDk4uCdFJyz8PMOA9T212cSQBW9/dcOZ9ymbCa6VK8bm42sen6w653AVdoiz+7ReQLYtgK9qDmSpdAS0W7zTW4+Yp6VPVmOtFqDyUEY+4CXxrJVEFJQ0uPJVX+tVhC5PlkV4Thtv/CVuxVuy0O15RqJML6/cZ7QJcICvg160iZTlFNDoYbtoz2j3xORh1ZnF1eOEfYr45uHBglVmPP8ddhrRKpp2HutsYM/Pr3EL/byXu5BRZSDFNA/bIGOo9iPvQLqgSOAyx/zePefSfy0C3TvABgJ8o7U/Oj4AFvoR8fahaAZYfyXEdXns653sqFCvtWKbUIXdaIIg+dikAU/eSb1PXjNoFEpptTHiDuEPP4hapXLDIesyEUoCOPCMSLdBwaOyOv9MJrZvEfFJfRLmERrPZPW+I03ky4J4J0+SYgGQPSfpaOddiAa+phMUCL0be+6XHl/L0SwNuYHM7RY9gv6X9ol+tU3K6uPwsBd+/ip6QRTEqc9w32aWT/wo=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(19092799006)(7416014)(376014)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NFRMWEdjcGx0ditkMnU2M0ZxSzJhZVViZSs5L1hoQTJza1FYV1VrV0NpZjJN?=
- =?utf-8?B?T2d6dVZJR09FVDkycW9Dc0hoNmgwU1FVL0EzQnhwbEIrSkVnSGFmdk12Wmll?=
- =?utf-8?B?VUxKZEpYRlFhcU9ISGtmd3B3Q0ovUSthUEcwMjZ4QjNDNTVyN2J3Y3pHTGlt?=
- =?utf-8?B?bklvcDlGMjhpSCtJQUE5Tks0eUcrYXJ4ZU52Sk1GWVNRM2FkeFVwSVQzYXlS?=
- =?utf-8?B?R1QxMUY5TjB0MjNQWDBtTmZjSnlxcE1Rb2c3S0FBLzJLYzJBRjZ3NnRIS0Ra?=
- =?utf-8?B?cGVld0k3c1pxUEVoZmxVdytzbDhQSkJrbVBDdVdHd01oRlcvb3MzZjFkRllD?=
- =?utf-8?B?NjNzYnFHZmRreENVa0JZeURZR0JETlNydzdYT3NmdE5QMDgyRlEybjR4dGtt?=
- =?utf-8?B?Rk5SRVEzMWZuWTIrZ25YVDUzVWNwQ2VWYzZvRXlNVzBzSWFISTdRL3V3WE4y?=
- =?utf-8?B?cDhVbHM2TE5LcmM4Q2l6RGpSSXQ0Tit1NUR6dHorZlVLYVVzaHlOQ1daK3RF?=
- =?utf-8?B?bERIT0pJMDQ1d09TL2ZCY3V6Y3FySWV5dlVjSTQwL3RVeEc1QU8vcE1vcmU1?=
- =?utf-8?B?UkppWmV5R2xsNmllVHJrZDl1Y0lIdXYvcjNXRXNFT1dpenNPQVQ0Sm5HenZP?=
- =?utf-8?B?TnR0c0VFWEg5QXpJS3FCdUczcmF2cytacnREMUNmRE1qeFpmeERtSUdKVmZU?=
- =?utf-8?B?NStUK1Rnc2I1UHRrRWdFamNnMHVEQzVGVXFRMVpvQ05Qcm9uRm1YMEs2MWF4?=
- =?utf-8?B?ckw0SWVPSWhCTHMvc1lOUlJFOVd2TDVrRDZoNFA5ZDFGSlFWUHN2RlFqcUdX?=
- =?utf-8?B?bkwzVC9BV3E3R01UcmFVWWNwWGpTdDJFT0tzNE16WUNkRXhXTVNRSzRsV005?=
- =?utf-8?B?S2s0WGtwWE9zcnZmaUhYMU1qSzN1c1kyVyt1d2dXdmRoMXJ3WDd2SDUzTWlP?=
- =?utf-8?B?TnVBRndBZFpoOU5TS084TU1NQTdJeldOS2huaWVtVTl0UXRHSFh0TE9ORElB?=
- =?utf-8?B?Zm1KTmlJRC9NMnlPdXZqNnl1N3FWRk9ySVBncmEzRmtIRUFMQ0lybmhRRW5K?=
- =?utf-8?B?TzBvc0FqWDVpVzNQUTd4N0w0TndpV3RWZXVvQmU1NG5FT0gxd2pQNDRCMEJI?=
- =?utf-8?B?dUExeTk2Z2txWUZEcGI4UktMbm9Ebmw1eVdDdmpuSit6ZWFRTmNBRzg1bXZB?=
- =?utf-8?B?anJSZ29TcHZ3MENsQUtJMzNNNmhrQ05sb0dJNTl5elVyRnk3b1JoaGZjeTlH?=
- =?utf-8?B?d3l2S2tBbDJCRkdPM2dnY01FMW5MVVd6dzd3WjlxRkxwYlhvSndLWGFaakMx?=
- =?utf-8?B?bWZzL3pqSisxMzN6Yjh5a1hHMGRyVTN3NkZZRHd2elIvbUpzbEhNNC9UUnB2?=
- =?utf-8?B?L24yNTYyS2ZGZnRmMHBGek54ak5tbU5kazRhVDBjcVBHZThYZkROWHgvTFNn?=
- =?utf-8?B?bU5qMTdNWEhjZnMrOGJRL2ZXbDVsaEdYc1doM3Y1WlBydThmWUJWRFFxbldG?=
- =?utf-8?B?b0RZV01lR3pBQStJMmU1K0I5NkFxV3pSWTVaUzl2WHZyUTJNeCtRTDRBcllm?=
- =?utf-8?B?NkI1RkZXKys5bTB1SEFqbDV5T0c5MXZjR3lGU2s5QUVDN3RQRzRydzcwTFBF?=
- =?utf-8?B?dU1Zdkd1Vk0wWnAyYUR0OE1zUDJNUzNTNWdZZmRpRlZRYmo3L0RSTmNPWjYw?=
- =?utf-8?B?VHhjUEdoQ3VUZzhjWDBFT3JHS2ZwVlh2YVUxZnVGaTVweXNCaExQd0Q5WGhF?=
- =?utf-8?B?WkJkbEl1QkJ5WlZHYVhEeHo0SDdjeUhBMjhoTzg1cVU0QWZmbDdBMFFBSE4z?=
- =?utf-8?B?ZGtqYm9zai9FN1NQRzM0bEhESXZUTHN6WW8vdDlJNXJKS0pWdnhaVjZZMGpJ?=
- =?utf-8?B?UUREOXJKTURCWnF6TStxdXA5ekhUenFLUjdvMTdDRG1GL09zZTRCeVJaTkFx?=
- =?utf-8?B?cVF4a015OElaVjR0R1FBbmViUW03dUxuWWFRdnk5TC9JTDZ3U0dHMVdobXh2?=
- =?utf-8?B?b2RVMExsTUFoRTY4S0sxNk9yT3NoU2xWa0pPS3BLWmpDSDVXMEwyYUtSMkVG?=
- =?utf-8?B?NGtOWlNQZzRFMUdJWGk2ejE4UGtTQUJOZFZZUUxRZXJEQWtoL1FncWM2aVVG?=
- =?utf-8?B?RXhqSXBYbW1UUmd2ZGpaNExiaHRxVHdVMXdIdXFqblFsZ1BXVERnVk03cU5J?=
- =?utf-8?B?Y3dKYnp3eEVOU2MrbHcyZGhQVi9PK3pHWEVHZjZESU1nZGh0SVZHNGhBU2xx?=
- =?utf-8?B?VVRrSkFPRWVLOWNjRE1xQnltcmVkdStIckZyOEYweDJjb0tBREVkSTZmeGFi?=
- =?utf-8?B?U2UzVmF2d0VCTkVFM1M4OWFvbDhDeXBxUkJmWjFyV0pOb1p2TUVVT3dpMk9y?=
- =?utf-8?Q?yhg4H51zUWr57tjBa0n7xuY6v+AmzwGIrrN2l?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9cb94eaa-5036-405a-aed9-08df14428943
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 22:33:31.6765
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PQoBNXWKdgaZaXhiZVJr3Bpdp7uEQSUGgdtqT3+IcCAfIMW7p5NS6i4z9MjWl7q24tqQmCFRbdPCnCSsBQkNI3vi2V7Y0zLiY301PzVOmdfjkERhLbwYhmyzuuarRO0f
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8390
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 16, 2026 at 02:46:34PM -0700, Rosen Penev wrote:
-> On Wed, Sep 16, 2026 at 12:06 PM Frank Li <Frank.li@oss.nxp.com> wrote:
-> >
-> > On Wed, Sep 16, 2026 at 11:24:05AM -0700, Rosen Penev wrote:
-> > > Fix the ordering guarantees between descriptor memory writes and the
-> > > MMIO accesses that expose them to the engine. The descriptor pool is
-> > > allocated with dma_alloc_wc(), so writes sit in the CPU write buffers
-> > > and must be drained before the engine is allowed to read them.
-> > >
-> > > Program the next-descriptor pointer with writel() instead of
-> > > writel_relaxed(); the full accessor drains prior memory writes before
-> > > the MMIO write.
-> > >
-> > > In mv_xor_tx_submit() the appended chain link must be visible before the
-> > > busy-status register is read. Use a full mb() so the engine cannot fetch a
-> > > stale chain link and stall the channel after the CPU decides it is still
-> > > busy.
-> > >
-> > > Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
-> > > Assisted-by: LLM
-> > > Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> > > ---
-> > >  drivers/dma/mv_xor.c | 10 +++++++++-
-> > >  1 file changed, 9 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-> > > index c4e0dce3ca64..0de2b1ad5c30 100644
-> > > --- a/drivers/dma/mv_xor.c
-> > > +++ b/drivers/dma/mv_xor.c
-> > > @@ -103,7 +103,10 @@ static u32 mv_chan_get_current_desc(struct mv_xor_chan *chan)
-> > >  static void mv_chan_set_next_descriptor(struct mv_xor_chan *chan,
-> > >                                       u32 next_desc_addr)
-> > >  {
-> > > -     writel_relaxed(next_desc_addr, XOR_NEXT_DESC(chan));
-> > > +     /* writel drains descriptor writes to DRAM before the engine
-> > > +      * is pointed at them
-> > > +      */
-> > > +     writel(next_desc_addr, XOR_NEXT_DESC(chan));
-> >
-> > I remember this my comments before, should be v2 version?
-> >
-> > >  }
-> > >
-> > >  static void mv_chan_unmask_interrupts(struct mv_xor_chan *chan)
-> > > @@ -410,6 +413,11 @@ mv_xor_tx_submit(struct dma_async_tx_descriptor *tx)
-> > >               /* fix up the hardware chain */
-> > >               mv_desc_set_next_desc(old_chain_tail, sw_desc->async_tx.phys);
-> > >
-> > > +             /* make the new link visible to the engine before we read
-> > > +              * the channel state, the device may fetch it at any point
-> > > +              */
-> > > +             mb();
-> > > +
-> >
-> > The first is readl_relaxed() in mv_chan_is_busy(), all io readl and writel
-> > is ordered.
-> >
-> > which part need mb() here?
-> It's to deal with readl_relaxed in mv_chan_is_busy. I'll change to
-> regular readl in v2.
+platform_get_irq() avoids having to explicitly map and dispose of an irq
+by having the platform_device machinery take care of it.
 
-I just want to know which variable need read barrier() ?
+This requires replacing the device_node with a platform_device in the
+bcom_eng struct so that platform_get_irq() can use it.
 
-Frank
+Conveniently, this also allows getting rid of of_node_get and
+of_node_put as the platform_device machinery also handles that.
 
-> >
-> > Frank
-> >
-> > >               /* if the channel is not busy */
-> > >               if (!mv_chan_is_busy(mv_chan)) {
-> > >                       u32 current_desc = mv_chan_get_current_desc(mv_chan);
-> > > --
-> > > 2.55.0
-> > >
+Replace the open-coded resource lookup, request_mem_region, ioremap and
+the manual iounmap/release_mem_region cleanup in probe/remove with the
+managed devm_platform_get_and_ioremap_resource() helper. This removes the
+now-unused error-unmap/release paths and simplifies the driver.
+
+Adjust the goto labels in bcom_task_alloc to match what is being freed.
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v2: resend.
+ drivers/dma/bestcomm/bestcomm.c            | 47 ++++++++--------------
+ include/linux/fsl/bestcomm/bestcomm_priv.h |  2 +-
+ 2 files changed, 18 insertions(+), 31 deletions(-)
+
+diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
+index 241a91936fe8..1006030ff167 100644
+--- a/drivers/dma/bestcomm/bestcomm.c
++++ b/drivers/dma/bestcomm/bestcomm.c
+@@ -47,6 +47,7 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
+ {
+ 	int i, tasknum = -1;
+ 	struct bcom_task *tsk;
++	int irq;
+ 
+ 	/* Don't try to do anything if bestcomm init failed */
+ 	if (!bcom_eng)
+@@ -67,30 +68,32 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
+ 	if (tasknum < 0)
+ 		return NULL;
+ 
++	irq = platform_get_irq(bcom_eng->pdev, tasknum);
++	if (irq < 0)
++		goto err1;
++
+ 	/* Allocate our structure */
+ 	tsk = kzalloc(sizeof(struct bcom_task) + priv_size, GFP_KERNEL);
+ 	if (!tsk)
+-		goto error;
++		goto err1;
+ 
+ 	tsk->tasknum = tasknum;
+ 	if (priv_size)
+ 		tsk->priv = (void*)tsk + sizeof(struct bcom_task);
+ 
+ 	/* Get IRQ of that task */
+-	tsk->irq = irq_of_parse_and_map(bcom_eng->ofnode, tsk->tasknum);
+-	if (!tsk->irq)
+-		goto error;
++	tsk->irq = irq;
+ 
+ 	/* Init the BDs, if needed */
+ 	if (bd_count) {
+ 		tsk->cookie = kmalloc_array(bd_count, sizeof(void *),
+ 					    GFP_KERNEL);
+ 		if (!tsk->cookie)
+-			goto error;
++			goto err2;
+ 
+ 		tsk->bd = bcom_sram_alloc(bd_count * bd_size, 4, &tsk->bd_pa);
+ 		if (!tsk->bd)
+-			goto error;
++			goto err3;
+ 		memset_io(tsk->bd, 0x00, bd_count * bd_size);
+ 
+ 		tsk->num_bd = bd_count;
+@@ -99,17 +102,12 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
+ 
+ 	return tsk;
+ 
+-error:
+-	if (tsk) {
+-		if (tsk->irq)
+-			irq_dispose_mapping(tsk->irq);
+-		bcom_sram_free(tsk->bd);
+-		kfree(tsk->cookie);
+-		kfree(tsk);
+-	}
+-
++err3:
++	kfree(tsk->cookie);
++err2:
++	kfree(tsk);
++err1:
+ 	bcom_eng->tdt[tasknum].stop = 0;
+-
+ 	return NULL;
+ }
+ EXPORT_SYMBOL_GPL(bcom_task_alloc);
+@@ -125,7 +123,6 @@ bcom_task_free(struct bcom_task *tsk)
+ 	bcom_eng->tdt[tsk->tasknum].stop  = 0;
+ 
+ 	/* Free everything */
+-	irq_dispose_mapping(tsk->irq);
+ 	bcom_sram_free(tsk->bd);
+ 	kfree(tsk->cookie);
+ 	kfree(tsk);
+@@ -377,16 +374,12 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	if (IS_ERR(regs))
+ 		return PTR_ERR(regs);
+ 
+-	/* Get the bestcomm node */
+-	of_node_get(op->dev.of_node);
+-
+ 	/* Prepare SRAM */
+ 	ofn_sram = of_find_matching_node(NULL, mpc52xx_sram_ids);
+ 	if (!ofn_sram) {
+ 		printk(KERN_ERR DRIVER_NAME ": "
+ 			"No SRAM found in device tree\n");
+-		rv = -ENODEV;
+-		goto error_ofput;
++		return -ENODEV;
+ 	}
+ 	rv = bcom_sram_init(ofn_sram, DRIVER_NAME);
+ 	of_node_put(ofn_sram);
+@@ -394,7 +387,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	if (rv) {
+ 		printk(KERN_ERR DRIVER_NAME ": "
+ 			"Error in SRAM init\n");
+-		goto error_ofput;
++		return rv;
+ 	}
+ 
+ 	/* Get a clean struct */
+@@ -405,8 +398,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	}
+ 
+ 	/* Save the node */
+-	bcom_eng->ofnode = op->dev.of_node;
+-
++	bcom_eng->pdev = op;
+ 	bcom_eng->regs = regs;
+ 	bcom_eng->regs_base = res_bcom->start;
+ 
+@@ -426,8 +418,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
+ 	kfree(bcom_eng);
+ 	bcom_eng = NULL;
+ 	bcom_sram_cleanup();
+-error_ofput:
+-	of_node_put(op->dev.of_node);
+ 
+ 	printk(KERN_ERR "DMA: MPC52xx BestComm init failed !\n");
+ 
+@@ -443,9 +433,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
+ 	/* Cleanup SRAM */
+ 	bcom_sram_cleanup();
+ 
+-	/* Release the node */
+-	of_node_put(bcom_eng->ofnode);
+-
+ 	/* Release memory */
+ 	kfree(bcom_eng);
+ 	bcom_eng = NULL;
+diff --git a/include/linux/fsl/bestcomm/bestcomm_priv.h b/include/linux/fsl/bestcomm/bestcomm_priv.h
+index 3b52f3ffbdf8..cddde7c74cb5 100644
+--- a/include/linux/fsl/bestcomm/bestcomm_priv.h
++++ b/include/linux/fsl/bestcomm/bestcomm_priv.h
+@@ -66,7 +66,7 @@ struct bcom_tdt {
+  * This holds all info needed globaly to handle the engine
+  */
+ struct bcom_engine {
+-	struct device_node		*ofnode;
++	struct platform_device		*pdev;
+ 	struct mpc52xx_sdma __iomem     *regs;
+ 	phys_addr_t                      regs_base;
+ 
+-- 
+2.55.0
+
