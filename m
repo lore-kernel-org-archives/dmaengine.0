@@ -1,78 +1,46 @@
-Received: from mail-lr2-f4.google.com (mail-lr2-f4.google.com [74.125.230.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE75A3A5E91
-	for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 12:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED3C4FC8FE;
+	Wed, 16 Sep 2026 13:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789560290; cv=none; b=nbgYGo+M/BP82E1zbLWGoGIfwtDcOslBO9lSM43suQB695KQowwx57/N4x4auvJkL5k+H12iHubNxw5975uVlE4/G7D5/j2MS1wPatsElT45N1+biUCK52YDuZVbwIgZM0dx91TIdmjSxo1Kmg679VoVXf7OfTuvW7QpcNnBspM=
+	t=1789566238; cv=none; b=HjXz71ns68GilqS39bro7repOGQxIj0KDKtOQ0ysusBDmPfuWHqWoAu6ryGkn2H6+NzYOa+CLnDB5SiUnegGWAMATkskseo4m4muc7a/xSGRkgoeAueWE1nkp3j4zQXB0yUkc2jBVE5gBrtvYY9IKMvHg3p1MiPWw0+nukTZwBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789560290; c=relaxed/simple;
-	bh=3zmL3ewY1kdparMjXtYd5YfgrB/htIhzolzkpwgWTug=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=np+RvoeYyBdcZUCKnZZIp1vyxczCU9Mh9M3tJknjNNkY+xfzR8gbSqKN+63dAu5futx7GEQQs0TF4q8Ia24HNwGG4UtRmSBzmU4+X0HlrMxv+ER32J+casSX3VxVvJfRoNdVr1gt3WyzNnMNXiFVKvlwuHnT98pZDxE0q27xZU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sN+p7ZKp; arc=none smtp.client-ip=74.125.230.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sN+p7ZKp"
-Received: by mail-lr2-f4.google.com with SMTP id 38308e7fff4ca-3a49bfe419aso14248651fa.0
-        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 05:04:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789560273; x=1790165073; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=dmdeb4lnNoJH7OwXB9Rluaec5aBqbfZHRKlp2w9jCKQ=;
-        b=sN+p7ZKp9bCgL7VATsMW94k9bC1dZX8SmkLo5Oiq+Br5hgeHG1nkXECrtZKy0URCsj
-         9RuV0QurShCZTjz8Ros9NwKAQBjCiS/YXdQQw/qykGEBfXf3K+R8PFuLfkoa6+D1t7L9
-         uLYSlAX+ThTLLZhZFcR5hU6TRL0u/OZL/ndyXsVOiqWZL5a3dR+OEAr8S4hO42ACp0sV
-         Jip2Na1rOBw+R7kdv9EDiF55eWBOlMdGcLMFnqrkVeFjKqDpFr3XvS/l2Ks0RUcU6Lsw
-         Cb6mSZoqdoJF1o9Wr0jk4zCKlM7r7w2gc8/p/0bfaFcCz86T0OtHhm5iqZSecRU7/7l8
-         2U2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789560273; x=1790165073;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=dmdeb4lnNoJH7OwXB9Rluaec5aBqbfZHRKlp2w9jCKQ=;
-        b=WUXsEMN36iC521mqVVWUAuh28XrdDVub5OirvBSBTiMTLPFhj/DLxUH8F70d70amLr
-         kzjoOAfra+WuzjthrB2AWYsFEkeFSssMEAiRlpf0d6gt6KyyKvvZWPBW0/c9u5ysvNwT
-         OowP32DoGOBltdCT5mC3CkyB4dZI1wmmIUjw5xnsti70XMsbcO+i+xJImo3DEQT+Vr4o
-         O1C2BtqvruIQJESzmQtJyuAKAEltcQMt/d7ERGkGfLDwbzEMCB3+rriHZbViKMvBsDkN
-         z4/fLOiCtNd18hpKPHW6yfvA9pIVWW1BTlub+1n4MHJ3tZKpGTKCTm5fTgjMxI2CHwZt
-         AeNQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwrMRq1pyWQsqBT+W7BAXhCKaCL2Ba4C3bzgR4cJAQwDzjOoYbZcfi2h/Kp4iYuw8K9cV4c83eLZyk=@vger.kernel.org
-X-Gm-Message-State: AFuF++mvXOJOoCRNCMwnLsb6ayYFJD7GKgfR+0xlWJt0TR0TcbQ6txgq
-	uSFTNvdmCqh9ut4aTaNwZK8Pl/8XosDWMzxBK6Psm5F9pPSUtrAHcCfx
-X-Gm-Gg: AYBFou1fau1tr72WJ3fs+sJ9Wf254hrAqGaYn/IRnnE4uFsxM9Xl5G3+MTNhdv3o6nW
-	OzHme+k7iNfjTayRP5e1ZCJ8kGqffJ154awWXqEIm/VKjJyigcO3MWGMF//rlBvdTN/LJLwjTmK
-	AWqZdDFhAJvtQiLtvdfeb/SDGLhglDlQIv+Ac26XkL0f7r3vD1FX4wFMSLl3R7RAn6tVmYWSmdQ
-	6Io/1mbkYxMzkrb4Nm8XDNAcw7Gg3jbQqrScxkS/t7r34VA1h0vust4Xqlv2eS1/94jYcGzoc35
-	kSbENz7+2P9Kq0TTBT2x0ATZjchysl0C4NtSu1uJQachUUu921aA8+bDhmISZQ/LCiGtJLscaRI
-	X1CQUyFHKj//JsIb7biS+s81wjL5vEMpL5kFyMPFe5T+pkoR3lY6qOQHBPdIXWbMTu6Gh0QDfgx
-	y0Rr9cRAI4SHVWf39oVHVh89D2dt5v8eq1YVsGRsLolJSHbNpO22w/vsR11ardCyLohJndP18xk
-	xxnrhq6bGmTgfyk
-X-Received: by 2002:a05:651c:41d6:b0:3a5:b0a5:3ff2 with SMTP id 38308e7fff4ca-3a5dca291e4mr10260111fa.12.1789560273060;
-        Wed, 16 Sep 2026 05:04:33 -0700 (PDT)
-Received: from localhost.localdomain ([78.40.184.2])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a5dafee366sm5974541fa.42.2026.09.16.05.04.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 05:04:32 -0700 (PDT)
-From: Roman Demidov <roman.demidov.nn@gmail.com>
-To: stable@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Roman Demidov <roman.demidov.nn@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	lvc-project@linuxtesting.org,
-	Koichiro Den <den@valinux.co.jp>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 5.15] dmaengine: dw-edma-pcie: Reject devices without driver data
-Date: Wed, 16 Sep 2026 15:04:06 +0300
-Message-ID: <20260916120408.145211-1-roman.demidov.nn@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1789566238; c=relaxed/simple;
+	bh=hwhIGeT1MDe1KLdko0k71UW6Tz+PVyJbY8+8TF5L2jk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZGB7+BGpxCSuuyo4LkLJDM8YlZOnE2SgEwWj9jo7DySnwZfqxUcdhArnPveK3MeMwu5xkCyBcVg12T+GvDo6zoC/SIQWCA2k4TmNxcPQFNrx4ZCydxrzXL62LGIszdemCXvGGB+EIihFbVusub65VtvRw+0d0XzixoS3MMU9/mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
+Received: from mail.andestech.com (atcpcs53.andestech.com [10.0.1.153])
+	by Atcsqr.andestech.com with ESMTPS id 68GDh475010197
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 16 Sep 2026 21:43:04 +0800 (+08)
+	(envelope-from cl634@andestech.com)
+Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs53.andestech.com
+ (10.0.1.153) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.43; Wed, 16 Sep
+ 2026 21:43:04 +0800
+Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Sep
+ 2026 21:43:04 +0800
+From: CL Wang <cl634@andestech.com>
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>,
+        "Gustavo A .
+ R . Silva" <gustavoars@kernel.org>,
+        <tim609@andestech.com>, <cl634@andestech.com>,
+        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v7 0/2] dmaengine: atcdmac300: Add Andes ATCDMAC300 DMA driver
+Date: Wed, 16 Sep 2026 21:42:56 +0800
+Message-ID: <20260916134258.2178081-1-cl634@andestech.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -80,44 +48,99 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DKIM-Results: atcpcs53.andestech.com; dkim=none;
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:Atcsqr.andestech.com 68GDh475010197
 
-From: Koichiro Den <den@valinux.co.jp>
+This patch series adds support for the Andes ATCDMAC300 DMA controller,
+a memory-to-memory and peripheral DMA controller that provides
+scatter-gather, cyclic, and slave transfer capabilities.
 
-commit 11d7cfe0c119691b2dafbb699bbca90258c678aa upstream.
+The ATCDMAC300 IP is embedded in AndesCore-based platforms or SoCs
+such as AE350 and Qilai.
 
-dw_edma_pcie_probe() treats the PCI device ID driver_data as the
-template for the controller layout and copies it unconditionally. A
-device bound dynamically via sysfs can match the driver without that
-data, which leads to a NULL pointer dereference.
+Changes in v7:
+  - Rebase onto the current dmaengine/next
+  - Fold in twelve correctness fixes found by review and confirmed on an
+    FPGA; no interface or binding change
+  - Interrupt path:
+      - Acknowledge only the status bits that were actually read
+      - Key the acknowledge on channel ownership instead of on in-flight
+        state the handler itself clears, which could leave a completion
+        unacknowledged until the core disabled the line
+      - Use raw spinlocks for the state shared with the hard IRQ handler
+  - Termination and descriptor lifetime:
+      - Do not run the callback twice, or recycle a descriptor, when a
+        transfer is terminated while its completion is in flight
+      - Initialise desc_node when a descriptor is allocated
+      - Wait for the channel to stop without holding the channel lock;
+        the poll could spin 100 ms with interrupts disabled
+  - Suspend and resume:
+      - Move the PM callbacks to the late phase so clients terminate their
+        transfers first, and name the channels that fail to idle
+      - Drain in-flight completions across suspend and resume
+      - Do not restart an idle cyclic channel on resume
+  - Probe:
+      - Register the DMA device only after the interrupt and cache
+        coherency setup, closing a window in which a client could obtain a
+        channel through dma_request_channel() on an unready controller
+      - Do not read-modify-write write-only registers
+      - Name the device in the probe-time reset error
 
-Reject such matches before enabling the device.
+Changes in v6:
+  - Rebase onto dmaengine/next; no functional changes from v5
+  - Fold the MAINTAINERS entry into the driver patch instead of carrying
+    it as a separate patch (series is now 2 patches)
 
-Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260521142153.2957432-3-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
----
-Backport fix for CVE-2026-72147
+Changes in v5:
+  - Update copyright year to 2026
+  - Remove redundant headers (init.h, iopoll.h, mod_devicetable.h)
+  - Move atcdmac_init_iocp() before of_dma_controller_register() in probe
+  - Change builtin_platform_driver() to module_platform_driver()
+  - Implement .remove callback to support safe module unloading
+  - Update Kconfig entry from bool to tristate
+  - Add MODULE_AUTHOR, MODULE_DESCRIPTION, MODULE_LICENSE macros
 
- drivers/dma/dw-edma/dw-edma-pcie.c | 3 +++
- 1 file changed, 3 insertions(+)
+Changes in v4:
+  - Use items list format with descriptions for reg property in DT binding
+    as suggested by Conor Dooley
+  - Re-add Acked-by from Conor Dooley for DT binding patch
 
-diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-index 2c1c5fa4e9f2..84d5a1d1b2a8 100644
---- a/drivers/dma/dw-edma/dw-edma-pcie.c
-+++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -151,6 +151,9 @@ static int dw_edma_pcie_probe(struct pci_dev *pdev,
- 	int err, nr_irqs;
- 	int i, mask;
- 
-+	if (!pdata)
-+		return -ENODEV;
-+
- 	/* Enable PCI device */
- 	err = pcim_enable_device(pdev);
- 	if (err) {
+Changes in v3:
+  - Rename DT binding file from andestech,qilai-dma.yaml to
+    andestech,ae350-dma.yaml
+  - Deprecate IP-core-based compatible usage and align with
+    SoC/platform-based strings
+  - Dropped Acked-by from Conor Dooley due to the above binding change
+  - Remove "andestech,atcdmac300" from of_device_id table
+  - Replace deprecated tasklet with threaded IRQ using
+    devm_request_threaded_irq() and IRQF_ONESHOT
+  - Update locking from spin_lock_bh() to spin_lock_irqsave()
+  - Use builtin_platform_driver() instead of module_platform_driver()
+  - Remove "select DMATEST" from Kconfig
+  - Add separate MAINTAINERS patch (patch 3/3)
+
+Please kindly review.
+
+CL Wang (2):
+  dt-bindings: dmaengine: Add support for ATCDMAC300 DMA engine
+  dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
+
+ .../bindings/dma/andestech,ae350-dma.yaml     |   67 +
+ MAINTAINERS                                   |    6 +
+ drivers/dma/Kconfig                           |   11 +
+ drivers/dma/Makefile                          |    1 +
+ drivers/dma/atcdmac300.c                      | 1625 +++++++++++++++++
+ drivers/dma/atcdmac300.h                      |  298 +++
+ 6 files changed, 2008 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/andestech,ae350-dma.yaml
+ create mode 100644 drivers/dma/atcdmac300.c
+ create mode 100644 drivers/dma/atcdmac300.h
+
 -- 
-2.53.0
+2.34.1
 
