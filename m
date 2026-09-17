@@ -1,311 +1,138 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011034.outbound.protection.outlook.com [52.101.70.34])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D58A3A7193;
-	Thu, 17 Sep 2026 03:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.34
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789615533; cv=fail; b=Wp4i6j7eL72JNBaf0q0tRjKOttzYZBXFcJyY0L3PMsq0DHc7WoQCgppUKL7Z0G2tydcPOdh8PfuSPCxdTI+CX/w3nV+LtRX06wSmqHScifGzElNBdt7XCukUcxyN5ldW9kA9/7N0/yYOQD4fo8eaKgi9JlWrjYqsv0YzdBc2saM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789615533; c=relaxed/simple;
-	bh=pFlIwVGycuRrK2Jeiamxkx7uSSflHAd1icKddSQzrc8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=bpraMGufJxyJ5Ckl5rq5j8rlIRQ7JLh8CiKWVzwAquBZq+OUmoh2/AJj6WusRPtJ8b1MRsZxIv5TkmEzbA5zL/czRwQaN07MPxO7Nu/XzJAISiPzqblXoMml/HggquNlYoVW7F3q+EyKJdciy6QenD/uWkXwc0QUWEdMnVz9ciM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=kaFXoUYO; arc=fail smtp.client-ip=52.101.70.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00583A9610
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 03:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789616505; cv=none; b=GZVDjvXL0YwGTAjrm6bxNJRioCcVJsirl44R0LtQi1Tc/Tnfy2x7FgpoDjuS123aAT+mAgtG+LaEx6RDgaQs9XiyhWyAQ/OX6vBJHE0/imNMngdN+pyZ0TpjDFJ8dd1CL6aV8evj92iN8FVtAL/yLLcmht0OycFh+a+92a5QlI8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789616505; c=relaxed/simple;
+	bh=4XhJsmVizhzHozwZPuPySnL45oeWWBP+08eCboV7Wms=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AWciD35wz25lYmrdnJr3JfOSWhII04shkAdgXNio7fc8Aliefq4i1Jr8c5kniI8eCopmCwvJsKfVtfvTT7QyOORqrIbTJ2lfRxdiltkoWJ8ks6Ua1lAzksfEW3zOp8IrAcqaujQSBnZRljktkM/U2g4KwCx2EygKCMBpzySWPao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NzC194yH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NbLberWq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="kaFXoUYO"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jrKrHD5B+5esH7xsi99XCNBNnpkFaAm2gBMsLmm03OeningNVav0Od8OeoGKH0302MWotqHpQSPHqfFjbfRt1gtB3ofcy1VYYQJf2r9V+pDzJ8ac+GMyprUabV/VCfVb0AxYrYJYZ5+tIHctnfhp6ue0P8xhV9VvKJnw1L4U8kuR4kjJ8tytOuu+sjQcDlBDJpX28VhH6eFn/IYEuged4CjfI7cHm0G8SE/Uk+l3nGnMZl96NbIROekKTRYk3ubtYxeg6+l2ouMqee291a3tyIT2+PP97Vd8SPZwm95l46y1jeUyeFMlhJ454fpv+zKKFR9b22TWI9F6+0eXg/5qmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yM5lfL+Ye2Dmrrr3sf3/fTciotYK/DdIvPzXeJbkbmk=;
- b=vJO1kevxxOHA6XTGEuz8jwsX+1wEwSxnNQpyhfzGNrCeAO5vEwPeujIex+2MD0vUrGffPYlijgcMEqWKeQTT2jRYJh/KDy7UiIBcyYyAqmzAmzMh9+oKr87E4ke1RKNrTbQuPyZesCijocYJ0gIITkYhGtF4DRZR/FahSGtqlaYQJsk4mUD2XylySE48tbyUo4X8za0putNtKHVKapcyl2pHXErq8kSUKaU/j15onwlQZW0KOJF9N5no5t8RbYf59kRhbSg/w06TJG1czi+YYLucYKIybARozbqzlho7P0DWxl4n+Ee2nQrxYlwEn0TRuGG2r+B2PaZv2/ut2nEZtQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yM5lfL+Ye2Dmrrr3sf3/fTciotYK/DdIvPzXeJbkbmk=;
- b=kaFXoUYOw2nzcpXyHpM1Y5qEB+aSBzkiGhKj1zgl9So/4RPCPy24a6gfEATctCRmlohAkZ16CnVyUPDc1UGQp6My4OsCNxSvsRH2oOocpTkEyYXM/8PpdaVrCU9FsmwNU86Kq+3DnZ4bWqgsqHBNzzF24Ene4uU0Gz316wm2eclaaEutKxoanEKxHwszhhH5PROfCUsHOZMoRjXy+TASFEYNcU1GvK6ykeCxC0aU4BAbUG8EG3A+xa49jV4pfpuCOvlca/DrvTi0MZDUFUxlSgey4ow/kXzTXFXr3a95G7SQaW3RMtNreAfpAKIY5cDB7HiH+FkETIKFATNaY7yRYA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS8PR04MB7720.eurprd04.prod.outlook.com (2603:10a6:20b:299::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Thu, 17 Sep
- 2026 03:25:28 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.012; Thu, 17 Sep 2026
- 03:25:28 +0000
-Date: Wed, 16 Sep 2026 22:25:12 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Rosen Penev <rosenp@gmail.com>
-Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:FREESCALE SOC DRIVERS" <linuxppc-dev@lists.ozlabs.org>,
-	"moderated list:FREESCALE SOC DRIVERS" <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCHv2] dmaengine: bestcomm: use platform machinery to get irq
-Message-ID: <aqtdmOzJSIawqKQq@SMW015318>
-References: <20260916224156.276511-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260916224156.276511-1-rosenp@gmail.com>
-X-ClientProxiedBy: PH8P220CA0030.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:348::15) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NzC194yH";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NbLberWq"
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68H0Tr5k3597322
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 03:41:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=B5C8wjP4LGLq/ehI6YaOhoiR
+	mBukehjstLcbOo1B3qM=; b=NzC194yHrdG/MscmREOBfbUZ903PjJFPlId0LMff
+	8LF7xeLYFhyMg8L9w8CLKaR+2cERYqDWwH+C196qRU8pHzBZVJhhwzpd9mwH/n/l
+	t6jTQje1Z8NMCeZTrx5UXR7VaeJanhYmwnvfWfQFSNQPyfeplHymxCpdk92Oi5iA
+	X1KA89i6kUS3t9mCtzBYai3aseimxWYadyXtiPzl6bdT9dvjAWS17aakMMKI6o8E
+	AXAy+ENC/VZ5nDE3g1BxNmEWPFKZLagcPnDotRnMhsoK6xCLtNfjoSbBfwYNQ92z
+	3L11sFXAbM8EXoKx2kYheR0IR0mhgOgjoIoBOxCJGYCQzQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqxayah3d-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 03:41:42 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2d6fed0652bso5771985ad.2
+        for <dmaengine@vger.kernel.org>; Wed, 16 Sep 2026 20:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1789616502; x=1790221302; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=B5C8wjP4LGLq/ehI6YaOhoiRmBukehjstLcbOo1B3qM=;
+        b=NbLberWqtJYKv+HqLZDItfWUd2V26KJB0AtdtCCBn1r3yaBgGem2qM2t/fCTwIkTCa
+         ntF1dZVhi527FRuxJJtuCSMPg779A137rh5sUhq6tE2zFe4gLtHvbJ0CAtsylk48e0Xk
+         CAx+85fNOksVC2P9UjLbTSi/ui/JYdIBYVdsXBuIs9aEiK0hKm9T1uzDN5sX2wq2eUrY
+         08H37RqOQqOavR0UOkSMreQYGb3rdcWar5CTDvxaCY5N2uCyfMO7IxQSCABA4rA1BDG8
+         L5qm1hNfeYH+cw4B6pVjKTmRlO3sBS6IvzlZUTCov27+rBemdgSFACMDR3i7zN+YbFjX
+         KCWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789616502; x=1790221302;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B5C8wjP4LGLq/ehI6YaOhoiRmBukehjstLcbOo1B3qM=;
+        b=xscZyHVuswg7lbl6GfHZtaP/Z9dcTBpgGZkBX0BwYRZrpvHHtd5my8WMzd/SymKMrN
+         xdYo07FEG7VnKXaiRfyQzWNBHBrMmSGWSbKfckWjhCVUHWCeHenSNBDewQ/f/nmIoYni
+         IjRiBI2ELfgs/YfgxkS/AXBnbCUaCE+bKrKQAqaXdGwxu1pGUB91cQ5n+LZNO2XI6bsl
+         v/wnLqSIj+WRee8LQ5sD7PJDF9uWw7ssEe2l8huvbDBOIr1gx1ex7pf4XAjycdEGY1e2
+         taISPW1s8KWybkulxcyAvsS6uyk4yhD/nXzFlx2cXhtNRzGY9ADdtMlqdcduAkAeC+Nk
+         o0+A==
+X-Forwarded-Encrypted: i=1; AKwUvBxy1LWIZj/nujnZqXzfwI8ByiLOyWp9DmfUj5C9MusjD2tSHnqt8SPPEyf8vvxJFhBN53dLqtWlF04=@vger.kernel.org
+X-Gm-Message-State: AFuF++llNVlLLyZ+mZmS5JMWLqSf7TD0tg17CJdYQO4Oj6ln03r/ezRB
+	lr/GusNUl0LH3VI+1468vSEYeWIdf0i+P1JBuAemoKeaFTZfgR7zuD3yV0B+OA8cOyopCP04DJV
+	g+qZ2Q/Ie9EJMjCi8nk9DOmZrMa2i93DmgtQilEqzSIXFdFeIgT9FGmkwA/WD+AE=
+X-Gm-Gg: AYBFou2wStZ1r7Va87V9vAGnmd0LxqkGMVy5JkhrlJdR/MkaVnJi96iNiezH0sNOgPM
+	UaGJKqnTgCnsT6zKnBT9X7ZtSF53oRQl4c73ccwttvBUzS05UShWjfJK5/7DMpQZJjdM2t27KsI
+	UnoEiCBT8kOBoeyDzxWBfFR7u5QEE3A51eYTpW1sAbrYp71QUd1b1yZ4bZn5q7uDMPRNBuqkyBv
+	E8KHsM8mMtottlCDEFUL92B0Cn3MWIZpsqxsU9dEkkBEr7X8CW/cwmB4hBN3EskVL+ZRkxnHVLk
+	573kHDPe3YpNPfmAuH+umzYFADzy9TDp+Y7BZfEuVcMRSdGl93D5F7pvxecOkE5xn/LV5SPPeV0
+	NstUWkh6PM4x/cOdXLTBH2SaogIX/zOFzBoWZ7s13Jlk=
+X-Received: by 2002:a17:902:cf03:b0:2db:31d5:1448 with SMTP id d9443c01a7336-2dd8e77cddcmr113408615ad.22.1789616501752;
+        Wed, 16 Sep 2026 20:41:41 -0700 (PDT)
+X-Received: by 2002:a17:902:cf03:b0:2db:31d5:1448 with SMTP id d9443c01a7336-2dd8e77cddcmr113408045ad.22.1789616501347;
+        Wed, 16 Sep 2026 20:41:41 -0700 (PDT)
+Received: from QCOM-aGQu4IUr3Y (i-global052.qualcomm.com. [199.106.103.52])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf5aee8b0sm22826369eec.23.2026.09.16.20.41.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 20:41:41 -0700 (PDT)
+Date: Thu, 17 Sep 2026 11:41:35 +0800
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, brgl@kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: Document the Nord GPI DMA
+ engine
+Message-ID: <aqthb96f2zj_dlK5@QCOM-aGQu4IUr3Y>
+References: <20260916-nord-gpi-dt-bindings-v1-1-857bf9e84999@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB7720:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b26c908-dc0b-4e66-6202-08df146b5216
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|376014|23010399003|1800799024|18002099003|10067099003|56012099006|11063799006|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	o/EN7N7M7DvoZ0dFxQ3DoYV1grZdS5gGCM3Kq6c0wYRH+C7nGuweOpxO46dCbN6s0mEKXKlh8atimA7RSr4jhoWU8Zy7Fo77MNNciBJdlnT5eMzi8NS7XMo5YkaE3rX2fabUlnFq2uyNk2pYmsu6DYMFvKmkvWSYp5BXh1Rqq9y/ujcWi6PCb1CQ9FYE8D49W0hlNDY/89Cfznh0RYrJdAWpmwE7AlPqceUZBOn6hkmifE9DMP8avQ/9LQUt7o4wDtIb7pr6ysqjGYN7XNloW5Nl74+D/2g/5zhPToMDTQtz0aXmLUb/h0+kxvsEoDepE+LC9DehPNiJPLojQp+LUn0l/keYyRQIsP5nUNvO8OWqprVEPqT4rY+VQyc/CtL5NqJjvmNw9ATWNH1S0CaG9LHQIKv5EdNv0WnXtafVVNfjnpR53inypncqrjKeWSa+L2CtH3MXrtCH7p0rtqWtToICyDMepYyVPwVIo88IseZF6qix8ghMgli/SxlTBnq7disHbR2tdCIjk6nzqM2AcNX3CV4auUAgW8Sd9hJ2K+4N+kPSzrSGqSLnyft5n43504R7/wIUQv20Vlee9e+fn1qI7OrFIoAXPX0rXJ+AVFXTh8qzSkvMfn3NY1CRwZ0Kkui+icyG2cDLiAuBnHu1Ti7zM05zo3kqoiyY1tXe9w8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(23010399003)(1800799024)(18002099003)(10067099003)(56012099006)(11063799006)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7z0A8MTYhfyZSupEX0SF9bek15F0BcTZ0076ZcuGr3r6MDa24dNk+AMyqbdF?=
- =?us-ascii?Q?Mh0B/5oaVkYJeBKGP4zswA8TJY+kRI0sjSK2QLnCJTDtwDErfeeNzwLn+TvV?=
- =?us-ascii?Q?Sj5OFvFmZLPGpVaEXEpIIJv9Pn8x/FHK2RGPylC1DU1+xp5TBXyCGAMojXLY?=
- =?us-ascii?Q?m07OK7sQDg2R2X/Dj2CQ7DV7tzDhUoLGlmyi9nIgcjfheJIbNvAyhH1LL/8w?=
- =?us-ascii?Q?8bhPrur99Jcm86iL0gjH7g3AyGYf46IL6RdQGC3n6ju3Ur7Qv70k1+8nKN97?=
- =?us-ascii?Q?bvIk2tEmzTovHKAalruafGy8a351lWzmzFECvqLTgQONfYT2teXpD93v4JCi?=
- =?us-ascii?Q?kp+2Xqp3adn3bko+Jx3qcMpScILuzvCr6pnmCso+d61bkqXtCzhXgQ2EASsj?=
- =?us-ascii?Q?SZjyfEzu70bg2xriFVRLf/uJIh9LJFXWB4hDr9LcUfY/cQIhzBmc78lIjU3w?=
- =?us-ascii?Q?d38+l71S1OZ9mkk4BM9EhBO2OahkIpGOcXl84hHDK3t8yEeB7D12U7TjwTOv?=
- =?us-ascii?Q?jA/ROyx4Z2OMOqq+G6ZwgYurBWEfhmFTnLLt/SJNEgkk651/Vct+G9Xxfm4Z?=
- =?us-ascii?Q?7xW1btXoBEmrD0n0DoGTgiAaQyPq7WxM7wDssy8FSBQurhqvPs4aieuhx+n8?=
- =?us-ascii?Q?kVtHTFO2k1kf6K6vGs/PPhTFe1B3jiHs+uzYTUuKNjUPI/x+2XWhpbAcQJvx?=
- =?us-ascii?Q?3wtAH6N/Mt1JrJaOLnnjVhV80CpnogcF3VZkaGzvGdi13ee5ATAnHkrvOBj5?=
- =?us-ascii?Q?tq68TBYeOrDk0kt/VnHKg7HD6+mGI8jASZ+NEylfr148nXQUyHkXBIpARENe?=
- =?us-ascii?Q?6bVmvJi5mQltFYsoWDLeRs/68juG1kUKsMq9kTmt/hRNI/ELQtveD0cVu5vX?=
- =?us-ascii?Q?XLm66t/lQErCaL3caN+kEDmtKaaSkAgrKGjqPimppvOAJQBNrd6imm7Csy+5?=
- =?us-ascii?Q?0cbrA5ntsgzEeR2b6Vzqcve24MdEwSOBjJJvDPOX0M1pOIVUiKEAyy7nnUDr?=
- =?us-ascii?Q?hXVxVk+kU91JOMRtL6sWVxBXwL9FHhxKfSqz4Una4IdTq88T0/FFgNSrQzPh?=
- =?us-ascii?Q?oCWPV2+BXzO9/QhbUlL5/VZrlkwg9S2uW2b1Z8aBzNOI5UxCZriynB+rGDHl?=
- =?us-ascii?Q?mctCpNh06QxTlf7XMP7ejBwSRSqnjLvif+82nqIHj9b8qRcNUoi5jLP+ya5f?=
- =?us-ascii?Q?w3SHrsP6KRrrbnd6krUCIgRAk2HuF3xlqPqfpd5QmxVmky4Og1PfXnErNN9r?=
- =?us-ascii?Q?vSP/4N2s160iZVyrPfV8f8L4qXrctJTU3v1VCvmYWZ64bKyFbP3M5VwkUDlo?=
- =?us-ascii?Q?fCmI/Mb5eBIgfuQicrQpxaQPnss2AaDmF2U673tdWdXGg9/zphbKpoKSPCx1?=
- =?us-ascii?Q?Q79gVa4ptbUxe8Y+fvQcSVvbsGXVC/q1H8Iwgm+KzZU9pRIaAqDPfnIUr/4q?=
- =?us-ascii?Q?sbRHcCsQAiPdctXHQYjcuiCM7wZAPoqjTAJRKAt8axmRWK8dZ2NdO8AS62EM?=
- =?us-ascii?Q?6kOAzp6YJ/LMlo9gNP1vm0ZLvpAJih2cyZohX5hfsc1vHf3NdUInmDrS1aF7?=
- =?us-ascii?Q?JfZJs+Ohssgr22HRb4d+itbiKXLvnJDzs2G6RtsVV+++LK5ROBSVsWw5YLgy?=
- =?us-ascii?Q?5rsL2d+JbpaW0fs9FFBvqavyOTCI1TCRcL5bqF2QwCWQGBubeHeoqXIMBrD+?=
- =?us-ascii?Q?p0RR/5YmrCu+hVj0HQoVRSO0XMyzUz8IKm/Ec5e3jl2opjfXox9dSVXnbnXi?=
- =?us-ascii?Q?o8/knAJ+IzxMT7HWb9Yc7OEEWzW8jaCV8dHUQBmSoATrcKzG/VC2?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b26c908-dc0b-4e66-6202-08df146b5216
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 03:25:28.4171
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qZTP9r3ba+AwW8Qev5KCYw2X5999P33AbofPHGvkbx1/nW4i4ShXMIm9Ev7sWMPmgEQwqekykKgf3Y8GWuYu0n6Qf9pr0fwhljqc/r6IuA9V4+zuKKL7bwQv3enM7QB/
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7720
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916-nord-gpi-dt-bindings-v1-1-857bf9e84999@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE3MDA0MyBTYWx0ZWRfX1vvYkF/QCgPc
+ f1Q8WhtnT8dlSNdGGf/vZCjxqgF+BoYbb5c0NVYI9TVkErbLLjGDscdYoyAGgulYvKuLKMMITsu
+ lxwQavyOf3czpHOhzY5Zz/2KLydaSdQVsOJU8F8OVqGSOwSvyqL+m2/jO/pEtb4M7srgKwRWOWs
+ uXU8RvmtDEDubqWQ9FFHCIA2sySI8e0P1UVNTkD1m1g1qimkwGB3MneD9ITJvvy/s5C0VNdRd35
+ JGw03hrQuHOtqPtaAziAQ+em1kvfXRs1aJ+lBqxSB50OIMfvRG12pqb4FeHJa2aFV9SpZUQmfaz
+ kavsDJDZh7uVt3k2LboCY1CKDcEuG1dhC5MFXRANH0EoeCFkg9fZ0+HqudtS1E8Yx+ZEupxQDZO
+ RQVRMqlMziwwY8Hg4oL2u+/Cw6z2tnojjnEK1RyPzr9lhtEkeIi1QJ69rOKvUal+nOkgrVxOwR2
+ lPu6U8R1/KqHh7j7dwA==
+X-Proofpoint-GUID: O495Ne7G6E7FNYgo0dlhZpS5nWosoT8O
+X-Authority-Analysis: v=2.4 cv=EoJHPicA c=1 sm=1 tr=0 ts=6aab6176 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=yOFVgSGORKUhaciPrRkA:9 a=CjuIK1q_8ugA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: O495Ne7G6E7FNYgo0dlhZpS5nWosoT8O
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE3MDA0MyBTYWx0ZWRfXw4sgONHgIv7x
+ lCJ+RDofVAPJ2bVSZ4rs7UOi01fpPwrNVLvE2DCKmCZV2O9lSU9Qrm41AeyfVWFuwubcudT/rtr
+ IAcZDg662sowUa12xN/D2CnbJgrhhRY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-16_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0 adultscore=0
+ impostorscore=0 clxscore=1011 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609170043
 
-On Wed, Sep 16, 2026 at 03:41:56PM -0700, Rosen Penev wrote:
-> platform_get_irq() avoids having to explicitly map and dispose of an irq
-> by having the platform_device machinery take care of it.
->
-> This requires replacing the device_node with a platform_device in the
-> bcom_eng struct so that platform_get_irq() can use it.
->
-> Conveniently, this also allows getting rid of of_node_get and
-> of_node_put as the platform_device machinery also handles that.
->
-> Replace the open-coded resource lookup, request_mem_region, ioremap and
-> the manual iounmap/release_mem_region cleanup in probe/remove with the
-> managed devm_platform_get_and_ioremap_resource() helper. This removes the
+On Wed, Sep 16, 2026 at 05:21:29PM +0200, Bartosz Golaszewski wrote:
+> Add the compatible string for the GPI DMA engine found on the Nord
+> family of SoCs.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-update commit message, no devm_platform_get_and_ioremap_resource() in patch.
-
-> now-unused error-unmap/release paths and simplifies the driver.
->
-> Adjust the goto labels in bcom_task_alloc to match what is being freed.
->
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> ---
->  v2: resend.
-
-If resend, don't pump version.
-
-Frank
->  drivers/dma/bestcomm/bestcomm.c            | 47 ++++++++--------------
->  include/linux/fsl/bestcomm/bestcomm_priv.h |  2 +-
->  2 files changed, 18 insertions(+), 31 deletions(-)
->
-> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
-> index 241a91936fe8..1006030ff167 100644
-> --- a/drivers/dma/bestcomm/bestcomm.c
-> +++ b/drivers/dma/bestcomm/bestcomm.c
-> @@ -47,6 +47,7 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
->  {
->  	int i, tasknum = -1;
->  	struct bcom_task *tsk;
-> +	int irq;
->
->  	/* Don't try to do anything if bestcomm init failed */
->  	if (!bcom_eng)
-> @@ -67,30 +68,32 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
->  	if (tasknum < 0)
->  		return NULL;
->
-> +	irq = platform_get_irq(bcom_eng->pdev, tasknum);
-> +	if (irq < 0)
-> +		goto err1;
-> +
->  	/* Allocate our structure */
->  	tsk = kzalloc(sizeof(struct bcom_task) + priv_size, GFP_KERNEL);
->  	if (!tsk)
-> -		goto error;
-> +		goto err1;
->
->  	tsk->tasknum = tasknum;
->  	if (priv_size)
->  		tsk->priv = (void*)tsk + sizeof(struct bcom_task);
->
->  	/* Get IRQ of that task */
-> -	tsk->irq = irq_of_parse_and_map(bcom_eng->ofnode, tsk->tasknum);
-> -	if (!tsk->irq)
-> -		goto error;
-> +	tsk->irq = irq;
->
->  	/* Init the BDs, if needed */
->  	if (bd_count) {
->  		tsk->cookie = kmalloc_array(bd_count, sizeof(void *),
->  					    GFP_KERNEL);
->  		if (!tsk->cookie)
-> -			goto error;
-> +			goto err2;
->
->  		tsk->bd = bcom_sram_alloc(bd_count * bd_size, 4, &tsk->bd_pa);
->  		if (!tsk->bd)
-> -			goto error;
-> +			goto err3;
->  		memset_io(tsk->bd, 0x00, bd_count * bd_size);
->
->  		tsk->num_bd = bd_count;
-> @@ -99,17 +102,12 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
->
->  	return tsk;
->
-> -error:
-> -	if (tsk) {
-> -		if (tsk->irq)
-> -			irq_dispose_mapping(tsk->irq);
-> -		bcom_sram_free(tsk->bd);
-> -		kfree(tsk->cookie);
-> -		kfree(tsk);
-> -	}
-> -
-> +err3:
-> +	kfree(tsk->cookie);
-> +err2:
-> +	kfree(tsk);
-> +err1:
->  	bcom_eng->tdt[tasknum].stop = 0;
-> -
-
-avoid unnecesary change.
-
->  	return NULL;
->  }
->  EXPORT_SYMBOL_GPL(bcom_task_alloc);
-> @@ -125,7 +123,6 @@ bcom_task_free(struct bcom_task *tsk)
->  	bcom_eng->tdt[tsk->tasknum].stop  = 0;
->
->  	/* Free everything */
-> -	irq_dispose_mapping(tsk->irq);
->  	bcom_sram_free(tsk->bd);
->  	kfree(tsk->cookie);
->  	kfree(tsk);
-> @@ -377,16 +374,12 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
->  	if (IS_ERR(regs))
->  		return PTR_ERR(regs);
->
-> -	/* Get the bestcomm node */
-> -	of_node_get(op->dev.of_node);
-> -
->  	/* Prepare SRAM */
->  	ofn_sram = of_find_matching_node(NULL, mpc52xx_sram_ids);
->  	if (!ofn_sram) {
->  		printk(KERN_ERR DRIVER_NAME ": "
->  			"No SRAM found in device tree\n");
-> -		rv = -ENODEV;
-> -		goto error_ofput;
-> +		return -ENODEV;
->  	}
->  	rv = bcom_sram_init(ofn_sram, DRIVER_NAME);
->  	of_node_put(ofn_sram);
-> @@ -394,7 +387,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
->  	if (rv) {
->  		printk(KERN_ERR DRIVER_NAME ": "
->  			"Error in SRAM init\n");
-> -		goto error_ofput;
-> +		return rv;
->  	}
->
->  	/* Get a clean struct */
-> @@ -405,8 +398,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
->  	}
->
->  	/* Save the node */
-> -	bcom_eng->ofnode = op->dev.of_node;
-> -
-> +	bcom_eng->pdev = op;
->  	bcom_eng->regs = regs;
->  	bcom_eng->regs_base = res_bcom->start;
->
-> @@ -426,8 +418,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
->  	kfree(bcom_eng);
->  	bcom_eng = NULL;
->  	bcom_sram_cleanup();
-> -error_ofput:
-> -	of_node_put(op->dev.of_node);
->
->  	printk(KERN_ERR "DMA: MPC52xx BestComm init failed !\n");
->
-> @@ -443,9 +433,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
->  	/* Cleanup SRAM */
->  	bcom_sram_cleanup();
->
-> -	/* Release the node */
-> -	of_node_put(bcom_eng->ofnode);
-> -
->  	/* Release memory */
->  	kfree(bcom_eng);
->  	bcom_eng = NULL;
-> diff --git a/include/linux/fsl/bestcomm/bestcomm_priv.h b/include/linux/fsl/bestcomm/bestcomm_priv.h
-> index 3b52f3ffbdf8..cddde7c74cb5 100644
-> --- a/include/linux/fsl/bestcomm/bestcomm_priv.h
-> +++ b/include/linux/fsl/bestcomm/bestcomm_priv.h
-> @@ -66,7 +66,7 @@ struct bcom_tdt {
->   * This holds all info needed globaly to handle the engine
->   */
->  struct bcom_engine {
-> -	struct device_node		*ofnode;
-> +	struct platform_device		*pdev;
->  	struct mpc52xx_sdma __iomem     *regs;
->  	phys_addr_t                      regs_base;
->
-> --
-> 2.55.0
->
+Reviewed-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
