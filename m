@@ -1,89 +1,99 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AB844239F;
-	Thu, 17 Sep 2026 07:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E5D2DA76C
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 07:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789629472; cv=none; b=K5x/xPSeDC/54jqEaNM/6Rq0clWPXoebLDelVw6NPJ8xCg2ruE9eLZ94wpHpj2/DEgi/FBQrDf/JQNuspzwp16H/2ah8+KyppZNOmnvqW4amPCl7I+5GqeO2/Uavn6NE/gqeGG6loEjPlweHPIa3Wi8Vegdaf4jI5gU1PLkMidI=
+	t=1789629909; cv=none; b=MvOHh+L5ws/gvHLVS6S/lTKJvmkrxg8QZex04FfgGjf+OAtQox9D5/49dDzfscHSkpAkf0klINIoQdn616BtjQsYbesLABDh3qmctOJXKzSPYhTbZ25aG5mdkATvxA922fTWYNoACN+5JaRtnrQ7tXR3QA69OUYR0ChLW5bxqb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789629472; c=relaxed/simple;
-	bh=oJ69tRvLbrqeKFkiOby1ZSgsZ7Q/m1HelwCZqGy6c7A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EABLAv47FgFv4Hne90Izro7vAEClfLImgXdEQ1O0QLW2sfeFXxoZhQ26MMuo1kFg95SgKjHTbdKNMiCzuihgt7CMWf7jffDw0XGHzQrsPIGNPRYS+/uOOoo4PPfccVxrY1lAVA534do6xt9N29IFVf3Cicpe3jv8fsxQKC7BMfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=Lx8pPvfb; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1789629909; c=relaxed/simple;
+	bh=1YZYQdA7cQnN53EzppnJRDei63bVcLlDarIc/XYRlso=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=lC+oMfo+VGz4Ry4BZFNKIjdBkSJxrpCHoOybtoF1G69gyxufTV7tOsaJ2sdsN21VMDIEe81pD4/kWW6Mv+KLFoiJlOJ6TCh34opG/qr2DyvD5dqCqkGh9dv5knq7RC9hQkfW8gSp1U4S9s6J/8SW6Ad/9bF4Bg2TMmAudMOxzII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6UAz3zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="Lx8pPvfb"
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 9D1952C6;
-	Thu, 17 Sep 2026 09:16:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1789629364;
-	bh=oJ69tRvLbrqeKFkiOby1ZSgsZ7Q/m1HelwCZqGy6c7A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Lx8pPvfbUAC+xXBt/97E5ufS0rYZN6wCAHVlHaEvCwmW8rktTj0GLru+VvlJ5dqjM
-	 2sRTaSWZOjjPRaFNgqP0LRfhOEUnEHbfWsSLU6DSJ7dbYAeEMBkP57L5kSmpzUNqea
-	 eWXH7ly+cjy6V6wgI2jpdvOkintK+UmhZM1wnG8I=
-Date: Thu, 17 Sep 2026 10:17:45 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org,
-	Zhang Shurong <zhang_shurong@foxmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Magnus Damm <magnus.damm@gmail.com>,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH 1/3] dmaengine: rcar-dmac: Fix PM usage counter imbalance
-Message-ID: <20260917071745.GA4019@killaraus.ideasonboard.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6UAz3zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDB61F000FF;
+	Thu, 17 Sep 2026 07:25:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789629907;
+	bh=o+KYgt91PVccvN9zLWo4sr7okQCG+kKr8aleLUyNixA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=L6UAz3zhtzf53PQ4zIEFFYEo6PY9pYoLPf6sh4p1cb6BOoI5PSUXnX73QQKmg9Wx1
+	 JmQ5hhMzJ8nTXhQpGXQLn0sm+jaf8lj9BaeJtPMOU9KEbMJLsYMUCYBKkAAhbarJWB
+	 QgvOozCNFzYsPsC4owVG1yC7s2izrEBo4ceJBS+IJ/mscfckr3MsTElKKds1gqSlF9
+	 nPpU5QcvUd8mU/GDpcjkSVuvZQcoBhu5KD3j5iCHbkz4OOeBPFvngNLnik4nNtSzG7
+	 Ii0eKmVsdq9AyNs77xtvEnk3d4EMtcIucsFFUVtITGFiDInBtSJpb47bI+lxCrBZqk
+	 PZj4Wjm5UCDPw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/3] dmaengine: rcar-dmac: Add missing
+ dma_descriptor_unmap()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Wolfram Sang" <wsa+renesas@sang-engineering.com>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, wsa+renesas@sang-engineering.com, vkoul@kernel.org
+In-Reply-To: <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
 References: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
- <20260917071208.36888-2-wsa+renesas@sang-engineering.com>
+ <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 17 Sep 2026 07:25:06 +0000
+Message-Id: <20260917072507.5BDB61F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260917071208.36888-2-wsa+renesas@sang-engineering.com>
 
-On Thu, Sep 17, 2026 at 09:12:06AM +0200, Wolfram Sang wrote:
-> From: Zhang Shurong <zhang_shurong@foxmail.com>
-> 
-> pm_runtime_get_sync will increment pm usage counter even it failed.
-> Forgetting to putting operation will result in reference leak here. We
-> fix it by replacing it with pm_runtime_resume_and_get to keep usage
-> counter balanced.
-> 
-> Fixes: 87244fe5abdf ("dmaengine: rcar-dmac: Add Renesas R-Car Gen2 DMA Controller (DMAC) driver")
-> Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: data corruption due to premature dma_cookie_complete() =
+before unmap
+--
 
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+commit 1e9a738c62158e887202df32a8267f4bc4bfe4cd
+Author: Koichiro Den <den@valinux.co.jp>
 
-> ---
->  drivers/dma/sh/rcar-dmac.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+dmaengine: rcar-dmac: Add missing dma_descriptor_unmap()
+
+This commit adds missing calls to dma_descriptor_unmap() in the threaded IRQ
+completion path and the channel reinit path. This prevents streaming DMA=20
+mappings from exhausting mapping resources.
+
 > diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-> index 3ad8aba5dcd4..5b54f1c4ce15 100644
+> index 2d2baa36feeae..016024858fe5a 100644
 > --- a/drivers/dma/sh/rcar-dmac.c
 > +++ b/drivers/dma/sh/rcar-dmac.c
-> @@ -1070,7 +1070,7 @@ static int rcar_dmac_alloc_chan_resources(struct dma_chan *chan)
->  	if (ret < 0)
->  		return -ENOMEM;
->  
-> -	return pm_runtime_get_sync(chan->device->dev);
-> +	return pm_runtime_resume_and_get(chan->device->dev);
->  }
->  
->  static void rcar_dmac_free_chan_resources(struct dma_chan *chan)
 
--- 
-Regards,
+[ ... ]
 
-Laurent Pinchart
+> @@ -1652,6 +1653,7 @@ static irqreturn_t rcar_dmac_isr_channel_thread(int=
+ irq, void *dev)
+>  		desc =3D list_first_entry(&chan->desc.done, struct rcar_dmac_desc,
+>  					node);
+>  		dma_cookie_complete(&desc->async_tx);
+> +		dma_descriptor_unmap(&desc->async_tx);
+
+[Severity: High]
+Could this specific ordering lead to data corruption?=20
+
+By calling dma_cookie_complete() before dma_descriptor_unmap() in
+rcar_dmac_isr_channel_thread(), polling clients (via dma_async_is_tx_comple=
+te()
+or rcar_dmac_tx_status()) checking for completion locklessly might observe
+the completion too early.
+
+If they access the destination buffer before the unmap operation finishes
+cache invalidations or SWIOTLB bounce buffer copies, it could result in
+reading stale data.
+
+Would it be safer to place dma_descriptor_unmap() strictly before
+dma_cookie_complete() to prevent clients from seeing stale memory?
+
+>  		list_del(&desc->node);
+> =20
+>  		dmaengine_desc_get_callback(&desc->async_tx, &cb);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260917071208.3688=
+8-1-wsa+renesas@sang-engineering.com?part=3D2
