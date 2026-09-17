@@ -1,116 +1,215 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F71466B1F
-	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 23:29:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789687774; cv=none; b=Ihivh0RsDeUuphiLo428o910n54XmaMaJ/OcpCsLCGxIWXND7R/h9P163C4ApJT0lPPj0JLFlhpwBUqMImydbjvjkOA8uRkDaFta2xmCkFuX0+R0y8APB7p4LNvNwJVOH3qT1SB5vd88na5DiXysMkmehVYfIImSdCTrYF0gjKY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789687774; c=relaxed/simple;
-	bh=vfCvItZUJWIDnmANtREff/s++lH1r/4XwMRHbFSb2xI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QHK7A+ErZssRCyjbgSM/ZpJXHSN+N2EEWyxoRLL342Uw05STBFxlA/FGeRxTg+BQrInwbRzk77CScuvdtflHqk4IVteAYaKfP9dTPJmDR6y0kqyMJkypPAa47Wr3uHi6aAe06C8Np9gaLV7UDKLRAONDw8zwnPa6G9LpnT/8Y18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GN+M4EGS; arc=none smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3419236E49B
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 23:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.99
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789688748; cv=pass; b=otkATgJcguM6UZhCFNe5Kv59LjB2dSkR2YhlxsuGpKEmbdV3NMinnnwVDskrCzFTof/o6TZ4AtxFTARo/SUapU1L8wP2fEm01MKEWij0MYQZe93m3hnXh3fCHF5Z9ZR8TZXBYDnevg+GFLYs1dA8swZWTqg+AbHkvoVVx/7P9Gc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789688748; c=relaxed/simple;
+	bh=pE4rjGDF1bQbyBBb0Wy35uSEjHl+G4PyGMxkQjXjeRA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NYYZ5ZNE/6mI2lUlB832UqxLXIBs5hu//LtPpSCCbfGHdzPPTd3ZUMhUeOiwB2GtiBY54sMVlUqrdMR0cpPziq0OfNWojBbseLTsZL3im1VQ0MKl2BodGW0T+GWrVhsWF8WbCM0b5u8z5vpUdRr3by1XVnCypJ0EVxlI7nCPxVs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C076HdeP; arc=pass smtp.client-ip=74.125.228.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GN+M4EGS"
-Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469b2e1d5so182362b3a.1
-        for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 16:29:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C076HdeP"
+Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6a98505364aso220948a12.3
+        for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 16:45:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789688743; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kfw/95gZJ1kwtl7BgRrsh/rsMB7VXczNcE4Kqh6tRcIdhkmQZy/LFS0B8O4x1ziVnU
+         H1W9ArcpmXQ6XormdzWMkOrLAFqcCXpA+n1AdPat2wKJ/q/YiF6R3azQ6L7ZMJr/jS1k
+         G/MstTD3bzJ8mnYlNykXt7kH8qt5/dJxA7/Ic90tcdTmPQxhKfJuTC/T/fVa/ha4ZQJe
+         Wa2ox04A68AdVJpC7DrKa2UoFwrd8VKU9+acX6wMVBNeNNOOxYkr9TdoUjYqGXReKiXe
+         PRx6Zqk11wNk/jM/o2NWnOsAR5hSxtdiWHVgR7f8DSOx/SEg8p+llJLORRnJxfpFmfNN
+         bPXg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=IRCvOsr2xS9Eb1jZjbj4vcoW3Fq5/gZdfVw4G7qLA0s=;
+        fh=oDAnnQ/SNfcNq0Iulz9Op5NCrtNjk/3yNGSUuLRVreU=;
+        b=dFMpwT4xucNejuFjOqO4M9StnLH5KB8cnPKi5txFFDXNkNt/2esxZ9jdq/jZVu84Gv
+         IiJj2bTD56eZ+wCbKksG8d3mlKleCyg0F4oUWvHLjvDp0NqUn5HPgDoEmVUQZDqaFH+H
+         OCWH70gUtZPX7reOYIrqq++EBKw8MeVWNexzcnX6HCUubV/ObVAwQ1LbT/CvnaEwUBhi
+         VLwyk7I8ZY4ZU33PBewpVP8r8HxBZTxYoaoeA+QA00j8Vl+Tiw0KKwzUIrl+aVmhtMyL
+         us8pApevRgTvhPBCFMBNJQfWghzSZKhbyrBECJSX9ZOtSMaCkZf7QyF+ggYgw+o9f4BB
+         QxkQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789687773; x=1790292573; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=/iL1Xh9ZZ7puvXidIO52nL8OUfG9aWJVfXlW3+EIGwE=;
-        b=GN+M4EGSJNy+rkLks2Ie7SHo60SlA46PjhNZw1xKaMa2GqyGWfoU0IPrxnHyPm2rCs
-         wxSNb/wltwBwXLdyh6CaQ3jITe7YinALWG1P+44K+mMuHqmOOiu0reNvNGrClzNtrAm1
-         Sswv9vK8vSus2guNV6Ky4JI3kS7PpAjt7Sr7kGeFCCCBpJz/TEbhV0YQrRSzR6Ei3Kkj
-         WdTLyJn4rPMPxTe7LZOVNtWNQyErVnEkUUWwUVHn0R3IvyQzGlUsSMlKL9BDGRgFfrwA
-         1+ImM8j9lLFLqpEVQkLzrKGRp9qhnIGHlH+SubkCqMJc3HAayHvxQrrQzxmreVIhoBuK
-         r+bg==
+        d=gmail.com; s=20251104; t=1789688743; x=1790293543; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=IRCvOsr2xS9Eb1jZjbj4vcoW3Fq5/gZdfVw4G7qLA0s=;
+        b=C076HdePBPIHEZPZcWB41QMZCTaSXAdizom0yZ6C1fmKp+R6mXM+vcxSqyr8RL6VX2
+         oF2FevOwyCJhYFkjYWKd4H0Bl9RFIFotRYREuMZ3aIpKXhozpCvEItsEfDllESaEBTYv
+         XjzaY8TWbhla/u3shdNviwywlEfjooS9LWBKwU6QoifQy2nqhm+aIhZvyl5on9fGk9k2
+         1OSY88/ifwaZ1Ho075KlYbJVk/W8hpCQNDZyc1Fn7rTOl8CD4KHhNyw7shkhs+FpP4y3
+         y1Fdjtebzyql3/LcjWBFIhaqU5vIfo3Tq7Rs4QOM5ShHoeP7+w97NhPikoKoqRM709wH
+         ndyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789687773; x=1790292573;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/iL1Xh9ZZ7puvXidIO52nL8OUfG9aWJVfXlW3+EIGwE=;
-        b=MboxUFCfoo5k0Eu7e9lEXRKf0D9yr2tRHQzsGXO0aUAMHgLmCTZydt8EJamp44wWbR
-         OuUUSdQZ5uTwu0jUFxaRvzNi6/IldzXYVgyAi4QiLhbYm/NE8URYbS+xRByMt61/gJWg
-         t0kgI5bJ8SR4Xj1JzXqo8sW6/FfTPjrkSDz5W16YzDwz6aPvrDaFNzIFKYhXjb/IESQ+
-         3lsYxS+6HRql832fOheaBnwIetpp+hHbhBsGbYh0KMRCZL+P7A0ygTg94+2mgz1MKPhZ
-         ls9qRFLde7OR6uGkt3Kf5toSMat/EkQTe4bhhr8/Uv9/72MENL9lo2n9iBTzj3575h/m
-         w8wQ==
-X-Gm-Message-State: AFuF++nOMyh7Vsv30kBJx39+ckHTe3aNX2C6sTZCudqQxYSi606/GIYK
-	Femx5Ql+UVuYEvO6f2PZQRydBN8nmXwgsYJVL2sf/rAeEzhsa7Wq2LwsnkZtSw==
-X-Gm-Gg: AYBFou0oQFP3xGX3GCNRFeBX1GCjUfUnPKQ7x0pZWZZva5H9HBQeveSebY9CJmfT3Zk
-	agYuPwpOHhSp1dsMQIiXyzvlybKbnnBERHUhJi3d+RjMu0+bMihzvcagzgqM/vUljahiJFamAf9
-	jHGH73vKhZwRM0/PYmcNBQnchAcNw8Zxub0K46TKtN5vZKY54a12DDCNKrxTcGVS5sRrfQ43avj
-	bx8aCdbRw04hmKZHubYhlDvzkAlZt6reEiJ9HcKzSgaI9fRyHwmSn1/TOv1hC6SMAJ3m3+JP5s6
-	xFpUhsqjHzRpM3QHJST9Kq8Z6HHjY7oBPPhYaQhK/iKgvtkkhHGUBZnalVbhbPWTpF4ZLJUCz/G
-	bPCulJz5LgReyXxOOGK59W7UvalHe2NOdn0dEei29iofy8l8oM7apNMzp4i1/Ip8P4lTjXkxvKD
-	lH4aXmJh3JDlV6so96DcsMEvQ5L9JEue7CK3EHu4PGiGZNKC+gl9p1lXEwlHqBiIqmJ7ZEniDUP
-	kDHSBR7rTYfBymBvD4l3ZS3YjQfr+Iu2ytGy4ajcECq5LQ59aQmzloEDVwHOiWOQT8dDhunAziU
-	JkqHnmSWk/ugKEbTT+xv+62oe7ATMu2Ld/uU6FSHFUAQHmgv
-X-Received: by 2002:a05:6a21:1b81:b0:3da:ec28:2cc9 with SMTP id adf61e73a8af0-3dd8c53b1f4mr853759637.23.1789687772800;
-        Thu, 17 Sep 2026 16:29:32 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e34])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc52e4bd4c8sm113418a12.3.2026.09.17.16.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Sep 2026 16:29:32 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv2] dmaengine: ste_dma40: allow COMPILE_TEST
-Date: Thu, 17 Sep 2026 16:29:30 -0700
-Message-ID: <20260917232930.128927-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+        d=1e100.net; s=20260707; t=1789688743; x=1790293543;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=IRCvOsr2xS9Eb1jZjbj4vcoW3Fq5/gZdfVw4G7qLA0s=;
+        b=MZuHhx5DG0l1ZCFupw/HSeuoUoWZLdvD7GTrniO1H2u7xGd/zbQcBjF/gIP6j1fiPU
+         9PwYHPKUIL46Itm2E2DizWzZzhRnjJVXvsg/iJ5gqDikLyBk62QIMWmxVlsoHCk48Ae1
+         dz6z63WepvtDS1Un8SAGbmO1MrgArTqbx/+dDpe5VD9y5IRK0w5DlZ8aucJICH5zyKgx
+         qfBykf7mHdmSgWl1RGj5ahgiY9CTQaOWyai/pb0Kh5hixlmIrWoiExCdKMwXRj3hffpj
+         yJ3PvxboJkH6Vp9A0qAXIrE/GLgAFGk6j+aeFMIBK0Il7v5aikRp6O/KuRIaljB9e+Rv
+         tcbQ==
+X-Gm-Message-State: AFuF++kZWB0SL06Zw1PQyywVqBGYo1HmkD63SmxqEWcRrqFO/tLAg0sm
+	/v4P0DxCkBVRfkzbyLHDI99nt66IuMjCq1n5sE5yN1lKH61wSj6pfRMvoMJIWVlijQQpxQRfC6S
+	GXBnlVy8M2skkPDK5qMbvadDxnbn8Pws=
+X-Gm-Gg: AYBFou322XiJ5cvU25D/r6s9KMi7JOVts1UeCDEacXMD28RJ+DrBEwIlkA5GYpEJjsL
+	PP6yySEEJKEZaBqG0XXnQI8gVU+8vcHu1QZsns+k3v2mAGQaKMSDw5JET9Ov1oXmJUidacdVX5J
+	4cx4uDfMXdulYNcs8v7+BrhDTPZNPEjs/E+FSeiJ7EZdMtLvaHgLrFGpUZ/6RH/AbTY44eXW21u
+	EeAQiSYisI+JEhik3rFUc3/YbExkU4L+pS0dKQCTty1Eml/UhS2SRnwuevlx3LXHL8wS7CPR3CL
+	fh+ruOgfQgSxaPv7iAmtL83lyChZi6kZ2s66qafmSVg/vpJBLcYReLKA30XxHM3/JxncimOEeBJ
+	4EdOi7uQ3yVZz3vofyK71wMue2aWyYl5r5+Kt2w9R4cZYLtSolGMPJ/NUMN2OPgj3AnyhnfHDEh
+	uSPzz+VT0qWFfkf6t3cS0YOtYMqxcGXkL/ncXlJELY7XpKt+mlg8eG7nk8FI/qtiuhgC3YlMUdn
+	RFO
+X-Received: by 2002:a17:906:c10f:b0:c29:659e:2fd2 with SMTP id
+ a640c23a62f3a-c2a157c1e2amr70591466b.27.1789688743376; Thu, 17 Sep 2026
+ 16:45:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260916182405.12985-1-rosenp@gmail.com> <aqrowa1TFhIDA-17@SMW015318>
+ <CAKxU2N-zLp3612KRsdmWKjm2hMBOikBZDBEqvpLOxpg44J4Fwg@mail.gmail.com> <aqsZMeDZShMpCVj_@SMW015318>
+In-Reply-To: <aqsZMeDZShMpCVj_@SMW015318>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Thu, 17 Sep 2026 16:45:31 -0700
+X-Gm-Features: AcwNN1XwuyK7TTtG8HY8dqkkaXc2gXqb_ZtiR21TrmE9DTQIzZohBc4bNkcnUts
+Message-ID: <CAKxU2N-KfzS3uXRE6GKy2FL2mgrfXwbHaZx21ynhrubnGkJcvQ@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: mv_xor: use writel() instead of relaxed variant
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Saeed Bishara <saeed@marvell.com>, 
+	Lennert Buytenhek <buytenh@marvell.com>, Maciej Sosnowski <maciej.sosnowski@intel.com>, 
+	Dan Williams <djbw@kernel.org>, Nicolas Pitre <nico@marvell.com>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The driver only uses portable kernel APIs and AMBA bit-field macros from
-<linux/amba/bus.h>. Allow building on other architectures via
-COMPILE_TEST for wider compile coverage.
+On Wed, Sep 16, 2026 at 3:33=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wro=
+te:
+>
+> On Wed, Sep 16, 2026 at 02:46:34PM -0700, Rosen Penev wrote:
+> > On Wed, Sep 16, 2026 at 12:06=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com=
+> wrote:
+> > >
+> > > On Wed, Sep 16, 2026 at 11:24:05AM -0700, Rosen Penev wrote:
+> > > > Fix the ordering guarantees between descriptor memory writes and th=
+e
+> > > > MMIO accesses that expose them to the engine. The descriptor pool i=
+s
+> > > > allocated with dma_alloc_wc(), so writes sit in the CPU write buffe=
+rs
+> > > > and must be drained before the engine is allowed to read them.
+> > > >
+> > > > Program the next-descriptor pointer with writel() instead of
+> > > > writel_relaxed(); the full accessor drains prior memory writes befo=
+re
+> > > > the MMIO write.
+> > > >
+> > > > In mv_xor_tx_submit() the appended chain link must be visible befor=
+e the
+> > > > busy-status register is read. Use a full mb() so the engine cannot =
+fetch a
+> > > > stale chain link and stall the channel after the CPU decides it is =
+still
+> > > > busy.
+> > > >
+> > > > Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR =
+engine")
+> > > > Assisted-by: LLM
+> > > > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > > > ---
+> > > >  drivers/dma/mv_xor.c | 10 +++++++++-
+> > > >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+> > > > index c4e0dce3ca64..0de2b1ad5c30 100644
+> > > > --- a/drivers/dma/mv_xor.c
+> > > > +++ b/drivers/dma/mv_xor.c
+> > > > @@ -103,7 +103,10 @@ static u32 mv_chan_get_current_desc(struct mv_=
+xor_chan *chan)
+> > > >  static void mv_chan_set_next_descriptor(struct mv_xor_chan *chan,
+> > > >                                       u32 next_desc_addr)
+> > > >  {
+> > > > -     writel_relaxed(next_desc_addr, XOR_NEXT_DESC(chan));
+> > > > +     /* writel drains descriptor writes to DRAM before the engine
+> > > > +      * is pointed at them
+> > > > +      */
+> > > > +     writel(next_desc_addr, XOR_NEXT_DESC(chan));
+> > >
+> > > I remember this my comments before, should be v2 version?
+> > >
+> > > >  }
+> > > >
+> > > >  static void mv_chan_unmask_interrupts(struct mv_xor_chan *chan)
+> > > > @@ -410,6 +413,11 @@ mv_xor_tx_submit(struct dma_async_tx_descripto=
+r *tx)
+> > > >               /* fix up the hardware chain */
+> > > >               mv_desc_set_next_desc(old_chain_tail, sw_desc->async_=
+tx.phys);
+> > > >
+> > > > +             /* make the new link visible to the engine before we =
+read
+> > > > +              * the channel state, the device may fetch it at any =
+point
+> > > > +              */
+> > > > +             mb();
+> > > > +
+> > >
+> > > The first is readl_relaxed() in mv_chan_is_busy(), all io readl and w=
+ritel
+> > > is ordered.
+> > >
+> > > which part need mb() here?
+> > It's to deal with readl_relaxed in mv_chan_is_busy. I'll change to
+> > regular readl in v2.
+>
+> I just want to know which variable need read barrier() ?
 
-Also add missing HAS_IOMEM as COMPILE_TEST also enables configs that
-don't necessarily have it.
+Review says:
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
----
- v2: add HAS_IOMEM
- drivers/dma/Kconfig | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ #### Validity of mb() after mv_desc_set_next_desc()
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index ae6a682c9f76..04a2410d94a4 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -448,7 +448,7 @@ config MOXART_DMA
- 	select DMA_VIRTUAL_CHANNELS
- 	help
- 	  Enable support for the MOXA ART SoC DMA controller.
-- 
-+
- 	  Say Y here if you enabled MMP ADMA, otherwise say N.
- 
- config MPC512X_DMA
-@@ -559,7 +559,8 @@ config SOPHGO_CV1800B_DMAMUX
- 
- config STE_DMA40
- 	bool "ST-Ericsson DMA40 support"
--	depends on ARCH_U8500
-+	depends on ARCH_U8500 || COMPILE_TEST
-+	depends on HAS_IOMEM
- 	select DMA_ENGINE
- 	select SRAM
- 	help
--- 
-2.55.0
-
+  =E2=80=A2 Ordering the memory store (old_chain_tail->phy_next_desc) befor=
+e
+the MMIO register load (readl_relaxed(XOR_ACTIVATION) in
+mv_xor.c:181-188) is necessary to prevent the
+  CPU from seeing busy =3D=3D 1 while the link store is still in the CPU's
+store buffer, followed by the hardware completing old_chain_tail,
+reading a stale 0-pointer, and
+  halting without the CPU restarting it.
+  =E2=80=A2 Since readl_relaxed() does not order against prior memory store=
+s,
+and dma_wmb() / wmb() only order stores against stores, a mandatory
+full barrier (mb()) is the
+  appropriate barrier for ordering a normal/WC memory store before an MMIO =
+read.
+>
+> Frank
+>
+> > >
+> > > Frank
+> > >
+> > > >               /* if the channel is not busy */
+> > > >               if (!mv_chan_is_busy(mv_chan)) {
+> > > >                       u32 current_desc =3D mv_chan_get_current_desc=
+(mv_chan);
+> > > > --
+> > > > 2.55.0
+> > > >
