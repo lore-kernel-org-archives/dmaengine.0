@@ -1,43 +1,46 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B44C363C48;
-	Thu, 17 Sep 2026 07:38:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2C03EB7F8;
+	Thu, 17 Sep 2026 08:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789630713; cv=none; b=gWk5SvYR9qGpztOZeWvxid1GTQPqouX5yGaqeB+95TEKQNVHSRSVdxbRSklQDnIPtqwOXOm8hghE/E/F86U5HeWV64eTwu2jtlt47ZvOGrV6/oGJxmfg9ZJK0ihSrCvsbzVhJh/K07UPHQRbvl1I0LGEnFCm225vAtppJB4Xfp8=
+	t=1789632572; cv=none; b=CbeFRdTDEFuYVpLoxJ6Zxo1yc7sC6fVeVfBUFCymiohVzkfajhm1brwruewqmqJQiyNlAuWkGz4m7r0NUzNPXsOmHapGSIZueHk91O0SrJeREHcd2hOw6v4febREJ20IPabL4dDF+xWHhaVt9NyLqjeMzTGkOw6MYyD7vIJdtM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789630713; c=relaxed/simple;
-	bh=qR2yxKsMcta+ewKq1D4+OkktBVgomhX0bdrqZ2TQa+c=;
+	s=arc-20240116; t=1789632572; c=relaxed/simple;
+	bh=hnzo5OuwdGzMqY+suA7RQ6qymDPictDenfcvZJQb3FQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gNe3EfQxq61IxJnrdbgl2JzNisdVQ+Lv7Kc8CatOrIS16Ae4Z/wh7EB39shYJ/OTCfJxUfViIDZ+pVjvN5gG3D8YceHrOs06btfIMnQOdhVZdyk0U0IxOQV6rna6nSe4xV5TZhZueo/lNnZH6y8L57Hq9dF4sBb5PizcOuTSW6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=UZe3cPsg; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=FNyMHgpsDFtCKhh+GcBgLFWD0ag6qDO8PpsLBBLoQu0ii2EdZSPkQPVYvbAX4sYZ4ZPJ/UGBOMBClB25ldQsTipy0O+a/2vknXzKbuovS9Ru/FfVIikrTVqjLkQEQK0o+DmNM8CTwxRil14axFsomSM1wIiT8kuBkUuuK27yA5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTSdDuI9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="UZe3cPsg"
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6811E324;
-	Thu, 17 Sep 2026 09:36:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1789630605;
-	bh=qR2yxKsMcta+ewKq1D4+OkktBVgomhX0bdrqZ2TQa+c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UZe3cPsgxIjDYVSq1Zl6sg9M+YlZxvb9XsOAhTpKyzKo3gfkOy6jGRq9L8/ZFfCB9
-	 aoSpv83RIPl2xBKPLODYvqSaIBth6XHElJwrP/ql4qPT+fimMRuzNYePyR9wnuyP7q
-	 OeNCWDL+ScWfbu6s+cqIJ+OSw0MeI6Olpwc+VPkQ=
-Date: Thu, 17 Sep 2026 10:38:25 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org, Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>, dmaengine@vger.kernel.org
-Subject: Re: [PATCH 2/3] dmaengine: rcar-dmac: Add missing
- dma_descriptor_unmap()
-Message-ID: <20260917073825.GB4019@killaraus.ideasonboard.com>
-References: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
- <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTSdDuI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F383A1F000FF;
+	Thu, 17 Sep 2026 08:09:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789632571;
+	bh=sbes0882iMbhpDutz94uKHFUZV6ExaVjEgbOPnw20JM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=lTSdDuI9KbA/YNynTcioXRA66l6F0PDbH0/e9a+5mYdfdy85aJM0vAdPrZwQI1B+N
+	 No+jizLoau/ThooMkRqmLDZm/Jk4/5GY4z6sDi6PcuI1jOTk0jocBvaUE/A9+8V5j8
+	 RzLKzTnjN3z9g4rZ+VrcaEpbehMCgIb2c0o709WGjCRfzjy/TtIz+FAGCLG17WhKvf
+	 OMg0oUfnK+qFnK/3sHCRgIdoTI6Xkxw0jNrv42dp7y6Kwuofym0kkKRm3IivPd6UxI
+	 HWwIiFBxEp1fu2Z8Dlm7hvL0UTkGQtYpmnob0jJC6JmozrNWWGuLWPl3i5+0MDMPxQ
+	 +Y6PYW3fD2vTw==
+Date: Thu, 17 Sep 2026 10:09:28 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Ulf Hansson <ulfh@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Lee Jones <lee@kernel.org>, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2 02/20] dt-bindings: arm: ux500: Drop NR_DOMAINS
+Message-ID: <20260917-arrogant-onyx-weasel-e59f06@quoll>
+References: <20260914-ux500-power-domains-v7-1-v2-0-9d0c17e1f816@kernel.org>
+ <20260914-ux500-power-domains-v7-1-v2-2-9d0c17e1f816@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -46,54 +49,21 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260914-ux500-power-domains-v7-1-v2-2-9d0c17e1f816@kernel.org>
 
-On Thu, Sep 17, 2026 at 09:12:07AM +0200, Wolfram Sang wrote:
-> From: Koichiro Den <den@valinux.co.jp>
+On Mon, Sep 14, 2026 at 01:54:30PM +0200, Linus Walleij wrote:
+> Keep the internal Ux500 PM domain count local to the only driver
+> that uses it.
 > 
-> Call dma_descriptor_unmap() right after dma_cookie_complete() in the
-> threaded IRQ completion path. Without this, streaming DMA mappings
-> attached to the descriptor are never released and may eventually exhaust
-> DMA mapping resources (e.g. IOVA with an IOMMU or bounce-buffer slots
-> with SWIOTLB), leading to dma_map_* failures.
-
-That looks like a horrible API. It pushes a requirement onto drivers to
-clean up something done by clients, and is completely undocumented.
-Can't those calls be moved somewhere in the DMA engine core ?
-
-> Also ensure dma_descriptor_unmap() is called in rcar_dmac_chan_reinit()
-> (error/terminate path) to avoid the same type of leaks.
+> Do not expose this implementation detail through the DT binding header.
 > 
-> Fixes: 87244fe5abdf ("dmaengine: rcar-dmac: Add Renesas R-Car Gen2 DMA Controller (DMAC) driver")
-> Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> [wsa: added Fixes tag]
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> ---
->  drivers/dma/sh/rcar-dmac.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-> index 5b54f1c4ce15..9155bceb723b 100644
-> --- a/drivers/dma/sh/rcar-dmac.c
-> +++ b/drivers/dma/sh/rcar-dmac.c
-> @@ -844,6 +844,7 @@ static void rcar_dmac_chan_reinit(struct rcar_dmac_chan *chan)
->  
->  	list_for_each_entry_safe(desc, _desc, &descs, node) {
->  		list_del(&desc->node);
-> +		dma_descriptor_unmap(&desc->async_tx);
->  		rcar_dmac_desc_put(chan, desc);
->  	}
->  }
-> @@ -1654,6 +1655,7 @@ static irqreturn_t rcar_dmac_isr_channel_thread(int irq, void *dev)
->  		desc = list_first_entry(&chan->desc.done, struct rcar_dmac_desc,
->  					node);
->  		dma_cookie_complete(&desc->async_tx);
-> +		dma_descriptor_unmap(&desc->async_tx);
->  		list_del(&desc->node);
->  
->  		dmaengine_desc_get_callback(&desc->async_tx, &cb);
+> Assisted-by: LLM
+> Reported-by: Krzysztof Kozlowski <krzk@kernel.org>
 
--- 
-Regards,
+I would say Suggested-by, because it is not a bug, just preference.
 
-Laurent Pinchart
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
