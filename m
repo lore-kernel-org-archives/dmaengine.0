@@ -1,155 +1,171 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011021.outbound.protection.outlook.com [52.101.70.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1134E021E;
-	Thu, 17 Sep 2026 15:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660589; cv=fail; b=I5YJQwotkP1nX2IwjynjNZtyNIfcw6Nza2L52fxpy8ldNK+IuwCgviTBBbzWBXKqyGxO1/DI9o7M6Pa2cbsAZDNKiUMkC6I5d76aCjbgPijO8zdq4zuX+RNeiLztMkfjHj5fheZVL/xVxm7ZGz4960m9/4eBQhgQyQVomqQ3D0A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660589; c=relaxed/simple;
-	bh=Lpbh+q6ID0ZzNoYrpPAmpF5K5EJpD8ocYwfXSfW2TRU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=iN2C6XSPE9hjR3s9L9JbR9K6ETiAU0u6fRViVCWd3Ose5Ay5xlH5X3cxNRI2IvMcl7mRm9MZM/0LHLzYEzGF64B2xTk/lhYJqHDmuvHJdfW5cnSjY3PfXW42masZBT/2f7T2Yz98mRf1hGtK1GFvdmjlIru6J35CWr5LzTbykIo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=dAtSaNOp; arc=fail smtp.client-ip=52.101.70.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8705012A5
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 16:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789662636; cv=none; b=sosvbtOyNw743PxzykXIgs93eEJUFlHkaH+sJ+Mv4w+9m8WqK8jsxRq+ltROymQb6xo5C0hoybrSoIIslOPLtjzauIp3s7otycMfgGdeutyRpJAYa0d77r7FKFvQeLUUYt1VxO6mIPMlcpmlHTNwUIiLDB3APWhF88XIZR/zXQc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789662636; c=relaxed/simple;
+	bh=1uKQgdK2ZQ67pQ69htT9iF0krrGap0M3PIVWMzu37pA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WSK1RhMguDAqYuzyNv5WQY4/eWpmVwWB3amnR37tBld9SuU4fThR7X+j01wCK1syD91zOIRRoAJKtt1WZFKXjoEJbpMuBL3CgnQKnXCX0fpY+XRW0VIYLaLLpXp0jd3lLlJXlUib/AJK4k8Yk42q8GbOgAdi/rYFHodsSfJo0S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aqMWM1TP; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="dAtSaNOp"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UvmtYiVvsmHOdNw55DZLDtDIFYrEjcJVPmdclWqC2OPUr0/lmjptbnuCpVNpr0+CPXQ8qvZFhBC+y0Fd8sh0vB59Gt2fsWNlcDtAy1RLexctL44MpHJpA30rYNJnrstszddjNpMuuIaOckteLO+uj+LJFEXPIMNSxIyfXR4kKrmJFQGQ/rkzzU/xQl+YFztgEMHZo52v/fNEvHh8zMY/WA42oJJhBbu9NepIdLoQ7SVFgGTH7amSBQvR2CfLGBWUUGadory/nP33arUS+yTMQ6zzkDhO/c/0JuQGi7VO3JFqjj53m5tZwq0E2a3cPkJsYR7YIodm3PsG1/EbjBtixg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wwZgb/y5CcQSIblwdvJdyc6N9VW/IX9eMISYq59jggs=;
- b=xT1VTesUdhrpvyTXNj9ifGnguON3s3TdsVGhQOSE0lNiCGa/exG5mdqzLOLbWTSC9x9IIWclbcv4uL2LKQBfj+ROCqT8BHkIc5VcIWoEUDBgCnPBOZ01SyVnD0f1VNtMPi9J4DfE26HzHF3P7+0HotKrcSWVf0V0fHujTcHcLE92G31XYigEtxXt2sp9e7f3uAr3s2e9zREHENGweFOLKq16ZPVzu2MPe659HJjAjuYMM4W2xZqXLWhpNzt9JL+H0W/zPY5aM5y/hgHhW08n6xSYqrsTJYe1HGzBHzbTccyVQRMzD/DJVUthkLSTGDNzbj1uf1rbMMDkJWTkPR4ZQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wwZgb/y5CcQSIblwdvJdyc6N9VW/IX9eMISYq59jggs=;
- b=dAtSaNOpE2HHj7Gq1dT//1AoZ7wTebvBXtpm++VtfwshB1ZTGVXQepn23BlHfYUxTOp+OISxzo+WUfwoZTq3CtAfZKaAOlVi5vMJ77mAdFVPRlRqd7eI4Ew8/NrD+CyjrgdiQKOT+ox+2EXpiOO4nkiL5kAlXb/5GY0BEMmOR0QvkVPGuAgdW8w07n4qbyY4ZrAGmpxsboiy3vKVNK41vHylgEn7hQ7Q2KnZRe6M/l3mWN+HMvmTsYmgfDBVqF3B+xvdoZvAxOCWIYUeYaIfvdCyOBtKdSH9szzx21ktDsHmnnJYxpv8RhMzWpOaF5hYWLkBoKONBycEMT3wlBT3eQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM7PR04MB7127.eurprd04.prod.outlook.com (2603:10a6:20b:113::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.12; Thu, 17 Sep
- 2026 15:56:23 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.012; Thu, 17 Sep 2026
- 15:56:23 +0000
-Date: Thu, 17 Sep 2026 10:56:14 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Devendra K Verma <devverma@amd.com>
-Cc: mani@kernel.org, vkoul@kernel.org, frank.li@kernel.org,
-	den@valinux.co.jp, dmaengine@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	michal.simek@amd.com
-Subject: Re: [PATCH v2 2/2] dmaengine: dw-edma: correct IP name in
- xilinx_cpm6_dma_data comment
-Message-ID: <aqwNnrPrXCI2hVdm@SMW015318>
-References: <20260917103050.1020982-1-devverma@amd.com>
- <20260917103050.1020982-3-devverma@amd.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260917103050.1020982-3-devverma@amd.com>
-X-ClientProxiedBy: CY5PR22CA0020.namprd22.prod.outlook.com
- (2603:10b6:930:16::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aqMWM1TP"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49cd4ba9f68so13871615e9.1
+        for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 09:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789662632; x=1790267432; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=epvtes+QTuG/8pdcW3OWOMHUppdH8T7oJtRmUkiI2+8=;
+        b=aqMWM1TPIyqazhICTpRfrGH6VWZ43iEOepqgEHCW0GmOJ7CnvhBlmFza3iajce7mfv
+         MkURq553STUfSpkKMNPKGoNnlv6EGe3YgvUozgo+ckV/1SvEAJD7HLroDrGiVx6+Enq4
+         1DVWly2htn88ghQ+EBELu+a1SicSmabI949ZpY/io215oeXuyTTmHPwrzl3aqIcv4NvL
+         EtoIOK3zfhHd9Ur0ZU6dDnCqR7WC+GsWNQknTFV1OHwpnK9idNPq2kQvW2sAd7t+Q0P0
+         JWtTT5JKZF6oiBsmdp10TQAMK1dPNgKn0NcJckoLJL9ezL/ugL6RVhkg4adoF10pYz53
+         kTtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789662632; x=1790267432;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=epvtes+QTuG/8pdcW3OWOMHUppdH8T7oJtRmUkiI2+8=;
+        b=ZgBgi0ygKdnUeK7658oeNEJKXYLGmXLy8WcAHaJYWX1jFhnmMJLzKePfapcCfbNOvQ
+         FSPGssL9nx+A2C9szBKxGe6NOwNt5SNeHl969XXTLodtUnbpDLd1z/KqsoKRRazBfizY
+         suSdUpGZWYKlteGWMMGShHHLKbgq+1p9MX1HEkoMpWX2Y6M3Wb0eNSXB4m1A1orE7gc2
+         0UoDvf2/OJ6qQCTD4Z6B2wra5rHeMb5Fc8pmAisdIYZxKxMhctEj9oeyyR7LPDMSMGb4
+         XSTs9r1/g2NsK8jy++InPHknMh9MX1R6Je2E/ZMWcXYa6vsoTbQilVXaO3tz2eOR1XsM
+         H9SQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz6RDU+RoQaEP92Vr8FbfwUVStjBjjrgl2gPhDEBSD8u0OyeX6Ac9DTazNf+6cFNSKtODiK+M68tIU=@vger.kernel.org
+X-Gm-Message-State: AFuF++k8gSSLfdZ4Zd1D5LkEIVGAG/YEW/8/LJNbzZJcw8BX7GS0Xmsw
+	la525Yzog2OMqZHg8II5zVSmn9D5FvPgaOP7cY83Sq6AHpTTcT5c8NdE
+X-Gm-Gg: AYBFou1P420NWiIWTUyCp0HmzsXUh6N7D1xuVqGMrqDE3hpmLq6AjMb6mtNbNfcJ3wT
+	5ygQAkaeZol90ejVZZuEwh+ZwRymdorJwyLPHmMrUdWj6uKUBc83HAXKHRFpPyJjOZIiVbg3cuC
+	IYdS64Ekei31Fu3ftOqABHfd0TR+/+gMRkvJ+ahuUMI9SMvYXb03m17NAnHh0frZDzet11tnx+7
+	hesxADZ/ky8l6RBpW4If6rBcoJpe4cOV879q+gTbq6AUDw04L3vk7ion4/rnmiYQdkKxQANsBlC
+	A6IHnuMfqHLMXxCscEde5+WR4pJIHnqckWUZ0dDLXmhZZEKiCsb9HeOz0iHbhN3saHSxyAeKL1n
+	/72AOkz228Tr1Ak2a/YOzkjSeMztOgJy8xTF80hIgQvSb9iMWy+EgGNfQz2NarB9Dr1kgS4gP4M
+	gB7GH74wQQPPC4yd94fH55bI0iApwlozPSDKXWroP6RQ9uPFnrj2zJK4fSvj7DIlpYTdpgj81lb
+	seGdUVwwJ5XI9DN+yuN
+X-Received: by 2002:a05:600c:e549:10b0:49e:745d:c317 with SMTP id 5b1f17b1804b1-49f1d516934mr56467995e9.12.1789662632070;
+        Thu, 17 Sep 2026 09:30:32 -0700 (PDT)
+Received: from localhost.localdomain ([72.255.58.127])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fbf515cfdsm77508595e9.11.2026.09.17.09.30.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2026 09:30:31 -0700 (PDT)
+From: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+To: Keguang Zhang <keguang.zhang@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	linux-mips@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Subject: [PATCH v3] dmaengine: loongson1-apb-dma: avoid using iterator variable after list_for_each_entry()
+Date: Thu, 17 Sep 2026 16:30:25 +0000
+Message-ID: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM7PR04MB7127:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54722fad-dc7d-4d76-daed-08df14d4386e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|19092799006|56012099006|4143699003|11063799006|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	2U7IixsREOvJHplywi4D0iAtXrJ0M1madR3ef1pbEAovIxTPpO0EUo6/91FKz1FBp0dQcpiNxvrN2D1zC5qkxrggVuOUDM6emJOQI7atrJbMM37tOYkEGU8Ht4jHAE+Mji4lMWptfamQ0UwonlpuketwjdtS6bv5HPQ0rZurWyX5ybzP00TuULWh5MldQiHJEFyi81hyRbpuZyF39+USC61iqMS4TfFGOZlaPuX3OR4CrEDhHHv5bXVSAfVxKFIYCJdVrjM7y6bbSRNw6gTk1Jr40585mho8IqWuJbCsvZo/DlOUq7F967TdkdQ4QIkODIigDsXatVUWAERRPkAWwAG/Ou4EpBocU19yRVlGV6+zd4ZwxfOrFh0/Xp3OPgjqYLAPej4x5rzKsK0clUUddWB3lLhAx/nd6YJzctGltpsiBFWMlxDahZugVILe+eUhZdExLmeIwIAd6OrRk8/tRafM2pKSImFxSdFf7NgmzyDD5zarttlymdlOtdna7H97GDdTM9rBj7JkdlicZ7+q2RRivtYVtvZxdHifDWpPBKDu7KRUz3OjvQw+cQfmQ8whOREfY+6Ua9W4mssOJ4YGCgukydpwx/0geq9qS+Ilr7YSpoj1GiVoinm3NBuV1pDN/oQZKV4VAQ8WPD9zyO7Jmb7Czc+mlOvILLlmuBpE2NE=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(19092799006)(56012099006)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aNpHJTUXhb5M70Pf1tz/SWIEQgKrFZZlwOfkLqSs4jNtJwA2YSIi/71LaB6u?=
- =?us-ascii?Q?QZkiqAndmpqmR/4NalwjUSDZ5oP9qP9MznxV1Bki08YhKMROeKS/K0DxmGje?=
- =?us-ascii?Q?oVj3U0ojHugN4/VfDpCHK7f08dEB0lu6wIgorIgZjwrOfHk86knOmIHwJiEa?=
- =?us-ascii?Q?L/WOwm1y8n95j1Dkrmp2Xaq1Su4yiCihw8Qv+OLUniOGAG8RnVgzNFulIGqU?=
- =?us-ascii?Q?K1kQ5NAWbPNp2oRz5Eyg6GgALOYesIJac1idP+vpaTJgn9XfwFEiYa/G7Kz1?=
- =?us-ascii?Q?QkLXO0uFo4LD5lFckSPb474yv4nWqi2AfNpYtm4xEWoBdGD9AwbPMVyZWozl?=
- =?us-ascii?Q?XnmcBbJEQMu/q/D8lrnw7yQ81ZyLiyn3JDdn5NkSUQ3Q62FdESjUvNVe+OMK?=
- =?us-ascii?Q?WaU9JYLIAZ/zSSxPjP46Rc6rOwbRz/30SQksmu6u5vYRhXWutSTdI4gFS4Eg?=
- =?us-ascii?Q?NL5loWkoumujNwHjATHyMr0GbSe9euocBd2MBqFZloZer3751Abo2M0uyqoX?=
- =?us-ascii?Q?80LUZsp6eT8bLZ4cSoWD+3FKhOaRhlLIeE8Uf3+vZVw1/vF5FVr/cNAAENUV?=
- =?us-ascii?Q?iIru7f2JfdIlWy1apb6I5aH+Ftpp53DmVYzHJlsiD7hyzSPyTUq7tBbHco5J?=
- =?us-ascii?Q?4xY78q6qHwU8hz6N5EFpcuUZYU6KmNxXr+ou8jLH6KI9uwEa2uRf3O2zxPdz?=
- =?us-ascii?Q?io79x0NZ585i1q9kTGoCTIWAz+dyG7HJo6pk4Isz767LZ/5a7vnGaFSm4wh6?=
- =?us-ascii?Q?eNANUmvS2yJaLrbFNXxQgAkwKSHgrfSH7uZE9+nBwTNNuCPtyfnIYlcvutpe?=
- =?us-ascii?Q?CTHojgWQQEUnCNRums0OQiWSm/jPOssiFpiLQc8orimou1KYTZ4XX/Yw8GpV?=
- =?us-ascii?Q?iua3Bn8kwmpZ/Y42Kus4w1JgefSWuwLNfGIZ5qSGzgxBj76XvswxYXe6taNw?=
- =?us-ascii?Q?oPSdzhc7EfstAEOa+V+KgeuEO8LkVU91Ica4clb9K8sKh9pTwkP7bmPUgyEo?=
- =?us-ascii?Q?rSxbJKVZ7/dHgzTqjWHgtLfXP17MXDfJMORCxejZgYcTNSecWC/r9O0k0EIL?=
- =?us-ascii?Q?zcTGotUJH7Ks9noYK6H+MK/zNQ9IDAVLMfV0VT0Uhzlr6h3YOx0W5fRx63GP?=
- =?us-ascii?Q?tHCRlpevOBeNBcCArSa4/Df9OsNVJGP4Grs2Q3/96TIKANvPqBK49S+UV0ED?=
- =?us-ascii?Q?8BU0Igmr1Ak7suZjMQbPr+tkQLz1P/uTHYptxmCOWxu3ajeIW7hUu1OqgD2O?=
- =?us-ascii?Q?kKtwKzX4zYf49L3uCthmRfDHCi7patf5ZdDmDxHmCL7zUlAgeOePsPeTvgqN?=
- =?us-ascii?Q?3+r9LQkbrcG2JeWJHzJow9DixQ18ayYQNOKZGGhm9tAPyRvuROcK/6pVeUKl?=
- =?us-ascii?Q?2ex9xw88YGPXfATTukjCUUex0/0ZOhY+0bCKjBTQ4peXTirGvHuwh4zXGCF5?=
- =?us-ascii?Q?LpW/sKW1hYGe2k0qQ0LFtIGzd6+/mTEF4s5KaMMelV2RUbA802jL3sJBpgsh?=
- =?us-ascii?Q?h3onajVTLZqN1DTysiHl8tWrXF4TmEfFfUjNqpgR4RI2kczzAVN1Hn+zpPR3?=
- =?us-ascii?Q?P5FHngSs1NyawWLvn4FomvEYl+zjM6d7wRDNwR91vuUDX8KDYZZngqE6xCX9?=
- =?us-ascii?Q?1AJBaIhDrlliCWJYLVep8xzyvHGU9EeQJOmAXMazrN3FGVoaL5bvGmdtWwfz?=
- =?us-ascii?Q?xcv766vu6eU4VJS2RcjyFvFCcAO2NeBcnBF3Klf8+6XEndq6LQNg73EUPAch?=
- =?us-ascii?Q?ClbMsflvUuF+1lhbD3fxyJhIyE1f6JpayjbJ73mVxJjMnDUU+K28?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54722fad-dc7d-4d76-daed-08df14d4386e
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 15:56:23.3353
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tufhDKSRAQ13lBgVZP91JKCsJyD8xHEf+KXcka2314fv1xnfTLJDgnEU3hGJ7s6gh/dusZWUAS+hIvffetj8E1VOTqLrmyYDZcXIM+ESvjw3xj75zGFIUkAdit1iOT0q
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR04MB7127
+Content-Transfer-Encoding: 8bit
 
-On Thu, Sep 17, 2026 at 04:00:50PM +0530, Devendra K Verma wrote:
-> Replace 'MDB' with 'CPM6' in the xilinx_cpm6_dma_data comment to
-> fix the IP name typo.
-> No functional change.
->
-> Signed-off-by: Devendra K Verma <devverma@amd.com>
-> ---
+ls1x_dma_tx_status() locates the descriptor actively being processed by
+walking the LLI list and comparing the hardware reported next descriptor
+pointer against each element's next-descriptor pointer.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+A list_for_each_entry macro is used in the comparison phase, which at
+the end of the loop leaves the lli pointer at the currently executing LLI.
+However this also subsequently runs for a non-match lli, in which it
+points at the head. This causes a type confusion bug which treats the
+head, which is a ls1x_dma_desc, as a ls1x_dma_lli object. Additionally it
+goes forwards and prints garbage via the dev_dbg.
 
-> Changes in v1:
->    o Corrected heading and body as per reviewer's suggestion
-> ---
->  drivers/dma/dw-edma/dw-edma-pcie.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-> index 006dea7d6322..762a693ab55b 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> @@ -146,7 +146,7 @@ static const struct dw_edma_pcie_data xilinx_mdb_data = {
->  };
->
->  static const struct dw_edma_pcie_data xilinx_cpm6_dma_data = {
-> -	/* MDB registers location */
-> +	/* CPM6 registers location */
->  	.rg.bar				= BAR_0,
->  	.rg.off				= SZ_4K,	/*  4 Kbytes */
->  	.rg.sz				= SZ_8K,	/*  8 Kbytes */
-> --
-> 2.43.0
->
+Fix the type confusion bug by only allowing matched LLI descriptor chains
+to print the current LLI and residue calculation, as failing to match
+should be treated as an unexpected condition.
+
+Found by the following Coccinelle check:
+
+  scripts/coccinelle/iterators/use_after_iter.cocci
+
+  drivers/dma/loongson/loongson1-apb-dma.c:461:6-9: ERROR: invalid
+  reference to the index variable of the iterator on line 450
+
+Compile test only; Hardware testing by Keguang Zhang.
+
+Signed-off-by: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com>
+Tested-by: Keguang Zhang <keguang.zhang@gmail.com> # on LS1B & LS1C
+---
+
+v2:
+- encapsulate residue calculation and dev_dbg inside the
+  list_for_each_entry() macro. Treat non-matching LLI as an unexpected
+  case.
+- link: https://lore.kernel.org/all/20260729143247.6111-1-mahad.ibrahim.dev@gmail.com/
+
+
+v3:
+- Collect tags from Keguang Zhang.
+- Repost patch in a new thread.
+- Change chan2dev to the newer dmaengine_chan_dev.
+
+
+ drivers/dma/loongson/loongson1-apb-dma.c | 27 ++++++++++++++----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+index 46b4bfef45e2..e62ab26c8327 100644
+--- a/drivers/dma/loongson/loongson1-apb-dma.c
++++ b/drivers/dma/loongson/loongson1-apb-dma.c
+@@ -441,22 +441,27 @@ static enum dma_status ls1x_dma_tx_status(struct dma_chan *dchan,
+ 
+ 			/* locate the current lli */
+ 			next_phys = chan->curr_lli->hw[LS1X_DMADESC_NEXT];
+-			list_for_each_entry(lli, &desc->lli_list, node)
+-				if (lli->hw[LS1X_DMADESC_NEXT] == next_phys)
+-					break;
++			list_for_each_entry(lli, &desc->lli_list, node) {
++				if (lli->hw[LS1X_DMADESC_NEXT] != next_phys)
++					continue;
+ 
+-			dev_dbg(dmaengine_chan_dev(dchan), "current lli_phys=%pad",
+-				&lli->phys);
++				dev_dbg(dmaengine_chan_dev(dchan), "current lli_phys=%pad\n",
++					&lli->phys);
+ 
+-			/* count the residues */
+-			list_for_each_entry_from(lli, &desc->lli_list, node)
+-				bytes += lli->hw[LS1X_DMADESC_LENGTH] *
+-					 chan->bus_width;
++				/* count the residues */
++				list_for_each_entry_from(lli, &desc->lli_list, node)
++					bytes += lli->hw[LS1X_DMADESC_LENGTH] *
++						 chan->bus_width;
++
++				dma_set_residue(state, bytes);
++				return status;
++			}
++
++			dev_warn(dmaengine_chan_dev(dchan),
++				 "unable to locate current lli.\n");
+ 		}
+ 	}
+ 
+-	dma_set_residue(state, bytes);
+-
+ 	return status;
+ }
+ 
+-- 
+2.54.0
+
