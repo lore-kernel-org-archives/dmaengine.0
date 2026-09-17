@@ -1,48 +1,47 @@
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F4A40B112
-	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 07:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC12448B8E
+	for <dmaengine@vger.kernel.org>; Thu, 17 Sep 2026 07:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789629136; cv=none; b=GimWGAKmYit1haqdXzacemz5uxkFjh4+Vs03wbgxsbmKUBBzKvWBowHlWPho4FIE4ycKYteb5Sj1wJRXJFFTWRZ3k3UD3mdb/AGda+hq6UFp7cOXS9XKv2+27faPYV9wV04Ty3h0Ih5FckgX1YiA2K2s7K/3/6Mnx391lf+HTUE=
+	t=1789629138; cv=none; b=nyfMNSEyyt0VisWKwJUNVo7FT9JcmBnhsn4b4NXzD/gXvA8gj+gdFuuiukavrM/4Xt0g8qqorHk0EI2kNuE4ndj4lkfHxKqRj6y0qKrO0RTHq5gebbcok3sKtivoTnXgDq58hsMKRMbpkgfxjsOTITJMQffSusfQ040BA7snDjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789629136; c=relaxed/simple;
-	bh=ZcXFAGSAILz/WlJmAOupIphMwAw5YWQKFKu6fbvPwqE=;
+	s=arc-20240116; t=1789629138; c=relaxed/simple;
+	bh=QjGaUqutVueVePvnO0C5iE/EafoiPOMTgwSb+0x2szI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpf/h5icyz5wpb3RI21Q4wnP0yd7GA7fmvLyXVCBhnUqp8+n+AYADp742BBF5LREaJ5Uw/ime0cwUfAqZn/2v49dN1pkckfLnDJxgwFXQrwSe7KH5sBjXZXrxRCBX7ZJYYg6jU/K7yiAiFl4BiaeML4qOUaFA1K034cTbqjk3GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=UpBxuqqo; arc=none smtp.client-ip=194.117.254.33
+	 MIME-Version; b=YKEIt9zmNI7J7kpDVoFu2C+mgPUKS0qItzgWNbxHEssvLqDcdFHPXLVsseLREqujKvi4ZO++HUy32Kqjz2ASRdg4OXkM5cKQ6z9hwPCnmjWwDNKml8yhA0bMUGB88xYh5hM2HbGd3hlqSddt7UkSMnyI02cyl9VK3Z2WV6Ffe8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=PyRGPDUQ; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="UpBxuqqo"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="PyRGPDUQ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
 	:in-reply-to:references:mime-version:content-transfer-encoding;
-	 s=k1; bh=xLXwVEM0EdpfKqeNzRrzkVN+s/Em1JxLTMh4RGErkZU=; b=UpBxuq
-	qoa+Eo7ejyAD441H5zfrVCfCl8pOgKs5aUiGELwXuEZ2nBofu2mR/ZfgXcYtrTLR
-	v5qVLectTq7v/rlwnL/1dzDtbP3Rv96u548XVxcWg/sTk5UCAqIKTCkqqJkqxaNY
-	OXdzDk/KB5pCDjfaq3zWhWFFCjsKoDFVkU9FV4PpwTGBK62H5v16ZpLwNnZjbkGd
-	Ei6bJUJaCKwEKAGaJae+1Y4DQChWoBubLqgIlGmqdUubROicSmDg19ODtrh/S9YI
-	ha+XUr05oVvBRCtBT17RAWIMWqoAmMd19+k7VR/iNTiF+U3iioxp5FN4ZJY77dnS
-	ItA3Oq265Y9eZQrQ==
-Received: (qmail 1890407 invoked from network); 17 Sep 2026 09:12:11 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 17 Sep 2026 09:12:11 +0200
-X-UD-Smtp-Session: l3s3148p1@n+qogKhbFJkujnsL
+	 s=k1; bh=55J6KesL2d7+fGcQIWioJIavBpJZhWX7NYBoq1g2Ex8=; b=PyRGPD
+	UQurJ22Rv6cm1irxntOn609qhjLb3+Txh66us18rnlewsp6T+enCAA2EZZJzUCZv
+	h88rhFPAtXeeTSp6ekrqDbrGi5QyzbFB59Al0LSDvgHbEC0SLzzch9FAJ+AAc7Dj
+	uc+4oPojKAahZMgN2yauUgiCb/kX5GpvLLIyedczNN9orh348rTGPzNocKr9xzge
+	2p57gA9IF1OmkBq9h4A1nDleWNoQiL3PYWH+kbXbY3PK9zH3q5tkAWkreq6/FpZZ
+	t7GuG5hqC8a//JNM+IfXsiE6sr/IfATKv37XSR6RaS3vUYRq03WUW/i+ABKX7Snt
+	cdVhfU1VT6rBccKg==
+Received: (qmail 1890489 invoked from network); 17 Sep 2026 09:12:13 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 17 Sep 2026 09:12:13 +0200
+X-UD-Smtp-Session: l3s3148p1@7xy9gKhbJpkujnsL
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: linux-renesas-soc@vger.kernel.org
-Cc: Zhang Shurong <zhang_shurong@foxmail.com>,
+Cc: Pan Chuang <panchuang@vivo.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Frank Li <Frank.Li@nxp.com>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
 	Magnus Damm <magnus.damm@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	dmaengine@vger.kernel.org
-Subject: [PATCH 1/3] dmaengine: rcar-dmac: Fix PM usage counter imbalance
-Date: Thu, 17 Sep 2026 09:12:06 +0200
-Message-ID: <20260917071208.36888-2-wsa+renesas@sang-engineering.com>
+Subject: [PATCH 3/3] dmaengine: rcar-dmac: Remove redundant dev_err()/dev_err_probe()
+Date: Thu, 17 Sep 2026 09:12:08 +0200
+Message-ID: <20260917071208.36888-4-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
 References: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
@@ -54,35 +53,38 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Shurong <zhang_shurong@foxmail.com>
+From: Pan Chuang <panchuang@vivo.com>
 
-pm_runtime_get_sync will increment pm usage counter even it failed.
-Forgetting to putting operation will result in reference leak here. We
-fix it by replacing it with pm_runtime_resume_and_get to keep usage
-counter balanced.
+The devm_request_threaded_irq() now automatically logs detailed error
+messages on failure. This eliminates the need for driver-specific
+dev_err() and dev_err_probe() calls that previously printed generic
+messages.
 
-Fixes: 87244fe5abdf ("dmaengine: rcar-dmac: Add Renesas R-Car Gen2 DMA Controller (DMAC) driver")
-Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Signed-off-by: Pan Chuang <panchuang@vivo.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 ---
- drivers/dma/sh/rcar-dmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/sh/rcar-dmac.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-index 3ad8aba5dcd4..5b54f1c4ce15 100644
+index 9155bceb723b..9c0c00e7cc2f 100644
 --- a/drivers/dma/sh/rcar-dmac.c
 +++ b/drivers/dma/sh/rcar-dmac.c
-@@ -1070,7 +1070,7 @@ static int rcar_dmac_alloc_chan_resources(struct dma_chan *chan)
- 	if (ret < 0)
- 		return -ENOMEM;
+@@ -1797,11 +1797,8 @@ static int rcar_dmac_chan_probe(struct rcar_dmac *dmac,
+ 					rcar_dmac_isr_channel,
+ 					rcar_dmac_isr_channel_thread, 0,
+ 					irqname, rchan);
+-	if (ret) {
+-		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
+-			rchan->irq, ret);
++	if (ret)
+ 		return ret;
+-	}
  
--	return pm_runtime_get_sync(chan->device->dev);
-+	return pm_runtime_resume_and_get(chan->device->dev);
+ 	return 0;
  }
- 
- static void rcar_dmac_free_chan_resources(struct dma_chan *chan)
 -- 
 2.53.0
 
