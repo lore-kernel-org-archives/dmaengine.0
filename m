@@ -1,66 +1,62 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012065.outbound.protection.outlook.com [52.101.66.65])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013000.outbound.protection.outlook.com [40.107.159.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD135383F6;
-	Thu, 17 Sep 2026 16:39:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3692A4F3916;
+	Thu, 17 Sep 2026 17:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.0
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663186; cv=fail; b=GrUZO5EGOCHdNX/RqNxrpfacfJULY4R2meF9tbtYtB/RwVomGVRn/djdseUweweNfhYyWPN88R0gQDXEOn/CnVc/Wkur3I7WWoSzfGpRRV5Hhymt3tuG7VPUpqDy8wezwe/ikgBJ/YHo3gMrrY/Nr57fJ7KXB/tlJUKQ7+aeMCA=
+	t=1789664644; cv=fail; b=uNb9Ty4zdkZTWvenMpOwW9jqm3Z3S29+5BA1SU7X/bw7dYleo8xMQXS3RI5Ai3qD/x5f6gemWs8n4QCjb/w5YcB+DvNSL/c+7ec/QoioEk3lDtGvOJhkoQHqdDfW2f9RclJQj71F8gZWlgVeVht7Jo2YZBWy4m6fDqizonnGofc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663186; c=relaxed/simple;
-	bh=jIofWphpk8mB5DQONa2lyjLuEmC4BcG3RtV41qpvufI=;
+	s=arc-20240116; t=1789664644; c=relaxed/simple;
+	bh=3oOnq8cVSqD7FF0ljlCkmTw/0yYReZS8LtKQ0NDDMiw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rDS7xT8a1uS3zEwQ3rLikO67HEP9k8XCqlXcUeYW/8IMJU1pWjH4OuV/ixZWt1O5nPW5ys/pKp3eDJHkbO9IOgp0isVKjDapIUg4NfIKAC1fNFMS1bvvK3/I2EMl+4ONpEWFAXP+72dDJISn5L7zZ3wGk+RrtJgNoaLq8aUZut8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=XaqzHoJ0; arc=fail smtp.client-ip=52.101.66.65
+	 Content-Disposition:In-Reply-To:MIME-Version; b=m1J9lut+pBmC4UjaSAvQPoukxy8BWUirkr8DHQB1bj2MZmAatwXMikcOcypLEng9MUTgrv88/Lzv/uaJpkj2VKDeftqNWlpjneTkbdlJqDFtumizdvz7f0+HWaZitNruwY01qLj1hauA/nILXrkrtqed1HkDlIo2T1F8sejv7eI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=o51/sb+F; arc=fail smtp.client-ip=40.107.159.0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="XaqzHoJ0"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="o51/sb+F"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HGLh8h08Z+/Ny5BqSW6Iw6gEfDNAO+jwmR4qkTFckY+xFTFkg96XrjHwPtiubQeQn6egk/7FsioiqRXlS96WzimawBvarHxptFWFcDuFkOXtqAc0V5qU+2eo8fvulc1s/5/hf5vvsPCusRxrEbRncXc/dD62LkD6EQMfMpCKGWvhZmokvU7EPbjPrOIXCtj3Qc4REo0HriivfertID2thIrSWxVmlJyfGKnOADCnk732dsKywviuao8eAnls+V3vF/DinmM6IR9UTN9Q+Ed/Cv/ZnRavrs8JwgJu/xo/daWuzsJ9dzI7mjI4SoQXTpsV+8sYyPxfU4w2jZU2ACxcyg==
+ b=Ok5KcLiIRJ9/XhnhP8BavHwPgysMz2H+atWeHT1NItngkiRaeiCfXgBrS6MpUoSiPnRf0xBsAB7LpsuCMJApwmjmmZ2jW4XwBE4Buc7/tvzXsIB4zrYFgR5+pE2ROiPIJOxDdS6DKa9l7ZGQxfVtk7zFX/4+QrtGs3P02hjgotyAKf3qpdhMJj9n14MUU8pW0MrLCPrSH8UTW8ZeaRvtL0CVe+tEPcQJShrZtmkq3cVWDqo80OurwA+ouEHDhhF+b2yaK68t4Jgy5SxI9c2SC2hIapbu7Y6BYIqM/USiOI3nkQe2TQgm4aHVFCQLDSP2UiOlV7EEbfeMKeFG9DDfKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SDbt93CcMCq1Dd+RgoBzDCu5VcwWbyepruWStA5hv2M=;
- b=jGhYArnE0pPfsbAua9YHO+gPwluHeyKdlo2rUfV+6xQgFU45YjbOwJjaAHHdlCefvX+h3iXndIltPy2hYBxe52UkNDUG6WJk/w+W5NlcXyynBd/kzI006cTraoskHQEIsDgHkuQi0Hy/I8VmZU9NyMjgJNhGv+HNLxSdLEjVl/Het8LEilCQek7ZvB2f+0hfi7awppWJBFlmx+NAqxF9Mz1hYGlBjYz/TqS88FddQzO66yVi/8INvdRUm3fs+kofauUBW0S5qyYuH1C/RqH9hgBAXdb0Lae9SLb+tb1eKOY/YZxXoj+u7wz+8cqj19QiVhzp8OHW6NyluRgWPKHNLg==
+ bh=FhSr8cj1YPQ4FSdk0Jq0j++PQzCDwfIfDg2oJ0fDllo=;
+ b=rEP1kLuKfJNORaG33qfq3u/PZHsIrHHquIIW+n4di8uaFt97GeQFGzOg9mzI7fyBkwvysca2kNo1PLhfLEMVkT020yc5wiWQhS/vnj3nnAFdySEdu09VqwI6/wRpG5F7ZUBOb+ik8686LE58/yK8otMQNyt2kwlkIPsxTyfhPZemVM8+geXbGoSa+XyPWSTMs3DUrmC9ZJqKKJ/sCE1/c7AKz8FyQdyHJFLYAngJfwJYciww+2k3oiMmcJNWuTah1P2Jiv711B0F+6PbNMFtRrYnlab/V6XOehieq3P/TqIHgh4M8MCmHGQn5T64FhYUsfurIkMEgNwkgfTdQnbgeg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SDbt93CcMCq1Dd+RgoBzDCu5VcwWbyepruWStA5hv2M=;
- b=XaqzHoJ0uaac+oZ9ZovXrSGNHsdIn+E0PG/icIJ6x+t6QtY1yHTsHeP+lUTwSMmJLSCKAXUu6WKndXMwibt+45xL9vtGg/rHZprEj27yB/F2oUdQC+mHcXe1hEO51GbIU+BgUXIxwMPCuqQTK1Jh6lOJ/URGmHluLEwpxNaUNvoHRzR9LM37IEltNYa2mjUj4Ow1Uc931Nfwpm2aPdJbZ3257pfXQtGE2b9rr7JUcovJ0QAm5FosTEEJN03AS1DtzrQIttuhKEiiyEAobSSRDcfmGetSngcR/5Dw8qbOuweqe496P2hrpqxWVhS7wL2SssB7EJbyW87xF6qSkoK32A==
+ bh=FhSr8cj1YPQ4FSdk0Jq0j++PQzCDwfIfDg2oJ0fDllo=;
+ b=o51/sb+F7musXE848qu9cwfTuDIsngJoCskoA582kOJopkEtr7AkUZuPucBj/4nPYY1voC/oO1h5ZhWwhOBhAdIyJEElIrdQIC8FohmAWzQwpKvwGxDPqYSVoYXTCIJHRg1ZutJfGEvTzbLp6klsZYMso8E1n36xRabqtYsc6T3xuMxwF26aqcXpJqSrUvG6Y9A5ZOYWjJZs3MKAxMIObo6qoBoKpVq4u4MhdfGhKd1/RZ++RWkY5jK3xxVzqG6rhr7LsdlYwvvir3VeXB88Pxdq4VteYf9IDLW8cbSZZsvbFPxZZh2/QWy/660FE2uoQaNumSdHCizAKtZ9ejhSOA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DB9PR04MB9283.eurprd04.prod.outlook.com (2603:10a6:10:36d::11) with
+ by MIWPR04MB105056.eurprd04.prod.outlook.com (2603:10a6:290:e6::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.12; Thu, 17 Sep
- 2026 16:39:37 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.12; Thu, 17 Sep
+ 2026 17:03:59 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0406.012; Thu, 17 Sep 2026
- 16:39:37 +0000
-Date: Thu, 17 Sep 2026 11:39:28 -0500
+ 17:03:59 +0000
+Date: Thu, 17 Sep 2026 12:03:50 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org, Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH 2/3] dmaengine: rcar-dmac: Add missing
- dma_descriptor_unmap()
-Message-ID: <aqwXwOiPgRDUQfp_@SMW015318>
-References: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
- <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
+To: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Cc: Keguang Zhang <keguang.zhang@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, linux-mips@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] dmaengine: loongson1-apb-dma: avoid using iterator
+ variable after list_for_each_entry()
+Message-ID: <aqwddneAK_yPAkVS@SMW015318>
+References: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
-X-ClientProxiedBy: PH7P220CA0122.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:327::28) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
+X-ClientProxiedBy: PH8P223CA0005.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:510:2db::19) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -69,106 +65,152 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB9283:EE_
-X-MS-Office365-Filtering-Correlation-Id: f0add7c9-2f14-4dc3-c4a6-08df14da42f7
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MIWPR04MB105056:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3d2e84be-a5b4-44a5-b1f5-08df14ddaa82
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|19092799006|23010399003|18002099003|22082099003|4143699003|10067099003|11063799006|56012099006;
+	BCL:0;ARA:13230040|376014|23010399003|366016|19092799006|1800799024|56012099006|11063799006|10067099003|22082099003|18002099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	4y85a5VORTWsLjc9WZaRMhIIXVABKPjOoGf4qkc/mi2fKm0JtwC5TvwsrJjBtyzYuVT1O6LVWm9FJ4aGqi3Va6xx1hu8S6KjMdsHZNsFwPE368dhkztRTEF9acyZIOYkSYqjVwwk/u3IDGWtz/ZcQ1Qi/4AtAmUA155Z2G6/x2hL9cPB+ufaYnbF85ARFRlGuVIFF6k2kPyOYChV6KrbmZLSWyg7IFtUuwr/iMF9pSNu3mo6J+uUqlUFEVG6moW3sEbIpzfNUpwvNYcXl1TdNcHfoEiN2AuXLxAOr0Hp8ojf1DZVeSXI6Tl9f04PqQgLgcJlaqUv/Jv2QKKrlSCM7uKBo+yzfqUNatr1ZZr+inurFP0F9yZK6hKZ4Rr4TEMUKiYq1Iy1SoFTUzc8lEhO/R0IfKx4xm1MxMXna9oLKjh77QWIJLXlcUmO/zjqlqbPoxzl1UNFVMaMfl6iTlaBOwOmJeXxRdkmENt//JptzUGxpi2V6Ri4oHrLtZ4UUuTMoIwC8kwZYkhEvAsrNDakxjdwBjGmuWsj+8FLJjTpOn2frCM+2pU0cZ3TfmwRul5sJtkuuMSamni9WEZd325mHrCRqfP7t3d8wUszJlz/mE0I9CjwGtTCj5koAJOV1Q6y3It73ijQL2P5n9Orw9TbpiqgjFuLEOxsAQ74IBFA56k=
+	8MdQlQeCZUqS7w1FiErHxstKPpZoDjWCW4GpukmiamrpEjnSpd46UKVa3e0WQa/q7TrQuRnwoPcgLBRJ9SAPybBDoS8k4JoLuyl4eSqS7nOHw42bDyJk0xM5b9TovY4Zzk4vgnz9lRYHeZXjlRprBzfMTOJT3RO+ipHiMANt5adOcAeB67E3x5FpF7azKQNzujrHrLTs/RGfG/VCd9ABFHLZBJKDdCAxEC4+gstE2zb0l1NrSJKYXZM9XE+imuEt866XAPbu5jjmegeTLxo/kATUNc1krWj6xZ/hjpuTF45dvbIzZ5RHyG9O0p83nJtcmTS8cXBtp9UEYTzErgTjq86zom82JYYrSBjhVXuOyV890l12LZBeZGAR5ybBMMnNT6JqTEzVwo5ADGDDVKaQj7e+AtxZ2Kjl2dteh5hsUSsiAGCd0NEybKScGu7alxUqMVw1cPH1hUNvO41axdhx2338NsfIKYjspZdZ3EMYte8kq80/UidO3xnFvwkSaxnISzp4xFYIkQ5Rgycs38miGli9+hgtPK0bdIXcHb1wPk9cfdvdxf4LVlYxJY1oUjvYb0LCwFKjaP5wTMYNv2RgAlA4sI3YNagGjvMParT/q6nBl2Gm/C9HjsFvCURVnFgKB7Qw1oJ9E8qBpMSd76jhNNdz0TScXflqI8QXUku/0nc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(19092799006)(23010399003)(18002099003)(22082099003)(4143699003)(10067099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(19092799006)(1800799024)(56012099006)(11063799006)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?lDmy+VokRsFtWH7q5figJypqW3faq3x0vysKhmKTfVet4aK13yc3BRflp/7S?=
- =?us-ascii?Q?GFTZe4WL2SfKB9Q8olj1eOanuoLdvj/A4UIC/fj1N4ebpSEMzk93A81E+dSb?=
- =?us-ascii?Q?6F7KhVECMfZNHNIbZk5RieH+3tMb2CZ8mQx5J3IA80n2arf4G2I6JvjGF1Bx?=
- =?us-ascii?Q?25jmXByAzilp3EWOCyN9Cj4GsbFG175x946ViOVYYemmyIz2LGmahq4a/dKd?=
- =?us-ascii?Q?D2swiWeDH69ea0/sBCEZi12K+1P59/OyfJB5mq+Tt4b4SXnVrp+S0XQ0e97y?=
- =?us-ascii?Q?nKLjEre73RB2AUXUGNdDwMx0OG4iygTN69U8z7JAWDEdT7pp0jLg9FXfJzNe?=
- =?us-ascii?Q?grd6/z+vV0yUooUHvzqm8QW2QyDpmZuXTclMWAbMGQpwVIsJpNKo4CqYdMTY?=
- =?us-ascii?Q?Ulvfc/Nhr41oOcIwat3WCHUnZ3O3fo+TSiCDWQ+hJqVC20d5kQqVjTEJ6Mnl?=
- =?us-ascii?Q?bmWjJvOmIdAGlsIWlGmmcQuExyaZwnHjGxeZjaAbXQU/eZyYtwexcBNsWglm?=
- =?us-ascii?Q?2OliRP/Ydy/2Ma9/wvXUsFQeyBVRAw1sibWGuWfWGrHEbiKR99mcZv55eMf0?=
- =?us-ascii?Q?6GX1OIfnVfkl8Nt3G3IQvJGnnX6LoT8uo4NnYbZBueGr9iba0bDXG3zE/nXJ?=
- =?us-ascii?Q?V2/4bpZtzpZSKieGdPNDtRluFVZF92x5BQ19qQoN9n2MswqsZB5dODWvAhvR?=
- =?us-ascii?Q?cC7f2Pi/sA17VrEWXG+G8ez9CcI/PXdbqSqdqFgdMQTHI9oi3DYeL3wytJig?=
- =?us-ascii?Q?hL2uD3wwqciqdgGjMXzUcQEO5G560rbvPm1dc+dk9QZ7rn8Sc4xA5EN9IRjO?=
- =?us-ascii?Q?z3QczQvokPln8YO9fre5AKDtXlwD8UstZnIqv0FrUv1u28uClbK/NVQHDy3U?=
- =?us-ascii?Q?HobaW4zdyg6LTgOlVwFvsAsWul5dk1vqzd/kiAQE/qLusyd6b6Fl+kvN4FoU?=
- =?us-ascii?Q?AJJajq2p08EDL4fTCUUDpDdrzJWJtVL/69vJ9e3nHISeY8NRbqcGaCCX1Wz+?=
- =?us-ascii?Q?xAf9QCduEymi/zKIBuM8ygB9WzFbD4cSg4aX/UbWfIoPZCEMQob2eZMGvLlA?=
- =?us-ascii?Q?gqxNaVJbgU09BYV8spPWb3U8toxrotB0GQ2g3XuYXNGcGhMWndeYWoSwcrLe?=
- =?us-ascii?Q?+qVM5/hE4s7ORENdecC/y0+QpnyLWsDuKQNUTQrcUABOdSFad8CQkND7woF+?=
- =?us-ascii?Q?N0dxdVqD5jljajPKCqocx2bmexoyucFhgGcmLRB/hS+Vy5I97WFc0cdyjBkM?=
- =?us-ascii?Q?4l3VjbRjH9/1D1tP+AYySYQgo64n0T0Lvd6MWEf12efU2HZhZCt2ptM2PAlE?=
- =?us-ascii?Q?U+/Kuvx45he6IRZG2jJhSlFaN3EY6QAEEYrpqnXkckUNqjLNZmpdGBTdQVy2?=
- =?us-ascii?Q?AAae1fq5JYwZ7lPG35aQ0IX6WXi+jja/6LSkAC1giIHrQsGaueFbYtvuXB82?=
- =?us-ascii?Q?0b6gOsdX9v45U/Zoe2iqBhBuW1sW0ZX9geSu/6dk1LRaiau8Qp/H0B7o1kxZ?=
- =?us-ascii?Q?N5nHawfUY/Fx/Gsnx69LpXFeZpuq4v88j0uKnVSEizZ+TVe22bUnNvJFRYcE?=
- =?us-ascii?Q?5OE/UvuHF3xYBROPy+hUGw25aA2+vn0NlWehBIhtvVVYmVbJ/2UQ9p5mFVeE?=
- =?us-ascii?Q?NB2qqUhpH9eH7QmG5F7DJnpLGaXZ3E02+2+0Q5YUxdYmWb/oZ+hayd9WbTx+?=
- =?us-ascii?Q?qFyOi1kIFWO3LHHklz8yPUFUc2gy8dF8fW3kJhHe2CothgWW7L+FhAorXmbY?=
- =?us-ascii?Q?zx6k7xqYDIvqCHC+hYho7PitiRokr8G9tTkaiOcdgFv2tJP/3f4w?=
+	=?us-ascii?Q?HYsI6MpYpGjxTXceeZzsVjN/ZSbXN0zzDjs6P84Fcwz/PY/g9paARW6zfdAM?=
+ =?us-ascii?Q?ZbtSAMVGD6/8anAZV+ma0fMWHWIFUCqFzdjZU17rtR4kdykpAUdShZfePJwI?=
+ =?us-ascii?Q?s2u4LDXFITVy271WeSYXOELv7cmU9j500/e8FG0shU8s9OpDgqWZxBZRZ809?=
+ =?us-ascii?Q?lnbiANqHSuWbdXV+Jc9cqDnNUll5gePRjCcMd5szP773W8UWccOle/NvORyP?=
+ =?us-ascii?Q?VNIcrZj5RTXuAarvP7w2NSPDIolA3SyH1+RAL9oV4FYTHXPK7KEXae1lM2xA?=
+ =?us-ascii?Q?nY5eYsE3kAE6jTRUVJ7PpXGeOonOwFaiLFdPO2P3CtJp1r5S44jmY37sQF7z?=
+ =?us-ascii?Q?K6jrqXgqCS5nEDHxX3LrwECrDjdUCDkG+2VtCzErhPmsL1Vgh6Wr9/SYpacS?=
+ =?us-ascii?Q?c1UFsLlam/DtfY+rs3V0nrLKEjp8YrZHQURZ6nJW4ArunyG+GNW2tdvfYr7r?=
+ =?us-ascii?Q?zE88oluwwAnDH97nGmKgLiLjmzADuPGSgEeoavidqSr6WUYr04zgGehGUOhQ?=
+ =?us-ascii?Q?PYDy36LOTIeJoT3pYkP1SuKWx5m4Uf1xd6lppnuXUZYMPjIDuuI+HQ7rKvlY?=
+ =?us-ascii?Q?pLoxUp1BK9xQcgLmIkPIXJYpL8ocnePPaOO9SHHOXIxQMk/rDcwsOQ/bDqbm?=
+ =?us-ascii?Q?/h6xUFIz23XyVlKB1YsKtF4Mp6+yqBwGjx0vfNTtAgkjyqQ5EftY8At0fCuG?=
+ =?us-ascii?Q?Vuh4oBSuNhYjSzX4fF8idx64oK/gSFSmkivDnCRdqOvG2N/XrlkR/ktWiNDs?=
+ =?us-ascii?Q?YHCqQc11QY17rDSD465XXfcFdRufQ6OlfH4/jLICCP9xvlJ/pmGgrHvZAy/W?=
+ =?us-ascii?Q?N5JpEAbQ8gfv6EiXx9tFwt4rWP5Y9xBY5Avn0NasmDVln09hXZfUrCKJQck7?=
+ =?us-ascii?Q?FcXVyppRhnKbX4kFRHzyBwwJAnykIZLRCUx5NRC0zsBq4ioekD3QinsizSkV?=
+ =?us-ascii?Q?+0KL4Tiemvq8PSOmwLtEXCaMXh6qm8W6Ese6cArBq1uddaPgM2d7OR5G/riP?=
+ =?us-ascii?Q?t8uMS/WmZv3qA2fmZKC3lIo7nRaTWzm9KhlyruiQ2BfNMNWfn9cpoK2gYBsv?=
+ =?us-ascii?Q?aKxBPHhQUYypNVQTM3HdSnPg4kApnpDYc4nUz9IERMLue0ZdDsB1YMAMorMl?=
+ =?us-ascii?Q?rKklJKKeDOafB5K/vGcdLpth5YEY7VHvRuvnAZ4IhuANddvvvPZkYz8/JLrX?=
+ =?us-ascii?Q?0CSjkKnmQTn496mY51aPjrEhtdzwBA6rL/E1JuyUGnzmss/rnuMZlbcc+YdA?=
+ =?us-ascii?Q?gahiyvCqkFvHDC9hy9lJbs4im2AKPHAexvWgE7PXRnWBm9xH/YrzD12JH+jx?=
+ =?us-ascii?Q?Z4Z5OMcYlwJUDRlUXctwRZzK5hDZOdGeV1nPlGA1QKqRPZei2ZQ8ATC9lyxH?=
+ =?us-ascii?Q?Ro49nVG+CPpDwD6dpBn+K+OvKQxAuAZgIdeD2WKTY9tOujKteAxc3aCYY42F?=
+ =?us-ascii?Q?9F6yzRHEcPcPOzpi7Y54CHlM0D0Vb/gzE26kZ/J9I9Zn75JhHCLPOluTRQp/?=
+ =?us-ascii?Q?R+YGUkLPC9VTZlP4fiDZx8N0bTOj9g2FRfHGLIzEyBDcnBcS8jmpstwUWDwI?=
+ =?us-ascii?Q?b+yXDutZZSznkyTz/xmDOEgEq5Oi9RAwIiw1mqi2RX483V0HOmqxC4Ad/BaF?=
+ =?us-ascii?Q?xaQO54RK0A5KKJZYinVRpad+idVIuENieSa3FP+8YZBkyHFtsFAY/Dev7Ab2?=
+ =?us-ascii?Q?pzEmGl5dX/pte0rzVvSHK1JeInUwoj6s5ftGSHrnJI0u/PGZuGw404sRJ+Lm?=
+ =?us-ascii?Q?1TOD9qPHIVCxi5PguaSPSI9ZZI0700d1HZ/vd6eSeKB6FrWCO8IG?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f0add7c9-2f14-4dc3-c4a6-08df14da42f7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d2e84be-a5b4-44a5-b1f5-08df14ddaa82
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 16:39:37.1967
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2026 17:03:59.4149
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XAffBX/VAtjRt31pcDZtuA911Fv8KGoyaY6t/BZWwEW0o84kFPbtccQXP+RfrZoe+vyGLabmoF+SLvCYJHkmly08Hiwf3WpGOn80taUX1JAV3vygkec3tK47SMC6Owtc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB9283
+X-MS-Exchange-CrossTenant-UserPrincipalName: IiOMFJIayfNYY2jH/Q0v+Ks+G0VlpCEglihlPfUkyKJo5UbeKX8R921gXMtAVIExc9QBth4bhWBgTpHtWB3LXdSfiDN87wW4gPl8VvCmsPTRmKG2iViJrvgXBdetoCeb
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MIWPR04MB105056
 
-On Thu, Sep 17, 2026 at 09:12:07AM +0200, Wolfram Sang wrote:
-> From: Koichiro Den <den@valinux.co.jp>
+On Thu, Sep 17, 2026 at 04:30:25PM +0000, Mahad Ibrahim wrote:
+> ls1x_dma_tx_status() locates the descriptor actively being processed by
+> walking the LLI list and comparing the hardware reported next descriptor
+> pointer against each element's next-descriptor pointer.
 >
-> Call dma_descriptor_unmap() right after dma_cookie_complete() in the
-> threaded IRQ completion path. Without this, streaming DMA mappings
-> attached to the descriptor are never released and may eventually exhaust
-> DMA mapping resources (e.g. IOVA with an IOMMU or bounce-buffer slots
-> with SWIOTLB), leading to dma_map_* failures.
+> A list_for_each_entry macro is used in the comparison phase, which at
+> the end of the loop leaves the lli pointer at the currently executing LLI.
+> However this also subsequently runs for a non-match lli, in which it
+> points at the head. This causes a type confusion bug which treats the
+> head, which is a ls1x_dma_desc, as a ls1x_dma_lli object. Additionally it
+> goes forwards and prints garbage via the dev_dbg.
 >
-> Also ensure dma_descriptor_unmap() is called in rcar_dmac_chan_reinit()
-> (error/terminate path) to avoid the same type of leaks.
+> Fix the type confusion bug by only allowing matched LLI descriptor chains
+> to print the current LLI and residue calculation, as failing to match
+> should be treated as an unexpected condition.
 >
-> Fixes: 87244fe5abdf ("dmaengine: rcar-dmac: Add Renesas R-Car Gen2 DMA Controller (DMAC) driver")
-> Signed-off-by: Koichiro Den <den@valinux.co.jp>
-> [wsa: added Fixes tag]
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Found by the following Coccinelle check:
+>
+>   scripts/coccinelle/iterators/use_after_iter.cocci
+>
+>   drivers/dma/loongson/loongson1-apb-dma.c:461:6-9: ERROR: invalid
+>   reference to the index variable of the iterator on line 450
+>
+> Compile test only; Hardware testing by Keguang Zhang.
+>
+> Signed-off-by: Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+> Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com>
+> Tested-by: Keguang Zhang <keguang.zhang@gmail.com> # on LS1B & LS1C
 > ---
->  drivers/dma/sh/rcar-dmac.c | 2 ++
->  1 file changed, 2 insertions(+)
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+
 >
-> diff --git a/drivers/dma/sh/rcar-dmac.c b/drivers/dma/sh/rcar-dmac.c
-> index 5b54f1c4ce15..9155bceb723b 100644
-> --- a/drivers/dma/sh/rcar-dmac.c
-> +++ b/drivers/dma/sh/rcar-dmac.c
-> @@ -844,6 +844,7 @@ static void rcar_dmac_chan_reinit(struct rcar_dmac_chan *chan)
+> v2:
+> - encapsulate residue calculation and dev_dbg inside the
+>   list_for_each_entry() macro. Treat non-matching LLI as an unexpected
+>   case.
+> - link: https://lore.kernel.org/all/20260729143247.6111-1-mahad.ibrahim.dev@gmail.com/
 >
->  	list_for_each_entry_safe(desc, _desc, &descs, node) {
->  		list_del(&desc->node);
-> +		dma_descriptor_unmap(&desc->async_tx);
->  		rcar_dmac_desc_put(chan, desc);
+>
+> v3:
+> - Collect tags from Keguang Zhang.
+> - Repost patch in a new thread.
+> - Change chan2dev to the newer dmaengine_chan_dev.
+>
+>
+>  drivers/dma/loongson/loongson1-apb-dma.c | 27 ++++++++++++++----------
+>  1 file changed, 16 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+> index 46b4bfef45e2..e62ab26c8327 100644
+> --- a/drivers/dma/loongson/loongson1-apb-dma.c
+> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
+> @@ -441,22 +441,27 @@ static enum dma_status ls1x_dma_tx_status(struct dma_chan *dchan,
+>
+>  			/* locate the current lli */
+>  			next_phys = chan->curr_lli->hw[LS1X_DMADESC_NEXT];
+> -			list_for_each_entry(lli, &desc->lli_list, node)
+> -				if (lli->hw[LS1X_DMADESC_NEXT] == next_phys)
+> -					break;
+> +			list_for_each_entry(lli, &desc->lli_list, node) {
+> +				if (lli->hw[LS1X_DMADESC_NEXT] != next_phys)
+> +					continue;
+>
+> -			dev_dbg(dmaengine_chan_dev(dchan), "current lli_phys=%pad",
+> -				&lli->phys);
+> +				dev_dbg(dmaengine_chan_dev(dchan), "current lli_phys=%pad\n",
+> +					&lli->phys);
+>
+> -			/* count the residues */
+> -			list_for_each_entry_from(lli, &desc->lli_list, node)
+> -				bytes += lli->hw[LS1X_DMADESC_LENGTH] *
+> -					 chan->bus_width;
+> +				/* count the residues */
+> +				list_for_each_entry_from(lli, &desc->lli_list, node)
+> +					bytes += lli->hw[LS1X_DMADESC_LENGTH] *
+> +						 chan->bus_width;
+> +
+> +				dma_set_residue(state, bytes);
+> +				return status;
+> +			}
+> +
+> +			dev_warn(dmaengine_chan_dev(dchan),
+> +				 "unable to locate current lli.\n");
+>  		}
 >  	}
->  }
-> @@ -1654,6 +1655,7 @@ static irqreturn_t rcar_dmac_isr_channel_thread(int irq, void *dev)
->  		desc = list_first_entry(&chan->desc.done, struct rcar_dmac_desc,
->  					node);
->  		dma_cookie_complete(&desc->async_tx);
-> +		dma_descriptor_unmap(&desc->async_tx);
-
-Does callback function still use these data? suppose should unmap after
-callback return.
-
-Frank
-
->  		list_del(&desc->node);
 >
->  		dmaengine_desc_get_callback(&desc->async_tx, &cb);
+> -	dma_set_residue(state, bytes);
+> -
+>  	return status;
+>  }
+>
 > --
-> 2.53.0
+> 2.54.0
 >
