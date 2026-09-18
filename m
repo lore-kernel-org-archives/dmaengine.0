@@ -1,126 +1,132 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5E24F0552;
-	Fri, 18 Sep 2026 11:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE8138F65C
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 11:52:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789731471; cv=none; b=SSJ3NMHYgNI2mBx4FFtbcEoHh39iOIUZNgoAAcIkHhWl742ummEY1A3bRbi+5Ese6LuSTBsHL8OaiQiaei3PDt0bDVozfy2Rog1rpqQAvoyq/IKL41uedWGtyEgnj3Ybmrw1pcBOt1lxU5IS9etUVyy0KVkcjHdbquincho7tck=
+	t=1789732352; cv=none; b=DMSDD6W0bQHZTqwkcPfgDCd8WXuKGetP13NU+HTZ61cnY6uGxEypuoI0Y1FSUmHxxLHVMlGPrV0yS7brSeCSAEKkqfL3M8BGrzbAQzUQF4QiU+Uh0ExNyS0yNSJlELV+mtR1fU0NtT3iImUcrEX2unneDgXoeaH/07RDerszC10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789731471; c=relaxed/simple;
-	bh=YSI2Kqp03uJdGsxs/TigJRkMGLCix8Ae7tfRm9DSN0Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/WtHfyxrhc1Pe8YTOy+Rzm8CVcVKfHHUT4ueIhj4oAr3mwwXSbXGRhq5yxLK1I8VWK8pE8YFmWk2vb+2RWcDFsQFZnYq9Fjb4ZndOMw0nyxVUsr8sYy7PQnZs7LQS0IolfnYQvCjGxK59gEVPWKxN9nDXcVVRkilRoRsCf+d6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LyPt0Rsz; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1789732352; c=relaxed/simple;
+	bh=IQzm3ziH2lEdfJ/vZc1FD1Cx0pkKjuTQdMcSI7gCIfs=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=g1ngaKxoDVmP2irK5oDkfNxaijL9gwXeX9oP+/4rLSciwGAbaCOQuZ+lk4dW2V58ZYqAcvHMcS4gfgHNGoOSfRoN+ohStxpSyGD9JZHPj89oXrjkcrI61FSqqfRSAPTlDCwJv5tCvUlldLFo6tQOEMl/eDRwhnfsr8iPiNzBKKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JTxxpfxv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LyPt0Rsz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789731469; x=1821267469;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=YSI2Kqp03uJdGsxs/TigJRkMGLCix8Ae7tfRm9DSN0Q=;
-  b=LyPt0Rsz4dobQnAjwJhSt4QmxfeyodgDTe0xgtdP0CVvQVTiLhpy5yF3
-   m7gSKNrPW6Ofev+5vIrJBsDgpkwM05D9T4nYAAxzIh8a3vzmlW8ZqUJlg
-   woaFnM1WWV6VDEUHzqMIEsxfY4yURC1VeZW8vWAOgAmJ9KV3DayQV2rDR
-   YkRptn/8q5mRZH7AJIunCf0qwpFaBvvMtZq8WMwtl4Qvp1C+4qDyK7B03
-   jwshoNi6OpNHI2WUOjg6T8XemXL1z9a9K/vvKCu7XeYa2BY60hHwtkFO0
-   rrn83n53RSy/qg8pfpdJkxe8zYbUJd2BC5W1AwuRGe1BLHKApdUfgIP5E
-   w==;
-X-CSE-ConnectionGUID: OyyztqV1SmSauExFqrJdnQ==
-X-CSE-MsgGUID: KNH/gJ0/RjWHdU9daO+u1A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11908"; a="89367488"
-X-IronPort-AV: E=Sophos;i="6.27,108,1787036400"; 
-   d="scan'208";a="89367488"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 04:37:47 -0700
-X-CSE-ConnectionGUID: c6DS/Y6KQE6nNfenLUwhZQ==
-X-CSE-MsgGUID: dSLxz0Y6Sn2i5TM1ASrqFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,108,1787036400"; 
-   d="scan'208";a="2783722"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa013.fm.intel.com with ESMTP; 18 Sep 2026 04:37:41 -0700
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 7BEA3A5; Fri, 18 Sep 2026 13:37:29 +0200 (CEST)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com
-Cc: Dave Penkler <dpenkler@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Xiubo Li <Xiubo.Lee@gmail.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: [PATCH v2 7/7] dmaengine: Remove deprecated dma_request_slave_channel()
-Date: Fri, 18 Sep 2026 13:34:11 +0200
-Message-ID: <20260918113727.1898998-8-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JTxxpfxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8AC1F000FF;
+	Fri, 18 Sep 2026 11:52:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789732350;
+	bh=sEyguvbkhhnJ8irHtKArt25A6rT4JMsess8O+hqdojI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=JTxxpfxvkep3mqOqoJePhx9Mt52fAqjQgvDBYOpgrzkhs1QnBNl4CDKbp7Cl4LlIb
+	 PPcW5k8F3gb3/5zp4gQL3CVrrxtIxzfU/NoevrrpZYSDhEGtgJJa776vSDamYXzA7g
+	 U+mJs3xdeUKpNnivf4gAjvejXhmKqpxrYGiYkQLSSiAZFHP5/8qe3CsWGetk+Sd3ZI
+	 PAdzh2pOHr3gZtMyX0uhpI+45l1rCF1o8ugPDsyOw1fnyeeHSqiAORyFlFGGuIVSmv
+	 3U17m/e79DbBA4RubsoXJPG7UqQnrghEoO3a4xrXfVeuErCcDikdKChfv/Vo1HcYIR
+	 B6Q0RKGrN+Mzw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/7] ASoC: sprd: Replace dma_request_slave_channel()
+ by dma_request_chan()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Andy Shevchenko" <andriy.shevchenko@linux.intel.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260918113727.1898998-3-andriy.shevchenko@linux.intel.com>
 References: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
+ <20260918113727.1898998-3-andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 18 Sep 2026 11:52:29 +0000
+Message-Id: <20260918115229.CC8AC1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-No more users.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] sprd: leak of -EPROBE_DEFER to userspace in ioctl paths
+--
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- include/linux/dmaengine.h | 9 ---------
- 1 file changed, 9 deletions(-)
+commit 27b9b3ffed70e1a1411a3993c1e469b1c18205a6
+Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index c3a49a33307c..1b57bc4a7e72 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -1768,15 +1768,6 @@ void dma_run_dependencies(struct dma_async_tx_descriptor *tx);
- #define dma_request_channel(mask, x, y) \
- 	__dma_request_channel(&(mask), x, y, NULL)
- 
--/* Deprecated, please use dma_request_chan() directly */
--static inline struct dma_chan * __deprecated
--dma_request_slave_channel(struct device *dev, const char *name)
--{
--	struct dma_chan *ch = dma_request_chan(dev, name);
--
--	return IS_ERR(ch) ? NULL : ch;
--}
--
- static inline struct dma_chan
- *dma_request_slave_channel_compat(const dma_cap_mask_t mask,
- 				  dma_filter_fn fn, void *fn_param,
--- 
-2.50.1
+ASoC: sprd: Replace dma_request_slave_channel() by dma_request_chan()
 
+This commit replaces the deprecated dma_request_slave_channel() function
+with dma_request_chan() in the Spreadtrum ALSA SoC driver. It also updates
+the error handling to propagate all possible errors returned by the new
+function back to the caller.
+
+> diff --git a/sound/soc/sprd/sprd-pcm-compress.c b/sound/soc/sprd/sprd-pcm=
+-compress.c
+> index e5249924b54d9..f394121d417a3 100644
+> --- a/sound/soc/sprd/sprd-pcm-compress.c
+> +++ b/sound/soc/sprd/sprd-pcm-compress.c
+[ ... ]
+> @@ -153,12 +154,12 @@ static int sprd_platform_compr_dma_config(struct sn=
+d_soc_component *component,
+>  		return -EINVAL;
+>  	}
+> =20
+> -	dma->chan =3D dma_request_slave_channel(dev,
+> -					      dma_params->chan_name[channel]);
+> -	if (!dma->chan) {
+> +	chan =3D dma_request_chan(dev, dma_params->chan_name[channel]);
+> +	if (IS_ERR(chan)) {
+>  		dev_err(dev, "failed to request dma channel\n");
+> -		return -ENODEV;
+> +		return PTR_ERR(chan);
+
+[Severity: Medium]
+Since sprd_platform_compr_dma_config() is called during the ALSA
+SNDRV_COMPRESS_SET_PARAMS ioctl path, could this propagate -EPROBE_DEFER
+directly to userspace if dma_request_chan() defers probing? Returning
+internal kernel errors like -EPROBE_DEFER to userspace can confuse user
+applications as it violates UAPI error semantics.
+
+>  	}
+> +	dma->chan =3D chan;
+> =20
+>  	sgt =3D sg =3D kzalloc_objs(*sg, sg_num);
+>  	if (!sg) {
+> diff --git a/sound/soc/sprd/sprd-pcm-dma.c b/sound/soc/sprd/sprd-pcm-dma.c
+> index 2d5ffbe17e814..2a89dc7616bf7 100644
+> --- a/sound/soc/sprd/sprd-pcm-dma.c
+> +++ b/sound/soc/sprd/sprd-pcm-dma.c
+[ ... ]
+> @@ -170,15 +170,16 @@ static int sprd_pcm_request_dma_channel(struct snd_=
+soc_component *component,
+> =20
+>  	for (i =3D 0; i < channels; i++) {
+>  		struct sprd_pcm_dma_data *data =3D &dma_private->data[i];
+> +		struct dma_chan *chan;
+> =20
+> -		data->chan =3D dma_request_slave_channel(dev,
+> -						       dma_params->chan_name[i]);
+> -		if (!data->chan) {
+> +		chan =3D dma_request_chan(dev, dma_params->chan_name[i]);
+> +		if (IS_ERR(chan)) {
+>  			dev_err(dev, "failed to request dma channel:%s\n",
+>  				dma_params->chan_name[i]);
+>  			sprd_pcm_release_dma_channel(substream);
+> -			return -ENODEV;
+> +			return PTR_ERR(chan);
+
+[Severity: Medium]
+Similarly, sprd_pcm_request_dma_channel() is invoked during the
+SNDRV_PCM_IOCTL_HW_PARAMS ioctl path. Does returning PTR_ERR(chan) here also
+risk leaking -EPROBE_DEFER to userspace if the DMA channel is not yet
+available?
+
+>  		}
+> +		data->chan =3D chan;
+>  	}
+> =20
+>  	return 0;
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918113727.1898=
+998-1-andriy.shevchenko@linux.intel.com?part=3D2
