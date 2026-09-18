@@ -1,73 +1,102 @@
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5A24FD299;
-	Fri, 18 Sep 2026 15:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7B550B407;
+	Fri, 18 Sep 2026 15:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789745855; cv=none; b=O6z7uT5wSBFgo1D8+80Gdng5HSvWr9LCHFXliCWYJx2OMV7IhWSV45u/fChO7epZmXOxylxrXYvG6BnlPkrIrbpe0c//1t7TqvUln3GNLuqnuVCv1dgizdvRCdTVHoKIMC1ywC5NFHiDtPXT35RZzOrSwf5QqRnJVZx2suscyPQ=
+	t=1789746411; cv=none; b=aObHYg7mBs9lCFn79wJve1wkWsD0kjcGUExe6zqiJc5byrRJFvis+ENQs7Fkh5Use9ty6SWxdbWcDLyUiQ9JxvAdKN0B+ha4Iel4wjaWYuz5aWMXlzp8D7C5TYHjsxP65AG/Cd9DVPq8QTsg9X/xD8TzCjcxRvAyCGRXiJmNB10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789745855; c=relaxed/simple;
-	bh=wEvaTWXDvnJgQGalW3gY+IGZ+93Bir6HwzV0vX03rzQ=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Subject; b=qPeali55N48bS30vToej2ip9A/p7dSzzyqqGQ3nXyy8aHzDnZigjE6JV8SYoyrrfdPm6Z0iZGbCMt6rQkzBjSQ1s8lx9KX7tiIghdZxPSws7DCW6/Y1AfqvTdbFzYZNhUAzp711jhLw5ezVLsayawNm1LUxETu8nBFd1lbnSAog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=pP9bWmdV; arc=none smtp.client-ip=204.191.154.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	s=arc-20240116; t=1789746411; c=relaxed/simple;
+	bh=ynopiZN/0hAwTlTK6FzFkyoErSsBwQh8mzZQQTHrX6k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GikXYiTynIw6XfJMWU623y6sQNuV4A2AKrrrJU5Ia5OL3XoELfpbAKvNCvIK058whpVdfX9reNWdEBIuSGwk6rFzAxDBEkwG9qP7ncbXLyNp9e761Zyn8j73b2hDxkGtcIrgx9AyyOYkASZoKlyX2kxhPAoti+nqW4shn9EeegM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwK4dlNI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="pP9bWmdV"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=wEvaTWXDvnJgQGalW3gY+IGZ+93Bir6HwzV0vX03rzQ=; b=pP9bWmdVwu6S/Cv5qkol0IOUV7
-	edF/1/n+x+87rzJZEbG7jq6JphNjfmT4qBTYfL+8d7/SW987wNIIfA1pzsgjsxNoJUWFAnicWlb6a
-	hkwIv912wpBGXlARWqiWasUrBnd45bnXkmOo+3d6ejiGmy0y3kGN1O64Bm08JS8w16c9sQfBJ/ML2
-	v3QV+EwEZ1XumxWDOx0CiGobr7RznFD95g2dQv3FxW02aHVWshoUcyqiS/ocIm+pBQJ2Z01EO50ou
-	GDWgoh+nQnwE10eXL4o/QqpTecMF6YZyCfAF7HJkRpmqxqwn04ewTinqpPyAc6rU391nF65SVkBmo
-	RP4k2fDQ==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1x7aeb-0000000CpQb-00EV;
-	Fri, 18 Sep 2026 09:37:33 -0600
-Message-ID: <94da5a00-c0b9-4cd3-b516-facadbee5097@deltatee.com>
-Date: Fri, 18 Sep 2026 09:37:26 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwK4dlNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E02B1F000FF;
+	Fri, 18 Sep 2026 15:46:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789746409;
+	bh=JboVS3406K9moY3GyytFj26wML1m6YzGEP2O+AdCWlA=;
+	h=From:Date:Subject:To:Cc;
+	b=YwK4dlNI9ZSqRvZCTd9nNFqC4V6p5TqniA3vMEAgVE50zjDoLR9Hnjl+xonBtCoWN
+	 yMQ8lZKm31VlE9/JSU0dtM5p+GCTktQLMkh9Qx/Vgy9VhuN52LZjcHxFnxwe12fGsm
+	 PyiXT6b7ictQlkVMXcjURu0RGBarD+MLeg9lauwKXIDPI1K9tU+MR+EYw71uDqkfC3
+	 fAZLu6r+mzW1i4w7m3i+ewt5oxaiXONhw16/ZPqGJIHuXaqCo4tD4A8h4qk+3o5TP2
+	 5CiEg0Yw2YrpPbOLYapbRFfd2HCCauZuMQAmv93tdVNUZXz4EUh3ZH/tzxEJFox2kv
+	 RTmPqrmBnbzUQ==
+From: Linus Walleij <linusw@kernel.org>
+Date: Fri, 18 Sep 2026 17:46:45 +0200
+Subject: [PATCH] dt-bindings: dma: dma40: Restore disabled-channels
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>, Kelvin Cao <kelvin.cao@microchip.com>,
- =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
- Dave Jiang <dave.jiang@intel.com>, George Ge <george.ge@microchip.com>,
- Jaeyoung Chung <jjy600901@snu.ac.kr>
-References: <20260902062153.31048-1-logang@deltatee.com>
-Content-Language: en-CA
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <20260902062153.31048-1-logang@deltatee.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, kelvin.cao@microchip.com, linux@weissschuh.net, dave.jiang@intel.com, george.ge@microchip.com, jjy600901@snu.ac.kr
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Level: 
-Subject: Re: [PATCH v6 00/10] dmaengine: miscellaneous fixes for ioat,
- switchtec_dma and plx_dma
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+Message-Id: <20260918-dma40-dt-disabled-channels-v1-1-0f691109d8d3@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqDMBBA0avIrB1IgrS2VxEXSWaqAzaVjIggu
+ buxyweff4JyFlZ4Nydk3kXllyps20CcfZoYharBGfcwL9sjfX1nkDYkUR8WJry7xIuis8HGSNT
+ zM0AdrJk/cvznw1jKBdWrvNpsAAAA
+X-Change-ID: 20260918-dma40-dt-disabled-channels-21b1ccdd8e7b
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ Linus Walleij <linusw@kernel.org>
+X-Mailer: b4 0.14.3
 
+The conversion of the DMA40 binding to YAML omitted the optional
+disabled-channels property from the original text binding. The driver still
+parses this property, but additionalProperties: false rejects any device
+tree using it.
 
+Restore disabled-channels and constrain it to the physical channel range.
+Also constrain memcpy-channels to the limits enforced by the driver and
+reject duplicate channel entries in both properties.
 
+Fixes: 23fbc87c8ae6 ("dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+---
+ .../devicetree/bindings/dma/stericsson,dma40.yaml          | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-Any update on when this might be merged? I thought it was ready to go
-and I'd really like to see it in this cycle.
+diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+index d8f92838f4c9..81b83603ea79 100644
+--- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
++++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
+@@ -140,8 +140,22 @@ properties:
+       - description: LCPA (Logical Channel Parameter Address) memory.
+       - description: LCLA (Logical Channel Link base Address) memory.
+ 
++  disabled-channels:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 31
++    uniqueItems: true
++    items:
++      maximum: 31
++    description: Physical channels that cannot be used by the DMA engine.
++
+   memcpy-channels:
+     $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 8
++    uniqueItems: true
++    items:
++      maximum: 63
+     description: Array of u32 elements indicating which channels on the DMA
+       engine are eligible for memcpy transfers
+ 
 
-Thanks,
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260918-dma40-dt-disabled-channels-21b1ccdd8e7b
 
-Logan
+Best regards,
+-- 
+Linus Walleij <linusw@kernel.org>
 
