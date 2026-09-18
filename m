@@ -1,120 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E151C041;
-	Fri, 18 Sep 2026 18:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12B5509F10
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 18:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789754627; cv=none; b=lZ8pGrftZef33Cz3ZhM/KWyNJVewwr/Yk/dFMuVKSd9QznuTg8/yTQ8Nr6AdyZK+59jnwDmOTzOqT1EqOX7BTEhcVaJ2mJbpI7riav8666SALWUya3mc9JZxn3DRvhrxn7TPgGXuvddPgqgrlbo3edglu4M/2cuEHyIswqKT4hg=
+	t=1789755028; cv=none; b=AF4yXdJwroEs1dNz2A+jU7od5BBg3zrm2ZAN5IvNFggP/wwY6AcXcQbzFVqwMPF7S5YtJOPAe70S7x6k7LcNlfCSqJoQsRUz8mwTEFMrSh6rwfTRYQ4kh9IcbtmmxmaZIMmnh2tMw2Nr6SuezEYr8ITlwukeL0w1JIBieOx3WdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789754627; c=relaxed/simple;
-	bh=xFHqUQTt5nxYYSOShNdstDQeM67a4Joi0srIHqDWAiE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qKQn3Q+mFMP3PKE0IsBJkgO6pq646R5DPbetDEDuQ5r2SYeFMqKJfpDOu5WeTADvtPzn47syaGms+R299V9VTzBkFvPt6c+JD9zn9v5FdIuBtTresldws8XJ+fkT6WOy67dj0mGkAw5L4VGUfWYHMc+4zmMKrXppUcG/2lvhuEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQLy7Iwm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789755028; c=relaxed/simple;
+	bh=xXqbkNsyR69Mna32/a1BTKXWygANlLfV2Ksh6iStf7U=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=elMt8VquChN1up345OaXMyHkVpvJ5m2JHZDRLkTUoMGQnd5wioZ/KzwMXJGX9q+iDr+Ua13TRbBNNVlKV6TEUBHmhOyC82UCF3sGFR7cYrmToYTk6SO5XWsxRWH9ac9hWv8NEYWBZazfBOpreBZvRC0P4kzstZis5zoHAni/QHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iz+ZtH/b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQLy7Iwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17371F00899;
-	Fri, 18 Sep 2026 18:03:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iz+ZtH/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFD81F000FF;
+	Fri, 18 Sep 2026 18:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789754625;
-	bh=evwplLMAwECJHF4vfadONOqwuoBW61zgQ3sC3t0YxQ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dQLy7IwmxHP4CwtCsFQsvtDqbpQbBbAk0FLYki7k7EbL3aWpZGlnagumVxIM536Vq
-	 RjPF/73Ebw3mUrdYbjrNyix3YbHb2bq/3ChoXdTn7IsanIfYNOaDWpHcreNjakUTQ5
-	 7tckYUtx157FJpGEt4MUEKBsvnpuHrhdurTHYCu8+BujAIWPnCJDh8nRj98y+mjfUf
-	 6oydL4rnRtCqn+bUtqZLkJW5zTQzYech/8ZyKuMWjd+K2ulYM0mgfUr3LP8xF88zzq
-	 nvnYG7g1lITZntkHHw/UdKfiivbOpXFh1IOdwf2iUwtLI0ga++xF2/9bPjV9hfyOTS
-	 sxIu2swoofe/A==
-Date: Fri, 18 Sep 2026 23:33:41 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>
-Cc: Frank Li <Frank.li@oss.nxp.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-iio@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andy@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v4 01/10] dmaengine: Move enum dma_slave_buswidth to a
- new header
-Message-ID: <aq18_TMNs4EJzgZO@parshuram>
-References: <20260911-dmaengine-support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com>
- <20260911-dmaengine-support-wider-dma-masks-v4-1-72b8fd4cc78e@analog.com>
- <aqgCQvRw9fns__0d@SMW015318>
- <aqjzvxI4ecoFvRLT@ashevche-desk.local>
- <aqlpoBJJXfZgsMxT@parshuram>
- <aqlwRkNcs_UqKjWs@parshuram>
- <aql6u3T0nnSVr-FC@SMW015318>
- <aqws8pN2rfS9-dCC@parshuram>
- <aqz1-OzFobOROuBw@nsa>
+	s=k20260515; t=1789755026;
+	bh=bd7ookS5uvbDgYwvHVezWrMxh7NC4YIURqYQjHQ0w48=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Iz+ZtH/bCE2VScBdOhkbPcDDa6eRqeNaBvaF9DSEoJOiDx5lJEoOBe8aO55hqkRDZ
+	 XlUL4wJwGL790DA0iadmzEeumPImqcBJiW4/32in8+SsOnkM3KrfD3HJ36BFyNnlJd
+	 NCL8k5RU6KSf/+b5KcRGy12pDoWwvILF6xusoJDhG/BFLzFGfGyUdrUCxQogF1vGMo
+	 9Ugw7y9TAoV2aDwv8RURrcBOxX2hH/qfuj7gsv/8kRdt8uJlZ+CaTSgZvIAFBdkOc/
+	 lmlbVnilZjH7fzyQSFlM1Eq7wkW65GyOig9Oe6zNs3B5NBEgYfjXv994/XTHdzIWIt
+	 9L3xaJZPi/h1w==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv2] dmaengine: bestcomm: Enable compile testing
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260918175950.21657-1-rosenp@gmail.com>
+References: <20260918175950.21657-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 18 Sep 2026 18:10:25 +0000
+Message-Id: <20260918181025.DCFD81F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aqz1-OzFobOROuBw@nsa>
 
-On 18-09-26, 09:39, Nuno Sá wrote:
-> On Thu, Sep 17, 2026 at 11:39:54PM +0530, Vinod Koul wrote:
-> > On 15-09-26, 12:04, Frank Li wrote:
-> > > On Tue, Sep 15, 2026 at 09:50:22PM +0530, Vinod Koul wrote:
-> > > > On 15-09-26, 21:22, Vinod Koul wrote:
-> > 
-> > > > > > Traditional naming would be
-> > > > > > dma/engine/provider.h
-> > > > > > dma/engine/consumer.h
-> > > > >
-> > > > > consumer and provider and good names.. I would retain the full dmaengine
-> > > > > everywhere please. dma causes confusion already!
-> > > >
-> > > > Thinking about it again, drivers/dma/dmaengine.h should be the provider
-> > > 
-> > > There some dmaengine code outside drivers/dma directory, like
-> > > drivers/crypto/ccp/ccp-dmaengine.c
-> > 
-> > They chose to be outside, their choice... They need to be updated as
-> > well to point to ../../dma/dmaengine.h :-)
-> 
-> I tend to agree with Andy but anyways. I feel this is going a bit out of
-> scope now. So what we have now in the series is:
-> 
-> 
-> - include/linux/dmaengine.h (without enum dma_slave_buswidth)
-> - include/linux/dma/types.h (with enum dma_slave_buswidth and new
->   dma_buswidth_t type) - A future one would be dma_cap_mask_t and we could
->   drop bitmap.h from dmaengine.h
-> - include/linux/dma/widthmask.h - The new bitmap based API for bus_width
-> 
-> I kind like the separation (and the whole point was to avoid bitmap.h in
-> the main dmaengine.h API) but tbh I'm not sure if a consumer driver
-> will ever use dma/widthmask.h without needing the consumer API. But
-> to sum things up, what do you suggest for vÛE?
-> 
-> * include/linux/dmaengine.h as the consumer API and includes the new
-> the widthmask API
-> * provider/private goes to drivers/dma/dmaengine.h and just includes
-> include/linux/dmaengine.h as the starting point?
-> 
-> Let me know how do you want things for v5
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] kconfig: missing PPC_MPC52xx dependency for SND_SOC_MPC5200_AC97
+--
 
-Yes lets talk about dma_slave_buswidth, it is client type. This is
-configured by users to set the width of peripheral.
-So this needs to be in the include/linux/dmaengine.h
+commit 95cb68468081de8e2880323cb63c64d9da8626b0
+Author: Rosen Penev <rosenp@gmail.com>
 
--- 
-~Vinod
+dmaengine: bestcomm: Enable compile testing
+
+This commit relaxing the dependency for the BestComm DMA engine allows it to
+be selected on PowerPC for compile-test builds. It adds an alternative
+dependency on (PPC && COMPILE_TEST).
+
+> diff --git a/drivers/dma/bestcomm/Kconfig b/drivers/dma/bestcomm/Kconfig
+> index 5dd437295964d..e23ba4982d7ed 100644
+> --- a/drivers/dma/bestcomm/Kconfig
+> +++ b/drivers/dma/bestcomm/Kconfig
+> @@ -5,7 +5,7 @@
+> =20
+>  config PPC_BESTCOMM
+>  	tristate "Bestcomm DMA engine support"
+> -	depends on PPC_MPC52xx
+> +	depends on PPC_MPC52xx || (PPC && COMPILE_TEST)
+
+[Severity: Low]
+Does relaxing this dependency cause an unresolved symbol during link time f=
+or
+SND_SOC_MPC5200_AC97?
+
+When COMPILE_TEST is enabled on PowerPC, PPC_BESTCOMM can be selected witho=
+ut
+PPC_MPC52xx. However, SND_SOC_MPC5200_AC97 in sound/soc/fsl/Kconfig depends
+on PPC_BESTCOMM but lacks an explicit dependency on PPC_MPC52xx:
+
+sound/soc/fsl/Kconfig:
+    config SND_SOC_MPC5200_AC97
+        tristate "Freescale MPC5200 PSC in AC97 mode driver"
+        depends on PPC_BESTCOMM
+
+This inherits PPC_BESTCOMM's relaxation and allows the driver to be built
+when the platform code is absent. In psc_ac97_cold_reset(), the driver
+unconditionally calls a platform function:
+
+sound/soc/fsl/mpc5200_psc_ac97.c:psc_ac97_cold_reset() {
+    ...
+        mpc5200_psc_ac97_gpio_reset(psc_dma->id);
+    ...
+}
+
+Since mpc5200_psc_ac97_gpio_reset() is only compiled when PPC_MPC52xx is
+enabled, does this result in an undefined reference at link time?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918175950.2165=
+7-1-rosenp@gmail.com?part=3D1
