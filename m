@@ -1,49 +1,50 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AEE4ED1B9;
-	Fri, 18 Sep 2026 11:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976444EE87F;
+	Fri, 18 Sep 2026 11:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789731465; cv=none; b=PgGjqWqSqNPk9Mu9+/4yuU8Fi6IsrkFmg7uy3nBi1NDrbplWzhkPOu0aJykUhoOUACMtP7uTfpEP1jT+BHNbXKRRnpOcGtEVrqgoDN+P97dVunjayqRsgv2sToc15uaLX/1FOBY7egjIPTR0/XuwlfRHzhBUp5eXxWSX5GGJyAU=
+	t=1789731467; cv=none; b=c03yNtkksWFqQyY0HT0tVUV2nPuJn2dyTs7m8eqd7YoVdUBiK1Srs6LhSrMHJ9fCxqHuHJFjX6sBN258vP2UelR0nYn7qo+ymz+2HnpC1BUfm/mpw39twLnlf1RjVePxN6WPSkRzMLx+2G28jwKK7VXNiGQOQZ+dDQeQa0Jqtrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789731465; c=relaxed/simple;
-	bh=3tCjl0Z1sktzbW2YwCZvEyafyorhC/cCFxIhMbEzRQg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P7iT4Zsl5dg9p74TaaNADAOIzn8vywLGAhgHIUbfTm7L68VE33I3M6QMv/UEkRQXjcjgnqSlo8lgH504eYy2ARg+hTlXGy9krKMWu+wdCcgybguxY29jkkXsNI0Y2ckS0MF5L9nEFTEgtOzzpYBefXJi6ObeI6SqloridCQtvEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YbElPtlb; arc=none smtp.client-ip=192.198.163.13
+	s=arc-20240116; t=1789731467; c=relaxed/simple;
+	bh=dsocwb7K2ZpRqzpDad5Pm4Zdlbi0/SbBbWa0Q7zC82k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BeLsyY5vpOkOZvW2QDs0PpozVqOfxMys2q+xGsEXXg+hEDV966j1FxjtnZBHetf2nvZlKje/rYx6nbz2fJMP4ywuKK4laBPcmOEKuoRGZfD9Fl5Uo9VXQip/PFw208FV5mE9P66CZHarNLsgGCTvwnxHNh9mXxpb7yH8yS/1saE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hs/utz7h; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YbElPtlb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hs/utz7h"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789731464; x=1821267464;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=3tCjl0Z1sktzbW2YwCZvEyafyorhC/cCFxIhMbEzRQg=;
-  b=YbElPtlbs+O1E+arsrrnLqQ2/HGggUrITJi4W/4AauC+zyV96StuPh4S
-   TqEidE44+RytS1YCpEDmxUdD9YDmoUPEETnA1U8VXMfaPTtPdcqjLgj0q
-   Th305rkDe5dHLEYvb5WqceCoBwJdWgwGGE3cR5A3v1RxL8wsfQRA83Fxq
-   WBdMliGm3PUuh5B/dX/sqrEtaR0VOnOTfv3wng0a5RzHA2wQ/XENeSFc2
-   qtNLhKAWZLKDj8PhNWNmqeKMCgU4xrxqOE/3rc1EZ+ycenbMlI67pZNdK
-   o0iA0VCHz+YsS25pc2AkrXfET1tPeTQ6qmol3z114evQUMj37GErfYtlt
+  t=1789731466; x=1821267466;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=dsocwb7K2ZpRqzpDad5Pm4Zdlbi0/SbBbWa0Q7zC82k=;
+  b=hs/utz7hPFkt3A0tN/U29ekwNfJD+3Ou6pXreL5kl0Dwx+BHS46JLB/W
+   ASP/K5Cc5EWADJj3a7PrVpdgHj1R5PNyIgNRB48gjsPt+IFtjoJvAPhz4
+   P9X/b662XNGhrl2KhI95vHUof3Edqm7lYVIBek9lZLxzzlap08zAVMU5h
+   zFT9tn2CEpFamKGIqFCcTaZK0kLxvnIBJom3OZ3G9Plm7GijgvhQ2ynYA
+   +K7cHs/Gi9VSPSq3BHkcQkm2LZgsYgucrWq9XRtWs6+DL0NF0Fi8rWs9B
+   Dg7687Y9TjDS7zO7WM9JtdafW8geGj/O3Beyvj96O6n7LrdKVKktiw6m0
    Q==;
-X-CSE-ConnectionGUID: 4jU9DjdfSxilVl8Zpe6nIQ==
-X-CSE-MsgGUID: Kuc5Aw6EQkSwd4NRohJkww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11908"; a="92739738"
+X-CSE-ConnectionGUID: kT2iOyJqSgq1LHcN58lr/w==
+X-CSE-MsgGUID: 8k+pu6d6S1ikBsO8pEXErg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11908"; a="92739760"
 X-IronPort-AV: E=Sophos;i="6.27,108,1787036400"; 
-   d="scan'208";a="92739738"
+   d="scan'208";a="92739760"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 04:37:41 -0700
-X-CSE-ConnectionGUID: Jf/bNaFCTZSqe9QU4FSD7g==
-X-CSE-MsgGUID: 1EkaHw41Qp2XYb8vIyZBcA==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 04:37:43 -0700
+X-CSE-ConnectionGUID: iLqdN8XLQ3SjN2203lubpg==
+X-CSE-MsgGUID: VSAVOy0OQ9qg8FU7OlJ13w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,108,1787036400"; 
-   d="scan'208";a="271029220"
+   d="scan'208";a="271029227"
 Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa007.fm.intel.com with ESMTP; 18 Sep 2026 04:37:35 -0700
+  by fmviesa007.fm.intel.com with ESMTP; 18 Sep 2026 04:37:37 -0700
 Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 5958099; Fri, 18 Sep 2026 13:37:29 +0200 (CEST)
+	id 76EA8A4; Fri, 18 Sep 2026 13:37:29 +0200 (CEST)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -78,10 +79,12 @@ Cc: Dave Penkler <dpenkler@gmail.com>,
 	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: [PATCH v2 0/7] ASoC et alia: Convert to use dma_request_chan()
-Date: Fri, 18 Sep 2026 13:34:04 +0200
-Message-ID: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 6/7] gpib: fmh_gpib: Replace dma_request_slave_channel() by dma_request_chan()
+Date: Fri, 18 Sep 2026 13:34:10 +0200
+Message-ID: <20260918113727.1898998-7-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
+References: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -90,44 +93,39 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Convert the last users (mostly in ASoC) to use dma_request_chan() and
-drop deprecated dma_request_slave_channel() completely.
+Replace dma_request_slave_channel() by dma_request_chan() as suggested
+since the former is deprecated. With this, propagate all possible errors
+to the caller.
 
-I think the best is to allow Mark to take the whole lot and provide an
-immutable tag or branch to others (DMAengine and GPIB).
+Reviewed-by: Dave Penkler <dpenkler@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/gpib/fmh_gpib/fmh_gpib.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Changelog v2:
-- Add a comment that errors are now propagated to the caller (Frank)
-- Make sure the error pointer is not dereferenced (Sashiko, Mark)
-- Collected tags
-
-v1: <20260915100931.3593242-1-andriy.shevchenko@linux.intel.com>
-
-Andy Shevchenko (7):
-  ASoC: stm32: spdifrx: Drop mention of the deprecated and unused call
-  ASoC: sprd: Replace dma_request_slave_channel() by dma_request_chan()
-  ASoC: soc-generic-dmaengine-pcm: Replace dma_request_slave_channel()
-    by dma_request_chan()
-  ASoC: pxa: Replace dma_request_slave_channel() by dma_request_chan()
-  ASoC: fsl_asrc: Replace dma_request_slave_channel() by
-    dma_request_chan()
-  gpib: fmh_gpib: Replace dma_request_slave_channel() by
-    dma_request_chan()
-  dmaengine: Remove deprecated dma_request_slave_channel()
-
- drivers/gpib/fmh_gpib/fmh_gpib.c      | 10 +++++++---
- include/linux/dmaengine.h             |  9 ---------
- sound/soc/fsl/fsl_asrc.c              |  2 +-
- sound/soc/fsl/fsl_asrc_dma.c          | 19 +++++++++++--------
- sound/soc/fsl/fsl_asrc_m2m.c          | 15 +++++++++------
- sound/soc/fsl/fsl_easrc.c             |  2 +-
- sound/soc/pxa/pxa2xx-pcm-lib.c        |  9 ++++++---
- sound/soc/soc-generic-dmaengine-pcm.c |  8 +++++---
- sound/soc/sprd/sprd-pcm-compress.c    |  9 +++++----
- sound/soc/sprd/sprd-pcm-dma.c         |  9 +++++----
- sound/soc/stm/stm32_spdifrx.c         |  2 +-
- 11 files changed, 51 insertions(+), 43 deletions(-)
-
+diff --git a/drivers/gpib/fmh_gpib/fmh_gpib.c b/drivers/gpib/fmh_gpib/fmh_gpib.c
+index 5e10e9353fed..4ab9b0a317fd 100644
+--- a/drivers/gpib/fmh_gpib/fmh_gpib.c
++++ b/drivers/gpib/fmh_gpib/fmh_gpib.c
+@@ -1458,11 +1458,15 @@ static int fmh_gpib_attach_impl(struct gpib_board *board, const struct gpib_boar
+ 	e_priv->irq = irq;
+ 
+ 	if (acquire_dma) {
+-		e_priv->dma_channel = dma_request_slave_channel(board->dev, "rxtx");
+-		if (!e_priv->dma_channel) {
++		struct dma_chan *tmp_chan;
++
++		tmp_chan = dma_request_chan(board->dev, "rxtx");
++		retval = PTR_ERR_OR_ZERO(tmp_chan);
++		if (retval) {
+ 			dev_err(board->dev, "failed to acquire dma channel \"rxtx\".\n");
+-			return -EIO;
++			return retval;
+ 		}
++		e_priv->dma_channel = tmp_chan;
+ 	}
+ 	/*
+ 	 * in the future we might want to know the half-fifo size
 -- 
 2.50.1
 
