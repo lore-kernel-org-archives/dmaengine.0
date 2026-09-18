@@ -1,205 +1,92 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F0B3AC0FA;
-	Fri, 18 Sep 2026 14:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF3E4E73B3
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 14:55:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789742266; cv=none; b=aeELm9liMa808CDVdecmsV+I3/3QdkM+5hndg4vfy2VK1ZC++QoFtPhX+ReVfaiSQc7O8qd7rv8tGMXbtYf03wmdovWfkqFLrR5bGFtKr2JWlBBv669e1ljaqO19IS4chnPZfcb3DVUbsDWdTb5TBpN1a3xnie9FbxGjof7vu4Q=
+	t=1789743317; cv=none; b=Sf7EgPkx9BhN1bn8ACDZ/F/t2kKbIQdOZnul20mlrJTlqe5NMFjfRNV99DHb3+Y5vaRi6NhafgruZs+s9cOUkRW8XdAbWcmzYiEBxOLzzPHAgCgIf7cn+0PkpH8Z4UKawvZbzMW8QB3ziI5ryi5MRL7xE8aQkN0bXF3ABN7+qwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789742266; c=relaxed/simple;
-	bh=cT9MZUefqqkKw7WHWzzp8+aaN83F67m383N8MtMYnbw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c0Z3DoV5m5wVPBfQaCLzEux06EsF74rZdvnozzRo+GuBsEXX2L+20Z9MPjRqSzVro8p4BlmD2QqEnPoOiCfEDEfXNHAqufsQyK4OYUYbMorJIrfA+PN0/bduH1QidZga0SsLGj2WSuX/h5jBW3sQWrf6hcW7s1RFdHYOSC44IEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AjY9bkoJ; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1789743317; c=relaxed/simple;
+	bh=ZL6cYPMJhXiIsT7Pc5akfvYGdMuxWucw5pjxHidtFM4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HzpCdixgLTZWY9nl7LZY5CnHkminZtCSr329bDt38q3gDDE+RU8cD4LsmqRchz35/psxiL3IM/tUlZdBFT/bIvdiDU7QgMap0fky+yB0dL9/VK5c06aQGuuf8kOldBwH1qBn+IBDOmhsvHZoVg+jkyERqwEtsRlkzIoaK3sQPjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tzxdiwks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AjY9bkoJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789742264; x=1821278264;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cT9MZUefqqkKw7WHWzzp8+aaN83F67m383N8MtMYnbw=;
-  b=AjY9bkoJsIT/R8BJrlxzdq3A859Y/hT9d2kH2QPA7kSbsfPGgJDzFzx0
-   WAvZgRM7RI1W6VRsgyb29tVqOO87jta8+s4ia6aD2iGAbma3K/CtzUbgD
-   botg4oAGkZ0l0zsbAXHqjW6HqGEic+BGonVH2oXRfdLpvSUR9AzX7jtC8
-   qzPlz+qRoOw1di2j4C+sTMyWF0X530ZuApia2CzrCxTQUr1FcWk6Pce4R
-   JrnXPfSsqZ0lLvzxpLJPGGyXzCBPVFq5eudjovXK3XWbgopwqw/cpV4UI
-   Hstg5d15VDqRANumhNuprDoxcypcpdgta+pekzPnplrVw4LXGtPrwA3wU
-   w==;
-X-CSE-ConnectionGUID: HBi372p2QFa5vnlkj+1r2w==
-X-CSE-MsgGUID: 5eb8b8FaQSuj0aRtDzTndQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11909"; a="100850520"
-X-IronPort-AV: E=Sophos;i="6.27,109,1787036400"; 
-   d="scan'208";a="100850520"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 07:37:43 -0700
-X-CSE-ConnectionGUID: 3Vkr41R3Tu+QsrJlbrlgVg==
-X-CSE-MsgGUID: a9tY0WWmS7ioSf8PSh08gg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,109,1787036400"; 
-   d="scan'208";a="270737077"
-Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.109.117]) ([10.125.109.117])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2026 07:37:42 -0700
-Message-ID: <8616f55f-9703-42d3-8d3e-7fdfb6a8a5ff@intel.com>
-Date: Fri, 18 Sep 2026 07:37:41 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tzxdiwks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB5F1F0089C
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 14:55:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789743314;
+	bh=ZL6cYPMJhXiIsT7Pc5akfvYGdMuxWucw5pjxHidtFM4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=Tzxdiwksdi3HM6Y8wIoOXU1RCocmsFRwdSDkOpZkNMuJ+NwnU97t1F/90zYlDILV9
+	 7RBJPx5cJjcKXBNFXiKjSVxglvDLJj5Lx/FqseO34hjIuqAXD177qHGQ+mHb3rFaHD
+	 UzNbpE3znTFsnaiy8FItdjgYu5qfBdcLr07ZsRrFVmGS1RFd8rGuHiivK3MAj7orJH
+	 wGoTlXQRZgEXFFiXB/uOgs17eYFFnPMN4cnObo/MqbMWHaDDEEMt5x6ET6F9ufhBkU
+	 /DTRWb7pAEA4axlYxQ8uv3YuhDIn9kROqKi5hkRWflsxoGETHTo4bzGq7k0k81pjjO
+	 nC+8TYwe8hcng==
+Received: by mail-lf2-f13.google.com with SMTP id 2adb3069b0e04-5b8c5231570so457589e87.2
+        for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 07:55:13 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBxxhareqVEKVKY5HDoIVUHmnNpTx+l+YMyRqMaosZEmt6atsjrjlp2r1BaN2ogcyOCuS6WiPfofF40=@vger.kernel.org
+X-Gm-Message-State: AFuF++lw91THRN48198zoIApXqSz/FU80DijZdYDE/6B/v6gUNowzlh7
+	4rnHIZvrr34HJyI2n1PiKf8bDQl2meNb6YNbdZ2fXEN0eRFf1SjvQJHxj7g1t+W8t8mLLHfOl8j
+	kcrs6Pw80Icx3aQtmox4QBloJwvxdKe0=
+X-Received: by 2002:a05:6512:10cb:b0:5b6:e07:8f95 with SMTP id
+ 2adb3069b0e04-5b8c18057d1mr853526e87.24.1789743312600; Fri, 18 Sep 2026
+ 07:55:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: use assign_bit() where applicable
-To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>,
- Vinicius Costa Gomes <vinicius.gomes@intel.com>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Peng Fan <peng.fan@nxp.com>,
- Kees Cook <kees@kernel.org>
-Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org
-References: <20260918141622.3022876-1-peng.fan@oss.nxp.com>
-From: Dave Jiang <dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20260918141622.3022876-1-peng.fan@oss.nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260918-dmaengine-fixes-v1-1-7e10da1633c1@kernel.org> <aq1L-UJ4ehCj3aNS@SMW015318>
+In-Reply-To: <aq1L-UJ4ehCj3aNS@SMW015318>
+From: Linus Walleij <linusw@kernel.org>
+Date: Fri, 18 Sep 2026 16:55:00 +0200
+X-Gmail-Original-Message-ID: <CAD++jLn8Eou7X+b7bnBjk0bFFvwOGfc3c_qS5r-eRj173N1_0A@mail.gmail.com>
+X-Gm-Features: AcwNN1Xzdm-yovEjrE_eALR4htrFm9GqsM-Ch_mhVrcPq62JVjF5tfAtXusU2ac
+Message-ID: <CAD++jLn8Eou7X+b7bnBjk0bFFvwOGfc3c_qS5r-eRj173N1_0A@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: Use unique debugfs names
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Sep 18, 2026 at 4:34=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wro=
+te:
+> On Fri, Sep 18, 2026 at 11:15:14AM +0200, Linus Walleij wrote:
 
+> > DMA40 registers multiple dma_device instances for the same platform
+> > device.
+>
+> d40_dmaengine_init() ? I see just register one dmaengine device. I think
+> it may have other problems.
 
-On 9/18/26 7:16 AM, Peng Fan (OSS) wrote:
-> From: Peng Fan <peng.fan@nxp.com>
-> 
-> Convert open-coded if/else with set_bit/clear_bit and their
-> non-atomic __set_bit/__clear_bit variants to the assign_bit/__assign_bit
-> API.
-> 
-> Done with Coccinelle semantic patch.
-> 
-> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+It certainly has other problems because I have a serires of 21 patches
+and counting just for the dma40 driver, haha :D
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+But this patch addresses a real problem.
 
-> ---
->  drivers/dma/idxd/sysfs.c  |  5 +----
->  drivers/dma/imx-sdma.c    | 15 +++------------
->  drivers/dma/ppc4xx/adma.c | 29 +++++++++--------------------
->  3 files changed, 13 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-> index 6d251095c350..2b0524324089 100644
-> --- a/drivers/dma/idxd/sysfs.c
-> +++ b/drivers/dma/idxd/sysfs.c
-> @@ -1095,10 +1095,7 @@ static ssize_t wq_ats_disable_store(struct device *dev, struct device_attribute
->  	if (rc < 0)
->  		return rc;
->  
-> -	if (ats_dis)
-> -		set_bit(WQ_FLAG_ATS_DISABLE, &wq->flags);
-> -	else
-> -		clear_bit(WQ_FLAG_ATS_DISABLE, &wq->flags);
-> +	assign_bit(WQ_FLAG_ATS_DISABLE, &wq->flags, ats_dis);
->  
->  	return count;
->  }
-> diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-> index 36368835a845..b8a91a0343b5 100644
-> --- a/drivers/dma/imx-sdma.c
-> +++ b/drivers/dma/imx-sdma.c
-> @@ -710,20 +710,11 @@ static int sdma_config_ownership(struct sdma_channel *sdmac,
->  	mcu = readl_relaxed(sdma->regs + SDMA_H_HOSTOVR);
->  	dsp = readl_relaxed(sdma->regs + SDMA_H_DSPOVR);
->  
-> -	if (dsp_override)
-> -		__clear_bit(channel, &dsp);
-> -	else
-> -		__set_bit(channel, &dsp);
-> +	__assign_bit(channel, &dsp, !dsp_override);
->  
-> -	if (event_override)
-> -		__clear_bit(channel, &evt);
-> -	else
-> -		__set_bit(channel, &evt);
-> +	__assign_bit(channel, &evt, !event_override);
->  
-> -	if (mcu_override)
-> -		__clear_bit(channel, &mcu);
-> -	else
-> -		__set_bit(channel, &mcu);
-> +	__assign_bit(channel, &mcu, !mcu_override);
->  
->  	writel_relaxed(evt, sdma->regs + SDMA_H_EVTOVR);
->  	writel_relaxed(mcu, sdma->regs + SDMA_H_HOSTOVR);
-> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
-> index 279a431ccae3..39b1c4fd9ca5 100644
-> --- a/drivers/dma/ppc4xx/adma.c
-> +++ b/drivers/dma/ppc4xx/adma.c
-> @@ -350,10 +350,8 @@ static void ppc440spe_desc_init_dma01pq(struct ppc440spe_adma_desc_slot *desc,
->  			 * of the transaction (src, dst, ...)
->  			 */
->  			iter->hw_next = NULL;
-> -			if (flags & DMA_PREP_INTERRUPT)
-> -				set_bit(PPC440SPE_DESC_INT, &iter->flags);
-> -			else
-> -				clear_bit(PPC440SPE_DESC_INT, &iter->flags);
-> +			assign_bit(PPC440SPE_DESC_INT, &iter->flags,
-> +				   flags & DMA_PREP_INTERRUPT);
->  		}
->  	}
->  
-> @@ -508,10 +506,7 @@ static void ppc440spe_desc_init_memcpy(struct ppc440spe_adma_desc_slot *desc,
->  	desc->src_cnt = 1;
->  	desc->dst_cnt = 1;
->  
-> -	if (flags & DMA_PREP_INTERRUPT)
-> -		set_bit(PPC440SPE_DESC_INT, &desc->flags);
-> -	else
-> -		clear_bit(PPC440SPE_DESC_INT, &desc->flags);
-> +	assign_bit(PPC440SPE_DESC_INT, &desc->flags, flags & DMA_PREP_INTERRUPT);
->  
->  	hw_desc->opc = DMA_CDB_OPC_MV_SG1_SG2;
->  }
-> @@ -2136,10 +2131,8 @@ static struct ppc440spe_adma_desc_slot *ppc440spe_dma01_prep_mult(
->  					chain_node);
->  		memset(iter->hw_desc, 0, sizeof(struct dma_cdb));
->  		iter->hw_next = NULL;
-> -		if (flags & DMA_PREP_INTERRUPT)
-> -			set_bit(PPC440SPE_DESC_INT, &iter->flags);
-> -		else
-> -			clear_bit(PPC440SPE_DESC_INT, &iter->flags);
-> +		assign_bit(PPC440SPE_DESC_INT, &iter->flags,
-> +			   flags & DMA_PREP_INTERRUPT);
->  
->  		hw_desc = iter->hw_desc;
->  		hw_desc->opc = DMA_CDB_OPC_MV_SG1_SG2;
-> @@ -2221,10 +2214,8 @@ static struct ppc440spe_adma_desc_slot *ppc440spe_dma01_prep_sum_product(
->  		iter->hw_next = list_entry(iter->chain_node.next,
->  					   struct ppc440spe_adma_desc_slot,
->  					   chain_node);
-> -		if (flags & DMA_PREP_INTERRUPT)
-> -			set_bit(PPC440SPE_DESC_INT, &iter->flags);
-> -		else
-> -			clear_bit(PPC440SPE_DESC_INT, &iter->flags);
-> +		assign_bit(PPC440SPE_DESC_INT, &iter->flags,
-> +			   flags & DMA_PREP_INTERRUPT);
->  
->  		hw_desc = iter->hw_desc;
->  		hw_desc->opc = DMA_CDB_OPC_MV_SG1_SG2;
-> @@ -2246,10 +2237,8 @@ static struct ppc440spe_adma_desc_slot *ppc440spe_dma01_prep_sum_product(
->  					chain_node);
->  		memset(iter->hw_desc, 0, sizeof(struct dma_cdb));
->  		iter->hw_next = NULL;
-> -		if (flags & DMA_PREP_INTERRUPT)
-> -			set_bit(PPC440SPE_DESC_INT, &iter->flags);
-> -		else
-> -			clear_bit(PPC440SPE_DESC_INT, &iter->flags);
-> +		assign_bit(PPC440SPE_DESC_INT, &iter->flags,
-> +			   flags & DMA_PREP_INTERRUPT);
->  
->  		hw_desc = iter->hw_desc;
->  		hw_desc->opc = DMA_CDB_OPC_MV_SG1_SG2;
+They are declared together in struct d40_base.
 
+Each gets its own channel list through d40_chan_init(), which points
+every channel back to the corresponding dma_device:
+
+d40c->chan.device =3D dma;
+list_add_tail(&d40c->chan.device_node, &dma->channels);
+
+All three deliberately receive the same parent device in
+See d40_ops_init():
+
+dev->dev =3D base->dev;
+
+They are then registered independently:
+
+dmaenginem_async_device_register(&base->dma_slave);
+dmaenginem_async_device_register(&base->dma_memcpy);
+dmaenginem_async_device_register(&base->dma_both);
+
+Yours,
+Linus Walleij
