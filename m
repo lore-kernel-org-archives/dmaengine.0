@@ -1,84 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082C1483833;
-	Fri, 18 Sep 2026 17:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3BF47DD6E
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 17:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789754290; cv=none; b=j0hyGTlkwAuHHdF6Rci/8p9FmCYHGldkz8ZkCTl924sLoRK5rvkCA4pCZ+vO6AnLiaiY2NB2/YNP1BvtbW4WJIYee3yYGjGoouboUAnIWSOhdADShKRs/KJs/8xCk0soHnU+Dn2ZhweQOROvIIyas60J2jMqfvSkcDoRgoYC6Nw=
+	t=1789754396; cv=none; b=M0xBrN2c9hrV1jNDeV2ZRFUco7VCG7JovfG1SbFRRoeaGiWGBOnB14rpxQpqAODzlP0ndnm+ErFWuIeyn7X07A0mqfdKEJEotucZA7ZR47EKCTfpcZ8RiYhKk5hW8lcSA+kw5mVTuWiBHRdsidsnkrWFiVMMyxFYyzssgwczNgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789754290; c=relaxed/simple;
-	bh=Uim/QizBNxw+rb7fl90AGnbHkpW/ncADgxNBrB6/k5c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eFuY58TTdjN+fjSgOqAUlMlRymgphRK8RosPm8SAwbYkPFS0LHWVmWGewGo1/uLqL+nv96FbOKjaBWW8bJNA+QFC0XGMrd7E5gJPt9wP+Nb8yjYASQVzSb01/V1XmSqyJTQk+63zsFF0ZnV/Ejsn4lBF7NixMMRPDWcSKDK4z0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFMZj+mJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789754396; c=relaxed/simple;
+	bh=T8+9GlGP9MFqBMqKA24QJwMA5/YrBixZGvj9RwPp7mg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SKs9/vFmsMKbMPSBPNF30Md91ecshhQVcdbYm4IAIuIiDcWHsgob879dvxar/ygfQsCNTHxkgxBb/YzCfkTL5OF1GyQoR3khsuA3Bc1fmmqWsjI6NqoAhzzMV8nteLO/Z90y2tXqJtDFRd7k0eJ8vM5QPmCXGDs6pDVJ5VqO8uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmZ3pBAC; arc=none smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFMZj+mJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6E61F000FF;
-	Fri, 18 Sep 2026 17:58:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789754286;
-	bh=1l9FecZC20se1cRT+U2yFyGnQU1PHlnfgdsZtd2O88c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nFMZj+mJxhvA4HWpVg8jsWxsjw/8Tku/xdTQdIfmCtvNrKQzG71Pq6lO5l7ogAmu3
-	 xSxmkOGz51hepFCStCNGeCu/+Ze5Hd4Fn69/4WxiIoM3QKK7tKKDKmxELKSqW0X9Fp
-	 MSTVj0C6gLx6vnYO7pvWlRDtUefL9itkMCiphZ2iVsKY/0rWOf1+NOr2bwnqdQFuqD
-	 u4KKWJz30R6brUDDVRIhYk63gWXR7L+QGUw8mSwfkwLZv0Zl8ZKiK8/3yrzQjZv775
-	 XHh3z5QI+9nuenRHdEA4MblSnGphwadG3ucTl6ozc2y0hmaoE+g5hdfUnPX3Cuxxd0
-	 awqMuDYbtnpEA==
-Date: Fri, 18 Sep 2026 23:28:02 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Frank Li <Frank.Li@nxp.com>, Mark Brown <broonie@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	bui duc phuc <phucduc.bui@gmail.com>, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-sound@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Dave Penkler <dpenkler@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmZ3pBAC"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc4c08393b0so884245a12.0
+        for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 10:59:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789754393; x=1790359193; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=3+paugbOt45TmuWzryTTwPeNc9ZdcNY2MsSqwjEw8MA=;
+        b=bmZ3pBACq8j/dnlRAOnFU3KUNdn3tLu3ShCv4NY5qnW53bF5WsLSUkUw/jRwwDYD5r
+         fU6p/zpnsilK5nQ89lGEtpyoQBoN6PGCOG2SAT0TNCeWZMnYIowkZYHhR50VyZrlTL3A
+         NgpX77muCkBwf8MAbzqmG34DMrXvCy/50uv4Olglgoa7e2OpaLsa6dIPVY9ocH4jz5nB
+         CM38JjP7DYsQ/YAlooko0j3OYQ8W7eXX+rHDYWnUnYRl4/1ynT9/i88zAcD9qTEEPLB7
+         7P5LAOpWbPQep+aGvOECkIFRRqdNDFpnFqbxwbwf0tugAsQ+7l9anqkD1XzhlH3BP57E
+         aW3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789754393; x=1790359193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3+paugbOt45TmuWzryTTwPeNc9ZdcNY2MsSqwjEw8MA=;
+        b=epJUajdr90v+8rHHQBVZjGx96mjDV3x/TPxVtJp6ORpW+F8kI6OtNsTjI0yVvm/33Z
+         EPIqgfNhd//CHFnWoQcckAois90jrJ9KER6fiw09dBRb344c9deUkEdLV40nRQp50t0F
+         woF2i8PFAgl+rTHldM6kbx9WQpx/dAf/muFCj89iUQBoGdOECeuwoErkHt/uYJ6HfGcC
+         sYFBvDbFzfsmjiD/PQTJkAXN3EJe8FYvdBsOIhbUcz6ccV4Nn4mPYOWcmbEztxreBKSM
+         hzh6uVB6rxgq0efiR55+BHMakSADeWMrpFHpRkcjBcMkuKOOSGFgKmPUoVm5DBSjxFLE
+         ZCzw==
+X-Gm-Message-State: AFuF++mobUEywJiDPwth1qsKs7pCbg+ti3O+aBvrfnDOzkWhhOVZ3Wnm
+	AEoERIwB+ybKC2gg58kmcZBZFW+brWdEBut6GfDv4QXOM5MYbjYkSffwKDfMww==
+X-Gm-Gg: AYBFou2hpd0jw67UBEh+3cgXLv10+AtOBXEp/MoHEtytU/9sREYfRth0l5b7xCNJ/rl
+	vxxiVyBX/Kq3ojywnOnUtxWSJJAJro5x5qLqbeSkCvdEWcjixQKKEa3/d+hnNmOT9NiRuWd9AoX
+	BMX5lIpKY8ekszGKe4OZEvxJ6MWz0dqTo3uIur07SGLSiEW3u2VqoQOGaGoSelrXUe2NBsj5yrr
+	zX5XsV9VzOvYqnIVGuAixLBi1NwJd4ccDwq9wytTlCrxv8+Q7NCUw939gfP5aAf+EJyzSukDM/O
+	V9aSCxbahU6TFEkA8UUzWV3yFwuc4QIBWZ9EfnaYnuMLzDu7hFn1TwBnwYlphXGow5JrovxLiLh
+	Qe2iNs2ezURirtEIeW47Ume/BkP7wUgGjNitIH+DHaAkNZlCEviQiKK3MZu+hluu24IuCUWhjGc
+	WLkxGF07n6+XtZ5SSUh3PTWNxbahIntN4K7g2ZnINDJC5z/1JIi2FWhiZO6db4tBySZY+6Q7c3s
+	Q83lEw8CsF5584EpzW7R1B7lMPi9cvmU7MAJnTCh3lK72rg7WkOFbI5lMBM9Si7SBhjLBcM30qC
+	ihlxmMkCMhJq+YylJ3nQbaN78CIV0RggElryM7wOOeS8R6gw
+X-Received: by 2002:a17:90b:3b85:b0:39e:6c69:34dc with SMTP id 98e67ed59e1d1-39e6c6936b2mr506482a91.64.1789754392938;
+        Fri, 18 Sep 2026 10:59:52 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-144d55bf843sm304342c88.8.2026.09.18.10.59.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2026 10:59:52 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: Re: [PATCH v2 7/7] dmaengine: Remove deprecated
- dma_request_slave_channel()
-Message-ID: <aq17qvmxF6nwclkR@parshuram>
-References: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
- <20260918113727.1898998-8-andriy.shevchenko@linux.intel.com>
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv2] dmaengine: bestcomm: Enable compile testing
+Date: Fri, 18 Sep 2026 10:59:50 -0700
+Message-ID: <20260918175950.21657-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260918113727.1898998-8-andriy.shevchenko@linux.intel.com>
+Content-Transfer-Encoding: 8bit
 
-On 18-09-26, 13:34, Andy Shevchenko wrote:
-> No more users.
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Allow the BestComm DMA engine to be selected for PowerPC
+compile-test builds.
 
-I thought I had acked earlier one. Here is it again
+The freescale ethernet and sound drivers now need a dependency on
+PPC_MPC52xx as they use headers/functions from that platform.
 
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v2: keep it bestcomm only
+ drivers/dma/bestcomm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion1(-)
 
-Acked-by: Vinod Koul <vkoul@kernel.org>
-
+diff --git a/drivers/dma/bestcomm/Kconfig b/drivers/dma/bestcomm/Kconfig
+index 5dd437295964..153b5492c93c 100644
+--- a/drivers/dma/bestcomm/Kconfig
++++ b/drivers/dma/bestcomm/Kconfig
+@@ -5,7 +5,7 @@
+ 
+ config PPC_BESTCOMM
+ 	tristate "Bestcomm DMA engine support"
+-	depends on PPC_MPC52xx
++	depends on PPC_MPC52xx || (PPC && COMPILE_TEST)
+ 	default n
+ 	select PPC_LIB_RHEAP
+ 	help
 -- 
-~Vinod
+2.55.0
+
