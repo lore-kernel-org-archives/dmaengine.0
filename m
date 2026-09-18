@@ -1,117 +1,156 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0E2274670;
-	Fri, 18 Sep 2026 16:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6059518127
+	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 16:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789748708; cv=none; b=iplJkno1tszNOdh1f4fvZjn28WTz2pWIiXvdMGvlwRJMWL/HSS/zHJYlNTcF51Z0qvj54C1sl3n2VQucUN+BOhKFGP9fKUgc5pGGvFRTM0XD+L9a9SW/YZ9T3AEHuVF9R5scISWoo/j0+bn43W7JddPHgaK56gWTbyehhVV+kRw=
+	t=1789749423; cv=none; b=VbuyiznA/HGujXx7CprOsok21lvQ8k6WzZcv0ER1MQlD6WbcV2EOUGBvS3fIQKJna9rVYsiKsh0MEIM/yh7FknDeQ1+8o16PfuJwmJEjFLu4i6eNYxGKIlfBRExGQd0GG2ljjX+XLOb8CnEw8ebe1o5w0ImzbxTaghZquyIv3q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789748708; c=relaxed/simple;
-	bh=NmgX1+yhPy9v3fRYqfJuz0msMqrxNAMimyxMgQt5XHg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g9LsnKHntDXGuTfQpA4zdXB7niDURd4YgHJqDICkfsobYUkWSTcZ3VQavLor7eq9GUqkGQpWTm2pmOlg6Evmtg7X7mkmh2oFscoEmX37S8K74tHe0CCwC+6G3VrkQnVQTzUsMQkc8pqJW4V5vKzh87Mq4HsyswG5Fjl05IkOs/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AXgz7pHx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789749423; c=relaxed/simple;
+	bh=rcBGyn6jrDqaequDHZ4xkPNjKsE0QHNCQCGXnYymoqs=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=RwTlYPsVUn1IBsY8uE7EdtqpSQQG3aMA86jHjrV0MxXCBHhC0zgstsEFbZEAlVP9nQO88bvXgIx+SvuuncggB/kguXa6fHscB0OKZ/UrPYlT/1hRSjs9JnoT3lwfeMuGI+odLhOaaJjhXMg56iUf1oG91gfXHFpwslfxa/THWwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EEraWchS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AXgz7pHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1761F00898;
-	Fri, 18 Sep 2026 16:25:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EEraWchS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2366F1F000FF;
+	Fri, 18 Sep 2026 16:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789748706;
-	bh=0/Q2D3SYGfJ5K2lM36NPcejxamrhFmzFV7oj1E0uiYQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=AXgz7pHxZDoH6LNxLX47EQhCXXCbcjm/q5Nld9l3jIW92pBeMAkerkTl/i/4hI8o/
-	 DOxDUsIdYNptsGMzCfnzOtpX5HtKx8RZYEg/AnvC4VIh1d95xHAXfLm8DwjUDY7Xtl
-	 lkEu48fl7L0ofEnJuEfygF4rWeSUSHdYRmEZtGSHxgMUyMaciNWDFGn0y+fRzpg7Z2
-	 OGRWTcQtf77sAxuChBxdWHCWebRsbhvjz/mJXBn5Z+JTbROgBIBlL9ygJ6A5iWL8G4
-	 whczNX6w1PGY0PoQi0rRNvdOmBmJ5NiXu8CfCdsXhDT4KYlitEYE646Ys5LtDvfSoQ
-	 0NiEMHSNBLsZg==
-From: Linus Walleij <linusw@kernel.org>
-Date: Fri, 18 Sep 2026 18:24:41 +0200
-Subject: [PATCH v3 22/22] dmaengine: ste_dma40: Validate memcpy
- configuration
+	s=k20260515; t=1789749421;
+	bh=rVvttde0EMVfiXWDWThhaD+aO8QekUxtCEAGlG4qRtA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=EEraWchSXGKKLL20Wy/lsvGDzVME8bPCCLux2dEUxXOeYP72vIoTiq99VfIqMw5cb
+	 H8RauqOL3y4lclZTlGjBUvHsGRkeaDMjx+Xtn3Y4aYUCbsqk/SHjj9Bf0tkkBThZCV
+	 i/nBw0md9Ag3wrrTnc9xhFCso3u5HDoJ9XM8GdxXMEjG74SMgXC27qez0vhGjBh9CH
+	 xb09GdBul3/vUuWq2Bd+7ZSFANctj+QywpldxOsl4fk5SxPGQMSAskzeljjdU0Nr2f
+	 u2eN0ToLhrseopiTYkElVfjapi/iXY4lusxtv8sGN9pw0yfmrVL28gVnWyCZhH4sa5
+	 +mkfuSHEb51rA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 06/22] dmaengine: ste_dma40: Handle runtime PM resume
+ errors
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Linus Walleij" <linusw@kernel.org>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260918-dma40-fixes-v3-6-8dd8450669e8@kernel.org>
+References: <20260918-dma40-fixes-v3-0-8dd8450669e8@kernel.org>
+ <20260918-dma40-fixes-v3-6-8dd8450669e8@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 18 Sep 2026 16:37:00 +0000
+Message-Id: <20260918163701.2366F1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-dma40-fixes-v3-22-8dd8450669e8@kernel.org>
-References: <20260918-dma40-fixes-v3-0-8dd8450669e8@kernel.org>
-In-Reply-To: <20260918-dma40-fixes-v3-0-8dd8450669e8@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org, 
- Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
-X-Mailer: b4 0.14.3
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] dmaengine: ste_dma40: skip channel teardown on PM resume failure
+- [High] dmaengine: ste_dma40: leave descriptor queued on PM resume failure
+--
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+commit ed522d6297daebccbf846812d9e9d09ad29b8000
+Author: Linus Walleij <linusw@kernel.org>
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+    dmaengine: ste_dma40: Handle runtime PM resume errors
+   =20
+    This commit replaces pm_runtime_get_sync() with pm_runtime_resume_and_g=
+et()
+    in several ste_dma40 channel operations. It adds error checking to abort
+    hardware access if the PM resume fails.
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
----
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index 1baee6f4d919a..c6f633353f3ea 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 3310f5086122..4969e78f365d 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1763,7 +1763,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
- 
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2038,12 +2039,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2051,6 +2057,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
+[ ... ]
 
--- 
-2.55.0
+> @@ -1521,8 +1527,13 @@ static struct d40_desc *d40_queue_start(struct d40=
+_chan *d40c)
+> =20
+>  	if (d40d !=3D NULL) {
+>  		if (!d40c->busy) {
+> +			err =3D pm_runtime_resume_and_get(d40c->base->dev);
+> +			if (err < 0) {
+> +				chan_err(d40c, "Failed to resume DMA: %d\n",
+> +					 err);
+> +				return ERR_PTR(err);
+> +			}
 
+[Severity: High]
+Does returning an error here without removing the pending descriptor from t=
+he
+queue or scheduling a completion tasklet cause issues? If a caller such as
+dma_async_issue_pending() triggers this, it appears the DMA client will hang
+indefinitely waiting for a transfer completion callback that never arrives.
+
+>  			d40c->busy =3D true;
+> -			pm_runtime_get_sync(d40c->base->dev);
+>  		}
+> =20
+>  		/* Remove from queue */
+
+[ ... ]
+
+> @@ -2042,9 +2053,6 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  	struct d40_phy_res *phy =3D d40c->phy_chan;
+>  	bool is_src;
+> =20
+> -	/* Terminate all queued and active transfers */
+> -	d40_term_all(d40c);
+> -
+>  	if (phy =3D=3D NULL) {
+>  		chan_err(d40c, "phy =3D=3D null\n");
+>  		return -EINVAL;
+> @@ -2066,7 +2074,13 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  		return -EINVAL;
+>  	}
+> =20
+> -	pm_runtime_get_sync(d40c->base->dev);
+> +	res =3D pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (res < 0)
+> +		return res;
+> +
+> +	/* Terminate all queued and active transfers */
+> +	d40_term_all(d40c);
+> +
+
+[Severity: High]
+Can this early return on PM resume failure cause hardware channels and
+descriptor memory to leak? By returning before calling d40_term_all() and
+d40_alloc_mask_free(), the physical channel state seems permanently locked =
+to
+allocated and descriptors are not released.
+
+>  	res =3D d40_channel_execute_command(d40c, D40_DMA_STOP);
+>  	if (res) {
+>  		chan_err(d40c, "stop failed\n");
+
+[ ... ]
+
+> @@ -2658,7 +2675,10 @@ static int d40_terminate_all(struct dma_chan *chan)
+> =20
+>  	spin_lock_irqsave(&d40c->lock, flags);
+> =20
+> -	pm_runtime_get_sync(d40c->base->dev);
+> +	ret =3D pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (ret < 0)
+> +		goto unlock;
+> +
+
+[Severity: High]
+Does jumping to the unlock label here skip d40_term_all()? If
+pm_runtime_resume_and_get() fails, it looks like pending and active
+descriptors are left in the queues and permanently leaked instead of being
+cleaned up.
+
+>  	ret =3D d40_channel_execute_command(d40c, D40_DMA_STOP);
+>  	if (ret)
+>  		chan_err(d40c, "Failed to stop channel\n");
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918-dma40-fixe=
+s-v3-0-8dd8450669e8@kernel.org?part=3D6
