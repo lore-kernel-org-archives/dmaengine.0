@@ -1,102 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8770B3264CE;
-	Fri, 18 Sep 2026 06:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C56D48551F;
+	Fri, 18 Sep 2026 06:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789712269; cv=none; b=mFWjYUBVRPeRMtDKnIwI5ZPcEVCl7D3Do9zzcCa/U3L3QYnwhp64mFACtx07owOLQOYlK7iR2/MsaSFuuzF2PUDk6H3DagzAlyUG6fX1BsaybjhYljg1jvUVDI1Q3eZx9Qaw5bYRVjQuuAgn3y01Z1NBG8cI+FPw2jX0JKsd9bw=
+	t=1789712707; cv=none; b=VfLpGu8UfFFPIXN4E0UemQAleAh6p+yAjuSzwohLF5V6GvBuwFKMywHVx7OSrWRo/mod/OPaOPVy9cAze+oyDzBOg7jvPkrxaykgLfoj0guLKCw8hFR5Z3HNPeX+TslFXiD06UAASLrhNGiXcGwZJAfMXVsriH1dYu3ExUK+rs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789712269; c=relaxed/simple;
-	bh=LNIh1q/fCx/y46pBI0Sid4N/SRWMnARsEQ1jgoXlDXQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hxAjY/b8/Mhp69B+LoeZxFTeKg/LNPRmuu/AzIVLAG5zfkO3dNqRRYlddEnmjLFVMHhzde1tU8K/iaIWSil3RcFpWxXGDvHUDU7BlH5t6t6GxOHsnbGyvMrTRTfSDJ8jWTT2HoL2T+6VZE9AuZjU7sH62PMtT81/biYdvKuUwaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VIymmGnM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789712707; c=relaxed/simple;
+	bh=kMWoUije5yTrC+y3H2eCV42peF2ZwHmEpdZ1AzMBN08=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DQDeeBD9EUEkXsBHmnEJEnBpUisxDPzQ/H9kzx7eSX5mjiJvOVUD88YNP+Fjc3dHeQg9W6JMokVtQ81+4UJUjUr6PAlNNGmrvSmj9BqpKS1hMuef8CjMb/GxRsz/6dx9u6HVlzcjPhQ1cEaQ9QydMVDH6UWWi/zSuSoLViW300E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q/G8cbH8; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VIymmGnM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5304B1F000FF;
-	Fri, 18 Sep 2026 06:17:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789712268;
-	bh=ZQuk43Brm3omuO2DAekLSRMmNspb8q1ZaXTTwle8fh0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=VIymmGnMspsP0ZCZVY4PL6IoQsRGqoVMe6G9hD5c4ysDDmi8QeeDmXQPdZK8eTdyB
-	 qgUXYXI82Snvu3l6r6Xrd3IT1Cm+FUDt2b3R2efOqoj5cvn1ULdyBhzwLSge4tTgWb
-	 dZJXHHmNdObQOFAEvE3k6+JsVfbUMPfK7NWXSTvjTJcyhjNRJ+jdAmY3ESeAw8HJOM
-	 9gdxrG0r+FrCVnE/y/dcTbbslcYQYtVRzQDU3icXkC11B5bUy2UEnZ32sY1AxsBFya
-	 oMeawWzq4mHGu7JgLPbIbAvD/hpyDXAW0Yz2eJ1+AXHlmwucCuieuZETAFHd5ZFpoD
-	 VXDSDi/WgJ8wg==
-Message-ID: <5b086e1a-8b8c-4536-8b64-e0169826ab33@kernel.org>
-Date: Fri, 18 Sep 2026 08:17:44 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q/G8cbH8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789712705; x=1821248705;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=kMWoUije5yTrC+y3H2eCV42peF2ZwHmEpdZ1AzMBN08=;
+  b=Q/G8cbH8IYMGqS6X4PrOGD9B4Uj4DLhriKBGgwAFnZJHC0k66Rfjj8/r
+   JCs0ZdNyhLnvLU/i5/WeNEjFli9LTSnLHCIUqaLc7GQKK/JhQM48I6fZ/
+   GJwFnb8rVLpeBWGGMOtYxcPdNqv0T/AjCk7TEe+UpZBmGYaDDPyhRhQye
+   Z77ILAeM4WSIGcTesrRZNfgfO3ZVZAXwtzr6AxYqTePpT8dZqlVXHUaDX
+   PDzHcFn9NYjh10gFOxcy+Tv9yZ3zevGHxOMLDAbqKfBNw8wVRbeGlJpvv
+   iaBrLo2W5wodrZBpMDtEBQdwYu2FFCC8SsxP7r4Nh9g8FD0up5UnE6AoT
+   Q==;
+X-CSE-ConnectionGUID: ZeIFikmlSJC5X9dMXTk/WA==
+X-CSE-MsgGUID: 7HxR9GM6SNaee240pnEuOg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="77761328"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="77761328"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 23:25:04 -0700
+X-CSE-ConnectionGUID: nik7p8FETbK9DCqO6zw0zw==
+X-CSE-MsgGUID: VmqEWhMvSN6swG9gHq3yag==
+X-ExtLoop1: 1
+Received: from carterle-desk.ger.corp.intel.com (HELO localhost) ([10.245.245.170])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2026 23:24:59 -0700
+Date: Fri, 18 Sep 2026 09:24:57 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@oss.nxp.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-iio@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
+	Frank Li <Frank.Li@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andy@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v4 01/10] dmaengine: Move enum dma_slave_buswidth to a
+ new header
+Message-ID: <aqzZOZ2ovBc6affP@ashevche-desk.local>
+References: <20260911-dmaengine-support-wider-dma-masks-v4-0-72b8fd4cc78e@analog.com>
+ <20260911-dmaengine-support-wider-dma-masks-v4-1-72b8fd4cc78e@analog.com>
+ <aqgCQvRw9fns__0d@SMW015318>
+ <aqjzvxI4ecoFvRLT@ashevche-desk.local>
+ <aqlpoBJJXfZgsMxT@parshuram>
+ <aqlwRkNcs_UqKjWs@parshuram>
+ <aql6u3T0nnSVr-FC@SMW015318>
+ <aqws8pN2rfS9-dCC@parshuram>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHv3] dmaengine: bestcomm: use platform machinery to get irq
-To: Rosen Penev <rosenp@gmail.com>, dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
- "open list:FREESCALE SOC DRIVERS" <linuxppc-dev@lists.ozlabs.org>,
- "moderated list:FREESCALE SOC DRIVERS" <linux-arm-kernel@lists.infradead.org>
-References: <20260918001835.154305-1-rosenp@gmail.com>
-Content-Language: fr-FR
-From: "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-In-Reply-To: <20260918001835.154305-1-rosenp@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aqws8pN2rfS9-dCC@parshuram>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
+
+On Thu, Sep 17, 2026 at 11:39:54PM +0530, Vinod Koul wrote:
+> On 15-09-26, 12:04, Frank Li wrote:
+> > On Tue, Sep 15, 2026 at 09:50:22PM +0530, Vinod Koul wrote:
+> > > On 15-09-26, 21:22, Vinod Koul wrote:
+
+...
+
+> > > > > Traditional naming would be
+> > > > > dma/engine/provider.h
+
+(Actually majority of the subsystems use driver.h.)
+
+> > > > > dma/engine/consumer.h
+> > > >
+> > > > consumer and provider and good names.. I would retain the full dmaengine
+> > > > everywhere please. dma causes confusion already!
+> > >
+> > > Thinking about it again, drivers/dma/dmaengine.h should be the provider
+> > 
+> > There some dmaengine code outside drivers/dma directory, like
+> > drivers/crypto/ccp/ccp-dmaengine.c
+> 
+> They chose to be outside, their choice... They need to be updated as
+> well to point to ../../dma/dmaengine.h :-)
+
+Hmm... It's rare to make such a requirement in the kernel for the resources
+like this. All I know about (GPIO, regulator, pwrseq, IIO), they split and
+provide the interfaces to the whole kernel.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-
-Le 18/09/2026 à 02:18, Rosen Penev a écrit :
-> platform_get_irq() avoids having to explicitly map and dispose of an irq
-> by having the platform_device machinery take care of it.
-> 
-> This requires replacing the device_node with a platform_device in the
-> bcom_eng struct so that platform_get_irq() can use it.
-> 
-> Conveniently, this also allows getting rid of of_node_get and
-> of_node_put as the platform_device machinery also handles that.
-> 
-> Adjust the goto labels in bcom_task_alloc to match what is being freed.
-> 
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> ---
->   v3: drop stale description
->   v2: resend
->   drivers/dma/bestcomm/bestcomm.c            | 47 ++++++++--------------
->   include/linux/fsl/bestcomm/bestcomm_priv.h |  2 +-
->   2 files changed, 18 insertions(+), 31 deletions(-)
-> 
-> diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
-> index 241a91936fe8..1006030ff167 100644
-> --- a/drivers/dma/bestcomm/bestcomm.c
-> +++ b/drivers/dma/bestcomm/bestcomm.c
-> @@ -99,17 +102,12 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
->   
->   	return tsk;
->   
-> -error:
-> -	if (tsk) {
-> -		if (tsk->irq)
-> -			irq_dispose_mapping(tsk->irq);
-> -		bcom_sram_free(tsk->bd);
-> -		kfree(tsk->cookie);
-> -		kfree(tsk);
-> -	}
-> -
-> +err3:
-> +	kfree(tsk->cookie);
-> +err2:
-> +	kfree(tsk);
-> +err1:
->   	bcom_eng->tdt[tasknum].stop = 0;
-> -
-
-This blank line removal is unnecessary.
-
->   	return NULL;
->   }
->   EXPORT_SYMBOL_GPL(bcom_task_alloc);
