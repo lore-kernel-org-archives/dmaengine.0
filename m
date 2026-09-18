@@ -1,94 +1,84 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DC1394794
-	for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 17:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082C1483833;
+	Fri, 18 Sep 2026 17:58:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789751855; cv=none; b=Kl1Apd1iTmOrK0p98ketXVjs/OzQCprkRKt0WXYzmj1wi+lBHbJsdWovfJMRco2Kr1656qW+vY6lBKRMEh7f6+zbQIsM/lFJ/BckvIEpOQr5RkDXEp9lZgO22afw7/q3Prpu5IM8dhZac5hsELgdlBFIP/SSuEhqVk+FBAoV2Bg=
+	t=1789754290; cv=none; b=j0hyGTlkwAuHHdF6Rci/8p9FmCYHGldkz8ZkCTl924sLoRK5rvkCA4pCZ+vO6AnLiaiY2NB2/YNP1BvtbW4WJIYee3yYGjGoouboUAnIWSOhdADShKRs/KJs/8xCk0soHnU+Dn2ZhweQOROvIIyas60J2jMqfvSkcDoRgoYC6Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789751855; c=relaxed/simple;
-	bh=NTC3Gw48ldFqeTM/MyMUk9W7FQpdSSVMIoZc8wW6qBQ=;
+	s=arc-20240116; t=1789754290; c=relaxed/simple;
+	bh=Uim/QizBNxw+rb7fl90AGnbHkpW/ncADgxNBrB6/k5c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfNtZvBOeplJCxKGs26Q7Wq8jgDz5mdOVEOzBUfFLZ669llDnxrGDu//jaxnA81SbgsbbkH738LX8QUpB6IpUXfgTFOOEgZwLrmbAnsFr4f7bbAiedInO3rVlQLnPk9ORIRc1JHS2NhCAbrCOaJWre6lXKavDeTt+g6kxwD3bv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=2pg2u+Sx; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=clCadTDB; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=eFuY58TTdjN+fjSgOqAUlMlRymgphRK8RosPm8SAwbYkPFS0LHWVmWGewGo1/uLqL+nv96FbOKjaBWW8bJNA+QFC0XGMrd7E5gJPt9wP+Nb8yjYASQVzSb01/V1XmSqyJTQk+63zsFF0ZnV/Ejsn4lBF7NixMMRPDWcSKDK4z0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFMZj+mJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="2pg2u+Sx";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="clCadTDB"
-Date: Fri, 18 Sep 2026 19:17:30 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1789751851;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jNMW+8kIr1Ga5wZOIyAdIG5R62p+zha9uLW220N0jGc=;
-	b=2pg2u+Sx3oEUk0mNmzz/Yi47eh7piHqjfAKmOZ9HbkTvhB35gq+f7dg8L5xsVjPIxcPgnc
-	BMjUL6uEXuqbk+HdGTK69owpUzgtRo1i8gSsdYAl75rdqX3CC2M7LJ6K49J8HG7z10Lim1
-	mZ/vu+zhJnaL23A2S/n67HuXen5zjH6tgN2pPw/uw1NRt2Qyh8Ojg7ou2BrvAmW75x6umO
-	c6rnVoqPBPN5cjjJ6pWANar56tLxONe+Alfzfju7hkqPeFrvmiFN522jUrQCsjej4iwtP1
-	6j4K3VMAev0JoOfjgVCVs0fBjIHoLzPPSuyoh+il6l+/Aauw+tFgnkUSiMislA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1789751851;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jNMW+8kIr1Ga5wZOIyAdIG5R62p+zha9uLW220N0jGc=;
-	b=clCadTDBfsADASaSJD8jJwC95FNf/tz/DnR50RWMFAdCfpBFH34Dq+bgw1CJ2dZ1eH6gH/
-	NetqPcjs6GI5WxCA==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: dmaengine@vger.kernel.org, Binbin Zhou <zhoubinbin@loongson.cn>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Subject: Re: [PATCH] dmaengine: loongson: Use %p for pointer formatting
-Message-ID: <20260918171730.HoXci15y@linutronix.de>
-References: <20260918103409.UV4g2ON7@linutronix.de>
- <aq1voagTv1oJ8FaA@SMW015318>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFMZj+mJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6E61F000FF;
+	Fri, 18 Sep 2026 17:58:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789754286;
+	bh=1l9FecZC20se1cRT+U2yFyGnQU1PHlnfgdsZtd2O88c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nFMZj+mJxhvA4HWpVg8jsWxsjw/8Tku/xdTQdIfmCtvNrKQzG71Pq6lO5l7ogAmu3
+	 xSxmkOGz51hepFCStCNGeCu/+Ze5Hd4Fn69/4WxiIoM3QKK7tKKDKmxELKSqW0X9Fp
+	 MSTVj0C6gLx6vnYO7pvWlRDtUefL9itkMCiphZ2iVsKY/0rWOf1+NOr2bwnqdQFuqD
+	 u4KKWJz30R6brUDDVRIhYk63gWXR7L+QGUw8mSwfkwLZv0Zl8ZKiK8/3yrzQjZv775
+	 XHh3z5QI+9nuenRHdEA4MblSnGphwadG3ucTl6ozc2y0hmaoE+g5hdfUnPX3Cuxxd0
+	 awqMuDYbtnpEA==
+Date: Fri, 18 Sep 2026 23:28:02 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Mark Brown <broonie@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	bui duc phuc <phucduc.bui@gmail.com>, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-sound@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Dave Penkler <dpenkler@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Xiubo Li <Xiubo.Lee@gmail.com>, Fabio Estevam <festevam@gmail.com>,
+	Nicolin Chen <nicoleotsuka@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: Re: [PATCH v2 7/7] dmaengine: Remove deprecated
+ dma_request_slave_channel()
+Message-ID: <aq17qvmxF6nwclkR@parshuram>
+References: <20260918113727.1898998-1-andriy.shevchenko@linux.intel.com>
+ <20260918113727.1898998-8-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aq1voagTv1oJ8FaA@SMW015318>
+In-Reply-To: <20260918113727.1898998-8-andriy.shevchenko@linux.intel.com>
 
-On 2026-09-18 12:06:41 [-0500], Frank Li wrote:
-> On Fri, Sep 18, 2026 at 12:34:09PM +0200, Sebastian Andrzej Siewior wrote:
-> > The %pK format modifier was meant for /proc kind of output, not general
-> > printk output. Since commit ad67b74d2469d ("printk: hash addresses
-> > printed with %p") pointers are hashed by default and the behaviour can
-> > be controller by `hash_pointers' boot argument.
-> > The policy on %p is to not introduce new ones. This is the only pointer
-> > output in the driver.
-> >
-> > Remove the pointer formating from debug output.
-> >
-> > Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-> > ---
-> >  drivers/dma/loongson/loongson2-apb-cmc-dma.c | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > index 1c9a542edc859..27f8f7a5738d9 100644
-> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > @@ -337,7 +337,6 @@ static void loongson2_cmc_dma_issue_pending(struct dma_chan *chan)
-> >  	guard(spinlock_irqsave)(&lchan->vchan.lock);
-> >
-> >  	if (vchan_issue_pending(&lchan->vchan) && !lchan->desc) {
-> > -		dev_dbg(chan2dev(lchan), "vchan %pK: issued\n", &lchan->vchan);
+On 18-09-26, 13:34, Andy Shevchenko wrote:
+> No more users.
 > 
-> You remove whole dev_dbg(), but commit message said Use %p
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-I redid based on feedback before submitting and forgot to update the
-subject. Are you fine with removing it?
+I thought I had acked earlier one. Here is it again
 
-> Frank
-> >  		loongson2_cmc_dma_start_transfer(lchan);
-> >  	}
-> >  }
 
-Sebastian
+Acked-by: Vinod Koul <vkoul@kernel.org>
+
+-- 
+~Vinod
