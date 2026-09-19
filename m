@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEDD30B521;
-	Sat, 19 Sep 2026 22:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5695626738C;
+	Sat, 19 Sep 2026 22:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789856554; cv=none; b=LT7llESZ/ijrJGoQ+JWs72FxxMJI3m9Od1UZEM92CPrmjIPDTreyDdx5/urHxY590eSKFNM4WXKKpJU0RA3S+knsTMxvV0tArjmfKP7win6C6wvQqF1oMJSBVbEbf+m/k7QNw90kXBGi3irXtHdwIUVH3gBaElLsm1wHngcTi7w=
+	t=1789856556; cv=none; b=U6qrXNbDDt7PtG3mOPqUPZ0oB+YB2lxb9qP8NAL/qYNlxUubjZbtUD8nvFvOWiJcLIkdkDh+rob1a88VOXXBejUAQr6PbdRLASps9iTYqR1QYpMmBTpc82jC1SXbyPDNf3YPOEB4f0owLaKS2wY5ZFqTk3HQhOomLBR8L5DRd7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789856554; c=relaxed/simple;
-	bh=3zt/18ary9e4qqAAwWk+albrl7wNw4jiRXa8TeDOS1c=;
+	s=arc-20240116; t=1789856556; c=relaxed/simple;
+	bh=rnXKeOsQPsAkCdhFJ9zcVR8MdXjqYiY+FW5CI3yOF9I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FRu7bx8XVpU4qZIFdRK6B70JkHIomoSpQRNAXUjj/tkeFGVciCLyUIgfk7qy5dOqGhW3HUmuJohBg2jjknmhHFGDnXVG4TxfoDocVNA0mDlEngEYflFriVE4m9cJ77f3V5T7coic/Ma1q/Q1oF5c+tvdJoOpo1YCYXmnK6JPtF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XOCrygDa; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=b+0Bksfl7KMluIec+JsvywA+Bep3QmZs9kX2WKNJbhcOCwd0ahjTUJLbkHIXoo+2ZIMjCIkyD7nz72qAdT5Ht01V2CJ/FRQdjd++2u/pUkdB5nS51N5MXpQtXSdO2Q64PGMGkFfeKM+HdTtD0Gz8P6/xLxwFVif9j7Uk2LZwrEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hW/V9RJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XOCrygDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E6E1F00893;
-	Sat, 19 Sep 2026 22:22:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hW/V9RJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D0B1F000FF;
+	Sat, 19 Sep 2026 22:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789856553;
-	bh=5JhxOobaY9WYVvDLhh/WetmeyUWOdcsEJtEuquJ7UqA=;
+	s=k20260515; t=1789856555;
+	bh=mN/vFB6kl+8QOvAP66Lp2VKYJ3ZuyV+F0lKMgi6MIfg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=XOCrygDaT/DLrvWE6+inf0P1YRjdPTZkPTUcKbLhBfIloAzj0Xn3dy6INgVj+ExJ+
-	 DUCssV2Q84/B4qilxgrbp5BlAsCe+Xp2MoMJ+2owOThMDqZ0ZaeWwj5uEg9zifE3Fu
-	 k9iLz8csdQhHsgc8OMw92VAzO3pn6deeLG8HED2SGBVCPCvBM6EJYZ7A6JPCYFlU7e
-	 F5g5D9tmxAVP42bcximHXbuoYCYWdlI5z5RJLx5XC+IEBka+/q0c8wFBloG/MyGtqL
-	 hijQnEPyTrsJcdcwb0KhP+e+NkhCNQni94wlcjzvqykDftO0lr1inBLwISf2auyAlE
-	 sfYht9ZqFE4pQ==
+	b=hW/V9RJBsaF2PUFK+GEV01vG0lVzoxIw3tVhThzQjsIm03H1N+0dWU7tMM29qSprH
+	 yyqYwfLhrJB0ubfTgFF9br7KZzb88sp4FXXT0VXZsJZmhJdmRCfe0TZrzEtU93ze2g
+	 LGabnDwDUzORHg2GkJdy67jxR35rIzquZrXJVLn9izoj7DbtcfEVrwlJ2vH3l1WCkn
+	 rvv4YZaijzElPZ1vAn+AakUi7S8GFrpF3tTXTvNYEUUtIQORxPEoNDIegyLiW5BMeT
+	 actI2Sav/OrCiTcQKLmMwyH/qnx6z0hh2c4zyl8hWrGbjUzEdKKPTcN+VG7XTPV1VT
+	 rGjV+qWTqbC+g==
 From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 20 Sep 2026 00:22:20 +0200
-Subject: [PATCH v4 09/23] dmaengine: ste_dma40: Init hardware before
- registration
+Date: Sun, 20 Sep 2026 00:22:21 +0200
+Subject: [PATCH v4 10/23] dmaengine: ste_dma40: Fix probe IRQ leak
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -38,7 +37,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-dma40-fixes-v4-9-d751b2d9c23f@kernel.org>
+Message-Id: <20260920-dma40-fixes-v4-10-d751b2d9c23f@kernel.org>
 References: <20260920-dma40-fixes-v4-0-d751b2d9c23f@kernel.org>
 In-Reply-To: <20260920-dma40-fixes-v4-0-d751b2d9c23f@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -46,59 +45,51 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-d40_probe() enables the interrupt handler and registers DMAengine devices
-before calling d40_hw_init(). An interrupt pending from the bootloader can
-therefore reach the handler while the hardware interrupt state is not
-initialized and channel lookup entries are empty. The handler deliberately
-does not acknowledge an interrupt for an unknown channel, so a level IRQ
-can retrigger continuously.
+d40_probe() registers the hardware interrupt before several later probe
+steps that can fail. Those error paths jump to destroy_cache without
+freeing the IRQ, leaving the handler registered after probe resources have
+been released.
 
-Request the IRQ with IRQF_NO_AUTOEN, then initialize the hardware and set
-the DMA segment limit. Enable the IRQ before registering DMAengine devices.
-This ensures the handler and clients only observe initialized hardware
-while still letting request_irq() fail before hardware interrupts are
-enabled.
+Track successful IRQ registration and free the IRQ on later probe failure.
 
 Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/dma/ste_dma40.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 9f725369721b..73560d482343 100644
+index 73560d482343..075c9b18d6c2 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3804,19 +3804,21 @@ static int __init d40_probe(struct platform_device *pdev)
- 	pm_runtime_enable(base->dev);
- 	runtime_pm_enabled = true;
+@@ -3687,6 +3687,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	struct resource res_lcpa;
+ 	int num_reserved_chans;
+ 	bool runtime_pm_enabled = false;
++	bool irq_requested = false;
+ 	u32 val;
+ 	int ret;
  
--	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-+	ret = request_irq(base->irq, d40_handle_interrupt, IRQF_NO_AUTOEN,
-+			  D40_NAME, base);
- 	if (ret) {
+@@ -3810,6 +3811,7 @@ static int __init d40_probe(struct platform_device *pdev)
  		d40_err(dev, "No IRQ defined\n");
  		goto destroy_cache;
  	}
++	irq_requested = true;
  
--	ret = d40_dmaengine_init(base, num_reserved_chans);
--	if (ret)
--		goto destroy_cache;
--
  	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
  
- 	d40_hw_init(base);
-+	enable_irq(base->irq);
-+
-+	ret = d40_dmaengine_init(base, num_reserved_chans);
-+	if (ret)
-+		goto destroy_cache;
+@@ -3846,6 +3848,8 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		regulator_disable(base->lcpa_regulator);
+ 		regulator_put(base->lcpa_regulator);
+ 	}
++	if (irq_requested)
++		free_irq(base->irq, base);
+ 	if (runtime_pm_enabled)
+ 		pm_runtime_disable(base->dev);
  
- 	ret = of_dma_controller_register(np, d40_xlate, NULL);
- 	if (ret) {
 
 -- 
 2.55.0
