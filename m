@@ -1,169 +1,144 @@
-Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907802D322E
-	for <dmaengine@vger.kernel.org>; Sat, 19 Sep 2026 00:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8905634B43F
+	for <dmaengine@vger.kernel.org>; Sat, 19 Sep 2026 00:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789778634; cv=none; b=Fc2K/VfemundIrZnsDxJk6cL1evCT6adFgYB+aS+HX1ziDNFphUftGdsG9vUvvlUaX+NZusSdPUYeEef7Xbanu7M+sCSB5+5DZHk3YeORR87j0PfYpL28JxlW+UWfFW/Uq34SzyUq/RBufGQVmjdmaGmc5qyXiRV89HpKPYpShY=
+	t=1789779278; cv=none; b=uGu5FSEv6XoH9lO3mCatm4Lpo/hGg/rFVPOOeHGamSJ9oLb+o3Wod3CdVE+J+ENZUdy/oVnXX3p/DvncGXPHoot9pNOO2hWJufQzIaGc4FIczFpZ57vNJVUAZ+VJDpGf9oIQSSpkScr1jYH+ooSQGimD47r+JknEJEYw4GTHLz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789778634; c=relaxed/simple;
-	bh=D+hAw/Uh09Q82SlEbERV57F3KoJyZOGCwE/LuwiDuzE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V3Keilyqkwizu01ASkdRWp348mYHB6RD/YoMrCtOguZrsjs5R6jMmYWN43cKnCacxsUV1WqaXJN65/09iNXezu/CPaiSvavfto9PBmhvBVdviyZt1HubBexqBR7Z0veioQrF9PqutzupF5ErEnKmftc6akzy5ZXj5KcdD83k5R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mzRbAPWe; arc=none smtp.client-ip=74.125.227.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789779278; c=relaxed/simple;
+	bh=i2exAnxUsv/xKIDw/XWFUPxshO7CPrwRQ3tSPa/Jhfw=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=KchqDhqIqYRHGkwtXareH7amdv2FzZcCU3e4FOKnuaRF0Fk4DSkJCKgy9ZDbl47ozGSj9iefRv6pJvXKQJ4LxNvjGWBtqOhONJP/BWUkMq6JimJi4Edn+DXays7nNrCv/xY+sVxYaya5KOUGt49UADkMHiqd5xJQ5lSPa/8pLBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MPdx0r4g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzRbAPWe"
-Received: by mail-pj2-f43.google.com with SMTP id 98e67ed59e1d1-396ccd4f99dso1411388a91.2
-        for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 17:43:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789778632; x=1790383432; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mkPeQNnq/YaoNWX48WK/qwCx8TOwAW8sXHVfmaoWgp0=;
-        b=mzRbAPWe+ZSQLAUmh0cWrz0+9enOzBEehuc/RJfMjUt3lfQ4hOnjR8FpGna87gcV6q
-         /1fgd4i+0XTdja72cTgCj/lqHq1Y/VCWPc4gOecgaJhera/n/hfeR+EeLYACO6VDQs1h
-         +NpJNGyijKWo94KzhvmfxXBKYr5pq3m6eB95pohdKAu90ER+w40V9SxqL6gDTqo+q2TH
-         Hd0uL1C3qnuNrtme3/O4agMD5U2Gn5P9fWxe0pQJmyWXowOKQpLTrlNZbTvQUzx5I8qE
-         lvhSNcTbW9vS9f9SBZBoFEdtOc+wZmB2ImooIY/BNZJEwNTb9ukowTDfbkKYxUPqExTh
-         ACvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789778632; x=1790383432;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mkPeQNnq/YaoNWX48WK/qwCx8TOwAW8sXHVfmaoWgp0=;
-        b=dOioI7W1o8+QqhN8WdbEF2VFd1ys8bjdpm3dtRGPNnYR77bck1s//yOKxq3tBYf+My
-         m1AyNQrSzcC4qKtGoRi4xpn5Z/8EhoXFhMcnn3ArISriSdI6/t7ZNqT0ir6n/Kj1e4OD
-         xsJWuHDOe1OzAxgknvguQWOmRe6tmrZaPvOevGOHSe5MwdAmNOV3eXq7GECYSHbpGyoY
-         GEjBDyYQq52W0ZOFrlRkc64ABJt2mQKu8GRuGYdhCpFpDU/+kD1PdkS1sJOmybEFGIqs
-         Yy5IKDvoFC6qrrPc4cxWQJsHnb/eItufib8mutBNgETufMxtiGnzeyHyeEo8nL+lDDu3
-         2CQg==
-X-Gm-Message-State: AFuF++mVMJ1F7cFqR/RINzx6EzLDV20LfclsdAlpZNu6r3nXUevbPB1l
-	SVTaLYkvXpiWpd+qtaGtG78Ym0kckmYyAdxuzyJ2fJb3Zy0jEUkv/qpYfsGQeA==
-X-Gm-Gg: AYBFou3XKD04g0GtmB8ocPIC7nubWD/LgzCR+Fqv82x4lhMsThZBfKxZSp3XLYHiXK8
-	9wZNH5cK4bWcH+Y+9Pnwn5ap5x2UiuOmlUiBO75S/bB7973qaZc6gAJh5d02Gzonmw23HRjOIIu
-	CbhtNzOx20qqGyL17s8H7am00jGRDZKkq0h2CqohUt9ysdNwe4op4ifXS63kiQePECsx5jWZzEn
-	c1as4Tw9fCS5x5rgbgwaqViS/XxIVL2qHkObQIfJ6PLhXyIzV1L82BEEmAciZC+s6oHH7+Ea8xX
-	jiJaz/qylotm+ysdlZrMW8YPg313h1gxYP6WCfAPIqHZJGsyhjzo9CHxi7HlpPCRogxKP7j0XuZ
-	lGKSzQ7AMM3ulWeJyaXzQRiOQW6Mga9qvNvOgEWmcV+pu8oOa/H0Q7saMcl/uAazB2oyiatI+P2
-	nQKI/3Db/6w6uJ4Pt0smWbdWpLfu5p0ksT0OizveV5CrAxrFDyVdVk/eWZ8iKMS4oEqYysxYcrA
-	n3Ty1Gb5qH4TgDX/JBrbomrLans77ISUK4QNIKySrLcyHotWYHfwCq+faRfS+E6bSJli/5hznsF
-	Q6mdcwJElJRX39bQvMB1DqFylTKzdLyz6IOoT10s0J2yvhUX
-X-Received: by 2002:a17:90b:57e8:b0:39e:6c69:9b8b with SMTP id 98e67ed59e1d1-39e6c69b27bmr1827870a91.48.1789778631767;
-        Fri, 18 Sep 2026 17:43:51 -0700 (PDT)
-Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c3145e5sm1768797a91.5.2026.09.18.17.43.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 17:43:51 -0700 (PDT)
-From: Rosen Penev <rosenp@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Harninder Rai <harninder.rai@freescale.com>,
-	Xuelin Shi <xuelin.shi@freescale.com>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCHv7] dmaengine: fsl_raid: check fsl_re_chan_probe() return value
-Date: Fri, 18 Sep 2026 17:43:49 -0700
-Message-ID: <20260919004349.736044-1-rosenp@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MPdx0r4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590B11F000FF;
+	Sat, 19 Sep 2026 00:54:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789779275;
+	bh=/t6sD8Lc5l+trDqWjk+4IV7TvQN7yRqjBQTpIFfsa+8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=MPdx0r4gHPi180s+hciFi3g/InvzMbzZmcT3+tod10APrXquEp9h7gw5wnkogQQts
+	 yq0oVKMvrey4fkEUE0KT7eXtI9c5nYRKoixZ1CNMoDA/Fa2hltLwfbxEFKds/oR6sG
+	 don5ovj0mO27KVIcqLOfTDxJm/d07WG8ajy1R8mDCA/q/qIIxYNJYBV+SXkxldr0ov
+	 bcavKG6r+JP3H+ltSDwfAaJIcBTWzItl8sK0z08xlYDKNoaATVHaOMo8TQuugylMSo
+	 QbkEsxVapOMp7JgJJJy692W19c45c48gBq/3EdurC9hS/NZnvfQhd/94qJmN4w6C+1
+	 EVyWkgbEApU3Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCHv7] dmaengine: fsl_raid: check fsl_re_chan_probe() return
+ value
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Rosen Penev" <rosenp@gmail.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <20260919004349.736044-1-rosenp@gmail.com>
+References: <20260919004349.736044-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 19 Sep 2026 00:54:34 +0000
+Message-Id: <20260919005435.590B11F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
-unconditionally increments total_chans. When a channel fails to probe
-(for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
-total_chans still advances, so fsl_re_remove_chan() later dereferences the
-NULL pointer during device removal.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: fsl_raid: Use-After-Free due to missing unwind on dma_a=
+sync_device_register failure
+--
 
-Check return value and guard fsl_re_remove() against NULL entries.
+commit d02780e2d0d4fd4ead4e7e3dafdee9eccab11cf0
+Author: Rosen Penev <rosenp@gmail.com>
 
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
----
- v7: handle differently based on sashiko review
- v6: increment ridx before continue;
- v5: put some stuff on one line for easier readability.
- v4: use break;
- v3: fix sashiko review
- v2: fix description
- drivers/dma/fsl_raid.c | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+    dmaengine: fsl_raid: check fsl_re_chan_probe() return value
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 9cc289f7129e..f269fe9df795 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -687,7 +687,6 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
- 		goto err_free;
- 	}
- 
--	re_priv->re_jrs[q] = chan;
- 	chan->chan.device = dma_dev;
- 	chan->chan.private = chan;
- 	chan->dev = chandev;
-@@ -741,6 +740,11 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
- 	/* Enable RE/CHAN */
- 	out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
- 
-+	/* Only record the channel once it is fully initialized, so the
-+	 * cleanup paths never touch a partially-probed ring.
-+	 */
-+	re_priv->re_jrs[q] = chan;
-+
- 	return 0;
- 
- err_free_1:
-@@ -836,18 +840,24 @@ static int fsl_re_probe(struct platform_device *ofdev)
- 		}
- 		/* Find out the Job Rings present under each JQ */
- 		for_each_child_of_node(np, child) {
--			rc = of_device_is_compatible(child,
--					     "fsl,raideng-v1.0-job-ring");
--			if (rc) {
--				fsl_re_chan_probe(ofdev, child, ridx++, off);
--				re_priv->total_chans++;
-+			if (!of_device_is_compatible(child, "fsl,raideng-v1.0-job-ring"))
-+				continue;
-+
-+			if (ridx >= FSL_RE_MAX_CHANS) {
-+				dev_warn(dev, "too many job rings, max %d\n", FSL_RE_MAX_CHANS);
-+				of_node_put(child);
-+				break;
- 			}
-+
-+			rc = fsl_re_chan_probe(ofdev, child, ridx, off);
-+			if (rc)
-+				dev_err(dev, "job ring %d probe failed: %d\n", ridx, rc);
-+			re_priv->total_chans++;
-+			ridx++;
- 		}
- 	}
- 
--	dma_async_device_register(dma_dev);
--
--	return 0;
-+	return dma_async_device_register(dma_dev);
- }
- 
- static void fsl_re_remove_chan(struct fsl_re_chan *chan)
-@@ -872,7 +882,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
- 
- 	/* Cleanup chan related memory areas */
- 	for (i = 0; i < re_priv->total_chans; i++)
--		fsl_re_remove_chan(re_priv->re_jrs[i]);
-+		if (re_priv->re_jrs[i])
-+			fsl_re_remove_chan(re_priv->re_jrs[i]);
- 
- 	/* Unregister the driver */
- 	dma_async_device_unregister(&re_priv->dma_dev);
--- 
-2.55.0
+    fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
+    unconditionally increments total_chans. When a channel fails to probe
+    (for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, y=
+et
+    total_chans still advances, so fsl_re_remove_chan() later dereferences =
+the
+    NULL pointer during device removal.
+   =20
+    Check return value and guard fsl_re_remove() against NULL entries.
 
+> diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+> index 2d86f61105e52..3530546a68e40 100644
+> --- a/drivers/dma/fsl_raid.c
+> +++ b/drivers/dma/fsl_raid.c
+[ ... ]
+> @@ -828,18 +832,24 @@ static int fsl_re_probe(struct platform_device *ofd=
+ev)
+>  		}
+>  		/* Find out the Job Rings present under each JQ */
+>  		for_each_child_of_node(np, child) {
+> -			rc =3D of_device_is_compatible(child,
+> -					     "fsl,raideng-v1.0-job-ring");
+> -			if (rc) {
+> -				fsl_re_chan_probe(ofdev, child, ridx++, off);
+> -				re_priv->total_chans++;
+> +			if (!of_device_is_compatible(child, "fsl,raideng-v1.0-job-ring"))
+> +				continue;
+> +
+> +			if (ridx >=3D FSL_RE_MAX_CHANS) {
+> +				dev_warn(dev, "too many job rings, max %d\n", FSL_RE_MAX_CHANS);
+> +				of_node_put(child);
+> +				break;
+>  			}
+> +
+> +			rc =3D fsl_re_chan_probe(ofdev, child, ridx, off);
+> +			if (rc)
+> +				dev_err(dev, "job ring %d probe failed: %d\n", ridx, rc);
+> +			re_priv->total_chans++;
+> +			ridx++;
+>  		}
+>  	}
+> =20
+> -	dma_async_device_register(dma_dev);
+> -
+> -	return 0;
+> +	return dma_async_device_register(dma_dev);
+
+[Severity: High]
+Does propagating the error from dma_async_device_register() leave the
+hardware interrupts active?
+
+If dma_async_device_register() fails, the probe function now returns the er=
+ror
+and aborts. The driver core will then automatically free all devm-managed
+memory, including the chan structures allocated in fsl_re_chan_probe().
+
+However, because fsl_re_chan_probe() requests a hardware IRQ via a non-devm
+request_irq() without any unwind path in fsl_re_probe() to call free_irq(),=
+ the
+hardware interrupts will remain active.
+
+If the hardware asserts an interrupt after the probe has failed and the
+memory is freed, fsl_re_isr() could be invoked, which would dereference the
+freed chan pointer and schedule a freed tasklet, causing a use-after-free
+and kernel crash.
+
+This isn't a bug introduced by this patch, but there is also a pre-existing
+early return in fsl_re_probe() that demonstrates the same lack of channel
+cleanup:
+
+drivers/dma/fsl_raid.c:fsl_re_probe() {
+    ...
+		rc =3D of_property_read_u32(np, "reg", &off);
+		if (rc) {
+			dev_err(dev, "Reg property not found in JQ node\n");
+			return -ENODEV;
+		}
+    ...
+}
+
+Should fsl_re_probe() provide a cleanup path to manually free the interrupts
+and other resources if dma_async_device_register() or subsequent job queue
+probes fail?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260919004349.7360=
+44-1-rosenp@gmail.com?part=3D1
