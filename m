@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB92339394;
-	Sat, 19 Sep 2026 22:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEE9348C7B;
+	Sat, 19 Sep 2026 22:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789856546; cv=none; b=MMpW/pwxSLqYV/cC8KSegJdW01S9zlk5bVyvbwD1Y1WDfrsPXAeFivNzrrSTE1KuvBpsXm2utO4Szu2M7uVI9lVbPlR8+sYF9rjuIDC1qytRvkXBzL5Xo5eqfVklmcoq7eCT7MzGb1hiqh/ZwU7MdndKLVczaYsr9Jpu7Q9fI5k=
+	t=1789856548; cv=none; b=GFjncqFfbD0UCt2e4QYOO3EwxtkFm1ogpMmM4Qt63jtmUMfXBlCO8rgJnCmOjfCvNDBS/ETkXN2kSZPylUNryPokwqgla4ES8BOwk1HSJG7TRNskczvr5dt87PStruQzqq305clfTB8WmiJYiV3KHe+yVPgQAZtxev66Eml9/lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789856546; c=relaxed/simple;
-	bh=FRJJ17BnZMUpcAIcGybL2R4uzHv0U9E8sP/F/EeyR7I=;
+	s=arc-20240116; t=1789856548; c=relaxed/simple;
+	bh=DalWrzKciS7IdsPwoctb5400vx9ooCbtzzB+MwyO+1k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sTKMza+xYg2AM+xSAJ+dPkinimzy1k80B/dgZjzmpkoBNizE0Q9rO0uMFcCgVhPu13YkLPZfzTypa/AmpNj5Gu47YtzNKgfDJ+TVWxIR6pqqNcNh8hvfKkD/lh1XrvDc32H5d7PCZ0fp7BojlAS96GcOmSQ5/jp96X2at/aLrac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G18vBYn5; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=OiJlMCl8UW9GIUkEVqbxHCdyM3cQE7ysavo7QWsP656btLzpfLVR3QX6BH+82VlKaPkI4YXWc8iC82/N5pY/aSymBe9z5lbtcmtNB1Kb8PcvkL6uwBAGhkDr6bwp6/EilZQUbs/p0Haj7e9RX5zKcDs1L45drSKz2isTP7V3xx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b1DgjDiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G18vBYn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587281F000FF;
-	Sat, 19 Sep 2026 22:22:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b1DgjDiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268AC1F00893;
+	Sat, 19 Sep 2026 22:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789856544;
-	bh=hMP849a+sIC4F4CSaa2afCsMvyj8u4Dw2PEwfMEmKYg=;
+	s=k20260515; t=1789856546;
+	bh=xgl0pGKP0a7RUwktjA5fIBxeg0+XEPqwz0FPd1WPNwA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=G18vBYn5jyWcRgia+vZ+LyhyS0nDAaw3AYzynfNHqhtGfP0DJ9Fe2c9oB5u1qcXP4
-	 jULO4nUCsKQbKz4pzzXTcs4Pri0Rmv3Dt9k5a87D8sEou77SUJ9eBulM4U4tASodYR
-	 LxK0QKDEEG5iJSdfmT1putbt9eDRb3gzoLJ6t/QmRaHbJchps8SW43W0T00/B63Oif
-	 PeFAOLZSmJuwo27+EcjhNdDo5nzN+Hk8Qy8IJFOTi8kolI35WT5nUrVeWiD17HGD6b
-	 K0fs3qp8yRdwnZKOtFFcVipvaHDw4/NMfjJOCUhEka3GcLqvY9dwSwoVp5ECHx0C99
-	 9yNvKA+24A5Yw==
+	b=b1DgjDiwdQT2u87bufzH2meCdQzcZb64Ql72LldCmg/JFRU+WhsCCibJgP1RqU382
+	 VXyansTWYZbCN5bEC17iQMS8guwnQ32xohsJaaoflOUb2jtG8Jb5vFgr8odKlvImad
+	 M4Ic2A3WJC2KJG/3bc0MhqnXDxPH6nwlDQ7Or0x8QN568JLglPWq0mec1TLCfTf+nQ
+	 sK8vRlqA0enhXhbp908PKsw15rqNkM7eUvDOcQjU63uxOCV4i6IZVeRnZgSgRkSIHy
+	 s0Dj+lTtTfuowOqeN5e/QrSPA9Pbk2LJaeUB+6riVr2GObKOz6bndpI4UTPUX5/HR9
+	 yvDhqbZEfW0pw==
 From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 20 Sep 2026 00:22:15 +0200
-Subject: [PATCH v4 04/23] dmaengine: ste_dma40: Fix failed start cleanup
+Date: Sun, 20 Sep 2026 00:22:16 +0200
+Subject: [PATCH v4 05/23] dmaengine: ste_dma40: Fix probe runtime PM
+ disable
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,7 +38,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-dma40-fixes-v4-4-d751b2d9c23f@kernel.org>
+Message-Id: <20260920-dma40-fixes-v4-5-d751b2d9c23f@kernel.org>
 References: <20260920-dma40-fixes-v4-0-d751b2d9c23f@kernel.org>
 In-Reply-To: <20260920-dma40-fixes-v4-0-d751b2d9c23f@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -45,109 +46,79 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-If d40_start() fails after a queued descriptor has been moved to the
-active list, d40_queue_start() currently returns NULL without unwinding
-the transfer state or clearing the channel busy flag.
+Some d40_probe() error paths jump to destroy_cache before runtime PM has
+been enabled for the DMA controller device. The label unconditionally
+calls pm_runtime_disable(), which increments disable_depth even though
+this probe attempt never enabled runtime PM.
 
-Fix this pre-existing error path by completing the descriptor through the
-normal tasklet path, clearing the busy flag, balancing the runtime PM
-reference and returning an error pointer to distinguish the failure from
-the no-work case. Do not free the descriptor directly, since it has
-already been submitted and has a DMA cookie.
+Track whether this probe attempt enabled runtime PM before disabling it on
+the error path. This is not about a later deferred-probe retry, since the
+driver is registered with platform_driver_probe(); it keeps the probe
+unwind balanced.
 
-When starting the next queued transfer from the completion handler, put
-the completed descriptor on the done list first. This preserves FIFO
-completion order if the new transfer fails to start and prevents the
-completed cookie from moving backwards.
+The interrupt handler uses pm_runtime_get_if_active() and cannot
+acknowledge a pending interrupt while runtime PM is disabled. Request the
+IRQ only after enabling runtime PM so the handler cannot enter an
+unacknowledged interrupt loop during probe.
 
-Use done-list membership rather than the cyclic flag to identify terminal
-descriptors in the tasklet. A cyclic descriptor that failed to start is
-then completed and removed instead of remaining permanently at the head
-of the done list.
-
-Fixes: 7d83a854a1a4 ("dma40: remove "hardware link with previous jobs" code")
+Fixes: 0618c077a8c2 ("dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe")
 Reported-by: sashiko-bot@kernel.org
 Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/dma/ste_dma40.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index b992471e05f2..4591da863398 100644
+index 4591da863398..bf3da3a94d8f 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -1633,8 +1633,15 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- 		/* Start dma job */
- 		err = d40_start(d40c);
+@@ -3643,6 +3643,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	struct resource *res;
+ 	struct resource res_lcpa;
+ 	int num_reserved_chans;
++	bool runtime_pm_enabled = false;
+ 	u32 val;
+ 	int ret;
  
--		if (err)
--			return NULL;
-+		if (err) {
-+			d40_desc_remove(d40d);
-+			d40_desc_done(d40c, d40d);
-+			d40c->pending_tx++;
-+			d40c->busy = false;
-+			pm_runtime_put_autosuspend(d40c->base->dev);
-+			tasklet_schedule(&d40c->tasklet);
-+			return ERR_PTR(err);
-+		}
+@@ -3730,12 +3731,6 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		goto destroy_cache;
  	}
  
- 	return d40d;
-@@ -1681,14 +1688,14 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 			return;
- 		}
- 
-+		d40_desc_remove(d40d);
-+		d40_desc_done(d40c, d40d);
-+
- 		if (d40_queue_start(d40c) == NULL) {
- 			d40c->busy = false;
- 
- 			pm_runtime_put_autosuspend(d40c->base->dev);
- 		}
+-	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+-	if (ret) {
+-		d40_err(dev, "No IRQ defined\n");
+-		goto destroy_cache;
+-	}
 -
--		d40_desc_remove(d40d);
--		d40_desc_done(d40c, d40d);
+ 	if (base->plat_data->use_esram_lcla) {
+ 
+ 		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
+@@ -3764,6 +3759,13 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	pm_runtime_mark_last_busy(base->dev);
+ 	pm_runtime_set_active(base->dev);
+ 	pm_runtime_enable(base->dev);
++	runtime_pm_enabled = true;
++
++	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
++	if (ret) {
++		d40_err(dev, "No IRQ defined\n");
++		goto destroy_cache;
++	}
+ 
+ 	ret = d40_dmaengine_init(base, num_reserved_chans);
+ 	if (ret)
+@@ -3799,7 +3801,8 @@ static int __init d40_probe(struct platform_device *pdev)
+ 		regulator_disable(base->lcpa_regulator);
+ 		regulator_put(base->lcpa_regulator);
  	}
+-	pm_runtime_disable(base->dev);
++	if (runtime_pm_enabled)
++		pm_runtime_disable(base->dev);
  
- 	d40c->pending_tx += callbacks;
-@@ -1702,20 +1709,22 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	struct d40_desc *d40d;
- 	unsigned long flags;
- 	bool callback_active;
-+	bool from_done;
- 	struct dmaengine_desc_callback cb;
- 
- 	spin_lock_irqsave(&d40c->lock, flags);
- 
- 	/* Get first entry from the done list */
- 	d40d = d40_first_done(d40c);
--	if (d40d == NULL) {
-+	from_done = !!d40d;
-+	if (!from_done) {
- 		/* Check if we have reached here for cyclic job */
- 		d40d = d40_first_active_get(d40c);
- 		if (d40d == NULL || !d40d->cyclic)
- 			goto check_pending_tx;
- 	}
- 
--	if (!d40d->cyclic)
-+	if (from_done)
- 		dma_cookie_complete(&d40d->txd);
- 
- 	/*
-@@ -1731,7 +1740,7 @@ static void dma_tasklet(struct tasklet_struct *t)
- 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
- 	dmaengine_desc_get_callback(&d40d->txd, &cb);
- 
--	if (!d40d->cyclic) {
-+	if (from_done) {
- 		if (async_tx_test_ack(&d40d->txd)) {
- 			d40_desc_remove(d40d);
- 			d40_desc_free(d40c, d40d);
+  report_failure:
+ 	d40_err(dev, "probe failed\n");
 
 -- 
 2.55.0
