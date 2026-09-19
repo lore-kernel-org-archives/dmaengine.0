@@ -1,73 +1,72 @@
-Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D4C255F2C
-	for <dmaengine@vger.kernel.org>; Sat, 19 Sep 2026 00:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907802D322E
+	for <dmaengine@vger.kernel.org>; Sat, 19 Sep 2026 00:43:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789777177; cv=none; b=UokhpzZyPafWbD/emV0RnnQxsK/NAFNIFNtIBtPP6oiinNyBrkGLX0Ky2sHDphWx0sKbu62RV4jfFgLuYMSv6wz4mqw/1M3C1cP2qXD0CaP6T8csF5zAHOZbyhClevqju84RR+i0weXSUaHqefNFnavmmO4z5EyGe0qnWbavU+k=
+	t=1789778634; cv=none; b=Fc2K/VfemundIrZnsDxJk6cL1evCT6adFgYB+aS+HX1ziDNFphUftGdsG9vUvvlUaX+NZusSdPUYeEef7Xbanu7M+sCSB5+5DZHk3YeORR87j0PfYpL28JxlW+UWfFW/Uq34SzyUq/RBufGQVmjdmaGmc5qyXiRV89HpKPYpShY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789777177; c=relaxed/simple;
-	bh=+jf3SiGVVgPNhWevlqvlngUC3VQElUYBMBqr0YMexYY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jOBKMNDFqCmCRw2eyZgTtLASW8E0ZeWVVMfv0Duyqvo1Q3jzWALcsZwjiK6rvU6sYffZEXTpGiGc/+FbgjMKEdhghxxjlS7vKDoyJ0wfPXUCCD0+4fDGBK7K8kojY6aMGDZyh4uKQyjCc/flhF714TVvSP+rpJQf6hHqVmbEKKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lJzD4O6R; arc=none smtp.client-ip=74.125.228.41
+	s=arc-20240116; t=1789778634; c=relaxed/simple;
+	bh=D+hAw/Uh09Q82SlEbERV57F3KoJyZOGCwE/LuwiDuzE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V3Keilyqkwizu01ASkdRWp348mYHB6RD/YoMrCtOguZrsjs5R6jMmYWN43cKnCacxsUV1WqaXJN65/09iNXezu/CPaiSvavfto9PBmhvBVdviyZt1HubBexqBR7Z0veioQrF9PqutzupF5ErEnKmftc6akzy5ZXj5KcdD83k5R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mzRbAPWe; arc=none smtp.client-ip=74.125.227.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJzD4O6R"
-Received: by mail-pz2-f41.google.com with SMTP id d2e1a72fcca58-8686f46e4adso1148115b3a.0
-        for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 17:19:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mzRbAPWe"
+Received: by mail-pj2-f43.google.com with SMTP id 98e67ed59e1d1-396ccd4f99dso1411388a91.2
+        for <dmaengine@vger.kernel.org>; Fri, 18 Sep 2026 17:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789777173; x=1790381973; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1789778632; x=1790383432; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=MHPfgHpVyaUa15qKDBAtKU0EMneYSzvSUcpDvb8HIw0=;
-        b=lJzD4O6RH17XvNDu9mzk6C8TSfJ8Z1CDC3cdZKztkYNzFQ2DV15L1YLJnqm4i5WSCI
-         A4mMb6xuVlpCxPyTBOUtsWNo4uVssgeMO7Sh4+NtRgjaXcZD+eJPahTg62CyNaFAKOTW
-         sZDrBvdJcdTJJ/4WlFPtQcIJVY7Kr21Hpe0GaEBW5VLlug144aXhtb17/tRiQnKjr575
-         m2FCodkMNBs3SbBK7klJ8V9qS0tFUxHmoNz+tSqnWydp21tzR3WwquCStDdFUVCzu+Ur
-         0E32CxjDjOlkgjDpPwKC8NqNEaLMokrm3GuRrdCTYA94Sn+KE8Tsq6AYAoaifBFHkQcD
-         OUnw==
+        bh=mkPeQNnq/YaoNWX48WK/qwCx8TOwAW8sXHVfmaoWgp0=;
+        b=mzRbAPWe+ZSQLAUmh0cWrz0+9enOzBEehuc/RJfMjUt3lfQ4hOnjR8FpGna87gcV6q
+         /1fgd4i+0XTdja72cTgCj/lqHq1Y/VCWPc4gOecgaJhera/n/hfeR+EeLYACO6VDQs1h
+         +NpJNGyijKWo94KzhvmfxXBKYr5pq3m6eB95pohdKAu90ER+w40V9SxqL6gDTqo+q2TH
+         Hd0uL1C3qnuNrtme3/O4agMD5U2Gn5P9fWxe0pQJmyWXowOKQpLTrlNZbTvQUzx5I8qE
+         lvhSNcTbW9vS9f9SBZBoFEdtOc+wZmB2ImooIY/BNZJEwNTb9ukowTDfbkKYxUPqExTh
+         ACvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789777173; x=1790381973;
+        d=1e100.net; s=20260707; t=1789778632; x=1790383432;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=MHPfgHpVyaUa15qKDBAtKU0EMneYSzvSUcpDvb8HIw0=;
-        b=qgLDkosK+MjPWLCo16g7upbqyZF6rsYuyIN9Lk8N2PU7URMUeov4HOd0AEqsQmFif5
-         n00hAhuPOzVDUhAMtkZ9A5Bc8eQR7B1lk6P4Ed5KA5yRp/CX5Ke4AN9rX1nMQGYN6nMc
-         ERviH0zSP9tC9kSwsjBM1QAQWc8iMGf+vR5BaqSL3rhZttZqp1Q1/8LQojI7W0bwkODc
-         1JCEskjpB+OHzJ6EZQvTeAQ3my2ED3tkomDjPmOOxZg09fn9whmFqyhYLnwFicxFJkIz
-         2laNKVzWjdVS2Aaw+hLJqtnFvPWV3IYwbdsbRMUiFxn97rwP0QJfjC8gww4TsJ5TTj+9
-         XyqQ==
-X-Gm-Message-State: AFuF++lkscak9yR06YjlL4aY0KNqF3DdBMFRLNmUI/16cJI2KJMnfL3G
-	TCpU1YsC8zZ2GMLQyj8peXYkE7Mg2w4/pGKl4d4HbETQtwRMCxbokylTDfNwqw==
-X-Gm-Gg: AYBFou08/EX6QGjd7l/qjXGv4RK/z84mDVWNb/FRYmD5k09PUeNKewhMA3I/fcWl23U
-	jQcRBK9P0+MYkEddhmfZ1jux15ag7XDXbVCXl7xMH1j9GLR4kPbtgbW5/Ay9XCvU7ZV4HLY07pd
-	kAPtEk7OjpkTSbrg1QKyNOEzo+NnO/k8oVYEdiS6g8iyk7ATFDXpvm8pR5oowpCxkgZ9ERC63wc
-	UGZzU6LNiX7OUHC8mAmHm+OPYngi7nrE6GDUdEvCrrTcg0ZLpH84HpOxVVME7QmV+wIeOKvK7uD
-	CPE2yZ7E9c7NrOG9zXl56Ay4vdZlLkY4Csx0alPIXZDMtzEi83gq6DSbyGw/tXQAixNm4j+7WAd
-	cJVgumqLxHa9+TfcNRZrhnb020eTME9mG9ZEHG5Kbd5ZTXtmurlqlLPAcKh4OS5Yy0CQ3X1gCUn
-	MAJlAOUk97W+N0FWP68Zdzf287p7QN1qKkRFILk+Bnkp43WwIs1lJpPwmwyoFGTyFxRHd3LErJP
-	gRCK0uOruS5EgjGf+Ef8YTY3GBPAFRADMJfbfAzD37G2KrexS5hq8rRj2UQ3qjdPGqk8WGdMHmO
-	VbWD6ENO8th5THC6bWiXpEFoKY/DBuYmZYuvF6fCCdUnf3XnHkZNXbD5XxM=
-X-Received: by 2002:a05:6a00:148f:b0:870:c2db:da2c with SMTP id d2e1a72fcca58-874de2125femr7108980b3a.25.1789777173083;
-        Fri, 18 Sep 2026 17:19:33 -0700 (PDT)
+        bh=mkPeQNnq/YaoNWX48WK/qwCx8TOwAW8sXHVfmaoWgp0=;
+        b=dOioI7W1o8+QqhN8WdbEF2VFd1ys8bjdpm3dtRGPNnYR77bck1s//yOKxq3tBYf+My
+         m1AyNQrSzcC4qKtGoRi4xpn5Z/8EhoXFhMcnn3ArISriSdI6/t7ZNqT0ir6n/Kj1e4OD
+         xsJWuHDOe1OzAxgknvguQWOmRe6tmrZaPvOevGOHSe5MwdAmNOV3eXq7GECYSHbpGyoY
+         GEjBDyYQq52W0ZOFrlRkc64ABJt2mQKu8GRuGYdhCpFpDU/+kD1PdkS1sJOmybEFGIqs
+         Yy5IKDvoFC6qrrPc4cxWQJsHnb/eItufib8mutBNgETufMxtiGnzeyHyeEo8nL+lDDu3
+         2CQg==
+X-Gm-Message-State: AFuF++mVMJ1F7cFqR/RINzx6EzLDV20LfclsdAlpZNu6r3nXUevbPB1l
+	SVTaLYkvXpiWpd+qtaGtG78Ym0kckmYyAdxuzyJ2fJb3Zy0jEUkv/qpYfsGQeA==
+X-Gm-Gg: AYBFou3XKD04g0GtmB8ocPIC7nubWD/LgzCR+Fqv82x4lhMsThZBfKxZSp3XLYHiXK8
+	9wZNH5cK4bWcH+Y+9Pnwn5ap5x2UiuOmlUiBO75S/bB7973qaZc6gAJh5d02Gzonmw23HRjOIIu
+	CbhtNzOx20qqGyL17s8H7am00jGRDZKkq0h2CqohUt9ysdNwe4op4ifXS63kiQePECsx5jWZzEn
+	c1as4Tw9fCS5x5rgbgwaqViS/XxIVL2qHkObQIfJ6PLhXyIzV1L82BEEmAciZC+s6oHH7+Ea8xX
+	jiJaz/qylotm+ysdlZrMW8YPg313h1gxYP6WCfAPIqHZJGsyhjzo9CHxi7HlpPCRogxKP7j0XuZ
+	lGKSzQ7AMM3ulWeJyaXzQRiOQW6Mga9qvNvOgEWmcV+pu8oOa/H0Q7saMcl/uAazB2oyiatI+P2
+	nQKI/3Db/6w6uJ4Pt0smWbdWpLfu5p0ksT0OizveV5CrAxrFDyVdVk/eWZ8iKMS4oEqYysxYcrA
+	n3Ty1Gb5qH4TgDX/JBrbomrLans77ISUK4QNIKySrLcyHotWYHfwCq+faRfS+E6bSJli/5hznsF
+	Q6mdcwJElJRX39bQvMB1DqFylTKzdLyz6IOoT10s0J2yvhUX
+X-Received: by 2002:a17:90b:57e8:b0:39e:6c69:9b8b with SMTP id 98e67ed59e1d1-39e6c69b27bmr1827870a91.48.1789778631767;
+        Fri, 18 Sep 2026 17:43:51 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8000:7a86::e35])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-877a6bec90dsm391673b3a.8.2026.09.18.17.19.31
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c3145e5sm1768797a91.5.2026.09.18.17.43.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 17:19:32 -0700 (PDT)
+        Fri, 18 Sep 2026 17:43:51 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: dmaengine@vger.kernel.org
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	linux-kernel@vger.kernel.org (open list),
-	linuxppc-dev@lists.ozlabs.org (open list:FREESCALE SOC DRIVERS),
-	linux-arm-kernel@lists.infradead.org (moderated list:FREESCALE SOC DRIVERS)
-Subject: [PATCHv4] dmaengine: bestcomm: use platform machinery to get irq
-Date: Fri, 18 Sep 2026 17:19:31 -0700
-Message-ID: <20260919001931.723402-1-rosenp@gmail.com>
+	Harninder Rai <harninder.rai@freescale.com>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv7] dmaengine: fsl_raid: check fsl_re_chan_probe() return value
+Date: Fri, 18 Sep 2026 17:43:49 -0700
+Message-ID: <20260919004349.736044-1-rosenp@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -77,175 +76,94 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-platform_get_irq() avoids having to explicitly map and dispose of an irq
-by having the platform_device machinery take care of it.
+fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
+unconditionally increments total_chans. When a channel fails to probe
+(for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
+total_chans still advances, so fsl_re_remove_chan() later dereferences the
+NULL pointer during device removal.
 
-This requires replacing the device_node with a platform_device in the
-bcom_eng struct so that platform_get_irq() can use it.
+Check return value and guard fsl_re_remove() against NULL entries.
 
-Conveniently, this also allows getting rid of of_node_get and
-of_node_put as the platform_device machinery also handles that.
-
-Adjust the goto labels in bcom_task_alloc to match what is being freed.
-
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: LLM
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- v4: drop whitespace change
- v3: drop stale description
- v2: resend
- drivers/dma/bestcomm/bestcomm.c            | 46 ++++++++--------------
- include/linux/fsl/bestcomm/bestcomm_priv.h |  2 +-
- 2 files changed, 18 insertions(+), 30 deletions(-)
+ v7: handle differently based on sashiko review
+ v6: increment ridx before continue;
+ v5: put some stuff on one line for easier readability.
+ v4: use break;
+ v3: fix sashiko review
+ v2: fix description
+ drivers/dma/fsl_raid.c | 31 +++++++++++++++++++++----------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/bestcomm/bestcomm.c b/drivers/dma/bestcomm/bestcomm.c
-index 241a91936fe8..310792ccd748 100644
---- a/drivers/dma/bestcomm/bestcomm.c
-+++ b/drivers/dma/bestcomm/bestcomm.c
-@@ -47,6 +47,7 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
- {
- 	int i, tasknum = -1;
- 	struct bcom_task *tsk;
-+	int irq;
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 9cc289f7129e..f269fe9df795 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -687,7 +687,6 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 		goto err_free;
+ 	}
  
- 	/* Don't try to do anything if bestcomm init failed */
- 	if (!bcom_eng)
-@@ -67,30 +68,32 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
- 	if (tasknum < 0)
- 		return NULL;
+-	re_priv->re_jrs[q] = chan;
+ 	chan->chan.device = dma_dev;
+ 	chan->chan.private = chan;
+ 	chan->dev = chandev;
+@@ -741,6 +740,11 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 	/* Enable RE/CHAN */
+ 	out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
  
-+	irq = platform_get_irq(bcom_eng->pdev, tasknum);
-+	if (irq < 0)
-+		goto err1;
++	/* Only record the channel once it is fully initialized, so the
++	 * cleanup paths never touch a partially-probed ring.
++	 */
++	re_priv->re_jrs[q] = chan;
 +
- 	/* Allocate our structure */
- 	tsk = kzalloc(sizeof(struct bcom_task) + priv_size, GFP_KERNEL);
- 	if (!tsk)
--		goto error;
-+		goto err1;
+ 	return 0;
  
- 	tsk->tasknum = tasknum;
- 	if (priv_size)
- 		tsk->priv = (void*)tsk + sizeof(struct bcom_task);
- 
- 	/* Get IRQ of that task */
--	tsk->irq = irq_of_parse_and_map(bcom_eng->ofnode, tsk->tasknum);
--	if (!tsk->irq)
--		goto error;
-+	tsk->irq = irq;
- 
- 	/* Init the BDs, if needed */
- 	if (bd_count) {
- 		tsk->cookie = kmalloc_array(bd_count, sizeof(void *),
- 					    GFP_KERNEL);
- 		if (!tsk->cookie)
--			goto error;
-+			goto err2;
- 
- 		tsk->bd = bcom_sram_alloc(bd_count * bd_size, 4, &tsk->bd_pa);
- 		if (!tsk->bd)
--			goto error;
-+			goto err3;
- 		memset_io(tsk->bd, 0x00, bd_count * bd_size);
- 
- 		tsk->num_bd = bd_count;
-@@ -99,15 +102,11 @@ bcom_task_alloc(int bd_count, int bd_size, int priv_size)
- 
- 	return tsk;
- 
--error:
--	if (tsk) {
--		if (tsk->irq)
--			irq_dispose_mapping(tsk->irq);
--		bcom_sram_free(tsk->bd);
--		kfree(tsk->cookie);
--		kfree(tsk);
--	}
--
-+err3:
-+	kfree(tsk->cookie);
-+err2:
-+	kfree(tsk);
-+err1:
- 	bcom_eng->tdt[tasknum].stop = 0;
- 
- 	return NULL;
-@@ -125,7 +124,6 @@ bcom_task_free(struct bcom_task *tsk)
- 	bcom_eng->tdt[tsk->tasknum].stop  = 0;
- 
- 	/* Free everything */
--	irq_dispose_mapping(tsk->irq);
- 	bcom_sram_free(tsk->bd);
- 	kfree(tsk->cookie);
- 	kfree(tsk);
-@@ -377,16 +375,12 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	if (IS_ERR(regs))
- 		return PTR_ERR(regs);
- 
--	/* Get the bestcomm node */
--	of_node_get(op->dev.of_node);
--
- 	/* Prepare SRAM */
- 	ofn_sram = of_find_matching_node(NULL, mpc52xx_sram_ids);
- 	if (!ofn_sram) {
- 		printk(KERN_ERR DRIVER_NAME ": "
- 			"No SRAM found in device tree\n");
--		rv = -ENODEV;
--		goto error_ofput;
-+		return -ENODEV;
- 	}
- 	rv = bcom_sram_init(ofn_sram, DRIVER_NAME);
- 	of_node_put(ofn_sram);
-@@ -394,7 +388,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	if (rv) {
- 		printk(KERN_ERR DRIVER_NAME ": "
- 			"Error in SRAM init\n");
--		goto error_ofput;
-+		return rv;
+ err_free_1:
+@@ -836,18 +840,24 @@ static int fsl_re_probe(struct platform_device *ofdev)
+ 		}
+ 		/* Find out the Job Rings present under each JQ */
+ 		for_each_child_of_node(np, child) {
+-			rc = of_device_is_compatible(child,
+-					     "fsl,raideng-v1.0-job-ring");
+-			if (rc) {
+-				fsl_re_chan_probe(ofdev, child, ridx++, off);
+-				re_priv->total_chans++;
++			if (!of_device_is_compatible(child, "fsl,raideng-v1.0-job-ring"))
++				continue;
++
++			if (ridx >= FSL_RE_MAX_CHANS) {
++				dev_warn(dev, "too many job rings, max %d\n", FSL_RE_MAX_CHANS);
++				of_node_put(child);
++				break;
+ 			}
++
++			rc = fsl_re_chan_probe(ofdev, child, ridx, off);
++			if (rc)
++				dev_err(dev, "job ring %d probe failed: %d\n", ridx, rc);
++			re_priv->total_chans++;
++			ridx++;
+ 		}
  	}
  
- 	/* Get a clean struct */
-@@ -405,8 +399,7 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	}
- 
- 	/* Save the node */
--	bcom_eng->ofnode = op->dev.of_node;
+-	dma_async_device_register(dma_dev);
 -
-+	bcom_eng->pdev = op;
- 	bcom_eng->regs = regs;
- 	bcom_eng->regs_base = res_bcom->start;
+-	return 0;
++	return dma_async_device_register(dma_dev);
+ }
  
-@@ -426,8 +419,6 @@ static int mpc52xx_bcom_probe(struct platform_device *op)
- 	kfree(bcom_eng);
- 	bcom_eng = NULL;
- 	bcom_sram_cleanup();
--error_ofput:
--	of_node_put(op->dev.of_node);
+ static void fsl_re_remove_chan(struct fsl_re_chan *chan)
+@@ -872,7 +882,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
  
- 	printk(KERN_ERR "DMA: MPC52xx BestComm init failed !\n");
+ 	/* Cleanup chan related memory areas */
+ 	for (i = 0; i < re_priv->total_chans; i++)
+-		fsl_re_remove_chan(re_priv->re_jrs[i]);
++		if (re_priv->re_jrs[i])
++			fsl_re_remove_chan(re_priv->re_jrs[i]);
  
-@@ -443,9 +434,6 @@ static void mpc52xx_bcom_remove(struct platform_device *op)
- 	/* Cleanup SRAM */
- 	bcom_sram_cleanup();
- 
--	/* Release the node */
--	of_node_put(bcom_eng->ofnode);
--
- 	/* Release memory */
- 	kfree(bcom_eng);
- 	bcom_eng = NULL;
-diff --git a/include/linux/fsl/bestcomm/bestcomm_priv.h b/include/linux/fsl/bestcomm/bestcomm_priv.h
-index 3b52f3ffbdf8..cddde7c74cb5 100644
---- a/include/linux/fsl/bestcomm/bestcomm_priv.h
-+++ b/include/linux/fsl/bestcomm/bestcomm_priv.h
-@@ -66,7 +66,7 @@ struct bcom_tdt {
-  * This holds all info needed globaly to handle the engine
-  */
- struct bcom_engine {
--	struct device_node		*ofnode;
-+	struct platform_device		*pdev;
- 	struct mpc52xx_sdma __iomem     *regs;
- 	phys_addr_t                      regs_base;
- 
+ 	/* Unregister the driver */
+ 	dma_async_device_unregister(&re_priv->dma_dev);
 -- 
 2.55.0
 
