@@ -1,118 +1,162 @@
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022123.outbound.protection.outlook.com [52.101.126.123])
+Received: from out30-100.freemail.mail.aliyun.com (out30-100.freemail.mail.aliyun.com [115.124.30.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1D53D4112;
-	Sun, 20 Sep 2026 05:15:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.123
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789881311; cv=fail; b=MDpSsCVh5/opjqwP1TXtHJRt0n1BgFyiB9+l3Xg3oSElI81hjCO9oX10iJxj6PnAbIE+4VLXRaaMf69EBb+e87vGW5K9HCdN/E6yws0OU6jC6BR8vx0dThKQNAZtYDNmWx4xwVTPSoSC5nFSiUkUFjZO/LNeqmP2PuNGZIkoz3Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789881311; c=relaxed/simple;
-	bh=ylZ/CvgG3yh2HSIJShoIBFahkooqMR7/RY6zuzk8lgo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jtCivOwdVTgi12VRWYh2VB9iuFfizcEjyL10qAGKi5IXtjwV0JdKIpErubXS2k03+fVF7VX0Q45tEBw7iEUXASH3YigoKkdFoKFWk61f+dtntNZO2SAqfCwUuCkz+nup7L1CmWoLxs75AQec1eMerA+dE5y3ZVhPBRmewxwnrys=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=52.101.126.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s8SPU5oAvtezlEd4woUcNkLHALbOsUJgdptDyX27GWCxQKPbAgC+WyPDXNJFWfJaKD/IPB7czGlDqmuLYvY16lX6Z63EjWvB2tadTw/DB+Ve/qVEBlDytIcK4zZSlKn0m6oo4Xav+eHBSXmMw0SOP6BcYdKemutbifiJpxKtHZdWf+cOJeTPi61TOHjd3J2Tiyxp1gH+VZeLWMFAIPFfx6wlRyBkEZ9XHqzj8tQ1VRIseHjeJoWTNqshxcDkC8kPeCZMKxuaIYNFInfQb3CjYlckCYybsJ4czNso96UG5MX8oeMrWwAgQvpOlm2u0jTQughEDf2HsjCtBmxojgACNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ylZ/CvgG3yh2HSIJShoIBFahkooqMR7/RY6zuzk8lgo=;
- b=pxXgi3CxESXTde6BDP9bdo0xPDjvgOYLxLNwOLCmScwsOaz3VJAGjJHmj/Zb26QE26zwKFOQAiasENSpzOy4bbGI0ZP9iLrRfvpeQJK0EyNFGD78d241fORMG11pR9tlAicSC9KuCVKIzG9+/+xcbtpf3d2Wpv4BVsAfJplljS8MzLoI1v/Ksr6e7jInX2o9ihi8oLpkStfH/JDlpDBfs3VtX5PKsnGVnrRfZIYPrb8ZlRSdfFHQq642+ETE08Ka/T5u0Kt4cwQkGII0IfxzByVbN6EHF4LAiyUn3ITAkaYJ1ikt9rt2sV4bbHKgsxY2t8y/chYOVgmWgrIUWdEt2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
- dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
- not signed); arc=none (0)
-Received: from TYCP286CA0356.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:7c::8) by
- JH0PR06MB6891.apcprd06.prod.outlook.com (2603:1096:990:51::10) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.428.15; Sun, 20 Sep 2026 05:15:04 +0000
-Received: from TY2PEPF0000AB85.apcprd03.prod.outlook.com
- (2603:1096:405:7c:cafe::6d) by TYCP286CA0356.outlook.office365.com
- (2603:1096:405:7c::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.428.15 via Frontend Transport; Sun,
- 20 Sep 2026 05:15:03 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 222.71.101.198)
- smtp.mailfrom=cixtech.com; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
- 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
-Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- TY2PEPF0000AB85.mail.protection.outlook.com (10.167.253.5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.451.8 via Frontend Transport; Sun, 20 Sep 2026 05:15:03 +0000
-Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id B587840920E2;
-	Sun, 20 Sep 2026 13:15:01 +0800 (CST)
-From: Jelly Jia <Jelly.Jia@cixtech.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: Jelly Jia <Jelly.Jia@cixtech.com>,
-	vkoul@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	Frank.Li@kernel.org,
-	robin.murphy@arm.com,
-	cix-kernel-upstream@cixtech.com,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 3/5] dt-bindings: dma: Add CIX Sky1 DMA-350 integration
-Date: Sun, 20 Sep 2026 13:15:01 +0800
-Message-ID: <20260920051501.3620794-1-Jelly.Jia@cixtech.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <aqE42NzerAiD2U1E@squawk>
-References: <aqE42NzerAiD2U1E@squawk>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F6D34DB72
+	for <dmaengine@vger.kernel.org>; Sun, 20 Sep 2026 08:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.100
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789892927; cv=none; b=CiojfEJ87Dws/FOj4VZ+JVyxd4iV7FXNDC3CVs3ZB8lH//PEggz5wIYvtix9zVDnj9AD7i5b2BfmodUEU5RvsaO1v9SYd0UnNWuLLEx8orurbmmqtAWL+U6TU3TwhJDav65cFCuVE+VELz5K0Gq8yaNVme/LSouqv29pPg2twxI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789892927; c=relaxed/simple;
+	bh=TWC6ZQPaZb0Cvk3H7O6j/aQMEgtQk2q2SNjR8jyYJeE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=f9+xy0wc1/qxOsStHzu0fluqlnaS+gNvSNqa7k2pM7JtIJFKkFUNVtuhkys6v6EshvuxbnUIAU/8iGNMk29e684bI16DX8eDvaMwcGsHiHgNfl3RoE5knyCHYSBDDWp9wDGaQvwd8nhgNtvL8OLiKP1uHzRXMJ70ZoWSTsbJq6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=MTzQ7/Um; arc=none smtp.client-ip=115.124.30.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="MTzQ7/Um"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1789892922; h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type;
+	bh=H6PQ1Bn9SUjfUCfgHL+o5iRpfiaRAYs2eCR9et5btaE=;
+	b=MTzQ7/UmgaJnPCZfRteKx3HSR1/vc9lBFcwwwl66M64CJv444IlU8vETbnQ4FkNif0ZCjxcaVLfurpyWaZICx9zLpg8c2PP91V4G66UcNs4VFWksVWbMM9fNGTDqakXjJTjGRIBdIyvCBDs7ojw8C3y3775DUDQnUSNdK9+dRMU=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R131e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam011083073210;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0XBFVgaN_1789892920;
+Received: from 30.178.84.196(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XBFVgaN_1789892920 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Sun, 20 Sep 2026 16:28:41 +0800
+Message-ID: <19220f15-4215-4dc7-9ba7-64da0fceb864@linux.alibaba.com>
+Date: Sun, 20 Sep 2026 16:28:40 +0800
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: idxd: Fix use-after-free of idxd_wq
+From: Guixin Liu <kanie@linux.alibaba.com>
+To: Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+ Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>,
+ Frank Li <Frank.Li@kernel.org>
+Cc: dmaengine@vger.kernel.org, Xunlei Pang <xlpang@linux.alibaba.com>,
+ oliver.yang@linux.alibaba.com
+References: <20260415095030.42183-1-kanie@linux.alibaba.com>
+In-Reply-To: <20260415095030.42183-1-kanie@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB85:EE_|JH0PR06MB6891:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: db941cae-d928-4856-80a4-08df16d6207e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|23010399003|7416014|376014|1800799024|36860700016|18002099003|22082099003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	OAJssUO5OBQLxSxysO2gjsA4HD70vatnsM/JWqqtcnGhYlgP27EBi9Ywp0Ou0QKHFObaSoFQb914F/9uMOGtX2xg3mIlnutcxnRf/S7HcadJ2lvz2b+BOULQ5YM8UkhFw1JKOvB8f7vY2eEdzuidSfLMrjTMr4+U27s4SY6SU0RunUoBUmzGVwGYSypxFIc0V+gq9JaJid8zoUcfV9N/nquhZFKQmzIF3hOcm/GK/kLug/WViwUXGvdZMBZ6cU4nTiwqwwUz+G7NqflZzzSw6m2MaJ0DiTsozct3LKHzS2PLII3L8Zu9e4EvqI3QMi6eZBrLiRxShB6WfNRgK9yyUIslYa2rT8hea5JI0Vg7p6soCWIPXxIX+UjaTAg1B5YDosIGlhde2BOYabFudaUOWn2gSXgZTVwi/TNNpiOYGfJwd3IOXwUQE7uPD8H0s7lJaE8H/iU13BhbMGIc70SRL5Ea/n3aUF+SjrC8Oc05ZFm8jTS/Dnyl3qr4ZSBphhhCMfT5FgueQph45VaroFVX4Tj9kTWJcPJqYRX9S79s8qW3X301N9ek1ZqR7iaHY1d8FSEeTrvdHQwgmOEIW3kv26/J+//hg+pAnSWGI7PCcdHkK7Hm2WjezlilICVvKOkEssLqa7/x5Lsgjg7FN2ojznzALT7pFseJWpmQWpGbKk+l18UpYWVh5Mvm6Un87BQ6+pf2u+r6W6gD8EkjUPjOgw==
-X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(23010399003)(7416014)(376014)(1800799024)(36860700016)(18002099003)(22082099003)(56012099006)(10067099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	KowlSTKsSt9TJdAxFPtmIulOQxSk4H8krEHbIsvLX/3BxqqksLTr1ZNpAhVmdK8Dngu8n+h0JU2e0qwXJirROV1wGFMHfQpBVC+U69wxmyNbF4kS518dhvRfaKTdBpO+BwDqcqHLQ2sckcytkI7MOlskCJNhLeGi5qYf4eqoM5qnzRqPYqiD5mmiv+WLzDKPlyUWRaCgSoY2jDf+BhTq4KMsKQdpICNRATE3I8t7B+o9NqxZxrpyvdvzGh4VHjvschyzL3jBXhb6XBZuT0qPtY7WQQa/rYkmLsGc2R0UV4TRE7ux3J6/QWlVuTLvowjv2FswOnU0PY/j+ai+9E4GWZxVESqLgQorDxgWnN48UhyoTcYGXaG0kXDpt44DfNowj3XpK6uJVIns2ZvXvpENt+iJ0kN7eh5Y5uI8NWM8xZQeMsEqZSpHps69Y3VrihvI
-X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2026 05:15:03.1384
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: db941cae-d928-4856-80a4-08df16d6207e
-X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	TY2PEPF0000AB85.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6891
 
-Hi Conor,
+Hi idxd maintainers, could anyone merge this patch?
 
-Thanks, understood: with the SoC-specific compatible scoping the
-integration code, other platforms are unaffected either way.
+Best Regards,
+Guixin Liu
 
-For v2 my preference is to keep the wrapper, since it leaves the
-generic arm-dma350 driver and its binding untouched. Does that work
-for you, or would you rather see the dma-350 node itself carry a
-device-specific compatible, with the clocks, resets and
-memory-region described on it? I'd also like Robin's take on the
-arm-dma350 side before restructuring that far.
 
-Best regards,
-Jelly
+在 2026/4/15 17:50, Guixin Liu 写道:
+> We found an idxd_wq use-after-free issue with kasan
+> when remove the idxd PCI device:
+>
+> BUG: KASAN: slab-use-after-free in idxd_device_drv_remove+0x1f8/0x240 [idxd]
+> Call Trace:
+>   <TASK>
+>   dump_stack_lvl+0x32/0x50
+>   print_address_description.constprop.0+0x2c/0x390
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   print_report+0xba/0x280
+>   ? kasan_addr_to_slab+0x9/0xa0
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   kasan_report+0xab/0xe0
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   device_release_driver_internal+0x391/0x560
+>   bus_remove_device+0x1f5/0x3f0
+>   device_del+0x392/0x990
+>   ? __pfx_device_del+0x10/0x10
+>   ? kobject_cleanup+0x117/0x360
+>   ? idxd_unregister_devices+0x229/0x320 [idxd]
+>   device_unregister+0x13/0xa0
+>   idxd_remove+0x4f/0x1b0 [idxd]
+>   pci_device_remove+0xa7/0x1d0
+>   device_release_driver_internal+0x391/0x560
+>   ? pci_pme_active+0x1e/0x450
+>   pci_stop_bus_device+0x10a/0x150
+>   pci_stop_and_remove_bus_device_locked+0x16/0x30
+>   remove_store+0xcf/0xe0
+>
+> Freed by task 15535:
+>   kasan_save_stack+0x1c/0x40
+>   kasan_set_track+0x21/0x30
+>   kasan_save_free_info+0x27/0x40
+>   ____kasan_slab_free+0x171/0x240
+>   slab_free_freelist_hook+0xde/0x190
+>   __kmem_cache_free+0x19e/0x310
+>   device_release+0x98/0x210
+>   kobject_cleanup+0x102/0x360
+>   idxd_unregister_devices+0xb3/0x320 [idxd]
+>   dxd_remove+0x3f/0x1b0 [idxd]
+>   pci_device_remove+0xa7/0x1d0
+>   device_release_driver_internal+0x391/0x560
+>   pci_stop_bus_device+0x10a/0x150
+>   pci_stop_and_remove_bus_device_locked+0x16/0x30
+>   remove_store+0xcf/0xe0
+>
+> In the idxd_remove() flow, when execution reaches
+> idxd_unregister_devices(), all idxd_wq instances have already been
+> freed. Subsequently, when device_unregister(idxd_confdev(idxd)) is
+> executed, it calls into idxd_device_drv_remove() which accesses the
+> already-freed idxd_wq. This fix resolves the issue by calling
+> device_release_driver() before idxd_unregister_devices().
+>
+> Fixes: 98da0106aac0d ("dmanegine: idxd: fix resource free ordering on driver removal")
+> Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+> Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+> Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+> ---
+> v1 -> v2:
+>   1. Call device_release_driver() in advance instead of swapping the order of
+>      device_unregister() and idxd_unregister_devices().
+>   2. Add Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>.
+>  drivers/dma/idxd/init.c | 27 ++++++++++++++++++++++-----
+>  1 file changed, 22 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+> index f1cfc7790d95..3b0a0363ca65 100644
+> --- a/drivers/dma/idxd/init.c
+> +++ b/drivers/dma/idxd/init.c
+> @@ -1293,13 +1293,30 @@ static void idxd_remove(struct pci_dev *pdev)
+>  {
+>  	struct idxd_device *idxd = pci_get_drvdata(pdev);
+>  
+> +	/*
+> +	 * The idxd sub-driver's remove callback (idxd_device_drv_remove())
+> +	 * iterates idxd->wqs[] and accesses wq objects. We must unbind the
+> +	 * sub-driver before idxd_unregister_devices() frees these objects,
+> +	 * otherwise a use-after-free occurs.
+> +	 *
+> +	 * We cannot simply reorder device_unregister(idxd_confdev) before
+> +	 * idxd_unregister_devices() because device_del() -> kobject_del()
+> +	 * recursively removes the parent's sysfs directory, which destroys
+> +	 * children's sysfs entries. Subsequent device_unregister() on the
+> +	 * children then fails with "sysfs group 'power' not found".
+> +	 *
+> +	 * Use device_release_driver() to only unbind the driver (triggering
+> +	 * idxd_device_drv_remove()) without touching sysfs. Then safely
+> +	 * unregister children before the parent.
+> +	 */
+> +	device_release_driver(idxd_confdev(idxd));
+>  	idxd_unregister_devices(idxd);
+> +
+>  	/*
+> -	 * When ->release() is called for the idxd->conf_dev, it frees all the memory related
+> -	 * to the idxd context. The driver still needs those bits in order to do the rest of
+> -	 * the cleanup. However, we do need to unbound the idxd sub-driver. So take a ref
+> -	 * on the device here to hold off the freeing while allowing the idxd sub-driver
+> -	 * to unbind.
+> +	 * When ->release() is called for the idxd->conf_dev, it frees all the
+> +	 * memory related to the idxd context. The driver still needs those bits
+> +	 * in order to do the rest of the cleanup. So take a ref on the device
+> +	 * here to hold off the freeing.
+>  	 */
+>  	get_device(idxd_confdev(idxd));
+>  	device_unregister(idxd_confdev(idxd));
+
