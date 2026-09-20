@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE29237DAC0;
-	Sun, 20 Sep 2026 18:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F6B44E675;
+	Sun, 20 Sep 2026 19:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789930801; cv=none; b=W+/+DKwIn7XJiulakxmJQ2WH87yS92qo6JlIJeG1FJZRFpnhbta3Y3vM0hmr/tIcGz00npryTvhYF7iqMmcPgLJK/B5ALqfiTB1UvkUFQfhJnnfGHz+QSElBgTig9HVFCs8UcknuvPFqlAsPnsZaUWQ0M3506AgMStWd3o+/3os=
+	t=1789930803; cv=none; b=D1aZa5ky0x/8pbN3/69P+kfNGnaZWeI/z/p/cX9y5/H/U9RM7b43aZKURTvWziopDyRnVSyCBVWktpG3SnwnWJgeNdsX2a8C4ntkRaOHlsffsnO26hITpvjtgdLdI3ek5xovJ84EtUPXEvON+PlReElCO4x79RVDbDJV633VmRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789930801; c=relaxed/simple;
-	bh=L72XaTAQ/tOswMrGtpGFeQLQgS1+1ZCYMQ0mTKCotCc=;
+	s=arc-20240116; t=1789930803; c=relaxed/simple;
+	bh=y8SLUXdt96PHq4pH+/8T6VINJJrTEHA3RAMCJeqzUvk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IIlqH0w2m5wH1a4Te4nZK8aaO0XQoWUZbO5Gwgg0cJ9wJM+40O+6V70HGMSbikR2LfI+5GD06LdSOANq4nQRTlyoTj2Fkxwr8kw+BSWGxMA75yQIYH1Majjy7N/4wa07ZFR932b828jIerGiBFLWhlCPpxlS451Ikylh3J3ozsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hVwUKZSF; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=VxHHCMJxD5wEVM5YlcEHaoIf0m9EXYvbA+Rx5Mmods8F9wo5tbRyOFaJ1tALgH/6N/p/bTTjOyUfVVCZrpXJA5RRPMW9ZKikv05orI4op7XgxzfN0EVdSCxzWud0O0VMtXmrDwHf9Bl3kwMcg73/EiboSPntUfwtIb/wSdK4x6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GsF1BDYl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hVwUKZSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BA61F00893;
-	Sun, 20 Sep 2026 18:59:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GsF1BDYl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B29B1F000FF;
+	Sun, 20 Sep 2026 19:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789930799;
-	bh=Wn8xbLLzODNlW6O5WHhylHeALCcEzt2gaOiCslcxtaY=;
+	s=k20260515; t=1789930801;
+	bh=XIJg3z/oeCRCBrXfWs/5Lh2zIKbH74jnAacoBZjxWm0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=hVwUKZSFHgSGnu+aGh3e/xns/gzS2dsbap063GvOtfvIZI2mG68M6UsT5jv//PS4i
-	 h7XOZF/BLB5KaSicuafNuvy0GXOxnRtBXqG+8uDxbx4EjNr72h++hmjQA39E43xAaW
-	 uWIkPI53w++Zb2abK5DofMTkCHO5mXpT6EwmmkluC/1YkAXko6AlSFCKnTLKrpU+Lv
-	 F2s+oZSPUcfhwzz30o5z9E/zdarZ02jx5rcMsyCYtjB9anCF0+CaUfiSKI1Q41BZoq
-	 qbjVDezQId9YoATM/M+//h9Iso7GwektFWewhs40kfBUWj0LTcnoQC2SL6qCss8Qzs
-	 feWpbjKgY/9pg==
+	b=GsF1BDYlsXbhptYz7yyLQTvFoeyGOKtDmJWT2FYQZxpFb0lY+SWNpJxrL2Dmx//bd
+	 Ygp1ZuBajCqZ2CFszG/pr1IzF+mq4mwWloHhMF5QCPDuR/30QQL9ug9y+xF5mcjHwD
+	 k1Kh9CIoDJ62ETaZUhaZJb1hlV/0jtgkTQqFvME266PmbXieoKAJutMQcXPCcwVHlE
+	 NxGj9r+aLgmGLjywJGGtba76qGuCgFpRhMxtE3gtkn3DRSftwLJEE8x70ETxAg8mur
+	 wgfVciDm5ApsulDwe21+lXib7taTZs1aU4bd/yt9jQDnrOojNwpyB4sLnLAV5u6ylF
+	 ndN0ICPbnMKBQ==
 From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 20 Sep 2026 20:59:45 +0200
-Subject: [PATCH v5 10/23] dmaengine: ste_dma40: Fix probe IRQ leak
+Date: Sun, 20 Sep 2026 20:59:46 +0200
+Subject: [PATCH v5 11/23] dmaengine: ste_dma40: Fix DMA registration unwind
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -37,7 +37,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-dma40-fixes-v5-10-5c55cd7f92f9@kernel.org>
+Message-Id: <20260920-dma40-fixes-v5-11-5c55cd7f92f9@kernel.org>
 References: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
 In-Reply-To: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -45,51 +45,136 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-d40_probe() registers the hardware interrupt before several later probe
-steps that can fail. Those error paths jump to destroy_cache without
-freeing the IRQ, leaving the handler registered after probe resources have
-been released.
+d40_dmaengine_init() registers DMAengine devices using devres-managed
+unregister actions. If probe fails after one of those registrations, the
+DMAengine devices stay visible until devres unwinds after d40_probe()
+returns.
 
-Track successful IRQ registration and free the IRQ on later probe failure.
+The channel tasklets are also initialized before each DMAengine device is
+registered. An interrupt can therefore have queued a tasklet by the time a
+later registration step fails, but unregistering the DMAengine devices
+does not drain that tasklet before probe-owned storage is released.
 
-Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+Add tasklet cleanup actions to the DMAengine registration devres group.
+On failure, free the IRQ before releasing the group so no new tasklets can
+be scheduled, then unregister the DMAengine devices and drain their
+tasklets before freeing the remaining probe resources. Keep the managed
+registrations and cleanup actions in place on successful probe by removing
+only the temporary group markers.
+
+Fixes: 42ae6f1695be ("dmaengine: ste_dma40: Remove platform data")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/ste_dma40.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 7cbcf8433fe0..ba529bd91752 100644
+index ba529bd91752..52d39883da51 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3710,6 +3710,7 @@ static int __init d40_probe(struct platform_device *pdev)
+@@ -3033,6 +3033,18 @@ static void __init d40_chan_init(struct d40_base *base, struct dma_device *dma,
+ 	}
+ }
+ 
++static void d40_kill_tasklets(void *data)
++{
++	struct dma_device *dma = data;
++	struct d40_chan *d40c;
++	struct dma_chan *chan;
++
++	list_for_each_entry(chan, &dma->channels, device_node) {
++		d40c = container_of(chan, struct d40_chan, chan);
++		tasklet_kill(&d40c->tasklet);
++	}
++}
++
+ static void d40_ops_init(struct d40_base *base, struct dma_device *dev)
+ {
+ 	if (dma_has_cap(DMA_SLAVE, dev->cap_mask)) {
+@@ -3079,6 +3091,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 
+ 	d40_ops_init(base, &base->dma_slave);
+ 
++	err = devm_add_action_or_reset(base->dev, d40_kill_tasklets,
++				       &base->dma_slave);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_slave);
+ 
+ 	if (err) {
+@@ -3094,6 +3111,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 
+ 	d40_ops_init(base, &base->dma_memcpy);
+ 
++	err = devm_add_action_or_reset(base->dev, d40_kill_tasklets,
++				       &base->dma_memcpy);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_memcpy);
+ 
+ 	if (err) {
+@@ -3111,6 +3133,12 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
+ 
+ 	d40_ops_init(base, &base->dma_both);
++
++	err = devm_add_action_or_reset(base->dev, d40_kill_tasklets,
++				       &base->dma_both);
++	if (err)
++		goto exit;
++
+ 	err = dmaenginem_async_device_register(&base->dma_both);
+ 
+ 	if (err) {
+@@ -3708,6 +3736,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	struct d40_base *base;
+ 	struct resource *res;
  	struct resource res_lcpa;
++	void *dmaenginem_reg_group;
  	int num_reserved_chans;
  	bool runtime_pm_enabled = false;
-+	bool irq_requested = false;
- 	u32 val;
- 	int ret;
+ 	bool irq_requested = false;
+@@ -3841,20 +3870,33 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	d40_hw_init(base);
+ 	enable_irq(base->irq);
  
-@@ -3833,6 +3834,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 		d40_err(dev, "No IRQ defined\n");
- 		goto destroy_cache;
++	dmaenginem_reg_group = devres_open_group(dev, NULL, GFP_KERNEL);
++	if (!dmaenginem_reg_group) {
++		ret = -ENOMEM;
++		goto destroy_cache;
++	}
++
+ 	ret = d40_dmaengine_init(base, num_reserved_chans);
+ 	if (ret)
+-		goto destroy_cache;
++		goto release_dmaenginem;
+ 
+ 	ret = of_dma_controller_register(np, d40_xlate, NULL);
+ 	if (ret) {
+ 		dev_err(dev,
+ 			"could not register of_dma_controller\n");
+-		goto destroy_cache;
++		goto release_dmaenginem;
  	}
-+	irq_requested = true;
++	devres_remove_group(dev, dmaenginem_reg_group);
  
- 	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+ 	dev_info(base->dev, "initialized\n");
+ 	return 0;
  
-@@ -3869,6 +3871,8 @@ static int __init d40_probe(struct platform_device *pdev)
- 		regulator_disable(base->lcpa_regulator);
- 		regulator_put(base->lcpa_regulator);
- 	}
-+	if (irq_requested)
++ release_dmaenginem:
++	if (irq_requested) {
 +		free_irq(base->irq, base);
- 	if (runtime_pm_enabled)
- 		pm_runtime_disable(base->dev);
- 
++		irq_requested = false;
++	}
++	devres_release_group(dev, dmaenginem_reg_group);
+  destroy_cache:
+ 	if (base->lcla_pool.dma_addr)
+ 		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
 
 -- 
 2.55.0
