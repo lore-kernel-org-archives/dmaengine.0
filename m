@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3593DB964;
-	Sun, 20 Sep 2026 19:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620952475CB;
+	Sun, 20 Sep 2026 19:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789930821; cv=none; b=t0U9v/Px0HawWEFQNBZzciCgAzBohDypQ5yZIjqIobE5U1TY5nXOD1KQD1HdIGSpTf0NhmMGdQAgLKIaE9Y1dGRCbN+0pJCBcg9nSA4/Hb10+njUr15fG+Alf1dMZlQGdBkwamaEr3NuziEvJL+GnZg6764avswexFOmcBS/ehs=
+	t=1789930845; cv=none; b=g8M2ptHeVtPh80DQhOAcq3DQaEP0aK8Bb2jRxG0eNPlf0JyHsqRFBPyHMXml8sciNOPX3V6fP20D7FczxW0FHE7NNtkrmPM5GbYkSO4r3Jc92DGbf0UC/7Xlh4TOHNbOj6HLbGc1YOrgcPZxSlenWicTMc7w5mhGom96CXnwZVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789930821; c=relaxed/simple;
-	bh=uLZU+K+E7msl9KSp85bPuQLji0VhSbj2qwZPIiduspY=;
+	s=arc-20240116; t=1789930845; c=relaxed/simple;
+	bh=0DkHUQHRfoqKL9gYxGMnkizsZmvgpbBQdsRd3+M3fKk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qfLTGTIL8+VAUKkY1grJ5KYkii91A3eVDK1S5w2o6CMnkSRqnH/JLebJUGNmA13JIsj0/zs6OV1Y3mW/0+bauK73NpFhP/wRFqcH4l5PuIiik2O+Yrk0v7+1pUoEUJV/U3GnNfr0CTZqlEqpIC1LFQsbUX4gdlw5yFXDJpaIAy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DkI1KLPx; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=m8e8kwMNvOnKywniiufk0LnTLhoc5d9fvMVz1x+ZsL8rMDjyb7ASdU8/Gnumhlieou/VrAkfscZ+8zwZtAoFNVolcWGMvb3PMQ7SZ6Srg1vqSAdC2/iNuTjI/bsytMJj867xyy9ND95oJv8I9tV2otcPKtRDA8Mr1WWrVau/tIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SXVuUvhb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DkI1KLPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AB11F000FF;
-	Sun, 20 Sep 2026 19:00:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SXVuUvhb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40751F00898;
+	Sun, 20 Sep 2026 19:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789930819;
-	bh=VpyQBlCooLKGOvS3HE/8MEOBbMIf2BiA/yMWc70lvvc=;
+	s=k20260515; t=1789930821;
+	bh=BW5ZyFWexrE/4Lt3ob2eE6u2cq6GMiXMHfOpGtcVFZw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=DkI1KLPxpp1AoJ4zCyPu0Y4/KNeB+CRqvsF16tVXPeoVW43fe/t3R0B5izXzmCa/7
-	 /HhWo/auy1L0ogG/y+c22hMQzApoi1OBl0N0PNYwmnRSNTbx8pxxOGROxqQGgRu5Z5
-	 TTrx6znf5k5YdSnHs1uFveMd13bHCReEvh0gIndefdkiE4/cvelfDlN1hQs3kMpnG/
-	 TSAzQPY07F1lnliCgmp4ZzxkQvHTF9dYCf2gNSyTqgNX/COmwEtHE8FF7sAFSrSM4a
-	 75zHJZXCwo4uVZOwjlhbeEtDvWEcU3dsJ7f+/r/JAeFYBXMHEbVi1sx3hT+h3rZsZM
-	 g+VDv0O5+5IEg==
+	b=SXVuUvhbLkEoK0HPfc0lajHFl3E+CfSeThngaQGyjyQjgt01WzliQ8f1x/q5drVyb
+	 N6mqIKhlQAF/I7Ifq2Dk29XBhNue4i4xnSf3w99IewZeqmftT2pgyiwqj1GTpY10H5
+	 hen+D7jot301E3p22Qc3/xxMGNXw5QbzrhUvJ5bpEs/eg1ydoPXUZLjEmKYLO6X98D
+	 hfqG+nDQpgx1ag4JA6ToN4vbno9x4nN/P9lgJWkegxH76roveOCSphRkq/LU5n9Bl2
+	 GkY4Gt1JEbxhYp0Tk2f11kg/aTt3OdP5gPzPJ3zGLwV0d8ol08Zj3P5J09ImXk2rJn
+	 r6+6Y6/W7E1JQ==
 From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 20 Sep 2026 20:59:56 +0200
-Subject: [PATCH v5 21/23] dmaengine: ste_dma40: Search all blocks for fixed
- logical channels
+Date: Sun, 20 Sep 2026 20:59:57 +0200
+Subject: [PATCH v5 22/23] dmaengine: ste_dma40: Validate fixed physical
+ channel indexes
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-dma40-fixes-v5-21-5c55cd7f92f9@kernel.org>
+Message-Id: <20260920-dma40-fixes-v5-22-5c55cd7f92f9@kernel.org>
 References: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
 In-Reply-To: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -46,41 +46,42 @@ Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
  Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
 X-Mailer: b4 0.14.3
 
-Fixed logical channel allocation scans physical channels in blocks of
-eight. When the requested physical channel does not belong to the first
-block, d40_allocate_channel() returns -EINVAL instead of checking later
-blocks.
+Fixed physical memcpy allocation uses dma_cfg.phy_channel directly as an
+index into phy_res when use_fixed_channel is set. d40_validate_conf()
+validates dev_type but not the fixed physical channel, allowing an invalid
+configuration to access memory outside the array.
 
-Skip nonmatching blocks so controllers with more than eight physical
-channels can allocate fixed logical channels from the later blocks.
+Validate the fixed physical channel centrally before accepting the channel
+configuration.
 
-Fixes: 5cd326fd27da ("dmaengine/ste_dma40: allow fixed physical channel")
+Fixes: f000df8c5a0e ("dmaengine: ste_dma40: support fixed physical channel allocation")
 Reported-by: sashiko-bot@kernel.org
 Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/dma/ste_dma40.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 13d1592bb3a4..41c7561314c1 100644
+index 41c7561314c1..a3159a657040 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -2099,11 +2099,8 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		if (d40c->dma_cfg.use_fixed_channel) {
- 			i = d40c->dma_cfg.phy_channel;
+@@ -1906,6 +1906,14 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ 		res = -EINVAL;
+ 	}
  
--			if ((i != phy_num) && (i != phy_num + 1)) {
--				dev_err(chan2dev(d40c),
--					"invalid fixed phy channel %d\n", i);
--				return -EINVAL;
--			}
-+			if (i != phy_num && i != phy_num + 1)
-+				continue;
- 
- 			if (d40_alloc_mask_set(&phys[i], is_src, event_line,
- 					       is_log, first_phy_user))
++	if (conf->use_fixed_channel &&
++	    (conf->phy_channel < 0 ||
++	     conf->phy_channel >= d40c->base->num_phy_chans)) {
++		chan_err(d40c, "Invalid physical channel (%d)\n",
++			 conf->phy_channel);
++		res = -EINVAL;
++	}
++
+ 	if (conf->dir == DMA_DEV_TO_DEV) {
+ 		/*
+ 		 * DMAC HW supports it. Will be added to this driver,
 
 -- 
 2.55.0
