@@ -1,117 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DBC47207B;
-	Sun, 20 Sep 2026 19:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF772475CB
+	for <dmaengine@vger.kernel.org>; Sun, 20 Sep 2026 19:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789930845; cv=none; b=SOJVpqd67/7Wci4Z4C5szP+dUb/EUwhkli7sQGsyZFcOusXEonE7UOMTvcX0BAJk8dR8bpO8Kft9FO8MhbHzPaRi1MUohWaC53EQve4M2Xg8y3wSbod3yKigHq7xCX0eg5p2HROr89XRpygWzDLkDXUbVwYNthcmYwyHsWL+5B0=
+	t=1789931448; cv=none; b=EHF3fSbazhhdZNPIrEjns9Jdp9hHvcSwqYVUOM2mP4sVt7uaIO7wmLdEOWmlwqNp6OJy5sQSpHAOnbuwvBTjIFm7H+5j4D1wJCHFvH5mHKrktcE9o21h5fxODlkkr2WhGvSg/IVjSfmkA5n3ad/Dm8zqTpFJZxRRq26FTRPUzRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789930845; c=relaxed/simple;
-	bh=jg8Ttfc6qe/pB6T1gkzjChXeAfyghZR60TGjRIQSFQo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gaFyWZAj4+NR/hijeHkBJ8jiN6UUkk3H+UndeEXBwSf8Q6HToyOocEZOL1Kxk9SIj9CSna2cx5vwyNp3s7GBuB56Vle8ZRmB/loSWcbxJdXq/Q6S3f6fCA4mIc54nEk4oc88vMbu8xXagzjPIne2NZ1wBW6ALXV3Ehh6il6RSZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IqOWG4sH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789931448; c=relaxed/simple;
+	bh=7nxa8XPZBhXdYIVIt0mJuxpXocvxg4zqFBy73+OTqGw=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=V6OeHvZvApqgCrqE0An040vN7jQGWO1JxIlt2nEsOu9doMci1NFeY2UsulXrnezLsk0IUIBdSq469wodaxPvaD7bszh45NaodOBNY4IM9/FlUma9q9Djv51aYOIcA3Fdu4YCBGDu/vrx4+OGbfkdEI76+cdJqBZCbWgUaRPMWlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jEHG9gAL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IqOWG4sH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922BB1F000FF;
-	Sun, 20 Sep 2026 19:00:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jEHG9gAL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20ECF1F000FF;
+	Sun, 20 Sep 2026 19:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789930822;
-	bh=VU3S0qWYRWOoJycbLuEw2ica4z+x14AFZYUiMG09FY0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=IqOWG4sHIv9LP/v7elKV83bHLbKCk1gV0wD1fAUDK33cAMuZ1SnAbLYsO752o2gGN
-	 R60uS9C6nDmLCXVEAVLEbH8Z36IKUlLwy/0ocVZ8m/bRoWOwuDadakGriJJRVI4Nyg
-	 RFrj+0glFM7h6GMhDzwJbzTmxrOgDHaBT4Qudqoh664dunc3KsYLSHzEVM9mFm/Pnj
-	 F/ttHRHaxTRZSM00CCnPZeJc9mawQN2rvPT7dV9nzyOEsNYppyk/C59EFSygtPCPq5
-	 DMxhTzNOsNBgi9PQIClMvaboitiUb18VP+7UdPsYWwAG+L94dXWLGmis0goBmb/pTy
-	 H9BcR2yA9+qgg==
-From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 20 Sep 2026 20:59:58 +0200
-Subject: [PATCH v5 23/23] dmaengine: ste_dma40: Validate memcpy
- configuration
+	s=k20260515; t=1789931447;
+	bh=kY4fGVQJtsjJ/gBk3fA4tZtF8p8lB+DRkjtykLCPE20=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=jEHG9gALink+KNpIjgUtgo/xCvdC6tcEtVqNLkdM3eJ1dQzUewP6oHmr+pAtAz6BG
+	 +UrTJxgvuEXqOMM29bZjAF7ljPwV7pwrVcQZwGRJlQtH4RcNnODMRJPFz6X86hZldM
+	 bCgmcokNO+NCc8dQyFaIhzanu+t7FKn4BkYuxYDUAdO/qARQ0xj45t04eUXczz1ItC
+	 AGISSqGMCesugsF5hc3q9/KJ+UA6NClniomH7hdJRUlgy7jynM7QtdPvgLExPDe/le
+	 XzD6V0KbcZtzG8FF6rV3CjyJ1Ex2g9RR3Pa/OtPAr95C2iVmiGdN5U28ZcupWREyBX
+	 74h7ZZunpgPOg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 08/23] dmaengine: ste_dma40: Return IRQ_NONE without
+ interrupt status
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Linus Walleij" <linusw@kernel.org>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260920-dma40-fixes-v5-8-5c55cd7f92f9@kernel.org>
+References: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
+ <20260920-dma40-fixes-v5-8-5c55cd7f92f9@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 20 Sep 2026 19:10:46 +0000
+Message-Id: <20260920191047.20ECF1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-dma40-fixes-v5-23-5c55cd7f92f9@kernel.org>
-References: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
-In-Reply-To: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org, 
- Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
-X-Mailer: b4 0.14.3
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: ste_dma40: IRQ_NONE on AMP-shared line disables IRQ
+--
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+commit 2ed162fa364e4bf7289280c1ba5e44ef8ed65fc3
+Author: Linus Walleij <linusw@kernel.org>
+Subject: dmaengine: ste_dma40: Return IRQ_NONE without interrupt status
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+This commit changes the DMA40 interrupt handler to return IRQ_NONE when no
+status bits are set. It aims to allow the generic spurious interrupt detect=
+or
+to disable a faulty status-less interrupt line while still treating foreign
+status as handled.
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
----
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index bb052d3028cc2..4380f9a1b035c 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
+> @@ -1807,6 +1807,7 @@ static void dma_tasklet(struct tasklet_struct *t)
+> =20
+>  static irqreturn_t d40_handle_interrupt(int irq, void *data)
+>  {
+> +	irqreturn_t handled =3D IRQ_NONE;
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index a3159a657040..57d556e46402 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1885,7 +1885,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
- 
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2159,12 +2160,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2172,6 +2178,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
+[ ... ]
 
--- 
-2.55.0
+> @@ -1872,7 +1879,7 @@ static irqreturn_t d40_handle_interrupt(int irq, vo=
+id *data)
+>  	if (ret > 0)
+>  		pm_runtime_put_autosuspend(base->dev);
+> =20
+> -	return IRQ_HANDLED;
+> +	return handled;
 
+[Severity: High]
+Does returning IRQ_NONE here risk disabling the DMA40 interrupt line in an
+Asymmetric Multi-Processing (AMP) setup?
+
+In an AMP setup where both Linux and another SoC core share the DMA40
+interrupt line and status registers, both cores receive the IRQ when an
+interrupt fires for the other core's channel. If the faster core (e.g.,
+an RTOS) clears the status register before the slower Linux handler reads
+it, Linux will read 0 bits set, and handled will remain IRQ_NONE.
+
+If the other core processes many interrupts, such as audio streams, Linux
+could quickly accumulate 99,900 'ghost' interrupts within a 100,000
+interrupt window. This would cause the generic Linux spurious interrupt
+detector to permanently disable the shared IRQ line, breaking all
+Linux-owned DMA channels. Returning IRQ_NONE for status-less interrupts
+appears to be incompatible with AMP-shared interrupt lines.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260920-dma40-fixe=
+s-v5-0-5c55cd7f92f9@kernel.org?part=3D8
