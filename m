@@ -1,140 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF32547066;
-	Sun, 20 Sep 2026 23:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4D547066;
+	Sun, 20 Sep 2026 23:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789945466; cv=none; b=NIiU84Dl66MAtoPFMSefSzIcMDbZaUoDgDTdU2cvSwWpisPaxPs8oOs10qhcaylT0/p0Og3zv9olhAcU/Sg5g8e20U2kpAWAvPMjYdqJVGzcKGIqR0zDFgpU1yBj2sHVtp3bJBnDr8X2PvDcc8ocw44QjbozLyhZDGQiGfSR60c=
+	t=1789945528; cv=none; b=O09Sfd8Rv47D3vmhQGVVno0mmEuFGncM8IBwo+T6y0L1PCg9LR7gymGj0NeloiSEGaSqiT/EaWJ6LeptGa4BFgz7H2aT+uct9qI/K+3zMu9ArB1yWOxt2b74aSQtiQURTD4hyNDZry+jx8+dod/Fy6JqW8IwJOtJJJVqO93nVcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789945466; c=relaxed/simple;
-	bh=3pQrfgMWXkDAhoXw/wWa+OmCJpazRxNVwhIUL3B1aBU=;
+	s=arc-20240116; t=1789945528; c=relaxed/simple;
+	bh=RC3ap9g0bSfKfSNvfujg6vgS8YBZMMAYVjutrnaOFQM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=WCNEhgc1Oswc6tM37h8Zo/Xt4iJQKnEAYHVK4RjOjCvscwQZO51k+iPcnSy9RDyCoYzuFJ5stra2a1AflemdHV4SuYIZsjOq4dCoUJDsyCZOODe0eLnwh4DyqnGOewhZXvBQstcxvp+MBQ5GC/iHqGpA6nivrJGmZFBfJG7r/Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mM4XGNQf; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=lSVgwRBSeakPIpTDbmkQwAEnYSW/93rwr3765EYwEZS7SQWwgY3zvvqHK8Gl/DtPdhXOkXYHDAs85fwOVC3qAwLvRnuyZh2vTQcWdaIvmv5xkyGaGxhSf9ETTiF2kjunhVapdofVTCok+Je01pcODWAkdTHVysDM4uvFRwIpBcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SK3DGT/a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mM4XGNQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BFB1F000FF;
-	Sun, 20 Sep 2026 23:04:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SK3DGT/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E331F000FF;
+	Sun, 20 Sep 2026 23:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789945465;
-	bh=Oh484vqStnymfsvQXpkqyTCv7WpvymOc4ncgA/Irasg=;
+	s=k20260515; t=1789945527;
+	bh=hCUaowriA3hZMRn59DPhhzIYIgSKcMxauQD9+dQvkEs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mM4XGNQfJua5ef0O1ssjJb+Sbt145oe0Xov5woty8kDSUiB4B9Bs4XDLAj+1uSeIp
-	 1uvtGPUkkR46ogRCbQuctRk0Qd5MVSZVCgWLksuzhWKY+RTPI+0LX4POfNqHQ6Q5yA
-	 mO1oWCInPRlTYrMGddvRh/vd5Zl86EZJgi94PfoE4Y+pcATHTaqowxaqjY2TicrNBR
-	 D563gqO7XEoSCfwIKMhGDj4kywBcX2oh5hU9Kia7d6PqBtLl9I3YHoETi+KmY/6l2T
-	 EBoooar9v/+D5slXlOol+MB6IDbdFuslCEMcmhB8pSR5aeM2qWyr5aq/w6aRImU1E4
-	 6rSdSsGH6Ghbg==
+	b=SK3DGT/aVfNNXUV+/ir/glJcAxY0ja+/uo7yIo92EX+2AKUx0qFotvrspq4otovjF
+	 qvGLP+XZE6bA+8TPhuYHHsxKsqiGIlx406IArr41WoMZA+JnLbLlcpi2RWsk7UPyF6
+	 IA1BoN0bhaT9HC5Ad+Quza2oSaF9n2jWdQSy0GMIu0efZavAHjCbL9dmAqwX4UmMCH
+	 h+wdnDAGT+3JJImQPW6NOsi6A0bTFbPLXzRQR6UBO/7rSQl0rERZZuYHNe1TvwtU/k
+	 nQEAIleTC+xbkeZSdVJlphXwiXgZpSWAdjHN7hNK+5tGfMOPhfrB3B103FL0Ptba3A
+	 Mvcy+y9Scu1Qw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 12/18] pmdomain: st: ux500: Control DB8500 EPODs
+Subject: Re: [PATCH v3 18/18] ARM: dts: ux500: Remove DB8500 EPOD regulators
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Linus Walleij" <linusw@kernel.org>
-Cc: conor+dt@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org, robh@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20260921-ux500-power-domains-v7-1-v3-12-9352be6b86b1@kernel.org>
+Cc: vkoul@kernel.org, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260921-ux500-power-domains-v7-1-v3-18-9352be6b86b1@kernel.org>
 References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org>
- <20260921-ux500-power-domains-v7-1-v3-12-9352be6b86b1@kernel.org>
+ <20260921-ux500-power-domains-v7-1-v3-18-9352be6b86b1@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 20 Sep 2026 23:04:24 +0000
-Message-Id: <20260920230424.87BFB1F000FF@smtp.kernel.org>
+Date: Sun, 20 Sep 2026 23:05:26 +0000
+Message-Id: <20260920230526.D9E331F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] pmdomain: ux500: missing RAM retention flags in power domains
-- [Medium] pmdomain: ux500: power leak from initializing domains as OFF
+- [Medium] soc: ux500: missing v-ape-supply causes dummy regulator warning =
+or probe failure
 --
 
-commit 9e8ecf92bb791471023c621b0664e285a95b3ad6
+commit 3a86fcf38f93ed2dd8837f7b5a7e6f474011a07f
 Author: Linus Walleij <linusw@kernel.org>
 
-pmdomain: st: ux500: Control DB8500 EPODs
+ARM: dts: ux500: Remove DB8500 EPOD regulators
 
-This commit moves the DB8500 EPOD state handling into the Ux500 power-domain
-driver. It also keeps the old regulator driver mutually exclusive with the
-pmdomain driver.
+Delete the deprecated db8500-prcmu-regulators node and all its EPOD
+regulators, including VAPE and VSMPS2. Their external consumers now use
+the AB8500 or AB8505 buck regulators, so no compatibility regulators
+are needed.
 
-> diff --git a/drivers/pmdomain/st/ste-ux500-pm-domain.c b/drivers/pmdomain=
-/st/ste-ux500-pm-domain.c
-> index d90a563cd6f37..b31a36a4acd17 100644
-> --- a/drivers/pmdomain/st/ste-ux500-pm-domain.c
-> +++ b/drivers/pmdomain/st/ste-ux500-pm-domain.c
+> diff --git a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi b/arch/arm/boot/dts/st/=
+ste-dbx5x0.dtsi
+> index 0603244dc9e83..efc84e018c44a 100644
+> --- a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
+> +++ b/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
 [ ... ]
-> +static int enable_epod(u16 epod_id, bool ramret)
-> +{
-> +	int ret;
-> +
-> +	if (ramret) {
-> +		if (!epod_on[epod_id]) {
-> +			ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE_RAMRET);
-
-[Severity: High]
-Are the RAM retention branches in enable_epod() and disable_epod() dead cod=
-e?
-
-The dbx500_powerdomain_info struct defines an is_ramret boolean, and these
-functions check it to use EPOD_STATE_RAMRET. However, none of the 16 domains
-initialized in ux500_pm_domains set .is_ramret =3D true.
-
-[ ... ]
-> -static struct generic_pm_domain ux500_pm_domain_sva_mmdsp =3D {
-> +static struct dbx500_powerdomain_info ux500_pm_domain_sva_mmdsp =3D {
->  	/* Vape_SVA_MMDSP_pwr */
-> -	.name =3D "SVA_MMDSP",
-> -	.power_off =3D pd_power_off,
-> -	.power_on =3D pd_power_on,
-> +	.genpd =3D {
-> +		.name =3D "SVA_MMDSP",
-> +		.power_off =3D pd_power_off,
-> +		.power_on =3D pd_power_on,
-> +	},
-> +	.epod_id =3D EPOD_ID_SVAMMDSP,
->  };
-
-[Severity: High]
-Will the omission of .is_ramret =3D true here cause SRAM data loss or preve=
-nt
-the domain from entering retention during suspend?
-
-In the old regulator driver, domains such as SVAMMDSP, SIAMMDSP, ESRAM12,
-and ESRAM34 explicitly had this flag set. Because the flag is never set in
-the new PM domain driver, it defaults to false. This means normal runtime PM
-transitions will fully power off the domains (EPOD_STATE_OFF) instead of
-retaining their state.
-
-[ ... ]
-> @@ -186,11 +304,12 @@ static int ux500_pm_domains_probe(struct platform_d=
-evice *pdev)
-[ ... ]
->  	genpd_data->num_domains =3D ARRAY_SIZE(ux500_pm_domains);
+> @@ -1122,8 +1031,6 @@ msp0: msp@80123000 {
+>  			compatible =3D "stericsson,ux500-msp-i2s";
+>  			reg =3D <0x80123000 0x1000>;
+>  			interrupts =3D <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
+> -			/* TODO: delete and replace with power-domain handling */
+> -			v-ape-supply =3D <&db8500_vape_reg>;
+>  			power-domains =3D <&pm_domains DOMAIN_VAPE>;
 > =20
->  	for (i =3D 0; i < ARRAY_SIZE(ux500_pm_domains); ++i)
-> -		pm_genpd_init(ux500_pm_domains[i], NULL, false);
-> +		pm_genpd_init(ux500_pm_domains[i], NULL, true);
+>  			dmas =3D <&dma 31 0 0x12>, /* Logical - DevToMem - HighPrio */
 
 [Severity: Medium]
-Could initializing these domains as software-OFF (is_off =3D true) lead to a
-power leak if the bootloader leaves them enabled?
+Will removing the v-ape-supply property cause regressions in the
+ux500-msp-i2s driver?
 
-When initialized as OFF (true), the genpd framework does not set stay_on
-and considers the domain to be already powered off in software. Because of
-this, genpd_power_off_unused() sees them as already OFF and skips calling
-pd_power_off().
+Looking at sound/soc/ux500/ux500_msp_dai.c:ux500_msp_drv_probe(), it
+unconditionally requests this regulator:
 
-Consequently, any domain left ON by the bootloader without an active kernel
-consumer is never powered off, failing to replicate the late init cleanup
-behavior of the old regulator driver.
+	drvdata->reg_vape =3D devm_regulator_get(&pdev->dev, "v-ape");
+	if (IS_ERR(drvdata->reg_vape)) {
 
-> +
-> +	ret =3D of_genpd_add_provider_onecell(np, genpd_data);
-> +	if (ret)
-> +		goto remove_genpds;
+Will this missing supply cause the regulator framework to fall back to a
+dummy regulator (emitting a warning) or return an error and break the
+driver probe entirely?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260921-ux500-powe=
-r-domains-v7-1-v3-0-9352be6b86b1@kernel.org?part=3D12
+r-domains-v7-1-v3-0-9352be6b86b1@kernel.org?part=3D18
