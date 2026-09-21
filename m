@@ -1,176 +1,228 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013051.outbound.protection.outlook.com [52.101.83.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF0651D51E;
-	Mon, 21 Sep 2026 22:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790029182; cv=fail; b=uyrHI6KWP18nC1USrhshJlseiELtAOa0V6W1xf6PFXQfUQo5eMCSdUGubbBWnhaP3AJ0SR+qyTRfCk76LU+spZiaXnVrF0jdl94xkRSZbkVXFXYVBaQaUpU7AibOGVSw90j+wPiuJipj/4yo3A/dZo5z0AzRjZllhDHceRFTw98=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790029182; c=relaxed/simple;
-	bh=LJUC4FJLtP1f1n4tOzTf08BIqBDZYVH4LkuPwWFQlpM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=SgyroXj73WPhXfbA2SJu4a6H3wDtGjTjHkSaNtPPNHEszrbKV52bdpErHxLSQNMMSi1W5vcgQspcsh1Ke6OmX+tHkNQ2C3aIToZ9eeDlF2QQKPZc8Q/46qOV34V/tP6zeE9XcS8S68B/zwqAwjgu0vDlogqME/qzl3qCkOKAPKU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=DWMQY9Wv; arc=fail smtp.client-ip=52.101.83.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA1A51DDF2
+	for <dmaengine@vger.kernel.org>; Mon, 21 Sep 2026 22:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790029550; cv=none; b=i6uNLc7GBC1LDWVV2EPWnp2rO/h5SoUfoqQI1Gwv2Z1lSCIkJmUfHuziAYT6Vg89nB/BqrCFEPI8y/1ayoTz9Xd9vIJYL7U48FbbVlnPA3C3zb0kPgI2iMkjtB+x+m0MJ5LwYnyaUr8z+rr4atZU+g/Nq+obMDT7q8fpyBYOn30=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790029550; c=relaxed/simple;
+	bh=ppfiKvwRFb3MsV+DdIeNcTDxiyrekIDHGHyJAgdAWnI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WQYtMTYJ9ulc5lSVvvzdtx7x/A+Y5XnyKwCv5ewmZpc3t1FXwIoBqV1TiKEGj381mphIYM4NLDc5KXG4szx8ucuTshDylU2f6/ObzhPBvbD15HVmgFsK+wCbtkYlx5vzgwA75RTGQha6AMaQ5/PufLSioJFMSf0X5xn66aGmjZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F5AptC+F; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="DWMQY9Wv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Cgq4MlbxjYx7ikZfz1T/gpeJnRHA0yP2IIBxRZlBJGMUhI8wUa7JjhDK37U1FXkjxnEUu+m83tjbJGz1sZs2OFM9QZlmVceUz+z2ju0pKqHNsgsQrxm5wfDIAF7N1GLklWGJwiSKzO/0s3P+2hBS5ffbBuFfsYEDNx/+i42Gr1b6Ctwvgkwz6u3RX0OE9eIyfAD0mAuqESUw3ymhDhEPj3tt3mvgI8rjNeTwBwVeHgWOF4E9L/hzsfK31xU+iwj/DdRUX7UOGIH6qDvngYrS9TLR+wSAWnMla7kczjmg5YLBfay7dJoVyfJ2H10Icl1VM9N0zrCSImQcmKIc2wiWBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sB9L4jZOpqhAlB0KfiInxhyB/5vy7ukKu2sbROpdZrk=;
- b=d3rV3ByJbcHlP8fnC1mP2QwVRT3nKLxoA1S5vS9Jt3LA3Xi95qmz1X8O9KTKZU3pkf7kvva5yCWeuVVlrhGwe7hmcV7ZwjKDVfaZGX0HAyd8gLDVSHHso+potXT7jtUVJymXkK4dTAPHGig/j2opg+mXbCawvX15M6QvxPb886a4f8J4Z4kd+TxJOjkIFcAiCZDR9sQB9uRskecPKId9+6X7HfYr3u3/zUS7vAQXnNzXUFOzcazxu8QUPHR1cjVdkRRMbHlDM4QEHOYi9DRBBFS0lJfo6DaVChZszSQj7eWc053CaHUksw/IrWZo3tkqhVdYUxvMUdBBqkU0AhKOLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sB9L4jZOpqhAlB0KfiInxhyB/5vy7ukKu2sbROpdZrk=;
- b=DWMQY9Wv5iUMzoZKV40zMviU4xcC1foAIQLbebGTw4lfPdqXOA/Eb7CN1kplKBD8b+fasgWvkKh9iADNBGJpF9eAINHJvZgXWdjotoKldWVNWRGEPk6q/1vTl6mRv4+0i+jdAzHwuPMpGekRTyap5CYfvi0UGevm4COd5WzDnSBKQp+CNF6iuS1PX1y06AgaPs+cu8pd6TcQlkdwY3Toj9FeBHEDCjvEe/RCdWQdCYJFLcywRY7BwAU6BLUUOIaQmxpg//26mu9Pdjm+fUV0hlmbJ5tQtwagbHTtAWL38DLY07uih4nfCFxdUHg7rVtU9UF/FPu+663P3fhj/bo36w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA1PR04MB11034.eurprd04.prod.outlook.com (2603:10a6:102:483::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Mon, 21 Sep
- 2026 22:19:34 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 22:19:34 +0000
-Date: Mon, 21 Sep 2026 17:19:27 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Linus Walleij <linusw@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
-	sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 06/23] dmaengine: ste_dma40: Check runtime PM in IRQ
-Message-ID: <arGtb2NK7orjJk0Z@SMW015318>
-References: <20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org>
- <20260920-dma40-fixes-v5-6-5c55cd7f92f9@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260920-dma40-fixes-v5-6-5c55cd7f92f9@kernel.org>
-X-ClientProxiedBy: CY5PR15CA0025.namprd15.prod.outlook.com
- (2603:10b6:930:14::34) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F5AptC+F"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccafb74fso3349392a91.3
+        for <dmaengine@vger.kernel.org>; Mon, 21 Sep 2026 15:25:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790029548; x=1790634348; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Wtx8XxjWiahHO9saGrrA8bVtKn979Y+PzPTB5vfUlfs=;
+        b=F5AptC+FXwwyvr/Jly9RSBRDEJq0bjfnuweoqoHH6MQjBLZbumla23BMh4QJL6m76f
+         hJ9QjY05ORXh7f/gQxVzKSyAKD8rOSyselm7L5myBgPl1YbR1Zvcf44pfVvQQcHn5s6s
+         v6Rk3j6jP6CoePB21++G4RVH9J2pMQxmsnm30dnE63yQA5FWD/MkR8GkdQFYL6XxTio2
+         0P6jycYmsmtewuzpfkUcH8/QS/9hyxjQU2gE1CvXWZa/fE6Rbt9ltdBdPf98lzfwVnAT
+         4LvSnXWeEXmFt4IEOFXQ/Ppv7TajZqd4MQafo7Nz/2bRMNTbD9BVW/JTRr6kjwETtrrX
+         kW1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790029548; x=1790634348;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Wtx8XxjWiahHO9saGrrA8bVtKn979Y+PzPTB5vfUlfs=;
+        b=J391jE8rb0QfLp0Bev8drWSw4ZhfChC6lHX7WAGNu3p/voxqP9bjYMTRyyPjoPaJ4I
+         FkMTwjjsO6pFOKqC6e5HRJcNGNZG9aWpQL2Gbma3i3d3oouKyoJGetK5uhuWNEQHSZMr
+         eNA/73jz5gt66Brr5CUH1hIREpdGUsbN/UJ0XiQ7p6vudROxpfzqPf0DuZIRYb/JhXMw
+         iiuaJRYstmkuJTqFZCPKH1JxpuhIHky53uJRf7N8GNlZR01Ao5xjKvgwMUkjAW/Urmep
+         8YTSTpEDUYS1yuAyOwI0+ftyhEbmtM2OuiovJE1DHt4R881CS+M3qfH+se1tFHqGu8ks
+         3log==
+X-Gm-Message-State: AFuF++l1ktMiCLNS1UF23i6RXfXjGL3VQsMSJVnItIvsyhLl1jz4HhU/
+	yqIjcqKoEi1xqN69A13aUpFHWGt7XQvlqo5T2cDoxJ+8Ah/MIlKbDwjSJQ2LRQ==
+X-Gm-Gg: AYBFou3Wm+xsdtxDgGoMW8QZLEphTDzLuGjCeu5nd1zayiJQF4sD96E56YmfnxVOVfC
+	HeAc5PSu/p7qCxZ7wHPb1lzc6ZnxsddQfyBk2v1qgeXvT9F33DhmVylP/bRVsmNkMrDmJ6S9qn7
+	56Vsm+osYL8e+JKwSS1V96BgKdhuUMWlvZJ/HbtGKwX/2s91XiDGwQgA9mGIjSxy1ya/cdAcd36
+	DbaeTSY1BMwMlzjrlBYItLIc7gRxCYsJuPuUoQpxXoYjRk3T1gErLosrTTqShYxFScwU8W5+hkJ
+	9dHAiuARosm8Gm/JiyFTV9vOL8UalH4L5NoQXlVYXETLNZaZGUOEuN2kHknVt8Dzhe+A5ZgVc/r
+	HAuNEgpVB7C7MKhIIgYTsITrvZfjfRQYF2msS36gI0XSimVbNnr6jnGF67jmP9CLBcb3++r14Mr
+	AXTeBm96vqC9m81Bla+jyAEvCQVvTDTCw2ML2rkeJfjK8Um34u8F/KrgTM8H+7innpnMAH6vuh5
+	T5QUYIRPxgWUdOhgruISZVaw/G6T3PPuRyD1HEMitAChXNxWb7xaWJZUllL2/L8mvgriRO+/uQJ
+	9b5gLjVR1QyFdXWEYRaz/eX33fC1c0TDYwV5hV7WrqX7yhaX
+X-Received: by 2002:a17:90b:3c05:b0:39e:218c:d47c with SMTP id 98e67ed59e1d1-39e54f42eddmr21948184a91.9.1790029547598;
+        Mon, 21 Sep 2026 15:25:47 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a06cb7dacfsm12607a91.4.2026.09.21.15.25.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Sep 2026 15:25:46 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Xuelin Shi <xuelin.shi@freescale.com>,
+	Harninder Rai <harninder.rai@freescale.com>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv8] dmaengine: fsl_raid: check fsl_re_chan_probe() return value
+Date: Mon, 21 Sep 2026 15:25:44 -0700
+Message-ID: <20260921222544.52655-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB11034:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86ce786f-9201-43bb-6604-08df182e6a7d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|19092799006|376014|10067099003|6133799003|18002099003|22082099003|56012099006|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	pGzcLTMhJO5HfCAAoEJm23fmiA/JHY+jvDmWU4AkuQe2KtrmEJOuGOI+0ny07hFmZhpU7Vz7tAOEh2MQA4yxmPABbcGR89M9JJopATqDmQQbZlBgC//RlZnE511lqqzVYnO9eGOJsiTYjxE9qErITKp98C0sW/mNSK5GHw1yBtG65+wwiTUdUvPMycVOtQJqhAGbaT4Uc+Jpe8F2lPi4SMmsbXEl8r360aTHXrqqgvaSAenPDJ4jZzKPb+EZTljqDTb4KymUxGHHKJSub9mnrT+SHhdoGJ8JBmyKy/mb3SqR4hIh2nsTnGbsBz/FtDoSVc+qa2ecUboCGAeBLqcleljECHAlLYjjtWZaLuajFEmwU7M7AOwQK8aqLM3iQayPoTVfbg0kpnTjyT8YqT0V5PAhuRLP4xeazI1dU6YTaWuXAUBUmcsoWxx8wVL9VbEOFfi5pVZLzk8kuenx8kRb3pGkzV9aM4iAjs25LCURAKtNf+UKbcMR1FAKCw2gszIRed43+jwoAj12Inqb9NSVSRZ5KBykk/OxjExWE8BmGudRcsrn68Wi6G+7tp2YIkvxreYlBldvCO7MvWH2rwetbJHrj9fq0dIPyZBesGBZpvC/G4g7VGAAQjeHsDsFF8Ul
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(19092799006)(376014)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?CjMbJotWoSvS7J2LRSKPZfrSjQ8r2KBl+sT8G3KoNLuSomJTKXXTsakWOfc4?=
- =?us-ascii?Q?hBUc8tboZqSIeHkDsrsStmM/JRVlDxFU5vyHuOmaFPG8zH/IQkED2Jd50rTf?=
- =?us-ascii?Q?2UL5VAFMjSq/OPb+3PD4gMA71Wvf6A+GfLfKGEs6iBb2L3FlozBRJXZIyJjk?=
- =?us-ascii?Q?BvGRQMIw/Mjsv1ej5x6zLgu18w37LYtqTAEr6mW2TGE/BQgQzRsxbC7L8Sso?=
- =?us-ascii?Q?8cDvPnem5MVwMzKLqvFcC2hRw68/akX7ESV3qLnCqeJJCMxO4oi1tb0yj1q+?=
- =?us-ascii?Q?PPTPJC9ImDAqPKzMmyXdm1lr1bpcsz9lAxYMhYUDpROWfvtmcvMSMm4RFTN5?=
- =?us-ascii?Q?iyGa8eN+qkJaFY5ycLub7wZYA1vzV0rjwWatu/jHaiaHHidXXAv59TlJDJJh?=
- =?us-ascii?Q?WzJb0+eWSKO+PbNmtkIWXuFZQAzpdKocmKrVxe0GNFjGh090p5jmaiM6uz8Z?=
- =?us-ascii?Q?oZOXfKpu9P/LcymL+x9jARd4ZvDw8La/86ThtUiMAM8BoiN4BDTc6XF+UTEM?=
- =?us-ascii?Q?E5JTNOCj6TR+49TM1vLhtdFc+/ildItCvwsz8m5RthCqZVbhpieRJ4z5SSIa?=
- =?us-ascii?Q?4b1gJ4tXKoa8pHlIpjkqDEDVOMRlGqRj3qlMAWshtvleAwahl3hHno/85qa6?=
- =?us-ascii?Q?PMINp2HqZFuZOeS7HdmWgyE5KGFKTCmUH5EjYTJBwPYm4x3mfOlN2rrxT5Fb?=
- =?us-ascii?Q?5TFZJaOS9ZivWVdmvzd11r1GuFM9IO++gbZeDNEPpEXe+6REMB9ueD+MfsFw?=
- =?us-ascii?Q?Pw2NmTXAjddRUMjMr24L0cq7DGCetra98e4O/xbvAgXz9xyT2KIZajv55ku9?=
- =?us-ascii?Q?XFGM4yy8G8nOagnmRslfA0ZWmGvxN8fPUyqoB41cG2R2YSIFVRZnoqMPRtke?=
- =?us-ascii?Q?FsqE2TXWDKDjtFOGT3DEdVsvpJ4q8XZ5RQUaIJ/0yRdHo+0wZSoWJ6T2A9BO?=
- =?us-ascii?Q?NrYAcdfFYt4blyDqw70gjAprr2gcrh55aRlsyaExzmIanalrd5oWo424Lo5U?=
- =?us-ascii?Q?IybWHRu/+I0dWXYJccZbvZdRjVu9YDWx/vOxW1k/5aA4jvsBuJC5fk8kRwEs?=
- =?us-ascii?Q?uQbdrUDjebk/MaTM4zdQBBZy8xttQkz9VdEJK3zI7RsnAhpBNyZyiPvkXIYM?=
- =?us-ascii?Q?BIXFe6AmvipF8VhWlfOiLC8/JOwV7uK0v5N3AN5pqyLa7GVvNKWormYoFyG7?=
- =?us-ascii?Q?UUddxn15Cm/nZhupYXpw2na5KLoKxX4fYiFhit1c8JP1kGa/YwJxtPP/8FcB?=
- =?us-ascii?Q?JOH5ji+5ao0KUNHAN+5MsVhGWetPprOOYwiv4BrlS+8CoBfcI7wiQ8xdmiaR?=
- =?us-ascii?Q?BXGO3BlbdjmGJK9ce2GH1hRdWj/hptdSD7hD8n63/N6hcprcEdQpgbJ/0ww4?=
- =?us-ascii?Q?tElxRDdLqOtxp+2KvkSRSXj6XZU8IA/eeK3ZCCBEUo5er4D3VRp2Er2WwGfe?=
- =?us-ascii?Q?HmAl7Dym8UEpFmy8R/AIU9wjxOFDm+UrnmyYk6PTpFfmAvaXrp1ZKHIiHXQq?=
- =?us-ascii?Q?La/RdO9YxMs6PYhAUgtBjgMssdt4e1zkU9FCtiuieTzA+Sa/THlX2Vwgbpni?=
- =?us-ascii?Q?CmT6OwWznjfyc4mzxLDD61LDUIFxugn+pOQoTZUFJltz2e4/tAAprRnRhZ5V?=
- =?us-ascii?Q?XixZhh0S+72qkkkM94thYImMYl73+6veqrIzlb+Z8qTq2dsX7M7c54FsEE/J?=
- =?us-ascii?Q?u+FmsDHDxQQNix2OQOTlQ58GbUk7SVHWI1CMeYm/8Iq/MculEt3sGqdVicJ0?=
- =?us-ascii?Q?Bmkrfvn5NlDhHCFeAC1s5EubAXS0hKDmh9ZzOUlJW1rflLbSzJb7?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86ce786f-9201-43bb-6604-08df182e6a7d
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 22:19:34.6664
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rIo0gOPk08HwAmJOIzIN4z2gtiT0GHM9zkuP3RhyOap5rSL2iySD2KDd6x4QbT/MLoelHLx+aV+6th5HKrEPJm7sg0sn07XkSv2rUufNDB/eXFukkXwlKzqzpKd8ZCRQ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB11034
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 20, 2026 at 08:59:41PM +0200, Linus Walleij wrote:
-> d40_handle_interrupt() reads DMA40 interrupt registers unconditionally. A
-> spurious interrupt can arrive while the device is runtime suspended, after
-> dma40_runtime_suspend() has disabled the GCC clock.
->
-> Avoid touching the registers unless the device is runtime active by taking
-> a conditional runtime PM reference. Return IRQ_NONE when the device is
-> suspended, and drop the reference after handling an active interrupt.
->
-> When CONFIG_PM is disabled, pm_runtime_get_if_active() returns -EINVAL even
-> though the registers remain accessible. Keep handling interrupts in that
-> configuration and only drop the runtime PM reference when one was acquired.
->
-> Fixes: 7fb3e75e1833 ("dmaengine/ste_dma40: support pm in dma40")
-> Reported-by: sashiko-bot@kernel.org
-> Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
-> Assisted-by: LLM
-> Signed-off-by: Linus Walleij <linusw@kernel.org>
-> ---
+fsl_re_probe() ignores the return value of fsl_re_chan_probe() and
+unconditionally increments total_chans. When a channel fails to probe
+(for example, an IRQ mapping failure) its re_jrs[] slot is left NULL, yet
+total_chans still advances, so fsl_re_remove_chan() later dereferences the
+NULL pointer during device removal.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Check return value and only count successfully probed channels, and guard
+fsl_re_remove() against NULL entries.
 
->  drivers/dma/ste_dma40.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 1d02226ab5ff..58128a980847 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
-> @@ -1798,6 +1798,11 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
->  	u32 *regs = base->regs_interrupt;
->  	struct d40_interrupt_lookup *il = base->gen_dmac.il;
->  	u32 il_size = base->gen_dmac.il_size;
-> +	int ret;
-> +
-> +	ret = pm_runtime_get_if_active(base->dev);
-> +	if (IS_ENABLED(CONFIG_PM) && ret <= 0)
-> +		return IRQ_NONE;
->
->  	spin_lock(&base->interrupt_lock);
->
-> @@ -1846,6 +1851,9 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
->
->  	spin_unlock(&base->interrupt_lock);
->
-> +	if (ret > 0)
-> +		pm_runtime_put_autosuspend(base->dev);
-> +
->  	return IRQ_HANDLED;
->  }
->
->
-> --
-> 2.55.0
->
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ v8: handle channel unwinding in fsl_re_probe
+ v7: handle differently based on sashiko review
+ v6: increment ridx before continue;
+ v5: put some stuff on one line for easier readability.
+ v4: use break;
+ v3: fix sashiko review
+ v2: fix description
+ drivers/dma/fsl_raid.c | 67 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 48 insertions(+), 19 deletions(-)
+
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 9cc289f7129e..a8f448f69586 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -687,7 +687,6 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 		goto err_free;
+ 	}
+ 
+-	re_priv->re_jrs[q] = chan;
+ 	chan->chan.device = dma_dev;
+ 	chan->chan.private = chan;
+ 	chan->dev = chandev;
+@@ -741,6 +740,11 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 	/* Enable RE/CHAN */
+ 	out_be32(&chan->jrregs->jr_command, FSL_RE_ENABLE);
+ 
++	/* Only record the channel once it is fully initialized, so the
++	 * cleanup paths never touch a partially-probed ring.
++	 */
++	re_priv->re_jrs[q] = chan;
++
+ 	return 0;
+ 
+ err_free_1:
+@@ -750,6 +754,17 @@ static int fsl_re_chan_probe(struct platform_device *ofdev,
+ 	return ret;
+ }
+ 
++static void fsl_re_remove_chan(struct fsl_re_chan *chan)
++{
++	tasklet_kill(&chan->irqtask);
++
++	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
++		      chan->inb_phys_addr);
++
++	dma_pool_free(chan->re_dev->hw_desc_pool, chan->oub_ring_virt_addr,
++		      chan->oub_phys_addr);
++}
++
+ /* Probe function for RAID Engine */
+ static int fsl_re_probe(struct platform_device *ofdev)
+ {
+@@ -759,7 +774,7 @@ static int fsl_re_probe(struct platform_device *ofdev)
+ 	u32 off;
+ 	u8 ridx = 0;
+ 	struct dma_device *dma_dev;
+-	int rc;
++	int rc, i;
+ 	struct device *dev = &ofdev->dev;
+ 
+ 	/* IOMAP the entire RAID Engine region */
+@@ -832,33 +847,46 @@ static int fsl_re_probe(struct platform_device *ofdev)
+ 		rc = of_property_read_u32(np, "reg", &off);
+ 		if (rc) {
+ 			dev_err(dev, "Reg property not found in JQ node\n");
+-			return -ENODEV;
++			rc = -ENODEV;
++			goto err_unwind;
+ 		}
+ 		/* Find out the Job Rings present under each JQ */
+ 		for_each_child_of_node(np, child) {
+-			rc = of_device_is_compatible(child,
+-					     "fsl,raideng-v1.0-job-ring");
+-			if (rc) {
+-				fsl_re_chan_probe(ofdev, child, ridx++, off);
+-				re_priv->total_chans++;
++			if (!of_device_is_compatible(child, "fsl,raideng-v1.0-job-ring"))
++				continue;
++
++			if (ridx >= FSL_RE_MAX_CHANS) {
++				dev_warn(dev, "too many job rings, max %d\n", FSL_RE_MAX_CHANS);
++				of_node_put(child);
++				break;
+ 			}
++
++			rc = fsl_re_chan_probe(ofdev, child, ridx, off);
++			if (rc)
++				dev_err(dev, "job ring %d probe failed: %d\n", ridx, rc);
++			re_priv->total_chans++;
++			ridx++;
+ 		}
+ 	}
+ 
+-	dma_async_device_register(dma_dev);
++	rc = dma_async_device_register(dma_dev);
++	if (rc)
++		goto err_unwind;
+ 
+ 	return 0;
+-}
+-
+-static void fsl_re_remove_chan(struct fsl_re_chan *chan)
+-{
+-	tasklet_kill(&chan->irqtask);
+ 
+-	dma_pool_free(chan->re_dev->hw_desc_pool, chan->inb_ring_virt_addr,
+-		      chan->inb_phys_addr);
++err_unwind:
++	/*
++	 * Tear down any channels that were successfully probed before the
++	 * error. fsl_re_chan_probe() already frees its own resources on
++	 * failure, so only fully-initialized channels in re_jrs[] need
++	 * cleanup here; otherwise their IRQs and DMA ring memory leak.
++	 */
++	for (i = 0; i < re_priv->total_chans; i++)
++		if (re_priv->re_jrs[i])
++			fsl_re_remove_chan(re_priv->re_jrs[i]);
+ 
+-	dma_pool_free(chan->re_dev->hw_desc_pool, chan->oub_ring_virt_addr,
+-		      chan->oub_phys_addr);
++	return rc;
+ }
+ 
+ static void fsl_re_remove(struct platform_device *ofdev)
+@@ -872,7 +900,8 @@ static void fsl_re_remove(struct platform_device *ofdev)
+ 
+ 	/* Cleanup chan related memory areas */
+ 	for (i = 0; i < re_priv->total_chans; i++)
+-		fsl_re_remove_chan(re_priv->re_jrs[i]);
++		if (re_priv->re_jrs[i])
++			fsl_re_remove_chan(re_priv->re_jrs[i]);
+ 
+ 	/* Unregister the driver */
+ 	dma_async_device_unregister(&re_priv->dma_dev);
+-- 
+2.55.0
+
