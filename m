@@ -1,132 +1,264 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8800A4F68A3
-	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 07:22:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E223839B7;
+	Tue, 22 Sep 2026 07:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790061767; cv=none; b=ejpOtCuKNIECHHQEd0bnI4YxKxCZF1HgL5pTJVtczXhgxVB0T1LuLtTgUNrzS16tCjeZ1iAr2E7EbAj8dXtz4iBUS5ZT2dL2vDbtmedPRk37lHm3d0cKmb5bhEiNtHNueVrbElqdtYu/wSlAbFN+q1/NudGfeFK9MBQyC/VEDjM=
+	t=1790061768; cv=none; b=EG4EbxdPgjgayeWAi1QD0PVaeTONbgeoWkS8vSTqUz0Tm9RBFOYlnTvZCghvVNGXoLicXig1dMKdSZnaBEsrySE55nmo1Q+Ewr40I9t06Ccu0lqP+WuvtSOCBhDLUxgHKRq4+ZaBrBhXGhjB7cL5zQSeoNCtpI8D5QC5VNCFLII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790061767; c=relaxed/simple;
-	bh=40KTFaOhOR4XVyPXvsqIHuRMnZah7jhj6hPfzoMJXEI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Mp72bP8q4dYDLeshO/cqo40uPv5j0Cwbz3a6oXj3FJ1sZpaanskM/mLaCjS/FRyZJaxpyAr/TB6CnuPWQIv/m/mbQDjdkFUkCrDY/dTtNuPTtk5y4gn7hMDbJhoDTcnKgbsyQWSMUD+s8jgAgg3qPrSxYDXUlsIgvJ3C5XFu48U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=deOKtKe2; arc=none smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790061768; c=relaxed/simple;
+	bh=jFXbOvV1XkqfIfGlbVDmaVMWCKW9dRvGw3tw0keKxfQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Tu6YIojsMj1iVD1B/4WKl4AFiyrqgVWme4GjANSFl98JXiDD1TCszvxyiOFP/8S9kUQs41RNaAdrUpgUl2nrlGd7kZUXBXye6GC5kad9rw5KpKICS0ClgZ6NyF1RLPKrK2tWpbIIG67Fb0qoAyZ09H7HBC9/k4jzYjHyj1dyNAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NDCn6opb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="deOKtKe2"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-39d654f02baso3197773a91.3
-        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 00:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790061766; x=1790666566; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=YqRdsoSwZuMFprPz4Ho4sF3JUn0Ps5OUJkmXS6wpmHg=;
-        b=deOKtKe2IVbb3OSLqVuOXpITb8Q/YCFXj8+XlsXLIX+oyESUOeOczT/gJ3q85CRIB5
-         ZwLE3rAARMpfCQfKJBMS6nN3r4PDJxjhaz67wtjznXdfmFf6lAlSqd7RXpu9+xjejzGz
-         ZRzhWM76wcNMAQ4fkEOAQCvlLCg6jO6oD83NdgGtBlDCDvjLtNShUFo4gwOg6yEuhviC
-         V0aH0CHVHqLO8y9PLNvbl/DBuINSqN8+dsTEFn7SFkTX+bBmV3rZfPbTnfkuPxN7lpbD
-         fx1bkJpDzwjkv8cnJa5aagZIEFTjBGzzf5HslQ612PemJ1ozEzyaQsHpDVxLINh/sEFi
-         YtLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790061766; x=1790666566;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=YqRdsoSwZuMFprPz4Ho4sF3JUn0Ps5OUJkmXS6wpmHg=;
-        b=QeNaglU+uFejAunZtIp34yXfkqZ1+K3pRS2zQiKbTcnn4m91Jx/A4mZqkb3KdTb2GL
-         P1/q5KguZqRZq8TMcpRTky4RHGKjUg/cIlRB7ywEpJRD4R5sQOKO+/PxF9+CCIlJb2Oe
-         aSVh7/QFAV4O0vMP5SRM3+4Okg2oy1JCwxkuEUMgm3EJNl8wGf7X1xellWT6QGfYsYl5
-         Y8U/Oqroj4PyLRy7HcOMMgXk3aA+qtJgRG3AeVCJdPADBJR7zjXE8SNOiREMJBxDT12f
-         fE80mddWysPdV3xRP91b0aDtY3k8mTMvTWpyeppjS9edWfud1Xc/NICk3yU50jBBSc7Q
-         p1uA==
-X-Gm-Message-State: AFuF++l8sn7RKXdza4iDrE/jluz669jq/a7Yz5b0M8xaVBYjJsHAeNIZ
-	Det+jXhqlW6zQRAx4GOBkLGeKGScNdtNRA5P1IGl1KpYx6qOc/Txpdpz2nQ4DrBq
-X-Gm-Gg: AYBFou2EnZVzu7LTipLAtwNvowXJv1tFrCI4GCV9jBI56xBwFoO39egbQM4dFrGkkeB
-	jhaYlJUNnZt0pwulQ6N98dVMEgszbIXzuun3jufXyAoBHRSz+UZmXa2RABGlyTlZgDqDqOMag1Y
-	ZOasKdrCt9bdK2icDlg+kpxWvbhhF8bUN7ioH4KUvm5368V0L6YOL0fptP7rakz8iRP9sHufhgK
-	22iuSExe+si13HxVSJlbSpvokcQ/r1FPPblKtFNQmw4ljGq+tscK2RYZVdNlePVvPAAp/FsPAmX
-	vwiYnIHnuzSU3yc3TioVvUyb1MiMBr3g6amRKV/r/x3KlPr7XP+8NCxb379yzby6+JYBid+gTjP
-	qKUTdGYsENoW0N6pxfFUdQ0vQzji8yEK7in5mK3rzXc56lkdcTvVb56gjluBJ+muYtlkcUWFbLZ
-	dzhybh6shr0ZN/wKmDbcr8owbgzOGfnu3OJKwTBEw8aeuvF5LAZwsfugdXamOU9K9GYHqVVob4c
-	FXgDtWBVdfnN85tRhGSVh78+HNoJtnrmMVvCokg+V0oJpw/oub4WO9kQVZ9NlPiYhk=
-X-Received: by 2002:a17:90b:4c81:b0:39e:6c69:34dd with SMTP id 98e67ed59e1d1-3a07334d199mr238687a91.65.1790061765828;
-        Tue, 22 Sep 2026 00:22:45 -0700 (PDT)
-Received: from localhost.localdomain (5.240.104.34.bc.googleusercontent.com. [34.104.240.5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a06dfd6705sm1851848a91.0.2026.09.22.00.22.42
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 22 Sep 2026 00:22:45 -0700 (PDT)
-From: Ginger Li <ginger.jzllee@gmail.com>
-To: ldewangan@nvidia.com,
-	jonathanh@nvidia.com,
-	vkoul@kernel.org
-Cc: dmaengine@vger.kernel.org,
-	linux-tegra@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: tegra186-gpc-dma: Read channel state under the lock
-Date: Tue, 22 Sep 2026 15:22:33 +0800
-Message-ID: <20260922072233.19592-1-ginger.jzllee@gmail.com>
-X-Mailer: git-send-email 2.46.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NDCn6opb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8D01F00893;
+	Tue, 22 Sep 2026 07:22:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790061766;
+	bh=UOKYh74cBYqQKkOP48mOwQp81+BIfXrsRyOjOSYV7Po=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=NDCn6opbs+P5mlfvv0b6GbWNQ7eujsQs82K9BNoN7U+MTudvh/hRG1B63SZzXbRDJ
+	 f1vPLmiNu4N84MzMyEm50L+rmmde2FKfU7ss9EIeFRNNko+hLvWA6N0Uuh4nKpfrYd
+	 xYJl/sXWpJXYc/W2IXm1ZLGah7ZqPLAq41gh6367sQ7MCHjx+8B/bPMJ2TDvMYh1jb
+	 GrePHx6jEBCoe600rMEhaEPyqcpVl2V8U4Pb/0ils/Ebi9AeKhrHxMqTpfVvorYLoi
+	 ghp5MVAub/1W+Jize3oyR1oWYHd3NIjhX/S25qiq4dJo0nqzQjVKBKxF6A4J6a+4tS
+	 3Ni0BXogND9jw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v9 16/19] dmaengine: ti: k3-udma-v2: New driver for K3
+ BCDMA_V2
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, robh@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260922064902.2719979-17-s-adivi@ti.com>
+References: <20260922064902.2719979-1-s-adivi@ti.com>
+ <20260922064902.2719979-17-s-adivi@ti.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 22 Sep 2026 07:22:46 +0000
+Message-Id: <20260922072246.7C8D01F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-tegra_dma_tx_status() reads tdc->status before taking tdc->vc.lock, and
-tegra_dma_isr() snapshots tdc->dma_desc before taking the same lock.  All
-writers of these fields (tegra_dma_start(), tegra_dma_xfer_complete(),
-tegra_dma_pause(), tegra_dma_resume() and tegra_dma_terminate_all()) update
-them under tdc->vc.lock.
+Thank you for your contribution! Sashiko AI review found 7 potential issue(=
+s) to consider:
+- [High] Missing NULL check for devm_kasprintf() return value in channel in=
+itialization
+- [High] Dangling pointer uc->chan causes use-after-free register corruption
+- [High] Missing driver remove function causes resource leaks and UAF on mo=
+dule unload
+- [Medium] Kconfig unmet direct dependency for TI_K3_RINGACC
+- [Medium] Ring IRQ handler erroneously returns IRQ_NONE after servicing TR=
+ interrupt
+- [Low] Returning a negative errno (-ENOENT) from an irqreturn_t function
+- [Low] Redundant consecutive MMIO writes to channel control register
+--
 
-The unlocked read in tegra_dma_tx_status() can therefore report DMA_PAUSED
-for a transfer that has already completed, and the unlocked read in
-tegra_dma_isr() can pick up a tdc->dma_desc which is being cleared
-concurrently, in which case the handler keeps using a stale descriptor
-pointer.
+commit 9332700324e4002eaf2d2700e1d64d1763905a6e
+Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Subject: dmaengine: ti: k3-udma-v2: New driver for K3 BCDMA_V2
 
-Read both fields while holding tdc->vc.lock.
+This commit adds a new driver for the TI BCDMA_V2 controller. It supports
+autopairing, static channel mapping, direct IRQs, and a unified channel
+register space where Tx and Rx channels share indices.
 
-Fixes: ee17028 ("dmaengine: tegra: Add tegra gpcdma driver")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
----
- drivers/dma/tegra186-gpc-dma.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> diff --git a/drivers/dma/ti/Kconfig b/drivers/dma/ti/Kconfig
+> --- a/drivers/dma/ti/Kconfig
+> +++ b/drivers/dma/ti/Kconfig
 
-diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
---- a/drivers/dma/tegra186-gpc-dma.c
-+++ b/drivers/dma/tegra186-gpc-dma.c
-@@ -606,7 +606,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
- static irqreturn_t tegra_dma_isr(int irq, void *dev_id)
- {
- 	struct tegra_dma_channel *tdc = dev_id;
--	struct tegra_dma_desc *dma_desc = tdc->dma_desc;
-+	struct tegra_dma_desc *dma_desc;
- 	struct tegra_dma_sg_req *sg_req;
- 	u32 status;
- 
-@@ -619,6 +619,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
- 	}
- 
- 	spin_lock(&tdc->vc.lock);
-+	dma_desc = tdc->dma_desc;
- 	status = tdc_read(tdc, tdc->regs->status);
- 	if (!(status & TEGRA_GPCDMA_STATUS_ISE_EOC))
- 		goto irq_done;
-@@ -786,10 +787,10 @@ static enum dma_status tegra_dma_tx_status(struct dma_
- 	if (ret == DMA_COMPLETE)
- 		return ret;
- 
-+	spin_lock_irqsave(&tdc->vc.lock, flags);
- 	if (tdc->status == DMA_PAUSED)
- 		ret = DMA_PAUSED;
- 
--	spin_lock_irqsave(&tdc->vc.lock, flags);
- 	vd = vchan_find_desc(&tdc->vc, cookie);
- 	if (vd) {
- 		dma_desc = vd_to_tegra_dma_desc(vd);
--- 
-2.43.0
+[ ... ]
 
+> @@ -49,6 +49,18 @@ config TI_K3_UDMA
+>  	  Enable support for the TI UDMA (Unified DMA) controller. This
+>  	  DMA engine is used in AM65x and j721e.
+> =20
+> +config TI_K3_UDMA_V2
+> +	tristate "Texas Instruments K3 UDMA v2 support"
+> +	depends on ARCH_K3
+> +	select DMA_ENGINE
+> +	select DMA_VIRTUAL_CHANNELS
+> +	select TI_K3_UDMA_COMMON
+> +	select TI_K3_RINGACC
+
+[Severity: Medium]
+Will selecting TI_K3_RINGACC without inheriting its direct dependency on
+TI_SCI_INTA_IRQCHIP cause an unmet direct dependencies warning during the
+build? It seems Kconfig could force TI_K3_RINGACC on without the required
+IRQ chip infrastructure.
+
+> +	select TI_K3_PSIL
+> +        help
+> +	  Enable support for the TI UDMA (Unified DMA) v2 controller. This
+> +	  DMA engine is used in AM62L.
+
+[ ... ]
+
+> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
+> --- /dev/null
+> +++ b/drivers/dma/ti/k3-udma-v2.c
+
+[ ... ]
+
+> +static int udma_v2_reset_chan(struct udma_chan *uc, bool hard)
+> +{
+> +	udma_chanrt_write(uc, UDMA_CHAN_RT_CTL_REG, 0);
+
+[Severity: High]
+Does the resource cleanup logic (like in bcdma_put_bchan) clear the newly
+introduced V2 alias uc->chan? If the alias is left dangling after primary
+pointers are set to NULL, would udma_chanrt_write() bypass the macro's safe=
+ty
+check and inadvertently write to a freed hardware register here?
+
+> +
+> +	/* Reset all counters */
+> +	udma_v2_reset_counters(uc);
+
+[ ... ]
+
+> +static int udma_v2_start(struct udma_chan *uc)
+> +{
+
+[ ... ]
+
+> +	case DMA_MEM_TO_MEM:
+> +		udma_bchanrt_write(uc, UDMA_CHAN_RT_CTL_REG,
+> +				   UDMA_CHAN_RT_CTL_EN);
+> +		udma_bchanrt_write(uc, UDMA_CHAN_RT_CTL_REG,
+> +				   UDMA_CHAN_RT_CTL_EN);
+> +
+> +		break;
+
+[Severity: Low]
+This isn't a bug, but is the duplicate write to UDMA_CHAN_RT_CTL_REG
+intentional here? It looks like it might be a copy-paste artifact from the
+V1 architecture where both tchan and rchan were separately enabled.
+
+> +	default:
+> +		return -EINVAL;
+> +	}
+
+[ ... ]
+
+> +static irqreturn_t udma_v2_udma_irq_handler(int irq, void *data)
+> +{
+> +	struct udma_chan *uc =3D data;
+> +	struct udma_dev *ud =3D uc->ud;
+> +	struct udma_desc *d;
+> +
+> +	switch (uc->config.dir) {
+> +	case DMA_DEV_TO_MEM:
+> +		k3_ringacc_ring_clear_irq(uc->rflow->r_ring,
+> +					  K3_RINGACC_RT_INT_STATUS_TR);
+> +		break;
+> +	case DMA_MEM_TO_DEV:
+> +	case DMA_MEM_TO_MEM:
+> +		k3_ringacc_ring_clear_irq(uc->tchan->tc_ring,
+> +					  K3_RINGACC_RT_INT_STATUS_TR);
+> +		break;
+> +	default:
+> +		return -ENOENT;
+
+[Severity: Low]
+This isn't a bug, but should this return IRQ_NONE instead of a negative err=
+no?
+Returning -ENOENT from a function returning irqreturn_t breaks kernel type
+semantics.
+
+> +	}
+
+[ ... ]
+
+> +static irqreturn_t udma_v2_ring_irq_handler(int irq, void *data)
+> +{
+
+[ ... ]
+
+> +	if (intr_status & K3_RINGACC_RT_INT_STATUS_TR) {
+> +		reg =3D udma_chanrt_read(uc, UDMA_CHAN_RT_CTL_REG);
+> +
+> +		/* check teardown status */
+> +		if ((reg & UDMA_CHAN_RT_CTL_TDOWN) && !(reg & UDMA_CHAN_RT_CTL_EN))
+> +			complete_all(&uc->teardown_completed);
+> +		udma_v2_udma_irq_handler(irq, data);
+> +
+> +		if (!(intr_status & K3_RINGACC_RT_INT_STATUS_COMPLETE))
+> +			return IRQ_HANDLED;
+> +	}
+> +
+> +	if (udma_pop_from_ring(uc, &paddr) || !paddr)
+> +		return IRQ_NONE;
+
+[Severity: Medium]
+If the handler successfully processes a TR interrupt in the block above
+(because both TR and COMPLETE bits are set), could returning IRQ_NONE here
+if the ring is empty violate IRQ subsystem semantics? Repeated occurrences
+might cause the kernel to permanently disable the IRQ line as a spurious
+interrupt.
+
+> +
+> +	spin_lock(&uc->vc.lock);
+
+[ ... ]
+
+> +static int udma_v2_probe(struct platform_device *pdev)
+> +{
+
+[ ... ]
+
+> +	for (i =3D 0; i < ch_count; i++) {
+> +		struct udma_chan *uc =3D &ud->channels[i];
+> +
+> +		uc->ud =3D ud;
+> +		uc->vc.desc_free =3D udma_desc_free;
+> +		uc->id =3D i;
+> +		uc->bchan =3D NULL;
+> +		uc->tchan =3D NULL;
+> +		uc->rchan =3D NULL;
+> +		uc->config.remote_thread_id =3D -1;
+> +		uc->config.mapped_channel_id =3D -1;
+> +		uc->config.default_flow_id =3D -1;
+> +		uc->config.dir =3D DMA_MEM_TO_MEM;
+> +		uc->name =3D devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
+> +					  dev_name(dev), i);
+
+[Severity: High]
+Does this devm_kasprintf() return value need validation? If the allocation
+fails and returns NULL, this is later passed to dma_pool_create() via
+bcdma_v2_alloc_chan_resources(), which will unconditionally dereference it =
+and
+cause a kernel panic.
+
+> +
+> +		vchan_init(&uc->vc, &ud->ddev);
+
+[ ... ]
+
+> +static struct platform_driver bcdma_v2_driver =3D {
+> +	.driver =3D {
+> +		.name	=3D "ti-udma-v2",
+> +		.of_match_table =3D udma_of_match,
+> +		.suppress_bind_attrs =3D true,
+> +		.pm =3D &udma_pm_ops,
+> +	},
+> +	.probe		=3D udma_v2_probe,
+> +};
+
+[Severity: High]
+Since this driver is registered via module_platform_driver(), could the lack
+of a .remove callback lead to resource leaks and a use-after-free on module
+unload? Subsystems like dma_async_device_register() and requested DMA rings
+will not be unregistered, leaving dangling pointers in the global
+dma_device_list.
+
+> +
+> +module_platform_driver(bcdma_v2_driver);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922064902.2719=
+979-1-s-adivi@ti.com?part=3D16
