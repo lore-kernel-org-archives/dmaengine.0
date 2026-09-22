@@ -1,136 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490264BD347;
-	Tue, 22 Sep 2026 09:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EB041D223;
+	Tue, 22 Sep 2026 09:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790069645; cv=none; b=OW2krv+ufDJGa+QFXsGhIc8kBxPELb+z3sZNtm9M5/6U74NzbZKyGP4gVz0ac73WmQBl/j9omHOG89mVvoE7bkQw+uZKPaiZrolGYyr9lQ/e4tXkBk/WSaEyAx0nwjXlLOI8pkSkKOf2vzSnT6smJTR0yhm8HaT7bdqBOydxiH8=
+	t=1790069807; cv=none; b=g6Y76EFW3e920MOMdqyDcvfUXHeMlDWT2kV8GC5aIsD45J8xX1SMRFcYIYGtbvxb3w3QE4ireIo6iV+VppK86fN70Cd6aLBlUI2xA+NoVmBrK255LAFRtXQhPk4v/X9F4T3dfuyJ+vHWnp3fJ4zhCkYqLLmfE5IHAcFqh8jomKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790069645; c=relaxed/simple;
-	bh=2TkFR5uB7VHGkSFx4DS807lKiViSUso0tMjwSRap4Cw=;
+	s=arc-20240116; t=1790069807; c=relaxed/simple;
+	bh=NjrjMUrUEDoaoxo1HBdx12UHTuUvP5cKzqBHcR6Y4nQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JEOoZf4UNtppK8ZAESCQn2hU9o3eg8jXOs9VQi6pl9Q7Bbh/qsbc74t9FrlmMbkzyC/+5tk3dA7rE6BWd62wGfHuiNDa/3jcwzuYE8rRDU0IiVpq/Gt7RqoonLJjFR8h9zaY1GM+4x7Dv5j7utwAZyMebEQS60my4QnVspR3kIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FxomlBVG; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Jg5IiwuuYyOu+j+676lFgdwBUSkIt7M5qCXYWBqn696k1TbiMFvn8lXNAQUxQTtlHNmZcWd6qjRWGJXOxruVy1z7IXeqG7rhFKr+8DkJaLMrvC7165T9XhlcJjcfzlI32NUbo2AZ8aJBQYK+UT2EqXe6QuwmrfaJutYwFW2zmZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMZ10AEC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FxomlBVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C62C1F00893;
-	Tue, 22 Sep 2026 09:34:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMZ10AEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCE11F000FF;
+	Tue, 22 Sep 2026 09:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790069642;
-	bh=jLGQKf7Lc0edJu0XG+uPL3+zStcKlGy4BpeUjz7x6FQ=;
+	s=k20260515; t=1790069805;
+	bh=MGDgPVCu/oQZqPrCeAouJ72D+PR3oFOIXDFf2xVwlPg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=FxomlBVGRhM5r3/mJboKSvEIzmh7VdPkKgpXzhzr6PPGRS/D3kEhyjaHcXZF3OTrT
-	 cGMxOTbeSL2m3wGuGXTb+hbBNpwwKFb7GVb5m6nakQNqKLW9bB5A1jWbfmXT2JjaWq
-	 gb51/GayXXB2cGmvYoNlH8h0UixkuclD40l/5TSuo1f0JgBEx7D39rcAOE8xvYLisM
-	 es0bf48V4e2o2WIMtwbp6dTfVLzB1aLSiurjTJPheAomsLiHz6gtYvCjaRywKAzWRg
-	 LSxqn4rYq/u4oFmDAbjYDR2hQXBB/WxoxcwYA2uhC44iBnNMblj1Q7JNGNnqjWmcln
-	 PkGvzVc01tBfw==
+	b=OMZ10AECWE0WS7XslYgL0cj+fs84dJs/6jCRflOkkPP0Z3kEOq1emTw330KHIptu4
+	 EE+xuWSDzfrTkMtbwIfyJTIrsDo0uhH8CmHI5eyO8OomAg5fWSp2sVoUirt784MU5h
+	 g6UgscwHPIr1DR/7PCZUEcn3Wfmhz8iUeP43lvwbCZ5G0MV2Z1AMwEeUEcnM+EdoA1
+	 SM06rdk9vssXLtA723UbOLJ8Z9r3OBTb3VEQTTdPUme/aa/B1xaA8z3/vStrDUoHqf
+	 82DrO92SXMnCnTQ44hl33zqOFCws3Ksi1K6wgYEVoatg2zfQ7NBInxxiAzEskkQEWD
+	 peB0mp1H0OOTg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: dma: loongson: Add Loongson-2 DMA mux
- request IDs
+Subject: Re: [PATCH 3/3] dmaengine: loongson: Add Loongson-2K0300 APB DMA
+ mux driver
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Binbin Zhou" <zhoubinbin@loongson.cn>
-Cc: vkoul@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <d8762c697fee7c2184f26968109162d59aef1514.1790068409.git.zhoubinbin@loongson.cn>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, dmaengine@vger.kernel.org
+In-Reply-To: <a7d2dae38291f9d23e5a930a394bc85d6c1db438.1790068409.git.zhoubinbin@loongson.cn>
 References: <cover.1790068409.git.zhoubinbin@loongson.cn>
- <d8762c697fee7c2184f26968109162d59aef1514.1790068409.git.zhoubinbin@loongson.cn>
+ <a7d2dae38291f9d23e5a930a394bc85d6c1db438.1790068409.git.zhoubinbin@loongson.cn>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 22 Sep 2026 09:34:01 +0000
-Message-Id: <20260922093402.6C62C1F00893@smtp.kernel.org>
+Date: Tue, 22 Sep 2026 09:36:44 +0000
+Message-Id: <20260922093645.1FCE11F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [Medium] dma: loongson: hardcoding physical DMA channel in device tree
-- [Low] dma: loongson: expose LS2K0300_DMA_REQ_MAX in binding header
+- [High] dmaengine: loongson: fix UAF of parent DMA node on route allocation
+- [High] dmaengine: loongson: fix NULL pointer dereference on routing error=
+ paths
+- [Low] dmaengine: loongson: remove unused 'shift' field from mapping struc=
+ture
 --
 
-commit e4e9feb04bfe5cf0cae531423dc7021c3d20e99c
+commit c46c8efe97ecad5eafdc1a9b6a37374efa172f8a
 Author: Binbin Zhou <zhoubinbin@loongson.cn>
 
-dt-bindings: dma: loongson: Add Loongson-2 DMA mux request IDs
+dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
 
-Add DT binding constants for the Loongson-2 DMA mux. It covers UART,
-I2C, SPI, I2S, ADC, and CAN peripherals for Loongson-2K0300. It also
-documents channel-pair semantics for peripherals using paired channels.
+This commit adds a DMA mux driver for the Loongson-2K0300 SoC. It exposes t=
+he
+routing fields in the chip global configuration registers as an OF DMA rout=
+er,
+which validates the specifier, programs the route, and forwards the transla=
+tion
+to the parent CMC DMA controller.
 
-> diff --git a/include/dt-bindings/dma/loongson,ls2k-dmamux.h b/include/dt-=
-bindings/dma/loongson,ls2k-dmamux.h
+> diff --git a/drivers/dma/loongson/loongson2-apb-dmamux.c b/drivers/dma/lo=
+ongson/loongson2-apb-dmamux.c
 > new file mode 100644
-> index 0000000000000..dcc8df86befbb
+> index 0000000000000..b6f1f4112d612
 > --- /dev/null
-> +++ b/include/dt-bindings/dma/loongson,ls2k-dmamux.h
-> @@ -0,0 +1,56 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Loongson-2 SoC DMA Mux dt-bindings
-> + *
-> + * DMA specifier format:
-> + *   dmas =3D <&dma_mux <request> <channel> <flags>>;
-> + *
-> + * The <channel> cell selects a physical CMC DMA channel (0-7)
-
-[Severity: Medium]
-Does this design hardcode software resource allocation policy into the hard=
-ware
-description?
-
-Device trees should describe immutable hardware wiring rather than software
-policy. Since the Loongson DMA mux is flexible (e.g., UART0 can be mapped to
-one of 4 channel pairs via a 2-bit register field), shouldn't the OS DMA
-engine dynamically allocate an available channel from a pool and program the
-mux accordingly?
-
-Statically assigning the channel in the DT shifts this policy to the hardwa=
-re
-description, preventing dynamic allocation and risking runtime resource
-conflicts if multiple peripherals concurrently request the same statically
-assigned channel.
-
-> + * For peripherals using channel pairs (UART, I2C, SPI2/3, I2S),
-> + * the channel number selects the pair: 0/1 -> pair 0, 2/3 -> pair 1,
-> + * 4/5 -> pair 2, 6/7 -> pair 3.
-> + *
-> + * Copyright (C) 2026 Loongson Technology Corporation Limited
-> + */
+> +++ b/drivers/dma/loongson/loongson2-apb-dmamux.c
 
 [ ... ]
 
-> +/* CAN-FD controllers */
-> +#define LS2K0300_DMA_CAN0		18
-> +#define LS2K0300_DMA_CAN1		19
-> +#define LS2K0300_DMA_CAN2		20
-> +#define LS2K0300_DMA_CAN3		21
-> +
-> +/* Total number of 2K0300 DMA requests */
-> +#define LS2K0300_DMA_REQ_MAX		22
+> +struct loongson2_dmamux_map {
+> +	u32 reg;
+> +	u32 mask;
+> +	u8 shift;
 
 [Severity: Low]
-Is it safe to expose LS2K0300_DMA_REQ_MAX in a device tree binding header?
+Is this shift field needed? Code inspection shows it is initialized in the
+ls2k0300_dmamux_maps array for all entries but is never read.=20
 
-Device tree binding headers define the stable ABI between the hardware
-description and the operating system. Exposing a _MAX macro is a known DT
-anti-pattern.
+The routing logic in loongson2_dmamux_set_route() correctly manages the
+shift operation implicitly using the field_prep() macro, which extracts
+the shift directly from the compile-time constant mask.
 
-If future hardware revisions or bindings add new request IDs, updating the =
-_MAX
-macro breaks backward compatibility with older compiled device trees or dri=
-vers
-that rely on the previous value, potentially leading to out-of-bounds acces=
-ses
-or ABI mismatches.
+> +	enum loongson2_dmamux_type type;
+> +	u32 high_reg;
+> +	u8 high_shift;
+> +};
 
-Should this macro be removed from the ABI header to prevent misuse?
+[ ... ]
+
+> +static void *loongson2_dmamux_route_allocate(struct of_phandle_args *dma=
+_spec,
+> +					     struct of_dma *ofdma)
+> +{
+
+[ ... ]
+
+> +	/* Program the SoC-specific route register */
+> +	ret =3D loongson2_dmamux_set_route(mux, request, channel);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+> +
+> +	/*
+> +	 * Rewrite dma_spec so the kernel router framework uses it to look
+> +	 * up the parent DMA controller and invoke its xlate.
+> +	 */
+> +	dma_spec->np =3D mux->dma_np;
+
+[Severity: High]
+Does this need to increment the reference count on the cached device node?
+
+Looking at the OF DMA framework, of_dma_router_xlate() explicitly calls
+of_node_put(dma_spec_target.np) after translating the channel request. Since
+this assignment directly copies the pointer without taking a reference via
+of_node_get(), will each DMA request unconditionally decrement the reference
+count of the cached parent device node, leading to a premature release?
+
+> +	dma_spec->args[0] =3D channel;
+> +	dma_spec->args[1] =3D flags;
+> +	dma_spec->args_count =3D mux->config->parent_args_count;
+> +
+> +	return NULL;
+> +}
+
+[ ... ]
+
+> +static int loongson2_dmamux_probe(struct platform_device *pdev)
+> +{
+
+[ ... ]
+
+> +	mux->dma_router.dev =3D dev;
+> +	mux->dma_router.route_free =3D NULL;
+
+[Severity: High]
+Will setting this callback to NULL cause a panic on error paths?
+
+In the framework's of_dma_router_xlate() function, if the parent DMA
+controller is not yet available (triggering -EPROBE_DEFER), the framework
+unconditionally executes ofdma->dma_router->route_free(...) without
+checking if the callback exists.
+
+Could this crash the kernel if the parent CMC DMA controller probes after
+the peripheral?
 
 > +
-> +#endif /* _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H */
+> +	platform_set_drvdata(pdev, mux);
+> +
+> +	ret =3D of_dma_router_register(dev->of_node, loongson2_dmamux_route_all=
+ocate,
+> +				     &mux->dma_router);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1790068409.gi=
-t.zhoubinbin@loongson.cn?part=3D1
+t.zhoubinbin@loongson.cn?part=3D3
