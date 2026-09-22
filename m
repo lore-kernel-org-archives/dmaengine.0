@@ -1,46 +1,39 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5D8314D1F;
-	Tue, 22 Sep 2026 09:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42CDC455630;
+	Tue, 22 Sep 2026 09:26:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790068850; cv=none; b=ggYrZ4+SsE2vWQH3bMDgI0MCHv4yoGeWCS9F4XbLSupB/iwFeaVqPYhzrbwqMpsD4MZR2wZB4jqW6YLkssHLpxs309VbYC8jthmmdyJjr/y4uu+w0j1YC8yo3xGXNSfV5g8b780Y9pxZ+0dU+PE4BcnHC2HivcWGE/Lt6tp4VKo=
+	t=1790069175; cv=none; b=Wh05nG9eH2xaAVdPPgdEUKLm6gPglH2G+K5mE7UoqzdgNFQKmcbqFntsNgM5G8HbXsFMjuwvhIyFwltBPh1Zibk8uAQkYR+25Agk6HuYJKFchEkJHl0ePcD2IVoWrz8R4mCbDHaVCymYgn3LyBnKqqj9MNFjkHKva47ESK3GflY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790068850; c=relaxed/simple;
-	bh=ufHQwVLWhbEqSDudZEAnnILdx9qDHelU/xGM0QyoWGM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DgMYBhxNToQ/CEjrIpQPONODmSVIXzPdpjuKZp8RYNcAvhuvWP9cgx8GzcGOPhbfSR1wC6WCu7bJ1irMN2+9vEU260mIIUj/LKz8IpKdlX3USi705hKEuKmpd/JYsh9hSOCjg0ZUOFZp4Kl+jYg7SV/dxivfp3ZSTzpWTtlIUo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HwGJuFnp; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HwGJuFnp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A111F000FF;
-	Tue, 22 Sep 2026 09:20:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790068848;
-	bh=dYkHamlC0XvL4sfwKvaCSqNhRE91tdB+Ax+AruYP6lc=;
-	h=From:To:Cc:Subject:Date;
-	b=HwGJuFnpjyM9k6k+oCT2JqJu2mw7v3tyJW/5e1pKdVs/V9X70gyZOPYq5y3GTp39n
-	 S4/Qw3WWlzKsQfAPOw3QXTjD3pFAIBPXE+gn2KQl/yRwZsoUvNFciOPs8uPSoSYK4n
-	 deQrdkoWqGaToY+umNDVjCV2d7UJxcbZrphE/3rwoahPReu1NZwzIMfNbgmS69Ka2a
-	 muiBn+1ZOWoPPBisPEZ6M0oIkLQF5OEgnDCYBkdXnDmKx8mhFK4e3X5CB3VJ4pPt6u
-	 4+JJAz550HW0OWoEl3xjfhr2hAfmx0xd3ZMhF32jFYVKoqHMMG59B5cKx6Za2vj7KP
-	 0X0UADqXcecLA==
-From: Claudiu Beznea <claudiu.beznea@kernel.org>
-To: vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	biju.das.jz@bp.renesas.com,
-	geert+renesas@glider.be
-Cc: claudiu.beznea@tuxon.dev,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	stable@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: [PATCH] dmaengine: sh: rz-dmac: Fix off-by-one in residue lmdesc lookup
-Date: Tue, 22 Sep 2026 12:20:37 +0300
-Message-ID: <20260922092037.224884-1-claudiu.beznea@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1790069175; c=relaxed/simple;
+	bh=5VVSl5kEoe00SoIyM5SbpQBKK4Df8IkKxZjS5IWulKI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BzrPoGdH/uSoFC/fzcvp4jLnKZaTHk128MdSqEEojLUaQsL7Cy46bCe3PzxK/p5gfuHaUqy9fuGCoAwn89dHUVMaTXIcBhsfnxP+IqBjIq/1JnldlmAziqwRh8yXtRH3Wdxcsy3YGyOzaJDztpDCL1/VGNOXQ2Wb7CFFuPH4g8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.159])
+	by gateway (Coremail) with SMTP id _____8Bxn9GsSbJqNpcOAA--.42293S3;
+	Tue, 22 Sep 2026 17:26:04 +0800 (CST)
+Received: from kernelserver (unknown [223.64.68.159])
+	by front1 (Coremail) with SMTP id qMiowJAxmM2qSbJqWbUjAA--.9386S2;
+	Tue, 22 Sep 2026 17:26:03 +0800 (CST)
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+To: Binbin Zhou <zhoubb.aaron@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+	devicetree@vger.kernel.org,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>
+Subject: [PATCH 0/3] Add Loongson-2K0300 APB DMA mux support
+Date: Tue, 22 Sep 2026 17:25:41 +0800
+Message-ID: <cover.1790068409.git.zhoubinbin@loongson.cn>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,57 +41,63 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJAxmM2qSbJqWbUjAA--.9386S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgESCGqx8fgENQABs7
+X-Coremail-Antispam: 1Uk129KBj93XoW7CF1DZFW8XFW8uw18JF13trc_yoW8Wry8pa
+	ya9a93KF1UtFy3Ars3JFyUAF1rZF93ta47Wayaqw1UJasxA34qvF1jyF1jvr47Cr1xXry2
+	vFy0kFWUGFy7AwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+	Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+	6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0x
+	vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+	42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+	kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erUUUUU=
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Hi all:
 
-lmdesc->nxla is the address of the next descriptor, so comparing it
-against CRLA, which is the address of the current descriptor,
-finds the descriptor before the active one, not the active one.
-The residue loops below then summed one lmdesc too many on top of
-that.
+Loongson-2K0300 integrates a CMC DMA controller with 8 physical
+channels. Peripheral DMA requests are not hard-wired to these channels;
+they are routed through the CHIP_CTRL13/14/15 DMA_MAP fields.
 
-Compare each descriptor's own address to CRLA instead, and add tb
-after advancing to the next lmdesc.
+This series adds support for that DMA request router.
 
-Fixes: 21323b118c16 ("dmaengine: sh: rz-dmac: Add device_tx_status() callback")
-Fixes: 172bfb57481c ("dmaengine: sh: rz-dmac: Add cyclic DMA support")
-Cc: stable@vger.kernel.org
-Suggested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
----
- drivers/dma/sh/rz-dmac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Patch 1 adds the DT binding constants for the peripheral request IDs.
+Patch 2 adds the DT binding documentation for the DMA mux.
+Patch 3 adds the driver, Kconfig symbol and Makefile entry.
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index ca76f1bb45c4..fdd7131e890a 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -937,7 +937,7 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
- 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
- 	u32 residue = 0, i = 0;
- 
--	while (lmdesc->nxla != crla) {
-+	while (rz_dmac_lmdesc_addr(channel, lmdesc) != crla) {
- 		lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
- 		if (++i >= DMAC_NR_LMDESC)
- 			return 0;
-@@ -948,13 +948,13 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
- 		u32 start_lmdesc_addr = rz_dmac_lmdesc_addr(channel, desc->start_lmdesc);
- 
- 		while (lmdesc->nxla != start_lmdesc_addr) {
--			residue += lmdesc->tb;
- 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-+			residue += lmdesc->tb;
- 		}
- 	} else {
- 		while (lmdesc->chcfg & CHCFG_DEM) {
--			residue += lmdesc->tb;
- 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-+			residue += lmdesc->tb;
- 		}
- 	}
- 
+The driver registers with of_dma_router_register(). In the route
+allocation callback it validates the <request> <channel> <flags>
+specifier, programs the SoC-specific route register, and forwards
+<channel> <flags> to the parent CMC DMA controller.
+
+Thanks.
+Binbin.
+
+Binbin Zhou (3):
+  dt-bindings: dma: loongson: Add Loongson-2 DMA mux request IDs
+  dt-bindings: dma: loongson: Add Loongson-2K0300 DMA mux support
+  dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
+
+ .../dma/loongson,ls2k0300-dmamux.yaml         |  49 +++
+ MAINTAINERS                                   |   3 +
+ drivers/dma/loongson/Kconfig                  |  13 +
+ drivers/dma/loongson/Makefile                 |   1 +
+ drivers/dma/loongson/loongson2-apb-dmamux.c   | 380 ++++++++++++++++++
+ .../dt-bindings/dma/loongson,ls2k-dmamux.h    |  56 +++
+ 6 files changed, 502 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+ create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
+ create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
+
+
+base-commit: 0a8dda0a15d3926422d286567f945a05328a4ac6
 -- 
-2.43.0
+2.52.0
 
