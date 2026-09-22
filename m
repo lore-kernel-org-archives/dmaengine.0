@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E204AA591;
-	Tue, 22 Sep 2026 07:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C764C8C4A;
+	Tue, 22 Sep 2026 07:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790060817; cv=none; b=utdvMFASOp3zigoXf9ROUpHx9of2lGawQGKOVHLYj4CqpYrYOT4Palk0D+K0TIPDcvVStT8Zgp2QGNK7njilSwZYCuLQ7EP6TsQpt9V3xOlCs5TNdYpSs2FL3PG7vhvPEbIj00O0EKxcAZhYXr5mmxh1efbzyIFNozuB6xGru14=
+	t=1790060873; cv=none; b=IcTa60NivRoyAkI8gRIui0JaL6VsmLMm65xXJUk0RozmlC8yFDsKXByQ0THa4f9XXM709/mclsL8HsjY2cYHYO7cc+2GcUBBDCrzKT0X0Z+vNGefBbfoRFhYjjLYV8lPPYGParhEq1izS1GRMjpvog/QA3qDvITs+YGU4X0BDzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790060817; c=relaxed/simple;
-	bh=IqtUZr48pWoEZYfF/d/fQg7U9fzgqQXywMPH3FQ3JxQ=;
+	s=arc-20240116; t=1790060873; c=relaxed/simple;
+	bh=SmK/3wCulMvKbbZvrX3LwNcL/B88pdBEHVChQYnQk5Q=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nbICtvAhV7FkGQQfCtcpjjAVNqPwtfkmPJ++h34ewO2CkKerdgh6DDIKo+MIu0X9cEmi6g3Jsk7rPKxPoxFwLhU8PBmtpAHBKBr4xIh5n69osTv5F7y7qFfn4Y6S4Dabsj7259NAApE0QlR5V/qXdW+INjjYO1sQvrReEGllO3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3CT8dkO; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=m5ai1Ak/IRRozvqO9EFa/LgWErYhObv6tlFUp8kqw7Z6Lo86TFUwfBWIBbph3pHHb7QsBVkgiMtV32esQM5qmcgp5lAXcUrZKCYKyZ90X+JA3iiQwDtiNVV4HlnqJit/IByqPnG+SOQai9BzGXJZrTe/R5iv9pNDqNB4Ddf0qrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z9N0s3I+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3CT8dkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DB81F000FF;
-	Tue, 22 Sep 2026 07:06:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z9N0s3I+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE801F000FF;
+	Tue, 22 Sep 2026 07:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790060815;
-	bh=1c1E3XWF8eiju0LA9Da6x7szB1ABur1NPrEC3yhxwMo=;
+	s=k20260515; t=1790060871;
+	bh=uss3OuebqDiChGDUO4Vq5jcXNl9o0lM528c1BHCf+TE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=h3CT8dkOf+xuBXZ5FBzBAQRU/8EI96Mg/B3M9I9+FURNmJjp9GxO/ZE7pV/gcHpIP
-	 t9+/vU5NVYZT4i8Gi794sCOO5DhX5mB6yCkQtgv/QZfW3iPg+SmdCWjTmOfX3fxpVV
-	 egHVC0RX67lxjb6UkRuZgF7vpiwwWi/IjDiBxg8Mt/Ek7AKnVScWxeW+BrEp9LWt5J
-	 jjiDeuIRZ0yw9uEP4fGe6Nniap9aNJLr7AN2nQhQLpbkVG82VUJdM32FetNQbBhAlc
-	 xhzwGa+uSWa1rQbv45hsFc1h0Ivtu9wBT1z2hEB32uj0HRbj6n0vdIMj4g5DBxkuD5
-	 EqtpgAfHjB0pw==
+	b=Z9N0s3I+i9qns9922abn5wF0vXO8kTP0wzuKVysYhsZTtB/8AtP9z3ef75jH7Gool
+	 v8NpX6xy2l0oLnTa2DA/rCW/L69XaptoidXQzJT3ISH6oGec1IyVikKKp67paegbc/
+	 PEcIe1HWEqVvLL5+PiET/2n349K69zINUL2tZp9pfWz6BikwCkltMtO/5Kpp52v+c2
+	 OFs9/jaEFgF4s2wMnT5GZbHdi06PZF105lGolPDyw5njZ2AN3CGJCzFNDXsBhEKxXk
+	 sCxzb4hyy8kc2xk5rM0A1WhURbfA+LwM5ZirKsMcUCIa/FBdg1vR0yC8KoWPWy7DsR
+	 bvDgncVL3PnGQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v9 12/19] drivers: soc: ti: k3-ringacc: handle absence
- of tisci
+Subject: Re: [PATCH v9 15/19] dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL
+ and PDMA data
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: Frank.Li@kernel.org, conor+dt@kernel.org, robh@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260922064902.2719979-13-s-adivi@ti.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20260922064902.2719979-16-s-adivi@ti.com>
 References: <20260922064902.2719979-1-s-adivi@ti.com>
- <20260922064902.2719979-13-s-adivi@ti.com>
+ <20260922064902.2719979-16-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 22 Sep 2026 07:06:54 +0000
-Message-Id: <20260922070655.58DB81F000FF@smtp.kernel.org>
+Date: Tue, 22 Sep 2026 07:07:50 +0000
+Message-Id: <20260922070751.5AE801F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,90 +47,76 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] soc: ti: k3-ringacc: base address zeroed before size in ring_free
-- [Medium] soc: ti: k3-ringacc: missing interrupt disable during ring free
+- [Medium] dmaengine: uninitialized stack variable use in psil_set_new_ep_c=
+onfig()
+- [Low] dmaengine: misleading error log in psil_set_new_ep_config()
 --
 
-commit a7de7c5cbd863cd6f1879ceaa2a3c115f7f1b58b
+commit 3b16508e4409dd766b60b58e1c4dabc6cf392380
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-drivers: soc: ti: k3-ringacc: handle absence of tisci
+dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL and PDMA data
 
-This commit adds support for platforms without tisci firmware, such as AM62=
-L.
-It does this by handling the absence of tisci using direct register writes =
-for
-ring configuration and reset.
+This patch adds PSIL and PDMA data for the AM62Lx SoC. It also introduces a
+new PSIL_EP_PDMA_XYMF type and adds a fifo_id field to psil_endpoint_config.
 
-> diff --git a/drivers/soc/ti/k3-ringacc.c b/drivers/soc/ti/k3-ringacc.c
-> index 5966db4327b13..0ef07207e1dfa 100644
-> --- a/drivers/soc/ti/k3-ringacc.c
-> +++ b/drivers/soc/ti/k3-ringacc.c
-
+> diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
+> index c4b6f0df46861..580fc553e23fa 100644
+> --- a/drivers/dma/ti/k3-psil.c
+> +++ b/drivers/dma/ti/k3-psil.c
 [ ... ]
-
-> @@ -576,10 +653,25 @@ static void k3_ringacc_ring_free_sci(struct k3_ring=
- *ring)
->  	ring_cfg.index =3D ring->ring_id;
->  	ring_cfg.valid_params =3D TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
+> @@ -90,9 +147,22 @@ int psil_set_new_ep_config(struct device *dev, const =
+char *name,
+>  				       index, &dma_spec))
+>  		return -ENOENT;
 > =20
-> -	ret =3D ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-> -	if (ret)
-> -		dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
-> -			ret, ring->ring_id);
-> +	if (!ringacc->tisci) {
-> +		u32 reg;
+> -	thread_id =3D dma_spec.args[0];
+> -
+> -	dst_ep_config =3D psil_get_ep_config(thread_id);
+> +	if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-pktdma")) {
+> +		bool dev_to_mem;
 > +
+> +		dst_ep_config =3D psil_get_ep_config_by_id(dma_spec.args[0],
 
 [Severity: Medium]
-When k3_ringacc_ring_cfg_sci() configures a ring in the !tisci path, it
-explicitly enables interrupts by writing to ring->intr->enable_set:
+If a malformed or improperly configured device tree specifies a #dma-cells
+value less than 1 for pktdma nodes, of_parse_phandle_with_args() will popul=
+ate
+fewer elements in dma_spec.args than expected. Because dma_spec is not
+zero-initialized, does this code read uninitialized stack memory from
+dma_spec.args[0] without verifying dma_spec.args_count >=3D 1?
 
-	writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE |=20
-	       K3_RINGACC_RT_INT_ENABLE_SET_TR,
-	       &ring->intr->enable_set);
-
-Should k3_ringacc_ring_free_sci() symmetrically disable these interrupts
-during teardown? Failing to disable interrupts while setting the size to 0
-might leave the hardware in an inconsistent state or cause spurious IRQs if
-the ring is reallocated.
-
-> +		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
-> +		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
-> +				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
-> +				&ring->cfg->ba_hi);
-
-[Severity: High]
-Does writing the base addresses before clearing the size register introduce=
- a
-race condition?
-
-Since the size is not yet updated to 0 here, the DMA engine remains technic=
-ally
-active. By clearing ba_lo and ba_hi first, any background transaction execu=
-ting
-in this narrow window could initiate a memory access at physical address 0x=
-0,
-potentially causing memory corruption or an IOMMU fault.
-
-Would it be safer to clear the size register before updating the base addre=
-ss
-registers?
-
+> +							  true,
+> +							  &thread_id, &dev_to_mem);
+> +	} else if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-bcdma"))=
+ {
+> +		bool dev_to_mem;
 > +
-> +		reg =3D readl(&ring->cfg->size);
-> +		reg &=3D ~K3_DMARING_CFG_SIZE_MASK;
-> +		reg |=3D ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
-> +
-> +		writel(reg, &ring->cfg->size);
+> +		dst_ep_config =3D psil_get_ep_config_by_id(dma_spec.args[2],
+
+[Severity: Medium]
+Similarly, if #dma-cells is less than 3 for bcdma nodes, does this code read
+uninitialized stack memory from dma_spec.args[2] without verifying
+dma_spec.args_count >=3D 3?
+
+> +							  false,
+> +							  &thread_id, &dev_to_mem);
 > +	} else {
-> +		ret =3D ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-> +		if (ret)
-> +			dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
-> +				ret, ring->ring_id);
+> +		thread_id =3D dma_spec.args[0];
+> +		dst_ep_config =3D psil_get_ep_config(thread_id);
 > +	}
->  }
+>  	if (IS_ERR(dst_ep_config)) {
+>  		pr_err("PSIL: thread ID 0x%04x not defined in map\n",
+>  		       thread_id);
+
+[Severity: Low]
+If psil_get_ep_config_by_id() fails to find a matching endpoint, it returns
+an error pointer without modifying the thread_id variable, which is
+initialized to 0 at the start of the function. Could this lead to misleading
+error logs that print 0x0000 instead of the actual channel ID that failed t=
+he
+lookup?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922064902.2719=
-979-1-s-adivi@ti.com?part=3D12
+979-1-s-adivi@ti.com?part=3D15
