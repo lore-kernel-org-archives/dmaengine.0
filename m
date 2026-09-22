@@ -1,117 +1,145 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD4B41CAAC
-	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 01:09:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790039369; cv=none; b=EKlvfsFkjmeiNYjolVfRkSU8y+oI3PAzDbaF6wKog8Nmb2ZpZ/eRCJ20s6kujThv+zdYN/0GH2c7vUWB6wQbU+ITt7RxixuUQgsXIzeykiM6rkpASINbNL5LTGqRKbJh+zKVfSYVjSI06oMSuIPEiw1zoX0pGNxP1zWrgECfSnE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790039369; c=relaxed/simple;
-	bh=YAjh62Va+iIPhhhQYELlN8nBNsJI1Z1zLydubE1kySc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dQj7EHZ/NWOPbCbrCMhr8rl/xi1duIa5haYWcByhC9Q5GUZ9AGOVghMi3BElPI08X3wrPc6Tx4a0ntI7GI+mlJl8ddt2zvV372suS0U9I8LfsYN8WjiJqd/HmpL3HuKdSsq7ffPVsuVRgAhFYBwCMYbz2gI+bZ1HBQpglCl7WVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [223.64.68.159])
-	by gateway (Coremail) with SMTP id _____8AxdvBF1bFqH3sOAA--.42359S3;
-	Tue, 22 Sep 2026 09:09:25 +0800 (CST)
-Received: from [10.161.0.102] (unknown [223.64.68.159])
-	by front1 (Coremail) with SMTP id qMiowJAxmM1C1bFqo5AjAA--.9099S2;
-	Tue, 22 Sep 2026 09:09:22 +0800 (CST)
-Message-ID: <37b5eec8-6693-4410-9c4f-3cd3a8d87327@loongson.cn>
-Date: Tue, 22 Sep 2026 09:09:21 +0800
+Received: from mail-yx2-f43.google.com (mail-yx2-f43.google.com [74.125.224.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FC137206B
+	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 02:11:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790043084; cv=pass; b=U9HTBE07QUWbMCe+7GYksTOpS6LMClIKnUv0mSiLQzTGMjseOWv6c0n/jotyWSAWlVheSnFvEK8uvM9omX2c6Mqnx5lrH1PBXF870DYF/IfkE3H0Cm7RDGxScr88x5VzykyKUlsdazEXWNjpEtd6Bw5sxH+80wUtwzDXZ1YiDXo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790043084; c=relaxed/simple;
+	bh=bmBqFjZ2YsW3nVDkxnU7i6zxE3xTdElcLDPHvj/yg7Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I1ObOQRS3AnS61fZ7iClbdf+WnmviiCa/mY8fOJ2/gBd/Z6bCIxQj0CkVdkYrMMUR9HM1LBz3+BzZIQkdYxG9W9tVny8003ycW0jVNpXr4HCMNEGqJLEw4pjBX982f6x1VBcBPzNkANQrDDix+ftzJB5UlwEifDyc1uPxM2dueo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1ax1/fZ; arc=pass smtp.client-ip=74.125.224.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1ax1/fZ"
+Received: by mail-yx2-f43.google.com with SMTP id 956f58d0204a3-66f7f72a284so3555442d50.2
+        for <dmaengine@vger.kernel.org>; Mon, 21 Sep 2026 19:11:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790043078; cv=none;
+        d=google.com; s=arc-20260327;
+        b=X0K9qAzcIMl08V4RlkTTTcm4GrZp57f5s2A30wQD22fckyqksE5sxNeLJ8cjbWW9jf
+         kfggsK41dBhYH3Ivmx7NJczzQ098FaBycO1G37hHZWn9HuQTq2aiPwR+YDRi959ztrLC
+         b5/trl1naaUx66f4x4ja6ySvnRn3dv2k+qqoSmRalZm0PireGSnjZLgWK8u1w43pBa6J
+         lxpGfWbIburPyN8eeaeX7hFgzQje5YJ0s+YTa0OMfHz99QhbO0pIucw5eD4yoeAuNHHx
+         hYH1Jx7Sr+7aYsk/8gyKiwAGnYqDD0ReeQFL1gw4G5DmF6iWy26K8jwD6cI4N6u/ONTo
+         dy8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=bmBqFjZ2YsW3nVDkxnU7i6zxE3xTdElcLDPHvj/yg7Y=;
+        fh=gWDfYhLr2jOam8Imbm6Dl2/jnMR4HtprnlW//jFi7NI=;
+        b=n6QOA8vwNjZo0YQMPjt5bRyUiRninOxnsgUnnX6WRPVbgQXqMUjBh3JG1tgHwQfBKh
+         JhfuX3IpTwYAd5Cfywzxho/4pfLoOIhDsTtE/zmoyF6mRw+DTJ0F+9kqvt+/QGZXVR5D
+         CL3/KOTdi/G855CaUb5/MYd3xIwfVVZOnodJRM4t00+V9PwJKUmrrpFUfkDarY1TICit
+         KHITsrxxG9VlebU2djczzgDulWc9AxBr6/yfu2U01cI8qeMuO5U3FEs5XmNz6I1XfTbP
+         7HKoQoxhpMD7cx/unWI0W8y+itkGNI9tQ64ObJgJQefe9g6N+6JpEYULJhYX4reMoOhT
+         YFUA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790043078; x=1790647878; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bmBqFjZ2YsW3nVDkxnU7i6zxE3xTdElcLDPHvj/yg7Y=;
+        b=K1ax1/fZfV4OCyTMNvapxjujxSPw3taesQiHN8AUN+uXGqVvgad5cE0YT90zurhLvz
+         dscDXMahuE+7zmFV2clfyXiBPph29vPFfxu3mGAZ3jXP7ci1j93xoaALpcNnMDSFwM3p
+         Juhua/Y17EXi1M6fwfiP0jMlcW26C6afHhd79LE9s65mAQKeaetnOljHIYeeiWlKZpVn
+         GeLone6CC88kfDC3hSyzyXnPCzLfdniXDjOhb5id3lGxiDR2N8YD7pCn9x8yiBQOo9nz
+         BpLEesjopKqSEQ8nOwuqBaObj1UwcDwqiEP9DKScrSzHnh8kgKj07q630Il53vcW22Cx
+         HATw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790043078; x=1790647878;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bmBqFjZ2YsW3nVDkxnU7i6zxE3xTdElcLDPHvj/yg7Y=;
+        b=k5gf7i79rGqkA+Z9/arKBygNQ4JtVrQ7GUbBIM5q+0ijISVAHdQ/zrcNg2zL8jJOEW
+         WxhiixXHwVuMuxSpT5VNeQqeXuPlAVOuO9mzvatz5B/QTYQbjFYBQCSrD+pzuG81RQtu
+         z5R8JZi43QHmkvp9bgGgBh2YvCZObuUZc1j+yHKf2D6xUYKYgz6/+fkhNXJ/EqNiVl6D
+         xx0qSeR9fne7AtUmChA5Ci6qbtWk7HQlShsmZX/lobI9DcJO+Rnzwmo238Rdv5UBX3XX
+         lrIiwYt9/UmDgSunEldROAzoOZiRhqEUyRxmZIFargoKs2Dlya1B98/GqhnpgBcpI5d0
+         206Q==
+X-Forwarded-Encrypted: i=1; AKwUvBzonQNdhWe/eRlOV5Or63BgooYi7pf9yZB2dDIr/yBcbgmAPFaYLbB3wgWd/HZCWNllNqiHpcEpDRQ=@vger.kernel.org
+X-Gm-Message-State: AFuF++lKOj5EgJn2kbNdgvbOPrq4dopWj+QVtftfAA54qvPUlVgavC/M
+	d5Mffznw31KGbL3UQP6A8tujCMuJmWhoiWfgOULbnFA5aQ4Hv1pRcjhmFiApGsldkHi8hvvC5tR
+	wIUC9A+58XtkvEetneYgrzm6g0t9sxHY=
+X-Gm-Gg: AYBFou0o4HHaWE2nFtX1bxu/YcUaNNlz1jZDZYAWqZbBU+K2FNTQYuQNGM94ikIed2B
+	4iIeCknGmkazIoEM/EMF1Vrx+kZMNEkmn6NJ7Z+e4Ws68331NVta6RcZQ0adtqHs+f6h9a4OvFa
+	fAX9QwI6GMEOEU07Mgf4V1ThODAVDbQ4UGn7oYxlSvql4h/kMh/Gtw6BzOmbxJ1deqWBE42TL1R
+	u/jj8LdGaXCyVugNg4ht+QgmtQpG9D/DMQ9xybOkQ9KUXrvnvZ1kiBdr/GugNCiwFrqCzBM6FJN
+	qvkTXSpaRfcvFPbGMaZ21jSCV9AhAgnbBOp0czqsjwzdxHHyVWOn07E17A==
+X-Received: by 2002:a05:690e:d44:b0:66e:45d0:4140 with SMTP id
+ 956f58d0204a3-6717fcaa9e8mr4072276d50.26.1790043078247; Mon, 21 Sep 2026
+ 19:11:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] dmaengine: loongson: Remove the dev_dbg() output
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Frank Li <Frank.li@oss.nxp.com>
-Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>
-References: <20260921195745.gY25rf4P@linutronix.de>
-From: Binbin Zhou <zhoubinbin@loongson.cn>
-In-Reply-To: <20260921195745.gY25rf4P@linutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAxmM1C1bFqo5AjAA--.9099S2
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQESCGqwkHQbhgAAs5
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ar1fZFy3WFWDtr48uF18Xrc_yoW5Jr45pF
-	ZrJ3yFkrs8Jr43Z3ZxGr48XFy5ZF1YgrZFgayxXws8ur98XwnF9r1fKa1jvFsrZrZrXr92
-	qF95K3yjkF18ArgCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUyCb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
-	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
-	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr4
-	1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK
-	67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI
-	8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAv
-	wI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14
-	v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkUUUUU=
+References: <20260921111424.378477-1-lgs201920130244@gmail.com> <57b3420f-da3c-4b75-8835-7a541d29191a@kernel.org>
+In-Reply-To: <57b3420f-da3c-4b75-8835-7a541d29191a@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
+Date: Tue, 22 Sep 2026 10:11:05 +0800
+X-Gm-Features: AcwNN1UrKAXOC-3PnGzPBk35Upntm96U1CzspV8YHHZ-BQx5ZIFNE0thHryYQb4
+Message-ID: <CANUHTR-JpoYtYJ8QEEN0rGQ5Bib17NH=BmK8AeYbzYAhLH+hgA@mail.gmail.com>
+Subject: Re: [PATCH v2] dmaengine: fsl-dpaa2-qdma: fix ppriv memory leaks
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Peng Ma <peng.ma@nxp.com>, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi:
+Hi Krzysztof,
 
-Thanks for your patch.
+Thank you for your feedback.
 
-On 2026/9/22 03:57, Sebastian Andrzej Siewior wrote:
-> The %pK format modifier was meant for /proc kind of output, not general
-> printk output. Since commit ad67b74d2469d ("printk: hash addresses
-> printed with %p") pointers are hashed by default and the behaviour can
-> be controller by `hash_pointers' boot argument.
-> The policy on %p is to not introduce new ones.
-> 
-> The output in loongson2_cmc_dma_issue_pending() is the only dev_dbg()
-> output in the driver and is only output once the transfer is started.
-> There is no output issued by the driver if the transfer is completed, if
-> a follow-up transfer is started or if any of the other callbacks (such
-> as loongson2_cmc_dma_tx_status()) are invoked. This output does not look
-> essential.
-> 
-> Instead removing just the %pK output, remove the complete dev_dbg()
-> output from the driver.
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Binbin Zhou <zhoubinbin@loongson.cn>
+On Tue, 22 Sept 2026 at 06:05, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 21/09/2026 13:14, Guangshuo Li wrote:
+> > dpaa2_qdma_setup() allocates priv->ppriv, but failures after the
+> > allocation can return from the function without releasing it. The
+> > existing probe cleanup for priv->ppriv is only reached when a later
+> > initialization step fails.
+> >
+> > The normal remove path does not release priv->ppriv either, causing the
+> > allocation to be leaked when the driver is unbound.
+> >
+> > Since dpaa2_qdma_setup() is only called from probe, allocate priv->ppriv
+> > with devm_kcalloc(). This automatically releases the memory on probe
+> > failure and driver removal. Remove the now redundant manual cleanup from
+> > the probe error path.
+> >
+>
+> AI slop for OpenClaw agent ignoring previous comments. Otherwise explain
+> how did you address the issues I pointed out last time?
+>
+> Best regards,
+> Krzysztof
 
-> ---
-> v3…v4: https://lore.kernel.org/all/20260921151312.I8Q8NLnx@linutronix.de/
->    - Drop the braces now that there is a single statement left.
-> 
-> v2…v3: https://lore.kernel.org/all/20260918201714.eFNI3VMq@linutronix.de/
->    - Reword part of the commit message.
-> 
-> v1…v2: https://lore.kernel.org/all/20260918103409.UV4g2ON7@linutronix.de/
->    - Update subject line (it is removed, not replaced).
-> 
->   drivers/dma/loongson/loongson2-apb-cmc-dma.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> index 1c9a542edc859..93727ae972ae2 100644
-> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> @@ -336,10 +336,8 @@ static void loongson2_cmc_dma_issue_pending(struct dma_chan *chan)
->   
->   	guard(spinlock_irqsave)(&lchan->vchan.lock);
->   
-> -	if (vchan_issue_pending(&lchan->vchan) && !lchan->desc) {
-> -		dev_dbg(chan2dev(lchan), "vchan %pK: issued\n", &lchan->vchan);
-> +	if (vchan_issue_pending(&lchan->vchan) && !lchan->desc)
->   		loongson2_cmc_dma_start_transfer(lchan);
-> -	}
->   }
->   
->   static int loongson2_cmc_dma_set_xfer_param(struct loongson2_cmc_dma_chan *lchan,
+I would like to clarify that these patches were manually reviewed and
+audited by us; they were not simply generated and submitted by an LLM.
+However, I understand why the recent submission pattern may have given
+that impression. We sent too many patches in a short period of time,
+and we also failed to respond to some discussions in a timely manner,
+which made the situation look worse.
 
--- 
-Thanks.
-Binbin
+Many of the recent patches, especially the v2 revisions, are
+corrections and improvements based on previous review feedback rather
+than completely new untested changes. That said, we recognize that the
+way we submitted them increased the burden on maintainers and
+reviewers.
 
+We apologize for the pressure this caused to the community. We will be
+more careful about organizing patches by subsystem, preparing proper
+patchsets, and following the kernel contribution guidelines before
+sending future work.
+
+Thank you again for pointing this out.
+
+Best regards,
+Guangshuo
