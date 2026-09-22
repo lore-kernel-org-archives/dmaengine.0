@@ -1,188 +1,132 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E382B3F8891;
-	Tue, 22 Sep 2026 07:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8800A4F68A3
+	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 07:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790061257; cv=none; b=pXN3XYZniQFuDfG8eWuBlOp9L+eeeH0S+axoI3ohbw1Z6REKcE8Tm6MthDV6mLrjKUU+ZbN/ErnUVyX7jTbxa1FSkKr8QzF8Ge01Hcm5CvcduFLE2LbtHPNHVO4TRB55LY7pemnFwu+vSUkRmLYf+/UZQOjcEeMhnpSnLM0M1ko=
+	t=1790061767; cv=none; b=ejpOtCuKNIECHHQEd0bnI4YxKxCZF1HgL5pTJVtczXhgxVB0T1LuLtTgUNrzS16tCjeZ1iAr2E7EbAj8dXtz4iBUS5ZT2dL2vDbtmedPRk37lHm3d0cKmb5bhEiNtHNueVrbElqdtYu/wSlAbFN+q1/NudGfeFK9MBQyC/VEDjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790061257; c=relaxed/simple;
-	bh=4ZVyXz6SHiLpbhe28V/OzygcfIdI5Tb2Cda8+NiEYSQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=iDTwsmTGaQ8h/I8czZe9bI2KMwU4eV5inAD8Lo7OkD1LHoT9Cauw2nYcs635FVPp2WczCqpN6OSATk/sej8HlX0E3Hnih3uQOLHvR6QUMKeFFsX09nVJ8jrbwV3rJDq7FenVZ7gm1DacRukJei0w6oRuitrTxLk03Qkobq6yMhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAbS6x8P; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790061767; c=relaxed/simple;
+	bh=40KTFaOhOR4XVyPXvsqIHuRMnZah7jhj6hPfzoMJXEI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Mp72bP8q4dYDLeshO/cqo40uPv5j0Cwbz3a6oXj3FJ1sZpaanskM/mLaCjS/FRyZJaxpyAr/TB6CnuPWQIv/m/mbQDjdkFUkCrDY/dTtNuPTtk5y4gn7hMDbJhoDTcnKgbsyQWSMUD+s8jgAgg3qPrSxYDXUlsIgvJ3C5XFu48U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=deOKtKe2; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAbS6x8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA2A1F000FF;
-	Tue, 22 Sep 2026 07:14:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790061255;
-	bh=aI06oI3UupUtss03KSUlJe1ny9XAks3A2UFfUY29z4s=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=DAbS6x8PJ4d7ZgF81X+Ki7oUK7GWy6UMdVEIdmqGoyftKKJ+vQqw1UuQvUyVYfDZ2
-	 hu4/hLe7GH+Prr5Kji/8E3KhKSkRHWOJ+uz8Inyv3qNZCICHSRoidrGJ7qeby17zJq
-	 KlvcbPgvcFsGEITaZGxw/ByxSHw8pwTSo+Etl3JtniphscCiDQVbWIcNBelebsQlPm
-	 fKh4ONUhFST4HIWxpndtN5fAqj16SO0SDnmnEE5jweMxhL2bDsPqp3vMJ5A2i/vF6Y
-	 e1uI1agMI0l+BsbZIu+ox8NFg/SQZ4kx/XJm/tn1wMxVPm3LK8UH0/OeIuUEFCDunU
-	 evHQR/mRlSVeQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v9 17/19] dmaengine: ti: k3-udma-v2: Add support for
- PKTDMA V2
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: vkoul@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org
-In-Reply-To: <20260922064902.2719979-18-s-adivi@ti.com>
-References: <20260922064902.2719979-1-s-adivi@ti.com>
- <20260922064902.2719979-18-s-adivi@ti.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 22 Sep 2026 07:14:14 +0000
-Message-Id: <20260922071415.3CA2A1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="deOKtKe2"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-39d654f02baso3197773a91.3
+        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 00:22:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790061766; x=1790666566; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YqRdsoSwZuMFprPz4Ho4sF3JUn0Ps5OUJkmXS6wpmHg=;
+        b=deOKtKe2IVbb3OSLqVuOXpITb8Q/YCFXj8+XlsXLIX+oyESUOeOczT/gJ3q85CRIB5
+         ZwLE3rAARMpfCQfKJBMS6nN3r4PDJxjhaz67wtjznXdfmFf6lAlSqd7RXpu9+xjejzGz
+         ZRzhWM76wcNMAQ4fkEOAQCvlLCg6jO6oD83NdgGtBlDCDvjLtNShUFo4gwOg6yEuhviC
+         V0aH0CHVHqLO8y9PLNvbl/DBuINSqN8+dsTEFn7SFkTX+bBmV3rZfPbTnfkuPxN7lpbD
+         fx1bkJpDzwjkv8cnJa5aagZIEFTjBGzzf5HslQ612PemJ1ozEzyaQsHpDVxLINh/sEFi
+         YtLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790061766; x=1790666566;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YqRdsoSwZuMFprPz4Ho4sF3JUn0Ps5OUJkmXS6wpmHg=;
+        b=QeNaglU+uFejAunZtIp34yXfkqZ1+K3pRS2zQiKbTcnn4m91Jx/A4mZqkb3KdTb2GL
+         P1/q5KguZqRZq8TMcpRTky4RHGKjUg/cIlRB7ywEpJRD4R5sQOKO+/PxF9+CCIlJb2Oe
+         aSVh7/QFAV4O0vMP5SRM3+4Okg2oy1JCwxkuEUMgm3EJNl8wGf7X1xellWT6QGfYsYl5
+         Y8U/Oqroj4PyLRy7HcOMMgXk3aA+qtJgRG3AeVCJdPADBJR7zjXE8SNOiREMJBxDT12f
+         fE80mddWysPdV3xRP91b0aDtY3k8mTMvTWpyeppjS9edWfud1Xc/NICk3yU50jBBSc7Q
+         p1uA==
+X-Gm-Message-State: AFuF++l8sn7RKXdza4iDrE/jluz669jq/a7Yz5b0M8xaVBYjJsHAeNIZ
+	Det+jXhqlW6zQRAx4GOBkLGeKGScNdtNRA5P1IGl1KpYx6qOc/Txpdpz2nQ4DrBq
+X-Gm-Gg: AYBFou2EnZVzu7LTipLAtwNvowXJv1tFrCI4GCV9jBI56xBwFoO39egbQM4dFrGkkeB
+	jhaYlJUNnZt0pwulQ6N98dVMEgszbIXzuun3jufXyAoBHRSz+UZmXa2RABGlyTlZgDqDqOMag1Y
+	ZOasKdrCt9bdK2icDlg+kpxWvbhhF8bUN7ioH4KUvm5368V0L6YOL0fptP7rakz8iRP9sHufhgK
+	22iuSExe+si13HxVSJlbSpvokcQ/r1FPPblKtFNQmw4ljGq+tscK2RYZVdNlePVvPAAp/FsPAmX
+	vwiYnIHnuzSU3yc3TioVvUyb1MiMBr3g6amRKV/r/x3KlPr7XP+8NCxb379yzby6+JYBid+gTjP
+	qKUTdGYsENoW0N6pxfFUdQ0vQzji8yEK7in5mK3rzXc56lkdcTvVb56gjluBJ+muYtlkcUWFbLZ
+	dzhybh6shr0ZN/wKmDbcr8owbgzOGfnu3OJKwTBEw8aeuvF5LAZwsfugdXamOU9K9GYHqVVob4c
+	FXgDtWBVdfnN85tRhGSVh78+HNoJtnrmMVvCokg+V0oJpw/oub4WO9kQVZ9NlPiYhk=
+X-Received: by 2002:a17:90b:4c81:b0:39e:6c69:34dd with SMTP id 98e67ed59e1d1-3a07334d199mr238687a91.65.1790061765828;
+        Tue, 22 Sep 2026 00:22:45 -0700 (PDT)
+Received: from localhost.localdomain (5.240.104.34.bc.googleusercontent.com. [34.104.240.5])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a06dfd6705sm1851848a91.0.2026.09.22.00.22.42
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 22 Sep 2026 00:22:45 -0700 (PDT)
+From: Ginger Li <ginger.jzllee@gmail.com>
+To: ldewangan@nvidia.com,
+	jonathanh@nvidia.com,
+	vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: tegra186-gpc-dma: Read channel state under the lock
+Date: Tue, 22 Sep 2026 15:22:33 +0800
+Message-ID: <20260922072233.19592-1-ginger.jzllee@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [Medium] dmaengine: ti: k3-udma-v2: IRQ name mismatch for PKTDMA mapped c=
-hannels
-- [Low] dmaengine: ti: k3-udma-v2: uninitialized pktdma_v2_driver check
-- [Low] dmaengine: ti: k3-udma-glue: enum passed as boolean parameter
---
+tegra_dma_tx_status() reads tdc->status before taking tdc->vc.lock, and
+tegra_dma_isr() snapshots tdc->dma_desc before taking the same lock.  All
+writers of these fields (tegra_dma_start(), tegra_dma_xfer_complete(),
+tegra_dma_pause(), tegra_dma_resume() and tegra_dma_terminate_all()) update
+them under tdc->vc.lock.
 
-commit 0e040285780e7048563c2c5482644c2f9d9fa82b
-Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Subject: dmaengine: ti: k3-udma-v2: Add support for PKTDMA V2
+The unlocked read in tegra_dma_tx_status() can therefore report DMA_PAUSED
+for a transfer that has already completed, and the unlocked read in
+tegra_dma_isr() can pick up a tdc->dma_desc which is being cleared
+concurrently, in which case the handler keeps using a stale descriptor
+pointer.
 
-This commit adds support for PKTDMA V2, which differs from V1 in that it
-uses unified channel spaces, direct IRQs, and static channel mapping instead
-of PSIL pairs. It also implements the allocation of TX and RX resources for
-the new PKTDMA V2 hardware.
+Read both fields while holding tdc->vc.lock.
 
-> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
-> --- a/drivers/dma/ti/k3-udma-glue.c
-> +++ b/drivers/dma/ti/k3-udma-glue.c
-[ ... ]
-> @@ -166,6 +166,29 @@ static int of_k3_udma_glue_parse_chn(struct device_n=
-ode *chn_np,
->  		goto out_put_spec;
-> =20
->  	thread_id =3D dma_spec.args[0];
-> +
-> +	/*
-> +	 * V2 PKTDMA DT specifiers encode the hardware flow/channel ID in
-> +	 * args[0] rather than the PSI-L thread ID used by V1. Resolve the
-> +	 * PSI-L thread ID before the common path checks the direction bit.
-> +	 */
-> +	if (common->udmax->match_data->version =3D=3D K3_UDMA_V2 &&
-> +	    xudma_is_pktdma(common->udmax)) {
-> +		struct psil_endpoint_config *ep_cfg;
-> +		u32 psil_thread_id;
-> +		bool dev_to_mem;
-> +
-> +		ep_cfg =3D psil_get_ep_config_by_id(thread_id, DMA_TYPE_PKTDMA,
+Fixes: ee17028 ("dmaengine: tegra: Add tegra gpcdma driver")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+---
+ drivers/dma/tegra186-gpc-dma.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-[Severity: Low]
-Is it intentional to pass the DMA_TYPE_PKTDMA enum as the boolean is_pktdma
-argument here? While the enum value evaluates to true and behaves correctly
-by accident, this appears to be a type mismatch. Should this use
-xudma_is_pktdma(common->udmax) or a boolean literal instead?
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -606,7 +606,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
+ static irqreturn_t tegra_dma_isr(int irq, void *dev_id)
+ {
+ 	struct tegra_dma_channel *tdc = dev_id;
+-	struct tegra_dma_desc *dma_desc = tdc->dma_desc;
++	struct tegra_dma_desc *dma_desc;
+ 	struct tegra_dma_sg_req *sg_req;
+ 	u32 status;
+ 
+@@ -619,6 +619,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
+ 	}
+ 
+ 	spin_lock(&tdc->vc.lock);
++	dma_desc = tdc->dma_desc;
+ 	status = tdc_read(tdc, tdc->regs->status);
+ 	if (!(status & TEGRA_GPCDMA_STATUS_ISE_EOC))
+ 		goto irq_done;
+@@ -786,10 +787,10 @@ static enum dma_status tegra_dma_tx_status(struct dma_
+ 	if (ret == DMA_COMPLETE)
+ 		return ret;
+ 
++	spin_lock_irqsave(&tdc->vc.lock, flags);
+ 	if (tdc->status == DMA_PAUSED)
+ 		ret = DMA_PAUSED;
+ 
+-	spin_lock_irqsave(&tdc->vc.lock, flags);
+ 	vd = vchan_find_desc(&tdc->vc, cookie);
+ 	if (vd) {
+ 		dma_desc = vd_to_tegra_dma_desc(vd);
+-- 
+2.43.0
 
-> +						  &psil_thread_id, &dev_to_mem);
-> +		if (IS_ERR(ep_cfg)) {
-> +			dev_err(common->dev,
-> +				"No PSI-L config for flow %u\n", thread_id);
-> +			ret =3D PTR_ERR(ep_cfg);
-> +			goto out_put_spec;
-> +		}
-> +		thread_id =3D psil_thread_id;
-> +	}
-> +
->  	if (dma_spec.args_count =3D=3D 2) {
->  		if (dma_spec.args[1] > 2 && !xudma_is_pktdma(common->udmax)) {
->  			dev_err(common->dev, "Invalid channel atype: %u\n",
-
-> diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-pr=
-ivate.c
-> --- a/drivers/dma/ti/k3-udma-private.c
-> +++ b/drivers/dma/ti/k3-udma-private.c
-[ ... ]
-> @@ -174,16 +174,30 @@ EXPORT_SYMBOL(xudma_is_pktdma);
-> =20
->  int xudma_pktdma_tflow_get_irq(struct udma_dev *ud, int udma_tflow_id)
->  {
-> -	const struct udma_oes_offsets *oes =3D &ud->soc_data->oes;
-> +	if (ud->match_data->version =3D=3D K3_UDMA_V1) {
-> +		const struct udma_oes_offsets *oes =3D &ud->soc_data->oes;
-> =20
-> -	return msi_get_virq(ud->dev, udma_tflow_id + oes->pktdma_tchan_flow);
-> +		return msi_get_virq(ud->dev, udma_tflow_id + oes->pktdma_tchan_flow);
-> +	}
-> +	struct platform_device *pdev =3D to_platform_device(ud->dev);
-> +	char irq_name[10];
-> +
-> +	snprintf(irq_name, sizeof(irq_name), "tx-%u", udma_tflow_id);
-
-[Severity: Medium]
-Does this cause an IRQ name mismatch for PKTDMA mapped channels?
-
-In pktdma_v2_alloc_chan_resources() in k3-udma-v2.c, the DMA engine channel
-allocation uses mapped_channel_id (via irq_ring_idx) to construct the "tx-%=
-u"
-IRQ name:
-
-    if (uc->config.dir =3D=3D DMA_MEM_TO_DEV)
-        snprintf(irq_name, sizeof(irq_name), "tx-%u", irq_ring_idx);
-
-However, this exported accessor xudma_pktdma_tflow_get_irq() uses the flow =
-ID
-to construct the exact same prefix.
-
-If mapped_channel_id differs from default_flow_id, will this cause
-initialization to fail for one of the consumers because it cannot lookup the
-expected IRQ name from the device tree?
-
-> +	return platform_get_irq_byname(pdev, irq_name);
->  }
-
-> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
-> --- a/drivers/dma/ti/k3-udma-v2.c
-> +++ b/drivers/dma/ti/k3-udma-v2.c
-[ ... ]
-> @@ -870,6 +1012,7 @@ static int udma_v2_resume(struct dma_chan *chan)
->  }
-> =20
->  static struct platform_driver bcdma_v2_driver;
-> +static struct platform_driver pktdma_v2_driver;
-> =20
->  static bool udma_v2_dma_filter_fn(struct dma_chan *chan, void *param)
->  {
-> @@ -879,7 +1022,8 @@ static bool udma_v2_dma_filter_fn(struct dma_chan *c=
-han, void *param)
->  	struct udma_chan *uc;
->  	struct udma_dev *ud;
-> =20
-> -	if (chan->device->dev->driver !=3D &bcdma_v2_driver.driver)
-> +	if (chan->device->dev->driver !=3D &bcdma_v2_driver.driver &&
-> +	    chan->device->dev->driver !=3D &pktdma_v2_driver.driver)
-
-[Severity: Low]
-Is pktdma_v2_driver intentionally left uninitialized here?
-
-Since the device is probed by bcdma_v2_driver (which matches both the BCDMA
-and PKTDMA compatible strings), this check against the unregistered driver
-struct seems like it would always evaluate to false, leaving pktdma_v2_driv=
-er
-entirely unused in memory. Does this structure need to be registered
-somewhere, or can this check be safely removed?
-
->  		return false;
-> =20
->  	uc =3D to_udma_chan(chan);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922064902.2719=
-979-1-s-adivi@ti.com?part=3D17
