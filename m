@@ -1,117 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC53F86EE;
-	Tue, 22 Sep 2026 23:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6075335AE
+	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 23:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790119901; cv=none; b=BJG+mbJQIqqBjHp7e/K69GPHXh7w1U086k4kiDQgtWQp5eSsiaSqIIxxE+pdrTwRxD6RO3G3NCArA6fROvXNXVGb5lgQcBAcXB+1Zn7TvVP4A6tYvtYlhpM95RaWz+VxKYlcAFfZScEzIcFZkl5CPiPc6l2lga0zWvMdddoq6sU=
+	t=1790120111; cv=none; b=gmr5trok0PrVg4FiNGmveh2e+bZvmNcvlewvnij6SV8ceytv8h5BZIbjgm1Iy8X7gDgSpBGgzX+8rMDSzS526zMR+G4kYqY0UMkiqm0AZIPcB3i9hwCjrbS41zQD0GlYKWkCI1/zmr1Ai7Iars3nZSQZAQ6gK3L2PeryuYDFzts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790119901; c=relaxed/simple;
-	bh=sdlTn9Q0R6/mWPb3yR0tAeo7GSSlxqh1ydccmKLsdGw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cWc270Ds9YXl7y3wjxHHfQiVY9/Cieq+qGInww8fDEetc2cX8ImKcfa794RFARSDcVuo7y9RftAIeVHhMqRmj9w/1oLgLU8UBYyHoF9YJgmo4LegemTxJZTJFMXiogYDb7XyVNs2/6lwDFiSP0fVsmlFqf6c6CfehrS/Aan/wgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WtWQjKRq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790120111; c=relaxed/simple;
+	bh=Pu0LIyep8ECHLzZXC61LZET888f/1qOClryiAQIqaag=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GDC9CO9xKm41JxDbfeW4XgS483Xci/iyXe6eYCSF/IV0cldvi4KdjOvyGmvg+oMU5mH7/WWkyUUtPvaIbBVrUKDYn4VmtrgRKrLp2QwS/jm86zlQapTQDNZtdhRZFiSjQlX4oFdnO8bDedcZ2Epi7gS2Iuuc0KJwtHtNje64h3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OHYqT3PF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WtWQjKRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8DB1F00893;
-	Tue, 22 Sep 2026 23:31:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OHYqT3PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDFD1F000FF
+	for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 23:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790119891;
-	bh=EuyLoayw5WruSqumoP92ns77+jHi9KMHh7HXBtmukt0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=WtWQjKRqO0oweDw8vwaekixoxr+CrJcKB0L8EjRIb7Hg8Yd/+kotp+FR0ii5OxXxN
-	 2qqeG950UpZA845vP6UGbP6xFwTn7ZxxsCxiP2OKXxkAZTGZ9XG52lpJ4lE1nEi6ff
-	 Jbxio7IaaVocrRs3GF4sTgWpx9xp00upSGIXMXVZMt2PrAzIbQg/kd1oNSBz0678No
-	 1iVewEdYmojI0Ks7fkYyvbzqrQHEF4+k7EZTzILoaJ6DydeJqqRy8MeZYKDw1Nsl62
-	 PFbI+i1nwGQrrHQ7gTvvusP4v8eVUrqENE1A2cCE4ixGRVaqF8a7NXo9OwDMlqTjyq
-	 0V5LvQKkohLZg==
-From: Linus Walleij <linusw@kernel.org>
-Date: Wed, 23 Sep 2026 01:31:08 +0200
-Subject: [PATCH v5 23/23] dmaengine: ste_dma40: Validate memcpy
- configuration
+	s=k20260515; t=1790120103;
+	bh=Pu0LIyep8ECHLzZXC61LZET888f/1qOClryiAQIqaag=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=OHYqT3PFt6Inu0sCytInvDAgTv/oQMI1RZJRl/PilqmkdT8cR5McvOzjBxEQZryCi
+	 XTM+YWktLE3ACAzYuZvFYj3I1/KLj/bEvcbBlOO2j0I6ieLUShHAPxyavEM7fHqy6t
+	 0KfkOI80Mb79dlpy4xZgNn7sknCr4FVew/75hGD0myVQLCzuYyw0+VssSPVheAgQ+b
+	 D/rA05eXF4JlVleMk/Ch3JoXrWxMfDn4dYp4mcReftHgCGdApTEgXvzglsc5x8jhmk
+	 CIS3AGjP72Orq+uZ9gS3cAnPcYSO5cxulNcyUIYYZNg28+zrSY8FHAhxJ4lE5Xi9eF
+	 FgWi3oFC+HqIg==
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b5e4f1651cso286855e87.0
+        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 16:35:03 -0700 (PDT)
+X-Gm-Message-State: AFuF++lpEZoF8Ujt556fXLKUwjyVZZOW4iu9ipfAtgo+RWtoR5OkrYOM
+	OmzVXhToPEYEjeobabdNHifsBh6F+nV4z795hddknR5kadld9KMkq8hO57miWNyQ0G6kqINSOZM
+	Y88rUZIK9V3lw8qXLjc10QLsc2NUR1vc=
+X-Received: by 2002:a05:6512:60e:20b0:5b7:50bc:32eb with SMTP id
+ 2adb3069b0e04-5b8d89ba16dmr156982e87.66.1790120102473; Tue, 22 Sep 2026
+ 16:35:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260923-dma40-fixes-v5-23-709d160cde76@kernel.org>
 References: <20260923-dma40-fixes-v5-0-709d160cde76@kernel.org>
 In-Reply-To: <20260923-dma40-fixes-v5-0-709d160cde76@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Wed, 23 Sep 2026 01:34:50 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnVrnknUimH2dLUGnNDJ5qOCYiqv0vjW9pizVquo6TCjw@mail.gmail.com>
+X-Gm-Features: AclHuK9dU3n-z4AwGVYodbotlqHC4cAWrTVWMC8tuLVlyvcNXYnE6Ii4cVkgZdI
+Message-ID: <CAD++jLnVrnknUimH2dLUGnNDJ5qOCYiqv0vjW9pizVquo6TCjw@mail.gmail.com>
+Subject: Re: [PATCH v5 00/23] dmaengine: ste_dma40: Fix numerous accumulated bugs
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
 Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org, 
- Linus Walleij <linusw@kernel.org>, sashiko-bot@kernel.org
-X-Mailer: b4 0.14.3
+	Frank Li <Frank.Li@nxp.com>, Frank Li <Frank.li@oss.nxp.com>, sashiko-bot@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+On Wed, Sep 23, 2026 at 1:30=E2=80=AFAM Linus Walleij <linusw@kernel.org> w=
+rote:
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+> This series fixes 26 DMA40 bugs.
+>
+> 12 were found while reviewing the Ux500 LCLA SRAM power-domain conversion=
+.
+>
+> The cyclic transfer residue bug was exposed by Ux500 audio playback.
+>
+> 13 more issues were identified during review and hardware-manual audit.
+>
+> The method taken is: whenever Sashiko complains: fix the bug it complains
+> about if possible.
+>
+> This has been boot tested on the Samsung Skomer device: DMA for MMC,
+> wireless SDIO and UART still works after these patches, and DMA for audio
+> started working.
+>
+> Assisted-by: LLM
+> Signed-off-by: Linus Walleij <linusw@kernel.org>
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+Ugh I managed to not update the patch series from v5 to v6 ...
+OK let me fix this up, wait a few days and resend.
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
----
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+I guess I'm getting a bit worn out by this fix series that started
+as a few fixes and just grows wildly thanks to / due to
+the massive AI review from Sashiko.
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 20241fafbf94..70aecfdcca2a 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1897,7 +1897,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
- 
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2171,12 +2172,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2184,6 +2190,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
-
--- 
-2.55.0
-
+Yours,
+Linus Walleij
