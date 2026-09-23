@@ -1,125 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805663909A5;
-	Wed, 23 Sep 2026 08:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B58331EA8
+	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 09:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790152490; cv=none; b=Ls9R4vtdK2LVln94WKdMY0FYAybXx0lwBjm3RsnIAJ155u240FXnG3V7wb6uSDnHmnlRdJ4FTLiVOYfHBNho/d44+p/HG/tmoqS8ti4y3KPIie/28yysjt77OR7/aqmWt9O9UPMxEUGsw5epZ+iyF9ELYihZAiSqDtflhppMGCM=
+	t=1790156676; cv=none; b=Yv2y7FLRt79gLV/17YwZ8XX4nG1FYt/L3MKbYYlDAo3kbj+8vQx1PSw+G3k5dragPhO9H2j7uvi+j4GhFddPIu+jzlMB4fRBjxM+5doZ0D/YM9RI5nTXpRhyIVkC5Zh7rnXe49MDcZUHHymWLtUaWl6NIZMksvEil0cF5Agp4gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790152490; c=relaxed/simple;
-	bh=elUNYHZrnT4OVCDssSy6vQXfnSqu7eReLuKE4AWHIuM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CPtalvV11ktJ1iVgXSysFCSQLziKt07a6gAsVs6jn+rgMfC7Yu9sUDYFyZ283YxE1gXGkbA9UmQM+55sUzxgiztZQeOnPyoC32nIWjHBjnN2oOIbdNetBHsjC38ZDVUTdF2+wgh+i9Rjc0mChdUFFlIW/QnOz0IBJcVixBFG4Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJ/OovWT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790156676; c=relaxed/simple;
+	bh=dU9hy7OQjqEoRycQvnYqwAL+gjlFdfNRteBCt/LfeHQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B4ZJGAAMRMjU6q8gtL5vawoM91ShU07+BUHcM+dlcOO5csKkSq+idfMqHkyrIoxG3uKu6jTXvkpe0dd6JA4UwPM3H64rJ9W/WFNm22iEgGvJMTK15dMCaTCkVF6UlQaSovn/lk2ZnJpHfxYpDOIX2Fpy0eRc0jSSdacd5iM/u4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jEQJZ9el; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJ/OovWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20281F000FF;
-	Wed, 23 Sep 2026 08:34:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790152481;
-	bh=fONU01jydHR4DKzstpQamxQnf6IvXt+cW08C/ElpZ0c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=aJ/OovWTX+MAupdejZ0JhdViOFsf6gaDxoq7MmZ2wjypNfIDLbqxlT8aLlxRcEkRj
-	 sr/heJ+KLZgJe49f52h6P6Z9yQnZlrZAgbJ9iQrZKPoUW7nzojHLcDtPmL3G8yYMBJ
-	 OoUuCIyx0EpqwitZokHysqgahB75slQifGcz6Rgeh4w07pJ/UI1Nr+bfSEx7FerVzq
-	 8+W1Mdpg9eT73brThAmQng0Tk34uPlansAoT0/IzqnLBMmvOHxFHW+z62bw1/S4OR3
-	 9PpMUQcya2WtdhZO9Sq+lCRatNPWQIFULSLwFXis+VLcCq5DRfb9no455z56Ll2zTR
-	 c2Myo6SUouxhQ==
-Message-ID: <e835bdca-cea9-4e55-8df6-cb8bb22bb74d@kernel.org>
-Date: Wed, 23 Sep 2026 10:34:34 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jEQJZ9el"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396cccbba91so396665a91.1
+        for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 02:44:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790156675; x=1790761475; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=cwEzXtz3NNCFqU3FWhb/zI4kz8S9UO05RDNlkWDHdYw=;
+        b=jEQJZ9elEHS7e6O2hgLR+q5QdgP2InP34z84U1LkOagDOzTmmW5Q9O7yjfOhSoR77c
+         J7FFz/LHLPz0de6vDNN6wtFWrQNIgmydwcIO+P/ZHYTnWwKk9pczXu5RVgQx8JqV+7c/
+         hKdKRLUsffv/pJ/84ufCYJ92hEW/s3S2eXpIrPzBI3zgFcVfjQy+ysuY9PDjQQLJQifT
+         EYP2nkVGbtWROhwDKxfiv+Tn0fphbH6k9l0FrwHqSDLoQ/uPWtekJMq92r68cVZhOOeJ
+         44Rg0B5fYjOOOtwJtHgdUbCbrakZVaYkjBzvCHNzxZNnZJTu1Oy2k+cFDF5bJpOIB03J
+         dmUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790156675; x=1790761475;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cwEzXtz3NNCFqU3FWhb/zI4kz8S9UO05RDNlkWDHdYw=;
+        b=XnG19RKThwjk7a7K4vBAReGmdYCYI5tWhVwz3CgljHm46ImihFfwovTrq7HpdBuQqS
+         5oc92x0bc54LmhCUVNpSuCMWXKVcYzM2ck0Dcew2z0KBvFMItyNNrGSuhxarwG3MudZ3
+         7AjcPJV2o2Njf5MNX8lr4Hzk+y5VoQlofWxJeCMigxO1cpNqumFVmY20lp5OqZNlRSaJ
+         n2A3Di07KX5+l3p8fO2GkdlFpH2W3ivnnfA3Sf2JvtQVzM5phESnbyJ0iRq6Q4yFqnpr
+         aZ1U7Ce6V0WPRVNR4xA7pLfAeZ4ZMsvsC1o3mJ16LJ89TMw/etkhAa0btPGytBb9aiDB
+         lDZg==
+X-Forwarded-Encrypted: i=1; AKwUvBz0NmU7C5KDd8wSKwhWdzFh+wVb3o/ZN7/1Gzx0WAsWNTEhrbWrlDX5HCQQSdiAzAHrlKJ7gZ6boHM=@vger.kernel.org
+X-Gm-Message-State: AFuF++nwvU3qZkYvphqf9FPr8dpoTfWEnsm1g1EhxIhiwJN8nfeJREYv
+	XGIgsikznhLU/cLtU43YXc4dRtr4kh5RlfOvgrxDmKLqNK08JH4g1NhJ
+X-Gm-Gg: AYBFou3Mha7zW3+wXBI1kS7ytNA9CQ6OUwXm+xmu0zX4vcsL/l/xrK4q7hWAQgXtJ0q
+	AOgFDAj/6O/Yngg7w1oEbhQnJmi/AZFXXY3x1X1tTE79M9o/i6qixTg2nhOjvYfu77VjomHvuCr
+	IvQyB91V94Vd6URnCiqPnW3qWVIKdGtmvYPAiBIAaSSs8M7LqTzYpPPOCdjHrkcPbbTiSEl5fla
+	oodudCY+R++Q34jAvAWDAkPqmouLeV8F0pHqfayvNGznnd22cIeBZsI6RghSbkJY92CwjYj19Qt
+	9rl3yDGsR6dljsEJnpIcOHYNFmqxAE/+lRjTS5PWKhgfVhGOrJdtTlEMLXaCKnRDnBQtNIVzRAl
+	c6Cn5OtODaOfLwknpf8tPIre2iLMmqKb+NoLeYoOWL/YBK5SKNiPG4BXNVPBFHaFvRefhuNDdv2
+	gPphvNLTuJlwi6vPh8XzZnoZ0u6cQgP4mUF5JKSD/dQXK4lqjUiHbsAbPjWXc5FuKVTYdpjrvCj
+	fvzzaLQX/6HE3AtLw==
+X-Received: by 2002:a17:90b:4c88:b0:3a0:3d1c:2dc2 with SMTP id 98e67ed59e1d1-3a07e6df035mr1828489a91.66.1790156674636;
+        Wed, 23 Sep 2026 02:44:34 -0700 (PDT)
+Received: from localhost.localdomain ([2406:da14:10b4:9b00:211e:3d68:8776:5ca0])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df6a60c741sm7874725ad.80.2026.09.23.02.44.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 23 Sep 2026 02:44:34 -0700 (PDT)
+From: Ginger Li <ginger.jzllee@gmail.com>
+To: sean.wang@mediatek.com
+Cc: vkoul@kernel.org,
+	Frank.Li@kernel.org,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dmaengine: milbeaut-hdmac: Fix deadlock with the channel IRQ handler
+Date: Wed, 23 Sep 2026 17:44:26 +0800
+Message-ID: <20260923094426.67872-1-ginger.jzllee@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/5] dt-bindings: dma: Add CIX Sky1 DMA-350 integration
-To: Conor Dooley <conor@kernel.org>, Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org,
- robin.murphy@arm.com, cix-kernel-upstream@cixtech.com,
- dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <aqE42NzerAiD2U1E@squawk>
- <20260920051501.3620794-1-Jelly.Jia@cixtech.com>
- <20260922-perky-absently-2590fe901176@spud>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20260922-perky-absently-2590fe901176@spud>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/09/2026 19:04, Conor Dooley wrote:
-> On Sun, Sep 20, 2026 at 01:15:01PM +0800, Jelly Jia wrote:
->> Hi Conor,
->>
->> Thanks, understood: with the SoC-specific compatible scoping the
->> integration code, other platforms are unaffected either way.
->>
->> For v2 my preference is to keep the wrapper, since it leaves the
->> generic arm-dma350 driver and its binding untouched. Does that work
->> for you, or would you rather see the dma-350 node itself carry a
->> device-specific compatible, with the clocks, resets and
->> memory-region described on it? I'd also like Robin's take on the
->> arm-dma350 side before restructuring that far.
-> 
-> The latter, since that's what we do for almost every other device under
-> the sun. Robin's take would probably be worth hearing, but you removed
-> all the context while replying which makes that more difficult...
+milbeaut_hdmac_interrupt() is a hardirq handler and takes mc->vc.lock with a
+plain spin_lock() for the whole time it runs.  interrupts are disabled locally
+in that context, so the handler itself is fine.
 
-Following DWC USB example, I think wrappers are discouraged. The
-integration of a block is together with that block an entire device.
-Integration is not something separate, at least usually. If it is,
-author should provide some arguments in terms of hardware. The arguments
-of driver are unconvincing.
+milbeaut_hdmac_chan_config(), milbeaut_hdmac_chan_pause() and
+milbeaut_hdmac_chan_resume() are called from process context and take the same
+lock with a plain spin_lock() as well, so interrupts stay enabled while the
+lock is held.
 
-And to prove this is same device (integration = block), the MMIO is the
-same.
+If a channel interrupt is delivered on the CPU that is inside one of those
+critical sections, milbeaut_hdmac_interrupt() spins on a lock that the
+interrupted code is holding and can never release, and the CPU hangs.
 
-Best regards,
-Krzysztof
+Take mc->vc.lock with spin_lock_irqsave() in those three functions, as
+milbeaut_hdmac_issue_pending() and the other process context users of this
+lock already do.
+
+Fixes: 6c3214e698e4 ("dmaengine: milbeaut-hdmac: Add HDMAC driver for Milbeaut platforms")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+---
+ drivers/dma/milbeaut-hdmac.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/dma/milbeaut-hdmac.c b/drivers/dma/milbeaut-hdmac.c
+--- a/drivers/dma/milbeaut-hdmac.c
++++ b/drivers/dma/milbeaut-hdmac.c
+@@ -214,10 +214,11 @@ milbeaut_hdmac_chan_config(struct dma_chan *chan, stru
+ {
+ 	struct virt_dma_chan *vc = to_virt_chan(chan);
+ 	struct milbeaut_hdmac_chan *mc = to_milbeaut_hdmac_chan(vc);
++	unsigned long flags;
+ 
+-	spin_lock(&mc->vc.lock);
++	spin_lock_irqsave(&mc->vc.lock, flags);
+ 	mc->cfg = *cfg;
+-	spin_unlock(&mc->vc.lock);
++	spin_unlock_irqrestore(&mc->vc.lock, flags);
+ 
+ 	return 0;
+ }
+@@ -226,13 +227,14 @@ static int milbeaut_hdmac_chan_pause(struct dma_chan *
+ {
+ 	struct virt_dma_chan *vc = to_virt_chan(chan);
+ 	struct milbeaut_hdmac_chan *mc = to_milbeaut_hdmac_chan(vc);
++	unsigned long flags;
+ 	u32 val;
+ 
+-	spin_lock(&mc->vc.lock);
++	spin_lock_irqsave(&mc->vc.lock, flags);
+ 	val = readl_relaxed(mc->reg_ch_base + MLB_HDMAC_DMACA);
+ 	val |= MLB_HDMAC_PB;
+ 	writel_relaxed(val, mc->reg_ch_base + MLB_HDMAC_DMACA);
+-	spin_unlock(&mc->vc.lock);
++	spin_unlock_irqrestore(&mc->vc.lock, flags);
+ 
+ 	return 0;
+ }
+@@ -241,13 +243,14 @@ static int milbeaut_hdmac_chan_resume(struct dma_chan 
+ {
+ 	struct virt_dma_chan *vc = to_virt_chan(chan);
+ 	struct milbeaut_hdmac_chan *mc = to_milbeaut_hdmac_chan(vc);
++	unsigned long flags;
+ 	u32 val;
+ 
+-	spin_lock(&mc->vc.lock);
++	spin_lock_irqsave(&mc->vc.lock, flags);
+ 	val = readl_relaxed(mc->reg_ch_base + MLB_HDMAC_DMACA);
+ 	val &= ~MLB_HDMAC_PB;
+ 	writel_relaxed(val, mc->reg_ch_base + MLB_HDMAC_DMACA);
+-	spin_unlock(&mc->vc.lock);
++	spin_unlock_irqrestore(&mc->vc.lock, flags);
+ 
+ 	return 0;
+ }
+-- 
+2.43.0
+
