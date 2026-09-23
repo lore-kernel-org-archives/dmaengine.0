@@ -1,102 +1,240 @@
-Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2033436D9E9
-	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 04:29:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790137798; cv=pass; b=F7fo23vmyOVpP3UKfWPz2i7eGguuDbmx+VibByCOhydwguxtiAhvWnHLTbvw4bz9up8TU+fhI0h3bCxchJFNHDiNJVn0RBPJEtsWbOWigJ0SOaUJ6ROhxWvzA3JiGt9HphDXcBOQuKuL4XLS+Y072Hz57+hF7xcYtiwd+LOnJg8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790137798; c=relaxed/simple;
-	bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lS0b8e/vMoljOHIEuZt6AcbzOmzvyUrKWF249mfVootTcKzCgAoa92aiWtq+afOzgUdkwpEZiII+6qo8OmQqzvNNbdrJjiaNp+hnnv4I/bUaMZrOSvGYfTAQwPCznRsdKs/89YqlzXQkF0zQTCZBAENbgaeiYZHmCi0nuZ8gTqs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qYKjfYsf; arc=pass smtp.client-ip=74.125.228.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FEB23D2A1;
+	Wed, 23 Sep 2026 04:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790138495; cv=none; b=CMPNr+IaxM3ymO7U/34XLMrN9nHbKb65F9ioADGhTGFw1UxBbBsZuYO+FmqOLJ6vepzNyvoOYxZiUAmmPSvgfp0qH1pkPfTck1kZ9Rnwrdaw391eEFWJQ5Zhas3ugn8zElSzL8F/EfLlI2sZy0T++qxvUHGkyC5AdgYjQJfmHPk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790138495; c=relaxed/simple;
+	bh=2g8DpJUpH8PlrjKZXif8Lq7wdVqgWNsDSnDRhW5C1wE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d+EsTOI4CZnnubWhBl4AKsW46QdzXkVNLifTpQsO05wUn8MjVgP8nKqFScudsuIhEOOuJXZiN+5HCUu32VwTveOylXB6ZfGyu7NfVNzM4XkB3E4ILvBkLLgVMaEJA+CvaLffzu7VNwwL4GIR98Ozv3iBFI9d6IKVESjmih6Z5i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=fAm3VdMV; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qYKjfYsf"
-Received: by mail-pz2-f43.google.com with SMTP id d2e1a72fcca58-85469a34908so387182b3a.0
-        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 21:29:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790137796; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ik9T6684bSZpuTYvoexsp/WiuBOK5pYbYigdwhwQcOxEngl03K8ZyCRXuFWuI5xy8w
-         /t3Q0tFNUBeUVN4ACy1IvjuYdp5tx7FqTNZfabfoMIzEfkddJj1qs4RW6ifL2yKAifl5
-         9oHXXcveUgMRjg6RLEIgGXEIoS0E2AssawFhs2e/sDRtv08uPsw5E60iFVNrNttn2x8n
-         xmI//uzA3KBa2izSVlNk81DH3zcC8dWBvhHmvkPxyI9dLpQbTul/wEJKC2c/roB/PSwi
-         ZnWBTFNNWGNyFpVKe51K7zRX3i536BuXuek6nszjA+la1jq4gBqPo0LJUwU3BBcprle3
-         iX8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
-        fh=LrM3G6RcmBZ425pLRY8E44TM1XcCb9gU9D3viVl1X8E=;
-        b=AoX6irV/PeP26udAWi2vTbegwH02GWt8czQ8RIrBN9be2PPiRM6eK7aSq3Lmz9jSMH
-         Dnuxeaev95mqXtkgManpaGNQj30zFm5heOIVsVtVktlyepcVeMz3nigupIiJGROyxwtc
-         mUZ/wr9t/DU4fG3rc3BYogvmr39qxX3ZxWQLLnFNLB0iR0yPZtvXVdkm4Es+qyyPr2eI
-         C4o97EHOWwcXVDgQrwjtQYt6w/FE7sCyrVvP5P+Y0XqT9nteCl8KDscjSfouwdJ4fEnv
-         3NtFsSRtJU8hstH9wQFYVLNBYB1sPBtBXYpBph60bWuGxR1yS6SsEeXAL7tybidc9g4I
-         zc/A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790137796; x=1790742596; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
-        b=qYKjfYsfF+xgyHDJnMkA7e/VrDChWx5AuS8ziMsefk/JDAnogHrjrAl2JmYtJUjYuP
-         EyZDi3LfGXyteZSOBgMiJRkVpzwY2WtSh4INcpR/zTU7c37aQYhjgzu45GsCP/0nVEB5
-         MiBe5Uisk/FG2Q84pmT78iAbyLzJBUuXkwngaS4RA82XksGOh8hpTjzi+JvMohRmXWjG
-         T7nCBcg22pNZzPdeYg6F3ufpmg6sgICC8VYCmrwrhVcHrVD+axlYDctkvBPMM2fWukT0
-         7BQhvdD90Jq49iD+uim1UEis4JylAqwFJJA117lI2L42fKmADDOREgxixwByZznMb7DC
-         +WYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790137796; x=1790742596;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
-        b=spV53JJKVw0krEkkOcOKkFLIbYC0EGPt5gYPrL32DXYoT65Kv3qYLVepwHa7ZFniPk
-         sJC+4pnhpedvQbFckRoI6qsNrCPl6oVraJdPvxcSkrgg20s5BuATeoMvNqYsGxx26XXt
-         g+aF8YWRuZlIZD6MTuoM2h4sCdLItjAi6Xd3G29aK8FrGE4i5qozLYeF1jYOqHCyemex
-         JPHSYFS49bOisW7niMElaBpG0Ag0zGitXOtzszTbs/Tn/MfbvivZBFaX+fjHrGropmC1
-         xiNtudYfbSih2daocfF6YecH3GmPlF7qFSySwLkIN4CfHyt31DfKuamx7vGAc0fYQNEf
-         +I0w==
-X-Gm-Message-State: AFuF++kFtK4jv5xsUID8X2nJX/pofBoBpVhNT7TADDFYZ4ho0EpHwv5Z
-	SVynTycCT7XpV8o4a0roPJZpK82+73Vsx9L9rcTqupo9j3Auzvxb+xYLHubelbvOYc4rsKO4NMC
-	JS1XO2yuBTZk3sJuRv6fPo7u/L2q88yc=
-X-Gm-Gg: AYBFou1Ye7PcN1uywLHIy9KRBujsid3+c4CwhuEDfthfqt7Dpng7yZcAaEEZdIc9FqP
-	IuwmqzzVqUmxr3+ZK7wz5Zd7Ve8PRG6k2HnnGqEXHX87KxntKL54WMMN1iKgM9C2QlFBCLhAFDu
-	t2GF2Ca8yal93PzYnpuA0oi0lnaKhaXEeTciqqE4bIgD8Kenk4MAYUUcep8gGPwJlf/mg21fpTN
-	lG/aYOZHkzNRoEnREtjLwSqvj/K9RUiPtEJ9iLLbXF7EsJp/tXAk9rO/ruKcv24H7UujyerIwN6
-	wNSyn2DsKKGtl86jzGTRAw7TSvk4EkIshUgqc6FBCtt3+vrKYiZtjQBbjPR5YWS9iE4jxkvvCDw
-	rDxRz9q3M+uaK0Qd2hwsYAn0U1/+7WcDV0g9uapFAUDUjjHyLDvEV3uqDFkz5Zmo1LbI=
-X-Received: by 2002:a05:6a00:761a:b0:87d:3894:196a with SMTP id
- d2e1a72fcca58-87d389421a3mr1066998b3a.57.1790137796397; Tue, 22 Sep 2026
- 21:29:56 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="fAm3VdMV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=PH
+	YHhH3fbkvl/BtctNyr8DOuwciATd1JnB35eSqWrtU=; b=fAm3VdMVFRtXWfOIKa
+	XfMnDFVfmlPweTdPrv9rdlawIfDzq8fG4b8ehsK0MZRimPiQBO5DaO+nEKPxUzzq
+	1M19MFjpxyzEcLTOCT/ZqEIdn9T4cQl7q2NUQ2/coqgcbR0aJZryjT2n/V0ELuF/
+	OqAsmHaXWn9nnkltNrG3IxFTE=
+Received: from LUOBO-DINQG8T.hobot.cc (unknown [])
+	by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id _____wDnb0xjWLNqBjINAQ--.56838S2;
+	Wed, 23 Sep 2026 12:41:09 +0800 (CST)
+From: Rui Wang <wr574332525@163.com>
+To: vkoul@kernel.org,
+	Eugeniy.Paltsev@synopsys.com
+Cc: Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Rui Wang <wr574332525@163.com>
+Subject: [PATCH v3] dmaengine: dw-axi-dmac: report paused state and residue in tx_status
+Date: Wed, 23 Sep 2026 12:41:04 +0800
+Message-ID: <20260923044104.3234-1-wr574332525@163.com>
+X-Mailer: git-send-email 2.53.0.windows.2
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260923040831.10936-1-phucduc.bui@gmail.com> <20260923041639.1EF301F000FF@smtp.kernel.org>
-In-Reply-To: <20260923041639.1EF301F000FF@smtp.kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Wed, 23 Sep 2026 11:29:44 +0700
-X-Gm-Features: AcwNN1Vvzt3y8riuWi4-ytcJhOf2WBYBJ9_lqO28wVuyCEhFO5pzOTb8nqKb7bk
-Message-ID: <CAABR9nHHSJPcdBwY82jOZG7HWs4FKbzPF-rckz=T+NTEKHj-DA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] dmaengine: ti: edma: fix pm_runtime usage counter
- leak on error
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDnb0xjWLNqBjINAQ--.56838S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxtr1rJr1kZr4DWw45Xw4kCrg_yoWxtw4rpa
+	y5G3yrGr4DWF9avF4UGw4UJr15ZF4rXFW7CrWrG3sIka1UX3sakF4fKa4YqF1DArn29342
+	9F4YyFy3Ga1UArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pi8uctUUUUU=
+X-CM-SenderInfo: lzuvlkittskjqv6rljoofrz/xtbC9Qe2T2qzWGeuGwAA3Y
 
-> [Severity: Medium]
-> The commit message references netcp_probe(), but the patch actually modifies
-> edma_probe() in drivers/dma/ti/edma.c. Could the commit message be updated to
-> reflect the correct function name being patched?
->
+The driver implements device_pause/device_resume, but device_tx_status
+keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
+tell a paused channel apart from a running one. Report DMA_PAUSED when
+the channel is paused and the cookie is still in flight, including for
+callers that pass a NULL dma_tx_state, and clear the stale is_paused
+flag in dma_chan_terminate_all(), which disables the channel and thus
+implicitly cancels the paused state.
 
-Yes, I will correct the function name in the next version.
+Also, the residue of an in-flight transfer is currently derived from
+the number of completed LLI blocks, so it only advances in block-size
+steps and stays stale for the duration of a large block. Read the
+current hardware pointer (CH_SAR for MEM_TO_DEV and MEM_TO_MEM, CH_DAR
+for DEV_TO_MEM) and walk the descriptor's LLIs to compute how many
+bytes have actually been transferred. The 64-bit pointer is sampled
+with a tearing-safe double read, as the transfer may be running
+concurrently. When the transfer has just completed but the descriptor
+has not been reaped yet, the pointer sits at the end of the last block
+and the residue naturally reads as 0; conversely, a channel whose
+enable bit is still set never reports full completion, so a stale
+pointer left by a previous transfer reusing the same buffer cannot be
+mistaken for a finished one. Queued descriptors keep reporting their
+full length and cyclic descriptors keep the block-granular accounting.
+
+Tested on an FPGA platform.
+
+Signed-off-by: Rui Wang <wr574332525@163.com>
+---
+Changes in v3:
+- Report DMA_PAUSED also to callers passing a NULL dma_tx_state.
+- Never report full completion while the channel enable bit is still
+  set, so a stale pointer (e.g. a new transfer reusing the buffer of a
+  just-finished one) is not mistaken for completion.
+- Link to v2: https://lore.kernel.org/dmaengine/20260923034653.1413-1-wr574332525@163.com/
+Changes in v2:
+- Sample the 64-bit SAR/DAR with a tearing-safe double read instead of
+  lo_hi_readq(), avoiding a torn pointer when the low half wraps.
+- Read the hardware pointer for the in-flight descriptor even after the
+  hardware has just completed it (channel enable self-cleared, IRQ not
+  yet handled), so the residue reads 0 instead of jumping back to the
+  full length.
+- Link to v1: https://lore.kernel.org/dmaengine/20260923030201.859-1-wr574332525@163.com/
+---
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 104 ++++++++++++++++--
+ 1 file changed, 96 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index eebed2474..5653a5712 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -352,33 +352,120 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
+ 	axi_desc_put(vd_to_axi_desc(vdesc));
+ }
+ 
++/*
++ * Read a 64-bit channel address register while the transfer may be
++ * running. A plain lo_hi_readq() tears if the low half wraps (carrying
++ * into the high half) between the two 32-bit reads, so sample the high
++ * half twice and re-sample the low half if it moved; a second 4 GiB
++ * wrap cannot happen within these few instructions.
++ */
++static u64 axi_chan_readq(struct axi_dma_chan *chan, u32 reg)
++{
++	u32 hi, lo, hi2;
++
++	hi = readl(chan->chan_regs + reg + 4);
++	lo = readl(chan->chan_regs + reg);
++	hi2 = readl(chan->chan_regs + reg + 4);
++	if (unlikely(hi != hi2)) {
++		/* Low half wrapped in between, take consistent samples */
++		lo = readl(chan->chan_regs + reg);
++		hi = hi2;
++	}
++
++	return (u64)hi << 32 | lo;
++}
++
++/*
++ * Return the number of bytes already transferred by the descriptor
++ * currently on the hardware (running, paused or just completed), based
++ * on the current read or write position: CH_SAR for MEM_TO_DEV and
++ * MEM_TO_MEM, CH_DAR for DEV_TO_MEM. Must be called with vc.lock held.
++ */
++static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
++				struct axi_dma_desc *desc)
++{
++	struct axi_dma_hw_desc *hw_desc;
++	bool dst = chan->direction == DMA_DEV_TO_MEM;
++	u64 pos, start;
++	u32 xferred = 0;
++	int i;
++
++	pos = axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
++
++	for (i = 0; i < desc->nr_hw_descs; i++) {
++		hw_desc = &desc->hw_desc[i];
++		start = le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
++
++		/* Current position is inside this block: partial progress */
++		if (pos >= start && pos <= start + hw_desc->len)
++			return xferred + (u32)(pos - start);
++
++		xferred += hw_desc->len;
++	}
++
++	/* Position doesn't match any block, be conservative */
++	return 0;
++}
++
+ static enum dma_status
+ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		   struct dma_tx_state *txstate)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 	struct virt_dma_desc *vdesc;
++	struct axi_dma_desc *desc;
+ 	enum dma_status status;
+ 	u32 completed_length;
+ 	unsigned long flags;
+-	u32 completed_blocks;
+ 	size_t bytes = 0;
+ 	u32 length;
+-	u32 len;
+ 
+ 	status = dma_cookie_status(dchan, cookie, txstate);
+-	if (status == DMA_COMPLETE || !txstate)
++	if (status == DMA_COMPLETE)
+ 		return status;
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 
++	if (chan->is_paused && status == DMA_IN_PROGRESS)
++		status = DMA_PAUSED;
++
++	if (!txstate) {
++		spin_unlock_irqrestore(&chan->vc.lock, flags);
++		return status;
++	}
++
+ 	vdesc = vchan_find_desc(&chan->vc, cookie);
+ 	if (vdesc) {
+-		length = vd_to_axi_desc(vdesc)->length;
+-		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
+-		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
+-		completed_length = completed_blocks * len;
+-		bytes = length - completed_length;
++		desc = vd_to_axi_desc(vdesc);
++		length = desc->length;
++
++		if (chan->cyclic) {
++			completed_length = desc->completed_blocks *
++					   desc->hw_desc[0].len;
++		} else if (vdesc == vchan_next_desc(&chan->vc)) {
++			/*
++			 * The descriptor is on the hardware: read the progress
++			 * from its pointer. If the transfer has just finished
++			 * but the interrupt has not reaped the descriptor yet,
++			 * the pointer sits at the end and the residue reads 0.
++			 *
++			 * The hardware clears the channel enable bit when the
++			 * transfer completes, so a still-enabled channel cannot
++			 * be done: right after the start its pointer may still
++			 * hold the value of a previous transfer, which aliases
++			 * the end of the new one when the buffer is reused.
++			 * Never report full completion while the channel runs.
++			 */
++			completed_length = axi_chan_get_xferred(chan, desc);
++			if (completed_length == length &&
++			    axi_chan_is_hw_enable(chan))
++				completed_length = length - 1;
++		} else {
++			/* Still queued, nothing transferred yet */
++			completed_length = 0;
++		}
++
++		bytes = length - min_t(u32, completed_length, length);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+@@ -1206,6 +1293,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 	vchan_get_all_descriptors(&chan->vc, &head);
+ 
+ 	chan->cyclic = false;
++	chan->is_paused = false;
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 
+ 	vchan_dma_desc_free_list(&chan->vc, &head);
+-- 
+2.43.0
+
