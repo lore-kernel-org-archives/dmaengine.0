@@ -1,179 +1,285 @@
-Received: from mail-ej2-f20.google.com (mail-ej2-f20.google.com [74.125.228.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C1B4334AD
-	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 05:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.148
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790142813; cv=pass; b=u7GFpa8GgSC58ScEfMlTVwKtdvJArtY3B8r4tT3IFJQyi+5IIqphb5Mfo2lziLATqJOT8ZWmXZ3j1t4StucFXFyBuct5ZwZfLG+XIi7jQQlPc56GUbdGw8Gy1ypp/tBAqBwXmw6ujBlx6tSKTaQGMrPJm1Qhq68yR/0ywRbe19A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790142813; c=relaxed/simple;
-	bh=wCB36lhePw43bhn1eMjIQeiRYhs/jz7LzvK3sw8DY/o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e1aPsQIOBjqkPn1fFq4Qf0y/EOk3rfKzZ6zHlvp+vScDDglJwNrueBh2Ut39kbGQPleZhuAW9dfSuPx+sM5DjkM2am/DWqwC2S5NObONZr2bpkBfN1zRAyMW1nKXeDfXiT8T29SFjU9ko+i0YwgmtsCJtoQDJcxoIq/0C3iTgSY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LTjGnxcg; arc=pass smtp.client-ip=74.125.228.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB6734EF0C;
+	Wed, 23 Sep 2026 06:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790143276; cv=none; b=uPSr8OjJ60Yj2BBu8RyzwMlE+ym5t54Ue0zkrtgztHDyWNvuN+2axoQ0s5Tjw0ZKP2lF96V0k5T1boZBGpIaxsssSWlh6+nxU8+8j+OUDeC5Z+fkiljYYB4im4soVZ2efxqgsCIyGTX2oYJeKlMKY6h8G6CXSqNeXS+ScRx5jTE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790143276; c=relaxed/simple;
+	bh=q5HtuaL/7zIru73zl+ZsvNSbOOJb12l5eB6mME90i4U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hcFEhIVYGQX/kyUUDLqVLCAy+yByeO/T/Po67Qc8Kkd2aHDWH9viCq3AKM/UhwR+CHSLGy4g8AlG2UhgGl7mCJvKIoe4vg6h++OQdLn5mj2h295mZ2BFJptMNcizFoIla/FVBk7ZRhLahZwWg32vRMJb5b0K0qT/s30dfAFwK7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=AaB8pLQy; arc=none smtp.client-ip=220.197.31.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LTjGnxcg"
-Received: by mail-ej2-f20.google.com with SMTP id a640c23a62f3a-c293c683202so71281266b.3
-        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 22:53:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790142810; cv=none;
-        d=google.com; s=arc-20260327;
-        b=BwK8vNZiwsPs59EqehTZhW+EJ9RYU2XSQrEr4fo9y/wQBHZrkr8omqzraySIvz2MBP
-         baWZfXHmjS781KoYrUG/Fla3DFYAwPLwWECNAMPugktt7TOvkeSna6s6ihPDdNiofwVx
-         lsst2zUm2Y73xk/0X3aDJOF9CJ8cvIaZ0C2FJqbhm4IVKp1Ro1+pKtkKRlg28pFBwtgB
-         e/8uwiiIDVc279WYaU3QNGqaIkPvWAZBqmuYdYh674jYrLG5MaCke7R/S2iFMk7LuBqx
-         wwu7i34dUm6gS3zfKllU+oRCYb6xlIlp7skrT4AQYGqjRdETqH8zTQQ+R0q8QXR5w74q
-         zGCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
-        fh=jRfuZ1Xmu9l7W3+KBadB6Vl2tj6kU6Yis5yHJCaMpo0=;
-        b=Mjfa2Pwab91MA6md9Z5f7o6PO0MTBJLHEDpqSwp4Nbovz1ES9kaUgtTCjUtrb0cfn6
-         jYTGdyOlp8aU0S7+TpyvxEdDnoXWuA5VZwf9ep7sKZ9tDyaEe/C9aaoXKPf9DtI9I5My
-         5gW0mbMP4BsHEhlXP7W1P3vuOKwAeG8HdEe4jZDojk6SLE1wx/zwi1P690FCQt1fITVj
-         XZUgg8d0NJGTx7rNsUGRXfyZxwisCoqjkP4510MPeYEsjdANtzDzFLMtZSGaLUsAKMAY
-         5Sf1+5T8xckUZwmmKuG9v9sBAq4LfDQd6Nm/RXh2cR/jYWFHNtLxEl8vHNjzAwhAhnv+
-         EtmA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790142810; x=1790747610; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
-        b=LTjGnxcgWtagsVEaNlaOZ2/GypUyemdq6w/gBp5f9xbwCPNKJRidx4vevPQw7KArOF
-         Dk8lHjE4jpvlejKZeMTQh5vliPyx4Kl6fgvQmWGhDXwlj5OvMaKjeKlxi1tjRKeeV7kx
-         fNuKWuBSwCvFuDJSETfgVBdPfB6BzJDFIPrD3sohhATa5qYfDMVKDyZS9JjRvb9iZQOg
-         K7lXt/N3Mo7NgEt/cWl3pYdDnevluFUKP6FPu86TGe/EGADTukT215XfxHDZA9HboRNC
-         Kv+1Uu+qtmx/VwEDjkwQrwvSK3jKDyR3Rf8Wouaq3jRHbGYTMgsaGnR0pJCVNAHyHMRy
-         nvFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790142810; x=1790747610;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
-        b=t/N9qD43Colz28MMuW/VZucjl0+FOdTFFCZC7vyD/zj929ic/6MKcSFysEor1b8BXj
-         h5Ii2BQ57S8u0tJAZAW5swiI1DVpEcGXKYgZ3AVOr1skpKz5zxPGoFoV+F7EldhPYX4n
-         EX1sn5glhCA2/eTMH/NF2E3KWKiJE0gWG0xJyQ5wjL2mnw/TPwI8PrAi6FjPlpCoTyvJ
-         +a+0sBRh15VVtdKEjifWSYwHcea25OUY5T3yOPqBcQTIzy2A4azSCJuhWzAURf7tFbk9
-         wrvkKsH7qHw/XHINWg1Ww8+m9M5NjSpOyULm87N3YpqrpupJpIY76jVqMVxtTsJc88hU
-         kHhg==
-X-Forwarded-Encrypted: i=1; AKwUvBxvg5IBUR0ZeMGlNsiCgjrCWoYnGg/DLT84xz3ggXI6YNQbmcdRapEdjcP/Rb/yTXu3BsduKVWZWio=@vger.kernel.org
-X-Gm-Message-State: AFuF++kWL65vjzTbsBOvRo14MjoIfJhyP+81Z/s7Ah1LqJts5cDK6oym
-	/U5J/HUUW6R+KCHoxvnYToKMdaicKBl6507cgKoOtUohCVzwmMCY8Bt0OpO0Xzb8pJksML4iOyM
-	d5q7lmIBMWLI7ws3zf1lA+rbIskuYuvs=
-X-Gm-Gg: AYBFou28lbXtcXvsMzAAvX5wIb9NrcqkEfTNvPN6bPLnq4BwHeZfoAbDPB2SjlqxEEe
-	vmntAd0QDcMXfntJe5Zbbflpa9nzoQEONKVBuvGh6X8CLbuJwch9F0ehBEiXHIioLncnQ3J3ZvU
-	/1uwwDbTaBTb6l49yTXYiPh9CiRSUz0MGhifrkvo0WrnQg4Dv3uUNJXLY3IqOY5fROpCFEfqhd1
-	VsMJHBeChv0jz6TdoiK3VMxh9kgrymyNGUUNJMr8p/OguIvWsBDGR7WvCnFZ6kAEpvBNF6PT6sz
-	Hx68/DdMDYd25oJheXi4z8RpgwTuKydoOK3LYV8Cm1HWG8mP/KwWxDEF6w==
-X-Received: by 2002:a17:907:97c1:b0:c2a:6bee:77c9 with SMTP id
- a640c23a62f3a-c2aadcefe12mr117281466b.4.1790142809578; Tue, 22 Sep 2026
- 22:53:29 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="AaB8pLQy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=YQ
+	y5aR7oWIGdKoIh87gvoEUOxvJFspyyAAlzNvXtwtM=; b=AaB8pLQyWlrhfoGLnP
+	9pLoPNINOoyQm1dHMkcukXhrCYjFOlO7TDH6nC2yIM6cWH2z8NkYOHOzls4H93cU
+	ieDkpAxbaDTgaO0wisRCaSP7IJOtBPsL6laTk4gzqfibhAnKnAMKG98c84NLP4CM
+	ZnWqarzEWpIVtBwVsgMmzXxQ0=
+Received: from LUOBO-DINQG8T.hobot.cc (unknown [])
+	by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id _____wD3_7gRa7NqLhUUAQ--.55648S2;
+	Wed, 23 Sep 2026 14:00:50 +0800 (CST)
+From: Rui Wang <wr574332525@163.com>
+To: vkoul@kernel.org,
+	Eugeniy.Paltsev@synopsys.com
+Cc: Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Rui Wang <wr574332525@163.com>
+Subject: [PATCH v4] dmaengine: dw-axi-dmac: report paused state and residue in tx_status
+Date: Wed, 23 Sep 2026 14:00:45 +0800
+Message-ID: <20260923060045.5571-1-wr574332525@163.com>
+X-Mailer: git-send-email 2.53.0.windows.2
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1790068409.git.zhoubinbin@loongson.cn> <arKwsyDwkCsIPjWk@SMW015318>
-In-Reply-To: <arKwsyDwkCsIPjWk@SMW015318>
-From: Binbin Zhou <zhoubb.aaron@gmail.com>
-Date: Wed, 23 Sep 2026 13:53:17 +0800
-X-Gm-Features: AclHuK9BQhIFAJMfP8FhnBIMi1HpURCls44U9SRbBAmppK4kZXV4hRu-tk4ozV8
-Message-ID: <CAMpQs4KszBmHDrXUZ9azYiGpsQY+LWqBSoWKB95VVO=ioh51bw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Add Loongson-2K0300 APB DMA mux support
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>, Huacai Chen <chenhuacai@loongson.cn>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	Huacai Chen <chenhuacai@kernel.org>, devicetree@vger.kernel.org, 
-	Keguang Zhang <keguang.zhang@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD3_7gRa7NqLhUUAQ--.55648S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxtr1rJr1kZF18ZrWrGw4UArb_yoWfWw17pF
+	W5G3yrKrWDXFnY9F47Gw4rJr15ZF4rJFy2kryrJ34akF45Grna9Fs3Ka4YqF1DCr929342
+	9F4Yy343Ga1UCrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pi8uctUUUUU=
+X-CM-SenderInfo: lzuvlkittskjqv6rljoofrz/xtbC1BRnAGqzaxQqIAAA3L
 
-Hi Frank:
+The driver implements device_pause/device_resume, but device_tx_status
+keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
+tell a paused channel apart from a running one. Report DMA_PAUSED when
+the channel is paused and the cookie is still in flight, including for
+callers that pass a NULL dma_tx_state, and clear the stale is_paused
+flag in dma_chan_terminate_all(), which disables the channel and thus
+implicitly cancels the paused state.
 
-On Wed, Sep 23, 2026 at 12:45=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wr=
-ote:
->
-> On Tue, Sep 22, 2026 at 05:25:41PM +0800, Binbin Zhou wrote:
-> > Hi all:
-> >
-> > Loongson-2K0300 integrates a CMC DMA controller with 8 physical
-> > channels. Peripheral DMA requests are not hard-wired to these channels;
-> > they are routed through the CHIP_CTRL13/14/15 DMA_MAP fields.
-> >
-> > This series adds support for that DMA request router.
-> >
-> > Patch 1 adds the DT binding constants for the peripheral request IDs.
-> > Patch 2 adds the DT binding documentation for the DMA mux.
-> > Patch 3 adds the driver, Kconfig symbol and Makefile entry.
-> >
-> > The driver registers with of_dma_router_register(). In the route
-> > allocation callback it validates the <request> <channel> <flags>
-> > specifier, programs the SoC-specific route register, and forwards
-> > <channel> <flags> to the parent CMC DMA controller.
->
-> Is it possible use standard mux interface?
->
-> drivers/mux/mmio.c
+Also, the residue of an in-flight transfer is currently derived from
+the number of completed LLI blocks, so it only advances in block-size
+steps and stays stale for the duration of a large block. Read the
+current hardware pointer (CH_SAR for MEM_TO_DEV and MEM_TO_MEM, CH_DAR
+for DEV_TO_MEM) and walk the descriptor's LLIs to compute how many
+bytes have actually been transferred. The 64-bit pointer is sampled
+with a tearing-safe double read, as the transfer may be running
+concurrently. The pointer is only consulted for the descriptor most
+recently programmed into the hardware, tracked in the previously
+unused chan->desc field; any other descriptor has not been started yet
+and keeps reporting its full length. When the transfer has just
+completed but the descriptor has not been reaped yet, the pointer sits
+at the end of the last block and the residue naturally reads as 0;
+conversely, a channel whose enable bit is still set never reports full
+completion, so a stale pointer left by a previous transfer reusing the
+same buffer cannot be mistaken for a finished one. Cyclic descriptors
+keep the block-granular accounting.
 
-It does not appear to be reusable.
-The mmio.c file appears to only involve setting bit fields in
-registers, but here, not only do we need to set the bit fields, but we
-also need to pass additional parameters to the DMA controller.
+Tested on an FPGA platform.
 
-Take i2s as an example:
-&i2s {
-        status =3D =E2=80=9Cokay=E2=80=9D;
+Signed-off-by: Rui Wang <wr574332525@163.com>
+---
+Changes in v4:
+- Track which descriptor the hardware pointer registers belong to via
+  the (previously unused) chan->desc field instead of testing the head
+  of desc_issued: a queued-but-never-started descriptor must not be
+  matched against the stale pointer left by a previous transfer, which
+  could otherwise falsely report full completion when its buffer is
+  reused.
+- Clear chan->desc when its descriptor is reaped or the channel is
+  terminated.
+- Link to v3: https://lore.kernel.org/dmaengine/20260923044104.3234-1-wr574332525@163.com/
+Changes in v3:
+- Report DMA_PAUSED also to callers passing a NULL dma_tx_state.
+- Never report full completion while the channel enable bit is still
+  set, so a stale pointer (e.g. a new transfer reusing the buffer of a
+  just-finished one) is not mistaken for completion.
+- Link to v2: https://lore.kernel.org/dmaengine/20260923034653.1413-1-wr574332525@163.com/
+Changes in v2:
+- Sample the 64-bit SAR/DAR with a tearing-safe double read instead of
+  lo_hi_readq(), avoiding a torn pointer when the low half wraps.
+- Read the hardware pointer for the in-flight descriptor even after the
+  hardware has just completed it (channel enable self-cleared, IRQ not
+  yet handled), so the residue reads 0 instead of jumping back to the
+  full length.
+- Link to v1: https://lore.kernel.org/dmaengine/20260923030201.859-1-wr574332525@163.com/
+---
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 114 ++++++++++++++++--
+ 1 file changed, 106 insertions(+), 8 deletions(-)
 
-        pinctrl-0 =3D <&i2s_pins>;
-        pinctrl-names =3D =E2=80=9Cdefault=E2=80=9D;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index eebed2474..66da247ff 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -352,33 +352,122 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
+ 	axi_desc_put(vd_to_axi_desc(vdesc));
+ }
+ 
++/*
++ * Read a 64-bit channel address register while the transfer may be
++ * running. A plain lo_hi_readq() tears if the low half wraps (carrying
++ * into the high half) between the two 32-bit reads, so sample the high
++ * half twice and re-sample the low half if it moved; a second 4 GiB
++ * wrap cannot happen within these few instructions.
++ */
++static u64 axi_chan_readq(struct axi_dma_chan *chan, u32 reg)
++{
++	u32 hi, lo, hi2;
++
++	hi = readl(chan->chan_regs + reg + 4);
++	lo = readl(chan->chan_regs + reg);
++	hi2 = readl(chan->chan_regs + reg + 4);
++	if (unlikely(hi != hi2)) {
++		/* Low half wrapped in between, take consistent samples */
++		lo = readl(chan->chan_regs + reg);
++		hi = hi2;
++	}
++
++	return (u64)hi << 32 | lo;
++}
++
++/*
++ * Return the number of bytes already transferred by the descriptor
++ * currently on the hardware (running, paused or just completed), based
++ * on the current read or write position: CH_SAR for MEM_TO_DEV and
++ * MEM_TO_MEM, CH_DAR for DEV_TO_MEM. Must be called with vc.lock held.
++ */
++static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
++				struct axi_dma_desc *desc)
++{
++	struct axi_dma_hw_desc *hw_desc;
++	bool dst = chan->direction == DMA_DEV_TO_MEM;
++	u64 pos, start;
++	u32 xferred = 0;
++	int i;
++
++	pos = axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
++
++	for (i = 0; i < desc->nr_hw_descs; i++) {
++		hw_desc = &desc->hw_desc[i];
++		start = le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
++
++		/* Current position is inside this block: partial progress */
++		if (pos >= start && pos <= start + hw_desc->len)
++			return xferred + (u32)(pos - start);
++
++		xferred += hw_desc->len;
++	}
++
++	/* Position doesn't match any block, be conservative */
++	return 0;
++}
++
+ static enum dma_status
+ dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
+ 		   struct dma_tx_state *txstate)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 	struct virt_dma_desc *vdesc;
++	struct axi_dma_desc *desc;
+ 	enum dma_status status;
+ 	u32 completed_length;
+ 	unsigned long flags;
+-	u32 completed_blocks;
+ 	size_t bytes = 0;
+ 	u32 length;
+-	u32 len;
+ 
+ 	status = dma_cookie_status(dchan, cookie, txstate);
+-	if (status == DMA_COMPLETE || !txstate)
++	if (status == DMA_COMPLETE)
+ 		return status;
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 
++	if (chan->is_paused && status == DMA_IN_PROGRESS)
++		status = DMA_PAUSED;
++
++	if (!txstate) {
++		spin_unlock_irqrestore(&chan->vc.lock, flags);
++		return status;
++	}
++
+ 	vdesc = vchan_find_desc(&chan->vc, cookie);
+ 	if (vdesc) {
+-		length = vd_to_axi_desc(vdesc)->length;
+-		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
+-		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
+-		completed_length = completed_blocks * len;
+-		bytes = length - completed_length;
++		desc = vd_to_axi_desc(vdesc);
++		length = desc->length;
++
++		if (chan->cyclic) {
++			completed_length = desc->completed_blocks *
++					   desc->hw_desc[0].len;
++		} else if (desc == chan->desc) {
++			/*
++			 * chan->desc is the descriptor last programmed into the
++			 * hardware, so the pointer registers belong to it. Never
++			 * match a queued-but-never-started descriptor against
++			 * the stale pointer left by a previous transfer.
++			 *
++			 * If the transfer has just finished but the interrupt
++			 * has not reaped the descriptor yet, the pointer sits at
++			 * the end and the residue reads 0. Conversely, the
++			 * hardware clears the channel enable bit on completion,
++			 * so a still-enabled channel cannot be done: right after
++			 * the start the pointer may still alias the end of a
++			 * previous transfer reusing the same buffer. Never report
++			 * full completion while the channel runs.
++			 */
++			completed_length = axi_chan_get_xferred(chan, desc);
++			if (completed_length == length &&
++			    axi_chan_is_hw_enable(chan))
++				completed_length = length - 1;
++		} else {
++			/* Still queued, nothing transferred yet */
++			completed_length = 0;
++		}
++
++		bytes = length - min_t(u32, completed_length, length);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+@@ -468,6 +557,9 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+ 	}
+ 	axi_chan_config_write(chan, &config);
+ 
++	/* The hardware pointer registers now belong to this descriptor */
++	chan->desc = first;
++
+ 	write_chan_llp(chan, first->hw_desc[0].llp | lms);
+ 
+ 	irq_mask = DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR;
+@@ -1077,6 +1169,8 @@ static noinline void axi_chan_handle_err(struct axi_dma_chan *chan, u32 status)
+ 	}
+ 	/* Remove the completed descriptor from issued list */
+ 	list_del(&vd->node);
++	if (chan->desc == vd_to_axi_desc(vd))
++		chan->desc = NULL;
+ 
+ 	/* WARN about bad descriptor */
+ 	dev_err(chan2dev(chan),
+@@ -1140,6 +1234,8 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+ 	} else {
+ 		/* Remove the completed descriptor from issued list before completing */
+ 		list_del(&vd->node);
++		if (chan->desc == vd_to_axi_desc(vd))
++			chan->desc = NULL;
+ 		vchan_cookie_complete(vd);
+ 	}
+ 
+@@ -1205,7 +1301,9 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 
+ 	vchan_get_all_descriptors(&chan->vc, &head);
+ 
++	chan->desc = NULL;
+ 	chan->cyclic = false;
++	chan->is_paused = false;
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 
+ 	vchan_dma_desc_free_list(&chan->vc, &head);
+-- 
+2.43.0
 
-        dmas =3D <&dma_router LS2K0300_DMA_I2S 3 0xbf>,
-                    <&dma_router LS2K0300_DMA_I2S 2 0xaf>;
-        dma-names =3D =E2=80=9Ctx=E2=80=9D, =E2=80=9Crx=E2=80=9D;
-};
-
-We need to pass the last two parameters <3, 0xbf>/<2, 0xaf> to
-`loongson2-apb-cmc-dma` to complete the relevant configuration.
-
-> Frank
->
-> >
-> > Thanks.
-> > Binbin.
-> >
-> > Binbin Zhou (3):
-> >   dt-bindings: dma: loongson: Add Loongson-2 DMA mux request IDs
-> >   dt-bindings: dma: loongson: Add Loongson-2K0300 DMA mux support
-> >   dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
-> >
-> >  .../dma/loongson,ls2k0300-dmamux.yaml         |  49 +++
-> >  MAINTAINERS                                   |   3 +
-> >  drivers/dma/loongson/Kconfig                  |  13 +
-> >  drivers/dma/loongson/Makefile                 |   1 +
-> >  drivers/dma/loongson/loongson2-apb-dmamux.c   | 380 ++++++++++++++++++
-> >  .../dt-bindings/dma/loongson,ls2k-dmamux.h    |  56 +++
-> >  6 files changed, 502 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k=
-0300-dmamux.yaml
-> >  create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
-> >  create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
-> >
-> >
-> > base-commit: 0a8dda0a15d3926422d286567f945a05328a4ac6
-> > --
-> > 2.52.0
-> >
-
---=20
-Thanks.
-Binbin
