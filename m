@@ -1,107 +1,81 @@
-Received: from mail-ua2-f39.google.com (mail-ua2-f39.google.com [74.125.226.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41885304D1
-	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 13:53:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.226.231
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD80534445;
+	Wed, 23 Sep 2026 15:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790171594; cv=none; b=Bf/TAnv+6aPGekA8hnipNwRbMxK1RvLNsR0I9UE3pTcUCtgErwBf7+bUTJUUHmrWp0pPTTfZo7WSTenS808iHzDVQVEtWoBItVj4EfYF6oN+BsGjY/8vDaFHvb7gpigoDHyAjGWmYoFYYi1262IJtO/kDc8Y5Q1TNUAufpUDb+Y=
+	t=1790176842; cv=none; b=BoJMbyDZ0zNwzo+Ea3kvbQVkCzo1hnr5bZvjv1Bdv68RFqCxCQq/ajoLgOhr8ljfX5UiMiycFuHAcLJVtMu8jFxCwfOXikfAYBMQgqKV5r1y9tgn87B2DrYR4WdnwR3WvBqlEj0foS/GaKxmbbLvKrIz27XMAJ7s6M8aA7d2Xv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790171594; c=relaxed/simple;
-	bh=pc0FDD6IR7pFOD7noF91D54mnHrzpCH4w/W7A8vQcRg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gZp7DtmRcpTGLJl9Snh3NpFYGxQMqXaFvD/CsRIVIHkU3Ow01VV3k7WHkuLgmxVIpBiEg0FAR3y3o6kDhNzc5nDM4wyR1gwrjkD7o7HrLjM2u+nTlJOYX1tYXgcBdMekl5qkiIKx0zwbxUw2iHCNcnP3F2P67Lyh2oCEPzHAGaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QFsDq/JH; arc=none smtp.client-ip=74.125.226.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790176842; c=relaxed/simple;
+	bh=0C54jny/GqShlf76MT3qk0YX6HN9yFkK8ZUPFcX/iFE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sguTzIOoFIcWj9rnYNUUaK/tO4HOtU+3A61+C2/AeT52hlf9Jguv8f09ErGg7gFyRqC2Pecskdvnmw2JC8T1Qm0NRAgVee7nds1RM8bMLLiEdb8h2r6X3Vf/CKRsXAHTfPerMU9WUKZQ9VtOu0d30OWmRjOOnQL7IB29u1jhLIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmf+SlqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QFsDq/JH"
-Received: by mail-ua2-f39.google.com with SMTP id a1e0cc1a2514c-982db8d3b1eso317404241.1
-        for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 06:53:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790171591; x=1790776391; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2SglU6SsyzFxHFyMmhSwCTOipsWKClut0lOm4koa3sM=;
-        b=QFsDq/JHrtEo26ZX9kLZzebgNEJYM1rcVa325fdWYhFm/HLwr0vP7wNfJ15PQDBnuI
-         /K5iZLplxUXb7geAgbH8Ilbwftq9fFQ4h2NmJjqiLOQuaL+9NZ148TFZl1NybA2kz673
-         hB7RAKFT+5Gh68qsM+H2zXgL8UlazdmF3SaJCQKfvd3YaXX1HD9ZGWaPPUq8AQQ73Ncz
-         7AXOXKdfr6A+gkRjTAYJpLvzEJQQP6q8iChyZF/uqYVXLzd9c+/Kht/TO4b91OLnZgFf
-         NKxHhL/fW3B3ruplMQ/VfdqcXSE8wddph7IfSbuA7u/KukBXHcY/FRtJwJFSiNctpdWV
-         iu9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790171591; x=1790776391;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2SglU6SsyzFxHFyMmhSwCTOipsWKClut0lOm4koa3sM=;
-        b=GpcwZexNuDESES5e8u6esj8kMxGgKtfjYLVa/d5pci+Vz18UYmWHOKv4baRvE79MUh
-         RrBTwwUhaGjtoUtTJ7ptl+640u/+aPBrh9p7XmgugbyTJ5MtoLZuIes+yGiKpHNtf+2u
-         hOjo7pQhaMuFImf5LxwCJCOXLHam5Fg15adrdaLrCJsQkjP5ojEI2uZLYJAn3I8l+iUp
-         2HJ55oB/dl/B0zyAtgo0jHsZmN3PTzuGnipIBihE0dvAw9xUDtjcYmecJQaRYAUH9/Nq
-         7JZnCYFMtQPmubGubrX8MBC/QU334Qm6J/Udoe03EQ5GW8HXq8OFaGJqWcqyZGWVP/4N
-         8SHg==
-X-Forwarded-Encrypted: i=1; AKwUvBz2ZB1YZkAUfqppp9Bg34rSLNAH+f1qnN6oJ3TsTr23sz7gPt+8ZrAPEd6X+tS+9w4iYCv2U2MfPfM=@vger.kernel.org
-X-Gm-Message-State: AFuF++mYMIYPnZy0r7Ie14Sz/ZNfexJexdEXopKEsGNlItBJ0D64Dhai
-	G6AHL3m5wNQMxkrKhtXRWu7/nc5HyvajuzcXzCxrZ4g71HdRpYNTBym6
-X-Gm-Gg: AYBFou0AHXnjpkIPXdK1IXoRgiACftWy0xu2yVEEbaWKHWakv5jCXWASvYcNVgUOOdD
-	SdskMhv33UQfsNlZgpQbUYzLLdz35G37M1hA7JMoRTtmPjRYCp0bRIpUoNUQGRCZlDv+vBh5HvH
-	Zss6ORy2jxY3XoUJSG2D7cv2+mUdlWFJ6/gr6Dvxs3YaIPk/7mJPYqAvFtlv1jWqKXDVWgS5XPd
-	fJTWLj2khGYNw4RndxniX9SGuovkVZRLlGi99NYwR8GBU3qEPuQVxwAIVCIE5PkzXpS3gsJoqUy
-	EVXik8zvQpmTsh4dBh2EqHcr3mRdGNyUqYvRh3j9tc9JhPoYNLxd0jWYHjcJjCmY55mK0HC6g7y
-	fAWwwmua+MERBqkaZFlIRq6/211E7zJRiCyw9XPL6MbRZQoDs3WChH7S7r5qUhIxyflg10R0wR1
-	b5nzRP6SyxxA2G70jqmhoOdWTfgh7wvfFCCuSSNZI/AK+SZHJvCTTVrqeucfXDXmo=
-X-Received: by 2002:a05:6102:3f8f:b0:7a5:1d50:ac35 with SMTP id ada2fe7eead31-7ac1db3268fmr2130763137.21.1790171591494;
-        Wed, 23 Sep 2026 06:53:11 -0700 (PDT)
-Received: from beelink.. ([187.13.30.172])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-7abf35bdfbcsm3911189137.1.2026.09.23.06.53.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 06:53:11 -0700 (PDT)
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-To: vkoul@kernel.org
-Cc: linuxppc-dev@lists.ozlabs.org,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH] dmaengine: fsldma: kill the channel tasklet on remove
-Date: Wed, 23 Sep 2026 10:53:01 -0300
-Message-ID: <20260923135301.2448228-1-qwe.aldo@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmf+SlqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E826E1F000FF;
+	Wed, 23 Sep 2026 15:20:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790176840;
+	bh=x7hz/wkv4TIP3tFV0atbeAtIVV/ATXHLJDQELrGuxLM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=cmf+SlqTaFJfYHX3sPm69koXlm9CC2phElbCF3QFWipRsHqfNXfjmXgo1N3kSzuVo
+	 39j8AsPtsVJsZzNHaJDJ9bvjelWWcNwUehLTjZ+H45O9I/fPCGukKXZ/XGLwCRdiuJ
+	 pSt1A5uCI9wb8Nv7Sc2WGuJSKK7wFPmI5H2bPOat5tDgoZKRqS9i2q59Y/vcmkTJdF
+	 RLO2xKif7mqKBByMy5EeuEhtEsMURKlm1Wt5+JR2eemcdpIl2oGbc/6uOzDtV16eSO
+	 Ynpy7Gxwxx6a3RzdUcRLSbltyuUhqbVlK4k/oBgXslQBwUd1msjf7kCrkW19E+anUL
+	 RQ19e+5JSteXQ==
+Date: Wed, 23 Sep 2026 16:20:34 +0100
+From: Lee Jones <lee@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v2 18/20] mfd/regulator: db8500-prcmu: Remove EPOD
+ regulators
+Message-ID: <20260923152034.GI3864833@google.com>
+References: <20260914-ux500-power-domains-v7-1-v2-0-9d0c17e1f816@kernel.org>
+ <20260914-ux500-power-domains-v7-1-v2-18-9d0c17e1f816@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260914-ux500-power-domains-v7-1-v2-18-9d0c17e1f816@kernel.org>
 
-fsl_dma_chan_remove() frees the fsldma_chan structure without first
-quiescing the channel's tasklet. If an IRQ fires just before the
-remove and schedules the tasklet, dma_do_tasklet() runs against the
-freed channel struct, causing a use-after-free.
+On Mon, 14 Sep 2026, Linus Walleij wrote:
 
-Add tasklet_kill() before tearing the channel down.
+> Remove the obsolete DB8500 PRCMU regulator drivers.
+> 
+> Drop the regulator build hooks and the db8500-prcmu-regulators MFD
+> cell now that EPODs are power domains.
+> 
+> Assisted-by: LLM
+> Acked-by: Mark Brown <broonie@kernel.org>
+> Signed-off-by: Linus Walleij <linusw@kernel.org>
+> ---
+>  drivers/mfd/db8500-prcmu.c             | 239 ----------------
+>  drivers/regulator/Kconfig              |  12 -
+>  drivers/regulator/Makefile             |   2 -
+>  drivers/regulator/db8500-prcmu.c       | 501 ---------------------------------
+>  drivers/regulator/dbx500-prcmu.c       | 155 ----------
+>  drivers/regulator/dbx500-prcmu.h       |  55 ----
+>  include/linux/regulator/db8500-prcmu.h |  38 ---
+>  7 files changed, 1002 deletions(-)
 
-Fixes: d3f620b2c4fe ("fsldma: simplify IRQ probing and handling")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
----
- drivers/dma/fsldma.c | 1 +
- 1 file changed, 1 insertion(+)
+Looks good.  What's the plan?
 
-diff --git a/drivers/dma/fsldma.c b/drivers/dma/fsldma.c
-index 22d62d9..0e2f848 100644
---- a/drivers/dma/fsldma.c
-+++ b/drivers/dma/fsldma.c
-@@ -1205,6 +1205,7 @@ static int fsl_dma_chan_probe(struct fsldma_device *fdev,
- 
- static void fsl_dma_chan_remove(struct fsldma_chan *chan)
- {
-+	tasklet_kill(&chan->tasklet);
- 	irq_dispose_mapping(chan->irq);
- 	list_del(&chan->common.device_node);
- 	iounmap(chan->regs);
 -- 
-2.43.0
+Lee Jones
