@@ -1,126 +1,125 @@
-Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38955446BFC
-	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 07:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805663909A5;
+	Wed, 23 Sep 2026 08:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790148353; cv=none; b=iJNvq4M7r2ruS82q6m5rZfxHEWu3hptCHV0BFmMO+62m5dh8YLqA/IRF4EPWA7MfTT8WEAeeWdjqjNuRjDcFb47eKRE/nS4mPKAqTG6DKKSLYxpcHsaFVZU/CCgV7GNtnJmXeivEJbgjwaUWlXaRswzFZeDG+saIQUoVFeoqs7U=
+	t=1790152490; cv=none; b=Ls9R4vtdK2LVln94WKdMY0FYAybXx0lwBjm3RsnIAJ155u240FXnG3V7wb6uSDnHmnlRdJ4FTLiVOYfHBNho/d44+p/HG/tmoqS8ti4y3KPIie/28yysjt77OR7/aqmWt9O9UPMxEUGsw5epZ+iyF9ELYihZAiSqDtflhppMGCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790148353; c=relaxed/simple;
-	bh=ztbtXJT8GDvreC8nZav70VVvbuRpS94hZVXtCzOGUic=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVSqCU7qsS3rLICFObWYNOuaN96uednhG/vRAmHaFoQlOcvQA+M42AoiCBKK7AOZl/IclaDxI4KchfwZ2w96DAbQntbAUP/FPjm2a7zLQIO7qJDI8LY4WeYA9GxVV4kUNo7FqBcXLfif8TastpRic9gGdke7mBqLl15ljvNsY0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FhogjmTH; arc=none smtp.client-ip=74.125.227.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790152490; c=relaxed/simple;
+	bh=elUNYHZrnT4OVCDssSy6vQXfnSqu7eReLuKE4AWHIuM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CPtalvV11ktJ1iVgXSysFCSQLziKt07a6gAsVs6jn+rgMfC7Yu9sUDYFyZ283YxE1gXGkbA9UmQM+55sUzxgiztZQeOnPyoC32nIWjHBjnN2oOIbdNetBHsjC38ZDVUTdF2+wgh+i9Rjc0mChdUFFlIW/QnOz0IBJcVixBFG4Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJ/OovWT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FhogjmTH"
-Received: by mail-pj2-f43.google.com with SMTP id 98e67ed59e1d1-39dacf053eeso343875a91.2
-        for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 00:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790148351; x=1790753151; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XUW9zlJk8CVD2x9WwkVbdCUyIQznruNWJ5NGWNfGy5w=;
-        b=FhogjmTHx9RHhH0FAsb7BiPa6MoWguDcfE1b5Eumg8YLBiF10p9/jYCoc6DYTAD5W0
-         DyUhuzacC8lElU7zU1xOkxF+Y5HIFBZ2YxHHHs2a0vpkx+dfwoobfQhOv+AEwo5i7DZd
-         lS1JOfslD+fFOHGUAOrkzm8qoYxr5qtWqoWcy5hEvi/JhMy2XecoOfT7hCOqSAjWAIN+
-         PfntDq2MUcpthsjElUn4N9i+LA2F7c4utv5rfcOdyBo0S53Do8AJV6uZgaRglHTGk6+w
-         QT0WTnuChEP/1Nwo20mEzGoM6yIVM01wP48P2JzaiCzLh0/nbmOSyVTWl5MYlbNntpZe
-         LWgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790148351; x=1790753151;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XUW9zlJk8CVD2x9WwkVbdCUyIQznruNWJ5NGWNfGy5w=;
-        b=PNWzPXrxB0ekllUC4jke5dUgx04nu+DoM/oZOBuKFoK5dTgPQSKaO17zLO1ufdjZE9
-         FlTlHN+pe7jrQSa24fvrHa64JBIQr2VPBypplcsmSCnoXV6VeLZ9cpN/+zwMrx8ZFwor
-         9ZLYFDIhhHXbt39NLBC90L+p5gXrprUkjKqzNSWd4KT1/VB3FksY6rYJz3D8GHzUKuRa
-         Z7mUv7B80v59tpUnhXuhxD/QpgeDJnxqp+vV6WO70wLYW+EykJz4/WGo/jVGon5BGecY
-         n+fM4mc4gVh8MBMmtQf23VcxF9APYbjOupgdVhY8Y9mQYch5GSHdDwp6IorLVOzazDAo
-         NblQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwPR7J+wseCx/MVM2ABnojR7nmurIEx86MSg2hQw4KHX1J81tlFWAG+2OiSHn0D/D/931qQ9UGMKpw=@vger.kernel.org
-X-Gm-Message-State: AFuF++l5n8adhwhOlKbyM80HoQ7Ivrm3p3dwXDwqv6c5o7wXR/cWvb1N
-	UjN5AqzRfJs1kzyNo8mSMz+8o883Q5K4Hhbdyx2QOXWQiQPNO7c7elV4
-X-Gm-Gg: AYBFou371oDFFGyOe4T+AevsyWCBUV5Kikc0vkrxFqqS5hzuJb9Ra+FycWKPgn8eiMf
-	8+9VUYGlq0cvRY7AAFJ3bwBg+8iqfqVVs86/4rLTVCxW0X5ayg2hB4ya0uESd/Ut+hdYJBwvnoa
-	+ZFVeucsV9OZZOau0g2ccM8tCU+1iptGKUkoVA4dcv5NjyCPChg/aI4rjcu1r1w/8n861Knea4N
-	MuDa/bvoM/DVvR0jaoeHOs4NMAL9YF2+gpLkXTVRill4DT3rTclLB/YkXsLddNWir/KQtyQ4yiW
-	I0yQ1vMFP8o/PeWpvgI4uzlLkKq14DN6/mo41mRubay2AjsQA/D35HwZ7ePVfZYEVwvlRBZwRm0
-	M+V2KkkNl7259b+Qdxk7O2o7pzJl4ynd/YomxkBfZmSePz7DhPX3Kvs82ve1j3wE7uXEZWeQPXp
-	wYYEjfwkLiHFS0Et+blnilJUPdRinK1GncOkE//FA0vgGrxWDtQevxne0SmRVzUgmR9iWhnRYJR
-	hwjNDG2Zw3bozb9KXGN7M9mSzorpPph9GNjHKmH6YMv+MUaXs7SWPhw0LGbT/a2CApXzJODa2NJ
-	Y0gOijzrAcvB1g==
-X-Received: by 2002:a17:90b:270e:b0:39e:6a7e:ee20 with SMTP id 98e67ed59e1d1-3a07e659a2dmr1634764a91.44.1790148351423;
-        Wed, 23 Sep 2026 00:25:51 -0700 (PDT)
-Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a07db88298sm3940945a91.4.2026.09.23.00.25.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Sep 2026 00:25:51 -0700 (PDT)
-From: phucduc.bui@gmail.com
-To: Vignesh Raghavendra <vigneshr@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>
-Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>,
-	Chuhong Yuan <hslester96@gmail.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH v2 2/2] dmaengine: ti: edma: Fix missing pm_runtime cleanup on probe failure
-Date: Wed, 23 Sep 2026 14:25:32 +0700
-Message-ID: <20260923072532.19307-2-phucduc.bui@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260923072532.19307-1-phucduc.bui@gmail.com>
-References: <20260923072532.19307-1-phucduc.bui@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJ/OovWT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20281F000FF;
+	Wed, 23 Sep 2026 08:34:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790152481;
+	bh=fONU01jydHR4DKzstpQamxQnf6IvXt+cW08C/ElpZ0c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=aJ/OovWTX+MAupdejZ0JhdViOFsf6gaDxoq7MmZ2wjypNfIDLbqxlT8aLlxRcEkRj
+	 sr/heJ+KLZgJe49f52h6P6Z9yQnZlrZAgbJ9iQrZKPoUW7nzojHLcDtPmL3G8yYMBJ
+	 OoUuCIyx0EpqwitZokHysqgahB75slQifGcz6Rgeh4w07pJ/UI1Nr+bfSEx7FerVzq
+	 8+W1Mdpg9eT73brThAmQng0Tk34uPlansAoT0/IzqnLBMmvOHxFHW+z62bw1/S4OR3
+	 9PpMUQcya2WtdhZO9Sq+lCRatNPWQIFULSLwFXis+VLcCq5DRfb9no455z56Ll2zTR
+	 c2Myo6SUouxhQ==
+Message-ID: <e835bdca-cea9-4e55-8df6-cb8bb22bb74d@kernel.org>
+Date: Wed, 23 Sep 2026 10:34:34 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/5] dt-bindings: dma: Add CIX Sky1 DMA-350 integration
+To: Conor Dooley <conor@kernel.org>, Jelly Jia <Jelly.Jia@cixtech.com>
+Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org,
+ robin.murphy@arm.com, cix-kernel-upstream@cixtech.com,
+ dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+References: <aqE42NzerAiD2U1E@squawk>
+ <20260920051501.3620794-1-Jelly.Jia@cixtech.com>
+ <20260922-perky-absently-2590fe901176@spud>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20260922-perky-absently-2590fe901176@spud>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+On 22/09/2026 19:04, Conor Dooley wrote:
+> On Sun, Sep 20, 2026 at 01:15:01PM +0800, Jelly Jia wrote:
+>> Hi Conor,
+>>
+>> Thanks, understood: with the SoC-specific compatible scoping the
+>> integration code, other platforms are unaffected either way.
+>>
+>> For v2 my preference is to keep the wrapper, since it leaves the
+>> generic arm-dma350 driver and its binding untouched. Does that work
+>> for you, or would you rather see the dma-350 node itself carry a
+>> device-specific compatible, with the clocks, resets and
+>> memory-region described on it? I'd also like Robin's take on the
+>> arm-dma350 side before restructuring that far.
+> 
+> The latter, since that's what we do for almost every other device under
+> the sun. Robin's take would probably be worth hearing, but you removed
+> all the context while replying which makes that more difficult...
 
-pm_runtime_get_sync() errors were not checked, so on failure the usage
-count leaked and pm_runtime_enable() was never undone, leaving
-runtime PM in a half-initialized state after a failed probe.
+Following DWC USB example, I think wrappers are discouraged. The
+integration of a block is together with that block an entire device.
+Integration is not something separate, at least usually. If it is,
+author should provide some arguments in terms of hardware. The arguments
+of driver are unconvincing.
 
-Switch to pm_runtime_resume_and_get(), which cleans up the usage count
-internally on error, and call pm_runtime_disable() to balance the earlier
-pm_runtime_enable() on that path.
+And to prove this is same device (integration = block), the MMIO is the
+same.
 
-Fixes: 23f49fd2ea9b ("dmaengine: edma: Remove dynamic TPTC power management feature")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
----
- drivers/dma/ti/edma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 8be9e71dab76..5254ce7b8514 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2650,8 +2650,16 @@ static struct platform_driver edma_driver = {
- 
- static int edma_tptc_probe(struct platform_device *pdev)
- {
-+	int ret;
-+
- 	pm_runtime_enable(&pdev->dev);
--	return pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret < 0) {
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- 
- static struct platform_driver edma_tptc_driver = {
--- 
-2.43.0
-
+Best regards,
+Krzysztof
