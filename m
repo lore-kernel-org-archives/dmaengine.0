@@ -1,136 +1,179 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej2-f20.google.com (mail-ej2-f20.google.com [74.125.228.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3134156DF
-	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 05:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790139725; cv=none; b=gOVTLSG8XiGvPX8A0JENMFEpQ9Ca5vc355rFvaPQZPrCUyLlUg6M9/uFZjwTJynLao3gb37B5wABqLOhykmbK4sk6pgip7EcMLSEMrpEAVCREyjg29kCKr0mfpaAzFbROb9G5MAarZYZsq5YmT3I8pZBR1TCbBexSGOjna9qsao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790139725; c=relaxed/simple;
-	bh=T+1WP/9QXpOK2sebXOcucRwnpsFtWn3Kfs4dJd4XSLQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JzsCKMHBGBCwMVI3/UyNEhWdgAX26UjA5Q4DPjjl11m3xBgak7Bie9xXGrrc0Rs9eOV++7WgqQongZFYM9gg6F/Hq3GRhs3JQV3StpJBufKzlcspwCJvDTymzRBL6qZYSz4ZmyN04fTX2tloimzJyaYxo80R/zCbeYkOKxa6v58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kR1FTnqE; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C1B4334AD
+	for <dmaengine@vger.kernel.org>; Wed, 23 Sep 2026 05:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.148
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790142813; cv=pass; b=u7GFpa8GgSC58ScEfMlTVwKtdvJArtY3B8r4tT3IFJQyi+5IIqphb5Mfo2lziLATqJOT8ZWmXZ3j1t4StucFXFyBuct5ZwZfLG+XIi7jQQlPc56GUbdGw8Gy1ypp/tBAqBwXmw6ujBlx6tSKTaQGMrPJm1Qhq68yR/0ywRbe19A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790142813; c=relaxed/simple;
+	bh=wCB36lhePw43bhn1eMjIQeiRYhs/jz7LzvK3sw8DY/o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e1aPsQIOBjqkPn1fFq4Qf0y/EOk3rfKzZ6zHlvp+vScDDglJwNrueBh2Ut39kbGQPleZhuAW9dfSuPx+sM5DjkM2am/DWqwC2S5NObONZr2bpkBfN1zRAyMW1nKXeDfXiT8T29SFjU9ko+i0YwgmtsCJtoQDJcxoIq/0C3iTgSY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LTjGnxcg; arc=pass smtp.client-ip=74.125.228.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kR1FTnqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B1A1F00893;
-	Wed, 23 Sep 2026 05:02:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790139723;
-	bh=9OvdbnmNE0cQR5BO9A4OgXfn2FLBF33FcS6AiHYBS3E=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kR1FTnqEvDYBE9ZY7IvQC8MxYOw78O6SLhjJ+yuqxltE97xxvlGKyHVKFwpuPjOxh
-	 WPiBi4Te7b6BInscZ4CypEL3RJf5ulxeDqiYKoFIjMgPwE78bV1hlXw+qsP41Jom3w
-	 3INqhzl8YQT0bwysPkPi0bunAIG24Bb8TGvjGYmJUzq31oiv72PzCGGSrVTWEoWTZg
-	 FkUyvwBbdiXYZOVgCqfjCBampLT5XqWYru8Mv7P/MEbozM9VvchX1PoLpVAUyr1q4x
-	 LdBz5tcU+sjwsr0cDVD8bcSWlIb/gPR/5CHZUUGH15OGr3SzU9xXJgcn4FpcTGAoKe
-	 hmOY1Rq3HyT4g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3] dmaengine: dw-axi-dmac: report paused state and
- residue in tx_status
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rui Wang" <wr574332525@163.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260923044104.3234-1-wr574332525@163.com>
-References: <20260923044104.3234-1-wr574332525@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 23 Sep 2026 05:02:03 +0000
-Message-Id: <20260923050203.89B1A1F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LTjGnxcg"
+Received: by mail-ej2-f20.google.com with SMTP id a640c23a62f3a-c293c683202so71281266b.3
+        for <dmaengine@vger.kernel.org>; Tue, 22 Sep 2026 22:53:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790142810; cv=none;
+        d=google.com; s=arc-20260327;
+        b=BwK8vNZiwsPs59EqehTZhW+EJ9RYU2XSQrEr4fo9y/wQBHZrkr8omqzraySIvz2MBP
+         baWZfXHmjS781KoYrUG/Fla3DFYAwPLwWECNAMPugktt7TOvkeSna6s6ihPDdNiofwVx
+         lsst2zUm2Y73xk/0X3aDJOF9CJ8cvIaZ0C2FJqbhm4IVKp1Ro1+pKtkKRlg28pFBwtgB
+         e/8uwiiIDVc279WYaU3QNGqaIkPvWAZBqmuYdYh674jYrLG5MaCke7R/S2iFMk7LuBqx
+         wwu7i34dUm6gS3zfKllU+oRCYb6xlIlp7skrT4AQYGqjRdETqH8zTQQ+R0q8QXR5w74q
+         zGCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
+        fh=jRfuZ1Xmu9l7W3+KBadB6Vl2tj6kU6Yis5yHJCaMpo0=;
+        b=Mjfa2Pwab91MA6md9Z5f7o6PO0MTBJLHEDpqSwp4Nbovz1ES9kaUgtTCjUtrb0cfn6
+         jYTGdyOlp8aU0S7+TpyvxEdDnoXWuA5VZwf9ep7sKZ9tDyaEe/C9aaoXKPf9DtI9I5My
+         5gW0mbMP4BsHEhlXP7W1P3vuOKwAeG8HdEe4jZDojk6SLE1wx/zwi1P690FCQt1fITVj
+         XZUgg8d0NJGTx7rNsUGRXfyZxwisCoqjkP4510MPeYEsjdANtzDzFLMtZSGaLUsAKMAY
+         5Sf1+5T8xckUZwmmKuG9v9sBAq4LfDQd6Nm/RXh2cR/jYWFHNtLxEl8vHNjzAwhAhnv+
+         EtmA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790142810; x=1790747610; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
+        b=LTjGnxcgWtagsVEaNlaOZ2/GypUyemdq6w/gBp5f9xbwCPNKJRidx4vevPQw7KArOF
+         Dk8lHjE4jpvlejKZeMTQh5vliPyx4Kl6fgvQmWGhDXwlj5OvMaKjeKlxi1tjRKeeV7kx
+         fNuKWuBSwCvFuDJSETfgVBdPfB6BzJDFIPrD3sohhATa5qYfDMVKDyZS9JjRvb9iZQOg
+         K7lXt/N3Mo7NgEt/cWl3pYdDnevluFUKP6FPu86TGe/EGADTukT215XfxHDZA9HboRNC
+         Kv+1Uu+qtmx/VwEDjkwQrwvSK3jKDyR3Rf8Wouaq3jRHbGYTMgsaGnR0pJCVNAHyHMRy
+         nvFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790142810; x=1790747610;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=b4ipNKvv9Ha8ZyDw0UA6CxU/i2uV2iwxrmfrZjUvuRU=;
+        b=t/N9qD43Colz28MMuW/VZucjl0+FOdTFFCZC7vyD/zj929ic/6MKcSFysEor1b8BXj
+         h5Ii2BQ57S8u0tJAZAW5swiI1DVpEcGXKYgZ3AVOr1skpKz5zxPGoFoV+F7EldhPYX4n
+         EX1sn5glhCA2/eTMH/NF2E3KWKiJE0gWG0xJyQ5wjL2mnw/TPwI8PrAi6FjPlpCoTyvJ
+         +a+0sBRh15VVtdKEjifWSYwHcea25OUY5T3yOPqBcQTIzy2A4azSCJuhWzAURf7tFbk9
+         wrvkKsH7qHw/XHINWg1Ww8+m9M5NjSpOyULm87N3YpqrpupJpIY76jVqMVxtTsJc88hU
+         kHhg==
+X-Forwarded-Encrypted: i=1; AKwUvBxvg5IBUR0ZeMGlNsiCgjrCWoYnGg/DLT84xz3ggXI6YNQbmcdRapEdjcP/Rb/yTXu3BsduKVWZWio=@vger.kernel.org
+X-Gm-Message-State: AFuF++kWL65vjzTbsBOvRo14MjoIfJhyP+81Z/s7Ah1LqJts5cDK6oym
+	/U5J/HUUW6R+KCHoxvnYToKMdaicKBl6507cgKoOtUohCVzwmMCY8Bt0OpO0Xzb8pJksML4iOyM
+	d5q7lmIBMWLI7ws3zf1lA+rbIskuYuvs=
+X-Gm-Gg: AYBFou28lbXtcXvsMzAAvX5wIb9NrcqkEfTNvPN6bPLnq4BwHeZfoAbDPB2SjlqxEEe
+	vmntAd0QDcMXfntJe5Zbbflpa9nzoQEONKVBuvGh6X8CLbuJwch9F0ehBEiXHIioLncnQ3J3ZvU
+	/1uwwDbTaBTb6l49yTXYiPh9CiRSUz0MGhifrkvo0WrnQg4Dv3uUNJXLY3IqOY5fROpCFEfqhd1
+	VsMJHBeChv0jz6TdoiK3VMxh9kgrymyNGUUNJMr8p/OguIvWsBDGR7WvCnFZ6kAEpvBNF6PT6sz
+	Hx68/DdMDYd25oJheXi4z8RpgwTuKydoOK3LYV8Cm1HWG8mP/KwWxDEF6w==
+X-Received: by 2002:a17:907:97c1:b0:c2a:6bee:77c9 with SMTP id
+ a640c23a62f3a-c2aadcefe12mr117281466b.4.1790142809578; Tue, 22 Sep 2026
+ 22:53:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <cover.1790068409.git.zhoubinbin@loongson.cn> <arKwsyDwkCsIPjWk@SMW015318>
+In-Reply-To: <arKwsyDwkCsIPjWk@SMW015318>
+From: Binbin Zhou <zhoubb.aaron@gmail.com>
+Date: Wed, 23 Sep 2026 13:53:17 +0800
+X-Gm-Features: AclHuK9BQhIFAJMfP8FhnBIMi1HpURCls44U9SRbBAmppK4kZXV4hRu-tk4ozV8
+Message-ID: <CAMpQs4KszBmHDrXUZ9azYiGpsQY+LWqBSoWKB95VVO=ioh51bw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Add Loongson-2K0300 APB DMA mux support
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, Huacai Chen <chenhuacai@loongson.cn>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	Huacai Chen <chenhuacai@kernel.org>, devicetree@vger.kernel.org, 
+	Keguang Zhang <keguang.zhang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] dmaengine: dw-axi-dmac: false 0 residue for queued descriptors due=
- to stale HW pointers
---
+Hi Frank:
 
-commit 1fb45501ae16a4b2f841216b130cbe2ef95cb7a3
-Author: Rui Wang <wr574332525@163.com>
+On Wed, Sep 23, 2026 at 12:45=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wr=
+ote:
+>
+> On Tue, Sep 22, 2026 at 05:25:41PM +0800, Binbin Zhou wrote:
+> > Hi all:
+> >
+> > Loongson-2K0300 integrates a CMC DMA controller with 8 physical
+> > channels. Peripheral DMA requests are not hard-wired to these channels;
+> > they are routed through the CHIP_CTRL13/14/15 DMA_MAP fields.
+> >
+> > This series adds support for that DMA request router.
+> >
+> > Patch 1 adds the DT binding constants for the peripheral request IDs.
+> > Patch 2 adds the DT binding documentation for the DMA mux.
+> > Patch 3 adds the driver, Kconfig symbol and Makefile entry.
+> >
+> > The driver registers with of_dma_router_register(). In the route
+> > allocation callback it validates the <request> <channel> <flags>
+> > specifier, programs the SoC-specific route register, and forwards
+> > <channel> <flags> to the parent CMC DMA controller.
+>
+> Is it possible use standard mux interface?
+>
+> drivers/mux/mmio.c
 
-dmaengine: dw-axi-dmac: report paused state and residue in tx_status
+It does not appear to be reusable.
+The mmio.c file appears to only involve setting bit fields in
+registers, but here, not only do we need to set the bit fields, but we
+also need to pass additional parameters to the DMA controller.
 
-The driver implements device_pause/device_resume, but device_tx_status
-keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
-tell a paused channel apart from a running one. This patch addresses
-this by properly reporting DMA_PAUSED and updating the residue calculation
-to read the hardware pointers directly instead of relying on completed
-blocks.
+Take i2s as an example:
+&i2s {
+        status =3D =E2=80=9Cokay=E2=80=9D;
 
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index eebed2474210d..5653a57126d66 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -352,33 +352,120 @@ static void vchan_desc_put(struct virt_dma_desc *v=
-desc)
+        pinctrl-0 =3D <&i2s_pins>;
+        pinctrl-names =3D =E2=80=9Cdefault=E2=80=9D;
 
-[ ... ]
+        dmas =3D <&dma_router LS2K0300_DMA_I2S 3 0xbf>,
+                    <&dma_router LS2K0300_DMA_I2S 2 0xaf>;
+        dma-names =3D =E2=80=9Ctx=E2=80=9D, =E2=80=9Crx=E2=80=9D;
+};
 
->  	vdesc =3D vchan_find_desc(&chan->vc, cookie);
->  	if (vdesc) {
-> -		length =3D vd_to_axi_desc(vdesc)->length;
-> -		completed_blocks =3D vd_to_axi_desc(vdesc)->completed_blocks;
-> -		len =3D vd_to_axi_desc(vdesc)->hw_desc[0].len;
-> -		completed_length =3D completed_blocks * len;
-> -		bytes =3D length - completed_length;
-> +		desc =3D vd_to_axi_desc(vdesc);
-> +		length =3D desc->length;
-> +
-> +		if (chan->cyclic) {
-> +			completed_length =3D desc->completed_blocks *
-> +					   desc->hw_desc[0].len;
-> +		} else if (vdesc =3D=3D vchan_next_desc(&chan->vc)) {
-> +			/*
-> +			 * The descriptor is on the hardware: read the progress
-> +			 * from its pointer. If the transfer has just finished
-> +			 * but the interrupt has not reaped the descriptor yet,
-> +			 * the pointer sits at the end and the residue reads 0.
-> +			 *
-> +			 * The hardware clears the channel enable bit when the
-> +			 * transfer completes, so a still-enabled channel cannot
-> +			 * be done: right after the start its pointer may still
-> +			 * hold the value of a previous transfer, which aliases
-> +			 * the end of the new one when the buffer is reused.
-> +			 * Never report full completion while the channel runs.
-> +			 */
-> +			completed_length =3D axi_chan_get_xferred(chan, desc);
-> +			if (completed_length =3D=3D length &&
-> +			    axi_chan_is_hw_enable(chan))
-> +				completed_length =3D length - 1;
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+We need to pass the last two parameters <3, 0xbf>/<2, 0xaf> to
+`loongson2-apb-cmc-dma` to complete the relevant configuration.
 
-[Severity: High]
-Does this code handle the case where the descriptor is at the head of
-desc_issued but hasn't actually been started on the hardware?
-
-If a transfer completes and a new transfer is queued reusing the same memory
-buffer, the new transfer will be at the head of desc_issued. Because the
-hardware is idle, axi_chan_is_hw_enable(chan) will be false.
-
-When dma_chan_tx_status() is called, vchan_next_desc() matches this new
-unstarted transfer. The hardware pointers CH_SAR and CH_DAR still hold the
-stale end-addresses from the previous transfer, which match the new
-transfer's boundaries.
-
-This causes axi_chan_get_xferred() to return length, and because the
-hardware is idle, the mitigation here is bypassed. Could this result in an
-unstarted transfer falsely reporting a residue of 0, indicating full
-completion?
-
-> +		} else {
-> +			/* Still queued, nothing transferred yet */
-> +			completed_length =3D 0;
-> +		}
-> +
-> +		bytes =3D length - min_t(u32, completed_length, length);
->  	}
+> Frank
+>
+> >
+> > Thanks.
+> > Binbin.
+> >
+> > Binbin Zhou (3):
+> >   dt-bindings: dma: loongson: Add Loongson-2 DMA mux request IDs
+> >   dt-bindings: dma: loongson: Add Loongson-2K0300 DMA mux support
+> >   dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
+> >
+> >  .../dma/loongson,ls2k0300-dmamux.yaml         |  49 +++
+> >  MAINTAINERS                                   |   3 +
+> >  drivers/dma/loongson/Kconfig                  |  13 +
+> >  drivers/dma/loongson/Makefile                 |   1 +
+> >  drivers/dma/loongson/loongson2-apb-dmamux.c   | 380 ++++++++++++++++++
+> >  .../dt-bindings/dma/loongson,ls2k-dmamux.h    |  56 +++
+> >  6 files changed, 502 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k=
+0300-dmamux.yaml
+> >  create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
+> >  create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
+> >
+> >
+> > base-commit: 0a8dda0a15d3926422d286567f945a05328a4ac6
+> > --
+> > 2.52.0
+> >
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923044104.3234=
--1-wr574332525@163.com?part=3D1
+Thanks.
+Binbin
