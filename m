@@ -1,62 +1,63 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011056.outbound.protection.outlook.com [40.107.130.56])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013043.outbound.protection.outlook.com [40.107.162.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A27E35E93B;
-	Thu, 24 Sep 2026 14:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AB44A2067;
+	Thu, 24 Sep 2026 14:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.43
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790261756; cv=fail; b=PryRIbm3Z4p0SyqXEDWeVodcbwX4bGPpWmBXtGRjM9er4DEZn24LLHjDpZfAEt5NFZVyQ74p+6jxuDTcNGMBKxJCnw/AHVdmhuiXBPCLxU8FUgSeHwD2VwOe1vSdcSPW2TjgPKYy25Z2xdbya7nHnxIu7fvMJdgoY9dM1rr9UEk=
+	t=1790261932; cv=fail; b=iTSX+2hQd7Rf0V18woFHOhXny/gMFRaqQEkgS0zzmJGTbJ036JLjzKVZzUqUqEftPXTV+WXfHutEz+FsUyJvydsp4NpiZSrVNEyQrQgkR7XpSfsoSlCemswT1T88BLI0uIdhB/zQrmYaQFcMHRUQMEbCWTsoV8IuKgPHqfweM88=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790261756; c=relaxed/simple;
-	bh=lOOpEnIRtQaEVNMZylC3oQXu0tr4cmCvFbB3qF9Aeoo=;
+	s=arc-20240116; t=1790261932; c=relaxed/simple;
+	bh=wXz4f5BSISa350FujX+mgfGTZ0jdDAi0ZQLRkSGZU/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=OoZ6FYhTDnqQ19HcvhGzvISS5FCLI7CPpIqjl9V299ybSGqH66rv0/mfEWrKxtESryuPs9Ach76nTSkvD7PMuk+QxqWpLy4Uuxfz5q7UhgMZvhAeEBSMeDE5+6kKCD+aaATlC3midfsr4+jyirF9yuH8YzkJfwRNAQi44V5Rz9M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=E9yiP+pE; arc=fail smtp.client-ip=40.107.130.56
+	 Content-Disposition:In-Reply-To:MIME-Version; b=C1Gpj4Nwj1s4qVUbse7lkNsLvbSETLvWTzKR6IE+j/nn8r9e4fXzGrMLWIPG6WVxMj9iebXD+d4rXp+ANudpJg4jJoaQpgxDCzW7YY4N8qkZ2VPtIh4yvu1zXdQ0XcbwsP4xo7sqZ/q3uAUHnqVSukGT+GJ4jorlaWmR2aKWKN8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=VvxTLtIA; arc=fail smtp.client-ip=40.107.162.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="E9yiP+pE"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="VvxTLtIA"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KgwyxDy+1aFjXY3QwEWpx2C/Z+bDN0Y6FIQ+6Sr9pb6g2OSRlawPYkEupMoASlYbn+5vDqmyMXWqsuDcKMvEv28EerP5jLmZKoCT6DJ/SKpqHA/ngkFPWw9+w7/5LK+4CbykPE6GXxc2TZ/Df7DrZdixLAfQC3GTCdTRtRbCkxJ9Vp3pFCKdBhEu8Hp7/T5JSmdj5V8t+1ekdYBoKayDRc2f0+O8zAFmeJdyf232syIrZZxp8eNy8kOLcHppbyDjFVIV+6IgxNeBm9fKyjH0tPixvNIRUPGuwPWE46bFcbadCdXZNjS3ULgRWvkd2TEk55YYiPFBpJrida3ShXSeIw==
+ b=PYBiZNEWmUy1OoK5S/Tp6yLm9SoGMcpATEDAW3og+tiozJ5FfPHyR6cUo4Qr6l8Cy+c5GRFtuC2GzGs2bun8GP5LkHIaRtWNFJmRmQaA7ldn4rS+RAhnVZy1CLKfJ/Wu/I6WXVjn8ck65OFt95pHgNg7MnkTEvocNqofeFqpMUH+Zh9QqwVlWg72YpaLS2VCbwmRqPBl4ryI5t+YzKEN8TrjLcUM73yCDN87g4TrXW0mf6afb6UCliDDU568oG9e/Yj+HfadE5/fjZljjr1oxtZBp19uxXJ8nKEp0Vq3spbx9aqe4VqxgOjgISeKWv1D6WMTlDJwWTggFGGmrb2AOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Wj0NId1LQxD+2/sSbSeIQ4nZA26kUyuUllpwJCaku78=;
- b=pyJhLm1LsHPrh5WLW31O582mhBrhinNpd188Yy3PVhQKzkvPlQcSH3/1DZXkrH9G75nDj5/SRdeoSnb6SbtX8nW3RqcX+ijgDePIXrSA1ELRF2gDWGSoL/mHIsx05uYh3v9fjzUy0hyn98jHOHmE1Zs5lsvwJsJUaJEKcl94uzIVZSlS7gyAJ43oJyU1sgpd4ZLdhEYbVqI9jktiPqEnW/noicGF1ZLN0JcE5d8A799KtGkiDKCrLdSoyxdX+9ZHc0bV+JoncgeEowLspUAZUZFRC6NiS8+J0YeL+j+QRMpT2sLc9ZF6gI0OJexmEseBdRU1XuI85AZd8aUUuZCgxQ==
+ bh=NpBucjrpGBUZfgvUCvSV/ZjaDdd4nQLLIEDXIx1hryQ=;
+ b=wOa6OX+QyrJ7a0Xt/h5tCodCY0nXX6WIqhV2A17xXD0vcQmGu4ij/Y0Qkdd/acyImg+cKqX9/EJecN9nd6GpWmuFiBBIRME/gj8PQo29ChYDrCym58ZkYd/i4RFEPvOgAwFIwQ/YHF9o6Lg97Pe/xEnCzt0j10/+da1cJ7i4RULbwBTRV/uOxR6sa78ukdgaO5C4j+z5dF29lPijTNTnfCGI2GgJ7s1r3mrnqF09R6h5rXDBT3/DKO5myL2h9b/hLbbeyUVHbVIJ6kSAR8CgVQ2h7/kObiFkRLOZg/9+KA1QgQ7UxkNb5us6iCxP/2zowULTwManIyWPOgdIs3Rj3A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Wj0NId1LQxD+2/sSbSeIQ4nZA26kUyuUllpwJCaku78=;
- b=E9yiP+pEtvgyHICTLTTi/eEXqnGjcFn7Td33ME3wAIPMoNXkGTy+DPYsPLtpSAfNgomIiQIzeZvGvjATCKXSce0jflcrb9VUwFqvm2UNgqVS8xrgZZ3v46WlcrJGtVvNbuXeTNx+I/s3Yiqdk9sEJcyOafKSCjsN4fUXj/rg5nDyKZ7UdDIOKjKTzxVd9EFzFVGfJvullVYw1UZo5k49jVxBvlayctF14qhXgh3jraX8PiDB75b8v/Ut8i+nBICJhsazhWKmQu3afOVSR5z8Voodx0lclz8zmWvq+mKnnXSzkIT3O+aNR74wfQNEiPMkin1GiO2bflYG18qvXmfegQ==
+ bh=NpBucjrpGBUZfgvUCvSV/ZjaDdd4nQLLIEDXIx1hryQ=;
+ b=VvxTLtIAzcxa8S0O2SImnu0tPPReMlqbUhuLcfVgcz0OTvU+uf+7QsITG2wfJzuYBdBaORGEBElF92mpG/p9XBSX+wfucnnn9H7kz7Op+I3xnEjMrDNsKiq/IxlseRlaZeqvQsmNJF3KO0oxCN1zLYmqTOvCRv4hO9vkDf8vYlsw32dBpm7SAolV+7E/wXisGfdI/rR9jawV5jSfiAp50gd4ezdXd9e3UdcyTWavaAeg19mdiSy1NuuBFkgOIcBZtn3A91fr367yIZH5CvQi2Y1A1JREzM/HDKp7kmtLV/W+F1b7Ray14PksuTs6RTiw4ABoB+o+p9NYauQ8CE/0Qg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by DU4PR04MB10363.eurprd04.prod.outlook.com (2603:10a6:10:55f::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 14:55:47 +0000
+ 2026 14:58:46 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 14:55:47 +0000
-Date: Thu, 24 Sep 2026 09:55:40 -0500
+ 14:58:45 +0000
+Date: Thu, 24 Sep 2026 09:58:38 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Linus Walleij <linusw@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v6 08/23] dmaengine: ste_dma40: Return IRQ_NONE when no
- interrupt is pending
-Message-ID: <arU57BPffCVmLTbd@SMW015318>
+	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
+	sashiko-bot@kernel.org
+Subject: Re: [PATCH v6 09/23] dmaengine: ste_dma40: Init hardware before
+ registration
+Message-ID: <arU6nkO05PQVY0F4@SMW015318>
 References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
- <20260924-dma40-fixes-v6-8-fdb6755020a2@kernel.org>
+ <20260924-dma40-fixes-v6-9-fdb6755020a2@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260924-dma40-fixes-v6-8-fdb6755020a2@kernel.org>
-X-ClientProxiedBy: CYXPR03CA0051.namprd03.prod.outlook.com
- (2603:10b6:930:d1::13) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260924-dma40-fixes-v6-9-fdb6755020a2@kernel.org>
+X-ClientProxiedBy: PH8PR22CA0016.namprd22.prod.outlook.com
+ (2603:10b6:510:2d1::9) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,123 +67,120 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DU4PR04MB10363:EE_
-X-MS-Office365-Filtering-Correlation-Id: 63b67461-95bc-4f20-ca27-08df1a4beacc
+X-MS-Office365-Filtering-Correlation-Id: 62db28f4-3a00-4e56-5581-08df1a4c54fc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|1800799024|376014|366016|23010399003|10067099003|22082099003|18002099003|11063799006|56012099006|4143699003;
+	BCL:0;ARA:13230040|19092799006|1800799024|376014|366016|23010399003|6133799003|10067099003|22082099003|18002099003|11063799006|56012099006|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	PXVaMIEmULMp7LyTwGvrjCg2FgZWB3tsn2oU1oRXgTUPSTqDaP/Q3h+soM1onGw5KJ0JHVPN/UNLZGm6V5zqBomMkpdlo7b9iE7A2yTJfkX763Ud/knmfV/rd6H4owYOByxxISPGlUDY7HjVUMNJAUpXdImHJtT8j1sLpbmZuCYq51AtrbPYWBDVEZTDpVtpcH/gRRuTSWjA5h1gydM497qzRacim8WFhu1BZTaPMyiER9XCLaJNbwmF6c0YOur1Q6TRLUoOzK6TOE9zjrA2EKxnuW4Fur7HR6dx2g8YdvloWwre7VwudsBbslRHWe2HOSZ3AyfwD++t72fYP5Vg9lyXo4rEGe5vTIDYvSK8/M4J74qzeLU+lloq+FoyGT5kcx0pA010MJk0WDvxgcDvvBy0AgCghqin4NYD1vq8VRM7wGiQ3TttVaXhgH3dBAV9A4y2S6TfbG/5+uDRuhaDTdbPZD62g9ubdO85sqv8bUhl3GTLHGR6QNlonExdg0tUtbWrx6hwFr1drm4LZh6327HfdhyI/O5f8x5NGxBInUAWHw820xq+lqldSsJpWlkepGsxefgerJXshnb7UHHQ2WrWKJ5GcrxerXAmRwraywRPxlGSD1mcZjX2zuNSfyYQ7VFiUVuWO8qd4EwBUOc1Izv6YgIGascsu3XbMLX5HQw=
+	FKaOBbX8vqtTnqs+R7zeDRnoScyc8oOzT8ShgxJ/KElo3VVCt37hezfdRGUpdIMNwp+tJQMskO6fLvaHCcbRUwhzpiLoLLSr0POeIIrKngiC5m078F3KTD55uRam//zblEslu4gH2OU4g6oOyiCFTzAqF/PhNXY/CLh61jRrj3iUGmkTnLaTiTirlTAZPGQ2udYEd3kcFerYk4nMFIG/cezsY8Bg0d8tqjkefWK4O1NAHweG/gJ6pbBmkRMFhA0rCxpiABLGfV7tS0D+XHIBdJXLbS79mkiIB7rnjAz3XOyPhTrL4Rw6axKXyXIVmLgiI0WV8THbxHTex7ANCRFlCwz3XiomHIqHrC8fm0IkyVyN7bjsr+yIrEtf6ebc0PkeWHYcpeXO5NZnzGBbmqIxxLlxz+1kYesHXw3Gc58GxsUWQyBdQTyS0GmkAfolNT0TixhM0+KLeYJGhaSzM9Zh/kTpMJE8X5a/L4ucW+nqyKt6DgGrcv+SHGRm9qTtNZ3UV/B8rimW3L47+lN8lvUa+pd0VnGocVUu7yjY4knIr/9fjkCin+6syD1KpY/HEkGouDFEkEa1EW0BJh8mrrkrdjuPLL5wmg1N+/u4MABkBm8fxRYCDh48aRRigfKUrBxn
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(376014)(366016)(23010399003)(10067099003)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(376014)(366016)(23010399003)(6133799003)(10067099003)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?UjovE5FHI/K5yvZS2clmg/RYzpg2VyCNF7Cby2gQZmfKFvVTu4JRaCctvgjA?=
- =?us-ascii?Q?A5SyJtxmTHJwKjxO1HnoHcHfPndcAFmWBqsvLyKwMRN1XDsHLn7FZxKrxsGy?=
- =?us-ascii?Q?rpMNx/S+PeXWSI+PjrPPZCuORl2BKkQnhM6vzOk46J6Ip5nWfjSUa+zABS/N?=
- =?us-ascii?Q?qYxhT/RWdit3O/dWEWVWooZDApBvg5UTFKNQcFeVf2wtOqCzDNnXVjOCC57q?=
- =?us-ascii?Q?UMAhmQvQfCPbhmpy/PnauvsifYyHlG6Ip8yeDB0vafMyDRUHoKC0xXhnpjJo?=
- =?us-ascii?Q?oLWKA3+xBL7ufxfuWK1bGDk9uONKAnRjQCAos7GFFVMe+QYhBwK3rUXYDQ2+?=
- =?us-ascii?Q?XaDMpO81ZKAn/AZiSfPLmVC2RtNCyN32Q/ulO4i4Nzij57Jc0nRQFVUVPx4+?=
- =?us-ascii?Q?e/8rELdp3/11yFctelCsoPzUpjGbfnRDHmtg8OJlmuRaTYinG29W2ZjMXKfk?=
- =?us-ascii?Q?XtUXKvL/AJuy3CoUwkTY7WnvLfYamgP4LN/7da/FF2Agvr+1MI1smJ6ujMA1?=
- =?us-ascii?Q?rHb7WObV4dPdCslHjPFfJevWeQPyrAlqekxVwvKrXwMEjk+JvAXkeXDRvLsZ?=
- =?us-ascii?Q?4Hsy8dFn/ehFbtMpax+aHAwGJzpXbxfKjD1azX+reOn36X+C6PNjKZGzqwg5?=
- =?us-ascii?Q?BAqmoXHrY+u/ZaoyYP3ZHjrZtk38hcaCWJs/8GpDJ4kQ1PL4gXJja2Bk3FMY?=
- =?us-ascii?Q?CXOP2TvgrcOMq5oFau6t82ATdGxrKbbVKqAkK1tgJ7SWp+d60D7e0/uHOS7o?=
- =?us-ascii?Q?uc+00OIy1yF7DaRGfPT+kOBYAqhlez6JL95+PMu77CzI2YDcuAo72K+EKwNo?=
- =?us-ascii?Q?LUoCu30nukzWTqgl835sH7sjUtBwM+YsyYR8WI+ctEJppxw6SHKAEdZr9wjz?=
- =?us-ascii?Q?WrEz5KMT6iKZyUassUw0ZanYMUtvdQ1s3Rb/Hf75Z/DGm7QWreseoU7ZTYec?=
- =?us-ascii?Q?ShL0R41RHfIVJy2u6ROOXy3etAHCZjwTzVj/2sP1Abj268xBNfmItsSgaHBo?=
- =?us-ascii?Q?5WmYqHo+1nwvEO1uVIXJdorXsam2R4j5NFSGUJQ2ggdqKC9qMGGJNbd3H9sO?=
- =?us-ascii?Q?rwxaQkwGwup+C+/AVRZekkaYCnEpFDCFoZ1KAeAy2kOVqg/3qcbeB5OQm4Yr?=
- =?us-ascii?Q?1bnJkO3GfYnLo89qsc3QMc8VbiGhu5X5/FJxP7OUCKf2v/pMVmasJfgxZjZD?=
- =?us-ascii?Q?dVr7xMcBA5vTH6s3VhtKvJW8RvRirMqiLLsh2A8/4p9E6fcvF/ASeLM2uzpr?=
- =?us-ascii?Q?q0lJZbfgcT1Q5yEZfY95gKHkTjyeLq/1bMON+3QHxeWVcf6a84Pk0eswBa13?=
- =?us-ascii?Q?31Q96G29X0urDVlp3E3b7Xk6uNKUN2XfRc07uLPQxQU4W9TpDNyU2fRE/TSJ?=
- =?us-ascii?Q?fy4se8H9EEmRMxZnexniaQoWW9nygmZHtq9hOTZo3zvi9PfCui5WXW/2NVaD?=
- =?us-ascii?Q?J/gRmvz9ol22h0S6g6UiZBsiJjPeFI8QniLH6nT5/jPtzigHqd6pIIwkyo3e?=
- =?us-ascii?Q?stR9j3JvMEsK5MPouBoaTXIth2MDJ9xH4WZ7XTmlkbY0ufFk/aqrgXNxsDyY?=
- =?us-ascii?Q?IqvXG/5oKOqDwnwMYzPZykIA/632OxRcyiDUql1LDNnsLJSzAdIz+mMaROsV?=
- =?us-ascii?Q?IMU7X2dnfRRabmVlt5fd1PUHTWJvlPJz5Dp5A4ZHgrFCNP2yWhJ/6swxTNjn?=
- =?us-ascii?Q?vSYSLT7PSY3tnqZQ1+8yhGzIFbh8bQhxzaGYOWrEPpOQNLkz/ty9daE8QfLn?=
- =?us-ascii?Q?IxDo6xLLnQ/mZuhStUatNi7Wk1Ev8xkNGxOT+F3h61vjPzNYlrsP?=
+	=?us-ascii?Q?Xv64iAI0guWglEdI9egtDhOm6dbCbbT0MeGjEjonP4UjpaKQMd0D4Y3CkgQz?=
+ =?us-ascii?Q?zattlXfOJ7iaMbosKGArSQ6VgTm1A2n8f1ACrdTeB2iiwv0vzyC7fp/7Jh52?=
+ =?us-ascii?Q?1914M96wGXzpxZv+2bmFs4TcJfRCGIXMLruIsqNaNQjuwJ1Ak9d64+7OYjZq?=
+ =?us-ascii?Q?EgSOT1u1ImGIA7jZvk1tA2R9UQpuimInmAN7f41sLR3MXLwmwLN/EAljZT4V?=
+ =?us-ascii?Q?tzoMAVxpsuQgJnxO+HiTsbHN8Zb9SzhWJfSqY1CXwnA8ek1FaydChdRVhhat?=
+ =?us-ascii?Q?MYTiW33VCto4Fm+SGWh4JhkhPJ3RmxATPcc+Xo2oZlxx+++lgshOz2Znx5X1?=
+ =?us-ascii?Q?rfIbBIFAF3Ad93oF7WvS4YZ8hvjiFc5zOj0M7B4+Q2tQ6PbYyhzwJJMG1CDi?=
+ =?us-ascii?Q?Bz0MTaoUNpKRxJ1ftxVK8CADCfc0ycpbibE5diCdi9e+JLaTT/SJlG5GNQHT?=
+ =?us-ascii?Q?Ihd81tYLPqn4Ew2luAhIvSHkSRwWUqNA1gxylZospZL3FGROus8Pp70BX6ta?=
+ =?us-ascii?Q?vleJPGDJUso2GpvD+3BJazpH1p7BB0A14SwS2X4B4mnX/5rG1S/rpygoo/Tl?=
+ =?us-ascii?Q?0BzT5QNKWMhOK3Fn1v0ofR8IrHHnwP8lP2BmGlfhizuc1ime+FcJbUl1wPhU?=
+ =?us-ascii?Q?NN6bkuEWOZR72SgR6lMUkBzLSFiReK75qItQqp0072QEWjhpq4gTQ+U44C9C?=
+ =?us-ascii?Q?DVWHQS3jPrlzB2eOAG6FU7lso9uVI7nRDCveGrCuKGpwIKgYoL38LbIoA5AG?=
+ =?us-ascii?Q?oJkMo+anMKeJPh+6bAXAbXUbbyAFpjKe/yAIsrijPjmPo0psZ48L4tpcLFFG?=
+ =?us-ascii?Q?81hKEolCPKap1uukMpX58O7/m/eV1/NrB+lxblXw1LAygyPe0kdN5Yuraqn3?=
+ =?us-ascii?Q?VN5S390m8Dr+bX85cRvK4zAlCibG7EZPmByqXI5tX4I2fH/cnO8lyaFjKmP5?=
+ =?us-ascii?Q?VUUwMtvJ8wKvPo+QqLpFQBmIrlQRQNNPQXK8EUMmv0ClOAZk/TH4YRYfVq3Q?=
+ =?us-ascii?Q?DaGDnWRbLnyMh1/lBIKkafQtFqvDD/0T1bB1wkneZOoRyMhWyOuWQeJiwHFd?=
+ =?us-ascii?Q?Du0YFaBW4CEESfGu3x0Y8F0nvQu5o3oPP3k0Fxs8v2Kqq2b9EZVWdW6fn9+u?=
+ =?us-ascii?Q?2dTc+xWwxb4wEEY7cF/KXP2Urjq+T1mqOF+gj77NhCGgpjRBWh4hI6dnh3OR?=
+ =?us-ascii?Q?F00jCJlO0nrMZPD3EqpsRt59DHE18J5orB4kEk8v0eI1QtwkIG7QJscpppVz?=
+ =?us-ascii?Q?OaraLS/AMgROFvf6bZfDLupCPtBcNTgokce+dzFgj/2VDcZXk3JEVTGaIufd?=
+ =?us-ascii?Q?yH/jtwU1CBGLG/DIk7CxG13fY6LPTDl5NutXqSFLeLqRqf3uA4SHGUw+XfK/?=
+ =?us-ascii?Q?zKMMgn2mrimFPG+jG2ASF6VDiZoRj7+rhESs0Ktf+pFEBkObCjJwTq6WalZ4?=
+ =?us-ascii?Q?N9tesWJD/hxcXw4bo7eaSvqcL2PPXQGLUr3+GMRzp3RxBr2WjgFRMnIrXmJe?=
+ =?us-ascii?Q?H67SDgVkIXZ245wf/4FMmz4SxVs+g9MmjCnrPUhOUczPWDzm4ctxf3Vf+lUX?=
+ =?us-ascii?Q?cjyPVEvl9qumVrhYYD+QhqTd9VertDGjjyOrPMR7wLsrXZeGAIDUmUXIWZOu?=
+ =?us-ascii?Q?ySR87ax3QkDNZeaJQiuQZlOlKhE90o+tlFfZczhXSVx4U6Ja1cUx9S88QGnJ?=
+ =?us-ascii?Q?t4O/AREU6869BHddRri7apBhRyLEFOzeK7KoR7GU874cYKNN2xyO6C7JkDCM?=
+ =?us-ascii?Q?TzWQISyuH44iIyJ7ISrkaCDcfNxDCnHe3Le018bL+fLlhddM7bk1?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 63b67461-95bc-4f20-ca27-08df1a4beacc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62db28f4-3a00-4e56-5581-08df1a4c54fc
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:55:47.6796
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:58:45.8566
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CdSUtbWiXe75G3oF7XV1bxdMp8asgr4zZlMjDU36smJ7+8WYzwek+2DMX5DF7bscwyXCjs/cn9FuJTSVlTIbhMpiCah6asSj6UA0aNWHCopcEcDXK7G8DJ1P/iG98mK7
+X-MS-Exchange-CrossTenant-UserPrincipalName: uISFwCDEtFmS3wL1WlNHCFTfvZv40gQjw1ap9njhj4riWsC1/g9mkDW7hrdeDc7+v+Q2dz83nuhqwu0MeVbSiO6BbsCS5QEGuJV1CSkliilqTGBLeH75xXhwEZJsBdj0
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB10363
 
-On Thu, Sep 24, 2026 at 10:35:20AM +0200, Linus Walleij wrote:
-> d40_handle_interrupt() returns IRQ_HANDLED even when no terminal-count or
-> error status bit is pending.
+On Thu, Sep 24, 2026 at 10:35:21AM +0200, Linus Walleij wrote:
+> d40_probe() enables the interrupt handler and registers DMAengine devices
+> before calling d40_hw_init(). An interrupt pending from the bootloader can
+> therefore reach the handler while the hardware interrupt state is not
+> initialized and channel lookup entries are empty. The handler deliberately
+> does not acknowledge an interrupt for an unknown channel, so a level IRQ
+> can retrigger continuously.
 >
-> IRQ_NONE is not only used to identify a device on a shared interrupt.
-> The generic IRQ core also counts it as unhandled for spurious IRQ
-> detection. DMA40 does not request this IRQ with IRQF_SHARED, so interrupt
-> sharing is not the purpose of this change.
->
-> If the line remains asserted without matching DMA40 status, returning
-> IRQ_HANDLED hides the stuck interrupt and can leave the CPU servicing it
-> indefinitely. Track whether any DMA40 status is pending and return IRQ_NONE
-> when none is present, allowing the generic IRQ core to diagnose and
-> eventually disable the faulty line.
->
-> DMA40 channels can be owned by other SoC cores. Their status means that
-> the interrupt is real, but Linux must not acknowledge it. Treat foreign
-> status as handled and leave its acknowledgment to the owning core, while
-> acknowledging and dispatching only registered Linux channels.
+> Request the IRQ with IRQF_NO_AUTOEN, then initialize the hardware and set
+> the DMA segment limit. Enable the IRQ before registering DMAengine devices.
+> This ensures the handler and clients only observe initialized hardware
+> while still letting request_irq() fail before hardware interrupts are
+> enabled.
 >
 > Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+> Reported-by: sashiko-bot@kernel.org
+> Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 > Assisted-by: LLM
 > Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  drivers/dma/ste_dma40.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  drivers/dma/ste_dma40.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
 >
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 712719f0c4cf..271f653a15c4 100644
+> index 271f653a15c4..85789ee7c0c9 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -1819,6 +1819,7 @@ static void dma_tasklet(struct tasklet_struct *t)
+> @@ -3838,19 +3838,21 @@ static int __init d40_probe(struct platform_device *pdev)
+>  	}
+>  	pm_runtime_use_autosuspend(base->dev);
 >
->  static irqreturn_t d40_handle_interrupt(int irq, void *data)
->  {
-> +	irqreturn_t handled = IRQ_NONE;
->  	int i;
->  	u32 idx;
->  	u32 row;
-> @@ -1852,6 +1853,12 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
->  		row = chan / BITS_PER_LONG;
->  		idx = chan & (BITS_PER_LONG - 1);
+> -	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+> +	ret = request_irq(base->irq, d40_handle_interrupt, IRQF_NO_AUTOEN,
+> +			  D40_NAME, base);
+>  	if (ret) {
+>  		d40_err(dev, "No IRQ defined\n");
+>  		goto destroy_cache;
+>  	}
 >
-> +		/*
-> +		 * Status for a channel owned by another core still explains
-> +		 * the interrupt, but only ACK Linux-owned channels below.
-> +		 */
-> +		handled = IRQ_HANDLED;
+> -	ret = d40_dmaengine_init(base, num_reserved_chans);
+> -	if (ret)
+> -		goto destroy_cache;
+> -
+>  	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+>
+>  	d40_hw_init(base);
+> +	enable_irq(base->irq);
 > +
->  		if (il[row].offset == D40_PHY_CHAN)
->  			d40c = base->lookup_phy_chans[idx];
->  		else
-> @@ -1884,7 +1891,7 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
->  	if (ret > 0)
->  		pm_runtime_put_autosuspend(base->dev);
+> +	ret = d40_dmaengine_init(base, num_reserved_chans);
+> +	if (ret)
+> +		goto destroy_cache;
+
+
+why not request_irq() after d40_hw_init(), suppose dw40_hw_init() will
+disable and clean all irqs.
+
+Frank
+
 >
-> -	return IRQ_HANDLED;
-> +	return handled;
->  }
->
->  static int d40_validate_conf(struct d40_chan *d40c,
+>  	ret = of_dma_controller_register(np, d40_xlate, NULL);
+>  	if (ret) {
 >
 > --
 > 2.55.0
