@@ -1,63 +1,62 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010058.outbound.protection.outlook.com [52.101.69.58])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010070.outbound.protection.outlook.com [52.101.69.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AEF48E0E3;
-	Thu, 24 Sep 2026 14:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF863B4EA9;
+	Thu, 24 Sep 2026 14:54:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.70
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790261447; cv=fail; b=X5pwm0fP51rBLs0N5uop9AEOMThJNUVKJJv+Ltn4BaExW5nWT6iICm1XcPdyfvG2yZoApBZgcTd4ZYD9PzflJlsjBg8U+EpvepekB7v+woczqJVL1e9GctSDunofLiV5cnMwJXANWgaIbvoxCyB+QHhFQt3q9+zDdee8aDtZk94=
+	t=1790261695; cv=fail; b=q2SsZDpkxn0uXrlCz06sAiuS3sUhXAnxZArTvQOIztLov4UdeS4wPg+XNyY9qNeH2tsarp0GaVEOSVP5yH/gM3ycGY+1q3TXxIdb+koxQ/mEL2IGEGhX3rCx6EsHCCZhpv1VTiMgYE/gvJFoE8r/pRAhIvrJOeQJarGZdifSLz4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790261447; c=relaxed/simple;
-	bh=BktCulYlr44gzKw0V41UBAqidu/eNNETW8f3CbGEiU8=;
+	s=arc-20240116; t=1790261695; c=relaxed/simple;
+	bh=ONSjJi8Ai21y2Z6dd4iunAgtCu44qGIaQWlRrR4HS4w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=i+E+0COCwuabRgdObUs2fEh7PoM1ODrfd9ZKeTLFL+uZf4PGtEAhViqMOjJ6RKHGdagsOC3JMa/dXmqW2W5fMh+xJT5MchKZVJpNrLNCDOPReRYq2yG2dL0K6UrjfM+TiGUALtIzOtqntQR9w/OvJADS5PbA1hIt7R1V2EC0eHo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Ju6L0DDp; arc=fail smtp.client-ip=52.101.69.58
+	 Content-Disposition:In-Reply-To:MIME-Version; b=MuWlp5jJcN+whosyHIah82/AjbpqUtBhP8rRpK6XGHvFXkeqfvT7emH/6k2hUc/pVn9/z8lffMN02RPOvkBCk7nIyofYyq0ukbrBeSM7E6Jd9mNU5A41c2KulQXAXAAshVDLpJbS1omApbUhGLODhKxzzJbd2AxEmZke+VLH9fE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NkGksSJJ; arc=fail smtp.client-ip=52.101.69.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Ju6L0DDp"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NkGksSJJ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FCH09uJAJEUVgos136yuAmtiUEJ4pqq4qg+E45XRjwyN8z5C8nvM+EtFkDCIWS6vOsgvEdLUj5YcftOtxZY5N5tbhQHHl5atkHucvGQD4U08wckmcEW/jWwhIIZmfLuGyzlPO/EtXK12x+vobVoGmOmmxSt1SWexCfNAFcnzKQMbYYOUL6CNt98FU2R0gyVvEj9+cZdhwr5jTp6UykiH0ucMwSx6Tdv9+e07v3odN6WDMDKZEkCpvhdGnF2FHOhUDTj+iT6D7KBWTuhkgF9rvFhzerK/Ib3I8d7/WbwqSTkqIkgBWV3pRjVvcoaUc73wGp3oKGd5lKy0+uUWXLH4fA==
+ b=Caz9ZEQ4QSLeioNy93Hp1/3IMQiWgQVJez85RmRogdVrCuTc4my4jOyNQHnY0hQDrLFsjjzp6828Ot+oWPPgMZgcXQEEBzCy5XUhakeO9W4WFxIjCZkvezyBLeEiHFvtpmfY3YWlJ6HCnazO324vACfhFbiITr5vLE/4WxKz35tAaFZqpoaqohvDC/KvGcRlN+cbSkXndd08URexexOpdLCEx5DGu+RugiHxN20I0dZfjMANgMcwpbpgvCqNDUUknXrrzVRVSGfVGS07RHrpEdsmKvC1jwrNmSv+n4ScKx5zsxKLCV0uUsSOiQoCHNZMoEJ2FEQnBYaN7IlKWcfTtQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RO16a0CAOmf9mOxLx2BO9WTcdAl7y5i/q7ZNDsBgUkA=;
- b=YHtaCuSSyZMeGW2krJkMPDyLKbwMBnUpdHiiWCUqdyPZRJusZhbcflRSVZC+O8btwKbj0wqpd33gbPeGUDT7KJNU/EQbBzaLxbjouEnjHyh0IZSVJJalrzg0D+zOr1Y3FuLlrweePF9T6YC0zF5HViEn1vsJoG+pUfzNILQjFo0KEWxhSgXskw1+I4vaJ25ZBrqEDR2+WpCxFx47BZ0rOnsw4lZpgtM7JpwQJeHwoPnHQr81Yte8fIF32AGF3Iqomh/G3EruC7cKnBVjzOkJShNC9SgeSnXQJwTR89IEIN+TP+gk2HYe5xPoe/tvmf89Z8pqYx/OXzkFdDXuGmQdkQ==
+ bh=yBHHEMv15pfpDLXrTd6DlqyV1F5GL01SGPSdgkQ2S58=;
+ b=RB0vTmOLjJoeogW4OGFQSFPXo0J5BBf+AC4PcD86Hx8UTnETvF76cos2oOZwpdWxPk4lDlAHdkhn6c7uR+ghOXpZ4lCdvzCCktLlBfcDRETsMjBPhsDBd/bRwr/hQYy+pYYRfhLgJFKs/0TU/rbAMmlQ923YZSCuObYh3Sfihp88A0XrNpWkhLOHFw80E0B66yGR+7qxQoZg8rNzpudcmZUlDCviA30a+ePFVHdSqAxq/nS/TukzShx+j6xzQRaMt91wYxgS+TUl1NbbfaQAkSgJiRO2XEn8ARNkGm0cUFcZFWcApG5pAbGhcwzsS0k2752NNl19oyjiOntemZZjtg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RO16a0CAOmf9mOxLx2BO9WTcdAl7y5i/q7ZNDsBgUkA=;
- b=Ju6L0DDplqSvAVRJno5x5h4GvsETAumUjixoU+NCF5ShJeSEmWCtz7svnNK0IfMidVE9JHBeMcfh85OezXlIpe9uUJBrnMeY1KShnQxrzxEriYljLZjcJmW47mOEd4iAgMeThUNn+vykuF7WswfOaJI1yCW3HLoon9+B9+l/l/j5KdRW13IyFyLyskmwFmMrz34408mjqOx8XxKxkHg7dzWtR5iDzTQTlpOepgyqd4Lb21LLOQCgb9JRO1WVV++pMxgs3EyV0+UYcPWDoduuEM04jGpAoA6616JpPMf+rDrtf5kI4Em2yRmJ/a3vRKAqqPMPt6O7PTEmUGIV2Mn18w==
+ bh=yBHHEMv15pfpDLXrTd6DlqyV1F5GL01SGPSdgkQ2S58=;
+ b=NkGksSJJ0QDufnhUU9HdppWL6WfBpe/J2Sj3f1oxanhKKljoCDej8qQqn0B1BclkJEwdHkglcnq2XVMtrqurreW7tKJ8TVTlN6cHVxp0xDHCXACvY+qPnSP0XrCNprM2G291YsUS1E7uKY/QyPOjLkmOd9HQkbR+rK3aCeIkN+sLT3YLYuP+qVAA9jzJPdqWQnZ4bEPujBkWihqsjLx4mPSllxgWyI2R2Pd1uKlRJQbCjZNCfETPlBw1GYy/wYQU0q0Evx34j0rBSdKDGvAJqLwRoYwxFFG/m8e/WB6Fw/UweGu5XQP/+xkGV4yyORSI20WzQIf8OLEyURnVkp0tKQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by MMZPR04MB439479.eurprd04.prod.outlook.com (2603:10a6:190:55::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 14:50:40 +0000
+ 2026 14:54:42 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 14:50:39 +0000
-Date: Thu, 24 Sep 2026 09:50:32 -0500
+ 14:54:42 +0000
+Date: Thu, 24 Sep 2026 09:54:35 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Linus Walleij <linusw@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
-	sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 05/23] dmaengine: ste_dma40: Fix probe runtime PM
- disable
-Message-ID: <arU4uCcM9Lzf3RMF@SMW015318>
+	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v6 07/23] dmaengine: ste_dma40: Handle runtime PM resume
+ errors
+Message-ID: <arU5q5UPIdcQyAUv@SMW015318>
 References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
- <20260924-dma40-fixes-v6-5-fdb6755020a2@kernel.org>
+ <20260924-dma40-fixes-v6-7-fdb6755020a2@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260924-dma40-fixes-v6-5-fdb6755020a2@kernel.org>
-X-ClientProxiedBy: CY5PR15CA0238.namprd15.prod.outlook.com
- (2603:10b6:930:66::9) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260924-dma40-fixes-v6-7-fdb6755020a2@kernel.org>
+X-ClientProxiedBy: PH1PEPF00013307.namprd07.prod.outlook.com
+ (2603:10b6:518:1::14) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -67,135 +66,263 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MMZPR04MB439479:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45a9990e-43d5-4b00-1f4c-08df1a4b3351
+X-MS-Office365-Filtering-Correlation-Id: deeb104f-1fa8-4d1f-fd48-08df1a4bc3ad
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|19092799006|4143699003|56012099006|10067099003|11063799006|18002099003|22082099003;
+	BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|23010399003|6133799003|22082099003|17002099007|18002099003|56012099006|11063799006|10067099003|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	/1WS8uD5nuN+OhI6nD8nht0ohqyT1Q/Ef4g6roYz//srprXFNbPn1gnte/TGDlQzVcYoZdW96V0FiDqKqs7WoLum3QJxTcW+jUd60hp9TFs9zO+29k7XCcFI63Ger/80N7Qm8HCgd8wqueQTjqUPIEmriPJXdqPjzoAphamNLKBvknORm2V5/7E9lPT7hJazC/tsn4UyrSEPUsZSIJndT2MJjsNifUgE6K4INp42RlcyGgxSbjV4zncF8v0fVx9ohTQedGtoH2sOFxNSlLF0enBnhxFQF7xwgwWYgkU9vavECmrmduRgOaYV+Uss9JJXK5AAEYFiHwOIPEaMtjNarE32AOUxuJjsvhyC4sIDzSPmBPGL2RRMRzycxj0Ra4wO9l+MV8lRdtd88ToJpcGm0lMYjT5a6q7DsM4SK04cJ0xR2QATTLLOeKG7xdWoRCDJhiRGpmQqMj7U0BoMz6ikBvBL+bdi81W+yRT/7xBCHLLvUk0d5UqcMZaPORGNAJHHTdSLBrtHSWJ290OdVhQ7yvMrXNRS7Ox5jVxXpay3MFxOaYRpVSg2FHxg2nkQkik1Pny54j/kKyoxyWBv7yoNZq7XhxLWmWwATtmREBwv0cSZrpxjIcVaw+RWxm3YhdvR
+	QHA9X0RNPwIo7NaVKzMHAqMyKI492wcDQPUupQjYkkNFl3JPIjUMDxDWTMjL4bNRE68s9HDdjduLShTy9KpffirRrjmi9vXPLrHziqyD9pi8kWk25snUWmxLp6Dklnt9Tp6fU9bgrtlZJ+H6nP5bYAVGqeSftOyXMtg0dTb0FH+TQKsUstl6kKl/Oml/J01yYmfwLkPf+blZc5y04S4j9zdng2g+diaoLhz4DN9zz1l031QBQ8qzBucWz4wTnGF/S6WvQf1uEj+qQ78N3VsWNYOoezZfu0rYw7HW1h3/S6jkJxaZ7UutYuH6ukO8dcKFAfJDyCjL6rsWPg8Tc4aBz7JKQxOYrOPx6kKTZJTTvYLZ4MLdypv7V3fy4FEBJGZFmpd54G0xpAQW5kBY2F9ZJpo8xJ6+Gl2wWMxXnfs+CzxcPJtOIBIH6CMXycCj9BwxEn7m4ywOdYowJCndmXQkOzpM7DS+YXbgeb5DIVl02YjnVkF5eDReABE1rizKsZyAmOuFUTxVqGI2T2JHoA7k+wbayxIJriMyTRWERypLKT48z9obvuxEaC+nV911CRjFCzAVE2rSkneKohFYZoY3Fc5m0qieMa+V6fYZmzZb0WtDHfK7WQCmO3mCrbFIiXciyrR4sXZ9NYYHgy6w0m4OaeAAPjjHl88dblU52Xw3LC0=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(19092799006)(4143699003)(56012099006)(10067099003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(23010399003)(6133799003)(22082099003)(17002099007)(18002099003)(56012099006)(11063799006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?YBMK7JMk6vpO2AA+Rr1OvgRKGWUNVmrfNmLCuZagvQ7iba2wdf3y0s7s3Uou?=
- =?us-ascii?Q?SZVWPEypUKSZp+zgce/bESQvJPeBdqjo0h4qk4KvoiGdpaEDntoFktoixW7v?=
- =?us-ascii?Q?tM4aRkMcZFE4Ge/sGwXRq1xQwvcbYmj48DarYs09Z7gqrW91Fv2tS+2OqGDw?=
- =?us-ascii?Q?mGKKharIVMVr7CTyRIS5p6j2U90IdDK3OUFEL01FIr7wtB/7OYTRzkeA6kR3?=
- =?us-ascii?Q?63jp135vj7Roaq4+b5jlcTcF3dIdgYuowI11YT/pm4grRKpAiWrSJfbftb+o?=
- =?us-ascii?Q?iGXWKE+RVXaX/OELnpZtb1hiJmRCUc9reo7htpj3dAhXRaTYPhsEwDg3DwYJ?=
- =?us-ascii?Q?rA04fffpf+fLNw6jg4EnjJ3tiVfpSuD309oDUXt8yjqdRuBgcf07zgt1NyW9?=
- =?us-ascii?Q?MD0rzMnM3OQ3PUOe3MoAKfJkCBXJmfsLNrUbTUOFKa28BrmKcALgu52b1B89?=
- =?us-ascii?Q?aJ96yAjmMlEztZ7sH73Qk8tLJlACacAWi2RazLMOXClbaGPEhvglz3J/ko+l?=
- =?us-ascii?Q?fwIlo1aiq3oIffhh4X17KNcRzNLEAM292hb3yjEGYXmRiZs7jRih6sIpRFVf?=
- =?us-ascii?Q?25G7BTQNVhM9k6meqGs05pgcVWDuaNmqd8sU4k5n3vKColR18Iii7+HkCzg3?=
- =?us-ascii?Q?kLuZkZf9X5UYVPIigqwrkMknEhPYo2SA7vhGtM755jZN3CwpxbxRGpxCyHxh?=
- =?us-ascii?Q?U7z6cQY5kGEDFPt3W/+FFKkQuA6VBTf4PDeLG29+h7KQ2Wg/+jOwtPvdI5bk?=
- =?us-ascii?Q?eV+AOJl2KZQx8Mqmr/R24/IRUKhIGiJM65soCwgYb6j9X8KH1uG7JgKxURBg?=
- =?us-ascii?Q?OT55A5UOPYLdmOmrjAmY7gR4EeEYccioeEvJqIvXaIaHUyH86ucvoCb4WomK?=
- =?us-ascii?Q?m8bUjYjDgZVokzGuTrQCurHSNTHSRu1E3PiWctCwQly+r12aHsB8Mw0BfYXG?=
- =?us-ascii?Q?NDJnFE8kZPYAg2fSz/oQqDVwVlfsjqUjQ07dkJB/z7Q8EN2RRsf40SuPLzKg?=
- =?us-ascii?Q?nW0DjcVIpQ5GYI7azDJP0mel/L3Z2NkrIeLtRrP7t3VImtSPkR9I32E4knlQ?=
- =?us-ascii?Q?I4GYVwaLfvtlUXN2/Fxhr6JJWqprM//IPucW4R61onl/1qw1cfQGfLA66+Qe?=
- =?us-ascii?Q?4cTkkJaV5QpVGm6/hVFXcMGWE9+oV81q03Ua+hRyyD1049sMm0SD7fWJAK+4?=
- =?us-ascii?Q?IZ4+rdfq8wizrnRD/FbKeddZkkFR9QrIoDdZ2wTIgPAiHJYJKzzkQkZ2EBm+?=
- =?us-ascii?Q?yaiUexZWRCVEZziGoblIK1+qiUSY3Tjdlxq/KHelLjnD2mpbbQagQlyVa+TT?=
- =?us-ascii?Q?bwjRhKWuIh9EI9mWRuaCV6B9u1V/UKr2gBQMwlW2nK3wdNrJBv95hCx7oLL6?=
- =?us-ascii?Q?vYkv5reqkcd0DA7sr5NKbJegZD9vTpONjr0x9mt8XYLMx8uDcw5CTdezUNEc?=
- =?us-ascii?Q?RLlT22u3NEIyXHZgCG9WYRkYCa69UBeexJ/uDArLCIWirK3NMuDgVQDGp+gG?=
- =?us-ascii?Q?Jrrz7EhM3fcigYi6+/nEtyeBlu1FRsglUphSkIRPAM7cbLn2GvvdPpHiJ0jg?=
- =?us-ascii?Q?wnvf6mIPsqIf1gxGr1cld5I0e44cgxan1rCCtJoIiMZfH9VkP6PSISGNIsHM?=
- =?us-ascii?Q?jouvGxIQmAs0XO6BXhsqsrmMXlD7GTPsrVAdqsFJnTlXfHDYGF2eE/QCRLag?=
- =?us-ascii?Q?K6kQMJTVCABB+BNHMiCRnxLlBcokvE7PuRjfpdYY1RHN57hu3+GxxckyQj0R?=
- =?us-ascii?Q?qo8QDkPYaakd91NR+vIof1+3hwo987yesf4fhPSNGWTKnUBQ6Kg+?=
+	=?us-ascii?Q?FYqx8ZDoClF39lx4eHWIKobnIKx6kSFQ1PyxeziRA/h4eX7nK5HqG6glxOZc?=
+ =?us-ascii?Q?xU8hBPgHp/q57BDLEujOERIn5W7FGQKR/jfX1J9pUhvBHItrU6cqGo8uVgT3?=
+ =?us-ascii?Q?RFKbtdThMEZXq8yipeBkHH5sn730ZAdFTniR6LLuNecJLgn+VfQQPMb0IxQa?=
+ =?us-ascii?Q?3HTBYDSD5nMJn+Y7Mhu7PqarqfZWCIGnPEjqOrwA2CKNWDORnMJ48URa8E23?=
+ =?us-ascii?Q?xaeLaRFa3+vh12PSlvuykfRkcjnraiyfEFB9JthmaQzP1MUCtH7QRiThG6nw?=
+ =?us-ascii?Q?/gTqJs5PY+vG6n1NxpkNmq30lvyY+6Kq5sN87mGD1YXEpzgiXrIeufMBKHTh?=
+ =?us-ascii?Q?URGCxLFcoV1NKvtPNFPic2ujtayW7elRDEBQRqi19h3YEOf5fzrny1fB1wJ6?=
+ =?us-ascii?Q?k5w1ESff5qsk/OZwCFt6OefliStwU7n7al5J/tz6S2ilL9PbivPjal+21+qa?=
+ =?us-ascii?Q?VGIOefGDX9MWXF5y38RCtGpncAPHjGOUervgRKQTZC3lol7nPMRswS6daQG+?=
+ =?us-ascii?Q?gFQZUFDIL7DtGd7bEumTqiOOafO1ZiZCgJBKpd3XsmlDeL+wxAG52Z2v/4bB?=
+ =?us-ascii?Q?hG9R9SBvCcRv3WiAJ2eXRSHNHic1Ni+uCZ5NigniOxunIUf4EgLRAayYDzXj?=
+ =?us-ascii?Q?AhNg6cLc7zO+L5YAgcaZFvmcASxRfrj2fzQdoHwn53hm7zU98XEVHiLiLEIr?=
+ =?us-ascii?Q?B/YxkWvFL4zV+97Km21vWicAdZ55bzB4nx8b+SjadPe+ecu1wgBx3weASk+3?=
+ =?us-ascii?Q?88zngyOBBEj7PxdM9jIzn/qJOX/VBxgtlBxWy53HAkJTLvt5vLBIXcwj8XRi?=
+ =?us-ascii?Q?3KWsdeHefPfAJoVf2VmncZwlwf9eT71zrYLAHEhAU8x1DIlN0f6VYhbOWsmI?=
+ =?us-ascii?Q?D0CW5vumGbFj2BYiy2Q/FGukUOm04ZTg+WKjQsFzLScWPrsLLiHumlSyyidy?=
+ =?us-ascii?Q?6k5C2WLPRrwTIau3w4h80wsF2XpNces4Jphm4RsXVjkxZA4x5HcDFZ7uG1g6?=
+ =?us-ascii?Q?MGhJWaFpmLyLAGkk1GxsKW934RQYTtRvmnp4qb6Fs6cyikeFWN4QIo1To8dv?=
+ =?us-ascii?Q?TGFnYS54uOZGERYSEwkIEHy6IruBt5/RdLPAqoAHDPC+KK146LEls/1zt6FH?=
+ =?us-ascii?Q?h13oI+oNr9tei7QR2vuPr4IXafhPqHRzbTyrUMczV/se4tnG0YExAXMesfkl?=
+ =?us-ascii?Q?aHt9rSmTrZnXGimqImKDCe8cgN3k9g8kaAvcIxXtRsADL5tBpA3r2L+WrvM8?=
+ =?us-ascii?Q?iud44lWI2LHm3VZbDI4Rq9xoAjE4DxXenCAKK3H9zmFEtPyn444ofvsQs71/?=
+ =?us-ascii?Q?4adCYYLYBzdvqX3aYFGZg9YxXrkcNOpSvKOWhbK16qnGxu4R8YXbu8DYGjeE?=
+ =?us-ascii?Q?1BkRkrksjNfqw0U2AT5wEPCWSKFWnP5Z7XbWzFCOZ+DIHjg7X0pUUI11R9VX?=
+ =?us-ascii?Q?IyDYR5+ZedIh9u4jnYY/XRofVuXy6Z82cdkPGjU9DrGNPuf1s8JRGpWojOel?=
+ =?us-ascii?Q?IIx73Zq13PCNwLdHEemU66wpPqRDkRhBZb2rq14st7B3k9+fmU608vVztCLo?=
+ =?us-ascii?Q?nAw1q3WNVT5GSlfmB3MorVN4we69UctxbBBjI/ydkc+M68w3uWERhzv2YSsL?=
+ =?us-ascii?Q?nNIo07oA+FVPZvuXi8O65GYfs60fhK/XLsC5Jxkbk8Ft3lDdWpqQP4ZD69i0?=
+ =?us-ascii?Q?mme3PPvbybeR9p3hKJEFyeJLBsFNzYpsq9CYBtU35y4MAYLHd9YC475++LDI?=
+ =?us-ascii?Q?n5ThPGbJtdmOMrXljftkGJjdacovM4srKC0wF+GpEjaf42b+YBw8?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45a9990e-43d5-4b00-1f4c-08df1a4b3351
+X-MS-Exchange-CrossTenant-Network-Message-Id: deeb104f-1fa8-4d1f-fd48-08df1a4bc3ad
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:50:39.8743
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:54:42.0696
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dfRfJjbRsGX7qIMYoLpADv4AmJfUiFCwCMFlbK9gGRFPk13vDrDgnEM9KS3YYAgIBBz07vT3/ozrli7wel2zSPQMh401/O0q4Bnh+32FYVst2ZT3td7POTydmDQ/XnBe
+X-MS-Exchange-CrossTenant-UserPrincipalName: yBer0wmoj+1QEdigetL+KYBNe8B9kz64IEO6vCJqVZxpvDfTI3cEIn5k4pUexwaxtwYYfBrWcNJlxNG2A0f980qh58oduR5wDyPu+gTiCvrqDauq8+fUtm+6xh4t6kiu
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MMZPR04MB439479
 
-On Thu, Sep 24, 2026 at 10:35:17AM +0200, Linus Walleij wrote:
-> Some d40_probe() error paths jump to destroy_cache before runtime PM has
-> been enabled for the DMA controller device. The label unconditionally calls
-> pm_runtime_disable(), which increments disable_depth even though this probe
-> attempt never enabled runtime PM.
+On Thu, Sep 24, 2026 at 10:35:19AM +0200, Linus Walleij wrote:
+> Several channel operations use pm_runtime_get_sync() and access DMA40
+> registers without checking whether runtime resume succeeded. If resume
+> fails, the registers may be inaccessible. pm_runtime_get_sync() also
+> increments the usage counter on failure, making error unwinding easy to
+> unbalance.
 >
-> Use devm_pm_runtime_set_active_enabled() to mark the controller active,
-> enable runtime PM and register balanced cleanup for probe failure. This
-> avoids both the disable-depth imbalance and ad-hoc probe state tracking.
+> Use pm_runtime_resume_and_get() and avoid register access when resume
+> fails. Acquire the runtime PM reference before allocating a channel so
+> failure needs no channel-allocation rollback.
 >
-> The interrupt handler uses pm_runtime_get_if_active() and cannot
-> acknowledge a pending interrupt while runtime PM is disabled. Request the
-> IRQ only after enabling runtime PM so the handler cannot enter an
-> unacknowledged interrupt loop during probe.
+> If a queued transfer cannot be started because resume failed, retire all
+> issued descriptors through the normal tasklet path. Since
+> dma_async_issue_pending() cannot return an error, leaving them queued would
+> make clients wait indefinitely for callbacks.
 >
-> Fixes: 0618c077a8c2 ("dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe")
-> Reported-by: sashiko-bot@kernel.org
-> Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+> Termination and channel release must also clean up software state when the
+> controller cannot resume. d40_term_all() only releases descriptor state and
+> does not access DMA40 registers, so it remains unconditional.
+>
+> Balance each transient runtime PM reference in its successful acquisition
+> block, without bookkeeping flags. Release the outstanding busy reference
+> and channel allocation state when freeing a channel. Skip only the hardware
+> stop that requires register access.
+>
+> Fixes: 7fb3e75e1833 ("dmaengine/ste_dma40: support pm in dma40")
 > Assisted-by: LLM
 > Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
->  drivers/dma/ste_dma40.c | 23 +++++++++++++----------
->  1 file changed, 13 insertions(+), 10 deletions(-)
+>  drivers/dma/ste_dma40.c | 74 ++++++++++++++++++++++++++++++++++---------------
+>  1 file changed, 52 insertions(+), 22 deletions(-)
 >
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 621ae9ffcd57..de1d5670adec 100644
+> index 690e41ca40f0..712719f0c4cf 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -3760,12 +3760,6 @@ static int __init d40_probe(struct platform_device *pdev)
->  		goto destroy_cache;
->  	}
+> @@ -1579,11 +1579,14 @@ static int d40_pause(struct dma_chan *chan)
+>  		return 0;
 >
-> -	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-> -	if (ret) {
-> -		d40_err(dev, "No IRQ defined\n");
-> -		goto destroy_cache;
-> -	}
+>  	spin_lock_irqsave(&d40c->lock, flags);
+> -	pm_runtime_get_sync(d40c->base->dev);
+> +	res = pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (res < 0)
+> +		goto unlock;
+>
+>  	res = d40_channel_execute_command(d40c, D40_DMA_SUSPEND_REQ);
+>
+>  	pm_runtime_put_autosuspend(d40c->base->dev);
+> + unlock:
+>  	spin_unlock_irqrestore(&d40c->lock, flags);
+>  	return res;
+>  }
+> @@ -1603,13 +1606,16 @@ static int d40_resume(struct dma_chan *chan)
+>  		return 0;
+>
+>  	spin_lock_irqsave(&d40c->lock, flags);
+> -	pm_runtime_get_sync(d40c->base->dev);
+> +	res = pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (res < 0)
+> +		goto unlock;
+>
+>  	/* If bytes left to transfer or linked tx resume job */
+>  	if (d40_residue(d40c) || d40_tx_is_linked(d40c))
+>  		res = d40_channel_execute_command(d40c, D40_DMA_RUN);
+>
+>  	pm_runtime_put_autosuspend(d40c->base->dev);
+> + unlock:
+>  	spin_unlock_irqrestore(&d40c->lock, flags);
+>  	return res;
+>  }
+> @@ -1646,8 +1652,20 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
+>
+>  	if (d40d != NULL) {
+>  		if (!d40c->busy) {
+> +			err = pm_runtime_resume_and_get(d40c->base->dev);
+> +			if (err < 0) {
+> +				chan_err(d40c, "Failed to resume DMA: %d\n",
+> +					 err);
+> +				do {
+> +					d40_desc_remove(d40d);
+> +					d40_desc_done(d40c, d40d);
+> +					d40c->pending_tx++;
+> +					d40d = d40_first_queued(d40c);
+> +				} while (d40d);
+> +				tasklet_schedule(&d40c->tasklet);
+> +				return ERR_PTR(err);
+> +			}
+>  			d40c->busy = true;
+> -			pm_runtime_get_sync(d40c->base->dev);
+>  		}
+>
+>  		/* Remove from queue */
+> @@ -2164,9 +2182,6 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  	struct d40_phy_res *phy = d40c->phy_chan;
+>  	bool is_src;
+>
+> -	/* Terminate all queued and active transfers */
+> -	d40_term_all(d40c);
 > -
->  	if (base->plat_data->use_esram_lcla) {
->
->  		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
-> @@ -3790,10 +3784,20 @@ static int __init d40_probe(struct platform_device *pdev)
->
->  	pm_runtime_irq_safe(base->dev);
->  	pm_runtime_set_autosuspend_delay(base->dev, DMA40_AUTOSUSPEND_DELAY);
-> -	pm_runtime_use_autosuspend(base->dev);
->  	pm_runtime_mark_last_busy(base->dev);
-> -	pm_runtime_set_active(base->dev);
-> -	pm_runtime_enable(base->dev);
-> +
-> +	ret = devm_pm_runtime_set_active_enabled(base->dev);
-> +	if (ret) {
-> +		d40_err(dev, "Failed to enable runtime PM: %d\n", ret);
-> +		goto destroy_cache;
-> +	}
-> +	pm_runtime_use_autosuspend(base->dev);
-> +
-> +	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-> +	if (ret) {
-> +		d40_err(dev, "No IRQ defined\n");
-> +		goto destroy_cache;
-> +	}
->
->  	ret = d40_dmaengine_init(base, num_reserved_chans);
->  	if (ret)
-> @@ -3829,7 +3833,6 @@ static int __init d40_probe(struct platform_device *pdev)
->  		regulator_disable(base->lcpa_regulator);
->  		regulator_put(base->lcpa_regulator);
+>  	if (phy == NULL) {
+>  		chan_err(d40c, "phy == null\n");
+>  		return -EINVAL;
+> @@ -2188,11 +2203,18 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  		return -EINVAL;
 >  	}
-> -	pm_runtime_disable(base->dev);
 >
->   report_failure:
->  	d40_err(dev, "probe failed\n");
+> -	pm_runtime_get_sync(d40c->base->dev);
+> -	res = d40_channel_execute_command(d40c, D40_DMA_STOP);
+> -	if (res) {
+> -		chan_err(d40c, "stop failed\n");
+> -		goto mark_last_busy;
+> +	/* Release descriptor state; this does not access DMA40 registers. */
+> +	d40_term_all(d40c);
+> +
+> +	res = pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (res >= 0) {
+> +		res = d40_channel_execute_command(d40c, D40_DMA_STOP);
+> +		if (res)
+> +			chan_err(d40c, "stop failed\n");
+> +
+> +		pm_runtime_put_autosuspend(d40c->base->dev);
+> +		if (res)
+> +			return res;
+>  	}
+>
+>  	d40_alloc_mask_free(phy, is_src, chan_is_logical(d40c) ? event : 0);
+> @@ -2208,8 +2230,6 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  	d40c->busy = false;
+>  	d40c->phy_chan = NULL;
+>  	d40c->configured = false;
+> - mark_last_busy:
+> -	pm_runtime_put_autosuspend(d40c->base->dev);
+>  	return res;
+>  }
+>
+> @@ -2584,10 +2604,14 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
+>  		err = d40_config_memcpy(d40c);
+>  		if (err) {
+>  			chan_err(d40c, "Failed to configure memcpy channel\n");
+> -			goto mark_last_busy;
+> +			goto unlock;
+>  		}
+>  	}
+>
+> +	err = pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (err < 0)
+> +		goto unlock;
+> +
+>  	err = d40_allocate_channel(d40c, &is_free_phy);
+>  	if (err) {
+>  		chan_err(d40c, "Failed to allocate channel\n");
+> @@ -2595,8 +2619,6 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
+>  		goto mark_last_busy;
+>  	}
+>
+> -	pm_runtime_get_sync(d40c->base->dev);
+> -
+>  	d40_set_prio_realtime(d40c);
+>
+>  	if (chan_is_logical(d40c)) {
+> @@ -2628,6 +2650,7 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
+>  		d40_config_write(d40c);
+>   mark_last_busy:
+>  	pm_runtime_put_autosuspend(d40c->base->dev);
+> + unlock:
+>  	spin_unlock_irqrestore(&d40c->lock, flags);
+>  	return err;
+>  }
+> @@ -2788,19 +2811,26 @@ static int d40_terminate_all(struct dma_chan *chan)
+>
+>  	spin_lock_irqsave(&d40c->lock, flags);
+>
+> -	pm_runtime_get_sync(d40c->base->dev);
+> -	ret = d40_channel_execute_command(d40c, D40_DMA_STOP);
+> -	if (ret)
+> -		chan_err(d40c, "Failed to stop channel\n");
+> +	ret = pm_runtime_resume_and_get(d40c->base->dev);
+> +	if (ret >= 0) {
+> +		ret = d40_channel_execute_command(d40c, D40_DMA_STOP);
+> +		if (ret)
+> +			chan_err(d40c, "Failed to stop channel\n");
+> +
+> +		pm_runtime_put_autosuspend(d40c->base->dev);
+> +	}
+>
+> +	/*
+> +	 * Always release software state, even when the controller cannot
+> +	 * resume. d40_term_all() does not access DMA40 registers.
+> +	 */
+>  	d40_term_all(d40c);
+> -	pm_runtime_put_autosuspend(d40c->base->dev);
+>  	if (d40c->busy)
+>  		pm_runtime_put_autosuspend(d40c->base->dev);
+>  	d40c->busy = false;
+>
+>  	spin_unlock_irqrestore(&d40c->lock, flags);
+> -	return 0;
+> +	return ret;
+>  }
+>
+>  static int
 >
 > --
 > 2.55.0
