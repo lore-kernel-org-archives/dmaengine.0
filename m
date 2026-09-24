@@ -1,451 +1,352 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011047.outbound.protection.outlook.com [40.107.130.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E2494A04
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 13:45:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D6E3D47A5;
+	Thu, 24 Sep 2026 14:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790257516; cv=pass; b=Q0nyXRx/PKvkHynKleOFW3t2gme1XCwhbWHcKXSMgw6I2h0YYa+x0WjuZ42Qc/9qww+Vg3lai7qDhwkjTDY9zkKPchza7WnI9xbBsZ7yaN2qnDr06XgGnZuwTmWA4BIUTkg+yo9tivFKnA4cIf8py9XVaNe8M8I06OsoiAFAWZg=
+	t=1790260649; cv=fail; b=TaNHHW/7RfzJmy0moZJR2vg4YU6iPu93fw+eZoxtzqi9FF2X++J1l8d0QGxCe9PzVFYsxz2PMfgvKj4XH8MYng0g1FLa4TCEJUjewMbStvqbKyHWhk6zNN3xDrXRVkyKKn4CMF2kfRb/kKmUX4VSHqo+iWH59DVemky09MtM7ic=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790257516; c=relaxed/simple;
-	bh=VxTD9bps2tmguob1h0DU6BbtFrs2Bck4jQrFUdaM7uY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jm1XFgmMD/cnnRaIiZ35qLHovMlreM7LIxIbb3x1JXqG048fB7eCIndhacTei5VpcJM58W3LbTIbWSgh0SRsCqHQMylGm/dNBo6uYI1J4Ydgyjc5R+21G+wO7SO/NdlKGLfk4nP4nbksZfmlBYLVYO1i8qtZArhSIkGCz+jC3Dw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OXNqTZaW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JY9ULeqQ; arc=pass smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1790260649; c=relaxed/simple;
+	bh=9vq+oj/6Ms/LFxAg4nMCIwM+JfunAseLeC54WLS53SA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=OCTNgTf4tCI79cXl8dXmRrIyEMK0ccslZYE1e01mfvolQ36ByZzHFn4RdqnaMHINnYhEguCjvJ1fPHHtcXIXjJGp2O9F6zPSLDrUeSYXCWNmQ7QKCpiA8KH9WKvu+BBikAfIx5RmFmyFjB5bkAs6f9t+FBSlglGGfNSg2H2l90c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=I+JPTYYW; arc=fail smtp.client-ip=40.107.130.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OXNqTZaW";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JY9ULeqQ"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68OC4XSL3134063
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 13:45:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+92HIZiD8BjzLF20PEwnQGtt9JR2IY1fehiHqBhK2DE=; b=OXNqTZaW1hVXUEuA
-	RpbpIDZ5ZyZIMz5G3cp/uC/FgcuVeu3hcEkHU+lrs0zGQ9LslzczkcYpfSViC2pQ
-	HDAj2sS5zlACKFUS3vuWUqwcHy/Pirw2f88NsGnJYR7H0RLWPSY9G/qjBuA7oVxg
-	r7JUkZP6oRWhIYTIB6Dlxk0JYowYsovizQ5kDwCHxSzWKeHWGpUMjP2vryZbILNt
-	p4jOnHT3okmy53j8LtMoyl+sGDCmTjkISbe/J+tNphd93NjcoU2TBMXKYrYszQ5t
-	96fw3+VpQemov/UV82Yj085pC3Ts6ZG23ZZMYfL+KsMe2dJihm7aww+cvUEExwLZ
-	/JxeBw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gw1ragvt1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 13:45:10 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2dd7d0751efso8516515ad.0
-        for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 06:45:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790257510; cv=none;
-        d=google.com; s=arc-20260327;
-        b=RsnFZYRs3n7Oh7SwiTc32x48U2WR07EwqItSsmGYWs2zsCszMZE1YR5oWpn/oa1AnE
-         KY5uH6FOWpYUze7ZHQ5nvZpDy4lF2RM7w4r+D2Y1T4uAIredqEJanGUrrYtTYLuySvsz
-         0Sfui68kYVnhxY0SeFHt1/BRK7fRa+iRykNglYud8fVZH1Xhtj1Ke+9e8YECvs9un4v0
-         e/lllmzMEC+THNGT0MFA7l1n2dj0WdZO7q7hCdzNtpzK18mOl/7utyYqRBXim+t11Bm/
-         Cd+5v7W1SVMId4iotUeBVqIbbmzFdNYq4i50wYRoniAwyakQW0TZBNV7S6b00UWgItBJ
-         FCtA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=+92HIZiD8BjzLF20PEwnQGtt9JR2IY1fehiHqBhK2DE=;
-        fh=i4EbcSL75LqdLzyncqcNk0cTd+3VOqVBbOHwPTwU51c=;
-        b=XIX0z/LBh+QJw8izVkNja1kpClKgkkQ50FhXBiNje6WIGElaIUojlxR3DL23UDUG7B
-         lC9Z8QwVEqpxhEGZOATxJcdWgz0aeu8JtRi4Kl5+INjM9KuNx8AopGB5COsk8smd++bU
-         tPGcH+v+v5kBMUKL4Jk2hQLtTm6rR7rK1zZN7N6A8Kpa0jDYvuUMR6sBAXNYz8u1cjWj
-         0NDgcf/gML2Gr76YBQeRPcud7tNOn8FlhppXo3Kimqm6HqXTFFU6i7VYTlsoNQjXDkvr
-         BKR0alExlCZIQEAzNufhv9Qyvlv1isDKvT8Qk9HF4OQ3mJHM3Z8dbo5F2BegC08teWC/
-         qaMg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790257510; x=1790862310; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=+92HIZiD8BjzLF20PEwnQGtt9JR2IY1fehiHqBhK2DE=;
-        b=JY9ULeqQf4WDJl7hRLUPNcJW/pFXdxZq05HjylkR0v4cB/oh+4TbWjXYzaq/UGPsn8
-         6ZOGjC98a358NTSg/rg1PnsrnG18fIlOuiUK+yynLF0j6B+BIVyybcC0m+myaUt7aDyA
-         naHumX6LXOv+Y6JTnkwdC5I0TGlLZTKLV7NzNdO3INHB7c9BImob1eSfWMNG+4R2yKMp
-         AO3fManve1qDQod+2canUkb2NCuMhtXBTSuq+Epq843EOjMMSIfVLJiM7C0NLJWyffx+
-         tyzkurISrVmqBSqwUX59j8PwfHcUl8Jl2eNPp4r56dv27xKyEz9RcvVFgm6Y6gKwRx1v
-         pwLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790257510; x=1790862310;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+92HIZiD8BjzLF20PEwnQGtt9JR2IY1fehiHqBhK2DE=;
-        b=08C24i786/UaDGMsja+lsXn41F+5EmHaKUbCxKV5LpTCs1uJLttRPOpUtcNjiaT8FP
-         09P2uf09bPILhCgzgomhp+5CP/S0+rn5LHqVLjBf9AOYm+UL3upYMPpa/lqesHbqx7f/
-         kKURADwocEp54MJAS55KwgAd3vfcchHk75gpYDtOZoq8awIOxliown2eR4wEAOSV65yA
-         aFunZMCo/iCAVnWQF3HFz3xIFAwDg05/OnaRQqprcpfWwQ6a8rnRURycXFxOVblK4BOa
-         PAHNnAt4CZGDdKbwELpyi94tAwgGuxSiGgC4LDUzcZhuW2Gd41RmEl/xXhbZsZp2xv+2
-         uupQ==
-X-Forwarded-Encrypted: i=1; AKwUvByyg5YWb3e0BGGxM/U5JlIvCNPFc5DSwvTiO597so3a1OvVdKW/GEWuB8NX3CeUiS41cuSBGW7cVbc=@vger.kernel.org
-X-Gm-Message-State: AFuF++llB/KYjgMfutLW49WK2cb1GvLx/9JVV24KB1BYdaIt2c4RFPfw
-	aYoUdZVeOWeK36hLXCV2r7Qp5UZ8tXNVi5j+2enr7QVmvTHslkp6mbUacOWsv5wlhGfMEhmQomJ
-	fAf1NewFocM/X97TBxDYOVfkCfJITwHmUOHAET6GtUosaOc7wfJeglL61P1InnIuyLADEQ1JZaO
-	bgVE5LPMoiiZnUb4pJ0oqhj1EvQjWbhblgYBfxmw==
-X-Gm-Gg: AYBFou0U146Kb8GkyMCBMO9+BaC96vn3JhQ9dAIyxxQ5TqgIxi/r/1GALvv1Syx2+di
-	ldZpbxHGUVM3lKHxn3gpK8JRW06IYC0tUwEL+TMD6kLg/RU9lI+NsvRgJjIUFmEtm3wGg+GUtwt
-	+FYE2gVBsYZzKAEh6Ckg+nOJy2UfkpdyI7cfaXnbbFq4k4wLduN4ET+8z8cg==
-X-Received: by 2002:a17:902:e747:b0:2df:89ac:a9f3 with SMTP id d9443c01a7336-2df89acb234mr4396895ad.30.1790257509531;
-        Thu, 24 Sep 2026 06:45:09 -0700 (PDT)
-X-Received: by 2002:a17:902:e747:b0:2df:89ac:a9f3 with SMTP id
- d9443c01a7336-2df89acb234mr4396605ad.30.1790257508990; Thu, 24 Sep 2026
- 06:45:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="I+JPTYYW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=S2WPD3ITwbdyZ1e5T3S7M1+693weYcIeDdcI5zKxz03eKL30wqbTiA8+jFwmrvXW3DoDqnR0zS+wopmV4o/ThNvRQHHXizT+5ImHGrr6SbNddgm9Ofuuldax93FN7sLyaSfFGL8vdF9de4LWyIYfQ/1YVw584CkU7qJsH2XsvqTYrbAcE/NyAXCvB0Z3aM/Is66PTgowBgjOHkUl4VJMUnTYQJeHeIbwDkzetqJ2VcGj9BSCGoD//QJm1uAuOitoiYLpfI/rE6MueefuogOyZS0uF8FMHNl/8CrWmb7H75h4vKVroTetuFQPJGY/WO+xTiFfcHv17hplb7TwJGGgiA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fEDEmuHVDi4mDjvNOMvvfTsr46Unp6jhfmWw4AFP16A=;
+ b=TkroUBbq3icEeiwIuv/2c2zK9d5g1vCfc6CVB42lMcXYN7Z8bFih4ALbPEZ1XFiJe1wYY2P2WgxMwGPe767M+nOCL/0EmDwyVfP0ccvrFVeGpcjtyjDVjnZD8PoSCXRDVT3HdeuoSxCO6ABukP2qOyFGdmuIxJK7ixVAUb7BRXb8l77TV0epd8f3fz5SMSYgJY1YzLWMtBBiWe8GCiAOIEX3iTNsxppxdtT0MzyXWWze6lnREnid7UrgzF3b5IMOHoVmmTXGXmcRxS0WuYJ6jWG94DnTz7U/SJiW82fFmJWnYIHh9zv6mCRZtPgGqNcjZhxK7oJ9FfkvwxIThGh6Qg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fEDEmuHVDi4mDjvNOMvvfTsr46Unp6jhfmWw4AFP16A=;
+ b=I+JPTYYWU8fjLQFGU1V7vc9jBoYNDaucoGYZNqnm1JHM0mLlznqMD/75TbgJRL2iRFXzTdb5lGm1Ac/y/vzc9fJL8jeBweGbFNt02t/8jG/gPbjlKRDNqbLS6P/pHesBQWXZtZeUaJ5MkCGsAfTu7ao1cyp3Vd2zw24LdsmwBe2XLlX6YEDtbz07SU/zuCZTcfs30YZVHaOMydBz58EM60Yanwounh4CqX45KXNv505Q46iV7TeFU02lbLw/jRbk7adpZm7ASu017Y0HRw18Pa39laa/naFlOt4yYzRqEuFzer8o16h01MOg8JxWSuFM97mM5ZoK0ibazo0myC9jvA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by MI7PR04MB897750.eurprd04.prod.outlook.com (2603:10a6:290:102::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
+ 2026 14:37:25 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
+ 14:37:25 +0000
+Date: Thu, 24 Sep 2026 09:37:18 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v6 02/23] dmaengine: ste_dma40: Fix cyclic transfer
+ residue
+Message-ID: <arU1nsEFPn43Madb@SMW015318>
+References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
+ <20260924-dma40-fixes-v6-2-fdb6755020a2@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260924-dma40-fixes-v6-2-fdb6755020a2@kernel.org>
+X-ClientProxiedBy: CYXPR03CA0096.namprd03.prod.outlook.com
+ (2603:10b6:930:d3::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org> <20260921-ux500-power-domains-v7-1-v3-12-9352be6b86b1@kernel.org>
-In-Reply-To: <20260921-ux500-power-domains-v7-1-v3-12-9352be6b86b1@kernel.org>
-From: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
-Date: Thu, 24 Sep 2026 15:44:57 +0200
-X-Gm-Features: AclHuK8823By2ir4rvAhJl6ftcMi5z7VMEo6jrXMBPTc2AtobSCQW7MLn1qCZ9I
-Message-ID: <CAPx+jO-3aZXatF+zL=G_cG0QaSjjCPrdhpXOGZC+_zNYxjsP1w@mail.gmail.com>
-Subject: Re: [PATCH v3 12/18] pmdomain: st: ux500: Control DB8500 EPODs
-To: Linus Walleij <linusw@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-        Lee Jones <lee@kernel.org>, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, dmaengine@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfX/w3Zoykt9AoD
- GS3yjmPm0u4tatVL4dLixpW0Hxl2TfrFagFgsCc2cSKDhT8vzsHJsVm6+p5St+eGPpZ1hgbeZte
- vv2xLB879p4w7qvaTbpyi1SpEpG2Y5a0TuRHS2SlOD0Y2c73mrxyfLTJdg+4g06fTtNyi9i9yt/
- AKZmhwu+GKkhh279b35uqvGI8IX4A4xsH2v2To/cNVnBV6oULk2B12ATNZurLlTNOpi52zTwZQz
- 11mKA1O8z2ZKd2JbYYaaNxpKDR8mMfvw4Dnr3YH98HtykY1YBBq9Zy3dSdFfz0L5yTKnYYCUBAt
- jQJ3W1sAl5JBVdUk+PGsduf8G4hcbQ5T22TlHGMJHnNKkLryw5cXBwyhvlf2wVNUWmNDJ0/kniC
- Oo0yqqEnBWxBLkLzDKt2lIXXL+fJ1IpQvd48cLdlsiB05FYAmYZ6LUptvTVOVEPoLlDvEuGUVng
- tLp+snhgjDCAtxVLJ7Q==
-X-Proofpoint-ORIG-GUID: EKcPyWjB8oyf3PSTxnn9bpgW63uZGXa9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA1NiBTYWx0ZWRfXxepNBfaAgwgh
- Cb84VyP2y2ZJx586fdPyCEESGgMeHc/j/UGmkPmla1U+pXFpXU8t3NHROkgsdDvLHOoCJzGD87I
- EQfkx4sr7ihRarN9CL24xpku0OlxrMY=
-X-Authority-Analysis: v=2.4 cv=fvpJ914f c=1 sm=1 tr=0 ts=6ab52966 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=VwQbUJbxAAAA:8 a=-O4hDVTBhx9-GJANRbkA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-GUID: EKcPyWjB8oyf3PSTxnn9bpgW63uZGXa9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 impostorscore=0
- adultscore=0 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609240056
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MI7PR04MB897750:EE_
+X-MS-Office365-Filtering-Correlation-Id: 41305d0d-f96c-49f2-3e77-08df1a495994
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|366016|23010399003|1800799024|376014|56012099006|6133799003|10067099003|11063799006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	S1B8WhAoPUnhnP3F6Tjxf4ivSim2mJ7m02gBYe+Tq2dqYUPbOxaTp+IDrVkt8KgGT9dSb7RnnAy5WZ1KsK1/1j4ZXrTvL8PpjRhmJHagxrznYwutV/x4hyvGTAp2godthx5KW1O4z/cfDrIpYj3DlR8DwmfpAbeOzsSnD/6OgNZYbI3B1p7xQUCsh+eyrts8mpLoTP5RXJ35DXrZ81z2lXyyQx3zU7X3iJ6XKUf6gYz2P5/X5jGGLInsCFcwwPBW0Mr7BQwgxruFTyUXeEGN3rC++cJt5CzDPMXMJDUlVlGtIX/Cl1/1Zw+kdgsf1B1pNwD2gbdWGheVHlOYtdNghnatpJEqmMzssDXbCar6Nh0YQEyS9TECEIB0Z9tkzwmUGizNufDWPBpKPTTPjbmiJcoUWYcpAdatheA271J4fdBaB4FBNT/8B7vfV9byfC1W43721XkJDCNmL4twiXwMCHGjOJplpIOoPSklY2OJKFagXiu+WCI/TL5jDjsV/TNznHqEC6zrPK/5qPTTZVjDVa+8rTb3mKrHTS9eSsCgRwNhiJi/GM1WOwQCueVs32VQ5puXGj+xSrJBUK6onVKH6RZ4RYyio14WPR+C9TT4hiZK1iQglAT+9scIC8a5iSkzREuBIZ8rOESu2GF8/HRTZdqnH0wuHgiInVw6Gvb5UsU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(1800799024)(376014)(56012099006)(6133799003)(10067099003)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Lg8WIJX6GaDiNETUhxd2GV1GKOf+1KRe3/fl3qxUM3HclzlWRByFRNVaGjuH?=
+ =?us-ascii?Q?KCSUUA38afXZDVN5e0aQUOu/uARElrwPfQ2dMWCFEuHAC2VW4nGVsYjrvmmb?=
+ =?us-ascii?Q?Ur0MB+j1xg6fuC6mhj+MF4aBngBU8pryw9EMc1G1KEcI9zCkIZL+MMO1rws3?=
+ =?us-ascii?Q?/+W2i2AR0b8Y/bShMjHo5fAvNXTjJ8XK8Ky+GUO2QhqmZKNHt3QjTv3KlWlq?=
+ =?us-ascii?Q?YVJC0lItin3uSNQ4/vkwUkOIHImcrZnQpGP3Y105SMiVBwXnQ/WxqJ4UXg+6?=
+ =?us-ascii?Q?fRkNYAyjZ1Z5qSqoHY6OOGlOqN2Rp6XPfYdVVwwrNrU2Yhil23txIYwoDXH6?=
+ =?us-ascii?Q?vv0qDODgBqzu2sUhKjACNLvrPR9+xmCNMx/qlrFJ+OP2b+GWVGbV4mBIAsU+?=
+ =?us-ascii?Q?TJjqhVb3MwHggkG7UuEfQcM7SqIEJStN9drdIakSUC5tl3C49jEZ7sXbZHqh?=
+ =?us-ascii?Q?+0dgWKK5Q8PvEpXgHE14DGtlcxD0Bp/kv/9VBcgAiFhW4nlzHDyvcySSF2Xt?=
+ =?us-ascii?Q?mZcIumYy+TW+OgWxANVUfw8LrT6nKGqguznmiN8yck0M0o6tVL8Mpdqe6cvC?=
+ =?us-ascii?Q?zMTP0NGSNHl5jXXgCAAm15Smm1ODzEfHBoJ/8I7nAHA52Ok3FPlAgR8MlScf?=
+ =?us-ascii?Q?OsE7e40sxy7LIw7ZSb4KUledubrkSxrmpYWSBN6imi2eO5UjUr17Y3TN/NQr?=
+ =?us-ascii?Q?YlfzhDd7Se+0mRRMYj4X2XMFTK+tX8T7Mmc3m5GskFn36LPA/l/8WMULRH9N?=
+ =?us-ascii?Q?ftdzHDIqc33yUwx3k7dm/SZWvJR0BpS4sdU08uIwAfy127gUT/ii0Mx6Uz7h?=
+ =?us-ascii?Q?8LfAtqBk687/AOMm/XKLjD6bz9EqnoioS/j3b2rxcmC0JBDfIRqyyMqAozz2?=
+ =?us-ascii?Q?oTnSYHNvX46e+3A+jvt+JFcL9phdcRyWgJuP15rKqNZUxo4scArPj25WE2+o?=
+ =?us-ascii?Q?SOabTYcVgE3MiZ4JS2LXGfSPHsBTdnkWf2FxMxwPyWlF+njNf1BnDubrubYS?=
+ =?us-ascii?Q?iMVNr5wJqHIHJUQw9o9BegmEmH/s2yJ9jDR26lnvYnDkJm3j5xkkIv/ippPg?=
+ =?us-ascii?Q?bj6mMl/2Z3aPU/5yWIatbKssfFF/ABV5YuNutAvhqslVdpZ3eelQCe1wq9sP?=
+ =?us-ascii?Q?+1lhwUZM0dqjjZ5zA4tHmpBYS7n19aJXoO1a4WnebKa1QQ5Q4xvsduvEBh6k?=
+ =?us-ascii?Q?BVqx2bwpiFuBOOu2eYAF3/5r33JXRkRtiUl7w/Afl7HXAKVIhIOyrlDbGy7I?=
+ =?us-ascii?Q?rmH06qg7H+9/xNEh6HWoa4E1TXux9xxmfgf/vtpfAxuQ0zBY3K2ZVkoGw58m?=
+ =?us-ascii?Q?A3ICXGq6ccF/InpTtvu0uoXErmdOWAhQh2zgdspXv0196pY8MWefhbl6XQ6J?=
+ =?us-ascii?Q?wxS9MS55cRh/2TSsUttWEetPvfW7SWqkGr8sWvBWaElgKoPrrGtSYV9JbrjF?=
+ =?us-ascii?Q?LGZflAvNM0CXBUTcOEft982yX1oQfQWXis8EhdNdW5YEXuRzGs2Qo5lU91Pq?=
+ =?us-ascii?Q?T5UbUg/abOXmXblJ/Kl3N5yNEFarWwUZVeR9TpbXeQIVvmlEcX6hZDc8XQ2M?=
+ =?us-ascii?Q?WMxTOmljg10V7en9PdrsXv0K9RbsqYJId4H6yapqofuUq9i+5vkcar4EQrBe?=
+ =?us-ascii?Q?ElYVV+wwLFtM8Wg3bxxn4NGhmodDOa4vW5+bU6YZ2PKRUsZjkLQ4IQyHRoZQ?=
+ =?us-ascii?Q?MxpQGda2jz0KfUtGUT05i09oh2EN1i9+fp4+iPtbb1bPl/Hg4SuhoPU37G8W?=
+ =?us-ascii?Q?uosKLDrHotuAU+fhobGg43nL6FESRyYKDjLp7JXxF2PNbPoyh/UI?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41305d0d-f96c-49f2-3e77-08df1a495994
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:37:25.0658
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PA+46JnWurQnirlKK7uJqNi9qP1TTkI7KMbpR8sPCfwtvyr9j4g2Muwl5SZbTpXiQlXMlG62VOn4KTyxfeNamUll2JhiW8wdA4kHGmmUd78KqVdRsqRgMaZilRMsvDo8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI7PR04MB897750
 
-On Mon, Sep 21, 2026 at 12:49=E2=80=AFAM Linus Walleij <linusw@kernel.org> =
-wrote:
+On Thu, Sep 24, 2026 at 10:35:14AM +0200, Linus Walleij wrote:
+> DMA40 reads residue from the element count of the currently active LLI.
+> For a cyclic transfer this reports at most one period, not the bytes
+> remaining until the cyclic buffer wraps.
 >
-> Move the DB8500 EPOD state handling into the Ux500 power-domain driver.
+> Once DMA40 advertises burst granularity, DMAengine PCM uses this residue
+> directly. For a four-period PCM buffer it consequently reports the
+> hardware pointer near three periods after every period interrupt. ALSA
+> eventually stops playback with -EIO although DMA period callbacks
+> continue.
 >
-> Keep the old regulator driver mutually exclusive with the pmdomain driver=
-.
+> Calculate cyclic residue from the current memory-side hardware pointer
+> instead. Read the destination pointer for capture and the source pointer
+> for playback. Sample the split logical channel pointer coherently and
+> retain the last valid residue during relink transitions.
 >
+> Make at most three residue sampling attempts: one initial read plus two
+> retries. The retries let transient split-register updates or LLI relink
+> windows settle, while the limit prevents unbounded polling if hardware does
+> not yield a valid pointer.
+>
+> This avoids counting terminal-count interrupts, which races with hardware
+> advancing to the next LLI and cannot account for coalesced interrupt
+> status. Also reject cyclic periods that expand into multiple LLIs because
+> logical cyclic LLIs each request a terminal-count interrupt and would
+> generate more than one callback per period.
+>
+> Reject invalid cyclic geometries before dividing or constructing the
+> scatterlist as well.
+>
+> Reported-by: Frank Li <Frank.li@oss.nxp.com>
+> Closes: https://lore.kernel.org/dmaengine/aq2wIPJW6viUxyy9@SMW015318/
+> Fixes: 15c606686541 ("dmaengine: ste_dma40: indicate granularity on channels")
 > Assisted-by: LLM
 > Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
->  arch/arm/mach-ux500/Kconfig               |   2 +-
->  drivers/pmdomain/st/ste-ux500-pm-domain.c | 355 +++++++++++++++++++++---=
-------
->  drivers/regulator/Kconfig                 |   1 +
->  3 files changed, 254 insertions(+), 104 deletions(-)
->
-> diff --git a/arch/arm/mach-ux500/Kconfig b/arch/arm/mach-ux500/Kconfig
-> index c18def269137..56636c993f49 100644
-> --- a/arch/arm/mach-ux500/Kconfig
-> +++ b/arch/arm/mach-ux500/Kconfig
-> @@ -26,7 +26,7 @@ menuconfig ARCH_U8500
->         select PL310_ERRATA_753970 if CACHE_L2X0
->         select PM_GENERIC_DOMAINS if PM
->         select REGULATOR
-> -       select REGULATOR_DB8500_PRCMU
-> +       select UX500_PM_DOMAIN
->         select REGULATOR_FIXED_VOLTAGE
->         select SOC_BUS
->         select RESET_CONTROLLER
-> diff --git a/drivers/pmdomain/st/ste-ux500-pm-domain.c b/drivers/pmdomain=
-/st/ste-ux500-pm-domain.c
-> index d90a563cd6f3..b31a36a4acd1 100644
-> --- a/drivers/pmdomain/st/ste-ux500-pm-domain.c
-> +++ b/drivers/pmdomain/st/ste-ux500-pm-domain.c
-> @@ -6,174 +6,292 @@
->   *
->   * Implements PM domains using the generic PM domain for ux500.
->   */
-> +#include <linux/cleanup.h>
->  #include <linux/device.h>
-> -#include <linux/kernel.h>
-> -#include <linux/platform_device.h>
-> -#include <linux/printk.h>
-> -#include <linux/slab.h>
->  #include <linux/err.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mfd/db8500-prcmu.h>
-> +#include <linux/mutex.h>
->  #include <linux/of.h>
-> +#include <linux/platform_device.h>
->  #include <linux/pm_domain.h>
-> +#include <linux/slab.h>
->
->  #include <dt-bindings/arm/ux500_pm_domains.h>
->
->  #define NR_DOMAINS             (DOMAIN_ESRAM_34 + 1)
-> +#define UX500_EPOD_NONE                NUM_EPOD_ID
->
-> -static int pd_power_off(struct generic_pm_domain *domain)
-> +/**
-> + * struct dbx500_powerdomain_info - dbx500 power domain information
-> + * @genpd: generic power domain
-> + * @epod_id: id for EPOD (power domain)
-> + * @is_ramret: RAM retention switch for EPOD (power domain)
-> + */
-> +struct dbx500_powerdomain_info {
-> +       struct generic_pm_domain genpd;
-> +       u16 epod_id;
-> +       bool is_ramret;
 
-This one is unused for the defined power domains. Is the plan to add
-support for this on top, later on?
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-> +};
+>  drivers/dma/ste_dma40.c | 106 +++++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 101 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index e4d689c9eba8..eab9c09b4bfe 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
+> @@ -65,6 +65,9 @@ struct stedma40_platform_data {
+>  /* Maximum iterations taken before giving up suspending a channel */
+>  #define D40_SUSPEND_MAX_IT 500
+>
+> +/* Maximum attempts to sample a stable cyclic residue position */
+> +#define D40_RESIDUE_MAX_ATTEMPTS 3
 > +
-> +static DEFINE_MUTEX(ux500_pd_lock);
-> +static bool epod_on[NUM_EPOD_ID];
-> +static bool epod_ramret[NUM_EPOD_ID];
-> +
-> +static int enable_epod(u16 epod_id, bool ramret)
->  {
-> -       /*
-> -        * Handle the gating of the PM domain regulator here.
-> -        *
-> -        * Drivers/subsystems handling devices in the PM domain needs to =
-perform
-> -        * register context save/restore from their respective runtime PM
-> -        * callbacks, to be able to enable PM domain gating/ungating.
-> -        */
-> +       int ret;
-> +
-> +       if (ramret) {
-> +               if (!epod_on[epod_id]) {
-> +                       ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE=
-_RAMRET);
-> +                       if (ret < 0)
-> +                               return ret;
-> +               }
-> +               epod_ramret[epod_id] =3D true;
-> +       } else {
-> +               ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE_ON);
-> +               if (ret < 0)
-> +                       return ret;
-> +               epod_on[epod_id] =3D true;
-> +       }
-> +
->         return 0;
+>  /* Milliseconds */
+>  #define DMA40_AUTOSUSPEND_DELAY	100
+>
+> @@ -378,6 +381,9 @@ struct d40_lli_pool {
+>   * @lli_len: Number of llis of current descriptor.
+>   * @lli_current: Number of transferred llis.
+>   * @lcla_alloc: Number of LCLA entries allocated.
+> + * @cyclic_dma_addr: Start address of the cyclic buffer.
+> + * @cyclic_buf_len: Length of the cyclic buffer.
+> + * @cyclic_residue: Last valid cyclic residue sample.
+>   * @txd: DMA engine struct. Used for among other things for communication
+>   * during a transfer.
+>   * @node: List entry.
+> @@ -396,6 +402,9 @@ struct d40_desc {
+>  	int				 lli_len;
+>  	int				 lli_current;
+>  	int				 lcla_alloc;
+> +	dma_addr_t			 cyclic_dma_addr;
+> +	size_t				 cyclic_buf_len;
+> +	size_t				 cyclic_residue;
+>
+>  	struct dma_async_tx_descriptor	 txd;
+>  	struct list_head		 node;
+> @@ -1420,6 +1429,64 @@ static u32 d40_residue(struct d40_chan *d40c)
+>  	return num_elt * d40c->dma_cfg.dst_info.data_width;
 >  }
 >
-> -static int pd_power_on(struct generic_pm_domain *domain)
-> +static int disable_epod(u16 epod_id, bool ramret)
+> +static bool d40_current_addr(struct d40_chan *d40c, dma_addr_t *addr)
+> +{
+> +	bool dst = d40c->dma_cfg.dir == DMA_DEV_TO_MEM;
+> +	void __iomem *high_reg;
+> +	void __iomem *low_reg;
+> +	u32 low;
+> +	u32 high;
+> +	u32 check;
+> +	int i;
+> +
+> +	if (chan_is_physical(d40c)) {
+> +		*addr = readl(chan_base(d40c) +
+> +			      (dst ? D40_CHAN_REG_SDPTR : D40_CHAN_REG_SSPTR));
+> +		return true;
+> +	}
+> +
+> +	if (dst) {
+> +		low_reg = &d40c->lcpa->lcsp2;
+> +		high_reg = &d40c->lcpa->lcsp3;
+> +	} else {
+> +		low_reg = &d40c->lcpa->lcsp0;
+> +		high_reg = &d40c->lcpa->lcsp1;
+> +	}
+> +
+> +	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
+> +		high = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
+> +		low = readl(low_reg) & D40_MEM_LCSP0_SPTR_MASK;
+> +		check = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
+> +		if (high == check) {
+> +			*addr = low | high;
+> +			return true;
+> +		}
+> +	}
+> +
+> +	return false;
+> +}
+> +
+> +static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
+> +			      size_t *offset)
+> +{
+> +	dma_addr_t current_addr;
+> +	dma_addr_t current_offset;
+> +	int i;
+> +
+> +	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
+> +		if (!d40_current_addr(d40c, &current_addr))
+> +			continue;
+> +
+> +		current_offset = current_addr - d40d->cyclic_dma_addr;
+> +		if (current_offset <= d40d->cyclic_buf_len) {
+> +			*offset = current_offset;
+> +			return true;
+> +		}
+> +	}
+> +
+> +	return false;
+> +}
+> +
+>  static bool d40_tx_is_linked(struct d40_chan *d40c)
 >  {
-> -       /*
-> -        * Handle the ungating of the PM domain regulator here.
-> -        *
-> -        * Drivers/subsystems handling devices in the PM domain needs to =
-perform
-> -        * register context save/restore from their respective runtime PM
-> -        * callbacks, to be able to enable PM domain gating/ungating.
-> -        */
-> +       int ret;
-> +
-> +       if (ramret) {
-> +               if (!epod_on[epod_id]) {
-> +                       ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE=
-_OFF);
-> +                       if (ret < 0)
-> +                               return ret;
-> +               }
-> +               epod_ramret[epod_id] =3D false;
-> +       } else {
-> +               if (epod_ramret[epod_id]) {
-> +                       ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE=
-_RAMRET);
-> +                       if (ret < 0)
-> +                               return ret;
-> +               } else {
-> +                       ret =3D db8500_prcmu_set_epod(epod_id, EPOD_STATE=
-_OFF);
-> +                       if (ret < 0)
-> +                               return ret;
-> +               }
-> +               epod_on[epod_id] =3D false;
-> +       }
-> +
->         return 0;
+>  	bool is_link;
+> @@ -2108,15 +2175,26 @@ static bool d40_is_paused(struct d40_chan *d40c)
+>
 >  }
 >
-> +
-> +static int pd_power_off(struct generic_pm_domain *domain)
-> +{
-> +       struct dbx500_powerdomain_info *info =3D
-> +               container_of(domain, struct dbx500_powerdomain_info, genp=
-d);
-> +       int ret =3D 0;
-> +
-> +       guard(mutex)(&ux500_pd_lock);
-> +       if (info->epod_id < NUM_EPOD_ID)
-> +               ret =3D disable_epod(info->epod_id, info->is_ramret);
-> +
-> +       return ret;
-> +}
-> +
-> +static int pd_power_on(struct generic_pm_domain *domain)
-> +{
-> +       struct dbx500_powerdomain_info *info =3D
-> +               container_of(domain, struct dbx500_powerdomain_info, genp=
-d);
-> +       int ret =3D 0;
-> +
-> +       guard(mutex)(&ux500_pd_lock);
-> +       if (info->epod_id < NUM_EPOD_ID)
-> +               ret =3D enable_epod(info->epod_id, info->is_ramret);
-> +
-> +       return ret;
-> +}
-> +
->  /*
->   * Apart from these voltage domains there is also VSAFE which is always
->   * on. Vape_esram0_pwr for eSRAM0 is connected to VSAFE.
->   */
-> -static struct generic_pm_domain ux500_pm_domain_vape =3D {
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vape =3D {
->         /* Vape_pwr */
-> -       .name =3D "VAPE",  /* 0.95 .. 1.20 V */
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +       .genpd =3D {
-> +               .name =3D "VAPE",  /* 0.95 .. 1.20 V */
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
-
-Several power domains below share this epod_id. What does that really
-mean? Or is this only temporary?
-
->  };
+> -static u32 stedma40_residue(struct dma_chan *chan)
+> +static u32 stedma40_residue(struct dma_chan *chan, dma_cookie_t cookie)
+>  {
+>  	struct d40_chan *d40c =
+>  		container_of(chan, struct d40_chan, chan);
+> +	struct d40_desc *d40d;
+> +	size_t offset;
+>  	u32 bytes_left;
+>  	unsigned long flags;
 >
-> -static struct generic_pm_domain ux500_pm_domain_varm =3D {
-> -       .name =3D "VARM",
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_varm =3D {
-> +       .genpd =3D {
-> +               .name =3D "VARM",
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+>  	spin_lock_irqsave(&d40c->lock, flags);
+> -	bytes_left = d40_residue(d40c);
+> +	d40d = d40_first_active_get(d40c);
+> +	if (d40d && d40d->txd.cookie == cookie && d40d->cyclic &&
+> +	    d40d->cyclic_buf_len) {
+> +		if (d40_cyclic_offset(d40c, d40d, &offset))
+> +			d40d->cyclic_residue = d40d->cyclic_buf_len - offset;
+> +		bytes_left = d40d->cyclic_residue;
+> +	} else {
+> +		bytes_left = d40_residue(d40c);
+> +	}
+> +
+>  	spin_unlock_irqrestore(&d40c->lock, flags);
 >
-> -static struct generic_pm_domain ux500_pm_domain_vmodem =3D {
-> -       .name =3D "VMODEM",
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vmodem =3D {
-> +       .genpd =3D {
-> +               .name =3D "VMODEM",
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+>  	return bytes_left;
+> @@ -2246,8 +2324,13 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
+>  	if (desc == NULL)
+>  		goto unlock;
 >
-> -static struct generic_pm_domain ux500_pm_domain_vpll =3D {
-> -       .name =3D "VPLL", /* 1.8 V */
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vpll =3D {
-> +       .genpd =3D {
-> +               .name =3D "VPLL", /* 1.8 V */
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+> -	if (sg_next(&sg_src[sg_len - 1]) == sg_src)
+> +	if (sg_next(&sg_src[sg_len - 1]) == sg_src) {
+>  		desc->cyclic = true;
+> +		if (desc->lli_len != sg_len) {
+> +			chan_err(chan, "Cyclic periods must fit in one LLI\n");
+> +			goto free_desc;
+> +		}
+> +	}
 >
->  /*
->   * CHECKME: as these are used directly by peripherals as regulators,
->   * perhaps they should stay in the regulator subsystem?
->   */
-> -static struct generic_pm_domain ux500_pm_domain_vsmps1 =3D {
-> -       .name =3D "VSMPS1", /* Also called VIO (1.2V) */
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vsmps1 =3D {
-> +       .genpd =3D {
-> +               .name =3D "VSMPS1", /* Also called VIO (1.2V) */
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+>  	src_dev_addr = 0;
+>  	dst_dev_addr = 0;
+> @@ -2524,11 +2607,18 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
+>  		     size_t buf_len, size_t period_len,
+>  		     enum dma_transfer_direction direction, unsigned long flags)
+>  {
+> -	unsigned int periods = buf_len / period_len;
+> +	unsigned int periods;
+>  	struct dma_async_tx_descriptor *txd;
+> +	struct d40_desc *desc;
+>  	struct scatterlist *sg;
+> +	dma_addr_t buf_addr = dma_addr;
+>  	int i;
 >
-> -static struct generic_pm_domain ux500_pm_domain_vsmps2 =3D {
-> -       .name =3D "VSMPS2", /* Also called VIO (1.8V) */
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vsmps2 =3D {
-> +       .genpd =3D {
-> +               .name =3D "VSMPS2", /* Also called VIO (1.8V) */
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+> +	if (!buf_len || !period_len || buf_len % period_len)
+> +		return NULL;
+> +
+> +	periods = buf_len / period_len;
+> +
+>  	sg = kzalloc_objs(struct scatterlist, periods + 1, GFP_NOWAIT);
+>  	if (!sg)
+>  		return NULL;
+> @@ -2543,6 +2633,12 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
 >
-> -static struct generic_pm_domain ux500_pm_domain_vsmps3 =3D {
-> -       .name =3D "VSMPS3",
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vsmps3 =3D {
-> +       .genpd =3D {
-> +               .name =3D "VSMPS3",
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
+>  	txd = d40_prep_sg(chan, sg, sg, periods, direction,
+>  			  DMA_PREP_INTERRUPT);
+> +	if (txd) {
+> +		desc = container_of(txd, struct d40_desc, txd);
+> +		desc->cyclic_dma_addr = buf_addr;
+> +		desc->cyclic_buf_len = buf_len;
+> +		desc->cyclic_residue = buf_len;
+> +	}
 >
-> -static struct generic_pm_domain ux500_pm_domain_vrf1 =3D {
-> -       .name =3D "VRF1",
-> -       .power_off =3D pd_power_off,
-> -       .power_on =3D pd_power_on,
-> +static struct dbx500_powerdomain_info ux500_pm_domain_vrf1 =3D {
-> +       .genpd =3D {
-> +               .name =3D "VRF1",
-> +               .power_off =3D pd_power_off,
-> +               .power_on =3D pd_power_on,
-> +       },
-> +       .epod_id =3D UX500_EPOD_NONE,
->  };
-
-[...]
-
-Kind regards
-Uffe
+>  	kfree(sg);
+>
+> @@ -2563,7 +2659,7 @@ static enum dma_status d40_tx_status(struct dma_chan *chan,
+>
+>  	ret = dma_cookie_status(chan, cookie, txstate);
+>  	if (ret != DMA_COMPLETE && txstate)
+> -		dma_set_residue(txstate, stedma40_residue(chan));
+> +		dma_set_residue(txstate, stedma40_residue(chan, cookie));
+>
+>  	if (d40_is_paused(d40c))
+>  		ret = DMA_PAUSED;
+>
+> --
+> 2.55.0
+>
