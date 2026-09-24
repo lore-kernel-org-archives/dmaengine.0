@@ -1,161 +1,162 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out30-131.freemail.mail.aliyun.com (out30-131.freemail.mail.aliyun.com [115.124.30.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E78D253B58
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 03:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44313DEFF1
+	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 03:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790219909; cv=none; b=MU4Xun0HAUuS1XOuymD/dfMvyl1FUAH+0iezqwCc6vaMCUo3GJAFgQNB0bkJG2GOp0PZlfMI0Y3J3ugU2Z0iASfavZf0J9HmiBUVFBC1Dj46z9AhVtUfq7WcWwNupi6skwi75ufuuW/daPy7dNLKewrKjpr2HU9p6nvVOnVV7Eg=
+	t=1790221705; cv=none; b=B0p6mACe9VA7sbFMntMMNN+0os1slWfh4SRL+xFHVK+587tdCbGQkDrKqfrbTdBmvyNIiVrjEABETyMiXVeGKNS7EGp0Ht65mMDDTtLZcTtOCcWLOilnYfnB+mLmlNpm47L4MjCaQwJ10CgAbutEwU3yHSFHzrpKOSDMFQBpIC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790219909; c=relaxed/simple;
-	bh=c5x1RFIWJwTTlqO0Q/agufrszpy5fDr6F1CPlfmrsH0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gYynsk97H4K5wJzVSasXJV0+7AYXVMW7IIepS039g4CUXoxVRue0r6VobgmniOa1jKolV4d1/wmIZO9yVO/uvZpti2vn3DVne/pbEXRlw9kuveZP9uYpxfxox8nrs3Mw8nVgXdb43CcqtpujZlJd72ali2dc+wkR3SXigtLBhsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VG6b6ESr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790221705; c=relaxed/simple;
+	bh=RByC2KcCzKhQRQq1B560KSPnrjr0BWu/OeFuIe4raPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=MqrQfCz7A0IGqzKz49Gr/R6Swc85Uy9WPRAP46GOJNNL7QV2buC/lvgoUDh1La7TwuWpNhFlWlA0Sf4sJGJ4pk+jg5GOoERnS2okzA3crPCXdwHYSqCNEjkiRe+owbfBWc0qYt+AZbxOqiCyL/LROxdxP+/Y5oKGlUQbZePrPGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=DShuNxFQ; arc=none smtp.client-ip=115.124.30.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VG6b6ESr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6351F000FF;
-	Thu, 24 Sep 2026 03:18:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790219908;
-	bh=YD9UOSG4qEyZZwUdU/UfOpZOYAprl1jKrafjV4Q1TH4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VG6b6ESr4g176ao5NF/iKDhJAbEDMOIhyIzU9pf2WSrGnwxt4nWhh/TTycfnvM4a0
-	 1cxo5pN7+BCkCzt7vaf8bQNnXckpaJVwab4HsoyaW5zub4G9GUR33YKrmm1s7Pnk5+
-	 pIowO7Fyr8xPwsBpEP48f7tm243aA52j76opAsibj8L0xsXt0FoLSjDEWxJyBimLUS
-	 mFvf+2Is8DoVPK71CSF60DZv+zu5RUPOPLrquid7MjlkaOKMW+86MJTDktTiQuq4G8
-	 XgryBZ1twaXWcUG6q+DQ//ndJWRbQ7a9NfXQtA3fl1Ix5mMhHoKIz8E281ZI+uGsAF
-	 SOFbcQlTXEdow==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5] dmaengine: dw-axi-dmac: report paused state and
- residue in tx_status
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rui Wang" <wr574332525@163.com>
-Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
-In-Reply-To: <20260924025739.844-1-wr574332525@163.com>
-References: <20260924025739.844-1-wr574332525@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 24 Sep 2026 03:18:27 +0000
-Message-Id: <20260924031827.DC6351F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="DShuNxFQ"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1790221691; h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type;
+	bh=JkWkow8Jgt3ftkp3L7onfdgYR223Z1puDT1IK+zUdcQ=;
+	b=DShuNxFQ0yB2JZZRagu7rR5aOBrgWj6vO0ElGN3zFoMDGTz+3m0pTSruOJrZUWGktpYnV/VxUK0AxFY8z9aMR3WmCHVXVAO9voG0ZLeEvpw7hcp5jYqpR5iuCD6Cw8jF0lFD1BCI2U4TowKSuhc+uMM84fqWET4GuBtK0esnEDY=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R221e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0XBYWXGR_1790221690;
+Received: from 30.178.84.73(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XBYWXGR_1790221690 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Thu, 24 Sep 2026 11:48:11 +0800
+Message-ID: <a8548bef-3a6e-4faf-975b-aba5fda89634@linux.alibaba.com>
+Date: Thu, 24 Sep 2026 11:48:08 +0800
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: idxd: Fix use-after-free of idxd_wq
+From: Guixin Liu <kanie@linux.alibaba.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org, Xunlei Pang <xlpang@linux.alibaba.com>,
+ oliver.yang@linux.alibaba.com,
+ Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+ Frank Li <Frank.Li@kernel.org>, Dave Jiang <dave.jiang@intel.com>
+References: <20260415095030.42183-1-kanie@linux.alibaba.com>
+In-Reply-To: <20260415095030.42183-1-kanie@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] dmaengine: dw-axi-dmac: stale hardware pointer race on buffer reuse
-- [Medium] dmaengine: dw-axi-dmac: incorrect residue for overlapping SG reg=
-ions
---
+Hi Vinod, could you please apply this patch? 
+This patch was from a long time ago.
 
-commit 51268a3a8963bcf17968d0065986bd47e9b6a2a8
-Author: Rui Wang <wr574332525@163.com>
-dmaengine: dw-axi-dmac: report paused state and residue in tx_status
+Best Regards,
+Guixin Liu
 
-The driver implements device_pause/device_resume, but device_tx_status
-keeps reporting DMA_IN_PROGRESS for a paused channel. This commit updates
-the reporting to handle paused state and calculates actual byte residue.
-
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index eebed2474210d..f0cb3c7956629 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-
-[ ... ]
-
-> @@ -352,33 +352,110 @@ static void vchan_desc_put(struct virt_dma_desc *v=
-desc)
->  	axi_desc_put(vd_to_axi_desc(vdesc));
->  }
-> =20
-> +/*
-> + * Read a 64-bit channel address register while the transfer may be
-> + * running. The two 32-bit halves cannot be read atomically on all
-
-[ ... ]
-
-> +static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
-> +				struct axi_dma_desc *desc)
-> +{
-> +	struct axi_dma_hw_desc *hw_desc;
-> +	bool dst =3D chan->direction =3D=3D DMA_DEV_TO_MEM;
-> +	u64 pos, start;
-> +	u32 xferred =3D 0;
-> +	int i;
+在 2026/4/15 17:50, Guixin Liu 写道:
+> We found an idxd_wq use-after-free issue with kasan
+> when remove the idxd PCI device:
+>
+> BUG: KASAN: slab-use-after-free in idxd_device_drv_remove+0x1f8/0x240 [idxd]
+> Call Trace:
+>   <TASK>
+>   dump_stack_lvl+0x32/0x50
+>   print_address_description.constprop.0+0x2c/0x390
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   print_report+0xba/0x280
+>   ? kasan_addr_to_slab+0x9/0xa0
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   kasan_report+0xab/0xe0
+>   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   idxd_device_drv_remove+0x1f8/0x240 [idxd]
+>   device_release_driver_internal+0x391/0x560
+>   bus_remove_device+0x1f5/0x3f0
+>   device_del+0x392/0x990
+>   ? __pfx_device_del+0x10/0x10
+>   ? kobject_cleanup+0x117/0x360
+>   ? idxd_unregister_devices+0x229/0x320 [idxd]
+>   device_unregister+0x13/0xa0
+>   idxd_remove+0x4f/0x1b0 [idxd]
+>   pci_device_remove+0xa7/0x1d0
+>   device_release_driver_internal+0x391/0x560
+>   ? pci_pme_active+0x1e/0x450
+>   pci_stop_bus_device+0x10a/0x150
+>   pci_stop_and_remove_bus_device_locked+0x16/0x30
+>   remove_store+0xcf/0xe0
+>
+> Freed by task 15535:
+>   kasan_save_stack+0x1c/0x40
+>   kasan_set_track+0x21/0x30
+>   kasan_save_free_info+0x27/0x40
+>   ____kasan_slab_free+0x171/0x240
+>   slab_free_freelist_hook+0xde/0x190
+>   __kmem_cache_free+0x19e/0x310
+>   device_release+0x98/0x210
+>   kobject_cleanup+0x102/0x360
+>   idxd_unregister_devices+0xb3/0x320 [idxd]
+>   dxd_remove+0x3f/0x1b0 [idxd]
+>   pci_device_remove+0xa7/0x1d0
+>   device_release_driver_internal+0x391/0x560
+>   pci_stop_bus_device+0x10a/0x150
+>   pci_stop_and_remove_bus_device_locked+0x16/0x30
+>   remove_store+0xcf/0xe0
+>
+> In the idxd_remove() flow, when execution reaches
+> idxd_unregister_devices(), all idxd_wq instances have already been
+> freed. Subsequently, when device_unregister(idxd_confdev(idxd)) is
+> executed, it calls into idxd_device_drv_remove() which accesses the
+> already-freed idxd_wq. This fix resolves the issue by calling
+> device_release_driver() before idxd_unregister_devices().
+>
+> Fixes: 98da0106aac0d ("dmanegine: idxd: fix resource free ordering on driver removal")
+> Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+> Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+> Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+> ---
+> v1 -> v2:
+>   1. Call device_release_driver() in advance instead of swapping the order of
+>      device_unregister() and idxd_unregister_devices().
+>   2. Add Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>.
+>  drivers/dma/idxd/init.c | 27 ++++++++++++++++++++++-----
+>  1 file changed, 22 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+> index f1cfc7790d95..3b0a0363ca65 100644
+> --- a/drivers/dma/idxd/init.c
+> +++ b/drivers/dma/idxd/init.c
+> @@ -1293,13 +1293,30 @@ static void idxd_remove(struct pci_dev *pdev)
+>  {
+>  	struct idxd_device *idxd = pci_get_drvdata(pdev);
+>  
+> +	/*
+> +	 * The idxd sub-driver's remove callback (idxd_device_drv_remove())
+> +	 * iterates idxd->wqs[] and accesses wq objects. We must unbind the
+> +	 * sub-driver before idxd_unregister_devices() frees these objects,
+> +	 * otherwise a use-after-free occurs.
+> +	 *
+> +	 * We cannot simply reorder device_unregister(idxd_confdev) before
+> +	 * idxd_unregister_devices() because device_del() -> kobject_del()
+> +	 * recursively removes the parent's sysfs directory, which destroys
+> +	 * children's sysfs entries. Subsequent device_unregister() on the
+> +	 * children then fails with "sysfs group 'power' not found".
+> +	 *
+> +	 * Use device_release_driver() to only unbind the driver (triggering
+> +	 * idxd_device_drv_remove()) without touching sysfs. Then safely
+> +	 * unregister children before the parent.
+> +	 */
+> +	device_release_driver(idxd_confdev(idxd));
+>  	idxd_unregister_devices(idxd);
 > +
-> +	pos =3D axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
-> +
-> +	for (i =3D 0; i < desc->nr_hw_descs; i++) {
-> +		hw_desc =3D &desc->hw_desc[i];
-> +		start =3D le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
-> +
-> +		/* Current position is inside this block: partial progress */
-> +		if (pos >=3D start && pos <=3D start + hw_desc->len)
-> +			return xferred + (u32)(pos - start);
+>  	/*
+> -	 * When ->release() is called for the idxd->conf_dev, it frees all the memory related
+> -	 * to the idxd context. The driver still needs those bits in order to do the rest of
+> -	 * the cleanup. However, we do need to unbound the idxd sub-driver. So take a ref
+> -	 * on the device here to hold off the freeing while allowing the idxd sub-driver
+> -	 * to unbind.
+> +	 * When ->release() is called for the idxd->conf_dev, it frees all the
+> +	 * memory related to the idxd context. The driver still needs those bits
+> +	 * in order to do the rest of the cleanup. So take a ref on the device
+> +	 * here to hold off the freeing.
+>  	 */
+>  	get_device(idxd_confdev(idxd));
+>  	device_unregister(idxd_confdev(idxd));
 
-[Severity: Medium]
-Will this logic correctly handle scatter-gather lists that contain
-overlapping or repeating physical memory addresses?
-
-If a DMA client submits an SG list using a common memory region for padding
-across multiple elements, pos could match an earlier block while the DMA
-engine is actually processing a subsequent block reusing the same physical
-address.
-
-Could this cause the residue to jump backwards and report an artificially
-high remaining byte count to clients that rely on a monotonically
-decreasing residue?
-
-> +
-> +		xferred +=3D hw_desc->len;
-> +	}
-> +
-> +	/* Position doesn't match any block, be conservative */
-> +	return 0;
-> +}
-
-[ ... ]
-
-> @@ -468,6 +545,9 @@ static void axi_chan_block_xfer_start(struct axi_dma_=
-chan *chan,
->  	}
->  	axi_chan_config_write(chan, &config);
-> =20
-> +	/* The hardware pointer registers now belong to this descriptor */
-> +	chan->desc =3D first;
-> +
->  	write_chan_llp(chan, first->hw_desc[0].llp | lms);
-> =20
->  	irq_mask =3D DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR;
->  	axi_chan_irq_sig_set(chan, irq_mask);
-> =20
->  	/* Generate 'suspend' status but don't generate interrupt */
->  	irq_mask |=3D DWAXIDMAC_IRQ_SUSPENDED;
->  	axi_chan_irq_set(chan, irq_mask);
-> =20
->  	axi_chan_enable(chan);
->  }
-
-[Severity: High]
-Is there a race condition between setting the descriptor as active and the
-hardware actually updating its pointer registers?
-
-If a client reuses a previously completed buffer for a new transfer,
-axi_chan_block_xfer_start() assigns chan->desc =3D first and enables the
-channel.
-
-If dma_chan_tx_status() is called to check the status before the DMA engine
-fetches the first LLI, it might evaluate a stale hardware pointer.
-
-Since the buffer is identical to the previous run, could the stale pointer
-match the end of the new transfer's memory range, causing
-axi_chan_get_xferred() to erroneously return the full block length and
-report a 0 residue for a newly started transfer?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924025739.844-=
-1-wr574332525@163.com?part=3D1
