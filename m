@@ -1,62 +1,63 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011047.outbound.protection.outlook.com [40.107.130.47])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011047.outbound.protection.outlook.com [52.101.65.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D6E3D47A5;
-	Thu, 24 Sep 2026 14:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6790488D86;
+	Thu, 24 Sep 2026 14:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.47
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790260649; cv=fail; b=TaNHHW/7RfzJmy0moZJR2vg4YU6iPu93fw+eZoxtzqi9FF2X++J1l8d0QGxCe9PzVFYsxz2PMfgvKj4XH8MYng0g1FLa4TCEJUjewMbStvqbKyHWhk6zNN3xDrXRVkyKKn4CMF2kfRb/kKmUX4VSHqo+iWH59DVemky09MtM7ic=
+	t=1790261323; cv=fail; b=oHuriyg+/6V9pEs9Wob21RW5GK4FrSU91V1UVMbktgqBNhwTR3ceQw8EfItYbUL1vzO4rayq6BOrns/QxbKMZd6iXUlJFftKumXiEHjAi2oCRGk1GQn1+Vpgi+9+KZMTtUgRRxvgfr3i6G+Nr1wmzCmqqL6t40Aa4HqBUq/uzcA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790260649; c=relaxed/simple;
-	bh=9vq+oj/6Ms/LFxAg4nMCIwM+JfunAseLeC54WLS53SA=;
+	s=arc-20240116; t=1790261323; c=relaxed/simple;
+	bh=X1LbE0LqrdAlvPD0hGaV3Y0npnB47gTjXtvxFeBjLKg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=OCTNgTf4tCI79cXl8dXmRrIyEMK0ccslZYE1e01mfvolQ36ByZzHFn4RdqnaMHINnYhEguCjvJ1fPHHtcXIXjJGp2O9F6zPSLDrUeSYXCWNmQ7QKCpiA8KH9WKvu+BBikAfIx5RmFmyFjB5bkAs6f9t+FBSlglGGfNSg2H2l90c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=I+JPTYYW; arc=fail smtp.client-ip=40.107.130.47
+	 Content-Disposition:In-Reply-To:MIME-Version; b=NN6w/uMF2oa0GKwy6a4j7QqJRhW5RDLeiVJNWoWG4FzaC4m0siE/Dp19Zi7ejtTHEWC+kiadtsT2DmYpJWWTFSQdAZ1L3EAW02uBdrtFSwv8BByx5EBFBoBrWHE8nv4Wh33kp/Lhua0M2IHdgtR/BkuxS7JbYShNtUJXHdEZ/sg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=SSA9EH9S; arc=fail smtp.client-ip=52.101.65.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="I+JPTYYW"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="SSA9EH9S"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S2WPD3ITwbdyZ1e5T3S7M1+693weYcIeDdcI5zKxz03eKL30wqbTiA8+jFwmrvXW3DoDqnR0zS+wopmV4o/ThNvRQHHXizT+5ImHGrr6SbNddgm9Ofuuldax93FN7sLyaSfFGL8vdF9de4LWyIYfQ/1YVw584CkU7qJsH2XsvqTYrbAcE/NyAXCvB0Z3aM/Is66PTgowBgjOHkUl4VJMUnTYQJeHeIbwDkzetqJ2VcGj9BSCGoD//QJm1uAuOitoiYLpfI/rE6MueefuogOyZS0uF8FMHNl/8CrWmb7H75h4vKVroTetuFQPJGY/WO+xTiFfcHv17hplb7TwJGGgiA==
+ b=peEd7k3H7OYW8R4Amlpn6UJ/TdkXWfQbHYiDVYNYgi0p5JTsS6tPvduqCSMxBR2nzukl9rSJDTR1zS8xNor19+Wkb6y9319qE25maHCDsFIu5qVj06RXXwVUEmaYnsYWiykVTxcxRkDne6kXNnetRzengUwHZ6C0HOawtcPAgacAHsjob4fvOTpEcTn0++aeE1vlAaZY2GPWqS1Sq5rnmLk4tP4lOQmvlBT4v2zYBSwobo+lzwGOQR2bcb29aKF9UvdDbul3Lc40A/04nQ8Qqnw+wcqCn4t5GTbC/crszv1aLDHXKPetJ3sdfqIxG62IsCRL9zVvFmAwQJHKtdkF1Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fEDEmuHVDi4mDjvNOMvvfTsr46Unp6jhfmWw4AFP16A=;
- b=TkroUBbq3icEeiwIuv/2c2zK9d5g1vCfc6CVB42lMcXYN7Z8bFih4ALbPEZ1XFiJe1wYY2P2WgxMwGPe767M+nOCL/0EmDwyVfP0ccvrFVeGpcjtyjDVjnZD8PoSCXRDVT3HdeuoSxCO6ABukP2qOyFGdmuIxJK7ixVAUb7BRXb8l77TV0epd8f3fz5SMSYgJY1YzLWMtBBiWe8GCiAOIEX3iTNsxppxdtT0MzyXWWze6lnREnid7UrgzF3b5IMOHoVmmTXGXmcRxS0WuYJ6jWG94DnTz7U/SJiW82fFmJWnYIHh9zv6mCRZtPgGqNcjZhxK7oJ9FfkvwxIThGh6Qg==
+ bh=oDV9RUeKjU0gV2BH0Z2ewO5aUI3PibVuN56Qe9QAoc4=;
+ b=TeQm7c9j1BUw/p9bGvYTWA5S+nyH9S5zuOTYVYrzHGmJvf3YrM13a8GFgpPVBkji4W93M2OIeu7tiwkJWWxXbxIOKOoK8xysZP76OwPJDG3rOzClt/qi1xQ/DwZW4NigKjn+QkCd4vXz6wmr7kV0lgcjd+08ee7l9tSpAHq0obreEtix9ESqMVwWzlICMKKtm8z0TfnOui7cxY6LjRCdbxVUjHyYy42Vpx92IbQYn3om8TAGZi6ZBlzRsNtmNQwpfJGB40dwxU8fiq6eccGtR/S4fva+1F2M8IiVQpmX48TMbrusUFA5GumYDzxZgSCGgeZmb/mt8ErLSnpKpqkv5w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fEDEmuHVDi4mDjvNOMvvfTsr46Unp6jhfmWw4AFP16A=;
- b=I+JPTYYWU8fjLQFGU1V7vc9jBoYNDaucoGYZNqnm1JHM0mLlznqMD/75TbgJRL2iRFXzTdb5lGm1Ac/y/vzc9fJL8jeBweGbFNt02t/8jG/gPbjlKRDNqbLS6P/pHesBQWXZtZeUaJ5MkCGsAfTu7ao1cyp3Vd2zw24LdsmwBe2XLlX6YEDtbz07SU/zuCZTcfs30YZVHaOMydBz58EM60Yanwounh4CqX45KXNv505Q46iV7TeFU02lbLw/jRbk7adpZm7ASu017Y0HRw18Pa39laa/naFlOt4yYzRqEuFzer8o16h01MOg8JxWSuFM97mM5ZoK0ibazo0myC9jvA==
+ bh=oDV9RUeKjU0gV2BH0Z2ewO5aUI3PibVuN56Qe9QAoc4=;
+ b=SSA9EH9SXzC49GuliliiLwK+ruF/eXLogO1CqTnW0IzvnktCLDfxrRpJy1kdCsRPXIzAWk+hTOnzxu/OoLk+6FrzsYYMNWprHAUvRM6U4qSk9MlcBPWJZCrT+B+CwZo4A/3MxOLWtWFeWtedGF2z2xlXuOSt1uPOexPHFwJ06LvvGW7GXBoTMaPEiJLonVLHY6yUsEQp6r7D1CHYfBYMuY5VwqgKJRPZvqqhTHm/l/oZfTw3BHMC3qS+Pkuya1Il9tgBHc6roeC38BRkVEVn8J9pU1ItM7+tbSX1rjYG1ukKa40uWdwv6AQlrAJum1+oAXR5WK4Z1L3AOLawDFV0/A==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by MI7PR04MB897750.eurprd04.prod.outlook.com (2603:10a6:290:102::10) with
+ by GV4PR04MB11377.eurprd04.prod.outlook.com (2603:10a6:150:29c::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 14:37:25 +0000
+ 2026 14:48:36 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 14:37:25 +0000
-Date: Thu, 24 Sep 2026 09:37:18 -0500
+ 14:48:35 +0000
+Date: Thu, 24 Sep 2026 09:48:28 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Linus Walleij <linusw@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v6 02/23] dmaengine: ste_dma40: Fix cyclic transfer
- residue
-Message-ID: <arU1nsEFPn43Madb@SMW015318>
+Subject: Re: [PATCH v6 03/23] dmaengine: ste_dma40: Recover coalesced cyclic
+ callbacks
+Message-ID: <arU4PAMX0wSdLEuO@SMW015318>
 References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
- <20260924-dma40-fixes-v6-2-fdb6755020a2@kernel.org>
-Content-Type: text/plain; charset=us-ascii
+ <20260924-dma40-fixes-v6-3-fdb6755020a2@kernel.org>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260924-dma40-fixes-v6-2-fdb6755020a2@kernel.org>
-X-ClientProxiedBy: CYXPR03CA0096.namprd03.prod.outlook.com
- (2603:10b6:930:d3::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260924-dma40-fixes-v6-3-fdb6755020a2@kernel.org>
+X-ClientProxiedBy: CY8PR12CA0005.namprd12.prod.outlook.com
+ (2603:10b6:930:4e::13) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -65,287 +66,248 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|MI7PR04MB897750:EE_
-X-MS-Office365-Filtering-Correlation-Id: 41305d0d-f96c-49f2-3e77-08df1a495994
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV4PR04MB11377:EE_
+X-MS-Office365-Filtering-Correlation-Id: 55d56e38-7415-41d0-b440-08df1a4ae965
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|1800799024|376014|56012099006|6133799003|10067099003|11063799006|4143699003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|23010399003|6133799003|18002099003|22082099003|56012099006|11063799006|10067099003|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	S1B8WhAoPUnhnP3F6Tjxf4ivSim2mJ7m02gBYe+Tq2dqYUPbOxaTp+IDrVkt8KgGT9dSb7RnnAy5WZ1KsK1/1j4ZXrTvL8PpjRhmJHagxrznYwutV/x4hyvGTAp2godthx5KW1O4z/cfDrIpYj3DlR8DwmfpAbeOzsSnD/6OgNZYbI3B1p7xQUCsh+eyrts8mpLoTP5RXJ35DXrZ81z2lXyyQx3zU7X3iJ6XKUf6gYz2P5/X5jGGLInsCFcwwPBW0Mr7BQwgxruFTyUXeEGN3rC++cJt5CzDPMXMJDUlVlGtIX/Cl1/1Zw+kdgsf1B1pNwD2gbdWGheVHlOYtdNghnatpJEqmMzssDXbCar6Nh0YQEyS9TECEIB0Z9tkzwmUGizNufDWPBpKPTTPjbmiJcoUWYcpAdatheA271J4fdBaB4FBNT/8B7vfV9byfC1W43721XkJDCNmL4twiXwMCHGjOJplpIOoPSklY2OJKFagXiu+WCI/TL5jDjsV/TNznHqEC6zrPK/5qPTTZVjDVa+8rTb3mKrHTS9eSsCgRwNhiJi/GM1WOwQCueVs32VQ5puXGj+xSrJBUK6onVKH6RZ4RYyio14WPR+C9TT4hiZK1iQglAT+9scIC8a5iSkzREuBIZ8rOESu2GF8/HRTZdqnH0wuHgiInVw6Gvb5UsU=
+	/d1El0yEgufB5nuLBJMNDWIE0CxgxPX73IHV7q1YUwmejWEz7Hjb+fUJ/z6QnTHdYIgY3C7d9a/5ckKUpZcqRwuNjH9aOC/BNxm+3OOpRYRrtWU+/i6cNfrb108oi8IZctJCmSBpIaxGIQqWWzqZHJreOgwS9fLODtJXuyOg3mF9jBGZrbmPyjWim8CkKKJmgXWT1UWsYn4sTbkZHSRVCAUEmytY2HUcztvRS3EFl2sOnDfXR5sp2e20Dc3BNDNySCUZGI0t10h4zyqSRPYxp+IBoIuP73xdjydy52VZDnHkIKQT/Pg7TCY1YCioVFtVSpTFrzWeluPUN/bClhGNWVEZdfaZnvsClV8jWgovHjoLLszcLK7O9m90XrNOg39cdl+UIMtuJdVP9eDRI4S/q3/8K1VY+RCeGx9VydV1dxaRslj0g2ydyD+ZI+CskGUZSbGqsdvYqbFgfNO8Wx+N75m/sVbS7paFxeVjWVUPecIsfC9i4f3H9YBnDJfOgrOcdsGv4748iDVColDgpAKR1bE6GWewznJigAluSsfm9sR/tl1fmM6jtwrinCoYDvnJM5nU8xd2WIJ5B+EVEpJdS6pfWmPOPRwBbdmZxMXgTpymXhJolrlOy9salZ0dilDztmwKdvGa1PBxcB9mFw+9eFoQoHfBVrp2GsB+8j7ntn0=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(1800799024)(376014)(56012099006)(6133799003)(10067099003)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(23010399003)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Lg8WIJX6GaDiNETUhxd2GV1GKOf+1KRe3/fl3qxUM3HclzlWRByFRNVaGjuH?=
- =?us-ascii?Q?KCSUUA38afXZDVN5e0aQUOu/uARElrwPfQ2dMWCFEuHAC2VW4nGVsYjrvmmb?=
- =?us-ascii?Q?Ur0MB+j1xg6fuC6mhj+MF4aBngBU8pryw9EMc1G1KEcI9zCkIZL+MMO1rws3?=
- =?us-ascii?Q?/+W2i2AR0b8Y/bShMjHo5fAvNXTjJ8XK8Ky+GUO2QhqmZKNHt3QjTv3KlWlq?=
- =?us-ascii?Q?YVJC0lItin3uSNQ4/vkwUkOIHImcrZnQpGP3Y105SMiVBwXnQ/WxqJ4UXg+6?=
- =?us-ascii?Q?fRkNYAyjZ1Z5qSqoHY6OOGlOqN2Rp6XPfYdVVwwrNrU2Yhil23txIYwoDXH6?=
- =?us-ascii?Q?vv0qDODgBqzu2sUhKjACNLvrPR9+xmCNMx/qlrFJ+OP2b+GWVGbV4mBIAsU+?=
- =?us-ascii?Q?TJjqhVb3MwHggkG7UuEfQcM7SqIEJStN9drdIakSUC5tl3C49jEZ7sXbZHqh?=
- =?us-ascii?Q?+0dgWKK5Q8PvEpXgHE14DGtlcxD0Bp/kv/9VBcgAiFhW4nlzHDyvcySSF2Xt?=
- =?us-ascii?Q?mZcIumYy+TW+OgWxANVUfw8LrT6nKGqguznmiN8yck0M0o6tVL8Mpdqe6cvC?=
- =?us-ascii?Q?zMTP0NGSNHl5jXXgCAAm15Smm1ODzEfHBoJ/8I7nAHA52Ok3FPlAgR8MlScf?=
- =?us-ascii?Q?OsE7e40sxy7LIw7ZSb4KUledubrkSxrmpYWSBN6imi2eO5UjUr17Y3TN/NQr?=
- =?us-ascii?Q?YlfzhDd7Se+0mRRMYj4X2XMFTK+tX8T7Mmc3m5GskFn36LPA/l/8WMULRH9N?=
- =?us-ascii?Q?ftdzHDIqc33yUwx3k7dm/SZWvJR0BpS4sdU08uIwAfy127gUT/ii0Mx6Uz7h?=
- =?us-ascii?Q?8LfAtqBk687/AOMm/XKLjD6bz9EqnoioS/j3b2rxcmC0JBDfIRqyyMqAozz2?=
- =?us-ascii?Q?oTnSYHNvX46e+3A+jvt+JFcL9phdcRyWgJuP15rKqNZUxo4scArPj25WE2+o?=
- =?us-ascii?Q?SOabTYcVgE3MiZ4JS2LXGfSPHsBTdnkWf2FxMxwPyWlF+njNf1BnDubrubYS?=
- =?us-ascii?Q?iMVNr5wJqHIHJUQw9o9BegmEmH/s2yJ9jDR26lnvYnDkJm3j5xkkIv/ippPg?=
- =?us-ascii?Q?bj6mMl/2Z3aPU/5yWIatbKssfFF/ABV5YuNutAvhqslVdpZ3eelQCe1wq9sP?=
- =?us-ascii?Q?+1lhwUZM0dqjjZ5zA4tHmpBYS7n19aJXoO1a4WnebKa1QQ5Q4xvsduvEBh6k?=
- =?us-ascii?Q?BVqx2bwpiFuBOOu2eYAF3/5r33JXRkRtiUl7w/Afl7HXAKVIhIOyrlDbGy7I?=
- =?us-ascii?Q?rmH06qg7H+9/xNEh6HWoa4E1TXux9xxmfgf/vtpfAxuQ0zBY3K2ZVkoGw58m?=
- =?us-ascii?Q?A3ICXGq6ccF/InpTtvu0uoXErmdOWAhQh2zgdspXv0196pY8MWefhbl6XQ6J?=
- =?us-ascii?Q?wxS9MS55cRh/2TSsUttWEetPvfW7SWqkGr8sWvBWaElgKoPrrGtSYV9JbrjF?=
- =?us-ascii?Q?LGZflAvNM0CXBUTcOEft982yX1oQfQWXis8EhdNdW5YEXuRzGs2Qo5lU91Pq?=
- =?us-ascii?Q?T5UbUg/abOXmXblJ/Kl3N5yNEFarWwUZVeR9TpbXeQIVvmlEcX6hZDc8XQ2M?=
- =?us-ascii?Q?WMxTOmljg10V7en9PdrsXv0K9RbsqYJId4H6yapqofuUq9i+5vkcar4EQrBe?=
- =?us-ascii?Q?ElYVV+wwLFtM8Wg3bxxn4NGhmodDOa4vW5+bU6YZ2PKRUsZjkLQ4IQyHRoZQ?=
- =?us-ascii?Q?MxpQGda2jz0KfUtGUT05i09oh2EN1i9+fp4+iPtbb1bPl/Hg4SuhoPU37G8W?=
- =?us-ascii?Q?uosKLDrHotuAU+fhobGg43nL6FESRyYKDjLp7JXxF2PNbPoyh/UI?=
+	=?utf-8?B?Y2F6NUtvRG11UnAxY0RHQXFMd2VHRVFTYTdBZEFtckE0RnR0aktONzVPNFVI?=
+ =?utf-8?B?dlF0Q2IvcGNpSGpKazBZREhVMzl4eXN4bjJYb2dlOTFXK2RiZ2w3YXA0WDd0?=
+ =?utf-8?B?bmJPaEJ2SFZOMHMycTE3NmlUYUkrUE1tZk93VVVJNXJnR0xYRzRpSXM1MTdi?=
+ =?utf-8?B?WUV0clhlZERjdXhUVFplQUpoT2NPYlFLTDRpL2hrakYvSk4xWDVWanhsQ0tt?=
+ =?utf-8?B?ak5vTmhpSWxqZWZmdTBpbmc3REtjSHBxRkFnektKZVFKTEVtNS9PZXlQSFIr?=
+ =?utf-8?B?UWlzd0tRc1VVYTVxci9iOXBqSU9CaGtlNFZWbkZVL01tSDFIYlp0N2EvMHda?=
+ =?utf-8?B?bDJkOHR3R1hFcU5DNjRERU9HUlZGdjZUc0szUTZEc0hOa3JadjZJcGlxeU5v?=
+ =?utf-8?B?NzMzTkJvdlpUcWR0YlpEVTRTb1MvMEVOTjVESnQ3Vi9FN2RyTkN2OVo2YUVn?=
+ =?utf-8?B?cWptRndDN29KZVdMRjEyaU83Rnd4L1N6RGlyNmRiWnVGb1Bsbmx5UzBScWxE?=
+ =?utf-8?B?NmJvcUZKMmZpb2RENHpmUHJKYjUwcWhsRFZEdERCTDRwMU5wQlZoVmNyM0tN?=
+ =?utf-8?B?Wi9BNWZydDkxWDZvYkc4REU5azJLUDZWU0ptbHd4OUNTd0hjbDlXNjZiOUlj?=
+ =?utf-8?B?b3hlV1J0ZE8rSnIySVNqbUF4T1pNQzZvUWltdlVFZTR6dVJHL1lNUkxGVlRw?=
+ =?utf-8?B?a0tzdW5sMWNEN0JYZEpRMkY1eU9melY0S3NZbi9Ha0MyMzRtRlpKWGJDS0Jt?=
+ =?utf-8?B?cVM2M21Cdnk4ZmNaNmtFOWpja1NEdjlXSlpKcVBhQlpvd2hzakRXeVl2VE0z?=
+ =?utf-8?B?L1dUU3U5Yzg0Ni8vLzFOMFJaZ3BHQTRHZkpHOGE4RWFZdEVNZjN0QjhIcnBx?=
+ =?utf-8?B?a3hMOGN0Y1BUbjUvUlFLVGpmT2NRY2s5UVdqTEtkMzd4YjcxWUR4SVhmNU5C?=
+ =?utf-8?B?eEFsSUs4RGp6a2x3YlVsOVlYVmpJOTNJV3NIalJYdXhLZUZJYzBjMFlSbVQ5?=
+ =?utf-8?B?OFR5YmI2QUFHZGpSRUZKNm82bk5tdVF5VUpWc1JFbkxJOW1kQmFCS202aEx6?=
+ =?utf-8?B?cUVrMHp3cHNJOUZqbG4xd3FnQVhPRzRMYnBCM1J4QTdIQWowZVNPM3NreS9q?=
+ =?utf-8?B?N2hFVTRkRERqSXI5RmJ5MWtTSXZ4bjN4OFJUVEFBOUFqUFA5VEh2UXFvSmpK?=
+ =?utf-8?B?UjQ3QVgxUEs1SHlsQk82UjZlZm9nOEFBckcwc2NHZmptcitQaHRKTTFXdHVh?=
+ =?utf-8?B?VUo5S0VveGxPOCtNSHhLL1VrN3FkOU5Yay9rSHBWazRzNS9KTy9ZSHVOZStk?=
+ =?utf-8?B?TnZ5MkNWWk15dzRmYzFBeEdkVS9uQ013cFZNRFJMMHFuSUcrL25kQllJamxN?=
+ =?utf-8?B?cVZGdlFjKzZvdS9aT1pQQVVmM0tqdGZPaDdZSUgwRkQ0ZkhkRi9LYml2aDhL?=
+ =?utf-8?B?VG16UUh2NUJEY1YzWXVPTUdoZFhkSjNYL3FSMlgzMUpWUkJrYXNTeHZmNkdr?=
+ =?utf-8?B?eDFLeTlBQ0djdTE3NlQ3REVWSG1KZkxzd3lhWlorTFMzbFlIM2VvRHh3Z3d3?=
+ =?utf-8?B?RnRDTmVDQ0hOb0NiazNxVkhIbjhMa2RPUlgwRUJ2RHRiN2FudU80VkUrR2pt?=
+ =?utf-8?B?UEZkSFY4VzF4VGRXamQrU3kxTitRTnM5S1h1QWJQbExjdDdPaFBkNGF6akJx?=
+ =?utf-8?B?cVNnRE1sZUlyYlRPRWZNWXM2Y0RlZmgvOUUwYnhLa1ZGZm8xR2hrTTJYY2xG?=
+ =?utf-8?B?dTloZ0dJQVpiT2RnKzVQMGt0cWxEYW1FNjFQOThyaEJpTFlDb0RuOEljSUxH?=
+ =?utf-8?B?QjlJRzlTQTM3aEsxQW83SmlyeUdXSVFadjR2enNKTlljY2loY2RIdHkzQ2tq?=
+ =?utf-8?B?WTBaYmpYY1c2Yk9iZ1hwS01Obkc2OEFJTENBZjYzK21jZE02VXVTQ3VDeXRD?=
+ =?utf-8?B?R0c2R2NFcllvdzh0Q1gxR3FqQTRWcERWNE9wZjYvaXJoZVJwWk1paTBSM25q?=
+ =?utf-8?B?Y0E3VGoyaFgrMXNKR1V5Y1FaTXFRdWtwRE5Ha2p5eFNudmt4M2p0eDY2Ri9K?=
+ =?utf-8?B?R3dGV01NYnltVmVRNjZvcUk0VnllMDgwWTgySEdqY3ZaS0NmaXMwTC9YRXht?=
+ =?utf-8?B?TjAvYk9sdVQxQjU5Z2tNaWd4bDl6MTRYeCtkVi90MW5iK1BKeVdTU1RDQmFv?=
+ =?utf-8?B?ZTJHemlYdDBjV2dYSWtWeWNINDc2bjBCa2U4cENKVm9KejBFVEIxUWVFczFI?=
+ =?utf-8?B?Q2ZRQWxaZktyNXoyWCtoMXlMSVd3cjg4NEw1U3MyZmR2djR6a2J4eU9waGl1?=
+ =?utf-8?B?ZWVLUkRFaVY1WkxwNXh2a0lxUEJ2NkZZckZmMTNzOUVxQnUzYk9Wbmd1NHkr?=
+ =?utf-8?Q?ykSTZIGkzdVfWT+NlLFcOyHPW7LGxy7zX5uDB?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41305d0d-f96c-49f2-3e77-08df1a495994
+X-MS-Exchange-CrossTenant-Network-Message-Id: 55d56e38-7415-41d0-b440-08df1a4ae965
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:37:25.0658
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:48:35.8589
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PA+46JnWurQnirlKK7uJqNi9qP1TTkI7KMbpR8sPCfwtvyr9j4g2Muwl5SZbTpXiQlXMlG62VOn4KTyxfeNamUll2JhiW8wdA4kHGmmUd78KqVdRsqRgMaZilRMsvDo8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI7PR04MB897750
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6J3gFJp5uyhaRwtFFn3SSdPHqlhMXqfERThMbRrDcWK6wPrz/V1dnGNjkyi86MQLjzxZ6wrp1AjAjilOJ635dg2pCi6yFevIWGY+RW2NBYvprWL3CH+dg8lkChHWfik4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR04MB11377
 
-On Thu, Sep 24, 2026 at 10:35:14AM +0200, Linus Walleij wrote:
-> DMA40 reads residue from the element count of the currently active LLI.
-> For a cyclic transfer this reports at most one period, not the bytes
-> remaining until the cyclic buffer wraps.
+On Thu, Sep 24, 2026 at 10:35:15AM +0200, Linus Walleij wrote:
+> DMA40 has one terminal-count status bit per channel, so cyclic period
+> interrupts can coalesce.
 >
-> Once DMA40 advertises burst granularity, DMAengine PCM uses this residue
-> directly. For a four-period PCM buffer it consequently reports the
-> hardware pointer near three periods after every period interrupt. ALSA
-> eventually stops playback with -EIO although DMA period callbacks
-> continue.
+> Use the memory-side pointer displacement to queue the minimum observable
+> number of callbacks. If sampling fails, queue one callback and invalidate
+> the saved position; the next successful sample resynchronizes without
+> recounting it.
 >
-> Calculate cyclic residue from the current memory-side hardware pointer
-> instead. Read the destination pointer for capture and the source pointer
-> for playback. Sample the split logical channel pointer coherently and
-> retain the last valid residue during relink transitions.
+> The pointer is modulo the cyclic buffer: a displacement of d periods can
+> mean d plus n complete iterations of the buffer. Report d, so the driver
+> could have missed n iterations of the buffer; DMA40 has no counter to
+> recover them. For an unchanged pointer, report one callback rather than
+> risk a spurious full-buffer burst.
 >
-> Make at most three residue sampling attempts: one initial read plus two
-> retries. The retries let transient split-register updates or LLI relink
-> windows settle, while the limit prevents unbounded polling if hardware does
-> not yield a valid pointer.
+> This condition has not been seen in practice and is only a product of
+> review comments that the buffer can miss interrupts.
 >
-> This avoids counting terminal-count interrupts, which races with hardware
-> advancing to the next LLI and cannot account for coalesced interrupt
-> status. Also reject cyclic periods that expand into multiple LLIs because
-> logical cyclic LLIs each request a terminal-count interrupt and would
-> generate more than one callback per period.
+> The preceding cyclic-residue fix ensures that every cyclic period fits in
+> one LLI, so each boundary corresponds to one client callback.
 >
-> Reject invalid cyclic geometries before dividing or constructing the
-> scatterlist as well.
->
-> Reported-by: Frank Li <Frank.li@oss.nxp.com>
-> Closes: https://lore.kernel.org/dmaengine/aq2wIPJW6viUxyy9@SMW015318/
-> Fixes: 15c606686541 ("dmaengine: ste_dma40: indicate granularity on channels")
+> Fixes: 0c842b551063 ("dma40: cyclic xfer support")
 > Assisted-by: LLM
 > Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  drivers/dma/ste_dma40.c | 106 +++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 101 insertions(+), 5 deletions(-)
+>  drivers/dma/ste_dma40.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 71 insertions(+), 1 deletion(-)
 >
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index e4d689c9eba8..eab9c09b4bfe 100644
+> index eab9c09b4bfe..7384a50cb895 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -65,6 +65,9 @@ struct stedma40_platform_data {
->  /* Maximum iterations taken before giving up suspending a channel */
->  #define D40_SUSPEND_MAX_IT 500
->
-> +/* Maximum attempts to sample a stable cyclic residue position */
-> +#define D40_RESIDUE_MAX_ATTEMPTS 3
-> +
->  /* Milliseconds */
->  #define DMA40_AUTOSUSPEND_DELAY	100
->
-> @@ -378,6 +381,9 @@ struct d40_lli_pool {
->   * @lli_len: Number of llis of current descriptor.
->   * @lli_current: Number of transferred llis.
->   * @lcla_alloc: Number of LCLA entries allocated.
-> + * @cyclic_dma_addr: Start address of the cyclic buffer.
-> + * @cyclic_buf_len: Length of the cyclic buffer.
-> + * @cyclic_residue: Last valid cyclic residue sample.
+> @@ -384,11 +384,14 @@ struct d40_lli_pool {
+>   * @cyclic_dma_addr: Start address of the cyclic buffer.
+>   * @cyclic_buf_len: Length of the cyclic buffer.
+>   * @cyclic_residue: Last valid cyclic residue sample.
+> + * @cyclic_period_len: Length of one cyclic period.
+> + * @cyclic_callback_pos: Position after the callbacks already queued.
 >   * @txd: DMA engine struct. Used for among other things for communication
 >   * during a transfer.
 >   * @node: List entry.
-> @@ -396,6 +402,9 @@ struct d40_desc {
->  	int				 lli_len;
->  	int				 lli_current;
->  	int				 lcla_alloc;
-> +	dma_addr_t			 cyclic_dma_addr;
-> +	size_t				 cyclic_buf_len;
-> +	size_t				 cyclic_residue;
+>   * @is_in_client_list: true if the client owns this descriptor.
+>   * @cyclic: true if this is a cyclic job
+> + * @cyclic_callback_pos_valid: Whether cyclic_callback_pos is reliable.
+>   *
+>   * This descriptor is used for both logical and physical transfers.
+>   */
+> @@ -405,12 +408,15 @@ struct d40_desc {
+>  	dma_addr_t			 cyclic_dma_addr;
+>  	size_t				 cyclic_buf_len;
+>  	size_t				 cyclic_residue;
+> +	size_t				 cyclic_period_len;
+> +	size_t				 cyclic_callback_pos;
 >
 >  	struct dma_async_tx_descriptor	 txd;
 >  	struct list_head		 node;
-> @@ -1420,6 +1429,64 @@ static u32 d40_residue(struct d40_chan *d40c)
->  	return num_elt * d40c->dma_cfg.dst_info.data_width;
+>
+>  	bool				 is_in_client_list;
+>  	bool				 cyclic;
+> +	bool				 cyclic_callback_pos_valid;
+>  };
+>
+>  /**
+> @@ -1487,6 +1493,64 @@ static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
+>  	return false;
 >  }
 >
-> +static bool d40_current_addr(struct d40_chan *d40c, dma_addr_t *addr)
+> +static unsigned int d40_cyclic_periods_elapsed(struct d40_chan *d40c,
+> +					       struct d40_desc *d40d)
 > +{
-> +	bool dst = d40c->dma_cfg.dir == DMA_DEV_TO_MEM;
-> +	void __iomem *high_reg;
-> +	void __iomem *low_reg;
-> +	u32 low;
-> +	u32 high;
-> +	u32 check;
-> +	int i;
+> +	size_t current_pos;
+> +	size_t offset;
+> +	unsigned int periods;
 > +
-> +	if (chan_is_physical(d40c)) {
-> +		*addr = readl(chan_base(d40c) +
-> +			      (dst ? D40_CHAN_REG_SDPTR : D40_CHAN_REG_SSPTR));
-> +		return true;
+> +	if (!d40d->cyclic_period_len)
+> +		return 1;
+> +
+> +	if (!d40_cyclic_offset(d40c, d40d, &offset)) {
+> +		d40d->cyclic_callback_pos_valid = false;
+> +		return 1;
 > +	}
 > +
-> +	if (dst) {
-> +		low_reg = &d40c->lcpa->lcsp2;
-> +		high_reg = &d40c->lcpa->lcsp3;
+> +	current_pos = rounddown(offset, d40d->cyclic_period_len);
+> +	if (!d40_residue(d40c) && current_pos != offset)
+> +		current_pos += d40d->cyclic_period_len;
+> +	if (current_pos == d40d->cyclic_buf_len)
+> +		current_pos = 0;
+> +
+> +	if (!d40d->cyclic_callback_pos_valid) {
+> +		/*
+> +		 * The previous interrupt was reported without a pointer
+> +		 * sample. Resynchronize without using the stale position,
+> +		 * which would count that callback again.
+> +		 */
+> +		d40d->cyclic_callback_pos = current_pos;
+> +		d40d->cyclic_callback_pos_valid = true;
+> +		return 1;
+> +	}
+> +
+> +	/*
+> +	 * The pointer wraps with the cyclic buffer, so its displacement is
+> +	 * only the minimum number of elapsed periods. Complete buffer laps
+> +	 * are not observable.
+> +	 */
+> +	if (current_pos > d40d->cyclic_callback_pos) {
+> +		periods = (current_pos - d40d->cyclic_callback_pos) /
+> +			d40d->cyclic_period_len;
+> +	} else if (current_pos < d40d->cyclic_callback_pos) {
+> +		periods = (d40d->cyclic_buf_len -
+> +			d40d->cyclic_callback_pos + current_pos) /
+> +			d40d->cyclic_period_len;
+
+typical cyclic buffer can get delta without if branch
+
+delta = (current_pos + d40d->cyclic_buf_len - d40d->cyclic_callback_pos ) % d40d->cyclic_buf_len
+periods /= d40d->cyclic_period_len；
+
+
+
 > +	} else {
-> +		low_reg = &d40c->lcpa->lcsp0;
-> +		high_reg = &d40c->lcpa->lcsp1;
+> +		/*
+> +		 * The TC status is a single latched bit. An unchanged pointer
+> +		 * cannot distinguish a complete lap from a repeated interrupt,
+> +		 * so do not amplify it into a buffer's worth of callbacks.
+> +		 */
+> +		periods = 1;
 > +	}
+
+above == case result is  period is 0.
+
+So  if (!period) return 1
+
+Frank
 > +
-> +	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
-> +		high = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
-> +		low = readl(low_reg) & D40_MEM_LCSP0_SPTR_MASK;
-> +		check = readl(high_reg) & D40_MEM_LCSP1_SPTR_MASK;
-> +		if (high == check) {
-> +			*addr = low | high;
-> +			return true;
-> +		}
-> +	}
+> +	d40d->cyclic_callback_pos = current_pos;
 > +
-> +	return false;
-> +}
-> +
-> +static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
-> +			      size_t *offset)
-> +{
-> +	dma_addr_t current_addr;
-> +	dma_addr_t current_offset;
-> +	int i;
-> +
-> +	for (i = 0; i < D40_RESIDUE_MAX_ATTEMPTS; i++) {
-> +		if (!d40_current_addr(d40c, &current_addr))
-> +			continue;
-> +
-> +		current_offset = current_addr - d40d->cyclic_dma_addr;
-> +		if (current_offset <= d40d->cyclic_buf_len) {
-> +			*offset = current_offset;
-> +			return true;
-> +		}
-> +	}
-> +
-> +	return false;
+> +	return periods;
 > +}
 > +
 >  static bool d40_tx_is_linked(struct d40_chan *d40c)
 >  {
 >  	bool is_link;
-> @@ -2108,15 +2175,26 @@ static bool d40_is_paused(struct d40_chan *d40c)
+> @@ -1609,6 +1673,7 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
+>  static void dma_tc_handle(struct d40_chan *d40c)
+>  {
+>  	struct d40_desc *d40d;
+> +	unsigned int callbacks = 1;
+>
+>  	/* Get first active entry from list */
+>  	d40d = d40_first_active_get(d40c);
+> @@ -1633,6 +1698,8 @@ static void dma_tc_handle(struct d40_chan *d40c)
+>  			if (d40d->lli_current == d40d->lli_len)
+>  				d40d->lli_current = 0;
+>  		}
+> +
+> +		callbacks = d40_cyclic_periods_elapsed(d40c, d40d);
+>  	} else {
+>  		d40_lcla_free_all(d40c, d40d);
+>
+> @@ -1653,7 +1720,7 @@ static void dma_tc_handle(struct d40_chan *d40c)
+>  		d40_desc_done(d40c, d40d);
+>  	}
+>
+> -	d40c->pending_tx++;
+> +	d40c->pending_tx += callbacks;
+>  	tasklet_schedule(&d40c->tasklet);
 >
 >  }
->
-> -static u32 stedma40_residue(struct dma_chan *chan)
-> +static u32 stedma40_residue(struct dma_chan *chan, dma_cookie_t cookie)
->  {
->  	struct d40_chan *d40c =
->  		container_of(chan, struct d40_chan, chan);
-> +	struct d40_desc *d40d;
-> +	size_t offset;
->  	u32 bytes_left;
->  	unsigned long flags;
->
->  	spin_lock_irqsave(&d40c->lock, flags);
-> -	bytes_left = d40_residue(d40c);
-> +	d40d = d40_first_active_get(d40c);
-> +	if (d40d && d40d->txd.cookie == cookie && d40d->cyclic &&
-> +	    d40d->cyclic_buf_len) {
-> +		if (d40_cyclic_offset(d40c, d40d, &offset))
-> +			d40d->cyclic_residue = d40d->cyclic_buf_len - offset;
-> +		bytes_left = d40d->cyclic_residue;
-> +	} else {
-> +		bytes_left = d40_residue(d40c);
-> +	}
-> +
->  	spin_unlock_irqrestore(&d40c->lock, flags);
->
->  	return bytes_left;
-> @@ -2246,8 +2324,13 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
->  	if (desc == NULL)
->  		goto unlock;
->
-> -	if (sg_next(&sg_src[sg_len - 1]) == sg_src)
-> +	if (sg_next(&sg_src[sg_len - 1]) == sg_src) {
->  		desc->cyclic = true;
-> +		if (desc->lli_len != sg_len) {
-> +			chan_err(chan, "Cyclic periods must fit in one LLI\n");
-> +			goto free_desc;
-> +		}
-> +	}
->
->  	src_dev_addr = 0;
->  	dst_dev_addr = 0;
-> @@ -2524,11 +2607,18 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
->  		     size_t buf_len, size_t period_len,
->  		     enum dma_transfer_direction direction, unsigned long flags)
->  {
-> -	unsigned int periods = buf_len / period_len;
-> +	unsigned int periods;
->  	struct dma_async_tx_descriptor *txd;
-> +	struct d40_desc *desc;
->  	struct scatterlist *sg;
-> +	dma_addr_t buf_addr = dma_addr;
->  	int i;
->
-> +	if (!buf_len || !period_len || buf_len % period_len)
-> +		return NULL;
-> +
-> +	periods = buf_len / period_len;
-> +
->  	sg = kzalloc_objs(struct scatterlist, periods + 1, GFP_NOWAIT);
->  	if (!sg)
->  		return NULL;
-> @@ -2543,6 +2633,12 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
->
->  	txd = d40_prep_sg(chan, sg, sg, periods, direction,
->  			  DMA_PREP_INTERRUPT);
-> +	if (txd) {
-> +		desc = container_of(txd, struct d40_desc, txd);
-> +		desc->cyclic_dma_addr = buf_addr;
-> +		desc->cyclic_buf_len = buf_len;
-> +		desc->cyclic_residue = buf_len;
-> +	}
+> @@ -2638,6 +2705,9 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
+>  		desc->cyclic_dma_addr = buf_addr;
+>  		desc->cyclic_buf_len = buf_len;
+>  		desc->cyclic_residue = buf_len;
+> +		desc->cyclic_period_len = period_len;
+> +		desc->cyclic_callback_pos = 0;
+> +		desc->cyclic_callback_pos_valid = true;
+>  	}
 >
 >  	kfree(sg);
->
-> @@ -2563,7 +2659,7 @@ static enum dma_status d40_tx_status(struct dma_chan *chan,
->
->  	ret = dma_cookie_status(chan, cookie, txstate);
->  	if (ret != DMA_COMPLETE && txstate)
-> -		dma_set_residue(txstate, stedma40_residue(chan));
-> +		dma_set_residue(txstate, stedma40_residue(chan, cookie));
->
->  	if (d40_is_paused(d40c))
->  		ret = DMA_PAUSED;
 >
 > --
 > 2.55.0
