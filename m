@@ -1,162 +1,198 @@
-Received: from out30-131.freemail.mail.aliyun.com (out30-131.freemail.mail.aliyun.com [115.124.30.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44313DEFF1
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 03:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CA53FDC06;
+	Thu, 24 Sep 2026 08:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790221705; cv=none; b=B0p6mACe9VA7sbFMntMMNN+0os1slWfh4SRL+xFHVK+587tdCbGQkDrKqfrbTdBmvyNIiVrjEABETyMiXVeGKNS7EGp0Ht65mMDDTtLZcTtOCcWLOilnYfnB+mLmlNpm47L4MjCaQwJ10CgAbutEwU3yHSFHzrpKOSDMFQBpIC8=
+	t=1790238919; cv=none; b=V3tuLCVeeJW5CyjZ+vl3dp+JPW/csufZ+fE3TJdJfCzrVKycQ4DPp7HnxMo6+eiRw2RNXB6JaKlWzNhicCtWnekMHWotEODW/0O3AoayxOuvLnjgkaKLPtE5ZKBstEeyqZ5lp4JWgsO4j42iiK1xWnKenZCOkEngmICNwfsp4BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790221705; c=relaxed/simple;
-	bh=RByC2KcCzKhQRQq1B560KSPnrjr0BWu/OeFuIe4raPQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MqrQfCz7A0IGqzKz49Gr/R6Swc85Uy9WPRAP46GOJNNL7QV2buC/lvgoUDh1La7TwuWpNhFlWlA0Sf4sJGJ4pk+jg5GOoERnS2okzA3crPCXdwHYSqCNEjkiRe+owbfBWc0qYt+AZbxOqiCyL/LROxdxP+/Y5oKGlUQbZePrPGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=DShuNxFQ; arc=none smtp.client-ip=115.124.30.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1790238919; c=relaxed/simple;
+	bh=hGVtWnnMRA8rdygAPgS8BLQ5m+G+Xk9yg+RuddzAoI4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ty+OBtCWrTaAiskYWGhkol470b3ekHcwFLUDuaQj0KglHcRVTD2+GVUAEB8UQtbPzXJvdp9F3m1dfSZMK3smtJyCHNxUPtfvqJCd9w8iu4vruYV5spgRKQVI4ItXqF0u53TCgMbFjwwV8s+KysSG49rdIpKjkRMOWrTX3Tcdh5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dbA2N6+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="DShuNxFQ"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1790221691; h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type;
-	bh=JkWkow8Jgt3ftkp3L7onfdgYR223Z1puDT1IK+zUdcQ=;
-	b=DShuNxFQ0yB2JZZRagu7rR5aOBrgWj6vO0ElGN3zFoMDGTz+3m0pTSruOJrZUWGktpYnV/VxUK0AxFY8z9aMR3WmCHVXVAO9voG0ZLeEvpw7hcp5jYqpR5iuCD6Cw8jF0lFD1BCI2U4TowKSuhc+uMM84fqWET4GuBtK0esnEDY=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R221e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045133197;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=7;SR=0;TI=SMTPD_---0XBYWXGR_1790221690;
-Received: from 30.178.84.73(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XBYWXGR_1790221690 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Thu, 24 Sep 2026 11:48:11 +0800
-Message-ID: <a8548bef-3a6e-4faf-975b-aba5fda89634@linux.alibaba.com>
-Date: Thu, 24 Sep 2026 11:48:08 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dbA2N6+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0879F1F000FF;
+	Thu, 24 Sep 2026 08:35:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790238917;
+	bh=3vKZEKuEETygG20gblUiV9ADmUUdeqOco4s6nx6GvmE=;
+	h=From:Subject:Date:To:Cc;
+	b=dbA2N6+GDYeOSkUFWYbvXsNgVjDe0iiRgU3Kuv4xIkAHyeerk+ZSTh0m2eXpmZEgh
+	 w+O48vzJHy+nEsPkgIM4O1p7Tu8JqThq2IhZEijSYq3oiSgjsCWKCuRI3CValFA1YC
+	 V6xFTXGN67l2OYupsjkxWaJp4/xokd1oQdZ17UgUHREV8tj153p4Rehbg3EqMYiu3w
+	 b0P6wXCiKrS+HFEHGnm8PajGwMSyI6G1YbyBDxALIf586dXNbXWficdMnOi/K69hEf
+	 zRHHpgJZEqP0qEtSf5NeQ7m8Pm46IIAy+PFLciolnVmHKw7jlpLZLgvUfZp3JheETw
+	 AkaSBBQuRUPpw==
+From: Linus Walleij <linusw@kernel.org>
+Subject: [PATCH v6 00/23] dmaengine: ste_dma40: Fix numerous accumulated
+ bugs
+Date: Thu, 24 Sep 2026 10:35:12 +0200
+Message-Id: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dmaengine: idxd: Fix use-after-free of idxd_wq
-From: Guixin Liu <kanie@linux.alibaba.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org, Xunlei Pang <xlpang@linux.alibaba.com>,
- oliver.yang@linux.alibaba.com,
- Vinicius Costa Gomes <vinicius.gomes@intel.com>,
- Frank Li <Frank.Li@kernel.org>, Dave Jiang <dave.jiang@intel.com>
-References: <20260415095030.42183-1-kanie@linux.alibaba.com>
-In-Reply-To: <20260415095030.42183-1-kanie@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33PTY7CMAwF4KugrAlynJ8mrLjHiEWbOBABLUpQN
+ Qj17pOyGZiOWD5b37P8YIVyosK2qwfLNKaShr4Gs14xf2z7A/EUamYIaMAi8HBpFfCYvqnwzrk
+ 2GgOAXWRVXDM9FxV87Ws+pnIb8v1ZPop5+n/PKDhwTUJZodtgrNudKPd03gz5wOaiET9grNhIl
+ FZK5RtoFlj+YifsO5YV2xCs0mCMI7vA6gX/vawqDo0WHQbnUcYF1h+wnn/2WvvQRIfx/edpmn4
+ AqhGsupsBAAA=
+X-Change-ID: 20260820-dma40-fixes-b99af66002bf
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Cc: dmaengine@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Linus Walleij <linusw@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
+ Frank Li <Frank.li@oss.nxp.com>, sashiko-bot@kernel.org
+X-Mailer: b4 0.14.3
 
-Hi Vinod, could you please apply this patch? 
-This patch was from a long time ago.
+This series fixes 26 DMA40 bugs.
 
-Best Regards,
-Guixin Liu
+12 were found while reviewing the Ux500 LCLA SRAM power-domain conversion.
 
-在 2026/4/15 17:50, Guixin Liu 写道:
-> We found an idxd_wq use-after-free issue with kasan
-> when remove the idxd PCI device:
->
-> BUG: KASAN: slab-use-after-free in idxd_device_drv_remove+0x1f8/0x240 [idxd]
-> Call Trace:
->   <TASK>
->   dump_stack_lvl+0x32/0x50
->   print_address_description.constprop.0+0x2c/0x390
->   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
->   print_report+0xba/0x280
->   ? kasan_addr_to_slab+0x9/0xa0
->   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
->   kasan_report+0xab/0xe0
->   ? idxd_device_drv_remove+0x1f8/0x240 [idxd]
->   idxd_device_drv_remove+0x1f8/0x240 [idxd]
->   device_release_driver_internal+0x391/0x560
->   bus_remove_device+0x1f5/0x3f0
->   device_del+0x392/0x990
->   ? __pfx_device_del+0x10/0x10
->   ? kobject_cleanup+0x117/0x360
->   ? idxd_unregister_devices+0x229/0x320 [idxd]
->   device_unregister+0x13/0xa0
->   idxd_remove+0x4f/0x1b0 [idxd]
->   pci_device_remove+0xa7/0x1d0
->   device_release_driver_internal+0x391/0x560
->   ? pci_pme_active+0x1e/0x450
->   pci_stop_bus_device+0x10a/0x150
->   pci_stop_and_remove_bus_device_locked+0x16/0x30
->   remove_store+0xcf/0xe0
->
-> Freed by task 15535:
->   kasan_save_stack+0x1c/0x40
->   kasan_set_track+0x21/0x30
->   kasan_save_free_info+0x27/0x40
->   ____kasan_slab_free+0x171/0x240
->   slab_free_freelist_hook+0xde/0x190
->   __kmem_cache_free+0x19e/0x310
->   device_release+0x98/0x210
->   kobject_cleanup+0x102/0x360
->   idxd_unregister_devices+0xb3/0x320 [idxd]
->   dxd_remove+0x3f/0x1b0 [idxd]
->   pci_device_remove+0xa7/0x1d0
->   device_release_driver_internal+0x391/0x560
->   pci_stop_bus_device+0x10a/0x150
->   pci_stop_and_remove_bus_device_locked+0x16/0x30
->   remove_store+0xcf/0xe0
->
-> In the idxd_remove() flow, when execution reaches
-> idxd_unregister_devices(), all idxd_wq instances have already been
-> freed. Subsequently, when device_unregister(idxd_confdev(idxd)) is
-> executed, it calls into idxd_device_drv_remove() which accesses the
-> already-freed idxd_wq. This fix resolves the issue by calling
-> device_release_driver() before idxd_unregister_devices().
->
-> Fixes: 98da0106aac0d ("dmanegine: idxd: fix resource free ordering on driver removal")
-> Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-> Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-> Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-> ---
-> v1 -> v2:
->   1. Call device_release_driver() in advance instead of swapping the order of
->      device_unregister() and idxd_unregister_devices().
->   2. Add Co-developed-by: Shuai Xue <xueshuai@linux.alibaba.com>.
->  drivers/dma/idxd/init.c | 27 ++++++++++++++++++++++-----
->  1 file changed, 22 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-> index f1cfc7790d95..3b0a0363ca65 100644
-> --- a/drivers/dma/idxd/init.c
-> +++ b/drivers/dma/idxd/init.c
-> @@ -1293,13 +1293,30 @@ static void idxd_remove(struct pci_dev *pdev)
->  {
->  	struct idxd_device *idxd = pci_get_drvdata(pdev);
->  
-> +	/*
-> +	 * The idxd sub-driver's remove callback (idxd_device_drv_remove())
-> +	 * iterates idxd->wqs[] and accesses wq objects. We must unbind the
-> +	 * sub-driver before idxd_unregister_devices() frees these objects,
-> +	 * otherwise a use-after-free occurs.
-> +	 *
-> +	 * We cannot simply reorder device_unregister(idxd_confdev) before
-> +	 * idxd_unregister_devices() because device_del() -> kobject_del()
-> +	 * recursively removes the parent's sysfs directory, which destroys
-> +	 * children's sysfs entries. Subsequent device_unregister() on the
-> +	 * children then fails with "sysfs group 'power' not found".
-> +	 *
-> +	 * Use device_release_driver() to only unbind the driver (triggering
-> +	 * idxd_device_drv_remove()) without touching sysfs. Then safely
-> +	 * unregister children before the parent.
-> +	 */
-> +	device_release_driver(idxd_confdev(idxd));
->  	idxd_unregister_devices(idxd);
-> +
->  	/*
-> -	 * When ->release() is called for the idxd->conf_dev, it frees all the memory related
-> -	 * to the idxd context. The driver still needs those bits in order to do the rest of
-> -	 * the cleanup. However, we do need to unbound the idxd sub-driver. So take a ref
-> -	 * on the device here to hold off the freeing while allowing the idxd sub-driver
-> -	 * to unbind.
-> +	 * When ->release() is called for the idxd->conf_dev, it frees all the
-> +	 * memory related to the idxd context. The driver still needs those bits
-> +	 * in order to do the rest of the cleanup. So take a ref on the device
-> +	 * here to hold off the freeing.
->  	 */
->  	get_device(idxd_confdev(idxd));
->  	device_unregister(idxd_confdev(idxd));
+The cyclic transfer residue bug was exposed by Ux500 audio playback.
+
+13 more issues were identified during review and hardware-manual audit.
+
+The method taken is: whenever Sashiko complains: fix the bug it complains
+about if possible.
+
+This has been boot tested on the Samsung Skomer device: DMA for MMC,
+wireless SDIO and UART still works after these patches, and DMA for audio
+started working.
+
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+---
+Changes in v6:
+- Simplify termination and channel-release runtime PM balancing by releasing
+  temporary references in the successful resume paths. Descriptor cleanup
+  remains unconditional because it does not access DMA40 registers.
+- Name and document the three-attempt cyclic-residue pointer sampling bound,
+  and remove an unrelated whitespace-only change from that patch.
+- Replace probe-local runtime PM bookkeeping with
+  devm_pm_runtime_set_active_enabled(), keeping IRQ registration after
+  runtime PM is enabled.
+- Link to v5: https://lore.kernel.org/r/20260920-dma40-fixes-v5-0-5c55cd7f92f9@kernel.org
+
+Changes in v5:
+- Respin to fix some further corner cases found by Sashiko as well
+  as can be done.
+- Resynchronize cyclic callback tracking after failed hardware-pointer samples
+  and limit unchanged-pointer interrupts to one callback. DMA40 has only one
+  latched terminal-count bit, so extra periods coalesced while the pointer is
+  unavailable and exact one-or-more full-buffer laps cannot be recovered
+  without risking spurious callbacks.
+- Count DMA40 status from channels owned by other SoC cores as handled
+  without acknowledging it, so only status-less interrupts return IRQ_NONE
+  and foreign DMA traffic cannot trigger spurious-IRQ disabling.
+  This is REALLY FRINGE but let's do our best anyway!
+- Link to v4: https://lore.kernel.org/r/20260920-dma40-fixes-v4-0-d751b2d9c23f@kernel.org
+
+Changes in v4:
+- Rework cyclic-transfer residue reporting to use the current memory-side
+  hardware pointer and reject periods that need more than one LLI.
+- Add cyclic callback recovery when terminal-count interrupts coalesce.
+- Retire all issued descriptors and release software channel state when a
+  runtime PM resume fails, while avoiding inaccessible hardware registers.
+- Validate physical event IDs against the variant event-group limit rather
+  than the physical channel count, as confirmed by the DB8500 manual.
+- Link to v3: https://lore.kernel.org/r/20260918-dma40-fixes-v3-0-8dd8450669e8@kernel.org
+
+Changes in v3:
+- Add a fix so physical channels advertise their existing cyclic support.
+- Add a cyclic-transfer residue fix so DMAengine PCM reports the correct
+  hardware pointer and Ux500 audio playback does not stop with -EIO.
+- In patch 3, preserve cookie completion order when the next queued
+  transfer fails to start and retire failed cyclic descriptors.
+- In patch 4, enable runtime PM before requesting the IRQ so pending
+  interrupts can be acknowledged during probe.
+- In patch 5, keep valid interrupt handling with CONFIG_PM disabled and
+  only drop a runtime PM reference when one was acquired.
+- Add checked runtime PM resume handling to channel operations.
+- Add an IRQ status patch returning IRQ_NONE when no DMA40 interrupt was
+  acknowledged.
+- In patch 8, keep the IRQ disabled until hardware initialization has
+  configured and cleared the DMA40 interrupt state.
+- In the DMA registration unwind patch, free the IRQ before unregistering
+  the DMA devices and drain initialized tasklets before releasing storage.
+- Add a fix releasing the LCPA SRAM node reference after reading it.
+- Move the disabled-channels binding restoration to its own series.
+- Store memcpy channel mappings per controller and check the property read.
+- Add validation for disabled physical channel indexes.
+- Reject DMA specifiers that do not contain exactly three cells.
+- Reject transfer direction changes after channel allocation so logical
+  channel resource masks are released correctly.
+- In the event-group bounds patch, use variant-specific limits so DB8540
+  event group 4 remains available.
+- Add fixed-channel fixes that search later physical blocks and validate
+  configured physical channel indexes.
+- Move the generic DMAengine debugfs naming fix to its own series.
+- Use `Assisted-by: LLM` for the existing assistance trailers.
+- Rebase onto v7.3-rc1.
+- Link to v2: https://lore.kernel.org/r/20260820-dma40-fixes-v2-0-63238334c707@kernel.org
+
+Changes in v2:
+- In patch 1, complete the failed-start descriptor through the normal
+  tasklet path and drop the runtime PM reference instead of freeing the
+  submitted descriptor directly.
+- Add an IRQ fix to avoid register access when DMA40 is runtime suspended.
+- Add a probe ordering fix so DMA40 hardware is initialized before
+  DMAengine devices are registered.
+- Add a probe unwind fix so DMAengine registrations are released before
+  freeing IRQ and LCLA resources.
+- Add an LCLA allocation fix so __get_free_pages() and free_pages() use an
+  allocation order instead of a raw page count.
+- Add a probe unwind fix so ESRAM LCLA mappings are not released with
+  free_pages().
+- Add a device tree parsing fix so memcpy-channels cannot overflow the
+  memcpy channel array.
+- Add a dev_type bounds fix so derived event groups cannot overflow
+  phy_res or the priority/realtime register window.
+- Add validation for fallback memcpy configurations so memcpy-channels
+  entries cannot bypass the dev_type bounds checks.
+- Add a DMAengine debugfs naming fix so drivers registering several
+  DMAengine devices for one parent device do not trigger duplicate-name
+  warnings.
+- Link to v1: https://lore.kernel.org/r/20260820-dma40-fixes-v1-0-5e14815ad689@kernel.org
+
+---
+Linus Walleij (23):
+      dmaengine: ste_dma40: Fix physical cyclic capability
+      dmaengine: ste_dma40: Fix cyclic transfer residue
+      dmaengine: ste_dma40: Recover coalesced cyclic callbacks
+      dmaengine: ste_dma40: Fix failed start cleanup
+      dmaengine: ste_dma40: Fix probe runtime PM disable
+      dmaengine: ste_dma40: Check runtime PM in IRQ
+      dmaengine: ste_dma40: Handle runtime PM resume errors
+      dmaengine: ste_dma40: Return IRQ_NONE when no interrupt is pending
+      dmaengine: ste_dma40: Init hardware before registration
+      dmaengine: ste_dma40: Fix probe IRQ leak
+      dmaengine: ste_dma40: Fix DMA registration unwind
+      dmaengine: ste_dma40: Fix LCLA allocation order
+      dmaengine: ste_dma40: Fix probe LCLA free
+      dmaengine: ste_dma40: Put the LCPA SRAM node
+      dmaengine: ste_dma40: Fix memcpy channel parsing
+      dmaengine: ste_dma40: Validate disabled channel indexes
+      dmaengine: ste_dma40: Validate DMA specifier length
+      dmaengine: ste_dma40: Reject direction changes after allocation
+      dmaengine: ste_dma40: Fix logical channel bounds check
+      dmaengine: ste_dma40: Fix event group bounds
+      dmaengine: ste_dma40: Search all blocks for fixed logical channels
+      dmaengine: ste_dma40: Validate fixed physical channel indexes
+      dmaengine: ste_dma40: Validate memcpy configuration
+
+ drivers/dma/ste_dma40.c | 562 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 436 insertions(+), 126 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260820-dma40-fixes-b99af66002bf
+
+Best regards,
+-- 
+Linus Walleij <linusw@kernel.org>
 
