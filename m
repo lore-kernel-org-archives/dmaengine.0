@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338704457A3
-	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 09:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752CF30DEA3
+	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 09:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790241021; cv=none; b=nZ6p4YI/v07SRzCGNJdVVvQppEbsWXcXiHwMBHG/DI5V00tvpuBGhjkfuCl6xMf5A5OjllTkJMwG2dp9K0nNdvF/zgeY+Pp9hkbUGL+a9UheXbRtWYSEpVGsHQ+CwfhRJ+cQkh4ogznyfhu1yvMuImOjuXF6B+iR4o5c0KeFOIs=
+	t=1790242109; cv=none; b=Lf7hG7f8Uj/U0Z7aN3Y0IBpcEDMJUAIiqosHJ9qFAb3aQe6vUhW5O0efb9zxkwtHiZ/lCn55Zo2tD+7xmXQNZ5qrE2W7DnNq4svSvAYiXAVRQMh3Wi1y3+rn0nTrT+5jiVq2ieq8rSePtGIKAhuBIQ029x/nwpOb3I038eOxO6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790241021; c=relaxed/simple;
-	bh=VBKmwpzl3VN5cEmKokfATAy4BQ8gFLCw/xRt0ztTGWE=;
+	s=arc-20240116; t=1790242109; c=relaxed/simple;
+	bh=hH91/4fpDvehcCEHq2HC9eahllPD+H3Xl/BuFId23Gc=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=hdQHuEI07nbHivUgc4T77pPAM45YzsDZ57SeNRdrPexXhlDUrLkXeUwluEDjscWTuV3zpPuTqW2slr3pjD/YgqWmV25GDrrEDHYgfJN6mETY+g4k9mlUE5/4PH8BT/Jyd94DVI9j2EpHc/d5CnFB+fBA2oHk5iJS1GFBtcuhLCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L2hSoeT/; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=iI1v/6RGFv7bNEjS4xACKLoEB6gQ/EiiPfZw+KWOJINSI8zNM/Bq4u2lpHO2k5nBVkyh7z83b/qVUl4y8ocq4ReErVlyHj79Bitm7AK6fjuWR4hxgZmAjzE5DOCOnuUaVIDPKu/mwk7RoL6GJInynDiGHzjeCqWz5LHrxwqfeZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aOOOi1rz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L2hSoeT/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834221F00898;
-	Thu, 24 Sep 2026 09:10:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aOOOi1rz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3E71F000FF;
+	Thu, 24 Sep 2026 09:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790241019;
-	bh=oAUq9pzRfpDJO0u/f0FvxdnYVzEf3eDzNROAPKIum7k=;
+	s=k20260515; t=1790242108;
+	bh=hFsrqAGOkWO44HE10W9GcXAdvusz5UBYmgJHKJVD1fs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=L2hSoeT/0hvrPy+FqJAg5V77pt5W9LY6kJh4NDNg/+UH4ZmvGn7JeL2SdJFKTKVK7
-	 b/pjQDlSNmg9vCieXQXZUo7ep7v37NtntuyjLfXXj7wy3JjJSu9JAMhVoaL/DPUbkD
-	 e1ScxfBMOjxlt4OUwYpvocav3Jg1U2ZcWsQ9oxEgZ6+j2nBS/tENAKyguevzvKieCC
-	 R/OBxs692XL2lk6D+N+zJeheaXtgsrS9MD7qVsMz3IEQjJjh4NaMHHdU59kGtkKiGq
-	 ZWwDtis24Bh5Wa8gT00Ttz2oboDvcruk/HLByeFyWRHsBsTEnviMp384GRyLQSfM3h
-	 EaVVpQwFpO+Sw==
+	b=aOOOi1rz2DWGNUpnqkP6JNDqeqI1O6hUnScAeGNMxj2+6P9L3SFMvaz3Z9Wv/vsZ7
+	 cNYVE3QkeaaX0A/YarvmHj9l4Em6lw+Qy/bWbecGA2islhEo9H6wyn5kCzbwS+KuiG
+	 g1JuXDneIO/Q8o3iWx9EsobV7/6j4GorlN5cQDd8n49Ygg4vqP9kToCXLLecQ3FshJ
+	 Nw1ldObcK8OQ1OAMjmq0FKeUSQzxZpaEiR0YJq/lrUPATmHy8HKTV/zDMDy38Y+rdK
+	 jpcCVp+Twj1lhMMzV0ti1lmLavApa35cG+RXqdgDS6Zz78ZxYFLYla4WN/HEbjmYb9
+	 OHeTp0z85AaSw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 11/23] dmaengine: ste_dma40: Fix DMA registration
- unwind
+Subject: Re: [PATCH v6 20/23] dmaengine: ste_dma40: Fix event group bounds
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Linus Walleij" <linusw@kernel.org>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20260924-dma40-fixes-v6-11-fdb6755020a2@kernel.org>
+Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
+In-Reply-To: <20260924-dma40-fixes-v6-20-fdb6755020a2@kernel.org>
 References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
- <20260924-dma40-fixes-v6-11-fdb6755020a2@kernel.org>
+ <20260924-dma40-fixes-v6-20-fdb6755020a2@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 24 Sep 2026 09:10:19 +0000
-Message-Id: <20260924091019.834221F00898@smtp.kernel.org>
+Date: Thu, 24 Sep 2026 09:28:27 +0000
+Message-Id: <20260924092827.AC3E71F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,83 +46,89 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] dmaengine: ste_dma40: tasklet UAF on devm_add_action_or_reset fail=
-ure
+- [High] dmaengine: ste_dma40: channel aliasing for event group 4 on V4B
 --
 
-commit 9ae706f948ab2a5c18bdce25be150382cc3a9c26
+commit 48ff5fdacb29b6847b9d51f8ce427281645c1c9b
 Author: Linus Walleij <linusw@kernel.org>
+dmaengine: ste_dma40: Fix event group bounds
 
-dmaengine: ste_dma40: Fix DMA registration unwind
+This commit fixes event group bounds validation by properly restricting
+device type values to the hardware event-group range and removing incorrect
+physical channel limits. It also stops physical channel searches before they
+can index past the allocated channel array.
 
-This commit adds tasklet cleanup actions to the DMAengine registration devr=
-es
-group. It aims to ensure tasklets are drained before freeing probe resources
-on registration failure.
-
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.=
+Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.=
 kernel.org/
 
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 36f4cbd4da364..87b5f1d97ac23 100644
+> index 8b13f1360edbe..d3d79e394d028 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-
 [ ... ]
-
-> @@ -3088,6 +3100,11 @@ static int __init d40_dmaengine_init(struct d40_ba=
-se *base,
-> =20
->  	d40_ops_init(base, &base->dma_slave);
-> =20
-> +	err =3D devm_add_action_or_reset(base->dev, d40_kill_tasklets,
-> +				       &base->dma_slave);
-> +	if (err)
-> +		goto exit;
+> @@ -2068,8 +2078,12 @@ static int d40_allocate_channel(struct d40_chan *d=
+40c, bool *first_phy_user)
+>  				}
+>  			}
+>  		} else
+> -			for (j =3D 0; j < d40c->base->num_phy_chans; j +=3D 8) {
+> +			for (j =3D 0; j < d40c->base->num_phy_chans;
+> +			     j +=3D D40_GROUP_SIZE) {
+>  				int phy_num =3D j  + event_group * 2;
+> +				if (phy_num + 1 >=3D num_phy_chans)
+> +					break;
 > +
 
 [Severity: High]
-If devm_add_action_or_reset() fails here, it will immediately execute
-d40_kill_tasklets(). Because the device interrupt was enabled earlier in
-the probe routine via enable_irq(), could an interrupt fire immediately
-after this premature cleanup and reschedule the tasklet?
+Does this cause channel aliasing for event group 4 on V4B hardware?
 
->  	err =3D dmaenginem_async_device_register(&base->dma_slave);
-> =20
->  	if (err) {
+Since D40_GROUP_SIZE is hardcoded to 8, if event_group is 4 (allowed for V4=
+B)
+and j is 0, phy_num evaluates to 8. But if event_group is 0 and j is 8,
+phy_num also evaluates to 8.
+
+Could this collision map two different groups to the same physical channel?
+
+Additionally, since D40_PHYS_TO_GROUP is hardcoded as ((phys & 7) / 2),
+channel 8 evaluates to group 0. Might this incorrectly configure the GCC cl=
+ock
+and hardware registers for group 0 instead of 4, breaking DMA operations for
+event group 4 and channels >=3D 8?
 
 [ ... ]
-
-> @@ -3852,20 +3881,33 @@ static int __init d40_probe(struct platform_devic=
-e *pdev)
-
-[ ... ]
-
->  	dev_info(base->dev, "initialized\n");
->  	return 0;
+> @@ -2089,8 +2103,10 @@ static int d40_allocate_channel(struct d40_chan *d=
+40c, bool *first_phy_user)
+>  		return -EINVAL;
 > =20
-> + release_dmaenginem:
-> +	if (irq_requested) {
-> +		free_irq(base->irq, base);
-> +		irq_requested =3D false;
-> +	}
-> +	devres_release_group(dev, dmaenginem_reg_group);
+>  	/* Find logical channel */
+> -	for (j =3D 0; j < d40c->base->num_phy_chans; j +=3D 8) {
+> +	for (j =3D 0; j < d40c->base->num_phy_chans; j +=3D D40_GROUP_SIZE) {
+>  		int phy_num =3D j + event_group * 2;
+> +		if (phy_num + 1 >=3D num_phy_chans)
+> +			break;
 
 [Severity: High]
-If we reach this error path because devm_add_action_or_reset() failed,
-the tasklet cleanup action was never registered.
+Will this mathematical collision also occur here for logical channel alloca=
+tion
+when event_group is 4?
 
-Since free_irq() is called here but there is no subsequent tasklet drain,
-does this leave any tasklet that was rescheduled after the initial failure
-still pending?
+[ ... ]
+> @@ -3470,6 +3486,7 @@ static int __init d40_hw_detect_init(struct platfor=
+m_device *pdev,
+>  	base->log_chans =3D &base->phy_chans[num_phy_chans];
+> =20
+>  	if (base->plat_data->num_of_phy_chans =3D=3D 14) {
+> +		base->gen_dmac.num_event_groups =3D D40_EVENT_GROUPS_V4B;
 
-Could this result in a use-after-free when the tasklet executes on the
-memory freed during the destroy_cache path?
+[Severity: High]
+Does setting the max event groups to 5 allow event_group =3D 4, which
+ultimately exposes the aliasing bug against the hardcoded block size of 8
+in d40_allocate_channel()?
 
->   destroy_cache:
->  	if (base->lcla_pool.dma_addr)
->  		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
+>  		base->gen_dmac.backup =3D d40_backup_regs_v4b;
+>  		base->gen_dmac.backup_size =3D BACKUP_REGS_SZ_V4B;
+>  		base->gen_dmac.interrupt_en =3D D40_DREG_CPCMIS;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924-dma40-fixe=
-s-v6-0-fdb6755020a2@kernel.org?part=3D11
+s-v6-0-fdb6755020a2@kernel.org?part=3D20
