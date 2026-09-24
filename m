@@ -1,182 +1,142 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013030.outbound.protection.outlook.com [40.107.159.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f41.google.com (mail-pj2-f41.google.com [74.125.227.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4777E4028E8;
-	Thu, 24 Sep 2026 21:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790284676; cv=fail; b=ASCAYLxWEX1isuHkrQVeZ+dciiR2s7YDnUzT7dPeOpeaF9WsQJAr73cRiAIYZclYltOtgPvb6bf9bjoU7M8GEDdHLyC7/Kl93M7wYlSPdLSGtKJg8oRAz5veVHLSgoFECcaJigxuXEbEVHv4WRKG7unbA6098Hwfr8sCpebot9w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790284676; c=relaxed/simple;
-	bh=D3bWFdwfINFYXeIqACOKqf1wfrlGbFDrUsXAKdNXclI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EAHx0wKuq7GacTYJgUJ5ZTjKUK6f9fvnVoFiJeC1IOyjFM7CgJScmdncpUtGlKwzb8s/s2R8Hv2ywdtaV9/ncPDlUtneV6a2HLWrL9OEkh4/PS/nh5jPlV/6R9lhOZjLPtgGWqUdXbvCcLBVzG3nzk/1CZNCDbBiApL3m6H9Hjs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=N2pZD2RX; arc=fail smtp.client-ip=40.107.159.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4FC4028E8
+	for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 21:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790284685; cv=none; b=rwqux+ltXRdYz1hknApwS2Mom+a+e553AdDSX+ZjBt/1IU3/hRpebF1+ObLbYByoagSL6pOnlEw7WJKnsvIKPM9KIDv4Qjwk8Mq4K4Phb1tnyKc9ilfT22U3HBf6zI4HJB/9SUtGK0ZEwqRZm5U9UcIwiJ06ftYk+AwmZaPB/Yw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790284685; c=relaxed/simple;
+	bh=zp1GtFAWNLSN7+BfopZI5W35y9BoiCnO65i6+zRDnoY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lbfo2v4SRPN8P0C6szToWgnR2rMLZXaXike4MVhf+4/53EHc62LY0H6IipFQAIi0inErLkkVzjAjc58M8Qrem727c/IXMS7enaHIXoNhwzM6sLcYbvwmafZkv9fMQ7R1Z/NVi2YJwriZzC/ndKUbesYgyCeTnNTnPEkCjYR5oKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmVD5QDS; arc=none smtp.client-ip=74.125.227.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="N2pZD2RX"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JWWcizvcL2Yvj/XkClb7U+w0mBXbOmeSaTIru9VOgdsEvfIPmJyHPQ4B8xdueNWz5ICeI6BAhlx45c5ul7hI8Cn2+3aeA7LrmwbTrqZJLQOlx7TE54css9c3Hggkix9TmCoNFNrV8rKTTfy1sRpvG3O/P5ylrZCBGyxIDalESwn0vieWFjFiRmx1tGTVYQVB9Jj1So9yK8HCst051MuCpxWiSVVAHVzjNewJ4ilrH4xj1vajN0fg/nkTs+lCPg4m98n34iyrzcJmZRXD/bM1dQ8Q2YUXKHEbRffnlcEqXbuN4RhKcP8x8htCJR84bv0ne7k2ghmPIiBsdLkuRd6Mtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nTP/ob5DqXbFtEORQSF1xROnwkJsf8nxM3/NszPcKK0=;
- b=HUqa3izoW7R0feixsiXJsed0tYx47K8cuHwqEolHXsRW0wa2YrSYZRaOc41aFbtBnZkYsMBl2Y5RWkwu2EXP511eFv2xzS1a7uec2HltMLv9j/cfMZo5+6C0RlJKB4Z0z2TpHvIJLh5q7K5kbxxtjhwP8pBrL6IFTFdjMNZuzh7S1JacolHEcZjZdhSFOKt1KXYAHueLWaCFGM4O+fKsNCWo7fY2HH+wYz0fBOO8QgNv3PJ1N29ShRj2HV+aQukBWdPeMLNWQhqJXR1G0wosepZv5XUnGY0aBUDcOZLkFuY8pRDYovN9A1SjABfiU8XE6f3U0qom/VZnzWfM+NxXFQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nTP/ob5DqXbFtEORQSF1xROnwkJsf8nxM3/NszPcKK0=;
- b=N2pZD2RX+vtjWE/YwiC0H1S4V1Y9X6GolaYXDB5z7KQ6mebd1/G0PP4UzkrsFv0G9RygLgQT7+PTYhPNlicCA5oDFOMhQEgEtUrJNTLbDc7eKfyYpxH2KzZU3G4WRvKIklbFzWgIetnHBzpNnV47j3tKty1vyGhZDg3VZHB78dlH8D4360m1zqW4pcoN3Tmfs48wRYsNvneMY7+DI0yve2KjGznbfUGZwAdPwqpQM+4t/ZpG1cEaCsuEhm6lgiwgoXEd0C1+tWZe1fjmTQXWPf1ErcKBPnd3tKtJ8fTXb7AXCuNculoeDHqeMaEcw7IDV4tFnHmYuKf+RFFugL9c0A==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM0PR04MB7123.eurprd04.prod.outlook.com (2603:10a6:208:197::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 21:17:50 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 21:17:50 +0000
-Date: Thu, 24 Sep 2026 17:17:42 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Claudiu Beznea <claudiu.beznea@kernel.org>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, biju.das.jz@bp.renesas.com,
-	geert+renesas@glider.be, claudiu.beznea@tuxon.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	stable@vger.kernel.org,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Subject: Re: [PATCH] dmaengine: sh: rz-dmac: Fix off-by-one in residue lmdesc
- lookup
-Message-ID: <arWTdpFikA2brWXq@lizhi-Precision-Tower-5810>
-References: <20260922092037.224884-1-claudiu.beznea@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260922092037.224884-1-claudiu.beznea@kernel.org>
-X-ClientProxiedBy: PH7P221CA0044.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:33c::14) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmVD5QDS"
+Received: by mail-pj2-f41.google.com with SMTP id 98e67ed59e1d1-3a0b18f811cso249297a91.0
+        for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 14:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790284683; x=1790889483; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=QD6KVQmWiWZCi2apQJykDCktIAOK2lbc8NkdM91LUdQ=;
+        b=KmVD5QDS9d6OoxzPnNgkdkgRi1hs5EwrTwZhv6Gr/fy/ij1+eYPW2u7T6FVkk53zji
+         YZ9KNnZ5dT9j5wXuE5HPnnpbriBikZ51ZaTBpy5oeH+bbnLtpwDHY9Ph5qvIW9+GSuQS
+         +wairQSu0Eloh86B2S9fBA7g7XBWs4bBDp2zhSgrnQMVUE3h3pcGaJYrA8pLZZT39v9L
+         y9/UKj5lTuHpQAQnIc2BLWJC6UdYvW9redUgP4c7BKbaPioSYGWIFyfLGd/s7s6KajLg
+         4KkkhyacKvDXoJwrZjmkcGmKBUaWVs4RbGVRtM7WuaCa/SpsBWNg+jhKkQ1LQNLo0YPY
+         ePyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790284683; x=1790889483;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=QD6KVQmWiWZCi2apQJykDCktIAOK2lbc8NkdM91LUdQ=;
+        b=gVmHtgaK+CeXW/stlUhWPGfvT0zakkq4NXv+lHreERvrcL0jWfwL3Gg+V5L2JvuSVh
+         ZjoAs3KqiOorP+EOpPviSm/+MplszTxhHrZT4VBg9uwjw/73YdT+PDfRLfPrx2DxEFIi
+         tN04wOUMMSSvJinGUo5qIQq5YieHAN8EhI5/smCOWGyl7r8HRTbutOsfRokGl+TwwwVf
+         /i/JnPV0Tp0ZNryRoXA7CmQW0/Rd/QS5r0VragDXDfbHPSOx7DiEdekYTFO/WQnYmQJQ
+         mea5uvc5W0W1eGyJ95yj1qVQXurMCnONxl0jOF/HMJvLkyj5usWkrNgJIItGe9JjMudK
+         C11g==
+X-Gm-Message-State: AFuF++kjTSRSiIN6SYhW4OVOXkJ2eBndLyiTCMmzh2tGC1pWtLFldr3k
+	mpxMRMpvpCUdDkHwrvbZAvyrNOdIx1YVxDTBGJf5E93lXUNbYTp/XUuNnR/atw==
+X-Gm-Gg: AYBFou2r7grq1iOlmJbXlgIvxpSjsTpnQHd7dvxBU3sVRnjVrV52SxkMxLlfMEjBNBn
+	VrbBpqVCYXqy/yBPjAJsLmwkW5FoWutLeXCe+h5CbtkyXpeGfi8YbZHMBWzlHyHgCMIrDEh9VP5
+	ZSwk6hDOKn7a1CJXUTSgrXSL63vwbx/xXlTTRPVOABrhyxqpOOvLpIOBmKQvRejhBouSM+raFha
+	rrY2evuYoQxWPTn68AnuJz4/fp7wHC+6LzDoJbKaHsYOSh4fbZyTnxt2yNQQ6jIXfvlmPzEvusO
+	DRNny8ktIAnA9E2OqFJv4hsph+yxPJgj2Co4oQhE/3YPD56+N+mTNuQdYLRZa7SrhFCTqnizvx4
+	vDnivw2F/GOnR08nZkRiP+kvyGkuLpsc3U8+DFgdVrpu0ZOF4XHvm6SslgDhD83gHvMMlMOBikn
+	hqZk8Jj1BOp34rtiN9LwshbjcVE1JbhXkT/U9bwKQOgUK5RaPgIXUo6UY+Gmn+fQZAOpuMT1MHp
+	t0c6L1hJ9JijZpnrafyjv1iUSFoeALoGbbDh0w4CTxEN0RM6sOjWje4Rzy7qjNpTjetNPIPE0+c
+	9bXbyOboLXMxjoEBClnlPnQMnMrC0ZNgGScwhoh2ZLTJnFecjnU8yDrMDGA=
+X-Received: by 2002:a17:90b:1c84:b0:39e:6a81:5a94 with SMTP id 98e67ed59e1d1-3a098e39a55mr3083632a91.40.1790284682689;
+        Thu, 24 Sep 2026 14:18:02 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e34])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a097663fd0sm6613523a91.9.2026.09.24.14.18.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2026 14:18:02 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCHv2] dmaengine: mv_xor: use devm_platform_ioremap_resource()
+Date: Thu, 24 Sep 2026 14:18:00 -0700
+Message-ID: <20260924211800.79208-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM0PR04MB7123:EE_
-X-MS-Office365-Filtering-Correlation-Id: 09211d90-9f07-47fe-f814-08df1a814a12
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|7416014|19092799006|10067099003|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	oowqxB9iM4OlYmZo1F5QKV5LFsbs04Bb9CVucntJFhlYOvl4FUH4g2xDhNut4PP/AjAVKjOVNfDx8eBOkkDASwLGq1urr3CyVwIb1+BCdzUNyAlf0Ht8zG0w8CqMml3+OTtlazozyl5IRUO+sxQt8RvUi6a+D0BwiMs67kzITAYkuWxlmj0RXesKoYbGLxqiGilrIFM+/NSOk1UryRrZOw8Fk6UjKux0vAESUtO1SdCBB2Hjjssrxw2T/LkDrD8Pjmu7rlTPPLrQroWa6uIF+1n2sJs578dOy8zaVDCib8Ba1AYGGFJNVy44YeZg4YgrM+BLTcXGGW7MltcuTCCuwckLzH1wkDg6TefSdHLprMV6A/fDPdJsyW3JFu8RBFelOFHfFVI3gHY4i9MpktU7Umq0E1jSAaijBckWOtxrAj5/ZV3rfPLk6Mv71R6CIw8k9ror79o3Ylo7yqsE8M7gIdAJUeVA2tb8ektAb3pJCHZLHqk7475FzORN8xXAQZZik6p200/OzNb74MgtOoIVfYl5b2qdZqFyAvgjqP2rrb8sY8/rNBg+5ny9kTspg9xGmtWZwU5JJX5TPy0S3JljfC1CcE8skeAWiBtrtcbyxf+16XmJShOTejJ2P2rAysx3qjFM6AvVGVdDxdLesStrksZ5Ym6pKpdVxZ7KjM+QiwI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(7416014)(19092799006)(10067099003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pKdC95cRtBfizyqaacPxfkCxngR8+0MX+ZqGVxba/obnV+uZrv1glMUEXzYQ?=
- =?us-ascii?Q?GFguZoJUJopfOn6V/0wb/xitjZjKxmBKsGDEc9ZArRijPmiM8g9i8JilUOcv?=
- =?us-ascii?Q?h6V+6zaB9/UJ4JblrkWucSfXTnrfAW0DbjiJqEBioO6YRqUjrVmH8RiD/ig4?=
- =?us-ascii?Q?r63xLkdI3DV0xxbvDBLg0kwTlNBA8pL49hnSSJo9w7JQu/QtS+FPhpoUz8J3?=
- =?us-ascii?Q?zMO0v9i6LBuSlvHR5cDCJs+PgoqR7d7LT7sRXVqW+4F+vAoC0KJ9lOA/Ru3+?=
- =?us-ascii?Q?lumMvHVU9/y8s9fGYF1EoGHsOdSNsDNQeSuXw9Tq4TAS4nOydBavfV3/u8B4?=
- =?us-ascii?Q?hywfSSfN8H1t4uGmfSqeZRZe0islRgbv/r3TpvQ65/V7VC5SJ0iFzju2OLpE?=
- =?us-ascii?Q?eDEGRDo/hbNwh7ua5pPuwvXX0TSOzMmOxt4rWnE4eqDbfSEwx5whnvEWcMHQ?=
- =?us-ascii?Q?1aCH7vo6UQ8ZwazwCeV5Mzld62sn+449Fs2Lr/lvNHo7zUSiTE1TChHgsaWf?=
- =?us-ascii?Q?8MdOsUjiEGMH+0gcNZpu4W+s7AaT4SpNYtgftiozVaEpK9A0ktZ8JJBqn6jo?=
- =?us-ascii?Q?2pRvGYrKHUZ0njaxB2Ims43qbYG8KGYbbi29tVTacWKCOkDVOqzuaANoRdJ8?=
- =?us-ascii?Q?SZKgzLHGvsgetZ/bCwUZyDkls5ZSTkL5NqR/fyZhgqyw3XyP5IawssX2Pdsq?=
- =?us-ascii?Q?CnfRD/XOnVVqoB88DSySKfkSIyRbbgEq0t608uypXExdpTbljDJ6D2jsAyGV?=
- =?us-ascii?Q?vlyr16HmcN7aUgggqaOMm5jwXauKmvTUrAUxiWVO7Gg4R5FKtqWrueu0EETF?=
- =?us-ascii?Q?bVLz1DhV6u7SECMJxw9FKgT//ydCYtMaWsfM4I8JcaE8EePgoFJZtoCUmcKH?=
- =?us-ascii?Q?YAiTygu0zk3FUHZNgwORJnBStY/vqvU51zn+LfRZPrQ9WuVEpzUnS2Ok7Vsp?=
- =?us-ascii?Q?XYx1yANJesFaq+Jgai0HgIL0HGNAJiVNUamov/xmKiN9AVIHMI32K8agBIys?=
- =?us-ascii?Q?zmayvH2b8gkhLhGe9yH9vDIvLmzLM5SfLe4lEg30PPM+vRNVqt4/JXMfGvsK?=
- =?us-ascii?Q?FQC03cU7RwwV3xRl7AljcJ68Zlo/tCpIzDTV4HtHtEdqLPGKfO+xT2j0ubtG?=
- =?us-ascii?Q?Oc+xt3YSwEyA3agvevOhe3591PxSZuJOq8KsvdioE0mIpgC2STBFBFPEaVMc?=
- =?us-ascii?Q?+7XpOlljk+OYWKsPwrvKbGSBMr168tT1ii9iYpmFM6mgRV12BEw+LG4BjF30?=
- =?us-ascii?Q?lW3fMRVO2546hwj5ZYIN2IS8oIrBBJQSOmOeoUMOEYWm2BmMYK2SJA4qGa72?=
- =?us-ascii?Q?AL6cY0d4HTMF3v9Xq0CDjwRVNN4VZXCf77dg9Qc+Z9n78XqGEMcC5gRn1/fC?=
- =?us-ascii?Q?eLNtcVz+FCUz+scYDHhgCsdy2YtCAhYXPLnnvD1bpEtqyx9l9kClJB0GxglZ?=
- =?us-ascii?Q?jp2NiT7WHh3KAxjVXt5JLN5pMQabKjVgu4yM2HMX0sC727yPR8wMloCuRDqE?=
- =?us-ascii?Q?QduD6VvYXf0gRtVmLUh7PBpaFL3MaJ6sFwdYX1dIdbr6XicIfwspJ8emywvF?=
- =?us-ascii?Q?U2YJ44teA4D/r6aQm106/6CYRbijo2ptKaPBRzeZ4TCEIU2G+MGs1jM2DX2u?=
- =?us-ascii?Q?oPlf5jFCba34q+imWGOBq3OdFzZEmQHsywkqWX8wVGN+1Ax0T972EEhfR7Vx?=
- =?us-ascii?Q?DUncUHnhDvBr1ZEQRu/CGrd2fWR725zdfepfUtiievHkuqgV9tipo2dSX9La?=
- =?us-ascii?Q?T+CoHsawkoMg2tsKzI3PlkcJufi8z9lfaTUb8uWv9fKHPC7SNQPX?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 09211d90-9f07-47fe-f814-08df1a814a12
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 21:17:50.7598
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3jua5Zg7eEtZqU6SNPDgyv39NL0dBdfevFfEHKjKAl5JOG0H/w1C5vuizVh2eKQsuDEr0yO4u5PeJV0Dzqr38IeCWMffP2TrrnIs+s9F+c/wYuD0HpU6uNqC4vrOleIe
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7123
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 22, 2026 at 12:20:37PM +0300, Claudiu Beznea wrote:
-> From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
->
-> lmdesc->nxla is the address of the next descriptor, so comparing it
-> against CRLA, which is the address of the current descriptor,
-> finds the descriptor before the active one, not the active one.
-> The residue loops below then summed one lmdesc too many on top of
-> that.
->
-> Compare each descriptor's own address to CRLA instead, and add tb
-> after advancing to the next lmdesc.
->
-> Fixes: 21323b118c16 ("dmaengine: sh: rz-dmac: Add device_tx_status() callback")
-> Fixes: 172bfb57481c ("dmaengine: sh: rz-dmac: Add cyclic DMA support")
-> Cc: stable@vger.kernel.org
-> Suggested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-> Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-> ---
+Replace the two open-coded platform_get_resource() plus devm_ioremap()
+sequences with devm_platform_ioremap_resource() for the low and high XOR
+register windows. This folds the resource lookup and mapping into a
+single call and returns an ERR_PTR on failure, checked with IS_ERR() and
+propagated via PTR_ERR().
 
+devm_platform_ioremap_resource() reserves the region via
+devm_request_mem_region(), which requires non-overlapping reg ranges. All
+XOR nodes in the Marvell DTS describe two distinct 0x100 register windows
+that do not overlap each other, and sibling XOR nodes interleave without
+overlapping, so the newly-reserving mapping introduces no region
+conflict.
+
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
+---
+ v2: remove build message
+ drivers/dma/mv_xor.c | 23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
->  drivers/dma/sh/rz-dmac.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-> index ca76f1bb45c4..fdd7131e890a 100644
-> --- a/drivers/dma/sh/rz-dmac.c
-> +++ b/drivers/dma/sh/rz-dmac.c
-> @@ -937,7 +937,7 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
->  	struct rz_dmac *dmac = to_rz_dmac(chan->device);
->  	u32 residue = 0, i = 0;
->
-> -	while (lmdesc->nxla != crla) {
-> +	while (rz_dmac_lmdesc_addr(channel, lmdesc) != crla) {
->  		lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
->  		if (++i >= DMAC_NR_LMDESC)
->  			return 0;
-> @@ -948,13 +948,13 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
->  		u32 start_lmdesc_addr = rz_dmac_lmdesc_addr(channel, desc->start_lmdesc);
->
->  		while (lmdesc->nxla != start_lmdesc_addr) {
-> -			residue += lmdesc->tb;
->  			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-> +			residue += lmdesc->tb;
->  		}
->  	} else {
->  		while (lmdesc->chcfg & CHCFG_DEM) {
-> -			residue += lmdesc->tb;
->  			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-> +			residue += lmdesc->tb;
->  		}
->  	}
->
-> --
-> 2.43.0
->
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index c4e0dce3ca64..481a34f2384f 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1315,7 +1315,6 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 	const struct mbus_dram_target_info *dram;
+ 	struct mv_xor_device *xordev;
+ 	struct mv_xor_platform_data *pdata = dev_get_platdata(&pdev->dev);
+-	struct resource *res;
+ 	unsigned int max_engines, max_channels;
+ 	int i, ret;
+ 
+@@ -1325,23 +1324,13 @@ static int mv_xor_probe(struct platform_device *pdev)
+ 	if (!xordev)
+ 		return -ENOMEM;
+ 
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	if (!res)
+-		return -ENODEV;
++	xordev->xor_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(xordev->xor_base))
++		return PTR_ERR(xordev->xor_base);
+ 
+-	xordev->xor_base = devm_ioremap(&pdev->dev, res->start,
+-					resource_size(res));
+-	if (!xordev->xor_base)
+-		return -EBUSY;
+-
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+-	if (!res)
+-		return -ENODEV;
+-
+-	xordev->xor_high_base = devm_ioremap(&pdev->dev, res->start,
+-					     resource_size(res));
+-	if (!xordev->xor_high_base)
+-		return -EBUSY;
++	xordev->xor_high_base = devm_platform_ioremap_resource(pdev, 1);
++	if (IS_ERR(xordev->xor_high_base))
++		return PTR_ERR(xordev->xor_high_base);
+ 
+ 	platform_set_drvdata(pdev, xordev);
+ 
+-- 
+2.55.0
+
