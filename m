@@ -1,112 +1,496 @@
-Received: from mail-dl2-f36.google.com (mail-dl2-f36.google.com [74.125.229.164])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D24418A37
-	for <dmaengine@vger.kernel.org>; Fri, 25 Sep 2026 05:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.164
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC01B46DFFC
+	for <dmaengine@vger.kernel.org>; Fri, 25 Sep 2026 14:10:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790315400; cv=none; b=bBv8fvpAuU3H4lOHXWVBf11tjAJnFMI7nvSHhq/WPCuddMdSJ7H2B2gKzayxx91IiJt10psst90pdKpX6jZYjzpIunY7QDh1oCg0V+yAqTkEYE2Vsutvp5QNjjirVWy9ZX1/d4SizDu+WPZnx0DYgyNaBVhXLrjoaVI/mOi50FM=
+	t=1790345414; cv=none; b=NjUVFew93pRVF1mJbFCqSo9KRxJ7Dpg9BrZC5kevTXQqkkshftrg6dGhzM0Zw9qW9I0Hp7OFoIGBnJGCeNtX7TtBxo4hA8M3TfMH075RLH7kbiAUMb2i7iZ/S10C5JLMrq/3NI3xNJ0M+WFwNimQ0YUcOT/YVbg7ryIcd8/Kyko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790315400; c=relaxed/simple;
-	bh=EG06O5nGv2YQN0VST9oF+t1fwSadqDRUmkKfBj3ohro=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fNkf9Iqa9C5pMGtVDDfMcZMuQOuhB0hbIfa/vuCGQjiExxD/6OuGKTA2wAkf+1s36Bblw4MAuJ6TC/cZNcEyhDfU9W8fqPi8F10GZXdGGC4TZBt5flb/TUejM8nZnh1VEOgwKDqeCZ9W9YKqtjEPh9rBrPnFt6aZm4w7FRZcsO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABRybzRY; arc=none smtp.client-ip=74.125.229.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790345414; c=relaxed/simple;
+	bh=MaqbqWc2/dFkqoXAaoGX/GjWl4wzzfu9GUD+ZiHRzEc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Oj3Q3j/ks+t/5ZnRYUav/WZAnEf039sux8Kkr231ddisXxCJZ/kI0fn7C+p0Xi8oWWSeRTBqG/p6sdA84vPRScf+ZhTdX/qLbIAUkgbjPq0jlXJqU6GQ1eXSTXIlYFnYpOknYugU/B+mwhfTompZDLMW6zeb37SZPL2axvFRPoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kcW744Pl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BW4fZdsD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABRybzRY"
-Received: by mail-dl2-f36.google.com with SMTP id a92af1059eb24-14373bcc010so515613c88.1
-        for <dmaengine@vger.kernel.org>; Thu, 24 Sep 2026 22:49:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kcW744Pl";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BW4fZdsD"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68PBLhJA900428
+	for <dmaengine@vger.kernel.org>; Fri, 25 Sep 2026 14:10:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	H/EQVVKLz9a3Hib3j2NdYC7VuMgC/jlWCcU786W+/ts=; b=kcW744PldxktVsEr
+	tWdN352+Mos0thb7P7hASOQNLDOmni5xagL4mDoMlY7N/J8Ax2TqM6O23tIuzF2L
+	DFR7t1l6YXkeE+If6dhXErKFXbpuLl97NeA8XxbTe05oKZx8mesPj9qOnhCKWADp
+	RNwFX8QRsY7YrfeGdb0oS1uVu7skN0Zmnr2Qnd6NITXejrJaYRYlasHAV4uPJpd6
+	1NYdoFlPlJL5YdC+KNdrrj+jYA6SCqimI4GEMVRXMsSXwkm/ViAw6j69vgIRtZD+
+	WsnGh4Mp+WkPqu3ob9Ejyg8ACLTNcJ5nkt7aXObzoDyqQkEHEXpp5VuKmPWl0W2o
+	4CsunQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gwr100g9w-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 25 Sep 2026 14:10:11 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-39de1f85cb2so1145044a91.0
+        for <dmaengine@vger.kernel.org>; Fri, 25 Sep 2026 07:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790315398; x=1790920198; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DwH7X2c0HE06d7+KW8RNk9wbjXMwH6aer++sxW6WHtI=;
-        b=ABRybzRYYf75yvWfMdB5RPwUp9xxW6SNmHk1tSuDTCLYvJiMrJMA61nZgVtnlxY6d8
-         UsDrImwhlJH5zgeMoSgJQVwqD+1yFuu+HBS31PUMLDJ0vHR9KtKcw7QHuYR2fNtXqtsB
-         rsx59DKFZQqv8sr8/Bci6eEBxOsl6jYn5jCG4mYbGuSdC9E76tbNZv9ye4pytGpaAUDv
-         LbcMoU2Otx/8jCl5M31HouSXpv5xqEVbUZukxl5yEPxgDu92P4y4FTkprOod7wquTy5+
-         2f2UNVNvvUiwWxHl8ylF21FcmAVq0JDOdocpvi3YPI1ru2lAB9Y02O3ILz7c7NiETpr2
-         htuA==
+        d=oss.qualcomm.com; s=google; t=1790345410; x=1790950210; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=H/EQVVKLz9a3Hib3j2NdYC7VuMgC/jlWCcU786W+/ts=;
+        b=BW4fZdsDFPEFTbgomRsk/AQF4h7rTpdXyBqXl4lbNGYl0HXoqSUn9N16yHMQsizQEK
+         3JhGLzrOFsDaSmMEHyBzFjYLhpR0pgiDLm2loWGix7XOvWudcN9k3hC/1uSliVTVW0zC
+         UxFhiXzJKZRUEuQz7Eumql0r7K9sXcLIhgjW0+VMYZ/Ni4M2pUIrmF+gw2TUtDKDO8p/
+         kxAZkzB37np/pg0t4RvSt8wHVZ26ZKeiMYFGW1Ibd5jWIYlYrW6ifcSZJCUZNE7Q2BXn
+         Qgp5LW6eAOMePxHQTg69H05xWTSnA7fyPSYsblB+Ys9WAynDNRyh7tdKr0noQQtGhHr3
+         mMJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790315398; x=1790920198;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1790345410; x=1790950210;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=DwH7X2c0HE06d7+KW8RNk9wbjXMwH6aer++sxW6WHtI=;
-        b=d5XqJLrwDG81EAGDBKRPdW4MPMMBHRFYtOT2o3DfcqJAqBqmxgXl6+Igf6JRcR3kf0
-         j4nCJhzZypNr5IO3ZRCzxRFAp+8g9Lz7Wb0quLDdJ6UnKhk0aK8rNqtgXFvzgpNCRgEE
-         G2ecbMZELUvumiBy1FqxdfIrC9cy8DSqUJOyJ02SDBeEI8ebXVucBJxEltZPxZ9pZeaG
-         YSQKluMdRtUMbKjWxIIjhNfjYO4nIpbQeoDJbz21AQiMS83DqMjPeGQ3/rn9sn9uNqIR
-         b+b2F76cBrqdGUYmOCg34izYQQun6jTcwfsXPUPvkXJqDAp0oD3eINKAFL9chqUvW9iX
-         oC2g==
-X-Forwarded-Encrypted: i=1; AKwUvByRo6yPVym/g1nRxSA7kt6dSazmIsw+uqwYsOpoKRB2lFLEIjJDOF3NwKxI/R0hVSeYQNI824wL/P0=@vger.kernel.org
-X-Gm-Message-State: AFuF++nbubJKNlGn/7R40R8YIGpO16iV6QVZZn5fl4r6aTlPFL129nFs
-	k7VgBPSrrCgod2fFX9ou313MgEEnSY/ARqmfBRcBVwb05c06X0LDRr6VnokeO0LMrk+ntQ==
-X-Gm-Gg: AYBFou3UCkzQvWAOAUhmszvcv3KwBYHgbIFpxsEurXhOkWU91C3X8yFr5GQYdYqTxiE
-	5C15sD48aCgcLG3nhhnFXVfp1WBwnF81lJM3OFbGdbmIub3MpnADPTTP7a733w4T0POgev+w/nY
-	xHs6LznNuXL/2izGy85Cjh6zey905j6PCBcEBPN4rAH+msxsb86RikzK8RrND/GAQ2cGqk2X3xO
-	Y0k8FGndW64YX2GR9FdqE8/3Dz64DkpIjn72DCJufUblJXaSiTWeXiSHqRcipzB4DQ1B9RqL7JQ
-	a7a40ytAp9nem5FHJ7aDt9KPAXYuJXsypkYXJYzjh27zncm4b+lNnF6M/PUv7mL7ulRmhATRYT6
-	dc8BjNbMPL7AlE6KvvxQoaIt3P7w5Hvy2vNSRVG5s8OPFrqpLhb7yCtfP5Kas8GyJMZYMqhEbUL
-	QnTkZGp+dRnMsrYywhz13899vvkYsC86HHO2jWk0XZcyEt0Qk+dr6LSW0GzWB690DpY2MC4ynm2
-	QkklAXMbGzQPfhuZlAYdHTgeVu/slotptVEYT8sEOaT0/VfxA5PZDYlg/Jh56WbOj4puA8Rt6gf
-	lv7tdeqDkL/J33HMt4GImK84TK+U2lffjLctkVo5B4LO7knuBBapz1hNlt0=
-X-Received: by 2002:a05:7022:6ba0:b0:13c:d318:5b91 with SMTP id a92af1059eb24-145ee808dcfmr1307621c88.13.1790315397970;
-        Thu, 24 Sep 2026 22:49:57 -0700 (PDT)
-Received: from spider.bream-herring.ts.net ([103.6.151.236])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-145ac67c3f8sm3243930c88.3.2026.09.24.22.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 22:49:57 -0700 (PDT)
-From: Matthias Goergens <matthias.goergens@gmail.com>
-To: vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: [PATCH] MAINTAINERS: name the vkoul/dmaengine next branch
-Date: Fri, 25 Sep 2026 13:49:53 +0800
-Message-ID: <20260925054953.2965762-1-matthias.goergens@gmail.com>
-X-Mailer: git-send-email 2.55.0
+        bh=H/EQVVKLz9a3Hib3j2NdYC7VuMgC/jlWCcU786W+/ts=;
+        b=wrRWSVXetLa4wnNGQV20UcLbwGkqB/k8bDV1vPciE6Hg6CydZ7soAWiKmJ1z10Tvhy
+         1QrUM91sGfd9zCH9wOv8LWKimR3dQ18pNOmKOEPzt2cbjcGW+FksfxxAfmfLoUEHfd05
+         JpuE2SWF6kqSLUm/u4PODvyH24/IWhvoGhKlU5h8pyoFil1tDOtEobytOJp5VJguakO2
+         9OJn+cpWfjSVUVy2yhKvEhjGK5ej5H6bS7U01fHXeu1tzjlqpURUC15xJ6jI4W2UX1Qy
+         wECyRiPGFiob3wlpp/l5DPXsm0vvtJP2p7LPsEen7QTDbNtoVaNQU6l8DKBUUL9oz5PE
+         ECVg==
+X-Forwarded-Encrypted: i=1; AKwUvBzoaHnhN6EJQFfthzsCgiMElSE72BZIF8uTjbBl/UVVcwvnlwJNolJKlQUhT24jPmB7W8qcV6Qwytk=@vger.kernel.org
+X-Gm-Message-State: AFuF++k3zLL8inwS7KIb8iPDdgOjKiRC8EBkSpppmu80vFcDS7B4ZDRO
+	TAm4JXqYJdp5Tc4sLL3o+WKU97bEt3JTdMnp5X8yItqcyduCjvIypTt8QTXAYlhMXyM1kxx8hVq
+	k04e1iuIjm7cmfETutDRJ736fBVqUBHGzZY9+K5X+8k2oVWPNvmq1PIMkYq0JVGo=
+X-Gm-Gg: AYBFou0uNA3fQkg+hrkZRQSCdh85mj1GnVTVVV75ThvVq9/J++KBStcRoALW+EFzhwA
+	N+ESeub5GlW1evqdjtpA2Y/QXNRzFOZIr3Fn2v/oT2DH40/KwTVGiIEvkwmTQFXaG5p/cdSNtoj
+	jvizXYHi5ahLIqzDOVuNg5gqlDuK9dOzoJBLBm1iUzxZ3oyD5cvsWj6zrHgfTXuDmGAia0aKF2i
+	9xXehaO8sgMtp2M0DCJdVqb4iuJpFaWRhKFecbCV8vZktqsrHC9MqfNyPGiXJu764ifNYntj8pT
+	qiQ3yCtaFz+GAFYe3DgO3U+ZoiuKnoz7ulPDNO4I1o8RX5rO7Wvrh7/wCrH6nsJPIRDqLBM6DGO
+	1qFY+kdZ/fX6Q0euINxuAryPNSHLdl5o=
+X-Received: by 2002:a17:90b:224e:b0:3a0:cbe2:9e0c with SMTP id 98e67ed59e1d1-3a0cbe2a16cmr701478a91.63.1790345410290;
+        Fri, 25 Sep 2026 07:10:10 -0700 (PDT)
+X-Received: by 2002:a17:90b:224e:b0:3a0:cbe2:9e0c with SMTP id 98e67ed59e1d1-3a0cbe2a16cmr701438a91.63.1790345409560;
+        Fri, 25 Sep 2026 07:10:09 -0700 (PDT)
+Received: from [192.168.0.3] ([49.204.107.168])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a0b8ce3f12sm1664008a91.2.2026.09.25.07.10.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Sep 2026 07:10:08 -0700 (PDT)
+Message-ID: <4ec85347-1d84-421b-9a49-1d2fc21a2e36@oss.qualcomm.com>
+Date: Fri, 25 Sep 2026 19:40:01 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dmaengine: qcom: gpi: trace: Add trace events
+ header for Qualcomm GPI DMA
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: konrad.dybcio@oss.qualcomm.com, Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        chandana.chiluveru@oss.qualcomm.com, mukesh.savaliya@oss.qualcomm.com,
+        linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+References: <20260909-add-trace-support-gpio-v2-0-01f81739bb88@oss.qualcomm.com>
+ <20260909-add-trace-support-gpio-v2-1-01f81739bb88@oss.qualcomm.com>
+ <aqHH8rliEDTmrW9P@SMW015318>
+Content-Language: en-US
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+In-Reply-To: <aqHH8rliEDTmrW9P@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA1NiBTYWx0ZWRfX5nb/7XN57VOY
+ HPQm8V2+CWIZXmyrGoyLyJaXGRsEFHNdhGDzjqyhZ31ukC2/uMcOD/5ebdvqR3V1NgX98Tohde5
+ VbBwHQFwzV+/JJA0gZE18STp3QMDYtQ6LfdRYr7/MaFiXo4nmtyt5LAXtj7S8j3Z7n2TYf9toPp
+ WOoy5G8Hl04KuhxU00m2fhaIvfTF32dGbjsTsBYHCmjjeKCZqRfllreGV9Kao6Hly4VJUaWCHte
+ 4wda/aAupGu8BxMsZkrUf51QXMZfOeHvcWZcTxtdJKbLCElkkhLaTUsnWx4sEbMTY7T+W//o1FG
+ u4j1fUGiyuf6TLbD0UwZufLvd3CRIzP8uW0NM3a2yBgLAFlcdaK5vcO60f0pCrE/2FEaVKv3Nmp
+ lPQhSSqhp/rtdH+6HgBCOoqdK5ReiSN3OaPN75dWwjpbJWYh4PPbCJ3sNDw7m8oLMw9LV5yATvM
+ iDx+mSW2H5IhgAoNx7A==
+X-Authority-Analysis: v=2.4 cv=ZfKIpcVA c=1 sm=1 tr=0 ts=6ab680c3 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=LbQqD9KVPf5lhnc1gAYl9w==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=9voflSBtY7004n_qTS8A:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: qHVQnAtMs81Eu3ldmFZmWFkM1ZNWjpGr
+X-Proofpoint-GUID: qHVQnAtMs81Eu3ldmFZmWFkM1ZNWjpGr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA1NiBTYWx0ZWRfXwOzCFepurp3F
+ SREOQHwamNQ6y0q3Dp/2mHfjIXHo3am2hAikmnUl7T298S/wKagVDD3hKPg50poiWb5owwlSxVK
+ BfzzwVWXz53ZLgdBBOQwvy21m83XvrA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250056
 
-The T: entry for DMA GENERIC OFFLOAD ENGINE SUBSYSTEM names
-vkoul/dmaengine without a branch.  The repository's HEAD points to
-branch master, which mainline already contains.  linux-next merges the
-next branch of this repository (Next/Trees).  Name that branch in the
-entry.
+HI Frank LI,
 
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
----
-This is part of a cleanup of all T: entries whose repository HEAD is
-not where development happens: one patch per repository, sent in small
-batches.  The plan is at [1], and why it goes out in batches at [2].
+Thank you for review.
 
-[1] https://lore.kernel.org/all/20260924033200.3615554-1-matthias.goergens@gmail.com/
-[2] https://lore.kernel.org/all/20260924101844.2403008-1-matthias.goergens@gmail.com/
+On 10-09-2026 02:26, Frank Li wrote:
+> On Wed, Sep 09, 2026 at 10:39:41AM +0530, Praveen Talari wrote:
+>> Add a tracepoint header for the Qualcomm GPI DMA engine driver.
+>>
+>> The events defined here cover channel/event command dispatch, IRQ
+>> type handling, channel/event control state transitions, error IRQ
+>> status, completion event processing (including the no-pending-
+>> descriptor and transfer result paths), per-event processing in the
+>> event ring, ring allocation/programming details, already-in-state
+>> checks for pause/resume, and TRE queuing and contents. Together they
+>> give full runtime visibility into GPI DMA behavior in place of the
+>> driver's former dev_dbg() based debug logging.
+>>
+>> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+>> ---
+>>   include/trace/events/qcom_gpi.h | 313 ++++++++++++++++++++++++++++++++++++++++
+> Any user use it outside drivers/dma? if no, move it in drivers/dma
+>
+> and please squash to patch 2, with user together.
 
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sure, will review and update in next patch-set.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 140eafcbbd78..b37df1bf5c03 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7701,7 +7701,7 @@ R:	Frank Li <Frank.Li@kernel.org>
- L:	dmaengine@vger.kernel.org
- S:	Maintained
- Q:	https://patchwork.kernel.org/project/linux-dmaengine/list/
--T:	git git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git
-+T:	git git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git next
- F:	Documentation/devicetree/bindings/dma/
- F:	Documentation/driver-api/dmaengine/
- F:	drivers/dma/
 
-base-commit: 62f4c998b297cf233997a2b4cd6fc2d2df0319c9
--- 
-2.55.0
+Thanks,
 
+Praveen Talari
+
+>
+> Frank
+>
+>>   1 file changed, 313 insertions(+)
+>>
+>> diff --git a/include/trace/events/qcom_gpi.h b/include/trace/events/qcom_gpi.h
+>> new file mode 100644
+>> index 000000000000..241d76855ac8
+>> --- /dev/null
+>> +++ b/include/trace/events/qcom_gpi.h
+>> @@ -0,0 +1,313 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +#undef TRACE_SYSTEM
+>> +#define TRACE_SYSTEM qcom_gpi
+>> +
+>> +#if !defined(_TRACE_QCOM_GPI_H) || defined(TRACE_HEADER_MULTI_READ)
+>> +#define _TRACE_QCOM_GPI_H
+>> +
+>> +#include <linux/tracepoint.h>
+>> +
+>> +TRACE_EVENT(gpi_send_cmd,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 cmd, const char *cmd_str),
+>> +	    TP_ARGS(dev, chid, cmd, cmd_str),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __string(cmd_str, cmd_str)
+>> +			     __field(u32, chid)
+>> +			     __field(u32, cmd)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __assign_str(cmd_str);
+>> +			   __entry->chid = chid;
+>> +			   __entry->cmd = cmd;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u cmd=%s(%u)",
+>> +		      __get_str(name), __entry->chid, __get_str(cmd_str),
+>> +		      __entry->cmd)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_irq_status,
+>> +	    TP_PROTO(struct device *dev, u32 gpii_id, u32 irq_type),
+>> +	    TP_ARGS(dev, gpii_id, irq_type),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, gpii_id)
+>> +			     __field(u32, irq_type)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->gpii_id = gpii_id;
+>> +			   __entry->irq_type = irq_type;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: gpii=%u irq_type=0x%08x",
+>> +		      __get_str(name), __entry->gpii_id, __entry->irq_type)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_ch_ctrl_irq,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 ch_state),
+>> +	    TP_ARGS(dev, chid, ch_state),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(u32, ch_state)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->ch_state = ch_state;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u ch_state=%u",
+>> +		      __get_str(name), __entry->chid, __entry->ch_state)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_ev_process,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 ev_type, u8 code,
+>> +		     u16 status, u32 length),
+>> +	    TP_ARGS(dev, chid, ev_type, code, status, length),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(u32, ev_type)
+>> +			     __field(u32, length)
+>> +			     __field(u16, status)
+>> +			     __field(u8, code)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->ev_type = ev_type;
+>> +			   __entry->code = code;
+>> +			   __entry->status = status;
+>> +			   __entry->length = length;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u ev_type=0x%02x code=%u status=%u length=%u",
+>> +		      __get_str(name), __entry->chid, __entry->ev_type,
+>> +		      __entry->code, __entry->status, __entry->length)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_queue_xfer,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 num_tre),
+>> +	    TP_ARGS(dev, chid, num_tre),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(u32, num_tre)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->num_tre = num_tre;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u num_tre=%u",
+>> +		      __get_str(name), __entry->chid, __entry->num_tre)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_gen_err_irq,
+>> +	    TP_PROTO(struct device *dev, u32 gpii_id, u32 irq_stts),
+>> +	    TP_ARGS(dev, gpii_id, irq_stts),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, gpii_id)
+>> +			     __field(u32, irq_stts)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->gpii_id = gpii_id;
+>> +			   __entry->irq_stts = irq_stts;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: gpii=%u irq_stts=0x%08x",
+>> +		      __get_str(name), __entry->gpii_id, __entry->irq_stts)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_ev_ctrl_irq,
+>> +	    TP_PROTO(struct device *dev, u32 gpii_id, u32 ev_ch_irq, u32 ev_state),
+>> +	    TP_ARGS(dev, gpii_id, ev_ch_irq, ev_state),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, gpii_id)
+>> +			     __field(u32, ev_ch_irq)
+>> +			     __field(u32, ev_state)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->gpii_id = gpii_id;
+>> +			   __entry->ev_ch_irq = ev_ch_irq;
+>> +			   __entry->ev_state = ev_state;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: gpii=%u ev_ch_irq=0x%08x ev_state=%u",
+>> +		      __get_str(name), __entry->gpii_id, __entry->ev_ch_irq,
+>> +		      __entry->ev_state)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_ev_no_desc,
+>> +	    TP_PROTO(struct device *dev, u32 chid, const u32 *ev_dword,
+>> +		     const u32 *tre_dword),
+>> +	    TP_ARGS(dev, chid, ev_dword, tre_dword),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __array(u32, ev_dword, 4)
+>> +			     __array(u32, tre_dword, 4)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   memcpy(__entry->ev_dword, ev_dword, sizeof(__entry->ev_dword));
+>> +			   memcpy(__entry->tre_dword, tre_dword, sizeof(__entry->tre_dword));
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u event=%08x:%08x:%08x:%08x pending_tre=%08x:%08x:%08x:%08x",
+>> +		      __get_str(name), __entry->chid,
+>> +		      __entry->ev_dword[0], __entry->ev_dword[1],
+>> +		      __entry->ev_dword[2], __entry->ev_dword[3],
+>> +		      __entry->tre_dword[0], __entry->tre_dword[1],
+>> +		      __entry->tre_dword[2], __entry->tre_dword[3])
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_xfer_result,
+>> +	    TP_PROTO(struct device *dev, u32 chid, int result, u32 residue),
+>> +	    TP_ARGS(dev, chid, result, residue),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(int, result)
+>> +			     __field(u32, residue)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->result = result;
+>> +			   __entry->residue = residue;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u result=%d residue=%u",
+>> +		      __get_str(name), __entry->chid, __entry->result,
+>> +		      __entry->residue)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_process_event,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 type, const u32 *dword),
+>> +	    TP_ARGS(dev, chid, type, dword),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(u32, type)
+>> +			     __array(u32, dword, 4)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->type = type;
+>> +			   memcpy(__entry->dword, dword, sizeof(__entry->dword));
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u type=0x%02x %08x:%08x:%08x:%08x",
+>> +		      __get_str(name), __entry->chid, __entry->type,
+>> +		      __entry->dword[0], __entry->dword[1],
+>> +		      __entry->dword[2], __entry->dword[3])
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_alloc_ring,
+>> +	    TP_PROTO(struct device *dev, u32 elements, u32 el_size,
+>> +		     u32 req_len, u64 len, size_t alloc_size),
+>> +	    TP_ARGS(dev, elements, el_size, req_len, len, alloc_size),
+>> +
+>> +	    TP_STRUCT__entry(__field(u64, len)
+>> +			     __field(size_t, alloc_size)
+>> +			     __string(name, dev_name(dev))
+>> +			     __field(u32, elements)
+>> +			     __field(u32, el_size)
+>> +			     __field(u32, req_len)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->elements = elements;
+>> +			   __entry->el_size = el_size;
+>> +			   __entry->req_len = req_len;
+>> +			   __entry->len = len;
+>> +			   __entry->alloc_size = alloc_size;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: elements=%u el_size=%u req_len=%u len=%llu alloc_size=%zu",
+>> +		      __get_str(name), __entry->elements, __entry->el_size,
+>> +		      __entry->req_len, __entry->len, __entry->alloc_size)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_ring_info,
+>> +	    TP_PROTO(struct device *dev, dma_addr_t dma_handle, phys_addr_t phys_addr,
+>> +		     u32 len, u32 el_size, u32 elements),
+>> +	    TP_ARGS(dev, dma_handle, phys_addr, len, el_size, elements),
+>> +
+>> +	    TP_STRUCT__entry(__field(u64, dma_handle)
+>> +			     __field(u64, phys_addr)
+>> +			     __string(name, dev_name(dev))
+>> +			     __field(u32, len)
+>> +			     __field(u32, el_size)
+>> +			     __field(u32, elements)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->dma_handle = dma_handle;
+>> +			   __entry->phys_addr = phys_addr;
+>> +			   __entry->len = len;
+>> +			   __entry->el_size = el_size;
+>> +			   __entry->elements = elements;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: dma_handle=%llx phys_addr=%llx len=%u el_size=%u elements=%u",
+>> +		      __get_str(name), __entry->dma_handle, __entry->phys_addr,
+>> +		      __entry->len, __entry->el_size, __entry->elements)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_already_state,
+>> +	    TP_PROTO(struct device *dev, u32 gpii_id, u32 pm_state),
+>> +	    TP_ARGS(dev, gpii_id, pm_state),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, gpii_id)
+>> +			     __field(u32, pm_state)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->gpii_id = gpii_id;
+>> +			   __entry->pm_state = pm_state;
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: gpii=%u already in pm_state=%u",
+>> +		      __get_str(name), __entry->gpii_id, __entry->pm_state)
+>> +);
+>> +
+>> +TRACE_EVENT(gpi_tre,
+>> +	    TP_PROTO(struct device *dev, u32 chid, u32 idx, const u32 *dword),
+>> +	    TP_ARGS(dev, chid, idx, dword),
+>> +
+>> +	    TP_STRUCT__entry(__string(name, dev_name(dev))
+>> +			     __field(u32, chid)
+>> +			     __field(u32, idx)
+>> +			     __array(u32, dword, 4)
+>> +	    ),
+>> +
+>> +	    TP_fast_assign(__assign_str(name);
+>> +			   __entry->chid = chid;
+>> +			   __entry->idx = idx;
+>> +			   memcpy(__entry->dword, dword, sizeof(__entry->dword));
+>> +	    ),
+>> +
+>> +	    TP_printk("%s: chid=%u tre[%u]=%08x:%08x:%08x:%08x",
+>> +		      __get_str(name), __entry->chid, __entry->idx,
+>> +		      __entry->dword[0], __entry->dword[1],
+>> +		      __entry->dword[2], __entry->dword[3])
+>> +);
+>> +
+>> +#endif /* _TRACE_QCOM_GPI_H */
+>> +
+>> +/* This part must be outside protection */
+>> +#include <trace/define_trace.h>
+>>
+>> --
+>> 2.34.1
+>>
