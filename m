@@ -1,87 +1,138 @@
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B539231842;
-	Sat, 26 Sep 2026 14:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E84371D1F;
+	Sat, 26 Sep 2026 16:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790433269; cv=none; b=ni+b5z4clCHic578+k8FUzvtZnLylpfx/ztcDJDixQNz3Y98azK3ZIo1TcOB3W+YwbovbzsRaoSxNAKxbDW2S4NTtY3u5s5o2sZzuxgD0NqFjyeClky0StSIH/5xUmOFA6p75TzpJV7eKgh5jjetkc+r04FM02uWWH9Rip2FZLk=
+	t=1790438590; cv=none; b=gpw8QDAOxAXYZ9/0akXou8yiERrJSalphzGrtEXcvNYBz1fW1TzzMhpk24TcOgvaqrC1VJhv17Jwxdss35Ji4deJZkELy4lcXO4p+hxD78iXsTQ0YCDeqtHEfBHwU2qEn5O5by0rngOtzYEW3iqW4LSFleflsvb5AVo4RQgOIFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790433269; c=relaxed/simple;
-	bh=sioWM7zU7orAq0yWu48tuqAz3z5o3yMX3T83TcxxaaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=apxRDao+oCuMsjOAkVGkFyS4eJh5b4HvVB8NvpTPy9P1V3D5kgSroz080BcokQAYEKYbRAyIXub/Jg130J5wgPpaID6Q/DqeW3dsOLnIir0fv+5/ugoeoYbtnVeBtYKoKvfI/ylU3MSTopm0wL/uR3ivJSLPpBzQ+c+0X72eDVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=OIrF0ZoN; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+	s=arc-20240116; t=1790438590; c=relaxed/simple;
+	bh=BWy9ymt+C3TfKogDDaUHpq9X5L8DGo37UtF+7eLoNBQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=EM2TNIH3ywxDwI6khGON3NcG2gXzBDcwTv3K0u5Nw5W7M3JLyvc2k0CEQDk3kuAq08ozBYgVxlRc0+n48Hp5iUMTgDKaGs3ubqZVah86yC76BMotAnb5FNChAVNsYmMjeePNtb16MTNpK9g7USWpAuPQBWJSImG54yNuGeSj/ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=AIM1zMg+; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="OIrF0ZoN"
-Received: from killaraus.ideasonboard.com (2001-14ba-70f3-e800--a06.rev.dnainternet.fi [IPv6:2001:14ba:70f3:e800::a06])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id F1636B5;
-	Sat, 26 Sep 2026 16:32:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1790433149;
-	bh=sioWM7zU7orAq0yWu48tuqAz3z5o3yMX3T83TcxxaaY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OIrF0ZoNTmP2Lh34cBXH+NEf2YlnDeyBWP/Y0GNoZpcBxs2nnT62H9yJ+rx7CmJNy
-	 GPxUH9pFck4AZvcVIMnsYulGkG4gW6OTZ8QvUMogQAqsL/MKaLB0W2Dwy8q95I//TD
-	 VGNszo1ZO0NmkV40TweHYccyULWmYDLulOK6yqmQ=
-Date: Sat, 26 Sep 2026 17:34:15 +0300
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Jiale Yao <yaojiale02@163.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Hyun Kwon <hyun.kwon@xilinx.com>, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] dmaengine: xilinx: dpdma: Reserve space for a string
- terminator
-Message-ID: <20260926143415.GA764757@killaraus.ideasonboard.com>
-References: <20260926121250.3258285-1-yaojiale02@163.com>
- <20260926121250.3258285-4-yaojiale02@163.com>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="AIM1zMg+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=C+
+	KFWhMVhDyc32PNB5YbDYV/IRrJTbVmHJi+TpvotRc=; b=AIM1zMg+krw1siZSuo
+	nk9tHqYK0MjZfo9vaManOkA9LSt/Iy8ZJ6GUsdvABA1buasQNl770f+XDXVrQ7ge
+	vqIpirBPNPIDojvie9rnc14BwR/8e02ZWYtIiYJaoBk8U55losBUFv3fL/gRTMkJ
+	cFEQlYAuQZ1L+OnauSGq7vQ18=
+Received: from pc.localdomain (unknown [])
+	by gzsmtp3 (Coremail) with SMTP id PigvCgCXfquP7LdqtkMhBg--.22772S2;
+	Sun, 27 Sep 2026 00:02:23 +0800 (CST)
+From: Jiale Yao <yaojiale02@163.com>
+To: Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Pavan Kunapuli <pkunapuli@nvidia.com>,
+	Rajesh Gumasta <rgumasta@nvidia.com>,
+	dmaengine@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Jiale Yao <yaojiale02@163.com>
+Subject: [PATCH] dmaengine: tegra186-gpc-dma: Fix queued transfer stall
+Date: Sun, 27 Sep 2026 00:02:12 +0800
+Message-Id: <20260926160212.91438-1-yaojiale02@163.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260926121250.3258285-4-yaojiale02@163.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:PigvCgCXfquP7LdqtkMhBg--.22772S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZrykGr45uFy8GF4UJryrZwb_yoW5Ar15pa
+	y7G39xG3yDtF13XF45GrW8ZFyUAF4ft3y29w4ayws3Cw4DXryq9F4xJa48KFWUAF92v3s2
+	9F4Yy343Cw47XFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piLZ2sUUUUU=
+X-CM-SenderInfo: x1dryxhdohiji6rwjhhfrp/xtbC8BDnImq37JDuZgAA3M
 
-On Sat, Sep 26, 2026 at 08:12:50PM +0800, Jiale Yao wrote:
-> xilinx_dpdma_debugfs_write() allocates a buffer of size bytes, and
-> strncpy_from_user() can fill it without a terminating NUL when the input
-> has no NUL in the copied range. strsep() and strcasecmp() then read
-> beyond the buffer.
+tegra_dma_issue_pending() returns before taking vc.lock whenever a
+descriptor is active. This skips vchan_issue_pending(), so descriptors
+submitted while a transfer is running remain on desc_submitted. The
+completion path clears dma_desc but never starts a queued descriptor,
+leaving the transfer stalled until another issue_pending() call.
 
-strncpy() has long been considered unsafe, and has finally been removed
-from the kernel in v7.2. A better fix would be to similarly replace
-strncpy_from_user() with a safe equivalent.
+Always publish submitted descriptors under the lock, and only start a
+new descriptor when the channel is idle. After a non-cyclic descriptor
+completes, start the next issued descriptor. Centralize the start of a new
+descriptor so cyclic preconfiguration is also performed when the
+completion path starts it.
 
-> Allocate an extra byte and keep that byte zero-initialized, so the input
-> copied remains unchanged and the buffer is always terminated.
-> 
-> Fixes: 1d220435cab3 ("dmaengine: xilinx: dpdma: Add debugfs support")
-> Signed-off-by: Jiale Yao <yaojiale02@163.com>
-> ---
->  drivers/dma/xilinx/xilinx_dpdma.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
-> index d9a3542c4531..b61ef3062d84 100644
-> --- a/drivers/dma/xilinx/xilinx_dpdma.c
-> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
-> @@ -410,7 +410,7 @@ static ssize_t xilinx_dpdma_debugfs_write(struct file *f,
->  	if (dpdma_debugfs.testcase != DPDMA_TC_NONE)
->  		return -EBUSY;
->  
-> -	kern_buff = kzalloc(size, GFP_KERNEL);
-> +	kern_buff = kzalloc(size + 1, GFP_KERNEL);
->  	if (!kern_buff)
->  		return -ENOMEM;
->  	kern_buff_start = kern_buff;
+Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+---
+ drivers/dma/tegra186-gpc-dma.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+index 64cedef1050a..4f4fdbda5e56 100644
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -553,6 +553,21 @@ static void tegra_dma_start(struct tegra_dma_channel *tdc)
+ 		  sg_req->csr | TEGRA_GPCDMA_CSR_ENB);
+ }
+ 
++static void tegra_dma_start_next(struct tegra_dma_channel *tdc)
++{
++	tegra_dma_start(tdc);
++
++	/*
++	 * For cyclic DMA transfers, program the second
++	 * transfer parameters as soon as the first DMA
++	 * transfer is started inorder for the DMA
++	 * controller to trigger the second transfer
++	 * with the correct parameters.
++	 */
++	if (tdc->dma_desc && tdc->dma_desc->cyclic)
++		tegra_dma_configure_next_sg(tdc);
++}
++
+ static void tegra_dma_xfer_complete(struct tegra_dma_channel *tdc)
+ {
+ 	vchan_cookie_complete(&tdc->dma_desc->vd);
+@@ -560,6 +575,8 @@ static void tegra_dma_xfer_complete(struct tegra_dma_channel *tdc)
+ 	tegra_dma_sid_free(tdc);
+ 	tdc->dma_desc = NULL;
+ 	tdc->status = DMA_COMPLETE;
++
++	tegra_dma_start_next(tdc);
+ }
+ 
+ static void tegra_dma_chan_decode_error(struct tegra_dma_channel *tdc,
+@@ -653,22 +670,9 @@ static void tegra_dma_issue_pending(struct dma_chan *dc)
+ 	struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
+ 	unsigned long flags;
+ 
+-	if (tdc->dma_desc)
+-		return;
+-
+ 	spin_lock_irqsave(&tdc->vc.lock, flags);
+-	if (vchan_issue_pending(&tdc->vc))
+-		tegra_dma_start(tdc);
+-
+-	/*
+-	 * For cyclic DMA transfers, program the second
+-	 * transfer parameters as soon as the first DMA
+-	 * transfer is started inorder for the DMA
+-	 * controller to trigger the second transfer
+-	 * with the correct parameters.
+-	 */
+-	if (tdc->dma_desc && tdc->dma_desc->cyclic)
+-		tegra_dma_configure_next_sg(tdc);
++	if (vchan_issue_pending(&tdc->vc) && !tdc->dma_desc)
++		tegra_dma_start_next(tdc);
+ 
+ 	spin_unlock_irqrestore(&tdc->vc.lock, flags);
+ }
 -- 
-Regards,
+2.34.1
 
-Laurent Pinchart
