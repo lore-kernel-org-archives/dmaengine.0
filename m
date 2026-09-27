@@ -1,95 +1,84 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD00C280035;
-	Sun, 27 Sep 2026 00:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4912DC792
+	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 08:41:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790469600; cv=none; b=Y5F5TQEW51Mmz7I3Ye6Th+HLcnoW0WQQxUOrSzMGoBTiZvelMapxKl/WWUboOc88LThMZhrfxVR/l0h7avn0jYMhM8o1pKfZVdJS2EjdpxYLU9jt+FyLl+BoNUdwNV1LHrDTuHnlrsGJO+B63JUgx/X9opAtbt2nLUl8L7qK6eg=
+	t=1790498520; cv=none; b=SY8v245S0WaC+sT2m4iY4YVFnDQEOTs6cQxo6Vr9PIqssxhR4bE4XiSXL1eGEcY7l5LqHiJC7TGPNvB8zOSfKnt48bZfPc/Ir/Sf9uPlVD7sLhMhhCkZ4Ojw+8KfDfYVXns7f+8Hz4IBTMl1Pal32HdE/TmvsWxoDG7zwtnug7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790469600; c=relaxed/simple;
-	bh=GCzP6euvKpSYuYQThYgcbJ04uTy/NJFMXHRYs7e/a1M=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WADT/1+LebACT1NYE1pBML9bW1RdKE+BePWCgJPYpCj6SpTieUl5Wy/4k/9sOlZd1sX8lQyQnu4gN7ZAyLx06XGBMZ55j8ZLTyfFCuZ9OGUhf1xb7HruS8BqYefrMA7HDV/zcElyRBpcei/mILhfpj3vJ79RcjT3PVHNDHocDBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn; spf=pass smtp.mailfrom=seu.edu.cn; dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b=Brvy0TWM; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seu.edu.cn
+	s=arc-20240116; t=1790498520; c=relaxed/simple;
+	bh=ssHHucZCZHVjKYb/oS7uXfR4XRKkhvPwANGA6q6rbKE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M570AUji5BzB3l5tRPR4H4aTOHC+bKt9ik8rPNLsd8gwhzdgya8YBmil24QXperM6TIDPYGYGE/cdWob6vukKrRzzSvRcsu/v7WHpXfpGqmtBBjaHMmgYRjtE+vBnHpDduEHkMuVItAjQOBvFWVZZZEvClEphC8JsD/16T0fvHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFi8MCZO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b="Brvy0TWM"
-Received: from seu.edu.cn (unknown [223.112.146.162])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4f364003f;
-	Sun, 27 Sep 2026 08:39:52 +0800 (GMT+08:00)
-From: Slavin Liu <bolin.liu@seu.edu.cn>
-To: vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	wens@kernel.org,
-	jernej.skrabec@gmail.com,
-	samuel@sholland.org,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	bolin.liu@seu.edu.cn
-Subject: [PATCH 1/2] dmaengine: sun6i: Fix use-after-free in slave sg LLI error cleanup
-Date: Sun, 27 Sep 2026 08:39:50 +0800
-Message-Id: <20260927003951.11210-1-bolin.liu@seu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFi8MCZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD751F00893
+	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 08:41:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790498518;
+	bh=NRzW+nL3FGVXxw2LYK9owXXCvFIG562HWQp0Te/h3M0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=fFi8MCZOjsJ275yEIMuaIiCCxlfAd1nQIakPRzBDO0ZSeaNvzm8/J4b9L4sKaxW8M
+	 7Oc+m/G2RpnI/nHhwSdPnebsRD0rcr1A9vU1Uw2/+OuMg+r+L/1Tw+EOdi/5K7F0RS
+	 zgzmeqK/zpy0eiKOEIQvv9CmUfp5/oZsbzQsFR9QCBuhOzZuyB5hVeL2ilUEwJagGZ
+	 FHyURkuPTzOyXBXoOAUHmJABbOFMNx6A1/qz3S5ysjJ809lPlyjeK6doE3vzEYTIx0
+	 wx69U0pJhQHHmiigaLrjCvdszJTtk0YqWi/UnG/33PCquEiDW7hH/FW0qZVj2Id6CP
+	 XnqVIuMnbbd8A==
+Received: by mail-lf2-f13.google.com with SMTP id 2adb3069b0e04-5b8c1b8d7b5so1822216e87.0
+        for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 01:41:58 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBzaYpJrBPvZCZisAPqVMXbdVLL4IkhFtuW6g4H/9D92tEeFodWI+PONpm7Ci/zD/LImBfeRGleJ9PY=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLhdn68biDDRUiL7z3Chi4z4IgZk2E/nynXt9iGWDxggwWV9YB8
+	aSslTKbYQr8NgffBMvuxm12x2Ds0RcoOdcPJd+/9rBlIGcaAq0gqAD13rjhn4Tnkh0NgcuXdkUd
+	akXqPjfVf/36SfCjqJNteHIgfvP3Le9Y=
+X-Received: by 2002:a05:6512:b07:b0:5b8:bc5e:d0ff with SMTP id
+ 2adb3069b0e04-5b8df09aeb1mr4003591e87.41.1790498517609; Sun, 27 Sep 2026
+ 01:41:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa0e04dd51403a1kunm4a399e5a199cc7
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDQhpMVk9LGhgeSkkdSB9NQlYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlJSUhVSkpJVUpPTVVKTUlZV1kWGg8SFR0UWUFZT0tIVUpLSU
-	hOQ0NVSktLVUtZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=Brvy0TWMlY4NSwnTMHliFyYzDnDuLaujYzQdtIlfTpcArAwP+aDFVpeDSoLCV8fTtJmFYS5BK0SMFRe/s4EnHabAeRUjiMGATmVZ3JtbkVAFRc/YG45+dVd68Yt3PmyMIs4C5bLBhWpwxam39Xte9r9vAoOUvcGwtKIlCGb3IvQ=; c=relaxed/relaxed; s=default; d=seu.edu.cn; v=1;
-	bh=EPZVT0iLAUIySdD3wN4FpEinf/bsqEsqXSgFqjUbfTg=;
-	h=date:mime-version:subject:message-id:from;
+References: <20260924-dma40-fixes-v6-0-fdb6755020a2@kernel.org>
+ <20260924-dma40-fixes-v6-11-fdb6755020a2@kernel.org> <arU9o0FEP-3wKne0@SMW015318>
+In-Reply-To: <arU9o0FEP-3wKne0@SMW015318>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sun, 27 Sep 2026 10:41:44 +0200
+X-Gmail-Original-Message-ID: <CAD++jL=A+7iiVoroCSi_C999-OQjC0+DimFTjpp8YmYc4HteRw@mail.gmail.com>
+X-Gm-Features: AclHuK_w4ZYWS_e2btsUd-1QpKJrhfum9b-4W5S2D-WmryqqXQlhvNW4i5Sji4c
+Message-ID: <CAD++jL=A+7iiVoroCSi_C999-OQjC0+DimFTjpp8YmYc4HteRw@mail.gmail.com>
+Subject: Re: [PATCH v6 11/23] dmaengine: ste_dma40: Fix DMA registration unwind
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	phone-devel@vger.kernel.org, sashiko-bot@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sun6i_dma_prep_slave_sg() chains one pool-allocated LLI per
-scatterlist entry.  When a later dma_pool_alloc() fails (GFP_NOWAIT,
-so it does not wait for reclaim, making failure realistic under memory
-pressure), the err_lli_free path walks the chain to free what was
-built: the loop body hands the current LLI back to the pool with
-dma_pool_free(), and the for-loop increment then reads
-v_lli->p_lli_next and v_lli->v_lli_next from the memory that was just
-freed and may already have been reallocated.
+On Thu, Sep 24, 2026 at 5:11=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com> wro=
+te:
 
-Cache both next fields of the current LLI before freeing it.
+> >       ret =3D d40_dmaengine_init(base, num_reserved_chans);
+> >       if (ret)
+> > -             goto destroy_cache;
+> > +             goto release_dmaenginem;
+> >
+> >       ret =3D of_dma_controller_register(np, d40_xlate, NULL);
+>
+> if use devm_of_dma_controller_register(), does it avoid use devres group?
 
-Fixes: 4fbd804e009a ("dmaengine: sun6i: Fix memory leaks")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
----
- drivers/dma/sun6i-dma.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+No not really.
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 7704b016aed8..025a43d0298d 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -790,9 +790,14 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-+	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;) {
-+		dma_addr_t next_p_lli = v_lli->p_lli_next;
-+		struct sun6i_dma_lli *next_v_lli = v_lli->v_lli_next;
-+
- 		dma_pool_free(sdev->pool, v_lli, p_lli);
-+		p_lli = next_p_lli;
-+		v_lli = next_v_lli;
-+	}
- 	kfree(txd);
- 	return NULL;
- }
--- 
-2.34.1
+All of these changes based on Sashiko's comments are starting to feel
+a bit overzealous, I think it is commenting on issues that actually exist
+in a lot of DMA drivers, are theoretical problems, but never occur in pract=
+ice.
 
+I don't know if I should stop dropping patches from the series
+because they are too fringe...
+
+I managed to clean this up a little bit, I'll repost.
+
+Yours,
+Linus Walleij
