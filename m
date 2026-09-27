@@ -1,67 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f41.google.com (mail-qk2-f41.google.com [74.125.230.233])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E241D635
-	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 17:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C25353A7E
+	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 20:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.233
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790531300; cv=none; b=iDUWiucrfGnL3Jr/FW0oBfq9DQmvV64SSL4cYV5qGG3kpR1128v9guPaDzog27tZJSeOtqw9yDwFs7/uB6PWf3hMnFXtQg3hasx9/gf/1EI1BvrirKb6nQyQoeXqDIJFZiNnnIHYu05QySnYO/a8OBRChhN8DjKxxE9CGfCBlY0=
+	t=1790542350; cv=none; b=fo+AyzkSZ377OMigJtXWXJoUbA0b4cTuVS2MaVqauj0IseDdrThOMnaxGSsNw7PR7UKuRM49xxfmTvixiSQJgcKAUVTGZ0cxTXR9M0UQU3UjYRQfagounMz5Sig/wBKEVhSUkgp62g01kVjS51P3jfLSQ+079t2i3INY/J44w64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790531300; c=relaxed/simple;
-	bh=9tCMVdNkP35IT55kMkZYxiVxL1wlT03JU2Np7kTuI3o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MDmH9AN+O3syW/gDgFLdJ6bjTEIR0jYWcaKmff+6QLgMmi/5WVI3mXkWpYuaLDOv8RRV2WgDs/QsiZNPGjFAYE6Zu5ysSmPt/2/LgvjLJR4hglyzvIaXUGc9pfOLLOoasdWhzqCchSTInwJN+F9dAR982mJh6kJ/Wc+8mJDAoCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d2+zprAD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790542350; c=relaxed/simple;
+	bh=t6xMn2L9d8s2ZCbQSuTC15GbJiy2EoeNXqPok1pTSm4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yv0lujzo0q8G4n7ZibNZIocD3nDwtRXWTFd7iKeGJ1j8q0UXaMBs00DTtn3yfF4YQYi201WejbxWOlvqPzr1qtjjE6wi/VpkGqE3gMLIg7maqk2EixoIjiaObFSXKCc1zwrozo2XZJUgmjkEXVcV8Us04xYoDNcKFeDVNTtM94A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZT056UXK; arc=none smtp.client-ip=74.125.230.233
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d2+zprAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80401F00898
-	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 17:48:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790531298;
-	bh=9tCMVdNkP35IT55kMkZYxiVxL1wlT03JU2Np7kTuI3o=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=d2+zprADYu0HLdWVVfnKPA9zO53sZqJ0FhZpzjEUBL6AepXgLxjY0fR6VSeVSc4Gn
-	 1oInQhg6jJOdOYaWYX/5/tcXDKYmoQmYW5DwMKBsHmvwoyVRVYuiTqZwLT9DQYkY1l
-	 KmW2o8FLgVNDBxq2Jb0l95NopR6be2D73/8PrymwD/u9TvnA07Wp93Zs1qxDDTcfVe
-	 ykDFk0WFujuqTUBC3pNaRjbO62U4uNjRa0hDEUUS4l9rnRJQg2/c2wjqzew+LfQSQP
-	 W1bOnOiSGvze7UlvfXsZWQDvdO+RTrdyoX/IHCExzMuN4sq5Gkfvh2+kO/tCy8bhLr
-	 6rMOkHiasdMDQ==
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b8e93611e7so2266602e87.1
-        for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 10:48:18 -0700 (PDT)
-X-Gm-Message-State: AFq9FYKciVoQR33bhdolnqsgG3pETT8rQNpS34E0dJdTX167gbos4jJV
-	strwdYqr2gyPWWAm4Y/+UShOiZ0EvShq92E5sqj6remLbiCuawKRIGfuxYzAY+7ijBDVAufO1lr
-	0kBOsiCUrOfW9E/+8oQYQpQZvaHd22qE=
-X-Received: by 2002:a05:6512:2396:b0:5b8:f2ca:40e6 with SMTP id
- 2adb3069b0e04-5b8f2ca4232mr1294357e87.8.1790531297453; Sun, 27 Sep 2026
- 10:48:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZT056UXK"
+Received: by mail-qk2-f41.google.com with SMTP id af79cd13be357-93bfa7b2093so281136185a.1
+        for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 13:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790542348; x=1791147148; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=HnxJD5ci4IByxWX6EfsPiJVcCaBAaDyK9ZZdVOk4Rrc=;
+        b=ZT056UXK6hCtnkIHLujja5X/VtVxGv9NcumFDxrZPTw3hHlGcE96x828Dkf9Fzrz3M
+         jI7Qarz0VtgGd0Qn5m+ldpEhiOGulCL9PrIwREQrtbQUwYBqMAR+AXkH4SJ8kD9eSAZx
+         Mv6t6nxe5oCIeglmxDkaa4sdfUPuLdelvP3usbzEtp9oG8jNW8wqhGKNIMloLSgfWgfx
+         qR5Rf09BNVtnrMtnpEmwXS498XJtZDiI/ZpDPGjILj8CM5+SSxsZ49CdkK4722qnmaFh
+         p8oEkiDiyEcTPXB9TfnRihcOT5cHibOoFxDSSYxjRcedaKnDSoHY/YPrCsNtpeFtJr/I
+         b2Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790542348; x=1791147148;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=HnxJD5ci4IByxWX6EfsPiJVcCaBAaDyK9ZZdVOk4Rrc=;
+        b=JJGc3Lqj67aV8IHtcbhJ834nY151C+BUil0u1dp0ohieFRo4Uq/7nAVVyxM1K8k1s/
+         VBv5MxADZhiwjD9/7htaal9oKWlmA/kMO5XtZ0akrQIUSKfn3X7hhEIEaV3a8jGkETk8
+         iVvZsWYVC9aYDfvxg35JboqCp8GHKff4ZIT8ssqKwxaUVDJa0PmM1Gq3TfDZSiPmuQMP
+         TQp+waa2UPT6xFvnSc3ZJUqcSFu8p+ZhzAB7j5ZptXC4/lkYt4L9JPvoo9Fpgyr5cgaf
+         CflU7QcoSWdMvGTvhPr1OYztDYkBZTeqIumlmNKa2mghVhZtu9CD4qn3pUR4CF2mUHgt
+         h2ZQ==
+X-Gm-Message-State: AFuF++kBJcKTA5Zp6j3PG4bycot7GOsZy2Od+3KZwdjV4qDLq4NGpjzm
+	SqudqErJk79+Cb6acdEqRS58EvKVfnSbGLAvXwgQzuH5HlkFjM9nAmAvxuqtXWeC
+X-Gm-Gg: AYBFou1hA9/2LYHcPpezP/HOvO5gtM3C8I26Q1hdQuLkp7OTf5uS9elMc2FbTJF5D4q
+	BASGS7y+bDOnUlKJ8ncsoS7EWD0aEiOwxhpK7kZvFUChU9xwGJhxsZaxWdV/iT8crophyorzsjp
+	qnPwJ7RdUv0UEB8DuuN0vMVpug8r4aM0VDAeqBFxm0nr5jGWcAH0KozQxLGYfhjeU8NEXK/Mq78
+	NmXdH9cJ2yR/SqIgQJmgKpT1SZ2d/2ieDwVYf3ECQSgkjpdtOI34WiLMnhCDCRKsDXhUVfG3Iq6
+	UD56ga3+xpSm9vIdpYtKSqIwvN0xRc8MfjhQwwHJB8BD/qELcI76A08j0IN9eAXPgIxOLtT1WYV
+	LfLUOEaG5bU/MG2kYtoZyCrvZk5KEaQHM283CZaZYhM+eI7i5Z95S3FHW30WwhtlG/fpDAyWoiB
+	rMTogNwSGrCEiN5wLRPEezlybPjozJ8efiIFSOq+99TuR02CaMvAMcuUsMo7wAoeWkPGIacJsUQ
+	izIfu0pajFNSIgtgPTIl/xgPx37OroIk2gtYLLbdv8Uxd+E6t1fsiffjPFdSkeREmAiwj3KYYfZ
+	emRAJsbC+UEkoUck4fZnoRfY1KNnxOmoX6PlfltsofCw/R4o
+X-Received: by 2002:a05:620a:bd4:b0:939:57ca:7e06 with SMTP id af79cd13be357-93c43c306f6mr1758205385a.9.1790542347934;
+        Sun, 27 Sep 2026 13:52:27 -0700 (PDT)
+Received: from ryzen.lan ([2601:644:8000:7a86::e35])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c6a38594esm267970885a.35.2026.09.27.13.52.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Sep 2026 13:52:27 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: dmaengine@vger.kernel.org
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] dmaengine: fsl_raid: use !desc for NULL check
+Date: Sun, 27 Sep 2026 13:52:24 -0700
+Message-ID: <20260927205224.29640-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
- <20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org> <20260927092431.DE0921F000FF@smtp.kernel.org>
-In-Reply-To: <20260927092431.DE0921F000FF@smtp.kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 27 Sep 2026 19:48:05 +0200
-X-Gmail-Original-Message-ID: <CAD++jLmFQiqiuJpF=Mo9bkF2n6_Q9nKjKR0x3Lmgw4107bUGFA@mail.gmail.com>
-X-Gm-Features: AclHuK9ty_hlcVfOqVsIEWWAP2Dv2LmHPHtWsLwQyvXHBviYrFQVUhYWR49-6aA
-Message-ID: <CAD++jLmFQiqiuJpF=Mo9bkF2n6_Q9nKjKR0x3Lmgw4107bUGFA@mail.gmail.com>
-Subject: Re: [PATCH v7 06/24] dmaengine: ste_dma40: Check runtime PM in IRQ
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Sep 27, 2026 at 11:24=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+<= 0 is flagged by sparse as being used for integer, not pointer
+comparison. Fix the warning.
 
-> Will this cause the kernel to eventually disable the interrupt line
-> ("nobody cared") and permanently break the DMA controller?
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/dma/fsl_raid.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Yes that is the idea.
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 9cc289f7129e..8e7026682d0a 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -346,7 +346,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_genq(
+ 	}
+ 
+ 	desc = fsl_re_chan_alloc_desc(re_chan, flags);
+-	if (desc <= 0)
++	if (!desc)
+ 		return NULL;
+ 
+ 	if (scf && (flags & DMA_PREP_CONTINUE)) {
+@@ -470,7 +470,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_pq(
+ 		src_cnt += 3;
+ 
+ 	desc = fsl_re_chan_alloc_desc(re_chan, flags);
+-	if (desc <= 0)
++	if (!desc)
+ 		return NULL;
+ 
+ 	/* Filling GenQQ CDB */
+@@ -554,7 +554,7 @@ static struct dma_async_tx_descriptor *fsl_re_prep_dma_memcpy(
+ 	}
+ 
+ 	desc = fsl_re_chan_alloc_desc(re_chan, flags);
+-	if (desc <= 0)
++	if (!desc)
+ 		return NULL;
+ 
+ 	/* Filling move CDB */
+-- 
+2.55.0
 
-That is what spurious interrupt handling does.
-
-Yours,
-Linus Walleij
