@@ -1,98 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBC3BFAFB
-	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 09:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A52D3B9937
+	for <dmaengine@vger.kernel.org>; Sun, 27 Sep 2026 12:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790501073; cv=none; b=HC2fa/0UK8Gsnncjnq+D5cqZWnJzc3feZAgEqKE0gDeh8dP/ESrUYQnXdxZVga51m2FN5G3FfFq04iw6IxcTXwiWgUib8iHLAMtQlPdHUWFRcahW4CjbZ2agD4GV7MX2f/VbN0uCH8spy17/4hGQ8MW2Z5Ci0ASclzlNPcsE6FM=
+	t=1790512752; cv=none; b=TUdU5oOnlpUCG3bi/M0J6owmc8DAH51D3/OJUgAVeB4ZRUg7m5bLE8aCaFHJtFvbNS+p3P8eKpvrwtBmTEG/0yCG0qVais8XbJzlpKk7uPWnzR13vC9DHpWMcejRIEkM5v/B33ke6TsgdoNoRjh9tb0JaN+AbLbRXh1Vz3hPRWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790501073; c=relaxed/simple;
-	bh=bni9w2qdjo8ErXd/YGtzD+ENwxNvdVLBfabq24lUnQ0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QwRT25w7YYOLVpQRrQy2/HWLZD/c0bviH7c6wiHA9+pJk6qwv48bgG8QURlvx2lOaUWenZmtd4/Pfitxz6ETU8/F74p0QOhhwYjcYp35yvwZ3S359DmesmcOW70vfFwF2yS2ZdGwHgXhC5ytELmNxU/zfzYE2GNFNSQiwiWlUKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mdiu6tcl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790512752; c=relaxed/simple;
+	bh=lXbT1gZhgqNf0U2ew8DjoPDaP0YHcP00vx/CO5CatQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cqniAtdcaeZBQ3892o6xcr/7eiBXdhWWTBuVXRliNNwBy6K3AYYREpffyaCJfkYOYUXDuisPOejWNYIdeg7C7pFlIik9poILVJ8tXpC/xrw8l7HA5NVNvg65RHQARgv+LBpym+oyM1AVNkGKUoV9JporOmI+OvbxCJxzdx+pkzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=d/L3FmcP; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mdiu6tcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0921F000FF;
-	Sun, 27 Sep 2026 09:24:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790501072;
-	bh=a67DuB11B1S15jhUJBxBzklwfB4krHKBY8MQstH2lEg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Mdiu6tclYFYoJYp0LdTUuBsWUpCzLOm00+Rq6Fufi7rRq3WHN9CkpcjOF/VEFxGe6
-	 /2pi7WUA+krt7mbbbc8qaTqMAOdUMbaEo9ye24kfAsLGfVzMc/ZCHb46VAPJSMOknB
-	 H9TllRA22L8x/BylxBCTAVls4MdM8AfLqSqkvNW168RpIUbRsJwR0PTcKeImjalDy0
-	 yMpObxG0hUwGXl7bHwP2QCEDPzq/VSYcjkCyoWahkiQ3RX7DOys8c0HX+tAnKKgVKI
-	 1k+wuUzk/H8pzVCNT3kKNhqYzJvngwXT52BayOQIKh37GWFp/Ex41qKHwzNH6OwyG3
-	 q6lr8n2wvHD1Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 06/24] dmaengine: ste_dma40: Check runtime PM in IRQ
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Linus Walleij" <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org>
-References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
- <20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 27 Sep 2026 09:24:31 +0000
-Message-Id: <20260927092431.DE0921F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="d/L3FmcP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=EGu3
+	ySMBI4Cxu/RSZ4du9HGuqYJcCtw8FGtZc9o7vkQ=; b=d/L3FmcPugBwWs+dFLb7
+	7Bh6c7l5I3L8F+Ti24S/Zqzx/hc2bELaRBjzKCWDg0nlgNxYmJI+B3gBHSihdkAH
+	wKciSB0KwbI2yBhU5uZynMTsZJzJ2HvNUJLldSrt+guiISYjlaLTviFZVxLRhS8m
+	N6LjRpRLwsyrZ6Hk8OCVPfGpoS+MCAjXbAKd2MfUR45HCUbbI3XS6yD2HiKXbM8x
+	OqU3R1X9weq/E38lMQ+20XH74QlmgiHhZJStJSlJ4+IHdgM52i63EjhK6VwfPfil
+	cun31o57slwzhvJHsQ6RYB+pklGxiGBS5hPeYpTFdg99wnafqDTawL8ClqSyIR2C
+	tQ==
+Received: (qmail 2605296 invoked from network); 27 Sep 2026 14:38:59 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 27 Sep 2026 14:38:59 +0200
+X-UD-Smtp-Session: l3s3148p1@D2nGO3ZcduQujnuD
+Date: Sun, 27 Sep 2026 14:38:58 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: linux-renesas-soc@vger.kernel.org, Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH 2/3] dmaengine: rcar-dmac: Add missing
+ dma_descriptor_unmap()
+Message-ID: <arkOX14nZOIlrVnD@shikoro>
+References: <20260917071208.36888-1-wsa+renesas@sang-engineering.com>
+ <20260917071208.36888-3-wsa+renesas@sang-engineering.com>
+ <aqwXwOiPgRDUQfp_@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4xQfaWpUBZwoadhw"
+Content-Disposition: inline
+In-Reply-To: <aqwXwOiPgRDUQfp_@SMW015318>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] dmaengine: ste_dma40: IRQ storm due to unhandled interrupt during =
-RPM_RESUMING
---
+--4xQfaWpUBZwoadhw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-commit 5c375e7c3c832d3f8400ed368962408e5da22738
-Author: Linus Walleij <linusw@kernel.org>
 
-dmaengine: ste_dma40: Check runtime PM in IRQ
+> > +		dma_descriptor_unmap(&desc->async_tx);
+>
+> Does callback function still use these data? suppose should unmap after
+> callback return.
 
-d40_handle_interrupt() reads DMA40 interrupt registers unconditionally. A
-spurious interrupt can arrive while the device is runtime suspended, after
-dma40_runtime_suspend() has disabled the GCC clock. Avoid touching the
-registers unless the device is runtime active by taking a conditional
-runtime PM reference.
+Actually, the opposite is true. Drivers have been fixed to use this
+order. One example:
 
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index 1dcfeabb3f363..5e9b6342c5a9e 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
-> @@ -1807,6 +1807,11 @@ static irqreturn_t d40_handle_interrupt(int irq, v=
-oid *data)
->  	u32 *regs =3D base->regs_interrupt;
->  	struct d40_interrupt_lookup *il =3D base->gen_dmac.il;
->  	u32 il_size =3D base->gen_dmac.il_size;
-> +	int ret;
-> +
-> +	ret =3D pm_runtime_get_if_active(base->dev);
-> +	if (IS_ENABLED(CONFIG_PM) && ret <=3D 0)
-> +		return IRQ_NONE;
+commit 9b335978f7081cd4fe264709599a18073e12fee2
+Author: Dave Jiang <dave.jiang@intel.com>
+Date:   Mon Jul 25 10:33:57 2016 -0700
 
-[Severity: High]
-Does returning IRQ_NONE here cause an IRQ storm during device resume?
+    dmaengine: fsldma: move unmap to before callback
 
-In dma40_runtime_resume(), the hardware clocks are enabled which immediately
-asserts any pending interrupts. However, the PM core's status is still
-RPM_RESUMING, causing pm_runtime_get_if_active() to return 0.
+    Completion callback should happen after dma_descriptor_unmap() has
+    happened. This allow the cache invalidate to happen and ensure that
+    the data accessed by the upper layer is in memory that was from DMA
+    rather than stale data. On some architecture this is done by the
+    hardware, however we should make the code consistent to not cause
+    confusion.
 
-Because the interrupt handler skips acknowledging the hardware interrupt and
-returns IRQ_NONE, the level-triggered interrupt remains asserted.
+    Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+    Acked-by: Li Yang <leoyang.li@nxp.com>
+    Signed-off-by: Vinod Koul <vinod.koul@intel.com>
 
-A similar situation can happen during system suspend when
-pm_runtime_force_suspend() disables runtime PM (disable_depth > 0), causing
-pm_runtime_get_if_active() to return -EINVAL.
+--4xQfaWpUBZwoadhw
+Content-Type: application/pgp-signature; name=signature.asc
 
-Will this cause the kernel to eventually disable the interrupt line
-("nobody cared") and permanently break the DMA controller?
+-----BEGIN PGP SIGNATURE-----
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260927-dma40-fixe=
-s-v7-0-89f595e8851d@kernel.org?part=3D6
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmq5Dl8ACgkQFA3kzBSg
+Kbb0Hg/5ASvSmkgLfceckvBzpWFx5LMb29upy8SuTNv+0gwJ1I6nOIXRKT//C1If
+B44GbwNyVKu77fCxoj7XkogoNZZowe4VfXmxQrALkOXh0BJRSvV1ixWeyQJ5Ojc0
+40du86xdFqoHuCy/wWEukTV4E5n+xUWQp0yuxOfVepMuYL7ElPjuLFYRX7kInbhs
+lb6DujdN5DFQQ/MtQtipm71j0FuIknx3z2vRdVi27pZCWzPksXMG2bdMq3NXQpco
+q8Do0HSMpWdfO/6kGwh6WzIT0H74bq5HUyZr5WGZzzkqJBrdC+gpyYqVyos6Lo+K
+Crh9mEBJ538BB+wwlAXTpR+Ar0IWAMsvBd30q/YNLPFBrONRZ3Yr/z2GRD6XLdzv
+9Us5E9x7qmC/dh+CzBrbYkvnhQ9nXkmusDjrccVr67cQypVtXHPm+3Q7mRe5usl7
+1zOjpTsLTdGYe81qIY2Bzl9tblg8KMV/8Mz9YWaCDG4T6/tsubmwr3U8cKxpDFTp
+DHYDlrSHmnyeixF0f0vy651KoQ0HNJafM7BSYmGBU3GcbBuEMGEsRcANq20XBi6S
+v3FgPIRo/Agf21/Zwg+6yE4dPjUHaHH4iMqcZXK5oCNywIlGs6+zKp7mA8PnVtny
+X67AU9//AFKdrxJMuNqCFKcbXmmilv8tHTTOi79Zipv1Y+3boik=
+=erPL
+-----END PGP SIGNATURE-----
+
+--4xQfaWpUBZwoadhw--
