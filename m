@@ -1,62 +1,63 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013058.outbound.protection.outlook.com [40.107.162.58])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011046.outbound.protection.outlook.com [52.101.70.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED914EFFB6;
-	Mon, 28 Sep 2026 16:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A6D4BCABA;
+	Mon, 28 Sep 2026 16:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790614124; cv=fail; b=Fms9bevEFVhR6UuaYJDo90PbkXnGgCxE1NwsXwiRmPFiNU4ODnVAenap/Lt8wC8xVDupVV3sMaQ/Hs7i8YOVT1Vzj/FP4z9FoME2+B6YaMlIfY+EBdAktySB76X8glv156Z4GXnzf4LwQSUFg+ZDmXZG+4gFtjoZHJpwAzkvrGE=
+	t=1790614182; cv=fail; b=B8HXKDK//pCOWd4c4AbvtVhzPnVdKppP9+ONbIWRidQfCxkXhbU54KEJ0LovKNqAFBPbqtwHI59nPjcv4idFEDOtt34NrreVi58Me6nuwFnltXazuIYkKbKUgals5Gq8OCe9Q2nteFXkeOEYb7XuUAqJ+3PjNFGIjR+z+6l6rSA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790614124; c=relaxed/simple;
-	bh=gSz++pfsXQMyEnqXwADGc6dWOSHTOVzM1wQ0IB8WIR4=;
+	s=arc-20240116; t=1790614182; c=relaxed/simple;
+	bh=sNDWMp4pR91xg3O4DVSw7/CUbX9bJrL1Ssbb1IvxvmU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=C0LujQRz3CpUezZDjtUwNyne9VtztH1U9DUAaaAx3A/ximTdApW//px1SDUQRG+QmhpZy4qhMs1UNnJWHl9a2HJKaqf5exdhUNHj+P2new1SBS6vrmbgooWFt/BR3Ur6YaGgOwnzMDe8YRBXp1tr7sbXPPXFLjsUcKB4IUDuYj0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=jToOu0Yo; arc=fail smtp.client-ip=40.107.162.58
+	 Content-Disposition:In-Reply-To:MIME-Version; b=q7/Gl2mpe1SbMNvFigR/NKchKz5gA1tHxgUNGr9j49B2f6Ec+DqWQg0GvENIlPJSrji/dWADcyjwlGLUPX8LnKWxmt9gxDMJ3aF5q72tdrBcbgexWa2mUpS5ZEQDB5nVY/P3AGcDLn4WQq/zapxBrU5MVFCpKFSRtUnPn6Gn34g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=qwbKatcM; arc=fail smtp.client-ip=52.101.70.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="jToOu0Yo"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="qwbKatcM"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cMaqQiXrEZ39s2hqY06kd9wGX+DG2SGgSrwcBnDJ2GY0rc3z1ttZgNurTtRuAIspEC8y353LmedkNOjUpY/NXaqnuQXJXVa3Pwa/KnNrsU7mWb5WL9j9owfJq+iBeyltZ8gF7kivaT+pffxADPkdxr2RhiIpa3zZHkB8UBWqmX5tG0xiPiwKKBNEvFqYpSriFHGfVb19E2V6q5oxnDDGqCux6sJtZ+rHK43/1yIkIaoxGzZaiGmIAne2HNdoW5JeWm8MauDGsLA/kALQuhvMwBKz19xv2kW0kz9IHqkRQcvOWasJHtop63a9knfuPMlsJS0WiLnviF92DE07KlGgRg==
+ b=CwwMhbwLgnaGTt2dHmywx4qk1QM8E5xTAfq9GQA2rrtSGuwjpo0VMokQzGQt2HXSfH6gZx06YLAEU5H8pZPtehlSgJEHBQGNEbZwFXi4hASvXspRILFf8O5DHca6F0zN0+onY7MKLqzgNmr8tedfb+wXyiRHv9x8x1oiQKSU1fTqrY5LDnQpJyDkBYGmpUwfGb7Hs5ZosqLdm1Ife8CzTzRpj+F8xxMsF8H+t7+4bWp2jNR7cSWUhT3jNsnm4zRrI02gnzErAGCrcJBV24rdSXZEEeS22nWOKJZKy7UrGhlnhOAAXbMf13HZRL3ze22PkVq4t//51EYbrX2gcYMu9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iIFGBS3istuDrFjNIQ2qL25LeVdgIEzB79hrVAoqmHw=;
- b=M6Is6woTiVKUUTfuQzLWABoludBlpiu9CMPZiCYasr2BXHvzLiW9fWYR4UM3Qd15Bol3p4HvGdX7uRD1DCx9sgcuD5nZKHVO91E0cgm6Cme6qgpUIYL3Mu8Fza6Rie15LhyUrEG0b1+Nfd/6eqDfBbpexOvYiaDTtno4uDVLxYv5PR/qup9yQfG5gF00oUCblsHAKSODkoYAZ7KUnrJ5lwfqThZFBH4e7oEcdluDdnEYIRDFOBUzBiNcp/8PGQjCNcIUD7CrJgpVdmYS1JsSS7wiqd5ytfXm766AgSamzeV3G4KjQcUAQLxQ4nnXfbcovt8tpSr7eyjnb3EkBNTJrQ==
+ bh=MEAHm4fs6j2VLTSoOxYy+Ot1LbExwwKKZViCoO9THS8=;
+ b=bUijS2WiuhUki99qdgtp48Tyt5T6L9u3uej9EfkN0hEDqKuWk8IuUE7MhEXhKW2DVhT/FPFBZc0SyqrdtK52qIvhBeaKqsfSmPS6pVTOTTwKFoMRLKZK/Xm0NSPWVf3fd57bEjWgd1Jck9O2DK+L+j+EEn8gOGCM2okIRwtBeErnYwdqlj9m/u3GmWogpvW9wEp+fWiK661V6GwlcRpkyoZb02uWQujx/efZkXXTC8pXTciVxtlz84fkF1Sxcb0761LfYNgRR1ocb9X3usA2HeYPmIQmIRG6a7bWlxcZwoIsE9ErKCC+Gns4e3RPIp08BpGpa3JLOoKl1VMfahrH4g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iIFGBS3istuDrFjNIQ2qL25LeVdgIEzB79hrVAoqmHw=;
- b=jToOu0YoPbj1AZTLrJIzIn+CzoEwhVXhb6tcWw2/bRAI2q4kP0+UgLg3np9T7CsPqbXdURFXzgR09SFiJiKKw0/rgewiDwliOYQlyyg9DnciXM6CB9ylV9H1XutmrBc4Lqr6x2TUi3ZDoHiAOa0fL4evHAjOIebQA2lA1fznwhO1V0eOlL7VXlI/TaTXEfpLFZmC7VsCqiIqFuHkjkuueWIPsr1BdKeqorUoXmVlR7E0GB/oZsHLObfmJsmlHnPF3PTn2nCUSRSRU0PxJ6tsB9wenNZeShhC2ZqG9Ku/jsTRuMQi9orcc9jT0QEi+cB6JwbcmV4w+KUMMroORTRP+A==
+ bh=MEAHm4fs6j2VLTSoOxYy+Ot1LbExwwKKZViCoO9THS8=;
+ b=qwbKatcMyTkKy2wcKAKyE+Yt35J4x+8bXwMJumhBTJS9gFUgeK0fbf0glXSw7lldj3bfG+zmdwb5w0KUhKWASkmk1cRzxksszMuBE+g3gEVN0jgvVpBn5hhDSlEYAMqPtFKk5Pd+wYUrGoPsTXK3HnDMVCjQSPLdGRg1h4apP4AqiwS61Z9Gbsu7SgiQvIEih5tIlxqQmdtqSS/B14cVoLPAPyV/n0p0e3dy9fatu8nYOj14BH2Oqs47cnB94WDplWe9W1kybD9PRf2XLrptWMjRpvNgoo8gPSIGJWcI72owC8Dp0J9zlFIeSIZ0evhf8t46yWE5OS2tBsxChcMwZQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by AS8PR04MB8452.eurprd04.prod.outlook.com (2603:10a6:20b:348::23) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.23; Mon, 28 Sep
- 2026 16:48:39 +0000
+ 2026 16:49:36 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.022; Mon, 28 Sep 2026
- 16:48:39 +0000
-Date: Mon, 28 Sep 2026 11:48:30 -0500
+ 16:49:36 +0000
+Date: Mon, 28 Sep 2026 11:49:28 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Linus Walleij <linusw@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v7 03/24] dmaengine: ste_dma40: Recover coalesced cyclic
- callbacks
-Message-ID: <arqaXibAtx9ULqu-@SMW015318>
+	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org,
+	sashiko-bot@kernel.org
+Subject: Re: [PATCH v7 09/24] dmaengine: ste_dma40: Init hardware before
+ registration
+Message-ID: <arqamM5DWg0ry-v-@SMW015318>
 References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
- <20260927-dma40-fixes-v7-3-89f595e8851d@kernel.org>
+ <20260927-dma40-fixes-v7-9-89f595e8851d@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260927-dma40-fixes-v7-3-89f595e8851d@kernel.org>
-X-ClientProxiedBy: CYXPR02CA0044.namprd02.prod.outlook.com
- (2603:10b6:930:cc::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260927-dma40-fixes-v7-9-89f595e8851d@kernel.org>
+X-ClientProxiedBy: PH7P220CA0118.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:32d::18) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,223 +67,116 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8452:EE_
-X-MS-Office365-Filtering-Correlation-Id: e1534a88-f580-44cf-a3d2-08df1d8058c6
+X-MS-Office365-Filtering-Correlation-Id: 186d116a-71b7-4623-4bf8-08df1d807ac9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|366016|19092799006|23010399003|1800799024|11063799006|56012099006|4143699003|10067099003|22082099003|18002099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	Ykl4GZTJ5WIleKqgz7gaFp5lREI9sQCFirPA2pSMZ5ptqS+0XshdRz1suVD8YXEsynuuGXR8kpOnnEP5Y64fe9Kp05gouft4GduDYM2fMlC7oxGTBoYbi67/mKVfUW4jXjuvTETVvwgMUITiQ8dBrctR6AfgVd5cbbG4hoDhOBEKb90oMey2hYF12JWn6NWkLq6NRQY2zGdA/uCBy4O5AnhWR4Pb0Qy4NmVYd39RqoSBZj8N1HmY7Zh99tZrKYdXBlL6oqqFYxFvokcxT5jYCQFpwdRhB6IYYKe0gx1AD/525mbjhz74RYqc/DlalcVwmHPC1mzuuYEtKOpWzBajPQirjvjDv7xcTBio8u+WrBwBxq9fIjh0uOUkw/FokcFEOrp1zdSY/g2jW9BDgp6XGFB/Paah3iwjLcvIVoyFj8Jw05+U3TOBo9aI3k1ld6udMIn5akubK+7K7N3/tP4mAm1Vzss822bHFzq93vh6wN4nQXHQVycKvvg6tMv1tgBUyhcnpj4T77pvPkiGfvW86pCIdkHBXfTceezDOO4PvWMP+nsDjYme2hTOUWuqevuHtWneKQ2oPlayDP8VMD3WYaoekaXdgTQZIyngumPQtSZjklLPPMfzePWfpZHruc5IWyZSSatXK0mE9gtZa9tGMztVult2bTArt2ufut3ACg8=
+	PRFC4H6J3jq02ce0wGtA1yZnEzheX5a4dnBIDYpDfjygHr/dePbrc5ObNUrKix68Bi0ph+P3+2LwsrtLsdg2duW0qnJbIqp6AxEyJ+0/+beb6aUqVQF/MiDYWuq+1rnLjPQO131PI4qvfgDXUhVw1hLA2US7jCOj5pQlF7y+Vc4GoARiNpHvj2mEOtDxG8W7NXzj7oEMINsjq2+tgrwVqgjLGvcJDBTDU9xIEL8R/cVYroeMfz5NnvuzzgN5dIHxk7G9rfSMgMWo9gkNeKiEThquwTYFZbyxX9QMp24wIqVe6qXDtZhDtKv2Ti+SASh7+TMimi0zoHT2Gcd0rhRWotCtzqfUeBRWoQoKOZMLkyvopGAHZEz2LpO7QdodESGjkHwpsmlq0Z22roYyVn6PfLm3QN1NnY6ibVceovUMAjMyWhZvCTlXoRthflEV6lJ724CatX29ge2JnVPBPp1CfJ3oRjw7JU5QKEeSywqgGUwyVi1yXwnLIwKXUepDN4Re5XSm7GSQk5SwBrIePl4Llyt4OIhUaLuiLrVJMyv+GMCJggJRIni2vhJT934qQVprVzCz30Xi0vChUYJcVR/DNamHiW+1ECRoU7QeQycJwVaQlEFg5p1dh9LF07oMNIOH
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(19092799006)(23010399003)(1800799024)(11063799006)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?GBwZTsja5QReo3f+M+13MXlES6mf5UZWnslQpRnetBhHVarbypKyNGm341Jt?=
- =?us-ascii?Q?3h+gJVh9dsqNHR3tD0XaKZlQReEI1k5g4YKjRjy8ss7krA2ZkAxvFi8DBOwL?=
- =?us-ascii?Q?CDuVKTna6lpP18A7no5H0n3GxWtaGSBzLxzSc44B7e7qL3arZ2BZozzsiEU6?=
- =?us-ascii?Q?ZOL7i7HCVr11xnUPjFHOto0x+xe1XyTPVpfM13JJp0AMHpWudo49BmHmCWHe?=
- =?us-ascii?Q?0H/sYyrEH9+kBmmfQpPZ0aG9ednfdcP7+aVylXt7VQG4DB5r4laeYHW2K1gE?=
- =?us-ascii?Q?JVw+U9CCJXmxq6aGXZlrfWUQW7io8a8bw1NOdcjB/xn2+gBSGOjVcrBWRRZa?=
- =?us-ascii?Q?JI8aqwviAFa+I4h2hh9NZjaRjwQtJoyNPOV6/sbim1nIwVdk4QQkh4HLXEC3?=
- =?us-ascii?Q?4Ct0t8KUPFUwevKXVKboRf1vhNWyyhfSWPgTzcDGuf38pOHT/COPSmK3Ym2r?=
- =?us-ascii?Q?nLTMHNNfLf74dLTqnI1et5rhIGzyJuDfeKzHpNWJ2uLtLTQnykduHv5jbHIX?=
- =?us-ascii?Q?zFRT+jqonpjPsOtfKMEOjbmFMuwipUIJlzcLszt9KFuLCY21K/RqQzVDMfHP?=
- =?us-ascii?Q?nFmhzxlwgsTemzg0o7tE9cv/fdz78XBVe+3GbNHimbN77NT/D8Fx8ocn6xLX?=
- =?us-ascii?Q?UOWcuCDWzwSpEZiUdhc+oewyouAycQu5YBytBAkcAKfC1RrUIxWRCYatA/RK?=
- =?us-ascii?Q?KTk6KVNqa6mtTm3yaFTwDUBdIn03mAquT0hLqYSaPVIMmedzk/Aby3a+VqQc?=
- =?us-ascii?Q?kDxz0NULGe7kJedxL8IXmfWVae0ZDMYmZA1rteQK2DU93o/vIJJDU9rfKnlX?=
- =?us-ascii?Q?Q3ZLrQj8F8q3qEq/ohBZZ4YHCNbLeCVBkZfgjaT4R/u09Nd/M5nMiRCOlWKL?=
- =?us-ascii?Q?mkPpPkuqtbU2APNMkRR8a78UFfD6lp2/CcqGG8zMQxVPB85bEjeAQEzosXhH?=
- =?us-ascii?Q?GiuW/K7OGsKMI1zcX4lv2S+pqYXREbf/XRIrmenaJEZdLOI+sW0tqfwFWzHD?=
- =?us-ascii?Q?/8XNUufFLANoUaXIZzZ6x/NyHdHezS9pMtKV9k90tbqvJb37e29yDvwvsDRT?=
- =?us-ascii?Q?y+o+BlJdQjbMrNrw16oLae5TqFmT23LBt99/ozJ+OxNnb9CbGkk3mk+pWLW6?=
- =?us-ascii?Q?0sfnJwu7gnWBJj0wcNBsYeX4YjMSI/h03eGWg2w3FePHrGTPI3RGljb6Ky19?=
- =?us-ascii?Q?bTM0sVXdq7yajbTivZAZ5t2unyaHXS3lzZnDqy1gOchdtl0q8sTdrwKvgl8s?=
- =?us-ascii?Q?tGP0cmlXwnz8/wk4zPdnAOqzR7ZaJTt6G5Zfh7JNDnxSldPeHmVK6ML4mTkc?=
- =?us-ascii?Q?ibjXzwhuvSdKDZXeppoeovmbf6pJFgxvEX3oE9M07nwzvnfhxkyczLCAzLUU?=
- =?us-ascii?Q?OCVivp6UxB7pMbWlZwh2Jiajw6MzOXM/9C+x+ijSYQZ8oKLSEvNyexqFZ+QM?=
- =?us-ascii?Q?pBU4lChdIyNkqN23Q4fXqaOWnO/sH9DwpOvFb2J1zZM60YGYPUJfo/R4AG24?=
- =?us-ascii?Q?k/JeBk8VweLRDAd5y8GsAzf52ptnEZj1BC5qERmYVuSFLydwykfEAPJ/p7jX?=
- =?us-ascii?Q?C8loRasM8IW4TL94TawLSDMIakdbhgmexZ88/4rtHQzTh3ywn/zCw+ik61++?=
- =?us-ascii?Q?K84SSi1HD7gex4S+AB/mUGmOEO9P+jMSzrcoL95VSdq3ZLYNK/hqYP8stjTz?=
- =?us-ascii?Q?bCU967ZG9ELr/TjIny30+9eaI6mX5wynW+PZE71d9ExaWFOcMBUHKwWPauP0?=
- =?us-ascii?Q?4tE1xsm+sY4TYv34BlK1HNqPUQi1sovUBC6sCqbvn9pM9gIj9JP4?=
+	=?us-ascii?Q?XGJZFICJugHj4nOg5rh8TYoDuE4R0Yd4iSf7Z8mQwSMnJAbfT3V3sWPGt4rI?=
+ =?us-ascii?Q?ultN3RuwEXZkcx8Da/CXrhagEd9QuHcLokdOVWkW7D+pY+nuVysw46QIXzWq?=
+ =?us-ascii?Q?WWpKIajwbz0F3KazmG1ehKBZzd9evkprV3DV4Bhg6mjQ/fltDQ+wcnCGsBbJ?=
+ =?us-ascii?Q?HJ2bnKK1Xr7e02kiSgwSAHVsHaSllgi5E5BQuVQZ1CiVvk/bdWdFRLQAjrQz?=
+ =?us-ascii?Q?zdmTtizs+zMHonbUUwFiYObwRB7oyPdFIK8c2avFOpV3pLDayHV0KR6tcVBQ?=
+ =?us-ascii?Q?Wqubca/gC/ryEV3vrfMQpwWJxEWaJrEK532rArsc8TSHGJDV/RYDIHfRA37O?=
+ =?us-ascii?Q?TxhvwVhtVDu0Bm2dr2vDBOEdGuYY1QxjTWG2DW3R4J1QPX+6h84AAN5LPBoA?=
+ =?us-ascii?Q?+f1ULeNZ/oScc4QawiaVQt1mxRTSyjiFoeKQUqDa3nveETYVMVDq3/wkBxWO?=
+ =?us-ascii?Q?lO+jYPQC0vBSPkIUZ0CLg+O4WDigVxi5PYmPsluqk0e7MT5IC/Rb00lUdUc+?=
+ =?us-ascii?Q?8fxeSp9T06aPceS037opRfCKV5FnpQ7zZ5iHC1q8O4yCKIaye0akLY5O/dsd?=
+ =?us-ascii?Q?7W16z7AnoEau5/2F+6+/9RP2Ad/jNvychcMBckQ4NrbM9xvU3IPpCcWps8KT?=
+ =?us-ascii?Q?gpZwjnOpxtzNgYo2iB8NRLTROWVVzK7GUiUhsJmMI/sduC2JgFqO9e8cwTul?=
+ =?us-ascii?Q?BSjXTCHre+YwWnIMtVyLLwBgZbfyVqQsYdvRlD1dmQzjfBlL2+CJCxEOYzTe?=
+ =?us-ascii?Q?QgELPjekf62NZDWw3i4+NYgGgD8wZWaayN82EGIgnvjyCFpvnBLxg0QyGb6J?=
+ =?us-ascii?Q?mldhYKu8uZwM9JI4bOsADohuxBxL8qPmbZGPFSyy/RAiwWc5aXC/GUHrMX3W?=
+ =?us-ascii?Q?vPIDaH+5cm85I2P802lGFUzGzMR+6iGa7ZPhz27s4/nrUNqfMS51lDKxEtrE?=
+ =?us-ascii?Q?pbwS4IRodndwt3h7Ow9h7x5ehth/4bMdT7iojwABLxECiXKalm8Iyq/zgaMb?=
+ =?us-ascii?Q?1Wj5LEa/YecaidMfghfQNJ2fqyMuSiiGbZ8UvuXmZES4Hfpb8piuHr4DecfH?=
+ =?us-ascii?Q?YZe1a8BpuXn1M8OvS74XSAkGJPbCvDOCr618szvgG3658orxhPPNiXO0HYtl?=
+ =?us-ascii?Q?XsTx7tp5SqLDzjeWtH0Sdy++S6QS3zFbbPitH1oYSF6kF7NxAui2yne17Hvc?=
+ =?us-ascii?Q?A/nAu9sF+sqhHC7AiSIPJQde1IOAuQgNgY1NjVUOosURju2CnWlU0a/nFPsI?=
+ =?us-ascii?Q?jNxv5EA4NG5WwEcZZ+kVW8Yx8SD4DZjMUf6Hm/kUfhd2PlNGIJO8At6beKTb?=
+ =?us-ascii?Q?ghZNSrIAxi0fxqfvhzLV/39pEF4OmV9/ml3bRB7kax/NzzQsS5Vjzc/J/5+B?=
+ =?us-ascii?Q?s/6M9gqz2l/iIlLh1h46IEsxJhOf9JR7egBoiqu+HF2pUdjUaGB+4xrLInso?=
+ =?us-ascii?Q?EwtINgvfG3qPZHulNEztxApCwAswvPzTRRnTzxzgEOnkylvARn0D16Rc9DKt?=
+ =?us-ascii?Q?X3Gkptwefs4L7ohxKEY+yOCJhOLPzZXi4gy6f6s+9ZHBpqq5gV9sdhDvlKJ0?=
+ =?us-ascii?Q?L9pW+dzsS3/nrQOenCkyLS+ZlyMl+9zcGXROFRF3gm+LTjK6hGMDggEJ7Xc6?=
+ =?us-ascii?Q?UtTfSwr8XW4nVWap1L3FT64IFyL9efPKKctFi+XAIVWVsYQaros4XErGyM6m?=
+ =?us-ascii?Q?nIwa/EslGETHtWzTvaMbClIDGojKiSnnvqJKzT3lPgdJaS5vq5pHFDizYXwI?=
+ =?us-ascii?Q?oOhzQ8L0fU2xWl7stVBhbHIHKAYmUi5IGuRLKwxhOslJh3QQojEf?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1534a88-f580-44cf-a3d2-08df1d8058c6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 186d116a-71b7-4623-4bf8-08df1d807ac9
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2026 16:48:39.5367
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Sep 2026 16:49:36.5714
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: b5wEJtk/AX9YWSTyAVAZnmd+HvjtTiw+kLdpRakn+/9nTDzvOFNEb7bob+OUsmihF63qa9KZLQ42aACQ1mDqq62W40vY8RlP24HUeJkAxF+wjVt0U+6UXI2riCqkd8iD
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9xwY+xyetiJI0KlOsaynvaXmOl8C6MSfRanDISwgKcOx7kMM3do0GDUSrFvcyRbzckGusFRkJQwJ0Kx+UQNVUEnyrX82gWMU82X5gwzDf/Wh0SzAgAmWCn/MlLYNjcEV
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8452
 
-On Sun, Sep 27, 2026 at 11:03:16AM +0200, Linus Walleij wrote:
-> DMA40 has one terminal-count status bit per channel, so cyclic period
-> interrupts can coalesce.
+On Sun, Sep 27, 2026 at 11:03:22AM +0200, Linus Walleij wrote:
+> d40_probe() enables the interrupt handler and registers DMAengine devices
+> before calling d40_hw_init(). An interrupt pending from the bootloader can
+> therefore reach the handler while the hardware interrupt state is not
+> initialized and channel lookup entries are empty. The handler deliberately
+> does not acknowledge an interrupt for an unknown channel, so a level IRQ
+> can retrigger continuously.
 >
-> Use the memory-side pointer displacement to queue the minimum observable
-> number of callbacks. If sampling fails, queue one callback and invalidate
-> the saved position; the next successful sample resynchronizes without
-> recounting it.
+> Initialize the hardware and set the DMA segment limit before requesting
+> the IRQ or registering DMAengine devices. d40_hw_init() clears pending
+> logical and physical interrupt status, so request_irq() can enable the
+> line normally after the hardware state is initialized.
 >
-> The pointer is modulo the cyclic buffer: a displacement of d periods can
-> mean d plus n complete iterations of the buffer. Report d, so the driver
-> could have missed n iterations of the buffer; DMA40 has no counter to
-> recover them. For an unchanged pointer, report one callback rather than
-> risk a spurious full-buffer burst.
+> This ensures that the handler and clients only observe initialized
+> hardware.
 >
-> This condition has not been seen in practice and is only a product of
-> review comments that the buffer can miss interrupts.
->
-> The preceding cyclic-residue fix ensures that every cyclic period fits in
-> one LLI, so each boundary corresponds to one client callback.
->
-> Fixes: 0c842b551063 ("dma40: cyclic xfer support")
+> Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
+> Reported-by: sashiko-bot@kernel.org
+> Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 > Assisted-by: LLM
 > Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
->  drivers/dma/ste_dma40.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 68 insertions(+), 1 deletion(-)
+>  drivers/dma/ste_dma40.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
 >
 > diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index eab9c09b4bfe..4b138aa313c8 100644
+> index 86efe2149be9..3bf89b057ccf 100644
 > --- a/drivers/dma/ste_dma40.c
 > +++ b/drivers/dma/ste_dma40.c
-> @@ -384,11 +384,14 @@ struct d40_lli_pool {
->   * @cyclic_dma_addr: Start address of the cyclic buffer.
->   * @cyclic_buf_len: Length of the cyclic buffer.
->   * @cyclic_residue: Last valid cyclic residue sample.
-> + * @cyclic_period_len: Length of one cyclic period.
-> + * @cyclic_callback_pos: Position after the callbacks already queued.
->   * @txd: DMA engine struct. Used for among other things for communication
->   * during a transfer.
->   * @node: List entry.
->   * @is_in_client_list: true if the client owns this descriptor.
->   * @cyclic: true if this is a cyclic job
-> + * @cyclic_callback_pos_valid: Whether cyclic_callback_pos is reliable.
->   *
->   * This descriptor is used for both logical and physical transfers.
->   */
-> @@ -405,12 +408,15 @@ struct d40_desc {
->  	dma_addr_t			 cyclic_dma_addr;
->  	size_t				 cyclic_buf_len;
->  	size_t				 cyclic_residue;
-> +	size_t				 cyclic_period_len;
-> +	size_t				 cyclic_callback_pos;
->
->  	struct dma_async_tx_descriptor	 txd;
->  	struct list_head		 node;
->
->  	bool				 is_in_client_list;
->  	bool				 cyclic;
-> +	bool				 cyclic_callback_pos_valid;
->  };
->
->  /**
-> @@ -1487,6 +1493,61 @@ static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
->  	return false;
->  }
->
-> +static unsigned int d40_cyclic_periods_elapsed(struct d40_chan *d40c,
-> +					       struct d40_desc *d40d)
-> +{
-> +	size_t current_pos;
-> +	size_t delta;
-> +	size_t offset;
-> +	unsigned int periods;
-> +
-> +	if (!d40d->cyclic_period_len)
-> +		return 1;
-> +
-> +	if (!d40_cyclic_offset(d40c, d40d, &offset)) {
-> +		d40d->cyclic_callback_pos_valid = false;
-> +		return 1;
-> +	}
-> +
-> +	current_pos = rounddown(offset, d40d->cyclic_period_len);
-> +	if (!d40_residue(d40c) && current_pos != offset)
-> +		current_pos += d40d->cyclic_period_len;
-> +	if (current_pos == d40d->cyclic_buf_len)
-> +		current_pos = 0;
-> +
-> +	if (!d40d->cyclic_callback_pos_valid) {
-> +		/*
-> +		 * The previous interrupt was reported without a pointer
-> +		 * sample. Resynchronize without using the stale position,
-> +		 * which would count that callback again.
-> +		 */
-> +		d40d->cyclic_callback_pos = current_pos;
-> +		d40d->cyclic_callback_pos_valid = true;
-> +		return 1;
-> +	}
-> +
-> +	/*
-> +	 * The pointer wraps with the cyclic buffer, so its displacement is
-> +	 * only the minimum number of elapsed periods. Complete buffer laps
-> +	 * are not observable.
-> +	 */
-> +	delta = (current_pos + d40d->cyclic_buf_len -
-> +		 d40d->cyclic_callback_pos) % d40d->cyclic_buf_len;
-> +	periods = delta / d40d->cyclic_period_len;
-> +	if (!periods) {
-> +		/*
-> +		 * The TC status is a single latched bit. An unchanged pointer
-> +		 * cannot distinguish a complete lap from a repeated interrupt,
-> +		 * so do not amplify it into a buffer's worth of callbacks.
-> +		 */
-> +		periods = 1;
-> +	}
-> +
-> +	d40d->cyclic_callback_pos = current_pos;
-> +
-> +	return periods;
-> +}
-> +
->  static bool d40_tx_is_linked(struct d40_chan *d40c)
->  {
->  	bool is_link;
-> @@ -1609,6 +1670,7 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
->  static void dma_tc_handle(struct d40_chan *d40c)
->  {
->  	struct d40_desc *d40d;
-> +	unsigned int callbacks = 1;
->
->  	/* Get first active entry from list */
->  	d40d = d40_first_active_get(d40c);
-> @@ -1633,6 +1695,8 @@ static void dma_tc_handle(struct d40_chan *d40c)
->  			if (d40d->lli_current == d40d->lli_len)
->  				d40d->lli_current = 0;
->  		}
-> +
-> +		callbacks = d40_cyclic_periods_elapsed(d40c, d40d);
->  	} else {
->  		d40_lcla_free_all(d40c, d40d);
->
-> @@ -1653,7 +1717,7 @@ static void dma_tc_handle(struct d40_chan *d40c)
->  		d40_desc_done(d40c, d40d);
+> @@ -3835,20 +3835,19 @@ static int __init d40_probe(struct platform_device *pdev)
 >  	}
+>  	pm_runtime_use_autosuspend(base->dev);
 >
-> -	d40c->pending_tx++;
-> +	d40c->pending_tx += callbacks;
->  	tasklet_schedule(&d40c->tasklet);
->
->  }
-> @@ -2638,6 +2702,9 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
->  		desc->cyclic_dma_addr = buf_addr;
->  		desc->cyclic_buf_len = buf_len;
->  		desc->cyclic_residue = buf_len;
-> +		desc->cyclic_period_len = period_len;
-> +		desc->cyclic_callback_pos = 0;
-> +		desc->cyclic_callback_pos_valid = true;
+> +	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+> +
+> +	d40_hw_init(base);
+> +
+>  	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
+>  	if (ret) {
+>  		d40_err(dev, "No IRQ defined\n");
+>  		goto destroy_cache;
 >  	}
+> -
+>  	ret = d40_dmaengine_init(base, num_reserved_chans);
+>  	if (ret)
+>  		goto destroy_cache;
 >
->  	kfree(sg);
+> -	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
+> -
+> -	d40_hw_init(base);
+> -
+>  	ret = of_dma_controller_register(np, d40_xlate, NULL);
+>  	if (ret) {
+>  		dev_err(dev,
 >
 > --
 > 2.55.0
