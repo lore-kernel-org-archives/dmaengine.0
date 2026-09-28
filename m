@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB573750A9;
-	Mon, 28 Sep 2026 03:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37805312814;
+	Mon, 28 Sep 2026 03:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790565310; cv=none; b=JAnkxH3LVBnumZDrPwHbcGiZHn12T1wlTlml3JhcRjosbGfBM1Rm1at3f9nP96gtSYNeLzpHUbpNg7uKxtv/8f+tyoZ1zQcLm6Xbr/xmJ7zr9NmWgjZ/Uyt0w7/4VEo4/8lIm2cBMoUDHkA8/iEoIMV2bZ75/atZHbjVq2PpL40=
+	t=1790565452; cv=none; b=pvRQvtUAJv9ADYlCP5+7lGrOJOVmUKJSTThFEJNaIM6C5H13lgRvj1o9pLJseaZ4VleuN1ne8uoD/Mya4KOdhkwxzXC4TQH1bGqEctkR5jS/PGKnR9UtdR0vXy/frYPLMg9DTRH2em41my8qd5N65Qzaw3jYKM7RD0p7/MtyaHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790565310; c=relaxed/simple;
-	bh=QLAzCMSCOsD64PyWQb28VTD9mJ3Ob9kOVzpcZgiPCwc=;
+	s=arc-20240116; t=1790565452; c=relaxed/simple;
+	bh=uNe38Z4IPHb8y+bZnUCedgmI80wrfVGqoGihu8Z0nFk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=l1IY9DdkgdbjRbE3FNYt3mK2NsT5VbwfiDHkaLhh92dwATv1V7OJSReeS+j3Me+dcHjrmJNVK5qdSQUFxDuI2X02KRnvDgE44jjTkS8hro7TtKKJ3HRsLEs23T3tcAJFsuFOhHzN8ogcaocI/PCvPqh9XERFFhKp2Gx6TTGjP84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SIcW1WP0; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=aDxP/JYET2kqbfJs6FKsRxufWiMm+kURXj+llaqtTs9zHql1yu6I8j8yiYJUsxnCLCteCk6CeTGklQRzENuQAIypcLS+ASFC4z2NhNYcs8r8oC3NF+WIJlZVK4tRmxeCl/hDNChBkOxSGO/8ILbrLcnBOBzPDD/Kgow1u7+d3MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g612h1dq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SIcW1WP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2041F000FF;
-	Mon, 28 Sep 2026 03:15:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g612h1dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF631F000FF;
+	Mon, 28 Sep 2026 03:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790565309;
-	bh=Na3foWPKjT2VVdZzz/ZNURIX8QZ7/KLW9PxIW8s3nJs=;
+	s=k20260515; t=1790565450;
+	bh=m1kKWt4DV0zhj/mN7KaH2dpAO252h168uwlJ9ptWqOs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SIcW1WP0SS5OnNN71PLYrCFJ7obr227N99Xinvd+mnLJU6vQL1fPrKbIUZt3Gcjax
-	 9bjXBehXeKo57B/JmOKQvRFDTKFvVLYvVRxO7/SpWrsYaKvS8TGphiUULoiUjTMLh9
-	 J2cLwclhnTgNyR79nhKGEq4Xk+I8AlKmJOw5DDlwIeWR0oUPJh/wqrMLl6eE9qbRFQ
-	 /sRSnw1aUFeiPwS3J2WE7F+ix0sd02bOHx5TWEH4jAZRXt9iZFBUISbeq8ZmauyR4p
-	 EXGcr0QdpE9jH4EdJZtA9rR/Jnn7EN6OdagPlucz+0+knhqK2j1zaV6AkTcN+bA+T0
-	 k2zHRYwzCaZxQ==
+	b=g612h1dqKbG4CRhJQNnRxSdvPkof5WTIajHAsE4kG/qc8cQk+HlM6PE62J9iHe9pz
+	 q1XL3gwRXJ4oMCkcygC4k1bW7VLriRaWk74CgtHxDJ+RivOj3zT+1/TyhAPC+jW39F
+	 r7UESIesQyXXsG/Xf4z/CoNMKGKfI2/PtgMHRVtFTa9Iljzy4XMW0Py9UWyH2Whe52
+	 rc+syKNrbMx/DirZfLy8FtpcsZ6xHWxRvJsbkck0y0CpyFQQ9ce1MLcVMQ/WhFzZ10
+	 eAVj8NXqDxjoeptpuZQbLk9TMto6b1S1c2bdx4jZKMWq8Pk6G5tXpBaA/3W3tkIFPv
+	 J1HuNCDZ08jHA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v10 12/19] drivers: soc: ti: k3-ringacc: handle absence
- of tisci
+Subject: Re: [PATCH v10 18/19] dmaengine: ti: k3-udma-v2: Update glue layer
+ to support PKTDMA V2
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: Frank.Li@kernel.org, conor+dt@kernel.org, robh@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20260928025749.1055383-13-s-adivi@ti.com>
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20260928025749.1055383-19-s-adivi@ti.com>
 References: <20260928025749.1055383-1-s-adivi@ti.com>
- <20260928025749.1055383-13-s-adivi@ti.com>
+ <20260928025749.1055383-19-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 28 Sep 2026 03:15:08 +0000
-Message-Id: <20260928031508.AD2041F000FF@smtp.kernel.org>
+Date: Mon, 28 Sep 2026 03:17:29 +0000
+Message-Id: <20260928031730.5DF631F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,78 +47,63 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] dma: missing hardware synchronization in ring disable
+- [High] dmaengine: ti: k3-udma-glue: RX channel incorrectly filters reques=
+ted metadata
 --
 
-commit 38d8e8375a9ffecbdf7a3fb0318fe6f0998f6f61
+commit b3e94e1224d88a6c81029a4dc336d837a68ff7a7
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-drivers: soc: ti: k3-ringacc: handle absence of tisci
+    dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
+   =20
+    Update glue layer to support PKTDMA V2 for non DMAengine users. The upd=
+ates
+    include handling absence of TISCI, direct IRQs, and autopairing.
 
-This patch adds direct register write support for ring accelerator operatio=
-ns
-on platforms without TISCI firmware, such as AM62L. It implements alternate
-paths for ring reset, configuration, and freeing when the TISCI handle is
-absent.
-
-> diff --git a/drivers/soc/ti/k3-ringacc.c b/drivers/soc/ti/k3-ringacc.c
-> index 5966db4327b13..15fab94e8cad0 100644
-> --- a/drivers/soc/ti/k3-ringacc.c
-> +++ b/drivers/soc/ti/k3-ringacc.c
+> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+> index 996c130b10f4a..309a74a0b2a67 100644
+> --- a/drivers/dma/ti/k3-udma-glue.c
+> +++ b/drivers/dma/ti/k3-udma-glue.c
 
 [ ... ]
 
-> @@ -576,10 +653,28 @@ static void k3_ringacc_ring_free_sci(struct k3_ring=
- *ring)
->  	ring_cfg.index =3D ring->ring_id;
->  	ring_cfg.valid_params =3D TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
+> @@ -725,11 +770,24 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_g=
+lue_rx_channel *rx_chn)
+>  	req.rx_chan_type =3D TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+>  	req.rx_atype =3D rx_chn->common.atype_asel;
 > =20
-> -	ret =3D ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-> -	if (ret)
-> -		dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
-> -			ret, ring->ring_id);
-> +	if (!ringacc->tisci) {
-> +		u32 reg;
+> +	if (!tisci_rm->tisci) {
+> +		u32 val =3D 0;
 > +
-> +		writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE | K3_RINGACC_RT_INT_ENABL=
-E_SET_TR,
-> +		       &ring->intr->clr);
-> +
-> +		reg =3D readl(&ring->cfg->size);
-> +		reg &=3D ~K3_DMARING_CFG_SIZE_MASK;
-> +		reg |=3D ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
-> +
-> +		writel(reg, &ring->cfg->size);
-> +
-> +		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
+> +		if (rx_chn->common.epib)
+> +			val |=3D UDMA_CHAN_CFG_FILT_EINFO;
+> +		if (rx_chn->common.psdata_size)
+> +			val |=3D UDMA_CHAN_CFG_FILT_PSWORDS;
 
 [Severity: High]
-Is it safe to clear the base addresses immediately after initiating the ring
-disable here in k3_ringacc_ring_free_sci()?
+Does this logic invert the requested configuration? The epib and psdata_size
+fields indicate that the user wants to receive this metadata. However,
+setting the FILT bits configures the hardware to drop this data, which seems
+to contradict the requested channel configuration. Could this be a copy-pas=
+te
+error from the TX channel configuration?
 
-When handling non-TISCI platforms, the code clears the size bits to disable
-the ring but does not poll the hardware to ensure the disable is complete
-before zeroing ba_lo and ba_hi.
-
-In k3_ringacc_ring_reset_sci(), there is a 100us readl_poll_timeout() to wa=
-it
-for the hardware to acknowledge the disable. If the hardware is still
-asynchronously tearing down the ring when k3_ringacc_ring_free() subsequent=
-ly
-calls dma_free_coherent() on this memory, could this lead to IOMMU faults or
-memory corruption?
-
-> +		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
-> +				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
-> +				&ring->cfg->ba_hi);
-> +	} else {
-> +		ret =3D ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-> +		if (ret)
-> +			dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
-> +				ret, ring->ring_id);
+> +
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CFG_REG, val);
+> +
+> +		return 0;
 > +	}
+> +
+> +	req.nav_id =3D tisci_rm->tisci_dev_id;
+>  	ret =3D tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
+>  	if (ret)
+>  		dev_err(rx_chn->common.dev, "rchan%d cfg failed %d\n",
+> -			rx_chn->udma_rchan_id, ret);
+> -
+> +				rx_chn->udma_rchan_id, ret);
+>  	return ret;
 >  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928025749.1055=
-383-1-s-adivi@ti.com?part=3D12
+383-1-s-adivi@ti.com?part=3D18
