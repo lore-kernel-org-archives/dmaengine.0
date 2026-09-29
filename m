@@ -1,195 +1,302 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011016.outbound.protection.outlook.com [52.101.70.16])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9FE390CB8;
-	Tue, 29 Sep 2026 14:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790691069; cv=fail; b=JM4b7on92PSu+l/ljh46Ak81WOu9ISYqh5JGYbSmat4Fw5vaCB3qzPYZWZbsCd9eP5fehsErUXTp42lM7UFWXD0Beit1UA86H5H9uPsByRCrdqzXUIG0LRQlJM3njqa5EVNA1s14RFE+sHS6XmDmPvE6+X8f3cTMIwjGUwS9goI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790691069; c=relaxed/simple;
-	bh=asqq9/toqGluyiGfFqtn1dYJTHFLgNOVf7XWkI8FLbo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=TypHPS9R0A8itMCEna+IupblaOwpORwslFtmnfgDlQZ/Y0fKx5ebOyoaF1BGIOJ8vLkkGu9u/OdUwJ+uHN7ba5zwlhnqIbu84vmaqsyV3gv3dERuKEknAZwD/A7fzZw7zueGdPeKBOW7gJdodO45e99LCJkC60BVOFBhycZCDEY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NHGQUV+G; arc=fail smtp.client-ip=52.101.70.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134E925B08D
+	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790693278; cv=none; b=GxoVb5fGutIypvMeDvvuYhBxhw15I2Noqgofd+ribZas7SVr8tKjM/N+wljdLQ4O8Ro2ikuTJlEgJE3SU5jCn3JO0ZY7PsCBf/kLNSqIfwKClDf+w1BkW6Rox48NK7uzU+H+VqoqzjMTPn/7hujh29D1GGKdL1f2Yvgpv+c7sqA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790693278; c=relaxed/simple;
+	bh=9SKT8aCCZY1wl1FsCgxAjHgW3cDtqMvlQ2rTmIB8m8U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yv8DFqGvoq2D5YHVrIeHtdomW534D321LunlfjNAKruMp0I2jWKsqo1lOgG+Nlrri9pidwv0kWbmVj0BafgR6v4X0RuWWlabPMyyi8Vj1pqx/7on0w3/K2LKmu+C7UjFPkV5p/31Ba23/dK/WyFXkFNTB9FArsuuQyLXsAXDk5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=euxQOPdd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OqRQCNd7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NHGQUV+G"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bV99KNOof89Zgf5wDIo72LuHnl7HMA/Kzq5s7F1gD9VsqNQVza/vJE76xYyCBnB4spWVjD4QEv2/s6NJMNUuVRixEapn57MzDv1JtLB3J6gnwij/hVn2mOTR/1td0LgTtmw1O5Q6nvTJTupZ4b0bIi8H2ANRNtrfyvDFmUteJDj3/Hi4+OV/AfNdp+TLymmOSQIdD2ep60TaFpP4zHnPkqyLNUWlx3oksyQXJUMz/LpaA2m0WopMZU4HtJnQbOWY8ZMmm3t7T6QXPSZHPd9iNZZdcHvTbm58y5s7Bl/lqO22KxCbFHfRqetaVkxlbbj8FdTmk0fPOkMPy+CgJe2fJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5XUpHsILyzveB+qIb5Cs8GeMuh2k8Fkg/5YjVwZeCh4=;
- b=iwjQ6N1RP73vZWdP/s2M4x0NsqMF9H+6d+uWOpLAiOjPTnpZUOij60NNKJRqf7Ga7m7+cyIe567fmTSD0Pfx1uy3xX7u0pfjBTYvFDCehVBgHGDFfrS0oVB5vUnpGBN8Fuc+UHBs+pU6ac2XnMvpzXURXGAqdbnhyWs5vsTT9j0ErMC72YlsuWv8cYhPT5/Qa8i2Pt9rd0ua5bNdYz6sL7glOZ11GKUu72JsNKCfqfzl8gDSQy2rBSwgd4EAgp0PbcEsU9I82Bwyu9IB8paGzSIl3kwjroe+hL7w1XfCFTKwfjDRdupoMc2vEryjz+1x9o2+6CBMjbcl+TCV1vzhvQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5XUpHsILyzveB+qIb5Cs8GeMuh2k8Fkg/5YjVwZeCh4=;
- b=NHGQUV+GGT54tPP3HbIQsi5qd8WggaqKiIVZjGdz7BaPWPNxRIjEZPUEfaDInJMsJZMXsfXXJ+fy0+stQ20j9+WZjNU5BjxL1J2ddlcnaVgoZDXpGzDIVJ2KXddZ1WP50vzI+I4r09ok9yJf1ySD3vZRphCzZMVTJKSheceWAr9pAkDGCy1OgsfslxSy43JnoGmsJ+7u61wfWXSG4ydLP0oqEGmQ+M4obfH+zorVTXGv38yKoN4zkdVHi59empTrGyG85iz8ihrtVVG/SiGxJFuR+HYKANc45iFz832HvO3ts5TFD1prD8ESep441DjusssXjTg70/1u/ts51C0fMA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV1PR04MB10821.eurprd04.prod.outlook.com (2603:10a6:150:200::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
- 2026 14:11:02 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.022; Tue, 29 Sep 2026
- 14:11:02 +0000
-Date: Tue, 29 Sep 2026 10:10:52 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 4/5] PCI: epf-mhi: Add batched DMA read support
-Message-ID: <arvG7FpE7_6uAKCN@lizhi-Precision-Tower-5810>
-References: <20260803-dma_multi_sg-v2-0-c12bb05e42d6@oss.qualcomm.com>
- <20260803-dma_multi_sg-v2-4-c12bb05e42d6@oss.qualcomm.com>
- <anTARsISvCPUA9_v@SMW015318>
- <szx7jctqp4h6yhgvhwmiqfjtsemwlu3iardtntp4nfc22u3bfi@ux5ioixmfdnh>
- <90fcc9ff-4ba6-4e16-a322-17ad8e4a51e7@oss.qualcomm.com>
- <ep3rjgc4idxt2ta53cebdzpqvyvvm2rnpxbo2ka3sqcmgqwdb2@cwi6gixldtxg>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ep3rjgc4idxt2ta53cebdzpqvyvvm2rnpxbo2ka3sqcmgqwdb2@cwi6gixldtxg>
-X-ClientProxiedBy: CYZPR05CA0006.namprd05.prod.outlook.com
- (2603:10b6:930:89::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="euxQOPdd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OqRQCNd7"
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TE64ak1649624
+	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=; b=euxQOPddC91dGmmT
+	7hupFBv7I1+SE8J6KCL5zrClHp47OmJpFkXWr0QMLZ4b7r7sZsmfbSUFKGIDT9jT
+	oDIIhN2B1A5PCBxWMUnZiDvn2epimyRZwYJhzji9mEf0r2ux6GaV2it9GT2BDVeB
+	ztIp6gmTyJoOmWFQjsjWyYP/I2el8+v2DpXw58H/o0VH+caDGqxwaju/TfYkq+wY
+	Gt9CI2rW9Te2DFZ83HOVz8QQ8y009C6PzPuO1/Y/xfEQWjxl9FrCfAzo724uQvZv
+	iMVvjISzo/sxq7r1HGFefW5YRU6rLO+RCDL3GOTmCLfeSpaa9Z9sbBbW73kbc8pK
+	qRDGRg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0et2867n-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-93c673116e3so587539485a.1
+        for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 07:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1790693275; x=1791298075; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=;
+        b=OqRQCNd7BBKYsJ9QqRW9c2d9uMSc7B5gtS8kZXs+GK6j98s431Vqq66S5TwLw+8GnF
+         m4vndqmnqZOHwWMN/QWX0TcMk6fsOJ3hL+Ce99pUwqifM7JmV0y4K7U7vTIsID3VF9im
+         DkaNb6uqsA1GRlQ+2Wk9L24gqjujXUERbOXJu5Xz8GEgcjXstKL/ZejAX5bKuPkIKezf
+         QFZawTvgCWKqhHoDuVbdpnVg6SExxMFU4F32EoygomaCHR1mwv5/3X3+p85rmeIsqO4b
+         s2daR/zCe+OhJCyTmd3UpaK2HVCAMwHy68jufmOCm3Mf0LG9WdBgk4s2DiPv7LkzUfnt
+         TK2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790693275; x=1791298075;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=;
+        b=whOf1C5LGVHMaJentzFywids+zyvUc+A2jhyS33JncMrCDXH5Y5Hk6Z+2r6y95Sac1
+         LJ6U7Z61l5c8V9wIzkc7g2TBdrNwC6rtsNGeNs2IZ2TdqsO6WdZLBCDQSovcRGLJ41rR
+         dltOPrnxL+fbaN8RQeciq84OTdZ8IuiHJfNS1kgQdqWK5OAq8JF8B1G+6kw+EMPLocDX
+         jzqq7q6Doln6KIYr1LsQe+Ci2Xzivxihm6BBtHWb9r3360089zyb1zOGlMyTK5ZHM/9D
+         wLHkVLK6V2sbViel19PvySJAFX3CYh1PoN9zsR6I2IhBlxkXKMMMtZfeduP5/RIQGYuN
+         SBQA==
+X-Forwarded-Encrypted: i=1; AKwUvBy3tJLCMkllTXrBvBxEcmbFTlXO7nOWf1MDF4s/tbc0ERLCj/sOkB/lnVlSOFkz37kOQqhSyD1COYU=@vger.kernel.org
+X-Gm-Message-State: AFuF++mi3gfMZJtv60S9DmeJSqrpLnyoqdsxq92yYza/IOgd9VUlQG7y
+	pDsp1i/8sSLqQ9yxeoslMiKZFu388U8ZWCzgT4Gtd4tyPHmjdaf8Thyh49jyGcXqIFeOQz51MKq
+	GeHz2+5VdekjlulxpDNaEAwjlFJfhtFdk1sE9EMFBABF87TolaFLr+C1hT3uG81Q=
+X-Gm-Gg: AYBFou0EdZ6yLV5TjngA/TaonxHEqjjiH6tINT2+6nYXcSGsuKs8INuO0E9HEbGKxTI
+	s4xtKCs1qtFG7DLPorkJflPYa76SCZnNNjRQ1r59RFcZ2VJPEyqSY2pp2IdWDWowYR6LQY1YdRi
+	g5nG5aJthhBilK6gAIJHU3hqBis1vfSRBHQTyYmt60kgLev/GfjLFozs33vqdWsEnrdy+3Xl45O
+	IH7QYJsgoaleoUTkJdEbHfIhfXO+sI90NY5E4Ejb1iVwuxAC4oAta0+fSJg0z7b3c6L1X8paADS
+	6XlcqX5Va8umUuTDraqVeCGFx3FaYLVOH0rHMQAMatcoOiGZ45cuaonCEsR9lfS2+8Q7NVhmytN
+	6FzIjauO8nWtoC6DWts7gk0nktTz8DAbwUnPf
+X-Received: by 2002:a05:620a:7004:b0:93c:5f3c:f482 with SMTP id af79cd13be357-93c5f3cfbd3mr2120476385a.33.1790693274977;
+        Tue, 29 Sep 2026 07:47:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:7004:b0:93c:5f3c:f482 with SMTP id af79cd13be357-93c5f3cfbd3mr2120468985a.33.1790693274302;
+        Tue, 29 Sep 2026 07:47:54 -0700 (PDT)
+Received: from [192.168.0.116] ([124.123.146.251])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c81423acasm407409585a.27.2026.09.29.07.47.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Sep 2026 07:47:53 -0700 (PDT)
+Message-ID: <c814c340-9973-44d4-a555-ee734cc613b4@oss.qualcomm.com>
+Date: Tue, 29 Sep 2026 20:17:49 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV1PR04MB10821:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d1a0cd9-781e-4746-da00-08df1e337e08
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|7416014|376014|366016|4143699003|10067099003|56012099006|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	aGl7RiW9iLDU8RqP5qD10Rtnqj/ajKqnjCiHgbiqFcYFUNlB5++Z6kFtu/Ve+2uVXBw9PmlfdcyolUV/e64CdEnPvhIdzShVWFzoALX3M2m+CXCpZ7cnd+5SsBkagxQsn85dJ9XnkqkzHDiztOJnqwumZoxF3lx2uVkCYTGz8x21wFL4sWSef07Tdd1qh2Y8QBqlRUSXObKN8yknDOzmeB54s71Y88JVlOmfPF4B0tlpKiaTloyr8SAhEa+HUVmyZIlFgRDeHFZ9qJ6ShOb2wdXAZX2Os7jrJgXoa4zUhMh2RY584pZ7IlYroKP90RYNBWDASyFBpiaBQBU6FPsZv0j0eGY3RPm9hRm4DXD8r/xNbk/6FhON2iDL4FnCAXEf/4p6GqwyTiWB3AejWCflPpgYo0DRMcs0pHlkuAaF97kZ/OI37NVbfq6I+wOt65OigNeoZervwQaYp0m3JiIUEsUlLXCVMzeqgAWm+yQ5XLQA57Xw5iiUU5pb+qG59HODc2G2QaBExk1L88RUTukJbeVa+3y2gJgsueP++VnEmhj74OkhDmXYk1a284V1sK3M9yHgLGU2O3eBjfbRtMIgXXoS0/FgKUnQwle/O/ul2nc7y2mE6jclvcsoKwh01nH0/WxJC/oykGRIMJzcET7J1sL+Ixwkw7qssrBKBh31J4Y=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(7416014)(376014)(366016)(4143699003)(10067099003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aFdVbzQ4ZzBxaE0va0dXZWlDaVo4UEZ0aUVjNFFycVY2MUN1dG9jbVVxdUNq?=
- =?utf-8?B?M1FkcEdJTjNnOUg3ZmFFdm0yNCt2WGZWQXAxSHVwMHgzaGlXUS85K05QRUh1?=
- =?utf-8?B?QkxQUlkxcG1Ld3NBdzZNUHY3NjZDa05jQzRBZ0QxTFMvMjQ2REdOVk9NV2Q5?=
- =?utf-8?B?QmEyV0wwWitlaXYwMFFWOFhTZXBueGxjK3haR042UG9BbEZGMXZDWFM5c2M0?=
- =?utf-8?B?Z0MzSFhneE5sMXZqY0o3YnlWT2NJSHhQdnNIeW1aYzdVYWhBb1J0MVp1VjVH?=
- =?utf-8?B?MGw0NHNPTmh2NEluektRem41NC8zT2Jub056eDV5K1dmRmhPNzk0a0Y3cGxK?=
- =?utf-8?B?d2pxTENERk0ydm9KaVVoaG1kRlNOOERxS2diMTBlMUlXS1U2ajZMYW05RnF0?=
- =?utf-8?B?Nm1sbXJZY0paR2F2MldUbVo2WitIOHZQSXZuNjgvdzliRDlobHRrRHd0d2hB?=
- =?utf-8?B?M09LeWZ1LzdEQkxtN3JXaElZaXA3MTZWcjV0Q3F4ZjdPekVTVGNHNmVqbzBE?=
- =?utf-8?B?OVNvYmNsRy8wdThZUksrNEN2bXNYUERZV2tlaTQvQnQxbWUrckdQRjg4ZkZG?=
- =?utf-8?B?SVRKR3l2WmdIU0NTdGZCUnI0eDYrdGZNVjZGVmtmUjAzTTlJdHZERkFGOHVN?=
- =?utf-8?B?ekUxSWxSQnRSVC8rZGtySHNNSlN1dElIZk9zV01MRjhwQ0R1REFMcnRkZ1da?=
- =?utf-8?B?UzZPd3R2UjJHRWU2Ti9uVGJXSTZhQjNrcjZuSzJJSm1iL3VJYURwMlVjcCtV?=
- =?utf-8?B?ellXb0dINXgyMkl2R3hvZW1nR2ZVR1EybGcvODFseldNN29BdkUxTnlSeXlZ?=
- =?utf-8?B?Q1NtK0NkdmQwZFl4c1NwOGtTZTd5Y0F5M2w4bytqN0laU2pnOXdpajRUdjVs?=
- =?utf-8?B?QjdVdE4vcmhDWTkwN0JaQ3RuVFZ0Vkg3UXAyUmpvRklmcjBvUEVYQzRrVTJQ?=
- =?utf-8?B?UWExbnE1YjI5V1YwZ0E5am5qOHpTa3liMyt5ckliQTcrR3E2NkxrbDc1OXUv?=
- =?utf-8?B?QXp1NHFJblYvZThEOGZDWk43VCtBb29OYTdTTkhRWTd2R0hiK0JHKzJwSE9J?=
- =?utf-8?B?Q29TZ1RkaXowY2VpeDdGTlpOZmpwbjBiaGZ1dThUUWk3U3JUallrVkEzWWR5?=
- =?utf-8?B?SmVlaDlvL3M0NHlrVnFXN3Bsck8rS3pmWkZsNmRQNUp2ZUd6bWRVUVh5ZkVx?=
- =?utf-8?B?SmJQb3pEbmR2Q0xpUXBPVXl0VFRZRTZ4a1F0cFpyUzhZWU0xUjczNXl5NWRv?=
- =?utf-8?B?K3NWVWxFYTN5UFc2cXZ2Zmx5eVQ4Z0gzWElRL05BUkZDQmZHQVNIRFNycWht?=
- =?utf-8?B?SStkWkNkUzErUjQxOEswK3NqK2xHVm84RnNIQjhuTHErdVdmWG8rUjE2NWJm?=
- =?utf-8?B?RW4yMzVrLzJaUjNZejVncmYxMHVWYktIMzVoUjlnZHorUUhBUTU2SHJaV0ZH?=
- =?utf-8?B?RWdMUlo4VW9JT1l2NGtMTWhkQzZCcTA3b2t0ZExyZG02b2k4S0RuSnREYUxN?=
- =?utf-8?B?S21lNlpQeE9SN0hhZytlK2JIRjJBWUVnUTkxRmU2ck0vQnUvSWY2UzRKazFV?=
- =?utf-8?B?dDFrV2M3RzE1ZjdnZHhRUHZkMFMyc2dMdjNRV3p3Y1FuU053QWRtR2NkbVlI?=
- =?utf-8?B?MlZCNzJEVTg3Um9ZOFFWVDhXcVBvdFVpbXVMSEJvU2xaNm9IOXNGbFhTdkcw?=
- =?utf-8?B?MnVybXNjOC9wdlRiUE9oL0cxYmh2RVh5cjNzSmlqU1V5ZDhrU0VUL2RleS82?=
- =?utf-8?B?UVQrQ1ZmVGFkK1NzR1p6Qzd1ZVlzY3Vkb1lQNDg5Q0FjVXhoUlNVZUZsVFdh?=
- =?utf-8?B?WWdveUVZWXUvQnRYb0pESDM0dVNMUDNvTDYrcDFiOUFHTnpmZGpTZWErNmdF?=
- =?utf-8?B?bkV5TnZzaTRza2FhMGRBUUFSbldxUzdwWmg5OTg0dzFNT0VvUjMvRlJVWFUz?=
- =?utf-8?B?Um9oQUxKWkpCMGdZQWpINjhlNTh3RjlKNWJvdTVmYXdmSDdySWR5NFhTakhT?=
- =?utf-8?B?RGMwOEQ1U0ZrQ21BZzlvdU1jOTF5VG9aWFFYSEJ1RW1Gb0tsTHY3bnhNbHJ1?=
- =?utf-8?B?L3kwMHFEVG9SQjJieTlLb2JJeXluSE5mUFFaTW5JNWVMSFQ2eGxoaFMxZnZt?=
- =?utf-8?B?akNIOFdZRTN6aExoWHdJWHF2NGNuSkN2ZC9rZW12Q0plMGlwRXBGY2pIcFlP?=
- =?utf-8?B?TlAwemRvbVEwQXNPN3prYUdoVG9LWEdkQkJhQ2JyOXVOazU0eUVnbENRbk5D?=
- =?utf-8?B?SXQ5SkVFUE5UUnZjVjFsRld0QS9OeFUwMXVhM0JVMFArN1VYeVlISlR2RGVi?=
- =?utf-8?B?cE9ldXIxelJRMitva053TlpzNEpLdFJvUWltTkg5TjFrUjc3OFpKVkRmK1Qx?=
- =?utf-8?Q?8imWvC75Jbo1gpG+cijPNgwAikcE/g4Qaro6T?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d1a0cd9-781e-4746-da00-08df1e337e08
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 14:11:01.9534
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TQVTK+XpQ2uJwCCvjDYupLEB6CjJUizUvWjS1JuhvGe+f5aipReyLqk57fLl0xTLMlRPM4UDhL5K+55EFIWOZbEk2BMLXtybETGZTMf/eLRV2WLxZJrR1SzhmIwOMNUY
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10821
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND] dmaengine: qcom: bam_dma: Defer IRQ trigger type
+ to device tree
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Andy Gross <agross@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+References: <20260717-qcom-bam-dma-irq-trigger-v1-1-6405eac86f00@oss.qualcomm.com>
+ <aqlQ_y-um0yqo6jj@SMW015318>
+ <64fc0855-3dd5-4668-9d4d-bd82be246de8@oss.qualcomm.com>
+ <b60b699e-7921-4a5c-b110-50448e660f44@oss.qualcomm.com>
+ <arqVap3Ky6vJEhRt@SMW015318>
+Content-Language: en-US
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+In-Reply-To: <arqVap3Ky6vJEhRt@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: iQQXf_dmNe0ZIxNtgTwvF18befOuBjoN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1OCBTYWx0ZWRfX6IsyorVUXIWU
+ DfZmAwAmdfeiKjNUu0A2m9klPZXt3ESdgWxg3AulaYxRhauWTUcx/0YUH/QsNiYmBtk3VMxRi8t
+ 8j/ZTLebS6MwuPhFLVCZpMh43pm2KRpbJ0GBFLs2wXc5wtp/9cGTrDmydVNJD9nM5JVkjmVYB/i
+ g5dG8h6fpCd4sBJBMFH78f+ADdOVEMUS27jU+b1J0W56I2gTLOKB6C5X4hJgUMVPYopC/cInH4L
+ 0i8DtWV4KsEZuHMEYG4ik+y8gvGcnOID9XpIYGY5YH2wxfd5ZuK9r9Dha/cJbOniOML/vY9tpbF
+ kNEdM55j68CdlOdQsgi5lrPb9wzmS3FP3ftbf/M4553wMTAZAYt3yHUnA7wdoIsvyJSVQ5BjK/8
+ uZpCE2BoJjR25QIuDNlHi18ID1pr2m1btfhUmsc9GL2FIQRMqWFkndX8OSDSoFWjSpD9096ONgZ
+ 7aFKXSmrosZ5w1/DQBA==
+X-Authority-Analysis: v=2.4 cv=cokOAF4i c=1 sm=1 tr=0 ts=6abbcf9c cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=K/78aEDNEn2Q/Yuv7mVN5Q==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=OWrbcomlJjJMdB3O3y4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: iQQXf_dmNe0ZIxNtgTwvF18befOuBjoN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1OCBTYWx0ZWRfX0MxeDqGWjjYO
+ 0aEvbu5xtygl03KjXaG1Ljm1e8gRJC+eVKV0nSs7DTXyv11rYDdkIu8kKs0ZdI+/nVfDyaT0lIw
+ PYiDBjQ+i8L2rZXo6sdiyY6KYty0QDg=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290058
 
-On Sat, Sep 26, 2026 at 10:49:04AM +0200, Manivannan Sadhasivam wrote:
-> On Tue, Sep 15, 2026 at 10:42:39AM +0530, Sumit Kumar wrote:
-> >
-> >
-> > On 8/14/2026 8:22 PM, Manivannan Sadhasivam wrote:
-> > > On Thu, Aug 06, 2026 at 12:11:34PM -0500, Frank Li wrote:
-> > >
-> > > [...]
-> > >
-> > > > > +       config.direction = DMA_DEV_TO_MEM;
-> > > > > +       ret = dmaengine_slave_config(chan, &config);
-> > > > > +       if (ret) {
-> > > > > +               dev_err(dev, "Failed to configure DMA channel for %u-buffer batch read: %d\n",
-> > > > > +                       num_buffers, ret);
-> > > > > +               goto err_unmap;
-> > > > > +       }
-> > > > > +
-> > > > > +       desc = dmaengine_prep_dma_sg(chan, dst_sg, num_buffers,
-> > > > > +                                    src_sg, num_buffers,
-> > > > > +                                    DMA_CTRL_ACK | DMA_PREP_INTERRUPT);
-> > > > Although both side memory address, but as previous discussion, which is not
-> > > > memcpy, still memory to IO space transfer.
-> > > >
-> > > I agree, it is peripheral DMA nevertheless.
-> > >
-> > > > Maybe enhence device_prep_peripheral_dma_vec(). Actually eDMA still split
-> > > > it to small trunk and linked together.
-> > > >
-> > > By enhance you mean keeping the semantics of device_prep_peripheral_dma_vec()
-> > > API? I don't know how it helps because we would most likely end up with two
-> > > vector arguments and duplicating scatter-gather lists.
-> > Frank can you comment on this.
+
+On 28-09-2026 09:57 pm, Frank Li wrote:
+> On Mon, Sep 28, 2026 at 02:38:14PM +0530, Vishnu Santhosh wrote:
+>> Hi Frank,
+>>
+>> On 16-09-2026 08:30 pm, Vishnu Santhosh wrote:
+>>> On 15-09-2026 07:36 pm, Frank Li wrote:
+>>>> On Fri, Jul 17, 2026 at 10:30:28AM +0530, Vishnu Santhosh wrote:
+>>>>> The driver hardcodes IRQF_TRIGGER_HIGH when registering the BAM
+>>>>> interrupt, which overrides the trigger type specified in the device
+>>>>> tree. On Qualcomm Shikra SoC, the A2 BAM signals an edge interrupt
+>>>>> to the apps processor; registering it as level-high causes the
+>>>>> interrupt to not fire, resulting in missed DMA completions.
+>>>>>
+>>>>> Use IRQF_TRIGGER_NONE instead, which causes the kernel to use the
+>>>>> trigger type already configured by platform_get_irq() when it parsed
+>>>>> the device tree interrupts property. This makes the driver
+>>>>> platform-agnostic.
+>>>> where show this? can you point me doc or code?
+>>>>
+>>>> Frank
+>>> Hi Frank,
+>>>
+>>> The BAM driver obtains the IRQ through platform_get_irq():
+>>>
+>>> bdev->irq = platform_get_irq(pdev, 0);
+>>>
+>>> in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1270
+>>>
+>>> It then registers the same IRQ with:
+>>>
+>>> ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+>>>                           IRQF_TRIGGER_HIGH, "bam_dma", bdev);
+>>>
+>>> in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1335
+>>>
+>>> The comment above IRQF_TRIGGER_NONE in include/linux/interrupt.h
+>>> states that when no trigger flag is specified, the interrupt uses the
+>>> trigger type already
+>>> configured by the machine or firmware.
+>>>
+>>> https://elixir.bootlin.com/linux/v7.3-rc3/source/include/linux/interrupt.h#L25
+> Thank you provide it. Kernel doc or comments may miss match actually code
+> Do you know where exactly handle IRQF_TRIGGER_NONE as what doc said?
 >
-> Frank, ping!
+> Frank
 
-I understand your requirement. It is not easy to handle. EP transfer is
-actually it is two memory space (even one side is IO space). two sgs needs
-consider offset is difference at both side, and total sg is difference,
-which is quite common, dma_map_sg() can conbine continue address to one.
+Please find the detailed flow below.
 
-At lease need help function to easily convert to DMA's description list.
+The trigger type is handled in two steps:
 
-Let me think more.
+1. platform_get_irq() looks up the DT trigger type and stores it in irq_data:
 
-Frank
+bam_dma_probe()
+  platform_get_irq()
+   platform_get_irq_optional()
+    platform_get_irq_affinity()
+     of_irq_get()
+      irq_create_of_mapping()
+       irq_create_fwspec_mapping() {
+           ...
+           irq_domain_translate(domain, fwspec, &hwirq, &type); /* L928 */
+           ...
+           /* Store trigger type */
+           irqd_set_trigger_type(irq_data, type);                 /* L1001 */
+       }
+
+https://elixir.bootlin.com/linux/v7.3-rc4/source/kernel/irq/irqdomain.c#L1001
+
+Type as IRQ_TYPE_EDGE_RISING, taken from the interrupts property in DT.
+
+2. request_irq() uses the stored type only when the caller gives no trigger flag:
+
+bam_dma_probe()
+  devm_request_irq()
+   devm_request_threaded_irq()
+    __devm_request_threaded_irq()
+     request_threaded_irq()
+      __setup_irq() {
+          ...
+          /*
+           * If the trigger type is not specified by the caller,
+           * then use the default for this interrupt.
+           * /
+           if (!(new->flags & IRQF_TRIGGER_MASK))
+              new->flags |= irqd_get_trigger_type(&desc->irq_data);  /* L1495 */
+          ...
+          if (!shared) {
+              /* Setup the type (level, edge polarity) if configured: */
+              if (new->flags & IRQF_TRIGGER_MASK) {
+                 ret = __irq_set_trigger(desc,
+                       new->flags & IRQF_TRIGGER_MASK);   /* L1719 */
+              }
+          }
+      }
+
+https://elixir.bootlin.com/linux/v7.3-rc4/source/kernel/irq/manage.c#L1495
+
+So with IRQF_TRIGGER_HIGH, the check at manage.c#L1495 is false, the DT
+type is ignored, and __irq_set_trigger() programs the GIC as level-high.
+With IRQF_TRIGGER_NONE (0), __setup_irq() takes the type stored from DT
+in step 1 and programs that instead.
+
+
+Thanks,
+Vishnu
 
 >
-> - Mani
->
-> --
-> மணிவண்ணன் சதாசிவம்
+>>>
+>>> Therefore, IRQF_TRIGGER_HIGH overrides the trigger type associated with
+>>> the IRQ during
+>>> DT/IRQ-domain mapping, while IRQF_TRIGGER_NONE preserves it.
+>>>
+>>> The Shikra DTS which is still under review describes the BAM interrupt
+>>> as edge-triggered:
+>>>
+>>> interrupts = <GIC_SPI 74 IRQ_TYPE_EDGE_RISING 0>;
+>>>
+>>> This driver change is needed so that the DT-specified trigger type
+>>> remains effective once
+>>> the Shikra DTS change is accepted.
+>>>
+>>>
+>>> Thanks,
+>>> Vishnu
+>>>
+>> Gentle ping on this patch. Please let me know if any other information to be shared
+>> from my side.
+>>
+>>
+>> Thanks,
+>> Vishnu
+>>
+>>>>> Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+>>>>> Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+>>>>> Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+>>>>> Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+>>>>> ---
+>>>>>    drivers/dma/qcom/bam_dma.c | 2 +-
+>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+>>>>> index 19116295f8325767a0d97a7848077885b118241c..6c3e2ca8a572fd04c925de0adbd5cc0616b361ef
+>>>>> 100644
+>>>>> --- a/drivers/dma/qcom/bam_dma.c
+>>>>> +++ b/drivers/dma/qcom/bam_dma.c
+>>>>> @@ -1303,7 +1303,7 @@ static int bam_dma_probe(struct
+>>>>> platform_device *pdev)
+>>>>>            bam_channel_init(bdev, &bdev->channels[i], i);
+>>>>>
+>>>>>        ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+>>>>> -            IRQF_TRIGGER_HIGH, "bam_dma", bdev);
+>>>>> +            IRQF_TRIGGER_NONE, "bam_dma", bdev);
+>>>>>        if (ret)
+>>>>>            goto err_bam_channel_exit;
+>>>>>
+>>>>>
+>>>>> ---
+>>>>> base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
+>>>>> change-id: 20260601-qcom-bam-dma-irq-trigger-0366e7e86f17
+>>>>>
+>>>>> Best regards,
+>>>>> --
+>>>>> Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+>>>>>
