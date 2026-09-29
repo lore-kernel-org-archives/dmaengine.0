@@ -1,302 +1,141 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134E925B08D
-	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D318566C5B
+	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 19:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790693278; cv=none; b=GxoVb5fGutIypvMeDvvuYhBxhw15I2Noqgofd+ribZas7SVr8tKjM/N+wljdLQ4O8Ro2ikuTJlEgJE3SU5jCn3JO0ZY7PsCBf/kLNSqIfwKClDf+w1BkW6Rox48NK7uzU+H+VqoqzjMTPn/7hujh29D1GGKdL1f2Yvgpv+c7sqA=
+	t=1790711094; cv=none; b=LNFYbhd+b33CGhvz2ZK8Gr4xIL4BOO9yHZauRu+3Pxw1pcqFeEoe9PmfOhOIyYsjDe7W326iZ2rnvDx58qUX8lC2Z/ztU3jAOBM6BibRO2zNkVaicdtXm6x9JZoAHJ8Fdec7zoOyqUqoSmUbuVJaJrp5HkAE7ZQoFTYJsxvqiVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790693278; c=relaxed/simple;
-	bh=9SKT8aCCZY1wl1FsCgxAjHgW3cDtqMvlQ2rTmIB8m8U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yv8DFqGvoq2D5YHVrIeHtdomW534D321LunlfjNAKruMp0I2jWKsqo1lOgG+Nlrri9pidwv0kWbmVj0BafgR6v4X0RuWWlabPMyyi8Vj1pqx/7on0w3/K2LKmu+C7UjFPkV5p/31Ba23/dK/WyFXkFNTB9FArsuuQyLXsAXDk5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=euxQOPdd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OqRQCNd7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1790711094; c=relaxed/simple;
+	bh=hPRoakWCFNkBhMs2RbAhu48KvrLhveA9lMJ+VhoTSvw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QnIpHbNFFDMvcyPV8ExqEfLiX6HLiVzVt0k6/7nRocQCE97UXmW46k3Z/ZPJ1utnwfhapH9qYGYOcfSRsWKrqORrJgoDYQUaTD+fYXiHIxgIhLAoFK4BPpVyyCxGt857XW/Ph5zeN8MpnVYgsh0euhe4Wq9251wjAybLMRO+mag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W2RrGCuz; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="euxQOPdd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OqRQCNd7"
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TE64ak1649624
-	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=; b=euxQOPddC91dGmmT
-	7hupFBv7I1+SE8J6KCL5zrClHp47OmJpFkXWr0QMLZ4b7r7sZsmfbSUFKGIDT9jT
-	oDIIhN2B1A5PCBxWMUnZiDvn2epimyRZwYJhzji9mEf0r2ux6GaV2it9GT2BDVeB
-	ztIp6gmTyJoOmWFQjsjWyYP/I2el8+v2DpXw58H/o0VH+caDGqxwaju/TfYkq+wY
-	Gt9CI2rW9Te2DFZ83HOVz8QQ8y009C6PzPuO1/Y/xfEQWjxl9FrCfAzo724uQvZv
-	iMVvjISzo/sxq7r1HGFefW5YRU6rLO+RCDL3GOTmCLfeSpaa9Z9sbBbW73kbc8pK
-	qRDGRg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0et2867n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 14:47:56 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-93c673116e3so587539485a.1
-        for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 07:47:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W2RrGCuz"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49ffbd83a92so27286655e9.0
+        for <dmaengine@vger.kernel.org>; Tue, 29 Sep 2026 12:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790693275; x=1791298075; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=;
-        b=OqRQCNd7BBKYsJ9QqRW9c2d9uMSc7B5gtS8kZXs+GK6j98s431Vqq66S5TwLw+8GnF
-         m4vndqmnqZOHwWMN/QWX0TcMk6fsOJ3hL+Ce99pUwqifM7JmV0y4K7U7vTIsID3VF9im
-         DkaNb6uqsA1GRlQ+2Wk9L24gqjujXUERbOXJu5Xz8GEgcjXstKL/ZejAX5bKuPkIKezf
-         QFZawTvgCWKqhHoDuVbdpnVg6SExxMFU4F32EoygomaCHR1mwv5/3X3+p85rmeIsqO4b
-         s2daR/zCe+OhJCyTmd3UpaK2HVCAMwHy68jufmOCm3Mf0LG9WdBgk4s2DiPv7LkzUfnt
-         TK2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790693275; x=1791298075;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1790711090; x=1791315890; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Z9XZoXTwGMQVNET7DHE0w8OqTS0H7fU7il6Xp1aiEII=;
-        b=whOf1C5LGVHMaJentzFywids+zyvUc+A2jhyS33JncMrCDXH5Y5Hk6Z+2r6y95Sac1
-         LJ6U7Z61l5c8V9wIzkc7g2TBdrNwC6rtsNGeNs2IZ2TdqsO6WdZLBCDQSovcRGLJ41rR
-         dltOPrnxL+fbaN8RQeciq84OTdZ8IuiHJfNS1kgQdqWK5OAq8JF8B1G+6kw+EMPLocDX
-         jzqq7q6Doln6KIYr1LsQe+Ci2Xzivxihm6BBtHWb9r3360089zyb1zOGlMyTK5ZHM/9D
-         wLHkVLK6V2sbViel19PvySJAFX3CYh1PoN9zsR6I2IhBlxkXKMMMtZfeduP5/RIQGYuN
-         SBQA==
-X-Forwarded-Encrypted: i=1; AKwUvBy3tJLCMkllTXrBvBxEcmbFTlXO7nOWf1MDF4s/tbc0ERLCj/sOkB/lnVlSOFkz37kOQqhSyD1COYU=@vger.kernel.org
-X-Gm-Message-State: AFuF++mi3gfMZJtv60S9DmeJSqrpLnyoqdsxq92yYza/IOgd9VUlQG7y
-	pDsp1i/8sSLqQ9yxeoslMiKZFu388U8ZWCzgT4Gtd4tyPHmjdaf8Thyh49jyGcXqIFeOQz51MKq
-	GeHz2+5VdekjlulxpDNaEAwjlFJfhtFdk1sE9EMFBABF87TolaFLr+C1hT3uG81Q=
-X-Gm-Gg: AYBFou0EdZ6yLV5TjngA/TaonxHEqjjiH6tINT2+6nYXcSGsuKs8INuO0E9HEbGKxTI
-	s4xtKCs1qtFG7DLPorkJflPYa76SCZnNNjRQ1r59RFcZ2VJPEyqSY2pp2IdWDWowYR6LQY1YdRi
-	g5nG5aJthhBilK6gAIJHU3hqBis1vfSRBHQTyYmt60kgLev/GfjLFozs33vqdWsEnrdy+3Xl45O
-	IH7QYJsgoaleoUTkJdEbHfIhfXO+sI90NY5E4Ejb1iVwuxAC4oAta0+fSJg0z7b3c6L1X8paADS
-	6XlcqX5Va8umUuTDraqVeCGFx3FaYLVOH0rHMQAMatcoOiGZ45cuaonCEsR9lfS2+8Q7NVhmytN
-	6FzIjauO8nWtoC6DWts7gk0nktTz8DAbwUnPf
-X-Received: by 2002:a05:620a:7004:b0:93c:5f3c:f482 with SMTP id af79cd13be357-93c5f3cfbd3mr2120476385a.33.1790693274977;
-        Tue, 29 Sep 2026 07:47:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:7004:b0:93c:5f3c:f482 with SMTP id af79cd13be357-93c5f3cfbd3mr2120468985a.33.1790693274302;
-        Tue, 29 Sep 2026 07:47:54 -0700 (PDT)
-Received: from [192.168.0.116] ([124.123.146.251])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c81423acasm407409585a.27.2026.09.29.07.47.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2026 07:47:53 -0700 (PDT)
-Message-ID: <c814c340-9973-44d4-a555-ee734cc613b4@oss.qualcomm.com>
-Date: Tue, 29 Sep 2026 20:17:49 +0530
+        bh=1xPmHroPUS9i0jXfxLubKHHis3db3+ArB5MF0c1e2XM=;
+        b=W2RrGCuzyiUo486ZWweqmInm0hRPG5G0t6Cg1EgLa+tV+YpF5jOgrIQAsiZ7GdCo8b
+         +Z2i5tSLY9pTrw21j+6FI17GnWAa4EIm9tJrMVMZ9Z1vnpzXz611kdDp+6HNIelFY0oo
+         TtbeinbHNapMT5yYJfeazHt7UBGQ/V8jmd/pgm6dv3CNe35VTRyYL5plK3MhlvPse4zv
+         gMSPjzext4OLWDJPNODcfU0O598DYsWt1MZlx/OqP3qao6hobl0jjIKGtZwTsDJPPdx3
+         edZ4Efp1RLcnRufEOYWxzMP9nMT5Txns3bCTDb4ulqmbids+dUcP2vE66WiiNbb96QIa
+         D7hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790711090; x=1791315890;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1xPmHroPUS9i0jXfxLubKHHis3db3+ArB5MF0c1e2XM=;
+        b=ECbbQKFErCCbTjotJeCJsHvrAkGCsZ7SWDmxLvz+yOPWKfwWvAOklomkyTftjKj2gz
+         1AOOcOQGGjYVkZihxlTS5iBxvqnY+jmrJ1CbObj52kWJF40ZC6JPRIEMC3EY9vFNUsjc
+         EVYfk0co3aCvTz5OsMezHR8r1UHon5kpSkxQ3JzTJZhl4+LUabJlruRHepzaErS38Pte
+         AnQNHiMFypotBRmi5Dep2o7h8mAjFBzgHm9BgIDkHPmRvXAaDktzEi1CTDTUuLnwwOeq
+         KPpCPwZCIy+bIJWlBWbTmc7RMD7kOQJD0WN8deru/jXu03+aKBSBAiu31pNzVaopm9xL
+         Rsng==
+X-Forwarded-Encrypted: i=1; AKwUvBzLBdr2faeXO/DLvnxiYmO7lsvUBvmqqb6a/brQv48qwZ04EiOe8UJomt1UB9PSZybqw6brPAth2zc=@vger.kernel.org
+X-Gm-Message-State: AFuF++mfw83mPlhYnWKknVs1j0p7G6FKmrQvrAAqrA67uGWW9cxekzJQ
+	1l63fv5UnbvDlCVU8u0qetop59hiqb4enW8yFKNS1H65CnkySyxx+DDx
+X-Gm-Gg: AYBFou0o+VM3YumSlV997JhYhusMkwOSnOHwhulT0ysio8CtU0gHNTg+JC7PEtXddhW
+	d7OdCXRwy8Dk9DLysXHaNHms7jS42y/6yY1fKI+IzyolNX+SaIjXtrgbqPtpmhQJA2oajNSoXbr
+	xxEhGC6t39/0arviG394sy4i3Ibb2coWXy/d80DyGZRSSqIQ8Mg34MDpqxp8widMiJI5/bls2JU
+	7arCFP7afKdvQ+4wd1WBp9h35dhU6Eq8C8d1+yzAiYCGq6VZ6M3z7WthIj0x1SFyZHB/KoH/edz
+	F4QEwYqfGrshrkYkx0irDCcZz8yREFxGhZnCw1XZ9bWCeL0y1Wtb0IFnf7DwzaexiHjSW5aTMHu
+	RyVXdYHec6mdLAMNT9CfKn1jAxczKfD7Y4tfhP8SyOfLcQS+MFbXIuYm45hsUP7Qr7uZAedsCH9
+	5MfuZjU97VRZJXdhiaDk/AVgHvmDxZNzE+J4nYedK1YHo6Pf2zBbv5Hia0ooPg9qxw/cGD71u92
+	D5x9Gg5xMKrV0gLEocWKs94
+X-Received: by 2002:a05:600c:1546:b0:49f:e4ca:e09 with SMTP id 5b1f17b1804b1-4a014fd1e9cmr2899905e9.3.1790711089450;
+        Tue, 29 Sep 2026 12:44:49 -0700 (PDT)
+Received: from localhost.localdomain ([82.142.85.166])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a014895428sm5265825e9.0.2026.09.29.12.44.47
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 29 Sep 2026 12:44:48 -0700 (PDT)
+From: Ginger Li <ginger.jzllee@gmail.com>
+To: Markus.Elfring@web.de,
+	dmaengine@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	jonathanh@nvidia.com,
+	ldewangan@nvidia.com,
+	vkoul@kernel.org
+Subject: [PATCH v2] dmaengine: tegra186-gpc-dma: Read channel state under the lock
+Date: Tue, 29 Sep 2026 21:44:34 +0200
+Message-ID: <20260929194434.29937-1-ginger.jzllee@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20260922072233.19592-1-ginger.jzllee@gmail.com>
+References: <20260922072233.19592-1-ginger.jzllee@gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND] dmaengine: qcom: bam_dma: Defer IRQ trigger type
- to device tree
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-        Andy Gross <agross@codeaurora.org>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-References: <20260717-qcom-bam-dma-irq-trigger-v1-1-6405eac86f00@oss.qualcomm.com>
- <aqlQ_y-um0yqo6jj@SMW015318>
- <64fc0855-3dd5-4668-9d4d-bd82be246de8@oss.qualcomm.com>
- <b60b699e-7921-4a5c-b110-50448e660f44@oss.qualcomm.com>
- <arqVap3Ky6vJEhRt@SMW015318>
-Content-Language: en-US
-From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-In-Reply-To: <arqVap3Ky6vJEhRt@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iQQXf_dmNe0ZIxNtgTwvF18befOuBjoN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1OCBTYWx0ZWRfX6IsyorVUXIWU
- DfZmAwAmdfeiKjNUu0A2m9klPZXt3ESdgWxg3AulaYxRhauWTUcx/0YUH/QsNiYmBtk3VMxRi8t
- 8j/ZTLebS6MwuPhFLVCZpMh43pm2KRpbJ0GBFLs2wXc5wtp/9cGTrDmydVNJD9nM5JVkjmVYB/i
- g5dG8h6fpCd4sBJBMFH78f+ADdOVEMUS27jU+b1J0W56I2gTLOKB6C5X4hJgUMVPYopC/cInH4L
- 0i8DtWV4KsEZuHMEYG4ik+y8gvGcnOID9XpIYGY5YH2wxfd5ZuK9r9Dha/cJbOniOML/vY9tpbF
- kNEdM55j68CdlOdQsgi5lrPb9wzmS3FP3ftbf/M4553wMTAZAYt3yHUnA7wdoIsvyJSVQ5BjK/8
- uZpCE2BoJjR25QIuDNlHi18ID1pr2m1btfhUmsc9GL2FIQRMqWFkndX8OSDSoFWjSpD9096ONgZ
- 7aFKXSmrosZ5w1/DQBA==
-X-Authority-Analysis: v=2.4 cv=cokOAF4i c=1 sm=1 tr=0 ts=6abbcf9c cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=K/78aEDNEn2Q/Yuv7mVN5Q==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=OWrbcomlJjJMdB3O3y4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-ORIG-GUID: iQQXf_dmNe0ZIxNtgTwvF18befOuBjoN
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1OCBTYWx0ZWRfX0MxeDqGWjjYO
- 0aEvbu5xtygl03KjXaG1Ljm1e8gRJC+eVKV0nSs7DTXyv11rYDdkIu8kKs0ZdI+/nVfDyaT0lIw
- PYiDBjQ+i8L2rZXo6sdiyY6KYty0QDg=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290058
 
+tegra_dma_tx_status() reads tdc->status before taking tdc->vc.lock, and
+tegra_dma_isr() snapshots tdc->dma_desc before taking the same lock.  All
+writers of these fields (tegra_dma_start(), tegra_dma_xfer_complete(),
+tegra_dma_pause(), tegra_dma_resume() and tegra_dma_terminate_all()) update
+them under tdc->vc.lock.
 
-On 28-09-2026 09:57 pm, Frank Li wrote:
-> On Mon, Sep 28, 2026 at 02:38:14PM +0530, Vishnu Santhosh wrote:
->> Hi Frank,
->>
->> On 16-09-2026 08:30 pm, Vishnu Santhosh wrote:
->>> On 15-09-2026 07:36 pm, Frank Li wrote:
->>>> On Fri, Jul 17, 2026 at 10:30:28AM +0530, Vishnu Santhosh wrote:
->>>>> The driver hardcodes IRQF_TRIGGER_HIGH when registering the BAM
->>>>> interrupt, which overrides the trigger type specified in the device
->>>>> tree. On Qualcomm Shikra SoC, the A2 BAM signals an edge interrupt
->>>>> to the apps processor; registering it as level-high causes the
->>>>> interrupt to not fire, resulting in missed DMA completions.
->>>>>
->>>>> Use IRQF_TRIGGER_NONE instead, which causes the kernel to use the
->>>>> trigger type already configured by platform_get_irq() when it parsed
->>>>> the device tree interrupts property. This makes the driver
->>>>> platform-agnostic.
->>>> where show this? can you point me doc or code?
->>>>
->>>> Frank
->>> Hi Frank,
->>>
->>> The BAM driver obtains the IRQ through platform_get_irq():
->>>
->>> bdev->irq = platform_get_irq(pdev, 0);
->>>
->>> in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1270
->>>
->>> It then registers the same IRQ with:
->>>
->>> ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
->>>                           IRQF_TRIGGER_HIGH, "bam_dma", bdev);
->>>
->>> in https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/dma/qcom/bam_dma.c#L1335
->>>
->>> The comment above IRQF_TRIGGER_NONE in include/linux/interrupt.h
->>> states that when no trigger flag is specified, the interrupt uses the
->>> trigger type already
->>> configured by the machine or firmware.
->>>
->>> https://elixir.bootlin.com/linux/v7.3-rc3/source/include/linux/interrupt.h#L25
-> Thank you provide it. Kernel doc or comments may miss match actually code
-> Do you know where exactly handle IRQF_TRIGGER_NONE as what doc said?
->
-> Frank
+The unlocked read in tegra_dma_tx_status() can therefore report DMA_PAUSED
+for a transfer that has already completed, and the unlocked read in
+tegra_dma_isr() can pick up a tdc->dma_desc which is being cleared
+concurrently, in which case the handler keeps using a stale descriptor
+pointer.
 
-Please find the detailed flow below.
+Read both fields while holding tdc->vc.lock.
 
-The trigger type is handled in two steps:
+Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+---
+v2:
+ - Fixes: expanded to 12 hex digits.
+---
+ drivers/dma/tegra186-gpc-dma.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-1. platform_get_irq() looks up the DT trigger type and stores it in irq_data:
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -606,7 +606,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
+ static irqreturn_t tegra_dma_isr(int irq, void *dev_id)
+ {
+ 	struct tegra_dma_channel *tdc = dev_id;
+-	struct tegra_dma_desc *dma_desc = tdc->dma_desc;
++	struct tegra_dma_desc *dma_desc;
+ 	struct tegra_dma_sg_req *sg_req;
+ 	u32 status;
+ 
+@@ -619,6 +619,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id
+ 	}
+ 
+ 	spin_lock(&tdc->vc.lock);
++	dma_desc = tdc->dma_desc;
+ 	status = tdc_read(tdc, tdc->regs->status);
+ 	if (!(status & TEGRA_GPCDMA_STATUS_ISE_EOC))
+ 		goto irq_done;
+@@ -786,10 +787,10 @@ static enum dma_status tegra_dma_tx_status(struct dma_
+ 	if (ret == DMA_COMPLETE)
+ 		return ret;
+ 
++	spin_lock_irqsave(&tdc->vc.lock, flags);
+ 	if (tdc->status == DMA_PAUSED)
+ 		ret = DMA_PAUSED;
+ 
+-	spin_lock_irqsave(&tdc->vc.lock, flags);
+ 	vd = vchan_find_desc(&tdc->vc, cookie);
+ 	if (vd) {
+ 		dma_desc = vd_to_tegra_dma_desc(vd);
+-- 
+2.43.0
 
-bam_dma_probe()
-  platform_get_irq()
-   platform_get_irq_optional()
-    platform_get_irq_affinity()
-     of_irq_get()
-      irq_create_of_mapping()
-       irq_create_fwspec_mapping() {
-           ...
-           irq_domain_translate(domain, fwspec, &hwirq, &type); /* L928 */
-           ...
-           /* Store trigger type */
-           irqd_set_trigger_type(irq_data, type);                 /* L1001 */
-       }
-
-https://elixir.bootlin.com/linux/v7.3-rc4/source/kernel/irq/irqdomain.c#L1001
-
-Type as IRQ_TYPE_EDGE_RISING, taken from the interrupts property in DT.
-
-2. request_irq() uses the stored type only when the caller gives no trigger flag:
-
-bam_dma_probe()
-  devm_request_irq()
-   devm_request_threaded_irq()
-    __devm_request_threaded_irq()
-     request_threaded_irq()
-      __setup_irq() {
-          ...
-          /*
-           * If the trigger type is not specified by the caller,
-           * then use the default for this interrupt.
-           * /
-           if (!(new->flags & IRQF_TRIGGER_MASK))
-              new->flags |= irqd_get_trigger_type(&desc->irq_data);  /* L1495 */
-          ...
-          if (!shared) {
-              /* Setup the type (level, edge polarity) if configured: */
-              if (new->flags & IRQF_TRIGGER_MASK) {
-                 ret = __irq_set_trigger(desc,
-                       new->flags & IRQF_TRIGGER_MASK);   /* L1719 */
-              }
-          }
-      }
-
-https://elixir.bootlin.com/linux/v7.3-rc4/source/kernel/irq/manage.c#L1495
-
-So with IRQF_TRIGGER_HIGH, the check at manage.c#L1495 is false, the DT
-type is ignored, and __irq_set_trigger() programs the GIC as level-high.
-With IRQF_TRIGGER_NONE (0), __setup_irq() takes the type stored from DT
-in step 1 and programs that instead.
-
-
-Thanks,
-Vishnu
-
->
->>>
->>> Therefore, IRQF_TRIGGER_HIGH overrides the trigger type associated with
->>> the IRQ during
->>> DT/IRQ-domain mapping, while IRQF_TRIGGER_NONE preserves it.
->>>
->>> The Shikra DTS which is still under review describes the BAM interrupt
->>> as edge-triggered:
->>>
->>> interrupts = <GIC_SPI 74 IRQ_TYPE_EDGE_RISING 0>;
->>>
->>> This driver change is needed so that the DT-specified trigger type
->>> remains effective once
->>> the Shikra DTS change is accepted.
->>>
->>>
->>> Thanks,
->>> Vishnu
->>>
->> Gentle ping on this patch. Please let me know if any other information to be shared
->> from my side.
->>
->>
->> Thanks,
->> Vishnu
->>
->>>>> Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
->>>>> Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
->>>>> Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
->>>>> Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
->>>>> ---
->>>>>    drivers/dma/qcom/bam_dma.c | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
->>>>> index 19116295f8325767a0d97a7848077885b118241c..6c3e2ca8a572fd04c925de0adbd5cc0616b361ef
->>>>> 100644
->>>>> --- a/drivers/dma/qcom/bam_dma.c
->>>>> +++ b/drivers/dma/qcom/bam_dma.c
->>>>> @@ -1303,7 +1303,7 @@ static int bam_dma_probe(struct
->>>>> platform_device *pdev)
->>>>>            bam_channel_init(bdev, &bdev->channels[i], i);
->>>>>
->>>>>        ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
->>>>> -            IRQF_TRIGGER_HIGH, "bam_dma", bdev);
->>>>> +            IRQF_TRIGGER_NONE, "bam_dma", bdev);
->>>>>        if (ret)
->>>>>            goto err_bam_channel_exit;
->>>>>
->>>>>
->>>>> ---
->>>>> base-commit: e43ffb69e0438cddd72aaa30898b4dc446f664f8
->>>>> change-id: 20260601-qcom-bam-dma-irq-trigger-0366e7e86f17
->>>>>
->>>>> Best regards,
->>>>> --
->>>>> Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
->>>>>
