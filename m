@@ -1,66 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11363D6CA3;
-	Wed, 30 Sep 2026 10:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790763734; cv=none; b=Nc9J91iYphH/qdkoXgn9Rg74C+tpAmcJWjRaSAhLZUwKNEl7G8KiifT/uHVXDeQgM+iwIEMiO5LCJpI8sO/VVrpCGlj42cklq4T64VInoGyN7tGdJum/AoNZz1duvznYwdC69QsIdD5F4QX1BG7NxpNtNcyfYYEpbw37HtDI2vA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790763734; c=relaxed/simple;
-	bh=fn+6JkbI/dBm1vUqHGCvnuSIX4G+50pN5naJvI6aUrk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oawLI4pKrsxJqnQnEUm3It/l8dEYH3Ih7fOnaKBFJnPdftI2LBEqdCKwO0uoNyrm7+imXa86R4Oz9rjjXc6gpc0YjBhFc8LzNEJWDHI2IBIBAF/urt5fHKT4fe1stxAZ/f8xHcVKiKKQ9WT7ZhiVmWaHI6eeBwcL9Qw+ttQJYc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1E8EkoI; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AF2495ACD
+	for <dmaengine@vger.kernel.org>; Wed, 30 Sep 2026 11:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.141
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790769449; cv=pass; b=GMwkYvUSvaQQgblKyG9ntklmWrHQb3gCF0oNFEVdwJi89Q9qoGjougJ60PrsBpFVO/pIz9/45e2ZRVkFM6s7b7psD+zD0zGL/8PmJaM5FBRvF6aJUP0GOu8xbB2BG83N4qN+dVcjrz2aZnNqL1Au8A8l/JutKUk+QiFod9z2G14=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790769449; c=relaxed/simple;
+	bh=UoFaUknaPGAot9LI650Qdfi+g+WeShPBf70M25SuqEA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uxGejWc3CRIfliPArM/L0cWagjSi7yOI342e5dmJmOr2HctkIGg4460zdOLNX17FwxQjfnwRhN9AAZKFnpFZ4wsLZRXZyfB6hNiKLbFoJOC9vngLaVYKOdlK0ZgR3qpZIJ7jwkVe0InzGZgcvvPXMAM3acZZ4mCsDNzUQpFkheo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQAr9S1U; arc=pass smtp.client-ip=74.125.224.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1E8EkoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D7F1F0089D;
-	Wed, 30 Sep 2026 10:22:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790763732;
-	bh=EiSeSFm/kvhrLzh49a4fyoEhiJlFq4d9oEzzedhJddY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=N1E8EkoI0GGLlh0efxN+9NG47E0OkIxtsBgMxqAi+aviD+YvVKadlqMSpkJPzVMlD
-	 h5RVFJ/fCY6vzN7ybGnMpz23Gz+ytXgUqEZW2hwwPXeeGak/bHkVYPtlbZcOEM1vPo
-	 zYrwIqnJNFzUJkc50gQ+09EjE7nTuCcwkt3ODbxjlq6hNb1ArLwzGwhlaKeZgJMcCj
-	 GsnYzm8uLZP3Z5vr3sqJ+AgXqNqJPndhPjp2Kk8z3BlRpYBP9wgUB/bwml+wCtBNY6
-	 6djCPwjkOekD1mhAxyr9ZY9Tpf9Jydp3YlY/eFEODDoAIc2UpojC/bV1GngcTLp6z0
-	 T6bK5IHMHWTTw==
-Date: Wed, 30 Sep 2026 12:22:08 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Cc: peter.ujfalusi@gmail.com, vkoul@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, nm@ti.com, ssantosh@kernel.org, 
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, vigneshr@ti.com, Frank.li@nxp.com, r-sharma3@ti.com, 
-	gehariprasath@ti.com
-Subject: Re: [PATCH v10 14/19] dt-bindings: dma: ti: Add K3 PKTDMA V2
-Message-ID: <20260930-reasonable-lemon-salamander-c23e99@quoll>
-References: <20260928025749.1055383-1-s-adivi@ti.com>
- <20260928025749.1055383-15-s-adivi@ti.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQAr9S1U"
+Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66e4ab20f4bso5524814d50.0
+        for <dmaengine@vger.kernel.org>; Wed, 30 Sep 2026 04:57:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790769446; cv=none;
+        d=google.com; s=arc-20260327;
+        b=akR0WIVPMVr9H/+GAML6IeVUXH8IKPcgo2rkXTyGfj9Zn2TTzYe5pdIcFoqhSZkFcf
+         3BGmzmkOJn1v68HDYjdmHEgIqxoHZaDSo/S3Y2JIdZ6NSJXodGo7AT10yBNKoq+WPiW3
+         yQvixmS7S6+sgP5uzNI9SFMopnCcsvAdHUx9cyqrimXf/+jSAJU/718tLPhDZ7OFF+vu
+         BzxHN1u4XZDSqakn9qy5dyzdgAeRJqqd0OJ7dO1cwPeBhNwD7JsfRXQHvZOctopa87TC
+         f/xW3V0ZYJ4MWd0oEo9UJYPk2gSI3kQqCIQx7PEoweM3/Mi7ubgI2sLPnr9azM1ov80M
+         GaTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Ba7AhExhkiMVWJNfe1v9ZUOyiNk92H/JjgkQAe6kipg=;
+        fh=rXAdtJ0t+bkOBZEEcwo7Y+o8NDDPP046L6dI8czbgDI=;
+        b=lTeUe/fyehmElr+ccgTjg6NrMLCH5FZZnIP2dXCzaEXGPaBnptvFjyUnWRCcaOqDsA
+         oxM0I9Z+UE87KgzSnQdbrYjmVF9VpKWUjbOQvghlE+2gkQWzQTFd4lCjyf4pu03H5hcp
+         5BlTs1GRlD/LypUOpezn6+lVjKkbAX5sUBpOfuf29xpisA4LloPM915lMHQwLiNBA25I
+         6/xHSTSw0A4ZCv9msLtg/8ZnGzb3rxF+twpJtyp/hS+WfyT4e77/9xI3xKa+Hn5wEEow
+         SWkie+nNwQBohnB3OV5+At8MYyqPEhULshhhjmrPHHb6TyStqDzriGEktjLLwv+R9Cq3
+         gISA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790769446; x=1791374246; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Ba7AhExhkiMVWJNfe1v9ZUOyiNk92H/JjgkQAe6kipg=;
+        b=OQAr9S1U79AheepEFc3eW+PvLQCQHbuErQhBRpCurfXkkhNAbkqlLqs5mVgVPTmT31
+         JhVvAIxcFlb4AJQNHU+X0rRjpW5dtb6ogahQWFHlWB2tIXUgbQFuzkvg8gueKxhiwP3o
+         kFPwBIohlqJ/6ZsPcnwpn9fI4xP5Ek8PaC5pejaC+8UmZ4lhpTdyMRTQB8D55E/cLUWn
+         3tASZDXqcmX4Fn6qEaZkD6d/r2rx2O1MMLxo1fg5CYUP3xJcCyMYlXaojpNUtNUtQioX
+         xlZ33/cdSd3Lnh4qusFiLd1PyuBdFMfdtDMkVcuUKo7OYKT4vba5c+dCw1nDE+vX3ozq
+         ZfTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790769446; x=1791374246;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ba7AhExhkiMVWJNfe1v9ZUOyiNk92H/JjgkQAe6kipg=;
+        b=K2dlUCFZ4funUO9IZ15M9KM+bj/dZv34snmvDtM/RCOzQ+zuJv44RPL19DXyB/mFEP
+         Wn2Crlpb6qJ2+Xn8MW8Ajwt1wKcASB17rb8BALd2Kfe3LlBhmXODTQBhoP66f0Rp1Q9a
+         jUyMs+V8Ya1fig1aGM1JDxW61fs5/gnBLaiurDXAqkYXXYC9R8uX6AYKEvOCX3pp6xJJ
+         lFDen0qiMg259LFDTtfogu2ngGWG5+6GwF9nFCvhuObPYVsqbjw9CTBkPatarPwJaq7H
+         92jPmZho40P3V0uzxFq8EhAUUvFikrTcDN67NF6GjUAEqFHVRrMmaA+4IuPCXouP2oiB
+         K0WQ==
+X-Gm-Message-State: AFuF++ke0RcBgwbBQl6aiWik4qDq/Fzff1lRszdJwA0Ez44w9YpiXJue
+	+wtkbRDz8LIr2iPtYWR22KMVo+NiEfKPhLDH9G9A+Skge+Yu6LCkhQIjZTXva2+jM9VKqjZK80M
+	Mk+Hud5tk8zxG6oz/jrrzEBnX5zYB6qU=
+X-Gm-Gg: AYBFou0fQ799m4YcWKQPbzICKX+TWR+3XH+ahJx+vYv8KbXWX62ONR+ZcmgZAEQE3hJ
+	6kdIk1Y7brlgTW8o0IIXa4zLmXmyC/dqWB78+v/rO/P8Kkxxf5gipM12Ykpfpw8VlIZK6cyMI3/
+	/o0yIPOMgHe11lgvs0X4MPZP+eOvaUr6c037EqwCGuhruE1qUrqBmgdCiEYqSginZjvFYBNeZ54
+	3RU+QVJkngyGHhZgrMxytuoIG2o3WgMTHm1EghEp1pW83TFCx5coi0B9zADMNi8tEUPI48ES6Jt
+	F5Sf7L7aWHfy3mde78Wrr9BlpaAzN6qNpttph67vEAK8hfnTvAD+okQ=
+X-Received: by 2002:a05:690e:b87:b0:673:572:449c with SMTP id
+ 956f58d0204a3-67683494064mr311881d50.97.1790769445863; Wed, 30 Sep 2026
+ 04:57:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260928025749.1055383-15-s-adivi@ti.com>
+References: <20260929194434.29937-1-ginger.jzllee@gmail.com>
+ <20260930071916.35722-1-ginger.jzllee@gmail.com> <0593ff86-c6ab-4c64-88a3-e500ed335760@web.de>
+ <CAGp+u1aTQvE_o=nObMb0LvuwmdFukG9qBeKGDvwcf5-ckG9xyg@mail.gmail.com> <cb64813e-0a11-4c14-9bea-45f8dceff115@web.de>
+In-Reply-To: <cb64813e-0a11-4c14-9bea-45f8dceff115@web.de>
+From: Ginger <ginger.jzllee@gmail.com>
+Date: Wed, 30 Sep 2026 13:57:11 +0200
+X-Gm-Features: AclHuK9c85XY0-0FVl9whcFZZRCVWc-3bABsjYrbvCeX-F_yjm-EuhyLPQ-257A
+Message-ID: <CAGp+u1Yw24hRsZfnD7sePs4C=xp-VLe1=OitaVRUrvE9tyNiiQ@mail.gmail.com>
+Subject: Re: [v3] dmaengine: tegra186-gpc-dma: Read channel state under the lock
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: dmaengine@vger.kernel.org, linux-tegra@vger.kernel.org, 
+	kernel-janitors@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Laxman Dewangan <ldewangan@nvidia.com>, 
+	Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 28, 2026 at 08:26:20AM +0530, Sai Sree Kartheek Adivi wrote:
-> New binding document for Texas Instruments K3 Packet DMA (PKTDMA) V2.
-> 
-> PKTDMA V2 is introduced as part of AM62L.
-> 
-> Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-> ---
->  .../bindings/dma/ti/ti,am62l-dmss-pktdma.yaml | 189 ++++++++++++++++++
->  1 file changed, 189 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-pktdma.yaml
+On Wed, Sep 30, 2026 at 9:46=E2=80=AFAM Markus Elfring <Markus.Elfring@web.=
+de> wrote:
+>
+> >> Under which circumstances will additional background information becom=
+e available?
+> >
+> > The static analyzer is a research-based one, built upon the LLVM IR.
+> > The analysis is founded
+> > on a symbolic model (not an ML model) for concurrency bugs.
+>
+> Thanks for such a hint.
+>
+>
+> >                                                             And due to
+> > the anonymity
+> > requirements, I am afraid I cannot reveal further information.
+>
+> How does this feedback fit to other known guidance?
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/D=
+ocumentation/process/researcher-guidelines.rst?h=3Dv7.3-rc5#n5
+>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+I can update more information about the static analyzer (i.e., it is
+experimental and its reported log) in the patch.
+I believe this aligns with the known guidance, but I cannot provide
+the source code links.
 
-Best regards,
-Krzysztof
+>
+> >>> Were any more of your contributions supported by advanced source code=
+ analysis tools?
+> >
+> > If you meant AI tools, then at this stage, no. For this patch, I have
+> > used AI tools to help phrase
+> > the patch better, but I did not use them for code analysis.
+> Will this information trigger further collateral evolution?
+>
 
+The collateral evolution will only affect the experimental analyzer.
+It does not affect the submitted patch.
+
+Sincerely,
+Ginger
