@@ -1,64 +1,62 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013022.outbound.protection.outlook.com [52.101.72.22])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010024.outbound.protection.outlook.com [52.101.84.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED7F54705C;
-	Wed, 30 Sep 2026 19:31:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4DE43B6F3;
+	Wed, 30 Sep 2026 19:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796665; cv=fail; b=hmPgXdDKnytPPAGgfY0uLzZwaQVxTTBFgxF9e0Pi3i6DO/HcxCF8FIrgGGKifMSS33OqCI5dTJchgo4R9c5QTLCt0/wedYiwDEdHAZaGGkkz0ugNbCBX0VxwqJXtXOA628ZnoYDbLE7MHT5E1pc1Pkx3uWm+KJMfY/v9iRH8WGE=
+	t=1790797032; cv=fail; b=VzIVufBQ4T8JDt8vncXdkds/UT8H3jZBgoEz9WnR6Mu4tg96QArltVVuHWe3rpNIB6ZwSOSHrIOs6IsXcp0Fb9d4huFC3F6xT4aNKDrD7MiGCN1BPFiTjRDuydSLZhHMiIgHM/pvLF9+N08vfZWY01IA2Lrsy+zJlwi25/VzKzA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796665; c=relaxed/simple;
-	bh=MI7I6Z4u3T1GW7/LQwGRddp5xV93Z7qnRaWBuv2H9uI=;
+	s=arc-20240116; t=1790797032; c=relaxed/simple;
+	bh=r2NeiwxwzjvVI0LQyqvm6l2MP6wJ8gSJ0ULdXH0RiDI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Q1kpCr38iafyQie03Sw/gRv+FBKRjT3CZYvAHCc74UDV7oUlFvUGKo/wFONhd2yuHWM11TNYrCkHUBXGb3/WcAe5MtCaFTgsXKbv7OJSdTtYAoGALbUINBVIYu62IWjCxvBWA9yV5W+sjKjMpixQNuhYG6pfUsQ7uVqPTaTcbUQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=qHlz4Y64; arc=fail smtp.client-ip=52.101.72.22
+	 Content-Disposition:In-Reply-To:MIME-Version; b=WjHxzqP3/g1Nm/3aTkxeFbB+jv1emYTv740TItIRBzzSo1uiQbNoTOBBUzA+D+lJNX73W5X/bB+iqwpBoBHWdGAZnC/oDpbrHu6IzjcxlHasZh+qy7kM/ghTOztfKlb8iJ06QFqp4JPqCWla579m6RReEjAnPf1ff9d/NhzQP6g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=MH6xXSQf; arc=fail smtp.client-ip=52.101.84.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="qHlz4Y64"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="MH6xXSQf"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B1bIcN57ubhHosfZ//AHDvpzYtWHWJVAcafAbHOUI/MlX99prMQ80mQWEgZZ4DMAxGhylsyAWJOu0VLVPIm6fJ4SqJ3kCEqzGTyhModXZhlvk6bQuAIRGHkMFSwqKYj4yYamSxbNroFCh4G1wct3J0dnRsaGbhyYrn+4uxSZ/ftcKQnV/S4XQWPeTsj/HKfJWkR8UOb9Tc7YjBRb9Y2iqYIheO5UT2SnjcO0bIUwNpa5wpckxn1e0QujxXO+hyVHmiAu2/YWDReHnXdFdLqUnBa1bfX4D8rP4bYUx/T4TAdB4PdpII0I20NQUrwERjLZ5HEkVDbQiV5AtZicvVYdxg==
+ b=p3QSSnlj5XPcxmL0IhUZHp1ngzm5/5jr0WQsXnl3lwsYZASiqRFNaNJg+gjsR/nmHIRQ209llqUQcz9Li02wpfngbQhj1oO0foJZwaDtaZ6TwrVd5IKOvnQvJsBrbXXJHEzfR0D51b5NG2hmrgRVxF9ix+/E712coRUgWw4fc+Vs6fmmDG86mLMBdGyr5RA1hMgrcaEnv0Lw5S3tRGpUGXK1BFTF08enHttxeFmMmfcAEWovxTZ3UHCSEX7CfqthzuLcnN0sgg7dssJNd29Zz5EETYJeBkLbqh3nwMzXPDbSGgTNHURPAVKAoXnEI/geGYhKvvBZy58PgeuHfh+k/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tq4NggqPawD9VL2gWYyi/f0nDcMiKba6/j4vAP+sCS4=;
- b=wfIQnjsf1H/uP5QpN/1zVOUGoJdfc4DMyGEIyL3gdakdh7Uj1/6SnNyY2yLkEnZF3Bb+TY85/WuDbMGNwiRAB6jPDBS4Ijgby01240lXYpjOpSZx5/9UBrQRMcesIj5ETIn8fEr/mXf8cDYpEEnqDCqZYpQutfzpd4UERVxzKHRrTTxDwdjft+jiOBTXJDtqnSt8G5EJr/DQvHDeZyHw3z0Z29QgirhE4C7+06pZLq+f30tqWuBuEQ+WG+3IToRvHAgnB2EfmoTxv2WcSN4oe5J3I4A6YReTxDgv9WyZnPcql01raScaPJohcOEeZ62EAviRfEhuDgrVVsWGFxE8UA==
+ bh=0THXl+KCU1b06SiOaLwPcLdBM4QR/RGl6qm73/f/Udk=;
+ b=bzF+56c/1GM/ffCoX99rtlBoAwI1QeIRDwC5SVZQ9wwQ7/p4Q/FpZDBVXrinNXgdg16QR7uukLQsZBfUzqWtc9NK4Y7UvFu0dbDYskwZVLBqhzxBCRdf3hSv9UL4doJgMUAfF/orJtuqYXA6oFJ/3XpEljivwdyUEF+FsYctEliECznGFo8uhKdWxIbUWWX/3bGa+pn0Ip44E5e7xxDza9cXhNe4RcG7gJGYAwIeYAummgnegiftxaMFN7ZSL1yrdyJQSebCwmykpTR8QRd4zW3S3KXYbJLVIMNLKLaomzLqd3oIqrssD9b2ykb01IKECtfuTcq0YiNOELxvwKgBUQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tq4NggqPawD9VL2gWYyi/f0nDcMiKba6/j4vAP+sCS4=;
- b=qHlz4Y64tdQJqyXeEPd9Au53u52etZJvvk7xRBqG/vXBww/fk711p9xbIjlA1RTXb2T9+IuhvENqfti1Q2XvUN6VOv1Kuwzqc4xG+Co8V9BlsdCF6agDD+VJSvRTzxNp8IVxi+4daiDXBPo3A2HZ4kObrKHxHrsvp2jyNZITvk8OQV8aliYEeScDfPsOuP2mAQ9ss0eL23COkwK/42lGwFWZsevvnWI+vrA2PtlKCHqieiJz8TNEbYQ/aiFkHmwI53gjWHfymRTLvVN2mNOxJvSsweW7xkTU7Md+IAe4DvjyHBdvB8qFBvekcN19+Z5mvNt7lql4CQcbegEqnzPncw==
+ bh=0THXl+KCU1b06SiOaLwPcLdBM4QR/RGl6qm73/f/Udk=;
+ b=MH6xXSQfhbNSvGHfclgixc1oWuKZsA6aJO8OsKzIi5mjviUMOYoSd3lF48LO8vC2rhT76Bd0GVzma+RNeoZteFdcncmrtMgw77yIfQ7wU079FxnLKZrz8Zzc5Hy0i91eQrYiz2Oa4oIkHpOFNltM1GTfetH4I64XHTKBG++Nk9B/etruXXPj0hNewD1aCsZ1L5CqCHDGrnaXSMyGx5lz0C0Fr93maBnuYMGEmSnX+K05cfaZ0qbHZpf+9PEfvuaIjX2LoyEqJs45s2ep1V5KHevV2xTgkuDiZD+/YoxXHcPBpwGCeiQw5qZcKGPvv5GcljworlqO22F7C6XvL5xKnA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by VI2PR04MB10288.eurprd04.prod.outlook.com (2603:10a6:800:220::17) with
+ by DUZPR04MB9781.eurprd04.prod.outlook.com (2603:10a6:10:4e1::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Wed, 30 Sep
- 2026 19:30:57 +0000
+ 2026 19:37:01 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.022; Wed, 30 Sep 2026
- 19:30:57 +0000
-Date: Wed, 30 Sep 2026 15:30:50 -0400
+ 19:37:01 +0000
+Date: Wed, 30 Sep 2026 15:36:54 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Wei Xu <xuwei5@hisilicon.com>,
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: dma: Convert hisilicon,k3-dma-1.0 to DT
- schema
-Message-ID: <ar1jarw-WgVlq2_G@lizhi-Precision-Tower-5810>
-References: <20260928124448.3754740-1-robh@kernel.org>
+	dmaengine@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v7 21/24] dmaengine: ste_dma40: Fix V4B event group
+ mapping
+Message-ID: <ar1k1jTz4EdBdBfE@lizhi-Precision-Tower-5810>
+References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
+ <20260927-dma40-fixes-v7-21-89f595e8851d@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260928124448.3754740-1-robh@kernel.org>
-X-ClientProxiedBy: CY5PR15CA0166.namprd15.prod.outlook.com
- (2603:10b6:930:81::14) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260927-dma40-fixes-v7-21-89f595e8851d@kernel.org>
+X-ClientProxiedBy: PH7PR17CA0015.namprd17.prod.outlook.com
+ (2603:10b6:510:324::26) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -67,235 +65,221 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI2PR04MB10288:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6eaac759-3319-4aea-b045-08df1f2959c0
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DUZPR04MB9781:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2fa384fd-b556-4e08-026d-08df1f2a32af
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|19092799006|366016|1800799024|11063799006|56012099006|10067099003|22082099003|18002099003|3023799007;
+	BCL:0;ARA:13230040|376014|366016|23010399003|19092799006|1800799024|18002099003|22082099003|4143699003|56012099006|10067099003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	AstdYg9BVhqBTlAH/u9zV6TI00jhFodhMsGFKnO+g5+AZQJvgfmZnS2XLdZH4MS50pgDwR2WH64XsiAJph24zuYNYREsBYM2DJxFpDGhc2cEYiYvo6gCmvO6hOnBgwQBBLMfTj0kUazmTdDZ3CJMOG4aIcgLDkVWYQJ3lvzUOaCePcexKNOqA+5YEZPdsVJv43orZzXk15rUY7Brv2z23fBl9TgCOKRAYXJbCeiDw+lT/DWc7vsNoPd3ARgaAoQ44eM6L+HvNTBBWWdIpOuCYQFVC8T4dBAhMGYHrQgs7c5PDH9VxRMpT4l2+h/61vtYF9uWfCTMd4IwQiKz1JsQ3k+YjkRsQ7Qni+gGNnpfSpAZLWVvsW27YOdzExByIWRbKs2ESq458sx/KbNINfbZJiL64ZdDAwbt7vuK5j2v0AHqCkSt8z3iVra55ktdevHwo4MIvkpvcY3pCivPMY15ciPFuOr8aG4//PxhrnIPQ80K2Q99q3ymVCZWQdmFzEUwSZkD8pCOhbiKAu1oHdn3nPbh5wE3pNnBPgE4yh2pfId53mxHIgmtRBSeaABMNay/n+iu4C3qBuWiUx2OkdIfBSormx0mFU4qR9R8WoKdCA5/9OUfOfm0SJbGYnlE+cR5
+	iG1eQtdRxRxP2uE/jJI4MUs+5Pcwrd23o8xuW/qHUJOTIzEZyEZVmnAVhTfzMlVav6XHq0xCP32iT9StcNpLTT2w1I8LvEN1Y7zw/c+Xo5GRsl6mLEcH0Ayq9wR+MOxktcvCCgyMdGnyftLDr3hZiwYNp78Oxp5OJ401S2iDc4pwPKey/5wEKHjPLfBAMSK989eFNLSzFQdcjq1Zeo1SUqEI9iMWZS2EVyaarA5yH+nn5Pu9gC7EsPxd/0sNlvUUYqbqRVAMLVLoL0I+D5ayGXr53La1wLpeQea+yfvYOvozap68uAkwVjEokOFJv9zhMy3Fjl1QfvaGZRwLmHvcDxMSw+CFpeofE182jmyqezmlarPLBR6xRqMnyTmmoll4a6sMSMl2GVvsDEYzBbVWMbHgNhsuJOuM4U1frbvvDzMhh1tIX3hIi9PJW6jjnlD+6mPoeorULfYNNuMqUlhrZ3s7nU37EhRhmkgCwWoNQPQtRgOaE92leNIVewx3ZqliLnoK09YrT4hGcRwIylCE3vkh4CvlFE7RGnYfhNuUesODaKtfFIgqliHFedOoq/a14GPLl9JyyMbIpnekrWQSyCHbCcD8rfViA2+HpeDP3o+WxsHUDC40Epw0pjXc8wZfdeW1Fn3HvKXxNtiTY0qRsRQGhtm/PMqbChfPydfvfzY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(19092799006)(366016)(1800799024)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(19092799006)(1800799024)(18002099003)(22082099003)(4143699003)(56012099006)(10067099003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?y17kwWkWhD6/qcS7NIa9A4A16nrWFdlletduSP0UlPh9TDFHii3fKM27bEFw?=
- =?us-ascii?Q?YBlh6Bwck+o0SxMWZdmC8Q/E4PmRRuM0+snwKRCvkU5aAUox+t2CEwNDUB8Y?=
- =?us-ascii?Q?V2RtEmcgeaBws9yzglNAbmAzUmkyL2ptjEyjruJ+ygEUhTQ58JtMaCUPvQNS?=
- =?us-ascii?Q?KI6c5Ca+x9zLeAjhL5B3zdxAbi/3Ol4omNyHEKCFa9AKC6uUCmV1LDtkykRm?=
- =?us-ascii?Q?odU+WNDY1cFcOpCWNOPhhR0e673+UaZYUHkh69JzX5iSzsihErKq3Bgj9Oq2?=
- =?us-ascii?Q?o555ZCQf7kLfvZaPhrJVGelJpOvmMEr9CCXEDkJfOj3txVJRz2yxmrr+V6bX?=
- =?us-ascii?Q?gKnOk+rFsiXoM+IX+sILSMwSM5YJhOA++e+9whVxF2usI4+1O2fX3xP5FnMf?=
- =?us-ascii?Q?skIs2BGW3FOz2RtHR41UGzjiQqDZqkD9eafaKSmPdVrri/SkWvaIHnaxmVmO?=
- =?us-ascii?Q?9cZqFS5rXLw8zYvV/RH38yMp1K2tVUuW6QcWEK6Mxw5w1WX7Zc1H1+OdQzZ9?=
- =?us-ascii?Q?mNW8OOG+6l3i6u6psd4W/X8AVlhy3i8k6NCYRHpxrMXYUF8Yy63pC0r14QD+?=
- =?us-ascii?Q?pUOpGMJvQpt7eKlpOgRfLmOZcofLW1aKiRifDvPszRhDSvrZatCWb+oe2a3F?=
- =?us-ascii?Q?qUlge7zIa+FI+H2sBUcp0FkhXBqWjeLW7L9uGpXkPSEtXvN9+CNKOgOLjCP4?=
- =?us-ascii?Q?yzkrdCAk2zHvJlOR2QTE99AkeCs5spDJ/XTbAFN4yQbsf5XwEbXjsdks05oc?=
- =?us-ascii?Q?+dAtZF2TbbKNUELvGin31tudQEh1DSAov85hQY3R2mmP6zNLE3BGrKibi6fk?=
- =?us-ascii?Q?KK1dXxTB4DCS0MJsLIQMyq7rbJFKWhW6Cy3O4RdBK/YVxUW6huBNLgSR8QVj?=
- =?us-ascii?Q?Ccniath+oMGVk5iz7LiU4DGMEYAgW7nQomu4bc6qs6QW6Shx3DoQb4qEBXW/?=
- =?us-ascii?Q?+eUn5B92ESJXV7gizmE4UFDSWtWcBg2TE5wtcB6azVFjscZzaT3hbUSTOWLn?=
- =?us-ascii?Q?R1OIvalqJwvMVKfwNps2K0PSyv1ZDaVMk9WfgDA5Vbt+t8iMp5i5MdXU9Onj?=
- =?us-ascii?Q?Divrd+N++wjjrn9ac69cIUZWpljhChmCx09awkSsYg8BN1QmePoZaXg2c66K?=
- =?us-ascii?Q?s4GP+s2Xlb17zh9CbZH2JpdatKUyMCFng6l9UPcwG4OfFx8GiR+/uwHVIDfN?=
- =?us-ascii?Q?a5e724HesBP1cJmm3S3QC4oxrAGxKILaMC/c42j7BeKK7JjzbK4XDcu3lt7u?=
- =?us-ascii?Q?NSo+CDkpA18RTxTnOVTHWMwY5vAZzO7IneX6eUwc7kG+rtj6CFS0kz1YhROu?=
- =?us-ascii?Q?p3wwh4lBWW5Fr2grnqmi6zfAVNawwUc+8ggD2MlUyHy3jjifcHTiQhRazdj0?=
- =?us-ascii?Q?2ThbCGBbU7/mP2TvyMB7XUcpccMce5wlhnX8kYzI2bmsCI96X4upBJe9E8g+?=
- =?us-ascii?Q?08vyDhfqz0p9SutojYMroT7eFfqsSQ0r0LWjhQBEfyzb9+RwsbOL8xszEF6D?=
- =?us-ascii?Q?TXRyGThcWtq4p10eTWTSEB0ZpAva1nEE5+EtOdJPuUSgmU3m8606nhnGqD3a?=
- =?us-ascii?Q?pKlTNVefGDT5qvYO4ToSTXEEU336xgGz6qoiXICbzk1KYw6BIb1kS4uuEBdg?=
- =?us-ascii?Q?L2+aqb/2pA2I0KsY9/PPBewyxGn9gAnVm7v6iz7W2FdkicoBZtuFIHpkVlDZ?=
- =?us-ascii?Q?2US095OH8i9NUIbeVk+LFifSvKc/rrew2Vsgpkwk7WFACxYTAaSjW0+buNPJ?=
- =?us-ascii?Q?oED88mEXw/xEtUo8roBoAWbNpozmx2S3I+6V76JhY5Qcb6UB/sEx?=
+	=?us-ascii?Q?X/mXbkkHSLbONL2/2j1Vga7Q5Ygl8j21Xo0GoZpYKkfKQG02W1infuWRJGMd?=
+ =?us-ascii?Q?tnPXFrdt0z9wHw/jx1ouCdTNMDqZWQVnh1iO/3j+56V+pnJePHs9cvyZ6xrs?=
+ =?us-ascii?Q?8wrmR5fnBI3pC83VfbZiAaiytPC7NT0NyL+Z5Ro7nX4GTVSuE1/V558cKv3Z?=
+ =?us-ascii?Q?kJsEhOCp7kplKcXnhVSSr+GYRwU8Pi6QKLNu76vhEi2DtsDcvDUZEMoI86xg?=
+ =?us-ascii?Q?wp5Fb9HVf8LwJYK5nEIvYWUlDS2XWJHZPGvW/5bc2uyqo0W87sQcQfOLamr3?=
+ =?us-ascii?Q?Tl7ks1c2ZQ3tqo4opEzlCMiXOrMuWmPOYnfBJfEMZtEAK0D3A2MwtOrHJENW?=
+ =?us-ascii?Q?FBO6tcH+JHFWyl8jXlZLUSvPat2bblWLaM856ZpKBy/G2iTxJPzwVoczBPFG?=
+ =?us-ascii?Q?rP9z5rIkxn0+sNsba+5dTWHCAcPjNXA825kIgcxQX4JJ798WGqlrddbCfLBk?=
+ =?us-ascii?Q?R4nwHCWfg4TTZtur+C0r53pvvmJBbfKZslvI1BAR28KNoQvTnLnxyr7mL1Kw?=
+ =?us-ascii?Q?LP243pNROnulnFkLV8WUbZ8CdxprhNn8Gr2rtZiXGrY5cxaKXXGEHpcxSrbv?=
+ =?us-ascii?Q?zAN91Sd8aKH9yNaVQsTluZkjAvQl0bHvzEuvqxzeyA6RykT9YMAJ1TGznu+u?=
+ =?us-ascii?Q?K21UXcBx3VW1+ggWYIGX5KpbVXwPrUx6Jojknb030cRNcnyFZWdPiDUPu3Hr?=
+ =?us-ascii?Q?wabnBGb4SEzpaaunoDXeHqcVTBHBJiUkmLnEXukVLlz3ftXjipglz5fcKyeB?=
+ =?us-ascii?Q?5Vae4iznyP4TD2X8HrnFLX0eNk30FA5lJFghhBnpRi4VLmEZOdrOzj8dWKZr?=
+ =?us-ascii?Q?0GKGX1knNYp62538r5vI0xox9Jf6ZZ+L6XB+bN7nv+la2W0Ji3WF1sQc5yUk?=
+ =?us-ascii?Q?zYiBYwx4k5o4HEZ3j+oej8awKKIvc3dPcYdbvByIsr8r5fnIlaT0P3/iydeQ?=
+ =?us-ascii?Q?XQgoc/T3RPaAnC07EDQZ3OPFhpGZkWob/e3tTnlb54UR58UaUv3FdwkAtAyh?=
+ =?us-ascii?Q?7ywdMxW9sYlf5ukHeClqd8NiH0+Sc2RyXeRm3yjQfVXZqirT8VeikZcAX7WY?=
+ =?us-ascii?Q?hxCYdANak4f4uksItwgRcTfcRrlf9AWOAATCfnVvEjRIZwPGF81j6jpBqKUv?=
+ =?us-ascii?Q?xVw8qaDzdVKPjIubuvDY5y16tXOeR7UhH8/pXV4snFzH7mdUI5+fbNEcJFtH?=
+ =?us-ascii?Q?pzzrG7XG4b89Tk2O654khI+G1qrj5i9NadScMMLLnn1YM1utCoxE4uKvPEWK?=
+ =?us-ascii?Q?/oGidqCLpVtBfIsjerXc9BnHcGKDJNHVDOKANIYXQyUAa5x9djd0zp3TdWXN?=
+ =?us-ascii?Q?u1zVZVRtWV4mt5H0zUFDVpnB63Gs2L7IkWEqv73n6ruPXWN7/UDdW4FGsRHx?=
+ =?us-ascii?Q?Bf13P6njPdMseyaMReZZUzeS4RakI6ZOFA1gNCDcdPPdKlHybbRACSiLRMkx?=
+ =?us-ascii?Q?PoKRe2hK/QSxkp8KGWo0fvf90Hf/cOpiEjpY78qk2h1jP+ORz0D4fwUkzzq0?=
+ =?us-ascii?Q?uCjmKi7z9YJuThPIKvScGWIVO7/gSQ69RKg/diuIH8YpebNcf5QUrNrXCMbe?=
+ =?us-ascii?Q?ta2CxdYmbtWgwGvN+KPqez3+qXDGWvwj/UwhoT2EqH9wX620hi9Xub05iOgr?=
+ =?us-ascii?Q?7a2q3RFm9gOdriyqTIIVQi2FGKw4IRtSlmrxvMGTmHeRmsKw//rFgC8C9MgX?=
+ =?us-ascii?Q?VXl9LTtHXwzrMYFzWTEJesFTDDrVWEd0w+kAUGBsxSw5rMjQz2397UKMmQ1c?=
+ =?us-ascii?Q?hjpTwfzDxvO2PWtfJBRLVMirifb//MDPgwknhbY9NPrg7w8ENd8O?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6eaac759-3319-4aea-b045-08df1f2959c0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2fa384fd-b556-4e08-026d-08df1f2a32af
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 19:30:57.2108
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 19:37:01.0920
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +FfE24JH0z3XpU8sgtxgvr6md6P02PSUQeld40Lrhfz6kO7yctLENj5HgI1XM6G+PBJx/gqAgHz4iLh6BFAHHNJuxLDA2ZxxEOGJIFFZyrLUK4tROxuuSB4fJ/bpoPnH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB10288
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZSXJWWb2IqKA5+bCBCg1OUIhLa5Rhv7rwjeLM1Pw+oO0xf8hBN2LhbNIWL6BvGERUTmly3s9AuPZ9fmPiq+F07v8hqr63nXiOMHl2CrRdYKDqbNkJfY20s28Xo34eIbU
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR04MB9781
 
-On Mon, Sep 28, 2026 at 07:44:46AM -0500, Rob Herring (Arm) wrote:
-> Convert the hisilicon,k3-dma-1.0 binding to DT schema format.
+On Sun, Sep 27, 2026 at 11:03:34AM +0200, Linus Walleij wrote:
+> DMA40 physical resources are connected in pairs to event groups. The
+> mapping repeats after each complete set of groups.
 >
-> Add dma-channel-mask, dma-no-cci, dma-type and interrupt-names
-> properties which were not documented.
+> D40_GROUP_SIZE and D40_PHYS_TO_GROUP() encode the four-group V4A layout.
+> On V4B, which has five groups, resources 8 and 9 are consequently offered
+> both to event groups 0 and 4. The GCC clock bookkeeping also treats these
+> resources as group 0 instead of group 4.
 >
-> The "hisilicon,hisi-pcm-asp-dma-1.0" doesn't have clocks, so make it
-> optional.
+> Derive the physical-resource stride and reverse mapping from the
+> variant-specific number of event groups. This preserves the V4A mapping
+> and gives V4B a ten-resource stride: resources 8 and 9 belong only to
+> group 4, while resources 10 and 11 repeat group 0.
 >
+> Fixes: 3cb645dc85a0 ("dmaengine: ste_dma40: support more than 128 event lines")
 > Assisted-by: LLM
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> Signed-off-by: Linus Walleij <linusw@kernel.org>
 > ---
-> v2:
->  - Fix example node name to 'dma-controller'
-> ---
->  .../bindings/dma/hisilicon,k3-dma-1.0.yaml    | 87 +++++++++++++++++++
->  .../devicetree/bindings/dma/k3dma.txt         | 47 ----------
->  2 files changed, 87 insertions(+), 47 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/dma/hisilicon,k3-dma-1.0.yaml
->  delete mode 100644 Documentation/devicetree/bindings/dma/k3dma.txt
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+
+>  drivers/dma/ste_dma40.c    | 47 ++++++++++++++++++++++++++++++++--------------
+>  drivers/dma/ste_dma40_ll.h |  2 --
+>  2 files changed, 33 insertions(+), 16 deletions(-)
 >
-> diff --git a/Documentation/devicetree/bindings/dma/hisilicon,k3-dma-1.0.yaml b/Documentation/devicetree/bindings/dma/hisilicon,k3-dma-1.0.yaml
-> new file mode 100644
-> index 000000000000..e60f2a572272
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/hisilicon,k3-dma-1.0.yaml
-> @@ -0,0 +1,87 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/hisilicon,k3-dma-1.0.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index 91dc143f9a80..a5471a9157cd 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
+> @@ -85,6 +85,7 @@ struct stedma40_platform_data {
+>  /* Number of event groups per hardware register layout */
+>  #define D40_EVENT_GROUPS_V4A 4
+>  #define D40_EVENT_GROUPS_V4B 5
+> +#define D40_PHYS_PER_EVENT_GROUP 2
+>
+>  /* Max number of logical channels per physical channel */
+>  #define D40_MAX_LOG_CHAN_PER_PHY 32
+> @@ -2027,6 +2028,12 @@ static bool d40_alloc_mask_free(struct d40_phy_res *phy, bool is_src,
+>  	return is_free;
+>  }
+>
+> +static int d40_phy_to_group(struct d40_base *base, int phy)
+> +{
+> +	return (phy / D40_PHYS_PER_EVENT_GROUP) %
+> +	       base->gen_dmac.num_event_groups;
+> +}
 > +
-> +title: Hisilicon K3 DMA controller
+>  static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  {
+>  	int dev_type = d40c->dma_cfg.dev_type;
+> @@ -2037,11 +2044,14 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  	int j;
+>  	int log_num;
+>  	int num_phy_chans;
+> +	int phy_group_stride;
+>  	bool is_src;
+>  	bool is_log = d40c->dma_cfg.mode == STEDMA40_MODE_LOGICAL;
+>
+>  	phys = d40c->base->phy_res;
+>  	num_phy_chans = d40c->base->num_phy_chans;
+> +	phy_group_stride = D40_PHYS_PER_EVENT_GROUP *
+> +			   d40c->base->gen_dmac.num_event_groups;
+>
+>  	if (d40c->dma_cfg.dir == DMA_DEV_TO_MEM) {
+>  		log_num = 2 * dev_type;
+> @@ -2075,13 +2085,18 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  				}
+>  			}
+>  		} else
+> -			for (j = 0; j < d40c->base->num_phy_chans;
+> -			     j += D40_GROUP_SIZE) {
+> -				int phy_num = j  + event_group * 2;
+> -				if (phy_num + 1 >= num_phy_chans)
+> +			for (j = 0; j < num_phy_chans;
+> +			     j += phy_group_stride) {
+> +				int phy_num = j + event_group *
+> +					      D40_PHYS_PER_EVENT_GROUP;
 > +
-> +maintainers:
-> +  - Wei Xu <xuwei5@hisilicon.com>
+> +				if (phy_num + D40_PHYS_PER_EVENT_GROUP >
+> +				    num_phy_chans)
+>  					break;
+>
+> -				for (i = phy_num; i < phy_num + 2; i++) {
+> +				for (i = phy_num;
+> +				     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
+> +				     i++) {
+>  					if (d40_alloc_mask_set(&phys[i],
+>  							       is_src,
+>  							       0,
+> @@ -2100,9 +2115,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  		return -EINVAL;
+>
+>  	/* Find logical channel */
+> -	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
+> -		int phy_num = j + event_group * 2;
+> -		if (phy_num + 1 >= num_phy_chans)
+> +	for (j = 0; j < num_phy_chans; j += phy_group_stride) {
+> +		int phy_num = j + event_group * D40_PHYS_PER_EVENT_GROUP;
 > +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - hisilicon,k3-dma-1.0
-> +          - hisilicon,hisi-pcm-asp-dma-1.0
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  '#dma-cells':
-> +    const: 1
-> +
-> +  dma-channels:
-> +    description: Number of physical DMA channels supported.
-> +    maximum: 32
-> +
-> +  dma-requests:
-> +    description: Number of virtual DMA request lines supported.
-> +    maximum: 32
-> +
-> +  dma-channel-mask:
-> +    description: Bitmask of usable DMA channels.
-> +
-> +  dma-no-cci:
-> +    type: boolean
-> +    description: DMA is not coherent with the CCI.
-> +
-> +  dma-type:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: SoC-specific DMA type name.
-> +    enum:
-> +      - hi3660_dma
-> +      - hi6220_dma
-> +
-> +  interrupt-names:
-> +    maxItems: 1
-
-It'd better move interrupt-names after interrupts property.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - '#dma-cells'
-> +  - dma-channels
-> +  - dma-requests
-> +
-> +allOf:
-> +  - $ref: dma-controller.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: hisilicon,k3-dma-1.0
-> +    then:
-> +      required:
-> +        - clocks
-> +
-> +additionalProperties: false
-
-there are $ref, should be unevaluatedProperties?
-
-Frank
-
-> +
-> +examples:
-> +  - |
-> +    dma-controller@fcd02000 {
-> +        compatible = "hisilicon,k3-dma-1.0";
-> +        reg = <0xfcd02000 0x1000>;
-> +        #dma-cells = <1>;
-> +        dma-channels = <16>;
-> +        dma-requests = <27>;
-> +        interrupts = <0 12 4>;
-> +        clocks = <&pclk>;
-> +    };
-> diff --git a/Documentation/devicetree/bindings/dma/k3dma.txt b/Documentation/devicetree/bindings/dma/k3dma.txt
-> deleted file mode 100644
-> index 10a2f15b08a3..000000000000
-> --- a/Documentation/devicetree/bindings/dma/k3dma.txt
-> +++ /dev/null
-> @@ -1,47 +0,0 @@
-> -* Hisilicon K3 DMA controller
-> -
-> -See dma.txt first
-> -
-> -Required properties:
-> -- compatible: Must be one of
-> --              "hisilicon,k3-dma-1.0"
-> --              "hisilicon,hisi-pcm-asp-dma-1.0"
-> -- reg: Should contain DMA registers location and length.
-> -- interrupts: Should contain one interrupt shared by all channel
-> -- #dma-cells: see dma.txt, should be 1, para number
-> -- dma-channels: physical channels supported
-> -- dma-requests: virtual channels supported, each virtual channel
-> -		have specific request line
-> -- clocks: clock required
-> -
-> -Example:
-> -
-> -Controller:
-> -		dma0: dma@fcd02000 {
-> -			compatible = "hisilicon,k3-dma-1.0";
-> -			reg = <0xfcd02000 0x1000>;
-> -			#dma-cells = <1>;
-> -			dma-channels = <16>;
-> -			dma-requests = <27>;
-> -			interrupts = <0 12 4>;
-> -			clocks = <&pclk>;
-> -		};
-> -
-> -Client:
-> -Use specific request line passing from dmax
-> -For example, i2c0 read channel request line is 18, while write channel use 19
-> -
-> -		i2c0: i2c@fcb08000 {
-> -			compatible = "snps,designware-i2c";
-> -			dmas =	<&dma0 18          /* read channel */
-> -				 &dma0 19>;        /* write channel */
-> -			dma-names = "rx", "tx";
-> -		};
-> -
-> -		i2c1: i2c@fcb09000 {
-> -			compatible = "snps,designware-i2c";
-> -			dmas =	<&dma0 20          /* read channel */
-> -				 &dma0 21>;        /* write channel */
-> -			dma-names = "rx", "tx";
-> -		};
-> -
+> +		if (phy_num + D40_PHYS_PER_EVENT_GROUP > num_phy_chans)
+>  			break;
+>
+>  		if (d40c->dma_cfg.use_fixed_channel) {
+> @@ -2129,14 +2145,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  		 * channels.
+>  		 */
+>  		if (is_src) {
+> -			for (i = phy_num; i < phy_num + 2; i++) {
+> +			for (i = phy_num;
+> +			     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
+> +			     i++) {
+>  				if (d40_alloc_mask_set(&phys[i], is_src,
+>  						       event_line, is_log,
+>  						       first_phy_user))
+>  					goto found_log;
+>  			}
+>  		} else {
+> -			for (i = phy_num + 1; i >= phy_num; i--) {
+> +			for (i = phy_num + D40_PHYS_PER_EVENT_GROUP - 1;
+> +			     i >= phy_num; i--) {
+>  				if (d40_alloc_mask_set(&phys[i], is_src,
+>  						       event_line, is_log,
+>  						       first_phy_user))
+> @@ -3307,9 +3326,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+>  			base->phy_res[i].allocated_src = D40_ALLOC_PHY;
+>  			base->phy_res[i].allocated_dst = D40_ALLOC_PHY;
+>  			base->phy_res[i].reserved = true;
+> -			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
+> +			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+>  						       D40_DREG_GCC_SRC);
+> -			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
+> +			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+>  						       D40_DREG_GCC_DST);
+>
+>
+> @@ -3329,9 +3348,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+>  		base->phy_res[chan].allocated_src = D40_ALLOC_PHY;
+>  		base->phy_res[chan].allocated_dst = D40_ALLOC_PHY;
+>  		base->phy_res[chan].reserved = true;
+> -		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
+> +		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+>  					       D40_DREG_GCC_SRC);
+> -		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
+> +		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+>  					       D40_DREG_GCC_DST);
+>  		num_phy_chans_avail--;
+>  	}
+> diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
+> index 2e30e9a94a1e..55090cb31057 100644
+> --- a/drivers/dma/ste_dma40_ll.h
+> +++ b/drivers/dma/ste_dma40_ll.h
+> @@ -16,8 +16,6 @@
+>
+>  #define D40_TYPE_TO_GROUP(type) (type / 16)
+>  #define D40_TYPE_TO_EVENT(type) (type % 16)
+> -#define D40_GROUP_SIZE 8
+> -#define D40_PHYS_TO_GROUP(phys) ((phys & (D40_GROUP_SIZE - 1)) / 2)
+>
+>  /* Most bits of the CFG register are the same in log as in phy mode */
+>  #define D40_SREG_CFG_MST_POS		15
+>
 > --
-> 2.53.0
+> 2.55.0
 >
