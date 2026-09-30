@@ -1,48 +1,48 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010010.outbound.protection.outlook.com [52.101.84.10])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013013.outbound.protection.outlook.com [40.107.162.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354FB3A874C;
-	Wed, 30 Sep 2026 21:44:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C513E49EB;
+	Wed, 30 Sep 2026 21:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.13
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790804681; cv=fail; b=TrchAjPzi48EzoTQx7AuM6Boqh26t/ucSEvoDJFzFM3T2aAJ1JqNmCCVRdD5/UijoAXCKyCqXeZPTPh9FHOSUd7A5SZozNsAapwdgaFGPRKyfRsQJGnLeET43Zs8bAObvqgcTQc/6svB99DltESJQ5EUJ+rizzWiIH1ff8kl+h8=
+	t=1790805186; cv=fail; b=H5I89eBbTaT2/31a3Izc1QpR71peTm8oaKinm6CCYVXBj32MRiw2ffD6Nlwx/7F2YMKacCxl36U+qS7clzBlmuzAmpdWzunhMbtGlgqZ/80rcBp1V0djp1/TLqh+1+KeJ7Srz1i9yIvyBULlBxxPVc8DUJubs1+qTAevmRV3oFQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790804681; c=relaxed/simple;
-	bh=Ez5vsKsHHmrADJ0C8rilpHPlG1fcikmLN/+ADXp8C2c=;
+	s=arc-20240116; t=1790805186; c=relaxed/simple;
+	bh=LaSeD193CljjVFYB71koCfFIwzRZK/JtWgGXjdP1Id0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=MH5KrWwe6HPZJ8VmL4ql5rwSWbq7fQ8TVpwYsEfJW59/PchnPz2LszuyZRqnJE4AdmPxQ8xi8JXKPRJZ+YM0+xNF+zFTpgZbYiC/p/bKEx7xQrquql5WmnuLexOl5+VkXcMCQWSsOnx/pNfMSxU43svURM5OoKYP0uZArF2Esn8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=skxNTzDU; arc=fail smtp.client-ip=52.101.84.10
+	 Content-Disposition:In-Reply-To:MIME-Version; b=p5iraxSoEKE2K4UEKBJxK7JEZt+hQvVTwFmAEQHuQ6p18KFO/74SHLEK86RdOXdnpyWd1RZqdPyxZQvM+yhrAZjM/pSfMO1/UGZbAX55X96utHly5Hhaxg8d3KHXr6ZoPuYQSA8UiG0YEwwK/oj6b7OoFkxabNaZsRP6uFiUHOI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=buLvmrf+; arc=fail smtp.client-ip=40.107.162.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="skxNTzDU"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="buLvmrf+"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VNk9/QiLhZFUeaK7qKo9Dk3w5kxsPQC153aV8+K3srYMxLP02Rcuruk+sIaIcY6mDhGpfnuL7oOVUt1mwkS3xixqnZ/Pa/QPCd5qcqfmw2k9izrDbZ91DWXBRKfvoKT/k2TmKdzcY2gb4mJGDX4WRfan8G5ShcwVlrMnViYyX71GqTT3ZO0w87tjjCUl/CqpCaGn/O6SkJa7kP3vsn+tDTsoz8UyI/5N59MDoYaZFwDP8pJTu5PWKBOUux/n2iLymZW62Uk7ugtwyQXZosrOqrPXTtNVwHjADqplWvIPjsdJR36x0btO9JGuvuh6tHTzSMoUYkuvWKianimHw9EE2A==
+ b=zLNya7pPxdOPhI9ZCnx20o+lXxQz2lihCXxTv5m6mIxy14fu8GZOS3Dk2n1uwOakZwihrORUwcW9PI2Tw7fjNxA+F6lyuhhSOV/7fdBp3aK8ei1+ab06Xr8kzipKAYSNHtKiXvLw6BWCCz+zv55qN/bzwCq5NXLLHigpmXxSBMpRcRy1ZisnD50jHkBQUeDWtUm0DjlmxTrlP7mvUbk/SA7SfiXbo9smX/DyqReLFHhb+Bd55mx6vJJFf8IPomqKs6NOPL23qTpEw7nyGlN9w3Jbrgjj2TTnk+ZatLIDk5sfguW0d1NvXPyw3xU4zl2LUyrYm4kDdNpWSNPEfs3xPw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2+penqPnMtvNdUAiPG6sVz5w9eaRxQi4uXODyEGYtxk=;
- b=SxaX+z8CTyE/oFZs6INDfGflBXYzlnNPVV7AVfSFn19qO5n7GvqTtWPUV5IfNG4xqRTOFFUI/w7FvXNIQ4F5GsJjDKBr8w76nGGZqQn7yl9IcV5s4NYbRO4LZVWmyROfg+SZTyeO9opwEz+fRPeqiHrzWWWbE0R1e0+mDwRdg6xE2bJ+47PHXv0mBJWxzld04Sz/3HfW8mfBjmrOsoKt2DHubJaSY81PSMjtve1pcw6ZAQ68ko+Bcj7mie+rM34fLbwUINMFsEwrFboNjEvFftacyjoeJLovVDmd7ymtt1qIYI860tMTbsCguHFfFny5uyTVtS4CfvKDpHsbKd9Mlw==
+ bh=T3aTAh0LYmPppMsocV5oIWFydxQs4imnfi8eqxMz3h8=;
+ b=L+tyNT2OULEyNL8yGEQzgL4VmLeSoIRQM0/L51b24852sdTlQegv8dPzMm8NBvTaxZwIRSCpFj13+m9H9hmA3lgt+U1g31BJ3mnZaRbBsh4Yj3J5On5MtwSqpqMHuYffEPPtpj6qxZpyeyet+GLanQQ0TmzXe6sqa9INLPABq8v6JnyW32jD5ZH9eMP7Q3v0XLInkwEMVhLhvcJwlFoR3BuLEY2BNne/zvWjOtZILU4rEf5v3q39aZMPlZ1stfv765B38EHxZx2wjBLmWUy3cgXNx8iKoyprx5r3CPqy7aHqiNAybsLMxaMXRmgBUjhDC3Kv3ELI+RiKi6MW6lnBew==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2+penqPnMtvNdUAiPG6sVz5w9eaRxQi4uXODyEGYtxk=;
- b=skxNTzDUlUcTwuzxrlo3RQ/IdZ9WOM6jE3eYJGkQrpetEKMOVt/wqcU0uLFYnfmLXI8BmUMpBG8+lPbD9NZcrInQvgC+o5rdZjVbGrfia2NNOqdMIFls7qHmgliat9NTh4itvN8vw4vaQ7GqVQb75FO96DEYJJX7lSSoq8SNAbUewtggfBmuQRZOPBUYpxV6+sd2mg1zWwpqnWBxmvfmy7Gp0YbzhamN7AwmGXANgdqk7iaoQdDt+Vc0qp/8BjnO8OkH2fSzE4RDF6mmVCnk15pXaKP6ixQSi401KeWF58A7McTIB/b8bofZfajoBMVKhegVdiyHkhCiqFJEpOLI3A==
+ bh=T3aTAh0LYmPppMsocV5oIWFydxQs4imnfi8eqxMz3h8=;
+ b=buLvmrf+8ckX03j212AGzBuCIRgx+Z+zpb3yqqMZtauewB42UGTfj4zN89gJnK+K782bDfXo/w0MRtZ7qX+EI7ubVqp6Ewx32x5LylBR3wpBXvNSVRLQogBTPjkMr8/6PHxv+4/ZRU6TxOYCOyaFFTmzW0iWAtQ24fGMs34LOGobvzqEm3uXNUM1hbDAz6dBfudsVAne1lN6uszLADtwBqwuTIbrOn1YgzbdA5NoYhlortWzcpdLNt3GwpCkqGDxHVi8xd6r0VBi/R9T/TNTATVdRUFiksmaHX8Z5xE0QGoGoBTzr7QLHZcdGFMfVonE8bxFcGBZ+COZrYPo+gNtjg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DBBPR04MB7708.eurprd04.prod.outlook.com (2603:10a6:10:20d::15) with
+ by DB5PR04MB11255.eurprd04.prod.outlook.com (2603:10a6:10:5e6::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Wed, 30 Sep
- 2026 21:44:36 +0000
+ 2026 21:53:02 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.022; Wed, 30 Sep 2026
- 21:44:36 +0000
-Date: Wed, 30 Sep 2026 17:44:27 -0400
+ 21:53:02 +0000
+Date: Wed, 30 Sep 2026 17:52:47 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Binbin Zhou <zhoubinbin@loongson.cn>
 Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
@@ -52,16 +52,16 @@ Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
 	Huacai Chen <chenhuacai@kernel.org>, devicetree@vger.kernel.org,
 	Keguang Zhang <keguang.zhang@gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: dma: loongson: Add Loongson-2K0300 DMA
- mux support
-Message-ID: <ar2CuxAv9mRfiVsA@lizhi-Precision-Tower-5810>
+Subject: Re: [PATCH 1/3] dt-bindings: dma: loongson: Add Loongson-2 DMA mux
+ request IDs
+Message-ID: <ar2Er9RkFYfaNUY2@lizhi-Precision-Tower-5810>
 References: <cover.1790068409.git.zhoubinbin@loongson.cn>
- <fdd9fa87058b75fda0dbb805de7989fcd279137c.1790068409.git.zhoubinbin@loongson.cn>
+ <d8762c697fee7c2184f26968109162d59aef1514.1790068409.git.zhoubinbin@loongson.cn>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fdd9fa87058b75fda0dbb805de7989fcd279137c.1790068409.git.zhoubinbin@loongson.cn>
-X-ClientProxiedBy: PH7P220CA0056.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32b::14) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <d8762c697fee7c2184f26968109162d59aef1514.1790068409.git.zhoubinbin@loongson.cn>
+X-ClientProxiedBy: PH7P220CA0047.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:32b::6) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -70,149 +70,154 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBBPR04MB7708:EE_
-X-MS-Office365-Filtering-Correlation-Id: cc48b855-9e06-4363-73ee-08df1f3c05d6
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB5PR04MB11255:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1bfe53a0-d444-41d1-b98d-08df1f3d3324
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|376014|19092799006|7416014|1800799024|18002099003|22082099003|4143699003|3023799007|6133799003|10067099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|366016|376014|7416014|19092799006|23010399003|1800799024|4143699003|18002099003|22082099003|10067099003|11063799006|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	xOrD2/7OOSe2lnC52TotDhvk+n7iYyOLzCXM74B8kKEPkhhRU/zFmFJoATme37Jzah9kJZm6epodXqaQOISnVmAjRq2xTh8X/3SJCgrtgO1YiRO0WuuBTnYasV7z+YtwPZ3DU/vV2I+FgZVaO9iXzjYC6iYyabspRt9yjeSQ0t26YBKxujN8xVWmg4eZRLeyeKl3NPAyVIW5eCgydSRHvcs/u28c9QLPP5n7oT0Sj+Y7Rn59I0l87rk0qccDIfTTIUdw/zwFsHaR4Ti65H4bsISo7bp6McudXtlLUPBaGoeMIPSULatJPdfdE0tJTb1wTZhoJisPAvpbX8hUbhPQahr9PCU4YTMtSJyOsTR+WLMncarqrE/uzxbSu8j2KwBSv4emsTwiDJ1zQ+GHfNVHZlfYE2nEPgjtJhTR822p3V39Evw0DrjdJrL8E9Q3HJxlsqp5S0OtKg8wtMYSJIl3wzGZuXHrkCarFYqvUwfqh5ZG+yvdrCc/77wG6lW34CNYC9vS+Z2fFSEvBlteBhp3cocebu1w0+Z75wsMhrUe5OxanN+m3CH/xmZEBCdAID9QpjRrvsbyFC2cAMmm53VtdfnbXU0YNzrdoyLiPVBywqE0Gg/PJQ8RtXKzuWsqlB6y
+	eHkUatmXWrANNDn7AB81ge3/JVMfOU107n/EeV1ILO6un40Ho36rr2J1WbfsgnSPFrMxPHH9FxCV1MTt2vIcj2MOGXIQ9htegAUM19aOUPS/j37+h7O1GBLKDz+p6GrDs8OK5tr67p1npN4yYRZpEMYfyJW70NswcFN20DxSH5E1fIRJxOVeIlXNiX9LPjnwUkhYk3KU/erUozJjPGMM+4yWXdIU6NyOoHh+knkUyI2X42xAb06p+f5qb0fA/3X5rgP/tQHTvDoSGfzneNQXoXjQBtrk/UftlL3u7NGmvuQ0mTlPCoMzG4Y/OydPzWOjJg8DELY6p4ouv6qF5DQ5VN2oVAn50AtfYY7G2199YTSzyF69IpL02JjJ9RpNr//3Iz151jx4H6stlu2XbTXbVBlPD57mRHgDtS3zR9y27GJtyWL+6vU/Wi9LfSleHM/+I8mFzl/bI8bH06ZT/iZqCUfV2DTvrlJyPEoc5BLs0XB3lgo9oUhsS29lNrYH7tI4xtPw5qeA/j6Np2K/moiegLQCRZ9QELNDoywXsx9d+2cwG54tyrCtzth84Pxway6eXUtoqcqhb31bCf/58/JIPEiPyKXUmV0LNzFjGtQHFlAv7bMm7znYzdOPO2Cn+4A5vpvZg6uhtmM+Y/4cqAymAMq4cWUDZubsTMqjhzAHCBM=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(19092799006)(7416014)(1800799024)(18002099003)(22082099003)(4143699003)(3023799007)(6133799003)(10067099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(19092799006)(23010399003)(1800799024)(4143699003)(18002099003)(22082099003)(10067099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?1DQOuoP/FlcQ2yiPi5K9stHyGyJTGTzR7lNwqU3XGm/wk3LV7EdOURI3DFzZ?=
- =?us-ascii?Q?bt5e51OwSJ7DhNuuW7OJCPCkWnn0F1cLvjMq8j1ipgPKo2XBJOJIJw5al+b2?=
- =?us-ascii?Q?Fp3OQIw64IuKekVE4++gUxbU7PHifO6TNzcsW+newXHLoBwzT4Ex2mCWrimU?=
- =?us-ascii?Q?W4tIgV4hzApgzHNSzFMbAus8TACpB9ri1qbvBUkY6WzPi3y5v6tdteNBvgzG?=
- =?us-ascii?Q?gN9l9N8LON9mfru4fooQusWpBq2LmjbVgvt5VwEqMHPfaVEgv2geVTHe0n/6?=
- =?us-ascii?Q?ERmrYeBQSJDC9wtFxKOX5FDBpKWWI5iIBQ5MKbs/+sdSzLJSV+jT9xaywH+3?=
- =?us-ascii?Q?tQ4LbZNpN4KZGcE51meKCtkbo84DAvrUIs57IkkaQoUxq/HTSJ5NwP9azVxi?=
- =?us-ascii?Q?8J6N+dp/edIrzdUXxfrA7d0m+YeznV2o8LfL99c8pZOUwG50VjFdDu7jf+2i?=
- =?us-ascii?Q?IYhX6vRHz/PzqEbgv/xFE87ZSICsOt8pQbAf5ij/FDU+ETTn9lAIZrTybvLL?=
- =?us-ascii?Q?5wjl9Wx/QV2uYNp3SJhiYIXo5+fcMGjRhacfamOCcGEsYw0kbwkcXcKAiaPM?=
- =?us-ascii?Q?ZPzA9jBc3v7O+pxasGnrc05PZdGJPCZnJBXOVUtpx3jKWRVOmK5YbENJdAya?=
- =?us-ascii?Q?EYE4AMt9XjNOtdCGOJas7f75CzfPck/5KAEoYF+W/JxdvOTQJT0Sal+oFsfM?=
- =?us-ascii?Q?rp8IdqSYcT7z5eqVdaDr7HEN48w06SlMjR6eq1oaU4TfNCfPl5nATVOWNcEn?=
- =?us-ascii?Q?DgG03HzwruiAjd6bVjiBTG/EY5UZNakeA/dxFGdgxt4OrmEgY3VuPwG0MzPr?=
- =?us-ascii?Q?CLJJKWwBnKR2IGy/ux7P21/ryUHuNPRXQdTXzXi9x7FVFMizWxy9niTK286J?=
- =?us-ascii?Q?K2BTm7Oo8er/lPKPHutN0fhUbLRXcxc2F6JBlFLeq+zKVPE5nA5B55MtNRtE?=
- =?us-ascii?Q?lpwIl2REaqf8jNjzfUxnmLlpCZow3u/I+V5ZZb01BzQuINWBVpuL6CiZ25Cs?=
- =?us-ascii?Q?T98LesmCrB6H+snMbZco5wkvtH+gNR3eBIUU/WTlmfKGspDPEh1W7MGatPiS?=
- =?us-ascii?Q?/hcLQoHHKdGe5az6S5Z+sDzlAdlECooH3++MSmTVBRQvnYZuopx4niGMBfVz?=
- =?us-ascii?Q?nwqaKYBoI+5ErQk8MvLWbix/yyUAJ5CYBbc42Yzc8s63iJIHcXFtIle0I0B3?=
- =?us-ascii?Q?+XQKsBoqGdbW+5xFs6A1TjwtpjQmMk2WcXcIzoCTIw2X/Uzv/iiVtyGseVQj?=
- =?us-ascii?Q?hxC0dpHd3560NCcAGP9nUQfE+W7ubmxCMdXBHCLzRFcgrIWvd9IEyawviD9c?=
- =?us-ascii?Q?csn69V1EKS+De+sfdKdFcICgvLqzTxzUYebSLgerj+w+jQ5qLs0O1ieh30gZ?=
- =?us-ascii?Q?WxeBoZMe+XpM+1HfBfBOKbRJiWfxA+Amt0JJ7MIizRxuRnMr68e0jTFf9R30?=
- =?us-ascii?Q?sTF6FbTUOSk4nMQK31zOS46uTz4q4bL3Q3XkoP05S6qD9gdiNvF2HSpxOiQV?=
- =?us-ascii?Q?9TFyhlaM8wll1EIx5NBiL30/90r1mdk1Oa4lpWrY1sRA6gZFC5ueVFCu47rx?=
- =?us-ascii?Q?YOSb0yFB4zNtAfGNyu01BXN/HZvsfLbyK70/KNljDvnVaJG2liH6H0kDDIu1?=
- =?us-ascii?Q?Kzx5JSJ5X/jHku6NrWZzJN8/rh4oaZrgeS6nAkjesTo/LJsMrrsE/0l6+AAd?=
- =?us-ascii?Q?5qhOwsBfMGO3zOZFWS6A/3uGOpH4oEyYQsU1EHciCjNmAHoy2C8oM+JIgoOB?=
- =?us-ascii?Q?mbKkNyUdt7La7VhoumyInXMc9eD2VVG6WWkF5ZhMAl0JEf9xEdTi?=
+	=?us-ascii?Q?m4zNqlqPaJH1HrQ1//wVzSCcOSYGNi9A64hVooswT2mlzC6URqu5AV63h3kb?=
+ =?us-ascii?Q?5llBiLeZeRH0RiAxKA3M4OEm35JVdAxKnEjhthDoU8MzDsssDB/5Sxg6jHaB?=
+ =?us-ascii?Q?YDut2BqzI5+JJGnPRYnxwiQV9h/cXVvJrhbKP70EZ+68DFiWSSXNFMiFgznJ?=
+ =?us-ascii?Q?M4w+5GrzfTFVsCSCwUQbZPHwz9vK09T3KGD1t76YBGRIyRIOVzvWXqxUm7Cv?=
+ =?us-ascii?Q?u3BUln0gwpUAVOTl2BbYje3aGg9QwqOyfK/uIAlobu4SWO6evWRfLuxmOeXM?=
+ =?us-ascii?Q?o0sjfHzNfBHYuDsyxFKuBPgQLybUSXddlkDry0uv6NODAiaJr61Q1/0TH/fq?=
+ =?us-ascii?Q?RWBAom79AsaCjMzRnoKXkmrLCnMPeHjxxJ81jo2A1Tv99t8s6IrNs3YOShaS?=
+ =?us-ascii?Q?DE8UoO86IfNsKttJu2Zf1gmI10JWrKoC5A2G9x6cxEUH/L2EiEnkqzWnE3X5?=
+ =?us-ascii?Q?jeS6oaBdlmuJ2Pf6o6ImZfHsuzKZ1WCWwKaMWXuuJZeSwR4SZOGtAWoaG/pC?=
+ =?us-ascii?Q?rPOtLPjoqiWO4NFOEJZWB0Ei4qrgcJKmz3XxAGRjsje7zmuK4MypW//ZUGWX?=
+ =?us-ascii?Q?fZTJsduer9EGE2fPcDN6NuL/A4k2mX2kKLgEMiXBinycwwAuEGCMwwzH0Fe0?=
+ =?us-ascii?Q?mAVT9Ya1lQjRvqJ20aKr2+iYTTboy1MQ1UBymkIDksWWmmxiNFz3+nfA/cG5?=
+ =?us-ascii?Q?iyLnnwRmFIuEp72W3iJt5wnVjS3Ry+33IwjlVY8k5yOUvxdYS+17yFRyM18J?=
+ =?us-ascii?Q?Ha8T1x4KCIGhIkLOscB2BJmfnmgb2uCtG0XH7JfdE5kjRhBSNeYf0vrWrQKT?=
+ =?us-ascii?Q?PPfyt6YrIMlQsUDzlPBrj5Mti3LL+uAzsm+edV5kyhknMgwEflLqjTHJb3H8?=
+ =?us-ascii?Q?IB/I782zw/jZttZ3ddhfpj89ca5HDcRU2sIFIh/uMe0FcHJ+u4H2hiLb1aTK?=
+ =?us-ascii?Q?Ct8zGCI6FojZx/jmaWBOfYJ0dCnAT2OrYo+mDeUsq9sfyv7LDQv3eSo1oQF8?=
+ =?us-ascii?Q?JFLWZNs2hiSPk+mrBZ9XS23kKA0jdIfd2fnWosm704/APef+ZvEvat6z4PoS?=
+ =?us-ascii?Q?I44wi0w23/TgA5f6088bL16gNxCXrAUIzExeUceR705qPsKwj7Q8EKVwwu+5?=
+ =?us-ascii?Q?13NBRILKfkBqIW+BmcQx58Gp7srg7T6qy5iAmy33oqT+/PqHmwd+jq3J5vZi?=
+ =?us-ascii?Q?RESDuHncTUKXqn+S1D0NF9asRZPs2gvcdnKTV4xuUMGUKXeAunqhIFxNveYy?=
+ =?us-ascii?Q?6AUX/d6p9/7jhh2W3C7qaZQPNfFA1sTDB4UgiwLIx88YyZgEE9CCz8XV/GMA?=
+ =?us-ascii?Q?qknwOo9PGoHoowjOtvo7oRowe3XJaG0zO9aheU1zMO885Mu7P+VIEga6Vf4y?=
+ =?us-ascii?Q?9qpvES+BR72w7sMXDHdHw0cRvLLcHrTFTnnBaw4YUrIzOdDRGj8Qow8iqzDq?=
+ =?us-ascii?Q?vkVL8Ew7Uxxc6LT4d/OkfneS4GUFzmAw4dNdqoX+8ndbuTCiXc7TxpxRyEJV?=
+ =?us-ascii?Q?a66p4OGzcIPAV+r8B02brXB3gcM7l14J49STi48Fu94iaGkhjGDRhrwGxZ0J?=
+ =?us-ascii?Q?Tb5BCJPW05jG6Ymik3vJ1tGGplzMNrO9F7J6hEg2VMvzALn6aDo1yu6Ws5wC?=
+ =?us-ascii?Q?aviLj7UViPf78ylBsPxGIeSpPitOMqL85d1prlTAL625M3HvxhOZPc6CgCxo?=
+ =?us-ascii?Q?NwAaTRacPvgU3FuIMZZBX0f9QzTzn7GA6ACXoEwHQULK6OkgzEMZ+t/pj66y?=
+ =?us-ascii?Q?hHcg0/0uSnhVlTHKKcxc9IFJ53z5U/LvFfxJy0gLSm/wL6S1/z8i?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc48b855-9e06-4363-73ee-08df1f3c05d6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1bfe53a0-d444-41d1-b98d-08df1f3d3324
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 21:44:36.7845
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 21:53:02.3859
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: H8vrgLC3NQ91zQayjcWfIJo5Cdk84Iob6rhYH5W5MnqA4c6rXXe/aUZ6zSePl//+Eg6svJM84ELlfSAegVLBpBhOGAA4+Rx/ZjwjddD6X7j26pxLzOUp2BejWOC/LteD
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7708
+X-MS-Exchange-CrossTenant-UserPrincipalName: L2Nl+w6P6nKOCEcJmIVXmCEor6g8O0AVCw59qEMC8v6syDZrV0uvu83pL+mgrICksi2oZxNUcNGz5dwKxS2tUdKAcriHkw85BbnAlJSiPiV070nnB5IRhtuf4DOMBHCo
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB5PR04MB11255
 
-On Tue, Sep 22, 2026 at 05:25:43PM +0800, Binbin Zhou wrote:
-> The DMA mux on Loongson-2K0300 is not a standalone hardware block. It is
-> implemented as part of the chip configuration registers CHIP_CTRL13/14/15,
-> which route peripheral DMA requests to the physical channels of the CMC
-> DMA controller.
+On Tue, Sep 22, 2026 at 05:25:42PM +0800, Binbin Zhou wrote:
+> Add DT binding constants for the Loongson-2 DMA mux.
 >
-> Document this as a DMA router. The #dma-cells = <3> specifier contains
-> the peripheral request ID, the target CMC DMA channel, and channel
-> configuration flags forwarded to the parent DMA controller.
+> The header defines the peripheral request IDs used in the DMA specifier
+> <request channel flags> for Loongson-2K0300, covering UART0-9, I2C0-3,
+> SPI2/3, I2S, ADC and CAN0-3. It also documents the channel-pair semantics
+> for peripherals that use paired DMA channels.
 >
 > Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
 > ---
->  .../dma/loongson,ls2k0300-dmamux.yaml         | 49 +++++++++++++++++++
 >  MAINTAINERS                                   |  1 +
->  2 files changed, 50 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+>  .../dt-bindings/dma/loongson,ls2k-dmamux.h    | 56 +++++++++++++++++++
+>  2 files changed, 57 insertions(+)
+>  create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
 >
-> diff --git a/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> new file mode 100644
-> index 000000000000..12b8f8af51e9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/dma/loongson,ls2k0300-dmamux.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Loongson-2 APB DMA MUX (DMA request router)
-> +
-> +maintainers:
-> +  - Binbin Zhou <zhoubinbin@loongson.cn>
-> +
-> +allOf:
-> +  - $ref: /schemas/dma/dma-router.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: loongson,ls2k0300-dmamux
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  '#dma-cells':
-> +    const: 3
-> +    description: |
-> +      Each cell represents the following:
-> +      1. The peripheral request id (see
-> +         include/dt-bindings/dma/loongson,ls2k-dmamux.h)
-> +      2. The physical CMC DMA channel (0-7) that is passed to the real
-> +         DMA controller
-
-Do you have restriction between request id and channel? Does any request id
-route to any channel?
-
-Frank
-> +      3. Bitfield representing DMA channel configuration that is passed
-> +         to the real DMA controller
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/dma/loongson,ls2k-dmamux.h>
-> +    dma-router@16000134 {
-> +        compatible = "loongson,ls2k0300-dmamux";
-> +        reg = <0x16000134 0xc>;
-> +        #dma-cells = <3>;
-> +        dma-masters = <&dma>;
-> +        dma-requests = <22>;
-> +    };
-> +...
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index b021fb623446..dc976938c58c 100644
+> index c31b81eb42d7..b021fb623446 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -15344,6 +15344,7 @@ M:	Binbin Zhou <zhoubinbin@loongson.cn>
->  L:	dmaengine@vger.kernel.org
->  S:	Maintained
->  F:	Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
-> +F:	Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+> @@ -15347,6 +15347,7 @@ F:	Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
 >  F:	Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
 >  F:	drivers/dma/loongson/loongson2-apb-cmc-dma.c
 >  F:	drivers/dma/loongson/loongson2-apb-dma.c
+> +F:	include/dt-bindings/dma/loongson,ls2k-dmamux.h
+>
+>  LOONGSON LS2X I2C DRIVER
+>  M:	Binbin Zhou <zhoubinbin@loongson.cn>
+> diff --git a/include/dt-bindings/dma/loongson,ls2k-dmamux.h b/include/dt-bindings/dma/loongson,ls2k-dmamux.h
+> new file mode 100644
+> index 000000000000..dcc8df86befb
+> --- /dev/null
+> +++ b/include/dt-bindings/dma/loongson,ls2k-dmamux.h
+> @@ -0,0 +1,56 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Loongson-2 SoC DMA Mux dt-bindings
+> + *
+> + * DMA specifier format:
+> + *   dmas = <&dma_mux <request> <channel> <flags>>;
+> + *
+> + * The <channel> cell selects a physical CMC DMA channel (0-7)
+> + * For peripherals using channel pairs (UART, I2C, SPI2/3, I2S),
+> + * the channel number selects the pair: 0/1 -> pair 0, 2/3 -> pair 1,
+> + * 4/5 -> pair 2, 6/7 -> pair 3.
+> + *
+> + * Copyright (C) 2026 Loongson Technology Corporation Limited
+> + */
+> +
+> +#ifndef _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H
+> +#define _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H
+> +
+> +/* UART controllers */
+> +#define LS2K0300_DMA_UART0		0
+> +#define LS2K0300_DMA_UART1		1
+> +#define LS2K0300_DMA_UART2		2
+> +#define LS2K0300_DMA_UART3		3
+> +#define LS2K0300_DMA_UART4		4
+> +#define LS2K0300_DMA_UART5		5
+> +#define LS2K0300_DMA_UART6		6
+> +#define LS2K0300_DMA_UART7		7
+> +#define LS2K0300_DMA_UART8		8
+> +#define LS2K0300_DMA_UART9		9
+> +
+> +/* I2C controllers */
+> +#define LS2K0300_DMA_I2C0		10
+> +#define LS2K0300_DMA_I2C1		11
+> +#define LS2K0300_DMA_I2C2		12
+> +#define LS2K0300_DMA_I2C3		13
+> +
+> +/* SPI controllers (IO mode) */
+> +#define LS2K0300_DMA_SPI2		14
+> +#define LS2K0300_DMA_SPI3		15
+> +
+> +/* I2S controller */
+> +#define LS2K0300_DMA_I2S		16
+> +
+> +/* ADC controller */
+> +#define LS2K0300_DMA_ADC		17
+> +
+> +/* CAN-FD controllers */
+> +#define LS2K0300_DMA_CAN0		18
+> +#define LS2K0300_DMA_CAN1		19
+> +#define LS2K0300_DMA_CAN2		20
+> +#define LS2K0300_DMA_CAN3		21
+> +
+> +/* Total number of 2K0300 DMA requests */
+> +#define LS2K0300_DMA_REQ_MAX		22
+
+REQ_MAX is not ABI and your driver have not use it.
+
+Frnak
+
+> +
+> +#endif /* _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H */
 > --
 > 2.52.0
 >
