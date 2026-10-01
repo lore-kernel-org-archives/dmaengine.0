@@ -1,90 +1,90 @@
-Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF724A64F4;
-	Thu,  1 Oct 2026 08:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.150.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0646C4B1CF3;
+	Thu,  1 Oct 2026 08:42:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790844161; cv=fail; b=Bs21BTguOh7/M/HNoBys+GTjq27ffSNk29jYFa/Y7xmiF2SUFRz60mcpsvU+32frMVaczBrzjlpAGJCvh6FoStktV1prr69xKwUsDWueIx+yzVhxeUuHySiVFcJTXtPSTZIjm/WKYSBIOuUzWnnT7uLf5ZcR1/8NvEzYZSOObQo=
+	t=1790844163; cv=fail; b=uJhe+/QuBgopMyaN4hcRz5QeNNKm4tfEwGR+dJ9ZH+dvMLimak+k6QdWvri0nysLG/WTgsmpG7+0ofyzc0m/ixzp3ucWnJxfO47Kg8L1xUYNwAzdT/KB3js7ShiYcCcl1IUxRX5vPDCU2ezrye1CNxb7zmR+uYt+7Vg5x2SiA+A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790844161; c=relaxed/simple;
-	bh=/aiAUN2AZLQdcUQP4xDUgYrQtUCcJ5CI+6rZuEpQepE=;
+	s=arc-20240116; t=1790844163; c=relaxed/simple;
+	bh=U7osgsgZPMFddchnKDZC89eADeAN2UHlLZhn2hoiVQc=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ELRGHUsCpU2dxFFq4Ybo62iuk4r+TDUncxy4aZAoTD6E22/tkX9hvJ0k72ZDvmGYpaxfJiPrxphSWyDkVxsbRWvO4Re5vCCY5BzSOSf7Ze/yn2iED069+Af9V+fieWhQWoF9HOD1ELtKcesYDOHkamyAy4ok5ESl2F3XKjHz5Ao=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=bU+afGIA; dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b=pdsgexfP; arc=fail smtp.client-ip=148.163.150.75
+	 MIME-Version:Content-Type; b=CzuSmXgDj9HYTIfeH2VTR8KEZzl44ZM+JwrgqPQH5Vq8vatRrDSAGvuKw0dkL4s9YJJZ33uvN+k1A/KVt/soelACLwzn2NLKMQLD4Cyhw7S2jJUrj+xtQPYkXIJJ4Hspux0pjj7dqBgajauX90wF4Ub7/vR2cXaK7ILSYaRRrD8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=hCtXDeXi; dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b=hOxoDCxT; arc=fail smtp.client-ip=148.163.154.28
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="bU+afGIA";
-	dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b="pdsgexfP"
-Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
-	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 6918F0hB1712654;
-	Thu, 1 Oct 2026 03:42:20 -0500
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="hCtXDeXi";
+	dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b="hOxoDCxT"
+Received: from pps.filterd (m0374956.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69171GQs793670;
+	Thu, 1 Oct 2026 03:42:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	proofpoint-05-2026; bh=JDi4FyA3Y+TWDA2m/JX+PEDsnRLRFhmw/teJzYU+O
-	hk=; b=bU+afGIAxVRkLLOVkuTxnxmPufCUknIYkcJguKLLNuPZ6/7nKVphJW6Io
-	gCzgZjY6lXybUb929yrAZ6Ye+rLy4+ix2x0sK7IsZgYW4eWpLzxijQGwnqTjWPmT
-	2Ckgxmg+JNbF9BC1T30rjz0QWfSbyy3y5DuquGMKitXHhSsxAqEjSiY7MN56BTr1
-	s+jFxF5+4XGVj9GHgFsWubUY9CpxgBDeyyuh5z8UKLqsANwuvBMypHfTV92P/PuH
-	1yhTiuRgyv8Oxgua4sRZ1TM8zqR8Wze5k7ZB8BURMftU4aEzKgk1b2cbGUoItkHV
-	TmwkH9TPz1XLCmtK9Hk6VLfM+oZLg==
-Received: from bn8pr05cu002.outbound.protection.outlook.com (mail-eastus2azon11011059.outbound.protection.outlook.com [52.101.57.59])
-	by m0384305.ppops.net (PPS) with ESMTPS id 4h1kufr429-1
+	proofpoint-05-2026; bh=1UA2mDYdxk6I1awioHjkdU8HhFoXQZUEyn+pUrf1Z
+	ek=; b=hCtXDeXiJPDmjprRqo2CBEgJpE64SwnqvSfrQyARoQZGA2sDhHWw21B9r
+	Wm2pkbXBlq7sKdBuPBfzVpJiPR3vvPIDx6EzGT3WEuLx3YWnPCmXKOX3vzn0ocaB
+	Vrlr0hxbzhA15sXcfjzUX4vn9cdJcEMa5niyY1YsDWTo/zWaVCRZ2/0BGUvV8Gwh
+	Q6oGA06QyYrdUrM3CSUxMddHC+uvqYAGhSNXVTMCDm6R9v3j0rDmfrqX8sskcZPw
+	kiNzONkofPslrOQkfVfkz/6e1c0mBdfIIkfnONwroS4xlOEZKcarTgnDdT+AEzqh
+	rHaX/cM5v27BeSwXj7+AOqiqyOA2w==
+Received: from sn4pr0501cu005.outbound.protection.outlook.com (mail-southcentralusazon11011012.outbound.protection.outlook.com [40.93.194.12])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4h17djv3cu-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 01 Oct 2026 03:42:19 -0500 (CDT)
+	Thu, 01 Oct 2026 03:42:28 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QezXumYORN0jNzbzk2mYTNC/vVESPEgQ4gDpYRMnHYD22e8FmtRbCQiKOWAG1kuNcg4F6Fwm9c2E7GMgpHROhl+dtmTU3PvcxqKLZdKy5cgUUBNiSwNpmJH8Aee/pqXrXHEOZYWDjSXfiAzZxDOItQbTPmRfLacaq0ovGhnT4KjTwhQxUf1OxhKX1ME8CGKKHd43cxCDLa6WnWXY+sT0cfY4Kb8jpon3XUanX6bwULzOijbB1EhfhQooL5zLxUqKy93pKJwUtdusfUjq6FE9UIYQvmRIN3RNyKcn3awBT/pcui4WDOzr9EVNGuocDv/72bCGz82ZkOzp9Qa+m2gZww==
+ b=IJZTmHo9+glMITIhIAUmjWe0Eml6XlIAOz/xq5GtUGU9FYquxj+Lc248JhOU8HWYkKjtfKX60u0hbgEth7zHyQyOnoSKogs3Dzl8ABE4T4PF/EobFOgouYusTpsbhatX/1unNseSk0VNNW2qmvb6Z8w/ft5hbr6S8FbIfkoWetMcoohswdQY6YOYgdndm+pVIsWklbxuav6XsBt9MJgphq+/7dCnAVE1axjYQhHplN7VUTr4T6/2/iFi1FwfHwpqyhQOAjHt1JSLyokedIY2z4H2qe3YDfxddB0ndNKlkVZPf/unEGav2eQnCm9K7Xfya6cV+yQPK4pFpfS6oo02mg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JDi4FyA3Y+TWDA2m/JX+PEDsnRLRFhmw/teJzYU+Ohk=;
- b=tMLKr+7X7wxa4G0Q2nUqbKdy2+Wvjq7vnpqIxaZQPs6lD0Y30LmX4Hu4eKg/VtZ7z7wbPj/RfjzjQrnHr0YB1cyGIdo7Hzuj3AdCWZmUWmV7v2rY5xUAcgz8SEuBIpXwKkHWe1l6oA3/L2VL4o3WSNd8lKnOFAvkLSKyiTxaDLPVu5XQ/oWQ9AKPE8NTSNndfmFgXOABOO9JTbx6sE96QayiZLCSn8N0SJ10cAEmodIHmYckqSQ7ziXpB2eIe5uG3eYm2XEeXLW9DVpulV85atHiI/DyPDqphf4xrDPKDV9sqhBj/p7VUGXHExZxg9GTqfOVb9YBDJV1V5TWU6vTCg==
+ bh=1UA2mDYdxk6I1awioHjkdU8HhFoXQZUEyn+pUrf1Zek=;
+ b=OX7HJDZthX0LnAHqzoxDkRBt2G26ycxW7tqP0ImhKOmwiB1MoLsfWtApGGefDKc4pNDtijQUNTkVCYr+BjxkHaU5ZXzx+TusAgzix90CIqfkOXHopp1c+TVUXapb9RExuuo5rXxwsPXRpeV5Vhrnc69NlN/UJ74sat/IxF8d5NAuzoG9lDxB8BQ3yFp62jZTSQU1xasg1jLdhHyaJn4HGEoDB6v5JhP7zlvPXaOB9CV5eqiWfVfWcNY3TqAZ2uRE6067JBBPgSDy6ZVOaiSKONPWykcCZPErr0CGv+Dcen4tDc3h/CNOWjBkF1oR3cIUXqH/v92QKEkdBDlNCvjQgQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.21.194) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
+ 198.47.23.194) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
  (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
  (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=ticloud.onmicrosoft.com; s=selector1-ticloud-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JDi4FyA3Y+TWDA2m/JX+PEDsnRLRFhmw/teJzYU+Ohk=;
- b=pdsgexfPXxHRgUYJ88o+O5lrpUP5uwUOVVISD++4G7fqkCcdiBjVT0LlKYgFrRkynbcsKC7ZAp9NGZCdkrhmN1CxNTQpl/LPzkIdp4fyb57nCQVW9CgSbUP7+TlHiGPSCE4BZMSxFzIdTtRgQW3lzxyl5f3l88j2P7YSK2Ofw44=
-Received: from CH0PR03CA0302.namprd03.prod.outlook.com (2603:10b6:610:118::24)
- by CH2PR10MB4133.namprd10.prod.outlook.com (2603:10b6:610:a6::7) with
+ bh=1UA2mDYdxk6I1awioHjkdU8HhFoXQZUEyn+pUrf1Zek=;
+ b=hOxoDCxTnjxiwxUOVZA7L+96gRnpru/l2In6pvGomVJICYnoYb72se60SC8WApx11rYPEc/saRBrKNUy5HdRi+9xtQFIrGLnIURKbSRSygcC6NMPba1gEqxSgl9tfxu6qXlr1VuLyUO944SoQP0g+9NH3boTOtemgm96kcXt/g8=
+Received: from BL1PR13CA0074.namprd13.prod.outlook.com (2603:10b6:208:2b8::19)
+ by MN7PR10MB275711.namprd10.prod.outlook.com (2603:10b6:208:634::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.9; Thu, 1 Oct 2026
- 08:42:15 +0000
-Received: from CH1PEPF0000AD7B.namprd04.prod.outlook.com
- (2603:10b6:610:118:cafe::3d) by CH0PR03CA0302.outlook.office365.com
- (2603:10b6:610:118::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.17 via Frontend Transport; Thu, 1
- Oct 2026 08:42:15 +0000
+ 08:42:25 +0000
+Received: from BN3PEPF0000B06E.namprd21.prod.outlook.com
+ (2603:10b6:208:2b8:cafe::17) by BL1PR13CA0074.outlook.office365.com
+ (2603:10b6:208:2b8::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.16 via Frontend Transport; Thu, 1
+ Oct 2026 08:42:25 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 198.47.21.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ is 198.47.23.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=ti.com;
 Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
-Received: from flwvzet200.ext.ti.com (198.47.21.194) by
- CH1PEPF0000AD7B.mail.protection.outlook.com (10.167.244.58) with Microsoft
+ 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
+Received: from lewvzet200.ext.ti.com (198.47.23.194) by
+ BN3PEPF0000B06E.mail.protection.outlook.com (10.167.243.73) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.472.14 via Frontend Transport; Thu, 1 Oct 2026 08:42:14 +0000
-Received: from DFLE211.ent.ti.com (10.64.6.69) by flwvzet200.ext.ti.com
- (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
+ 15.21.496.3 via Frontend Transport; Thu, 1 Oct 2026 08:42:25 +0000
+Received: from DLEE204.ent.ti.com (157.170.170.84) by lewvzet200.ext.ti.com
+ (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 1 Oct
- 2026 03:41:42 -0500
-Received: from DFLE208.ent.ti.com (10.64.6.66) by DFLE211.ent.ti.com
- (10.64.6.69) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:42:10 -0500
+Received: from DLEE203.ent.ti.com (157.170.170.78) by DLEE204.ent.ti.com
+ (157.170.170.84) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 1 Oct
- 2026 03:41:42 -0500
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE208.ent.ti.com
- (10.64.6.66) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 03:42:09 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE203.ent.ti.com
+ (157.170.170.78) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
- Transport; Thu, 1 Oct 2026 03:41:42 -0500
+ Transport; Thu, 1 Oct 2026 03:42:09 -0500
 Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [10.24.51.254])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 6918f9rv630551;
-	Thu, 1 Oct 2026 03:41:37 -0500
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 6918f9s3630551;
+	Thu, 1 Oct 2026 03:42:05 -0500
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
         <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <nm@ti.com>,
@@ -93,9 +93,9 @@ To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
         <linux-arm-kernel@lists.infradead.org>, <vigneshr@ti.com>,
         <Frank.li@nxp.com>, <s-adivi@ti.com>
 CC: <r-sharma3@ti.com>, <gehariprasath@ti.com>
-Subject: [PATCH v11 06/19] dmaengine: ti: k3-udma: move ring management functions to k3-udma-common.c
-Date: Thu, 1 Oct 2026 14:10:22 +0530
-Message-ID: <20261001084105.1692228-7-s-adivi@ti.com>
+Subject: [PATCH v11 12/19] drivers: soc: ti: k3-ringacc: handle absence of tisci
+Date: Thu, 1 Oct 2026 14:10:28 +0530
+Message-ID: <20261001084105.1692228-13-s-adivi@ti.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261001084105.1692228-1-s-adivi@ti.com>
 References: <20261001084105.1692228-1-s-adivi@ti.com>
@@ -109,387 +109,405 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7B:EE_|CH2PR10MB4133:EE_
-X-MS-Office365-Filtering-Correlation-Id: bd438a92-48d3-44ee-1db6-08df1f97e4b4
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06E:EE_|MN7PR10MB275711:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e858fa7-81c4-4b57-cc6f-08df1f97eb01
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|7416014|1800799024|36860700016|82310400026|10067099003|3023799007|6133799003|56012099006|22082099003|18002099003|921020;
+	BCL:0;ARA:13230040|23010399003|36860700016|7416014|376014|1800799024|82310400026|10067099003|56012099006|921020|6133799003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	WkAu1bEyGkdrjffUdF+ctXR/iysIC7n7HqPBqxHHuvz/bqX0LwBVZRDzBJgSZC7f2FEvl/C4Cag42+FLiWz605BUhOGViea8HGL0HgBr7kTQDcZ4xLXA0gXMoHJ9PWjrznMTpZFn8G8uiQAAaNuLg/OVf5kaakcPCeUprw/JXzgBsIfmgiOzhWVKT+VjHye+TKT3su32wjPueUv+cgs00dCp6EHfE04mbVmW2XvcTUjY5hLDO1THbRCnAG/yflkEogjCaKlwzlO454CdXcA+w1TRrYyj4IsLRExF4cMs1a2P47U6hM0G4mCDje8Es+OalyJ8abLzLaNKfd5qPENH38m0B4GG4RA2rrBLeZ8TjpZ5Uvs3xyHUhN7/hWePd/NB7bmXGl2fbn8jxB25KDrZQep9W7Wk50D1eo68AQGPHtqz/F6miSvHgUWfcIsEL/dcjJo/VqHju41CnbYqGAzIV2HUbAQ+LvMn74uwQ3kCBd8nm4zVFLsnGpLHvrbqiWDSp9p2luiCQ0HLUJkNVwdEw0MfKrcNhH+L9GKUeTVbq7UORxQWmSettBhQB5PUczAPVf5jUkg+/v1k5m95hUXXLhPzxy4K5KkpdbD/8LuB1fuwtbhNgewcjYSiunHg7q0spE963l+RU74M/Il5Bhd35m1KLT+nmGoyV2PLWgQdog46Hj1LXGu58rjwWBlI6z5bgvOnvIwhYdqzzed87ESc5q/yTQTxNmTeegZ+NYHyGuYJ0c95ZriRYwzMse7Bs2UI
+	lB8ZeKmyXcFdUoyAJ4WOfk7NyGz8RYZ7E0uczH5E3N7utwyaIZUNQC2HqhyH6tioOxJTF1IrhL6gPjNOmnd4MisN9zWTzo+fUXx9usPxRLKfafHPeaflsuPdz42Xu6NCXNSXnfdQ8+kjKg1Q/UMseBXwXayudF7+8GezEPnlU8VPupOgP3gVtTACXLgbQuPQWslSfArzxXj9UWINKYjmpvV+FjQt7WTiYyigG8Hpb5gUMTLmbXngA8gxe0tuqIyWKoagR2Mn/VHZTErptXM8otYCoUDgHDPNvMIemXZ+PkBofHYNM+cCWrP744vNUem5AKUpmZrUlxbff1os1fVFWpg7WZXuYDBxXeqJwk7LiEihJo90VL7Tbrif6oSRbwvmu++L6I/Hyn7DPqLDOik1pt77Ug/MnwEBkWXQ1rdVF7k9ih+4cn1ZvXX9vy9fslJ61GXJ7+J08l/DXQ9lieNZcJE+Cvj/JHxFspfx2IZt8Vt8pQXTLuJWT7XrPlLj23K9hybw1QKKlgUg4H0Bt1nf+bgQYotFjhK4r/WV/nG3W0BK18ztCAX8Q63v67jQOGvQtAPXOnYOL8Uno7IbgP9nGfwPC8Sd3hAXrpferghRE7/dvsMLJB3oLu7VK0BEcRmMnlBLULBZU+p0/LsHy73MbBSlgDeO8EQ127MEu89uq+/3YYL0let7e0QK2jdJpgDrxYeq+xKyHI+7peY6VlKwGMZBSai1fuc3H28vpqvY8GPTn3r/d3wWgCM2hU1DAL4e
 X-Forefront-Antispam-Report:
-	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(23010399003)(376014)(7416014)(1800799024)(36860700016)(82310400026)(10067099003)(3023799007)(6133799003)(56012099006)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
+	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(36860700016)(7416014)(376014)(1800799024)(82310400026)(10067099003)(56012099006)(921020)(6133799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	wdz4NuLvp47qvzWODRa8eZPX9YJqMsE+iJdbQ+eKkK1qT/wPzG+y/TG+P2a3FwP3c7knFj2R47C2sBSzkiiV317vzNvt2nQjKETAWzz45nk3bV1eGZzneavY+YcKqzslV3UQV5HDtlg0bCF2wSz+0QopH7jcxOewCzo8+cGg3edlY17e71CVbe5OIl4MQp4nwuY9YVMlzhuk9KcNIliO6JhLWu08VJzT3xeSLB2Xi+gt4e3dh1LdlZeqKDq8GVM/Kt6o9X+o/zAiLiMgtfLBRrHeV1uu32kxM/jPa0IuhGh+CJMuy/ycOU4bBbKU5u3lTfAyBosbsQJTOP6ayL5vvtZ3f12IjR8e3fRqIE8FvDPe90Um9kSYq3ONKR0rREu/yJDklI7j8G1DHAMYtx9aEtUJuWmJOgGkXMyILMI2pKiWojb0ljKVuGdvmPwfb+dC
+	Hq9et66l4McpNWovSHqamNtunKMhzTr7ExdZkV3WitijOKgisdO2O6/ypvlFiEkLq16NqFIWhedxqTbwVi4Pl7F8Ud9lnNM1t9MwN7Q42d7PPCPZ3nc63zP1abWcunN0U3Zim5HBacmwLdNmo2SroRRUnLmiqVYd7Mjw8jwg2ADcNbsHW/71BjSifHkieoxhjp36Wpdls3+3FUGdJXQPfv/YegvIqHSCqfILuIauFJxbe8mz5yuh9aQ0GrGNkXgLeuEtywLE0B2PxJvKsTPoyFuRblbq4fYsT1OpC1cbCueYyJY9wSOYBwPJK83+Wx06Qn/3zuHYLNJAedNbSWtF5bdXFLV5BWZ/Gd2WGZQqvPFzeuDsblQveQaviiHm/Xuyllj9G6vo+wBzvPEqGCppXnWqYdR7JY2j92mZ2Z4HWJ9H1cjfLI1u56WBNhdR2W1Y
 X-Exchange-RoutingPolicyChecked:
-	ndzYe2/lcBz9kFpsad4f4EfHXLggNP7dXvfejX8WmjUSiwK+7p+QLmlpqd9JpN2nKWej2ytCAadhNBlMRqR3i+5QGGhHoNc2VHv9yAVWB8jWdasyj1Fuw0XH8GUXuEq5RvQpKAA4lcQrPLViaUII+dbp/BZu/fu7Kkdm5CQdLprTsEz2xRauktz5dutXUf9p6vXPUWVXHjWLoLSj6ZbXqOyJJ0Db2GQC+Ng706WhO10hNQUIeuCZdlQFFIoifLqw9itc0jBx+XSL82SGiQrNQFQT2g8wcMj79sv/pcpYMmMnYuyG0zv29ZK+3B/pV4tbcmPZMoHyY9w61O2TqKZomA==
+	brdNtaa5Tf1/Z72+RdUYPzu5RB8wqYrt+ra/ENhUT1LI0EUzBwm7djfVRViB+uOOoTkeDMbys/u8XItvYsj5500oCBCYtomUW2ChQQtNT+oxIhppNwSjPrk9SN5fg+XKstuHRmQIwAPprIQ0R+GU7L1eCVhvD5onERm6AtR80w82bFqDWedrYsiUI7wsRV+azxTMk6rowkRfiplzHYdHuXBtjB8H5oE5B7F0Rn6KIlOZzaOp6I6Ec4FMxqi+sNiq7p9NxLkL4tI0jT0hdowOajIy8d1/ISzeohz61/jjL+cXGn295FDoiizgF7OLQy2xm0kbgXacpk+AKvnDbOgEKw==
 X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 08:42:14.6557
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2026 08:42:25.2006
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd438a92-48d3-44ee-1db6-08df1f97e4b4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e858fa7-81c4-4b57-cc6f-08df1f97eb01
 X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	CH1PEPF0000AD7B.namprd04.prod.outlook.com
+	BN3PEPF0000B06E.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR10MB4133
-X-Proofpoint-ORIG-GUID: OihvjhDUKSF8ngJ90WDzzpKynsqLPhe5
-X-Authority-Analysis: v=2.4 cv=I+Lw19gg c=1 sm=1 tr=0 ts=6abe1ceb cx=c_pps
- a=J5CYyyHZZtesdUd/yj239g==:117 a=iwqwCZQqcuTv3JOpYdM7/Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=660iZSQnnn4A:10 a=AlMIdn_sM9wA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22 a=taLDd7a_hP9WKsMzeGRc:22
- a=8AirrxEcAAAA:8 a=sozttTNsAAAA:8 a=bS-Ji3T8UFNk2xfqAFIA:9
- a=ST-jHhOKWsTCqRlWije3:22
-X-Proofpoint-GUID: OihvjhDUKSF8ngJ90WDzzpKynsqLPhe5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfX4OOrN76IV5gd
- 7VuWztSDC8tJe1DIqBGdatDlSYfEHYmEV7daqenOXXnURBosJ017WttX/fxgtbzzpVVmit1mqdU
- p6QFXXP/C80MHSCCxg12mLR8XRAmim+S5SFlsey7olRXL4AgxsaWW+HIFKgbfqdhE3fRYzklNo1
- uBEYDzXaObtBNMGUXg5VgTGPMsXKpEzBNO2p00fvSppBBp2pGA8CH7eERETUZO9R0reDMIaDAJP
- Ws5TVwiwk/PzwbtmygIxWW3Ddo5FlY+g65rTyKe1kil2Ypj3QctknqNflNdYpYBMJ1e7t6GEYmn
- jo+psxEQM7lWg72/PS4PXImnS4mccnFJszk3gAqTLyi/h9zEbwL3lH6YeQ7GmBopmqYiM0k20Eg
- Vmmd13TOXznJIq3E5Na/iAfKoTKUnpRtM8JMA5cMGhFE+RnD2KN7wX8vjOw419TUmvzRv5EaxQG
- UIF6kDNXMw+cszZfSgA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfX/fMS4Lpm8xW5
- T9dmFJ0rozWH7pcW0T7mfPrtL846R7d2r211iFIsqSJCuJBWMNlIL1YQm4dFaRIPVkrI648ftNL
- 7UsSmy836c5QU/mpQr4H26apq/f9eK0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN7PR10MB275711
+X-Proofpoint-GUID: 6B61zAeYyOsiPmASuVTCYJZx8oc4wrfI
+X-Authority-Analysis: v=2.4 cv=aswnmiZV c=1 sm=1 tr=0 ts=6abe1cf4 cx=c_pps
+ a=X74xAhwpQ9G8Yf2i8TuT2g==:117 a=WotqVVQAdb04rnGuttW3Kw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=660iZSQnnn4A:10 a=s63m1ICgrNkA:10
+ a=AlMIdn_sM9wA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22
+ a=jwouBfj2j3NM8CExmVVE:22 a=sozttTNsAAAA:8 a=JJJAxwKGgbaLG8uOhDEA:9
+X-Proofpoint-ORIG-GUID: 6B61zAeYyOsiPmASuVTCYJZx8oc4wrfI
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfX0/2nfDjI+EvU
+ JeBrlHUwIthZQzuj2pneFP4qRN9N+rZ33q6czo09urCCoSz/RnnRZ1dWhmZ1GO0ZzLyJEI1uE8c
+ 1v096HEsqO7qYXbfeHmI8QuFU0QaYE4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDAzNCBTYWx0ZWRfXwfBjxGdcqncu
+ dkfmKM252+/RHQl3mtE/9YzXzL1cDLrY+w0GoQPfLziWu6U2eutNtQunMe5CCT6/WGT1Ba9WX0r
+ PN0FBXZkUtoH+zz7fI3dkxQyGZ+mwcBAqloaAGn3xI9hI1dWjQ53pnlLyXmPH90KAM41WL4AaUU
+ N9WZ3DY8UCxcafjZbciCwjUC5WJbj6lD99joBbI3SC/aczsET/7NdRLhvWZgSiDC9BIuMvV6ggD
+ uBTvWGfCS/RABemnYlLpDwJVtL4ERFDJo1c7GrxEzgLojSLpLYq66FEjhBKt0BhHmECKbehm6j9
+ GIpT9CcB50dVw6lQLDgiO1RFyQ/TkXDXYgHPRpq8ib/crEFedZwnbRVxzmylbrOHODJ9MyV+f+y
+ nKU/r9qJVEDHKwx1DLEnCfBZWR9B35MNcoN39mD7yA/87WEyZxIfb4UjE5uUs4jFpYciu6zKKwq
+ 3xk5yc8HrPPbcSOk88g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010034
 
-Relocate the ring management functions such as push, pop, and reset
-from k3-udma.c to k3-udma-common.c file. These operations are
-common across multiple K3 UDMA variants and will be reused by
-future implementations like K3 UDMA v2.
+Handle absence of tisci with direct register writes. This will support
+platforms that do not have tisci firmware like AM62L.
 
-No functional changes intended.
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 ---
- drivers/dma/ti/k3-udma-common.c | 119 ++++++++++++++++++++++++++++++--
- drivers/dma/ti/k3-udma.c        | 100 ---------------------------
- drivers/dma/ti/k3-udma.h        |  11 ++-
- 3 files changed, 118 insertions(+), 112 deletions(-)
+ drivers/soc/ti/k3-ringacc.c       | 199 +++++++++++++++++++++++++++---
+ include/linux/soc/ti/k3-ringacc.h |  18 +++
+ 2 files changed, 198 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-common.c
-index 9b7ae758bdc90..4961f4d3d1496 100644
---- a/drivers/dma/ti/k3-udma-common.c
-+++ b/drivers/dma/ti/k3-udma-common.c
-@@ -12,6 +12,13 @@
+diff --git a/drivers/soc/ti/k3-ringacc.c b/drivers/soc/ti/k3-ringacc.c
+index 5966db4327b13..d52e0ab33678c 100644
+--- a/drivers/soc/ti/k3-ringacc.c
++++ b/drivers/soc/ti/k3-ringacc.c
+@@ -7,6 +7,7 @@
  
- #include "k3-udma.h"
+ #include <linux/dma-mapping.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+@@ -46,6 +47,53 @@ struct k3_ring_rt_regs {
+ 	u32	hwindx;
+ };
  
-+static int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
-+				 void *data, size_t len);
-+static void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
-+				    size_t *payload_len, size_t *max_len);
-+static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
-+				  size_t payload_len);
++#define K3_RINGACC_RT_CFG_REGS_OFS	0x40
++#define K3_DMARING_CFG_ADDR_HI_MASK	GENMASK(3, 0)
++#define K3_DMARING_CFG_ASEL_SHIFT	16
++#define K3_DMARING_CFG_SIZE_MASK	GENMASK(15, 0)
 +
- static const struct dma_descriptor_metadata_ops metadata_ops = {
- 	.attach = udma_attach_metadata,
- 	.get_ptr = udma_get_metadata_ptr,
-@@ -120,7 +127,7 @@ void udma_desc_free(struct virt_dma_desc *vd)
- }
- EXPORT_SYMBOL_GPL(udma_desc_free);
- 
--bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr)
-+static bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr)
- {
- 	if (uc->config.dir != DMA_DEV_TO_MEM)
- 		return false;
-@@ -130,7 +137,6 @@ bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr)
- 
- 	return false;
- }
--EXPORT_SYMBOL_GPL(udma_desc_is_rx_flush);
- 
- bool udma_is_desc_really_done(struct udma_chan *uc, struct udma_desc *d)
- {
-@@ -722,7 +728,7 @@ udma_prep_slave_sg_pkt(struct udma_chan *uc, struct scatterlist *sgl,
- 	return d;
- }
- 
--int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
-+static int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
- 			 void *data, size_t len)
- {
- 	struct udma_desc *d = to_udma_desc(desc);
-@@ -758,7 +764,7 @@ int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
- 	return 0;
- }
- 
--void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
-+static void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
- 			    size_t *payload_len, size_t *max_len)
- {
- 	struct udma_desc *d = to_udma_desc(desc);
-@@ -779,7 +785,7 @@ void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
- 	return h_desc->epib;
- }
- 
--int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
-+static int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
- 			  size_t payload_len)
- {
- 	struct udma_desc *d = to_udma_desc(desc);
-@@ -1239,5 +1245,108 @@ void udma_desc_pre_callback(struct virt_dma_chan *vc,
- }
- EXPORT_SYMBOL_GPL(udma_desc_pre_callback);
- 
-+int udma_push_to_ring(struct udma_chan *uc, int idx)
-+{
-+	struct udma_desc *d = uc->desc;
-+	struct k3_ring *ring = NULL;
-+	dma_addr_t paddr;
++/**
++ * struct k3_ring_cfg_regs - The RA Configuration Registers region
++ *
++ * @ba_lo: Ring Base Address Low Register
++ * @ba_hi: Ring Base Address High Register
++ * @size: Ring Size Register
++ */
++struct k3_ring_cfg_regs {
++	u32	ba_lo;
++	u32	ba_hi;
++	u32	size;
++};
 +
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		ring = uc->rflow->fd_ring;
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		ring = uc->tchan->t_ring;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
++#define K3_RINGACC_RT_INT_REGS_OFS		0x140
++#define K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE	BIT(0)
++#define K3_RINGACC_RT_INT_ENABLE_SET_TR			BIT(2)
 +
-+	/* RX flush packet: idx == -1 is only passed in case of DEV_TO_MEM */
-+	if (idx == -1) {
-+		paddr = udma_get_rx_flush_hwdesc_paddr(uc);
++/**
++ * struct k3_ring_intr_regs {
++ *
++ * @enable_set: Ring Interrupt Enable Register
++ * @resv_1: Reserved
++ * @clr: Ring Interrupt Clear Register
++ * @resv_2: Reserved
++ * @status_set: Ring Interrupt Status Set Register
++ * @resv_3: Reserved
++ * @status: Ring Interrupt Status Register
++ * @resv_4: Reserved
++ * @status_masked: Ring Interrupt Status Masked Register
++ */
++struct k3_ring_intr_regs {
++	u32	enable_set;
++	u32	resv_1;
++	u32	clr;
++	u32	resv_2;
++	u32	status_set;
++	u32	resv_3;
++	u32	status;
++	u32	resv_4;
++	u32	status_masked;
++};
++
+ #define K3_RINGACC_RT_REGS_STEP			0x1000
+ #define K3_DMARING_RT_REGS_STEP			0x2000
+ #define K3_DMARING_RT_REGS_REVERSE_OFS		0x1000
+@@ -139,6 +187,8 @@ struct k3_ring_state {
+  * struct k3_ring - RA Ring descriptor
+  *
+  * @rt: Ring control/status registers
++ * @cfg: Ring config registers
++ * @intr: Ring interrupt registers
+  * @fifos: Ring queues registers
+  * @proxy: Ring Proxy Datapath registers
+  * @ring_mem_dma: Ring buffer dma address
+@@ -158,6 +208,8 @@ struct k3_ring_state {
+  */
+ struct k3_ring {
+ 	struct k3_ring_rt_regs __iomem *rt;
++	struct k3_ring_cfg_regs __iomem *cfg;
++	struct k3_ring_intr_regs __iomem *intr;
+ 	struct k3_ring_fifo_regs __iomem *fifos;
+ 	struct k3_ringacc_proxy_target_regs  __iomem *proxy;
+ 	dma_addr_t	ring_mem_dma;
+@@ -467,15 +519,39 @@ static void k3_ringacc_ring_reset_sci(struct k3_ring *ring)
+ 	struct k3_ringacc *ringacc = ring->parent;
+ 	int ret;
+ 
+-	ring_cfg.nav_id = ringacc->tisci_dev_id;
+-	ring_cfg.index = ring->ring_id;
+-	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_COUNT_VALID;
+-	ring_cfg.count = ring->size;
++	if (!ringacc->tisci) {
++		u32 reg;
+ 
+-	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
+-	if (ret)
+-		dev_err(ringacc->dev, "TISCI reset ring fail (%d) ring_idx %d\n",
+-			ret, ring->ring_id);
++		if (!ring->cfg)
++			return;
++
++		reg = readl(&ring->cfg->size);
++		reg &= ~K3_DMARING_CFG_SIZE_MASK;
++		writel(reg, &ring->cfg->size);
++
++		ret = readl_poll_timeout(&ring->cfg->size, reg,
++					  !(reg & K3_DMARING_CFG_SIZE_MASK),
++					  1, 100);
++		if (ret) {
++			dev_err(ringacc->dev, "ring %d size clear timeout\n",
++				ring->ring_id);
++			return;
++		}
++
++		reg = readl(&ring->cfg->size);
++		reg |= ring->size;
++		writel(reg, &ring->cfg->size);
 +	} else {
-+		paddr = udma_curr_cppi5_desc_paddr(d, idx);
++		ring_cfg.nav_id = ringacc->tisci_dev_id;
++		ring_cfg.index = ring->ring_id;
++		ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_COUNT_VALID;
++		ring_cfg.count = ring->size;
 +
-+		wmb(); /* Ensure that writes are not moved over this point */
++		ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
++		if (ret)
++			dev_err(ringacc->dev, "TISCI reset ring fail (%d) ring_idx %d\n",
++				ret, ring->ring_id);
 +	}
+ }
+ 
+ void k3_ringacc_ring_reset(struct k3_ring *ring)
+@@ -501,6 +577,9 @@ static void k3_ringacc_ring_reconfig_qmode_sci(struct k3_ring *ring,
+ 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_MODE_VALID;
+ 	ring_cfg.mode = mode;
+ 
++	if (!ringacc->tisci)
++		return;
 +
-+	return k3_ringacc_ring_push(ring, &paddr);
-+}
-+EXPORT_SYMBOL_GPL(udma_push_to_ring);
+ 	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
+ 	if (ret)
+ 		dev_err(ringacc->dev, "TISCI reconf qmode fail (%d) ring_idx %d\n",
+@@ -576,10 +655,40 @@ static void k3_ringacc_ring_free_sci(struct k3_ring *ring)
+ 	ring_cfg.index = ring->ring_id;
+ 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
+ 
+-	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
+-	if (ret)
+-		dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
+-			ret, ring->ring_id);
++	if (!ringacc->tisci) {
++		u32 reg;
 +
-+int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
++		writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE | K3_RINGACC_RT_INT_ENABLE_SET_TR,
++		       &ring->intr->clr);
++
++		reg = readl(&ring->cfg->size);
++		reg &= ~K3_DMARING_CFG_SIZE_MASK;
++		writel(reg, &ring->cfg->size);
++
++		ret = readl_poll_timeout(&ring->cfg->size, reg,
++					  !(reg & K3_DMARING_CFG_SIZE_MASK),
++					  1, 100);
++		if (ret) {
++			dev_err(ringacc->dev, "ring %d size clear timeout\n",
++				ring->ring_id);
++			return;
++		}
++
++		reg = readl(&ring->cfg->size);
++		reg |= ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
++
++		writel(reg, &ring->cfg->size);
++
++		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
++		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
++				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
++				&ring->cfg->ba_hi);
++	} else {
++		ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
++		if (ret)
++			dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
++				ret, ring->ring_id);
++	}
+ }
+ 
+ int k3_ringacc_ring_free(struct k3_ring *ring)
+@@ -670,15 +779,36 @@ int k3_ringacc_get_ring_irq_num(struct k3_ring *ring)
+ }
+ EXPORT_SYMBOL_GPL(k3_ringacc_get_ring_irq_num);
+ 
++u32 k3_ringacc_ring_get_irq_status(struct k3_ring *ring)
 +{
-+	struct k3_ring *ring = NULL;
-+	int ret;
++	struct k3_ringacc *ringacc = ring->parent;
++	struct k3_ring *fwd_ring = &ringacc->rings[ring->ring_id];
 +
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		ring = uc->rflow->r_ring;
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		ring = uc->tchan->tc_ring;
-+		break;
-+	default:
-+		return -ENOENT;
-+	}
-+
-+	ret = k3_ringacc_ring_pop(ring, addr);
-+	if (ret)
-+		return ret;
-+
-+	rmb(); /* Ensure that reads are not moved before this point */
-+
-+	/* Teardown completion */
-+	if (cppi5_desc_is_tdcm(*addr))
++	if (!fwd_ring->intr)
 +		return 0;
 +
-+	/* Check for flush descriptor */
-+	if (udma_desc_is_rx_flush(uc, *addr))
-+		return -ENOENT;
-+
-+	return 0;
++	return readl(&fwd_ring->intr->status);
 +}
-+EXPORT_SYMBOL_GPL(udma_pop_from_ring);
++EXPORT_SYMBOL_GPL(k3_ringacc_ring_get_irq_status);
 +
-+void udma_reset_rings(struct udma_chan *uc)
++void k3_ringacc_ring_clear_irq(struct k3_ring *ring, u32 status)
 +{
-+	struct k3_ring *ring1 = NULL;
-+	struct k3_ring *ring2 = NULL;
++	struct k3_ringacc *ringacc = ring->parent;
++	struct k3_ring *fwd_ring = &ringacc->rings[ring->ring_id];
 +
-+	switch (uc->config.dir) {
-+	case DMA_DEV_TO_MEM:
-+		if (uc->rchan) {
-+			ring1 = uc->rflow->fd_ring;
-+			ring2 = uc->rflow->r_ring;
-+		}
-+		break;
-+	case DMA_MEM_TO_DEV:
-+	case DMA_MEM_TO_MEM:
-+		if (uc->tchan) {
-+			ring1 = uc->tchan->t_ring;
-+			ring2 = uc->tchan->tc_ring;
-+		}
-+		break;
-+	default:
-+		break;
-+	}
++	if (!fwd_ring->intr)
++		return;
 +
-+	if (ring1)
-+		k3_ringacc_ring_reset_dma(ring1,
-+					  k3_ringacc_ring_get_occ(ring1));
-+	if (ring2)
-+		k3_ringacc_ring_reset(ring2);
-+
-+	/* make sure we are not leaking memory by stalled descriptor */
-+	if (uc->terminated_desc) {
-+		udma_desc_free(&uc->terminated_desc->vd);
-+		uc->terminated_desc = NULL;
-+	}
++	writel(status, &fwd_ring->intr->status);
 +}
-+EXPORT_SYMBOL_GPL(udma_reset_rings);
++EXPORT_SYMBOL_GPL(k3_ringacc_ring_clear_irq);
 +
- MODULE_DESCRIPTION("Texas Instruments K3 UDMA Common Library");
- MODULE_LICENSE("GPL v2");
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index a8fe919f307f6..6a731fcfc0697 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -174,106 +174,6 @@ static bool udma_is_chan_paused(struct udma_chan *uc)
- 	return false;
- }
- 
--static int udma_push_to_ring(struct udma_chan *uc, int idx)
--{
--	struct udma_desc *d = uc->desc;
--	struct k3_ring *ring = NULL;
--	dma_addr_t paddr;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		ring = uc->rflow->fd_ring;
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		ring = uc->tchan->t_ring;
--		break;
--	default:
--		return -EINVAL;
--	}
--
--	/* RX flush packet: idx == -1 is only passed in case of DEV_TO_MEM */
--	if (idx == -1) {
--		paddr = udma_get_rx_flush_hwdesc_paddr(uc);
--	} else {
--		paddr = udma_curr_cppi5_desc_paddr(d, idx);
--
--		wmb(); /* Ensure that writes are not moved over this point */
--	}
--
--	return k3_ringacc_ring_push(ring, &paddr);
--}
--
--static int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr)
--{
--	struct k3_ring *ring = NULL;
--	int ret;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		ring = uc->rflow->r_ring;
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		ring = uc->tchan->tc_ring;
--		break;
--	default:
--		return -ENOENT;
--	}
--
--	ret = k3_ringacc_ring_pop(ring, addr);
--	if (ret)
--		return ret;
--
--	rmb(); /* Ensure that reads are not moved before this point */
--
--	/* Teardown completion */
--	if (cppi5_desc_is_tdcm(*addr))
--		return 0;
--
--	/* Check for flush descriptor */
--	if (udma_desc_is_rx_flush(uc, *addr))
--		return -ENOENT;
--
--	return 0;
--}
--
--static void udma_reset_rings(struct udma_chan *uc)
--{
--	struct k3_ring *ring1 = NULL;
--	struct k3_ring *ring2 = NULL;
--
--	switch (uc->config.dir) {
--	case DMA_DEV_TO_MEM:
--		if (uc->rchan) {
--			ring1 = uc->rflow->fd_ring;
--			ring2 = uc->rflow->r_ring;
--		}
--		break;
--	case DMA_MEM_TO_DEV:
--	case DMA_MEM_TO_MEM:
--		if (uc->tchan) {
--			ring1 = uc->tchan->t_ring;
--			ring2 = uc->tchan->tc_ring;
--		}
--		break;
--	default:
--		break;
--	}
--
--	if (ring1)
--		k3_ringacc_ring_reset_dma(ring1,
--					  k3_ringacc_ring_get_occ(ring1));
--	if (ring2)
--		k3_ringacc_ring_reset(ring2);
--
--	/* make sure we are not leaking memory by stalled descriptor */
--	if (uc->terminated_desc) {
--		udma_desc_free(&uc->terminated_desc->vd);
--		uc->terminated_desc = NULL;
--	}
--}
--
- static void udma_decrement_byte_counters(struct udma_chan *uc, u32 val)
+ static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
  {
- 	if (uc->desc->dir == DMA_DEV_TO_MEM) {
-diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
-index 38a54226836a5..1777f0e1f085e 100644
---- a/drivers/dma/ti/k3-udma.h
-+++ b/drivers/dma/ti/k3-udma.h
-@@ -566,14 +566,7 @@ struct udma_desc *udma_udma_desc_from_paddr(struct udma_chan *uc,
- 					    dma_addr_t paddr);
- void udma_purge_desc_work(struct work_struct *work);
- void udma_desc_free(struct virt_dma_desc *vd);
--bool udma_desc_is_rx_flush(struct udma_chan *uc, dma_addr_t addr);
- bool udma_is_desc_really_done(struct udma_chan *uc, struct udma_desc *d);
--int udma_attach_metadata(struct dma_async_tx_descriptor *desc,
--			 void *data, size_t len);
--void *udma_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
--			    size_t *payload_len, size_t *max_len);
--int udma_set_metadata_len(struct dma_async_tx_descriptor *desc,
--			  size_t payload_len);
- struct dma_async_tx_descriptor *udma_prep_slave_sg(struct dma_chan *chan,
- 						   struct scatterlist *sgl, unsigned int sglen,
- 						   enum dma_transfer_direction dir,
-@@ -589,6 +582,10 @@ void udma_desc_pre_callback(struct virt_dma_chan *vc,
- 			    struct virt_dma_desc *vd,
- 			    struct dmaengine_result *result);
+ 	struct ti_sci_msg_rm_ring_cfg ring_cfg = { 0 };
+ 	struct k3_ringacc *ringacc = ring->parent;
+ 	int ret;
  
-+int udma_push_to_ring(struct udma_chan *uc, int idx);
-+int udma_pop_from_ring(struct udma_chan *uc, dma_addr_t *addr);
-+void udma_reset_rings(struct udma_chan *uc);
+-	if (!ringacc->tisci)
+-		return -EINVAL;
+-
+ 	ring_cfg.nav_id = ringacc->tisci_dev_id;
+ 	ring_cfg.index = ring->ring_id;
+ 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
+@@ -689,6 +819,24 @@ static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
+ 	ring_cfg.size = ring->elm_size;
+ 	ring_cfg.asel = ring->asel;
+ 
++	if (!ringacc->tisci) {
++		u32 reg;
 +
- /* Direct access to UDMA low lever resources for the glue layer */
- int xudma_navss_psil_pair(struct udma_dev *ud, u32 src_thread, u32 dst_thread);
- int xudma_navss_psil_unpair(struct udma_dev *ud, u32 src_thread,
++		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
++		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
++				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
++				&ring->cfg->ba_hi);
++
++		reg = readl(&ring->cfg->size);
++		reg &= ~K3_DMARING_CFG_SIZE_MASK;
++		reg |= ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
++
++		writel(reg, &ring->cfg->size);
++		writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE | K3_RINGACC_RT_INT_ENABLE_SET_TR,
++		       &ring->intr->enable_set);
++		return 0;
++	}
++
+ 	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
+ 	if (ret)
+ 		dev_err(ringacc->dev, "TISCI config ring fail (%d) ring_idx %d\n",
+@@ -1347,6 +1495,11 @@ static int k3_ringacc_probe_dt(struct k3_ringacc *ringacc)
+ 		return PTR_ERR(ringacc->rm_gp_range);
+ 	}
+ 
++	if (!IS_ENABLED(CONFIG_TI_SCI_INTA_MSI_DOMAIN)) {
++		dev_err(dev, "TI_SCI_INTA_MSI_DOMAIN is required for a DT-probed ringacc with ti,sci\n");
++		return -ENODEV;
++	}
++
+ 	return ti_sci_inta_msi_domain_alloc_irqs(ringacc->dev,
+ 						 ringacc->rm_gp_range);
+ }
+@@ -1481,9 +1634,12 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
+ 
+ 	mutex_init(&ringacc->req_lock);
+ 
+-	base_rt = devm_platform_ioremap_resource_byname(pdev, "ringrt");
+-	if (IS_ERR(base_rt))
+-		return ERR_CAST(base_rt);
++	base_rt = data->base_rt;
++	if (!base_rt) {
++		base_rt = devm_platform_ioremap_resource_byname(pdev, "ringrt");
++		if (IS_ERR(base_rt))
++			return ERR_CAST(base_rt);
++	}
+ 
+ 	ringacc->rings = devm_kzalloc(dev,
+ 				      sizeof(*ringacc->rings) *
+@@ -1499,6 +1655,10 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
+ 		struct k3_ring *ring = &ringacc->rings[i];
+ 
+ 		ring->rt = base_rt + K3_DMARING_RT_REGS_STEP * i;
++		ring->cfg = base_rt + K3_RINGACC_RT_CFG_REGS_OFS +
++			    K3_DMARING_RT_REGS_STEP * i;
++		ring->intr = base_rt + K3_RINGACC_RT_INT_REGS_OFS +
++			     K3_DMARING_RT_REGS_STEP * i;
+ 		ring->parent = ringacc;
+ 		ring->ring_id = i;
+ 		ring->proxy_id = K3_RINGACC_PROXY_NOT_USED;
+@@ -1512,7 +1672,8 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
+ 		ring->flags = K3_RING_FLAG_REVERSE;
+ 	}
+ 
+-	ringacc->tisci_ring_ops = &ringacc->tisci->ops.rm_ring_ops;
++	if (ringacc->tisci)
++		ringacc->tisci_ring_ops = &ringacc->tisci->ops.rm_ring_ops;
+ 
+ 	dev_info(dev, "Number of rings: %u\n", ringacc->num_rings);
+ 
+diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
+index 39b022b925986..4b6ec925e2f2d 100644
+--- a/include/linux/soc/ti/k3-ringacc.h
++++ b/include/linux/soc/ti/k3-ringacc.h
+@@ -158,6 +158,23 @@ u32 k3_ringacc_get_ring_id(struct k3_ring *ring);
+  */
+ int k3_ringacc_get_ring_irq_num(struct k3_ring *ring);
+ 
++/**
++ * k3_ringacc_ring_get_irq_status - Get the irq status for the ring
++ * @ring: pointer on ring
++ *
++ * Returns the interrupt status
++ */
++u32 k3_ringacc_ring_get_irq_status(struct k3_ring *ring);
++
++/**
++ * k3_ringacc_ring_clear_irq - Clear the given interrupts
++ * @ring: pointer on ring
++ * @status: mask of interrupt status bits to clear
++ *
++ * Clears only the interrupt status bits set in @status on the ring
++ */
++void k3_ringacc_ring_clear_irq(struct k3_ring *ring, u32 status);
++
+ /**
+  * k3_ringacc_ring_cfg - ring configure
+  * @ring: pointer on ring
+@@ -262,6 +279,7 @@ struct k3_ringacc_init_data {
+ 	const struct ti_sci_handle *tisci;
+ 	u32 tisci_dev_id;
+ 	u32 num_rings;
++	void __iomem *base_rt;
+ };
+ 
+ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
 -- 
 2.55.0
 
