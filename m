@@ -1,145 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192333FA5E7;
-	Thu,  1 Oct 2026 09:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1732F4B2031;
+	Thu,  1 Oct 2026 09:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790845599; cv=none; b=tVHB1CKmkTyTRmOl32kfGZkjZGFD9Cqg145P+/rIMrPN5/Igjrjd0w2d8HtXyWvmoGChyBmvHjfBwmvedMNSkJQx3ctwv99r1o6u6I/mVdokKdbpU0MbxPB4Ikawf59VpqEWYvN1wcrcF/PDJPhVLtpc0818g3toA/7nqiPn2uw=
+	t=1790845722; cv=none; b=MHTia4BGPl6soF/YhGuzZ6aHiZYdTQnRoNJaHYMHoZ0GXNTmJM4O/BxRHkGPB+DYfjDyDAjy5WcSYWBVFTigChY6DZ89sm4+mGCIElFnsWyGh5e5yz2/uLwtPmVGX5OvhH1rIatIHGCzMwoB7eXmdLk3CQW8YAH5vU8pZ0zvMHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790845599; c=relaxed/simple;
-	bh=+qiaIi0klqwiUS05wp5tbRPSt4Wfl/UgsGcrKTL7yWc=;
+	s=arc-20240116; t=1790845722; c=relaxed/simple;
+	bh=WXNlVnoI2VfZEsDH0LkAE/SsfdFZRbuKdn75YznnNUM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=g0I7vj2B0rjU8NY+N7jZokerwla7uNIVOBu4Bx4E0HRedU7NC+bBhlUehEVF5p5tz/efk/wOA0uFIiIzWH4QEcmydHeQuVmmspZSX/whOZATZXAvueoUtEshTSv6mH13WOiHML94VCkCfLxKKO7jgljvndUk5Jsz+zCXkPNqm2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ir9ANkaC; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=abGM8SzXf8Z6Z+iREEpysX359VMcQLvyOt8yyo3+361SWKHOwdPFM4efVx1BpnnEddSVMSYThWxtLp0zz8e3GGGU2e43W1aSW3B8rwc14OKe4xPimp6pbysJCBOF0FsVWr9hlQZ1wOlg8JObfW7L4BzzrRPJOIBoqXOYsN2hHNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HVYDRsql; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ir9ANkaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832AD1F000FF;
-	Thu,  1 Oct 2026 09:06:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HVYDRsql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C2A1F000FF;
+	Thu,  1 Oct 2026 09:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790845598;
-	bh=EgdrKZaT7WpKG4/pMr22P462E25bJ5Vof6QHb6zfCos=;
+	s=k20260515; t=1790845721;
+	bh=Antg2aEnAamoqtlo4IjRtRkHzJ31zsalyQDGYb/LQYg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ir9ANkaCkIcXG+mrxvtSPENCyg8/XTD2MkXcOd1HkGYWXvNlIUgte1q13xLc5tFPi
-	 u4qjLtVsYxy0QbJMBB6nwiZOvrWCbB9a4kkOwr7y+J2jwE1/+oYGtu8X857C7DhlRm
-	 NJQTW4zj5ywS+qGFSmr+0n1OvajaRUSepZIkBRBOWi7M0IQe98fErOLU8DAplUARRt
-	 Pt8bDWLw6Wjfjm8WcqHS7WT5Fghd7/PnRf4bQwiI93y4DiCuSODZElcFe5o8JQjlId
-	 VrQvLdnSclpHfSHtyOnAmUhyryFdIcf7WJca9tBZmQ9lXBTiJidkZXEx0RDegHwBNz
-	 BLxtkzR1HmW0A==
+	b=HVYDRsqlEZM+lrnkemSI6ivcbyHpwccl3Eivgtu1nlNwPkY1zi4sY2568eRcvejMu
+	 5NrO2ipxuWB48NiQnfl61v/ZTYMo77a+5rENAQb/uCdG/zxca3zc73wQgr4njSkwDF
+	 bSuBfSlQrtBdsSwIQwgo7Kflzasg/+X7Cdyfnt4oz9qGWW2Ftc5NqLiGRyzba1RYVh
+	 JakXsjhuF0oqocewYaPCpNfjZ0Bd/XH2gZ6aCmjRnwoWrdJmcq3wJcSH2dYdZ+UZxL
+	 WW0gwg0nqoi03Fgfgg6rWBsPkw/Rvw9IdekHuDWZUXdxZCi17eXi0yJQbxkgBCtoH/
+	 H/QI5O5q2tJJw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v11 11/19] dmaengine: ti: k3-udma: move inclusion of
- k3-udma-private.c to k3-udma-common.c
+Subject: Re: [PATCH v11 13/19] dt-bindings: dma: ti: Add K3 BCDMA V2
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20261001084105.1692228-12-s-adivi@ti.com>
+Cc: conor+dt@kernel.org, Frank.Li@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org, robh@kernel.org
+In-Reply-To: <20261001084105.1692228-14-s-adivi@ti.com>
 References: <20261001084105.1692228-1-s-adivi@ti.com>
- <20261001084105.1692228-12-s-adivi@ti.com>
+ <20261001084105.1692228-14-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 01 Oct 2026 09:06:37 +0000
-Message-Id: <20261001090637.832AD1F000FF@smtp.kernel.org>
+Date: Thu, 01 Oct 2026 09:08:40 +0000
+Message-Id: <20261001090840.93C2A1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] mm: UAF in of_xudma_dev_get() due to dereference after put_device()
-- [High] mm: UAF in xudma_dev_put() due to devm_ unbind race
-- [Medium] Commit message claims 'No functional changes intended' but adds =
-features
+- [Medium] dt-bindings: dma: ti: missing power-domains property in AM62L BC=
+DMA schema
 --
 
-commit d7ff936b088ca2c00890bff99f72a6c55660576f
+commit 9c4ddac8074788bfceb8a94493e2349001561825
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-dmaengine: ti: k3-udma: move inclusion of k3-udma-private.c to k3-udma-comm=
-on.c
+dt-bindings: dma: ti: Add K3 BCDMA V2
 
-Relocate the #include directive for k3-udma-private.c to k3-udma-common.c
-to share code between UDMA variants and prepare for variant-specific
-implementations.
+New binding document for Texas Instruments K3 Block Copy DMA (BCDMA) V2.
+BCDMA V2 is introduced as part of AM62L.
 
->     No functional changes intended.
+> diff --git a/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma=
+.yaml b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+> new file mode 100644
+> index 0000000000000..76184485ebcba
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+
+[ ... ]
+
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - "#dma-cells"
+> +  - interrupts
+> +  - interrupt-names
+> +
+> +unevaluatedProperties: false
 
 [Severity: Medium]
-The commit message explicitly asserts "No functional changes intended", but=
- the
-patch actively introduces functional module pinning logic (try_module_get).
-Could the commit message be updated to accurately reflect these lifecycle
-changes?
+Looking at Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+at line 91, since the K3 AM62L architecture utilizes ARM SCMI for device
+power management, does this strict evaluation constraint cause device tree
+schema validation (make dtbs_check) to fail?
 
-> diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-pr=
-ivate.c
-> index 44c097fff5ee6..d2501e074bcfb 100644
-> --- a/drivers/dma/ti/k3-udma-private.c
-> +++ b/drivers/dma/ti/k3-udma-private.c
-> @@ -54,10 +54,26 @@ struct udma_dev *of_xudma_dev_get(struct device_node =
-*np, const char *property)
->  		return ERR_PTR(-EPROBE_DEFER);
->  	}
-> =20
-> +	/*
-> +	 * Callers keep using ud (via function pointers stored in it, e.g.
-> +	 * ud->psil_pair) after this call returns, bypassing the dmaengine
-> +	 * core's own try_module_get() protection. Pin the owning driver's
-> +	 * module here so it can't be unloaded out from under a live glue
-> +	 * client; xudma_dev_put() releases it.
-> +	 */
-> +	if (!try_module_get(ud->ddev.owner))
+The BCDMA device node will need to explicitly declare a 'power-domains'
+property to be powered on. Because neither this schema nor its referenced b=
+ase
+schema (dma-controller.yaml) define 'power-domains', the dtbs_check tooling
+will reject the architecturally required property as unevaluated. Should
+'power-domains' be defined in the properties before setting this to false?
 
-[Severity: High]
-Does this code introduce a use-after-free race?
-
-Earlier in of_xudma_dev_get(), put_device(&pdev->dev) is called, which drops
-the reference to the platform device:
-
-	ud =3D platform_get_drvdata(pdev);
-	put_device(&pdev->dev);
-	if (!ud) {
-		pr_debug("UDMA has not been probed\n");
-		return ERR_PTR(-EPROBE_DEFER);
-	}
-
-Immediately after this, the new code executes try_module_get(ud->ddev.owner=
-).
-
-If a concurrent device unbind (e.g., via sysfs) occurs in this tight window,
-the devres-managed ud object can be freed. The subsequent access to
-ud->ddev.owner dereferences the freed pointer.
-
-Should put_device() be called after we are done accessing ud?
-
-> +		return ERR_PTR(-ENODEV);
 > +
->  	return ud;
->  }
->  EXPORT_SYMBOL(of_xudma_dev_get);
-> =20
-> +void xudma_dev_put(struct udma_dev *ud)
-> +{
-> +	module_put(ud->ddev.owner);
-
-[Severity: High]
-Can this dereference a freed pointer upon device unbind?
-
-The ud pointer is implicitly managed by devres. When of_xudma_dev_get() ret=
-urns
-it to the client, it explicitly drops the device reference without establis=
-hing
-a device link. The module pinning added here does not prevent sysfs device
-unbinding.
-
-If the UDMA device is unbound, devres frees ud. Later, when the client clea=
-ns
-up, it calls this new xudma_dev_put(), which dereferences the already-freed
-ud->ddev.owner.
-
-> +}
+> +examples:
+> +  - |
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261001084105.1692=
-228-1-s-adivi@ti.com?part=3D11
+228-1-s-adivi@ti.com?part=3D13
