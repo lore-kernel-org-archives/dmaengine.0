@@ -1,70 +1,67 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013025.outbound.protection.outlook.com [40.107.162.25])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011053.outbound.protection.outlook.com [52.101.70.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB413AAF54;
-	Fri,  2 Oct 2026 14:47:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD724DF4D5;
+	Fri,  2 Oct 2026 15:31:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790952481; cv=fail; b=WGXEIJKBQVgblma3Pjw+T9vmKpBRfDn9kBF3KnZrrzR2wwwkY4i7y1qvR+vtTtoQxyIN9jN50oslyptmueA+VCvx8iPl2d+NLWruUYyX47Ugih8oy8BY5uuKZwBRhkADtBp9sADonWFGE7GTqH+JJIIrGslDn6/jIWA35ghxXHk=
+	t=1790955115; cv=fail; b=tHq9qPBv5GZTgMmLyewUbH8xdXGKDvxcvWZAQEmL8W0vBSP1TmIeRdfaRLCGfuVqEd2Xl/zyK9PDZbIWjX+a15gRCbYdnspfwTufvrMiLPxwe3S9p18pw/x17XtQ7q0FSlim/Pwr5PwuowRMPSJwP+BM8Si84skJcyYipwG9IlI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790952481; c=relaxed/simple;
-	bh=OqVQzSGNvzr8kOjVOa38LhowyiNtggGoE02VCHKDjFs=;
+	s=arc-20240116; t=1790955115; c=relaxed/simple;
+	bh=Nyo3i79piYuupOD/qHuJPHnUQtj1sgzXsKWAAfeArRk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=S06EKuirZje6/IWboKMDRGFJQkdPk0bjIcoD6kxXlS3xW5R85MKhFENVcAKiKug998Zwjh8VtQ2tarsdpoaEK1NK0UHcd5b30dUUtqVph2tgD5NHVTxxqXz26Ef6t7cp3bVlWkROEy5INL/783c5awzfTBBJN3HPCPBTeG4c5uM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=mOgmsZH1; arc=fail smtp.client-ip=40.107.162.25
+	 Content-Disposition:In-Reply-To:MIME-Version; b=BUyEFbrXJcWrCGfgz1dEh4QKVOgJku0GFx1R4ijE/zLV2m7k8kqaiA8SaVRSC4y380BPvl7N4OFrNs5sfB6dj7An+N5S8QknogxfwL/x5iAtLBaQZb3hcDSVgagXZVoXT7AmCiKlhTMCAma7pfDj879cp4Vf9pM51iKmBUrhV18=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=pxQx4A0E; arc=fail smtp.client-ip=52.101.70.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="mOgmsZH1"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="pxQx4A0E"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IFi9axVauePTof9rEmQH/mdA7lgcuLGFYsjAb5Cuh8ZOfih7VAKO9TWisgnamlDaNFr4esdkLQxWwBh6x7edyDw+Df/QEXqjAyrlOHzZGxSyVZwVZ0nAR6tfYLnY1Dhua63bEyuvGFzI6nGsfWtogWuTYFPBIMahmtYE7jJra07pnebrhAz9yduW8xvNxkFIAiP4gbgfYym88AigI+yx8ck64Ed5U4TLgKMCD3njpwU+7kjLwHLoKkmBiaYj+ZU2P/EAWimI9uhmwZ/sBqWi7E2tbFnq1N3MKNaRQ4ebJNMIRpHPNZtVodt00aaRB0Q7sB6vXO7nkyZ7NSIJHo4zlA==
+ b=e/ecSoWCmUqJsMzmznop4IrquGgBN21Bz3flB24ZXJve1ysNivsmi8f96N5TJKBH4ILiAlXmHbD7dCDk/hC7MGqhbeDzjK0/1RBQ6x5EbChMSfRra7SIMP7WsqETOQ/Eu4Ve66ybKJkIl4wU1AVmUfvnpV3bmfhuKWT+10jtTo8z4cWnRpGxr9P65vPbFTTX+zg9LPzOnh0DhGKr5l4Ta3uetXR2Mk0p7phjfm66CdbyHqEZb9QANYZIka/OLn3xYfSdCkw3OKWi7q08IWjJcnvF+V8dor2XLw+kXPCXmuLXVZthElpjMTOE85InYx11JHe4UyKpIZyJG6yltu+Fng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ys12rwu1tph0QBsxZfXciLeOkv41RQffv57+sP7myDw=;
- b=bGVla5kpaumnhZuV3SNyqmO51zkGPcnNMuJ8F7yNlKfsrBd4ybovhwyWdkKCLkKBSC5gpXTv3nT4HPJa9R1WWirgZzsNZAFcxyjRNNw4DNMhH7uXl0fRX6lM7my/z22i9RkJYVlZDNhkpFs0T3ONNaPlSlNHJms6njrygl3aD2+0a82csIpcBO6sFgasDB0xaJ1e7w3Vkqlx9E72IU4yHk5bPP/1cMhrbq0TE0yMX0MSmqPMFh8GYZnUNTWTWJ1QvBYlSG56PhgapFX3sd3+nbGVJnYD5+pTHktYr1aYXdRreUg6AQ0f4ZJjNjlQIX7p0MRm5VcCzt58DzKpqRrYcA==
+ bh=CsgjStnAIWHZEC1MHf7Xi3ng/UTUjmZOkfMJ59XZYHM=;
+ b=uGqy6qXcNePUUpNQ9yZtHGDZ4/TGRhyCOykYxke7Lh4PqSgne9ZMItBS7K6hQJnxnG9OEUcHPPotRWgsh4MSkcr+LduVz6kLLdJ2oGVHszNRHQkTZOlPiPXQFNs8AXaoapwwWDxunyVQS4be9wUf6wFPvLCw+P2679tWEMq0EqI9MJaa4yNfSjBADOdF07Uo9PYUiAtIRPY8qlmRwuJK2d3wKaCLNOpkB2QmWtQkl0cX4a0giNkoMeLHaZ3AgIKsr7iu7SY+mk2/FfHqxWjCZA1y8+y3S2BOlBCif/dHx076BHG9F1qnqV2ZLjVdu471Douh2EzNlxS9IGHYRjnwlw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ys12rwu1tph0QBsxZfXciLeOkv41RQffv57+sP7myDw=;
- b=mOgmsZH1Uk7r41JszRDHsrMlPpYwxlKI+nsDpc8rIo4qmH9N+JxKcvn+WxTuSfaeJHCbwnwdUQHq/oSYVblwz0SQvRuqHuj4Bv1t6lR0BQVjto5G6ayFzL0yuNx0757BmRhiQU6+qktvh0WYjFrMh2knHmsiuqzDDEks8S+HO0OCThBUCQXGwXs8nwxZEVhm/vEXNcbJJEx6PfDiBCq41TM3srjP/9DqJlckht/LsAe4fCDfT2FpKFyclRAHs9X1JmA7L7qUYwpP4AnjCaqfu3PBj+mdBOX+1Xd1mp7XypNnnZkCNoLv+PuD1zKae62dXYEHTu2DJ3jKteoLhRRwDw==
+ bh=CsgjStnAIWHZEC1MHf7Xi3ng/UTUjmZOkfMJ59XZYHM=;
+ b=pxQx4A0EL8M7+spjU9qQXu0T84NLOXyQY9WcZutpnVkpRBDQpcc7TmslfCMwnxI/rbvvX+EIqqj7AuyhYCWQyIjYg6dkxGu70PPWDmzy5Kx1Qkx9lE9yYw0eICinY3DtfHlIpWH6GkXtfV3iqoKJvDLFXfHymUnWAA90GOMYiZPdXo1OSH6YEsimNpSq61mT/JNQbaR3iJIFSxB6tZvuNeQ116L9veVWxHoB8gKo796vgZX/xMyqmChqjStPfkrSNZQ9+sIdDwfFRDGOTMAywwBrydIH8Wc255wJYzkZhhOpw5vTvv5Vmh1IYBsDBAbpSNrMeHibKkkrDdskM1ze8Q==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM9PR04MB8488.eurprd04.prod.outlook.com (2603:10a6:20b:41b::24) with
+ by DB9PR04MB8076.eurprd04.prod.outlook.com (2603:10a6:10:246::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.19; Fri, 2 Oct
- 2026 14:47:51 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Fri, 2 Oct
+ 2026 15:31:51 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0472.016; Fri, 2 Oct 2026
- 14:47:51 +0000
-Date: Fri, 2 Oct 2026 09:47:41 -0500
+ 15:31:51 +0000
+Date: Fri, 2 Oct 2026 10:31:41 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Binbin Zhou <zhoubb.aaron@gmail.com>
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>, Rob Herring <robh@kernel.org>,
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
-	Huacai Chen <chenhuacai@kernel.org>, devicetree@vger.kernel.org,
-	Keguang Zhang <keguang.zhang@gmail.com>
-Subject: Re: [PATCH 2/3] dt-bindings: dma: loongson: Add Loongson-2K0300 DMA
- mux support
-Message-ID: <ar_EDV7FMDBr7xCp@SMW015318>
-References: <cover.1790068409.git.zhoubinbin@loongson.cn>
- <fdd9fa87058b75fda0dbb805de7989fcd279137c.1790068409.git.zhoubinbin@loongson.cn>
- <ar2CuxAv9mRfiVsA@lizhi-Precision-Tower-5810>
- <CAMpQs4KOvjvOku+DEMzr+OdfRNQAm9QoXnG3B93ZJs78ax5NQA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+	Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: Document the Nord GPI DMA
+ engine
+Message-ID: <ar_OXbdMsP43JM9v@SMW015318>
+References: <20260916-nord-gpi-dt-bindings-v1-1-857bf9e84999@oss.qualcomm.com>
+ <CAMRc=MdVQ4xUFPtcytXt5Tqor5-fUjHiRvnpmxBsJpJbd1rHLw@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMpQs4KOvjvOku+DEMzr+OdfRNQAm9QoXnG3B93ZJs78ax5NQA@mail.gmail.com>
-X-ClientProxiedBy: PH5P222CA0008.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:34b::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <CAMRc=MdVQ4xUFPtcytXt5Tqor5-fUjHiRvnpmxBsJpJbd1rHLw@mail.gmail.com>
+X-ClientProxiedBy: CY8PR12CA0009.namprd12.prod.outlook.com
+ (2603:10b6:930:4e::29) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -73,195 +70,104 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8488:EE_
-X-MS-Office365-Filtering-Correlation-Id: e43b2bbb-40c9-4ee0-a3e4-08df209421f4
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DB9PR04MB8076:EE_
+X-MS-Office365-Filtering-Correlation-Id: 448550f4-d075-4103-e9a2-08df209a47d8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|19092799006|1800799024|366016|23010399003|56012099006|4143699003|3023799007|10067099003|6133799003|11063799006|22082099003|18002099003;
+	BCL:0;ARA:13230040|19092799006|1800799024|366016|376014|7416014|23010399003|10067099003|56012099006|4143699003|11063799006|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	N368m04H8xXZ88mcvKkMp26T4XXOKvjwCiyD34ie2OMp2HSQ8b80o9S2Aj+vbRsclpsjqBoLyM5ivnUQyBJd1U1USTEK2X5Cg4Q/V+eN5fudy88SqzU0+VP07dQhD32iIy3rCFlz7r2N6mveq3QOLBr8DhT2mX37cqpUtiie6wjZxUIPV5dhe6XObjLORweMyXOK+LG8hWI9TJyN+kEuArChNvAPoFm6dnlIUxLbdPbucdnlfREeOCc22CxjDPyk+I2lHsF5k1JqAcQQVY2nxxXBAmgyxlf2NRS8+mrSK7GdLoq70qfzivyzXQLcSUEXHKb6PL2zB/o+AZSv/Szb9qMU6U9D/grhlTXEc8ezkQJpKhkZ/FD4kG9e628sZBq8xDdWbdIuf9/tcTrRDafRKS92dnpYtXuuKDnHHH6vhyolnXjYBilqNElcHztLOK8KaiSV2O0DPWO9kamtEwFDRGvLZnQX7FEhHuDVVEI+U/5iYlOAQXlYVNB/Ga/LWYGzrFPYwGy1FJ2NlRYLzrhbJu2Dc606M9ZwX63Ht7UEzN3JkFkhZUxxawddj+XG3tKE6YzeubX9OnyjzsxdimfdOkrGe0OGuLSTY2PhtLjDCfj7nIKof9VmvSyHZ1Sa5J3p
+	190OTs2Qyz5mnIR+3UVsDKX9mTpB2khRghOnzQQhxLytD5H0NVZ3lIG4fRuIoZ804AcfkgI4Y/iVjOeTjdyn/tq+9VUW19f/IsTaB9RdqAh9HM0J4leYRvvcfDHME7Tz2npLwqeHpb/ZK0L6RuFPRnZvOVFkKG1gimgPU8CsLeY3stlEFThUW51gSYPc7ZLH25tgiM5w/vHIP3gEZ3UH/xciCq5EyRvbT7jHo43FyMjpGum8Q/PdYu1shznv1WotGvKIsaTsZTxZ2qYVANoxOgIOtJrJHXMQ0omHnMx3L+lFKO8T/YCKFUOCU9yH8NyhL3Ct8ZawBgIsoRZY7tv642HiuRS9tdQQZwAE0NOBHGzW0HnTt0z1MCIDz9RDYzo3qfDmZXLI9FCLYOloHd8UrwyPvlMWFkArx0I6SD5LDOCUSLBlg+xSTK4loAxssTNE1y+Vkyzub3kEVQzW5oiGreEc2rIjwQZw8eSZ8NR1JAIxw5Tl4BKlneH2ws8Zcdh7nsAuVFIuRBVRUwFrTufjqT6gMuu8uyKhPGOVD5JtToh4Dok61qMbhjveEPjbgiy7fDwld+5eOfS4pwPotF1pUWsJ+xpWbj1OAl5SsCjVqtqQyq38/nMJIk/rq/hWI6uJI+8KCAmHCGfh0DsNSSzKlK1pMT5So8eWkdQx+Iu3gcs=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(19092799006)(1800799024)(366016)(23010399003)(56012099006)(4143699003)(3023799007)(10067099003)(6133799003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(376014)(7416014)(23010399003)(10067099003)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cEduY3VtS0RuUUFITmsxZDc4ODJIUmNOOG1YNWd5d1NqcmxqcVVTSVdIalNi?=
- =?utf-8?B?bVNsd01GLzFTWVlvOTk1MWE4YiszTFhiYmtCOXVWUVROMTBNdlgydVgzMVcr?=
- =?utf-8?B?V3gvQ0VqMVhTNXNkWFpweHdCS0YyZmJMVlJCdWI5dHR5ZENlNlphR3BISm9y?=
- =?utf-8?B?ZVp5QlVzUWtpdDhwdWJGcnF6VU8yU0VlOFN5U2JnNGxkTFNuSGxZbGladHdj?=
- =?utf-8?B?UFRZUGFoOHhuU0dUT1JudFBQeURpdE1DYWxqNWgrc1BZK1hibVFKNDBFd2lp?=
- =?utf-8?B?QWc0cmowVFV1cGptM3JjZGt0dW5WcUthMmlZVy9NTFpBdDhtc25yRXpnbDBY?=
- =?utf-8?B?YkxPWnhsTVd5YmY1Nm9RRnZEQ1RkaXJRVE1DVHBwWXhlMVdhWStrclVFTml0?=
- =?utf-8?B?eUg0VFBXZmZlL0daamh4SmlDdE5UMjJ2L0MvR2ZqcWFmSE9JOTdQZXFIeUo1?=
- =?utf-8?B?MkFMVkxiS1dteVJaZWpVQ0k4N215dzdDa0owZnhRNDN2aUdnQVBBL21NN1BG?=
- =?utf-8?B?MXFPeGtHdWJxdjlQOWVPNTFVU09WM3A1Q2VmR3lqNWNMNHFSdlZ2SjNIQ3Vn?=
- =?utf-8?B?K2pYK1BPcDcvYmQwZHJQZlJKUHdVdjBxSHpmNW1iK3F1VHNBZnFWT0NNNzlv?=
- =?utf-8?B?azQ3K1JvVWtubGdQakhqRUhhbW9TNEFiNWtTRHZOazNsQ3N6bUtHQlhQQXBU?=
- =?utf-8?B?c0VaTUJ5RVFUR3RZWWduR3BLSGUzYW1nRDBJb3JCWXVJZm1JZ0h5UU1FY3Fu?=
- =?utf-8?B?VkpxUllYQ041czdGN245d2ZzSG51WVFyME1LbVlYR3FINGFSK2Z1akxWeUhp?=
- =?utf-8?B?WHFWczFNS0FyNTNndkkvbjA3cVRuUk51c2wyQmEzaEZhWkdKSHNyUnFZeFlI?=
- =?utf-8?B?MzZvK2s5YWg3ZnE2QVVwYmxlUmtiSnZ3Mmt5ZXlRcXduWmdjZW5NYzJlc0ZX?=
- =?utf-8?B?Y0pJV1IzQ25ycnI3YzBEaVI3dU1ibk5UNFAveXhRQmpSQjAxRzd5RFRVVGox?=
- =?utf-8?B?SVk1VXBjV1graytINkJDWUl2RlRPejFRTGFXVGVGMEJ5SUtkR1B2M3NZOUNm?=
- =?utf-8?B?N0hwUVBnSXF0Sk9SUVFMWjgzVmducXpNTDV5eDVqRC9lNzNsZGJGbHNHNllp?=
- =?utf-8?B?OE9odS9BMklrclNuZjFMTUNacmFDTzRGVHVtYURnSWpwVy9PZEwya2hCSFJl?=
- =?utf-8?B?Y3AyS0Y2RXRYSlBrTlljZGpWaVdrd0NuSTNyMVFSL2RndlJWd1VGYmJ6S1ds?=
- =?utf-8?B?OGxYN0JBdldrNEJKL1plMERwQnRNN2VGSzhDSWdGbTRCVnhadnNWMGxiT1hP?=
- =?utf-8?B?NGJxV0FGQ2wwS2N2N0JSVTVxVUlvTWl5OWprTzFQcmVGdEZEL1dJdFpxb3o0?=
- =?utf-8?B?REczYVhmdnJaWHM4UFFKRVN2a0FkSUk2TzdHQ2NNcW9YUEhFKzJOY2ZwRWdC?=
- =?utf-8?B?cVFxWVZxeTFkcGhNWFR0MnVCc0xjK3FQNDlpNUZlalY1Z2JldnB3M0p0bElv?=
- =?utf-8?B?NEdjbzJCVlpJZGNuSXJxU1JXYXpiZW53MEN3cDlQU2Z0cHB2Z0d4WGwvV0ph?=
- =?utf-8?B?WHJvZE5FR1h1dTk4RHFXUENQNTZzU3E4TTBtT0VaWHpSM3pnS1VsdXE2aUF6?=
- =?utf-8?B?bDhiV09rUzhrTm1SNHZzdWp0NFZyb2ZCTGN1WnoyS1Nha3dGVjJudHowK1Qx?=
- =?utf-8?B?ZlhLcDhKcnpvWk9HNzgwWkZJYVExQ09uZE1tdXdEMmM1ZU5QWXVySlhKc2xy?=
- =?utf-8?B?NER0aXQ5L1JDeFVheURwVXBRQ0thZkN3OTFrREJRMGdNc3oyTGJOQmJiMVpT?=
- =?utf-8?B?bEpTOFhGSkVUZDAzNnQzdnlVVnY0dVpoM2tKRVIvRGJKaVRYcDZZZ1JsdUJs?=
- =?utf-8?B?dW5hVkpiZ0ZreHpOQWZXWnlRV0ZIdmRCcmFIOVhTOWwyTjJOQWhVQTZYMlRt?=
- =?utf-8?B?ZU1SU1FtTndwem5QSEJNZVJSc2xueTVKcHF2WXBtRS9wZTBRZ2EzRTVzd2RE?=
- =?utf-8?B?SkRSN1cxbFdYT0xqUU1qblRBRStISjFPNjFveHkxd1dENXlLRzVHUmdHd3Bz?=
- =?utf-8?B?QVNLUStTL2FFa3pCbURjQ0FQMEloZ0M4eVBXZTk3MkZCQVM0QkJKSnFFa2tT?=
- =?utf-8?B?KzFaUmxTUDhrc0cyZ0tURDBYU0VLSDVRc0pXRHlBMFhsZUdpa3k3bGYyMlAr?=
- =?utf-8?B?eXRFTENrWTVWaDBNOHYzMnNRQU5hb0h1UjZoR00xQytIaFJjR0JVTUxEalNk?=
- =?utf-8?B?cEhhOStuYnhidFZ4USs1ZXJCVnV5WExLR2hOLzJ3NjdmbTVzbWpNZ3BXbU1W?=
- =?utf-8?B?dlJiSmpjcnZYWU0rMnloSGpNamVNd3NnbVRQL3NKQ0I3S1J5NGoyOU9INDRs?=
- =?utf-8?Q?U6quu/YTKSj2dfsFkSVQqW4NebKyHbgh2BgiN?=
+	=?us-ascii?Q?x1+qJdbyxt8L3PEveVVDHOhbBsMToopYJT7f+slS27CqJio7Xoz9SRfIloB1?=
+ =?us-ascii?Q?GXu824VRuu0V22VDpZwowaRmdZDjr/17HUEuRNo5stfJ0CokwDVsuiMwlRK2?=
+ =?us-ascii?Q?byDGwDh6Vo+WnmXwa9LzC+jjg1IpFw6YjCw0uD2pREd66FGA1CR1+HOAfodk?=
+ =?us-ascii?Q?aykPAJY+rXsFW6WLTWKhe761kd95pJ63SfoEmCL4fIuAdkhtdDuYwbs6ePHb?=
+ =?us-ascii?Q?JK++I4wshhBQ4F/ddp1Fa5a8d1xfK2EyPCPYTZ+0lkvmqjT1KhQH9IJCav7+?=
+ =?us-ascii?Q?byYid1UO1jr0aXeXNCZk4gp4p0Wdn1QUhTUMPbdojBWAzvkgChx6f/l5e5YR?=
+ =?us-ascii?Q?7fsUrOjiZdfkpHhlWLh/TwZ9pUy8ceJ+4UhTqw3nchP+ytQ80k8Z8/gjs07x?=
+ =?us-ascii?Q?Ddsow8tRdfsO1cE8vfpwg+9GpxmEI1/CaSt9TLnxS7SKAXEO/Qt1ev97eEwf?=
+ =?us-ascii?Q?ZzrwyqsY01aniG2PC82ZoNlybjhxaxAxca8SunmL9rTZRXTgia3umJucPtQy?=
+ =?us-ascii?Q?KQKHQXRnbs74fg8PdG/S10fbjcfMYXe+0pzqNhzvnI4g5TQaULEMcGbg6YuM?=
+ =?us-ascii?Q?8QGAAQ/f44eNoUD7GDvW4xpTzfUfYtKxYwj9FcxZZlDVwvxTSLIP0uGmyU4t?=
+ =?us-ascii?Q?xGFsj0EaYJ7mido6frjyciE3Z5iMvUFIK9p/aAKBNCTZO5e55ZlqL7Z1lz6E?=
+ =?us-ascii?Q?hd4NXVZ59ZwId7eUrJhasXfmur1fIO9ahRhxTCzMZzH8e/jJeZdYPrT7IVm1?=
+ =?us-ascii?Q?fcL/BEQoz8Xr+BZqcGkpu8Xu0vKtTVIHuFgh+XCoA33q3t79qGyGhL1bFMie?=
+ =?us-ascii?Q?//ww1E6JPjYJlGMMHsau1HByfun+US6k96KmB3+z1jI6GWHLdEQrYYUALKMA?=
+ =?us-ascii?Q?L8LVWlMJtQh1RbCNVJJrQC2XSi+5Y0Py1C5oLdxsP1JWfLCUNk+uiuBtP45s?=
+ =?us-ascii?Q?/05nMErwM3x9bYEkof+myADU0d39KjjRbAPFwL0fPhAoSrJJQeqVBHYT9BF5?=
+ =?us-ascii?Q?envh5m4udT5flTDiPgnfKCWmXjBrpG5PoH5uYQDULoEawuIvgC/6YTHSFwWB?=
+ =?us-ascii?Q?NvrqnRTYboNE2gLyhp1uCYh+9vRN1JAcKqWVtzOZB9PgU1k60AZW7dcSEAKK?=
+ =?us-ascii?Q?euGsBrLhU6apCwbFHcSD1JoY1yz3rR23YQOTA62rQxsxg/qCBU2rzqCyaob5?=
+ =?us-ascii?Q?PSWbXQ0nfuusJbNzC18VV4TT8UHFRb/byqMCXDV6Eir8VDjtjmVyn2fhkGoo?=
+ =?us-ascii?Q?rbwb5Iq68wra2iBx7tKrhWrKUC63gzhOQPgxib0TSBCtN+4wQ5+99h3+XIN4?=
+ =?us-ascii?Q?ro6ggX8lSgzE62jWv6nncpDHjA+I7Z1ZaU/j1z+DOxdh4zRHdkehrGat3e3m?=
+ =?us-ascii?Q?iw+6+RfFNE98vezE/mIwlvKTW1SHcBgZUhV0Ib4SbnhgCaomKoY8PekkwzaJ?=
+ =?us-ascii?Q?vEHoY0/XIJKD7tYiiU/wDGOAEh2HNsuvVblqiWylXrs7iL4DRhPVVx5ShjGB?=
+ =?us-ascii?Q?01zD6T83Tgtk4A8p2CmpXDk9jQ9pq09rKjmVZaQpCW1c3QRXOLBskZ8RQHpp?=
+ =?us-ascii?Q?2/f2X19Ku8jAOowjN4dp4riZvvcyJ8+q7HTxBNp2sc/dMr4NODmUk8wvrLRi?=
+ =?us-ascii?Q?y1Zq960C1zLKIFidUeecia6nNuImuQ7y5dudMcgQ8ZG0fEd1TFy9M5UIvySV?=
+ =?us-ascii?Q?eouUJvjUK+sy5LnLB7jbXS9/S1gC9spWrjmFayar2W9cE+79nztXvj6va8Xe?=
+ =?us-ascii?Q?JVdIc52o4IQiZjYdAZz5rTDXmQbrmtu0739Au2Q9XQgzEdmHHt51?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e43b2bbb-40c9-4ee0-a3e4-08df209421f4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 448550f4-d075-4103-e9a2-08df209a47d8
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 14:47:50.9918
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 15:31:51.5164
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UZ8pcN10TGtUtZwBBjYhiuMEftGRvy3HV98Cz3hagpnQFaIXFhzyXVDKAKsYiTcwrF2XJDHgXc0yXhfSnIgP2Q4Ag700ltuZKx2Yx5gQ7lM6jQ6gz/TDw76JUQDKt2DC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8488
+X-MS-Exchange-CrossTenant-UserPrincipalName: EUC8desCbl/D/fT2GLm/GtGM0xakksyJUr+n6qhLTqGeUi7ELFTvBCG1n9ygyRFYDUYGDFQ4nSaiTFU2wjRsi4cLNl9MLmOVFHtL2VU9HaIcgEX/F44yCe7xQKFimYoU
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8076
 
-On Fri, Oct 02, 2026 at 10:00:11PM +0800, Binbin Zhou wrote:
-> Hi Frank:
->
-> Thanks for your reply.
->
-> On Thu, Oct 1, 2026 at 5:44 AM Frank Li <Frank.li@oss.nxp.com> wrote:
+On Fri, Oct 02, 2026 at 11:46:57AM +0300, Bartosz Golaszewski wrote:
+> On Wed, 16 Sep 2026 17:21:29 +0200, Bartosz Golaszewski
+> <bartosz.golaszewski@oss.qualcomm.com> said:
+> > Add the compatible string for the GPI DMA engine found on the Nord
+> > family of SoCs.
 > >
-> > On Tue, Sep 22, 2026 at 05:25:43PM +0800, Binbin Zhou wrote:
-> > > The DMA mux on Loongson-2K0300 is not a standalone hardware block. It is
-> > > implemented as part of the chip configuration registers CHIP_CTRL13/14/15,
-> > > which route peripheral DMA requests to the physical channels of the CMC
-> > > DMA controller.
-> > >
-> > > Document this as a DMA router. The #dma-cells = <3> specifier contains
-> > > the peripheral request ID, the target CMC DMA channel, and channel
-> > > configuration flags forwarded to the parent DMA controller.
-> > >
-> > > Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-> > > ---
-> > >  .../dma/loongson,ls2k0300-dmamux.yaml         | 49 +++++++++++++++++++
-> > >  MAINTAINERS                                   |  1 +
-> > >  2 files changed, 50 insertions(+)
-> > >  create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> > > new file mode 100644
-> > > index 000000000000..12b8f8af51e9
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> > > @@ -0,0 +1,49 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/dma/loongson,ls2k0300-dmamux.yaml#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: Loongson-2 APB DMA MUX (DMA request router)
-> > > +
-> > > +maintainers:
-> > > +  - Binbin Zhou <zhoubinbin@loongson.cn>
-> > > +
-> > > +allOf:
-> > > +  - $ref: /schemas/dma/dma-router.yaml#
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    const: loongson,ls2k0300-dmamux
-> > > +
-> > > +  reg:
-> > > +    maxItems: 1
-> > > +
-> > > +  '#dma-cells':
-> > > +    const: 3
-> > > +    description: |
-> > > +      Each cell represents the following:
-> > > +      1. The peripheral request id (see
-> > > +         include/dt-bindings/dma/loongson,ls2k-dmamux.h)
-> > > +      2. The physical CMC DMA channel (0-7) that is passed to the real
-> > > +         DMA controller
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> > ---
+> >  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
 > >
-> > Do you have restriction between request id and channel? Does any request id
-> > route to any channel?
+> > diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > index 54dca623223d51373a4d54591f3ebbf5e31fca17..ad70717b5b86e600e74d6cfe42015dc03db25ba9 100644
+> > --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+> > @@ -29,6 +29,7 @@ properties:
+> >                - qcom,hawi-gpi-dma
+> >                - qcom,kaanapali-gpi-dma
+> >                - qcom,milos-gpi-dma
+> > +              - qcom,nord-gpi-dma
+> >                - qcom,qcm2290-gpi-dma
+> >                - qcom,qcs8300-gpi-dma
+> >                - qcom,qdu1000-gpi-dma
+> >
+> > ---
+> > base-commit: e6e35979777d646fe3c7c94dca7dd32fb25d45f4
+> > change-id: 20260916-nord-gpi-dt-bindings-f4b10102d22b
+> >
+> > Best regards,
+> > --
+> > Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> >
+> >
 >
-> Yes, according to the description of this register’s bit fields in the
-> manual, DMA channels are not mapped arbitrarily.
->
-> We can broadly categorize them as follows:
-> 1. First, most peripherals that use this DMA controller request
-> adjacent DMA channels (TX/RX) in pairs.
-> Let’s take I2S as an example.
-> Bits [17:16] at address `0x16000138` controls the I2S DMA channel mapping:
-> 00: Channels 0, 1
-> 01: Channels 2, 3
-> 10: Channels 4, 5
-> 11: Channels 6, 7
-> 2. The SM/DES/AES module uses only channels 0 and 1, corresponding to
-> the bit field values 00 and 01, respectively.
-> 3. The can/adc module is single-channel, so each bit in the
-> corresponding bit field corresponds to channels 0–7.
+> Vinod: gentle ping, can this make v7.4, please? Otherwise, can you Ack it
+> and let Bjorn pick it up?
 
-Does channel dynmatic allocated or have to static assign, if channel dynmatic
-allocated, needn't arg2. If static assign, it'd better descript clean about
-restriction between arg1 and arg2.
+I have not seen dt team's review tags yet. You should ping DT Team firstly.
+
+And subject:
+	dt-bindings: dmaengine: qcom,gpi, although there some use "dma",
+but avoid confuse in future, all will consistently use "dmeangine".
 
 Frank
 
 >
-> >
-> > Frank
-> > > +      3. Bitfield representing DMA channel configuration that is passed
-> > > +         to the real DMA controller
-> > > +
-> > > +required:
-> > > +  - compatible
-> > > +  - reg
-> > > +
-> > > +unevaluatedProperties: false
-> > > +
-> > > +examples:
-> > > +  - |
-> > > +    #include <dt-bindings/dma/loongson,ls2k-dmamux.h>
-> > > +    dma-router@16000134 {
-> > > +        compatible = "loongson,ls2k0300-dmamux";
-> > > +        reg = <0x16000134 0xc>;
-> > > +        #dma-cells = <3>;
-> > > +        dma-masters = <&dma>;
-> > > +        dma-requests = <22>;
-> > > +    };
-> > > +...
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index b021fb623446..dc976938c58c 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -15344,6 +15344,7 @@ M:    Binbin Zhou <zhoubinbin@loongson.cn>
-> > >  L:   dmaengine@vger.kernel.org
-> > >  S:   Maintained
-> > >  F:   Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
-> > > +F:   Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
-> > >  F:   Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
-> > >  F:   drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > >  F:   drivers/dma/loongson/loongson2-apb-dma.c
-> > > --
-> > > 2.52.0
-> > >
->
-> --
-> Thanks.
-> Binbin
+> Bart
