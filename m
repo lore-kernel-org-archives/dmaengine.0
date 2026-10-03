@@ -1,95 +1,206 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CEE41442D;
-	Sat,  3 Oct 2026 10:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F5B3655F3;
+	Sat,  3 Oct 2026 14:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791022245; cv=none; b=fBDa151Pngogp1X7QfOlIpBRuQEFLe6T/992u35hhAH0otFnUnLsYWckvmTKe7YeEwXK5gwMNhl2CuJiMD1HpjbJV4jFkXCncduix/cp5o/M2I9w0AO5cAST/8YERFC/lEtOcm9USH1Z6d99xrjoAAGXLsvrXp5AreoqJCMqpss=
+	t=1791039177; cv=none; b=WdYmdBSKt2fdu8n5S2Py44NRmq1ILLuZTRG+pzZ5nQ/7xWw3ljEVtFY7WawaXE35pzzHDgtca228ausuxajulvPJ9jEo7g+2A36yFwbFssqviAjXnEbTklPvxQ63jVUK8Osdg6ZGoP049CbrDpM4f+vrwAc0JK4VamER4eZDBIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791022245; c=relaxed/simple;
-	bh=H4piNk7LYmRM6sh8EcC11GJZCJ3ItfW6aN3ztQuOQOY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=XPFw+718R/Gq1v3MStiTGeRh75+U1iATUIg3Vp9Xp6ZvFgX9250kx6IGfUqCrTCjmnJF2a1DY1i+tpPCeoTptEDTfzCM2qmiYcyAnuF44ZtdTI9QASN/102dJb1bsvh4mQI3coqzXI4LGCRT8NymwsS7a0Z6SPGJmziGd/jCN9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=PoFprmmv; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791039177; c=relaxed/simple;
+	bh=WjedVfcJVU/MQt7k/NT42LV+0N9QCiM5k6UX3eo1nlY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A+st+A5UYY7T6CSu8eyn7ITUnVPgnNsed7z335Ot/6fNixQUQCfmaTh/sEvNympD+PCHnmg+Os/b8+hWphzv/GaI5N7dDodLMLEogtKKW/R8jajNYqupH2EogVfOtl7MzmzH8JWpd+prRNUnW5V4SFFr/WyfhCL3ibca2zuoWgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YScjAeTp; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="PoFprmmv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=H4piNk7LYmRM6sh8EcC11GJZCJ3ItfW6aN3ztQuOQOY=; b=P
-	oFprmmvwu9vJ+eKHY6PH/tFT8Yb7LG+fczg13BySK6Nt4efV0uy6+tgrkThdNglH
-	nvw6oZjF1INCmg7v2JAC318UZZ+fQm+8RGdEqzuV0dYtHNBkRz/mW1o45wAR3zlw
-	YgopQioryuf2Lfb9faR5PT48wql2g4QJ24AcdDNujE=
-Date: Sat, 3 Oct 2026 18:09:58 +0800 (CST)
-From: "jiale yao" <19888972804@163.com>
-To: "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>
-Cc: "Frank Li" <Frank.li@oss.nxp.com>, "Vinod Koul" <vkoul@kernel.org>,
-	"Frank Li" <Frank.Li@kernel.org>,
-	"Michal Simek" <michal.simek@amd.com>,
-	"Hyun Kwon" <hyun.kwon@xilinx.com>, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH 3/3] dmaengine: xilinx: dpdma: Reserve space for a
- string terminator
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <20261001210021.GQ944070@killaraus.ideasonboard.com>
-References: <20260926121250.3258285-1-yaojiale02@163.com>
- <20260926121250.3258285-4-yaojiale02@163.com>
- <20260926143415.GA764757@killaraus.ideasonboard.com>
- <ar7Hj-BQW7xPtjaC@lizhi-Precision-Tower-5810>
- <20261001210021.GQ944070@killaraus.ideasonboard.com>
-X-NTES-SC: AL_Qu2SA/yZvUki7imcYOkdmE8Uges8WcC0svki1YJUc+4GhzHBwiABbHpeBEnt4NmlFwSNnAm9ShFy8/5qb6BZFaVVU2ewdjadkXA/7HvZFQ==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YScjAeTp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791039176; x=1822575176;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=WjedVfcJVU/MQt7k/NT42LV+0N9QCiM5k6UX3eo1nlY=;
+  b=YScjAeTpEx/y96r4DB9trvKuQnn+pdGOrIGk+Ndvbahhpzok2e4KDMY5
+   N/SWleCaahKsAe2A+54FrWk2Ws22R7aSnuvD2hi6B7WpGh1D7LpySPr+a
+   +TUmgI4BybthZQAPb8gLpuy6bIJgg5kGwIv7irFtU8OC+9g5sccSk83k7
+   KKJa24rs+9S9Imd36IiyBm4rgFWBhjVOOoInqxSLGM37k4Pv9C+2Hvjb3
+   PzFF6JVlognhnIp5NhqCALZZcXmgXp2nJVFy96aO8OXjsIieYJ0mVtGar
+   QUkPFUMpXpKMbltdX2jA2S5g/DeoPokn/CZPp2XlbZ8XtwnyqWDq1T7z0
+   Q==;
+X-CSE-ConnectionGUID: 4cACApzpQhajr8pIWFyMrQ==
+X-CSE-MsgGUID: jx9aQSYNS5q1zLlUlGCxoQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11924"; a="113558219"
+X-IronPort-AV: E=Sophos;i="6.27,138,1787036400"; 
+   d="scan'208";a="113558219"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2026 07:52:55 -0700
+X-CSE-ConnectionGUID: Jbe3JksrQ+e5M1GxtJoa9Q==
+X-CSE-MsgGUID: ixJJ03mXROu58hsuGioCOg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,138,1787036400"; 
+   d="scan'208";a="276532289"
+Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.245.78])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2026 07:52:50 -0700
+Date: Sat, 3 Oct 2026 17:52:48 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-iio@vger.kernel.org,
+	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
+	Frank Li <Frank.Li@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Andy Shevchenko <andy@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v4 01/10] dmaengine: Move enum dma_slave_buswidth to a
+ new header
+Message-ID: <asEWwIfO0LB27wj9@ashevche-desk.local>
+References: <aqlpoBJJXfZgsMxT@parshuram>
+ <aqlwRkNcs_UqKjWs@parshuram>
+ <aql6u3T0nnSVr-FC@SMW015318>
+ <aqws8pN2rfS9-dCC@parshuram>
+ <aqz1-OzFobOROuBw@nsa>
+ <aq18_TMNs4EJzgZO@parshuram>
+ <arDtEB0na9DxDWAS@nsa>
+ <arFXc0LqEpgWSS6m@SMW015318>
+ <ar-Il2qP_Qms3Qw1@nsa>
+ <ar-13p3a7ENGfMOF@SMW015318>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <7d6a7daa.140b.1a1013df0a8.Coremail.19888972804@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:jygvCgD3n1V31MBqK0cHAA--.63684W
-X-CM-SenderInfo: x1dryxhdohiji6rwjhhfrp/xtbCzRYdV2rA1HYUSwAA3G
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ar-13p3a7ENGfMOF@SMW015318>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-QXQgMjAyNi0xMC0wMiAwNTowMDoyMSwgIkxhdXJlbnQgUGluY2hhcnQiIDxsYXVyZW50LnBpbmNo
-YXJ0QGlkZWFzb25ib2FyZC5jb20+IHdyb3RlOgo+T24gVGh1LCBPY3QgMDEsIDIwMjYgYXQgMDQ6
-NTA6MjNQTSAtMDQwMCwgRnJhbmsgTGkgd3JvdGU6Cj4+IE9uIFNhdCwgU2VwIDI2LCAyMDI2IGF0
-IDA1OjM0OjE1UE0gKzAzMDAsIExhdXJlbnQgUGluY2hhcnQgd3JvdGU6Cj4+ID4gT24gU2F0LCBT
-ZXAgMjYsIDIwMjYgYXQgMDg6MTI6NTBQTSArMDgwMCwgSmlhbGUgWWFvIHdyb3RlOgo+PiA+ID4g
-eGlsaW54X2RwZG1hX2RlYnVnZnNfd3JpdGUoKSBhbGxvY2F0ZXMgYSBidWZmZXIgb2Ygc2l6ZSBi
-eXRlcywgYW5kCj4+ID4gPiBzdHJuY3B5X2Zyb21fdXNlcigpIGNhbiBmaWxsIGl0IHdpdGhvdXQg
-YSB0ZXJtaW5hdGluZyBOVUwgd2hlbiB0aGUgaW5wdXQKPj4gPiA+IGhhcyBubyBOVUwgaW4gdGhl
-IGNvcGllZCByYW5nZS4gc3Ryc2VwKCkgYW5kIHN0cmNhc2VjbXAoKSB0aGVuIHJlYWQKPj4gPiA+
-IGJleW9uZCB0aGUgYnVmZmVyLgo+PiA+Cj4+ID4gc3RybmNweSgpIGhhcyBsb25nIGJlZW4gY29u
-c2lkZXJlZCB1bnNhZmUsIGFuZCBoYXMgZmluYWxseSBiZWVuIHJlbW92ZWQKPj4gPiBmcm9tIHRo
-ZSBrZXJuZWwgaW4gdjcuMi4gQSBiZXR0ZXIgZml4IHdvdWxkIGJlIHRvIHNpbWlsYXJseSByZXBs
-YWNlCj4+ID4gc3RybmNweV9mcm9tX3VzZXIoKSB3aXRoIGEgc2FmZSBlcXVpdmFsZW50Lgo+PiAK
-Pj4gRG8geW91IG1lYW5zIHVzZSBzdHJuZHVwX3VzZXIoKT8KPgo+SSB3YXMgdGhpbmtpbmcgYWJv
-dXQgYWRkaW5nIGEgc3Ryc2NweV91c2VyKCksIGJ1dCBhIGR1cCB2ZXJzaW9uIGNvdWxkCj5wb3Nz
-aWJseSBiZSBpbnRlcmVzdGluZyB0b28gaWYgdGhlcmUgYXJlIGVub3VnaCB1c2VycyB0aGF0IGNh
-bGwKPmtbem1dYWxsb2MgKyBzdHJuY3B5X2Zyb21fdXNlci4KClRoYW5rcyBmb3IgYWxsIHJldmll
-d3MsIGhvdyBhYm91dCB0aGlzIG9uZT8KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjYx
-MDAzMDk1OTIyLjU3NTM1MC0xLXlhb2ppYWxlMDJAMTYzLmNvbS8KPgo+PiA+ID4gQWxsb2NhdGUg
-YW4gZXh0cmEgYnl0ZSBhbmQga2VlcCB0aGF0IGJ5dGUgemVyby1pbml0aWFsaXplZCwgc28gdGhl
-IGlucHV0Cj4+ID4gPiBjb3BpZWQgcmVtYWlucyB1bmNoYW5nZWQgYW5kIHRoZSBidWZmZXIgaXMg
-YWx3YXlzIHRlcm1pbmF0ZWQuCj4+ID4gPgo+PiA+ID4gRml4ZXM6IDFkMjIwNDM1Y2FiMyAoImRt
-YWVuZ2luZTogeGlsaW54OiBkcGRtYTogQWRkIGRlYnVnZnMgc3VwcG9ydCIpCj4+ID4gPiBTaWdu
-ZWQtb2ZmLWJ5OiBKaWFsZSBZYW8gPHlhb2ppYWxlMDJAMTYzLmNvbT4KPj4gPiA+IC0tLQo+PiA+
-ID4gIGRyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZHBkbWEuYyB8IDIgKy0KPj4gPiA+ICAxIGZp
-bGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKPj4gPiA+Cj4+ID4gPiBk
-aWZmIC0tZ2l0IGEvZHJpdmVycy9kbWEveGlsaW54L3hpbGlueF9kcGRtYS5jIGIvZHJpdmVycy9k
-bWEveGlsaW54L3hpbGlueF9kcGRtYS5jCj4+ID4gPiBpbmRleCBkOWEzNTQyYzQ1MzEuLmI2MWVm
-MzA2MmQ4NCAxMDA2NDQKPj4gPiA+IC0tLSBhL2RyaXZlcnMvZG1hL3hpbGlueC94aWxpbnhfZHBk
-bWEuYwo+PiA+ID4gKysrIGIvZHJpdmVycy9kbWEveGlsaW54L3hpbGlueF9kcGRtYS5jCj4+ID4g
-PiBAQCAtNDEwLDcgKzQxMCw3IEBAIHN0YXRpYyBzc2l6ZV90IHhpbGlueF9kcGRtYV9kZWJ1Z2Zz
-X3dyaXRlKHN0cnVjdCBmaWxlICpmLAo+PiA+ID4gIAlpZiAoZHBkbWFfZGVidWdmcy50ZXN0Y2Fz
-ZSAhPSBEUERNQV9UQ19OT05FKQo+PiA+ID4gIAkJcmV0dXJuIC1FQlVTWTsKPj4gPiA+Cj4+ID4g
-PiAtCWtlcm5fYnVmZiA9IGt6YWxsb2Moc2l6ZSwgR0ZQX0tFUk5FTCk7Cj4+ID4gPiArCWtlcm5f
-YnVmZiA9IGt6YWxsb2Moc2l6ZSArIDEsIEdGUF9LRVJORUwpOwo+PiA+ID4gIAlpZiAoIWtlcm5f
-YnVmZikKPj4gPiA+ICAJCXJldHVybiAtRU5PTUVNOwo+PiA+ID4gIAlrZXJuX2J1ZmZfc3RhcnQg
-PSBrZXJuX2J1ZmY7Cj4KPi0tIAo+UmVnYXJkcywKPgo+TGF1cmVudCBQaW5jaGFydAo=
+On Fri, Oct 02, 2026 at 08:47:10AM -0500, Frank Li wrote:
+> On Fri, Oct 02, 2026 at 11:43:17AM +0100, Nuno Sá wrote:
+> > On Mon, Sep 21, 2026 at 11:12:35AM -0500, Frank Li wrote:
+> > > On Mon, Sep 21, 2026 at 09:53:49AM +0100, Nuno Sá wrote:
+> > > > On Fri, Sep 18, 2026 at 11:33:41PM +0530, Vinod Koul wrote:
+> > > > > On 18-09-26, 09:39, Nuno Sá wrote:
+> > > > > > On Thu, Sep 17, 2026 at 11:39:54PM +0530, Vinod Koul wrote:
+> > > > > > > On 15-09-26, 12:04, Frank Li wrote:
+> > > > > > > > On Tue, Sep 15, 2026 at 09:50:22PM +0530, Vinod Koul wrote:
+> > > > > > > > > On 15-09-26, 21:22, Vinod Koul wrote:
+
+...
+
+> > > > > > > > > > > Traditional naming would be
+> > > > > > > > > > > dma/engine/provider.h
+> > > > > > > > > > > dma/engine/consumer.h
+> > > > > > > > > >
+> > > > > > > > > > consumer and provider and good names.. I would retain the full dmaengine
+> > > > > > > > > > everywhere please. dma causes confusion already!
+> > > > > > > > >
+> > > > > > > > > Thinking about it again, drivers/dma/dmaengine.h should be the provider
+> > > > > > > >
+> > > > > > > > There some dmaengine code outside drivers/dma directory, like
+> > > > > > > > drivers/crypto/ccp/ccp-dmaengine.c
+> > > > > > >
+> > > > > > > They chose to be outside, their choice... They need to be updated as
+> > > > > > > well to point to ../../dma/dmaengine.h :-)
+> > > > > >
+> > > > > > I tend to agree with Andy but anyways. I feel this is going a bit out of
+> > > > > > scope now. So what we have now in the series is:
+> > > > > >
+> > > > > >
+> > > > > > - include/linux/dmaengine.h (without enum dma_slave_buswidth)
+> > > > > > - include/linux/dma/types.h (with enum dma_slave_buswidth and new
+> > > > > >   dma_buswidth_t type) - A future one would be dma_cap_mask_t and we could
+> > > > > >   drop bitmap.h from dmaengine.h
+> > > > > > - include/linux/dma/widthmask.h - The new bitmap based API for bus_width
+> > > > > >
+> > > > > > I kind like the separation (and the whole point was to avoid bitmap.h in
+> > > > > > the main dmaengine.h API) but tbh I'm not sure if a consumer driver
+> > > > > > will ever use dma/widthmask.h without needing the consumer API. But
+> > > > > > to sum things up, what do you suggest for vÛE?
+> > > > > >
+> > > > > > * include/linux/dmaengine.h as the consumer API and includes the new
+> > > > > > the widthmask API
+> > > > > > * provider/private goes to drivers/dma/dmaengine.h and just includes
+> > > > > > include/linux/dmaengine.h as the starting point?
+> > > > > >
+> > > > > > Let me know how do you want things for v5
+> > > > >
+> > > > > Yes lets talk about dma_slave_buswidth, it is client type. This is
+> > > > > configured by users to set the width of peripheral.
+> > > > > So this needs to be in the include/linux/dmaengine.h
+> > > > >
+> > > >
+> > > > Agreed! But providers also need to set the allowed bus mask. And I'm
+> > > > just not sure they need to include/consume all of the consumer API.
+> > > > Also, it's common to allow the provider API to be widely used throughout
+> > > > the kernel (but I agree that could be even harder to get done - if we
+> > > > want to make some stuff really private - but I guess that could be done
+> > > > in a second step or more incrementally). We do also have some subfolders
+> > > > in `drivers/dma` which means we'll need the odd "../dmaengine.h" relative
+> > > > include which I do not love tbh (on top of the crypto stuff).
+> > > >
+> > > > I really think something like the below would be more appropriate (if we
+> > > > just want the provider/consumer API without further splitting like the
+> > > > types.h and widthmak.h in this version):
+> > > >
+> > > > include/linux/dmaengine.h - provider API (as of today)
+> > > > include/linux/dmaengine-consumer.h
+> > > >
+> > > > But anyways, if you or Frank do not object in the next few days, I'll
+> > > > take the above approach suggested by Vinod:
+> > > >
+> > > > drivers/dma/dmaengine.h - provider
+> > > > include/linux/dmaengine.h - consumer
+> > >
+> > > It think it is fine.
+> >
+> > So I was aboutto start on this again and I just realized
+> > drivers/dma/dmaengine.h already exists today so nothing to do on this
+> > series.
+> 
+> I just find it and start some cleanup/move work.
+> 
+> > I mean I could remove the consumer include on the dmaengine
+> > drivers that I'm touching but not really on scope and super important
+> > IMO. So, for the consumer side, should I just go to the first approach
+> > where all the bus_width API goes into include/linux/dmaengine.h or
+> > should I keep:
+> >
+> > include/linux/engine/types.h
+> > include/linux/engine/widthmask.h
+> >
+> > And have a better separation on the consumer side? Or maybe changing
+> > s/engine/consumer/ on the above paths?
+> 
+> I go through v3 thread, Andy just said split to new type.h, but not have
+> provided reason.
+> 
+> I am planning move provide API and data structure to driver/dma/dmaengine.h
+> 
+> include/linux/dmaengine.h will keep consume only defination and API.
+> 
+> why still need types.h?
+
+The idea was to rectify the messed up dependencies. Without split of types we
+will need to have bitmap.h (IIRC the initial idea of the split was that) only
+where it's indeed required. Besides bitmap.h there are might be more headers
+that "include half of the world" which should be avoided in every header file.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
