@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4836548425A
-	for <dmaengine@vger.kernel.org>; Mon,  5 Oct 2026 14:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9494AEBD4;
+	Mon,  5 Oct 2026 15:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791210303; cv=none; b=t/wu1o4IhLUkrRhaknf5QcHAPXlRN/QY4aY7GY4SKfy1zmaXUJxZqdk7mGVBeLe0Yi1TeL3EYat8ImaLD1SQtcC6eSVJpeOIi3mjNmIGDKWFTgrxgM7R2ka/hz9iletOPoQq6UoUwBR+BdfsDtskMQs/SwIsmZVgh9iuRZxZ27E=
+	t=1791214787; cv=none; b=ijE6B2hDJhZNxn/PTmHjqmbI4Di2MymarI5wF/CkOTAys6urFtdD4vhgMjkdvP5LtBUtDOwavu+9fhzqQSmhzRNocuTUPClQvI028HLxdgEN174GMur2FokzltXTNsxmguzWYZ7hPL99ewLExZ6V70MljNl0MgAyX3K/dyKvhoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791210303; c=relaxed/simple;
-	bh=xfXDUnnHmrER0PBSf15tSFPTMMzsFy6KXRrC7JYpik4=;
+	s=arc-20240116; t=1791214787; c=relaxed/simple;
+	bh=1tcdq40VCHEBsE92wXv5rVseBtMmp+4TmylwZhJr7Hg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bxM27/e8cgpnZURW8epEDiLeJC7n/BDyVoaQvhXcATB8op75KhzYVK3vUzcCvb74j3mXejA5i50DJoxbcGZa366+E0W8cXFBgR9kzP7q8GkP4f1Lq02d0RlmgqckJm+8poANZD4VocbpLA9Y42BnaXC/ieBxzRgJglOScU95xpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o2buJH2W; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=SBIJguReALshUodLdGqg7NEH7ypGEHZ6doLB1hKhGVDF5HFdRGzDX6yabMNzRZpeAFSW7Pl4Fbd8kPEPY5WOHKo8WPUUpq3ghAiXsBsnQSKoHOQKji+TuGSycCksA8W8XY1DIdPwOZ/CV654y7Snl83dazLia75jeeZtMpVuspY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mswDsWWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o2buJH2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE51B1F000FF;
-	Mon,  5 Oct 2026 14:24:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mswDsWWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E67F1F000FF;
+	Mon,  5 Oct 2026 15:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791210294;
-	bh=GZXqVHffbtS9OmqiTsAvrAvLKtalktJGFjXvPB3NZYQ=;
+	s=k20260515; t=1791214786;
+	bh=MAB0w+SPt8/frgP+ogeZgftgq+o4maNl70fGx44ZOEk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=o2buJH2WuEvgMj1AH4qK58ixpphjb0tEgKf0LTJ9+Df2w8IxvltI0+wv2D4ClY+ba
-	 DQmFStj7HlfxCwbfGJrYRDTTfcxWEI6DbMzV9I1bklwC6vLr1HjPo01IWIGciwwlXH
-	 hCgY3oVaxIjoGR4pbYDN3+Zmwa80vbu/PKZszvB5R32yY1Y/vvxVAiTB9MasR0wuUm
-	 J73kuzngdBVqOELJlGoy7JV5dU2MHmuDEONOYk7/66TCGeg/nlog5i3KZPSfLbezdW
-	 xKGRToNvuyoQaXaCCVVeKUSIOMSW8sVcBX4QSGL0Ghl1Gi1vjsM7r2ndrMEhej2AMs
-	 Dg649XOMUjYLg==
-Date: Mon, 5 Oct 2026 16:24:51 +0200
+	b=mswDsWWi8qhLa4BSMYOtdzReUOqAp0GaCrEe/LSamA9dlOLdvWRz4PnAW9VOgX5Zh
+	 bEw5kBmfU35vXDQJRlPhWZDDhd2EoVzSEg5dYyKVk6lVdzrvF6Q6Ey/BDj8FmOUINH
+	 m8PyvB6SA1Lg8/WWRN1Rmkwq0L1MnxkcLPcvC676R4RmTi50XxXJ5FH/M1ct8uM8aE
+	 GW3q/qGCklK1cdGYi1p3yRoW1s/dR5uR/d9Nk0qTYQKnK/qQddwyq5OlTJzsnTEunE
+	 zJ+eNgBAiyZIFEiixjfP51xgcOh11WRaSX8qA01M7k2D/GpG3N0xy19H+yYL9RMMCg
+	 sAr0YvRRgPzsQ==
+Date: Mon, 5 Oct 2026 17:39:42 +0200
 From: Vinod Koul <vkoul@kernel.org>
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Frank Li <Frank.li@oss.nxp.com>, dmaengine@vger.kernel.org,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Frank Li <Frank.Li@kernel.org>
-Subject: Re: [PATCH v4] dmaengine: loongson: Remove the dev_dbg() output
-Message-ID: <asOzMw3YIXi7GqJl@parshuram>
-References: <20260921195745.gY25rf4P@linutronix.de>
+To: Linus Walleij <linusw@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
+	phone-devel@vger.kernel.org, sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v7 22/24] dmaengine: ste_dma40: Search all blocks for
+ fixed logical channels
+Message-ID: <asPEvh3O1ysaeeGs@parshuram>
+References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
+ <20260927-dma40-fixes-v7-22-89f595e8851d@kernel.org>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -43,26 +45,51 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260921195745.gY25rf4P@linutronix.de>
+In-Reply-To: <20260927-dma40-fixes-v7-22-89f595e8851d@kernel.org>
 
-On 21-09-26, 21:57, Sebastian Andrzej Siewior wrote:
-> The %pK format modifier was meant for /proc kind of output, not general
-> printk output. Since commit ad67b74d2469d ("printk: hash addresses
-> printed with %p") pointers are hashed by default and the behaviour can
-> be controller by `hash_pointers' boot argument.
-> The policy on %p is to not introduce new ones.
+On 27-09-26, 11:03, Linus Walleij wrote:
+> Fixed logical channel allocation scans physical channels in blocks of
+> eight. When the requested physical channel does not belong to the first
+> block, d40_allocate_channel() returns -EINVAL instead of checking later
+> blocks.
 > 
-> The output in loongson2_cmc_dma_issue_pending() is the only dev_dbg()
-> output in the driver and is only output once the transfer is started.
-> There is no output issued by the driver if the transfer is completed, if
-> a follow-up transfer is started or if any of the other callbacks (such
-> as loongson2_cmc_dma_tx_status()) are invoked. This output does not look
-> essential.
-> 
-> Instead removing just the %pK output, remove the complete dev_dbg()
-> output from the driver.
+> Skip nonmatching blocks so controllers with more than eight physical
+> channels can allocate fixed logical channels from the later blocks.
 
-This doesnt apply against the current code, pls rebase
+This failed to apply for me, I have skipped and applied the rest
+
+> 
+> Fixes: 5cd326fd27da ("dmaengine/ste_dma40: allow fixed physical channel")
+> Reported-by: sashiko-bot@kernel.org
+> Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
+> Assisted-by: LLM
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Linus Walleij <linusw@kernel.org>
+> ---
+>  drivers/dma/ste_dma40.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index a5471a9157cd..fe9539138549 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
+> @@ -2124,11 +2124,8 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+>  		if (d40c->dma_cfg.use_fixed_channel) {
+>  			i = d40c->dma_cfg.phy_channel;
+>  
+> -			if ((i != phy_num) && (i != phy_num + 1)) {
+> -				dev_err(chan2dev(d40c),
+> -					"invalid fixed phy channel %d\n", i);
+> -				return -EINVAL;
+> -			}
+> +			if (i != phy_num && i != phy_num + 1)
+> +				continue;
+>  
+>  			if (d40_alloc_mask_set(&phys[i], is_src, event_line,
+>  					       is_log, first_phy_user))
+> 
+> -- 
+> 2.55.0
 
 -- 
 ~Vinod
