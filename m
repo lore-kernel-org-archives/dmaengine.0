@@ -1,93 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E277B4503E4;
-	Mon,  5 Oct 2026 09:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0A0488755;
+	Mon,  5 Oct 2026 13:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791193574; cv=none; b=bNWTe4ZDQYYz5LpvF7/dOMbWKsEZAGx3ThHveZUdh7tiYfkLP+DVAAaH+BuQzSbmQtDPhfMHvR4r0S/KUFAJ1myuBnNLnNqSXQ07d5r6kGEuTX1fJbs2Iil0fz6lKB5PdNoJMtLg4I1VylLPnW+somP28cs4srAt57RGqL3iy8Q=
+	t=1791207640; cv=none; b=MCY1ptadMGR4DuEeLAt1WvW3ob0/F7GuzJUhpO26SsVgBGixMp256xpO6cFSWbI5mu6ypql5DnIbT9nZAsFNblp2c2cos1iZgZTEXPAyDGUlhJ8yu08GKZiNzL6fYxsdqgKfvShTktUs9IgA+/h57+PYuWB0T6AtbCDr1KPRoaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791193574; c=relaxed/simple;
-	bh=ul5xBavGUV3BJnrn16M4rueg+VNDwAIkL1Sf7XxwCzY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bGOszQ7rryrN1oopslgPJVt6dvPeEeR4cifPfEmbCGrWLALcFyusYxtEoeSn04v5Bi4fj44V1KUipGE/Zfa3aB06A8r0Nc8/7NVp7Q2Z1lkqrXV/CZDzSGjkvWhp3BMfHzvxgJ4xWTTXdaO6EhfHsF1dZwTxp8ww9a4fkNfDmgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hd8pP30f; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791207640; c=relaxed/simple;
+	bh=aVMT+TlFk3tHAaSH75xyt5q3uMFWyWh48p1Tp55Leu0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fGEhQ1jkrddz80DsezEd1JWvnPEVYfZJRBGc9f+f0fV8J+ZN2UMrFsIOlxw8z9MNJnH6ib1xc34iqpa4wUTsCmcgmh26rWpjTsuF0/b8/TvAoGMB5f61KI33KiE+g3OspYcMHDyZleII5Rb5NOXGj6B4LFO7eFcQB+Np/TlYKDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YxthRWqB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hd8pP30f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172221F000FF;
-	Mon,  5 Oct 2026 09:46:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YxthRWqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE9A1F000FF;
+	Mon,  5 Oct 2026 13:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791193563;
-	bh=8QSl6eNFzO5K4AgUcFGaHmDMwJIdFkwlEYyxJaykHaI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=hd8pP30flTFxoQOj4lpMx++eeLlT9guk4G7V+rjdLco1yKIPGjAMouz1QJudtRyHG
-	 oQ444dLj2XC+c5tEiL9QB1g4n1afMmKZ61/jejuLY9S+hbbMbL8u7R2S+itVNFTEbn
-	 10bUKJ8nKgyCPuWOl9Gc3aMOc78bVk/FW0hlUcxE0zm6QSmTukxddPCXywIU38NHhi
-	 0RGFOvYbwVuxePQKSHzPKj6IE2p47WQGqXdiuUiOfj0cCDyeXzwhIksdZdCXHh67sT
-	 PZ/lFS6/wyxsFboduliv8kZlT8jb3j+ZNfQGWwYhAiHCL6l7NnWBZQyMGI+hkWiJ5Y
-	 NzkmvBegS1Xxw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 1/5] dmaengine: add
- dmaengine_prep_dma_(pq|pq_val|interrupt|xor)() API
-Reply-To: sashiko-reviews@lists.linux.dev
-To: Frank.Li@oss.nxp.com
-Cc: Frank.Li@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, imx@lists.linux.dev
-In-Reply-To: <20261005-dmaengine_prep_dma_pq-v3-1-a4a241f26fa7@nxp.com>
-References: <20261005-dmaengine_prep_dma_pq-v3-0-a4a241f26fa7@nxp.com>
- <20261005-dmaengine_prep_dma_pq-v3-1-a4a241f26fa7@nxp.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 05 Oct 2026 09:46:02 +0000
-Message-Id: <20261005094603.172221F000FF@smtp.kernel.org>
+	s=k20260515; t=1791207639;
+	bh=xcVeQf+7BvvJau/SIVYSD0F0OxAJkDKz3X1xVomNTxg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=YxthRWqBIZWtFN7pZzyzeejRM1DF0EJzUmIMI1CLOiA42FQ59PtA9aAk4FQPpt4yg
+	 01dyIIaItqlAtjjinAWBg9y2RWoME/sQtWu0tHJmx2HlP4dCPwYS+OuLmyeErTx+9Z
+	 ecFyYsgt86Ue+R3vIouq5kc/M7CZtHhZBo7aH0hzDfVRXLa9YrMv1e8A9fB0l5hB5U
+	 a0U/DUIXHCOPlfKei45Bj445bWSChytE43RsGLyPr0iLVDlYL+vxlK8WD/DtbsOjQs
+	 P+kC8Hf+bhh09jb8EcpYEYpIrDIecFld2jbkiK7wYhM1alYphnUtAaP3qw257kimg3
+	 N5Jd1xKzWf6MA==
+Date: Mon, 5 Oct 2026 15:40:36 +0200
+From: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Julian Braha <julianbraha@gmail.com>, maddy@linux.ibm.com,
+	mpe@ellerman.id.au, npiggin@gmail.com, chleroy@kernel.org,
+	Frank.Li@kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	kernel-janitors@vger.kernel.org, linusw@kernel.org, kees@kernel.org,
+	colin.i.king@gmail.com, rosenp@gmail.com, joao@joaoff.com,
+	linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org
+Subject: Re: [PATCH v3] powerpc: remove dead 440SP code
+Message-ID: <asOo1HzrYIysrWF_@parshuram>
+References: <20260901152341.1219343-1-julianbraha@gmail.com>
+ <ar7J3nl2pNW-B7AO@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ar7J3nl2pNW-B7AO@lizhi-Precision-Tower-5810>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] doc: incorrect flag names in dmaengine_prep_dma_pq_val() comment
---
+On 01-10-26, 17:00, Frank Li wrote:
+> On Tue, Sep 01, 2026 at 04:23:41PM +0100, Julian Braha wrote:
+> > The 440SP config option can never be enabled, making all references to it
+> > dead code.
+> >
+> > The only board using CONFIG_440SP was IBM LUAN, which was commented out by
+> > commit f65573314e4e ("[POWERPC] Re-organize Kconfig code for 4xx in
+> > arch/powerpc") then removed by commit ff5f483f3091 ("powerpc: 4xx: remove
+> > commented out Kconfig entries").
+> >
+> > Let's remove support for 440SP, since nobody can be using it anyway.
+> >
+> > This dead code was found by kconfirm, a static analysis tool for Kconfig.
 
-commit f5c4a27207edbbbf16dc41d215bb04c300d1dd66
-Author: Frank Li <Frank.Li@nxp.com>
+> >
+> > Signed-off-by: Julian Braha <julianbraha@gmail.com>
+> > ---
+> 
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> 
+> > Changes since v2:
+> > - cleaned up preprocessor condition
+> >
+> > Link to v2:
+> > https://lore.kernel.org/all/20260901150645.1199097-1-julianbraha@gmail.com/
+> >
+> > Changes since v1:
+> > - added historic details to description
+> >
+> > Link to v1:
+> > https://lore.kernel.org/all/20260816125615.985387-1-julianbraha@gmail.com/
+> > ---
+> >  arch/powerpc/boot/cuboot-katmai.c   |  2 +-
+> >  arch/powerpc/include/asm/async_tx.h |  2 +-
+> >  arch/powerpc/include/asm/dcr-regs.h | 10 +++++-----
+> >  arch/powerpc/kernel/cpu_specs_44x.h | 12 ------------
+> >  arch/powerpc/platforms/44x/Kconfig  |  3 ---
+> >  drivers/dma/Kconfig                 |  2 +-
+> >  drivers/dma/ppc4xx/adma.c           |  9 ---------
+> >  drivers/dma/ppc4xx/adma.h           |  2 +-
+> >  drivers/dma/ppc4xx/dma.h            |  9 ---------
 
-dmaengine: add dmaengine_prep_dma_(pq|pq_val|interrupt|xor)() API
+Can you send dmaengine only parts please.. or if this goes thru ppc
+tree:
 
-This commit adds inline wrappers for several DMA engine preparation
-functions to provide a clean public API. It also incorporates proper
-pointer checks before accessing the underlying device callbacks.
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
-> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-> index c3a49a33307c6..6a187136f9493 100644
-> --- a/include/linux/dmaengine.h
-> +++ b/include/linux/dmaengine.h
-
-[ ... ]
-
-> +/**
-> + * dmaengine_prep_dma_pq_val - prepare a DMA PQ validation operation
-> + * @chan: the channel to use for this operation
-> + * @pq: array of two addresses holding existing P and Q parity buffers
-> + * @src: array of source buffer addresses
-> + * @src_cnt: number of source buffers
-> + * @scf: array of scaling coefficients, one per source buffer
-> + * @len: length in bytes of each buffer
-> + * @pqres: output flags indicating P and/or Q check results (SUM_CHECK_P=
-_VALID,
-> + *         SUM_CHECK_Q_VALID)
-
-[Severity: Low]
-This isn't a bug, but the documentation refers to non-existent constants.
-Should this instead reference the correct SUM_CHECK_P_RESULT and
-SUM_CHECK_Q_RESULT flags?
-
-> + * @flags: DMA engine flags (e.g. DMA_PREP_INTERRUPT)
-> + *
-> + * Prepare a PQ validation transaction.  The engine recomputes P and Q f=
-rom the
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261005-dmaengine_=
-prep_dma_pq-v3-0-a4a241f26fa7@nxp.com?part=3D1
+-- 
+~Vinod
