@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE6E4CDA0E;
-	Mon,  5 Oct 2026 15:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3FA4CB8A6;
+	Mon,  5 Oct 2026 15:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791214990; cv=none; b=K10X2GhDv4sGiy4+fEWwX8+480eC3fKQ81PS0q+dPzFESRdpcC/bT+EDusDW5xYGaij8JTEF5vmxo7qQHOMyP9NjxLFJ3DVRCAq5cwoHqRb77BkPjYtadXhHMm1huE3mEoChvW07aBNLiSVwBTaVYOqgl+8XYZEh/fY5Hlj/X7c=
+	t=1791214992; cv=none; b=kGzqAYxQZ6CNIip1wcd9SJqeoEMBYgR+LKaNHXpPWuwtferGeHHIRKS7ABzq9/Kr+CpKgiWqbTgOH/kFrpm7oKgxOMIrOgCBKLMOQ+KuLC0zwO6c7Dfs3coQdJ2Sv4Ti92g+SIkwHsnsjwEyQd6TNEmBfkN6EsR9eM40SMnkgK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791214990; c=relaxed/simple;
-	bh=TZ37uppsEKT6O/lt70QLZZW1s9HfosgORGRDGdRokKw=;
+	s=arc-20240116; t=1791214992; c=relaxed/simple;
+	bh=GXAQZUSWpy4hKJwe2mGmv4PutXDENGVjexFI2E2MPYk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=daOaDNgnYd+gFWUV0aTiVZtu7NBd7sniSG0LS2Zm4HQZ+InDq6Im4WU2mCYLBtfatWKogq7065nIJcVPtiNUJnorA7lxqieWSoyDkq2QDfOmUeCK75rJ3btcbBdMNPzVcznFVFbvt9zGovDMUDxdfIg3chbKDyBBAlDSCVopC/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QZ8VS3Dl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XQmraznhjjW1ooqYzpT3NvqMldKSis1RxVHUimTSBX5OumMBo2FbzLOEMpcGBQFBhSbC1rb33GcHSuI94sla0s+iyMK/Q6fXBgogNX/JSZq5DWlybpSAbGr1dlEHNpNiZLIod/n/ZynQSebBJgi5L0xr6K8RR6/YGstDdDbITUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sx4/jEcs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QZ8VS3Dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F076F1F00899;
-	Mon,  5 Oct 2026 15:43:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sx4/jEcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7146A1F000FF;
+	Mon,  5 Oct 2026 15:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791214988;
-	bh=Q1Vfx7NrxHZYYW5wQYD7P1oRNFAFAgPBJklq3qG+Db8=;
+	s=k20260515; t=1791214991;
+	bh=0gYw3HiLxnLxVmIB/d2DZS1XkezGBNZsq55r+hnmTl4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=QZ8VS3DlM0nG+JWTLc1DKFMUZcfUCJzceZk2H1N9tb5uP4m/xH6GS1DKTl/6q+0Xw
-	 Rsdc3xKVZnMgeMbB+iCO1HnRnhRX/zFf7H3cC2TJB/s5sPJ3Rs9qt4cefXKoKIIlsA
-	 ev7ZcFrqmwtmjyHnlVO7rDhJsuul/aI+oOoQtCVC6ifhFg9NtPOmtRFXAF7ZPDIQUC
-	 fJ4kQam4r4tRpn7mOJz45gDnkFVpEIc+KAbBlN32G1QlPJgClFjzeZM0RSh2pnCcXz
-	 Zd47isaxvvS92HMx2+x1A53HJFtmn4oPkimxfHPPxBK5MGqSU1pwNZ0XcA0hJ8UilY
-	 mYFyRGyTc4ZIA==
+	b=Sx4/jEcsnd5SS+JfzczFUpSgaTqrZcwsJTCDtOH8jwvEYHBPA1ZuuWk1WSztbCiwG
+	 5aOSovAvIgLmXWW0E7cS39MbTxRh/vNn4g/pRfKEuhJaA9ldLiFmnxJTBB4JW4vCyT
+	 NjQkW4NcVMai2F7QdSdcNulgeJCBDfPQP8t6c2jg+Uf40RvfxsE/G4tg2WT8e48SsY
+	 n33YS50hQwO19Nc+RkrEr/hU/topY2rC6SgChKA4UQlBJiicrDHc8PW7wl4AYF13y2
+	 maVH1NtbDyqJTP+peyZL/vuVTazTy28SZWieQkoYQJfudXP+StxbL7A4s8Nda51xIK
+	 t0H+S72Lw4kXw==
 From: Vinod Koul <vkoul@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Xianwei Zhao <xianwei.zhao@amlogic.com>
-Cc: linux-amlogic@lists.infradead.org, dmaengine@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-hardening@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
- Frank Li <Frank.Li@nxp.com>
-In-Reply-To: <20260903-amlogic-dma-v12-0-f769bc344056@amlogic.com>
-References: <20260903-amlogic-dma-v12-0-f769bc344056@amlogic.com>
-Subject: Re: [PATCH v12 0/3] Add Amlogic general DMA
-Message-Id: <179121498561.358863.6559293781501344071.b4-ty@kernel.org>
-Date: Mon, 05 Oct 2026 17:43:05 +0200
+To: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, Frank Li <Frank.Li@kernel.org>, 
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org, "Claude Opus 4.8" <noreply@anthropic.com>
+In-Reply-To: <20260905062833.272484-1-diegomancera.dev@gmail.com>
+References: <20260905062833.272484-1-diegomancera.dev@gmail.com>
+Subject: Re: [PATCH] dmaengine: loongson2-apb-cmc: fix descriptor leak in
+ prep_slave_sg()
+Message-Id: <179121498909.358863.17544428904174593757.b4-ty@kernel.org>
+Date: Mon, 05 Oct 2026 17:43:09 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -52,19 +48,21 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Thu, 03 Sep 2026 07:38:27 +0000, Xianwei Zhao wrote:
-> Add DMA driver and bindigns for the Amlogic SoCs.
+On Sat, 05 Sep 2026 00:28:33 -0600, Diego Fernando Mancera Gomez wrote:
+> loongson2_cmc_dma_prep_slave_sg() allocates the descriptor with
+> kzalloc_flex() before iterating over the scatterlist. If
+> loongson2_cmc_dma_set_xfer_param() fails inside the loop, the function
+> returns ERR_PTR(ret) without freeing the descriptor. At this point the
+> descriptor has not been handed to vchan_tx_prep() yet, so nothing else
+> will ever free it, leaking it on every failed ->device_prep_slave_sg()
+> call (e.g. an unsupported transfer direction or bus width).
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/3] dt-bindings: dma: Add Amlogic A9 SoC DMA
-      commit: 9d79e5efaf7b908fd3eea1a6afb34fc06dfa1d7e
-[2/3] dmaengine: amlogic: Add general DMA driver for A9
-      commit: b84b5197e344e2d378a9edf5d782b6fbddff8d06
-[3/3] MAINTAINERS: Add an entry for Amlogic DMA driver
-      commit: a5b2763df36b5c8ca0927f24ee97d9617e4eb6eb
+[1/1] dmaengine: loongson2-apb-cmc: fix descriptor leak in prep_slave_sg()
+      commit: 4bbfc1d7e56134336dd1f792f51ee88a600a27ad
 
 Best regards,
 -- 
