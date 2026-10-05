@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B59E4A341C;
-	Mon,  5 Oct 2026 14:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4836548425A
+	for <dmaengine@vger.kernel.org>; Mon,  5 Oct 2026 14:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791209975; cv=none; b=uFe/RS8GPvVO5UyDOz6KMz3/e9ee1n1HXFbeLPf16CMaQ313DfSOYiN9ZKoBOiL/qp4Nl3s25wcTi5rBVzpdHSyBrHl6SbnHMqzM/1BQ0XgpjrbMe8RhvcmmQzaAGyLzumGVTTQQu02pe4vLAbSn7WgI97l6xD47B4dNSHA0an0=
+	t=1791210303; cv=none; b=t/wu1o4IhLUkrRhaknf5QcHAPXlRN/QY4aY7GY4SKfy1zmaXUJxZqdk7mGVBeLe0Yi1TeL3EYat8ImaLD1SQtcC6eSVJpeOIi3mjNmIGDKWFTgrxgM7R2ka/hz9iletOPoQq6UoUwBR+BdfsDtskMQs/SwIsmZVgh9iuRZxZ27E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791209975; c=relaxed/simple;
-	bh=dR3nf6xCW4np55kOQycEYodNj9RL9fJ2Y54GNF1lX0I=;
+	s=arc-20240116; t=1791210303; c=relaxed/simple;
+	bh=xfXDUnnHmrER0PBSf15tSFPTMMzsFy6KXRrC7JYpik4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NR/ujU/Ikk15zP556/gie31IvEB1cbUm1DIoT6ThOhexupODr0ZQyuzvpgEMP67OYOvqT+8DM7lFWKNRiIwWcc8wQMlImbdcpxe+0sOP5L6O96kAsBt3kXj3Ud0OHGSVWng4h1Aiu1uYbUAbvqMcT4RKSKaKPImtE/esRpyomJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WE1+f07b; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=bxM27/e8cgpnZURW8epEDiLeJC7n/BDyVoaQvhXcATB8op75KhzYVK3vUzcCvb74j3mXejA5i50DJoxbcGZa366+E0W8cXFBgR9kzP7q8GkP4f1Lq02d0RlmgqckJm+8poANZD4VocbpLA9Y42BnaXC/ieBxzRgJglOScU95xpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o2buJH2W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WE1+f07b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741221F000FF;
-	Mon,  5 Oct 2026 14:19:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o2buJH2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE51B1F000FF;
+	Mon,  5 Oct 2026 14:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791209966;
-	bh=REP6MYHxsdh3OHkYaHhZIo0xot4Ti1gN9Nb+mTFa5RM=;
+	s=k20260515; t=1791210294;
+	bh=GZXqVHffbtS9OmqiTsAvrAvLKtalktJGFjXvPB3NZYQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=WE1+f07bVgtvLavxmSBzqprPbpkXFOKlk+AzeqIBV9ESKFJmUNeBQgD2OlvEY7anA
-	 tgC/husuLQxl3QkKLJFhDRGFbWjl2hdB5TaSrzYK/vfJrTDAZnseNJ4yVi2/5dMfBQ
-	 DmjHwK2s0h42kz5kyVcBUJTUmAa0R4GI43AmEfYSYZY2FBF3L1xYEAqsDwOWW7ovyS
-	 hXDasPMgIDiT2TvpHi3UoUGEpMkkArtHZOvp0Tukab6boJJUyP8w634EVNMCnVZKgA
-	 P/38Rqy6wR40fiKNc9oleBEmgEyr1y93KbFOiS+2J6HJLpNSiD6D1gSvI7WIX3YaGX
-	 QZJrkuZ30ntbw==
-Date: Mon, 5 Oct 2026 16:19:23 +0200
+	b=o2buJH2WuEvgMj1AH4qK58ixpphjb0tEgKf0LTJ9+Df2w8IxvltI0+wv2D4ClY+ba
+	 DQmFStj7HlfxCwbfGJrYRDTTfcxWEI6DbMzV9I1bklwC6vLr1HjPo01IWIGciwwlXH
+	 hCgY3oVaxIjoGR4pbYDN3+Zmwa80vbu/PKZszvB5R32yY1Y/vvxVAiTB9MasR0wuUm
+	 J73kuzngdBVqOELJlGoy7JV5dU2MHmuDEONOYk7/66TCGeg/nlog5i3KZPSfLbezdW
+	 xKGRToNvuyoQaXaCCVVeKUSIOMSW8sVcBX4QSGL0Ghl1Gi1vjsM7r2ndrMEhej2AMs
+	 Dg649XOMUjYLg==
+Date: Mon, 5 Oct 2026 16:24:51 +0200
 From: Vinod Koul <vkoul@kernel.org>
-To: Devendra K Verma <devverma@amd.com>
-Cc: mani@kernel.org, frank.li@kernel.org, den@valinux.co.jp,
-	dmaengine@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, michal.simek@amd.com
-Subject: Re: [PATCH v2 1/2] dmaengine: dw-edma: Sort Register Field Macros by
- Bit Position
-Message-ID: <asOx6y7hiVrEUNGa@parshuram>
-References: <20260917103050.1020982-1-devverma@amd.com>
- <20260917103050.1020982-2-devverma@amd.com>
+To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Frank Li <Frank.li@oss.nxp.com>, dmaengine@vger.kernel.org,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Frank Li <Frank.Li@kernel.org>
+Subject: Re: [PATCH v4] dmaengine: loongson: Remove the dev_dbg() output
+Message-ID: <asOzMw3YIXi7GqJl@parshuram>
+References: <20260921195745.gY25rf4P@linutronix.de>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -45,39 +43,26 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260917103050.1020982-2-devverma@amd.com>
+In-Reply-To: <20260921195745.gY25rf4P@linutronix.de>
 
-On 17-09-26, 16:00, Devendra K Verma wrote:
-> Sort register field macros by bit position to improve readability.
-> No functional change.
-
-This fails on current code and needs a bit more sorting.
-
+On 21-09-26, 21:57, Sebastian Andrzej Siewior wrote:
+> The %pK format modifier was meant for /proc kind of output, not general
+> printk output. Since commit ad67b74d2469d ("printk: hash addresses
+> printed with %p") pointers are hashed by default and the behaviour can
+> be controller by `hash_pointers' boot argument.
+> The policy on %p is to not introduce new ones.
 > 
-> Signed-off-by: Devendra K Verma <devverma@amd.com>
-> ---
-> Changes in v1:
->    o Corrected heading and body as per reviewer's suggestion
-> ---
->  drivers/dma/dw-edma/dw-edma-pcie.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> The output in loongson2_cmc_dma_issue_pending() is the only dev_dbg()
+> output in the driver and is only output once the transfer is started.
+> There is no output issued by the driver if the transfer is completed, if
+> a follow-up transfer is started or if any of the other callbacks (such
+> as loongson2_cmc_dma_tx_status()) are invoked. This output does not look
+> essential.
 > 
-> diff --git a/drivers/dma/dw-edma/dw-edma-pcie.c b/drivers/dma/dw-edma/dw-edma-pcie.c
-> index 9f237ba916de..006dea7d6322 100644
-> --- a/drivers/dma/dw-edma/dw-edma-pcie.c
-> +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-> @@ -31,8 +31,8 @@
->  
->  #define DW_PCIE_XILINX_MDB_VSEC_DMA_ID		0x6
->  #define DW_PCIE_XILINX_MDB_VSEC_ID		0x20
-> -#define DW_PCIE_XILINX_MDB_VSEC_DMA_BAR		GENMASK(10, 8)
->  #define DW_PCIE_XILINX_MDB_VSEC_DMA_MAP		GENMASK(2, 0)
-> +#define DW_PCIE_XILINX_MDB_VSEC_DMA_BAR		GENMASK(10, 8)
->  #define DW_PCIE_XILINX_MDB_VSEC_DMA_WR_CH	GENMASK(9, 0)
->  #define DW_PCIE_XILINX_MDB_VSEC_DMA_RD_CH	GENMASK(25, 16)
->  
-> -- 
-> 2.43.0
+> Instead removing just the %pK output, remove the complete dev_dbg()
+> output from the driver.
+
+This doesnt apply against the current code, pls rebase
 
 -- 
 ~Vinod
