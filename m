@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43FB4D5974;
-	Mon,  5 Oct 2026 15:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216494D796C;
+	Mon,  5 Oct 2026 15:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791215009; cv=none; b=Ys07PKg9DkdiEJliU3pCJYDf4vB9/sbOKr9aY/pRCPEQbH/HHd9sLU4ediHv4A5sKkuqGcYl/h2GgQEJ2xiXsvBO9yHkUIW/asx0Ml3U4aMadd6oY59dhAFoV8cxnP+B/Qey5EjsnmwjwTvmPPYhSuX4Fs0Qfnl/vzM9MlXYENA=
+	t=1791215013; cv=none; b=M8sf8glynagrimT6pY77bJhE50+k7wJM7b/LPyfbPwH3ie0LUdd/pM8dHKbltGNfZnhsMgWDOnDXgDL+NdYk8LQGb8ae4RD3ZlTaLJg3F/uYhm57pYsgK3urvA89ULIOTARgMMLnTKuc650O77z+a5+4VdFxLzDPozH2i6WX10s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791215009; c=relaxed/simple;
-	bh=aEb30S0VpNW/W5wSJTciNZeQlFAFdKqun402WeND7rI=;
+	s=arc-20240116; t=1791215013; c=relaxed/simple;
+	bh=MGtCI72p328j03OTkEC7xfAJkAt4172XIwEPAbwPTRg=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=PQYxMcLOCfykJGOTJAU8LRVdrZV5dimaIA8TMppPzFSqGyu01NtBi/Xqg4XDwLXSaFwI2No/s5i/h1X7hw9Nha3CEhaR988OvYMJfGQtBhhk04BGUKaDdPIiif9pNwadmXdxNZFyBW+SWIrD1825hZ6Y04Mbp5IVUawNjHf5UrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXik+ztl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IvawWL4KI50oxHYq/yBkFyIWkgouW/qKHty+3x8DjFN5hR7aGdOkIG8x/9CyzdyLyWcdNU2Tr12qdXYA4+SGt/0ElNDvnsy9yEX5Oxab6FE+7R0MWwCXpBk7v0q8n7f0CbfmGBfp0RUOsqhkNbEhrmK1Ap9X9Z6KiT9A4pi8dUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUaACKvr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXik+ztl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9901F00893;
-	Mon,  5 Oct 2026 15:43:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUaACKvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364C91F000FF;
+	Mon,  5 Oct 2026 15:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791215008;
-	bh=8DlIKj7jO7jqn1va1Bn6lXQ5MWKlFIDzvl6eRb51k08=;
+	s=k20260515; t=1791215011;
+	bh=2mhnBnDa3icGYBlrsRq1w0WPoVIqoiIvOyy81bKb3so=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=DXik+ztlNzFxuQmBbL1M94ngAD1VT7eoYbgATclZTHrwmQMDvMQdUjG258qY+gbul
-	 RvyI9tJ8mC6MPLUnZW6zq6wxu5Tq6VQJ5wWSVg6uWgcCJgWXRHJwwEobkmrngvvWkI
-	 yi5RlcB+fP8oYxli0WUjkSMRMoRshOCcDsPRdB0cyyNI3Y4EcMBXjR9CLqXo0gRRD7
-	 fL3uAJovDmar0zztlbNFjC4r20q8uwjibZSQyttpJzAIFswOlo+Uf3Oh4O7ROVkzIT
-	 KlZif+RpZ6eMGHMnwS1jsiKMLdJ0zFRZyAAUWNY2qLc2YbYzpR0B4LETn7mcmXr15y
-	 +5CFvlyR2x2dw==
+	b=XUaACKvrL85sLcsCKGppctEwswqkz0y46759GPzWH6IWfvv15rfvUqguVEdufq0L8
+	 wG9NUWLDmTDqtUE//pKuwtEdNRxBevJVNvQ4KUXfLG+uaGeN9sPcYqSukrNokLbo2y
+	 y8jd0F7MvAXHcKYDfHRF/d9rtZG75SStAqJS3rm3Jq9Coz3MQCBZCKvg/SObgNa5r2
+	 Q6QHUPPsjh/Gig15vUCQVaNI2N0NVFonMGjru5LL/eplXE/6GfCVxET067IEBDExNN
+	 OVk3Ve43ThwdlEPqT73A4oY7TVGCaACaAmiyBIuiJ5+A4l75DgiLCdYnZ4pZC4UFuG
+	 eT00+8fBj2Nqg==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20260918175950.21657-1-rosenp@gmail.com>
-References: <20260918175950.21657-1-rosenp@gmail.com>
-Subject: Re: [PATCHv2] dmaengine: bestcomm: Enable compile testing
-Message-Id: <179121500730.358863.14325828175484264801.b4-ty@kernel.org>
-Date: Mon, 05 Oct 2026 17:43:27 +0200
+To: Frank.Li@kernel.org, biju.das.jz@bp.renesas.com, 
+ geert+renesas@glider.be, Claudiu Beznea <claudiu.beznea@kernel.org>
+Cc: claudiu.beznea@tuxon.dev, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+ Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>, stable@vger.kernel.org, 
+ Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+In-Reply-To: <20260922092037.224884-1-claudiu.beznea@kernel.org>
+References: <20260922092037.224884-1-claudiu.beznea@kernel.org>
+Subject: Re: [PATCH] dmaengine: sh: rz-dmac: Fix off-by-one in residue
+ lmdesc lookup
+Message-Id: <179121500885.358863.14766200941521520131.b4-ty@kernel.org>
+Date: Mon, 05 Oct 2026 17:43:28 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -45,20 +50,22 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Fri, 18 Sep 2026 10:59:50 -0700, Rosen Penev wrote:
-> Allow the BestComm DMA engine to be selected for PowerPC
-> compile-test builds.
+On Tue, 22 Sep 2026 12:20:37 +0300, Claudiu Beznea wrote:
+> lmdesc->nxla is the address of the next descriptor, so comparing it
+> against CRLA, which is the address of the current descriptor,
+> finds the descriptor before the active one, not the active one.
+> The residue loops below then summed one lmdesc too many on top of
+> that.
 > 
-> The freescale ethernet and sound drivers now need a dependency on
-> PPC_MPC52xx as they use headers/functions from that platform.
-> 
+> Compare each descriptor's own address to CRLA instead, and add tb
+> after advancing to the next lmdesc.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: bestcomm: Enable compile testing
-      commit: 57946765c242005bdb16d17944c27662c8c5b013
+[1/1] dmaengine: sh: rz-dmac: Fix off-by-one in residue lmdesc lookup
+      commit: 9db8e502b34bc1df8078abd0169a4fa0624de3bb
 
 Best regards,
 -- 
