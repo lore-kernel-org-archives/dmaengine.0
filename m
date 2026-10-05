@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777CB4D09F3;
-	Mon,  5 Oct 2026 15:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43FB4D5974;
+	Mon,  5 Oct 2026 15:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791215008; cv=none; b=KkbCY54Zpyi0QySl+S9u/1MPBYkomnsVjeTBTRxYWeEod5KiMKK0YUoLddoOtaC+E0FHsCje7BzQpXPd4BZOdxQE9bxUySGVp5yTlswGiClziEarr/4q43cFW39izG4g+N7NH+aLkN3Ou9QvngUeCADFYOjQsOgfYNPwZMCvBQ4=
+	t=1791215009; cv=none; b=Ys07PKg9DkdiEJliU3pCJYDf4vB9/sbOKr9aY/pRCPEQbH/HHd9sLU4ediHv4A5sKkuqGcYl/h2GgQEJ2xiXsvBO9yHkUIW/asx0Ml3U4aMadd6oY59dhAFoV8cxnP+B/Qey5EjsnmwjwTvmPPYhSuX4Fs0Qfnl/vzM9MlXYENA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791215008; c=relaxed/simple;
-	bh=0QsYJAEtA/wcZmbgGyZ19sQErgmiCOhqDt3alsmxDTI=;
+	s=arc-20240116; t=1791215009; c=relaxed/simple;
+	bh=aEb30S0VpNW/W5wSJTciNZeQlFAFdKqun402WeND7rI=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=SYQ9Wo22UbPZN12LxUCFP+jF1Lz+Nm6FJhz87qhl66TZGi1Hm8cq+zEytc/otGnQhnUwjY1W2gFEvG70w75sv/8SyVZWjlZy8WkPt8QQpmSZ3zcyh9Am+C3tK3z6dIbdC2hZbqq+EEXd4tQYSdtTKozVObJego+Zl68LMSmz1cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TniW9neX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PQYxMcLOCfykJGOTJAU8LRVdrZV5dimaIA8TMppPzFSqGyu01NtBi/Xqg4XDwLXSaFwI2No/s5i/h1X7hw9Nha3CEhaR988OvYMJfGQtBhhk04BGUKaDdPIiif9pNwadmXdxNZFyBW+SWIrD1825hZ6Y04Mbp5IVUawNjHf5UrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXik+ztl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TniW9neX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6FA1F000FF;
-	Mon,  5 Oct 2026 15:43:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXik+ztl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9901F00893;
+	Mon,  5 Oct 2026 15:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791215007;
-	bh=Q5WuGdChPOQR0vjftfl5fUSQjcwbvKwZfaPsZ7I0dkA=;
+	s=k20260515; t=1791215008;
+	bh=8DlIKj7jO7jqn1va1Bn6lXQ5MWKlFIDzvl6eRb51k08=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=TniW9neXllce7NIK2HiIcHuRubQzns8HlabuzsWcp3yG85FBThAFvjZdmvfuV7aEc
-	 cpHkuKa0hEnF10t0ClbRcQDlYph/dCcWVeBA6gm5yZz+TM65uO8geOGpt4OuOnW9ZC
-	 JS2eMfltT2QZAOt8oQ2AB4PKX3fjPZerLgSH4RitYjwLscnvLCHbXNwlQmNx0Lcz3z
-	 dBCtiS53rrGO5Jh91sjM70fP4mPJFuGJyQmUdkiF6Gq2E+YZbjJglXs2vdy9FwquUF
-	 smDcna+FgKNgAnKpQ7mdgkHZ++TV/UjYrO0J48KpZChxrDBR/PyH96y7GLcg1RHDfR
-	 M2x+fAs5KRP9w==
+	b=DXik+ztlNzFxuQmBbL1M94ngAD1VT7eoYbgATclZTHrwmQMDvMQdUjG258qY+gbul
+	 RvyI9tJ8mC6MPLUnZW6zq6wxu5Tq6VQJ5wWSVg6uWgcCJgWXRHJwwEobkmrngvvWkI
+	 yi5RlcB+fP8oYxli0WUjkSMRMoRshOCcDsPRdB0cyyNI3Y4EcMBXjR9CLqXo0gRRD7
+	 fL3uAJovDmar0zztlbNFjC4r20q8uwjibZSQyttpJzAIFswOlo+Uf3Oh4O7ROVkzIT
+	 KlZif+RpZ6eMGHMnwS1jsiKMLdJ0zFRZyAAUWNY2qLc2YbYzpR0B4LETn7mcmXr15y
+	 +5CFvlyR2x2dw==
 From: Vinod Koul <vkoul@kernel.org>
-To: Viresh Kumar <vireshk@kernel.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Frank Li <Frank.Li@kernel.org>, Binbin Zhou <zhoubinbin@loongson.cn>, 
- Sinan Kaya <okaya@kernel.org>, 
- Pawel Zalewski <pzalewski@thegoodpenguin.co.uk>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Frank Li <Frank.Li@nxp.com>
-In-Reply-To: <20260916-acpi-dma-v3-0-0dac05654967@thegoodpenguin.co.uk>
-References: <20260916-acpi-dma-v3-0-0dac05654967@thegoodpenguin.co.uk>
-Subject: Re: [PATCH v3 0/4] dmaengine: use designated initializers for
- acpi_device_id
-Message-Id: <179121500435.358863.16138122883017416450.b4-ty@kernel.org>
-Date: Mon, 05 Oct 2026 17:43:24 +0200
+To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
+Cc: Frank Li <Frank.Li@kernel.org>, linux-kernel@vger.kernel.org
+In-Reply-To: <20260918175950.21657-1-rosenp@gmail.com>
+References: <20260918175950.21657-1-rosenp@gmail.com>
+Subject: Re: [PATCHv2] dmaengine: bestcomm: Enable compile testing
+Message-Id: <179121500730.358863.14325828175484264801.b4-ty@kernel.org>
+Date: Mon, 05 Oct 2026 17:43:27 +0200
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -52,29 +45,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Wed, 16 Sep 2026 16:27:53 +0100, Pawel Zalewski wrote:
-> This series is converting lists that contain the acpi_device_id struct,
-> which is defined in the include/linux/device-id/acpi.h to make use of named
-> initializers (which they do not use currently). This work is part of the on
-> going effort in the kernel associated with device-ids [1]
+On Fri, 18 Sep 2026 10:59:50 -0700, Rosen Penev wrote:
+> Allow the BestComm DMA engine to be selected for PowerPC
+> compile-test builds.
 > 
-> The plan is to convert acpi_device_id::driver_data to have an anonymous
-> union, similarly to what was introduced for PCI and I2C device ID tables.
-> The goal is to increase type-safety (most of the existing casts are gone),
-> to improve readability and to make use intent a bit more clear:
+> The freescale ethernet and sound drivers now need a dependency on
+> PPC_MPC52xx as they use headers/functions from that platform.
+> 
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] dmaengine: dw: use designated initializers for acpi_device_id
-      commit: 3a03a5866e82027c0fa96f6208721397e5a6ff78
-[2/4] dmaengine: loongson: use named initializers for acpi_device_id
-      commit: b37c93bc1cfd0f5fb898b7943bd0c1797341a41d
-[3/4] dmaengine: qcom: use named initializers for acpi_device_id
-      commit: db09763394959442d91d86840717412073c41abc
-[4/4] dmaengine: xgene-dma: use named initializers for acpi_device_id
-      commit: b2c203a5878b0d3f95e4802fa01e320d317b82cf
+[1/1] dmaengine: bestcomm: Enable compile testing
+      commit: 57946765c242005bdb16d17944c27662c8c5b013
 
 Best regards,
 -- 
