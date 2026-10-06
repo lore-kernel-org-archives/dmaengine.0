@@ -1,91 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C5A3E49C2
-	for <dmaengine@vger.kernel.org>; Tue,  6 Oct 2026 10:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E742E612E;
+	Tue,  6 Oct 2026 13:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791282655; cv=none; b=jAMJoswcuww2PR3Ypb3IFbcJ/wju3LQfDp39JZE8s7TaqRiiinZNFHGylg8p/JYLJhLIWxco32ut93D03zmj1qQD7Oy9CVYnxkwPmRwlxAMuI3NEkbbjtKyIbc2sPqS7cgbBxdzJh6v4BsOED74pRK5OLvYqRInYpu162OCJyXc=
+	t=1791292883; cv=none; b=JsxB9/4VnaOdpHGkyU4orUGfdX2ynJ0E2JS5NjuMH+d3du09W16oGYpDPrzu5mtl4kXedNJk05JMF/s3MJA5QGlSEo7K9gYxQhxdUGlQNdpwoy/rE0xFWJmJFXcnZegCndRwwnDwcyeDv609N1PDx1V8T6qhCFszF5Q3kOKSrlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791282655; c=relaxed/simple;
-	bh=xQbV5GbBp43r4Try8maWYx6KPArL8fbqa1bW31iNOu0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nPJAcTWfIEBUJAi9CCmQffuiXY4eaYjrxPYiSDhAmJs+k7Rb3Hj9nLIutV1N+DMCRUHwWqH7iHg551Tl9V+D4F/q5kwhXP+03eXKDDU0vX2NtQgNHUAxD5DD7W2r7tqcvegGT4n/b8oRppPClXMF4JeztQ5nySs5ygaSJN1nG5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dD0cwu0N; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791292883; c=relaxed/simple;
+	bh=GtYfK7DE21vH43faUucQ7DDkw5kq00kA8zMWE5wRT5E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kbl3PtJkBNerSJsqgocCjL9AE2c/hCw9DH847vPyPKaJtyYkMvy3aDJxJU6+9Un/17UTubm2pU0CVIdFvwnDjBSTWkghnmpTOc/+kIfQlf8y6ta2/6GzEEB1g/JSE45ksIAz0rtUZUSi/VX1vBJU9pAZ7SC+MknAoQYQqQJLarE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VdQe8ZD7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dD0cwu0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C4B1F008A2
-	for <dmaengine@vger.kernel.org>; Tue,  6 Oct 2026 10:30:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VdQe8ZD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB3A1F000FF;
+	Tue,  6 Oct 2026 13:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791282653;
-	bh=5ZaN40cf3gaPYVrOntAep/0sU9jdzMlSTIwHDqydOaY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=dD0cwu0NaDmzI6FDzUr53SqL2l2laUa5BRdUfSDXpMeJulyDsNvKsVevM17EV3FEd
-	 UnKpbzoEAi1KOzIDEnEX7hQZBVO5C3K16NnV0NfEVsa75lDW43NjtZdYPMUCx8kT6T
-	 V8dDmhAxtndAcxWds7MxUMrjuRmmQvQuryZPTJHIBHYHLkXZGXoeemLfEexl0uadYO
-	 x7OD+ttM+AOxtRzH0yQD4Mh6ONR7x4isxees6zA9pEdZ9XuqQ8uB2KiPLHPnoUTkJP
-	 jQfDo++ybon7Jrf/vh/St2hPwor3pVNafuKsj1hcHTvtBSXNJsk2YgzKp/i53Om+GZ
-	 xpXvOTPX/BvJQ==
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3a20c95e412so3777201fa.1
-        for <dmaengine@vger.kernel.org>; Tue, 06 Oct 2026 03:30:53 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AKwUvBz2HQ8j5F8/asyDlPZpPeOHYvRtH/qRSSUZ92HU3y16SKAwAoLNPEV6I+cZ3WzJ95Y9/HYJ+8Y7Kig=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJ4hWnP3OywF3emlotYAuXb8TeO/e+3QWH1CPdNag/c2QNa4P7R
-	1T7LcP5q+hoqlchTOMD1Uu/x5ZfdbPn/1k8VFAkp8Y5LsNvk5CHAEH3F96dGFyPZwyeFoNDDHaK
-	KegJdvGP9LpWPNVWmKMrSia5eR54zMwk=
-X-Received: by 2002:a2e:9fca:0:b0:3a9:969e:98a6 with SMTP id
- 38308e7fff4ca-3a99af67db3mr1737921fa.25.1791282652577; Tue, 06 Oct 2026
- 03:30:52 -0700 (PDT)
+	s=k20260515; t=1791292882;
+	bh=ve6FyCySopgjKeMpIP/0QU8qxdOqPiBfDjjpOehpCoY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VdQe8ZD7EPqTDHxtueMopqyaA1HhJuYlOfkK5y35AbXr7QAEUOVHdzh02IY0Ui1sS
+	 dTmdQ2Wqr/EJ9L500f7BIdOdngJN8ypO5dwzdm9U4V4xc1ZozSS/Z0+DJ1npqgwDWN
+	 CLLY3/r6Pe9nVzsx4VPzR1fcFViQfNV7ATamTawPejNpLVkCDAoVKHge+ujnFUTIoS
+	 o8oRA8gLvsrOM3JdZIy3gPrfNiNDr0IrGpRPZQZocUpVHpCa8s43/eNkWQZGUExh5G
+	 o11rGxaWa5eVuns9oAa9KUMbn3A9UkiiXgTdvDIXe69dUfMG7ktRxa1Dkao+9iTntX
+	 kckAQe/EUYfSg==
+Date: Tue, 6 Oct 2026 15:21:18 +0200
+From: Vinod Koul <vkoul@kernel.org>
+To: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Frank Li <Frank.Li@kernel.org>, Lee Jones <lee@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	dmaengine@vger.kernel.org, Frank Li <Frank.li@oss.nxp.com>
+Subject: Re: [PATCH v3 15/18] dmaengine: ste_dma40: Use power domain for LCLA
+ SRAM
+Message-ID: <asT1zuk9WNJU4p9M@parshuram>
+References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org>
+ <20260921-ux500-power-domains-v7-1-v3-15-9352be6b86b1@kernel.org>
+ <CAPx+jO_KJJ6ORKuw6VJmtZAOEnzVz0+bq3bEFupAK_4UROKBAA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org>
-In-Reply-To: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 6 Oct 2026 12:30:40 +0200
-X-Gmail-Original-Message-ID: <CAD++jL=gFt9kKZH9T-m8B_pbwRvzc35tTrMn5V238d3528DpUg@mail.gmail.com>
-X-Gm-Features: AclHuK_AtwEo8WT_r25jczYf_hFshziwzfIIOr6vEXjFvPYUcVAgc5OmT1Oo8GM
-Message-ID: <CAD++jL=gFt9kKZH9T-m8B_pbwRvzc35tTrMn5V238d3528DpUg@mail.gmail.com>
-Subject: Re: [PATCH v3 00/18] pmdomain: st: ux500: Implement ux500 power domains
-To: Ulf Hansson <ulfh@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	dmaengine@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Frank Li <Frank.Li@nxp.com>, 
-	Frank Li <Frank.li@oss.nxp.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mark Brown <broonie@kernel.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Frank Li <Frank.Li@kernel.org>, 
-	Lee Jones <lee@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPx+jO_KJJ6ORKuw6VJmtZAOEnzVz0+bq3bEFupAK_4UROKBAA@mail.gmail.com>
 
-Hi Ulf,
+On 24-09-26, 15:26, Ulf Hansson wrote:
+> On Mon, Sep 21, 2026 at 12:49 AM Linus Walleij <linusw@kernel.org> wrote:
+> >
+> > Replace the LCLA ESRAM regulator with runtime PM.
+> >
+> > Use the SRAM device that owns the ESRAM34 power domain.
+> >
+> > Hold that domain while DMA transfers are active. The DMA controller is
+> > runtime PM IRQ-safe, so keep taking explicit LCLA runtime PM references
+> > from the descriptor preparation path instead of relying on a runtime PM
+> > device link from the atomic transfer path.
+> 
+> A bit of an orthogonal problem, but related to the above. The irqsafe
+> thing have been discussed in the past for DMA controller drivers.
+> 
+> Would it possible to get rid of the irqsafe configuration for the dma
+> controller device, altogether?
+> 
+> I don't recall exactly, but not the entire consumer DMA API is allowed
+> to be called in atomic context, but perhaps that is not sufficient to
+> allow us to drop the irqsafe configuration for the DMA controller
+> device?
+> 
+> If not, I wonder if the consumer of the DMA (like an mmc controller)
+> should be assigned as a consumer device (using device links and
+> DL_FLAG_PM_RUNTIME) of the DMA controller device. In this way, the
+> consumer (mmc) would be able to control the supplier (DMA) through the
+> device link directly using runtime PM. This could potentially avoid
+> the requirement of having to use irqsafe for the DMA controller
+> device. Maybe someone already tried this?
+> 
+> If the irqsafe configuration can be dropped, in some way or the other,
+> this patch could become less intrusive, as all that would be needed is
+> to create a device link to sram device using DL_FLAG_PM_RUNTIME.
 
-On Mon, Sep 21, 2026 at 12:48=E2=80=AFAM Linus Walleij <linusw@kernel.org> =
-wrote:
+That is a consequence of dmaengine work running in tasklet and thus
+softirq mode. The dmaengine tasks need to run with a higher priority to
+enable higher dmaengine throughput. We have plans to move to WQ_BH [1], but
+I think that runs in softirq mode as well...
 
-> This series pays off technical debt from the beginning of the device
-> tree for ARM initiative in the early 2010s.
-
-I have so many fixes series that need to land for v7.4 that this is
-mostly targeted at v7.4 at this point.
-
-However:
-
-> Linus Walleij (18):
->       dt-bindings: power: Convert Ux500 PM domains to schema
->       dt-bindings: arm: ux500: Drop NR_DOMAINS
->       dt-bindings: arm: Add the actual power domains on U8500
-
-What do you think about applying these three patches to the
-PM domain tree as a starter for v7.4 if it's not too late?
-
-They are reviewed by binding maintainers and should be
-uncontroversial and will make it possible to avoid trouble when
-merging more stuff later.
-
-Yours,
-Linus Walleij
+[1]: cover.1786384168.git.allen.lkml@gmail.com
+-- 
+~Vinod
