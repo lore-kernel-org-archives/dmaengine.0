@@ -1,67 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF7844063E;
-	Wed,  7 Oct 2026 10:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EE4483BF2;
+	Wed,  7 Oct 2026 10:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791370671; cv=none; b=ngjPzCmbLxA8Eo7C6oeLv1MszFPyoNQ8dh3cB9DsDgDHePlfyaoLij/02voaC1tmCiTNKdPhukIAE5nrExyNmY6BrxfBrGbcu3mGZjAP5viUhHrvfU/s/FxmAPHfvcF4WEQ6+J40mOelV80dEWay0B/b7W9PFcNay+INKI1R87c=
+	t=1791370728; cv=none; b=SWp8Nw4KzP+OUxXfOhlYdhOIblU2yA5y+kL04wmhldnw8MfhxqhPhJ+lNpsSUb50VRIAVttm8sgTJMwN4LngSJDdvCMBe3tpsotdEzzL1yLn2m/JA8zMCs9itZYGC78qgAqPaZJqvZ44ejOWM/gIeKinjDMOsFlLDR18kw0naY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791370671; c=relaxed/simple;
-	bh=FKPl8K4OQMqj6x7bQKb+Ij9G0eLAP2POSsT/jjoc0PE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=chECE5g9uBE3PrQx37bZJsLm3SRANqy+Ng8zWBCNdhpNUwES1aefdYwRgG1RkKIE62wus98DC6dXMI6hTFgcdRel2cwJfRENmM9vDHUqPVF1yab53FV9Fs8ZWKvA/2lZyQki2TNFGR2+Pck0v8w7dEpeukNOIOFpWWcSBFRJ/nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hkudkQ9+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791370728; c=relaxed/simple;
+	bh=QFXIXB99Hc4xAfCNIJmNcvK6MG8czMABWZ6vPX4mx4o=;
+	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
+	 Date; b=Wmp37pBpLHW2whkCnRUoYbvgL3rO12HreMYAgZgVbe+ty2WlNc3iCbVbzk25U98eQ2xNFEFg4VtWyfAlN37pGz/XH9xKXsnCtPuBBNmn7w8x3ITVlMAavj9IVrt7V7/E0RC0s9S3WEm0shetrBaiI8saMXm/1s8tbgdZx1QPwCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NNXBPlPd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hkudkQ9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB0A1F0089C;
-	Wed,  7 Oct 2026 10:57:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NNXBPlPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D0A1F0089B;
+	Wed,  7 Oct 2026 10:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791370645;
-	bh=I8Hn2H3aSA+WMwgsxsNGd9M13Y6LwmNxTwB7ecQup00=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hkudkQ9+E0PKtA+7QifM9ZInJQtUR3SZJcmw98WTLSmENz1O1LkWCgAOLKyY0W+tT
-	 E1AwaE+mfbGRVpgZKsfx/DaIdTEMu1FjkszjTZuABW420MbdymxxxUI8jDxoJz4sE8
-	 52ddQYGV3Jupzf3AaonNf/ajVi9IBBpYjxnGNUZSE47ztnwwS3TisMiDq7WKxjmNeL
-	 c24OjHlQUFeX8dmpe19G74eZbcIAylk8WwqujsUEpCGeYy8JRMrtq8JfoOEYxIjJXW
-	 PRcVRz/iZ2+KaLQAGaZQvWZPHtPqhuXQetMhhE85in6fDyPc9sxy9+hKeyXwupEUdb
-	 yIrvXZWv9m75Q==
-Date: Wed, 7 Oct 2026 12:57:22 +0200
-From: Vinod Koul <vkoul@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@codeaurora.org>,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, brgl@kernel.org,
-	stable@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: Re: [PATCH v26] dmaengine: qcom: bam_dma: free interrupt before the
- clock in error path
-Message-ID: <asYlkqFPqm3_P1I4@parshuram>
-References: <20261006-bam-dma-free-irq-v26-1-eef5c713d831@oss.qualcomm.com>
+	s=k20260515; t=1791370700;
+	bh=FmP+pubLQ6p2PYKYBHUnSMCXOIFoWoeub9J35/iNso8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=NNXBPlPdMAlvNLmd9x3ER1h6ZaGEp1S8QtAz+o1vqdX391w5xEA3vb/B3fYVzWnqn
+	 gqtBVqQDl8itNIgv18X4eGGDfeIbHNKpBqKg+ZWRNw3TU503FtCPNpt+nV8Hn8LyTX
+	 U5nHS03R2368Ef4fOmZ/3vinLwulnfJbLetiqmzjwCcm5+6iwr1bgiL37riluKXqX+
+	 Ffqxz6YTXE1fW2l0D1Bm5Yp2akkKlKgdtKKerKbrJT4+Kxn5oSLWs+E/M8Klj2So0C
+	 MTjjYUV0E6Qthc0fJazUGOBSeLMGIgiye9WMqMlstK+rWFmDIKcPbqH6kHajgIXC3R
+	 5DiNGhClMMYcw==
+Message-ID: <sashiko-outbox-162896@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v12 14/20] dt-bindings: dma: ti: Add K3 BCDMA V2
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, Frank.Li@kernel.org, robh@kernel.org, dmaengine@vger.kernel.org, vkoul@kernel.org
+In-Reply-To: <20261007102936.2402427-15-s-adivi@ti.com>
+References: <20261007102936.2402427-1-s-adivi@ti.com>
+ <20261007102936.2402427-15-s-adivi@ti.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 07 Oct 2026 10:58:19 +0000
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261006-bam-dma-free-irq-v26-1-eef5c713d831@oss.qualcomm.com>
 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] dt-bindings: dma: ti: am62l-bcdma missing power-domains/clocks p=
+roperties
+--
 
-Hey Bart,
+commit 7cc1465076fec744d409700a2f52d2abf1725b87
+Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-On 06-10-26, 10:08, Bartosz Golaszewski wrote:
-> The BAM interrupt is requested with a devres helper and so on error it's
-> freed after probe() returns. We disable the clock before freeing or
-> masking it so it may still fire and we may end up reading BAM registers
-> with clock disabled.
-> 
-> Stop using devres for interrupts as we free it in remove() manually
-> anyway. Add an appropriate label and free the interrupt before disabling
-> the clock in error path and in remove().
+dt-bindings: dma: ti: Add K3 BCDMA V2
 
-This does not apply on current code, please rebase on dma/next
+This commit introduces a new binding document for the Texas Instruments K3
+Block Copy DMA (BCDMA) V2. It is intended for AM62L and describes block copy
+and split channels.
 
--- 
-~Vinod
+> diff --git a/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma=
+.yaml b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+> new file mode 100644
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/ti/ti,am62l-dmss-bcdma.yaml
+[ ... ]
+> +allOf:
+> +  - $ref: /schemas/dma/dma-controller.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: ti,am62l-dmss-bcdma
+> +
+> +  reg:
+> +    items:
+
+[Severity: Medium]
+Since the AM62L transitions to standard ARM SCMI and drops the proprietary
+ti,sci properties, should the standard "power-domains" and "clocks"
+properties be explicitly declared in this properties block?
+
+The AM64 variant utilized an independent "ti,sci-dev-id =3D <26>", indicati=
+ng
+independent resource management in firmware distinct from the DMSS parent
+bus.
+
+If a device tree author adds "power-domains =3D <&scmi_pds X>;" to the
+ti,am62l-dmss-bcdma node to describe this hardware, it appears schema
+validation will falsely reject it because unevaluatedProperties is set to
+false further down in the schema.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261007102936.2402=
+427-1-s-adivi@ti.com?part=3D14
