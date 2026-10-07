@@ -1,146 +1,176 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f50.google.com (mail-yx1-f50.google.com [74.125.224.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB32493D4F;
-	Wed,  7 Oct 2026 11:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791371588; cv=none; b=HAdKgpiRDpq5k/tXnOm0fJUZeDG7UIVbau11x21ftyZ6Wk1vkoLFk6BihwntWx76XQoOiED76kyHqcirSbQ2MI0kUPZZCOa2hE5iYxegQ/B4ZIA356Z7EbGFc7K3fLfAo7ch43cr6mHVvHh3Xtv//buSkC0XqosTuP5P+HeLBx4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791371588; c=relaxed/simple;
-	bh=p5HX6h+CDIsJtBSDEYDv0u5BxSLvj3nvd4kc+lVkyEM=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=hgIGGKatd1ARWQ4vYU7948j7OwxxhkpefJi8i7we5b4WqsfYo2A/i47CYDtrLnp8bo7zRXFY6LmmLSRr9x7NsB3Zcbkr4ql9V50kEfqrpG63POE2L8mmuRA+EoFyH8GOKFugjzStTfmlLz7jjJzAYXicK07sgu3lH4hLpB64lxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GzSIU0aA; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3B4963A5
+	for <dmaengine@vger.kernel.org>; Wed,  7 Oct 2026 11:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791372482; cv=pass; b=Xqo1falEyJyViAyA8P+L08vsh1YKPe5+Jf/LO5J6FMpkdrZQqEGdb+J98O20DiaB6Q066NCHhkE+aCeDOyw4yCkLa7aQcdG3ukHIZ53CyTOlM4mgyVfua8efNvKYByCYN5PjTZTVo5bJ19UPFltYnK27u2SHVMHTbeZ0+FYhv5Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791372482; c=relaxed/simple;
+	bh=FpzJ35zvhmqOa2+RwZnppUz698uzzC9G/FlxDAwKxyI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bJjdDTLyLi0i5kbCopYU1//BPp6X6KeGrOJWrF7thSGwBaenEw+Uke1y2BnRjJvJZIQSx3xia/t7TxJBc9Ydbmo6d7kthpSPWmPmlEo0Vf9nN0OfM0Mdb/Bl9iUERgzOaNcuDG245bKiP0tUzvObgcgXjVc3ntIXZr69nWyY2SQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ekAsJW71; arc=pass smtp.client-ip=74.125.224.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GzSIU0aA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C60A1F0089B;
-	Wed,  7 Oct 2026 11:12:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791371575;
-	bh=HS3gcW56Dfiyp30FMgUlwtjAjhY3iTmdHAm/6aRur6M=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=GzSIU0aAG9WJLcLalpnshFDCOo8IA7wxJGTXqF3j8FVICSVEgpa2r4K4E/flnJwGR
-	 lxhJrH3A67DRtCEMopCHId69Hvdc1/SEWdAXU88t15SVNb/FG+Mg24DxCenftEt6xp
-	 NI4UY7GIshz6tof1UUdU8g7c3mQDMUn2q1Y+4bLQ+EJu0UnUXykXV3jsbJ9MfFMEUa
-	 HkjV83TY76ASUeJpi9sDW6YtQp3AZtjs/u2YwpXTXrm5P17QltoMjYqd0xIMr7sGs/
-	 pFOwJnDuTpk0ts/PZBuGufwOzLYJLGBbkIpaMPRxgB46bcCKYAlC311qvTJxqRfcXF
-	 Uc44vkSvt3k3A==
-Message-ID: <sashiko-outbox-162917@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v12 18/20] dmaengine: ti: k3-udma-v2: Add support for
- PKTDMA V2
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org
-In-Reply-To: <20261007102936.2402427-19-s-adivi@ti.com>
-References: <20261007102936.2402427-1-s-adivi@ti.com>
- <20261007102936.2402427-19-s-adivi@ti.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 07 Oct 2026 11:12:54 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ekAsJW71"
+Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-67699afea08so1805709d50.3
+        for <dmaengine@vger.kernel.org>; Wed, 07 Oct 2026 04:27:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791372465; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TnuauE6vI+wa8mn9RKQZuZpRoXJG1B9I5u+QWu3M7q+Zo+Jk0vlFp/ImOmdXaRZ1sG
+         EtCIDJ1h7EQcBzfnZOtJ0SMQ7lDOeNnMbgFcyQFvHRGrschCiB0ROJyvK3YpOTsr2Teu
+         mQd55LpNZX30S0a27BP4P0FWaiFXQbcJP5HBlV3Fy/asaegKDOzw3bII6BVqnqdC7fsK
+         ejI6Kn+NbInMiCxP/ZOV45c5WXa6wjck1Qbj9XVLgZmbGl8O75CLmDcF9tvGc6/CHuws
+         ZozVJNeE3gsA90WDGrCvmq8UfsXtj2dyhHMymr73yCLej7JymF2QPNsRusKRJcK/mBcn
+         K5Wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=pavyWN5UuE9jlfBpdpJeca0fIeVjQP6tBMNr3yh5OZo=;
+        fh=6eaVA7ftNr/2sfWSwHdRi+Xn0iAs5Io6ZaUGodpiyqM=;
+        b=UoAoQpByuT4tt4NLi76peBS9KVAVRYeu+CH2raGqdlpRnCttqH+IDv15zqZy+xbCY6
+         FSImxD4FiDAZ6V/OmWwLnV5fYTzEc+Il77JO0ahm2eXismLZlWOrw1VhZ8/Ko/quyj6H
+         dKCjRkc3PO8XwDjFvf+/d65BchwDLz1wAm9UQ9re4nER/CakcI+Hh5IFrhZcxuSyW4sc
+         1z5pprdz1emLIDBluoe3BvASgxMtB4gBXvfW5vFPaqCHYQ0FQ+JYlMlrxM/xHWiw/hld
+         Iit2P5M+3IhfqbeF5Nwe2PQy7M2E9OoEc0qKEvcPYtfJavyp9sVbpLA15XTC6pXHVVKo
+         mqnA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791372465; x=1791977265; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pavyWN5UuE9jlfBpdpJeca0fIeVjQP6tBMNr3yh5OZo=;
+        b=ekAsJW71M9T9SI/egh4sshHwR7cszL3UPcuQljDyCjPu7KzXjwEDvTaRBqszr9jTbp
+         o16EnFaWwL7HV3TI2cvXq7So3tpp9Vblj+zpY5YaunZJfBSjceaGGNndi6DY/10ernu6
+         Cf0dY6kF02KBthwTwnnx2Cxldp+xxDfh/XYHptxyic7YhVr0tJyT1chQXp02h8jCwZEA
+         j7g+h5Gu/jKROvgVOOqWTNcmakOKkgi9JkFpsY3vvlVfmNklHhnI5LApP4O6CsxEgxCK
+         wk3Fpx9r2fZhJdCW3ZTZfPt9YpU4hlZ6lRJTswEUl0l79xfQdsIYIOxHiK/+3z4o3mn2
+         CSAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791372465; x=1791977265;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=pavyWN5UuE9jlfBpdpJeca0fIeVjQP6tBMNr3yh5OZo=;
+        b=070zGBY66EgZQSQmo9NcXFt2MP+o2x03yW3co/Vep1hVQchB1V5XRMX/DZCPxXvWMM
+         bOAzgsQF7ZROyixrwT7hd5snANtE5NIDyUSOC/NYoICjbeh18ryvo37shtWHVPbU+JpE
+         zymb78pGzPc25WokN0Fw+LxuhzEB3e20clWniTK3g8HF8VGVH6GIRNCpLN3eMXzR5qLX
+         SFRCHvXU/CbZErRje90dOPqkJHFBwuguwCzyzIJPJ530CmHoOnb4KqEgZHEz1XbLotqY
+         hblxo1DRtQ30i8YTesmtzN9ky9zxwM0PPWmHn7FCWlqHZaGv1WTWmnme65f7Ylg9eM2i
+         4ZzQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxHdjX9hOjYVrqEaygOtgihzMzJxDhxYvvBIOT0AgQpVui1QoxeYHWZAVsEl/P37XuuLSmwrOUjdXA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKIcCxLld+8lEVVTGM9PxEE3NB3qRSKJiP7eDuMj5X9OcMEaPZL
+	oapsP5tb+/I2YMIfvZgNhnuVjrLh/186SDMEXYQJImEV+Hz7ZBDFp6IOxgHBxnjJKBGmjDESsjX
+	QuN4psXlJt/djPWfMYYwdjS8dZtykJpQ=
+X-Gm-Gg: AYBFou3LWGRruAdYaoItoo6nx8T8uD6yHqmM3Q155e44RJaSB2wpyVuGyTCKXoU33Hn
+	JI12oMEbuK48dqnerbDYXHLmkoEKRcJP1AVBkdtPfHlQKLlSShBWtSholuNhzn67FayhVJHOC9V
+	wp5qg771FUXRVH4ygj8zzqQQR04U9geJYeYsViK+/XF0fqLKFCTg8QHlxVZwoNmspm3XkHLEExn
+	+z42An9O1pdujHgOQvSWBsGiH+uLuNB1seAI91f+3AAcrDRlTwpinS1R+kxQVYVW0ISkLb5hf/K
+	ObyWo5eAfY+A8QYKbS5fZo692RbjxPuOwI/TNy/U5smSrC/Ds0uCDC2Y5N92tY/R/RU=
+X-Received: by 2002:a05:690e:1182:b0:675:6d8c:f445 with SMTP id
+ 956f58d0204a3-6790a0b3142mr964922d50.10.1791372465276; Wed, 07 Oct 2026
+ 04:27:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20260808112043.2781244-1-lgs201920130244@gmail.com> <ar1yiPC1pxx8H974@lizhi-Precision-Tower-5810>
+In-Reply-To: <ar1yiPC1pxx8H974@lizhi-Precision-Tower-5810>
+From: Guangshuo Li <lgs201920130244@gmail.com>
+Date: Wed, 7 Oct 2026 19:27:34 +0800
+X-Gm-Features: AclHuK9xkPJNTgSq7-x7dqK0gz-t6G-LeWcqzQTZVQ2BJAwWf9PL48vGNZtximY
+Message-ID: <CANUHTR_w4cOAOoYDCDS8bwzPEuYgWp1KjZztgLx-4P1kkhwjiA@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom: hidma_mgmt: fix autosuspend cleanup on
+ probe failure
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Sinan Kaya <okaya@kernel.org>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Andy Shevchenko <andy.shevchenko@gmail.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] dmaengine: ti: hardware ring UAF on unstoppable DMA channel error =
-path
-- [Medium] dmaengine: ti: udma_v2_ring_irq_handler returns IRQ_NONE for val=
-id RX flush
-- [Medium] dmaengine: ti: DMA mapping leaks on probe and setup error paths
---
+Hi Frank,
 
-commit 49c152d7719d193b9ac7700439e03ff1c85f702b
-Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Thanks for the review.
 
-dmaengine: ti: k3-udma-v2: Add support for PKTDMA V2
+On Thu, 1 Oct 2026 at 04:35, Frank Li <Frank.li@oss.nxp.com> wrote:
+>
+> On Sat, Aug 08, 2026 at 07:20:43PM +0800, Guangshuo Li wrote:
+> > hidma_mgmt_probe() calls pm_runtime_use_autosuspend(), but its failure
+> > path does not call the matching pm_runtime_dont_use_autosuspend()
+> > before disabling runtime PM.
+> >
+> > If the autosuspend delay is set to a negative value while autosuspend
+> > is enabled, the runtime PM core increments usage_count to prevent
+> > runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+> > during cleanup, this reference is not dropped and usage_count remains
+> > unbalanced.
+> >
+> > Add the missing pm_runtime_dont_use_autosuspend() call to the probe
+> > failure path before disabling runtime PM.
+> >
+> > This issue was found by manual code inspection.
+>
+> Your descripption doesn't match your patch. You change change pm_runtime_enable()
+> to devm_pm_runtime_enable()
+>
+> Frank
+>
+> >
+> > Fixes: 7f8f209fd6e0 ("dmaengine: add Qualcomm Technologies HIDMA management driver")
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+> > ---
+> >  drivers/dma/qcom/hidma_mgmt.c | 7 +++++--
+> >  1 file changed, 5 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/dma/qcom/hidma_mgmt.c b/drivers/dma/qcom/hidma_mgmt.c
+> > index 4805ce390ffa..470c88f36d25 100644
+> > --- a/drivers/dma/qcom/hidma_mgmt.c
+> > +++ b/drivers/dma/qcom/hidma_mgmt.c
+> > @@ -168,7 +168,11 @@ static int hidma_mgmt_probe(struct platform_device *pdev)
+> >       pm_runtime_set_autosuspend_delay(&pdev->dev, HIDMA_AUTOSUSPEND_TIMEOUT);
+> >       pm_runtime_use_autosuspend(&pdev->dev);
+> >       pm_runtime_set_active(&pdev->dev);
+> > -     pm_runtime_enable(&pdev->dev);
+> > +
+> > +     rc = devm_pm_runtime_enable(&pdev->dev);
+> > +     if (rc)
+> > +             return rc;
+> > +
+> >       pm_runtime_get_sync(&pdev->dev);
+> >
+> >       virtaddr = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+> > @@ -310,7 +314,6 @@ static int hidma_mgmt_probe(struct platform_device *pdev)
+> >       return 0;
+> >  out:
+> >       pm_runtime_put_sync_suspend(&pdev->dev);
+> > -     pm_runtime_disable(&pdev->dev);
+> >       return rc;
+> >  }
+> >
+> > --
+> > 2.43.0
+> >
 
-The patch adds support for PKTDMA V2 to the k3-udma driver. It introduces
-changes such as static channel mapping, direct IRQs to the GIC, unified
-channel space, and remote side configuration handled directly by DMA without
-needing to write to PEER registers.
+You are right, the description of the patch does not match the actual
+change. This was my mistake.
 
-> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
-> index 0bbd7e41a8f9b..feac531a24f47 100644
-> --- a/drivers/dma/ti/k3-udma-v2.c
-> +++ b/drivers/dma/ti/k3-udma-v2.c
-[ ... ]
-> @@ -803,6 +803,155 @@ static int bcdma_v2_alloc_chan_resources(struct dma=
-_chan *chan)
->  	return ret;
->  }
-> =20
-> +static int pktdma_v2_alloc_chan_resources(struct dma_chan *chan)
-> +{
-[ ... ]
-> +	if (udma_is_chan_running(uc)) {
-> +		dev_warn(ud->dev, "chan%d: is running!\n", uc->id);
-> +		ud->reset_chan(uc, false);
-> +		if (udma_is_chan_running(uc)) {
-> +			dev_err(ud->dev, "chan%d: won't stop!\n", uc->id);
-> +			ret =3D -EBUSY;
-> +			goto err_res_free;
-> +		}
-> +	}
-[ ... ]
-> +	ret =3D request_irq(uc->irq_num_ring, udma_v2_ring_irq_handler,
-> +			  IRQF_SHARED | IRQF_TRIGGER_HIGH, uc->name, uc);
-> +
-> +	if (ret) {
+The patch tried to address the missing autosuspend cleanup, but
+instead of adding the explicit pm_runtime_dont_use_autosuspend() call
+in the error path, it switched to devm_pm_runtime_enable(). This made
+the implementation and the commit message inconsistent.
 
-[Severity: Medium]
-Will returning IRQ_NONE for a valid hardware event (like an RX flush descri=
-ptor
-successfully popped) break the IRQF_SHARED contract?
+I will prepare and send a v2 patch with the fix matching the description.
 
-In udma_v2_ring_irq_handler(), if udma_pop_from_ring() returns -ENOENT, it
-evaluates as true and returns IRQ_NONE:
+Thanks again for catching this.
 
-    if (udma_pop_from_ring(uc, &paddr) || !paddr)
-        return IRQ_NONE;
-
-Since accumulating these spurious interrupts during teardown can cause the
-spurious IRQ detector to permanently disable the interrupt line, does this
-break all other devices sharing the IRQ?
-
-[ ... ]
-> +err_irq_free:
-> +	uc->irq_num_ring =3D 0;
-> +err_res_free:
-> +	udma_free_tx_resources(uc);
-> +	udma_free_rx_resources(uc);
-
-[Severity: High]
-Does this code free the coherent DMA memory back to the kernel pool without
-disabling the hardware ring accelerator?
-
-If the DMA channel is still running (as checked earlier in the function) and
-the ring accelerator points to this freed memory, will the hardware perform
-arbitrary DMA writes/reads and corrupt kernel memory?
-
-
-[Severity: Medium]
-Does the error path in udma_v2_probe() permanently leak coherent DMA memory?
-
-If of_dma_controller_register() fails, it returns without calling
-udma_teardown_rx_flush():
-
-    ret =3D of_dma_controller_register(dev->of_node, udma_v2_of_xlate, ud);
-    if (ret) {
-        dev_err(dev, "failed to register of_dma controller\n");
-        dma_async_device_unregister(&ud->ddev);
-    }
-    return ret;
-
-Additionally, if dma_map_single() fails inside udma_setup_rx_flush(), does =
-it
-return -ENOMEM without unmapping the already-mapped resources like
-rx_flush->buffer_paddr?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261007102936.2402=
-427-1-s-adivi@ti.com?part=3D18
+Best regards,
+Guangshuo
