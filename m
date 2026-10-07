@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9700F442B2F;
-	Wed,  7 Oct 2026 11:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8153C483BF2;
+	Wed,  7 Oct 2026 11:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791371158; cv=none; b=O5RKT3jo8Ful4TI19g74+y4MPRS61zY5cLFKzDVOkNtbaZ1Q95X6P+hUHyRCz5EmRnbCUOOIG+cCXL4KjMQ1tVOTF5FA9B9SJr9c14LzRBlLJBo7OKobViNGmEnsKwozKkaaboB+mGUmr14EMv3MJ/ip8B642+iI1N1vX9S5W14=
+	t=1791371315; cv=none; b=pXyQyVFxGsFl+MoInlQQSDU59PjQ2S1TKADe3hUJx+GXksoXNTjtQbjxnejcnm9weOwsTcEP+QPUpsqXfSoBurd56tXX9KdEyYfewyFQuHXQkEUP9DbyaqJzshZMowJpNh03EoODlt/v1DVnet8p4HONYIrkxunfe6gXIv+CJcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791371158; c=relaxed/simple;
-	bh=gUMpOCfZE8qoEazQmjeJKIiyvqdVWeXD7qSIzalU3BU=;
+	s=arc-20240116; t=1791371315; c=relaxed/simple;
+	bh=NzHe65DventoijSoonZPQ+KXIkmumDEgG8tFKSVN0Oo=;
 	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=kdhdpNic/N155r+Oq2mAbn43ur0W/LThcZwoO937QGVNre9U+p5vXJpUOldhDjiB9Bj30Cbg6YzJeFZexWwGt57xJGRDpPW5gyzUEeR4CgwBKzVN4TPZaX/t4DYh9EBOgk2rSgnDjO7TnsIXrv+ooMvtCuX9imlgoG8EheVOuYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPI7NKEh; arc=none smtp.client-ip=100.103.45.18
+	 Date; b=UVRvrafP1uWLzcIJfoXElMqN55CeKm3y8HuW+iFyCxV88JgO+L7Izjb9df+uPyAVUwstjlZx20gAkqnvXS9wCixNeL2Ciw+2uLBR8hey325fjR6O9kojhMrL6nGXxL8M28g4ZTDXBOYnrEDch830h/qS8N+kxjWEfm8EQ47mvSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MGdlNjdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPI7NKEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7116B1F0089B;
-	Wed,  7 Oct 2026 11:05:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MGdlNjdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210361F008A1;
+	Wed,  7 Oct 2026 11:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791371133;
-	bh=lIgs7C3UT5MQL2dk39QsP/uZgwHQzRUm9Ov4Kt2aq6w=;
+	s=k20260515; t=1791371297;
+	bh=uFso4s9qu/CvpNpQTzn/PYvxHSVNPPqu9LyoOfIY7/g=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=QPI7NKEhkVr0rogT0EJHPULKpnmDT8fHau2+AavPIJ0/6VptPV+16SshCu2O/pGIW
-	 yMVc+ladmbCjMpy2ichE6XTaObliaaqIPXRt98upqZjJ8ruLsLAwP2ud4QUCDJxp/Z
-	 5X0ugKJypVWdw6Xsr//XEdTUjNZzSph4h76apb3cPnLiddiMT1Lmda5ne3Wtv09tCr
-	 7ybfLfi5jbkR5pH4EfrhybITxZDbuQsw8pkG7Z4e1/U/KI9i6raCwnSmzprOqINXMW
-	 h0pGy41Gp+5J3tbKKlsiMhTLfTfD6xjnSaTMBNTIRP/9CHz1L+si0NWz/PIrs8W02s
-	 lRIre03tTtz3Q==
-Message-ID: <sashiko-outbox-162906@kernel.org>
+	b=MGdlNjdzgn1lrU+5wTXeQt+dwd40xtVuGCX4gkHMi3lZs8nDwscFAlgkLSE6egVgV
+	 /zRznFmiGOKqUEXVrZzPqiDDb/bcqaoBsnDU4LmgXqP9/8KDGK9FJ4LG1hP72MHv/G
+	 KGm85L0RKxOBmNrEgogZaqlb/yiMkLui821OaZE669DXDBiMY0IbW6Qvqgio2Nmyo6
+	 QnMEC0Q1SosmBdIXvzmE3rtEWucX6v+qggDM63dDeqLM8Ovh0SbNSOJd/5FR6860Ka
+	 EHzn9brLclOzzVOdjE/RjqmSr3EPoa6vOHxZWh06bF4ySXN+mZS40f4hsgXeMDxbba
+	 9I7c16LkwemEQ==
+Message-ID: <sashiko-outbox-162914@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v12 20/20] dmaengine: ti: k3-udma: Validate resource ID
- and fix logging in reservation
+Subject: Re: [PATCH v12 19/20] dmaengine: ti: k3-udma-v2: Update glue layer
+ to support PKTDMA V2
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
-Cc: robh@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261007102936.2402427-21-s-adivi@ti.com>
+Cc: devicetree@vger.kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261007102936.2402427-20-s-adivi@ti.com>
 References: <20261007102936.2402427-1-s-adivi@ti.com>
- <20261007102936.2402427-21-s-adivi@ti.com>
+ <20261007102936.2402427-20-s-adivi@ti.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 07 Oct 2026 11:05:32 +0000
+Date: Wed, 07 Oct 2026 11:08:16 +0000
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -47,78 +47,71 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] dmaengine: ti: k3-udma: missing lock in resource reservation leads=
- to TOCTOU
+- [Medium] dmaengine: ti: k3-udma-glue: invalid TX filtering bits written t=
+o RX channel CFG
 --
 
-commit 710a674e34f14eb0ae15cca2c7bdeb8e8a4b36b1
+commit 80d8898567997b92a02ff1c556dd2a370e753920
 Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-dmaengine: ti: k3-udma: Validate resource ID and fix logging in reservation
+dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
 
-The __udma_reserve_##res macro currently lacks a bounds check for the
-provided id. If a caller passes an ID exceeding the resource count,
-test_bit() performs an out-of-bounds memory access on the bitmap.
-This commit adds a bounds check and corrects the error codes and logging
-for resource reservations.
+This commit updates the glue layer to support PKTDMA V2 for non DMAengine
+users. It adds handling for the absence of TISCI, direct IRQs, and TX/RX
+channel autopairing.
 
-> diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-com=
-mon.c
-> index 846c1d72eaba9..a22dcaca754b9 100644
-> --- a/drivers/dma/ti/k3-udma-common.c
-> +++ b/drivers/dma/ti/k3-udma-common.c
-> @@ -2046,9 +2046,14 @@ struct udma_##res *__udma_reserve_##res(struct udm=
-a_dev *ud,	\
->  					       int id)			\
->  {									\
->  	if (id >=3D 0) {							\
-> +		if (id >=3D ud->res##_cnt) {				\
-> +			dev_err(ud->dev,				\
-> +				#res " id %d is out of bounds.\n", id);	\
-> +			return ERR_PTR(-EINVAL);			\
-> +		}							\
->  		if (test_bit(id, ud->res##_map)) {			\
-> -			dev_err(ud->dev, "res##%d is in use\n", id);	\
-> -			return ERR_PTR(-ENOENT);			\
-> +			dev_err(ud->dev, #res "%d is in use\n", id);	\
-> +			return ERR_PTR(-EBUSY);			\
->  		}							\
+> diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+> --- a/drivers/dma/ti/k3-udma-glue.c
+> +++ b/drivers/dma/ti/k3-udma-glue.c
 
-[Severity: High]
-Does this missing lock lead to a time-of-check to time-of-use race conditio=
-n?
+[ ... ]
 
-The macro __udma_reserve_##res() performs an availability check locklessly
-using test_bit() here, or find_next_zero_bit() later in the macro:
+> @@ -728,11 +773,24 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_g=
+lue_rx_channel *rx_chn)
+>  	req.rx_chan_type =3D TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+>  	req.rx_atype =3D rx_chn->common.atype_asel;
+> =20
+> +	if (!tisci_rm->tisci) {
+> +		u32 val =3D 0;
+> +
+> +		if (!rx_chn->common.epib)
+> +			val |=3D UDMA_CHAN_CFG_FILT_EINFO;
+> +		if (!rx_chn->common.psdata_size)
+> +			val |=3D UDMA_CHAN_CFG_FILT_PSWORDS;
+> +
+> +		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CFG_REG, val);
 
-    id =3D find_next_zero_bit(ud->res##_map, ud->res##_cnt,
-                            start);
+[Severity: Medium]
+Are these TX-specific filtering bits valid for the RX channel configuration
+register?
 
-This is followed by an update completing an unsafe read-modify-write sequen=
-ce:
+According to the hardware abstractions, UDMA_CHAN_CFG_FILT_EINFO and
+UDMA_CHAN_CFG_FILT_PSWORDS map exclusively to the transmit channel's TCHAN_=
+TCFG
+register. Receive channels do not appear to have these configuration fields
+in their CFG register.
 
-    set_bit(id, ud->res##_map);
+Extended info presence for RX channels seems to be configured at the receive
+flow level (using UDMA_FLOWRT_RFA_RX_EINFO_PRESENT), which is already handl=
+ed
+independently in k3_udma_glue_cfg_rx_flow(). Writing these TX-specific bits
+to the RX channel here might set undefined or reserved bits and potentially
+corrupt the RX channel hardware state.
 
-Similarly, __udma_alloc_gp_rflow_range() performs lockless discovery of the
-free GP flow region:
-
-    start =3D bitmap_find_next_zero_area(tmp,
-                                       ud->rflow_cnt,
-                                       tmp_from, cnt, 0);
-
-And marks the GP flow region as allocated, completing a separate unsafe
-read-modify-write sequence:
-
-    bitmap_set(ud->rflow_gp_map_allocated, start, cnt);
-
-Because exported glue-layer functions like k3_udma_glue_request_tx_chn()
-call these helpers directly during client probe without holding any
-driver-level lock (such as ud->lock), can concurrent probes race and
-double-allocate hardware resources?
-
->  	} else {							\
->  		int start;						\
+> +
+> +		return 0;
+> +	}
+> +
+> +	req.nav_id =3D tisci_rm->tisci_dev_id;
+>  	ret =3D tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
+>  	if (ret)
+>  		dev_err(rx_chn->common.dev, "rchan%d cfg failed %d\n",
+> -			rx_chn->udma_rchan_id, ret);
+> -
+> +				rx_chn->udma_rchan_id, ret);
+>  	return ret;
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261007102936.2402=
-427-1-s-adivi@ti.com?part=3D20
+427-1-s-adivi@ti.com?part=3D19
