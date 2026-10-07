@@ -1,61 +1,61 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A09A451984
-	for <dmaengine@vger.kernel.org>; Wed,  7 Oct 2026 11:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893204A262D
+	for <dmaengine@vger.kernel.org>; Wed,  7 Oct 2026 12:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791373276; cv=none; b=BQi4gAJnCP/3p0E+PAGy+Rfir9sfohjfLGMhn0YWVktHjTShbM4SmENARJG5XGN5+gfehF5wYH1h/X56cYSltJ8TfFLtQ4aCin0Lr0w1FWBrtdj32PJ0pP5Kyhd5OQGSP+TML673EQEh5Zic0jSCr2QhggOS+ecDaYgzjEvQvqg=
+	t=1791376071; cv=none; b=Hszvni0b9Jb+Cv/HtUqIoEWtocNuNoj9RnAlv1YE/x4fWkraVrME8B7KBFfSzeA522O81s92N0Nehg4z+yHEy7NUtKSO8Yw/63JZ0ZLCcoA46uaGDXYUlBrsirGx+1foRJhWGL1thVzunHXGaPZ2Y4pGhMs1r6eQ3+jBe7usxNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791373276; c=relaxed/simple;
-	bh=HrHOxl8vU4NtC3eVjUlc4i27OUvjn5hRvuvP9BpLLW8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QomUtJ9b+7x6NyHzpeFT5wAfR5SqbEoaFuYHkWcXVPjqx0A8lPITXUV0g3GjHDtGVE+jADlRNhoVBfd1NX+QOU90X83/1v8+hoKBBtoW+wIVtuOE/bf2NUWIsoeY7yOZQ2x836DI2eOX9XI6c0/KZl8VZLNBI0H31bYfNqUcc+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AKxsODvu; arc=none smtp.client-ip=209.85.216.53
+	s=arc-20240116; t=1791376071; c=relaxed/simple;
+	bh=mrYDL8Jc5kHOxo/uk1bef7rw5P9jwUrrYQcpUUCM5R8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uIoghEuJYQDVhunnBQX8sgY1zJncQuri+yN3TRUlDgAZR0umIzoHE+y9N9B/4b/drP9gkTw/3Qw4yrii21hJHJc0zm6oWaIe5Q/d5RmGoyNDEW5gl771FdrGuaSm6CYoV5Kv6nIHpenQQ9Jt6W8WbEJGAHe0Ggb3munqVW3KYRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BP0pbMui; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AKxsODvu"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3a4b9732d5aso1685313a91.3
-        for <dmaengine@vger.kernel.org>; Wed, 07 Oct 2026 04:40:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BP0pbMui"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3964dfb5b9aso1950110a91.1
+        for <dmaengine@vger.kernel.org>; Wed, 07 Oct 2026 05:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791373247; x=1791978047; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1791376062; x=1791980862; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1S+23ZtOjWwrYVTwNmNORRFxt1wYzNyVlF7uFakN9wo=;
-        b=AKxsODvuOCo7ST92k4/L8taWX/E1wKOTTRb6x0ZB2HOUxt522M9TVesw4/Qzz0s8Nm
-         dASR1xMiOGb49376DEEs8Ot9LkRYUDKnLZ53vj2nQvLFEm7AHQCREyTTaQDM9Uel9mJu
-         8lC1l97sHDtn8LBtN+nqpvywHMOOIYOxkAgv4zIgkXnHOPWXzkSBpp76z3OevDpLLw8l
-         2chpgwxN56yiTX5/8YhwivEogDteeRZvHeJzfK7QQwBQJXRCHyP7mWgBXWJA+/0LyNIC
-         hLk6ti1SR385ghDQu6jyTfO1O/0YaKwNcKXyV716MfHnZABTubxB+n+8pIe/Nt52bZTG
-         O61g==
+        bh=BhdLoXtc9kkNzHYF4QrrqBcMnO9w0fLSquEWS/rnbxY=;
+        b=BP0pbMui3jhElTXQYCUBTYnSKzfUDgvophxTlHJaVR8OoxUZmgv9iRGW65Z5YmaR8V
+         CBitjewxxi9zRnXJ6vjMo6wlBleCVDJA4XBb8jiUyImVGj720iHtox3vYGufseei35xe
+         S04u/TNrLygaad0S2y93/kMiTmdjr1BEnvf3WMG+gLSJfnd4rKXksmedeONwHDF4Ypsh
+         6yCu1KKM8RuRwN09P2e1Rvmy2wDgXGEFkRopDR9QsYAdjjrI0k72w40aItEtNKfKgpnS
+         8JQHYGXlcBDtaexYdjRvZACQhgDxbLMFN9rHmNDnIdqFuzQ061AOJRhn0DpURJEjAdzC
+         q1Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791373247; x=1791978047;
+        d=1e100.net; s=20260707; t=1791376062; x=1791980862;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1S+23ZtOjWwrYVTwNmNORRFxt1wYzNyVlF7uFakN9wo=;
-        b=lMlBexHJ0pcd5R30xye6RPQYVxG10wbXOoOnUkUlgzLzyxskrE9zF50zwfjbq8/Pc2
-         K+hZEyFIomUc6K0tXmUTd2Gcp71DwueQwn1DstqGJgxlxz5Bgx+z2dDLQyNJ7MxWIwO2
-         GUmNoiwjRO3eaX6ZDnKQ39saFvlAp+DmK+xdGXna4BRanPQ1Uxl9OfB35UCK1XIvz+7Q
-         bvJPdwXYC7F2eDoB6UR9XJ8Ne/5DnT5eT8tZgnUJ/++lvIL4hV+ufaXFBRLIq1d4sFaj
-         Bc7FULGykBokm7QMIfdJEGEcqEeKJ7c0EJ6Satosh9RB0NF6f7y9MJiLTiiE7b8855Vk
-         T+XQ==
-X-Forwarded-Encrypted: i=1; AKwUvByi6LTxZIxiR4hgxQLuf3bZEHkUjVSVbFjhGyMdZvHNwR+6DZPHuVZEkDEA2Lv6E16P3nC+KnADHoc=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKjMgfZokiPqYdSfK1SisRFM2+f4txnNV1LrHDbLtYGasNePT5H
-	KEejj0ppwHg5GYA93hBDpZU13DKfEEwnMKmkZfMUFqF83rgZY5Si+G+Z
-X-Gm-Gg: AYBFou1XYhsYM3IJkI8QMrYglQ3jPbiwbzscXF1Rxo2sdgXdVpP2fK13XkLpujPnvFl
-	L7CMdZ70JzEN4oL4rd2CLRTu/2ChbA2dCagvyUk9k9PNvojhJlI1GulBuT2EoP1K5u6pC8zmz9b
-	1cXO8vRHuxEyl6NXLEZu+IJSLoEh1JsWXHYP1ffclso4S5TJ9thJvUzLFBl3qkw0e6xUpzwV+/4
-	XCZ/OiSC503CKhaEtC5LNqZhGl5Z6aZPwC4lCmUXx+D1DxCdh1yAfOeKCD27ptJXPNhJTcJAikb
-	ZkZjEf1gtcLVld7S1dTPxpJd5y53CwGbCAmjlFtOTOqshcvhFxE1mTcbfS/R6+N+cY+/idhk431
-	SMFko/Xiexs2J9gisGPrAUi8l90ams5vW8IR6KPHmCj8JMcUGDQZ1x4OCP/8EJRsllaL65k41I/
-	ctmxd8zRPLf/AOGWmzHchiaz/MTFBnZ/gBvrUyTWwrgV/B2BDiaOBPpw==
-X-Received: by 2002:a17:90b:384d:b0:39e:6c68:c787 with SMTP id 98e67ed59e1d1-3a8a1553dedmr1695567a91.61.1791373246732;
-        Wed, 07 Oct 2026 04:40:46 -0700 (PDT)
+        bh=BhdLoXtc9kkNzHYF4QrrqBcMnO9w0fLSquEWS/rnbxY=;
+        b=FGeNvef9ImcpVuPGASdzjGr8HbsPgdcwOi3BotKtOYGJfRDGItt9imTl0V/Qgd52Ew
+         qrVibktxx4f3bI94OJXLWnwaRKWa5kfGGuNk+fHrdnI/AMvqOtZptua0ooRGR1v2TBhf
+         6nvbrxvd+LpSbl08crTCFGuQDXjDVD7l4rlW7wL241QKR2WOjPC30kpSmk8OaL5HAIX7
+         d7IG2KyPHPdmGU65bBErr5nTsqiEj1HRYVYg7MJ9avaf37py/uWr4IxJs5wY2DShok31
+         HKSkTWFkRxVi2QjcDXDn1WOo5iYx3xqPLZO2rx4n07Kt1LKLZ5rTKzWzmxGXRorBxk2/
+         lztg==
+X-Forwarded-Encrypted: i=1; AKwUvBwTVsWe8U+KmWgdb/qrama9PRHyXYT38I3k9ZViIWySOnF7A4UQKRHW+PfPXyRy3j4PlLf+Rn2u7Gk=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKtubwUj7/SfB59Cd8TA/H9E6/TpUy7cuV8oR5d1u9k/qevFiAD
+	B0p233bETv9IwHFeSWL7Rz5VSl7VisnPP7oy6jccFWhFfENfh+ejQrRO
+X-Gm-Gg: AYBFou1xsqEcLL4WeaMpUgtG/jDMn7qcSasOoLSKi57OX1wh13xWew9uvlELZWB0P7w
+	w9IIU1ZVhp+0qoNEfL6txU/fjZ+kXbJzrIbKm/gdQMTJO09jULZHe4A1C/6ERRCu1KH177gEFcY
+	JFIYbg0DZnXVsSU0eI0YIL/NQwjMGBX4712UHDAR+03ttM/tivz9LnFo2GI1IyOkf7XW2TkhMMw
+	7tVRD0xWiywa2/fz0wquXlfMNgXHGe2v2kO56vz3ULTkcIUvd4PoW4lobKqt07pkBUi7URW9ckQ
+	m8zx3U2isY6grv6bbW9k+C9NWGOAfIcSt6YhIwS7zzpGMgU53SdZvyZWQRQvg726vHmYFypDkpT
+	012gSH5MLE7u2TkE9LUnB8dUvu7g34aeN6YU8zk1XCo3vToLqolckW8MJLzOPB6geukoooLE+ow
+	EhsgZXk5yPhNrzl5jrbZLs4b5PHhMporGZ2IdE3WZG7wkHEDD8etsH5ZM=
+X-Received: by 2002:a17:90b:2884:b0:3a5:364:dfd with SMTP id 98e67ed59e1d1-3a8a0cd1a2dmr1992504a91.31.1791376061688;
+        Wed, 07 Oct 2026 05:27:41 -0700 (PDT)
 Received: from lgs.. ([2001:250:5800:1000::8534])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a89b5c5d9asm4127072a91.11.2026.10.07.04.40.42
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a88eff2146sm6384956a91.10.2026.10.07.05.27.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Oct 2026 04:40:46 -0700 (PDT)
+        Wed, 07 Oct 2026 05:27:41 -0700 (PDT)
 From: Guangshuo Li <lgs201920130244@gmail.com>
 To: Sinan Kaya <okaya@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -67,9 +67,9 @@ To: Sinan Kaya <okaya@kernel.org>,
 	linux-kernel@vger.kernel.org
 Cc: Guangshuo Li <lgs201920130244@gmail.com>,
 	stable@vger.kernel.org
-Subject: [PATCH v2] dmaengine: qcom: hidma_mgmt: fix autosuspend cleanup on probe failure
-Date: Wed,  7 Oct 2026 19:38:36 +0800
-Message-ID: <20261007113836.115774-1-lgs201920130244@gmail.com>
+Subject: [PATCH v3] dmaengine: qcom: hidma_mgmt: fix autosuspend cleanup on probe failure
+Date: Wed,  7 Oct 2026 20:25:34 +0800
+Message-ID: <20261007122534.194286-1-lgs201920130244@gmail.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -93,6 +93,15 @@ Fixes: 7f8f209fd6e0 ("dmaengine: add Qualcomm Technologies HIDMA management driv
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 ---
+v3:
+  - Add the missing changelog.
+
+v2:
+  - Keep pm_runtime_enable() and explicitly add the missing
+    pm_runtime_dont_use_autosuspend() call in the probe failure path
+    instead of switching to devm_pm_runtime_enable().
+  - Update the commit message to match the actual change.
+
  drivers/dma/qcom/hidma_mgmt.c | 1 +
  1 file changed, 1 insertion(+)
 
