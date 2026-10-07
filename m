@@ -1,90 +1,90 @@
-Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F66D4908A8;
-	Wed,  7 Oct 2026 10:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.150.75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14AB495AEC;
+	Wed,  7 Oct 2026 10:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791369169; cv=fail; b=YOaK+asWMmOGYbD3zs1k0C4z9K1jNjX1P2S4Nn8Solu6KZ6Tw6Qe8IvBhJr40jwEMIAmlXosP7wivJHWSdgAwhv6qwJKohUSKN4vkZn2x9/2JfpCM1Ozzzg+YyLbx76AEJ8t+bNbQKhnvoIo7ItK2M/tG8dtEEgOOZEVZSE9AiM=
+	t=1791369177; cv=fail; b=cGN53OFrlV8MiCAE4fCjpKaEtqCQc2nwzQr2AMWZqICCf+NedaM8nUY/QpSfrCIa/75jP9VD2Dw9zl59IkVrC/5rtpVBk9PRbkwCwpU4mv6gkFXyoOgkGOGLWT1M7Q+e+vwtleYczvUlZdmJe6zaMCYxoPThzXyOYoiwUZsvnrM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791369169; c=relaxed/simple;
-	bh=i2LPnaLAnKwQO68ApHeiy+VlQxlT1QHckjudp84Hl2M=;
+	s=arc-20240116; t=1791369177; c=relaxed/simple;
+	bh=itE9L0a/hyvay52Ps7wNys7MBFKCoOtMXDFKS6sPsNQ=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SZjUKbB8LDesQ5eVKD1uOpb7AKYISMqcoip8T+K7lwAb+6Id+nNOprPb6tWIjjZnEJ0kqQhjTKLzjoQ1wrb3eeWnqTk/S7LQqzCsPA4bqstpjHQdgA4hoWSQj0AnjA+m3OczSCEON79DaYZEb2QKYuAjnkNb+ZyhLUfWM1q6XyI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=AzojfFrW; dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b=qfM7WT7J; arc=fail smtp.client-ip=148.163.150.75
+	 MIME-Version:Content-Type; b=hJOHyo62rxR4xVAUB1M3DAheqOqn1v9MNu24kDfREec/PfGTuUUZb4gWARGpkrDhXYeCv6H5Z33Mh2asmbvNFyd+5YtdN1A1KZCiBjwZINW13ZY8vrZVxJTogG6TpV+8mvZghcQYiykziX80ft+5ub5S84CtjWZTNUuf0ih8s0I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=Td/nCwBL; dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b=JYovpDl1; arc=fail smtp.client-ip=148.163.154.28
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="AzojfFrW";
-	dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b="qfM7WT7J"
-Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
-	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 6977jhg3494488;
-	Wed, 7 Oct 2026 05:31:59 -0500
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="Td/nCwBL";
+	dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b="JYovpDl1"
+Received: from pps.filterd (m0374955.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6977k0bS753187;
+	Wed, 7 Oct 2026 05:32:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	proofpoint-05-2026; bh=DpSY1ILhS+4roJk5hBN1daHnmxQOAUD9RnOxC7Rey
-	+4=; b=AzojfFrWsTp9QO+dKC+JODK2k8m2s/gaXvAcjdsa0DspS6an3eLE8xPSE
-	y5iXd+/18pk9IQ3KNNgBSX7qvmj7B4TjRGmGAf/wfODcoP35H0Qyvb8Uq6IgtSml
-	hSFkIMv+VDyZuTCKB4dwOHg2KiX2A8uD4ZIWjq4k2DK4C0SXLUoun17SjxMf8axB
-	fI20YuWN7UGCvGZPPv4ci8ABqmzp+ldNPQ7sc0Fk90r2GGxTzWgh3u9Jnw4Jydv2
-	0Ofi52v3YCDU4c74Gu3zHqC1FK6xiffeSERf6YVpeRetJQUi7lgqVStRadbYQNh0
-	uv/0vC2GpjWSQHDpdwG4Rdvg2xXpw==
-Received: from dm5pr21cu001.outbound.protection.outlook.com (mail-centralusazon11011019.outbound.protection.outlook.com [52.101.62.19])
-	by m0384305.ppops.net (PPS) with ESMTPS id 4h5dk4sx3s-1
+	proofpoint-05-2026; bh=hlteJzJE05VQzFqelXrjk3/3FIzs7oN/XaJHnLjML
+	Ok=; b=Td/nCwBLHAV+6kJj0S7j1/bveJzdpVhk7+T034dBs1ihqba77WCCO5COS
+	8Y89C2vExgH2wmA+tv+cuOYnxLy4JQLd9niFipXCGxT1JeqF283Qxl8VRVK5TZVz
+	9obPY7lDk3RtK6i3ZfSvbJXRM4GW2EtOzMeh1oxjfKX/ik0GMQ4jkkNA9hT6tNZg
+	kuLP/RdddIziDom2tdLK5yViUWrloebw49tl8yIe+IQG1VOauc3WkW23E0FD+0gj
+	OAOABgkUlLncgmIF8TRtWJhn4BhsDhMUD0jGfgP0N1F6CZAL0GFhX+PtAcN658g2
+	Lnr9G0pGLbFt+vcM/VOk6H3Iw9dKw==
+Received: from ph7pr06cu001.outbound.protection.outlook.com (mail-westus3azon11010008.outbound.protection.outlook.com [52.101.201.8])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4h5hw78q05-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 05:31:58 -0500 (CDT)
+	Wed, 07 Oct 2026 05:32:06 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bdnv24AhAESFanreFDZamLl3AQLAqvRpH/ggYMMq/QXw4xfslp66mXo7FqX2kRVZF15EZvo2Aor1Mlf+YmTxJ0heoKUtPZZmdPDsYhpAdHZI9UGLs/MsUbNl3XelvdYjMznoSxefWDCDnpcWRXh3zYJQ9T+S4u7xRjvZTTYRS7KhwuhWGetgW4sxZqbV1pXEEHHeWApVZnqrtip4YIxOhtvIhRf9c9g2yBSyQvzZRFQX45WgMnG1zqRgNvZYvxGu+LAfP/CZgViuoh0i8FshIIeSPx+1ch0yDqFkVxrPZYtN6l3ykx+4Fz8qezlr8w20FzDWYN0pDqqlOlmzQXreiA==
+ b=UHfrXHrEiJ+skzdPQl7lEWdEuoA8rjNf7C+ApRCp4UdJZu1Q5vnY7kXcNxpWeEQgH/MI6yEVh1XGOu4trLMjHVczZHerJ7E5ek1EWskwPzAjQzIfJuAWnM2XZ2UNh/rZw2FeByNcheo2LUMDK+6pqU87S8UUS/2iMDfz6E5JtErT9MJI+HRtkPRzRr/aOkOQlaLIPGSVEn4N/BUhvMv4eCEwDb+fKLSavettYOrLBpca9pWEdfJEYzG/80ij93EMYcSp194PlCe4LZi0OSYSMcIm2F/N8gQfX1SznFN2B6+PlDw36X10jY9yyZXrgekN49Wlhktuij9L28bvfx5sYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DpSY1ILhS+4roJk5hBN1daHnmxQOAUD9RnOxC7Rey+4=;
- b=HOn+aqhgtXJbHA+8m0ADZZNORNgjwwjTKO1IW3BVLTcuaA55zlvuI1iSgU96DKZFlGrP1cmHx6Qaqi9J0j9eqHRPHNDMo2xEwQJCCEZvuFoIJ979oa/NKg4mPXJDgWzlECDsd4zMBiRxCicUhApFfaXQFjpYskXxGzlvxWwqcWsYNpAtSR/Pwv2sh3wLqiM683efCoC//uCYWX2wtByO8uFgRr2ERrnlNBDQOYnrTjqieYmZL1FM0gZA1kuprKtlob8Yrk9J1i6wRLdrH0XR6RFeiM2GkCLxtEXitVMxb6to5rwgE/iZAZvHa8mewd7ctQyak/6+Uzq3BMB0q6B2cQ==
+ bh=hlteJzJE05VQzFqelXrjk3/3FIzs7oN/XaJHnLjMLOk=;
+ b=SuY63QHTVxf4HIVVYPlWd4CQSPryGLMN+UKQoSdcyiay+D6iISvEOesRQegU0K4DO+5xUtMdMFhIFizRcvnkHYofD9QnUIBvkLRocodVPfX2Gwp9QqgJUP9eYiZqSnSO8JrrInQqjljnClZ/VNgJHsiD8hePA+/nD5ujxDnH0xZOWgT1T/X90XLvb+mubEh9p5gP/P6CeBtZeJ4Uc73h1QNapOTbxsAC+ulOvkgymfuoLnJ35dMOHsujkHX5sIi8ukIyxQaTtXP3DlgCayzd7+cy9YbMb3moToMd9y5LC3MAiK5NqV+Ntv2O26MKnblh75xxmI6Simn9QsYBxGTsbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 198.47.23.195) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
+ 198.47.21.194) smtp.rcpttodomain=nxp.com smtp.mailfrom=ti.com; dmarc=pass
  (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
  (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=ticloud.onmicrosoft.com; s=selector1-ticloud-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DpSY1ILhS+4roJk5hBN1daHnmxQOAUD9RnOxC7Rey+4=;
- b=qfM7WT7JiR6zDwaFZRZAoVO0DXtqFqm7bYiAKszLPGltoagSXjzJ9dR4FER1cDuZQBWNkUpalhPpTZLjdq+ECareHZG0X1mWyqbrmOzN4fuoR41/22nKDLDtSrucevHHbWUD4HGQhs5JzEGGOq2rhjG3iVgsLJS9phyw6kvxDsg=
-Received: from BY1P220CA0022.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::14)
- by CY5PR10MB6216.namprd10.prod.outlook.com (2603:10b6:930:43::12) with
+ bh=hlteJzJE05VQzFqelXrjk3/3FIzs7oN/XaJHnLjMLOk=;
+ b=JYovpDl1qDVYhO326w1m8wQnF7VD1psZR2BTp6aEZIYiP6oB5hNnYR+G243Cto42H/X5MLmxPk9jxyWnOZ0TsReDdYHp7nMm54/LKTdFUyRDqg2vGSe6bnTu1xe0dFvMGQIhu12uX4sdKPZWf7XR6roP5hYc1xeOlNBjZh13zUM=
+Received: from PH7PR02CA0024.namprd02.prod.outlook.com (2603:10b6:510:33d::10)
+ by CH3PR10MB7435.namprd10.prod.outlook.com (2603:10b6:610:15c::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.6; Wed, 7 Oct 2026
- 10:31:23 +0000
-Received: from SJ1PEPF0000231C.namprd03.prod.outlook.com
- (2603:10b6:a03:5c3:cafe::81) by BY1P220CA0022.outlook.office365.com
- (2603:10b6:a03:5c3::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Wed, 7
- Oct 2026 10:31:23 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.14; Wed, 7 Oct
+ 2026 10:32:01 +0000
+Received: from CY7PEPF000000EF.namprd04.prod.outlook.com
+ (2603:10b6:510:33d:cafe::37) by PH7PR02CA0024.outlook.office365.com
+ (2603:10b6:510:33d::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Wed, 7
+ Oct 2026 10:32:00 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 198.47.23.195) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ is 198.47.21.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=ti.com;
 Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
- 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
- client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
-Received: from lewvzet201.ext.ti.com (198.47.23.195) by
- SJ1PEPF0000231C.mail.protection.outlook.com (10.167.242.233) with Microsoft
+ 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
+Received: from flwvzet200.ext.ti.com (198.47.21.194) by
+ CY7PEPF000000EF.mail.protection.outlook.com (10.167.247.171) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 10:31:23 +0000
-Received: from DLEE204.ent.ti.com (157.170.170.84) by lewvzet201.ext.ti.com
- (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
+ 15.21.496.14 via Frontend Transport; Wed, 7 Oct 2026 10:31:59 +0000
+Received: from DFLE213.ent.ti.com (10.64.6.71) by flwvzet200.ext.ti.com
+ (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 7 Oct
- 2026 05:31:04 -0500
-Received: from DLEE203.ent.ti.com (157.170.170.78) by DLEE204.ent.ti.com
- (157.170.170.84) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 05:31:17 -0500
+Received: from DFLE211.ent.ti.com (10.64.6.69) by DFLE213.ent.ti.com
+ (10.64.6.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Wed, 7 Oct
- 2026 05:31:03 -0500
-Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE203.ent.ti.com
- (157.170.170.78) with Microsoft SMTP Server (version=TLS1_2,
+ 2026 05:31:17 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE211.ent.ti.com
+ (10.64.6.69) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
- Transport; Wed, 7 Oct 2026 05:31:03 -0500
+ Transport; Wed, 7 Oct 2026 05:31:17 -0500
 Received: from uda0498651.dhcp.ti.com (uda0498651.dhcp.ti.com [10.24.51.254])
-	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 697ATiT0013473;
-	Wed, 7 Oct 2026 05:30:59 -0500
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 697ATiT3013473;
+	Wed, 7 Oct 2026 05:31:13 -0500
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
         <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <nm@ti.com>,
@@ -93,9 +93,9 @@ To: <peter.ujfalusi@gmail.com>, <vkoul@kernel.org>, <robh@kernel.org>,
         <linux-arm-kernel@lists.infradead.org>, <vigneshr@ti.com>,
         <Frank.li@nxp.com>, <s-adivi@ti.com>
 CC: <r-sharma3@ti.com>, <gehariprasath@ti.com>
-Subject: [PATCH v12 16/20] dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL and PDMA data
-Date: Wed, 7 Oct 2026 15:58:57 +0530
-Message-ID: <20261007102936.2402427-17-s-adivi@ti.com>
+Subject: [PATCH v12 19/20] dmaengine: ti: k3-udma-v2: Update glue layer to support PKTDMA V2
+Date: Wed, 7 Oct 2026 15:59:00 +0530
+Message-ID: <20261007102936.2402427-20-s-adivi@ti.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261007102936.2402427-1-s-adivi@ti.com>
 References: <20261007102936.2402427-1-s-adivi@ti.com>
@@ -109,449 +109,443 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF0000231C:EE_|CY5PR10MB6216:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e16db19-efb3-47ac-a387-08df245e2260
+X-MS-TrafficTypeDiagnostic: CY7PEPF000000EF:EE_|CH3PR10MB7435:EE_
+X-MS-Office365-Filtering-Correlation-Id: bfdc2392-32fa-4a0f-d7ca-08df245e37d5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|1800799024|7416014|376014|36860700016|10067099003|56012099006|3023799007|13003099007|22082099003|18002099003|921020;
+	BCL:0;ARA:13230040|7416014|376014|1800799024|82310400026|23010399003|36860700016|10067099003|56012099006|6133799003|3023799007|921020|13003099007|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	QQhqc/ryleqqm0JunraisFd83fmQ3Ucn+JGdhGxUB8E4eEPHHSd2ld6Ge2tGEZK/vMPwnh/JHmJt7v73Qhg776GuiMUKwaU+enZC9J+3Uzyrl37+0y5q41Sgk+IcspFvM+8F2cJ0rgmrS85JLZqR2gbWUdmUrveHBYR0d2t7+3yny7IQvcsUr2Dd3TJLAZd7X1SVZCSIB/n7lslmT+DvdFCVb64chfBZSL3LmwfM0UqYbfNBldzHPhYTjxeHhjEwTMAAESdhIwKkplHpF3/4jejiqxkco898Dq3Rbq6IZq/oWtyim4IbbDYFCTmKCIOa7mFaDhOUqXW0TGDu8m1Rcwv5N6/a4RdHoacUdvep5K3cGLi/B8q67+nH/1f2Z/sbS4PW0Pocdl1xePOa9vxR5cgnx5dgwP0P/T8+3Jhl+r9U2ZZ/nyI9IaWSjqi/mUpEiAEIrxJ9CJ4g+mD0TtDFU7WAwMG3wrglS6QyNYX6oDOPeUhjXM3tfMalBadq4XpHPLE/B29jGhkGZYEoJvnBPMbP/JZMywlTQ8jBmehECS6H4YF98oCMdXL3t9x3YIJ6xvnet23ce5fWqCZ3D45piv2/VeHM1HbIxrzpch24rsyxfnssyPvqm0FujACIWtrm59nkTTB1h8Ici3tfH7gReJ91zpzN7kSgJhHLd2Lb9tIxdOiuF31hMV7npe9AWCHx
+	weLQ5ZAF5YGdW7CLyJjfhbTWDR86TUcAOxGXoZ5+wbfSkP47a7ugeCpLCqObgX+vB9fI6IVq9RU4CLoiliEjMgeVabPZGI6xj0w3aGqPlQB/cpVoMR1KzIZ+6zfX7xF97KuGVdlfVvuBDGhoPfnDteAU1OKEae1qaJvF/Yerwft3mlOrdqgn75EswjXLXDQ6hTiL6pVGihiLrZ6nty5Ic8Ed5UJRleb1huFbkOK9/iQ8cO8753oKNS4N7JBiWqvd2uaYUyC/ph0HO1GcJYzCI4qlFlKMZ/6CLHV242X3qOim5qfB7883xQmSfr0dVL0S/yUkV1xWEVyqs3I3yN2wPiNxK0VVEm+9oqjaJPGnUvy4NFfphkymZpTdJ9A737WYHo7rX+c1CvYrtQQXYiAUGE+KZ9bISwxMbu+pyDXUiAHRTwntYIGOgTvz7DdvtsXeijdjQWlLt+yyzZ1tZoJQs/tZbtmXOqa9vgB7yGPavD3dGMalU/7j8jiCFJBikH7TlZpyuvK8Bgp5EfZQxv4BfwjV9yNX1QXn+QKiw74qdXDSwhyKpek+0UO32KArWiuQGPzj2Vz8py9VDJbikfdD1pt/jusnm6PMV+8N31Ab21+fXkPpGVHV07L7rd+rLpQbXmDPfAM5yl1kYxZBVVYkoYzLwbWJT+CjAQ7d/MLFtiA82dOWIocWKPf36wpToKBC
 X-Forefront-Antispam-Report:
-	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(1800799024)(7416014)(376014)(36860700016)(10067099003)(56012099006)(3023799007)(13003099007)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
+	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(23010399003)(36860700016)(10067099003)(56012099006)(6133799003)(3023799007)(921020)(13003099007)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	9gK6m4r9N6nPkUwdGBeCnrbNe/DFwqIamR1bbX1CexO8efD0xA/72/3qQ5GXeIDfOD7cEXwFDa8V32VOKjFjT2kNcE6KLVQYvzmc6m98RyhZp5xXoxrFz7WYjn5/taISf47Wh/e4qaMc846VMluk05Q4QRk7FP6ZR55GK1ESddNup/NM1fa4Cw58Z/PNy8/vvEI+Z1zyzinHXe6p+5tJqvGW/sPxw2p9hVIJwCmsxUBEm1y2OFPYzX4skLALgocrJC5Wdl4TI76pDGsQbZLLG1rNifYH6WRwWt1Q//bgwQrG4slc03Ry7vxdU8aKmhQ1K2nUDWNcQ9s8TwY2HQP3AiDmGEKqtO3yEAoABL+ajIPwzhZykdJN1qP/5n2a5Qc5HVOqAbqjbUJ9u6LXLi74BXHxwvQ5nnZ8P+cbhoMiHrXLCW1GwRyTI4oPIhrTVEUU
+	0ZzvVNNcBnimpeXxuT3BMnN/qJbjhaP5ExtfbMc/fgfXhkn6JzeTeWX3Nx7rm1IF02rkl9lyATtnnG75YrmMVa57wrC8xMrvFMjQBs1vDhEzUfgJCH/oAGjwLEIL5GiCGY9s7kx0RBZ08ZeNmrQDTLSPcnQaEmJkMLM2O/l0DgH/UqfIHfkP6qKZRt/qgmRw571ttZ6dVzgFm8z4AVwKoziFxxu/yBzCnU+zethkwhnX2ENGMuv4T4o2euIYUv12ZKG5RWAMKgz55ZRndtKSExPNM6kqL4w+SfDUtgherWxXsZVtqsECuzynYy2sUddCMXGNENZetLvz8a5BCet8hQscAEUEBBbI+HUd1QFvb3zIcSHzVX3Ei1vGYptsZ8qOjAEHR7boHDhxbgdT7Dl0CvC0cnZI0o6c2YO8eTvJy5H7v3HT1LKjiWiTRprj7FXD
 X-Exchange-RoutingPolicyChecked:
-	WS9niGAHQp5+TiUQWkZ+DH5BGGTd9/FZduK2AMMp7f+0OStyqd/ZVvHpGA/par4P0DRKLclhiGmbDv6kFHgc/lSPdAHsTaJDSu6+22kAVSMJRFzsIpJdkfOsOOR7Y8rlvDznnzDL9AhdzJuN2LR5+uHQqd49JRrcCpGd7TTkPfZgSsmxwaOSpM6edV9HkNPX1jb1eDAmQ7RlFYZjOA20VATPzN9y2N9n8ZAZID186FlIaPtQQ3tK7PvqgkputGLDEikIeF1k/OsUog8G6pJfV0bI+LCHSvt4Nd7b+TWJ4+Z1pJeLzsM+uRRgRPWFfU/pcXL2moEId/gXioNIUEbqGw==
+	KFZ/YtPPSWp6cO1vhzNGxWIhDw1Ag/2HsCO2Xf489zkT21IozSeZerLiIADj43TsD3r9mJNEHNYqOudCRD5FyGKQtq+05Ep/y66oOgr4RxxacYK7GMbwmgzYYVqReX/47qa2PJZ0rTkizuTZAZINJvkYyQcOqqm6/ojLUf9yfjR1t1hmzklvihIbv6t5a5h2er28I4qTzJlDTP2tvsd5irjRgIXN+TTx2vbwjDJ4SOL5BoAnwkOps6CDZjkpYQFTRnVXRfYRxFtFORzfBne0MjaFiUGud8+SDbH1xoO6ENdb6SPOzKRBsdSqW8nc6jRn62ela7Gch2qd8UlnOlccGA==
 X-OriginatorOrg: ti.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 10:31:23.0823
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 10:31:59.1308
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e16db19-efb3-47ac-a387-08df245e2260
+X-MS-Exchange-CrossTenant-Network-Message-Id: bfdc2392-32fa-4a0f-d7ca-08df245e37d5
 X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF0000231C.namprd03.prod.outlook.com
+	CY7PEPF000000EF.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB6216
-X-Authority-Analysis: v=2.4 cv=TaYDJhQh c=1 sm=1 tr=0 ts=6ac61f9f cx=c_pps
- a=UyUtkpB65yKBl9uddpDweA==:117 a=f+v6EHfkeJbVwR46tk4DMg==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=660iZSQnnn4A:10 a=s63m1ICgrNkA:10
- a=AlMIdn_sM9wA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22
- a=taLDd7a_hP9WKsMzeGRc:22 a=sozttTNsAAAA:8 a=MKZzBV7iI1zLNhNYVM4A:9
-X-Proofpoint-GUID: 9364hqf5YPqVLFeOb7U3KQWulbVMF0vq
-X-Proofpoint-ORIG-GUID: 9364hqf5YPqVLFeOb7U3KQWulbVMF0vq
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA0MSBTYWx0ZWRfX0Afmjq/2UfvF
- efzKuLrOQEs2EBiS7zml2HSkEJcplgXVt6KYksQbZasF6jNcRpoIrYRGkjWa8etALRD0WGP/RNm
- H1A2SlhqKc8+FEarXboUL3hWLiZ20to=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA0MSBTYWx0ZWRfXxwBhoIC2wPjp
- 4SJ11LaUYrNKRvDIr1ToxhKW0yMnRXP2wDQgbFLUCMdkG5ApqqLP9nLkkBACTeDvK50PGv/sAC5
- oHdBknHWcn62nvBqMM6q8pATZstsa+RUetXrsf8GIcryvxx/86b9KKzAJQKsqIBOPUY0hdG2vW6
- wKhPQ3wlzRAN56CXstYpMQVsX6MdT3XIaQjTtc8HxYTXtAGwWO9VBAt8Ifnog1Rg8RcK+C6UELY
- nYIdEA9wXHfuwzin6/lbKSb6h+vCpdaUFG9/FwEheUa0jXCk75SQCXdwRmYrRkARTq49dx7nUcy
- 8t2D6TysbiByEB+lq4OV40W/zTOAk2K27NbNp6USe1TmxwhK0tErmSWkV/zob+wreSklO8suJmN
- XaWa8hP49anDXyzPvCn0rowNZllAo0rrkS7uutBMdyEkf5QmcUqZfSOTq1n2SHZJt/Adt4sS24z
- 2RLnnjLQkzbuW2xsLYw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7435
+X-Authority-Analysis: v=2.4 cv=as8nmiZV c=1 sm=1 tr=0 ts=6ac61fa6 cx=c_pps
+ a=5av3elwsUCsOTZAZyay1PA==:117 a=iwqwCZQqcuTv3JOpYdM7/Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=660iZSQnnn4A:10 a=AlMIdn_sM9wA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22 a=fPAWb5peG099m5CrUpKH:22
+ a=sozttTNsAAAA:8 a=4Ig8warNfptl5lTuD7MA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA0MSBTYWx0ZWRfX9UomnO2JCRON
+ ewyVN7WPlk7cFdSRQ3GmSpmh6HgIJYEWsjWC1EvRyW8HkhPZcReGm+xN22nYyX1sqolIdUFVO6y
+ 0ABHJcbmh+JqR6rcJWYV3FySsjddUiM=
+X-Proofpoint-ORIG-GUID: gctnOxIMJELeG6eEp9JCEwv3sYIr_WiF
+X-Proofpoint-GUID: gctnOxIMJELeG6eEp9JCEwv3sYIr_WiF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA0MSBTYWx0ZWRfXwZTFD0aUNpLY
+ IACX7f0Ztqxw15zIspyFgF7PPGhRp0V/dyFWUombMpsQAYOaiY6+htf8v2QPam4ckNFUYp651A9
+ GnBsZoAMfy7egzA5nwrX4p6xtZiTtnpJTSI6rmHj1RsDk59AejTQ83BMA10Q0Tqtgs9AnXlpeza
+ /1Vub3ggp0fz3f1vFzAgfyHYYfTQV6NnRM4BZHxsp0HwUc++BUK3MHjZ18KKhbR3Ej4qUnmugMP
+ ehnyBAnEkRa9vaOtFf3Qg1EDF8uaoJV3HH6/YkfVZbynK2Y/yk7xNQJb9YtZj67Ylb7J2n67u7B
+ sX26wzqlSZGXBi/QYm705DeMV4mve6pVWpbakkXpwb0EeGmNEWMXfmXOgH0mMnwZOhCuJ6i/dh0
+ Sz+lAWnyfVmv26KByDd39eboq4OSPV/zlnep0+JqmxVYnxfglFzAozrDGlZWIUYOg1MoI4kTmla
+ Hrv6KUDMNvwjauvFY7Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_03,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 priorityscore=1501 adultscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 clxscore=1015 suspectscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 spamscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070041
 
-Add PSIL and PDMA data for AM62Lx SoC.
+Update glue layer to support PKTDMA V2 for non DMAengine users.
 
-Introduce new PSIL_EP_PDMA_XYMF type for channels that have multiple
-selectable fifos. Also add a new fifo_id field to psil_endpoint_config
-to specify the selectable fifo_id.
+The updates include
+- Handling absence of TISCI
+- Direct IRQs
+- Autopair: Lack of PSIL pair.
 
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
 ---
- drivers/dma/ti/Makefile        |   3 +-
- drivers/dma/ti/k3-psil-am62l.c | 169 +++++++++++++++++++++++++++++++++
- drivers/dma/ti/k3-psil-priv.h  |   5 +
- drivers/dma/ti/k3-psil.c       | 106 +++++++++++++++++++--
- include/linux/dma/k3-psil.h    |   3 +
- 5 files changed, 279 insertions(+), 7 deletions(-)
- create mode 100644 drivers/dma/ti/k3-psil-am62l.c
+ drivers/dma/ti/Kconfig           |   2 +-
+ drivers/dma/ti/k3-udma-glue.c    | 190 ++++++++++++++++++++++++-------
+ drivers/dma/ti/k3-udma-private.c |   5 +
+ drivers/dma/ti/k3-udma.h         |  13 +++
+ 4 files changed, 169 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/dma/ti/Makefile b/drivers/dma/ti/Makefile
-index 3b91c02e55eaf..41bfba944dc6c 100644
---- a/drivers/dma/ti/Makefile
-+++ b/drivers/dma/ti/Makefile
-@@ -14,6 +14,7 @@ k3-psil-lib-objs := k3-psil.o \
- 		    k3-psil-am62.o \
- 		    k3-psil-am62a.o \
- 		    k3-psil-j784s4.o \
--		    k3-psil-am62p.o
-+		    k3-psil-am62p.o \
-+		    k3-psil-am62l.o
- obj-$(CONFIG_TI_K3_PSIL) += k3-psil-lib.o
- obj-$(CONFIG_TI_DMA_CROSSBAR) += dma-crossbar.o
-diff --git a/drivers/dma/ti/k3-psil-am62l.c b/drivers/dma/ti/k3-psil-am62l.c
-new file mode 100644
-index 0000000000000..ee77fae3787a4
---- /dev/null
-+++ b/drivers/dma/ti/k3-psil-am62l.c
-@@ -0,0 +1,169 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ *  Copyright (C) 2024-2025 Texas Instruments Incorporated - https://www.ti.com
-+ */
-+
-+#include <linux/kernel.h>
-+
-+#include "k3-psil-priv.h"
-+
-+#define PSIL_PDMA_XY_TR(x, ch)					\
-+	{							\
-+		.thread_id = x,					\
-+		.ep_config = {					\
-+			.ep_type = PSIL_EP_PDMA_XY,		\
-+			.mapped_channel_id = ch,		\
-+			.default_flow_id = -1,			\
-+		},						\
-+	}
-+
-+#define PSIL_PDMA_XYMF_TR(x, ch, fifo)				\
-+	{							\
-+		.thread_id = x,					\
-+		.ep_config = {					\
-+			.ep_type = PSIL_EP_PDMA_XYMF,		\
-+			.mapped_channel_id = ch,		\
-+			.default_flow_id = -1,			\
-+			.fifo_id = fifo,			\
-+		},						\
-+	}
-+
-+#define PSIL_PDMA_XY_PKT(x, ch)					\
-+	{							\
-+		.thread_id = x,					\
-+		.ep_config = {					\
-+			.ep_type = PSIL_EP_PDMA_XY,		\
-+			.mapped_channel_id = ch,		\
-+			.pkt_mode = 1,				\
-+			.default_flow_id = -1			\
-+		},						\
-+	}
-+
-+#define PSIL_ETHERNET(x, ch, flow_base, flow_cnt)		\
-+	{							\
-+		.thread_id = x,					\
-+		.ep_config = {					\
-+			.ep_type = PSIL_EP_NATIVE,		\
-+			.pkt_mode = 1,				\
-+			.needs_epib = 1,			\
-+			.psd_size = 16,				\
-+			.mapped_channel_id = ch,		\
-+			.flow_start = flow_base,		\
-+			.flow_num = flow_cnt,			\
-+			.default_flow_id = flow_base,		\
-+		},						\
-+	}
-+
-+#define PSIL_PDMA_MCASP(x, ch)				\
-+	{						\
-+		.thread_id = x,				\
-+		.ep_config = {				\
-+			.ep_type = PSIL_EP_PDMA_XY,	\
-+			.pdma_acc32 = 1,		\
-+			.pdma_burst = 1,		\
-+			.mapped_channel_id = ch,	\
-+			.default_flow_id = -1		\
-+		},					\
-+	}
-+
-+/* PSI-L source thread IDs, used for RX (DMA_DEV_TO_MEM) */
-+static struct psil_ep am62l_src_ep_map[] = {
-+	/* PDMA_MAIN1 - UART0-6 */
-+	PSIL_PDMA_XY_PKT(0x4400, 0),
-+	PSIL_PDMA_XY_PKT(0x4401, 2),
-+	PSIL_PDMA_XY_PKT(0x4402, 4),
-+	PSIL_PDMA_XY_PKT(0x4403, 6),
-+	PSIL_PDMA_XY_PKT(0x4404, 8),
-+	PSIL_PDMA_XY_PKT(0x4405, 10),
-+	PSIL_PDMA_XY_PKT(0x4406, 12),
-+	/* PDMA_MAIN0 - SPI0 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0x4300, 16, 0),
-+	PSIL_PDMA_XYMF_TR(0x4300, 18, 1),
-+	PSIL_PDMA_XYMF_TR(0x4300, 20, 2),
-+	PSIL_PDMA_XYMF_TR(0x4300, 22, 3),
-+	/* PDMA_MAIN0 - SPI1 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0x4301, 24, 0),
-+	PSIL_PDMA_XYMF_TR(0x4301, 26, 1),
-+	PSIL_PDMA_XYMF_TR(0x4301, 28, 2),
-+	PSIL_PDMA_XYMF_TR(0x4301, 30, 3),
-+	/* PDMA_MAIN0 - SPI2 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0x4302, 32, 0),
-+	PSIL_PDMA_XYMF_TR(0x4302, 34, 1),
-+	PSIL_PDMA_XYMF_TR(0x4302, 36, 2),
-+	PSIL_PDMA_XYMF_TR(0x4302, 38, 3),
-+	/* PDMA_MAIN0 - SPI3 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0x4303, 40, 0),
-+	PSIL_PDMA_XYMF_TR(0x4303, 42, 1),
-+	PSIL_PDMA_XYMF_TR(0x4303, 44, 2),
-+	PSIL_PDMA_XYMF_TR(0x4303, 46, 3),
-+	/* PDMA_MAIN2 - MCASP0-2 */
-+	PSIL_PDMA_MCASP(0x4500, 48),
-+	PSIL_PDMA_MCASP(0x4501, 50),
-+	PSIL_PDMA_MCASP(0x4502, 52),
-+	/* PDMA_MAIN0 - AES */
-+	PSIL_PDMA_XY_TR(0x4700, 65),
-+	/* PDMA_MAIN0 - ADC */
-+	PSIL_PDMA_XY_TR(0x4503, 80),
-+	PSIL_PDMA_XY_TR(0x4504, 81),
-+	PSIL_ETHERNET(0x4600, 96, 96, 16),
-+};
-+
-+/* PSI-L destination thread IDs, used for TX (DMA_MEM_TO_DEV) */
-+static struct psil_ep am62l_dst_ep_map[] = {
-+	/* PDMA_MAIN1 - UART0-6 */
-+	PSIL_PDMA_XY_PKT(0xC400, 1),
-+	PSIL_PDMA_XY_PKT(0xC401, 3),
-+	PSIL_PDMA_XY_PKT(0xC402, 5),
-+	PSIL_PDMA_XY_PKT(0xC403, 7),
-+	PSIL_PDMA_XY_PKT(0xC404, 9),
-+	PSIL_PDMA_XY_PKT(0xC405, 11),
-+	PSIL_PDMA_XY_PKT(0xC406, 13),
-+	/* PDMA_MAIN0 - SPI0 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0xC300, 17, 0),
-+	PSIL_PDMA_XYMF_TR(0xC300, 19, 1),
-+	PSIL_PDMA_XYMF_TR(0xC300, 21, 2),
-+	PSIL_PDMA_XYMF_TR(0xC300, 23, 3),
-+	/* PDMA_MAIN0 - SPI1 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0xC301, 25, 0),
-+	PSIL_PDMA_XYMF_TR(0xC301, 27, 1),
-+	PSIL_PDMA_XYMF_TR(0xC301, 29, 2),
-+	PSIL_PDMA_XYMF_TR(0xC301, 31, 3),
-+	/* PDMA_MAIN0 - SPI2 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0xC302, 33, 0),
-+	PSIL_PDMA_XYMF_TR(0xC302, 35, 1),
-+	PSIL_PDMA_XYMF_TR(0xC302, 37, 2),
-+	PSIL_PDMA_XYMF_TR(0xC302, 39, 3),
-+	/* PDMA_MAIN0 - SPI3 - CH0-3 */
-+	PSIL_PDMA_XYMF_TR(0xC303, 41, 0),
-+	PSIL_PDMA_XYMF_TR(0xC303, 43, 1),
-+	PSIL_PDMA_XYMF_TR(0xC303, 45, 2),
-+	PSIL_PDMA_XYMF_TR(0xC303, 47, 3),
-+	/* PDMA_MAIN2 - MCASP0-2 */
-+	PSIL_PDMA_MCASP(0xC500, 49),
-+	PSIL_PDMA_MCASP(0xC501, 51),
-+	PSIL_PDMA_MCASP(0xC502, 53),
-+	/* PDMA_MAIN0 - SHA */
-+	PSIL_PDMA_XY_TR(0xC700, 64),
-+	/* PDMA_MAIN0 - AES */
-+	PSIL_PDMA_XY_TR(0xC701, 66),
-+	/* PDMA_MAIN0 - CRC32 - CH0-1 */
-+	PSIL_PDMA_XYMF_TR(0xC702, 67, 0),
-+	PSIL_PDMA_XYMF_TR(0xC702, 68, 1),
-+	/* CPSW3G */
-+	PSIL_ETHERNET(0xc600, 64, 64, 2),
-+	PSIL_ETHERNET(0xc601, 66, 66, 2),
-+	PSIL_ETHERNET(0xc602, 68, 68, 2),
-+	PSIL_ETHERNET(0xc603, 70, 70, 2),
-+	PSIL_ETHERNET(0xc604, 72, 72, 2),
-+	PSIL_ETHERNET(0xc605, 74, 74, 2),
-+	PSIL_ETHERNET(0xc606, 76, 76, 2),
-+	PSIL_ETHERNET(0xc607, 78, 78, 2),
-+};
-+
-+struct psil_ep_map am62l_ep_map = {
-+	.name = "am62l",
-+	.src = am62l_src_ep_map,
-+	.src_count = ARRAY_SIZE(am62l_src_ep_map),
-+	.dst = am62l_dst_ep_map,
-+	.dst_count = ARRAY_SIZE(am62l_dst_ep_map),
-+};
-diff --git a/drivers/dma/ti/k3-psil-priv.h b/drivers/dma/ti/k3-psil-priv.h
-index a577be97e3447..970afd46a79e6 100644
---- a/drivers/dma/ti/k3-psil-priv.h
-+++ b/drivers/dma/ti/k3-psil-priv.h
-@@ -35,6 +35,10 @@ struct psil_ep_map {
- };
+diff --git a/drivers/dma/ti/Kconfig b/drivers/dma/ti/Kconfig
+index e6a2cf37062e7..e7a579f42b584 100644
+--- a/drivers/dma/ti/Kconfig
++++ b/drivers/dma/ti/Kconfig
+@@ -68,7 +68,7 @@ config TI_K3_UDMA_COMMON
+ config TI_K3_UDMA_GLUE_LAYER
+ 	tristate "Texas Instruments UDMA Glue layer for non DMAengine users"
+ 	depends on ARCH_K3 || COMPILE_TEST
+-	depends on TI_K3_UDMA
++	depends on TI_K3_UDMA || TI_K3_UDMA_V2
+ 	help
+ 	  Say y here to support the K3 NAVSS DMA glue interface
+ 	  If unsure, say N.
+diff --git a/drivers/dma/ti/k3-udma-glue.c b/drivers/dma/ti/k3-udma-glue.c
+index 78722a7f8ebd2..d3d2c232d898c 100644
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -12,6 +12,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/io.h>
+ #include <linux/init.h>
++#include <linux/iopoll.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/soc/ti/k3-ringacc.h>
+@@ -267,6 +268,23 @@ static int k3_udma_glue_cfg_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
+ 	const struct udma_tisci_rm *tisci_rm = tx_chn->common.tisci_rm;
+ 	struct ti_sci_msg_rm_udmap_tx_ch_cfg req;
  
- struct psil_endpoint_config *psil_get_ep_config(u32 thread_id);
-+struct psil_endpoint_config *psil_get_ep_config_by_id(u32 channel_id,
-+						      bool is_pktdma,
-+						      u32 *thread_id,
-+						      bool *dev_to_mem);
- 
- /* SoC PSI-L endpoint maps */
- extern struct psil_ep_map am654_ep_map;
-@@ -46,5 +50,6 @@ extern struct psil_ep_map am62_ep_map;
- extern struct psil_ep_map am62a_ep_map;
- extern struct psil_ep_map j784s4_ep_map;
- extern struct psil_ep_map am62p_ep_map;
-+extern struct psil_ep_map am62l_ep_map;
- 
- #endif /* K3_PSIL_PRIV_H_ */
-diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
-index c4b6f0df46861..1c4ae124d172d 100644
---- a/drivers/dma/ti/k3-psil.c
-+++ b/drivers/dma/ti/k3-psil.c
-@@ -28,6 +28,7 @@ static const struct soc_device_attribute k3_soc_devices[] = {
- 	{ .family = "J784S4", .data = &j784s4_ep_map },
- 	{ .family = "AM62PX", .data = &am62p_ep_map },
- 	{ .family = "J722S", .data = &am62p_ep_map },
-+	{ .family = "AM62LX", .data = &am62l_ep_map },
- 	{ /* sentinel */ }
- };
- 
-@@ -71,12 +72,70 @@ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id)
- }
- EXPORT_SYMBOL_GPL(psil_get_ep_config);
- 
-+struct psil_endpoint_config *psil_get_ep_config_by_id(u32 channel_id,
-+						       bool is_pktdma,
-+						       u32 *thread_id,
-+						       bool *dev_to_mem)
-+{
-+	int i;
++	if (!tisci_rm->tisci) {
++		u32 val = 0;
 +
-+	mutex_lock(&ep_map_mutex);
-+	if (!soc_ep_map) {
-+		const struct soc_device_attribute *soc;
++		if (tx_chn->tx_pause_on_err)
++			val |= UDMA_CHAN_CFG_PAUSE_ON_ERR;
++		if (tx_chn->tx_filt_einfo)
++			val |= UDMA_CHAN_CFG_FILT_EINFO;
++		if (tx_chn->tx_filt_pswords)
++			val |= UDMA_CHAN_CFG_FILT_PSWORDS;
++		if (tx_chn->tx_supr_tdpkt)
++			val |= UDMA_CHAN_CFG_TX_SUPR_TDPKT;
 +
-+		soc = soc_device_match(k3_soc_devices);
-+		if (soc) {
-+			soc_ep_map = soc->data;
-+		} else {
-+			pr_err("PSIL: No compatible machine found for map\n");
-+			mutex_unlock(&ep_map_mutex);
-+			return ERR_PTR(-ENOTSUPP);
-+		}
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CFG_REG, val);
++
++		return 0;
 +	}
 +
-+	if (soc_ep_map->src) {
-+		for (i = 0; i < soc_ep_map->src_count; i++) {
-+			struct psil_ep *ep = &soc_ep_map->src[i];
-+
-+			if (ep->ep_config.mapped_channel_id != (s16)channel_id)
-+				continue;
-+			if ((bool)ep->ep_config.pkt_mode != is_pktdma)
-+				continue;
-+			*thread_id = ep->thread_id;
-+			*dev_to_mem = true;
-+			mutex_unlock(&ep_map_mutex);
-+			return &ep->ep_config;
-+		}
-+	}
-+
-+	if (soc_ep_map->dst) {
-+		for (i = 0; i < soc_ep_map->dst_count; i++) {
-+			struct psil_ep *ep = &soc_ep_map->dst[i];
-+
-+			if (ep->ep_config.mapped_channel_id != (s16)channel_id)
-+				continue;
-+			if ((bool)ep->ep_config.pkt_mode != is_pktdma)
-+				continue;
-+			*thread_id = ep->thread_id;
-+			*dev_to_mem = false;
-+			mutex_unlock(&ep_map_mutex);
-+			return &ep->ep_config;
-+		}
-+	}
-+
-+	mutex_unlock(&ep_map_mutex);
-+	return ERR_PTR(-ENOENT);
-+}
-+EXPORT_SYMBOL_GPL(psil_get_ep_config_by_id);
-+
- int psil_set_new_ep_config(struct device *dev, const char *name,
- 			   struct psil_endpoint_config *ep_config)
+ 	memset(&req, 0, sizeof(req));
+ 
+ 	req.valid_params = TI_SCI_MSG_VALUE_RM_UDMAP_CH_PAUSE_ON_ERR_VALID |
+@@ -528,21 +546,39 @@ int k3_udma_glue_enable_tx_chn(struct k3_udma_glue_tx_channel *tx_chn)
  {
- 	struct psil_endpoint_config *dst_ep_config;
--	struct of_phandle_args dma_spec;
--	u32 thread_id;
-+	struct of_phandle_args dma_spec = { 0 };
-+	u32 thread_id = 0;
-+	u32 channel_id = 0;
-+	bool by_channel_id = false;
- 	int index;
+ 	int ret;
  
- 	if (!dev || !dev->of_node)
-@@ -90,17 +149,52 @@ int psil_set_new_ep_config(struct device *dev, const char *name,
- 				       index, &dma_spec))
- 		return -ENOENT;
- 
--	thread_id = dma_spec.args[0];
-+	if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-pktdma")) {
-+		bool dev_to_mem;
- 
--	dst_ep_config = psil_get_ep_config(thread_id);
-+		if (dma_spec.args_count < 1) {
-+			of_node_put(dma_spec.np);
-+			return -EINVAL;
+-	ret = xudma_navss_psil_pair(tx_chn->common.udmax,
+-				    tx_chn->common.src_thread,
+-				    tx_chn->common.dst_thread);
+-	if (ret) {
+-		dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
+-		return ret;
+-	}
++	if (tx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		ret = xudma_navss_psil_pair(tx_chn->common.udmax,
++					    tx_chn->common.src_thread,
++					    tx_chn->common.dst_thread);
++		if (ret) {
++			dev_err(tx_chn->common.dev, "PSI-L request err %d\n", ret);
++			return ret;
 +		}
-+
-+		by_channel_id = true;
-+		channel_id = dma_spec.args[0];
-+		thread_id = dma_spec.args[0];
-+		dst_ep_config = psil_get_ep_config_by_id(dma_spec.args[0],
-+							  true,
-+							  &thread_id, &dev_to_mem);
-+	} else if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-bcdma")) {
-+		bool dev_to_mem;
-+
-+		if (dma_spec.args_count < 3) {
-+			of_node_put(dma_spec.np);
-+			return -EINVAL;
-+		}
-+
-+		by_channel_id = true;
-+		channel_id = dma_spec.args[2];
-+		thread_id = dma_spec.args[2];
-+		dst_ep_config = psil_get_ep_config_by_id(dma_spec.args[2],
-+							  false,
-+							  &thread_id, &dev_to_mem);
+ 
+-	tx_chn->psil_paired = true;
++		tx_chn->psil_paired = true;
+ 
+-	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+-			    UDMA_PEER_RT_EN_ENABLE);
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
++				    UDMA_PEER_RT_EN_ENABLE);
+ 
+-	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
+-			    UDMA_CHAN_RT_CTL_EN);
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
++				    UDMA_CHAN_RT_CTL_EN);
 +	} else {
-+		thread_id = dma_spec.args[0];
-+		dst_ep_config = psil_get_ep_config(thread_id);
++		u32 val;
++
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
++				    UDMA_CHAN_RT_CTL_AUTOPAIR | UDMA_CHAN_RT_CTL_EN);
++
++		ret = read_poll_timeout(xudma_tchanrt_read, val,
++					val & (UDMA_CHAN_RT_CTL_PAIR_COMPLETE |
++					       UDMA_CHAN_RT_CTL_PAIR_TIMEOUT),
++					100, 500, false,
++					tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG);
++		if (ret || (val & UDMA_CHAN_RT_CTL_PAIR_TIMEOUT)) {
++			dev_err(tx_chn->common.dev, "TX channel autopair timeout\n");
++			xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG, 0);
++			return -ETIMEDOUT;
++		}
 +	}
- 	if (IS_ERR(dst_ep_config)) {
--		pr_err("PSIL: thread ID 0x%04x not defined in map\n",
--		       thread_id);
-+		if (by_channel_id)
-+			pr_err("PSIL: channel ID 0x%04x not defined in map\n",
-+			       channel_id);
-+		else
-+			pr_err("PSIL: thread ID 0x%04x not defined in map\n",
-+			       thread_id);
- 		of_node_put(dma_spec.np);
- 		return PTR_ERR(dst_ep_config);
+ 
+ 	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn en");
+ 	return 0;
+@@ -576,8 +612,16 @@ void k3_udma_glue_tdown_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ 
+ 	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn tdown1");
+ 
+-	xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
+-			    UDMA_CHAN_RT_CTL_EN | UDMA_CHAN_RT_CTL_TDOWN);
++	if (tx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
++				    UDMA_CHAN_RT_CTL_EN | UDMA_CHAN_RT_CTL_TDOWN);
++	} else {
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_PEER_REG(8),
++				    UDMA_CHAN_RT_PEER_REG8_FLUSH);
++		val = xudma_tchanrt_read(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG);
++		xudma_tchanrt_write(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG,
++				    val | UDMA_CHAN_RT_CTL_TDOWN);
++	}
+ 
+ 	val = xudma_tchanrt_read(tx_chn->udma_tchanx, UDMA_CHAN_RT_CTL_REG);
+ 
+@@ -592,10 +636,12 @@ void k3_udma_glue_tdown_tx_chn(struct k3_udma_glue_tx_channel *tx_chn,
+ 		i++;
  	}
  
-+	mutex_lock(&ep_map_mutex);
- 	memcpy(dst_ep_config, ep_config, sizeof(*dst_ep_config));
-+	mutex_unlock(&ep_map_mutex);
+-	val = xudma_tchanrt_read(tx_chn->udma_tchanx,
+-				 UDMA_CHAN_RT_PEER_RT_EN_REG);
+-	if (sync && (val & UDMA_PEER_RT_EN_ENABLE))
+-		dev_err(tx_chn->common.dev, "TX tdown peer not stopped\n");
++	if (tx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		val = xudma_tchanrt_read(tx_chn->udma_tchanx,
++					 UDMA_CHAN_RT_PEER_RT_EN_REG);
++		if (sync && (val & UDMA_PEER_RT_EN_ENABLE))
++			dev_err(tx_chn->common.dev, "TX tdown peer not stopped\n");
++	}
+ 	k3_udma_glue_dump_tx_rt_chn(tx_chn, "txchn tdown2");
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_tx_chn);
+@@ -708,7 +754,6 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_CHAN_TYPE_VALID |
+ 			   TI_SCI_MSG_VALUE_RM_UDMAP_CH_ATYPE_VALID;
  
- 	of_node_put(dma_spec.np);
+-	req.nav_id = tisci_rm->tisci_dev_id;
+ 	req.index = rx_chn->udma_rchan_id;
+ 	req.rx_fetch_size = rx_chn->common.hdesc_size >> 2;
+ 	/*
+@@ -728,11 +773,24 @@ static int k3_udma_glue_cfg_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 	req.rx_chan_type = TI_SCI_RM_UDMAP_CHAN_TYPE_PKT_PBRR;
+ 	req.rx_atype = rx_chn->common.atype_asel;
+ 
++	if (!tisci_rm->tisci) {
++		u32 val = 0;
++
++		if (!rx_chn->common.epib)
++			val |= UDMA_CHAN_CFG_FILT_EINFO;
++		if (!rx_chn->common.psdata_size)
++			val |= UDMA_CHAN_CFG_FILT_PSWORDS;
++
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CFG_REG, val);
++
++		return 0;
++	}
++
++	req.nav_id = tisci_rm->tisci_dev_id;
+ 	ret = tisci_rm->tisci_udmap_ops->rx_ch_cfg(tisci_rm->tisci, &req);
+ 	if (ret)
+ 		dev_err(rx_chn->common.dev, "rchan%d cfg failed %d\n",
+-			rx_chn->udma_rchan_id, ret);
+-
++				rx_chn->udma_rchan_id, ret);
+ 	return ret;
+ }
+ 
+@@ -781,8 +839,11 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 	}
+ 
+ 	if (xudma_is_pktdma(rx_chn->common.udmax)) {
+-		rx_ringfdq_id = flow->udma_rflow_id +
++		if (tisci_rm->tisci)
++			rx_ringfdq_id = flow->udma_rflow_id +
+ 				xudma_get_rflow_ring_offset(rx_chn->common.udmax);
++		else
++			rx_ringfdq_id = flow->udma_rflow_id;
+ 		rx_ring_id = 0;
+ 	} else {
+ 		rx_ring_id = flow_cfg->ring_rxq_id;
+@@ -829,6 +890,21 @@ static int k3_udma_glue_cfg_rx_flow(struct k3_udma_glue_rx_channel *rx_chn,
+ 		rx_ringfdq_id = k3_ringacc_get_ring_id(flow->ringrxfdq);
+ 	}
+ 
++	if (!tisci_rm->tisci) {
++		u32 val = 0;
++
++		if (rx_chn->common.epib)
++			val |= UDMA_FLOWRT_RFA_RX_EINFO_PRESENT;
++		if (rx_chn->common.psdata_size)
++			val |= UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT;
++		if (flow_cfg->rx_error_handling)
++			val |= UDMA_FLOWRT_RFA_RX_ERROR_HANDLING;
++
++		xudma_rflowrt_write(flow->udma_rflow, UDMA_RX_FLOWRT_RFA, val);
++		rx_chn->flows_ready++;
++		return 0;
++	}
++
+ 	memset(&req, 0, sizeof(req));
+ 
+ 	req.valid_params =
+@@ -1336,6 +1412,9 @@ int k3_udma_glue_rx_flow_enable(struct k3_udma_glue_rx_channel *rx_chn,
+ 	if (!rx_chn->remote)
+ 		return -EINVAL;
+ 
++	if (!tisci_rm->tisci)
++		return 0;
++
+ 	rx_ring_id = k3_ringacc_get_ring_id(flow->ringrx);
+ 	rx_ringfdq_id = k3_ringacc_get_ring_id(flow->ringrxfdq);
+ 
+@@ -1377,6 +1456,9 @@ int k3_udma_glue_rx_flow_disable(struct k3_udma_glue_rx_channel *rx_chn,
+ 	if (!rx_chn->remote)
+ 		return -EINVAL;
+ 
++	if (!tisci_rm->tisci)
++		return 0;
++
+ 	memset(&req, 0, sizeof(req));
+ 	req.valid_params =
+ 			TI_SCI_MSG_VALUE_RM_UDMAP_FLOW_DEST_QNUM_VALID |
+@@ -1412,21 +1494,39 @@ int k3_udma_glue_enable_rx_chn(struct k3_udma_glue_rx_channel *rx_chn)
+ 	if (rx_chn->flows_ready < rx_chn->flow_num)
+ 		return -EINVAL;
+ 
+-	ret = xudma_navss_psil_pair(rx_chn->common.udmax,
+-				    rx_chn->common.src_thread,
+-				    rx_chn->common.dst_thread);
+-	if (ret) {
+-		dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
+-		return ret;
+-	}
++	if (rx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		ret = xudma_navss_psil_pair(rx_chn->common.udmax,
++					    rx_chn->common.src_thread,
++					    rx_chn->common.dst_thread);
++		if (ret) {
++			dev_err(rx_chn->common.dev, "PSI-L request err %d\n", ret);
++			return ret;
++		}
+ 
+-	rx_chn->psil_paired = true;
++		rx_chn->psil_paired = true;
+ 
+-	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
+-			    UDMA_CHAN_RT_CTL_EN);
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
++				    UDMA_CHAN_RT_CTL_EN);
+ 
+-	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+-			    UDMA_PEER_RT_EN_ENABLE);
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
++				    UDMA_PEER_RT_EN_ENABLE);
++	} else {
++		u32 val;
++
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
++				    UDMA_CHAN_RT_CTL_AUTOPAIR | UDMA_CHAN_RT_CTL_EN);
++
++		ret = read_poll_timeout(xudma_rchanrt_read, val,
++					val & (UDMA_CHAN_RT_CTL_PAIR_COMPLETE |
++					       UDMA_CHAN_RT_CTL_PAIR_TIMEOUT),
++					100, 500, false,
++					rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG);
++		if (ret || (val & UDMA_CHAN_RT_CTL_PAIR_TIMEOUT)) {
++			dev_err(rx_chn->common.dev, "RX channel autopair timeout\n");
++			xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG, 0);
++			return -ETIMEDOUT;
++		}
++	}
+ 
+ 	k3_udma_glue_dump_rx_rt_chn(rx_chn, "rxrt en");
  	return 0;
-diff --git a/include/linux/dma/k3-psil.h b/include/linux/dma/k3-psil.h
-index 5f106d852f1cf..36e347311f8b2 100644
---- a/include/linux/dma/k3-psil.h
-+++ b/include/linux/dma/k3-psil.h
-@@ -35,6 +35,7 @@ enum udma_tp_level {
- enum psil_endpoint_type {
- 	PSIL_EP_NATIVE = 0,
- 	PSIL_EP_PDMA_XY,
-+	PSIL_EP_PDMA_XYMF,
- 	PSIL_EP_PDMA_MCAN,
- 	PSIL_EP_PDMA_AASRC,
- };
-@@ -78,6 +79,8 @@ struct psil_endpoint_config {
- 	u16 flow_start;
- 	u16 flow_num;
- 	s16 default_flow_id;
-+	/* XYMF FIFO index (0-3 for CS0-CS3), Only for PSIL_EP_PDMA_XYMF */
-+	u8 fifo_id;
- };
+@@ -1463,8 +1563,16 @@ void k3_udma_glue_tdown_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
  
- int psil_set_new_ep_config(struct device *dev, const char *name,
+ 	k3_udma_glue_dump_rx_rt_chn(rx_chn, "rxrt tdown1");
+ 
+-	xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
+-			    UDMA_PEER_RT_EN_ENABLE | UDMA_PEER_RT_EN_TEARDOWN);
++	if (rx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_RT_EN_REG,
++				    UDMA_PEER_RT_EN_ENABLE | UDMA_PEER_RT_EN_TEARDOWN);
++	} else {
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_PEER_REG(8),
++				    UDMA_CHAN_RT_PEER_REG8_FLUSH);
++		val = xudma_rchanrt_read(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG);
++		xudma_rchanrt_write(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG,
++				    val | UDMA_CHAN_RT_CTL_TDOWN);
++	}
+ 
+ 	val = xudma_rchanrt_read(rx_chn->udma_rchanx, UDMA_CHAN_RT_CTL_REG);
+ 
+@@ -1479,10 +1587,12 @@ void k3_udma_glue_tdown_rx_chn(struct k3_udma_glue_rx_channel *rx_chn,
+ 		i++;
+ 	}
+ 
+-	val = xudma_rchanrt_read(rx_chn->udma_rchanx,
+-				 UDMA_CHAN_RT_PEER_RT_EN_REG);
+-	if (sync && (val & UDMA_PEER_RT_EN_ENABLE))
+-		dev_err(rx_chn->common.dev, "TX tdown peer not stopped\n");
++	if (rx_chn->common.udmax->match_data->version == K3_UDMA_V1) {
++		val = xudma_rchanrt_read(rx_chn->udma_rchanx,
++					 UDMA_CHAN_RT_PEER_RT_EN_REG);
++		if (sync && (val & UDMA_PEER_RT_EN_ENABLE))
++			dev_err(rx_chn->common.dev, "TX tdown peer not stopped\n");
++	}
+ 	k3_udma_glue_dump_rx_rt_chn(rx_chn, "rxrt tdown2");
+ }
+ EXPORT_SYMBOL_GPL(k3_udma_glue_tdown_rx_chn);
+diff --git a/drivers/dma/ti/k3-udma-private.c b/drivers/dma/ti/k3-udma-private.c
+index 3f6235cd4d72a..1acab00bbd5a9 100644
+--- a/drivers/dma/ti/k3-udma-private.c
++++ b/drivers/dma/ti/k3-udma-private.c
+@@ -3,6 +3,10 @@
+  *  Copyright (C) 2019 Texas Instruments Incorporated - http://www.ti.com
+  *  Author: Peter Ujfalusi <peter.ujfalusi@ti.com>
+  */
++#include <linux/irq.h>
++#include <linux/irqchip.h>
++#include <linux/irqdomain.h>
++#include <linux/interrupt.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ 
+@@ -181,6 +185,7 @@ void xudma_##res##rt_write(struct udma_##res *p, int reg, u32 val)	\
+ EXPORT_SYMBOL(xudma_##res##rt_write)
+ XUDMA_RT_IO_FUNCTIONS(tchan);
+ XUDMA_RT_IO_FUNCTIONS(rchan);
++XUDMA_RT_IO_FUNCTIONS(rflow);
+ 
+ int xudma_is_pktdma(struct udma_dev *ud)
+ {
+diff --git a/drivers/dma/ti/k3-udma.h b/drivers/dma/ti/k3-udma.h
+index cd705fcc94f08..b71e8129459c4 100644
+--- a/drivers/dma/ti/k3-udma.h
++++ b/drivers/dma/ti/k3-udma.h
+@@ -86,6 +86,17 @@
+ #define UDMA_CHAN_RT_CTL_PAIR_COMPLETE BIT(16)
+ #define UDMA_CHAN_RT_CTL_ERROR		BIT(0)
+ 
++/* UDMA_CHAN_CFG_REG */
++#define UDMA_CHAN_CFG_PAUSE_ON_ERR	BIT(31)
++#define UDMA_CHAN_CFG_FILT_EINFO	BIT(30)
++#define UDMA_CHAN_CFG_FILT_PSWORDS	BIT(29)
++#define UDMA_CHAN_CFG_TX_SUPR_TDPKT	BIT(8)
++
++/* UDMA_RX_FLOWRT_RFA */
++#define UDMA_FLOWRT_RFA_RX_EINFO_PRESENT	BIT(30)
++#define UDMA_FLOWRT_RFA_RX_PSINFO_PRESENT	BIT(29)
++#define UDMA_FLOWRT_RFA_RX_ERROR_HANDLING	BIT(28)
++
+ /* UDMA_CHAN_RT_PDMA_STATE_REG */
+ #define UDMA_CHAN_RT_PDMA_STATE_IN_EVT		BIT(31)
+ #define UDMA_CHAN_RT_PDMA_STATE_TDOWN		BIT(30)
+@@ -714,6 +725,8 @@ u32 xudma_rchanrt_read(struct udma_rchan *rchan, int reg);
+ void xudma_rchanrt_write(struct udma_rchan *rchan, int reg, u32 val);
+ bool xudma_rflow_is_gp(struct udma_dev *ud, int id);
+ int xudma_get_rflow_ring_offset(struct udma_dev *ud);
++u32 xudma_rflowrt_read(struct udma_rflow *rflow, int reg);
++void xudma_rflowrt_write(struct udma_rflow *rflow, int reg, u32 val);
+ 
+ int xudma_is_pktdma(struct udma_dev *ud);
+ 
 -- 
 2.55.0
 
