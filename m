@@ -1,107 +1,110 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DCC3B14C6;
-	Thu,  8 Oct 2026 17:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D11A3A7F4C
+	for <dmaengine@vger.kernel.org>; Thu,  8 Oct 2026 17:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791481099; cv=none; b=j5BoCgbMxDGC+QmYQFdOlDWEkwez/6hM97ONVXjn/+xKvzktRDrtnD6OOq3Q4G60WHWgBYAgddtFBryWAadpbgLoCTou1SZa762Cr4tRxCaKQJxy2vI0+IiDi7GyYqD4OpTfBpiH7jxUl1PWKhs/LzYvizKX0X1JEQx2ZzGaPko=
+	t=1791481296; cv=none; b=t6Mb91ek9aT7a30To2Ggr6o4sLlV4wu8x17jADfkkDymidKRIvaVt900/CTRxlL78u4kj8O+5+hsNv21yD0LR1U85L3LcVzgtaKZyiqo+Lq5zk795CenEthXQp7GlhKhAjReb+lNbHN33TQTVwD/qYEDevZXFzsig7d8Lc/XJ+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791481099; c=relaxed/simple;
-	bh=qYtHttXAHlR0qS19Rqv1FhyQJd4hcKVSBJQ7u9dNS94=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=g9nEDrHI3yxF+KtGFJvfPSbEGTyUJ09UtsUJlNB2BssliMNj92mAVdSCEzDlbkTR0MxBPOQmnDG4roDpeHsDxZ12h6jmvS7k6XKY5jqr92Cr9XPVmwsW1JTVOK8HClrU/agd2bfhYUswKd/GvOOWFU/D8FDRflaom5CaZZTl1/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QStgZHl8; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1791481296; c=relaxed/simple;
+	bh=tJyXfCgQWKJoJW+jidNyd1FNACSo0ZNPY5I2bQmtnms=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eCpSPV4A8dgLRwSf17V25MAbVpAL8KkmG7/SSCZSolsT1Avr8E8pE1H4Ov1245TrmTOxmHOka4PWf6RI7d91asxW/Bcgb1FAoY/psDZo4Pw94XPLr/3e+96lrgfvP5C7wJkwePDTqYWXHhGIInCp6ES1kBqUBubxCtBZ3uVdnLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QfpLiDo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QStgZHl8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791481098; x=1823017098;
-  h=from:to:in-reply-to:references:subject:message-id:date:
-   mime-version:content-transfer-encoding;
-  bh=qYtHttXAHlR0qS19Rqv1FhyQJd4hcKVSBJQ7u9dNS94=;
-  b=QStgZHl8ABrF6s0rgELcRCun9khMW91pPmb3mF1KSvrSi4l/YbDWuREQ
-   JAo1lAzPT0ftPfuercWJPAK+kM9x63ifhf5D3tArQgxedO/NWzP7gpI93
-   6VQwAovd3BBrdu6hLj4qpRDm5L021oyiaaAGz2Ux4R6Y67V7CpZjllqr6
-   jqLMyzGi+Kg2uDFLDfoaXO+LDV1ehycJ5wmRevkzrV7YJtOthcV49smub
-   nXvME/SQcbA7G2G25H7vaAADlfd+MRvQVs0FiBwrYWzVvwtLsrrGfuzAF
-   jcEMSqd9Pa4WiVg0OH3xef5wgbFysZYeGzJBOwA8ZPcSlUcfLjKfiPjz6
-   A==;
-X-CSE-ConnectionGUID: ++lO+i9ETFGFF7YuDGUg/Q==
-X-CSE-MsgGUID: 9LmXsbv6R8W6hNIMDEeNew==
-X-IronPort-AV: E=McAfee;i="6800,10657,11928"; a="279881"
-X-IronPort-AV: E=Sophos;i="6.27,146,1787036400"; 
-   d="scan'208";a="279881"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2026 10:38:17 -0700
-X-CSE-ConnectionGUID: 2nk0g4G0RWmUVNn9tDP8Ow==
-X-CSE-MsgGUID: ohFYAAIaTWeXIUq4TpcjJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,146,1787036400"; 
-   d="scan'208";a="1919313"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.140])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2026 10:38:11 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Michal Simek <michal.simek@amd.com>, Jeff Johnson <jjohnson@kernel.org>, 
- Hans de Goede <hansg@kernel.org>, Andres Salomon <dilinger@queued.net>, 
- Thomas Gleixner <tglx@kernel.org>, Paul Fox <pgf@laptop.org>, 
- Dan Carpenter <error27@gmail.com>, 
- Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>, 
- Hyun Kwon <hyun.kwon@xilinx.com>, dmaengine@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
- platform-driver-x86@vger.kernel.org, Jiale Yao <yaojiale02@163.com>
-In-Reply-To: <20260926121250.3258285-1-yaojiale02@163.com>
-References: <20260926121250.3258285-1-yaojiale02@163.com>
-Subject: Re: [PATCH 0/3] debugfs: Reserve space for string terminators
-Message-Id: <179148108715.29028.11629364722583143417.b4-ty@b4>
-Date: Thu, 08 Oct 2026 20:38:07 +0300
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QfpLiDo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BA11F00893
+	for <dmaengine@vger.kernel.org>; Thu,  8 Oct 2026 17:41:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791481294;
+	bh=5i+jUBNJvJIFB5HiIYZuQDmQj7HbLmugYNNn4gZkj88=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=QfpLiDo+ScFtGJGP/5JODLI0pv8v5KZVTe3aJRCgmwNneXmkgfhJBnTBTYaSE+lTT
+	 +nZwnnkZq3F682cP6EqkDvLOAmz6rEvskLWzPF+Qz6cUZHR0oqmArJVkOL8+ypYJBJ
+	 tEksKTJ7nr5OGgwE6kEJKpEbyJsSfseOrtKGq+gqPa9EanBqd8g0deddbYDuBD2Vpw
+	 2B2piO9VomrzAyAoubg5+a+CsmEO/iy++UgxqNVbbWCyoDlpbRyUxxgi0pepT48rF0
+	 ve7ESnP+YoqLfYBd8ZdS7lxCAlp4v+SEG48ztNI+pTxA0/FHwnqlItwIJ3uXrn452X
+	 pcIwYkuYyQ83w==
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c31988fc977so117272066b.2
+        for <dmaengine@vger.kernel.org>; Thu, 08 Oct 2026 10:41:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvByjwANXejRW1IMLsSn/yj9Jc4Zr7BlTarRVyKh6KEymyMg8JzFsMSFzXMEz72f7mzBRA7fkooOjBwE=@vger.kernel.org
+X-Gm-Message-State: AFuF++mGUJCnvEsYeexdvVB37tfUpEoyJ/MjKU+rRUTf37Ea2Tz22nVe
+	jWN8SUvYGfY22eFS6zSaj1R4eu02tb2QAiunSGWJNcuEp7rS2uMaK+bf6nDWLlRSdz4+NGmYY7Q
+	GqCzm7XvF9nOpbMIawakglFPFuvE3yw==
+X-Received: by 2002:a17:907:961e:b0:c2a:34fe:ea4d with SMTP id
+ a640c23a62f3a-c317c0b85e3mr582174866b.25.1791481292967; Thu, 08 Oct 2026
+ 10:41:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15.2
+References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org> <20260921-ux500-power-domains-v7-1-v3-5-9352be6b86b1@kernel.org>
+In-Reply-To: <20260921-ux500-power-domains-v7-1-v3-5-9352be6b86b1@kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 8 Oct 2026 12:41:21 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+1O+os8=YGUoKg6zCm-r0gQ35baKX=z65uTQNB0i=RVQ@mail.gmail.com>
+X-Gm-Features: AclHuK9f1ZliBZPCj2LPLQU47t9EaM2IftpsDD1GQ_Z1aWMRTo5dRurMLb5PWy0
+Message-ID: <CAL_Jsq+1O+os8=YGUoKg6zCm-r0gQ35baKX=z65uTQNB0i=RVQ@mail.gmail.com>
+Subject: Re: [PATCH v3 05/18] dt-bindings: display: ste,mcde: Allow power domains
+To: Linus Walleij <linusw@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Ulf Hansson <ulfh@kernel.org>, Mark Brown <broonie@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Lee Jones <lee@kernel.org>, 
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-pm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	dmaengine@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 26 Sep 2026 20:12:47 +0800, Jiale Yao wrote:
+On Sun, Sep 20, 2026 at 5:48=E2=80=AFPM Linus Walleij <linusw@kernel.org> w=
+rote:
+>
+> Document the MCDE power domain.
+>
+> Keep the legacy EPOD regulator binding unchanged for now.
+>
+> Assisted-by: LLM
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Linus Walleij <linusw@kernel.org>
+> ---
+>  Documentation/devicetree/bindings/display/ste,mcde.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/display/ste,mcde.yaml b/Do=
+cumentation/devicetree/bindings/display/ste,mcde.yaml
+> index 7a12d0b817e6..05e7e4ebc882 100644
+> --- a/Documentation/devicetree/bindings/display/ste,mcde.yaml
+> +++ b/Documentation/devicetree/bindings/display/ste,mcde.yaml
+> @@ -35,6 +35,9 @@ properties:
+>    resets:
+>      maxItems: 1
+>
+> +  power-domains:
+> +    maxItems: 1
+> +
+>    epod-supply:
+>      description: a phandle to the EPOD regulator
+>
+> @@ -109,6 +112,7 @@ examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/irq.h>
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/arm/ux500_pm_domains.h>
+>      #include <dt-bindings/mfd/dbx500-prcmu.h>
+>      #include <dt-bindings/gpio/gpio.h>
+>
+> @@ -116,6 +120,7 @@ examples:
+>        compatible =3D "ste,mcde";
+>        reg =3D <0xa0350000 0x1000>;
+>        interrupts =3D <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+> +      power-domains =3D <&pm_domains DOMAIN_B2R2_MCDE>;
 
-> The same boundary mistake appears in three debugfs write handlers. Each
-> handler has a zero-initialized buffer and allows a user write to fill the
-> entire buffer. That overwrites the only NUL terminator before the input
-> is parsed with sscanf(), strsep(), or strcasecmp(), which can then read
-> beyond the end of the buffer.
-> 
-> The write paths are independent, so the fixes are split by file and can
-> be applied separately. Each patch reserves one byte for the terminating
-> NUL while preserving the normal input size for that handler.
-> 
-> [...]
+This patch is in next, but the define is not breaking dt_binding_check.
 
-Thank you for your contribution, it has been applied to my local
-review-ilpo-next branch. Note it will show up in the public
-platform-drivers-x86/review-ilpo-next branch only once I've pushed my
-local branch there, which might take a while.
-
-FYI [if applicable to your patch], as per Linus' policy change, also
-fixes are mostly routed through for-next unless the fix is for a
-commit introduced in the most recent cycle or is clearly a regression
-fix.
-
-The list of commits applied:
-[1/3] platform/olpc: Reserve space for a string terminator
-      commit: 4ef563af57cc48d5a9662d7c69aa4447c2cc1b2c
-[2/3] wifi: ath12k: Reserve space for a string terminator
-      (no commit info)
-[3/3] dmaengine: xilinx: dpdma: Reserve space for a string terminator
-      (no commit info)
-
---
- i.
-
+Rob
