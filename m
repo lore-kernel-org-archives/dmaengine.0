@@ -1,241 +1,207 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013064.outbound.protection.outlook.com [40.107.159.64])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012050.outbound.protection.outlook.com [52.101.53.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F10331C567;
-	Thu,  8 Oct 2026 21:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4359A357D17;
+	Fri,  9 Oct 2026 04:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791494639; cv=fail; b=UearlJ6zRt0O9J/99Vbeq5gEVAaMg7hS1jcQTZ03LKqBZiXvk8dsV8+zT3jPE9yb/oFc1sbv/VwF+MZ0hTxGmQ/p7Z1sdjDo3PsrgerPti+lxaGYqEtgPNkqRnrqtkJfmT8BmK1zkxi5PtgUUcVDMf+9XXohPTKvGDqxjEmxU7M=
+	t=1791518445; cv=fail; b=CHqAO7d/yGa8OdKFldWhdkZFRaJveEvin4wa4tGu1DFpIP9OdqiPBqfbywI0uiZ/P0M0OscvrpRHNxfQXenVZIKB1sCOeUu/RsTm1Mb0qhdot/M1fwT3G0rrSQN4Abrq1prGW4+QHk5ewJ+8ujD+MA6ki16ogT43S/vLfuT6UCQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791494639; c=relaxed/simple;
-	bh=F96iKkPzBfpORRTWAZFPrWwI2TTS+P4/arfX8mMbiec=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=rtav1fADbW1k0rM6yJlpAgtpBlgbd41i75W7kf9b1pBU3OqD6MfkK+0q1IBJj6LUvhPq1bR+G/xlnxoFF0rOYgkxrPSnfQjOS9FpAXeuT63IAM2T+gqot9lwfHvyt4qausBPuJNQxSawii+Zqlh37IHwTXZAoVBLuDI9rSALWjE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=C30Dr4ie; arc=fail smtp.client-ip=40.107.159.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1791518445; c=relaxed/simple;
+	bh=W/FtfKXNk9otc2PcxhUpJR0gjsjSmbWWSZqcnil5Amg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=TDxzXXpsemPTfssXvwAZtpRKva66+L3zNT7IgZvPLv3Ff4ah0ln946fk8Bus7SNh3CLWBpqQDKgkawqef77+LCEB6oOWp4gXxMrzQ65BUW/pehs8mdFXj/oEM0Jx/Dv28XcPUkhWbGaolKFebWYJlW/Um1M38z2pPG1oyEji2jg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=MZiLAJId; arc=fail smtp.client-ip=52.101.53.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="C30Dr4ie"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="MZiLAJId"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Sxm8Vw5S8kxAv1L+6E4P0Y2sUHanlBZY/QoFP709N6oo5xKCANzNJJBhd0PhBgN4iA8o+M1pqwXRzDOPCEZNMPRngFxHaaQ/grcDmzI3GYi6undUCju8ut0VD8SSB34Ky9B3mfk/K1Wkh7IqwJxHM6W3fUHfImLuUTB3WmczrXTagMCh2mmIbICEN3TnTQLC5qUK927CE52ukXN3qtJQkyZ60j58qPBQoJV1VRMHdToXunT62sisDxwS8x3Y27p+bVSHN74Rjo0ivZtAZ7E4iHm7bWq68yXEUk+jN9mRxbG3cNSq+7elkRan1EJNuENVDc4YfBk6aV944+Jpc2cmig==
+ b=uWxrlYB5ojlPA2+6nxTnNfwkx9vjEmvPm7zGtsoXZjCgb/NAtaMGFou2EDmsbTlPsnEo7/dD2Y+WiCLRn7Tb01wk0KWckD/Tm526cOHEJi+7pTYwN7jaixTpDh7jMBSa6gc3SxRLdrcV5ZQsJNUoW0dOJghJweaYI/6zgvJMRzprwhAfNL1Md+i6OZ2MQcczlgVYDOQxwHp94CIjFiN1DBlyWetJGuxGxfD2cGFXFVtmBOrFlZ6DL4OFNSvbFYbTm1LoMk2r1s/naHbgEJZtTj0CJUbLZa21C5oyuT/hg+gYP1KIIPuKfFFFqYkzcnWm7TGQt2uef2DZwK1J5TR+Mw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wev4kxGArQ7rnlz2z41EDvIzBx7RHaZTFZFi/WVNUw4=;
- b=BNaO7L0jxx4UDfqYCZkUBEs2ZV1EgZURWic5u7Ey0jkYeR23AWB4XKQZJuDC+HxVgfJ00MZbHtzXSNLqTcAPBO/lrq3jECoem2AQTevW6czJrprjn+Yw1THum2T3dbZNGpwE562UB7V3JxY1YCcuYnauV3049bNQvZ0x8WkqiIpFJRggop0tvn+GevM8VXvhlp3jqZoUax2/Miq7ixOWrmepXe7urJMb6u3QLw7e22QcjYl6oF/PPhdxj2POYOTfp3wqUSy9mx9hbCGeqIHtrZhKgNji56v2xNZ91lOl4bIUUQBVW1W9Qv6vx3XRt3ZfJB3JNr4FlOmghXcTW6sVVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ bh=5CwMtfXsjsdoJFC0NxBg31b8ZuvRC7S7ZIXiaL+PRZw=;
+ b=IsrTrzXRKKXHyYMtvDV46JAu5aBWx2+P+Z9KzpWGMgstj5d4KqqMVpvisrS7clyx/XSvfO7MBmKUQsmm6XIgpIrf5err6Ll7tI89JNgcg1bOl7GAZuryxb8LWcIKnwt2R6xUck2b7bgqU3ROxdEYMTBWwmvglLKa9Gknln9njowxklOfmvbxiuLPcWcAZuCMpPiFK9nuqamXzl2VieWDNpBebamr2i2JZMiB6QD7lCM6sbCJ55PSeC3CG2hsMlf1CpIkUojMzJ9IybfMYhvgJwaWBSDcRa90YDpZS9LoKt/406fRwubn+jSJdUH5zMlmjuT38Z/9Q7WVOLvsmDLkZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wev4kxGArQ7rnlz2z41EDvIzBx7RHaZTFZFi/WVNUw4=;
- b=C30Dr4ie+bh/cOP3r45K7t1qWoSo+TGvy6/mr+Ll4WD52S9mlHTATsdEpHGM7PZmm1fK7yCYON8SSmFijOKNj4n41ia/UDh76ufXaFy/coccKm6fcp7AS7blBtV7/583bC/m3AdrI/LUXESkdk88xls+e8sdnRo3SLcCNtaLoCJlf4X9KAgTD4ovakC4Yydkz/VwurQU88khrzcAQZNmPjGiazNSUkOVYIwhoaFaWmTPoKSjq4EkUBvjKRrgdum7SRms2vLQuqYK9zVgpz+IOmINFwf9fxFmV6XXJpb1TpU6GgsX8aVBnmn9oGaQoEAlcEUllt9pShrQdfMnd2Xtbw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA1PR04MB10675.eurprd04.prod.outlook.com (2603:10a6:102:48f::9) with
+ bh=5CwMtfXsjsdoJFC0NxBg31b8ZuvRC7S7ZIXiaL+PRZw=;
+ b=MZiLAJIdWjpWpBhNRuuHB1MxnGtW6K4IgZCdIw6/gvYNgFsX58b/7jeTiA2kwi0xVVJz2v10J2mEBw52kWlE23Ha1Oh0FzCafi/xImwvVa8BRhO5qjXdlQu7s2vHu7miEzlh105rcQNG0acNOB1kiFRlUG+uDheG7f/ScpGGN34=
+Received: from BY1P220CA0050.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59e::12)
+ by CH4PR12MB026689.namprd12.prod.outlook.com (2603:10b6:610:506::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.17; Thu, 8 Oct
- 2026 21:23:54 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0496.015; Thu, 8 Oct 2026
- 21:23:54 +0000
-Date: Thu, 8 Oct 2026 16:23:49 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Ginger Li <ginger.jzllee@gmail.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: pl330: Fix lock-order inversion in the
- channel release path
-Message-ID: <asgJ5cVHQyiKFJo7@SMW015318>
-References: <20261007150104.38253-1-ginger.jzllee@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261007150104.38253-1-ginger.jzllee@gmail.com>
-X-ClientProxiedBy: AM0PR02CA0153.eurprd02.prod.outlook.com
- (2603:10a6:20b:28d::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.17; Fri, 9 Oct
+ 2026 04:00:31 +0000
+Received: from SJ1PEPF00001CE7.namprd03.prod.outlook.com
+ (2603:10b6:a03:59e:cafe::71) by BY1P220CA0050.outlook.office365.com
+ (2603:10b6:a03:59e::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.21 via Frontend Transport; Fri, 9
+ Oct 2026 04:00:31 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ1PEPF00001CE7.mail.protection.outlook.com (10.167.242.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Fri, 9 Oct 2026 04:00:31 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 8 Oct
+ 2026 23:00:26 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 8 Oct
+ 2026 23:00:25 -0500
+Received: from xhdnaggolla50x.amd.com (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.49 via Frontend
+ Transport; Thu, 8 Oct 2026 23:00:21 -0500
+From: Golla Nagendra <nagendra.golla@amd.com>
+Date: Fri, 9 Oct 2026 09:30:11 +0530
+Subject: [PATCH v4 2/6] PM: runtime: Add pm_runtime_if_active guard and
+ conditional variant
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20261009-adma-pm-fix-and-per-channel-reset-v4-2-55f5fe409c55@amd.com>
+References: <20261009-adma-pm-fix-and-per-channel-reset-v4-0-55f5fe409c55@amd.com>
+In-Reply-To: <20261009-adma-pm-fix-and-per-channel-reset-v4-0-55f5fe409c55@amd.com>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, "Michal
+ Simek" <michal.simek@amd.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+	Kedareswara rao Appana <appana.durga.rao@xilinx.com>, Rob Herring
+	<robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+	<conor+dt@kernel.org>, Michael Tretter <m.tretter@pengutronix.de>, "Harini
+ Katakam" <harini.katakam@amd.com>, Shyam Pandey <radhey.shyam.pandey@amd.com>
+CC: <dmaengine@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <git@amd.com>, Golla Nagendra
+	<nagendra.golla@amd.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791518416; l=3597;
+ i=nagendra.golla@amd.com; s=20261008; h=from:subject:message-id;
+ bh=W/FtfKXNk9otc2PcxhUpJR0gjsjSmbWWSZqcnil5Amg=;
+ b=O24pGi5SfDFoJT477thCqrJgC1Zub1cvoFmYQ4u6mgcuD+LJAwEysDG9kIuA6R5wqN/AbKwxG
+ B+r+f/DgdDRCytHEhJcw5c7QoQJ6IBkZpYptVsY/kRH/rj6dMPS2k7h
+X-Developer-Key: i=nagendra.golla@amd.com; a=ed25519;
+ pk=pCRGj/0mb0C3aDMpVVZeyBqOIQZUKGJjCKL4QZTu7nQ=
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB10675:EE_
-X-MS-Office365-Filtering-Correlation-Id: b84e65ba-6a30-4dd8-beb8-08df2582746b
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CE7:EE_|CH4PR12MB026689:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9f8d5b3b-45ca-44dd-f577-08df25b9dcf2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|19092799006|366016|6133799003|22082099003|18002099003|10067099003|11063799006|56012099006;
+	BCL:0;ARA:13230040|1800799024|82310400026|7416014|36860700016|376014|23010399003|10067099003|18002099003|22082099003|921020|11063799006|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	Y3Zgye3fUcMx5NUfBG1BkAI2ID1VMhdN0RyFfouLRA4tGqB+RUb3OeEgh4y2/Rh72ce4PuuZZyHs+rsp4yL0Aj15VwPrMbCqz/8dRSaTn34BHyju5z7JsROi3DdcHVHsrTQ0botIFjkGH4m4DpHQ+wAnDbuokM7J1supfzlVeh6THURDWWzIGHLhD/XmjdsVrOwGtuSWb/8msfj5YAYUuKLM0EPj5/Spexjxu5EOQnSDwNIq9Zz+x80Tmw/HsCbu2ioawMS4nOczbvnja9003jx/GYkaOHGpW5Suth78Vd3nQsw9CzR9CoCgfB2vTpNDvSIGsirzcmtEXEZOLKFGE5GAUT9RIDcesVJxGIriFQgHMYMvLLtpFYmovh+W7rNJWIKCAQtsMIFw0/QlzBth1x/a7JERD7U5xyB9CANnxkIQfw7fYD0b1vWkxpiJoaz0iCXubRuc5bGGS5bopH9IyzeernHhv/65C8d+mg7h28vK9XQNKfMpKuwFtKPHDp9D2lAITH9e7oPGc7vD4AqnvhW0Wy94XkMNnJVeo+IXtX/bhiiYNpD9cstZfHBbvJBoZ9DSuksSoj663e7QkfXkXvs0ur6H4OoRpvJyRpGMCy6amt+2OyQZj5t2krxiDSN+kOrlOc6nU9/SRVTsOzWkzQTBN0oSzJY2YerKJdDdZGc=
+	zQBcyZ/DYrZ5Ai59LpYwVL1d4XNC7TgYW313IFqqA1XYBBocHYWOKZGLec2VUPl9A8ScnYtnyr9ch3/F5JTiARcWx8F+GAlSeKDNmcNPZXzzLkAkJloO+e5uR5kkg6fuUk/FbTTEE8n++qj1JjyddF9AKnZtF9MCTmupBQu7cm2NMSx7uvEdo8gZERykUIbvlmVR91yN0D+iG7CjXnwVj30zjyysURbr6/amD6KscaKBxj735/l4SbIvAQRCG1dkrqSozv4FwBesk9iMGMtHrDYQzirq6tPU9MTRl4yuQJANb1GdPQB2ma6dcgTfrMDXfdLTmdcMZ9O6ytLX5f/6oH+zeXjEmFigPbMr1MitJqYId+ByxbAkOeOHUdOZ+7ggIaxKebJZpb13opp/Sxxvh+qfHdj/jlGfsc2/LjFsf0lRXN11PpfRyQ0sZ9/Ja97XxX/02OQhKpxDdNohxgNQcmlK+CJunFMUkp/KC20RJjArTV3GvaF8hpC+6FdBgDRYHJNzOT9RFYU8LELmC5h0b87FN++3t7+N+klk4HtENWwjQgUHqS+hnItlOEO+E/joze5oala1ykEU/BWOnvQj5SRBmhDUNgR4Aw/8YNJ5T+1nCVGg6o/aGs9serFbr8rKnsDiR4PvEjpPTJkXJxS5oX6b6nhaKHlEErGITmcq3/c2XjVMmEn5c2+AqPtEj3f5DcH57LIMJCH/3ZOuK+fpC4HbZgMkTxX10VN0PefaBGuMMGDksZu1X0Hunmt8GBha
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(19092799006)(366016)(6133799003)(22082099003)(18002099003)(10067099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(7416014)(36860700016)(376014)(23010399003)(10067099003)(18002099003)(22082099003)(921020)(11063799006)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AZQ9Ez0vyiyKkU9+qmBFaNcyXunqcUUVkuVxnyWABZY9eGKURKoTRZTnzoqf?=
- =?us-ascii?Q?xRDNXegV6IOrGY5v0U9gF8JDI0Ogx3GIgKcOxVqvO+HKwtVWFlPnvtVrNnxw?=
- =?us-ascii?Q?qiJYeHWe+JUSyPBZfApb3AgnrYEKXdJGkg5RCp0RaVbPw36Q+PFFCZHo1K+8?=
- =?us-ascii?Q?I7hwYvARRGMX+GqvQRM/d+00S+1mwIT9rvugn5PWe2RDFDDiY/AezxbFcPbH?=
- =?us-ascii?Q?zkNA2xKL8cnotCMVh3rsYVQXG0MnutPTRmnLZUMwOHHGqDvJasUcWE19ujrF?=
- =?us-ascii?Q?sCIX3KtHaXY29lEqgAMyWxN/8ubK0qt4Pgqt8TrhkX+lSGKjKm96MnL4ZB1b?=
- =?us-ascii?Q?NTGNIIO4ohuDgFcG69AAoOPxOdhYrnxWVhuXdz2cidQT9d50dI3Z+uJEcEbj?=
- =?us-ascii?Q?6Ld0e1k+VAAfZAsqdLYS9Q2yjR1+u7ld6vPqi4j1idOUM78Lr8v1esGJpLFJ?=
- =?us-ascii?Q?eomOx+e+HS8xfv5QsatE+Nfp+0zNO2Tob4b1wO3ww8ty0mlMi7hHffrRTrHU?=
- =?us-ascii?Q?Q3K/fZzG06l8h2WTJ/FrX50VVHPbWkAYeGmwOt/3dV7SYwqy+c6uQ/tLoUi4?=
- =?us-ascii?Q?hiqnGifXRG2lKNejgFrKrMXikpd8/0zU6EfkoPa44gY4AdTAcpPG75jYl8+W?=
- =?us-ascii?Q?OCXQpm3ecthHnzxCsY4aKI+SkjMml+heovqXU0PWGHLiJujY581GTfGNfltw?=
- =?us-ascii?Q?8jcIYQgGHrfulQXM1XEVSRI7D11YMjQoJOjBlvzXyhv3d/2akEG95HBLKG8k?=
- =?us-ascii?Q?DMeR33Swb5sKpjFmqDrybfsrbhy9h2NFoLZ62U1pLHStsx5B0fveKlZn6dty?=
- =?us-ascii?Q?dcRBoYSeZupxXgv3fQzbD6XHeq6Y+Uf/fGbTc1cvSRi7NrTUB/FKrYevhqfr?=
- =?us-ascii?Q?yECQpQIEdliF45WGvsOoFB5xoO8yadTMzogTrESt+xIphJfRldmBb6WcEaDR?=
- =?us-ascii?Q?LW3e3oEKrBmKhi/AR8WfUcnHM9Pjs9AT6sWfFrVehFnEM42Kr10urGPdJUUQ?=
- =?us-ascii?Q?qoOawKP+lEczaYavY++Hkv4/YWE6NArxyyW50yTHICeCl2DGDpM80hLCL9YE?=
- =?us-ascii?Q?c07+ulLVQHxFYCI2ZoWD8qL0HaocromD9Qk30rRkoAsUBfofomO2sFcno78t?=
- =?us-ascii?Q?K+XgFjofgNL17UsrSu1iJuKMnv5RwxlrTWdQdUBJ1NP5k3b8WakX6O+KET71?=
- =?us-ascii?Q?iGLRMsk3/elAm/XF8yZD10AaWJZBTfo2bEYPOa3iFmo7MBOSsr3fiBzwdvBB?=
- =?us-ascii?Q?3TyjGh2vIqXLb8mJlYSIYRIvU3+y2yHIvfhNcPfPiH9x3FUhr/XfzltcN3Ue?=
- =?us-ascii?Q?sgQRdF8K2lZ+aq/LC5r80weaqnaM88fqBrmORxKIMSgrbe6vowpHIi1Q/bm4?=
- =?us-ascii?Q?6HF1IHPO69ETTls0A7RIt/l/sIpiZXH1vp9NsDdaJWlWeYcxKspl4FG8X72W?=
- =?us-ascii?Q?jUZmxzv8jfTYfyTFld9iDHkFn09xxrJVMd4aQMcs2+9tEvZ6a0kiyLNQAQ65?=
- =?us-ascii?Q?GhfhdiioE1K4waH5VOSOs3/4ycbKmlRRIcyuITpmAQcyrvgpsKzDCSVDPJNg?=
- =?us-ascii?Q?KmSyKiwuh+0fyj3ypxIm5hOQ1oQwCkvRFExNClO6vc2i7QjlYBhXO95jzKZs?=
- =?us-ascii?Q?vGTj6MHClWKuowB/XuUZSfuJH4ZQlgn0XC/vXyox5JuCnKTB1Xf2Oaz9C+X+?=
- =?us-ascii?Q?1G0Om1Pv/yQqq4bZWwjhkW78m6EBiZQ7AqDj1zmm88NEB+mEQ4XPRGoSU2nj?=
- =?us-ascii?Q?fS72deBh+xjD10SuERpJy7boJjwdVN2kpsesY1biVu5GNh6H9skp?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b84e65ba-6a30-4dd8-beb8-08df2582746b
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2026 21:23:54.2548
+	/pJgerksaHongF/5yoFXRbIwfpu3SK2ToNG1npz2on/vewr8+gdG+YcPdkVjDrUJHoHylqo66wy5dhR515YBOOURNdurm1US/vlp0zEE2UlF0GoC8JfHgRztefUPSpGWj7lj27zXDHAa4dRuEoOWdo3qMC0aKhduehxPMUjcHC/HrTJv6auTohJsSeQk092V1GFd7nD1kSOt27zTpXVqWWJIRXFNv1Ns6UyRxnaJba8kph2pw23WxuB8LR1kgqEx5bCl+HGo1aeXOKJYtck/1HWAzx9BtRl4fGS3UJPVZVXucuSAyuWKoQFCbV2yKj+pie+R2G7bM1PUGymDZ7WR0RwjLgJJ50wwZbhI3Yf79UStajiRbm+N9zSdVk6+qGFIhnilw684bSIUczxMidy69Z+etklMSFII4B09cnPf16lacH1dMhPjjDFmGfl3Sb0Z
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 04:00:31.5201
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3gKwtMmoBH3dBh6/wcSLA3klCc3QVbqP637zdJLqP0seeR6UNuu1fYSRaIpI/+vLlY02phPV70mOaJld+miqt7d06NxZE4De09N1haMwK8MNMIde857SN7dXAxgfJM0T
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10675
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f8d5b3b-45ca-44dd-f577-08df25b9dcf2
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF00001CE7.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR12MB026689
 
-On Wed, Oct 07, 2026 at 11:01:04PM +0800, Ginger Li wrote:
-> [You don't often get email from ginger.jzllee@gmail.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> pl330 uses two locks per transfer: the channel lock pch->lock and the
-> controller lock pl330->lock. My static analyzer reported that they can
+Add a pm_runtime_if_active base guard and its _try conditional variant
+to pm_runtime.h for drivers that need to conditionally acquire a runtime
+PM reference only when the device is already active.
 
-			       The static analyzer ....
+The base guard must not be used directly via guard()/scoped_guard()
+because pm_runtime_get_if_active() only acquires a reference when it
+returns 1; the destructor unconditionally calls pm_runtime_put(), which
+would underflow usage_count on a suspended device. The base guard
+exists solely to back the DEFINE_GUARD_COND _try variant.
 
-> be taken concurrently in opposite orders, leading to potential deadlocks.
->
-> The terminate/stop paths take pch->lock first and then pl330->lock, e.g.
->   pl330_terminate_all()
->     -> spin_lock_irqsave(&pch->lock, flags);
->     -> spin_lock(&pl330->lock);
-> and
->   pl330_pause()
->     -> spin_lock_irqsave(&pch->lock, flags);
->     -> spin_lock(&pl330->lock);
->
-> While on the other hand, the channel release path takes pl330->lock first
-> and then pch->lock in pl330_free_chan_resources():
->   pl330_free_chan_resources()
->     -> spin_lock_irqsave(&pl330->lock, flags);
->     -> pl330_release_channel(pch->thread);
->     -> dma_pl330_rqcb()
->       -> spin_lock_irqsave(&pch->lock, flags);
->
-> Freeing a channel (dma_release_channel() -> dma_chan_put() ->
-> pl330_free_chan_resources()) while another CPU is in pl330_terminate_all()
-> or pl330_pause() on the same channel is therefore an ABBA deadlock: the
-> one thread spins on pl330->lock that the other holds, and vice versa.
+The _try variant (used via PM_RUNTIME_ACQUIRE_IF_ACTIVE) satisfies the
+_try API contract that guards must not produce an error when runtime PM
+is disabled for the device. When pm_runtime_get_if_active() returns
+-EINVAL (runtime PM disabled), the expression calls
+pm_runtime_get_noresume() to pre-balance the destructor's unconditional
+pm_runtime_put(), then returns 1 so the guard condition succeeds
+(bypass). This mirrors the behaviour of pm_runtime_active_try which
+uses RPM_TRANSPARENT for the same purpose. When the device is genuinely
+runtime-suspended (return value 0), the guard condition fails and
+ACQUIRE_ERR returns true, allowing callers such as interrupt handlers to
+skip MMIO accesses.
 
-To here is enough. cut below message.
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+---
+ include/linux/pm_runtime.h | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
->
-> Inspecting the driver code suggests the rule that dma_pl330_rqcb() must
-> not be called with pl330->lock held: pl330_dotask() and the callback
-> drain loop  in pl330_update() both releases pl330->lock before their
-> dma_pl330_rqcb() calls. Thus, pl330_release_channel() is expected
-> to follow the same manner.
->
-> Let pl330_release_channel() manage pl330->lock itself and keep the two
-> dma_pl330_rqcb() calls outside the critical section, and stop holding
-> pl330->lock around the call in pl330_free_chan_resources().
->
-> This was found by a static analyzer on Linux 7.3-rc4; it reported
-> DeadLock::AllLock (Certain) for
->
->     pl330_free_chan_resources() <-> pl330_terminate_all()
->     pl330_free_chan_resources() <-> pl330_pause().
->
-> Fixes: 91539eb1fda2 ("dmaengine: pl330: fix double lock")
-> Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-> ---
->  drivers/dma/pl330.c | 24 +++++++++++++++++++++++-
->  1 file changed, 23 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-> --- a/drivers/dma/pl330.c
-> +++ b/drivers/dma/pl330.c
-> @@ -1805,16 +1805,32 @@
->
->  static void pl330_release_channel(struct pl330_thread *thrd)
->  {
-> +       struct pl330_dmac *pl330;
-> +       unsigned long flags;
-> +
->         if (!thrd || thrd->free)
->                 return;
->
-> +       pl330 = thrd->dmac;
-> +
-> +       spin_lock_irqsave(&pl330->lock, flags);
->         _stop(thrd);
-> +       spin_unlock_irqrestore(&pl330->lock, flags);
+diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+index 64921b10ac74..ae2a8740ffb3 100644
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -609,6 +609,13 @@ DEFINE_GUARD(pm_runtime_active, struct device *,
+ 	     pm_runtime_get_sync(_T), pm_runtime_put(_T));
+ DEFINE_GUARD(pm_runtime_active_auto, struct device *,
+ 	     pm_runtime_get_sync(_T), pm_runtime_put_autosuspend(_T));
++/*
++ * Do not use directly -- the destructor calls pm_runtime_put()
++ * unconditionally, which underflows if no reference was acquired.
++ * Use only via the _try variant below.
++ */
++DEFINE_GUARD(pm_runtime_if_active, struct device *,
++	     pm_runtime_get_if_active(_T), pm_runtime_put(_T));
+ /*
+  * Use the following guards with ACQUIRE()/ACQUIRE_ERR().
+  *
+@@ -624,6 +631,23 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try,
+ 		  pm_runtime_get_active(_T, RPM_TRANSPARENT), _RET == 0)
+ DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
+ 		  pm_runtime_resume_and_get(_T), _RET == 0)
++/*
++ * The _try contract is that no error is produced when runtime PM is disabled,
++ * so bypass the guard when pm_runtime_get_if_active() returns -EINVAL: take a
++ * reference with pm_runtime_get_noresume() to pre-balance the destructor's
++ * pm_runtime_put() and return 1 so the guard condition succeeds. Interrupt
++ * handlers then keep servicing interrupts when runtime PM is disabled for the
++ * device or CONFIG_PM is not enabled.
++ */
++DEFINE_GUARD_COND(pm_runtime_if_active, _try,
++		  ({
++			int _r = pm_runtime_get_if_active(_T);
++
++			if (_r == -EINVAL)
++				pm_runtime_get_noresume(_T);
++			_r == -EINVAL ? 1 : (_r ?: -EAGAIN);
++		  }),
++		  _RET == 1)
+ 
+ /* ACQUIRE() wrapper macros for the guards defined above. */
+ 
+@@ -639,6 +663,9 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
+ #define PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND(_dev, _var)	\
+ 	ACQUIRE(pm_runtime_active_auto_try_enabled, _var)(_dev)
+ 
++#define PM_RUNTIME_ACQUIRE_IF_ACTIVE(_dev, _var)	\
++	ACQUIRE(pm_runtime_if_active_try, _var)(_dev)
++
+ /*
+  * ACQUIRE_ERR() wrapper macro for guard pm_runtime_active.
+  *
 
-[1]
->
-> +       /*
-> +        * dma_pl330_rqcb() takes the channel lock, which is acquired before
-> +        * pl330->lock on the terminate/pause/tx_status paths.  Calling it with
-> +        * pl330->lock held would invert the lock order, so keep it outside the
-> +        * critical section
-> +        * pl330_update() already follow.
-> +        */
->         dma_pl330_rqcb(thrd->req[1 - thrd->lstenq].desc, PL330_ERR_ABORT);
->         dma_pl330_rqcb(thrd->req[thrd->lstenq].desc, PL330_ERR_ABORT);
-[2]
->
-> +       spin_lock_irqsave(&pl330->lock, flags);
->         _free_event(thrd, thrd->ev);
->         thrd->free = true;
-> +       spin_unlock_irqrestore(&pl330->lock, flags);
+-- 
+2.43.7
 
-[3],
-
-how do you make sure it is safe to do 1, 2 and 3 without pl330->lock?
-
-Frank
->  }
->
->  /* Initialize the structure for PL330 configuration, that can be used
-> @@ -2358,9 +2374,15 @@
->         tasklet_kill(&pch->task);
->
->         pm_runtime_get_sync(pch->dmac->ddma.dev);
-> -       spin_lock_irqsave(&pl330->lock, flags);
->
-> +       /*
-> +        * pl330_release_channel() takes pl330->lock itself and calls
-> +        * dma_pl330_rqcb(), which takes the channel lock.  It must therefore
-> +        * not be called with pl330->lock held (see the comment there).
-> +        */
->         pl330_release_channel(pch->thread);
-> +
-> +       spin_lock_irqsave(&pl330->lock, flags);
->         pch->thread = NULL;
->
->         if (pch->cyclic)
-> --
-> 2.43.0
