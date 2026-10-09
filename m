@@ -1,115 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4C545198F
-	for <dmaengine@vger.kernel.org>; Fri,  9 Oct 2026 16:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311324DA9BE
+	for <dmaengine@vger.kernel.org>; Fri,  9 Oct 2026 16:15:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791561836; cv=none; b=VszpUvlFfm4VmGUeAZny6MJNoGsJp/ac6mchoOWUlC8jbtoccEg8kFJdJE0J1wqH8hKjti457gVoQrpMxFmTkDElMws2fA2CCDyju319rCo8ic5ATxeFV31xK5vmiq6+rzhsdqX8d4JbS69j/IX228ZCA+Bm6pzw4lx23ijp2BM=
+	t=1791562516; cv=none; b=KLhXXaFfJJnM96pbM0/H60LPDY3p4lUhN8zYvzdTcTH/DFUGsio4e6W4xkTMKDaChETeyQa0UPRhc/l4Fd2U+B8rkmsLwgbHaenLDcPT5ZmRysCOh6PvMfVGWCiBMcpB/EEqsoIsyV+enqQDpPoP/OVITw2LocM08jDbEmgqhBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791561836; c=relaxed/simple;
-	bh=7W94mZXGa92eeGCXxzgc/erblKSppQmVZfuisbl0DOQ=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=YyGcAJrpPa6LEa+FF/Z7ZEVkj0jhq8/OHFcXGmNIc4/QhcBjSjdpf1UP+4YvXx99hbqJeHa50eXMQ9YNf5U0oTmbGmxr+FZXMHZURBpOrx5qeW8JepJc2QwRtgPzuSfcFaiIFsODc+VLXbRfIypsqsghlVMXPuNMJiijOEeWRes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8/DPXlW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791562516; c=relaxed/simple;
+	bh=wgIX1S24h2P4HPzSMc4RGGAwTHKl50S9ibDTi5MtLho=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rcQu/f/5GyXBKCc2wy5Xa69lowZnZrtFKpnmFjpnDAdsOp8RV8hKpMc2sxSiguFzE4SbWktzD5qeEK3av/1HHT8xNGdKElmBCtBrHOyL0HNYGDYvcmQn8i2eYvBBisjk2r9f4Fcdg0BJW0r2jCkicVgBUTwb2tY7sJQ0sVthvF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KxS4oKHS; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8/DPXlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CAF1F00893;
-	Fri,  9 Oct 2026 16:03:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791561835;
-	bh=Tw5LYnsPXKAIB82tiUo8VJZdLRzsiDBpcJtX1hwtBp4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=H8/DPXlWhG9huHxJstcuzHZJIfpn7c+KL7XH30uDXPhAeu6/lr5tQWMLa4QSHMJBj
-	 eQ3XAFkFTBYJHAmCGUoytyDKUSNT9hlmS+6AGo4ynIkp/oOQYPVvWvqMn93UcxWKka
-	 twvCIkFFnWU95Vonsr5U+/ZWmfgP15D4ClLjJFdv7RUt6ZDbhahiAglz1pShyNwipw
-	 /FdEjMVLwrAh2iHiLR0TbXj/C6wpEB0izG6mCdMy6APL3RJt2Jp524apOe0RKJMCnw
-	 IsHlxD2ap7PTgAjv1QATscGPSAL17DoCha+5+B4sQsM0LuodpJ4UK1+TqOh3zL0HcR
-	 K3o7EqtVaV/VQ==
-Message-ID: <sashiko-outbox-165812@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 2/9] dmaengine: dma-axi-dmac: Use bus width
- capability helpers
-Reply-To: sashiko-reviews@lists.linux.dev
-To: =?utf-8?b?TnVubyBTw6E=?= <nuno.sa@analog.com>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20261009-dmaengine-support-wider-dma-masks-v5-2-4c4e63a7a1af@analog.com>
-References: <20261009-dmaengine-support-wider-dma-masks-v5-0-4c4e63a7a1af@analog.com>
- <20261009-dmaengine-support-wider-dma-masks-v5-2-4c4e63a7a1af@analog.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 09 Oct 2026 16:03:54 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KxS4oKHS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791562516; x=1823098516;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=wgIX1S24h2P4HPzSMc4RGGAwTHKl50S9ibDTi5MtLho=;
+  b=KxS4oKHSHgybQkGFzy52yF457r/jjEtFlXEsDtD3/W08lBdOvfnly1bg
+   WxFKnCV51k9iokkQ7F85JohEj0a2Pm3BD4xv4vZoF9JLTgISTsYni7dhz
+   etCHTwkWlEwHrzyAK6u0VRy0SVAuNTyJIkWg0+xO5x9sEijiARTy49CrK
+   hWlyiMf+DZ0M5Thd/qppWz8J3qAWya+IhCoe7CL/xqf9Pu7aeF+nMRxk4
+   8PBPwQuRRr8x6TpyXx9MLya3PeST5NSHhFcCZUMQy7DxDL3pxac82r3vE
+   vMl3I3lzOkZSg/9BP0GUSW7KUc2KIlMmhGLlLV0FMG2OLkrm9czOa2Cod
+   w==;
+X-CSE-ConnectionGUID: UeUye9UVTHeZimGO+wxn5w==
+X-CSE-MsgGUID: WrJxqXvTQGydalsTtQA81w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="257346"
+X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
+   d="scan'208";a="257346"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 09:15:15 -0700
+X-CSE-ConnectionGUID: wuXNGfW2RwmGylp5V1hV+w==
+X-CSE-MsgGUID: p47TUs46RpiCkD+bqmMCag==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
+   d="scan'208";a="662020"
+Received: from aduenasd-mobl5.amr.corp.intel.com (HELO [10.125.109.99]) ([10.125.109.99])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 09:15:14 -0700
+Message-ID: <13208c9b-cf71-4b1e-ae7e-d43dcc47ee27@intel.com>
+Date: Fri, 9 Oct 2026 09:15:12 -0700
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: dmaengine: clarify ordering rules around cookie
+ completion
+To: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
+Cc: Frank Li <Frank.Li@kernel.org>,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>,
+ Koichiro Den <den@valinux.co.jp>
+References: <20261009093745.539924-1-vkoul@kernel.org>
+From: Dave Jiang <dave.jiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <20261009093745.539924-1-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] dmaengine: axi-dmac: Incorrect copy_align assignment causes UB for=
- >=3D 32-byte widths
---
 
-commit 32d178f66f02ed239c1f773e106395cd1e81ae9c
-Author: Nuno S=C3=A1 <nuno.sa@analog.com>
-Subject: dmaengine: dma-axi-dmac: Use bus width capability helpers
 
-This commit transitions the AXI DMA controller driver to use dma_bus_width_=
-set()
-to advertise source and destination bus widths. This allows the driver to e=
-xpress
-widths of 32 bytes and above while maintaining legacy fields.
+On 10/9/26 2:37 AM, Vinod Koul wrote:
+> Sashiko pointed in [1] about the cookie completion order. It is good to
+> Document that for ensuring that dma buffer is flushed and no stale data
+> is seeing by consumer, we need to make sure such action is taken before
+> drivers invoke dma cookie completion.
+> 
+> [1]: https://lore.kernel.org/r/20260917072507.5BDB61F000FF@smtp.kernel.org
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-> index d47ff27e1408f..ca9cf1e0c5e46 100644
-> --- a/drivers/dma/dma-axi-dmac.c
-> +++ b/drivers/dma/dma-axi-dmac.c
-[ ... ]
-> @@ -1262,8 +1262,13 @@ static int axi_dmac_probe(struct platform_device *=
-pdev)
->  	dma_dev->device_terminate_all =3D axi_dmac_terminate_all;
->  	dma_dev->device_synchronize =3D axi_dmac_synchronize;
->  	dma_dev->dev =3D &pdev->dev;
-> -	dma_dev->src_addr_widths =3D BIT(dmac->chan.src_width);
-> -	dma_dev->dst_addr_widths =3D BIT(dmac->chan.dest_width);
-> +	ret =3D dma_bus_width_set(dma_dev->src_bus_widths, dmac->chan.src_width=
-);
-> +	if (ret)
-> +		return ret;
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+
+> ---
+>  Documentation/driver-api/dmaengine/provider.rst | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+> index 2897ade67b39..1bcbce705659 100644
+> --- a/Documentation/driver-api/dmaengine/provider.rst
+> +++ b/Documentation/driver-api/dmaengine/provider.rst
+> @@ -557,6 +557,11 @@ dma_cookie_t
+>  - Not really relevant any more since the introduction of ``virt-dma``
+>    that abstracts it away.
+>  
+> +- dmaengine drivers need to ensure buffers are flushed before invoking
+> +  vchan_cookie_complete() or dma_cookie_complete(). This would imply a call
+> +  to unmapping buffers or any such architcure calls to ensure caller seeing
+> +  buffers are flushed is done before invoking these calls.
 > +
-> +	ret =3D dma_bus_width_set(dma_dev->dst_bus_widths, dmac->chan.dest_widt=
-h);
+>  dma_vec
+>  
+>  - A small structure that contains a DMA address and length.
 
-[Severity: High]
-Does this migration to support widths of 32 bytes and above expose an
-undefined behavior in the alignment checks?
-
-Later in axi_dmac_probe(), the copy alignment is assigned the literal byte
-width:
-
-    dma_dev->copy_align =3D (dmac->chan.address_align_mask + 1);
-
-However, dma_dev->copy_align expects a log2 alignment exponent (as defined
-by enum dmaengine_alignment). The DMA core uses dmaengine_check_align(),
-which calculates the alignment using a bitwise shift:
-
-include/linux/dmaengine.h:dmaengine_check_align() {
-    ...
-    return !(((1 << align) - 1) & (off1 | off2 | len));
-}
-
-With this patch explicitly allowing widths of 32 bytes and above,
-copy_align can now reach 32. This results in an operation of 1 << 32,
-which triggers undefined behavior on 32-bit arithmetic, potentially
-invalidating DMA transfer alignment checks.
-
-> +	if (ret)
-> +		return ret;
->  	dma_dev->directions =3D BIT(dmac->chan.direction);
->  	dma_dev->residue_granularity =3D DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
->  	dma_dev->max_sg_burst =3D 31; /* 31 SGs maximum in one burst */
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009-dmaengine-=
-support-wider-dma-masks-v5-0-4c4e63a7a1af@analog.com?part=3D2
