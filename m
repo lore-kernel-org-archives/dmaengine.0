@@ -1,132 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A316C49738E;
-	Fri,  9 Oct 2026 09:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1B13D9541;
+	Fri,  9 Oct 2026 09:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791537307; cv=none; b=L80NUKe4/Yh5Qvi9oksNvV1Qbf1cacNr+RyTOZrJEZ5mJ8NnwQJeDpd+xudoCyBOzSMIV5g+bFXWdkjLdXsX0DQpr2pKA9T1u/OlCtDQ4ao1CIYAtCzODBtS5F+08UghwR8kgmwrY9/bcwVmioOmJahUAaXunsCf4dBV52zT0Lk=
+	t=1791537599; cv=none; b=dCpiqzyJbFI4AvA2rvMxxyEpq75rMhnpUDmmtRpycsB+larx3qkinOqCgyXyQ307cAEsIHVafjTTy2uCA7+dvf7LMQht4qsjY+wggpg/60gBQ0QLraER5eiFTPQE7fFmgHQMgEq3oGqPr8FuMVDL9o9lI8mswX9y25Obzim5hqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791537307; c=relaxed/simple;
-	bh=rkWOojI+ebnA3Fv4IWTizk0VlXUsQPN3hEzpRvmmX8o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZGkQ1VG9UaLaLYqSwZ6ZPz5ZAScrneLhEzPs6DYnRFV0Yvmo65pQm6pzvAnN7sRj7irVrNl2VD7R+ZZTbfYj/QfyQ0qXfX52DKd0qgUhvAxpkDDNdfLIXUseq8R0gEIbGC2L5R7VZvt6St/2pQ0+NjnSr6OmZpZstio1gF9pNX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d1iSR24M; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d1iSR24M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A801F00893;
-	Fri,  9 Oct 2026 09:15:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791537304;
-	bh=3NN/hoihGlgYOQ3g+HiDIFNp0hvlK2XY1wVVhjZreZc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=d1iSR24MZdZWLG3gs/fGUx1COZO0uDBytxmc7byfdGwfxukLFU1e7EbY2cNKo7da9
-	 wJV/BYTBVVqPrNK1dqQtr1aMOkEfw+0EXwnbCUht7gHZfOzKGGdvcujEsZ5wzeT1FO
-	 hMkI0NSd3ktIUnGjTbD4HS1Uua/oS52qIxUy5U3Dx9I7NVAvFOonQ1BC8vwyucZmr5
-	 TPIszck4cljr0ATfW6EYHdNQmEl6iHJOOTRFJfGpObmA4aevizSLnjzW//xNXnnBE+
-	 oGa21Vz071e6QkRUnWX9iWa1v3xnR5qTFgN5OBBGLIPKaqi3fIsGYN4pCorq7+szF9
-	 kUKFO6ON9BRag==
-Date: Fri, 9 Oct 2026 11:15:00 +0200
-From: Vinod Koul <vkoul@kernel.org>
-To: Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>
-Cc: Frank Li <Frank.li@oss.nxp.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <noname.nuno@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-iio@vger.kernel.org,
-	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org,
+	s=arc-20240116; t=1791537599; c=relaxed/simple;
+	bh=nhG3/rieSjC5NNr0qWIYRx/E2bze2PWXFEaFpLXt8rE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uVMyiPeqKVzwfzYu/YPsgn3OfIuLHEefShffi7WKXB1lCIdHijLjvQ3GNpbFMBoKIx5TqIM9rJTT4bwfcmWEfYFZSQe8fONnPWNwBo6+lDWJuoydjcjwyBj3zV88Jr/LiWSnHwHohPf5yx0vBIsrUDTbQtMtiTRmG+f1+/wQHKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.159])
+	by gateway (Coremail) with SMTP id _____8CxutG7schqZhUUAA--.58736S3;
+	Fri, 09 Oct 2026 17:19:55 +0800 (CST)
+Received: from kernelserver (unknown [223.64.68.159])
+	by front1 (Coremail) with SMTP id qMiowJDxBc22schqA2cqAA--.61825S2;
+	Fri, 09 Oct 2026 17:19:51 +0800 (CST)
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+To: Binbin Zhou <zhoubb.aaron@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andy@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v4 01/10] dmaengine: Move enum dma_slave_buswidth to a
- new header
-Message-ID: <asiwlNB2GMhmBlk8@parshuram>
-References: <aq18_TMNs4EJzgZO@parshuram>
- <arDtEB0na9DxDWAS@nsa>
- <arFXc0LqEpgWSS6m@SMW015318>
- <ar-Il2qP_Qms3Qw1@nsa>
- <ar-13p3a7ENGfMOF@SMW015318>
- <asEWwIfO0LB27wj9@ashevche-desk.local>
- <asGk4fj_HQ5HupB4@SMW015318>
- <6f5dd1c1622adbaf0174a949ca91cb11872087ff.camel@gmail.com>
- <asSqVEHe8EjkbcwW@SMW015318>
- <asTDTxneqrpFlZi-@nsa>
+	dmaengine@vger.kernel.org
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+	Xuerui Wang <kernel@xen0n.name>,
+	loongarch@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>
+Subject: [PATCH v2 0/3] Add Loongson-2K0300 APB DMA mux support
+Date: Fri,  9 Oct 2026 17:19:31 +0800
+Message-ID: <cover.1791535540.git.zhoubinbin@loongson.cn>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <asTDTxneqrpFlZi-@nsa>
+X-CM-TRANSID:qMiowJDxBc22schqA2cqAA--.61825S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQEPCGrIS3YGyAAAsW
+X-Coremail-Antispam: 1Uk129KBj93XoW7CF1DZFW8XFW8uw18JF13trc_yoW8try5pa
+	9xC3yakFyUtFy7Aws5Ja48Zr4rZ3sxJa42gayaqw1qka9xG34qq3WIyF1jvr17Cr18AFW2
+	vFykCFW8GF17ZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUkSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+	67AKxVWxJVW8Jr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28Icx
+	kI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2Iq
+	xVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42
+	IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY
+	6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Cr0_Gr1UMIIF0xvEx4A2js
+	IEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjxUFyCJUUUUU
 
-On 06-10-26, 10:47, Nuno Sá wrote:
-> On Tue, Oct 06, 2026 at 02:59:16AM -0500, Frank Li wrote:
-> > On Tue, Oct 06, 2026 at 07:36:06AM +0100, Nuno Sá wrote:
-> > > On Sat, 2026-10-03 at 19:59 -0500, Frank Li wrote:
-> > ...
-> > > >
-> > > > There are already include bitmap.h, and use
-> > > >
-> > > > typedef struct { DECLARE_BITMAP(bits, DMA_TX_TYPE_END); } dma_cap_mask_t;
-> > > >
-> > > > Suppose all DMA Engine consumer will use it to do some check. So I think
-> > > > needn't split it as indivial version.
-> > >
-> > > Are we sure all consumers are making use of dma_cap_mask?
-> > 
-> > Some legacy user check it. Supposed needn't check it after get channel.
-> > I am working new API to check it to avoid direct access it.
-> > 
-> > > In fact the only function
-> > > depending on bitmap.h is the one clearing the cap_mask. But stepping a bit back,
-> > > bitmap.h was the original proposal from Andy so the idea was to have the new
-> > > widthmask (this one indeed heavily uses bitmaps) already as a split. And with it,
-> > > came types.h given that the DMA enum needs to be used from both consumers and
-> > > providers.
-> > 
-> > Supposed provider is super set, which can include consume part.
-> 
-> Yes but also look the below note on the consumers.
-> 
-> > 
-> > > And note that consumers might want the header without actually needing the
-> > > bus width API so the separation kind of made sense to me.
-> > > Then, as a follow up the idea was to also split the cap_mask API into it's own header
-> > > with a backing include in the main consumer header.
-> > >
-> > > So if we all agree with the above, I guess the current series does not really has to
-> > > change. I see 3 ways:
-> > >
-> > > * Just go back some versions before and have all of it in dmaengine.h
-> > > * The current form
-> > > * s/engine/consumer on the current proposal include/linux/dma/engine/*
-> > 
-> > I think we can put include/linux/dmaengine.h now. The split/move need more
-> > work. I already sent some patches.
-> > 
-> 
-> Ok, to be sure we're 100% on the same side, plan for now is to add the
-> bus width API directly in include/linux/dmaengine.h?
+Hi all:
 
-Agreed, we have two headers one global: include/linux/dmaengine.h which
-will be moved as a consumer API Header and local header
-drivers/dma/dmaengine.h which will be provider header (i am okay to
-rename as such as well).
+Loongson-2K0300 integrates a CMC DMA controller with 8 physical
+channels. Peripheral DMA requests are not hard-wired to these channels;
+they are routed through the CHIP_CTRL13/14/15 DMA_MAP fields.
 
-So this one is used by both so lets keep in global header.
+This series adds support for that DMA request router.
 
-Thanks
+Patch 1 adds the DT binding constants for the peripheral request IDs.
+Patch 2 adds the DT binding documentation for the DMA mux.
+Patch 3 adds the driver, Kconfig symbol and Makefile entry.
+
+The driver registers with of_dma_router_register(). In the route
+allocation callback it validates the <request> <channel> <flags>
+specifier, programs the SoC-specific route register, and forwards
+<channel> <flags> to the parent CMC DMA controller.
+
+Thanks.
+Binbin.
+
+=========
+V2:
+Patch(1/3):
+ - Drop LS2K0300_DMA_REQ_MAX as it is not part of the ABI;
+Patch(2/3):
+ - More detailed description of `dma-cells`;
+ - Add the `dma_requests` constraint
+Patch(3/3):
+ - Drop loongson2_dmamux_map->shift;
+ - Move of_parse_phandle() into loongson2_dmamux_route_allocate() avoid
+   UAF;
+ - Drop loongson2_dmamux->dma_np;
+ - Check dma_requests;
+ - Add devm_add_action_or_reset() instead of .remove();
+ - Replace `metux()` with `spinlock()`, which has lower overhead;
+ - Add loongson2_dmamux_route_free().
+
+Link to V1:
+https://lore.kernel.org/all/cover.1790068409.git.zhoubinbin@loongson.cn/
+
+Binbin Zhou (3):
+  dt-bindings: dma: loongson: Add Loongson-2 DMA mux request IDs
+  dt-bindings: dma: loongson: Add Loongson-2K0300 DMA mux support
+  dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
+
+ .../dma/loongson,ls2k0300-dmamux.yaml         |  72 ++++
+ MAINTAINERS                                   |   3 +
+ drivers/dma/loongson/Makefile                 |   1 +
+ drivers/dma/loongson/loongson2-apb-dmamux.c   | 398 ++++++++++++++++++
+ .../dt-bindings/dma/loongson,ls2k-dmamux.h    |  53 +++
+ 5 files changed, 527 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+ create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
+ create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
+
+
+base-commit: 1d8ae2003de08f61095e4e928b1b8cce6c23cabd
 -- 
-~Vinod
+2.52.0
+
