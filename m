@@ -1,85 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12F54908CC
-	for <dmaengine@vger.kernel.org>; Fri,  9 Oct 2026 09:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BE4497B87;
+	Fri,  9 Oct 2026 09:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791538814; cv=none; b=LSCRukIRwOam9IkxBAFX6MZl8bKyYbTjXmMrCQtgB1fSMQPFJLSTMPsXZc/kCdbnkDpa4X17MgD63HsEZxHb6vB9YykvVotAMOJgPEJh3A9k/l9f84YxHPAQHSt+9+vGJZFenlA6L1c1RAxtfe+l9OtR9HDvaxVf9eLvG5qEM38=
+	t=1791539029; cv=none; b=I3ktKHm5kwJ7tJQa9DeMBUpZJiu3gJlA2TuLKf4UcDDD2RM9kVh6mbgN27DkNwzPMTMzkHJ1PyZhGM+5Y/HHY4MawPk3nLDXsLgZcVJbB+OCsDHicJJNXXpkKzAZIWWfFRA+iN9Cs02Np7LkVuzlGCwJcuR9t4rzQfiBpbBJfkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791538814; c=relaxed/simple;
-	bh=i3AUEgnNmqX1j6FyrZUoOgrpq9E7+h83+W5O2Dq5/Vk=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=R7Yhyjcy3kwiPUOYal9PXM638b80xDv2KQ2qlkbs0zqlMvTVAPup/ZYLvZ1YnDJ8FDiMmAsXc8mj71UrVyZRF32JnuJoVhb6OwY6ld2/zQhZo7qjTPT0R4ZjSJ6tXot4I/XH1ZQM3FDDxTTgSToQyyD7knVJvkoJQvEGqTAsnbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fblTEnZ2; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791539029; c=relaxed/simple;
+	bh=Ni1fdoFnjpafpiRBYCB9qFuOoNMXdGPwfxm/cU2m6Xc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SB3xQCEIAsZXbhKJZmXkDJNub1QyR0cVlp5tXZmvRpcm1D7vRV5LnygSk5iVujmC7/273yOGDf8rDuk9iHrB9cN0fpBsi1s1S4vTDuu26Whop/49N8Jz7iU5rA5pg8I54pxdZr1wxrY8G4quqAPYECYeYePmWuseFKMe3v4p/qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/knBLIM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fblTEnZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9101F000FF;
-	Fri,  9 Oct 2026 09:40:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/knBLIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94BA1F000FF;
+	Fri,  9 Oct 2026 09:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791538805;
-	bh=z0SGgt7Z3LhxzLgpY17Vl3UAzkzxHP3OrEYy80Lc77Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fblTEnZ27O8bnKUBuqD5Jay6qlIxHY1NrPGBOOY2U5M4qePg/JhKDW//rTy/cGNma
-	 4gs1tYJI4gW+D46QiW/dfkEedKax0k7SavCujWog3vKRCz3Z7pK74BC/dft859UsUN
-	 bXB+bWUDrSZaFKrmtnwS7iGduv9dYyXZZfzecTu+qKdZJaafa2AMyeVIT+6mYyrBZn
-	 x/gUu3ChsiP6j7XffPByLKWkKSzQhddFuZomSr88VSH9RbPO8ZwraR04DZ+BDNOkSw
-	 +4GpULutHXqqUA82d43qm9kRfPUi+iXa1Cf2sVcTDvJpLXk1kQHXOwwugWXogq4ukb
-	 u8ktSC6paQ1eA==
-Message-ID: <sashiko-outbox-165180@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] docs: dmaengine: clarify ordering rules around cookie
- completion
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Vinod Koul" <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org, Frank.Li@kernel.org, vkoul@kernel.org
-In-Reply-To: <20261009093745.539924-1-vkoul@kernel.org>
-References: <20261009093745.539924-1-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 09 Oct 2026 09:40:04 +0000
+	s=k20260515; t=1791539019;
+	bh=PbSICq/SyAcnLxJ/3kBxuPhqZVN84tKx60r3+VjqUJk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=i/knBLIM4WbJ6eCCx2LdtFz39MlFxgzvCe53ay28diCbGgVGzKdC7g890BfCGOt3F
+	 Y4YGw4jR3d6ylWN/N1H6ZGQEQy5jqqbFjclEqZKcp3UALxZ1UtLjuC4/ap9SkixN3p
+	 o7VGvNRrPm0wrFTrSeA1Xrwt6Hbz0cliP3RIiUyW44yfDoIYPoxG8pxjfoBgyYBXd7
+	 ECRqBUYWgL5F87U+ofqiyKS/ValTrdxq26dC8DANHDCB3W9UyLFkAjhGLHne28BTar
+	 WCXotEk6gUY2v5dEUmN280CCi/2IUt2OR51+gcGSoje7gaHjjy+1cwSxSgui/4h06y
+	 F+nHhioEpii3g==
+Date: Fri, 9 Oct 2026 11:43:35 +0200
+From: Vinod Koul <vkoul@kernel.org>
+To: Dave Jiang <dave.jiang@intel.com>
+Cc: Frank.Li@oss.nxp.com, Dan Williams <djbw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Frank Li <Frank.Li@kernel.org>, Jon Mason <jdmason@kudzu.us>,
+	Allen Hubbe <allenbh@gmail.com>, Ard Biesheuvel <ardb@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	"open list:CRYPTO API" <linux-crypto@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" <dmaengine@vger.kernel.org>,
+	"open list:NTB DRIVER CORE" <ntb@lists.linux.dev>,
+	imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH 1/1] dmaengine: change dmaengine_get_unmap_data() first
+ arg to dma_chan
+Message-ID: <asi3R24SY-Y2wJQx@parshuram>
+References: <20260922184527.2414043-1-Frank.Li@oss.nxp.com>
+ <b40fa0d7-fbd0-4ee8-b99c-781d08c18838@intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b40fa0d7-fbd0-4ee8-b99c-781d08c18838@intel.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] docs: typo 'architcure' and grammatical errors in dmaengine provide=
-r documentation
---
+On 22-09-26, 16:09, Dave Jiang wrote:
+> 
+> 
+> On 9/22/26 11:45 AM, Frank.Li@oss.nxp.com wrote:
+> > From: Frank Li <Frank.Li@nxp.com>
+> > 
+> > Replace the struct device *dev argument with struct dma_chan *chan so
+> > callers do not need to reach into the dma_device internals to obtain
+> > the device pointer.  The implementation now derives the device via
+> > dmaengine_get_dma_device(chan), which correctly handles the per-channel
+> > IOMMU mapping case.
+> > 
+> > Prepare to make dma_device private and make dmaengine API consistent.
+> > 
+> > Signed-off-by: Frank Li <Frank.Li@nxp.com>
+> 
+> For the NTB bits:
+> Acked-by: Dave Jiang <dave.jiang@intel.com>
+> 
+> 
+> > ---
+> >  crypto/async_tx/async_memcpy.c      | 4 ++--
+> >  crypto/async_tx/async_pq.c          | 4 ++--
+> >  crypto/async_tx/async_raid6_recov.c | 4 ++--
+> >  crypto/async_tx/async_xor.c         | 8 ++++----
+> 
+> Maybe one day Dan's wishes will become true and someone will finally deprecate async_tx....
 
-commit 5e1e4fe7c0e4434abe23aff6f6d55d9b232ea575
-Author: Vinod Koul <vkoul@kernel.org>
+Does Intel still have use it. I am looking at fixing the names and we
+can drop async_tx completely...? 
 
-docs: dmaengine: clarify ordering rules around cookie completion
-
-This commit adds documentation to clarify the ordering rules for DMA cookie
-completion, ensuring buffers are flushed before drivers invoke the completi=
-on.
-
-> diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentat=
-ion/driver-api/dmaengine/provider.rst
-> index f4ed98f701c91..073ba6c0f29dc 100644
-> --- a/Documentation/driver-api/dmaengine/provider.rst
-> +++ b/Documentation/driver-api/dmaengine/provider.rst
-> @@ -555,6 +555,11 @@ dma_cookie_t
->  - Not really relevant any more since the introduction of ``virt-dma``
->    that abstracts it away.
-> =20
-> +- dmaengine drivers need to ensure buffers are flushed before invoking
-> +  vchan_cookie_complete() or dma_cookie_complete(). This would imply a c=
-all
-> +  to unmapping buffers or any such architcure calls to ensure caller see=
-ing
-> +  buffers are flushed is done before invoking these calls.
-
-[Severity: Low]
-This isn't a bug, but there is a typo here ('architcure' instead of
-'architecture'), and the phrasing "to ensure caller seeing buffers are
-flushed is done before invoking these calls" is grammatically awkward.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009093745.5399=
-24-1-vkoul@kernel.org?part=3D1
+-- 
+~Vinod
