@@ -1,42 +1,43 @@
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C1B4A64C6
-	for <dmaengine@vger.kernel.org>; Sat, 10 Oct 2026 12:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657FE4A5EC2
+	for <dmaengine@vger.kernel.org>; Sat, 10 Oct 2026 12:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791636322; cv=none; b=qTVET5k4tDs8DmU8P66hf4V49EP6pwiTfOa7OZ20ZmHD4tqLLk552dJOUymXDtlrDclH3WC39OwenkSCW6fqoS0Dn05Mh+6Po9lgk91ZVatGEz9RMV2ImDra95559kPYOgT18EEMatbxu2x5oTupmVz7ZPB34C59hVZTrEStVC0=
+	t=1791636323; cv=none; b=gIJJi+zDpUKlcwxz2vF3K4SmrIBOuFLDKyz99lChxHy+M3YAe1ljOZ+mQBL+zE84Wtj6tCLQkq/8/SLIZc8PAusOA0QqPbZJDjMCGZUYYSvYWRQG1kF4U0WJL647YSbcCn7Ub9U2QLf25LMJHhkJhoEFlXFO38otAWNw89n9/oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791636322; c=relaxed/simple;
-	bh=/avlakguXMmmpmxG2qHgFp32krlvQif4YB7D95DFmy8=;
+	s=arc-20240116; t=1791636323; c=relaxed/simple;
+	bh=Tt+BWm5QuOAgGtzY0aHYte8IdK6d45tD+YUAl+mJW2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlqoUiQLip2UFnhpH2AsCW7tVfQbQ1/P0h5tIlI3FcISzBLTOATRn3Q0QrEYUSiyIpztYuzuw870ne5Is6ijuymOHFz9KgVKw18mxnylvK0wnXmIsK8ATxn1zliOpcEQoZAsDmEbbOUsF+h5rH0GhdXzFSohac8uxiKycYgSy0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=TJjygx/b; arc=none smtp.client-ip=194.117.254.33
+	 MIME-Version; b=Po0vO7ID6BafV9V3P8eqnB0RRRcOb8pRA3QyDuoMfMpATCOTvMt+tTvPAYHys0zZThI1dtkkBX16RPhOoP/PzP6EVsGuXgauNsLZ0LGzQAAhZsIBEKX5OjwAoV1CneN3vt/Ziw2Wetly9Hqfr9nJPyGUbfiGTtjv5BKMJKvKFYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=TZOuZFla; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="TJjygx/b"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="TZOuZFla"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
 	:in-reply-to:references:mime-version:content-transfer-encoding;
-	 s=k1; bh=gavVwlu+nhGzOB0P+B6s/Hd+8rQIK0nzCwuiOSLmIaA=; b=TJjygx
-	/buMjTNPGckLsa24QnjuiaV4x4mcUVHCLvBDHy3NMoCRDyNFNsFel78B1y68BaNT
-	Bw0KrCSKK8UopfeFjD3DDXkjCJsBHSPR+cTZFTB85ZJjG8iVnLvGK+uMao9DZLoT
-	fzMdtwb9PBkHkUFwgiN2daV0fH+UQDDHxKAVXrUWRiEso48gjeZnf9/Cd8zZDrn/
-	w833n64qMpfI8jtZ4KQUDN11id/E34eagd8LWfcdlc2GzVPmMlr+nKD6ozlgX3vP
-	YybxIsqHyRO3WGJGyGNrRr1dZBBeaEZHqZ102w1G51ye1KKILoovoOU5QWqgRSbR
-	mcDMMytD+fIeSSug==
-Received: (qmail 1548789 invoked from network); 10 Oct 2026 14:45:10 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Oct 2026 14:45:10 +0200
-X-UD-Smtp-Session: l3s3148p1@UnzR1XtdaoHV64Vz
+	 s=k1; bh=PvgdP8WOH6w1/yzYlykXjJikWNIuZp6OaomqezLk6+s=; b=TZOuZF
+	laGX87SO3muIHgQqZvXLYABInJz3zsMyEkO97GivRsva1IHFhmDa5IFNQWISLefq
+	/nh06LlVTozu0RmUCBzgOfGLn8CmaMQAV7BMiCgr7F5Y0Pq1ExSkj0XFoeFBnq/S
+	JkExV95mM5prLgb79UfdUgqfEZRf+L5IKmRNd88HUREIMVP3/jp7SAo0pydkphBC
+	GhaC9SZpGXYJYftRoTJ1LFBmCkLtiOoMdRJmz/SvY2BgNuyC/V5IyaR8PNYbaq7J
+	3JT74peXuUZYXB2Nnlq8ENJDHUeCCFKEKi+eJqR2OcVsF1RBfvaW+49CPGD8YCBj
+	bTzZZ5ny4zcqi69Q==
+Received: (qmail 1548762 invoked from network); 10 Oct 2026 14:45:09 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Oct 2026 14:45:09 +0200
+X-UD-Smtp-Session: l3s3148p1@86DB1XtdZoHV64Vz
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: dmaengine@vger.kernel.org
 Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH 2/8] dmaengine: fsl_raid: unmap descriptor before completing cookie
-Date: Sat, 10 Oct 2026 14:43:40 +0200
-Message-ID: <20261010124348.19055-3-wsa+renesas@sang-engineering.com>
+Subject: [PATCH 1/8] dmaengine: ptdma: unmap descriptor before completing cookie
+Date: Sat, 10 Oct 2026 14:43:39 +0200
+Message-ID: <20261010124348.19055-2-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
 References: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
@@ -54,23 +55,33 @@ unmapped before completing the cookie.
 Link: https://lore.kernel.org/r/20261009093745.539924-1-vkoul@kernel.org
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 ---
- drivers/dma/fsl_raid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/amd/ptdma/ptdma-dmaengine.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index 9cc289f7129e..967638e9c87e 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -135,8 +135,8 @@ static void fsl_re_issue_pending(struct dma_chan *chan)
+diff --git a/drivers/dma/amd/ptdma/ptdma-dmaengine.c b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
+index 628c49ce5de9..7f51d1e6c727 100644
+--- a/drivers/dma/amd/ptdma/ptdma-dmaengine.c
++++ b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
+@@ -224,8 +224,8 @@ static struct pt_dma_desc *pt_handle_active_desc(struct pt_dma_chan *chan,
+ 				if (desc->status != DMA_ERROR)
+ 					desc->status = DMA_COMPLETE;
  
- static void fsl_re_desc_done(struct fsl_re_desc *desc)
- {
--	dma_cookie_complete(&desc->async_tx);
- 	dma_descriptor_unmap(&desc->async_tx);
-+	dma_cookie_complete(&desc->async_tx);
- 	dmaengine_desc_get_callback_invoke(&desc->async_tx, NULL);
- }
+-				dma_cookie_complete(tx_desc);
+ 				dma_descriptor_unmap(tx_desc);
++				dma_cookie_complete(tx_desc);
+ 				list_del(&desc->vd.node);
+ 			} else {
+ 				/* Don't handle it twice */
+@@ -362,8 +362,8 @@ static void pt_cmd_callback_work(void *data, int err)
+ 		if (desc->status != DMA_ERROR)
+ 			desc->status = DMA_COMPLETE;
  
+-		dma_cookie_complete(tx_desc);
+ 		dma_descriptor_unmap(tx_desc);
++		dma_cookie_complete(tx_desc);
+ 	} else {
+ 		tx_desc = NULL;
+ 	}
 -- 
 2.53.0
 
