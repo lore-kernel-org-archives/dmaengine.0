@@ -1,42 +1,44 @@
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5224A68BC
-	for <dmaengine@vger.kernel.org>; Sat, 10 Oct 2026 12:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91E24A64CF
+	for <dmaengine@vger.kernel.org>; Sat, 10 Oct 2026 12:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791636329; cv=none; b=V6vRExy2hh2V0BNsNj2Hj4j4VzYTuFSvU6DY23aLUfGb9EoDh3cKyO2BNvkHsFrTv5QkCzmAf9kCOHKO7lCXQrM/HYDYRf7s+nzH7JXJGnGroSCzc9c4ZFMdEG5YkH6scRSdb0XzmIAVlWTUy26lJRrLdQnyc2ucgtjqiNiTM1E=
+	t=1791636329; cv=none; b=n90wUR/b4NPmEreDeRRzFVo0L2EpHfPElc09mBOdQSV76enM3FLOti8I8+lVlDRttkQxvNWc4Z3foW2WEtS4sFPoBrjUzHylBLleWsiE0B2cwjB6V0ISoXRAaioJdZCq2I9Z3Hd5E5KYeJVLxDRc5lTI8cIe3dhnCtZRYloDcKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791636329; c=relaxed/simple;
-	bh=T4gS0MmNz9rbavEDA8HH+sXzjDU6ybTZ6TJW4sMzFOA=;
+	bh=/CwrHnHOzIUrfSQYZEQRb63E6XOHyslFCO10Q7vbk0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuriMGIn5D/5bByNh5I2kbf2odyODfpI3sFU6yRA7V1bhGksNZZg6+h+IwZTYJhBGoVTRzYoDcF7fkN49tRtU10q5ZKPcslDjsLPIqQ6Y71Al2LIdyF042H+6cH+G1OHhGmjoopIckulDXYVQGF3EMq/d4xyYM/K97hfzdIFbEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=FZUxYNlZ; arc=none smtp.client-ip=194.117.254.33
+	 MIME-Version; b=SQdDjyn5LhQOC3mMeenfbeerZYZPySbmfKEyvzBShZ88oXzpfiyDZ4Bg0Tjo7mnFk80UxvUJsgXyDjMVKQG0uW2LcpI4cBXPNFUO0/dsQ+SBT+VqM2uwFs3ugCiHJWJ0QHztwokUdRiLKB6CUmRHLgPP69oZLxMmuNOE3N0CHCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=P/gD4UW7; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="FZUxYNlZ"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="P/gD4UW7"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=from:to:cc:subject:date:message-id
 	:in-reply-to:references:mime-version:content-transfer-encoding;
-	 s=k1; bh=B98AYOLBqs3rgjWA4IBzn0uvBEcQs1N4swTYBPzH2x8=; b=FZUxYN
-	lZ13a0UAhIy4HI9tOxDYyDRUQaiX0GhnL5wIDXA2ermjTGfY9S6lz66Ucaa0xnbf
-	3Ezx8CNK+CrTYsPXug2M79+6LXnAiQyJDeBZS0YWG5ohbnrZYr6HL6HtqqaZ4IDn
-	yxI/FjGBOt1wbjtrh9FBECu64AJcochnJU+NV1AktcZA97kR3reJ0qEKQkWfrDPN
-	uJl5BSxJxP5jw2WceIhf8Blx/qgd9cNnX5enOOai9ai1XWyb1PVGuu8/xb+5eOe6
-	9dSinQ4/yGQirH4sE6KxXykuTbkzNGifAqB+f8rN4ydvfPMiPVRJFtJKSfGOtK6R
-	usY1MyKLYa4N0icg==
-Received: (qmail 1548942 invoked from network); 10 Oct 2026 14:45:18 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Oct 2026 14:45:18 +0200
-X-UD-Smtp-Session: l3s3148p1@MmFO1ntd8MzV64Vz
+	 s=k1; bh=BkbY9chiUiTRa+opPaeA800jcUPjZ9Q9dzgQpnLfD4k=; b=P/gD4U
+	W7inN/hxpBJm8IJZKCrTIqUcRmpXV2YBs8E+FXRfUgA41ngl0qp7RCEPpgGIs5vI
+	Sgi8yiibFHG6jaBU+unK78Re8rYHO8b0JQ/rusJO28G39coFKMtGCLBWN2pC3LOL
+	Ei/8GNvPIg3kOYOrFqcvIfenEiYsedhWULDEOuxiO1/xGSsY0AtH8YI8HGbC7343
+	WgdTzrti+J7WRV19QGB/AHlvS7Qpwd2lUdU72rSmDtGNghAvHtMlStv8dsdhnIQW
+	InzRgm/o4ChOn5LzMjhH0cdqIXgtVK1fP2V2BLGqv4GowOJN4nOP3ZSN2gR1F26Z
+	1m4AWOEKebwkgBzg==
+Received: (qmail 1548928 invoked from network); 10 Oct 2026 14:45:17 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 10 Oct 2026 14:45:17 +0200
+X-UD-Smtp-Session: l3s3148p1@w3E91ntd5szV64Vz
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: dmaengine@vger.kernel.org
 Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Kelvin Cao <kelvin.cao@microchip.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH 8/8] dmaengine: xgene-dma: unmap descriptor before completing cookie
-Date: Sat, 10 Oct 2026 14:43:46 +0200
-Message-ID: <20261010124348.19055-9-wsa+renesas@sang-engineering.com>
+Subject: [PATCH 7/8] dmaengine: switchtec-dma: unmap descriptor before completing cookie
+Date: Sat, 10 Oct 2026 14:43:45 +0200
+Message-ID: <20261010124348.19055-8-wsa+renesas@sang-engineering.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
 References: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
@@ -54,23 +56,33 @@ unmapped before completing the cookie.
 Link: https://lore.kernel.org/r/20261009093745.539924-1-vkoul@kernel.org
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 ---
- drivers/dma/xgene-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/switchtec_dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
-index 8d1c58ca0d48..698d7ca7ff7f 100644
---- a/drivers/dma/xgene-dma.c
-+++ b/drivers/dma/xgene-dma.c
-@@ -548,8 +548,8 @@ static void xgene_dma_run_tx_complete_actions(struct xgene_dma_chan *chan,
- 	if (tx->cookie == 0)
- 		return;
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index a386c3a284e6..84a0a2e5e872 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -486,8 +486,8 @@ switchtec_dma_cleanup_completed(struct switchtec_dma_chan *swdma_chan)
+ 		}
  
--	dma_cookie_complete(tx);
- 	dma_descriptor_unmap(tx);
-+	dma_cookie_complete(tx);
+ 		do {
+-			dma_cookie_complete(&desc->txd);
+ 			dma_descriptor_unmap(&desc->txd);
++			dma_cookie_complete(&desc->txd);
+ 			dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+ 			desc->txd.callback = NULL;
+ 			desc->txd.callback_result = NULL;
+@@ -529,8 +529,8 @@ switchtec_dma_abort_desc(struct switchtec_dma_chan *swdma_chan, int force)
+ 		res.residue = desc->orig_size;
+ 		res.result = DMA_TRANS_ABORTED;
  
- 	/* Run the link descriptor callback function */
- 	dmaengine_desc_get_callback_invoke(tx, NULL);
+-		dma_cookie_complete(&desc->txd);
+ 		dma_descriptor_unmap(&desc->txd);
++		dma_cookie_complete(&desc->txd);
+ 		if (!force)
+ 			dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+ 		desc->txd.callback = NULL;
 -- 
 2.53.0
 
