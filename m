@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAA32AD00
-	for <dmaengine@vger.kernel.org>; Sun, 11 Oct 2026 20:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C452AD00;
+	Sun, 11 Oct 2026 20:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791751126; cv=none; b=r6F0U7FimBI2o0bH7hdpAandXkF89PUASxCHzg8JoavQ9W91VL+tk3VHV+FSZuLUscoXek7eziR5fBimxZF2GLamhDcTWD+tq1p8+OqPMWHm6dXgHiTxNR8njhJjiGAMtECRPTroTSH8c7wCv12lxh9cDzSR6VsvMZLc4L+ngtM=
+	t=1791751128; cv=none; b=V80vwZTQonBonkk2KD9Ab5+2feIfxKaQ3j+TXmq00502g2Sy5Lu9ont+UUc1API0R2qLLLU39FM8J3khUMWo6pRno6GDQa9/X1f0tjQKDL2OWhD+hJk1A1bypETcwl++JGIdG1mg5eR4uYCwyNiAJotgUTbJJzLjYiDgjLVyvIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791751126; c=relaxed/simple;
-	bh=U/uHs1XbJqGCM3fq/EYnY1oOSbjWRkMb2/STHhTak3w=;
+	s=arc-20240116; t=1791751128; c=relaxed/simple;
+	bh=lcHPBSMos0qwExzxVdrmD268Xn8iDGScSlib+TKOEbU=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ejXvOOIQXvpiV61jEtR6c9ar9B4oP5eMOgjsyqkhyARpjCvoy8bYEttjfC4sChDDbYXsfYygAJ389hEbBOK6juO4Fs96tuT6G111qbJBy1FujIOCdR3KHquLMDUuAFknayZcjQabzIDs4YhIyVxC3KuB4l7DnOjXzpy57ISgATo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WeJVKxb8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Apk9vr7KkEuvsOLbFZ6LAZVTWZu9r89IVJDPjuslmWzsWKGjiQsSO+V9hEKGyKrxLdZA/WEBf9GaefwTC7WmL+HU/URXvej7RdMphOQjKC4CGi47mCjvasIJ/vajLkowldue/ePjHDmZg2lvRq/C3wv63SSZXjQ4o300/SOSk+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhHDfr6w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WeJVKxb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654671F0089B;
-	Sun, 11 Oct 2026 20:38:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhHDfr6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9351F0089C;
+	Sun, 11 Oct 2026 20:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791751125;
-	bh=ofmIBBbqxJ6/hIQJtBpc7xjtrsiD6oJii9//iQ1htzk=;
+	s=k20260515; t=1791751127;
+	bh=reWRkuW0hAlZFnk+d1VjwTNlztXheRbRR+EBybysZfs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=WeJVKxb8RInnx9ZHFoVxIJhJCO/+Jx4b0SN2gXEp/pxrqKAinJYdp5zk4LcCLTsaD
-	 IgI8kET/lKVId2u7clMXyI4iWHvYEgDsnq8p6kI5i41MjRAAo7BQ1ubUxMtCQktchG
-	 lJOHGMjW1p5CENcHdVpAqut3maJLoi1xAsh4uJZcuI7byC5YiBhRZV3sIs7GNVdnY5
-	 SXJfktJrcfgva3FHRiPg/ZFx/Xm88tqImGmmE/kJynnqygEzGkyHSTPSpkQyzSelcJ
-	 LCQawQxLa0lidf9UHLOsucEgE9DNumz8tP9UKE/GS4RTMKuD0BSUYZcYoWpKgyYwrX
-	 HBu5ZDtXYGR0w==
+	b=fhHDfr6wU3HBez1/wFQeI5uYxDofNlXyRnKB10NELoMxwZf7jvHAXLV9vLjQ0lPXN
+	 Xo3CnFPkfK+BpLFwAA6Ljtr0ZFp/Qt5bWBwV3LEgDNIaYj8tEKHFbf47R+8pbHyY6P
+	 K72bnMLwPNHTj4/BXHJ+ox+E9tJ8gf8k+XMg/x5xDQ7D+VuKdBo0+kFBNDjp0EXpg7
+	 YpBuMv2D5pSBUCRn0Jgg1WUKR1R3Z49J3Wf80RNTlRboiWPUFGUzJErnoDiMGTFR5Y
+	 GU4w2zqmwjSKsAsIeTfgVTzgWGfYZPCqf1XwU7jAgQUYLunC2TDSkHu0UdChx0BaL3
+	 H57GjeOgPwbdw==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, 
- Wolfram Sang <wsa+renesas@sang-engineering.com>, 
- Koichiro Den <den@valinux.co.jp>
-In-Reply-To: <20261009093745.539924-1-vkoul@kernel.org>
-References: <20261009093745.539924-1-vkoul@kernel.org>
-Subject: Re: [PATCH] docs: dmaengine: clarify ordering rules around cookie
- completion
-Message-Id: <179175112438.604740.4996434444257122340.b4-ty@kernel.org>
-Date: Sun, 11 Oct 2026 21:38:44 +0100
+To: Frank Li <Frank.Li@kernel.org>, Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
+In-Reply-To: <20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org>
+References: <20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org>
+Subject: Re: [PATCH] dmaengine: ste_dma40: Preserve the LCPA I/O address
+ space
+Message-Id: <179175112609.604740.2384834135572859219.b4-ty@kernel.org>
+Date: Sun, 11 Oct 2026 21:38:46 +0100
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,20 +47,23 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Fri, 09 Oct 2026 11:37:44 +0200, Vinod Koul wrote:
-> Sashiko pointed in [1] about the cookie completion order. It is good to
-> Document that for ensuring that dma buffer is flushed and no stale data
-> is seeing by consumer, we need to make sure such action is taken before
-> drivers invoke dma cookie completion.
+On Sat, 10 Oct 2026 00:58:53 +0200, Linus Walleij wrote:
+> The LCPA area is mapped with devm_ioremap(), but lcpa_base and the
+> per-channel lcpa pointer lack __iomem annotations. This loses the I/O
+> address space and makes sparse warn when d40_current_addr() assigns
+> LCPA register addresses to its __iomem pointers.
 > 
-> [1]: https://lore.kernel.org/r/20260917072507.5BDB61F000FF@smtp.kernel.org
+> Annotate both pointers and the LCPA argument of d40_log_lli_lcpa_write()
+> to preserve the I/O address space from the mapping to the register
+> accessors. This also fixes the existing LCPA read and write warnings
+> without changing the generated code.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] docs: dmaengine: clarify ordering rules around cookie completion
-      commit: fa89be96e845de705eed6edd01ecb79d46ee21c7
+[1/1] dmaengine: ste_dma40: Preserve the LCPA I/O address space
+      commit: 42c31fec1ca76b8b5f7759def122d418dff2cd4b
 
 Best regards,
 -- 
