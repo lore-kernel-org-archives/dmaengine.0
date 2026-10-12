@@ -1,102 +1,162 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E0D363086;
-	Mon, 12 Oct 2026 18:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3454838F649
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 18:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791828925; cv=none; b=KGvtqG+etpqzJqhK6o7Hymwyjg7XzWH7ngokx0x2a4xlkNVOvWUYGncrq/WLnYxfKxdMJ0q6e4XUYsYRYufzNcOQjrGaRCk/jE9xrC7YMLBh22xRA+wQfIcIokFqapL35mp8Y/7eXNDaVh+6LazcG4yVGXyGN+j9+mcplfCrh9c=
+	t=1791830769; cv=none; b=U7Wo9yJuNTWfmiQk5r/XHK3wOn0JLhYUE4r/C2JTv/E1PAz4WxcGclMXVZkbeS502B0LdjmgpNEUO507avzyw6ClK1WvYlVMh4ZUtz07U6NlOBglR+djYL6VIX27yij5qTzchVBhY0cj67nxDpX8GHM3rXIxUl1qiCkHbK+Ca5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791828925; c=relaxed/simple;
-	bh=nUjuSbrZaN64WJgvYr2jmyN4E5eYvUamc6TkEzJhogo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jugcj0bf1mHPgXocygpZ6cCrvicgBru6b4umeJYKP1lA755HTMtp8lTeKPAAN19lXyqtW8rLNZ5jUOAMIlMq4VnviXvfsCn3/GEqgqIixw+NSjMgYfKjiHdjTbsndTb3GpUAlrh1NZ4CTCJ9DkDe5ChoIHt8XH+dxNxOvAwEqAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kmSGLKHT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791830769; c=relaxed/simple;
+	bh=wJbzi3CjEWYRW6F8QGjB5MCTpn7eSajB29LpxYDyDmo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=flzy8OH2FpfQbA6movC3z8T4Iqoh06HP1zwcM6SLxq/MXPi+Y7F5bdihNEYsUXuSMmFGDvHk5oKIgEes32zZZ8m43fLd/3dqvMsS9OqzriSEkzonLh/f/Gt/JiKpyD+ZQfxxmev54UUsmE1Kj1ar2nP5Epo5LfMxyel+xybD0FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhNT1XW5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kmSGLKHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251301F0089B;
-	Mon, 12 Oct 2026 18:15:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhNT1XW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE641F008BD
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 18:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791828924;
-	bh=sJ7Cz9cE5jYmh9i7+7gt+I7tJt8elW65y25IztcbqK8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kmSGLKHTM0Xvrvi2qmfl59/BADJyznbG+bzb0bGwHPkZV/MCemLPQtRRvfKMc1SCK
-	 EIZRGiHj6qCGSoZR2+EP2wEkB4cYuLid2h42DFhMeCFHqR7/B8jfuFT5HGbkajB2w+
-	 AdKCsHPEOFUGlPpzZ5gJLIm0V3evijWTJIuZh9QrFmfbR888KHH0utNWOuYh3jBHdh
-	 mCLhiQaFkh+fFUnitd+g8EGWCxESqozjK312zWZ4n5xNr/Plg2su41m/T4P31o4zeo
-	 k9yjNS4IL8Z7dZnXWSji7b/T1BwxouuxWIogksUxwOhHeDaN+IZ5KIgXWR8MaRJ+ZG
-	 tx0K8SJL6aYxw==
-Date: Mon, 12 Oct 2026 19:15:19 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.murphy@arm.com,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] dt-bindings: dma: arm,dma-350: Document the CIX
- Sky1 integration
-Message-ID: <20261012-trailing-makeover-daf4d62ac2b9@spud>
-References: <20260907033404.596839-1-Jelly.Jia@cixtech.com>
- <20261009051846.1115962-1-Jelly.Jia@cixtech.com>
- <20261009051846.1115962-5-Jelly.Jia@cixtech.com>
- <20261009-e284e1844269292657604ec7@squawk>
- <asoSH0CLbi7xmjP8@ubuntu>
+	s=k20260515; t=1791830765;
+	bh=/MEr9TnYRLEADPm5dzJuPJHXku6tQFEe33VUaq9byuA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=fhNT1XW5NUlRnPw2Fivx9Ih549qwrcSW7eJTooUp25OG4U85bx6y89U9yu2QZezoY
+	 VYoo4RGdZ6fSJH/oRLNPTdWosFIZecXQLfy/s3P+kr0gaMAqFeFRxOoYDDZSWPIo8r
+	 PMoE4XuJwzcX0Jip3GzH1i69yARx2MqavXPoGexxo6Uffc9PqLsd4/JVyJOx/1BqTH
+	 fxi5he5vJ0kwD+zUpA8Qwdh1Ydjtz0rPtA4GQEUQx2yljoU19u8sKkcNSiWzb42gJL
+	 mpWT8s5HfHE0EKb/II9Ec0U82pY4wU0wLeCLlEZpHuPn47kcbwAb24z9OEwjntz2wU
+	 O6jKN4SiBHveg==
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5ba3ac592faso579118e87.0
+        for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 11:46:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBxp0rwMGUgALNJHXPrB2rvq2tjx9iQ92zTGdxhjNL8tV4wocRU3xAzC56lcBqAjVP/YMl8Zkdr910E=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJoYYdqxaa3dxDL7NhjOfI4Gx4yX/ol9OwPKgcMMy5rYrUuGYKp
+	5kYYllP+d+1Nv68dmrFwJgsFCtfOljEuckRVMCyDFUOmOnPL5c0n/Imuf8ekqJoPZ9Ra3pZYMYF
+	kvjSeXWsJTmMxOeaQeBO0NTEExGuPbO0=
+X-Received: by 2002:a05:6512:3a92:b0:5b8:eb3a:759b with SMTP id
+ 2adb3069b0e04-5bcde8bdabdmr3719119e87.42.1791830763879; Mon, 12 Oct 2026
+ 11:46:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Vbao+CsgOn8rBfQO"
-Content-Disposition: inline
-In-Reply-To: <asoSH0CLbi7xmjP8@ubuntu>
-
---Vbao+CsgOn8rBfQO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20261009-adma-pm-fix-and-per-channel-reset-v4-0-55f5fe409c55@amd.com>
+ <20261009-adma-pm-fix-and-per-channel-reset-v4-2-55f5fe409c55@amd.com>
+In-Reply-To: <20261009-adma-pm-fix-and-per-channel-reset-v4-2-55f5fe409c55@amd.com>
+From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Date: Mon, 12 Oct 2026 20:44:00 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0iLOJ49Zn_vPbpbqhPQ_F3W5PCpFN1VnxOzoxL7Y4PN+A@mail.gmail.com>
+X-Gm-Features: AclHuK_xrLBr4L5nslTfPR7n5tDlLGvjFUHFyA86wwCkbsTjUQQ1gKk2AD2PTHM
+Message-ID: <CAJZ5v0iLOJ49Zn_vPbpbqhPQ_F3W5PCpFN1VnxOzoxL7Y4PN+A@mail.gmail.com>
+Subject: Re: [PATCH v4 2/6] PM: runtime: Add pm_runtime_if_active guard and
+ conditional variant
+To: Golla Nagendra <nagendra.golla@amd.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Michal Simek <michal.simek@amd.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Kedareswara rao Appana <appana.durga.rao@xilinx.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Michael Tretter <m.tretter@pengutronix.de>, Harini Katakam <harini.katakam@amd.com>, 
+	Shyam Pandey <radhey.shyam.pandey@amd.com>, dmaengine@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, git@amd.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 10, 2026 at 06:23:27PM +0800, Jelly Jia wrote:
-> On Fri, Oct 09, 2026 at 04:31:26PM +0100, Conor Dooley wrote:
-> > > +  cix,irq-router:
-> > > +    $ref: /schemas/types.yaml#/definitions/phandle
-> > > +    description:
-> > > +      Syscon phandle for the CIX Sky1 subsystem register block that =
-routes
-> > > +      DMA-350 channel interrupts to the AP interrupt controller.
-> >
-> > See comments on the driver for more on this, but I'm not convinced that
-> > this should be in this node - especially if this thing controls other
-> > device's routing too.
-> >
-> > Thanks,
-> > Conor.
->=20
-> Agreed - v3 drops cix,irq-router from the binding completely. We plan
-> to handle the interrupt gate as firmware/pre-Linux platform setup for
-> v3, so the DMA node should not describe it. With the property gone, the
-> CIX-specific conditional in allOf goes away as well, and the binding is
-> back to the generic controller properties plus the CIX compatible. The
-> corresponding driver changes are in my reply on the driver patch.
+On Fri, Oct 9, 2026 at 6:00=E2=80=AFAM Golla Nagendra <nagendra.golla@amd.c=
+om> wrote:
+>
+> Add a pm_runtime_if_active base guard and its _try conditional variant
+> to pm_runtime.h for drivers that need to conditionally acquire a runtime
+> PM reference only when the device is already active.
+>
+> The base guard must not be used directly via guard()/scoped_guard()
+> because pm_runtime_get_if_active() only acquires a reference when it
+> returns 1; the destructor unconditionally calls pm_runtime_put(), which
+> would underflow usage_count on a suspended device. The base guard
+> exists solely to back the DEFINE_GUARD_COND _try variant.
+>
+> The _try variant (used via PM_RUNTIME_ACQUIRE_IF_ACTIVE) satisfies the
+> _try API contract that guards must not produce an error when runtime PM
+> is disabled for the device. When pm_runtime_get_if_active() returns
+> -EINVAL (runtime PM disabled), the expression calls
+> pm_runtime_get_noresume() to pre-balance the destructor's unconditional
+> pm_runtime_put(), then returns 1 so the guard condition succeeds
+> (bypass). This mirrors the behaviour of pm_runtime_active_try which
+> uses RPM_TRANSPARENT for the same purpose. When the device is genuinely
+> runtime-suspended (return value 0), the guard condition fails and
+> ACQUIRE_ERR returns true, allowing callers such as interrupt handlers to
+> skip MMIO accesses.
+>
+> Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+> ---
+>  include/linux/pm_runtime.h | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>
+> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+> index 64921b10ac74..ae2a8740ffb3 100644
+> --- a/include/linux/pm_runtime.h
+> +++ b/include/linux/pm_runtime.h
+> @@ -609,6 +609,13 @@ DEFINE_GUARD(pm_runtime_active, struct device *,
+>              pm_runtime_get_sync(_T), pm_runtime_put(_T));
+>  DEFINE_GUARD(pm_runtime_active_auto, struct device *,
+>              pm_runtime_get_sync(_T), pm_runtime_put_autosuspend(_T));
+> +/*
+> + * Do not use directly -- the destructor calls pm_runtime_put()
+> + * unconditionally, which underflows if no reference was acquired.
+> + * Use only via the _try variant below.
+> + */
+> +DEFINE_GUARD(pm_runtime_if_active, struct device *,
+> +            pm_runtime_get_if_active(_T), pm_runtime_put(_T));
+>  /*
+>   * Use the following guards with ACQUIRE()/ACQUIRE_ERR().
+>   *
+> @@ -624,6 +631,23 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try,
+>                   pm_runtime_get_active(_T, RPM_TRANSPARENT), _RET =3D=3D=
+ 0)
+>  DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enabled,
+>                   pm_runtime_resume_and_get(_T), _RET =3D=3D 0)
+> +/*
+> + * The _try contract is that no error is produced when runtime PM is dis=
+abled,
+> + * so bypass the guard when pm_runtime_get_if_active() returns -EINVAL: =
+take a
+> + * reference with pm_runtime_get_noresume() to pre-balance the destructo=
+r's
+> + * pm_runtime_put() and return 1 so the guard condition succeeds. Interr=
+upt
+> + * handlers then keep servicing interrupts when runtime PM is disabled f=
+or the
+> + * device or CONFIG_PM is not enabled.
+> + */
+> +DEFINE_GUARD_COND(pm_runtime_if_active, _try,
+> +                 ({
+> +                       int _r =3D pm_runtime_get_if_active(_T);
+> +
+> +                       if (_r =3D=3D -EINVAL)
+> +                               pm_runtime_get_noresume(_T);
+> +                       _r =3D=3D -EINVAL ? 1 : (_r ?: -EAGAIN);
+> +                 }),
+> +                 _RET =3D=3D 1)
+>
+>  /* ACQUIRE() wrapper macros for the guards defined above. */
+>
+> @@ -639,6 +663,9 @@ DEFINE_GUARD_COND(pm_runtime_active_auto, _try_enable=
+d,
+>  #define PM_RUNTIME_ACQUIRE_IF_ENABLED_AUTOSUSPEND(_dev, _var)  \
+>         ACQUIRE(pm_runtime_active_auto_try_enabled, _var)(_dev)
+>
+> +#define PM_RUNTIME_ACQUIRE_IF_ACTIVE(_dev, _var)       \
+> +       ACQUIRE(pm_runtime_if_active_try, _var)(_dev)
+> +
+>  /*
+>   * ACQUIRE_ERR() wrapper macro for guard pm_runtime_active.
+>   *
+>
+> --
 
-For correctness, I think you still need to model this by using interrupt-map
-in the syscon node, with the syscon as the interrupt parent. If firmware
-will program it, you don't need to actually implement anything in a
-linux driver (unlike the Microchip and Renesas devices that I linked),
-you just need to put the interrupt-map property in the syscon and common
-code will do the rest.
+For the record, I'm still unconvinced about the guard definitions above.
 
---Vbao+CsgOn8rBfQO
-Content-Type: application/pgp-signature; name=signature.asc
+Please try to reimplement the series without them for the time being.
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCas0jtwAKCRB4tDGHoIJi
-0rvzAP45h5Dn2C+Y02Q/vohB7N99QpMoe5knRjpH10VLH4udPwD9GSoyu1o41xQ3
-1XdkvyTiiRgLHfky9uIGfJ5uVfboRgY=
-=jyIs
------END PGP SIGNATURE-----
-
---Vbao+CsgOn8rBfQO--
+Thanks!
