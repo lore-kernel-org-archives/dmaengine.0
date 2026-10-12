@@ -1,151 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB5D46D09B;
-	Mon, 12 Oct 2026 08:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1357469841;
+	Mon, 12 Oct 2026 08:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791795062; cv=none; b=n/u2MN7U/rMVT2g4TJqvNKEiDdUR2IQuv++QvONurtj8kHpX12KTcn7+ytedmN22lSvKZu+8dFZcmPfzpH/9kkyyOYHsjeHyHeEMSsqmYvE3FMRXt9PhGYRU/xo03nN0a7f94QO1wHwYqYRX+ebwajs6N5HvE7h1zhbP4cWb3LQ=
+	t=1791795081; cv=none; b=MPzhaXtKlFPMB0xc/gXh6sa91DHypBdyfq2Ndg913cx9BAE1FNy9/cvsa/6gNTZk77Z+GcwaMLD7S+WpgeeXMWxSzjfgWhiLZjh0AWA7sNXr1wlA/y8oZCU6zVElYph4ViLVBaZXPNyjByGsCBE99zl3ccNQBB5bn0Hb+BL2KFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791795062; c=relaxed/simple;
-	bh=reiBIdHoLCLchV16rS2mUhkqhpuQr52DAA5xPqT8FCE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VLgqqDV4L5VKr6RZSnr2Mct6zqE2n0yaIJAd2uvSzQaf29dn3iPxOGkGSlxb116Z4QSsnyC0DTXpfNTZx5QuA4BT/ESzx3Z20bi953eheYd9KwMFxqDafD/CxWDo+jPDJlc0+o6lfwHbSkP/w7nTsTAQjY34UDHShrq8JEp36aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a98O/BCq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791795081; c=relaxed/simple;
+	bh=5hoyyoSORk9mzUd+W1nOoRHU/O1mL/R7NkGxhA54QXE=;
+	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
+	 Date; b=DD7DwDGhZq1QYjgrcSWs32jwG6vwxH7bg04SEHzkTOLyZx2YFC1nj0Euz8Ph9bH64HPcM70K7Lh1qiegTb/FHi/YcN+9rLmyypbOj7GS9G7vxihziMI4GeVnEK5GJvW4XcIiKpFhoDZBP66fLWbXIGKgOHX6tImCfiPqjIhbXl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QjVCr3vW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a98O/BCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95661F0089B;
-	Mon, 12 Oct 2026 08:50:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QjVCr3vW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACB01F0089C;
+	Mon, 12 Oct 2026 08:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791795060;
-	bh=Oo77ofVgiaIxk7/HrKuQfjrMk2AzM4yZPId3+7w7fvk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=a98O/BCqbhHG2B1sOa/v0bIuNQWRfDrKDF+LKT5WJDfjFQuFAhmADi3OaIuCg7g05
-	 FE3TzyQYdv9tVBix7xQdchnWrvdNrXW2UPUdkw+CNm0iNoycyRu7npZ1zvMzzvWWyC
-	 OU5TzZfqJgU14HdjCeBaOpDvbThSdoNYpXskij0webDBwdCmQLEIbhQ2iMSkOiZFtY
-	 rgNFRJ2axy5nVPM9HACbGCWxmljvLHPhMjxzUJCmMDNNDjm/NNfIxVsUcnyEd++dzB
-	 /Uqx87F/5dqH4XN2vOeUWIA5qU6TuncVYXoeKFDcS8M+jNbEa27NGnN/7r+Z+Fy4q8
-	 hhRULsAqye2/g==
-Date: Mon, 12 Oct 2026 10:50:56 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, robin.murphy@arm.com, devicetree@vger.kernel.org, 
-	Frank.Li@kernel.org, cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/6] dt-bindings: dma: arm,dma-350: Document the CIX
- Sky1 integration
-Message-ID: <20261012-velociraptor-of-improbable-upgrade-bfe14a@quoll>
-References: <20260907033404.596839-1-Jelly.Jia@cixtech.com>
- <20261009051846.1115962-1-Jelly.Jia@cixtech.com>
- <20261009051846.1115962-5-Jelly.Jia@cixtech.com>
+	s=k20260515; t=1791795079;
+	bh=g8DFu80vVeE+gFk1uhLcIaTP0KcYgoGx+Z11nrn5M8I=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=QjVCr3vWTtdLWT+sjmTimDvsbFfG9WrukC/DBP6VY52vHHG8/nqDe4LKC4MtjDPVf
+	 rtQJS1av/+sQgJCxn3bb+qsrv1a7Utz++YvKt8ZCLZYmtZB2j8uN4b5ITRhXs03/av
+	 ZVTxdhWHfPzgh4Dw9Y4xaprXl+T3fopwMgh7pek9n1hcFV5UgRtH1x6+kypDjqZ9xu
+	 YKuGLSwVNbhFNgN0rr3OI4ITp7H6cf3WGU1nVxGRkUygH2tdsQpVKX8CkoYVjmYrZU
+	 9JTF5XLhpM9pXBKpb6AWAjWhpcfAYHdgXkEpe3Ms5xvdherNok2Ve1nD75Leq+ixqo
+	 t1gWlg8TZhMXQ==
+Message-ID: <sashiko-outbox-167868@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 5/6] dmaengine: arm-dma350: Support integration
+ clocks, resets and reserved memory
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Jelly Jia" <Jelly.Jia@cixtech.com>
+Cc: conor+dt@kernel.org, vkoul@kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, Frank.Li@kernel.org, devicetree@vger.kernel.org
+In-Reply-To: <20261012084155.2547480-6-Jelly.Jia@cixtech.com>
+References: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
+ <20261012084155.2547480-6-Jelly.Jia@cixtech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 12 Oct 2026 08:51:18 +0000
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261009051846.1115962-5-Jelly.Jia@cixtech.com>
 
-On Fri, Oct 09, 2026 at 01:18:44PM +0800, Jelly Jia wrote:
-> The CIX Sky1 DMA-350 integration is the same device with SoC glue around
-> it, so it is described by the arm,dma-350 node itself with an additional
-> "cix,sky1-dma350" compatible rather than by a separate wrapper node.
-> 
-> Extend the binding with the CIX compatible and the resources the
-> integration needs: a clock, a reset, an optional reserved memory region
-> used when the controller cannot reach all of system memory, and the
-> syscon that routes the channel interrupts to the AP interrupt
-> controller on Sky1. The cix,irq-router property is only valid together
-> with the CIX compatible.
-> 
-> Assisted-by: LLM checkpatch sparse dt_binding_check dtbs_check
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: probe fails on level-based reset controllers due to -EN=
+OTSUPP
+--
 
-Only LLM. Drop all other tools, which guidance asked you to put here
-build process tools?
+commit 9e76b19e390586bfc4ec916b67c4dd6c3a4800c5
+Author: Jelly Jia <Jelly.Jia@cixtech.com>
 
-How is it even possible to assist here with sparse? And really,
-mentioning checkpatch is just wrong. EVERY patch must run through
-checkpatch, with no exceptions.
+dmaengine: arm-dma350: Support integration clocks, resets and reserved memo=
+ry
 
-Do not attach (thread) your patchsets to some other threads (unrelated
-or older versions). This buries them deep in the mailbox and might
-interfere with applying entire sets. See also:
-https://elixir.bootlin.com/linux/v6.16-rc2/source/Documentation/process/submitting-patches.rst#L830
+This commit adds support for integrating the arm-dma350 controller with
+clocks, resets, and reserved memory regions using the device tree. It enabl=
+es
+the clock, triggers the reset control, and attaches the reserved memory
+before registering the DMA device.
 
-> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
-> ---
-> v1 -> v2:
-> - Folded the integration into arm,dma-350.yaml: the Sky1 DMA-350 is the
->   same device, so it keeps the generic compatible plus a device
->   specific "cix,sky1-dma350" compatible, and the integration resources
->   are described on the controller node.
-> - Dropped the separate cix,sky1-dma350.yaml wrapper binding.
->  .../devicetree/bindings/dma/arm,dma-350.yaml  | 33 ++++++++++++++++++-
->  1 file changed, 32 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> index 429f682f15d8..3b991985c416 100644
-> --- a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> +++ b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-> @@ -11,10 +11,23 @@ maintainers:
->  
->  allOf:
->    - $ref: dma-controller.yaml#
-> +  - if:
-> +      not:
-> +        properties:
-> +          compatible:
-> +            contains:
-> +              const: cix,sky1-dma350
-> +    then:
-> +      properties:
-> +        cix,irq-router: false
+> diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
+> index 79bd6a04ea0c5..d811a0dc9fe9e 100644
+> --- a/drivers/dma/arm-dma350.c
+> +++ b/drivers/dma/arm-dma350.c
 
-Entire allOf block goes after required: part.
+[ ... ]
 
->  
->  properties:
->    compatible:
-> -    const: arm,dma-350
-> +    oneOf:
-> +      - const: arm,dma-350
-> +      - items:
-> +          - const: cix,sky1-dma350
-> +          - const: arm,dma-350
->  
->    reg:
->      items:
-> @@ -36,6 +49,24 @@ properties:
->      const: 1
->      description: The cell is the trigger input number
->  
-> +  clocks:
-> +    maxItems: 1
-
-So all devices have clocks and resets?
-
+> @@ -1139,12 +1142,28 @@ static void d350_free_chan_resources(struct dma_c=
+han *chan)
+>  static int d350_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev =3D &pdev->dev;
+> +	struct reset_control *reset;
+> +	struct clk *clk;
+>  	struct d350 *dmac;
+>  	void __iomem *base;
+>  	u32 reg;
+>  	int ret, nchan, dw, aw, r, p;
+>  	bool coherent, memset;
+> =20
+> +	clk =3D devm_clk_get_optional_enabled(dev, NULL);
+> +	if (IS_ERR(clk))
+> +		return dev_err_probe(dev, PTR_ERR(clk),
+> +				     "failed to enable clock\n");
 > +
-> +  resets:
-> +    maxItems: 1
+> +	reset =3D devm_reset_control_get_optional_exclusive(dev, NULL);
+> +	if (IS_ERR(reset))
+> +		return dev_err_probe(dev, PTR_ERR(reset),
+> +				     "failed to get reset\n");
 > +
-> +  memory-region:
-> +    maxItems: 1
+> +	ret =3D reset_control_reset(reset);
+> +	if (ret)
+> +		return ret;
 
-and memory-region?
+[Severity: High]
+Is it intentional to fail the probe if the reset controller does not support
+pulse-based resets?
 
-> +    description:
-> +      Reserved memory region used for DMA allocations when the controller
-> +      cannot reach all of system memory.
-> +
-> +  cix,irq-router:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      Syscon phandle for the CIX Sky1 subsystem register block that routes
-> +      DMA-350 channel interrupts to the AP interrupt controller.
+If the underlying reset controller (such as reset-simple without a pulse
+configuration) only supports level-based assert and deassert semantics,
+reset_control_reset() will return -ENOTSUPP. Because the probe function
+aborts on any error here, it will fatally fail to bind on those platforms.
 
-Best regards,
-Krzysztof
+The commit message states the intent is to release the reset, which usually
+corresponds to reset_control_deassert(). Could this use
+reset_control_deassert() instead, or is there a way to handle the -ENOTSUPP
+error gracefully so the probe can succeed?
 
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012084155.2547=
+480-1-Jelly.Jia@cixtech.com?part=3D5
