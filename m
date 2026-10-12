@@ -1,128 +1,159 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2424F55AC
-	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 21:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7055D4CDDE7
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 21:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791841663; cv=none; b=uRIzYrKhNho0txRhOXUdx6Hu7aYPoyZWC5LEscBIjmbDrWaxhjcmZXIafZGJ+TheRZQJkRVT1ZNQurRQlukvBVmqSF5J4hJbcqRU3hLu7DOad46hANI7NyS/OAPbZHuf1t/qeMWqoRHP2jfV8U8oqGhI0nmLLjCXUQJkZ1fe0Vc=
+	t=1791841810; cv=none; b=BWunfRR8iSyEgVz7+yDtVwEKqMlrGxLV+gwYBwcHy6kDcJFJSPSyfRfz5FqNWeLTB2IdqxbZCx4gmL1JU9gWECKEvBc4/p21AFCanV+vN5j1Mts0CUnGyoRV9se3OPMyiiDY9yBi/Yk/fYHcWcLrHtbalj1ZRhy89o5F2ls/mfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791841663; c=relaxed/simple;
-	bh=lBH3oFtyn/BbgiFbWgObG96hpQjWTISUXyw20kjYifo=;
+	s=arc-20240116; t=1791841810; c=relaxed/simple;
+	bh=xq6QpuQT2t/1+iEkE5B12HRGkny0UdLPlQfkW03KTlw=;
 	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=XLvzL44YcbVvLXfM5NxuGVtaVRlPlrPPiYMI4fDPn3kOwtFdtfPdPdNlLezPdaIxbqIu3jJszTeXYWmz7YoxXvRfWShWO7RbTrw+NCnnmVIifLuptWkM/NOg5yKA9kddDAyp/rgBcm1gQ3BhwGOn7ZUB5JtrW8pM5yaH75HwLp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRQQZL/A; arc=none smtp.client-ip=100.103.45.18
+	 Date; b=sCyb4vOe0AfqLDgDneL6HiYIC9ZrnaTyju30+zpom/1G69o8pCi/4M1fSMklKKFIczh3DWVRl2WsW/pVk+dfEGZCzxYl19Rx4/BVXWG3hdf5dbHboimy2X2cToV3Bbqln2ia4Ynomn+fqx+jeWLWQ1XL/+qWWcGSaBOlkMnQ2mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9zexe/G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRQQZL/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE091F0089B;
-	Mon, 12 Oct 2026 21:47:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9zexe/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9449F1F0089B;
+	Mon, 12 Oct 2026 21:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791841660;
-	bh=otz0mIyXt/8XHgzy/FhPEF7kVxowmrEt7N/7uOmuE7M=;
+	s=k20260515; t=1791841805;
+	bh=7xm7Bva38mzhwb4nAKIL4kN8kKv5pNuSAXPqVIj3vy4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=LRQQZL/AAYiVtHLQxg16o4+kx6zr60Qr7HDRw6e/eHGpEapK0oaoSahaIB/HYumaU
-	 bXi2sFQrzNFJYQR5ElApKDLDfnv6L5af5XIeCA21E0RWTkzwZ1S8swKp3WsifVkolv
-	 MKBVrRRFKFpNE95NMfmKMArTvQQXY3gCeOlQ5+RUu8EaMhLP9kKvSX3hrheXzVs9Au
-	 iPXvcrmkmz22tm0H56Rk/hnrakNNaMaRH5YlcTuvB3bt5twnXwfePMizYcS4ScEkrC
-	 Af8mCyWETCtqU/C5fy0JG8G/qgiHaXk2i79oQN/zUyfHtEZQP055DDfyhj04kiW31z
-	 txLAqQHDHp4NQ==
-Message-ID: <sashiko-outbox-168646@kernel.org>
+	b=Y9zexe/GoYPVUxmoou7Yyk7G7AOG5TAYrCu5Xx6kuYlnNhNPng6uXk7iw6pp/VR+a
+	 q51lbqn9Ms3nyAsOiAAKf5nb0PtFYOiBsocS1O3QDsWy1n36MGg1YwB1HHWzzeJ+eL
+	 jRVl2cv7usO8qFX2LyvrRqAe0P6maDCWcvF8XqQEzGBS0MuecJLOkFRLXgwaxLlSWK
+	 nMMQYK7oNiUgxwSlIftzkCqgZO/lHwo6EDEj6xZm/lYYDKf6bgSyZobIOahCAJsXoQ
+	 UjsgI0S6NrU15fImBFykhCjs915tIqth4f12LL7YpScJegPF1G6npx5Zhr/SHcOsDo
+	 ciy7lkQHQCOwg==
+Message-ID: <sashiko-outbox-168650@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 4/6] dmaengine: idxd: Fix unwind bounds in device
- registration error paths
+Subject: Re: [PATCH 5/6] dmaengine: idxd: Fix error code handling in
+ idxd_cdev_open()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261012-wt-idxd-fixes-v1-4-30a35a445077@intel.com>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261012-wt-idxd-fixes-v1-5-30a35a445077@intel.com>
 References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
- <20261012-wt-idxd-fixes-v1-4-30a35a445077@intel.com>
+ <20261012-wt-idxd-fixes-v1-5-30a35a445077@intel.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 12 Oct 2026 21:47:39 +0000
+Date: Mon, 12 Oct 2026 21:50:05 +0000
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] dmaengine: idxd: UAF/double-free on device registration failure
+- [High] dmaengine: idxd: idxd_cdev_open() masks -ENOMEM from xa_insert()
+- [High] dmaengine: stranded PASID xarray entry on shared FD close breaks f=
+ault handling
+- [Medium] dmaengine: idxd: missing idxd_wq_disable_pasid() rollback on ida=
+_alloc() failure
 --
 
-commit 571be93356be3fdc63d0506588c4e560e5d9eccc
+commit 63ea0ebbf579eb846dc4486575508a710df270fc
 Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-dmaengine: idxd: Fix unwind bounds in device registration error paths
+dmaengine: idxd: Fix error code handling in idxd_cdev_open()
 
-When registering the per-idxd wq, engine, or group devices, a failure partw=
-ay
-through must roll back exactly the devices already added. This commit fixes
-an underflow loop by starting the rollback at i instead of i - 1.
+idxd_cdev_open() mishandles rc on two error paths: on ida_alloc() failure,
+it jumps to failed_ida without setting rc, returning 0. And when xa_insert()
+returns -EBUSY, rc is left negative and can leak out. This commit fixes
+both paths.
 
-> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-> index d5ffc641c8567..e828292e5fb88 100644
-> --- a/drivers/dma/idxd/sysfs.c
-> +++ b/drivers/dma/idxd/sysfs.c
-> @@ -1876,7 +1876,7 @@ static int idxd_register_engine_devices(struct idxd=
-_device *idxd)
->  	return 0;
-> =20
->  cleanup:
-> -	j =3D i - 1;
-> +	j =3D i;
->  	for (; i < idxd->max_engines; i++) {
->  		engine =3D idxd->engines[i];
->  		put_device(engine_confdev(engine));
+> diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+> index 82b07cf942ef8..abbab9bdd06c3 100644
+> --- a/drivers/dma/idxd/cdev.c
+> +++ b/drivers/dma/idxd/cdev.c
+> @@ -264,8 +264,11 @@ static int idxd_cdev_open(struct inode *inode, struc=
+t file *filp)
+>  		mutex_lock(&wq->uc_lock);
+>  		rc =3D xa_insert(&wq->upasid_xa, pasid, ctx, GFP_KERNEL);
+>  		mutex_unlock(&wq->uc_lock);
+> -		if (rc < 0)
+> -			dev_warn(dev, "PASID entry already exist in xarray.\n");
+> +		if (rc < 0) {
+> +			/* An existing entry is harmless, warn and continue */
+> +			dev_warn(dev, "PASID entry already exists in xarray.\n");
+> +			rc =3D 0;
+> +		}
 
 [Severity: High]
-Does this error handling sequence lead to a double-free of the child device=
-s?
+Does this code unintentionally mask all negative return codes, including
+-ENOMEM?
 
-If device registration fails partway, this local cleanup path drops the ref=
-counts
-on the child device kobjects via put_device() and device_unregister(), which
-frees them.
+xa_insert() can return -ENOMEM if memory allocation fails. By unconditional=
+ly
+clearing all negative return codes (rc =3D 0), this allows the file open to
+succeed without registering the user context in the xarray.
 
-The failure then cascades up to idxd_register_devices(), which rolls back
-previously registered child devices (like WQs), also freeing them. Cruciall=
-y,
-the pointers in idxd->engines and idxd->wqs are left dangling.
+Later, when a subsequent hardware page fault occurs for this PASID,
+idxd_copy_cr() will call xa_load(), fail to find the context, and silently
+drop the completion record.
 
-Then, the error is returned to idxd_pci_probe_alloc(), which unwinds by jum=
-ping
-to err_dev_register and explicitly calling idxd_cleanup():
+[Severity: High]
+If a process opens multiple file descriptors to a shared IDXD workqueue,
+does treating -EBUSY as harmless leave the second FD stranded when the first
+FD is closed?
 
-drivers/dma/idxd/init.c:idxd_pci_probe_alloc() {
+When the first open succeeds, the context is inserted into the upasid_xa
+xarray. The second open fails the xa_insert with -EBUSY, which this code
+explicitly treats as harmless and continues, leaving the first context in
+the xarray.
+
+However, when the process closes the first file descriptor,
+idxd_xa_pasid_remove() successfully matches and removes the first context
+from the xarray:
+
+drivers/dma/idxd/cdev.c:idxd_xa_pasid_remove() {
+	ptr =3D xa_cmpxchg(&wq->upasid_xa, ctx->pasid, ctx, NULL, GFP_KERNEL);
+}
+
+The second file descriptor remains open and active, but its PASID is no
+longer mapped in the xarray. If a hardware fault occurs for this PASID,
+idxd_copy_cr() will fail to find the context in the xarray, warn
+'No user context', and silently drop the completion record.
+
+> =20
+>  		if (wq_dedicated(wq)) {
+>  			rc =3D idxd_wq_set_pasid(wq, pasid);
+> @@ -279,6 +282,7 @@ static int idxd_cdev_open(struct inode *inode, struct=
+ file *filp)
+>  	idxd_cdev =3D wq->idxd_cdev;
+>  	ctx->id =3D ida_alloc(&file_ida, GFP_KERNEL);
+>  	if (ctx->id < 0) {
+> +		rc =3D ctx->id;
+>  		dev_warn(dev, "ida alloc failure\n");
+>  		goto failed_ida;
+>  	}
+
+[Severity: Medium]
+Does the failed_ida error path leak the PASID hardware configuration?
+
+During open(), if the WQ is dedicated, idxd_wq_set_pasid() programs the
+hardware WQ with the calling process's PASID. If the subsequent ida_alloc()
+fails, the error path (failed_ida) unbinds the PASID from the IOMMU and
+removes it from the xarray:
+
+drivers/dma/idxd/cdev.c:idxd_cdev_open() {
     ...
-	rc =3D idxd_register_devices(idxd);
-	if (rc) {
-		dev_err(dev, "IDXD sysfs setup failed\n");
-		goto err_dev_register;
-	}
-    ...
- err_dev_register:
-	idxd_cleanup(idxd);
+failed_ida:
+failed_set_pasid:
+	if (device_user_pasid_enabled(idxd))
+		idxd_xa_pasid_remove(ctx);
+failed_get_pasid:
+	if (device_user_pasid_enabled(idxd) && !IS_ERR_OR_NULL(sva))
+		iommu_sva_unbind_device(sva);
     ...
 }
 
-idxd_cleanup() invokes idxd_cleanup_internals(), which iterates over the ar=
-rays
-via idxd_clean_engines() and calls put_device() again on the dangling point=
-ers:
-
-drivers/dma/idxd/init.c:idxd_clean_engines() {
-	for (i =3D 0; i < idxd->max_engines; i++) {
-		conf_dev =3D engine_confdev(idxd->engines[i]);
-		put_device(conf_dev);
-	}
-}
-
-Could this secondary cleanup access the freed device pointer and execute a
-double-put, causing a use-after-free?
-
-[ ... ]
+However, it fails to call idxd_wq_disable_pasid() to clear it from the
+hardware WQ. This leaves the hardware WQ in the ENABLED state programmed
+with a stale, unbound PASID.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012-wt-idxd-fi=
-xes-v1-0-30a35a445077@intel.com?part=3D4
+xes-v1-0-30a35a445077@intel.com?part=3D5
