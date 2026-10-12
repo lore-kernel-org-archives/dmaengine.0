@@ -1,155 +1,128 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8240C4F55BC;
-	Mon, 12 Oct 2026 21:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2424F55AC
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 21:47:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791841137; cv=none; b=qs9k1TTrXFeNdMqe+S7anQFWmPf5KsJCwFE4cmVGGhuZ6vMcdu7hBRXbk4SoqXhOWyyT7Yt1dil1cir6iH8VvvE1ajkHKfA33BojSl+kKQ9YR1TXYixiZckXOzr6LlUvQDY73UVlrHc7V9WA8K9Crsq7+PSXg6JYZ8c40Nu4qxs=
+	t=1791841663; cv=none; b=uRIzYrKhNho0txRhOXUdx6Hu7aYPoyZWC5LEscBIjmbDrWaxhjcmZXIafZGJ+TheRZQJkRVT1ZNQurRQlukvBVmqSF5J4hJbcqRU3hLu7DOad46hANI7NyS/OAPbZHuf1t/qeMWqoRHP2jfV8U8oqGhI0nmLLjCXUQJkZ1fe0Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791841137; c=relaxed/simple;
-	bh=tOilvSTC8/h8ezC7J4rJQrlBpp5dG8Zc+vshrt1PZOU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qXz0JWnpSCWKpWftoXCzdzkdFudFKrzMNjh/OKz0e9Tv9P46Bcpl7v4Qj+hp07dzbslmJFqSxhZB4Jz5skeq9Bt2XcMg2bPq0mbV5eFmLwWIOYBsM7cEx2vLrNkznjeEXNSt/EgLNCAx13Klf/B5UTu8in3WUPARbfVhZaumLXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YKK2rfjO; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1791841663; c=relaxed/simple;
+	bh=lBH3oFtyn/BbgiFbWgObG96hpQjWTISUXyw20kjYifo=;
+	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
+	 Date; b=XLvzL44YcbVvLXfM5NxuGVtaVRlPlrPPiYMI4fDPn3kOwtFdtfPdPdNlLezPdaIxbqIu3jJszTeXYWmz7YoxXvRfWShWO7RbTrw+NCnnmVIifLuptWkM/NOg5yKA9kddDAyp/rgBcm1gQ3BhwGOn7ZUB5JtrW8pM5yaH75HwLp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRQQZL/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YKK2rfjO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791841136; x=1823377136;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=tOilvSTC8/h8ezC7J4rJQrlBpp5dG8Zc+vshrt1PZOU=;
-  b=YKK2rfjOkVU5gN9KF1LafL+4aN/Mm2bpM+SnFgKUpXHE1tHv2JOEoXUK
-   eWgO0QY2BN8HxtL7AlxB/r3fv2I8WPwxSFhnwgfleBpXWLhWLGHI9fXMb
-   AGrT8zoXF0ZDwaiPL+cghHJ6KQIaVXAMQOm1q7uTMVCMcIbCpIcDxtULV
-   tFjWwHPp7eGH57YGKQ6QuLdcTgkynDTc6EkNC7pMD14zxHAU5DXswRWoi
-   oewJmjiAhg3oxD+TKt5WCKf4EHYAn9mnkmInmnjUURIalmhiNdeLZBt7a
-   7aMoZgOK4l+42j/ZlO/N8guISqIbEPiwzBLLCIbqSDHAbsNm7AMaVlXvv
-   A==;
-X-CSE-ConnectionGUID: z251yTTlSeSdHnqKrPOQWw==
-X-CSE-MsgGUID: oQ+Qbi5vSM+dk9MCGod3BA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="459915"
-X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="459915"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:39 -0700
-X-CSE-ConnectionGUID: UUufAmdgQKODYwv+ZTCFPg==
-X-CSE-MsgGUID: SB6/2e9XTruKh8//4GN+2w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="986076"
-Received: from vcostago-desk1.jf.intel.com (HELO [10.241.243.117]) ([10.241.243.117])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:39 -0700
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Date: Mon, 12 Oct 2026 14:38:09 -0700
-Subject: [PATCH 6/6] dmaengine: idxd: Do not release interrupt handles on
- terminate_all
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRQQZL/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE091F0089B;
+	Mon, 12 Oct 2026 21:47:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791841660;
+	bh=otz0mIyXt/8XHgzy/FhPEF7kVxowmrEt7N/7uOmuE7M=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=LRQQZL/AAYiVtHLQxg16o4+kx6zr60Qr7HDRw6e/eHGpEapK0oaoSahaIB/HYumaU
+	 bXi2sFQrzNFJYQR5ElApKDLDfnv6L5af5XIeCA21E0RWTkzwZ1S8swKp3WsifVkolv
+	 MKBVrRRFKFpNE95NMfmKMArTvQQXY3gCeOlQ5+RUu8EaMhLP9kKvSX3hrheXzVs9Au
+	 iPXvcrmkmz22tm0H56Rk/hnrakNNaMaRH5YlcTuvB3bt5twnXwfePMizYcS4ScEkrC
+	 Af8mCyWETCtqU/C5fy0JG8G/qgiHaXk2i79oQN/zUyfHtEZQP055DDfyhj04kiW31z
+	 txLAqQHDHp4NQ==
+Message-ID: <sashiko-outbox-168646@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 4/6] dmaengine: idxd: Fix unwind bounds in device
+ registration error paths
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261012-wt-idxd-fixes-v1-4-30a35a445077@intel.com>
+References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
+ <20261012-wt-idxd-fixes-v1-4-30a35a445077@intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 12 Oct 2026 21:47:39 +0000
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-wt-idxd-fixes-v1-6-30a35a445077@intel.com>
-References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
-In-Reply-To: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
-To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Fenghua Yu <fenghuay@nvidia.com>, 
- Shuai Xue <xueshuai@linux.alibaba.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Vinicius Costa Gomes <vinicius.gomes@intel.com>, 
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-X-Mailer: b4 0.17-dev-362b8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791841118; l=2905;
- i=vinicius.gomes@intel.com; s=20230921; h=from:subject:message-id;
- bh=tOilvSTC8/h8ezC7J4rJQrlBpp5dG8Zc+vshrt1PZOU=;
- b=0RvrYTePKgefXJ5sc9A9+nwSBtDTYpBQJFF6aAUUdPlBoo0Iu4WS34hGfi8hM9Dk2duHf9N2S
- sKYyR0SdcIUBbY+Lw+w8ea3jJJQwW2Z1oettVHwzCZkgUqV7g/ggAdG
-X-Developer-Key: i=vinicius.gomes@intel.com; a=ed25519;
- pk=aJkrtgqgT6TZ8iIHSG8/rTPsmlYnjMrUjCsMYvCzntk=
 
-idxd_wq_flush_descs() is called from the dmaengine .device_terminate_all
-path, but besides flushing the pending descriptors it also releases the
-interrupt handle. As the workqueue stays enabled, the handle is never
-re-armed, and any subsequent submission uses an invalid handle and never
-completes.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: idxd: UAF/double-free on device registration failure
+--
 
-This only shows up when the same workqueue is used more than once: the
-first run leaves the handle released on terminate_all, so any later run
-times out on every descriptor. dmatest reproduces it by running twice.
+commit 571be93356be3fdc63d0506588c4e560e5d9eccc
+Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-Split the interrupt handle teardown into idxd_wq_release_int_handle() so
-that terminate_all only flushes descriptors. The FLR path still needs
-both, so call them together there.
+dmaengine: idxd: Fix unwind bounds in device registration error paths
 
-Fixes: 2a93f5747d0e ("dmaengine: idxd: Flush all pending descriptors")
-Reported-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
----
- drivers/dma/idxd/device.c | 11 ++++++++++-
- drivers/dma/idxd/idxd.h   |  1 +
- drivers/dma/idxd/irq.c    |  1 +
- 3 files changed, 12 insertions(+), 1 deletion(-)
+When registering the per-idxd wq, engine, or group devices, a failure partw=
+ay
+through must roll back exactly the devices already added. This commit fixes
+an underflow loop by starting the rollback at i instead of i - 1.
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 131138483b87..06299f40f531 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -1349,6 +1349,16 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
- }
- 
- void idxd_wq_flush_descs(struct idxd_wq *wq)
-+{
-+	guard(mutex)(&wq->wq_lock);
-+
-+	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
-+		return;
-+
-+	idxd_flush_pending_descs(&wq->ie);
-+}
-+
-+void idxd_wq_release_int_handle(struct idxd_wq *wq)
- {
- 	struct idxd_irq_entry *ie = &wq->ie;
- 	struct idxd_device *idxd = wq->idxd;
-@@ -1358,7 +1368,6 @@ void idxd_wq_flush_descs(struct idxd_wq *wq)
- 	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
- 		return;
- 
--	idxd_flush_pending_descs(ie);
- 	if (idxd->request_int_handles)
- 		idxd_device_release_int_handle(idxd, ie->int_handle, IDXD_IRQ_MSIX);
- 	idxd_device_clear_perm_entry(idxd, ie);
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index ce78b9a7c641..f4aed90560e0 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -804,6 +804,7 @@ int idxd_wq_init_percpu_ref(struct idxd_wq *wq);
- void idxd_wq_free_irq(struct idxd_wq *wq);
- int idxd_wq_request_irq(struct idxd_wq *wq);
- void idxd_wq_flush_descs(struct idxd_wq *wq);
-+void idxd_wq_release_int_handle(struct idxd_wq *wq);
- 
- /* submission */
- int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc);
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 6a25e1fd0e62..26d75d744797 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -405,6 +405,7 @@ static void idxd_wqs_flush_descs(struct idxd_device *idxd)
- 		struct idxd_wq *wq = idxd->wqs[i];
- 
- 		idxd_wq_flush_descs(wq);
-+		idxd_wq_release_int_handle(wq);
- 	}
- }
- 
+> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+> index d5ffc641c8567..e828292e5fb88 100644
+> --- a/drivers/dma/idxd/sysfs.c
+> +++ b/drivers/dma/idxd/sysfs.c
+> @@ -1876,7 +1876,7 @@ static int idxd_register_engine_devices(struct idxd=
+_device *idxd)
+>  	return 0;
+> =20
+>  cleanup:
+> -	j =3D i - 1;
+> +	j =3D i;
+>  	for (; i < idxd->max_engines; i++) {
+>  		engine =3D idxd->engines[i];
+>  		put_device(engine_confdev(engine));
 
--- 
-2.56.0
+[Severity: High]
+Does this error handling sequence lead to a double-free of the child device=
+s?
 
+If device registration fails partway, this local cleanup path drops the ref=
+counts
+on the child device kobjects via put_device() and device_unregister(), which
+frees them.
+
+The failure then cascades up to idxd_register_devices(), which rolls back
+previously registered child devices (like WQs), also freeing them. Cruciall=
+y,
+the pointers in idxd->engines and idxd->wqs are left dangling.
+
+Then, the error is returned to idxd_pci_probe_alloc(), which unwinds by jum=
+ping
+to err_dev_register and explicitly calling idxd_cleanup():
+
+drivers/dma/idxd/init.c:idxd_pci_probe_alloc() {
+    ...
+	rc =3D idxd_register_devices(idxd);
+	if (rc) {
+		dev_err(dev, "IDXD sysfs setup failed\n");
+		goto err_dev_register;
+	}
+    ...
+ err_dev_register:
+	idxd_cleanup(idxd);
+    ...
+}
+
+idxd_cleanup() invokes idxd_cleanup_internals(), which iterates over the ar=
+rays
+via idxd_clean_engines() and calls put_device() again on the dangling point=
+ers:
+
+drivers/dma/idxd/init.c:idxd_clean_engines() {
+	for (i =3D 0; i < idxd->max_engines; i++) {
+		conf_dev =3D engine_confdev(idxd->engines[i]);
+		put_device(conf_dev);
+	}
+}
+
+Could this secondary cleanup access the freed device pointer and execute a
+double-put, causing a use-after-free?
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012-wt-idxd-fi=
+xes-v1-0-30a35a445077@intel.com?part=3D4
