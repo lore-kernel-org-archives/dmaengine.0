@@ -1,41 +1,27 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C452AD00;
-	Sun, 11 Oct 2026 20:38:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88841388881;
+	Mon, 12 Oct 2026 03:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791751128; cv=none; b=V80vwZTQonBonkk2KD9Ab5+2feIfxKaQ3j+TXmq00502g2Sy5Lu9ont+UUc1API0R2qLLLU39FM8J3khUMWo6pRno6GDQa9/X1f0tjQKDL2OWhD+hJk1A1bypETcwl++JGIdG1mg5eR4uYCwyNiAJotgUTbJJzLjYiDgjLVyvIw=
+	t=1791774513; cv=none; b=OazL7V4wYh0OAep4lL5u/5QgGSrC+hg7mDWrFRsJVcru9+Bs7806OiARpYb+4yzjYVlVyCSlXlmafw2JCRzkOMJQw6MM1ZwDsppTUlpsAlh1BXyiq9Xie569HxmFZqdq40JItNdkQ4zgWSwn8zBPA/VB2aycM7ddpHIXaREjsZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791751128; c=relaxed/simple;
-	bh=lcHPBSMos0qwExzxVdrmD268Xn8iDGScSlib+TKOEbU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Apk9vr7KkEuvsOLbFZ6LAZVTWZu9r89IVJDPjuslmWzsWKGjiQsSO+V9hEKGyKrxLdZA/WEBf9GaefwTC7WmL+HU/URXvej7RdMphOQjKC4CGi47mCjvasIJ/vajLkowldue/ePjHDmZg2lvRq/C3wv63SSZXjQ4o300/SOSk+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhHDfr6w; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791774513; c=relaxed/simple;
+	bh=FA7IJ8y1g44u2q72KpqUerXvklYzPv4lbagS5NmzIwY=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=PZvGisv2JGvyvChhbGzBxWFOB/7LONe+1k6k6RVN5n728GGmJE/oZuVMpK/D9VA7vnmQpWpnUyOiap7MeRoIyl/BiOVhTi7UptcRWK05zBR7PwdBWQxOlW8rmZmqluoAKn/XBIUnI8f0us3VNm6Ut5w6wnsZ+RTPYSOtD1brQDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=awwMU4ZF; arc=none smtp.client-ip=218.76.62.146
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhHDfr6w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9351F0089C;
-	Sun, 11 Oct 2026 20:38:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791751127;
-	bh=reWRkuW0hAlZFnk+d1VjwTNlztXheRbRR+EBybysZfs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=fhHDfr6wU3HBez1/wFQeI5uYxDofNlXyRnKB10NELoMxwZf7jvHAXLV9vLjQ0lPXN
-	 Xo3CnFPkfK+BpLFwAA6Ljtr0ZFp/Qt5bWBwV3LEgDNIaYj8tEKHFbf47R+8pbHyY6P
-	 K72bnMLwPNHTj4/BXHJ+ox+E9tJ8gf8k+XMg/x5xDQ7D+VuKdBo0+kFBNDjp0EXpg7
-	 YpBuMv2D5pSBUCRn0Jgg1WUKR1R3Z49J3Wf80RNTlRboiWPUFGUzJErnoDiMGTFR5Y
-	 GU4w2zqmwjSKsAsIeTfgVTzgWGfYZPCqf1XwU7jAgQUYLunC2TDSkHu0UdChx0BaL3
-	 H57GjeOgPwbdw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, Linus Walleij <linusw@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-In-Reply-To: <20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org>
-References: <20261010-dma40-smatch-fix-v1-1-26ca10043957@kernel.org>
-Subject: Re: [PATCH] dmaengine: ste_dma40: Preserve the LCPA I/O address
- space
-Message-Id: <179175112609.604740.2384834135572859219.b4-ty@kernel.org>
-Date: Sun, 11 Oct 2026 21:38:46 +0100
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="awwMU4ZF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=b+vDvRRipTrI1T/VEnrSBjhQ4lBtUbOzg
+	EdM1A6Isms=; b=awwMU4ZFTUj8fgNItL8kTtgoPgoWAGZ5hIZcgp3KQALrb7dHT
+	RsFX2q+Gk9vDAxdh+LVWc9EiuZNwKGvldVf7c4jHgPhn2pMksns4PP4GWGn/hMn0
+	+9Jo1n3f+YlDYrUyA2g5jMT2NUt79Nj81Kcux7AYxaOOS2ZGoc209kbRS0=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDnrwb0TsxqFNUBAA--.934S2;
+	Mon, 12 Oct 2026 11:08:01 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -44,29 +30,70 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
+Subject: Re: [PATCH v2 08/10] riscv: dts: ultrarisc: Add initial device
+ tree for UltraRISC DP1000
+From: Xincheng Ji <jixincheng@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, devicetree@vger.kernel.org, 
+ conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, 
+ dmaengine@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260907101304.368E71F00A3A@smtp.kernel.org>
+References: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
+ <20260907-ultrarisc-dts-v2-8-5eb4c97477c5@ultrarisc.com>
+ <20260907101304.368E71F00A3A@smtp.kernel.org>
+Date: Mon, 12 Oct 2026 11:07:30 +0800
+Message-Id: <179177445093.2537254.1384669594502107966.b4-reply@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791774451; l=1085;
+ i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
+ bh=FA7IJ8y1g44u2q72KpqUerXvklYzPv4lbagS5NmzIwY=;
+ b=ao2vMfGgIhJvOsEkfRD2rSyS9wNv15SFnwsrM4aVkJx2+fYHm+Abo4gtErAMBhbZpt82t8dGy
+ /BEGb+x5AJaDyx1UvcYiPKdMVshqlbD0CEvz+7d8LgxqmnSCDYdqagX
+X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
+ pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
+X-CM-TRANSID:AQAAfwDnrwb0TsxqFNUBAA--.934S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7GFyDury5Wry3CF48ZFW5Wrg_yoWDZFX_ur
+	909w17Ww4DJ340kanFkr1YvF12kFsxKry3Jwsrtry3Kr97Xw45CrZ29rZav3WxK3yxWFyk
+	Cr9xXFWFvw1a9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb3xYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r1j6r4UM28EF7xvwVC2z2
+	80aVCY1x0267AKxVWUJVW8JwAIcxvE14x267AKxVWUJVWUGwAS0I0E0xvYzxvE52x082IY
+	62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7V
+	C2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkF
+	7I0En4kS14v26r126r1DMxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvf
+	C2KfnxnUUI43ZEXa7IU0go2UUUUUU==
+X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAJDmq-VKkAAgADsv
 
+  Hi,
 
-On Sat, 10 Oct 2026 00:58:53 +0200, Linus Walleij wrote:
-> The LCPA area is mapped with devm_ioremap(), but lcpa_base and the
-> per-channel lcpa pointer lack __iomem annotations. This loses the I/O
-> address space and makes sparse warn when d40_current_addr() assigns
-> LCPA register addresses to its __iomem pointers.
+  I'm temporarily taking over this patch series from Jia Wang.
+  On 2026-09-07 10:13 +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Does this reg size limit of 0x400 provide enough space for 8 DMA channels?
 > 
-> Annotate both pointers and the LCPA argument of d40_log_lli_lcpa_write()
-> to preserve the I/O address space from the mapping to the register
-> accessors. This also fixes the existing LCPA read and write warnings
-> without changing the generated code.
+> The Synopsys DW AXI DMA IP driver (dw-axi-dmac-platform.c) maps channel
+> registers starting at chip->regs + 0x100 + i * 0x100. For 8 channels, the
+> maximum base offset is 0x800 (channel 7).
 > 
-> [...]
+> In axi_dma_hw_init(), the driver iterates over these channels and writes to
+> their registers (e.g., CH_INTSTATUS_ENA at offset 0x080, hitting offset
+> 0x880). Since the reg property defines a window of only 0x400 bytes,
+> accesses for channels 3 through 7 will fall completely outside the declared
+> memory region, leading to out-of-bounds memory accesses. 
+ 
+  After checking the hardware register map, I confirmed that the DMA
+  register range specified in the device tree is incorrect. Thank you
+  for catching this issue. I'll correct the range in v3.
 
-Applied, thanks!
+  Best regards,
+  Xincheng Ji
 
-[1/1] dmaengine: ste_dma40: Preserve the LCPA I/O address space
-      commit: 42c31fec1ca76b8b5f7759def122d418dff2cd4b
-
-Best regards,
 -- 
-~Vinod
-
+Xincheng Ji <jixincheng@ultrarisc.com>
 
