@@ -1,40 +1,40 @@
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023117.outbound.protection.outlook.com [40.107.44.117])
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022139.outbound.protection.outlook.com [52.101.126.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3F144AB88;
-	Mon, 12 Oct 2026 08:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2006944F546;
+	Mon, 12 Oct 2026 08:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.126.139
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791794525; cv=fail; b=FMbIisECNSpQBVl2/dzgGxBVgIAIZEcUf3uJslC6bcubUElb8XwY1ELqIafb07cpT8HViZwOPqWvDt0n6a1k8e9ZcrQ0wMfnptxiDBPnzgJC00aIejV88zjErliqBViF6Exb4SmEcLemb92721xcfXWXoufuIyF95LfrRJF8PFw=
+	t=1791794525; cv=fail; b=ci9RyVJpuqspGLk/UCcODpJKKTEIRjBcfqvF44NThiioqpf2WtxLFBzCzQHT807WQ9wHswzHg5CyLPBSUlTUUOa9fEcvYf5lYTwDPZnWOBATxkoYd5z42UprLO8jX+l7f6Xy0fVMhaLtGwz88hqAeweJUtYFfj4AE2JINpwabXU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791794525; c=relaxed/simple;
-	bh=mjriUQj6SpM6npErZWRWYyZ4Yx14iqjgehaj7T3aGmE=;
+	bh=jeYZg6fYkoNlVjkesoZerxRD92gTs+mIKcd9DnP7WK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XwEAe2KtDbRhB0yTOYsxwz3Syde7msawWOeBnVPockCe9YZRD/vH0yiTXV6rTFyqw9XVs+8rr8DV55mGJ37czNINrecvwf7EMW4p34ePOoUslicVi6Ey0HPqChhqdngbPYbTghri2nYVQPsVkgRCzmNiSGz/R4pgm4+ht3TvbmY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=40.107.44.117
+	 MIME-Version:Content-Type; b=gDyn1UNii9BcySWkd52AsN7XAIkz00P4lzLB5Vn/1XHgkl84YyIsBK4Y2xAoSepbbIi2b0HE7FnE2pqvxQp/3YoDqjtqXBqHLi96SysWSZJ+jt7pjC+lOp9ve80s3b05sJAZ2qhNZyObksshy/pen3EYtjeHNPAxCsIk2uD5tb4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com; spf=pass smtp.mailfrom=cixtech.com; arc=fail smtp.client-ip=52.101.126.139
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q67tyxmoQEkMPmy2th6WbIHVXye55qWtc4H8dYImOagusVG0yPcRGq9ghlCDNOFaH88oRXykmU6ADIBTj3K+dyjIADfnnC+itynl5A48gDeBCXPsINzK+dusA7BLJqANTb5MtZQEbpkvRmRvfWV4WFP6+MULXZGGYQNq+zqOLdxgJPWFuKVPTfhtvyPfc3+j/roKHU+26HToie5fxFG0Q8zZAo/4h+blNO1kb+QIpXXaJPDtub+Fz7P/xRdv3XEaqh00qSi5yXzga3wm5n6VrmcRCkatE/Yhv3lRoB+4fww0V6/q/9JsNjeRCLf0fEgLwVFfmex61U8q4iaCMmfVtA==
+ b=qYaqdERGLMQyu5rre6b5DX2mb/NVtfVOqKPHvkd8ZtKbp9Zaig2UiRFefM/QPSMufvDDHfO7/oz9tvRbcbH/6l68lnligD4C0o3J5uf7wfzTKigLc1+1he0VGYoh5kQGcQRSidd8enzHJ4lvIzptm+SbVoS1vufP5KBNnemoz3F459c4H1iK6ck9nXASnmkf9kD4J3TyzSJaQhVrWUA4VdGVUSwUKzUkzAk3D5ktgKBWsWlifb0T8ZuutVNmD+mQ6/GXJ6qJYW3HAlIY1DKWsDCo+8h4FCWkFWkDAZC+XOrRiK1U1IqAFfNQnOy5BFgAEsDHTjId1Nq5eYpJdZmT3A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oAUBbWjmy7gM79cxRGpSG76shBuac0uR5iXg3eTw3ng=;
- b=RTGPl3AGuOMVNaUeVWWhWF4Alq0yMVEQV19BeRY17sk1PLIwdCcB6g7bCZzCnF2mFi8xzC7HzQFs2s95aTcRzG/5Z4ZP5AsBP4o5TaY7OyGeXDiVck2FEbDfQGC5Pt+os3XR1WS1shQ6Ff34kLim1xNquicgtcM9PinMp5XbZ1olZ1tAAVoQ04Vuuzt5TqQuVeyY8CpgZ1ZEBNs/KrCMysmTofq565RU8ywvCkeKg6bEtkMRXhdZ5hP/QwDPPRanWA1Lt2124+bOERTUHQurWwGquVSwiu2d4GvugxgRBwFlm2JJ6h8Q8CAImI5T9eRS0EaU6xORY+kSHlfKh2OQpQ==
+ bh=c+2AYfY5786NYA3+kTy9fqJHr1BbdGes8nvS15ATHUk=;
+ b=BAfk7lCVIcvEEi3RNyTZI1nR7oz78Tb8Pi6qz1vVywPqBMxCG1C0fXUor5VLrsFsFvdLZZEEjroTiQ/puGndGcVdfLkLvcrQ5ehXjG3W/B1NWdW6Lu8UnS64CgYt5p65VrI+fCU4Jm4W3Rtx82102I+Lj/rty1T1sdr2vy76vox0S8Suv2IY11j9JcK8EOY7CL1OSC4dZd9CfHyB1vGh3Auv3q28UOClDkz2ixHcly6X/8HeuW9VsezN5+Sj2h8AJUcYJ3ljdHhBYQXZdYNUmUu1A5eHwl/AQMuVvTZ2AxrFCcRnECYDdaJWUUmD5EYzNDgGU6XxA6s03FQBadFGpQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
  dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
  not signed); arc=none (0)
-Received: from SI1PR02CA0041.apcprd02.prod.outlook.com (2603:1096:4:1f6::18)
- by PUZPR06MB5517.apcprd06.prod.outlook.com (2603:1096:301:fe::13) with
+Received: from SI1PR02CA0002.apcprd02.prod.outlook.com (2603:1096:4:1f7::16)
+ by SEYPR06MB6662.apcprd06.prod.outlook.com (2603:1096:101:176::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 08:41:59 +0000
-Received: from SG1PEPF000082E6.apcprd02.prod.outlook.com
- (2603:1096:4:1f6:cafe::86) by SI1PR02CA0041.outlook.office365.com
- (2603:1096:4:1f6::18) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 08:42:00 +0000
+Received: from SG1PEPF000082E8.apcprd02.prod.outlook.com
+ (2603:1096:4:1f7:cafe::13) by SI1PR02CA0002.outlook.office365.com
+ (2603:1096:4:1f7::16) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Mon, 12
- Oct 2026 08:41:58 +0000
+ Oct 2026 08:42:00 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
  header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
@@ -42,12 +42,12 @@ Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
  222.71.101.198 as permitted sender) receiver=protection.outlook.com;
  client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
 Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- SG1PEPF000082E6.mail.protection.outlook.com (10.167.240.5) with Microsoft
+ SG1PEPF000082E8.mail.protection.outlook.com (10.167.240.9) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Mon, 12 Oct 2026 08:41:58 +0000
+ 15.21.522.6 via Frontend Transport; Mon, 12 Oct 2026 08:41:59 +0000
 Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 2A7A640920F2;
-	Mon, 12 Oct 2026 16:41:57 +0800 (CST)
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 1E92940920F6;
+	Mon, 12 Oct 2026 16:41:58 +0800 (CST)
 From: Jelly Jia <Jelly.Jia@cixtech.com>
 To: vkoul@kernel.org,
 	robh@kernel.org,
@@ -61,9 +61,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Jelly.Jia@cixtech.com
-Subject: [PATCH v3 2/6] dmaengine: arm-dma350: Add slave and cyclic transfer support
-Date: Mon, 12 Oct 2026 16:41:51 +0800
-Message-ID: <20261012084155.2547480-3-Jelly.Jia@cixtech.com>
+Subject: [PATCH v3 5/6] dmaengine: arm-dma350: Support integration clocks, resets and reserved memory
+Date: Mon, 12 Oct 2026 16:41:54 +0800
+Message-ID: <20261012084155.2547480-6-Jelly.Jia@cixtech.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
 References: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
@@ -76,915 +76,143 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E6:EE_|PUZPR06MB5517:EE_
+X-MS-TrafficTypeDiagnostic: SG1PEPF000082E8:EE_|SEYPR06MB6662:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: e42fa88d-d6c4-4d63-35f9-08df283cad76
+X-MS-Office365-Filtering-Correlation-Id: f70b6205-10e5-4787-c856-08df283caebb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|7416014|23010399003|82310400026|36860700016|56012099006|5023799004|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|376014|1800799024|7416014|6133799003|18002099003|22082099003|10067099003|261009223027099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	tLpi2yxKdzL2pe1ZUxnxX2cwgFoN9LIAHB1gtsNtV90K7pIKPr+8EsG8inaRjplVAZKoOU1cQex1HYOFkTQaG7NlJvfS911XiNm2f+10aTHzkG4IH0oYNEhJbj+W/JzQLi63smP5cxGy8BFAZr0yybAWWrvLoMCbWfACoELDd1SCKAL4qgFbpIt/e7MnGMrAuc5j44QbwV/LgGbwZKIAjlDFqF4KJ14Wl8aeOLWelcf6OUmBMMBTKtClGYtnApPldUV5FqrZTj4qt3GqHXPlwnNlgeaX4/+CD7AK9wFKclc/Cxg8zJDpnz/cxHobowThCmSZbJc4/0Ilw+9QFo4zIXh6fZQcX0W5iKqr3acrmbABAVxUWaR09hHclyUQ+V2bHTR8EKA9JDirc1HY40e0AB7ho2EZXDeXyhyYQZLNhhshZHy+5JJlfdkoeOsCyx1Z1o/djyJvNnMn6yo0YmAczChAoU1bgjFTEY/bpzOEzpqgppzAFC1avyJtXyKwqx13tzyD9qt0j5oVbENZyyXXDt0E29h/FhMWzlnJK2d71DgfwPMBeDkzkbtGR9+vwogTdedH1CceCaDIkUV4NqmGaINf3BdyGUMu4hxJkLBm2EfgqlCBxJbLrtusPdQMlF/T2AmvUhdALK10Tcqc0smUge0jV8oG7TlVqgXdiSbtDGY8oIpVUEfCA0zlCeXKlE9JWu+8wXimXqFc9Wq6WqRkWA==
+	CSQ9mU8flix9eDW5UftT/JTIsqSnGvcE2YsMuDOFMzYSzObc3GCm75zYL9GDe6CkXoh1fihfSC/LsDkWxYppV9CJyvO0NiBK0DkRVezrWorYOxOmN9jCq0M2MyHMbkWjVF4HsWDQuds8WFVKUEUIDE0hCrFqC1/Z0hqD+U4VafoYOxDXwaLyVIxQ3Z41aRCWUK1pgxznWIXio5DQmpHtRKVXS9i5nK3RYheqyJXHAJwE06CZ/bPesVHLTSluqMs1Sdn2WOs2ViK9GnqzYLr7PFwRCg+7fv7hq6pY+c4+j7LkBzToXTcSP+WgUAXZN3EIWfwVL82h+h69gXIpAn404S/S8nYoajs5MCLXIZImQ5HTXXJXPXnF3avn3+wOvvkcsco0WcDyxC/WgHNk5LzDERc/4J1gOf8ZdEvIOpOhCu+QEq2tL8xjX44OZWK+naO659+cGSV7KeIu8KKhdfUxLAyI/pORrUXG6w4+yrXDj1oZnGMSCyCZ1s7tlxxW7HQs4LvZH2+JSzM/5uMkkk/SQWtv+Yv13rxSqJC6V/kt4wQ18GtcWjk6osdS+tEwj5UtMTrVlK+UARGdwye+dyYPrqxWWrn+SwkSPIYkse+gzN8lRHwF/oNz7wX241zkR7ZIOJ9J7HmsOjzi0aYVIi10IcErtL0FPTlFrs3Ee7jipFFzz8nbZguaQHLFwJ671giFVIX/oGrl1bnuM2BAA1MUJw==
 X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(1800799024)(7416014)(23010399003)(82310400026)(36860700016)(56012099006)(5023799004)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1102;
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(376014)(1800799024)(7416014)(6133799003)(18002099003)(22082099003)(10067099003)(261009223027099003)(56012099006);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	32F5dZv1W6w7Iu9T6Oimnxgs/7XHXTh9/JzlEhl0YLPLm26TVA6Rw80EyKdO0uDLfPGY+gEM1aA7wmw8LxRHsxOIyHmy4bu/jS3Lj8JJjVnvc9wUU4e4aeR9LjveMSUL0uxQURnDIcygGgypXPirmZD9oHZ382CWMguWErbwTIddaTDdU8oK7mNgJkMsxB3oj0usI0kBKvgKed+jNQWz2YE193/kQC1hQ4DZ3LHTh+0mEbJ19iK0eROWcel92ikHPnxOzOvXPpwLAilpWx8phSecLHkfHLyjDnNg7XrDOO2XhPoTmPIvM0TYzhcfFvoRNvz74v88pGpcZlm6ghaigzcpNOIuF8+IYTSFeGlUcfljug3eJHMDCuyjMzPAwKnpnC0GXrLHxY23PV0xel4Q3occSnygNqq4oKwyWHlmdtjhY44XZAZy2Gfvbsdk6OrD
+	nxBnHm/jVIaeWOF0WWFEsT4y2WvPdp27ZLKLhtYeruVTlw9dhx5S/AORNkX3h8Anbob23AS7tNBnNFbsvAmqBNJhXVQSf7nARouf39k9egQtpy12eC0ZX2RQZEniQhtNU4XZ/a23J8gXpFgwr0/j3jXNA0RqKH7z+BunX1DGCs80rgV+VFqqQpDjbGTR2EDMymEHrKSI2FB/jQKnmIX10ol3s0MqTHUpYBa9c/h5cIiPEEPhowGpqB/J01YG0CEQFN8dIMnessVBoosb5K2nnCtYcHfDcEBoAMeoAGawBt9lb2y5B1RvRIGxyC+qmayUHqpOuzm4yD6khuJbOlaeCHPZn8XqEh0Xg+0akilLt/mlHGkYYga+nTFkU7ti3DX7Ei5qcil7rQsl3WNwkgU/GXhuIzDq2BD22WeatruE/IUWxjt4lIvct3yAT+HdBszs
 X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 08:41:58.0670
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 08:41:59.9827
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e42fa88d-d6c4-4d63-35f9-08df283cad76
+X-MS-Exchange-CrossTenant-Network-Message-Id: f70b6205-10e5-4787-c856-08df283caebb
 X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	SG1PEPF000082E6.apcprd02.prod.outlook.com
+	SG1PEPF000082E8.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5517
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6662
 
-Add DMA slave support to the Arm DMA-350 driver, which so far only
-supports memory-to-memory transfers.
+SoC integrations of the DMA-350 gate the controller with a clock and may
+hold it in reset until the driver brings it up, and a DMA master which
+cannot reach all of system memory may have a reserved memory region
+attached to it. Bring the controller up with these resources: enable
+the clock, release the reset, and attach the reserved memory region when
+the device tree provides one.
 
-Slave transfers are needed to serve peripheral requests: on the CIX
-Sky1 SoC, for example, the audio subsystem uses DMA-350 channels to
-move PCM data between memory and peripheral FIFOs, which requires both
-scatter-gather and cyclic transfers.
-
-Each scatterlist entry becomes one command in a linked list of DMA-350
-commands, so a whole slave_sg transfer runs without software
-intervention; a cyclic transfer chains the last command back to the
-first one, which the controller then executes indefinitely. The trigger
-input comes from the DMA specifier and is programmed into CH_TRIGINCFG:
-the block size field carries the configured maxburst for memory-to-device
-transfers and zero for device-to-memory transfers.
-
-Peripheral addresses are translated through the DMA API and cached per
-channel, so repeated transfers to the same FIFO do not remap. The
-command list is allocated with kmalloc() and mapped with
-dma_map_single() rather than dma_alloc_coherent(), because it is freed
-from the virt-dma tasklet which runs with interrupts disabled, and
-dma_free_coherent() may only be called with interrupts enabled.
-
-Completion handling is reworked for the new descriptor types: the
-handler claims an interrupt only when a channel interrupt is actually
-pending, tolerates a spurious interrupt with no active descriptor, and
-reports cyclic progress through vchan_cyclic_callback().
-
-Residue reporting walks the command list: the channel link pointer is
-read (retrying when the channel steps it between the two halves of the
-address) to find the command being executed, and the length of every
-command that has not started yet is added to the residue of the current
-one. The link pointer is re-read around the CH_XSIZE read, and a channel
-which stepped to the next command in between falls back to the residue
-of the last completion, so the bytes left in the command which just
-finished are not counted twice. Cyclic transfers report the progress
-inside the running period the same way: the progress made in the running
-period is subtracted from the residue of the last period boundary when
-the channel link pointer still names the command of the running period,
-and the period-boundary residue is kept otherwise.
+The integration is described entirely by the device tree; the driver
+contains no SoC-specific code.
 
 v2 -> v3:
-- The trigger block size wording was corrected: the field carries the
-  maxburst for memory-to-device transfers and zero for device-to-memory
-  transfers.
-- Residue reporting re-reads the channel link pointer around the CH_XSIZE
-  read so that a channel stepping to the next command cannot make the
-  residue jump, and cyclic transfers report the progress inside the
-  running period.
+- The patch no longer carries CIX Sky1 match data, the interrupt router
+  handling or the system resume hook: the Sky1 interrupt gate is set up
+  by the boot firmware and is not configured by Linux.
+- of_reserved_mem_device_release() is now also called when the DMA
+  device or the OF DMA controller registration fails.
 
 Assisted-by: LLM checkpatch sparse dt_binding_check dtbs_check
 Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
 ---
- drivers/dma/arm-dma350.c | 654 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 631 insertions(+), 23 deletions(-)
+ drivers/dma/arm-dma350.c | 35 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 33 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
-index 4e17130de6c8..7a198d35bef6 100644
+index 79bd6a04ea0c..d811a0dc9fe9 100644
 --- a/drivers/dma/arm-dma350.c
 +++ b/drivers/dma/arm-dma350.c
-@@ -3,12 +3,17 @@
- // Arm DMA-350 driver
+@@ -4,14 +4,17 @@
  
  #include <linux/bitfield.h>
-+#include <linux/bitops.h>
+ #include <linux/bitops.h>
++#include <linux/clk.h>
  #include <linux/dmaengine.h>
  #include <linux/dma-mapping.h>
  #include <linux/io.h>
  #include <linux/of.h>
-+#include <linux/of_dma.h>
+ #include <linux/of_dma.h>
++#include <linux/of_reserved_mem.h>
  #include <linux/module.h>
-+#include <linux/overflow.h>
+ #include <linux/overflow.h>
  #include <linux/platform_device.h>
-+#include <linux/scatterlist.h>
-+#include <linux/slab.h>
++#include <linux/reset.h>
+ #include <linux/scatterlist.h>
+ #include <linux/slab.h>
  
- #include "dmaengine.h"
- #include "virt-dma.h"
-@@ -102,6 +107,10 @@
- #define CH_FILLVAL		0x38
- #define CH_SRCTRIGINCFG		0x4c
- #define CH_DESTRIGINCFG		0x50
-+#define CH_TRIGINCFG_BLKSIZE	GENMASK(23, 16)
-+#define CH_TRIGINCFG_MODE	GENMASK(11, 10)
-+#define CH_TRIGINCFG_TYPE	GENMASK(9, 8)
-+#define CH_TRIGINCFG_SEL	GENMASK(7, 0)
- #define CH_LINKATTR		0x70
- #define CH_LINK_SHAREATTR	GENMASK(9, 8)
- #define CH_LINK_MEMATTR		GENMASK(7, 0)
-@@ -147,6 +156,7 @@
- #define LINK_LINKADDR		BIT(30)
- #define LINK_LINKADDRHI		BIT(31)
- 
-+#define D350_SLAVE_CMD_WORDS	14
- 
- enum ch_ctrl_donetype {
- 	CH_CTRL_DONETYPE_NONE = 0,
-@@ -161,6 +171,18 @@ enum ch_ctrl_xtype {
- 	CH_CTRL_XTYPE_FILL = 3
- };
- 
-+enum ch_trigincfg_mode {
-+	CH_TRIGINCFG_MODE_COMMAND = 0,
-+	CH_TRIGINCFG_MODE_DMA_FC = 2,
-+	CH_TRIGINCFG_MODE_PERIPH_FC = 3
-+};
-+
-+enum ch_trigincfg_type {
-+	CH_TRIGINCFG_TYPE_SW = 0,
-+	CH_TRIGINCFG_TYPE_HW = 2,
-+	CH_TRIGINCFG_TYPE_INTERNAL = 3
-+};
-+
- enum ch_cfg_shareattr {
- 	SHAREATTR_NSH = 0,
- 	SHAREATTR_OSH = 2,
-@@ -178,7 +200,25 @@ struct d350_desc {
- 	u32 command[16];
- 	u16 xsize;
- 	u16 xsizehi;
-+	u32 *cmds;
-+	dma_addr_t cmds_dma;	/* DMA API address of the command list */
-+	size_t cmds_size;
-+	u32 *cmd_len;
-+	size_t ncmds;
-+	size_t bytes;
-+	size_t period_len;
-+	size_t periods;
-+	size_t period;
- 	u8 tsz;
-+	bool cyclic;
-+};
-+
-+struct d350_chan_map {
-+	phys_addr_t cpu_addr;
-+	dma_addr_t dma_addr;
-+	size_t size;
-+	enum dma_data_direction dir;
-+	bool needs_unmap;
- };
- 
- struct d350_chan {
-@@ -189,10 +229,13 @@ struct d350_chan {
- 	enum dma_status status;
- 	dma_cookie_t cookie;
- 	u32 residue;
-+	u32 req;
- 	u8 tsz;
- 	bool has_trig;
- 	bool has_wrap;
- 	bool coherent;
-+	struct d350_chan_map map;
-+	struct dma_slave_config sconfig;
- };
- 
- struct d350 {
-@@ -212,9 +255,418 @@ static inline struct d350_desc *to_d350_desc(struct virt_dma_desc *vd)
- 	return container_of(vd, struct d350_desc, vd);
- }
- 
-+static void d350_free_cmds(struct device *dev, struct d350_desc *desc)
-+{
-+	if (desc->cmds) {
-+		dma_unmap_single(dev, desc->cmds_dma, desc->cmds_size,
-+				 DMA_TO_DEVICE);
-+		kfree(desc->cmds);
-+	}
-+	kfree(desc->cmd_len);
-+}
-+
- static void d350_desc_free(struct virt_dma_desc *vd)
+@@ -1139,12 +1142,28 @@ static void d350_free_chan_resources(struct dma_chan *chan)
+ static int d350_probe(struct platform_device *pdev)
  {
--	kfree(to_d350_desc(vd));
-+	struct d350_desc *desc = to_d350_desc(vd);
+ 	struct device *dev = &pdev->dev;
++	struct reset_control *reset;
++	struct clk *clk;
+ 	struct d350 *dmac;
+ 	void __iomem *base;
+ 	u32 reg;
+ 	int ret, nchan, dw, aw, r, p;
+ 	bool coherent, memset;
+ 
++	clk = devm_clk_get_optional_enabled(dev, NULL);
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk),
++				     "failed to enable clock\n");
 +
-+	d350_free_cmds(vd->tx.chan->device->dev, desc);
-+	kfree(desc);
-+}
++	reset = devm_reset_control_get_optional_exclusive(dev, NULL);
++	if (IS_ERR(reset))
++		return dev_err_probe(dev, PTR_ERR(reset),
++				     "failed to get reset\n");
 +
-+static int d350_alloc_cmds(struct dma_chan *dchan, struct d350_desc *desc,
-+			   size_t ncmds)
-+{
-+	struct device *dev = dchan->device->dev;
-+	size_t cmd_size = D350_SLAVE_CMD_WORDS * sizeof(u32);
-+
-+	if (check_mul_overflow(ncmds, cmd_size, &desc->cmds_size))
-+		return -ENOMEM;
-+
-+	/*
-+	 * The command list is freed from the virt-dma tasklet, which runs with
-+	 * interrupts disabled, so it cannot come from dma_alloc_coherent():
-+	 * dma_free_coherent() may only be called with interrupts enabled.
-+	 */
-+	desc->cmds = kmalloc(desc->cmds_size, GFP_NOWAIT);
-+	if (!desc->cmds)
-+		return -ENOMEM;
-+
-+	desc->cmds_dma = dma_map_single(dev, desc->cmds, desc->cmds_size,
-+					DMA_TO_DEVICE);
-+	if (dma_mapping_error(dev, desc->cmds_dma)) {
-+		kfree(desc->cmds);
-+		desc->cmds = NULL;
-+		return -ENOMEM;
-+	}
-+
-+	desc->ncmds = ncmds;
-+
-+	return 0;
-+}
-+
-+static void d350_unmap_resource(struct d350_chan *dch)
-+{
-+	struct device *dev = dch->vc.chan.device->dev;
-+	struct d350_chan_map *map = &dch->map;
-+
-+	if (map->dir == DMA_NONE)
-+		return;
-+
-+	if (map->needs_unmap)
-+		dma_unmap_resource(dev, map->dma_addr, map->size, map->dir, 0);
-+
-+	map->dir = DMA_NONE;
-+	map->needs_unmap = false;
-+}
-+
-+static dma_addr_t d350_map_resource(struct d350_chan *dch,
-+				    phys_addr_t cpu_addr, size_t size,
-+				    enum dma_data_direction dir)
-+{
-+	struct device *dev = dch->vc.chan.device->dev;
-+	struct d350_chan_map *map = &dch->map;
-+	dma_addr_t dma_addr;
-+
-+	if (map->dir == dir && map->cpu_addr == cpu_addr &&
-+	    map->size == size)
-+		return map->dma_addr;
-+
-+	d350_unmap_resource(dch);
-+
-+	dma_addr = dma_map_resource(dev, cpu_addr, size, dir, 0);
-+	if (dma_mapping_error(dev, dma_addr)) {
-+		dev_err(dev, "map slave failed ch%u phys=%pa size=%zu dir=%d\n",
-+			dch->vc.chan.chan_id, &cpu_addr, size, dir);
-+		return DMA_MAPPING_ERROR;
-+	}
-+	map->needs_unmap = true;
-+
-+	map->cpu_addr = cpu_addr;
-+	map->dma_addr = dma_addr;
-+	map->size = size;
-+	map->dir = dir;
-+
-+	return map->dma_addr;
-+}
-+
-+static bool d350_buswidth_supported(u32 widths, enum dma_slave_buswidth width)
-+{
-+	return width < BITS_PER_TYPE(widths) && (widths & BIT(width));
-+}
-+
-+static int d350_check_slave_config(struct dma_device *dma,
-+				   struct dma_slave_config *config)
-+{
-+	u32 maxburst = FIELD_MAX(CH_CFG_MAXBURSTLEN) + 1;
-+	u32 widths = dma->src_addr_widths | dma->dst_addr_widths;
-+
-+	if (!d350_buswidth_supported(widths, config->src_addr_width) ||
-+	    !d350_buswidth_supported(widths, config->dst_addr_width))
-+		return -EINVAL;
-+
-+	if (config->src_maxburst > maxburst ||
-+	    config->dst_maxburst > maxburst)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
-+static int d350_config(struct dma_chan *chan, struct dma_slave_config *config)
-+{
-+	struct d350_chan *dch = to_d350_chan(chan);
-+	struct dma_device *dma = chan->device;
-+	unsigned long flags;
-+	int ret;
-+
-+	ret = d350_check_slave_config(dma, config);
-+	if (ret) {
-+		dev_err(dma->dev, "invalid slave configuration\n");
-+		return ret;
-+	}
-+
-+	spin_lock_irqsave(&dch->vc.lock, flags);
-+	if (dch->desc || !list_empty(&dch->vc.desc_allocated) ||
-+	    !list_empty(&dch->vc.desc_submitted) ||
-+	    !list_empty(&dch->vc.desc_issued)) {
-+		spin_unlock_irqrestore(&dch->vc.lock, flags);
-+		return -EBUSY;
-+	}
-+	spin_unlock_irqrestore(&dch->vc.lock, flags);
-+
-+	d350_unmap_resource(dch);
-+	memcpy(&dch->sconfig, config, sizeof(dch->sconfig));
-+
-+	return 0;
-+}
-+
-+static struct dma_chan *d350_of_xlate(struct of_phandle_args *dma_spec,
-+				      struct of_dma *ofdma)
-+{
-+	struct d350 *dmac = ofdma->of_dma_data;
-+	struct d350_chan *dch;
-+	struct dma_chan *chan;
-+	u32 req;
-+	int i;
-+
-+	if (dma_spec->args_count != 1) {
-+		dev_err(dmac->dma.dev, "dma phandle must have one argument\n");
-+		return NULL;
-+	}
-+
-+	req = dma_spec->args[0];
-+	if (req >= dmac->nreq) {
-+		dev_err(dmac->dma.dev, "invalid DMA request %u, have %d\n",
-+			req, dmac->nreq);
-+		return NULL;
-+	}
-+
-+	for (i = 0; i < dmac->nchan; i++) {
-+		dch = &dmac->channels[i];
-+		if (!dch->has_trig)
-+			continue;
-+
-+		chan = dma_get_slave_channel(&dch->vc.chan);
-+		if (chan) {
-+			dch->req = req;
-+			return chan;
-+		}
-+	}
-+
-+	dev_err(dmac->dma.dev, "no free channel with trigger support\n");
-+
-+	return NULL;
-+}
-+
-+static u32 d350_device_transcfg(u32 maxburst)
-+{
-+	return FIELD_PREP(CH_CFG_MAXBURSTLEN, maxburst - 1) |
-+	       FIELD_PREP(CH_CFG_SHAREATTR, SHAREATTR_OSH) |
-+	       FIELD_PREP(CH_CFG_MEMATTR, MEMATTR_DEVICE);
-+}
-+
-+static int d350_slave_params(struct d350_chan *dch,
-+			     enum dma_transfer_direction direction,
-+			     phys_addr_t *dev_cpu_addr,
-+			     enum dma_data_direction *dev_dir,
-+			     enum dma_slave_buswidth *width, u32 *maxburst)
-+{
-+	struct dma_slave_config *config = &dch->sconfig;
-+
-+	if (direction == DMA_MEM_TO_DEV) {
-+		*dev_cpu_addr = config->dst_addr;
-+		*dev_dir = DMA_FROM_DEVICE;
-+		*width = config->dst_addr_width;
-+		*maxburst = config->dst_maxburst;
-+	} else if (direction == DMA_DEV_TO_MEM) {
-+		*dev_cpu_addr = config->src_addr;
-+		*dev_dir = DMA_TO_DEVICE;
-+		*width = config->src_addr_width;
-+		*maxburst = config->src_maxburst;
-+	} else {
-+		return -EINVAL;
-+	}
-+
-+	return *width && *maxburst ? 0 : -EINVAL;
-+}
-+
-+static void d350_fill_slave_cmd(struct d350_chan *dch, struct d350_desc *desc,
-+				u32 *cmd, dma_addr_t mem, dma_addr_t dev_dma_addr,
-+				size_t len, bool link, dma_addr_t link_addr,
-+				enum dma_transfer_direction direction,
-+				enum dma_slave_buswidth width, u32 maxburst,
-+				enum ch_ctrl_donetype donetype)
-+{
-+	bool mem_to_dev = direction == DMA_MEM_TO_DEV;
-+	u16 xsize, xsizehi;
-+	u32 devcfg;
-+	u32 memcfg;
-+	u32 trigcfg;
-+
-+	desc->tsz = __ffs(width);
-+	xsize = lower_16_bits(len >> desc->tsz);
-+	xsizehi = upper_16_bits(len >> desc->tsz);
-+	devcfg = d350_device_transcfg(maxburst);
-+	memcfg = dch->coherent ? TRANSCFG_WB : TRANSCFG_NC;
-+
-+	trigcfg = FIELD_PREP(CH_TRIGINCFG_BLKSIZE,
-+			     mem_to_dev ? maxburst - 1 : 0) |
-+		  FIELD_PREP(CH_TRIGINCFG_MODE, CH_TRIGINCFG_MODE_PERIPH_FC) |
-+		  FIELD_PREP(CH_TRIGINCFG_TYPE, CH_TRIGINCFG_TYPE_HW) |
-+		  FIELD_PREP(CH_TRIGINCFG_SEL, dch->req);
-+
-+	cmd[0] = LINK_CTRL | LINK_SRCADDR | LINK_SRCADDRHI | LINK_DESADDR |
-+		 LINK_DESADDRHI | LINK_XSIZE | LINK_XSIZEHI | LINK_SRCTRANSCFG |
-+		 LINK_DESTRANSCFG | LINK_XADDRINC | LINK_LINKADDR |
-+		 LINK_LINKADDRHI |
-+		 (mem_to_dev ? LINK_DESTRIGINCFG : LINK_SRCTRIGINCFG);
-+	cmd[1] = (mem_to_dev ? CH_CTRL_USEDESTRIGIN : CH_CTRL_USESRCTRIGIN) |
-+		 FIELD_PREP(CH_CTRL_TRANSIZE, desc->tsz) |
-+		 FIELD_PREP(CH_CTRL_XTYPE, CH_CTRL_XTYPE_CONTINUE) |
-+		 FIELD_PREP(CH_CTRL_DONETYPE, donetype);
-+	cmd[2] = lower_32_bits(mem_to_dev ? mem : dev_dma_addr);
-+	cmd[3] = upper_32_bits(mem_to_dev ? mem : dev_dma_addr);
-+	cmd[4] = lower_32_bits(mem_to_dev ? dev_dma_addr : mem);
-+	cmd[5] = upper_32_bits(mem_to_dev ? dev_dma_addr : mem);
-+	cmd[6] = FIELD_PREP(CH_XY_SRC, xsize) |
-+		 FIELD_PREP(CH_XY_DES, xsize);
-+	cmd[7] = FIELD_PREP(CH_XY_SRC, xsizehi) |
-+		 FIELD_PREP(CH_XY_DES, xsizehi);
-+	cmd[8] = mem_to_dev ? memcfg : devcfg;
-+	cmd[9] = mem_to_dev ? devcfg : memcfg;
-+	cmd[10] = mem_to_dev ? FIELD_PREP(CH_XY_SRC, 1) :
-+				FIELD_PREP(CH_XY_DES, 1);
-+	cmd[11] = trigcfg;
-+	cmd[12] = lower_32_bits(link_addr) | (link ? CH_LINKADDR_EN : 0);
-+	cmd[13] = upper_32_bits(link_addr);
-+}
-+
-+static struct dma_async_tx_descriptor *
-+d350_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
-+		   unsigned int sg_len,
-+		   enum dma_transfer_direction direction,
-+		   unsigned long flags, void *context)
-+{
-+	struct d350_chan *dch = to_d350_chan(dchan);
-+	size_t cmd_size = D350_SLAVE_CMD_WORDS * sizeof(u32);
-+	enum dma_data_direction dev_dir;
-+	enum dma_slave_buswidth width;
-+	struct d350_desc *desc;
-+	phys_addr_t dev_cpu_addr;
-+	dma_addr_t dev_dma_addr, mem;
-+	struct scatterlist *sg;
-+	u32 maxburst;
-+	size_t len;
-+	int i;
-+
-+	if (unlikely(!is_slave_direction(direction) || !sg_len))
-+		return NULL;
-+
-+	if (d350_slave_params(dch, direction, &dev_cpu_addr, &dev_dir, &width,
-+			      &maxburst))
-+		return NULL;
-+
-+	dev_dma_addr = d350_map_resource(dch, dev_cpu_addr, width, dev_dir);
-+	if (dma_mapping_error(dchan->device->dev, dev_dma_addr))
-+		return NULL;
-+
-+	desc = kzalloc_obj(*desc, GFP_NOWAIT);
-+	if (!desc)
-+		return NULL;
-+
-+	if (sg_len > 1) {
-+		if (d350_alloc_cmds(dchan, desc, sg_len))
-+			goto err_free_desc;
-+
-+		desc->cmd_len = kcalloc(sg_len, sizeof(*desc->cmd_len),
-+					GFP_NOWAIT);
-+		if (!desc->cmd_len)
-+			goto err_free_cmds;
-+	}
-+
-+	for_each_sg(sgl, sg, sg_len, i) {
-+		enum ch_ctrl_donetype donetype = CH_CTRL_DONETYPE_CMD;
-+		dma_addr_t link_addr = 0;
-+		bool link = false;
-+		u32 *cmd = desc->command;
-+
-+		mem = sg_dma_address(sg);
-+		len = sg_dma_len(sg);
-+		if (!len || (len >> __ffs(width)) > U32_MAX ||
-+		    !IS_ALIGNED(len | mem | dev_dma_addr, width))
-+			goto err_free_cmds;
-+
-+		if (sg_len > 1) {
-+			cmd = desc->cmds + i * D350_SLAVE_CMD_WORDS;
-+			if (i < sg_len - 1) {
-+				link = true;
-+				link_addr = desc->cmds_dma + (i + 1) * cmd_size;
-+				donetype = CH_CTRL_DONETYPE_NONE;
-+			}
-+			desc->cmd_len[i] = len;
-+		}
-+
-+		if (check_add_overflow(desc->bytes, len, &desc->bytes) ||
-+		    desc->bytes > U32_MAX)
-+			goto err_free_cmds;
-+
-+		d350_fill_slave_cmd(dch, desc, cmd, mem, dev_dma_addr, len,
-+				    link, link_addr, direction, width, maxburst,
-+				    donetype);
-+	}
-+
-+	if (sg_len > 1)
-+		memcpy(desc->command, desc->cmds, cmd_size);
-+
-+	return vchan_tx_prep(&dch->vc, &desc->vd, flags);
-+
-+err_free_cmds:
-+	d350_free_cmds(dchan->device->dev, desc);
-+err_free_desc:
-+	kfree(desc);
-+
-+	return NULL;
-+}
-+
-+static struct dma_async_tx_descriptor *
-+d350_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t buf_addr,
-+		     size_t buf_len, size_t period_len,
-+		     enum dma_transfer_direction direction, unsigned long flags)
-+{
-+	struct d350_chan *dch = to_d350_chan(dchan);
-+	struct d350_desc *desc;
-+	phys_addr_t dev_cpu_addr;
-+	dma_addr_t dev_dma_addr;
-+	enum dma_data_direction dev_dir;
-+	enum dma_slave_buswidth width;
-+	size_t period, cmd_size;
-+	u32 maxburst;
-+	int ret;
-+
-+	if (!buf_len || !period_len || buf_len % period_len ||
-+	    buf_len > U32_MAX || !is_slave_direction(direction))
-+		return NULL;
-+
-+	ret = d350_slave_params(dch, direction, &dev_cpu_addr, &dev_dir, &width,
-+				&maxburst);
++	ret = reset_control_reset(reset);
 +	if (ret)
-+		return NULL;
++		return ret;
 +
-+	dev_dma_addr = d350_map_resource(dch, dev_cpu_addr, width, dev_dir);
-+	if (dma_mapping_error(dchan->device->dev, dev_dma_addr))
-+		return NULL;
-+
-+	if (!IS_ALIGNED(buf_addr | dev_dma_addr | period_len, width))
-+		return NULL;
-+
-+	desc = kzalloc_obj(*desc, GFP_NOWAIT);
-+	if (!desc)
-+		return NULL;
-+
-+	desc->bytes = buf_len;
-+	desc->period_len = period_len;
-+	desc->periods = buf_len / period_len;
-+	desc->cyclic = true;
-+
-+	if (d350_alloc_cmds(dchan, desc, desc->periods)) {
-+		kfree(desc);
-+		return NULL;
-+	}
-+
-+	cmd_size = D350_SLAVE_CMD_WORDS * sizeof(u32);
-+
-+	for (period = 0; period < desc->periods; period++) {
-+		u32 *cmd = desc->cmds + period * D350_SLAVE_CMD_WORDS;
-+		dma_addr_t mem = buf_addr + period * period_len;
-+		dma_addr_t next = desc->cmds_dma +
-+				  ((period + 1) % desc->periods) * cmd_size;
-+
-+		d350_fill_slave_cmd(dch, desc, cmd, mem, dev_dma_addr,
-+				    period_len, true, next, direction, width,
-+				    maxburst, CH_CTRL_DONETYPE_CMD);
-+	}
-+	memcpy(desc->command, desc->cmds, cmd_size);
-+
-+	return vchan_tx_prep(&dch->vc, &desc->vd, flags);
- }
- 
- static struct dma_async_tx_descriptor *d350_prep_memcpy(struct dma_chan *chan,
-@@ -228,6 +680,7 @@ static struct dma_async_tx_descriptor *d350_prep_memcpy(struct dma_chan *chan,
- 	if (!desc)
- 		return NULL;
- 
-+	desc->bytes = len;
- 	desc->tsz = __ffs(len | dest | src | (1 << dch->tsz));
- 	desc->xsize = lower_16_bits(len >> desc->tsz);
- 	desc->xsizehi = upper_16_bits(len >> desc->tsz);
-@@ -266,6 +719,7 @@ static struct dma_async_tx_descriptor *d350_prep_memset(struct dma_chan *chan,
- 	if (!desc)
- 		return NULL;
- 
-+	desc->bytes = len;
- 	desc->tsz = __ffs(len | dest | (1 << dch->tsz));
- 	desc->xsize = lower_16_bits(len >> desc->tsz);
- 	desc->xsizehi = upper_16_bits(len >> desc->tsz);
-@@ -339,6 +793,66 @@ static u32 d350_get_residue(struct d350_chan *dch)
- 	return res << dch->desc->tsz;
- }
- 
-+static u32 d350_get_sg_residue(struct d350_chan *dch)
-+{
-+	struct d350_desc *desc = dch->desc;
-+	size_t cmd_size = D350_SLAVE_CMD_WORDS * sizeof(u32);
-+	size_t cmd = 0, i;
-+	u32 linkaddr, linkaddrhi, hi_new, lo_new;
-+	u32 residue;
-+	u64 next_cmd;
-+	int retries = 3; /* 1st time unlucky, 2nd improbable, 3rd just broken */
-+
-+	if (!desc->cmd_len)
-+		return d350_get_residue(dch);
-+
-+	/*
-+	 * CH_LINKADDR points at the next command. Match it against the command
-+	 * array to find the command currently executing, then add every later
-+	 * command which has not started yet.
-+	 */
-+	/* The channel may step the link pointer between the two reads */
-+	hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	do {
-+		linkaddrhi = hi_new;
-+		linkaddr = readl_relaxed(dch->base + CH_LINKADDR);
-+		hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	} while (linkaddrhi != hi_new && --retries);
-+
-+	next_cmd = (linkaddr & ~CH_LINKADDR_EN) | ((u64)linkaddrhi << 32);
-+
-+	if (!next_cmd) {
-+		cmd = desc->ncmds - 1;
-+	} else {
-+		for (i = 1; i < desc->ncmds; i++) {
-+			if (next_cmd == desc->cmds_dma + i * cmd_size) {
-+				cmd = i - 1;
-+				break;
-+			}
-+		}
-+		if (i == desc->ncmds)
-+			return dch->residue;
-+	}
-+
-+	residue = d350_get_residue(dch);
-+
-+	/*
-+	 * If the channel stepped to the next command while CH_XSIZE was read,
-+	 * the size belongs to the command which just finished and the sum below
-+	 * would count the bytes left in it twice. Keep the residue from the last
-+	 * completion in that case.
-+	 */
-+	hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	lo_new = readl_relaxed(dch->base + CH_LINKADDR);
-+	if (hi_new != linkaddrhi || lo_new != linkaddr)
-+		return dch->residue;
-+
-+	for (i = cmd + 1; i < desc->ncmds; i++)
-+		residue += desc->cmd_len[i];
-+
-+	return residue;
-+}
-+
- static int d350_terminate_all(struct dma_chan *chan)
- {
- 	struct d350_chan *dch = to_d350_chan(chan);
-@@ -369,7 +883,60 @@ static void d350_synchronize(struct dma_chan *chan)
- 
- static u32 d350_desc_bytes(struct d350_desc *desc)
- {
--	return ((u32)desc->xsizehi << 16 | desc->xsize) << desc->tsz;
-+	return desc->bytes;
-+}
-+
-+static u32 d350_get_cyclic_residue(struct d350_chan *dch)
-+{
-+	struct d350_desc *desc = dch->desc;
-+	size_t cmd_size = D350_SLAVE_CMD_WORDS * sizeof(u32);
-+	u32 period_residue = desc->bytes - desc->period * desc->period_len;
-+	u32 linkaddr, linkaddrhi, hi_new, lo_new;
-+	u64 next_cmd;
-+	int retries = 3; /* 1st time unlucky, 2nd improbable, 3rd just broken */
-+
-+	/*
-+	 * desc->period counts the completed periods, so period_residue is the
-+	 * residue at the last period boundary. Subtract the progress made in
-+	 * the running period, read from CH_XSIZE: CH_LINKADDR points at the
-+	 * command after the one executing, so while the channel is still on the
-+	 * command of the running period it names the first command of the next
-+	 * period.
-+	 */
-+	hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	do {
-+		linkaddrhi = hi_new;
-+		linkaddr = readl_relaxed(dch->base + CH_LINKADDR);
-+		hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	} while (linkaddrhi != hi_new && --retries);
-+
-+	next_cmd = (linkaddr & ~CH_LINKADDR_EN) | ((u64)linkaddrhi << 32);
-+	if (next_cmd != desc->cmds_dma +
-+			((desc->period + 1) % desc->periods) * cmd_size)
-+		return period_residue;
-+
-+	period_residue -= desc->period_len - d350_get_residue(dch);
-+
-+	/*
-+	 * If the channel stepped to the next period while CH_XSIZE was read,
-+	 * the size belongs to a command of the next period and mixing it with
-+	 * the current one would overstate the residue: keep the value from the
-+	 * period boundary instead.
-+	 */
-+	hi_new = readl_relaxed(dch->base + CH_LINKADDRHI);
-+	lo_new = readl_relaxed(dch->base + CH_LINKADDR);
-+	if (hi_new != linkaddrhi || lo_new != linkaddr)
-+		return d350_desc_bytes(desc) - desc->period * desc->period_len;
-+
-+	return period_residue;
-+}
-+
-+static u32 d350_get_active_residue(struct d350_chan *dch)
-+{
-+	if (dch->desc->cyclic)
-+		return d350_get_cyclic_residue(dch);
-+
-+	return d350_get_sg_residue(dch);
- }
- 
- static enum dma_status d350_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
-@@ -387,7 +954,7 @@ static enum dma_status d350_tx_status(struct dma_chan *chan, dma_cookie_t cookie
- 	if (cookie == dch->cookie) {
- 		status = dch->status;
- 		if (status == DMA_IN_PROGRESS || status == DMA_PAUSED)
--			dch->residue = d350_get_residue(dch);
-+			dch->residue = d350_get_active_residue(dch);
- 		residue = dch->residue;
- 	} else if ((vd = vchan_find_desc(&dch->vc, cookie))) {
- 		residue = d350_desc_bytes(to_d350_desc(vd));
-@@ -469,17 +1036,32 @@ static void d350_issue_pending(struct dma_chan *chan)
- static irqreturn_t d350_irq(int irq, void *data)
- {
- 	struct d350_chan *dch = data;
--	struct device *dev = dch->vc.chan.device->dev;
--	struct virt_dma_desc *vd = &dch->desc->vd;
-+	struct virt_dma_desc *vd;
-+	struct d350_desc *desc;
-+	u32 residue = 0;
- 	u32 ch_status;
-+	u32 irq_status;
-+	u32 errinfo = 0;
- 
- 	ch_status = readl(dch->base + CH_STATUS);
--	if (!ch_status)
-+	irq_status = ch_status & (CH_STAT_INTR_DONE | CH_STAT_INTR_ERR);
-+	if (!irq_status)
- 		return IRQ_NONE;
- 
--	if (ch_status & CH_STAT_INTR_ERR) {
--		u32 errinfo = readl_relaxed(dch->base + CH_ERRINFO);
-+	if (irq_status & CH_STAT_INTR_ERR)
-+		errinfo = readl_relaxed(dch->base + CH_ERRINFO);
- 
-+	writel_relaxed(ch_status, dch->base + CH_STATUS);
-+
-+	spin_lock(&dch->vc.lock);
-+	desc = dch->desc;
-+	if (!desc) {
-+		spin_unlock(&dch->vc.lock);
-+		return IRQ_HANDLED;
-+	}
-+
-+	vd = &desc->vd;
-+	if (irq_status & CH_STAT_INTR_ERR) {
- 		if (errinfo & (CH_ERRINFO_AXIRDPOISERR | CH_ERRINFO_AXIRDRESPERR))
- 			vd->tx_result.result = DMA_TRANS_READ_FAILED;
- 		else if (errinfo & CH_ERRINFO_AXIWRRESPERR)
-@@ -487,21 +1069,27 @@ static irqreturn_t d350_irq(int irq, void *data)
- 		else
- 			vd->tx_result.result = DMA_TRANS_ABORTED;
- 
--		vd->tx_result.residue = d350_get_residue(dch);
--	} else if (!(ch_status & CH_STAT_INTR_DONE)) {
--		dev_warn(dev, "Unexpected IRQ source? 0x%08x\n", ch_status);
--	}
--	writel_relaxed(ch_status, dch->base + CH_STATUS);
--
--	spin_lock(&dch->vc.lock);
--	vchan_cookie_complete(vd);
--	if (ch_status & CH_STAT_INTR_DONE) {
--		dch->status = DMA_COMPLETE;
--		dch->residue = 0;
--		d350_start_next(dch);
--	} else {
-+		residue = d350_get_active_residue(dch);
-+		vd->tx_result.residue = residue;
- 		dch->status = DMA_ERROR;
--		dch->residue = vd->tx_result.residue;
-+		dch->residue = residue;
-+		dch->desc = NULL;
-+		if (desc->cyclic)
-+			vchan_terminate_vdesc(vd);
-+		else
-+			vchan_cookie_complete(vd);
-+	} else {
-+		if (desc->cyclic) {
-+			desc->period = (desc->period + 1) % desc->periods;
-+			dch->residue = d350_get_cyclic_residue(dch);
-+			vchan_cyclic_callback(vd);
-+		} else {
-+			dch->status = DMA_COMPLETE;
-+			dch->residue = 0;
-+			dch->desc = NULL;
-+			vchan_cookie_complete(vd);
-+			d350_start_next(dch);
-+		}
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
+@@ -1251,15 +1270,26 @@ static int d350_probe(struct platform_device *pdev)
+ 		dmac->dma.device_prep_dma_memset = d350_prep_memset;
  	}
- 	spin_unlock(&dch->vc.lock);
  
-@@ -525,6 +1113,7 @@ static void d350_free_chan_resources(struct dma_chan *chan)
++	if (of_property_present(dev->of_node, "memory-region")) {
++		ret = of_reserved_mem_device_init(dev);
++		if (ret)
++			return dev_err_probe(dev, ret,
++					     "failed to attach reserved memory\n");
++	}
++
+ 	platform_set_drvdata(pdev, dmac);
  
- 	writel_relaxed(0, dch->base + CH_INTREN);
- 	free_irq(dch->irq, dch);
-+	d350_unmap_resource(dch);
- 	vchan_free_chan_resources(&dch->vc);
- }
- 
-@@ -568,23 +1157,32 @@ static int d350_probe(struct platform_device *pdev)
- 	dev_dbg(dev, "DMA-350 r%dp%d with %d channels, %d requests\n", r, p, dmac->nchan, dmac->nreq);
- 
- 	dmac->dma.dev = dev;
-+	dmac->dma.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED);
-+	dmac->dma.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED);
- 	for (int i = min(dw, 16); i > 0; i /= 2) {
- 		dmac->dma.src_addr_widths |= BIT(i);
- 		dmac->dma.dst_addr_widths |= BIT(i);
- 	}
--	dmac->dma.directions = BIT(DMA_MEM_TO_MEM);
-+	dmac->dma.directions = BIT(DMA_MEM_TO_MEM) |
-+			BIT(DMA_MEM_TO_DEV) |
-+			BIT(DMA_DEV_TO_MEM);
- 	dmac->dma.descriptor_reuse = true;
- 	dmac->dma.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
- 	dmac->dma.device_alloc_chan_resources = d350_alloc_chan_resources;
- 	dmac->dma.device_free_chan_resources = d350_free_chan_resources;
- 	dma_cap_set(DMA_MEMCPY, dmac->dma.cap_mask);
-+	dma_cap_set(DMA_SLAVE, dmac->dma.cap_mask);
-+	dma_cap_set(DMA_CYCLIC, dmac->dma.cap_mask);
- 	dmac->dma.device_prep_dma_memcpy = d350_prep_memcpy;
-+	dmac->dma.device_prep_slave_sg = d350_prep_slave_sg;
-+	dmac->dma.device_prep_dma_cyclic = d350_prep_dma_cyclic;
- 	dmac->dma.device_pause = d350_pause;
- 	dmac->dma.device_resume = d350_resume;
- 	dmac->dma.device_terminate_all = d350_terminate_all;
- 	dmac->dma.device_synchronize = d350_synchronize;
- 	dmac->dma.device_tx_status = d350_tx_status;
- 	dmac->dma.device_issue_pending = d350_issue_pending;
-+	dmac->dma.device_config = d350_config;
- 	INIT_LIST_HEAD(&dmac->dma.channels);
- 
- 	reg = readl_relaxed(base + DMANSECCTRL + NSEC_CTRL);
-@@ -623,6 +1221,8 @@ static int d350_probe(struct platform_device *pdev)
- 		reg |= FIELD_PREP(CH_LINK_MEMATTR, coherent ? MEMATTR_WB : MEMATTR_NC);
- 		writel_relaxed(reg, dch->base + CH_LINKATTR);
- 
-+		dch->coherent = coherent;
-+		dch->map.dir = DMA_NONE;
- 		dch->vc.desc_free = d350_desc_free;
- 		vchan_init(&dch->vc, &dmac->dma);
- 	}
-@@ -638,6 +1238,13 @@ static int d350_probe(struct platform_device *pdev)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to register DMA device\n");
- 
-+	ret = of_dma_controller_register(dev->of_node, d350_of_xlate, dmac);
+ 	ret = dma_async_device_register(&dmac->dma);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to register DMA device\n");
 +	if (ret) {
-+		dma_async_device_unregister(&dmac->dma);
++		of_reserved_mem_device_release(dev);
 +		return dev_err_probe(dev, ret,
-+				     "Failed to register OF DMA controller\n");
++				     "Failed to register DMA device\n");
 +	}
-+
- 	return 0;
- }
  
-@@ -645,6 +1252,7 @@ static void d350_remove(struct platform_device *pdev)
- {
- 	struct d350 *dmac = platform_get_drvdata(pdev);
+ 	ret = of_dma_controller_register(dev->of_node, d350_of_xlate, dmac);
+ 	if (ret) {
+ 		dma_async_device_unregister(&dmac->dma);
++		of_reserved_mem_device_release(dev);
+ 		return dev_err_probe(dev, ret,
+ 				     "Failed to register OF DMA controller\n");
+ 	}
+@@ -1273,6 +1303,7 @@ static void d350_remove(struct platform_device *pdev)
  
-+	of_dma_controller_free(pdev->dev.of_node);
+ 	of_dma_controller_free(pdev->dev.of_node);
  	dma_async_device_unregister(&dmac->dma);
++	of_reserved_mem_device_release(&pdev->dev);
  }
  
+ static const struct of_device_id d350_of_match[] __maybe_unused = {
 -- 
 2.54.0
 
