@@ -1,119 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFE33537E8;
-	Mon, 12 Oct 2026 08:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990AF309EFC
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 10:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791795137; cv=none; b=AezfUwVdEC4Q4qWZTxpgTrwcraWRkEl7iosT8HZfWvuCPc3Bb5U1INWWhxW2bJiwuZNUmc2LRSpNJ0+ERC1pM8iDWU8ptvkqEFTIzRu7ABcvn37OU7jWb8/ICtYOFKt033t6t0HJ++PmxiihJNLEj4gMmqMTbTMtXJvEyL6ybGY=
+	t=1791799991; cv=none; b=DGME20GTaPREYwY8RGo9BLSOJ4OnfcUOajaktFjQIJykJ+mQ5X5DVbfWlMGKx5UtpTcY1pk7HTSiU3QAPd8Sc6IyYPThRrjv0Kg2q6ktKc00cQ+VIDQp3VpHknK7dcK2JdPPoU/ua1g/BW/aOdB/Nn5YnwvOXAk0wJMOO84dD3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791795137; c=relaxed/simple;
-	bh=3NUENpFH3FouN2McquUElY5gUSXsmgZdfaw2/vECv2s=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=kGdPveXcDzPBkrMfqgFkxCVCkymcP6PRO30KZeAuze3sqKiDIIeXou24m/MClM9iOgitbzjzlwQvhAujXNznd4dvVMWqbxiR+h0FAtNG3sdSWJ/cihwBXADZJ8IsdzSjbYz9JqppTYLYPUNFrB50obq3NGNHa8Zu7JnaDl/dxd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VHk6FdJX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791799991; c=relaxed/simple;
+	bh=a9wITDWNYCyDc/6M4gzNG7p5rTn5OkesyFvug6cv1E4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N70Sl1Of09o/Qlew5kJ/z+H2ooyS5KYpCicFf97ley2WKMIk7GwH4L+eQRKQQDnC/2KLjs0MB1dOZDkkEXCJ2ymVSbRaWBBt8Ju6uIjjoulvEsIBq5f/UUCR5BJiHPDIb2k9vqz+Y5pYL6q2pOkls5Dn1And675muF0kylRrTKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=DPLvvQd0; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VHk6FdJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBCE1F0089B;
-	Mon, 12 Oct 2026 08:52:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791795136;
-	bh=0hqEXMZbyDrSVgp31592vZ/S/CbFRKyvhUFOFBh4Cnw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VHk6FdJXAOcGi5qp2HGcm7eOxje5Jp89dVN9hxCb+ODLtAgWAdyATfNzr7ZUFelQA
-	 1sKcAD9OOWKdTUMwm7jHatj+ILgp6CmpxUM2z8YtbMod+jsaeHAjF7myW57jJZyFkn
-	 pGYLWiBV7TU1NbD+PsV0cgLx+iS6bPBG9YtriiS5KfXtrxjnNVz/0I/K+ZP9YUSADQ
-	 7sI+L20G0I1cXeRBducF+SirdXhsszdFQ5UXbpTlHADIPm3DPorX6hFcsxBgv/l32x
-	 BeQu35Ec2CT2dJbAiClMtM9c/qmdtCDGwNkAq55hVJeAazbMZD0pVriN90JwFnMPBw
-	 Ii6dlSv+sHmgQ==
-Message-ID: <sashiko-outbox-167870@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 6/6] arm64: dts: cix: Describe the Sky1 DMA-350 bus
- integration
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jelly Jia" <Jelly.Jia@cixtech.com>
-Cc: Frank.Li@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, vkoul@kernel.org
-In-Reply-To: <20261012084155.2547480-7-Jelly.Jia@cixtech.com>
-References: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
- <20261012084155.2547480-7-Jelly.Jia@cixtech.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 12 Oct 2026 08:52:15 +0000
+	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="DPLvvQd0"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a16aaf2067so20961225e9.0
+        for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 03:13:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tuxon.dev; s=google; t=1791799978; x=1792404778; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oBH7MrtvWb2jpzSRxs5Qbj54HzWjkwoKw7gmLgBjG7o=;
+        b=DPLvvQd0JG/JWKg+0xjoiuX/UCc4WvHthjl+rajlQm0ds0jQZnttVAutur/vUFgEAb
+         cAt9/xtrH0txUKsJUcSnCfkIwrQVna+Yk5Ue/awYpRLRZQlUn7gLNP0VanxHU46iZnm0
+         eFO+EfjJWTR52d5N7qpd/hK2hWQGTgLmMpY56Q+y39e/Bz9LY77AqZng2QRoLNJubLqi
+         fGjkU/foIJsaaAtb5EHWJlvlgFJtXUk8dX9HWrli+mimKsIwbmo0cbOUkzMRRi+jezgZ
+         gCh1HSU8e8ZCTVRkqkX313nlyTJxsxPcgU3TbV6SgMVU9cuD8uFYbhMhunUkJRt/zXqb
+         Ct+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791799978; x=1792404778;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oBH7MrtvWb2jpzSRxs5Qbj54HzWjkwoKw7gmLgBjG7o=;
+        b=sIZ7L0wJZXNT72l/xIotyLlvcMkJ34LYzX24kxnxGjGIwGnbAbvUlksF4UvHBczOax
+         FzraJ/hlpgB7PbtHeS6ase2rgkzBgHJZ2Jgjgk5j6k1pP75xuMxqhK8m0fX60P48Ftj7
+         0QMSz2RC/LXM4cPcwo8bmAsBiOmi8kZG0sQbkw8dyzdoW+Hbzr4ApV/tattXIdCgL/vt
+         1LDfxrAY+Iq/me1la56Jfp744uNYj/MDKl3ClxckpNCgMsWXnOormZX5nlqJnzm8PbkJ
+         OG3gLcuOmW3F0veXo+0gsvc8Vsn5obtAhKI4UWIr3Lwzr7bjTmhmpUyeuNNRpO2VjbyB
+         D7YA==
+X-Gm-Message-State: AFq9FYJldERe2kGBEv2SUqxoBP3ciUxy8thKWSnIZ2i0trHRDFmXZ+9A
+	4dAYEOv/Q8khemUdSP9YBXIlakvx58r43RtEKPqQRHBLmVeXE1PAdFbM2L7Cm3rIh+E=
+X-Gm-Gg: AYBFou03OIORp1Ug3cJa71Y2M6VCS0yyURETHAqwL5kPYYGUWxTV33P+AVaUcj8Zk/C
+	KYcV39Jiq4aSdZi92c2nvnOGx4nGRnBPo8mOS69Qw8LqySjwnCgJUEXrXTenL5CNBEuyLRIKHAc
+	KoWR6eiWTljjsCKZqPyl3fR2+QFKvtaT88d8ZJKmPtBPETJxpsR2LAuoRZTiUbgOpwAh57H4Q2L
+	lqSzmeP9KvUxX1lI1f/WHMCBLj+APQ51NNEIMWKC4vaZyQI+PcKa1P+NL0JCPw1tK5oKVPEMNQg
+	NZXcrKs6pW6Re6ig7uLooLCQAYvGOjtUYhcHjSLn5Xc6WMrjpd3INXGJAitPUDQ7B6+GkGqJSzY
+	bwONQV4HtF5W+VGG7WMrU6W95JN6txCdx0Q8CqKe74EWAAKgbQGZrBCIPwHjsiYo0ZVy25sloDe
+	VqtHndZSkPN9JEUijmGmQFhu5eJ0jqArjC1xxhu4UMZvQNo4wldMfR4fr4G9KKVBd6dyls1m0lf
+	cd8Pu0=
+X-Received: by 2002:a05:600c:524a:b0:49b:9202:6f80 with SMTP id 5b1f17b1804b1-4a18e4a4f2amr170900145e9.6.1791799978068;
+        Mon, 12 Oct 2026 03:12:58 -0700 (PDT)
+Received: from [192.168.50.4] ([82.78.167.188])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a190344032sm278112685e9.15.2026.10.12.03.12.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Oct 2026 03:12:57 -0700 (PDT)
+Message-ID: <3ff66de9-4b90-4fac-bd67-7b21aef9aae0@tuxon.dev>
+Date: Mon, 12 Oct 2026 13:12:56 +0300
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: dmatest: fix race between wait for thread
+ and thread start
+To: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Seraj Alijan <seraj.alijan@sondrel.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260828151024.2081478-1-cosmin-gabriel.tanislav.xa@renesas.com>
+Content-Language: en-US
+From: claudiu beznea <claudiu.beznea@tuxon.dev>
+In-Reply-To: <20260828151024.2081478-1-cosmin-gabriel.tanislav.xa@renesas.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] dts: cix: missing memory-region for restricted AUDSS DMA
---
 
-commit bb152839bba0e4fcf17541cd1a7e5a05b3b33ae1
-Author: Jelly Jia <Jelly.Jia@cixtech.com>
 
-arm64: dts: cix: Describe the Sky1 DMA-350 bus integration
+On 8/28/26 18:10, Cosmin Tanislav wrote:
+> Each dmatest worker thread has a pending and a done flag which describe
+> the thread's lifecycle.
+> 
+> pending is initialized to true when the thread is added to the threads
+> list. pending is set to false once the thread is actually running. done
+> is set to true once the thread has finished its testing.
+> 
+> When the wait module parameter is set to true, dmatest_init() waits for
+> the !is_threaded_test_run() condition to become true.
+> 
+> If the worker thread is not started and running by the time
+> dmatest_init() waits, the !is_threaded_test_run() condition will be true
+> and the wait will stop early, before the worker thread is even started.
+> dmatest_init() exits, defeating the whole purpose of the wait.
+> 
+> If then we try to remove the module, kthread_stop() will try to cleanup
+> the worker threads, interrupting wait_event_freezable_timeout(), which
+> will return -ERESTARTSYS, causing the "test timed out" message to be
+> printed.
+> 
+> Clear the pending flag once we wake up the worker thread to avoid this
+> race.
+> 
+> Fixes: d53513d5dc28 ("dmaengine: dmatest: Add support for multi channel testing")
+> Signed-off-by: Cosmin Tanislav<cosmin-gabriel.tanislav.xa@renesas.com>
 
-The FCH DMA-350 controller sits behind an interconnect window, so the
-addresses its DMA master uses differ from the CPU physical addresses.
-Describe the integration as a bus node carrying the dma-ranges of that
-window, with the controller itself as a child, and give the controller
-the SoC compatible and the clock feeding it.
+I've tested this on RZ/Five and RZ/V2L, on top of next-20261002. There are no 
+more "test timed out" reported.
 
-> diff --git a/arch/arm64/boot/dts/cix/sky1.dtsi b/arch/arm64/boot/dts/cix/=
-sky1.dtsi
-> index 0a820f45feb96..1262f34794d21 100644
-> --- a/arch/arm64/boot/dts/cix/sky1.dtsi
-> +++ b/arch/arm64/boot/dts/cix/sky1.dtsi
-
-[ ... ]
-
-> @@ -576,6 +591,35 @@ mbox_pm2ap: mailbox@65a0080 {
->  			cix,mbox-dir =3D "rx";
->  		};
-> =20
-> +		/*
-> +		 * The AUDSS DMA-350 master sits behind an interconnect window;
-> +		 * the dma-ranges below are its view of the address space.
-> +		 */
-> +		audss-dma-bus {
-> +			compatible =3D "simple-bus";
-> +			#address-cells =3D <2>;
-> +			#size-cells =3D <2>;
-> +			ranges;
-> +			dma-ranges =3D <0x0 0x20000000 0x0 0x07010000 0x0 0x00100000>,
-> +				     <0x0 0x30000000 0x0 0xc0000000 0x0 0x20000000>;
-> +
-> +			audss_dmac: dma-controller@7010000 {
-> +				compatible =3D "cix,sky1-dma350", "arm,dma-350";
-
-[Severity: High]
-Does this node need a memory-region property to provide a restricted DMA po=
-ol?
-
-The AUDSS DMA-350 controller restricts its DRAM access to a 512MB window at
-0xc0000000 via its parent's dma-ranges. Since system RAM normally starts at
-0x80000000, default allocations for descriptors will fall outside this reac=
-hable
-window.
-
-When a driver calls generic routines to allocate and map these descriptors,
-such as in drivers/dma/arm-dma350.c:d350_alloc_cmds():
-
-    desc->cmds_dma =3D dma_map_single(dev, desc->cmds, desc->cmds_size,
-                                    DMA_TO_DEVICE);
-    if (dma_mapping_error(dev, desc->cmds_dma)) {
-
-the mapping will fail because the generic allocation is out of bounds for t=
-his
-device's DMA ranges. The global SWIOTLB bounce buffer would also be
-inaccessible for the same reason.
-
-> +				reg =3D <0x0 0x07010000 0x0 0x10000>;
-> +				clocks =3D <&audss_cru CLK_DMAC_AXI>;
-> +				resets =3D <&audss_cru AUDSS_DMAC_SW_RST>;
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012084155.2547=
-480-1-Jelly.Jia@cixtech.com?part=3D6
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
