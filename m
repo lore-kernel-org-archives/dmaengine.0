@@ -1,46 +1,44 @@
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575133C276E
-	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 10:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430F13ACF1D
+	for <dmaengine@vger.kernel.org>; Mon, 12 Oct 2026 10:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791801747; cv=none; b=HYHNiLxjCTxC4weKOZ3IjV0fM+xpMQph6lJwuP7EVxo5Lo4TYHY8k0P1z7ZXiua9O/3XqU+trlQQhGKNZ2ZSWl+amhAI4/+iiEVqFrtGdh8JpwVPrL4z7I5fzj8YXgQxeou6M8npebZ+oZccEZs2YUTFeNbwvAlPp5M+LfdMqxk=
+	t=1791801829; cv=none; b=H2sKaYGPp8MrbHHFV0W7/+I5Zw+36Wp/qhInvLUegt5Fg5dlSaFa6/ZVJkEtSxrJ1j8+JUEapCL9mFQnd1eM80tDSt7dqUyCdMVYTxCCifTGuivBZyUhufyrxSTWXQjJX6Z5kAiEKDC/T7pt/HwhvQCDdkQpxpAXclK7s81Btms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791801747; c=relaxed/simple;
-	bh=28Yx66NjZP5xzk20OUiMpkRXEDNf1lueGuVxCuGpePg=;
+	s=arc-20240116; t=1791801829; c=relaxed/simple;
+	bh=Zz2W0z0cWvL9+n753j1WAam4CZ5s6Xk6anZyjUmFcYM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YjGzgPRTfG+qrw1q1XpMnMBHBLCK9NpKZRozoYXoRlx+rtguZqKs2CP6azEp5cQRojXpkBnarvp1dF/yEJtuvgSIBQToYIwxAdrYNxy0lwebnEElZBa7i10fb3tTlNERt3S1i8GsTmgTtFX5ee4Ip8Irjr7U62KCuEZHKCIJV9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=Qy9VvlWD; arc=none smtp.client-ip=194.117.254.33
+	 Content-Type:Content-Disposition:In-Reply-To; b=ahYuf7VRPOypd1dOrm9FafW8QhsZWc6OxIXnqHcJAqKUJ8tK+BjnyOOLFEOIENGFFLuQtaKO7PPUvp5C5K0iED8zSKrdxYGbouECwM6y6VgP5IMnifRB+wnG/j7k8JVtbd9Nxuu/rtD1iNOYyCUDdZEi4maHqZuEQp7HVJvk9es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=Pfkrqqxj; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="Qy9VvlWD"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="Pfkrqqxj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=28Yx
-	66NjZP5xzk20OUiMpkRXEDNf1lueGuVxCuGpePg=; b=Qy9VvlWDm8isC1bObrWG
-	SA7+vRows5/Po3Gpp7oCU1OyJJDVRDUHSEDSphpqy2pMEtDkDLQ3PkJGAag4/rNH
-	KtKJZQoJcJHKZ0cMZJyrz8JGv99owFdXmjMiE7wn8A+T2qmC6nOFu+tOyZCCY0cC
-	lQ+aXamKl60IJotDtSOCptXGkyJ6DnQog2+ZmiA1xH+K88KDCfqAJPW21HSYMn3f
-	p/ZXl46Poq7oOWjB+XuCTSFqh3EuZMzh0yjqoEcPyw9Sko4XzHnsvCzafH38xT/E
-	x8RP+cAXUgdM4ExFblAqpLVaRdwIiNeoKjjwhegS2ANhXNKLdT6y6elLXEIjf3zx
-	sA==
-Received: (qmail 2216045 invoked from network); 12 Oct 2026 12:42:12 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 12 Oct 2026 12:42:12 +0200
-X-UD-Smtp-Session: l3s3148p1@WRTEWaJdzK4ujnuu
-Date: Mon, 12 Oct 2026 12:42:12 +0200
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=Zz2W
+	0z0cWvL9+n753j1WAam4CZ5s6Xk6anZyjUmFcYM=; b=PfkrqqxjfA00PkgN4eGe
+	w9fYKHRwUyvNDBHQIdWkxcM4HNQ18C9RKNIwxq+Cah2yw/HWkmhMylE/eFZ2JcSo
+	JD6mljTPVKaq1dhJlUq8TBFaQ9cdkbwtO4SliW0JS3O1H8/hgUsVAGYA5RYemkzZ
+	EEBAlfm75RDHqWhuHBK1RcC+7uUghQr1JvK4HJGfLZOwqF6AKEO60AKuiTST35zw
+	rTmoD9baJ+tTzCiqt5KuFCZO+npDkppd4FMEJD0PEfF2fQJ8d1LHhA9S2Q9wh7xR
+	JR0Rb4k62oVIHqK5JXBWI5sIpf96c7N/ZYb8t7FXJ5YEYfbL5GAvtTx9rL2R+nUP
+	dg==
+Received: (qmail 2216586 invoked from network); 12 Oct 2026 12:43:44 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 12 Oct 2026 12:43:44 +0200
+X-UD-Smtp-Session: l3s3148p1@uDVEX6JdHJQujnuu
+Date: Mon, 12 Oct 2026 12:43:44 +0200
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: dmaengine@vger.kernel.org
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>, Frank Li <Frank.Li@kernel.org>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 0/8] dmaengine: unmap descriptor before completing cookie
-Message-ID: <asy5hLkzZARvkKyD@shikoro>
-References: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>, John Allen <john.allen@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-crypto@vger.kernel.org
+Subject: Re: [PATCH] crypto: ccp - unmap descriptor before completing cookie
+Message-ID: <asy53A_Noe3EE-KZ@shikoro>
+References: <20261010125001.19300-3-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -48,50 +46,44 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qReZEPt7jmvXPKts"
+	protocol="application/pgp-signature"; boundary="WDG1I0qEgaCJ3/l0"
 Content-Disposition: inline
-In-Reply-To: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20261010125001.19300-3-wsa+renesas@sang-engineering.com>
 
---qReZEPt7jmvXPKts
+--WDG1I0qEgaCJ3/l0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, Oct 10, 2026 at 02:50:03PM +0200, Wolfram Sang wrote:
+> To ensure that buffers are flushed, make sure that the descriptor gets
+> unmapped before completing the cookie.
+>=20
+> Link: https://lore.kernel.org/r/20261009093745.539924-1-vkoul@kernel.org
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+
+I'd like to drop this patch because Sashiko reported an issue with it
+which I am not able to analyze.
 
 
-> We found out that we need to unmap descriptors before completing a
-> cookie [1]. Fix the drivers for which this is a no-brainer and just
-> switches those two function calls.
-
-Okay, according to Sashiko, patches 1+5+6+7 are no no-brainers but need
-a deeper analysis which I am not able to provide.
-
-So, we could drop this series entirely because it seems more trustworthy
-to let people with actual hardware fix these issues. Maybe a FIXME could
-be added instead to these drivers.
-
-Or, we can apply at least patches 2+3+4+8 where Sashiko found no issues.
-
-I tend to use the first option but am open to whatever maintainers think
-about it.
-
-
---qReZEPt7jmvXPKts
+--WDG1I0qEgaCJ3/l0
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmrMuYQACgkQFA3kzBSg
-KbboYhAAsC1OwNrLEWb964Z1mC5KIzmafkgw2xWyV6npkoU2Odw9cSO0QrvCgIOA
-fSUXs7g4iuntwNPX2e4Al2GsBoyu1E21mIwb2Hn8iK/jfpMD6qydtpA0+WBOfaVO
-1KjCuCBbrSavdps5XTq0EVac9558OV6RPMbufGGwrYRw0C09euLfhrTJ4Oq89lpe
-mgnTyeLQjNcU9/kKuE4sMPwus3AKUKYPrNt2kw7JQuKsfpTBLxgC7C2R6s4QbEQm
-/acygK5fuXsrXvWu1CSwZyKNnkcIidF3OH4+2qrgU6dWCHk7BlTwUDKUuwckgcfg
-562d9IpTLMejyAqH6/Vuc6nYcj8gwo1TR5uriRo/MzXqddSfAcaS6jGvTtn7ScFk
-4Gw0h43g8B3vgEwP3CK7MdELlE9W0L3d5cwzpwIEpJTtksz9kr59J2B9dhrIA99x
-32ep3xqbUhqUPF/t6Aw+JPweOPA3hrPQ/4UeZVoN1BxiWPpkI004Oz3Bse2pZNB0
-1r3ow70SGj8HCafOZRn0OM8Im9RmOiDo4L75KbhIODwFHEc4GVhNQ6RR1P5CQkmt
-LmK4GSde/Lfjob0y5xQE7lR/RqjxEn72JTMycR26pW3SxyDzhRQq0aZEHw7MznBA
-hPzIIutYe/0jlrg00SJO/UaMhuJsQGMDBTjOgA9xy4q/PS11bvE=
-=V3D/
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmrMudwACgkQFA3kzBSg
+KbZctg//QUjmtYf+fv/Tb+l0cx19fZ7DQ6TyitPOt+zSM6bAGICljOGxPoBUlBex
+OnPPAc8g9lMK0JImxjzMBRydjne/HLE+AwwZq9FtALF9gnXahpvGXWZD9hnBAlvD
+UwkwEPDOMZqLYD0zhZEusg9sxNoa9/nNCojhfq0gNrBTPRfaXXeC61gGY/MSrJXA
+3TQuqEIUduyvfBPPUy1UhwFLLZADvZLPg5L94hD2z5EPWHf5LNY88aTiXYDy/CWz
+xj7KqV3Xn4SzbDORjc0nsbtIJ7tx1O9u4e0B3g/wUQFyv4Pyt7jOaKWou2oHxbxv
+rBlfuDjXtWSwD7Qy2/jodgSSEmORcM8VoNxFwcYXkxgbSAQR1luEmmOyyd3esUp/
+h2URmUmqW5/kZ/7f5Sg1l345D5NIG/WsIWS6kRjTNkLH/hxTE5s/jX4wAPS5A6Us
+qmizsVEDPfz7L2Gmo5ew9TsUGXIoe89bfcASaGBZtGv4WPi10vfwbao1/a859k6c
+ZarkLWqToSQVcpxfmyV4U6wsF7oEEE98sZBJeMHXTzbBovtTgeB4NyqYom+mQhLa
+xy0mEXN6DjeZd9iQSLIQLuHjSVktazTEY5xc30+lwNYMQvGBrJiKao6dslW2gz6+
+sR6esEAkcaG/BeKsd0IvcQhVZ9pGMfwnjp7GSTj31PtO8aMKXD0=
+=HbNB
 -----END PGP SIGNATURE-----
 
---qReZEPt7jmvXPKts--
+--WDG1I0qEgaCJ3/l0--
