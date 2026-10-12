@@ -1,52 +1,52 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DFA3BF68D;
-	Mon, 12 Oct 2026 21:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B643D47C2;
+	Mon, 12 Oct 2026 21:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791841136; cv=none; b=DAY04AzV+WY8W7XBT0C9cMOc3G7+vTUbrAcHKBPMkTDZsJKWaelx0R5DhN9qBn4IlwIL6FJmWNdHl0n3bz7fwZoLpYTRHH5cvlyYm6SJutPr6uyQQrLmm8uv3dH05Rywiv3KL32NFs0H/BBuSdQb/BAOGksgmauBm9qczqkyEW4=
+	t=1791841136; cv=none; b=lzhhrlYfyA0qCigbA9U8t4hFFF5cIPfIc1KrfGwpRt4SELwp9tDH+9OxchZAdcVO+tuFYN12a/ldRYa3vFg4rffkzB8gH2u1qsfg5SoEP9g6iIfuf+VWDy8dQ8UQkr6znk66xW0cp/RdGwOuDwPxZJf2DPbiMObt7nWZ1MlYVwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791841136; c=relaxed/simple;
-	bh=aYQVoT0Tc7BdS/Y3vtjo08DcqnXoVDksw6bzyVdHoZs=;
+	bh=x5jidGddvEONZs4UJjc/pa0eZwQ8zzBqFkYU42/Scv0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SxET1jEAu0vUtRD3SWQFioDE0zexAt+0+kgNPneCduooHqwWAAID8ZWAyZAe5DjEG3NdZzUYnxu2QxcI/lDDGKmZOE7yJ03cR3HBSF29kgp5eiYX1pEUWlkFJSRE2+SeKBebuevZhBLBjCUOxxss997OUXiBKy9JuJRST8wgRr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YLmufzkf; arc=none smtp.client-ip=192.198.163.11
+	 In-Reply-To:To:Cc; b=mGJ8LiHFjOPzcHR+WQW2TYHCPR0ekaeRceVuNVYZ1GuwjCApRuyR4k5mPktJ+Xh6qKukYtE8WD+8JU7/dBKnn6Zt8ztVcYiYLcCNX8xA9FA8zqn+nU8NhDvy3JfC/8NPY/ee9MKUzBQR+fjFjUqCoGADyMGw4+8nKqKcq9kjfEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=c5lVtCXs; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YLmufzkf"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="c5lVtCXs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791841131; x=1823377131;
+  t=1791841134; x=1823377134;
   h=from:date:subject:mime-version:content-transfer-encoding:
    message-id:references:in-reply-to:to:cc;
-  bh=aYQVoT0Tc7BdS/Y3vtjo08DcqnXoVDksw6bzyVdHoZs=;
-  b=YLmufzkfLnReXPqWqhshPQjQ6QvC1sDKSX30i5bk+Ru1oHjeEB3yFxjo
-   jWvwFMEzclxEHd++Bc25TUWoaFZPv2M8ljdIW4qRqlExNoyizt9YlArWK
-   ANDKKaIspjTk9TnAlh+PvLYW6pPuX8bqxFEhs0CzOdrgKBEiof2SNfL+v
-   TnahnuOVQGFYr6GbDyxvEqmWKHZvozHvuaX3MXGaUFN23DDM5K9GcYvmK
-   WQKIh0X+gL0dqpg2P8WMvb0xTtZbIcmhj4rLtXRt/Nww9Rr44q66cEdvZ
-   VaK7O+DhT6Brr7FaXUVFd1AkLOj/H4ucpWkfB4b7plHHtaquom+we1Agb
-   A==;
-X-CSE-ConnectionGUID: H1mtGPDoTxm+uXW274kozQ==
-X-CSE-MsgGUID: 3GvcBPCUSfyI5wM0yHc8Mw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="459907"
+  bh=x5jidGddvEONZs4UJjc/pa0eZwQ8zzBqFkYU42/Scv0=;
+  b=c5lVtCXsG3ASs0tHaIHVOsfJFh9WhpMPU/bO/A7AQUR2CrCKFeKhEmST
+   Oz2EhbEXpiYU0JOyXcW+tp+jh/jO3X/1DUiaFX51t6JEVuSElKHgtUErL
+   orIaBlzgnLFGHjMyMzZx2KhzhUd8U5pkeztGpdb4N6cHpXhJ7JiixdZr3
+   qf1bOM51VgKzw1G+a9729RNeIMt9RpfbUfwEE2YO4TnXBoaUVtK0KdYTf
+   DXkl59ThyZSzNv00fWFo4CD0VYxF5ku4Sue7vlXIzwTNXJINEeiGIZ4Mn
+   bkwkWXZKAMYfogrrJGDBYvnKCP0LAO8AmAYmFUsPs8sPVeYA1ZFMHB8L3
+   Q==;
+X-CSE-ConnectionGUID: WMX2EMirQSK+oXgIQSj0Dw==
+X-CSE-MsgGUID: ShKyrraKTwOcdpmCKDP1Uw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="459911"
 X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="459907"
+   d="scan'208";a="459911"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:39 -0700
-X-CSE-ConnectionGUID: xQAo6Bo3Tcaz1pisb3mwWw==
-X-CSE-MsgGUID: 7Ag+PMUjQDCOZDmLo1FceA==
+X-CSE-ConnectionGUID: QLDSys0oSzOO6KTzbphsow==
+X-CSE-MsgGUID: O1iIm6uNTCyvi6MyfhrLDw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
-   d="scan'208";a="986071"
+   d="scan'208";a="986074"
 Received: from vcostago-desk1.jf.intel.com (HELO [10.241.243.117]) ([10.241.243.117])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:39 -0700
 From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Date: Mon, 12 Oct 2026 14:38:07 -0700
-Subject: [PATCH 4/6] dmaengine: idxd: Fix unwind bounds in device
- registration error paths
+Date: Mon, 12 Oct 2026 14:38:08 -0700
+Subject: [PATCH 5/6] dmaengine: idxd: Fix error code handling in
+ idxd_cdev_open()
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-wt-idxd-fixes-v1-4-30a35a445077@intel.com>
+Message-Id: <20261012-wt-idxd-fixes-v1-5-30a35a445077@intel.com>
 References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
 In-Reply-To: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
 To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -64,65 +64,62 @@ To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>,
 Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Vinicius Costa Gomes <vinicius.gomes@intel.com>
 X-Mailer: b4 0.17-dev-362b8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1791841118; l=1822;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791841118; l=1986;
  i=vinicius.gomes@intel.com; s=20230921; h=from:subject:message-id;
- bh=aYQVoT0Tc7BdS/Y3vtjo08DcqnXoVDksw6bzyVdHoZs=;
- b=bX8u7KxehM4VXdCpl3QzciqZR/e2ri1VIaYySPceqQPsz+K9gI+XE/3mVCPegKZhFB7VplQ4l
- 3bJIl1WlGCGBA8VpRqmDuh94QXgqd0Evj8r6quDyhi2ukbVhc1GHUzt
+ bh=x5jidGddvEONZs4UJjc/pa0eZwQ8zzBqFkYU42/Scv0=;
+ b=M+PdY/cCb6z0PT5oXV3jcY3xzQ4okCjQEwyXZ/ce/gcBEPXpVEZzpa94Bup/eckTUNu3k1aw6
+ VQfFrPU4yJEC6+smBkfEWhEO5R959MAaD9RyF2ZZFvmVy13SgR1PQG5
 X-Developer-Key: i=vinicius.gomes@intel.com; a=ed25519;
  pk=aJkrtgqgT6TZ8iIHSG8/rTPsmlYnjMrUjCsMYvCzntk=
 
-When registering the per-idxd wq, engine, or group devices, a failure
-partway through must roll back exactly the devices already added, i.e.
-the range [0, i) when device_add() fails at index i.
+idxd_cdev_open() mishandles rc on two error paths:
 
-idxd_register_{wq,engine,group}_devices() get this range wrong: each
-seeds the "while (j--)" rollback loop with j = i - 1 instead of j = i.
-This skips one device (leaking it), and when the very first device
-fails (i == 0) the index underflows to -1 and the loop walks off the
-front of the array.
+  - On ida_alloc() failure it jumps to failed_ida without setting rc,
+    returning the leftover 0 from the earlier successful xa_insert(), so
+    open() falsely reports success.
 
-Start the rollback at i.
+  - When a PASID entry already exists, xa_insert() returns -EBUSY.  This
+    is non-fatal and only warned about, but rc is left negative and can
+    leak out for a shared wq (which skips the idxd_wq_set_pasid() branch
+    that would reset it).
 
-Fixes: 7c5dd23e57c1 ("dmaengine: idxd: fix wq conf_dev 'struct device' lifetime")
-Fixes: 75b911309060 ("dmaengine: idxd: fix engine conf_dev lifetime")
-Fixes: defe49f96012 ("dmaengine: idxd: fix group conf_dev lifetime")
+Set rc to the ida_alloc() error before unwinding, and reset rc to 0
+after the "PASID already exists" (Fixed the "exist -> exists" typo
+while at it) warning.
+
+Fixes: e6fd6d7e5f0f ("dmaengine: idxd: add a device to represent the file opened")
+Fixes: b022f59725f0 ("dmaengine: idxd: add idxd_copy_cr() to copy user completion record during page fault handling")
 Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 ---
- drivers/dma/idxd/sysfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/idxd/cdev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index d5ffc641c856..e828292e5fb8 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1876,7 +1876,7 @@ static int idxd_register_engine_devices(struct idxd_device *idxd)
- 	return 0;
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 82b07cf942ef..abbab9bdd06c 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -264,8 +264,11 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 		mutex_lock(&wq->uc_lock);
+ 		rc = xa_insert(&wq->upasid_xa, pasid, ctx, GFP_KERNEL);
+ 		mutex_unlock(&wq->uc_lock);
+-		if (rc < 0)
+-			dev_warn(dev, "PASID entry already exist in xarray.\n");
++		if (rc < 0) {
++			/* An existing entry is harmless, warn and continue */
++			dev_warn(dev, "PASID entry already exists in xarray.\n");
++			rc = 0;
++		}
  
- cleanup:
--	j = i - 1;
-+	j = i;
- 	for (; i < idxd->max_engines; i++) {
- 		engine = idxd->engines[i];
- 		put_device(engine_confdev(engine));
-@@ -1904,7 +1904,7 @@ static int idxd_register_group_devices(struct idxd_device *idxd)
- 	return 0;
- 
- cleanup:
--	j = i - 1;
-+	j = i;
- 	for (; i < idxd->max_groups; i++) {
- 		group = idxd->groups[i];
- 		put_device(group_confdev(group));
-@@ -1932,7 +1932,7 @@ static int idxd_register_wq_devices(struct idxd_device *idxd)
- 	return 0;
- 
- cleanup:
--	j = i - 1;
-+	j = i;
- 	for (; i < idxd->max_wqs; i++) {
- 		wq = idxd->wqs[i];
- 		put_device(wq_confdev(wq));
+ 		if (wq_dedicated(wq)) {
+ 			rc = idxd_wq_set_pasid(wq, pasid);
+@@ -279,6 +282,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	idxd_cdev = wq->idxd_cdev;
+ 	ctx->id = ida_alloc(&file_ida, GFP_KERNEL);
+ 	if (ctx->id < 0) {
++		rc = ctx->id;
+ 		dev_warn(dev, "ida alloc failure\n");
+ 		goto failed_ida;
+ 	}
 
 -- 
 2.56.0
