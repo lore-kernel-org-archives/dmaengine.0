@@ -1,239 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A654C9E03;
-	Mon, 12 Oct 2026 19:07:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1C945D903;
+	Mon, 12 Oct 2026 21:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791832074; cv=none; b=nBmLciTBPNgL6SjtMwdmwaaPkqKKTdQs81Jpj0W/yE34h7ul/1O7IV+40Vd0a86LwoIsapYL2zvICihLkO9R/oRKO7F5kD7YnadXboJ8HNrkCamuNK7ELPx/aJ8Gm9gQoECAl1E9Ikd0gOSfoEuiABYDnGycAM7mcxgvQaFurH8=
+	t=1791841126; cv=none; b=SzJg+ihF+xAmTt3TeyK5s4CoBNhOxeMgvzA04uWRU3l4mV+9nfb5oFKjsyv9kTA55pU/9YgQtcVyxH5powq10Wjj2FuZ37W9JwU558J9dlHRoAMUv2JFqZGwxNM35BwQTHXkgwu6D9AFTWdxtdbX1hqEvytXiXrLKykwQOSa8ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791832074; c=relaxed/simple;
-	bh=Mn6D3gy9/w+bnfjcb6z26eaqqu098jbtRQKRwMp7XuE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kfDKfXMOhiY4RbUcSovPxYsJQOHh2y3PYyFRuyDpTnLkRS8F7fmSKsMmFhhgqcfl+rIxx0s0fV+ZuBN0I1c2k5xB+mabfm6x7+e/d94XUikrD07fA276twULSiwchzHmJKfQcq77j72v9jeW4koV7Y3a3SpAUewK5wppcFC+nGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BoLzz8Nu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791841126; c=relaxed/simple;
+	bh=g96STZZmBcCP/AR7VqTLRRlb13HRj5IVmPfJhDh+I8I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GHAxRjDxsa9rkGMJ/Uq/wJ18XZkSxKvhFSR11tU5tBYhrC7ijROOSR0RkFcqMQ4L/iojQaBvCjmtKXDMweKSx2yd7FcAZHpqzmwsMRMCnj05vIr4hUW165aoU2K3YgbeGedNf5BSZtYktE1/bTRJLpLVWVskKa3B11dPri+EyWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HfHGAh/r; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BoLzz8Nu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936811F0089B;
-	Mon, 12 Oct 2026 19:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791832072;
-	bh=fAUfWWTxjwqCeuukrWQxTgwGQa9QftroT/t4wDZYVVw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BoLzz8NuAjzMywAPstQCH3qnS5gIf3tWURdDM4XY1syXbT1LSQySctZ2fppM7RtHP
-	 rLwcvb8DmcMBAi9bzzhDvyWJctQWBb5jK/GMi8ckeBx7ROBH4BreVfHRvBEYRCUPtZ
-	 Yq5KVAauL+xGSkYdujPrKKiKfywCV1UrI4Lr9XSu12tAosK30XTbV+fWR4Q3Cu1TAr
-	 3oq2oF34wQb5Z09u1hj2fueQtHI+nbRDxDm9ZvHdbDzP0QvnU6pZ3a8mctQVx+/xAd
-	 letnpc5qmYQSbQXDeazBiMKGPpN62CT+RKhUOK82KzJDphDOoW0zdH73RH60m0byXo
-	 guZc0TDwEdUqw==
-Date: Mon, 12 Oct 2026 20:07:48 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.murphy@arm.com,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] arm64: dts: cix: Describe the Sky1 DMA-350 bus
- integration
-Message-ID: <20261012-rural-undermost-b4817ebd4740@spud>
-References: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
- <20261012084155.2547480-7-Jelly.Jia@cixtech.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HfHGAh/r"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791841120; x=1823377120;
+  h=from:subject:date:message-id:mime-version:
+   content-transfer-encoding:to:cc;
+  bh=g96STZZmBcCP/AR7VqTLRRlb13HRj5IVmPfJhDh+I8I=;
+  b=HfHGAh/rug67yD5WO2hJpzPJjZoPCQvhs9pzDfzg+sHacDWizfQ1Nd7+
+   9lssjn9wWW9Gva75JcqCbZtq/43zHlPygEToHb9T7tWHSQ3m8pOWkJUWl
+   FvGANCF16VhYYHt+adhTSPGETYM2S6kMgM7f/BJRMkH8wN2EsIzk/HDj4
+   cgJuL0qa6rnsoRT70Sp5uK0uVDAVphQtWinZIav+UeYDHhURC1ybT6qsc
+   Jk6LjWfMkeE7qKj/71vJtKhoBLCVh2BfZqBD02/YE70J2TWKC0L4W1o5a
+   PwOQTSmait+40RCig7urafMYrzPj4w6iM7LxfD/R0YItTJjo3TBmqabyS
+   w==;
+X-CSE-ConnectionGUID: 2MWyUeGOSviZg+NFOd4/kA==
+X-CSE-MsgGUID: 0L8BGCIwSeqxhVs8jHrWfQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="459883"
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="459883"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:39 -0700
+X-CSE-ConnectionGUID: 8bEHUB5DQKOYOtTxB///zA==
+X-CSE-MsgGUID: vNVax3rlQNizq+iI9P1oEw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="986059"
+Received: from vcostago-desk1.jf.intel.com (HELO [10.241.243.117]) ([10.241.243.117])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 14:38:38 -0700
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Subject: [PATCH 0/6] dmaengine: idxd: More error handling fixes
+Date: Mon, 12 Oct 2026 14:38:03 -0700
+Message-Id: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eZMYkGYe2LFIW0E9"
-Content-Disposition: inline
-In-Reply-To: <20261012084155.2547480-7-Jelly.Jia@cixtech.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMSw5AQBAFryK9NkkPyQRXEQtDoy2Qab9E3F1jW
+ fVS7wKhwCRQRBcE2ll4nhRsHEEz1FNPhltlSDBxmGFqjlXN2ZqOTxJja3Teu9xbQtBmCfQNmpT
+ Vz7L5kZr1PYH7fgCib7lPcQAAAA==
+X-Change-ID: 20260803-wt-idxd-fixes-1a06bb69b1e0
+To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>, Fenghua Yu <fenghuay@nvidia.com>, 
+ Shuai Xue <xueshuai@linux.alibaba.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Vinicius Costa Gomes <vinicius.gomes@intel.com>, 
+ Steve Wahl <steve.wahl@hpe.com>, 
+ Bogdan Codres <bogdan.codres@windriver.com>, 
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+X-Mailer: b4 0.17-dev-362b8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791841118; l=1399;
+ i=vinicius.gomes@intel.com; s=20230921; h=from:subject:message-id;
+ bh=g96STZZmBcCP/AR7VqTLRRlb13HRj5IVmPfJhDh+I8I=;
+ b=XMKWBBNq1rje35jEwLRD9d4VmKuuSwDJfMIzOIR1X2AgaM4DhctIdntO5BTdziTcrHLqmUpzE
+ jxlatlD1YwnD6zvdahvne6U5fXY5JwDr/sdesnmeo2S6HGzXkzf+K++
+X-Developer-Key: i=vinicius.gomes@intel.com; a=ed25519;
+ pk=aJkrtgqgT6TZ8iIHSG8/rTPsmlYnjMrUjCsMYvCzntk=
 
---eZMYkGYe2LFIW0E9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Mostly this series proposes fixes for issues in the error handling
+paths of the idxd driver. Patches 1/6, 2/6 and 3/6 are for issues that
+have been shown to happen in the real world.
 
-On Mon, Oct 12, 2026 at 04:41:55PM +0800, Jelly Jia wrote:
-> The FCH DMA-350 controller sits behind an interconnect window, so the
-> addresses its DMA master uses differ from the CPU physical addresses.
-> Describe the integration as a bus node carrying the dma-ranges of that
-> window, with the controller itself as a child, and give the controller
-> the SoC compatible and the clock feeding it.
->=20
-> The AUDSS DMA-350 controller is described the same way, with its clock
-> and reset. It has no consumer in the SoC dtsi yet: the audio controllers
-> that use it are not described upstream.
->=20
-> The bus nodes are address domains, not devices: they have no reg, so
-> they carry no unit-address in their node names.
->=20
+Patch 6/6 is an exception, in the sense that it's not error path
+related, it's an issue that I introduced (my scripts were removing
+the idxd module after each dmatest run, so I didn't caught this).
 
-> v1 -> v2:
-> - The DMA-350 nodes are no longer wrappers with the generic controller
->   as a child: each Sky1 DMA-350 is a single device node with the
->   "cix,sky1-dma350", "arm,dma-350" compatible, its real MMIO region and
->   the integration resources (clock, reset) that v1 kept on the wrapper.
->   The integration and the block are one device, and the MMIO is the same
->   as the generic node it replaces.
-> - The FCH and AUDSS DMA-350 masters sit behind SoC interconnect windows
->   in a static DMA address domain: the AUDSS masters see the audio
->   register and FIFO block at 0x20000000 and the DRAM window at
->   0x30000000, which the CPU sees at 0x07010000 and 0xc0000000, and the
->   FCH masters see the 0x040b0000 window at 0x040a0000. Their DMA view of
->   the address space is not the CPU physical view.
-> - The windows are static hardware configuration, set up before Linux
->   starts by the boot firmware / secure world: they are not programmable
->   from Linux and must not be reconfigured by it. There is nothing for a
->   Linux interconnect provider to manage here, so the translation cannot
->   be modeled as one; it is a fixed property of the bus.
-> - It is described the standard devicetree way instead: a generic
->   "simple-bus" parent with an identity "ranges;" and the "dma-ranges" of
->   the window. This is not the rejected v1 wrapper and not a separate DMA
->   wrapper/integration device: the parent has no device-specific or
->   vendor wrapper compatible, only the generic "simple-bus" compatible,
->   no reg, no clocks, no resets, no driver and no private address
->   translation. Its only job is to carry the static translation, so it is
->   only a generic bus/address-domain node.
-> - The "dma-ranges" have to sit on that parent for the OF core to build
->   dev->dma_range_map: of_dma_configure_id() starts the lookup at the
->   device's parent (bus_np =3D __of_get_dma_parent(np) in
->   drivers/of/device.c), so a "dma-ranges" on the controller node itself
->   would be ignored. The translation is applied by the DMA API, not by
->   driver code: the driver maps slave resources with dma_map_resource()
->   and contains no address parser.
-> - Mainline has similar bus nodes: the Agilex5 DMA bus (dma-bus@10db0000,
->   a simple-bus with dma-ranges whose controller carries
->   "altr,agilex5-axi-dma", "snps,axi-dma-1.01a") and the Marvell AC5
->   buses (bus@80500000 with "ranges;" and "dma-ranges", and
->   behind-32bit-controller@7f000000, whose only purpose is the DMA
->   mapping of the devices below it).
->=20
-> v2 -> v3:
-> - The AUDSS interrupt gate is set up by the boot firmware and is not
->   configured by Linux, so the cix,irq-router property is gone.
-> - The bus nodes carry no unit-address in their names: they have no reg,
->   which made dtc warn (unit_address_vs_reg).
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+---
+Steve Wahl (2):
+      dmaengine: idxd: Do not call destroy_workqueue with null idxd->wq
+      dmaengine: idxd: fix duplicate memory frees on initialization error path
 
-None of this should be in the commit message.
+Vinicius Costa Gomes (4):
+      dmaengine: idxd: Fix potential double free on probe error path
+      dmaengine: idxd: Fix unwind bounds in device registration error paths
+      dmaengine: idxd: Fix error code handling in idxd_cdev_open()
+      dmaengine: idxd: Do not release interrupt handles on terminate_all
 
->=20
-> Assisted-by: LLM checkpatch sparse dt_binding_check dtbs_check
-> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
-> ---
->  arch/arm64/boot/dts/cix/sky1.dtsi | 68 +++++++++++++++++++++++++------
->  1 file changed, 56 insertions(+), 12 deletions(-)
->=20
-> diff --git a/arch/arm64/boot/dts/cix/sky1.dtsi b/arch/arm64/boot/dts/cix/=
-sky1.dtsi
-> index 0a820f45feb9..1262f34794d2 100644
-> --- a/arch/arm64/boot/dts/cix/sky1.dtsi
-> +++ b/arch/arm64/boot/dts/cix/sky1.dtsi
-> @@ -518,18 +518,33 @@ iomuxc: pinctrl@4170000 {
->  			reg =3D <0x0 0x04170000 0x0 0x1000>;
->  		};
-> =20
-> -		fch_dmac: dma-controller@4190000 {
-> -			compatible =3D "arm,dma-350";
-> -			reg =3D <0x0 0x4190000 0x0 0x10000>;
-> -			interrupts =3D <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> -				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>;
-> -			#dma-cells =3D <1>;
-> +		/*
-> +		 * The FCH DMA-350 master sits behind an interconnect window;
-> +		 * the dma-ranges below are its view of the address space.
-> +		 */
-> +		fch-dma-bus {
-> +			compatible =3D "simple-bus";
-> +			#address-cells =3D <2>;
-> +			#size-cells =3D <2>;
-> +			ranges;
-> +			dma-ranges =3D <0x0 0x040a0000 0x0 0x040b0000 0x0 0x00040000>,
-> +				     <0x0 0x80000000 0x0 0x80000000 0x8 0x00000000>,
-> +				     <0x80 0x00000000 0x80 0x00000000 0x80 0x00000000>;
-> +
-> +			fch_dmac: dma-controller@4190000 {
-> +				compatible =3D "cix,sky1-dma350", "arm,dma-350";
-> +				reg =3D <0x0 0x04190000 0x0 0x10000>;
-> +				clocks =3D <&scmi_clk CLK_TREE_FCH_DMA_ACLK>;
-> +				interrupts =3D <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH 0>;
+ drivers/dma/idxd/cdev.c   |  8 ++++++--
+ drivers/dma/idxd/device.c | 11 ++++++++++-
+ drivers/dma/idxd/idxd.h   |  1 +
+ drivers/dma/idxd/init.c   | 21 ++++++---------------
+ drivers/dma/idxd/irq.c    |  1 +
+ drivers/dma/idxd/sysfs.c  |  9 +++++----
+ 6 files changed, 29 insertions(+), 22 deletions(-)
+---
+base-commit: 42c31fec1ca76b8b5f7759def122d418dff2cd4b
+change-id: 20260803-wt-idxd-fixes-1a06bb69b1e0
 
-As I said on v2 an hour or so ago, I don't think this is correct, and
-you should put an interrupt-map node into the syscon that contains the
-irq routing registers, and have the syscon be the interrupt parent for
-this node.
+Best regards,
+--  
+Vinicius
 
-Thanks,
-Conor.
-
-> +				#dma-cells =3D <1>;
-> +			};
->  		};
-> =20
->  		mbox_ap2se: mailbox@5060000 {
-> @@ -576,6 +591,35 @@ mbox_pm2ap: mailbox@65a0080 {
->  			cix,mbox-dir =3D "rx";
->  		};
-> =20
-> +		/*
-> +		 * The AUDSS DMA-350 master sits behind an interconnect window;
-> +		 * the dma-ranges below are its view of the address space.
-> +		 */
-> +		audss-dma-bus {
-> +			compatible =3D "simple-bus";
-> +			#address-cells =3D <2>;
-> +			#size-cells =3D <2>;
-> +			ranges;
-> +			dma-ranges =3D <0x0 0x20000000 0x0 0x07010000 0x0 0x00100000>,
-> +				     <0x0 0x30000000 0x0 0xc0000000 0x0 0x20000000>;
-> +
-> +			audss_dmac: dma-controller@7010000 {
-> +				compatible =3D "cix,sky1-dma350", "arm,dma-350";
-> +				reg =3D <0x0 0x07010000 0x0 0x10000>;
-> +				clocks =3D <&audss_cru CLK_DMAC_AXI>;
-> +				resets =3D <&audss_cru AUDSS_DMAC_SW_RST>;
-> +				interrupts =3D <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>,
-> +					     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>;
-> +				#dma-cells =3D <1>;
-> +			};
-> +		};
-> +
->  		audss_cru: clock-controller@7110000 {
->  			compatible =3D "cix,sky1-audss-cru";
->  			reg =3D <0x0 0x07110000 0x0 0x10000>;
-> --=20
-> 2.54.0
->=20
-
---eZMYkGYe2LFIW0E9
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCas0wBAAKCRB4tDGHoIJi
-0tZvAQCSHmcnTV6jgT2PsmPzk+KiLw1d4u3fGARAiQ3YfXvDuwEA8WYfrMKQNIA4
-jHJrD7aA6U3SwLq7B48xBdfJ5ZPT8wA=
-=zOqj
------END PGP SIGNATURE-----
-
---eZMYkGYe2LFIW0E9--
