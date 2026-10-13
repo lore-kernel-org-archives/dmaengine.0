@@ -1,61 +1,64 @@
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013017.outbound.protection.outlook.com [52.101.83.17])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013002.outbound.protection.outlook.com [52.101.83.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D724BD373;
-	Tue, 13 Oct 2026 14:45:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9213D0BE1;
+	Tue, 13 Oct 2026 14:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.2
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791902755; cv=fail; b=ogP0JjQRWXU01uK47KjOX8EgNon9iysDOlso72ZMhcXAaEqUN/OzXOghwh+WRIX+HoeBLex4MV2fqFoS7aW3huxLcF6ZyH3SGyi7B8qy858/xat5TJnxHdONaU+WXV2/fiYSHjkOahbth5Iix6k5yG43iZpqayAMH/iZcCyrx6A=
+	t=1791903322; cv=fail; b=KcuZ0p+bTb+s5wFSItnoOJp96H49FMDsUaEiY0yWSet0IMOr7ufDdTv72BHum7cbX4qLWUqg5aGAokSc6lJaAiCwHRfsRCV09v9qa5dRg6sTISACZNv07K8NGRT2dFhZbL/e09eszsPheDXJPldQsu4c342/dunwi23TuPuHYfE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791902755; c=relaxed/simple;
-	bh=1YRbqz9f5wUAbfNZ+1FyQ8nR8+FYTZqyq9PYVoP9PtY=;
+	s=arc-20240116; t=1791903322; c=relaxed/simple;
+	bh=+7uD1qeoNrtWIKPK4kxzmWqsPONpnGJrOuUEmgPmiuY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=M1WyjpXMvqni+TyFDvYVfcCMiSq2L1u2hOCBaa4VFohrQaEBHOqGnpPtwZImyc1FPXz1GtBLItQVLD6/1YRAcqVNMNdf32KV2o7xm3vhKmU1Oxf49tzl2kCBMxFjhGqrbF8nPvFvSLuZ3m6hALIVG+QYcUmvl8KJ2KXlgiMyb8I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=NIIxD5E9; arc=fail smtp.client-ip=52.101.83.17
+	 Content-Disposition:In-Reply-To:MIME-Version; b=pMigCZSTZAvVR8DqDO8vzmJJp9k3Jdkgj1BgcHiaCjJV6EjP3on0bSvolbOkoN0O3pjuhG+zsJKqhcGOcQeb1Q3uJ3nbugPHN99fMBh25vKj0mKWJtiaUOyXaO9XvFd/jlkpSs8bkSNjpyIxY6NYesIQFUFUtsjbDbS+JshxjZU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=CEKXrD4Y; arc=fail smtp.client-ip=52.101.83.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="NIIxD5E9"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="CEKXrD4Y"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v6UeI5Qj3U/1yFpTVqJQJJI241KldgxRRDtuY0tsm8SU+fIhOBfa9Kzm+rXPuAkh2/o9l7vWt6xVdMk/fjhttP8RdddfUQ7nICCQszHQNPS7VS2tVKUIQCQFGyGAH8BreRB2Lk7nXJi7Ze064X0Qi3xD3NP5YWp+tx5nxHgiHySBPkRFXVeHl05AsdPmfz026S8qjRUkk8n4T9L8X2fy8soIMUd2hZ9Ej0yJEujQm9o2ph5UTQwsGvbNnxmwvPu4lOGqlXrYa69clhuxdsVPTz8vV6gIFAY+5V6wx3kEjnc5p/MidltjojvIwi8MrxdNg8M+rSpWqyolH1coYk0+yg==
+ b=Aw7+trSvtfLYh3k+TZA40Zf2OGq9InELjSbU2lFG2H6K5quGu4qPpywfqaDgycYoqYm8TJLlDRWg1jikSpyhCfmIEH3o6nJlAiZEfHjsOQ+o2hs3nto2mAvLWYB9KmwGuxkIBs8/IP6HuSt+jC6pHXTdlFbEe5yut2MUmQG4wl3mRm85jTPolHCJAM1ox8uIrM01bZBJweDJh/0OanEDQIYA6ytYzbmhscNLhuNPpdfZRG9H/TIHMfzm5GP1ARpxjQxwwQ0sswYfjziT8eGjOshDzXoWPUEv1LqGK8hKSwwBWpCZ9gVh7V12XU1USkngiia8huJuzK3nwsUAA3ddzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4LfXnhpl2ZWP8MUFSRZrEAbyPw0AhQF70pu820ogmXc=;
- b=IkDAXoGYdoETA8U9AXhPc2gN/ykDnWS91J6EPioEMYoX8e803qvePmysy/uyPnxJBYsAkPRhT+uc4BTaveafUIBVqg6bTWZ9BOcIRWNAoqJsj195zDHko8BcP03eRK9o/jRaUXbx1GsbR/5CFqHvGckIhxjzBk+D7vX9NV53ITuKkG4rTkfSuwrmqhG/qx/bFKqQlhL2w3TVfBHnpkb9ysSHvkyP2DgsQUzCN5AheFGrVgxKPahp7he3JtblO1P2m9sEw2DioLU+DVb/R+er5wPNjXekv45bIhxa/0kk5HVhCwbVomrvD64eDZguvGe8TDL6n84oVXGZsyFGWuxPtQ==
+ bh=eivp8cwGZX6BKr4DuJWyXBfqiqvrN247HN/4Xw349tg=;
+ b=rn9K6+guekyw0mBfmJfLUpfLQls+VSoz1mouNBKfxEzAxG39TdsiIioZ0j749fQLOt/28qihLnyygVvKHDiSzs8x2iWOLHzcJNP5UyMzl+/VYTpEcZ5gse/1Dp1v+gqwuEPL2XD+UtHg66QWGMLZbqp1J62weCygvS3k5A8y72+C5CWcZTrvsDEIRRzyNinez1GMkOJtXU8mhWPTyoQws13jOd8QqZ/B4kiJ9o/ZWclBpPEKgQzGJzhXs0CiFj7MIgPmBp1HzJ6FNcEkyddqsYT2d7KJO12AYAjFEkfKXwM2tMaIkCTFMkI7JAOrkDGLStMeVraOvbe3Gc+cJWyjwA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4LfXnhpl2ZWP8MUFSRZrEAbyPw0AhQF70pu820ogmXc=;
- b=NIIxD5E9C8mK9x2knLmoNoc7qiipQZVcPLmF6kUuf0yskwywN7oUuTC0FyQdAvC/y0v8/Zr3FoA3+dztR3bgojlsJ9RIUqf/XSw8EWy4MmVB3nFqA5+IpVoMQb+lQ3fEm7P3GRDoY+9mII6SRdFFSE1AsUw/RKD9bY6s5H78FDg6KmtbUMzf45LObKgb9Y9kycj1ILsTP25wHo1ZVXUxfi31mkQjdM/V/2kzqhZNdPh+bGlOiS7N+OzhdnEv8QKbKpYD7aDGsnxHDN3ZX78GBM836P/YA+MK/oGXnqB5S6rWcLbunicck6AN15PAxtTFF8oSOPseMqa4520GC4sNLw==
+ bh=eivp8cwGZX6BKr4DuJWyXBfqiqvrN247HN/4Xw349tg=;
+ b=CEKXrD4YJP/oEFX3wGwTIxShVNWdpjbL7thjT7AXwVk8cAzXxWlJxW4H/fKAm3sl6WR8miVHerU/pUJUIhzPj3WBKWHkhnFsiwgZ8zI8OfqWeA21y1HRE+Yg36lIss4lhxNp0dWRRYlMNCjctn5RguTm+UuLSSDJmHCs1+QeSeDgfGvzbXijrahhWfc7Wh0AmIly5oMDRd6/dvmVjR6Ks2iKlcrOIs8it+6XpHu6DUu7gzHr/Yctd09YSrcqzkFqvTh+AyidbEb2A6JtydbOedGAMBUJJ+sQ/O5QqhI82qRClSBe2VryzvEs1h8eFRaUL2nHCazohxnAmcdntE917g==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AM0PR04MB7011.eurprd04.prod.outlook.com (2603:10a6:208:193::10) with
+ by PA1PR04MB11358.eurprd04.prod.outlook.com (2603:10a6:102:4ef::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
- 2026 14:45:49 +0000
+ 2026 14:55:17 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.011; Tue, 13 Oct 2026
- 14:45:49 +0000
-Date: Tue, 13 Oct 2026 09:45:35 -0500
+ 14:55:17 +0000
+Date: Tue, 13 Oct 2026 09:55:03 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Rui Wang <wr574332525@163.com>
-Cc: vkoul@kernel.org, Eugeniy.Paltsev@synopsys.com, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6] dmaengine: dw-axi-dmac: report paused state and
- residue in tx_status
-Message-ID: <as5ED5zr6jhwJVxh@SMW015318>
-References: <20260928035133.2046-1-wr574332525@163.com>
+To: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Cc: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Fenghua Yu <fenghuay@nvidia.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Steve Wahl <steve.wahl@hpe.com>
+Subject: Re: [PATCH 1/6] dmaengine: idxd: Do not call destroy_workqueue with
+ null idxd->wq
+Message-ID: <as5GR-3kOfI47wQc@SMW015318>
+References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
+ <20261012-wt-idxd-fixes-v1-1-30a35a445077@intel.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260928035133.2046-1-wr574332525@163.com>
-X-ClientProxiedBy: PH7PR13CA0022.namprd13.prod.outlook.com
- (2603:10b6:510:174::24) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20261012-wt-idxd-fixes-v1-1-30a35a445077@intel.com>
+X-ClientProxiedBy: CY5PR19CA0037.namprd19.prod.outlook.com
+ (2603:10b6:930:1a::18) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -64,316 +67,104 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM0PR04MB7011:EE_
-X-MS-Office365-Filtering-Correlation-Id: c24d71fc-55ae-4db6-f852-08df2938abe7
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB11358:EE_
+X-MS-Office365-Filtering-Correlation-Id: 77dd5355-ff1f-4aed-585a-08df2939fe65
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|19092799006|23010399003|56012099006|11063799006|5023799004|261009223027099003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|19092799006|56012099006|4143699003|11063799006|261009223027099003|10067099003|18002099003|22082099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	clf4BMQePSOp2DyO6/VAGBLYbCJPPITQDzh9doUVNIaHo4v+lP5lKjz+CSJ0sdt1OHcCgOT9Wyb1FoWowd8UtLnMAR4CmfOO3M3Lf6E6X9+VJBdEI54rsHcM2t81Nd9UPZZz/ve33H933wTyW2/DL/hWE0RZZJ12mvz8gOsfxpyd9I+GrnZZk+dxy8pLsDcQqVJPaLHjCDvDQxGZXg1HXPNXQsaA+iY95RFnHCXZf0IKeoi00jpu7xFrEB++yUCHzBviTG7I11Bi4gBLMaBlnHsABCe7up1MYvC3qUEX4KO65OJT8X1ibyQ48JMbGe1TcDO5BQRqA2Rd/sKwwRC1Y0pDXd3AvBzQtKvEjIlL/lq+BiwM6e56igi9I96cAD7wVRFeO5iiw5bDjg4a1NEI/B0QQsh0Xr0FBv1kLrm8wWJhOz+OOLmlIRPpMEoY5ZxuzuzqF4EZBe9soZv4PVcNK2+bC+JfGKOe/J4WDkBrK2DvoYgh4P3S0IuZoIriQOfd/to1ydl8nuQHGYxHrm+VumebSgpdbRApqDcJPZ10p8KpQOm6zqV/DCh61G7hTSHpfLUxTF/WYaUPzW1c/7fSsmTqvE0fVwM+7MhqfPzkQFvIP3ZMlbbV5Iy402On7nZl
+	cQ6Pa/esH61TsA1tmBfPPHGzeWS53ci/Z8ImBgnhJ71j06vI2zejUPzDPZG/cN8AYkh/6Onva6NYZ6Uce+JP0dCvBgbGMjkWrg8SZGfczYr3415TJjwKV8vdZJ0M4aW8pNLm0J+bIH3wp1hH+evzXcjtWggk7GTFY0B0yNX5+4+AVAAyFy6oGM8O2jiP/Ntf07CAancZJWl4ej6i9IqLsm58VJDbCEiyuMqBJiudu5NavGAq2/8zm1cxwWsKXfr+KDQqgMdnTzAKVhS95H2UDw86lEZrnIxPpra7sTZooMtrpsANgKRYcEqil9rWHa0VsKU5jpd1KkHK6GGoNmxQdxs7w32x1HQZNJk2bAeZ63yGVhgqZSTc6xMOlN45sq0hej+Rc2EQpPL2nMZg7DUfbpKEZIirq0eTWyHbdmM3ewzPb/279O88ktVqVrtpE9ItVI+p0diKiToeuZMLV6gPDl5isJMr1fPxrBJsRAE9YhAzsrsy7kBWQbvZNEyNAVkdk4d9zH0J7Orm40gkfO9kKIcxOCkhflhXIMHp7QOqwf8SgvwBJqGHCT00ljwsXQIexQSCxBJdhkn8JNart5ntY1wS2eCIGf0FDWrWcHJdZc1gjvCsuSOK0ooI8BL8uhv2gw2In0TwOeq1HLdWmoxBtcL3b1Ecjj61J2Xd3tUlZ2Y=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(19092799006)(23010399003)(56012099006)(11063799006)(5023799004)(261009223027099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(19092799006)(56012099006)(4143699003)(11063799006)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xhVODZYU96d4y2dTmSHebw8oirBhEElGMP22lBKCagABd9b958veCst5Xbrn?=
- =?us-ascii?Q?IOD+7kLNtpZe6fIDZqbXbz/VABZqJKSGAn73YepU9BAJ2FQOufqYSxWZPAOx?=
- =?us-ascii?Q?4qHuVIFWhrPHA2tby3uIJhlkwjJswuP9EHKs8dkvtmdGXbDbbHqX3DV2zRuJ?=
- =?us-ascii?Q?pgB8H7GfEiptl9NMZsVA8DKXOhbbZESQ0F5EBBJlIWxMUPrc8iZ0ALLv2Dkn?=
- =?us-ascii?Q?HxgQinNTyXIM+Q8NB33WvkGYPLGyE2/9zMsFzCAnf4N6WlDQ8HC61rG/AVRG?=
- =?us-ascii?Q?fklTYWF9UsNRWYfRD4RMn7sOc7xTWFiZR1aks3HdT8PyKRuUzNIx92/ar+84?=
- =?us-ascii?Q?PwtwBqkupd/GdOvqkJgEvrHe6LJselUQVvpC7FhBkHl5SsbsAa9DFCat3O23?=
- =?us-ascii?Q?NbkHXgbKCfCwwnkrjibIb7pvsIctg3H5HNFg9ZxVJOsa+uzEYSmRiBUgZAvw?=
- =?us-ascii?Q?natu6rkEkwn6fpnFU1kTnoa4uR6xWKGgufWmK5rKs+PTrmLcWKUAiBsyuhfj?=
- =?us-ascii?Q?HuWPwgnpbASGe5lqdyhmvlvxjgHYtJ0Um0f955hQhRDgrLFrZNUe2IhcB5A7?=
- =?us-ascii?Q?TobkD2+mH4Yx2bG9jX26neZjzJKGdBmffUL5UEYREIW7eOXHv5GdVv7ip4RT?=
- =?us-ascii?Q?A4zIPISotr4FD/25yNpesCAzSdl69KosEoKnN7ToZHRZqyL/5TJPhGc5VLR4?=
- =?us-ascii?Q?HjNDAPSpHrFVNee56CnWIjHPJCOsinZ4cBQetHklviSI5irziNjcafa9wjVV?=
- =?us-ascii?Q?a7k/kDsIUsPTGQtB/DUIfcVF4mHBcuAyP3QNwBel1AHMtq+iP1U/LY+YtOkc?=
- =?us-ascii?Q?V6hZsZ8MFeZ8DJSf/s0qesFAwaNZZ/WYcqOJuEjHNqyGvpqxl28pkVe8qN3h?=
- =?us-ascii?Q?+Uson3HQ5k1P6CYECVDSHTabWdMWyajLEffldBsUXJC9ledYkQhFexSD+4M1?=
- =?us-ascii?Q?NYYCx1tCDuuV3s9DL1ZmefVezl//zNuy3mLfe7lKaqj+mDYL735BjFseGfsC?=
- =?us-ascii?Q?GJW7TofdxYWoDvMXWMtQD6DbiGFRDhJhw8Z0/4iaDgoDm/hUMgpaU/X1DcyC?=
- =?us-ascii?Q?IJnLU9Ytzz+P9WDXRAxE0xs7zZSyWglxxjFQib2Qhf9oe6v6fU8CUNoCajuJ?=
- =?us-ascii?Q?ojF4R1xxsS5u/DHrTXQ/dwNoztoJuycDKlc371qPDOhUiuwNPKkQjiUPf5et?=
- =?us-ascii?Q?tz6yeDTVexVXvL8Cv4buoFwWlzfemgHnPvAM+H0Op8esWtpkNSmr7k7klCT4?=
- =?us-ascii?Q?9If9M1/Za6VkxR1y3WTXrjhoq73rv6Mp61uOWRWXoxAp5kW+KbZsiSlX4TdE?=
- =?us-ascii?Q?cbYTiVulhW6ynuDGCjJJy4Y9q9saJ6CwvIbHAo3Q+ALkEAV+pIZqHoxIeB86?=
- =?us-ascii?Q?Wv941KVZ2Gu326jmVhCQnVBlg1oYschutSSzJCRYVLRrJAcu3wEXNBytDoxh?=
- =?us-ascii?Q?6Av14JmO7VxO5reuKLTeFoZ6AoALszCc54StI9LipSK2bbGEMJRf4f/OvRYs?=
- =?us-ascii?Q?DJVptNM+0J7kp5o3T6A8vRmuEV5DjT69GMH0s0hwZoF7wv+a3SUUW97EyJGb?=
- =?us-ascii?Q?1R9DYdXAKYA9ZQjpG5lXoENUGK4NF/mW7zdjIyIAHOTkGgTGgILJySQXFAKS?=
- =?us-ascii?Q?WPlEFNxBZwgqfbvj/WNRGHsWA5HA2VcB2CkxIxWB+ztuHFxRvXOxJ15as5B0?=
- =?us-ascii?Q?ciLMbhBpbLa7mwI/rgA7Gpp2WC79s086JJ3tkLKKLXXxIxqT/TjdjRmnygNm?=
- =?us-ascii?Q?rb6M/Qe6JVBkCoD09bLlaq9R6981IYleUEKGApnU8sihpI8u07+2?=
+	=?us-ascii?Q?5MPCwLi26kVxRUGbsavWxyoSD8sejn36rhoua3tzFAaAPHerSl1VcyeCPdsZ?=
+ =?us-ascii?Q?h1M92EGqarBjciMoaqA6QmwlHqKEEcftEQRGjY9kf5Rx43fQrBxLNEwLNUnE?=
+ =?us-ascii?Q?tojNnZL1dJe8CSNo/pzOKB33X9FAaS6bswV48Vvz9bk4MHPzNMPSDNZ4itng?=
+ =?us-ascii?Q?+tTi6e3N/KINTIinml5tqZhsTMKM74ycHexnGo/ZGT2bhSt1nvWtD5z23h9h?=
+ =?us-ascii?Q?wT2IEmGfoUVfGPOrUJTrkmcu6XXgjySFMqG6h63iKnk8a4RKJOQWSj+Ov8DS?=
+ =?us-ascii?Q?qj5AeX4VNvCfFsjOrdQqxm59RmfkdlheM+/JJ4YePgAPXo4+rCgKiwNnfhv1?=
+ =?us-ascii?Q?m9Zh6nzTjVJZXYW5WdArWxMumdFBR94Y4v0Ytd0sitJAp7Y2u/5M+632EHni?=
+ =?us-ascii?Q?xDlWihpu5wKEYvUv0ggxMK5FWzfZU/ZdykraLif/Fu9mC5O1XFeo+d/Zrm1j?=
+ =?us-ascii?Q?vwDQIVNM3Pa91yC2fAc3lmAtMHlMSaxKt/XmCN6BXIffK7D2XLlwWMdb76S9?=
+ =?us-ascii?Q?lNK9k432M+tVHa9e+9U2H1cSWhcAovT9lLRBrePNvZuHEBzv3R21ZD12chU3?=
+ =?us-ascii?Q?O+tJ6Hi0zpVyjE6MM0GJKC+0dbsPxLp22LgABqmbjdsz54HmHNQlSUysOFG7?=
+ =?us-ascii?Q?KoqfvJr0Lm+/fgPQef9M+CWO+1tVRjITTK8LFTvJWji/MjTxwz7qV1QjRbh9?=
+ =?us-ascii?Q?sJGKrRNVQP9dBrgm0HX/szs+Tde92ItpJqjj8SOOHHuu9hKDm7XGgXjybJO0?=
+ =?us-ascii?Q?/ExJDgEwjulORWhdwVKTk0+q5t9o/kJEc8z7Z8+Me7AlwDWgr1/DyFv/1bvX?=
+ =?us-ascii?Q?ofRbciJIQMAVJ/t0J90QLReItAqXYiKqeNf1/DEY5gJnsg24/buNX/8d7Ycn?=
+ =?us-ascii?Q?tB0h7g5nDkNo/1Gf7QzZndB0XKaedDvBRQwQxyh3C/xczzBYhhwWvZQq96YC?=
+ =?us-ascii?Q?4oZrpP5vAjyCVTMYpzTfSrdG3BvbH/re+t4z8s6rT8EhJTwm4W2Fd0Ep4kLB?=
+ =?us-ascii?Q?TVQiUmqgFgRTHlny3QAD2+KQzWz+hfcdQwweKZEvQuD2kDGRKxHz/l9x6WYB?=
+ =?us-ascii?Q?FzKhxwH5OzPxHwvQcxP/ZXi507WoPGRWIq7wtECvgKsQQIV/jry4RO2poNjK?=
+ =?us-ascii?Q?7AXuuWcoaCi28uEtDls7RUtU08vO61B41SRtYI6HXSUDSweMZ+8Z0VYw1viX?=
+ =?us-ascii?Q?7QMuJWA1UZDzAbH05xGg+QQXTVymotk2ODVDZkcF+lpFO0N1NFyBmRCkI1xd?=
+ =?us-ascii?Q?EyNZag3McFC4YIe/WlWRFZm9lMpLFk0MhyaiEEomo9sdKPneDvw5MBeFBEJ0?=
+ =?us-ascii?Q?bIGLhVuivKPjvMAZ3qOid3+BIO6uOZSXGJn/yZDPUgEEynkVmmDi+u92S7u8?=
+ =?us-ascii?Q?JwiE6k4DGearaccow0A2dWHzZIC+gC3J92oatRRF/gFxUnqYH9L/uACXmFdT?=
+ =?us-ascii?Q?XbWHsInvPwKIdJhm1/k5Th6czke53cZUU7//wdV+MMzIiCmHmPC5T72nS3mI?=
+ =?us-ascii?Q?gzf+2QSSZzGZToFrse9McIwXAnxqfi0f6ZKjCX0N15mgx7NmiMfDnXjkZLVo?=
+ =?us-ascii?Q?jo2BJahFA/t9ZjGh0vq+TBURVGmFhnjYnWk61zoNbdD72/ntqr8WeUYErnGQ?=
+ =?us-ascii?Q?PJyXwniTO3tSyxXTbJiEOPZzfP+AWybrrX202fvIHamEaxb8sXIfFDQZZeFE?=
+ =?us-ascii?Q?OFOR6lhSPDgko5nirK0XLu1h5GW89BZPzQW8volxqosKgMgFyjXGv9yZGMZx?=
+ =?us-ascii?Q?0YjVR+xNFWWeTGerKpSbpXVh/B3Kjg6yyOCNaJbepjHiYDp0Fzzl?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c24d71fc-55ae-4db6-f852-08df2938abe7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77dd5355-ff1f-4aed-585a-08df2939fe65
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 14:45:49.1716
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 14:55:17.0916
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HTdFMSTAnTX2Gbfh6u/eZpizPt7K/NmwpSrWJXvnF/lajcVusfkgz4Ke9yOwgIsll3Zo2gCpxEPCMWT2KIAgE4Q3lJvueGKzadtIbxILdDboum4BP75C2/luDm4XwFnZ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7011
+X-MS-Exchange-CrossTenant-UserPrincipalName: QkPSnok3BSJBtsiAM1Saw01JW8+HPLsx8O28MgLwLkVyUlgcUaEp6lBlMWifjS/lkXKEEkFS7EZBDR+5NKmwbvIhTOpd1xSefnP5L2nE9W5pdzOQhtYwE4fBPMxpe/ZE
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB11358
 
-On Mon, Sep 28, 2026 at 11:51:33AM +0800, Rui Wang wrote:
-> The driver implements device_pause/device_resume, but device_tx_status
-> keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
-> tell a paused channel apart from a running one. Report DMA_PAUSED when
-> the channel is paused and the cookie is still in flight, including for
-> callers that pass a NULL dma_tx_state, and clear the stale is_paused
-> flag in dma_chan_terminate_all(), which disables the channel and thus
-> implicitly cancels the paused state.
+On Mon, Oct 12, 2026 at 02:38:04PM -0700, Vinicius Costa Gomes wrote:
+> From: Steve Wahl <steve.wahl@hpe.com>
 >
-> Also, the residue of an in-flight transfer is currently derived from
-> the number of completed LLI blocks, so it only advances in block-size
-> steps and stays stale for the duration of a large block. Read the
-> current hardware pointer (CH_SAR for MEM_TO_DEV and MEM_TO_MEM, CH_DAR
-> for DEV_TO_MEM) and walk the descriptor's LLIs to compute how many
-> bytes have actually been transferred. The 64-bit pointer is sampled
-> with a tearing-safe double read, as the transfer may be running
-> concurrently. The pointer is only consulted for the descriptor most
-> recently programmed into the hardware, tracked in the previously
-> unused chan->desc field; any other descriptor has not been started yet
-> and keeps reporting its full length. When the transfer has just
-> completed but the descriptor has not been reaped yet, the pointer sits
-> at the end of the last block and the residue naturally reads as 0. The
-> pointer registers are pre-loaded with the first block's addresses when
-> the channel is programmed, so a stale pointer left by a previous
-> transfer (e.g. when its buffer is reused) can never be observed before
-> the first LLI fetch completes. Cyclic descriptors keep the
-> block-granular accounting.
+> Error paths within idxd_pci_probe_alloc and related functions end up
+> calling destroy_workqueue with a null pointer, from
+
+all funciton need (), include subject.
+
+destroy_workqueue()
+
+Frank
+
+> idxd_conf_device_release via put_device, because that allocation has
+> not yet occurred when the error is hit.
 >
-> Tested on an FPGA platform.
+> This was encountered running in a kexec'd kdump kernel with reduced
+> resources, causing the "Device is HALTED!" branch in
+> idxd_device_init_reset to be taken.
 >
-> Signed-off-by: Rui Wang <wr574332525@163.com>
+> In idxd_conf_device_release, check that the workqueue has been
+> allocated before trying to destroy it.
+>
+> Fixes: 3d33de353b1f ("dmaengine: idxd: Fix not releasing workqueue on .release()")
+> Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
+> Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 > ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
-> Changes in v6:
-> - Pre-load CH_SAR/CH_DAR with the first block's addresses when
->   programming the channel, so a stale pointer from a previous transfer
->   can never be observed before the first LLI fetch, even if its buffer
->   is reused for the new one (discussed with Frank Li).
-> - Link to v5: https://lore.kernel.org/dmaengine/20260924025739.844-1-wr574332525@163.com/
-> Changes in v5 (thanks to Frank Li's review):
-> - Rewrite the tearing-safe register read as a do/while loop.
-> - Drop the "never report full completion while the channel is enabled"
->   clamp: chan->desc matching already keeps never-started descriptors
->   away from the stale pointer, and the residual stale-read window is
->   bounded by the first LLI fetch after channel enable.
-> - Use min() instead of min_t().
-> - Link to v4: https://lore.kernel.org/dmaengine/20260923060045.5571-1-wr574332525@163.com/
-> Changes in v4:
-> - Track which descriptor the hardware pointer registers belong to via
->   the (previously unused) chan->desc field instead of testing the head
->   of desc_issued: a queued-but-never-started descriptor must not be
->   matched against the stale pointer left by a previous transfer, which
->   could otherwise falsely report full completion when its buffer is
->   reused.
-> - Clear chan->desc when its descriptor is reaped or the channel is
->   terminated.
-> - Link to v3: https://lore.kernel.org/dmaengine/20260923044104.3234-1-wr574332525@163.com/
-> Changes in v3:
-> - Report DMA_PAUSED also to callers passing a NULL dma_tx_state.
-> - Never report full completion while the channel enable bit is still
->   set, so a stale pointer (e.g. a new transfer reusing the buffer of a
->   just-finished one) is not mistaken for completion.
-> - Link to v2: https://lore.kernel.org/dmaengine/20260923034653.1413-1-wr574332525@163.com/
-> Changes in v2:
-> - Sample the 64-bit SAR/DAR with a tearing-safe double read instead of
->   lo_hi_readq(), avoiding a torn pointer when the low half wraps.
-> - Read the hardware pointer for the in-flight descriptor even after the
->   hardware has just completed it (channel enable self-cleared, IRQ not
->   yet handled), so the residue reads 0 instead of jumping back to the
->   full length.
-> - Link to v1: https://lore.kernel.org/dmaengine/20260923030201.859-1-wr574332525@163.com/
-> ---
->  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 113 ++++++++++++++++--
->  1 file changed, 105 insertions(+), 8 deletions(-)
+>  drivers/dma/idxd/sysfs.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> index eebed2474..0fa97b83b 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -352,33 +352,110 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
->  	axi_desc_put(vd_to_axi_desc(vdesc));
->  }
->
-> +/*
-> + * Read a 64-bit channel address register while the transfer may be
-> + * running. The two 32-bit halves cannot be read atomically on all
-> + * platforms, so sample the high half before and after the low half
-> + * and retry if it moved (the low half wrapped in between).
-> + */
-> +static u64 axi_chan_readq(struct axi_dma_chan *chan, u32 reg)
-> +{
-> +	u32 hi, lo, hi2;
-> +
-> +	do {
-> +		hi = readl(chan->chan_regs + reg + 4);
-> +		lo = readl(chan->chan_regs + reg);
-> +		hi2 = readl(chan->chan_regs + reg + 4);
-> +	} while (unlikely(hi != hi2));
-> +
-> +	return (u64)hi << 32 | lo;
-> +}
-> +
-> +/*
-> + * Return the number of bytes already transferred by the descriptor
-> + * currently on the hardware (running, paused or just completed), based
-> + * on the current read or write position: CH_SAR for MEM_TO_DEV and
-> + * MEM_TO_MEM, CH_DAR for DEV_TO_MEM. Must be called with vc.lock held.
-> + */
-> +static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
-> +				struct axi_dma_desc *desc)
-> +{
-> +	struct axi_dma_hw_desc *hw_desc;
-> +	bool dst = chan->direction == DMA_DEV_TO_MEM;
-> +	u64 pos, start;
-> +	u32 xferred = 0;
-> +	int i;
-> +
-> +	pos = axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
-> +
-> +	for (i = 0; i < desc->nr_hw_descs; i++) {
-> +		hw_desc = &desc->hw_desc[i];
-> +		start = le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
-> +
-> +		/* Current position is inside this block: partial progress */
-> +		if (pos >= start && pos <= start + hw_desc->len)
-> +			return xferred + (u32)(pos - start);
-> +
-> +		xferred += hw_desc->len;
-> +	}
-> +
-> +	/* Position doesn't match any block, be conservative */
-> +	return 0;
-> +}
-> +
->  static enum dma_status
->  dma_chan_tx_status(struct dma_chan *dchan, dma_cookie_t cookie,
->  		   struct dma_tx_state *txstate)
+> diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+> index 6d251095c350..d5ffc641c856 100644
+> --- a/drivers/dma/idxd/sysfs.c
+> +++ b/drivers/dma/idxd/sysfs.c
+> @@ -1836,7 +1836,8 @@ static void idxd_conf_device_release(struct device *dev)
 >  {
->  	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
->  	struct virt_dma_desc *vdesc;
-> +	struct axi_dma_desc *desc;
->  	enum dma_status status;
->  	u32 completed_length;
->  	unsigned long flags;
-> -	u32 completed_blocks;
->  	size_t bytes = 0;
->  	u32 length;
-> -	u32 len;
+>  	struct idxd_device *idxd = confdev_to_idxd(dev);
 >
->  	status = dma_cookie_status(dchan, cookie, txstate);
-> -	if (status == DMA_COMPLETE || !txstate)
-> +	if (status == DMA_COMPLETE)
->  		return status;
+> -	destroy_workqueue(idxd->wq);
+> +	if (idxd->wq)
+> +		destroy_workqueue(idxd->wq);
+>  	kfree(idxd->groups);
+>  	bitmap_free(idxd->wq_enable_map);
+>  	kfree(idxd->wqs);
 >
->  	spin_lock_irqsave(&chan->vc.lock, flags);
->
-> +	if (chan->is_paused && status == DMA_IN_PROGRESS)
-> +		status = DMA_PAUSED;
-> +
-> +	if (!txstate) {
-> +		spin_unlock_irqrestore(&chan->vc.lock, flags);
-> +		return status;
-> +	}
-> +
->  	vdesc = vchan_find_desc(&chan->vc, cookie);
->  	if (vdesc) {
-> -		length = vd_to_axi_desc(vdesc)->length;
-> -		completed_blocks = vd_to_axi_desc(vdesc)->completed_blocks;
-> -		len = vd_to_axi_desc(vdesc)->hw_desc[0].len;
-> -		completed_length = completed_blocks * len;
-> -		bytes = length - completed_length;
-> +		desc = vd_to_axi_desc(vdesc);
-> +		length = desc->length;
-> +
-> +		if (chan->cyclic) {
-> +			completed_length = desc->completed_blocks *
-> +					   desc->hw_desc[0].len;
-> +		} else if (desc == chan->desc) {
-> +			/*
-> +			 * chan->desc is the descriptor last programmed into
-> +			 * the hardware, so the pointer registers belong to
-> +			 * it; never match a queued-but-never-started
-> +			 * descriptor against the stale pointer left by a
-> +			 * previous transfer. If the transfer has just
-> +			 * finished but the interrupt has not reaped the
-> +			 * descriptor yet, the pointer sits at the end and
-> +			 * the residue reads 0.
-> +			 */
-> +			completed_length = axi_chan_get_xferred(chan, desc);
-> +		} else {
-> +			/* Still queued, nothing transferred yet */
-> +			completed_length = 0;
-> +		}
-> +
-> +		bytes = length - min(completed_length, length);
->  	}
->
->  	spin_unlock_irqrestore(&chan->vc.lock, flags);
-> @@ -427,6 +504,7 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
->  {
->  	u32 priority = chan->chip->dw->hdata->priority[chan->id];
->  	struct axi_dma_chan_config config = {};
-> +	struct axi_dma_lli *lli = first->hw_desc[0].lli;
->  	u32 irq_mask;
->  	u8 lms = 0; /* Select AXI0 master for LLI fetching */
->
-> @@ -468,6 +546,19 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
->  	}
->  	axi_chan_config_write(chan, &config);
->
-> +	/*
-> +	 * Pre-load the pointer registers with the first block's addresses.
-> +	 * The hardware reloads them with the same values once it fetches
-> +	 * the first LLI; in between, a reader observes the start of the
-> +	 * first block instead of a stale pointer left by a previous
-> +	 * transfer (which may alias the new one if the buffer is reused).
-> +	 */
-> +	axi_chan_iowrite64(chan, CH_SAR, le64_to_cpu(lli->sar));
-> +	axi_chan_iowrite64(chan, CH_DAR, le64_to_cpu(lli->dar));
-> +
-> +	/* The hardware pointer registers now belong to this descriptor */
-> +	chan->desc = first;
-> +
->  	write_chan_llp(chan, first->hw_desc[0].llp | lms);
->
->  	irq_mask = DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR;
-> @@ -1077,6 +1168,8 @@ static noinline void axi_chan_handle_err(struct axi_dma_chan *chan, u32 status)
->  	}
->  	/* Remove the completed descriptor from issued list */
->  	list_del(&vd->node);
-> +	if (chan->desc == vd_to_axi_desc(vd))
-> +		chan->desc = NULL;
->
->  	/* WARN about bad descriptor */
->  	dev_err(chan2dev(chan),
-> @@ -1140,6 +1233,8 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
->  	} else {
->  		/* Remove the completed descriptor from issued list before completing */
->  		list_del(&vd->node);
-> +		if (chan->desc == vd_to_axi_desc(vd))
-> +			chan->desc = NULL;
->  		vchan_cookie_complete(vd);
->  	}
->
-> @@ -1205,7 +1300,9 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
->
->  	vchan_get_all_descriptors(&chan->vc, &head);
->
-> +	chan->desc = NULL;
->  	chan->cyclic = false;
-> +	chan->is_paused = false;
->  	spin_unlock_irqrestore(&chan->vc.lock, flags);
->
->  	vchan_dma_desc_free_list(&chan->vc, &head);
 > --
-> 2.43.0
+> 2.56.0
 >
