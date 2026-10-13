@@ -1,65 +1,61 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013057.outbound.protection.outlook.com [40.107.162.57])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013024.outbound.protection.outlook.com [52.101.83.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573D553C3A3;
-	Tue, 13 Oct 2026 20:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.57
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D193E535FDF;
+	Tue, 13 Oct 2026 20:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791923698; cv=fail; b=DdxDKKwuDz8Qs6AjjxNNEWb2wJYPmUF9D5W4kXZzP1edShbjDyG/VVBh3a9os9/7f/bGkwLxiiZUowFO9zDDP1/LEo3JAe8kfEXbSItcupEz6zjsdNmsD71FWWd+srn6bmGV/XsJmv+vDFfcMzGpEmIow050vqCbPYL9CckkK4w=
+	t=1791924115; cv=fail; b=V5MYMqPRyv6yYPzWTe1U0iLx+MWWI1HwCLyAUo0tQcehWU1PSfMzOKOGNceQkqyU7mxMPZFvaxQo/UtJFZmH6VpJZ+Z9wnog2KPfzzW5K1NVPqza4IBYKPtU4BJGCCmspDU63XQv/7Vjp5khm+HneCfotKClbyNS7Poa9RZJkHU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791923698; c=relaxed/simple;
-	bh=9im+Nh7uz6vkHVx8/yhwISI+mR5zWsqljmIspQASpYU=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=GKDDP4NaHkb72tFDifvTPJ4c5sltEs4cop5DzAuN8krdO3UBYT0qqs3jHQ4q86114N1BE7OrNYrpn/SgHJ7YoRo5ZmHiVHc0cBRaPEZDkmvZlXXs3Dlxn6n2TRqg9xz4Igc+b4H4gmw0HDapOB2UyJXORh2tf7SAWCEmZtO3rwQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=oqw0a6am; arc=fail smtp.client-ip=40.107.162.57
+	s=arc-20240116; t=1791924115; c=relaxed/simple;
+	bh=wXT8VYWx88OBmBxkGtESJhjCqwQhKuKgxVdy+wER4AE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=SbD6u4Dl3OErcBHVQ1gUW+9dsjruqbuWEWX3GROR4/I0RYvRYR3efzq1RTRrsa4N8hdpkUQxfzdcG4U9fg9e14FVdI4D7rqeSiOHjc1SxALbxRnlUoHWHO5wf/h3leZpJ7EVFuTybUnNNKwuI2mIO6yHMmWZDiHT8WB3SvcVHp0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=lh0YWXs8; arc=fail smtp.client-ip=52.101.83.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="oqw0a6am"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="lh0YWXs8"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u3yTGJZfRaPgFHk68egZTeiFCrkFAErYWDrG1HLOwhj74qhsNa6absm+No2//zAD25MdcfqjCyybsOUnmFycoihXqL6CwNb7T3pv9sowLq4YnvsWVut8ln+uVOPvRhIPXS7Zw8xbcuqhWsB+3B1wdbH+SNLI9EECMjTTs6BPGnrI2yAtncktm6dKXMUkpY+ytxl9A/JYuStUNi0g4FknoPNTM0RObKYi56smZsFCwWvM5OiFl7jTGDRzXzVqoYWghsUfTeF4UboI2Yr3qpPM9p8St/i/Q55Sam1LNzvJoxuwfq8ORHY4aHdwzQXuMXhUBameMVTADZuyFZhdYpseKg==
+ b=VfnjP33t65nBwfainexLA/OXo3ayA5Xzb/phRY3zP1pgthekCnB2laFFh4Rqb1wK17iL6Qjh9GQTWV0MPA5gPM7HjqbtCe6d+odkE/62pMlnZSv5r9H5LyK6HDyTv7WuTqmrZx40RC4YfEJxqAE+fBtGrjrGEBGeginFhpnKfVPX2NVJUv8Z0ieCboS6dYg4mTGAM9sfYeSrHqMUWp6bXaB1Sdw7IKEHNV2of40nFkSbrXF7AuWQ7OP9VdbrKQ0Zbb+OZkLqVIjFNaScVXnSG7Cuhbkzr6xvYAiy5XM1Pn5ubWuWFZMoaQmIR93wiJ/app9Ftrb+pYpJjU3JDBJD5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mPjY7nDGYGEPwJsecX3KR7AhF+6rOy/LTJW3VsPighQ=;
- b=oV8KLZwpmpMDEcPuLTO/gDe+CDCYf0/mlk20i42A8lQRpAjFy43O3CGRdZAI3UkIKiTCSuDlDjNRi6d3bt8sEk9gv2qFnxsPUcsj0app+msXjQfnfeAMqS6KtHgr3jDImnY+ObInQ9dscVmgzvdw9HpcML+xE0hOmhbgKZwA7CWyjV3WaFK2U5I2KlwYJ8iwriTGHGqfe1FNHcKJCpeHTacmQs7i0Go6g1a0+/L2YzSguCV4MfQ7iPIwyAADcQdK52CK233CIp4E7PcRnGCijGzBX8ozMv9kyJz4ASjPO0OraunlSlmhLMkNkd8vrMi6xgOSYoQDR7VOh2bMz2ny7A==
+ bh=tT4DRGt7zYL4oQ5PVLKpHMOZhB9NI9ev44KruZVL7xQ=;
+ b=DXtdjtfB9KjU6kTBsYuNyb2UvNlx66cwav5o2IHEQp+534zUPCvu/Z7f1LRW1v6j2xQ8FtzGOHo0+Wq21BBGwVHcv1AGqPVgNwi7bfL6+4gaiutKqDIKkhjHyRDch6nj8Ik1RKngGFTD/abFrITaCzrbjnsgV/e8qPpkC+dF6lr+bdnarCTSz/bGbg7qIbTc9pOXws5yo5nBK8qPXkpIvSh5kFXm4XPis8zbxC8QolQRknZQqdrNPvdVd139QdBpX3ftV+SUwU2XUDx+nogwZGPvg3nxqEwTUavIeGdl8NAv6mB7N4SUCnxjCDOz+cfFNRwrh/9N/0mPb7qU4Uyrtw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mPjY7nDGYGEPwJsecX3KR7AhF+6rOy/LTJW3VsPighQ=;
- b=oqw0a6amqQ/4kpipOrQmPwRSpmhVWwgY+st+SfMGXUy6t6+kGLlp357y/juyIY+pw9ECJlesEyS+AD3vDrZSGxLNEO6Q6a5nI2mNxTj5Ui2KX+iYBCaKzbLFgCn1b1feMpehTFd9MYzP41OE2aMelpQJw3x2vd3zl7qTUPm9NndZJUODLEs7zrIuTk2igiknhBp3pIg+cD+qJiPrrNkWwbnkP1DGGd+L89cUijxo1ElEINZBkiFJ/R/MApM1gBfrYnLnb3ZRMvIZPaiM5OGsRjfdBxMJC0oL/qjCXyZIMZmbOv7eTjlUX3dDi9FUg8XUEvJx2WYiT7uEoJwzh3r8vA==
+ bh=tT4DRGt7zYL4oQ5PVLKpHMOZhB9NI9ev44KruZVL7xQ=;
+ b=lh0YWXs89ULzr8HfAYklUZKZ6uxe5RC6/dEn48Gnw/5CGvfMkLeUp3mj28QKymXp/8N3PTL7htHeUUdGooJVl7dBtjFnKk4APoCnZZe8ZpN81JiE2kJ30rwf5Rsd/ov3UhLIIfEa8Nvau4mLq3yzUOPKKS6aVDwYhnfpDIPgggsbPH/hwVdufsfjW2QgwfyvTbzdRTiDKzLfK5I9rvVw08gVZsmGKRB49hwENIPc5Jvxa5tmY+okyJR7R3J3Hvc8nwaDDRp2NBoLTK8RXUp9F/d2ZWrjT/jg5U1hRSiY14tEP7QMtW5QgntJEttlSYS2YndPUEBH0d8nt2opYA3Slw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by ZR6PR04MB375776.eurprd04.prod.outlook.com (2603:10a6:910:dc::10) with
+ by AMDPR04MB11555.eurprd04.prod.outlook.com (2603:10a6:20b:71d::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Tue, 13 Oct
- 2026 20:34:51 +0000
+ 2026 20:41:49 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.011; Tue, 13 Oct 2026
- 20:34:51 +0000
-From: Frank.Li@oss.nxp.com
-To: Vinod Koul <vkoul@kernel.org>,
+ 20:41:48 +0000
+Date: Tue, 13 Oct 2026 16:41:42 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	dmaengine@vger.kernel.org (open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM),
-	linux-kernel@vger.kernel.org (open list)
-Cc: imx@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 1/1] dmaengine: shdma: move shdma_chan and shdma_desc structs to private header
-Date: Tue, 13 Oct 2026 16:34:23 -0400
-Message-ID: <20261013203433.337893-1-Frank.Li@oss.nxp.com>
-X-Mailer: git-send-email 2.43.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: CY8P220CA0013.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:930:46::9) To GV2PR04MB11799.eurprd04.prod.outlook.com
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dmaengine: bestcomm: drop unneeded sram exports
+Message-ID: <as6Xhp7ldXkA0CFh@lizhi-Precision-Tower-5810>
+References: <20260915180919.8899-1-rosenp@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260915180919.8899-1-rosenp@gmail.com>
+X-ClientProxiedBy: CY5P221CA0149.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:930:6a::9) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -68,291 +64,110 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|ZR6PR04MB375776:EE_
-X-MS-Office365-Filtering-Correlation-Id: 22a79334-fd8f-4b18-1296-08df29696e64
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AMDPR04MB11555:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54859678-bf37-44e3-0156-08df296a6761
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|1800799024|19092799006|23010399003|56012099006|261009223027099003|11063799006|18002099003|10067099003|6133799003;
+	BCL:0;ARA:13230040|376014|23010399003|19092799006|366016|1800799024|56012099006|11063799006|261009223027099003|22082099003|10067099003|18002099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	60YrGeukHCnLBorFDkIFRlEdE9H8TU3zfBuwRYspa4p+tO9SC6eVH5UxMQ29MabqEkEIUpmty3cV4uu1YPcmISEe4MvEHwsBNuI4PxN7a2MhaHOnjW8XdALC2qEUXABWP2Ey1A5uFCqo3/jWC9QwTAGsCW/k1GZSfYLX3meEE5fB/0TWwoMZ8REcPTagLAW2lQqWHIe6Hu3tpGe7/umuwI6PGXV4Iami2XvOtA75UQPM9B82Q0WWiAQN8PpfccfIqhN66bZIIqPrr1FBAhrr5GOnYufJW3cJg5AdikhEA6+cCxOLl3D5FrJ4jSXDxo0gkyLE5X/rSAJIyYBF715sPdNo0C81+98ACETnKNeheFv+cxSCsaBGm4uj682mY48Kz8IBFluMlMCNNptWqBmMrKl22dPwwgaxwcsBtAhLtiMFbXcAj4Bh3/5z+hLnE1joMd5xk9iKLN8J9Hymf/IGhsyDoWDU2pK2buQ9gEYlDNb6QnRhamYhKuki1XUUQU5mOoJAViQ4VQRnaQ6ixyGVr3Ijxo5p+LzL4QpBeiOI20rGwgxyTHp5ThE01iy6mQiya6OEhQ9Mhi7lhA46rCoYOe+RkA6JkkOCu3vinlpc0XG3KoMeMBOxoblD5Z3ELfl58Xq3DfBNbmeHuaZ6ihBETHQ+/XCkzWG2q9fXXe56M4E=
+	Z3UhDOFxRIV3G1RJ4qo6eAotAAxNlTi7Q9UEA6RKhFy6fHy8EONk/jOy3SPOjBG8xjVJl+vAtH3MwOfSSLCcpUgUFpdPJx03Bhic/Snh/yCucjL/HYX0khlmD5Q5G13WqrVj/sVkvGyHG0rOcE+0krlkz8cPHtRvqQSTdZHNW33nwyfUerglig7AIjtcUMN405FjWMF0aYW6uyjFsz99Rr1/WwJBbI2+UZIC570sSR5X7UED9TtbeVKIzksfcuuWh/wxoZEFtScnfllzIsCnunKnoZVv+1bOnlp3MW2b2WNf28DlSo1t9ypsFa2zwN15D3OMlXyHwMou4zpdjZv3mxmMTiJzRMNRp+P6R3Kk2kbpt7uLFiuju2QaLKkVXZm+YIL/TTv423EvY/44vqp+PvFWCnedfVHtxWLmoabcD85s1uyPrSPNBAPRM7+IeA0uanjT6BOgeI2PofyTzixqROYqAFk/5PNotECWI5ue0kvPJD+g+SDkHsd9mhu1Iv6NgXZ1VmcYavmyx6y5b0n1xgKy3D7KGKukmrQEhaZfLwE0NKq9RKqv0hvXKoegpXkKRyW1+hQ0R0wu/lz+nAjL+w7H6Ne97kzGO+NBN/MstLou9Av1qvX/3Cg9VMu552MUJoBFRwK8V1XSBROCQO/zbNbyq2KhKZxzSk7hmMBBJcE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(19092799006)(23010399003)(56012099006)(261009223027099003)(11063799006)(18002099003)(10067099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(19092799006)(366016)(1800799024)(56012099006)(11063799006)(261009223027099003)(22082099003)(10067099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?me79hDn9ZSGILvB1scQzfV/6cPmh/Yo3AylRZAwowSWnrhUmHx1ymiggInt8?=
- =?us-ascii?Q?AMKYCvjgeDLqXuSRcKSLuSODUqkLtVh8jHSeGg3F0DomGXzQo9j+1aVIjxp8?=
- =?us-ascii?Q?eWA9hnZUX+XVB7dLpogzolIRkOHcrFfPX/m95pzmWesm18Y1mX1c5xjVMjXH?=
- =?us-ascii?Q?z2k8cvVfy4RheVpPRj2etIeZrzF5P1ATo6AXdQF4D111B74AiInqNCFS04y6?=
- =?us-ascii?Q?GCBE2CaHv+tz81HxbM/oxrb8cFizQ8ceuvSpRmsX5ijhZNEOFkctDxqaAKr2?=
- =?us-ascii?Q?VKgSJ3Re5PnZPcd00D+KfNSr3NsISWfitOZChY6VF7jZ9t0TrNQVOyKNlp2l?=
- =?us-ascii?Q?9pi8XP4RHdiX5zyMPgMjUkGSkq6VWoCvWqX3mfEVlt6umchIaPRPOupmbRs/?=
- =?us-ascii?Q?sZ9RGH8xx7Z9jOmTPoJktn1syyeOlIMrh/Rd2rkpbYo/V0KLuy7NtlXzI4xJ?=
- =?us-ascii?Q?8JtZayj7KINL/tmBiCF5D3VuOWyaFaMp3OCLQkdN1BAE909ZDEsjS9xLiBii?=
- =?us-ascii?Q?1djgIoo6M8Qtb3gKiCo0XacZA+Cdy5g8naZcwFW/NnNB1F4DMOaQvGKWTyH5?=
- =?us-ascii?Q?601LoMdDBobe2bqpwf65YWP8cSHKd4MtzKAjGO1isiFmOPoddhOs+7Oclb9K?=
- =?us-ascii?Q?cCxdXhg2L9UIagBjvBO2pUgE53xM9qmSOzSfici+aBaeEdO9c2q/tXobzxRd?=
- =?us-ascii?Q?6OHoqhR5fgiMM6QOYWAHYi07/J1banUsgYu4NCbyA4W+rc4riX2k2kL2CSoH?=
- =?us-ascii?Q?F6IM+IsT1mV5oip8yZmCslYA80xDW1xmWKpLAsVPL/qvFwAia5IT5jNuiPbD?=
- =?us-ascii?Q?7Xko6848swoNpNe5P4V/jzYqmpIvGB1/qTfDjgvlVEefjmCPTNGDUyqDJGdy?=
- =?us-ascii?Q?Wj7GDDPURG6Gm1OJuh/AB0F+/ZU93Ta7QPMZBFJxhzbZ4P+X8YZ8JgHlnfU9?=
- =?us-ascii?Q?b6aLQ1P7ntjmrtbE8HRXAa0dsd4mjpA1Asza23JPW++0qdTsqGjkna/u1ltR?=
- =?us-ascii?Q?tptFTlNkRXAbR9wYL6S8zMxgbgEBv1UkERi9M3feUlYXVZv5TZyJGzOoX2dE?=
- =?us-ascii?Q?tB0C0ukAj1XJGNUpS0t98NPYA+dCrIsVlqZzSQ9bhAdugqIUJDH3ixtdpP84?=
- =?us-ascii?Q?djlj4EZhwAyEfbrPk157b50C1GWl5kElIFJlDBIun5p1SGP2Y0C1vbRfKLCT?=
- =?us-ascii?Q?xA7KYXewasCc44xdXM5Euf1yYjfxrTtsgbQ0FYaZskqOHShHxn3W3bwhVT88?=
- =?us-ascii?Q?ERWSD0I9Dk5e9+VjLAVVVEXpWUotXvEibZMRTO5FHKsU4ZjxwlQVsoshKNLc?=
- =?us-ascii?Q?y/WgzGQaxG3U158KRzVztESDthiC6p3fdQXrbQf6lukgYle80vhEV5hNhLhX?=
- =?us-ascii?Q?ljBtr9ChImSNX93b8kQjbkVh8YWVguACANI/IK1Ggh9Pj9t3dpD7MSBacR1k?=
- =?us-ascii?Q?f1/LUwrFbdliziUzq0Ayxcurn9MKuxH2GG3DpAJkjoIFON/auPwhqoMDhFpK?=
- =?us-ascii?Q?Avk6rv7aGGv47f4wruyFeqYi+FX9EPwMJW8u6z/yVY/8eCmrfHKnX4gTKxeW?=
- =?us-ascii?Q?hXz6eMrPGhhxMmiLsc9um3ofw0FLol2A93IoSZmDBvyyp5wx1QCEaY6Jd82c?=
- =?us-ascii?Q?edCfnHagLobNzF43saq0kHkB0rCQk9QHEp0XCvHB/MM3DmnbPzdoSTYuRhvb?=
- =?us-ascii?Q?8S69jXUKcJJM2AUgMFikWkXHldB6VbzFOYG1FzRoPEc4c+PstITJMlsDY1p2?=
- =?us-ascii?Q?QzOAq24pURImHsMEPqul41bVy8EOEssqQGnTaSAg+Y9RT4IB1VN1?=
+	=?us-ascii?Q?SA9cu5Ec8XR06T4t+LLoCiW3/cUgBDXMKMitF90qZlsNndUOnO4g54q9wwYb?=
+ =?us-ascii?Q?EgLVlPflkeJ8cuSj5GtgN9UaH34u3mELs5RrR2g/69yR8IWSyQtz6gVZOj+9?=
+ =?us-ascii?Q?SMZ+5wqD36Vh3cAL0pc03g43B7+jM3IMHQBvzOZvwXnAFYPQKdvEwDCGu2/6?=
+ =?us-ascii?Q?ePjUvLfZNSFODwd+E4lFQGE6jmiFg/ZLIFilcSVaWy2Osrck/L3CBHgO0lT1?=
+ =?us-ascii?Q?WcBTBr/P5q/nbFokA8v53ar7NjhBdy9ZFIycLtz67UiDxGAh9O2P9fps50d8?=
+ =?us-ascii?Q?P4DRQ1/z02GHwSTKoCCIJ2tj8qXZi7V/ZeACApuG0FmH6u/YIKraoTbnt/C1?=
+ =?us-ascii?Q?sgGwGRGTuzqma6BODlwYSmKcHIetp6H8cRQY/DwdomJpbLev9ciSESqp8kot?=
+ =?us-ascii?Q?BxSGSQn3ecOfsPpJMuzlbfdcbHJd+9isHrwk6XQv+kkGL3petEPbrCUdbhQ0?=
+ =?us-ascii?Q?wvua5vaLIgomXF6aMYCjQQgmjBfTkdoPUA5vtgYWU34E0DATCUGb52dFFoph?=
+ =?us-ascii?Q?XNSmT3LFkKG3xy47VW2B9XSTfRNPJH/I5a02XmMs9ekdQ0c+UbJqQxuzf6qt?=
+ =?us-ascii?Q?8k2gqGVN1+KlwCHs/md6yFYIc3xRaaxlUEZ7+/fs8QTG22NOZiGJeo7kxNHq?=
+ =?us-ascii?Q?J+hMMKr4xMpW7EEMWOq3VXPDB7gGKypTY37ufs90wlE6zG2JywFp8d3Lhn7c?=
+ =?us-ascii?Q?V/wYDFAQP7huGlLbrls4dvAjjbzb0+bXYCg5Mn/jNYurLnE/pFcs2c2BLqjt?=
+ =?us-ascii?Q?x1MMgViQc1rgMHY/igzR9CRI4g1eO0f5tfJV+xXveiVouOHp7llfuHtfhNQS?=
+ =?us-ascii?Q?161kaWor59kL4Bz8UKK6JWSGC76sFI50abpTkgtZU2Brq/PM2rBBQm/jAS9W?=
+ =?us-ascii?Q?2nsa7+0TQJFV2gwR8KCNM+0Bha0X6BFb5RE2a4l3JTY0nYm8L2NF9SluAAJn?=
+ =?us-ascii?Q?hfXvfEH+FVeQF2TxoNKFIMkOYI12sYhk9pDHvrjx+rPnpgWmHhoF2Tu76b28?=
+ =?us-ascii?Q?OixQgCUjFCC7oJD4IZ9A6Jq41RGpPI7v3LhfL1sLNqmStnBAqJu67RjSguYC?=
+ =?us-ascii?Q?PCUzmWUlSNwnS2Em/Rq2rp4aOoopq7xXv5EVdvUSf8lPGmBY2EgciClZINLO?=
+ =?us-ascii?Q?c80WhGiOYRBbpmxKEDVX1tH5dvBUk3mp3F/rCDGsTiNYa3pNDgLjnXy2fskw?=
+ =?us-ascii?Q?txn/SseH90/PQJVZbEBb+vzVcv/N7WdhZmCF4wqtUKbqmYX1X5pplCuVe7Bo?=
+ =?us-ascii?Q?Z0cvnb9sEuPppciVXiJOSUMzf5b383r0GgB2Px9zwACHQN7kBxYnluLg4ax5?=
+ =?us-ascii?Q?0VkBmN9WowHLDPqznSY/fUxIPvd9zieQFjZrfRkKsI5rl5vNvOKA1kr5wmj1?=
+ =?us-ascii?Q?opVugLP2gK37MUbtsNHdFucelp2IyV6HgK2FUKxq8d+nrkVfThBIcPi17icN?=
+ =?us-ascii?Q?L2MiFg1c64ALCCLt+c4BAM687BFkwi2VvKANrX6sKwWBgB3unYUcokNj/Vog?=
+ =?us-ascii?Q?eVsZpWsPpLbQsT6U0z4OeuGTq9cR4cO1JFMpBqIMJLzNef6USNFYbXdbGOcg?=
+ =?us-ascii?Q?K/E3twInNHFLIlgAmcZ/0cDF/hYJjK7eyI6mJdVzULX87lNEQEEQslYhFf4Q?=
+ =?us-ascii?Q?pmevfdiZCrCqSX05kLD6hr49AbseZrZ1qJ6ixSjYSxG08xXa09Ac6NFn+H5O?=
+ =?us-ascii?Q?OCvSPWRpGjRj4cMlg46auoC6COJS3tHepQX/lyH1Tpx9SyiwiSm4rt31qHRv?=
+ =?us-ascii?Q?1FxtFBhBctWrvBgdb/g+09uKqHTKYWFyEG5RTdp8cRd9Al4DQjCb?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 22a79334-fd8f-4b18-1296-08df29696e64
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54859678-bf37-44e3-0156-08df296a6761
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 20:34:51.1798
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 20:41:48.8877
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Cr/DrG9Wipzdi5cEcBRhXMM7Dp7Gvcq7ru9og/beEwYv/lEjb6mNv4u6s4GkeU11DmGhMjDO3cJll/nKLNIHcVZz9ltHLIRuHX6VNTudY2Wdl2GjP5vQdcSOVFQ59cuR
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR6PR04MB375776
+X-MS-Exchange-CrossTenant-UserPrincipalName: +eLJlWeju16GmEsAtKTdW+Y9AXlBBnn0luiKhPUo2tX6C+njU6l0YSc9TVP3AfXUJmI4vg3rXS9amuIE1oqa03sj3HX8+awH0eNLZNcEiTURX9taf6AQJdZ2+W2jyN/1
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR04MB11555
 
-From: Frank Li <Frank.Li@nxp.com>
+On Tue, Sep 15, 2026 at 11:09:19AM -0700, Rosen Penev wrote:
+> bcom_sram_init(), bcom_sram_cleanup(), bcom_sram_alloc() and
+> bcom_sram_free() are only called from bestcomm.c, which is part of
+> the same bestcomm-core module as sram.c.  Remove the now-pointless
+> EXPORT_SYMBOL_GPL() statements; the functions stay non-static because
+> they cross compilation units within the module.  bcom_sram itself
+> remains exported for the inline helpers in sram.h.
+>
+> Assisted-by: LLM
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> ---
 
-Move struct shdma_chan and struct shdma_desc from the public header
-include/linux/shdma-base.h into the driver-private header
-drivers/dma/sh/shdma.h. These structs are only used internally by the
-shdma driver and do not need to be exposed to external users.
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-Prepare to make struct dma_async_tx_descriptor private.
-
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
----
- drivers/dma/sh/shdma-base.c |  2 +-
- drivers/dma/sh/shdma.h      | 80 +++++++++++++++++++++++++++++++++++++
- include/linux/shdma-base.h  | 80 +------------------------------------
- 3 files changed, 83 insertions(+), 79 deletions(-)
-
-diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
-index 89a78e685b1d1..ef704a6aed233 100644
---- a/drivers/dma/sh/shdma-base.c
-+++ b/drivers/dma/sh/shdma-base.c
-@@ -20,7 +20,7 @@
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- 
--#include "../dmaengine.h"
-+#include "shdma.h"
- 
- /* DMA descriptor control */
- enum shdma_desc_status {
-diff --git a/drivers/dma/sh/shdma.h b/drivers/dma/sh/shdma.h
-index f97d80343aea4..d66d45062e9bd 100644
---- a/drivers/dma/sh/shdma.h
-+++ b/drivers/dma/sh/shdma.h
-@@ -15,11 +15,32 @@
- #include <linux/interrupt.h>
- #include <linux/list.h>
- 
-+#include "../dmaengine.h"
-+
- #define SH_DMAE_MAX_CHANNELS 20
- #define SH_DMAE_TCR_MAX 0x00FFFFFF	/* 16MB */
- 
- struct device;
- 
-+struct shdma_chan {
-+	spinlock_t chan_lock;		/* Channel operation lock */
-+	struct list_head ld_queue;	/* Link descriptors queue */
-+	struct list_head ld_free;	/* Free link descriptors */
-+	struct dma_chan dma_chan;	/* DMA channel */
-+	struct device *dev;		/* Channel device */
-+	void *desc;			/* buffer for descriptor array */
-+	int desc_num;			/* desc count */
-+	size_t max_xfer_len;		/* max transfer length */
-+	int id;				/* Raw id of this channel */
-+	int irq;			/* Channel IRQ */
-+	int slave_id;			/* Client ID for slave DMA */
-+	int real_slave_id;		/* argument passed to filter function */
-+	int hw_req;			/* DMA request line for slave DMA -
-+					 * same as MID/RID, used with DT
-+					 */
-+	enum shdma_pm_state pm_state;
-+};
-+
- struct sh_dmae_chan {
- 	struct shdma_chan shdma_chan;
- 	const struct sh_dmae_slave_config *config; /* Slave DMA configuration */
-@@ -30,6 +51,13 @@ struct sh_dmae_chan {
- 	dma_addr_t slave_addr;
- };
- 
-+struct shdma_dev {
-+	struct dma_device dma_dev;
-+	struct shdma_chan **schan;
-+	const struct shdma_ops *ops;
-+	size_t desc_size;
-+};
-+
- struct sh_dmae_device {
- 	struct shdma_dev shdma_dev;
- 	struct sh_dmae_chan *chan[SH_DMAE_MAX_CHANNELS];
-@@ -41,6 +69,58 @@ struct sh_dmae_device {
- 	u32 chcr_ie_bit;
- };
- 
-+struct shdma_desc {
-+	struct list_head node;
-+	struct dma_async_tx_descriptor async_tx;
-+	enum dma_transfer_direction direction;
-+	size_t partial;
-+	dma_cookie_t cookie;
-+	int chunks;
-+	int mark;
-+	bool cyclic;			/* used as cyclic transfer */
-+};
-+
-+/**
-+ * struct shdma_ops - simple DMA driver operations
-+ * @desc_completed:	return true, if this is the descriptor, that just has
-+ *			completed (atomic)
-+ * @halt_channel:	stop DMA channel operation (atomic)
-+ * @channel_busy:	return true, if the channel is busy (atomic)
-+ * @slave_addr:		return slave DMA address
-+ * @desc_setup:		set up the hardware specific descriptor portion (atomic)
-+ * @set_slave:		bind channel to a slave
-+ * @setup_xfer:		configure channel hardware for operation (atomic)
-+ * @start_xfer:		start the DMA transfer (atomic)
-+ * @embedded_desc:	return Nth struct shdma_desc pointer from the
-+ *			descriptor array
-+ * @chan_irq:		process channel IRQ, return true if a transfer has
-+ *			completed (atomic)
-+ */
-+struct shdma_ops {
-+	bool (*desc_completed)(struct shdma_chan *, struct shdma_desc *);
-+	void (*halt_channel)(struct shdma_chan *);
-+	bool (*channel_busy)(struct shdma_chan *);
-+	dma_addr_t (*slave_addr)(struct shdma_chan *);
-+	int (*desc_setup)(struct shdma_chan *, struct shdma_desc *,
-+			  dma_addr_t, dma_addr_t, size_t *);
-+	int (*set_slave)(struct shdma_chan *, int, dma_addr_t, bool);
-+	int (*setup_xfer)(struct shdma_chan *, int);
-+	void (*start_xfer)(struct shdma_chan *, struct shdma_desc *);
-+	struct shdma_desc *(*embedded_desc)(void *, int);
-+	bool (*chan_irq)(struct shdma_chan *, int);
-+	size_t (*get_partial)(struct shdma_chan *, struct shdma_desc *);
-+};
-+
-+#define shdma_for_each_chan(c, d, i) for (i = 0, c = (d)->schan[0]; \
-+				i < (d)->dma_dev.chancnt; c = (d)->schan[++i])
-+
-+int shdma_request_irq(struct shdma_chan *, int, unsigned long, const char *);
-+bool shdma_reset(struct shdma_dev *sdev);
-+void shdma_chan_probe(struct shdma_dev *sdev, struct shdma_chan *schan, int id);
-+void shdma_chan_remove(struct shdma_chan *schan);
-+int shdma_init(struct device *dev, struct shdma_dev *sdev, int chan_num);
-+void shdma_cleanup(struct shdma_dev *sdev);
-+
- struct sh_dmae_regs {
- 	u32 sar; /* SAR / source address */
- 	u32 dar; /* DAR / destination address */
-diff --git a/include/linux/shdma-base.h b/include/linux/shdma-base.h
-index b6827c06d332f..a7e6184728f8d 100644
---- a/include/linux/shdma-base.h
-+++ b/include/linux/shdma-base.h
-@@ -43,85 +43,9 @@ struct shdma_slave {
- 	int slave_id;
- };
- 
--struct shdma_desc {
--	struct list_head node;
--	struct dma_async_tx_descriptor async_tx;
--	enum dma_transfer_direction direction;
--	size_t partial;
--	dma_cookie_t cookie;
--	int chunks;
--	int mark;
--	bool cyclic;			/* used as cyclic transfer */
--};
--
--struct shdma_chan {
--	spinlock_t chan_lock;		/* Channel operation lock */
--	struct list_head ld_queue;	/* Link descriptors queue */
--	struct list_head ld_free;	/* Free link descriptors */
--	struct dma_chan dma_chan;	/* DMA channel */
--	struct device *dev;		/* Channel device */
--	void *desc;			/* buffer for descriptor array */
--	int desc_num;			/* desc count */
--	size_t max_xfer_len;		/* max transfer length */
--	int id;				/* Raw id of this channel */
--	int irq;			/* Channel IRQ */
--	int slave_id;			/* Client ID for slave DMA */
--	int real_slave_id;		/* argument passed to filter function */
--	int hw_req;			/* DMA request line for slave DMA - same
--					 * as MID/RID, used with DT */
--	enum shdma_pm_state pm_state;
--};
--
--/**
-- * struct shdma_ops - simple DMA driver operations
-- * @desc_completed:	return true, if this is the descriptor, that just has
-- *			completed (atomic)
-- * @halt_channel:	stop DMA channel operation (atomic)
-- * @channel_busy:	return true, if the channel is busy (atomic)
-- * @slave_addr:		return slave DMA address
-- * @desc_setup:		set up the hardware specific descriptor portion (atomic)
-- * @set_slave:		bind channel to a slave
-- * @setup_xfer:		configure channel hardware for operation (atomic)
-- * @start_xfer:		start the DMA transfer (atomic)
-- * @embedded_desc:	return Nth struct shdma_desc pointer from the
-- *			descriptor array
-- * @chan_irq:		process channel IRQ, return true if a transfer has
-- *			completed (atomic)
-- */
--struct shdma_ops {
--	bool (*desc_completed)(struct shdma_chan *, struct shdma_desc *);
--	void (*halt_channel)(struct shdma_chan *);
--	bool (*channel_busy)(struct shdma_chan *);
--	dma_addr_t (*slave_addr)(struct shdma_chan *);
--	int (*desc_setup)(struct shdma_chan *, struct shdma_desc *,
--			  dma_addr_t, dma_addr_t, size_t *);
--	int (*set_slave)(struct shdma_chan *, int, dma_addr_t, bool);
--	int (*setup_xfer)(struct shdma_chan *, int);
--	void (*start_xfer)(struct shdma_chan *, struct shdma_desc *);
--	struct shdma_desc *(*embedded_desc)(void *, int);
--	bool (*chan_irq)(struct shdma_chan *, int);
--	size_t (*get_partial)(struct shdma_chan *, struct shdma_desc *);
--};
--
--struct shdma_dev {
--	struct dma_device dma_dev;
--	struct shdma_chan **schan;
--	const struct shdma_ops *ops;
--	size_t desc_size;
--};
--
--#define shdma_for_each_chan(c, d, i) for (i = 0, c = (d)->schan[0]; \
--				i < (d)->dma_dev.chancnt; c = (d)->schan[++i])
-+struct shdma_chan;
-+struct shdma_dev;
- 
--int shdma_request_irq(struct shdma_chan *, int,
--			   unsigned long, const char *);
--bool shdma_reset(struct shdma_dev *sdev);
--void shdma_chan_probe(struct shdma_dev *sdev,
--			   struct shdma_chan *schan, int id);
--void shdma_chan_remove(struct shdma_chan *schan);
--int shdma_init(struct device *dev, struct shdma_dev *sdev,
--		    int chan_num);
--void shdma_cleanup(struct shdma_dev *sdev);
- #if IS_ENABLED(CONFIG_SH_DMAE_BASE)
- bool shdma_chan_filter(struct dma_chan *chan, void *arg);
- #else
--- 
-2.43.0
-
+>  drivers/dma/bestcomm/sram.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/drivers/dma/bestcomm/sram.c b/drivers/dma/bestcomm/sram.c
+> index 09ef5142c26c..d33e0f931682 100644
+> --- a/drivers/dma/bestcomm/sram.c
+> +++ b/drivers/dma/bestcomm/sram.c
+> @@ -119,7 +119,6 @@ int bcom_sram_init(struct device_node *sram_node, char *owner)
+>
+>  	return rv;
+>  }
+> -EXPORT_SYMBOL_GPL(bcom_sram_init);
+>
+>  void bcom_sram_cleanup(void)
+>  {
+> @@ -132,7 +131,6 @@ void bcom_sram_cleanup(void)
+>  		bcom_sram = NULL;
+>  	}
+>  }
+> -EXPORT_SYMBOL_GPL(bcom_sram_cleanup);
+>
+>  void* bcom_sram_alloc(int size, int align, phys_addr_t *phys)
+>  {
+> @@ -148,7 +146,6 @@ void* bcom_sram_alloc(int size, int align, phys_addr_t *phys)
+>  	*phys = bcom_sram->base_phys + offset;
+>  	return bcom_sram->base_virt + offset;
+>  }
+> -EXPORT_SYMBOL_GPL(bcom_sram_alloc);
+>
+>  void bcom_sram_free(void *ptr)
+>  {
+> @@ -163,4 +160,3 @@ void bcom_sram_free(void *ptr)
+>  	rh_free(bcom_sram->rh, offset);
+>  	spin_unlock(&bcom_sram->lock);
+>  }
+> -EXPORT_SYMBOL_GPL(bcom_sram_free);
+> --
+> 2.55.0
+>
