@@ -1,62 +1,60 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86834A2A7C;
-	Tue, 13 Oct 2026 22:34:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27018519922
+	for <dmaengine@vger.kernel.org>; Tue, 13 Oct 2026 22:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791930892; cv=none; b=dXp09v9O2QojX+dN+vuCHcDhgrQUD4NClp0CwhCpUpGFaG5PdO+tjUlXjXZM4WfYGuaUpu/G2O4UTwR6ERHTFKKaZKShCOeL7hN5x0j2igQcRiHrhhpZnFg60/PvMxV2/YtDf51e3i3CkWH5lbDei5ovfRNB9uoGWLnmdoL9ZWM=
+	t=1791932049; cv=none; b=RyqC/fuVAVYc9bD0lLRHghaqSuF7rLoHR675HwxBlBz3aqFBZYwl9+Ec9jGQXQoox8MtCgKt6WLhe2Zm7xdJOe/MY4d0Akhw6qurphD0zPn1CFq+x7HAFOaODvOCCiYBVRT12eKQrSCaHtB24gxoQkRdCFbDg+IS1PETgGLvu1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791930892; c=relaxed/simple;
-	bh=LhaxcUeXKQMORGDtbxuV5twJ2wtDdlWnUIbGVqMIScQ=;
+	s=arc-20240116; t=1791932049; c=relaxed/simple;
+	bh=msU/i9O6mTA5qhMROORD4h3qGhJHXQ3cY7esNkgKNbY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mMTsDBDNDWP/pj+sopuTtUQPU37BijpnfgtoIB24OEpxeqGQh5pb8cKKtaPoavNukW8riT4biikQ9UfPxEWSOtSUZlT9VoA049xAC/4ONQnhIPkAJalJw7p9YIy+mLA6uROE4e4KqIRXgIG0H5w4uPrmg9mQTp26Lyi8pZd9Az8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a2SyyKm1; arc=none smtp.client-ip=198.175.65.16
+	 MIME-Version:Content-Type; b=Q83fdQRx1H5z1uVYpY6rsTmUt54vOU+ZA2KUb08VtViLvyiKD6g5Vl+t4MM9VQvi0YugZjRun9uWd9xhnn5t1P0KitTvqRS4D3F8aKaeLzHwK2vu35csOvclCV/GTrF1SHsyYLoSr7THd/41IV9ybP5+wJjElGj1qiXOIXS3Z0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eqYVd4R6; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a2SyyKm1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eqYVd4R6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791930889; x=1823466889;
+  t=1791932046; x=1823468046;
   h=from:to:cc:subject:in-reply-to:references:date:
    message-id:mime-version;
-  bh=LhaxcUeXKQMORGDtbxuV5twJ2wtDdlWnUIbGVqMIScQ=;
-  b=a2SyyKm1xPC5BjI601yQDh0/5urmugRlga+GMgk29h80KZ2vYDs21y4j
-   TEg9EmkUEWClif92Cwpif89XN9KXuLKqVxbWQnLTV9Wrgj32T65vCW0eB
-   Ozw9DhtyrrNLSf095XEbNE/8BkS0Zw0mNOhnrqWxbW+kSsaMxIE945/hD
-   I/0baPD2osEU5g1yXjYa4w1rAQ59adSNWztP1WEiieOIpnIABqNDDODRg
-   R51jgDmI7Mc0Bprkw8GnruVIIuUf6d6WR8HGWhei9tzi5SyzWDwS1EMIe
-   +HDZrVsMQSaFvxPXWbRTBq2ozvO6Bcjo3RRzCL1TTgUOzO8Pr6dnCN8zP
-   w==;
-X-CSE-ConnectionGUID: XDOf6u6FSp6UhmGxGNwkhQ==
-X-CSE-MsgGUID: P9KxnHZHSOmKkdtmLBA0SA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="656119"
+  bh=msU/i9O6mTA5qhMROORD4h3qGhJHXQ3cY7esNkgKNbY=;
+  b=eqYVd4R6f+ENEL8QL5rLw6Pho6ow8z0Spe3d6gRqjc62r29VEIcS5Ufq
+   CYp+3FJ1aJpIEOI15k85ZtVIYXdAX/Mv/SMLyEwCggFwbPS2TH4OKGHIy
+   +nBJhWsHR5f0SibXPmFNmh/+YMAqAXmkepPCHDAYVjqN8JyUSuWfiy2bc
+   quGZ7HZv6ZXdTaDOfuVlB8r1FLnfEO9WUbw5dsMYDeYyY22+97oIJQmoZ
+   JFbrZXSMO7xdwF6UIBKjxuDbxgoUkEVAX9b8dNAbx2bRHyl3ZPC9B2RQ0
+   TG+bFGMEe7Egg88sUl8ksBU5CoqVsV68FHTY0dvTNjYXBVs+Y2oSKwlAI
+   A==;
+X-CSE-ConnectionGUID: N58hJt4fR0OajdXpO8wVmA==
+X-CSE-MsgGUID: jvVemVudS36aYRVQUoP2iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="563146"
 X-IronPort-AV: E=Sophos;i="6.27,156,1787036400"; 
-   d="scan'208";a="656119"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 15:34:48 -0700
-X-CSE-ConnectionGUID: 3QdeiE1fSnapkkWRK+5qxQ==
-X-CSE-MsgGUID: 0lBsFLpKS6mjz3aj3ZFe7Q==
+   d="scan'208";a="563146"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 15:54:06 -0700
+X-CSE-ConnectionGUID: 0HtpPYzUTKadwSNf1OeD1Q==
+X-CSE-MsgGUID: LE8oxLPyS9C9jgMZAtr1sw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,156,1787036400"; 
-   d="scan'208";a="1350602"
+   d="scan'208";a="3125384"
 Received: from vcostago-desk1.jf.intel.com (HELO vcostago-desk1) ([10.241.243.117])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 15:34:47 -0700
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 15:54:06 -0700
 From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, Frank
- Li <Frank.Li@kernel.org>, Fenghua Yu <fenghuay@nvidia.com>, Shuai Xue
- <xueshuai@linux.alibaba.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Steve Wahl
- <steve.wahl@hpe.com>
-Subject: Re: [PATCH 1/6] dmaengine: idxd: Do not call destroy_workqueue with
- null idxd->wq
-In-Reply-To: <88903331-7dff-4732-b443-10e8fcb9699f@intel.com>
-References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
- <20261012-wt-idxd-fixes-v1-1-30a35a445077@intel.com>
- <88903331-7dff-4732-b443-10e8fcb9699f@intel.com>
-Date: Tue, 13 Oct 2026 15:34:45 -0700
-Message-ID: <87mrshjkl6.fsf@intel.com>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>, dmaengine@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>, Dave Jiang
+ <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, Frank Li
+ <Frank.Li@kernel.org>
+Subject: Re: [PATCH 3/8] dmaengine: idxd: unmap descriptor before completing
+ cookie
+In-Reply-To: <20261010124348.19055-4-wsa+renesas@sang-engineering.com>
+References: <20261010124348.19055-1-wsa+renesas@sang-engineering.com>
+ <20261010124348.19055-4-wsa+renesas@sang-engineering.com>
+Date: Tue, 13 Oct 2026 15:54:04 -0700
+Message-ID: <87h5ipjjoz.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -65,30 +63,16 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Dave Jiang <dave.jiang@intel.com> writes:
+Wolfram Sang <wsa+renesas@sang-engineering.com> writes:
 
-> On 10/12/26 2:38 PM, Vinicius Costa Gomes wrote:
->> From: Steve Wahl <steve.wahl@hpe.com>
->> 
->> Error paths within idxd_pci_probe_alloc and related functions end up
->> calling destroy_workqueue with a null pointer, from
->> idxd_conf_device_release via put_device, because that allocation has
->> not yet occurred when the error is hit.
->> 
->> This was encountered running in a kexec'd kdump kernel with reduced
->> resources, causing the "Device is HALTED!" branch in
->> idxd_device_init_reset to be taken.
->> 
->> In idxd_conf_device_release, check that the workqueue has been
->> allocated before trying to destroy it.
->> 
->> Fixes: 3d33de353b1f ("dmaengine: idxd: Fix not releasing workqueue on .release()")
->> Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
->> Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-> ^ needs a sign off rather than an ack since you posted his patch?
+> To ensure that buffers are flushed, make sure that the descriptor gets
+> unmapped before completing the cookie.
 >
+> Link: https://lore.kernel.org/r/20261009093745.539924-1-vkoul@kernel.org
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> ---
 
-Yeah, will add my sign off. 
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
 
 Cheers,
