@@ -1,168 +1,200 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DECA4A68B5
-	for <dmaengine@vger.kernel.org>; Wed, 14 Oct 2026 22:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA23356773;
+	Wed, 14 Oct 2026 23:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792016727; cv=none; b=BTigROGCKaLtfo1tMV7Zes5vQE8HphHM4x+E3x15Lf21T3n+aZB/U+J6BTlpTeDE+Aq6Jp20pWznlQW84GlwxmxHxruoiWVa2zW0YahICAUCvEBdtnok7ZLgFbkfN3HD6dYSc9QQD0J6OsxbZ5HxL2ypExf7mvhrI1qG3+n9s84=
+	t=1792022290; cv=none; b=DptVX0rHL0STC+2/9vjUieOu2B37VWfjgPk4+jMW2JmKd7G+sTdhiJm85m9avrw/SHhvACStoJ47LFWWN9r09MLH23c/7uC72LFqRg17ypVFeR+Yz4SMyHViwMA1hJbF3T6oAvg54ofTodrMZbTVLr1tP4XiF3+FELUoyIDzOL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792016727; c=relaxed/simple;
-	bh=nQ8YG2vU7S0uYgtAkMzTRmzK3bGvs4pmiPwIKEQvb2s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=De2QI6VUC+obS3JtYfOnIjBnHRuttzeEdObh5JGivo+0ueK7U2yKe4rSnWIR0vU37vxrBU8hYsDRazNf4RFbQqIRtN6uoFTlHsnu7HVyIE44LKn3+pz6TlIxKZxekCEEdVVFoydYA8mQdU+cpfdeHCbXN+RqZzjyMkMppPJVIoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dvALibTC; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1792022290; c=relaxed/simple;
+	bh=BBNgSFYtTED4gc4KjQd/tUlL0Uhir2q7Je/nlbYFT2k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=cbKQMBXJ3lno5ymUffS/oTXa7OvyzkF2Q3RGfLTvCf9rc2zzyT/IhqHhX39aaVAknB1xbELf2XR5NoVs3XU28Gr6ZsiC7Bvri8ut9TgW1/9Rpxg0mqc+jkwPp3Hl35dqHfLYsaiaGcU68w39GErFVzrFHhq9Mw4QoKGNGlns0c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLCEH6cV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dvALibTC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792016726; x=1823552726;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=nQ8YG2vU7S0uYgtAkMzTRmzK3bGvs4pmiPwIKEQvb2s=;
-  b=dvALibTCHEg2MiU3JwesNeVXV9Yv9jJlNty6yDOZVc8Bju/Imjs/v1/p
-   NX0OA0T5WWS+qYpRTSBt5VBxoAVpCCFHHNMLtnRn2fMHk2U0AY4BEKh1e
-   Ca4G3PFJ5yngpDtpCTj/J/evQSMX61qoweMZkbGyxEOWHASKxFKFLdDAx
-   bRDn53xEJnT1QOOP0sjBr6Rlj27RiBOkWDL6qmouzt1NqW4GABqCBJvlT
-   tST/AnqwZNsBKOStCGtRySnWG20RCCSxlSF4yWM9baSP6VsC9MPweHQ+P
-   x970oj1hUm6/Xpbwvsh60GaPuQ3wjJNACCFZT8KI6GVTVRMenJR7DFCch
-   g==;
-X-CSE-ConnectionGUID: FXwSyLl3SOyom7m7pSZabg==
-X-CSE-MsgGUID: e+Z/CrExRvK2X9nvKtVhhA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11935"; a="781549"
-X-IronPort-AV: E=Sophos;i="6.27,158,1787036400"; 
-   d="scan'208";a="781549"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 15:25:25 -0700
-X-CSE-ConnectionGUID: VTXhgDE8QKKkAVhtKK0piA==
-X-CSE-MsgGUID: a/7Fo/zyQUude/g0YTkJww==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,158,1787036400"; 
-   d="scan'208";a="1551368"
-Received: from vcostago-desk1.jf.intel.com (HELO vcostago-desk1) ([10.241.243.117])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 15:25:26 -0700
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 6/6] dmaengine: idxd: Do not release interrupt handles
- on terminate_all
-In-Reply-To: <sashiko-outbox-168653@kernel.org>
-References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
- <20261012-wt-idxd-fixes-v1-6-30a35a445077@intel.com>
- <sashiko-outbox-168653@kernel.org>
-Date: Wed, 14 Oct 2026 15:25:25 -0700
-Message-ID: <87cxtbj4x6.fsf@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLCEH6cV"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C8759C2BCF5;
+	Wed, 14 Oct 2026 23:58:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1792022289;
+	bh=BBNgSFYtTED4gc4KjQd/tUlL0Uhir2q7Je/nlbYFT2k=;
+	h=From:Date:Subject:In-Reply-To:References:To:Cc:Reply-To:From;
+	b=iLCEH6cVI2amFiwJpO0JN7bwRYzMabB8U6JjQZU/hyJE1oV/nY1GKdvF8sYLUiO6t
+	 mlBaBVUHD/HNBZEKCZ5anNUqACH5SqUue+ZSLJNRt5O59la+WS7GY4K27pxXaWbRKC
+	 JVCr20AGJXgqRYh1xOXzVFOeoMjv9SXsZpYyzQvhaYuwYCoGjHvn2C+lAeeE6VnhwE
+	 a4crzgTJcc3Y7aMmzQ29119b9vANPPaho1z7X7OywZzGoTrYEps+ZGF2n65jvslXp6
+	 JUn0HmVInYBd05MI/tZFlfqbbYVxmluTUaP292MXTTVtEfRXVgP9yoWWIpcVjylz92
+	 y63ZqIwEjpM4A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4A80CC6B2D;
+	Wed, 14 Oct 2026 23:58:09 +0000 (UTC)
+From: Mizuno Miotsuki via B4 Relay <devnull+founder.crepuse.com@kernel.org>
+Date: Thu, 15 Oct 2026 07:58:08 +0800
+Subject: [PATCH v3] dmaengine: pl330: Fix unbalanced runtime PM
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261015-review-pl330-pm-original-v3-v3-1-5be09f37df77@crepuse.com>
+X-B4-Tracking: v=1; b=H4sIAA8X0GoC/yWP3Q6CMAxGX8Xs2iJjQtQr38N4sY0KVdjIivhDe
+ Hc3SXrzNacn/WbBGAhZnDazCDgRk3cxqO1G2Fa7BoHqmEWRF5XMZQkJwhcMnVI5DD34QA053cG
+ kwODhIOviaJW5iWgYAt7o/bdfrmvmp7mjHZMyEUYzggna2Tatom/179a7SLTEow+f/4NTkUxCV
+ mW+T1OB2qtSgoSGRmB0NWCvqQN+Njpk31TgHLx9gG1p4Mz6XlyXZfkBPzXHsPYAAAA=
+X-Change-ID: 20261015-review-pl330-pm-original-v3-be881d29c3bf
+In-Reply-To: <1650450456-34351-1-git-send-email-sugar.zhang@rock-chips.com>
+References: <1650450456-34351-1-git-send-email-sugar.zhang@rock-chips.com>
+To: vkoul@kernel.org
+Cc: dmaengine@vger.kernel.org, krzk@kernel.org, ulfh@kernel.org, 
+ Frank.Li@kernel.org, m.szyprowski@samsung.com, huibin.hong@rock-chips.com, 
+ rmk+kernel@arm.linux.org.uk, sugar.zhang@rock-chips.com, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5020;
+ i=founder@crepuse.com; s=20261012; h=from:subject:message-id;
+ bh=dH6QyJ7OcZPyaRLWF7m5BqNce6CGMbzXSoeguCrRg3g=;
+ b=owGbwMvMwCUmds2G2fVJ/hLG02pJDFkXxPmvT4r5vMi9vVlylcXDiP86v95xsz35YsA5b5ZnS
+ PqM9eEtHRNZGMS4GCzFFFlmi7KXH2pecW3uhCY7mDmsTCBDpEUaGICAhYEvNzGv1EjHSM9U21DP
+ 0EjHQMeYgYtTAKZaiIWR4YTRbR87czMbOY1eqZalaiKJK+t2CExKrVP2f7Aoun9WA8M/tSeTXty
+ 9z3RSXDVf/OE+Hc7giVV3a+JOHBHXm3hl/fxbHAA=
+X-Developer-Key: i=founder@crepuse.com; a=openpgp;
+ fpr=9B150777C283A8D69D90823E16D63C0345E46FA4
+X-Endpoint-Received: by B4 Relay for founder@crepuse.com/20261012 with
+ auth_id=1166
+X-Original-From: Mizuno Miotsuki <founder@crepuse.com>
+Reply-To: founder@crepuse.com
 
-sashiko-bot@kernel.org writes:
+From: Sugar Zhang <sugar.zhang@rock-chips.com>
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] dma: idxd: sleep in atomic context in device_terminate_all()
-> - [High] dmaengine: idxd: Hardware UAF and IOMMU faults due to flushing active WQ without disable
-> - [Medium] dmaengine: idxd: missing check for INVALID_INT_HANDLE in release
-> --
->
-> commit dc7ea0d446f4b8c4e4f29fa4595acabcca6b297f
-> Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
->
-> dmaengine: idxd: Do not release interrupt handles on terminate_all
->
-> This commit splits the interrupt handle teardown from the descriptor
-> flushing in idxd_wq_flush_descs(). This prevents the interrupt handle
-> from being incorrectly released during dmaengine terminate_all, which
-> was causing subsequent runs to time out.
->
->> diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
->> index 131138483b877..06299f40f5312 100644
->> --- a/drivers/dma/idxd/device.c
->> +++ b/drivers/dma/idxd/device.c
->> @@ -1349,6 +1349,16 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
->>  }
->>  
->>  void idxd_wq_flush_descs(struct idxd_wq *wq)
->> +{
->> +	guard(mutex)(&wq->wq_lock);
->> +
->> +	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
->> +		return;
->> +
->> +	idxd_flush_pending_descs(&wq->ie);
->> +}
->
-> [Severity: High]
-> Does this code introduce a sleep-in-atomic bug when called via the
-> dmaengine termination path?
->
-> The dmaengine API allows dmaengine_terminate_async() to be called from
-> atomic context (such as an interrupt handler or while holding a spinlock).
->
-> This routes to idxd_dma_terminate_all(), which then calls
-> idxd_wq_flush_descs().
->
-> Because idxd_wq_flush_descs() unconditionally acquires wq->wq_lock using
-> a sleepable mutex, terminating an asynchronous transfer from atomic
-> context could trigger a scheduling-while-atomic panic.
->
+This driver use runtime PM autosuspend mechanism to manager clk.
 
-Ugh, bad one. Worried that my lockdep tests didn't catch this one. Will
-fix.
+  pm_runtime_use_autosuspend(&adev->dev);
+  pm_runtime_set_autosuspend_delay(&adev->dev, PL330_AUTOSUSPEND_DELAY);
 
-> [Severity: High]
-> Can this flush implementation cause a use-after-free and IOMMU faults?
->
-> By calling idxd_flush_pending_descs() without first disabling or halting
-> the hardware workqueue, the software descriptors are completed, freed,
-> and client memory is unmapped while the hardware may still be actively
-> processing them.
->
-> Since the hardware continues to execute DMA operations into buffers that
-> have already been unmapped, can this result in memory corruption and
-> IOMMU faults?
->
->> +
->> +void idxd_wq_release_int_handle(struct idxd_wq *wq)
->>  {
->>  	struct idxd_irq_entry *ie = &wq->ie;
->>  	struct idxd_device *idxd = wq->idxd;
->> @@ -1358,7 +1368,6 @@ void idxd_wq_flush_descs(struct idxd_wq *wq)
->>  	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
->>  		return;
->>  
->> -	idxd_flush_pending_descs(ie);
->>  	if (idxd->request_int_handles)
->>  		idxd_device_release_int_handle(idxd, ie->int_handle,
->> IDXD_IRQ_MSIX);
+So, after ref count reached to zero, it will enter suspend
+after the delay time elapsed.
 
-Another pre-existing one. And another potential to be in another series.
-I think I might have caught a consequence of this bug when testing
-iaa-crypto. Let's see if the fix fits on v2.
+The unbalanced PM:
 
->
-> [Severity: Medium]
-> Is it possible for ie->int_handle to be INVALID_INT_HANDLE here?
->
-> If a previous operation leaves the handle as INVALID_INT_HANDLE (-1) but
-> the workqueue remains in the IDXD_WQ_ENABLED state, this code will
-> unconditionally issue a release command to the hardware using -1 (0xffff).
->
-> Should this function include a check for ie->int_handle ==
-> INVALID_INT_HANDLE before calling idxd_device_release_int_handle(),
-> similar to how it is handled in idxd_wq_free_irq()?
->
->>  	idxd_device_clear_perm_entry(idxd, ie);
->
+* May cause dmac the next start failed.
+* May cause dmac read unexpected state.
+* May cause dmac stall if power down happen at the middle of the transfer.
+  e.g. may lose ack from AXI bus and stall.
 
-Will fix.
+Considering the following situation:
+
+      DMA TERMINATE               TASKLET ROUTINE
+            |                            |
+            |                       issue_pending
+            |                            |
+            |                     pch->active = true
+            |                       pm_runtime_get
+  pm_runtime_put(if active)              |
+    pch->active = false                  |
+            |                      work_list empty
+            |                            |
+            |                     pm_runtime_put(unconditional)
+            |                            |
+
+At this point, it's unbalanced(1 get / 2 put).
+
+After this patch:
+
+      DMA TERMINATE               TASKLET ROUTINE
+            |                            |
+            |                       issue_pending
+            |                            |
+            |                     pch->active = true
+            |                       pm_runtime_get
+  pm_runtime_put(if active)              |
+    pch->active = false                  |
+            |                      work_list empty
+            |                            |
+            |                   pm_runtime_put(if active)
+            |                            |
+
+Now, it's balanced(1 get / 1 put).
+
+Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
+Fixes: ae43b3289186 ("ARM: 8202/1: dmaengine: pl330: Add runtime Power Management support v12")
+
+Link: https://lore.kernel.org/r/1650450456-34351-1-git-send-email-sugar.zhang@rock-chips.com
+Signed-off-by: Huibin Hong <huibin.hong@rock-chips.com>
+Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+Signed-off-by: Mizuno Miotsuki <founder@crepuse.com>
+---
+Hi Vinod, Sugar and Huibin,
+
+I am forwarding Sugar's April 2022 v2 as v3, with the same one-line
+change, original authorship and original Signed-off-by chain. The
+original submission is linked in the commit message. I found no mainline
+merge or revert of this change; current dmaengine fixes, next and master
+still use the unconditional assignment.
+
+Our SaneBSP investigation on an RK3308B UNIHIKER M10 independently
+rediscovered the same accounting issue. The experimental G-only kernel
+logged:
+
+  dma-pl330 ff2c0000.dma-controller: Runtime PM usage count underflow!
+
+The subsequent H kernel, which included this gate, did not report the
+warning during a four-rate 62.625 MiB qualification and a bounded serdev
+regression. H also contains other changes, and G/H were experimental
+kernels. This is additional runtime evidence, not an isolated hardware
+proof of this one-line fix on upstream. None of the experimental cyclic
+DMA modifications is included here.
+
+A source-anchored reference-count model reproduces the extra put after
+termination in the old path and balances the active-gated path, including
+cyclic requeue. That is a model, not a compiled-kernel race reproducer.
+
+Validation of this rebased patch:
+- ARM64 W=1 drivers/dma/pl330.o build on dmaengine/fixes.
+- Strict checkpatch, including the two historical Fixes IDs.
+- Clean application on current dmaengine fixes/next/master and mainline.
+
+Would you reconsider the outstanding patch? Please let us know if there
+was an objection or an alternative fix outside the archived discussion.
+
+Changes in v3:
+- Rebase the unchanged code change onto dmaengine/fixes, Linux 7.3-rc4.
+- Add an archival Link to the original v2.
+- Preserve the original author, commit explanation, Fixes and DCO trailers.
+- Add the bounded new evidence and validation here, outside the commit.
+
+Changes in v2 (Sugar, 2022):
+- Update the commit message following Vinod's suggestions.
+
+Regards,
+Mizuno Miotsuki
+---
+ drivers/dma/pl330.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index 6214d9000..17264a05d 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -2090,7 +2090,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+ 		spin_lock(&pch->thread->dmac->lock);
+ 		_stop(pch->thread);
+ 		spin_unlock(&pch->thread->dmac->lock);
+-		power_down = true;
++		power_down = pch->active;
+ 		pch->active = false;
+ 	} else {
+ 		/* Make sure the PL330 Channel thread is active */
+
+---
+base-commit: 93f51579e7df248780214094418f205253383cc5
+change-id: 20261015-review-pl330-pm-original-v3-be881d29c3bf
+
+Best regards,
+--  
+Mizuno Miotsuki <founder@crepuse.com>
 
 
-Cheers,
--- 
-Vinicius
