@@ -1,62 +1,64 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011049.outbound.protection.outlook.com [40.107.130.49])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011003.outbound.protection.outlook.com [52.101.70.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD66443E4D;
-	Fri, 16 Oct 2026 15:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847902DEA8F
+	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 15:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.3
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792164713; cv=fail; b=simjMpVFIzsaDVy5Tv4KLhM/ZRifr9yfWWzFGOODEdLgin7uNhiQ09GZ38uirZ8QQxIP3Bdmg1cs67od1poBP9ytUsi4jtEWLWthIGSZpm/lVTkyHsIi45q+F9N7SIgdI8lvKuWgGERS/snLoi0fezvlUf6qgbH/z5uu7OMvn08=
+	t=1792164858; cv=fail; b=PlzMOFZVy3sbHrrDBT6sSvSAw2KzT36fBCc02xkw5CzVHGqzKmqobHcMrDThA4sqLXt11TQxf5hZLtQm8M4Y2A0sXQvcY5h3LkJVuWiyxHAB1exqv78PK8TnQVgB0D0/SxAscvzEiNd0TjbAEJvF838IRj8YsbY3qRzB0N/kK6I=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792164713; c=relaxed/simple;
-	bh=jleq5qRwnwMsosgUvMZmxzmzZbxaHMsDnQnMbIjH/ZU=;
+	s=arc-20240116; t=1792164858; c=relaxed/simple;
+	bh=cRgPb9hEjCM+5tUzysON2AiiIih0HOaVezXvIIj1VLU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=kioHmcGnNOaL5AI5rcBo+YDzZF8+jR/iKrvWNsANzhOvlw3Rsxi7viPEwbR1SJD4qDbI8k/WfJs/KzAhPrVq177slShR8N3tBUmhkkIJJ8jJ5hETaV5QfYMbNTZbOpF10U9vTYgcs4Q1Q4xuBK2V4ymExmvnkDN08n5VFD+5FWA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=BzlxKgv7; arc=fail smtp.client-ip=40.107.130.49
+	 Content-Disposition:In-Reply-To:MIME-Version; b=hY7o+ljqLajC93Mz7cZV2LGA0lda9OsNNDREPj8fa/Oik7arfC3vZWVJT/WcsMQ2nS+WzZwNRlRSzJ6PGIv8E7OHg3U2iCHroJvtoQc+K63u/sSPYl9rXx6fwsTBj/5BXe8PpOJFbl1wjrPKxF6Tw83UC5DIujjIOYRhlcq+c2M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=iB7/reDJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="BzlxKgv7"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="iB7/reDJ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y8rVQKwBzLJNBr8sMgCzoyVAPuyFgyHjwWTilivSDaHxkE5EpTrdvwPvi3IDrvO2tT385c5cTlc3gR2hBEaOFPsVB2Z09bA061XJk4C9U3PdPb0DfgzD0CMqfJmkepjkkTHIVunzx0kylLa1bFaq+G9zbMJPn6ki4VtUWemOQVhTWYxlAInmvRccMgs8rP3YKyBzZX6tcIHzi4WpJgtxNhYuRz/vqthTR4WVg/VYRhaytP6fwavGjd73eLlk3yIIdrTzC8lFwB/SeIIsQguTMOoaqbNG/lu2nSF4DmrhQZx4N5FaGmh6ZwDJ/2K1xtc7pBGOQMYwg1xg55Kigg5oyw==
+ b=D/AkKG03Rcw0BLkDMUwBM7QDzyJrfM3Q/kKwv7IsLssNw26srDOxD0Mp7pKQugm6/GwfDPX5v1nJQOKi5GCqi0sSbW0AN/8rUm+zS+N/zufWUHibJL2gvm2GuY5tKFWX8Lhdyg2EMdVwHI3J0I9llD2XmUa+N8uEVAo0R7AyAqsvt/Y6Zwz8hroukm78FdyD04vtM0J/09FvqHE6L8WXSc32Y0atiQsy++qxLlXIooIML5CbQFgEBB5VnQ2Bn8bzjQGSYAc8uD0Utwo3DOvN1CXIhPmo95jNeqtjjbMsu69lPGj1l9jsaKFXxD9RjgCJJBQQ/4CkdPeNy6ZcWvJIzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9DvuIdEFke79uS7AG1Ce1Jlr069ZbZf2umZvsTgLl1Y=;
- b=tF5p9Cofq4a1D3iJqfZszFlPZS9AmXiiX8NzNn3ogbA5JHCWamZfb3vRMf7O3fUf9HzGODZBxTPKLuw6jgRN7chrY7k7ziRSQK3bxoE8+BotYMOKiRKiBbjCg8Pi9Lf/TN4SMzyzbN18NuPiapqes1eR9jF2ZdvoavhjtwNtcmHiUyLFp9rqWZDo8C1LlYEKGg6lYc6Cb2UNokg2lGWBEPOwhe4hwtnMVcNoXQkWmJqkiKOECmwEu+By5Y8/AsozEdJMbIY03PUZtTr3PiWKHtHYBKq2OHxlrUElp8sjS/X9iuUaUflil71wr3CPE6YSUn/r1E+41iTwTlm8AdvpfA==
+ bh=EMZpXjciAS1Z2fBRyBc1/o1vXotmGd+uAnqRbANQOPY=;
+ b=vJKNucvQeSoaFJc2V6/YcKg1FFdquQXYX8pUb6YQBU96XN3dVsqXgq6WaMGi7RbxKOVvtVmYVG1Yp2J5pSXK0FouTx5oSB4xWjf9aEp1LGQoYSWJlfMOGxAYJ+DL6W9r8Cl1y9JkyKlo5z8Rx5eOeTC6okDWRRiLI/EPgBN/RSFTI0uhlzzfDxpoZz/SY406NP01Gzb+v90sGcoBFb3vUVfAVU3wUM2kBVKNKBT+0QaPyYzcmBi/pDB/d79VI/G36EmmlwL1TfoloKrU7oHjMTfKJnU1nV00r1auo1Teu0e5U4Fl05v2aE8q8GxWjScEBIiflyqCmrhjdL4Rgz6lhg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9DvuIdEFke79uS7AG1Ce1Jlr069ZbZf2umZvsTgLl1Y=;
- b=BzlxKgv7n3T60QNZn4xuaXxP5+ic4uBdG6Y2PGl+LrM1IFO6yHey3VuTI08qK46KIhPaFNqyKeLlX/++zIYGkao2DJupLQUzmuW0hwIuAq26KnNtWi1ewiM2NzTXTVVozCCvu2/cuBqWmjeGz0uuwI6H5EEk0w+DgO48lOySSUTPGtnGJnQ5jTtnutjDeDSt3CHC9bYPHV2Hunv0HN0VqiHtpq/hSAVxRv+smm3obbQMFLPQYc6a4airOoCC1ilxhWkScMsMAYB+MLhKcc2Cxk/7Zlbqk7YU+xu22NrCLJ+1hBBo/Ta5yxN/5HtAxNS4q2vWC9aYbzbHNqO/ZxiSvA==
+ bh=EMZpXjciAS1Z2fBRyBc1/o1vXotmGd+uAnqRbANQOPY=;
+ b=iB7/reDJOHLEQNIf54dvWL+ZiaM6JRR5GFNPYqnXnENS03439esGD92/7ukEDRixC7rCS4sn7rTGlKxC2BaGjwHWPZPKvXVYPwLp/8k5b7J4gBb7+cUnnEngKcaEjT5Vs0JS7o5rOXtSJaQIIDxM7eSvA4uT/8ll6mwTWBY3eyHLJR/Vtq4RpHlzS4WOkNrpqN0GV1gZ2Gg2f1SV4csxd0ZetPAke1dLuaVYilDvjldvcTF4zBkE1V1fF14+xcIsdugjp7J/lv/w8AkEii/JwafH13LDaj0mA2qFGYx5kci/+QyYnTrtpk2FmLTtKpxm1hkFx6wlD1wSgTn+y+yeoQ==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by AM0PR04MB7092.eurprd04.prod.outlook.com (2603:10a6:208:19c::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
- 2026 15:31:49 +0000
+ 2026 15:34:11 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 15:31:49 +0000
-Date: Fri, 16 Oct 2026 11:31:41 -0400
+ 15:34:11 +0000
+Date: Fri, 16 Oct 2026 11:34:04 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Cc: Olivier Dautricourt <olivierdautricourt@gmail.com>,
-	Stefan Roese <sr@denx.de>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: altera-msgdma: fail probe when reset times out
-Message-ID: <atJDXUqsOjtfa6qN@lizhi-Precision-Tower-5810>
-References: <20260623060554.13523-1-pengpeng@iscas.ac.cn>
-Content-Type: text/plain; charset=us-ascii
+To: sashiko-reviews@lists.linux.dev
+Cc: Hongling Zeng <zenghongling@kylinos.cn>, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org, vkoul@kernel.org,
+	linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH] dmaengine: sun6i: Fix potential deadlock in
+ sun6i_dma_terminate_all()
+Message-ID: <atJD7EEGFVjdqhsC@lizhi-Precision-Tower-5810>
+References: <20260705075738.10639-1-zenghongling@kylinos.cn>
+ <20260705080726.585E31F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260623060554.13523-1-pengpeng@iscas.ac.cn>
-X-ClientProxiedBy: PH8PR20CA0017.namprd20.prod.outlook.com
- (2603:10b6:510:23c::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260705080726.585E31F000E9@smtp.kernel.org>
+X-ClientProxiedBy: DS1PR04CA0006.namprd04.prod.outlook.com
+ (2603:10b6:8:44f::6) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,121 +68,153 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM0PR04MB7092:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5afd2e22-fa07-4f82-f6bd-08df2b9a985b
+X-MS-Office365-Filtering-Correlation-Id: 3ebefddd-b1bb-44d0-f98b-08df2b9aecda
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|1800799024|18002099003|22082099003|10067099003|11063799006|261009223027099003|56012099006;
+	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|1800799024|6133799003|18002099003|22082099003|10067099003|4143699003|11063799006|261009223027099003|5023799004|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	+KOTuQ6Zl26Vhle/cNlpp/x/uPgtdyxDPXroJfkd4sMmDc5L0/CLTxMNYj2h29qjcvauozv6irbQLmDbHCODhyHwpF/1Ttj2or97VhPEnTRHEd9PaXiRzKW5IjZbycUSiDs9wMBbKIqfwNT5O9QJtgbfppBqy9BSHwmO0EmtN48NTNEpg6W+S175zDQYuptrC5I/uQu5yBKFPVZt7X6hUdvQgyz9fercdUZLsZuo+eRVTvfpx29COqUn8qREwrRRTBiZSG7ge6R7XL83PS7+B/VayaIJvLqW4VIGoGkSOEDDjRjCESnUDOFI1UZIVaWqQ0sNfElxFNkMiDz3f5x5DfUVo3M/scQ9zBTZek6TbFyzjyTTljECeebNnmwFlI4yseEpf2PiKDWpsMdU59jVqw6S4IGd8sEP4V4UmAYDD7dJVOFi6TIlo0/ujCqixCEc7BtKr42bKFP+Fv9jYpmdtshN3dNPRZhRz7AfSV717e7ObPuRUf/zF1RmirDID/ouGC52IiBRDTUL/xUxJfI68lTjlkqdQJXhofdhrUH9Kcfy8sc4sKr7jyPRD7XP9PG+0y78ER9RAUuIaO40HTp3P/2QaM97KVVbWfKHvo7BmK6llWYDuaqVY/mtSL4aPiRY0MtFGK4tEVsJAZKrOdhYJQCYyrfpx/A0b4wmJBs6VNI=
+	jHm9Mi6rxxrpH+lq0P1FBl//e8y/VusGGPACn4EHkFtTN/ARrnqr9HG+z9H2uvtDY450jgW7U9CVfZ/W4X9UGqI+AgYozGlSMnJhe5Uz1A0JkuAUz1pyjppy5db8N8NNpKQmXKgvXVrFc/eslJMPVps59M0FcMY7ET0xg2XNO9OFS+RMXfUQeVCUUnIob4z3CqoBo90GnmzPvV6xG2YI3fBJoy+AKM4OJhnMlXLeb/Y9zFUHigHwM4BPKIVIPZEUSxjWg/dGlFfWr3m9nYnOrYhXPj0xQPLEv91ylmLQqVVHkhvx1aAYqsgcyNExLhh9Z124NF07FXA4Gu5hGPhPCPgLBW9vt9wH73JVCOe8BBfNUVj2ZorgFBDZXqQJo6YrwY3vaJ6wP5ldFfD2Aj9rq/pnD1ZsbG7D870XuPEYI/5JIorWG30EyCyyI+1MyBZmruZIwJUIC5X8Y0eWdmgSi7lBDpSDYcYTHCS+/uFqGjGmrHfXZ7peLhbiI2tNiRAhCwPv/w8CncFzNWnCjAnAt21UNNwRrpPruj/msc2Ni/xMLatpl6qFP/49jxq65ceaMLjsryx92DR1NqisyTobe52k0+6aKnNgIqpfsp2vtug=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(1800799024)(18002099003)(22082099003)(10067099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(1800799024)(6133799003)(18002099003)(22082099003)(10067099003)(4143699003)(11063799006)(261009223027099003)(5023799004)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KJHvF0z5dcoSGT8xW9osyAccEVat640mbvZGFGUcG+YML08t0tiMy1okGO7+?=
- =?us-ascii?Q?VRQVPtCZx6g3b5td7FPrNaMbJpbkDWNLuWoFcWrrbRUN76oToosa4/0k4WKf?=
- =?us-ascii?Q?uwRDGjsl6+DydvrI+/7LrYATk1dOWlc9fJHXPuMDQDE85Q9zMUw7jRofLxbd?=
- =?us-ascii?Q?oQSEcfrp3P2K8HwnYMuzc2Bhq9ulFv9RmV2E7AxfcFDrbtM21AR6eDc18cE2?=
- =?us-ascii?Q?BweTU0n4/o9pAyxrzPrSaDY4/xbPYxRqs+eZOdov9iQMt5gqAUXKGDm/ysJR?=
- =?us-ascii?Q?TL31w64YIw9rlDo4UAetY8bS1iyVlkxt0qEWaVWKmxsVYRPeN5rCAfncPbdJ?=
- =?us-ascii?Q?rmJ8/U/0hN0RLKy5dbFdOyjgYBNJdunmCr9sT7RYI3CIygMgJuxj0TjzjJoc?=
- =?us-ascii?Q?YTl7gvBN/XL8pOcWV/1dmwrBhSYjlqd4Nxj2pDvUczgjckgeR9EeChfdGIDQ?=
- =?us-ascii?Q?1enGwL2+kOkOrtwnRMq7WBxCFF3Q21w7SNpLMeuXfUEMKiijVz6YTXTZqWuu?=
- =?us-ascii?Q?95Rg2g8mS01NRIQa8GyscDjz8QQ9ywoZGM6zPTHAQShkRaeIGP22q8hJq3gz?=
- =?us-ascii?Q?VScG31KR8WWmHJxUjyXCsGXqgD/x2V7NSzeOh2mzFVsqt0mLsaDMolBCKQtd?=
- =?us-ascii?Q?xPHrGpius2oIjzPdEteaqzi69k4A3igfYNTHVsl2ULSjaI8Ne0cdkKzuD0/X?=
- =?us-ascii?Q?mUkb11JtFGc+FqcC2Iorwe84sBp1aXm8IOmMF+zuz2EMCaXrqirDCgjedioo?=
- =?us-ascii?Q?jOT2aIXMz1MutJ+u/e0DpxV5zW82HwmueVIKIvpxSYNvWLNqmIwWm86JMvd/?=
- =?us-ascii?Q?Xanmg52Oxj8zC8kzpG6IcNAq8QQgHvWOZIeNB7VnfIx97L+XMKq/lCjIC+ei?=
- =?us-ascii?Q?osGUGY/rEg4rHHUkMqO2uEJl6Je2CCA7vdtNsCyanBKqsu8NVIjQ1HymzGVy?=
- =?us-ascii?Q?RxLnq5ivLva2kEr+N43KOlc/tlRCnjFhJCHuBxDM0tGYsY9c90kGGZb/aCkl?=
- =?us-ascii?Q?BqctA2rdcn7JsTSpPK+bo+maaohuRxnCmPvNk8BV487ZOhlKlrXFuhO80meK?=
- =?us-ascii?Q?qZY108YUHHNArQLpMoUVXTz2uQDrhBpaGGebc6vTr/r/hdkE/60c2BAv+yzP?=
- =?us-ascii?Q?RKdg26Arr77Q7MDoHLe66OGhY1Lb2UfK/q2eHkHd7X2p/xhRT4zJJTJlYhd3?=
- =?us-ascii?Q?zhqc2Uj3WMRSWmIzOh7Cd1ZVESDez7wsaq6zBwdYPeOZZMaXSrsZ/wlIK+Kd?=
- =?us-ascii?Q?+MLedOc7qWlCQ22VQdw5l1AoNd57mTOSukWiapq3oN2uljQAsxt2JHCckvyH?=
- =?us-ascii?Q?WCXJGJ2v+PLNAfFtzgkTBkYm5r5iH7XytHVfncdmKvfrHvAYaKI6+2Z0cdPd?=
- =?us-ascii?Q?23m7t1aSReUFC88IDdCEbUHUq6O9i9hVChBPxvAUZV19zYI/0DUI6QYwVRrk?=
- =?us-ascii?Q?mC5uNe50nj6LoysB2fh1ucb5fzr5QSgvPW9bHkIt1tuYMNmzX+yJyT9ebF2K?=
- =?us-ascii?Q?borz/8FP7tRPmDeLfePDfn5Zlfzeb18V7/GEwQ9dbj9ka0WDXM+ABSCznqiu?=
- =?us-ascii?Q?4gNhxuCWwE4uiDb9/pNZGkWI4X7T1vU2rdtUF76B7HyeCl0hA1Ffxdr0wBMn?=
- =?us-ascii?Q?ABVFBhZB8ld/Mtxpx3LRJJGiq79sim2DgiTan+41H/BZCptMk1bp73IcW9wP?=
- =?us-ascii?Q?Whlu582i+JpYpyv5dsA9zHL9YDcBGiJDqVNJgcq0ALpyq/S3EHywD21DS62T?=
- =?us-ascii?Q?83eX3mqhGQYK2HrUckqBTFabsXtTnjTZwCIze2elKUTzvw3xUu0m?=
+	=?iso-8859-1?Q?C24CoFNHOarQC3IKuM5VVykxbw+Oow6Vi1Bqivp56jBOJ3GZyx4oJ802ni?=
+ =?iso-8859-1?Q?XkMDfYewieWxfkJGtVqRWxdElQEqCZprqJc95pN0pckeiZORo51BEznnQI?=
+ =?iso-8859-1?Q?TfWLd0vlvKDUV3EBdVX0lAVXm4W1Y7UZdTwPbhKiKs10oOtrBnOSvGsEpD?=
+ =?iso-8859-1?Q?iKW3k2jt95ucmE+jCgwmaGVkaSr+sIPd3UQSpl+celF/uaZfIJdNhJxlRV?=
+ =?iso-8859-1?Q?Qx+/K3ZJfk6CPLmw/DUjcCNKsRt8LaaYqtpii8szbeBNq7+hQlwcMkxVt5?=
+ =?iso-8859-1?Q?i5ql1KaWE2oeOqWnj2juqTeVLYaX43/jCh4TOZbHtBfSNWZxrsKhUociEc?=
+ =?iso-8859-1?Q?VprnVApwlyekckjY3vIkd7cJgvwjkfKegLCtxAfo2KvCOW86uHI/qsHLOr?=
+ =?iso-8859-1?Q?Leb3rCfoR1yguWVWTnHJakMOZ9lKbako2xGnxM3vFKFBJFbFb4QPTF/Nzp?=
+ =?iso-8859-1?Q?1NNtjSVQxpnmg8O6HMwrbUxNrSSVVM6EFww3gnlYXdkaib4FW2UZXmYzHP?=
+ =?iso-8859-1?Q?rl2TtObHL0uSauVe8jHDpgcg+a/ZlGnUOLcOo+0iiR3M1MPZrK3Svm28JA?=
+ =?iso-8859-1?Q?EcSWPmbLpi0ZRxTC/lHq3Wswv3SMc3cdWvaqnS+mo7HUwPQnI0FG1rRdDR?=
+ =?iso-8859-1?Q?ekgGl+5SlrAgAHDhteadaBRyc+Qknpa+6FfK2bn5VW7pei4WQVobDeMANA?=
+ =?iso-8859-1?Q?1jHA5gzWehvuUairrQ3bzQQoT2zDaI3IeiYm2PdWIN0akbEO6gh7fOTkbT?=
+ =?iso-8859-1?Q?G45aOyVDhlUO1bA3+L1HPhGX9XGn2JXadn8nGYr7VvSJOKpi41zHB9VOJl?=
+ =?iso-8859-1?Q?XB/upTIxcc6m0YlKljtdDxyPfqSSTmOtgnULciX5GYxs6dHW09v+ebX1Dh?=
+ =?iso-8859-1?Q?MslqhqFm1quXRFmfUV4V9pXD7FGaGdS5zp5E6j7LnImBH1c5+oGfzqpfnc?=
+ =?iso-8859-1?Q?L2TFfJJIK9XucpynmRw/WqUgcRj3lcmCPZcNDzvJgDWux5pgCpF6oB6pHL?=
+ =?iso-8859-1?Q?SNN86VJ0M9z98YelVj6g/k3c0RPmj/4fxV/r3tDUxYK6fIabA8hUKqJYW2?=
+ =?iso-8859-1?Q?Ws/MbHZeHWy5iYlBmKs9iN26zIE+R0XFv+p1MWRGqoyEuWD19ycJPtYp5q?=
+ =?iso-8859-1?Q?o2ppkZ+No6/hvokWlnJqGaFMNcs6Jgjc9u+4HRQiEtsZ7aONk/eqatEOka?=
+ =?iso-8859-1?Q?O1/FH/1fP0shlItAixdq6i0MRbo/8OLEwj+7eq1krUtVA93e/igptTaVuP?=
+ =?iso-8859-1?Q?cEV6LxIdYxLM3XmpZ/Pq+kTFDsorN/K5vciJI4ZgPmNv+6mYdFWF9julTj?=
+ =?iso-8859-1?Q?aElU1TYokjxPYTLg3QT62RMYEsweIQvw6oLav1xZ4Uu8ToUJ2A6nj7CsZF?=
+ =?iso-8859-1?Q?jxpts6J1gRGFMpcn2NUVN/r5SGXwEmVCNnc4XLty3/+EHq9k2oafA4wuXu?=
+ =?iso-8859-1?Q?t4lR+/i7xC9i4eIADhVSlo8kLFj9TOQskz3nynmRsu9e2RY46Exyr87nQx?=
+ =?iso-8859-1?Q?2D7nbLzU1/ToWwWMrqipanZ62NbZfbfPoZ8u5/G7gPy6NYRP5tXiHcptaO?=
+ =?iso-8859-1?Q?h4b26fr6D4OO6Zw4GIwPVA+BXI3MMZalRoFxOwFj0PxaiOS5xMbJDgQr1g?=
+ =?iso-8859-1?Q?C2gVkOO/t1zjhYBlMI81Ppqqq3IyAlKJqS7T+87VoLAByTadbKm/G6u6Ls?=
+ =?iso-8859-1?Q?Hc3SaMVdE+7btRgqPpr8KeJPgHkLjcM+Q9YfLJoeMoix72R0NXPwKk73OS?=
+ =?iso-8859-1?Q?sQZOMsxc8AVWYlasRRgRJNhrWGt9VwxqOTt/3C/OKfkdtezwjugEtbAHuw?=
+ =?iso-8859-1?Q?nAkPF05NdpMPe7b/cJT/eOAEy6jkEYCdVPeySj/tHsx0iOBHcSCj?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5afd2e22-fa07-4f82-f6bd-08df2b9a985b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ebefddd-b1bb-44d0-f98b-08df2b9aecda
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:31:49.2505
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:34:11.0255
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: quRIMbRMjc0xK7dzqkmIyNO0uCtQ7THH4jXvT4v+z/5EaM8XCHKHbWBDhpNiiR9gaQfJjR0hQWM4q8DMNGvC1Tdz4luI4MJ0ABjHcDxh/ehuDw/vzzpkmq74NAqScvl5
+X-MS-Exchange-CrossTenant-UserPrincipalName: lgulH9gdfsYLcUtuTVXsk/lokQXNWA8uSJwtl8iB8ToLIIKf2ywDvDmgvpQLXwU8QtPfa7oV4shjsL6QFkv4eL9S15T1lFAtJIevPGcZnRq/T09vaf9PgYTFnAZ5jWgi
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7092
 
-On Tue, Jun 23, 2026 at 02:05:54PM +0800, Pengpeng Hou wrote:
-> msgdma_probe() resets the controller before publishing the DMA device
-> and OF DMA provider, but msgdma_reset() only logs a timeout and then
-> continues to enable the controller and mark it idle.
+On Sun, Jul 05, 2026 at 08:07:25AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 >
-> If the reset bit never clears, the driver can still register a DMA
-> engine backed by a controller that did not leave reset. Return the
-> readl_poll_timeout() error from msgdma_reset() and abort probe on reset
-> failure.
->
-> Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-> ---
+> New issues:
+> - [High] Unconditional hardware interrupt re-enablement violates caller lock state.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Please fix this issue
 
->  drivers/dma/altera-msgdma.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+Frank
+
 >
-> diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-> index b46999c81df0..f60a4e86a246 100644
-> --- a/drivers/dma/altera-msgdma.c
-> +++ b/drivers/dma/altera-msgdma.c
-> @@ -466,7 +466,7 @@ static int msgdma_dma_config(struct dma_chan *dchan,
->  	return 0;
->  }
->
-> -static void msgdma_reset(struct msgdma_device *mdev)
-> +static int msgdma_reset(struct msgdma_device *mdev)
->  {
->  	u32 val;
->  	int ret;
-> @@ -478,8 +478,10 @@ static void msgdma_reset(struct msgdma_device *mdev)
->  	ret = readl_poll_timeout(mdev->csr + MSGDMA_CSR_STATUS, val,
->  				 (val & MSGDMA_CSR_STAT_RESETTING) == 0,
->  				 1, 10000);
-> -	if (ret)
-> +	if (ret) {
->  		dev_err(mdev->dev, "DMA channel did not reset\n");
-> +		return ret;
-> +	}
->
->  	/* Clear all status bits */
->  	iowrite32(MSGDMA_CSR_STAT_MASK, mdev->csr + MSGDMA_CSR_STATUS);
-> @@ -489,6 +491,7 @@ static void msgdma_reset(struct msgdma_device *mdev)
->  		  MSGDMA_CSR_CTL_GLOBAL_INTR, mdev->csr + MSGDMA_CSR_CONTROL);
->
->  	mdev->idle = true;
-> +	return 0;
->  };
->
->  static void msgdma_copy_one(struct msgdma_device *mdev,
-> @@ -896,7 +899,9 @@ static int msgdma_probe(struct platform_device *pdev)
->  		goto fail;
->  	}
->
-> -	msgdma_reset(mdev);
-> +	ret = msgdma_reset(mdev);
-> +	if (ret)
-> +		goto fail;
->
->  	ret = dma_async_device_register(dma_dev);
->  	if (ret)
+> Pre-existing issues:
+> - [High] Incomplete deadlock fix: sun6i_dma_pause() contains the exact same deadlock vulnerability.
+> - [High] Lockless read of vchan->phy causes Time-Of-Check to Time-Of-Use (TOCTOU) race condition and hardware corruption.
 > --
-> 2.50.1 (Apple Git-155)
 >
+> commit 1435f9b5204cbc43aa5b41f133e1e3e88387cce1
+> Author: Hongling Zeng <zenghongling@kylinos.cn>
+> dmaengine: sun6i: Fix potential deadlock in sun6i_dma_terminate_all()
+>
+> This commit modifies sun6i_dma_terminate_all() to use spin_lock_irq()
+> instead of plain spin_lock() when acquiring sdev->lock. The change aims
+> to prevent a deadlock caused when a DMA interrupt fires while the lock
+> is held.
+>
+> > diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+> > index a9a254dbf8cb9..840f7276ad5d5 100644
+> > --- a/drivers/dma/sun6i-dma.c
+> > +++ b/drivers/dma/sun6i-dma.c
+> > @@ -939,9 +939,9 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+> >  	unsigned long flags;
+> >  	LIST_HEAD(head);
+> >
+>
+> [Severity: High]
+> This is a pre-existing issue, but does reading vchan->phy locklessly at
+> the start of this function create a race condition?
+>
+> In sun6i_dma_terminate_all():
+>
+> static int sun6i_dma_terminate_all(struct dma_chan *chan)
+> {
+>         ...
+>         struct sun6i_pchan *pchan = vchan->phy;
+>         ...
+>         spin_lock_irqsave(&vchan->vc.lock, flags);
+>         ...
+>         if (pchan) {
+>                 writel(DMA_CHAN_ENABLE_STOP, pchan->base + DMA_CHAN_ENABLE);
+>
+> If sun6i_dma_tasklet() completes a transfer, clears vchan->phy, and
+> reassigns the physical channel to a different virtual channel before the
+> lock is acquired here, would this operate on a stale pchan and stop
+> an unrelated transfer?
+>
+> Similar lockless reads of vchan->phy exist in sun6i_dma_pause(),
+> sun6i_dma_resume(), and sun6i_dma_tx_status().
+>
+> > -	spin_lock(&sdev->lock);
+> > +	spin_lock_irq(&sdev->lock);
+> >  	list_del_init(&vchan->node);
+> > -	spin_unlock(&sdev->lock);
+>
+> [Severity: High]
+> Does this unconditional spin_unlock_irq() risk breaking callers that
+> invoke dmaengine_terminate_all() with interrupts already disabled?
+>
+> Since spin_unlock_irq() forces hardware interrupts back on, it could
+> destroy the caller's interrupt-disabled state and lead to unexpected
+> nested interrupts. Is it safer to use spin_lock_irqsave() and
+> spin_unlock_irqrestore() here?
+>
+> [Severity: High]
+> This is a pre-existing issue, but does sun6i_dma_pause() have the exact
+> same deadlock vulnerability being fixed here?
+>
+> sun6i_dma_pause() acquires the same lock without disabling interrupts:
+>
+> static int sun6i_dma_pause(struct dma_chan *chan)
+> {
+>         ...
+>         } else {
+>                 spin_lock(&sdev->lock);
+>                 list_del_init(&vchan->node);
+>                 spin_unlock(&sdev->lock);
+>         }
+>
+> Could a DMA interrupt fire while this lock is held in process context
+> and cause the same tasklet deadlock?
+>
+> >
+> >  	spin_lock_irqsave(&vchan->vc.lock, flags);
+> >
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260705075738.10639-1-zenghongling@kylinos.cn?part=1
