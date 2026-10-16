@@ -1,63 +1,62 @@
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010054.outbound.protection.outlook.com [52.101.69.54])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011013.outbound.protection.outlook.com [40.107.130.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FF04772BF
-	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 15:51:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D336B4E8DE0;
+	Fri, 16 Oct 2026 15:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.13
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792165895; cv=fail; b=mfwFW+xc89FGaq/Cya2lRIyMMfvfa7QXRd43a4YuGjmStPgtun4ZwORad9xBAZVozUJi8dr7vGFb8QiU92kjH8wDzhSlUlCMKdLHRh2iuGnuF7Ytp28nYbGL2Oe1hpx/kNX7n8XggCWlaH0UCWbFOiw7o8OEHO8+tlypS2auo8Q=
+	t=1792166209; cv=fail; b=BmHk9EgghRi2Xmj9Vl9p5DbXBb+teI5u7rJ33N+MAtw039EHvf/VqPLbw5ZrVQpPmo7FrcGqmpJvz8utai3dc/DZqHIxlhRxdX98uQYPr19UNuHyQjx/xPEzU+2HzuAGDt836WG80BA+nfLPmJlQ3A+3qSsfJGoF3EcBMIRHQrk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792165895; c=relaxed/simple;
-	bh=w2KLGu4KaRCpm5bwYvGWZTJcoQhOPlzBVUGLQZTTlxI=;
+	s=arc-20240116; t=1792166209; c=relaxed/simple;
+	bh=smWFxD6EoY1wszDOPe6XKG/Y94FYDPHX1vrclGpiZuw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=NuSRAfajEWEibuWzpziPh3+7PKP/MnVh64z1SrDQlx6PZGzaCMqdGgVVNhJSeMpo3lq17szYMNZZCWsZfvPjZJ+zh59XDzjRuiqHLi+BvMAiRqbXJZKEB/FtTMYZVGAAw6MMux7n2uEPSyg1Mm6TN2iMw6clGCtKXAoNOEFZDPc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ADWMLJk6 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.69.54
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gw75XRf+7tJfMZ++YAuJMGAXepjloBtuk0PFOW/z+e7BPgmrFspnlNE9acOL+zS18eFdK8c/FnI5+4s6Ev06IVZEdcvWH/0XaUxIeTMe1xLZ+cW1wkeXOWAvSeuwiyYL5UXPVVMM3xI/AqTNeO81MyG01IZ7ponbNPITXYVz32c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Xot/9NIw; arc=fail smtp.client-ip=40.107.130.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ADWMLJk6"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Xot/9NIw"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m/zhPWY17GbzEheYCNfGz14zctGd3ClQgSD5i6fX6Cz61HfshfMLF75ne6ezutfcHsZuPonkVXOkD7P/AWyUm4aPZ5cxSaN0WAIH3/v/MUy/Y+1dHVbNnyjUS2s5Yhpeajb0Mqej9KETG2DWTxhNEMOWb83iir6XIqK3rW+M0r9B8Z5deGq4BqSzctLKj9fx7eT/4Xecr1x+nTOMEmEJE2n50J/OkQQnO1fqgzt14oeLUDMnLJUDfhBYDxLmRYn5NDskeKVa3H4QhN1wZohtqwx3J81dHPT6iT9q8crT0CRd4MivTuUA24zM4Y3kv89Qj1cycGHaliN+61NzpfXFxw==
+ b=T61tI4vwbf9/vIDSD9zKHEePqH54yde+fhQeTT+jNEN8I8z4F5nYIDdIJuhAue9iRGtnh2g8Q7zgPAUd4/nAA5SGbwfp5So16p7E/dql00MScexqES5iaqoVrs5eFYp/oVplx67xp7OgLWaM0dkO7qyglHbhcQD+zzNMx0ZdNsgfiOle2jdBC4OACgqBQMhJkFghkDnU+JSJ+qEK77DeEBcYGEDG2NA5Mx+rH8ROPxQKQMiNf+jPtSLOJXPkNGV3nXvZklUvA6yIyz7UDEBExM3rlnV8Evj10Pe3DEF221SgE89843ME3DTA8dQ56s5WRD6jX3zCZCZeA0dV9PbOhA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1TNYNn+HW+er8N5YU+PbPzg/YiCL4+GEy6DZ4RhDUI8=;
- b=igPytJNkpDKd+YszfTk9uD222TiNs18ne6yOsCawNV8lrQobcXYT08oD4szCWIdQREwx5b925y4mS/qhbo96VG/LyRSxzpERCBaMDGPOH3kVP38J5eX3NGlXTw/kCQirDcf0a3B8g5LtLEBRoUdejPsWjSaq8K+71Q1LAu9hdLGZq7nw3sSBFxew+vkkCQmQj4fkmIZ/tP5cskN/4MgZKW8Zu5pkr2+t9cvyE44d4ElO9sQnFSqyB2E3eTWJGQnUQpKrzcpbjBBIqTQAOjwghgtj4tgKkHu44YA6b5mDDoA3GCALD1Ku6ic+9UR4M0pbt49C213L9gr9tcV7LqcXZw==
+ bh=uSxo511YdW/EufdQ2X8JZsJI6HKqzAzvvV+EezNsWfM=;
+ b=gg8J3vWivHe6UGgTME0w2+C5Od1oQjP6iLCbq+H69bEPblRHDAJmr1JiM+bpSK0hc34iiACIKVEwgdRuLYDZ1LqtqW5TC75xdqo7I4d1L00jRsceDbcSY6Ut2r6gaUrFBe3cL441ABAtQQA60v5I9YsAVdgmNlX9GQDNAbMGlNzz12YfsiznQ2wjyUhJSuokvI0P97SiTCBc+HAbmHhiLATS/UZ3+0tHw01qpWCrcM9cLfkZ/3fheoRE6kkvvncEogEHJiWWh88J/LbSzx3EeDLiNWAug+hGpkUlITm3jiFxNLJ3M7vyaMAPWANuv/tIiBJw884JDO2AgB1XaLtXVA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1TNYNn+HW+er8N5YU+PbPzg/YiCL4+GEy6DZ4RhDUI8=;
- b=ADWMLJk63kxUcDLm+T8YbHzMD/M0ytXO9SAKbj8RiT9c6rEeymylE8PUzKviDBENK9zmjl51gum5OP3TE9djsPZI4TfsSwBCkNbmwg/trhfS3tLBF2EdE51xDWF506PjRlUUWOMwBPEazbIX8nfrQvIY/B8MIvz/JuRzKnAkwPBAIeeazy/9nGAfT6sGRR0zUVMwPeojMxTvatYJe1VorGwh0X0LbuRXYmqwnrldPBs3/cbCvQvnZjkRNSZkamOxca0/rpK6VOlNCaeZ0ddxoS+V0Tud46Pc/hjmprPSAazQsjegKCgZRPa2Ylg538kwO8H2IDqaAAShvGrU70+zgA==
+ bh=uSxo511YdW/EufdQ2X8JZsJI6HKqzAzvvV+EezNsWfM=;
+ b=Xot/9NIwThvcx/2MAadR+ETWXfLugPujQV/sjSXr8sIUFNgaicGQl+4w5kY1pDgMJ8xtz19tX6wxbSfbmhDAn773+fR7FAbcp4G3li04sK8yVX4WLpq1IDvFggQT5prY0xUXeYSj9DX4FkTTl5VT5qzhlyS7cXb8xsWGA9yFV0LVidOwMRoQjsluXlTO2cn4uLfbdeb23GK7hbAMSebRml1zwfTm2qUvw740jm10tnVC6Mz0f2maD6d960UQoDAPqTN4QYkx8XMfZPQPo+z0E4LQwCgfw9mLZLAF6Sw1pQ2d0tCI0pT0lAcjpPOu9Zo/PEgx0hi4ZatrSoJBuXdoFA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by DBBPR04MB7899.eurprd04.prod.outlook.com (2603:10a6:10:1e1::21) with
+ by PA4PR04MB9688.eurprd04.prod.outlook.com (2603:10a6:102:271::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
- 2026 15:51:30 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
+ 2026 15:56:42 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 15:51:30 +0000
-Date: Fri, 16 Oct 2026 11:51:23 -0400
+ 15:56:42 +0000
+Date: Fri, 16 Oct 2026 11:56:36 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Ruoyu Wang <ruoyuw560@gmail.com>, vkoul@kernel.org,
-	dmaengine@vger.kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH] dmaengine: mmp_pdma: Check virtual channel before
- scheduling tasklet
-Message-ID: <atJH-4ZtPYdfOlIM@lizhi-Precision-Tower-5810>
-References: <20260707150356.2257833-1-ruoyuw560@gmail.com>
- <20260707152604.37C7D1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Brian Masney <bmasney@redhat.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v2] dmaengine: qcom: gpi: correct gchan in error paths
+Message-ID: <atJJNN-BfkgVGlZH@lizhi-Precision-Tower-5810>
+References: <20260708-qcom-gpi-err-fix-v2-1-49c9be055501@redhat.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260707152604.37C7D1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: DS1PR03CA0018.namprd03.prod.outlook.com
- (2603:10b6:8:233::15) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260708-qcom-gpi-err-fix-v2-1-49c9be055501@redhat.com>
+X-ClientProxiedBy: DS3P221CA0004.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:8:45e::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,280 +65,130 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBBPR04MB7899:EE_
-X-MS-Office365-Filtering-Correlation-Id: 014cf989-c421-41cf-7a70-08df2b9d5825
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB9688:EE_
+X-MS-Office365-Filtering-Correlation-Id: fd7283d1-057d-4c5a-6bfe-08df2b9e127a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|19092799006|23010399003|56012099006|4143699003|11063799006|5023799004|261009223027099003|10067099003|22082099003|18002099003|6133799003;
+	BCL:0;ARA:13230040|19092799006|23010399003|366016|376014|1800799024|6133799003|18002099003|10067099003|22082099003|11063799006|261009223027099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	lmOeD7+XuMnod9T8ChF3ZD46u/PbX41AJoxca9fO8RJH74Q2SyZqtXVCtVKnMLdGspx3eXLFzmRtaMDXADrwb9c4APGLIl08ZnlHDoepUzvpqfVTWa9xb5j60M65f3Dng7QL36PGQ18UsMWeaS4ciURmLmuGwvawmZQoLDx0pQcSbUmsIP7Zn8e+AWUQ74U4wpVggV4XynS1dRbB5m6MKvrR3ay1uX7W8Kcqx4hwJgHZaUN8WGnaQLqf7QWuoXPEbjoHw8vE9UJK6pofM60NCyOtha0kvOSCP0N20n8bYuBIuD9S7iO0qWYjnOcAuF9gJPUMJBQOnUUD97eNz8r+FwL3lIuF49TFSVIeUApasegYkwoaHJlAehoookwznY7yX7NNqH83kpgv4WUTIh+gXuWjQfnbSk2gjzsVvNXfzS4Gfp0dAZ4b6/0V9gcJI6HfPAAEsUMEcgavPuR8pJ8C2+EoGHseVhV2rUwhn3b7cJ6gxjATa3TF3FACUIiSuFgd1XYwhDFk9Xloa8dy8n+FjS9SbLEM47m1monaHSplsHF21fgeoYrTBXtpIdU6zdOXPqnspthJiGMbS4oQvJgO8xcII2/xiQl40zRjL3UgnL0=
+	c/uArwt0zbQiVO9v+lfylu0953jqlBQ49WDUwINuAMiabJ/k/RFYIfmUEVUfuYLleWjUNE6/6sIQoIL/feCA1SkwOAJVCkB/cZWFdqqa+3DREMOymKkBP2tVKghNsWdX4e1ohX74NkeYJzPQZQuYubUrn5HqKNvbPa+CchM0gGYaw7tlDUc0Vt9wFbsJVHwvHNCDdlo8T9MEr3Vq/aFUdhTQ2r64BYwFVKuoDLu5Fp/gZBA3MTI1+UX3I6AQuiWK7WrQh3eWg8YMjD0TlsgwbczrZCtYMtU3kIg4W1QR/865j6arZsL8ZbVp1M3A7ndn+UG7TizSOb2AAZAtq6eOV3gNo43an9j64ZOS2SDWG+aeaj5Has34YzlCnjTjPDELxjpmWas7l6NBda2t8i5IHjkm8Z3ozeyh/VJhutIYYIV2wLgbUDe39Cn3bBvsTQe53llbb2m78YsA43JcMxdGcevoyzkjJQLgMgogk0wa7SZ0A/9SpgLb3vI7ie8VS2hq+PkFI58LdJhFGj3M2UD42Dgft1T/2+sZZsIbIVvhVqmuFhzBgOywCQuHgPmDGRKdAQmkcbukC9RQbI/1ekGdHcOjYmMs5W8Tkv3XhwCirEMwB/iH5k17F9hfcoSvuXRT
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(19092799006)(23010399003)(56012099006)(4143699003)(11063799006)(5023799004)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(376014)(1800799024)(6133799003)(18002099003)(10067099003)(22082099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?92ne7hl+pvHesuelf/JF5GVdQIlLIXXlJrVR7WMLNPWZDnsPw0UWx0ecDd?=
- =?iso-8859-1?Q?QuLQ03/TwgQO1zHUapAoo18oTOQfrC3IE9yiPGkvoMXzdgzSzBBSpbodxv?=
- =?iso-8859-1?Q?5DuOOYWTSi4xP2QWgwQQ0EeuRU2AIYLZqM5rqmEbFonr4B0xZXDRVONUk9?=
- =?iso-8859-1?Q?7DZqwh1gxmCbABcBLT5nMrvM3emq6/IraoitfnBMv6DzQXnmXO92pGyYQL?=
- =?iso-8859-1?Q?Z4JjZr+/si00fcy5yB/oJ8lHRJJNQHGcUpqW0XrgZGiau8LtMlaf+ctC3P?=
- =?iso-8859-1?Q?3bwvTYnoQDQtD0U4f6NXxkrv7wJxZ0aliwR7e3vB66G/tbPsNbPRzwCMbx?=
- =?iso-8859-1?Q?rlGN9RcM2GSGKIu64ohrlCDZFi6K2X3WPK5BBCOWktOjsbzYkM1nrRQ7fu?=
- =?iso-8859-1?Q?pMYp7M5lwWu9sIJmfqlC1e7P109cAbKavl9sa7SlFKdcWUVYArRfPdOzds?=
- =?iso-8859-1?Q?ivoexVFWN1BLYrMbz8IaJLntd8NggbP1tmm70HITSy2YCwiwzpWLcWbZkf?=
- =?iso-8859-1?Q?X6XrmQkO3VU9OdashH+D0kxL5aBNGMKaNO0J3L3y8Rj5EE/Qac5fsaeh+Y?=
- =?iso-8859-1?Q?WsrnkYqNSbCohstboH7qlERHfFBCz82kI/OXWQSdSWO6Y5qb+toocFCjx8?=
- =?iso-8859-1?Q?Q5ip7AG7I6O35KT6/dzGGMX0p72iaWogD0BwVrhnK/m++cASJQMLe4Nx+x?=
- =?iso-8859-1?Q?FUoNk1zrqhllPB8XbXC1wtS52hIT7wcyKp3Sgg1dSS5HfOEaGEjSiSNvv6?=
- =?iso-8859-1?Q?qEZfahACS69Gj6BIiJCrz5DfPmefXE3bSJN34QCzYJOrC+vqtbVdtlpbvI?=
- =?iso-8859-1?Q?mKD0CTzKBtZVije5AogKNDtcRNmSAyD6qJ/KDX2iIERlOy9BPFtnP3tOiO?=
- =?iso-8859-1?Q?ZHYqWV9uhkme/eehC59W9BMMnnB/R3HCqYJW8quKAWpkQqO7XpSAGizjP6?=
- =?iso-8859-1?Q?32ecRDhbqReiPrKpGLUYUSMVIREhJ8hIacekpKhWqLG6MaOO+LcmN3gE6/?=
- =?iso-8859-1?Q?3O7H1qEUXdH3R16CHOgjjGCMdBpafOPgTEOyHFh+0P/t1QCGlQrVsakbdI?=
- =?iso-8859-1?Q?C6zZVs+q8ZD8YGAlWnzKaROVT3RGrxToNL0d95slJXA5EoVnc1+tKArlMl?=
- =?iso-8859-1?Q?Eqi0+fdcvx8Xw5wG6xNsTOff3ltPkOClZmkA8nLo+E/gNe8ECHxM67H3iu?=
- =?iso-8859-1?Q?6AjsxvZYxGIZDVrqIAJSpj7mRJER4hdzjtBcJ2Bd4odXYBWx4sT/0HmXPR?=
- =?iso-8859-1?Q?IqYflJf3Knix6C5AbPVYOaBrNNtLKuvRhQtXpN2ZiZa63rQ8Kt3v1HpsKF?=
- =?iso-8859-1?Q?jXxz/ZdciuijepR/PJTb0N7l/RfEDC0sFvblz9KKbsFXaiZXA64HH0f3zf?=
- =?iso-8859-1?Q?k4wA351bFSkTqUjFxMijCSF0VRSJWOWS0JaUZg/yAKS68H1id1gWI4euBz?=
- =?iso-8859-1?Q?Bl12714WY8TpwD+jimMXOkvEREPKj9NRzW5iIH09S+3Om9PI+QhV4ryfLF?=
- =?iso-8859-1?Q?xCZw6W/xUE95GVENmyTDb5pteoFGEfrQqsvU7T7ZJtvXRU3zxavNZwXWU/?=
- =?iso-8859-1?Q?MHNYhjTlV7BFZ0xljqdKU4RWw7aMtT7n0HC6bGQlWEV9vycUbrcY3Ao9Tj?=
- =?iso-8859-1?Q?sn8InLp4679msCHLiAndfKqarOOqARO/uZx4atiXPjSPwWj/3orB9PSznT?=
- =?iso-8859-1?Q?DWANWhjS/1r+R986N/vJwCUEMA4JBIuKCWrshevIu1LWBbrHsuwry4Bn8e?=
- =?iso-8859-1?Q?OGM3LQPFBPKG4BjkKyxPqbaepXa/RWTOlfJ7tgSn1ZRZBCSeXqIG1qgYar?=
- =?iso-8859-1?Q?Qt/Ovc8IOqVxKiAE66Ny6u6zXxGIgGGXJBPtyCfHpzsnyPDjohVv?=
+	=?us-ascii?Q?8JRfyZfqR5cWpdu/4ypwZSxke6FWK+T39LDZHNUcicG+daC+aSrzf4okCIl9?=
+ =?us-ascii?Q?UsTGQlW+sj6QG9p9fgTjBx83uhm/3CVxjnAmoIBvqN6JbLP4cLsEUipFmewS?=
+ =?us-ascii?Q?0C61SmTlPn6jEDzxayjOwi1Rrtmi9CaOOJx+IFoE198A+dxmKCl9+iT6E4jA?=
+ =?us-ascii?Q?+hDOV8Wilt8VIkb1DQE1/PQvsZaa2UraumGzMSSctm2BR/iFsWdHzRHC+StC?=
+ =?us-ascii?Q?K0DYMjkh8S4zPJmFAbiQm5jwoIracmN8UewSh/Edoxw8tB0H0N2hAN580vjP?=
+ =?us-ascii?Q?x7S+K3hW2V0dYvEzxTmsIwhFQ9edIkfwJOYxcF+QK1je06VK6Rha12YsQYJi?=
+ =?us-ascii?Q?S+HqE9TjWL1fpU9rJWCB91C05e4AEqeh+Vl9LGv8ym4EXlumjiJe55Vnp30C?=
+ =?us-ascii?Q?YJm76oP7c3Pjx6CBOugMvdeWGPOd4Je/oVRCuCTyS3g85o1L/PXuC3Im5UE1?=
+ =?us-ascii?Q?nZ9JLtbGnC2dlAGn9SIx1SifuTTYUnlwoYg4dF/UqDtIQUI3Xd0RY5jzCT32?=
+ =?us-ascii?Q?rjBqE7OXxrlGyDLzIGKcQdd2ESbtM7b3+qNiRkO+TrtYLtDTe0hyzVvOqhGd?=
+ =?us-ascii?Q?LhwMqYq2H/l04G2ZwkuQwaKXf+/RX+VXbzR45VGQ62wS7QemN2zkt2deF0af?=
+ =?us-ascii?Q?2AoYCUEqhu8PtmgtHoDtY1nA8Jbds9ED++CDsr/daPgHffsSoINFXVugyly1?=
+ =?us-ascii?Q?yVRAdNW2O8SQux22xeekKNw375NzL+v2Yd6+JQS2mlhfUbUNxt3uSfPSp4pS?=
+ =?us-ascii?Q?ONoilCTtb8/dOfk4qAr0aYZRz3Z3wkMbptcyO+aoMNUdi4jccL38+waku1Mo?=
+ =?us-ascii?Q?HWhF46Sz7A3lOim5TKGS9gxbE0Mqj25MZE1uTBHhTSqImajUxMsBIZHnbg8V?=
+ =?us-ascii?Q?vP7xERWdPygvm4ntKeYZMjG2f33epJAIwuoNwYBCalyudu5LPERPHh+3eIkN?=
+ =?us-ascii?Q?Ru1+JK3qt771HE35lE5YwEg3H3CLNUH4+7FxnenrswgW+nHfBEpktrJXlCfQ?=
+ =?us-ascii?Q?nOn/bZB8h8LH9bAXBYHQFHgfEz36ani3NnEiQiwS2MgMXDNkWjVZMzLaaBg+?=
+ =?us-ascii?Q?cuJO2tfxiU5MflH+sVbK7Iiou56DvRQ/bB6relMv7ZcB0XtoeqLkQW4yj0Hm?=
+ =?us-ascii?Q?NsOwLpFO57Sh96e+MyR+V6HT56zsBgQCR+1zupssY4tvO1b3NFqUf6pbxlyF?=
+ =?us-ascii?Q?9MKTJPTOOR+ODXRif4YRzLgCSYp+MW57wn8wbbtvhQUOFARpOcXITa0L80P1?=
+ =?us-ascii?Q?6J1bxZYkMqjs1z1JU2zTfJZJ4zrpQ0xyPqu8Uo9eaS5J/fFTmjIjEVEeqEyg?=
+ =?us-ascii?Q?RcsvV2C4T/9eDGxkLLtSSxebasOGWg6ymQ/mPpWGPDZ4K59IGwxhfi6GXXLG?=
+ =?us-ascii?Q?W5WJheerYCZeFw+pxJ3k5h5wxcKAdNyGjbk5vn6ULrag5ettv4WrfPpTgq+3?=
+ =?us-ascii?Q?lk/e6UcxiHzLhXI49n/YU+TYWtEMJ/Qb7LSlcBSLnQx33fnUzjLOJ/rWni+h?=
+ =?us-ascii?Q?GnM0hBNG+J9iCaNZpJAXzlNzck+jSI+Gq8aD+o3SEnqGQrNcFx5wW+APBWSb?=
+ =?us-ascii?Q?eoNovU6+uCWVwVV+61pjF+7ensE1ul8w3CxzZzLGqIoBEezDom6Grq0bPsKI?=
+ =?us-ascii?Q?SKXV5/883CUJd4enntKvIL6Lad9LZS8mSr1PpW9no8/DeM8Xrf8FOt2lFimr?=
+ =?us-ascii?Q?xhWSmKFPmf84i1nKAIO+i1DIgJKdRIU2PTMHEuWwln4qcLzdrss2Ceoschyo?=
+ =?us-ascii?Q?ATGQkGaI2xlFGjhB9cPiRj2joSo3p/JjyGVwcrmouWBSOvX6xkwG?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 014cf989-c421-41cf-7a70-08df2b9d5825
+X-MS-Exchange-CrossTenant-Network-Message-Id: fd7283d1-057d-4c5a-6bfe-08df2b9e127a
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:51:30.0183
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:56:42.6230
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: k3ATswfTdt7fxWwPx/66UOIgmYsAaXvPY56xcpr4Q8a8Q4ZPe3jz1PeVNlelMEV+UAAOGOTjC9h7v58LC2LkJmXODarZgbKO9+aEuRUMsb6PsnrtXHKChqniOBNhXrTK
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7899
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6l1HFycM9JRLGOWBXPhh6PYGduLRNe0CTs2cz3JT62twFB0cxkrSDbfwDMcNrkb6gSyr7ZWmCnViypFwqGkZQov6IXpOtDLjB2WvByEnHx0eqRdJtHVtNrUo626prYQT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9688
 
-On Tue, Jul 07, 2026 at 03:26:03PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+On Wed, Jul 08, 2026 at 06:57:25PM -0400, Brian Masney wrote:
+> When attempting to start the Fedora graphical installer from a USB
+> thumbdrive on the Lenovo Thinkpad x13s laptop, the following errors are
+> shown in dmesg multiple times:
 >
-> Pre-existing issues:
-> - [High] The patch leaves a Time-Of-Check to Time-Of-Use (TOCTOU) race open by taking two separate snapshots of `phy->vchan`.
-> - [High] Time-of-check to time-of-use (TOCTOU) races on `chan->phy` can lead to NULL pointer dereferences when racing with channel termination.
-> - [High] Missing `tasklet_kill()` during channel teardown and driver removal leads to use-after-free vulnerabilities.
-> - [High] A use-after-free write occurs on the error paths of the `prep_*` functions when freeing the descriptor list.
-> - [High] The DMA channel hangs indefinitely if multiple transactions are submitted before `issue_pending` is called.
-> - [Medium] Stale hardware interrupts are not reliably cleared when a physical channel is disabled, risking state corruption upon reallocation.
-> --
+>     kernel: gpi 800000.dma-controller: cmd: CH START completion timeout:0
+>     kernel: gpi 800000.dma-controller: Error with cmd:CH START ret:-5
+>     kernel: gpi 800000.dma-controller: Error start chan:-5
 >
-> --- Patch [1]: [PATCH] dmaengine: mmp_pdma: Check virtual channel before scheduling tasklet ---
-> commit 4969ecc3a7a7a671c042835c34adbdf0229a2d70
-> Author: Ruoyu Wang <ruoyuw560@gmail.com>
+> Looking through the error path, gpi_send_cmd() sends the wrong gchan to
+> gpi_send_cmd() in gpi_ch_init()'s error path. Fix this by passing the
+> correct gchan in gpi_ch_init()'s error path of gpi_send_cmd().
 >
-> dmaengine: mmp_pdma: Check virtual channel before scheduling tasklet
->
-> mmp_pdma_chan_handler() clears a physical-channel interrupt and then
-> unconditionally schedules phy->vchan->tasklet. The physical channel can
-> be detached from its virtual channel when the channel is terminated or
-> when no pending work remains, so a late or shared interrupt can reach the
-> handler with phy->vchan already NULL.
->
-> Snapshot phy->vchan in the interrupt path, skip tasklet scheduling when
-> there is no virtual channel, and use the same snapshot for the BUSERR
-> warning. Use WRITE_ONCE() for the matching attach/detach stores because
-> the IRQ path reads this pointer without taking phy_lock.
->
-> Fixes: c8acd6aa6bed ("dmaengine: mmp-pdma support")
-> Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
->
-> > diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-> > index 386e85cd4882a..6f379e9f10017 100644
-> > --- a/drivers/dma/mmp_pdma.c
-> > +++ b/drivers/dma/mmp_pdma.c
->
-> [ ... ]
->
-> > @@ -370,11 +372,16 @@ static int clear_chan_irq(struct mmp_pdma_phy *phy)
-> >  static irqreturn_t mmp_pdma_chan_handler(int irq, void *dev_id)
-> >  {
-> >  	struct mmp_pdma_phy *phy = dev_id;
-> > +	struct mmp_pdma_chan *vchan;
-> >
-> >  	if (clear_chan_irq(phy) != 0)
-> >  		return IRQ_NONE;
-> >
-> > -	tasklet_schedule(&phy->vchan->tasklet);
-> > +	vchan = READ_ONCE(phy->vchan);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does taking two separate
-> snapshots of phy->vchan leave a time-of-check to time-of-use race open?
->
+> Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> Assisted-by: Claude:claude-opus-4-6
+> ---
 
-Although it is not introduce by this patch. But you try to fix some problem,
-please fix this also.
+The same problem fixed by
 
-I am not sure if it is safe schedule tasklet, which already detach from
-vchan.
+commit dd27c3f4d6108556b74b5f3f4d1d885269e7ffa3
+Author: Aniket Randive <aniket.randive@oss.qualcomm.com>
+Date:   Wed Aug 19 17:09:31 2026 +0530
+
+    dmaengine: qcom: gpi: Fix resource leaks as part of channel clean up
+
+    The gpi_ch_init() error handling paths do not fully clean up resources
+    when channel initialization fails.
 
 Frank
 
-> The commit message mentions using the same snapshot, but the implementation
-> takes one snapshot in clear_chan_irq() and a second one here in
-> mmp_pdma_chan_handler(). If an interrupt fires for an old virtual channel
-> exactly as the physical channel is reassigned to a new one, the two
-> READ_ONCE(phy->vchan) calls could fetch different virtual channels.
+> There's a separate issue with the graphical Fedora installer not
+> working that I haven't had time to dig into further. I can work
+> around it by using the text installer.
 >
-> The interrupt would be cleared for the old channel, but the tasklet would be
-> scheduled for the new channel, prematurely completing its pending descriptors.
+> Changes in v2:
+> - Commit message cleanup as suggested by Frank
+> - Commit title cleanup as suggested Konrad
+> - Add Konrad's Reviewed-by
+> - Link to v1: https://lore.kernel.org/r/20260625-qcom-gpi-err-fix-v1-1-5ca3f00fe2e3@redhat.com
+> ---
+>  drivers/dma/qcom/gpi.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> Could this be fixed by returning the vchan pointer from clear_chan_irq()
-> instead of reading it twice?
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index a5055a6273af..3f390b5821ab 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1965,12 +1965,12 @@ static int gpi_ch_init(struct gchan *gchan)
+>  error_start_chan:
+>  	for (i = i - 1; i >= 0; i--) {
+>  		gpi_stop_chan(&gpii->gchan[i]);
+> -		gpi_send_cmd(gpii, gchan, GPI_CH_CMD_RESET);
+> +		gpi_send_cmd(gpii, &gpii->gchan[i], GPI_CH_CMD_RESET);
+>  	}
+>  	i = 2;
+>  error_alloc_chan:
+>  	for (i = i - 1; i >= 0; i--)
+> -		gpi_reset_chan(gchan, GPI_CH_CMD_DE_ALLOC);
+> +		gpi_reset_chan(&gpii->gchan[i], GPI_CH_CMD_DE_ALLOC);
+>  error_alloc_ev_ring:
+>  	gpi_disable_interrupts(gpii);
+>  error_config_int:
 >
-> > +	if (!vchan)
-> > +		return IRQ_HANDLED;
-> > +
-> > +	tasklet_schedule(&vchan->tasklet);
-> >  	return IRQ_HANDLED;
-> >  }
+> ---
+> base-commit: 6c94b38b83a04c43ea49004275f0391404051093
+> change-id: 20260625-qcom-gpi-err-fix-06ef18453608
 >
-> [Severity: High]
-> This is a pre-existing issue, but can this lead to a NULL pointer dereference
-> due to a time-of-check to time-of-use race in mmp_pdma_residue()?
->
-> In mmp_pdma_residue(), chan->phy is checked and used locklessly:
->
-> drivers/dma/mmp_pdma.c:mmp_pdma_residue() {
->     ...
->     if (!chan->phy)
->         return 0;
->
->     if (chan->dir == DMA_DEV_TO_MEM)
->         curr = pdev->ops->read_dst_addr(chan->phy);
->     ...
-> }
->
-> Concurrently, mmp_pdma_terminate_all() can call mmp_pdma_free_phy(), which
-> sets chan->phy = NULL. Because chan->phy is accessed without READ_ONCE() or
-> locks, the compiler might reload the variable from memory between the check
-> and its use, resulting in a NULL dereference.
->
-> [Severity: High]
-> This is a pre-existing issue, but does the channel teardown path miss a
-> tasklet_kill() call, potentially leading to a use-after-free?
->
-> In mmp_pdma_free_chan_resources(), the descriptor pool is destroyed without
-> synchronizing or killing active tasklets:
->
-> drivers/dma/mmp_pdma.c:mmp_pdma_free_chan_resources() {
->     ...
->     dma_pool_destroy(chan->desc_pool);
->     chan->desc_pool = NULL;
->     ...
-> }
->
-> Similarly, in mmp_pdma_remove(), the driver unregisters the device and allows
-> devres to free chan memory without first killing the tasklet. If a tasklet is
-> scheduled just before the DMA channel is freed, dma_do_tasklet() could run
-> concurrently with or after teardown, causing it to dereference chan after it
-> is freed or operate on chan->desc_pool after it is destroyed.
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the error path in the
-> prep_* functions cause a use-after-free write when freeing the descriptor list?
->
-> In mmp_pdma_prep_memcpy(), newly allocated descriptors are appended using
-> list_add_tail(&new->node, &first->tx_list). If an allocation fails, the error
-> path passes the dynamically embedded list head to the cleanup function:
->
-> drivers/dma/mmp_pdma.c:mmp_pdma_prep_memcpy() {
->     ...
-> fail:
->     if (first)
->         mmp_pdma_free_desc_list(chan, &first->tx_list);
->     ...
-> }
->
-> During cleanup in mmp_pdma_free_desc_list():
->
-> drivers/dma/mmp_pdma.c:mmp_pdma_free_desc_list() {
->     ...
->     list_for_each_entry_safe(desc, _desc, list, node) {
->         list_del(&desc->node);
->         dma_pool_free(chan->desc_pool, desc, desc->async_tx.phys);
->     }
->     ...
-> }
->
-> Since first->tx_list is embedded in first, and first is freed during the
-> first iteration, subsequent iterations perform list_del(&desc->node). This
-> modifies the list head inside the already freed first descriptor, corrupting
-> the memory of the DMA descriptor pool.
->
-> [Severity: High]
-> This is a pre-existing issue, but does the DMA channel hang indefinitely if
-> multiple transactions are submitted before issue_pending() is called?
->
-> In start_pending_queue(), all pending transactions are moved to chain_running,
-> but only the physical address of the first descriptor is programmed to the
-> hardware:
->
-> drivers/dma/mmp_pdma.c:start_pending_queue() {
->     ...
->     list_splice_tail_init(&chan->chain_pending, &chan->chain_running);
->
->     /*
->      * Program the descriptor's address into the DMA controller,
->      * then start the DMA transaction
->      */
->     pdev->ops->write_next_addr(chan->phy, desc->async_tx.phys);
->     ...
-> }
->
-> Since descriptors from different transactions are not linked, the controller
-> will stop after the first transaction. The tasklet in dma_do_tasklet() sees
-> that chain_running is not empty and leaves chan->idle = false:
->
-> drivers/dma/mmp_pdma.c:dma_do_tasklet() {
->     ...
->     chan->idle = list_empty(&chan->chain_running);
->
->     /* Start any pending transactions automatically */
->     start_pending_queue(chan);
->     ...
-> }
->
-> However, start_pending_queue() returns immediately if chan->idle is false,
-> meaning the remaining transactions in chain_running are never started.
->
-> [Severity: Medium]
-> This isn't a bug introduced by this patch, but can stale hardware interrupts be
-> incompletely cleared when a physical channel is disabled or enabled?
->
-> In disable_chan(), the read-modify-write sequence might miss W1C
-> (write-1-to-clear) interrupt bits that become asserted during the window:
->
-> drivers/dma/mmp_pdma.c:disable_chan() {
->     ...
->     dcsr = readl(phy->base + reg);
->
->     if (phy->vchan) {
->         struct mmp_pdma_device *pdev;
->
->         pdev = to_mmp_pdma_dev(phy->vchan->chan.device);
->         writel(dcsr & ~pdev->ops->run_bits, phy->base + reg);
->     ...
-> }
->
-> If a hardware interrupt fires between readl() and writel(), the snapshot's
-> W1C interrupt bit is 0, so writel() writes 0, failing to clear the pending
-> interrupt.
->
-> Similarly, enable_chan() performs an unlocked read-modify-write on a W1C
-> register, blindly clearing any pending W1C bits without processing them. When
-> the physical channel is later reassigned, this stale interrupt can trigger
-> the IRQ handler for the new channel.
->
+> Best regards,
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260707150356.2257833-1-ruoyuw560@gmail.com?part=1
+> Brian Masney <bmasney@redhat.com>
+>
