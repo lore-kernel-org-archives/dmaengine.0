@@ -1,188 +1,195 @@
-Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11023128.outbound.protection.outlook.com [52.101.127.128])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0E526C385
-	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 06:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.128
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792132881; cv=fail; b=ZX8POdap36njoeUCyT5VJY4maR4N+D2UNMzpdst2s8QQ9eOQ3HCwCnYM2lBiYCJ98QR51S3BGa8z3kEYkLQ4lGY1iOZ/b18nbqm4fb+lX6rUMVIvXmsSglqxmHRWcaaO8pTf/x5IFkrqtCn9uIMjn71z8e8Rx6Ninv7BfJiAjzM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792132881; c=relaxed/simple;
-	bh=yOxkQ/U0l1NqvvCGWEb5IPewEdaYhjsvo02hG0tLl48=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=XS5eYgfUJL/nm4r6n3bxBusFRJjyRmLu5ZiPSNFhxG+sESPVWn4WwXn3thz7doVYLXIk95CaV8PVso/OalEDaicJO+NoaXG5d4I4v21U9VGxBjr05QujXP+xvotHo192yiy3WUc9Y/p4F2UzRkpJyPmEL/k0H48KxjbfFxQyLYY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=yGHrGlig; arc=fail smtp.client-ip=52.101.127.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593513B8934
+	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 10:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792145962; cv=none; b=ONDMhe6YejDepzu+XVEXo+6xrK/boeGk2CaOtjFBqdgJ8uzixBNUYiZANAUwNVvRj4/9t/2o9C3UNGIyzCOcihNvxfnn8WiUkLrZkDXhx4q7w2q+WPMQwQS/k+C9lS3cM9wXmw3HsNgWyow0ZMOfLGG6100woth209BeWPKjYzg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792145962; c=relaxed/simple;
+	bh=U9CRgRoLAmtk8E/dKxBycedliKECA2YqR+zLevH5pAI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KlH5WoZr4yentVje8uD/p2x17+c4WEMEKkPfzQ+E6jW7ye11TA57WK3Z5g7oKw0pucfF0YN1Ts7MsQmt+h06Efi5Jhqy/sx2tN7rn3Xuykuxt9wrsxAhRfEtQxPmrmlXTJ1N5Cd+NNv4/1q3/Twvy7Eeva+c5vuCV5sdtUkm3xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Tef+K4uB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=O/ql6neh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="yGHrGlig"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rNrG4TYY+2IPXfAdlAXdgqSR5crtcCR4JYEqzp0bCJqqH7FsLsaMkNlY5toeZMuyL4bk61hEsoZ4Absij5fAeGPKrRUP5FWNPV/w4l0Pr8zsM1arO/xu7WhbHR5N3rbon/JFM2lcptz2BnZ5CehOvpcxuUZWsfpMuxtJPKby7bAuenlxehsnsdkRlQVQMHzgDPLPN8PLEN5B6Q7aCwr7qZmO6kL08lMiXcBjLZn8DS/EPhAQGSLHAApjszc4olGlXGcrsQnk9ue0GfbWfMaHUtsPSN350ax3pRq3133L/Nv2G8gdVqAFr+D5oTd93JyzfHLzBXKf//r4csAKKX6PBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5//BQlKx4zxcjK/Qbr37FJ4QCVNYPNyLJYb/G2JV+CY=;
- b=G/Kp72cZbYAVPgn12m45YmEtbyUksefKEkxlV1JUULltKSvKBvyYMucyCPe1fgb01uCyISoLZ5yCvofgpPCQMEsMADKXQrThK66HSE/y9kDnHymgM6NJj0Vh0QdX4tcSfJBwOB4M8lIpi69EcfcMiNyGTkdyUYEgriuB5mQxMG4Y6cLYAdrRyfi31lqjXKemAj82SA0ry3d6mjJY2sEZMuiEuKnx5y6QpgM/4shjFeYP6zTqp8xoO5NUAvr/2AiqxvmtUleSt206t0KkC2TaSq5aX3J8rjuG/vUzbMQv4RxpHpqntHnrZURc7xHdNAbFc2IRbGxwWgl/qvGUxDxhJg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5//BQlKx4zxcjK/Qbr37FJ4QCVNYPNyLJYb/G2JV+CY=;
- b=yGHrGligDRRjCXQnaE75HayM799bGCLkgNpkZ7wHSS0E38mvR9k+ukZMYxVcqDBRx7MZpHrYm+zfFvITJ56mHu08uyTTiRqBtAfOixae/0dwNc4xC1X3hF7fKPCUZLuH3fm3zH9GnFLcVtIqqzK3AugDehN4TAndv9kUgKKNmSbf6dU2jUnZN4xdbStqVTMfQ5k1ADPt2vgJ/YSUu4Lb4cBmjL9/G/4Mj166cbJxwjhUdqRb8XI+9GSUfIU9GCsECiiwcG+2cH8b7OMDg4g62iIYoenzswjmQZ9tDPzIR+pmzalpAnHDCYT8a01Fh1JvnkPqFeQ1GWPiZ6PcIkuz8Q==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
- by SE1PPFB8A17DC0E.apcprd03.prod.outlook.com (2603:1096:108:1::861) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
- 2026 06:41:17 +0000
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4%7]) with mapi id 15.21.0522.012; Fri, 16 Oct 2026
- 06:41:15 +0000
-Message-ID: <a84be450-95ac-4878-b01a-8654fe7dd8b0@amlogic.com>
-Date: Fri, 16 Oct 2026 14:41:11 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: amlogic: Fix regmap error check issue
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, dmaengine@vger.kernel.org,
- vkoul@kernel.org, Frank.Li@kernel.org, neil.armstrong@linaro.org
-References: <20261016-fix-a9-dma-complier-v1-1-024421d5b3c8@amlogic.com>
- <sashiko-outbox-173653@kernel.org>
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
-In-Reply-To: <sashiko-outbox-173653@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI1PR02CA0016.apcprd02.prod.outlook.com
- (2603:1096:4:1f4::17) To TYZPR03MB6896.apcprd03.prod.outlook.com
- (2603:1096:400:289::14)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Tef+K4uB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="O/ql6neh"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69GAAhFi1648927
+	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 10:19:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=; b=Tef+K4uBkMBRv2OZ
+	ZIiOtdCer65op6N/K79bjlIrA6CtrrEUEc9LXhP3QuzAnXN6uPRBFatwBZ+06z99
+	1RhnVbmlxCd8x2teNLgAvv8nkog8QWwstqvaJ55Q6tCRXxpkHod0vYXZ5dxR2caz
+	XnnmoeDEQbzukohzCJCp7iIGoqyMEmK7lBU7GS2/PkvpQsOQOSWbZlEu6u8oFZ9c
+	q05GQIn31gG7eA1w/l5dBMG2ybl/sBk33R0qkTD8k/qct+qRSwOGmK5+61+TK3DJ
+	L0y7dBIVNZBoU40FF3S8SUh1ClSHnIFIxSUkRDMuDqdlg28GLIuOSCvGDMbUS1VZ
+	gwbkgg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbhumr1w6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 10:19:20 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-35c3c370b17so7840267eec.0
+        for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 03:19:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1792145959; x=1792750759; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=;
+        b=O/ql6nehyblNwZf3TUQrlbHI5yUDKLSSGj3vbL0j3dev+zwwZGwE9UOVXw8PsMp9U7
+         /Iil+1Fm/zqhz1Q/cPIWO3mS0J+4bW7A3ijNdS/qZNSyGImted/FMGX9R5hDfXOX1OMj
+         nV6twp6ptO8l/JPBJmqSCKPMsQASlPWvpvP6U1846GRw1zYB8MgeB1jV2PRMG6Iybct7
+         qCt7ev78C4AW7qfE3TFE57GRHEprvKrzozmG/rZnekKxpfb+BpaGXZy+2DYmhhQFYbxh
+         1zZBYQichv+keJH1iuJBNrdRZxEOrgtJhPbvXneigi9ccxjcbYWwZIZnhJgtszYR5SQU
+         I2WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792145959; x=1792750759;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=;
+        b=2Uqd2cVLNmI3mWVWeiJT+RQKHm+7M2OyrDCEfpGZ6nAi4U2Nq81FAtRSBBOwo0Ayrl
+         ABfvwQgfNN9YktGS19tklYzvF4ocIP/fNJQHQ6QrFwqaa0Ja31r2GisBzYsb6eGo9u4F
+         Eh5FgCsWEo70Asu4pBtb9/F1/BG/9EFKe5Uiwo+xu6H6yqCaBFrquBNdOOK+9H3kofJx
+         unNrR0zl7acWLUMwVBdxPduLaWxxZR5VKeBaa+kkuLfAZ3UA/ZCofVab+B7NmNLoVeeO
+         NKRoIHzr3taBW6LbxnVKMebWb+shSFsktAlkYWkqdth+GYVxLQwhuY5RzS4FPuAiP/3P
+         TgOg==
+X-Gm-Message-State: AFq9FYLP1OE4+3p5XUJm0+uUK9dpFMo5IaN/xKpm7v+L3MN6LG2HxGUN
+	VLPEQw0ogGI8oZV1URhq+MS1oYV6Uj4ik7rSgdyjgRbkNxmJfd0RT39/jGLuGFVY4FqmF/C/yQY
+	keFSXG32VhaSzpVsNroogG9IprVLG/d5ygajK8o2kcOr+NCs+U6xrvBX4UJisEOtKFtavivY=
+X-Gm-Gg: AYBFou14iv4BR3sPX69iqvz+KSqrEisrLwMSNrlUd10dB2S/6ljGw0nn6gbhCF5NqBa
+	VFwBxQ1z+NEjViIEW1arXVRoCgNUTm9tSmVyYohTpBaBZ/CEKxtIRsmeNw8K648eFHCgeTxVMPC
+	NzCY4j3Fm+S+HwOhFpobRVIu5Ns7dLWfkx1kk6Rrbx9uSMyoaN+QN90aC/mwHm4ts+S3w3u4gFv
+	UzXBjXkVREn8bsacKeZ5i8Vpo5DGYxqF+0ljEcT7O5D3+5QYkImvBALK+sMH1nuSnWKBjC/UpxA
+	rqoacN/I7KH61B4GlceFXHp4DptOTT+AoMqh9h6KqNpSCrBeRdxBLvreA6s1oiXGJ5c7m+4ztkf
+	mXYfCXeeIt+XA2ffFKaWzzefnoAAzKjg=
+X-Received: by 2002:a05:693c:2a13:b0:35f:a2ad:603 with SMTP id 5a478bee46e88-35fa2ad06cbmr4910710eec.16.1792145958959;
+        Fri, 16 Oct 2026 03:19:18 -0700 (PDT)
+X-Received: by 2002:a05:693c:2a13:b0:35f:a2ad:603 with SMTP id 5a478bee46e88-35fa2ad06cbmr4910675eec.16.1792145958247;
+        Fri, 16 Oct 2026 03:19:18 -0700 (PDT)
+Received: from [10.218.14.97] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36082a7b33bsm10937298eec.24.2026.10.16.03.19.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2026 03:19:17 -0700 (PDT)
+Message-ID: <7337fb06-0953-42f6-acdf-ccd29549fd8b@oss.qualcomm.com>
+Date: Fri, 16 Oct 2026 15:49:14 +0530
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|SE1PPFB8A17DC0E:EE_
-X-MS-Office365-Filtering-Correlation-Id: 108d1485-ec62-446f-0a99-08df2b5079f4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|18002099003|10067099003|22082099003|11063799006|261009223027099003|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	8bDbLeOQNmpoqRV71K22YbEVQ9pYDs2tm7Wp2cBBes4XbyDZyMcDTbPWy9eN8hdxV6GXaxPIZtyYf1ld35blFkEsNsJ3951UbhF9kPpRz2Og6xFH4pVjC5TT3oHkswvmGCFKvzhomnztqiQyXvs4+y/EHD4bfwYJ47niib7nJXAUFjKsNvBtHGCeZ7NOElkPPJUhtjySxsdTugXcpgrOyA6aJEMPuVnsyCMJRDYoq4rZUy1PzfxhvseohOGtbJPrg4RAiXq4YWrTsHWPP1QSYF6xCCUIAvZsGIhpTrSDutxRwXk3uQuME/E3lC0MbhwwFDEQuX0iFv1etmh0fgNa/ARQY9+tFAhXNq74Ea09HyMazPB2qdUDOHg8DhmL/Zayz5SjcZZxEV0yGCkSjDpNlcjWwYd5GQVIzLgdFWtcalK8Io7DVT5uiunlCoej1x7p+nfz2w9XVBY+GX3sPFGaDiQllk42RwrD7QXn+0f8sA+Pt/6TSFvUBzGB6FaX++zZ2f+daZYyN+FZLsvJajT4LlWyZbdQu5UjWWO/ZZnr2lGbaWCn+nJweMN0zaJ+NftLSpmS/wnzonUW/z/bqpr3oPnN1JOPKPOp11I0UkRJuks=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(18002099003)(10067099003)(22082099003)(11063799006)(261009223027099003)(4143699003)(56012099006);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Njd6cy84QVR4NTdUOUZHcEFDTE1WVUZzYStuK0k2eks2em9lQndKbHgwNHhQ?=
- =?utf-8?B?bXBadlc5b2dTTmZIVEZDMEV6LzdCTzBUVnBvN2p2alZaNDR0Wnc3U1VWZHRZ?=
- =?utf-8?B?b3k1aElnR3VWUnkzMTJUcXcvY1d6T0h1NWhvN0FTemlGaDhPd21KeWZ5eDNr?=
- =?utf-8?B?QUtXVURyYjJ1YjNFRVpEMThZb1gvV2NyS1JLaU9hRFdBRmNGaURML253WXlG?=
- =?utf-8?B?alpUYXd1dlJRRzl4NGRpREVGSGMzaTIvTEE0a0pNSlQ4dW1USFB3UzltaFRp?=
- =?utf-8?B?VU53RUxJY3NLWGh2b2NVcE5xOTF4N0JDTmQvYTd4VStleEpqTFZZeXB2NFAw?=
- =?utf-8?B?ZjQzbFRzL28ycjByTnNyNng4OHphT1BMY0RXKzdPVnU1QXhMck1lQ3I4SlJ1?=
- =?utf-8?B?cVdVdHJJdmRkcTJ6WjAwc1d3Sk03dHhETFY2Y3JQWWUrQXRsQ29wL2ZDV0NH?=
- =?utf-8?B?Y3lKcFU4WUlEelVqYmpEM1FFQnpCS1ZqVzA5MG4vM0RJc3RtNlVVT0k3aXRp?=
- =?utf-8?B?NUVNQy81dGxuVzRHN0J3cnhNSWhUT0tJZlFEeEhzVHFORFMvaHV1WkJKU3Az?=
- =?utf-8?B?ZmlPd1p1Tjlkd0ZPdnpFeTE2MnIxbTdMMjBhQm1UVWdtWDdnWXp2Z1c4MUdU?=
- =?utf-8?B?SmtScW5LcW56QlM4eitINEdKUHpuN1EvUkk5THZtWlE1RGdSTGErZjAxcFZz?=
- =?utf-8?B?TkUycGQ4RzExYnl0MWZLa1QxUlBEaXJuUHZicWFIV0VsTUJ6VzliZ2pHWUVz?=
- =?utf-8?B?U2NYM1R5Ylp5d2ZMTFN0TmNqYldmN0FOUFNRejE1VHRHcytDeXBTRmp0WTdR?=
- =?utf-8?B?Yzl3bnF2ZTVpb2ZNaXdXNkU4Wk5zMFl2Y1pRR2pJM0lXdHlndnlGQmFzMHps?=
- =?utf-8?B?K2pqK3dSKzFpZzB1YTNsZzhFMk5aWjBVNjJ0V3l3Z2VTblFCQ0Q5MEhSMkZX?=
- =?utf-8?B?TUNXY21UclVhK2lpYk1XZjJjdWN2c0M4aGZRMHJTOWpxWDBqQ3hORUFSOFVC?=
- =?utf-8?B?N2thSHJoUU94REg5b3BQQjV3RUh3bEI4VnFRUkk0aUdSRzBpbWpuU001QjNC?=
- =?utf-8?B?OVRFbHlwaHA1cm1RTGFGTm1CcHRFUFZvY1ZDaVJvN2JVZCtob09GeTY2V3Jz?=
- =?utf-8?B?WkpLN05NMWJYUThmUkZTOEJnQWpvU1FwU3NmT3R3eVhCQ0s3TDYzMkxlaXVI?=
- =?utf-8?B?YXhRSHdUZk5HRndQNjVqOXRsYWhxTFFvV0xsWWJSa3cxODl3dGhJcDFuaEor?=
- =?utf-8?B?akxYNTlIRUtLZWRTR3VhMjBEQzczay9qNEErZWlJMEk4T28vM1dWMW91eEZv?=
- =?utf-8?B?SVNKN2thNXErY0JEOWpPSkZjU1BTbWJVR1BSUkJpZnpnT2dvSTU4VHlZa2FJ?=
- =?utf-8?B?TVI1MSs4bDF3UFNtczZRNGkvS28wYVJtWCtQTHpDMGl3NXNyeHVReCtWczFt?=
- =?utf-8?B?WVcwTmx6bEhSWHk0QWFsM3pBSFM1RTZEQ1dBanBzR1d0RnIyd0F1aEM3YzNo?=
- =?utf-8?B?RnpnM0phclhMemh6dk82Myt5UUtPb3lrSHd3end2Wjg2Rjh2eE9RMm92dUdK?=
- =?utf-8?B?aXZzcVJjTVpJaTc2Ulp3V2J6ejVpZ2ZNYlZMTzVwZXBUOWpXWDF1SEVPMndB?=
- =?utf-8?B?UDRXSUdhdXlIM3k1RkVtWG91OWppa1RFT3RPdEVwTHJJMExnbEhzbHpaVWsy?=
- =?utf-8?B?cEhKZjNMMis0b1JDejdidjBmaFdiTGl3ZHZQeEZjUHdudk1TQlB3Q20ya2RP?=
- =?utf-8?B?YlZBSmtpeGxqeWl0clRUbHFQWUUrVTNsYno0UU5uOTF6a01rYk9PUFdwb0ph?=
- =?utf-8?B?aUkxN09DN0UremZJY1N2YkNZbWRMYUlGL3lwTDFnaTRjejdrL0FGSHJaYXVu?=
- =?utf-8?B?NlFwd3B5RjhMNERrbmtVOFdNNEcwMTczZ3pKZlZ4Z1MvY3lPL3VLKzNWSGVZ?=
- =?utf-8?B?ZmNIT01jUnd0WGw3YWhrMTR0cVZpV1JsQzFlbzl6OWpjbk9WWSttTmdWNTE2?=
- =?utf-8?B?ZTUzeGZ6ZGwwZjc0SVNDSno1TW9hL2JNSk96OFlROEd0ZXpOTnNQemNhb3Vp?=
- =?utf-8?B?MnBOY2FvQVNFemI0WG1IdFhoQksranI0NW45eUNFZm1hcUtvNVpCL2RRL1hG?=
- =?utf-8?B?dEtUR0ZLa1NFdDR4MG00TVdLeEM1eWIrVTQwRysrV0h2dUd2NGFpY0s5V0Za?=
- =?utf-8?B?b21YVXFmaThHNnFLNEt2cjdnbjcyTlBFaDgwVDV3VUxxWm5rMGdnanRFaFk5?=
- =?utf-8?B?U3VkMGlsV0F2Snc5Z3I2RDMzVjhvdEtOeVVrNWlPS3gwN3hpSURPSWhWUnRj?=
- =?utf-8?B?SS9BTG03UklGTGM0dE4yWVcyQzRtdFJCRUVjVkg0NXpKaUJ2VlQrdz09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 108d1485-ec62-446f-0a99-08df2b5079f4
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 06:41:15.5078
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wjVA9xwMwV/CdTKzYYZvn/MfI0aPcKKcdqMhvmnzjL7//LWGbCIDOOvx+/V0NLDzpRJfwm8+fcFO+yxEZ5el2JxFVIr0XXuH7UUmi+44eds=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPFB8A17DC0E
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] dmaengine: qcom: gpi: Convert dev_dbg() calls to
+ tracepoints
+To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
+Cc: dmaengine@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+        vkoul@kernel.org, Frank.Li@kernel.org
+References: <20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com>
+ <20260926-add-trace-support-gpio-v3-2-8572bf7456b2@oss.qualcomm.com>
+ <20260925210244.D6D5F1F000FF@smtp.kernel.org>
+ <as6nEloHzo_YkEW9@lizhi-Precision-Tower-5810>
+Content-Language: en-US
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+In-Reply-To: <as6nEloHzo_YkEW9@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA0MCBTYWx0ZWRfXzL+abTafm/wR
+ PRCB+Yyc1dL6gn6ugzlIAQIVk+f9q2QMembkgndDDkoSmc1huDwdkgkfmgQbH99f6KaN+h0Ze50
+ b4O5mTcrjcVdAsvuRtyYuoF01mfzjhk=
+X-Authority-Analysis: v=2.4 cv=H+BOUOYi c=1 sm=1 tr=0 ts=6ad1fa28 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=0yzcsfwEXPjLm50L98AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: 1eQKqByDjyv_YiOBjKWwFwQtnx82_c_L
+X-Proofpoint-ORIG-GUID: 1eQKqByDjyv_YiOBjKWwFwQtnx82_c_L
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA0MCBTYWx0ZWRfX1qG6/BYB9t7x
+ vQ6EQOe7wtJfCy4uZPTh+08qmMHL1hLWOoFdTdImonbmtEr+d8jS5sopA2k2OZJx8/ouYJoU0k8
+ iwCYYEgkxyRwJIymVrRsJN67ocp1iNBNvAcInqX3OG5Et8DWXSBHQXrZ0BMWsDCyLMOpHa20QZN
+ 4N6SQNXApjjJoG+zFcwWFlQc+lHk9T6uRKR1YDQEw5bouEWPeIIxyZTpwRZp7QPsXlXZFRCdUbT
+ /OgyBsy1OWBcMmLz9vPcsiaZMTvi/XUGxg5LsFr+6wLBP3dyuPxwK2cdh645kCAjWLSJ0ZGKl+E
+ 6dGQCy2rdVVikKrwQ1yH0+CL2TzK2agWVztYrmtzioqHLVkeHKU3LC/oWIt9BYM1gdc7dSSqwUw
+ nQpdAmV2t/FII9sM1E6I6bylbOuYPVGJRVvpzuzhs/VDCfMPoNyJghwerbFCLPM4zQplG9l9jxc
+ 9H/h4yf1h8Zs5O96umQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160040
 
-Hi,
+Hi Frank Li
 
-On 2026/10/16 11:08, sashiko-bot@kernel.org wrote:
-> [ EXTERNAL EMAIL ]
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] dmaengine: amlogic: free_wq leaked on error paths in aml_dma_probe()
-> --
-> 
-> commit 84261163c6f208aa12834ec242da34b3d805e7ad
-> Author: Xianwei Zhao <xianwei.zhao@amlogic.com>
-> 
-> dmaengine: amlogic: Fix regmap error check issue
-> 
-> This commit changes the error check for devm_regmap_init_mmio() to use
-> IS_ERR() instead of IS_ERR_OR_NULL(). This resolves a Smatch warning about
-> passing zero to PTR_ERR().
-> 
-> Closes: https://lore.kernel.org/r/202610080953.C5TYlCaA-lkp@intel.com/
-> 
->> diff --git a/drivers/dma/amlogic-dma.c b/drivers/dma/amlogic-dma.c
->> index 78ee2337ae712..684121d13fcab 100644
->> --- a/drivers/dma/amlogic-dma.c
->> +++ b/drivers/dma/amlogic-dma.c
->> @@ -632,7 +632,7 @@ static int aml_dma_probe(struct platform_device *pdev)
+On 14-10-2026 03:18, Frank Li wrote:
+> On Fri, Sep 25, 2026 at 09:02:44PM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Low] dmaengine: qcom: gpi: unused variable gpi_ev_state_str causes compiler warning
+>> --
 >>
->>        aml_dma->regmap = devm_regmap_init_mmio(&pdev->dev, aml_dma->base,
->>                                                &aml_regmap_config);
->> -     if (IS_ERR_OR_NULL(aml_dma->regmap))
->> +     if (IS_ERR(aml_dma->regmap))
->>                return PTR_ERR(aml_dma->regmap);
-> 
-> [Severity: Medium]
-> Does this code leak the free_wq workqueue on this error path?
-> 
-> aml_dma->free_wq is allocated earlier in aml_dma_probe() using
-> alloc_ordered_workqueue(), which isn't managed by devres:
-> 
-> drivers/dma/amlogic-dma.c:aml_dma_probe() {
->      ...
->          aml_dma->free_wq = alloc_ordered_workqueue("aml_dma_free", 0);
->          if (!aml_dma->free_wq)
->                  return -ENOMEM;
->      ...
-> }
-> 
-> If devm_regmap_init_mmio() fails and we return directly here, there is
-> no cleanup for the allocated workqueue.
-> 
-
-I will submit a patch separately to fix it.
-
+>> commit 16ff3240f7873902688743d98570cd5eebf13594
+>> Author: Praveen Talari <praveen.talari@oss.qualcomm.com>
 >>
->>        aml_dma->clk = devm_clk_get_enabled(&pdev->dev, NULL);
-> 
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261016-fix-a9-dma-complier-v1-1-024421d5b3c8@amlogic.com?part=1
+>> dmaengine: qcom: gpi: Convert dev_dbg() calls to tracepoints
+>>
+>> This commit replaces dev_dbg() based debug logging in the GPI DMA driver
+>> with tracepoints, providing structured runtime visibility.
+>>
+>>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+>>> index fafe6ac848d94..6aff2a0d54161 100644
+>>> --- a/drivers/dma/qcom/gpi.c
+>>> +++ b/drivers/dma/qcom/gpi.c
+>> [ ... ]
+>>> @@ -887,15 +883,14 @@ static irqreturn_t gpi_handle_irq(int irq, void *data)
+>>>   				ev_state = DEFAULT_EV_CH_STATE;
+>>>
+>>>   			gpii->ev_state = ev_state;
+>>> -			dev_dbg(gpii->gpi_dev->dev, "setting EV state to %s\n",
+>>> -				TO_GPI_EV_STATE_STR(gpii->ev_state));
+>>> +			trace_gpi_ev_ctrl_irq(gpii->gpi_dev->dev, gpii_id, ev_ch_irq,
+>>> +					      gpii->ev_state);
+>> [Severity: Low]
+>> Is it possible that this change in gpi_handle_irq() within
+>> drivers/dma/qcom/gpi.c leaves the gpi_ev_state_str static array and
+>> TO_GPI_EV_STATE_STR macro as orphaned dead code?
+>>
+>> Since trace_gpi_ev_ctrl_irq() only takes the integer value, the final
+>> consumer of the macro is removed. Could this regression trigger a
+>> -Wunused-variable compiler warning for the unreferenced static array
+>> when compiling the driver with standard kernel warning flags enabled?
+>>
+>> For reference, the array is defined earlier in the file as:
+>>
+>> static const char *const gpi_ev_state_str[MAX_EV_STATES] = {
+>> 	[EV_STATE_NOT_ALLOCATED] = "NOT ALLOCATED",
+>> 	[EV_STATE_ALLOCATED] = "ALLOCATED",
+>> };
+> Please Remove dead code also.
+
+Thanks for pointing this out. I can reuse gpi_ev_state_str in the trace 
+output instead of removing it. I’ll update the patch accordingly.
+
+Thanks,
+
+Praveen Talari
+
+>
+> Frank
+>
+>> #define TO_GPI_EV_STATE_STR(_state) (((_state) >= MAX_EV_STATES) ? \
+>> 				    "INVALID" : gpi_ev_state_str[(_state)])
+>>
+>> --
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com?part=2
