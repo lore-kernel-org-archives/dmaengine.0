@@ -1,64 +1,62 @@
-Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012051.outbound.protection.outlook.com [52.101.66.51])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013031.outbound.protection.outlook.com [52.101.72.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073E25B0A5
-	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 16:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D884CCDE9;
+	Fri, 16 Oct 2026 16:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.31
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792168341; cv=fail; b=IogOp7wmwdJaaCYzT2KFG2hgl6ZlhxyvTM7pmxCsa+LUIUhnpi14lg242FtPPJzrjRSbm3xMP+UAyxy18nnkVgMTwM0dVFdKZqd1CZOObs0ot5Ky3WSnFr1ao10FL+lAwDfQw1I+GGns9mKRnZpOkwirSu4FWda6288wNAaqyz4=
+	t=1792168819; cv=fail; b=Mg4IAwHjEZM3oW67FS1CM/WCQ4NAMKbUvCZVKT/oDFYgA1H54Yw/hfGrtyFe+QhqT9GFyYLI88yZE/bjJTo/reZTxxif3OPhF1eRwu1Y72ApFhUp6oeDcxsnx5dPPHZQwK6/EwTUnoxpKPC7+j0pQb5x9QOc39jnq4RtuOX9CzE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792168341; c=relaxed/simple;
-	bh=JePWywyNTQtblRyPo4XnqNgzcUMHLKU6QF6jq/PX8us=;
+	s=arc-20240116; t=1792168819; c=relaxed/simple;
+	bh=sUEdzZicE56mkgCFULXHo9yRwbfjo8dv36YDvwdomiI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=GdNuO3T8LRRZCvUSvci9iZ24ZeiiEbu6Z6eeAgPAM6HrAPtofo1t7sK+nNYixbY1nObXPM5UnqzDuHNzMzldJ5+ETk1KsiS8e4stCf3YxIAJHZu3nRfCqwMgy8SthdNTWnNkw2IvYlXR5E5yc9VJlkgLSBbwhneiFUYG5SOTA0o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=InI8/mcJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.51
+	 Content-Disposition:In-Reply-To:MIME-Version; b=PUmU7QwkkI8G+PWkxtdMrdOhZRUzEeK6asm4dIdhIfS8BP9KILA1AXWj1n5W7BlpnotEywM4UoU563Ko2MjUgYDZV7SfnG7vVaM6DDtOW+nnbSnGTvQdJlC+92bn3RPqCsLvC6RskxILGkLBYoEhr38mzMryNbw9rY4lf+A93p4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Kq3He9c1; arc=fail smtp.client-ip=52.101.72.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="InI8/mcJ"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Kq3He9c1"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nu8T2ydKI9F6HkbbM9k5mh//2V6d5HVY9t+KKsmiZSIg2vMLrPf0m589Wk6q7HuC3QFDcWqRy+/PRJj7QzZz4W8thv0b99a9fm+k4WdEyPUJsLBXcal7pGfkU7c8OqPjyVr2HXck7G5y0xgCFBsDBxq2H1c1RQV4zy9Escf/FHmtQ+ArdLwTS8na3XSgR20gxwSXW3x4jKgJNJGW06KQWnyt5BxpEuNLaj/8c+9T65qD2q2OYiYzZeyWpQXfyprWkuNrvyqXv6RgFm7X24gyZjRylA68ipOvn+G17jluLfg/0Wh3BVlkYy0a6rVjbiAP8K6gCVvgorj+vPzlIeCTjg==
+ b=pI5zIF+A02jdzMbd+nNbi5tZTxABRz/K04K7N1bpnExI9mfPhOZEA+4EaEgRVmx6P6+Fj6SnGBz70ZSAGnwF5Bk8fgVr3M45MhdOJmPwyGqVqcz7ApWd4XbIGhRu2nIPV0YRFyWXdkuhHxRgRLQQpya571oZm161lMz6j/2nipafns9eDa8gRhWG6uy5EIERbnAtmj6uyBHAjM+WKaApQAss36OniTa2mLUhrI1Xw6wtqlNWozd3KC/mNTOBDSag4i46G1yC7r3D1SUzBElC14RtOiV0RqiSHzRwz0w+xmT8ymdLPyFWUEnjInxVd+9dQPpRVfRC4MpShJwrYk8zxA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
- b=e14G3zem2Jyb1NGWrSlZmV5/GWjKHtF7nvV/A6L9O3wR75tcUdNkUwtFbdGh2kXQRaqFeIi1kzmVpAmtmgYTJO5XpP5V0ngaSjmqpnXoJeJpS3RVJ2kSRKUnCziY0pGETlzn0NDcgSYW6OUHzzCrX0Jpy55Dvh5R0BfMl9vCpzSgOTpTx0BSMxC22tIhxJ/NRv5pAmnFbp1GVvWQ5BPB34MpKG/KxmZFy6KRBtpnK2txonJeQsj3VaiHa+V92yIKUOh4dzHo1K8Ja1fRNJwJR7RC22QYQZ13CDtXraYLeLGzgKrm1rI7HysU//Ff0ir45/I6ozqHa9lVhbqeA3LiPw==
+ bh=EyQg3rcgxAScndoXbngeZx42mjuOAFxwDXzjo39kL+o=;
+ b=mRvQOxvHCtqsaRXPXVd+RS6OJI2BGF9kyAv7mjxGgd1wG9vlsq0vtuPX7/ckK4G7RECEXZbfEibi97PNvkD1y6eqZzc4+XKXKNyEoOriN32Da8j6E2tALsknsrl5kQHeOpdnA/RDv1SOdoC4heZqmhUUTmZrTTVHzul91NsdUh+x759gncOXX+ATusElPtTVmBYP+FVYa2X4qWhCFfiNPTIdE8vhKRi/3I4i8MiQJ5x91+NpVHHbnQi4XWrbNBmHT7D42aiULHJKtG6LUs5MmQDzljxo+ZdYBGr15c1GFzxOKZKnObt+WCmPdn62vuHoOtYqMaTgTugr3i53RGYk4w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
- b=InI8/mcJ8uR9N7YwXhLHPjdRStx8DMFE1jlhGdHZRngjU7aXcK2yijAdHux7catvHYurU+mSs8z6gAc+uh0lQ24ytieL+CZPCU9DQLH35csnW/W5fzmxl3Y9kLyXyIpEXZ86i36LtjTqG5tgVGrG+L+o61YuzwD9Wf21gBqL4Puav2iHkd2u4zbsCOOCGkojBNLetMjXdGj40nPMvZOZsHAdEl70gWQK7lqw/VhIvHSwNQUtO5OkgKwuP51LHIxYgizwa/MxxFLLdLiPssP/3CEhC7fm7H8gicGL+3weJApfE+fILjjJ1W0wO2QmeDgkj6ANb/15QW0YhueLIzJlZg==
+ bh=EyQg3rcgxAScndoXbngeZx42mjuOAFxwDXzjo39kL+o=;
+ b=Kq3He9c1atPq4XGFoyenpSmweE7r2Lo2BYubZ8mCyDezC8yfOeqHVTnRpJuDplZ7tLOIaaykShB2JZiHmeCuPG7FdHDKk5NpPrmASP42X5gVmkLyosxoX4RTbSQTUNI7jUzaDoHn9KvyxuMMJucLIhctfrRFSiLQgzWYBNYPdsg3Yi6vUNF9q0yxbIY8ubEHyscNQkDjjvNhZTctAwbb/2LCno72qblg5BassYc4Cq72I4mpZWIcSIKt4nu9dOV6LYIgs7fP6+QkU4lYus/FByVZ/7ylknZvhoMrR7mXZK+KuTp345mMmWq6T2o5ub3DCgElg6SXfJP95G7DgBrE3w==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS8PR04MB8977.eurprd04.prod.outlook.com (2603:10a6:20b:42c::22) with
+ by AM9PR04MB8337.eurprd04.prod.outlook.com (2603:10a6:20b:3e8::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
- 2026 16:32:17 +0000
+ 2026 16:40:13 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 16:32:17 +0000
-Date: Fri, 16 Oct 2026 12:32:10 -0400
+ 16:40:13 +0000
+Date: Fri, 16 Oct 2026 12:40:06 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Nathan Lynch <nathan.lynch@amd.com>, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when
- stopping a run
-Message-ID: <atJRihx8s9iSImNR@lizhi-Precision-Tower-5810>
-References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
- <20260722-dmatest-fixes-and-fatal-errors-v1-2-8287709987ea@amd.com>
- <20260722160949.7ECFB1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Cc: vkoul@kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	jianhao.xu@seu.edu.cn
+Subject: Re: [PATCH] dmaengine: tegra: initialize channel state before
+ requesting IRQ
+Message-ID: <atJTZmloabvKGOTD@lizhi-Precision-Tower-5810>
+References: <20260830061213.2209331-1-runyu.xiao@seu.edu.cn>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260722160949.7ECFB1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: PH8PR05CA0024.namprd05.prod.outlook.com
- (2603:10b6:510:2cc::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260830061213.2209331-1-runyu.xiao@seu.edu.cn>
+X-ClientProxiedBy: PH7PR17CA0061.namprd17.prod.outlook.com
+ (2603:10b6:510:325::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -67,144 +65,122 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8977:EE_
-X-MS-Office365-Filtering-Correlation-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AM9PR04MB8337:EE_
+X-MS-Office365-Filtering-Correlation-Id: 16ef28c8-7234-42af-35ee-08df2ba426d8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|23010399003|19092799006|366016|56012099006|260925022911599003|260925021311599003|260925021911599003|4143699003|11063799006|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|1800799024|19092799006|376014|23010399003|366016|22082099003|18002099003|10067099003|261009223027099003|11063799006|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	gb7qjecNz5cgA23Q3vCj4AdbLGT2fvhdUMyfsZklObhnNL0BDUoakN/9PEAAbAPytFxmK8EnvprvEgfCI63igzZxzNICP8JKzTJWG/tHpM/lmqVKJXO0uU36Tt5SrkNniUDTx6aG+Kr5mi5iCRIlq3Aif8EogP9jzTQK2eibiFQZVUNYxMyd5CQ6s0JkSp4Z+ezjs47u19xsLZgvGHtzWX6QQ1g6z6Pxb/alkwzkrC8hzS4jAE3A0Yt6UsKvR4pJWlVgpZPudksZj6fKqoMSmU9ejnQIemBh7sQ6iz/Bl8tRwYvrvWPRL9PaSUvfnmK+hgGrP6U4ix9AfCb9lkt78wTULCuB3hirgPSFAwObgcyPgHbC/myuHswLlVF6wKVv+F71u4+noExXj82HaXR1oUZAlQ18nRp7IfjB6MHq7hoREjUW0BndZ2wpWO7XPKX6T4OlmDe9Q7AM4GLV8EfvHfhxtuab3k5tjllsYOfYcrmxITvfTXyvnQAzupQaFD9xnGh/3RU+81rvllEQ79J9NRH2Ju3TTDrAxn32f3Qun2GFLw5Sn35up0MAr25G+NC4tpw1J0QcoIBCk33kkSBBUXb50rxAtBJBJ5g+3h97Mdo=
+	Fo2L212P3kEIGEI+3eY87N2xnhO7jufozMbTmaL5Ybv9q7RRn4AtlrKpGv0vDLrafOwQ3OGQd+HwanJtuAMbE0QeRZ+g7T23ZC+F2iC+1TMIhzewQt0POdt1Sjg6kbywEhG6SuGo6PcdLHdYtTdllG/CfxCuMB7SGT4Y7JriPC+BKx07efCcMp+rsLVGGvCAlElWM5eIa1YSBqaurOVez5qbySqR6BZ3sUfofzsopQwO2E+155fMJe2rHD1m//BTspA237GGaTFNAW6+xlW/BGBeMS37U14pK1rUVDcpcpJIjUpv7iwa9Nlokgvgj/JQdEUpg2aCom3p8YZFXpIjkl29nCYfly86WRqzZV7VSpA+fPkHdZCLeuEBFLD9dSc5TFekWErQhUlXuT3mU9iWw4dVyuZNUV7tNNn4IgIMihQA6nDVDrABZ9scKCEGZbREC7VlOygSNqrkQfWbj48Ow+3Rondo5LSoR2pgwdkKzLFHYdgaD9HkNkyQpso/tPyqIJy2Rh8G26jed4VT653ewpvrpKfpKv5uNZcS85y4gdVpAYmzcH2Hcml76o1SyWXcnkGPtLw2RueuTvZIMip3ZJvc6fKJmzR4it8AHGYxDa+Xo1ihRF/dX2nX0Y3iQuIgCbYZUn6HWZ8Fk5Hubx8HOfu417+HVvb2yAE0UFp8nt8=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(19092799006)(366016)(56012099006)(260925022911599003)(260925021311599003)(260925021911599003)(4143699003)(11063799006)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(376014)(23010399003)(366016)(22082099003)(18002099003)(10067099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?pqnrz7qHCkZpGlBCQcOzCwafb5wSOlJvffxdO+jjQf0MCYUs0mn/dMd18K?=
- =?iso-8859-1?Q?pk37cKYaVA3UJG158BqaS1A5dUrEvac7XCeJzAPFwvYB7K4zY+IvwBSeAI?=
- =?iso-8859-1?Q?+H7SVzjHPyk7FUsMLSqZaCKPZLSNvWagmvAfB+pApr4dvKFqAE0whPYFAk?=
- =?iso-8859-1?Q?CXy0dZ5O2jVLJGlgolmMo0lMj4QKUdhicmLpMUGoJY2OZ6fdNfoHw6GmSB?=
- =?iso-8859-1?Q?RrF//YYl4aqK7bgJeoU4QHJT7bzVzTYMyq0bbW7xYeKwZtQcwF42cXiYbB?=
- =?iso-8859-1?Q?dlniQsDBYrzsLqKDkuZgdFefhqDjvFcTVjoWM8rUpeUbgkMW03AE83YguI?=
- =?iso-8859-1?Q?c7mHxRfZLA2rYNp6ghntR3+0vB+4EN6TL/8yRhAT4aOnED5OdsZxlrSEWw?=
- =?iso-8859-1?Q?cDEewOTaqQf36+YwFEC+Gkz1hc5CZVUpoUVRff2eIx921UiqUyoYpBZ3Ne?=
- =?iso-8859-1?Q?e/f52sccvdap9199SJSoVBD+g74YoPMk0WoePL2W0kOUzyASitDsZHtDsx?=
- =?iso-8859-1?Q?TihovOpbW4L3VCzLZUSMO8TrwKIdtD0N05U05nLnbaaYikE0UI4dtFotON?=
- =?iso-8859-1?Q?8R9q+8JaanWcTXfRbLuTrQLxrn5W+l1pIakpEM7AYnY3t12t7XqS4twZCO?=
- =?iso-8859-1?Q?45pJd7JxtjrlQ1N2B+k7Dpre2g8rZwpkgsk0R4Np8g1a8xryYYhTf9n/qq?=
- =?iso-8859-1?Q?rRPbPBULOFQLf9tocMlqAOmyR+KOaZcjs9lQ3QENhRxcvTsON5v8m3xmst?=
- =?iso-8859-1?Q?j6PDmOFq/QywTzZGtT6s9QH66fB5fNBWy/+2ukrfDPPKE8aNThJ0SD86YI?=
- =?iso-8859-1?Q?kqEqasIRWLB8x7TFFrrO8BJuVGjHUaCtJ6Rv2BR6mqxgkLVLD9f0QeBURR?=
- =?iso-8859-1?Q?KvoKTbkVbgyYcQH+9P0dwkKUUNfAJF+SiuDBsIsYCDSv9JZL2ki+zfkzu5?=
- =?iso-8859-1?Q?B7DYfxmZk1cVnbulNUeOvPPnPGz/v1ppJ4vLU0R7rA96+Q9mVT34wstf5n?=
- =?iso-8859-1?Q?n1W0+ogat5hGgQqVtkg+RWi6ethMvdpsE3rERbVykBmeUROxueB7NjBgbp?=
- =?iso-8859-1?Q?ypYF6jqrQ6xigv1l+BC4QWxCLzqpp7rnzOb1BBSO6ru/OuglxPx3nNpO7R?=
- =?iso-8859-1?Q?MVu3/hD0xVQ7NFUewaxXYPibCTIzY8kY0x+fFyAB/bB8Uq0Y9CIYl9wHuF?=
- =?iso-8859-1?Q?U8IHiilsPK33at46I901tcMRuIc5EPQb+tU4RAO5+tYcm7rhn0gcMxSkmI?=
- =?iso-8859-1?Q?jnA/iH9RKR+h1AlN12u12mcazxlAYUlo6NDKHEQhUvvGhKTZ9Xy/oC0yxO?=
- =?iso-8859-1?Q?/N9eivvmJFE85ufLkUMhuMXShefguK490V/8N7TwjmE2GZ1v38UGohGTAt?=
- =?iso-8859-1?Q?z9ZgVJPtPgpb/hzhpFzk0Pv8gaEx/dDkq/u+P2KSDqaAXVW2VQHkw741hp?=
- =?iso-8859-1?Q?keTki8REyWPvi1NesOhX7XD7J3JSBBPZiDsMI/joa9C3FjWbl9EaYtuQe9?=
- =?iso-8859-1?Q?o9Wg+ELdAMcvm5jxc0kR/kpY2DmJ3uRepmdMO8T8UhZU56RKMbiIfuoV0D?=
- =?iso-8859-1?Q?MkVx8QukCFTvNf0A1GmPyMyHrEvYGEyyn0uPMlB+SDFZLzMSYApINRRSdg?=
- =?iso-8859-1?Q?oAPMPHRoaEzjm7iUfS5UUZXcZ54W8yIWQ331SZMZ2wwnQFFAUCdElzkUEA?=
- =?iso-8859-1?Q?k0kw7ESEw0+fINSQSWF46zMwEKhciUa1x1hk8cfAup+rRqDe6LxnsmPlIe?=
- =?iso-8859-1?Q?dSuIRanALMdoWjARw7IByGukaGB6TNOcFojFXFUCZGYAyadAc4DbgeBt8A?=
- =?iso-8859-1?Q?3bIfRj6PU+5yf5yAafaqa72JIJmr843B4jmuIxEUEkJwX33yS4J6?=
+	=?us-ascii?Q?bfZM0t1+pqCG/CO3vMD81QzDxf8kWq+o0Mo+QLeD1Syc/5Rn9MGMFRGivOto?=
+ =?us-ascii?Q?8JIhsmbreGFBHValFkOLL2YxVTU34RsPaOTNtxf5iXmSjRrW4HsZzDgJ2g8z?=
+ =?us-ascii?Q?BfD1vYd04Aljybl9vQtz2nSZE6x3Y0IcxU1oPxCFAGw4gZZ/ISkAspJHFN4X?=
+ =?us-ascii?Q?jb3bFa2FcYosjJ/6cQOS5Wth10b6NY0JwecEWKnKtDTjw5J5DCW4SJaYkHLv?=
+ =?us-ascii?Q?CHuysueJztmtNyIdVZypMyFswdMg/Tabu0llytHHZX7nQWYjJDDB45+7MybU?=
+ =?us-ascii?Q?Cze9R0EIv253UxxKjI58GIXIhjGMw3cBcXtGxqBaGRBOvKg9YlQGLfYg7Evk?=
+ =?us-ascii?Q?ElBtWkdcrr8Jyhd/IAfHeDLq3C7wi9sJgNbiYwbEFJACtyOs8wy2DeJbUl1J?=
+ =?us-ascii?Q?tPRHtWbRVlSmojoQlImoBML0J2xbFqoKlCkKRv2QebiQfoITvvVirtF5k60t?=
+ =?us-ascii?Q?H97mtaLd/8QjnuJVecWsl1owE2WgrqfjsOSplZLAPyP1f7+Ohmnh4EMLKeUS?=
+ =?us-ascii?Q?fK7ujnBPaKsZZKASrI/Z0df6yhwCKCAOZVkN+jUuTkv1VHNUJanBinapUwz7?=
+ =?us-ascii?Q?LRUiEqRLbMXrbczBCdoh81sN/s/cCdQeyxtxPDIH1P95pKl3Hq/fHBENcw2p?=
+ =?us-ascii?Q?0UT73/J54AC/ByyU10LIgO+KBgSCo43AGl1d4MpVyljuo+9i05oqYd/IIIzn?=
+ =?us-ascii?Q?c5KSlzljTZQ3RoD/2pYMg1HJeJS6yw02iZqal1TBbQf4ej6Slkk1JbIVQlf8?=
+ =?us-ascii?Q?Myelhig2yG41AtJQTUvqmYl3s6xdo/+X1DQrF4pv193AO/BKE7TLHpcvv17n?=
+ =?us-ascii?Q?cHUFO62LHXbYI0sraZa90BtWQQCdQU8vAv3JBJ7V8rBzv+zrRAWxToTHlThK?=
+ =?us-ascii?Q?EWU8sTT9A/FUhYtjs7K/rY/T3Fd0ClmKUFNM0ke5HSRR4cLQUUSDQbPnftPq?=
+ =?us-ascii?Q?KMeNM9jTIiYbD39Xs6qEvjbSKtaZb+FtJ8Ujn2iWX3SIdvj2+HsEDH8vrjv0?=
+ =?us-ascii?Q?0EsJN7JppCI/GkkHREhiU8h3q2oIiBN6vA+OcNRu9sNrfZa3qLkkmXmMZj/7?=
+ =?us-ascii?Q?ITQ2xYpctGNFyoRoWcEuc5yLqy45/mZMiD2xEvhmChhaxOr3SX7imh2gMCQS?=
+ =?us-ascii?Q?JLcHnxPZLSno0yD61LKulP/oW4XRqYfhsDVtKaqDIzI1eACbFYuH6bgPagSJ?=
+ =?us-ascii?Q?gZQFqOtQpjVF3vAspwMgPI6IFIcJMt6VXk1XcHD3XtxmJCw4WiVlcXZZO7wG?=
+ =?us-ascii?Q?A7IRo+cO3NLhsIMtMC0w4dYIcRMf/XnEqPvR9EVxOzxCVfJyx7MDjCvuk2aF?=
+ =?us-ascii?Q?6s3GX104rqiDelyZ3rdkt0+UaOfVqR51CUX3IsOXvOvxW2p7/FIZYhjYWPEk?=
+ =?us-ascii?Q?zaw7Owgh00t/ggiA7f3AfbkdZL+Qi7Bq8eDzvWZ8QpNEIqAMyf/hNOO5ihts?=
+ =?us-ascii?Q?OIJNYYUD+hXioebST3Pml8XxocJ7e00i+8sin2T8Fqv2+Vfu5L9K0aIMhOjq?=
+ =?us-ascii?Q?Ufs/PTvvBwK+cnEphuQ2c6Up2lXYMYDRaYbY6S8ofmRBqSt6vF/ku385F1zF?=
+ =?us-ascii?Q?ZaY8xGOpPRsDyhuPsGDbWhHzs4uZ+6ijUZhkoqHoN1AVwDy8xaUwx4hfMKLR?=
+ =?us-ascii?Q?f3MWsR7Pu3ui/7F3DqeRVD+ZK2wjBoulPlWPnUzuIyoPk18SP9Hu9sNq0bYd?=
+ =?us-ascii?Q?/V8TkJ/b4KmymAqaxRrGJo5NfBKSR9F9Lx/XebZWXN5rOm/F6kEdVzP4DPZC?=
+ =?us-ascii?Q?GmCzbIGEJff1/0rmxeWbXb5BWJbxCaLu7nGzoJ00SbjM9Dp1Fibg?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 16ef28c8-7234-42af-35ee-08df2ba426d8
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:32:17.5714
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:40:13.7998
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lL0lv4fNQ9K/WpUeuM4ZtEeM+Vs46wrFbvP3R0z1KkEVHSmwIhE34ZP2lNIyzz711Dxy8hNtItPkbBh39NOKzJvMTWjoKJK2ib+fMsdde4AEuRJ4MhL4QXrqYJ9lInMc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8977
+X-MS-Exchange-CrossTenant-UserPrincipalName: it9E4CxIcbt4HwwRlqZ0Ov3uopYQWtW6T3o0rBaCKmwZ4wpflHyj0F0YM6wiaoSbwAY6DjnwPaHS0EVA1knS09qm/We9Lh1qES4vmmWhkeDYoy6wdV56D/l0UlTo6yeR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8337
 
-On Wed, Jul 22, 2026 at 04:09:49PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Bypassing the error path during thread stop prevents dmaengine_terminate_sync() from being called, leading to a Use-After-Free of the dmatest_thread struct by the completion callback.
+On Sun, Aug 30, 2026 at 02:12:13PM +0800, Runyu Xiao wrote:
+> tegra_dma_probe() registers a channel IRQ before initializing the
+> channel lock, tasklet, waitqueue, and descriptor lists used by the
+> interrupt path. A pending interrupt can therefore access uninitialized
+> channel state.
+>
+> Prepare the channel state before requesting its IRQ so the handler and
+> tasklet always see initialized synchronization and list objects.
+>
+> Fixes: ec8a1586780c ("dma: tegra: add dmaengine based dma driver")
+> Cc: stable@vger.kernel.org
+> Assisted-by: Codex:GPT-5
+> Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+> ---
 
-Look like make sense. Please check it
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-Frank
-
-> - [Medium] Bypassed DMA status check when stopping results in unhandled DMA errors.
+>  drivers/dma/tegra20-apb-dma.c | 25 +++++++++++++------------
+>  1 file changed, 13 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+> index 640b8a218..23fd294ab 100644
+> --- a/drivers/dma/tegra20-apb-dma.c
+> +++ b/drivers/dma/tegra20-apb-dma.c
+> @@ -1494,6 +1494,19 @@ static int tegra_dma_probe(struct platform_device *pdev)
+>  		}
+>
+>  		snprintf(tdc->name, sizeof(tdc->name), "apbdma.%d", i);
+> +		tdc->tdma = tdma;
+> +		tdc->id = i;
+> +		tdc->slave_id = TEGRA_APBDMA_SLAVE_ID_INVALID;
+> +
+> +		tasklet_setup(&tdc->tasklet, tegra_dma_tasklet);
+> +		spin_lock_init(&tdc->lock);
+> +		init_waitqueue_head(&tdc->wq);
+> +
+> +		INIT_LIST_HEAD(&tdc->pending_sg_req);
+> +		INIT_LIST_HEAD(&tdc->free_sg_req);
+> +		INIT_LIST_HEAD(&tdc->free_dma_desc);
+> +		INIT_LIST_HEAD(&tdc->cb_desc);
+> +
+>  		ret = devm_request_irq(&pdev->dev, irq, tegra_dma_isr, 0,
+>  				       tdc->name, tdc);
+>  		if (ret) {
+> @@ -1507,18 +1520,6 @@ static int tegra_dma_probe(struct platform_device *pdev)
+>  		dma_cookie_init(&tdc->dma_chan);
+>  		list_add_tail(&tdc->dma_chan.device_node,
+>  			      &tdma->dma_dev.channels);
+> -		tdc->tdma = tdma;
+> -		tdc->id = i;
+> -		tdc->slave_id = TEGRA_APBDMA_SLAVE_ID_INVALID;
+> -
+> -		tasklet_setup(&tdc->tasklet, tegra_dma_tasklet);
+> -		spin_lock_init(&tdc->lock);
+> -		init_waitqueue_head(&tdc->wq);
+> -
+> -		INIT_LIST_HEAD(&tdc->pending_sg_req);
+> -		INIT_LIST_HEAD(&tdc->free_sg_req);
+> -		INIT_LIST_HEAD(&tdc->free_dma_desc);
+> -		INIT_LIST_HEAD(&tdc->cb_desc);
+>  	}
+>
+>  	dma_cap_set(DMA_SLAVE, tdma->dma_dev.cap_mask);
 > --
->
-> --- Patch [2]: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when stopping a run ---
-> commit 65f43e5ca342a54064656c1ebe548edaa5c088bd
-> Author: Nathan Lynch <nathan.lynch@amd.com>
->
-> dmaengine: dmatest: Suppress bogus failures when stopping a run
->
-> Writing 0 to the module 'run' attribute stops the test threads with
-> kthread_stop(). This commit introduces checks against kthread_should_stop()
-> to suppress stale failures against transfers that actually succeeded.
->
-> > diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-> > --- a/drivers/dma/dmatest.c
-> > +++ b/drivers/dma/dmatest.c
-> [ ... ]
-> > @@ -848,14 +848,19 @@ static int dmatest_func(void *data)
-> >  					done->done,
-> >  					msecs_to_jiffies(params->timeout));
-> >
-> > -			status = dma_async_is_tx_complete(chan, cookie, NULL,
-> > -							  NULL);
-> > +			stopping = kthread_should_stop();
-> > +			status = stopping ?
-> > +				dma_sync_wait(chan, cookie) :
-> > +				dma_async_is_tx_complete(chan, cookie, NULL, NULL);
-> >  		}
-> >
-> >  		if (!done->done) {
-> > -			result("test timed out", total_tests, src->off, dst->off,
-> > -			       len, 0);
-> > -			goto error_unmap_continue;
-> > +			/* stopping: dma_sync_wait() let the transfer finish, not a timeout */
-> > +			if (!stopping) {
-> > +				result("test timed out", total_tests, src->off,
-> > +				       dst->off, len, 0);
-> > +				goto error_unmap_continue;
-> > +			}
->
-> [Severity: Medium]
-> By skipping this error path when stopping is true, does this bypass evaluating
-> the status returned from dma_sync_wait()?
->
-> If a legitimate hardware error or timeout occurs exactly when the thread is
-> stopped, it looks like it would either falsely report a successful test (if
-> noverify is set) or misreport it as a data mismatch.
->
-> [Severity: High]
-> Could skipping the goto error_unmap_continue here lead to a use-after-free
-> in a delayed callback?
->
-> If a delayed callback leaves done->done false when stopping, failed_tests
-> won't be incremented. Later, when dmatest_func() exits:
->
->     if (ret || failed_tests)
->         dmaengine_terminate_sync(chan);
->
-> Since failed_tests remained 0, the thread exits without synchronizing the
-> channel. Then dmatest_cleanup_channel() executes:
->
->     put_task_struct(thread->task);
->     kfree(thread);
-> }
->
-> /* terminate all transfers on specified channels */
-> dmaengine_terminate_sync(dtc->chan);
->
-> Is there a window where a pending tasklet executes dmatest_callback()
-> after kfree(thread) but before dmaengine_terminate_sync() is finally called,
-> leading to a use-after-free on the thread structure?
->
-> >  		} else if (status != DMA_COMPLETE &&
-> >  			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
-> >  					 dev->cap_mask) &&
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=2
+> 2.34.1
