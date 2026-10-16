@@ -1,64 +1,64 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010033.outbound.protection.outlook.com [52.101.84.33])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012051.outbound.protection.outlook.com [52.101.66.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FFC2EEE69;
-	Fri, 16 Oct 2026 16:15:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3073E25B0A5
+	for <dmaengine@vger.kernel.org>; Fri, 16 Oct 2026 16:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792167333; cv=fail; b=MrFmj/1CNKNFAXx7BXops5BnmjE47wzbWEZ+It1brA/468N4LHk10mYA32bbRVz9dtnAALDhUMKIdBlMDJ18UVk/hnvXMQFrAOK11VrKULKDtgEx0H84ZMBWnunnjeNfXwX3sYROlssaNhTCSbxjun3q6lD4KD2ITO7O3Lwra/M=
+	t=1792168341; cv=fail; b=IogOp7wmwdJaaCYzT2KFG2hgl6ZlhxyvTM7pmxCsa+LUIUhnpi14lg242FtPPJzrjRSbm3xMP+UAyxy18nnkVgMTwM0dVFdKZqd1CZOObs0ot5Ky3WSnFr1ao10FL+lAwDfQw1I+GGns9mKRnZpOkwirSu4FWda6288wNAaqyz4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792167333; c=relaxed/simple;
-	bh=Ovmi6/NaqYRKjsDBzh5/84QAQ4fd8ADR/chKAG8oRE4=;
+	s=arc-20240116; t=1792168341; c=relaxed/simple;
+	bh=JePWywyNTQtblRyPo4XnqNgzcUMHLKU6QF6jq/PX8us=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=IK4hPPlQiDgD02UEfBDDwR1u+ADZh53iibZMP9ZUDBnSGDq2GoYyoYspmdX62VbkUl7mCq/UmjlEDoAFw/tuKkvjAXW3XfhyWuQhZ2cdj9n0Va03JKHM7OgidEW7YJH07qmqI2BSiNnp7FYBhgx6O5MfRHqRkTNn+/aBt3ORtUg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=uULXGInj; arc=fail smtp.client-ip=52.101.84.33
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GdNuO3T8LRRZCvUSvci9iZ24ZeiiEbu6Z6eeAgPAM6HrAPtofo1t7sK+nNYixbY1nObXPM5UnqzDuHNzMzldJ5+ETk1KsiS8e4stCf3YxIAJHZu3nRfCqwMgy8SthdNTWnNkw2IvYlXR5E5yc9VJlkgLSBbwhneiFUYG5SOTA0o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=InI8/mcJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.66.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="uULXGInj"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="InI8/mcJ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T48weDy+CLG8Lmhs4ehysHLyyhcSOhTvpKdRtK1knQQl+LAulE+jeBSasohqZqzvpe1JOdSmPqa7BsJKCVWRGRa4k2hHrgPAJxK+vsnj/QV+aUcdnT1UMasLI4O+PVEP4Q+aHmsJyozNxbsP8IvI5dwUWTMsuQVldq94uBByGLaOTkkWrKmblLVMaIQqr9zmN66vqarzt8d1XLpYtmB3oPxzFz1VG4ZXzP4rW+9jyPpK/j4GiBFg8SfJIBHE8SKONXD3s9Kx20WiXpKK1HRDmAckr0bE2ZmJunvhQgq2Tokh2tk/haLcwQGeDBg+eb0JB/u70ZzUEKzFJh0cHoBOUg==
+ b=nu8T2ydKI9F6HkbbM9k5mh//2V6d5HVY9t+KKsmiZSIg2vMLrPf0m589Wk6q7HuC3QFDcWqRy+/PRJj7QzZz4W8thv0b99a9fm+k4WdEyPUJsLBXcal7pGfkU7c8OqPjyVr2HXck7G5y0xgCFBsDBxq2H1c1RQV4zy9Escf/FHmtQ+ArdLwTS8na3XSgR20gxwSXW3x4jKgJNJGW06KQWnyt5BxpEuNLaj/8c+9T65qD2q2OYiYzZeyWpQXfyprWkuNrvyqXv6RgFm7X24gyZjRylA68ipOvn+G17jluLfg/0Wh3BVlkYy0a6rVjbiAP8K6gCVvgorj+vPzlIeCTjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H7GiyUuRfxgmpGA1x90tVgsiZ5q1mojpREeK64iq37E=;
- b=BloVDNhDsJv6OLM7Q3C7fZR7T2MRKZgb7Bt5Aj9RhTx3GlQdhzSGBnDKOIIafIhRAQ5rhh/m4U6pbbAcBO5Z4+2JKf3cjWw2WOpEucjHKqnxIBpDZfth+wvvBu44/FtPFiQ/rVYn7/HKyu/JnmRy0I+f3yJo3MnjE7L9se2sDyTcOvMIJoXvbJ/nM1TQujGL+1y5B78X4WA0vFQJWda1RqTboI76CuTh0AhnQcCwf0UqJkBHxkk3VIGSEjEYJLfc/ief8Gqf7PB8Bis0aspmceBqU7GjkhAWMbpXWVtCJ68mKMmj7xtTaDu5Fw8a1kBY48DLSsRn/5AEqk4a+ss8JQ==
+ bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
+ b=e14G3zem2Jyb1NGWrSlZmV5/GWjKHtF7nvV/A6L9O3wR75tcUdNkUwtFbdGh2kXQRaqFeIi1kzmVpAmtmgYTJO5XpP5V0ngaSjmqpnXoJeJpS3RVJ2kSRKUnCziY0pGETlzn0NDcgSYW6OUHzzCrX0Jpy55Dvh5R0BfMl9vCpzSgOTpTx0BSMxC22tIhxJ/NRv5pAmnFbp1GVvWQ5BPB34MpKG/KxmZFy6KRBtpnK2txonJeQsj3VaiHa+V92yIKUOh4dzHo1K8Ja1fRNJwJR7RC22QYQZ13CDtXraYLeLGzgKrm1rI7HysU//Ff0ir45/I6ozqHa9lVhbqeA3LiPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H7GiyUuRfxgmpGA1x90tVgsiZ5q1mojpREeK64iq37E=;
- b=uULXGInj+euCMjpx74YfwYzZvkhc+Izr9RxEGGb/NX9mT7kFN6Z9rpius+z5GPQUNNEdyqFEkxKLCq3VnmtH3DekzBV5idVIIL1hBPeL8An/a8bteBECc/a2greLYLLe5HFdHayT/SQfmCQaobctTFcefyEOpu6o5d8WQNk7vjZN5RAN1BbQh8R8EuDGkh6WavomDb5w8V7T0oryvIdi/yk38Xt+VTf21F6vKHfg5HWL3Ub4gi9NVME3esF5O63kJXHuCMw6z4HX3MZ1R0VEXxDWB0/su+cXPvtEox0f5tUzvDZ+jF3AG2qhFRQCVIQQs3Fddm7Kp5PE37rlpjzlcQ==
+ bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
+ b=InI8/mcJ8uR9N7YwXhLHPjdRStx8DMFE1jlhGdHZRngjU7aXcK2yijAdHux7catvHYurU+mSs8z6gAc+uh0lQ24ytieL+CZPCU9DQLH35csnW/W5fzmxl3Y9kLyXyIpEXZ86i36LtjTqG5tgVGrG+L+o61YuzwD9Wf21gBqL4Puav2iHkd2u4zbsCOOCGkojBNLetMjXdGj40nPMvZOZsHAdEl70gWQK7lqw/VhIvHSwNQUtO5OkgKwuP51LHIxYgizwa/MxxFLLdLiPssP/3CEhC7fm7H8gicGL+3weJApfE+fILjjJ1W0wO2QmeDgkj6ANb/15QW0YhueLIzJlZg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV4PR04MB11751.eurprd04.prod.outlook.com (2603:10a6:150:2d8::14) with
+ by AS8PR04MB8977.eurprd04.prod.outlook.com (2603:10a6:20b:42c::22) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
- 2026 16:15:27 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 16:32:17 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 16:15:27 +0000
-Date: Fri, 16 Oct 2026 12:15:19 -0400
+ 16:32:17 +0000
+Date: Fri, 16 Oct 2026 12:32:10 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
-Cc: konrad.dybcio@oss.qualcomm.com, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, bjorn.andersson@oss.qualcomm.com,
-	praveen.talari@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mukesh.savaliya@oss.qualcomm.com
-Subject: Re: [PATCH v2] dmaengine: qcom: gpi: Fix SE ID and SE Protocol
- fields widths in SCRATCH_0
-Message-ID: <atJNlzZlA7illyMj@lizhi-Precision-Tower-5810>
-References: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
-Content-Type: text/plain; charset=us-ascii
+To: sashiko-reviews@lists.linux.dev
+Cc: Nathan Lynch <nathan.lynch@amd.com>, dmaengine@vger.kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when
+ stopping a run
+Message-ID: <atJRihx8s9iSImNR@lizhi-Precision-Tower-5810>
+References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
+ <20260722-dmatest-fixes-and-fatal-errors-v1-2-8287709987ea@amd.com>
+ <20260722160949.7ECFB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260721-fix_se_id_and_se_protocol_fields-v2-1-ee1d63d6c549@oss.qualcomm.com>
-X-ClientProxiedBy: PH8PR22CA0006.namprd22.prod.outlook.com
- (2603:10b6:510:2d1::10) To GV2PR04MB11799.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260722160949.7ECFB1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR05CA0024.namprd05.prod.outlook.com
+ (2603:10b6:510:2cc::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -67,114 +67,144 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV4PR04MB11751:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5786c356-092e-4820-c1b9-08df2ba0b11d
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8977:EE_
+X-MS-Office365-Filtering-Correlation-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|7416014|1800799024|366016|19092799006|56012099006|11063799006|261009223027099003|10067099003|22082099003|18002099003|3023799007;
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|19092799006|366016|56012099006|260925022911599003|260925021311599003|260925021911599003|4143699003|11063799006|261009223027099003|10067099003|18002099003|22082099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	JguflDuNizRvlcjJBk6kT6sYsREUQVSpRAcV4xo4NUdDsHcUD+qdQWVQiDglO9ban3MebwsqQtdRm71Pxbdj0XfpXq33RXuu8DQOCsZINRegWfaPsrFL23YmZBgeMD7ypqrhGY4++4tOiT9Pxb69Wfxvsn1nX4lCpkBh2PBeYjSeG6KNAz8Hd1w7tP6f0xw5Mc8iNwulkJkY2IjvdmbfEoI/n0GpHYcW7mjG47FRCKdmdMn/h2WW1e3ZQLCmIZrvXKgpNKhozxasnvf8ZtWQtHQMpBfGE8nvv4zVuuILezYIFBlyGVHHc4ajYznncI0Ytzer0HUaj4larvPKS1GUzU5uHHns5yAFDg19M1+uCqNl2VV/KanuJtJtFy1ZUrCX2qOPWPaxbm0OqdwtYZQOtWl8Xt7t+zzku/j9/X6jJfKtNDUB247WHkhx0ph8e+uCmuO/78hsfvT9lIQpP30a0q+2hchKSRI6dZILVD0pG15sVMKbXCrXB8WgsST6xRW56ddMWgUfYswGYVOqCN1q1WIksCO3tzvWBJ9V7QDROQC+TB/etL81TDFSJNx60URjZPrzhtreSXv2Ev8G50mZR4no8dpSxQuXI9OejZKB3TLqm3AAPQoD3Sqs21Lu0+ik
+	gb7qjecNz5cgA23Q3vCj4AdbLGT2fvhdUMyfsZklObhnNL0BDUoakN/9PEAAbAPytFxmK8EnvprvEgfCI63igzZxzNICP8JKzTJWG/tHpM/lmqVKJXO0uU36Tt5SrkNniUDTx6aG+Kr5mi5iCRIlq3Aif8EogP9jzTQK2eibiFQZVUNYxMyd5CQ6s0JkSp4Z+ezjs47u19xsLZgvGHtzWX6QQ1g6z6Pxb/alkwzkrC8hzS4jAE3A0Yt6UsKvR4pJWlVgpZPudksZj6fKqoMSmU9ejnQIemBh7sQ6iz/Bl8tRwYvrvWPRL9PaSUvfnmK+hgGrP6U4ix9AfCb9lkt78wTULCuB3hirgPSFAwObgcyPgHbC/myuHswLlVF6wKVv+F71u4+noExXj82HaXR1oUZAlQ18nRp7IfjB6MHq7hoREjUW0BndZ2wpWO7XPKX6T4OlmDe9Q7AM4GLV8EfvHfhxtuab3k5tjllsYOfYcrmxITvfTXyvnQAzupQaFD9xnGh/3RU+81rvllEQ79J9NRH2Ju3TTDrAxn32f3Qun2GFLw5Sn35up0MAr25G+NC4tpw1J0QcoIBCk33kkSBBUXb50rxAtBJBJ5g+3h97Mdo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(7416014)(1800799024)(366016)(19092799006)(56012099006)(11063799006)(261009223027099003)(10067099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(19092799006)(366016)(56012099006)(260925022911599003)(260925021311599003)(260925021911599003)(4143699003)(11063799006)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Whaexh6pbUsYizkPXwNB+AnwJzYTFzLQYgc8fRM5YAApeAn7LoojE0v/d6F0?=
- =?us-ascii?Q?+EixLDFxowM1x/PB1XsiqigZpDyXsVN3g/BenETbIE+p2mEyykaEa++ggYRk?=
- =?us-ascii?Q?DwKCC8QqeE4xbH+mKUxik5evLSjhWrTW1CskN4Rqhp+0qwfLV2eS8xf2gMtt?=
- =?us-ascii?Q?tTkso7rdIem7k0DW4R615TpYets3PBSi4wWkiEcUJ7getDkYlXg21yC9ax+Z?=
- =?us-ascii?Q?gRh3zlPy6udeSXlsUFwNCjfZwj69ToRqEUWPYdMIzYFzHb0HMrU8rqAnncLW?=
- =?us-ascii?Q?ArhNfbTAVJ0CtsVOAP7XqTYk4YEycUBkwbXWfAu9M9NWqBnYGakx9jdZi4Ky?=
- =?us-ascii?Q?F0tklAN7Hy/3mmXAkZ+/AuxKtXPEQ+HmY7rlvhfUG64C4cjY+31jAVSGvs22?=
- =?us-ascii?Q?O4QkR93XEsDM2MlSJWq7uqKcAZlou0E52gX/cfxRpyUSOWFiaHxijy7fXidu?=
- =?us-ascii?Q?ve4OeOMXO7vJA4uUtn7aSqew1URDbCJQIf1eQ8BTz7r2jkQzHsmXEwqQTJX3?=
- =?us-ascii?Q?BsMF0r1pdiam9yjwE3s2YJf+2PZRN+oTDhSATMmt6M2EJbDpSfMdvFMyk3E7?=
- =?us-ascii?Q?52X6X/4h+VHvsQllZwRGKCE73/tc1OeCBAYpEzCE56wf/RODALyyL9a/InLY?=
- =?us-ascii?Q?IItihIelyevHfG4lpTfxyqv4NMdLdCycgMLDtYDPNrT6tjOuWRQJGTIxLIMi?=
- =?us-ascii?Q?i0YJXGoXeJJRJyNy036BYBKKoIv8E+T99HamgA96ABKVDC2XUZNgL9/viia5?=
- =?us-ascii?Q?jopwFgiA2FYYY8D6loMWZoeUuMSU0oxl+rdZ9KD9V9CCG4S3IEsEa/2X+vLe?=
- =?us-ascii?Q?LPPgrH1UESit/F1OI3zP2RTU1uwGuMaCFCxauTTEBbZf+yZ+SuavSO+Apff3?=
- =?us-ascii?Q?xAcvjIDLEmFaqhXVayW422UTZDPbKRTtGA2rR4dsxbkNA280Sln6zpwQd3rf?=
- =?us-ascii?Q?Fqe7YpNq+2qLZB/yLaSFQJ4NMrRnZ/+J0G6NR0raCD7XAvAd9Poi15y/gQkh?=
- =?us-ascii?Q?RNHy00ejFeIaDYEbdir9tpoP8Ib5onnb9ZXfURvxGCpbqZa+8xZHEzX1ngp4?=
- =?us-ascii?Q?ZJajrcp1FH677kHNVM0FiyUQmi27GVATMrSOl7iE3Ylv+QPFg6J+vlhWshMi?=
- =?us-ascii?Q?MwUvW/YGlTqZcTLsxhg2ijMYk+8EoKWZurOmJPt5/dVnQ5XZih0oO9+HBk2j?=
- =?us-ascii?Q?cGhPgYdZJfpV3/6ZKDoeSIGlC68CKv5Ago5qHgQCVKFNT/tT7FZxmjj40Ic7?=
- =?us-ascii?Q?c7xWVWQ9YV4vwMuSliZbr8321fJ2XtAQ4iYd6phn9szzMK66OJBWweekyrI9?=
- =?us-ascii?Q?W90RyDi7cwsQONURvXorNtJW7nCyjxNcURXXkLn8PR+6EQg5MflLVc8i/PkB?=
- =?us-ascii?Q?3i5vMrMhdNJee2gxV4mFRcTp4dsnNvdNRkWf5sZ7WCSQAYA3XyBMgmQftenf?=
- =?us-ascii?Q?iECkOyQF77hENTLPzHi9Jv4FsZ+v1fPAW4uLdcVG72pjEY6oR/IOelTHx9Ex?=
- =?us-ascii?Q?9AHjm8NE8EvHL5CaHPd2aqx77V7Xn9E/XYLfy7tkfKEIC54sdU0pj82ryjwr?=
- =?us-ascii?Q?BIKoKhYY+4hTsstTMO+4GtYrkTSBFnf8j/6hHNDJTn0Bi1BKzOfX++NOrpmI?=
- =?us-ascii?Q?clpPyardOvkrGgu37sm/O6tyvMATGqB8czSO83OfTem54tbr42pRcJMwiOPb?=
- =?us-ascii?Q?3tXFJubfuOiYBOIyv+Yg87CpLyZ7VHCFif0wWU03hyoDJVropa5aB11RHK+H?=
- =?us-ascii?Q?spGnIItCOGc9ENP+PZH/jHNspT97yPkKarNNR4zl9jTdAYFm9Taw?=
+	=?iso-8859-1?Q?pqnrz7qHCkZpGlBCQcOzCwafb5wSOlJvffxdO+jjQf0MCYUs0mn/dMd18K?=
+ =?iso-8859-1?Q?pk37cKYaVA3UJG158BqaS1A5dUrEvac7XCeJzAPFwvYB7K4zY+IvwBSeAI?=
+ =?iso-8859-1?Q?+H7SVzjHPyk7FUsMLSqZaCKPZLSNvWagmvAfB+pApr4dvKFqAE0whPYFAk?=
+ =?iso-8859-1?Q?CXy0dZ5O2jVLJGlgolmMo0lMj4QKUdhicmLpMUGoJY2OZ6fdNfoHw6GmSB?=
+ =?iso-8859-1?Q?RrF//YYl4aqK7bgJeoU4QHJT7bzVzTYMyq0bbW7xYeKwZtQcwF42cXiYbB?=
+ =?iso-8859-1?Q?dlniQsDBYrzsLqKDkuZgdFefhqDjvFcTVjoWM8rUpeUbgkMW03AE83YguI?=
+ =?iso-8859-1?Q?c7mHxRfZLA2rYNp6ghntR3+0vB+4EN6TL/8yRhAT4aOnED5OdsZxlrSEWw?=
+ =?iso-8859-1?Q?cDEewOTaqQf36+YwFEC+Gkz1hc5CZVUpoUVRff2eIx921UiqUyoYpBZ3Ne?=
+ =?iso-8859-1?Q?e/f52sccvdap9199SJSoVBD+g74YoPMk0WoePL2W0kOUzyASitDsZHtDsx?=
+ =?iso-8859-1?Q?TihovOpbW4L3VCzLZUSMO8TrwKIdtD0N05U05nLnbaaYikE0UI4dtFotON?=
+ =?iso-8859-1?Q?8R9q+8JaanWcTXfRbLuTrQLxrn5W+l1pIakpEM7AYnY3t12t7XqS4twZCO?=
+ =?iso-8859-1?Q?45pJd7JxtjrlQ1N2B+k7Dpre2g8rZwpkgsk0R4Np8g1a8xryYYhTf9n/qq?=
+ =?iso-8859-1?Q?rRPbPBULOFQLf9tocMlqAOmyR+KOaZcjs9lQ3QENhRxcvTsON5v8m3xmst?=
+ =?iso-8859-1?Q?j6PDmOFq/QywTzZGtT6s9QH66fB5fNBWy/+2ukrfDPPKE8aNThJ0SD86YI?=
+ =?iso-8859-1?Q?kqEqasIRWLB8x7TFFrrO8BJuVGjHUaCtJ6Rv2BR6mqxgkLVLD9f0QeBURR?=
+ =?iso-8859-1?Q?KvoKTbkVbgyYcQH+9P0dwkKUUNfAJF+SiuDBsIsYCDSv9JZL2ki+zfkzu5?=
+ =?iso-8859-1?Q?B7DYfxmZk1cVnbulNUeOvPPnPGz/v1ppJ4vLU0R7rA96+Q9mVT34wstf5n?=
+ =?iso-8859-1?Q?n1W0+ogat5hGgQqVtkg+RWi6ethMvdpsE3rERbVykBmeUROxueB7NjBgbp?=
+ =?iso-8859-1?Q?ypYF6jqrQ6xigv1l+BC4QWxCLzqpp7rnzOb1BBSO6ru/OuglxPx3nNpO7R?=
+ =?iso-8859-1?Q?MVu3/hD0xVQ7NFUewaxXYPibCTIzY8kY0x+fFyAB/bB8Uq0Y9CIYl9wHuF?=
+ =?iso-8859-1?Q?U8IHiilsPK33at46I901tcMRuIc5EPQb+tU4RAO5+tYcm7rhn0gcMxSkmI?=
+ =?iso-8859-1?Q?jnA/iH9RKR+h1AlN12u12mcazxlAYUlo6NDKHEQhUvvGhKTZ9Xy/oC0yxO?=
+ =?iso-8859-1?Q?/N9eivvmJFE85ufLkUMhuMXShefguK490V/8N7TwjmE2GZ1v38UGohGTAt?=
+ =?iso-8859-1?Q?z9ZgVJPtPgpb/hzhpFzk0Pv8gaEx/dDkq/u+P2KSDqaAXVW2VQHkw741hp?=
+ =?iso-8859-1?Q?keTki8REyWPvi1NesOhX7XD7J3JSBBPZiDsMI/joa9C3FjWbl9EaYtuQe9?=
+ =?iso-8859-1?Q?o9Wg+ELdAMcvm5jxc0kR/kpY2DmJ3uRepmdMO8T8UhZU56RKMbiIfuoV0D?=
+ =?iso-8859-1?Q?MkVx8QukCFTvNf0A1GmPyMyHrEvYGEyyn0uPMlB+SDFZLzMSYApINRRSdg?=
+ =?iso-8859-1?Q?oAPMPHRoaEzjm7iUfS5UUZXcZ54W8yIWQ331SZMZ2wwnQFFAUCdElzkUEA?=
+ =?iso-8859-1?Q?k0kw7ESEw0+fINSQSWF46zMwEKhciUa1x1hk8cfAup+rRqDe6LxnsmPlIe?=
+ =?iso-8859-1?Q?dSuIRanALMdoWjARw7IByGukaGB6TNOcFojFXFUCZGYAyadAc4DbgeBt8A?=
+ =?iso-8859-1?Q?3bIfRj6PU+5yf5yAafaqa72JIJmr843B4jmuIxEUEkJwX33yS4J6?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5786c356-092e-4820-c1b9-08df2ba0b11d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:15:27.8004
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:32:17.5714
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LJBVhg/qiyigmtfvY6f6vHPTP96BfeLf7apSi5j4wWGuhF2wehWXTE5GpLseR0gHxNbAFKDri47tsmzhcP6unnEM6aaBFMpHGiyog6LrUG6AgKvICQxWiuISwuRT23w6
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR04MB11751
+X-MS-Exchange-CrossTenant-UserPrincipalName: lL0lv4fNQ9K/WpUeuM4ZtEeM+Vs46wrFbvP3R0z1KkEVHSmwIhE34ZP2lNIyzz711Dxy8hNtItPkbBh39NOKzJvMTWjoKJK2ib+fMsdde4AEuRJ4MhL4QXrqYJ9lInMc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8977
 
-On Tue, Jul 21, 2026 at 04:15:46AM -0700, Chandana Kishori Chiluveru wrote:
-> GPII_n_CH_k_SCRATCH_0_SEID is currently defined as GENMASK(2, 0), only
-> 3 bits wide. Serial engine indices >= 8 get silently truncated by
-> FIELD_PREP()/u32_encode_bits() when written into the scratch register,
-> causing the GPI channel to bind to the wrong serial engine. The
-> channel allocate command still succeeds (it doesn't require the
-> target SE to respond), but the subsequent channel start command times
-> out waiting for hardware to complete the handoff to the (incorrectly
-> bound) SE, and gpi_send_cmd() returns -EIO leading to GSI usecase failures
-> for SE8 and SE9 serial engines.
->
-> Older documentation, such as the SDM845 hardware programming guide,
-> describes the SE ID field as bits [2:0]. More recent QUP hardware
-> documentation defines the field as bits [3:0]. Use the wider definition
-> to match current hardware documentation while remaining compatible with
-> existing platforms and enabling serial engine IDs greater than 7.
->
-> Also update the SE Protocol field definition to match the documented
-> register layout and keep both fields correctly packed.
->
-> Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-> Signed-off-by: Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
-> ---
+On Wed, Jul 22, 2026 at 04:09:49PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Bypassing the error path during thread stop prevents dmaengine_terminate_sync() from being called, leading to a Use-After-Free of the dmatest_thread struct by the completion callback.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Look like make sense. Please check it
 
-> Changes in v2:
-> - Updated the protocol field value properly
-> - Link to v1: https://patch.msgid.link/20260720-fix_se_id_and_se_protocol_fields-v1-1-e41dbb107d97@oss.qualcomm.com
-> ---
->  drivers/dma/qcom/gpi.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index a5055a6273af..fc12cf9122f9 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -207,8 +207,8 @@ enum CNTXT_OFFS {
->
->  /* Scratch registers */
->  #define GPII_n_CH_k_SCRATCH_0_OFFS(n, k)	(0x20060 + (0x4000 * (n)) + (0x80 * (k)))
-> -#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(2, 0)
-> -#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(7, 4)
-> +#define GPII_n_CH_k_SCRATCH_0_SEID		GENMASK(3, 0)
-> +#define GPII_n_CH_k_SCRATCH_0_PROTO		GENMASK(8, 4)
->  #define GPII_n_CH_k_SCRATCH_0_PAIR		GENMASK(20, 16)
->  #define GPII_n_CH_k_SCRATCH_0(pair, proto, seid)		\
->  			     (FIELD_PREP(GPII_n_CH_k_SCRATCH_0_PAIR, pair)	| \
->
-> ---
-> base-commit: 34cf6dafc47441dfb6b356a095b89c3585a93714
-> change-id: 20260710-fix_se_id_and_se_protocol_fields-d7f0fe616596
->
-> Best regards,
+Frank
+
+> - [Medium] Bypassed DMA status check when stopping results in unhandled DMA errors.
 > --
-> Chandana Kishori Chiluveru <chandana.chiluveru@oss.qualcomm.com>
 >
+> --- Patch [2]: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when stopping a run ---
+> commit 65f43e5ca342a54064656c1ebe548edaa5c088bd
+> Author: Nathan Lynch <nathan.lynch@amd.com>
+>
+> dmaengine: dmatest: Suppress bogus failures when stopping a run
+>
+> Writing 0 to the module 'run' attribute stops the test threads with
+> kthread_stop(). This commit introduces checks against kthread_should_stop()
+> to suppress stale failures against transfers that actually succeeded.
+>
+> > diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+> > --- a/drivers/dma/dmatest.c
+> > +++ b/drivers/dma/dmatest.c
+> [ ... ]
+> > @@ -848,14 +848,19 @@ static int dmatest_func(void *data)
+> >  					done->done,
+> >  					msecs_to_jiffies(params->timeout));
+> >
+> > -			status = dma_async_is_tx_complete(chan, cookie, NULL,
+> > -							  NULL);
+> > +			stopping = kthread_should_stop();
+> > +			status = stopping ?
+> > +				dma_sync_wait(chan, cookie) :
+> > +				dma_async_is_tx_complete(chan, cookie, NULL, NULL);
+> >  		}
+> >
+> >  		if (!done->done) {
+> > -			result("test timed out", total_tests, src->off, dst->off,
+> > -			       len, 0);
+> > -			goto error_unmap_continue;
+> > +			/* stopping: dma_sync_wait() let the transfer finish, not a timeout */
+> > +			if (!stopping) {
+> > +				result("test timed out", total_tests, src->off,
+> > +				       dst->off, len, 0);
+> > +				goto error_unmap_continue;
+> > +			}
+>
+> [Severity: Medium]
+> By skipping this error path when stopping is true, does this bypass evaluating
+> the status returned from dma_sync_wait()?
+>
+> If a legitimate hardware error or timeout occurs exactly when the thread is
+> stopped, it looks like it would either falsely report a successful test (if
+> noverify is set) or misreport it as a data mismatch.
+>
+> [Severity: High]
+> Could skipping the goto error_unmap_continue here lead to a use-after-free
+> in a delayed callback?
+>
+> If a delayed callback leaves done->done false when stopping, failed_tests
+> won't be incremented. Later, when dmatest_func() exits:
+>
+>     if (ret || failed_tests)
+>         dmaengine_terminate_sync(chan);
+>
+> Since failed_tests remained 0, the thread exits without synchronizing the
+> channel. Then dmatest_cleanup_channel() executes:
+>
+>     put_task_struct(thread->task);
+>     kfree(thread);
+> }
+>
+> /* terminate all transfers on specified channels */
+> dmaengine_terminate_sync(dtc->chan);
+>
+> Is there a window where a pending tasklet executes dmatest_callback()
+> after kfree(thread) but before dmaengine_terminate_sync() is finally called,
+> leading to a use-after-free on the thread structure?
+>
+> >  		} else if (status != DMA_COMPLETE &&
+> >  			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
+> >  					 dev->cap_mask) &&
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=2
