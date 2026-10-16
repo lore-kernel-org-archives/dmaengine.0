@@ -1,62 +1,62 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011013.outbound.protection.outlook.com [40.107.130.13])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011022.outbound.protection.outlook.com [52.101.65.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D336B4E8DE0;
-	Fri, 16 Oct 2026 15:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A41412F585;
+	Fri, 16 Oct 2026 15:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.22
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792166209; cv=fail; b=BmHk9EgghRi2Xmj9Vl9p5DbXBb+teI5u7rJ33N+MAtw039EHvf/VqPLbw5ZrVQpPmo7FrcGqmpJvz8utai3dc/DZqHIxlhRxdX98uQYPr19UNuHyQjx/xPEzU+2HzuAGDt836WG80BA+nfLPmJlQ3A+3qSsfJGoF3EcBMIRHQrk=
+	t=1792166327; cv=fail; b=Vy76OwDD3JXPjz9Xct8EuNNvyUmJvxY4pFW1DcCM5BHGgN9gc0GgjNMz47CKuaRqpnvJ6R0VJuMAvN2F5Ix2B9cLv61Cr69kPNvcHKt9DVNFKaMD4AHtf6E6cJISdMW9xgsgFlK33hi3yGzaAns6WAeoawPLjSUeWvQ7+dQ35Aw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792166209; c=relaxed/simple;
-	bh=smWFxD6EoY1wszDOPe6XKG/Y94FYDPHX1vrclGpiZuw=;
+	s=arc-20240116; t=1792166327; c=relaxed/simple;
+	bh=v3GuMJj7M5rbYUMTjV9a0waKgDNLa+O73dHiTdJJhVM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=gw75XRf+7tJfMZ++YAuJMGAXepjloBtuk0PFOW/z+e7BPgmrFspnlNE9acOL+zS18eFdK8c/FnI5+4s6Ev06IVZEdcvWH/0XaUxIeTMe1xLZ+cW1wkeXOWAvSeuwiyYL5UXPVVMM3xI/AqTNeO81MyG01IZ7ponbNPITXYVz32c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Xot/9NIw; arc=fail smtp.client-ip=40.107.130.13
+	 Content-Disposition:In-Reply-To:MIME-Version; b=mSkO/eIZMQANlSMgkWLwB+aTEKjGBsykc28ZzwiABHFwYH6dwRWYPzG4KMZzLdK6fLG26fv7eNj63zb0sHrIugjqT7hin1eaZcrukVqW44/jKUsG1aX1RPyy85LGkQP6NTI+nTdvOBfrA3ey1Lxtpg22BKjjZQcJhBncVqymCGU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=vLEpqozC; arc=fail smtp.client-ip=52.101.65.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Xot/9NIw"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="vLEpqozC"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T61tI4vwbf9/vIDSD9zKHEePqH54yde+fhQeTT+jNEN8I8z4F5nYIDdIJuhAue9iRGtnh2g8Q7zgPAUd4/nAA5SGbwfp5So16p7E/dql00MScexqES5iaqoVrs5eFYp/oVplx67xp7OgLWaM0dkO7qyglHbhcQD+zzNMx0ZdNsgfiOle2jdBC4OACgqBQMhJkFghkDnU+JSJ+qEK77DeEBcYGEDG2NA5Mx+rH8ROPxQKQMiNf+jPtSLOJXPkNGV3nXvZklUvA6yIyz7UDEBExM3rlnV8Evj10Pe3DEF221SgE89843ME3DTA8dQ56s5WRD6jX3zCZCZeA0dV9PbOhA==
+ b=qNXJG3ArrcVWlp/ek0XmgX+vaEXft5ZrDKPoBPdw78tcaJKlucQvk54Y8kZg6ddtA0sHAn8+acuWSPlEyYNWVtCnwH7vex4RpnnVtcA8WSrv1uWQYVPNsmIC+pJOaGZBdHQpI7zAn+Ms5DImsA5vOavnockXrYbqyp5OfuiqcAtIh66IWBBtmJ+85e4TOFD3nKZOLWF1LaqIALRDIKeVo+zcNgJ4c2p2+3+W6hv40WcdTK1+JgNqU4UWdnqxlGgu/GXCMerETiKPATRZE8Pzz9AXWDy8E851Ix0s9MUMvGe27POFTnioNHfDzH1l5Uv0GYhglswKZu+aRLDA1MvI2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uSxo511YdW/EufdQ2X8JZsJI6HKqzAzvvV+EezNsWfM=;
- b=gg8J3vWivHe6UGgTME0w2+C5Od1oQjP6iLCbq+H69bEPblRHDAJmr1JiM+bpSK0hc34iiACIKVEwgdRuLYDZ1LqtqW5TC75xdqo7I4d1L00jRsceDbcSY6Ut2r6gaUrFBe3cL441ABAtQQA60v5I9YsAVdgmNlX9GQDNAbMGlNzz12YfsiznQ2wjyUhJSuokvI0P97SiTCBc+HAbmHhiLATS/UZ3+0tHw01qpWCrcM9cLfkZ/3fheoRE6kkvvncEogEHJiWWh88J/LbSzx3EeDLiNWAug+hGpkUlITm3jiFxNLJ3M7vyaMAPWANuv/tIiBJw884JDO2AgB1XaLtXVA==
+ bh=RB6zYpD5KbF5evU9szolJNfqPDiVsBja+oXw/1SsEgc=;
+ b=XUid+hkR+bn0qNUQMgD4bgEdq6dGttmiguWfdcvNwiGQVJmBqFFLPEJu5P/ntc3xFaopaq8K6snUKgf5bhUJjBnexT9FUon2FLAoWQn5P6NXeJZ+QAKxlJCVT2W78oWeVWH7+wtM4Emo5p8hzx5SOgzZigjbMk0r7vmrlrVLliKZTLF9xAa///NwPRBezAVkjsdr6YUlBa2NKRTJw/X8xvxZrHGE3PCLaxpFdwbR65bZBuZHsQMSE91D+IRGOyTUa6w2I16/rsNfGO5UIYNDCUj2XdNCfbiw/Xh06VwlOZdHmWVk3WEvbwImSgzbOmc99EPl+PW7tpUC2KHE0blqFw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uSxo511YdW/EufdQ2X8JZsJI6HKqzAzvvV+EezNsWfM=;
- b=Xot/9NIwThvcx/2MAadR+ETWXfLugPujQV/sjSXr8sIUFNgaicGQl+4w5kY1pDgMJ8xtz19tX6wxbSfbmhDAn773+fR7FAbcp4G3li04sK8yVX4WLpq1IDvFggQT5prY0xUXeYSj9DX4FkTTl5VT5qzhlyS7cXb8xsWGA9yFV0LVidOwMRoQjsluXlTO2cn4uLfbdeb23GK7hbAMSebRml1zwfTm2qUvw740jm10tnVC6Mz0f2maD6d960UQoDAPqTN4QYkx8XMfZPQPo+z0E4LQwCgfw9mLZLAF6Sw1pQ2d0tCI0pT0lAcjpPOu9Zo/PEgx0hi4ZatrSoJBuXdoFA==
+ bh=RB6zYpD5KbF5evU9szolJNfqPDiVsBja+oXw/1SsEgc=;
+ b=vLEpqozCtZnFCWns7KdFty7bNT4fLWg25v57TE2h9FGE/A/W94rYup1VO72NTzGWn1kA5LSQlLTFXmYRUYHsaknSBFo+UiJRgK5Bbt5ep2rFFg1993xyp5sYfwsvEY0ryWtEe9daeFrq59FUwGcB9lQ4f+AK2Cwa864Fcetlc1JVL8EQc+nQ2moQ3m1Yij8lSA/uATr2DCcodJLo52r1FMDx0YpI5t75xDNiTcJzmj0bInmomvrLSIXhlwjB3z7IaCvEyO8zdJCgMi40GKxj4wYK6jWJ8Pj+nJLoP+MC1uBSagusVn837v7lKL7rJEC0U5697J/FHA1nLQbBaW3GGg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
  by PA4PR04MB9688.eurprd04.prod.outlook.com (2603:10a6:102:271::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
- 2026 15:56:42 +0000
+ 2026 15:58:41 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 15:56:42 +0000
-Date: Fri, 16 Oct 2026 11:56:36 -0400
+ 15:58:41 +0000
+Date: Fri, 16 Oct 2026 11:58:35 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Brian Masney <bmasney@redhat.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] dmaengine: qcom: gpi: correct gchan in error paths
-Message-ID: <atJJNN-BfkgVGlZH@lizhi-Precision-Tower-5810>
-References: <20260708-qcom-gpi-err-fix-v2-1-49c9be055501@redhat.com>
+To: Ruoyu Wang <ruoyuw560@gmail.com>
+Cc: dave.jiang@intel.com, vkoul@kernel.org, ashok.raj@intel.com,
+	fenghua.yu@intel.com, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: Remove channel from list on
+ registration failure
+Message-ID: <atJJqx-Ef0jNePJd@lizhi-Precision-Tower-5810>
+References: <20260709062303.4167624-1-ruoyuw560@gmail.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260708-qcom-gpi-err-fix-v2-1-49c9be055501@redhat.com>
-X-ClientProxiedBy: DS3P221CA0004.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:8:45e::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260709062303.4167624-1-ruoyuw560@gmail.com>
+X-ClientProxiedBy: DM6PR03CA0089.namprd03.prod.outlook.com
+ (2603:10b6:5:333::22) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
@@ -66,129 +66,93 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB9688:EE_
-X-MS-Office365-Filtering-Correlation-Id: fd7283d1-057d-4c5a-6bfe-08df2b9e127a
+X-MS-Office365-Filtering-Correlation-Id: db8e8f02-7c38-449c-b72e-08df2b9e596f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|366016|376014|1800799024|6133799003|18002099003|10067099003|22082099003|11063799006|261009223027099003|56012099006;
+	BCL:0;ARA:13230040|19092799006|23010399003|366016|376014|1800799024|18002099003|10067099003|22082099003|11063799006|261009223027099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	c/uArwt0zbQiVO9v+lfylu0953jqlBQ49WDUwINuAMiabJ/k/RFYIfmUEVUfuYLleWjUNE6/6sIQoIL/feCA1SkwOAJVCkB/cZWFdqqa+3DREMOymKkBP2tVKghNsWdX4e1ohX74NkeYJzPQZQuYubUrn5HqKNvbPa+CchM0gGYaw7tlDUc0Vt9wFbsJVHwvHNCDdlo8T9MEr3Vq/aFUdhTQ2r64BYwFVKuoDLu5Fp/gZBA3MTI1+UX3I6AQuiWK7WrQh3eWg8YMjD0TlsgwbczrZCtYMtU3kIg4W1QR/865j6arZsL8ZbVp1M3A7ndn+UG7TizSOb2AAZAtq6eOV3gNo43an9j64ZOS2SDWG+aeaj5Has34YzlCnjTjPDELxjpmWas7l6NBda2t8i5IHjkm8Z3ozeyh/VJhutIYYIV2wLgbUDe39Cn3bBvsTQe53llbb2m78YsA43JcMxdGcevoyzkjJQLgMgogk0wa7SZ0A/9SpgLb3vI7ie8VS2hq+PkFI58LdJhFGj3M2UD42Dgft1T/2+sZZsIbIVvhVqmuFhzBgOywCQuHgPmDGRKdAQmkcbukC9RQbI/1ekGdHcOjYmMs5W8Tkv3XhwCirEMwB/iH5k17F9hfcoSvuXRT
+	Xq6e3MEfAxGQkNVVJ3La/8JL3IphYVndZmRvrWZ/0zbGJ747rEUjgoZFBCzycg9ApzBLNbkUIZJ6GhIizNiuaM42Vb/FCzg+aeZxMZ33TvJ+zDVxcr0HytOkxEKUqs1hRpUKJ8etRevS70VkgeJnwc4pIRuqt+BmqY+JmvgWbt9aeOljx+SuDz0kXcxRXpSp0ETWbeUZeo+DQaf4pE2Q7yOVHBKcjnLuHn3nB5Y7F0IROrqHRp5Zo8BVM3bctqADOKWIOxKBo9DDBuZ8gBV8UsI4WSDnL+te3wJv+MamVyEDnPefIQ/T81ZgL7auVBMlq/bsEMOG/4Epd5+m8iaOaYEEeZ01owK7yH4dcEjXEDQ+pmOU90SW9PYq61p7rbUAL7AitI6m5LcKx0NL/IAskQn7DnwYM5szmNn8vfrhAMJ+Nx7ZoHjY8PvQSIzJuSr2Lm/vEbZ3r/cmZyMqhe+RIIHrwTwwB+G7CCswvqD2mIfJBeIidcKZMkH10qoFcaSAGD/jisNsWZ+8wWEiPQVA5dnAZvgWXc2r73zkW4vu+FY0i6iiYIt+GtqUMTZfnzgg3pJn409xXnIj71iS9IfSBkealmxkgeQDfpjCcKl4pCFQg8cJIjO+cONb3jpntUO/ntsq3Z/IkcsaDTfYaSNwSWvsmseDDtOxvnItmT8UnGE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(376014)(1800799024)(6133799003)(18002099003)(10067099003)(22082099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(376014)(1800799024)(18002099003)(10067099003)(22082099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?8JRfyZfqR5cWpdu/4ypwZSxke6FWK+T39LDZHNUcicG+daC+aSrzf4okCIl9?=
- =?us-ascii?Q?UsTGQlW+sj6QG9p9fgTjBx83uhm/3CVxjnAmoIBvqN6JbLP4cLsEUipFmewS?=
- =?us-ascii?Q?0C61SmTlPn6jEDzxayjOwi1Rrtmi9CaOOJx+IFoE198A+dxmKCl9+iT6E4jA?=
- =?us-ascii?Q?+hDOV8Wilt8VIkb1DQE1/PQvsZaa2UraumGzMSSctm2BR/iFsWdHzRHC+StC?=
- =?us-ascii?Q?K0DYMjkh8S4zPJmFAbiQm5jwoIracmN8UewSh/Edoxw8tB0H0N2hAN580vjP?=
- =?us-ascii?Q?x7S+K3hW2V0dYvEzxTmsIwhFQ9edIkfwJOYxcF+QK1je06VK6Rha12YsQYJi?=
- =?us-ascii?Q?S+HqE9TjWL1fpU9rJWCB91C05e4AEqeh+Vl9LGv8ym4EXlumjiJe55Vnp30C?=
- =?us-ascii?Q?YJm76oP7c3Pjx6CBOugMvdeWGPOd4Je/oVRCuCTyS3g85o1L/PXuC3Im5UE1?=
- =?us-ascii?Q?nZ9JLtbGnC2dlAGn9SIx1SifuTTYUnlwoYg4dF/UqDtIQUI3Xd0RY5jzCT32?=
- =?us-ascii?Q?rjBqE7OXxrlGyDLzIGKcQdd2ESbtM7b3+qNiRkO+TrtYLtDTe0hyzVvOqhGd?=
- =?us-ascii?Q?LhwMqYq2H/l04G2ZwkuQwaKXf+/RX+VXbzR45VGQ62wS7QemN2zkt2deF0af?=
- =?us-ascii?Q?2AoYCUEqhu8PtmgtHoDtY1nA8Jbds9ED++CDsr/daPgHffsSoINFXVugyly1?=
- =?us-ascii?Q?yVRAdNW2O8SQux22xeekKNw375NzL+v2Yd6+JQS2mlhfUbUNxt3uSfPSp4pS?=
- =?us-ascii?Q?ONoilCTtb8/dOfk4qAr0aYZRz3Z3wkMbptcyO+aoMNUdi4jccL38+waku1Mo?=
- =?us-ascii?Q?HWhF46Sz7A3lOim5TKGS9gxbE0Mqj25MZE1uTBHhTSqImajUxMsBIZHnbg8V?=
- =?us-ascii?Q?vP7xERWdPygvm4ntKeYZMjG2f33epJAIwuoNwYBCalyudu5LPERPHh+3eIkN?=
- =?us-ascii?Q?Ru1+JK3qt771HE35lE5YwEg3H3CLNUH4+7FxnenrswgW+nHfBEpktrJXlCfQ?=
- =?us-ascii?Q?nOn/bZB8h8LH9bAXBYHQFHgfEz36ani3NnEiQiwS2MgMXDNkWjVZMzLaaBg+?=
- =?us-ascii?Q?cuJO2tfxiU5MflH+sVbK7Iiou56DvRQ/bB6relMv7ZcB0XtoeqLkQW4yj0Hm?=
- =?us-ascii?Q?NsOwLpFO57Sh96e+MyR+V6HT56zsBgQCR+1zupssY4tvO1b3NFqUf6pbxlyF?=
- =?us-ascii?Q?9MKTJPTOOR+ODXRif4YRzLgCSYp+MW57wn8wbbtvhQUOFARpOcXITa0L80P1?=
- =?us-ascii?Q?6J1bxZYkMqjs1z1JU2zTfJZJ4zrpQ0xyPqu8Uo9eaS5J/fFTmjIjEVEeqEyg?=
- =?us-ascii?Q?RcsvV2C4T/9eDGxkLLtSSxebasOGWg6ymQ/mPpWGPDZ4K59IGwxhfi6GXXLG?=
- =?us-ascii?Q?W5WJheerYCZeFw+pxJ3k5h5wxcKAdNyGjbk5vn6ULrag5ettv4WrfPpTgq+3?=
- =?us-ascii?Q?lk/e6UcxiHzLhXI49n/YU+TYWtEMJ/Qb7LSlcBSLnQx33fnUzjLOJ/rWni+h?=
- =?us-ascii?Q?GnM0hBNG+J9iCaNZpJAXzlNzck+jSI+Gq8aD+o3SEnqGQrNcFx5wW+APBWSb?=
- =?us-ascii?Q?eoNovU6+uCWVwVV+61pjF+7ensE1ul8w3CxzZzLGqIoBEezDom6Grq0bPsKI?=
- =?us-ascii?Q?SKXV5/883CUJd4enntKvIL6Lad9LZS8mSr1PpW9no8/DeM8Xrf8FOt2lFimr?=
- =?us-ascii?Q?xhWSmKFPmf84i1nKAIO+i1DIgJKdRIU2PTMHEuWwln4qcLzdrss2Ceoschyo?=
- =?us-ascii?Q?ATGQkGaI2xlFGjhB9cPiRj2joSo3p/JjyGVwcrmouWBSOvX6xkwG?=
+	=?us-ascii?Q?K+CHovG90+Y14KtDo4Dfp6dnN5HmEO2wHbQZl9PEm9dVruymkjqFEihnQ7fA?=
+ =?us-ascii?Q?sZ/PG/Q0SxLnaSdp4ZI7G7nF1f6w6abTHAi42lPJk8q3LNcqlaMxTLe0kROq?=
+ =?us-ascii?Q?KEbxvKKmNUlNEENHHP+3r8vuGVfxcetBLH+6PtQfyioufjhh+hxpRDPeSlTF?=
+ =?us-ascii?Q?SMDDMpjdu3UcE594Q6YgQMG2dWgjwF+3dSb6/qS4HLrHSuVuqbP/r96jw5c1?=
+ =?us-ascii?Q?GeWEeehfjeLo5wnIRQp06Z+rer9Sl5cc3IIsYb+am5VeZGtgi8et/gA2M1eS?=
+ =?us-ascii?Q?TqvngxSlQYStcRw+9gyg+239no1YU1QVkzAFJVhzVOUDjr0scUdJ2ATmOVe2?=
+ =?us-ascii?Q?iXnQAY9lqH5Ed5orfGx4aiGtxxwu1ri6RQEVBx9OVtZn3npG25Qr80lzSUKa?=
+ =?us-ascii?Q?FW69zkX5RTlHopLw8MUDkV+u/47HMpJE/B69REkuKl0Doth9h5pkXRIzMtG2?=
+ =?us-ascii?Q?668uXlLizLfaHKLZ0ykmUCldmpjpOP72KvbSMxU3/Vn10LfPyKA2EOnYW+M+?=
+ =?us-ascii?Q?X+BKSPZtcUxfEYv+KK4jf8aSE8hUI1KEi5mYi+gMDDonEbdpuCsLIcGahLs0?=
+ =?us-ascii?Q?+Rnb8UThOK1SZoiGEJ5HyGRHD/h0Kts11CWllFitOqGanT954Ha8wfnGy+8W?=
+ =?us-ascii?Q?gYqkcnUkhzdQo3I2DwBn/axDYzau3AKNpm0i/4Qdwk1WUgsVu1n2p1bxS3Y7?=
+ =?us-ascii?Q?aOsvtMGaexTKh/dV49agL15pEMnVmZNz7mChi+joHqUx436xSgEukJM3wN2U?=
+ =?us-ascii?Q?2nnhbUoETV4M11ekEoclRDNVazXgG0VKd5tVpVEWq1K0PE2/eltHRVA/fQdu?=
+ =?us-ascii?Q?lScUgj1MOcRbwDqX9gnNO6a/9rEqUFFpmYZLpAzkuVSTK37Fjr8pEwy5e6rI?=
+ =?us-ascii?Q?wi5MdXv3zalki28GXd1f/exC60e+6ZY4R1wuDoX/dX6SK9z9T06lb+shIGAn?=
+ =?us-ascii?Q?8JhPu4JXkPkbmw1G3gC+gTNl0jr7F5QAP5vptP6xOyxPqZ6LcakSgNdxgwRB?=
+ =?us-ascii?Q?89OTEODpH1d1bhmUW2yDFo48tX+nR+XJdatgreuZ5r8ev7xar9VeCkMGAgd7?=
+ =?us-ascii?Q?ltmV4zaF/xlMhZJ/0gmIm5RmxRfkKBApB4hEeF0vLpKvT4Ht885Glb3iWAlY?=
+ =?us-ascii?Q?RYv/MnO2G05U84XXC/HjtVjaqiI0Uv/AUHo6dK6Hls1mLTDxxWv3dcUXS/89?=
+ =?us-ascii?Q?yPEBeOJ4NbteKSI+JTHgmu8FsRrA6a2jcMVC5KNCRkXWOED0eZ/9COJkWj7r?=
+ =?us-ascii?Q?1blmwWk4wVgNWsS2dzJgEszLOMp7flEtS6V+f+EB7fJZP/7BQBsYz+75nqHG?=
+ =?us-ascii?Q?MQuUYxMfZQbB11PP7KS0Ef4tFR1b0FDA7QV9jQvLfuLp6oGpt2/fb8Nb/c55?=
+ =?us-ascii?Q?oCsneHmHWmNYaWQPBovxkg+Q/9BolkiXfJAavOAtdHMIFt7BftgHPBnWfEvR?=
+ =?us-ascii?Q?MLAnNKKlqFPadxOYWFPao/RLd+mPxw30X5Zk284LQ1FIcuc9lOwwjhV+2ORW?=
+ =?us-ascii?Q?GCDDCgvkrGWEMbFdTH/2W/HVWZYwdz3bs8mgL/AGRyXecuBKsgXycD9gtUfD?=
+ =?us-ascii?Q?DIQ5UBFY+/ic7UOKnvutjaN7SuCM31orJKJBJzVx+y9NbwRlSje6GmwpJcSt?=
+ =?us-ascii?Q?aqIZq/QUfGdjwLViCBONvH/YKWavLwq6AWghYnx+FNYGdw9m0kmnNxL+nEmS?=
+ =?us-ascii?Q?tiNyEEzp0u2OH9Wtf83ynRf9cSj1Xd6pnsFkbZgeISueFIcO1Wq3AM9jAK31?=
+ =?us-ascii?Q?rm1tyFJgPJaXNd4bA1tE6aiyIPwWOGEHT4q8Q8gBUEMQC9+TEXa1?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd7283d1-057d-4c5a-6bfe-08df2b9e127a
+X-MS-Exchange-CrossTenant-Network-Message-Id: db8e8f02-7c38-449c-b72e-08df2b9e596f
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:56:42.6230
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:58:41.7111
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6l1HFycM9JRLGOWBXPhh6PYGduLRNe0CTs2cz3JT62twFB0cxkrSDbfwDMcNrkb6gSyr7ZWmCnViypFwqGkZQov6IXpOtDLjB2WvByEnHx0eqRdJtHVtNrUo626prYQT
+X-MS-Exchange-CrossTenant-UserPrincipalName: h+aKWB2g53d31+12ZZibehkAViX7YZ5v+zBMdTajjkuhAB1NxyHbxGMvQZt+xQFzNxbt0Ht3p9BTzJ4yoAL0PLkDxdkSAfEtYuCV2ASKBJas94ClFi+5DHDv7jZqWWfX
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9688
 
-On Wed, Jul 08, 2026 at 06:57:25PM -0400, Brian Masney wrote:
-> When attempting to start the Fedora graphical installer from a USB
-> thumbdrive on the Lenovo Thinkpad x13s laptop, the following errors are
-> shown in dmesg multiple times:
+On Thu, Jul 09, 2026 at 02:23:03PM +0800, Ruoyu Wang wrote:
+> idxd_register_dma_channel() links the channel before registering it.
+> If dma_async_device_channel_register() fails after that, the error path
+> frees idxd_chan while chan->device_node remains on dma->channels.
 >
->     kernel: gpi 800000.dma-controller: cmd: CH START completion timeout:0
->     kernel: gpi 800000.dma-controller: Error with cmd:CH START ret:-5
->     kernel: gpi 800000.dma-controller: Error start chan:-5
+> The DMA device can therefore retain a channel list entry that points into
+> freed idxd_chan memory. Remove the channel from dma->channels before
+> freeing idxd_chan on the registration failure path, matching the driver's
+> normal unregister path.
 >
-> Looking through the error path, gpi_send_cmd() sends the wrong gchan to
-> gpi_send_cmd() in gpi_ch_init()'s error path. Fix this by passing the
-> correct gchan in gpi_ch_init()'s error path of gpi_send_cmd().
+> A static analysis checker reported the stale list entry, and manual
+> source review confirmed the registration failure path.
 >
-> Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
-> Assisted-by: Claude:claude-opus-4-6
+> Fixes: 397862855619 ("dmaengine: idxd: fix dma device lifetime")
+> Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 > ---
 
-The same problem fixed by
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-commit dd27c3f4d6108556b74b5f3f4d1d885269e7ffa3
-Author: Aniket Randive <aniket.randive@oss.qualcomm.com>
-Date:   Wed Aug 19 17:09:31 2026 +0530
-
-    dmaengine: qcom: gpi: Fix resource leaks as part of channel clean up
-
-    The gpi_ch_init() error handling paths do not fully clean up resources
-    when channel initialization fails.
-
-Frank
-
-> There's a separate issue with the graphical Fedora installer not
-> working that I haven't had time to dig into further. I can work
-> around it by using the text installer.
+>  drivers/dma/idxd/dma.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> Changes in v2:
-> - Commit message cleanup as suggested by Frank
-> - Commit title cleanup as suggested Konrad
-> - Add Konrad's Reviewed-by
-> - Link to v1: https://lore.kernel.org/r/20260625-qcom-gpi-err-fix-v1-1-5ca3f00fe2e3@redhat.com
-> ---
->  drivers/dma/qcom/gpi.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+> index 9937b671f6376..f2c03f3cf1925 100644
+> --- a/drivers/dma/idxd/dma.c
+> +++ b/drivers/dma/idxd/dma.c
+> @@ -289,6 +289,7 @@ static int idxd_register_dma_channel(struct idxd_wq *wq)
 >
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index a5055a6273af..3f390b5821ab 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -1965,12 +1965,12 @@ static int gpi_ch_init(struct gchan *gchan)
->  error_start_chan:
->  	for (i = i - 1; i >= 0; i--) {
->  		gpi_stop_chan(&gpii->gchan[i]);
-> -		gpi_send_cmd(gpii, gchan, GPI_CH_CMD_RESET);
-> +		gpi_send_cmd(gpii, &gpii->gchan[i], GPI_CH_CMD_RESET);
+>  	rc = dma_async_device_channel_register(dma, chan, NULL);
+>  	if (rc < 0) {
+> +		list_del(&chan->device_node);
+>  		kfree(idxd_chan);
+>  		return rc;
 >  	}
->  	i = 2;
->  error_alloc_chan:
->  	for (i = i - 1; i >= 0; i--)
-> -		gpi_reset_chan(gchan, GPI_CH_CMD_DE_ALLOC);
-> +		gpi_reset_chan(&gpii->gchan[i], GPI_CH_CMD_DE_ALLOC);
->  error_alloc_ev_ring:
->  	gpi_disable_interrupts(gpii);
->  error_config_int:
->
-> ---
-> base-commit: 6c94b38b83a04c43ea49004275f0391404051093
-> change-id: 20260625-qcom-gpi-err-fix-06ef18453608
->
-> Best regards,
 > --
-> Brian Masney <bmasney@redhat.com>
+> 2.51.0
 >
