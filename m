@@ -1,44 +1,42 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566C3D1ABA;
-	Sun, 18 Oct 2026 04:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C13E230BD5;
+	Sun, 18 Oct 2026 04:07:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792296472; cv=none; b=UVa4ExH5/IO24rOzI6JfGKQKvmI/tRPp6qBRHxLa4ajaOJoRQfHV7txIINLKrC2Kcm9DWVFhsmB9TMATBr8KqHgnqWNbINA/PsfiTuUtZgIwh/GWVrw8U/RCti+hMPvig9aHS47EW44VPfyVEsIX00Uqr/wHS8Q8Ao/K0D9dFwY=
+	t=1792296476; cv=none; b=HS43SuM3a67KXFo473l4tEE9aSjfbER6Y+b6eZohz6N+yCnL5+yxfj9d0IpyZ5qNUBHcKaaQmw4bQrPOZZQ1//PY2v0WJDA4Yo2jX//qvTswmHpl+dTU3RjzOMPB1kzU7kqdlXNiFCOowmSmoEYWuG3mXhSHs+ictOzXHeuov5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792296472; c=relaxed/simple;
-	bh=fSljAV2FbT77zUxrmANfexkoq8n2WEr9kzNoVzajjOo=;
+	s=arc-20240116; t=1792296476; c=relaxed/simple;
+	bh=G8uvKAICumnoju16izJLRqSV727WGM6DvqfjkyaGuNU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IWRnvYRBjAxsf3adpSYZ9OokRgZDrLM5OU7J9HAGswWvIJ5StDQzJwtRMvTW4H6zT+6KaDXzPSww2am6oMjw7R3ctqTmnm/TrdvkmpLA1jY5q8KuQYCqAU0Kh3Bb9WHCVvTWn4Y6N0ohnL7K2mERg+HMS2jGjEuX+15tUQMH2G4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=i3NuQwfw; arc=none smtp.client-ip=117.135.210.5
+	 MIME-Version; b=foIbPgIA4prXgBmg05MOBGdGXGL+5zhRn/KLLKdiPxZmQWY05o5W/WSr8ICxS/pKJLW+DB9ftk4KziTyO4gAO65i091T3vjsu4FSGU/yJ8nKflveMtJxnqQprSAnOjtFAbRubjydlOCPY2fS/b9+vsl+aQ0XtXenVBIOwrCrIkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=cro0uQsQ; arc=none smtp.client-ip=220.197.31.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="i3NuQwfw"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="cro0uQsQ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=C3
-	DrBSmI7PaY49boo7JnEo8GedqFk7giSTwh1QlA6j0=; b=i3NuQwfwaULvIemX7A
-	q5uJgYSuK8P28vzUN1vDuKOFLqDZWN7KV6gIVT7pchAcNbMQWmg8y3rIwY5NVZQB
-	5zHw5/plj/x5W1AX7Nmvo8SulEiJyy5Ub6bIqCaUiwUa9aqZk8pkVHVNBqQqmotp
-	hevaU7QyKsC3gqs09AIzDcw24=
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=VB
+	/wzJZuyZ3XOVyTvVWo7955Ny9Hkqwfin90Z3YdYNk=; b=cro0uQsQu2X3IgTutx
+	5OSQXe2l3q5mpHj4Gm5X2k6+zwZM3TKr5peB07LrJolRAx0VCQUL0FEr6CmiNuL6
+	ohzYmnYrXM3nHMc5DOGPJhCY75tm9IaXXKGzJpPw3pNQ8xkIy6YT+GZDqQKpYZQ9
+	4ABI8L54FVgztcJAzPP4eDEoc=
 Received: from pc.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wD3n6n9RdRqdUaGAw--.28247S7;
-	Sun, 18 Oct 2026 12:07:33 +0800 (CST)
+	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wD3n6n9RdRqdUaGAw--.28247S3;
+	Sun, 18 Oct 2026 12:07:28 +0800 (CST)
 From: Jiale Yao <yaojiale02@163.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Lennert Buytenhek <buytenh@marvell.com>,
-	Maciej Sosnowski <maciej.sosnowski@intel.com>,
-	Nicolas Pitre <nico@marvell.com>,
-	Dan Williams <djbw@kernel.org>,
-	Saeed Bishara <saeed@marvell.com>,
+	Ryan Mallon <rmallon@gmail.com>,
+	Mika Westerberg <mika.westerberg@iki.fi>,
+	H Hartley Sweeten <hsweeten@visionengravers.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Jiale Yao <yaojiale02@163.com>
-Subject: [PATCH 5/7] dmaengine: mv_xor: drain IRQ tasklet before freeing channel memory
-Date: Sun, 18 Oct 2026 12:07:21 +0800
-Message-Id: <20261018040724.534641-6-yaojiale02@163.com>
+Subject: [PATCH 1/7] dmaengine: ep93xx: drain tasklet before freeing channel resources
+Date: Sun, 18 Oct 2026 12:07:17 +0800
+Message-Id: <20261018040724.534641-2-yaojiale02@163.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261018040724.534641-1-yaojiale02@163.com>
 References: <20261018040724.534641-1-yaojiale02@163.com>
@@ -49,58 +47,49 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3n6n9RdRqdUaGAw--.28247S7
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFyrAr4ftFy7Xr4rArW5Wrg_yoW8WF1xpr
-	47J398CrW8ta1ak3Z0k3WrAFW5tFWxJ3yxKr9Fgw13Ww13Zr92vw18C3WjvF1DtrWkZF42
-	k398Xw1FgF1DGF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pEiSdQUUUUU=
-X-CM-SenderInfo: x1dryxhdohiji6rwjhhfrp/xtbCzgVinGrURgUnZgAA3J
+X-CM-TRANSID:_____wD3n6n9RdRqdUaGAw--.28247S3
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tF4UAw4UtFykuF1xXw1UJrb_yoW8JFy7pF
+	Z7G3yDuryIyF1ftF1DJw10vF1rWwsxKrWjkrZrKw1fZr4Fqr10qr1rC34jvFyqqrWfZa17
+	KFyqy3yfCFs3Cw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pMuWdAUUUUU=
+X-CM-SenderInfo: x1dryxhdohiji6rwjhhfrp/xtbCzgBhm2rURgAnHAAA33
 
-The XOR interrupt handler schedules irq_tasklet to clean channel
-descriptor lists. Both device removal and late channel setup failures
-can free the coherent descriptor pool while a previously queued tasklet
-still refers to it.
+The DMA interrupt handler can schedule the channel tasklet. Releasing
+the IRQ waits for a running interrupt handler, but it does not drain a
+tasklet that was already queued.
 
-Release the IRQ first so no new tasklet can be queued, kill the tasklet,
-and only then free the descriptor pool and DMA mappings.
+The channel resource release path frees the software descriptors and
+disables the clock while such a tasklet can still access the channel and
+invoke a completion callback.
 
-Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
+Free the IRQ first to stop new tasklet producers, then kill the tasklet
+before releasing the descriptors and clock.
+
+Fixes: 5fa29a17fabf ("dmaengine: add ep93xx DMA support")
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 ---
- drivers/dma/mv_xor.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/ep93xx_dma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 25ed61f1b089..ec746cd16960 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1013,6 +1013,9 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
+diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+index 311e55a97ba9..6134e9ca699d 100644
+--- a/drivers/dma/ep93xx_dma.c
++++ b/drivers/dma/ep93xx_dma.c
+@@ -1015,11 +1015,13 @@ static void ep93xx_dma_free_chan_resources(struct dma_chan *chan)
+ 	list_splice_init(&edmac->free_list, &list);
+ 	spin_unlock_irqrestore(&edmac->lock, flags);
  
- 	dma_async_device_unregister(&mv_chan->dmadev);
- 
-+	free_irq(mv_chan->irq, mv_chan);
-+	tasklet_kill(&mv_chan->irq_tasklet);
++	free_irq(edmac->irq, edmac);
++	tasklet_kill(&edmac->tasklet);
 +
- 	dma_free_wc(dev, MV_XOR_POOL_SIZE,
- 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
- 	dma_unmap_single(dev, mv_chan->dummy_src_addr,
-@@ -1025,8 +1028,6 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
- 		list_del(&chan->device_node);
- 	}
+ 	list_for_each_entry_safe(desc, d, &list, node)
+ 		kfree(desc);
  
--	free_irq(mv_chan->irq, mv_chan);
--
- 	return 0;
+ 	clk_disable_unprepare(edmac->clk);
+-	free_irq(edmac->irq, edmac);
  }
  
-@@ -1162,6 +1163,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
- 
- err_free_irq:
- 	free_irq(mv_chan->irq, mv_chan);
-+	tasklet_kill(&mv_chan->irq_tasklet);
- err_free_dma:
- 	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
- 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ /**
 -- 
 2.34.1
 
