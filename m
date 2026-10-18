@@ -1,135 +1,81 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4B12AD0C
-	for <dmaengine@vger.kernel.org>; Sun, 18 Oct 2026 17:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA203E1D17
+	for <dmaengine@vger.kernel.org>; Sun, 18 Oct 2026 21:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792346186; cv=none; b=BuIFpglUAwnugn8KItBpQVxXZku6S573nimSe6OQeK5woGEO91s15BAqocxKbp33uirQ6S66V9CJxcrVCpqIgd8bMYiP5wIVCPkrspWpjSjTiA06zLRqLdKXlOrfkGYeae/XaEBeqJrpUZy+iMjyzJmYjzQ6wwY0qmrwcHXnv+M=
+	t=1792357234; cv=none; b=flB0ip3KKKkCkBp8S3aIdU/YRM+ey6tERA1qbSJsk5XKueYVvxZUCg80llwE5KqgJdrMquktAa/JXPRpLihS9YcMmJ2zvNXKK//FiZuuZrJewyYM3Bdjb0Vw5W0DaGV9rOuy8QT73Hj7S9NoHYEd4Wyshbap94MClxpKrymbrrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792346186; c=relaxed/simple;
-	bh=C4zvxQ3ByJGufk7XoL4+jX2SllFBBV52SY2visrIqkY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=G04iSiKTBd7TfP7xYWDa+uWpHK5ITlTwSHtXhpAr3/cGvx2Rg0YFA4bw5vFVtTsUpxkLj2og2Egskw41uDxEGckS4PhbRdIeO9SwyvAhNUSB225IlziqsACTnK9SUtpOm4k8JGf17iUjPlFglaEuJ5C861Es8CnFfFJJiX9I32c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iIPbEQYH; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792357234; c=relaxed/simple;
+	bh=lmuebTtapyafAqg/MZz1PoSj/pPTFJ0VaRJlQ3t8Yhg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DTYBDVjqLkVyR8tpqt/pxIqhsz/vW8vwLw0EOIJA4n8A7rXDvC6/dlIi8gErXF55MQfgngkMmCeRXae+EfSCKlitpHIlJJn7udoXAJ54UVwumzm5xyRhjcM+Szm2GWAACQ2nJHXkCv7/bQtSwjgHCmiyIr5BPZcGYUWiab+ZRXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YtMp+ymR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iIPbEQYH"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a1e266fca2so2818945e9.3
-        for <dmaengine@vger.kernel.org>; Sun, 18 Oct 2026 10:56:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792346183; x=1792950983; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=cOllkDlXTVHDfSWD1mHeu4GOOrDPlAc+Nz12Oh59KqY=;
-        b=iIPbEQYH6lfHraOfWFXgHMfAKqjqIzcddjsZeV1hDbdPFD0uHoEE+1hmVkzeWEk47V
-         hMYiHo0tux+vSn1P9t6/x8nGq1z1jplR4TmzBMTvRgsupUsrSpK6XzOkE1VIBK1PRZar
-         ZUiEF1bDZMmMY3rVl0fNqNlY6ItcojSzbNBkurmSg4/49FVBHCB2E/oUMw5+dWhdHVIa
-         u+tqDyh0lHncm28KJ3ia66sv4mGEPT4gLVKM4cZG+NKtrw/ciajA0dOFjSJPpdGXcXxR
-         +ere9rnDAe9lXe7v7XvD2hY76wQ8q+n46Y9V7X+TghStTX2klu8jito4tZvPCUHSNG0Z
-         1KHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792346183; x=1792950983;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=cOllkDlXTVHDfSWD1mHeu4GOOrDPlAc+Nz12Oh59KqY=;
-        b=O6rOW2dLGdHuIyi7cafQbqSAfhYQqsVIEeBvdS0SfXUd7MEFOwQz+MdUhDHbMYqqY7
-         DqYdGbp6+PH+sF+1sJPF1M7DmODzqH5wMgtceVidK5GOlXqowAtqylB9ms2JVnz+l6ZA
-         m7NsBBxu5deBggQ5f5NswQa28cto0K8rqDqLJlsjYQvVXiHIsD5qx16xUe4lT6HrcXcP
-         pN0xoqhionTpOgTKW7LxEPArH5EJhirtXgQhXxZP+hTzdnY9dzAshWo4MV5nnvoHnmZf
-         eKohoxRsvMCE6BZZR4xVipIwToq3W5KIh7Xzq2OxK0lw58vz0fHGtW2RonKFBJ8fwZ4C
-         XNhg==
-X-Forwarded-Encrypted: i=1; AKwUvBwp15Lq6TfoYncsZBFNTW7Nws/QOVnuLaSSv9MhXhV03hvdNKolnqTb9AIS8R33on1Gmtu/rbB5mB8=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJCgCWH7n7tRgsznAZAJ7t+f8n0FgmGGP26EH3q7uykMFh0UsLy
-	Pbpf6cUPUcqX/uGtHYr615voWJ+PUpvgtTZRmSl9Cl1wVeP7DRGnfgRg
-X-Gm-Gg: AYBFou0ReMSJq9YvSoS2b3YRgdiYR4rZPgHkq/tO9P4MobYd/KmRTNXSeadR7t2f39M
-	gJu40Eq+4+F1++m/E9/Qjibr22i53cz7lYUxTrBetF5pdpiWFo4D2/Vdnbdp4JXFUrKxwqRJAiB
-	O2g/FV32C57hk4/A+HHMRZkmG96ksZ8bSIDj5Thndr8MtHRtDD4xjdZ1dUavB+1bHawCi6F25J/
-	oM4y9LU9cKCAzRDo1B/FmFA9Yc4moEXsxNITB6SO7dCxwuca1K/1Q++4NigfgxTJp16xjKwi3pc
-	xCYRevnXuujrDRhbIuGLPalWiPuHAp1Jm7+RzRkzcxqXUVt7aCT77NhXYNgDmg0CraMcj1+V6Ml
-	n24wmuoV6l0vqoOCGhp99jWov6Op93mCW1tsbNymKUFxDopKbOrAvhx8Yi2TBmSnONPK+QaC57N
-	DIOYYxIZ45xEztxirUnxXfQjgziB87U/hO9c1n4po1IPGsI25gR2RgrNlmWcWune1CkMO8YHgAn
-	QuE+jAs1qnRGqaSzmp7FcoLN0DjwyqbtFVlKFFnHFJCfpTfU1VU9MJNwlKIeSceVwUiPCe71gUm
-	c3vkJ1YmNX5rVdiKzd7JTr2nwM5t5EZCBJmrDlwr/6KwYUzpBxKhT6Z5+JeU35G5VchRe80LxGF
-	EVgsv
-X-Received: by 2002:a05:600c:5492:b0:4a1:e4c4:f6a9 with SMTP id 5b1f17b1804b1-4a1e4c4f8a8mr32200995e9.23.1792346183097;
-        Sun, 18 Oct 2026 10:56:23 -0700 (PDT)
-Received: from MBP-von-Karl.localdomain (dynamic-2a02-3100-b13f-0501-c85b-b4b7-2475-2549.310.pool.telefonica.de. [2a02:3100:b13f:501:c85b:b4b7:2475:2549])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1d756ce69sm140854855e9.4.2026.10.18.10.56.21
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 18 Oct 2026 10:56:22 -0700 (PDT)
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>,
-	dmaengine@vger.kernel.org
-Cc: Karl Mehltretter <kmehltretter@gmail.com>,
-	Frank Li <Frank.Li@kernel.org>,
-	Dan Williams <djbw@kernel.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dmaengine: dmatest: make wait parameter reads interruptible
-Date: Sun, 18 Oct 2026 19:56:06 +0200
-Message-Id: <20261018175606.38045-1-kmehltretter@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YtMp+ymR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6FB1F000C8
+	for <dmaengine@vger.kernel.org>; Sun, 18 Oct 2026 21:00:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792357232;
+	bh=lmuebTtapyafAqg/MZz1PoSj/pPTFJ0VaRJlQ3t8Yhg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=YtMp+ymRPWyQ7hmja30jNOBaDQwwuI1782ArVM54H4yDKQ6vMlbBrHJh9/j6vMCQQ
+	 kkco7+IJ6KuhBq32eHqDCuhf/pnUgjT5WjSoyw2mx1CvBY8c/O1pd7fbbu+pz8Gbpo
+	 fsemPDeRIRM9iAV7f6WJTkBihbhI2yTu6UL/ipU4htWwMjc5qYWa9kme+ZCZxjvncS
+	 hVbikVC+fQn1oX/BSOxrsTtOLfupRHkKOezACijZhgQ9BZ5on7HtqMMFVCLL0ENf62
+	 5BSBjb3zwB53tvC7eFeQgKKS4ExHk+UfqDwodHlxgTa7+A16pPA2DcE6hO+Rince/1
+	 uGyNY5Cyi87Sg==
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5ba3ac592faso1682320e87.0
+        for <dmaengine@vger.kernel.org>; Sun, 18 Oct 2026 14:00:32 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvByk0n8GX+yWIckg0zGm2/Ws2tABVyP7rJoyZewSEyyBhBLZMuWpY0KssofUYHF06wkfOarFYQ6ch9Q=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLW4SRwIsvf9ZNedzABqB+0VDfKVBunx3qj6goTTinZcrzJ3EuB
+	DaU7EjynO88NjyBQ7QtHCZ/9K4v4wmLVDtvuYzw/cEr575YnDyAv2mVnPG/LzSVFnt0XMx6lqvc
+	zADnDRwVT6Tjyr0N5hCLTfhCwBd1dsdU=
+X-Received: by 2002:a05:6512:3d8c:b0:5b6:4ae:d87 with SMTP id
+ 2adb3069b0e04-5be50a655e4mr2028129e87.27.1792357231440; Sun, 18 Oct 2026
+ 14:00:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261018040724.534641-1-yaojiale02@163.com> <20261018040724.534641-8-yaojiale02@163.com>
+In-Reply-To: <20261018040724.534641-8-yaojiale02@163.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sun, 18 Oct 2026 23:00:17 +0200
+X-Gmail-Original-Message-ID: <CAD++jL=DqXggfdAq6yU8=OBm5atks77CcQ4AnuR9RcAS6QQsrg@mail.gmail.com>
+X-Gm-Features: AclHuK-3fui0U03t7CAaiKHddUwpmQ1nyZ2GG7y4wk-UNeVfMtV2nvH5lucn1Ag
+Message-ID: <CAD++jL=DqXggfdAq6yU8=OBm5atks77CcQ4AnuR9RcAS6QQsrg@mail.gmail.com>
+Subject: Re: [PATCH 7/7] dmaengine: ste_dma40: synchronize tasklet when
+ releasing a channel
+To: Jiale Yao <yaojiale02@163.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	Dan Williams <djbw@kernel.org>, Srinidh Kasagar <srinidhi.kasagar@stericsson.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, linux-arm-kernel@lists.infradead.org, 
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reading the wait parameter during a finite test uses wait_event(). The
-reader remains in uninterruptible sleep until all test threads finish.
-Long runs trigger the hung-task detector, and signals cannot stop the
-reader:
+On Sun, Oct 18, 2026 at 6:07=E2=80=AFAM Jiale Yao <yaojiale02@163.com> wrot=
+e:
 
-  INFO: task cat:71690 blocked for more than 120 seconds.
-  Call trace:
-   dmatest_wait_get+0x17c/0x1d8 [dmatest]
-   param_attr_show+0x6c/0xb0
+> DMA completion handling schedules a per-channel tasklet that processes
+> completed descriptors and invokes client callbacks. Channel release
+> terminates and frees the descriptor state without draining a tasklet
+> that was already queued.
+>
+> After d40_free_dma() removes the channel from the interrupt lookup
+> tables, kill the tasklet before returning the channel to the DMAengine
+> core.
+>
+> Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3"=
+)
+> Signed-off-by: Jiale Yao <yaojiale02@163.com>
 
-Use wait_event_interruptible() and propagate the signal error so Ctrl-C
-and timeout can abort the sysfs read. The test threads continue
-independently.
+This makes sense.
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
-On a Raspberry Pi 500+ RP1 DMA channel, a script configured dmatest with
-1 MiB buffers and two threads of 2,000 iterations each. The unpatched
-run completed all 4,000 tests without failures in 267 seconds, but
-emitted hung-task reports at 120 and 241 seconds.
-
-With the patch, the same 4,000 tests completed without failures in 269
-seconds and emitted no hung-task report. In a separate patched run,
-SIGTERM terminated the reader. Both test threads continued and completed
-all 200 tests without failures.
-
-Fixes: 2d88ce76eb98 ("dmatest: add a 'wait' parameter")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
----
- drivers/dma/dmatest.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 2ae346939..7e6b6c446 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -287,9 +287,14 @@ static int dmatest_wait_get(char *val, const struct kernel_param *kp)
- {
- 	struct dmatest_info *info = &test_info;
- 	struct dmatest_params *params = &info->params;
-+	int ret;
- 
--	if (params->iterations)
--		wait_event(thread_wait, !is_threaded_test_run(info));
-+	if (params->iterations) {
-+		ret = wait_event_interruptible(thread_wait,
-+					       !is_threaded_test_run(info));
-+		if (ret)
-+			return ret;
-+	}
- 	wait = true;
- 	return param_get_bool(val, kp);
- }
--- 
-2.39.5 (Apple Git-154)
-
+Yours,
+Linus Walleij
