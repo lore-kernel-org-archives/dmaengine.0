@@ -1,57 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792439640;
-	b=VdmB45hZEW9zmtyBfmFn5VaA8zXJbR+vb0zQgI1hDPXGg0s0bM9mJMuLk+bbjwWF7OGC
-	 SIR89v4ZpKnG3jhOhA/oHbF98PuFChJvAPcfTnMXCagdYDkjPPePo9tHchMPXAXyLuLqe
-	 aM5o+TK/cOVvQeuzfzlADXmpaepFxbzuUKHAyIFJmSV+uXfbCfh7cd10qLF2Wn/DqAaKF
-	 8x/6zUXg1G33HgcA/i/Nj/aWcSHn+nWFOo6F2VEMvjRJ3TRiOvzK1HO+j2qP49h0bqg0e
-	 R8s5BbF/GBDVBLVfnLiwPK4RurKxyh+QBzCj309kgDYYh5P+bZywjE4eTBGw7UvxCxw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792439640;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=gtOJcAkQO+EceQGLDvhGMKukNDYcmkidaQWm8PfNzW8=;
-	b=06Pdh9Zb8+W7fyHL7ZTaGa46aIgVdPgQOJu4SQhEdc5yNCHosMiIYIjTLYrIkFT/DgZS
-	 ajt3ZrkVfJhH/q9Eevvo/Jujs27uQXtDTdXx/GrwJOOfah/tyNoblxJuVlzeGU+Tr3jT0
-	 Uj2PpvGHYGuk4dW+BrA26Ic+LV1YZd8RZ638EyENxpLWhfSQOANXFYGopNYOHgJiOh3KK
-	 JUAdX8cQdrp/2BmItfuKQEblkorImRLMqPE6xZ2WweMKpoy3ZkQVOFxl8QM3EnthlQRTy
-	 fn8S2JSqtqfJCz7Pdv2FjgRHCMd2rCVae4sew0UmsSpmix5lITnP5lI2MAyaghiU9Hw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=huqwvKuL;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.61
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792443687;
+	b=uihH08eSd7TC2a+p9lip34IFkvQ99/sCOiuU0kmx/3Dbv6x2rAsA0bmsZwdb2cgTMfrg
+	 jWkwS5jbniGPeaMLoxBUGuVBY7us7wcHAAzMpBGvyVFo/dalwojVV3wKiXslnQ2C2NO7R
+	 kaB+c1mlF3mtU8AwCUrelz/ry8ReTKRxDVYilmhYJFOQrbneW0H+TR+IBCD1kNkjtQkHL
+	 zODduhzwRzs0JL1bdX3VQznEbE+pqDfXynNu6PMxm0sO2DhdfG91mKDrYjve9/VhzBMsN
+	 bzk5MUz9mYMYgVYGDt46TlNkEHSaaCVUGl54aDvfHSRLirq9nVOLrOCxfRmDb/juVZQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792443687;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=O5sU4mbAV9wmgoqRwzc/JMHHiOlH0VK8wQiIZnz272w=;
+	b=vGuiixuma9CtYtFZWWBazpj/7IJ9XwSejKtj1wJj8a5ai0ocoegnQYLUWMh1bGjQDikO
+	 Yw3xQZkw/sXcF8tby5bflIYxZ7ImS1tDvEQUcyPtKpW//HMBSwG54ZnDQDBg8rQsBZMaZ
+	 pxzVslxRYAUpZpZTBzQetCTSpcKv2rG8lnD6WaJzetJI2/X6GAi0N1z2ToTlYwVHG8tUH
+	 wx9PNUDMqSRiSEvCcvcY+ISiXW9LG4fcFKJkVAdI1xMzmooer73lpdN+cItLbQ7IuMo9M
+	 yHOHWzMFfItcqEqFAoNypzKa4ZuUFa19yfoSH1tWcgCndA+CbfvEiFQTPE/bgWCZjBA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="wXkq/qXN";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.61
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013061.outbound.protection.outlook.com [40.107.159.61])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4AA606A31B
-	for <dmaengine@vger.kernel.org>; Mon, 19 Oct 2026 19:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F124606A31A;
+	Mon, 19 Oct 2026 21:01:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F124606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=huqwvKuL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D941F000C4;
-	Mon, 19 Oct 2026 19:53:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792439639;
-	bh=gtOJcAkQO+EceQGLDvhGMKukNDYcmkidaQWm8PfNzW8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=huqwvKuLshQ6OaaZeY/SXQeDsQtBTJ9kPQkUjH6rO1tMz8a12afp71GGieeEuX8zD
-	 viXHPwCNU+klB1ugifCW1mJioDmTbj1uxxuql3I2zI5DmwZx5pHB1KODAUgoYssH1V
-	 kjD438BCAcEUWdtBVrsHeO1e23FWiMr8s5u2OtQxtyrkXpIu4LWjRX15rjWVAyBlf1
-	 NP4S3+JBnz5XGJ/fm4a1dUfEoUeloi/AkXHGXkszk3MBzaQcPA8vTT88GFWWhHGOgO
-	 r/G0NgAXEAOHrA/kpSmy79s/xsLFi4vIKDz0XfCqPYbV0uvAtyVOCpAMsjpAaskkny
-	 IrvnGA5DpAuNg==
-Message-ID: <sashiko-outbox-178156@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 17/17] dmaengine: idxd: run the interrupt-handle revoke
- under the queue lock
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Daniel Byrne" <daniel1.byrne@intel.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261019150630.4026341-18-daniel1.byrne@intel.com>
-References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
- <20261019150630.4026341-18-daniel1.byrne@intel.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 19 Oct 2026 19:53:59 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=wXkq/qXN
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sYSlieKZRBFl9zInU2cygmxxHpwXaTp07knniWNIJW3vW1WzkwRJBkaIn7VHtptSQhU9tUFGcmC7k/upmpFtEkby58vTrEcoqI97q3RY0RVRqT5ubqxXeo6xXYunv5q0FDPRgvymmwXKmSZWQeZFQzDrXMf+bl1pcmO/TW7c0/iNa5DNSbphOnIAKphwQZyeO3UB1FsWbDE0tvpeAPmiX6O9K8Ijb1IVZsuSTwH5C8bTEvsqRCZ+YpcuROZ6Fs3vu9nCBkb0P2ZtZqEsJ2dqXqfMKQYUmtETev4B9eAHbVM95yCpGBwIKA2XqGxS2tBQFYkhWkxdDIHpxqu10wLiSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=O5sU4mbAV9wmgoqRwzc/JMHHiOlH0VK8wQiIZnz272w=;
+ b=thwcjSZF2YnO4vEXJlSzG1hCqXHKbBrD1MnERDLn2+r/LxnSchjuwchqnhHIIWw2sAbZ3Dn7P6KMUUj+hVIzRX8d5ZEasW6c6euqsoO1TPjZZlWq5vfvcKbzJcSdqieKSzk52zvBT+/bgyd4SdgE6uh/ysab2ix3G9oBfv+yoGCJPGK9F5ghVft1+baGRPrrdHak07KvKDknQ19qAPPgYB0Nr0SpoZYV7DYV6liMhdV66HLRfyPTHlVuEmgPnxzkT/InwQ/TI7/EVMWVXOFumdx7aca1qU5jjS0LiOqrmfJeHv4zrmeKg94rGkXTn772osZHYHDdvGHVduErUB96Tg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O5sU4mbAV9wmgoqRwzc/JMHHiOlH0VK8wQiIZnz272w=;
+ b=wXkq/qXNdr92+Hr0eqHbfsA4HfbTk182PtDX4tft0hU5TPDR1JjXN4bBmZ89tzV8/bRO/IEN864X5TG/xrI7tIb8tkidDaT5BrmvRJNxN3kSQ3ZAvbi9HYdrOVFwdiqQEGZYEeahUJw3QvzqZE7tqcctwhwxOXlmv9IRLXHx0S7YN4J5HSLGYtoB0hZjWOodAOTXmkNqIMPAten8aT37ZI8RURSlV/jqDUoDJVnr/f7OYxjGxJ3meyDQFOxg8AwC8/EuI7r+Vf3rmwMeYx3MXQwdWKGI33SLWHE4XtBD3zLr7F73ko+yWdVjDbtKmt4oS0JTlEPKqC8e5kXjLJcKig==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by GV1PR04MB10605.eurprd04.prod.outlook.com (2603:10a6:150:20c::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Mon, 19 Oct
+ 2026 21:01:23 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0522.017; Mon, 19 Oct 2026
+ 21:01:23 +0000
+Date: Mon, 19 Oct 2026 16:01:14 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org,
+	Frank Li <Frank.Li@kernel.org>, Dan Williams <djbw@kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: dmatest: make wait parameter reads
+ interruptible
+Message-ID: <ataFGmkPoDIYMX3j@SMW015318>
+References: <20261018175606.38045-1-kmehltretter@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261018175606.38045-1-kmehltretter@gmail.com>
+X-ClientProxiedBy: PH5P222CA0006.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:34b::6) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,274 +96,118 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GV1PR04MB10605:EE_
+X-MS-Office365-Filtering-Correlation-Id: 759226e7-245d-4497-a1c6-08df2e2421a0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|19092799006|376014|366016|6133799003|18002099003|10067099003|22082099003|11063799006|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	Nf34v1dnEMN/1yLA8SpA6Hb4n/poAUN/080ETxVZnhAyXU52qqK/pUmdztYIXOZR3YBD5Mrzjh/zWb4tLtSnB7lJceLQ+7xBwoBRtqWzXuhFPonWaMTEZ4uUYQH99zrOSKNqxlNSpK0FkMhMxpXYtEeVZOqZNsFg89gAB+UQmUIWJS+uO6/dn3rH8wYQ29hWVJtiuuOVnjgxP3nm4FNqVT65D3a4r/FZGj7JA5mTAFOk5++wt/eT7wXWy7rrA1/gfxl47Fi4YG/zpPNkWA4FFa+wFB9sjcAKKpFcl6eZeP+iQvEz8wx/sH2mD5uPnk9c68LcZ2k29n5SETW6FYwSaQUjfUf1p90I6ZHaMoGahiQOpZ7Y8uEtg1NQWyesGSXEs4BEWGO0uS06udcC7VvDdnrumAufGCD0NiGBm9QYNptj8YFGY5mu83nlc83BkAlbllIaxm8kI5Sqy0r0AcvxGrDAVpMxNwwPGDv+U2mxfa7tbilAoRX1KE5AWDbLmUcVp0K9LNwVBQxS4pXN/DQbmn+O/vePdbQoMB7T5+u3kHULildigOVEV1TOLNky33NjNDYflU7P/MPwIFrHt2vr2UPIX4HFTiiN8SgPRfvpeVDtscOTYsJ3ObV1v0zd+os78dD2CCDZAQ7mSNz3BxGwkQkXEYdfTFJAzze2uqaNMqc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(19092799006)(376014)(366016)(6133799003)(18002099003)(10067099003)(22082099003)(11063799006)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ECh7BuTDwf+IrB6cUrZdiRZk37pR1t9WhvyQLG8vubHERS9KEL1DV5BsG/OW?=
+ =?us-ascii?Q?EPZG0aqgbuEfX/GIducaWtrWG5O9spLvyDFJTVWQ8ac0OXmhoHgGLgeiPqzi?=
+ =?us-ascii?Q?Cv9x3oxXtV7nfLJtDBQdUAekk5MetwL72z2J93+hC9sQkcIHLsDTyEZ1YJJA?=
+ =?us-ascii?Q?f1iM1AVMW9KrbKX9kmnPiC/8IQyljVKiZbyaymBXHBWdxR4VQKdr9HwG3Wsq?=
+ =?us-ascii?Q?atKAyziQEU6BCn5mYBreyGxsy4xCNOIv7/e5lD01Er8bFmCMjFAjpFqNZbnW?=
+ =?us-ascii?Q?C9SSPWnmcsdOtbD/yQqkX6+p5k60wUiwT25AjMmzmwyxz9OGpnL0qG9RMg9f?=
+ =?us-ascii?Q?P+7B1uEjALDRa30SoezHbl76sYD/OEy9zhHPF2UA4piyZF1JDDsKepArd56q?=
+ =?us-ascii?Q?XNrsrxTfx+owMzv55OUtOcdTSBSQjUVQe60O5KJWgYLmk3ngqzeE3pXBNDaH?=
+ =?us-ascii?Q?FYIGpN/CyWfCJkX122+53CMPbUhGePGLxnw5WETDf2tOSZUwR9WCzSXTxzHw?=
+ =?us-ascii?Q?cRbbFl/l71+jsnJFfFLcLwkf1dFCIBVqNskqm8jLL4GkNA/LTx9Tv9WuC3Qx?=
+ =?us-ascii?Q?cLKEI4sRGEaoqlPNXey4rLnqQeI7/syEyin30jq3TuA0jTToyq+NpWatfU2Q?=
+ =?us-ascii?Q?VXSP0irccK81HbVbGR/lmvSwF+xrr9DOhsrLYHaZOzS/zYv/5TUmHrOtAtqc?=
+ =?us-ascii?Q?jX9zJh6+/Zh1w7cwL57CuPg4giqs7pzdJ2Vv1XNNrTpNQSls4M4CnywxY45p?=
+ =?us-ascii?Q?uLxacC18Hs8yWvG/MVq+aUDo3YVPV5K8FpZXcsnwWVAYaItHST8C9pxxs8XE?=
+ =?us-ascii?Q?rffJpxKAcTvoeW0UZEuizICg/aM+DMw15Qiwbi/irmrdgecpY1+qVfop32k8?=
+ =?us-ascii?Q?1ClqwurpvVnbuu9Jt7hSx+XvXD6V6aHMIG7gotRspaft54CN4ZbH5hvVFGT3?=
+ =?us-ascii?Q?KoxRjjIizCYxAdXx9Knl9Lt8RtX532QdLzZvnF5Fi9060O86cj18CX0k5IFP?=
+ =?us-ascii?Q?lHuzZM5AEliQ3k7x9g3otZWkscPk/Olpahs1ttt5QrBCNyHcCQ9FLr/g//iA?=
+ =?us-ascii?Q?qH6/oe9Fd5frZfElj30epymxQt0p5MqNGp5qgBsgEyoKTEA+htivg2zce9XD?=
+ =?us-ascii?Q?I1WNWDQh1TAAZCQ+wpMrzYrvnecelqdHrwDlYHL5PV0OZeA1sN/g0ANVWskR?=
+ =?us-ascii?Q?QVT6VzZpQJPSS4tCP9HuMNkCaMkCpyDBM34l0PrTU00Q2TekTFz2fMb/jGKt?=
+ =?us-ascii?Q?cPhQNPxF57K1Jxrz2vmXYbVZv5zT+5W2wGvOad3Acilr0+NMhuV3XOAQl6gf?=
+ =?us-ascii?Q?lXVGrRd6LfGEhxqJRNr5wYGTmw/Ud405tRowas4kC2ZS9b36WqKEvijqlkGi?=
+ =?us-ascii?Q?BHveASyYeSlSXR2fauD+jIUCSAn6nDOnfrCOLUZyDS9mSpx8H7XIv7TaOrxi?=
+ =?us-ascii?Q?R56XqPvQbwXw09lWkxUjQe9wIyarMAbVp6XNZSiUZlv9qYYjF2tbidB6azkQ?=
+ =?us-ascii?Q?+kR2i02oe+PFcfgT3MIWPeC7KYpMdYdeP0MM4IQ8jnh7krRLqCLsX0EdtA6k?=
+ =?us-ascii?Q?8pFRKyf3nlLfyQ79IGQ3PBiL1AQd71xKO7Haw2Y9VLrxrpP/jM7ILD0L/W1k?=
+ =?us-ascii?Q?ftLIuDDxfIWDRHBh8KfrNmRS+6EfDqc4FQiV1gA+F5ek8iDsbkMZpcsa0xms?=
+ =?us-ascii?Q?Ij9FvhppR5ffdBUfECZxXHHh4Zf644DkuETkfjoXpdgjZKxoEV67x+jeIDFA?=
+ =?us-ascii?Q?+LGfIFSDBhOC3UJ2QGVgB6TfRYDqH6QwmUvxcEh3n3JZIUGnqs/F?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 759226e7-245d-4497-a1c6-08df2e2421a0
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 21:01:22.9902
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /fBGPJ1MQOVh+eIPE7RdDjClCMPTCmSHu7tBjRHOf4lWWloTnkEHTVnRmksHED7VbzFpJoTSra2Cv+YEuMoKkif7s2zGbL9njbNbdKPT3DsgnvDZHk5WXYXykMxbqN40
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10605
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] dmaengine: idxd: deadlock on wq_lock in idxd_abort_invalid_int_han=
-dle_descs()
-- [High] dmaengine: idxd: drain and handle update on killed wq in idxd_int_=
-handle_revoke()
-- [Medium] dmaengine: idxd: handle leak and rebind race in idxd_int_handle_=
-revoke()
---
+On Sun, Oct 18, 2026 at 07:56:06PM +0200, Karl Mehltretter wrote:
+> Reading the wait parameter during a finite test uses wait_event(). The
+> reader remains in uninterruptible sleep until all test threads finish.
+> Long runs trigger the hung-task detector, and signals cannot stop the
+> reader:
+>
+>   INFO: task cat:71690 blocked for more than 120 seconds.
+>   Call trace:
+>    dmatest_wait_get+0x17c/0x1d8 [dmatest]
+>    param_attr_show+0x6c/0xb0
+>
+> Use wait_event_interruptible() and propagate the signal error so Ctrl-C
+> and timeout can abort the sysfs read. The test threads continue
+> independently.
+>
+> On a Raspberry Pi 500+ RP1 DMA channel, a script configured dmatest with
+> 1 MiB buffers and two threads of 2,000 iterations each. The unpatched
+> run completed all 4,000 tests without failures in 267 seconds, but
+> emitted hung-task reports at 120 and 241 seconds.
+>
+> With the patch, the same 4,000 tests completed without failures in 269
+> seconds and emitted no hung-task report. In a separate patched run,
+> SIGTERM terminated the reader. Both test threads continued and completed
+> all 200 tests without failures.
+>
+> Fixes: 2d88ce76eb98 ("dmatest: add a 'wait' parameter")
+> Assisted-by: LLM
+> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+> ---
 
-commit 2920ff390e78f9271a288774e6a5796ea738663d
-Author: Daniel Byrne <daniel1.byrne@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-dmaengine: idxd: run the interrupt-handle revoke under the queue lock
-
-This commit acquires wq_lock in idxd_int_handle_revoke() after requesting a
-new interrupt handle so that handle updates, drains, or failure quiesce and
-descriptor aborts serialize against workqueue unbind and halt.
-
-> diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-> index 4517a09fcf1b9..8217698056bb4 100644
-> --- a/drivers/dma/idxd/irq.c
-> +++ b/drivers/dma/idxd/irq.c
-> @@ -115,6 +115,11 @@ static void idxd_abort_invalid_int_handle_descs(stru=
-ct idxd_irq_entry *ie)
->  	struct idxd_desc *d, *t;
->  	struct llist_node *head;
-> =20
-> +	/*
-> +	 * An unbind frees the descriptors and the allocator under
-> +	 * wq_lock, so they are completed under it as well.
-> +	 */
-> +	lockdep_assert_held(&ie_to_wq(ie)->wq_lock);
->  	spin_lock(&ie->list_lock);
->  	head =3D llist_del_all(&ie->pending_llist);
->  	if (head) {
-> @@ -142,6 +147,7 @@ static void idxd_int_handle_revoke(struct work_struct=
- *work)
->  	struct pci_dev *pdev =3D idxd->pdev;
->  	struct device *dev =3D &pdev->dev;
->  	int i, new_handle, rc;
-> +	bool killed;
-> =20
->  	if (!idxd->request_int_handles) {
->  		kfree(revoke);
-> @@ -166,15 +172,31 @@ static void idxd_int_handle_revoke(struct work_stru=
-ct *work)
->  			continue;
-> =20
->  		rc =3D idxd_device_request_int_handle(idxd, i, &new_handle, IDXD_IRQ_M=
-SIX);
-> -		if (rc < 0) {
-> +		if (rc < 0)
->  			dev_warn(dev, "get int handle %d failed: %d\n", i, rc);
-> +
-> +		/*
-> +		 * The request runs without wq_lock, so that a reset can end
-> +		 * it, and the queue may have been unbound meanwhile. An
-> +		 * unbind invalidates the handle in the same wq_lock hold
-> +		 * that unmaps the portal and frees the descriptors, so a
-> +		 * handle still valid under the lock means that the queue
-> +		 * still has its portal, its descriptors and its completion
-> +		 * handler. Everything below, the drain included, stays in
-> +		 * this hold.
-> +		 */
-> +		guard(mutex)(&wq->wq_lock);
-> +		if (ie->int_handle =3D=3D INVALID_INT_HANDLE)
-> +			continue;
-
-[Severity: Medium]
-Can this leak new_handle or race with a concurrent unbind and rebind while
-wq->wq_lock is not held during idxd_device_request_int_handle()?
-
-First, if idxd_device_request_int_handle() succeeds (rc =3D=3D 0) while a
-concurrent unbind runs idxd_drv_disable_wq() -> idxd_wq_free_irq():
-
-drivers/dma/idxd/device.c:idxd_wq_free_irq() {
-	if (idxd->request_int_handles)
-		idxd_device_release_int_handle(idxd, ie->int_handle, IDXD_IRQ_MSIX);
-	idxd_device_clear_perm_entry(idxd, ie);
-	ie->vector =3D -1;
-	ie->int_handle =3D INVALID_INT_HANDLE;
-	ie->pasid =3D IOMMU_PASID_INVALID;
-}
-
-idxd_wq_free_irq() only releases the old ie->int_handle and sets
-ie->int_handle =3D INVALID_INT_HANDLE. When idxd_int_handle_revoke() then
-acquires wq->wq_lock and sees ie->int_handle =3D=3D INVALID_INT_HANDLE, it =
-hits
-continue without calling idxd_device_release_int_handle() on new_handle.
-
-Second, if the queue is unbound and then rebound via idxd_drv_enable_wq() ->
-idxd_wq_request_irq() before idxd_int_handle_revoke() acquires wq->wq_lock:
-
-drivers/dma/idxd/device.c:idxd_wq_request_irq() {
-	if (idxd->request_int_handles) {
-		rc =3D idxd_device_request_int_handle(idxd, ie->id, &ie->int_handle,
-						    IDXD_IRQ_MSIX);
-		if (rc < 0)
-			goto err_int_handle;
-	} else {
-		ie->int_handle =3D ie->id;
-	}
-}
-
-ie->int_handle is populated with a new valid handle for the rebound queue.
-When idxd_int_handle_revoke() acquires wq->wq_lock, ie->int_handle is no
-longer INVALID_INT_HANDLE, so it treats the newly rebound queue as the old
-binding: if the earlier idxd_device_request_int_handle() failed (for exampl=
-e,
-while the permission entry was cleared during the unbind), it overwrites the
-new ie->int_handle with INVALID_INT_HANDLE and quiesces the rebound queue; =
-if
-it succeeded before the rebind, it overwrites the rebound queue's
-ie->int_handle with the stale new_handle.
-
-> +
-> +		if (rc < 0) {
->  			/*
->  			 * Failed to acquire new interrupt handle. Kill the WQ
->  			 * and release all the pending submitters. The submitters will
->  			 * get error return code and handle appropriately.
->  			 */
->  			ie->int_handle =3D INVALID_INT_HANDLE;
-> -			idxd_wq_quiesce(wq);
-> +			__idxd_wq_quiesce(wq);
->  			idxd_abort_invalid_int_handle_descs(ie);
->  			continue;
->  		}
-
-[Severity: High]
-Can calling idxd_abort_invalid_int_handle_descs() while holding wq->wq_lock
-deadlock on wq->wq_lock?
-
-idxd_abort_invalid_int_handle_descs() completes descriptors synchronously:
-
-idxd_int_handle_revoke()
-  guard(mutex)(&wq->wq_lock)
-  idxd_abort_invalid_int_handle_descs(ie)
-    idxd_desc_complete(d, IDXD_COMPLETE_ABORT, true)
-      idxd_dma_complete_txd(d, IDXD_COMPLETE_ABORT, true, NULL, NULL)
-        dmaengine_desc_get_callback_invoke(tx, &res)
-
-For a dmaengine workqueue, the client completion callback is invoked
-synchronously under wq->wq_lock. As noted in idxd_flush_pending_descs() in
-drivers/dma/idxd/device.c:
-
-	/*
-	 * A halt flush that delivers the callbacks of a dmaengine queue
-	 * leaves its descriptors to the interrupt thread, which runs them
-	 * without wq_lock, as it runs every completion. A callback may
-	 * terminate the channel, which takes that lock, and the halt flush
-	 * holds it. The halted device writes no record any more, so one it
-	 * never finished is marked aborted for the thread to complete.
-	 */
-
-If the client callback terminates the channel on error via
-dmaengine_terminate_async() or dmaengine_terminate_all(), it enters
-idxd_dma_terminate_all():
-
-drivers/dma/idxd/dma.c:idxd_dma_terminate_all() {
-	struct idxd_wq *wq =3D to_idxd_wq(c);
-
-	guard(mutex)(&wq->wq_lock);
-	...
-}
-
-Wouldn't that immediately self-deadlock on wq->wq_lock?
-
-> @@ -193,21 +215,20 @@ static void idxd_int_handle_revoke(struct work_stru=
-ct *work)
->  			continue;
->  		}
-> =20
-> -		mutex_lock(&wq->wq_lock);
-> -		reinit_completion(&wq->wq_resurrect);
-> -
-> -		/* Kill percpu_ref to pause additional descriptor submissions */
-> -		percpu_ref_kill(&wq->wq_active);
-> -
-> -		/* Wait for all submitters quiesce before we change interrupt handle */
-> -		wait_for_completion(&wq->wq_dead);
-> +		/*
-> +		 * Kill percpu_ref to pause additional descriptor submissions
-> +		 * and wait for all submitters to quiesce before we change
-> +		 * the interrupt handle. A queue a halt already killed and did
-> +		 * not revive is left dead.
-> +		 */
-> +		killed =3D idxd_wq_kill(wq);
-> =20
->  		ie->int_handle =3D new_handle;
-> =20
->  		/* Revive percpu ref and wake up all the waiting submitters */
-> -		percpu_ref_reinit(&wq->wq_active);
-> +		if (killed)
-> +			percpu_ref_reinit(&wq->wq_active);
->  		complete_all(&wq->wq_resurrect);
-> -		mutex_unlock(&wq->wq_lock);
-> =20
->  		/*
->  		 * The delay here is to wait for all possible MOVDIR64B that
-
-[Severity: High]
-When idxd_wq_kill(wq) returns false because a halt or teardown quiesce
-already killed wq->wq_active, is it safe to still update ie->int_handle and
-call idxd_int_handle_revoke_drain(ie)?
-
-In idxd_halt() in drivers/dma/idxd/irq.c:
-
-		if (halt_flr(err)) {
-			idxd->state =3D IDXD_DEV_HALTED;
-			...
-			idxd_wqs_halt_flush(idxd, false);
-			for (i =3D 0; i < idxd->max_wqs; i++) {
-				struct idxd_wq *wq =3D idxd->wqs[i];
-
-				if (wq->type =3D=3D IDXD_WQT_KERNEL)
-					WRITE_ONCE(wq->ie.int_handle, INVALID_INT_HANDLE);
-			}
-			...
-		} else {
-			idxd->state =3D IDXD_DEV_HALTED;
-			/* Same as above: nothing in flight will ever complete. */
-			idxd_wqs_halt_flush(idxd, false);
-			idxd_wqs_unmap_portal(idxd);
-			idxd_device_clear_state(idxd);
-
-In the system-reset branch, idxd_wqs_halt_flush() kills wq->wq_active under
-wq->wq_lock and unlocks, while wq->state is still IDXD_WQ_ENABLED and
-ie->int_handle is not invalidated. Next, idxd_wqs_unmap_portal() unmaps
-wq->portal and sets wq->portal =3D NULL without holding wq->wq_lock before
-idxd_device_clear_state() clears wq->state under wq->wq_lock (and on
-non-configurable devices without IDXD_FLAG_CONFIGURABLE,
-idxd_device_clear_state() does not clear wq->state at all).
-
-If idxd_int_handle_revoke() acquires wq->wq_lock after idxd_wqs_halt_flush(=
-),
-idxd_wq_kill(wq) returns false, but idxd_int_handle_revoke() proceeds to
-idxd_int_handle_revoke_drain(ie):
-
-drivers/dma/idxd/irq.c:idxd_int_handle_revoke_drain() {
-	...
-	portal =3D idxd_wq_portal_addr(wq);
-	...
-	wmb();
-	if (wq_dedicated(wq)) {
-		iosubmit_cmds512(portal, &desc, 1);
-	} else {
-		rc =3D idxd_enqcmds(wq, portal, &desc);
-
-which dereferences wq->portal while it is NULL or being unmapped.
-
-Similarly, in the FLR branch of idxd_halt(), wq->ie.int_handle is set to
-INVALID_INT_HANDLE outside wq->wq_lock after idxd_wqs_halt_flush(). If
-idxd_int_handle_revoke() acquires wq->wq_lock after idxd_wqs_halt_flush()
-before that write, or if iaa_crypto_remove() has called idxd_wq_quiesce(wq)
-prior to disabling the queue, idxd_wq_kill(wq) returns false, yet
-idxd_int_handle_revoke() still writes ie->int_handle =3D new_handle and sub=
-mits
-a hardware drain descriptor to the halted or quiesced queue.
-
-Should idxd_int_handle_revoke() avoid updating ie->int_handle and issuing t=
-he
-drain when killed is false (or when the device is halted)?
-
-=D1=82=D0=B8=D1=82=D1=8C=D1=81=D1=8F
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019150630.4026=
-341-1-daniel1.byrne@intel.com?part=3D17
+>  drivers/dma/dmatest.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+> index 2ae346939..7e6b6c446 100644
+> --- a/drivers/dma/dmatest.c
+> +++ b/drivers/dma/dmatest.c
+> @@ -287,9 +287,14 @@ static int dmatest_wait_get(char *val, const struct kernel_param *kp)
+>  {
+>  	struct dmatest_info *info = &test_info;
+>  	struct dmatest_params *params = &info->params;
+> +	int ret;
+>
+> -	if (params->iterations)
+> -		wait_event(thread_wait, !is_threaded_test_run(info));
+> +	if (params->iterations) {
+> +		ret = wait_event_interruptible(thread_wait,
+> +					       !is_threaded_test_run(info));
+> +		if (ret)
+> +			return ret;
+> +	}
+>  	wait = true;
+>  	return param_get_bool(val, kp);
+>  }
+> --
+> 2.39.5 (Apple Git-154)
+>
