@@ -1,81 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792422877;
-	b=2rMrzEk1ZRg9hxoC28qASmgchmJUQr5wxDT+CJtV1+Xq8oxSMY9pL6vRANFuCOVfuD3O
-	 c3y52OTj3Q0l3lXNZ2C2xaRfjgDmOO2orHKMF++nfcWPahrIItL9MLV5/DVx+Cu344GgK
-	 EvCM/J3oTJgFm8BJCJZ61+7UX+Eclrli6IrBqaQgYph8o0VZwHsPYgd+0YsxTXgm72YFs
-	 dJ+aHjm5YrfuJIPb/zpv/Zoer4PhN/6OvVGV/VC0VtPI6/buP+z/qE35B3uGIgxpefHPx
-	 A8pBRmKKC4l/faFT311CAXGWb/Yr+AciNIC54W9MzYvjBnVkNthLRFjR/ww0Wniv4qQ==
+	t=1792422876;
+	b=OZSf+mp8H0KvT0cYWVO4dxmcI6b6mZCTMQniamBsuPOGk5EBD7hAXbXPf4swQi2Ht2c2
+	 vGDawWg2swheuuCmHdWgUqxHUsVVtpU4o2NZp36iGJu/I+HyX5nQ18JQCwds23478Io86
+	 PfjJJhJ00CTjGXOg7TU4OQuOeD9A6d2WzB8e7+lh8/xQo3ly0k3//DyU8tIljmW0CG9a2
+	 7YAE53NAVaLXCvI3WQwZeon36205DdL/Rp0lenMeL4P91LU9jDkDdGNnYoyV0T2Jcf0vy
+	 a/1eZQ/M6ePhMxXCeBgzoWgHAAvrotSUoULlI1g4qBIONEeT09HjILgJS6ivdKDkzFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792422877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792422876;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=GwztzXGiW7OnAu9QbRSyq73Z8Eatn3pZ575kk94zIeU=;
-	b=OHbwRgjShnsmAjXHEhCgDvk3BPy85EOMIwA34oFNzD2p6uqu3jq5WnZ1n96fBBJozTbA
-	 ASOrqjGRvc6jrWuD3nBwfx76wEA0WnDrCXAwuvqorgewbksEPRDEYdVzxBtmrhMRAF8f2
-	 9/WA6V7k+vBVzGWZZ9Fn2nThFNV6HysTwzrQwv6TJkrXNv9GeTSFBBpXp9ASkqUcJQl8E
-	 Q4YaBvCqj4TXs5L9Crr1fxpyG2vBL3q9nNewmUgGX4DTPUYgtwqCitXYnsL1SmZ6OGTqu
-	 4g9EIZZ1Wx0hKL29hbvYAXtmzQ1jQNFkSb07qMyXuQzoTKt4/YCAy1UdktyCGwY1pQQ==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=vUJLscG8XSSHQFg2sviQyqrV2fKWzSk1RRNuPFKLxmg=;
+	b=lhfbz2XMw3jcspQEMn9k4mkqJAxmTvwjkzm5nRYzjMuCIKPGfnpziIH4ubm3ImeZiUFy
+	 yYNeqlveHAOKK7arvXlKRBtxs88mmnt0f7NxsvMe4BmJIvvDdl5Q8VLRv49DUjyHGJZiQ
+	 isMki4E5nUi5n1fDSbItA6081zgBQMPmyHF2vdLLD1doZU3uQ1mvjIqHrhbrfye4PoNDe
+	 ol+Vd5AWx0CIiWVgiRFnnmQwc9uKpXaYILgjVGWGK469oSbPqHYMPXaPG+mHuci0EMFNw
+	 LXZiTj3u+jLBt1HCkjTAMXWfxt9iPJlJEnegww3RPnyqf6ex37qbNKT0jgiSf+1DZkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="Cb/pLjbt";
-	arc=none smtp.remote-ip=198.175.65.9
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NUBrfE3D;
+	arc=none smtp.remote-ip=198.175.65.12
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA15609CED4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2145609CED3;
 	Mon, 19 Oct 2026 15:14:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDA15609CED4
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2145609CED3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Cb/pLjbt
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NUBrfE3D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1792422876; x=1823958876;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=OxZSt/jYZA56remEOs1LpCwtEvXYIh/MngBNA+cobgk=;
-  b=Cb/pLjbtqHSrTwHgmm1m1TDPMaxt6VGIzMe0NbgnzO/0mEfp7zcAGVwD
-   ZVwBIqRBqbS6J6FPvorBpA0e9eq46FXU2xcp0OUGBLt/cCv0osWd8t/tb
-   l/NpaFq0dUV25OEpH+xhreC84r29mlZ7fTTAWePGcs10GjBqlC9bhpqHq
-   oWqKn3fu9VvK9zI34qUr2l3wDxgzX5H04ubf/MvDuehKpONfNTdH+2+QE
-   xCdvg8X8KWYu/OnLFmmQh+kCdRqI1wYl+EficcAtKDBd9xwDh2ISTrxQR
-   EyRMGiGfG34a592L+1x2gl7h9vUy6d77xJowlW0zCO3wKzSO/hGT5VEMf
-   Q==;
-X-CSE-ConnectionGUID: ajG/gNPdTT64e6lpYil1mQ==
-X-CSE-MsgGUID: cNubKg2ISlyvMjaiVSGCNQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="992123"
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=wWYDKmOpaDXM/8DgQbmgTptDV+gFVhwrFPGHfjTFFto=;
+  b=NUBrfE3Dw2iQphMm/jaHZmiBxTjTS5TTF1Sb3FuvqiGF3MPa22RKMONm
+   FY9yCJOtqiElIITNk+V7OB1hVyWBQ7wN+vzhFusvVJD5YgcLrGVnPk0cx
+   hvKDXqvplmvZidfF5KKgrYcW11Ho67OI2iXtOFlIeoojTXEquHjqtz46W
+   x7piycCdei8cMl7WSwj6cqPGN9BRIEY+7dXfKG9fDWeP1O7aInpCNPbji
+   PB3sNpEZGamS0Z4xzN20u70pWfk6FEs43RjVcZ1YLrbkDL/PXiBxY3i3K
+   jN9kl8I3D8yJKP321brVYz6jla5OfPOCtJ2Z+dd4cGlOUrZS8kJxFX58J
+   g==;
+X-CSE-ConnectionGUID: NQYFMmXQTAmASIVp33Pyrw==
+X-CSE-MsgGUID: om0wE/myQziLeefq9s6oCw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986909"
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="992123"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:36 -0700
-X-CSE-ConnectionGUID: fMGnTY3hS0iQdJ3EoYwDkw==
-X-CSE-MsgGUID: pdPHpR76Q/+JLFYQNK5E1Q==
+   d="scan'208";a="986909"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:34 -0700
+X-CSE-ConnectionGUID: gt2nOSQrRxuQcHt8XBKOlw==
+X-CSE-MsgGUID: XZu2InRrR7SnegWPwfk/vA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="2636134"
+   d="scan'208";a="2536962"
 Received: from jf5300-15a101203tc.jf.intel.com (HELO meta-crater2c.jf.intel.com) ([10.54.113.49])
-  by fmviesa005.fm.intel.com with ESMTP; 19 Oct 2026 08:14:35 -0700
+  by orviesa003.jf.intel.com with ESMTP; 19 Oct 2026 08:14:33 -0700
 From: Daniel Byrne <daniel1.byrne@intel.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Dave Jiang <dave.jiang@intel.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Frank Li <Frank.Li@kernel.org>,
+	Dan Williams <djbw@kernel.org>,
 	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Frank Li <Frank.Li@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tom Zanussi <tom.zanussi@linux.intel.com>,
+	Kristen Accardi <kristen.c.accardi@intel.com>,
 	dmaengine@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/3] [PATCH 0/3] dmaengine: polled completion status for out-of-order providers
-Date: Mon, 19 Oct 2026 08:06:29 -0700
-Message-ID: <20261019150632.4026424-1-daniel1.byrne@intel.com>
+	linux-crypto@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH 06/17] dmaengine: idxd: keep the interrupt handle across terminate_all
+Date: Mon, 19 Oct 2026 08:06:19 -0700
+Message-ID: <20261019150630.4026341-7-daniel1.byrne@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261019150630.4026341-1-daniel1.byrne@intel.com>
+References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -87,61 +92,103 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A client that polls transaction status on a device whose work queues
-complete out of order, as DSA's do when several engines serve one
-queue, cannot use the cookie-ordered dma_async_is_tx_complete(): the
-completed-cookie watermark moves past descriptors still in flight.
-These three patches add dmaengine_async_is_tx_complete() as the polling
-API, routing the query to device_tx_status() without the cookie-window
-outputs, implement it in idxd from a generation-numbered cookie that
-reads the descriptor's own completion record, and drop
-DMA_COMPLETION_NO_ORDER and DMA_OUT_OF_ORDER, whose only setter was
-idxd. dmatest's polled mode is the in-tree user; the io_uring DMA copy
-offload, to be posted separately, is the one that needs the exact answers.
+idxd_wq_flush_descs(), the device_terminate_all() implementation,
+released the work queue's interrupt handle and cleared its permission
+entry after flushing the pending descriptors. The handle is only
+requested again when the driver rebinds. On a live channel every
+descriptor submitted with a completion interrupt after a terminate
+therefore fails with DSA_COMP_INT_HANDLE_INVAL, and since no
+interrupt is raised for such a descriptor the client never learns of
+it and waits forever. A single dmaengine_terminate_sync() on an error
+path, which the API allows, disabled the channel for good.
 
-This applies on top of "dmaengine: idxd: fixes found by an in-kernel
-polling client", posted alongside, which the status implementation's
-reset-epoch handling depends on.
+Flush the pending descriptors only. Releasing the handle and clearing
+the permission entry belong to idxd_wq_free_irq(), which already does
+both when the interrupt is torn down. idxd_wq_flush_descs() is also the
+flush of the FLR halt path, which relied on it to mark the handles
+invalid. The FLR revokes every handle, so that path now marks them
+invalid itself, without a device command, and the teardown after the
+reset skips the release of a handle the reset has already revoked.
 
-Daniel Byrne (3):
-  dmaengine: add dmaengine_async_is_tx_complete() for channel status
-    queries
-  dmaengine: idxd: generation-number transaction status
-  dmaengine: drop DMA_COMPLETION_NO_ORDER and DMA_OUT_OF_ORDER
+At this point idxd_flush_pending_descs() still frees the slots of
+in-flight interrupt-armed descriptors while the device may hold them.
+A later patch in this series, "dmaengine: idxd: quarantine
+terminate_all's descriptor slots until the device has drained",
+addresses that.
 
- Documentation/driver-api/dmaengine/client.rst |  24 +--
- .../driver-api/dmaengine/provider.rst         |  64 ++++---
- drivers/dma/amba-pl08x.c                      |   2 +-
- drivers/dma/at_hdmac.c                        |   5 +-
- drivers/dma/dmaengine.c                       |   2 +-
- drivers/dma/dmaengine.h                       |  21 ++-
- drivers/dma/dmatest.c                         |  14 +-
- drivers/dma/idxd/device.c                     |   1 +
- drivers/dma/idxd/dma.c                        | 159 +++++++++++++++++-
- drivers/dma/idxd/idxd.h                       |   3 +
- drivers/dma/idxd/irq.c                        |   8 +
- include/linux/dmaengine.h                     |  55 +++---
- 12 files changed, 268 insertions(+), 90 deletions(-)
+Fixes: 2a93f5747d0e ("dmaengine: idxd: Flush all pending descriptors")
+Cc: stable@vger.kernel.org # 7.0+
+Assisted-by: Claude:claude-opus-5-5
+Assisted-by: Claude:claude-fable-5-1
+Signed-off-by: Daniel Byrne <daniel1.byrne@intel.com>
+---
+ drivers/dma/idxd/device.c |  7 +------
+ drivers/dma/idxd/irq.c    | 16 +++++++++++++---
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-
-base-commit: c03c1a14507dfaf8b856c2608f9ac216021fc222
-prerequisite-patch-id: b50615a6696ce4ffa7e20911f77b9f7f0481f14f
-prerequisite-patch-id: 36d833fd556bce04054a7e373ee46575186bb58c
-prerequisite-patch-id: 3aeecac097eafb6812e10b9896a242c61c4ca5da
-prerequisite-patch-id: 99e0468cdabf56a287c6a7f2d7ef06aa6d5a573e
-prerequisite-patch-id: b1dd90551e6b671e751aae8d2a688d9db8f300f5
-prerequisite-patch-id: c99a06be81e6a56d84a14bf9e00d2b48455c3a89
-prerequisite-patch-id: 3e39b306130b75fedae70a328072dc9577818b9f
-prerequisite-patch-id: b1d8fb5b5f7f478adca95f4c8b632480164d18b4
-prerequisite-patch-id: b6d48ab83002f113833ba874be299c241788dd30
-prerequisite-patch-id: 53bb73bdfd98cd78ca5d86b00ad7e96fcebf7ee6
-prerequisite-patch-id: de44e2d44df13e8e07ae00df842d67c9d5c874d2
-prerequisite-patch-id: 8191bc0ef2c849d2d9d55f73fc2169f695ea8594
-prerequisite-patch-id: bfc55b104522278ca1fba36d3f4adb3a306267bc
-prerequisite-patch-id: 12c1f4cba95509b8e7e87ce5c2f9c4265ec0c2df
-prerequisite-patch-id: 6e859bfd95e53386bce02ac6585f09a067d0bb8e
-prerequisite-patch-id: 2874936c0a5b3863db0309e06ee93008890a714e
-prerequisite-patch-id: 85ef17aa68aecd398d3b47ad8df435ce715572e8
+diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
+index a83b5da88f8c..a461cae7a409 100644
+--- a/drivers/dma/idxd/device.c
++++ b/drivers/dma/idxd/device.c
+@@ -1336,7 +1336,7 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
+ 	free_irq(ie->vector, ie);
+ 	idxd_flush_pending_descs(ie);
+ 
+-	/* The interrupt might have been already released by FLR */
++	/* FLR revokes every handle; the halt path marks them invalid. */
+ 	if (ie->int_handle == INVALID_INT_HANDLE)
+ 		return;
+ 
+@@ -1351,7 +1351,6 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
+ void idxd_wq_flush_descs(struct idxd_wq *wq)
+ {
+ 	struct idxd_irq_entry *ie = &wq->ie;
+-	struct idxd_device *idxd = wq->idxd;
+ 
+ 	guard(mutex)(&wq->wq_lock);
+ 
+@@ -1359,10 +1358,6 @@ void idxd_wq_flush_descs(struct idxd_wq *wq)
+ 		return;
+ 
+ 	idxd_flush_pending_descs(ie);
+-	if (idxd->request_int_handles)
+-		idxd_device_release_int_handle(idxd, ie->int_handle, IDXD_IRQ_MSIX);
+-	idxd_device_clear_perm_entry(idxd, ie);
+-	ie->int_handle = INVALID_INT_HANDLE;
+ }
+ 
+ int idxd_wq_request_irq(struct idxd_wq *wq)
+diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+index 647969920a06..915304ee7099 100644
+--- a/drivers/dma/idxd/irq.c
++++ b/drivers/dma/idxd/irq.c
+@@ -442,13 +442,23 @@ static irqreturn_t idxd_halt(struct idxd_device *idxd)
+ 			INIT_WORK(&idxd->work, idxd_device_reinit);
+ 			queue_work(idxd->wq, &idxd->work);
+ 		} else if (gensts.reset_type == IDXD_DEVICE_RESET_FLR) {
++			int i;
++
+ 			idxd->state = IDXD_DEV_HALTED;
+ 			idxd_mask_error_interrupts(idxd);
+-			/* Flush all pending descriptors, and disable
+-			 * interrupts, they will be re-enabled when FLR
+-			 * concludes.
++			/*
++			 * Flush all pending descriptors. The FLR revokes every
++			 * interrupt handle, so mark them invalid here without a
++			 * device command; they are requested again when a work
++			 * queue is re-enabled after the reset.
+ 			 */
+ 			idxd_wqs_flush_descs(idxd);
++			for (i = 0; i < idxd->max_wqs; i++) {
++				struct idxd_wq *wq = idxd->wqs[i];
++
++				if (wq->type == IDXD_WQT_KERNEL)
++					WRITE_ONCE(wq->ie.int_handle, INVALID_INT_HANDLE);
++			}
+ 			dev_dbg(&idxd->pdev->dev,
+ 				"idxd halted, doing FLR. After FLR, configs are restored\n");
+ 			INIT_WORK(&idxd->work, idxd_device_flr);
 -- 
 2.43.0
 
