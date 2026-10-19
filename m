@@ -1,86 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792422878;
-	b=umPVcKQs95dRzQjOEHoWzSMM41hFTslD20oGyQ4w69T8L16mM+Ms7wYoHBvuvFOXD66i
-	 tBGdjNgE4usCzfu7nu25nT7NPBY0zaCfvfJ3xOVlS4zNQctbYrn0ZI0q+RZ1CzWwa/FCb
-	 Q5H3KYjP93Kc7FqhN31ZYQZOZaKDnAapt3/UNCXjyLnrRpq+YiovtFaQM/K9kNvIMeGsw
-	 DAEiU4UcMO4eq59pWNAC3vrgM1WihC75oswz/wgZaApTlT+fF1c8Ami2S9Jm/gV6zvskz
-	 cY/P5JsV4TQavityW4C1Q8vCuBvH9tsNwRtUjVBzzoA9yZSPT2bayDgblyeSzhtG/TQ==
+	t=1792422877;
+	b=uqIln9mOTzgK5RUH94e2p6m3G/VLf7tum/NIy4bVlRQ+UfbH1bii20IEgHxIL7IBTFXn
+	 3D5PxpXfisbSBjjxfPRS2Olu/UI/AyTFbMsTlRHPCiukDd4epqqyu7cehmr5TYbs3DcUq
+	 7pE35xjev74Jtc5huJm9D3B+oz+VmsAzfvNiBWmuiKx6pYb5/ubgisFyja6mPD/pG1zeD
+	 HJj7/kUE3XNd54PiyE/YMOweeauR0Db2Ei6/WC2y/V9CsWgNTEa8lM8+yity6rL4zdb3b
+	 beJXf1aDZLE/9zE6YNGfPG+YLD2g/kw2x9PtMzYvox8F4fwl9r23P2b0Enjr3e9FOJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792422878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792422877;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=wyMNmoV7LLQCe5NBcl4HLsDDXaPs+fkB0uZvlmUvPpk=;
-	b=5lDqgc6hMpBPjErUHEwp7FRZfiV+SJske6njyALFB+CCJGtE+XSsdijHVotkx9uIFFlt
-	 ZM8QxskjEiE1waWHSynDx4GwVpE2Zx/ehfwJ5zJ8ixafmBw62BtbLGh24nvs7IgzlVsEq
-	 88pX0Sf6rjbCvI4nivG6F9ulvs9xZOvbovziQjojHG86m2NP4OTKN4mX6FQBLYcmWC75Y
-	 ei/z5LlfLVRNAyhkFlgUCLFOtyh2A22HhpVeDNu9RmXdWBuFSNkDta1/GKJlmve5JiMSZ
-	 be5grZ+wsGTFMJfnP+StWGjyKKnHkWK3IhwmsxJlMHWBgOjLHUEig+OSRQTC54qvMeg==
+	bh=RLjqAdwihfwMILiMHPnz0FYmmo76i0aPQCh334CV9WE=;
+	b=L1CX0BIFF4iHSEkW2J1UN8vXyLANCPWyHF2X8gtS9gCx2IlqtL8IwPCryLi2hDb4o8sP
+	 nrUoE+Db8tjfQo+KYvA+VuTFWWAsTCsuEKb2RpNRsvI2/lIRbbbgARUAOBJrKVresZfCF
+	 zY4dgE2Jo47W5SYBM22ZemnMIHrea/kXVMhIk0CZmHbWtMxMLtk5xbKuqyPC7r6eZXgWp
+	 6GGDnra7ZaaQMQAxypvY8jScuvt651np+oziTmJV9oYoHJx6HqQVrgAV1PUuFS9gelEv4
+	 h5OtnUGH/ZbkfECUFmDW2wRzIIquSR+zUA8bSYa2rx6KJAPAKIOqCQjJ+FnrX8b4TIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Rl9D987c;
-	arc=none smtp.remote-ip=198.175.65.12
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="WEvhS/HD";
+	arc=none smtp.remote-ip=198.175.65.9
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C82609CEDD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F84609CEDE;
 	Mon, 19 Oct 2026 15:14:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21C82609CEDD
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28F84609CEDE
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Rl9D987c
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WEvhS/HD
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1792422878; x=1823958878;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=QgVVF5Nil8kjcN6fX6wTMPSDsxBuQH1tWzFFSyv8gGU=;
-  b=Rl9D987cQLXUlIl6L+kbGyP9YFXcJAIF7UsdkcdlNhsN8C4DxrgXKqSc
-   /vXoNejC8cwe0TGp7bzXJrBJo3SR5EkeNywCh2NyOvlMPPtR0EP3XaKmX
-   dpOAy0ZRFH421XM1ulKtAGSYGX7aUNm8mhtaMXtU6jKGFdp1TTG60/nWH
-   nrilSJrvDHW1JKLze5OJHYQ7fZkVCdhKjM8nuWh2jE8UU1CyJ1ow4ouCi
-   betzTIhNq7D9Uyh0Zx67Et2IVP1XEaQd1YxS1CSs88SJw8atXX6IzC9NR
-   OWs6dIzr65dObfPif81fpmxmK6cUI8/UMg9+UlrbPjEYbV7V/R3xhzey7
-   A==;
-X-CSE-ConnectionGUID: yhvr66Z5Re6Q5pKqsMBoHA==
-X-CSE-MsgGUID: ofFD/Pj0QVW1byhtQMBtYw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986918"
+  bh=TDUC9/ygnBevxT8Y20L5HUe3WFLonkXYpQ/2lAUky5g=;
+  b=WEvhS/HDqalAO53KHkJ85ksgnVVW4ZpDMo/rpLAalKTXzCTlu3tjyQQS
+   nDX+Z5/+xwBqWWfTwQdD2c1zS8e0nZmVOcmZOIOgGsBEff9NxvKrxySGX
+   DWiztdlCiUPSosIgaroPDlyfdICwK2UYGtdr5VJrnYZDS7ze1gzeRox0B
+   j+1oPPXXWy/X4kscZ5ZwBs00ixkHWGPXMSZ5S+1EnHrt+8IAnQVGyirRx
+   sxVMzOMAFM7QiuyQq46OVP5BvcKaUNZJjN+I1hrb4HC19D3C7JWpd3DcF
+   Qr7bfJzXQIRpR6cmv89KX7kLv4xHdxeVuSwOSbZB9X7MvBgRMGhE7cc6n
+   w==;
+X-CSE-ConnectionGUID: uIAJmcl7RPuY+gqe12bUcg==
+X-CSE-MsgGUID: YzLfwR9ZT5iKs7iqRKCgDA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="992128"
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="986918"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:34 -0700
-X-CSE-ConnectionGUID: AaLch5cvQiq1SnRJDFgN6Q==
-X-CSE-MsgGUID: XyYt6r+vSMi0J3gzW3jB6Q==
+   d="scan'208";a="992128"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:36 -0700
+X-CSE-ConnectionGUID: ts3hCmxIRqujsEnHjHCn9g==
+X-CSE-MsgGUID: IxcBpJplQy6yQzPxTgk6JQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="2536974"
+   d="scan'208";a="2636138"
 Received: from jf5300-15a101203tc.jf.intel.com (HELO meta-crater2c.jf.intel.com) ([10.54.113.49])
-  by orviesa003.jf.intel.com with ESMTP; 19 Oct 2026 08:14:34 -0700
+  by fmviesa005.fm.intel.com with ESMTP; 19 Oct 2026 08:14:35 -0700
 From: Daniel Byrne <daniel1.byrne@intel.com>
 To: Vinod Koul <vkoul@kernel.org>,
 	Dave Jiang <dave.jiang@intel.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Dan Williams <djbw@kernel.org>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Frank Li <Frank.Li@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	Kristen Accardi <kristen.c.accardi@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
 	dmaengine@vger.kernel.org,
-	linux-crypto@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH 09/17] dmaengine: idxd: quarantine terminate_all's descriptor slots until the device has drained
-Date: Mon, 19 Oct 2026 08:06:22 -0700
-Message-ID: <20261019150630.4026341-10-daniel1.byrne@intel.com>
+	linux-doc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] dmaengine: add dmaengine_async_is_tx_complete() for channel status queries
+Date: Mon, 19 Oct 2026 08:06:30 -0700
+Message-ID: <20261019150632.4026424-2-daniel1.byrne@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261019150630.4026341-1-daniel1.byrne@intel.com>
-References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
+In-Reply-To: <20261019150632.4026424-1-daniel1.byrne@intel.com>
+References: <20261019150632.4026424-1-daniel1.byrne@intel.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -92,307 +90,328 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-idxd_dma_terminate_all() flushes the pending descriptors and frees their
-slots while the device still holds them. A late completion record then
-lands on the slot's next owner and completes it with the old
-descriptor's status, and the unmap data the client attached is released
-while the device may still access the memory it maps; with an IOMMU
-another mapping can reuse the released address and take the late
-access.
+Add dmaengine_async_is_tx_complete() as the client API for polling the
+completion of one transaction. Like dma_async_is_tx_complete(), which
+it deprecates, it routes the query to the channel's device_tx_status()
+callback; the change is that it drops the @last and @used outputs,
+which only make sense for providers that complete in cookie order.
+A provider that tracks per-descriptor state can answer exactly from
+that state, and a high-rate in-kernel polling user, the io_uring DSA
+copy offload to be posted separately, depends on such answers.
 
-Keep those slots out of use instead. terminate_all now waits for the
-submitters in flight, so that every descriptor on the lists is in the
-device, and the flush moves the descriptors the device has not finished
-to a per-queue quarantine, with their unmap data, after it has completed
-their cookies. device_synchronize() takes the quarantine, drains the
-queue, which covers everything the device held when the drain was
-issued, and only then frees the slots and the unmap data. A descriptor
-terminated after the take waits for the next synchronize. The halt flush
-frees the quarantine itself, since the halt killed every descriptor the
-device held, and so does the queue disable once its drain and reset
-have completed.
+The kernel-doc says how far such an answer goes. It is exact for a
+transaction submitted without DMA_PREP_INTERRUPT, on the first query
+that reports it finished. An interrupt-armed transaction reports its
+result through callback_result, and a cookie whose descriptor has been
+retired reads DMA_COMPLETE. The client guide's advice to pause or stop
+the channel before a query points at that text.
 
-Fixes: 2a93f5747d0e ("dmaengine: idxd: Flush all pending descriptors")
+dma_async_is_complete() was only used through dma_cookie_status(), so
+delete it from the client header and open-code the cookie-window
+comparison there. Move dma_set_tx_state(), which only providers call,
+from the client header into drivers/dma/dmaengine.h; every in-tree
+user already includes it. Convert dma_sync_wait() and dmatest to the
+new helper, fix the two comments that still name the deleted helper,
+and document the cookie assignment helpers in the provider guide.
+
 Assisted-by: Claude:claude-opus-5-5
 Assisted-by: Claude:claude-fable-5-1
 Signed-off-by: Daniel Byrne <daniel1.byrne@intel.com>
 ---
- drivers/dma/idxd/device.c | 117 ++++++++++++++++++++++++++++++++++++--
- drivers/dma/idxd/dma.c    |  12 +++-
- drivers/dma/idxd/idxd.h   |  12 +++-
- drivers/dma/idxd/init.c   |   1 +
- drivers/dma/idxd/irq.c    |   3 +-
- 5 files changed, 138 insertions(+), 7 deletions(-)
+ Documentation/driver-api/dmaengine/client.rst | 24 ++++-----
+ .../driver-api/dmaengine/provider.rst         | 45 ++++++++++++++--
+ drivers/dma/amba-pl08x.c                      |  2 +-
+ drivers/dma/at_hdmac.c                        |  5 +-
+ drivers/dma/dmaengine.c                       |  2 +-
+ drivers/dma/dmaengine.h                       | 21 +++++++-
+ drivers/dma/dmatest.c                         |  3 +-
+ include/linux/dmaengine.h                     | 54 +++++++++----------
+ 8 files changed, 103 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 41223d2e20af..09475f5ea026 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -118,6 +118,8 @@ int idxd_wq_alloc_resources(struct idxd_wq *wq)
- 	if (wq->type != IDXD_WQT_KERNEL)
- 		return 0;
+diff --git a/Documentation/driver-api/dmaengine/client.rst b/Documentation/driver-api/dmaengine/client.rst
+index 5ee5d4a3596d..255aaad33339 100644
+--- a/Documentation/driver-api/dmaengine/client.rst
++++ b/Documentation/driver-api/dmaengine/client.rst
+@@ -277,8 +277,8 @@ The details of these operations are:
  
-+	/* A fresh pool: nothing outstanding can land in it. */
-+	INIT_LIST_HEAD(&wq->quarantine);
- 	num_descs = wq_dedicated(wq) ? wq->size : wq->threshold;
- 	wq->num_descs = num_descs;
+       dma_cookie_t dmaengine_submit(struct dma_async_tx_descriptor *desc)
  
-@@ -170,10 +172,18 @@ EXPORT_SYMBOL_NS_GPL(idxd_wq_alloc_resources, "IDXD");
- void idxd_wq_free_resources(struct idxd_wq *wq)
- {
- 	struct device *dev = &wq->idxd->pdev->dev;
-+	LIST_HEAD(dead_descs);
+-   This returns a cookie can be used to check the progress of DMA engine
+-   activity via other DMA engine calls not covered in this document.
++   This returns a cookie that can be used to check the progress of a transaction
++   via dmaengine_async_is_tx_complete().
  
- 	if (wq->type != IDXD_WQT_KERNEL)
- 		return;
+    dmaengine_submit() will not start the DMA operation, it merely adds
+    it to the pending queue. For this, see step 5, dma_async_issue_pending.
+@@ -357,23 +357,23 @@ Further APIs
  
-+	/*
-+	 * The disable frees the pool only after its drain and its reset
-+	 * completed, and a failed enable has run nothing, so the device no
-+	 * longer reaches what a quarantined descriptor maps.
-+	 */
-+	idxd_wq_quarantine_take(wq, &dead_descs);
-+	idxd_wq_quarantine_free(wq, &dead_descs);
- 	free_hw_descs(wq);
- 	free_descs(wq);
- 	dma_free_coherent(dev, wq->compls_size, wq->compls, wq->compls_addr);
-@@ -1391,11 +1401,14 @@ int idxd_device_load_config(struct idxd_device *idxd)
- 	return 0;
+    .. code-block:: c
+ 
+-      enum dma_status dma_async_is_tx_complete(struct dma_chan *chan,
+-		dma_cookie_t cookie, dma_cookie_t *last, dma_cookie_t *used)
++      enum dma_status dmaengine_async_is_tx_complete(struct dma_chan *chan,
++		dma_cookie_t cookie)
+ 
+-   This can be used to check the status of the channel. Please see
+-   the documentation in include/linux/dmaengine.h for a more complete
+-   description of this API.
+-
+-   This can be used in conjunction with dma_async_is_complete() and
+-   the cookie returned from dmaengine_submit() to check for
+-   completion of a specific DMA transaction.
++   This can be used with the cookie returned from dmaengine_submit()
++   to check for completion of a specific DMA transaction.
+ 
+    .. note::
+ 
+       Not all DMA engine drivers can return reliable information for
+       a running DMA channel. It is recommended that DMA engine users
+       pause or stop (via dmaengine_terminate_all()) the channel before
+-      using this API.
++      using this API, unless the provider tracks per-descriptor state.
++      Even such a provider answers exactly only within the limits that
++      the kernel-doc of dmaengine_async_is_tx_complete() in
++      include/linux/dmaengine.h describes: for a transaction submitted
++      without DMA_PREP_INTERRUPT, and on the first query that reports it
++      finished.
+ 
+ 5. Synchronize termination API
+ 
+diff --git a/Documentation/driver-api/dmaengine/provider.rst b/Documentation/driver-api/dmaengine/provider.rst
+index f4ed98f701c9..ef342886af96 100644
+--- a/Documentation/driver-api/dmaengine/provider.rst
++++ b/Documentation/driver-api/dmaengine/provider.rst
+@@ -419,7 +419,9 @@ supported.
+ 
+     - tx_submit: A pointer to a function you have to implement,
+       that is supposed to push the current transaction descriptor to a
+-      pending queue, waiting for issue_pending to be called.
++      pending queue, waiting for issue_pending to be called. Each
++      descriptor is given a cookie to identify it. See the section
++      "Cookie Management" below.
+ 
+     - phys: Physical address of the descriptor which is used later by
+       the dma engine to read the descriptor and initiate transfer.
+@@ -533,6 +535,41 @@ supported.
+ 
+   - May sleep.
+ 
++Cookie Management
++------------------
++
++When a transaction is queued for submission via tx_submit(), the provider
++must assign that transaction a cookie (dma_cookie_t) to uniquely identify it.
++The provider is allowed to perform this assignment however it wants, but for
++convenience the following utility functions are available to create
++monotonically increasing cookies:
++
++  .. code-block:: c
++
++    void dma_cookie_init(struct dma_chan *chan);
++
++  Called once at channel creation.
++
++  .. code-block:: c
++
++    dma_cookie_t dma_cookie_assign(struct dma_async_tx_descriptor *tx);
++
++  Assign a cookie to the given descriptor.
++
++  .. code-block:: c
++
++    void dma_cookie_complete(struct dma_async_tx_descriptor *tx);
++
++  Mark the descriptor as complete and invalidate the cookie.
++
++  .. code-block:: c
++
++    enum dma_status dma_cookie_status(struct dma_chan *chan,
++      dma_cookie_t cookie, struct dma_tx_state *state);
++
++  Report the status of the cookie, filling in the state structure if
++  it is not NULL.
++
+ 
+ Misc notes
+ ==========
+@@ -550,10 +587,10 @@ where to put them)
+ 
+ dma_cookie_t
+ 
+-- it's a DMA transaction ID that will increment over time.
++- it's a DMA transaction ID.
+ 
+-- Not really relevant any more since the introduction of ``virt-dma``
+-  that abstracts it away.
++- The value can be chosen by the provider, or use the helper APIs
++  such as dma_cookie_assign() and dma_cookie_complete().
+ 
+ dma_vec
+ 
+diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+index 5e88fd44812d..8c235a603bb0 100644
+--- a/drivers/dma/amba-pl08x.c
++++ b/drivers/dma/amba-pl08x.c
+@@ -1536,7 +1536,7 @@ static void pl08x_free_chan_resources(struct dma_chan *chan)
  }
  
--static void idxd_flush_pending_descs(struct idxd_irq_entry *ie)
-+static void idxd_flush_pending_descs(struct idxd_irq_entry *ie,
-+				     bool quarantine)
- {
-+	struct idxd_wq *wq = ie_to_wq(ie);
- 	struct idxd_desc *desc, *itr;
- 	struct llist_node *head;
- 	LIST_HEAD(flist);
-+	LIST_HEAD(qlist);
- 	enum idxd_complete_type ctype;
+ /*
+- * Code accessing dma_async_is_complete() in a tight loop may give problems.
++ * Code polling the transaction status in a tight loop may give problems.
+  * If slaves are relying on interrupts to signal completion this function
+  * must not be called with interrupts disabled.
+  */
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index e5b30a57c477..7ea0822a3900 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1666,9 +1666,8 @@ static int atc_terminate_all(struct dma_chan *chan)
+  * @cookie: transaction identifier to check status of
+  * @txstate: if not %NULL updated with transaction state
+  *
+- * If @txstate is passed in, upon return it reflect the driver
+- * internal state and can be used with dma_async_is_complete() to check
+- * the status of multiple cookies without re-checking hardware state.
++ * If @txstate is passed in, upon return it reflects the driver
++ * internal state: the last completed and the last issued cookie.
+  */
+ static enum dma_status
+ atc_tx_status(struct dma_chan *chan,
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index ced78c985d1c..d7febef65a2d 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -537,7 +537,7 @@ enum dma_status dma_sync_wait(struct dma_chan *chan, dma_cookie_t cookie)
  
- 	spin_lock(&ie->list_lock);
-@@ -1423,8 +1436,82 @@ static void idxd_flush_pending_descs(struct idxd_irq_entry *ie)
- 		tx = &desc->txd;
- 		tx->callback = NULL;
- 		tx->callback_result = NULL;
-+		/*
-+		 * A descriptor the device has not finished still has its
-+		 * completion record to write. A flush that leaves the
-+		 * device running keeps its slot out of use, or the record
-+		 * would land on the slot's next owner and complete it with
-+		 * this descriptor's status. Its unmap data stays with the
-+		 * slot as well, since the device may still access what it
-+		 * maps, and an address released now could be mapped again
-+		 * for someone else before the late access.
-+		 */
-+		if (quarantine && ctype == IDXD_COMPLETE_ABORT) {
-+			struct dmaengine_unmap_data *unmap = tx->unmap;
-+
-+			tx->unmap = NULL;
-+			idxd_dma_complete_txd(desc, ctype, false, NULL, NULL);
-+			tx->unmap = unmap;
-+			list_add_tail(&desc->list, &qlist);
-+			continue;
-+		}
- 		idxd_dma_complete_txd(desc, ctype, true, NULL, NULL);
+ 	dma_async_issue_pending(chan);
+ 	do {
+-		status = dma_async_is_tx_complete(chan, cookie, NULL, NULL);
++		status = dmaengine_async_is_tx_complete(chan, cookie);
+ 		if (time_after_eq(jiffies, dma_sync_wait_timeout)) {
+ 			dev_err(chan->device->dev, "%s: timeout!\n", __func__);
+ 			return DMA_ERROR;
+diff --git a/drivers/dma/dmaengine.h b/drivers/dma/dmaengine.h
+index 53f16d3f0029..e72876a512a3 100644
+--- a/drivers/dma/dmaengine.h
++++ b/drivers/dma/dmaengine.h
+@@ -79,7 +79,26 @@ static inline enum dma_status dma_cookie_status(struct dma_chan *chan,
+ 		state->residue = 0;
+ 		state->in_flight_bytes = 0;
  	}
+-	return dma_async_is_complete(cookie, complete, used);
 +
-+	if (list_empty(&qlist))
-+		return;
-+	spin_lock(&ie->list_lock);
-+	list_splice_tail(&qlist, &wq->quarantine);
-+	spin_unlock(&ie->list_lock);
-+}
-+
-+/*
-+ * Take what terminate_all has quarantined so far. A drain covers only
-+ * what the device held when it was issued, so a synchronize takes the
-+ * quarantine before it drains and frees it if the drain completed. A
-+ * descriptor terminated meanwhile waits for the next one. The list lock
-+ * serialises this with the flush that adds to the quarantine and with a
-+ * halt or a teardown that frees it all.
-+ */
-+void idxd_wq_quarantine_take(struct idxd_wq *wq, struct list_head *list)
-+{
-+	spin_lock(&wq->ie.list_lock);
-+	list_splice_init(&wq->quarantine, list);
-+	spin_unlock(&wq->ie.list_lock);
-+}
-+
-+/*
-+ * Nothing the device holds can write their completion records, or reach
-+ * the memory their unmap data maps, any more. The unmap data goes before
-+ * the slot, which a new owner may take at once.
-+ */
-+void idxd_wq_quarantine_free(struct idxd_wq *wq, struct list_head *list)
-+{
-+	struct idxd_desc *desc, *itr;
-+
-+	list_for_each_entry_safe(desc, itr, list, list) {
-+		list_del(&desc->list);
-+		dma_descriptor_unmap(&desc->txd);
-+		idxd_free_desc(wq, desc);
++	if (complete <= used) {
++		if ((cookie <= complete) || (cookie > used))
++			return DMA_COMPLETE;
++	} else {
++		if ((cookie <= complete) && (cookie > used))
++			return DMA_COMPLETE;
 +	}
++	return DMA_IN_PROGRESS;
 +}
 +
-+/*
-+ * A halt killed every descriptor the device held: the quarantined slots
-+ * are free. Under wq_lock, since an unbind racing the halt may free the
-+ * pool.
-+ */
-+void idxd_wq_halt_release(struct idxd_wq *wq)
++static inline void dma_set_tx_state(struct dma_tx_state *st,
++	dma_cookie_t last, dma_cookie_t used, u32 residue)
 +{
-+	LIST_HEAD(dead_descs);
-+
-+	guard(mutex)(&wq->wq_lock);
-+
-+	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
++	if (!st)
 +		return;
 +
-+	idxd_wq_quarantine_take(wq, &dead_descs);
-+	idxd_wq_quarantine_free(wq, &dead_descs);
++	st->last = last;
++	st->used = used;
++	st->residue = residue;
  }
  
- static void idxd_device_set_perm_entry(struct idxd_device *idxd,
-@@ -1456,7 +1543,7 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
- 		return;
+ static inline void dma_set_residue(struct dma_tx_state *state, u32 residue)
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 2ae3469397f3..3d0d54a97add 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -847,8 +847,7 @@ static int dmatest_func(void *data)
+ 					done->done,
+ 					msecs_to_jiffies(params->timeout));
  
- 	free_irq(ie->vector, ie);
--	idxd_flush_pending_descs(ie);
-+	idxd_flush_pending_descs(ie, false);
+-			status = dma_async_is_tx_complete(chan, cookie, NULL,
+-							  NULL);
++			status = dmaengine_async_is_tx_complete(chan, cookie);
+ 		}
  
- 	/* FLR revokes every handle; the halt path marks them invalid. */
- 	if (ie->int_handle == INVALID_INT_HANDLE)
-@@ -1476,16 +1563,38 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
- 	ie->pasid = IOMMU_PASID_INVALID;
+ 		if (!done->done) {
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 4178248611d9..83bef7a70b99 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -1596,9 +1596,12 @@ static inline void dma_async_issue_pending(struct dma_chan *chan)
+  * @last: returns last completed cookie, can be NULL
+  * @used: returns last issued cookie, can be NULL
+  *
+- * If @last and @used are passed in, upon return they reflect the driver
+- * internal state and can be used with dma_async_is_complete() to check
+- * the status of multiple cookies without re-checking hardware state.
++ * This function is deprecated. New code should use
++ * dmaengine_async_is_tx_complete() instead.
++ *
++ * If @last and @used are passed in, upon return they reflect the most
++ * recently submitted (used) cookie and the most recently completed
++ * cookie.
+  */
+ static inline enum dma_status dma_async_is_tx_complete(struct dma_chan *chan,
+ 	dma_cookie_t cookie, dma_cookie_t *last, dma_cookie_t *used)
+@@ -1615,36 +1618,29 @@ static inline enum dma_status dma_async_is_tx_complete(struct dma_chan *chan,
  }
  
--void idxd_wq_flush_descs(struct idxd_wq *wq)
-+/*
-+ * @quarantine: the device keeps running, so the slots of the descriptors
-+ * it has not finished stay out of use until a drain covers them. A halt
-+ * has killed them and frees their slots at once.
-+ */
-+void idxd_wq_flush_descs(struct idxd_wq *wq, bool quarantine)
+ /**
+- * dma_async_is_complete - test a cookie against chan state
+- * @cookie: transaction identifier to test status of
+- * @last_complete: last know completed transaction
+- * @last_used: last cookie value handed out
++ * dmaengine_async_is_tx_complete - poll for transaction completion
++ * @chan: DMA channel
++ * @cookie: transaction identifier to check status of
+  *
+- * dma_async_is_complete() is used in dma_async_is_tx_complete()
+- * the test logic is separated for lightweight testing of multiple cookies
++ * Query the provider's device_tx_status() callback for the state of a
++ * single transaction. Providers that rely on cookie ordering answer with
++ * the cookie-window approximation. Providers that track per-descriptor
++ * state can answer exactly, but only for a transaction submitted without
++ * DMA_PREP_INTERRUPT and only on the first query that reports it
++ * finished. A transaction submitted with DMA_PREP_INTERRUPT reports its
++ * result through callback_result, and the query only tells whether it
++ * has finished. Once the first terminal answer has retired the
++ * descriptor, a later query for the same cookie reads DMA_COMPLETE.
++ *
++ * Return: DMA_COMPLETE, DMA_IN_PROGRESS, DMA_PAUSED, DMA_ERROR or
++ * DMA_OUT_OF_ORDER.
+  */
+-static inline enum dma_status dma_async_is_complete(dma_cookie_t cookie,
+-			dma_cookie_t last_complete, dma_cookie_t last_used)
+-{
+-	if (last_complete <= last_used) {
+-		if ((cookie <= last_complete) || (cookie > last_used))
+-			return DMA_COMPLETE;
+-	} else {
+-		if ((cookie <= last_complete) && (cookie > last_used))
+-			return DMA_COMPLETE;
+-	}
+-	return DMA_IN_PROGRESS;
+-}
+-
+-static inline void
+-dma_set_tx_state(struct dma_tx_state *st, dma_cookie_t last, dma_cookie_t used, u32 residue)
++static inline enum dma_status dmaengine_async_is_tx_complete(struct dma_chan *chan,
++	dma_cookie_t cookie)
  {
- 	struct idxd_irq_entry *ie = &wq->ie;
-+	bool killed = false;
+-	if (!st)
+-		return;
++	struct dma_tx_state state;
  
- 	guard(mutex)(&wq->wq_lock);
- 
- 	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
- 		return;
- 
--	idxd_flush_pending_descs(ie);
-+	/*
-+	 * A submitter between its list add and its portal write holds
-+	 * wq_active. Waiting for the reference to die puts every listed
-+	 * descriptor in the device, where the drain that frees the
-+	 * quarantine covers it. A halt flush has done this itself.
-+	 */
-+	if (quarantine && !percpu_ref_is_dying(&wq->wq_active)) {
-+		reinit_completion(&wq->wq_resurrect);
-+		percpu_ref_kill(&wq->wq_active);
-+		wait_for_completion(&wq->wq_dead);
-+		killed = true;
-+	}
-+	idxd_flush_pending_descs(ie, quarantine);
-+	if (killed) {
-+		percpu_ref_reinit(&wq->wq_active);
-+		complete_all(&wq->wq_resurrect);
-+	}
+-	st->last = last;
+-	st->used = used;
+-	st->residue = residue;
++	return chan->device->device_tx_status(chan, cookie, &state);
  }
  
- int idxd_wq_request_irq(struct idxd_wq *wq)
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index defd1af74c0a..196045cb9ef2 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -199,7 +199,8 @@ static int idxd_dma_terminate_all(struct dma_chan *c)
- {
- 	struct idxd_wq *wq = to_idxd_wq(c);
- 
--	idxd_wq_flush_descs(wq);
-+	/* The device keeps running what the lists held. See synchronize. */
-+	idxd_wq_flush_descs(wq, true);
- 
- 	return 0;
- }
-@@ -207,8 +208,17 @@ static int idxd_dma_terminate_all(struct dma_chan *c)
- static void idxd_dma_synchronize(struct dma_chan *c)
- {
- 	struct idxd_wq *wq = to_idxd_wq(c);
-+	LIST_HEAD(quarantined);
- 
-+	/*
-+	 * dmaengine_synchronize() promises the client that its memory may
-+	 * be freed afterwards. The drain keeps that promise, and nothing
-+	 * the device held before it is left to write a completion record,
-+	 * so the slots terminate_all quarantined are free again.
-+	 */
-+	idxd_wq_quarantine_take(wq, &quarantined);
- 	idxd_wq_drain(wq);
-+	idxd_wq_quarantine_free(wq, &quarantined);
- }
- 
- int idxd_register_dma_device(struct idxd_device *idxd)
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 221a7302bb0c..31bc4a506225 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -224,6 +224,13 @@ struct idxd_wq {
- 	struct idxd_desc **descs;
- 	struct sbitmap_queue sbq;
- 	struct idxd_dma_chan *idxd_chan;
-+	struct list_head quarantine;	/* descriptors a terminate_all took
-+					 * off the lists while the device
-+					 * still held them. Their slots, with
-+					 * their unmap data, are freed once a
-+					 * drain that covers them completes or
-+					 * the device stops. Under ie.list_lock.
-+					 */
- 	char name[WQ_NAME_SIZE + 1];
- 	u64 max_xfer_bytes;
- 	u32 max_batch_size;
-@@ -807,7 +814,10 @@ void idxd_wq_quiesce(struct idxd_wq *wq);
- int idxd_wq_init_percpu_ref(struct idxd_wq *wq);
- void idxd_wq_free_irq(struct idxd_wq *wq);
- int idxd_wq_request_irq(struct idxd_wq *wq);
--void idxd_wq_flush_descs(struct idxd_wq *wq);
-+void idxd_wq_flush_descs(struct idxd_wq *wq, bool quarantine);
-+void idxd_wq_quarantine_take(struct idxd_wq *wq, struct list_head *list);
-+void idxd_wq_quarantine_free(struct idxd_wq *wq, struct list_head *list);
-+void idxd_wq_halt_release(struct idxd_wq *wq);
- 
- /* submission */
- int idxd_submit_desc(struct idxd_wq *wq, struct idxd_desc *desc);
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 9c47a7b9e48e..c4319ac27bfb 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -213,6 +213,7 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
- 		init_waitqueue_head(&wq->err_queue);
- 		init_completion(&wq->wq_dead);
- 		init_completion(&wq->wq_resurrect);
-+		INIT_LIST_HEAD(&wq->quarantine);
- 		wq->max_xfer_bytes = WQ_DEFAULT_MAX_XFER;
- 		idxd_wq_set_max_batch_size(idxd->data->type, wq, WQ_DEFAULT_MAX_BATCH);
- 		idxd_wq_set_init_max_sgl_size(idxd, wq);
-diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index acb901e59a00..6f58d33b7297 100644
---- a/drivers/dma/idxd/irq.c
-+++ b/drivers/dma/idxd/irq.c
-@@ -427,7 +427,8 @@ static void idxd_wqs_flush_descs(struct idxd_device *idxd)
- 	for (i = 0; i < idxd->max_wqs; i++) {
- 		struct idxd_wq *wq = idxd->wqs[i];
- 
--		idxd_wq_flush_descs(wq);
-+		idxd_wq_flush_descs(wq, false);
-+		idxd_wq_halt_release(wq);
- 	}
- }
- 
+ #ifdef CONFIG_DMA_ENGINE
 -- 
 2.43.0
 
