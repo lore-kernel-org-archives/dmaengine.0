@@ -1,99 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.31
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792437004;
-	b=DcTbEkVM2l9To5HAeXpkBugJyOnMUlBfxaZOyFuzyWxvtONfDG5/t4QUU3NGdjz6T8D0
-	 H5sUDLKV0NQZlaG6zIBFzrAkJHs5KdZSSj5zwSCRy6t6PAEfQ6iJ6c3a5h0XoJKKKuxus
-	 DXaLNZzo0jbcV9/c7RUapHphyjieZs3uR4YhOJBV3pgain8Mja20MNOYYwtZaAY7LRTIT
-	 /YrcFed7SIQJ2U0IvxJ+DZmGIQPJmruB4M0R2Yus3/2wB+54Ebtmriuh639E5j+yNt9i5
-	 NtS+Dr+z0K+c5zrjb2pqT3q2gCY++mkYdPCnek4vFRaHRlsziFi3nNhSV6T8/fymeSA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792437004;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=02rV/1DKjLTt9HQB3IsR2Z4GVgu6TvxkYo3Lm5gpkCs=;
-	b=mwyu6emJh7bMyUIcKPiuH0QfmCVtEpHq9QO0GGZYdgFbRef5+zibUCVJqcTRjHiwtC3a
-	 0r1ZdkfmDyX59xXJgZPrff+PQq+K1sur61OwyDfpM23zDwaU2nWpU06yVkO0/z0AoV47r
-	 e+Fo3RTN99VcuQsibU8zFF2kC//PqHwCL1ebq0Ii5M6lq7oiSM1COH8eckCXKKwNyIq7d
-	 qyPurKA/aeoIocIWBTcez1EzOoLR6NT8Rhf0k6rm7c5MaXwAOeOPqD2MZETMdeAvUwOZ+
-	 Wh3DkTGoIxUcKe4K1I753koQDivUcaRX/YPnu9xlCKM0q8gfPGHrW7Q6bQBPm93Bicw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=jjIh4Hs3;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.31
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010031.outbound.protection.outlook.com [52.101.69.31])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792437478;
+	b=djCQtjE1rPnDZGCvDmXhVq1OMZI0Ss1dz6zrkOlo8gG7213BSAsD810JXcHIgp56xcIp
+	 xS0HZs0igyjCr2W9kpea5QZvgDOq8ml+lHX9GcuPuXMOMZYQSTyHbu2dzCQK8p79RRMOT
+	 ECNZZ0NjUdXebfn8zhkzJ1IdjnXj7A9PzhMCS0ObLd9RKzqS4NujDYG+i585nHjdAInu8
+	 fLfQT5LLkiFHQss6vyfZ30GwjEDO8CDDe0lR+u91nPqy9xruoxN6R4EYfYUCnUrn6Zqif
+	 HuLlhEDokZG+h402R/ZzWT3bxkXOQ9WZOTwzhs7sSOUMB1/+88s/BHQGbe0lC/hjZzQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792437478;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=+qh/pOfi02SdK1B7LhZ9JOBfvnwo5Y+K66DuK6JUGJ4=;
+	b=xcLOurWDipXST0h3B63QnH5EvwE3hh8kOk2Xfd1XPueKjSDIjmhDyO0kZmzwONDUVGtA
+	 WsGjkQhFfOkn+2hyjypDtnj1dRqHdkNVuOSOmsNM/8rO330sfpBcBizQSeodii8SfKqyV
+	 WJjTP+ZmZF8iFHpvRug6TVo+16VkcWc4H5q86XpaZKyaK7Fdq85TD4PscUF0AxKnioxHm
+	 l1WGUJk6G7HS5/5VoRV18vT/eqbhcZuKfQ8+r47y7bI+88dZqgeo1xuXtXEV45Fsy/9y1
+	 z+8kenDkDeD39eVqtTs16prPujcpCLCYz8IFgIA53syW9GRYG/2sDLAL9rnqB/JJmfg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fqx0h0O0;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7B5606A319;
-	Mon, 19 Oct 2026 19:10:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C7B5606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F488606A319
+	for <dmaengine@vger.kernel.org>; Mon, 19 Oct 2026 19:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=jjIh4Hs3
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s2H568hUD1ic8WHBxWSv39FCi7oXfROpx5kOQY1cDR+OIlIAQE14RzTMWH4bGHkGGDpuEqZq3n9mb7KghkyHtQdL1stlMJckZMD+x48In5OW3mlOAzHsbqdzOtORwv0ZMMqdu9pRto/f1ojwRiKHU8HtzT4oN5C4NRiVu749AR3l9/7TAfvKJ7WkI8DoX6okEKBM55Q0MStwUBO2fRgp34YX9oWCgbeeglCD2cmZfEiRLrBDf7xnYmYacgLmMCWI2faLBPNTrwt8qIO/zM3TLPqfAwPvyjW3KTBu5Oo0xf/fezO5ds9RqNoWUXaDZaQWie6o4aZwyiTytGPdfGdJZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=02rV/1DKjLTt9HQB3IsR2Z4GVgu6TvxkYo3Lm5gpkCs=;
- b=Vl2dcBDlCjVAvYMeeMJAjynTWXsJ6yo/vjYlTMoPLN0intv81g6a9QPmlkKGp9wk18/jcahrFsmCBhgn9ArDTJTWyXeM3SH4zHS5qfhKQA1yRqPxLeLl6iPHU6jwBAmPiz4aFeZ/4oJDxXanCarcYPSPGF6QIjIkcFP45C9N/Vmn3gjtizYVOo45UYGZTH82IBODWs792gF/Xf4JkfUcgKJKl2WuyC0JwBY0ET4P3FFIsEGcnkxlfrqIJo1V7LYY1bSuHwiiFsEIiqnDLbfRCcW6lys7Sl/ehqrY56c6nkkLJD6IZvtN5Ig14+0cGEFzZ31UQKgZT9BoeFVpfOP3sQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=02rV/1DKjLTt9HQB3IsR2Z4GVgu6TvxkYo3Lm5gpkCs=;
- b=jjIh4Hs303A/44mUBed9fjTTiTJTAnO3RvkTkqxVcFbVSsgKm716GdRCvxo+OCZj9ozMFoo+OWQzq7br/g5W0RiSvQk9Ka9jYKf8x9buRRUc5EKIY/eew9LHEHbjyGIN8BiXJsDDaw2E4PwjDwBnCzCZKcvMJgaxS5hbZ0f7Rlqf/Lo4a+SEgGCF62etKL1JCMav8IhbzNUboq/ywuQbDClOif57xaYqQNAktKJMdX0q/iTzU3xO9LpNVTecpxow/tTyeT/QfmNNSB6ompLDOycVEZwZseGRHVsBImTOLBXxm9qirTEzeGFlDk88ObHjohmvLzHPItUj3bq4tN0E4w==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by PA1PR04MB10722.eurprd04.prod.outlook.com (2603:10a6:102:483::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.18; Mon, 19 Oct
- 2026 19:09:59 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0522.017; Mon, 19 Oct 2026
- 19:09:59 +0000
-Date: Mon, 19 Oct 2026 14:09:49 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Daniel Byrne <daniel1.byrne@intel.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>, Dan Williams <djbw@kernel.org>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Frank Li <Frank.Li@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Tom Zanussi <tom.zanussi@linux.intel.com>,
-	Kristen Accardi <kristen.c.accardi@intel.com>,
-	dmaengine@vger.kernel.org, linux-crypto@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 00/17] [PATCH 00/17] dmaengine: idxd: fixes found by an
- in-kernel polling client
-Message-ID: <atZq_eCNCmdlrEU8@SMW015318>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fqx0h0O0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7461F000C4;
+	Mon, 19 Oct 2026 19:17:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792437478;
+	bh=+qh/pOfi02SdK1B7LhZ9JOBfvnwo5Y+K66DuK6JUGJ4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=fqx0h0O0p+osJtR0R+IiWt/zeFLNBl7fBImtxyzQdb6SONtZQ3j10ZbFmeh7Zg0Yn
+	 3dAJUXVslN57eaFSGExSeMlTp1ZbdiCuWVIdg8FyaB3+EsOeuDTxp0OdLSWA00BgI3
+	 DBjFzKruYcZ46I5A2dbwMiYoQlYlLXqbdjWmQHC+u5bEeLc6roMUO/3fehOisH9XZJ
+	 53BL3gjoEGeZr04FPaYvMQU1mzCIVpNIb5mjxyqiKAQQADLR7XfshbMrh6p4K3gzSI
+	 F8Tnzo1J/pvBaSwvTr8d24xNB/WbTrwxgbzhq9FVfSJSuCLjdZzmzuT8CpBmwsMFzM
+	 Y5M4NhPAc8htQ==
+Message-ID: <sashiko-outbox-178140@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 15/17] dmaengine: idxd: flush the work queues on every
+ halt type
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Daniel Byrne" <daniel1.byrne@intel.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261019150630.4026341-16-daniel1.byrne@intel.com>
 References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261019150630.4026341-1-daniel1.byrne@intel.com>
-X-ClientProxiedBy: PH5P220CA0009.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:34a::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+ <20261019150630.4026341-16-daniel1.byrne@intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 19 Oct 2026 19:17:57 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -102,72 +60,197 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PA1PR04MB10722:EE_
-X-MS-Office365-Filtering-Correlation-Id: 23341d42-186a-48f9-342c-08df2e149215
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|19092799006|1800799024|23010399003|366016|6133799003|22082099003|18002099003|11063799006|261009223027099003|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	83+lvo6HLzeN6OtNOo8PNRmSW6+Izt1jPOE861OaIBf1TA1kCgx+uCA1wxoVc2tzx1bwMipbJMV4wP91RmWnsdWhcBgHbva3abDWHXI8qhSi0kYnNiqADh4gTOhW3VAUWB7aSuAoyojidIGt5x3R5NlsfW8idtc6IWGXen7Fynk7HNBl1Ty+CZcNojzOWog696Uyt5e1dERMEXc4WskYADcT7v3yPkR3hZk/hl8rYN7qB0u/wfExEExWMNcLWwfpCCwyx28Ada+aRxKm3LWP2Xux1sYAZ4pRLivo1kQtKQUFy7viVRtX2GR7r/e+0XkByxS+YOdJ7+C5iq0aSXDjRVIUJ9M47JOcfnUyVAxQGv3YXAFZDZkcoDDw7yTzhre4r3j7WfURnYAd6aOjG46mtiB1iJEU14NOk/jLi58yIwgNjpMsTiljfiuyDcebLLoOnyWMaFqShwHnAlYWwlQD1qY18IFTJ7oURWx73E//HYYkmDybQYG4N3YtYtFpZft4zIdTZj7UuO2P9b4S8EiC55TKTrFJPA6plWX0G1N58LgMgcHEvjKHONt2CxMjPjIuunjHh95qraXz+xg1IqthDN+2EDwNNy3uNWFDSCmMfJQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(19092799006)(1800799024)(23010399003)(366016)(6133799003)(22082099003)(18002099003)(11063799006)(261009223027099003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?n/pxxzjdF01zhUz1dIUwlbsNlVaqtDepDAUqTpYq21no5dMRN2j4xFwqdWUf?=
- =?us-ascii?Q?d+CB5TSb6vZKqPG//4/47IH1mZ/p7xNtY1EO8NjyE8EHPzZfwhP5UEUricZR?=
- =?us-ascii?Q?1lqpWGOjZVo0YGWP6JFJ5okmNHft9yhxIECxxygnayQfJgv7Wf3ojYx3j10H?=
- =?us-ascii?Q?Rll4URBMTGG/PPyVREjeT3eVXZEKdNcMnBjbj9imMC8nCGLl3siZAwaKSDD6?=
- =?us-ascii?Q?aqwYP1yuD3Wv0fAqzPKKGcfUCJjC9O7Fl3Bk2g4rd72cXBD6NKPljZs7yWuc?=
- =?us-ascii?Q?miCIqcaY9x4bez3I3wsBK5uy1OfEOkOt4AkcpTyeyafx3EEhEfc5UjC1pRE4?=
- =?us-ascii?Q?6Gb4RSWhmPuAc+rz5RwlQfXOYH75zXTlHkEsYWsolAGppS8JftgUQHII2jWL?=
- =?us-ascii?Q?siI2r/y8ZlD/olAvKta00xBkqlTL+EPKxGUunovBG9R26KPnpA7hJJGYdKp5?=
- =?us-ascii?Q?d2OlDZZg7LHV0v7mQBo3h0fLlQCvIRjuA/WsQCUpq+KeGdwj8q1+h5vUbmtC?=
- =?us-ascii?Q?TrDY/Cip0hMl+Hok5E1bKNzbM2HMAuPr8+F+9pTeBCAKgjKpy3OOa34cw0of?=
- =?us-ascii?Q?Y9bmsyM+GDdr4llYeBbPw+zHnn96S95dmj6sBrDq53Vxw5H99ROwIRt+s5nB?=
- =?us-ascii?Q?c8gt6eczxtj7DRx+4gtvj+Cm9+ivaMJdI/goONOg0oyYVK03spNhx2kUJvUU?=
- =?us-ascii?Q?CqbPT2euq3pi4fkk4vXlbCgrJZIlRYGMhyL5MsX4tic8tNQ0SEYh6s3A5dCt?=
- =?us-ascii?Q?K1T5ymjVtum9fVowWNV5d7K2w+e+r/B6K1QqDs/GW3bmSzCawjXG50DI43oF?=
- =?us-ascii?Q?j3+tw7iNGYh4FInh21ShMePex0Un66s1qx/JIYNPBtYWZ/zjYcDpDpMuBbud?=
- =?us-ascii?Q?sBgLm/CM4V1YE/XrSzgexVilwx3KyU1yLRfN5FYFK4KVKzDm/JktH683gp1R?=
- =?us-ascii?Q?H6NZWD8rWjmZr8kntLZZE/onSRPaYH3AosMKuMSD1ksiEvZaQpU1+OlTdU74?=
- =?us-ascii?Q?wtvfRLoEY0wZN2KkZGyalPwrRwbI1QuCCbqzvNg1PtqUGKoDhTHf8c3Bxf0o?=
- =?us-ascii?Q?ZzUOrbd5Gzp0fw2EuuZVxiXmdGU9adgL2L3vOOv9dRUszILmA5NSfQhMIdY4?=
- =?us-ascii?Q?7Jnr+37X0415e2I+ZwE+bTy9eDuoiV2rFE8ZCNYocRvlbnJV3uRxDrrAolt7?=
- =?us-ascii?Q?+miF+V6XGiwslZIf5TdfpMJgQk07xdaMpmCNKgphRFU4IdJoF8pZ4AX5TNQW?=
- =?us-ascii?Q?OZMOfeoUBoeIK85h9zgAO3nH/DA+VpQftuy1F/DSoCylptsCajD7dcWfhj6p?=
- =?us-ascii?Q?4BHjLkNDoVGfy7V/qXZDkYd++ieMb5eHjz0ba6wU+fHkcVMPaYRATldE42sh?=
- =?us-ascii?Q?SkPCP56QNG0H4yPF4i6X86oVg/W/MoFj/LJCPHoc0xZqVUB0wsYzCfI7q3SB?=
- =?us-ascii?Q?xXKE55jfJj4Pg3kIyoB412ZC90jvrtB3Pi6jlnL+g1TGOfVIUg6OteacVdSC?=
- =?us-ascii?Q?0a+NMpsHD3SRHu03UwWr7dfoF+ZC6BjS8r3Y8QBajE3h12GrYCuevmH3kMUw?=
- =?us-ascii?Q?3pDUe5HtFMwYaTjlYYJS4KaPG1VmOJ7xSwZDg7Sf8XTbeFosS9aKUn4biObz?=
- =?us-ascii?Q?YjpREO1rOngqhrn//nl44+aR975HcrP1lydSdBZasLVrFf1WAmLseolBu8K3?=
- =?us-ascii?Q?0DCyHuR7OXLoTFFYxlNahBP/LcFk4TpBlvdCCqLKjK/4mictVae4GBRpsm14?=
- =?us-ascii?Q?ysFUWBdeg64CCk+Wij5xNgCTXclKMFFy0bs2nIAoPuIeVGu85UTv?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23341d42-186a-48f9-342c-08df2e149215
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 19:09:59.5702
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zedneNFPqrr816mbq8iI822/8nbZACCLYQAVtiJbOQuseBmxDvmfE9foh3RFxj3xJ7/f8bwWDAVrwv1WKLZouACtZBpvdNWW0WQU46UKbuhZA8JkJuSa/ocKqACet6xH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10722
 
-On Mon, Oct 19, 2026 at 08:06:13AM -0700, Daniel Byrne wrote:
-> [You don't often get email from daniel1.byrne@intel.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> These are fixes for bugs in the idxd driver that an in-kernel polling
-> client exposed while sharing DSA work queues between many io_uring rings
-> (that client is to be posted separately as "io_uring: DMA-engine copy offload
-> for buffered file I/O").
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: idxd: premature wq_active revival in idxd_wqs_halt_flus=
+h()
+--
 
-where the link, I can't find at
+commit 6dda938d3d45e583931b07390e3058529e447340
+Author: Daniel Byrne <daniel1.byrne@intel.com>
 
-https://lore.kernel.org/all/?q=io_uring%3A+DMA-engine+copy+offload+for+buffered+file+I%2FO
+dmaengine: idxd: flush the work queues on every halt type
 
-Frank
+This commit flushes kernel work queues on all device halt types (software
+reset, FLR, and system reset) rather than only on FLR. Before flushing, it
+kills wq_active and waits for in-flight submitters to finish, reviving the
+reference afterwards on software reset.
+
+> diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
+> index 1ec3d360eea8f..99b2df7fc2de0 100644
+> --- a/drivers/dma/idxd/irq.c
+> +++ b/drivers/dma/idxd/irq.c
+> @@ -422,15 +422,61 @@ static void idxd_device_flr(struct work_struct *wor=
+k)
+>  		dev_err(&idxd->pdev->dev, "FLR failed\n");
+>  }
+> =20
+> -static void idxd_wqs_flush_descs(struct idxd_device *idxd)
+> +/*
+> + * Complete what the halted engines will never finish, or a client waiti=
+ng
+> + * on one of those descriptors waits forever. The flush hands descriptors
+> + * back, so no submitter may still own one: a submitter that passed the
+> + * state check before the halt can hold a descriptor on the pending list
+> + * while its ENQCMDS retries, and it aborts and frees that descriptor
+> + * itself when the submit fails. Killing wq_active and waiting for the
+> + * last submitter to drop its reference orders the flush after that.
+> + * Each queue is handled in one hold of wq_lock, from the state check
+> + * through the revive. A driver remove that quiesces the queue in one
+> + * hold and disables it in another, as iaa_crypto's does, would otherwise
+> + * find the reference dying between the kill and the revive, skip its
+> + * own kill, and have the revive undo its quiesce before its disable
+> + * frees the queue.
+> + * @resurrect: revive the queues afterwards for a reset that keeps them.
+> + */
+> +static void idxd_wqs_halt_flush(struct idxd_device *idxd, bool resurrect)
+>  {
+> +	bool killed;
+>  	int i;
+> =20
+>  	for (i =3D 0; i < idxd->max_wqs; i++) {
+>  		struct idxd_wq *wq =3D idxd->wqs[i];
+> =20
+> -		idxd_wq_flush_descs(wq, false);
+> +		mutex_lock(&wq->wq_lock);
+> +		if (wq->state !=3D IDXD_WQ_ENABLED || wq->type !=3D IDXD_WQT_KERNEL) {
+> +			mutex_unlock(&wq->wq_lock);
+> +			continue;
+> +		}
+> +		killed =3D idxd_wq_kill(wq);
+> +		__idxd_wq_flush_descs(wq, false);
+>  		idxd_wq_halt_release(wq);
+> +
+> +		if (resurrect) {
+> +			/*
+> +			 * Revive only what this flush killed, and only if no
+> +			 * failed interrupt handle revoke killed it for good,
+> +			 * which leaves the handle invalid. The state changes
+> +			 * without the lock only to enabled, in the reinit of
+> +			 * an earlier halt, or on a queue that an FLR recovery
+> +			 * has unbound, whose reference reads as dying, so this
+> +			 * flush did not kill it. A reference an earlier halt
+> +			 * left dead stays dead, since that halt's recovery
+> +			 * unbinds the queue. The revive has to stay in this
+> +			 * hold: moved to the reinit, it would reopen the
+> +			 * window described above.
+> +			 */
+> +			if (killed && wq->ie.int_handle !=3D INVALID_INT_HANDLE)
+> +				percpu_ref_reinit(&wq->wq_active);
+> +			complete_all(&wq->wq_resurrect);
+> +		} else {
+> +			/* Let blocked submitters retry and fail on the state. */
+> +			complete_all(&wq->wq_resurrect);
+> +		}
+> +		mutex_unlock(&wq->wq_lock);
+>  	}
+>  }
+> =20
+> @@ -442,6 +488,8 @@ static irqreturn_t idxd_halt(struct idxd_device *idxd)
+>  	if (gensts.state =3D=3D IDXD_DEVICE_STATE_HALT) {
+>  		idxd->state =3D IDXD_DEV_HALTED;
+>  		if (gensts.reset_type =3D=3D IDXD_DEVICE_RESET_SOFTWARE) {
+> +			/* The reinit below re-enables the queues, so revive them. */
+> +			idxd_wqs_halt_flush(idxd, true);
+>  			/*
+>  			 * If we need a software reset, we will throw the work
+>  			 * on a system workqueue in order to allow interrupts
+[ ... ]
+> diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
+> index fab3e0176cbae..cf8536e94c15e 100644
+> --- a/drivers/dma/idxd/submit.c
+> +++ b/drivers/dma/idxd/submit.c
+[ ... ]
+> @@ -215,6 +225,22 @@ int idxd_submit_desc(struct idxd_wq *wq, struct idxd=
+_desc *desc)
+>  			return -ENXIO;
+>  	}
+> =20
+> +	/*
+> +	 * A software-reset halt revives wq_active before its reinit enables
+> +	 * the device again. A submitter that passed the check above before
+> +	 * the halt and got its reference after the revive would post to the
+> +	 * halted device, which drops the descriptor, and nothing would
+> +	 * complete an interrupt-armed one. The halt stores the state before
+> +	 * its kill and revives the reference after the wait. The barrier
+> +	 * pairs with the release in percpu_ref_reinit() and orders this
+> +	 * read after the tryget that saw the revive.
+> +	 */
+> +	smp_rmb();
+> +	if (idxd->state !=3D IDXD_DEV_ENABLED) {
+> +		percpu_ref_put(&wq->wq_active);
+> +		return -EIO;
+> +	}
+> +
+>  	portal =3D idxd_wq_portal_addr(wq);
+
+[Severity: High]
+Can reviving wq->wq_active in idxd_wqs_halt_flush() before
+idxd_device_reinit() runs allow idxd_submit_desc() to post descriptors to a
+work queue that is still disabled in hardware?
+
+On a software-reset halt, idxd_halt() calls idxd_wqs_halt_flush(idxd, true),
+which reinitializes wq->wq_active and completes wq->wq_resurrect, and then
+queues idxd_device_reinit(). In idxd_submit_desc(), the second check only
+verifies idxd->state !=3D IDXD_DEV_ENABLED after acquiring wq->wq_active.
+
+However, in idxd_device_reinit():
+
+drivers/dma/idxd/irq.c:idxd_device_reinit() {
+	...
+	rc =3D idxd_device_enable(idxd);
+	if (rc < 0)
+		goto out;
+
+	for (i =3D 0; i < idxd->max_wqs; i++) {
+		if (test_bit(i, idxd->wq_enable_map)) {
+			struct idxd_wq *wq =3D idxd->wqs[i];
+
+			rc =3D idxd_wq_enable(wq);
+			if (rc < 0) {
+				clear_bit(i, idxd->wq_enable_map);
+				dev_warn(dev, "Unable to re-enable wq %s\n",
+					 dev_name(wq_confdev(wq)));
+			}
+		}
+	}
+}
+
+idxd_device_enable() sets idxd->state =3D IDXD_DEV_ENABLED before the loop
+calls idxd_wq_enable() on each work queue.
+
+Once idxd->state is set to IDXD_DEV_ENABLED, won't submitters on a dedicated
+work queue pass both checks in idxd_submit_desc(), add interrupt-armed
+descriptors to ie->pending_llist, and call iosubmit_cmds512() before
+idxd_wq_enable() has enabled that work queue in hardware, causing the device
+to drop the descriptors and leaving waiting clients hung?
+
+In addition, there appear to be two cases where the work queue is never
+re-enabled in hardware even after idxd_device_reinit() finishes while
+wq->wq_active remains live:
+
+1. If idxd_wq_enable() fails in idxd_device_reinit(), it warns and clears
+   wq_enable_map, leaving idxd->state =3D=3D IDXD_DEV_ENABLED and wq->wq_ac=
+tive
+   live on the disabled work queue.
+
+2. If IDXD_FLAG_CONFIGURABLE is not set, idxd_device_reset() ->
+   idxd_device_clear_state() does not clear wq->state, so idxd_wq_enable()
+   sees wq->state =3D=3D IDXD_WQ_ENABLED and returns 0 without issuing
+   IDXD_CMD_ENABLE_WQ:
+
+drivers/dma/idxd/device.c:idxd_wq_enable() {
+	...
+	if (wq->state =3D=3D IDXD_WQ_ENABLED) {
+		dev_dbg(dev, "WQ %d already enabled\n", wq->id);
+		return 0;
+	}
+
+	idxd_cmd_exec(idxd, IDXD_CMD_ENABLE_WQ, wq->id, &status);
+	...
+}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019150630.4026=
+341-1-daniel1.byrne@intel.com?part=3D15
