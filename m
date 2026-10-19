@@ -1,64 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792422875;
-	b=0aDoASZUX9N8q8uz7jvKpbX3tlVBs/JZAwTgnI87XDldcA7GheS1Zua1zPShfwF+O7qV
-	 6K5aBDOO7jOr6k11rOKKZ0wTRiy0TOvFCujKU4mmOaBDsXf1KLAITwglBYXDOy0zvZL5R
-	 NhrJOijUPmgroSSGAyW5L1u/kvcjJv/POj0pMVMqcbvjYZAR+OngdVHAsu0MfYn5Zs9gH
-	 Clr37Yr/AeGpyqqzhAVLoLvGYl6E6w5fg7gv26GgqhCAEUyXraYl0LoeyniYg/1IiKv+M
-	 u5PTVjO32hGrG6wyj+AE2vgMQ/tEoiwngLum+/tteE66mt+U803bHZufSiyH5zZt2qA==
+	t=1792422874;
+	b=RBa/3pFUW0peVituomaxgfyI4HGXjWra4qhToeYZoRAUxClZYUUmLWCVs3BDzv4Gswmv
+	 LxBqVTCe+TF3UOzig7CULKiImBgSenMSJhxOnqQYUQjdHIl2a8I0B4D75PcR8aZ1t8Ebf
+	 mVTAnZQT+7tJ7v3qHoXkBu1aKd63ersRHYgXcp4NuAZSvRjT+KiRYPa+mVFluMJI8AZqO
+	 E3k7UfQf4hei6r8Ai5eiNtnC9SLJTbQz09eiC0VOg1OEOERBTP1wnlO+dNvPRB7FyhWS5
+	 JN677OU4YJZfA10cfz5alL1I508c/xPChmpGZwkBx1uSI4Zmz+WbHaHMJxw/kKylMYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792422875;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792422874;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=xIJeajS9jjtNcUTuok39zQGD54vxXLVdXbql+UaLazs=;
-	b=a8Br/XZ4FgvHqgeETPyZgGbIoykrHRGim5hiOqmyZnoLtPdTbmQZdZFaM7dJOjn+G60P
-	 aG/rKcTyP3EQCQc7Pp07/DwuqeJY05WrcGPVhOrifuiDpNEncBvw+OS4un6SLlcc4KvhF
-	 Q7Jp3FxNqWDVl3YWCVNdab4aexsS245kT0H/V4hstdvbDlSzPKnJZYps1Hur2IG+2I0vt
-	 LyCC/C/Domx6NTm6o9vtN8kjagIrcEAVyTNR3CaLnFBwDzT5l8iwBx6QKOZ53MdtEJElu
-	 oS6SOdk6ZXkAqCp1V7Eaeutsb2Wze12BDJeLj+m7VP/FX+vqM09wTP3dphHTb9sL9cA==
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=n3qf+f9JOnVqbADl8hOmlsjTW3vGVFRlj2rwalpREsQ=;
+	b=QqVc+nrTlZUUpPZEBkMXbQdrauPMpzlTSr+2yUklkdgySeJCgxFdSSGbBBa6ziCu01hU
+	 WN0+fgjyVi36iHOFRZI3xx4kd7oRIZxA52/JIYU26vtVtfxGWl/g6WT++CDopfo4hPYxR
+	 Dvo2KCIDBKb3siF/qDZzAkvJYqjL61zDH7mcAnl2JlZox7Rh+hFow9kJTGRaKojLiZnOQ
+	 bRWQh3tyt5oz0J/z9kZreCfmDYxqMjHxjJ6KLvg4goposoErLyEqkJ+Z/PNia3YYC68qV
+	 9CxlEyeaFs9Pf9HKpxqcpa+81PDCExeRBRQZUnvrNJp2pxy/PWpKyAwYPhHkLKUJa6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dLK2KVCg;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=l1USfmJ4;
 	arc=none smtp.remote-ip=198.175.65.12
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D7609CECD;
-	Mon, 19 Oct 2026 15:14:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E54D7609CECD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF05609CEC5;
+	Mon, 19 Oct 2026 15:14:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6FF05609CEC5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dLK2KVCg
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=l1USfmJ4
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792422875; x=1823958875;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=G5nEe1IhmdwwprxW4cb6uNZ0ux+LJmOrwz33ArBAsZY=;
-  b=dLK2KVCg9bgIc9cHErUP5Opk+ZZOChtQF4kDZFNZzqU3V5nJAhGxxDba
-   qqYqbxSKKlhrM8Zr/djBS4WyyYw/3Yrhw95Rgq+55ThfYK0jJ6Uy/DOEj
-   rSi0OP65EW1pyqaO57prv71etxQvnidcF6kQAxjASsnGkbMae2ff5TrkW
-   2EcqVWKNEfE0YxpLq8RVrJ9EzpdV0j1alPwAdGP0B83Hu8dui3gZVsg1E
-   CzBb6iEZ/4nFV2TU2C3omxdZHG2wUDbGSCJEBe1YnLHBID4wnlTzEU1X0
-   MmBz1IAY/k95viB6K7U3iixjYt6uxsCEU+ogGGBNUyvv9J2ycWQRjj+ua
-   Q==;
-X-CSE-ConnectionGUID: 3DSCbVpVRkGmEL4m+Oc3kg==
-X-CSE-MsgGUID: Dn9TagwpSqmLGNdmxJFbWA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986900"
+  t=1792422874; x=1823958874;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=SkRzdP6TGWZsx5ESerPHIuIbeqAgpFdhqI58Lf1jinQ=;
+  b=l1USfmJ41MNlEkjdVHX9djFGjQKOTP+ZDW/zGCpBlpWhxJd61roKilSR
+   EsvViyrRjKGVbfd7HM1dY5XFtskBiUvUbavIzWGwtzTeH/bN9divPUuK2
+   NSpcnQL1t4T9flg36rZN5TlrGkY1ru7jxpW5ciCoLitVdBi8YOcuE+9IC
+   fmSiJPCS0MThNeX7zpicRgFz1R3R0SWP2Sa3tMKyDy20JAgAtxt8dhvTz
+   DcdT1O0spmY0DaTUWWFWAaCo1V8Q9JPeqGekiAu/7soopN52XzYbpV92S
+   LvKKxOyMPAujwTGMqojTCl1KVvRrYEFRdeF81OzCtnqBw2Cd/dakVhZJv
+   g==;
+X-CSE-ConnectionGUID: v93U+4vSTACewUO6kMFi8A==
+X-CSE-MsgGUID: F69UYfbEQqOhfDyjJbxv2Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986891"
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="986900"
+   d="scan'208";a="986891"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:34 -0700
-X-CSE-ConnectionGUID: rF/5olWiQqmz3RTMepllKA==
-X-CSE-MsgGUID: 1OhYzD1fQjiHK/xv6WrXSg==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:33 -0700
+X-CSE-ConnectionGUID: GC5P4fG4RF+Ouz8K5nXipg==
+X-CSE-MsgGUID: OJ0YWyC/RKOyYnxcr4Ws4Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="2536950"
+   d="scan'208";a="2536938"
 Received: from jf5300-15a101203tc.jf.intel.com (HELO meta-crater2c.jf.intel.com) ([10.54.113.49])
   by orviesa003.jf.intel.com with ESMTP; 19 Oct 2026 08:14:33 -0700
 From: Daniel Byrne <daniel1.byrne@intel.com>
@@ -75,12 +74,10 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH 03/17] dmaengine: idxd: refuse a memcpy longer than the WQ max transfer size
-Date: Mon, 19 Oct 2026 08:06:16 -0700
-Message-ID: <20261019150630.4026341-4-daniel1.byrne@intel.com>
+Subject: [PATCH 00/17] [PATCH 00/17] dmaengine: idxd: fixes found by an in-kernel polling client
+Date: Mon, 19 Oct 2026 08:06:13 -0700
+Message-ID: <20261019150630.4026341-1-daniel1.byrne@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261019150630.4026341-1-daniel1.byrne@intel.com>
-References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -92,47 +89,85 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-idxd_dma_submit_memcpy() checks the length only against the device
-limit from GENCAP. Since commit d7aad5550eca ("dmaengine: idxd: add
-support for configurable max wq xfer size"), WQCFG is programmed with
-the work queue's own max_transfer_size instead, and that is the limit
-the hardware enforces. Since commit 92452a72ebdf ("dmaengine: idxd: set
-defaults for wq configs"), that limit defaults to 2 MiB.
+These are fixes for bugs in the idxd driver that an in-kernel polling
+client exposed while sharing DSA work queues between many io_uring rings
+(that client is to be posted separately as "io_uring: DMA-engine copy offload
+for buffered file I/O"). They apply to v7.3 on their own and do not
+depend on that series. Each patch says which released kernels it
+affects; the ones that fit stable are tagged.
 
-A copy longer than the work queue's limit is therefore accepted at prep
-time and then fails in hardware with DSA_COMP_XFER_ERANGE. A client that
-sets only tx->callback cannot see that error, so the copy looks
-complete. Also check the work queue's limit, so that prep returns NULL
-and the caller can fall back.
+In short:
+ - the event-log fault path dereferences a NULL workqueue on a kernel WQ
+   (stable, 6.4+), plus a hardening of the user WQ's workqueue teardown;
+ - a memcpy longer than the work queue's transfer limit is accepted at
+   prep and fails silently in hardware (stable, 5.10+);
+ - a channel is listed before it is complete, and a failed registration
+   leaves a freed channel on the list (stable, 5.13+);
+ - the device driver is unbound after its work queues were freed;
+ - terminate_all releases the work queue's interrupt handle for good
+   (stable, 7.0+);
+ - device commands wait forever, and the interrupt-handle release writes
+   over a running command; the device disable misreads the fail-fast
+   status as "already disabled"; the device is disabled after its
+   queues' software state is gone; a reset loses the command interrupt
+   it re-creates;
+ - terminate_all frees descriptor slots the device still holds, and
+   drains and resets report a timeout as a completed drain;
+ - a descriptor whose submission failed is freed twice (stable, 5.14+);
+ - an iaa_crypto descriptor is completed as a dmaengine transaction on
+   abort and flush (stable, 6.8+);
+ - software- and system-reset halts never flush the work queues, a halt
+   flush strips the callbacks of live clients, and the interrupt-handle
+   revoke runs without the queue lock.
 
-On a Granite Rapids DSA with the default 2 MiB work queue limit and a
-device limit of 2 GiB, dmatest with norandom=1 and test_buf_size=4194304
-reports a data error for every copy on v7.2: the destination is never
-written, yet each copy completes. With this change the same test fails
-at prep, and copies of 1 MiB and 2 MiB pass as before.
+Tested on a Granite Rapids system with four DSA devices: crc32c-verified
+DMA I/O from the io_uring client under WQ unbind, live unbind and rebind,
+driver unbind, PCI FLR and PCI driver unbind and rebind, on a v7.2-based
+tree, clean under KASAN, DMA_API_DEBUG and lockdep; the v7.3 rebase is
+conflict-free and build-tested per patch.
 
-Fixes: d7aad5550eca ("dmaengine: idxd: add support for configurable max wq xfer size")
-Cc: stable@vger.kernel.org # 5.10+
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Daniel Byrne <daniel1.byrne@intel.com>
----
- drivers/dma/idxd/dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Daniel Byrne (17):
+  dmaengine: idxd: don't queue EVL fault work for kernel WQs
+  dmaengine: idxd: detach the user fault workqueue under the event log
+    lock
+  dmaengine: idxd: refuse a memcpy longer than the WQ max transfer size
+  dmaengine: idxd: list a new channel only once it is complete
+  dmaengine: idxd: unbind the device driver before its work queues go
+    away
+  dmaengine: idxd: keep the interrupt handle across terminate_all
+  dmaengine: idxd: bound device command waits and fail fast after a
+    timeout
+  dmaengine: idxd: compare the device disable status code whole
+  dmaengine: idxd: quarantine terminate_all's descriptor slots until the
+    device has drained
+  dmaengine: idxd: return -ETIMEDOUT from drains and resets and leak
+    what the device may still write
+  dmaengine: idxd: disable the device before its work queues are
+    unregistered
+  dmaengine: idxd: hold device commands off while the reset re-creates
+    its interrupts
+  dmaengine: idxd: fix the double free of a descriptor whose submission
+    failed
+  dmaengine: idxd: complete an iaa_crypto descriptor through its own
+    driver on abort and flush
+  dmaengine: idxd: flush the work queues on every halt type
+  dmaengine: idxd: keep client callbacks on a halt flush and cancel
+    resubmissions after a terminate
+  dmaengine: idxd: run the interrupt-handle revoke under the queue lock
 
-diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
-index 9937b671f637..c116416e10e5 100644
---- a/drivers/dma/idxd/dma.c
-+++ b/drivers/dma/idxd/dma.c
-@@ -115,7 +115,8 @@ idxd_dma_submit_memcpy(struct dma_chan *c, dma_addr_t dma_dest,
- 	if (wq->state != IDXD_WQ_ENABLED)
- 		return NULL;
- 
--	if (len > idxd->max_xfer_bytes)
-+	/* The work queue's configured limit is what the hardware enforces. */
-+	if (len > idxd->max_xfer_bytes || len > wq->max_xfer_bytes)
- 		return NULL;
- 
- 	op_flag_setup(flags, &desc_flags);
+ drivers/dma/dmaengine.c   |  41 +++
+ drivers/dma/idxd/cdev.c   |  62 +++-
+ drivers/dma/idxd/device.c | 588 ++++++++++++++++++++++++++++++++++----
+ drivers/dma/idxd/dma.c    |  60 +++-
+ drivers/dma/idxd/idxd.h   |  53 +++-
+ drivers/dma/idxd/init.c   |  64 ++++-
+ drivers/dma/idxd/irq.c    | 258 +++++++++++++----
+ drivers/dma/idxd/submit.c | 158 ++++++++--
+ include/linux/dmaengine.h |   2 +
+ 9 files changed, 1109 insertions(+), 177 deletions(-)
+
+
+base-commit: c03c1a14507dfaf8b856c2608f9ac216021fc222
 -- 
 2.43.0
 
