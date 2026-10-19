@@ -1,64 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792422877;
-	b=LHhcm8OB5kuijtzeWXFCkwS5sl9pFDzZ7KYAg/BkGKbjfMFp/9DICI6ecXb9EfChF6lY
-	 IUluuip4zLnNfFX70seWWv2sN5bmgdc2vYBfj421xyJc2ZtI3+/lfMSsqZWxtunfd546I
-	 N30IUUNYTXhi5hOUdcxodHKzMPTpbht/SKNcZ82yDPreaQYVIxcN8d58xwyG9b5BtdwXz
-	 YWfEORNKrQc8X84kbRxPTuMYz8iUpow+uwKTtMFFtNzXS3RzUZvts7DuyCKxHM7ALXLjb
-	 acHG8H7o8ZOHnMn+Elyj7SJ12yI3Ay5v5KZez88dZQ79xlMkMdX3ghLy+6GKve+AMxA==
+	t=1792422881;
+	b=lzgaGlk4RI82LYIrlofhD+0PUybyky0V3jibzWJLB5849AkRdYTmE57qhlT4A4WyV5xb
+	 kuOlSuewmIw3QcI2Kf0qWNdTa+NgwjWQ8ez6z8BkacXOACjL3MIQ3zxrnVlOUr8lgrWNP
+	 RfQR1lR3RpCaJVJqjmlHl+URCIDI9Ev6c9+RTc8SyEHvhM8Az02c+tPEASbxVCouai/+S
+	 a/viH9k9/CLI68Io4FGwt6Qto/k6x05VIbYjJ4LA0ECA6vkcGlJ79J49QDTmHQ9wN4/W4
+	 8k+KGwdYoBxJ1NgoDf8S7CiE0+lOGs4EU/3XsY+1PuzhMjr4Djki1L+fe9YJ4YDOJ2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792422877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792422881;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=Xfhcl/tnBKhomUEe29FQKwdYefKI9CRM2uefptsw0PQ=;
-	b=aXrYXvArFSVVFTVDmhfTW223cevpXks3wOomIYGTTJ5x9tzkhqxoIr2OKrqTKTQoobue
-	 aTwMSWfWcADK/i+b/4HJSNcNBl6W08mnvpRMMEQJvO3omDEpOdhUGTf/0CxISJ+i71Tj5
-	 kzY3dFa+WGcpOZSYqC7cTWlXoKuFO2NBRxknTaR88gfIpgF3AkOl7ZnJb8WVHmKLIPP65
-	 6C19F5rI+QEb9nI0vl55tYZvbPipUZ83R4PNtOpNOMAV8zlZ0SQbK4FZX0Tj8T0yniQTb
-	 BW6kSZ/Y2nw4NmsOEKhm+ViyJ1/8ah6QEl9evD4g54u2nAB447+Plcj4PwjlJdv7Orw==
+	bh=4KPYc3E+o50lGpfkZzyN+iidtBIGIosti2i/oeYJMK4=;
+	b=fTynAKvjvlLbD5a6I8rcyPf2QWRa7cV0OMn8XjJ+S2V46kY+/2PX80xTi0ercuxL7Nhn
+	 jfSaPPBPmyXXrh+n1URA7c6DWR9C0Jp6vGqTNPwn8v6eeFzplhvnxf51t6CsVjecWfW7e
+	 NAkuwYTGITUAJOGOhXT6VjyJlnxedSwJL3qGO5S1jvf2FyLKlaWVQo6zEeceVXehoJarW
+	 QuvjkiRpQmK/fkTLdk+gTpNtSF/7A8JHz+y5b2hsh+Mxvq5F8G4/1HwdN23D+xqMWPOyD
+	 ted4/UY1GdTPnVNlgdHANNW4lAKFnBIZuh2t8wRvD237LhguQi6JXQmsXeEs5tl6cEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=W1AV22pg;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T1el7Yp9;
 	arc=none smtp.remote-ip=198.175.65.12
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1301609CEDA;
-	Mon, 19 Oct 2026 15:14:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1301609CEDA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8259609CEE0;
+	Mon, 19 Oct 2026 15:14:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8259609CEE0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=W1AV22pg
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=T1el7Yp9
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792422877; x=1823958877;
+  t=1792422879; x=1823958879;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ZfeOTfLcnNBlh1mE4JwdF2XkVLvyx9LjhRUEehl5Ikg=;
-  b=W1AV22pgHv0bfeHCI/3v31eaNAG9w9jPC1AraM+rbzdilikpAY5l+2wG
-   1bg98tgvFI2T8r5kwF9d+y3GycSmCc3jk/Xrd3OIEgZYnoxHd4C+NBOxP
-   jYq5bPzNNVyyl/OjBCRc41a7DZsdrtL9vfsYmZPz31lWCLiJXwoqJeQnm
-   K2hsDQgxyvh4Azp8Hg8dJ/CywYtNiT0T+2hWdNofBEyU3em68pnBdbWLw
-   FQzslTVYi5sy/j0u1HcobIhxKrRjboGETXtpyJIBp9AwfnYjDl+b8FC2G
-   Vd43qoIoLwgOBfJAh/it6mnaH0x9/AySn/dFeWgAIKavAbYnP/nhQHZCK
-   g==;
-X-CSE-ConnectionGUID: iSPUpAVAQ/SU3vqezAdwKA==
-X-CSE-MsgGUID: skxx0iL9QxKLRW8wjUxMUw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986912"
+  bh=dC5QT0uihgVJxiEcFO1l7zrA7kQg0kL1a85c3o260k0=;
+  b=T1el7Yp96xy2zHu/WGfKjLbN/zKZwFNfnmrYOgQyD6CJ63FtdSlUSjCv
+   mZ2d/iQjBXHt8gd9MiGLikV2QMi1+b5AoCULyiw5rUEPojkooN1KdXgYn
+   NNDbzkzhjiAv+rXvauLZo1gjjIvy+Yu5UPBqPdHAunbb+tIVMl/aZTcmL
+   evH5hIsT4VDgLx5X7B68UMa0huHWDAHAUsrMEGKviK9YnE5rnO+18h/xu
+   dOTCp0c3S3PzhipIazBhxsmDaQVN49VYT0LQKWxvZn23b/bdnP3n72LFB
+   CXoBdLdgwf4Bb8a1WJ6wAOQUTbyHGzXnoV9TllCh0BwzkOrjOJNhHbSWQ
+   A==;
+X-CSE-ConnectionGUID: 5d0MSqvDT1K3NPPPQxTQ9A==
+X-CSE-MsgGUID: taK4wTd3TPCeJao8Jfi27Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="986930"
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="986912"
+   d="scan'208";a="986930"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:34 -0700
-X-CSE-ConnectionGUID: sqTnvNHVSWWuNkX5SQc+bw==
-X-CSE-MsgGUID: 1FXx7HkYSCOjIsKMYbWG5A==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 08:14:35 -0700
+X-CSE-ConnectionGUID: Wt6oS79eS4SSxZvP5G77OA==
+X-CSE-MsgGUID: B203IircSgSMji9YVuFFnQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="2536966"
+   d="scan'208";a="2536991"
 Received: from jf5300-15a101203tc.jf.intel.com (HELO meta-crater2c.jf.intel.com) ([10.54.113.49])
   by orviesa003.jf.intel.com with ESMTP; 19 Oct 2026 08:14:34 -0700
 From: Daniel Byrne <daniel1.byrne@intel.com>
@@ -75,9 +75,9 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	linux-crypto@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH 07/17] dmaengine: idxd: bound device command waits and fail fast after a timeout
-Date: Mon, 19 Oct 2026 08:06:20 -0700
-Message-ID: <20261019150630.4026341-8-daniel1.byrne@intel.com>
+Subject: [PATCH 13/17] dmaengine: idxd: fix the double free of a descriptor whose submission failed
+Date: Mon, 19 Oct 2026 08:06:26 -0700
+Message-ID: <20261019150630.4026341-14-daniel1.byrne@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261019150630.4026341-1-daniel1.byrne@intel.com>
 References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
@@ -92,380 +92,222 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-idxd_cmd_exec() waits forever, twice: first for a previous command to
-finish, then for the interrupt that completes its own command. A device
-command that never completes therefore leaves the caller in an
-uninterruptible sleep, and every subsequent command joins the queue
-behind it. Observed with a DRAIN_WQ issued from cdev release while a
-descriptor sat blocked on a page fault that could not be serviced: the
-releasing process became unkillable, every later process exit queued
-behind it in D state, and the reboot hung until a power cycle.
+llist_abort_desc() marks the failed descriptor aborted before it
+searches the lists for it. When the interrupt thread has just taken the
+pending list into a private batch, the search misses it, the thread
+completes and frees the descriptor on seeing the mark, and the caller
+frees it again: sbitmap_queue_clear() then stores through the per-cpu
+hint of cpu -1, or clears the bit of the slot's next owner, and a thread
+that read the record before the mark puts the freed descriptor on the
+work list. This needs only interrupt-armed descriptors in flight on a
+shared queue whose ENQCMDS fails, as in a guest whose shared queue other
+guests keep full.
 
-Bound both waits at 30 seconds; a drain of a loaded work queue is the
-slowest legitimate command and healthy commands complete in
-microseconds. Only the owner of a command can tell that it is stuck. A
-caller waiting for the running command restarts its budget whenever
-another command starts running and gives up when the owner marks the
-device, so healthy commands queued behind one another never add up to
-a false timeout. On its own timeout the owner sets
-IDXD_FLAG_CMD_TIMEDOUT, so waiters and later commands fail fast with
-IDXD_CMDSTS_HW_ERR, and leaves IDXD_FLAG_CMD_RUNNING set, since the
-device may still be executing the command and writing another to the
-command register would be undefined. The command completion lives on
-the owner's stack, so it is detached under cmd_lock on timeout, and
-the interrupt handler checks under that lock that it is still set.
+Sort the pending list under the list lock in the thread, as the abort
+does, so a descriptor still waiting on the hardware is always on one of
+the lists the abort searches. The device never took a failed
+descriptor, so its record stays clear and nothing completes it before
+the abort has taken it off the lists; from then on it is the
+submitter's alone and needs no mark. The finished descriptors the abort
+takes off the pending list go to the work list for the interrupt thread,
+which the abort wakes, instead of being completed in the submitter's
+context.
 
-A timeout fences the device: every command fails fast and nothing is
-freed. A late completion interrupt clears both flags, so a device that
-was merely slow is usable again, and so do a PCI reset and the recovery
-from a halt, which also forget the running command and wake its owner
-instead of letting it sleep out the timeout. The owner checks under
-cmd_lock that the command is still its own before it reads the status;
-a forgotten command is reported failed and marks nothing. There is no
-sysfs lever to clear the state.
-
-The interrupt-handle release polled the command register under
-cmd_lock, which idxd_cmd_exec() does not hold while its command runs,
-so it could be written over a running command, and it spun unbounded
-with preemption off. Send it through idxd_cmd_exec() like the request.
-
+Fixes: 6b4b87f2c31a ("dmaengine: idxd: fix submission race window")
+Cc: stable@vger.kernel.org # 5.14+
+Assisted-by: Claude:claude-opus-5
 Assisted-by: Claude:claude-opus-5-5
 Assisted-by: Claude:claude-fable-5-1
 Signed-off-by: Daniel Byrne <daniel1.byrne@intel.com>
 ---
- drivers/dma/idxd/device.c | 157 +++++++++++++++++++++++++++++++++-----
- drivers/dma/idxd/idxd.h   |   3 +
- drivers/dma/idxd/init.c   |   9 +++
- drivers/dma/idxd/irq.c    |  25 +++++-
- 4 files changed, 175 insertions(+), 19 deletions(-)
+ drivers/dma/idxd/irq.c    | 63 ++++++++++++++++++++++-----------------
+ drivers/dma/idxd/submit.c | 48 +++++++++++++++--------------
+ 2 files changed, 62 insertions(+), 49 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index a461cae7a409..5ebc2c1a3859 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -12,6 +12,9 @@
- #include "idxd.h"
- #include "registers.h"
- 
-+/* generous bound: drain of a loaded WQ is the slowest legitimate command */
-+#define IDXD_CMD_TIMEOUT_MS	30000
-+
- static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 			  u32 *status);
- static void idxd_device_wqs_clear_state(struct idxd_device *idxd);
-@@ -498,7 +501,7 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 	union idxd_command_reg cmd;
- 	DECLARE_COMPLETION_ONSTACK(done);
- 	u32 stat;
--	unsigned long flags;
-+	unsigned long flags, left;
- 
- 	if (idxd_device_is_halted(idxd)) {
- 		dev_warn(&idxd->pdev->dev, "Device is HALTED!\n");
-@@ -507,21 +510,69 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 		return;
- 	}
- 
-+	if (test_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags)) {
-+		dev_warn(&idxd->pdev->dev,
-+			 "Not sending command %#x: an earlier device command timed out, device needs a reset\n",
-+			 cmd_code);
-+		if (status)
-+			*status = IDXD_CMDSTS_HW_ERR;
-+		return;
-+	}
-+
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.cmd = cmd_code;
- 	cmd.operand = operand;
- 	cmd.int_req = 1;
- 
- 	spin_lock_irqsave(&idxd->cmd_lock, flags);
--	wait_event_lock_irq(idxd->cmd_waitq,
--			    !test_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags),
--			    idxd->cmd_lock);
-+	/*
-+	 * Wait for the running command, if any. Only its owner can tell
-+	 * that it is stuck, so this wait does not declare a timeout of its
-+	 * own: its budget covers one owner and restarts whenever another
-+	 * command starts running, and it ends early when the owner gives
-+	 * up and marks the device. Several healthy commands queued behind
-+	 * one another therefore never add up to a false timeout.
-+	 */
-+	while (test_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags)) {
-+		u32 seq = idxd->cmd_seq;
-+
-+		if (test_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags)) {
-+			spin_unlock_irqrestore(&idxd->cmd_lock, flags);
-+			dev_err(&idxd->pdev->dev,
-+				"not sending command %#x: the running device command timed out, device needs a reset\n",
-+				cmd_code);
-+			if (status)
-+				*status = IDXD_CMDSTS_HW_ERR;
-+			return;
-+		}
-+		if (!wait_event_lock_irq_timeout(idxd->cmd_waitq,
-+				!test_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags) ||
-+				test_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags) ||
-+				idxd->cmd_seq != seq,
-+				idxd->cmd_lock,
-+				msecs_to_jiffies(IDXD_CMD_TIMEOUT_MS))) {
-+			/*
-+			 * The owner started before this wait and has the
-+			 * same budget, so its own timeout is due; it marks
-+			 * the device and wakes this queue. Give up without
-+			 * marking anything here.
-+			 */
-+			spin_unlock_irqrestore(&idxd->cmd_lock, flags);
-+			dev_err(&idxd->pdev->dev,
-+				"timed out waiting for the running device command before %#x\n",
-+				cmd_code);
-+			if (status)
-+				*status = IDXD_CMDSTS_HW_ERR;
-+			return;
-+		}
-+	}
- 
- 	dev_dbg(&idxd->pdev->dev, "%s: sending cmd: %#x op: %#x\n",
- 		__func__, cmd_code, operand);
- 
- 	idxd->cmd_status = 0;
- 	__set_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags);
-+	idxd->cmd_seq++;
- 	idxd->cmd_done = &done;
- 	iowrite32(cmd.bits, idxd->reg_base + IDXD_CMD_OFFSET);
- 
-@@ -530,9 +581,57 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 	 * the command completes via interrupt.
- 	 */
- 	spin_unlock_irqrestore(&idxd->cmd_lock, flags);
--	wait_for_completion(&done);
--	stat = ioread32(idxd->reg_base + IDXD_CMDSTS_OFFSET);
-+	left = wait_for_completion_timeout(&done,
-+				msecs_to_jiffies(IDXD_CMD_TIMEOUT_MS));
- 	spin_lock(&idxd->cmd_lock);
-+	/*
-+	 * A reset, or the recovery from a halt, forgot this command
-+	 * meanwhile, and another may be running by now. Forgetting the
-+	 * command completes the wait, but it can also happen between the
-+	 * interrupt's completion and this lock, or after the wait ran out,
-+	 * so ownership is checked whichever way the wait ended. The device
-+	 * is not stuck on this command, and the command state belongs to
-+	 * whatever runs now. Mark nothing and leave that state alone, even
-+	 * if this command completed just before the reset or the halt: its
-+	 * status can no longer be trusted.
-+	 */
-+	if (idxd->cmd_done != &done) {
-+		spin_unlock(&idxd->cmd_lock);
-+		dev_err(&idxd->pdev->dev,
-+			"device command %#x was ended by a reset\n",
-+			cmd_code);
-+		if (status)
-+			*status = IDXD_CMDSTS_HW_ERR;
-+		return;
-+	}
-+	/* A timeout, unless the interrupt beat the lock. */
-+	if (!left && !completion_done(&done)) {
-+		/*
-+		 * The device did not complete the command. Detach the
-+		 * on-stack completion so a late interrupt cannot touch it,
-+		 * and leave IDXD_FLAG_CMD_RUNNING set: the device may still
-+		 * be executing, so no further commands may be issued.
-+		 * IDXD_FLAG_CMD_TIMEDOUT makes waiters and future callers
-+		 * fail fast; a late completion interrupt or a device reset
-+		 * clears both flags.
-+		 */
-+		idxd->cmd_done = NULL;
-+		set_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags);
-+		wake_up(&idxd->cmd_waitq);
-+		spin_unlock(&idxd->cmd_lock);
-+		dev_err(&idxd->pdev->dev,
-+			"device command %#x timed out, device needs a reset\n",
-+			cmd_code);
-+		if (status)
-+			*status = IDXD_CMDSTS_HW_ERR;
-+		return;
-+	}
-+	/*
-+	 * Read the status while this command still owns the register: no
-+	 * other command is written before RUNNING is cleared below.
-+	 */
-+	stat = ioread32(idxd->reg_base + IDXD_CMDSTS_OFFSET);
-+	idxd->cmd_done = NULL;
- 	if (status)
- 		*status = stat;
- 	idxd->cmd_status = stat & GENMASK(7, 0);
-@@ -543,6 +642,33 @@ static void idxd_cmd_exec(struct idxd_device *idxd, int cmd_code, u32 operand,
- 	spin_unlock(&idxd->cmd_lock);
- }
- 
-+/*
-+ * Forget the running command, whether its owner still waits for it or
-+ * has given up on it. Called when the device has been reset or has
-+ * halted, so the command can no longer be executing. A waiting owner is
-+ * woken instead of sleeping out its timeout. It finds that it no longer
-+ * owns the command and returns without touching the command state,
-+ * which belongs to whatever command runs next.
-+ */
-+void idxd_cmd_reset_state(struct idxd_device *idxd)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&idxd->cmd_lock, flags);
-+	/*
-+	 * The completion is on the owner's stack. It is valid while
-+	 * cmd_done points to it, since the owner clears cmd_done, or sees
-+	 * that it points elsewhere, under cmd_lock before it returns.
-+	 */
-+	if (idxd->cmd_done)
-+		complete(idxd->cmd_done);
-+	idxd->cmd_done = NULL;
-+	__clear_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags);
-+	clear_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags);
-+	wake_up(&idxd->cmd_waitq);
-+	spin_unlock_irqrestore(&idxd->cmd_lock, flags);
-+}
-+
- int idxd_device_enable(struct idxd_device *idxd)
- {
- 	struct device *dev = &idxd->pdev->dev;
-@@ -644,31 +770,20 @@ int idxd_device_release_int_handle(struct idxd_device *idxd, int handle,
- {
- 	struct device *dev = &idxd->pdev->dev;
- 	u32 operand, status;
--	union idxd_command_reg cmd;
- 
- 	if (!(idxd->hw.cmd_cap & BIT(IDXD_CMD_RELEASE_INT_HANDLE)))
- 		return -EOPNOTSUPP;
- 
- 	dev_dbg(dev, "release int handle, handle %d\n", handle);
- 
--	memset(&cmd, 0, sizeof(cmd));
- 	operand = handle & GENMASK(15, 0);
- 
- 	if (irq_type == IDXD_IRQ_IMS)
- 		operand |= CMD_INT_HANDLE_IMS;
- 
--	cmd.cmd = IDXD_CMD_RELEASE_INT_HANDLE;
--	cmd.operand = operand;
--
- 	dev_dbg(dev, "cmd: %u operand: %#x\n", IDXD_CMD_RELEASE_INT_HANDLE, operand);
- 
--	spin_lock(&idxd->cmd_lock);
--	iowrite32(cmd.bits, idxd->reg_base + IDXD_CMD_OFFSET);
--
--	while (ioread32(idxd->reg_base + IDXD_CMDSTS_OFFSET) & IDXD_CMDSTS_ACTIVE)
--		cpu_relax();
--	status = ioread32(idxd->reg_base + IDXD_CMDSTS_OFFSET);
--	spin_unlock(&idxd->cmd_lock);
-+	idxd_cmd_exec(idxd, IDXD_CMD_RELEASE_INT_HANDLE, operand, &status);
- 
- 	if ((status & IDXD_CMDSTS_ERR_MASK) != IDXD_CMDSTS_SUCCESS) {
- 		dev_dbg(dev, "release int handle failed: %#x\n", status);
-@@ -1340,6 +1455,12 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
- 	if (ie->int_handle == INVALID_INT_HANDLE)
- 		return;
- 
-+	/*
-+	 * The release waits for a running command like any other command.
-+	 * It is not sent, or does not complete, only on a halted device or
-+	 * after a command timed out, and the reset such a device needs
-+	 * revokes the handle. The handle is forgotten in any case.
-+	 */
- 	if (idxd->request_int_handles)
- 		idxd_device_release_int_handle(idxd, ie->int_handle, IDXD_IRQ_MSIX);
- 	idxd_device_clear_perm_entry(idxd, ie);
-diff --git a/drivers/dma/idxd/idxd.h b/drivers/dma/idxd/idxd.h
-index 2343f0367d62..221a7302bb0c 100644
---- a/drivers/dma/idxd/idxd.h
-+++ b/drivers/dma/idxd/idxd.h
-@@ -267,6 +267,7 @@ enum idxd_device_state {
- enum idxd_device_flag {
- 	IDXD_FLAG_CONFIGURABLE = 0,
- 	IDXD_FLAG_CMD_RUNNING,
-+	IDXD_FLAG_CMD_TIMEDOUT,
- 	IDXD_FLAG_PASID_ENABLED,
- 	IDXD_FLAG_USER_PASID_ENABLED,
- 	IDXD_FLAG_REMOVING,	/* PCI remove under way, refuse binds */
-@@ -332,6 +333,7 @@ struct idxd_device {
- 	spinlock_t dev_lock;	/* spinlock for device */
- 	spinlock_t cmd_lock;	/* spinlock for device commands */
- 	struct completion *cmd_done;
-+	u32 cmd_seq;		/* bumps when a command starts running */
- 	struct idxd_group **groups;
- 	struct idxd_wq **wqs;
- 	struct idxd_engine **engines;
-@@ -779,6 +781,7 @@ int idxd_device_enable(struct idxd_device *idxd);
- int idxd_device_disable(struct idxd_device *idxd);
- void idxd_device_reset(struct idxd_device *idxd);
- void idxd_device_clear_state(struct idxd_device *idxd);
-+void idxd_cmd_reset_state(struct idxd_device *idxd);
- int idxd_device_config(struct idxd_device *idxd);
- void idxd_device_drain_pasid(struct idxd_device *idxd, int pasid);
- int idxd_device_load_config(struct idxd_device *idxd);
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 4443d23fde5a..9c47a7b9e48e 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -1057,6 +1057,15 @@ static void idxd_reset_done(struct pci_dev *pdev)
- 	struct device *dev;
- 	int rc, i;
- 
-+	/*
-+	 * A reset ends any command, including one that had timed out. The
-+	 * PCI core resets the device even when the preparation failed and
-+	 * the device is not rebound, and it calls this after a reset that
-+	 * failed as well, which cannot be told apart here. Like the rebind
-+	 * below, this assumes that the reset ran.
-+	 */
-+	idxd_cmd_reset_state(idxd);
-+
- 	if (!idxd->idxd_saved)
- 		return;
- 
 diff --git a/drivers/dma/idxd/irq.c b/drivers/dma/idxd/irq.c
-index 915304ee7099..acb901e59a00 100644
+index e48f7c307ceb..1ec3d360eea8 100644
 --- a/drivers/dma/idxd/irq.c
 +++ b/drivers/dma/idxd/irq.c
-@@ -35,6 +35,11 @@ static void idxd_device_reinit(struct work_struct *work)
- 	struct device *dev = &idxd->pdev->dev;
- 	int rc, i;
+@@ -651,31 +651,39 @@ static void irq_process_pending_llist(struct idxd_irq_entry *irq_entry)
+ {
+ 	struct idxd_desc *desc, *t;
+ 	struct llist_node *head;
++	LIST_HEAD(flist);
+ 
+-	head = llist_del_all(&irq_entry->pending_llist);
+-	if (!head)
++	if (llist_empty(&irq_entry->pending_llist))
+ 		return;
  
 +	/*
-+	 * The halt ended whatever command was running, and a command that
-+	 * timed out before the halt would otherwise refuse the reset.
++	 * Sort under the list lock, as the submit abort does. A descriptor
++	 * still waiting on the hardware reaches the work list within the
++	 * same hold, so the abort of a failed submission, which searches
++	 * both lists under the lock, always finds its own descriptor.
 +	 */
-+	idxd_cmd_reset_state(idxd);
- 	idxd_device_reset(idxd);
- 	rc = idxd_device_config(idxd);
- 	if (rc < 0)
-@@ -550,7 +555,25 @@ irqreturn_t idxd_misc_thread(int vec, void *data)
++	spin_lock(&irq_entry->list_lock);
++	head = llist_del_all(&irq_entry->pending_llist);
+ 	llist_for_each_entry_safe(desc, t, head, llnode) {
+ 		u8 status = desc->completion->status & DSA_COMP_STATUS_MASK;
  
- 	if (cause & IDXD_INTC_CMD) {
- 		val |= IDXD_INTC_CMD;
--		complete(idxd->cmd_done);
+-		if (status) {
+-			/*
+-			 * Check against the original status as ABORT is software defined
+-			 * and 0xff, which DSA_COMP_STATUS_MASK can mask out.
+-			 */
+-			if (unlikely(desc->completion->status == IDXD_COMP_DESC_ABORT)) {
+-				idxd_desc_complete(desc, IDXD_COMPLETE_ABORT, true);
+-				continue;
+-			}
++		if (status)
++			list_add_tail(&desc->list, &flist);
++		else
++			list_add_tail(&desc->list, &irq_entry->work_list);
++	}
++	spin_unlock(&irq_entry->list_lock);
+ 
++	list_for_each_entry_safe(desc, t, &flist, list) {
++		list_del(&desc->list);
 +		/*
-+		 * cmd_done is cleared under cmd_lock when idxd_cmd_exec()
-+		 * gives up on a command: the completion lives on its stack,
-+		 * so a late interrupt must not touch it.
++		 * Check against the original status as ABORT is software
++		 * defined and 0xff, which DSA_COMP_STATUS_MASK can mask out.
 +		 */
-+		spin_lock(&idxd->cmd_lock);
-+		if (idxd->cmd_done) {
-+			complete(idxd->cmd_done);
-+		} else if (test_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags)) {
-+			/*
-+			 * The command its owner gave up on has finished after
-+			 * all. The device is usable again, so let the queue go.
-+			 */
-+			__clear_bit(IDXD_FLAG_CMD_RUNNING, &idxd->flags);
-+			clear_bit(IDXD_FLAG_CMD_TIMEDOUT, &idxd->flags);
-+			wake_up(&idxd->cmd_waitq);
-+			dev_warn(dev, "a timed-out device command completed late\n");
-+		}
-+		spin_unlock(&idxd->cmd_lock);
++		if (unlikely(desc->completion->status == IDXD_COMP_DESC_ABORT))
++			idxd_desc_complete(desc, IDXD_COMPLETE_ABORT, true);
++		else
+ 			idxd_desc_complete(desc, IDXD_COMPLETE_NORMAL, true);
+-		} else {
+-			spin_lock(&irq_entry->list_lock);
+-			list_add_tail(&desc->list,
+-				      &irq_entry->work_list);
+-			spin_unlock(&irq_entry->list_lock);
+-		}
+ 	}
+ }
+ 
+@@ -727,18 +735,19 @@ irqreturn_t idxd_wq_thread(int irq, void *data)
+ 	 * submmiter adds all the submitted descriptor after sending it to
+ 	 * the workqueue. It's a lockless singly linked list. The work_list
+ 	 * is the common linux double linked list. We are in a scenario of
+-	 * multiple producers and a single consumer. The producers are all
+-	 * the kernel submitters of descriptors, and the consumer is the
+-	 * kernel irq handler thread for the msix vector when using threaded
+-	 * irq. To work with the restrictions of llist to remain lockless,
+-	 * we are doing the following steps:
++	 * multiple producers and several consumers. The producers are all
++	 * the kernel submitters of descriptors, and they add to the llist
++	 * without a lock. The consumers are the kernel irq handler thread
++	 * for the msix vector when using threaded irq, the abort of a
++	 * failed submission, the interrupt handle abort and the flushes,
++	 * and each empties the llist under the list lock. The thread does
++	 * so in these steps:
+ 	 * 1. Iterate through the work_list and process any completed
+ 	 *    descriptor. Delete the completed entries during iteration.
+-	 * 2. llist_del_all() from the pending list.
+-	 * 3. Iterate through the llist that was deleted from the pending list
+-	 *    and process the completed entries.
+-	 * 4. If the entry is still waiting on hardware, list_add_tail() to
+-	 *    the work_list.
++	 * 2. Under the list lock, llist_del_all() from the pending list and
++	 *    move each entry still waiting on hardware to the work_list and
++	 *    each completed one to a private list.
++	 * 3. Process the entries of the private list outside the lock.
+ 	 */
+ 	irq_process_work_list(irq_entry);
+ 	irq_process_pending_llist(irq_entry);
+diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
+index 26dce0179d30..5806b1b74a2f 100644
+--- a/drivers/dma/idxd/submit.c
++++ b/drivers/dma/idxd/submit.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
+ #include <linux/init.h>
++#include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
+@@ -92,12 +93,6 @@ static struct idxd_desc *list_abort_desc(struct idxd_wq *wq, struct idxd_irq_ent
+ 		}
  	}
  
- 	if (cause & IDXD_INTC_OCCUPY) {
+-	/*
+-	 * At this point, the desc needs to be aborted is held by the completion
+-	 * handler where it has taken it off the pending list but has not added to the
+-	 * work list. It will be cleaned up by the interrupt handler when it sees the
+-	 * IDXD_COMP_DESC_ABORT for completion status.
+-	 */
+ 	return NULL;
+ }
+ 
+@@ -106,9 +101,8 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
+ {
+ 	struct idxd_desc *d, *t, *found = NULL;
+ 	struct llist_node *head;
+-	LIST_HEAD(flist);
++	bool wake = false;
+ 
+-	desc->completion->status = IDXD_COMP_DESC_ABORT;
+ 	/*
+ 	 * Grab the list lock so it will block the irq thread handler. This allows the
+ 	 * abort code to locate the descriptor need to be aborted.
+@@ -122,10 +116,15 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
+ 				continue;
+ 			}
+ 
++			/*
++			 * A finished descriptor goes on the work list for
++			 * the interrupt thread, as one still in flight does,
++			 * rather than being completed in the submitter's
++			 * context.
++			 */
+ 			if (d->completion->status)
+-				list_add_tail(&d->list, &flist);
+-			else
+-				list_add_tail(&d->list, &ie->work_list);
++				wake = true;
++			list_add_tail(&d->list, &ie->work_list);
+ 		}
+ 	}
+ 
+@@ -133,21 +132,26 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
+ 		found = list_abort_desc(wq, ie, desc);
+ 	spin_unlock(&ie->list_lock);
+ 
+-	if (found)
+-		idxd_dma_complete_txd(found, IDXD_COMPLETE_ABORT, false,
+-				      NULL, NULL);
++	/*
++	 * Their interrupts may have run the thread before they reached the
++	 * work list, so it is woken again.
++	 */
++	if (wake)
++		irq_wake_thread(ie->vector, ie);
+ 
+ 	/*
+-	 * completing the descriptor will return desc to allocator and
+-	 * the desc can be acquired by a different process and the
+-	 * desc->list can be modified.  Delete desc from list so the
+-	 * list traversing does not get corrupted by the other process.
++	 * The device never took the descriptor, so its record is still
++	 * clear. The interrupt thread and another submitter's abort sort
++	 * the lists under the list lock and leave one with a clear record
++	 * on a list, so the search finds the descriptor, and once off the
++	 * lists it is the submitter's alone. Marking it aborted before
++	 * that would let another context that saw the mark on a list
++	 * complete and free it, and the caller frees it as well.
+ 	 */
+-	list_for_each_entry_safe(d, t, &flist, list) {
+-		list_del_init(&d->list);
+-		idxd_dma_complete_txd(d, IDXD_COMPLETE_ABORT, true,
++	WARN_ON_ONCE(!found);
++	if (found)
++		idxd_dma_complete_txd(desc, IDXD_COMPLETE_ABORT, false,
+ 				      NULL, NULL);
+-	}
+ }
+ 
+ /*
 -- 
 2.43.0
 
