@@ -1,96 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792528160;
-	b=umO6Q0KBuwQc84APsQTuJe//fkRHa7yGkTSYxhRDJXJE0QTR5mZE1oQNE+FAp4F9yFME
-	 8GMlIWwLaAZTlno29OoxACmtguJ8YZm9qdQVRme607DJKZ5ADipBPjU0zHFekuSdB0/Qc
-	 KOT4zPYJq9ll5KQnNheRCAlD841JhxqS+RzHJfRJVk0EM36+n1or8BrNTLSz/qF+Je8KS
-	 KFGRTPNdY36CnFzLSNMMNJ5mww0GbfqYo7lVwvwb13cNp5YnEmpiJE6KCE7QeNyvN68oa
-	 Lddqm6t34YO2Y5xaHbVxYsYQE89u9HJNossB/qhvKbg7gT7P8LYB/yAo5X+NR/rLIHg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792528160;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=V6L8IJssLFGh2DkVvUNXp3YRELoRcMsg2OWBMxI6lEQ=;
-	b=B6ujiZj04edcaCifl585Cxpm3ybO8Zdb/tLRC1WY5a7VPRkbrUxGBS8qjGKmn26SpPl3
-	 9upiyfnmSBi1Lznp5OMs6EOE/NZ4yy1eejVTLiulF8ZfJqnja1QfKZ1EKAefXNbRtehBg
-	 FX9ycGzQLR9DZqphwFkpTa1imU79LAycdcHoH8UfP/1yxFfXt7BT2fr5O1pqqjOh45dPd
-	 zwrAVlGpoDFRMXn82av23luW457dakq67MQipAGnvEGDoxd7cS/oMIFUIWE70I+67rAUj
-	 wyRMSrHEgW8lUGyD5+9CtWzauuSOfjRnSHXEcqCJOwN6fa/fGskWnhu5uim7ecdDeGQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=HzDfSyjU;
-	arc=none smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.61
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792530518;
+	b=zarQNho8sdpQHaLMy8HKdtMF3+sR1s1BKVuN4r+VM16jqXcWg56RIMzsI1WLZIur/HJM
+	 pHLcSn4qTgPDiI1zwi1uLpdSLVUfnANd9QEGOw+Stc2S9hQPGxFmaaaGcvTYpSQO/3SB0
+	 5VxVP+QGISns+zRZNXBfVdkDziuJFEFHe7uJridKNQseoOe04ifhyZSvJA9wKGdJKUWW8
+	 75cNNhqPPgy/GP4Zq/lqKmFKuyiNST4rYyKDWAJJLkfO4hx/GAlvcpDIWu+GmMXKDWVBA
+	 0y+uLwKe+Iz1+FPXHYvq8ttdMAHXnUCQ1q4tBx7P1bEnndhLA4u39TVCaMVx/cX5Otw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792530518;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=W9WmSd001WcMoW6/ejk2Nntumf0uE2tWkF7/9LSa+yY=;
+	b=RKypll6iGgv/JnuihBmkhnRKId0/QE0a42thE3TsXBuiarBpAeBxsiriQ0qHHMADwCHr
+	 HTQoMKymrVwO7UicR7cypOoGU+bNkgZpsLZiOv4kA6mSaBCvS1Cz2AFN7hHsuiNmPzZHW
+	 mXSTZbewSQwoX+Q1BQ5OZpFnS9+aU2vAhHyMFsGI5gEZijFPacT67+EZl9yNlYlSVKeyV
+	 lGrfw3jPq71/FWf9EH2gGxgko8lVa8HD8uFAnRfIhL0ZRFKjFvwb/alB+Mp6rnlCv1Km+
+	 Icvo+RvIEaNH+XFRzLBT4dLklz5peH1Jzu12Uws2/rWMymsZJxBz+hsacd24ppQBxCA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=XV136Nf+;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.61
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013061.outbound.protection.outlook.com [52.101.83.61])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F80606A31A
-	for <dmaengine@vger.kernel.org>; Tue, 20 Oct 2026 20:29:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77F80606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC514606A319;
+	Tue, 20 Oct 2026 21:08:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC514606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=HzDfSyjU
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a1de789b63so17905e9.0
-        for <dmaengine@vger.kernel.org>; Tue, 20 Oct 2026 13:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792528159; x=1793132959; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=V6L8IJssLFGh2DkVvUNXp3YRELoRcMsg2OWBMxI6lEQ=;
-        b=HzDfSyjUxpCF5oKd7tPhPgvjWBwQSySht2EDa8laW4ycSImd+4voevTEazzhUa1pwV
-         lDziNmQo6kYwSNFc5YGca5nKkALN13XlLn9jna3OgUojXY7AvOPVMqUPQPi85FBPAW6V
-         uvoFANgV5X4Y1LyEzKOHPZbm+Fv+UgFazxmA1Uqy3/offXu3TKhiX5UMNCHj2zctOVi6
-         5+EE+0+bCc8n3CEF3oErA6Ys7mYijsAb1GmPLhwO/Y8OvOIUJ32Erk9Nviv89d3bacC+
-         R10VR3SlyR1XrFqlowRXzT34ie5xc7D0jap37J+Nu//FV5hHBSBYDR5Hotf/6dOTiu5K
-         VYbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792528159; x=1793132959;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=V6L8IJssLFGh2DkVvUNXp3YRELoRcMsg2OWBMxI6lEQ=;
-        b=Mo3LV0fJ7uFDxqca5wgwN1fUzc72PsHyzshsSpTKk8QTi0BKjWnLUz3Gci+4C8c3l1
-         mm9HCHYQs+uBx5SK2oBuQMFxInG+8Dq5SjML2i4EjoCEp4obiOhLKSvyfCk6oKDbWZIS
-         +733sHH9nLfTXU1nr+c7is9/xquL/TD/EpSavNgebkE5wyB7QK4pMkQCUJEbA5CuSAtb
-         STEMeFPeK3iIUwFzWUWlMUO5X2YNQg5jplMiMOE0eK2OD6jLlSxscaWRvH2TBP+4ETR8
-         paGCgmBesrP08YfkvgJ3YRCrZuPiJXcHcJsMZmIsgkJ7KrAbw9dAkoaTvvEbeHNRBeD2
-         3zdQ==
-X-Forwarded-Encrypted: i=1; AKwUvBx2oUHPmeVzS6wWVCxCHdfSNdmHsRenC5VIiAaR7LUr8j5dAutTMHJPqGzW8zVKgIh2ClNlmk/hHAA=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIerq7fhcq3ejcxgUAxnFSXCYXy6VSzjxgTn2wP0Vh14496vwkm
-	2BjRNDccUjvlmXvp1vKaQR/y24f2KYX9yEGQOCKjl+ymbZieTtd3aB5N+CiezvAMhpcspJfEyqQ
-	tCg4+fA==
-X-Gm-Gg: AYBFou0aj3H/+Osd00Uk95n9TSFbOlvOYS6PRNwX0MyPZaUMnhBLX1fTfhUbh/mD1r7
-	6gsDuf//2F5WJlpSyN1vSdmGcd+rPNJf+UlVm9uVlPyJOVzceCwjYZWGAHcIht1lIN1n5smp4vG
-	6uuhDln7kOx0GFaP3GJxmyvedo3fwqJQKOIkjMrW7yPBug5mGG2MTSY6M5ttZUEC5ER2RMQJJ2z
-	AuopxEmSTSBw2JZUCQPKkuSHnA/YDztNkbBGKh8EusW7RwPkXenSYiOyQJjgVELWcDRTZm/SUAo
-	ZcAEJvXv3VIBAMyCJnEQ8qg9yFAPnTPjya75qbhIfi1w4GLMBNnUvFM0R7e7gG6UJSE1tJvPep4
-	mMdg8PEOwvg8nikiKQbtUbTxrZXXKdl36IAlf+V9zC41aO72OvI28zsgu5vclv/VkPIuSRirNqs
-	HbSKux6/5yzCnCiOkLXsw4E0vbZ/EYF9DexMfKesAmPCPxGjU4YGgzZVKVG4SK+NqbjSdP9JZlW
-	utriK7Wxci/y1HZhHO34exfVXPWCJ2j0F58P0cO
-X-Received: by 2002:a05:600c:c11b:b0:49e:65b0:7b7c with SMTP id 5b1f17b1804b1-4a1f598638amr1043095e9.7.1792528158429;
-        Tue, 20 Oct 2026 13:29:18 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e2581f0e2sm644857f8f.15.2026.10.20.13.29.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 13:29:16 -0700 (PDT)
-Date: Tue, 20 Oct 2026 20:29:12 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, vkoul@kernel.org,
-	Frank.Li@kernel.org, bartosz.golaszewski@oss.qualcomm.com,
-	pramod.gurav@linaro.org, andy.gross@linaro.org
-Subject: Re: [PATCH 1/2] dmaengine: qcom: bam_dma: Take a PM ref at remove()
-Message-ID: <atfPGHuujGny2dVo@google.com>
-References: <20261020180804.140766-1-smostafa@google.com>
- <20261020180804.140766-2-smostafa@google.com>
- <ate3QoD2ESDtB9wq@SMW015318>
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=XV136Nf+
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W+OyGkBQuj2Xsq1+3b2q8jvh76tWW6p8YqDTTFIPKy5DcKSGbvEL1t7/ZNAPpJ4b9lAfC2Quown48U1BdDRs/KP96o/kXxKo0BOsfA3GvuHis82HwcCol5ilerOGu9xMgBR6CW5wRnhvMyXmNNX+5XR8ibNFw0eq+NxqSK4QXecqCp4S3Cob1Y2W9XvUSU39gTKGWc0ma/91bJD7dEHuG4mz5pI252NvsfFUSgko/GS2iBk2Z3l1aCioq/a3TJeVrO+EOhzDNdsceFf/LOBkEWEuh5u95gedu1n2dQpjlgOC6PcQDYPYGFUUARz0i/rCmqPmF2aGzPyS9Av63+LwSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W9WmSd001WcMoW6/ejk2Nntumf0uE2tWkF7/9LSa+yY=;
+ b=fRrSTvoB6Z4LCVuLiXy22oZDMmt1kmSHSFRera3TmwRnaFFQKNyASRWA2uJD2FG7UJGXtxIU8NkKjCq2/KSu9UYdxFtZXZQvSPYWTAjioXcddYw/RWFzfusDN916zfRYpibWKcQdq6sSc/Nt8SRy/CrBNEzDFeuJEDFsSd0goU/ctFcpJAA7IXcXoBkDokvpIQkmu+fhaOylNDo8U45516H0PcV0UQQWGvvMwVA6YiiudSpw5iziU6H8K67beUIVSFXukhmmBEMPH6VX2OlmqteqEX4bS4lilGuu8xQZiG66hM/DWUd6jxlApyPS0QYRnStvhX+YqP8lFkth19RRNw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=W9WmSd001WcMoW6/ejk2Nntumf0uE2tWkF7/9LSa+yY=;
+ b=XV136Nf+ZLYRqEKBLKy3l3lWMkOSpE8Lgn2UOznpvtAAb95YDwt7UxQzl1CDst2m1gbTDv7an9/PO0R02SQrULSgr4NK+79fRpu6vrp1FHsftBECfohntpYMZ2gtf4BV0tDSuoDb5KYaUpf91PBNFhQTlgxObGAc+L2mYfuHt8EhQOV+FQj22NPgWMMUueSsfM6LVjadB+9ZqqZnXyzQ5PHZWZuqS0JR/dGb+y4GwAXSCvo0vuofXqoT8NtI9AFPqVpvlKOJenTGQVlVbvxcySPyjw3y8JrKV336qC730z5f76/NQ3qU2+fJ4WioPb1Wl5quHunXbopdadNIuk2yWg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by DBBPR04MB7900.eurprd04.prod.outlook.com (2603:10a6:10:1e8::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Tue, 20 Oct
+ 2026 21:08:34 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Tue, 20 Oct 2026
+ 21:08:33 +0000
+Date: Tue, 20 Oct 2026 17:08:26 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Rosen Penev <rosenp@gmail.com>
+Cc: dmaengine@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, Saeed Bishara <saeed@marvell.com>,
+	Lennert Buytenhek <buytenh@marvell.com>,
+	Maciej Sosnowski <maciej.sosnowski@intel.com>,
+	Dan Williams <djbw@kernel.org>, Nicolas Pitre <nico@marvell.com>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dmaengine: mv_xor: use writel() instead of relaxed
+ variant
+Message-ID: <atfYShWWp0DTGj_M@lizhi-Precision-Tower-5810>
+References: <20260916182405.12985-1-rosenp@gmail.com>
+ <aqrowa1TFhIDA-17@SMW015318>
+ <CAKxU2N-zLp3612KRsdmWKjm2hMBOikBZDBEqvpLOxpg44J4Fwg@mail.gmail.com>
+ <aqsZMeDZShMpCVj_@SMW015318>
+ <CAKxU2N-KfzS3uXRE6GKy2FL2mgrfXwbHaZx21ynhrubnGkJcvQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKxU2N-KfzS3uXRE6GKy2FL2mgrfXwbHaZx21ynhrubnGkJcvQ@mail.gmail.com>
+X-ClientProxiedBy: PH5P220CA0006.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:34a::7) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -100,132 +105,194 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ate3QoD2ESDtB9wq@SMW015318>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DBBPR04MB7900:EE_
+X-MS-Office365-Filtering-Correlation-Id: d707024f-6375-4e2f-b90b-08df2eee4cd8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|7416014|1800799024|19092799006|366016|56012099006|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	4y3jOwmjQrblNVXqWihpJQkyurUcuOLkDu4mtcMwVm3k/oxPN5+n66jwje9rIh4LZeur2Y7es4VYQskHvfmfPY4EPdIGYEpd/26z/H8BfAXNv9tY88QC12gSc2yHmeRSBbIwW+CpXjXQ81sUCq9Bf0hpfGZc1EufttKCTMppcJLmLWIz0ZR87GUCEporcU3t0TXh3XrOLe4RaoUlzDaOkbc71u7/1dvCNkSNXoBAI9ceXk3cuw4rvxmGhE9DOmOMXmv/29MLGCoTkTOM6kn7TY6NbxEE9eNNGp1GwgdTuBTg9fY1GqVFt5WL7XdDoA5Sgox8cRy+fY5vFtWNP2Zj71ryF68ERL3ia7hMTyryZEq1J3vi7hRDwsPV9CfLWUYj7VKlscOTKW3hbxZJ5v2yodnwJBt1PZsn9Iu5d7ajnlnYTpT44t3Tk4/46fSll+Fv2eMXTxowD4FyE34YicFt2kURmgsIDp5MxRihEi8GBWGb2qFm0E4Y67/QzPXxdKOpLVwSMa/d4bc8MfHibDkBs58VA2Hjt9QEBhX2UT+9gGjb+g7Iu0eXoA7V8oPFBp73SxHIVChAVuIcYMjsN9CSTCdPH0EzbsY2VVp3Dhyw84lY+oajH8txBHMTekpKN7FVXe+7oLP3uohhbKaqFls31DYDtxcjpU6dagzCgQlbSa4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(7416014)(1800799024)(19092799006)(366016)(56012099006)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SDB2a21raGNhSHJMT1JCMzhXUGZsVzVlNGI0RmMwTDdqRTdqaSt4NTk5TEJI?=
+ =?utf-8?B?bnQrZXZPYVN6L2Z1UXptbFlBMG05ZXJDNmJWVEpaNEJNeDNZT0VnZDQ4TzBj?=
+ =?utf-8?B?ZHhNcXNPUTF3WnJtUkpYQ2tBUS9lVW1xWjNsNFV4eElZK2c4ZjZHZnlkK0NH?=
+ =?utf-8?B?U29Ec0lvbi9jZng0RFZGQ3AyZCszNjNPU3duVVgwNE5GeUw0Skp2bFhyYzlR?=
+ =?utf-8?B?WTBsSXRSTGcrSmhjN2RUWGNhR3RTMCtOSVVNd1ZhYS9nTkJWamJQSVNLYStC?=
+ =?utf-8?B?NmJTd0JCYUl1NzNldVZwdFo4SlRUVlZIVGE3TzZET2RxSG56RldsVlpHYStv?=
+ =?utf-8?B?QXNpeHcwa0RrMlBPRGJWOHpJRHZuOVBzVmVnRzJsZzNzYVBJK1B6dFVtMFd6?=
+ =?utf-8?B?czBBS0dKV0VROFZXVkREU3d0OXFlWlZJUVJ6dG5KcVFTMjZ1Vk5remRCZDZW?=
+ =?utf-8?B?V2dxWGRMR1BKTmtHcHZOdnBZM0ZCWk9KSW02RFZJb2lkM0Y2SytrNlV4TEt3?=
+ =?utf-8?B?Umg4bk50RnI0NndBVE4wZ0NvSU16bEtIa1RiTWphTjFGeGUzc3dTdHNYQnhx?=
+ =?utf-8?B?YU9FdjJnUHlLTHovbElqT25Jdy8vL2RtZHV5MVNoMk1GSkxmMVNCTkNrT2hk?=
+ =?utf-8?B?NUo5VHMxQlZhUnY1a0ZLeU5OMEIyRk5ES3lOeVhLQy9XRFRBZjlsT0FMam12?=
+ =?utf-8?B?WndhWk1NRThMTGJsaXZ5ODVRWW9WTHdPaUhlajZiWnpJOC9OTE96TDZCaTl4?=
+ =?utf-8?B?QmVld25wSWszUGNkdDJYUmZGenBzbU95bU5HcER5N2N1Sk5Cemd4R3lmcXdI?=
+ =?utf-8?B?YnRNNDVOZ3pmUE9CUWtNc0hqMDd3MEpNdmFteldEdi84NStUK1Mxc1ZyTlkr?=
+ =?utf-8?B?WkRKdDhpcmpVcWh1L1V2Z0wwN0pRWkI5SkJhdGJTdXVZM0FTaDc4WGp2TTUr?=
+ =?utf-8?B?L00yMmpnM0IzVk5JK3VHZWM4WVhVQ2QyQk1SY016Q1U0QnhZVFEvRmV1NHI0?=
+ =?utf-8?B?cUJhTDU5TGxmeDFybnRsMW9SWnp1bXRJWklqTlY3emNWeG5WdFRwVEEwVDds?=
+ =?utf-8?B?N0g0U0NTaGxBUld6TkdxYWo1UGZndEUrdjVBS254cmNvMk5MaERFMHJ4MTky?=
+ =?utf-8?B?dG5jbkREUXkydUpOZnU1d29tNTdFREVGbDVsaDJFclJ6T3pFL3RpZjBaOGQz?=
+ =?utf-8?B?S05BUUo3c3FXVEV3czdFMXREOVcrZU9URkpjSkkvNW1NcSsrNzQ3UkZyQjlT?=
+ =?utf-8?B?UjBySG84eWF5WGNoYXBwUXlINng5eThDay9RYkMxYmx0YUZTUmk0VjFiYUJm?=
+ =?utf-8?B?d1lyVVJCVUlXRTE2TFlFQjJsbVdmK0FqZ1cvaWh3VkdPdGNXNTdzdXFDZVla?=
+ =?utf-8?B?alhPcnlQK1pEdzAxY1pESmhFQUh4OXB2aWF6eVBxL0ZhRmR2a2FvVEJRTW5a?=
+ =?utf-8?B?eXExUHZsR21adGJVb241L29MNEhVdDd3SzVRbitrb00yMXpPVzhsSFVXaDlS?=
+ =?utf-8?B?VTR4N0U2M20vcTFReWtjTzUxSnQwbjZFdGxUekM2MW9iR2duS2lycnU5OVRy?=
+ =?utf-8?B?YWNYRzI5MWdkZUxFNUVkdXJDUEU1ME1LVDg3T2tUeE1sQkhHY1VXZktQNXgz?=
+ =?utf-8?B?N0FkZW9xTEdiWEkxUFUrOVM0bkRJT0NEY21LUjZFd1lSWFdaT2lkRVN1U0R5?=
+ =?utf-8?B?SWc2UjNVYnpwbS9yVTJNOXE1eFc0VXR4THY3Vm9kNWNaZEYvd3NMblVRa2Rx?=
+ =?utf-8?B?d1dBT2huNmdiaTJmRlprWmc4aXRzbUdUMjV6ckNzdUtSbGFOTHRNSXZOUXlB?=
+ =?utf-8?B?b0ZFUXBhaXV1K2JMelpnbkROMjJma1dhR1VGTkg1Zzd6cmdTd00rTVY3TjRN?=
+ =?utf-8?B?WnJzUGZKTEhETnhhdklYaUtKQ09KSStXSzBST244UUhVRTRXU2hta1J4Nitq?=
+ =?utf-8?B?dzRwV1hDWjdUOU1VMGJZQ0ZYeGRkc2cvTzdNdWlrTFdpNGJndSs5TmhsckJu?=
+ =?utf-8?B?a1ppVEtCTmI0VWp0QU12YmpLQVBqaG05TzJ4WE15UU1XK1pVOHkrYS9Bdmdp?=
+ =?utf-8?B?dlFkNE5Bd3hpSkVrNEJ4OTJIYU1LZTZyTGY4Z1gzYVBDNGlPK0xBSzRyUjNr?=
+ =?utf-8?B?UmhDZVk1Y1A4N1ZmVm93eUtCU21hVU85RWJVcEVIblZTYWdPV2d3WFQrRTlK?=
+ =?utf-8?B?S0wvS3VDMk1vRXZjdkhFSThhZXRzVDcxYXlCTXc4bVlBOWlQdzEwNy9NWUFn?=
+ =?utf-8?B?UnkyRkFBWVRSbEZSWUY3NzNFOUVFemh4YzNzUTVMc3RJalQrM1dEZHN3bDk3?=
+ =?utf-8?B?ZFVIVDhmUFppRCtjT0hUQlF4RDltdjFxRjZ6ZVJ5ZnhQcVRxNnBBYUpIUmRO?=
+ =?utf-8?Q?Eha8N07Ft2ah4ontWAh8lP5MdBe4P5/qiLivn?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d707024f-6375-4e2f-b90b-08df2eee4cd8
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 21:08:33.8023
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lptMo3pcYUBShEqNU6FOUUvupRsW/3m7TRCiThl117JqXvY8sR4MyQd4CxiniRWeSfQLu2X3oyPYJDRHwGb45JoJ0Nd+yJ/Zm300B/jTlZVqNVmP5YYLy2BToyhXTNdF
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7900
 
-On Tue, Oct 20, 2026 at 01:47:30PM -0500, Frank Li wrote:
-> On Tue, Oct 20, 2026 at 06:08:02PM +0000, Mostafa Saleh wrote:
-> > [You don't often get email from smostafa@google.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On Thu, Sep 17, 2026 at 04:45:31PM -0700, Rosen Penev wrote:
+> On Wed, Sep 16, 2026 at 3:33 PM Frank Li <Frank.li@oss.nxp.com> wrote:
 > >
-> > bam_dma_remove() calls pm_runtime_dont_use_autosuspend() and
-> > pm_runtime_force_suspend(), which on a BAM with its own clock disables
-> > bam_clk, and only then writes BAM_IRQ_SRCS_MSK_EE and terminates the
-> > channels, touching registers of a block whose clock has just been
-> > removed, causing the board to reset.
+> > On Wed, Sep 16, 2026 at 02:46:34PM -0700, Rosen Penev wrote:
+> > > On Wed, Sep 16, 2026 at 12:06 PM Frank Li <Frank.li@oss.nxp.com> wrote:
+> > > >
+> > > > On Wed, Sep 16, 2026 at 11:24:05AM -0700, Rosen Penev wrote:
+> > > > > Fix the ordering guarantees between descriptor memory writes and the
+> > > > > MMIO accesses that expose them to the engine. The descriptor pool is
+> > > > > allocated with dma_alloc_wc(), so writes sit in the CPU write buffers
+> > > > > and must be drained before the engine is allowed to read them.
+> > > > >
+> > > > > Program the next-descriptor pointer with writel() instead of
+> > > > > writel_relaxed(); the full accessor drains prior memory writes before
+> > > > > the MMIO write.
+> > > > >
+> > > > > In mv_xor_tx_submit() the appended chain link must be visible before the
+> > > > > busy-status register is read. Use a full mb() so the engine cannot fetch a
+> > > > > stale chain link and stall the channel after the CPU decides it is still
+> > > > > busy.
+> > > > >
+> > > > > Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
+> > > > > Assisted-by: LLM
+> > > > > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > > > > ---
+> > > > >  drivers/dma/mv_xor.c | 10 +++++++++-
+> > > > >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > > > >
+> > > > > diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+> > > > > index c4e0dce3ca64..0de2b1ad5c30 100644
+> > > > > --- a/drivers/dma/mv_xor.c
+> > > > > +++ b/drivers/dma/mv_xor.c
+> > > > > @@ -103,7 +103,10 @@ static u32 mv_chan_get_current_desc(struct mv_xor_chan *chan)
+> > > > >  static void mv_chan_set_next_descriptor(struct mv_xor_chan *chan,
+> > > > >                                       u32 next_desc_addr)
+> > > > >  {
+> > > > > -     writel_relaxed(next_desc_addr, XOR_NEXT_DESC(chan));
+> > > > > +     /* writel drains descriptor writes to DRAM before the engine
+> > > > > +      * is pointed at them
+> > > > > +      */
+> > > > > +     writel(next_desc_addr, XOR_NEXT_DESC(chan));
+> > > >
+> > > > I remember this my comments before, should be v2 version?
+> > > >
+> > > > >  }
+> > > > >
+> > > > >  static void mv_chan_unmask_interrupts(struct mv_xor_chan *chan)
+> > > > > @@ -410,6 +413,11 @@ mv_xor_tx_submit(struct dma_async_tx_descriptor *tx)
+> > > > >               /* fix up the hardware chain */
+> > > > >               mv_desc_set_next_desc(old_chain_tail, sw_desc->async_tx.phys);
+> > > > >
+> > > > > +             /* make the new link visible to the engine before we read
+> > > > > +              * the channel state, the device may fetch it at any point
+> > > > > +              */
+> > > > > +             mb();
+> > > > > +
+> > > >
+> > > > The first is readl_relaxed() in mv_chan_is_busy(), all io readl and writel
+> > > > is ordered.
+> > > >
+> > > > which part need mb() here?
+> > > It's to deal with readl_relaxed in mv_chan_is_busy. I'll change to
+> > > regular readl in v2.
 > >
-> > Sashiko(Locally) also reports, it then calls clk_disable_unprepare()
-> > on a clock that runtime suspend already disabled, which can trigger
-> > "already disabled" warning in clk_core_disable().
-> >
-> > Hold a runtime PM reference across the register accesses and the
-> > channel teardown. Once the hardware is quiet, disable runtime PM with
-> > the device still active and drop the clock exactly once, balancing the
-> > clk_prepare_enable() in probe.
-> >
-> > Fixes: 7d2545599f5b ("dmaengine: qcom-bam-dma: Add pm_runtime support")
-> > Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> > ---
-> >  drivers/dma/qcom/bam_dma.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > index f67a93a37d48..bd583f78e0c1 100644
-> > --- a/drivers/dma/qcom/bam_dma.c
-> > +++ b/drivers/dma/qcom/bam_dma.c
-> > @@ -1403,12 +1403,10 @@ static void bam_dma_remove(struct platform_device *pdev)
-> >         struct bam_device *bdev = platform_get_drvdata(pdev);
-> >         u32 i;
-> >
-> > -       pm_runtime_dont_use_autosuspend(&pdev->dev);
-> > -       pm_runtime_force_suspend(&pdev->dev);
-> > -
-> >         of_dma_controller_free(pdev->dev.of_node);
-> >         dma_async_device_unregister(&bdev->common);
-> >
-> > +       pm_runtime_get_sync(&pdev->dev);
-> >         /* mask all interrupts for this execution environment */
-> >         writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
-> >
-> > @@ -1428,6 +1426,9 @@ static void bam_dma_remove(struct platform_device *pdev)
-> >
-> >         tasklet_kill(&bdev->task);
-> >
-> > +       pm_runtime_dont_use_autosuspend(&pdev->dev);
-> 
-> After
-> 
-> commit d1706f9da9f40dffe8621cc0ee03b847f41f1d6d
-> Author: Joshua Crofts <joshua.crofts1@gmail.com>
-> Date:   Sat Sep 19 10:24:28 2026 +0200
-> 
->     PM: runtime: call pm_runtime_dont_use_autosuspend() on reinit()
-> 
->     Add a pm_runtime_dont_use_autosuspend() call to pm_runtime_reinit() to
->     ensure autosuspend is disabled on driver teardown.
-> 
->     Suggested-by: Frank Li <Frank.Li@nxp.com>
->     Signed-off-by: Joshua Crofts <joshua.crofts1@gmail.com>
->     Link: https://patch.msgid.link/20260919-move-dont-use-autosuspend-v1-1-f6e2d1315c23@gmail.com
->     Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> 
-> 
-> Needn't call pm_runtime_dont_use_autosuspend()
+> > I just want to know which variable need read barrier() ?
+>
+> Review says:
+>
+>  #### Validity of mb() after mv_desc_set_next_desc()
+>
+>   • Ordering the memory store (old_chain_tail->phy_next_desc) before
+> the MMIO register load (readl_relaxed(XOR_ACTIVATION) in
+> mv_xor.c:181-188),
 
-I see, thanks for pointing that out, I will remove it in v2.
+According to Documentation/memory-barriers.txt, read_relaxed() order
+with writeX for the same peripherial.
 
-> 
-> 
-> > +       pm_runtime_disable(&pdev->dev);
-> 
-> Can you use devm_pm_*() call to fix this problem.
+mv_desc_set_next_desc(old_chain_tail, sw_desc->async_tx.phys);
+use writel(),
 
-AFAICT, in that case we need to gate the clk_disable_unprepare()
-in remove() as the suspend() also runs after remove(), so
-clk_disable() would be called twice.
+mv_chan_is_busy() call readl_relaxed(XOR_ACTIVATION(chan)); readlX() must
+happen after previous writel().
 
-The problem seems to be bam_dma_runtime_resume/suspend() calling
-clk_enable/disable() but also remove() calls disable(), so something
-as:
+>  is necessary to prevent the
+>   CPU from seeing busy == 1 while the link store is still in the CPU's
+> store buffer, followed by the hardware completing old_chain_tail,
 
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1379,7 +1379,7 @@ static int bam_dma_probe(struct platform_device *pdev)
-        pm_runtime_use_autosuspend(&pdev->dev);
-        pm_runtime_mark_last_busy(&pdev->dev);
-        pm_runtime_set_active(&pdev->dev);
--       pm_runtime_enable(&pdev->dev);
-+       devm_pm_runtime_enable(&pdev->dev);
- 
-        return 0;
- 
-@@ -1433,9 +1433,10 @@ static void bam_dma_remove(struct platform_device *pdev)
- 
-        tasklet_kill(&bdev->task);
- 
--       pm_runtime_disable(&pdev->dev);
-        pm_runtime_put_noidle(&pdev->dev);
-+#ifndef CONFIG_PM
-        clk_disable_unprepare(bdev->bamclk);
-+#endif
- }
- 
- static int __maybe_unused bam_dma_runtime_suspend(struct device *dev)
+It is impossible. readl_relatex() guaratee get register value after previous
+write data reach finial taget place. Many place use the same method to
+guaratee previous write complete.
+
+> reading a stale 0-pointer, and
+>   halting without the CPU restarting it.
+>   • Since readl_relaxed() does not order against prior memory stores,
+
+readl_relatex() don't order against prior memory stores, but order
+with previous writel()
+
+> and dma_wmb() / wmb() only order stores against stores, a mandatory
+> full barrier (mb()) is the
+>   appropriate barrier for ordering a normal/WC memory store before an MMIO read.
+
+simples said, io read and write is order itself.
+
+1. mv_desc_set_next_desc() writle(),
+2. mv_chan_is_busy() read_relax(),
+
+1 and 2 is order, all data if have dependence, it is also order.
+
+a = readl()
+b = a * 2.  >> this must happen after readl().
 
 
-I can see example for both patterns in tree. However, 2) seems to
-be more common:
-1) Gating CONFIG_PM: drivers/mailbox/mtk-cmdq-mailbox.c
-2) Get/disable/put_noidle then clk_disable(): drivers/mmc/host/sdhci-msm.c
-
-Thanks,
-Mostafa
-> 
-> Frank
-> > +       pm_runtime_put_noidle(&pdev->dev);
-> >         clk_disable_unprepare(bdev->bamclk);
-> >  }
+Frank
 > >
-> > --
-> > 2.56.0.212.g129ede20d9-goog
+> > Frank
 > >
+> > > >
+> > > > Frank
+> > > >
+> > > > >               /* if the channel is not busy */
+> > > > >               if (!mv_chan_is_busy(mv_chan)) {
+> > > > >                       u32 current_desc = mv_chan_get_current_desc(mv_chan);
+> > > > > --
+> > > > > 2.55.0
+> > > > >
