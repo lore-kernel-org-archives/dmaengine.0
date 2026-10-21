@@ -1,87 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792616806;
-	b=A8G7zsb6neL3HX6kY5qtQqtL1gySbjzLM5rUrNKCJxkVgBGfa6zM1+mvAE+2vzWoZAsJ
-	 Bso9IjoUN3Az3BXTK7TFOPbHfN5NvX+a/8geDLvzw7tFnZcTh8nKfHURu44u71Xmp/OnO
-	 whdZ3Ej5/YYydRyAQRhoWoU3V++nCmZbhM+upSGNuhdyyZguRipeSx+LefNnTow6U4jaR
-	 m2WXAuQ2+o2caZvWOsARBaXM8xxr+Ua25/xS8VrfRxukRx1/sOipa8SKz1ayKqVgtlC/+
-	 BjlHw0ei4zk4hsnaj//zvM7pzbpSe9vwPnG0qMb6qW26Hy5TYvG8NGCTjAmEd34xo7Q==
+	t=1792617095;
+	b=01rrrzgohxXUJSExqr5YieURtfO/btm+ecv2jso14tdYQ9Xwlk+M5kO7iPBAcrQgI2rI
+	 onqueTuR9RfB29rQjoBt836UZVh4B4LXuoXGSXBPqmyjNZvrTjopVz1HVLNde2cx4tb2E
+	 y+KiKrrn6la7II1P/Z0BKdBwzM2TsOeATQPhchFU1rtEqNySbU90kdY5ZZ1HgVD7H9Lya
+	 bfpmmn7AbvL4R0Uo2DW6b5wpmpzPgtP/up1LJDlHsOYXJ8rejSiGim6QMvdg9eSRlFvKd
+	 7Fi6VwSpyXhAJp0eSFneVFpS2Znr3D+OQc2GXJuRLdh7u9bhpx37wzJINk1NkaaB+Zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792616806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792617095;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=fxNhFdCnRx1TnZ/VZCHBg1thsLr/kiS3HyDFHely7YU=;
-	b=QX9XLCNHhj+k/3MBpNZZuKbXO09T1Ki4jMfAbjP4/ej+bbkCsD37q1mizU1natIRV1je
-	 Q7sJfXD2kqub26S1zc9cJYRywClG6o3J6/Y9brar0wbLyWZAt8tMbCEiOIE/O8Xc9lK0o
-	 cgVKDKmZFrSKo6BjWbwPJfNIq5PIVRimeV3c0hiIPXPQDF7lj7q8dPGcqk15nj8IwZXnX
-	 kDaciJpn2dhxzDZMG93XFdt1ajWjnIq1XWn+OP/QVO6Bmhd1N9oTtia2mU1gEmh2lWD8M
-	 s1MvnXGoA/mNvANx8hJx1WxAZ4iJ63NsZnJX5Nb21Rl0tRBpXMK2PT9heMIW9OCsdcg==
+	bh=MqdkwnXZrZ+WSeQ8sJhYzDlGNeCAoHXJu9T3vCXsEVQ=;
+	b=o1P5eUNf20QIkxl52pzqCnXz4VPe0HDZHynk5q3g6CJHQ2LSXBRriGFoopBlwPuCtNwS
+	 aheObtB9g/zLS7zaW6BKO69j1hfEH9+ZDzo1c9l0dD7PK26W7fqQKFhpm27z6K4Uh6BC/
+	 v3KpqjMgb/pKADO1ZE1UcAWL1oDRSefzShUTiL/1l2JfUGr/64HKcdn4yWW9CmyUrzs/w
+	 lE+cSNkZconoVTV7ai9F1LgGGiJu0FUlNVpIKiPP5Pte91fw/diW+z484qhaYclmlfm5e
+	 vY1ybXqidZMJpoMJEH33UAsrX8jxmBuoCHXzWCwm5FE+oc/AQKJYdly1AJTUcx1SGOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SPDfOhhE;
-	arc=none smtp.remote-ip=209.85.210.52
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="A/qAGEP2";
+	arc=none smtp.remote-ip=209.85.161.53
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89F8606A31B
-	for <dmaengine@vger.kernel.org>; Wed, 21 Oct 2026 21:06:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B89F8606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B03D606A31B
+	for <dmaengine@vger.kernel.org>; Wed, 21 Oct 2026 21:11:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2B03D606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SPDfOhhE
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-847ac7ccd85so833292a34.3
-        for <dmaengine@vger.kernel.org>; Wed, 21 Oct 2026 14:06:45 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=A/qAGEP2
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-6de1fd5f572so548566eaf.3
+        for <dmaengine@vger.kernel.org>; Wed, 21 Oct 2026 14:11:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792616804; x=1793221604; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792617094; x=1793221894; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:content-type
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=fxNhFdCnRx1TnZ/VZCHBg1thsLr/kiS3HyDFHely7YU=;
-        b=SPDfOhhEl+TiGBdv0TUrraxxSzgweR9jfyy+x8DxEwxlbVs7GkJNsiTQxewh5RYIV4
-         fq1v+4/l4bMnaTSRmoAodCrb5sY2p0qRAu7KZf6Dpr5d6yWPdAT2Scx1W+9vcWf5jaEg
-         mimQsNyyotFRJg+OlwgTg5vgA09D45umNmkU1mV9efBg5TOm0k+Gj227kp8H2YbQ8+Wd
-         Bm/ZPWE3c42h0VMk7m7D+0vnqOy4qnkKyD8zKPjSofU73SgdMU0u1BSC+g3kAvPgyLOL
-         xa9Bs7PTXAWI5FaRCqpZC076oWQ8jwBjNXwMV4DQyzwHEiUkUi/jp/jzIrV5aPhSFgba
-         QkvQ==
+        bh=MqdkwnXZrZ+WSeQ8sJhYzDlGNeCAoHXJu9T3vCXsEVQ=;
+        b=A/qAGEP2xYtqwZwBkxIDqtHEAo1qsn/j/ZnEAfXvv85+H8NdexbcJrJoZ985nhDdEk
+         WxrEbcd5coJlgA0qylzImpLj7BXi9+rMJnphf4r6F6j7j9QwbYemAmP7HWvJxhDz1141
+         bG18EH3dL+B92c6r6tqfwBqFWJ2XqZMfYSePATAsqnlF9x7R9PBCF+EKIaaC3MSwWypL
+         KXdx4ctNpwh84XzXV5ElfTtypmd/fLes62ZtAPipo3TiUQzUmuMVotWA9Pi75BH+VOo8
+         p1xrbRR/zDcCdCtuiWOIOWp5trj7PNbSFzfgu0qfPtpfNo8PNsEGanbHOh5Zgf6vVIBN
+         ojWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792616804; x=1793221604;
+        d=1e100.net; s=20260707; t=1792617094; x=1793221894;
         h=cc:to:message-id:content-transfer-encoding:content-type
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to:content-type;
-        bh=fxNhFdCnRx1TnZ/VZCHBg1thsLr/kiS3HyDFHely7YU=;
-        b=Ml6JQ3fXSzJGAeNmpcdXr4fwm7XootZcO3fYxi1OqDCgNaRPpTIJS5kWetqVj7CpLq
-         Zuy2gidZdWgiAK7XRew6sPqxxUEoAsWlSLkofwjAhMWD5rSmBxy/AuXZYi8ILdNG3ip8
-         69X4uyXLyOfsA6O8LGI+8fSPHUOiqAOjoIAGQWAooV0mZRENlRLbCBWgEe0zDEIsI8KX
-         qPIRodTp/6Irswp42dFLOc2Cw/ymdpPNDxiobs6/ZvuwkzAeln7RCx6Q9WGdShSoTHpl
-         CUQPbrG0C6k5ANT9nE4IJzpjqtByqoqmIUnzfVaG3/NgqPFStOqdfETJfDmt0Uociyrs
-         q1dA==
-X-Gm-Message-State: AFq9FYJXGoVrS0FC+NuKr8GLXWlgYTo8fiEPMP+8CUf4rJJvbhhiCOg4
-	FdAtOiqhAfZV6TQcdGn1B0Qkg9N1kRxozkkgwnA0fPK0ygTdSI1JgGAK
-X-Gm-Gg: AYBFou2b0t3W6SywWcaA6e8m8kFZzqv0dBylVJ9CAdC+rp1ZgLQQNrwlj9t/tukxvIV
-	CNusOTWnRFtbh5SsYMKumFjYVch/6MrXRoh1olcvxMtkDZXG1cu+16h4qF4gUeKC16AW2wRvxP/
-	vX2TgRqUDcrc3TOxdBM/HdayV1RqVhxmc5V1sa1zJZrKboFqWArHlUTq+5NU1U9HDCrSV6gvK68
-	DrnxcENmqp4+q1U7pXogMtdOWU4LWL+wPu+6SsnAZls1mmRN0afdBrVvkhjZk4F4zIeu5vMfQOP
-	oFMazColEruCk6th+QxWWOWsrWxhAvtOQa71pF8UxxrLUFWCxLoVaucv0emSFyBa0HqF2MuY488
-	aJxP+flhDHPQxuQ0GXhE3GW291jczSIVIPVjzoW3mIZRAOj1QeWbxgSm7ZnAl0ECOD5yPPLofyr
-	FFWF86t/g4gFM+TpDQatMFB/opgy19T1zwcwBaelVJJdRLhTGAyW2yf76G9SpjlwhfN9VV8AIjH
-	sRjdFMVvem6YeWKErI/mI0c9jEgQ462eKYxJ+RETgvyejTAHBJ7A2o0jsCSOKsXElg/xYot0QNr
-	nU1aaRXjHVoSBbDCAfhCE+OnfWGIUDMb59fWfQPhw4vnD1wiJ+Yi0KLGdJ2eKioy4v1AKjLPkJ8
-	TcvW/oQslO786inJUpux1PnS+jehVHg6tq6HZJ3KW+31v75M3IDVq0teVqQPi/I6kSFHIvrRRqd
-	WgXQ==
-X-Received: by 2002:a05:6830:3495:b0:81c:a8c5:633e with SMTP id 46e09a7af769-84d08afde73mr2463140a34.11.1792616804678;
-        Wed, 21 Oct 2026 14:06:44 -0700 (PDT)
+        bh=MqdkwnXZrZ+WSeQ8sJhYzDlGNeCAoHXJu9T3vCXsEVQ=;
+        b=UglpR7rbL29aoSIocXq2+zdeJWbZmSJTJZ+7bKBg3h9UIxGhR85KwVD3dWAzi7fdrc
+         jYe1GZ26VSR4icbKVQu5ukjulmxWwiecxG0WAe1vdFxveHgMJMfqFcnwKFb4c9BrjC2z
+         sQPn1Kx2zyuoboR8Z+6uh0+QGHW81Cd74CwrPgRbJ8A70M2Bi4SAnx7RtdbY/1PAosGM
+         R6T7qMrYKrDnOb48YMjF3w5O9K7sM1lV4ckuuK5Npkto98u5dMb2odsk1wa5k0VwglJW
+         lcattzIeTWIJhQd8CFDGIFKZIm66i1vWbVo71NqdcQm5OBYrwUHQ7pxUIdKZoGOA0Dxg
+         wg7g==
+X-Gm-Message-State: AFq9FYK0ZlIDZ/KUhm2YYh+hQXO5rF7SEQlDUZzuG/49zQXM8jVjv6NE
+	xCYNAQVAsWLQ7I/rAJwXQEzUe0GYbbsaL2fvWqnKhYJlHn9WZhLi++J0
+X-Gm-Gg: AYBFou18/a3NNfFfsMSGaEvZIoNvHnKBIP87r8UbRlN73oHE5CNi8WqjpP3wJEXYWYB
+	ICF34pA/cPc4TbrCy8na5sqq+Fseeua8XmFexyH5etNrHQPu20tn1LDXdL+NALUsOvIKRfc7vXG
+	XtJACf/vV6W2ZSnULgRt8M4W+jl41l+7HYfZ6dUrEW2lYVVPjV/jl0GZEe/X8e1t2cf7axIiodO
+	VkO5BFFMNthd0bCoSyYr0uWG9v50NH6cnm7uxQTYiIzZUuta7EsDmOdOHIksq2HHkrKhI/W7bQ4
+	ot2UIkl99nKw6rF1i2PrAv6l3/a9IgwyQej+t2QDjCviHs3d7Oc0CmH6k12NL1YDNc9lwIyqftc
+	gl9wbJjqNFLsqo/bh6RHMwGon6hnYFN3x+fJQJ6nZ6i+c/fTI9vBCWixgpzDJKsMO1gLlQx76gT
+	9SP5TBWsL+Estb86XspmVPgdjWzjCXF16xuZfjlCLpEbyNN2Q0lGc1XzBThJ8moD9lhvcUNky8O
+	qqUNX3KYrPtDxMXPDpI2k4AFlmiedvNHK5gHo+C98XP1ihjSw8ELWdo2AWbV4cBDYW/rhXsvkZd
+	wXcYedLYkrPW1CxmaBsEpJZC6Uyp3NTAkmj6/O8j5W4Du2bpRFS9ZrcDPgXhuHW5BuWnS6Xazy/
+	pxEakrv/LKRW4/JMt9/V3TYXwKFsuPD55IUj1DNFQh7u8CADIlWU+r079HjYYO7x9o+8vWWutDm
+	0ZLmY=
+X-Received: by 2002:a05:6808:1645:b0:4f7:a3f2:d8b4 with SMTP id 5614622812f47-5536055db95mr2302438b6e.65.1792617094073;
+        Wed, 21 Oct 2026 14:11:34 -0700 (PDT)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84cbd2d04b5sm3466826a34.14.2026.10.21.14.06.43
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-552b583fd57sm2806628b6e.8.2026.10.21.14.11.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Oct 2026 14:06:44 -0700 (PDT)
+        Wed, 21 Oct 2026 14:11:33 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Wed, 21 Oct 2026 15:06:33 -0600
-Subject: [PATCH] dmaengine: sun6i: bound burst selection before shifting
+Date: Wed, 21 Oct 2026 15:11:29 -0600
+Subject: [PATCH] dmaengine: sun6i: constrain descriptor addresses through
+ the DMA mask
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -93,11 +94,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261021-submit-sun6i-dma-burst-limit-v1-v1-1-41a7a476ef66@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWN0Q6CMAxFf4X02UY2CUR/xfCwjQo1Us02iAnh3
- +3k6ebctOdukCgyJbhVG0RaOfFbFMypgjA5GQl5UAZb29bU1mBa/MxZQ1rGYXbol5gyvri0q8G
- mo4u9dqbpDIFaPpEe/P0v3PuDVfGkkIu2XHiXCH10EqZSqZNkZKHz8bfvPyr+VHqlAAAA
-X-Change-ID: 20261021-submit-sun6i-dma-burst-limit-v1-47e32971471e
+Message-Id: <20261021-submit-sun6i-dma-descriptor-mask-v1-v1-1-76e72bd52e57@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWN3Q6CMAyFX4Xs2kY2IlFfxXCxnwrVrJB1EhPCu
+ 7vJVfOdnPN1U4KJUNS92VTClYRmLqBPjfKT5RGBQmFlWtPr1miQj4uUy+GeIEQLAcUnWvKcIFp
+ 5w6qhuzjXXbW7dcaqYloSPun7//IYDi6aF/pc1bXhrCC4ZNlPNSpe5JEYz8du33+vDdddqQAAA
+ A==
+X-Change-ID: 20261021-submit-sun6i-dma-descriptor-mask-v1-35bb381b932a
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
  Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
  Samuel Holland <samuel@sholland.org>
@@ -106,41 +108,71 @@ Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
 
-find_burst_size() tests BIT(maxburst) before reducing the client's maximum
-to a supported burst length. DesignWare UARTs request a maximum burst of
-one quarter of their FIFO size, so a 256-byte FIFO supplies 64. Shifting
-an unsigned long by 64 is undefined even on a 64-bit CPU. The fallback
-loop can repeat the same invalid shift.
+Descriptor allocations pass GFP_DMA32 to dma_pool_alloc(). The DMA API
+chooses the memory zone from the device address mask, rather than accepting
+zone-selection flags from the driver. These flags can also reach the pool
+metadata allocation and trigger a slab allocator warning, as observed on
+H616 when preparing the first UART receive-DMA chain.
 
-Limit the search to the highest burst represented in the controller's
-nonzero capability mask before either shift. Larger client limits still
-select the largest supported burst, while smaller limits retain the
-existing power-of-two selection and the zero/default case is unchanged.
+Set a 32-bit coherent DMA mask before creating the descriptor pool and
+remove GFP_DMA32 from its allocations. The driver does not encode the
+extra descriptor-address bits supported by some variants, so descriptor
+links must remain below 4 GiB. Keep the streaming mask unchanged for
+variants with wider source and destination addresses.
 
-Fixes: 7178c3586ab4 ("dmaengine: sun6i: Choose appropriate burst length under maxburst")
+Fixes: ec31c5c59492 ("dmaengine: sun6i: Add support for 34-bit physical addresses")
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- drivers/dma/sun6i-dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/sun6i-dma.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 7704b016aed8..a8b12262b3c3 100644
+index 7704b016aed8..0ef6ed1f936e 100644
 --- a/drivers/dma/sun6i-dma.c
 +++ b/drivers/dma/sun6i-dma.c
-@@ -590,6 +590,9 @@ static u32 find_burst_size(const u32 burst_lengths, u32 maxburst)
- 	if (!maxburst)
- 		return 1;
+@@ -684,7 +684,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_memcpy(
+ 	if (!txd)
+ 		return NULL;
  
-+	/* maxburst is a transfer limit, not necessarily a valid bit index. */
-+	maxburst = min_t(u32, maxburst, fls(burst_lengths) - 1);
+-	v_lli = dma_pool_alloc(sdev->pool, GFP_DMA32 | GFP_NOWAIT, &p_lli);
++	v_lli = dma_pool_alloc(sdev->pool, GFP_NOWAIT, &p_lli);
+ 	if (!v_lli) {
+ 		dev_err(sdev->slave.dev, "Failed to alloc lli memory\n");
+ 		goto err_txd_free;
+@@ -743,7 +743,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
+ 		return NULL;
+ 
+ 	for_each_sg(sgl, sg, sg_len, i) {
+-		v_lli = dma_pool_alloc(sdev->pool, GFP_DMA32 | GFP_NOWAIT, &p_lli);
++		v_lli = dma_pool_alloc(sdev->pool, GFP_NOWAIT, &p_lli);
+ 		if (!v_lli)
+ 			goto err_lli_free;
+ 
+@@ -826,7 +826,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
+ 		return NULL;
+ 
+ 	for (i = 0; i < periods; i++) {
+-		v_lli = dma_pool_alloc(sdev->pool, GFP_DMA32 | GFP_NOWAIT, &p_lli);
++		v_lli = dma_pool_alloc(sdev->pool, GFP_NOWAIT, &p_lli);
+ 		if (!v_lli) {
+ 			dev_err(sdev->slave.dev, "Failed to alloc lli memory\n");
+ 			goto err_lli_free;
+@@ -1345,6 +1345,11 @@ static int sun6i_dma_probe(struct platform_device *pdev)
+ 		return PTR_ERR(sdc->rstc);
+ 	}
+ 
++	/* This driver uses unextended 32-bit addresses for descriptor links. */
++	ret = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
++	if (ret)
++		return ret;
 +
- 	if (BIT(maxburst) & burst_lengths)
- 		return maxburst;
- 
+ 	sdc->pool = dmam_pool_create(dev_name(&pdev->dev), &pdev->dev,
+ 				     sizeof(struct sun6i_dma_lli), 4, 0);
+ 	if (!sdc->pool) {
 
 ---
 base-commit: 93f51579e7df248780214094418f205253383cc5
-change-id: 20261021-submit-sun6i-dma-burst-limit-v1-47e32971471e
+change-id: 20261021-submit-sun6i-dma-descriptor-mask-v1-35bb381b932a
 
 Best regards,
 --  
