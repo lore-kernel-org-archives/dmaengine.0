@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.72.57
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792600679;
-	b=ruQr2dbbv+W9caczam2yIUW7JweGSHJEVjsVlwfH6kbZeXngQcZOx/FDWJtoyh8RpfkK
-	 /XhUZ4yLJGjUCeUjBLBsbCoJ9MyhyliQ/cJ31fRfHDHbOnOKl6tUXqG3ftKHKknHWwnnW
-	 ZzfN1TqIbSpNsDiER+UqjiYckww+43zznh1ImFd7eVGQw+Y6yh4Iv7SIOv4nNAaL/o1PD
-	 ciyxRxrfPsetpfIuN3dyZOL89xjJ4wHc1VrPU4Vn8ZFdW7b3+uaXR7Lw1UeyqBxsMFbL8
-	 swGc6Pnk/iVKlPnIWNGoIXxbLXJEPMxJFM4to1th8V7G3gUZK4bXmvCIErcYeY+ikgw==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.65
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792601072;
+	b=pUGGGEg6hog6kUp6vXxf6BNRl8pf5BDS/ioZ+kzSr9po2Az6LQ1mXDa72fSi8nvRQfdV
+	 ba+E+pN9JA6p4G6AHYpHPU2WKTsP7Al5wBhrY9UMz4srJ/AFh96QCpSJflVZP52KVy/xj
+	 9MsPwHRBWs2XNPqgAorES1wwNFFewMyTV2lP8vq7hNyxHK5G/tgSuD5Qa71ESj1iG3/Zn
+	 mSBu4gRPvgnSSIvQ2cUZs3o1k2mNMgQv5tzvbjjD2vAKFZf9998m/g1u6XdJPSxLuXEOS
+	 6dnZ2IK5N92BJnuMro/eRGMjOkzHlyyHWLfh3ZSqDLJD4d8GPYUxEYymDu5sWoqeqLg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792600679;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792601072;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,73 +24,70 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=f8k2DjxEyqUaL9cGTocKFyj6UPD2f8risYrBO2Zps14=;
-	b=4zr1zUhgY7FsEEpg4PV8Xu+JF714TRVlbL0vUZsgLWVJQxTAj7DzWJJosfOaqf/wRPAr
-	 KyVFLqYEEpIE/Crb3JFApRQJssNKiep9aBbMNMIPK4+Rf/vw39dWFsDlDA8CWGCd9D+Ki
-	 /eakI17KMPmklvnmOPP4KCEG8GOGT4QMOOjhUMa+DkyjLaSoxDPjgLFV9wuFF30ot05DY
-	 ns8rce0qmsk1wwA7ft6QMg8lB3aBJvZUSrBz8OY4L2nlWsI7VXOFhKO8Kr/RghaHEGc/1
-	 EOlUJdPTyL3JVNV8N+gwlFUotwyc1bYVtvblmuUDP+X8qTgnwjXobzAZHc6b793Or2A==
+	bh=yW3Q1TBNNUInnc0+sceufCj9u9RPmhdmihRZ5xUlZiQ=;
+	b=ohJoxuwT3n1ILf7GpQ/t1ISs2VBUAoyuCqu32OLxnPOTjBcwfe5k+l0qUOMQFKhlPIl1
+	 BB9GQ6H1N9m4U3wOoQDvIA2v0gHTy/9lkvVKnI5XXhzhkmdRz7HqhyuwE9onX1PIg9xVO
+	 OuM1xQcoWRZzg4oMY7dImO+ItcXHUOMCC8D4Fo+ExRAfeOI0Mn6Abv9lz9SxLv7IXQlrD
+	 P/V2hT2bTLMJ+hOCRLpo+4+hqBbXnbQhsVAtOQ3vQplIyPyhv8whrxa62z1BMLByw/8eA
+	 Rzh04xPG18VTBNbkN7RrYl1IfkuEf8QoJyTP59c+X8QGjVrSJQ+RwFdsG5k832t3P+A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="KQ26xcF/";
-	arc=fail smtp.remote-ip=52.101.72.57
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013057.outbound.protection.outlook.com [52.101.72.57])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=oJKpoubh;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.65
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013065.outbound.protection.outlook.com [40.107.162.65])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A06606A319;
-	Wed, 21 Oct 2026 16:37:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54A06606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B65606A319;
+	Wed, 21 Oct 2026 16:44:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98B65606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=KQ26xcF/
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=oJKpoubh
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pwmW04zDFOwUCpT3cgJwrB96obFIKZSOTVjbWBL7RQS3DRBupmCr5kIM1Ql0ETVqzxykFIzTAT1jqJ75IhEbzkOZISeETh/rbHDzYQmskRlhuXM9enSICNrK9eiiIj25frRxMuUZF7YVlV4ApEjI0/vgXfnmYX7PAfrsVZKgpbHFaDrUG0GpET19bZVqK7IxTcnYNPkBN2rWYIdFDeXmAgT386i5ELB+llH1MjY5/5ItynrM6kJS8bjR4X+ADM2aRZHxnJvvmtjBKyVlFSHzB8SrDzHKOlg1Oerz6Koa+GLlGcKN4SaLEKwl7aRWUeiOzmsEp0M6xJRTP2XjwjwJgg==
+ b=AcLj2O644mOH0zhDt7q8LD1KW/tnFWz9VodOYT/zhZGJnBObwFtBcTEwxUtlby931p1i/c0mplFujxJt13kJ3PGuXa+3B28oFgniDGiqs50/4hZStfYGr+mTGH0AHzNIYFNr3JuLrAlIMzf7s25QYNoD67dcHHZtjpz2YhRrIp0lGFrrVuHeglUIoDZs6djRvO9o7SQ7wDygMl0FJn3jPN/5v79yrzhVZDf2aUI0fGpCIaaCROl3IOZt6U1YnarAiRyLsamHcSo3QWAI+otFcN3Mud4g1LuASLfRqq8UjiRdq1Ei86oujP/ZH/Z0+akS1dae8gv38HZDkn8RjprmIg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
- b=Rwi8iDh1KUVie0VKCKCv9STiUnvnnp3FX8xL+gXMEnrg+Vg26pWNy06Uq9DDuAK2tHeA1nt/4yE0QvQs1rbjrIZLfq0xvS2R/KNiTch4SidmjvgOmy6FiA9OGGOZo+kjAOEIaogSehocudwXuf+yDTKHCHHQBijm5oCPUs87K51uJD7AD5lykzoRKH88xvhN3trjMEtbReALGismeg957xw32/R/s0txy+mO4isvM7CVmxsmgwU290KXqLPN3dGJdY6KcCxK/ni/eitMDsJ2muFmDuPfzTs5WOCS4z6e/BqIzt84e1BvD4CT7mLQPM2m6f0Jd9xYAVLeF74RXxB50w==
+ bh=yW3Q1TBNNUInnc0+sceufCj9u9RPmhdmihRZ5xUlZiQ=;
+ b=Bcn7a+cGBy35Iu2gB95x5JI4Af/sApDuUXpI1BmaLn87PiHCbY2W+BO0ThslKivqC/EWXnwZC5hjgzeVW4mPzs8tzwUBhzrKujOEFoDXjPmMCkBlM+QdMj4LgLlYlqW6bTK58XQTYcnc+763x8AFYte0DRf1gt+f/AArxamT43xck9cwUZR1wBSTlr4dT3/Gp8l50KydZ+3gUwC0yld2czHVTkAACguwd6FH+tZ43O1WXyiAaDeIFm1FaH3+jliJsiKJpEFAvWd5uuy1DlR8TmFVzIcFCvJvAj8ZqLsLg2YUZsv6TURHMPDJi2ATSA93d+ynZn7ORxJB025flxmftw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
- b=KQ26xcF/JKvVHwuUHyQwgBwasUlQ+K4v9i8t4V6nMhl6XU2rpA0qF6dh4+UuQkv1bgmvcFdY3b+JMRh2/H9J4BVzjd1pzLyGitiuwf2lgP6cC0dG06gKjjD8hTk+4C/EOholQysrFPIMR2zPFobLAVvYyD2mb9CDhjAwuYkMI2x8WD7JXYgSn/tDyLPiKXviDUAqQuzIFY3+QaW3A4Cfjk50xTWGJrTBrEl+0vJNBHEOZhuPuAJKvdLi4fj/u6AphNqdlbyN96OLMu+HYwMQWp4rrAtzh5ywUG3XVtxULjJjO5zap7jW9QHePSxI4ALgSdY+vD90y1nCZtRN3zUSng==
+ bh=yW3Q1TBNNUInnc0+sceufCj9u9RPmhdmihRZ5xUlZiQ=;
+ b=oJKpoubhfel2nfrT0ZVzP4jTMeB3msOBHlcJAg4A2JYs/EDq+6bdIFgbWiKWkM5/B/3m2J05FlG7lzGL7KT+Ni3vLRXGHLuRyOfdG9rmEsLx3k+DmHKp20wLzIhMHEGrNGl4JXbG3GrHQvMZ78CU5lqG87nl2YYMeaqLBwyQMHz9izZsoKgQBSGJAb1SrsSu47mPB4eP/HI2pG357b3DkhxkSfKFC+Ism2tvbtLjXtk4JVr98BHpAFn58fwhAl14JrUwdtKw4nfT7x8Dqi57jV/jk8R/jPi/LR+jYwiULN8GcmRlaD7npFZvWkWs590XDGng48HpRpKabx9sxmpq6Q==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AMBPR04MB12310.eurprd04.prod.outlook.com (2603:10a6:20b:723::23) with
+ by VI0PR04MB10974.eurprd04.prod.outlook.com (2603:10a6:800:269::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
- 2026 16:37:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.14; Wed, 21 Oct
+ 2026 16:44:27 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
- 16:37:55 +0000
-Date: Wed, 21 Oct 2026 12:37:48 -0400
+ 16:44:27 +0000
+Date: Wed, 21 Oct 2026 12:44:19 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	robh@kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for
- multi-owner I2C transfers
-Message-ID: <atjqXMg6-fLLYEsf@lizhi-Precision-Tower-5810>
-References: <20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com>
- <20260813140047.1006478-3-mukesh.savaliya@oss.qualcomm.com>
- <20260813141955.7466B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Roland Dreier <rolanddreier@rivian.com>
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dmaengine: dw-axi-dmac: Bound the cyclic LLP search
+ to the descriptor
+Message-ID: <atjr446tJ1ECtdMk@lizhi-Precision-Tower-5810>
+References: <20261006-dw-axi-fixes-v1-0-3b319e456d93@rivian.com>
+ <20261006-dw-axi-fixes-v1-1-3b319e456d93@rivian.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813141955.7466B1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: DS0PR17CA0007.namprd17.prod.outlook.com
- (2603:10b6:8:191::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
+In-Reply-To: <20261006-dw-axi-fixes-v1-1-3b319e456d93@rivian.com>
+X-ClientProxiedBy: PH8PR07CA0039.namprd07.prod.outlook.com
+ (2603:10b6:510:2cf::7) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -102,222 +99,104 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AMBPR04MB12310:EE_
-X-MS-Office365-Filtering-Correlation-Id: 28c602f5-b432-47b6-9650-08df2f91a870
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|VI0PR04MB10974:EE_
+X-MS-Office365-Filtering-Correlation-Id: b4ecf511-70c2-4d77-f19b-08df2f9291ef
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|1800799024|6133799003|18002099003|10067099003|22082099003|4143699003|261013131602099003|261009223027099003|11063799006|56012099006;
+	BCL:0;ARA:13230040|23010399003|19092799006|376014|1800799024|366016|6133799003|18002099003|22082099003|11063799006|4143699003|261009223027099003|10067099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	xeDVqHfSw44FJDJtiXkEuNFhuXtIDACsJPJFXLEAfOTJzsJ2jxQP6SWL0mE1wqnK2+cDYJ6YoD+qLsN3TyoW1HE3BIiQEbMsctzcNxlQU/TGtQod7zK0aILlprpFOhE4iCJ9dZbMSs/3Ual5g1mk398TuPOgz1fcnkRahDMfxOw49QJVLCdReopvWs3oUCvneE1RyssOZGHkcZEIXSdT8OaGDGyQ3flUdzvQTWhBFJ70pcv6Xwxb5+nBaWPhHwed4ay6BVswWTAyZ3ODWcTk6Dv3dT7EHqS8BehCLeW6Q66alKVe1Yhh7/xMQzYY6FLOBDRY6jvY0LUkPj27sZ4gnJ0SjtQQtraF7H4+puZa06tNV7bmXnaUlC7/10x0ptY7ts4aH8/5vPO7z/Yi8TF+AV535QuLwCDSc2bK/G5P5cHjo8wRMW7ZKJuQHaALJdpOa9R67g0h5rQcqoL9A7lLW+7enj21eadaHTg2wHMN0AS4+oGhZ5ytsJe/Nw7VKn0d3Nz/zs0tiij6LyB4EpCp3GkwUJvXgzOiAmEjLftqlKc7z9QMw23LDl7jqnn1/Q3xR/zDc/JsnmY0d7Gz1b+I8AiHyBxHeiCxFw7L//zqjDI=
+	p6s3pJSeVg8nhy2HZBXbZ0czY2lWlFSJP0DPdjgYZJaTW8xxA8Qh91GiR8PA8/JN9S8d/S25WfJBxwBbqw+9qjv9/0L8Wd7dQknq4vigA2u9yBNqPJ54G91ra54FA/u2jxeZmjSK0aAef858ZRbUJrj2RXu8VVDg8i+6wrrewG1pda2AAERgjBXbYeKSXDMpxNBLN76M7KXxmVFLJqthsznFS1wmIzwspDg95h4RlsFT9wjIgWMK5uxvhMFA3Exxtq/5oaC8wO9JXhwZJwvBw/ITHiurGj03/mscykJUtGUC6v3s6rTGTN8TcNfeIFotgg4ejpwGGHTyhhcBJJvl7bLEl9dazv0qWsym49f6kVs0jQHkKqb7sH6QnJwXH1fzQeM7ZDMF3uYOF7kNuaH1suIfbf9I7Hr1WKslqVLjrxbdprRjpKpY2h46LAk3Ni0DOHLY3CIxGY3wI/kPAw7007np5ETJyNaaD4bvP1pZXE4d5JlcYRdnlczji/L0TEuY2koOwzJGxNJcOHyRgViDt1HWJ6zu9NUCeRzWU94Hf8SA1BLkf6TKIi71ypS30j5nFDLLlfs8Y2Iw/8bl/ZuB6opUU14ANZwB1SuKspfgyZNlr3p7OxkOUm4i9L+XQ6b/rGL7pXRsN0N58lRn4VGh/0Q15zUB8+CMhlbyTSknwVg=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(1800799024)(6133799003)(18002099003)(10067099003)(22082099003)(4143699003)(261013131602099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(19092799006)(376014)(1800799024)(366016)(6133799003)(18002099003)(22082099003)(11063799006)(4143699003)(261009223027099003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?4Pxev9DwH5WBPJRtKSuWZ5bxXvvq7siVdjaMk3aZcsrv1aaijAhHVElHNg?=
- =?iso-8859-1?Q?eSYALbMX2DX/eBl+rEhcTuTcvZbDvXpqnuOqDmBo5WTz5D/DFomyqkBB+0?=
- =?iso-8859-1?Q?wsTFJ6eBPmk4+VaewEtZjv6wt50CSkubkjd5uVwP2wrEkrb+d7yoKgMnQE?=
- =?iso-8859-1?Q?JgJspIzrbO8T5rO33Jmb0hQWE/St8IA1JEG0K0UrtHxhyhVujNhtKHXePx?=
- =?iso-8859-1?Q?8HISUVJEA7T2KXAw9ez/+m+aVV6VJUg96yBycrqhHRQN7AK9HOD4ogXDhw?=
- =?iso-8859-1?Q?gDm6wF8hzDHHuMEifrrlAbTjDsjT/Ok+Uo6jKfinItqzpWfKClrUOSKIjc?=
- =?iso-8859-1?Q?snmVftkc31pjdUKf1GMY05f7v6GsrkRob4VTPgJWqQZ2k2HVDCl1ptbYLb?=
- =?iso-8859-1?Q?F0emtjt/QxHJ/6YfDyP4oImGRRml4irJhM3CIMZDbyi7wL1inoDFZBuKRV?=
- =?iso-8859-1?Q?BgZqwkdX2lpSg8/6uc9+BVKOuxHLysTHuKA2MYQGc+n2Xc2Tcle51nO2Ko?=
- =?iso-8859-1?Q?+U7+sDkkX+fvra3TH6asG+MTfEZmyRxwiolfzGvteWyVuSHhoNik7i7LcJ?=
- =?iso-8859-1?Q?x5znquSW4O6vpJ9jdEjQvGW+/DghL8bryh5Y18eQHWK8Ecx78DEv2219cs?=
- =?iso-8859-1?Q?xPiKqh0p4Wrjkq7ak4CKAFmNrQ+ATM1lR5Rq5p4+As+qH8AwcsTWULzKFz?=
- =?iso-8859-1?Q?TDNX5o0DACcrYhu8MwVvViOgZyP/BkcY8Sv7rz6jzaEUDpzPwEpk6ksp3J?=
- =?iso-8859-1?Q?v6U2snmxHcoSGu+DgN70V41lMg9hGdNZH+hpr5WDTfTX0kmmY12c4ffIBT?=
- =?iso-8859-1?Q?p6fB5BHORjzPbeva4Bz1wrzv7EHn8/sl+ZpObaYGFMFTzG0QtdKtAqSTS9?=
- =?iso-8859-1?Q?8qSfnZlrVAfYzvaJNj4Rsxn7Y8T56ENAqn2NqIL/iAIcGoZRrAqYvR/bmT?=
- =?iso-8859-1?Q?9R0QhY9Bq5wgJPaZ5pYde+mvC0XCC2pZKNd1qFqfn72+LqSVeEMQIjX5pP?=
- =?iso-8859-1?Q?QcmtG5KZdwjVLx6TioyOdWN35GBEdQjrUk2g4WHz8SURTsdajz4MstZYoj?=
- =?iso-8859-1?Q?tFh7J1JNugOnyZ64kgvMWjpT8E9BhCr4e4pLmAyrZwbbYkRHcda7IcoCv2?=
- =?iso-8859-1?Q?TC4utm065vMOujsbZ7y8Qe3XPZKNUdNFBXht1uus/l8ozLCZJmz5u581aY?=
- =?iso-8859-1?Q?ueTHZ/KqVBmoVORbKU/B0LvQp4KppmnMthszzRUhVXF8sp9eEoxuDLW8Fw?=
- =?iso-8859-1?Q?gavDzK+xktici08TPR3CfBLIB8E8RUzQN2Z7ZIhtTWACuFByUOLn6ZJGZH?=
- =?iso-8859-1?Q?a3S9xt2Z/1K8H9zzwNNzhfXOKzPg8oVi/dKwkbFbFpLjxaM0maaz15jBsl?=
- =?iso-8859-1?Q?n0vw2u5ZOAWdJ6rptDkz1mqflogkX7ZBBeu6oWJ7tOUrQdICL1Yc0guLSN?=
- =?iso-8859-1?Q?fpTj1iqA4EeLL5AFjWLjeOWkPCRI2+74o11nWuzuicpj21fEXfrJj0ecDo?=
- =?iso-8859-1?Q?zY9eUQGmd4zUG4t0jRrsYfgyaD2WlcspfihojXYvXjSl2MTzyA0buNzbGS?=
- =?iso-8859-1?Q?Ke4GVUj7G6rG1qnpEqA3utOaSV7jY3yQ7XJKcRWE3HPmFAiMg1i8gVDlgw?=
- =?iso-8859-1?Q?BB95gquJksQadC4VzFOC5UP0fbI5Tp3WQnuqT+lu6wbxyydiOlDzjtatWN?=
- =?iso-8859-1?Q?bpCpAcFapo6xuW9ok+Dibg4EdRemojTo1VddrzF8ifgQM4SY1PSorOOmAe?=
- =?iso-8859-1?Q?cpgGp7DUI9t6TLSbcvIHpui+jDqPLf+wyDkaWv0Qzg+KfQi+I+FshBvgxB?=
- =?iso-8859-1?Q?bgXNp+wtPyvDimaAt7u2QtavmW259kfNHDWO2hMV7MDEHjm3C6Cz?=
+	=?us-ascii?Q?cJjjOAc/zzaOrQqZYM11x6fDiLRJ8C4qpTg+GHaHiyMMCfJ5FzhAKDusIQEJ?=
+ =?us-ascii?Q?T6yvbDfCCbqrcMHt1DrEZhigrLzHcdIUqAYSmjwUhii1EAk4Ag7GRMUBOFqu?=
+ =?us-ascii?Q?xT9cRFjEbFVcbGq9tYQripfnBqxW5ifV1FomRg14QNQwNeQzxZ/79C17p57q?=
+ =?us-ascii?Q?KOC6yDJDmXJAOR6YwHaIp36U2jfnj5woaK+5qgi8o/ixIJnL7LjA1Ivwi+UL?=
+ =?us-ascii?Q?nj5avJwkHQdL5tKD+HrErevYFLnovnKuP5vTQMRj9pZB5OH97nBiWvgeREya?=
+ =?us-ascii?Q?XN71TT3ME13a+YgSvGT7Q079BJZesDcQ05+uw2y4t2FlfSlK3aUPChXq/F93?=
+ =?us-ascii?Q?POhU4XkG42D/uBb7isg7JzqdQXQlPkJEZP2lTqgTslr1Fe2wqIf11MC+/8VV?=
+ =?us-ascii?Q?FgJstW+oZbT2xdDizcuLLWBL7cTI5SRma3ZDmRYvjnyJUbRsy2ANdF602yJ/?=
+ =?us-ascii?Q?QROeAyRFQDmBrVxsvqZ3id7IF3YhIyWUz1JcNLudFfYzgEL/RnRACD6ikni9?=
+ =?us-ascii?Q?foarHjVIO+7YZfMmkLAxNUiLUoLuDYcpoWF8oAWgHQ1FeMs80aNjZ8wpy0mt?=
+ =?us-ascii?Q?ljuKoa5ShggtoDVso4nxoOh8rK/o8iWrardetwo59nm2lw2aQCy17C5dl6Rw?=
+ =?us-ascii?Q?lRTs2u0SAjfmsPZp2+jOOa48r6n9m81gPvPsIVciGg/6M64XQ6gxC2GFjd1I?=
+ =?us-ascii?Q?9QJ4GBs42z7S3mJQ0TNF0Erp7ROtGkrGsOqe1smqqdMbNkGf6wBFxXlpdmO+?=
+ =?us-ascii?Q?ID60gKMbuH/L5nwIb/dlp+0m5S4YvODVqEddhob63rgJaVrtDGOuPKYCXvHk?=
+ =?us-ascii?Q?4VIOvOzJQINv9AEIY4bRdQHv7spuEaiLzsmlKvuu4HY1lWGaPX0408OpRNgF?=
+ =?us-ascii?Q?/UDsn4ZnEuiR4h0Q5g0xi2A+7/eR9LN1XGLhlijWI3A8TsAv80ZY6wHMw6BR?=
+ =?us-ascii?Q?ClGktd6bx6AAmBbCmd/Zy3kVZhKqGJCOeiCH4Rfbxp8b2NxROsC1D3Ils4vI?=
+ =?us-ascii?Q?LonK/wMnl6Fxnanh9+6j/kE0S78A8OtgMqqVfqfgnBdCOpd227gcWeTG1/iB?=
+ =?us-ascii?Q?6/P/mQ+DX6HBhS4qo/cUTVnV0Cucrn9lrT3Jbwd66U2QoHHEfXO2Vld07sHf?=
+ =?us-ascii?Q?56DYHZ4zkAHnd/j2AdZ2o2NouMqq6fbKG1zMmOoYVxKHr9/CxtOS1MjAmXSF?=
+ =?us-ascii?Q?FDfjD3ybnT0nLOsuTU4Ru61EDhk6dwfRHb+ygNUa/onlHwGYBAPz6KrMM4Jy?=
+ =?us-ascii?Q?bQX7PnpL8Bk1KygEHhQUYrg3guIN0ShMKFYlqp1jLfrXJtJ+aYX9Ab+TKIHU?=
+ =?us-ascii?Q?W1x5jFD7jN9My+furJPGCjjYPx2Maqz8YWMvt1Kmh+Coa2BSd2wmn8DVyrzt?=
+ =?us-ascii?Q?nidAT1+fJnEh32F4BWxjIj4fVUr/Jxpzl3bvlkEzC4YUhdrO38VdwbH/HwR8?=
+ =?us-ascii?Q?WK8uuaefFghWHq1DbaghMJq2iJ1dhl7UvleXPaHxmtQTFbdsJTicVXZ/UXQ9?=
+ =?us-ascii?Q?TgAusTccPwlLp9rSCqEbtPB23p6cFe66R5Ti1ncQARBrX4SRPlkAFFq1qXG/?=
+ =?us-ascii?Q?UVtkXRQMqXLpNHHI1eedHxAE2yZAtnMn1OShywfmL+Gow6ZzyHm9xESpTZoI?=
+ =?us-ascii?Q?Bo8mItE1kjIGPVGylzmSGycelGCSj1m+lZTH9oltj8jZesQ9VcFP3mx6G1jq?=
+ =?us-ascii?Q?dSKAljjnLvF/YI0386M3YBh5QXTB/swNZTEpwAu/43xG/6xM8gviYQBuj4fg?=
+ =?us-ascii?Q?ZE9dbauUuj03v6nEm/FRLDyfwXSvHRJ+8gUHlYkGEweCDJicCCHQ?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28c602f5-b432-47b6-9650-08df2f91a870
+X-MS-Exchange-CrossTenant-Network-Message-Id: b4ecf511-70c2-4d77-f19b-08df2f9291ef
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 16:37:55.3526
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 16:44:27.0916
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P9Hi+P2ZwPUT8IWEgJ9j1HZx1t0+hU3dwJ3loMrQsKxNCU7/R309YSwmpU71LG0EX+hLBfxx/XLrujTenvGaT06clOXZ7snZdpusLY4FkK/ba07u5zFBxSaxNMMPObrv
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB12310
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6FKnLyksaCC5iWfaWmYz7XNEBUK9pCTVnMFMdLB7QwdVsygdr+D2A3ZvC1V5oSn/qWamn7b5NLjdgLE2bE81DOWeBmPkkPQbHse2UOK6Cl0FsqW1zv9vTkf3B+/WsfRi
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10974
 
-On Thu, Aug 13, 2026 at 02:19:55PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+On Tue, Oct 06, 2026 at 01:03:07AM +0000, Roland Dreier wrote:
+> For a cyclic transfer, axi_chan_block_xfer_complete() looks for the
+> LLI whose address matches CH_LLP by walking the descriptor's hw_desc
+> array, but it bounds the walk with chan->descs_allocated. That counts
+> the LLIs of every descriptor allocated on the channel, not just this
+> one. If CH_LLP matches none of the descriptor's LLIs (should never
+> happen, but...) while another descriptor is allocated, the loop reads
+> past the end of the array.
 >
-> New issues:
-> - [Critical] Setting `TRE_FLAGS_IEOB` on LOCK and UNLOCK TREs causes multiple completion events per descriptor, leading to Use-After-Free and queue corruption.
-> - [High] The driver prematurely drops the hardware lock in Write-then-Read multi-message transfers due to misinterpreting `DMA_PREP_INTERRUPT`.
-> - [High] Failure to reset `gchan->lock_pending` during channel reset or termination permanently bypasses hardware locking for subsequent transactions.
-> - [High] `gpi_prep_slave_sg()` blindly hardcodes the maximum TRE requirement to 3, failing to account for the newly added LOCK and UNLOCK TREs, causing ring buffer overflow.
+> Bound the walk with the descriptor's nr_hw_descs, as in the
+> already-queued patch "dmaengine: dw-axi-dmac: Fix LLI dump
+> out-of-bounds access".
+>
+> Assisted-by: LLM
+> Signed-off-by: Roland Dreier <rolanddreier@rivian.com>
+> ---
 
-Need fix these issue or provide explain.
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-Frank
-
+>  drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
-> Pre-existing issues:
-> - [High] Dangling pointer in `gchan->config` leads to Use-After-Free during channel reallocation.
-> --
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> index eebed2474210..813d17a278e7 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> @@ -1095,7 +1095,6 @@ static noinline void axi_chan_handle_err(struct axi_dma_chan *chan, u32 status)
 >
-> --- Patch [2]: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers ---
-> commit b6883d50c999f402ed4f7be119614262119be22d
-> Author: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
->
-> dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers
->
-> This commit adds support for emitting lock and unlock Transfer Ring Elements
-> (TREs) around I2C transfers on QUP-based controllers shared with other
-> processors. The GPI driver autonomously determines the placement of these
-> TREs based on transaction boundaries and latches a multi-owner flag during
-> initial configuration.
->
-> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> > index a5055a6273af6..25fe7410bee2e 100644
-> > --- a/drivers/dma/qcom/gpi.c
-> > +++ b/drivers/dma/qcom/gpi.c
->
-> [ ... ]
->
-> > @@ -518,7 +529,7 @@ struct gpii {
-> >  	bool ieob_set;
-> >  };
-> >
-> > -#define MAX_TRE 3
-> > +#define MAX_TRE 5
->
-> [Severity: High]
-> While MAX_TRE is increased to 5 here, does gpi_prep_slave_sg() still
-> hardcode the maximum TRE requirement to 3 when checking if the ring buffer
-> has enough elements available via gpi_ring_num_elements_avail()?
->
-> If the ring buffer only has 3 or 4 slots available, could this pass the
-> check but fail to enqueue the remaining elements like the UNLOCK TRE,
-> potentially locking the hardware bus?
->
-> >  struct gpi_desc {
->
-> [ ... ]
->
-> > @@ -1617,6 +1629,17 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
-> >  	gchan->config = new_config;
-> >  	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
-> >
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but when
-> gpi_free_chan_resources() frees this memory with kfree(gchan->config), it
-> leaves gchan->config as a dangling pointer.
->
-> Since gchan elements are statically allocated arrays reused across DMA
-> channel requests, if the channel is requested again, will this call to
-> krealloc() receive the freed pointer and cause a slab use-after-free?
->
-> > +	/*
-> > +	 * Latch the multi_owner flag from the initial config call so the GPI
->
-> [ ... ]
->
-> > @@ -1627,10 +1650,33 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
-> > +	/*
-> > +	 * Insert a LOCK TRE before the first transfer of a multi-owner
-> > +	 * transaction.  The GPI driver detects the transaction start
-> > +	 * autonomously: if multi_owner is set and no lock has been issued
-> > +	 * since the last unlock (lock_pending == false), this is the first
-> > +	 * descriptor in a new transaction.
-> > +	 */
-> > +	if (chan->multi_owner && !chan->lock_pending) {
-> > +		tre = &desc->tre[tre_idx];
-> > +		tre_idx++;
-> > +
-> > +		tre->dword[0] = 0;
-> > +		tre->dword[1] = 0;
-> > +		tre->dword[2] = 0;
-> > +		tre->dword[3] = u32_encode_bits(1, TRE_LOCK);
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
->
-> [Severity: Critical]
-> Adding TRE_FLAGS_IEOB to the LOCK and UNLOCK TREs means a single transaction
-> produces an EOB event (from Lock), an EOT event (from DMA), and another EOB
-> event (from Unlock).
->
-> In gpi_process_xfer_compl_event(), EOB events fall through to the success
-> path which pops the active descriptor from gchan->vc and frees it. Since a
-> single descriptor generates multiple events, could the event handler pop and
-> free unrelated descriptors from the queue, causing a use-after-free?
->
-> > +		tre->dword[3] |= u32_encode_bits(0, TRE_MINOR_TYPE);
-> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-> > +
-> > +		chan->lock_pending = true;
->
-> [Severity: High]
-> If a transaction errors out after a LOCK TRE is generated and the client
-> calls gpi_terminate_all() to abort the transfer, gchan->lock_pending is not
-> reset to false.
->
-> On the next transaction, will gpi_create_i2c_tre() evaluate lock_pending as
-> true and skip inserting the necessary LOCK TRE, causing transactions to run
-> on the shared bus without acquiring the hardware lock?
->
-> > +	}
-> > +
-> >  	/* first create config tre if applicable */
-> >  	if (i2c->set_config) {
->
-> [ ... ]
->
-> > @@ -1690,6 +1736,35 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->
-> [ ... ]
->
-> > +	/*
-> > +	 * Insert an UNLOCK TRE after the last write transfer of a multi-owner
-> > +	 * transaction.  DMA_PREP_INTERRUPT marks the final descriptor in the
-> > +	 * batch; reads carry their own completion event so the unlock follows
-> > +	 * the write leg of each read message.
-> > +	 */
-> > +	if (chan->multi_owner && is_last && i2c->op != I2C_READ) {
-> > +		tre = &desc->tre[tre_idx];
-> > +		tre_idx++;
-> > +
-> > +		tre->dword[0] = 0;
-> > +		tre->dword[1] = 0;
-> > +		tre->dword[2] = 0;
-> > +		tre->dword[3] = u32_encode_bits(1, TRE_UNLOCK);
->
-> [Severity: High]
-> If the i2c-qcom-geni client driver executes Write-then-Read sequences by
-> setting DMA_PREP_INTERRUPT on the write leg to wait for its completion, will
-> this logic equate the flag with the absolute end of the I2C transaction?
->
-> Could this prematurely append an UNLOCK TRE between the write and read,
-> destroying the I2C bus stretch and allowing other owners to interleave
-> transactions and corrupt the bus state?
->
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_MINOR_TYPE);
-> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-> > +
-> > +		chan->lock_pending = false;
-> >  	}
-> >
-> >  	for (i = 0; i < tre_idx; i++)
+>  static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+>  {
+> -	int count = atomic_read(&chan->descs_allocated);
+>  	struct axi_dma_hw_desc *hw_desc;
+>  	struct axi_dma_desc *desc;
+>  	struct virt_dma_desc *vd;
+> @@ -1122,7 +1121,7 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+>  		desc = vd_to_axi_desc(vd);
+>  		if (desc) {
+>  			llp = lo_hi_readq(chan->chan_regs + CH_LLP);
+> -			for (i = 0; i < count; i++) {
+> +			for (i = 0; i < desc->nr_hw_descs; i++) {
+>  				hw_desc = &desc->hw_desc[i];
+>  				if (hw_desc->llp == llp) {
+>  					axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
 >
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com?part=2
+> 2.54.0
+>
