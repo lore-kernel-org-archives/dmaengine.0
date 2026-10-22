@@ -1,57 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792696555;
-	b=uAEmlj9EeXRNDmq0PelybHSuUIoB5Q0yg5L5BCKHuAorr74tf8QbsZSTlCOl7UL86gNN
-	 qEJABfGTnmwyxDDSA35S4DGkRObGYTqReVf9F34pTkx9A8AJJzhnLXELLbVprPQruiWqr
-	 /yLFFhMPkZMk9gMLdgAUGyIyESHyFkDy50mRKzD5TiwB+OVQuu1QFL3tOFaSKe8umFymB
-	 /WViEZXkpL490EPRfCiKv9N5kqF93xt3dfzfQumv4FqJasyXfdDWZVma5Lfn4YY1Mi3tD
-	 tdXV7YXY0H9RbhS/Gm46N+2axWdMI++kFHaBGHBPIPkdTUObrbKtj+4P56zAkxsaMIA==
+	t=1792698060;
+	b=deY0vwIuTpcTdr0UtLJ8ExZjHwNZemj4bmTar4gc73jAnssTEJzczcyWvS3Be81NQs/B
+	 QwzDZihUSytmaCwdt7N6C7RcNTxEKVcajpv+C1B0z+923zohqSoBmYxqmqCNQ0LepGZaf
+	 /KN5bhA0nulmOOyuNcZEYAHYp3NMLpIwZD3M88ti7/XoKH7lxmp5+Q1RMqGOPArlUehOc
+	 OYiSNLowoFvox9UyKjVtZ3aaB3qvsMXUqux6IPO6TQtwUNax5wPSvjHZP3hj9qCTpNUnA
+	 0hoGcQ1XBK6YVOU642ct2uaV10aqiWVg6AyoxBTlciJaz+eYKZqeJEmQzqRcdXNZE1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792696555;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=M9TF/oJtNsCW04VyyVA0DTdtkGn3HSYEv0sTZmn7Gk4=;
-	b=tAVuBFLrlvU7kfTKNrm4dr1qsF9kfBglJg094QhL+ugPc1ojUPEgh1M8ANjvNBcuzeHK
-	 T8vlvuDmZXHlVxoIx1C64fVuLzduscL2/jVAOv9dFUjtG3lX6fkxVVq8mYCnDFWBXsQSg
-	 dlxOFhbHmDj10iBGhoEqqGA+C0fd5SOeVuNrt7tPSKObt7+ogwNcazzcCnXU3okt2foSm
-	 A+bYqTajG75yMhbsELqfYpRNg3OR0pwLRhX1nlzOrd0QdGvDsYxOsuefi4fDCdacBlaFt
-	 kB72PAlorbjYuoNn+PEcE9bSxAjy5fG5BQVdREkQ8tL/HUz2p+gO9IWFoWBXo4So/Sw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792698060;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Date:Subject:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=rMu7gYcxvQNy61MemzFOFXFmQujG4mGCgZD776uY0wk=;
+	b=CZiWY7ewgtYDJ03EKFtmTQLLhGtj+Twq4FoA3ZQupe3N7mR26Qwznzd1B35MAhXMiPSt
+	 L+481Eu1JwwyiK1EAZ7mnW1Md57LQK8rdeI2TyEH5lnTNP4WfnjD780cosAzUn5Kl+GD6
+	 Akt3ga2xgNT7+ph7Z4h/idu/xxI++WHlvOoqGi3tEocXyGp5qKFYcCSKobq9FwGBTJG6n
+	 0BeQjqNbHbCt5YEq0qhQfjWsDQVbtFElQe8Gx2aoqLLV9Z/DTeFrVuKmI1qdjBJaBMu8M
+	 bO3We/tCBmXEtHI8rABKIM/VSn5UzUl1lIsVScck9J3hbdu8M55Z6KOIwY2+KFpDFYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dmhPUiHG;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kfRYEeIa;
+	arc=none smtp.remote-ip=209.85.161.52
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E5F606A319;
-	Thu, 22 Oct 2026 19:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0381E606A319
+	for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 19:40:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0381E606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dmhPUiHG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C931F01825;
-	Thu, 22 Oct 2026 19:15:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792696555;
-	bh=M9TF/oJtNsCW04VyyVA0DTdtkGn3HSYEv0sTZmn7Gk4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dmhPUiHG/8cp+vxzB3k+IQ6pcNdOVFdAjm7KydR3ywBb8p8S7yT4QO1liEC9CadGI
-	 3ZyRr8ySqnj7r/Zpsek80xcQH5nbjZiHuGF9Abr6wEt/btvQ5g8oYbALSQ2G/Z8t/B
-	 8FJlTiG9uIjLUgznFOtNbkfjZEQiSOqidJ3wYFj1gqToeVrOBKTVufDplerjeYD10r
-	 P69vKZPEzjdLp/4bIyNdNFeNca4BgbgDumJVgi+Bj8V4kH+aoZeuIbJ1u6lTWySI0j
-	 VsdaL1YcXJtg+t1Ss92DfFSeXwmqdVr5kJDTCnLdFPYmcR80qXDRVLbM6sYemMlU6w
-	 A9VDmFAHBLIOA==
-Message-ID: <sashiko-outbox-181954@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/4] dmaengine: dw: Prevent tx-status calling
- DMA-desc callback
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "James Hilliard" <james.hilliard1@gmail.com>
-Cc: dmaengine@vger.kernel.org, linux-serial@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261022-submit-dw-dma-synchronize-v1-v2-1-5244e94dca8c@gmail.com>
-References: <20261022-submit-dw-dma-synchronize-v1-v2-0-5244e94dca8c@gmail.com>
- <20261022-submit-dw-dma-synchronize-v1-v2-1-5244e94dca8c@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 22 Oct 2026 19:15:54 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kfRYEeIa
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-6fe4372c5f3so106938eaf.3
+        for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 12:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792698059; x=1793302859; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=rMu7gYcxvQNy61MemzFOFXFmQujG4mGCgZD776uY0wk=;
+        b=kfRYEeIa7DkLyy5+7TTOAJvwhXxE09LCxrE8jesDq+E8ioWfi9aeMvlnUFx6uaB3E6
+         fFJWWNuSRiv0sRkQAAh6NZhIp/e7uDCjcDbZruZWVlchkaXjxGqihaQWOQ5zKouAMbQf
+         /uKVmCpFhEuZZlaaNIKG9JBFfOgdUphRTS3ZqMwBuEZloS3iqGKulzKODVfglsl+dCkz
+         KYk7y8B3HA7SvVrpYWVgTbxorLEpxIrrmiOlJnBFaqzb/tOBS0q/WBGEuhh3nnjyGZCD
+         Joy7OcPErsmlhdsuBNx8tq8ut2RfMl2QXUhV8DmiHIp0dbcSDfowUbWedb2Eh5QHjLYM
+         UUtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792698059; x=1793302859;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=rMu7gYcxvQNy61MemzFOFXFmQujG4mGCgZD776uY0wk=;
+        b=yHky1H7QnLBk9PsaH+S7DKJsOj0FiTmT9YfRv1CThYlhAD8xrnxEFkozxyL6MYkBz0
+         nEyHHH31rERl5G9YSSaiCe/s/x1u6xs7jY38yUB0SiYx51dh4B5tTM/nPKk4HC6SC8+J
+         lXtuIHzHeCG9N0M5eSMuQSRdm33Jt1/zkjr7ZysLaGZEDZbTKEXByhRCdRvy6wy4XDCR
+         20FVarVi1YOCMQGaq8vKb9O+4wwM3FdEWugVSkaHpC2/o2vVffCP2IdPczViKp1gFNVW
+         MCVMSO1X3Et+RZk2Dd/AzpStrR+ZeXD+Ee15roMGdFRlO7l1CoPoTfmJlceZ6BzpWPcx
+         3l+g==
+X-Gm-Message-State: AFq9FYK8sMU3iTMqrrZ0ZcKPtsH91jvS+avwJM03JvttpM46eXeuo50N
+	jhT2XYSYyM9vfmyPgnz8k04Rd6N2ESXEiupEdi+4LmN8yNC5ix04rreX
+X-Gm-Gg: AYBFou2p0HqaWYDGyeJ9iWNn2Tdrk1elzLK/iYFl2+m9JIHo7oednVyLeR1ozqZcEDP
+	bDldd5iFSM9iM6isxvbs2If66y103BPR54tZhfIRcKocC69nPKadeXA/P2zulF5C54a8ob1Nu06
+	LUSreBc4YHp0C1gwpb2T0SEqiRxY8piZSaw8QfthAqRZRqYODE3ps3M6HoA5iD8IN3zfKA4GEY7
+	uV4kCcyPBHSBq7Y5KFd+rfZ+s2Ojgk99hDW8zSc23u5QRRCoxR4FLLrTogN6UM2oJAsD4qQNDoh
+	7BlvtsQ9A1SnqUzy3ljmUVHi2yOMQZ27P0POI0I8X2SgnEhgppqciS4d54ken8z1P8yx2xMmIYc
+	HSuwtYtUIKGG/clyOb+Yo/pVOecsC1ZeNVb6iPXGBOvwt9wN4ty2VOPjRslinzNqQGYypZ6zIQ3
+	VUwcDyoHDK7g19aNxoRqA5Nz5LjFsBBOmkXIJ+OIdPJRqgIjieHdJCPGmUfn3MU1J32P+laPuLE
+	CBE23pozsPhviXjYloA4f+sjAmEKkuCA/kufZgJvyn6P5gKYR5lrpuQvRxcJSrCXYSx042G0gxM
+	CqpUTw0k66uq/a1VvVE0Zt9Qz9bxE8R7Rj+yIadJtLxxUSVWWAWKlMjAk4U18gUGhTpqWzxTWlE
+	UeIn5p+RK8/X1LGCEaWSiZ4zNg+US0HdPmlUT3SfNXY+FXLpUewKqlY4yWyagiKst974GkL1eG4
+	7N5hmGTwcVwUd6wQYMDCUb02Ey
+X-Received: by 2002:a05:6820:6784:b0:709:8fcf:6d9a with SMTP id 006d021491bc7-70b88aefe41mr234594eaf.78.1792698058797;
+        Thu, 22 Oct 2026 12:40:58 -0700 (PDT)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-70b8b2c4561sm42639eaf.9.2026.10.22.12.40.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2026 12:40:58 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Thu, 22 Oct 2026 13:40:54 -0600
+Subject: [PATCH v2] dmaengine: mediatek: uart: synchronize completion
+ callbacks
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,208 +91,98 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261022-submit-mtk-uart-dma-synchronize-v1-v2-1-fdaef0e2edd6@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5WOTQ6CMBCFr2K6dpTyI8SV9zAsShlg1LamLUQk3
+ N0WTuDyTd775luYQ0vo2PWwMIsTOTI6hPR4YHIQukegNmSWJumFJykHNzaKPCj/hFFYD60S4GY
+ tB2s0fREmDryoZJUlWVOUOQugt8WOPtuTe73nQHmg9JEcG41wCI0VARNPgYm6J43nfRcaAzlv7
+ Lx5TjyS/lKKVpB3Zckr2WGX81uvBL1O0ihWr+v6A72DrsYIAQAA
+X-Change-ID: 20261021-submit-mtk-uart-dma-synchronize-v1-158c8303b574
+To: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.li@oss.nxp.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ James Hilliard <james.hilliard1@gmail.com>
+X-Mailer: b4 0.15.2
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Critical] dmaengine: dw: premature completion in dwc_scan_descriptors() =
-on zero residue
-- [High] dmaengine: dw: polled and non-interrupt transfers time out in dwc_=
-tx_status()
---
+Terminating a UART APDMA channel waits for its interrupt handler, but
+completion callbacks run in the virt-dma tasklet. A callback already
+removed from desc_completed can still be running after termination
+returns. With no device_synchronize hook, dmaengine_synchronize() does
+not wait for that callback either.
 
-commit 0cd2ee9537c620b0eff806ffd2af94c36f805f91
-Author: Serge Semin <fancer.lancer@gmail.com>
+Add vchan_dma_synchronize() with the DMAengine callback signature and
+use it for UART APDMA. The shared helper wraps vchan_synchronize() so
+drivers can assign it directly to device_synchronize. Document that the
+termination path must have stopped the channel and prevented new
+callbacks before using it.
 
-dmaengine: dw: Prevent tx-status calling DMA-desc callback
+This lets clients finish asynchronous cancellation before reusing
+callback state or freeing DMA buffers. Keep the callback wait out of
+device_terminate_all so it can be performed without locks acquired by
+the callback.
 
-This commit removes the dwc_scan_descriptors() call from dwc_tx_status() to
-avoid invoking descriptor completion callbacks while holding consumer locks
-such as the 8250 UART port lock. Instead, it introduces helper functions to
-compute the residue directly for soft-LLP and hard-LLP transfers and uses
-dwc_get_hard_llp_desc_residue() in both dwc_tx_status() and
-dwc_scan_descriptors().
+Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
+Suggested-by: Frank Li <Frank.li@oss.nxp.com>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Changes in v2:
+- Add a documented vchan_dma_synchronize(struct dma_chan *) helper in
+  virt-dma.h and use it directly as the UART APDMA device_synchronize
+  callback, following Frank Li's review [0].
+- Link to v1: https://patch.msgid.link/20261021-submit-mtk-uart-dma-synchronize-v1-v1-1-4f7718cfef41@gmail.com
 
-> diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-> index dd75f97a33b3d..af1871646eb9e 100644
-> --- a/drivers/dma/dw/core.c
-> +++ b/drivers/dma/dw/core.c
+[0] https://lore.kernel.org/r/atoz6M7RHU14_a3J@SMW015318/
+---
+ drivers/dma/mediatek/mtk-uart-apdma.c |  1 +
+ drivers/dma/virt-dma.h                | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-[ ... ]
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index f74e9a328588..6bc4f20d8b06 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -514,6 +514,7 @@ static int mtk_uart_apdma_probe(struct platform_device *pdev)
+ 	mtkd->ddev.device_config = mtk_uart_apdma_slave_config;
+ 	mtkd->ddev.device_pause = mtk_uart_apdma_device_pause;
+ 	mtkd->ddev.device_terminate_all = mtk_uart_apdma_terminate_all;
++	mtkd->ddev.device_synchronize = vchan_dma_synchronize;
+ 	mtkd->ddev.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE);
+ 	mtkd->ddev.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_1_BYTE);
+ 	mtkd->ddev.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
+index 59d9eabc8b67..f1fc3bf48275 100644
+--- a/drivers/dma/virt-dma.h
++++ b/drivers/dma/virt-dma.h
+@@ -234,4 +234,19 @@ static inline void vchan_synchronize(struct virt_dma_chan *vc)
+ 	vchan_dma_desc_free_list(vc, &head);
+ }
+ 
++/**
++ * vchan_dma_synchronize - DMAengine callback to synchronize a virtual channel
++ * @chan: DMA channel to synchronize
++ *
++ * Use as device_synchronize when device_terminate_all has stopped the channel
++ * and prevented new callbacks from being scheduled. This waits for callbacks
++ * and frees terminated descriptors through vchan_synchronize().
++ *
++ * Context: non-atomic context, with no locks held that callbacks need.
++ */
++static inline void vchan_dma_synchronize(struct dma_chan *chan)
++{
++	vchan_synchronize(to_virt_chan(chan));
++}
++
+ #endif
 
-> @@ -358,41 +358,16 @@ static void dwc_scan_descriptors(struct dw_dma *dw,=
- struct dw_dma_chan *dwc)
->  		return;
->  	}
-> =20
-> -	dev_vdbg(chan2dev(&dwc->chan), "%s: llp=3D%pad\n", __func__, &llp);
-> +	dev_vdbg(chan2dev(&dwc->chan), "%s: hard LLP mode\n", __func__);
-> =20
->  	list_for_each_entry_safe(desc, _desc, &dwc->active_list, desc_node) {
-> -		/* Initial residue value */
-> -		desc->residue =3D desc->total_len;
-> -
-> -		/* Check first descriptors addr */
-> -		if (desc->txd.phys =3D=3D DWC_LLP_LOC(llp)) {
-> -			spin_unlock_irqrestore(&dwc->lock, flags);
-> -			return;
-> -		}
-> -
-> -		/* Check first descriptors llp */
-> -		if (lli_read(desc, llp) =3D=3D llp) {
-> -			/* This one is currently in progress */
-> -			desc->residue -=3D dwc_get_sent(dwc);
-> +		desc->residue =3D dwc_get_hard_llp_desc_residue(dwc, desc);
-> +		if (desc->residue) {
->  			spin_unlock_irqrestore(&dwc->lock, flags);
->  			return;
->  		}
-> =20
-> -		desc->residue -=3D desc->len;
-> -		list_for_each_entry(child, &desc->tx_list, desc_node) {
-> -			if (lli_read(child, llp) =3D=3D llp) {
-> -				/* Currently in progress */
-> -				desc->residue -=3D dwc_get_sent(dwc);
-> -				spin_unlock_irqrestore(&dwc->lock, flags);
-> -				return;
-> -			}
-> -			desc->residue -=3D child->len;
-> -		}
-> -
-> -		/*
-> -		 * No descriptors so far seem to be in progress, i.e.
-> -		 * this one must be done.
-> -		 */
-> +		/* No data left to be send. Finalize the transfer then */
->  		spin_unlock_irqrestore(&dwc->lock, flags);
->  		dwc_descriptor_complete(dwc, desc, true);
->  		spin_lock_irqsave(&dwc->lock, flags);
+---
+base-commit: 93f51579e7df248780214094418f205253383cc5
+change-id: 20261021-submit-mtk-uart-dma-synchronize-v1-158c8303b574
 
-[Severity: Critical]
-Can checking only if (desc->residue) here cause an in-progress descriptor to
-be completed and freed prematurely while still linked on dwc->active_list?
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
-Previously, dwc_scan_descriptors() returned immediately whenever an LLI
-matched the channel LLP register (desc->txd.phys =3D=3D DWC_LLP_LOC(llp) or
-lli_read(..., llp) =3D=3D llp), even if desc->residue -=3D dwc_get_sent(dwc)
-evaluated to 0.
-
-In the DesignWare AHB DMAC, dwc_get_sent(dwc) reads CTL_HI (BLOCK_TS), which
-counts bytes fetched from the source into the channel FIFO. On a single-blo=
-ck
-descriptor or the final LLI of a multi-block descriptor (where lli.llp =3D=
-=3D 0
-and hardware LLP =3D=3D 0), once all source bytes have been read into the F=
-IFO,
-dwc_get_sent(dwc) equals the block length and dwc_get_hard_llp_desc_residue=
-()
-returns 0 while destination writes are still draining from the FIFO
-(RAW.XFER =3D=3D 0) or when a destination bus error (RAW.ERROR) halts the c=
-hannel
-with RAW.XFER =3D=3D 0.
-
-When dwc_get_hard_llp_desc_residue() returns 0, dwc_scan_descriptors() now
-falls through to dwc_descriptor_complete(dwc, desc, true), which sets
-desc->txd.cookie =3D 0 via dma_cookie_complete() and frees desc (and its
-tx_list children) to dw->desc_pool via dwc_desc_put() without removing
-desc->desc_node from dwc->active_list. It then disables the channel via
-dwc_chan_disable() and calls dwc_dostart_first_queued(dwc) with the freed
-descriptor still on dwc->active_list.
-
-In particular, when reached via dw_dma_tasklet()->dwc_handle_error():
-
-drivers/dma/dw/core.c:dwc_handle_error() {
-	dwc_scan_descriptors(dw, dwc);
-
-	spin_lock_irqsave(&dwc->lock, flags);
-
-	bad_desc =3D dwc_first_active(dwc);
-	list_del_init(&bad_desc->desc_node);
-	list_move(dwc->queue.next, dwc->active_list.prev);
-	...
-	dwc_descriptor_complete(dwc, bad_desc, true);
-}
-
-dwc_handle_error() will pop the already-freed bad_desc from dwc->active_lis=
-t,
-dereference it in dwc_dump_lli() (use-after-free), and pass it to
-dwc_descriptor_complete() a second time, triggering
-BUG_ON(tx->cookie < DMA_MIN_COOKIE) in dma_cookie_complete() and
-double-freeing bad_desc to dw->desc_pool.
-
-Note that while a later commit in this series ("dmaengine: dw: serialize
-error recovery with channel termination") removes the dwc_scan_descriptors()
-call from dwc_handle_error(), the if (desc->residue) check and missing
-list_del(&desc->desc_node) in dwc_scan_descriptors() remain and can still be
-reached from dw_dma_tasklet()->dwc_scan_descriptors() if a concurrent
-dwc_terminate_all() and transfer restart clear RAW.XFER before
-dwc_scan_descriptors() acquires dwc->lock.
-
-[ ... ]
-
-> @@ -1012,12 +1028,6 @@ dwc_tx_status(struct dma_chan *chan,
->  	struct dw_dma_chan	*dwc =3D to_dw_dma_chan(chan);
->  	enum dma_status		ret;
-> =20
-> -	ret =3D dma_cookie_status(chan, cookie, txstate);
-> -	if (ret =3D=3D DMA_COMPLETE)
-> -		return ret;
-> -
-> -	dwc_scan_descriptors(to_dw_dma(chan->device), dwc);
-> -
->  	ret =3D dma_cookie_status(chan, cookie, txstate);
->  	if (ret =3D=3D DMA_COMPLETE)
->  		return ret;
-
-[Severity: High]
-What happens for polled transfers or descriptors prepared without
-DMA_PREP_INTERRUPT now that dwc_tx_status() no longer calls
-dwc_scan_descriptors()?
-
-In drivers/dma/dw/core.c, both dwc_prep_dma_memcpy() and dwc_prep_slave_sg()
-only enable the descriptor completion interrupt when DMA_PREP_INTERRUPT is
-set:
-
-	if (flags & DMA_PREP_INTERRUPT)
-		/* Trigger interrupt after last block */
-		lli_set(prev, ctllo, DWC_CTLL_INT_EN);
-
-When DMA_PREP_INTERRUPT is not set in hard-LLP mode (or when DMAC interrupts
-are masked at the wrapper level), the controller sets RAW.XFER when the
-transfer finishes, but never raises an interrupt to run dw_dma_interrupt()
-and dw_dma_tasklet(). Without dwc_scan_descriptors() in dwc_tx_status(),
-chan->completed_cookie is never updated, completed descriptors remain on
-dwc->active_list, and dwc_tx_status() continues to return DMA_IN_PROGRESS
-even after the residue reaches 0.
-
-Several in-tree callers rely on polling completion without
-DMA_PREP_INTERRUPT:
-
-1. sound/soc/intel/catpt/dsp.c:catpt_dma_memcpy() prepares memcpy transfers
-with DMA_CTRL_ACK (and with DMAC interrupts masked in CATPT_SHIM_IMC) and
-waits via dma_wait_for_async_tx():
-
-	desc =3D dmaengine_prep_dma_memcpy(chan, dst_addr, src_addr, size,
-					 DMA_CTRL_ACK);
-	...
-	status =3D dma_wait_for_async_tx(desc);
-	ret =3D (status =3D=3D DMA_COMPLETE) ? 0 : -EPROTO;
-
-When dma_wait_for_async_tx() times out and returns -EPROTO to
-catpt_request_dma_load_firmware(), releasing the channel via
-dma_release_channel()->dwc_free_chan_resources() then hits
-BUG_ON(!list_empty(&dwc->active_list)).
-
-2. drivers/dma/dmatest.c:dmatest_func() in polled mode prepares transfers
-with flags =3D DMA_CTRL_ACK and waits via dma_sync_wait().
-
-3. crypto/async_tx/async_memcpy.c:async_memcpy() omits DMA_PREP_INTERRUPT
-when submit->cb_fn is NULL.
-
-Could dwc_tx_status() still finalize descriptors that did not request an
-interrupt (or when no callback is registered), or otherwise update completi=
-on
-state for polled transfers?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022-submit-dw-=
-dma-synchronize-v1-v2-0-5244e94dca8c@gmail.com?part=3D1
