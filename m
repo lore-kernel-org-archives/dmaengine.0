@@ -1,79 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792707160;
-	b=fbz7WA7F7oo3Jntvovt51p8nGUm36HmkNeTNRux/2n4KKs8M8ZZiKzNeYFjviF7pa9q/
-	 qGb+xgRcueUDTlDRCkepKJNidQQdFrB9QX4940xpW8A9YZlEHm9PmWClkDltaxOvSolNL
-	 f5m5M7PyZ1Ypg1RWr084HuZlgh/fuMPVJrGfVsv2nUWwpjfOMkPLtJJuDRjAEnfqz8HL3
-	 0e1QzLibuA8s0xF/eo750COqG6UnzvJyITXlIpLdjxaVqGnNiWpIVBW1yG1H4SmnyKjT7
-	 yKKjQyEZ3ta0DO10FdpAeOrle0/JXdaZzzz2mSzx/EY7Faqo9+z3l2uIWW+46MRYk7A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792707160;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=Ub1wcWejjpZhi+639ya37TwcHArqYpKLVBaE2WfY3MM=;
-	b=WvQsUJfpZwCYnfgouZO22bz6/5IBmSRG4XyYnN5vTh2O+WIiaAHdx8z1WiIP+/ZaTlWx
-	 BBPNinOHom/7P1h1+0Ae03OPVOUqQqv9H+QdrAgIXTB1rn+mqp728rloJojBxI7kqv9QB
-	 TcxLJRmfnr2RHVmqVqrJvde792NNsgsniUioEaKmpLYH19/mc4IjSD9rWDNHXtVXUlAda
-	 kC/8bsg6mZ+T2PpHWSOZo6rEhUuflGmJDJh+5lwHwmuLRl2q0qZNOos9X9uXwdZBlgHDE
-	 FFOfD/xW5WmM8SWthHkGm1J/XekqudOTnt7y+j6nJsnPznnBzBQrp6kDqBTYSRJJFMg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FVxwyTOW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792708169;
+	b=4fwtK0G3ejFqmsc5iItLxgWmop0bkhvjGg4sL814cWlW6Lnn1/z66lKOVVRltysDDACh
+	 H2t49Xc5c43A3jjiO58Dj+Ja7N+Pvcekg6i0461JzAu0/53CHLVquJfejFwbrto3j+VN2
+	 u+jGQ+s+hR02qpatMw3JSrktGtGcdWWZ8QoEatWRxDL7CQsVCuShKwnNH76oIpM0FOQ9E
+	 33DurikjbSC9/nwf2ikDTZkxHHKY45cmRosB90eNMumYehC8Vp01OrbqBcCdbNzLDDmjZ
+	 rbn/kqqQsZOqb/Lf4prWtTuCdXkFnWhILwV2Sje6G3e2Zp0sqAqYEr1pnSNP7yaiNcg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792708169;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=vMyD24zIksX5iyZivlendeJe+HpeBe1LyFNcDxlm1dk=;
+	b=d1jrI43cfByIQ9p1zZFqBoUthICSXG/zJA2sf2lbtorNyAMGltwIU9ra1m8UQeS1BfuX
+	 qEHqm8qG/bYZsGHdB+JSRC+6F1Xqe+AzKR+CI4P1ZuVf5vRWnFLIlmbmML1z6yWRMUJ+e
+	 3odTiDaRhtuF289zIGdzOxPDLjkkdmfZHUPC14eC07v5BOc1fUmuoEmxcyP3NChWX6VZe
+	 rkZt58SpCz1l4JVBhO58eUIQ93i+T5gHfrDKSgPC1W/bWus8o6zE3naGNJ19L9xOSio3k
+	 P80yVpIXgM1wUu/mdxkIPFoFPNq2qa2VeEvZEf0pyNYJKimAscm2A0Iv8Nq1J5fw6rw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XvqgJc8H;
+	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADEF606A319;
-	Thu, 22 Oct 2026 22:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F75606A319
+	for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 22:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FVxwyTOW
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1792707154;
-	b=m5wGTcu/BXMoYBFGvwHkoGeRO2XvVWp9aOcgt/Io65aIIuUAQwXrjtpqcpBH5D32guu5
-	 ZiPVZqzTdA01XhN0a+WzDJrtspr9maFg9WNLPS1BKwqjC/B6EgDOUbdzaduU902oNxvgu
-	 3nvlIy7+J+7rjYPT30I5eI9miYk3lGif5MJBKOEGFetSy1yoo/g0E3cjHir3ZuCIJf6zf
-	 AF0BvZW6HHynWONwNq6mhYMQP5kRrZ75HOAg5nTs3iaTlS4h8DRG1X7MOcMvbAoIW89im
-	 Zbizyv6T9Y/WMEjPhiIfFdmt1yNqv6Uc6e/DEc6fDc2RG492ot2f8m8ynVe9O16JCaA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1792707154;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=Ub1wcWejjpZhi+639ya37TwcHArqYpKLVBaE2WfY3MM=;
-	b=hjnU0RNTvmhOk+Ogy28ohwA7DwuUFptP1uxBz4Xt0OLsMXuT+f5LRWBErFUyehy0p5c6
-	 o2fx77vJlkrZ+UcP4QWIBmUy0p4vbk+wHnLchyf4p3QmSk6q/wpUdUBWVcN+aru3Eynh+
-	 rsc3gesBrfCvWh6bDOhZR6VhARcDJWllyRYCBvYBVTATfRMIzqWXsuNzzTI8TDiBnDecS
-	 +doBZzYjUU1EJ5kf4s8zvVGaNNTnmPYW5wI5v9e6WNpd7TSY2aOgqUukBFrFhe/NCbD9J
-	 vuik13FsAZ+MmmEg1vGE29kwFnHK/dW5ZZbpXcCfwewSrN+o/zTpA04E4TOV1YtUGIA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 1D6B81F01829;
-	Thu, 22 Oct 2026 22:12:34 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XvqgJc8H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39C51F01825;
+	Thu, 22 Oct 2026 22:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792707154;
-	bh=Ub1wcWejjpZhi+639ya37TwcHArqYpKLVBaE2WfY3MM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=FVxwyTOWmTH2qTxsVLhmKdG/T2wCfAINPkh3GNgY6U+3WtHjXZfWVkEDPCBhepg60
-	 ab/vn9glVV5OXKg0rkcWJf6rfpYTcZlXKA/ub658DrWyhLT+JV2OrUFP9KaHTZQW+s
-	 w+eq98xvFVbDnTdnUfW4PY25NHfRsUOXFt9Om5oTYTTLEBrUJ9hZyqUxvwcU9Qqa+t
-	 u1pecdhOIORsAnqGoqbb5z3FjeVY6K/oQm7ecEOGB+DU+CTOCfGvNMOdM13LpvDvxi
-	 EL93AH2XeBPVQPSoi7LjJFe0NuB6D2zOqXs/y0x3GLcrawPwkN9kHqRlbx1PCrtzMn
-	 2v17W4dK+9t9Q==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 74FAA41FB2;
-	Thu, 22 Oct 2026 22:12:33 +0000 (UTC)
-From: "Jeff C. Jensen via B4 Relay" <devnull+kernel.nullptr.com@kernel.org>
-Date: Thu, 22 Oct 2026 15:11:30 -0700
-Subject: [PATCH 1/5] dmaengine: xilinx_dma: Reject transfers that map no
- data
+	s=k20260515; t=1792708169;
+	bh=vMyD24zIksX5iyZivlendeJe+HpeBe1LyFNcDxlm1dk=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=XvqgJc8H+lUYOX6V6muYtOFBrc2PrSkhMvpAJmcAL8kOgObAFySSxCs9XPWfL0f0s
+	 LqhVucH/YLixK8esA6zv06q/XIXhPBb5Gft+Iicm3fane5Vk0/FW9oz1QnynHzeSOY
+	 oYPZGm6YSROT/ZahT7DUUqWYK9uJTRsR9PNrJbILDTAWGTxV7GgcRejDk4Rke07KKJ
+	 aMvj8zs5kLfEz0Xnci8yRAg/SJJijXSsROlmiWjMKfp2C9oTBpJh2nPt3KgHAuqNuc
+	 0yv2Tt9Wvx6uFkvKT7t5Dr1AJW3Cz7gE45PSUpnS3uqRCXflsW2yhZViSuXaQMXr1y
+	 j0ET0PkxCTsmA==
+Message-ID: <sashiko-outbox-182123@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 5/5] dmaengine: xilinx_dma: Recover a withheld AXI DMA
+ channel
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Jeff C. Jensen" <kernel@nullptr.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261022-xilinx-dma-work-v1-5-20faea2e7a80@nullptr.com>
+References: <20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com>
+ <20261022-xilinx-dma-work-v1-5-20faea2e7a80@nullptr.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 22 Oct 2026 22:29:28 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -82,94 +60,224 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261022-xilinx-dma-work-v1-1-20faea2e7a80@nullptr.com>
-References: <20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com>
-In-Reply-To: <20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com>
-To: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
-Cc: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>, 
- Suraj Gupta <suraj.gupta2@amd.com>, 
- Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, 
- Alex Bereza <alex@bereza.email>, 
- Folker Schwesinger <dev@folker-schwesinger.de>, 
- Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- "Jeff C. Jensen" <kernel@nullptr.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2155; i=kernel@nullptr.com;
- s=openpgp-2026; h=from:subject:message-id;
- bh=4HSoHWwpvRObiCk9NoS17klkZW5nP/aozCZjxK9JszY=;
- b=owGbwMvMwCV2439B4wpuQQ7G02pJDFm3ugIqTHk057113Wq+c/as+yY/3Xevzkhfa2C1dcoT0
- wN1vjZHOkpZGMS4GGTFFFmOH5u2M9/Wv66o+n4VzBxWJpAhDFycAjCRE3cZGS4df5qnIF2dcvm4
- vMHG08suzOv9fMFrZVi+6JOj8qb7V7AwMqxm+eHYnPjv4NmIuob0q3JKu8LvCliUH/EoXfXgzrT
- ldUwA
-X-Developer-Key: i=kernel@nullptr.com; a=openpgp;
- fpr=C7C696B96F3D4F7E727BDF7AD8FF7081A80B1108
-X-Endpoint-Received: by B4 Relay for kernel@nullptr.com/openpgp-2026 with
- auth_id=1265
-X-Original-From: "Jeff C. Jensen" <kernel@nullptr.com>
-Reply-To: kernel@nullptr.com
-Content-Transfer-Encoding: 7bit
 
-From: "Jeff C. Jensen" <kernel@nullptr.com>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] dmaengine: xilinx_dma: chan->quiesced not cleared on failed reset
+- [Medium] dmaengine: xilinx_dma: race in xilinx_dma_tx_submit() across cha=
+nnel recovery
+--
 
-If every entry of a scatterlist or a DMA vector array has zero length,
-the preparation loops in xilinx_dma_prep_slave_sg(),
-xilinx_dma_prep_peripheral_dma_vec() and xilinx_mcdma_prep_slave_sg()
-allocate no segments. Each function then takes list_first_entry() of the
-empty segment list anyway, so desc->async_tx.phys, which is later
-programmed as the current descriptor, is derived from the list head
-rather than from a segment. For DMA_MEM_TO_DEV, the SOP and EOP bits are
-also set through pointers that do not point at a segment.
+commit 0230d2d57b7d259e756e6f7875674a232d1f812a
+Author: Jeff C. Jensen <kernel@nullptr.com>
 
-Fail the preparation when no segment was allocated.
+dmaengine: xilinx_dma: Recover a withheld AXI DMA channel
 
-Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
-Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
-Fixes: 38433a6fdfb7 ("dmaengine: xilinx_dma: Support descriptor setup from dma_vecs")
-Assisted-by: Claude:claude-fable-5-1
-Signed-off-by: Jeff C. Jensen <kernel@nullptr.com>
----
- drivers/dma/xilinx/xilinx_dma.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+This commit adds two-step recovery for a withheld single-channel AXI DMA
+controller by resetting the engine in xilinx_dma_terminate_all() and
+reclaiming the quarantined descriptors in xilinx_dma_synchronize().
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index cffe7c6fa640..5ccc9f9d58a3 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2305,6 +2305,9 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
- 		}
- 	}
- 
-+	if (list_empty(&desc->segments))
-+		goto error;
-+
- 	head = list_first_entry(&desc->segments, struct xilinx_axidma_tx_segment, node);
- 	desc->async_tx.phys = head->phys;
- 
-@@ -2406,6 +2409,9 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
- 		}
- 	}
- 
-+	if (list_empty(&desc->segments))
-+		goto error;
-+
- 	segment = list_first_entry(&desc->segments,
- 				   struct xilinx_axidma_tx_segment, node);
- 	desc->async_tx.phys = segment->phys;
-@@ -2613,6 +2619,9 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
- 		}
- 	}
- 
-+	if (list_empty(&desc->segments))
-+		goto error;
-+
- 	segment = list_first_entry(&desc->segments,
- 				   struct xilinx_aximcdma_tx_segment, node);
- 	desc->async_tx.phys = segment->phys;
+> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
+dma.c
+> index 0316c6e7881f9..c72c0fc985c5c 100644
+> --- a/drivers/dma/xilinx/xilinx_dma.c
+> +++ b/drivers/dma/xilinx/xilinx_dma.c
 
--- 
-2.43.0
+[ ... ]
 
+> @@ -2917,12 +2920,109 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dcha=
+n, struct scatterlist *sgl,
+>  	return NULL;
+>  }
+> =20
 
+[ ... ]
+
+> +static int xilinx_dma_reset_withheld_channel(struct xilinx_dma_chan *cha=
+n)
+> +{
+> +	unsigned long flags;
+> +	int err;
+> +
+> +	if (!xilinx_dma_reset_is_isolated(chan)) {
+> +		dev_err(chan->dev,
+> +			"channel %p stays withheld: a reset would disturb the other channel\n=
+",
+> +			chan);
+> +		return -EBUSY;
+> +	}
+> +
+> +	err =3D chan->stop_transfer(chan);
+> +	if (err)
+> +		dev_dbg(chan->dev, "channel %p did not halt before its reset\n", chan);
+> +
+> +	err =3D xilinx_dma_chan_reset(chan);
+> +	if (err) {
+> +		dev_err(chan->dev, "channel %p stays withheld: reset failed again\n", =
+chan);
+> +		return err;
+> +	}
+> +
+> +	spin_lock_irqsave(&chan->lock, flags);
+> +	chan->quiesced =3D true;
+> +	spin_unlock_irqrestore(&chan->lock, flags);
+> +
+> +	return 0;
+> +}
+
+[Severity: High]
+What happens if terminate is called twice on a withheld channel before
+dmaengine_synchronize() runs, and the second reset times out?
+
+Specifically, in drivers/dma/xilinx/xilinx_dma.c:
+
+1. A single-channel AXI DMA controller fails a reset and is withheld via
+   xilinx_dma_quarantine_channel() with chan->quarantined =3D true and
+   chan->err =3D true.
+
+2. The client calls dmaengine_terminate_async(), which runs
+   xilinx_dma_terminate_all() -> xilinx_dma_reset_withheld_channel().
+   When xilinx_dma_chan_reset() succeeds, xilinx_dma_reset() clears
+   chan->err =3D false and sets chan->idle =3D true, and
+   xilinx_dma_reset_withheld_channel() sets chan->quiesced =3D true.
+   Because dmaengine_synchronize() has not run yet, chan->quarantined
+   remains true.
+
+3. Before dmaengine_synchronize() runs, terminate is called again (for
+   example, via dmaengine_terminate_sync() or a second
+   dmaengine_terminate_async() during teardown).
+   xilinx_dma_terminate_all() sees xilinx_dma_chan_quarantined(chan) is
+   still true and invokes xilinx_dma_reset_withheld_channel() a second
+   time.
+
+4. xilinx_dma_reset_withheld_channel() unconditionally starts another
+   hardware soft reset via xilinx_dma_chan_reset(chan) (writing
+   XILINX_DMA_DMACR_RESET to XILINX_DMA_REG_DMACR) without clearing
+   chan->quiesced. If this second reset times out,
+   xilinx_dma_reset_withheld_channel() returns -ETIMEDOUT, but leaves
+   chan->quiesced =3D true and chan->err =3D false from the earlier reset
+   while XILINX_DMA_DMACR_RESET is still incomplete in hardware and
+   XILINX_DMA_DMAXR_ALL_IRQ_MASK has not been re-enabled.
+
+Similarly, xilinx_dma_quarantine_channel() does not clear
+chan->quiesced =3D false when withholding a channel:
+
+drivers/dma/xilinx/xilinx_dma.c:xilinx_dma_quarantine_channel() {
+	spin_lock_irqsave(&chan->lock, flags);
+	chan->quarantined =3D true;
+	chan->err =3D true;
+	/* a completion pass mid-callback stops at its current descriptor */
+	chan->terminating =3D true;
+	...
+}
+
+When dmaengine_synchronize() subsequently runs (either directly or
+unconditionally via dma_release_channel() -> dma_chan_put()),
+xilinx_dma_synchronize() -> xilinx_dma_recover_channel() sees both
+chan->quarantined and chan->quiesced set to true. Wouldn't that cause
+xilinx_dma_recover_channel() to free chan->quarantine_list, release the
+segment reservations in chan->seg_used, and allow new transfers or
+xilinx_dma_free_chan_resources() to free chan->seg_v while the second
+hardware reset has not completed?
+
+> +
+> +/**
+> + * xilinx_dma_recover_channel - Return a withheld channel to service
+> + * @chan: Driver specific DMA channel
+> + *
+> + * Must run after the completion tasklet has been killed, so that no com=
+pletion
+> + * pass holds a withheld descriptor. Frees the withheld descriptors, whi=
+ch
+> + * restores their segment links and releases their reservations, and ret=
+urns
+> + * the channel to idle with no error, so it takes work again. Does nothi=
+ng
+> + * unless the engine was reset after the channel was withheld.
+> + */
+> +static void xilinx_dma_recover_channel(struct xilinx_dma_chan *chan)
+> +{
+> +	unsigned long flags;
+> +
+> +	spin_lock_irqsave(&chan->lock, flags);
+> +	if (!chan->quarantined || !chan->quiesced) {
+> +		spin_unlock_irqrestore(&chan->lock, flags);
+> +		return;
+> +	}
+> +	xilinx_dma_free_desc_list(chan, &chan->quarantine_list);
+> +	chan->quarantined =3D false;
+> +	chan->quiesced =3D false;
+> +	chan->cyclic =3D false;
+> +	chan->err =3D false;
+> +	chan->idle =3D true;
+> +	chan->desc_pendingcount =3D 0;
+> +	chan->desc_submitcount =3D 0;
+> +	spin_unlock_irqrestore(&chan->lock, flags);
+> +
+> +	dev_info(chan->dev, "channel %p recovered\n", chan);
+> +}
+
+[Severity: Medium]
+Can clearing chan->quarantined =3D false in xilinx_dma_recover_channel()
+race with an in-flight xilinx_dma_tx_submit() that dropped chan->lock to
+run xilinx_dma_chan_reset()?
+
+In drivers/dma/xilinx/xilinx_dma.c, xilinx_dma_tx_submit() drops
+chan->lock around xilinx_dma_chan_reset() and
+xilinx_dma_quarantine_controller(), then reacquires chan->lock to check
+chan->quarantined:
+
+drivers/dma/xilinx/xilinx_dma.c:xilinx_dma_tx_submit() {
+	...
+	if (chan->err) {
+		spin_unlock_irqrestore(&chan->lock, flags);
+		err =3D xilinx_dma_chan_reset(chan);
+		if (err < 0) {
+			if (chan->xdev->dma_config->dmatype !=3D XDMA_TYPE_AXIDMA)
+				return err;
+			xilinx_dma_quarantine_controller(chan);
+			cookie =3D err;
+		}
+		spin_lock_irqsave(&chan->lock, flags);
+		if (chan->quarantined)
+			goto withhold;
+	}
+
+	cookie =3D dma_cookie_assign(tx);
+
+	/* Put this transaction onto the tail of the pending queue */
+	append_desc_queue(chan, desc);
+	...
+}
+
+If Thread A's xilinx_dma_chan_reset() fails in xilinx_dma_tx_submit() and
+calls xilinx_dma_quarantine_controller(), Thread A's descriptor desc has
+not yet been added to chan->quarantine_list while chan->lock is still
+dropped.
+
+If Thread B concurrently runs dmaengine_terminate_sync() ->
+xilinx_dma_terminate_all() -> xilinx_dma_reset_withheld_channel() and
+xilinx_dma_synchronize() -> xilinx_dma_recover_channel() before Thread A
+reacquires chan->lock, xilinx_dma_recover_channel() frees
+chan->quarantine_list and sets chan->quarantined =3D false.
+
+When Thread A then reacquires chan->lock in xilinx_dma_tx_submit(), it
+sees chan->quarantined is false, skips the withhold path, overwrites
+cookie =3D err with dma_cookie_assign(tx), and appends desc to
+chan->pending_list after dmaengine_terminate_sync() has already completed.
+If another descriptor was prepared after recovery, its segments were
+reserved at chan->seg_next (after desc's segments), so appending desc
+behind it queues AXI DMA ring segments out of ring order; and if desc is
+cyclic, the recovery reset also cleared XILINX_DMA_CR_CYCLIC_BD_EN_MASK in
+XILINX_DMA_REG_DMACR that xilinx_dma_prep_dma_cyclic() wrote before
+submission.
+
+Should xilinx_dma_tx_submit() check whether its own reset attempt failed
+rather than relying on chan->quarantined remaining true across the lock
+drop?
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022-xilinx-dma=
+-work-v1-0-20faea2e7a80@nullptr.com?part=3D5
