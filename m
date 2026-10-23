@@ -1,107 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.132
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792747853;
-	b=o8i58Gzm3LjS7XC7zBlqbMMpDM0k1cT68jir/kog2g9s8qM46SVfKYwkVLVtPq4vx/Qd
-	 555ZarfI7sq6KUNBGwiSD5SWnGy+PUcW04xffPhRWZGLrm+QSSTOx4dYmAd0a3nd7tiwB
-	 JIlYqAMGqwqaJKNAClre4s2nvkETJLK0iz4UGaePYQn0P1LSCyEPtgTc3Xp7zd78k1fIE
-	 CetED7Fk8cirhqkBN63GXLoLMQwuAsBNHX8otrPboW+h9kX7ynbi0YDQTuCGSPBt2m/TW
-	 G7NR0yJYCiuSBdU2UGDpPJXPdnWxgTGTlAuF6G7YSIIzkGPzbqrh1aVCKn4QG1nmYWg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792747853;
-	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
-	 Received-SPF:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:Content-Type:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=h3Psh2Ln79XIDklh26NgvODE+n0LcA6EzIdhkNIDRFg=;
-	b=gqfg4yQ/DfznmjH375MVph0ujVeMTz7ZLi1e6hNjuEOePRYEEKNGOa3TDU9QL0CQzgGd
-	 rCKGR1xp2wkGEh8EC/qnj3bir1c4l2CRtf6MCRYyB67K92JdezJs2dHJggX1Ey6T6Lh2Z
-	 ga6wmZeVk8HcLmQ4+H5YiixqgK70jNQRVmFCpPZhiZI/H+o6oySRsqhZnXjEV7vQqDmSV
-	 Y/FZfa50r5RFo7cSfTpeGa2U2d9qGyqSUksNS5/ON+bnoNvhVdm76bH3t8IDZjwI+kW4C
-	 hAsH4QMWfPx2/iCFM/mlvmw6b/GB/cM3wsYshcck0gVHLNPKTc3QDJFISRilpuB0NSg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=cixtech.com;
-	spf=pass smtp.mailfrom=cixtech.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.132
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022132.outbound.protection.outlook.com [40.107.75.132])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792749196;
+	b=NuLOEEM/AybEYHEx5+O+8b84q9SA0XbByHUYJ0SHXf2njxuPcCwzWkxWlhxxkd5zCHJT
+	 Pk+p7XLVG2P+BCfTPgQL9RDnz7r6HwDZa1HNs65YoGnOr0WRWnv1yCIclizImWW4cX6W5
+	 HgQONmsQV7S8aXk3zVuPC6qjPQDUYaAKljMV2qlLXhtNeMoKuuDhPKbA3N8XnNnueycNs
+	 rrzTgVHUwHxQM3JMS3WRrOdasviqaTvV/Qs2trH/IvLDh1kIyNA1BiTH31YHpdtlDQJbt
+	 KLS5uBI/UIi4ginEzwGFsw2GCHVPNZOIIITaPl8s6DT6Ise2bYhrE+OWRdXIpkU2zwQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792749196;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=OoHuobr1W4Hg3djaW5xGjOqp6InpOS/re/XPCAIVT8Y=;
+	b=GCCsEN2lMt9xZxZ+l4iNzsx7PkriVsAJsfwYhd2kgNPKO1T0l1PYI7H3PvTsGpHhbPZ/
+	 WssDsJpv9USHBCeA4zeqs3b6YiL+ovxGURqWqs6O3BTdiiEWFwT7Zga099OHjQEDmmSyM
+	 XGpswBpjXto16ksNT1q65qp0jEkCJKPLdMh7WStoFNaRoiq8xLAXjOSRrW0g/SUcFy8nc
+	 zqT7x9lse+0CE67DEuyzOEnq+DVZkJghMJUIT/ebfYu2up0JEx80HIBrZTxqEUdpmieeG
+	 nKqrs/P7a3q5/6++P1yWMAUc4kX3F6jY035Q4Od2l85li9dE1ssOSciq7ZubdxbYaiA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QT27aicZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE41606AD05;
-	Fri, 23 Oct 2026 09:30:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AE41606AD05
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V4/G51JrWYXveLLOw4MonyVAx1Jhv9fcRDgEmWBVnJ2gyiGWKlUWZuI6LvLIaRWJRDiP8Syl5NpMTPiNHigbNH38AoO5oQvyqCD5xOVWzK/1amyCAIOQVoPmS1Yo8RxzkGk2+sqTAxowLxbjPfXBguPDwKrBR40ecmKoUDozQyoKPVLjCbPGLjwkkkHmwIA2FEToMXTu+7UGJLVv4BQZM1glHDwb7SHL5E5mqb88WqtftZbbfcXDXnLZ3NSoMhjhhp6IxTXPKmi9fojTSTPRgXrhwJimUzCd8g7XISOTdmoAzWhds3z3shXcjqkD1QLD3YA0Bm4Y5WxWWKcLvhvwEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h3Psh2Ln79XIDklh26NgvODE+n0LcA6EzIdhkNIDRFg=;
- b=CuT7/qhl7fSs6kH9i+vAprHHU97ZC90bGb6DFKwIpbaAhCpwNYHRQFCgXASwqg3QcenCJrJty611mil8U0tp70yV4jOeRjws8ArnPktIth6pRSbBGOPyoRaDKXkkmhRCoOzfTXkd1UQU1PFgnjRRh0m6g5dS1c8R5Gp1hW8JXaqJWzjucVeZvwB1RO6cLmBfAXXBbTbDCiS/Y9XFsYBGFmk3xJkIZSrlt8lmB5AqiJOrBwjQt+lLScVlOUHWaWMaVFM6A2PC3tEyp4De/Bzyqg8wSmFjPZ2VMoNFVqV5q674DozMe1DtNaDnQHlW/12fCJR8scG1/PqyuTde9ha3UA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
- dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
- not signed); arc=none (0)
-Received: from SGAP274CA0009.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::21) by
- TY8PR06MB9176.apcprd06.prod.outlook.com (2603:1096:405:3aa::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.2; Fri, 23 Oct
- 2026 09:30:48 +0000
-Received: from SG1PEPF000082E6.apcprd02.prod.outlook.com
- (2603:1096:4:b6:cafe::8d) by SGAP274CA0009.outlook.office365.com
- (2603:1096:4:b6::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.19 via Frontend Transport; Fri,
- 23 Oct 2026 09:30:48 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
- 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
-Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- SG1PEPF000082E6.mail.protection.outlook.com (10.167.240.5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.546.15 via Frontend Transport; Fri, 23 Oct 2026 09:30:47 +0000
-Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id E73FF40920E2;
-	Fri, 23 Oct 2026 17:30:46 +0800 (CST)
-From: Jelly Jia <Jelly.Jia@cixtech.com>
-To: vkoul@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	robin.murphy@arm.com,
-	sboyd@kernel.org,
-	bmasney+clk@redhat.com,
-	jbrunet+clk@baylibre.com
-Cc: devicetree@vger.kernel.org,
-	Frank.Li@kernel.org,
-	cix-kernel-upstream@cixtech.com,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Jelly.Jia@cixtech.com,
-	linux-clk@vger.kernel.org,
-	joakim.zhang@cixtech.com
-Subject: [PATCH v1 3/5] dt-bindings: dma: arm,dma-350: Document dma-channel-mask
-Date: Fri, 23 Oct 2026 17:30:43 +0800
-Message-ID: <20261023093045.3248630-4-Jelly.Jia@cixtech.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261023093045.3248630-1-Jelly.Jia@cixtech.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AB2606A31F;
+	Fri, 23 Oct 2026 09:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QT27aicZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746BD1F01825;
+	Fri, 23 Oct 2026 09:53:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792749195;
+	bh=OoHuobr1W4Hg3djaW5xGjOqp6InpOS/re/XPCAIVT8Y=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=QT27aicZiX03/slaIx3sg8DyFkR2Fpt6WJazyoZfS9dPeCvpgXptJPJeH4LFDBQ2z
+	 gI7Id0vohALWjOpLItCuJeNYjdh5Nxin3uQm+9Y0ZbrWbpGF09cXQDBk5hhDIc8/Yc
+	 LwCl7ntVpgv2MFDqWRjEYJaDSW7yXBUQLcTptnrpr90VcAxIuBD7d2LEXVaekBrxSn
+	 RQ+LMsEUQPBEK7lVaUByROlvgb+1DgDCXOIR4TaCS7saumi5y7ySe2LlX7fqLdEiRd
+	 IocGAhSTSkXuAzASfdBextvzqVC+sxPXGbSTttqwXBYXF3e/Ji8DPWjYDi36osz/Jb
+	 uBoODXnTCw5bQ==
+Message-ID: <sashiko-outbox-182643@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v1 2/5] clk: cix: Handle Sky1 AUDSS DMA interrupt gates
+ as an irqchip
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Jelly Jia" <Jelly.Jia@cixtech.com>
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261023093045.3248630-3-Jelly.Jia@cixtech.com>
 References: <20261023093045.3248630-1-Jelly.Jia@cixtech.com>
+ <20261023093045.3248630-3-Jelly.Jia@cixtech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 23 Oct 2026 09:53:15 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -110,62 +60,293 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E6:EE_|TY8PR06MB9176:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: c24db466-c210-4e00-5d7b-08df30e8523a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|36860700016|7416014|376014|82310400026|56012099006|261009223027099003|18002099003|10067099003|22082099003|261021121427099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	WriKSUVKDZ1GW3bCyYFGSPu1L6zA5reXEsASkpjUasKOcWLUxfRbYN+8FzW5FJCZxjYhQIyjT4CKvC6an3Dz0nSRrOZLjEF6KuFHNJJqdMeoc1JHIbFSQ02Ct94UXX5xJjVGNffxCxD855tW6ofnBLCN6yCB6mbT3QaZ44dhZBNTkRX1DmoqhliUH8Ie3YVHNbIxkbfWkU7an1SNt9QduDoTRyAs/ur5R/xNsAOjh9oZCJtcfXfR2DMIqDCxnDFuEkcPRvRQM3AfLTQS6hGLasiCXrAp9G5HAf1nIxed43nYcg17rWl7dfnleN4DDVBMCIRUV5ZUa1U7AkOwT0ccN/8lizdELlo+d6A0NHbzaR+nsGQVc62t6sXMBKEG2bLcaC6APm1ZQjMXpJZZ5L+GR+w9UosFEXLQ6mSIs/NE+qt8Kalq90Dcyxb99/K4H+9+B+7DyLNKddc/TI/jRzWrurjEAcu0kjSp/HJksPvVJ6cWQJjGr2CWkqCfgA711CQR24IbQI5fOtXZFX7bRO26dZZeHRX8BXCEC9GllwZD+5YmQnu8fqITsQvg5+p5ykCY1fty+cPKif0kBngMysb+NPifIHHr6yqUz96hoiU5WT6Bm6oshF6PNIbbX8S5yIMymzvZVFZYl1m2zGk3Ym7cWixxu43hVmQ9WglafgtKwAMe+8OVBU9AF1C4VObPBm/410YOUwh8h0r+IbgRycDXUg==
-X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(36860700016)(7416014)(376014)(82310400026)(56012099006)(261009223027099003)(18002099003)(10067099003)(22082099003)(261021121427099003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	hgLZkeYiECfVMmGm7RPMR6CujAf/NZDQXIHEArw8gYb7Et1Wlrgyk2xLtSopMELRMnmFxTYQbWnmUg+117FGqyJgnRHjUOPr8r3SWkthRlMTZPhzZgoVvEpaeqEHycRf/DY2zxq/14AwPykUwQ/ze+RYCIK/hVG9ZOUGA3uavsOQ3WkOjS29BmL82fWO74UYJfYeB7JXQs8kxxFc5HOj8dFCdFofCl9+tQEgxueUL2nvv+lV2d/ZGp/FoHIWXT53Ymrdxp+7/U3qyRl80Y9OsMZ24Cxr+dAWr2nu3t1cU5lVI2O+m1hpqlBEKkIsKpuDvS/oln+Z3ucMARTrbLmMKklJpuWIM0lzxY8+hjdUBdnxw4rsad4tgz7O1FhCkXxm8FuMYGOJxCChr7qfomZ2p9EZBFH5O9A+x1Vz2uJDRh03JUtQElBwTz2zYFZXr+54
-X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 09:30:47.8369
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c24db466-c210-4e00-5d7b-08df30e8523a
-X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SG1PEPF000082E6.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY8PR06MB9176
 
-Some DMA-350 integrations reserve channels for firmware or another
-processor. Allow the standard dma-channel-mask property so firmware can
-describe which channels Linux may use.
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
+- [High] clk: cix: unclocked MMIO access in sky1_audss_irq_teardown() and I=
+RQ callbacks
+- [High] clk: cix: invalid wait context in sky1_audss_irq_handler() and mas=
+k callbacks
+- [High] clk: cix: missing irq_dispose_mapping() in sky1_audss_irq_teardown=
+()
+- [High] clk: cix: level IRQ storm with handle_untracked_irq() on lazy IRQ =
+disable
+- [Low] clk: cix: missing select IRQ_DOMAIN for CLK_SKY1_AUDSS in Kconfig
+--
 
-DMA-350 implements at most eight channels, so one 32-bit cell is enough;
-limit the property to a single cell.
+commit d366d15da9922d1961ddd48a45f4b621f1a77320
+Author: Jelly Jia <Jelly.Jia@cixtech.com>
 
-Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
----
- Documentation/devicetree/bindings/dma/arm,dma-350.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+clk: cix: Handle Sky1 AUDSS DMA interrupt gates as an irqchip
 
-diff --git a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-index 43279878207c..98e7bb651210 100644
---- a/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-+++ b/Documentation/devicetree/bindings/dma/arm,dma-350.yaml
-@@ -43,6 +43,9 @@ properties:
-     description:
-       Optional reset line, where the integration exposes one.
- 
-+  dma-channel-mask:
-+    maxItems: 1
-+
- required:
-   - compatible
-   - reg
--- 
-2.54.0
+This commit adds an irqchip and linear IRQ domain to the CIX Sky1 AUDSS clo=
+ck
+driver to manage the DMA-350 channel interrupt gates in the INFO_AP_IRQC
+register. It installs a chained IRQ handler on the shared parent GIC line a=
+nd
+registers a devres teardown action to clean up the irqchip.
 
+> diff --git a/drivers/clk/cix/clk-sky1-audss.c b/drivers/clk/cix/clk-sky1-=
+audss.c
+> index e096b8121df30..789cbba631d16 100644
+> --- a/drivers/clk/cix/clk-sky1-audss.c
+> +++ b/drivers/clk/cix/clk-sky1-audss.c
+
+[ ... ]
+
+> @@ -928,6 +939,110 @@ static int sky1_audss_clks_enable(struct sky1_audss=
+_clks_priv *priv)
+>  	return err;
+>  }
+> =20
+> +static void sky1_audss_irq_mask(struct irq_data *d)
+> +{
+> +	struct sky1_audss_clks_priv *priv =3D irq_data_get_irq_chip_data(d);
+> +
+> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
+> +			   BIT(d->hwirq), 0);
+> +}
+> +
+> +static void sky1_audss_irq_unmask(struct irq_data *d)
+> +{
+> +	struct sky1_audss_clks_priv *priv =3D irq_data_get_irq_chip_data(d);
+> +
+> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
+> +			   BIT(d->hwirq), BIT(d->hwirq));
+> +}
+
+[Severity: High]
+Will calling regmap_update_bits() in sky1_audss_irq_mask() and
+sky1_audss_irq_unmask(), as well as regmap_read() in sky1_audss_irq_handler=
+(),
+trigger an invalid wait context warning under CONFIG_PROVE_RAW_LOCK_NESTING
+and sleep in atomic context on PREEMPT_RT?
+
+In drivers/clk/cix/clk-sky1-audss.c, priv->regmap_cru is initialized via
+devm_regmap_init_mmio() using sky1_audss_regmap_config:
+
+    static const struct regmap_config sky1_audss_regmap_config =3D {
+            .reg_bits =3D 32,
+            .val_bits =3D 32,
+            .reg_stride =3D 4,
+    };
+
+Because sky1_audss_regmap_config does not set .use_raw_spinlock =3D true,
+regmap initializes a non-raw spinlock_t for map->spinlock.
+
+The IRQ core invokes .irq_mask and .irq_unmask while holding irq_desc->lock
+(a raw_spinlock_t), and sky1_audss_irq_handler() runs in hardirq context.
+Acquiring the regmap spinlock_t in those paths violates raw_spinlock_t
+nesting rules. Should sky1_audss_regmap_config set .use_raw_spinlock =3D tr=
+ue?
+
+> +
+> +static struct irq_chip sky1_audss_irq_chip =3D {
+> +	.name		=3D "sky1-audss-dmac",
+> +	.irq_mask	=3D sky1_audss_irq_mask,
+> +	.irq_unmask	=3D sky1_audss_irq_unmask,
+> +	.flags		=3D IRQCHIP_SKIP_SET_WAKE,
+> +};
+> +
+> +static int sky1_audss_irq_map(struct irq_domain *d, unsigned int irq,
+> +			      irq_hw_number_t hwirq)
+> +{
+> +	if (hwirq >=3D SKY1_AUDSS_DMAC_IRQS)
+> +		return -EINVAL;
+> +
+> +	irq_set_chip_data(irq, d->host_data);
+> +	irq_set_chip_and_handler(irq, &sky1_audss_irq_chip,
+> +				 handle_untracked_irq);
+> +	irq_set_noprobe(irq);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct irq_domain_ops sky1_audss_irq_ops =3D {
+> +	.map	=3D sky1_audss_irq_map,
+> +	.xlate	=3D irq_domain_xlate_onecell,
+> +};
+> +
+> +static void sky1_audss_irq_handler(struct irq_desc *desc)
+> +{
+> +	struct sky1_audss_clks_priv *priv =3D irq_desc_get_handler_data(desc);
+> +	struct irq_chip *chip =3D irq_desc_get_chip(desc);
+> +	unsigned long enabled;
+> +	unsigned int hwirq;
+> +	u32 val;
+> +
+> +	chained_irq_enter(chip, desc);
+> +
+> +	if (!regmap_read(priv->regmap_cru, INFO_AP_IRQC, &val)) {
+> +		enabled =3D val & INFO_AP_IRQC_DMAC_MASK;
+> +		for_each_set_bit(hwirq, &enabled, SKY1_AUDSS_DMAC_IRQS)
+> +			generic_handle_domain_irq(priv->irq_domain, hwirq);
+> +	}
+> +
+> +	chained_irq_exit(chip, desc);
+> +}
+
+[Severity: High]
+What happens if a child DMA interrupt is disabled via disable_irq(),
+disable_irq_nosync(), or suspend_device_irqs() and that channel later
+asserts its level-high interrupt?
+
+Because sky1_audss_irq_chip only provides .irq_mask and .irq_unmask (without
+.irq_disable or IRQCHIP_MASK_ON_SUSPEND) and sky1_audss_irq_map() does not
+set IRQ_DISABLE_UNLAZY, irq_disable() performs a lazy disable: it marks the
+interrupt disabled in software without calling sky1_audss_irq_mask(), leavi=
+ng
+BIT(hwirq) set in INFO_AP_IRQC.
+
+Unlike handle_level_irq() and handle_fasteoi_irq(), handle_untracked_irq()
+does not call mask_irq() when an interrupt arrives while disabled:
+
+    void handle_untracked_irq(struct irq_desc *desc)
+    {
+            raw_spin_lock(&desc->lock);
+
+            if (!irq_can_handle(desc))
+                    goto out_unlock;
+            ...
+
+When the disabled channel asserts its level interrupt, sky1_audss_irq_handl=
+er()
+sees BIT(hwirq) set in INFO_AP_IRQC and calls generic_handle_domain_irq() ->
+handle_untracked_irq(), which returns immediately without masking the gate =
+or
+clearing the source. Once chained_irq_exit() unmasks the parent GIC line,
+won't the level-high parent interrupt immediately re-fire in an infinite ha=
+rd
+IRQ storm?
+
+> +
+> +static void sky1_audss_irq_teardown(void *data)
+> +{
+> +	struct sky1_audss_clks_priv *priv =3D data;
+> +
+> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
+> +			   INFO_AP_IRQC_DMAC_MASK, 0);
+> +	irq_set_chained_handler_and_data(priv->parent_irq, NULL, NULL);
+> +	irq_domain_remove(priv->irq_domain);
+> +}
+
+[Severity: High]
+Does sky1_audss_irq_teardown() leak mapped irq_desc descriptors and leave
+dangling pointers when calling irq_domain_remove(priv->irq_domain) without
+first disposing of existing mappings?
+
+When a consumer calls platform_get_irq(), irq_create_fwspec_mapping() maps =
+the
+child virq through sky1_audss_irq_map(), setting desc->irq_data.domain to
+priv->irq_domain, desc->irq_data.chip_data to priv, and desc->irq_data.chip=
+ to
+&sky1_audss_irq_chip. Platform consumers do not call irq_dispose_mapping() =
+on
+unbind.
+
+Calling irq_domain_remove() directly without iterating over the domain's
+hwirqs and calling irq_dispose_mapping(irq_find_mapping(priv->irq_domain,
+hwirq)) leaves those virtual IRQ descriptors allocated in the global IRQ tr=
+ee
+with dangling pointers to the freed domain, freed priv, and (if built as a
+module and unloaded) unmapped sky1_audss_irq_chip memory.
+
+> +
+> +static int sky1_audss_irq_init(struct platform_device *pdev,
+> +			       struct sky1_audss_clks_priv *priv)
+> +{
+> +	struct device *dev =3D &pdev->dev;
+> +	int ret;
+> +	int irq;
+> +
+> +	if (!of_property_read_bool(dev->of_node, "interrupt-controller"))
+> +		return 0;
+> +
+> +	irq =3D platform_get_irq(pdev, 0);
+> +	if (irq < 0)
+> +		return irq;
+> +
+> +	priv->irq_domain =3D irq_domain_add_linear(dev->of_node,
+> +						 SKY1_AUDSS_DMAC_IRQS,
+> +						 &sky1_audss_irq_ops, priv);
+
+[Severity: Low]
+Can this fail to build under CONFIG_COMPILE_TEST=3Dy when CONFIG_IRQ_DOMAIN=
+ is
+not enabled?
+
+In drivers/clk/cix/Kconfig, CLK_SKY1_AUDSS depends on ARCH_CIX || COMPILE_T=
+EST
+and selects AUXILIARY_BUS, REGMAP_MMIO, and RESET_CONTROLLER, but does not
+select IRQ_DOMAIN. Because irq_domain_add_linear(), irq_domain_remove(),
+irq_domain_xlate_onecell, and generic_handle_domain_irq() are only declared
+when CONFIG_IRQ_DOMAIN is enabled, should CLK_SKY1_AUDSS select IRQ_DOMAIN =
+as
+well?
+
+[ ... ]
+
+> @@ -1110,6 +1225,13 @@ static int sky1_audss_clk_probe(struct platform_de=
+vice *pdev)
+>  		goto fail_pm;
+>  	}
+> =20
+> +	/* Tear the irqchip down before the runtime-PM cleanup disables clocks.=
+ */
+> +	ret =3D sky1_audss_irq_init(pdev, priv);
+> +	if (ret) {
+> +		dev_err_probe(dev, ret, "failed to set up AUDSS DMA IRQs\n");
+> +		goto fail_pm;
+> +	}
+> +
+>  	pm_runtime_put_sync(dev);
+> =20
+>  	return 0;
+
+[Severity: High]
+Can sky1_audss_irq_teardown(), sky1_audss_irq_mask(), sky1_audss_irq_unmask=
+(),
+and sky1_audss_irq_handler() access INFO_AP_IRQC while the AUDSS CRU is
+runtime-suspended with its NoC reset asserted and parent clocks disabled?
+
+In sky1_audss_clk_runtime_suspend(), suspending the device asserts
+priv->rst_noc and disables all four parent clocks:
+
+    reset_control_assert(priv->rst_noc);
+
+    sky1_audss_clks_disable(priv);
+
+There appear to be three paths where INFO_AP_IRQC is accessed while the CRU=
+ is
+in this unclocked/reset state:
+
+1. At the end of sky1_audss_clk_probe() (and at fail_pm), pm_runtime_put_sy=
+nc()
+suspends the device immediately if no consumer clock is prepared. Likewise,
+during driver unbind, __device_release_driver() runs pm_runtime_put_sync()
+before devres_release_all(). Because the device is already runtime-suspended
+before devres teardown starts, registering sky1_audss_irq_teardown() after
+sky1_audss_clk_rpm_cleanup() does not keep the CRU clocked when
+sky1_audss_irq_teardown() calls regmap_update_bits() on INFO_AP_IRQC.
+
+2. In sky1_audss_irq_init(), priv->irq_domain is created without calling
+irq_domain_set_pm_device(priv->irq_domain, dev). As a result, requesting or
+freeing a child DMA IRQ does not runtime-resume dev before
+sky1_audss_irq_unmask() or sky1_audss_irq_mask() accesses INFO_AP_IRQC (and
+any gate bit written while suspended would be overwritten by sky1_reg_save
+on the next runtime resume).
+
+3. In sky1_audss_clk_pm_ops, pm_runtime_force_suspend() and
+pm_runtime_force_resume() are wired to normal system sleep callbacks via
+SET_SYSTEM_SLEEP_PM_OPS() rather than noirq callbacks, so the CRU is placed
+in reset and unclocked during dpm_suspend() while the chained handler
+sky1_audss_irq_handler() and child IRQs are still active.
+
+Should the driver set irq_domain_set_pm_device(), ensure runtime PM is acti=
+ve
+around the register write in sky1_audss_irq_teardown(), and move the system
+sleep callbacks to noirq?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023093045.3248=
+630-1-Jelly.Jia@cixtech.com?part=3D2
