@@ -1,16 +1,16 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.162.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792752766;
-	b=TPqnglXy1eKQwdZrWAtW9YYaru7Lzgrrj//KT164XwicZjvy8fJlg4rWuQvYBSvhYJTM
-	 ZHo3TFEuX93xQJX9cSo/MSUwSfydGhwf5FYpt0OWkijGGAYuoq6xwAJ0KsUq1QT/wyBVV
-	 g1VQbLLKmnTr1neG8ytE9lFmH/pgnY/epxFT9R0ks4KfAVChDUrcRFi10Cs76GKd3Urnv
-	 PzHRmEof2k0qmLY9CIVMIt7VyvuOsZxVH4/tTN40PshAJcNWTlp0FcDElsR62Jjeh7lOd
-	 YxetVQVNLw67vMBd5AL2CQibaIDQURsFYyyCt+yBEMzACWYsvFceWDpMr7c/HVsjxwQ==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.35
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792752886;
+	b=zxeQy88bgkZqoG5S1ueHUSBgc0LMU777LhEjp5uJ9wk14kPMRonPY46RalHzsH74jYjg
+	 /ltk/0QpbO5mfJCQRuZDVeTwuLdqm9zTqsb8P/IQYz6ImW0xvCxMnaZlWHNbB9fI9t/aw
+	 8pHbHKmkZ40nXSCwS7URtfKpMBdBKjIqcckVxgki4d2Ci/udtkg2jsijmDh4/2SQ5Iykl
+	 0yCA3UwFPnOej+tUQyjZ6uI546ELxAink5g7zOfPOBXuaFrEWf0l5LsfWOOaGHYN4amC+
+	 TjatbHFnJvJ2bfwjr/MdqOkSFDhG8eFpTnRTwvppm2oZ27Pj9EbRFHLDX65iXXl0NlQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792752766;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1792752886;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:Subject:Date:
+	 Message-Id:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
+	 X-Change-ID:To:Cc:X-Mailer:X-ClientProxiedBy:MIME-Version:
 	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
@@ -24,71 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=pQaOnaZcTVvEme48jC747zRkwN9tYKHxM1eQHEK2nGA=;
-	b=XnUxcPZEnPZm5ioxAQI+f/IIGI9YBvswcHYcaRhn0tnUyNpRJYyqFcXnRl0Cyy1MUUGM
-	 End/FjC1Ljl/ksDPTGl7kXXuGMfBuLP9YuGtT2omndCDZdeNH8EWWBz43anEEYJb4LfRD
-	 krc7cQ2zXNLOyYPFXCDqIkZJtoDJhEobnVv8Fc3NslVqL7aJObM6DwSckVGbT9FTCXj7n
-	 +rwrnFQ36619DgtUszuvjk6bJXv7oF3Yhypdwhi/9+6veC9r9SbhQMnNRA9lhn7IBWUw9
-	 0YJswWRS97jt6KLRNmiVW19IvoniYT/yBzdlCRAaPmqbZryQHs/wnbvh4qOg0S/4QpA==
+	bh=Ul0u/GQi3VvzX7tQWIu+IItp/g7LoJ/Bx6nWXbSsD7E=;
+	b=qCC6xWatd47MHtnu6jsilpPzRImdxc1BlFGSB3VPMeN96WBlTiYoB+x6bK4XURKQWnPT
+	 LHbB9VYdw1pKgmDWTnT68yhKsmN2veXMs7kKfxXL9fnFejFk7FAvMFxVKzORL4AF2F4Mx
+	 9alX1OOXI0TXL6hi7Zj5WMF9dIfTrPasr6ePcvFPqu5w/qwBg3XJKmqBs0eWLwRm0Ud3u
+	 QfO6DBSyXppUMWddJBMEk1KLlAv7y/9TlZpVKSH4H53DSUK00d0m2FOWoW3sL9WsBhzIv
+	 Op2Oopy8JyGZ6xQDWPCS1APua1PrPx4S0obDNgA5HUJEGRlioqxss/8+178Qb4HyH3w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=oQUvbmzm;
-	arc=fail smtp.remote-ip=40.107.162.18
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013018.outbound.protection.outlook.com [40.107.162.18])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=ZPzK4HK4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.35
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013035.outbound.protection.outlook.com [52.101.72.35])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E8E606A326
-	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 10:52:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4E8E606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5B0606A31B;
+	Fri, 23 Oct 2026 10:54:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1F5B0606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=oQUvbmzm
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=ZPzK4HK4
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kQHem3nrvNDXWM3CJHjnxsTDhZKWv44U1R4PGC4VpDLB1LxbX00GvyU8BpNe5dolAkDDl3eZMLRyaAS9MH62E0qEcwm8dxHL0EF9PPXCS4z48yvfD3G6GO42SyLt8MKKT/M53Hq6pOZFd9zeASegHUJF1ou9+HZPWNlMUh6M+TaaH3MXZZubcmyGX0Jk3WwfgvCH9vj8Ds8MQlxVIj3c+HgqTKC5BFjG5DyYvZqhbAiGPVQD1lD7NMNOm4s+LKe0v3dRnqjoKU6D3856b8o1BuWwbNYszyz50cp7xuofQKDe10WKDGGtCPoWg0xbIJ/55/3IVwtAMu+RVwBWyDr9Sw==
+ b=GzpbnFjsGC0k8noq4yT83+VC+gpxaSMuM9amjMMuk/4nxTIhDxyWKy4i6RCkVkz6jcwLANxwpZ6yL0xA/f9Jxkinp05KM4n6p4n+049a1gTV662DknH6pAHEZFL/DT5OcoEEzVN1DQa4EtKji9gMGu3InuTkmfzzmEDQ08RJT3zqTjeC7BTMzk+HdWC1uwB4stWelM/UCS6t2tRiDm7+sEjSl8kpFjIpR7mZqtJw/qK1Vdpy0TGq9GOUyp8hrswbn6M/Gopu3Jc+aNqFpe/89xcsU1VYfD6bI720AckuN4NxFgIBUgKnE3aidYqEKlX/NAtH+4bHWx2few8ksZ7pZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3ROlvWVofN9R2ubw1i9wE9RkoLmGMd3RnJgd+1VD6tU=;
- b=LPdtYrBjvu1cklZDq0UTL19f233ElX/jvoOdqmu9dX5C6PMRYHLBdSx8sAXtlECM/XXmG/cB1Pa6h2azcyhh2FtSD34Qaux8ZbAFk1GeRWTa3bP/UN1tZkXOagwmqH3Ddb4lPpox05YujGRWtGVKfmZxrl9FpRdYphypNOV6/3/vIxaihY5CM5fi15cEyvRIabK47sO53tmcsEFi4Ab7IDCEzBpy2RQAAowBPdx/WasF8WuSu99k9Fu3Ua2M1S/t/TmzeNtmMuJhw9WyUDuTWjjEV7nhYmeKAILng5mtIJDe149/OK+xRadMkRB/XJt3L/RF2Qol6gFvsiti8pjfdA==
+ bh=Ul0u/GQi3VvzX7tQWIu+IItp/g7LoJ/Bx6nWXbSsD7E=;
+ b=ZJpnr20eEpQHBPqvIaCRDUKewEt2NJm9E1bLVJqmoAgGvL7WfakrfUpY/oGqMcTYwwqxPx1uNZxCEzsXLgeiJ0YLPF/fGbqZDtOz6HLCly6G3J1epSb7EJbEr9pVkB7ZQIsoVvrDqLc9FvLELpGJ4zkHRbqZws4PeIbY4ug6gXARC55BjzlCsUTVPY3j+irhSbsXPDtQEw9qSu325URUWkiMOZrOuA0JlkCs6kmjrCSnFpYy1LKEossTx/PXnJNvj88N95bGqNgCJl+UFpRq0iNqrhMV81jKbn5BKFYIXaZknfP2M7BeVrfNPUSZW9/mvwcPDT3bFppbh/8msKYs5A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3ROlvWVofN9R2ubw1i9wE9RkoLmGMd3RnJgd+1VD6tU=;
- b=oQUvbmzmmDRqnYoA5k8nxvHYvZh2EvYuWtK79w6yaHngYKUYSIDrSGAxqO8jGfV41MF22UaiXYU6ayQo+wZF8ZOzhUGmxuoH9ehmcbeJbH0+7yFeLFoTlGDBxVujqN4Cohkm1XoaeM4gZrjeOfKegpF9ndVv1FfI8nXR18iwZ2A7PFijm+5xWFe1+yRbkGGugtNWM8aFCW+LnWteryQxHeV1R6qdd9jLAJu+3E8BVvf9dyKdiGidlryD55+5GLzLO5F9+UY6vsHZBOYA36s0Lwxpd21yWA4QHIZbke5UN2kqEXUbieubxSILFh7V6xSwXBSd5Sg1FZOwkU+n25tMlQ==
+ bh=Ul0u/GQi3VvzX7tQWIu+IItp/g7LoJ/Bx6nWXbSsD7E=;
+ b=ZPzK4HK4T+76p5SiOeIYt3GN1qS6yJXejoJYchmlIsJTHGMy/u7c31jZJmIlWztPk6Wo06qbPYJh/EXQm0d2wIiKATMBAHdIJAApeGQzPDYaNwuNgwS2pqMIb9rPE8NNEo1PC33nbp/FXWpXisg2YtqNgIupBOVSci17tkAfz2DSvFdpk8303eCg3w/WWJsZxE7/R9xNwRAOdQUvAvoZK0FbvzDTxxA+cbrgwu+AxSUxbIkLlzRoBIogPuSkafjkN9taCL4ivDDciXQAhrn7AiIqnrToiVrbhWcSUjmYQMl5DKW3Qyq0CRtZlFJXJAOQwMmLmnco2BjkTxGHT4CUvA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from VI1PR04MB5807.eurprd04.prod.outlook.com (2603:10a6:803:ec::21)
  by GV4PR04MB955734.eurprd04.prod.outlook.com (2603:10a6:150:402::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Fri, 23 Oct
- 2026 10:52:42 +0000
+ 2026 10:54:42 +0000
 Received: from VI1PR04MB5807.eurprd04.prod.outlook.com
  ([fe80::3da4:2827:d637:37de]) by VI1PR04MB5807.eurprd04.prod.outlook.com
  ([fe80::3da4:2827:d637:37de%4]) with mapi id 15.21.0546.017; Fri, 23 Oct 2026
- 10:52:42 +0000
-Date: Fri, 23 Oct 2026 18:57:18 +0800
-From: Joy Zou <joy.zou@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, imx@lists.linux.dev, vkoul@kernel.org,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH v6 4/5] dmaengine: fsl-edma: add runtime suspend/resume
- support
-Message-ID: <ats9joQ5d/Je3ONA@shlinux89>
-References: <20260701-b4-edma-runtime-opt-v6-0-354ff4229c00@oss.nxp.com>
- <20260701-b4-edma-runtime-opt-v6-4-354ff4229c00@oss.nxp.com>
- <20260701094312.B0EE61F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260701094312.B0EE61F000E9@smtp.kernel.org>
-X-ClientProxiedBy: MA5P287CA0300.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:21e::13) To VI1PR04MB5807.eurprd04.prod.outlook.com
+ 10:54:42 +0000
+From: joy.zou@oss.nxp.com
+Subject: [PATCH v7 0/4] add runtime suspend/resume support
+Date: Fri, 23 Oct 2026 18:59:07 +0800
+Message-Id: <20261023-b4-edma-runtime-opt-mo-v7-0-418e53c5f9b7@oss.nxp.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPs922oC/yXMQQ6CMBBG4auQWTtJSwTUqxgXLf3BMWlL2mJMC
+ Hen6vJbvLdRRhJkujUbJbwlSwwVw6mh8WnCDBZXTa1qe3XRmu2Z4bzhtIYiHhyXwj6ycvpqANs
+ 5C6rxkjDJ5ze+P/7Oq31hLN8b7fsBpRjFBXoAAAA=
+X-Change-ID: 20260811-b4-edma-runtime-opt-mo-0d19aeeb5dbe
+To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
+ Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Cc: Joy Zou <joy.zou@oss.nxp.com>, Frank Li <Frank.Li@kernel.org>, 
+ imx@lists.linux.dev, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Joy Zou <joy.zou@nxp.com>
+X-Mailer: b4 0.15.2
+X-ClientProxiedBy: SI1PR02CA0040.apcprd02.prod.outlook.com
+ (2603:1096:4:1f6::7) To VI1PR04MB5807.eurprd04.prod.outlook.com
  (2603:10a6:803:ec::21)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -101,293 +102,180 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI1PR04MB5807:EE_|GV4PR04MB955734:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9fcc1ba2-ace3-4368-eb84-08df30f3c0fe
+X-MS-Office365-Filtering-Correlation-Id: 1725284e-a946-4f8e-01f5-08df30f40abe
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|261021121427099003|6133799003|18002099003|10067099003|22082099003|261021123027099003|4143699003|11063799006|5023799004|261009223027099003|261022105027099003|56012099006|261022075727099003;
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|261021121427099003|6133799003|18002099003|10067099003|261021123027099003|261009221227099003|11063799006|261009223027099003|261022105027099003|56012099006|261022075727099003;
 X-Microsoft-Antispam-Message-Info:
-	xui0rJLmkx5n9FMoYiiop55q4X6TEF0NMnww0eBxepJwy4ecYvD8z9lJd6zfaenQUBWHjY4eiiDqSkg7ewd8McrKREnCcRAsS6AsFro+cRGPARf3q7YDpDKzRI41ddNpn1WnNDYqyZFLrsMvTMnwyCHAfGop3eEg2DMy8mn5PXgKRvztW8YDC5C9nYRxmsOQz8GvgPE7RQCTiUoT7jsuZb2pnR1YwlfxSgWILt2kZAjYMXMVFMkQB64lW4wjHCGD1TZM/A6r5pylRLPOjctu5T+AZ44WXD/JkZBChHqsdgcX8GP/vvppqC/espy9dnvlGRlJdUfqL6vuZ83xOGCFrmQ2ZW6nEeU9+EY9757VJkQ8ZJeUfMyZpj1LxgMaCHvD0wX+CmDUB6ZlzeYcYVkeG+Rlvf2WoGIvZpeLLmUj6Fj0bkUc9pgGzcprZamNQdv0WpYVC+n2ynad5u897BXk2mNWliAjFfz9x7tLfb+/Nz8uTC1iqPadix9Z3LImJMJdcyJn6bEqID+VsrDXORiS0PjlJYzy3DSX7XwkzD5S5U23qsntBJxJOXavS0DcIA9MlfCTcAxHDQFVJ2aD4GtLoQd4rbRIS564c6f2dZAHHPo=
+	JtiHiUWOLtNePoUzthp5Flxf7zd6qn5GhK91PMvnotTPzjIBcCes81KfaNBV2pW9PNB77y5Ul2wDaVfEW36842NTn+ifl5eCzCvY2xdih+zxu6BOF9EDQtngyYBOA0Ke9g9n8x6zQJF/lEXfe00TvIGM/iEo+o3e2jiWrEDK27NwaHN4vmXqf36EsJWlRKuiQp+wGf0IXsOlF0K1IL1pn2UaGjQNKzPkvMTa2ONzidGKz5VeT04tpIaSLRI2UB65odCRZ4sPzoIDgD0brxpBiDjHYjjND5qwwfS0rlB9vzeTW59UDry+WWlRTEafD4WJv3q4TSUVO0dx9awVcXdTi1IUmDRvFD2gP1bPmUYoUA/VwhumBiz4bYdn4/1GsEfv5kYfMCfKK6owlYL13+/Sv85uKkjlbOIsxnHsvmbZFFUr1m2wR8oxyilHWmgc75lBmjAcsSo6FG92AES4jIiCJUlINy9gZGDPz1s27XuKW64wSHsHjxcbjT+Isyz516ktVKxQ1t/6EnSVya0eICO68PpM+4K2V77uidML3V+LxiKhE7cTLRX+StWfkXGo0pZdH1TyDlcWtIRCUe9fkzHZxrVMaibabz7tmVXzQNEwwKD1DaMJ2O0vVps9B/5YzILj
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5807.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(261021121427099003)(6133799003)(18002099003)(10067099003)(22082099003)(261021123027099003)(4143699003)(11063799006)(5023799004)(261009223027099003)(261022105027099003)(56012099006)(261022075727099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5807.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(261021121427099003)(6133799003)(18002099003)(10067099003)(261021123027099003)(261009221227099003)(11063799006)(261009223027099003)(261022105027099003)(56012099006)(261022075727099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?cnUcAGVAs5Tx9lwT3mJ6ipmb/MvI+PsLhTJ5UQ4koTeMVq7gVVrdP9KwD3?=
- =?iso-8859-1?Q?kFEoHRQHpLuXu+YMo/F94spCWqr76/oY0hWFAm01nLIq7laaCGTAkaCZtf?=
- =?iso-8859-1?Q?7pHQQFgeZSQvLkwipdhB/GShZigUC5vQtwv1IueQ7Rcg2hq763UHcDfswD?=
- =?iso-8859-1?Q?BVBCviEZKJ4riPRgTPeEocIRUSrvX64s8llrrFXloa/aMOkuQ1ZbrvcYjR?=
- =?iso-8859-1?Q?Dnxd5GMgEapi8S18QKv3/mOW6BvIfoOPUZoaKTHLWe6QIRRMvcymuv4wSm?=
- =?iso-8859-1?Q?ZsJh/yifOTsqEHN4HK4TPHClfTpXza9d/cAHqmaNEcoT59cMYdZ6tpyqe/?=
- =?iso-8859-1?Q?eTASaU3A/uMtk9+zfFzZzE8Pu92ROYPWZmHd3VZbYZpJHo0OS4X0DA6BCt?=
- =?iso-8859-1?Q?guN05N+YmoaSSd/qT4Rm8/v2I+5cy6tLlMXpqh307DGfKwKNfX5h9kH+bi?=
- =?iso-8859-1?Q?U7IaNLFJa6vwmtMuMtSe9VFZumBdJrqstsrooCTE557l78IyP78TqQZNUY?=
- =?iso-8859-1?Q?/e1v/LnPgXSqNhYN0xNAFKN76F1whmrEqomjWLfEu2BqiG7WvCqUFEG8rg?=
- =?iso-8859-1?Q?HH7mcfizcv/nXKkqIyfOutQImjHaCZ1YgakXZFO6kszZTCx5JMTV6JYV8/?=
- =?iso-8859-1?Q?cDv9lfZMn9UZnUaRSg3UWA+jhJKgMXcpaBkBTA2DCeGz9ZngLQK+zXzRkh?=
- =?iso-8859-1?Q?0qPR16WtO0dYXBfLviIQEzndo58yOu1X1zXQjt+ZBbjMKQMPvJJdkitiar?=
- =?iso-8859-1?Q?12/1z5Q1cDBzzof9D3j4An81nvIoES89uRXxIb9aMNXPupjnbSv9x7/Kmv?=
- =?iso-8859-1?Q?VsZHoxBJRXjXfCZeD9v+7/w/KYtbAh38so4FnxFU/piUOTSUVMETFY5tT6?=
- =?iso-8859-1?Q?oeQeFjwJOMSC22G8mTKrcoG8etegsU0qnrg+3xQRToHfJD/pVs/wwGaPCi?=
- =?iso-8859-1?Q?h6LheJRptRPbJ5twtvNelgMbbc793AlFiLWiI/kWJgbGKygVkywLX7Cf1g?=
- =?iso-8859-1?Q?znav4OHTsqxNvRzELnSE/zXs9tMX26mKC5gMxRASd8lpZQ+xLAibrXbqqS?=
- =?iso-8859-1?Q?lrUiaTzBWItkwcx6Nw5PdSPu61f/Olm40Gi9L9jYGQmwqCU/6iaVf917jQ?=
- =?iso-8859-1?Q?8kyPVSvQPLb8ZnAbK2TmZSDbPNPHXqKUSN1OTVqNANPWKoBZzcbQkVtdXN?=
- =?iso-8859-1?Q?ihBBGrjFSsOqA8ebLMiX1/uLP3BBbgHcGolGIPGnHevgkkne9UkzOy9aLt?=
- =?iso-8859-1?Q?PxUA20R1hmKppsvmTTwVlFVvWZma/ClP+P4G2okcb8hQs2SrjloWIi/IBg?=
- =?iso-8859-1?Q?q35n6Ar7SRBxgwZf8/rOKhDvM4fO894VeFkGJsMzj3cQ1fQQ8LAEadQgYR?=
- =?iso-8859-1?Q?NYb6iifHAKQPMiXynPp0XNenHBwu4qWJ/h1/Th6ZOdv+dzMJ8TlMxP5c3a?=
- =?iso-8859-1?Q?MxNzyS+kqvHR0Iv5H30KSf9MxdOFGyaapkixA/HkBfdBCzYxyeErh44mxz?=
- =?iso-8859-1?Q?01EZlD7j11lkS29LJ7WsB0OPQ3BnA+7RXF/osuSkCRGT42hLwobj/iQLeU?=
- =?iso-8859-1?Q?Eu8eArVGkfkVALgRfFnGw3/7+LsMyE+RVYAdDYA3lUsZTJKiCQjCoY0r+u?=
- =?iso-8859-1?Q?8HHmcSfktCxfdpyiGRk/kFpR/MDPbN7OwwcQ5IfjUDNtCeh4XhvU3AVHLH?=
- =?iso-8859-1?Q?1V+wZfYkHUijHHULn8clwutloL5DIdSrV6h+3Gw7rHovH5lJvrh9qKDruo?=
- =?iso-8859-1?Q?QCZa+oPGexPxlcvZrJUB+2MiAJ+hDZ5qGPQ3Xt2k6CI3RSA6JAV+HDeDzu?=
- =?iso-8859-1?Q?7buVDpbVP40MvOpqO74HbbfT8iCgXX8cW3IzQh6DEkJyX4HfvqNI?=
+	=?utf-8?B?UktRN2tXZE5tNlI0VWNOWU53TW5oMzdYdTJpZVNOU3RmaWxUdHBvanZPK2dq?=
+ =?utf-8?B?NmpqdjhzcjRvU1oxVlQ3SG5nbUVibHh1a09wZWdpekRxQzV1VUNjTk1WN2hE?=
+ =?utf-8?B?YlQ2RFpGMzVrRUNlNnV4RWlwejBlUUd1OVhXT0dKaXQzeExSSkk2NHEvbEpM?=
+ =?utf-8?B?ZTUxQlRQUFlJQ1BUWGdBU2hUWm9UN0JmWjlEVGJnNWo5R2U0TjAxWjVINWhu?=
+ =?utf-8?B?bXpHd3VzUjVHeDgrdXpjdEgza3RXRWoza0hCdzF1dFRYOGFEMVQ5am9taEJw?=
+ =?utf-8?B?RkJkN2hMWVVuZXZPMlI3QU1lVk4zZmY4Z0w2TVVIRGxudEhaT0xmWEN1Ny9K?=
+ =?utf-8?B?c2ZDYzhQUktJQTFDbDZsWTZvMk1lUkJoc2NCOUZlbTh1QVh4VE5HcU5GODhF?=
+ =?utf-8?B?Q0lQUk5DZTBpaE1hekh5eVcxRjNtc1RKLzhTeWdKYmNYdXhQOTBNMFBzOG9P?=
+ =?utf-8?B?YXhNeU9WK3dQWE41UDluLzFoNnE1UjRTcXNDR2ZsY25Jb0Fhdm1QN1FuTnov?=
+ =?utf-8?B?eEtMUEFEbzBiZUxsUURPaVFmWmwzTUs1emdsTmJ6djFCTTdyUmE3SFlHaFk0?=
+ =?utf-8?B?dlNDOXhxbFpnUVhUaXZ0cWRmaHVRSGpQYW8valFrUitGbmdueVB0ank3bVcr?=
+ =?utf-8?B?RzVoNk9reWxSd2lOeXVybnZDWWFXWjR3UWtpMjRTQzJVa0dOV1JaODIvUlB6?=
+ =?utf-8?B?bk8vVzNXbXRqSE5lNnJKSnBUQlhKWVh6ZW4rYThHSGROSldlekpOdzBEVis4?=
+ =?utf-8?B?U2puNXZHdFhrV0ozREJHcEF6eUkwamxWNlh1WTNjVVp0azEvdlBPaHNOZlJm?=
+ =?utf-8?B?N245MTNGc2I2WDB6KzZHQ0xzVEY0cXFCejBYRm9KZWpMVGo1b1BOaytHSXQw?=
+ =?utf-8?B?anI1QUdFVXNpYjhTN1NmazIrRlZyRkYwNkk3UFpQN25EYlAzVkV2SDlESjBj?=
+ =?utf-8?B?dExDU1NVbklnZkZQanFTTVkxSE5kRzhJTEpTTnRHN0doYXJyeEIrcDAya0FQ?=
+ =?utf-8?B?VzNKdlV2RnQ5UmJKbnptSjFxNGRpOEJDYloyeEE3ZnZ1V1pZSkVMTlFXUzdJ?=
+ =?utf-8?B?RmlyQTFyQ0FZekFGSWdIMjNJaWFYTXBOMkYwdnpuMTVuemJIMXhWVTJUVmdE?=
+ =?utf-8?B?N3NQY3VRelN6emRqU3ZsMjNqTHlpNUp0b2F2SjhwZmhpWHR2b2VFR1FKTnJp?=
+ =?utf-8?B?cVlabkxFRFl0L2RZcm05RFRFVnlEVEluVm1jTWJmcVY1N2tCTmZJU1NTb3RI?=
+ =?utf-8?B?a3FwRVJQQW1xMnRldUlYazBXMDJoZmYzNGJEdnJhcXlWZjdYK1ZKYVQzajAr?=
+ =?utf-8?B?b2FZTUNIMy9DcXQ0a3M4YU5xL1V4MS95aVR3QzV4NTVLL09kN2swTTU4TWNp?=
+ =?utf-8?B?WGVHVFdQNVlONjhWTUNxNXFkcjZiR2VieDJLVWVoZDNhMEFxVXUxNmVwRm15?=
+ =?utf-8?B?WFRtT0gvNzZiTWozc3RKcFhFbGl5SDVFaHMrcWxpSVc5WUgvTlBnUmhBcGUv?=
+ =?utf-8?B?dTZHeENWSkoyV2V0UTFUZVZlQ2p3dWJhMWRQYXJOdDkyb2xuNnNPWG8xRWdj?=
+ =?utf-8?B?YWJZU3ZWWkhvTzMvMmU5bmVkUFpaQVhtdExNMjJPM0psSFZyUG8xd3BZa0Np?=
+ =?utf-8?B?MEoyWjFUNlRqNmJXcHh6QVA4ZEFBK0orbURqS3J1b3UvUGJqN1AvVjhrY251?=
+ =?utf-8?B?aEdnWmMxU1VmSm9pUHY0MHhmRTFuOU5aZTQ5VXVGODVCV1dSSXNDcC9kY0ty?=
+ =?utf-8?B?YlNHZStLZ3FPbzIyb0ZWcmpLU0FqQSs0dmlIRXRUajl6Ym1ud0xaS21LZ3BN?=
+ =?utf-8?B?YmQwaFk3T3U3a3BmQUM0MGsxTlk2UTJDQkd0OTJ3Q1RoN1phU0NaNHVSREFu?=
+ =?utf-8?B?b3NjMzlpZXRsdXVFZFNvc2FBWXJXcXFuaWVsVTh5VTdtU09TUE9aVmpuS0tD?=
+ =?utf-8?B?MWZ6dkdFRkp3ZE5XbkEyZDdxaHFrSmJIVXdKTG1MZXdtUm45eDVxN2pUQjQw?=
+ =?utf-8?B?alFaN0F0bFA1dENvdjBsQk9tSitMUTRXd09ncDBGbnJId09QQXdBalY3NzVm?=
+ =?utf-8?B?MlpaNis4WFpFSjRTeitrTGZJaXdob3hiOXNoSXhEaHRHQ1ZTWFkwREt4RFc5?=
+ =?utf-8?B?QVpGSGxvcGdjMDVreUNmS0NGNGREK0k2TW8zZ3R2NG52akMzWmlaenBEYnFV?=
+ =?utf-8?B?c1pja1ZoWjQzSmc5cHVXOWNXMDk5YjE2RVJSK1g1d0gxaHhJcHVieEFHc3BG?=
+ =?utf-8?B?Z2FiQ3FsMXU1Wlp5cStXMnBkbDFzZ0hwOWpSWnlGS2xBOVJvc21qeVI5OE9H?=
+ =?utf-8?B?UDVnbzZ0bWNObnB3d0VpUC9lODBmcCs1VFNZYjhLNDRxallHQ0E1a1ZVVW1u?=
+ =?utf-8?Q?9hPWNdhFEtXAmbSQKQ2ZE1RO6RI25AlQU5gn4?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9fcc1ba2-ace3-4368-eb84-08df30f3c0fe
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1725284e-a946-4f8e-01f5-08df30f40abe
 X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB5807.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 10:52:42.0492
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 10:54:42.4181
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4mvWoah3Ahw7r5Jja+O15lBciQ9aAjLwkpaCeZT406fr5vKzJKtt538iJvGR10647fQdsZYPUYjs77idBBQki3tq//AdxEOJuKeBh110BQrQSeHRpFS2z/D+tCa15QSI
+X-MS-Exchange-CrossTenant-UserPrincipalName: hc+INDupBoe+48rpYkoWSuzziZ8fnumXKSV5ZaXlyijCcUWCjRgR0bISmTA9PrOiFkLreKQiLLW030MNuNHxe8XsOB7AgNwG+PB6el4BJDTOLaX/hz8mGCXQ2UAgDPUy
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR04MB955734
 
-On Wed, Jul 01, 2026 at 09:43:12AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Skipping hardware interrupt acknowledgment for inactive PM channels leads to an unrecoverable infinite IRQ storm.
-> - [High] The channel runtime suspend callback calls `synchronize_irq()` with a negative error code and fails to synchronize actual per-channel shared IRQs.
-> - [High] Accessing a freed `device_link` in `fsl_edma3_detach_pd()` due to devres teardown order inversion.
-> - [Medium] The DMA engine and its channels are exposed to clients before their IRQs and runtime PM domains are fully initialized.
-> - [Medium] Runtime PM usage counters for the engine device and channel power domains are permanently leaked on multiple error paths during probe.
-> --
-> 
-> commit a5800ff547600d938eb443a21684d6291b4658d1
-> Author: Joy Zou <joy.zou@nxp.com>
-> 
-> dmaengine: fsl-edma: add runtime suspend/resume support
-> 
-> Introduce runtime suspend and resume support for FSL eDMA. Enable
-> per-channel power domain management to facilitate runtime suspend and
-> resume operations.
-> 
-> > diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-> > index fe02b68d75fd3..3518dfb4292d2 100644
-> > --- a/drivers/dma/fsl-edma-main.c
-> > +++ b/drivers/dma/fsl-edma-main.c
-> > @@ -37,15 +37,27 @@ static irqreturn_t fsl_edma_tx_handler(int irq, void *dev_id)
-> >  	unsigned int intr, ch;
-> >  	struct edma_regs *regs = &fsl_edma->regs;
-> >  
-> > +	if (pm_runtime_get_if_active(fsl_edma->dma_dev.dev) <= 0)
-> > +		return IRQ_NONE;
-> > +
-> >  	intr = edma_readl(fsl_edma, regs->intl);
-> > -	if (!intr)
-> > +	if (!intr) {
-> > +		pm_runtime_put(fsl_edma->dma_dev.dev);
-> >  		return IRQ_NONE;
-> > +	}
-> >  
-> > +	pm_runtime_put(fsl_edma->dma_dev.dev);
-> >  	for (ch = 0; ch < fsl_edma->n_chans; ch++) {
-> > +		struct fsl_edma_chan *fsl_chan = &fsl_edma->chans[ch];
-> > +
-> > +		if (pm_runtime_get_if_active(&fsl_chan->vchan.chan.dev->device) <= 0)
-> > +			continue;
-> > +
-> >  		if (intr & (0x1 << ch)) {
-> >  			edma_writeb(fsl_edma, EDMA_CINT_CINT(ch), regs->cint);
-> >  			fsl_edma_tx_chan_handler(&fsl_edma->chans[ch]);
-> >  		}
-> > +		pm_runtime_put(&fsl_chan->vchan.chan.dev->device);
-> >  	}
-> >  	return IRQ_HANDLED;
-> >  }
-> 
-> [Severity: High]
-> If a channel is runtime suspended (e.g., due to a hardware race or a spurious
-> interrupt), the interrupt bit is never cleared because the loop evaluates
-> pm_runtime_get_if_active() <= 0 and continues to the next iteration.
-> 
-> However, the function ultimately returns IRQ_HANDLED unconditionally. 
-> Could returning IRQ_HANDLED without clearing the hardware interrupt flag 
-> trick the interrupt controller into thinking the event was serviced, 
-> potentially leading to an infinite IRQ storm?
-> 
-> This same pattern appears in fsl_edma_err_handler() and 
-> fsl_edma3_or_err_handler().
-> 
-> [ ... ]
->
-Add the following comment to the code:
-A racy or spurious interrupt for an already-suspended controller or
-channel is an extremely rare corner case and highly unlikely in practice.
+Clean up driver FLAGs and introduce runtime suspend and resume support for
+FSL eDMA.
 
-> > @@ -691,6 +711,36 @@ static int fsl_edma3_attach_pd(struct platform_device *pdev, struct fsl_edma_eng
-> >  	return -EINVAL;
-> >  }
-> >  
-> > +/* Per channel dma power domain */
-> > +static int fsl_edma_chan_runtime_suspend(struct device *dev)
-> > +{
-> > +	struct fsl_edma_chan *fsl_chan = dev_get_drvdata(dev);
-> > +	struct fsl_edma_engine *fsl_edma = fsl_chan->edma;
-> > +
-> > +	if (fsl_edma->txirq)
-> > +		synchronize_irq(fsl_edma->txirq);
-> > +
-> > +	if (fsl_edma->errirq)
-> > +		synchronize_irq(fsl_edma->errirq);
-> > +
-> > +	clk_disable_unprepare(fsl_chan->clk);
-> > +
-> > +	return 0;
-> > +}
-> 
-> [Severity: High]
-> Are we synchronizing the correct IRQs before disabling the channel clock?
-> 
-> During probe, global IRQs like fsl_edma->txirq are initialized to -EINVAL 
-> for SoCs using per-channel IRQs. This check evaluates to true because -EINVAL
-> is non-zero, causing a negative error code to be passed to synchronize_irq().
-> 
-> Additionally, this code doesn't synchronize the channel-specific shared 
-> IRQ (fsl_chan->txirq). Could this allow a shared IRQ handler to execute 
-> and access hardware after the clock is disabled?
-> 
-> [ ... ]
-> 
-Modify the condition to verify that fsl_edma->txirq is greater than 0.
-> > @@ -891,6 +917,64 @@ static int fsl_edma_probe(struct platform_device *pdev)
-> >  		return dev_err_probe(&pdev->dev, ret,
-> >  				     "Can't register Freescale eDMA engine.\n");
-> >  
-> > +	ret = devm_pm_runtime_enable(&pdev->dev);
-> > +	if (ret)
-> > +		return dev_err_probe(&pdev->dev, ret, "Can't enable eDMA engine PM runtime!\n");
-> > +
-> > +	ret = pm_runtime_resume_and_get(&pdev->dev);
-> > +	if (ret < 0)
-> > +		return dev_err_probe(&pdev->dev, ret, "Failed to resume eDMA engine!\n");
-> > +
-> > +	ret = fsl_edma->drvdata->setup_irq(pdev, fsl_edma);
-> > +	if (ret)
-> > +		return ret;
-> 
-> [Severity: Medium]
-> By calling dmaenginem_async_device_register() just prior to enabling 
-> runtime PM and setting up IRQs, do we expose the channels to clients 
-> prematurely?
-> 
-> If a client allocates a channel concurrently before runtime PM is enabled, 
-> fsl_edma_alloc_chan_resources() will invoke pm_runtime_resume_and_get(), 
-> which could fail with -EINVAL.
-> 
-Move dmaenginem_async_device_register() after runtime PM is enabled.
-> [Severity: Medium]
-> If fsl_edma->drvdata->setup_irq() fails here, we return the error code 
-> directly. Does this leave the pdev->dev usage counter permanently 
-> incremented from the pm_runtime_resume_and_get() call just above?
->
-Move fsl_edma->drvdata->setup_irq() to the end of probe() and use
-dev_err_probe() on failure.
-> > +	for (i = 0; i < fsl_edma->n_chans; i++) {
-> > +		struct fsl_edma_chan *fsl_chan = &fsl_edma->chans[i];
->
- > +		struct device *chan_dev;
-> > +
-> > +		if (fsl_edma->chan_masked & BIT(i))
-> > +			continue;
-> > +
-> > +		chan_dev = &fsl_chan->vchan.chan.dev->device;
-> > +		dev_set_drvdata(chan_dev, fsl_chan);
-> > +		dev_pm_domain_set(chan_dev, &fsl_edma_chan_pm_domain);
-> > +
-> > +		if (fsl_chan->pd_dev) {
-> > +			fsl_chan->pd_dev_link = device_link_add(chan_dev, fsl_chan->pd_dev,
-> > +								DL_FLAG_STATELESS |
-> > +								DL_FLAG_PM_RUNTIME);
-> > +			if (!fsl_chan->pd_dev_link) {
-> > +				return dev_err_probe(&pdev->dev, -EINVAL,
-> > +						     "Failed to add device_link to %d!\n", i);
-> > +			}
-> > +		}
-> 
-> [Severity: High]
-> Could the teardown order of these stateless device links result in a 
-> use-after-free on probe failure or driver unbind?
-> 
-> Earlier in probe, devm_fsl_edma3_detach_pd is registered as a devres 
-> cleanup action before the DMA engine is registered. 
-> 
-> However, the stateless device link is added here with the channel device 
-> (chan_dev) as the consumer. On unbind or probe failure, devres actions 
-> execute in reverse order:
-> 
-> 1. The DMA engine unregisters, destroying chan_dev.
-> 2. The driver core automatically purges and frees all device links attached 
->    to the deleted device.
-> 3. devm_fsl_edma3_detach_pd executes and calls device_link_del() on the 
->    now-freed fsl_chan->pd_dev_link.
->
-DL_FLAG_STATELESS means the device link will not be automatically released and
-must be explicitly removed with device_link_del().
-> > +		ret = devm_pm_runtime_enable(chan_dev);
-> > +		if (ret)
-> > +			return dev_err_probe(&pdev->dev, ret,
-> > +					     "Can't enable eDMA channel PM runtime!\n");
-> > +
-> > +		if (fsl_chan->pd_dev) {
-> > +			ret = pm_runtime_resume_and_get(fsl_chan->pd_dev);
-> > +			if (ret)
-> > +				return dev_err_probe(&pdev->dev, ret,
-> > +						     "Failed to power on eDMA channel %d!\n",
-> > +						     fsl_chan->vchan.chan.chan_id);
-> > +		}
-> > +
-> > +		ret = pm_runtime_resume_and_get(chan_dev);
-> > +		if (ret < 0) {
-> > +			return dev_err_probe(&pdev->dev, ret,
-> > +					     "Failed to resume eDMA channel %d!\n",
-> > +					     fsl_chan->vchan.chan.chan_id);
-> > +		}
-> 
-> [Severity: Medium]
-> If pm_runtime_resume_and_get(chan_dev) fails here, we return directly.
-> Does this leak both the engine's usage counter (pdev->dev) and the channel 
-> power domain's usage counter (fsl_chan->pd_dev) acquired earlier in this 
-> function?
-> 
-Replace pm_runtime_resume_and_get() with PM_RUNTIME_ACQUIRE_IF_ENABLED().
-> -- 
->
+Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
+---
+Changes in V7:
+- replace devm_clk_get_optional() with devm_clk_get_optional_enable() for
+  patch #1 and #2.
+- replace devm_clk_get_optional() with devm_clk_bulk_get_optional_enable()
+  for patch #3.
+- replace devm_clk_get_optional_enable() with devm_clk_get_optional() for patch #4.
+- replace devm_clk_bulk_get_optional_enable() with devm_clk_bulk_get_optional()
+  for patch #4.
+- use PM_RUNTIME_ACQUIRE_IF_ENABLED()/PM_RUNTIME_ACQUIRE_ERR() guards to
+  replace pm_runtime_resume_and_get() and the manual error handling for both
+  the eDMA engine and per-channel devices.
+- move dmaenginem_async_device_register() after runtime PM is enabled.
+- move fsl_edma->drvdata->setup_irq() to the end of probe() and use
+  dev_err_probe() on failure.
+- check "irq > 0" instead of "irq" before synchronize_irq() in
+  fsl_edma_chan_runtime_suspend().
+- add fsl_chan txirq and errirq synchronize_irq() check in fsl_edma_chan_runtime_suspend().
+- add comments explaining the pm_runtime_get_if_active() checks in the interrupt handlers.
+- dropped patch #5 since this is a pre-existing issue that will be fixed in a separate patch.
+- Link to v6: https://lore.kernel.org/r/20260701-b4-edma-runtime-opt-v6-0-354ff4229c00@oss.nxp.com
 
+Changes in V6:
+- add synchronize_irq() before disabling the channel clock in fsl_edma_chan_runtime_suspend()
+  per AI review comments.
+- add pm_runtime_get_if_active() in interrupt handlers to ensure registers can be accessed
+  correctly per AI review comments.
+- remove manual fsl_edma3_detach_pd() call when device_link_add() fails. The devres
+  framework will handle cleanup automatically on probe failure per AI review comments.
+- clear fsl_chan->pd_dev_link after freeing the device link to prevent potential
+  use-after-free issues per AI review comments..
+- move fsl_edma->drvdata->setup_irq() atfer edma engine pm_runtime_resume_and_get().
+- replace devm_clk_bulk_get_optional_enable() with devm_clk_get_optional()
+  and clk_bulk_prepare_enable() in order to use runtime PM for power
+  management later.
+- replace devm_clk_get_optional_enable() with devm_clk_get_optional()
+  and devm_clk_prepare_enable() in order to use runtime PM for power
+  management later for patch #1 and #2.
+- add new patch #5 fix use-after-free issue per AI review comments.
+- modify the commit message for patch #1,#2 and #3.
+- add Reviewed-by tag for patch #1,#2 and #3.
+- Link to v5: https://lore.kernel.org/r/20260513-b4-b4-edma-runtime-opt-v5-0-1e595bfb8423@nxp.com
 
+Changes in V5:
+- add three new patches, two of which replace devm_clk_get_enabled() with devm_clk_get_optional_enabled(),
+  and the other convert to clk bulk API.
+- remove unnecessary flags FSL_EDMA_DRV_HAS_CHCLK and FSL_EDMA_DRV_HAS_DMACLK.
+- remove redundant clk_disable_unprepare() due to the pm_runtime_put_sync_suspend() added.
+- use devm_pm_runtime_enable() to replace pm_runtime_enable() and add return value check.
+- add return value check for pm_runtime_get_sync().
+- replace pm_runtime_get_sync() with pm_runtime_resume_and_get().
+- replace DMAMUX clock handling with bulk clock API for edma engine runtime suspend/resume.
+- remove dev_pm_domain_detach() when device_link_add() fail because the fsl_edma3_detach_pd()
+  also call dev_pm_domain_detach().
+- remove device_link_add() DL_FLAG_RPM_ACTIVE flag and pm_runtime_put_sync_suspend().
+- add clk_bulk_disable_unprepare() for clk_prepare_enable() fail in fsl_edma_runtime_resume().
+- remove the extra space before RUNTIME_PM_OPS.
+- add skip channel comments for system suspend.
+- add clk_disable_unprepare() for dmaclk at the end of probe function.
+- add clk_bulk_disable_unprepare() for muxclk at the end of probe function.
+- Link to v4: https://lore.kernel.org/imx/20251017-b4-edma-runtime-v4-1-87c64dd30229@nxp.com/
 
+Changes for V4:
+- fix a typo dmaegnine/dmaengine in the subject.
+- Link to v3: https://lore.kernel.org/imx/20250912-b4-edma-runtime-v3-1-be22f7161745@nxp.com/
 
+Changes for V3:
+- rebased onto commit 8f21d9da4670 ("Add linux-next specific files for 20250911")
+  to align with latest changes.
+- Remove pm_runtime_dont_use_autosuspend() from fsl_edma3_detach_pd().
+  because the autosuspend is not used.
+- Move some edma channel registers initialization after the chan_dev
+  pm_runtime_enable().
+- Add clk_prepare_enable() return check in fsl_edma_runtime_resume.
+- Add flag FSL_EDMA_DRV_HAS_DMACLK check in fsl_edma_runtime_resume/suspend().
+- Link to v2: https://lore.kernel.org/imx/20241226052643.1951886-1-joy.zou@nxp.com/
 
+Changes for V2:
+- drop ret from fsl_edma_chan_runtime_suspend().
+- drop ret from fsl_edma_chan_runtime_resume() and return clk_prepare_enable().
+- add review tag
+- Link to v1: https://lore.kernel.org/imx/20241220021109.2102294-1-joy.zou@nxp.com/
 
+To: Frank Li <Frank.Li@nxp.com>
+To: Vinod Koul <vkoul@kernel.org>
+To: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Cc: Frank Li <Frank.Li@kernel.org>
+Cc: imx@lists.linux.dev
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
+---
+Joy Zou (4):
+      dmaengine: fsl-edma: use devm_clk_get_optional_enabled() for channel clock
+      dmaengine: fsl-edma: use devm_clk_get_optional() for DMA engine clock
+      dmaengine: fsl-edma: convert DMAMUX clock handling to bulk clock API
+      dmaengine: fsl-edma: add runtime suspend/resume support
 
+ drivers/dma/fsl-edma-common.c |  14 +-
+ drivers/dma/fsl-edma-common.h |   4 +-
+ drivers/dma/fsl-edma-main.c   | 330 ++++++++++++++++++++++++++++++++----------
+ 3 files changed, 261 insertions(+), 87 deletions(-)
+---
+base-commit: 3d229ce89862b8e82d71a9e11d6f840ca272a6d6
+change-id: 20260811-b4-edma-runtime-opt-mo-0d19aeeb5dbe
 
+Best regards,
+--  
+Joy Zou <joy.zou@oss.nxp.com>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- Sashiko AI review · https://sashiko.dev/#/patchset/20260701-b4-edma-runtime-opt-v6-0-354ff4229c00@oss.nxp.com?part=4
