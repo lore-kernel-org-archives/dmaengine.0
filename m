@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792725298;
-	b=RcWUEFtDj8EQA+De23yp7Aoa/9pWX3LAuYtX/BAQgfbWAi71ynjx6qlXy8pd3XJ48uBm
-	 5VZQDDAh2WEjPosgieMBR1C6GRMmytlTAwgR5NXc74OHF3Y2M6o0/ffIjmocxR11Bx/Tf
-	 IqIytlPHCGmoS4SqDJGuht+CNs4HCIxZ6O4r5qXH6J65gv4JRIWpQbym8tfh2yxAPvy/F
-	 J62iWgJWPPBXS3Xqbml9tlci4nN6guXox5KNLW9nVbiRVrl+I8M6H1jh9lrKsu09usWVz
-	 ejENZKEIC+tkSAQrlFZ9Ruv0mda04LQA5yBgfp4rYMVd2vdV19H0qmKH6C+CAUgxQ0w==
+	t=1792725300;
+	b=BT2sdTLtA6p+bNz0O5VbqWFzIxmLeuqNxYZZx7SOQ119ak6Y8icUmwrG9NWneQIeROrG
+	 WzApUbocdc3n9/Rso5Yd+5uA49hn923s0ZjXr63/NXi+e9/jqO10BlDE6+KqdAUOH1ZTD
+	 rmxQLs9Ek3J5sOKQFD6DnhicE5wu2Tt/wfA1odtigK/dblGXwCoJccY3gHv6YTa2lZOCP
+	 9dB2dzQSJuMbiel+GgCSX11eeDDXNA5WPlI7GKiUUee8PtLiyT+GVePrLGX+5/QFmHcGz
+	 7LqxfKWXsxk1XbAoyukTw/QoUWNjyVG1nj8eKzP0b+0ZijRH+11+KcXeYipMO0CFbbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792725298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792725300;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
-	b=kKu8JDv9y/scTDjYK3Fxcw+1rCn0ywTfAsgarmm6Evo6uLLK0owaUR6INimR8X+JmK/L
-	 D81u3RoYV+30nNGsTTnYVupRzN2154EO2CYQD5nB1PeQbwG0YP1EOztGNM4qrrbmz+eE6
-	 XyoQHCr3NPuJC+9IY2QkPt7K7O3CGHZD9ngnwDtnUG74E14LCvaBG3E6upfZSSRPM+oxm
-	 H/eo7Y9/8yZVjm8Ne38QxV1rK287vkOj3qqSQy/JZ03K/vzb4VJD1uHrw5Avle6oZIcsW
-	 MDMNk9Axu2B9HAcpkkWNdUdzh8d4X6txtA217nJQiPXmF3MuXaIC9a7YRdi9b+qBi1g==
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
+	bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+	b=mxORlsaBF80IBaGZPDzPU8IWmqM4Of1CR9Umxpmjnpa54EwySnO5R0/sgC/YYG7ZoObO
+	 at4yGzSOBGUk9O7aBfCZ70hBBISxUi/1u1Sj74RALa8bmvzI2Y/b7xTmrBRxXLj9Vb9q4
+	 RKF4rUlGKfCOZS+AxZiDVHb1fK1DZVV3Ys1KrYYCIUT/ZFe7aNVlF1jxeouNyT0WRBu8G
+	 73If4TGfkh6Y6qqVrJoGYaWoFk6joQ55ODxpNrd/cJo4g7hTaUfAPTzsyDct7G1gtK1WC
+	 6nYjnlpQKT6Mtu4suedt93mYj21/QqYK0WK87GClijmeyXc6axKWQKGVYx1YgxKzB6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CRVuB6t8;
-	arc=none smtp.remote-ip=209.85.210.54
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FSyRO3Jm;
+	arc=none smtp.remote-ip=209.85.161.44
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F2C606A31F
-	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 03:14:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55F2C606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4A9606A32A
+	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 03:14:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB4A9606A32A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CRVuB6t8
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-82109f51565so170284a34.2
-        for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 20:14:58 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FSyRO3Jm
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6ddef424972so270141eaf.3
+        for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 20:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792725297; x=1793330097; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
-        b=CRVuB6t842ohZa4yXpdvYfpQQB+JZ8vtj27hDtwFjjfsa5UNrk86UJADeCMRsIjxqa
-         w3B0jVWLPBZUayQWGSrcT2aVnDgXTItnaxgoVlpFR0TkgL78lUqWRpOcvw636S8Q09BG
-         yR4yZSeT1NkERpWwOviqLHXzV3/8WJ67nFc+NIOzQ9INUQHzivATserbBlCItdspp0t9
-         nYl1KBzbtHGGlRvN5XPXIpomcPCI9a2tQ9/MXBWOYl1Dwfw62iIR875KX9VjUuKyvNoY
-         OiHfKDksxaJAduJszJFW28kswLh+IGB637b2ztelcdgk89wOHROuaxIiA5NcCXkKEzX5
-         RhYA==
+        d=gmail.com; s=20251104; t=1792725299; x=1793330099; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+        b=FSyRO3Jms3E9Jf5Dvp+KldFAHs19x0a+sFC/yWDyB3yn3kmGAue8c2MNODXgnd+1SE
+         Kf9iKg2wgxcIyrj6joHsbP5FxKhYPs0dsVywMuUaVGjIbTR6kfXSBMgLc+kHGHgyEnwB
+         T2LGDmzDdsJGUaue5PPUx/8Gqulcr5a9xlYQT18Q9MANOrkCrsjqzYIQqo1//UJ8h6Ue
+         mQ21DclioF0qM1wDcIUIDmmDDrOMXIU6aE/TrK/b4pNfr+qORTJ+E7DJIigEcua2lpb1
+         8as7S4Tn0my/DkJltl1xKcBAVAO4/owwBfpfV3wSpoXNR/SuIthpbwOdW0KVpGuhBwZ7
+         DGRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792725297; x=1793330097;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
-        b=Ik5uwqvmUfq+Um6w8iGM5pZlSU0Sp8j+xkkoyPFkZj0kTY99W8jTtvyLdMXGmJk8nS
-         IZSi9fU21gfaycKGehlYSIc+bAxtuJ3f2KMwup6A5/liXi7w79pHPwMOgj3g1akVYBsF
-         uDYXTzNeQSpGElUi+HOpTutxi5B4L9dHMjLWi7661NaAhHQeXPNUt8wJmfp8uLqzGQlj
-         7CENsNNNmMuZUSVM/mcU4WeAIepevefHUlgStEVTZdWXnW3Qy6MVdMFt9WFxhCFeFw5n
-         YpxinOhVK5CJ3bp/OZjO2rfp4hAPjEiznsQTjXa3h2rgUwtzjz+c2BdWVCI0rVvfSinP
-         xPng==
-X-Forwarded-Encrypted: i=1; AKwUvBw+50Y4xJgHkZda+QWmqMsXIxj4VUI0Yo+id1NYK+iVIt3L/qyFsgGJTkddOqdfIW7qR4b4Dsrs58o=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI/rwXtFtUcSP6RO10wFjPEeCRwNOOmVBqb9j+GImAKaMuf2mMl
-	6SeJlik4aJhUjifyPN09yqI/jFGhddyHuiurclmEziJOQHdK+Q1bRxYe+R/P8dzj
-X-Gm-Gg: AYBFou31mZsKPNPcDofnT8ZITeFKWELxP3mUF4jjjzdGHLgvpBVraU2tHYAue0+UaIT
-	6ZbdJcvcHNILKACSWhVDC0CZvhVRXLibUCudiyG1YAWBERZkqStNZcwGd6ed5yWtTu8pMvKGmtE
-	1W0SPBHWoQOCAjLGISMRZPr/oU+JErMRZytAJPsGD4zMnTRbYVKISCr8cQGYn7WH54UiZhh1NRm
-	to5nDJI7f/ub0/TQFt3MI3WMKLAHccmkmycq12FVY5oEYOq9J2SLDKKfHXtoDa8l/6nWi15OsLf
-	BdyzMoXg7F0zO5fUoqy+g5WKkdcbt09nCBnheIu7neCEP9AxrDpJmv1dQGv3/vPPzjqV9po23gQ
-	7lZGKla6PA9t7w8HYARS/e5O8lw46QS3bhLQ7TWLS5Y+Tq4UtKSv+gJHLBKK0w72ntkE6f+aGxr
-	nWIjuxMCxA2TZy96E5M82L6186FFsfc/lVfWu9u32eanGyP4YChXAn9b8z1CIYmMm4Q3Wqb3K5R
-	HVEbfJnOancTVd256oQFwHduGWkxHPOaqt+rylWQ1rEHtki+FoHbgByjjTLYlMNfUoq25MGWQlf
-	ZvS8hdqRouS/rW1Fkk0cXA3VLiPSdTSFJC7bWGw7yvmeSzgy4ZPDRRpif67TwW+mEIuDnJCQ3T6
-	mLDfWID1ghaowyrKg1vJaGxuUUD/pl3Fr7pkAa7umfNzu/X4H0fF7HZvBYQAowOsqH1xQbzBCU8
-	rc+XM=
-X-Received: by 2002:a05:6830:412a:b0:821:94d2:83cd with SMTP id 46e09a7af769-84fafc689dfmr760717a34.9.1792725297222;
-        Thu, 22 Oct 2026 20:14:57 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792725299; x=1793330099;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+        b=K3PFnQ9Q3ThSt1FIkJJWoEi9Vc5QvKsy9pjJx5YtzT+GzKfEgPjlpnfFVfF6tAoW4P
+         0+WHX9+H51jqVTrZpfA7r6SSxHXTlaBaNFE+yyLN1LVMpkwLvvP76CRYrH+uchlt42Fa
+         G0HjlDwWRcMM1UXEKtzeqSAvPar5qNnRsj+21qTDfCLmTu1aCuhFzd+ezaniOmPB7Mju
+         Ogf/cseCEp9CwyaELmNrpYTb4FuO5QU5qme4w1fK1Xih9ZEtutphiljpnEUVj1sdw16w
+         dhUKFKJleDU6ZvwMK4cBQ3uDxJOex5dENlA121Am9Lsh6av63MrwcJ+zxoEidbQeiQMQ
+         iqew==
+X-Forwarded-Encrypted: i=1; AKwUvBxCVf7ZbcND2qp2wI2HwXLjsdF9SASdzL32BNf7t5OY6GPNkBS3XtJM9RuAS2pB0lnagtbERvTPMTU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJ24kGoWgbMuhrEGMLOxE0mRydTKI0N8F5UvjMnfstZZB5Tqmai
+	E92QbAbgbRDglOAhhLc3WHvjUsOqEIo5gcFuPIZYom07w74Zx7FHKQ5C
+X-Gm-Gg: AYBFou1P692aOm6P1/i9r2NIVYDC6V4yJkTvAqTXHDSgS1I/zUr5lY+079QcPsZQds4
+	LjNPK1PzNYtHhxD/CqCibFyhhVNbyYRyknf64pSGgnQunY2FauKyQ/ftpFw3YiGpDrNyNvPf1Kp
+	sAH+48Ddq1HAP/PRhs9bVZ5hwABLJnvK6cUckyEtEkg5SPqXOLhcxYVBVGbldALNNRjekefnMiL
+	95gxHGqGWqS7LB4E6rDyTlAsjezZXTPDZzuY6ei5pb4OB46RptYRPArKNfl3n68ozoW9ZEZ3z+t
+	e9NhYW1Cklo4PSSeSVlZs0jZ0OV9xXzbLmdn9bJrtMoxrfD7gHz1SuB9TqQrAUbcDPvTdKmneDF
+	Eg2Z4njv6UuAuf2B/2vPLPHuxTZ0lrUS1FI2hQMO7mTbOkfGU5g3qzVfWdah0IiuocT7LPB3R2h
+	57QXJM+oujK7Pt+NTLa8p0DR4QZjwVl9YcreMiAprzbZECrslr85pmuEfqc4rJT7WXPhjzeJZuQ
+	+wQf5/p4qMOQguwUDeduHKwJ5g5MTyAft0Ud9B2pdKbRxQwzFUhe1h13FJwwCVlACMJiltR4sn/
+	ngi0vC9TZAia5OZ52GOt2DYHPXFrh4VB9ll+KtdeLVlgcBAQtkzVWz2ATr3gWdHWbVUbFrINzD7
+	MgR712ko6zG1MGMHsBFJKdcjBLcP6Onp2bWCfc9LotfDgQZGylVPjqnonZHZb+T4OW9GQMeRdPV
+	EynqQT
+X-Received: by 2002:a05:6820:a013:b0:6c1:f38e:7053 with SMTP id 006d021491bc7-70b8880e70cmr711138eaf.3.1792725298780;
+        Thu, 22 Oct 2026 20:14:58 -0700 (PDT)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84fbda584d9sm938638a34.13.2026.10.22.20.14.56
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84fbda584d9sm938638a34.13.2026.10.22.20.14.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 20:14:56 -0700 (PDT)
+        Thu, 22 Oct 2026 20:14:58 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Subject: [PATCH 0/6] dmaengine: sun6i: fix interrupt routing and channel
- lifetime
-Date: Thu, 22 Oct 2026 21:14:51 -0600
-Message-Id: <20261022-submit-sun6i-dma-lifetime-next-v1-v1-0-01085f684c9f@gmail.com>
+Date: Thu, 22 Oct 2026 21:14:52 -0600
+Subject: [PATCH 1/6] dmaengine: sun6i: fix physical channel index in
+ interrupt handler
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -96,13 +96,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WQy2oDMQxFf2XwugY/ZNnOr5QsbFlqXDrTdmYSA
- iH/XrfpJitxQfccoZvaeO28qcN0Uytf+tY/lxHsy6ToVJY31r2NrJxxaI1zejvXue9jLNh1m4v
- +6MJ7n1kvfN31xergyduQBBJYNThfK0u//jlej488IO9M+y/4f2Pl7/OQ7481VcvGmj7noTpMR
- SQwlhiFMJdIkI0DBAwZTLMJnGuR0D9kZafTuPkwNfQ5AUSEWIpptRoT6uA0wloyMoJjKQmfW4K
- RrKSWWmZjgQiDESd+YBKiA2/I1xjrcysF51JMTYCpgQxVJGl+vMz6kBm5hlQsizre7z+Uy8BEc
- wEAAA==
-X-Change-ID: 20261022-submit-sun6i-dma-lifetime-next-v1-53c3158f4841
+Message-Id: <20261022-submit-sun6i-dma-lifetime-next-v1-v1-1-01085f684c9f@gmail.com>
+References: <20261022-submit-sun6i-dma-lifetime-next-v1-v1-0-01085f684c9f@gmail.com>
+In-Reply-To: <20261022-submit-sun6i-dma-lifetime-next-v1-v1-0-01085f684c9f@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
  Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
  Samuel Holland <samuel@sholland.org>, Arnd Bergmann <arnd@arndb.de>, 
@@ -114,53 +110,47 @@ Cc: Hongling Zeng <zenghongling@kylinos.cn>,
  dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
  James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org, 
- Frank Li <Frank.Li@nxp.com>, Sashiko <sashiko-bot@kernel.org>
+ Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.15.2
 
-Correct interrupt routing and serialize physical-channel ownership across
-allocation, completion, pause and termination. Keep paused virtual channels
-off the allocator, drain completion callbacks before releasing resources,
-and associate cyclic state with the descriptor that owns it.
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-The first patch carries Hongling Zeng's physical-channel indexing fix [0],
-adapted to the configurable interrupt-bank size introduced for A733. The
-second handles partially populated banks, including H3's twelve channels.
-The remaining patches establish the ownership locking, pause bookkeeping,
-callback retirement and per-descriptor cyclic state in that order.
+The interrupt handler iterates over register banks in the outer loop,
+but the physical channel lookup uses only the inner loop index. It
+therefore handles every bank as if it belonged to the first channels.
 
-Based on DMAengine next at aff5e6a77fc6, which includes A733 support, with
-the posted IRQ-safe locking fix [1], channel pause-bit fix [2], and the
-virt-dma synchronization helper from [3] applied first. The synchronization
-patch uses that shared helper for the sun6i device_synchronize callback.
+For controllers with eight channels per bank, interrupts from channels
+8 and above are routed to channels 0-7. On A733, each bank covers one
+channel, so every interrupt is routed to channel 0. This can falsely
+complete descriptors for unrelated channels and corrupt their data.
 
-[0] https://lore.kernel.org/r/20260706064123.66035-1-zenghongling@kylinos.cn
-[1] https://lore.kernel.org/r/20260926171049.841335-1-tien.nguyenminh@embeddedlinux.blog
-[2] https://lore.kernel.org/r/20261021-submit-sun6i-dma-pause-bit-v1-v1-1-38d286b69dab@gmail.com
-[3] https://lore.kernel.org/r/20261022-submit-mtk-uart-dma-synchronize-v1-v2-1-fdaef0e2edd6@gmail.com
+Use the absolute channel index, calculated from the bank number and the
+controller's configured number of channels per bank.
 
-Assisted-by: Codex:gpt-6-astra
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+[james: use the configured bank size and describe the A733 case]
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Hongling Zeng (1):
-      dmaengine: sun6i: fix physical channel index in interrupt handler
+ drivers/dma/sun6i-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-James Hilliard (5):
-      dmaengine: sun6i: handle the last partial interrupt bank
-      dmaengine: sun6i: serialize channel reassignment with interrupt handling
-      dmaengine: sun6i: track paused virtual channels
-      dmaengine: sun6i: synchronize callbacks before releasing channel resources
-      dmaengine: sun6i: keep cyclic state with the prepared descriptor
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 8752969366ff..9d94a37fcf10 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -603,7 +603,7 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+ 		sun6i_write_irq_stat(sdev, i, status);
+ 
+ 		for (j = 0; (j < sdev->cfg->num_channels_per_reg) && status; j++) {
+-			pchan = sdev->pchans + j;
++			pchan = sdev->pchans + i * sdev->cfg->num_channels_per_reg + j;
+ 			vchan = pchan->vchan;
+ 			if (vchan && (status & vchan->irq_type)) {
+ 				if (vchan->cyclic) {
 
- drivers/dma/sun6i-dma.c | 153 ++++++++++++++++++++++++++++--------------------
- 1 file changed, 89 insertions(+), 64 deletions(-)
----
-base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
-change-id: 20261022-submit-sun6i-dma-lifetime-next-v1-53c3158f4841
-prerequisite-patch-id: d6398447647aa0dbb005b5e6dc6ba96e642efa86
-prerequisite-patch-id: f67c1f8d8d9e014cc650f2f37648662430c3b77b
-prerequisite-patch-id: 8522878df4ecd4fb007cfd32611359e6eb58a1ef
-
-Best regards,
---  
-James Hilliard <james.hilliard1@gmail.com>
+-- 
+2.53.0
 
