@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792772856;
-	b=1TgsUB4ilYwMwkRp/p/prvMZ/3K6KE2s+0XiDfMW9v9JhHC+MH/g0cYFBtiIcRhWMY3A
-	 xZIOuk7lXvzUQR+HX5hNkWdeoCAr+ZWWfrQ7Dcp2IRp1GHtbWhLR/+7qk2KnO+7fZFH1I
-	 tcsJghjacjGQEUR9Q8xw+Q9844B9tTuLDPGR8bE5RHOlV9PgQxaJFLor5P3Gma+mOMN1Z
-	 wieP8ynFZsVotuZyYaXSchLEniJhsGmKFZnxgu2OTUblc3DIKcPAes3rDgyg0JFPxT7gH
-	 yKNEKezjKBEzr/aU2MDTnZdpazkGdChwmj56M0XOsIe3FJT+R4pY7ZHHPsxZEtgzJxA==
+	t=1792780965;
+	b=Wy4JeqdO4xCk8bhMoeRyE1l0yMzWRLAWJzxGicydS6enn263znQZws5YKIsOm+n2/U4R
+	 WwoIUhWYigZL5h7k5KKxGWBD/R9a2DUN1QCT2G15GKqHKTFFGHyU7bWVKxwdbYoE37+QI
+	 Oglava6MKu61/wG72h07Y0a2p6++n3OgtTNZ0GVMvy8FIs9/JgpQKzrYDgEwQ2LaQJKWy
+	 Mu/OpKjKSqbwTNqWmDVCXm0TCSyH7TFM4hsiAK3RlVMy1F0LtYD4dMveTJSBQub0N5Wlk
+	 xspp8Un3dPpDqJ0M++V9sVx0939brZAH3X1yPKjEam4AcqGSt8h6x471SQQPiZDTLkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792772856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792780965;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=LnT7ErhIPfz2XEiDMVSZAaVOI+TPOyMOC4a7RAVDPqc=;
-	b=YeA73TY/DGuGK9voZRkt8bmEbs9KBPRj5Ag5XIN8iA3MIVJ49chvatTAvMmAQgcXTMtr
-	 JvGeiWSFkgUcQLomRFXbjZ9dAsyjMNQ5yPbqbRCqYvTvoP4yK74if8BLNxV1mLxSMAIxC
-	 xH/H9ZWhaSF3AE+cadpPitm8LN3F4RxTZy0V5G02MWRXGdFjS3QbIHny6DF+jBLDWaPGz
-	 ObdIUrWOn/VUGIpTB2g8+A/nI8Onf6+KP5DqePUh3CpnIdtN5MD6W3pn6gVgb9Nbm2DTL
-	 nO963VFl3k4NyCKufXsxJNOkrZ3nw3qWmPbVfMgxD0c0hrqbqCIHT3p5v05RpqAOyFw==
+	bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+	b=edRB03f7BiGsRPk4fO59SyL+eiMm3ZIA53LtYQO9Sh8ZMuHQAXvkPX8xK+gmboQNbZNv
+	 s/U9NH4Mx6h0+dg++R2Y/Ov+JneUhtO2xFYpqAGzZgBCKW/Ck6S8fgJDk83ByGNynqA3l
+	 jngFDhPdS+JAclPTEcZ0mw6ivzI18ewPobZVP+2wnPxbKzznWkifpYADVLQnlzrQx+86Z
+	 87eXj1snxVfMEkAptl0HqFeLKXW4VIkk20GSIra2Tq6jIplsG145o9K3hVvJBlzpQjOkg
+	 hb5HNua7P21xBbJHIkdGs+p8a45JCSPUEdQqGhWS/6FYGP99kn/EbknlpwwkItCo99A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=c6EFyH0A;
-	arc=none smtp.remote-ip=209.85.161.42
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=boAmUDgX;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F872606A330
-	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 16:27:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F872606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F4606A329
+	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 18:42:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B81F4606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=c6EFyH0A
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-6b8e2d8df4fso745654eaf.1
-        for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 09:27:35 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=boAmUDgX
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-84a248254f4so751521a34.0
+        for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 11:42:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792772854; x=1793377654; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792780964; x=1793385764; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LnT7ErhIPfz2XEiDMVSZAaVOI+TPOyMOC4a7RAVDPqc=;
-        b=c6EFyH0AR4YrAqnRW5359Qq5fVB/fFlXkFiz2Y0Y/vNq9FQTKDfW+eI/bKstwuUyXg
-         r3UASbNrjuCIARXD5yucGYPkXUwzHBXTzUeinEVtRy7xBrUKcd6X1cMJ+mFnOPx6xqPN
-         iy2pZG46MQesm2e6BGjtor2UyjWsZOSsRHsqviOBQ5j43uVccYephAwdlS+4GSTvu1ta
-         9BEQej/XTtxRoen0I6Gdmm148jCm//hStKY+tSQPfDYL9M8F1cE3Jp06wMWc0A6A/Zmn
-         F7B2SdCFX36SLw+q1Ktq7LTae6s+0bJBWTAcGnglGT6ZuyAQboJRF7TLXDHuFlLCkBoi
-         nD6g==
+        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+        b=boAmUDgXp1hX3kYPRavRSDi/Dfdi4D7sJxbXiSJRV98P+/YkSgSgqCBpcS0U6Padpi
+         SvIh4brqcif1qCnWZBtg07XkoDdwxPzxbBkUVU3kuG25SjJHJuJS9U5zRa4YfgMxvy3p
+         NGdxuGXPhT679NodQEH7OlBovG7Zf/eaFaEYT161Tc/DVC3/VfRYH+a+kom9PTnL8jhR
+         ik0k9sDWd7F8uten/xEGvLIpnM/JBq3TUVcMOc5T4WxRHwemMnVMAPOiHRgyAOxPlwZW
+         JX6zrseRPIxDusVPtZsNREFYpz9+1jCtm56ROoYIJ5AkCh05eHH7R8ht6Rj2ED6tN28A
+         RKYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792772854; x=1793377654;
+        d=1e100.net; s=20260707; t=1792780964; x=1793385764;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=LnT7ErhIPfz2XEiDMVSZAaVOI+TPOyMOC4a7RAVDPqc=;
-        b=y6dEXSfsaa9vh780VjCR07jOkYo5e1lCTf7YaCtG+Fy3gSYsPfXQQkyzsf6Lpa/LD+
-         /vD1MHtCVmQ/LOfqfc6wY5FfY8MSk3khRaJNcGifHO+GLqaFzgJe+YVquC/1Ld1FersN
-         Fg8WMVY5/XO6oK1+6hhdPa5Abp6+PJJt4hRIfi/ssCbWNrmQNDd4+o1JKlkkqbqjtgRZ
-         3yAJUP7nXHFD0+5lTB7Vm1Lg4Ryjp2nUWWy8zJvuvc5usLjP10FRSfUer3NkMSOuEuyP
-         9gWMa5n9Q3gF5u3jd0YfnSWZEDmxzvEztjH94gnnC9gsl1EdZ7pJ/1ymFi7fETQOQqCm
-         UnPg==
-X-Forwarded-Encrypted: i=1; AKwUvBx8CxHmss3KEnaLNVzytoLIHP/NhmdaHlMr7fH/zPvW5HRM55hG4scOQy+3A/MBJ988PRpBQceyewE=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKSipKjjOcbkdhPaRUj3y9aY+fnzNLVWmZqd2NfaG8rW7LBnKxT
-	0kOT3qfqB5fQ/3mTPx8/gvBVCr8YLZVluJ9/OCC+Nbodw/3tlbpH77lT
-X-Gm-Gg: AYBFou0lE86JUHO6kKjKVFdBcZx03RijlCWJgjj3QEeVOjzetExeL9pvCaYuNtg4NGX
-	y3/w8adGTqGE5uH2lQZyQrAfAddmKe6dTMmeGm6jkhcV9PTmuGcIvQ3vGHrhM747DAMbOIbcwuS
-	u4vyNT/kENY8byVPPr3pAA4KjNyjahtey+9sdug1TidI/Kb9T5zK3221V1fdm5tSc+KSn2Q8Tn5
-	IO+aTCJadejxKCXtzz9fjmJyNvSUAEdNePb0nalshUBC4qYqQpQpWhIGVYRHsTPU/26FB7liNAb
-	4OXA6JU5gQ4Xvrr6PXjE7VKUuHejQtr0fX+EivPKETKOR1l96jfCJAOMAi0RZiRQ8U2OT5tD6YS
-	/RCCbaMC+P54sn/5JTYRUyyIGYVo0SIxEw8ESoZaSNagC+WPWI58xTxyeiYuIfz+PcSa8MGqkaB
-	vCZlYW3HsGHp9+nI/hVEpwHEU0XfzbM/kHtAaDA2MP38rE90ivxYaUGGQjPO5dnx3Cguqe90u16
-	WeWiwo9Ha7D5gLu4TjUqzdnVYHIa4NgRNxLsYGcL0QLaVFQxgAFJA4w+sx7zEfant2/skXKZvYK
-	OJOAdPRpE/hQLrSFna4MSQd09uMvwTfY0KKIJJd62Bd5KVEn5PhmCmhhufxdanAcVh0YDsXc1OZ
-	6harEys24NW3TQEl5VH9EXP5a8yEXGAZEvk0H44XfAPeclMUZ5RDJomEFtPiErTf368tT/zVXMS
-	IK0pY=
-X-Received: by 2002:a05:6820:440c:b0:6c2:396e:b991 with SMTP id 006d021491bc7-70b88a8ec5amr1684933eaf.61.1792772854205;
-        Fri, 23 Oct 2026 09:27:34 -0700 (PDT)
+        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
+        b=pf/EbOQxBmEAOcqoJnmNddil7jajBHq/21JNy2ckoH3nnLy/CLFuGq0aPkZcCGweal
+         o5dfIiIx70VjeoMUlVnBvKfAZoQsBsvqukvo5g4m+qJaumpjhK/YSfTfQLU+KHn6BTri
+         ixfwIhjgyoDebJf7SZ/xL+XO12dI8fjWvOY7j8wKzdEF67fRi1B2Am+ArzE6bWVuCbK/
+         a2EJ0GhGMBqC5JHRV4ZEpFfi8w3Uh+x6oH16Uj3cPd9Jneo3l6Z/TjH4GueYYdrtcnQx
+         pVpnpwb/N4Dqu8vncWkzkV0XM2vMWdOAp327p557zkiiZG1ekqUQb1IlaeXVRREAbp3Q
+         89JA==
+X-Forwarded-Encrypted: i=1; AKwUvBw508bj5wix+iU/ufocwLnS4KL667B9o1ynsNRNkdah3q3RpZI3jecSi4qj1VxVPFXR9MQuUcloBVs=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIF5JtLfskEUHyCIl291hDixNImbq/XF1BCSvSrDwc7JcoNBfBf
+	XFbYtGQtlSTZp6NOXVJnC0xB1USQTJDwWvsZ70JKSdahCzs2OOQrieO3
+X-Gm-Gg: AYBFou2oWtjSB1YNJ1ZG6yPdgOt+MD9nFmC+OCAvuVcK8WKM8gzBkWida0LMidA4NRR
+	TDvUtAcsWHOd4k5OGw/kCkFZhUlvBtU1UWUF7M6Zi2YijFqZ9ZNwTPTv7oEBlSUgRNzvYmxYEEW
+	RKlg3mMZFmMSLh8UQPLMmVqm2V5Bggdm/l5k/vtl7fJekesLe7IpHIaVIYHeIo+bfjtYv5XSQtP
+	ivAdy+zWlNmsqDCqn7EAvycloub+q6P/NY6raklwKosB2XcZ63VDo7Nj968IMxJa/x7hnWAItis
+	dQDYraxtRLMsnO8ZqGirrmTBjkacFK3FfyJZjCplR0ypD67xbkqB8HE8wmmqaQwWVQa3q0eWA2q
+	XEl7iXLs6RV4Bfg2vtrDaagmzosFeQFSEkZNd//kgOP7X2TyZ5g3bxWWMtFFD8MPIb8lfBpBm9m
+	5fbU9dUGlJyY1JoHgEQnoxNgjyUtJnesjrRw4hHDz+sfnsH/qTOVxzX71INLodojg+V2lmQlqVt
+	QW8SRdFkBCWl6Vv3pAUAIoRXrkHgBjdRuyqcL+inHm7NTGtIM5BejFeWeoY1HDSgwJSZwX2KrGj
+	0lQBRhLuMNrR9fVA4uTo/qU402kih7n5f6dl47zXXBegXD2lTwb2FgTdMBx7IiytnumMj4Oz4Fa
+	uWyw0kYtNMk+r+0N7BJgWnwVhSOQZkXLvMtU3kEH07/OLqFDER+iRrjs/rq4sc+uv5CoG6HyySu
+	Btiw==
+X-Received: by 2002:a05:6808:30a3:b0:4cb:818f:d56e with SMTP id 5614622812f47-55c0020ff8amr68675b6e.22.1792780963715;
+        Fri, 23 Oct 2026 11:42:43 -0700 (PDT)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-70b9aed3144sm372801eaf.12.2026.10.23.09.27.32
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-55bfe199544sm336682b6e.13.2026.10.23.11.42.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 09:27:33 -0700 (PDT)
+        Fri, 23 Oct 2026 11:42:43 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 23 Oct 2026 10:27:23 -0600
-Subject: [PATCH v3 2/4] dmaengine: dw: serialize error recovery with
- channel termination
+Date: Fri, 23 Oct 2026 12:42:35 -0600
+Subject: [PATCH v2 1/6] dmaengine: sun6i: fix physical channel index in
+ interrupt handler
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -96,101 +96,60 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-submit-dw-dma-synchronize-v1-v3-2-c62bf048f5ce@gmail.com>
-References: <20261023-submit-dw-dma-synchronize-v1-v3-0-c62bf048f5ce@gmail.com>
-In-Reply-To: <20261023-submit-dw-dma-synchronize-v1-v3-0-c62bf048f5ce@gmail.com>
-To: Viresh Kumar <vireshk@kernel.org>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Maciej Sosnowski <maciej.sosnowski@intel.com>, 
- Dan Williams <djbw@kernel.org>, 
- Haavard Skinnemoen <haavard.skinnemoen@atmel.com>
-Cc: Serge Semin <fancer.lancer@gmail.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- dmaengine@vger.kernel.org, linux-serial@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>, 
- Lars-Peter Clausen <lars@metafoo.de>, 
- James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org
+Message-Id: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-1-c9e07cc44bf8@gmail.com>
+References: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-0-c9e07cc44bf8@gmail.com>
+In-Reply-To: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-0-c9e07cc44bf8@gmail.com>
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, Arnd Bergmann <arnd@arndb.de>, 
+ Maxime Ripard <mripard@kernel.org>, Jens Kuske <jenskuske@gmail.com>, 
+ Jean-Francois Moine <moinejf@free.fr>
+Cc: Hongling Zeng <zenghongling@kylinos.cn>, 
+ Chengfeng Ye <cyeaa@connect.ust.hk>, 
+ Nguyen Minh Tien <tien.nguyenminh@embeddedlinux.blog>, 
+ dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org, 
+ Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.15.2
 
-The tasklet samples RAW.ERROR before taking the channel lock. A
-concurrent termination can empty the active list before dwc_handle_error()
-uses that cached error to select a descriptor. The list head is then
-interpreted as a descriptor. Even with an active descriptor, moving
-queue.next unconditionally can put an empty queue's head on the active
-list and pass it to dwc_dostart().
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-Recheck the error status under the channel lock and stop the channel
-before selecting its failed descriptor. Only one transaction is issued
-at a time, so take that descriptor directly instead of scanning for
-completions first. The scan can otherwise complete it and start queued
-work before the error handler has identified the failed transaction.
+The interrupt handler iterates over register banks in the outer loop,
+but the physical channel lookup uses only the inner loop index. It
+therefore handles every bank as if it belonged to the first channels.
 
-Detach the failed descriptor under the same lock and use the queued-start
-helper, which leaves an empty queue alone. Clear the software-LLP flag
-before restarting so a failed multiblock transfer does not prevent the
-next transaction from starting. Keep the completion callback outside the
-lock, with the detached descriptor owned by the tasklet.
+For controllers with eight channels per bank, interrupts from channels
+8 and above are routed to channels 0-7. On A733, each bank covers one
+channel, so every interrupt is routed to channel 0. This can falsely
+complete descriptors for unrelated channels and corrupt their data.
 
-Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
-Fixes: f336e42f73d9 ("dw_dmac: Move single descriptor from dwc->queue to dwc->active_list in dwc_complete_all")
+Use the absolute channel index, calculated from the bank number and the
+controller's configured number of channels per bank.
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
 Cc: stable@vger.kernel.org
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+[james: use the configured bank size and describe the A733 case]
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- drivers/dma/dw/core.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/dma/sun6i-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-index 07a5f5105787..51c5460b4670 100644
---- a/drivers/dma/dw/core.c
-+++ b/drivers/dma/dw/core.c
-@@ -408,10 +408,17 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	struct dw_desc *child;
- 	unsigned long flags;
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 8752969366ff..9d94a37fcf10 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -603,7 +603,7 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+ 		sun6i_write_irq_stat(sdev, i, status);
  
--	dwc_scan_descriptors(dw, dwc);
--
- 	spin_lock_irqsave(&dwc->lock, flags);
- 
-+	/* Termination may have cleared the error since the tasklet sampled it. */
-+	if (!(dma_readl(dw, RAW.ERROR) & dwc->mask))
-+		goto unlock;
-+
-+	dwc_chan_disable(dw, dwc);
-+	clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
-+	if (list_empty(&dwc->active_list))
-+		goto unlock;
-+
- 	/*
- 	 * The descriptor currently at the head of the active list is
- 	 * borked. Since we don't have any way to report errors, we'll
-@@ -419,12 +426,7 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	 */
- 	bad_desc = dwc_first_active(dwc);
- 	list_del_init(&bad_desc->desc_node);
--	list_move(dwc->queue.next, dwc->active_list.prev);
--
--	/* Clear the error flag and try to restart the controller */
--	dma_writel(dw, CLEAR.ERROR, dwc->mask);
--	if (!list_empty(&dwc->active_list))
--		dwc_dostart(dwc, dwc_first_active(dwc));
-+	dwc_dostart_first_queued(dwc);
- 
- 	/*
- 	 * WARN may seem harsh, but since this only happens
-@@ -443,6 +445,10 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 
- 	/* Pretend the descriptor completed successfully */
- 	dwc_descriptor_complete(dwc, bad_desc, true);
-+	return;
-+
-+unlock:
-+	spin_unlock_irqrestore(&dwc->lock, flags);
- }
- 
- static void dw_dma_tasklet(struct tasklet_struct *t)
+ 		for (j = 0; (j < sdev->cfg->num_channels_per_reg) && status; j++) {
+-			pchan = sdev->pchans + j;
++			pchan = sdev->pchans + i * sdev->cfg->num_channels_per_reg + j;
+ 			vchan = pchan->vchan;
+ 			if (vchan && (status & vchan->irq_type)) {
+ 				if (vchan->cyclic) {
 
 -- 
 2.53.0
