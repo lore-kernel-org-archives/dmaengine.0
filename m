@@ -1,56 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792739424;
-	b=x5yJBx0kbXCLWZgBIY0+yQOGvjpDR7u6B71lZCwu+VqdYXd6yAhCOwFr7GzB12JliymN
-	 LYyu7b30nCTHDWoOlTg1G88SvdHURtgKfFqNlzWlRCj6HCWTXJWOstoDUdEnscmmjOgB7
-	 VTkfRiJ3lNF81kBKq33PgkEsRwev64Y7TzjWoHx5xdralxnZA+Oi4zUWI19UayxkoguIH
-	 uDpB4rGT2qF7oakjOX2cD5ok0hVadillzIJhJ8oWtej49f6eMk0y6Xz5+NtDGXymgw7Jj
-	 smAPWpzXTh2hkicddtXsZvjyZr2lR6cJEbf0vChBHX0Fi+dPG1l2G6Yt41ID5FAzuqA==
+	t=1792740737;
+	b=KgDGNIhRBpbUSoDysW9Og7nuXA5R4H26q8r4z58ookAubFAAXwzIxddNhROtQCFeelVb
+	 f/KC3waC0VOkpf4nFMgMZVEEY4tPaU6BCp2gNx7l8e1w3oj5eHfLmEFcxK6Zj+TDejhWt
+	 CX42ppE0xdRBbxOzwS5nPydcwqWP3LLk9LEWeKx7e3gDUeAmWBXB+wl/YiV+YEczt0wKJ
+	 iIZZIQtJeyV9IpToBVwtX8DTHyA5O1GBDkPQ3y92x4q+mW/8VpMfBUpO+cGrvfGvVQhdQ
+	 h4FzREQz3mjSXvjiT7ER86Ti1JtqVUcGxgY3+L+HMIYcHCLaMpQw6d0W2NKilgrFE3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792739424;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=IjUW9VOy+z+U6O2o5i7NrlYe2z7xMdh2bO5jUNJ/p34=;
-	b=2/FMlRaUiuxwHVnyDfOmpHh7D3Il16Wbqt8e4MyRkaYZwitPIRMHB4/H9h5Qkg9Tn6Aa
-	 pR3Daqic9U5mH/ivxK9S54+4EytQYtmGmWd0hnouQXocdpztC59OYNbX7i3ycmuG4i0/o
-	 WbRVm62luJmukKRHOmQslk9p9tBr+LEr3YLrt624p3t1AaMUj2k+ocmjwSMQzt8dO0a3Y
-	 RQcGvnySCkwf+8w0SwYfRLo4OyOfO4DfqoEIQiyTHV4aKGm6NVHXsc9zG3lZO4aZbqbyK
-	 HrpeIE4eDF/8q0HyRzOZ8lt+Ajj5nAiZ+wTQk4BLwFpHYu4vdKghHsRYo4U1bJmY7eg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792740737;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=bhnlngDTdPCRzQ3WfPeVfNn/5dfQaEbDCnTEYto+WIk=;
+	b=uR4oulK9cWLB/5y7mqfIOyXxeU+KNn9EOUcJFbkLdQQlw+Ztn5z0sE3bL7M9ZGDzriB2
+	 aeokB+y2Z1k3vvuuGbj1VLZnd12iMYxoF5QaaQR1ZydZiXNJ8LimK/a8X/4q5+v3ljpm3
+	 0EGGBkCESuMUxZIFeaBcM9DOKwrQ/qGIFPKhBACKVDq5kh3qqCA1S5Sg7WmKh5/kPdfIp
+	 Nj/QXAJhArlQedmw+E9Y0LpZ13HDomfiFw+JbVapaQAGcOs4ct5Fsr/nHOUMbzzzzZGNs
+	 LdClCfRTwM7t86Z2noigK41UGIJjrJfh1EaMDZ4kpoTDbHfgXTvgUJzDFvCiv3eO/Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JZecYBrU;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=d1+eVLMY;
+	arc=none smtp.remote-ip=209.85.214.175
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E262606A32C
-	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 07:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A1E606A31A
+	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 07:32:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34A1E606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JZecYBrU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CEC1F01825;
-	Fri, 23 Oct 2026 07:10:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792739423;
-	bh=IjUW9VOy+z+U6O2o5i7NrlYe2z7xMdh2bO5jUNJ/p34=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=JZecYBrUmRPxwo0QerVryVljDGZnHatcxgZz93dueswDJOwzVvjS+y5yZMmvJw6OL
-	 hf1jE4LStUL4/2N3y/Wt7edLEWC65p8zANL/a0sXGLXHwpcZL7GSHUjP7ReEcuGqlW
-	 XEjGMlSr5DRXMouz9JYl/064+TVGxNVntY44uxM9AoPKnU0yrua1qrcpbkSz/D9S9C
-	 9xGOhbFBIuh9dSw4Tp9v66bD1bs0lTh4qieQbtYSZZGegETAsa8E6Hr6pK99B0F5w3
-	 ijL+FytD3njsTVgc6bSMoKhBKOAlYSV03bmjSdNNofK0ZvZEsKf5KrjCmpCkR89rfD
-	 IkpJ4VK9nbL4w==
-Message-ID: <sashiko-outbox-182385@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: xilinx: Fix wild pointer dereference on
- empty segment list
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Li Ximo" <lixicaicai@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261023065806.3175584-1-lixicaicai@gmail.com>
-References: <20261023065806.3175584-1-lixicaicai@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 23 Oct 2026 07:10:22 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=d1+eVLMY
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2ea7987517aso2863575ad.0
+        for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 00:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792740736; x=1793345536; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bhnlngDTdPCRzQ3WfPeVfNn/5dfQaEbDCnTEYto+WIk=;
+        b=d1+eVLMYtXs0c/wY+D+8tqUVklOiPZV1r/PQ3RY7YaNYpOGlGBu5YWT9hIPUnww2eG
+         757QD4qV6c7lJZJ5RJ5UOlExl+FgIi98uN3v8UJI7DNVTppGdY4WlABffWATu1IsP763
+         RZZE941EiVPOjd9pcrvf/MTX9O3RH/XOaCq4sqAfkAMcAINYiciJw+lM2Z59dR2fnu/h
+         D6FyX3YJXYYb9MvNIEpWgZaHxSGEfw8GpYWuWiwhyOgelg9KKN+ZNcTnvkMkTriGf9rj
+         takfVi5mvcrHrKfp90V+ffHvQXZwdkHZWW5If72hirpLtbYLIEGlVkcG7+cl3jWNr+Ht
+         kW7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792740736; x=1793345536;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=bhnlngDTdPCRzQ3WfPeVfNn/5dfQaEbDCnTEYto+WIk=;
+        b=i8lHlheYpQAKDszxSxy7BTvPfRthFHJ/zoybxUxJW2ccKscvYgDx0qNv1mOjx70hlN
+         XjY8wqopapDU/EVXpUGSxmyZEzmJvhjCGNhtFQwO4rimxRUw2R9YqdCceb4oLjNabvyu
+         AoAwYzRWCI/lMj68sZxNE9/xRKKjebn9+hKNnTAwMpkUKdP2JTcpsSrJEgjAxJKLUK4N
+         ICoLcEp0+7eeOFE13E0SWhhSuBit+vOzR1A147Gn3IrVsfphktRznRLVxRj+9+9HnHGr
+         VBnUyg7o4d0CLPoNFhjshkGA0QBbVhyWLzL/nvL22/lHWOsJOWCoNL0VM/Ks5KU6WZ7b
+         c+1Q==
+X-Forwarded-Encrypted: i=1; AKwUvBzIDUmMXn8fgALmh6bHE/J6JkmhFHWA7WYh+gqaVoU5xXqZ8y/nD5fHijT3HsyWPAzLBy9cQzLA6yw=@vger.kernel.org
+X-Gm-Message-State: AFq9FYL4as6KNphgibgw8baggSDfD8e5btBnqaRHvs2iHHS7zvtOK+yT
+	bOnRMKS+ckG4tdG/9Vxa2vptnwcJ21SGbOOQcvBrwxzjUBQbIYayCzGt
+X-Gm-Gg: AYBFou1/UP/jUIYoYTJovQIEfM0nYkwdK48h0KmiSSBoV7GAKfrQnFHJEmdfuPrdiUM
+	zoz3owapHViDiBDT+YwLW9W+83Sz43NWk5hXZFJNTj+zo6IXXWEA8hd2oI3gjAyTLMJmurY7jG9
+	9oYNOLNqRHBkqPk2LJ1R75MB2FMNXYZCwTIi6htTwEV6YE8Gb1CnC6OGPnpFMncAuTHpzm2xqPb
+	4PGYFpj72m3MmZpO55qKCV8iar2oNLwBxx48vS0pbi4k8ZG/JH12D0Us7eiIg3gHiIyy/vTZqRj
+	mj8C/GovzOBXU2zAhKMLCyJ8sYAxrvz3DzUR1dGFm+ilGE2BOFQvjU+QOCQhmKjOoLGiqy2bPkO
+	qFXEjjqKkEeyQ3b/CuoEpxmfPATn+6PTOd9c7Tyd420/2++MiaYkzvF0h0PWE54/5zn7K8bQZ5G
+	M+gp4YuMdxo4wzZnr+FSruxU4SEG6qq3tRU+cyegF0QzHaiTBYwdxP2Ir5EoAd8HZT3CWJlvsCp
+	rdYE81KNEYdEhec9mZfEWdezYCY0fyHAe3jaHiRBB5rmBCNO/S2733R8wAy0uEcioodn1Yf/RA=
+X-Received: by 2002:a17:902:e547:b0:2e4:b112:14d with SMTP id d9443c01a7336-2ea7d132e9fmr13812005ad.54.1792740736475;
+        Fri, 23 Oct 2026 00:32:16 -0700 (PDT)
+Received: from spiderman.taila3fd8c.ts.net ([202.112.47.77])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea7b3a8cfesm6769735ad.40.2026.10.23.00.32.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 00:32:16 -0700 (PDT)
+From: Li Ximo <lixicaicai@gmail.com>
+To: Sinan Kaya <okaya@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>
+Subject: [PATCH] dmaengine: qcom: hidma: fix wild pointer stored in mchan->running when active list is empty
+Date: Fri, 23 Oct 2026 15:31:54 +0800
+Message-Id: <20261023073154.744365-1-lixicaicai@gmail.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,90 +98,74 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] dmaengine: xilinx: NULL return in xilinx_dma_get_metadata_ptr()
---
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-commit 5ff31a1fefdaf467f495be421ba38281e2cbd1a6
-Author: Wang Haoran <haoranwangsec@gmail.com>
+While auditing list_first_entry() users we found two call sites in the
+HIDMA driver that invoke it on mchan->active without verifying the list
+is non-empty. list_first_entry() never returns NULL: on an empty list
+head->next == head, so container_of() produces a bogus non-NULL pointer
+into the enclosing hidma_chan structure instead. That wild pointer is
+stored into mchan->running, and is later dereferenced in
+hidma_tx_status() where "if (mchan->running) runcookie =
+mchan->running->desc.cookie" passes precisely because the pointer is
+not NULL, yielding an out-of-bounds read / memory corruption.
 
-dmaengine: xilinx: Fix wild pointer dereference on empty segment list
+The list can be empty at both sites on entirely normal paths. In
+hidma_callback(), the completed descriptor is first moved from active
+to completed; when it was the last active descriptor, the subsequent
+list_first_entry() runs on the now-empty list. In
+hidma_issue_pending(), a client calling dma_async_issue_pending()
+without any queued descriptor leaves both queued and active empty, and
+the "if (!mchan->running)" branch then fetches the "first" entry of an
+empty active list.
 
-This commit guards against empty segment lists in the Xilinx DMA prep
-functions and in xilinx_dma_get_metadata_ptr() to avoid dereferencing wild
-pointers from list_first_entry().
+Fix both sites by switching to list_first_entry_or_null(), which
+returns NULL for an empty list. This makes the existing NULL check on
+mchan->running in hidma_tx_status() effective, so the paused-channel
+cookie query takes the -EINVAL path instead of dereferencing a wild
+pointer. Both call sites already run under mchan->lock, so no
+additional locking is needed.
 
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
-dma.c
-> index cffe7c6fa6405..07f52f8412b10 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
-> @@ -650,8 +650,11 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_=
-async_tx_descriptor *tx,
->  	struct xilinx_axidma_tx_segment *seg;
-> =20
->  	*max_len =3D *payload_len =3D sizeof(u32) * XILINX_DMA_NUM_APP_WORDS;
-> -	seg =3D list_first_entry(&desc->segments,
-> -			       struct xilinx_axidma_tx_segment, node);
-> +	seg =3D list_first_entry_or_null(&desc->segments,
-> +				       struct xilinx_axidma_tx_segment, node);
-> +	if (!seg)
-> +		return NULL;
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+---
+ drivers/dma/qcom/hidma.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-[Severity: High]
-Should xilinx_dma_get_metadata_ptr() return an ERR_PTR() (such as
-ERR_PTR(-EINVAL) or ERR_PTR(-ENODATA)) before modifying *max_len and
-*payload_len when desc->segments is empty, rather than returning NULL?
+diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+index c939635be..925c912e0 100644
+--- a/drivers/dma/qcom/hidma.c
++++ b/drivers/dma/qcom/hidma.c
+@@ -176,8 +176,9 @@ static void hidma_callback(void *data)
+ 		queued = true;
+ 
+ 		/* calculate the next running descriptor */
+-		mchan->running = list_first_entry(&mchan->active,
+-						  struct hidma_desc, node);
++		mchan->running = list_first_entry_or_null(&mchan->active,
++							  struct hidma_desc,
++							  node);
+ 	}
+ 	spin_unlock_irqrestore(&mchan->lock, irqflags);
+ 
+@@ -238,9 +239,10 @@ static void hidma_issue_pending(struct dma_chan *dmach)
+ 	}
+ 
+ 	if (!mchan->running) {
+-		struct hidma_desc *desc = list_first_entry(&mchan->active,
+-							   struct hidma_desc,
+-							   node);
++		struct hidma_desc *desc;
++
++		desc = list_first_entry_or_null(&mchan->active,
++						struct hidma_desc, node);
+ 		mchan->running = desc;
+ 	}
+ 	spin_unlock_irqrestore(&mchan->lock, flags);
+-- 
+2.30.2
 
-The caller in drivers/dma/dmaengine.c uses the ERR_PTR() error convention a=
-nd
-directly returns the result of metadata_ops->get_ptr():
-
-void *dmaengine_desc_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
-				      size_t *payload_len, size_t *max_len)
-{
-	int ret;
-
-	if (!desc)
-		return ERR_PTR(-EINVAL);
-
-	ret =3D desc_check_and_set_metadata_mode(desc, DESC_METADATA_ENGINE);
-	if (ret)
-		return ERR_PTR(ret);
-
-	if (!desc->metadata_ops || !desc->metadata_ops->get_ptr)
-		return ERR_PTR(-ENOTSUPP);
-
-	return desc->metadata_ops->get_ptr(desc, payload_len, max_len);
-}
-
-Callers of dmaengine_desc_get_metadata_ptr(), such as axienet_dma_rx_cb() in
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c, check the returned point=
-er
-with IS_ERR() before dereferencing it:
-
-	app_metadata =3D dmaengine_desc_get_metadata_ptr(skbuf_dma->desc, &meta_le=
-n,
-						       &meta_max_len);
-	...
-	if (IS_ERR(app_metadata)) {
-		if (net_ratelimit())
-			netdev_err(lp->ndev, "Failed to get RX metadata pointer\n");
-		dev_kfree_skb_any(skb);
-		lp->ndev->stats.rx_dropped++;
-		goto rx_submit;
-	}
-
-	/* TODO: Derive app word index programmatically */
-	rx_len =3D (app_metadata[LEN_APP] & 0xFFFF);
-
-Because IS_ERR(NULL) is false, returning NULL when !seg bypasses the caller=
-'s
-error check and leads to a NULL pointer dereference, while also mutating
-*max_len and *payload_len on failure.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023065806.3175=
-584-1-lixicaicai@gmail.com?part=3D1
