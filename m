@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792749196;
-	b=NuLOEEM/AybEYHEx5+O+8b84q9SA0XbByHUYJ0SHXf2njxuPcCwzWkxWlhxxkd5zCHJT
-	 Pk+p7XLVG2P+BCfTPgQL9RDnz7r6HwDZa1HNs65YoGnOr0WRWnv1yCIclizImWW4cX6W5
-	 HgQONmsQV7S8aXk3zVuPC6qjPQDUYaAKljMV2qlLXhtNeMoKuuDhPKbA3N8XnNnueycNs
-	 rrzTgVHUwHxQM3JMS3WRrOdasviqaTvV/Qs2trH/IvLDh1kIyNA1BiTH31YHpdtlDQJbt
-	 KLS5uBI/UIi4ginEzwGFsw2GCHVPNZOIIITaPl8s6DT6Ise2bYhrE+OWRdXIpkU2zwQ==
+	t=1792749504;
+	b=a/yLcG9v6OTGQTqoaJ0/mI2/v2xhe0JsPwXRR+EJOYQjPLvyWe3KrCe8QJiU/z7AgGw/
+	 bflXyXbTZSK5KoRweozWxap054B8a7aJRKdbaFV6bbMV1Xeo6ammVaK72YBJ26r7YHVte
+	 3yCUG3sMFA3OIWu8WjidlAV0Ef/0e06nFuN3BqhwB+gDzQ29pdGzty5UqsXp0hNYEsgmn
+	 NRTx/K4psNV2seWyPqK/tuCoPXcyJsKUzX8onT49wrR1vgptocfAlWLjOjHTd+pHtBmuG
+	 +K9OQjOEsV3OJNH/7UAhrMy3z0Xc+GFRkNwEtkrA83shy6rA2uT0bvjAdQgeJF7lWUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792749196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792749504;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=OoHuobr1W4Hg3djaW5xGjOqp6InpOS/re/XPCAIVT8Y=;
-	b=GCCsEN2lMt9xZxZ+l4iNzsx7PkriVsAJsfwYhd2kgNPKO1T0l1PYI7H3PvTsGpHhbPZ/
-	 WssDsJpv9USHBCeA4zeqs3b6YiL+ovxGURqWqs6O3BTdiiEWFwT7Zga099OHjQEDmmSyM
-	 XGpswBpjXto16ksNT1q65qp0jEkCJKPLdMh7WStoFNaRoiq8xLAXjOSRrW0g/SUcFy8nc
-	 zqT7x9lse+0CE67DEuyzOEnq+DVZkJghMJUIT/ebfYu2up0JEx80HIBrZTxqEUdpmieeG
-	 nKqrs/P7a3q5/6++P1yWMAUc4kX3F6jY035Q4Od2l85li9dE1ssOSciq7ZubdxbYaiA==
+	bh=F7z54Mm7JzDI3a3Zv0NiLmWi5pxlTQCT46xlX2O/ufE=;
+	b=lnsmvg5CLNlwg4CeqDuGlUbp5SKt3AtNXyy7FIU0ECBC2KWuzqjXRkKe/gWdTl2ij2E3
+	 7de+erGpwGVNUHo4jkhhzB8Mo3PPz1Pmoc8VEXK+Z3nKk/Wb7p4oGfSve499MsyczefeJ
+	 7sLQchhnv3SFJPP5mXVFo20rltqt6livVukYF8dcE5vvPOdCubsyz6fq5tjsiUHgbGcbs
+	 I4zoXhTThYPswKK9NqlPwJWKOuwVKFOl8weB9kqvVp61WfSuZsgMJT5nnsbuQkfHnOhX1
+	 8T3hgeX3lsnK02IFptltvPmLbS/oTJ2b0JpAboR/Xg4+8ScDTaI56Z1vlUSuJ68ts8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QT27aicZ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NwZXFNhU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AB2606A31F;
-	Fri, 23 Oct 2026 09:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2836A606A31A;
+	Fri, 23 Oct 2026 09:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QT27aicZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746BD1F01825;
-	Fri, 23 Oct 2026 09:53:15 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NwZXFNhU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97691F01825;
+	Fri, 23 Oct 2026 09:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792749195;
-	bh=OoHuobr1W4Hg3djaW5xGjOqp6InpOS/re/XPCAIVT8Y=;
+	s=k20260515; t=1792749504;
+	bh=F7z54Mm7JzDI3a3Zv0NiLmWi5pxlTQCT46xlX2O/ufE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=QT27aicZiX03/slaIx3sg8DyFkR2Fpt6WJazyoZfS9dPeCvpgXptJPJeH4LFDBQ2z
-	 gI7Id0vohALWjOpLItCuJeNYjdh5Nxin3uQm+9Y0ZbrWbpGF09cXQDBk5hhDIc8/Yc
-	 LwCl7ntVpgv2MFDqWRjEYJaDSW7yXBUQLcTptnrpr90VcAxIuBD7d2LEXVaekBrxSn
-	 RQ+LMsEUQPBEK7lVaUByROlvgb+1DgDCXOIR4TaCS7saumi5y7ySe2LlX7fqLdEiRd
-	 IocGAhSTSkXuAzASfdBextvzqVC+sxPXGbSTttqwXBYXF3e/Ji8DPWjYDi36osz/Jb
-	 uBoODXnTCw5bQ==
-Message-ID: <sashiko-outbox-182643@kernel.org>
+	b=NwZXFNhUtUeSIApRJ/8z9X1BGhZJHS4zCDD/O8/46OxNULFn7gMikcaU/hVFC5yH1
+	 1GeFkw4wsFbwWCRLI20G9VnkYTm20fAEYEDHCUTi9LklmewQG+0dEA0oxkYPTgnd6X
+	 M95YpKdBOq1d52RJgZtK/Uk/ayFETBxu8hiLwb0Ca1oGb/UWKaIO/lumzA49BZbTVx
+	 Dx0qYr8QntKLjhmHQYxlE3rAt3snMnHiHCDGziAw5Pv9d0vTDArwh0Qgc8qLng2q1T
+	 zEakOm0sQQBP8PBjiyCoQx6T2bIsv/u4+iurd200mj1w0M5SdsRfOp/RXloJwMdJla
+	 nDeYZJhJBMccA==
+Message-ID: <sashiko-outbox-182650@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v1 2/5] clk: cix: Handle Sky1 AUDSS DMA interrupt gates
- as an irqchip
+Subject: Re: [PATCH v4 2/5] dmaengine: arm-dma350: Add slave and cyclic
+ transfer support
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Jelly Jia" <Jelly.Jia@cixtech.com>
-Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261023093045.3248630-3-Jelly.Jia@cixtech.com>
-References: <20261023093045.3248630-1-Jelly.Jia@cixtech.com>
- <20261023093045.3248630-3-Jelly.Jia@cixtech.com>
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261023093017.3248454-3-Jelly.Jia@cixtech.com>
+References: <20261023093017.3248454-1-Jelly.Jia@cixtech.com>
+ <20261023093017.3248454-3-Jelly.Jia@cixtech.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 23 Oct 2026 09:53:15 +0000
+Date: Fri, 23 Oct 2026 09:58:23 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -63,290 +63,423 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 5 potential issue(=
 s) to consider:
-- [High] clk: cix: unclocked MMIO access in sky1_audss_irq_teardown() and I=
-RQ callbacks
-- [High] clk: cix: invalid wait context in sky1_audss_irq_handler() and mas=
-k callbacks
-- [High] clk: cix: missing irq_dispose_mapping() in sky1_audss_irq_teardown=
-()
-- [High] clk: cix: level IRQ storm with handle_untracked_irq() on lazy IRQ =
-disable
-- [Low] clk: cix: missing select IRQ_DOMAIN for CLK_SKY1_AUDSS in Kconfig
+- [High] dmaengine: arm-dma350: unlocked sconfig read and -EBUSY in d350_co=
+nfig()
+- [High] dmaengine: arm-dma350: cyclic residue desync in d350_get_cyclic_re=
+sidue()
+- [High] dmaengine: arm-dma350: unchecked has_trig/tsz and BIT(0) in addr_w=
+idths
+- [High] dmaengine: arm-dma350: missing stop wait in d350_start_next() and =
+stop race
+- [Medium] dmaengine: arm-dma350: race in d350_irq() and d350_terminate_all=
+() on CH_STATUS
 --
 
-commit d366d15da9922d1961ddd48a45f4b621f1a77320
+commit 7ea8f6c5155871b057296b78b296628ea4bd9bcc
 Author: Jelly Jia <Jelly.Jia@cixtech.com>
 
-clk: cix: Handle Sky1 AUDSS DMA interrupt gates as an irqchip
+dmaengine: arm-dma350: Add slave and cyclic transfer support
 
-This commit adds an irqchip and linear IRQ domain to the CIX Sky1 AUDSS clo=
-ck
-driver to manage the DMA-350 channel interrupt gates in the INFO_AP_IRQC
-register. It installs a chained IRQ handler on the shared parent GIC line a=
-nd
-registers a devres teardown action to clean up the irqchip.
+This commit adds peripheral scatter-gather and cyclic DMA transfer support =
+to
+the Arm DMA-350 driver, including trigger configuration, coherent command p=
+ool
+allocation, period callbacks, and residue calculation. It also adds slave
+configuration validation, OF DMA controller registration, and bounded chann=
+el
+stop polling during teardown.
 
-> diff --git a/drivers/clk/cix/clk-sky1-audss.c b/drivers/clk/cix/clk-sky1-=
-audss.c
-> index e096b8121df30..789cbba631d16 100644
-> --- a/drivers/clk/cix/clk-sky1-audss.c
-> +++ b/drivers/clk/cix/clk-sky1-audss.c
+> diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
+> index 4e17130de6c87..f62ff6a9f4909 100644
+> --- a/drivers/dma/arm-dma350.c
+> +++ b/drivers/dma/arm-dma350.c
 
 [ ... ]
 
-> @@ -928,6 +939,110 @@ static int sky1_audss_clks_enable(struct sky1_audss=
-_clks_priv *priv)
->  	return err;
->  }
-> =20
-> +static void sky1_audss_irq_mask(struct irq_data *d)
+> @@ -207,14 +254,452 @@ static inline struct d350_chan *to_d350_chan(struc=
+t dma_chan *chan)
+
+[ ... ]
+
+> +static int d350_config(struct dma_chan *chan, struct dma_slave_config *c=
+onfig)
 > +{
-> +	struct sky1_audss_clks_priv *priv =3D irq_data_get_irq_chip_data(d);
+> +	struct d350_chan *dch =3D to_d350_chan(chan);
+> +	struct dma_device *dma =3D chan->device;
+> +	unsigned long flags;
+> +	int ret;
 > +
-> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
-> +			   BIT(d->hwirq), 0);
-> +}
+> +	ret =3D d350_check_slave_config(dma, config);
+> +	if (ret) {
+> +		dev_err(dma->dev, "invalid slave configuration\n");
+> +		return ret;
+> +	}
 > +
-> +static void sky1_audss_irq_unmask(struct irq_data *d)
-> +{
-> +	struct sky1_audss_clks_priv *priv =3D irq_data_get_irq_chip_data(d);
-> +
-> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
-> +			   BIT(d->hwirq), BIT(d->hwirq));
-> +}
-
-[Severity: High]
-Will calling regmap_update_bits() in sky1_audss_irq_mask() and
-sky1_audss_irq_unmask(), as well as regmap_read() in sky1_audss_irq_handler=
-(),
-trigger an invalid wait context warning under CONFIG_PROVE_RAW_LOCK_NESTING
-and sleep in atomic context on PREEMPT_RT?
-
-In drivers/clk/cix/clk-sky1-audss.c, priv->regmap_cru is initialized via
-devm_regmap_init_mmio() using sky1_audss_regmap_config:
-
-    static const struct regmap_config sky1_audss_regmap_config =3D {
-            .reg_bits =3D 32,
-            .val_bits =3D 32,
-            .reg_stride =3D 4,
-    };
-
-Because sky1_audss_regmap_config does not set .use_raw_spinlock =3D true,
-regmap initializes a non-raw spinlock_t for map->spinlock.
-
-The IRQ core invokes .irq_mask and .irq_unmask while holding irq_desc->lock
-(a raw_spinlock_t), and sky1_audss_irq_handler() runs in hardirq context.
-Acquiring the regmap spinlock_t in those paths violates raw_spinlock_t
-nesting rules. Should sky1_audss_regmap_config set .use_raw_spinlock =3D tr=
-ue?
-
-> +
-> +static struct irq_chip sky1_audss_irq_chip =3D {
-> +	.name		=3D "sky1-audss-dmac",
-> +	.irq_mask	=3D sky1_audss_irq_mask,
-> +	.irq_unmask	=3D sky1_audss_irq_unmask,
-> +	.flags		=3D IRQCHIP_SKIP_SET_WAKE,
-> +};
-> +
-> +static int sky1_audss_irq_map(struct irq_domain *d, unsigned int irq,
-> +			      irq_hw_number_t hwirq)
-> +{
-> +	if (hwirq >=3D SKY1_AUDSS_DMAC_IRQS)
-> +		return -EINVAL;
-> +
-> +	irq_set_chip_data(irq, d->host_data);
-> +	irq_set_chip_and_handler(irq, &sky1_audss_irq_chip,
-> +				 handle_untracked_irq);
-> +	irq_set_noprobe(irq);
+> +	spin_lock_irqsave(&dch->vc.lock, flags);
+> +	if (dch->desc || !list_empty(&dch->vc.desc_allocated) ||
+> +	    !list_empty(&dch->vc.desc_submitted) ||
+> +	    !list_empty(&dch->vc.desc_issued)) {
+> +		spin_unlock_irqrestore(&dch->vc.lock, flags);
+> +		return -EBUSY;
+> +	}
+> +	memcpy(&dch->sconfig, config, sizeof(dch->sconfig));
+> +	spin_unlock_irqrestore(&dch->vc.lock, flags);
 > +
 > +	return 0;
 > +}
-> +
-> +static const struct irq_domain_ops sky1_audss_irq_ops =3D {
-> +	.map	=3D sky1_audss_irq_map,
-> +	.xlate	=3D irq_domain_xlate_onecell,
-> +};
-> +
-> +static void sky1_audss_irq_handler(struct irq_desc *desc)
-> +{
-> +	struct sky1_audss_clks_priv *priv =3D irq_desc_get_handler_data(desc);
-> +	struct irq_chip *chip =3D irq_desc_get_chip(desc);
-> +	unsigned long enabled;
-> +	unsigned int hwirq;
-> +	u32 val;
-> +
-> +	chained_irq_enter(chip, desc);
-> +
-> +	if (!regmap_read(priv->regmap_cru, INFO_AP_IRQC, &val)) {
-> +		enabled =3D val & INFO_AP_IRQC_DMAC_MASK;
-> +		for_each_set_bit(hwirq, &enabled, SKY1_AUDSS_DMAC_IRQS)
-> +			generic_handle_domain_irq(priv->irq_domain, hwirq);
-> +	}
-> +
-> +	chained_irq_exit(chip, desc);
-> +}
-
-[Severity: High]
-What happens if a child DMA interrupt is disabled via disable_irq(),
-disable_irq_nosync(), or suspend_device_irqs() and that channel later
-asserts its level-high interrupt?
-
-Because sky1_audss_irq_chip only provides .irq_mask and .irq_unmask (without
-.irq_disable or IRQCHIP_MASK_ON_SUSPEND) and sky1_audss_irq_map() does not
-set IRQ_DISABLE_UNLAZY, irq_disable() performs a lazy disable: it marks the
-interrupt disabled in software without calling sky1_audss_irq_mask(), leavi=
-ng
-BIT(hwirq) set in INFO_AP_IRQC.
-
-Unlike handle_level_irq() and handle_fasteoi_irq(), handle_untracked_irq()
-does not call mask_irq() when an interrupt arrives while disabled:
-
-    void handle_untracked_irq(struct irq_desc *desc)
-    {
-            raw_spin_lock(&desc->lock);
-
-            if (!irq_can_handle(desc))
-                    goto out_unlock;
-            ...
-
-When the disabled channel asserts its level interrupt, sky1_audss_irq_handl=
-er()
-sees BIT(hwirq) set in INFO_AP_IRQC and calls generic_handle_domain_irq() ->
-handle_untracked_irq(), which returns immediately without masking the gate =
-or
-clearing the source. Once chained_irq_exit() unmasks the parent GIC line,
-won't the level-high parent interrupt immediately re-fire in an infinite ha=
-rd
-IRQ storm?
-
-> +
-> +static void sky1_audss_irq_teardown(void *data)
-> +{
-> +	struct sky1_audss_clks_priv *priv =3D data;
-> +
-> +	regmap_update_bits(priv->regmap_cru, INFO_AP_IRQC,
-> +			   INFO_AP_IRQC_DMAC_MASK, 0);
-> +	irq_set_chained_handler_and_data(priv->parent_irq, NULL, NULL);
-> +	irq_domain_remove(priv->irq_domain);
-> +}
-
-[Severity: High]
-Does sky1_audss_irq_teardown() leak mapped irq_desc descriptors and leave
-dangling pointers when calling irq_domain_remove(priv->irq_domain) without
-first disposing of existing mappings?
-
-When a consumer calls platform_get_irq(), irq_create_fwspec_mapping() maps =
-the
-child virq through sky1_audss_irq_map(), setting desc->irq_data.domain to
-priv->irq_domain, desc->irq_data.chip_data to priv, and desc->irq_data.chip=
- to
-&sky1_audss_irq_chip. Platform consumers do not call irq_dispose_mapping() =
-on
-unbind.
-
-Calling irq_domain_remove() directly without iterating over the domain's
-hwirqs and calling irq_dispose_mapping(irq_find_mapping(priv->irq_domain,
-hwirq)) leaves those virtual IRQ descriptors allocated in the global IRQ tr=
-ee
-with dangling pointers to the freed domain, freed priv, and (if built as a
-module and unloaded) unmapped sky1_audss_irq_chip memory.
-
-> +
-> +static int sky1_audss_irq_init(struct platform_device *pdev,
-> +			       struct sky1_audss_clks_priv *priv)
-> +{
-> +	struct device *dev =3D &pdev->dev;
-> +	int ret;
-> +	int irq;
-> +
-> +	if (!of_property_read_bool(dev->of_node, "interrupt-controller"))
-> +		return 0;
-> +
-> +	irq =3D platform_get_irq(pdev, 0);
-> +	if (irq < 0)
-> +		return irq;
-> +
-> +	priv->irq_domain =3D irq_domain_add_linear(dev->of_node,
-> +						 SKY1_AUDSS_DMAC_IRQS,
-> +						 &sky1_audss_irq_ops, priv);
-
-[Severity: Low]
-Can this fail to build under CONFIG_COMPILE_TEST=3Dy when CONFIG_IRQ_DOMAIN=
- is
-not enabled?
-
-In drivers/clk/cix/Kconfig, CLK_SKY1_AUDSS depends on ARCH_CIX || COMPILE_T=
-EST
-and selects AUXILIARY_BUS, REGMAP_MMIO, and RESET_CONTROLLER, but does not
-select IRQ_DOMAIN. Because irq_domain_add_linear(), irq_domain_remove(),
-irq_domain_xlate_onecell, and generic_handle_domain_irq() are only declared
-when CONFIG_IRQ_DOMAIN is enabled, should CLK_SKY1_AUDSS select IRQ_DOMAIN =
-as
-well?
 
 [ ... ]
 
-> @@ -1110,6 +1225,13 @@ static int sky1_audss_clk_probe(struct platform_de=
-vice *pdev)
->  		goto fail_pm;
->  	}
-> =20
-> +	/* Tear the irqchip down before the runtime-PM cleanup disables clocks.=
- */
-> +	ret =3D sky1_audss_irq_init(pdev, priv);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "failed to set up AUDSS DMA IRQs\n");
-> +		goto fail_pm;
+> +static int d350_slave_params(struct d350_chan *dch,
+> +			     enum dma_transfer_direction direction,
+> +			     phys_addr_t *dev_cpu_addr,
+> +			     enum dma_data_direction *dev_dir,
+> +			     enum dma_slave_buswidth *width, u32 *maxburst)
+> +{
+> +	struct dma_slave_config *config =3D &dch->sconfig;
+> +
+> +	if (direction =3D=3D DMA_MEM_TO_DEV) {
+> +		*dev_cpu_addr =3D config->dst_addr;
+> +		*dev_dir =3D DMA_FROM_DEVICE;
+> +		*width =3D config->dst_addr_width;
+> +		*maxburst =3D config->dst_maxburst;
+> +	} else if (direction =3D=3D DMA_DEV_TO_MEM) {
+> +		*dev_cpu_addr =3D config->src_addr;
+> +		*dev_dir =3D DMA_TO_DEVICE;
+> +		*width =3D config->src_addr_width;
+> +		*maxburst =3D config->src_maxburst;
+> +	} else {
+> +		return -EINVAL;
 > +	}
 > +
->  	pm_runtime_put_sync(dev);
-> =20
->  	return 0;
+> +	return *width && *maxburst ? 0 : -EINVAL;
+> +}
 
 [Severity: High]
-Can sky1_audss_irq_teardown(), sky1_audss_irq_mask(), sky1_audss_irq_unmask=
-(),
-and sky1_audss_irq_handler() access INFO_AP_IRQC while the AUDSS CRU is
-runtime-suspended with its NoC reset asserted and parent clocks disabled?
+Does rejecting d350_config() with -EBUSY when descriptors are present break
+pipelined slave transfers and descriptor reuse, while still leaving
+d350_slave_params() unlocked against concurrent d350_config() calls?
 
-In sky1_audss_clk_runtime_suspend(), suspending the device asserts
-priv->rst_noc and disables all four parent clocks:
+In d350_prep_slave_sg() and d350_prep_dma_cyclic(), all slave configuration
+fields are snapshotted via d350_slave_params() into the newly allocated
+struct d350_desc when preparing a descriptor, so updating dch->sconfig does
+not affect already-prepared descriptors.
 
-    reset_control_assert(priv->rst_noc);
+However, d350_config() returns -EBUSY whenever dch->desc is set or any of
+desc_allocated, desc_submitted, or desc_issued is non-empty. That prevents
+clients from reconfiguring the channel for a subsequent transfer while an
+earlier one is allocated or in flight. In addition, because
+dmac->dma.descriptor_reuse is true, vchan_vdesc_fini() places completed
+DMA_CTRL_REUSE descriptors back onto dch->vc.desc_allocated, causing all
+subsequent dmaengine_slave_config() calls to fail with -EBUSY until the
+reusable descriptor is freed or terminated.
 
-    sky1_audss_clks_disable(priv);
+At the same time, d350_prep_slave_sg() and d350_prep_dma_cyclic() call
+d350_slave_params() before vchan_tx_prep() acquires dch->vc.lock and inserts
+the descriptor onto dch->vc.desc_allocated:
 
-There appear to be three paths where INFO_AP_IRQC is accessed while the CRU=
- is
-in this unclocked/reset state:
+  d350_prep_slave_sg() / d350_prep_dma_cyclic()
+    d350_slave_params()   <-- reads dch->sconfig without dch->vc.lock
+    ...
+    vchan_tx_prep()       <-- acquires dch->vc.lock and adds to desc_alloca=
+ted
 
-1. At the end of sky1_audss_clk_probe() (and at fail_pm), pm_runtime_put_sy=
-nc()
-suspends the device immediately if no consumer clock is prepared. Likewise,
-during driver unbind, __device_release_driver() runs pm_runtime_put_sync()
-before devres_release_all(). Because the device is already runtime-suspended
-before devres teardown starts, registering sky1_audss_irq_teardown() after
-sky1_audss_clk_rpm_cleanup() does not keep the CRU clocked when
-sky1_audss_irq_teardown() calls regmap_update_bits() on INFO_AP_IRQC.
+If dmaengine_slave_config() -> d350_config() runs concurrently with
+d350_prep_slave_sg() or d350_prep_dma_cyclic(), d350_slave_params() can rea=
+d a
+partially updated dch->sconfig while memcpy() is executing under
+dch->vc.lock. Should d350_config() allow updating dch->sconfig while
+descriptors exist, and should d350_slave_params() read dch->sconfig under
+dch->vc.lock?
 
-2. In sky1_audss_irq_init(), priv->irq_domain is created without calling
-irq_domain_set_pm_device(priv->irq_domain, dev). As a result, requesting or
-freeing a child DMA IRQ does not runtime-resume dev before
-sky1_audss_irq_unmask() or sky1_audss_irq_mask() accesses INFO_AP_IRQC (and
-any gate bit written while suspended would be overwritten by sky1_reg_save
-on the next runtime resume).
+[ ... ]
 
-3. In sky1_audss_clk_pm_ops, pm_runtime_force_suspend() and
-pm_runtime_force_resume() are wired to normal system sleep callbacks via
-SET_SYSTEM_SLEEP_PM_OPS() rather than noirq callbacks, so the CRU is placed
-in reset and unclocked during dpm_suspend() while the chained handler
-sky1_audss_irq_handler() and child IRQs are still active.
+> @@ -347,6 +897,7 @@ static int d350_terminate_all(struct dma_chan *chan)
+> =20
+>  	spin_lock_irqsave(&dch->vc.lock, flags);
+>  	writel_relaxed(CH_CMD_STOP, dch->base + CH_CMD);
+> +	dch->stopping =3D true;
+>  	if (dch->desc) {
+>  		if (dch->status !=3D DMA_ERROR)
+>  			vchan_terminate_vdesc(&dch->desc->vd);
+> @@ -360,16 +911,105 @@ static int d350_terminate_all(struct dma_chan *cha=
+n)
+>  	return 0;
+>  }
+> =20
+> +static int d350_wait_for_stop(struct d350_chan *dch)
+> +{
+> +	u32 cmd;
+> +	int ret;
+> +
+> +	if (!READ_ONCE(dch->stopping))
+> +		return 0;
+> +
+> +	/* STOPCMD clears only after the channel has stopped using commands. */
+> +	ret =3D readl_poll_timeout(dch->base + CH_CMD, cmd,
+> +				 !(cmd & CH_CMD_STOP), 10,
+> +				 D350_STOP_TIMEOUT_US);
+> +	if (ret)
+> +		dev_warn(dch->vc.chan.device->dev,
+> +			 "channel %d failed to stop\n", dch->vc.chan.chan_id);
+> +	else
+> +		WRITE_ONCE(dch->stopping, false);
+> +
+> +	return ret;
+> +}
 
-Should the driver set irq_domain_set_pm_device(), ensure runtime PM is acti=
-ve
-around the register write in sky1_audss_irq_teardown(), and move the system
-sleep callbacks to noirq?
+[Severity: High]
+What happens if a client calls dmaengine_terminate_async() ->
+d350_terminate_all() and then issues a new transfer via
+dma_async_issue_pending() -> d350_issue_pending() -> d350_start_next() befo=
+re
+calling dmaengine_synchronize()?
+
+In d350_terminate_all(), CH_CMD_STOP is written to CH_CMD, dch->stopping is
+set to true, and dch->desc is cleared to NULL under dch->vc.lock without
+waiting for CH_CMD_STOP to clear. If d350_issue_pending() is called next,
+d350_start_next() sees dch->desc =3D=3D NULL and immediately writes the new
+descriptor's registers and CH_CMD_ENABLE while CH_CMD_STOP may still be act=
+ive
+in hardware, and without clearing dch->stopping.
+
+Additionally, in d350_wait_for_stop(), WRITE_ONCE(dch->stopping, false) runs
+outside dch->vc.lock. If d350_terminate_all() runs on another CPU after
+readl_poll_timeout() finishes polling CH_CMD but before
+WRITE_ONCE(dch->stopping, false) executes, dch->stopping is overwritten with
+false. A subsequent d350_synchronize() for that second termination will then
+see dch->stopping =3D=3D false and skip waiting for CH_CMD_STOP before
+vchan_synchronize() frees the descriptor's command pool buffers and unmaps
+peripheral resources.
+
+> +
+>  static void d350_synchronize(struct dma_chan *chan)
+>  {
+>  	struct d350_chan *dch =3D to_d350_chan(chan);
+> =20
+> +	/* A stop timeout must not skip callback synchronization. */
+> +	d350_wait_for_stop(dch);
+>  	vchan_synchronize(&dch->vc);
+>  }
+> =20
+>  static u32 d350_desc_bytes(struct d350_desc *desc)
+>  {
+> -	return ((u32)desc->xsizehi << 16 | desc->xsize) << desc->tsz;
+> +	return desc->bytes;
+> +}
+> +
+> +static u32 d350_get_cyclic_residue(struct d350_chan *dch)
+> +{
+> +	struct d350_desc *desc =3D dch->desc;
+> +	u32 period_residue =3D desc->bytes - desc->period * desc->period_len;
+> +	u32 linkaddr;
+> +	u32 linkaddrhi;
+> +	u32 hi_new;
+> +	u32 lo_new;
+> +	u64 next_cmd;
+> +	int retries =3D 3;
+> +
+> +	/*
+> +	 * desc->period counts the completed periods, so period_residue is the
+> +	 * residue at the last period boundary. Subtract the progress made in
+> +	 * the running period, read from CH_XSIZE: CH_LINKADDR points at the
+> +	 * command after the one executing, so while the channel is still on the
+> +	 * command of the running period it names the first command of the next
+> +	 * period.
+> +	 */
+> +	hi_new =3D readl_relaxed(dch->base + CH_LINKADDRHI);
+> +	do {
+> +		linkaddrhi =3D hi_new;
+> +		linkaddr =3D readl_relaxed(dch->base + CH_LINKADDR);
+> +		hi_new =3D readl_relaxed(dch->base + CH_LINKADDRHI);
+> +	} while (linkaddrhi !=3D hi_new && --retries);
+> +
+> +	next_cmd =3D (linkaddr & ~CH_LINKADDR_EN) | ((u64)linkaddrhi << 32);
+> +	if (next_cmd !=3D desc->cmds[(desc->period + 1) % desc->periods].dma)
+> +		return dch->residue;
+> +
+> +	period_residue -=3D desc->period_len - d350_get_residue(dch);
+> +
+> +	/*
+> +	 * If the channel stepped to the next period while CH_XSIZE was read,
+> +	 * the size belongs to a command of the next period and mixing it with
+> +	 * the current one would overstate the residue: keep the last reported
+> +	 * value instead.
+> +	 */
+> +	hi_new =3D readl_relaxed(dch->base + CH_LINKADDRHI);
+> +	lo_new =3D readl_relaxed(dch->base + CH_LINKADDR);
+> +	if (hi_new !=3D linkaddrhi || lo_new !=3D linkaddr)
+> +		return dch->residue;
+> +
+> +	return period_residue;
+> +}
+
+[Severity: High]
+Can d350_get_cyclic_residue() permanently freeze dch->residue or return sta=
+le
+residue from a previous period when comparing next_cmd against the
+software-tracked desc->period?
+
+Unlike d350_get_sg_residue(), which locates the active command by matching
+next_cmd against desc->cmds[i].dma, d350_get_cyclic_residue() requires
+next_cmd to equal desc->cmds[(desc->period + 1) % desc->periods].dma, where
+desc->period is incremented once per interrupt in d350_irq():
+
+  if (desc->cyclic) {
+          desc->period =3D (desc->period + 1) % desc->periods;
+          dch->residue =3D d350_get_cyclic_residue(dch);
+          vchan_cyclic_callback(vd);
+  }
+
+This can fail in several ways:
+
+1. If interrupt latency causes two periods to complete before d350_irq() re=
+ads
+and clears CH_STATUS (when desc->periods > 1), the hardware link pointer
+advances by two commands while desc->period only increments by one. Because
+subsequent interrupts advance both hardware and desc->period by one,
+next_cmd !=3D desc->cmds[(desc->period + 1) % desc->periods].dma remains tr=
+ue on
+every subsequent call, freezing dch->residue for the rest of the cyclic
+transfer.
+
+2. In d350_irq(), desc->period is incremented before calling
+d350_get_cyclic_residue(dch), without first updating dch->residue to the new
+period boundary (desc->bytes - desc->period * desc->period_len). If
+d350_get_cyclic_residue() takes either early return to dch->residue (or if
+d350_tx_status() runs after hardware steps to the next period but before
+d350_irq() takes dch->vc.lock), it returns the stale dch->residue from an
+earlier period.
+
+3. If buf_len =3D=3D period_len (desc->periods =3D=3D 1), desc->cmds[0] lin=
+ks to
+itself, so CH_LINKADDR never changes when the period wraps around while
+CH_XSIZE is being read. Also, if a cyclic descriptor is reused,
+d350_start_next() does not reset desc->period to 0.
+
+Could d350_get_cyclic_residue() match next_cmd against desc->cmds[i].dma to
+determine the active period directly from hardware, similar to
+d350_get_sg_residue()?
+
+[ ... ]
+
+> @@ -469,17 +1112,32 @@ static void d350_issue_pending(struct dma_chan *ch=
+an)
+>  static irqreturn_t d350_irq(int irq, void *data)
+>  {
+>  	struct d350_chan *dch =3D data;
+> -	struct device *dev =3D dch->vc.chan.device->dev;
+> -	struct virt_dma_desc *vd =3D &dch->desc->vd;
+> +	struct virt_dma_desc *vd;
+> +	struct d350_desc *desc;
+> +	u32 residue =3D 0;
+>  	u32 ch_status;
+> +	u32 irq_status;
+> +	u32 errinfo =3D 0;
+> =20
+>  	ch_status =3D readl(dch->base + CH_STATUS);
+> -	if (!ch_status)
+> +	irq_status =3D ch_status & (CH_STAT_INTR_DONE | CH_STAT_INTR_ERR);
+> +	if (!irq_status)
+>  		return IRQ_NONE;
+> =20
+> -	if (ch_status & CH_STAT_INTR_ERR) {
+> -		u32 errinfo =3D readl_relaxed(dch->base + CH_ERRINFO);
+> +	if (irq_status & CH_STAT_INTR_ERR)
+> +		errinfo =3D readl_relaxed(dch->base + CH_ERRINFO);
+> +
+> +	writel_relaxed(ch_status, dch->base + CH_STATUS);
+> +
+> +	spin_lock(&dch->vc.lock);
+> +	desc =3D dch->desc;
+> +	if (!desc) {
+> +		spin_unlock(&dch->vc.lock);
+> +		return IRQ_HANDLED;
+> +	}
+
+[Severity: Medium]
+Can an interrupt from a terminated transfer be misattributed to a newly
+started descriptor in d350_irq()?
+
+In d350_irq(), CH_STATUS and CH_ERRINFO are read and cleared before acquiri=
+ng
+dch->vc.lock. Meanwhile, d350_terminate_all() stops the channel and sets
+dch->desc =3D NULL under dch->vc.lock without clearing CH_STATUS, and
+d350_start_next() also does not clear stale status bits in CH_STATUS before
+enabling the next descriptor.
+
+If d350_terminate_all() and a subsequent d350_issue_pending() ->
+d350_start_next() run on another CPU after d350_irq() reads CH_STATUS but
+before d350_irq() acquires dch->vc.lock (or if CH_STAT_INTR_DONE /
+CH_STAT_INTR_ERR was latched just before d350_terminate_all() +
+d350_issue_pending() ran with local IRQs disabled), d350_irq() will see the
+newly started dch->desc under dch->vc.lock and complete or advance the wrong
+descriptor.
+
+Should CH_STATUS be read and cleared under dch->vc.lock, and also cleared in
+d350_terminate_all() / d350_start_next()?
+
+[ ... ]
+
+> @@ -568,23 +1243,32 @@ static int d350_probe(struct platform_device *pdev)
+>  	dev_dbg(dev, "DMA-350 r%dp%d with %d channels, %d requests\n", r, p, dm=
+ac->nchan, dmac->nreq);
+> =20
+>  	dmac->dma.dev =3D dev;
+> +	dmac->dma.src_addr_widths =3D BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED);
+> +	dmac->dma.dst_addr_widths =3D BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED);
+>  	for (int i =3D min(dw, 16); i > 0; i /=3D 2) {
+>  		dmac->dma.src_addr_widths |=3D BIT(i);
+>  		dmac->dma.dst_addr_widths |=3D BIT(i);
+>  	}
+> -	dmac->dma.directions =3D BIT(DMA_MEM_TO_MEM);
+> +	dmac->dma.directions =3D BIT(DMA_MEM_TO_MEM) |
+> +			BIT(DMA_MEM_TO_DEV) |
+> +			BIT(DMA_DEV_TO_MEM);
+>  	dmac->dma.descriptor_reuse =3D true;
+>  	dmac->dma.residue_granularity =3D DMA_RESIDUE_GRANULARITY_BURST;
+>  	dmac->dma.device_alloc_chan_resources =3D d350_alloc_chan_resources;
+>  	dmac->dma.device_free_chan_resources =3D d350_free_chan_resources;
+>  	dma_cap_set(DMA_MEMCPY, dmac->dma.cap_mask);
+> +	dma_cap_set(DMA_SLAVE, dmac->dma.cap_mask);
+> +	dma_cap_set(DMA_CYCLIC, dmac->dma.cap_mask);
+
+[Severity: High]
+Does setting BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED) in src_addr_widths and
+dst_addr_widths break dma_get_slave_caps() callers, and should slave/cyclic
+transfers also check per-channel dch->has_trig and dch->tsz capabilities?
+
+There are a few related capability issues here:
+
+1. DMA_SLAVE_BUSWIDTH_UNDEFINED is 0, so setting
+BIT(DMA_SLAVE_BUSWIDTH_UNDEFINED) sets bit 0 in dmac->dma.src_addr_widths a=
+nd
+dmac->dma.dst_addr_widths. Because dma_get_slave_caps() exports these bitma=
+sks
+directly to clients, callers that compute minimum address alignment via
+__ffs(caps.src_addr_widths) (such as iio_dmaengine_buffer_alloc()) will get
+align =3D 0 instead of 1 and fail transfers with -EINVAL. Could
+d350_buswidth_supported() handle DMA_SLAVE_BUSWIDTH_UNDEFINED explicitly
+instead of advertising BIT(0) in dma.src_addr_widths and dma.dst_addr_width=
+s?
+
+2. Unlike d350_of_xlate(), neither d350_config(), d350_prep_slave_sg(), nor
+d350_prep_dma_cyclic() checks dch->has_trig (and d350_probe() advertises
+DMA_SLAVE and DMA_CYCLIC unconditionally even if no channels support trigge=
+rs
+or dmac->nreq =3D=3D 0). If a channel without trigger support is obtained v=
+ia a
+non-OF path, d350_fill_slave_cmd() will program CH_SRCTRIGINCFG /
+CH_DESTRIGINCFG on hardware that lacks trigger support.
+
+3. Each channel reads its own data width into dch->tsz from CH_BUILDCFG0
+(which d350_prep_memcpy() and d350_prep_memset() respect), whereas
+d350_check_slave_config() only checks the controller-wide widths from
+DMA_BUILDCFG0. If a channel has a narrower data width than the controller
+maximum, d350_fill_slave_cmd() can program desc->tsz =3D __ffs(width) excee=
+ding
+dch->tsz.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023093045.3248=
-630-1-Jelly.Jia@cixtech.com?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023093017.3248=
+454-1-Jelly.Jia@cixtech.com?part=3D2
