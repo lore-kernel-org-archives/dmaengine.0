@@ -1,99 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792712944;
-	b=4Sl5Tp+EzIAplLd1kTNkk8smvCdZuqZBIj3qvqr5H6KK/b1OogOAt3WRnt9fngevXCYD
-	 dnVkY5u/AhoZMQYdF8M1lCFiAg65UEv37hXZmkDjtSf1PE2YpEWGPmrK66gk+r50HP6Z1
-	 gTUsYxXuai107GlBoYRhPS2gcmrhnIj0omodOxG/DOH7w2rxrD5EkGSeLiJ3+NMGOQEYo
-	 ovv12OOqS8+7FKD1sx27dUQ0Qv6eEdUJwkvNtz6r96FWwuA7Y/BzBs3449n/5jy50Grux
-	 CE9czieMHoYi05q02MMrTXWhWEIRQPEpRcbCk8GmYujOUWZpOPBXIlSe+pCbouWPIiw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792712944;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.54
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792725298;
+	b=RcWUEFtDj8EQA+De23yp7Aoa/9pWX3LAuYtX/BAQgfbWAi71ynjx6qlXy8pd3XJ48uBm
+	 5VZQDDAh2WEjPosgieMBR1C6GRMmytlTAwgR5NXc74OHF3Y2M6o0/ffIjmocxR11Bx/Tf
+	 IqIytlPHCGmoS4SqDJGuht+CNs4HCIxZ6O4r5qXH6J65gv4JRIWpQbym8tfh2yxAPvy/F
+	 J62iWgJWPPBXS3Xqbml9tlci4nN6guXox5KNLW9nVbiRVrl+I8M6H1jh9lrKsu09usWVz
+	 ejENZKEIC+tkSAQrlFZ9Ruv0mda04LQA5yBgfp4rYMVd2vdV19H0qmKH6C+CAUgxQ0w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792725298;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=hG4DQLwgfQ2Ox8LPZjYJVttUVZFQq7dsn2e6G1CsU64=;
-	b=bXIX+WIx5jVQSCJ2onmOrAnxJxXV+AmbroQ9gaY7eUCHuNnSYvmikqLXI/lryhvzNiFX
-	 Tm/yh1TYXXTcPc1W+hJHDivJBckko4twpCFpsoIZx7NO9Ka8kT3KQQG1Eityi8Lv/8aHc
-	 FBNAEL/CgDeNyD9mXWl8kFLkGhnywKtRTW/DktHgQVqNQtzmmMl/aFcnMFNnQs3I4GybS
-	 OqCEWYWH09HFkqYEzxjXQ3uBVkm+Fg8dcQoIM/ZcZuyFxrN2sEq4amYIeVuZwhXD1XUs0
-	 xvne7I528hgeiHqHD4Yc/UOSUNwc/kgeIW8W8uuAG7iYlXHL7wF/Cq09ARyCtdYOj7A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nullptr.com;
-	spf=pass smtp.mailfrom=nullptr.com;
-	dkim=pass header.d=nullptr.com header.i=@nullptr.com header.a=rsa-sha256 header.s=google header.b=DUsWdXiN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.171
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
+	b=kKu8JDv9y/scTDjYK3Fxcw+1rCn0ywTfAsgarmm6Evo6uLLK0owaUR6INimR8X+JmK/L
+	 D81u3RoYV+30nNGsTTnYVupRzN2154EO2CYQD5nB1PeQbwG0YP1EOztGNM4qrrbmz+eE6
+	 XyoQHCr3NPuJC+9IY2QkPt7K7O3CGHZD9ngnwDtnUG74E14LCvaBG3E6upfZSSRPM+oxm
+	 H/eo7Y9/8yZVjm8Ne38QxV1rK287vkOj3qqSQy/JZ03K/vzb4VJD1uHrw5Avle6oZIcsW
+	 MDMNk9Axu2B9HAcpkkWNdUdzh8d4X6txtA217nJQiPXmF3MuXaIC9a7YRdi9b+qBi1g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CRVuB6t8;
+	arc=none smtp.remote-ip=209.85.210.54
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCEE606A31B
-	for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 23:49:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9CCEE606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nullptr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nullptr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F2C606A31F
+	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 03:14:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55F2C606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nullptr.com header.i=@nullptr.com header.a=rsa-sha256 header.s=google header.b=DUsWdXiN
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-33fb4680717so958101eec.1
-        for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 16:49:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792712942; cv=none;
-        d=google.com; s=arc-20260327;
-        b=LZWrTYwgDHIMFWi1lycvum0uK2CCXPpON4Y3qb23DQ3n0c7sa3c2L4FQZkHJhvXUxI
-         kSvaUtiDVfdGI9DoNiam4K4YmvA5kGxTsEdA1Ps3YNudlcGFbWqk3iIBucN2UZ8nUoHu
-         7iZ9POUrWo8PMbsb81ZQRAVBgnDztY5MozGDin/VxpsFQGP310ag77VSLrX9hB4Q5afL
-         GdlnEojHnZy4m6YiK4fnRdDG/mKVPX6eWtsimgdcgMbeREj86XT6OmOlD8ZO8GfaU33H
-         OE57IeCF/Uw02VfFxJtbsdW6k/tE+HXzjkGgq1jLLHiWhrp09UFgyIRwaAJYp2h21i4+
-         HC9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=hG4DQLwgfQ2Ox8LPZjYJVttUVZFQq7dsn2e6G1CsU64=;
-        fh=LrM3G6RcmBZ425pLRY8E44TM1XcCb9gU9D3viVl1X8E=;
-        b=moB2aHZHGyMmYd7lTD7/geq07chKsF7h/xNhWyUUCODyto3kcdZRDC1OTEkMrw+rvV
-         n2Kf5P3kfnipktjWguX7pXemqaBH4dKC4oJYVY7Hoic0NBLv/4gz8oLIAVDqOaX/x0cB
-         i7GYv2m/ayrhcug0nCYAMBoynh7RGDhP5W1RsYgAaE+h12G9e22kNWI2bo9mARYo3NS1
-         zBuQ+Y8R+W6OAIYTmnNOdXkXSoNxgEMoojFc2tVf/dyu41RjWCKqu0LcFV7jghltXVim
-         IQbj9e2zhwh9TpxhlWpcSj4HicYgQ6KJ0c8Xo047I6Nu0vj+CCTxdniV/sAdFs1Q+5qV
-         MvhA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CRVuB6t8
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-82109f51565so170284a34.2
+        for <dmaengine@vger.kernel.org>; Thu, 22 Oct 2026 20:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nullptr.com; s=google; t=1792712942; x=1793317742; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hG4DQLwgfQ2Ox8LPZjYJVttUVZFQq7dsn2e6G1CsU64=;
-        b=DUsWdXiNIkyonJuhc1a9JV2AS2DS3jSdzEpBPMLF+oViPS6EDcpwBfyqlKSgRtQM4s
-         tkyiaVog2/s773Lw/IX2YRv20ScNRTRCFTHCeNNjcl+61hboya8bCyzXD/HPoCunr2Qa
-         +zqN5cXQKyXcmK5IGADNX1+uHC3pJ4mILoBtJIeJHEzLRupW9+9F9pna3TmD1NVPev6I
-         uXbFnWjUF6xiOvx/9mM14vALBaq6KUA4ejI5TdHwv4gXzopsTsxqRRjsc2Fs1VVc7NaH
-         ODq9VZAVzF86yCML0svcByNH5VIC3oid9dE4ZQzyCK3GWAMPT1lBV81QGsKCCCoMfhbz
-         h3/w==
+        d=gmail.com; s=20251104; t=1792725297; x=1793330097; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
+        b=CRVuB6t842ohZa4yXpdvYfpQQB+JZ8vtj27hDtwFjjfsa5UNrk86UJADeCMRsIjxqa
+         w3B0jVWLPBZUayQWGSrcT2aVnDgXTItnaxgoVlpFR0TkgL78lUqWRpOcvw636S8Q09BG
+         yR4yZSeT1NkERpWwOviqLHXzV3/8WJ67nFc+NIOzQ9INUQHzivATserbBlCItdspp0t9
+         nYl1KBzbtHGGlRvN5XPXIpomcPCI9a2tQ9/MXBWOYl1Dwfw62iIR875KX9VjUuKyvNoY
+         OiHfKDksxaJAduJszJFW28kswLh+IGB637b2ztelcdgk89wOHROuaxIiA5NcCXkKEzX5
+         RhYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792712942; x=1793317742;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20260707; t=1792725297; x=1793330097;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=hG4DQLwgfQ2Ox8LPZjYJVttUVZFQq7dsn2e6G1CsU64=;
-        b=gpbaFMGpUp5vEuXAO9fufpYZcBITb9Q9YVorDesdjCNecVLZ+2DXHRvNkZO47CirTN
-         ErgGKi5iI+09oqHJNuTJQ7rbkapoz5nv405MaPdqyOzsyt8JP1zV55Y1yioAP9OWzAUX
-         C5qmUQX6BmvcoOMKTPN0/SmqiaAlgyjrSGUkPOr3Dv6buMfvGTHoz0iWW9kqk0gkRIOX
-         UUzzXemGJZe4F+u6hXCppacbsfMS+ndA7eCBhjps00kSwnJ0m1E30x8Gz4ErJNgqZXPx
-         uZ0kqoBg1xFuBL6Jf6+Al2nn276/av9SzIamTPGN3z6vqV0Jf/ByuH9i3TYqIL4BSrl+
-         dShA==
-X-Gm-Message-State: AFq9FYJuGIgmutcbwP0F6KpVzwqtOLqC5704ztoIlOLfJNMF2etfi6gs
-	c6sPuvv0ZLoGT11pWXEoHvhk3ZcsFx5BEPMlufAH0lJxn3F/7B7VtUDX7dLPpYl+zUChmOT5he5
-	vCRl81yJidBOKpE83DhGnJtPnSwlyYjxefua3Q3mOjbCaQEe5LuWkD0bPBg==
-X-Gm-Gg: AYBFou27mEKSe3y7chuic+GOly+0OZ3cyJuMC17z6NRCW/fa21KImzn20Qs/eJuvXwf
-	j1d+XV7zAlBLpNo36HwSx/DzEW3dkZUCsyS6r6ihiJm39v+Ttd4sP5x82DZr42+JQgaCtcwAKLe
-	EudWls1xQfJWQaqR+lDO0DPkuQ5woHzX7BQDjfFD3mf8/hmBz6+B0dGV9i70a4SRTS4NlGlXv2B
-	C7pUVIwg3sHhaYm9dh5jahK0p+wjpIWjTpPWzJv91th0R6UXr1KOXdue+DU734RslB5u0S9HOFu
-	JJD+/Vq3Z+XJ39m/MFED5sUuXhx6AkUNPF+wFRuDfHyBr3F1mwNcoBM6odRt3nnop1Wu4nU6jpy
-	8rDjkU5qFziTeDx10/TMa8f06s26d6x28Ac0uvfWDFcxk112CTu+jHLk3aZea3NgkEXeFg6wmfO
-	ah5YFPDvGH725wBbGkTGs+1JPenzS9gabcQosdo9kQ1hJZumfE1aLy
-X-Received: by 2002:a05:693c:400e:b0:352:4f11:8118 with SMTP id
- 5a478bee46e88-369d9898b71mr851272eec.40.1792712942467; Thu, 22 Oct 2026
- 16:49:02 -0700 (PDT)
+        bh=pm5LxVvpIboHfA4NG+PJUVszg46D0jGE/bRr+E4n5SU=;
+        b=Ik5uwqvmUfq+Um6w8iGM5pZlSU0Sp8j+xkkoyPFkZj0kTY99W8jTtvyLdMXGmJk8nS
+         IZSi9fU21gfaycKGehlYSIc+bAxtuJ3f2KMwup6A5/liXi7w79pHPwMOgj3g1akVYBsF
+         uDYXTzNeQSpGElUi+HOpTutxi5B4L9dHMjLWi7661NaAhHQeXPNUt8wJmfp8uLqzGQlj
+         7CENsNNNmMuZUSVM/mcU4WeAIepevefHUlgStEVTZdWXnW3Qy6MVdMFt9WFxhCFeFw5n
+         YpxinOhVK5CJ3bp/OZjO2rfp4hAPjEiznsQTjXa3h2rgUwtzjz+c2BdWVCI0rVvfSinP
+         xPng==
+X-Forwarded-Encrypted: i=1; AKwUvBw+50Y4xJgHkZda+QWmqMsXIxj4VUI0Yo+id1NYK+iVIt3L/qyFsgGJTkddOqdfIW7qR4b4Dsrs58o=@vger.kernel.org
+X-Gm-Message-State: AFq9FYI/rwXtFtUcSP6RO10wFjPEeCRwNOOmVBqb9j+GImAKaMuf2mMl
+	6SeJlik4aJhUjifyPN09yqI/jFGhddyHuiurclmEziJOQHdK+Q1bRxYe+R/P8dzj
+X-Gm-Gg: AYBFou31mZsKPNPcDofnT8ZITeFKWELxP3mUF4jjjzdGHLgvpBVraU2tHYAue0+UaIT
+	6ZbdJcvcHNILKACSWhVDC0CZvhVRXLibUCudiyG1YAWBERZkqStNZcwGd6ed5yWtTu8pMvKGmtE
+	1W0SPBHWoQOCAjLGISMRZPr/oU+JErMRZytAJPsGD4zMnTRbYVKISCr8cQGYn7WH54UiZhh1NRm
+	to5nDJI7f/ub0/TQFt3MI3WMKLAHccmkmycq12FVY5oEYOq9J2SLDKKfHXtoDa8l/6nWi15OsLf
+	BdyzMoXg7F0zO5fUoqy+g5WKkdcbt09nCBnheIu7neCEP9AxrDpJmv1dQGv3/vPPzjqV9po23gQ
+	7lZGKla6PA9t7w8HYARS/e5O8lw46QS3bhLQ7TWLS5Y+Tq4UtKSv+gJHLBKK0w72ntkE6f+aGxr
+	nWIjuxMCxA2TZy96E5M82L6186FFsfc/lVfWu9u32eanGyP4YChXAn9b8z1CIYmMm4Q3Wqb3K5R
+	HVEbfJnOancTVd256oQFwHduGWkxHPOaqt+rylWQ1rEHtki+FoHbgByjjTLYlMNfUoq25MGWQlf
+	ZvS8hdqRouS/rW1Fkk0cXA3VLiPSdTSFJC7bWGw7yvmeSzgy4ZPDRRpif67TwW+mEIuDnJCQ3T6
+	mLDfWID1ghaowyrKg1vJaGxuUUD/pl3Fr7pkAa7umfNzu/X4H0fF7HZvBYQAowOsqH1xQbzBCU8
+	rc+XM=
+X-Received: by 2002:a05:6830:412a:b0:821:94d2:83cd with SMTP id 46e09a7af769-84fafc689dfmr760717a34.9.1792725297222;
+        Thu, 22 Oct 2026 20:14:57 -0700 (PDT)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-84fbda584d9sm938638a34.13.2026.10.22.20.14.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Oct 2026 20:14:56 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH 0/6] dmaengine: sun6i: fix interrupt routing and channel
+ lifetime
+Date: Thu, 22 Oct 2026 21:14:51 -0600
+Message-Id: <20261022-submit-sun6i-dma-lifetime-next-v1-v1-0-01085f684c9f@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -103,62 +94,73 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com>
- <20261022-xilinx-dma-work-v1-5-20faea2e7a80@nullptr.com> <sashiko-outbox-182123@kernel.org>
-In-Reply-To: <sashiko-outbox-182123@kernel.org>
-From: "Jeff C. Jensen" <kernel@nullptr.com>
-Date: Thu, 22 Oct 2026 16:48:51 -0700
-X-Gm-Features: AclHuK_tK39u8v34AT_NCdYdlPGzw2WXko96m5az-UgWvd_URdgj8AQ-VL9fGOM
-Message-ID: <CAHnw2UnRtTCXuEhXacnVGQfewRQgMbakwbVrgiUvsw550i4jPQ@mail.gmail.com>
-Subject: Re: [PATCH 5/5] dmaengine: xilinx_dma: Recover a withheld AXI DMA channel
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WQy2oDMQxFf2XwugY/ZNnOr5QsbFlqXDrTdmYSA
+ iH/XrfpJitxQfccoZvaeO28qcN0Uytf+tY/lxHsy6ToVJY31r2NrJxxaI1zejvXue9jLNh1m4v
+ +6MJ7n1kvfN31xergyduQBBJYNThfK0u//jlej488IO9M+y/4f2Pl7/OQ7481VcvGmj7noTpMR
+ SQwlhiFMJdIkI0DBAwZTLMJnGuR0D9kZafTuPkwNfQ5AUSEWIpptRoT6uA0wloyMoJjKQmfW4K
+ RrKSWWmZjgQiDESd+YBKiA2/I1xjrcysF51JMTYCpgQxVJGl+vMz6kBm5hlQsizre7z+Uy8BEc
+ wEAAA==
+X-Change-ID: 20261022-submit-sun6i-dma-lifetime-next-v1-53c3158f4841
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, Arnd Bergmann <arnd@arndb.de>, 
+ Maxime Ripard <mripard@kernel.org>, Jens Kuske <jenskuske@gmail.com>, 
+ Jean-Francois Moine <moinejf@free.fr>
+Cc: Hongling Zeng <zenghongling@kylinos.cn>, 
+ Chengfeng Ye <cyeaa@connect.ust.hk>, 
+ Nguyen Minh Tien <tien.nguyenminh@embeddedlinux.blog>, 
+ dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org, 
+ Frank Li <Frank.Li@nxp.com>, Sashiko <sashiko-bot@kernel.org>
+X-Mailer: b4 0.15.2
 
-On Thu, 22 Oct 2026 22:29:28 +0000, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> What happens if terminate is called twice on a withheld channel before
-> dmaengine_synchronize() runs, and the second reset times out?
+Correct interrupt routing and serialize physical-channel ownership across
+allocation, completion, pause and termination. Keep paused virtual channels
+off the allocator, drain completion callbacks before releasing resources,
+and associate cyclic state with the descriptor that owns it.
 
-[...]
+The first patch carries Hongling Zeng's physical-channel indexing fix [0],
+adapted to the configurable interrupt-bank size introduced for A733. The
+second handles partially populated banks, including H3's twelve channels.
+The remaining patches establish the ownership locking, pause bookkeeping,
+callback retirement and per-descriptor cyclic state in that order.
 
-> Wouldn't that cause
-> xilinx_dma_recover_channel() to free chan->quarantine_list, release the
-> segment reservations in chan->seg_used, and allow new transfers or
-> xilinx_dma_free_chan_resources() to free chan->seg_v while the second
-> hardware reset has not completed?
+Based on DMAengine next at aff5e6a77fc6, which includes A733 support, with
+the posted IRQ-safe locking fix [1], channel pause-bit fix [2], and the
+virt-dma synchronization helper from [3] applied first. The synchronization
+patch uses that shared helper for the sun6i device_synchronize callback.
 
-Checked and confirmed, I was able to recreate it on the vendor-kernel
-backport with fail_function: a terminate whose reset completes, then one
-whose reset fails, and synchronize puts the channel back in service.
+[0] https://lore.kernel.org/r/20260706064123.66035-1-zenghongling@kylinos.cn
+[1] https://lore.kernel.org/r/20260926171049.841335-1-tien.nguyenminh@embeddedlinux.blog
+[2] https://lore.kernel.org/r/20261021-submit-sun6i-dma-pause-bit-v1-v1-1-38d286b69dab@gmail.com
+[3] https://lore.kernel.org/r/20261022-submit-mtk-uart-dma-synchronize-v1-v2-1-fdaef0e2edd6@gmail.com
 
-Will fix in v2: a failed reset of a withheld channel goes back through
-xilinx_dma_quarantine_channel(), which now also clears chan->quiesced,
-so any failed reset cancels an earlier completed one.
+Assisted-by: Codex:gpt-6-astra
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Hongling Zeng (1):
+      dmaengine: sun6i: fix physical channel index in interrupt handler
 
-> [Severity: Medium]
-> Can clearing chan->quarantined = false in xilinx_dma_recover_channel()
-> race with an in-flight xilinx_dma_tx_submit() that dropped chan->lock to
-> run xilinx_dma_chan_reset()?
+James Hilliard (5):
+      dmaengine: sun6i: handle the last partial interrupt bank
+      dmaengine: sun6i: serialize channel reassignment with interrupt handling
+      dmaengine: sun6i: track paused virtual channels
+      dmaengine: sun6i: synchronize callbacks before releasing channel resources
+      dmaengine: sun6i: keep cyclic state with the prepared descriptor
 
-[...]
+ drivers/dma/sun6i-dma.c | 153 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 89 insertions(+), 64 deletions(-)
+---
+base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
+change-id: 20261022-submit-sun6i-dma-lifetime-next-v1-53c3158f4841
+prerequisite-patch-id: d6398447647aa0dbb005b5e6dc6ba96e642efa86
+prerequisite-patch-id: f67c1f8d8d9e014cc650f2f37648662430c3b77b
+prerequisite-patch-id: 8522878df4ecd4fb007cfd32611359e6eb58a1ef
 
-> Should xilinx_dma_tx_submit() check whether its own reset attempt failed
-> rather than relying on chan->quarantined remaining true across the lock
-> drop?
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
-Correct, this should be fixed. I don't think the ring-order part can
-happen, since patch 3 requires a descriptor to be submitted before the
-next one is prepared. Queueing the descriptor on the recovered channel
-after the terminate returned is a bug. Can fix in v2: if its own reset
-failed and the channel is no longer withheld, submit cancels the
-descriptor and returns the reset error.
-
-Both issues come from the recovery this patch adds and don't exist in
-1-4, which never clear chan->quarantined, so the fixes stay in 5/5 and
-1-4 are unchanged.
-
-I'll gate v2 on additional reviews to limit churn. Fixes were
-straightforward.
-
--Jeff
