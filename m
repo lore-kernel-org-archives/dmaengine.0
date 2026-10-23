@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792780965;
-	b=Wy4JeqdO4xCk8bhMoeRyE1l0yMzWRLAWJzxGicydS6enn263znQZws5YKIsOm+n2/U4R
-	 WwoIUhWYigZL5h7k5KKxGWBD/R9a2DUN1QCT2G15GKqHKTFFGHyU7bWVKxwdbYoE37+QI
-	 Oglava6MKu61/wG72h07Y0a2p6++n3OgtTNZ0GVMvy8FIs9/JgpQKzrYDgEwQ2LaQJKWy
-	 Mu/OpKjKSqbwTNqWmDVCXm0TCSyH7TFM4hsiAK3RlVMy1F0LtYD4dMveTJSBQub0N5Wlk
-	 xspp8Un3dPpDqJ0M++V9sVx0939brZAH3X1yPKjEam4AcqGSt8h6x471SQQPiZDTLkA==
+	t=1792780966;
+	b=p5WwaqY6gNdipTfagaEjkqio509lH6vi2qCj7Zmjun5CgAsYOEhIoj7kkAxWj/jlLjQk
+	 kjBpz9LeWLrVRd4OVBMAy68n165xSMmSFtsetaDcNC5lx9G5SCA8W+5KvHZ+8z51mqkAY
+	 /waDgRLHOdItRU8QQ15+jVNKHM0CNmc7g78EJ8Ho981r1/F08Iqq6ogw8eeBeFIZboaGz
+	 W6VDy6m7l/LU+7OBVigKECRS2tBIL5G4DTkcM+wnnHZ83s7aBtUQUJuLrtfLb0+x2y2N/
+	 XfqHZ084BW16iJthFXXUrs7Tmr/YBiuBwkM7BUWD8GozyfzPuENyFMsTkm1p2o6Tetg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792780965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792780966;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
-	b=edRB03f7BiGsRPk4fO59SyL+eiMm3ZIA53LtYQO9Sh8ZMuHQAXvkPX8xK+gmboQNbZNv
-	 s/U9NH4Mx6h0+dg++R2Y/Ov+JneUhtO2xFYpqAGzZgBCKW/Ck6S8fgJDk83ByGNynqA3l
-	 jngFDhPdS+JAclPTEcZ0mw6ivzI18ewPobZVP+2wnPxbKzznWkifpYADVLQnlzrQx+86Z
-	 87eXj1snxVfMEkAptl0HqFeLKXW4VIkk20GSIra2Tq6jIplsG145o9K3hVvJBlzpQjOkg
-	 hb5HNua7P21xBbJHIkdGs+p8a45JCSPUEdQqGhWS/6FYGP99kn/EbknlpwwkItCo99A==
+	bh=M4PRNLWENu8KTspo6tzX21p33JWmvMwO8+MOa0PXQoA=;
+	b=d6ywdUxNOrfeRLOudy+wu4qf6dT2Ai4CJVY/WCVZRT1OHannN81H6T4rOMd0JRX/fdUf
+	 7dgd9aPqcngCF1Xaz14BlrmLyOr6l2Q+sos0AZXdO9bZIbLB4YpVDr5N3jrPW36kylkYq
+	 UjrotrqjxaeP5s8lBppBdbwjnnV7chL8SFIVe9uM9O9NDpc4cOR0lvdVNmRBVxEp1bpVf
+	 Q4u0aRk/eJDHCDhal8Dc8MNNurdV0JlmtXFhTcagYCd8Lhf4AQA3x3pgVF3KYPyxY+xeI
+	 5mvvk0MqyGQg8myochluZ4zDr91ucSYt2dGIlVZl8uGQz4tBWYOqP5EH9xXTOy4tWzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=boAmUDgX;
-	arc=none smtp.remote-ip=209.85.210.43
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SLGHX5hu;
+	arc=none smtp.remote-ip=209.85.210.48
+Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81F4606A329
-	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 18:42:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B81F4606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8E9606A334
+	for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 18:42:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6F8E9606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=boAmUDgX
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-84a248254f4so751521a34.0
-        for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 11:42:44 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SLGHX5hu
+Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-8256106635eso619653a34.0
+        for <dmaengine@vger.kernel.org>; Fri, 23 Oct 2026 11:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792780964; x=1793385764; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1792780965; x=1793385765; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
-        b=boAmUDgXp1hX3kYPRavRSDi/Dfdi4D7sJxbXiSJRV98P+/YkSgSgqCBpcS0U6Padpi
-         SvIh4brqcif1qCnWZBtg07XkoDdwxPzxbBkUVU3kuG25SjJHJuJS9U5zRa4YfgMxvy3p
-         NGdxuGXPhT679NodQEH7OlBovG7Zf/eaFaEYT161Tc/DVC3/VfRYH+a+kom9PTnL8jhR
-         ik0k9sDWd7F8uten/xEGvLIpnM/JBq3TUVcMOc5T4WxRHwemMnVMAPOiHRgyAOxPlwZW
-         JX6zrseRPIxDusVPtZsNREFYpz9+1jCtm56ROoYIJ5AkCh05eHH7R8ht6Rj2ED6tN28A
-         RKYA==
+        bh=M4PRNLWENu8KTspo6tzX21p33JWmvMwO8+MOa0PXQoA=;
+        b=SLGHX5huiodZlkNq99J51FiOKv4XM9q9Xs0bDua0NtQlic9V5QXI4qE2XMSNOBPJx9
+         1quJqfbceKvueqHiPAn1D5b/NZrAPzwp7oxvBw+AO+Enmia1OJeTBbl9a4F1qA2BCFxV
+         yvCXLMl7GSV7ESByNrpHN8EFuFDauut2YsNzYoufCL4ViCbIE7zjLMe4bzeWcULIrnde
+         6Uyk+JGtoL20FvIG8F1ltoJMlSTXO/lBKMwb3DyxlwFurfB4gNvzM9gqqwyAn6N6YF/9
+         pC09r1g16TnEIRtCrG4Exl0weDRxoHR6f0jwj1XrSErOBBprwIytHhdRcSntmj/mqw3/
+         aUNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792780964; x=1793385764;
+        d=1e100.net; s=20260707; t=1792780965; x=1793385765;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Yi+Mby52IcSMxw6Bb+wKdKUkb+i4YW8eVg++kxowvr0=;
-        b=pf/EbOQxBmEAOcqoJnmNddil7jajBHq/21JNy2ckoH3nnLy/CLFuGq0aPkZcCGweal
-         o5dfIiIx70VjeoMUlVnBvKfAZoQsBsvqukvo5g4m+qJaumpjhK/YSfTfQLU+KHn6BTri
-         ixfwIhjgyoDebJf7SZ/xL+XO12dI8fjWvOY7j8wKzdEF67fRi1B2Am+ArzE6bWVuCbK/
-         a2EJ0GhGMBqC5JHRV4ZEpFfi8w3Uh+x6oH16Uj3cPd9Jneo3l6Z/TjH4GueYYdrtcnQx
-         pVpnpwb/N4Dqu8vncWkzkV0XM2vMWdOAp327p557zkiiZG1ekqUQb1IlaeXVRREAbp3Q
-         89JA==
-X-Forwarded-Encrypted: i=1; AKwUvBw508bj5wix+iU/ufocwLnS4KL667B9o1ynsNRNkdah3q3RpZI3jecSi4qj1VxVPFXR9MQuUcloBVs=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIF5JtLfskEUHyCIl291hDixNImbq/XF1BCSvSrDwc7JcoNBfBf
-	XFbYtGQtlSTZp6NOXVJnC0xB1USQTJDwWvsZ70JKSdahCzs2OOQrieO3
-X-Gm-Gg: AYBFou2oWtjSB1YNJ1ZG6yPdgOt+MD9nFmC+OCAvuVcK8WKM8gzBkWida0LMidA4NRR
-	TDvUtAcsWHOd4k5OGw/kCkFZhUlvBtU1UWUF7M6Zi2YijFqZ9ZNwTPTv7oEBlSUgRNzvYmxYEEW
-	RKlg3mMZFmMSLh8UQPLMmVqm2V5Bggdm/l5k/vtl7fJekesLe7IpHIaVIYHeIo+bfjtYv5XSQtP
-	ivAdy+zWlNmsqDCqn7EAvycloub+q6P/NY6raklwKosB2XcZ63VDo7Nj968IMxJa/x7hnWAItis
-	dQDYraxtRLMsnO8ZqGirrmTBjkacFK3FfyJZjCplR0ypD67xbkqB8HE8wmmqaQwWVQa3q0eWA2q
-	XEl7iXLs6RV4Bfg2vtrDaagmzosFeQFSEkZNd//kgOP7X2TyZ5g3bxWWMtFFD8MPIb8lfBpBm9m
-	5fbU9dUGlJyY1JoHgEQnoxNgjyUtJnesjrRw4hHDz+sfnsH/qTOVxzX71INLodojg+V2lmQlqVt
-	QW8SRdFkBCWl6Vv3pAUAIoRXrkHgBjdRuyqcL+inHm7NTGtIM5BejFeWeoY1HDSgwJSZwX2KrGj
-	0lQBRhLuMNrR9fVA4uTo/qU402kih7n5f6dl47zXXBegXD2lTwb2FgTdMBx7IiytnumMj4Oz4Fa
-	uWyw0kYtNMk+r+0N7BJgWnwVhSOQZkXLvMtU3kEH07/OLqFDER+iRrjs/rq4sc+uv5CoG6HyySu
-	Btiw==
-X-Received: by 2002:a05:6808:30a3:b0:4cb:818f:d56e with SMTP id 5614622812f47-55c0020ff8amr68675b6e.22.1792780963715;
-        Fri, 23 Oct 2026 11:42:43 -0700 (PDT)
+        bh=M4PRNLWENu8KTspo6tzX21p33JWmvMwO8+MOa0PXQoA=;
+        b=ZeE2B0pBZ/Lmqv121Xyp3IPxCyHY/2GnB8VQ/tOW8gwnCO4Jx+TnQdR8GlGQjUpIwA
+         AmMxNxwGR7WfJkl7Tt2tMka/wPMsnPD3S70tnJ+uc1zk/0ePPwHLH580tOV0eAz7oYkg
+         PrRsyoKo3V0eCnNRKTYk27HQZawd8+jlsGjzRa2euG5WELFo7E3oYxcBjCwW6ajN4rS/
+         cwYMi1TO3Dd7d5xFG3itcvluCiGT7DjUZTS8QqYjj/nmW4TVADIiVoQ0VNNLS5XXtIVU
+         fGWFIeAoCeGI9y99/fQJIBzDtG/XLb3zMUYs1cVp3InSSFmycB6O+rzKs4CHzUArcM77
+         CDNw==
+X-Forwarded-Encrypted: i=1; AKwUvBwhYBYUdgzGjj76hrq7CGCwWlKrEgeXG4xP/zNMzWdY+lFvwlYUdoApAjLN3O6ShlUditOzaPITf+s=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJu6G8E22qRaqHO+avJZtYFa8NkbtswUPkcOZMEEL4LYIFVtD14
+	lu/oR8lH1sq0rrK6gcvFwuytsVXYA2xoI0qC/yxOeMrQD+FNfr4F3N7V
+X-Gm-Gg: AYBFou2gMjpvWMrvOUlsvabniBpu2F527mmB2s/khr1dyZUTXnhED2yxAIBK9EvLAFt
+	2JJiR9QImZC3CqTSaBkLzI9dsrafG935/qVToYEx3UW8b6LLlxha5GDfV+nPNqnHoRohuW9HFBL
+	vbRHDzhHAVsRiaYZv8N3MEcUp8UjBqI55z/X4Mb1WZR2CZi2UA9tuExjR2N46/X6NxoZARt8S7N
+	tnoN92cbprMa+sNmP7bVGo5cgn1NOg0qRUfX57CrYijoaX5kzJP9of7pJyObz8i4LA+Xtp0s8Mm
+	4BE09ybE8Upb+YGo6Tx5gQJyNDVxne6PRVLkJ2VhWJTuhXqz8RkTnICduYFbP9VtiwJDS4xVm6h
+	qf9B3bb5YJpUR1FdEL4F5L041CsGsUD+9X6h9fdS4sgaBANhlIKbiZRvufuTTc/zub8f2PO9K5F
+	jPB3Emtz9hhNyp4E7o31g1EUw4Qbnv+xxSzPoS5HDiFmehBkNCRxvm7W7qtslM91XZOzkHX9N/c
+	6JWV3ldpWe9X2ha85T+SnybqUd3uIvoSWDkynkqOIV0QCeu5LS2ao66WOFkY9EjD4PMa3/Vxo9q
+	TgCZkuG1VMU2vLJaoTIGzmtHCXoBc0vJXHapkDOBjxnvpZtlJB258ia58pzMoDG8uUjKDPiw2U6
+	ZbSrjzcQz4X374SvYODBntxSiZmvlMZ9zUaVTVhsF13fA/WhDyXQJgIBdo6HLQDGQH8tFcT/5Hf
+	88qA==
+X-Received: by 2002:a05:6808:1819:b0:539:596f:6623 with SMTP id 5614622812f47-55c0035e613mr53516b6e.64.1792780965312;
+        Fri, 23 Oct 2026 11:42:45 -0700 (PDT)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-55bfe199544sm336682b6e.13.2026.10.23.11.42.42
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-55bfe199544sm336682b6e.13.2026.10.23.11.42.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 11:42:43 -0700 (PDT)
+        Fri, 23 Oct 2026 11:42:44 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 23 Oct 2026 12:42:35 -0600
-Subject: [PATCH v2 1/6] dmaengine: sun6i: fix physical channel index in
- interrupt handler
+Date: Fri, 23 Oct 2026 12:42:36 -0600
+Subject: [PATCH v2 2/6] dmaengine: sun6i: handle the last partial interrupt
+ bank
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -96,7 +96,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-1-c9e07cc44bf8@gmail.com>
+Message-Id: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-2-c9e07cc44bf8@gmail.com>
 References: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-0-c9e07cc44bf8@gmail.com>
 In-Reply-To: <20261023-submit-sun6i-dma-lifetime-next-v1-v2-0-c9e07cc44bf8@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
@@ -109,44 +109,56 @@ Cc: Hongling Zeng <zenghongling@kylinos.cn>,
  Nguyen Minh Tien <tien.nguyenminh@embeddedlinux.blog>, 
  dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org, 
- James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org, 
- Frank Li <Frank.Li@nxp.com>
+ James Hilliard <james.hilliard1@gmail.com>, 
+ Sashiko <sashiko-bot@kernel.org>
 X-Mailer: b4 0.15.2
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+The number of physical channels need not be a multiple of the number
+covered by an interrupt-status register. H3 has twelve channels and
+eight channels per bank. Rounding down the number of banks leaves its
+channels 8 through 11 without completion handling.
 
-The interrupt handler iterates over register banks in the outer loop,
-but the physical channel lookup uses only the inner loop index. It
-therefore handles every bank as if it belonged to the first channels.
+Round up the number of banks to visit, and stop processing the last bank
+at num_pchans so unused status bits cannot index past the physical-channel
+array. Use the controller's configured bank size for both limits and
+the physical-channel index.
 
-For controllers with eight channels per bank, interrupts from channels
-8 and above are routed to channels 0-7. On A733, each bank covers one
-channel, so every interrupt is routed to channel 0. This can falsely
-complete descriptors for unrelated channels and corrupt their data.
-
-Use the absolute channel index, calculated from the bank number and the
-controller's configured number of channels per bank.
-
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-[james: use the configured bank size and describe the A733 case]
+Fixes: f008db8c00c1 ("dmaengine: sun6i: Add support for Allwinner H3 (sun8i) variant")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260706065650.34B131F00A3A@smtp.kernel.org
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- drivers/dma/sun6i-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/sun6i-dma.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 8752969366ff..9d94a37fcf10 100644
+index 9d94a37fcf10..0a9645171180 100644
 --- a/drivers/dma/sun6i-dma.c
 +++ b/drivers/dma/sun6i-dma.c
-@@ -603,7 +603,7 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+@@ -587,12 +587,13 @@ static void sun6i_dma_tasklet(struct tasklet_struct *t)
+ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+ {
+ 	struct sun6i_dma_dev *sdev = dev_id;
++	u32 channels_per_reg = sdev->cfg->num_channels_per_reg;
+ 	struct sun6i_vchan *vchan;
+ 	struct sun6i_pchan *pchan;
+ 	int i, j, ret = IRQ_NONE;
+ 	u32 status;
+ 
+-	for (i = 0; i < sdev->num_pchans / sdev->cfg->num_channels_per_reg; i++) {
++	for (i = 0; i < DIV_ROUND_UP(sdev->num_pchans, channels_per_reg); i++) {
+ 		status = sun6i_read_irq_stat(sdev, i);
+ 		if (!status)
+ 			continue;
+@@ -602,8 +603,9 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+ 
  		sun6i_write_irq_stat(sdev, i, status);
  
- 		for (j = 0; (j < sdev->cfg->num_channels_per_reg) && status; j++) {
--			pchan = sdev->pchans + j;
-+			pchan = sdev->pchans + i * sdev->cfg->num_channels_per_reg + j;
+-		for (j = 0; (j < sdev->cfg->num_channels_per_reg) && status; j++) {
+-			pchan = sdev->pchans + i * sdev->cfg->num_channels_per_reg + j;
++		for (j = 0; j < channels_per_reg &&
++		     i * channels_per_reg + j < sdev->num_pchans && status; j++) {
++			pchan = sdev->pchans + i * channels_per_reg + j;
  			vchan = pchan->vchan;
  			if (vchan && (status & vchan->irq_type)) {
  				if (vchan->cyclic) {
