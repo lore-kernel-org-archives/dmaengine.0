@@ -1,58 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792911957;
-	b=sZiZw6uLhjfComzpoBS6oyfHiYLKzsW8ktLWjTHixL2mHn1CxR53NRFd3gyBlX9D3L7N
-	 eCwKphuNUB+qGNTXRszjC52FlAFv7p0vDUYk4tB/j+rUGtoYX1KB70EHCpbDlRBwoWrV8
-	 prSnefDlOoT44ZeaOsSgKdlrbCfHfrd6s1ZSgIT1852GO83hNOIexviIu7NaRglsjFKnU
-	 a5NDQNe9Iavw4m5GE+jCULat00D2slikeBMjVluiyuirOZil8Bx2RynRIAiutxB2qOtBO
-	 2wbYvWPHwbS3EYfd4jJ3dHXKWCXor6j99haKQF6P9jij7TWQm0/GPhreVA71QeSoZDw==
+	t=1792916395;
+	b=2nc8MGWaayQcHn2qyFRdDTyR3bAi6uishiYCS8X2scc/oB6Utkccq7tQ3FGU69dSfM9L
+	 HcnlnKJIEIcy+S32ymP2XG+wV7qtOSQQBcxmfR4n8Rx6kqGuxPzRcou4y0krag/RLWL4N
+	 xlU57Z5drNIgJ9c58gYQ6GSvawzXIXpEx4xNx/xlXM88LWybKbxuRBoj3N2EMYt/U6D0l
+	 GsovabuWxBrT4ZxvFe8bnyivOKMAR93mfYnKChRSaUlwRRv2SbCjX+xiYGD7tNE4ofCkS
+	 hFpX5FPHXNbva+bo5kO0x3OiskKlYqjMZobMg43X0EJq+JGvg3htD6mZLPvXPOEwgGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792911957;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:To:Cc:References:Subject:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=ZHgf9Oqz4kON6PIRMceQHOAtbrDTsic99xdcjhJ2H64=;
-	b=qrBLFwICYuNYMVycYX02wUNfxNPRTuyEJkc/ZWAMbSzXshug3SqBpxip7s5+HAHW8or7
-	 38rd9UmGIC7gpe0KOkBtv5zoC45z7QA38tu1RmrXiT86FlK3Ur3yDY9iv4rH0KUBEioCA
-	 dBh1Fx8E0oWzEED0m7J/wOWTOXLDG6yOGFPlnYkdnPbv3lXsZnzOyLjZl7cZLm6RQDxBs
-	 qIQArJC2XuxV7ipVViOBYIPYb9aeqR4isydyDu1VQ0oFnd5vt3SyjeoITrRNZ9yGoO5Uy
-	 InQiUWoofvxQc5b1SrrRndl1H2jWtAXHuKjUdILrsIP79JJT0NQ8FGb6hKL4dcJ2Hvw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792916395;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=L5vQuDzdFc2/TL510zPfdcRtJl0VtToAbSliAS1HTxU=;
+	b=rZj4CB5fpowne23V8vu+PPDpNSAnG3BCV1bTe3el5kk9uutOI0Xd2FZYQ6vtqx3k7uDL
+	 //Oq5Qa+fWWoKtSIo9d3vQwCSwANXqGENYqPovDgu7xtY8NMk8mfkMxhcvX23RZVV9tN/
+	 E/miwnfvpOYVYyp8bb8+4FRYLusBO18YO+1/CtPYDUxK8IoMGMPMkebLrxJ8hRpijpBqv
+	 VKH9dEh3nFJKJFzlhPjGFjQTM/zO14T0kFrMU3JhcnjS6sUemA58kn7QbkFqe9czEDciG
+	 nk53YhNJAqwu0f4JciJBJIqAqpCRC9uPxQPYzTAAWxvEa5Av7BMqoIF9BPYauE3l9Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=web.de;
-	spf=pass smtp.mailfrom=web.de;
-	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b="L74DT/QZ";
-	arc=none smtp.remote-ip=212.227.17.11
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WzAKHX8L;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E91606A31A;
-	Sun, 25 Oct 2026 07:05:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77E91606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E61606A31D
+	for <dmaengine@vger.kernel.org>; Sun, 25 Oct 2026 08:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=L74DT/QZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1792911948; x=1793516748; i=markus.elfring@web.de;
-	bh=ZHgf9Oqz4kON6PIRMceQHOAtbrDTsic99xdcjhJ2H64=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=L74DT/QZ5OrxkqjZphSLivWVoYV3OMfwcsBKutCrePr94HvT8gz2BcL7yVaEFzCg
-	 X9VKCpnpYFdpGL43/ETmw8hURDslMpAZ9MIFR40YcOYiiogC61MtSJkTAZhkmVvkL
-	 A/iVYqlh+WCznTl6GG8zhfKHntNbcbLsBCdMcdVHRO2u+cB6upvwU89cOVovXZ9Xk
-	 0CsB8rO4rWUhRzXFkiYlaNVLXE7O5FGem8o6x/CCMBm/14rdkh7ussiJLORo6mz0t
-	 YxoiDnnlI+g5+oWxv0dk9tUMHPKGZGWdEN0KaU9Q2QboGYSY1nRWV3H7BoNDEq3VU
-	 2LT3cuLrD/x+ynI9Mg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mt8kN-1wRWkv0TUH-00tU96; Sun, 25
- Oct 2026 08:05:48 +0100
-Message-ID: <ad468ad8-c7d2-4737-ac43-827fe02aec04@web.de>
-Date: Sun, 25 Oct 2026 08:05:26 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WzAKHX8L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECD41F031E2
+	for <dmaengine@vger.kernel.org>; Sun, 25 Oct 2026 08:19:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792916395;
+	bh=L5vQuDzdFc2/TL510zPfdcRtJl0VtToAbSliAS1HTxU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=WzAKHX8LEKtVY9zk/E0YetCkq2IqbixZ7eZFlY/NmT7GiAah5KaknkLqcn/zwSbwJ
+	 gHqHvRfXpLvPvoidVb/SYEEyIRzBPFcZRrw6wbGd5qfYPf7NbCBTgfx20xfv2Wkujn
+	 zzUzIRMCKFFAahKL7MCARqNDC7m9S1ZVCXl7Ju+dIfftNXxyRIW46fUFdhNdAJsNga
+	 rWQU/U8ZL4VSyU2YWSMSNWbkigaHIvS20j8s0vfWNAI2DTwwq/74JxrdKrJIcm5pCI
+	 oQMFEzgwDvIPUHei0BYUSvS/FSdsgBeEht2Y7Rxb0tBdoN+zKRlT8vduTVsgmNsExX
+	 zFDpd3TNw47NA==
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6acb57c2b88so2428809a12.2
+        for <dmaengine@vger.kernel.org>; Sun, 25 Oct 2026 01:19:54 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBxOJtX8/FeNzIkVveeRUuqAtlhNYoJdKRB2pLkEpKcJd9QLbijS2uBeNyAI/o7nCasvZ2UMw71miVA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKgQQ2Eta/Od9uNopO3N4gH+0l7kek38Y+2hihbA6OugYL123OK
+	eCa2MsAMrzDHMFKPGqfGP8X9gaJekHmtjsMFY9vRRlj+6XxrEI3YgLjddhnVdPqdrwVWrJL4ub8
+	yHnqzM3XoBBgdFZzXWq8H5MhYHpjFdBM=
+X-Received: by 2002:a05:6402:448c:b0:6b1:d2ee:3933 with SMTP id
+ 4fb4d7f45d1cf-6b443122e1cmr5036368a12.45.1792916393592; Sun, 25 Oct 2026
+ 01:19:53 -0700 (PDT)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,130 +59,526 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Xianwei Zhao <xianwei.zhao@amlogic.com>, dmaengine@vger.kernel.org,
- linux-amlogic@lists.infradead.org, Frank Li <Frank.Li@kernel.org>,
- Vinod Koul <vkoul@kernel.org>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Christophe Jaillet <christophe.jaillet@wanadoo.fr>
-References: <20261023-fix-a9-dma-wq-v1-1-b414de837e6e@amlogic.com>
-Subject: Re: [PATCH] dmaengine: amlogic: fix workqueque not free when probe
- failed
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20261023-fix-a9-dma-wq-v1-1-b414de837e6e@amlogic.com>
-Content-Type: text/plain; charset=UTF-8
+References: <cover.1791535540.git.zhoubinbin@loongson.cn> <54a6180b35353d2c03c5a752305636baacd02e9c.1791535540.git.zhoubinbin@loongson.cn>
+In-Reply-To: <54a6180b35353d2c03c5a752305636baacd02e9c.1791535540.git.zhoubinbin@loongson.cn>
+From: Huacai Chen <chenhuacai@kernel.org>
+Date: Sun, 25 Oct 2026 16:19:42 +0800
+X-Gmail-Original-Message-ID: <CAAhV-H5s9o=9t7cmdh-C3TaAnfxeJkE-gKiD6s+mVn_XoN7GxA@mail.gmail.com>
+X-Gm-Features: AclHuK87Nz-siV_1h94HZiErIw95AdvaGDUsSMYLDb1N_pU5439lWqar8k2C89Y
+Message-ID: <CAAhV-H5s9o=9t7cmdh-C3TaAnfxeJkE-gKiD6s+mVn_XoN7GxA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] dmaengine: loongson: Add Loongson-2K0300 APB DMA
+ mux driver
+To: Binbin Zhou <zhoubinbin@loongson.cn>
+Cc: Binbin Zhou <zhoubb.aaron@gmail.com>, Huacai Chen <chenhuacai@loongson.cn>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	Xuerui Wang <kernel@xen0n.name>, loongarch@lists.linux.dev, devicetree@vger.kernel.org, 
+	Keguang Zhang <keguang.zhang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3rws5CI/7MTBtlb3WWWM7Mr/AAe2xTFSlBPb/BKb9JvCUh/l1nC
- xuANG5mzetSBpvtI8Rkk94q3zpGG8LLE39yjbv/1cHqMSarUgk6Yq0A0tB5L71r4S3JPhmB
- h+DCu+xqV2cTGOqHp1tdbLX7k1R21RBAhu1gQOoGlljmVj+noCUb2LzUDZO9nw/AmLvV5Qs
- GLy6iBH8xS/4QxnthRUGQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:cTkS9iLFIfM=;zX3Zcqlmq55WnSqqryhUzqE5rZt
- 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
 
-> when probe failed, workqueue not free. Convert the driver to use
-=E2=80=A6
+Hi, Binbin,
 
-I find this wording approach improvable.
+On Fri, Oct 9, 2026 at 5:20=E2=80=AFPM Binbin Zhou <zhoubinbin@loongson.cn>=
+ wrote:
+>
+> The Loongson-2K0300 DMA mux is not a standalone DMA controller. It is
+> implemented as a set of routing fields in the chip global configuration
+> registers CHIP_CTRL13/14/15, which select which physical channel of the
+> on-chip CMC DMA controller handles each peripheral DMA request.
+>
+> Add a driver that exposes these routing fields as an OF DMA router. The
+> router's allocation callback validates the <request> <channel> <flags>
+> specifier, programs the corresponding CHIP_CTRL register field, and then
+> rewrites the specifier to <channel> <flags> so that the parent CMC DMA
+> controller's xlate is used.
+>
+> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+> ---
+>  MAINTAINERS                                 |   1 +
+>  drivers/dma/loongson/Makefile               |   1 +
+>  drivers/dma/loongson/loongson2-apb-dmamux.c | 398 ++++++++++++++++++++
+>  3 files changed, 400 insertions(+)
+>  create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 78622b255f88..0b0c6ea41c64 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -15355,6 +15355,7 @@ F:      Documentation/devicetree/bindings/dma/loo=
+ngson,ls2k0300-dmamux.yaml
+>  F:     Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
+>  F:     drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>  F:     drivers/dma/loongson/loongson2-apb-dma.c
+> +F:     drivers/dma/loongson/loongson2-apb-dmamux.c
+>  F:     include/dt-bindings/dma/loongson,ls2k-dmamux.h
+>
+>  LOONGSON LS2X I2C DRIVER
+> diff --git a/drivers/dma/loongson/Makefile b/drivers/dma/loongson/Makefil=
+e
+> index 48c19781e729..271fd38fa8f2 100644
+> --- a/drivers/dma/loongson/Makefile
+> +++ b/drivers/dma/loongson/Makefile
+> @@ -2,3 +2,4 @@
+>  obj-$(CONFIG_LOONGSON1_APB_DMA) +=3D loongson1-apb-dma.o
+>  obj-$(CONFIG_LOONGSON2_APB_DMA) +=3D loongson2-apb-dma.o
+>  obj-$(CONFIG_LOONGSON2_APB_CMC_DMA) +=3D loongson2-apb-cmc-dma.o
+> +obj-$(CONFIG_LOONGSON2_APB_CMC_DMA) +=3D loongson2-apb-dmamux.o
+Here we can use
+obj-$(CONFIG_LOONGSON2_APB_CMC_DMA) +=3D loongson2-apb-cmc-dma.o
+loongson2-apb-dmamux.o
 
-See also:
-[PATCH v2] dmaengine: amlogic: Fix missing destroy_workqueue() at error pa=
-th in aml_dma_probe()
-https://lore.kernel.org/dmaengine/13a835b1770e360af7991bb4c91ce52a8d01e331=
-.1792785154.git.christophe.jaillet@wanadoo.fr/
+Huacai
 
-Regards,
-Markus
+> diff --git a/drivers/dma/loongson/loongson2-apb-dmamux.c b/drivers/dma/lo=
+ongson/loongson2-apb-dmamux.c
+> new file mode 100644
+> index 000000000000..01bd3ce4ca25
+> --- /dev/null
+> +++ b/drivers/dma/loongson/loongson2-apb-dmamux.c
+> @@ -0,0 +1,398 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * Loongson2 SoC APB DMA Mux Controller
+> + *
+> + * Copyright (C) 2026 Loongson Technology Corporation Limited
+> + *
+> + * Device tree bindings:
+> + *
+> + *   2K0300:
+> + *     dma_mux: dma-mux@16000134 {
+> + *             compatible =3D "loongson,ls2k0300-dmamux";
+> + *             reg =3D <0x0 0x16000134 0x0 0xc>;
+> + *             #dma-cells =3D <3>;
+> + *             dma-masters =3D <&dma>;
+> + *             dma-requests =3D <22>;
+> + *     };
+> + *
+> + * DMA specifier: <request> <channel> <flags>
+> + *   - request: peripheral request ID (LS2K0300_DMA_*)
+> + *   - channel: target physical DMA channel
+> + *   - flags:   channel configuration flags forwarded to the parent DMA
+> + *              controller
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/cleanup.h>
+> +#include <linux/device.h>
+> +#include <linux/dmaengine.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_dma.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +#include <linux/spinlock.h>
+> +
+> +#include <dt-bindings/dma/loongson,ls2k-dmamux.h>
+> +
+> +/* Loongson-2K0300 registers definitions */
+> +#define LS2K0300_CHIP_CTRL13           0x00
+> +#define LS2K0300_CHIP_CTRL14           0x04
+> +#define LS2K0300_CHIP_CTRL15           0x08
+> +
+> +/* CHIP_CTRL13 bitfields */
+> +#define CTRL13_UART0_DMA_MAP           GENMASK(17, 16)
+> +#define CTRL13_UART1_DMA_MAP           GENMASK(19, 18)
+> +#define CTRL13_UART2_DMA_MAP           GENMASK(21, 20)
+> +#define CTRL13_UART3_DMA_MAP           GENMASK(23, 22)
+> +#define CTRL13_UART4_DMA_MAP           GENMASK(25, 24)
+> +#define CTRL13_UART5_DMA_MAP           GENMASK(27, 26)
+> +#define CTRL13_UART6_DMA_MAP           GENMASK(29, 28)
+> +#define CTRL13_UART7_DMA_MAP           GENMASK(31, 30)
+> +
+> +/* CHIP_CTRL14 bitfields */
+> +#define CTRL14_UART8_DMA_MAP           GENMASK(1, 0)
+> +#define CTRL14_UART9_DMA_MAP           GENMASK(3, 2)
+> +#define CTRL14_I2C0_DMA_MAP            GENMASK(5, 4)
+> +#define CTRL14_I2C1_DMA_MAP            GENMASK(7, 6)
+> +#define CTRL14_I2C2_DMA_MAP            GENMASK(9, 8)
+> +#define CTRL14_I2C3_DMA_MAP            GENMASK(11, 10)
+> +#define CTRL14_SPI2_DMA_MAP            GENMASK(13, 12)
+> +#define CTRL14_SPI3_DMA_MAP            GENMASK(15, 14)
+> +#define CTRL14_I2S_DMA_MAP             GENMASK(17, 16)
+> +#define CTRL14_ADC_DMA_MAP             GENMASK(20, 18)
+> +#define CTRL14_CAN0_DMA_MAP            GENMASK(23, 21)
+> +#define CTRL14_CAN1_DMA_MAP            GENMASK(26, 24)
+> +#define CTRL14_CAN2_DMA_MAP            GENMASK(29, 27)
+> +#define CTRL14_CAN3_DMA_MAP            GENMASK(31, 30)
+> +
+> +/* CHIP_CTRL15 bitfields */
+> +#define CTRL15_CAN3_DMA_MAP_HI         BIT(0)
+> +
+> +#define LS2K0300_DMA_MAX_CHANNEL       7
+> +
+> +/**
+> + * enum loongson2_dmamux_type - Type of the mapping field
+> + * @LOONGSON_DMAMUX_PAIR: 2-bit field, value selects a channel pair
+> + *                        (0/1, 2/3, 4/5, 6/7).
+> + * @LOONGSON_DMAMUX_SINGLE: 3-bit field, value selects a single channel
+> + *                          or controller index directly.
+> + */
+> +enum loongson2_dmamux_type {
+> +       LOONGSON_DMAMUX_PAIR,
+> +       LOONGSON_DMAMUX_SINGLE,
+> +};
+> +
+> +/**
+> + * struct loongson2_dmamux_map - DMA request to register bitfield mappin=
+g
+> + * @reg: Register offset from the controller base
+> + * @mask: Bitfield mask within the register
+> + * @type: Mapping type (pair or single)
+> + * @high_reg: Optional extension register offset (0 if unused)
+> + * @high_shift: Bit position in the extension register
+> + */
+> +struct loongson2_dmamux_map {
+> +       u32 reg;
+> +       u32 mask;
+> +       enum loongson2_dmamux_type type;
+> +       u32 high_reg;
+> +       u8 high_shift;
+> +};
+> +
+> +/**
+> + * struct loongson2_dmamux_config - SoC-specific DMA mux configuration
+> + * @maps: Pointer to the request mapping table
+> + * @num_maps: Number of entries in @maps
+> + * @max_channel: Highest valid channel/controller index
+> + * @parent_args_count: Number of cells to write to dma_spec->args[]
+> + *                     when forwarding to the parent xlate.
+> + */
+> +struct loongson2_dmamux_config {
+> +       const struct loongson2_dmamux_map *maps;
+> +       u32 num_maps;
+> +       u32 max_channel;
+> +       u32 parent_args_count;
+> +};
+> +
+> +/**
+> + * struct loongson2_dmamux - DMA mux controller state
+> + * @base: I/O-mapped register base
+> + * @lock: Protects register read-modify-write sequences
+> + * @dma_router: Router structure passed to of_dma_router_register()
+> + * @config: SoC-specific configuration
+> + */
+> +struct loongson2_dmamux {
+> +       void __iomem *base;
+> +       spinlock_t lock;        /* Protects register read-modify-write se=
+quences */
+> +       struct dma_router dma_router;
+> +       const struct loongson2_dmamux_config *config;
+> +};
+> +
+> +/* Loongson-2K0300 mapping table */
+> +static const struct loongson2_dmamux_map ls2k0300_dmamux_maps[] =3D {
+> +       [LS2K0300_DMA_UART0] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART0_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART1] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART1_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART2] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART2_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART3] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART3_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART4] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART4_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART5] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART5_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART6] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART6_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART7] =3D { LS2K0300_CHIP_CTRL13, CTRL13_UART7_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART8] =3D { LS2K0300_CHIP_CTRL14, CTRL14_UART8_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_UART9] =3D { LS2K0300_CHIP_CTRL14, CTRL14_UART9_DMA=
+_MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_I2C0]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_I2C0_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_I2C1]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_I2C1_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_I2C2]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_I2C2_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_I2C3]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_I2C3_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_SPI2]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_SPI2_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_SPI3]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_SPI3_DMA_=
+MAP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_I2S]   =3D { LS2K0300_CHIP_CTRL14, CTRL14_I2S_DMA_M=
+AP, LOONGSON_DMAMUX_PAIR,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_ADC]   =3D { LS2K0300_CHIP_CTRL14, CTRL14_ADC_DMA_M=
+AP, LOONGSON_DMAMUX_SINGLE,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_CAN0]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_CAN0_DMA_=
+MAP, LOONGSON_DMAMUX_SINGLE,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_CAN1]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_CAN1_DMA_=
+MAP, LOONGSON_DMAMUX_SINGLE,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_CAN2]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_CAN2_DMA_=
+MAP, LOONGSON_DMAMUX_SINGLE,
+> +                                0, 0 },
+> +       [LS2K0300_DMA_CAN3]  =3D { LS2K0300_CHIP_CTRL14, CTRL14_CAN3_DMA_=
+MAP, LOONGSON_DMAMUX_SINGLE,
+> +                                LS2K0300_CHIP_CTRL15, 0 },
+> +};
+> +
+> +static const struct loongson2_dmamux_config ls2k0300_dmamux_config =3D {
+> +       .maps                   =3D ls2k0300_dmamux_maps,
+> +       .num_maps               =3D ARRAY_SIZE(ls2k0300_dmamux_maps),
+> +       .max_channel            =3D LS2K0300_DMA_MAX_CHANNEL,
+> +       .parent_args_count      =3D 2,
+> +};
+> +
+> +static inline u32 loongson2_dmamux_read(struct loongson2_dmamux *mux, u3=
+2 reg)
+> +{
+> +       return readl(mux->base + reg);
+> +}
+> +
+> +static inline void loongson2_dmamux_write(struct loongson2_dmamux *mux, =
+u32 reg, u32 val)
+> +{
+> +       writel(val, mux->base + reg);
+> +}
+> +
+> +/**
+> + * loongson2_dmamux_set_route() - Program the DMA request route
+> + * @mux:     DMA mux controller
+> + * @request: Peripheral DMA request ID
+> + * @channel: Target physical DMA channel or controller index
+> + *
+> + * Computes the register value according to the mapping type:
+> + *   - PAIR   : channel / 2 selects the pair index
+> + *   - SINGLE : channel is written directly
+> + *
+> + * Return: 0 on success, negative error code otherwise.
+> + */
+> +static int loongson2_dmamux_set_route(struct loongson2_dmamux *mux, u32 =
+request, u32 channel)
+> +{
+> +       const struct loongson2_dmamux_map *map;
+> +       u32 reg_val, route_val, high_val =3D 0;
+> +
+> +       if (request >=3D mux->config->num_maps)
+> +               return -EINVAL;
+> +
+> +       if (channel > mux->config->max_channel)
+> +               return -EINVAL;
+> +
+> +       map =3D &mux->config->maps[request];
+> +
+> +       switch (map->type) {
+> +       case LOONGSON_DMAMUX_PAIR:
+> +               route_val =3D channel / 2;
+> +               break;
+> +       case LOONGSON_DMAMUX_SINGLE:
+> +               route_val =3D channel;
+> +               if (map->high_reg)
+> +                       high_val =3D (channel >> 2) & 0x1;
+> +               break;
+> +       default:
+> +               return -EINVAL;
+> +       }
+> +
+> +       guard(spinlock_irqsave)(&mux->lock);
+> +
+> +       /* Write the primary register field */
+> +       reg_val =3D loongson2_dmamux_read(mux, map->reg);
+> +       reg_val &=3D ~map->mask;
+> +       reg_val |=3D field_prep(map->mask, route_val);
+> +       loongson2_dmamux_write(mux, map->reg, reg_val);
+> +
+> +       /* Write the extension register field if present */
+> +       if (map->high_reg) {
+> +               reg_val =3D loongson2_dmamux_read(mux, map->high_reg);
+> +               reg_val &=3D ~BIT(map->high_shift);
+> +               reg_val |=3D high_val << map->high_shift;
+> +               loongson2_dmamux_write(mux, map->high_reg, reg_val);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * loongson2_dmamux_route_allocate() - DMA router allocation callback
+> + * @dma_spec: OF DMA specifier <request> <channel> <flags>
+> + * @ofdma:    Router's of_dma structure; ofdma->dma_router points to our
+> + *            struct dma_router embedded in struct loongson2_dmamux.
+> + *
+> + * Return: NULL as route_data (nothing to free), or an ERR_PTR on failur=
+e.
+> + */
+> +static void *loongson2_dmamux_route_allocate(struct of_phandle_args *dma=
+_spec,
+> +                                            struct of_dma *ofdma)
+> +{
+> +       struct loongson2_dmamux *mux;
+> +       u32 request, channel, flags;
+> +       int ret;
+> +
+> +       if (!ofdma->dma_router)
+> +               return ERR_PTR(-EINVAL);
+> +
+> +       mux =3D container_of(ofdma->dma_router, struct loongson2_dmamux, =
+dma_router);
+> +
+> +       if (dma_spec->args_count !=3D 3)
+> +               return ERR_PTR(-EINVAL);
+> +
+> +       request =3D dma_spec->args[0];
+> +       channel =3D dma_spec->args[1];
+> +       flags =3D dma_spec->args[2];
+> +
+> +       if (request >=3D mux->config->num_maps ||
+> +           channel > mux->config->max_channel)
+> +               return ERR_PTR(-EINVAL);
+> +
+> +       /* Program the SoC-specific route register */
+> +       ret =3D loongson2_dmamux_set_route(mux, request, channel);
+> +       if (ret)
+> +               return ERR_PTR(ret);
+> +
+> +       /* The of_node_put() will be done in of_dma_router_xlate function=
+ */
+> +       dma_spec->np =3D of_parse_phandle(ofdma->of_node, "dma-masters", =
+0);
+> +       if (!dma_spec->np)
+> +               return ERR_PTR(-ENODEV);
+> +
+> +       dma_spec->args[0] =3D channel;
+> +       dma_spec->args[1] =3D flags;
+> +       dma_spec->args_count =3D mux->config->parent_args_count;
+> +
+> +       return NULL;
+> +}
+> +
+> +/**
+> + * loongson2_dmamux_route_free() - DMA router free callback
+> + * @dev: Back pointer to the router's device
+> + * @route_data: Router-specific data returned by route_allocate
+> + *
+> + * The driver does not allocate any per-route resources, so this callbac=
+k
+> + * is intentionally empty. It must still be provided because the OF DMA
+> + * core calls it unconditionally on some error paths (e.g. -EPROBE_DEFER=
+)
+> + * without checking for a NULL pointer.
+> + */
+> +static void loongson2_dmamux_route_free(struct device *dev, void *route_=
+data)
+> +{
+> +}
+> +
+> +/**
+> + * loongson2_dmamux_unregister_of_dma() - devm action to unregister the =
+router
+> + * @data: Pointer to struct loongson2_dmamux
+> + *
+> + * Called automatically by the device-managed resource framework both on
+> + * probe failure and on driver removal, ensuring the OF DMA router is
+> + * always unregistered.
+> + */
+> +static void loongson2_dmamux_unregister_of_dma(void *data)
+> +{
+> +       struct loongson2_dmamux *mux =3D data;
+> +
+> +       of_dma_router_free(mux->dma_router.dev->of_node);
+> +}
+> +
+> +static int loongson2_dmamux_probe(struct platform_device *pdev)
+> +{
+> +       struct device *dev =3D &pdev->dev;
+> +       struct loongson2_dmamux *mux;
+> +       u32 dma_requests;
+> +       int ret;
+> +
+> +       mux =3D devm_kzalloc(dev, sizeof(*mux), GFP_KERNEL);
+> +       if (!mux)
+> +               return -ENOMEM;
+> +
+> +       mux->base =3D devm_platform_ioremap_resource(pdev, 0);
+> +       if (IS_ERR(mux->base))
+> +               return PTR_ERR(mux->base);
+> +
+> +       spin_lock_init(&mux->lock);
+> +       mux->config =3D &ls2k0300_dmamux_config;
+> +
+> +       ret =3D of_property_read_u32(dev->of_node, "dma-requests", &dma_r=
+equests);
+> +       if (ret)
+> +               return dev_err_probe(dev, ret, "missing dma-requests prop=
+erty\n");
+> +
+> +       if (dma_requests !=3D mux->config->num_maps)
+> +               return dev_err_probe(dev, -EINVAL,
+> +                                    "dma-requests=3D%u mismatches driver=
+ num_maps=3D%u",
+> +                                    dma_requests, mux->config->num_maps)=
+;
+> +
+> +       mux->dma_router.dev =3D dev;
+> +       mux->dma_router.route_free =3D loongson2_dmamux_route_free;
+> +
+> +       platform_set_drvdata(pdev, mux);
+> +
+> +       ret =3D of_dma_router_register(dev->of_node, loongson2_dmamux_rou=
+te_allocate,
+> +                                    &mux->dma_router);
+> +       if (ret)
+> +               return dev_err_probe(dev, ret,
+> +                                    "Failed to register DMA router");
+> +
+> +       ret =3D devm_add_action_or_reset(dev, loongson2_dmamux_unregister=
+_of_dma, mux);
+> +       if (ret)
+> +               return ret;
+> +
+> +       dev_info(dev,
+> +                "Loongson2 DMA Mux Controller registered (max_channel=3D=
+%u, requests=3D%u)",
+> +                mux->config->max_channel, mux->config->num_maps);
+> +
+> +       return 0;
+> +}
+> +
+> +static const struct of_device_id loongson2_dmamux_of_match[] =3D {
+> +       { .compatible =3D "loongson,ls2k0300-dmamux" },
+> +       { /* sentinel */ }
+> +};
+> +MODULE_DEVICE_TABLE(of, loongson2_dmamux_of_match);
+> +
+> +static struct platform_driver loongson2_dmamux_driver =3D {
+> +       .driver =3D {
+> +               .name =3D "loongson2-dmamux",
+> +               .of_match_table =3D loongson2_dmamux_of_match,
+> +       },
+> +       .probe =3D loongson2_dmamux_probe,
+> +};
+> +module_platform_driver(loongson2_dmamux_driver);
+> +
+> +MODULE_DESCRIPTION("Loongson2 SoC DMA Mux Controller driver");
+> +MODULE_AUTHOR("Loongson Technology Corporation Limited");
+> +MODULE_LICENSE("GPL");
+> --
+> 2.52.0
+>
+>
