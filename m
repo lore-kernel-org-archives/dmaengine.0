@@ -1,57 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793007318;
-	b=SkmFMGA44+uP5XWW+bRFEnF+4ZCcsDrIs6tKaxpJHTpZBI6geDaGjpdPaLnF+k6Unr+5
-	 wlBPfg34H7hdIYrkwj+qbomOlFpUQIDtD5XyrHd9ZEw/S81gOuOdlK5+aUY1T4Y0fy1RO
-	 748itf4oGUNxUIDSmMsJ47kx+2RSW09vwlG+BdKSWKeyOq5aE8tukfDuqyAkjBFDa0kL+
-	 UexErIy+1vq7kjYucUXdf5YxwRwuAxPIIA6cj/KwfVF8CxLUbAnJgfVmKv6LhwxOo6cWW
-	 fE2S6kg8YsyJ0XtzHmINcd5eojAQcGPI1VwPuYUyq31PyWlAAiK+/BWQhDojbVmefGg==
+	t=1793015482;
+	b=h15zjaNlfnwOG/G4u7Vgb3JpB7/KuMVWwrxQSElKYHU6nxw2mSztOja0166Fdk/+fvqH
+	 Xt0uSGkHEsAMOAUgere695DKWbZFQurw0qWuimoxGOcxgIopmJj1aQxQ4qqiAYhxvNjrx
+	 Dug/72qnA1of43LvgbI6yaMUAvmXC5Fg0OEeIUUJFfaT9V7MuMa68/EOYOkmr3AjvMJjk
+	 oS+HKF07p4tG1UsftDvIR4e2V90QEKZ+yKRdSfX26EZBorb8MBjv3IDhJWCO40RK8dl1d
+	 qT+65J/iXjn++t2MI4VxLROj3S7DzaGzRY4EHG3/jd3wYba4sGzFrIphwnS4KSfwc+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793007318;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=rpp4HFvsGszK3nn9DAg/ahaYBPyTpKxkYeTqN5cOCXA=;
-	b=p5Sl79X5awRTThTQH/o/bpaCoC5WI+K9XLsUDahP79k/23GVNq12FjhOJipwMFUaOZbj
-	 QUv63vpL5wmLI9IC0gV/20ntfTWQaPRXqBC62ijuBNynqz1fZqcxva4JX6nGjOIAergcP
-	 0FxRxxDRB81mxbMI7DS+YLQndTCT/52SLthA4/0kUZDbwoIpMsXO8afR1CJi7xgzjx5op
-	 fu9Ke0qCbAjqTAZDIuKALuYjV7kluCtEWci3scPU1C89SwIYjJZFq1sx8DUng6Et5kwLA
-	 9hwZ+0XEwbxMLovPgvRdAx7O69RSwBq3joI641O5kSVOhY2LUvxf4iTm6GEO0N35o1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793015482;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=E0esgy2urAKBegODgpBIrC0VFP99XhOfXo6f3PoumB4=;
+	b=RenFRcrx+QlES7sWG4rYGYs0Y+qslK6wPAMeNL7uTRJJFMJW6sjB2afcZoKmP3RqMHNO
+	 UceZJd8abJ0F326BWlUSzuSZT2JycgwTogUvL0DKG8VbhVGqgSsLrKNy7wS1CFMWDn6vk
+	 VlgcBfVAx+qhg3bSii1Hw3/iLLlwwA18BzQMnqPh8KjSgG3KRKLIaS2396wNRnzw03oNL
+	 Ytb2K30J7j9yf94ErTUTfP1Vxd8DhFY758sBLntinu7mtaKaOw/IyY1zx+txRZ6rPDHl3
+	 53dtJDSxyXe/aNa/VtUAFH0nLz6ugog0D6ZvhEdfh0iCAdQBh57vMUtC3Vf8+zR8UAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wi+KmTm4;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="MTMfG/zS";
+	arc=none smtp.remote-ip=209.85.214.169
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4AB606A320;
-	Mon, 26 Oct 2026 09:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B02606A31B
+	for <dmaengine@vger.kernel.org>; Mon, 26 Oct 2026 11:51:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72B02606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wi+KmTm4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E90D1F01828;
-	Mon, 26 Oct 2026 09:35:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793007318;
-	bh=rpp4HFvsGszK3nn9DAg/ahaYBPyTpKxkYeTqN5cOCXA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Wi+KmTm46KStbEwCJOaZjGsR1xvQb8MSCSeG6Pfjr0EOwdEBJPanGCoNbMnb36mM+
-	 ijh8dlHR3BR1VH0F463j3QgDagiPnJI66Zp576bUU9vKb0TLsAOEy8+rrYo+ridpuU
-	 i6PASCSzbNQu0LABICiKnMFTCkY9IgIu0J8QBeWtKSzwlTYxFK+8zeJGf66X6uqwPj
-	 xVMg5C0pDng/YfdEGrvUki+ZnnOTg5MpHhGE6eoo3iXj44OLpjy+xuVokL7m9FcWx9
-	 valkKnTFN+Cc3lb/DNXaO3VPUcz/HCKqjUBrw8uQ+slinh/Ut3ZYHU/WUTmMwNx5iZ
-	 yvSxrB2vK1vWQ==
-Message-ID: <sashiko-outbox-184805@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add
- pause/resume support
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Binbin Zhou" <zhoubinbin@loongson.cn>, dmaengine@vger.kernel.org
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
-References: <cover.1792988985.git.zhoubinbin@loongson.cn>
- <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 26 Oct 2026 09:35:17 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MTMfG/zS
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2e9e53d011eso20198265ad.1
+        for <dmaengine@vger.kernel.org>; Mon, 26 Oct 2026 04:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793015481; x=1793620281; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=E0esgy2urAKBegODgpBIrC0VFP99XhOfXo6f3PoumB4=;
+        b=MTMfG/zSO17kLWtg0vfDzPd9SeenV6eWXy6nibQcCTOrsg5jSrv/OJ0E9CxXJ/Oaaw
+         ElJY41x2nd40gtPnGitdFl7htTsVne+gSi5b3VOZZT00z9DAEBDnWh9ddyw+bWtk6e18
+         vqw2LPqTJe3pZoaKzTrq0qtLop5bxyo0WDMvZfcEFZQQqnyTEZbQ7o34YIfZWAnnOU1T
+         kJcs7aKgTx1TdMOBeBNpUbMi+side4DyJRTXmujvIQvmlj8/E7nAa56110lERY4w9eJe
+         aZA7dV25dcpk6PfEqfKL7pZc2EenyVNZEVntaPOUi8+OH1a2jJI82LfnRRnUqBnvouNC
+         LceA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793015481; x=1793620281;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=E0esgy2urAKBegODgpBIrC0VFP99XhOfXo6f3PoumB4=;
+        b=jGTgTEMhg6eD6jeCwImXKot5D2fFRGCxQXh3cqCLW4t8UKTbymaGbHhor6i5MLJHmA
+         ld/qfIH9KdtCeem+5q5NS/ROUtrgd9nVFjhNVqly1sqJ+ZI08019S6eMaH0oCeMCusHR
+         C/Cl7VXz71ekYWNqQXMHPd/EQxtsuH3CedRWifw4c9SMC+B6hkRAM3deeKtWlTDN0GrF
+         FnkSd+USCcrlxSdz9TYffWLSUSYLbIXBiD6rm+jHQEUmZu4iGAiJrwMnYUlcKuFbdVFh
+         z/U9EhFjHrpL/XIBTo7E3xU+5fI9dhDZn9yEXZ59FNP5A+/aUzjbNs+f7zbmtfbY+EFI
+         w6gw==
+X-Forwarded-Encrypted: i=1; AKwUvBzFRLz/EcbIJzjgeOadIWd+PU6fAfPKoU/PIhjRbVAWfmxUViQShJlwGvkb+z9MwG56y9eXIv74qiI=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIZSFxeMgYztAiW9ovHIWHZlec0Ktqifyx9Bblhb5qD854Ags4e
+	k5rY/Lj8/j0Z0FGsg/wLC6DeQql+PLO5OyW5H36t1iSR/eIoPwm7cYKM
+X-Gm-Gg: AYBFou1bmGpqPkQkviWnoVMtCTkdBkRpj63ykQhdqC9qyNfELuuOJt/OyY7gRRAUvqW
+	ybllrCcdlcDg/tbdroBwXz9Fl/8y/KfPFWBb2IVv7FizlTolpSzHR1T+K3W1Kc66oCGV5RhwSSk
+	KzhYnMy9g1UZgTs15wWmJl8AG9SfD6dfORUfkRt9eNF672TctQN2w2yrDSd9WoT3Q9MG0qtZs+O
+	dqmfjZ4+eDnOD5Kz7YnOKUqEUo/9b9wsHtXJNYfAtvHa1XZ1Sx9xAIhxIRslVn0aa6VhwqGVnpw
+	DVWE8wOZ5lb1/4FN4dCIhnovhumigcCvx9r83SwAjY+hp/tPpaQt7Rk5bTpyib0ah4VCWhOcV6s
+	UPxlV78CkGTYua0GsatNPku49OYixc2RafFSLAINQdN4ZUmYr0NAMSblDY+zjc1MGLsgRWhFdq0
+	7KwjlcugrFgCcGbFDe/8dD3RYSvkDjAQPOH11/+hO8XQgoaEAXGKbevidBo0swJOPj2b7WRJDBh
+	JKJuqZd/vYUtkcxFXZfA3OqP2tXhRsPfUZNuR/b8vn++VkogSj7vqdx+AuWlAyoQ+t5UZC65fM=
+X-Received: by 2002:a17:903:fa8:b0:2e9:740c:371 with SMTP id d9443c01a7336-2ea9c6c4eacmr54260345ad.38.1793015480745;
+        Mon, 26 Oct 2026 04:51:20 -0700 (PDT)
+Received: from spiderman.taila3fd8c.ts.net ([202.112.47.77])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea9af32271sm15443585ad.9.2026.10.26.04.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 04:51:20 -0700 (PDT)
+From: Li Ximo <lixicaicai@gmail.com>
+To: Keguang Zhang <keguang.zhang@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	linux-mips@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>
+Subject: [PATCH] dmaengine: loongson1: fix list_first_entry on possibly empty lli_list
+Date: Mon, 26 Oct 2026 19:51:13 +0800
+Message-Id: <20261026115113.3359939-1-lixicaicai@gmail.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,106 +97,76 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] dmaengine: loongson: loongson2_cmc_dma_start_transfer() clears p=
-ause state
-- [Medium] dmaengine: loongson: loongson2_cmc_dma_tx_status() ignores pause=
- if !state
---
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-commit 8e161a43d78d90e76eaddc39b1b96c7a28b1dd6c
-Author: Binbin Zhou <zhoubinbin@loongson.cn>
+ls1x_dma_issue_pending() calls list_first_entry(&desc->lli_list, ...)
+without checking whether the list is empty. list_first_entry() does not
+return NULL for an empty list; it returns the container_of() of the list
+head pointer, i.e. a wild pointer that points backwards into the
+enclosing struct ls1x_dma_desc/virt_dma_desc area. The bogus &lli->phys
+is then passed to ls1x_dma_start(), which dereferences it (out-of-bounds
+read) and programs the DMA controller with the garbage address.
 
-dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
+The list can indeed be empty: dmaengine_prep_slave_sg() forwards an
+sg_len of 0 to the driver unmodified, ls1x_dma_prep_slave_sg() does not
+reject it, and ls1x_dma_prep_lli() then builds no LLIs (the for_each_sg
+loop body never executes) yet still returns success. The resulting
+descriptor with an empty lli_list is queued as a valid transfer and the
+problem only blows up later in issue_pending. This was found by code
+audit; we do not have Loongson1 hardware to reproduce it at runtime.
 
-This commit adds pause and resume support to the Loongson-2 APB CMC DMA
-driver by clearing and restoring LOONGSON2_CMCDMA_CCR_EN while preserving
-the hardware transfer position. It also updates status reporting and
-cyclic scatterlist advancement to honor the paused state.
+Fix it in two places, following defense in depth: reject sg_len == 0
+requests early in ls1x_dma_prep_slave_sg() (a zero-length transfer is
+meaningless anyway), and switch ls1x_dma_issue_pending() to
+list_first_entry_or_null() with a NULL check so an empty lli_list can
+never reach the hardware programming path. Neither change affects the
+normal non-empty path.
 
-> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/l=
-oongson/loongson2-apb-cmc-dma.c
-> index c654e05729024..a4153ea854623 100644
-> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+One related pre-existing issue is deliberately not addressed here:
+ls1x_dma_prep_dma_cyclic() derives sg_len as buf_len / period_len, so a
+caller passing buf_len < period_len gets sg_len == 0 and crashes even
+earlier (sg_init_table() on a zero-entry table), before issue_pending
+is ever reached. That is a separate bug in the cyclic prep path and is
+left for a follow-up patch.
 
-[ ... ]
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+---
+ drivers/dma/loongson/loongson1-apb-dma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-> @@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_c=
-mc_dma_chan *lchan)
->  	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
-> =20
->  	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
-> +
-> +	lchan->paused =3D false;
->  }
+diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+index 89786cbd2..e7eb40584 100644
+--- a/drivers/dma/loongson/loongson1-apb-dma.c
++++ b/drivers/dma/loongson/loongson1-apb-dma.c
+@@ -302,6 +302,9 @@ ls1x_dma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 	dev_dbg(chan2dev(dchan), "sg_len=%u flags=0x%lx dir=%s\n",
+ 		sg_len, flags, dmaengine_get_direction_text(dir));
+ 
++	if (!sg_len)
++		return NULL;
++
+ 	desc = ls1x_dma_alloc_desc();
+ 	if (!desc)
+ 		return NULL;
+@@ -478,8 +481,11 @@ static void ls1x_dma_issue_pending(struct dma_chan *dchan)
+ 			struct ls1x_dma_desc *desc = to_ls1x_dma_desc(vd);
+ 			struct ls1x_dma_lli *lli;
+ 
+-			lli = list_first_entry(&desc->lli_list,
+-					       struct ls1x_dma_lli, node);
++			lli = list_first_entry_or_null(&desc->lli_list,
++						       struct ls1x_dma_lli, node);
++			if (!lli)
++				return;
++
+ 			ls1x_dma_start(chan, &lli->phys);
+ 		}
+ 	}
+-- 
+2.30.2
 
-[Severity: Medium]
-Can this reset lchan->paused and restart DMA when a segment completion
-interrupt races with loongson2_cmc_dma_pause() on a non-cyclic transfer?
-
-loongson2_cmc_dma_pause() allows pausing any channel with an active
-lchan->desc, including non-cyclic slave_sg transfers. If a scatterlist
-segment finishes and latches LOONGSON2_CMCDMA_TCI just before
-loongson2_cmc_dma_pause() acquires lchan->vchan.lock and sets
-lchan->paused =3D true, the interrupt handler will subsequently run:
-
-  loongson2_cmc_dma_chan_irq()
-    -> loongson2_cmc_dma_handle_chan_done()
-      -> loongson2_cmc_dma_start_transfer()
-
-Unlike the cyclic path in loongson2_cmc_dma_configure_next_sg(), the
-non-cyclic path in loongson2_cmc_dma_handle_chan_done() calls
-loongson2_cmc_dma_start_transfer():
-
-	loongson2_cmc_dma_stop(lchan);
-	...
-	/* Start DMA */
-	reg->ccr |=3D LOONGSON2_CMCDMA_CCR_EN;
-	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, reg->ccr);
-
-This clears lchan->paused =3D false in loongson2_cmc_dma_stop() and
-unconditionally sets LOONGSON2_CMCDMA_CCR_EN for the next scatterlist
-entry or next queued descriptor. Should non-cyclic scatterlist
-advancement also preserve lchan->paused and avoid re-enabling the channel
-while paused?
-
-[ ... ]
-
-> @@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(s=
-truct dma_chan *chan, dma_co
->  			/* Active descriptor: compute residue from hardware progress */
->  			state->residue =3D loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
->  									lchan->next_sg);
-> +			/*
-> +			 * A paused channel still has an active descriptor but is not making
-> +			 * progress. Report DMA_PAUSED so clients can distinguish it from a
-> +			 * running transfer.
-> +			 */
-> +			if (lchan->paused && status =3D=3D DMA_IN_PROGRESS)
-> +				status =3D DMA_PAUSED;
->  		} else if (vdesc) {
->  			/* Queued descriptor not yet started: residue is the total length */
->  			struct loongson2_cmc_dma_desc *ldesc =3D to_lmdma_desc(vdesc);
-
-[Severity: Medium]
-What happens if a client queries transfer status on a paused channel with
-a NULL state pointer, such as via dmaengine_tx_status(chan, cookie, NULL)
-or dma_async_is_tx_complete()?
-
-Earlier in loongson2_cmc_dma_tx_status():
-
-	status =3D dma_cookie_status(chan, cookie, state);
-	if (status =3D=3D DMA_COMPLETE || !state)
-		return status;
-
-When state is NULL, loongson2_cmc_dma_tx_status() returns early before
-acquiring lchan->vchan.lock and checking lchan->paused, so it will return
-DMA_IN_PROGRESS instead of DMA_PAUSED for the active paused descriptor.
-Should the lchan->paused check still be performed when state is NULL?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1792988985.gi=
-t.zhoubinbin@loongson.cn?part=3D4
