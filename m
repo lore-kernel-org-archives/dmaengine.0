@@ -1,60 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.119.170.32
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792965524;
-	b=iOK5gm4vdtuq4rzl5TGnOSwrClOK5NYRi3+LXKlLNEXnrDIfDJh0kVa50VwslyVt9ko1
-	 PL4mo19vYYUSOCatzzZm571L/mehz1pl4QdbcBGb/Vx15jPLR4zCKX9rE6isxFasJGJCc
-	 IAjEwNAcmL+4XQePHTekcnKUYj5UqGD+ordse7uoFI/geULKpd92cdyGZMF2wQIQnKABm
-	 cMg4Bzlz8zb1v5epTrntgaXlh0/OSHLCrUGOOXCSIRnw0kq/AVKPpBdQGZANJtpkavQ40
-	 jT/Pem6k3ESpmZdoZaHNe0dFlyhQU4IFnRV8MlVC24vhb35jY29szACoImxypCJ3R2A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792965524;
-	h=DMARC-Filter:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-	 References:Autocrypt:Content-Type:Content-Transfer-Encoding:
-	 MIME-Version;
-	bh=1RBHY3hPRDk0PqItgt+PMZFbI0zf0aeDwbS6+0ip1AI=;
-	b=D7gcqCmeT6kF83Vi30oSlIfogOww1zoKO+uex3aKLYs0ohyAiY9xIqTN6f3UNAr76TPP
-	 2pkt8Jt3q1u7sgYkvTIhB12yEBJw9i87/8RpVzlPzO+DKKSQrsjsJ979sumCDmQUbPjx+
-	 zhh/xBTIWOn1a3wwge7T7u3kuS4lnT46GpVj9fGgtLiiunjaH8ZTpm01wFJHS+MJ9mWeW
-	 8/tpFm+IkQj/+zQALVsaKfbPGPHGV9XMNxnM1Qys6MvTQ5ZQoYN2wOIGr0seF2G8T6RKB
-	 rySmMh5tKF6fStAoSAv06BD7U3CKh3d/eqAdON8O2oekyITrSdMPRU1SBEd2pRAF6tQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=crapouillou.net;
-	spf=pass smtp.mailfrom=crapouillou.net;
-	arc=none smtp.remote-ip=185.119.170.32
-Received: from aposti.net (aposti.net [185.119.170.32])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.114
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792981835;
+	b=SvOmurF99QpwdPQL1IQeSTFjgcXVJWsONjxlNzmhyMNQkb3xIK3fF1qc+yF7fYaYKwTi
+	 605UJ0nwm327oIO6boh5uAzWqGCf7lw1MOSOtpqpmLaIVIQ4LEeuv+yrQnI4rFLnhGTLg
+	 tgoQmvvNA2Kuo2I6FVqHb0xIrRXDw2T+f4m9OkugkjJUoFop6r1kyRQU+DHiHNYtvYlCc
+	 P69snSWCoJ9fmxg22wK+NwZzSycr3ZlzbqR3Qoe2BP7lIfuYi5xbc09gkQYDuHc+ngwvj
+	 TVpjjFRhzP9jQwBl8Xf/U/1iitk/ex1vrqMhDyqpd77+3TDQRF6uI/2kcSbXYWWmWEg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792981835;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=FH3Ct+2X3mVcCvl6jnlW9a400G8Re7jAmkrGWWNI0Dg=;
+	b=huTYxQHsTo4Yr2YQ+uU37V8emWoakdiefEgHRFV7V7xD4wEr0Tl7UgeU0yupNhIgy/tn
+	 3Zo1fFFW1K7/h3KL2DI/NNraoX4ODOXZC/9BGRRjO0oaza4W78zrYhqfipD3xY8maeYWJ
+	 m1cgY2nHfyveHu/W649bjESpRZvlN5tB8hewSXzTRQgxG+9eIhDFFHXn/oX975foXOB5J
+	 bSotufQ5KPkf6BElaKLJrSbr9E29oO2tMyhxnfIqpdnW2oJyoUK+McxCSPmoleCnx7ukt
+	 0al8PY4aSVw3veeBW5uHmkf55cFFf2GCJhytmCoowey9iWIjhfypAUayzvPvuD2Al7A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amlogic.com;
+	spf=pass smtp.mailfrom=amlogic.com;
+	dkim=pass header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=XKsSOn5A;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.114
+Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022114.outbound.protection.outlook.com [52.101.126.114])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9880606A31A;
-	Sun, 25 Oct 2026 21:58:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B9880606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
-Message-ID: <dc62e1711e971504c463bee8760c8144b0df53ac.camel@crapouillou.net>
-Subject: Re: [PATCH] dmaengine: dma-jz4780: Fix NULL dereference in
- tx_status after terminate
-From: Paul Cercueil <paul@crapouillou.net>
-To: Olivier Louvignes <olivier@mgcrea.io>, Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-mips@vger.kernel.org, stable@vger.kernel.org
-Date: Sun, 25 Oct 2026 22:58:29 +0100
-In-Reply-To: <20261023080953.16963-1-olivier@mgcrea.io>
-References: <20261023080953.16963-1-olivier@mgcrea.io>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
- LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
- FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
- z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
- +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
- 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
- 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
- 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
- dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
- 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
- rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
- lBwgAhlGy6nqP7O3u7q23hRU=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AE1606A31A;
+	Mon, 26 Oct 2026 02:30:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 80AE1606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=XKsSOn5A
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=msbvIrc6YLv6RaZ11yKHdkSO26wn8/tc4e9VlFTgRPhYYVmKnIEjPB6XlBXrQaYKszV6Z/aU+Q6diSRgErzortmXqdD2V7jRXEubAp6bczKtbamB287evpUe0AEVKKRICrbsnhuwsDbWVwO3kv6hCfLCeQbUz5m/OKGLHlA3CV7HOGN7GMNDpkVb0mIRtkiK9jMsb5ixis1aK2k9UKSWORgAdkk0Jx1aUmFz8k6fccFvJfvbBwmEj0ARDvzf0E/E9FG8hSgQYMAIDHmjzSA9sQoMovKKtjZU3gVhVYduVoqDjHt81YAuDH9OYi8uuE6rZYaDsNg1Y66TJyxNNLAZiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FH3Ct+2X3mVcCvl6jnlW9a400G8Re7jAmkrGWWNI0Dg=;
+ b=PFl0m42xyGXF4SjNFARPNttbDTGx02XfxC3kZkiU3vXpO8kEIgnr5wWYvAWlzEfCsAwLPI200MjTuYHnozaDvTiRIPwlzUEjvExXWc9wEycOUhgUqgGUWU2RsGvzlnMyLIf4gMiTAt5YvLjOzEXWme/E0ujPEi20dTBb0P5d3KcKKBIQpQa2ZCWZUJEY9aF4DiLYL/NiuGHDMxEOmMpWhgIQ11A7PiD4ZwEj0rHY6p2nIiff9v46VMtb6cIU7V2vWrOwQc92lmsl7Ppd3q2TJlr8kZ+9xJ9Z0dMvOTfX+Ewjc7zuIz8x9gcmi69mJqk/PI4YcmWnLauBcsFtjjLcZQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FH3Ct+2X3mVcCvl6jnlW9a400G8Re7jAmkrGWWNI0Dg=;
+ b=XKsSOn5AsAnObR0MCjnLPVccHNhYcTpN4mJnx3NhzVz/xy4PSN/yxqWlqVAN2il6c6nzVgFHAYnIVZQ4MSZH2wJ2WwCMkmxY3bYcmD1vUjHkzoN2ma6U/Ofl6OLj9yyBS10T4bv36/0vVKkjZYqK/Dsff/EmThzsWjEFjfYHayUADtWNgloBT9xBojKDzq1aEEj56nL66YZXLb9HtN3VCOlp5FzywVW5N+qBbtA8Pq4hqJ3CyidVDQDzAa6kQhY4qg5/uo/AWqFClHfWsKgJNIUFG8SwN/j64Gt6lCj89fVSJXTa35UOBCpTvcok/NvVOOUCjetHj146XxfHXmGxJw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
+ by KUZPR03MB9443.apcprd03.prod.outlook.com (2603:1096:d10:44::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
+ 2026 02:30:31 +0000
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::78d4:9dee:2e32:d1e4%7]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
+ 02:30:30 +0000
+Message-ID: <d12ba4c2-cf68-4710-a9e7-42abeabb601d@amlogic.com>
+Date: Mon, 26 Oct 2026 10:30:24 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: amlogic: fix workqueque not free when probe
+ failed
+Content-Language: en-US
+To: Markus Elfring <Markus.Elfring@web.de>, dmaengine@vger.kernel.org,
+ linux-amlogic@lists.infradead.org, Frank Li <Frank.Li@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Christophe Jaillet <christophe.jaillet@wanadoo.fr>
+References: <20261023-fix-a9-dma-wq-v1-1-b414de837e6e@amlogic.com>
+ <ad468ad8-c7d2-4737-ac43-827fe02aec04@web.de>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+In-Reply-To: <ad468ad8-c7d2-4737-ac43-827fe02aec04@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2PR01CA0034.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:192::9) To TYZPR03MB6896.apcprd03.prod.outlook.com
+ (2603:1096:400:289::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -64,78 +101,83 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|KUZPR03MB9443:EE_
+X-MS-Office365-Filtering-Correlation-Id: 62012e57-5d19-4c27-fff9-08df33091aaa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|261009223027099003|261022105027099003|260925022911599003|260925021911599003|260925021311599003|10067099003|56012099006|18002099003|22082099003|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	Zof6T3DQ5iKIa/5FvVKv06JeZ2BLRnFXPURr9n5iwTHPoqAgYWJ4Nk+Sq3ke0fj0k2nHFZEZXnT9Xefd/iB+1YgKnjbRxRgdnguFM6Kpd+dZlwrjD0AKHTts+oj6J6Fd4FsaLYuK+Qu+AVDlOWve1Cft/t5FCNf3iRrurUygls7iaPCOPypgDkb/IXRdsc2uE4h/NN001WKTDw4Qx53FPpP7M6+lLT+sld4q3n9DrDd8jdVdqY9bKVfRWohtN57P4FRvUBuPn9gYNUA2sLlb84F6CluLjhLsCfPUjriv8WHj3wTR8/Nkwww0g/pilpy5o65NicQUop2nb5dQazSYx6x1N5soCXxFk5zjtQW9IAjWOdUSa0Ih43bNPxuXMX6J/RPRP5WLepI7uiO3IR2LtRvSk8t6bQWj1QxuV8B+ah2Ucca3cn3EecvCzaawkm1DtTT87ZGE/eo+ryg3R3C3deABwso9SagWSJyv56koMzs7mWDEeCJo1Mp0AFKZHuIhPq/RoucI69JO5nLOiLV6ZoJsbbYN79XKRmJ9jOR1H4ecTbyY2VxSxEd++Gk+m8wZ8qYOk9+aYajNh1PAPXBKrd6uqE2+7h1OTlkvT3C4HyLHAQpocV5jJSfjDS0euQz0
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(261009223027099003)(261022105027099003)(260925022911599003)(260925021911599003)(260925021311599003)(10067099003)(56012099006)(18002099003)(22082099003)(11063799006)(4143699003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RDBkcXVicFZESlp2WG90NlpjRTE5WnU0bzBQRy9oZ3BLMHc5VGVYSlBRdXRv?=
+ =?utf-8?B?aDVDdHVyL1djQVJ2QnBLMGI5akhnZjd5TUpkUlVVcXhWNWl6ZzdMMXhEaHRw?=
+ =?utf-8?B?MklCVm4yTnJPWkJTZ3RYRy9ySWlWWVI1cG93Yms5b2FXTEdhbStZUnJoalNW?=
+ =?utf-8?B?cUVxVEhQbXdEZ1FObmhJdTY5cTJjelk5ZmMwQ3p5SC9hd1c5RldHWFBQblhl?=
+ =?utf-8?B?cDVQNlk1UC8zcjZSVzhUbEMvTU1BQUFUTytuVzhUZ3lNaHFUanE5TlU5Q0Fq?=
+ =?utf-8?B?L2RMOVRBWnZhWXk0L2tsL0QzbTYyR1JPREhvM1g2cmJZaVhTVVBxS1JmR0ND?=
+ =?utf-8?B?QVYyY0JITGFhdEZhelhXMnlaVEVNZ0h1WUN5b2JicHdRV0MvbUVESEEvalJt?=
+ =?utf-8?B?YkxRQ0NaWWNuK0Y5SG8xd0FPRnlubFlFMTBxcHZTMWVqcU00bE9qb1VaQlpD?=
+ =?utf-8?B?ckc1aUFhU3U2WkJ4NUhoWVU1WmVrSXgvVG13TGpsTEg1bEdNcXBlbjZLZzZr?=
+ =?utf-8?B?QUFmRFliS0Q0eGExaDl6cmYvL2RaaDR6ZXNRSWwvcG9NQzBTUTYxbTBBOEhi?=
+ =?utf-8?B?L1hXWDdNaHd4Qm5xaXY5SUZhRXFIeGwvQ3FpenkvM1ZiSUNoazRON2J2Yzln?=
+ =?utf-8?B?TTV6aWJNeEt0S0FyTEFNZmJUMlYrdUtTemg3clBLV0hqUW9IUGFTY3hRWXM5?=
+ =?utf-8?B?Z2FJRjBpbFpBRmN4VU5qMlV1cjNJODlHcW5NNS9uYkVNQ2tsZGh2MWVvRjhx?=
+ =?utf-8?B?T29jYUJsZitkMDFobWFEZktmU3BWY1MwRHMyQjVYQXV0M01GQnd5NFhYeXQv?=
+ =?utf-8?B?UTFWSTQzRGtvYmhVSDVpaUtXR0k2U3pXbEc0NTZMa1RtTTBaOHc0NnNJZnE2?=
+ =?utf-8?B?S05IRWRQZVloYXZjUHNDS3V2TFJJdWlJdWFjTXUrZHg2eW9aOFc2TE5LWDN6?=
+ =?utf-8?B?bjNmNjcxMWE1UTFLQi9GRnR1Qm0xR3V2U1Jhb1pIamQ3ZUtKZU9wRzYrVEJM?=
+ =?utf-8?B?MVA1anV0bFd0R1c1M3RaV3A2clJ4SG9lUitqdGxBZXJKdFY3dlhiTkoxYlRv?=
+ =?utf-8?B?aDR0L2Vyem1yam83b29McVUyZ0JNSHBibjlEaG9JZEdSd3NRLzdOSkNQek1H?=
+ =?utf-8?B?blZiSHNROWR2RmIyMU16aTRiN2lGcWRiOFU2bFVWcnBCdDZtOHd4Mnllcm1v?=
+ =?utf-8?B?czVZeDA0TUVveWlLSW4wZVU3UXJ6bWErWXd3dTVxdVZ6aytwYWtaMU9tT21Z?=
+ =?utf-8?B?OENNOWdxWWgxOVBOcFZmZzYwVk9ORjNVQTJnR1U3VHhReVUyMU1tcXRUb1Vp?=
+ =?utf-8?B?RXB3bkxKR3FwSGFqNEIxV1dka1BDRTN0UDBqd09GTGg3OFdZSDBsZDJqazhM?=
+ =?utf-8?B?VDBNN0pYNUFKVFFIcFRCbXBqK01EaEZJcG1QWThRSkI1SGlsenR5WTFDMVE0?=
+ =?utf-8?B?N1MzMFZrNEhBcGgvVnByWjJkbU5YMjlCSEFpQzJKNlJNcmR6Q2d3YmV5cFd6?=
+ =?utf-8?B?Mk56aUs0eWZ2b1JGMFB5TnhEcTUvenpSc1JiRGw4d0pVSW9HTEVqenl5aWJ4?=
+ =?utf-8?B?Z2lLUWwvSSs5anVHUVd3aGludkcydlhhd1dSZUliTm1RWWN2SVVQUWlSYWV4?=
+ =?utf-8?B?bmpXbWRYb0todThNWldxZVJUV2VzVGJxcHplNHZxUjdEVWw3QXVnOGVVN1ZE?=
+ =?utf-8?B?blptczZtVFlUaGpzYTFHVE5XYnFlM2FkejgxKzBuZVBFR0llTWxIOUV2TmF2?=
+ =?utf-8?B?MC9ldzEwOVgwS1ZYUDZ4NlpLckpnaWlSZnZaZTl0K1RiUE4rWFI4VTk4VU9W?=
+ =?utf-8?B?b3haUG9tWUduWGhEdXZyWDNCVDJpNkE2Tms2WTFvWlBGejlrbjNKcjZjOUgw?=
+ =?utf-8?B?OEM5MUd1N0pBb0R4Q2dJZTJ2YnFUYWtDaVZ1VlArdnByOEpmc0d6NzRoWEtO?=
+ =?utf-8?B?NUphdXVld1A0NkhnbE0wR1RtaEJJcmpUMXZ0L21SZnB4VFZPeEV2eEtoM0Jq?=
+ =?utf-8?B?dTZYZjRpUGFjT0hFbFZoRFRNS0w1d0EyeUd0Y0lybGVEM3YzZGZtTzF5ZlFE?=
+ =?utf-8?B?L2g3N21GWFhwc3pGc1ZQa1c0NmZ1WVBhVjVvVnZtSVZqcGZGaDhYLzVtTW5F?=
+ =?utf-8?B?VEtyUmRQWHVlYzN4dkwwdFJQSVU5azkySHRkNlBwbmFFdkVMTlFlRXhqWkxY?=
+ =?utf-8?B?Q3N1Q0VKRE51UTBDRTBqMytHdDhjR1RDbEVPa2p6NjZscWVVNUJ2akdOMElF?=
+ =?utf-8?B?dFluejI5MHFycTN1ZDh5RUtGbEx4ckV4c2hyYW9EbnlVdlVldjZ3bml2TkNN?=
+ =?utf-8?B?QXJJVVcveW4wMnhoZmR3ZXhrQkxOdEhWSWRkOTlCUkZMbUUzdEV1QT09?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 62012e57-5d19-4c27-fff9-08df33091aaa
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 02:30:30.8038
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zqNf60Ck3XznW7ip5ep4EcJpilXqAwE3VoiHI1OzqKka4m+s2uZebtA5XXOVc+8rvXNajiwp+U4QqzPYGhOWeEeoHuLaKdQglg4yhuKGPok=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR03MB9443
 
-Hi Olivier, Vinod,
+Hi Markus,
+    Sorry, I didn't notice the submission you sent. I will drop my 
+submission.
 
-Le vendredi 23 octobre 2026 =C3=A0 10:09 +0200, Olivier Louvignes a =C3=A9c=
-rit=C2=A0:
-> jz4780_dma_terminate_all() sets jzchan->desc to NULL. The cookie of a
-> cyclic transfer never completes, so a later jz4780_dma_tx_status()
-> call
-> with that cookie finds no descriptor on the channel's lists, takes
-> the
-> else branch and reads jzchan->desc->vdesc.tx.cookie through the NULL
-> pointer.
->=20
-> The driver has always allowed this, but it only shows once something
-> calls tx_status() on a terminated cyclic channel, as
-> snd_dmaengine_pcm_sync_stop() does since commit 88e98af9f4b5 ("ALSA:
-> pcm_dmaengine: Don't synchronize DMA channel when DMA is paused").
-> Closing a playback stream then oopses:
->=20
-> =C2=A0 epc : jz4780_dma_tx_status+0x184/0x210
-> =C2=A0 Call Trace:
-> =C2=A0 [<8048e104>] jz4780_dma_tx_status+0x184/0x210
-> =C2=A0 [<805804d8>] snd_dmaengine_pcm_sync_stop+0x4c/0x94
-> =C2=A0 [<8058f068>] snd_soc_pcm_component_sync_stop+0x80/0xc0
-> =C2=A0 [<805775b8>] do_hw_free+0x20/0x6c
-> =C2=A0 [<80577650>] snd_pcm_release_substream+0x4c/0x9c
-> =C2=A0 [<805781ac>] snd_pcm_release+0x48/0x9c
->=20
-> Only compare the cookie with the current descriptor's when there is
-> one.
->=20
-> Fixes: d894fc6046fe ("dmaengine: jz4780: add driver for the Ingenic
-> JZ4780 DMA controller")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Olivier Louvignes <olivier@mgcrea.io>
-
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-
-Cheers,
--Paul
-
-> ---
-> Apologies to the stable list: two copies of this patch reached it
-> earlier
-> today from test sends, with the Cc trailer still in place. Please
-> ignore
-> those. This is the real submission, and it is the same patch.
->=20
-> Seen on an Ingenic X1600 (HiBy R1, compatible "ingenic,x1830-dma" as
-> fallback) on v7.3; the code is shared by all the SoCs this driver
-> supports. The patch is build-tested on 734bef548a96 (v7.3-7363).
->=20
-> =C2=A0drivers/dma/dma-jz4780.c | 2 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-> index 6070dfdb7114..7f827be502f1 100644
-> --- a/drivers/dma/dma-jz4780.c
-> +++ b/drivers/dma/dma-jz4780.c
-> @@ -658,7 +658,7 @@ static enum dma_status
-> jz4780_dma_tx_status(struct dma_chan *chan,
-> =C2=A0		/* On the issued list, so hasn't been processed yet
-> */
-> =C2=A0		residue =3D jz4780_dma_desc_residue(jzchan,
-> =C2=A0					to_jz4780_dma_desc(vdesc),
-> 0);
-> -	} else if (cookie =3D=3D jzchan->desc->vdesc.tx.cookie) {
-> +	} else if (jzchan->desc && cookie =3D=3D jzchan->desc-
-> >vdesc.tx.cookie) {
-> =C2=A0		residue =3D jz4780_dma_desc_residue(jzchan, jzchan-
-> >desc,
-> =C2=A0					jzchan->curr_hwdesc + 1);
-> =C2=A0	}
->=20
-> base-commit: 734bef548a96e8774d6eef5dfa2026c6edc4e80b
+On 2026/10/25 15:05, Markus Elfring wrote:
+>> when probe failed, workqueue not free. Convert the driver to use
+> …
+> 
+> I find this wording approach improvable.
+> 
+> See also:
+> [PATCH v2] dmaengine: amlogic: Fix missing destroy_workqueue() at error path in aml_dma_probe()
+> https://lore.kernel.org/dmaengine/13a835b1770e360af7991bb4c91ce52a8d01e331.1792785154.git.christophe.jaillet@wanadoo.fr/
+> 
+> Regards,
+> Markus
