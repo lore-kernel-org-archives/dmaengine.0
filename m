@@ -1,39 +1,39 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792989096;
-	b=MgwTtJAybKNclRt64uSDn/erMXi9cAw+Pcurn3SwftRKTVz94XkRXynnXQcNs4e4DAAO
-	 HQl8CVfbWORV6Pxgy0NnoecTiZXuwktAYBx5qm4wCycHsNqpNRE8mc9misnEy9jTdMZsw
-	 f7kX14jidts7Iu82ZXx+iHUOcbjmfR8Ycc0T8t/+foNk+O7OLSPAb/7GQGKbAZ2nDzN69
-	 vFHpLH1DLox6/zr3KjBF6DKQcSuoLLNBq+ssZVn0SOLftZAQO/rZMM+vba26Q/92Zub3M
-	 94cgJ8wu0JWkSjur99Iu7v87eJNS/kRudmohwBdy0qcjEtXDd+2C5TvogplpcQG/FWQ==
+	t=1792989108;
+	b=jzeZELYIXZRSOTDSQgWZrcVDVJSTBg2GCKr4xt0YpAezgYNZKLTlYQYMzFpouFz4vmb0
+	 ALOniz7dBOneHDLMTSVJVJArZ4EPEVBGhvNjZE1E/JvF8NCXpG36JP9Aeb2Cratkp0AM3
+	 29THrAXMPEA6p4Xl1Gj6AfG2a3PVdtFWKfkvu5r1fdgfZRGBAwUsVr1FJSGYFzAnNcoB5
+	 0yVu6r6RRJGjvSGdSqAr0y/Z9/CSUSE5wBwp+OlcadNeGguskwZX8pn7L/OqevAyQA5jw
+	 ZWmfOyQaG5//DQlMqPSnBgSLxnu2UTxSbNWjONKSNBQVMng93jsQGguspeERT98PJ9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792989096;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792989108;
 	h=DMARC-Filter:Received:Received:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-CM-TRANSID:X-CM-SenderInfo:
 	 X-Coremail-Antispam;
-	bh=Tbp7WXoUWrwvQSxD4WsSNQf/TDtZecOrIW9P6AEmN9I=;
-	b=YrK6KQxVVVHn2Z5UEtJM/7vZcsQFG83VZxVlhUpJNawNADL7NOXH+y+55OtcrkvqS6Xv
-	 TunkD1l4u/74mu5r1e+E9WUtU8DehdnHtOib6K2+gz4kRM9dNJ825d1+4HE+fFVyqOxBd
-	 ZmlKNMzyEDmxkypsu2Ca0+5s5zKqGwepRGlNd2OB/iQjuOPoswml4vQeQoMdhS13khBzq
-	 qw0piNbrJXozu088KBMLOw94k/UrwTQX38WK2jfEstxu7mP2xRhuQQ7r6chj4qj3dQudl
-	 HeSHs3eX2P6Yfak31xdRPfyNzKQXQTmcE+6PCbWyNrc7nyNXz0pF8dD1vyD+D525qSg==
+	bh=RxfFLbETcuxW2hF36Q+mEp1d3PXIqaOdJ0GDwfEkrjg=;
+	b=TXtwcNTkxIeWsotcIo4kTGAiVXJ3EuOKuAuGwkR7cxqdCgITO133YHhaxOKHpwq+lA5Q
+	 h30i+DNYJx7CIrhciO+c9SfKDo+716pLAqpVe2xSdYzSxBBMA+0oSpXTO/RFVAb74s7yU
+	 rx1axVdqe4L4P+Dc3YFLFivdvFh07ZdBVrThl5g1ZsXC1xDjGDk2c5wBwVpWDQ9DRziUI
+	 meRvHOk5xXgPfAZM3ovorUXllL2tkDAh9DpOU5ZTCOHetd2oQZCyX4bbHig5RRvvwIrC1
+	 r/VDDYmhpTCwRfHiw+mtICU8XV17AfBCJ1GnKapdaC/PVCEjHXdZ5rK+2O7mKb+OBzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=loongson.cn;
 	spf=pass smtp.mailfrom=loongson.cn;
 	arc=none smtp.remote-ip=114.242.206.163
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA1BD606A320;
-	Mon, 26 Oct 2026 04:31:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AA1BD606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3B7606A31B;
+	Mon, 26 Oct 2026 04:31:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD3B7606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
 Received: from loongson.cn (unknown [223.64.69.17])
-	by gateway (Coremail) with SMTP id _____8Bx69Gk195qdV0ZAA--.7868S3;
-	Mon, 26 Oct 2026 12:31:32 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8Cxf9Ox195qqV0ZAA--.8135S3;
+	Mon, 26 Oct 2026 12:31:45 +0800 (CST)
 Received: from kernelserver (unknown [223.64.69.17])
-	by front1 (Coremail) with SMTP id qMiowJAxlMyh195qoTgwAA--.8141S4;
-	Mon, 26 Oct 2026 12:31:32 +0800 (CST)
+	by front1 (Coremail) with SMTP id qMiowJCxf8+w195qvzgwAA--.37154S2;
+	Mon, 26 Oct 2026 12:31:45 +0800 (CST)
 From: Binbin Zhou <zhoubinbin@loongson.cn>
 To: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
@@ -48,11 +48,10 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
 	loongarch@lists.linux.dev,
 	devicetree@vger.kernel.org,
 	Keguang Zhang <keguang.zhang@gmail.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	stable@vger.kernel.org
-Subject: [PATCH 2/4] dmaengine: loongson: loongson2-apb-cmc-dma: Fix residue for queued descriptors
-Date: Mon, 26 Oct 2026 12:31:21 +0800
-Message-ID: <bd120f2c1ab291645a21b1cf9babdfcc0412cac7.1792988985.git.zhoubinbin@loongson.cn>
+	Binbin Zhou <zhoubinbin@loongson.cn>
+Subject: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
+Date: Mon, 26 Oct 2026 12:31:38 +0800
+Message-ID: <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1792988985.git.zhoubinbin@loongson.cn>
 References: <cover.1792988985.git.zhoubinbin@loongson.cn>
@@ -66,85 +65,195 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAxlMyh195qoTgwAA--.8141S4
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQEMCGretPgwGQAAsV
-X-Coremail-Antispam: 1Uk129KBj93XoWxZFW5JF13JrWDAF4UGF18Xrc_yoW5Gr1fpa
-	y3AayrWFW5tay3ZFsxWry8WF15AFWfXrZFg3y7Gw13ur1DXw129r1fGFyFqFW7Jas8uFyI
-	qFZ5u39xGF4UG3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+X-CM-TRANSID:qMiowJCxf8+w195qvzgwAA--.37154S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgEMCGrexPwvAwAAsn
+X-Coremail-Antispam: 1Uk129KBj93XoW3WryxKr4fCrykJFWfGw15Awc_yoWxCr4rpF
+	y3Aa4FgFW5trWFvFn8ZFW8WF1UAryFq39rtFW7GwnxWrykZw1xur1fJ3W8uF47AFyDuF12
+	qFZY9rs8GF1UCrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
 	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
-	14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY1x0262kKe7
-	AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
-	67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
-	8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JVW5
-	JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
-	1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
-	daVFxhVjvjDU0xZFpf9x07jFRRiUUUUU=
+	0xBIdaVrnRJUUUvSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+	Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_GFv_Wrylx2IqxVAq
+	x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r
+	43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF
+	7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI
+	0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7I
+	U8QJ57UUUUU==
 
-tx_status() computes residue for both the active and the queued
-descriptors through loongson2_cmc_dma_desc_residue(), which reads the
-hardware CNDTR register. For a descriptor that has not started yet that
-register does not describe its transfer, so clients can observe a
-residue that does not match the amount of data still to be moved.
+Clients that run cyclic transfers sometimes need to stop the channel
+temporarily and continue from the same position later. Without pause and
+resume, such clients have to terminate and restart the transfer, which
+loses the current position and can cause observable glitches or
+duplicated data. In addition, advancing to the next scatterlist entry
+while the client has requested a pause must not silently restart the
+channel.
 
-Report residue from the descriptor length for queued transfers, and keep
-the hardware-based calculation only for the active descriptor.
+Provide pause/resume semantics that preserve the current hardware
+position, and make scatterlist advancement honor the paused state so a
+paused channel stays stopped until the client explicitly resumes it.
 
-Cc: stable@vger.kernel.org
-Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson Multi-Channel DMA controller")
 Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
 ---
- drivers/dma/loongson/loongson2-apb-cmc-dma.c | 23 ++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/dma/loongson/loongson2-apb-cmc-dma.c | 94 +++++++++++++++++++-
+ 1 file changed, 90 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-index f090fbe0b8a1..8b8d530d60c3 100644
+index c654e0572902..a4153ea85462 100644
 --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
 +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-@@ -472,6 +472,17 @@ loongson2_cmc_dma_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t buf_addr, si
- 	return vchan_tx_prep(&lchan->vchan, &desc->vdesc, flags);
+@@ -93,6 +93,7 @@ struct loongson2_cmc_dma_chan {
+ 	int irq;
+ 	u32 next_sg;
+ 	struct loongson2_cmc_dma_chan_reg chan_reg;
++	bool paused;
+ };
+ 
+ struct loongson2_cmc_dma_dev {
+@@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_cmc_dma_chan *lchan)
+ 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
+ 
+ 	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
++
++	lchan->paused = false;
  }
  
-+static size_t loongson2_cmc_dma_desc_total_len(struct loongson2_cmc_dma_desc *desc)
-+{
-+	size_t total = 0;
-+	u32 i;
-+
-+	for (i = 0; i < desc->num_sgs; i++)
-+		total += desc->sg_req[i].len;
-+
-+	return total;
-+}
-+
- static size_t loongson2_cmc_dma_desc_residue(struct loongson2_cmc_dma_chan *lchan,
- 					     struct loongson2_cmc_dma_desc *desc, u32 next_sg)
+ static int loongson2_cmc_dma_terminate_all(struct dma_chan *chan)
+@@ -254,12 +257,13 @@ static void loongson2_cmc_dma_configure_next_sg(struct loongson2_cmc_dma_chan *l
  {
-@@ -518,12 +529,16 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
+ 	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
+ 	struct loongson2_cmc_dma_sg_req *sg_req;
++	bool keep_paused = lchan->paused;
+ 	u32 ccr, id = lchan->id;
  
- 	scoped_guard(spinlock_irqsave, &lchan->vchan.lock) {
- 		vdesc = vchan_find_desc(&lchan->vchan, cookie);
--		if (lchan->desc && cookie == lchan->desc->vdesc.tx.cookie)
-+		if (lchan->desc && cookie == lchan->desc->vdesc.tx.cookie) {
-+			/* Active descriptor: compute residue from hardware progress */
+ 	if (lchan->next_sg == lchan->desc->num_sgs)
+ 		lchan->next_sg = 0;
+ 
+-	/* Stop to update mem addr */
++	/* Stop to update mem addr (idempotent when already paused) */
+ 	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, id);
+ 	ccr &= ~LOONGSON2_CMCDMA_CCR_EN;
+ 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
+@@ -268,9 +272,16 @@ static void loongson2_cmc_dma_configure_next_sg(struct loongson2_cmc_dma_chan *l
+ 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CMAR, id, sg_req->chan_reg.cmar);
+ 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CNDTR, id, sg_req->chan_reg.cndtr);
+ 
+-	/* Start transition */
+-	ccr |= LOONGSON2_CMCDMA_CCR_EN;
+-	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
++	/*
++	 * Only re-enable when the client has not paused the channel.
++	 * A paused cyclic channel still needs its CMAR/CNDTR advanced
++	 * so that resume() starts on the right scatterlist entry, but
++	 * the enable bit must stay clear until the client asks for it.
++	 */
++	if (!keep_paused) {
++		ccr |= LOONGSON2_CMCDMA_CCR_EN;
++		loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
++	}
+ }
+ 
+ static void loongson2_cmc_dma_handle_chan_done(struct loongson2_cmc_dma_chan *lchan)
+@@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
+ 			/* Active descriptor: compute residue from hardware progress */
  			state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
  									lchan->next_sg);
--		else if (vdesc)
--			state->residue = loongson2_cmc_dma_desc_residue(lchan,
--									to_lmdma_desc(vdesc), 0);
-+		} else if (vdesc) {
-+			/* Queued descriptor not yet started: residue is the total length */
-+			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
-+
-+			state->residue = loongson2_cmc_dma_desc_total_len(ldesc);
-+		}
- 	}
++			/*
++			 * A paused channel still has an active descriptor but is not making
++			 * progress. Report DMA_PAUSED so clients can distinguish it from a
++			 * running transfer.
++			 */
++			if (lchan->paused && status == DMA_IN_PROGRESS)
++				status = DMA_PAUSED;
+ 		} else if (vdesc) {
+ 			/* Queued descriptor not yet started: residue is the total length */
+ 			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
+@@ -624,6 +642,72 @@ static int loongson2_cmc_dma_of_controller_register(struct loongson2_cmc_dma_dev
+ 	return of_dma_controller_register(dev->of_node, loongson2_cmc_dma_of_xlate, lddev);
+ }
  
- 	return status;
++/**
++ * loongson2_cmc_dma_pause() - Stop the channel without losing state
++ * @chan: DMA channel
++ *
++ * Clears CCR.EN so the controller stops issuing requests to the
++ * peripheral. CNDTR and CMAR keep their current values, so
++ * loongson2_cmc_dma_resume() can pick up exactly where the transfer
++ * left off. The channel remains in cyclic mode; only the enable bit is
++ * dropped, so a paused cyclic channel does not advance the write
++ * pointer until resumed.
++ *
++ * Return: 0 on success.
++ */
++static int loongson2_cmc_dma_pause(struct dma_chan *chan)
++{
++	struct loongson2_cmc_dma_chan *lchan = to_lmdma_chan(chan);
++	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
++	u32 ccr;
++
++	guard(spinlock_irqsave)(&lchan->vchan.lock);
++
++	if (lchan->paused || !lchan->desc)
++		return 0;
++
++	lchan->paused = true;
++
++	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, lchan->id);
++	ccr &= ~LOONGSON2_CMCDMA_CCR_EN;
++	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
++
++	return 0;
++}
++
++/**
++ * loongson2_cmc_dma_resume() - Restart a paused channel
++ * @chan: DMA channel
++ *
++ * Restores CCR.EN. CNDTR is left untouched, so the transfer continues
++ * from the exact word where the pause happened.
++ *
++ * Return: 0 on success.
++ */
++static int loongson2_cmc_dma_resume(struct dma_chan *chan)
++{
++	struct loongson2_cmc_dma_chan *lchan = to_lmdma_chan(chan);
++	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
++	u32 ccr;
++
++	guard(spinlock_irqsave)(&lchan->vchan.lock);
++
++	if (!lchan->paused)
++		return 0;
++
++	lchan->paused = false;
++
++	/* No descriptor: nothing left to run */
++	if (!lchan->desc)
++		return 0;
++
++	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, lchan->id);
++	ccr |= LOONGSON2_CMCDMA_CCR_EN;
++	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
++
++	return 0;
++}
++
+ static int loongson2_cmc_dma_probe(struct platform_device *pdev)
+ {
+ 	const struct loongson2_cmc_dma_config *config;
+@@ -676,6 +760,8 @@ static int loongson2_cmc_dma_probe(struct platform_device *pdev)
+ 	ddev->device_synchronize = loongson2_cmc_dma_synchronize;
+ 	ddev->device_tx_status = loongson2_cmc_dma_tx_status;
+ 	ddev->device_terminate_all = loongson2_cmc_dma_terminate_all;
++	ddev->device_pause = loongson2_cmc_dma_pause;
++	ddev->device_resume = loongson2_cmc_dma_resume;
+ 
+ 	ddev->max_sg_burst = LOONSON2_CMCDMA_MAX_DATA_ITEMS;
+ 	ddev->src_addr_widths = LOONGSON2_CMCDMA_BUSWIDTHS;
 -- 
 2.52.0
 
