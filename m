@@ -1,39 +1,39 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792989108;
-	b=jzeZELYIXZRSOTDSQgWZrcVDVJSTBg2GCKr4xt0YpAezgYNZKLTlYQYMzFpouFz4vmb0
-	 ALOniz7dBOneHDLMTSVJVJArZ4EPEVBGhvNjZE1E/JvF8NCXpG36JP9Aeb2Cratkp0AM3
-	 29THrAXMPEA6p4Xl1Gj6AfG2a3PVdtFWKfkvu5r1fdgfZRGBAwUsVr1FJSGYFzAnNcoB5
-	 0yVu6r6RRJGjvSGdSqAr0y/Z9/CSUSE5wBwp+OlcadNeGguskwZX8pn7L/OqevAyQA5jw
-	 ZWmfOyQaG5//DQlMqPSnBgSLxnu2UTxSbNWjONKSNBQVMng93jsQGguspeERT98PJ9Q==
+	t=1792989202;
+	b=Fp2g7bKwEOsWKTDCZnnZ16MqSOHrWW4iPp04Odjc8XPT0tEMarsC/rRS9+KSKdgD7+o7
+	 juDzlsodnApkjIXzx24mFX/JrAC9o1BTS4O41Lv7adHe+VomgwbFTYWj9ccmv4GjIsoAr
+	 jurSd08XS1Sebk4wr/xW5nxLPdQTAMcKV0UnDsbHkw0mZJx8HanXMfYI40nes3hlbzdnd
+	 m8pF5PHZolYrE4ENso3Wyb9RL+Exq3pm9EEs0PW5U6XaHjOT5yXRtZMSNeRxKd4vm7CrC
+	 X8t63MyynnVGeO+dLzdQ6NHhzNeCG8i4N171gcak+TAJ4Q0I5si/o9YDMNNHl7rvrAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792989108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792989202;
 	h=DMARC-Filter:Received:Received:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-CM-TRANSID:X-CM-SenderInfo:
 	 X-Coremail-Antispam;
-	bh=RxfFLbETcuxW2hF36Q+mEp1d3PXIqaOdJ0GDwfEkrjg=;
-	b=TXtwcNTkxIeWsotcIo4kTGAiVXJ3EuOKuAuGwkR7cxqdCgITO133YHhaxOKHpwq+lA5Q
-	 h30i+DNYJx7CIrhciO+c9SfKDo+716pLAqpVe2xSdYzSxBBMA+0oSpXTO/RFVAb74s7yU
-	 rx1axVdqe4L4P+Dc3YFLFivdvFh07ZdBVrThl5g1ZsXC1xDjGDk2c5wBwVpWDQ9DRziUI
-	 meRvHOk5xXgPfAZM3ovorUXllL2tkDAh9DpOU5ZTCOHetd2oQZCyX4bbHig5RRvvwIrC1
-	 r/VDDYmhpTCwRfHiw+mtICU8XV17AfBCJ1GnKapdaC/PVCEjHXdZ5rK+2O7mKb+OBzQ==
+	bh=tNqsvXgqRWXzP/izZ2kYfFH0p1gIT5FKPDmcvcDX+iw=;
+	b=YMJRFrBlq+gH0IMxtjMmPqUGT/8WCgevLr8/VWZdpwP6PK7PWH0f1ygQyI0DbqKuVBZI
+	 REjpdhO18bMw2UqpYzfwUvIua7w9O6hOE8zMpj6+/+KLBxaWyIAigbpysy3zc1u5JYesz
+	 0LdKR90mEvrXRjoR3BsW47BTPr67sGTWUUnIHsYFFSkuJ0X23UIrccehlnI/FRzrBfJCd
+	 SMcjDqLtYjxegMmvy3ABHiFV6/+UB0daZtjsUL/taR04urraiToH88wfPofhikHiop01W
+	 owvSKQ+zVi5eVJI0qhcYsb8DPVonWMdOrHwYKPaHHMMJRu5xz16tl9xISJ9/RQ5AaXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=loongson.cn;
 	spf=pass smtp.mailfrom=loongson.cn;
 	arc=none smtp.remote-ip=114.242.206.163
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3B7606A31B;
-	Mon, 26 Oct 2026 04:31:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD3B7606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83D77606A31F;
+	Mon, 26 Oct 2026 04:33:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83D77606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
 Received: from loongson.cn (unknown [223.64.69.17])
-	by gateway (Coremail) with SMTP id _____8Cxf9Ox195qqV0ZAA--.8135S3;
-	Mon, 26 Oct 2026 12:31:45 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8BxW_AP2N5q1l0ZAA--.8136S3;
+	Mon, 26 Oct 2026 12:33:19 +0800 (CST)
 Received: from kernelserver (unknown [223.64.69.17])
-	by front1 (Coremail) with SMTP id qMiowJCxf8+w195qvzgwAA--.37154S2;
-	Mon, 26 Oct 2026 12:31:45 +0800 (CST)
+	by front1 (Coremail) with SMTP id qMiowJAx1cwI2N5q6jgwAA--.7070S3;
+	Mon, 26 Oct 2026 12:33:16 +0800 (CST)
 From: Binbin Zhou <zhoubinbin@loongson.cn>
 To: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
@@ -48,13 +48,14 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
 	loongarch@lists.linux.dev,
 	devicetree@vger.kernel.org,
 	Keguang Zhang <keguang.zhang@gmail.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>
-Subject: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
-Date: Mon, 26 Oct 2026 12:31:38 +0800
-Message-ID: <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v3 1/2] dt-bindings: dma: Document DMA mux support for Loongson-2K0300
+Date: Mon, 26 Oct 2026 12:33:05 +0800
+Message-ID: <c4ae9695aa266bf714a53b5f46218645fc64347a.1792986696.git.zhoubinbin@loongson.cn>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1792988985.git.zhoubinbin@loongson.cn>
-References: <cover.1792988985.git.zhoubinbin@loongson.cn>
+In-Reply-To: <cover.1792986696.git.zhoubinbin@loongson.cn>
+References: <cover.1792986696.git.zhoubinbin@loongson.cn>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -65,195 +66,198 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJCxf8+w195qvzgwAA--.37154S2
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgEMCGrexPwvAwAAsn
-X-Coremail-Antispam: 1Uk129KBj93XoW3WryxKr4fCrykJFWfGw15Awc_yoWxCr4rpF
-	y3Aa4FgFW5trWFvFn8ZFW8WF1UAryFq39rtFW7GwnxWrykZw1xur1fJ3W8uF47AFyDuF12
-	qFZY9rs8GF1UCrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-CM-TRANSID:qMiowJAx1cwI2N5q6jgwAA--.7070S3
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAgEMCGrexPwvDAAAso
+X-Coremail-Antispam: 1Uk129KBj93XoWxKry3uw15Jr1kGr43Cr17Jwc_yoW7tr43pa
+	sIkFZakFy0yFyfCa95KFy8Kr15XrZayFy7Xay7XrnrC3yDJ34Yvr43Ka1YvFW7Gr4IvrW7
+	XryvgrW2gasrZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
 	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUvSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	0xBIdaVrnRJUUUBqb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r126r13M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
 	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
-	Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_GFv_Wrylx2IqxVAq
-	x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r
-	43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF
-	7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI
-	0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7I
-	U8QJ57UUUUU==
+	0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAF
+	wI0_Gr1j6F4UJwAaw2AFwI0_Jrv_JF1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2
+	xF0cIa020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_
+	Wrv_ZF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x
+	0EwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E74
+	80Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0
+	I7IYx2IY67AKxVW5JVW7JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UMIIF0xvE42
+	xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF
+	7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7IU0EfO5UUUUU==
 
-Clients that run cyclic transfers sometimes need to stop the channel
-temporarily and continue from the same position later. Without pause and
-resume, such clients have to terminate and restart the transfer, which
-loses the current position and can cause observable glitches or
-duplicated data. In addition, advancing to the next scatterlist entry
-while the client has requested a pause must not silently restart the
-channel.
+The DMA mux on Loongson-2K0300 is not a standalone hardware block. It is
+implemented as part of the chip configuration registers CHIP_CTRL13/14/15,
+which route peripheral DMA requests to the physical channels of the CMC
+DMA controller.
 
-Provide pause/resume semantics that preserve the current hardware
-position, and make scatterlist advancement honor the paused state so a
-paused channel stays stopped until the client explicitly resumes it.
+Document this as a DMA router. The #dma-cells = <3> specifier contains
+the peripheral request ID, the target CMC DMA channel, and channel
+configuration flags forwarded to the parent DMA controller.
 
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
 ---
- drivers/dma/loongson/loongson2-apb-cmc-dma.c | 94 +++++++++++++++++++-
- 1 file changed, 90 insertions(+), 4 deletions(-)
+ .../dma/loongson,ls2k0300-dmamux.yaml         | 72 +++++++++++++++++++
+ MAINTAINERS                                   |  2 +
+ .../dt-bindings/dma/loongson,ls2k-dmamux.h    | 53 ++++++++++++++
+ 3 files changed, 127 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+ create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
 
-diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-index c654e0572902..a4153ea85462 100644
---- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-+++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-@@ -93,6 +93,7 @@ struct loongson2_cmc_dma_chan {
- 	int irq;
- 	u32 next_sg;
- 	struct loongson2_cmc_dma_chan_reg chan_reg;
-+	bool paused;
- };
- 
- struct loongson2_cmc_dma_dev {
-@@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_cmc_dma_chan *lchan)
- 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
- 
- 	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
+diff --git a/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+new file mode 100644
+index 000000000000..df607d9ff599
+--- /dev/null
++++ b/Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/loongson,ls2k0300-dmamux.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	lchan->paused = false;
- }
++title: Loongson-2 APB DMA MUX (DMA request router)
++
++maintainers:
++  - Binbin Zhou <zhoubinbin@loongson.cn>
++
++allOf:
++  - $ref: /schemas/dma/dma-router.yaml#
++
++properties:
++  compatible:
++    const: loongson,ls2k0300-dmamux
++
++  reg:
++    maxItems: 1
++
++  '#dma-cells':
++    const: 3
++    description: |
++      Each cell represents the following:
++      1. Peripheral request ID: This describes the corresponding bit field
++         for that peripheral in the configuration register; see (
++         include/dt-bindings/dma/loongson,ls2k-dmamux.h) for details.
++      2. Physical DMA channel (0-7): This not only represents the DMA
++         channel used by the peripheral but is also converted into a value for
++         the corresponding bit field in the configuration register, indicating
++         the legitimacy of that peripheral using that channel.
++         Specifically:
++         - I2S/SPI/UART/I2C: Require adjacent channels in pairs; valid
++            values are 0/1, 2/3, 4/5, 6/7;
++         - SM3/SM4/DES/AES: Single channel; valid values are limited to 0/1;
++         - CAN/ADC: Single channel; valid values range from 0 to 7.
++      3. DMA Channel Configuration: A 32-bit mask used to specify
++         device-specific DMA channel configurations.
++         - Bit 6: Peripheral Address Increment Mode
++            0x0: Disabled
++            0x1: Enabled
++         - Bit 7: Memory Address Increment Mode
++            0x0: Disabled
++            0x1: Enabled
++         - Bits 12-13: Priority
++            0x0: Low
++            0x1: Medium
++            0x2: High
++            0x3: Very High
++
++  dma-requests:
++    const: 22
++
++required:
++  - compatible
++  - reg
++  - dma-requests
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/dma/loongson,ls2k-dmamux.h>
++    dma-router@16000134 {
++        compatible = "loongson,ls2k0300-dmamux";
++        reg = <0x16000134 0xc>;
++        #dma-cells = <3>;
++        dma-masters = <&dma>;
++        dma-requests = <22>;
++    };
++...
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 42f5165019ee..78622b255f88 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -15351,9 +15351,11 @@ M:	Binbin Zhou <zhoubinbin@loongson.cn>
+ L:	dmaengine@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/dma/loongson,ls2k0300-dma.yaml
++F:	Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
+ F:	Documentation/devicetree/bindings/dma/loongson,ls2x-apbdma.yaml
+ F:	drivers/dma/loongson/loongson2-apb-cmc-dma.c
+ F:	drivers/dma/loongson/loongson2-apb-dma.c
++F:	include/dt-bindings/dma/loongson,ls2k-dmamux.h
  
- static int loongson2_cmc_dma_terminate_all(struct dma_chan *chan)
-@@ -254,12 +257,13 @@ static void loongson2_cmc_dma_configure_next_sg(struct loongson2_cmc_dma_chan *l
- {
- 	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
- 	struct loongson2_cmc_dma_sg_req *sg_req;
-+	bool keep_paused = lchan->paused;
- 	u32 ccr, id = lchan->id;
- 
- 	if (lchan->next_sg == lchan->desc->num_sgs)
- 		lchan->next_sg = 0;
- 
--	/* Stop to update mem addr */
-+	/* Stop to update mem addr (idempotent when already paused) */
- 	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, id);
- 	ccr &= ~LOONGSON2_CMCDMA_CCR_EN;
- 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
-@@ -268,9 +272,16 @@ static void loongson2_cmc_dma_configure_next_sg(struct loongson2_cmc_dma_chan *l
- 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CMAR, id, sg_req->chan_reg.cmar);
- 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CNDTR, id, sg_req->chan_reg.cndtr);
- 
--	/* Start transition */
--	ccr |= LOONGSON2_CMCDMA_CCR_EN;
--	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
-+	/*
-+	 * Only re-enable when the client has not paused the channel.
-+	 * A paused cyclic channel still needs its CMAR/CNDTR advanced
-+	 * so that resume() starts on the right scatterlist entry, but
-+	 * the enable bit must stay clear until the client asks for it.
-+	 */
-+	if (!keep_paused) {
-+		ccr |= LOONGSON2_CMCDMA_CCR_EN;
-+		loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, id, ccr);
-+	}
- }
- 
- static void loongson2_cmc_dma_handle_chan_done(struct loongson2_cmc_dma_chan *lchan)
-@@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
- 			/* Active descriptor: compute residue from hardware progress */
- 			state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
- 									lchan->next_sg);
-+			/*
-+			 * A paused channel still has an active descriptor but is not making
-+			 * progress. Report DMA_PAUSED so clients can distinguish it from a
-+			 * running transfer.
-+			 */
-+			if (lchan->paused && status == DMA_IN_PROGRESS)
-+				status = DMA_PAUSED;
- 		} else if (vdesc) {
- 			/* Queued descriptor not yet started: residue is the total length */
- 			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
-@@ -624,6 +642,72 @@ static int loongson2_cmc_dma_of_controller_register(struct loongson2_cmc_dma_dev
- 	return of_dma_controller_register(dev->of_node, loongson2_cmc_dma_of_xlate, lddev);
- }
- 
-+/**
-+ * loongson2_cmc_dma_pause() - Stop the channel without losing state
-+ * @chan: DMA channel
+ LOONGSON LS2X I2C DRIVER
+ M:	Binbin Zhou <zhoubinbin@loongson.cn>
+diff --git a/include/dt-bindings/dma/loongson,ls2k-dmamux.h b/include/dt-bindings/dma/loongson,ls2k-dmamux.h
+new file mode 100644
+index 000000000000..1e2907ab069d
+--- /dev/null
++++ b/include/dt-bindings/dma/loongson,ls2k-dmamux.h
+@@ -0,0 +1,53 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Loongson-2 SoC DMA Mux dt-bindings
 + *
-+ * Clears CCR.EN so the controller stops issuing requests to the
-+ * peripheral. CNDTR and CMAR keep their current values, so
-+ * loongson2_cmc_dma_resume() can pick up exactly where the transfer
-+ * left off. The channel remains in cyclic mode; only the enable bit is
-+ * dropped, so a paused cyclic channel does not advance the write
-+ * pointer until resumed.
++ * DMA specifier format:
++ *   dmas = <&dma_mux <request> <channel> <flags>>;
 + *
-+ * Return: 0 on success.
++ * The <channel> cell selects a physical CMC DMA channel (0-7)
++ * For peripherals using channel pairs (UART, I2C, SPI2/3, I2S),
++ * the channel number selects the pair: 0/1 -> pair 0, 2/3 -> pair 1,
++ * 4/5 -> pair 2, 6/7 -> pair 3.
++ *
++ * Copyright (C) 2026 Loongson Technology Corporation Limited
 + */
-+static int loongson2_cmc_dma_pause(struct dma_chan *chan)
-+{
-+	struct loongson2_cmc_dma_chan *lchan = to_lmdma_chan(chan);
-+	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
-+	u32 ccr;
 +
-+	guard(spinlock_irqsave)(&lchan->vchan.lock);
++#ifndef _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H
++#define _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H
 +
-+	if (lchan->paused || !lchan->desc)
-+		return 0;
++/* UART controllers */
++#define LS2K0300_DMA_UART0		0
++#define LS2K0300_DMA_UART1		1
++#define LS2K0300_DMA_UART2		2
++#define LS2K0300_DMA_UART3		3
++#define LS2K0300_DMA_UART4		4
++#define LS2K0300_DMA_UART5		5
++#define LS2K0300_DMA_UART6		6
++#define LS2K0300_DMA_UART7		7
++#define LS2K0300_DMA_UART8		8
++#define LS2K0300_DMA_UART9		9
 +
-+	lchan->paused = true;
++/* I2C controllers */
++#define LS2K0300_DMA_I2C0		10
++#define LS2K0300_DMA_I2C1		11
++#define LS2K0300_DMA_I2C2		12
++#define LS2K0300_DMA_I2C3		13
 +
-+	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, lchan->id);
-+	ccr &= ~LOONGSON2_CMCDMA_CCR_EN;
-+	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
++/* SPI controllers (IO mode) */
++#define LS2K0300_DMA_SPI2		14
++#define LS2K0300_DMA_SPI3		15
 +
-+	return 0;
-+}
++/* I2S controller */
++#define LS2K0300_DMA_I2S		16
 +
-+/**
-+ * loongson2_cmc_dma_resume() - Restart a paused channel
-+ * @chan: DMA channel
-+ *
-+ * Restores CCR.EN. CNDTR is left untouched, so the transfer continues
-+ * from the exact word where the pause happened.
-+ *
-+ * Return: 0 on success.
-+ */
-+static int loongson2_cmc_dma_resume(struct dma_chan *chan)
-+{
-+	struct loongson2_cmc_dma_chan *lchan = to_lmdma_chan(chan);
-+	struct loongson2_cmc_dma_dev *lddev = lmdma_get_dev(lchan);
-+	u32 ccr;
++/* ADC controller */
++#define LS2K0300_DMA_ADC		17
 +
-+	guard(spinlock_irqsave)(&lchan->vchan.lock);
++/* CAN-FD controllers */
++#define LS2K0300_DMA_CAN0		18
++#define LS2K0300_DMA_CAN1		19
++#define LS2K0300_DMA_CAN2		20
++#define LS2K0300_DMA_CAN3		21
 +
-+	if (!lchan->paused)
-+		return 0;
-+
-+	lchan->paused = false;
-+
-+	/* No descriptor: nothing left to run */
-+	if (!lchan->desc)
-+		return 0;
-+
-+	ccr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CCR, lchan->id);
-+	ccr |= LOONGSON2_CMCDMA_CCR_EN;
-+	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
-+
-+	return 0;
-+}
-+
- static int loongson2_cmc_dma_probe(struct platform_device *pdev)
- {
- 	const struct loongson2_cmc_dma_config *config;
-@@ -676,6 +760,8 @@ static int loongson2_cmc_dma_probe(struct platform_device *pdev)
- 	ddev->device_synchronize = loongson2_cmc_dma_synchronize;
- 	ddev->device_tx_status = loongson2_cmc_dma_tx_status;
- 	ddev->device_terminate_all = loongson2_cmc_dma_terminate_all;
-+	ddev->device_pause = loongson2_cmc_dma_pause;
-+	ddev->device_resume = loongson2_cmc_dma_resume;
- 
- 	ddev->max_sg_burst = LOONSON2_CMCDMA_MAX_DATA_ITEMS;
- 	ddev->src_addr_widths = LOONGSON2_CMCDMA_BUSWIDTHS;
++#endif /* _DT_BINDINGS_DMA_LOONGSON_LS2K_DMAMUX_H */
 -- 
 2.52.0
 
