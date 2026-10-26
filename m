@@ -1,57 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792989198;
-	b=bRquZdan7fczk7mOqQSQZAK+9SvmXtC4jvpmZdAfuyoTZ9bmoSC6polA+o0ObTpsJPfn
-	 HLx0fsab55UihDDryVJnmJpGaL4yQXNOjqG44PJIxEVypYp4g1vOSXz4Z7r4dGT6TIcyK
-	 VXaCrmPjdV6CzZaCbmitLazU3owjrVNCTKxkxKnObtI0FHfm1aMaPw2NKMiMefXAqQHKb
-	 hBtTKeQ0TtR+YuAzXZWhFqNAkY4uUKesqlitoYqyMFX5jsJlG2slkV8LsdsYWX8zWVhu9
-	 VrxYvIr1j5zkZu+VO0bWy7sSMIosjqek0g6UdS+Bi9NdLfG+c8p5r0TJiKPpEHtG6Kw==
+	t=1793002334;
+	b=l3R93vyhhBmh0GQdRLTFuVeAhnDPoi9dTaMs1LBwd21CteiNLqOmWe2KBQ2bDTQEVvL6
+	 S0TBZzvlc69+NgPjMDfMm5bG9lCskdt7PZ/ZoYwVPVuDNSx1AqUR8gf11jl6s9sLkS9jk
+	 p95PIYV2Zx7msYqRUkeO+Njl4xRFeyh8qS/TGYZ/+XLITouG941tMCN70NbB6u2ylMcSp
+	 7D9NSNfxT3Z4u3O1pJtvlhkl/Omc5cuIAWJKN4VsjrbmQFToBjRWgZD6FsCvS8ca4wPX/
+	 OwnXfv04HDcjatt5bXfZIgtJIXHKFm5Q/PzjXH4/NGI2VXwFUdEJexgAYlOIcX9PrUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792989198;
-	h=DMARC-Filter:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-CM-SenderInfo:X-Coremail-Antispam;
-	bh=OLaBTI8wSKAzgSQXZOyB0488XXKM5pNdxDw1IYaL8d8=;
-	b=zSwSkLcjuN5uDgFjSPIlwWNDmNEUS8UKnmibfxfNpw4dWV7XbSpuJlC3ttlXgfED61eE
-	 t8fJmnsHjxw9yKxHckid+e63plOMZnR7HsDJKA+TudeIGB8t/xEoGiASWf2F08Dm3jxmr
-	 wYDddqCfFgvFrtxbDYqgaVcxBQbjrl8e2jQ6BvKHnLQC1EeLOZAbCL0dFIMFBImvxn7kt
-	 8xFtkyVrofu4Zradvt1E2cQurpV+9cvE/9wJqycP3aYzGnAeCQ/IALM46yG7s3GSLS80p
-	 v+KpLq4/043erhJa0nkWOS/uA6TbA2D2YlLa9E/+UiW/IjIUV5fCzwVP4E/qCh1jcXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793002334;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=788vu28/RmpbuxZcV5D6HBDXw42mfNytDK356zbWFxI=;
+	b=pQbEgqwq6Guw7ra5Zcef2JQ4mZVvWZ0LX/LJRljGB1HcjEe+uB/ZaxBkuyyF3TMDdf8b
+	 RbSux5rD7iVk6Q42epYS0qqu15GG66KdvrR9jIQuqRw/Sl6CiJxYv+2zCz5MQzpNsC+l6
+	 Ov3Fb1/beYZRv6Pd5ii2ofDWofmrtxRSh+PGz08Jb/iJfIcDoCGEk8Uv8yfPpATQpqc16
+	 dVgiC5xV61ZAL6CqogNlfoKng+MN2sqSmlAs1y00zR1TKIz/C6CE1BVAWPagS1/LWwPt0
+	 A9GcMQ4KhRJVq117XZNgRhCzbz8TVhMqERTAGlbdciK902czUsyhExyv5vp765w3EjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=loongson.cn;
-	spf=pass smtp.mailfrom=loongson.cn;
-	arc=none smtp.remote-ip=114.242.206.163
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75F4B606A31A;
-	Mon, 26 Oct 2026 04:33:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75F4B606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [223.64.69.17])
-	by gateway (Coremail) with SMTP id _____8Cx_9IL2N5qzF0ZAA--.8332S3;
-	Mon, 26 Oct 2026 12:33:15 +0800 (CST)
-Received: from kernelserver (unknown [223.64.69.17])
-	by front1 (Coremail) with SMTP id qMiowJAx1cwI2N5q6jgwAA--.7070S2;
-	Mon, 26 Oct 2026 12:33:13 +0800 (CST)
-From: Binbin Zhou <zhoubinbin@loongson.cn>
-To: Binbin Zhou <zhoubb.aaron@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org
-Cc: Huacai Chen <chenhuacai@kernel.org>,
-	Xuerui Wang <kernel@xen0n.name>,
-	loongarch@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>
-Subject: [PATCH v3 0/2] Add Loongson-2K0300 APB DMA mux support
-Date: Mon, 26 Oct 2026 12:33:04 +0800
-Message-ID: <cover.1792986696.git.zhoubinbin@loongson.cn>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SkrhOp0e;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E75606A31A;
+	Mon, 26 Oct 2026 08:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SkrhOp0e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799B21F01828;
+	Mon, 26 Oct 2026 08:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793002333;
+	bh=788vu28/RmpbuxZcV5D6HBDXw42mfNytDK356zbWFxI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=SkrhOp0e/e07xdOA0NDEcNPwlL2Nasi5VA7pBzAWQODpGpG9ijvkEVaxFupqoizIL
+	 2Uj5ucNWlMY7KR2dj2lF+aT+B2UA4NKpSrTK5Qgx8uBl9F0sHSIEoFVBIF02kRkfp6
+	 32Xy42c2RUPwIX81GkNaK4/kQ7UNu8bzeuTwRsM+iDE8e+WujeZ8IKIMgWCD62iznl
+	 Byss+a7f2GeKaArfI6iiM1AaeIgTYNA8QLfxQ9NRAGSHGxiLwMFFxDEi37sHDBXWPP
+	 NpVRWDpqZ2RWQUeY0JJD3mglfrXetvjjULZkXB8MMbvb7LdNk1aZwFKAukBJ7OPrTr
+	 Yhl4wJXOnkzOw==
+Date: Mon, 26 Oct 2026 09:12:09 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jelly Jia <Jelly.Jia@cixtech.com>
+Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, robin.murphy@arm.com, sboyd@kernel.org, bmasney+clk@redhat.com, 
+	jbrunet+clk@baylibre.com, devicetree@vger.kernel.org, Frank.Li@kernel.org, 
+	cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, joakim.zhang@cixtech.com
+Subject: Re: [PATCH v1 1/5] dt-bindings: soc: cix: Describe the Sky1 AUDSS
+ DMA IRQ controller
+Message-ID: <20261026-able-complex-skunk-d7db4c@quoll>
+References: <20261023093045.3248630-1-Jelly.Jia@cixtech.com>
+ <20261023093045.3248630-2-Jelly.Jia@cixtech.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -61,96 +61,25 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAx1cwI2N5q6jgwAA--.7070S2
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQEMCGretPgwNQAAs5
-X-Coremail-Antispam: 1Uk129KBj93XoWxGF4DZFyfuw18ZF1fCF4UAwc_yoW5Gr4rpa
-	9xC3y3Kr4DtFy7Aws3Jay8urW5Zr9xJr12gFWaqw1q9a98W3yjqa1Iy3Wqvry7Cr18AFW2
-	vrykCrW8GF1UZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUkIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
-	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
-	67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
-	Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
-	6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0x
-	vE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY
-	6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aV
-	CY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8QJ57UUUUU==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261023093045.3248630-2-Jelly.Jia@cixtech.com>
 
-Hi all:
+On Fri, Oct 23, 2026 at 05:30:41PM +0800, Jelly Jia wrote:
+>  examples:
+>    - |
+> -    audss_cru: clock-controller@7110000 {
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    gic: interrupt-controller {
+> +        #address-cells = <2>;
+> +        #interrupt-cells = <4>;
+> +        interrupt-controller;
+> +    };
 
-Loongson-2K0300 integrates a CMC DMA controller with 8 physical
-channels. Peripheral DMA requests are not hard-wired to these channels;
-they are routed through the CHIP_CTRL13/14/15 DMA_MAP fields.
+Drop node, not relevant.
 
-This series adds support for that DMA request router.
-
-Patch 1 adds the DT binding constants for the peripheral request IDs
-and yaml file for the DMA mux.
-Patch 2 adds the driver, Kconfig symbol and Makefile entry.
-
-The driver registers with of_dma_router_register(). In the route
-allocation callback it validates the <request> <channel> <flags>
-specifier, programs the SoC-specific route register, and forwards
-<channel> <flags> to the parent CMC DMA controller.
-
-Thanks.
-Binbin.
-
-=========
-V3:
-Patch(1/2):
- - Merged the two commits containing the dt-binding header file and
-   the YAML file; no other changes were made;
- - Add Acked-by tag from Conor.
-
-Patch(2/2):
- - Append the dmamux object to the existing CMC DMA line;
- - Add loongson2_dmamux_assign_bits() helper, no functional change;
- - Add Reviewed-by tag from Frank.
-
-Link to V2:
-https://lore.kernel.org/all/cover.1791535540.git.zhoubinbin@loongson.cn/
-
-V2:
-Patch(1/3):
- - Drop LS2K0300_DMA_REQ_MAX as it is not part of the ABI;
-Patch(2/3):
- - A more detailed description of `dma-cells`;
- - Add the `dma_requests` constraint
-Patch(3/3):
- - Drop loongson2_dmamux_map->shift;
- - Move of_parse_phandle() into loongson2_dmamux_route_allocate() avoid
-   UAF;
- - Drop loongson2_dmamux->dma_np;
- - Check dma_requests;
- - Add devm_add_action_or_reset() instead of .remove();
- - Replace `metux()` with `spinlock()`, which has lower overhead;
- - Add loongson2_dmamux_route_free().
-
-Link to V1:
-https://lore.kernel.org/all/cover.1790068409.git.zhoubinbin@loongson.cn/
-
-Binbin Zhou (2):
-  dt-bindings: dma: Document DMA mux support for Loongson-2K0300
-  dmaengine: loongson: Add Loongson-2K0300 APB DMA mux driver
-
- .../dma/loongson,ls2k0300-dmamux.yaml         |  72 ++++
- MAINTAINERS                                   |   3 +
- drivers/dma/loongson/Makefile                 |   2 +-
- drivers/dma/loongson/loongson2-apb-dmamux.c   | 404 ++++++++++++++++++
- .../dt-bindings/dma/loongson,ls2k-dmamux.h    |  53 +++
- 5 files changed, 533 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/devicetree/bindings/dma/loongson,ls2k0300-dmamux.yaml
- create mode 100644 drivers/dma/loongson/loongson2-apb-dmamux.c
- create mode 100644 include/dt-bindings/dma/loongson,ls2k-dmamux.h
-
-
-base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
--- 
-2.52.0
+Best regards,
+Krzysztof
 
