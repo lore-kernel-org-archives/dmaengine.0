@@ -1,95 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.112
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793071357;
-	b=ZCCDTw3Hh2Rqk5t7sS6ct1+h+vB3RJLLh0VI+pnAXlX62kErqZ1NmR1jitv1/Rqc9Uch
-	 GVLCTLn8jVds8Dm+Ta8W8KQlIYuZysCxi+RgrK9bphsIEkBrsoVqMZnREDrKdGHLZZNTE
-	 PoMRSHLwNfvvox7ezcfi3XWITDQFWp4Z7Gj/ZSrdePATZV3lXQHizvj8MphCTbocZn1VO
-	 cMQ7RDrpXGMheniKwrnqX5t+Wn1Sxvt9qJ1Shh4SBJ41aZ+2iabVrvocaih+FdxJTvpU8
-	 WcUOR9+9PQ8ppAByrDGFUXN5Rv87VG7c1jX7g9jO8RzvE97aEUI/9j18bEBqJKwa2nw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793071357;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=HIGKO/w0+8SnQsbqd5ZDjAs6opde3OsE70XYcXtG4K8=;
-	b=gKTY5adMuQpU7glNWC+i1D5zU32+ejOkhGAtRREOuF93VOkMlGWCrj/tgioz8FhOcobO
-	 kYs8SFwoGPFs+89G13UVR/quGlv/qRQXzn4gJeRzpgtqIQ3hYXahztSCrL3QTs5ISeECr
-	 khX9oHQu5ua0oISilvxHnk3GZhCpeBipDmuclzRCRR9/TcEwLP91uif3CoomlGTPWIn45
-	 BRZzygsgYc/wUh0E2/kWRTRrzOQGxg945YQt/MEkLZgV+R/WJOeSKwSOplfbacx1puyLw
-	 Z7+BmsKQgNqw6XMiAKaSUh06Amm+rr988GRC4p9zLmLBVjlXrhgZ4cXyjVZaIZQO2Dg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amlogic.com;
-	spf=pass smtp.mailfrom=amlogic.com;
-	dkim=pass header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b="IpSele/O";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.112
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023112.outbound.protection.outlook.com [40.107.44.112])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793078005;
+	b=F/1LzsRTRZqaOUIaP/+LlMA8gAOBhfnlNtsThzlLLXtvmOiDXF82LgKf1I6rguqv3Mbo
+	 X985ngtk08Bod0eq8wnrWP/FBCBQ146Jj3zqUlfXA0uBslXcnVuleqAiEJhP7VjLz0Hgz
+	 rQI45P5tv7l6OGsTzqCCBVFgjbtkJ/K20NtgkTIFNE9ZGkUgsfmBJg4h5MGpArr8WEVcy
+	 apVGzQnkfsnBR19aHXBr83Xt4WjhpoI0NfYwqOTL80gCNW9wuqdxGoeTb8QUjh4EJ8LQC
+	 utPYpgdwdCMkp/a7ENF2yEgXfZym6woFQbfqW5Bs9TniQNa+yxwlNPidMqdB/yI00ig==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793078005;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:From:
+	 Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Proofpoint-Spam-Info:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=MarEIKFbQwA9h6Hy1ZNcr17QnNWznQahW2ON7TrWhXM=;
+	b=RIuuACyx+6qZIPQkH9UF722wFyDhFipb7xjd6Hu+b8H//HpcUKEA13L6sXCjO0crXjas
+	 XgCxsGx6LNErIEJzgnz08mmKIjKeS1SaDm53pybzWSqfNKnfVNAShuvN0tQrEwUTYr5PQ
+	 et8NnaT35nT+ghdG5CfMLWT4t+pG3sERBRY07VUu/yDq9KhMGp5JS9FoCC99uN4+qVllS
+	 LRWQOCECFM1PWFgqwLWet3HgtWiw7Ho5vj2UxtnLpWQeQ6ko82DkQPFzftm54Q02aNR8x
+	 Lp0kzxHaA1j7AesFC1BI+BtlZ+bLqSOUsDhTPcpce1RdSeDcAbPa3D1/wvZDtRdBSTg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GXInQVsc;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BVdbmptb;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3DD606A31A;
-	Tue, 27 Oct 2026 03:22:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C3DD606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D32C606A31D
+	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 05:13:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D32C606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=IpSele/O
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P6XvkjqX3oR6O1KpStKd9Ga2Ixk4Wg0cGHNyPUjpkzAmYTLPmcfC/WR7gvvSydYoFq3SHYIqFZDPykcclbXNkAbNUB10dgMufshmBl1qQhv0vQtCB1Vww91yGV+6L5KHUtiVwPaVsa0lLMGpqjmkqjC2c0EqK61ETPMyjOSPHD1XlyS9aWcAHFcECu+7HaPGZQ/FW6CbiNY5N6uuo/g3YgDdJP51Gkp5Cq4OGtjrP6LftLqlFVFxN47J6GkEAodLp/JHFVs/J5s5/KCGHkLwSIkBHePDOx9nUZmxdNYtK2J+UoR45akXk6+MCSl41s3b7rmmvz152CLIRRTlJjDV1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HIGKO/w0+8SnQsbqd5ZDjAs6opde3OsE70XYcXtG4K8=;
- b=x8GzXHDaHN3cIDMan7WWEnFI1RPzMZGpKkucAsZiDTS6hkThwqp7MIR0Zc85bmVVjTlt4YBKcjAD/RLkDT2ca0earpMuBng/Rl9wM+9Q4wo1tUttv4jc2xpxbDXDtM6ZzQiW5eVpbjzwbyEoSodhl4jFshV5yXacgduJhkIa/IccEgOwb2JGRdcoP53CPXg0mJ633E4581XgZEDrnQuZVZlOyWI4eNtOFxAUjYmaOIv4MR3t6iRRqXV2WQ/E0eZkrFlfUgqu4O/i7AV21yYkdSxa7S1ul10FdkiNSz9OvCjj2kiUHuNHZGbna97sDw3M9URjkZQFUOSl5TOO4Y6zRQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HIGKO/w0+8SnQsbqd5ZDjAs6opde3OsE70XYcXtG4K8=;
- b=IpSele/OgGMODLgIN0Wzu9iQ6KA4/ZebA6ZNr9QF4H8S9lfsAkoxKRh6xV6TYiRvCqkZKckvCMOHYiSiuu36IeLdaJpO6CTu7Wr8JR4BLwVrqYscjp2yKk/zvl04Ffr+dxcPACcztI0SpNK17fA5wErnq0zPmvQ/Sp6OOA1EUOQgmSiQV9fUXarVqdldyPdJm+upfvkKpErzAlGCK3BKQMxfMjFWCFu5l7RCIAqw6YhvfiXauhee/RHIOv9Gqba4Ka/hAwgNCkxty5WaG/bUVBuWmd3LDQu7af660fXXylhXoa6NjkhXLZ966+uKbSDLpC09Lc1FBUpQNw70VIXuFA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
- by KUYPR03MB9928.apcprd03.prod.outlook.com (2603:1096:d10:8e::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 03:22:32 +0000
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4%7]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 03:22:32 +0000
-Message-ID: <c836dd3c-1ec5-4442-b892-53f849a2d31f@amlogic.com>
-Date: Tue, 27 Oct 2026 11:22:29 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dmaengine: amlogic: Fix missing destroy_workqueue() at
- error path in aml_dma_probe()
-Content-Language: en-US
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
- linux-amlogic@lists.infradead.org, dmaengine@vger.kernel.org
-References: <13a835b1770e360af7991bb4c91ce52a8d01e331.1792785154.git.christophe.jaillet@wanadoo.fr>
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
-In-Reply-To: <13a835b1770e360af7991bb4c91ce52a8d01e331.1792785154.git.christophe.jaillet@wanadoo.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SE2P216CA0139.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2c8::11) To TYZPR03MB6896.apcprd03.prod.outlook.com
- (2603:1096:400:289::14)
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GXInQVsc;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BVdbmptb
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69R2F3ni3521335
+	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 05:13:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MarEIKFbQwA9h6Hy1ZNcr1
+	7QnNWznQahW2ON7TrWhXM=; b=GXInQVscNUjoLeyZ0knax1ZMh01UEqjcmjclZB
+	Ij9qQYKae5YoeymMqN6TycwNwBxYeyrzGZ/GMnWWUvqYP6XKa/0yszUba8L1oHJ0
+	6/NrtlWButpp82x9LDk2znEZu/XBISZBpQRsJ+PNA7iTMzOOM20WUkqQ2Z4eJ2HI
+	Bg7TXGpoKe/0LFJZSo8LsgchSlshyUPPCJM98yiujHc33n7yowxCwP4OZ8absyh5
+	hOeQ2bNP7MfAz3GiRF1howedSn3P0J8pBzjgs+6OTE/EtP7D8FrlAHCa8s8CPKu9
+	twG8n2/7hejuuy6Nx/3G1kHJBAN7nF7Ep3j+zG65b+a0QxmQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjb54j5k5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 05:13:23 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-30c0d568830so10175476eec.1
+        for <dmaengine@vger.kernel.org>; Mon, 26 Oct 2026 22:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1793078003; x=1793682803; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=MarEIKFbQwA9h6Hy1ZNcr17QnNWznQahW2ON7TrWhXM=;
+        b=BVdbmptbIDBnxzcw47989D+U/lURQvLS59KIqnf2H8b2uzBYJisXzn0oNXzBrUq+XV
+         K3OMBULA5nd2yOS2gmYgaUh/y9way32ODsEPpWk0dqITij9AC10zsWW7psD+C3Fll0c0
+         awpQC3W/D+IBfTlz76eE1h5DIijBLGJD0wicW7tRTM4reAEvljcr/DRYlw3/7ZSIeL8c
+         p9c4Qk0CqUfeuQg40poJSpOox1gVitx7mbZBbgxDR3gQn1/8wgXCW9r3S+DMBcO2JlWq
+         /yHNsWq3yp7SRWlVfGgCkgHsJ8za++iKjoBlt/sMZeY1Wy0aE7s5ENqtRry+5+xEAOJj
+         HCmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793078003; x=1793682803;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=MarEIKFbQwA9h6Hy1ZNcr17QnNWznQahW2ON7TrWhXM=;
+        b=0Pqm7QGt+pVRivHmTMD0EUmfhNAJCjGkQUNpBafED7RX+6NaePWD2/ISoTneIUqjqW
+         MMgc7DzPytNif1POwFGuT4qjBp3mqljrHrru0NJbI+ubWVmNU0v74e2cZX/5xU2jXt9Z
+         uHw+coQQHdwpk6yRwBJZ/Ml2FYQI9DUjiZ/N/S1REFEn4txfxB9CPbT4TQo09UAynmqt
+         UFZEtqmHiAOvYE2e8six98bx4DqCE3MytStDb3vKEyy0pxM8C+Fr//uYYTv8RXEyKpHC
+         eLGfbc4rk9AZUKTkfwyHUy87J/mjMgZ0aScLBN0vbW+DCUc7dNDhlyREhX3BvSkyoPYx
+         S4rg==
+X-Forwarded-Encrypted: i=1; AKwUvBzWgIm8//7DykDmMcLuGTOaHDtj7n1C3FHt6FzOZtaJaF0iBEkNzfVWskeGPplEZnpOEHbm0sxnJz0=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIQgd5O4iVWLPoilvHDHfYx3J9klEoGRTZ9UDUiBXZwyzbwc3Wb
+	b9/uhzcHmPHzBPoZ2ImfNn+XgifR5fOrjVj8BJyn9GJm3o/giNo10VCaL2Ws1zrIsmUPxJ2ltoQ
+	UPbh9auuBbGRGfQvOiTs45YgI/VwasJkjsmJwK9brWVqrGHHH2Of8aT5H+VB8DEU=
+X-Gm-Gg: AYBFou0lyCmSpsCZLbMvqA+aqH2a939cDSQH/Ql7UxuGpiTsakyuibLvDlsY03PkmD7
+	PI9GptHJV+x2hvEsoK1d7edpEP2tDeO4RqNuIUFJu9wyIaoLPLhjOKce9oATQg2CjusTzChIMLr
+	DFEoCeGg6LBOGmfEfHvot0wpG5tP3D2NIrISoeH4VFXEoJ+jdg7FWy8Kh+/mwmHuCcggCYBy9lE
+	kcKR+QMW8i44MjepdAYcq6Nh9PhxBPs92aA18XTg8/vRgnSgHs/AbP2H1aZaBzV3OD6z6Plk6AD
+	IcfPsSYaQHx9rDiBQ6nZyjYwpMrWiot1ql8xqb9TZfBNN9pIkFMR3paY518s//WvEFsOjeqQHEo
+	adT/P9dh0ZD/CIf3egAdWwgrbmNklMLpqXA==
+X-Received: by 2002:a05:7022:b0d4:b0:14d:3c0c:79e8 with SMTP id a92af1059eb24-19934e7166bmr10591555c88.10.1793078002836;
+        Mon, 26 Oct 2026 22:13:22 -0700 (PDT)
+X-Received: by 2002:a05:7022:b0d4:b0:14d:3c0c:79e8 with SMTP id a92af1059eb24-19934e7166bmr10591519c88.10.1793078002146;
+        Mon, 26 Oct 2026 22:13:22 -0700 (PDT)
+Received: from hu-arandive-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-198a249c331sm62298866c88.17.2026.10.26.22.13.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 22:13:21 -0700 (PDT)
+From: Aniket Randive <aniket.randive@oss.qualcomm.com>
+Subject: [PATCH v3 0/3] i2c: qcom-geni: Add I2C bus recovery support
+Date: Tue, 27 Oct 2026 10:43:14 +0530
+Message-Id: <20261027-20260826_aniket_randive_oss_qualcomm_com-v3-0-7f2a6e572de9@oss.qualcomm.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -99,113 +114,115 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|KUYPR03MB9928:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16fc28b0-e0fe-4b66-0790-08df33d989cc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|261009223027099003|261022105027099003|261021123027099003|261021121427099003|260925021311599003|260925022911599003|10067099003|260925021911599003|56012099006|261026121527099003|6133799003|22082099003|18002099003|11063799006|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	G2ddHIo5+wzQY3PonpTVXulmgmM202rKs5ggseS5oiZFUKh5OJTPmLEbpnNyHbOHvP7RGxbDE5+a2gMbvvc5CrgFVl/TOTcSacOeT3Ysr5SrdZEFUdyU3NgQxszcKBfZwgbRePDobT57pxTXs/1XtT0woT8QDJdBsfw9ZYSehHUMtg21ia4rzLnde6W8959dLD9aqZZxZayHvtb2KdGj2b1WQGuTfxwt7DdBNmboS4y3wXRn6c29ptuF4yhshOMunirMaa/s3H5dJU5N83d2f3ZY9tFwPK9ojAnbNb+xbQG75/AgeVQhHHF1LisyM0TdrgZ64fNUjfq5lInCaDJVf61HuShG44YbwPY0zufgc6D0nma1xfG58YD7SLBIPI2ZHbHCzducF4nTlxXPSO4bLylSEk1RuXqKYzPsrzNFSUnernu7AGpHhT529/i0xdMv8v5WiHb9ZdGmYoNUr0hRj4NhDtSe6/+eNPKz5PGAzdD+nLzgUZEuZL2hBzctE7zAbKH2loM/8bWBLJK1pTE5Ttm9qikNjt5F2hI9bliKSGhVobUPUH+ocESOvzkHpc75hMt20zhj1vJX63Vf/UqH/AnHwhYG+IW/BEwFfiUgHnlKL/m6rkouRNpFoqGC5Z0N
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(261009223027099003)(261022105027099003)(261021123027099003)(261021121427099003)(260925021311599003)(260925022911599003)(10067099003)(260925021911599003)(56012099006)(261026121527099003)(6133799003)(22082099003)(18002099003)(11063799006)(261026140227099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UWczdmJaT0JZRE9BVHJSWitBUlIvQnZsRkhpQUFYRzB4V3RUTGdXMk5pUzBC?=
- =?utf-8?B?dk03ckJBRndhY0dHSGdPZ0FhQ3J6a3FzTnU0ODgzcElnTDZQWnVQcFNrU2hV?=
- =?utf-8?B?WWFrVThPR3A4MVdKK2x4R0ErWGtnOXl3VTk2KzhNZTNHNkRXbitIek1jdnYr?=
- =?utf-8?B?OXdjQkVyQWtqVEhTc2dIZEw3K3ZBRWo5TzZtSFRMd2p4Mmh2SjNHb045ajVw?=
- =?utf-8?B?OWNNVlYyMzB6cUZpMjR2WmJ5OU5MK3htczVIdjRiZmd1cWJOMFlsYjBkQXJl?=
- =?utf-8?B?WFhTRmU2ZDMyVHNlL3gzNHl3MzlXQlVYdjR3eHA4bU5aOWlZbjdBa2Y3Mi85?=
- =?utf-8?B?eXJUVFBqVUo4K09YaklJV2l3SDlyaTdRS0JOZVhaM21YMVBaZnR0bURYWG9R?=
- =?utf-8?B?UXFlU2pZOHFUajZyaXpQVjl1K3k4Zkkrc0dRek1ZMDJDQS95NDJRb29UK0li?=
- =?utf-8?B?aHFaMHF4YmxRc2pDQ0FJZGxZdDRseWVpR1ZTNHhSOTAyVTlkNEozdmJmdmtr?=
- =?utf-8?B?eldYajEvK3RyczVpdk9EbWt5NUxhSTQ4TXFneHRZNGY4YW9RNDhScGc2N3VW?=
- =?utf-8?B?VlcwUmc2T2tTY2wvblBkZHUvWnBmM0xObjhkbklKb0h5YU1vVCtIZzBSL1Ew?=
- =?utf-8?B?UStKMkJrN3d5RE9yY0g2eHI4N1VDWExkb2VmRVNZMGFQODhlRWtpaDdXYldT?=
- =?utf-8?B?Y1JvUXlFd0ZzK3BvcDdPMnM5cUlUMGZyY3pvcjVwM29CMVRzeHdDNEhIdkZR?=
- =?utf-8?B?ZjltTzlzSTNhNlVTbUV3QUgwU1JoTmVTQWZUWmdPZEk3cXRaVnl4M25EK3lv?=
- =?utf-8?B?T2JNSlRHOGlGMHZ5enV5YXA3dTRCQStaekJyVUloWUV2OFdCUzVENXFXOUQy?=
- =?utf-8?B?UEhlcVRnNHpGMmVJNzBFMURVMk9QRmJTamhZQUtvRlhoWmY1bldnaHJUQnA3?=
- =?utf-8?B?MjJiNkpqb1Z6anNvdmRQS1I2SldDaUlaQjdybENhOWNGMWFVWmVzZ1FUTFdB?=
- =?utf-8?B?U2RwQmtQMVFHZXhSeUc4TUp5QkZMTHVIQmlhVTlEZmdMcmZSLzRveXdSQWcr?=
- =?utf-8?B?OEtEZEZOd2ZFSU16U0k1N2pWTTdiS0hldGd6UCs1bmRLTDZXU21xNy9ST1lh?=
- =?utf-8?B?NjhBNmZyamVPZStKUkU3dkprVldSOE04MXNrSHJvYUM1MEk4elpTNDY1a2U2?=
- =?utf-8?B?eUhYVVJlakxlNmJ3TU5xWUN1TVVIQWo0TU41N2JLM2VFcExpbFRTaUFBN2Jx?=
- =?utf-8?B?aGhjTHdON1lJaU0vT2ZZTC9TWlhtOVhlT0lIRzRxZ0xkQjlscHlxeFBsS0s0?=
- =?utf-8?B?YkdabzhzdS9adm1hTkdGMEd4Z1RuOWFGRk5MWllOYk4rdVU2VjVvWlR5YkJL?=
- =?utf-8?B?REJhVDJ4QmJoeXFiL0xaY1I1NE9pRzlBbkVqWlVwL0FGYmN5SUM2eEpWNlB2?=
- =?utf-8?B?UXFMSkpFdzdka25EV1dXMjlXM3NzeUVNQnZnR0pCb2lCQnFMTlBTc2krZVk2?=
- =?utf-8?B?SjJDK3UxYStCbWVXWDNna2tjakNuNmhwV1FFZFJuN2NjWjNVVHIwZnNHNC81?=
- =?utf-8?B?NThibG1ENG1EbkNOTmczRnd3RnhESkI1QndOYWJYOGd5OXJHSXh2UzhLR3Z4?=
- =?utf-8?B?VU42QlVjeGoxL3ZJMDAzNjVBSGw3RTBPZkRrSTUwZVBiUVRlMGZRMFMzcFhY?=
- =?utf-8?B?cjFVSExZKzFDb2toZ0JFaHBNZndCQmlrSmZMNVVkWkZrMWgxVlhYWXdWMjBs?=
- =?utf-8?B?QXgrZkdLcEY0Q2dpbFlOUnhzazYxK1F0Z2JEL2hxaGRSWlJSZEx6RWJvL21G?=
- =?utf-8?B?ZXlkMTIzUVJMU0pPdG5JYVZUOE93NHYvN3M3WjMyZGx3bWdHVjRnOXF4VmlR?=
- =?utf-8?B?dWdNMlkrMEZlb2ZPY1ZJOXJyZThDWm1HSDBHSGc5eFdYUXplc1QxNzRqMDYw?=
- =?utf-8?B?OThjcTdCWlBCWFE4bk9GVXIzb0RxeS9Ld2p6Q1hXZGdXRmZOZ1VBZDBDMkho?=
- =?utf-8?B?WmhWUzRJclhlTlVaSEJtRVQxV2twWk83b2REczFMQk5XT3FpWU01ZFFKLzFm?=
- =?utf-8?B?SDZ3Q1cyMEYyNWlUZEJaLzdTWkJjeFprbXVlZzVJM1dUZFNoZHZSaTNFVHdy?=
- =?utf-8?B?QlY3VmptVTRSNWhWeGdmc3NOcjlzUStQd3BXUzFlM2tTcGJqakVPN0VVL3pR?=
- =?utf-8?B?SzRxdGJOdEVMQk92a2tFOXc5S2J5U09IYk9FRTdtQ0xRNkpXTk1IeHFuZTJn?=
- =?utf-8?B?aCs5cEJjYklDWEEvRVpiR1cwZ2NidW83cHN2YWlWQ1lFYisrWUZ2SktNMmxZ?=
- =?utf-8?B?SW9RdFhaT0pqT1gwT2xGekpJenFkVU13Z21oVXVnVVQ0bU4vM1d2Zz09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16fc28b0-e0fe-4b66-0790-08df33d989cc
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 03:22:32.3730
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vPljzRXjMnrv4i8vVmtKPV4lA3OlbMBQiE+ZcjMghbNtRvVy/NF0N9LulHXOMulFB+fBstJYH1/1vlBXod6tLtuuPDC6ajX7wD4CHoDG0GE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUYPR03MB9928
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOoy4GoC/42Owa7CIBBFf8WwFkOHFqur9x8vhrR00FFb3oOWa
+ Ez/XdDoyoWbydzk5txzYwE9YWDbxY15jBTIDSnI5YKZQzPskVOXMgMBqhCi5vkRNSjdDHTCUft
+ m6CiidiHo/6k5G9f3Oh1el7aylVRSQMcS7s+jpctj6nf3zGFqj2jGzM+NA4XR+evDJRa5x15rn
+ MDodgrao3ER/ZXHgoskI61As1a2Ln+SweplsEqH5ZUIb04hQH6vHyHxN7JaQ1tWslP2A3+e5zt
+ LuSdIQQEAAA==
+X-Change-ID: 20261008-20260826_aniket_randive_oss_qualcomm_com-84f5f536302d
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+        Andi Shyti <andi.shyti@kernel.org>
+Cc: naresh.maramaina@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-i2c@vger.kernel.org,
+        Aniket Randive <aniket.randive@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793077998; l=2681;
+ i=aniket.randive@oss.qualcomm.com; s=20260325; h=from:subject:message-id;
+ bh=o1kpDOqfPBPXbo5TDZm+ulJUUJzq8+gQRhql7a3zJW4=;
+ b=HwCvHxL9FSP0kbvMu/177jOQ2MKmoI/8ttmgetmO2QYu+emxG4q/hH1eyBOB0jSuQTQ21OirI
+ aoQ8v1Bwh5jBgHBZBdjeFfFFMNr+opJSzWtZ/oT7MYolW8o0tHQjtNO
+X-Developer-Key: i=aniket.randive@oss.qualcomm.com; a=ed25519;
+ pk=4o37X1ZqGbCO/T2SR8kq/HnWvq0yb1RUlFuNukovbQk=
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAyMCBTYWx0ZWRfX2q9Yb4A66VZQ
+ MLUX1uVu9C6gOL8SO0/9YXATN9uvzfU8uKe9oqXeBaXQ4rnpM3hS7U6ifPdwARkqFCP3MlEHIsZ
+ +KipkU2Xz0dNJDx3Zk83luAhp/u8FW0=
+X-Authority-Analysis: v=2.4 cv=bsnZl0ai c=1 sm=1 tr=0 ts=6ae032f3 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=5qjwvz7LsgNgZhFB2CoA:9
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-ORIG-GUID: 7koqmKxc08GET_fwXLNvgXoHwg9u55C6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAyMCBTYWx0ZWRfX9FKacl/jzzn8
+ SQRDSSPndHYpBX1IrtAtVhfh3KJywBlY2iS3P9gJPKNG5sJaIYn0GO5TGhyMEdOC2ySxMO80p3Q
+ PzPWlOQHMqfKwxal42dOCemIonG+jp6AVBLYoG19EF13qcsLNxmAqvckCgNsTxAxBDeTgjBb0X2
+ Fpz6eVR7pXLgYE1ZNfhRNhRUC2MaPJlncX0YQM/YNbT6tQyM7E7Z9OOJ64rL51Q9pvF3R8207b+
+ ZgONv2dYBGdlzI6tI2vq/Og80tnVZpdLPVYrd2FsmF7iFyY6MmlKIavXWB1HXXTQVsz/pRh1dwu
+ ngBVxICG21bADxAW7Tw2beLUvS1KcjEP+p3WvZQF5kKmCErTqWtXui/CXQ0V5Cz7btRFPrjnNjY
+ P6oygrUDQDD8ccLaMsyjJF1Q/KIS4SMbnZg1Ddywh6/GkkUaFaJgs7mWTHdG9DsO025NagSFGGi
+ Vk0BVbDjmYz8eoewZOg==
+X-Proofpoint-GUID: 7koqmKxc08GET_fwXLNvgXoHwg9u55C6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_01,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610270020
 
+An interrupted I2C transaction can leave a target holding SDA low and
+prevent subsequent transfers. Add recovery using the GENI I2C_BUS_CLEAR
+and I2C_STOP_ON_BUS opcodes in both FIFO and GPI DMA modes.
 
-Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+The series adds zero-payload recovery opcode support to the GPI DMA
+driver, registers an I2C bus recovery callback, and triggers recovery
+following relevant transfer errors when the bus is not free. Recovery
+checks both SDA and SCL and preserves the original transfer error.
 
-On 2026/10/24 17:05, Christophe JAILLET wrote:
-> If an error occurs after the alloc_ordered_workqueue() call, the
-> corresponding memory is never released.
-> 
-> Use the managed version instead, as already done by most functions in the
-> probe and simplify the remove function accordingly.
-> 
-> This avoids the leak.
-> 
-> Fixes: b84b5197e344 ("dmaengine: amlogic: Add general DMA driver for A9")
-> Signed-off-by: Christophe JAILLET<christophe.jaillet@wanadoo.fr>
-> ---
-> Compile tested only.
-> 
-> Changes in v2:
->    - update the subject   [Franck Li]
-> 
-> v1:https://lore.kernel.org/lkml/93183551770e260aff993bb4cf1ce5ba8dc1e732.1792785154.git.christophe.jaillet@wanadoo.fr/
-> ---
->   drivers/dma/amlogic-dma.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/dma/amlogic-dma.c b/drivers/dma/amlogic-dma.c
-> index 684121d13fca..791bd82743d3 100644
-> --- a/drivers/dma/amlogic-dma.c
-> +++ b/drivers/dma/amlogic-dma.c
-> @@ -620,7 +620,7 @@ static int aml_dma_probe(struct platform_device *pdev)
->          if (!aml_dma)
->                  return -ENOMEM;
-> 
-> -       aml_dma->free_wq = alloc_ordered_workqueue("aml_dma_free", 0);
-> +       aml_dma->free_wq = devm_alloc_ordered_workqueue(&pdev->dev, "aml_dma_free", 0);
->          if (!aml_dma->free_wq)
->                  return -ENOMEM;
-> 
-> @@ -712,7 +712,6 @@ static void aml_dma_remove(struct platform_device *pdev)
->                  if (aml_chan)
->                          tasklet_kill(&aml_chan->vchan.task);
->          }
-> -       destroy_workqueue(aml_dma->free_wq);
->   }
-> 
->   static const struct of_device_id aml_dma_ids[] = {
+---
+Changes in v3:
+- Use the adapter timeout from the FIFO recovery patch onward.
+- Configure clocks and timing before recovery, with PM cleanup on failure.
+- Remove unreachable GPI error checks.
+- Log DMA termination failures during GPI recovery.
+- Preserve GPI timeouts and stop further recovery commands.
+- Link to v2: https://patch.msgid.link/20261023-20260826_aniket_randive_oss_qualcomm_com-v2-0-93572b453d6f@oss.qualcomm.com
+
+Changes in v2:
+- Rebase onto next-20261006.
+- Move the recovery opcode macro removal into the DMA opcode patch.
+- Check both SDA and SCL for bus idle and reject recovery with SCL low.
+- Share the bus-state and recovery-trigger checks between both modes.
+- Guard the current message pointer when checking data NACK status.
+- Reuse the FIFO transfer abort helper for recovery command timeouts.
+- Use the adapter timeout for FIFO and GPI recovery commands.
+- Preserve the DMA configuration error code in GPI recovery.
+- Link to v1: https://lore.kernel.org/r/20260826-i2c_bus_recovery-v1-0-203f0ec76f84@oss.qualcomm.com
+
+To: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>
+To: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+To: Andi Shyti <andi.shyti@kernel.org>
+Cc: naresh.maramaina@oss.qualcomm.com
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-i2c@vger.kernel.org
+Signed-off-by: Aniket Randive <aniket.randive@oss.qualcomm.com>
+
+---
+Aniket Randive (3):
+      dmaengine: qcom: gpi: Add I2C bus recovery opcode support
+      i2c: qcom-geni: Add bus recovery support for FIFO mode
+      i2c: qcom-geni: Add bus recovery support for GPI DMA mode
+
+ drivers/dma/qcom/gpi.c             |  30 ++++++
+ drivers/i2c/busses/i2c-qcom-geni.c | 210 ++++++++++++++++++++++++++++++++++++-
+ include/linux/dma/qcom-gpi-dma.h   |   2 +
+ 3 files changed, 239 insertions(+), 3 deletions(-)
+---
+base-commit: eea3fef32a9cf36abcb5975a5a594e4135a6b026
+change-id: 20261008-20260826_aniket_randive_oss_qualcomm_com-84f5f536302d
+
+Best regards,
+--  
+Aniket Randive <aniket.randive@oss.qualcomm.com>
+
