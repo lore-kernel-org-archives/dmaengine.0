@@ -1,93 +1,41 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793084452;
-	b=Kc40ylpF2mCq2+45xi+5Hy72xgCcHmsWsiM7VPrSSs7S1cU/+2PreJAgglccoJmUfZke
-	 7CaBwXUrrf6c9FSu+45yYtloqav/7IvzxTW6xVGAvROLcSTPqYnCFN9EsRBPF+z41hK8N
-	 qsMTSVAcv0fjfVAlX2v2wEzTCMm6sSumDG0wlFpuUmdvehWe3vYVjFzr43TcmxAnDqMPR
-	 yMik5JLzxPtKczEJYVU2EnsBWPlx+a4H6LUaqA7BDodNHLWwKWDRS0MdSH6RhOr08MU41
-	 2IHWGPOfTFguQBnNJGw/YozNGwEHwFdKiQZx9Cb+T4hB2V7yRpO09GBkmUQbniisMbQ==
+	t=1793099790;
+	b=ijh6aSGOJBOfj98AG9jm+uFSPFUscJvrWNJc6f6C4TAShRjQzirVBa6tOqTRN69sW2wa
+	 7j+zW3gnYXhLp7DCg8o8D97oJOmXNOPpjHZdgtmAme0QhZUReu4O6JutRJ+ucw2hzoGii
+	 uYe/oDGLebGuNh9z0DLo+bBVtAaSDi05ywDtOalNx5UdN5bl2WQyheQaifpnzPNE5c/hk
+	 tWNwSYTVYpcJNUZlh0CpK+K2bgohUYargi/bnIBfMDKNbW0XnRHKGHRO1cdSXhoh4BZPg
+	 Ogok+SPZnk1RPO8wk2kJfUZBZZxIDlKq2kSlzfR38u8ffmcKB1ccEoBCmi9vG2F6L4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793084452;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=cGATTdkdECjcBWxNbblz5Map/VJxFsYs+1/o7jtM7Y4=;
-	b=cuLzpA7i9nCMT6DqQEpuHPo/ZsaWFL7aZgh4EAm749T4oVKzmeRy06TwnmT7lvldb8lj
-	 QZUu8ua0efc8dnExw5JxIM4Tl8aXtikmtJnbnl6Ds2NQgLrwFAuu0rnIAWk56L/WbqB0v
-	 u5xMUvTe20l52GsqbRIZN5hJDe8+BW/B24AOyhXInMvlpFcDRwFwKYyS5Oni4/d6LgjW8
-	 ZmJX9As+Zy5GMAqiSiakFh4ag9usQZ3YbGUeF/8eqDab/djd8T7fprIC4UiK59CzyCvZi
-	 MQDtpCuzLYECoo7OTtPylNZYlePRwa0ZU/J31RypWol2grSHvqwBtaxNcgaDyfWav1g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793099790;
+	h=DMARC-Filter:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-CM-SenderInfo:
+	 X-Coremail-Antispam;
+	bh=vVtBkWkK7zs4jMXWSQ4xXM4N92+j1aNMfI0Zy/p0UKc=;
+	b=IUM8Oj6zDmJuzEuc/GHyg0tT/21I3mvUr7tOe6jFPFZXzZSEopHD+EZ6T0wwhXeaINZe
+	 BE3D8a/gk0WbKrmbT1qN4Krw1FduOUMJiwIEg1A2preOwjqvWkyCCNXiKhe2AmArnCc+p
+	 5sLY0ZpK7+LwtPSERFNt41AlCsgYS6uKujtHjc3o4Oasr1f53J8RVdtHK6LxaD2d/xd39
+	 WS4xxWx3k9khk347idOKCGsDVWrKOXTOiHNV0f+MMbXcJy6u9eR7GKIZjmZ6JnBdLh6Cv
+	 62Nup3C8ax3ze8de0qrUM5q7KOSOEtmnrCNeJXSttzbq7Jle8UmbVIKi5FOegjAw+HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BaBobvxM;
-	arc=none smtp.remote-ip=209.85.221.51
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FE8606A31A
-	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 07:00:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2FE8606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BaBobvxM
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e0d1da913so571274f8f.1
-        for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 00:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793084450; x=1793689250; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=cGATTdkdECjcBWxNbblz5Map/VJxFsYs+1/o7jtM7Y4=;
-        b=BaBobvxMsAvvi0DFhbcLtLgfU0Y/8bb8HS7Yk4YGK/byyIwtPmEGG6IyURf4EbuhxH
-         pp0Vw/eVRZb/rnstVd6UP/ZYF/H9pWxsyA0oZF39NYsjNwg1+X9TidofS9cPLBR44Ijr
-         mr57urbpSYlor+h/IdtrJ/BNIwYdQgkP0g9fbytdiYQY/QOIot4Rwdjq6Yp+dYGI3zYE
-         ohcppaD3qOZce+3T8/1sy46+Ah5yp49TIjSYspOMS/6TAVbGLU4I4htShdAxmgN56F+6
-         qrTv/mPeh2kE76mUw6NARL1toS6lB6QN66L/ks6sIZk82vgo7QRL3bstXJVeEZDBGPMv
-         paJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793084450; x=1793689250;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=cGATTdkdECjcBWxNbblz5Map/VJxFsYs+1/o7jtM7Y4=;
-        b=jocdHOA5lKtZ6MRn82X0vgkTGgYjRpkjRkyzuYaztACfPwX0sq70zqZfHw/s2UP2T0
-         LsfTw7GKJK+0PSbT6NyB5LywI1AGsYBmgNjMcMej/J5g3iFk3gBwx5iU4c3m+irGD8px
-         xHPXvmT70SoA8nCqeYJLs1/WtzXSFGKLGdwd+6rBbIVW9qGgNmU8NdI/6V61YVNSEJEP
-         oTq3YGXkLYDUKouVNl7TBmH5vxZRArF9Hf49nsQOHPFZClLdljK8/eJslZM+HFhi5F36
-         R9nEyjSwlVq+zTrFFF8BcYKCh6OzrSP/9pzc1YjEVxRDQI2GUsq8C0mNmZ7YlhqgRCUA
-         20iA==
-X-Forwarded-Encrypted: i=1; AKwUvBzoHSdCsbKmNS98VBcjej0pitHq3mj8qtE786yJpvIjdBid+8edQPELjiaabLUiaTpA8vF5gm1ffjQ=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLzWzkvOnHbO2xaqy2Fw2NF2/x5jxGcenE0hKd/nCP3EGdUW9du
-	BImin9whlWTbrW/cO9OGerAF4WwtjV5WyOdyCjNd7L4kRhExfY92N1Im
-X-Gm-Gg: AYBFou3pTtw9DPF+TE+weY8Vnwc6aAqCyJDzMptxWhXhJJHbo8YS4WJaQ/MXGPesas3
-	kHzW94+0pY7pskCXqgoKLzArfSG23H08V/9XRWzxvm+2IjdXq6aPnBIpu7Vrqn4kGoHa0q83b8w
-	iZ619d20daMKq1K8NDEOFCDDC+OLel+IdogF0RPA90dDEM7Ei1K+5waFNhzIIS0bbqbbVgKQ+ar
-	vncekqne1yyTYtwXU957ssNdWEYRN3ZDVF1mbEuLnyfCGMluZitcF3NJo/cANQlrx8CiHXSWXR8
-	66d3ixpVnWF6GXfkN57vdXAnHCjAgbx/aK54UrhtHfZNg25E47Dy/9YCAG8nSiA+NCvDtuZvdfi
-	PLBzZ9oCNrm2g5SE9il7JosrhtbOxRrRaszVgKZbtkg5+aVLbGj7Ub4L0sGD4LXHb7FjFjqMr6D
-	fQ1ogK8anbl/dBU72U+bVE15hN9rC4UChxKun+rbCkeBu24+Dl6k1TKiddHxvasv6r4+DCBgQnu
-	pxDxRivdm/1CLAS1qGNKrkAkCtez9XdV8BOO3NaE/FFf7SFMq6RYWcdUflLLgoNOScWNnz1AyNp
-	JmZZKq6zf94lkhyKwbVbi1Mn+2Og7Jcf+tlM/9IYxhh/CnwMDJl3VX3xXo7PbxGEgMJexrDZ16J
-	/AiLx5PvWdgJ41osLJRlh
-X-Received: by 2002:a5d:6105:0:b0:48c:58b9:f17c with SMTP id ffacd0b85a97d-48e55a3ee4amr2846576f8f.12.1793084449747;
-        Tue, 27 Oct 2026 00:00:49 -0700 (PDT)
-Received: from localhost.localdomain (193-154-207-67.adsl.highway.telekom.at. [193.154.207.67])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3eb8f25fsm20270127f8f.2.2026.10.27.00.00.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 00:00:49 -0700 (PDT)
-From: Andreas Gabriel-Platschek <andi.platschek@gmail.com>
-To: vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Andreas Gabriel-Platschek <andi.platschek@gmail.com>
-Subject: [PATCH] dmaengine: pl08x: mark slave channels as DMA_PRIVATE
-Date: Tue, 27 Oct 2026 08:00:37 +0100
-Message-ID: <20261027070037.1809112-1-andi.platschek@gmail.com>
-X-Mailer: git-send-email 2.47.3
+	dmarc=none header.from=loongson.cn;
+	spf=pass smtp.mailfrom=loongson.cn;
+	arc=none smtp.remote-ip=114.242.206.163
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A05D606A31B;
+	Tue, 27 Oct 2026 11:16:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A05D606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.69.17])
+	by gateway (Coremail) with SMTP id _____8DxTtMIiOBqbsoZAA--.8947S3;
+	Tue, 27 Oct 2026 19:16:24 +0800 (CST)
+Received: from [127.0.0.1] (unknown [223.64.69.17])
+	by front1 (Coremail) with SMTP id qMiowJAxmM0GiOBqWqYwAA--.35025S2;
+	Tue, 27 Oct 2026 19:16:23 +0800 (CST)
+Message-ID: <006f82c9-e689-4ca4-8a5e-cd4cc3e14225@loongson.cn>
+Date: Tue, 27 Oct 2026 19:16:20 +0800
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -97,42 +45,164 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dmaengine: loongson: loongson2-apb-cmc-dma: Fix
+ cyclic residue wrap NULL dereference
+To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ vkoul@kernel.org, Frank.Li@kernel.org
+References: <cover.1792988985.git.zhoubinbin@loongson.cn>
+ <e094c8dc1d01af2f296457f6c18b5d85ae76905f.1792988985.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-184754@kernel.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+In-Reply-To: <sashiko-outbox-184754@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qMiowJAxmM0GiOBqWqYwAA--.35025S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQENCGrgBnkJzgADs0
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jr4kCr47tFy5CF4DAF17CFX_yoW7tr4xpF
+	y3Jwn5Wry5Jw4rZFs8ur1rXF1UAFWrJFZ2qw43WrnxWr98Xrn29r1fta1rXayUAr98ur1j
+	qrs5u397C3WUGacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64
+	vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+	jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2I
+	x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+	8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+	0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXUUUUU=
 
-The pl08x slave engine channels are only ever handed out through
-explicit requests: DT clients go via pl08x_of_xlate() and the
-platform-data path uses dma_request_channel() with a filter, both of
-which end up in dma_get_slave_channel(). They are not meant to be
-published in the general-purpose channel table.
 
-Mark the slave device with DMA_PRIVATE at probe time so the dmaengine
-core treats it as always-private. Without this, if a dmaengine client
-is already active when the device is registered,
-dma_async_device_register() takes a reference on every channel, and
-the subsequent dma_get_slave_channel() from pl08x_of_xlate() fails
-because the channel is no longer free (client_count != 0), leaving DT
-slave clients unable to acquire channels.
 
-The memcpy engine stays public as it is intended to be shared through
-the per-CPU channel table.
+On 2026/10/26 17:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] dmaengine: loongson: wrong next_sg check in loongson2_cmc_dma_desc_residue()
+> --
+> 
+> commit d1cdc3886ec73f6a09aef30478b0b2741d57690c
+> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+> 
+> dmaengine: loongson: loongson2-apb-cmc-dma: Fix cyclic residue wrap NULL dereference
+> 
+> This commit updates loongson2_cmc_dma_desc_residue() to check desc->cyclic
+> instead of lchan->desc->cyclic when next_sg == 0, and adds a comment
+> explaining the cyclic wrap behavior.
+> 
+>> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> index 2037120b23caa..f090fbe0b8a1e 100644
+>> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> @@ -484,7 +484,19 @@ static size_t loongson2_cmc_dma_desc_residue(struct loongson2_cmc_dma_chan *lcha
+>>   	ndtr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CNDTR, lchan->id);
+>>   	residue = ndtr << width;
+>>   
+>> -	if (lchan->desc->cyclic && next_sg == 0)
+>> +	/*
+>> +	 * For a cyclic descriptor that has wrapped (next_sg == 0), the
+>> +	 * current period only has the in-flight entry left; the entries
+>> +	 * from sg[0] onwards belong to the next period. Adding them would
+>> +	 * make residue exceed one period.
+>> +	 *
+>> +	 * Use desc->cyclic, not lchan->desc->cyclic: this helper is also
+>> +	 * reachable with a descriptor that is not lchan->desc, and only
+>> +	 * the active-descriptor branch passes lchan->desc today. Keying
+>> +	 * the wrap decision on the descriptor being queried keeps the
+>> +	 * result correct and avoids depending on lchan->desc being set.
+>> +	 */
+>> +	if (desc->cyclic && next_sg == 0)
+>>   		return residue;
+> 
+> [Severity: Medium]
+> Can an active cyclic descriptor ever reach loongson2_cmc_dma_desc_residue()
+> in drivers/dma/loongson/loongson2-apb-cmc-dma.c with next_sg == 0?
+> 
+> When starting a transfer in loongson2_cmc_dma_start_transfer(), lchan->next_sg
+> is set to 0 before configuring sg_req[0] and immediately incremented to 1
+> under lchan->vchan.lock:
+> 
+>      if (lchan->next_sg == lchan->desc->num_sgs)
+>          lchan->next_sg = 0;
+> 
+>      sg_req = &lchan->desc->sg_req[lchan->next_sg];
+>      ...
+>      lchan->next_sg++;
+> 
+> Similarly, on cyclic period completion in loongson2_cmc_dma_handle_chan_done(),
+> loongson2_cmc_dma_configure_next_sg() wraps lchan->next_sg from
+> lchan->desc->num_sgs to 0 to program sg_req[0], and
+> loongson2_cmc_dma_handle_chan_done() immediately increments lchan->next_sg to
+> 1 under lchan->vchan.lock:
+> 
+>      if (lchan->desc->cyclic) {
+>          vchan_cyclic_callback(&lchan->desc->vdesc);
+>          /* LOONGSON2_CMCDMA_CCR_CIRC mode don't need update register */
+>          if (lchan->desc->num_sgs == 1)
+>              return;
+>          loongson2_cmc_dma_configure_next_sg(lchan);
+>          lchan->next_sg++;
+>      }
+> 
+> While the final period sg_req[num_sgs - 1] is in flight, lchan->next_sg equals
+> desc->num_sgs, so the loop
+> 
+>      for (i = next_sg; i < desc->num_sgs; i++)
+>          residue += desc->sg_req[i].len;
+> 
+> naturally executes zero iterations. Thus for an active descriptor,
+> lchan->next_sg is always in [1, desc->num_sgs] when
+> loongson2_cmc_dma_tx_status() queries it under lchan->vchan.lock.
+> 
+> In this patch, the only caller that passes next_sg == 0 to
+> loongson2_cmc_dma_desc_residue() is the else if (vdesc) branch in
+> loongson2_cmc_dma_tx_status() for an unstarted queued descriptor on
+> vchan.desc_issued:
+> 
+>      if (lchan->desc && cookie == lchan->desc->vdesc.tx.cookie)
+>          state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
+>                                                          lchan->next_sg);
+>      else if (vdesc)
+>          state->residue = loongson2_cmc_dma_desc_residue(lchan,
+>                                                          to_lmdma_desc(vdesc), 0);
+> 
+> With desc->cyclic && next_sg == 0, querying a queued cyclic descriptor (while
+> another descriptor is active) returns early before summing desc->sg_req[i].len,
+> reporting only the active transfer's ndtr << width.
+> 
+> Even after the later commit in the series ("dmaengine: loongson:
+> loongson2-apb-cmc-dma: Fix residue for queued descriptors") switches the
+> else if (vdesc) branch to loongson2_cmc_dma_desc_total_len(),
+> loongson2_cmc_dma_desc_residue() is only called for the active descriptor
+> lchan->desc with lchan->next_sg in [1, desc->num_sgs]. Doesn't that leave the
+> next_sg == 0 check as dead code and the comment describing cyclic wrap and
+> non-active descriptors inaccurate?
 
-Signed-off-by: Andreas Gabriel-Platschek <andi.platschek@gmail.com>
----
- drivers/dma/amba-pl08x.c | 1 +
- 1 file changed, 1 insertion(+)
+Yes, an active cyclic descriptor next_sg is never 0.
+loongson2_cmc_dma_start_transfer() sets next_sg to 0 and immediately
+increments it to 1 before programming sg_req[0], and
+loongson2_cmc_dma_configure_next_sg() does the same after wrapping. So
+the next_sg == 0 branch is dead code for the active path, and the
+existing loop already handles the last period correctly (next_sg ==
+num_sgs means zero iterations).
 
-diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
-index 543c2eb8cfa8..06881d3f29a9 100644
---- a/drivers/dma/amba-pl08x.c
-+++ b/drivers/dma/amba-pl08x.c
-@@ -2775,6 +2775,7 @@ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
- 		pl08x->has_slave = true;
- 		dma_cap_set(DMA_SLAVE, pl08x->slave.cap_mask);
- 		dma_cap_set(DMA_CYCLIC, pl08x->slave.cap_mask);
-+		dma_cap_set(DMA_PRIVATE, pl08x->slave.cap_mask);
- 		pl08x->slave.dev = &adev->dev;
- 		pl08x->slave.device_free_chan_resources =
- 			pl08x_free_chan_resources;
+I'm inclined to merge patch-1 and patch-2 because this section of code 
+needs to be removed in patch-2, so there's no point in fixing it first 
+and then deleting it.
+> 
+> Also, regarding the commit message description of the NULL dereference when
+> lchan->desc == NULL: since vchan_find_desc() searches vchan.desc_issued, and
+> both loongson2_cmc_dma_issue_pending() and loongson2_cmc_dma_handle_chan_done()
+> immediately start the first descriptor from vchan.desc_issued under
+> lchan->vchan.lock, can vchan.desc_issued ever be non-empty while lchan->desc
+> is NULL? Should this check and its comment be removed altogether once queued
+> descriptors use loongson2_cmc_dma_desc_total_len()?
+> 
+
 -- 
-2.47.3
+Thanks.
+Binbin
 
