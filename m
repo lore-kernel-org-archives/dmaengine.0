@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.130.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793129683;
-	b=jmgQymhPU4kHOaHj3hOsg6ArqCLzTAgo24DSB60EzTCL99Z+51EW6e3BdV8zeNGpfu5S
-	 rY1HvS+IluDZ0i8nIf048CpgVFD4mtQczeEvAcPw2YsmktK9gbi7TgwOFSHzw3KLX0q1y
-	 JLFYF3QiulI3NUQpgz+IiLn7TmhEl90yNIQaDvwepctC3qqWMakkICiQp6oRDa1SxDHHG
-	 b23sZbUXFDYTHp/OCbUFaqinnrp4ioK1TQHSBdN3/xQOT0SnyXeqMPCYn+WwNtHVUzT8e
-	 hLhjMCflHYzedDc4AdetymMGA4SDR87W6pyKUhR8NAPaSrcA3rUnDJYAT5Zh5Z3Gnsg==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.24
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793130310;
+	b=wrK8/6YoGBz9IvEdW9haOwXzdt3AaIc5mAnoFEUEE0/SAkRLJndFKJAFjLV/nqs4I+M0
+	 yKpIT5DtDjp1bg1MKKClgUMNWYecemTCb2Uwse3rmk0rxFdGGuHM681atucI+eSlmU/9V
+	 FC8Ysm6BLffKIgod+khk6vjd2xyUL+CtDfWTyNBNmAjzMUq0KMo0XnMmkvXG125vBbe8q
+	 xWn02ZYIBrbDiY+TV0gayBeCmUDdV1YZNQJPMWl/sxFgQJ/POjMyP6CvGvvrRDhFfmU+y
+	 H1RQ8GZ8dRPHgOgyxOh7dRfQs+bKg+IZCApY2EVbqGu83gsMl+zV9Nw29ybPygOuG9w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793129683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793130310;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,70 +24,71 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=/78QzbmyNQcgtNpVQfu0yL7/dL85G5mBtAhh/wbW/io=;
-	b=rKLdM22pA8yawt6QEP13L8O7TH/VejPBNdYVTchTY6DtQ2oI8e8FcAmj5fUJj4DjMvGk
-	 PX98sdudrN39z86pDIMhI7es4NBSK5DV3qnurCdddRAVCg+LW6g4JeMQpe1cq4BEhSXQQ
-	 k0yXL8naW6nlozGXYyQxvhkubLydgr4ARqK6ehyLzYNCwsMKlqP3t3CJqbJeW8Vw2+xcQ
-	 1nu4gVsTFGYTcHePMl7EhSDykQ+DDuRBfCAG153fqNXczjR4fyA/MphO1Yykxn3CaYI9h
-	 Dq4KORvqgvSQ7C9NV5ENQ+ei7JuLKpblLcncvBVLc7Bk1AHtu7Ffpc88H5CClcxYJmg==
+	bh=oErQvoyWidPnf1wzEqiUOymqZMAm4Mju+7g7K+LFqdM=;
+	b=u3BbGstHrd9kR5CBBzHVHY8fSNTmpQ2VC8poeW0U8r6nZkl2DA2TEMACnnGZo9Zw3KUw
+	 9+nFIFJhc9W8IFnjueD0A2daztAhT9jwQ6/3D9UXikPpOGws4/bY0iFtoZPpPvSU0BwYi
+	 C+Lzn2KIe9uSyuS+3pAyy0BSS+Dzn+Y/DABpkBVekT8r0aF+hvrNYGCJGq7Ro/c9NtICv
+	 vAcOZr9APA7nY15NEDdm1EEKjTYcZFlnXEbGT5+wjP9txNZissCo4E6/SHX6+TdDayVhW
+	 KQbETX3zYBuqkGTm6NYp2kQnk1FIxGU8aslelKRGfC6h0IPzXyCnNKAHD8lLcW0MJgA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=NVeS0DFh;
-	arc=fail smtp.remote-ip=40.107.130.51
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011051.outbound.protection.outlook.com [40.107.130.51])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=ZXBAxQLy;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.24
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011024.outbound.protection.outlook.com [40.107.130.24])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56653606A31D
-	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 19:34:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56653606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA3E606A321;
+	Tue, 27 Oct 2026 19:45:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7BA3E606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=NVeS0DFh
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=ZXBAxQLy
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ru7Ji3bJvw8Eyx8Fhde7CqYKe9ZubAiVA9Mcsf0XdAeywPwshD+dx4w2sgGVkddf+EFlCsqZwVWs1B4jQ61d8TZWLtW8KVfqVNWbg4wKJGKCZFgG9PB10kspZ2Vn1xB8N9B+k5LNMocHWBmY/iJQrwlmbqNHPH7lFvBqKATiS6EzpFm0V3z7ozsb3oGHpDWQPGlyS6Sau3jzrAt92+P8J1zE1/NDUsmuJdXaIwY55NhE5tDwC1SlRb7GPwAfRc/msx7LIKh0wg58QLK2v/kKMGHB6vCSQY2ywv14RsUbJoonZ/Q2zFWMVlw6s5QMOnp+ASi27NzZbbsoVyKkaioU0g==
+ b=I5lP6AEKQZIb9qGhf5ZPvMtSoA81piwYSEs7qYrOFS9cCQhFpDpVsBH6jaVbsxUvwDTmUGP/1ECA6To89MiBx2VOp7QK6eTWgQrCRs3aUpwQI/JEFF5Wvhq+6PW5TmRhrRbRHRPqbbeiCgVOBhT1QLDgSnG5zhQDJcqATmols74uVa766yvLujkVK69Ywhhg1gkwERkjWXQe3KP01Uo9u/8yuBDSj38rBdMasMl9NwdWjwyAo/8FzaZaVF3mlAV9m/OZK980StPQ+mYPEqxo/Iv78Pe8ccKq4LrMhFsoT1RGcNwXH7gHGIeV6mm6p8kYBeIklAepO0tiNH2E8auRIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nAbdJbZyf+XkSJUOG4cZHoXys6YivdFnAAWjxp7YLx8=;
- b=UpKBtxejxG9BjLqgZnJC1SCgg07SHe93FAeXpyndY1zjCg94BW4rg6GvIKukzu9NPhRl9uFZFdE+hsRst7Q+24IKuxkWIX3Gon4l+raNrK+8aix2V+egoOe9XKzu1g9TWKbCBUqGn1MpobiH7JCquU1om04G6vc45PDuEhAdaVd5+toMwQOhVBoKEhwWVZt6enbqTclnDxNxvN0mKBtOAB9HOdkHyqF8o2xvhWZJvcf/uT2zV2zPZIOdS2qPv3Rqbarj6Gs9hv5HgqTmTelgE9mNV80/3lb+BKk8vniD2dQdBd+RgoXLfAHLxdL6Ht5sSw6Kt/4U3Bjd5PVlmQiyXw==
+ bh=oErQvoyWidPnf1wzEqiUOymqZMAm4Mju+7g7K+LFqdM=;
+ b=xbtFVNU+zHEC4AbY63hQ8b1zXT34ecZpAuMdlWvMXQS9yQaGs2EKGMfHfiHPCcmybjTj97/QmaEbkJLz4Bm0LQS3zIu86cXHEcOXeUSEWFhQQy79Cuvy8HcRfOtqYkaT7fv6GaT0G3o659fbVMe1YQ3XBdPNMaeTfQuaLS/T46Z9zwknDc6+qaAjRMqiSQ7f5gmTSeiDZ2yH3AKHidRWWjBcobmt/RYFLGyT/aeG1LUIzxY0R3BEN6yUJsx+fZm+pCCL2kijY+so7GPVHNPxAnYNFJvn5YTqp7K4Inlabue+Ua1bkNqnpOexHjXXLIPSe9jWbZUiKz3Zf7qCV0RR9A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nAbdJbZyf+XkSJUOG4cZHoXys6YivdFnAAWjxp7YLx8=;
- b=NVeS0DFhcJllZzCWW3OCZZ23cqFMpZCLBeVc12b1TDcKoWuUJWVLzi6ndUzmOTQrzEC/k1Kptotfmv94CaIbM47DfY+4FvEknYO8LWYjeFVdsxcj+HlJpNDwN5q2UxQwQPRKiV6D3QimgD6CMaoRzkpg4wDz2FZVwefVQSvC/p7HzjOGvhX/zSlymSSsDyqGDVlMddsrmd2gnTC2Cjp2IiJ45A6rGnBU5kJwuSJc4uxieCVKQg/O1yKvsVDLs5HWNUIJKwKQF7dnfPkE6bk5uDxZMTi2yZ8+uZACSDv8cdsVPslFjs9IprqsGPVlVlvfLYjuAy6Y2KTW84+B+4KOXg==
+ bh=oErQvoyWidPnf1wzEqiUOymqZMAm4Mju+7g7K+LFqdM=;
+ b=ZXBAxQLyzz8eGoOIIRnNDX3xI6npimaDRPPC0VC0H8XdHzN9W24sqqSxIsMNaN5Ht1SoPUeL5dVX0fjicVNoFRgdA5qjSZfSJ1O922uxBcPrZeuTTzkK9o+HTfTuXBUridyLHybM9zHk5k3DYv30DlnwfYsE7xR4fFHAyNew8/8GVLnZvF0DqOSydojY0xTbslD+BwXq48CpmUcQFgQ3frgOzZBddiTLkfoPJs5Mwehyqoc9H5Hc2wYwJiPZnkLuYT9W+LsbXoV3x4RgK488W+DspbRwAKtKT8q9+RZe5xXDxTJ/5Iku98w/BZoKB8tpsf0U5QzEjSbWwtdb3BnlWA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AS8PR04MB8183.eurprd04.prod.outlook.com (2603:10a6:20b:3f1::11) with
+ by DB8PR04MB6954.eurprd04.prod.outlook.com (2603:10a6:10:11c::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 19:34:38 +0000
+ 2026 19:45:06 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 19:34:38 +0000
-Date: Tue, 27 Oct 2026 15:34:32 -0400
+ 19:45:06 +0000
+Date: Tue, 27 Oct 2026 15:44:58 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Li Ximo <lixicaicai@gmail.com>, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH] dmaengine: xilinx: Fix wild pointer dereference on empty
- segment list
-Message-ID: <auD8yFdjxcak-RtC@lizhi-Precision-Tower-5810>
-References: <20261023065806.3175584-1-lixicaicai@gmail.com>
- <sashiko-outbox-182385@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: Li Ximo <lixicaicai@gmail.com>
+Cc: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Vinod Koul <vkoul@kernel.org>, Michal Simek <michal.simek@amd.com>,
+	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Wang Haoran <haoranwangsec@gmail.com>
+Subject: Re: [PATCH] dmaengine: xilinx: dpdma: Fix crash on zero-length
+ cyclic transfer
+Message-ID: <auD_OiHTRaig1Q0A@lizhi-Precision-Tower-5810>
+References: <20261023065900.3455414-1-lixicaicai@gmail.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-182385@kernel.org>
-X-ClientProxiedBy: DM6PR06CA0089.namprd06.prod.outlook.com
- (2603:10b6:5:336::22) To MI3PR04MB12438.eurprd04.prod.outlook.com
+In-Reply-To: <20261023065900.3455414-1-lixicaicai@gmail.com>
+X-ClientProxiedBy: PH7P221CA0002.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:32a::13) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -99,141 +100,117 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AS8PR04MB8183:EE_
-X-MS-Office365-Filtering-Correlation-Id: a9510c63-7af1-431e-7551-08df34615718
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DB8PR04MB6954:EE_
+X-MS-Office365-Filtering-Correlation-Id: 118291d7-674f-4ef4-849b-08df3462cd22
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|19092799006|1800799024|366016|6133799003|22082099003|261026121527099003|18002099003|11063799006|4143699003|261021121427099003|56012099006|10067099003|261009223027099003|261022105027099003|261026140227099003;
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|1800799024|366016|18002099003|6133799003|22082099003|261026121527099003|56012099006|10067099003|261022105027099003|261009223027099003|11063799006|261026140227099003|261021121427099003;
 X-Microsoft-Antispam-Message-Info:
-	WQxJHisDFHJEhxU5lMAerTTBbpCbqwtXrgttM3ln73TX18T2RjcLgvq3FDww3MewfXCwOEXUgvPOPmSaYAb5n1iwTApgv6fGJQ7gtQZFkHEZaXkt+p1lToFa0Fb1SS/eds5sSuhnARc1gdUr9Q3wbVOpT87WAGCSClYQGsahw9RAnLeVx4KwxVFbSEeRAO4pT6eHno+LqnrHEiEDpRtBAHPcHOYG7BnUf270N9SY+9tKMcpdoyudOoU2wGJX8qKIlPOrRaQVIuanFuU/C28EftW74az5gFgLjR6PhHmnNWFwL3iDU65GKZqh2BEKF5NFPuUbF1vDOcfBwmTG8pQDZQn6coLOuQdtQV81l1pkBIFWvfvxpPgNYuDwnJRjkY/YO2op3nwjHyL5+TLm/DnCqAXHz6IrWbUBUqQQyVZ8xHgUEp3sb3p9p39GGEeYZQuVirRfjZQhw3JplQ+rTWQ+wdjPdYn2iI2RJcCKp8oak7mz62o11BudmOXkK3ph67GwPtz34g+8hHW2dC3Wwl3TI2QPZbQ9Pf+s0+PzZd6eN3lFq3I9zEk+brRplob4IhcIHBDscYEkQA+37Ffx//a1+kOuPRD9SX1gDjKWDuw3rjk=
+	92XdyHUU2fIdLTqiGUtG7d7/j9Zo5kB5IoM1gQPZKkAZUudDbu3Y4r6ncKQbrG2DTM0QzTx50BztbxxViU5t9yMXyKJlWZ5IcX33o9HmMfdRdx/r8u0cVqwXGkjccsrx0u5N3erkoUpkETKTveQ0JuSRftdotF5OO+XkfPRzja8V2ZdT77p4jXYf50U7gO/xXEgvK/NlrKM4RBZgyjDTGnwx9FYac4DvaTgAA3Gd+vs+iNzjgbkAVnT2RXeTaQ75uSt9g4q1lvZbEcv7Ua8zT30bRyhgSjIsVszAWMgsbNK2nm6BmfT1NCFRhI8KJ8zpjVfREWyGTDeyFUd1T3FxUYpTRXjS8OA3NZ1C35SHxXJ/ImAT3Caf3+KY1AmB53dhBD9E1U/7pWjOrkNuYaLYCEs8rT64EBpJj/7bjbraD11twb7KYEs40Yrv+YtNtcvlYlCWeibQcMrQFAiwmSnaAdN0PBIqh8TfOS5jUenqzaN/CheZhbXtXDXzJNrGeDcDTgEBKLPvZIA7m7Mpzd1nY4azAHlr4nizx8aCTO3JcEIonCRj7WXjF9irvEd+0keQSPYv1YScW60ONfKAu5208SSuAKQyLqqWZFfFqgEK4SoUzIKRXgwmf+9YgGGjXlLnrOpbudqOjfrhELE8lOvh/FYxKA/9JfK86Q20h9uqwT0=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(19092799006)(1800799024)(366016)(6133799003)(22082099003)(261026121527099003)(18002099003)(11063799006)(4143699003)(261021121427099003)(56012099006)(10067099003)(261009223027099003)(261022105027099003)(261026140227099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(1800799024)(366016)(18002099003)(6133799003)(22082099003)(261026121527099003)(56012099006)(10067099003)(261022105027099003)(261009223027099003)(11063799006)(261026140227099003)(261021121427099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?7eO6Y0tVMoiV47qUxs73Jve13FT2Unkl2cCFPdkE3JjBt0NNkeyAydurhb?=
- =?iso-8859-1?Q?SE+gqOweoSEQTIwGUQQNEKBejFLYLdOiKWTtNlK05ywGCoSS9/OYX8GGhx?=
- =?iso-8859-1?Q?RBk1YNrEdrrzVV4nybNGAfyR4OB0BWHYJZilZ3P+8MNaiVlBj7Be7JbufR?=
- =?iso-8859-1?Q?Rdc3+Q3sJDNtNadXngn8Q1XQ2vVNAfAsS2+Pok4d3jMsUJvvCpa9GQS5uR?=
- =?iso-8859-1?Q?3g6qQEI2pUia10d1GnQd/15xn6oijWtdaTO8k6Yxy4p0OQKH1POL02B1Zv?=
- =?iso-8859-1?Q?tSfuGBqf9mcVrgAiya0/LQYshQvUxbFIcyasX3mVrgssrd670UAiwuV7XC?=
- =?iso-8859-1?Q?u8iKqCMXDTOD/W6hMhE/tjgzXWWSRyTEe2aaciLleioKAmQjEC9UoGiAq6?=
- =?iso-8859-1?Q?d0T9Vt90WQvMSPf351PrmOtp8n9ZuSGMi3FrbRHGoZLtzDawgk2kGR2XTM?=
- =?iso-8859-1?Q?wJf4XuNn1k6gOdoCI0md1cCQD8Te8ZjR3aDeNdnYEm3e9YI/zZrSKZiYwW?=
- =?iso-8859-1?Q?CqAm0h37sesTb+jTwwxQ97gNEWJIuHGd07CQvQ7j56Bu6bqpuQ4trBZBXG?=
- =?iso-8859-1?Q?mHOwQRuJrInP1wLpgBYBiuGy+wCiv9lP9mYDmNOzE3SLOE1y5kMPyTlULz?=
- =?iso-8859-1?Q?Kdjk1abu3YRPVKcLUOIWukiZHnKUlXajawvyt64gThOXA3yvk3YuXXAYza?=
- =?iso-8859-1?Q?zcOSGj2n3a7wvcNsEySxGR2SdcwXj1PkPo9O6G1BC3lofjedAhIpHyH4BO?=
- =?iso-8859-1?Q?wJz+D+xzzhr2X+f1jiwZe2rvuqObEawk7/szV8UnIZB9Ksa9O//9aOPCJK?=
- =?iso-8859-1?Q?V6GS/rsyxMF5kAZnA/OJY7ZvHnrI1s6DfjkRJWP+1SusANDF5jUdp5Rinb?=
- =?iso-8859-1?Q?cqVVaKfsI3ShYVek7RuHLBorfY4Sn1RkEK3fbiaOQqaDK3yXVFTQxAoYXt?=
- =?iso-8859-1?Q?fEbnSgktJ76Tx0SWVQPZXmSjcgagVNryFuF47OeDOxmVtCzK61lj8H1Qj2?=
- =?iso-8859-1?Q?sGzY66uEjDI0qx2Ky26lWjP8LRAKcLHQciyxAlkrDd2D8PB3Ts/tiE65VT?=
- =?iso-8859-1?Q?AeJHT6QlueINYi+ePYlrIRaEoxVqiwphphOGsLfHxfGiHA59fbQTQUYnMF?=
- =?iso-8859-1?Q?CUk4RNs6+NU6wSIZN0Ra+i17Ju7S42fxCeOKO4iGK7NgkWBdzHSM9z8sgm?=
- =?iso-8859-1?Q?rk4wPi+fbGmC8feG7KypUSMMASvYzVyt0wPX3BQjYE7FdV1LuHtRqIZMoZ?=
- =?iso-8859-1?Q?41ftJHVwufWZjEjStTwi4YlDDIkMjYkgbaHp2nPubWfr1UwsX/8KyA3yDV?=
- =?iso-8859-1?Q?PBBXfFWjmQqHB+el9sMtJ+AgA/reMHptdNOEnBa8Tx61mvMFY4LC91WdlH?=
- =?iso-8859-1?Q?2rrBOq+MpAYRfWpVVBcQSEs01xMKr6CZ9t+1cBvnBJHdS9sivsDgjHtXsF?=
- =?iso-8859-1?Q?7lkI48O9pbZB1L3yugLrDBOEp/udGhnA7ycVdfi6ng1Vpyty0gkKGPvwoP?=
- =?iso-8859-1?Q?mgCnk1tM8Jx5tbEVkJMtWBV0YJBhEMnjWBm7w7h3Sd13xwdvCOsG/p1Aga?=
- =?iso-8859-1?Q?u1C6YOyztq9YRDzXbYKMnSH04oWaSLKIcwh5/OdkV2P/7mYHTWrapQQQNZ?=
- =?iso-8859-1?Q?szECi99EZJJHI2NE1N95R8EHkjCoGvzwtDj/mkLe8G8VxhV4Cwv0cjQ4ap?=
- =?iso-8859-1?Q?bViztQZDWU/6beNId7gspiEFRYt8fCZLPYuwRSFXLyZmMkuv8zIGi16A2W?=
- =?iso-8859-1?Q?Wj27tW7KVFfE8fzTdZZ7dVaHKupLAgsSyOlWtqojSLBr03uQMGwNIKurwC?=
- =?iso-8859-1?Q?XKgKpT7vDiWOCx0QXlTLwAJtjnDGTMBnjLsm9KEy3/PcYs1+NuTB?=
+	=?us-ascii?Q?PUeqJQH4mXuhwOVADMN5BDZFLys9AC0OIhcP1hbrxdmWOpB1FLRnrSZ4SUxR?=
+ =?us-ascii?Q?HLUJ4Lem0Cn+bfbxC6Sb9wMAAKd1BFvuaseacHEtaDHj3A6KIywnlJKD2RgD?=
+ =?us-ascii?Q?4qy2bwXslC4Ga9aac+w2PSMSsLy3ZCSX1lcw9ywaNA9Eu38bA9F8JgYdQeDg?=
+ =?us-ascii?Q?BxowNqhATX/tFVq71BNuw8WIwaEKtgOt3lEkdYn/MhIqwFq5mZNWx8WT8tWP?=
+ =?us-ascii?Q?uhm9RhXP0cknOQ2e3nDdnmylldacxM6wDIhcMzmPrfhuW+0a0nIXrdNjvAgq?=
+ =?us-ascii?Q?63rCWACQv/F1PGcVP9g/5Aek1tZTG2sUQuAGaLRrnFz+tMkxQKj5i9oP9vFv?=
+ =?us-ascii?Q?kuCpDoEHzg1y3aTKRl+an1TQhdkrNUX/jPNIHKZF1DQIwSYjRuO4LS5waYMS?=
+ =?us-ascii?Q?ZiPTZK2/CwfVK1l8DYgcBT8cEPGO8xDQAt2P3ecn8n61vj0f9vC5OGF2I79K?=
+ =?us-ascii?Q?jbTnfQ8qvnks4nhAzZH2THBSOhXGau3cgwp83g2B1gBmlIoCnDamVwJpVQi/?=
+ =?us-ascii?Q?m4aoZL2zploCXJ7CSlDgtf612c08Pxyihe7JSs19R0bgQy+hMnVWSn9eS+u9?=
+ =?us-ascii?Q?l5Rnvcl2nRpUfU3XgahzlrMlxE59Lc9yHoWJQqzmc0bMcpGK9/IY1BJsoJnT?=
+ =?us-ascii?Q?w05IjRfTBjFieXpW7WnGnvHoFyJWk911cdb7fWcR9iOM1ahlljCUHk8YGKPF?=
+ =?us-ascii?Q?GFdIcWZQ93oRtk+QxN42OH4RrP76AnDnGA9GeRwBQqzpV3o3aOfyVuIZYDnt?=
+ =?us-ascii?Q?WB9tvLNOb09fanEPJPqr0M8+y5rx27y2AoFWOfyEpKxjsDqxqbF/oZ06M9Ts?=
+ =?us-ascii?Q?+qqfIXUF/ctUyW0SijCqutxPQCTtfqcpwIzRX8FhQbQlV4J4J1jXGa+ZVVp5?=
+ =?us-ascii?Q?/U1dwPTKqX6gV3CrNbv0CQQv7jOp9EFf1U8ym/PGu4KzuSGg/8BQz1wrhLd8?=
+ =?us-ascii?Q?qxTzLvvLUiw7Xolo/2CP7+qsX6eIeJAPRxb5BlsF54KQs5O9nMtHeuK2BT4Z?=
+ =?us-ascii?Q?U09ghpWyS++f75Pvs7EyhDn0TAiEsVKJzHqqlJWBRawO76i/X1ZByF+wu976?=
+ =?us-ascii?Q?gXllA4I/9ZnIcEgt7CvJoc6XIq8KYm5chVcFcqic/GBsLVllKCV8xK6GuDWm?=
+ =?us-ascii?Q?ZgJlKAIhr33AcJ51KC2dAqJKmVuyLkJNp7AD1tO46SRYbGw7sHlX3fY9NagD?=
+ =?us-ascii?Q?S+OAWOOUmuS0ojqb4doB2wDTvsBsra22Qp8dvHkQ0cWeo/DbTMNrSXXV/ROp?=
+ =?us-ascii?Q?nDjza0ijnYBTOitY3qe5XDt9nmWdbmA6YG8lXYriy3AgoXs12VKeBF3iwdRN?=
+ =?us-ascii?Q?cN6rtR/7LuJ1yYCLwj/nUNsp1WZmWUw6sKXql9Q+1SQxEfRBSWFQ4t3H5CLU?=
+ =?us-ascii?Q?yP0ZY4qkgy4QvRo2Y3w5e+nu0n9U0NbIWPVFj80+jGn5TugNPpaob7mfrzUf?=
+ =?us-ascii?Q?T4z82t7W1cTUdSP62wyjRnm2sMCoADt/pHvAcl/+yaT+TFbfYngWny0x2KAO?=
+ =?us-ascii?Q?9AO6FIDMxw3rxhdXRkepyr23cMAJE+RgFClTZ6OX5m5jW7gmN2f9X06Fy7ud?=
+ =?us-ascii?Q?pmDDDBWzL3O6e1VcGXne4gP1dmA2asDMjhU8jYViYnQlNP5+67FWO5B7yq7o?=
+ =?us-ascii?Q?TwpGMQJcebubqmE2B2M7VpixxecNzrn2/mnyVz59SzTRDEK6IeUHUUw81utt?=
+ =?us-ascii?Q?2c/9avlivpjndZeQzqH1KVniTjDFNeNQfc45sqpe4GItC5RsLM8Qi2jJprNO?=
+ =?us-ascii?Q?aJOT/mPz1XBdlLfhRi3LptdylDQ/lfs/q5u+Wt8OKupNZTA3/o56?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9510c63-7af1-431e-7551-08df34615718
+X-MS-Exchange-CrossTenant-Network-Message-Id: 118291d7-674f-4ef4-849b-08df3462cd22
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 19:34:38.9363
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 19:45:06.3604
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hAcN3BWMD0PVTHMndmCWAQqg71RmsGGq2JRDH71Y52DAAjC3b4cIdkGxpzKKbnPbldANYZ5dw7nVdPq5CFM7+V1SjN/8pHEwp1OkKFZhSc1y1GfgGyvtjxweCJxD8a5e
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8183
+X-MS-Exchange-CrossTenant-UserPrincipalName: UVj+4TOUTmVndqTgxBOQlSblZwIJ535yAHU0cnhKezITKYaS0kKBZ93DX9Cu/E9ViE5G9aL65I9Ru9edSIbDHsA6OnH7e5pe2a/b0VkDhc9NmbPNi2DVCEtWaP+K9JL5
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR04MB6954
 
-On Fri, Oct 23, 2026 at 07:10:22AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dmaengine: xilinx: NULL return in xilinx_dma_get_metadata_ptr()
-> --
+On Fri, Oct 23, 2026 at 02:59:00PM +0800, Li Ximo wrote:
+> From: Wang Haoran <haoranwangsec@gmail.com>
 >
-> commit 5ff31a1fefdaf467f495be421ba38281e2cbd1a6
-> Author: Wang Haoran <haoranwangsec@gmail.com>
+> list_first_entry() does not return NULL when the list is empty; it
+> returns the result of container_of() on the list head, i.e. a wild
+> pointer rather than a valid entry. This was found by code audit.
 >
-> dmaengine: xilinx: Fix wild pointer dereference on empty segment list
+> In xilinx_dpdma_chan_prep_cyclic(), periods is computed as
+> buf_len / period_len. When buf_len is 0, the wrapper
+> xilinx_dpdma_prep_dma_cyclic() does not reject the request: it only
+> checks buf_len % period_len, and 0 % period_len == 0 passes. The
+> build loop then never executes, leaving tx_desc->descriptors empty
+> and 'last' still NULL. The unconditional list_first_entry() on the
+> empty list returns a wild pointer, and the immediately following
+> last->hw.next_desc write dereferences NULL, so a zero-length cyclic
+> request leads to a near-guaranteed kernel oops (plus an out-of-bounds
+> read of sw_desc->dma_addr through the wild pointer).
 >
-> This commit guards against empty segment lists in the Xilinx DMA prep
-> functions and in xilinx_dma_get_metadata_ptr() to avoid dereferencing wild
-> pointers from list_first_entry().
->
-> > diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-> > index cffe7c6fa6405..07f52f8412b10 100644
-> > --- a/drivers/dma/xilinx/xilinx_dma.c
-> > +++ b/drivers/dma/xilinx/xilinx_dma.c
-> > @@ -650,8 +650,11 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
-> >  	struct xilinx_axidma_tx_segment *seg;
-> >
-> >  	*max_len = *payload_len = sizeof(u32) * XILINX_DMA_NUM_APP_WORDS;
-> > -	seg = list_first_entry(&desc->segments,
-> > -			       struct xilinx_axidma_tx_segment, node);
-> > +	seg = list_first_entry_or_null(&desc->segments,
-> > +				       struct xilinx_axidma_tx_segment, node);
-> > +	if (!seg)
-> > +		return NULL;
->
-> [Severity: High]
-> Should xilinx_dma_get_metadata_ptr() return an ERR_PTR() (such as
-> ERR_PTR(-EINVAL) or ERR_PTR(-ENODATA)) before modifying *max_len and
-> *payload_len when desc->segments is empty, rather than returning NULL?
->
-> The caller in drivers/dma/dmaengine.c uses the ERR_PTR() error convention and
-> directly returns the result of metadata_ops->get_ptr():
->
-> void *dmaengine_desc_get_metadata_ptr(struct dma_async_tx_descriptor *desc,
-> 				      size_t *payload_len, size_t *max_len)
-> {
-> 	int ret;
->
-> 	if (!desc)
-> 		return ERR_PTR(-EINVAL);
->
-> 	ret = desc_check_and_set_metadata_mode(desc, DESC_METADATA_ENGINE);
-> 	if (ret)
-> 		return ERR_PTR(ret);
->
-> 	if (!desc->metadata_ops || !desc->metadata_ops->get_ptr)
-> 		return ERR_PTR(-ENOTSUPP);
->
-> 	return desc->metadata_ops->get_ptr(desc, payload_len, max_len);
-> }
->
-> Callers of dmaengine_desc_get_metadata_ptr(), such as axienet_dma_rx_cb() in
-> drivers/net/ethernet/xilinx/xilinx_axienet_main.c, check the returned pointer
-> with IS_ERR() before dereferencing it:
->
-> 	app_metadata = dmaengine_desc_get_metadata_ptr(skbuf_dma->desc, &meta_len,
-> 						       &meta_max_len);
-> 	...
-> 	if (IS_ERR(app_metadata)) {
-> 		if (net_ratelimit())
-> 			netdev_err(lp->ndev, "Failed to get RX metadata pointer\n");
-> 		dev_kfree_skb_any(skb);
-> 		lp->ndev->stats.rx_dropped++;
-> 		goto rx_submit;
-> 	}
->
-> 	/* TODO: Derive app word index programmatically */
-> 	rx_len = (app_metadata[LEN_APP] & 0xFFFF);
->
-> Because IS_ERR(NULL) is false, returning NULL when !seg bypasses the caller's
-> error check and leads to a NULL pointer dereference, while also mutating
-> *max_len and *payload_len on failure.
+> Bail out through the existing error path (freeing the tx descriptor
+> and returning NULL) when the descriptor list is still empty after the
+> build loop. A non-empty list also implies that the loop ran at least
+> once, so 'last' is guaranteed to be valid as well.
 
-Make sense, please fix it.
+Can you use simple words to descript this problem
+
+dmaengine: xilinx: dpdma: fix crash on zero-length cyclic transfer
+
+When buf_len is zero, the descriptor build loop never runs, leaving the
+descriptor list empty. The following list_first_entry() on the empty list
+returns a bad pointer and causes a kernel oops.
+
+Return NULL if the descriptor list is empty after the loop.
 
 Frank
+
 >
+> Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+> Reported-by: Li Ximo <lixicaicai@gmail.com>
+> Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+> ---
+>  drivers/dma/xilinx/xilinx_dpdma.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+> index d9a3542c4..bdfa85b80 100644
+> --- a/drivers/dma/xilinx/xilinx_dpdma.c
+> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
+> @@ -730,6 +730,9 @@ xilinx_dpdma_chan_prep_cyclic(struct xilinx_dpdma_chan *chan,
+>  		last = sw_desc;
+>  	}
+>
+> +	if (list_empty(&tx_desc->descriptors))
+> +		goto error;
+> +
+>  	sw_desc = list_first_entry(&tx_desc->descriptors,
+>  				   struct xilinx_dpdma_sw_desc, node);
+>  	last->hw.next_desc = lower_32_bits(sw_desc->dma_addr);
 > --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261023065806.3175584-1-lixicaicai@gmail.com?part=1
+> 2.30.2
+>
