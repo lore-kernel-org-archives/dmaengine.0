@@ -1,88 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793125734;
-	b=utO3YApZZ14GlRKrhZGEpFSGDxGvJQ5ZVnybgS9aCtaMY9iG1qnOSE3uvAI8vmAG1WH8
-	 XTOIhDHurjpl8omp1IL76fyEn1USXdW8xIEfHRxXDqGM3dTObtugTILTLWHSor9IXTSIR
-	 4ORUblgzag8M7Tdi7zpXOq8k39bNuzs7EyC/xawUOWkuG/xPigGSOsBUIDOw2LKx+BE5o
-	 veCGJS1kl53Bh9vqNEdPWj9p/kj7iqBD17IYfCwwb33TnymMhqoObDpHs8hN+JWiBQmPX
-	 MdV0OfysWFwRlc60jNfww5pY0UR6hPcAAnwQxQrKxmNVHIm1F+MDYI9M5pTffcg1KWw==
+	t=1793126617;
+	b=PBSWAUxSuQ6QoLPUvE89Wh16rrWli0qVM6BVPiIxNU3fUq1xfy4tP3eJhLZ+l53qsDaY
+	 alvu3Lj7/oJa4Alt8qTGlBnG+/5tHry8wJWJB8VzLyVz5VGvSZBYUm//tTSYEMBP5A7Vh
+	 E5TI/Ns1/2enLqA00iMNm9MeeF8/sQwjsZ8LmZfBb/nOz/qDl3qVGUbT8tvKRbAA1rEDj
+	 u/K/TXRt4xY1MHChgynhnJ7ofg04NsWVKg6cdoGTV7O0/89FBe9Jey53v6Gip1XOkNqE8
+	 /W4euxcZSeYACV9JoWcMUf4nuNznsUrAvk9rJ8mn5C1iiGGAfUZcsV3/Pp6SeP4ypPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793125734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793126617;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=BLfFNn1Qcpgkc/CE+gfkXeaI8Qpi2GlNUfZr/MSyrCY=;
-	b=5g1CnXtfVOUmviW76D0mW8p1aO5/emFp7PRLGR0Vrbw1kyySRy27wXfOsV+4RYg/R0d1
-	 m8T4gEYD69Sp1I3EfDP9YxGOQQ+KelnYeueXGXlfrX63CGXmAavxP9TYwvCgiUP2/D2Tk
-	 xMb/6hXk2z9tWj3xGI9U9VTmAZApEsg7TqgAEArKovCJ9Cj94gGK/MWhewlhVsr04htnB
-	 SuImy7ezp86S6umq6xuQGaQ0efWHlleoPHjmAA1ZDUEiVE19uGALJpcmhIMDK84ElCdaO
-	 Tc2EQU0Xcqwb4I9jMr3u7dW55aqMhojE93cUtpGr9owTnwXDwM6nvCkfqfl+Pwz6XUg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=9axz0yVX2giw2uFg+BgambTLl5XOFya7eXMeUfHcrMc=;
+	b=wNdFwbDwNsdEIfV4svAjBQc0MLHzt38WCLhS434u2M+nOWJ9BBVe0r7SUMS0JlbNmyWK
+	 MXGoUjK/UT6ExTIthMXhko/RXhy9Irsthp9az74+TGoTa724n6roTCndYI+0c8uR+aXxJ
+	 aqF9Sd1aVryYrnDKlwAvu/AvTJa1S5KXO5VICbAZtzszLWuccY230TrOqJFDXBHr97vJ1
+	 /rSbR9bOd8wSGi2K3CqhuF1CszOJJSM7pTfETMfO2iI8QzBKgu48jCecDanNHvRJPlPpj
+	 LllQhs2xTA2yD+FI9njgL7N8kfttVWu7DA4xN/WsTklgPuFpsmNnLuSmCwrlqZMHeLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="IzuVmn/3";
-	arc=none smtp.remote-ip=209.85.221.44
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nEzEdYSR;
+	arc=none smtp.remote-ip=209.85.210.43
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E0C606A323
-	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 18:28:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57E0C606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8691606A320
+	for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 18:43:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8691606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IzuVmn/3
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-48e46e449e8so96838f8f.3
-        for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 11:28:53 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nEzEdYSR
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-8253bc5a613so122982a34.0
+        for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 11:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793125732; x=1793730532; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BLfFNn1Qcpgkc/CE+gfkXeaI8Qpi2GlNUfZr/MSyrCY=;
-        b=IzuVmn/3PK9k7xpmQcANtQTaHfMbFHFVZuCQQjBOZcwHtm9l0fcAnfhVtYYXkWluIT
-         w71AMui723QvIQqh5zjvS+Np2nRcHflIOKTGYdUNpV8vgv4xEyY506P7MQj6e72izXZ0
-         i+E5hp1Yq6Lwl3WJ+WJ/9yIPFzgAp//w5FFtv3M0Jr4WdLpaIV78oN2QGHTbDB4dbbXu
-         qjMgzh+W/tRdSMASwKyRnLFWP7gG7UXgblH8hluuvE8pzPnzU5Oa59G79Yg6Qdso0yig
-         hvMsDOzfkUrikadI+u/5jNAghab5Umy3QgQxkFXyurFUkaAPLFfxgmSq9DLmKqkawzUN
-         aBYg==
+        d=gmail.com; s=20260707; t=1793126616; x=1793731416; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=9axz0yVX2giw2uFg+BgambTLl5XOFya7eXMeUfHcrMc=;
+        b=nEzEdYSRqizAr6UfE1w1r7/oF4eXh3fRPB5gthej+S7YpcqWPtHfHENZUmJfaOJ4CY
+         sa+cFlKqcS5FUvSFB8M0PsrjJ1FQCC2YVksNH1IPCSq8jH1lYx4YXiQJ4AJIEDcCmfON
+         Fv/lGfOCe+HI3wqusDJ9Dc/NFXvYexgUYGy1whARxiB6Lh6t/ln+GO4ukWS59ZghUo6c
+         fZZO5gnFL7XagqPJHgHbN7S6xZYjBZxV7rzRUcDkXOt1WwnvoiclcDvWz9xL8Ld01Nre
+         YO8mNIIeLh9B+s0RzzZbG3PNLdZvLzkADrseTPhTas/rtJLZ/DzMXaFzqHyUwH+F1OSP
+         X5hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793125732; x=1793730532;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=BLfFNn1Qcpgkc/CE+gfkXeaI8Qpi2GlNUfZr/MSyrCY=;
-        b=AYXYUJnCgPzL5fwATcySi7h/yQW/humry1SigXZqxQlo6T6TJ5KnZsWiUaM8HruEUE
-         5gKRSHINrfoYTi9lEf0kSKr4z0SBBL4ceKgltOPP5jpvXJXdig/GQJj4FhLgLPSFrJaj
-         uAZut86GkHnKpi5+QKoTtYUJuYYyL7NIQcKJ6aJaO+QrBTgoMBx+ayqFb/5E1hk81APo
-         kUOLzCSML3DplTojQemgPPvr3KK5qKA1/nDAKoydLq41IwZyX0oHIqCxqBcTJJ7jP2HU
-         1a+UwH9NOER7uLC7pO2ilRVwZHMzTEIVZ/IaK98B3G1AEZmVyZ1zMhye5Rec2CuTJSJU
-         cuBQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwOb/gmhduq6n2zVfUETE6arrjfx57vOTuDUpVRNOAxjf+wnhd3IFWjs5OmPQHsqhL+5qx7yweYmEs=@vger.kernel.org
-X-Gm-Message-State: AFq9FYKE6y2Ecd4sbZIpSmO0TATClJ8dzPf/9tulG7Obsw7ZfMChwwRp
-	CglTrJ+t4CPS45OnbTjGliXOn7F6HZjE/EH9AmB7WlKaMhuT1wo+l3R0
-X-Gm-Gg: AYBFou3yVExXy4aqPskA4waC43mxdcmmWhFX7rJvJQL/NJc9eKifG3y2ZUrR/p8GOq3
-	uajgFOn/ooP1ejtOgxO9z4aIE89Lcf5gbzR/SesCV+tec6tv5nDzzjQefWPd3hXw/EzWPPZcBsj
-	sITwnv1hCQufjejfQjxMS5sh2gRiWYYQKgwgp2sbS3jq8h9zq0O/BvTM7ayiLGldEMOCksN8dZ9
-	mh0MLzISJFeGsDRYI7CALWmR02NqA49GY6ZlvCXc2Npoe1AIxBybr0oMpM6zAKMFUSV6YyRkz6D
-	Cf3OQTYMvld5ewDMPm0zPibpuU4Nqux7vg2L2TaGWJYfxzKB7DUWbDnM16nvEngSRm5PDihu+s+
-	R3dJZ8xzgSlcDsHLTeBDBRdJX0IgQnL6tBdfcqK3Gz8uYjOCf/YTr5SXSLMJSnHzloGhe0h8YY2
-	Ey7snm8wsQ4+rNl4AI73Yw5uS0E3nIHvuPdbJLAbOZotZDfXf0lUXxhHyCe/bcrCcU9szRH7RR0
-	5DlVeOtyTr6RgiJGfXUvJbY+b0ExTOQBEWYp0lFPaGeyjhhExyUMlMPRBKxss5uFvJd3LTxa65Z
-	dT8jlAJ1+sw2z0tTNlbArNJoycMUdEDC1FDycvccmckcooAjCE3Lj3jyrs02BNs8VfY=
-X-Received: by 2002:a05:6000:26cc:b0:48d:ef0e:b791 with SMTP id ffacd0b85a97d-48e5d313b51mr689662f8f.54.1793125731380;
-        Tue, 27 Oct 2026 11:28:51 -0700 (PDT)
-Received: from [192.168.42.93] (193-154-207-67.adsl.highway.telekom.at. [193.154.207.67])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ecd3555sm23765915f8f.42.2026.10.27.11.28.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2026 11:28:50 -0700 (PDT)
-Message-ID: <60d0962f-8769-49e8-9674-48ec98278529@gmail.com>
-Date: Tue, 27 Oct 2026 19:28:49 +0100
+        d=1e100.net; s=20260707; t=1793126616; x=1793731416;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=9axz0yVX2giw2uFg+BgambTLl5XOFya7eXMeUfHcrMc=;
+        b=ULlIZ0I+/7x6uuXjSs+0bxPtgIl3lPpwcmCPDmgjwno3153H3RjBWWjhuotT30vemo
+         OYtGy7XKbPwA7g3uOAE5XoHodoPZRxhaZq4/rc/Q9/68nLm1jv2mQe+1cQVNrM9XdbTt
+         SDW7tfXQj5o0oyN1UGbS9k6pt48BFDX7WsEFHM4YwdX5yyNVOllLQktAJIzCl2nWv20/
+         owGGJSCauT7iZrQLv1Atj0WqX3DNymIZHCFodwVrepXeA/uWHjV5AIf/Nhv2JL8LoXON
+         pCQzZWUanI8Z/TupmkQDauNP368lPH23Fz6il50VVdeqXLYAMNvZfeUUvC5eunYgRCJK
+         GQFQ==
+X-Gm-Message-State: AFq9FYJy0y/44CAERuzvPkAym1InO4mr8rNi2jXAcls9jcaJqHm1VXoc
+	W4wMbjL1dAquEDuayNFlaOaA962Xld6xEorqaq9yhhJGW2oWcNSgjy0j
+X-Gm-Gg: AYBFou0d3utJ3qS8ABu1PMPvCneCQJFd9g9Km7yo3mRLjd5XAylCNuQn3Pn6zljFsWZ
+	iAEyVdIJ80pHuZKAiV9erOwXlvTnXMDDT7c+lhqPC6Cu+KcNMtYIDR71V60sF9zkr3Nh9G/zBps
+	B9JCwScj7zf1GCzSywvyyAwyIgJ9I98RNbRmxpSwm3IfB07ZeIzh8oj/vm1jcsDeq88ftU8mDMU
+	JzhZULyOZCJWYagpPkjucII6URAvvYgXewGCUuyY1teGUq8y9DmFed6M18lJIIQXpJKoIbIgLNo
+	c3uixV7/YHRyTatu8H/tQK6lkGEEAepPFF3t/3IH1YlY0cAyWBw2RpLjvBgYaa5MS3womR/ygcS
+	S/IlWhuz6ypNN0hYh+ysAjZBIQx7EfcCiMMQr34kBPPDg1p6i3/DY/fBIV3+i+w+S2DWosqaEj2
+	QQ1H3SYv646k3YSzuz5nnwECapMyN+xYVHf7ShzeMBCO8oQgeizitd7nZOvh4oC7S5hWEoqcDGS
+	mzknXyvro4yrFo9ShPiiwQ/M6DfBs701jKorb/HO2Tygy77P9mgBmfu8q5l14gysrLeTJ2OMkDB
+	qCwmzPjIFR+YGKy46XDtQKIQqqv+YcLRtRQVbA1SnsMo4eN/jnRzVqu9aFxGN4vRF2P0uBtEm6x
+	WXHkli7FXZFaeo8THVABbhfu1meKC7/CZHcyOnshiQyyanp3Cmj/Eqw58M+odkhqq0hftpJ7BPP
+	lio+dP
+X-Received: by 2002:a05:6830:2b2a:b0:829:9992:20e7 with SMTP id 46e09a7af769-85ab88cd029mr404051a34.30.1793126615647;
+        Tue, 27 Oct 2026 11:43:35 -0700 (PDT)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-850fb074fb6sm12488338a34.12.2026.10.27.11.43.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 11:43:35 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH v3 0/2] dmaengine: share virt-dma synchronization and use
+ it for UART APDMA
+Date: Tue, 27 Oct 2026 12:22:25 -0600
+Message-Id: <20261027-submit-mtk-uart-dma-synchronize-v1-v3-0-aad7a6b3c62e@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -92,87 +93,112 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: pl08x: mark slave channels as DMA_PRIVATE
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20261027070037.1809112-1-andi.platschek@gmail.com>
- <auC3nGX0hA494DZL@SMW015318>
-Content-Language: en-US
-From: Andreas Gabriel-Platschek <andi.platschek@gmail.com>
-In-Reply-To: <auC3nGX0hA494DZL@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/5XOTRLCIAwF4Ks4rI0WWm3HlfdwXFAIbVSoA7Tjz
+ /Tugm5c6vJlki/vyQJ6wsB2iyfzOFGgwaVQLhdM9dJ1CKRTZqIQW14IDmFsLUWw8Qyj9BG0lRD
+ uTvV+cPRAmDjwTaOasijbTV2xBF09Grq9nxyOn5yUE6qY5bzRyoDQepmYPEomuo4crj93aaOnE
+ Ad/f/eceJb+qpRbQWXqmjfKoKn4vrOSLis1WJYrTeKbFD+RIpFGSzQFCtR6+03O8/wC5PmkD1s
+ BAAA=
+X-Change-ID: 20261021-submit-mtk-uart-dma-synchronize-v1-158c8303b574
+To: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>, 
+ Frank Li <Frank.Li@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Basavaraj Natikar <Basavaraj.Natikar@amd.com>, 
+ Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ Lars-Peter Clausen <lars@metafoo.de>, 
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Zhou Wang <wangzhou1@hisilicon.com>, Longfang Liu <liulongfang@huawei.com>, 
+ Andy Shevchenko <andy@kernel.org>, Keguang Zhang <keguang.zhang@gmail.com>, 
+ Binbin Zhou <zhoubinbin@loongson.cn>, 
+ Taichi Sugaya <sugaya.taichi@socionext.com>, 
+ Takao Orito <orito.takao@socionext.com>, 
+ =?utf-8?q?Am=C3=A9lie_Delaunay?= <amelie.delaunay@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Laxman Dewangan <ldewangan@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>, 
+ Thierry Reding <thierry.reding@kernel.org>, 
+ Vignesh Raghavendra <vigneshr@ti.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>
+Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-rpi-kernel@lists.infradead.org, imx@lists.linux.dev, 
+ linux-mips@vger.kernel.org, linux-tegra@vger.kernel.org, 
+ James Hilliard <james.hilliard1@gmail.com>, Frank Li <Frank.li@oss.nxp.com>
+X-Mailer: b4 0.15.2
 
+Provide a virt-dma synchronization helper with the DMAengine callback
+signature and use it in drivers whose synchronization callbacks only
+convert the channel and call vchan_synchronize().
 
-On 10/27/26 3:39 PM, Frank Li wrote:
-> On Tue, Oct 27, 2026 at 08:00:37AM +0100, Andreas Gabriel-Platschek wrote:
->> [You don't often get email from andi.platschek@gmail.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>
->> The pl08x slave engine channels are only ever handed out through
->> explicit requests: DT clients go via pl08x_of_xlate() and the
->> platform-data path uses dma_request_channel() with a filter, both of
->> which end up in dma_get_slave_channel(). They are not meant to be
->> published in the general-purpose channel table.
->>
->> Mark the slave device with DMA_PRIVATE at probe time so the dmaengine
->> core treats it as always-private. Without this, if a dmaengine client
->> is already active when the device is registered,
->> dma_async_device_register() takes a reference on every channel,
-> Code change is okay. Are you sure the above description correct? where
-> code set it active when dma_async_device_register().
->
-> Frank
+Use the shared callback for MediaTek UART APDMA so clients can wait for
+completion callbacks before reusing callback state or freeing DMA
+buffers. The shared helper and existing-driver conversions form the
+preparatory patch, followed by the UART APDMA fix.
 
-I do think so, because
+Assisted-by: Codex:gpt-6-astra
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 
-async_damengine_get() -> dmaengine_get() is called from 
-crypto/async_tx/async_tx.c and increments the dmaengine_ref_count.
-This way the dmaengine_ref_count is already >=1 before the pl08x 
-dmaengine probes.
+Changes in v3:
+- Split the shared helper and existing-driver conversions into a separate
+  preparatory patch, leaving the UART APDMA callback assignment in the
+  second patch, as requested by Frank Li [1].
+- Replace 26 equivalent driver-local synchronization wrappers with the
+  shared helper in the preparatory patch.
+- Link to v2: https://patch.msgid.link/20261022-submit-mtk-uart-dma-synchronize-v1-v2-1-fdaef0e2edd6@gmail.com
 
-dma_async_device_register() (in dmaengine.c) iterates over the channels 
-inside of the following conditional:
+Changes in v2:
+- Add a documented vchan_dma_synchronize(struct dma_chan *) helper in
+  virt-dma.h and use it directly as the UART APDMA device_synchronize
+  callback, following Frank Li's review [0].
+- Link to v1: https://patch.msgid.link/20261021-submit-mtk-uart-dma-synchronize-v1-v1-1-4f7718cfef41@gmail.com
 
-  if (dmaengine_ref_count && !dma_has_cap(DMA_PRIVATE, device->cap_mask))
+[0] https://lore.kernel.org/r/atoz6M7RHU14_a3J@SMW015318/
+[1] https://lore.kernel.org/r/auDOqLln9_ra__hY@lizhi-Precision-Tower-5810/
 
-and in there a dma_chan_get() is called for each channel and increments 
-the client_count. With a client_count  >=1 we fail once 
-pl08x_of_xlate()->dma_get_slave_channel() is called.
+---
+James Hilliard (2):
+      dmaengine: virt-dma: share the DMAengine synchronization callback
+      dmaengine: mediatek: uart: synchronize completion callbacks
 
-setting DMA_PRIVATE prevents the client_count from being incremented by 
-the core, keeping the client_count at 0 until a real client requests one
+ drivers/dma/amba-pl08x.c                       | 11 ++---------
+ drivers/dma/amd/ptdma/ptdma-dmaengine.c        |  9 +--------
+ drivers/dma/arm-dma350.c                       |  9 +--------
+ drivers/dma/bcm2835-dma.c                      |  9 +--------
+ drivers/dma/dma-axi-dmac.c                     |  9 +--------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |  9 +--------
+ drivers/dma/fsl-edma-main.c                    |  9 +--------
+ drivers/dma/fsl-qdma.c                         |  9 +--------
+ drivers/dma/hisi_dma.c                         |  9 +--------
+ drivers/dma/hsu/hsu.c                          |  9 +--------
+ drivers/dma/idma64.c                           |  9 +--------
+ drivers/dma/img-mdc-dma.c                      |  9 +--------
+ drivers/dma/k3dma.c                            |  9 +--------
+ drivers/dma/loongson/loongson1-apb-dma.c       |  7 +------
+ drivers/dma/loongson/loongson2-apb-cmc-dma.c   |  9 +--------
+ drivers/dma/loongson/loongson2-apb-dma.c       | 14 +-------------
+ drivers/dma/mediatek/mtk-uart-apdma.c          |  1 +
+ drivers/dma/milbeaut-hdmac.c                   |  7 +------
+ drivers/dma/milbeaut-xdmac.c                   |  7 +------
+ drivers/dma/stm32/stm32-dma.c                  |  9 +--------
+ drivers/dma/stm32/stm32-dma3.c                 |  9 +--------
+ drivers/dma/stm32/stm32-mdma.c                 |  9 +--------
+ drivers/dma/tegra210-adma.c                    |  9 +--------
+ drivers/dma/ti/edma.c                          | 11 ++---------
+ drivers/dma/ti/omap-dma.c                      |  9 +--------
+ drivers/dma/uniphier-mdmac.c                   |  7 +------
+ drivers/dma/uniphier-xdmac.c                   |  7 +------
+ drivers/dma/virt-dma.h                         | 15 +++++++++++++++
+ 28 files changed, 44 insertions(+), 205 deletions(-)
+---
+base-commit: 93f51579e7df248780214094418f205253383cc5
+change-id: 20261021-submit-mtk-uart-dma-synchronize-v1-158c8303b574
 
-hope that makes sense?
-best!
-Andi
->
->> and
->> the subsequent dma_get_slave_channel() from pl08x_of_xlate() fails
->> because the channel is no longer free (client_count != 0), leaving DT
->> slave clients unable to acquire channels.
->>
->> The memcpy engine stays public as it is intended to be shared through
->> the per-CPU channel table.
->>
->> Signed-off-by: Andreas Gabriel-Platschek <andi.platschek@gmail.com>
->> ---
->>   drivers/dma/amba-pl08x.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
->> index 543c2eb8cfa8..06881d3f29a9 100644
->> --- a/drivers/dma/amba-pl08x.c
->> +++ b/drivers/dma/amba-pl08x.c
->> @@ -2775,6 +2775,7 @@ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
->>                  pl08x->has_slave = true;
->>                  dma_cap_set(DMA_SLAVE, pl08x->slave.cap_mask);
->>                  dma_cap_set(DMA_CYCLIC, pl08x->slave.cap_mask);
->> +               dma_cap_set(DMA_PRIVATE, pl08x->slave.cap_mask);
->>                  pl08x->slave.dev = &adev->dev;
->>                  pl08x->slave.device_free_chan_resources =
->>                          pl08x_free_chan_resources;
->> --
->> 2.47.3
->>
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
+
