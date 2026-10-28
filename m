@@ -1,145 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793206240;
-	b=SIkKikJON1/Qzl3q0KqQsmoztTUazmvPUevtcTK8gD4sJOlanF5TMsCl5KMgt1haeU9Q
-	 WB5z/xSKXUEuVCBznQJkIoHKRSRX/Nw49HJ2u1jfZ/SKvX/IXdXIV7k6cZVcKpr/Aj3V8
-	 BqHc9ahH9pNC8bBRMIC7Qplznc9bO0JNK5x/X13AjGLPNqFkJOWZ5tTcJ2D+LVfv74QCK
-	 N88UhcC21Fc6LyhVqzN8QkXkMGLtE1bgtLt3dvZdBI2P0oSzBXKYCsx0GqEqDNZJkJ9O5
-	 qN7zReKNDfVsVK/YCWgYRNfxvLClxlcGAhxjDrbjirOMDAHJxZ4Qyny15ZK4p4ehx9A==
+	t=1793207020;
+	b=cZgwtMFTu0+FJkF31vuCl/3bewlQlvbsMQL4tGR09l1E5c+SLNoezR2xGFAFGbPRd2EJ
+	 7u3PwxjAxNxZEnjBBjbD38VuOkab8BbWtUtEBIDlKXqs5oCGW9u4peQCRkSb2Ec/NBBK1
+	 OAAhow/Y4S3tz7XFimjXk8tIiqHCvnJkeNQyGrtKJu4ljQlD069mzpPwPqpNlaohcnOD/
+	 N+4IWAIhmq0wpWee4jjFjrK7U/Bp3ebXsjPlkKyzQFhgeMkYE13qwmoxr2F8zuofg6qas
+	 NDM6AWkKwzbWl7wpmjyS0+pajz1vXOdtyOld+TTvTZymKHtwJoFoWsriPqTcvadissA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793206240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207020;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:X-Google-Original-Message-ID:Date:From:To:Cc:Subject:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=4bFPaFC4sn5I0ZmpvEnIMtoAAhYqi+gI/vKT8dEg8LI=;
-	b=LcPOMZeC+HL/NI/LRsqW6WZzxKhzllmIRLTm1LVOI+wErnciKvz20m3bGmc/rbjTTJSp
-	 HWlat7uzoxOQwKluY1gIRi22qE27BCWaK7qHbvypYOfkMB94SX2YIHkdaPXPHft/ssvvE
-	 558rJ4ESilo3E6SwHC0Ht6XJvZYMJhAYXe37/s7t2fF/ski6fyjNgN5ud3z86gat/DIAO
-	 z6r19/uhdy/52mC0ag7ejub1oVRCZfytDjzYK1k7L/HQde4MMDBl0xzBWv2uQ8p0DzL0K
-	 5fcbIHDGb9ERgT2xYILbepkDcSkyHr9BmwZMj81MbbPvBv4E4Es2Vn5L2IgMd9dMknA==
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
+	b=2EBKjczys4Nas8bGi9pObgs1Kn4FJEaaUoO/d8ZT4lD00qDyEJ1ZMQbnpB6XIf9jzUWF
+	 5REop5TsA5F4P7V/08FdvJOAYXKQeC2wSTt+RWJw0b0sTPLlZexWH5naX+8z0pzmJ/Acp
+	 vm1fpczGLzqsjrXBclEHGpXhSq5XsKiNwG2EF49/wsO8lYwrIYkvELpwuFk8Oh7l/tMed
+	 acQvAq32iCipj32lsBi5HzfRunzMwJKn6cBmLOqZazO5OR33X6vN3hhVcjaRcNvdTz7/0
+	 wKXH/k4DNJtzapSOVLO7TKDRrsgEG+/oZdR6elB4QqX1DgaSLFers3JfTof+ZFdZUYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bvVViE7s;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wh63upBh;
+	arc=none smtp.remote-ip=209.85.218.45
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39042606A326
-	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 16:50:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39042606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A787606A31A
+	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 17:03:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A787606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bvVViE7s
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a140e7405dso12730685e9.3
-        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 09:50:40 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wh63upBh
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so192381866b.3
+        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 10:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793206239; x=1793811039; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:subject:cc:to:from:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4bFPaFC4sn5I0ZmpvEnIMtoAAhYqi+gI/vKT8dEg8LI=;
-        b=bvVViE7sfBqKWfi/kLDJYlnvzOUXPLQxwi7WE8YcmF6ZlMSeeXt5LVtwTgYjpBwkt8
-         SYP3vMcQXr/owFcgMM1gE2QwZ/DTceP96Ogemeuc3wSVYptLjbh5WQ0zOa/QFUl5Bsyv
-         t91KeRJRSejTTfSC30ERKT+SYsNtmNlFP19tG7VGrb/Fyrtxkv8HCWTMM4co1xxufiUC
-         fsayYomNX2KXae5ip40Tnzxu0+b09pZZ8pnmB2UJbRFHhmlzRF7my1fWETNYJaMtDwI5
-         xLbeFqSzSFzkr23lLp9iNBgX8plx3P3KNsPgixIQp18S34Dqr3UjM2Pb0SImAbIC4Wby
-         52og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793206239; x=1793811039;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:subject:cc:to:from:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20260707; t=1793207017; x=1793811817; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4bFPaFC4sn5I0ZmpvEnIMtoAAhYqi+gI/vKT8dEg8LI=;
-        b=uqhYgpl/v9SO4BnxLpjiQHrVuMqOMTiowA+NGy15oLn4PLWMN+F4zlgnxrkQE4IpOC
-         vF/uUo1MJ3mxgIIVjJlvMrYU9WL4lEj+hFgcsQJhQw3UDm0k+omV0da1mZNRBfjF983P
-         HmUbyZg7Iw/vX8ReYzcMbVuCNlWPyQj5HSV2VhvcHRJ05Op/XCDvbVih6yOZhOD4p8d6
-         x4SoH/gb6F9zAzF7Vh3F9IAC4XbyPhnvogAu3IbjFqPRloJ0EYgsTCdTtcZt1SLRTUo3
-         oNYl4Y7XVO+bBXWRpvjTXmD2Nz3TRQMGJrqTXkrNYRV8scbFNrZxv5uTIPdkWGF4S/A1
-         w8SQ==
-X-Forwarded-Encrypted: i=1; AKwUvBw7sFjGEmGtpWnLqq65p4qQciQy4k75knT9qcDfHXqfafBI6+duAIgJqZT7AtZL3KcJITUEFBFYr6k=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIE3ox9nlBooXu2CPMpVwi18QJhI/h7Q4BXDp5qDVILytqBfvf0
-	wVZXCoVku0hoVNdB/cxWVWafey2qqW0X74H6wuIgGj00g1T1zn3Bxakw
-X-Gm-Gg: AYBFou01fpm57+ag93xi50Zd2h7mGjGBFsr1UcBR2uOwe4P2+UmSa4ZiWWgMwKd6vfj
-	MaDF9rSp1MDtkJndpErKPizhZPX703Q71dPcDLRWQfDqQar08vGLfJCwkA4Tu7TVuh4wYNw9M1p
-	Df10xncYrfH8bRNKbtoseMAXN9r549GG1Ot7ixwc8pQjzr5BpzOJlIWo49GkGkHvXoQu/WXSG6z
-	5QZIF6gy8SLemW8Zati6xWz6wyuqrMqTUBlNQsGSMBRhHODnZpxe8laFauGJiI0f+LI9VqkZqZl
-	9haYnraQv/f1PUWO3mI7pgkDxE04y/rCr7qkpSwQ5LR2EamVHjGNTtT6ZdhrVfMx1Ov0OWZD65+
-	UawgR5YvlLggjqriSVXRNz47uHsB6N/H8fHN2UIETT/CFwtbrJanA5Nr5pS69KUXThoqW5OevwV
-	5KKLW9XBP4R5v1WyLkQ6j7v0DBwbL/JDJMxkzVD40KpXlqhn5bbSNTs66Fz4u/euLP5FdGwCrh0
-	xRWWRu2+if+8S+RAhBpQlC+fyI+KEBZHFkoZswNTcheKlGDj38KmmkzEnGaMBv9DZ/CmbdsyuEe
-	Pxhjg2OhxQWOBqSvfoL1PIwQzKwRa9qbHVGl9GVkISGXDZt7IIdoEMef7GljV/sAX+x1TkqUbQ4
-	ZAK/gL+sauNoejZoY
-X-Received: by 2002:a05:600c:630e:b0:4a6:7d6:821f with SMTP id 5b1f17b1804b1-4a9678bff9cmr62960175e9.29.1793206238343;
-        Wed, 28 Oct 2026 09:50:38 -0700 (PDT)
-Received: from Ansuel-XPS. (93-34-92-187.ip49.fastwebnet.it. [93.34.92.187])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ebc4d76sm29895785f8f.12.2026.10.28.09.50.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 09:50:37 -0700 (PDT)
-Message-ID: <6ae227dd.6c7231db.220083.ae75@mx.google.com>
-X-Google-Original-Message-ID: <auIn2SfzeFL2CJn-@Ansuel-XPS.>
-Date: Wed, 28 Oct 2026 17:50:33 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Yinbo Zhu <zhuyinbo@loongson.cn>, Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Tiffany Lin <tiffany.lin@mediatek.com>,
-	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Eric Anholt <eric@anholt.net>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Peng Fan <peng.fan@nxp.com>,
-	Aakarsh Jain <aakarsh.jain@samsung.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	freedreno@lists.freedesktop.org, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: Fix property name typos in if/then schemas
-References: <20261028120216.2657397-1-robh@kernel.org>
+        bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
+        b=Wh63upBhKqln1Dt0rWPscluGhXAz6aZc8Mlo6+SFGXkxnjnAB+dDcYrmn4lRueuAJz
+         QgQXJ5TznTgLv696roqARD6qiqrA9WOvsRldSZ1Nl8K3vW7z9nVrd+vg9J5d8I8NX5De
+         LlzM0Jzk9R+NDW9gEs1pqwPpMw7RmJmK0rbYrpjAhUWwghUEbbUvY9LeBmfEVUeqwiTX
+         4i/NAPLA66XFMzLOs8cph87ZNs65VLLFZfXaFQyy5O5vvJItM/+dfcmgFDRsryQmkPh9
+         SdrPkNM7z+/o3nlE8wfm+G9JVu9Wste7YWFinxPsXiDrPO4RCJTKkoT/kEWixB/TMUjM
+         IddA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793207017; x=1793811817;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
+        b=T7BxMRaBjtLPtbInSClF9ediT0FfiDiS11AbRZWHzkWpUziMpPp6Ad6uTNPKFzH/l6
+         aLga5/AND6Xm7+lKpU9KS0qqX2ie98akpxm5ESEDoFwTjoiASAvD6iSog7jHc0TFqLIU
+         ABzSxjSt7GVSV/sZlEIXymSj1tbTL+O/ou6/B0IslXNtm139+Cdh7Bqs6CYRT+Cbd3xZ
+         5gQIaUKcbQgTc1oiaKMh6Me8D33qqRAYXZxt376vjep3IG9w8a+QsoedoHVRKbCzswbD
+         hlJQQUhoNDpkTUgHorN40zR35BnsqxIb6rLz7qaV+iNjRR/9SF/00d3nvnSXBW2cZW3G
+         uMrw==
+X-Forwarded-Encrypted: i=1; AKwUvBylIjBNdwguyFSiR7zNgIPySm1XxIcF+03NVZVK8xyU5qM5pVhKdxqIVfurtWGd1UBI3gXR6EH3IkA=@vger.kernel.org
+X-Gm-Message-State: AFq9FYIOKkjCJiQDOx1w8A7Mg5ngiFhSkGQr/wMWuL2nEqKl7u4MCQBB
+	c7nviaVPXH8TRyGuyqJObTAINa+WPKYzpOWWGQHohokYdMSNn2Hhp7pVuRdjVTvC
+X-Gm-Gg: AYBFou3LmMmhkDHALtY4ByAbUsYZXuC83edIVaEtxjaxt3tTfQ+4Wkx7CopMFWxpi/J
+	NcDcvWk1O13yxWt9j27Vt0i1yI09thcqtwUR4SiWlpmx3iXneBigsQ0KA5bXRGp9baXtpm7xjcF
+	4C88hkxPuVDckYGszMnHkn2i/6x2B1SSZ9NW34Q6MqYNrCUT4sDNUULI/EiJGncmR1b5kjwQrrF
+	9EbH3ggK9wfxd/X7CF2YYky7NsnmkMyO8HH8fraPVM8PgIPzBJJjSl59Nr9DvdwDRMO+YQZRUMi
+	vdGhLZsWlDCmtGzlFiTq+9KTqHYQYFmnF6Y6DoU1k9XfigJF/oVNMqljNbkeo9zo1UbV2kFxzAq
+	eO6HEcwVPyTlpmcF9yHWrpxXJuJMLcUbUJ+xMZCDwWQ2MN2kRd9jl63gO75C7VA3TRq3P0RE7nC
+	1Z+pBXFqgw+MVftLGeU0vxP6ZtcQcp17PDGouyGtUQPpwvGj5dJTVPu0n2IE3b6FoOK4EE6p5O3
+	+fN+kyfofpZumiH/LcpFw2/Ti4DaCk3zdaWGIZBrrlBWj4rAfjLYff/RuRG/6XUjVH+7acivFaN
+	XJNIxiS8faZ3msPrSXdBYqueOtXKgjGPdqV4KVYcEg==
+X-Received: by 2002:a17:907:fd18:b0:c29:659e:2fd6 with SMTP id a640c23a62f3a-c49bdf2ba80mr270930466b.10.1793207017356;
+        Wed, 28 Oct 2026 10:03:37 -0700 (PDT)
+Received: from [192.168.0.24] ([195.136.82.49])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd77e1e9sm635884766b.67.2026.10.28.10.03.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Oct 2026 10:03:36 -0700 (PDT)
+Message-ID: <af0c6729-6859-40e7-bb55-33fe67fb5c1a@gmail.com>
+Date: Wed, 28 Oct 2026 18:03:33 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -149,24 +92,100 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261028120216.2657397-1-robh@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: pl330: drop only the runtime PM reference a
+ channel holds
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+References: <20261028-pl330-runtime-pm-v1-1-f0fb5c34a7c4@gmail.com>
+ <auIIIC6ATpcJgDTM@SMW015318>
+Content-Language: en-US
+From: =?UTF-8?Q?Krzysztof_Soko=C5=82owski?= <krzysiek.sokolowski@gmail.com>
+In-Reply-To: <auIIIC6ATpcJgDTM@SMW015318>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Oct 28, 2026 at 07:02:12AM -0500, Rob Herring (Arm) wrote:
-> Property names within if/then schemas currently go unchecked whether
-> they have a type defined or match what's in the top-level schema. Adding
-> a check finds a number of instances of typos. The typos result in the
-> schema having no effect on constraints.
-> 
-> With this, fix the mediatek,vcodec-encoder 'clocks' count constraint
-> exposed by the name correction.
-> 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-For KPSS:
+W dniu 28.10.2026 o 15:35, Frank Li pisze:
+> On Wed, Oct 28, 2026 at 12:28:11PM +0100, Krzysztof Sokołowski via B4 Relay wrote:
+>> [You don't often get email from devnull+krzysiek.sokolowski.gmail.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>
+>> From: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
+>>
+>> pl330_tasklet() drops a runtime PM reference when the channel's work
+>> list is empty, without checking that the channel still holds one.
+>> pl330_terminate_all() drops that reference too (power_down =
+>> pch->active) and clears pch->active. If a completion schedules the
+>> tasklet and a client terminates the channel before the tasklet runs, the
+>> tasklet finds an empty work list and drops the reference a second time:
+>>
+>>    Runtime PM usage count underflow!
+>>
+>> after which the controller can be runtime suspended while still in use.
+>>
+>> Seen on an RK3128 board (dw_mmc using the PL330 for SD transfers) under
+>> combined SD and USB load, where the dw_mmc error path terminates the
+>> channel; the underflow was followed by "pl330_update:1678 Unexpected!"
+>> and a failure to request the DMA channel again.
+>>
+>> Take power_down from pch->active in the tasklet, as pl330_terminate_all()
+>> does, so the reference taken in pl330_issue_pending() is dropped once.
+>>
+>> Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
+>> ---
+> The same patch at
+> https://patchwork.kernel.org/project/linux-dmaengine/patch/20261015-review-pl330-pm-original-v3-v3-1-5be09f37df77@crepuse.com/
+>
+> Frank
+>>   drivers/dma/pl330.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+>> index c2d0b47..b0eced8 100644
+>> --- a/drivers/dma/pl330.c
+>> +++ b/drivers/dma/pl330.c
+>> @@ -2090,7 +2090,12 @@ static void pl330_tasklet(struct tasklet_struct *t)
+>>                  spin_lock(&pch->thread->dmac->lock);
+>>                  _stop(pch->thread);
+>>                  spin_unlock(&pch->thread->dmac->lock);
+>> -               power_down = true;
+>> +               /*
+>> +                * Drop the runtime PM reference only if this channel still
+>> +                * holds it: pl330_terminate_all() may already have dropped it
+>> +                * while this tasklet was scheduled.
+>> +                */
+>> +               power_down = pch->active;
+>>                  pch->active = false;
+>>          } else {
+>>                  /* Make sure the PL330 Channel thread is active */
+>>
+>> ---
+>> base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
+>> change-id: 20261028-pl330-runtime-pm-b5a30050b2f5
+>>
+>> Best regards,
+>> --
+>> Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
+>>
+>>
+Hello.
 
-Reviewed-by: Christian Marangi <ansuelsmth@gmail.com>
+It is very interesting, but I have it for last month only in my private 
+repo, that has now public facing side to upstream fixes I have made .
 
--- 
-	Ansuel
+My public repo: https://github.com/ksokolowski/rocknix-distribution/
+
+Set of patches including this one are here:
+
+https://github.com/ksokolowski/rocknix-distribution/commit/dd3923788d94588b8d5fdb602808b13370ab4208#diff-27b400675ba20f118e98f9a25b963ece2a2336d9ef1fc9416c273f507e24c271
+
+Anyway, I can confirm it works fine on real hardware for last month. So 
+you can drop my patch and merge previous one as tested and confirmed to 
+work.
+
+Krzysztof
+
