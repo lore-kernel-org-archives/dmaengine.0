@@ -1,98 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.169
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793230701;
-	b=PdlNM4nBolU/BYvQPkRA1SQzjmQKtnVGYgYPirxYx3GdNvvOXzXle+ccCxyijodCdq1l
-	 eBoLdfyfVyP7zFtNN6EhCa6yGk/V6W5nwITDi7nUmMlzYDemExCtoaAoHfl7b+CaZWCHB
-	 cERhNKikVwuKhtjh4drIgIo7KM0rM+ysT1pGCDYbk8fq7lV1EM0lsxq09JXWLg1mdvATU
-	 sMAOnwBifi8YVVqQKKUBVKuimQdzPT3OdvtrL5TdZW7i6Bzf1QYRYT7+qlmvPkUro+Vun
-	 oc0wDGQ8dIQxLEhZgkUzifFZ7iPOyU51II2GwXMUvde7PPVlvBCSP+VMCnJyU8j6C9A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793230701;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=BwnJftUwj+AATA9qklYrAxD78ahkF2IuNib+vGAuNWk=;
-	b=cOwSBbbXw1YUP7gftf/8uqazbYSWe/fvsgNdLi1yPcEUxYhc+LSgBH4ijk+n73FynOfZ
-	 MZGneyCre58we6D4VM2OX8nU70YYM5JIjFXr/gfDhOew0Xk23NVlx3kYJDVank78r3TbW
-	 phDc423YRidG5OAMLqH4854EVqRw8JA6dzWtZGt9j82LB4d6mV1dJrM91ja1EB3Lex+d1
-	 eigIfDQ2fbRLyFsxzg5RXWmrSjH4TD98rSKS8Li/PM1zsbTd0VKOBV7pyvhv+K53gkYNJ
-	 7e69N6vgbWqRko1HkD5jXue3dlizOwgkfZPLcfXAKCpCg6Vdjt1Jv05cwnPuU0PLvow==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nullptr.com;
-	spf=pass smtp.mailfrom=nullptr.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.169
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793231232;
+	b=2PYZCg3mThLzezw1w8n3cKmfiXois7312sqxBrg6f75mQfDuzrQrbW/WZs7xuOcOUmc3
+	 rbvAyYsmgAxwb1liL0ds61kEzS0psOySjwAOK7dXCejsRXeZKbI9hw8qfkCSpGbJGl56c
+	 ZzliyZUGe4HuKOTQJu0idfUKx4qe7qVKIb9xhmoceGfN2sArbnVHqK/zEO/p+T21gKS1B
+	 SSOy32jI7FqP7nnvp7hFQC42b0O85ETPRx+PmLrdYsy8Rppmd4YAimx363Lpmsjqq2oTI
+	 gChxwBW+3ztxI7apDI31m2qn6BEoF4vOhCmCo2980ad7MfUvrudDgMzVPSpVvbIvFQA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793231232;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=neOivWsfnHbQR3N6AKh/3PoW3tIDMGi3k5qezfAAwY4=;
+	b=vbXkEV5Z5oBXMuPtH9KWc+F9vfTYPbVbrN5cEmremTKv0nHnm/7UM5fOrG9FrE/7JFUE
+	 ad/hpOcLIMtiGa8hw6thvz2TRO/TXIiLOQfSwYLm9b9ndsVh15iGYoACBqO1XTrnPy3g6
+	 QQ4S6jMU/Jj30PM5Wy4gVa5Q8w77jxf65ZhZ5aszGbjwECpywmB3psanHfgmuYMYLiy8v
+	 Uj51XEXBrGg6jmoheaGi51m/TnS2gMoZaCVLVsS7d2QJRAMyo2uISZcXupc8b4CenzMgk
+	 pW4XOb1uaxmdhfCTk+gJ42vG2R7sD1EKqH5oXwE9YZCBZdRyrmS7wx9X5XvRmlInZIQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="f/4cLrJ4";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C785606A31C
-	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 23:38:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C785606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nullptr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nullptr.com
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-8b10d24345dso15191127b3.3
-        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 16:38:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793230691; cv=none;
-        d=google.com; s=arc-20260327;
-        b=K53+150rSRnJYgYbv5IUVuel+Y952Ts9N8gUUufaZcbigWjLidl0wVaM/m2sEHtc5i
-         LDB0pzB31mxOT12njQ50mqlDfXjwU+gtex/R4YBwngf88Ta9866gyxR1LqHHimQqAQ2Q
-         3FpLXmYu9XTS1nKLrChp5JyEsP+bxOvkRp2TqQxx4N0MBo94hcQLbE21ad5H659jYkdp
-         CyBl57kbUkMGx0hKo+prm45j8WFON/u2Jr8iqjvKn3ss1OK/kWTXcJXd1Aup6vM8g1pc
-         JX944pB2Df+xQ6MGabIsT+m+uMvrb9XdDzDIj6L3wnMRH2YKdC2o7uhd6Lii6cvvMGt7
-         CuXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BwnJftUwj+AATA9qklYrAxD78ahkF2IuNib+vGAuNWk=;
-        fh=obdFqePYz6SyQSANaHWJrZm1BoLZWyUzOVNhOymkmAc=;
-        b=AP61iFCPPN1xerMcebgiFcAVNJdtTktVtm5d0s3H1VhowT0lwQMAA8mfKOjkLu72Tl
-         wvlD3ns5VyDnKdL4CdTihHeweTDpfdZYPwjWV7QFEZDuwl5+4B7XgedPz6Gv2wQR4hsF
-         mMk2O/PLGbp9gs2pZscgg5ppMqzTxOhUvs+s6eay8p6S/mAa6TU3bi+wyon2Iu24/lW1
-         AtOj6UbCXDm2ggAk2a4yzHHdKkpzfpJRtGdbSkbV12u+LZlTLpogsCQM7MbaRyI7msKq
-         8jZtmtOYyCRnpofvWrFNN6k+9zR892OFOpCs1FsZYKU6Q66oveAWuTl3tFwo9SmsGoQE
-         CuFQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nullptr.com; s=google; t=1793230691; x=1793835491; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BwnJftUwj+AATA9qklYrAxD78ahkF2IuNib+vGAuNWk=;
-        b=EybuO5PsCdtZBlXFtNBHcCMOqDiSJOQzE2/e1eChgMMX/p4gC2s5ERF/SekqQcwU5L
-         8MMrtOnx6JSto1t4eCs748AzQuyxhXk8Hyb88kcp/ZOqiC6IZAClqDr+aZUuTyYmBpIK
-         +BqhUm/rE5atw0n9GMRFHQBEeK4PSSUg9FQ8EgAIfJZ/DKnu5+faT4XO/j8ZC1Jrv+cs
-         05xFinPkiI0uY0HNn19PXHVVv8C/b28LU2X0T6OwtYtai1zrsLX351sdJtoFYEs2cS9m
-         3WKqyoXpz6dSRoGXWuSX9yJ3Xk1gDi43U41lPFA4osGc8Yfz1zmczSbmnPy+bWot3VTt
-         iWFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793230691; x=1793835491;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BwnJftUwj+AATA9qklYrAxD78ahkF2IuNib+vGAuNWk=;
-        b=YTfqD+XyLxUR7lh1YTMAyvToUP5MBJJvBB+le8/pP0Xq4sXZvVOX6+CtGrGHoO5SaB
-         426wCEGRkDOvURxpsu+WIZJFhnpJNhvv+RJdgMdRW+DP9UqOmuI1iVEP4HnFVEMtImyj
-         De3VuuLYsJIEY43sjBa8ftsOhOy093DJFvH7DrWfKqDHocqvd734ODSbmauVPrtBzxLP
-         4lQIDYJKivZkCmFdEg5v2Re9sEWEuizuUf7K8XJXiL8ny91GsptlWCNrEisfydqCju2d
-         t/EBtzLMXAAJJaR+HNzOckdr5gRzk2xQCEQUNLfC0YYrxHKcXg96CF7Nhk+1kXn5o+3w
-         Hpwg==
-X-Forwarded-Encrypted: i=1; AKwUvBxDCtxvbqk6UkJupAJP5oogzepgq6Z0IUShwnasrp1atpnZB2I8V+Mmens2M2YNTnvogyCtZyBaYWU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYI66OrlovPCfq4YK1YiT8HUBSkp4aUEFYZfEzI5HbDgYVKhLyw4
-	7b/wK4eufF9/2p4GRGzDUdXOt3ihyfRs3RTUonrot1yY1vnlF8aPwk4pvKTDRj7rz9QNnRSQ/lP
-	IdFneaTCqPwIRjnwO4xMige6Zav0gmG0TnKG5bGgbCA==
-X-Gm-Gg: AYBFou3Z75y7uAlkrLNyfGB/embbWN5FEPcoCZsIr08EFqYM8iKOk5lTBSo5CceCYH0
-	XHeIwBL00nTuIlLwhbdkSc3dfmrphLBx5Mnikgz/79NqDebM6xDLzKF0Nbczes7k0+/x9hQtesD
-	Nw5GJAHukjoPNfvEcagT2uKCc/ryg7g6JIkh1vTmNINDdThLLFjPJqD4wdjxeUgTwtwPnCOm/Tn
-	i7bzIC5YH21bYYiTKiZLCQQYQ+yQeZWWiof9CQ7D/SIcz8n9RMSS6EY1tYxYcff2T5K/rQgS4jV
-	Tala5WprhpwrJXoZ3gUi5q1IcK06W8/4nHF5Xh4XGZKtUzegcHivl7uhgGxxT53F9NHr72cokOw
-	p/s/fyAR0UAELhFJOJz/QSFrpHjXHgIWcPtVOy6u6XRJGdNzXjM6j4z5IU2jkI08oExbWYz7eKz
-	LcZy7IbNWjrVE3+2hd6hBTMtHfbMTXOQA21gf9GUkA0S5hxARHJ1MNz/U=
-X-Received: by 2002:a05:690c:38b:b0:8ab:37e5:6678 with SMTP id
- 00721157ae682-8b1b5d394a6mr28742787b3.44.1793230691387; Wed, 28 Oct 2026
- 16:38:11 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746DF606A31A;
+	Wed, 28 Oct 2026 23:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=f/4cLrJ4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF611F01825;
+	Wed, 28 Oct 2026 23:46:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793231232;
+	bh=neOivWsfnHbQR3N6AKh/3PoW3tIDMGi3k5qezfAAwY4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=f/4cLrJ4TGztgvmr14VBy6t7mBV8AM+uDlLfYVyShzm7APQvQBIiI0EDLgRGe0v7z
+	 LrPP1CYrALPm5Q04g1ErXIwYEqxpncy7n/vcasP5VS7fxapXxWQMRvQ3eLtXYsxC4u
+	 pO80RH6CgwyVic6xTA3E8YyB/WqO22L05DI08uL25eIqchvragaWR3rowAwilUDAAt
+	 Xh6oVb4uczfsq1lW3toZ9+v63X4qnWgC+a2EdGz7QxrKclbDs6hRlAucgG9mlmv1zz
+	 0pRXR0bqvqejkSM04r2n2wZ9K5nHoWUM+gUptsMAuOcN5EfgGaQV+XNpzRAcoIe2zH
+	 rDwATDPNl5e/Q==
+Date: Wed, 28 Oct 2026 23:46:52 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+ Brian Masney <bmasney+clk@redhat.com>, Jerome Brunet
+ <jbrunet+clk@baylibre.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
+ Dooley <conor+dt@kernel.org>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Florian Fainelli
+ <florian.fainelli@broadcom.com>, Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Rob Clark
+ <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
+ <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>, Frank Li <Frank.Li@nxp.com>, Vinod Koul
+ <vkoul@kernel.org>, Yinbo Zhu <zhuyinbo@loongson.cn>, Linus Walleij
+ <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, David Lechner
+ <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, Tiffany Lin
+ <tiffany.lin@mediatek.com>, Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+ Yunfei Dong <yunfei.dong@mediatek.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Andrzej
+ Hajda <andrzej.hajda@intel.com>, Ryder Lee <ryder.lee@mediatek.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?UTF-8?B?V2lsY3p5?=
+ =?UTF-8?B?xYRza2k=?= <kwilczynski@kernel.org>, Manivannan Sadhasivam
+ <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Matthias Brugger
+ <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, Christian Marangi
+ <ansuelsmth@gmail.com>, Eric Anholt <eric@anholt.net>, Kuogee Hsieh
+ <quic_khsieh@quicinc.com>, Peng Fan <peng.fan@nxp.com>, Aakarsh Jain
+ <aakarsh.jain@samsung.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linux-rpi-kernel@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org,
+ imx@lists.linux.dev, dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH] dt-bindings: Fix property name typos in if/then schemas
+Message-ID: <20261028234652.0d075035@jic23-hlaptop>
+In-Reply-To: <20261028120216.2657397-1-robh@kernel.org>
+References: <20261028120216.2657397-1-robh@kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -102,72 +96,236 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com>
- <20261022-xilinx-dma-work-v1-4-20faea2e7a80@nullptr.com> <auD5_fHykXpkQ8ns@lizhi-Precision-Tower-5810>
- <CAHnw2UkB_KTh3c816SUUgaH=SenFKOpYwvaMvowzi-O5oFmCyg@mail.gmail.com> <auIR2GFWZHUP5vzs@SMW015318>
-In-Reply-To: <auIR2GFWZHUP5vzs@SMW015318>
-From: "Jeff C. Jensen" <kernel@nullptr.com>
-Date: Wed, 28 Oct 2026 16:38:00 -0700
-X-Gm-Features: AclHuK-LKjsKCaobPjRchQyPcT15lMhGBWVE2x98cOvF9GEVC10J-zU2k9Et8_w
-Message-ID: <CAHnw2UkoFcTHs7nXBBFVEZpyf8BCTs9tpkSmj5RXCsSoaQmK4w@mail.gmail.com>
-Subject: Re: [PATCH 4/5] dmaengine: xilinx_dma: Withhold an AXI DMA engine
- whose reset did not complete
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org, 
-	Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>, 
-	Suraj Gupta <suraj.gupta2@amd.com>, Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>, 
-	Alex Bereza <alex@bereza.email>, Folker Schwesinger <dev@folker-schwesinger.de>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-That makes sense. Given the cause is likely a hardware fault, and
-that a timeout is generally a sufficient and common recovery, I'll
-drop patch 4 from the series in v2.
+On Wed, 28 Oct 2026 07:02:12 -0500
+"Rob Herring (Arm)" <robh@kernel.org> wrote:
 
-On Wed, Oct 28, 2026 at 8:16=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wro=
-te:
->
-> On Tue, Oct 27, 2026 at 01:36:27PM -0700, Jeff C. Jensen wrote:
-> > In theory. I haven't seen a reset time out on our hardware. Every faile=
-d
-> > reset in my testing was injected with fail_function, as the cover lette=
-r
-> > notes.
-> >
-> > PG021 describes the soft reset as graceful: "Pending commands/transfers
-> > are flushed or completed", and the Reset bit reads 1 while the reset is
-> > in progress. My reading is that a transfer that must complete needs the
-> > memory side to respond, so a stalled interconnect or memory port would
-> > keep the reset in progress. The driver already allows for that, since
-> > xilinx_dma_reset() polls the Reset bit with a timeout and returns an
-> > error. It just doesn't act on the error: xilinx_dma_terminate_all()
-> > frees the descriptors and returns 0 regardless, so if the engine is
-> > still fetching, the next transaction reuses segments the engine owns.
-> >
-> > Patch 4 may be more than this series should carry as a fix. One option
-> > is to drop it from the series and post it with patch 5 as a two-patch
-> > RFC, scoping failed resets out of this series.
->
-> Yes, reset timeout is most likely Triple fault. If timeout happen, most
-> likely hardware fault and can't recover at all.
->
-> We generally choose timeout value is much bigger than enough.
->
-> Frank
->
-> >
-> > -Jeff
-> >
-> > On Tue, Oct 27, 2026 at 12:22=E2=80=AFPM Frank Li <Frank.li@oss.nxp.com=
-> wrote:
-> > >
-> > > On Thu, Oct 22, 2026 at 03:11:33PM -0700, Jeff C. Jensen wrote:
-> > > > When xilinx_dma_chan_reset() times out, all the driver knows is tha=
-t it
-> > >
-> > > Does this real happen? or just in theory
-> > >
-> > > Frank
-> > >
+> Property names within if/then schemas currently go unchecked whether
+> they have a type defined or match what's in the top-level schema. Adding
+> a check finds a number of instances of typos. The typos result in the
+> schema having no effect on constraints.
+> 
+> With this, fix the mediatek,vcodec-encoder 'clocks' count constraint
+> exposed by the name correction.
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>  .../devicetree/bindings/clock/qcom,kpss-gcc.yaml     |  2 +-
+>  .../bindings/display/brcm,bcm2711-hdmi.yaml          |  2 +-
+>  .../bindings/display/msm/dp-controller.yaml          |  2 +-
+>  .../devicetree/bindings/display/msm/hdmi.yaml        |  4 ++--
+>  Documentation/devicetree/bindings/dma/fsl,edma.yaml  |  2 +-
+>  .../devicetree/bindings/gpio/loongson,ls-gpio.yaml   |  2 +-
+>  .../bindings/iio/adc/amlogic,meson-saradc.yaml       |  2 +-
+
+For IIO
+
+Acked-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+
+>  .../bindings/media/mediatek,vcodec-encoder.yaml      | 12 ++++--------
+>  .../devicetree/bindings/media/samsung,s5p-mfc.yaml   |  2 +-
+>  .../devicetree/bindings/pci/mediatek-pcie.yaml       | 12 ++++++------
+>  10 files changed, 19 insertions(+), 23 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
+> index 88b7672123a0..ed347096df46 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
+> @@ -62,7 +62,7 @@ then:
+>      - '#clock-cells'
+>  else:
+>    properties:
+> -    clock: false
+> +    clocks: false
+>      clock-names: false
+>      '#clock-cells': false
+>  
+> diff --git a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
+> index c1cefd547391..fd4d598f6ff8 100644
+> --- a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
+> +++ b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
+> @@ -145,7 +145,7 @@ allOf:
+>              - description: CEC stuck at low interrupt
+>              - description: Hotplug connected interrupt
+>              - description: Hotplug removed interrupt
+> -        interrupts-names:
+> +        interrupt-names:
+>            items:
+>              - const: cec-tx
+>              - const: cec-rx
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 094a6383bb77..f72d1b354007 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -304,7 +304,7 @@ allOf:
+>          clocks:
+>            minItems: 6
+>            maxItems: 6
+> -        clocks-names:
+> +        clock-names:
+>            minItems: 6
+>            maxItems: 6
+>  
+> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> index dfec6c3480f3..02d27ccad024 100644
+> --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+> @@ -113,7 +113,7 @@ allOf:
+>              - const: core
+>              - const: master_iface
+>              - const: slave_iface
+> -        core-vcc-supplies: false
+> +        core-vcc-supply: false
+>  
+>    - if:
+>        properties:
+> @@ -136,7 +136,7 @@ allOf:
+>              - const: core
+>              - const: alt_iface
+>              - const: extp
+> -        hdmi-mux-supplies: false
+> +        hdmi-mux-supply: false
+>  
+>    - if:
+>        properties:
+> diff --git a/Documentation/devicetree/bindings/dma/fsl,edma.yaml b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
+> index f609038e35ae..0260d177c7d0 100644
+> --- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
+> +++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
+> @@ -172,7 +172,7 @@ allOf:
+>              const: fsl,imx7ulp-edma
+>      then:
+>        properties:
+> -        clock:
+> +        clocks:
+>            minItems: 2
+>            maxItems: 2
+>          clock-names:
+> diff --git a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
+> index 69852444df23..07c8b233c6bd 100644
+> --- a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
+> +++ b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
+> @@ -80,7 +80,7 @@ allOf:
+>          - resets
+>      else:
+>        properties:
+> -        "#interrupts-cells": false
+> +        "#interrupt-cells": false
+>          interrupt-controller: false
+>          resets: false
+>  
+> diff --git a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
+> index 70ab4e140e71..535213ba0c5e 100644
+> --- a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
+> +++ b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
+> @@ -92,7 +92,7 @@ allOf:
+>      else:
+>        properties:
+>          nvmem-cells: false
+> -        mvmem-cel-names: false
+> +        nvmem-cell-names: false
+>          clocks:
+>            minItems: 4
+>          clock-names:
+> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
+> index 4505e66876a2..52f471a070d5 100644
+> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
+> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
+> @@ -110,19 +110,15 @@ allOf:
+>  
+>      then:
+>        properties:
+> -        clock:
+> -          items:
+> -            minItems: 1
+> -            maxItems: 1
+> +        clocks:
+> +          maxItems: 1
+>          clock-names:
+>            items:
+>              - const: venc_lt_sel
+>      else:
+>        properties:
+> -        clock:
+> -          items:
+> -            minItems: 1
+> -            maxItems: 1
+> +        clocks:
+> +          maxItems: 1
+>          clock-names:
+>            items:
+>              - const: venc_sel
+> diff --git a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
+> index b46cc780703c..4488d5ca9b9c 100644
+> --- a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
+> +++ b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
+> @@ -174,7 +174,7 @@ allOf:
+>              - const: mfc
+>          iommus:
+>            maxItems: 2
+> -        iommus-names: false
+> +        iommu-names: false
+>  
+>  examples:
+>    - |
+> diff --git a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
+> index c009a7a52bc6..7c40361f95ec 100644
+> --- a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
+> @@ -127,7 +127,7 @@ allOf:
+>          phy-names:
+>            const: pcie-phy1
+>  
+> -        power-domain: false
+> +        power-domains: false
+>  
+>        required:
+>          - resets
+> @@ -150,7 +150,7 @@ allOf:
+>            minItems: 2
+>            maxItems: 2
+>  
+> -        reset: false
+> +        resets: false
+>  
+>          reset-names: false
+>  
+> @@ -171,7 +171,7 @@ allOf:
+>          clocks:
+>            minItems: 6
+>  
+> -        reset: false
+> +        resets: false
+>  
+>          reset-names: false
+>  
+> @@ -193,7 +193,7 @@ allOf:
+>          clocks:
+>            minItems: 6
+>  
+> -        reset: false
+> +        resets: false
+>  
+>          reset-names: false
+>  
+> @@ -215,7 +215,7 @@ allOf:
+>          clock-names:
+>            maxItems: 1
+>  
+> -        reset: false
+> +        resets: false
+>  
+>          reset-names: false
+>  
+> @@ -223,7 +223,7 @@ allOf:
+>  
+>          phy-names: false
+>  
+> -        power-domain: false
+> +        power-domains: false
+>  
+>          mediatek,pbus-csr: false
+>  
+
