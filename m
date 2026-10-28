@@ -1,88 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793207020;
-	b=cZgwtMFTu0+FJkF31vuCl/3bewlQlvbsMQL4tGR09l1E5c+SLNoezR2xGFAFGbPRd2EJ
-	 7u3PwxjAxNxZEnjBBjbD38VuOkab8BbWtUtEBIDlKXqs5oCGW9u4peQCRkSb2Ec/NBBK1
-	 OAAhow/Y4S3tz7XFimjXk8tIiqHCvnJkeNQyGrtKJu4ljQlD069mzpPwPqpNlaohcnOD/
-	 N+4IWAIhmq0wpWee4jjFjrK7U/Bp3ebXsjPlkKyzQFhgeMkYE13qwmoxr2F8zuofg6qas
-	 NDM6AWkKwzbWl7wpmjyS0+pajz1vXOdtyOld+TTvTZymKHtwJoFoWsriPqTcvadissA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793207020;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
-	b=2EBKjczys4Nas8bGi9pObgs1Kn4FJEaaUoO/d8ZT4lD00qDyEJ1ZMQbnpB6XIf9jzUWF
-	 5REop5TsA5F4P7V/08FdvJOAYXKQeC2wSTt+RWJw0b0sTPLlZexWH5naX+8z0pzmJ/Acp
-	 vm1fpczGLzqsjrXBclEHGpXhSq5XsKiNwG2EF49/wsO8lYwrIYkvELpwuFk8Oh7l/tMed
-	 acQvAq32iCipj32lsBi5HzfRunzMwJKn6cBmLOqZazO5OR33X6vN3hhVcjaRcNvdTz7/0
-	 wKXH/k4DNJtzapSOVLO7TKDRrsgEG+/oZdR6elB4QqX1DgaSLFers3JfTof+ZFdZUYQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wh63upBh;
-	arc=none smtp.remote-ip=209.85.218.45
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.16
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793207158;
+	b=CfDYQWlkSCm3rdvrd/3UQvW199nieZKDfahTzBc/PdM0+Uh0vscW1z/izGFmOjE5r9d0
+	 O+4mghlT0W33+iNM+6vDumDE1lsMBE5T8e9ePxWo1GYAKHZF+07SYk8JkJX+7mGaa0xpt
+	 8bX2hFkEPsDCeh93wM6n/H2HmiH97s9OhSwXvjieIOEyIq2ilb4wgDJqshhY1yHk+j1pF
+	 hvS2uvYavFnQ95pjccyKWxYq6byNGPH3GKYDSnMd7RMKrteNtTSg3nmVarRTs8HQsIvFc
+	 f2BQqUrdHwqKx3+ubyfGbwnMt6KolXwbiGA+hLvSCUCnrfVFpt+FD5RqZjwijpX8YMQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793207158;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=CUmnbaCJ7pd5NBAxcV9NjP+78L98ZBtyC/aojqVMqfg=;
+	b=kZZvoIvWM9ZwH40PqQGioCjF+zPwW8EufgtxNrzjhMVf4j1ootNAUQD9j21e78V0Qtv/
+	 ctwNTe3u4DKNh1sJH6MhYVdPLEwBFriaIyGjWo2xxYNhtls+Gk/Fl0KM0qGDxMrvUhfq6
+	 q2gWUvJyvWD5nN91K0I0xHgcQ15E+nTmEgFeZgnIkgqGC9B7JGMGxRuS/pf+7ajfy+BUa
+	 CoYyN4Vq03urCIQqukranAmBoEeGxqf6k16CPaJBzhW+9fQGjnPy0jYQY3XIUWlzGlaaI
+	 ngZRCyykYz2a86ElwgjKC4fTYAdDBPhVReW9hqgB9qS6F+LmOA94pyPopachL9cXpTA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=tJ1nuE7g;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.16
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011016.outbound.protection.outlook.com [40.107.130.16])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A787606A31A
-	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 17:03:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A787606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5516606A31D;
+	Wed, 28 Oct 2026 17:05:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5516606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Wh63upBh
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so192381866b.3
-        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 10:03:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793207017; x=1793811817; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
-        b=Wh63upBhKqln1Dt0rWPscluGhXAz6aZc8Mlo6+SFGXkxnjnAB+dDcYrmn4lRueuAJz
-         QgQXJ5TznTgLv696roqARD6qiqrA9WOvsRldSZ1Nl8K3vW7z9nVrd+vg9J5d8I8NX5De
-         LlzM0Jzk9R+NDW9gEs1pqwPpMw7RmJmK0rbYrpjAhUWwghUEbbUvY9LeBmfEVUeqwiTX
-         4i/NAPLA66XFMzLOs8cph87ZNs65VLLFZfXaFQyy5O5vvJItM/+dfcmgFDRsryQmkPh9
-         SdrPkNM7z+/o3nlE8wfm+G9JVu9Wste7YWFinxPsXiDrPO4RCJTKkoT/kEWixB/TMUjM
-         IddA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793207017; x=1793811817;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DO/5rN8t06lVCuIKT6Pz+YWotCVnUOjfp0iAhj+HMRg=;
-        b=T7BxMRaBjtLPtbInSClF9ediT0FfiDiS11AbRZWHzkWpUziMpPp6Ad6uTNPKFzH/l6
-         aLga5/AND6Xm7+lKpU9KS0qqX2ie98akpxm5ESEDoFwTjoiASAvD6iSog7jHc0TFqLIU
-         ABzSxjSt7GVSV/sZlEIXymSj1tbTL+O/ou6/B0IslXNtm139+Cdh7Bqs6CYRT+Cbd3xZ
-         5gQIaUKcbQgTc1oiaKMh6Me8D33qqRAYXZxt376vjep3IG9w8a+QsoedoHVRKbCzswbD
-         hlJQQUhoNDpkTUgHorN40zR35BnsqxIb6rLz7qaV+iNjRR/9SF/00d3nvnSXBW2cZW3G
-         uMrw==
-X-Forwarded-Encrypted: i=1; AKwUvBylIjBNdwguyFSiR7zNgIPySm1XxIcF+03NVZVK8xyU5qM5pVhKdxqIVfurtWGd1UBI3gXR6EH3IkA=@vger.kernel.org
-X-Gm-Message-State: AFq9FYIOKkjCJiQDOx1w8A7Mg5ngiFhSkGQr/wMWuL2nEqKl7u4MCQBB
-	c7nviaVPXH8TRyGuyqJObTAINa+WPKYzpOWWGQHohokYdMSNn2Hhp7pVuRdjVTvC
-X-Gm-Gg: AYBFou3LmMmhkDHALtY4ByAbUsYZXuC83edIVaEtxjaxt3tTfQ+4Wkx7CopMFWxpi/J
-	NcDcvWk1O13yxWt9j27Vt0i1yI09thcqtwUR4SiWlpmx3iXneBigsQ0KA5bXRGp9baXtpm7xjcF
-	4C88hkxPuVDckYGszMnHkn2i/6x2B1SSZ9NW34Q6MqYNrCUT4sDNUULI/EiJGncmR1b5kjwQrrF
-	9EbH3ggK9wfxd/X7CF2YYky7NsnmkMyO8HH8fraPVM8PgIPzBJJjSl59Nr9DvdwDRMO+YQZRUMi
-	vdGhLZsWlDCmtGzlFiTq+9KTqHYQYFmnF6Y6DoU1k9XfigJF/oVNMqljNbkeo9zo1UbV2kFxzAq
-	eO6HEcwVPyTlpmcF9yHWrpxXJuJMLcUbUJ+xMZCDwWQ2MN2kRd9jl63gO75C7VA3TRq3P0RE7nC
-	1Z+pBXFqgw+MVftLGeU0vxP6ZtcQcp17PDGouyGtUQPpwvGj5dJTVPu0n2IE3b6FoOK4EE6p5O3
-	+fN+kyfofpZumiH/LcpFw2/Ti4DaCk3zdaWGIZBrrlBWj4rAfjLYff/RuRG/6XUjVH+7acivFaN
-	XJNIxiS8faZ3msPrSXdBYqueOtXKgjGPdqV4KVYcEg==
-X-Received: by 2002:a17:907:fd18:b0:c29:659e:2fd6 with SMTP id a640c23a62f3a-c49bdf2ba80mr270930466b.10.1793207017356;
-        Wed, 28 Oct 2026 10:03:37 -0700 (PDT)
-Received: from [192.168.0.24] ([195.136.82.49])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46bd77e1e9sm635884766b.67.2026.10.28.10.03.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2026 10:03:36 -0700 (PDT)
-Message-ID: <af0c6729-6859-40e7-bb55-33fe67fb5c1a@gmail.com>
-Date: Wed, 28 Oct 2026 18:03:33 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=tJ1nuE7g
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JC3Oo7nvV7rwtdaTTV1kIdirpfPPviRcc3XhNQzWjbAVUSyFBHbgNQphnWLcRZc1aZrPvoksfdY3JoRCbVRLw/sKj/vDVv9//ngIzoyWu8BCs8Y3eI+WvLW3a+XrEPspipN8bCxy/AVTUiTgwtJAhM8Tq12nPn7ENfQE+yjEuOgkisx3RHZpMix2N1j7C0uaziOlEdV2AL/kKeiAXKXTIhvHohBZdZ9i24DnJyH6QPMCyT5bSU07iGNYg1+HlWCHSmmY113cX5ZUumBuWrnL27OfN472Iwv/OQon0tX0ZYJG+UvVtpgNZuWyws4Iyj62Deln9WNTPEDzPMywVumO4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CUmnbaCJ7pd5NBAxcV9NjP+78L98ZBtyC/aojqVMqfg=;
+ b=bzp6BVsb8q16t665R1bSD3AeThTD81k8PX+rgaW83AJK2PN+5DdXgMZe6hpFr6YG4aRJQxJdwi2puiaph4NEpN+lRLf4UMqhcjKLhjRRd51Xb33nD6BksYK+DDBg8H0eETAV1+xbEWtF+uvKt01bQb8AXouU6Ju3tlscNutg6kA/6A5JBhoZaACL7/tPXzhAziiTQb4SViNJ7hVdhvNWRpD70X+MOoauVIG/u/Opzf/BwUjJZcMj50e3Z9WOe+1cFd5mOLqM/9qSmvuaPZ/gN36FY4djdybYWM1bI1ALGupDAVURkOP1+Lg5lL04NMPxJGbCi9h8jQOlYLgdVcDjuA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CUmnbaCJ7pd5NBAxcV9NjP+78L98ZBtyC/aojqVMqfg=;
+ b=tJ1nuE7g08SAB+xfuw+gj9haHbvrzMvwYnncO/x/IrnvRvdCdfMPqV2Hh4cR4Q2/GcrSvsqgt/u0a7Sekmnuj/cI2fsxnjjmZXxS+YETSdk26FQ6Gu9doz0NCP5z60kwi4yyuB4XelBEZ8+X14oEDBzb+6/WN6207kTl+K6XwsFLc8dD8I7q0ZCTmz1djenD8KILcMDxstubewgXg4h4RzjnioE3Ne4AnerE2gkm4Lxymlrd8R5s0TKacWZmiq4m+BBP68dF3S/XyrEX1WUv7JfHQuIz8ckEi15n6dL3Tt3CtUJ19AduieInyvbIdjTeM1ZJXuL8/kcd1OJAPTWV9A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by OSKPR04MB11341.eurprd04.prod.outlook.com (2603:10a6:e10:98::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Wed, 28 Oct
+ 2026 17:05:54 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.021; Wed, 28 Oct 2026
+ 17:05:54 +0000
+Date: Wed, 28 Oct 2026 13:05:45 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Li Ximo <lixicaicai@gmail.com>
+Cc: Sinan Kaya <okaya@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, Wang Haoran <haoranwangsec@gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom: hidma: fix wild pointer stored in
+ mchan->running when active list is empty
+Message-ID: <auIrac9AMf1Jwwt3@lizhi-Precision-Tower-5810>
+References: <20261023073154.744365-1-lixicaicai@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261023073154.744365-1-lixicaicai@gmail.com>
+X-ClientProxiedBy: SJ0PR13CA0098.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c5::13) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -92,100 +98,138 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dmaengine: pl330: drop only the runtime PM reference a
- channel holds
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20261028-pl330-runtime-pm-v1-1-f0fb5c34a7c4@gmail.com>
- <auIIIC6ATpcJgDTM@SMW015318>
-Content-Language: en-US
-From: =?UTF-8?Q?Krzysztof_Soko=C5=82owski?= <krzysiek.sokolowski@gmail.com>
-In-Reply-To: <auIIIC6ATpcJgDTM@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|OSKPR04MB11341:EE_
+X-MS-Office365-Filtering-Correlation-Id: e0abd5cd-2381-449d-c4c1-08df3515ba35
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|19092799006|1800799024|366016|23010399003|6133799003|18002099003|22082099003|56012099006|5023799004|11063799006|261026140227099003|261026121527099003|261021121427099003|261021123027099003|10067099003|261022105027099003|261022075727099003|261009223027099003|261028144727099003;
+X-Microsoft-Antispam-Message-Info:
+	f20I0TM/ORbd5ws+Q4Bxrw+CY7PxFnKDCS5lpbjuGopnl5N3jN9/tNedum6+HQHT/zfmN8vi+7L19PWIUbvG92CH0aqwfwl5I0Y1WBCM7WZi6GerylX2pWfhRvw0kqomKWYtS5CT8McEubciBUgXG/iC1W88Iz8C6nrVa9f6r2it+2azPwH5G+JCwRrXomMfo6gmfKi+Gy6M8KC49ImfDPLSBCg2fN7qaO1tpkAgBhbzl3CsgWqgc23jSErdGJFt8mPUn5PH+z6LTBKp6Tadcwo4pJX9uuUJStKh0C+adqjqnFzJwep8yBQEXXvCLipjdROz4uyL4Is3+FBVB1KKVGMee4W4TUXHag6QH6nIHD9U7bTbHq7JGcNNkLtnGtXRaotjzJk6GuQL+Sd5XpUmws2FtiLypprRWaUhBppj0qEu6PAhIGzcTU+lAiqcN9NXFBlllA7a1io4ExcpIy0m6HFVEDCy4/1sk9H1FA70c8hlt5DSBF1bK06+2Bd2MdMX3FBV21CK1Pz4il/DJDzBQngvIlczFMQzkbY14QwDroH+bxhvXvXZUa/TtPcHkDLE7+zijVasOtfami+AjaVld6I18NDhB6DOUF1J8ZYxq5UQ9JK5Ei4kjRrcBuVwoETXrDt1x5i9flOuP/D6h+zwlrXPu0MRFizqrQjETTAPtXo=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(1800799024)(366016)(23010399003)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004)(11063799006)(261026140227099003)(261026121527099003)(261021121427099003)(261021123027099003)(10067099003)(261022105027099003)(261022075727099003)(261009223027099003)(261028144727099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?il7eNoMELBnROmYi+RaTMgaaKxVrMeLtOzUeDz3b5RXNu8RyqPhSzPcS6Nsn?=
+ =?us-ascii?Q?/5BnaCSHVrkL2vNfDrUHAU4fmiyGS93YXn5qzU+S86po7XEFazOHxI4JNQqA?=
+ =?us-ascii?Q?o2oT9ndr7niU++t6RO5dmw0kD1ekfPjIxfsy7dNe2gJGhquyuI4nEu9vxX0s?=
+ =?us-ascii?Q?QvsnJGyI0xcqiYmAcAneN2iN1vBCrU4RKbox1/LyaAxR8eiGVEV0n0PhwV71?=
+ =?us-ascii?Q?mkKOt/CiGCxyDoP5XaEmBtFBygj+ZtH5SlP4dV7p7oHMvnNeD5rFRzyEl720?=
+ =?us-ascii?Q?UzUU9W31iSxKaKLpR/peu5gBfoXz7/FbkoGXgJC57eFLbUT770l9QsUBODDg?=
+ =?us-ascii?Q?TD63pusjDizdyaWdFDeMo78V6Gh56PRkNiOeTIARR7Eo1uCpd61bC4RsnI10?=
+ =?us-ascii?Q?z9qaU0rcxDC967iYNUF9MDacIKjEX4U2RV+ntlZu5paQ1rXdEOlkGwFE75vg?=
+ =?us-ascii?Q?EuFt3K2c5+DIrk8yhFZxOQ5x4GnLZ/3yU8jELmfYj1F+Ung7w85qMFNNvGG/?=
+ =?us-ascii?Q?zRcCY0Vy57RMdD1gdE2o3eIsl8mzUZNNQD4zdb0vjdFhvTR/+wvVejQw8uDm?=
+ =?us-ascii?Q?Fbq6jpbU9+Iu+MooHXsLs3jkQZl3C6uBAEBNtOl18dPjRg1BUO5AD0lZ/QmV?=
+ =?us-ascii?Q?vMWT4LvzNcke9Amz5oNZJgDheGISqPsUfUA97u4lLG3fHn9a6jQZsT5tYT7k?=
+ =?us-ascii?Q?mhk7NTL9x3UMfbAQDfD/wTgcbm8ezyADbrvUsPXcEtsNYfhNvktWkJc8iAB4?=
+ =?us-ascii?Q?knJyc6FbqS/A2d8D9euNELbu2nbAIMYMZTawphJzjvQdBuiUD0CgjrKoc6Z8?=
+ =?us-ascii?Q?OFQAmKEkK9KkUcgSD04ODwUjCqj5ZrysH6BPnHRP4zfFUXGOUbDaGy9Wrqwg?=
+ =?us-ascii?Q?9HGZW/dUHmucXhlsAYDsY4Wj7W6h6ojZkimmXJEb18vXpMQh8Bmvt+qEtIDi?=
+ =?us-ascii?Q?cU68e3DzU2ypiupYu3gIt5FfqG0oM8CHx/kVfSamXPJRL79VsMvBkzc0Qffk?=
+ =?us-ascii?Q?Q26RxavndlD2TA4hY8PzRHF5QWMwhza77x7bCe5y1pOj1lburCVrAq7O19kS?=
+ =?us-ascii?Q?5SbvVlMyIQorttBBoGgdPbnUlfye8KnfN+d7n6TBCZy9cWF7s2ykk9rC0DsX?=
+ =?us-ascii?Q?m2jt0DZdStVHD9pb9WSnvtvS9GMCnCDOzLL3bfgTmpGPXkEwMqPJwOI7kNzb?=
+ =?us-ascii?Q?4mTwFaBxhHfHXIhZiJGcKmhT2DJJjJBnNItMUjAsFpNaqxf/5J6E//HhfEUg?=
+ =?us-ascii?Q?9krNFo6+Mge2P+ZHr1inZEVuarjbAPP67XkHR+4dWQbHvD9x2slzx0jyPiyv?=
+ =?us-ascii?Q?8426Rd15BNt8AB/0z4wJuHwcbx/i93MS55XkrYZQQVrQud2U/hw4JoJNgyh9?=
+ =?us-ascii?Q?8/Uj98MFxkSlsK6xuUYvY7QdWzXOMe/AUdEWLj1Gv2y7ZTU3SyIUAfg040om?=
+ =?us-ascii?Q?ngN7AGkL3vhg6SSOz9Qi2qk4Pa2rPIXTWxYt3wup0+C38q9jwnVbgC5yJyYp?=
+ =?us-ascii?Q?QZoWKCi+Tg7knZ11zNILngzbc2TKc6bgiC+XHvBbYNDGKsq5u5fsBXrfJd29?=
+ =?us-ascii?Q?TrfOWtZGPFCc18D70zU89jxjBwCdidVwGvC6NMFTSTu0aW/4Wg88TzuoyxFh?=
+ =?us-ascii?Q?Jar0d8smfvEUR7N43UKM2VzRBuL94MUnCRvXVUw+i8cpX63yH6RsTV9iy/Yp?=
+ =?us-ascii?Q?d+JHGCKXaejXXJ5aEIefZ+tmsX9d8KDxEqkIBUdFLYL8pFyM3QV8kpfs4Z8W?=
+ =?us-ascii?Q?7KVzs5FFH9kRarjzfvUCl5nRQc6SD5VNnB3pgrg+u1jPcr7pOhzg?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0abd5cd-2381-449d-c4c1-08df3515ba35
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2026 17:05:54.5196
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MGijBDq4wMtTgeeUxD7RWQiwhoJqacilaCy0lw4VmaqGzNo+UYRRe/OJa6hzOTBb0rbgDfDZh9rRjtGd3eGcNMia1YX5IfT2Ma5nJJFgm5T0WKOLRET/UF/L6rzCvFGS
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSKPR04MB11341
 
-
-W dniu 28.10.2026 o 15:35, Frank Li pisze:
-> On Wed, Oct 28, 2026 at 12:28:11PM +0100, Krzysztof Sokołowski via B4 Relay wrote:
->> [You don't often get email from devnull+krzysiek.sokolowski.gmail.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>
->> From: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
->>
->> pl330_tasklet() drops a runtime PM reference when the channel's work
->> list is empty, without checking that the channel still holds one.
->> pl330_terminate_all() drops that reference too (power_down =
->> pch->active) and clears pch->active. If a completion schedules the
->> tasklet and a client terminates the channel before the tasklet runs, the
->> tasklet finds an empty work list and drops the reference a second time:
->>
->>    Runtime PM usage count underflow!
->>
->> after which the controller can be runtime suspended while still in use.
->>
->> Seen on an RK3128 board (dw_mmc using the PL330 for SD transfers) under
->> combined SD and USB load, where the dw_mmc error path terminates the
->> channel; the underflow was followed by "pl330_update:1678 Unexpected!"
->> and a failure to request the DMA channel again.
->>
->> Take power_down from pch->active in the tasklet, as pl330_terminate_all()
->> does, so the reference taken in pl330_issue_pending() is dropped once.
->>
->> Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
->> ---
-> The same patch at
-> https://patchwork.kernel.org/project/linux-dmaengine/patch/20261015-review-pl330-pm-original-v3-v3-1-5be09f37df77@crepuse.com/
+On Fri, Oct 23, 2026 at 03:31:54PM +0800, Li Ximo wrote:
+> From: Wang Haoran <haoranwangsec@gmail.com>
 >
-> Frank
->>   drivers/dma/pl330.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
->> index c2d0b47..b0eced8 100644
->> --- a/drivers/dma/pl330.c
->> +++ b/drivers/dma/pl330.c
->> @@ -2090,7 +2090,12 @@ static void pl330_tasklet(struct tasklet_struct *t)
->>                  spin_lock(&pch->thread->dmac->lock);
->>                  _stop(pch->thread);
->>                  spin_unlock(&pch->thread->dmac->lock);
->> -               power_down = true;
->> +               /*
->> +                * Drop the runtime PM reference only if this channel still
->> +                * holds it: pl330_terminate_all() may already have dropped it
->> +                * while this tasklet was scheduled.
->> +                */
->> +               power_down = pch->active;
->>                  pch->active = false;
->>          } else {
->>                  /* Make sure the PL330 Channel thread is active */
->>
->> ---
->> base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
->> change-id: 20261028-pl330-runtime-pm-b5a30050b2f5
->>
->> Best regards,
->> --
->> Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
->>
->>
-Hello.
+> While auditing list_first_entry() users we found two call sites in the
+> HIDMA driver that invoke it on mchan->active without verifying the list
+> is non-empty. list_first_entry() never returns NULL: on an empty list
+> head->next == head, so container_of() produces a bogus non-NULL pointer
+> into the enclosing hidma_chan structure instead. That wild pointer is
+> stored into mchan->running, and is later dereferenced in
+> hidma_tx_status() where "if (mchan->running) runcookie =
+> mchan->running->desc.cookie" passes precisely because the pointer is
+> not NULL, yielding an out-of-bounds read / memory corruption.
+>
+> The list can be empty at both sites on entirely normal paths. In
+> hidma_callback(), the completed descriptor is first moved from active
+> to completed; when it was the last active descriptor, the subsequent
+> list_first_entry() runs on the now-empty list. In
+> hidma_issue_pending(), a client calling dma_async_issue_pending()
+> without any queued descriptor leaves both queued and active empty, and
+> the "if (!mchan->running)" branch then fetches the "first" entry of an
+> empty active list.
+>
+> Fix both sites by switching to list_first_entry_or_null(), which
+> returns NULL for an empty list. This makes the existing NULL check on
+> mchan->running in hidma_tx_status() effective, so the paused-channel
+> cookie query takes the -EINVAL path instead of dereferencing a wild
+> pointer. Both call sites already run under mchan->lock, so no
+> additional locking is needed.
+>
 
-It is very interesting, but I have it for last month only in my private 
-repo, that has now public facing side to upstream fixes I have made .
+Can you use simple words.
 
-My public repo: https://github.com/ksokolowski/rocknix-distribution/
+dmaengine: qcom: hidma: fix memory corruption when active list is empty
 
-Set of patches including this one are here:
+list_first_entry() does not check if the list is empty. When mchan->active
+is empty it returns a bogus pointer, which causing memory corruption.
 
-https://github.com/ksokolowski/rocknix-distribution/commit/dd3923788d94588b8d5fdb602808b13370ab4208#diff-27b400675ba20f118e98f9a25b963ece2a2336d9ef1fc9416c273f507e24c271
+Use list_first_entry_or_null() instead.
 
-Anyway, I can confirm it works fine on real hardware for last month. So 
-you can drop my patch and merge previous one as tested and confirmed to 
-work.
+Frank
 
-Krzysztof
-
+> Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+> Reported-by: Li Ximo <lixicaicai@gmail.com>> Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+> ---
+>  drivers/dma/qcom/hidma.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+> index c939635be..925c912e0 100644
+> --- a/drivers/dma/qcom/hidma.c
+> +++ b/drivers/dma/qcom/hidma.c
+> @@ -176,8 +176,9 @@ static void hidma_callback(void *data)
+>  		queued = true;
+>
+>  		/* calculate the next running descriptor */
+> -		mchan->running = list_first_entry(&mchan->active,
+> -						  struct hidma_desc, node);
+> +		mchan->running = list_first_entry_or_null(&mchan->active,
+> +							  struct hidma_desc,
+> +							  node);
+>  	}
+>  	spin_unlock_irqrestore(&mchan->lock, irqflags);
+>
+> @@ -238,9 +239,10 @@ static void hidma_issue_pending(struct dma_chan *dmach)
+>  	}
+>
+>  	if (!mchan->running) {
+> -		struct hidma_desc *desc = list_first_entry(&mchan->active,
+> -							   struct hidma_desc,
+> -							   node);
+> +		struct hidma_desc *desc;
+> +
+> +		desc = list_first_entry_or_null(&mchan->active,
+> +						struct hidma_desc, node);
+>  		mchan->running = desc;
+>  	}
+>  	spin_unlock_irqrestore(&mchan->lock, flags);
+> --
+> 2.30.2
+>
