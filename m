@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.21
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.27
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793197603;
-	b=G77mkdDU9zVH1bPJpgI3ho9XKYUbqxq/ZyCeV+hoWJ7WoU72YeanpAZ2/PNNmen74aEg
-	 uAf/p7oj5KaleLCMoAhiycafDeI8UyNDKvPLmwNB6aMIClgWKVt5qip83JOn6jsi5Khoe
-	 2afzyaWIouhhFsM0ZMgF/ypFTtITzbYjhDnI5REIrzIV3nej1p5RpFZ8tJAZ5wko1Q5oM
-	 rsslzOyQH5jFSJPeBaEjkPnCcs0IRr09PtNpF88GvAAjBaKnOA4V+G4MW1qk4elbw/PaS
-	 TNsx9RgSPYpvknO1wmeTCzu/pnxQxsHfTLrMrrVjZreZT07laIboqZuFrbCkIegHZnw==
+	t=1793198124;
+	b=rlx9gJgjztL3D/CsSdzqSguH+87ZDBpiItYiLS1WQhCMKBMGmH03WqVnVZ2ZGZVmxDd1
+	 eAc4eJeOJ+3Vfk95aGGgz0bVNadlTOOrE2s58rcY2dIR2zpCFciChKrPRMz0CiaTBQSib
+	 7TM4fo/lIQ7O7sUMRdvp/YklFiQoqHbjFNObLChawql/AnC53JwUA3BJfyExlcpRRJs3b
+	 tsxbHdJaPGGeQFjco1y07J2+zT80/nvuC0D5LCWTekKLxyriNIw3/L+4SQ27cgkL2d8zs
+	 n0f4MJC1+d/5XzZZrp8VYnFpIoLJSXKsAhPpG5kWXavnp+tt5Gj/iq+pkVLLnnIU1yA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793197603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793198124;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,119 +24,70 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=PugH5ADTgWBNgCzo2c+KFwnk0r1PS5zDUpNv2SsWnUo=;
-	b=e2YwDzOM4V+sC9NuoKhk2XkbWltNXlMh4wc3DnXzM02Q6qUTUxRjBL+ULtyrrbSQP0ja
-	 USQ89hwOQrLaNAgvJd06ooKONhpOjkSqWJeSV779Ll+hZw512Jp8OgHgSz1a1lLz8yml0
-	 kW3sL/pv0E4DBhKvSKtb/A0Gq8LVYthzmYz3sFOP/HhsAHWe3xY1ccgBpxkPgNH8n6+0x
-	 fdly20ws2wwzy0X+iPT/XrXsAyU4RyKSJiXGZ2XZQuUfwlJsal/+lrCEifMcC3YnDpuqs
-	 L9850BWpcuNuFRS7R5m6J6isO+5QcuGqhp+gUHRy8dRTo+6oXBX2S4E6lJCcT9uOeGg==
+	bh=r3fxlZ2r5h76cH195mNtnLRts2D8lhDaQuQQ5yuWNAI=;
+	b=X9AT2UxCstsaYYSV8tbM25fO8i45sbsAv05rbLCqaqrF3beYLRKqlTsG7zDN86yWqmm5
+	 alp3WXGmD27Ah3cyrQ2ojoaXUQtjJtd28AlqghmMbw1be1ZrvaCzOwCTB+Qk8c19AZaRr
+	 9i9JvMQO5m/u4AFhPfO1RzB5Z2F0k9IZClbb7uAHMTOQef7xUW6/GraWhtCGx71PQR/v6
+	 z1w895De5wo35knqXW2ODcZ5GnTSW9rSYuarkKvQXAfZDUE8WKDTy2DjcFr3bUnkTJ2CA
+	 7fLNKSbzVfEAv6iG0LT8nJRLu4k13l+xSemGbqP03LpbR6WtNz9ac51Zyrm0YpX249g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=iWAMacif;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.21
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013021.outbound.protection.outlook.com [52.101.83.21])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=hd5twVmp;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.27
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011027.outbound.protection.outlook.com [52.101.65.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D739606A327;
-	Wed, 28 Oct 2026 14:26:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9D739606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4961D606A31A;
+	Wed, 28 Oct 2026 14:35:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4961D606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=iWAMacif
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=hd5twVmp
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EUzwkxM+5U4c4djubNdkw5RXK63QafpWqgHpEtrm0fB5uAsxWrwmazQpKzNwQxPUVBDDCz6BVTiAqFuNGaF8kLJqDzY2LFJlU3nSjFHYvJr9yRgfZG83AcuyjjEcnrg/l/G1o98ikYXsdXWpHZH2H7sqB9fFXfT4zEVf0Bkd8NhNGUW8WwEABmVD7f4ZP6hNtRSWsXVJycIzu9zNS+llo/+5yhFGnH3xnpOP8N/brtbFQefVDOlYH6fBCuooh9Vccb79i/9BGUwIL2ofT+0zg0QAfav/N7B2U3+VD6+PyzUQZ+PVdyin/3eT1UH4BANC/CqW+yKQ+gDCwhr4DMu7yw==
+ b=E286FC/LAGbU8aLgVkPmus56BwGHloNDnotAnWIfFWU0hJcNow3SlQXK62JTPG9am8ItQiCvl1+zWRlCReoXfsKwNpb/tPwnz9r3GV2gkYt7ijwyNQR8B4NqLS3zYqXZuWg9X68ttD48DbBKf1bsfD63EcxYrybOIHNnY/M1aL4Yl2ZoDD5YBONGLn8NQwzD8uqYbQl14BtmcKqzKfdASkvCG98O9T3HauwDRAVLgQNro2MCqx4Trxji6Zb6RrLmg9rY6Eb754RI8NeUWh8HXfnYS5oaq5+9Pf0YSiQ2lbNNPYtK6cpaQkp7TH7lxjeoY2a5a3rk9S1A/ZUjpkfwrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PugH5ADTgWBNgCzo2c+KFwnk0r1PS5zDUpNv2SsWnUo=;
- b=JQVpgOrqGZHrVNs3QTVt/HbATgeZfHtJ9PnI3eXo63FfaG6+8FrdQTiFPYg9VGIBUlEakFTMP9UR90QodP8KS5UHgXtd7Ob7HqWex7BJxFX7aSiU1hYdQZtXuXiojj9SkELkMEIiY7EjLNuuuYx0sKb0qYcjMHiCiQH6KZUh2lWMC7JOrB1WDJumNTw5O6Run61xTI7YDuNNSnB5iTDiaPP/nyDEcYig1v0fmAkTbvm+Uut1w7ZPLC16CwFUA9JLCbauy1lv4jGFp8xE0hbUpP5nASzwvBaQ/CL9R62TRQnNg+8/7OOks+hmeIyGJ7UHtOmfWUHEXedfEze41eOEug==
+ bh=r3fxlZ2r5h76cH195mNtnLRts2D8lhDaQuQQ5yuWNAI=;
+ b=STKHcFAIuwYaY9/pkbBeYyJsublBsoC2pmo8dcUwNPQ9xOk+hCSPbmK+YkmCxD0pSYe0XyKvG6Fcq0FC/OpzOmOLwiQzrGUP8Qkb1Hg8oxSXkBkG+1nRw7+mt7F1y3SFnecI3wD01B2N+6SdQ3kK2UlzQSCRsMOLFavoq7bGILv7YCWRc3MyThQE4FTsOvhP6NtH3NCJMQ5wj+DGmliEuzyBBKt8JUgGm6mAvjH2SyRjIER/xMAHNNGsl6NTwPVSmLVBOXQwpUmZC30gN9OOeqHTJrDN6fQwh03K4Dp/nB0nJKCTpdS57DeGQ9zAdLbLdryjVJ8zcTW2gOnj+M+jDg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PugH5ADTgWBNgCzo2c+KFwnk0r1PS5zDUpNv2SsWnUo=;
- b=iWAMacifbwocz+lHil0qO84MTMkMOvglnubW7bzl47kSj8aDd/2iJBVrA0AMZXLeOWpYpL1FngTp/a/DVauU9sHv2cwkDIQdvc/zSe96Vv9BV7o5/ztL7qeb5o9UGh+CfwlLY1c24Y8s7sq2ClColacayPq6oRGDMU9Lsf+cau0+iTPd+NvPDgt+1oYH2DgFfb9rLGSMx2lVizp8slVdtYwuEYnppE13e2paZvpU4TJvtAPC5NjcJTe6682OuHhdu3nO070j3rAwPrnlkd786Z/ryrx31b9WrEDMMwSZIj5V/aX7fYfMPVWNVnI2ffGsXF9IO+d1moDU4MP68ODO3g==
+ bh=r3fxlZ2r5h76cH195mNtnLRts2D8lhDaQuQQ5yuWNAI=;
+ b=hd5twVmpn1ee2pQ/LQAnsRcN2ow65CS90uHJKyNTsUjJV9ZgNSydKAN3FwUPp44hPzzqXFOdvYDswYUi+ssb74w1E5V911fwSgudLrkWcpAH4bgImT3gTtcftniIZ4KN25620BCb1MZHYTsvfNtVYur4/4v+ZfJ0LMw+y3PPM5xGCL6rf7Q454i0i+mt0kORn7SuWrqv7w8st1c7ZZxz7PUSV6O3K6uj3Ld/gf6gLhut4JtzjGe98iHbh0rlpOlm0rZ8wErbes2cG8bemshuVCuSCmYumwwtFGVqW1PpDWXWssvk6T0iB91cFmX+EOjqOHTRgxBTxn/OeJs22I4Yng==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by PAXPR04MB9186.eurprd04.prod.outlook.com (2603:10a6:102:232::18) with
+ by PAXPR04MB8191.eurprd04.prod.outlook.com (2603:10a6:102:1c4::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Wed, 28 Oct
- 2026 14:26:37 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Wed, 28 Oct
+ 2026 14:35:21 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.021; Wed, 28 Oct 2026
- 14:26:36 +0000
-Date: Wed, 28 Oct 2026 09:26:13 -0500
+ 14:35:21 +0000
+Date: Wed, 28 Oct 2026 09:35:12 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Yinbo Zhu <zhuyinbo@loongson.cn>, Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Tiffany Lin <tiffany.lin@mediatek.com>,
-	Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Eric Anholt <eric@anholt.net>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Peng Fan <peng.fan@nxp.com>,
-	Aakarsh Jain <aakarsh.jain@samsung.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	freedreno@lists.freedesktop.org, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: Fix property name typos in if/then schemas
-Message-ID: <auIGBc2Wo21H6Rdm@SMW015318>
-References: <20261028120216.2657397-1-robh@kernel.org>
-Content-Type: text/plain; charset=us-ascii
+To: krzysiek.sokolowski@gmail.com
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: pl330: drop only the runtime PM reference a
+ channel holds
+Message-ID: <auIIIC6ATpcJgDTM@SMW015318>
+References: <20261028-pl330-runtime-pm-v1-1-f0fb5c34a7c4@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261028120216.2657397-1-robh@kernel.org>
-X-ClientProxiedBy: PH7PR02CA0020.namprd02.prod.outlook.com
- (2603:10b6:510:33d::28) To MI3PR04MB12438.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261028-pl330-runtime-pm-v1-1-f0fb5c34a7c4@gmail.com>
+X-ClientProxiedBy: PH5P222CA0012.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:34b::8) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -148,286 +99,131 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PAXPR04MB9186:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee112b64-b16e-4703-361e-08df34ff7912
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PAXPR04MB8191:EE_
+X-MS-Office365-Filtering-Correlation-Id: 58c863a2-bbdf-489d-43ce-08df3500b1c1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|376014|19092799006|7416014|1800799024|261026140227099003|11063799006|56012099006|261026121527099003|261022105027099003|261022075727099003|261021121427099003|261021123027099003|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|19092799006|11063799006|56012099006|261009223027099003|261022105027099003|261026121527099003|261026140227099003|261021121427099003|261021123027099003|261022075727099003|10067099003|18002099003|22082099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	PJnUc1WGA8a9fo4wsN9yLiJ6vA5jbebBB+U2liGAOGkTaLqzc0fWb10tCiLjM+PF0yRnGzgQiNOWoSMDuKujWM3xjbJA6IVi9NRE/dO5lLDsDFuBmfACI3ffyL0XkEZ/xlItnJ67Y4Ha0xSMz9+FYO0EpiSULbJdz/HyuG0CHYgCAxnr4Mpq7eK5DldLlG6ieUrgtIR+peeX/B3VHg7e/A6NrJrtluh4szGpg8NRmKHyLVPL61pUHNX5Gmq8iNNZVCT+UXLonwxybLqKBxSLIvqujHrPfMcceSIYn2HOBlQz4CTjRrRYPon1QgttoLy1ZOmYYrAHGFtWRctZ1DwxXgyrOLR+EC1kNPbXDd1asyBBYGRzFd9nOQN9aXi8d19wiphqDemPt7KMbMTgM10sA9zsZ1bpULDbGdFUEumnzPVJ4XRWuzz6/uUnn7XATiPeOMe9S9SKsfeo+DkambXEmRxt9Xutj2bpMe1WTI26z33ni/vrf/C+03GWnXzx5HHB5AlnOukvwgpf12LTEPc6ORhOOsAuP9B4tAco03CEg2JxkLhdgRJ14QjDKGfY+TFR1QfhL63l6W84q2EkVc0dfKIrj2kTvrHW5XzY+YbjrDcLTlERuxAdA85BwC1U6GdzJNCOULrhRJuWV6xFpK49Vjn0HpJwA67A9d14uN5sMao=
+	hVOoZFedsPJ08K35tje5cxmmX3jQfte/zLLyBJPcybolIcBBcTO3ThvqpSb/ayQ8Yo6YF00/4hitO4XM429csT7C1EsPB/fLMlpjU56l4d02PMssQWk6f+R3TUw8kuHgUAm+dkjzmt8xPYVVYrKYg2V8Jklil1tTDUn5jysFbYC357EHKFrnxvOdKRL8sYVymqizXek5/RSc1PaU9JyjzV/PX2NYUIEdn089NY5oTFRYB4+QPGbSlWd1to8FjOcSKL4sRejJ78wLQA0MxqkIcWoudvSpVhBd5tiljifG8R3QQg7p6NyQhPQvN50CuWmcBnps+dKvo4unKQ/AuIgvz2FFztFdiLJ1dvhXFfXbmlrFMv/6Bpurf2mJbt4ra029h6//FfsFFZ2OIoZzEOVN2GpnM0zYFcvnaO+15glh+45gpUllbgBCQe0Re9OFv+eTQCSVddKb1r/5Bj3A4BjTQmaghokDxtBg44I36dQk1Wvg/fML7maAVHgDpqsym8vTBJooIrMLRr4GTiSsoiWt8ARQVjHH00SyK+Pj2fgMO+tMxEdPagRh3YiZy/l4Pk90C5piZcVZSOfb4v975litycPF2jbwuj+ArEnQ7MJQ5EOqpFXfIj7kUdUPAyr0O5xi
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(19092799006)(7416014)(1800799024)(261026140227099003)(11063799006)(56012099006)(261026121527099003)(261022105027099003)(261022075727099003)(261021121427099003)(261021123027099003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(19092799006)(11063799006)(56012099006)(261009223027099003)(261022105027099003)(261026121527099003)(261026140227099003)(261021121427099003)(261021123027099003)(261022075727099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?yhoz00PVsJqtF9EPEGywCcxhtZzWfcPJ2a+fSI+CijO6DYTWCvNdLXi+bPrn?=
- =?us-ascii?Q?ZeKh1fIb0GP+Ummi+pEAjQls/FlH+Ad7FEMSo092qWc02Bak1tfgK/u2V3ka?=
- =?us-ascii?Q?BDo1wVM+Ol2lHwOpGD4BijqT9l5cuKnZsRg4oPOaOrkpq/Sx/x3pX22AFbGb?=
- =?us-ascii?Q?lNwJ58LQgM3x/PYjuCD7uOIVk1KalCYg2NWMjEWhDboCjEcYi04A8K865dbG?=
- =?us-ascii?Q?YrQiocw+U3/PvvEiHkxs8l4Wkpc4cyoWB0OBhcnjXO9TCs3R4t7kW3Pn0nJO?=
- =?us-ascii?Q?YbLS8uJsgFmoiP5kM8mCvXrg7yG9KQQvYtnVuMLRiU0juAaOnmFvxGdR9N2B?=
- =?us-ascii?Q?Ghhx05bRvwK8vxSiry9NEJW0ZSx0yRNrmSkfTv9g9FbnDNYwz+DTZe2QNyL1?=
- =?us-ascii?Q?B7radpUCui8gAMsbtKAgrWpPGimcDJqjj5osDs2/PUGyGqLM0YVkCY3DbGxp?=
- =?us-ascii?Q?2dtRofJqYRg84QCxQvk2VrVVEA/WBrgJgkIMytJB5x3wX5Q3MNHYjwwBYnfk?=
- =?us-ascii?Q?2ALEbNV3i+KzF0Pj0eqydxYwWMm3UTzim1htmPTLKchI+OP2HKDGvQ+Ohwla?=
- =?us-ascii?Q?w6lTA15BaP46alY0xfFr2SGNX1gGfQP6RAmPwHf2jOyS1I3gUDQyfxuAb/ub?=
- =?us-ascii?Q?KxWOW/7WXvJJJRWyERMjyxjPrJ5F0SpGo7kzY8ktCDOEgxp2l68VyFNdN8Ej?=
- =?us-ascii?Q?icQufBWl9ibG5SXMJS1l5Xv7B4nxGD4B/zM0+1I53UtU+A3AEuKIeBju2id2?=
- =?us-ascii?Q?X47vCHaO6QON+9yxQUAkUA60GlsiyUZEdOGywnDVTAlP5JRWsYTAdUSw09K9?=
- =?us-ascii?Q?eV0gJw+s7LdP/SPj5AvY0nbMAREN5L/hKf/GdB9eniNOtQ3qCluDNDjshpTi?=
- =?us-ascii?Q?K832WPxVIQ2eNy2mJZ2TPH52cGmKm+/wZwMPGyi2uHd2um1lvM4rQZ2FNZ5X?=
- =?us-ascii?Q?swyeD1c1MXhKbMiJEYAKcItRhVC/94cauWDUVVWujZbfMieGv4sDJRPtLjGl?=
- =?us-ascii?Q?n/66c7UWc/k5hUjIUV/7NnyznpkJ97C502iOz2eU1ZOK3l6qsEaH/HwbUh6g?=
- =?us-ascii?Q?TdTmie/iU8eKDSd2N3xtL+h00IStPlZND/eem85Y/zJFxK4G0R5LreUL3ANp?=
- =?us-ascii?Q?yQSzyyTvJW9ltrGUVpTjDDdr1drGRKjIuhexOF1b/bFBJExTrUUjnJcDcKGS?=
- =?us-ascii?Q?9xDz59VM3PapXAL6dE3vd5iDby3TZzJtNAFdHsJ/j4NVkHYS4pvclaeW+mx7?=
- =?us-ascii?Q?rynV/rKj2Kqz/rLdbRLnWUD2DyW7gsfZzF5it0yVFQI4DhTlKkLus8K9xh/t?=
- =?us-ascii?Q?Loxo1CYtDQEir6vQEzA5Fkq53rihfyDYPgpM0vSLCTC4QL+oZ7dJ1h2cFRNO?=
- =?us-ascii?Q?AsLLXWCovcCX+0cSQa32ja0rSe1XjONdqIcrCyBJQjsy13618dMiKIp0DoHv?=
- =?us-ascii?Q?kdHcr9J/e348pElrKJzUgXNv2UZvnGFZaJ19sBWCbop2tasK/bapL7iXMrP3?=
- =?us-ascii?Q?/Tc+e6sH84p7OHRrxFZj2bHZs9E4ANbG5Khv0PZ7RwpT+BjfDBLSoZht3Qok?=
- =?us-ascii?Q?TMwmGoggaCWkowZNqzQ0+ZNvXKZz12AWOMN9XIjkDNn05/3dDRPFgjRJNvRT?=
- =?us-ascii?Q?+6moCkdl500/4XQUaE28rAzSkv9AvzOJ4q2IXjLCzvNxXovL5KmDTCuiLMPH?=
- =?us-ascii?Q?uxjOrKGHTFDcdB57snUoBua/nYypyM/OCICX2xm5Ypq/RAksaW+hbBxYxlF2?=
- =?us-ascii?Q?JiVQzMzKGVIAAUNgBLWs8LmwMuHZdZ8rUDcuVFV5SXN7t1QhNkQv?=
+	=?utf-8?B?WTVFN01GOGVmNmQ4cThFQWlWY1ZiMDJGcGhVN1QyMFFIQ1hQQjNiRWx3ckh6?=
+ =?utf-8?B?eklxWE9XWEJiS3o5VHNuaEYyMVB0WXpOU0FjVXBPWDJwVFMzRGZPNU1sRHd5?=
+ =?utf-8?B?Z0s0eDhSNDRQa2N0NEJGcFhqejc0Wi9UMFBsemhFQi9jYTRiY2VSU1E3T2Vw?=
+ =?utf-8?B?NVRYS0JBZFhPTFZ4K3VNaDhld2RqS1A5ckYzdUlSNlVVVU5lSW9tcU01eDBk?=
+ =?utf-8?B?RnhkeXJiRE9TMk1qU0FQNFhPcjVacGlsMzVmL3p6QU40WmFJdDJ1M2F6L3hh?=
+ =?utf-8?B?dHpjZ3hNUTFKWm1zQng4ajVEMkhMYzR6YWZkVU9SRk9MUXF0T1dGemxaUDlT?=
+ =?utf-8?B?RGZ4NlA2UExyNGZKWGVKMjU5MmowTEV2UjkydmU1MDdVTlVib0xVKzFEQldP?=
+ =?utf-8?B?MjVtYXdnSEhFaElISXplZlh3UmhrcVpFYk9jZThYOXNYdlE3d1pFTVEzN05u?=
+ =?utf-8?B?aCtxUTdaMU5mQWhzMTZPWHdOeWZGT1hadTNoM0E5R0dvdW5CdTVySEZUUitH?=
+ =?utf-8?B?WElJZGFQalJ6NW5PUDhaSWZRVko5Vmh5TUJjcHZlbUdDRUpvRzYxMmNJbElu?=
+ =?utf-8?B?NHp2azE3UDRjbmlkTTJ6SFlPQXJJMHZId2tGR0g5SmxablZGdDFOaDlJbU01?=
+ =?utf-8?B?OURvdmJ0YU96NUdDNFp1Ui9oYkRkYVgzVVJvSW5lbFdyT1F0KzVUd1RMcDll?=
+ =?utf-8?B?RlNzVDBlbEN5bS9PZU16NmdXRDNib2dqYXlQYzNmd1hXdnMxZ3VOL2xPUW9S?=
+ =?utf-8?B?cS9vMWJ0cDZ5M0taYjAydEtzU3YvVEp2YWJWbkZUT3d4UjZaQkFKdms2V01u?=
+ =?utf-8?B?YmJyNHF3U2RXZ0xBZ3FqWmZlVDJqeVZFc2htSS9Eam5waDRZdkZDOTRKemFY?=
+ =?utf-8?B?ZlQ4VG1PNUVnVVo3OFcvZi90dk4wQ29Mdnl4VEZ1QzVxNU9LOVRYWEVRbFl3?=
+ =?utf-8?B?M1JmakM3d0hJNmZoRVlXN2xMQlNVQ21rWkJjN0cyTTRycTcwMys0NkJ3cjBF?=
+ =?utf-8?B?bTBObElYYXo0bVVmZEdsaURlOVpCRnd6QkpxbXJOR0xaTXlKbXZldjZEb3pB?=
+ =?utf-8?B?bnE3NXIxNGhpN0s3MlFMV0xtWFVKOHZjUkJjKzNzcHhEUUl2NWVpTGhjUjgv?=
+ =?utf-8?B?K0FxWkhWVWU4aTM0dFQ2V3pBUGtIYTdVdnY0dEd4M09wNWhkSkNralhJT0ZC?=
+ =?utf-8?B?UWxQbUFCcTRvclVxNnBJckE5SVNKc3VDbEg0ajZncXRxaXJyazVJQzZNakw1?=
+ =?utf-8?B?SVZVZXNwVkpOcTJlWEljaTJ3VkVqYk9iRUZnTWF0enNONEVWMXAwaDdHMmVk?=
+ =?utf-8?B?ZzRRZ0JETXk3aCtjV0YrVHRNOWVYVGFNQitVUUMwZWxrcCtzaDZNbU5MUW9L?=
+ =?utf-8?B?MEtJZGl0bVpyRllzZ28wSlVlR2RzNldpaE9vWmZhZm5OTi9uaHFHMk1CTHIy?=
+ =?utf-8?B?UnN5MkxHaEpPSUZGUEExTVJ0MG4xUURmZjBGbkRpYS96emZJYmtHeGpHZTV6?=
+ =?utf-8?B?RG0xZlF5a2RMa3Ftd1YwOEowQXRabW0xOXcwaDBWTEIyWUVWdzZ3WHBiQ2li?=
+ =?utf-8?B?WG4xMlZyVkNRQmVJU2R3ckcxU1Vvd3FTVVhvMGlvV0xHV2RlWUlVRDhEL1NP?=
+ =?utf-8?B?djRrclZ2Uk05THFObU5CeFJPeUZrQnFhYU9wbzNoWU9BWWlBWnNCcTNlUSsr?=
+ =?utf-8?B?TVVSSnk2L1JJdkdMeWdrRHdEU2gvck4yT3BocTFRTnFPNEhYd1FoNENud3Qy?=
+ =?utf-8?B?UWVuQ2w4N0EzakQ2SjZZOEZqL2dJMGJvdC9SYnFMZi90czBQSGdvekdRbnZs?=
+ =?utf-8?B?NmNYZnphQXE3K05MNWxRdTF5NnBWTnk5Y2pyN040cUFPT1RObjc0RktWN04w?=
+ =?utf-8?B?K0U3RkxLc1FwNFpOdVlrYVJsQXRXVTRVN01HdUNCZERNUkVuQnNQbE1Ba2dS?=
+ =?utf-8?B?SEJLbEpVRVVmWm5MUGdaQzhjVXJWenIzeml2MTFHU0J5UnIrKzEwMDk3UEFs?=
+ =?utf-8?B?VjkraDB6RGlheFFhQ1R3VmpZKy9wRmFsVm1RaVViR3AzQUtPOUNramtqYWRk?=
+ =?utf-8?B?OXFSQWVtc2w3WTRUVkYzOWJDQlUreXp1b0ZKcWJiQ1B3R3B4SDhGTUVhS2ty?=
+ =?utf-8?B?SUVLNmVQYndJOGJyVWF3aGVFN3h2Nm8wZTNqQ3NOQzFLa1E3dTFTOEgwQzFE?=
+ =?utf-8?B?N3g3bmtBWm5UeURPWjBSQmhFV1pxd2JERGJFSkZ0YXBuTkV6NDN0TFNmeXFa?=
+ =?utf-8?B?Y2NHV204OTZjeDhoZVJsSVpBcXFSVDhMcmdzWjRuVUdqbTZjTEFvN1NIZVlk?=
+ =?utf-8?B?SC9Cc0RvVldsN0w3MXJSSjdxU0RmQyt1UVhlUEhJa0syaG5SSmxVQWFFMFRH?=
+ =?utf-8?Q?w9LHnfNPjYUdUHG+y9y3llwfQ9JDYkDW2E8PX?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee112b64-b16e-4703-361e-08df34ff7912
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58c863a2-bbdf-489d-43ce-08df3500b1c1
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2026 14:26:36.4955
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2026 14:35:21.0496
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZH/uQIX74lyS4VQF0juYZ9Pq0oADROx4SlEDjn+RN7+ybXxf6O0CUlCrijxHFlbr6RQysbMT6euZyhNsqJNUkY84246+IuBVQr6rei29eBcSZtkNXqcpcgdGna8PnrEF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9186
+X-MS-Exchange-CrossTenant-UserPrincipalName: X/UDB6mZ+B2k1w2zZ6gM4CcZt+yhKYZoheQ07HtJiGLetDi24xbMPAJUjTkHHYvyjMhixndZCEzlrwgqbd9EWHMAczC4D6RVpNiLc7+Z6tHES9DnLdj2n2w+scdlsan2
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8191
 
-On Wed, Oct 28, 2026 at 07:02:12AM -0500, Rob Herring (Arm) wrote:
-> Property names within if/then schemas currently go unchecked whether
-> they have a type defined or match what's in the top-level schema. Adding
-> a check finds a number of instances of typos. The typos result in the
-> schema having no effect on constraints.
+On Wed, Oct 28, 2026 at 12:28:11PM +0100, Krzysztof Sokołowski via B4 Relay wrote:
+> [You don't often get email from devnull+krzysiek.sokolowski.gmail.com@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 >
-> With this, fix the mediatek,vcodec-encoder 'clocks' count constraint
-> exposed by the name correction.
+> From: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
 >
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> pl330_tasklet() drops a runtime PM reference when the channel's work
+> list is empty, without checking that the channel still holds one.
+> pl330_terminate_all() drops that reference too (power_down =
+> pch->active) and clears pch->active. If a completion schedules the
+> tasklet and a client terminates the channel before the tasklet runs, the
+> tasklet finds an empty work list and drops the reference a second time:
+>
+>   Runtime PM usage count underflow!
+>
+> after which the controller can be runtime suspended while still in use.
+>
+> Seen on an RK3128 board (dw_mmc using the PL330 for SD transfers) under
+> combined SD and USB load, where the dw_mmc error path terminates the
+> channel; the underflow was followed by "pl330_update:1678 Unexpected!"
+> and a failure to request the DMA channel again.
+>
+> Take power_down from pch->active in the tasklet, as pl330_terminate_all()
+> does, so the reference taken in pl330_issue_pending() is dropped once.
+>
+> Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
 > ---
->  .../devicetree/bindings/clock/qcom,kpss-gcc.yaml     |  2 +-
->  .../bindings/display/brcm,bcm2711-hdmi.yaml          |  2 +-
->  .../bindings/display/msm/dp-controller.yaml          |  2 +-
->  .../devicetree/bindings/display/msm/hdmi.yaml        |  4 ++--
->  Documentation/devicetree/bindings/dma/fsl,edma.yaml  |  2 +-
->  .../devicetree/bindings/gpio/loongson,ls-gpio.yaml   |  2 +-
->  .../bindings/iio/adc/amlogic,meson-saradc.yaml       |  2 +-
->  .../bindings/media/mediatek,vcodec-encoder.yaml      | 12 ++++--------
->  .../devicetree/bindings/media/samsung,s5p-mfc.yaml   |  2 +-
->  .../devicetree/bindings/pci/mediatek-pcie.yaml       | 12 ++++++------
->  10 files changed, 19 insertions(+), 23 deletions(-)
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+The same patch at
+https://patchwork.kernel.org/project/linux-dmaengine/patch/20261015-review-pl330-pm-original-v3-v3-1-5be09f37df77@crepuse.com/
 
+Frank
+>  drivers/dma/pl330.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> index 88b7672123a0..ed347096df46 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> @@ -62,7 +62,7 @@ then:
->      - '#clock-cells'
->  else:
->    properties:
-> -    clock: false
-> +    clocks: false
->      clock-names: false
->      '#clock-cells': false
+> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+> index c2d0b47..b0eced8 100644
+> --- a/drivers/dma/pl330.c
+> +++ b/drivers/dma/pl330.c
+> @@ -2090,7 +2090,12 @@ static void pl330_tasklet(struct tasklet_struct *t)
+>                 spin_lock(&pch->thread->dmac->lock);
+>                 _stop(pch->thread);
+>                 spin_unlock(&pch->thread->dmac->lock);
+> -               power_down = true;
+> +               /*
+> +                * Drop the runtime PM reference only if this channel still
+> +                * holds it: pl330_terminate_all() may already have dropped it
+> +                * while this tasklet was scheduled.
+> +                */
+> +               power_down = pch->active;
+>                 pch->active = false;
+>         } else {
+>                 /* Make sure the PL330 Channel thread is active */
 >
-> diff --git a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> index c1cefd547391..fd4d598f6ff8 100644
-> --- a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> @@ -145,7 +145,7 @@ allOf:
->              - description: CEC stuck at low interrupt
->              - description: Hotplug connected interrupt
->              - description: Hotplug removed interrupt
-> -        interrupts-names:
-> +        interrupt-names:
->            items:
->              - const: cec-tx
->              - const: cec-rx
-> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> index 094a6383bb77..f72d1b354007 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> @@ -304,7 +304,7 @@ allOf:
->          clocks:
->            minItems: 6
->            maxItems: 6
-> -        clocks-names:
-> +        clock-names:
->            minItems: 6
->            maxItems: 6
+> ---
+> base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
+> change-id: 20261028-pl330-runtime-pm-b5a30050b2f5
 >
-> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> index dfec6c3480f3..02d27ccad024 100644
-> --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> @@ -113,7 +113,7 @@ allOf:
->              - const: core
->              - const: master_iface
->              - const: slave_iface
-> -        core-vcc-supplies: false
-> +        core-vcc-supply: false
->
->    - if:
->        properties:
-> @@ -136,7 +136,7 @@ allOf:
->              - const: core
->              - const: alt_iface
->              - const: extp
-> -        hdmi-mux-supplies: false
-> +        hdmi-mux-supply: false
->
->    - if:
->        properties:
-> diff --git a/Documentation/devicetree/bindings/dma/fsl,edma.yaml b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> index f609038e35ae..0260d177c7d0 100644
-> --- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> @@ -172,7 +172,7 @@ allOf:
->              const: fsl,imx7ulp-edma
->      then:
->        properties:
-> -        clock:
-> +        clocks:
->            minItems: 2
->            maxItems: 2
->          clock-names:
-> diff --git a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> index 69852444df23..07c8b233c6bd 100644
-> --- a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> @@ -80,7 +80,7 @@ allOf:
->          - resets
->      else:
->        properties:
-> -        "#interrupts-cells": false
-> +        "#interrupt-cells": false
->          interrupt-controller: false
->          resets: false
->
-> diff --git a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> index 70ab4e140e71..535213ba0c5e 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> @@ -92,7 +92,7 @@ allOf:
->      else:
->        properties:
->          nvmem-cells: false
-> -        mvmem-cel-names: false
-> +        nvmem-cell-names: false
->          clocks:
->            minItems: 4
->          clock-names:
-> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> index 4505e66876a2..52f471a070d5 100644
-> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> @@ -110,19 +110,15 @@ allOf:
->
->      then:
->        properties:
-> -        clock:
-> -          items:
-> -            minItems: 1
-> -            maxItems: 1
-> +        clocks:
-> +          maxItems: 1
->          clock-names:
->            items:
->              - const: venc_lt_sel
->      else:
->        properties:
-> -        clock:
-> -          items:
-> -            minItems: 1
-> -            maxItems: 1
-> +        clocks:
-> +          maxItems: 1
->          clock-names:
->            items:
->              - const: venc_sel
-> diff --git a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> index b46cc780703c..4488d5ca9b9c 100644
-> --- a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> +++ b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> @@ -174,7 +174,7 @@ allOf:
->              - const: mfc
->          iommus:
->            maxItems: 2
-> -        iommus-names: false
-> +        iommu-names: false
->
->  examples:
->    - |
-> diff --git a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> index c009a7a52bc6..7c40361f95ec 100644
-> --- a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> @@ -127,7 +127,7 @@ allOf:
->          phy-names:
->            const: pcie-phy1
->
-> -        power-domain: false
-> +        power-domains: false
->
->        required:
->          - resets
-> @@ -150,7 +150,7 @@ allOf:
->            minItems: 2
->            maxItems: 2
->
-> -        reset: false
-> +        resets: false
->
->          reset-names: false
->
-> @@ -171,7 +171,7 @@ allOf:
->          clocks:
->            minItems: 6
->
-> -        reset: false
-> +        resets: false
->
->          reset-names: false
->
-> @@ -193,7 +193,7 @@ allOf:
->          clocks:
->            minItems: 6
->
-> -        reset: false
-> +        resets: false
->
->          reset-names: false
->
-> @@ -215,7 +215,7 @@ allOf:
->          clock-names:
->            maxItems: 1
->
-> -        reset: false
-> +        resets: false
->
->          reset-names: false
->
-> @@ -223,7 +223,7 @@ allOf:
->
->          phy-names: false
->
-> -        power-domain: false
-> +        power-domains: false
->
->          mediatek,pbus-csr: false
->
+> Best regards,
 > --
-> 2.53.0
+> Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
 >
 >
