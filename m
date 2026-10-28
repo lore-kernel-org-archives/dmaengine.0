@@ -1,98 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793219048;
-	b=uP0/aWMa6SHc9y7/0EdyVi4o5D4JaDoy8B7YHiceaiiwiBvKe44HJlZgyIlX3QceAobV
-	 anL3G0wsegxNrsK0dC3bApofrFKNzvsU+Csi3IpOK6shh1vA7hW8Hxn3RVgEYIlWwAvQP
-	 QFbymCsAQ7jKFmWx4nplqsQsF+HvxAB45ZYbWqaCKSwmzaH1kzSU7iuvIfwDwJZB+XWqT
-	 xAMzIZ6b6EET08VbOaHhF5ejmoIpQaxgx1Zwt7OoFHgWo3Y10bMYtivN9VndDtQY9aDr5
-	 BJg2qKgktn8ZGkAruZROC00e2PsicIDbDrgQAQZlhW1pQHEkfTQXMf5DYu0fG6hNYPQ==
+	t=1793219072;
+	b=0+OBGzA1kXhy5aZkTP4wOslViEqAtB8QvbP5t7uwEcI5VWZAd/F/QT6vFTU8aLmS7DO/
+	 6Z+piK8x8peYMx4SBGHikyG9YWBNHgNWkwIvAp2k7hF0PdCIu/Smaj/NG/055PtLRfC1z
+	 9WUoAzvTclPVEtV6/0qCS8fLO/ELazw+/9FA67pG28toy7cl0C6DgeZmIoyYC4JjXrksf
+	 i9Zb9OvlDETqZpU3Mtkad1nZzzyhXzvHT5MLa3vWB8dlEcVW2SpNicKuFevMVca17I6WK
+	 6RsSzRE7Dru5bI4kIMlR2YEuWi8WTCxKHLaHYnxJOPTJlD2dZpl9VGDzpPLFBDUZsWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793219048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793219072;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5lS3F0Cpg++YyxcvMj5RtcnTaD4p5NTHQ0SzmxT4UpE=;
-	b=xeWyD2ksvkYwYAarM09KmhNjU53JslgiNeoenCPeXbVllJUxlhMbsOcgqt/Brqb/fLGa
-	 y9kZE3maZYONDmAfGNeJWMtCBjbD2S7KnN1Qx/SOeDMyoeDTI0Qf/IrzGbfzokzBp/foc
-	 qUj2uoJ4OZJPBrEpvx938QuOj2uoWLJ4d3wxyaY2Hc/Bb3oEJLPHHR9csEpc8wyv5JLpJ
-	 zVXrMXUk020Jk0izJolXpFItjt8c16KKIU/4w1bTFwm9ZNXGH3PCH279A5EI2abWGcv28
-	 5yqvdu8ScBXJWr50wSKka6keeaIV5CaXpTINsqyqGeZGsfZnJA53qETvuaRzKpqV4gQ==
+	bh=KZO0llYPU/YEOMtaIxYJKySzHbda7jaK+nmG1BkJ+Z4=;
+	b=rnSIH2KOt794lDXaJJ7+DAcRK2/f1b2T1vAxdNWPZyaXj0fFACUiILrPAdhUVdjzGT92
+	 HvzqZyKfllYF2cETmZ1rjWdrKLXrAYhtBJLL+mZQ1NEtu4zZzc2gwSKRhPC2FXOD7v/Bt
+	 kNMdPSt853Rh+4Z5hK+TH8xyWwlCC1W/9Cr0jLv2TlX7GjUdKmRXPpqq6unVctxzWI0KF
+	 I5cw/EGAKPQjPzhVuANahNTLAnIftjGQXut59+E1QizYkhNCl+G9LYF6lVAgEpyeb3snp
+	 1j9ROgjLmLcCeSIvppMZ9Ek5HCvbVHyygPBbJ+h7xe8QPXqhWfA0AWalLb8iIWf7iaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=purestorage.com;
 	spf=pass smtp.mailfrom=purestorage.com;
-	arc=none smtp.remote-ip=209.85.128.47
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	dkim=pass header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=CUXRjv9P;
+	arc=none smtp.remote-ip=209.85.221.51
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11F7606A32C
-	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 20:24:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D11F7606A32C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1096606A31D
+	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 20:24:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1096606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=purestorage.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a5177d78c7so13877965e9.2
-        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 13:24:06 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=CUXRjv9P
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e10a70540so937154f8f.1
+        for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 13:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=purestorage.com; s=google2022; t=1793219045; x=1793823845; darn=vger.kernel.org;
+        d=purestorage.com; s=google2022; t=1793219070; x=1793823870; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=5lS3F0Cpg++YyxcvMj5RtcnTaD4p5NTHQ0SzmxT4UpE=;
-        b=apIzO/FLOIPEPyIQkW/EQOtJrZIBvmNI7vSesQpObzJ/kDpba9EGoD4T0k5TLlc181
-         0kXlmFAp56SVfPFL1kLdPKR4f2B+BRrUslAmh3XfWufk1Fz0R8M1IJCBxkhHREtkD+WG
-         LCdDG8bhnGcuRLHKtA8Y12TW8DcnlEZwaJtoYDyddQoafRj8VPtbu2HI9HSl+jTMo6L3
-         4mrmKgltCTm4etvn4GMrOmZfhQXwtmk4GdiyOmA2LoD32RcIM+ruzwDhNDTv51XJ3VJI
-         /PsQsjLABk+gmp0wznLa0iM8ZKncdgktyGSTwKEYlLe8CgK4cEc+8ZA0gSjh9Kwp++jl
-         2fIQ==
+        bh=KZO0llYPU/YEOMtaIxYJKySzHbda7jaK+nmG1BkJ+Z4=;
+        b=CUXRjv9PZSBaRi4Wr5D8+F2lxZ45eA+WHxVPHavMmQwNXaeV4ess/InR84ibks/mnX
+         aU9I6nKsVRlRaKBP9vrQVXkJiHjpN1cek6LE3Xix9Y06b8ZWe+QmBMosbkVgJCCf1LQz
+         Sb/cpp/y5p15sN46rRyYK9ZwahZk9BPH1tjoacBuCjdRipjylWbNrDmF8qVwuhAlryI+
+         GVyclxvFwoJ0lUd9cCNoxYGp4QxoMDq1aKRq8lOSWgfveIDS4OIa7aQ1P9jYjR7eVqKa
+         LNtqRjnGYpJlK2m4ofSEkTGYlXQ9szu4c4akgBBTB7irBAN5yNng/GEjJuc+v0i+uUsp
+         nCFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793219045; x=1793823845;
+        d=1e100.net; s=20260707; t=1793219070; x=1793823870;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=5lS3F0Cpg++YyxcvMj5RtcnTaD4p5NTHQ0SzmxT4UpE=;
-        b=e3HAicvrCgnWLkJlMdMZu9jROSFQzc2CqzBihiUOvv5Y4JmyxYS79DY4fjVbZMNLMO
-         nD0wHpKJTBRshRfD2Kf0lfGLNr50cQUA39KwjUgM5QLMeKoVdNMAwrzZlVqdkn/VqgSd
-         lHXPdFNYgWnZpziRp71oT5dm8fzyIkMgyPsYNLw52/EyI3vdKVEMwXtFmRVRheTNXjsq
-         idPZAI0BQz5YZOvzsO5NmAz9ESXYasqmmWg+SyjKIdv29bUFkD/3ugtaZoeRWlfEWfSR
-         VbdEP1sYCDLIukwTHa9jzRIEXYQTZv9vnj+xWRCyGMXpUKGhfNF4XF7OWqbcJ58vcf11
-         JWKw==
-X-Forwarded-Encrypted: i=1; AKwUvBxR+4eb7B2sRAK37WMeeNrbEuYnZZkuNA2WHXCWQwayr0/6FjR9nbjDUCYJmtQMlkMkxqMbHCm4YkU=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLyYgqI3HZkb/NznkqUol2E22Pz+r4Z5NgIv1y+EoyprVriYZqt
-	0qK8mgX4WHQNUmvkOInmTHmjJMvYAcb9hXTtjU5tTdc/FWyFveH0ZiJgAsnFWWHBmwc=
-X-Gm-Gg: AYBFou3VFXWUAhedqaNgnk/3HrwILI/2WIYr4E7nZg/l9vPFrsFRtg71v4zVspKd0rK
-	kExXPj3bH8uQ/WG4jPfAgE2qo2RKCF3yYzud12jAG7lHZOxPAXp1wq2IpVP/iixpGPsVAxP4acR
-	39aBouggafUC/iDGKjnEU518MByTJ+CwgR3h9KPWMhHux4ks75EjHQj6je047jBhlzHFZiMsp+C
-	BaArLXsVSl342qWlTkigR1mPPuVOqguBW+y8Zk3qg+LI1vD5+EtlNqrcOms5bYnuEmulXCej88/
-	fPUM4VOQOsrHxVMa/8qnsPbqjPRuu76seZO841R1JXHFcowedBLCp0aExnKCO95VTuu3PsnqeIU
-	xSt536ZXsXZhyV/NEP/xsywHyqegLGHerjFPOG9sklHzTwiOqe7sKscneaO3YGGr5VhWwmbV7UE
-	thLQWnc8XzWQMowT15krb1KgDnbaydxNQgMKbuj2bmGBtsu4nnsnoMGViugRdWvBj+1vfD4B7OD
-	IOf74vyBhAl+PRIYkQgBMbem2bebDCJFWVJyTfuyN5QyVW1suX0vSXB0ML6M2GNvtOSH4YMnCKI
-	NlYorVlvZkj8pctE/0QpFDFLFQrj6AxI06w6wL321F8kzPxI+9QTkxZmmqaerfyYdIidY9vbluO
-	s2vTDlZR5Zn22hw1YUKDCqTgbUqQlnHLK
-X-Received: by 2002:a05:600c:350b:b0:4a1:fe55:88ef with SMTP id 5b1f17b1804b1-4a966c41721mr72974675e9.20.1793219045017;
-        Wed, 28 Oct 2026 13:24:05 -0700 (PDT)
+        bh=KZO0llYPU/YEOMtaIxYJKySzHbda7jaK+nmG1BkJ+Z4=;
+        b=Oiou/60lFci/YpVKy4kLwmD/Zn/yxTzH2Sr5R7v1A/0kjxFgu9bPpSFlb7U33yG7DE
+         s8x3XZcrMUx3dfrRVfi2hdALtOEmsV+2dHPVB1ZTTwEQh7CvOcGUw4o2K2asbrDqxhlr
+         cpW7D/RsEKIMi4nJJg1tG+wVDwgE5R+7zTnYM9yNwbeXGoPfce+ZvCMEm15VmGgcQnXO
+         vxO98kwuLdFlr3Qze6PjhUMGM7ah+jf7HT0V0anuUQ7CMnf8j8LYc8CBeLnxTIzfKsrq
+         XY0z3u+3Lbb8TKtmpt5z463D5b1XDiVWPaloEjhZnqvkXP5FUyDTRzjHe4VTmYMyTOib
+         XGKw==
+X-Forwarded-Encrypted: i=1; AKwUvBxeRNL7rVWgbWsYsxnzGzNc3AL0O1iCAeHPHXHrgGlfiV4Cqt1ioYzfrF1xPjHlQKfckAIM5E+yT2k=@vger.kernel.org
+X-Gm-Message-State: AFq9FYLbRdIiagjRb9tEoYYSgYJuZcTJZ80DQisyW+N3Ve23QgVAGqTi
+	d9teYYkTE4fe6IfJ8PvLHtLBAawcmJb91f/7gk2ePsfORO00ilVjNz4sXYnMHagtZ9A=
+X-Gm-Gg: AYBFou1GDxgr9U5s21YOJdHHwkuKQ27auKGrYwJETZq5MsJi+InQBupIC0gvsUBwe1K
+	mv4iLs2Wwv7WMvFtvaAUjQvlBzM7JYMY5pOxQWWG/eMdBnVPoJ+CZvD12a9vYfNa/PK3NR3/WSl
+	YczvdKN4MgNh6lzdmOjACpbD9z4dnMOxw05CzmkjFi2pmTFGEvqZUHzR4TBpa1RCJXHM7jI0LSz
+	Z8toGKmquFFbfzUQzFt2vxwZMuz2nWeu/CcyDUGeb11aGCoOIeaNcogfneAoHPVy1FoDtf/67dJ
+	1sh7/jpO62bnhfp02tDaWck3QWErFVEfaDrm+hELfIjoecODKvdw7Nkt7kBrvsJATJQcyyTIKjl
+	Z/FQIKzO7hMqy6B1m+tODzSkm4j8FY15BumVyszWIEMQfRIc3/A5Th2fWhxIZdmgwhXqzgj4oL6
+	PITRMuGkcJNQt/UbzA32C6Y8r3OcPqcM0GoOrWLQUt2ERzOAF6Pp1Y1CeBmRSSxdKRazLcgexe6
+	Uols219IWTp5Jmy+0u1vDAQ0x3OGbp4/lqYXIar+2U4LeA/0dmJb3cHc6hLaMc72kaMOuoXPOzo
+	nEkNzLBh8AZb2aHcCgGwkOxsuHaGP9yGOdYBBrGZVdWrWnhDh1sN3uVQ/XTQh2TNKN5BaxepLCa
+	ci4pDPim2rtY=
+X-Received: by 2002:a5d:5d0a:0:b0:488:83f7:6352 with SMTP id ffacd0b85a97d-48e5d58cca9mr9393565f8f.4.1793219070045;
+        Wed, 28 Oct 2026 13:24:30 -0700 (PDT)
 Received: from irdv-jinli.dev.purestorage.com ([208.88.158.129])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4aa7ee57589sm17498015e9.2.2026.10.28.13.24.02
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-48e412cc164sm28563439f8f.7.2026.10.28.13.24.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2026 13:24:04 -0700 (PDT)
+        Wed, 28 Oct 2026 13:24:29 -0700 (PDT)
 From: Jingyi Li <jinli@purestorage.com>
-To: vinicius.gomes@intel.com
-Cc: steve.wahl@hpe.com,
+To: vkoul@kernel.org,
+	vinicius.gomes@intel.com
+Cc: Frank.Li@kernel.org,
 	dave.jiang@intel.com,
-	vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	fenghuay@nvidia.com,
 	xueshuai@linux.alibaba.com,
+	fenghuay@nvidia.com,
 	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Jingyi Li <jinli@purestorage.com>
-Subject: Re: [PATCH 0/6] dmaengine: idxd: More error handling fixes
-Date: Wed, 28 Oct 2026 20:24:00 +0000
-Message-ID: <20261028202400.1144290-1-jinli@purestorage.com>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] dmaengine: idxd: fix crashes in the probe error path
+Date: Wed, 28 Oct 2026 20:24:25 +0000
+Message-ID: <20261028202425.1144329-1-jinli@purestorage.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
-References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
+In-Reply-To: <20261028003708.834341-1-jinli@purestorage.com>
+References: <20261028003708.834341-1-jinli@purestorage.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -104,42 +105,30 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Vinicius,
+Hi Frank, Vinod,
 
-We hit the bug fixed by 1/6 and 2/6 in a kdump crash kernel on
-systems with DSA: idxd probe fails at device reset ("Device is
-HALTED!"), the error path oopses in destroy_workqueue() on a NULL
-idxd->wq, and no dump is saved. With slub_debug, the duplicate frees
-in idxd_free() are also reported.
+Thanks Frank for the review and for pointing me to Vinicius's series
+"dmaengine: idxd: More error handling fixes" [1]. Patches 1-3 of that
+series cover both patches here:
 
-Testing: I applied patches 1-3 of this series on top of 6.18.57 and
-tested on 10 systems with DSA, triggering kdump with idxd loaded in
-the crash kernel, with and without slub_debug=FZPU. Unpatched: 10/10
-oopses in destroy_workqueue(), 0/10 dumps saved. With patches 1-3:
-10/10 dumps saved in both configurations, no oopses, warnings or
-slub reports.
+- 1/2 (double free in idxd_free()) is covered by their 2/6, which
+  makes the same change to idxd_free().
 
-The failure here is at device reset, before idxd_setup_internals(),
-so it exercises 1/6 and the idxd_free() part of 2/6; for 3/6 it only
-shows no regression on this path.
+- 2/2 (destroy of a NULL or already destroyed workqueue) is covered
+  by their 1/6 and 3/6 together. 1/6 adds the same NULL check in
+  idxd_conf_device_release(), for a probe failure before idxd->wq is
+  allocated. 3/6 removes the early destroy_workqueue() calls, so the
+  release callback is the only place the workqueue is destroyed.
 
-Could 1-3 carry Cc: stable? The commits named in the Fixes: tags have
-been backported to stable kernels (we hit this on 6.18.57). Also,
-from reading the code, 1/6 alone only covers the case where idxd->wq
-was never allocated: with only 1/6, a failure after
-idxd_setup_internals() still destroys the wq twice (once in the
-unwind, once in the release callback), which 3/6 fixes by removing
-the early destroy. So 1/6 and 3/6 should be backported together.
-(Our kdump failure doesn't reach that path, so I haven't reproduced
-it.)
+So please drop this series in favor of theirs. The one caveat is that
+1/6 alone only covers the "never allocated" case; without 3/6, a
+failure after idxd_setup_internals() still destroys the workqueue
+twice. If 1/6 and 3/6 don't both go in (including to stable), 2/2
+here would still be needed.
 
-For patches 1-3:
-Tested-by: Jingyi Li <jinli@purestorage.com>
+I've replied on their series with test results.
 
-I sent an overlapping series [2] before finding this one; I've asked
-for it to be dropped in favor of this.
-
-[2] https://lore.kernel.org/r/20261028003708.834341-1-jinli@purestorage.com
+[1] https://lore.kernel.org/dmaengine/20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com/
 
 Thanks,
 Jingyi
