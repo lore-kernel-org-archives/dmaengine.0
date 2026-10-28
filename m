@@ -1,101 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.8
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793147842;
-	b=ne9dr1zQDsJXkSko0YwxzzOmsJW61eo1R8EyUJNKmyVBRAuEuh6BikAfs+S93dbggdNg
-	 s4eZBDKjTni/ScZT18G49WH0kyzxjYZOpDP8PbzwvM2KCgS3csGiRwuZTSKpgu3+d+9/2
-	 CitvavNteVWaY1huqYVD55KCM2j2QUzvt6paU9OvJ4ZfHV6tfpVjPaGWbNahhUI2drFGO
-	 3bKgfgwAcInCMFGf7iPB0nxtjZlchML9BRqmZYfXpk4OEX8u+I8CvqnL+sUeQynz5DKly
-	 PE4iH4sqMWAIN5fW80PeNVrSP/KpV0nVKMRoCsYsRnx5x9IPR+/01b/wNjMg3XQ8rZQ==
+	t=1793174662;
+	b=tM1eKuiw+qZaW4h3XGvCwYkS/XfKug7dbHF76lC2dbk1ug8xvnamlAHLNUcKtRyY6Ym4
+	 WYSsTQIX2BzC9RjIZF9e7G+SozvIngByaQVo1G6c6LCXwHlnSVlvy15fxiTtns1I82D32
+	 hcpatUDoZmlV8TDtUtAPz80kIA8/AvPLzxw/3n9GZLWEEWFGY4yD9stkyyQArwbGrnEXy
+	 mfvgUDn/FQ+xfCyDjnVf6xdZGKZbmhs58AlRad0r58Xr7Crrpi+P6ycYzq8gw1jlvHm31
+	 TkBSix9Gbj1UM15RkLylsq5suBK4hROOFbTlOf09oudsg+b/8LcGcyPFOYPZuja9R7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793147842;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6z3QohFwrl9/yr27qFYsYBSnTw/3E1beDpN8A1lFb2w=;
-	b=jdUoSVjhPRvLXT66ToT0KPdL1NJn0yOnLCpP8I8vyD4vVzp98cbeHkUvlqQyvz00OW/a
-	 VLbDWrf61BGfJKEpWT9xRb9BYLQgJw52hp4fmdXVx//7/wL8EfAEqsYOT9I8x6H5yWsfF
-	 MrMT/qSfctBTfDUdzhDVOe78nlm1zoXokRMXIFKWAlEHQzyxlxjg8Arn8L1ydD2ncslRD
-	 /Vz8NFU3QTlKf7Z8o5MY5D3+kECIbSIqwyJCrR3Y1Cn1Jci06RLF16+6WV5L9bpdU8UST
-	 CKTf5JmVmzD47reEvWiQuA5+l+WFkDzUzZZdt8yLUoAvtWsYEqp1T/HHEAVFiNd+r/g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793174662;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=QYUY+SzuyzidMIs5wvcWQ+wJedzQHVpapr2RX4nAS3g=;
+	b=aTCP8atxdM5BlUJgkAlpC5uZTrCgJHVEntngJprjERh8IqtrmZQTX6Spl4k2QvqHOpie
+	 LJIH5i0ircn2R92jq5tpC6OWcT5VTdAXRV0Ocfyj1JS5+OaMWQwEvVaaFxdBCLF5cUDI8
+	 z5MCvTzAZ0FsltTlBjh5Yp2A14Hc0fHInMlil+Wr7F4lfgbXwd5mfgBVLOLoML2naUpXo
+	 Lj+FzrCZih+dwmV9bfoBWG9GHo1HRd539Ooeu8L9QtALEO8WEANTAKSDFptRd8FK7sB5O
+	 iAIXiUfiMndIfnoEKgrfMwfwTCZt8rBBpFjmqtIhqaXmDDNzoBq5mOVN9I+T09HaPDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=purestorage.com;
-	spf=pass smtp.mailfrom=purestorage.com;
-	dkim=pass header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=Us3BQ6Oe;
-	arc=none smtp.remote-ip=209.85.128.54
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PSBniF0w;
+	arc=none smtp.remote-ip=192.198.163.8
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3F7606A337
-	for <dmaengine@vger.kernel.org>; Wed, 28 Oct 2026 00:37:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F3F7606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=purestorage.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=purestorage.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E841606A31D;
+	Wed, 28 Oct 2026 08:04:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E841606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=purestorage.com header.i=@purestorage.com header.a=rsa-sha256 header.s=google2022 header.b=Us3BQ6Oe
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a1df4c0966so2825185e9.1
-        for <dmaengine@vger.kernel.org>; Tue, 27 Oct 2026 17:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=purestorage.com; s=google2022; t=1793147840; x=1793752640; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6z3QohFwrl9/yr27qFYsYBSnTw/3E1beDpN8A1lFb2w=;
-        b=Us3BQ6OeRGuRLKCh4A/xtwYUHovES9okx+gEuRziZgqPd+whmms6vJJv/aAT7oMEJ2
-         3rCugxLgKUVvC706v+s9kTo6ahP81FDSnV1qrL9ABg7JTwdbjmUglOFXrlP0E64jrRfo
-         nMxpepUMNBqgrb253CsbpMePH9H8wEJTZgaVb503dpyFixRl6qhgpQ1iFaJQeWTKChxW
-         P1BYLKCna4TSyR3tdO6hLCwBPqrW4H44+KlDyU1joaYrtoOLQWw8T2t5psyRfsKl3w25
-         R6/A7nd0IPcIKGML4ixFDkBiYai4YeJpvW7E5kTa5klSmbCNsipZkgWAAqUjgS+6AFmm
-         +hlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793147840; x=1793752640;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6z3QohFwrl9/yr27qFYsYBSnTw/3E1beDpN8A1lFb2w=;
-        b=xnoVnao63stV3A7vz8ufCs+KbOEV5aXrSM0dOWC9BiHIn6FF7FphWD2KEFpEuXWh+1
-         rzaSyynyrwqU4fyURwDiBK3WkzjfRKGMAqTnPz8EgAtutGY6+daxVIi4n7BWkXS+5Xnu
-         fE//+Lznz2KVOKLu9x7cH/ms+Z2JLFXpSi0S7UOYSJZcNiCnKwKMWPvWeRzY97xlXEGF
-         782oRerdzdGAHbjPeybzrxqUAzwHkEJ8dF+jiqfpJQVyjSxhI7TS1LeK28k0At36wKXw
-         xrAYs0kf2Q3fpS7+G0ExhH9z8+bSjLXw6WIKY595V23zjxEty2dQ6C4LurL4GJ3xExgL
-         ghiQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzUcKfs6M9M2Hlu9+jahm66y4vIdYRpNUAF9WHSbyYK7ST8/Lt48TMcP8qAmuLxuETjt4wS/5InTKk=@vger.kernel.org
-X-Gm-Message-State: AFq9FYLwbtR1n8y2N2cFpTiVhmHbE19OkoZR7B0nTzFHmFEiBouqDPvd
-	+1C8PbUi1pQ3n8/AWe+lOjV1XTSFIubhaEYRv28A/SA1w+Zy/+5dwBU2fAqeEmjPi68=
-X-Gm-Gg: AYBFou3VzuHM5aadNawAczOjuQpC20lXSLcatmKdxoXY7bf8+LeiB/KYzbxWALA66cT
-	SXLWbxBTeMl0kN/BnAlMXMd+pzs4VaGY814eSZ32ba+xgbpwuIsGDhbKwluE4JlxBn5bqQOOz6J
-	eBZoBTge2ZVkiPCvksLPKfV39EoN2xP7ngT2/KF89v51dr4+o1DjmTeLmKJaaoRUxzbYkOswi2d
-	Sg58MkyxKC0Pcf+B7kysIkIDVJC27AfJ2piyK6Tcve0R7GfiDh/8+SVW3thz5eEdtwaFGwnwg0C
-	5ORpJpjOx2bFIL7tLHYwqQOiQjwHxmAMbk6qCmmOTc37ZhJVtIBS+ce3dUD+bKB6LBL91KBxYwr
-	eJO9cKN5ucllgVboX//Kfmuw+oEO5Xn5EmQyllMDDWe9HyNt+pksh9FC+WYMF2h4AQkoiwWo6Ns
-	5UvxFuOF7Ygb/BpJS1OWis7V/Fa85xrK0rqpgfbKfX70/XcPNU2annbCDIzeoXq6U9HTkbFEZg4
-	HqouXy/HgWlhoQ/0eX/G/Lek2EyJe257lgM8s/hcjAjZx8USAPY8iI5wewVAxCytffJvoMW9HGb
-	pKI140/2BvoSugIhsJ9VP9X4aEfBQyna7841v5Sz1h8v0IahzTDay9Z5RHkYuuM7TOiXtHFjTiV
-	m/kDt6WXxY4w=
-X-Received: by 2002:a05:600c:3e15:b0:4a2:18c4:61a5 with SMTP id 5b1f17b1804b1-4a9961f3d36mr3510115e9.6.1793147840030;
-        Tue, 27 Oct 2026 17:37:20 -0700 (PDT)
-Received: from irdv-jinli.dev.purestorage.com ([208.88.158.128])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4a976010d2csm8395245e9.2.2026.10.27.17.37.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 17:37:18 -0700 (PDT)
-From: Jingyi Li <jinli@purestorage.com>
-To: vkoul@kernel.org,
-	vinicius.gomes@intel.com
-Cc: dave.jiang@intel.com,
-	xueshuai@linux.alibaba.com,
-	fenghuay@nvidia.com,
-	Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Jingyi Li <jinli@purestorage.com>
-Subject: [PATCH 2/2] dmaengine: idxd: fix destroy of NULL or already destroyed workqueue
-Date: Wed, 28 Oct 2026 00:37:07 +0000
-Message-ID: <20261028003708.834341-3-jinli@purestorage.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261028003708.834341-1-jinli@purestorage.com>
-References: <20261028003708.834341-1-jinli@purestorage.com>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PSBniF0w
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793174661; x=1824710661;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=GlCrv/Z8ykZTWKLkjrgizpbqqqsL18IOZ9JsGj4pQww=;
+  b=PSBniF0wd7ppMixld2UUoEB73b1yiGoF8vRXQw+G1YSVuOdfGa10kRy1
+   PP038b2/20WyHj8Za8s3lOK6A5CKledqp9kljtVsDUOiHC+eGA3zA2vlM
+   MT+/FAI3eBlmS2C57vmTMY/nyWjYUaQySkZWV1rFyvAhDua/Nh3xd3GdY
+   sWwjrfJ8DDi7yQFTihVA+9UVxHpxbl2/Ir0XbFIFvaF+ALvnRLsnNW4NV
+   s/AYwI6IkDwqYskbzcKE+gmmy5RrHX+JztLgLKfgdsnx3gKVSDAKY0OQJ
+   fttgekcrMV59ncuafHN6jde7skpkm3TP+u/EPoo8Z96VcipDy/1yMDhB8
+   Q==;
+X-CSE-ConnectionGUID: VvuNxWhBR5mRVIB/1sqpXw==
+X-CSE-MsgGUID: S9P5R5nJQ4GOca9bIDys7w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1780746"
+X-IronPort-AV: E=Sophos;i="6.27,182,1787036400"; 
+   d="scan'208";a="1780746"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 01:04:20 -0700
+X-CSE-ConnectionGUID: 3U2XXT5qQFSCkgAuKxEChg==
+X-CSE-MsgGUID: XN/qcR2yR4S9jibXAKAjrg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,182,1787036400"; 
+   d="scan'208";a="4852263"
+Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.117])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 01:04:11 -0700
+Date: Wed, 28 Oct 2026 10:04:08 +0200
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Zhou Wang <wangzhou1@hisilicon.com>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>, dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-mips@vger.kernel.org, linux-tegra@vger.kernel.org,
+	Frank Li <Frank.li@oss.nxp.com>
+Subject: Re: [PATCH v3 1/2] dmaengine: virt-dma: share the DMAengine
+ synchronization callback
+Message-ID: <auGseGw39K115Zfi@ashevche-desk.local>
+References: <20261027-submit-mtk-uart-dma-synchronize-v1-v3-0-aad7a6b3c62e@gmail.com>
+ <20261027-submit-mtk-uart-dma-synchronize-v1-v3-1-aad7a6b3c62e@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -105,80 +111,33 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261027-submit-mtk-uart-dma-synchronize-v1-v3-1-aad7a6b3c62e@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-idxd_conf_device_release() unconditionally calls
-destroy_workqueue(idxd->wq). This is wrong in two cases:
+On Tue, Oct 27, 2026 at 12:22:26PM -0600, James Hilliard wrote:
+> Several virt-dma drivers implement device_synchronize with a wrapper that
+> only converts the DMA channel and calls vchan_synchronize(). Provide
+> vchan_dma_synchronize() with the DMAengine callback signature so these
+> drivers can assign it directly.
+> 
+> Document the requirement to stop the channel and prevent new callbacks
+> before synchronization, and the context in which the callback wait may
+> run. Replace the equivalent wrappers in the existing drivers with the
+> shared helper, preserving their callback-wait and descriptor-cleanup
+> behavior.
 
- - If idxd_probe() fails before idxd_setup_internals() has created the
-   workqueue, for example when the device reports HALTED after reset,
-   idxd->wq is still NULL and the final put_device() in the probe error
-   path oopses:
+...
 
-   BUG: kernel NULL pointer dereference, address: 00000000000000d0
-   RIP: 0010:destroy_workqueue+0xe/0x300
-   Call Trace:
-    <TASK>
-    idxd_conf_device_release+0x15/0x90 [idxd]
-    device_release+0x3c/0x90
-    kobject_put+0x7e/0x1e0
-    idxd_pci_probe_alloc+0x300/0x15e0 [idxd]
-    local_pci_probe+0x22/0x60
-    pci_device_probe+0xd4/0x260
+>  drivers/dma/hsu/hsu.c                          |  9 +--------
+>  drivers/dma/idma64.c                           |  9 +--------
 
- - idxd_cleanup_internals() and the err_evl path of
-   idxd_setup_internals() destroy the workqueue but leave idxd->wq
-   pointing to it, so the release callback destroys it a second time.
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com> # hsu, idma64, virt-dma
 
-Clear idxd->wq after the early destroys and skip the destroy in the
-release callback when there is no workqueue.
-
-We hit the NULL case in a kdump crash kernel, where the DSA device
-fails to reset and the oops kills the crash kernel before the dump is
-saved.
-
-Fixes: 3d33de353b1f ("dmaengine: idxd: Fix not releasing workqueue on .release()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jingyi Li <jinli@purestorage.com>
----
- drivers/dma/idxd/init.c  | 2 ++
- drivers/dma/idxd/sysfs.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 1577d22b299c..5962cacef060 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -389,6 +389,7 @@ static void idxd_cleanup_internals(struct idxd_device *idxd)
- 	idxd_clean_engines(idxd);
- 	idxd_clean_wqs(idxd);
- 	destroy_workqueue(idxd->wq);
-+	idxd->wq = NULL;
- }
- 
- static int idxd_init_evl(struct idxd_device *idxd)
-@@ -460,6 +461,7 @@ static int idxd_setup_internals(struct idxd_device *idxd)
- 
-  err_evl:
- 	destroy_workqueue(idxd->wq);
-+	idxd->wq = NULL;
-  err_wkq_create:
- 	idxd_clean_groups(idxd);
-  err_group:
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 6d251095c350..d5ffc641c856 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1836,7 +1836,8 @@ static void idxd_conf_device_release(struct device *dev)
- {
- 	struct idxd_device *idxd = confdev_to_idxd(dev);
- 
--	destroy_workqueue(idxd->wq);
-+	if (idxd->wq)
-+		destroy_workqueue(idxd->wq);
- 	kfree(idxd->groups);
- 	bitmap_free(idxd->wq_enable_map);
- 	kfree(idxd->wqs);
 -- 
-2.43.0
+With Best Regards,
+Andy Shevchenko
+
 
