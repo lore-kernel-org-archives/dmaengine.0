@@ -1,107 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.8
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793174662;
-	b=tM1eKuiw+qZaW4h3XGvCwYkS/XfKug7dbHF76lC2dbk1ug8xvnamlAHLNUcKtRyY6Ym4
-	 WYSsTQIX2BzC9RjIZF9e7G+SozvIngByaQVo1G6c6LCXwHlnSVlvy15fxiTtns1I82D32
-	 hcpatUDoZmlV8TDtUtAPz80kIA8/AvPLzxw/3n9GZLWEEWFGY4yD9stkyyQArwbGrnEXy
-	 mfvgUDn/FQ+xfCyDjnVf6xdZGKZbmhs58AlRad0r58Xr7Crrpi+P6ycYzq8gw1jlvHm31
-	 TkBSix9Gbj1UM15RkLylsq5suBK4hROOFbTlOf09oudsg+b/8LcGcyPFOYPZuja9R7w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793174662;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization;
-	bh=QYUY+SzuyzidMIs5wvcWQ+wJedzQHVpapr2RX4nAS3g=;
-	b=aTCP8atxdM5BlUJgkAlpC5uZTrCgJHVEntngJprjERh8IqtrmZQTX6Spl4k2QvqHOpie
-	 LJIH5i0ircn2R92jq5tpC6OWcT5VTdAXRV0Ocfyj1JS5+OaMWQwEvVaaFxdBCLF5cUDI8
-	 z5MCvTzAZ0FsltTlBjh5Yp2A14Hc0fHInMlil+Wr7F4lfgbXwd5mfgBVLOLoML2naUpXo
-	 Lj+FzrCZih+dwmV9bfoBWG9GHo1HRd539Ooeu8L9QtALEO8WEANTAKSDFptRd8FK7sB5O
-	 iAIXiUfiMndIfnoEKgrfMwfwTCZt8rBBpFjmqtIhqaXmDDNzoBq5mOVN9I+T09HaPDg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PSBniF0w;
-	arc=none smtp.remote-ip=192.198.163.8
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793186894;
+	b=CJndgCYShsK0q1voc3E6OKa8ANDISAB5Hi86bsa1ZBORufPO1JyktM6Xs2erg031tEvI
+	 Sjhsd6Hu5RPbiNkpF3XVmuAPPNxL6KWXxFUEDT6JVMWxSo1vjB7DIb8x2xX2o2F5A8Tsp
+	 c4IJYIwh/F8ue8OFqv/zZOSYSzBKZmW/7Vie1buUBJOjHO9DKcTyH1qyKCWyhyh3ghbvR
+	 EkYH0uWhdxZXaxVN9JEUbi4vNIJpe039Tgw5lhnAByUoEBwgGSncgsiq6GvG8H92s6dlG
+	 aIS2dTB5WbWk3qgCoYWDw1EDghokYuuWAfYAiM+yMuFnNVJ705H4JuFFF6FvahkrL3A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793186894;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=OraIQ2SDhu0uL8MoTVbZTwStx8G1xutMjL4a8ZJPBog=;
+	b=bKIEk11/3JWO5gt6zLYX4ahS2PQiwDEuFQgcbxZL2pyX4SLFOvagIChmlBl0+2fAlTeo
+	 QfmsPBiZ3v8d8/1gN1KJdorBJIQTRDTdrn4tMoL5z3xHxsaMDcwDzQgm+DiEfAVeXuLvA
+	 MbngmXnbh6mGzWDhta5sQ1j9dy9Qqsscpa4Pib97y4W/NaWjz2s6QvxGDAfoQBco6hw7T
+	 ypjkxsl20qzjUJvePdRB1jC1py0/z+01sm/1H0rNbXuvWdo7LaIGV9LEzDLRW69AjhQqA
+	 Tgmc/lj0OBIXxZQwPkblKFerTQEnd0rEve7VkGu3PdXYewQJbytfSiu0X9WwZABErTg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WI80yjlT;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E841606A31D;
-	Wed, 28 Oct 2026 08:04:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E841606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A54606A31C;
+	Wed, 28 Oct 2026 11:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PSBniF0w
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793174661; x=1824710661;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=GlCrv/Z8ykZTWKLkjrgizpbqqqsL18IOZ9JsGj4pQww=;
-  b=PSBniF0wd7ppMixld2UUoEB73b1yiGoF8vRXQw+G1YSVuOdfGa10kRy1
-   PP038b2/20WyHj8Za8s3lOK6A5CKledqp9kljtVsDUOiHC+eGA3zA2vlM
-   MT+/FAI3eBlmS2C57vmTMY/nyWjYUaQySkZWV1rFyvAhDua/Nh3xd3GdY
-   sWwjrfJ8DDi7yQFTihVA+9UVxHpxbl2/Ir0XbFIFvaF+ALvnRLsnNW4NV
-   s/AYwI6IkDwqYskbzcKE+gmmy5RrHX+JztLgLKfgdsnx3gKVSDAKY0OQJ
-   fttgekcrMV59ncuafHN6jde7skpkm3TP+u/EPoo8Z96VcipDy/1yMDhB8
-   Q==;
-X-CSE-ConnectionGUID: VvuNxWhBR5mRVIB/1sqpXw==
-X-CSE-MsgGUID: S9P5R5nJQ4GOca9bIDys7w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1780746"
-X-IronPort-AV: E=Sophos;i="6.27,182,1787036400"; 
-   d="scan'208";a="1780746"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 01:04:20 -0700
-X-CSE-ConnectionGUID: 3U2XXT5qQFSCkgAuKxEChg==
-X-CSE-MsgGUID: XN/qcR2yR4S9jibXAKAjrg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,182,1787036400"; 
-   d="scan'208";a="4852263"
-Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.117])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 01:04:11 -0700
-Date: Wed, 28 Oct 2026 10:04:08 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: Sean Wang <sean.wang@mediatek.com>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Zhou Wang <wangzhou1@hisilicon.com>,
-	Longfang Liu <liulongfang@huawei.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	=?iso-8859-1?Q?Am=E9lie?= Delaunay <amelie.delaunay@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-mips@vger.kernel.org, linux-tegra@vger.kernel.org,
-	Frank Li <Frank.li@oss.nxp.com>
-Subject: Re: [PATCH v3 1/2] dmaengine: virt-dma: share the DMAengine
- synchronization callback
-Message-ID: <auGseGw39K115Zfi@ashevche-desk.local>
-References: <20261027-submit-mtk-uart-dma-synchronize-v1-v3-0-aad7a6b3c62e@gmail.com>
- <20261027-submit-mtk-uart-dma-synchronize-v1-v3-1-aad7a6b3c62e@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WI80yjlT
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1793186893;
+	b=Xtgy0jXV1dBkgT0MR4AgjtJYapjc0XsslGvPAie/XSVUqh8I7tbqE/u8yMjN7mOD6KxY
+	 AyXlcIsM2fNdNU1W/Oo0F3ZlngeNBfQ/0cmei03RRX9fXKOKNKPBcny2+v2WKG3TMYs9g
+	 6H67cPg/E8RppFI5kPf96LsjigdJAHAuD00+Pd5EJqEg6J3lGvJ4MdPHsYFumQll0QEQM
+	 +MyvJF0/dg92oUYVXxWOsDQjbmvJ9woyDhNAD/oi9l2RBxkTN+utaQPj7sZBjGNDmOuCV
+	 b+ofnIQZV2rjlxyounPQbm3+QkpxxFXtZ1+uvSOutpqMOaZWnoiRzCBlAKW5i+NbAWA==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1793186893;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=OraIQ2SDhu0uL8MoTVbZTwStx8G1xutMjL4a8ZJPBog=;
+	b=lm3P+IaEa05w+JilVyTnEbwWnllwPz/33RiSZiLGnBTK3NLbo29I7r294wdouEvfCug6
+	 DNzzToIsCGOS17AkdTunpCARTDWgQlbfHtpcUMD0Cwi+qiz6KfODMHcbn1kLHdA/gMAy0
+	 iRHxfKNf+rJTcOFE2B5ye0rAjhWUfzVvjw/Tem8XCUg54bk25NKu12gpA3JyTOh0ogS6W
+	 PzLwW6HVWznmtmiWKOvBzNdN5qK2hfsNRwSy25K9Sg4wAEsnAyYHSFVlrvoJuqVfNDayw
+	 AZe2yX1LJdseTKpP4tDpsiz+y/UQGEGVpT4XU8OIXGxvcJvv9m3uKFMiLR/Z7DkRjVw==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id 101771F031E3;
+	Wed, 28 Oct 2026 11:28:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793186893;
+	bh=OraIQ2SDhu0uL8MoTVbZTwStx8G1xutMjL4a8ZJPBog=;
+	h=From:Date:Subject:To:Cc:Reply-To;
+	b=WI80yjlTSkrjldjZt+cbwEWMZJB1f8AAlgBqRvYJ1KGoO105xoAPdLH7EtQDHeawz
+	 aCU2lewYFtggTXpJn9h7aZBh6bg3X8rYepGssMUp7cfvY7HHa5KAWrS30398ypwB+F
+	 hYpyfiuBnxmof0J/5FAKxR/D8rHEpT3xdWT3AiRAyhvyh6tSNAVydTPxX0XTDwl0m8
+	 Q4K+2TAMoTmT80hI3ygHKKkQt6oH66H5i+n31JkId5wydedFOrz61olajaUtoE99FA
+	 3jET8T6OuxIyMnpyoqN1M1SgrhvY/OFzksCD32xAuyrgQqdyeYCFcpFqcQOHdMrCZU
+	 GncwJFVSpisKA==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id 96E6E4540F;
+	Wed, 28 Oct 2026 11:28:12 +0000 (UTC)
+From: =?utf-8?q?Krzysztof_Soko=C5=82owski_via_B4_Relay?= <devnull+krzysiek.sokolowski.gmail.com@kernel.org>
+Date: Wed, 28 Oct 2026 12:28:11 +0100
+Subject: [PATCH] dmaengine: pl330: drop only the runtime PM reference a
+ channel holds
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -111,33 +83,84 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261027-submit-mtk-uart-dma-synchronize-v1-v3-1-aad7a6b3c62e@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261028-pl330-runtime-pm-v1-1-f0fb5c34a7c4@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2Nyw7CIBQFf6VhLcnl3forpgugF8XYh0CNSdN/F
+ 63LSebM2UjGFDGTc7ORhK+Y4zxVYKeG+JudrkjjUJlw4JoBb+nyEAJoWqcSR6TLSJ2yAkCB40G
+ ROlsShvj+JS/9wXl1d/Tl2/kbCZ9r/SqHRpzNSP08jrGcGxuCQm2NCV531njZAZdaatVJGFgrO
+ R+M14KRft8/xOgpXMAAAAA=
+X-Change-ID: 20261028-pl330-runtime-pm-b5a30050b2f5
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ =?utf-8?q?Krzysztof_Soko=C5=82owski?= <krzysiek.sokolowski@gmail.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793186892; l=2072;
+ i=krzysiek.sokolowski@gmail.com; s=20261028; h=from:subject:message-id;
+ bh=N0Dj51bhXIkS3BDw3/lGRjrwPEjdmvZxsqfqjpdUcCU=;
+ b=ehlD/UbuZSYLlj0k3N8mtTulGuMalewB+pRQnS63Q3pr8M5a7lbCppFfroC6Kq/aGDjJJK1ee
+ 1uDkG+C2TppBmzIO7uFxRQQuHlqX9L2yt4eiW5LwDi6NBGvo/2IN8LI
+X-Developer-Key: i=krzysiek.sokolowski@gmail.com; a=ed25519;
+ pk=qeeCHf+lXP5Q+6LakjbiVVxxcDVYb7Op1WMfhoaK2T0=
+X-Endpoint-Received: by B4 Relay for krzysiek.sokolowski@gmail.com/20261028
+ with auth_id=1343
+X-Original-From: =?utf-8?q?Krzysztof_Soko=C5=82owski?= <krzysiek.sokolowski@gmail.com>
+Reply-To: krzysiek.sokolowski@gmail.com
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 27, 2026 at 12:22:26PM -0600, James Hilliard wrote:
-> Several virt-dma drivers implement device_synchronize with a wrapper that
-> only converts the DMA channel and calls vchan_synchronize(). Provide
-> vchan_dma_synchronize() with the DMAengine callback signature so these
-> drivers can assign it directly.
-> 
-> Document the requirement to stop the channel and prevent new callbacks
-> before synchronization, and the context in which the callback wait may
-> run. Replace the equivalent wrappers in the existing drivers with the
-> shared helper, preserving their callback-wait and descriptor-cleanup
-> behavior.
+From: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
 
-...
+pl330_tasklet() drops a runtime PM reference when the channel's work
+list is empty, without checking that the channel still holds one.
+pl330_terminate_all() drops that reference too (power_down =
+pch->active) and clears pch->active. If a completion schedules the
+tasklet and a client terminates the channel before the tasklet runs, the
+tasklet finds an empty work list and drops the reference a second time:
 
->  drivers/dma/hsu/hsu.c                          |  9 +--------
->  drivers/dma/idma64.c                           |  9 +--------
+  Runtime PM usage count underflow!
 
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com> # hsu, idma64, virt-dma
+after which the controller can be runtime suspended while still in use.
 
--- 
-With Best Regards,
-Andy Shevchenko
+Seen on an RK3128 board (dw_mmc using the PL330 for SD transfers) under
+combined SD and USB load, where the dw_mmc error path terminates the
+channel; the underflow was followed by "pl330_update:1678 Unexpected!"
+and a failure to request the DMA channel again.
+
+Take power_down from pch->active in the tasklet, as pl330_terminate_all()
+does, so the reference taken in pl330_issue_pending() is dropped once.
+
+Fixes: 5c9e6c2b2ba3 ("dmaengine: pl330: Fix runtime PM support for terminated transfers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
+---
+ drivers/dma/pl330.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index c2d0b47..b0eced8 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -2090,7 +2090,12 @@ static void pl330_tasklet(struct tasklet_struct *t)
+ 		spin_lock(&pch->thread->dmac->lock);
+ 		_stop(pch->thread);
+ 		spin_unlock(&pch->thread->dmac->lock);
+-		power_down = true;
++		/*
++		 * Drop the runtime PM reference only if this channel still
++		 * holds it: pl330_terminate_all() may already have dropped it
++		 * while this tasklet was scheduled.
++		 */
++		power_down = pch->active;
+ 		pch->active = false;
+ 	} else {
+ 		/* Make sure the PL330 Channel thread is active */
+
+---
+base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
+change-id: 20261028-pl330-runtime-pm-b5a30050b2f5
+
+Best regards,
+--  
+Krzysztof Sokołowski <krzysiek.sokolowski@gmail.com>
 
 
