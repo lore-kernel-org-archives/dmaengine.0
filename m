@@ -1,93 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793254389;
-	b=Tes/sfBGuImzrGcRTSeX4LG4ZuUcqZm91UM4Iu1r8vc8GQaFcfGsaRsiJsvjMkJs3VXq
-	 ejUaASoxMs0NvbLVz3cY/TTtE0UlDSHIkmAwNvO/blIYLwudLdkMDxZToY6EU1uALehBs
-	 SjzuclP/WvxVrbDbJcAUG2uXXwGeriHthTzE/LNGZ5jChWo4R7Ch0GwSmoqihsxCaXRko
-	 yEEEbaAT4xDeq/v+pqyq4henciKcwPyepS58oP2bsSKFFtvD5uJcOTQtkDYniia8mwciv
-	 +cytMTeG7vajxP5sf6XpSZ7jgXTYvJQfQHK4COkThC9Jqe9UKjxxfKOVsquq3EifBqA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793254389;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=8HfICeltQZtZCQ5hD60I+Ms/gO7apKM3P6RJyOQSEUI=;
-	b=ygpf8oSIetfgdHDl0NfHPaR6Yo2nxtU/ayi5CGecBeXHfOd/8UUHYzeBpyXRe8gpL7NV
-	 oD3Af+M27S4KG1WZi3Ksgf5Wvptf3sVJo5COf8NYvF3xxAGJtcwd+kDaWSl58bszJK8RY
-	 B1MNXrhG6jCrkqQAhBj0GyG1hd7YhH5m3Uo4L3XpP0wKLOeyoFYgCG7b41rUCBnMp55sm
-	 WRssEs3XmoMUXuCF9ErOr+rPvbazyHDnL0yRfJRE2slgITnb2fc0jJd2O70n5Kkvka0y1
-	 y6hxAGXmAYNczyOGDdovVMYW6O8Svx8qiVXBmH/6+5iJ0QjU1gwIKdWtjRrGdvKZcBA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AY9fCZM8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793259735;
+	b=J95nEr8yFL+dQr7b5V7AUWal76aJFP/83UqUGEY/aUdf+AG/QWGzYH5hfyyGqvxpJRKy
+	 JsimdHEizu5ahZ9TLwVMMPNTru42C/+LHPDt56euXhP37PDu5bwUyRBPGH0ekXDFVkEcj
+	 Zx9XYARNpf16rya9tEV87dBZ72gDCKUOluID1DWfR+2o4q7ScGAzq1Skl/nTIyp8jcx7g
+	 FAjGV+mzXKWXxyRPGqHPVFp4b/anlgW/lEpaxoj4zyRkpUgrzMWELtn5XzUWEcDufMsdw
+	 TeUmC29FiHzZ9Hv6fx2yi8O80TJcfUl8hV0mo70Qxsbxdyk8pJBaBXgHDInnivcp+IA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793259735;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=nRUCr4NQ66GLUUzHJ4QDNjrj6aEkhbXAp6tE51ISY0s=;
+	b=Nj+IixcemHVfWuvqWFwxng3A8FgLPga773/w4n2ukwdhY2v/71VSWME3pFcVnT1hUB7q
+	 BvAKjtP6dAI04HVu2fqhaUMWgo4MIitLB35h+hWhoWASRhM4//A2QOsCT0TUJL5apkDSH
+	 XTBCW6A16EyoL+Z+JQ0wv8543ACL4LMYc4c9B9BIoSUCI/2bCQxPGdD21ZlYONhXKUMvC
+	 ZwWbMkia0yK5cw1+1P0VhjArl0M9RU4R9um/HRh7ZyGt3N129s92blPItUMLZprMhEPG8
+	 oalxGcttajMLYUioYQECSjaioSztceoqW1Ex/2MRGfgzix6ptX06adWaZg9ELUL4Hcg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zGc0Y9V9;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0309606A31D;
-	Thu, 29 Oct 2026 06:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A570C606A322
+	for <dmaengine@vger.kernel.org>; Thu, 29 Oct 2026 07:42:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A570C606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AY9fCZM8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFD61F01825;
-	Thu, 29 Oct 2026 06:12:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793254387;
-	bh=8HfICeltQZtZCQ5hD60I+Ms/gO7apKM3P6RJyOQSEUI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=AY9fCZM838jxvzO1LZjlGpXv0W8K3teqSZL7RijTgFK+vMuR9I/rLM2tTDsuEdu49
-	 D2/wj4MDZjo91NakOEaX5qSF5O95U3YG8/G5UHWIxf80ZCUvpFSL90WwQh/5OnZhB+
-	 IxV3Ir9hpPOUOgGFeO+ZNTpumWj+emmZLNf8wkK2peC6tx3JvxcCwhRjIp/8vl4fIF
-	 5Te7rIsn3LXYjnylmmiG2eWT/I2O7NNXE/I6Z/jqqYBvXQ+flDBPRbsCb9u28Gwj8Z
-	 Wm++8Vi3KmsJ2uSOrdepJb1M4tZjsQyVIQao8cR8k7StT66yaZCypWnGb4AtixMYe1
-	 607LwJx2luOOA==
-Date: Thu, 29 Oct 2026 07:12:52 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
- Brian Masney <bmasney+clk@redhat.com>, Jerome Brunet
- <jbrunet+clk@baylibre.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
- Dooley <conor+dt@kernel.org>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Florian Fainelli
- <florian.fainelli@broadcom.com>, Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Rob Clark
- <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
- <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, Frank Li <Frank.Li@nxp.com>, Vinod Koul
- <vkoul@kernel.org>, Yinbo Zhu <zhuyinbo@loongson.cn>, Linus Walleij
- <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, Jonathan
- Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, Nuno
- =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman
- <khilman@baylibre.com>, Martin Blumenstingl
- <martin.blumenstingl@googlemail.com>, Tiffany Lin
- <tiffany.lin@mediatek.com>, Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
- Yunfei Dong <yunfei.dong@mediatek.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, Andrzej
- Hajda <andrzej.hajda@intel.com>, Ryder Lee <ryder.lee@mediatek.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?UTF-8?B?V2lsY3p5?=
- =?UTF-8?B?xYRza2k=?= <kwilczynski@kernel.org>, Manivannan Sadhasivam
- <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Matthias Brugger
- <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Christian Marangi
- <ansuelsmth@gmail.com>, Eric Anholt <eric@anholt.net>, Kuogee Hsieh
- <quic_khsieh@quicinc.com>, Peng Fan <peng.fan@nxp.com>, Aakarsh Jain
- <aakarsh.jain@samsung.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, linux-rpi-kernel@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, freedreno@lists.freedesktop.org,
- imx@lists.linux.dev, dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: Fix property name typos in if/then schemas
-Message-ID: <20261029071252.586c8cbc@foz.lan>
-In-Reply-To: <20261028120216.2657397-1-robh@kernel.org>
-References: <20261028120216.2657397-1-robh@kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zGc0Y9V9
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c468bd799ecso234286366b.1
+        for <dmaengine@vger.kernel.org>; Thu, 29 Oct 2026 00:42:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793259732; cv=none;
+        d=google.com; s=arc-20260327;
+        b=V7gucP8oGNlJMigvGYNqEP42boxet6dXYscCuZ4Luwdg0PwfEKE+96C0+zlHaNCmKT
+         9mNoZ3TaSOo95uAHddydNcmwPnkaGnW5/fvxhjUpvXkAzh3HIBeKvXvKhWEqieZ7IL2w
+         cSEAx+QsZomMzxafF3f7V66kexVIEF7JIyylT/OrvekcRq7sseas3eXvTXVnE8IJGOkc
+         aXDa+B9sV0x721O5A1JBjleeqxnqmX7M23n06ImOuXJl9dAkfQEnTIL8MXp+NMZAaQtO
+         EW3MD70zXOQy6MhyA3dynwnRHET/7bEpM4HWif7MfVyyahHg3h1+FUZ/LNxDO3PUGYS5
+         Wl+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nRUCr4NQ66GLUUzHJ4QDNjrj6aEkhbXAp6tE51ISY0s=;
+        fh=sIJic+k3m4nLeV2uDZAYQJpMFfwSOqlrF9DPSs7Zdno=;
+        b=Utkxu5D4FpOQICv1wW5+pMQ0B3gAWaby/od5a4TGOS8xYmdNnUx2Grqo0KcGFvypSH
+         MWyUtfLJda0wzn+Og7USwtMOtnhbcL8iyaBk42rF5EzKTIiWe6tBmnMXOYazfVkWWJau
+         EuxMotgBmoUWJDL+eVc/sMl5glrtGCA2k9qZCot+PRFAPNSqBsIaicLK+JKHmXIV0Ptu
+         2JoIlIviu3qn6zaVAgXUgW9k5W2ucpnOozTJJCO5nNEqeMimuJjF8PwcF/RlWA0H3MrW
+         OokZIha2VTO0w6ewgiMZnvbVm1jjnZlPfPKFHmYSzEZq47vvMVO3TThpgBYFvjjl6nX3
+         5QGA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793259732; x=1793864532; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nRUCr4NQ66GLUUzHJ4QDNjrj6aEkhbXAp6tE51ISY0s=;
+        b=zGc0Y9V9yQhkIss1bYi176ej2dIv7fz3bctn8ItT8bqV4TE0UelQmq2Gikz9hLf9Hz
+         vNHl+yFKBv76Vfu7Mg4/OWVcFBObMsIzU0zhaG3Uq3plDzVC/AP2q2OCraNH2ris5/im
+         Zqb7RhRuV0Q1CZHmUEiYbs4cJE6Mg+Tkv665xqAuAvHX5O5/PC+Z+ZwaQoJQ0oBKybhE
+         Mpf81dGZ9wDrJnNiMpbsgK9LEX42jxZxNRQo3HCEkH2W0TlP81/EcvOZ6ZEfPoGjABXN
+         PoQlOF76E3JGhpf0sthOBkS0X5fUgRGZVYUW/Ft2YJqpukUhNo+w/IqwKx4EuoRIxc6G
+         CEOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793259732; x=1793864532;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nRUCr4NQ66GLUUzHJ4QDNjrj6aEkhbXAp6tE51ISY0s=;
+        b=gLhRpbAof4tBXjXrchnXxJuF+bZcfrceeegFoHDyLH0eFUW2duM0Jd6rGkLKl75UJ8
+         nv7gY1gyEhKm1Q1cvYOEv95yaxmLLl+iF0Lr8H2UNC217cLnPWo2g3JCfAsC6f24A53j
+         fpHklujwcT2xD+RnnI/N+fK63LufF+eZRZxA7RJzzW/ktd8AywCKhzFA5HkSdlDYHTAT
+         beRIo5lboVXDWZ7E9WeBzLAJiEFvwWi00hW1xKvGa8cFHc5kiVfkw+LermVcYcR01rnQ
+         w6SyCf3e3LgiQL9lBG+gnZpJPzIwglSaYw2aJW9IwvtYRgrMqwn7iu0Dfqaxkmz3n7fl
+         Mdow==
+X-Forwarded-Encrypted: i=1; AKwUvByGQfI6X/5mW0Z2eoGnN5T6i2xSnacNPoDLuc3+wBNbN8i+vunD+OT6uzGRp0xW/ccjPWoeWnysZWU=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJMZHLVMs6VRWFrVjJc3DU7rn6xJpEpcgUQkofS+gezxrCxlwyu
+	hj/p67X77VXCUNuAYHzMTpIT/TVTCsISiYTnLy7tTeojzRrSE0gYnp0+IYfwmFaiKcAqUeM+GZZ
+	D58Q0w6hcKDBv2TEJy5LFFYeC9yEu8LE=
+X-Gm-Gg: AYBFou0AWi3C0cuSsESLoFBTPDYd/MmD6hq30CC1DIuNTGeh9Tiov6xNM2bUxp6hYmC
+	8a6RBKpmwDcuEURHD8009HGjOcCyPfh+tbb6BIjP0uA+gSRU/FkXtsr3VLSymbgyw+TB5z7Q7fp
+	XsGGP1s/9oMJNnEdhMbnrY9pVSU/ETY8mLc5rVKCUBB69xOOi6fB+lDpJTmY3KxguJJT/bTPTVq
+	cU6yTXLuM6aaGJj+3zZpSV8HBBYRZgRtGVcoUmcxJsfBlKF1w8WymsxMiD9LnW6Ae1oRLi7UhpE
+	SbP9y5RnCNqY4a96iHGDW5Vzlzbh51+3JFuNSmnlzRIwTYh7j0tYTcUK+l8DfG/1HyL3+P7dDvF
+	sT0GeFlqyeyq3kvNa/mQjsXkZ8mH0ctGyUpW52hI=
+X-Received: by 2002:a17:906:fd45:b0:c49:bf6a:28fa with SMTP id
+ a640c23a62f3a-c49bf6a2c46mr282671766b.28.1793259730604; Thu, 29 Oct 2026
+ 00:42:10 -0700 (PDT)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -97,240 +104,108 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <cover.1792988985.git.zhoubinbin@loongson.cn> <dcb49d67055cc41af3bd68cce01c05e73a7c2787.1792988985.git.zhoubinbin@loongson.cn>
+ <auIe15pAb8ZZWbnV@lizhi-Precision-Tower-5810>
+In-Reply-To: <auIe15pAb8ZZWbnV@lizhi-Precision-Tower-5810>
+From: Binbin Zhou <zhoubb.aaron@gmail.com>
+Date: Thu, 29 Oct 2026 15:41:57 +0800
+X-Gm-Features: AclHuK8kbVDGgdNrbovyTyakUo3h504IwuEClXkjkVVljd7312xDrPpt32lzyXs
+Message-ID: <CAMpQs4KMbvRpF9axnnEbO6Rcna77WqHQykv4jvw-EOnSbH8FBw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] dmaengine: loongson: loongson2-apb-cmc-dma: Program
+ CNDTR when advancing sg
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, Huacai Chen <chenhuacai@loongson.cn>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	Huacai Chen <chenhuacai@kernel.org>, Xuerui Wang <kernel@xen0n.name>, loongarch@lists.linux.dev, 
+	devicetree@vger.kernel.org, Keguang Zhang <keguang.zhang@gmail.com>, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 28 Oct 2026 07:02:12 -0500
-"Rob Herring (Arm)" <robh@kernel.org> wrote:
+Hi Frank:
 
-> Property names within if/then schemas currently go unchecked whether
-> they have a type defined or match what's in the top-level schema. Adding
-> a check finds a number of instances of typos. The typos result in the
-> schema having no effect on constraints.
-> 
-> With this, fix the mediatek,vcodec-encoder 'clocks' count constraint
-> exposed by the name correction.
+On Thu, Oct 29, 2026 at 12:12=E2=80=AFAM Frank Li <Frank.li@oss.nxp.com> wr=
+ote:
+>
+> On Mon, Oct 26, 2026 at 12:31:22PM +0800, Binbin Zhou wrote:
+> > When configure_next_sg() moves to the next scatterlist entry it updates
+> > CMAR but leaves CNDTR at the value left over from the previous entry.
+> > The controller therefore keeps using a stale transfer count, so the
+> > hardware does not move the amount of data the descriptor describes.
+>
+> How it works at 1c0028e725f1? not test ?
 
-For media:
+Let me clarify how I found this and what I actually tested, since
+there is a fair concern the patch may be redundant.
 
-Acked-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+I hit this while debugging a CAN-FD driver. Reading through the
+Loongson CMC driver I noticed that loongson2_cmc_dma_start_transfer()
+programs both CMAR and CNDTR for an SG entry, but
+loongson2_cmc_dma_configure_next_sg() programs only CMAR. The
+asymmetry looked wrong, and I wanted configure_next_sg() to program
+the same set of registers as start_transfer().
 
-> 
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->  .../devicetree/bindings/clock/qcom,kpss-gcc.yaml     |  2 +-
->  .../bindings/display/brcm,bcm2711-hdmi.yaml          |  2 +-
->  .../bindings/display/msm/dp-controller.yaml          |  2 +-
->  .../devicetree/bindings/display/msm/hdmi.yaml        |  4 ++--
->  Documentation/devicetree/bindings/dma/fsl,edma.yaml  |  2 +-
->  .../devicetree/bindings/gpio/loongson,ls-gpio.yaml   |  2 +-
->  .../bindings/iio/adc/amlogic,meson-saradc.yaml       |  2 +-
->  .../bindings/media/mediatek,vcodec-encoder.yaml      | 12 ++++--------
->  .../devicetree/bindings/media/samsung,s5p-mfc.yaml   |  2 +-
->  .../devicetree/bindings/pci/mediatek-pcie.yaml       | 12 ++++++------
->  10 files changed, 19 insertions(+), 23 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> index 88b7672123a0..ed347096df46 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,kpss-gcc.yaml
-> @@ -62,7 +62,7 @@ then:
->      - '#clock-cells'
->  else:
->    properties:
-> -    clock: false
-> +    clocks: false
->      clock-names: false
->      '#clock-cells': false
->  
-> diff --git a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> index c1cefd547391..fd4d598f6ff8 100644
-> --- a/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/brcm,bcm2711-hdmi.yaml
-> @@ -145,7 +145,7 @@ allOf:
->              - description: CEC stuck at low interrupt
->              - description: Hotplug connected interrupt
->              - description: Hotplug removed interrupt
-> -        interrupts-names:
-> +        interrupt-names:
->            items:
->              - const: cec-tx
->              - const: cec-rx
-> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> index 094a6383bb77..f72d1b354007 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> @@ -304,7 +304,7 @@ allOf:
->          clocks:
->            minItems: 6
->            maxItems: 6
-> -        clocks-names:
-> +        clock-names:
->            minItems: 6
->            maxItems: 6
->  
-> diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> index dfec6c3480f3..02d27ccad024 100644
-> --- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
-> @@ -113,7 +113,7 @@ allOf:
->              - const: core
->              - const: master_iface
->              - const: slave_iface
-> -        core-vcc-supplies: false
-> +        core-vcc-supply: false
->  
->    - if:
->        properties:
-> @@ -136,7 +136,7 @@ allOf:
->              - const: core
->              - const: alt_iface
->              - const: extp
-> -        hdmi-mux-supplies: false
-> +        hdmi-mux-supply: false
->  
->    - if:
->        properties:
-> diff --git a/Documentation/devicetree/bindings/dma/fsl,edma.yaml b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> index f609038e35ae..0260d177c7d0 100644
-> --- a/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> +++ b/Documentation/devicetree/bindings/dma/fsl,edma.yaml
-> @@ -172,7 +172,7 @@ allOf:
->              const: fsl,imx7ulp-edma
->      then:
->        properties:
-> -        clock:
-> +        clocks:
->            minItems: 2
->            maxItems: 2
->          clock-names:
-> diff --git a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> index 69852444df23..07c8b233c6bd 100644
-> --- a/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> +++ b/Documentation/devicetree/bindings/gpio/loongson,ls-gpio.yaml
-> @@ -80,7 +80,7 @@ allOf:
->          - resets
->      else:
->        properties:
-> -        "#interrupts-cells": false
-> +        "#interrupt-cells": false
->          interrupt-controller: false
->          resets: false
->  
-> diff --git a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> index 70ab4e140e71..535213ba0c5e 100644
-> --- a/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> +++ b/Documentation/devicetree/bindings/iio/adc/amlogic,meson-saradc.yaml
-> @@ -92,7 +92,7 @@ allOf:
->      else:
->        properties:
->          nvmem-cells: false
-> -        mvmem-cel-names: false
-> +        nvmem-cell-names: false
->          clocks:
->            minItems: 4
->          clock-names:
-> diff --git a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> index 4505e66876a2..52f471a070d5 100644
-> --- a/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> +++ b/Documentation/devicetree/bindings/media/mediatek,vcodec-encoder.yaml
-> @@ -110,19 +110,15 @@ allOf:
->  
->      then:
->        properties:
-> -        clock:
-> -          items:
-> -            minItems: 1
-> -            maxItems: 1
-> +        clocks:
-> +          maxItems: 1
->          clock-names:
->            items:
->              - const: venc_lt_sel
->      else:
->        properties:
-> -        clock:
-> -          items:
-> -            minItems: 1
-> -            maxItems: 1
-> +        clocks:
-> +          maxItems: 1
->          clock-names:
->            items:
->              - const: venc_sel
-> diff --git a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> index b46cc780703c..4488d5ca9b9c 100644
-> --- a/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> +++ b/Documentation/devicetree/bindings/media/samsung,s5p-mfc.yaml
-> @@ -174,7 +174,7 @@ allOf:
->              - const: mfc
->          iommus:
->            maxItems: 2
-> -        iommus-names: false
-> +        iommu-names: false
->  
->  examples:
->    - |
-> diff --git a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> index c009a7a52bc6..7c40361f95ec 100644
-> --- a/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/mediatek-pcie.yaml
-> @@ -127,7 +127,7 @@ allOf:
->          phy-names:
->            const: pcie-phy1
->  
-> -        power-domain: false
-> +        power-domains: false
->  
->        required:
->          - resets
-> @@ -150,7 +150,7 @@ allOf:
->            minItems: 2
->            maxItems: 2
->  
-> -        reset: false
-> +        resets: false
->  
->          reset-names: false
->  
-> @@ -171,7 +171,7 @@ allOf:
->          clocks:
->            minItems: 6
->  
-> -        reset: false
-> +        resets: false
->  
->          reset-names: false
->  
-> @@ -193,7 +193,7 @@ allOf:
->          clocks:
->            minItems: 6
->  
-> -        reset: false
-> +        resets: false
->  
->          reset-names: false
->  
-> @@ -215,7 +215,7 @@ allOf:
->          clock-names:
->            maxItems: 1
->  
-> -        reset: false
-> +        resets: false
->  
->          reset-names: false
->  
-> @@ -223,7 +223,7 @@ allOf:
->  
->          phy-names: false
->  
-> -        power-domain: false
-> +        power-domains: false
->  
->          mediatek,pbus-csr: false
->  
+I instrumented the driver to read back CNDTR before and after
+configure_next_sg(), and forced a non-uniform descriptor by
+temporarily making period 0 shorter than the rest. With the CNDTR
+write in configure_next_sg() reverted, the read-back stayed at the
+period 0 length for every subsequent period, and the TC interval
+matched that length =E2=80=94 so the hardware was reusing the first period'=
+s
+count. With the write restored, the read-back tracked each period's
+actual length.
+
+That test required a non-uniform descriptor that I built by hacking
+prep_dma_cyclic(). As you know, cyclic mode itself is uniform by
+construction =E2=80=94 buf_len % period_len is checked, and every
+sg_req[i].len is set to period_len. So in any real cyclic user today,
+the hardware CNDTR preload mechanism already reloads the correct value
+on each CCR.EN edge, and this patch changes nothing. I2S audio works
+fine without it, and I could not have found the bug from userspace
+alone.
+
+So yes, this patch is arguably redundant for the current in-tree
+users. I kept it because it makes configure_next_sg() consistent with
+start_transfer() and removes a hidden "all SG entries are equal
+length" assumption, also I'm happy to drop it.
+
+>
+> Frank
+>
+> >
+> > Program CNDTR together with CMAR so software and hardware progress stay
+> > in sync.
+> >
+> > Cc: stable@vger.kernel.org
+> > Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson =
+Multi-Channel DMA controller")
+> > Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+> > ---
+> >  drivers/dma/loongson/loongson2-apb-cmc-dma.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma=
+/loongson/loongson2-apb-cmc-dma.c
+> > index 8b8d530d60c3..c654e0572902 100644
+> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > @@ -266,6 +266,7 @@ static void loongson2_cmc_dma_configure_next_sg(str=
+uct loongson2_cmc_dma_chan *l
+> >
+> >       sg_req =3D &lchan->desc->sg_req[lchan->next_sg];
+> >       loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CMAR, id, sg_req-=
+>chan_reg.cmar);
+> > +     loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CNDTR, id, sg_req=
+->chan_reg.cndtr);
+> >
+> >       /* Start transition */
+> >       ccr |=3D LOONGSON2_CMCDMA_CCR_EN;
+> > --
+> > 2.52.0
+> >
 
 
-
-Thanks,
-Mauro
+--=20
+Thanks.
+Binbin
