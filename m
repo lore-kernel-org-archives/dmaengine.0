@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.229.82
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.8
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793372884;
-	b=HTZvxb6dr1G8WMOGkSRih9IfjpR/Xm6I4ZdA88QvAaXXwshWDMkWsPU6l4dCC5v9ApPA
-	 98iekV8F4AzaR0KVY0b7/4dFgcjsmFvrsKIUQywUXsO3CCMUdbNpJy2Y5k8YrZk7zCT7g
-	 hvbEz8Oc5RqBwruphImE0fmx598WLFVO6I19kp7XFlBOjspUlk1kUxQlKxR9DlRfPIu75
-	 rKXtjVZcffVRsN2Itfz2bVxo+eCua+oS4yTsXC4RyrSFC2FltbeeCLRZbT1BQ4Xpchz3J
-	 BKlKtcunsKhS8x/8nOAT4m3n6s50h9K50x8nGz9otqkUYPhAlfV3rxjHVlFZqW00WCQ==
+	t=1793373413;
+	b=kCacosK44rhn3XefwWfDlDsOT8fiFk7UPHSBTmqCuBwshd0L5gpCPhw2+ezUfhDW5YjP
+	 P0n6P2SRUQ5lJtoA7TqhBrYnVQ9YnCB6A2tMYZ+Zbc8WQIeBfLntVpuubORErcOOgvj8c
+	 8CURHFaX00PfbUij9Zj4/4d1zYJ+Og/qwSBZdGEvGcblT7xWX4ehNtM74Nlm/PnFliI69
+	 6BpkJhzIS/6ZORreII7IUWgR+KlNofdz48HVnr8xBz7rUVrcBywIc1OIlLySyF5whGAuB
+	 /Zj/hP12IWlU85l+cxm+MYERtjstEYD4+NcXyWGYOa8VKBHaWWjBVSE+b2oJXP0LCCQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793372884;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793373413;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,77 +24,79 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=MErFWj1ajQwST9qYyk/vBLjOoKZmuN7mnEQpppbbc7A=;
-	b=kD/f+XyqujFh7iQVq/Yk0rVoO+/cAl9SdANyWwE5R/g28UizEC15mmlUpI35SWTl1Cad
-	 14ZDXh4h9tZ1GIvN2iT3mTdU8yaODTJkF4Gm/i+qlZfoikBYX17/QU7VNdrQmRkseRQ/u
-	 FyCd+Ia53XKs3veZFMIYJZMoqvNp5eq5iqJ6brv6P5gV5hMc4e+j2o3fIPYg1YMeanV6A
-	 KG0yXU4GAU185AgaIloekTBQpI6vYIdQ6sRvTtu1yvXWvvDMd2V45AWfdrJxwufTS7XVl
-	 JadF+C0NqFlrMPkIG3KG1GoJT5AX+mxgD2InFHEW6kdXqFiayzuU/lUPVJtA1votOVw==
+	bh=FdY1F5DdjPISd9Qg7wQGWOZVWGwLHnKYxLWv6t1q/x4=;
+	b=Tsn0JFECkRpyuVRriL9ZdE7DKwApDTIAryHVjwRB7U8I+ETPcaha5+D6ksy7erGrBw5b
+	 Y4USJTmswfpK0oS6+BfaFTQLYmgmmctwpI5+0H/tlwgq4qFmeX3Wag4P0lcKMLcaFps9k
+	 Bxy9NJ+DemfHMt6zQjzM2zRiBn3gA9VBk/evQu3KzLIEcnSiLFyXdYupe1rbc6DYt5OY2
+	 mNPzySaMefkr0UH+75GzcX3TFHxk+QjheDUZ68EFMGG7x2J1G4EtAXTbXrjR/B4QRoeEi
+	 7JBYUbnMVLHUjoMvhJWi16JDzC74QKkPIDuY0xcPJAa6LONr6Wzk57C+y/5QvgO+rzg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=valinux.co.jp;
-	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=pass header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b="M+Jp/wgH";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.229.82
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020082.outbound.protection.outlook.com [52.101.229.82])
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=e9FdvSmt;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.8
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012008.outbound.protection.outlook.com [52.101.66.8])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80A660A2633;
-	Fri, 30 Oct 2026 15:08:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C80A660A2633
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE72606A31C;
+	Fri, 30 Oct 2026 15:16:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2EE72606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=M+Jp/wgH
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=e9FdvSmt
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LcH0gEp8nN1pFaDjzGYxhwTQ97w+H8qpp2+0eipYke32m46IbV3+26ZdHEmR0bKAnS6PbUaD86oRMjY3bltigddgJZSQNRWsDzMGmu6NomK7/ySsF7ZA8KY3TTjittDrar6eHYcbxy8dRmUTGSmuoSgZmkWI8XjlHfiA1hOZxSSP/RqHMJz/Qw3g3qARQmAQGfYAYFnZN86l0DroCU3WdmZ4p9onH0cHb0I2ot4yH7C9z2sLQSE9svazCAaFqfXxXwH48YAqK5+0R4ZUs222Gb3fVlhzmhjZyAbx9ErysleqIZ62yZ1aw7y6upob2Q6JB/VquXNVeLlgMjGzWNCAsw==
+ b=RQ0+B5qzrDQbG2ClxNFgRlmNUawg38/Dc24SET4+Y/GSkMSAsbs7avsU2I1Am2fR4jB+vht0IWFWoHuDO3/K1zBt0zl1bSZDLV+fK1Z8YBWFL7z9bGEGYj6D7laXRRQUFlTEvdC41i12bDJ2I27X0/22WDwq1Qc287jwWSZN971Ws0eyjRn6yKH1AkYJ6XlQeFU1HcVZOKitSKK7nEiroW5Rl1PX03SLdj+ByHf3c2jW2OKdO87prfOR4mpcV6Hm9ngaCZWQ3SS3kc3h7F/+2XIvvGqbRnOdbLdPIhZZFUvMjdO61bZizuA9thZupLLMQ/aUtnu+OgCIG3WjCe57eQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MErFWj1ajQwST9qYyk/vBLjOoKZmuN7mnEQpppbbc7A=;
- b=PBZ83NqWT9THySQN0Va0nHB1oNjADiTCgKBu4B6LI7Ji8zdbzup42fMcw7u1ZxyHZDbVKosPCpbw5W75zaFQbOg4Ktog3qAml2/j2w1jKN0LzOOysOat0pBBlYeVrhN28b+6KcrefUP7JORBK+9R4FYGjY+oaQ2AjR2VgEv5lXE0LpClgWrjzS0M0nnrVoW768o7R1Hg0VODY/Ssz9PmemZx3G2uR0hJmM/fbOSPORht56hbeNUUCOAXVM+OfPG0eoMQIGhRiejyIXBBj5yJo5u01TBqSDlb9ki5HNVJNrolh9OmRH11IovPOC8PhnpL4QChM1L6nUDHT5Wttru6cw==
+ bh=FdY1F5DdjPISd9Qg7wQGWOZVWGwLHnKYxLWv6t1q/x4=;
+ b=KtCsDiX+PPyIKwyZbTOjWR7d0d8JQT2+bjA21JjTzCa6aAaX7jrhIYjBjGhbueA9EiAaTMxRgOZPeMopfOIouYkGyaDu6g1xVQCOUnN5aVZN52t143a7n3nYnpGVJGxxlnfnVG89YShKieIPKLVMySMaGGtpIx2ynF4meikpoaUEQGHjfk65KFa69n+tuBF3kgjFngokFxNiQivzlfAeA2qPFS/cHxs6mX9As00iE+tauauaDSDRK0to0Ccy4zTLdSsHbUfKfH+WGaaUcAW36UyxK3crauLlokZAOCz+bLY6DWIxUZgZlL/OG2pkXBULXshnaZwchjnMdeMGhhYJSQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MErFWj1ajQwST9qYyk/vBLjOoKZmuN7mnEQpppbbc7A=;
- b=M+Jp/wgHVjUR4jMb1RoT3w8DbpH8SJfRMXQWoS5Kit1OzYm07ke8AcTkSZQDgfZhDy07gOoCfnSg2ohBo3IFu3j+6786rHjSiLZGJmaVI7iK46teWyNAtQ8+6g4Sapci7vJxKF2IH2V6HcdEXXgVO3z3Kvfyey18wZdQ5sRsIUQ=
+ bh=FdY1F5DdjPISd9Qg7wQGWOZVWGwLHnKYxLWv6t1q/x4=;
+ b=e9FdvSmtqAvcRzPFunrqFrVFgLyU7sCIjVkkfieAf+TkX5yByoT3W4+QY8sE0fNgEbMtiqiGGROm5HIl/bismNdpMet+cMUV9dOO+oRTmg0MLWo5N5nB/Vwb0Zdg6y2OSqq5fX+a5lHtgO8VZEgKlK+Xwt8PySg9XqfRBn0xcR8kEPsGiBBmPjyQ3l54cn/JYZLZ98AZnFbrP7lwlcvXEYgYNsQx33xavm4SoRgq1pwVkfbpProKwZJ/ZckzMJs3dOrXVHXdN+jCp1T03V+nxS0VwCnRx6wbTBYxEg5exV3+ZctV4oDqWvDQHS7+talwXgoxWQJ1QBNf8T+s0TNTwA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by OS3P286MB2389.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:150::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.10; Fri, 30 Oct
- 2026 15:07:56 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0569.009; Fri, 30 Oct 2026
- 15:07:56 +0000
-From: Koichiro Den <den@valinux.co.jp>
-To: Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Cc: Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
+ (2603:10a6:20b:75e::21) by VI2PR04MB10713.eurprd04.prod.outlook.com
+ (2603:10a6:800:275::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Fri, 30 Oct
+ 2026 15:16:47 +0000
+Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
+ ([fe80::ba23:1fa4:ce58:ff06]) by AMBPR04MB12445.eurprd04.prod.outlook.com
+ ([fe80::ba23:1fa4:ce58:ff06%3]) with mapi id 15.21.0569.008; Fri, 30 Oct 2026
+ 15:16:47 +0000
+Date: Fri, 30 Oct 2026 10:16:37 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: Viresh Kumar <vireshk@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Dan Williams <djbw@kernel.org>,
 	Serge Semin <fancer.lancer@gmail.com>,
-	Cai Huoqing <cai.huoqing@linux.dev>,
-	Niklas Cassel <cassel@kernel.org>,
-	Devendra K Verma <devverma@amd.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: [PATCH v6 5/5] dmaengine: dw-edma: Add trace support
-Date: Sat, 31 Oct 2026 00:07:42 +0900
-Message-ID: <20261030150742.2586776-6-den@valinux.co.jp>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261030150742.2586776-1-den@valinux.co.jp>
-References: <20261030150742.2586776-1-den@valinux.co.jp>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TY4P301CA0013.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:26f::19) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	dmaengine@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>, stable@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] dmaengine: dw: calculate residue separately from
+ completion
+Message-ID: <auS01eEyWjGD03MQ@SMW015318>
+References: <20261029-submit-dw-dma-synchronize-v1-v4-0-fea447d9f285@gmail.com>
+ <20261029-submit-dw-dma-synchronize-v1-v4-4-fea447d9f285@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261029-submit-dw-dma-synchronize-v1-v4-4-fea447d9f285@gmail.com>
+X-ClientProxiedBy: PH0PR07CA0041.namprd07.prod.outlook.com
+ (2603:10b6:510:e::16) To AMBPR04MB12445.eurprd04.prod.outlook.com
+ (2603:10a6:20b:75e::21)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -105,283 +107,295 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS3P286MB2389:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0015aceb-78b2-4843-a211-08df3697937e
+X-MS-TrafficTypeDiagnostic: AMBPR04MB12445:EE_|VI2PR04MB10713:EE_
+X-MS-Office365-Filtering-Correlation-Id: 02e8ea04-d9c0-400a-1cd6-08df3698d078
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|10070799003|23010399003|376014|7416014|1800799024|366016|56012099006|261009223027099003|261026135527099003|261026121527099003|261021123027099003|261021121427099003|10067099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|19092799006|7416014|376014|261021121427099003|261022105027099003|261021123027099003|10067099003|261009223027099003|261022075727099003|56012099006|261026121527099003|6133799003|18002099003|22082099003|5023799004|11063799006|261028144727099003|4143699003|261026140227099003;
 X-Microsoft-Antispam-Message-Info:
-	EeV+hKFl8hdIi0HrIphZDfbZc3gRzJp1YMzqEs6+44XicOeShIFwETdq5Q8k76LSiNjyiB2C7JssqP0FQUzEfkYRyLxNNz8OWyEBrtuAs7WczK6J1ILipwN8a4FRi2tK+imiUGK2WhGNN8x8eUCgOu6U3YfHgAb3LRlEqhD2hd3+kwc6hhG6k4IgWeDf/u5bJPQiu7eKnPyEaNFybnD8/AelyMZjqTUecA95m/oxCyHuJL8rFU6u0E5islHlD7ur+hDQmU+7103Y6Tn1SpPts2Q3KIBBZb6z0D55llLKQCfbiE5G9LA2/JxSu7HMhJ4TKMbONMpIT8Ap3fN3YeA899vlKLHTh6HVOjwB3+Gus9kOej6y27VHJtrgoWhf2OLuSvOytu8h5FQbeu0/iFR3IksEyC9K16zgFhPhCya7Gcd8NKqwvGTf5c8fSgVi5Ors4wWT9vcJvzNeCQ9Kumz46jDMdCFN8iSk373sTcHEvP/8VK7AEIIJY9w2WYd20VP6oBNAd7N9ZGSE9QKiV6LVgD7Qp5/jL8vSG81e2geH3SDG5YJ7gorf94RME5QNJCqP6Kpg5e37LW6hlojU8C3caZl8RekpAIQVTBSHfkHWS3lFfMGlPzYWbmo+ABSbR2DO
+	0602yOSxrYoR/7ebzqzU0tdthoX52e8u3kqz9Zk4JW+efuuKzM6y8QVcEul6DC4T98YDRr9VHVt2KhMu3Bb+ww0V7XXhK9sBFIW/vlgKM2I7kyQBx+IGKXBHZlQD6/PUphULZp3QOLLvuCHlS9QSdZPkI3+5KMdz2de7bMQ45jf9On+Sr0EgD4dU5qPK7CyLjlpXMhpBN2yP5wCRHZ4bCo443oMwSLYdpeiZ0jsvPUOOaf5OGfFxXkg96V2CKJ73kgIG9suCjlVEMhU+n9YJVln7tK2bCeH67akHbqNfn9cxDNuVVfN2mSLgkzIsD/k+Oo9yiVl4NlM8w/xSh8CFZgUMwjJFfiDFawuzrwwn7E4gkIMKV3zBwrxzBLG5y1XyXTzQL7kGtYY47jgy1hNwNKD9Mf2IfT5aFKZ9vRG/wMAFD+v2mqF+zNBWeNSH5vN+gvM+xMrtNl2dkIKRUQAerfqELYZMzc1lLFmlaxl0e3EPRrz1vH4n2YklMYmFaEgDv7ur5cnF0j2jLFGBTyURbaU8zqyi6sPY+zqKqHREwxuWf4VXMct5m/UXR13XtNpHViGRie9wZtB4ZScsgUdoJt71uicxwqm8TkG87r15ETGBjvrVhyX9lPRaY357DuClgzh/IULpmTIJhnDS2TclU80GJ/tH6T1kK4Fju6UPWDY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(376014)(7416014)(1800799024)(366016)(56012099006)(261009223027099003)(261026135527099003)(261026121527099003)(261021123027099003)(261021121427099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR04MB12445.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(19092799006)(7416014)(376014)(261021121427099003)(261022105027099003)(261021123027099003)(10067099003)(261009223027099003)(261022075727099003)(56012099006)(261026121527099003)(6133799003)(18002099003)(22082099003)(5023799004)(11063799006)(261028144727099003)(4143699003)(261026140227099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?lXIqPyJFHmCXTVFlizkQmQihLP2hb+BrBlcCnx6uRbo/JTPEFujf4wRcuVxQ?=
- =?us-ascii?Q?rGO3QHkpPktT/TvCW89R73e4QorNyJNWlr/TbxeHfcYtENuybEClyN8PGxKC?=
- =?us-ascii?Q?tKyh7r0El4tI3QVX9Bn8GNGytM8v+8Ea0NwGShb5PrqR9tfzElweVfbbnnLi?=
- =?us-ascii?Q?QYwK7V45Q6hrLuMluZQPSZenzpHxY74LD3BB7FQhDe35iL8hPnqrEpSxH1Nf?=
- =?us-ascii?Q?eEuI8v7obIJu1BqKe7O1P6DX8DjRYBQC8gwcDb5EcDNYRvo4vkDTtJdHxEeK?=
- =?us-ascii?Q?eV7C8qre+sAmyUaBecq/PMpgQcZxE3N9ud6MB9XCAL9Slzk2ct4O8jX3+el9?=
- =?us-ascii?Q?SAfEVyexYZ1HoXzaAt/huAZb2f68tv2SpB2ZbfQnEwy3Vn+B5mPuxcXoJMBK?=
- =?us-ascii?Q?rdtaVw8KHk36jideBCKjClGr+5V6CqI3sQqOtexrBcLbeWLA5UfUgkl0n7jt?=
- =?us-ascii?Q?FkzqLrctPF26RPKP0fyALXxlT6czNwbN2ie2bSrt7dkKVVMheEewXhTLbdiL?=
- =?us-ascii?Q?+shWFmN2GnEmBXctglZB7XkkJM6Lhf9hGTS6NzB1RXBvUt09j3i11vumtbLw?=
- =?us-ascii?Q?zVTpfEnuTMEEJAT63V05sXSWRn7kxP203DrTM2opL2dg92iQrol6QCh57oqz?=
- =?us-ascii?Q?7AkeYgPF2DPl0ixs1GpcF+/Dyxyp9gG0PttdeM8TC2o3+3FPG6ZjwOTWzgdh?=
- =?us-ascii?Q?6cxYypwrjzEv/fIR3EyU4YqAgU+HbKWxwuTrSOM84rEx4B7ApTNaKSEfvFTS?=
- =?us-ascii?Q?AiBISPAjNVIGwndL25k0Gu1txMOv8v63E9trgL+YE8ZnnDDlr5zL5KCTpNHV?=
- =?us-ascii?Q?Tg5NYI0Cz1pgU3E1bx7OZEtIGtjk+X0qyRvMNDL2UU+Nl+avKO7eAGEepGQu?=
- =?us-ascii?Q?mGKjirCLafF5O4MCAlQkCHoDeesftvxKq01/BPHohsaAGyj0XX28edgZvTdL?=
- =?us-ascii?Q?OnffFSYIqYLCm7kSkW25IkRbKE28N3rGOyj1qgEoDXaBk9BAeVHcZ+DIlxpg?=
- =?us-ascii?Q?BMrrHinWeKXL5x6TC5y0dM5PPty1lnmdQIa2EIERB8t5pBVwYLEBil8/W1ql?=
- =?us-ascii?Q?qAURZIk9ifCOuVWEjVWh+7/9AHNIAnxWfUqqS8vhMNtl7J52r1h7TRWdsWLm?=
- =?us-ascii?Q?+oNmC7GCZ0gaQcUVBwpsifmyqoxsgm8KfAcSn/X9wXY+JtHzCMmdLR8VBnvu?=
- =?us-ascii?Q?7Hc8whzXsx2GJc8R2MAHaT6ddmZ8o5YCkytCfggMK7aq+QpLoTYgF9214UoN?=
- =?us-ascii?Q?1xRJMAHGHg9/UyLiPjUrJubfpD9cnNQ0awtMqLKV/ilhm1AM0wW1VjgqmI9f?=
- =?us-ascii?Q?PIGBekfKfJDvnEN4jXrrFr11QO1GDW1ECuKAiY8el170GrtKXQccdA7ZT0XJ?=
- =?us-ascii?Q?Qq2wV6OZrPxpUb2QZE4AHq9hJqo5n43Z0Ie5+8gZen+uUSZIizAAmBhPjC8a?=
- =?us-ascii?Q?0BBEFjPml6BVrPgEe8gDpbHFJn+RZyxCKSPdd3EniRQsU27EQktIzdU29pkU?=
- =?us-ascii?Q?qmSzOXqsYs6A4tjEQErwwHy+PRyChN1uw7viNZP5FRAuXAu7iANxGvEPEs5n?=
- =?us-ascii?Q?Dl0I+VUVbFxexdp42yyOo81A6c4SnC3hmTR+iHao5GXEWNM5zL1rqjcepZ9q?=
- =?us-ascii?Q?eSOt0VtJGmDSRbipdVzJZLg3MXz9JdCCrXE38YmfZ+qkJ8qTmgR9IWMMFsQE?=
- =?us-ascii?Q?9Y1u1WrjBw4hskU2nu1bTGlYe4tmpdR1/xpd3WD8UWEYxoF1vymBgZtFf/p6?=
- =?us-ascii?Q?h8iKiwlo0kqmJYB0ZHKYvs0pH/CWyJ+5HN3cRnirUSLdO+mEiJnH?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0015aceb-78b2-4843-a211-08df3697937e
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+	=?us-ascii?Q?WzyR3klOTAvkj+11MSU3d1dUzZoJDg5LEwkLdiNf9+SpwWFyoNH/ZMGeik+m?=
+ =?us-ascii?Q?2GavHK1520zA/3quY1VSxwBi9hTc080BukqYZbWRH87V9N4kRxA4cTnEx95f?=
+ =?us-ascii?Q?BWc+duqHRi983F5Liy7NXmiAzwbeq28s0vYrCLxvDn3bOuiNYaYlrI7Up96R?=
+ =?us-ascii?Q?6rWQkqp6Kvw47Te4p1VwHSqmM7N5atLBYto0SXsO38RmUb0x7KOodLBpphA2?=
+ =?us-ascii?Q?88aIQ1/1LlBD4kEIOuQyZCWX9ViM+Eeiq7nTDEY48mUII75HERpMIS4e66ha?=
+ =?us-ascii?Q?jOEhbdaEp/EJCUF8/tlcveLIvmJlNlyJ8ab7gm4q8m8j1/iuCh9v411h3Byr?=
+ =?us-ascii?Q?KuiwSTf9otLxdX1Ll/xpgpA0HkLKI8/T4L5aZrm2GT0NjexBLYj4Hy+yCFFu?=
+ =?us-ascii?Q?A3rLJdFo+wtl/gQ2T7SLQLghDQfiMjotyRLoZDmrHtlqg/LTH/Cof7hbzOlz?=
+ =?us-ascii?Q?Bq7WSm3DEo0uaHNW7Noft8aqdgDqDX3RXwQGVSIFtHU1X4W9QCGZoT/emcJu?=
+ =?us-ascii?Q?XB5VIYeXraeUSrzfjtU9Gw8QBtY1tdVgD+rXKYubbi4pX2aX3qxeHD7PiQuA?=
+ =?us-ascii?Q?jBG52SnIiX+HSschHQT8aQLz+d3a3UdzbK+Od1RuUK9P8DXUlX/d0COzmK/S?=
+ =?us-ascii?Q?4vt3cLpB8eyw6IQ8DoWZlX2Jm/HjawU3ubRfFqg48pxwN7Jv0Xc3PVxZOzXg?=
+ =?us-ascii?Q?UTfLKDn4703Y/BNZwZq1t3Tte86MxQlfOK3u5LOqbZrMEbeDcXUfUw3P71t8?=
+ =?us-ascii?Q?eY9g/veEOKPARqeWpj5KrWPJ6ZYroUaibzJJzRhir3lKkBKercfkkOdO6ZZj?=
+ =?us-ascii?Q?Rfkue9x0pzJWeuIy3BfbjhppV0FwoGPbCM3zoQy38R+33kmOEx0ayaojgJGq?=
+ =?us-ascii?Q?yL7idgDE3fJX1QOPoEoHBex3IUXkORvh9JsqD5bQEMdfhKWS9okMGTRltdp9?=
+ =?us-ascii?Q?LiQTEDCnm2jKOyjHEhX2iqgt0BW5pbXXVh0nr6YJhLOHhD46RiBIKX3sCU+w?=
+ =?us-ascii?Q?d8OUVnbiA/JQ2Eu35ToxifXZwwnMopVxefdNAOBkj7PMpqyRhvy1cBW2FP7M?=
+ =?us-ascii?Q?T79pdi3StLRmYXMfS6ZLrPcoknAvAqCmLWuus/vMm7l4I5ldB0WFFHWCkOMi?=
+ =?us-ascii?Q?3s14jfTPVHc69bMdOaWqftxh3hgO5mjYxbc3AvpCGJDdvvJbIO6VAOKfEZ0D?=
+ =?us-ascii?Q?40nXrP+M3UEvRvfEr0xylE5THB23XiDAYi5if+luD04UZC+hVR8Qfqu6HOb2?=
+ =?us-ascii?Q?NaCAPalsVJL7fRpAwGJ6dJQShaPAR8RgqT7Ip8Zhv8t7zxlj5/CF6RLLGelj?=
+ =?us-ascii?Q?o2+ZLcH1JCahQewCiNmiT15TVEgkw6tld2G8f4YUQcTYxwdQriUcao3BV1cN?=
+ =?us-ascii?Q?z7S5cho43R7lfnxH/yymJnpkBihYY2WbnKwby5AJRAemexvAkyQsjkH+jWlw?=
+ =?us-ascii?Q?WLTC5RbeZAl07GwPq4cNn3dzgiPQpD8S3BV3PBXG6OmtncYsMS+bEQLuuUlE?=
+ =?us-ascii?Q?sCvxpDL2nLBQiNex9L0hsJKv02nCYFBFa/u5f1gYS/k8V7TRSdjRkELyr2+y?=
+ =?us-ascii?Q?EU9hT1DuB8PgIOBYYTyX2bKOv8kawZ0SADjemEoiJneaNm8XtwDBECs2aNHW?=
+ =?us-ascii?Q?o5FcsuQZddyPQhrBYxLxDT3N1c278X6R+YHCGFyzTCv83cx7YT6Fk8PVVdGh?=
+ =?us-ascii?Q?H1hB0IeWNaCUYPDKdYv8j6dDzEa95tF3WFKXiqycXqn3tnKvsA/ABevwZRfD?=
+ =?us-ascii?Q?pVGqHqk2VB06Vc/tolKeU7bprfXA/as/aBoopUw26HLM/n5XYx4A?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 02e8ea04-d9c0-400a-1cd6-08df3698d078
+X-MS-Exchange-CrossTenant-AuthSource: AMBPR04MB12445.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2026 15:07:55.3616
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2026 15:16:47.2397
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ubAISvXrILmmZvkmhDgeX945PJ3A0hVJHEImczFGr8Sa3TKKvdhJQtoN9xBtSdQlYp4CkN5MyP6vbwaKlvBCuw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3P286MB2389
+X-MS-Exchange-CrossTenant-UserPrincipalName: tu9X8ELFH0LBA/Om7HwG2vm0MpNUpDmzJVWAkcbJ5ujUDvs90R3VgBKWpXgnXXMtwS4evaxom/v9Y8u0mP2diTo+BJ9mBBvLq1y0r7II+c2jSoqyUihXPqoeToge2czO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB10713
 
-From: Frank Li <Frank.Li@nxp.com>
+On Thu, Oct 29, 2026 at 04:29:38PM -0600, James Hilliard wrote:
 
-Add tracepoints for LL publication, descriptor append and completion,
-and doorbells. Record channel and ring indices to help diagnose stalls.
+dmaengine: dw: move residue calculation into helper dwc_get_hard_llp_desc_residue()
 
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
----
-Reworked v5 patch 24:
-https://lore.kernel.org/r/20260812155721.2807506-25-den@valinux.co.jp/
+> From: Serge Semin <fancer.lancer@gmail.com>
+>
+> The descriptor scanner mixes transfer-complete handling with hardware-LLP
+> residue calculation. A status query needs the latter for the requested
+> cookie even when no transfer-complete event is pending.
+>
+> Move hardware-LLP residue calculation into its own helper and call it from
+> the status getter under the channel lock. Keep software-LLP progress in
+> the scanner and subtract the current block's progress when reporting its
+> residue. The scanner now handles transfer-complete events only, retaining
+> the distinction between zero source residue and destination completion.
+>
+> Also search the queued descriptors so a transfer waiting to start reports
+> its full length instead of zero residue.
+>
+> Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> [james: retain polled completion and report queued residue]
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+>
+> ---
+>
+> Changelog RFC:
+> - Instead of just dropping the dwc_scan_descriptors() method invocation
+>   calculate the residue in the Tx-status getter.
+> ---
+>  drivers/dma/dw/core.c | 166 +++++++++++++++++++++-----------------------------
+>  1 file changed, 68 insertions(+), 98 deletions(-)
+>
+> diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+> index 1f7afcd01565..1d6419e1cd3c 100644
+> --- a/drivers/dma/dw/core.c
+> +++ b/drivers/dma/dw/core.c
+> @@ -274,123 +274,60 @@ static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
+>
+>  static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+>  {
+> -	dma_addr_t llp;
+>  	struct dw_desc *desc, *_desc;
+>  	struct dw_desc *child;
+> -	u32 status_xfer;
+>  	unsigned long flags;
+>  	LIST_HEAD(list);
+>
+>  	spin_lock_irqsave(&dwc->lock, flags);
+> -	llp = channel_readl(dwc, LLP);
+> -	status_xfer = dma_readl(dw, RAW.XFER);
+>
+> -	if (status_xfer & dwc->mask) {
+> -		/* Everything we've submitted is done */
+> -		dma_writel(dw, CLEAR.XFER, dwc->mask);
+> -		if (list_empty(&dwc->active_list)) {
+> -			spin_unlock_irqrestore(&dwc->lock, flags);
+> -			return;
+> -		}
+> -
+> -		if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+> -			struct list_head *head, *active = dwc->tx_node_active;
+> -
+> -			/*
+> -			 * We are inside first active descriptor.
+> -			 * Otherwise something is really wrong.
+> -			 */
+> -			desc = dwc_first_active(dwc);
+> -
+> -			head = &desc->tx_list;
+> -			if (active != head) {
+> -				/* Update residue to reflect last sent descriptor */
+> -				if (active == head->next)
+> -					desc->residue -= desc->len;
+> -				else
+> -					desc->residue -= to_dw_desc(active->prev)->len;
+> -
+> -				child = to_dw_desc(active);
+> +	if (!(dma_readl(dw, RAW.XFER) & dwc->mask))
+> +		goto unlock;
+>
+> -				/* Submit next block */
+> -				dwc_do_single_block(dwc, child);
+> +	dma_writel(dw, CLEAR.XFER, dwc->mask);
+> +	if (list_empty(&dwc->active_list))
+> +		goto unlock;
+>
+> -				spin_unlock_irqrestore(&dwc->lock, flags);
+> -				return;
+> -			}
+> +	desc = dwc_first_active(dwc);
+> +	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+> +		struct list_head *head = &desc->tx_list;
+> +		struct list_head *active = dwc->tx_node_active;
+>
+> -			/* We are done here */
+> -			clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
+> -		}
+> +		if (active != head) {
+> +			/* Update residue to reflect last sent descriptor. */
+> +			if (active == head->next)
+> +				desc->residue -= desc->len;
+> +			else
+> +				desc->residue -= to_dw_desc(active->prev)->len;
+>
+> -		if (dma_readl(dw, CH_EN) & dwc->mask) {
+> -			dev_err(chan2dev(&dwc->chan),
+> -				"BUG: XFER bit set, but channel not idle!\n");
+> +			child = to_dw_desc(active);
+>
+> -			/* Try to continue after resetting the channel... */
+> -			dwc_chan_disable(dw, dwc);
+> +			/* Submit next block, including for polled transfers. */
+> +			dwc_do_single_block(dwc, child);
+> +			goto unlock;
+>  		}
+>
+> -		/* Detach the completed transfer before starting queued work. */
+> -		list_splice_init(&dwc->active_list, &list);
+> -		list_for_each_entry(desc, &list, desc_node)
+> -			dma_cookie_complete(&desc->txd);
+> -		dwc_dostart_first_queued(dwc);
+> -		spin_unlock_irqrestore(&dwc->lock, flags);
+> -
+> -		list_for_each_entry_safe(desc, _desc, &list, desc_node) {
+> -			list_del_init(&desc->desc_node);
+> -			dwc_descriptor_free(dwc, desc, true);
+> -		}
+> -		return;
+> +		clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
+>  	}
+>
+> -	if (list_empty(&dwc->active_list)) {
+> -		spin_unlock_irqrestore(&dwc->lock, flags);
+> -		return;
+> -	}
+> +	if (dma_readl(dw, CH_EN) & dwc->mask) {
+> +		dev_err(chan2dev(&dwc->chan),
+> +			"BUG: XFER bit set, but channel not idle!\n");
+>
+> -	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+> -		dev_vdbg(chan2dev(&dwc->chan), "%s: soft LLP mode\n", __func__);
+> -		spin_unlock_irqrestore(&dwc->lock, flags);
+> -		return;
+> +		/* Try to continue after resetting the channel... */
+> +		dwc_chan_disable(dw, dwc);
+>  	}
+>
+> -	dev_vdbg(chan2dev(&dwc->chan), "%s: llp=%pad\n", __func__, &llp);
+> -
+> -	list_for_each_entry_safe(desc, _desc, &dwc->active_list, desc_node) {
+> -		/* Initial residue value */
+> -		desc->residue = desc->total_len;
+> -
+> -		/* Check first descriptors addr */
+> -		if (desc->txd.phys == DWC_LLP_LOC(llp)) {
+> -			spin_unlock_irqrestore(&dwc->lock, flags);
+> -			return;
+> -		}
+> -
+> -		/* Check first descriptors llp */
+> -		if (lli_read(desc, llp) == llp) {
+> -			/* This one is currently in progress */
+> -			desc->residue -= dwc_get_sent(dwc);
+> -			spin_unlock_irqrestore(&dwc->lock, flags);
+> -			return;
+> -		}
+> -
+> -		desc->residue -= desc->len;
+> -		list_for_each_entry(child, &desc->tx_list, desc_node) {
+> -			if (lli_read(child, llp) == llp) {
+> -				/* Currently in progress */
+> -				desc->residue -= dwc_get_sent(dwc);
+> -				spin_unlock_irqrestore(&dwc->lock, flags);
+> -				return;
+> -			}
+> -			desc->residue -= child->len;
+> -		}
+> +	dma_cookie_complete(&desc->txd);
+> +	list_move_tail(&desc->desc_node, &list);
+> +	dwc_dostart_first_queued(dwc);
+> +unlock:
+> +	spin_unlock_irqrestore(&dwc->lock, flags);
+>
+> +	list_for_each_entry_safe(desc, _desc, &list, desc_node) {
+> +		list_del_init(&desc->desc_node);
+> +		dwc_descriptor_free(dwc, desc, true);
+>  	}
+> -
+> -	/* Residue describes source reads; only RAW.XFER completes a transfer. */
+> -	spin_unlock_irqrestore(&dwc->lock, flags);
+>  }
+>
+>  static inline void dwc_dump_lli(struct dw_dma_chan *dwc, struct dw_desc *desc)
+> @@ -969,9 +906,39 @@ static struct dw_desc *dwc_find_desc(struct dw_dma_chan *dwc, dma_cookie_t c)
+>  		if (desc->txd.cookie == c)
+>  			return desc;
+>
+> +	list_for_each_entry(desc, &dwc->queue, desc_node)
+> +		if (desc->txd.cookie == c)
+> +			return desc;
+> +
+>  	return NULL;
+>  }
+>
+> +static u32 dwc_get_hard_llp_desc_residue(struct dw_dma_chan *dwc, struct dw_desc *desc)
+> +{
+> +	u32 residue = desc->total_len;
+> +	struct dw_desc *child;
+> +	dma_addr_t llp;
+> +
+> +	llp = channel_readl(dwc, LLP);
+> +
+> +	/* The first descriptor may still be waiting to be fetched. */
+> +	if (desc->txd.phys == DWC_LLP_LOC(llp))
+> +		return residue;
+> +
+> +	if (lli_read(desc, llp) == llp)
+> +		return residue - dwc_get_sent(dwc);
+> +
+> +	residue -= desc->len;
+> +	list_for_each_entry(child, &desc->tx_list, desc_node) {
+> +		if (lli_read(child, llp) == llp)
+> +			return residue - dwc_get_sent(dwc);
+> +
+> +		residue -= child->len;
+> +	}
+> +
+> +	return residue;
+> +}
 
- drivers/dma/dw-edma/Makefile        |   2 +
- drivers/dma/dw-edma/dw-edma-core.c  |   9 +++
- drivers/dma/dw-edma/dw-edma-core.h  |   2 +
- drivers/dma/dw-edma/dw-edma-trace.c |   4 +
- drivers/dma/dw-edma/dw-edma-trace.h | 117 ++++++++++++++++++++++++++++
- 5 files changed, 134 insertions(+)
- create mode 100644 drivers/dma/dw-edma/dw-edma-trace.c
- create mode 100644 drivers/dma/dw-edma/dw-edma-trace.h
+This patch still too big. You can create new helper()
+dwc_get_hard_llp_desc_residue() and replace orginal code exactly, then
+change gradulatly.
 
-diff --git a/drivers/dma/dw-edma/Makefile b/drivers/dma/dw-edma/Makefile
-index 83ab58f87760..5f395fa1ede4 100644
---- a/drivers/dma/dw-edma/Makefile
-+++ b/drivers/dma/dw-edma/Makefile
-@@ -1,8 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
- 
-+CFLAGS_dw-edma-trace.o		:= -I$(src)
- obj-$(CONFIG_DW_EDMA)		+= dw-edma.o
- dw-edma-$(CONFIG_DEBUG_FS)	:= dw-edma-v0-debugfs.o	\
- 				   dw-hdma-v0-debugfs.o
-+dw-edma-$(CONFIG_TRACING)	+= dw-edma-trace.o
- dw-edma-objs			:= dw-edma-core.o	\
- 				   dw-edma-v0-core.o	\
- 				   dw-hdma-v0-core.o $(dw-edma-y)
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 3e23d177a579..be8816528b2e 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -219,6 +219,7 @@ static void dw_edma_ll_consume(struct dw_edma_chan *chan, int idx,
- 
- 		dw_hdma_set_callback_result(vd, DMA_TRANS_NOERROR);
- 		list_del(&vd->node);
-+		trace_edma_complete_desc(desc);
- 		vchan_cookie_complete(vd);
- 	}
- 
-@@ -245,6 +246,12 @@ static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
- 				     chan->ll_head, chan->cb,
- 				     i == desc->nburst - 1 || free == 1);
- 
-+		trace_edma_fill_ll(chan, chan->ll_head,
-+				   desc->vd.tx.cookie,
-+				   desc->burst[i].sar,
-+				   desc->burst[i].dar, desc->burst[i].sz,
-+				   chan->cb);
-+
- 		chan->ll_head++;
- 
- 		if (chan->ll_head == chan->ll_max) {
-@@ -298,6 +305,7 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
- 		if (!chan->ll_valid)
- 			dw_edma_core_reset_ll(chan);
- 
-+		trace_edma_append_desc(desc);
- 		dw_edma_core_start(desc);
- 		ret = 1;
- 	}
-@@ -361,6 +369,7 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
- static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
- {
- 	dw_edma_core_ll_sync(chan);
-+	trace_edma_doorbell(chan);
- 	dw_edma_core_do_ch_doorbell(chan);
- }
- 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 84a811bdcb6d..769c0c08a711 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -154,6 +154,8 @@ struct dw_edma {
- 	const struct dw_edma_core_ops	*core;
- };
- 
-+#include "dw-edma-trace.h"
-+
- typedef void (*dw_edma_handler_t)(struct dw_edma_chan *chan,
- 				  unsigned int events);
- 
-diff --git a/drivers/dma/dw-edma/dw-edma-trace.c b/drivers/dma/dw-edma/dw-edma-trace.c
-new file mode 100644
-index 000000000000..2620ad61a943
---- /dev/null
-+++ b/drivers/dma/dw-edma/dw-edma-trace.c
-@@ -0,0 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#define CREATE_TRACE_POINTS
-+#include "dw-edma-core.h"
-diff --git a/drivers/dma/dw-edma/dw-edma-trace.h b/drivers/dma/dw-edma/dw-edma-trace.h
-new file mode 100644
-index 000000000000..653b36acff15
---- /dev/null
-+++ b/drivers/dma/dw-edma/dw-edma-trace.h
-@@ -0,0 +1,117 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Copyright 2023 NXP.
-+ */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM dw_edma
-+
-+#if !defined(__LINUX_DW_EDMA_TRACE) || defined(TRACE_HEADER_MULTI_READ)
-+#define __LINUX_DW_EDMA_TRACE
-+
-+#include <linux/types.h>
-+#include <linux/tracepoint.h>
-+
-+DECLARE_EVENT_CLASS(edma_desc_info,
-+	TP_PROTO(struct dw_edma_desc *desc),
-+	TP_ARGS(desc),
-+	TP_STRUCT__entry(
-+		__field(size_t, nburst)
-+		__field(size_t, start_burst)
-+		__field(dma_cookie_t, cookie)
-+		__field(u32, id)
-+		__field(u8, dir)
-+	),
-+	TP_fast_assign(
-+		__entry->nburst = desc->nburst;
-+		__entry->start_burst = desc->start_burst;
-+		__entry->id = desc->chan->id;
-+		__entry->dir = desc->chan->dir;
-+		__entry->cookie = desc->vd.tx.cookie;
-+	),
-+	TP_printk("chan %u%c desc %d nburst %zu start_burst %zu",
-+		__entry->id,
-+		__entry->dir ? 'R' : 'W',
-+		__entry->cookie,
-+		__entry->nburst,
-+		__entry->start_burst)
-+);
-+
-+DEFINE_EVENT(edma_desc_info, edma_append_desc,
-+	TP_PROTO(struct dw_edma_desc *desc),
-+	TP_ARGS(desc)
-+);
-+
-+DEFINE_EVENT(edma_desc_info, edma_complete_desc,
-+	TP_PROTO(struct dw_edma_desc *desc),
-+	TP_ARGS(desc)
-+);
-+
-+TRACE_EVENT(edma_doorbell,
-+	TP_PROTO(struct dw_edma_chan *chan),
-+	TP_ARGS(chan),
-+	TP_STRUCT__entry(
-+		__field(u32, id)
-+		__field(u8, dir)
-+		__field(u32, done)
-+		__field(u32, head)
-+	),
-+	TP_fast_assign(
-+		__entry->id = chan->id;
-+		__entry->dir = chan->dir;
-+		__entry->done = chan->ll_done;
-+		__entry->head = chan->ll_head;
-+	),
-+	TP_printk("chan %u%c done %u head %u",
-+		__entry->id,
-+		__entry->dir ? 'R' : 'W',
-+		__entry->done,
-+		__entry->head)
-+);
-+
-+TRACE_EVENT(edma_fill_ll,
-+	TP_PROTO(struct dw_edma_chan *chan, u32 idx, dma_cookie_t cookie, u64 src,
-+		 u64 dest, u32 sz, bool flag),
-+	TP_ARGS(chan, idx, cookie, src, dest, sz, flag),
-+	TP_STRUCT__entry(
-+		__field(u32, idx)
-+		__field(u64, src)
-+		__field(u64, dest)
-+		__field(u32, sz)
-+		__field(u32, id)
-+		__field(dma_cookie_t, cookie)
-+		__field(bool, flag)
-+		__field(u8, dir)
-+	),
-+	TP_fast_assign(
-+		__entry->idx = idx;
-+		__entry->src = src;
-+		__entry->dest = dest;
-+		__entry->sz = sz;
-+		__entry->id = chan->id;
-+		__entry->dir = chan->dir;
-+		__entry->cookie = cookie;
-+		__entry->flag = flag;
-+	),
-+	TP_printk("chan %u%c %d [%u] %c src: %08llx dest: %08llx sz: %04x",
-+		__entry->id,
-+		__entry->dir ? 'R' : 'W',
-+		__entry->cookie,
-+		__entry->idx,
-+		__entry->flag ? 'C' : 'c',
-+		__entry->src,
-+		__entry->dest,
-+		__entry->sz)
-+);
-+
-+#endif
-+
-+/* This part must be outside the header guard. */
-+
-+#undef TRACE_INCLUDE_PATH
-+#define TRACE_INCLUDE_PATH .
-+
-+#undef TRACE_INCLUDE_FILE
-+#define TRACE_INCLUDE_FILE dw-edma-trace
-+
-+#include <trace/define_trace.h>
--- 
-2.54.0
+Frank
 
