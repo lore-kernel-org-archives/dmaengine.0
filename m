@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793373435;
-	b=ujREvBSylOsWr19aLg1unOVGYAsuJ883g39SMqu6BjMrdAHGEIrDO/JHe1z0SctPIe79
-	 TlPEGfzc9SmiB4o3RNxnp6ik7zuFSNdqeg0gzZ09mAI2ZlPpK9T4TGDeyp6BPKccwxXfL
-	 p1fetPG5zR2M/t1LwHJ39fTByhd5u1zfRkv+buMjtAau+ff1INhZHDCRqw522UI7i6cZA
-	 5m233Lb//w43QD9IAq/RXEQQtKGIsGUR9N/ARTSt1xUPqUkM4u5zJv0hId/chsohjHhWk
-	 t+G+VQh+TSLf09tgq+CdUDEfVkYmKX2+4GC2NBwRytbEs/ne+u1Pi4Qm8XbL3/rb9aQ==
+	t=1793373669;
+	b=IWGPux4yDIXwgJQTJA15bq+4SAo7vZpk62ihRON7Kgtr4DsCsvyZ6B/X9undo+AflwT4
+	 lyRRvDR5inIiewgHzZU6W+P6i/bOLVTjjx8V248uK681wyNgY5S3Ga7S2TLYwzV7dX+v7
+	 rnFrMYSWzgiIcJWZ5+cbqGd8kirJG2tu5cMyTSd6a1qi94pGtKm7L3vC6HLHgeM0pQ8PS
+	 zImpqsWJ8cae9vYNLWG370fRpWd10TZr6qQLJ6FLnxOIzoi9kBRysWMkY82QtVKUjxFKW
+	 vk8hmC5PoB+CtiICW2YePs0jcqKBsXhiDYw9Wxm4hMlvYUnhF50KurtOBm8ezNTuvpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793373435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793373669;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=sIU8CDTfsSV0E97VvcGSPbXyGHw92fm5udRdTkpjaSk=;
-	b=igkI02ic7MvewxO28T/aRsOxcwiqu8c3MSgzCOqELFMBOQN7Muyh2JuNX63LFjN+CEiY
-	 Yspntw/SMucSoFhlrRQiF/3Ic08xRf22sh5i1lr8Y6BkZ5zG3NFDAQtMHy5ihYfCk998y
-	 tAAl+QtOA5nfUe3cye6guwq7Lu0bPRde+S1Eto8Qsq6pWI71G2n/vPcIMuSYL0nn8Ts1K
-	 KMHPJxXxhOAsjTSEf85AAp3AnspNjKAzLQTAD//o08bSpMDrHWVxh/H4gfKoB02flq1k/
-	 7LxmFrHYw35C9/jngTPUgtp2sWyf8PGRRekwApznF3sWlA6tPACdznxufP+E3JoJYPA==
+	bh=AEmwirg2N+MYyFC3UFJdbyP92DW9FOyPFo6hEKBZTqA=;
+	b=RbXJ4OHWaHboADw2MVgV62suSeqGrVMoBMWTwWjFi5SaWNWjXYd02Tjse3awt1Dbdz/q
+	 uyszmzPknHb4JuUiFfTvrRkhJtieVT1pk7eRrkz6vtZyaN64IJJ2z+IJhQXZPVWwmiIC6
+	 lEY1XdtpYMecy0SSusPWA594QzsYBIvj9ObTZohIZr5uO/17G5nYgHbaTaCa0Iky8g0f/
+	 TsFH5lNQvl3zFCG9CB7QLu9lqPI2AVYMFfZED7qWkp3D6QTg0n3rgnHsOfeBZl/kMTLKJ
+	 uXUOrohtX3fyXcwpp6D5c/BAf2WHJVeR0y3xDOl00zG7jX6T8K5zpAnlYbTW8FMwUhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LoeKkhKe;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hjGHgaTU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8337606A31E;
-	Fri, 30 Oct 2026 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE81606A31E;
+	Fri, 30 Oct 2026 15:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LoeKkhKe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A9D1F00A02;
-	Fri, 30 Oct 2026 15:17:14 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hjGHgaTU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FE11F00A02;
+	Fri, 30 Oct 2026 15:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793373434;
-	bh=sIU8CDTfsSV0E97VvcGSPbXyGHw92fm5udRdTkpjaSk=;
+	s=k20260515; t=1793373668;
+	bh=AEmwirg2N+MYyFC3UFJdbyP92DW9FOyPFo6hEKBZTqA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=LoeKkhKe/WWsB+z8yuibYhAL85SMCgrtxxO+KUZzBucMUgNUgKA4d4i860097DnST
-	 yBbXiBG3yJ1jn1qoOv8f3/5aArv8LyGjoGgxM1KU7VAH3DPshg79BF1WvBier6/XQd
-	 76uSi81rpexoR4NYBxUE4JEWkEuWnU8N+kCMVCUxXudEYet9QK0njKr29EORP+tR97
-	 RDHLZfc2ynRiVpoJsPNYdnHVR+ir47wbo+p15zwovPEoADyz2Wdrebx9S9bcik0gnS
-	 9gFMBFnOYtjdDiMeURcDbU91r/cZ7xlAGRGefefpSCnmZEFaglro+RxiX4p5CHPIAR
-	 ucNnssRgblUag==
-Message-ID: <sashiko-outbox-191148@kernel.org>
+	b=hjGHgaTU1gzina+KAiGPMDmMo5RmoIDYtYCC8Y501EAHELELhya/inqoXjwlUdxWy
+	 rIgo3dAKdoBq42UpAIHV/PMWeze9BuG8ZtDMAJirfaihZEZ0Ba/CZIQVGaS/c7nSXq
+	 ajiL87pVbLsvToGDYLGGGUfET+I6EITA1iIWpgh0Y/a5E1ByMAcA5TRhata6uXz5k8
+	 sxv4YiC/ah+GACbPYfMGRr4FOZziPImVo5mXQkUnO6Y8iZ0uF/6RxBebI+m4U/ue/h
+	 yYn+lcIj3Vn9DliBwZpcP11xiCCMVcfmQWDizrtb2B+NiUi7holZgeZjh5JWfJdNYl
+	 EPwC57nH3FPWw==
+Message-ID: <sashiko-outbox-191157@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v6 5/5] dmaengine: dw-edma: Add trace support
+Subject: Re: [PATCH v6 3/5] dmaengine: dw-edma: Use HDMA watermark
+ interrupts as LL progress
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Koichiro Den" <den@valinux.co.jp>
 Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261030150742.2586776-6-den@valinux.co.jp>
+In-Reply-To: <20261030150742.2586776-4-den@valinux.co.jp>
 References: <20261030150742.2586776-1-den@valinux.co.jp>
- <20261030150742.2586776-6-den@valinux.co.jp>
+ <20261030150742.2586776-4-den@valinux.co.jp>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 30 Oct 2026 15:17:13 +0000
+Date: Fri, 30 Oct 2026 15:21:08 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,120 +63,86 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] dmaengine: dw-edma: tracepoints use edma_ prefix instead of dw_edma_
+- [Medium] dmaengine: dw-edma: non-LL watermark unmasked in dw_hdma_v0_core=
+_int_setup()
 --
 
-commit 8d4bbe2d0d3de12559142ae2213cc91782526216
-Author: Frank Li <Frank.Li@nxp.com>
+commit 5e1e3ed55b7d4e9a83bc0d3c9ec3bbccd4a0395c
+Author: Koichiro Den <den@valinux.co.jp>
 
-dmaengine: dw-edma: Add trace support
+dmaengine: dw-edma: Use HDMA watermark interrupts as LL progress
 
-This commit adds tracepoints for linked-list publication, descriptor append
-and completion, and doorbells in the dw-edma driver to help diagnose stalls.
+This commit enables HDMA watermark interrupts on linked-list entries that
+request an interrupt, configures local or remote interrupt delivery, and
+routes watermark events to the linked-list progress handler.
 
-> diff --git a/drivers/dma/dw-edma/dw-edma-trace.h b/drivers/dma/dw-edma/dw=
--edma-trace.h
-> new file mode 100644
-> index 0000000000000..653b36acff158
-> --- /dev/null
-> +++ b/drivers/dma/dw-edma/dw-edma-trace.h
-> @@ -0,0 +1,117 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Copyright 2023 NXP.
-> + */
+> diff --git a/drivers/dma/dw-edma/dw-hdma-v0-core.c b/drivers/dma/dw-edma/=
+dw-hdma-v0-core.c
+> index aa430219d0af2..7ca5afa181fe5 100644
+> --- a/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> +++ b/drivers/dma/dw-edma/dw-hdma-v0-core.c
+> @@ -58,7 +58,8 @@ static u32 dw_hdma_v0_core_int_setup(struct dw_edma_cha=
+n *chan, u32 val)
+>  {
+>  	val &=3D ~(HDMA_V0_LOCAL_ABORT_INT_EN | HDMA_V0_REMOTE_ABORT_INT_EN |
+>  		 HDMA_V0_LOCAL_STOP_INT_EN | HDMA_V0_REMOTE_STOP_INT_EN |
+> -		 HDMA_V0_ABORT_INT_MASK | HDMA_V0_STOP_INT_MASK);
+> +		 HDMA_V0_ABORT_INT_MASK | HDMA_V0_WATERMARK_INT_MASK |
+> +		 HDMA_V0_STOP_INT_MASK);
+> =20
+>  	/*
+>  	 * HDMA_INT_STATUS.STOP and .ABORT are latched only when LSIE and
+> @@ -68,10 +69,14 @@ static u32 dw_hdma_v0_core_int_setup(struct dw_edma_c=
+han *chan, u32 val)
+>  	 */
+>  	val |=3D HDMA_V0_LOCAL_ABORT_INT_EN | HDMA_V0_LOCAL_STOP_INT_EN;
+> =20
+> -	if (chan->irq_mode =3D=3D DW_EDMA_CH_IRQ_REMOTE)
+> +	if (chan->irq_mode =3D=3D DW_EDMA_CH_IRQ_REMOTE) {
+> +		if (!chan->non_ll)
+> +			val |=3D HDMA_V0_WATERMARK_INT_MASK;
 > +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM dw_edma
-> +
-> +#if !defined(__LINUX_DW_EDMA_TRACE) || defined(TRACE_HEADER_MULTI_READ)
-> +#define __LINUX_DW_EDMA_TRACE
-> +
-> +#include <linux/types.h>
-> +#include <linux/tracepoint.h>
-> +
-> +DECLARE_EVENT_CLASS(edma_desc_info,
-> +	TP_PROTO(struct dw_edma_desc *desc),
-> +	TP_ARGS(desc),
-> +	TP_STRUCT__entry(
-> +		__field(size_t, nburst)
-> +		__field(size_t, start_burst)
-> +		__field(dma_cookie_t, cookie)
-> +		__field(u32, id)
-> +		__field(u8, dir)
-> +	),
-> +	TP_fast_assign(
-> +		__entry->nburst =3D desc->nburst;
-> +		__entry->start_burst =3D desc->start_burst;
-> +		__entry->id =3D desc->chan->id;
-> +		__entry->dir =3D desc->chan->dir;
-> +		__entry->cookie =3D desc->vd.tx.cookie;
-> +	),
-> +	TP_printk("chan %u%c desc %d nburst %zu start_burst %zu",
-> +		__entry->id,
-> +		__entry->dir ? 'R' : 'W',
-> +		__entry->cookie,
-> +		__entry->nburst,
-> +		__entry->start_burst)
-> +);
-> +
-> +DEFINE_EVENT(edma_desc_info, edma_append_desc,
-> +	TP_PROTO(struct dw_edma_desc *desc),
-> +	TP_ARGS(desc)
-> +);
-> +
-> +DEFINE_EVENT(edma_desc_info, edma_complete_desc,
-> +	TP_PROTO(struct dw_edma_desc *desc),
-> +	TP_ARGS(desc)
-> +);
-> +
-> +TRACE_EVENT(edma_doorbell,
-> +	TP_PROTO(struct dw_edma_chan *chan),
-> +	TP_ARGS(chan),
-> +	TP_STRUCT__entry(
-> +		__field(u32, id)
-> +		__field(u8, dir)
-> +		__field(u32, done)
-> +		__field(u32, head)
-> +	),
-> +	TP_fast_assign(
-> +		__entry->id =3D chan->id;
-> +		__entry->dir =3D chan->dir;
-> +		__entry->done =3D chan->ll_done;
-> +		__entry->head =3D chan->ll_head;
-> +	),
-> +	TP_printk("chan %u%c done %u head %u",
-> +		__entry->id,
-> +		__entry->dir ? 'R' : 'W',
-> +		__entry->done,
-> +		__entry->head)
-> +);
-> +
-> +TRACE_EVENT(edma_fill_ll,
-> +	TP_PROTO(struct dw_edma_chan *chan, u32 idx, dma_cookie_t cookie, u64 s=
-rc,
-> +		 u64 dest, u32 sz, bool flag),
-> +	TP_ARGS(chan, idx, cookie, src, dest, sz, flag),
+>  		val |=3D HDMA_V0_REMOTE_ABORT_INT_EN |
+>  		       HDMA_V0_REMOTE_STOP_INT_EN |
+>  		       HDMA_V0_ABORT_INT_MASK | HDMA_V0_STOP_INT_MASK;
+> +	}
+> =20
+>  	return val;
+>  }
 
-[Severity: Low]
-This isn't a bug, but since TRACE_SYSTEM in drivers/dma/dw-edma/dw-edma-tra=
-ce.h
-is defined as dw_edma, should the event class and tracepoints follow the
-subsystem_event naming convention and use the dw_edma_ prefix instead of
-edma_?
+[Severity: Medium]
+In dw_hdma_v0_core_int_setup(), HDMA_V0_WATERMARK_INT_MASK is unconditional=
+ly
+cleared at the start of the function, unmasking the local watermark interru=
+pt
+pin. Later, it is only set back to 1 (masked) when chan->irq_mode is
+DW_EDMA_CH_IRQ_REMOTE and !chan->non_ll.
 
-Specifically, edma_desc_info, edma_append_desc, edma_complete_desc,
-edma_doorbell, and edma_fill_ll export global tracepoint symbols under the
-generic edma_ prefix (which is also used by drivers/dma/fsl-edma-trace.h)
-and are invoked in drivers/dma/dw-edma/dw-edma-core.c from
-dw_edma_ll_consume(), dw_edma_core_ll_start(), dw_edma_start_transfer(),
-and dw_edma_core_ch_doorbell().
+When a channel is started in non-LL mode via:
 
-Renaming them to dw_edma_desc_info, dw_edma_append_desc,
-dw_edma_complete_desc, dw_edma_doorbell, and dw_edma_fill_ll (along with
-their callers in dw-edma-core.c) would match the TRACE_SYSTEM name and avoid
-generic edma_ symbol names.
+  dw_edma_device_issue_pending()
+    -> dw_edma_start_transfer()
+      -> dw_edma_core_start()
+        -> dw_hdma_v0_core_non_ll_start()
+          -> dw_hdma_v0_core_int_setup()
+
+chan->non_ll is true, which leaves HDMA_V0_WATERMARK_INT_MASK cleared (0,
+unmasked) in both DW_EDMA_CH_IRQ_LOCAL and DW_EDMA_CH_IRQ_REMOTE modes.
+
+In remote IRQ mode, all local interrupt pins are expected to be masked. In
+addition, if a watermark interrupt fires on a non-LL channel (for instance,=
+ if
+the hardware watermark_en register is non-zero), dw_hdma_v0_core_handle_int=
+()
+will report DW_EDMA_IRQ_PROGRESS, causing dw_edma_done_interrupt() to
+prematurely complete the active non-LL burst while the channel is still
+running.
+
+Should HDMA_V0_WATERMARK_INT_MASK be set whenever chan->non_ll is true or
+chan->irq_mode =3D=3D DW_EDMA_CH_IRQ_REMOTE, so that local watermark interr=
+upts
+are only unmasked for LL channels in local IRQ mode?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261030150742.2586=
-776-1-den@valinux.co.jp?part=3D5
+776-1-den@valinux.co.jp?part=3D3
