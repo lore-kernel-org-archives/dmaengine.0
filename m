@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793648059;
-	b=sBAi4LTYVqI0hF9j1u8vvw+UtEy7gBkvMStZw+u0nQsj7M4Lrnr4S0WG2cfxMAGA4PC3
-	 bEhJCspScea+jLOCS2xaIpyWejlI3H1/1mXj+YXFvJGxXQcuslNth2sSKzvBHYCdxX8T4
-	 V1Qah7jqSiwsZSNW7Usxkvw3wAv+7PnJzvMP9NQv5XzOLi54+/IFFGOT9B7jIHZ35e8i+
-	 WlwEkv8Hk0dQtHabK+yCkcldSM/1BCL2uzVE+is/NeVSm1wclWMQu+LS98K3V6Rkp9+ea
-	 8ZsOEEjaSjBbKTM1DGqtlWu4+YUm1axmsWk6i8+ZwzNRgjR8M3KsOFad031/njb+nvw==
+	t=1793648061;
+	b=atpg2d9tmRzAg+A69X1ntr8jT77tBChbT7hjKKTOTlPkJUhatsUHB0/U7WfQSnDvBqMS
+	 0Kr8m0+/1YD1o3DAc7KLMt1Go6hzjDVoO09a60afIMblf9EaKFIZVMoot7uD8Zac+0WJZ
+	 IZ6758Rx0Z5bNxKU5v+AziFOI824oC/q+k92UveS2cpgtqiaMtk4UR3UoeUNV6qGgEt47
+	 iLsdECl1UcuaYVwkXfDGnOefGE8MZZ5A0NYi5sxQeueyDlkqkvUGuNbElb7aYy1Wgf+I9
+	 ULhIykPZuM3gtVcSamFw15Y/Ullq+S62U5qGbWyFWLGC1JFfsHGDmzbJjbgH5DcFspA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793648059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793648061;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=q+rdUxamFVww//fVRdvdICS8n134NRDCqiLcyvwJX0I=;
-	b=Q2NIiAYQ87g8oWfObZbDzPa4RAxCXlb/1k6c+bnMZuJxYZ+/HjCZgpFGprTTvnrs5j72
-	 eAYgPe4FbcH+GqRiumOARYRoK52jmlziUatZQXuuvMdZt9h/TqaSOYLgSAMiRzTpSAVYT
-	 JACCJatT56HIO5RY8yHA4rwoAgoEADbpQBLBLksKP1CDMkTCtha3FnzCxjXn80Agm0RaW
-	 geQP99OIYB/FozGo2a4L+fX9nv+wUwemNh+O4dzMgs0A0CJ46dhkkIOZdkKX6NZQE7M/C
-	 5vLjaoF14JBQHlYXOKunk+NPZ78xO5KIg4otLcYUU8Q+LHRleZDKVaPLVXZQtQlhtpg==
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
+	bh=/oL/d63e2xaO/P/OLh85rsbWKHpvbqFNY1ZyDh443Xs=;
+	b=KqEWht/x19TemqQ4ioiXGNJAPWP2YADk+NuEKJP06Uc7L+vblPiJ//bh3E3tjDlbwPWW
+	 OSvTPJzkcSms/NuxSObu8TB06wBYogZn6EByfyptKgxpXzWTGcDdWJIzPNhCjOemTISJ3
+	 SUfmqgfjRpI3d6mFTQscYPf3D0teKiGYqVPwTtAou41HeuD7UdKvBBYMzzzVNjLc6rqN2
+	 ok7JVDYeDe6NEql+R7h8lLcPZrdjlhknB7WZvBWpRJNPjMtrbbZ1oxtVMfkIi9qzDFdOq
+	 jeIt6LhUm3Vio+yZx6gyYPwOp8ucmGxBSczYOX1svCflEE5n4ZPTJSNbg6Ny88YULwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XJcPyCaG;
-	arc=none smtp.remote-ip=209.85.167.179
-Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RpSNen4N;
+	arc=none smtp.remote-ip=209.85.210.53
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D00606A327
-	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 19:34:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2D00606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA701606A33F
+	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 19:34:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA701606A33F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XJcPyCaG
-Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-53dbe9b8d6eso3058368b6e.1
-        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 11:34:18 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RpSNen4N
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-823e4047037so2510849a34.2
+        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 11:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793648058; x=1794252858; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=q+rdUxamFVww//fVRdvdICS8n134NRDCqiLcyvwJX0I=;
-        b=XJcPyCaGwGGomr3dCjfS8r+48PC8R4Ov0Juox2GIMmm25Gn9vxey4/354LRl1tL3Pt
-         2GnF1litqZBioV2H73zSi7rP8h1mYOCpB3kxcyhdhhAQN0YimkIbtTq5dNpNnrKpmWsK
-         qaZOOQ7busMgL7icaRwDIZjTHCw5eSSLWluhMydSusb0OuuoBiZhAq8JQeb5S8/F8MRd
-         piK0CC8kVl6BtNotGyXYfTh0kNJ6/er26T2yiyfUigJ0E+kMEUsQ3bMEkVzgxHfQSWW6
-         ov07OYzRsFh0vdNIKqiyjjHw9P1RGrTX8W21vprfznWCavihOFvyfa5aY1FRoGBUX6D7
-         rUtA==
+        d=gmail.com; s=20260707; t=1793648059; x=1794252859; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/oL/d63e2xaO/P/OLh85rsbWKHpvbqFNY1ZyDh443Xs=;
+        b=RpSNen4NuMcD8RfuTuX/4qNZOlAqG9kEZUodizemBf//CAHSt/hHOxCTwluuPnbzQl
+         KPTqvkuTB0BE+qTsQv7zckzUVeIOqNdXcxzK8yYss3jBf7MDOE+FzM/bL61B5vEDb51F
+         mNjIYqnuMcey1OWsI4aVQYcewyT+mGT99ssQ9AWMZu9Leo9zYzyx4x7GJvxRvi2VKShA
+         KY2Tlv9Q+J3tsN/mq9cb4q37oULXAK4kG+Wst1a4RB15e+qotNdqS31ckB4tbCIbm7Tp
+         M9yFkP6AZ4sigExQI4+lyxOBY+7z896vkMpMrVIwO2z+tQMJAbvCHgxSykxSipYsiBtr
+         XuwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793648058; x=1794252858;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=q+rdUxamFVww//fVRdvdICS8n134NRDCqiLcyvwJX0I=;
-        b=QwUFSbS1T8yTabkVsk1N41f6Rkefl7O+TpXiLhstMw931e5r18hscavcaTR6gvD2j5
-         D4CJ6p00rOBanxOapHqHD2frpTE39/6yuGcEV5mMBlWlBQS1+qr75FROrmiPkViBKGtL
-         4jsXr36dFnVBHIiWYGhCcalBff+ZwjFsA/TzHIl0KGKzwDnPxQd0r+akE5WTgQuA8xgs
-         UWHiUzt0VfAzkJMPT0fYUkCK5m7kkkWPk6fSRPZ1Wk4rx07SIE9BAKUkr2ghl1Mk+/MX
-         GIFPCjDfeQ2rIL8fHTBUwse8F/9YrvytmLEGMTWW8pv1ZgdJgKCNpDHbMYqac8RtQtae
-         ZD4Q==
-X-Forwarded-Encrypted: i=1; AKwUvBzfAqkTjrDAuBfJ/eU1iWOHuPrDwVAiccAGY0qtvAFYsVTwczpcQ41kALMgc2lWxMFJmb09AhdU7Vg=@vger.kernel.org
-X-Gm-Message-State: AFq9FYK8DSxCIjy9E+UVuHXQM2QzkndJ0Ko8ZVZKuyAnMyPJPShOPNPV
-	/GVFVtxOCueatgygawNeK9A5l2LkOoHn5U1ME17aPwyNlu4ItO46XxrzJk58dg==
-X-Gm-Gg: AYBFou3KBXwvSrqpPQOUD2IocucbSGuF6f4eET/h2bLjE0StO+XtNcw+/eKULDVVJmH
-	vFg9CRnnwy6qG53HyJbdJC8jnT13k8EqS/EQ0/i4KSNRnnvtI+nhIgGtxLZeTf7kHc2EkLUEnty
-	kNMtwVqNPYxud2jk80QVMHTVptsXLy2W3fIhb/NMVqk2R4b+cuIPPV5eISv+lMTBNv4YEeQC16T
-	FHjXWdzTiTogazW97/RAVvs82l8bux5bc/JaV605CiqwNFupweOFQX/NnHYRsTDLgrql1lEu11A
-	L4UoKe+WDu7KsGaiXDJRF7fvL7TO3T2zpoBEzkc13vNk0sbkMG0JuqJmOgkCVVvSZU1lUFTeEpf
-	a4eVh1FedredFSGJL70wOAlnkri7PiaWM2pOOSo/CHCc5zlZU1AJPAMdLobBCJnWZGY50xve+C4
-	uoxRPRVqTZIP/hG7335zP+eGUYwL1LH5sznTuTb7mbkqNh4W9FwQdiMkBixNtpanR9qmU5JyudE
-	jvQtSPxgLU9tdHlqkkiH6jat++/n18LeI6DedInSTxwygR/Z8iFCca/oQ4kGpeHrD2eWXoaZx2Q
-	m59kofiaFQMfG3FFCjedJNDVQRae3TJr7n8+BzvgsTuRmgBFPlUDu2DHZ/NFcNt0f1Yc4CG84wC
-	3wV0dS9STKx84hpE+q7LZPUB9VE2Tp4aEhKOoE9fJi7CSZxSF3bQ2e8dygwF1/Hr0SLZL5eVHGU
-	163dL5ShJ8WTorL9KE+TH1AClx1lGSR4mPRNj3oq8d2RpmWxNypXg=
-X-Received: by 2002:a05:6808:17a3:b0:4d6:9133:cfee with SMTP id 5614622812f47-563efc7b62cmr7343937b6e.51.1793648057640;
-        Mon, 02 Nov 2026 11:34:17 -0800 (PST)
+        d=1e100.net; s=20260707; t=1793648059; x=1794252859;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/oL/d63e2xaO/P/OLh85rsbWKHpvbqFNY1ZyDh443Xs=;
+        b=a8qCKNf9j/juJGUxD8NIjb0LilfGnAaU8fWeSaxMw47cO5TRK9uWLMYbmwf1HE2xqu
+         plYOLIHqQWFPwT/o13QzAjtYUPs4HWgXRk0TYgsid0P+AfdO79zkU/15K+Nr8jxaYI08
+         K3SaRlbfU97zlI/X9mEHrOkhvsPuou8AVlDu1gSnDmePDNVUhkDYUF3oHXZ0D0jAUD7G
+         iKsNBl3L8rFPllGgN54lh2T05ttbIYnJwwVmzlY75lTSlb3oaQ6jwMqg53CRFIUw4uUv
+         xjhHPWDU5qF7N1A1+8Beb0oZ4yDtH3/gGCxpNGUZKiMb3zbotdJlAUsgsA3GnJDtMLkP
+         O1Uw==
+X-Forwarded-Encrypted: i=1; AKwUvByRdii/1e9Gg8VWrfAToBpi9NoGA7mM4Lekw4aQM5r2gdPO7RNwPmriwk8VvYi4urCUZs/n8v3DQKw=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKT75ts60Hw/YDGqFc8FeVmdot4sht+9ZT1qtfWAEP0/Dr3HvRo
+	UZJLOmsNpXtIAuuGnPZhloJ1ks0U0IHX9+eNWegUnPN3yOBnScnr7pCW
+X-Gm-Gg: AYBFou2O+c7YfnTgrBhEy2x4FyHunN3GqPBs6tDnR1B2nAnW9nqj/1hchAIJNg4/XXm
+	7yKGzMydjAM2jPds9uVWMz931rlK7et+5UaxdFmLbiFYoL1R2iBouvHhXmshCYmK9mQqA1GgJ7R
+	Gcg1Jv1q5sNnCWcaXxTQkb9QxyLGqC4CFBpRLB0ZGpz32sk2ASQYl9JA0LGn1WlIpSwKCmpojvm
+	Oha3NwxQ56DXoyV1SfVBc6Wd2vRPY0n8dHXv/2s0SKQuBm47H8hItiVzhMuGPCTSzkiYbKw2Ko2
+	HQvTeve54qezOf2X/LyA54fFmr6tbI2CWiikJezADw78oZxmrg8QXjUwKdlqoT661PXDkMUX+sE
+	1C3q8VDTVd8CBhGdFHlleEK3WYbEzHIdoSMsbcKQOQYjW1qY/IsO/oMeeOKR3h0BXuAqnYhwXzA
+	l4DmvQIpSBU47kCJKuPqvQxfCj75kTcaFqBk40cJgq9DiiX6Z4sOUp23m37iI680wF7gIoVi+eO
+	dCFOAD/zVEc36JXVzfeTrZ3XaORm8FvK8/Eedh+LooiDggdbooaK5ePlBKfZJ7PB6w1OW/uHnK4
+	8/Ii98aE25uvczvuzg20hptSnmF2mRbX7iHJ3JUjrFVdqhcq067IRAIaDhlq/5+LGyfFQ+OfnaO
+	8zVyK/WaJDaXHQPr0hl9LZWSxAq8hadPLEkZyU4e5NwirCbBx4Y+478UagJI5Nn+BX3xVVT2uhj
+	15ZFCBCK9YwK1hn82pdd4vWNFYVEaVQYmhTZWj1rClM0tX3CDsFEk=
+X-Received: by 2002:a05:6808:191f:b0:4f4:3790:6615 with SMTP id 5614622812f47-5640deea416mr8455725b6e.11.1793648059580;
+        Mon, 02 Nov 2026 11:34:19 -0800 (PST)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-5640fd93451sm8558249b6e.3.2026.11.02.11.34.16
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-5640fd93451sm8558249b6e.3.2026.11.02.11.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 11:34:17 -0800 (PST)
+        Mon, 02 Nov 2026 11:34:18 -0800 (PST)
 From: James Hilliard <james.hilliard1@gmail.com>
-Subject: [PATCH v5 00/10] dmaengine: dw: serialize completion and
- termination
-Date: Mon, 02 Nov 2026 12:34:12 -0700
-Message-Id: <20261102-submit-dw-dma-synchronize-v1-v5-0-d3207758fbf9@gmail.com>
+Date: Mon, 02 Nov 2026 12:34:13 -0700
+Subject: [PATCH v5 01/10] dmaengine: dw: Fix XFER bit set, but channel not
+ idle error
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -96,12 +96,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43OwW7DIAwG4FepOM8bOJAmO+09qh0ImIRpIRNk6
- boq7z5oL1EvmeTLb9mf/itLFD0l9nq4skiLT34KOainAzODDj2Btzkz5FgLjgLSdzf6GewZ7Kg
- hXYIZ4hT8L8EigJTiTh6dFVazTHxFcv7nxp/e7zn/f5CZi1kuOp0IuqgzU1bZpND7QC/3v3wx+
- DRP8XJruIgi/bNMHgG1do0yaGtXt2/9qP3ns5lGVsosuMVwB0PgoFBKaqU1ujGPWLXFqh2sypi
- psXNcNk4ZesTkFmt3MJkxR1rKo20dNmqLrev6B+1DI33jAQAA
-X-Change-ID: 20261021-submit-dw-dma-synchronize-v1-e550f47fd1da
+Message-Id: <20261102-submit-dw-dma-synchronize-v1-v5-1-d3207758fbf9@gmail.com>
+References: <20261102-submit-dw-dma-synchronize-v1-v5-0-d3207758fbf9@gmail.com>
+In-Reply-To: <20261102-submit-dw-dma-synchronize-v1-v5-0-d3207758fbf9@gmail.com>
 To: Viresh Kumar <vireshk@kernel.org>, 
  Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
  Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
@@ -117,118 +114,171 @@ Cc: Serge Semin <fancer.lancer@gmail.com>,
  Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.15.2
 
-Keep client callbacks in the controller tasklet while preserving polled
-completion. Serialize descriptor ownership across completion, error
-recovery and termination, and wait for callbacks before a client reuses
-its resources.
+From: Serge Semin <fancer.lancer@gmail.com>
 
-The series first serializes completion, error recovery and cookie
-accounting with termination. Separate patches extract hardware-LLP
-residue calculation, move it into the status getter, simplify completion
-handling and report queued residue. Channel release and
-device_synchronize then gain tasklet draining before the final patch
-adds deferred notifications and shared completed-descriptor cleanup.
+If a client driver gets to use the DW DMAC engine device tougher
+than usual, with occasional DMA-transfers termination and restart, then
+the next error can be randomly spotted in the system log:
 
-The series adapts Serge Semin's channel-restart and callback fixes [0-2].
-Polling continues to advance cookies and software-LLP blocks, while client
-notifications run from the controller tasklet. Synchronization preserves
-pending tasklet runs from other channels.
+> dma dma0chan0: BUG: XFER bit set, but channel not idle!
 
-Based on dmaengine/fixes at 6628e7d4c6b2.
+For instance that happens in case of the 8250 UART port driver handling
+the looped back high-speed traffic (in my case > 1.5Mbaud) by means of the
+DMA-engine interface.
 
-[0] https://lore.kernel.org/r/20240911184710.4207-1-fancer.lancer@gmail.com
-[1] https://lore.kernel.org/r/20240911184710.4207-2-fancer.lancer@gmail.com
-[2] https://lore.kernel.org/r/20240911184710.4207-3-fancer.lancer@gmail.com
+The error happens due to the two-staged nature of the DW DMAC IRQs
+handling procedure and due to the critical section break in the meantime.
+In particular in case if the DMA-transfer is terminated and restarted:
+1. after the IRQ-handler submitted the tasklet but before the tasklet
+   started handling the DMA-descriptors in dwc_scan_descriptors();
+2. after the XFER completion flag was detected in the
+   dwc_scan_descriptors() method, but before the dwc_complete_all() method
+   is called
+the error denoted above is printed due to the overlap of the last transfer
+completion and the new transfer execution stages.
 
-Assisted-by: Codex:gpt-6-astra
+Clear the channel interrupt status when stopping it, and keep the XFER
+check, descriptor detachment and queued-transfer restart in one locked
+section. An empty active list needs no completion processing.
+
+When the locked XFER recheck finds no event, only update residue. A stale
+tasklet snapshot may belong to a terminated transfer, and a zero residue
+only means the source has been read, not that destination writes have
+finished. Requiring RAW.XFER also prevents the fallback scan from freeing
+a descriptor still linked on active_list.
+
+Fixes: 69cea5a00d31 ("dmaengine/dw_dmac: Replace spin_lock* with irqsave variants and enable submission from callback")
+Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+[james: require a locked XFER event and handle an empty active list]
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-
 ---
-Changes in v5:
-- Rebase onto dmaengine/fixes at 6628e7d4c6b2, using the shared
-  dmaengine_chan_dev() helper for channel logging.
-- Split residue handling into a behavior-preserving extraction, status
-  calculation, scanner simplification and queued-residue reporting,
-  following Frank's review.
-- Share completed-descriptor freeing between the tasklet and channel
-  release, retaining callbacks for normal completion and suppressing
-  them during teardown. Name the helper dwc_free_completed().
-- Carry Frank's additional review tags and put the submitter sign-off
-  after the review tags.
-- Link to v4: https://patch.msgid.link/20261029-submit-dw-dma-synchronize-v1-v4-0-fea447d9f285@gmail.com
+ drivers/dma/dw/core.c | 70 ++++++++++++++++++++-------------------------------
+ 1 file changed, 27 insertions(+), 43 deletions(-)
 
-Changes in v4:
-- Split v3's callback-deferral patch into cookie accounting, residue
-  calculation, channel-release draining and callback-deferral patches,
-  following Frank's review. The resulting seven-patch series preserves
-  v3's final implementation.
-- Place device_synchronize before callback deferral so clients can drain
-  deferred notifications when the completion list is introduced.
-- Carry Frank's Reviewed-by tags on the unchanged channel-completion,
-  error-recovery and device_synchronize patches.
-- Link to v3: https://patch.msgid.link/20261023-submit-dw-dma-synchronize-v1-v3-0-c62bf048f5ce@gmail.com
+diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+index 575b7bb6af9a..2a9db9e39f5f 100644
+--- a/drivers/dma/dw/core.c
++++ b/drivers/dma/dw/core.c
+@@ -136,6 +136,12 @@ static inline void dwc_chan_disable(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 	channel_clear_bit(dw, CH_EN, dwc->mask);
+ 	while (dma_readl(dw, CH_EN) & dwc->mask)
+ 		cpu_relax();
++
++	dma_writel(dw, CLEAR.XFER, dwc->mask);
++	dma_writel(dw, CLEAR.BLOCK, dwc->mask);
++	dma_writel(dw, CLEAR.SRC_TRAN, dwc->mask);
++	dma_writel(dw, CLEAR.DST_TRAN, dwc->mask);
++	dma_writel(dw, CLEAR.ERROR, dwc->mask);
+ }
+ 
+ /*----------------------------------------------------------------------*/
+@@ -252,34 +258,6 @@ dwc_descriptor_complete(struct dw_dma_chan *dwc, struct dw_desc *desc,
+ 	dmaengine_desc_callback_invoke(&cb, NULL);
+ }
+ 
+-static void dwc_complete_all(struct dw_dma *dw, struct dw_dma_chan *dwc)
+-{
+-	struct dw_desc *desc, *_desc;
+-	LIST_HEAD(list);
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&dwc->lock, flags);
+-	if (dma_readl(dw, CH_EN) & dwc->mask) {
+-		dev_err(dmaengine_chan_dev(&dwc->chan),
+-			"BUG: XFER bit set, but channel not idle!\n");
+-
+-		/* Try to continue after resetting the channel... */
+-		dwc_chan_disable(dw, dwc);
+-	}
+-
+-	/*
+-	 * Submit queued descriptors ASAP, i.e. before we go through
+-	 * the completed ones.
+-	 */
+-	list_splice_init(&dwc->active_list, &list);
+-	dwc_dostart_first_queued(dwc);
+-
+-	spin_unlock_irqrestore(&dwc->lock, flags);
+-
+-	list_for_each_entry_safe(desc, _desc, &list, desc_node)
+-		dwc_descriptor_complete(dwc, desc, true);
+-}
+-
+ /* Returns how many bytes were already received from source */
+ static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
+ {
+@@ -297,6 +275,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 	struct dw_desc *child;
+ 	u32 status_xfer;
+ 	unsigned long flags;
++	LIST_HEAD(list);
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
+ 	llp = channel_readl(dwc, LLP);
+@@ -305,6 +284,10 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 	if (status_xfer & dwc->mask) {
+ 		/* Everything we've submitted is done */
+ 		dma_writel(dw, CLEAR.XFER, dwc->mask);
++		if (list_empty(&dwc->active_list)) {
++			spin_unlock_irqrestore(&dwc->lock, flags);
++			return;
++		}
+ 
+ 		if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+ 			struct list_head *head, *active = dwc->tx_node_active;
+@@ -336,9 +319,23 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 			clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
+ 		}
+ 
++		if (dma_readl(dw, CH_EN) & dwc->mask) {
++			dev_err(dmaengine_chan_dev(&dwc->chan),
++				"BUG: XFER bit set, but channel not idle!\n");
++
++			/* Try to continue after resetting the channel... */
++			dwc_chan_disable(dw, dwc);
++		}
++
++		/* Detach the completed transfer before starting queued work. */
++		list_splice_init(&dwc->active_list, &list);
++		dwc_dostart_first_queued(dwc);
+ 		spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+-		dwc_complete_all(dw, dwc);
++		list_for_each_entry_safe(desc, _desc, &list, desc_node) {
++			list_del_init(&desc->desc_node);
++			dwc_descriptor_complete(dwc, desc, true);
++		}
+ 		return;
+ 	}
+ 
+@@ -384,22 +381,9 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 			desc->residue -= child->len;
+ 		}
+ 
+-		/*
+-		 * No descriptors so far seem to be in progress, i.e.
+-		 * this one must be done.
+-		 */
+-		spin_unlock_irqrestore(&dwc->lock, flags);
+-		dwc_descriptor_complete(dwc, desc, true);
+-		spin_lock_irqsave(&dwc->lock, flags);
+ 	}
+ 
+-	dev_err(dmaengine_chan_dev(&dwc->chan),
+-		"BUG: All descriptors done, but channel not idle!\n");
+-
+-	/* Try to continue after resetting the channel... */
+-	dwc_chan_disable(dw, dwc);
+-
+-	dwc_dostart_first_queued(dwc);
++	/* Residue describes source reads; only RAW.XFER completes a transfer. */
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ }
+ 
 
-Changes in v3:
-- Order channel-completion and error-recovery locking before callback
-  deferral, retaining four patches.
-- Require a locked RAW.XFER event before retiring a transfer; zero source
-  residue alone cannot establish destination completion.
-- Preserve polled completion and software-LLP progress in tx_status(),
-  queuing client notifications for the controller tasklet.
-- Serialize cookie updates with termination and report queued residue.
-- Drain deferred notifications on channel release and let a pending
-  tasklet return without MMIO after the last channel is released.
-- Adapt Serge's two patches and retain his authorship and revision notes.
-  Drop the Tested-by tags that covered their earlier implementations.
-- Identify the introduction of the synchronization API in the final
-  patch's Fixes tag.
-- Link to v2: https://patch.msgid.link/20261022-submit-dw-dma-synchronize-v1-v2-0-5244e94dca8c@gmail.com
-
-Changes in v2:
-- Carry Serge Semin's two posted fixes before the synchronization change,
-  preserving his authorship and revision notes. Add the requested stable
-  Cc trailers and Andy Shevchenko's Tested-by tags to those unchanged fixes.
-- Add a separate error-recovery fix for stale error status, empty channel
-  lists and software-LLP state when terminating or restarting a channel.
-- Use tasklet_disable()/tasklet_enable() instead of tasklet_kill() so
-  synchronization preserves scheduling requests from other channels.
-- Explain descriptor ownership during termination and acknowledge the
-  shared-tasklet scheduling race reported by Sashiko.
-- Link to v1: https://patch.msgid.link/20261021-submit-dw-dma-synchronize-v1-v1-1-6af85c2d6f69@gmail.com
-
-Revision history from Serge's series:
-
-Link: https://lore.kernel.org/dmaengine/20240802080756.7415-1-fancer.lancer@gmail.com/
-Changelog RFC:
-- Add a new patch:
-  [PATCH 2/2] dmaengine: dw: Fix XFER bit set, but channel not idle error
-  fixing the "XFER bit set, but channel not idle" error.
-- Instead of just dropping the dwc_scan_descriptors() method invocation
-  calculate the residue in the Tx-status getter.
-
----
-James Hilliard (6):
-      dmaengine: dw: serialize error recovery with channel termination
-      dmaengine: dw: complete cookies before releasing the channel lock
-      dmaengine: dw: simplify transfer-complete handling
-      dmaengine: dw: report residue for queued transfers
-      dmaengine: dw: drain the tasklet before releasing channel resources
-      dmaengine: dw: synchronize completion callbacks
-
-Serge Semin (4):
-      dmaengine: dw: Fix XFER bit set, but channel not idle error
-      dmaengine: dw: extract hardware-LLP residue calculation
-      dmaengine: dw: calculate residue in the status getter
-      dmaengine: dw: Prevent tx-status calling DMA-desc callback
-
- drivers/dma/dw/core.c | 301 +++++++++++++++++++++++++-------------------------
- drivers/dma/dw/regs.h |   1 +
- 2 files changed, 154 insertions(+), 148 deletions(-)
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20261021-submit-dw-dma-synchronize-v1-e550f47fd1da
-
-Best regards,
---  
-James Hilliard <james.hilliard1@gmail.com>
+-- 
+2.53.0
 
