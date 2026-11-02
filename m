@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793610452;
-	b=LsfOhZ2XUCSQWnVcna2Uf6B8L0QB+BYu9C0V4yJuwfrnX+4mE5N6trsoPfTaReEkqZkJ
-	 yozYzMFhp/BArz82B7nUMz3y2mMx81j80LH2jTbS9ZvdvEZ0jhymJ5L75iCJ/eN9faufO
-	 cq1jw6YA6XSpC5YRecNE8+9u3df1Ahrp4KtxNTmDCd2KNl5iLvAkV0lC569Dym5/d78Db
-	 2p6gzbPIPfQDDVdKcPMh4KzdphD/yyKvs+K28YeUbWkdRKeb7Tr2TTgTXT3OwfgzAK8hN
-	 p9w4/SqACJSfeaxKtqUjlysk7zj3mHsmeRvrG/DIkBsDua6a7Z1iv7uCgssIhz8u7aA==
+	t=1793610454;
+	b=ZJZhwpNPM8BzO29fWCM4vpxdZVeKtzhdb88evdcuDrkOQSg5mjgznF8WG6/UDg3lCpI1
+	 hE4MCg4UxF+8tJPI0ZlQqkAXtSGfdDesse5V6W2MA5z1WxDPB7T31KW+vdgSikSFfhHKD
+	 wxFlgs31dFdQUcHEyrfgZsfvY6PKPC+my+fF/b/sjqjLhGOoo9Ogix/oYG/kSjbiG4MnS
+	 redaJ5OWrPZIzsnx9zjuB/aYmY9qZ/MV10J2+ZnH/TJzHN6/vp+NQX2CA1C145qUyL4CH
+	 rrGi/kFUlg/mHT0gtFA/QzQcyGthnfmfcYC2xhY4SRr1AalGSHoH+Ti+IGAXSV7wt7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793610452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793610454;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OWa6rCe3eYZYo8piCwJXbY132UwyBp1v43wGP7zJqDE=;
-	b=n4YiEDZhiFspqCs+/VCkZg1RRotTckqWRQtpjxQKxiKrJV25mNzbiSNU3Io/mag+Yxi4
-	 0c5JklikpyJdpaigj/Tcqj7KJ+Oyik8oK+Vk71UI+yCznjIX7tJSUCuthhRkeAa7t+bnm
-	 WDbLdqGBiyM9DFNfsuaor/zkBeyMDuOKLFubhEaeGVum2CupoN+eMqlkeWd0O86Zitf8B
-	 g0v7AcVQF1ixTbQXvCdfIKwMUw0VOtNzWf8uaO1L/pbjVhhFvPhe8H6+Hhx/qLHPIiBV2
-	 ITvjDAer6HAdTrJzOYpGK7PJS+YAgj0wGkAKLMQk+oxkQ41bQbUtbaI8TVMMmbE3aWw==
+	bh=ca0mm6wOincCYsxFkpZ3alJVNygD9weGLU+HWZOKny4=;
+	b=nW09NHStC1M3MUQ8Sd/6aMqZ5xViwEdjYL/VMDIpFkgUgdH6kHQb9JYwAKrztrr+I7c2
+	 f4SzIiuKr8hnEYN3QSEvwayUlfeGcWbzXK9UZf6lbAAeRbND2RvcgOfCaV/wQWIjbOOKg
+	 vbBcJhWhG4khexAwkYLOvhU3PtBcmhMBxHHGnlBn9VlG+WbbiTH6+ENpWdsZ3/FRVNwnj
+	 wpr9pqN48YQKFr54VvPvPpD1DxQ9FWYgU6HRgAY8QS6y/MpqVMpDZgQxVXSG+yc4Q/PLe
+	 +T3Q3aySNNShdffDImcm2dDvMPs8wO/HgQo6rfoi3h5WYBcm4HZNteJSN2f22usR6Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g+5SqkAK;
-	arc=none smtp.remote-ip=209.85.128.54
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwPzx3BJ;
+	arc=none smtp.remote-ip=209.85.128.46
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098B3606A324
-	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 09:07:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 098B3606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135F6606A32D
+	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 09:07:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 135F6606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=g+5SqkAK
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a218c463d1so17781745e9.0
-        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 01:07:31 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PwPzx3BJ
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a4d7ae1ae9so25061995e9.1
+        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 01:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793610450; x=1794215250; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793610452; x=1794215252; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=OWa6rCe3eYZYo8piCwJXbY132UwyBp1v43wGP7zJqDE=;
-        b=g+5SqkAK2Lw6nb1DAvrw0aUpPuXaqrN4EVqrLvgEt8tECV4HZNwk+o82weuVlS+zK6
-         smd+vs2aGipLC5ckbzeRJB5zM7iLDUoKx5EBXnjL8gnAjeRI9IgKplqTB7usq7tY6O4V
-         ccX1fu/ORXfXVtCOtiIQuRB1ZkDCccWhCseawvcQ5gS2+pr54e9KiPQLu0RTW6i9ABp6
-         RFFw7+mgR2+m6kkJ/cGJBdCbRStpvFDI5B3UpGCtC+KQxW8MlEMF33FLcGrcOUWwqewC
-         +lA3ICUvajFe6lSIYgacEEO/GzRwWLG+ZRbocPTifUmgJYduOJIU1fW7drlHHJdk6y2s
-         ZWIg==
+        bh=ca0mm6wOincCYsxFkpZ3alJVNygD9weGLU+HWZOKny4=;
+        b=PwPzx3BJSz/awoGWU+IZ3UQnFFWPlLmyalf5Y2n1KQbzx9gJl1U6leoC9n0YQvl9Bl
+         x0MuDsWZCQeSdGqXgPei4MFi+Ax3C9Av7eLm4GRkp4ThZe2QFIOO7C4sQw+S05sWgiIP
+         cmyFfa29Mxb+CslnWdooX7DcqAbRr7Tn5x1l7hXZhI2w1m7FGd5nHk6u9nqEcx+gzHPS
+         xJVFie1OMTy0c83K10SJ+8geGpkNd6Y+oPGiOItFLm4XcJ577p+yr/OYxNGUu1zyO+TT
+         23ZJ43dTyUJEMKafAv8cYaF/6JV8s/fh2/prewqwjZwum4Xug77DvgMXXG25TG1gDJwZ
+         L6Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793610450; x=1794215250;
+        d=1e100.net; s=20260707; t=1793610452; x=1794215252;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=OWa6rCe3eYZYo8piCwJXbY132UwyBp1v43wGP7zJqDE=;
-        b=mNy2kmsWlVar6SAEjJic1nZ3ZcR8Vv7jtVK6c/TFOnN/qbdum4jG+OSwXR21D79ETt
-         FCui/3i8jFCigf7sgkgK2Oi3n+iSdpGZkWUr3PrXP1fwe0SDhdpWZlV8Elz+CkLPueVC
-         ZjBxLLxCQG8s5VYz/QV3ewi84ncrGZpHIO0RYzQtpSrYU6iGzTfJvcq9NLyLTQHdTYtL
-         V9qKy7PqJ5IWIXV/pmOH/lFFUT1dXbr5LWGTvG1GxlKEYTRaOVr+nrOh3hL1ULed1g5v
-         Tq+VomiLdooZtJgyRSGa4tvxrbpGKdSebPE3Vq81yxN46vUPy+rzxI4QfGv/baNdySyq
-         sc8A==
-X-Forwarded-Encrypted: i=1; AKwUvBw8mCXjPJHi8wwbGeEGNe1rNpCfcqfdpLz/RDXKJQkvftTtEoS72qBoZgMlu8TQ4oUmh5YX7+nlu+A=@vger.kernel.org
-X-Gm-Message-State: AFq9FYJxUWyPA2WOlv52012VON3rMu/j+9RwTk4b0Xc0LmNupDYRlXcG
-	3z5wvk7MrdBTPlIhQfM3H6HN1B6HWWM6J8n1/qrxmCSIgq1WPkHEsKh9
-X-Gm-Gg: AYBFou2mxZ7AURRPyreaH7a6q6hp0NRDvJOGhZLvHASYlTNAsSKrn9PTNmnfYQjxOhY
-	MAy/X4QVuUIVsapn9pEKUIiZ7+tIFDLeG1NhsqWKMwY86Rk0JWi6SUCagAiJoKEuN4RWk83npxY
-	HfQ610WK5mlFMWZU11v7wZeYCEmLsKLZviU+KrGwvsWrqti9qoePQW0DGl3REw5O7TWu0ahdarf
-	gYbbdLakE0WGoX8J3etArsyHPdBmaXshleEwEHbJFMIq3d9Ri8bdVrH7bEGVBIhICHLyBUQdZ2N
-	u/XSfGqX4I3OpZCoy3TW8Q6ELcHsnXUlRyMUylml7sAzN/WA5MjsknCnK2JAeRYjTZxAXJ2DlZ2
-	L227VRwt7NH8wKbrh5XcFZfnaVab9ppyJ1hXG8pnPUtSG2FYpnWD11eaAz7ZWiF7EsevBF9pXE6
-	7I+HMwwTDIWyMRxak66I/b/gS8QBstuErK/WK/mLkxtHf1/tGYWbL2f+bJVBkUbdujmXahl8zYA
-	jGmPxlw77hPVZ6h7F2ExJGNb1Igv0nUwrD54JJloBfOeseA5kp/cRg5S6fSt2E7zWYP683mqs3t
-	TmN7mOyMkskNaLq9njbKwKKqOGf451OCM1o5oIiO9RGS0jcOMcbRVHwlvPwdDVpykOiSvUzxH0F
-	Vb8P0F3WtiFW3T+S+3pYf0eGEsmDx+JEa7RjveWS3Y+6n94OcLI/nIvs/zXqzVHcTR94ptL7D6N
-	ldLZWWGaLRrYep
-X-Received: by 2002:a05:600c:871a:b0:4a6:44b:2593 with SMTP id 5b1f17b1804b1-4ac18d68babmr192107805e9.29.1793610450362;
-        Mon, 02 Nov 2026 01:07:30 -0800 (PST)
+        bh=ca0mm6wOincCYsxFkpZ3alJVNygD9weGLU+HWZOKny4=;
+        b=SJxltmgN+J3DqZEn12oaBghFr265MSZPPSJ17b1Hp2uwjMr4ovL+Ey62Exu7XFKkX7
+         H2SqNmTOmVYN8ktdxtpxtGhMC5uqVuXj2TBiYTvgZFiMdXM80kNMkhjxjZi1fqIhHyZk
+         OpfC1jjmkOfN8eAoHRM7ifVzwgjlpBfzMxsxV1+ZL2v/auyMyoTXW+uvVzWIA4ArM27D
+         tU6BOhKMSHXkJqF73h8DJBNRreF3DQ2+UF4QeHzdXPu1xpM8SMOJ5cRNE+yVO2I8sgm+
+         EYz00EWih/O/vDZULPPjUyQ6wVsVfS/lCqzmlk5/95NHL/TGNPOXFvIMAGEIEslU7yp3
+         p2QA==
+X-Forwarded-Encrypted: i=1; AKwUvByByPIkxvVaKMFRMJBYk7JHuAIT7gWN67rSBzUaEM2GZSjWYd7gPMGAK88VndLdULvCTPreNFpngKI=@vger.kernel.org
+X-Gm-Message-State: AFq9FYKxB6xGl50sMSmLct+4vvf+vjd70l/CS2+oJiFPmHjjjJedG07j
+	nAvtyhw2lXuubOJnTjBOczSoFDWZY2kxNwk1BuOLmKEFMh24FCjwSDlo
+X-Gm-Gg: AYBFou0AYh4JCu7Tw3LjCtcVp4Hx1UaY5RTevdPJ3xNmJ6xgL6k5E4fRylWQAMi1atv
+	4ZYe9cofFlJwnm+TfBcIUqcZaEOuYlU0xJQAU9eENFEdL3o27AvQBU2SEhx3aE+gtAwlBJHR9TQ
+	xthbQr3AueMQd7dxhnopJgTMgSAjyx9uTk+u0e34uGxvCL+TgUaVVNvC3j/O8YH+y1C0x0tDfll
+	7LA4QobPHCpQ+Yn/80XUvRDJaiTkiiol0yzPch+bWPGITrxqPVDMXW82DP/3alPlPWz5WOlZ8fm
+	7nElvf4CJMfTfNAJsBzqHj1OZN+xCDjQ8xRuNSGgns7h+K3q7IxF3ySziO0MnJnEj8idHN/DF2a
+	AkMZ4T21fEyqehUz+C/5eLHkUmN5KKOFPNHi71SLeK8tFXal/lRlqSh/P80wwmIlwYSU5UrRH1n
+	za2RW22kOHCRmqq47rgM/WSoSNOLVdR0dk3RnfLUMq+544cUo4MYMt4W7VeqJv7s6BZ6ZrUphFd
+	wu2SGZ6JzYi2R4MvniBK1lEReU/t/FHhbyY9m9MFZtUmVyKLypZmhiv8T5a4gTJgbouC89zAmhb
+	ogPkf+63EVASxjSrfPRyWQ+xmwjdFPs11eqiyzby9YAF2ayldoK9/d0RiTRKSdHQ6ACnnwAja5b
+	cEr5Wq8ppAoPQSgync+uU8Emc9tVVrvRwQqjHy/esDXhwKTG3zoZDZLZP0Kr0gok7bSQRy2AaLp
+	32fgp5oXTRu2yr2sYK+Bsgq0rXIKRCyG0tgg==
+X-Received: by 2002:a05:600c:5249:b0:4a7:7f3f:6f8e with SMTP id 5b1f17b1804b1-4ac1228b5bfmr210076365e9.0.1793610452115;
+        Mon, 02 Nov 2026 01:07:32 -0800 (PST)
 Received: from cypher.home.roving-it.com ([2001:8b0:fb11:0:3889:86e0:d449:e2e1])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4abf5b27e46sm417879945e9.3.2026.11.02.01.07.29
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4abf5b27e46sm417879945e9.3.2026.11.02.01.07.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 01:07:29 -0800 (PST)
+        Mon, 02 Nov 2026 01:07:31 -0800 (PST)
 From: Peter Robinson <pbrobinson@gmail.com>
 To: Florian Fainelli <florian.fainelli@broadcom.com>,
 	Dave Stevenson <dave.stevenson@raspberrypi.com>,
@@ -93,9 +93,9 @@ To: Florian Fainelli <florian.fainelli@broadcom.com>,
 	linux-arm-kernel@lists.infradead.org,
 	bcm-kernel-feedback-list@broadcom.com
 Cc: Peter Robinson <pbrobinson@gmail.com>
-Subject: [PATCH 7/9] ARM: dts: bcm2711-rpi: Use 40-bit DMA for HDMI audio
-Date: Mon,  2 Nov 2026 09:06:57 +0000
-Message-ID: <20261102090713.896324-8-pbrobinson@gmail.com>
+Subject: [PATCH 8/9] arm64: dts: broadcom: bcm2712: Add DMA controllers
+Date: Mon,  2 Nov 2026 09:06:58 +0000
+Message-ID: <20261102090713.896324-9-pbrobinson@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261102090713.896324-1-pbrobinson@gmail.com>
 References: <20261102090713.896324-1-pbrobinson@gmail.com>
@@ -110,47 +110,66 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable the dma40 controller on the Raspberry Pi 4, ch 11
-is reserved for the VPU firmware for VCHIQ communication,
-and add the DMA channels for HDMI audio.
+Describe the BCM2712 legacy DMA channels (0-5) and the DMA4
+channels (6-11) as separate nodes, both disabled for boards
+to enable. Node labels follow the Raspberry Pi downstream tree.
 
 Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
 ---
- arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 40 +++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi b/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
-index 1eb6406449d19..a49a732d3f64e 100644
---- a/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
-+++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi
-@@ -42,6 +42,12 @@ i2c0_1: i2c@1 {
- 	};
- };
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+index edae2f3584a8d..be4e94c9e7695 100644
+--- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
++++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+@@ -546,6 +546,46 @@ axi: axi {
+ 			     <0x18 0x00000000  0x18 0x00000000  0x04 0x00000000>,
+ 			     <0x1c 0x00000000  0x1c 0x00000000  0x04 0x00000000>;
  
-+&dma40 {
-+	/* The VPU firmware uses DMA channel 11 for VCHIQ */
-+	brcm,dma-channel-mask = <0x7000>;
-+	status = "okay";
-+};
++		dma32: dma-controller@1000010000 {
++			compatible = "brcm,bcm2712-dma";
++			reg = <0x10 0x00010000 0x0 0x600>;
++			interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 84 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 85 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "dma0",
++					  "dma1",
++					  "dma2",
++					  "dma3",
++					  "dma4",
++					  "dma5";
++			#dma-cells = <1>;
++			brcm,dma-channel-mask = <0x0035>;
++			status = "disabled";
++		};
 +
- &firmware {
- 	expgpio: gpio {
- 		compatible = "raspberrypi,firmware-gpio";
-@@ -59,12 +65,14 @@ reset: reset {
- &hdmi0 {
- 	clocks = <&firmware_clocks 13>, <&firmware_clocks 14>, <&dvp 0>, <&clk_27MHz>;
- 	clock-names = "hdmi", "bvb", "audio", "cec";
-+	dmas = <&dma40 10>;
- 	wifi-2.4ghz-coexistence;
- };
- 
- &hdmi1 {
- 	clocks = <&firmware_clocks 13>, <&firmware_clocks 14>, <&dvp 1>, <&clk_27MHz>;
- 	clock-names = "hdmi", "bvb", "audio", "cec";
-+	dmas = <&dma40 17>;
- 	wifi-2.4ghz-coexistence;
- };
- 
++		dma40: dma-controller@1000010600 {
++			compatible = "brcm,bcm2712-dma";
++			reg = <0x10 0x00010600 0x0 0x600>;
++			interrupts = <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>, /* dma4 6 */
++				     <GIC_SPI 87 IRQ_TYPE_LEVEL_HIGH>, /* dma4 7 */
++				     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>, /* dma4 8 */
++				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>, /* dma4 9 */
++				     <GIC_SPI 90 IRQ_TYPE_LEVEL_HIGH>, /* dma4 10 */
++				     <GIC_SPI 91 IRQ_TYPE_LEVEL_HIGH>; /* dma4 11 */
++			interrupt-names = "dma6",
++					  "dma7",
++					  "dma8",
++					  "dma9",
++					  "dma10",
++					  "dma11";
++			#dma-cells = <1>;
++			brcm,dma-channel-mask = <0x0fc0>;
++			status = "disabled";
++		};
++
+ 		pcie0: pcie@1000100000 {
+ 			compatible = "brcm,bcm2712-pcie";
+ 			reg = <0x10 0x00100000 0x00 0x9310>;
 -- 
 2.56.0
 
