@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793602844;
-	b=xCY+ZD7i3CrWENAKxrm6pisgzYqJWa1OS0vasL0ENZNlgU7/eATKoykDN0AJ2jaJOHMO
-	 iy1wnTYXAIco9qmezdlPf1BMQTBcyqnB17KEJf960LB6z2fFH7QFB86nhA1hIsibrFZ8p
-	 +ROpbkkiH6ec+EbJoY5kiPSmAb4QOh02kNDC2al4UoO2LGfwu3oUuJH9f6EPqeutJktrZ
-	 0cZ10pfPpiBrbhsD08S2njMgoXX/Rc8UtiVJCMXWhkYdlC50Lyb1vQPaA7MBRfiJo93BE
-	 LQDyrf3HUZ/vVW0/AZ46Rs9v/+hlRPu4IAWWT6ctALhglOE0MQ9gk6Vuc/AMVGeMR7w==
+	t=1793602942;
+	b=R0PGo0YFgMYVAxAoTEoeigvX50WAaNBSVv+BC5obbbIfYeWJ27bKssdBhvGwnkr/GKiS
+	 udPGAO7mfT50dqtjIYElL3P9BbdTLgaZDVbnigiVOghYP02377ePib/oKD89JVWKjKEjv
+	 WpUuOuYtGH8zrnSTfbN1faDHlPuVaUL1IJ3iOPcSLUDWf1W2i5j0xeHpqzybUqEeulob6
+	 gp1dKj2BGedCok/539P9CiMW6ltGd7bMRW11iZDZiCMZ3sWBKedlKoIy+DvXD7BL/kfb4
+	 pa/mW8pZs4dwiqqD+ze4pNif/sj91kfkpbBvY80SOZaHmhXXtcJQhJWLkS6/yQTO5XQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793602844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793602942;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=drddJG0sj3gAdPwkvwI/bq+BjhbH5qeTOg1nM6CQf4o=;
-	b=RCiJaCWrYBjFPd51kyG7hNRrPCFDtDssVoF2EzsgNONs7pBKELg2yMBiV1YASSLRzu0K
-	 1lf3eD2W1kaxrL1Sz0KBKGGypclqlFQ4hSoxNMF4FsT3ZhMiQcA7hxP8whFJG9Hh7nx63
-	 htbovlD78ynzSpOsl19vkx+g8lIDhnAeEaPDo/AA0CQCyGwwaVGsCnamYmNp+2D+T+5Rk
-	 ESH1sFMpS7PXZuGrabLvTyWUVXeuLWOh4OXAnmMrMewU0CBqOUsGrrWWXF1mvanYMh/8r
-	 pNUfB6dog0GJRHRmuHc2hiIIclu2dxDVc/Jxy+xrytL3lIsqcPNbqAvvr+qvAgIMpQg==
+	bh=kvankmk2QFXC2vUWQQIwHDpzEngj0wySdroAo3N/rgg=;
+	b=2cpYi1B6V8om8shvhLREH1I64C6rXWfhkIjYDUPaKul2z1b/pkbY/zDi8d6lz5ysT45L
+	 PFcSTwYAXLUn44FYPiuK+D3WmXJ25At2L02CO7KH7uziyN2c+ogU4cMVQhiVcQ4mvbmx5
+	 MagC9O1RwGL+jRc5oi3ttWmXA3i+DFzsilLSpVQUysKa7ciE81KcdtDua7PA/i9Zs3Bco
+	 MpcU7B5YbjepaF/Qvlh7HxlrrmBm8pi1a5kPH6hkRfoKITeWYS5kc9Gl4xTgUJH6gDuSr
+	 lT6eSrfQsfCoKJ5dECjPrLe7Q/t9b44g+U42SMPqczteOpQPyLX2zQ/dSo/IWjVaMkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="F58qm/N3";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nuJQynR2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D647606A32D;
-	Mon,  2 Nov 2026 07:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BD2606A324;
+	Mon,  2 Nov 2026 07:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=F58qm/N3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8C01F00919;
-	Mon,  2 Nov 2026 07:00:43 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nuJQynR2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB52E1F000C1;
+	Mon,  2 Nov 2026 07:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793602844;
-	bh=drddJG0sj3gAdPwkvwI/bq+BjhbH5qeTOg1nM6CQf4o=;
+	s=k20260515; t=1793602942;
+	bh=kvankmk2QFXC2vUWQQIwHDpzEngj0wySdroAo3N/rgg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=F58qm/N3coRjks5+CJFgOjjJDM4V0zANSCKNnLZ5+uL82sa9nQ5VvzjJLEa3klQ9e
-	 V03RmzZUwaLq9CXeV4fHmGonyI5FMJfv691QYvFj42c8bjJE/QsM7Ny0rAkHdaDjPW
-	 CFUomsgqA0RKFXHEmm2zdAEWfhArjmOsCndwfXgtp4+xYJXNvFps01s1alWAhGAhyJ
-	 sj8S1AJuDLHTcY89SrhcQxwt4KBPEKvv+cr+vT4zBTj5s8RwmDlJrbfj7vm7I6bEel
-	 EYKy0XxZP754zgC/FRFwFJ3qD223Ml5RaH2QQKDOA5VKqaiBjlZB2FSbXH+0R5IzTD
-	 lI7VCKiK238Ng==
-Message-ID: <sashiko-outbox-192991@kernel.org>
+	b=nuJQynR2ng6XCCV3Z1nG3dCTO8JGO/aCpCP2nF008o3i/xjDaJnBv5eQJqRO1Oejw
+	 iH2xAyHsA/T6p9auMpsgLuImCVve+FTKqpIg5u1ePLcFj37lzpZPHB/JSMoiL5h54p
+	 xOaip9FrgzF9rVENles7o6NhwGcTXGQ/aXKjEq1++KPqR1XoObBvPJkE5QMEdygqsV
+	 Uku5QmiDGofBqWDrkQhNO6Z2DCIWJb7+wtdCKxAkikTkczZ8wQsWQjmmxLwjEAymch
+	 hsdFTX0Y61hB8jU0TI30BbA15tWapsJOOJOQcM7RfLZIa3YLn7o8018JzxNfvFqjRL
+	 zzINP3NSUUSUg==
+Message-ID: <sashiko-outbox-192994@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 7/7] arm64: dts: imx95: convert eDMA to per-channel
- child nodes
+Subject: Re: [PATCH v3 2/7] dmaengine: add a bus for DMA channel devices
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?UGVuZyBGYW4gKE9TUyk=?= <peng.fan@oss.nxp.com>
 Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261102-edma-iommu-v3-v3-7-9d0e62a954eb@Example.Com>
+In-Reply-To: <20261102-edma-iommu-v3-v3-2-9d0e62a954eb@Example.Com>
 References: <20261102-edma-iommu-v3-v3-0-9d0e62a954eb@Example.Com>
- <20261102-edma-iommu-v3-v3-7-9d0e62a954eb@Example.Com>
+ <20261102-edma-iommu-v3-v3-2-9d0e62a954eb@Example.Com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 07:00:43 +0000
+Date: Mon, 02 Nov 2026 07:02:21 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -63,91 +62,68 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] arm64: dts: imx95: edma2 child nodes break fsl_edma_probe() on imx=
-95-navq
+- [Medium] dmaengine: unmap pool leak on error return in dma_bus_init()
 --
 
-commit 4788f1a45cc4009b4772c28b9de4641ae62aa052
+commit 3da3c262ba473326c89ad5f74821c3da53e57669
 Author: Peng Fan <peng.fan@nxp.com>
 
-arm64: dts: imx95: convert eDMA to per-channel child nodes
+dmaengine: add a bus for DMA channel devices
 
-This commit converts the edma2 and edma3 nodes in imx95.dtsi from flat
-interrupt arrays on the parent node to 64 per-channel child nodes with
-individual reg and interrupts properties.
+This commit adds a dedicated dma_chan_bus_type bus for DMA channel devices
+and registers it in dma_bus_init() so that per-channel IOMMU configuration
+can work properly.
 
-> diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/d=
-ts/freescale/imx95.dtsi
-> index d20c2498b9aa2..64570703ce6cb 100644
-> --- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-> +++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-> @@ -635,148 +635,666 @@ edma2: dma-controller@42000000 {
->  				compatible =3D "fsl,imx95-edma5";
->  				reg =3D <0x42000000 0x210000>;
->  				#dma-cells =3D <3>;
-> +				#address-cells =3D <1>;
-> +				#size-cells =3D <1>;
-> +				ranges;
->  				dma-channels =3D <64>;
->  				/* channels 0 and 1 reserved for V2X fast hash */
->  				dma-channel-mask =3D <0x3>;
+> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> index 34be53487a21d..6fea67f088b35 100644
+> --- a/drivers/dma/dmaengine.c
+> +++ b/drivers/dma/dmaengine.c
+> @@ -1643,17 +1643,35 @@ void dma_run_dependencies(struct dma_async_tx_des=
+criptor *tx)
+>  }
+>  EXPORT_SYMBOL_GPL(dma_run_dependencies);
+> =20
+> +static int dma_chan_bus_match(struct device *dev,
+> +			      const struct device_driver *drv)
+> +{
+> +	return 0;
+> +}
+> +
+> +const struct bus_type dma_chan_bus_type =3D {
+> +	.name  =3D "dma",
+> +	.match =3D dma_chan_bus_match,
+> +};
+> +
+>  static int __init dma_bus_init(void)
+>  {
+>  	int err =3D dmaengine_init_unmap_pool();
+> =20
+> +	if (err)
+> +		return err;
+> +
+> +	err =3D bus_register(&dma_chan_bus_type);
+>  	if (err)
+>  		return err;
+> =20
+>  	err =3D class_register(&dma_devclass);
+> -	if (!err)
+> -		dmaengine_debugfs_init();
+> +	if (err) {
+> +		bus_unregister(&dma_chan_bus_type);
+> +		return err;
+> +	}
 
-[ ... ]
+[Severity: Medium]
+If bus_register(&dma_chan_bus_type) or class_register(&dma_devclass) fails =
+in
+dma_bus_init(), does this leak the slab caches and mempools allocated in
+unmap_pool[] by dmaengine_init_unmap_pool()?
 
-> +				dma-channel@42100000 {
-> +					reg =3D <0x42100000 0x8000>;
-> +					interrupts =3D <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-> +				};
-
-[Severity: High]
-Will adding all 64 enabled dma-channel child nodes under edma2 cause
-fsl_edma_probe() to fail on arch/arm64/boot/dts/freescale/imx95-navq.dts?
-
-In arch/arm64/boot/dts/freescale/imx95-navq.dts, &edma2 overrides
-dma-channels to 30 while inheriting all 64 enabled child nodes from
-imx95.dtsi:
-
-    &edma2 {
-        /* channels 30-63 owned by M7 */
-        dma-channels =3D <30>;
-    };
-
-Previously, with a flat interrupts array on the parent node,
-fsl_edma3_irq_init() only iterated up to fsl_edma->n_chans (30) and ignored
-the remaining entries.
-
-With child nodes present, fsl_edma_probe() sets fsl_edma->n_chans =3D 30 and
-calls fsl_edma_configure_chan_from_dt(), which iterates over every available
-child node via for_each_available_child_of_node(). When it reaches
-dma-channel@42100000 (channel 30), fsl_edma_child_to_chan_id() rejects it:
-
-drivers/dma/fsl-edma-main.c:fsl_edma_child_to_chan_id() {
-    ...
-    ch_id =3D div64_u64(child_res.start - chan_base, chan_size);
-    if (ch_id >=3D fsl_edma->n_chans)
-        return -EINVAL;
-    ...
-}
-
-fsl_edma_configure_chan_from_dt() then returns -EINVAL and aborts probing
-edma2 altogether:
-
-drivers/dma/fsl-edma-main.c:fsl_edma_configure_chan_from_dt() {
-    ...
-    for_each_available_child_of_node(np, child) {
-        ch_id =3D fsl_edma_child_to_chan_id(pdev, fsl_edma, child,
-                          &parent_res);
-        if (ch_id < 0) {
-            dev_err(&pdev->dev, "invalid channel in %pOFn\n", child);
-            of_node_put(child);
-            return -EINVAL;
-        }
-    ...
-}
-
-Should imx95-navq.dts reserve channels 30-63 via dma-channel-mask (or
-disable those child nodes) so that edma2 still probes?
+Previously, class_register(&dma_devclass) failure also missed calling
+dmaengine_destroy_unmap_pool(), and the new bus_register() error path and
+updated class_register() rollback path both return without calling
+dmaengine_destroy_unmap_pool() to clean up unmap_pool[].
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102-edma-iommu=
--v3-v3-0-9d0e62a954eb@Example.Com?part=3D7
+-v3-v3-0-9d0e62a954eb@Example.Com?part=3D2
