@@ -1,56 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793611540;
-	b=vcJqywhpLJO4BWz+PbXCpsW5s/BGr0Pb4yvcXk8URtq+ily3xvBR02tRneFMB+WxO9v2
-	 MZQhaPyXghVfYPbPuBjzyNf8Mb2wALCHYxoTV0Uzfezn7DbrvwP30BSdaInpF3shaiS6a
-	 /dks9gVoC9N7nPbpP8ZZMUrsl2QVvBgJ/hrwlRWavmIe6CtcbITJcuxe937DrmKhjR34j
-	 K2CB7+L8kESObtq0L8wq3aLcMRQDPLDoZltSjpFkCqMKacCYxV636pLDpwVTz08VFcJqB
-	 d2Y9PGThnxxvlcaHHK+K+oZxTHb3K3odn2h0Tk+t7RPypN3knkYU0usjwUciR1W7XhQ==
+	t=1793612742;
+	b=U40dSR/7C/AR1oGtFxq227gxl+GmD70XElJQWKEal/Aw17M2HJQycFgNBvi/8cDU+WXl
+	 rXIBvu2jeucVHChiB9qUuWe4ce+vojRKcDzGVJS/EWutqYc2XXZlV8of7n0tZ5IQalyKv
+	 to/rNYAdMuMXeiboUism+6dQm93dPNYzEpAlatkeObOAjNOuGj72eUm3R3kdjyZJKtvxi
+	 rBbEa7oLduObBpgHamaI/0dEKXrD9Flyx5HiUXt6Uph/22CY/K/LVtgd/fsBS50q26kSu
+	 sCQxN/ufmDBHc6DYUxNYrFu6wxZCtZwoZcHaen8Rh2gJCFogkp6w+TZcMELqIIfYO3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793611540;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=Y4NbtLYaFP4E0Lljt2qlK+DkXnQdfw5VgiOhYb0xXFA=;
-	b=DFBU5K2UQ8vvfyjfNVifc58IftPdfPCNMjzRA5bXIXBCCxfIOdsW3uVkZ4xge81BDRTw
-	 LRgof90dPPArdZc/7EFGnCVbQCLj5s7/dpJgQ20y1JI2gBd+H72GiNSBrPcUxJUIxMAaP
-	 qOMMvSozbx9Y8Q9I+YHU9+A+HoVD3IO4FKuGEsg4fSeyOOBEbvvKaecH1LiHTCJlQUs6b
-	 IP+31n9z0cVblsKr6sGyaZxl3hqxyIHpPcLEfz6kfixK/gVFCIe0O8cpiHpdt2WWovZOe
-	 HL9u3tC6Dh/J8ZCjnD4UuzU7Bg2hbK0JS2cFI66VajPQmMIAGDvA2fpqCZbYOnS8opw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793612742;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:From:To:Cc:References:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=91hrC+ps8zug3m9SthpYigfa4E/zchDNBPSUwZvkGJM=;
+	b=MetLLvcWf4l7V7ef/b6/VRrictj09YUa1pKTkGZY40TDxwtpExlFP5HXWgAS93JCtKnQ
+	 F6S469dZND/kVSPCWlXkzmYWNaXX37djgvQzsbTbm1qS3GaQTmtlL4ndrwnVPiUCXhKxL
+	 WUAtRy7LsglVZH2kRZfds5100F60PwSdGGRQ40Tez8MU4Mq1TZl8WivMEGyVlViuRuESK
+	 XhYoEmZGijXXFvNHA90km6qaVgcwjRVtPQ4DnIz7OMG8gqwQ2PdK4RIdY0bPFf2OJ920+
+	 Sims/TyQFwAatkjsGj7y+384XtQf+aBCkZ6awonF+4WNXxvvT/vjTrN9Qz7hbDAPK9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XMdnBVjq;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OI6TnrpY;
+	arc=none smtp.remote-ip=209.85.218.45
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F174060A260B;
-	Mon,  2 Nov 2026 09:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ED9606A324
+	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 09:45:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03ED9606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XMdnBVjq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6F41F01803;
-	Mon,  2 Nov 2026 09:25:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793611539;
-	bh=Y4NbtLYaFP4E0Lljt2qlK+DkXnQdfw5VgiOhYb0xXFA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XMdnBVjqsM/sixDf0cIPrACMKC549gzGwAcwvn0GSF0if8NjyPzHD/ggZKM8TnPYa
-	 MmQ1X+xX7fAsckXvLshb1T44kwYg9FIHKCXFLwRTVFVR4qC3v2k/BDtCjZ0mX46Ovk
-	 mKsj7V4PtUub9VyZmsmdUyVL5LqPBogJ26zGeY/mBJA4O8TMfYMnMmK2VoJTOLpyXM
-	 PQXp5dQSp9iYKLshoEaduNtzxj1i6lUkpzZVGj1msa/U84TO+Lgy4Gndzb1cxFONnc
-	 3fqtIULxl13UA8OPkjaXb4IX9wvAZAnBUCPk8xPhnY3rQHOmMQvS5YtB4+J0Eue8hh
-	 XJR0KlkSufo1w==
-Message-ID: <sashiko-outbox-193172@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 5/9] dmaengine: bcm2835: Add BCM2712 support
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Peter Robinson" <pbrobinson@gmail.com>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-Cc: robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261102090713.896324-6-pbrobinson@gmail.com>
-References: <20261102090713.896324-1-pbrobinson@gmail.com>
- <20261102090713.896324-6-pbrobinson@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 09:25:38 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OI6TnrpY
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4cdc606b47so83606366b.0
+        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 01:45:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793612740; x=1794217540; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=91hrC+ps8zug3m9SthpYigfa4E/zchDNBPSUwZvkGJM=;
+        b=OI6TnrpYqG7qyy3J6+90wx0M38+qvWLpSIbBI86J0zBkW1gHrtNRBmlHQWdm4Afr2R
+         YKCtGbkurXgX5p7REF07zQXuFAzBbii619u7sNSUEeR2kluxciptjnG2LX3D0NiA1cxW
+         uhY6RrhoEblu24TVFKnAnGZUVhsHvrEp3SLzrMjBAzjzt3UDZauR5hrLyeGrS+VNQObN
+         fz82jhA3hV7cNvfYy4Z7D4OXkOkvppgiuR/rXENPSSR4sOQvfwTgwtbp3qZSvELJz5fo
+         AI1QRiyz2Adi7n156pOReiQ5Kye/gnkY1YNl0ZhMOR/dMaFWjiC80MbFpN0ncFDEQbRM
+         RWSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793612740; x=1794217540;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=91hrC+ps8zug3m9SthpYigfa4E/zchDNBPSUwZvkGJM=;
+        b=zqXPhua6Z8A6AcGd41qqKqllURydc0AaO0DiPltWZUe9PG+A36V5tn7VfFDjbxkxor
+         +a+610rwOXoOX4gfoNKAYns94jNiuxUE/j9SW6ug0EDVP+UApEF3yad/4yj822QlfXH6
+         sJCu9969xOzkE1q1vxFOAplLoEQx8IpTBQ/8lxX/LP8CSP5ebKbi13ezYCi5k3mHkxhF
+         v3WVzJu2xu+Jfwi9FvfOQ6GatSeKEuaukVFTMK4Q4yAY6fqyNW2UMn+2EEDoitow0y7P
+         0NH+RfWkbo1Du5omRntGjiFKPMmPR+GdAI4S9iNVML8edq5MnxWg2+0/66nUWUtjndo1
+         mUuw==
+X-Forwarded-Encrypted: i=1; AKwUvBzh2GtnlibwetQhwTWt48mr1It5rBsNPO19C0WkkaMFsOOAMjEgrfujWQ8TodWe2Jq4ND2+pwemevs=@vger.kernel.org
+X-Gm-Message-State: AFq9FYJcabrIJcYAZBonviXL7AO7h9C2DAY8Zz+5lReSRaIzIP0vs5ir
+	ZFi5kUWyeUNotIzFF8BoP11cWWDStjadU0B18bXemOI8uozONSRGQ7Bo
+X-Gm-Gg: AYBFou1z/YGsBBlDSqqw536ohgDHvadvBLcOt02R2gd3DbTXua+AMRbU+mufm4l85NP
+	U18w86aHJY9wyx7+1sfAQL+XndZRyc/ImRc7Jce7bjYaEPWAHbeXykikobAx9h2/BZhqSTvc05u
+	nKNmb2OTRtEWBYydGU7X8S8acb5ar7iXno/jmj2v3dHqCd/JO1bGSJ7wiEiqYs5F8VA4f2BGMZ2
+	g40tlQyXfGPTLcoRuGyOnpFnJ1kGMmJGZgzALbOLgs8BhJJjn5qo2GrhjbDAmbWdDhbOY8N9RL4
+	Bs9hJfXriiAA4u+c+m5Fe3cPlGF1m8dTZihyhyXKNsI18NZU8ldFye6nm+CmlnFr7TDF2+xiJCV
+	+/xi4/JEDuKbY2VgxNb2t/mC+PjuiAM3vw5cLa4VbhC3j5RCRmaMolGvOf+sUOYxeiQ0NGFXCMm
+	RYNzzlgtn6sCAEwSR5FmrCsqcE+OU8LIYChP3KKuUrh1ZcWM6oEMLSWH2ibtRiZ6cJAsA6LpWdr
+	Zmu/JvnC1kabCBK0YPdSWVVQYfQLaZRB4wK4MR5hn/I+sbQ5zH/DkFIqS1vyxnfzvt1McSHxoHJ
+	PdZmQYSsZmXvDrhj17dmrhW3v5RUc7p4Pb10uBrD3AkHRFC/lgFwWfzm9m5G8HUHVYHnFhW5GTE
+	VA7ky65kmIF8tOxHBTbxrhmXB2urRosuX9zYOiSn1uht0
+X-Received: by 2002:a17:907:6e93:b0:c46:7ec3:fde7 with SMTP id a640c23a62f3a-c4ca7aac4e2mr783350066b.31.1793612740250;
+        Mon, 02 Nov 2026 01:45:40 -0800 (PST)
+Received: from [192.168.1.229] (20-144-89-188.ftth.glasoperator.nl. [188.89.144.20])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c4cabc174d0sm369796766b.4.2026.11.02.01.45.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Nov 2026 01:45:39 -0800 (PST)
+Message-ID: <03f2dae1-453b-42ce-a3fa-e444906bb1bc@gmail.com>
+Date: Mon, 2 Nov 2026 10:45:38 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,107 +90,65 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: apple-admac: Fix position one period ahead at
+ period boundary
+From: Jacob Procee <sn125164@gmail.com>
+To: =?UTF-8?Q?Martin_Povi=C5=A1er?= <povik+lin@cutebit.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+ Neal Gompa <neal@gompa.dev>, asahi@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20261029105908.22809-1-sn125164@gmail.com>
+ <E5478149-FA00-4A41-8CAC-7E8CF8578473@cutebit.org>
+ <80246e46-8b9b-4cc8-b3a0-b07f9e5aaf8f@gmail.com>
+Content-Language: en-US
+In-Reply-To: <80246e46-8b9b-4cc8-b3a0-b07f9e5aaf8f@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] dmaengine: bcm2835: missing STRIDE high bits in residue address =
-helpers
---
+On 10/30/26 08:35, Jacob Procee wrote:
+> Thanks for the ack and the extra background info. I would love to take a
+> look at a race-free version of admac_cyclic_read_residue() as a separate
+> follow-up patch; v2 of this fix follows shortly.
+Hello Martin,
 
-commit 036b8292dd25c0046b851159c80cd9142c283fa1
-Author: Peter Robinson <pbrobinson@gmail.com>
+I looked into this using REG_DESC_RING. It only contains descriptors
+that the hardware hasn't fetched yet, and its read slot is effectively
+the hardware's fetch pointer.
 
-dmaengine: bcm2835: Add BCM2712 support
+Unfortunately, it isn't updated atomically with the residue reload
+either. Across 1.49 M reads, I hit 126 period boundaries. In 4 cases,
+DESC_RING still showed the old state even though the residue had already
+reloaded. In another case, DESC_RING had advanced while the residue was
+still 0 and no report had been posted. So I don't see a way to get a
+consistent, retry-free read from these registers.
 
-This commit adds support for the BCM2712 DMA controller with a 40-bit DMA
-mask, configuring channels 6-11 as 40-bit DMA4 engines and setting
-ext_addr for legacy layout channels so that address bits [39:32] are
-stored in the control block STRIDE field.
+One could make the retry check more comprehensive by using three
+counters: outstanding = queued + playing + reported, with playing being
+1 unless the residue is 0. This would also catch the reverse ordering,
+where the report is posted after the descriptor is loaded, which the v2
+check doesn't cover.
 
-> diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-> index 35f8c47dea89f..f06609b04a098 100644
-> --- a/drivers/dma/bcm2835-dma.c
-> +++ b/drivers/dma/bcm2835-dma.c
-[ ... ]
-> @@ -349,6 +363,9 @@ static void bcm2835_dma_cb_set_src(struct bcm2835_cha=
-n *c,
->  	}
-> =20
->  	e->cb->src =3D lower_32_bits(addr);
-> +	if (c->ext_addr)
-> +		FIELD_MODIFY(BCM2712_DMA_STRIDE_SRC_HI, &e->cb->stride,
-> +			     upper_32_bits(addr));
->  }
-> =20
->  static void bcm2835_dma_cb_set_dst(struct bcm2835_chan *c,
-> @@ -362,6 +379,9 @@ static void bcm2835_dma_cb_set_dst(struct bcm2835_cha=
-n *c,
->  	}
-> =20
->  	e->cb->dst =3D lower_32_bits(addr);
-> +	if (c->ext_addr)
-> +		FIELD_MODIFY(BCM2712_DMA_STRIDE_DST_HI, &e->cb->stride,
-> +			     upper_32_bits(addr));
->  }
+However, I left the debug module running overnight (10.65 h, with music
+playing through the speakers), and never observed that reverse ordering.
+There were no XRuns or backward steps. The speaker channel had 96.6 M
+reads and 15,483 boundary hits; the second channel had 29.3 M reads and
+86 hits.
 
-[Severity: Medium]
-Should bcm2835_dma_cb_mem_addr() and bcm2835_dma_get_pos() also account for
-the upper address bits [39:32] stored in the STRIDE field when c->ext_addr
-is set on legacy layout channels?
+All 1,498 snapshots that failed the three-counter check were explained
+by read skew: 822 where DESC_RING was read before the fetch while the
+residue was already full, and 676 where it was read after the fetch
+while the residue was still 0. The positions returned to ALSA never
+stepped backwards.
 
-In drivers/dma/bcm2835-dma.c, bcm2835_dma_cb_set_src() and
-bcm2835_dma_cb_set_dst() place upper_32_bits(addr) into e->cb->stride under
-BCM2712_DMA_STRIDE_SRC_HI and BCM2712_DMA_STRIDE_DST_HI when c->ext_addr is
-true on non-40-bit channels (such as channels 0-5 on BCM2712).
+Given that the more complicated check would only handle a case I haven't
+observed, I'd prefer to stick with the simpler v2 retry.
 
-However, bcm2835_dma_cb_mem_addr() and bcm2835_dma_get_pos() only check
-c->is_40bit_channel and otherwise return only the lower 32 bits:
+Unless you know something about the hardware ordering that these traces
+wouldn't show, I'd prefer to stick with the simpler v2 retry.
 
-drivers/dma/bcm2835-dma.c:bcm2835_dma_cb_mem_addr() {
-	if (c->is_40bit_channel) {
-		if (dir =3D=3D DMA_DEV_TO_MEM)
-			return bcm2711_dma40_addr(e->cb40->dst, e->cb40->dsti);
-		return bcm2711_dma40_addr(e->cb40->src, e->cb40->srci);
-	}
-
-	return dir =3D=3D DMA_DEV_TO_MEM ? e->cb->dst : e->cb->src;
-}
-
-drivers/dma/bcm2835-dma.c:bcm2835_dma_get_pos() {
-	...
-	if (dir =3D=3D DMA_DEV_TO_MEM)
-		return readl(base + BCM2835_DMA_DEST_AD);
-	return readl(base + BCM2835_DMA_SOURCE_AD);
-}
-
-When bcm2835_dma_tx_status() calls bcm2835_dma_get_pos() and
-bcm2835_dma_desc_size_pos() to compute transfer residue:
-
-drivers/dma/bcm2835-dma.c:bcm2835_dma_desc_size_pos() {
-	for (size =3D i =3D 0; i < d->frames; i++) {
-		struct bcm2835_cb_entry *e =3D &d->cb_list[i];
-		size_t this_size =3D bcm2835_dma_cb_get_len(d->c, e);
-		dma_addr_t dma =3D bcm2835_dma_cb_mem_addr(d->c, e, d->dir);
-
-		if (size)
-			size +=3D this_size;
-		else if (addr >=3D dma && addr < dma + this_size)
-			size +=3D dma + this_size - addr;
-	}
-	return size;
-}
-
-If a transfer on a BCM2712 legacy layout channel crosses a 4 GiB boundary,
-dma + this_size exceeds 0xffffffff while addr wraps in the 32-bit
-BCM2835_DMA_SOURCE_AD or BCM2835_DMA_DEST_AD register, causing the range
-check (addr >=3D dma && addr < dma + this_size) to fail and report zero
-residue while the transfer is still running. Similarly, if scatter-gather
-segments in different 4 GiB regions have overlapping low 32-bit addresses,
-bcm2835_dma_desc_size_pos() can match the wrong control block.
-
-Could bcm2835_dma_cb_mem_addr() and bcm2835_dma_get_pos() reconstruct the
-full 40-bit address from the STRIDE field when c->ext_addr is true?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102090713.8963=
-24-1-pbrobinson@gmail.com?part=3D5
+Kind regards,
+Jacob
