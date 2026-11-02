@@ -1,88 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.54
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793651902;
-	b=s7O7CBpR/YDVDYolb+vQ9yhwgQiT+Oara/xAsuqaR5MJrxLPzY9d/PHpP6MOjhalPHX6
-	 qNVM4RVA8D02vzImjSpwYZMsjQ7A3e8v8fGY33atMhMQk2w8NmfBz6iKlOk+oJRZ8R+Y0
-	 J2dfnMEj2l2bNGfntU/CH3o9ovji9gDP+96xaZXMnH87BEGpnw85ZZDunu2IBLRpU2ujh
-	 /amSAKoG/7VwXMJzjDlego6hk2WU+SDNqRgsi2990oiZROhGT52pSahEx3GMyde7yq73p
-	 2xfi7q8pBH/YUR7tzS/j+ScsmFFKbcpGOH8TGD4kWHy2lkAYS1ZinTDx8Swx2k5tBVA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793651902;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=JqOfHGfqq8y0jqDTq9u5axpAxahHuV8gA44EpfAxrF0=;
-	b=Ep+3Zyk6u9wMWJRanVWj3yVX3SHupE/0dpVpH3dWOOIKKgMOVQT6Pcu88hVJVHkNTWvm
-	 vKw1T7IgbQMYTYwsXMF2eLruG+4+/yfhe1niZox6EpcV6fON1y1+NfFIJOiQr5tuR6Kev
-	 402/OjatWbzRxyOsmZSVa5fzAcNuOeXvVmfvsgmnu+JNmYgVhJnNS1GlWGAAPBHzQql9a
-	 EcON6zgbRhnhWD0q6yx4yLq3rBCnw1KUDfHqg7+KilbFMszyfY9xaYE2DTquafKelykFR
-	 iCFhGZFKmyEYdi0LPTsNKDABRt26Oc0jariwGhmQx/MjeaVNJf9RP8m1xLu6VP6wLxg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RR0lW1VF;
-	arc=none smtp.remote-ip=209.85.219.54
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.37
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793653818;
+	b=eBHdnt2Y7EC4myZUTsHiDmW8+gfhFWZSc/+87xtyoTe1Php/yfLxO95PLMp41GjnWA8X
+	 LQMc3Pv3ZzGEjJLehLqkERnxsr1f+Bg2OM7UYVoA3pz5ra3gg8XAmjGy3pfrUGFjHZi1F
+	 dGBINRwjRRRFleLMMQPhnO4Er2plC36ZzfcBrqCVKMpIGvG5lmla7aUU9TEFRppSj2QpP
+	 +jo7vTcqw5fcil2i8Yzga6+VHcn7j03iINTLwUhsshDg2c54ykSnOseAj982aM1JS7Orv
+	 A8Gt4xkLycWeQc9JEHNuzGUMV/S0cqW7ZKeXYxz8lchx0g6RkQ1qkJm3VF0ALN2RZOw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793653818;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=1dUjQmf+wzicArY3fDxNEE6AbNtWOtE1s/XhpTk2yuA=;
+	b=sATgQ89eHfOr94cDmNEI9Qhj0QdXj7V6CGrO426aUDnona+n4OgEPErh3YW/hMhDEGlv
+	 emDjAdzvPSmbw7NxaGw+cWoF5+zW0FxrGnVdlaA1v/ZsJuN7p0S7Do7g/7beUGX4KODAM
+	 xztlJ3ldnYpNjtu2i7Hr2Vyh/5pqYxui/4JyZoIN1LDm0BHr/srnLbmWqb/D73qxDFeo3
+	 NrVcyDbq99IbpJL+uN+Zj0HXhPj3lg+Xq6LPcCXkzNTBljcBO2dra0BMP0MPF4xenjwAH
+	 9BXjpuPW/7RMrqXjQf50XHIJO9e53MT+7intf7668HacoJv6t2/VdqRfgEHuzJCcJhQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=i31Rd035;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.37
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011037.outbound.protection.outlook.com [52.101.70.37])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877E8606A327
-	for <dmaengine@vger.kernel.org>; Mon,  2 Nov 2026 20:38:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 877E8606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30E5606A333;
+	Mon,  2 Nov 2026 21:10:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E30E5606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RR0lW1VF
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-91c162febb9so41371236d6.3
-        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 12:38:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793651901; x=1794256701; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JqOfHGfqq8y0jqDTq9u5axpAxahHuV8gA44EpfAxrF0=;
-        b=RR0lW1VFKizrAZ287W1z5EGkksIw6Qk9fnOOVuPipp5gYg8D3KBYAQBS5R6sPJVLfa
-         mk05b5NHBPOkX4xozdkvRe87h06j0eFQpgzL9HakSjRx5wirQ1OUegry5AIGBeoEPUCU
-         QqJ511y3CgLuCw4oljTBoj2B1SI/+xBpKBJ2/imJH2RN01EwAmRhaEa0uj7e03J4ZFVR
-         34FeNhTm6dgLfIZFYhsyRSgCLDs/PmMghZjDz+QBl3dL2gdbQkaxtPSpWrgW0X4Tmhar
-         /Ejwnjxii8kgC/nO4JvSbqgUWn30yhJUmSJfhOcMfqt6pvP28OKSNI4ebkNyFzRgXih8
-         W2kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793651901; x=1794256701;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JqOfHGfqq8y0jqDTq9u5axpAxahHuV8gA44EpfAxrF0=;
-        b=Q7s8Cq2d8e+Br0Cs/SduTTe8SL6XzJBGhLmrhK1zrMQwNTQh0GMJVtwaxHQRjQL/z7
-         4ibpFNkI2r2QhbyG91wX8iVA60afUylmmZ02HXpaUohjKdKE/jAKE2w/nwB08YDyD6cE
-         6EaVFgAESxNswr8zCfJbOOIlJUWLwPWki3psEF754MT9dVAeCdt6HLgMJsWe6TUh+QTM
-         kkXcr51jWKbIgHSy9yABR/vp2b6G7uLF2auBWfGkD1vL+yH4vXaRaeqYgPfRYqrLCfvk
-         mLAVYjrN1tUOgiN8XZrXA1535pfLBs819RuHqbpaqEUNHNTcMYOrsMHL/lfYuGkQiZjq
-         PIHQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzorTQj8nOLfuMa3xA3iQHsBFrHJTQ8sNCg4A6cXYat2wsc+qdv5VpYmYYj7GkHmlhKKORycR4aZdo=@vger.kernel.org
-X-Gm-Message-State: APuU4Z855d0pAsq3w4RLfvhiBoHX5MtbfE+cg0YRh+BLhmkNpOMgmolh
-	6V5MdqkbvFUQi50Ap4clhUJ4tBjArlHCNUIXmzisxjfVmQnSCfUpi3B9
-X-Gm-Gg: AYBFou0lQiXtm5AcAKVuvPu1jPRf/Z+RgNvjZ31JPRRv0rcyQeZl+w0EOz4gdkwV3sh
-	+iHuLw8IZMUo2uPxJVe0EzQUmW+o535SlSxr1k99a8SLidag48Bgl9GgcYxtdhnU84EDTohp6Fd
-	mE36YXmSjW1NgS2f43Moh0FpD+fcAioWCAiqv/OksM5J4T5IK8iBOAwujdlqPxAL0gSiC887sNt
-	4M/UolyIC1wJStSik/NJaRoK7UOLzgnraoLfrevmJmXQFUmvAmIdeN8XLB9hEzrSg9KK1mui2Zn
-	AQCp7WN2yBkeZa7GCWj+EtHlYIXu0roMM/HVXUpvVxVTDLD4TS4u6GI31TfW9ePtl16xgLBFQYa
-	6XRlFr6Xp/HheQ14kH/oeS7gqZW/aPT1inxTJ3MQY4SrS9V9zvsbqaRhqxomW3TYvtG8K165lwW
-	OYuA/hjhlfYvIrRncsoChNhwXMP/3AGyp1s1IiJAMlabVGuN5/vjigrMjQnRBhodZwf53475tu+
-	rMchE1H+j6VshLL2VZoFYRPkB+7WRf3LvRqJ/+5QGJDS59AlhH1RaAojFEYq2/3hdOrZPnHxvny
-	kR7QwAkAnUn1jqsCNdim4v9MTrIp8WKs1DqKzcRUEkd+hYVZB7Fwdt0=
-X-Received: by 2002:a05:6214:21e5:b0:91b:5d3a:f136 with SMTP id 6a1803df08f44-91ca4b8303emr172551426d6.53.1793651901295;
-        Mon, 02 Nov 2026 12:38:21 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f26f1esm100674086d6.13.2026.11.02.12.38.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 12:38:20 -0800 (PST)
-Message-ID: <5bd67c8d-41ee-40e7-ab75-031e1520758f@gmail.com>
-Date: Mon, 2 Nov 2026 12:38:15 -0800
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=i31Rd035
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ESJkDqvFXNpPmfmzro7Xq9LMfZrQN9fxcMhTHEo8quDsCT1lBaS5IhtfcVA45Hl34wDTWyovJpiWYf8a+lAt6hBa23eTQW7WSNSa/gcbuNjXABg8PpQrv5SQJBTiutPl3mJdlADKJUXfEQKLqcJn9OIo6FIkErfVHI8XmgSNEAO2e5gv5+gBDNK4JayoTcetvvSFfAxHn4Xb+DQxMcLCbJguO03a5HFCwDuVltIjIJolTbTRVyCTdHNh6/2PRTIhIaS4TuPugajxgu4wuzSIaqkEin1wRRDLPlXIRW38vrskJy7q8aYwdSpfbJ8wWGFwIKJq5VZV9x9fVtucryjs/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1dUjQmf+wzicArY3fDxNEE6AbNtWOtE1s/XhpTk2yuA=;
+ b=xo2jaEkodNwPM9RyZCkn01c+mJcR0vBEyQyHe4e08RsgB96JNr75g57kj6ZWyL/EjRsp2aXCLfVxmmULXM6nFJOXk2aTVkRFUGKx6uEGjdovZSECDhR4LlmcJQwwOOlxhKBQGkl1bPENabcFywWH9MbHQg5oBtldQZD0klTYgXie28HcVSE0BEg75c95G0AVyg/dHdnVbZPtmrScEND6Wf8RqbI3M0O43QSOxJtyC60NvEI/VKTuORJJB7yntdWMhj2bkigJLpGe4vCmW4c7ahO+5ATHNsU+JvauRnM7TIuHJyemdUNPfesZOyH4muoWfWlgexmGv9XvPEmqkolkjg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1dUjQmf+wzicArY3fDxNEE6AbNtWOtE1s/XhpTk2yuA=;
+ b=i31Rd035cNvRQPxJZX2/dzqi51t0rlqWnqAuveTQOASNveIRxgLhRTolvySNE/hjHHRSbFO63OQ6B8B2yoMNFX7Dvr+JHTAd7sFFA1M9mTD3aWmWy0ihoRPkazE7AxTi1wLUbu5LrIRqflUtTT7JYRMToe1oHVMmKcrs3rTySaVCVVEQ7dht/2oTl/Z6SVE3pinIuGK9PD0A8KFRi97k/W7EbmxEP6kikAZk9htbFm5I3/xllIMuRVMeSSmevlKWHWL8nHN9dBI4ervCoRmdxAKeS1IHbXvSz6Pm1T/wBAV6Kl9j6MNxMKfTysZKOMjXQxZfhuBw7vPUFIngbMMJUg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by AM9PR04MB8604.eurprd04.prod.outlook.com (2603:10a6:20b:43b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 21:10:13 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 21:10:13 +0000
+Date: Mon, 2 Nov 2026 15:10:03 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: Viresh Kumar <vireshk@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Dan Williams <djbw@kernel.org>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	dmaengine@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>, stable@vger.kernel.org
+Subject: Re: [PATCH v5 05/10] dmaengine: dw: calculate residue in the status
+ getter
+Message-ID: <auj8K5jwbBOZWIOu@SMW015318>
+References: <20261102-submit-dw-dma-synchronize-v1-v5-0-d3207758fbf9@gmail.com>
+ <20261102-submit-dw-dma-synchronize-v1-v5-5-d3207758fbf9@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261102-submit-dw-dma-synchronize-v1-v5-5-d3207758fbf9@gmail.com>
+X-ClientProxiedBy: PH5P220CA0006.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:34a::7) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -92,83 +106,181 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] dt-bindings: dma: brcm,bcm2835-dma: Add BCM2711 and
- BCM2712
-To: Peter Robinson <pbrobinson@gmail.com>, Conor Dooley <conor@kernel.org>
-Cc: Florian Fainelli <florian.fainelli@broadcom.com>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
- linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
- bcm-kernel-feedback-list@broadcom.com, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-References: <20261102090713.896324-1-pbrobinson@gmail.com>
- <20261102090713.896324-2-pbrobinson@gmail.com>
- <20261102-email-target-d3191584d234@spud>
- <CALeDE9Ncz=6jo_1VxdCJgSVV+fCTgkUvci-=e4MQYFYo_O9M0Q@mail.gmail.com>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <CALeDE9Ncz=6jo_1VxdCJgSVV+fCTgkUvci-=e4MQYFYo_O9M0Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM9PR04MB8604:EE_
+X-MS-Office365-Filtering-Correlation-Id: 01ed04b8-3064-4aa3-40ed-08df3925af9e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|19092799006|376014|366016|1800799024|23010399003|10067099003|18002099003|22082099003|261102123227099003|56012099006|4143699003|11063799006|261021123027099003|261022075727099003|261022105027099003|261026140227099003|261026121527099003|261009223027099003|261028144727099003|261021121427099003;
+X-Microsoft-Antispam-Message-Info:
+	3121c0K7bni3EbrMvaonVfW6AQBtWC14nRk9wPXtBjJz8a5mMhhiPC/+pEAwWbPaWXMEcGNy9xWsLKxlje71U5HpNA84m9kUvt+v8FlaCSeqo8LCOvqXttAFwss9Fy5+rUn+2fGu++HqMy08AyluTxmnJufHTck6/9dXC3E0eyyAlIIaxlkTmEvWMuEqVM8qZUHwaDZtrGtXrxX0U4dZ5ah28LibwD0HFXTuUGUWz/rxmGVAPRpJ/hflb8UePU3dXpKDTkI48YAYPrq2GH5GQ5KPH7CUfoOVK5DgKlhjcpBGFfwlr8p4n8ywZlj9vQEGcrels6Yb5sczcuPIOj4b50tGCHIWmQEyhSF+gNq4KCRTD1tFqlgIuSn/RCfH300Q8j2K1yqu3+r2/od9KffuIebM+9x8FC1fagCcdN8E7xJlEAaRXVoP0F+Jn82jkZecVRMpK4YAViPCaLlpOQIVmtGOhyZt/no3qX0uTRgBm94oJPzkwEEhN2y55KJdKQ20XKG03FvrFy94/CiwusQN6m8v+L/Zodgxn9fXcwQdyvOeoa8Wjs3ttFrzdvJreRI2JU/qb/izcuGfBVj3hkB75nqYhctTV+HF8BjIsVcQiUxYOG4gZCZoG+/shdC7rWxMpJXmUFNstQgP7usHhMre0KOJFiOVtdm9YAsz4o9msKI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(19092799006)(376014)(366016)(1800799024)(23010399003)(10067099003)(18002099003)(22082099003)(261102123227099003)(56012099006)(4143699003)(11063799006)(261021123027099003)(261022075727099003)(261022105027099003)(261026140227099003)(261026121527099003)(261009223027099003)(261028144727099003)(261021121427099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NSqAoydYk2/UXaQ7KiEEAtsJha6yUbAzblC1MKN99xJAgBpLv766Rz6v/jN5?=
+ =?us-ascii?Q?LFnZV3wmyXS/G7s1ezDBhz+NpjTl7+wmSblvtDk06jE75APgk5WK480Xf6vX?=
+ =?us-ascii?Q?USbI8OxePicDAZqy+uEZnkinr6b5QD4vzQeTVb1q/uzD7EbNpmeUK9Z5dDrO?=
+ =?us-ascii?Q?HttLowUmkRMVQdfpCEp5QqCwKALvqM8h+52Fo0hcPQs36ixzaCeNA/Y6UobJ?=
+ =?us-ascii?Q?qZ2U+AQvLsEszH4J8wY+inSMGJmgNdDdeLspNV8Xlg/KEuHEm+cBpOFafCu0?=
+ =?us-ascii?Q?Q+iePNi5TMiEEHDY90YpDiKEG1+o/BHk76Dc1jVqtg+l4c7+vudq+yta5euQ?=
+ =?us-ascii?Q?T4QbJRo6dZpuDRw05OPH1ja7eRJuQKHr9cvji+d1QdGyxvPbOfJR8Cs0iSHk?=
+ =?us-ascii?Q?gXIKCV9Ji+NDEjRPu3qrXo3W2+mscGtF0+438IYxUQ80bDeW7qyRUotuZHJ6?=
+ =?us-ascii?Q?XanoMJfSCavU6FgCsf0Z4sg9VrQz+7ONweIWoUoKPs8l4x/KutZuMvNwZJ5G?=
+ =?us-ascii?Q?BwFbjlRJd9kEtf2yeKa+fQMmrFhq2CLsP4TT0E4bkW9PaYzzcENB+x/BMbJv?=
+ =?us-ascii?Q?z9/unfNtXm90olh9NgZRM61uhKU8Xi81++Ye0GL43QUdwyQkvC+6YzPoeCrS?=
+ =?us-ascii?Q?Zz2Iu/XSb2in7A/xEROxfDVL2ToZ9K/OfPWrLqQgCOi2B7hRKerl2coU028b?=
+ =?us-ascii?Q?ncVmHRbauhHMz88D2N8cdZZuXME+EO9mSN9OGBHAymJBSwWSRGhiYSRou6Tz?=
+ =?us-ascii?Q?V1ui5WLBT/0M9hu4eQnP016YRtMkTG9z0EOBgidR2dxuF5E7pBblxtMisCDE?=
+ =?us-ascii?Q?6rrqKiOLHKTO9Q7gxigo/a/OZn38NaEQg0RTA8vGPGV88j9YcldV6Sv0xxk0?=
+ =?us-ascii?Q?lF9OGMtDzgOBic50Q3NWpa5ivW8a0LJUuJzLoOFV7UztQeUiVoy1Rr8nrAzv?=
+ =?us-ascii?Q?LeEkrupuwWHZgNpUKvSb2gTXQncFy11y5Gl5NJbPzo+ytoovPsXeotAzGe5R?=
+ =?us-ascii?Q?BntZ5h3mbEZyA/W6F5HmP87pqstaRMiGVtMcHiATl3cYmU3bvYjs9cu2mFAE?=
+ =?us-ascii?Q?7Ptuq+KW7r/9XJgtTQ17lU6uS7zXhDPB3WAKz9g3qFxUyjpFLrtbMUXSi9/u?=
+ =?us-ascii?Q?rtwvBNfPrzc7fY9DoEn/ai3Hevpt2YOkETFvkdI7Toc9s+hCX/VnGvG+39jS?=
+ =?us-ascii?Q?+H3xx95tRed8IG2+ISQNu3tdc62b7LDDt2BoyUSWVDqY1s4eQ3AMWZfepN8m?=
+ =?us-ascii?Q?R2lbgFGji0t4u/gXHPenO2R05RnjdZ9CtsUZSo/OS9K2ILSYIM2O/KVxDbea?=
+ =?us-ascii?Q?oCWYoAl5b3xvCb96u9qNtqZBN7qsLVnPHlXUK9m+EkSreiLsfLEEXHAWUOWB?=
+ =?us-ascii?Q?IVBAJinf6XzBJefagMMUwjOJgS76D/ES6lNH/25NBo/xgzXfqZAPj2yRQIK1?=
+ =?us-ascii?Q?owOFYtKSoPWA/nGx4ys7wB1Uh4R5sCXPehVF6WC6oNdocdQmkU02RyCZMTmf?=
+ =?us-ascii?Q?QnGLTiRpAFNTWYIqqX+TlL5bgdnmBZWBvykWXqq8DujPYsSxAHypweujMvKZ?=
+ =?us-ascii?Q?lWOOTBuTT/EUUM3pSdJC2FsRFozeZRc5ql2x17jJE5pgM6FHVIvZV0X/EhPu?=
+ =?us-ascii?Q?SYTp7uPH9so1BcsKTPCOfeoO9hcbtROOt5xsuHAsEML1exB4c2c14ERym8EU?=
+ =?us-ascii?Q?RETPbdoAynBKlSJ3qhakDZXtx1HTC+08haDxDdWB9GkXOfyxmTX6KQVtswa5?=
+ =?us-ascii?Q?s0lcRZLdsCzWlzNmt66w9W3ZbZzae8vp2aqAwAJclA3uQjIg80uj?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 01ed04b8-3064-4aa3-40ed-08df3925af9e
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 21:10:13.4876
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VXRoV94LTZnoAy9WZMClftj8e6rABNiqKMLC22UfMBhkVx1Adz+If0ishvrR+r3sGpBX0mFg8NBhd2BtUVEy677QqsoScGa4K9K5y7iSLqPR65Da7Qif7M7j2p9avfTL
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8604
 
-On 11/2/26 12:18, Peter Robinson wrote:
-> On Mon, 2 Nov 2026 at 19:39, Conor Dooley <conor@kernel.org> wrote:
->>
->> On Mon, Nov 02, 2026 at 09:06:51AM +0000, Peter Robinson wrote:
->>> Add compatibles for the BCM2711 40-bit DMA4 channels, which are
->>> described by a separate node covering channels 11-14, and for the
->>> BCM2712 DMA controllers. The register address of a node identifies its
->>> first channel, allowing a controller to be split across nodes.
->>>
->>> Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
->>> Cc: Rob Herring <robh@kernel.org>
->>> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
->>> Cc: Conor Dooley <conor+dt@kernel.org>
->>>
->>> ---
->>>   .../bindings/dma/brcm,bcm2835-dma.yaml        | 31 +++++++++++++++++--
->>>   1 file changed, 29 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml b/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
->>> index c9b9a5490826c..31d97a10a0ea9 100644
->>> --- a/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
->>> +++ b/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
->>> @@ -9,18 +9,27 @@ title: BCM2835 DMA controller
->>>   maintainers:
->>>     - Nicolas Saenz Julienne <nsaenz@kernel.org>
->>>
->>> -description:
->>> +description: |
->>>     The BCM2835 DMA controller has 16 channels in total. Only the lower
->>>     13 channels have an associated IRQ. Some arbitrary channels are used by the
->>>     VideoCore firmware (1,3,6,7 in the current firmware version). The channels
->>>     0, 2 and 3 have special functionality and should not be used by the driver.
->>>
->>> +  BCM2711 channels 11 to 14 are 40-bit capable DMA4 channels, described by a
->>> +  separate brcm,bcm2711-dma node. BCM2712 has 40-bit addressing on all
->>> +  channels, with channels 6 to 11 being DMA4 channels. A controller may be
->>> +  split across several nodes, the register address identifies the first
->>> +  channel of a node.
->>
->> Uh no, a device should not be split across different nodes. This should
->> not be needed, why can't your driver handle the upper channels having
->> different capabilities?
-> 
-> This is the way it's done in the downstream kernel, unfortunately
-> Broadcom doesn't publish the HW details so either they'd need to
-> contribute the support (which they've not done since the RPi4 was
-> available) or I'm not sure what the other options would be. Open to
-> suggestions.
+On Mon, Nov 02, 2026 at 12:34:17PM -0700, James Hilliard wrote:
+> From: Serge Semin <fancer.lancer@gmail.com>
+>
+> Calculate hardware-LLP residue while looking up the requested cookie under
+> the channel lock. The scanner and the status getter currently take that
+> lock separately, allowing a descriptor to start between the scanner's
+> residue update and the status query.
+>
+> Have dwc_get_hard_llp_desc_residue() return a local residue value from a
+> fresh LLP snapshot. Keep the persistent residue field for software-LLP
+> block accounting, subtracting the current block's progress when reporting
+> status. The descriptor scanner continues to advance software-LLP blocks
+> and complete cookies from RAW.XFER, including for polled transfers.
+>
+> Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> [james: retain polled completion and software-LLP progress]
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+>
+> ---
+>
+> Changelog RFC:
+> - Instead of just dropping the dwc_scan_descriptors() method invocation
+>   calculate the residue in the Tx-status getter.
+> ---
+>  drivers/dma/dw/core.c | 88 ++++++++++++++++++---------------------------------
+>  1 file changed, 31 insertions(+), 57 deletions(-)
+>
+> diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+> index 5a1caca7ad68..0d6b5bd8ea6b 100644
+> --- a/drivers/dma/dw/core.c
+> +++ b/drivers/dma/dw/core.c
+> @@ -267,41 +267,8 @@ static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
+>  	return dw->block2bytes(dwc, ctlhi, ctllo >> 4 & 7);
+>  }
+>
+> -static bool dwc_get_hard_llp_desc_residue(struct dw_dma_chan *dwc,
+> -				       struct dw_desc *desc, dma_addr_t llp)
+> -{
+> -	struct dw_desc *child;
+> -
+> -	/* Initial residue value */
+> -	desc->residue = desc->total_len;
+> -
+> -	/* Check first descriptors addr */
+> -	if (desc->txd.phys == DWC_LLP_LOC(llp))
+> -		return true;
+> -
+> -	/* Check first descriptors llp */
+> -	if (lli_read(desc, llp) == llp) {
+> -		/* This one is currently in progress */
+> -		desc->residue -= dwc_get_sent(dwc);
+> -		return true;
+> -	}
+> -
+> -	desc->residue -= desc->len;
+> -	list_for_each_entry(child, &desc->tx_list, desc_node) {
+> -		if (lli_read(child, llp) == llp) {
+> -			/* Currently in progress */
+> -			desc->residue -= dwc_get_sent(dwc);
+> -			return true;
+> -		}
+> -		desc->residue -= child->len;
+> -	}
+> -
+> -	return false;
+> -}
+> -
+>  static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+>  {
+> -	dma_addr_t llp;
+>  	struct dw_desc *desc, *_desc;
+>  	struct dw_desc *child;
+>  	u32 status_xfer;
+> @@ -309,7 +276,6 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+>  	LIST_HEAD(list);
+>
+>  	spin_lock_irqsave(&dwc->lock, flags);
+> -	llp = channel_readl(dwc, LLP);
+>  	status_xfer = dma_readl(dw, RAW.XFER);
+>
+>  	if (status_xfer & dwc->mask) {
+> @@ -372,27 +338,6 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+>  		return;
+>  	}
+>
+> -	if (list_empty(&dwc->active_list)) {
+> -		spin_unlock_irqrestore(&dwc->lock, flags);
+> -		return;
+> -	}
+> -
+> -	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+> -		dev_vdbg(dmaengine_chan_dev(&dwc->chan), "%s: soft LLP mode\n", __func__);
+> -		spin_unlock_irqrestore(&dwc->lock, flags);
+> -		return;
+> -	}
+> -
+> -	dev_vdbg(dmaengine_chan_dev(&dwc->chan), "%s: llp=%pad\n", __func__, &llp);
+> -
+> -	list_for_each_entry_safe(desc, _desc, &dwc->active_list, desc_node) {
+> -		if (dwc_get_hard_llp_desc_residue(dwc, desc, llp)) {
+> -			spin_unlock_irqrestore(&dwc->lock, flags);
+> -			return;
+> -		}
+> -	}
+> -
+> -	/* Residue describes source reads; only RAW.XFER completes a transfer. */
+>  	spin_unlock_irqrestore(&dwc->lock, flags);
+>  }
+>
+> @@ -975,6 +920,32 @@ static struct dw_desc *dwc_find_desc(struct dw_dma_chan *dwc, dma_cookie_t c)
+>  	return NULL;
+>  }
+>
+> +static u32 dwc_get_hard_llp_desc_residue(struct dw_dma_chan *dwc, struct dw_desc *desc)
+> +{
 
-Neither here nor there, IMHO, yes it would be nice if documentation was 
-published (and a customer like Raspberry Pi is probably one of the few 
-that can get the needle to move there).
+Don't move this function, just change to return value boot to u32 to reduce
+changes.
 
-You have the bcm2711 and bcm2712 compatible strings which should be 
-enough for you to know which channels are 40-bit capable and which are 
-not, yet keep the same Device Tree node.
--- 
-Florian
+
+Frank
