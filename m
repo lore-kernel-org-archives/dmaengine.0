@@ -1,99 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793725818;
-	b=r8fFubbnbYvFdDlqX4yj6DMSRpGkvyLQAkeiwgC2Gl+1yy+XR66XG9viv7MbZZIQjLfH
-	 nypAbEGAHP1IwzDRnP6CPXAY2Wm8DImzcejtNd+XhrLR4UcpBoSHVm94O0UYZZ48QwoSW
-	 J955GdhlA0pOQBukhFT9FKLrcqmjgcA+cBAVGtd/lIcTAJJ8n2YkE2OcjdVFKC43grPsg
-	 BsRxg8s3yJBk3Ho8q0vV8oioodXio5afxcrBXUAHxbPP9u9RjAQotin8hDhU2HjfJKdfE
-	 DTOa6WyToSUf7LpxvF5H9l9Xkckx7hWSMpm24vxM+0nDKWbCWGNKTdYmJJ4A1/aYtxw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793725818;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=dVyIeRQJHeB49FS4amSNOfxSQ+jsE+/JpXBqaJR89vk=;
-	b=MoQmJYQU3vWPs6QVcyW3257uW845w3SR04YXdJ6u2J6I5KI2p/drTLQqSiqY5hjoJPtM
-	 8QyIo7XPYp522njbC5pGygi7fK0ueq2uVSg1ErOAvjmZTZG0EHm1z2rjpTdz3JB9pwhgQ
-	 dw48PxW5FF1rxEXtTcand/VTTXjJr+5coylv4yKXNnX2vVbkNLfEBGHzRww6uN6RD2RTb
-	 ne2bQV74S71WU3Gz/7STAWh+QbGagmClvi9XF+D64Av6xzgjehGWcfDzQLuHCNaXlPz3E
-	 MpK3XWO33p+J5qp+ihgrRHwvVLVoF0Q2sbLkga5QWpaW8FWM4ke5omMp7vlc9j4t31w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=raspberrypi.com;
-	spf=pass smtp.mailfrom=raspberrypi.com;
-	dkim=pass header.d=raspberrypi.com header.i=@raspberrypi.com header.a=rsa-sha256 header.s=google header.b=JxILHW9o;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.46
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793726042;
+	b=sECJghrn8QGwVs9hMclCLrFd2Ixm7KA2B6xzMc2NPm4v+W5sL0lFH7XtoP7RSYFO5j7u
+	 T3CjlN3VhxZEblLgVs1ugu1KAePhiiigPqFnUt++DCAq2TGaQlHTdDPnFltrM0tB1D16P
+	 GEXeEnDa5iuuwhHmoCuWix0ibGmJ/nTLbpG/BbW6XxTl5VurpC8amg4Iax93wPAER8VPi
+	 seXbPS9PmEol7KhaQH1dUnM/YLnnahbuO9XfRScxo02ZV11vsPt/DiyM1s/L957fBtrCR
+	 w1yoJNxWB0evvPtBiiPPb+hBPiiPq+aWvFmeIdmpVtwmW/NSTGi+zYXa4YPEdjlY6Nw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793726042;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=GSZWQMNRRQKeKiORPlTniQ5xuB29M5LGd/dL1rFGXmE=;
+	b=Dtd3UU6tSDkbOwxBjJOJVWaXRkYbURS3lTtXvMfpH6hlU/bt4uSWW4M1iB0j+IKxW8IS
+	 FNVYGTwilvmPVR0Lal6FuDRTb9c87FnWkkt1NBt8QmORxBxW6p560gF0JTgR8y9unMf7v
+	 HmBEJKaPuDMgxH8ct5A5jsx6hB1shjC6NGEAq7TQ4zt6d4XhRwagoyxm+MlZScirhaxGA
+	 Vu1yOmnFEX42friI+YodnoZP8GF9v5NTHBg0pCv2CgKhDar6kFDmPcYBHYrgWn71M+FTk
+	 D/vykrR3uByBRbIddhO8hYFT+HfkIWkPn5K3KdiUkkm8q8ueuB3EaqEc9R3/OS+sRaw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="n/BIpAUy";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682AD606A329
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 17:10:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 682AD606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=raspberrypi.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raspberrypi.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E640606D80A;
+	Tue,  3 Nov 2026 17:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=raspberrypi.com header.i=@raspberrypi.com header.a=rsa-sha256 header.s=google header.b=JxILHW9o
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-c450ab1483cso727774266b.3
-        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 09:10:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793725811; cv=none;
-        d=google.com; s=arc-20260327;
-        b=D1WpqDF3YKlV3QZy/6MqcliAMWP3Ry07DwjPMv1tfk552mMXYEp9xp1+2NYjmW31wS
-         HgQIzIoWEBT2OVVUNKhwfKJLFhEyDyE9cxSdripsGFUfSivU45t2OlygaGfhUauPAgx+
-         QKcE1U/inlHP7oOdZqLJ/qOtIveta4THBYWXi6h6V3wUJvrN3YDN7I9gCOtRcdhBqAI4
-         YM3k76+7gX023BwH+1qkjgHqH1UZ+GDH3MxMPhyjclDQWQ8LJxp70B91TzwuxY9rbnpL
-         p+50I+yi3nGgFZ8Kw6sH506CNRohZYY8jfe+yUQ5WJpMvf7YmMUdZdONNyYBz6y5XXTY
-         lMpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=dVyIeRQJHeB49FS4amSNOfxSQ+jsE+/JpXBqaJR89vk=;
-        fh=2wQcGPVuLgs9+zdBTFghdka785GqKJe9s+BgPqDjhUw=;
-        b=dsy+gBzwCmiEhXTxXzihN5BsTcFG866N5bz6/8v5A9/wx3WryNzkXL6Qr0okm+Rz8C
-         R+IvGsiwDJz66DQ9vikiS68XLfKR+wNAd02DLu+qkW0VN3CjM4gP7hYfjP5xgrqEJk5r
-         2lvNSFb7ooFY2Lj/SGl9Qv+IflTHZnbmls873LR26Uq19ZzF85JwYYhdhqg5BdbOx2EG
-         Nb4iJiaw4SokOrucwdNhMQX/ctksIUoh9ESiDNO/G84gRy1aAjLPu2VqmU8wj8bAULMI
-         EZAcqQA2twjrOeLygOalvEhFbYVrkgDqXtEMLaeubgRdDCmdSxBr0Xhb/oxEUF9iGGpv
-         dvqw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=raspberrypi.com; s=google; t=1793725811; x=1794330611; darn=vger.kernel.org;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dVyIeRQJHeB49FS4amSNOfxSQ+jsE+/JpXBqaJR89vk=;
-        b=JxILHW9oYQyXUYBtKv5mOLzWifmwbFU5MNI6Mp4YODeYAzXlF6FwKyKkebHtzdDUmP
-         oXoW2e5P8WnYVZNz7WHUyIFENfwIZI1SD3j4wlgld63bqHDUfuqwCyjVM6tGZg095Ar9
-         ou5iZ8mvEHPtc2qB9uYv3hztIjJReuw1mOKug0C9yGfIIPj2AFQN+pOenpQvaxSV+5tK
-         AKHy1yYC/IEtbdkJ94EYKQoYPFQ76GClEv0y75JPclIa+KUBpLBVQ8VkgaAFCPVhV70e
-         yPtYJX87NNuZpHnwgo7/tkA2MJwTZ1Uz4tZ7JzvmBzB2IsQM+S/v9DwgE4cYVMCDibu2
-         Tt/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793725811; x=1794330611;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dVyIeRQJHeB49FS4amSNOfxSQ+jsE+/JpXBqaJR89vk=;
-        b=O1YYFsxl3hf6umw8KZe7FFjqYqFpJ+VX10/pfTyrg9APUF5rB6ZLrMNXQQgkgM5Bm2
-         A0ONfx0PUJUFBVbfQuKaEGXrzuxRWECdXmROQO0S+HnQHL+pheRlp6SxLsHc1fqhKIFp
-         kHOhpH0U+orOfgrfS7uqUX/W3U4cf26i2f0quMbXRZToaWOUlKaDKjwZM/fUYrPYy8ta
-         UXsTUJs6MusleVdMwgFHSK8t0J077kigjQG5QWriVhudsE0ziD6pw+G1m+bH7fiifaMB
-         RN9DzK0s8csGQRNaAUqL1fzu5wZ1zWPQSxDZJBFZHJOVNPi2jZJLPoiIM1B3BoaIlEZh
-         fkCw==
-X-Forwarded-Encrypted: i=1; AKwUvBzjOHw9zv8+YFSpDhcm2D0y4ijkIuWuPyLp7Mc8IS4M1HtKO6Wutr48KlGwmYxgiByv2XtPp+dh5V0=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/TBbOVEeZQks4c6MPd4d5G5bJE8GYRHXbJ5FP6MvX9ksFBGuAv
-	1ZY/PvMLn3XtqzALBtOhzRwsRjpkyMDhMefp7e060oeJwVRUS3NFNIFoPqRIqgiu4JD4eCBhYz2
-	dMQyiqttsCo/yf5hu+/AaHpcMfYvAJvYgwBkwEuU+/Q==
-X-Gm-Gg: AYBFou0GFXxtNTG475ympAAm/GWp5KzKcohts/kJ9HTZ+cRL5jTxq4P136lMzYIP3ZV
-	ShpAQkMgqMYyZ02zI941YMCUijTYBABlRQxpIGNW+CtBpxAk1vXjqtRBJrNDtxiLB7q031mS5ZU
-	HdxNLGuRGLJoUJJzHCvxFkbZ0j1ksG40u0k6kuxdVx9Mf+okkGLWMyWXti1MmlzWk//XUUl3r9o
-	Ru3arR7T8GRhfZ4yEPqfQygVe7acg2RRiYZ8Pqy9V/ugyzvW+iCyWoR3jOgN+XJIuIS77jmBAxI
-	Zf+9c+9WvW/7QkvPIVQxIbV1Hu+vT0Th4mRZlWCc1cKDD6PMEeQy/gTB4oLO6A6vo2oWAQ1Qwde
-	zs7BU7D7NxXAhlqnoVHxtukU6QFKCRxnIhdx8DSEtemhCvgzWfmh4/a4U/LyWLlaOkOVq
-X-Received: by 2002:a17:907:9811:b0:c25:2688:8212 with SMTP id
- a640c23a62f3a-c4ca74209fcmr1138335066b.0.1793725810499; Tue, 03 Nov 2026
- 09:10:10 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n/BIpAUy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581301F00A16;
+	Tue,  3 Nov 2026 17:14:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793726041;
+	bh=GSZWQMNRRQKeKiORPlTniQ5xuB29M5LGd/dL1rFGXmE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=n/BIpAUyeNiV5AToVuVj1rE4BJTXrCnup38fNbuF+u6/0gBLv1HRITS2YwzlJPQZc
+	 9e8Z+IdjJOHbRq7w81HN7HQkLkA3ifxadA4dXuhqQcW9TtJTOY6xZQa2K0kbqIFsL1
+	 ntdTB+N/12u2ypyRHBywQk0B4R7ReTzKBrYQfahzBPMImFNMNJFd74hk2qRrmmda8a
+	 i7pwZNQYBoiNXGcEZBhx4l58uOadBlBMsXKLC8GP2YIRwRc2CHaK6vgkpaIBOuDzgE
+	 a/Bq6vDqKM/ZMotb0IrTyf9Kk3ZPCVwWwQTsbTuwz9std3gVPhz3O+9TBufJ2XQOZR
+	 z5pNRaJ/xwzZA==
+Message-ID: <sashiko-outbox-195778@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/2] PCI: switchtec: Add Gen6 secure switches to NTB DMA
+ alias quirk
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Logan Gunthorpe" <logang@deltatee.com>, linux-pci@vger.kernel.org, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261103170033.471034-3-logang@deltatee.com>
+References: <20261103170033.471034-1-logang@deltatee.com>
+ <20261103170033.471034-3-logang@deltatee.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 03 Nov 2026 17:14:00 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -102,60 +60,77 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-References: <20261102090713.896324-1-pbrobinson@gmail.com> <CAPY8ntCZgp4_aaYim__XrmfL=gW-e1dnu2CjBG3n-VzbghYgNQ@mail.gmail.com>
-In-Reply-To: <CAPY8ntCZgp4_aaYim__XrmfL=gW-e1dnu2CjBG3n-VzbghYgNQ@mail.gmail.com>
-From: Phil Elwell <phil@raspberrypi.com>
-Date: Tue, 3 Nov 2026 17:09:33 +0000
-X-Gm-Features: AclHuK8tMj1QOQ1uafVmUFnYp2xZaTUAkPNNAv0ydPYWKPLq44x8qXFWk7k_EBs
-Message-ID: <CAMEGJJ2ro0s0ZvQRgNneZZKTictbQcWzfLAT9fc9d62uA1cS3g@mail.gmail.com>
-Subject: Re: [PATCH 0/9] dma: Add BCM2711 and BCM2712 support to bcm2835-dma
-To: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Cc: Peter Robinson <pbrobinson@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Vinod Koul <vkoul@kernel.org>, 
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	bcm-kernel-feedback-list@broadcom.com
-Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 3 Nov 2026 at 16:49, Dave Stevenson
-<dave.stevenson@raspberrypi.com> wrote:
->
-> Hi Peter
->
-> On Mon, 2 Nov 2026 at 09:07, Peter Robinson <pbrobinson@gmail.com> wrote:
-> >
-> > The upstream bcm2835-dma driver only handles the older BCM2835 SoCs
-> > up to the Raspberry Pi 3. The later BCM2711/BCM2712 add extra channels
-> > that support 40-bit DMA4 channels so add support so this works upstream.
-> >
-> > The first patch updates the bindings, them patches 2-5 do some
-> > refactoring and add the support for the newer SoCs.
-> >
-> > Finally patches 6 and 7 add the nodes to the base device tree and
-> > patches 8 and 9 enable it and configure HDMI audio to use them as
-> > per the down stream device trees.
-> >
-> > The series was assisted considerably by Claude Opus 5.5 based on the
-> > various downstream Raspberry Pi patches and tested on a number of
-> > RPi5B revC/D, RPi4B and a RPi3B+ all running Fedora 45. Checkpatch
-> > and dtbs_check pass clean.
->
-> cc Phil Elwell as he knows far more about DMA on the Pi than I do.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] PCI: switchtec: missing Gen6 device IDs in quirk_switchtec_ntb_d=
+ma_alias()
+--
 
-Let me answer some of the questions that have arisen:
+commit 17094c1753a87a229df82238fb75b9bb1b5728fe
+Author: Logan Gunthorpe <logang@deltatee.com>
 
-1. The downstream bcm2711 dtsi has 2 nodes for the DMA channels for 2 reasons:
-   i. It is an accurate reflection of the hardware, and which bus the
-DMA controller's bus master interface appears on.
-   ii. It allows us to use the address translation provided by the
-dma-ranges property - we do no explicit address munging in the
-downstream driver.
+PCI: switchtec: Add Gen6 secure switches to NTB DMA alias quirk
 
-2. This driver does know about each channel's capabilities - see how
-is_lite_channel and is_40bit_channel are initialised independently of
-the DT node where it is declared.
+This commit adds four Gen6 PFXs and PSXs secure switch device IDs to the
+quirk_switchtec_ntb_dma_alias() PCI fixup table so NTB DMA transactions
+receive the proper requester ID alias under an IOMMU.
 
-I hope that clears things up a bit.
+> diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> index 7f1f47ea2ee41..691eff466d9ce 100644
+> --- a/drivers/pci/quirks.c
+> +++ b/drivers/pci/quirks.c
+> @@ -6250,6 +6250,10 @@ SWITCHTEC_QUIRK(0x5568);  /* PAXA 68XG5 */
+>  SWITCHTEC_QUIRK(0x5552);  /* PAXA 52XG5 */
+>  SWITCHTEC_QUIRK(0x5536);  /* PAXA 36XG5 */
+>  SWITCHTEC_QUIRK(0x5528);  /* PAXA 28XG5 */
+> +SWITCHTEC_QUIRK(0x6064);  /* PFXs 64XG6 */
+> +SWITCHTEC_QUIRK(0x6048);  /* PFXs 48XG6 */
+> +SWITCHTEC_QUIRK(0x6164);  /* PSXs 64XG6 */
+> +SWITCHTEC_QUIRK(0x6148);  /* PSXs 48XG6 */
 
-Phil
+[Severity: Medium]
+Should the remaining 12 Gen6 Switchtec device IDs from switchtec_pci_tbl in
+drivers/pci/switch/switchtec.c also be added to SWITCHTEC_QUIRK() here?
+
+Commit 5e6c21c56998 ("PCI: switchtec: Add Gen6 Device IDs") added all 16 Ge=
+n6
+Switchtec device IDs to switchtec_pci_tbl via SWITCHTEC_PCI_DEVICE(...,
+SWITCHTEC_GEN6), which binds both PCI_CLASS_MEMORY_OTHER and the NTB endpoi=
+nt
+class PCI_CLASS_BRIDGE_OTHER:
+
+drivers/pci/switch/switchtec.c:switchtec_pci_tbl[] =3D {
+    ...
+	SWITCHTEC_PCI_DEVICE(0x6048, SWITCHTEC_GEN6),  /* PFXs 48XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6064, SWITCHTEC_GEN6),  /* PFXs 64XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6044, SWITCHTEC_GEN6),  /* PFXs 144XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6060, SWITCHTEC_GEN6),  /* PFXs 160XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6148, SWITCHTEC_GEN6),  /* PSXs 48XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6164, SWITCHTEC_GEN6),  /* PSXs 64XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6144, SWITCHTEC_GEN6),  /* PSXs 144XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6160, SWITCHTEC_GEN6),  /* PSXs 160XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6248, SWITCHTEC_GEN6),  /* PFX 48XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6264, SWITCHTEC_GEN6),  /* PFX 64XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6244, SWITCHTEC_GEN6),  /* PFX 144XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6260, SWITCHTEC_GEN6),  /* PFX 160XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6348, SWITCHTEC_GEN6),  /* PSX 48XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6364, SWITCHTEC_GEN6),  /* PSX 64XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6344, SWITCHTEC_GEN6),  /* PSX 144XG6 */
+	SWITCHTEC_PCI_DEVICE(0x6360, SWITCHTEC_GEN6),  /* PSX 160XG6 */
+    ...
+};
+
+Every Gen3, Gen4, Gen5, and PCI100x device ID in switchtec_pci_tbl has a
+matching SWITCHTEC_QUIRK() or SWITCHTEC_PCI100X_QUIRK() entry in
+drivers/pci/quirks.c for PCI_CLASS_BRIDGE_OTHER.
+
+Without entries for the other four Gen6 PFXs/PSXs secure switch IDs (0x6044,
+0x6060, 0x6144, 0x6160) and the eight non-secure Gen6 PFX/PSX switch IDs
+(0x6248, 0x6264, 0x6244, 0x6260, 0x6348, 0x6364, 0x6344, 0x6360), will
+quirk_switchtec_ntb_dma_alias() fail to run during PCI enumeration for those
+models, leaving their NTB proxy requester IDs unaliased under an IOMMU?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103170033.4710=
+34-1-logang@deltatee.com?part=3D2
