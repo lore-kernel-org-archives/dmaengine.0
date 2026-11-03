@@ -1,68 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793721616;
-	b=SsNOR0z5FPWj1yrR0B+SOtS1mUJTyDd6dtBCTbjkO/hQdI8szFhiM6ICzqJW273Ryh5d
-	 3ZkYebiDUL07l/dQul2sEjRHhgno06axxnALw5SorXSGy8jZnZ/now0l+SiZtfGDDN8cd
-	 9mTOcta3iJLKp3kXwk4KAPGxz+Q+9g7rSgykvLT1Q4kyetgQ/IC/rBdOC/G9BAxIHK++d
-	 dhEDZ4+Wpb0aDnUR9XPlc2Vv8kVQFwXMXT63cD1RjO2A+MLSjXYLYaFQzevv9Ps3bf+Sh
-	 5xKtUfOKBUuJwnKz+O/fBmIgzX0nFnLXulFOv5ffZTRhTMKO5huuZi3izyBuPxRc/Xw==
+	t=1793722424;
+	b=qn5Csju8Ok8fcIsuj4oETYgIbdpyGBlJHTAkSjm28CpHepX8uaeP7g6ltDEC3K+dAlrI
+	 AUjQZiqnQ4aUJADgdJNbP9YWYq4kCk/dXBP1Urgqx3kNdhqiQGZmdJAekQuXILEBp8f1S
+	 afMFf9IQ5DlthYjU7zUkVHTynaToPGxLpWsQG8tiGEEBSMQhOlYwcnfAFXBIp+0LVIc30
+	 d+N+PFv5PGoNPwosmHIi5fDvpfhyjFQnuR+sCoJ2EQNYRkiEif6uvXeUGfVXL8Rov+bap
+	 +hOA/wyi3OjQi92YnSnKBe2pZgdfTO1jNV6eZOeNNoPh2D/ENzB83LgyE+ARdd2ZaRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793721616;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=9dzSoEpgZH00q1wJSX9moEpvSB1iYpBLDpCufMdRJpk=;
-	b=ieopSYULSChk20bfn9js3wt9sumBnfbOUFjFUNnFlwj12hwfE6QYyHukUtOR6Qu/f3z5
-	 HjKKX3LOGph9bw50rcaZgRs4LcsUNJHXq44rZCCJwgQaZjmkDxrI5K9EDnhhpAthCKDsQ
-	 92bXYtCZUVo1ndbMcqI6jdkY3GsIf8u/V1SuzJ49lriMxBQB/T9ne7uL1xI9bf64iMku7
-	 zFxxWmPqnNCbo+g59lGRZiKuic7d6ds2y/4dDrqWLD4SdaDEJigQGq5uRgIi9HJQ3qbwI
-	 AJEWdSG4pgN75bUCCjDlQtch84suBXcwqRE5N90mvt9DBdUXtZatIq+1iK4CkwKJLfw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793722424;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=x/FH5otqYEf36A9OIs9LxoVkpQV/mW7gemnZEwlcnCo=;
+	b=s2KukjV5uns7O/PnIF0X0bGZdUKczQAYpCyG6fXDRXNKFIDMVgNMQlzKo22w1RxZOLFw
+	 cot3Kqvk7j3uHsrzxtYF28xOpAl3+sJmNGY4Y7SwE/IhtGHfY9g9D8C4PiAu40RbjCW0F
+	 fl+WvWRwycA1UyKGATj7MqyW8Kd8ku3tkXKl0LJ1OzSxDQEwBaKvBsg27BT2dhTpfMe0V
+	 4bQ9TaSgwjOB9JzohTtG1E7XeBAXF84oHjXImN41Hx2nKG8n2H2X/SZ6EHHYTySbXqU0Q
+	 AEERsQa12q5CvtICFO1IzDTdEna4k+gBW04AnfpYRiAM9tKkbfEsUBMca8rXmexSHDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nf7M8Ct5;
-	arc=none smtp.remote-ip=198.175.65.15
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZzXFqdbx;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A3606D808;
-	Tue,  3 Nov 2026 16:00:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 100A3606D808
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9379D606EE9F
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 16:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nf7M8Ct5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793721614; x=1825257614;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ZmRQw/f3ox9Gd6QqlPw6u4WhtoaoRSpDpT4Lez/k8AM=;
-  b=nf7M8Ct5cZzv/av65vn3EZ0uzuZe8BC4omWOEeNX00YdzrG22ASUyGvV
-   UQ19wV1EoHwz1pQf1T3+MfshNE82tqD1K/4N24fpf3sADUVFRH5PYTWSh
-   3t5QgsWHvOtlVnekuyd9e/RkVwOLpE9mS1c0OguPH01ILDxbnlSvPNLRb
-   HVJ+LLNpUKrG9t27g9HCT05HgADhsGfw9aGkRgxEqsO9/GDHEqBSBgyNe
-   GiXapVisNclQYtZVPVC0I2oBDVqgZ1zy/PyJka5Zti8ORtEaozcs765vx
-   V46cAvgTDj4adGuezXQie8NFIg3dj+glKcUpNLeqK0WRZJB/Tu5gMgHgT
-   g==;
-X-CSE-ConnectionGUID: 2KbRiv/nQoeTqGNG4AEcCA==
-X-CSE-MsgGUID: LUgFUsJISbC17/9cLdGIMw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2459640"
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="2459640"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 08:00:13 -0800
-X-CSE-ConnectionGUID: KkVoLTGfRhKjkiaJSRGpsA==
-X-CSE-MsgGUID: lYYPYe33T2y/SrHrm45WNA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,193,1787036400"; 
-   d="scan'208";a="6806239"
-Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.109.235]) ([10.125.109.235])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 08:00:12 -0800
-Message-ID: <0e0bf495-ff00-45b2-98bd-d9901196e447@intel.com>
-Date: Tue, 3 Nov 2026 09:00:10 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZzXFqdbx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4121F00A15;
+	Tue,  3 Nov 2026 16:13:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793722424;
+	bh=x/FH5otqYEf36A9OIs9LxoVkpQV/mW7gemnZEwlcnCo=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ZzXFqdbxpD1TFs0x76YOPs3yuQCGSSzVf+OzQkcJd0bQRBa4etBMAw+9e6HHL8pD/
+	 RcVfuFmmDhN/Wn4cZ9G5EcZ+r6HnAH2NygRr+/Z9YpuhpUU8SUF53m84QRdNJSwpmc
+	 xL0H/m6fPn/LlaYYMdipHsQtLsG1wMalVsiFK5e2DPBtlwue4+ME5KhRabn8VwmrNA
+	 vwtcDkbF3aE8BeS9LPfdbIGdE3WSmvetWehRZ2qxAL8oal1MOPknuoHeIF8NPToAxk
+	 ujDNpXDv7vepPYXCAtIwIyl9tT5hzezmv61krmvGBeRmPrP1+pqeEyupsjSMAtvv4o
+	 NfeMksuU2irig==
+Message-ID: <sashiko-outbox-195706@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6/6] dmaengine: plx_dma: don't invoke client callbacks
+ with ring_lock held
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Logan Gunthorpe" <logang@deltatee.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261103155202.461725-7-logang@deltatee.com>
+References: <20261103155202.461725-1-logang@deltatee.com>
+ <20261103155202.461725-7-logang@deltatee.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 03 Nov 2026 16:13:43 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -71,335 +60,160 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dmaengine: ioatdma: convert per-channel sysfs to
- chan_groups
-To: Logan Gunthorpe <logang@deltatee.com>, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.li@nxp.com>, Christoph Hellwig <hch@infradead.org>,
- Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
- =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
- Kelvin Cao <kelvin.cao@microchip.com>
-References: <20261103154022.459620-1-logang@deltatee.com>
- <20261103154022.459620-3-logang@deltatee.com>
-From: Dave Jiang <dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20261103154022.459620-3-logang@deltatee.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] dmaengine: plx_dma: premature teardown in plx_dma_free_chan_resour=
+ces()
+- [Medium] dmaengine: plx_dma: race in plx_dma_process_desc() when dropping=
+ ring_lock
+--
 
+commit 3bb7031cbf95b71426caf9709207e0ede88301d6
+Author: Logan Gunthorpe <logang@deltatee.com>
 
-On 11/3/26 8:40 AM, Logan Gunthorpe wrote:
-> Use the new dma_device.chan_groups mechanism to add ioat's "quickdata"
-> per-channel attributes directly to the channel's existing struct
-> device, instead of a second, separately managed kobject
-> (ioat_ktype/ioat_kobject_add()/ioat_kobject_del()).
-> 
-> Each show()/store() now recovers the struct dma_chan via
-> dev_to_dma_chan() under dma_list_mutex, the same safe pattern already
-> used by the core attributes, returning -ENODEV once the channel has
-> been unregistered rather than reading it after the fact.
-> 
-> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+dmaengine: plx_dma: don't invoke client callbacks with ring_lock held
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+This commit updates plx_dma_process_desc() and plx_dma_abort_desc() to copy
+and clear descriptor completion callbacks, advance plxdev->tail, and drop
+plxdev->ring_lock before invoking the callback to avoid a deadlock when a
+callback prepares a new transfer.
 
-> ---
->  drivers/dma/ioat/dma.h   |   6 +-
->  drivers/dma/ioat/init.c  |   5 +-
->  drivers/dma/ioat/sysfs.c | 166 +++++++++++++++------------------------
->  3 files changed, 67 insertions(+), 110 deletions(-)
-> 
-> diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
-> index e8a880f338c6..d36cc2df74ea 100644
-> --- a/drivers/dma/ioat/dma.h
-> +++ b/drivers/dma/ioat/dma.h
-> @@ -103,7 +103,6 @@ struct ioatdma_chan {
->  	#define IOAT_CHAN_DOWN 0
->  	#define IOAT_COMPLETION_ACK 1
->  	#define IOAT_RESET_PENDING 2
-> -	#define IOAT_KOBJ_INIT_FAIL 3
->  	#define IOAT_RUN 5
->  	#define IOAT_CHAN_ACTIVE 6
->  	struct timer_list timer;
-> @@ -112,7 +111,6 @@ struct ioatdma_chan {
->  	dma_addr_t completion_dma;
->  	u64 *completion;
->  	struct tasklet_struct cleanup_task;
-> -	struct kobject kobj;
->  
->  /* ioat v2 / v3 channel attributes
->   * @xfercap_log; log2 of channel max transfer length (for fast division)
-> @@ -190,7 +188,7 @@ struct ioat_ring_ent {
->  };
->  
->  extern int ioat_pending_level;
-> -extern const struct kobj_type ioat_ktype;
-> +extern const struct attribute_group *ioat_groups[];
->  extern struct kmem_cache *ioat_cache;
->  extern struct kmem_cache *ioat_sed_cache;
->  
-> @@ -393,8 +391,6 @@ void ioat_issue_pending(struct dma_chan *chan);
->  /* IOAT Init functions */
->  bool is_bwd_ioat(struct pci_dev *pdev);
->  struct dca_provider *ioat_dca_init(struct pci_dev *pdev, void __iomem *iobase);
-> -void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type);
-> -void ioat_kobject_del(struct ioatdma_device *ioat_dma);
->  int ioat_dma_setup_interrupts(struct ioatdma_device *ioat_dma);
->  void ioat_stop(struct ioatdma_chan *ioat_chan);
->  #endif /* IOATDMA_H */
-> diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-> index a57024c4b066..984078920c2b 100644
-> --- a/drivers/dma/ioat/init.c
-> +++ b/drivers/dma/ioat/init.c
-> @@ -541,8 +541,6 @@ static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
->  
->  	ioat_disable_interrupts(ioat_dma);
->  
-> -	ioat_kobject_del(ioat_dma);
+Link: https://lore.kernel.org/dmaengine/20260717223217.B6FBF1F000E9@smtp.ke=
+rnel.org
+
+> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+> index 8c4b19d681ad5..17745f7a5658d 100644
+> --- a/drivers/dma/plx_dma.c
+> +++ b/drivers/dma/plx_dma.c
+> @@ -134,6 +134,7 @@ static struct plx_dma_desc *plx_dma_get_desc(struct p=
+lx_dma_dev *plxdev, int i)
+> =20
+>  static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
+>  {
+> +	struct dmaengine_desc_callback cb;
+>  	struct dmaengine_result res;
+>  	struct plx_dma_desc *desc;
+>  	u32 flags;
+> @@ -165,11 +166,14 @@ static void plx_dma_process_desc(struct plx_dma_dev=
+ *plxdev)
+> =20
+>  		dma_cookie_complete(&desc->txd);
+>  		dma_descriptor_unmap(&desc->txd);
+> -		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+> +		dmaengine_desc_get_callback(&desc->txd, &cb);
+>  		desc->txd.callback =3D NULL;
+>  		desc->txd.callback_result =3D NULL;
 > -
->  	dma_async_device_unregister(dma);
->  }
->  
-> @@ -1185,12 +1183,11 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
->  		goto err_disable_interrupts;
+>  		plxdev->tail++;
+> +
+> +		spin_unlock_bh(&plxdev->ring_lock);
+> +		dmaengine_desc_callback_invoke(&cb, &res);
+> +		spin_lock_bh(&plxdev->ring_lock);
+
+[Severity: Medium]
+Can dropping plxdev->ring_lock here after calling dma_cookie_complete() and
+incrementing plxdev->tail cause descriptor callbacks to run out of order or
+concurrently?
+
+plx_dma_process_desc() is called both from the tasklet plx_dma_desc_task()
+and from plx_dma_tx_status():
+
+drivers/dma/plx_dma.c:plx_dma_tx_status() {
+	ret =3D dma_cookie_status(chan, cookie, txstate);
+	if (ret =3D=3D DMA_COMPLETE)
+		return ret;
+
+	plx_dma_process_desc(plxdev);
+
+	return dma_cookie_status(chan, cookie, txstate);
+}
+
+When plx_dma_tx_status() calls plx_dma_process_desc() in process context and
+an interrupt schedules plxdev->desc_task while bottom halves are disabled
+under spin_lock_bh(), calling spin_unlock_bh(&plxdev->ring_lock) re-enables
+bottom halves and can immediately run plx_dma_desc_task() ->
+plx_dma_process_desc() on the same CPU before dmaengine_desc_callback_invok=
+e()
+is called for the first descriptor. Because plxdev->tail was already
+incremented, the tasklet will process subsequent descriptors and invoke
+their callbacks ahead of the earlier descriptor's callback.
+
+Similarly, on SMP, while one caller has dropped plxdev->ring_lock to execute
+dmaengine_desc_callback_invoke(), a concurrent caller of plx_dma_tx_status()
+on another CPU can enter plx_dma_process_desc(), observe the updated
+plxdev->tail, and invoke subsequent callbacks concurrently, or observe
+DMA_COMPLETE from dma_cookie_status() while the descriptor's callback is
+still running.
+
 >  	}
->  
-> +	dma->chan_groups = ioat_groups;
->  	err = dma_async_device_register(&ioat_dma->dma_dev);
->  	if (err)
->  		goto err_disable_interrupts;
->  
-> -	ioat_kobject_add(ioat_dma, &ioat_ktype);
-> -
->  	if (dca)
->  		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
->  
-> diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
-> index 976134df8108..9bdc0fbf7696 100644
-> --- a/drivers/dma/ioat/sysfs.c
-> +++ b/drivers/dma/ioat/sysfs.c
-> @@ -14,134 +14,95 @@
->  
->  #include "../dmaengine.h"
->  
-> -struct ioat_sysfs_entry {
-> -	struct attribute attr;
-> -	ssize_t (*show)(struct dma_chan *, char *);
-> -	ssize_t (*store)(struct dma_chan *, const char *, size_t);
-> -};
-> -
-> -static ssize_t cap_show(struct dma_chan *c, char *page)
-> +static ssize_t cap_show(struct device *dev, struct device_attribute *attr,
-> +			char *page)
+> =20
+>  	spin_unlock_bh(&plxdev->ring_lock);
+> @@ -177,6 +181,7 @@ static void plx_dma_process_desc(struct plx_dma_dev *=
+plxdev)
+> =20
+>  static void plx_dma_abort_desc(struct plx_dma_dev *plxdev)
 >  {
-> -	struct dma_device *dma = c->device;
-> +	struct dma_device *dma;
->  
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
+> +	struct dmaengine_desc_callback cb;
+>  	struct dmaengine_result res;
+>  	struct plx_dma_desc *desc;
+> =20
+> @@ -192,11 +197,14 @@ static void plx_dma_abort_desc(struct plx_dma_dev *=
+plxdev)
+> =20
+>  		dma_cookie_complete(&desc->txd);
+>  		dma_descriptor_unmap(&desc->txd);
+> -		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
+> +		dmaengine_desc_get_callback(&desc->txd, &cb);
+>  		desc->txd.callback =3D NULL;
+>  		desc->txd.callback_result =3D NULL;
+> -
+>  		plxdev->tail++;
 > +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	dma = c->device;
->  	return sysfs_emit(page, "copy%s%s%s%s%s\n",
->  		dma_has_cap(DMA_PQ, dma->cap_mask) ? " pq" : "",
->  		dma_has_cap(DMA_PQ_VAL, dma->cap_mask) ? " pq_val" : "",
->  		dma_has_cap(DMA_XOR, dma->cap_mask) ? " xor" : "",
->  		dma_has_cap(DMA_XOR_VAL, dma->cap_mask) ? " xor_val" : "",
->  		dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
-> -
->  }
-> -static const struct ioat_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
-> +static DEVICE_ATTR_RO(cap);
->  
-> -static ssize_t version_show(struct dma_chan *c, char *page)
-> +static ssize_t version_show(struct device *dev, struct device_attribute *attr,
-> +			    char *page)
->  {
-> -	struct dma_device *dma = c->device;
-> -	struct ioatdma_device *ioat_dma = to_ioatdma_device(dma);
-> +	struct ioatdma_device *ioat_dma;
->  
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	ioat_dma = to_ioatdma_device(c->device);
->  	return sysfs_emit(page, "%d.%d\n",
->  			   ioat_dma->version >> 4, ioat_dma->version & 0xf);
->  }
-> -static const struct ioat_sysfs_entry ioat_version_attr = __ATTR_RO(version);
-> +static DEVICE_ATTR_RO(version);
->  
-> -static ssize_t
-> -ioat_attr_show(struct kobject *kobj, struct attribute *attr, char *page)
-> +static ssize_t ring_size_show(struct device *dev, struct device_attribute *attr,
-> +			      char *page)
->  {
-> -	const struct ioat_sysfs_entry *entry;
-> -	struct ioatdma_chan *ioat_chan;
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
->  
-> -	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
-> -	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
-> +	if (!c)
-> +		return -ENODEV;
->  
-> -	if (!entry->show)
-> -		return -EIO;
-> -	return entry->show(&ioat_chan->dma_chan, page);
-> -}
-> -
-> -static ssize_t
-> -ioat_attr_store(struct kobject *kobj, struct attribute *attr,
-> -const char *page, size_t count)
-> -{
-> -	const struct ioat_sysfs_entry *entry;
-> -	struct ioatdma_chan *ioat_chan;
-> -
-> -	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
-> -	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
-> -
-> -	if (!entry->store)
-> -		return -EIO;
-> -	return entry->store(&ioat_chan->dma_chan, page, count);
-> -}
-> -
-> -static const struct sysfs_ops ioat_sysfs_ops = {
-> -	.show	= ioat_attr_show,
-> -	.store  = ioat_attr_store,
-> -};
-> -
-> -void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type)
-> -{
-> -	struct dma_device *dma = &ioat_dma->dma_dev;
-> -	struct dma_chan *c;
-> -
-> -	list_for_each_entry(c, &dma->channels, device_node) {
-> -		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
-> -		struct kobject *parent = &c->dev->device.kobj;
-> -		int err;
-> -
-> -		err = kobject_init_and_add(&ioat_chan->kobj, type,
-> -					   parent, "quickdata");
-> -		if (err) {
-> -			dev_warn(to_dev(ioat_chan),
-> -				 "sysfs init error (%d), continuing...\n", err);
-> -			kobject_put(&ioat_chan->kobj);
-> -			set_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state);
-> -		}
-> -	}
-> -}
-> -
-> -void ioat_kobject_del(struct ioatdma_device *ioat_dma)
-> -{
-> -	struct dma_device *dma = &ioat_dma->dma_dev;
-> -	struct dma_chan *c;
-> -
-> -	list_for_each_entry(c, &dma->channels, device_node) {
-> -		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
-> -
-> -		if (!test_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state)) {
-> -			kobject_del(&ioat_chan->kobj);
-> -			kobject_put(&ioat_chan->kobj);
-> -		}
-> -	}
-> -}
-> -
-> -static ssize_t ring_size_show(struct dma_chan *c, char *page)
-> -{
->  	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
->  
->  	return sysfs_emit(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
->  }
-> -static const struct ioat_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
-> +static DEVICE_ATTR_RO(ring_size);
->  
-> -static ssize_t ring_active_show(struct dma_chan *c, char *page)
-> +static ssize_t ring_active_show(struct device *dev,
-> +				struct device_attribute *attr, char *page)
->  {
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
->  	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
->  
->  	/* ...taken outside the lock, no need to be precise */
->  	return sysfs_emit(page, "%d\n", ioat_ring_active(ioat_chan));
->  }
-> -static const struct ioat_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
-> +static DEVICE_ATTR_RO(ring_active);
->  
-> -static ssize_t intr_coalesce_show(struct dma_chan *c, char *page)
-> +static ssize_t intr_coalesce_show(struct device *dev,
-> +				  struct device_attribute *attr, char *page)
->  {
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
->  	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
->  
->  	return sysfs_emit(page, "%d\n", ioat_chan->intr_coalesce);
->  }
->  
-> -static ssize_t intr_coalesce_store(struct dma_chan *c, const char *page,
-> -size_t count)
-> +static ssize_t intr_coalesce_store(struct device *dev,
-> +				   struct device_attribute *attr,
-> +				   const char *page, size_t count)
->  {
->  	int intr_coalesce = 0;
-> +
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
->  	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
->  
->  	if (sscanf(page, "%du", &intr_coalesce) != -1) {
-> @@ -153,20 +114,23 @@ size_t count)
->  
->  	return count;
->  }
-> +static DEVICE_ATTR_RW(intr_coalesce);
->  
-> -static const struct ioat_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
-> -
-> -static const struct attribute *const ioat_attrs[] = {
-> -	&ring_size_attr.attr,
-> -	&ring_active_attr.attr,
-> -	&ioat_cap_attr.attr,
-> -	&ioat_version_attr.attr,
-> -	&intr_coalesce_attr.attr,
-> +static struct attribute *ioat_attrs[] = {
-> +	&dev_attr_ring_size.attr,
-> +	&dev_attr_ring_active.attr,
-> +	&dev_attr_cap.attr,
-> +	&dev_attr_version.attr,
-> +	&dev_attr_intr_coalesce.attr,
->  	NULL,
->  };
-> -ATTRIBUTE_GROUPS(ioat);
->  
-> -const struct kobj_type ioat_ktype = {
-> -	.sysfs_ops = &ioat_sysfs_ops,
-> -	.default_groups = ioat_groups,
-> +static const struct attribute_group ioat_attr_group = {
-> +	.name = "quickdata",
-> +	.attrs = ioat_attrs,
-> +};
-> +
-> +const struct attribute_group *ioat_groups[] = {
-> +	&ioat_attr_group,
-> +	NULL,
->  };
+> +		spin_unlock_bh(&plxdev->ring_lock);
+> +		dmaengine_desc_callback_invoke(&cb, &res);
+> +		spin_lock_bh(&plxdev->ring_lock);
 
+[Severity: High]
+Does releasing plxdev->ring_lock after advancing plxdev->tail in
+plx_dma_process_desc() and plx_dma_abort_desc() allow
+plx_dma_free_chan_resources() to finish tearing down the channel while a
+callback is still executing on another CPU?
+
+Previously, holding plxdev->ring_lock across the entire loop ensured that
+plx_dma_abort_desc() in plx_dma_free_chan_resources() would wait until any
+concurrent plx_dma_process_desc() or plx_dma_abort_desc() call finished
+invoking all callbacks.
+
+With plxdev->ring_lock dropped around dmaengine_desc_callback_invoke(), if
+CPU0 is in plx_dma_remove() -> plx_dma_abort_desc() or plx_dma_tx_status() =
+->
+plx_dma_process_desc() and advances plxdev->tail to plxdev->head before
+dropping plxdev->ring_lock, CPU1 can run dma_release_channel() ->
+plx_dma_free_chan_resources():
+
+drivers/dma/plx_dma.c:plx_dma_free_chan_resources() {
+	...
+	tasklet_kill(&plxdev->desc_task);
+
+	plx_dma_abort_desc(plxdev);
+
+	plx_dma_free_desc(plxdev);
+	dma_free_coherent(plxdev->dma_dev.dev, ring_sz, plxdev->hw_ring,
+			  plxdev->hw_ring_dma);
+}
+
+Because tasklet_kill() only waits for plxdev->desc_task, plx_dma_abort_desc=
+()
+on CPU1 can acquire plxdev->ring_lock, see plxdev->tail =3D=3D plxdev->head=
+, and
+return immediately while CPU0 is still inside dmaengine_desc_callback_invok=
+e().
+plx_dma_free_chan_resources() and dma_release_channel() will then return and
+allow the client (such as ntb_transport_free_queue() or ntb_perf) to free t=
+he
+callback parameter data while the callback is still using it on CPU0.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103155202.4617=
+25-1-logang@deltatee.com?part=3D6
