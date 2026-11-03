@@ -1,95 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793694746;
-	b=UNoUqLGpgGRyw01J4XoH3qQ6D3igyvon8M41VNA5R19SkbP6wxSib2bsarRK9sHqHv66
-	 IIg6lJUFfwiuHiLrZjnZVCKD3255USjw/NLmWPlqFq8s5OMBd2cLRsNoxPhK2plmRWiyl
-	 Adm1WpCYZPkwqwJFTC6Ci5YVog3Op+M0Wj5GL6VWtc7HJphjAWhSP/C7dDe2H5uVq1gC2
-	 SEBJXAIVkAxWc+bITbN72WGIUN1CtsPlQCtQUiA3kNNTU6SB+bPW0Ooy4VKZDGoA4VnHj
-	 zExDGesb1YOE3B/OVZ/WMlXYYqevtpFkjXxhSfJQE+llBsTBs/Wzepivess574nOTpw==
+	t=1793694770;
+	b=HeA3z0RfdqocIOA0Aod118yEAuZNS5rDXXwVa5Q4Q3Q0cnZ7oDGGGh7oJm7XhqSLgZnT
+	 GW55Sp9A0mwQm4CXxJ1k1vRj2eNnRng4zHQMphfZJao9Ot9hL12XjywGVdTvWmAumBn68
+	 GReGZgSDAq2brvEqEhfJ67NfjGerhGytUjJpFQfmHDeiMV9AkIffH05XarfXYJ7n+yhCd
+	 VfzJZB1JayJuQ7Wvdz6O11rn7nNAF9gn9aNVTdDtsbzFkPBuD8TIgThFST/W+4Etspufg
+	 MsvLIyREFDeMUWeybOHIKCE6EJua9w/JC6wFicSR/4dV6NW9yt1G9nC3qlgs9npp+Vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793694746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793694770;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=z/lQc+uwRuDiVntqSHAzYirnLKbYOYkb92/IgHqdzPM=;
-	b=C3gtJh8QEEtgJShXMnKn/U9iLE6y4B4Bf8RoZOaoraWJYxf3DpvEn7ON1IcLA1sC94fH
-	 eoHfGTyMCTcpY7a56riWh8TsrV5r0hjC6wjQdXJrstg+xh0iQFeKPDwvpQeenp6X0u/JL
-	 gtstvfYbgKlYT+Y2EoXS2RNHfoidnJf5Y0QyHmjuIpOTcucqGVQCG+IW1QxgphmnD8CHg
-	 clUdpg1U5JGIpTBaVOOjCTLap9ynB/OQi/bj8eRIe/hQ4Cmibf7lsg6zsBZ1247FFEL6S
-	 cWn6yd+aTKCE0uk4YmqnSZLIIrqQsmNG7nl96CBru5HUw4VDH71xRSwDdOW0iJVw5Ng==
+	bh=l4U/3KUqu/qVdhfefKvegkeTdRkvD6adQTd3BjiKpMs=;
+	b=RRfmxPACCjjytO37BgRn8rFZgc30iMPaz7koN+newQdBu03RpsZXCUkTHr+Iy6l+2fMp
+	 EDlNxCTRV6GLrZ0DrWdGivgtfRxNle9CmO2SfeBlieYzLE55/qT3IwaOJdOsdVJZtlFHI
+	 b3pcJh3q1IW+LqQ86Cl+rcDIy5LWPwiqc8EMXIxIar7iE2f46TBd9XCSVo5Yj0MmiexY8
+	 zucFP2FLbwQd/0cPgsEsdeC/GougUTporXgAiY/Iifxz8yM6m0SrJDitfFOV8h/sJpCpF
+	 LceCc4/C2vnUkosJtiEYqs18tuxhw8i/O6uYUPQQf4bIertGqtRmPKIELEtjfkz4yGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=N5fohdBx;
-	arc=none smtp.remote-ip=209.85.216.46
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RVmQn6k2;
+	arc=none smtp.remote-ip=209.85.214.174
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D86606A331
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 08:32:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13D86606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D28606D814
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 08:32:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3D28606D814
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=N5fohdBx
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3ac451e128cso2464767a91.1
-        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 00:32:25 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RVmQn6k2
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2eb5251724bso9277145ad.3
+        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 00:32:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793694745; x=1794299545; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1793694769; x=1794299569; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=z/lQc+uwRuDiVntqSHAzYirnLKbYOYkb92/IgHqdzPM=;
-        b=N5fohdBx1NFB9AacLoSHrX8kbHCWs0MOFlRa7iGrfcHrdu9N2ICrvSNW+jtvWA/at0
-         0iQUKX8LtCxGZmPCnF7TakoIIzG2QtQom9Y8mi5FybXTwj+yrGJXGzs3R4WU565xPvqY
-         6kTFfWOGhnFahW92OPvWAuDPs/0ByNgGPmx7cjEX6Yn2ZPZ51UAxbhv2ExJM3lSrdbvl
-         Aav+HOMNmVy3U9ELqSoyECWxI/U/gIdxDgbnUdc+DC1NhC/ahaLM8YV051OMEDk5whKE
-         dVYmHjFaaptVC9InyjtJ6HWO+aL8rbE0u9GSswzao2FfSnqDJ513az1Guv9iat4lzrxS
-         WT6g==
+        bh=l4U/3KUqu/qVdhfefKvegkeTdRkvD6adQTd3BjiKpMs=;
+        b=RVmQn6k2Be56GRnv3kgo6y8yO4XYArI54aRhbRp3FlxGLJ//+tmPQREsSGk1U4FV0n
+         2IWXAo5HckUek9BxECowcEiDZQ7kY/tx62aWhsCXzyQ36Xh1kx8YumvbK8bCoxF9MxMW
+         gGC0YiQullx9OttnZ6QCXMC9NFPdMzh7TRcy9jMVviYLp8bAeKviPBCf2DknqDUJeImk
+         7AbvUpE7aLfIJg9hvR4Xay9OXOP+xzu8Q9E6/DK+K2QrEHUXgSRbEDlxz1PLrWxZ63jh
+         9jNfZMQAUJ3dCmC1Rsuk2+7kPCtFNsSJIP2nNO3kvZCJfYBsTMYS5+aoAudnzoMfQJD7
+         JD+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793694745; x=1794299545;
+        d=1e100.net; s=20260707; t=1793694769; x=1794299569;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=z/lQc+uwRuDiVntqSHAzYirnLKbYOYkb92/IgHqdzPM=;
-        b=XzxAZFFcmYlcrKtaT2BVpRXd9d/AlRS9PyunGvwFGbxVw25O6Ep+QVKQtR8dpe4QRC
-         XE12yA/snTvVzg4SLmQTJJx/ma1NxJ3bXT439klbCN3HnReDGaWENg6ymQ84/ZujJ5nG
-         sDUDXhZZ65TdQ2T+2+cjA1h0Fjvf92ySMrhStGzHKNBzRLJeIOAWu7KeDkWnVty0iEAF
-         nZ+ZFK0Ea30Hjk+4O7Z3H1YDbHFpDf8uTb4PSlsjkyLxG0AiRz+4GbsoB28Ote/BPsg/
-         WyCByb3r0eH2ZlKj80Rw+RYnYw38EqTdr88fduImMGEVmcS4HpcyPYdsMlOXkgdb16D+
-         M9XA==
-X-Forwarded-Encrypted: i=1; AKwUvBxnWsSdrda/HAjh1oZY7e5bxiLPB82Mg30Iikj+Yi2wgK2b84xmfpcxIHQMRQry9/gAKRmWBIJO3EQ=@vger.kernel.org
-X-Gm-Message-State: APuU4Z99gFdWRi0gSvVIdc2PqFBLrH6jNa+RFutkGoeUD1aPap8kAv4Z
-	WTvD+vkNiDZRpdGZ7NFfxQmGu00yxJP//sbP345jmip20E5eOD0227x3
-X-Gm-Gg: AYBFou2+sgkTPXutRpxVjepm6x8jj3bKMknXhcSVBhlW8P9jyRg4uhDiN2xAVS1GZpO
-	CgVicf6US6cdEO2mpcVorws/4CbnymVT6ofx8O2eNvh0qykjcEH9uyyI+6SnExwj2PNVmBFNEUc
-	bVXrEHQN14k4UTg1JPp4PvCY6doptNXR/sFD+7YmFwPUHj3vugu6MXYYlgkqHO6hktK9r4pTTH/
-	0yRrbl3F43gawjIwXn32XBTWi0ggCiKAzawr2oiTWTJLRVdhLfBcXaepAWz0m4NaYkRkk69b+ga
-	WBvF1R+V3g1/Vwa31uvWWihAVqIykqvMMcMbQ3bL4xzY7dzm8dG7Q+rzt8kUC0xJWTTE262zx9P
-	BCIm90NhdhgZJaW6X5RRYauNDLknutLYDwXifN+H5OOT1MPecuxPXJUEDX3w9QhsS26Ym1Qomy3
-	g22M08sk5wTKB16y65HKPz3zbRt4PVJI4I7iWMcgy7Iefq2sR7678Whvg/uickOM+Z4PM7sqFKV
-	CVuC8Heh8E+eOtjC9rWF2xka7TFrLudhnC3qRKYl9HOW+8KwqN1s14BF+cFFpaA99IJvIs5/s6+
-	DlpN6gbrYMtc/Pld2EfbzLsvNICCzMdNaShiLrK7fkH3suH/
-X-Received: by 2002:a17:90b:584c:b0:3ac:fe93:a731 with SMTP id 98e67ed59e1d1-3ae8981e640mr9133105a91.56.1793694745256;
-        Tue, 03 Nov 2026 00:32:25 -0800 (PST)
+        bh=l4U/3KUqu/qVdhfefKvegkeTdRkvD6adQTd3BjiKpMs=;
+        b=poVMIxDebHzuV5nvBsDMyII4SEkNtltJM+V0YuAUeu27C/j5SQaTxr0veClM8AZDlm
+         RJRyxVXu2/Fmw3o3i63rjF5B8ZU+tEffNm3JJ1yDB23+L3v5egwT1H6FVOPieU8cP7Cx
+         ztc3RXTl9h/JH1+/q+Ym4AduM68Ao88bw4y3vEmAa6R4F8H174/f5LZJ6StwQ+E9/e++
+         6znA6sYwPoiLrkBq4PWhzbtCYhqxXkZn1m+TQGQA26DEuKcuC4pNJqoOL0Av1YCEYLn0
+         /5bALSZEnyB0hACx1/N2aNEK1fmnimhUbAzLS9Ab0hWWgR2kmXhwxAuaFNv+GkTi8Pql
+         cj8A==
+X-Forwarded-Encrypted: i=1; AKwUvBz57k8DhvXUSEo6MfnRRecqeSFk0uYjwM0CD4le30yEXcxHpCrQvEsVFHftj7La0PKDTiS0kohsiHU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/BNko7cDFGDkqOnO2j1HyYFkufPoT1DjFCU3EJD4t7XMlgYi9E
+	ILQmrDhDBqglKJek7iSYcj5puFcsHndSorXDIeBuvABLmS0aUrbqRYXx
+X-Gm-Gg: AYBFou1aL8dgx6x0CXmTpLrdV2pBkXhc2MNNmPmVs1gDEwbD2plV2n8JD+M+Py1Xjut
+	Lcph5wB6c6iIgfRtGFxg9MVsyyKWMj93VhnMrxE986mdGa7IF4Up+bEVniLeWycaWoZCpj7eXzv
+	zYYOyKLJkGuzZ5jS6u3Ccdjp4GVHZhd6Avj793g1w15bvHEA/TAe9eZ6MWS6JrVhe7n2Ufef9sT
+	tN9ug/jET/plBoIcbv/nYaF+wkkGGp+dsAuGQaIRfNeflxQjvYrhuNZzLmOKqE6eAWKq26vh9fe
+	i4KnrXPD4p96OqAo2hIvsi/z2wARIlSmsrsqBBUY+DsBT1Ots6S4/Xom2v8kueB82j/Ps51xHvR
+	sAQmu8JrD0zuPOnHAqQvBnJYBc9K/L8LEzuoEUWuzellwKWspBEduh6a4FP1IYME/WfEXHQRRGC
+	ew68zyjvilqRr2hbq9JzghWUW7LSer68bpw0R5hHvdUeez1CgAVmV6H7HRIn6VDMm3Y6BB5cGdS
+	Qs1lYX1Yb1ZqyXhjFtSfOGrW2CCCdHxsUuTftd3pg6L5M5BT7Re5D8YIO9lRmGVplJCEN7ajnNS
+	uKRbDhb4T1Ie+6+lzIFg3WZeufosHvOKq3nuWfBXSmtTTNcy
+X-Received: by 2002:a17:903:46ce:b0:2e9:723a:cf37 with SMTP id d9443c01a7336-2eb364e0725mr114991555ad.50.1793694769016;
+        Tue, 03 Nov 2026 00:32:49 -0800 (PST)
 Received: from spiderman.taila3fd8c.ts.net ([202.112.47.77])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b07c5d7f82sm3232140a91.5.2026.11.03.00.32.22
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eb392a5f48sm37036785ad.64.2026.11.03.00.32.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 00:32:25 -0800 (PST)
+        Tue, 03 Nov 2026 00:32:48 -0800 (PST)
 From: Li Ximo <lixicaicai@gmail.com>
-To: Sinan Kaya <okaya@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Michal Simek <michal.simek@amd.com>
 Cc: Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Wang Haoran <haoranwangsec@gmail.com>,
 	Li Ximo <lixicaicai@gmail.com>
-Subject: [PATCH v2] dmaengine: qcom: hidma: fix memory corruption when active list is empty
-Date: Tue,  3 Nov 2026 16:32:14 +0800
-Message-Id: <20261103083214.1682930-1-lixicaicai@gmail.com>
+Subject: [PATCH v2] dmaengine: xilinx: Fix wild pointer dereference on empty segment list
+Date: Tue,  3 Nov 2026 16:32:39 +0800
+Message-Id: <20261103083239.2033556-1-lixicaicai@gmail.com>
 X-Mailer: git-send-email 2.25.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -104,10 +103,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Wang Haoran <haoranwangsec@gmail.com>
 
-list_first_entry() does not check if the list is empty. When mchan->active
-is empty it returns a bogus pointer, which causes memory corruption.
+list_first_entry() does not return NULL on an empty list; it returns the
+result of container_of() on the list head, i.e. a wild pointer. In the
+Xilinx DMA driver, the prep functions xilinx_dma_prep_peripheral_dma_vec(),
+xilinx_dma_prep_slave_sg() and xilinx_mcdma_prep_slave_sg() can build zero
+segments while still returning a descriptor, and both they and
+xilinx_dma_get_metadata_ptr() then take list_first_entry() of the empty
+segment list, yielding a wild pointer that is dereferenced for
+desc->async_tx.phys or the metadata app words.
 
-Use list_first_entry_or_null() instead.
+Guard the three prep functions against an empty segment list by going
+through the existing error path (which frees the descriptor and returns
+NULL), and make xilinx_dma_get_metadata_ptr() return ERR_PTR(-ENODATA)
+in that case without touching the length outputs, matching the ERR_PTR()
+convention that dmaengine_desc_get_metadata_ptr() and its callers (e.g.
+axienet) check with IS_ERR().
 
 This issue was found by static analysis.
 
@@ -115,42 +125,62 @@ Reported-by: Wang Haoran <haoranwangsec@gmail.com>
 Reported-by: Li Ximo <lixicaicai@gmail.com>
 Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
 ---
-v1: https://lore.kernel.org/r/20261023073154.744365-1-lixicaicai@gmail.com
-v2: rewrite the commit message in simpler words as suggested by Frank
-Li; no code change.
+v1: https://lore.kernel.org/r/20261023065806.3175584-1-lixicaicai@gmail.com
+v2: xilinx_dma_get_metadata_ptr() now returns ERR_PTR(-ENODATA) instead
+of NULL and no longer modifies *max_len/*payload_len on failure, per
+Frank Li's review; the prep function guards are unchanged.
 
- drivers/dma/qcom/hidma.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
-index c939635be..925c912e0 100644
---- a/drivers/dma/qcom/hidma.c
-+++ b/drivers/dma/qcom/hidma.c
-@@ -176,8 +176,9 @@ static void hidma_callback(void *data)
- 		queued = true;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index cffe7c6fa..8b9e3a13e 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -649,9 +649,12 @@ static void *xilinx_dma_get_metadata_ptr(struct dma_async_tx_descriptor *tx,
+ 	struct xilinx_dma_tx_descriptor *desc = to_dma_tx_descriptor(tx);
+ 	struct xilinx_axidma_tx_segment *seg;
  
- 		/* calculate the next running descriptor */
--		mchan->running = list_first_entry(&mchan->active,
--						  struct hidma_desc, node);
-+		mchan->running = list_first_entry_or_null(&mchan->active,
-+							  struct hidma_desc,
-+							  node);
- 	}
- 	spin_unlock_irqrestore(&mchan->lock, irqflags);
- 
-@@ -238,9 +239,10 @@ static void hidma_issue_pending(struct dma_chan *dmach)
- 	}
- 
- 	if (!mchan->running) {
--		struct hidma_desc *desc = list_first_entry(&mchan->active,
--							   struct hidma_desc,
--							   node);
-+		struct hidma_desc *desc;
++	seg = list_first_entry_or_null(&desc->segments,
++				       struct xilinx_axidma_tx_segment, node);
++	if (!seg)
++		return ERR_PTR(-ENODATA);
 +
-+		desc = list_first_entry_or_null(&mchan->active,
-+						struct hidma_desc, node);
- 		mchan->running = desc;
+ 	*max_len = *payload_len = sizeof(u32) * XILINX_DMA_NUM_APP_WORDS;
+-	seg = list_first_entry(&desc->segments,
+-			       struct xilinx_axidma_tx_segment, node);
+ 	return seg->hw.app;
+ }
+ 
+@@ -2305,6 +2308,9 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
+ 		}
  	}
- 	spin_unlock_irqrestore(&mchan->lock, flags);
+ 
++	if (list_empty(&desc->segments))
++		goto error;
++
+ 	head = list_first_entry(&desc->segments, struct xilinx_axidma_tx_segment, node);
+ 	desc->async_tx.phys = head->phys;
+ 
+@@ -2406,6 +2412,9 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
+ 		}
+ 	}
+ 
++	if (list_empty(&desc->segments))
++		goto error;
++
+ 	segment = list_first_entry(&desc->segments,
+ 				   struct xilinx_axidma_tx_segment, node);
+ 	desc->async_tx.phys = segment->phys;
+@@ -2613,6 +2622,9 @@ xilinx_mcdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 		}
+ 	}
+ 
++	if (list_empty(&desc->segments))
++		goto error;
++
+ 	segment = list_first_entry(&desc->segments,
+ 				   struct xilinx_aximcdma_tx_segment, node);
+ 	desc->async_tx.phys = segment->phys;
 -- 
 2.30.2
