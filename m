@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.35
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.10
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793718904;
-	b=LAVCNUojW2E/0uDei3b1Hza8+1lG5WBfGTG9srHMh2cRbFiTnVatSQIkh0S06yXl1TqB
-	 jtbBAc+ETJohiJ3A3ZOvodxLls2IWEir0pya7ec0OWWsR/Na9f0TEdJ4ITGf/ha0vi2Gz
-	 JoyqP2ZPecMQ1EqYH0mukEJY7mkYbGTAT41s1XvzWQQZajlc3HaexMz38NNBfq2bUifKd
-	 Xby2MgnkKUWHZpX9jXsXEo3Bt5NNOjFcjPFRw2ysZW/nZt+rAtobAzfQRVfmH9adSR0Or
-	 DqqyxNBhmmiOKudoPjAN9UKodeOsO7vcbjILqdMzk1g3X8jTbLToPG9eQKg/ZvZ9OWA==
+	t=1793718994;
+	b=yDuQewBKlKZHrTmy+GWah14S6xvD7NjCtrC2QZdaaQhrsZ8UOh/mXfsInD8OEYQ3jX20
+	 zbmrZE0fKF8gPRi21N9NrrpGwprziFOdekujp9Qw7gnesg7UxGzJckhfYB5dPwDAUCi3X
+	 0OraYkvB5JW0v/O9VS3C5RMr1y8XzoBuOgfTbvrYRv4+OO2znkqxleqEhjqjCzKYuCoHQ
+	 UA7A0FwfgcXJfMOz/cWAKEqzDDcjPHFFYM6YUZjIbw/7sBWKyyROcUylaAssANrojmmAr
+	 sq13JfBYTOViFYtZZETFWeD4BujxVGcjm3vgwmJkvi2awZY8NHZzD9uUnGZ9bSMU9Zw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793718904;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:Date:Subject:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793718994;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,82 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=gWZXrh24f5P64f5W7wFP/bDHfxgZfMTleODQcAViQoQ=;
-	b=fzKa0q3ZKL7cYBWG8CwfqM/N2LfDf+wnO5fGGM5D9h0nmLVWy+MOZNQAbwgZkF5RthHg
-	 D4WU7Xk2+OvargZZ2BSkmvwaXPERRyyqV1SKi+HKWVDlPfnEfCJJcKzM8LMwvKWGI2E9E
-	 VIxxc7qaPz77/H6Ln5cKso39UJ8xBkfocLFIv86r4AA96p+yP49mf3h2h34k/ZQmxb/wf
-	 tcm34A41weoyZ+uFDlk4QrWWXPJzGyq1/onotOsdbuolUmBzUokX5dgVTj9Q+Z1GN89hv
-	 VkCYoSTNu4wzLQFkNtGYqj4QZyy6p3FrAC/r07L78MSuNSe1vWb7X+Tm0ZPQ4M6rLpg==
+	bh=TUKSV2LAuGKKlKGLTRBFuRObZ9b2YV7yYrkIV1dr+s0=;
+	b=h4NVi8COVBtNNmfBwLz3ZmnE+BbANKHkh7aYcCAx6Eq6ckPYxzDpXR4o7nx68QG3l7V6
+	 JhRN4GTBTGSw+NEBNFcr1T/whc0+EF6O2hyUIRoRkf6ofFnP9uFFuFa1VEnOSjEIlYHdH
+	 mXiUGvLDlh1F1+VfNwMb215AS31cjL/PdmTo2/zIdKue1/o6vuIPmTm15FjfwX6rlGcJH
+	 Xp2mD+7a2zu2WrQiKhwDjJh5Xf9g7iar7eakEq//w3hF0OUvpk0drgy2laAfWYstlxj28
+	 EgRxWZIUQGI5K4IfA4NLbMlzASck82JGvpuh4lTBkSoQ0eRqhubDksPM906zUQzCmOg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=lCRwhyjq;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.35
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013035.outbound.protection.outlook.com [52.101.72.35])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=jM6BhiCg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.10
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013010.outbound.protection.outlook.com [52.101.72.10])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E3E606F614;
-	Tue,  3 Nov 2026 15:15:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E7E3E606F614
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE97B606A7BC;
+	Tue,  3 Nov 2026 15:16:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE97B606A7BC
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=lCRwhyjq
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=jM6BhiCg
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NHPtSvnPhaxVWQz2+xPqK+6LMh8toARzMj6oDWMSmt+TfQ0UYI15oMDUuFDVIBq6QQXYCClye7RG710ECXUxIKWf9ROA13SuXUp1xRI9s6L79upOPiupZIdhkS+KGmNOtOdq74xGS+BgmrrPBkz5Bs80PHOlz4JrHc+6Fcs4dXjFEIf+l721EJIpU1fGQ9SGPnCivoKfQPpsRZq9JWkLRa3uRbdu5FYmS79twiC7hqR+tD/PjyOrWIcKXUEExWFrjNq7W2Zw63ssew7TcCBt9NRlGhwKoLZ8o5ATxX6Qr3I8OS14biCX77PBYNloBm2ZcObSHRuvbJkzGvnQsU8FSQ==
+ b=kxaYDeBJrS4Oz2OsJd0WgsaEyzS8VLn7hEge6krMcxr/w7K2yvnGZi6zJXjIdlzGm/WcSokW8s+Iz1kDP/2qqdBb25FWrE/sLGZrg0Ws2Luy6NriJGVSTbVsfmUACu6yQzu7HPuieeKB9yGvUcw7GSJOSxLW1OnKQLbZ1z3zanvjkin7+S3tw3udzN3ESZhvLCKDiZpZWaPxTkU2zvgHXV4te5EGTe1hG8ihF1437/Gd2Tn933tB1yX98HDXJpI+H/dNIz77k6wtcwfF0wkvbO5qFWYAZsj0WAwuys/j1hMS4bKJoiRslmcsXxzhVik/iJVyadWu7rwCKDdW/dsWaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gWZXrh24f5P64f5W7wFP/bDHfxgZfMTleODQcAViQoQ=;
- b=rVuTHtAZJGcJtFmrEvZKaj0Wdc1ysrBxmHzDfXQ4+4B/ZdcP7+NKoFKo8mLKV3Z2AyDJnAPTXEZ/Wbr/0nP9xjueW/gpY7tz0b/n6ZHVzyl/3s/I4XmRTxsK5+OtQJzngfAbnLR15S+wH+glaNX+VC7QgMjUh3b88AG311Al05Bzyau1F3pyWam8IgNucUw9502DwDYFxRthYCcXrpVPB0GBMxvtr3zKSRNsu6cAYZZlUsotITC87mEf2IRKCDqnbJhohBA7jWiUvK6PmQMakRSibPa/xT5g1TTPyOEwtBmnwKYWA3BZfvblUKODidzobnM13HX6+p03cElGuRJiGQ==
+ bh=TUKSV2LAuGKKlKGLTRBFuRObZ9b2YV7yYrkIV1dr+s0=;
+ b=dvF+eFmyptHg503M+/OSKBRscPTkCI6/OPHVZ3mfXLQYm78rjD2yqkSJHaK4hqpvhqHWgdBf131FapwPFUhcBBpSLzRKI95BEvb0okk6dy/svWqxs9ZK2rtrPu5pxz0bdpmVFnupum0QGetU04UkYimd4m+4n2bM81oRVaL99DJZ5epz5zhnS1x6wt+yHT03lpw+LkR45UUomuWtoJ+f3MIcBDkmHvvZoj6+egWOQCaEvO66vr+E1vaj+Ki5l10AGeKNYRX78YhrNcJhlT2XExYZnvTesOFyl9hWCqa0zRnbOenYo4w3jHVia3YCIQZ1Rr0ofdkeX85ZSw9sjbkxvQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gWZXrh24f5P64f5W7wFP/bDHfxgZfMTleODQcAViQoQ=;
- b=lCRwhyjq91AceqR7ySdPEXzpzeBXSecLYK2cq10Ez3jOaGczYTfKvNFM7yWgOegwXQBCi4tAnFYYcQZvsSqFtCc3DtITMK5qdTKaJ1YiTVNUMpRGl08YhGbDP8MpBJ74mfnAdfkyOfFsfHis7cezEPcSj39P4nBSWxJUxq/E/pI4UI44/5oW2CSFT1elUlGJaclzioxuA4cmn8b8bw/lS4cJskFBIwqeEXAHRq+iTf4bSjrF+OPGLKKkSr3KoNXCNXbf1FYvPQzwZPKexTI2/Oo1nucyN2wA+6ufXDVLIiHZMj03ba1OGOlwTiBTUA5387GwH3mDO4vuUsECIN9uHQ==
+ bh=TUKSV2LAuGKKlKGLTRBFuRObZ9b2YV7yYrkIV1dr+s0=;
+ b=jM6BhiCgph6JC+UEkLk9MpYoJo/2fSw3x93FEof53drzXCj/mtznvn/z07sEePmPe9FAlLEnQLdD0V3GEato8Q5p/CZFzZpn+BGbOWT8ENc99nyh0uLy96kS1t0gfUqfqvLqBZyDDTXVk2y+3auj6u09SBgfOQfevpkaMo+cWbLzT01x+wBhxZm1eIUEhiSlJimtTSF5Z0jgP8JKv3EsnHp3a8PBM54l4pjbdFQY+YEHEbP05ekqpsc1Qad5EimFeh+t164cgQUodgKJYhU8yu6LGiyTow5bwRmPxXFGs4vsJH/9wTFHuKnLfdv3uEOOW7w51cfS14MJQkr9ar6plw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com (2603:10a6:20b:24d::9)
- by VI0PR04MB11023.eurprd04.prod.outlook.com (2603:10a6:800:25c::16) with
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by AS4PR04MB9624.eurprd04.prod.outlook.com (2603:10a6:20b:4ce::9) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Tue, 3 Nov
- 2026 15:14:59 +0000
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9]) by AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9%6]) with mapi id 15.21.0592.007; Tue, 3 Nov 2026
- 15:14:59 +0000
-From: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
-Date: Tue, 03 Nov 2026 23:19:04 +0800
-Subject: [PATCH v4 7/7] arm64: dts: imx95: convert eDMA to per-channel
- child nodes
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261103-edma-iommu-v3-v4-7-470415d418c5@Example.Com>
-References: <20261103-edma-iommu-v3-v4-0-470415d418c5@Example.Com>
-In-Reply-To: <20261103-edma-iommu-v3-v4-0-470415d418c5@Example.Com>
-To: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>, 
- "Joerg Roedel (AMD)" <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
- Robin Murphy <robin.murphy@arm.com>, Laxman Dewangan <ldewangan@nvidia.com>, 
- Jon Hunter <jonathanh@nvidia.com>, 
- Thierry Reding <thierry.reding@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, 
- Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev, 
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- iommu@lists.linux.dev, linux-tegra@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Peng Fan <peng.fan@nxp.com>
-X-Mailer: b4 0.16-dev-7bc12
-X-ClientProxiedBy: SI2PR01CA0030.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::15) To AM8PR04MB7874.eurprd04.prod.outlook.com
- (2603:10a6:20b:24d::9)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.8; Tue, 3 Nov 2026
+ 15:16:31 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0592.007; Tue, 3 Nov 2026
+ 15:16:31 +0000
+Date: Tue, 3 Nov 2026 09:16:23 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Li Ximo <lixicaicai@gmail.com>
+Cc: Keguang Zhang <keguang.zhang@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>, linux-mips@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Wang Haoran <haoranwangsec@gmail.com>
+Subject: Re: [PATCH v2 2/2] dmaengine: loongson1: guard issue_pending against
+ empty lli_list
+Message-ID: <aun6x4Br6rc0VXIc@SMW015318>
+References: <20261103084638.1190232-1-lixicaicai@gmail.com>
+ <20261103084638.1190232-2-lixicaicai@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261103084638.1190232-2-lixicaicai@gmail.com>
+X-ClientProxiedBy: PH7P221CA0033.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:33c::25) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -110,892 +100,124 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM8PR04MB7874:EE_|VI0PR04MB11023:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3abbbebf-ab8b-4156-bafc-08df39bd39b6
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AS4PR04MB9624:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f0a5da4-1dbc-43a2-69ee-08df39bd7098
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|366016|7416014|376014|1800799024|261021121427099003|261021123027099003|261022105027099003|261009223027099003|921020|261026140227099003|261028144727099003|11063799006|22082099003|18002099003|261102123227099003|56012099006|10067099003;
+	BCL:0;ARA:13230040|366016|19092799006|376014|23010399003|1800799024|10067099003|22082099003|18002099003|56012099006|11063799006|4143699003|261021123027099003|261022075727099003|261021121427099003|261022105027099003|261102123227099003|261028144727099003|261026121527099003|261026140227099003|261009223027099003;
 X-Microsoft-Antispam-Message-Info:
-	ys+wJ19EMX7Mz4qYrUJauR0o4ybw2MgT4f4SrPbpUO6ecJ1MPJEHk6bUp4X8ZzdgARdOWhiw94AmNesUOlczEcqlKvYYp0XGn+rb/SCyC8co55GZDrkp6E4nl48LqL1oQ6qN8m2Su5eDC3+H5qz8NIxnCLXfKF2U6pab+Ho1kl0ejEUC9bJDzPVfVaPhU0a6TZPiPhEhYCeD0zcslbFVv3k+sfNefeIHOim/RpgQzpUkdm9dVtXA/bWCUgR4NmQOzSBwCHxu0p9BotR30+ICHGoDw5zxrrz4bgEybjWfjKE9R4ZIJCOjOlhccJG3VnG60D31Ahw3RSq2MnLH9kGi5/AUgJDIe/AYnC9zw00Bmax2QilYPENmUtzbCKFWM92u5IrTj4O733d7rC80qLG0aCvqWxrxXWfZ5jE6rxq+4RvmATzxTnEiP6YXa155kyctvuPofCI42kqtZw5XaBzmvMs5cleoAz3J3W796E0fIz7buNwZdLdBFDZjw+yTH/STnV1gAO0cLNAChtR015vi4prmzuNSEneJnNdQ4AWWmWui4gbPM9jlQ+bIt6bDWANMgoGHcQ9V3QSbZbyTzqy9sMnNl2UbRH5JIp5wOVNfYJ1w66YwVTqvwGEK4FkibU/zTC83gbgS/oHfp/lCgB9sjqIo7Hlt2WEoj8HYlwSN5wA6KlPZjRw6J9DlMIY8mjcugrkIHweiDDcZZVpN1CIBJg==
+	sICXYI1i5Kd67jtkneCO9P5oNqzTtBgqlrwtMVfFnVDy3EWn+6s9yw0bVEE1wUpZ/aBOmwt9Z5ScYDSIQxzx3YreNzG4GjXGgJwhsoKTThd1mkrkHTzUWLlwhLq/eyE2+nU5HXZOYG2pNCV1EQlKVq/YANjn2t0qYfQfMda/q5Aaqt7dQfRNSsvXZ34ubv3NNpzGOegq1gCBcFo9it3acFOtsyHs2wlJQLuX+qvBUBF2/XYC37r2Ui3LZ0ZLHMjqvwb14EdXcen9lUtk5/IzSzO+uvylVrfo3UIrpnvm5VEPOI1sjoUBJi56fz9Uwm8K3uHhxQnkgzhZZp45marUT2B3INRaVQvpFTnc/RfhM3Yddc3dpsRkuVSCiVV4YCks0f9D8LkjUTX+SSye6Q7+1sgdBccAcz9epeET4N2+p2i2ffQl+gEe0SMbHJZ1ihWbIASjFMwcfXEmBd/XLXN2OJTdi+aMcbmr4SbK28qirnww4lfYWDVtTqrsE7WWStQajgBLRVTHToEjQ2O3zV276aTIzHvUDYcKBkLBzO0lLoiWBX9mTKfi5GAj5f3/ga7lvs5Py9IoqEZVh+mjKSrZhDFqxd4wkW/1J5ldi3HwTprExTpqWzZv7uCEeNUux5e2
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM8PR04MB7874.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(7416014)(376014)(1800799024)(261021121427099003)(261021123027099003)(261022105027099003)(261009223027099003)(921020)(261026140227099003)(261028144727099003)(11063799006)(22082099003)(18002099003)(261102123227099003)(56012099006)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(376014)(23010399003)(1800799024)(10067099003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003)(261021123027099003)(261022075727099003)(261021121427099003)(261022105027099003)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(261009223027099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NTYyZ3d0VHVPZis2VWRKZ1dDYTVhT0ViOW9USjVRbXlPWEhzZC9LTHZwMjJ3?=
- =?utf-8?B?Mnh4cGhYREFJL1ZIT0RHaWlGZTVGWkJEbUJRYlBmL2c5VGpEc3RaS0V0bkFG?=
- =?utf-8?B?WlBYQ0w3Q2NpU2ltR0F4R0lMdWViVHJXNmNQR1BDTXdPcXZVWEhSU08xTWVY?=
- =?utf-8?B?elF3a3poU2ttdUhBeCtUZENZRFVudnhYblV4dCtjMG0vNENnSFFkM21RK3Uy?=
- =?utf-8?B?dHh2dmI2azE1cVJ5SnlVTmszWWFzdzcwWXUvblB2N0FOYll1K2hpM0NLaVVN?=
- =?utf-8?B?SHFlZlRNMkEyam9ETmNCdXVsaGdpK3FGR2VncUIvVHRDYmVBaW54UjZEZ3JG?=
- =?utf-8?B?djhFU3NYN0V1QjZwY3I4VjVmT0J5NnBiSjJqRzNra25nNXNsV2Z0QlhNVnZq?=
- =?utf-8?B?M2Y4cU9PNUpSVUwwOFJ4cDUvaVRzcjJWUHBKNWVGYnFMbGNKZWV6Q2lCbEFu?=
- =?utf-8?B?cC93d09EQkNhbGRBVTNZODVYRm1EOGxZLzB2cXBDdllXZWxJczN3OFpQczhs?=
- =?utf-8?B?L0FXOUpLTWhjS0NuUU96ZXFLSEVKKys4MzZVeXNia0c1SllYVG9BRjJtS2lT?=
- =?utf-8?B?SkZKWC9RZUk4WXBMYisybFF4ZHpaRVFhWm8yQVRTQWgySEt2RlFxVGlFNXBq?=
- =?utf-8?B?d0lQYUx3dUJRTzBsajB4TUVJQ2tjOElKNnB3dDFHcDVvOTl1cmpTVWRnM2Vv?=
- =?utf-8?B?YU1mWGxvRVRYVEZGaGhqVnFnTXVyQThEdVhhNVZ6NkdCNUppSkR2U3p0QlBa?=
- =?utf-8?B?Q2ZzbW5zYXJrYS91M3VKQzlaV3FxeVRCdUhVUlU3cVB6OXYycFg5Zld6RTNO?=
- =?utf-8?B?eTBmOWt4emh4VmllS0dCOTZtMnFFYjRLS0xTbFJvQXd2UTlnem0yK0UzcVFy?=
- =?utf-8?B?LzhqbVR0YXhCS2JBWnR1TERvSndMdmY3VnJ0Mmo1ZDVoNXNmbmJqRG9jTldr?=
- =?utf-8?B?VGxtbWpzN0c1QjgwNkRHcTNuK1FTL1RWUkFDTHlSR1d0VnpmdzRCQysrc01h?=
- =?utf-8?B?cjlwTnl6enFlN1B0N245Tjl2RG1sb2VUUnQyNE1ZbHB6Yk93RVRuOWlJMWdi?=
- =?utf-8?B?MW1iOTR0Nmtjakx1SEkyQmlPMkUvSktzdzh4OVFDZ0VNQk9RUG1FT2daZ3Jw?=
- =?utf-8?B?ZFpMRmQyTWZRY2swKzVSYUFqdUdMaFkwbUFDRVFBT0xyRkptaWcvNGEzd3NG?=
- =?utf-8?B?eEdib2VrUlRNcnB4WktRUGdtRFlwelNPWlg4TFRCNTVBNlp4R1RVczBmMG43?=
- =?utf-8?B?bmdqR3YzeVpCVTNSQ1dPTTFsSG5ldGxIQTd2WEFuN1Jac2JMQkd6SUc1a3lB?=
- =?utf-8?B?Tk1kWXkwZEx1c2w3ME1DcnBQMEZFUy9WV1h5ZmRqSUdMZmxRTHo0KzlzYkhJ?=
- =?utf-8?B?SkhIMkRYTzJxZ1F2eGNLd29Vd2xQSFpKZ3REcG41cHBUaERSU1BtY1h5cTdP?=
- =?utf-8?B?OGRkemg5NVVHZmZDZ04yR0pQSThtL1ZXamp6ZVFiVHA2aHJhQXdQaGpqcHY3?=
- =?utf-8?B?dEdkK1hac2g1SkFKc0tYaVpROUxDa2Z5RlBxdkxKbVF3MFhoOVkvd3dZS3hG?=
- =?utf-8?B?Q0toOS9LY0twUGZzdnVSdm4zajIvTFhxY3JtNnVYSUdSa2FBOTFlWUdheFdm?=
- =?utf-8?B?TjRKbHFkbkhEbFh5d0RWMkg0emhHQTRvYzFROHJGNUxzQTlVbm4wQVNzZVo1?=
- =?utf-8?B?bWg3enNudjdiQXFqWDU2eGZ6cDM1V3EyRUMvUHNVYldBb3IwdHNjTjd6SHhB?=
- =?utf-8?B?YTZhbVFNRlB1RHhqK0tQajdNTDRJZU5LdDE0Q2xaREU2dnI0Q2pFY0l5ekQ1?=
- =?utf-8?B?Wm9aem1SRTJhbCtrSE1FZDVhYkpEUkJ1aEZuM2VIUEx0T29kcUpySVI5bU1O?=
- =?utf-8?B?bmFtdXNRdFE1WDNLVnB1cktobFUyUnczUHR5cG81UWwrbzFvZ2c3eXNWUVpl?=
- =?utf-8?B?aEVpdWlRTzA5dFhhc09kaHBzWDZId2FxS0xnejJtOERoM2U5M1Awb0lDd0dl?=
- =?utf-8?B?VTF3L3ExZnM0OWF4Y1c3dDJIMjJ0VzI3THVCTGlFYnVjYTFNWkh3eWxDWHJB?=
- =?utf-8?B?MTJOUitDMlBqdWQ0ZnVsSzhmUk9IRHhnWWxNb08vMW9rZWN6NlFsOVoxL1A3?=
- =?utf-8?B?cmhlOWJNRkRZSVVtWWFXdURsdlY1cXhnaXVsSUQ5K0FKd3JOcndKRXByVC9v?=
- =?utf-8?B?TXJFcyt1TFBvaVlDcFJzZjVRTkxab1dHMEdVRkZjaytQUk4vU01Ha3UrczBo?=
- =?utf-8?B?cFg1Tm9xNTJPbEVFN0FEem1QQXZtWXZTbXF5UWhuSEhLVDRuVU9vTWNVM09I?=
- =?utf-8?B?RWlhSHkxNUhESThZNWhhWGozb1dESGwwYmpGOUdidldMcktFMklZZjFZS3p1?=
- =?utf-8?Q?NtpZ/U/8dm7lOHbhzebJvzqduRro4EC1G1caR?=
+	=?us-ascii?Q?RkCsFIGwa0/Ee8s4dfo9/6jix8k0IaTd92V6SQvBrM9VLLMu6DwXPaZnVlrF?=
+ =?us-ascii?Q?rL7ToThokGPS7um4BBqkp1z5db3rORUIxV29BA6KvZOxKuxhlBIcuHdwSFi8?=
+ =?us-ascii?Q?ycvB+ApkUh9BWE+mGENfnIyl9nhsqPjgBPh0IKy4/v0cxOo/jDb99AgL4Dk6?=
+ =?us-ascii?Q?K7EnVmFhXnzzLRb7FPIbY8v4kI1ilWp0hZRs25Zek1VqJLmT0almjGMUld7o?=
+ =?us-ascii?Q?nB2NkK5zsppF1Up4YzvLIJLjEqYCHW8b+/UTcDHcMloorY4URgTWf5CpNrNs?=
+ =?us-ascii?Q?ybCVRH+9Y5NbegPir9GvgWGz3p8gteXjwGqMveJCDxZNj4RWtjCFcohGDNu/?=
+ =?us-ascii?Q?iH6Sf5gJFPN506566CL4R2uNnxBZIqRNsy1Z8w2BMMo4q7Ov9ROb3jafCJGx?=
+ =?us-ascii?Q?a019wM9djcBRIZmIm5Pjen6JxGgyhUksf4PQ3kdhLvDJDZIxWDU7V60oBJ1Z?=
+ =?us-ascii?Q?4YO7g2uQVrWBBWr7yPQN8oYf8hKP7hMTZOlhr+QEWXmCr2wzNDRqEOuPD9CW?=
+ =?us-ascii?Q?5O2icyWSh2ofer7vPQxI1h0yH0rqqFeTlsPoN4OPn3akSUWf9POV0mAJQguZ?=
+ =?us-ascii?Q?/XBbmWJYBwGN5j+q5uaJJfMCNNCYAE9QO2P/OZKXtR6GVOGIQCHYFUZWOZ2t?=
+ =?us-ascii?Q?CsoaAaqaaWL4zI0tMnZYIO5UMcZy/Q/SuZRfe8/Bn74KvW50pLWOGKRDjYqr?=
+ =?us-ascii?Q?kMsPkyytCRSE0kX5s5/M2b/0ymxsfov/djH/6dNPwI0RHDQFcw6nP6OngN22?=
+ =?us-ascii?Q?TE5jKv/q4i0GaSLfPBsD6T0znytNQXFKingFVYXCXQoU0mEcWTOHtLDiGDa8?=
+ =?us-ascii?Q?7lE5X9DfbNcI4nKA5zsAPCoWGYdXD4h8yYnPUlqbIdOOYyDKR5LITGUNDFVo?=
+ =?us-ascii?Q?wliE5+EwND5EGzSSMQ4drI8HwrxjYGhlYk0F2LSJoAq9mHrJ6HNxrMWxXawe?=
+ =?us-ascii?Q?HJ2tIPLiOtWxhOrevdTtUkjjyXiM6g92sc9+R2ndS4Uto4JrUmAl9dINUZG4?=
+ =?us-ascii?Q?ZMl7Pu2Gsbyku5ZHcGJYleSjv8ghTuxBV4hVgcsDHU9opUb7vd33S5K1UDLc?=
+ =?us-ascii?Q?RjpscC/5rTI56e0k+nBXRQ0FsnMZakfrblZgoPPKpiQFTVimP0Hh9keFVNhN?=
+ =?us-ascii?Q?O4uOz1jJpUS2Imdm/ZrP1H9PRRK1YVQy+eWi1WWneXs/dKrk6QcOIwbVK0LP?=
+ =?us-ascii?Q?jYVHPqKjAVexXINHgNgmwpi+fqxI6pQtBfyQ5B7bfDVN1NmiwzAkc+tLf0u4?=
+ =?us-ascii?Q?q890V8fJzegAIqLlVlb9wDx1R1ipsI1yvxL/oOk4zlrAEcXIxBsX5zBxJ1T+?=
+ =?us-ascii?Q?pnk7qSkKPcA3E5QMGpBSDiLX/wlIHp1qbhU14N2Jrwx4V6eEYQTAR0hbNG3O?=
+ =?us-ascii?Q?VK80rvXLqvDNS1UqfNITg4xRtZEhAG5qOjuK2eIDvaNMV8kskHQXK6bHYj8f?=
+ =?us-ascii?Q?4/61CrSYW1UeLTK030w01UlZYKskeL8YgtFmO6jNEU1gAGU/W2mR3xzgpm90?=
+ =?us-ascii?Q?i73hhmQoCJWnITkTEsJWZNAll2QYb7IxIfQDvAuUZI43Vxhm++v2n3ert9cb?=
+ =?us-ascii?Q?jnVBCcOjs19nsJ5TXyQT6ku3tGRlbTse04ypsKaPEYtSOi5fnw3MhUK2x3Fc?=
+ =?us-ascii?Q?JdMuOAcBxMYDGYAVjGzLDVbLxMcqJqOQ//gMQBQDbw223CB9Tinfbg/U5p1L?=
+ =?us-ascii?Q?D/nbimbrIaP+xB+9Iq4qtofKLsjnJl1b4HjbhO7xYAvTK9DizUFO+xepAWKF?=
+ =?us-ascii?Q?5W/9Z3rghXAnanLIaNDY+/U+O4RcCrBW/3g2b6wGjMto7Rr+W653?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3abbbebf-ab8b-4156-bafc-08df39bd39b6
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR04MB7874.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f0a5da4-1dbc-43a2-69ee-08df39bd7098
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 15:14:59.2697
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2026 15:16:31.2751
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: m6GQFpYIAQrHbjniZeoT7Ef8yqGJ4IHtoO5nBpuAyzEQApKRuyX5NfMXuuQkK4RtEhJaZHPZeM3FNpAv3+ANPPUAgDDLQhgHOTHjVV2azmNoQpKATYyeCogr0qMQWSlQ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB11023
+X-MS-Exchange-CrossTenant-UserPrincipalName: CNkTXjGCg4Jlj0XEiHrKcFAyelj9YutUFpa67EO+JXkxSXNa2sv2gvyPHRNbYIfweqd9eN7vBNG2do7kv9achOvn1iFk+C2nvF4Voa7ws7ialXjfYK5egjAG05fyw9NH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR04MB9624
 
-From: Peng Fan <peng.fan@nxp.com>
+On Tue, Nov 03, 2026 at 04:46:38PM +0800, Li Ximo wrote:
+> From: Wang Haoran <haoranwangsec@gmail.com>
+>
+> ls1x_dma_issue_pending() calls list_first_entry(&desc->lli_list, ...)
 
-Convert edma2 and edma3 from flat interrupt arrays at the parent node
-to per-channel child nodes (dma-channel@<addr>). Each child carries
-its own reg (real per-channel MMIO region) and interrupts property.
+list_first_entry()
 
-edma2 (64 channels at 0x42000000):
-  - Channel N at 0x42010000 + N * 0x8000 (size 0x8000)
-  - Paired interrupts: SPI 128-159, two channels per SPI
+> without checking whether the list is empty. list_first_entry() does not
+> return NULL for an empty list; it returns the container_of() of the list
+> head pointer, i.e. a wild pointer into the enclosing
+> struct ls1x_dma_desc/virt_dma_desc area.
 
-edma3 (64 channels at 0x42210000):
-  - Channel N at 0x42220000 + N * 0x8000 (size 0x8000)
-  - Paired interrupts: SPI 256-287, two channels per SPI
+> The bogus &lli->phys is then
+> passed to ls1x_dma_start(), which dereferences it (out-of-bounds read)
+> and programs the DMA controller with the garbage address.
+>
 
-edma1 (imx93-edma3, 31 channels with 1:1 non-paired interrupts) is
-left unchanged as it uses a different interrupt scheme.
+Cut this paragraph
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
----
- arch/arm64/boot/dts/freescale/imx95.dtsi | 774 ++++++++++++++++++++++++++-----
- 1 file changed, 646 insertions(+), 128 deletions(-)
+> Switch to list_first_entry_or_null() with a NULL check so an empty
+> lli_list can never reach the hardware programming path.
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index d20c2498b9aa2..64570703ce6cb 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -635,148 +635,666 @@ edma2: dma-controller@42000000 {
- 				compatible = "fsl,imx95-edma5";
- 				reg = <0x42000000 0x210000>;
- 				#dma-cells = <3>;
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				ranges;
- 				dma-channels = <64>;
- 				/* channels 0 and 1 reserved for V2X fast hash */
- 				dma-channel-mask = <0x3>;
--				interrupts = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 159 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 159 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_BUSWAKEUP>;
- 				clock-names = "dma";
-+
-+				dma-channel@42010000 {
-+					reg = <0x42010000 0x8000>;
-+					interrupts = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42018000 {
-+					reg = <0x42018000 0x8000>;
-+					interrupts = <GIC_SPI 128 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42020000 {
-+					reg = <0x42020000 0x8000>;
-+					interrupts = <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42028000 {
-+					reg = <0x42028000 0x8000>;
-+					interrupts = <GIC_SPI 129 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42030000 {
-+					reg = <0x42030000 0x8000>;
-+					interrupts = <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42038000 {
-+					reg = <0x42038000 0x8000>;
-+					interrupts = <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42040000 {
-+					reg = <0x42040000 0x8000>;
-+					interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42048000 {
-+					reg = <0x42048000 0x8000>;
-+					interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42050000 {
-+					reg = <0x42050000 0x8000>;
-+					interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42058000 {
-+					reg = <0x42058000 0x8000>;
-+					interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42060000 {
-+					reg = <0x42060000 0x8000>;
-+					interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42068000 {
-+					reg = <0x42068000 0x8000>;
-+					interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42070000 {
-+					reg = <0x42070000 0x8000>;
-+					interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42078000 {
-+					reg = <0x42078000 0x8000>;
-+					interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42080000 {
-+					reg = <0x42080000 0x8000>;
-+					interrupts = <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42088000 {
-+					reg = <0x42088000 0x8000>;
-+					interrupts = <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42090000 {
-+					reg = <0x42090000 0x8000>;
-+					interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42098000 {
-+					reg = <0x42098000 0x8000>;
-+					interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420a0000 {
-+					reg = <0x420a0000 0x8000>;
-+					interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420a8000 {
-+					reg = <0x420a8000 0x8000>;
-+					interrupts = <GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420b0000 {
-+					reg = <0x420b0000 0x8000>;
-+					interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420b8000 {
-+					reg = <0x420b8000 0x8000>;
-+					interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420c0000 {
-+					reg = <0x420c0000 0x8000>;
-+					interrupts = <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420c8000 {
-+					reg = <0x420c8000 0x8000>;
-+					interrupts = <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420d0000 {
-+					reg = <0x420d0000 0x8000>;
-+					interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420d8000 {
-+					reg = <0x420d8000 0x8000>;
-+					interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420e0000 {
-+					reg = <0x420e0000 0x8000>;
-+					interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420e8000 {
-+					reg = <0x420e8000 0x8000>;
-+					interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420f0000 {
-+					reg = <0x420f0000 0x8000>;
-+					interrupts = <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@420f8000 {
-+					reg = <0x420f8000 0x8000>;
-+					interrupts = <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42100000 {
-+					reg = <0x42100000 0x8000>;
-+					interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42108000 {
-+					reg = <0x42108000 0x8000>;
-+					interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42110000 {
-+					reg = <0x42110000 0x8000>;
-+					interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42118000 {
-+					reg = <0x42118000 0x8000>;
-+					interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42120000 {
-+					reg = <0x42120000 0x8000>;
-+					interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42128000 {
-+					reg = <0x42128000 0x8000>;
-+					interrupts = <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42130000 {
-+					reg = <0x42130000 0x8000>;
-+					interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42138000 {
-+					reg = <0x42138000 0x8000>;
-+					interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42140000 {
-+					reg = <0x42140000 0x8000>;
-+					interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42148000 {
-+					reg = <0x42148000 0x8000>;
-+					interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42150000 {
-+					reg = <0x42150000 0x8000>;
-+					interrupts = <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42158000 {
-+					reg = <0x42158000 0x8000>;
-+					interrupts = <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42160000 {
-+					reg = <0x42160000 0x8000>;
-+					interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42168000 {
-+					reg = <0x42168000 0x8000>;
-+					interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42170000 {
-+					reg = <0x42170000 0x8000>;
-+					interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42178000 {
-+					reg = <0x42178000 0x8000>;
-+					interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42180000 {
-+					reg = <0x42180000 0x8000>;
-+					interrupts = <GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42188000 {
-+					reg = <0x42188000 0x8000>;
-+					interrupts = <GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42190000 {
-+					reg = <0x42190000 0x8000>;
-+					interrupts = <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42198000 {
-+					reg = <0x42198000 0x8000>;
-+					interrupts = <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421a0000 {
-+					reg = <0x421a0000 0x8000>;
-+					interrupts = <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421a8000 {
-+					reg = <0x421a8000 0x8000>;
-+					interrupts = <GIC_SPI 153 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421b0000 {
-+					reg = <0x421b0000 0x8000>;
-+					interrupts = <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421b8000 {
-+					reg = <0x421b8000 0x8000>;
-+					interrupts = <GIC_SPI 154 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421c0000 {
-+					reg = <0x421c0000 0x8000>;
-+					interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421c8000 {
-+					reg = <0x421c8000 0x8000>;
-+					interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421d0000 {
-+					reg = <0x421d0000 0x8000>;
-+					interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421d8000 {
-+					reg = <0x421d8000 0x8000>;
-+					interrupts = <GIC_SPI 156 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421e0000 {
-+					reg = <0x421e0000 0x8000>;
-+					interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421e8000 {
-+					reg = <0x421e8000 0x8000>;
-+					interrupts = <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421f0000 {
-+					reg = <0x421f0000 0x8000>;
-+					interrupts = <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@421f8000 {
-+					reg = <0x421f8000 0x8000>;
-+					interrupts = <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42200000 {
-+					reg = <0x42200000 0x8000>;
-+					interrupts = <GIC_SPI 159 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42208000 {
-+					reg = <0x42208000 0x8000>;
-+					interrupts = <GIC_SPI 159 IRQ_TYPE_LEVEL_HIGH>;
-+				};
- 			};
- 
- 			edma3: dma-controller@42210000 {
- 				compatible = "fsl,imx95-edma5";
- 				reg = <0x42210000 0x210000>;
- 				#dma-cells = <3>;
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				ranges;
- 				dma-channels = <64>;
--				interrupts = <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 257 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 257 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 258 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 258 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 269 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 269 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 271 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 271 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 273 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 273 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 285 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 285 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 286 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 286 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>,
--					     <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&scmi_clk IMX95_CLK_BUSWAKEUP>;
- 				clock-names = "dma";
-+
-+				dma-channel@42220000 {
-+					reg = <0x42220000 0x8000>;
-+					interrupts = <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42228000 {
-+					reg = <0x42228000 0x8000>;
-+					interrupts = <GIC_SPI 256 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42230000 {
-+					reg = <0x42230000 0x8000>;
-+					interrupts = <GIC_SPI 257 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42238000 {
-+					reg = <0x42238000 0x8000>;
-+					interrupts = <GIC_SPI 257 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42240000 {
-+					reg = <0x42240000 0x8000>;
-+					interrupts = <GIC_SPI 258 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42248000 {
-+					reg = <0x42248000 0x8000>;
-+					interrupts = <GIC_SPI 258 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42250000 {
-+					reg = <0x42250000 0x8000>;
-+					interrupts = <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42258000 {
-+					reg = <0x42258000 0x8000>;
-+					interrupts = <GIC_SPI 259 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42260000 {
-+					reg = <0x42260000 0x8000>;
-+					interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42268000 {
-+					reg = <0x42268000 0x8000>;
-+					interrupts = <GIC_SPI 260 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42270000 {
-+					reg = <0x42270000 0x8000>;
-+					interrupts = <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42278000 {
-+					reg = <0x42278000 0x8000>;
-+					interrupts = <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42280000 {
-+					reg = <0x42280000 0x8000>;
-+					interrupts = <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42288000 {
-+					reg = <0x42288000 0x8000>;
-+					interrupts = <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42290000 {
-+					reg = <0x42290000 0x8000>;
-+					interrupts = <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42298000 {
-+					reg = <0x42298000 0x8000>;
-+					interrupts = <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422a0000 {
-+					reg = <0x422a0000 0x8000>;
-+					interrupts = <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422a8000 {
-+					reg = <0x422a8000 0x8000>;
-+					interrupts = <GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422b0000 {
-+					reg = <0x422b0000 0x8000>;
-+					interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422b8000 {
-+					reg = <0x422b8000 0x8000>;
-+					interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422c0000 {
-+					reg = <0x422c0000 0x8000>;
-+					interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422c8000 {
-+					reg = <0x422c8000 0x8000>;
-+					interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422d0000 {
-+					reg = <0x422d0000 0x8000>;
-+					interrupts = <GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422d8000 {
-+					reg = <0x422d8000 0x8000>;
-+					interrupts = <GIC_SPI 267 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422e0000 {
-+					reg = <0x422e0000 0x8000>;
-+					interrupts = <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422e8000 {
-+					reg = <0x422e8000 0x8000>;
-+					interrupts = <GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422f0000 {
-+					reg = <0x422f0000 0x8000>;
-+					interrupts = <GIC_SPI 269 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@422f8000 {
-+					reg = <0x422f8000 0x8000>;
-+					interrupts = <GIC_SPI 269 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42300000 {
-+					reg = <0x42300000 0x8000>;
-+					interrupts = <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42308000 {
-+					reg = <0x42308000 0x8000>;
-+					interrupts = <GIC_SPI 270 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42310000 {
-+					reg = <0x42310000 0x8000>;
-+					interrupts = <GIC_SPI 271 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42318000 {
-+					reg = <0x42318000 0x8000>;
-+					interrupts = <GIC_SPI 271 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42320000 {
-+					reg = <0x42320000 0x8000>;
-+					interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42328000 {
-+					reg = <0x42328000 0x8000>;
-+					interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42330000 {
-+					reg = <0x42330000 0x8000>;
-+					interrupts = <GIC_SPI 273 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42338000 {
-+					reg = <0x42338000 0x8000>;
-+					interrupts = <GIC_SPI 273 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42340000 {
-+					reg = <0x42340000 0x8000>;
-+					interrupts = <GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42348000 {
-+					reg = <0x42348000 0x8000>;
-+					interrupts = <GIC_SPI 274 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42350000 {
-+					reg = <0x42350000 0x8000>;
-+					interrupts = <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42358000 {
-+					reg = <0x42358000 0x8000>;
-+					interrupts = <GIC_SPI 275 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42360000 {
-+					reg = <0x42360000 0x8000>;
-+					interrupts = <GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42368000 {
-+					reg = <0x42368000 0x8000>;
-+					interrupts = <GIC_SPI 276 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42370000 {
-+					reg = <0x42370000 0x8000>;
-+					interrupts = <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42378000 {
-+					reg = <0x42378000 0x8000>;
-+					interrupts = <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42380000 {
-+					reg = <0x42380000 0x8000>;
-+					interrupts = <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42388000 {
-+					reg = <0x42388000 0x8000>;
-+					interrupts = <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42390000 {
-+					reg = <0x42390000 0x8000>;
-+					interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42398000 {
-+					reg = <0x42398000 0x8000>;
-+					interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423a0000 {
-+					reg = <0x423a0000 0x8000>;
-+					interrupts = <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423a8000 {
-+					reg = <0x423a8000 0x8000>;
-+					interrupts = <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423b0000 {
-+					reg = <0x423b0000 0x8000>;
-+					interrupts = <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423b8000 {
-+					reg = <0x423b8000 0x8000>;
-+					interrupts = <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423c0000 {
-+					reg = <0x423c0000 0x8000>;
-+					interrupts = <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423c8000 {
-+					reg = <0x423c8000 0x8000>;
-+					interrupts = <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423d0000 {
-+					reg = <0x423d0000 0x8000>;
-+					interrupts = <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423d8000 {
-+					reg = <0x423d8000 0x8000>;
-+					interrupts = <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423e0000 {
-+					reg = <0x423e0000 0x8000>;
-+					interrupts = <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423e8000 {
-+					reg = <0x423e8000 0x8000>;
-+					interrupts = <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423f0000 {
-+					reg = <0x423f0000 0x8000>;
-+					interrupts = <GIC_SPI 285 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@423f8000 {
-+					reg = <0x423f8000 0x8000>;
-+					interrupts = <GIC_SPI 285 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42400000 {
-+					reg = <0x42400000 0x8000>;
-+					interrupts = <GIC_SPI 286 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42408000 {
-+					reg = <0x42408000 0x8000>;
-+					interrupts = <GIC_SPI 286 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42410000 {
-+					reg = <0x42410000 0x8000>;
-+					interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-+				};
-+
-+				dma-channel@42418000 {
-+					reg = <0x42418000 0x8000>;
-+					interrupts = <GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>;
-+				};
- 			};
- 
- 			mu7: mailbox@42430000 {
+> The companion
+> patch rejects the known producer of such descriptors (sg_len == 0 in
+> ls1x_dma_prep_slave_sg()); this guard covers any remaining path.
 
--- 
-2.34.1
+Cut this paragraph.
 
+This common issue about list_first_entry(). Keep commit message simple
+and leave important informaiton.
+
+Frank
+
+>
+> This issue was found by static analysis.
+>
+> Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+> Reported-by: Li Ximo <lixicaicai@gmail.com>
+> Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+> ---
+> v1: https://lore.kernel.org/r/20261026115113.3359939-1-lixicaicai@gmail.com
+> v2: split the two independent fixes into separate patches as requested
+> by Frank Li; no code change.
+>
+>  drivers/dma/loongson/loongson1-apb-dma.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+> index 89786cbd2..e7eb40584 100644
+> --- a/drivers/dma/loongson/loongson1-apb-dma.c
+> +++ b/drivers/dma/loongson/loongson1-apb-dma.c
+> @@ -478,8 +481,11 @@ static void ls1x_dma_issue_pending(struct dma_chan *dchan)
+>  			struct ls1x_dma_desc *desc = to_ls1x_dma_desc(vd);
+>  			struct ls1x_dma_lli *lli;
+>
+> -			lli = list_first_entry(&desc->lli_list,
+> -					       struct ls1x_dma_lli, node);
+> +			lli = list_first_entry_or_null(&desc->lli_list,
+> +						       struct ls1x_dma_lli, node);
+> +			if (!lli)
+> +				return;
+> +
+>  			ls1x_dma_start(chan, &lli->phys);
+>  		}
+>  	}
+> --
+> 2.30.2
