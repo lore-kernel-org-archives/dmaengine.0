@@ -1,57 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793722424;
-	b=qn5Csju8Ok8fcIsuj4oETYgIbdpyGBlJHTAkSjm28CpHepX8uaeP7g6ltDEC3K+dAlrI
-	 AUjQZiqnQ4aUJADgdJNbP9YWYq4kCk/dXBP1Urgqx3kNdhqiQGZmdJAekQuXILEBp8f1S
-	 afMFf9IQ5DlthYjU7zUkVHTynaToPGxLpWsQG8tiGEEBSMQhOlYwcnfAFXBIp+0LVIc30
-	 d+N+PFv5PGoNPwosmHIi5fDvpfhyjFQnuR+sCoJ2EQNYRkiEif6uvXeUGfVXL8Rov+bap
-	 +hOA/wyi3OjQi92YnSnKBe2pZgdfTO1jNV6eZOeNNoPh2D/ENzB83LgyE+ARdd2ZaRQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793722424;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=x/FH5otqYEf36A9OIs9LxoVkpQV/mW7gemnZEwlcnCo=;
-	b=s2KukjV5uns7O/PnIF0X0bGZdUKczQAYpCyG6fXDRXNKFIDMVgNMQlzKo22w1RxZOLFw
-	 cot3Kqvk7j3uHsrzxtYF28xOpAl3+sJmNGY4Y7SwE/IhtGHfY9g9D8C4PiAu40RbjCW0F
-	 fl+WvWRwycA1UyKGATj7MqyW8Kd8ku3tkXKl0LJ1OzSxDQEwBaKvBsg27BT2dhTpfMe0V
-	 4bQ9TaSgwjOB9JzohTtG1E7XeBAXF84oHjXImN41Hx2nKG8n2H2X/SZ6EHHYTySbXqU0Q
-	 AEERsQa12q5CvtICFO1IzDTdEna4k+gBW04AnfpYRiAM9tKkbfEsUBMca8rXmexSHDw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZzXFqdbx;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793724551;
+	b=WAKu/Ro+feLAzbOHli5lT3TwUBtYqYcvfL4sZfXU7fAMuUCwk8WuyQXubffXcxkt/dz7
+	 sav5b7lOPeapQkppX0/hy9lMRNiFGn5bXnvXq54u/KycnbwFUgE4q36F5PB/6x7SMyK6M
+	 oa9TaxnEXFBgIJqIxQ3i3mr/CQpX+DYbXK+sL9Pv8vbN/rmPJgwn1byvxS3BhdCVLTfiO
+	 u9C/7weVJJoMKUPpMxbm/03Cd7qjbyksKlmF5ridTlGvk1IPqzxcrqZ+Eh/G6UcKXdRS3
+	 yz0sy8w3xr//SwWH2H/7ODUXkwlLRMZ1JKZSEkQupU3YyNvKBl9QpaofU6bpCalfuLQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793724551;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=Sza56W2M4G9zJCLvoybSSjbXkV1CKuYe/xyw4UQY9AE=;
+	b=zlZHjZ1ofF/2neQhaJrIKbSrLi69AniVnfaQYuD51ARKHTu7XtmIA5aDRDb/NhPUhtmA
+	 bbqpdU7zkre5if/d3v2+DzJ7FD9Ld5/+4wsg6E6XEeSWtbTZmGt5/SGRxvkoDtjYLpaqL
+	 FsOWP8XXN6cDeuBadp/C2m2231XLVTx55Ql3RxGSNkQHHZhttx1GrNKSNu/EG5SGWTqDi
+	 Y0xpDGWvLE/cUMgVLpj+2SIJpUKBC9e3eVVoDFsmJD+QQOgrDLn0YqShLieJFhVMltW7v
+	 bbaOIps8VcofLaz7Xmej1HJHkUasvOu5Tyb/u4AyDEGOmlH0MoYOxKsqLUZlcOBej/A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=raspberrypi.com;
+	spf=pass smtp.mailfrom=raspberrypi.com;
+	dkim=pass header.d=raspberrypi.com header.i=@raspberrypi.com header.a=rsa-sha256 header.s=google header.b=k7gshdYH;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.161.44
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9379D606EE9F
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 16:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFCB606A326
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 16:49:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AFCB606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=raspberrypi.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raspberrypi.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZzXFqdbx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4121F00A15;
-	Tue,  3 Nov 2026 16:13:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793722424;
-	bh=x/FH5otqYEf36A9OIs9LxoVkpQV/mW7gemnZEwlcnCo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZzXFqdbxpD1TFs0x76YOPs3yuQCGSSzVf+OzQkcJd0bQRBa4etBMAw+9e6HHL8pD/
-	 RcVfuFmmDhN/Wn4cZ9G5EcZ+r6HnAH2NygRr+/Z9YpuhpUU8SUF53m84QRdNJSwpmc
-	 xL0H/m6fPn/LlaYYMdipHsQtLsG1wMalVsiFK5e2DPBtlwue4+ME5KhRabn8VwmrNA
-	 vwtcDkbF3aE8BeS9LPfdbIGdE3WSmvetWehRZ2qxAL8oal1MOPknuoHeIF8NPToAxk
-	 ujDNpXDv7vepPYXCAtIwIyl9tT5hzezmv61krmvGBeRmPrP1+pqeEyupsjSMAtvv4o
-	 NfeMksuU2irig==
-Message-ID: <sashiko-outbox-195706@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6/6] dmaengine: plx_dma: don't invoke client callbacks
- with ring_lock held
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>, dmaengine@vger.kernel.org
-Cc: vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261103155202.461725-7-logang@deltatee.com>
-References: <20261103155202.461725-1-logang@deltatee.com>
- <20261103155202.461725-7-logang@deltatee.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 03 Nov 2026 16:13:43 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=raspberrypi.com header.i=@raspberrypi.com header.a=rsa-sha256 header.s=google header.b=k7gshdYH
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-6df7f544919so2957733eaf.1
+        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 08:49:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793724549; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mrc9970k0iesQZzxQLLo0B2beKZGRWKOEsFrYxlyMwck/l6BQ5kKkWNwBwNDqpJgir
+         wXI2qwe3XLwMvsMXl2CkCXv24bMy0+u8EE0Htqlm2YB5e0P3G1mlp5MqBTlA3Af4/l4J
+         Eq2Jx3yuktJOdYt4GoDcGc/YaMLm0YkVb3/I/lnUVI1eym+clBMeonvPpLSZdZQKi7//
+         VjQDsSL1zdhpncUjJ71A2KthS/goa91shMEBJcC6OJTOvPpQjztc/Mjkpkv79vBWcMc9
+         VcAdM0/rSWmL4rblwUmQkmy8Ug8ruMWFRsZZmLjcGajxEJzxPno9GPSDaefXdYVUV7IE
+         LzNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=Sza56W2M4G9zJCLvoybSSjbXkV1CKuYe/xyw4UQY9AE=;
+        fh=LCh+tS1U4KVo6P3G1z1fMGEhJ5t8D4MHF5A0oD2bdLw=;
+        b=rv/4HmhZw5Tj5UZtIOG9iqrdX864p6SKhUXFDUDsVjbYB22xZpdq5ud/63QCRSk/bk
+         1tX0aX+/hdkRbyJK4giMlC0vz6/KbT03MJigIBEgCNMQtruFKBP/CakG5rHtNMUq4eHC
+         4La+9MJlejrKrIPEOUw52cspgkd7Xox7I4C7pg6zgx0m8nfPM2DeMkllxIQ4DHObnHAE
+         KndvlmvRqJUyQaprSnBDdFJmf5f5eGP07FeYynSB7Pk1cQ36wZtemI7XNE96bxXOp+Be
+         DHUeVylHqY8vIZzyh3OogyykE1cLFdGiF7546Lo8kqJdbq6Agrsu0OOnIPK3cF+tIxWL
+         PYYw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=raspberrypi.com; s=google; t=1793724549; x=1794329349; darn=vger.kernel.org;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Sza56W2M4G9zJCLvoybSSjbXkV1CKuYe/xyw4UQY9AE=;
+        b=k7gshdYHRpP53Q7yeUy/RmrSI399/OaEJ5JN3Z30FYBxMlDUTN0TzBgKJ0pQM2quGx
+         1dTOArEXd95tQ6sQA8kOE/pWv2HFyTPcRMPpN6ghfaRcAZL8+7n9mThGi5g3gXK5HNub
+         gHk0d/Hixn+fFnFpJEEYM9l5EWUeI4cw0l++x+RESBVSIfxuLJfj5FNl3YPjRdcdTt4+
+         +RJP58CeAAnn/+PprgIHVGkedMLUxnmwMjAXLjTjlqzjbZTLUA8//jMGSv5VvUmUPOLs
+         pgUTHs8aZ9D6rxKc+Zxe/QD/HeOQzXGK/lLXtb829YCh49Sfql+BxoI3MrTvC/x/W7GX
+         CKiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793724549; x=1794329349;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Sza56W2M4G9zJCLvoybSSjbXkV1CKuYe/xyw4UQY9AE=;
+        b=0ehZ5cjs7bxEK0f90NwpRoPnlKjM59ZRCm34a6XQBJgTsy8uZI5DzLXzuEV56fYCWz
+         eOEKhi49MtCbjQsNKPnFuIi26gOER62HtQbEhVDWyo39xV65mA68xbNH8EuEQOgWKd+f
+         EwRJ4wBhPNGdGBcfsieAU7XQo6gnIJQUzLcnpgs2SmC84ybXqQIDF9MVNM4KO822u2h7
+         orQG8QThcEEpYFMmUO+CYiyM/cD8XZxrnuixQLV0C4AtGb+CqP/Mw5MWGBPOjOePH4tj
+         0LcYgsjD0BVLz849T+YGB1+yNpcu/BHKyTaXnHWKFKgV0KmCobiBjhwX/22QBs1NXY2K
+         vJJA==
+X-Forwarded-Encrypted: i=1; AKwUvBy9ZZmKA53CymnsKvYoGF4GIko9F+XAEEO6ePuUgmRQBUf+qrSiU3gZJb75/gAx/Gil/xVVB3uIfnI=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9zd44JrwYH7xvNRVxpP1+xc4xtXO0mABjFe+y7xixnEEOMkV5+
+	GvOrpcyum3YVAiYs8DGwV67KwRYMiIocHj4BHbhJmtgnDuY+Wltz+M/U7WEdsgzBGP3R4IgLwwn
+	3XAMp82qLhT/1lfnTMHXNc5ESJQAfCwFOfs786H7cKw==
+X-Gm-Gg: AYBFou3uWlXb6IkXbXHoBb7a6/Xi8/mw2zNx5kQ0uK0mxaLYAo82yoeDM1knheZArzJ
+	jz4BSz/nF4aoetB7gTXB/klmE02v4nEKQK47PnGyyuPDCfc9TW/p73x7UtjHnlnJi9qIHtXHlsU
+	mTATki9d+eyd+4Kps4JIzSnpZr75PN1bGZelQi6hi6C3OS6sO5AMDnRNDHB5+qNtt1vtj3Ur9P4
+	HymrwwN7OUui/FeWK6Dyue5QUgLVzCtHCncG4DQrT8awXvU9Oo5aeMVIT1JIp3GEQY/9RQi/XFg
+	lzkifSevgfRS1rL8P7XcwoWn9yuCn6FX6Ea9UL4X+Ndp+nD9wXMxGbiBqa+qAEBh0DXshApuhvG
+	UEtwkOKfrwhBHuG3o93BjQoYpu1JMEs0dWcZ50NHMfk18OFrFM0Pr/LHqWReZwBoHwA60ZKwCRT
+	sIoKLXGHWabV0UGYt7lOjZP9hWAylCVwd0mqYsyx0B0jhVm4uay0/S
+X-Received: by 2002:a05:6820:1794:b0:714:b145:a2fe with SMTP id
+ 006d021491bc7-714f2421901mr8082390eaf.12.1793724549410; Tue, 03 Nov 2026
+ 08:49:09 -0800 (PST)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,160 +103,64 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+References: <20261102090713.896324-1-pbrobinson@gmail.com>
+In-Reply-To: <20261102090713.896324-1-pbrobinson@gmail.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Date: Tue, 3 Nov 2026 16:48:52 +0000
+X-Gm-Features: AclHuK9TxGbcB0r3JV185lrcPtsBTW6TG2IE6iERGadxyS8js5NnWPr-6g7jlJY
+Message-ID: <CAPY8ntCZgp4_aaYim__XrmfL=gW-e1dnu2CjBG3n-VzbghYgNQ@mail.gmail.com>
+Subject: Re: [PATCH 0/9] dma: Add BCM2711 and BCM2712 support to bcm2835-dma
+To: Peter Robinson <pbrobinson@gmail.com>
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	bcm-kernel-feedback-list@broadcom.com, Phil Elwell <phil@raspberrypi.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] dmaengine: plx_dma: premature teardown in plx_dma_free_chan_resour=
-ces()
-- [Medium] dmaengine: plx_dma: race in plx_dma_process_desc() when dropping=
- ring_lock
---
+Hi Peter
 
-commit 3bb7031cbf95b71426caf9709207e0ede88301d6
-Author: Logan Gunthorpe <logang@deltatee.com>
+On Mon, 2 Nov 2026 at 09:07, Peter Robinson <pbrobinson@gmail.com> wrote:
+>
+> The upstream bcm2835-dma driver only handles the older BCM2835 SoCs
+> up to the Raspberry Pi 3. The later BCM2711/BCM2712 add extra channels
+> that support 40-bit DMA4 channels so add support so this works upstream.
+>
+> The first patch updates the bindings, them patches 2-5 do some
+> refactoring and add the support for the newer SoCs.
+>
+> Finally patches 6 and 7 add the nodes to the base device tree and
+> patches 8 and 9 enable it and configure HDMI audio to use them as
+> per the down stream device trees.
+>
+> The series was assisted considerably by Claude Opus 5.5 based on the
+> various downstream Raspberry Pi patches and tested on a number of
+> RPi5B revC/D, RPi4B and a RPi3B+ all running Fedora 45. Checkpatch
+> and dtbs_check pass clean.
 
-dmaengine: plx_dma: don't invoke client callbacks with ring_lock held
+cc Phil Elwell as he knows far more about DMA on the Pi than I do.
 
-This commit updates plx_dma_process_desc() and plx_dma_abort_desc() to copy
-and clear descriptor completion callbacks, advance plxdev->tail, and drop
-plxdev->ring_lock before invoking the callback to avoid a deadlock when a
-callback prepares a new transfer.
-
-Link: https://lore.kernel.org/dmaengine/20260717223217.B6FBF1F000E9@smtp.ke=
-rnel.org
-
-> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-> index 8c4b19d681ad5..17745f7a5658d 100644
-> --- a/drivers/dma/plx_dma.c
-> +++ b/drivers/dma/plx_dma.c
-> @@ -134,6 +134,7 @@ static struct plx_dma_desc *plx_dma_get_desc(struct p=
-lx_dma_dev *plxdev, int i)
-> =20
->  static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
->  {
-> +	struct dmaengine_desc_callback cb;
->  	struct dmaengine_result res;
->  	struct plx_dma_desc *desc;
->  	u32 flags;
-> @@ -165,11 +166,14 @@ static void plx_dma_process_desc(struct plx_dma_dev=
- *plxdev)
-> =20
->  		dma_cookie_complete(&desc->txd);
->  		dma_descriptor_unmap(&desc->txd);
-> -		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
-> +		dmaengine_desc_get_callback(&desc->txd, &cb);
->  		desc->txd.callback =3D NULL;
->  		desc->txd.callback_result =3D NULL;
-> -
->  		plxdev->tail++;
-> +
-> +		spin_unlock_bh(&plxdev->ring_lock);
-> +		dmaengine_desc_callback_invoke(&cb, &res);
-> +		spin_lock_bh(&plxdev->ring_lock);
-
-[Severity: Medium]
-Can dropping plxdev->ring_lock here after calling dma_cookie_complete() and
-incrementing plxdev->tail cause descriptor callbacks to run out of order or
-concurrently?
-
-plx_dma_process_desc() is called both from the tasklet plx_dma_desc_task()
-and from plx_dma_tx_status():
-
-drivers/dma/plx_dma.c:plx_dma_tx_status() {
-	ret =3D dma_cookie_status(chan, cookie, txstate);
-	if (ret =3D=3D DMA_COMPLETE)
-		return ret;
-
-	plx_dma_process_desc(plxdev);
-
-	return dma_cookie_status(chan, cookie, txstate);
-}
-
-When plx_dma_tx_status() calls plx_dma_process_desc() in process context and
-an interrupt schedules plxdev->desc_task while bottom halves are disabled
-under spin_lock_bh(), calling spin_unlock_bh(&plxdev->ring_lock) re-enables
-bottom halves and can immediately run plx_dma_desc_task() ->
-plx_dma_process_desc() on the same CPU before dmaengine_desc_callback_invok=
-e()
-is called for the first descriptor. Because plxdev->tail was already
-incremented, the tasklet will process subsequent descriptors and invoke
-their callbacks ahead of the earlier descriptor's callback.
-
-Similarly, on SMP, while one caller has dropped plxdev->ring_lock to execute
-dmaengine_desc_callback_invoke(), a concurrent caller of plx_dma_tx_status()
-on another CPU can enter plx_dma_process_desc(), observe the updated
-plxdev->tail, and invoke subsequent callbacks concurrently, or observe
-DMA_COMPLETE from dma_cookie_status() while the descriptor's callback is
-still running.
-
->  	}
-> =20
->  	spin_unlock_bh(&plxdev->ring_lock);
-> @@ -177,6 +181,7 @@ static void plx_dma_process_desc(struct plx_dma_dev *=
-plxdev)
-> =20
->  static void plx_dma_abort_desc(struct plx_dma_dev *plxdev)
->  {
-> +	struct dmaengine_desc_callback cb;
->  	struct dmaengine_result res;
->  	struct plx_dma_desc *desc;
-> =20
-> @@ -192,11 +197,14 @@ static void plx_dma_abort_desc(struct plx_dma_dev *=
-plxdev)
-> =20
->  		dma_cookie_complete(&desc->txd);
->  		dma_descriptor_unmap(&desc->txd);
-> -		dmaengine_desc_get_callback_invoke(&desc->txd, &res);
-> +		dmaengine_desc_get_callback(&desc->txd, &cb);
->  		desc->txd.callback =3D NULL;
->  		desc->txd.callback_result =3D NULL;
-> -
->  		plxdev->tail++;
-> +
-> +		spin_unlock_bh(&plxdev->ring_lock);
-> +		dmaengine_desc_callback_invoke(&cb, &res);
-> +		spin_lock_bh(&plxdev->ring_lock);
-
-[Severity: High]
-Does releasing plxdev->ring_lock after advancing plxdev->tail in
-plx_dma_process_desc() and plx_dma_abort_desc() allow
-plx_dma_free_chan_resources() to finish tearing down the channel while a
-callback is still executing on another CPU?
-
-Previously, holding plxdev->ring_lock across the entire loop ensured that
-plx_dma_abort_desc() in plx_dma_free_chan_resources() would wait until any
-concurrent plx_dma_process_desc() or plx_dma_abort_desc() call finished
-invoking all callbacks.
-
-With plxdev->ring_lock dropped around dmaengine_desc_callback_invoke(), if
-CPU0 is in plx_dma_remove() -> plx_dma_abort_desc() or plx_dma_tx_status() =
-->
-plx_dma_process_desc() and advances plxdev->tail to plxdev->head before
-dropping plxdev->ring_lock, CPU1 can run dma_release_channel() ->
-plx_dma_free_chan_resources():
-
-drivers/dma/plx_dma.c:plx_dma_free_chan_resources() {
-	...
-	tasklet_kill(&plxdev->desc_task);
-
-	plx_dma_abort_desc(plxdev);
-
-	plx_dma_free_desc(plxdev);
-	dma_free_coherent(plxdev->dma_dev.dev, ring_sz, plxdev->hw_ring,
-			  plxdev->hw_ring_dma);
-}
-
-Because tasklet_kill() only waits for plxdev->desc_task, plx_dma_abort_desc=
-()
-on CPU1 can acquire plxdev->ring_lock, see plxdev->tail =3D=3D plxdev->head=
-, and
-return immediately while CPU0 is still inside dmaengine_desc_callback_invok=
-e().
-plx_dma_free_chan_resources() and dma_release_channel() will then return and
-allow the client (such as ntb_transport_free_queue() or ntb_perf) to free t=
-he
-callback parameter data while the callback is still using it on CPU0.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103155202.4617=
-25-1-logang@deltatee.com?part=3D6
+> Peter Robinson (9):
+>   dt-bindings: dma: brcm,bcm2835-dma: Add BCM2711 and BCM2712
+>   dmaengine: bcm2835: Refactor control block handling
+>   dmaengine: bcm2835: Support controllers split across several nodes
+>   dmaengine: bcm2835: Add BCM2711 40-bit channel support
+>   dmaengine: bcm2835: Add BCM2712 support
+>   ARM: dts: bcm2711: Add 40-bit DMA controller
+>   ARM: dts: bcm2711-rpi: Use 40-bit DMA for HDMI audio
+>   arm64: dts: broadcom: bcm2712: Add DMA controllers
+>   arm64: dts: broadcom: bcm2712-rpi-5-b: Enable HDMI audio
+>
+>  .../bindings/dma/brcm,bcm2835-dma.yaml        |  31 +-
+>  arch/arm/boot/dts/broadcom/bcm2711-rpi.dtsi   |   8 +
+>  arch/arm/boot/dts/broadcom/bcm2711.dtsi       |  16 +
+>  .../boot/dts/broadcom/bcm2712-d-rpi-5-b.dts   |   8 +
+>  .../dts/broadcom/bcm2712-rpi-5-b-base.dtsi    |  10 +
+>  arch/arm64/boot/dts/broadcom/bcm2712.dtsi     |  40 ++
+>  drivers/dma/bcm2835-dma.c                     | 496 +++++++++++++++---
+>  7 files changed, 534 insertions(+), 75 deletions(-)
+>
+> --
+> 2.56.0
+>
