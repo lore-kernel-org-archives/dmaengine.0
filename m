@@ -1,56 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793695338;
-	b=pz+kFG1NjBrA0MuG/UKj+rNG7al+w99XewDEh910ot261R9LewNmvkH+6DEkYI6ioayj
-	 tbNiGZ5X1TefDi5gLkFrpyaK9hQD8gqsmmQzrwHLdtPY6AEsiAoozBTTsvAW9BHE8Zh0y
-	 tYdaoMLLUDMyHEqsU0CZ5Qn5sc9TG/JndiNW9dfvK+fCr30PqWLQhjRJApCSC12jC9KQd
-	 uQA+ZxqEzglCMwhdMTq6GoaYxo0kYZwALqOFadZwbaqlcYHhTCqX1yzH0Pkh4G0XFFQYC
-	 k6GJNxJdXplD1qFpumCvXwJirDDU1HRdQ4osDFOah8M4PmNhLEu2JoLhQRQM8k1uaOw==
+	t=1793695608;
+	b=Mx4LxaMo1RaokWs13W7a58QklIj1k/4ksdyr8IQKWK4HYCZiOOUcP/F6a6oxxjJaaG4T
+	 F2ut63Wz+uFAz+YNtOoFq97wuxHEVnBx1yxjJIWzHmWku39wng4DTgbydtTLu2gNjIR72
+	 C3AncKxVQWY/ZoX3SnBk6hgeGJHdE1SBKWKwyi7ArHk7ubW9U/brJ+KaKWPDKRKxeykoj
+	 vD1V+97I+5HLscJouvxMyn5VtlFlD7xFydPba4cKyEaE1mFbye7KR3kQFCtOpQZ0Eu3a7
+	 DzBTqVcJCg+nrj0lTG9DmvUXtQXKfdtWYQGgWkj9hthu9SsPFyznmiCSVm3n6GjwR9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793695338;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=9gwEicJ/Ymf8YSJ4s2rZykKLEiOvo8BrmlnfIqbq3o8=;
-	b=mTZnZGtKJsBMlJF33cchi9c021QDQrVGrwfvqxlltX2vOaAQGBNqXgIMTwzrfcvojYwO
-	 By1tqLk46gIawA2jRrGEAChQTnllL3bV66bmRrHXD5CDGnkHEIBNqyJ3QAHY9UkPgrX8H
-	 PrZP1Z+QWnvNm78kwjH4dfjCB+PDLYdhvBfnuXrLEwyJEP2WROVDJmZfIgJZKbpwR95q3
-	 ziZNcTByt0GVlnaVxMg3mKF3sA1Udgx+2efAbr/LX6LJ/mSt4+NVwgFKOsjN2YfRqwQUv
-	 ZKqRznjhrd/u+a1mcaapra5ldbR6C0uIudr4iKoWKzIW/bnbHrbBCw0t0/C5rRP121A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793695608;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=ZwpN3MWkuJgEw/5lVf5YS3s9N6pKk0wMcXzClzDmDeU=;
+	b=BCp2g9BcuFbtJwGFDyMHGreyYf9XGpHsO+a0nwKxD+TwUEagr3rlRXK4O6GXFOxT0fYO
+	 +l27Af6yyUNo6rx8LpVqajfZNuZ9oEjXmrw3M5CZ6sLsELEchbp/C3X8KNhQ4yeEEi/hM
+	 RZMSF4GMmAl6ewjm5lO83WUSflCFpDdQ1RZp1JcNQM8gXu0mZvdN03J/FA51OS2NxTtBD
+	 Djy/R67TNg10yoVVAhQmnvwLYwB3HKIyY/OamAAK7T4H9c+Tut6ZK+4MIVDG1iEQdbdcp
+	 /VTuPj8V61VRpLXCfWq7Ei9SQX37st3kfXooi8Zr4kO6VkNjRMjMiil0uGh4W5lE/yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="CY2QNnu/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tmrLDn5D;
+	arc=none smtp.remote-ip=209.85.215.174
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F054606EEBE
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 08:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59F9606A326
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 08:46:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E59F9606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CY2QNnu/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5111F00919;
-	Tue,  3 Nov 2026 08:42:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793695338;
-	bh=9gwEicJ/Ymf8YSJ4s2rZykKLEiOvo8BrmlnfIqbq3o8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=CY2QNnu/zYa+FvhmfbUDsrXfgh975j/OgpygIgYBhToWb7HD5FrOBSOfbjyTZyCUU
-	 fY5S1hX25pkmVqj94zsLPek6MBo+jVirTT+jHhJrP0/eC6GsICAhQdiVU8hwtKbX9b
-	 CyKrysVtbFA6ji/6BNs6m33c01HXOUCtT1837WNnuldh1QO4U0qq7EQyhuY04HD0A9
-	 J7FWrs8df61xx4R9f2HcPxgSMZ43qnhz7TPrKgR5mVp4WDpkPGIfsqA+v83qVN2a9m
-	 R6iI4MGP4fYiAXztfiB8yrSUPYNyYup8h7tFuIbj9pH+51ZYELvFXHu6LWyFg4FKxC
-	 gEuns2l8KejKQ==
-Message-ID: <sashiko-outbox-194855@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] dmaengine: xilinx: dpdma: fix crash on zero-length
- cyclic transfer
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Li Ximo" <lixicaicai@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261103083132.1122990-1-lixicaicai@gmail.com>
-References: <20261103083132.1122990-1-lixicaicai@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 03 Nov 2026 08:42:17 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=tmrLDn5D
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cd62c570b5dso2590589a12.2
+        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 00:46:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793695607; x=1794300407; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZwpN3MWkuJgEw/5lVf5YS3s9N6pKk0wMcXzClzDmDeU=;
+        b=tmrLDn5DgdsgbIctBbIJsfK7Y2GKRlv04AVwZzWIVHmW5P1vliiZbYj/pkdJrN9YIc
+         FU/twe4HI1RPmiFs78bzbQvbHNGn4JP883Uin26ttA7z/MK9FrCJtnMHZoxCXCZ9JX5E
+         RNG+2684vScWrtFCOyVwj1z2d+Oa/Id82LBP/Pt0j2ljK5xQvFgbHb400AdmWWD4Z9rp
+         N0PKe2T7nuxxynUiNBu43cDnwf6QSKRZttd9S8yAWslmyq8teVJpoEBZDTmFWYzFmmLw
+         Whkr/0rTzrgEJkVBjWrvJn1lNvef03prOlIqd0tE5CwkMAgKIuPjbHcVKduRu78M/rJQ
+         fLnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793695607; x=1794300407;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZwpN3MWkuJgEw/5lVf5YS3s9N6pKk0wMcXzClzDmDeU=;
+        b=H+CG6hhTjekXi8y5t+aFqJMr2NhLcDI1z7X9pKBnPFO50dP8tgl2eU8KkuAEd0atDW
+         hml1PwXimDJQ3SvPcYvUMO8Ytm/xolbUvMv5YGpwztGfFcNgATrETZk3XjbqgJxXlBuu
+         FfPcKGrDGvIv4hFCb+JpAAduU6cj2N7j0kIR/he/p7fMML3chrkOq/E0U9McZ7Glgdhz
+         qS1wwUxZ+dxu2bEybcJtx1RwnQpWrE6vl1phqgfn2/jm1GREOKGm+9PSPCe297885br3
+         c5GsC3uiSxrnhtVxOlkB3dC5szCjV3Cvmp0oBSVzTGIrOIwwxQO41OLMeK1FBl0LASrA
+         7rNA==
+X-Forwarded-Encrypted: i=1; AKwUvBwcOXUwoRC6Gq7q1AK/v0a0EQthrcsgbNilc5ecwG6c4HVcKmP5JY+IuID8QtemyNLGq1/sPXpxx0w=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/8uyLpkUqmcNYhWeNZewEG9pwsfonQIM8RazRv9iHSi79PcsO0
+	UltfpRkRSz8BuCi0BMx3XwvrPAScRVjbl+k0Pkk9pt3cov73Sx28EEik
+X-Gm-Gg: AYBFou3PzksAuriSVyT0KbR9eLSoLYBoK5Y5vjVyR7005WFFvnvQtblzf3y27Q3+XhB
+	Z9tzCQhxiJwvjbud4uqpfLHB4CES3i+7FNbW714hcaZzKxyyKjPIEnXXpDxoNX+jHLYJAS6Jkay
+	rGezcJOblKiz2axCNxcngCbsJD2I+cuw1hUT5P8pAmcAruhXAs0ieBJUQ5D59xvN/iwBzyosVQm
+	jUxDZzdLdUU0RVQXebTJ8j0wyXrnec1i5s3FbtPNIb+An2L9oTcyg+L7UGIbRlAVbCpvoDwgBos
+	QQ0HR0TnWfWyRPT28q7hOozcVU6e5BMTG+rSk3cyu4GRyYAYdVYnooV5lZ5zdTZGm5Rd0/AN1UH
+	4ZS8n/BeMF8MLlAj/v3Eb1THs4lTG5S3FUPLRy1eRQg+7gZelpN5kjcfFyJ/7UQSSDYdzZqf+ei
+	yHq+xqeKehBnEPcMVx/wASHCTvzWQynQ4pRXjyiOX3UosOOco37W/ddsgSWrYi3Y0A9W5IBMjfc
+	M5M2H/geTdIOfDxpkPSvRjegZouw+p02zFhVzMSigbJN+5ZHF0rSWB8KMuiQXrA2IyJHRkE6+57
+	k5LvD+hInnW2bc67BzLLDnyhWRZYcNX/kbUJvzDPTDoUD7qHe05i/E3E4t3hknOEtNBY3Q==
+X-Received: by 2002:a05:6a21:1bc1:b0:3e1:8a96:7bbb with SMTP id adf61e73a8af0-3e928a24501mr11343003637.51.1793695607116;
+        Tue, 03 Nov 2026 00:46:47 -0800 (PST)
+Received: from spiderman.taila3fd8c.ts.net ([202.112.47.77])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb364a8910sm901853a12.23.2026.11.03.00.46.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Nov 2026 00:46:46 -0800 (PST)
+From: Li Ximo <lixicaicai@gmail.com>
+To: Keguang Zhang <keguang.zhang@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	linux-mips@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>
+Subject: [PATCH v2 1/2] dmaengine: loongson1: reject zero-length sg requests in prep_slave_sg
+Date: Tue,  3 Nov 2026 16:46:37 +0800
+Message-Id: <20261103084638.1190232-1-lixicaicai@gmail.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,96 +98,46 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] dmaengine: xilinx: dpdma: misplaced and incomplete zero-length c=
-heck
---
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-commit 9ce2097539c963154302835e8e5bdaba12caffe7
-Author: Wang Haoran <haoranwangsec@gmail.com>
+dmaengine_prep_slave_sg() forwards an sg_len of 0 to the driver
+unmodified. ls1x_dma_prep_slave_sg() does not reject it, and
+ls1x_dma_prep_lli() then builds no LLIs (the for_each_sg() loop body
+never executes) yet still returns success, producing a descriptor with
+an empty lli_list that is queued as a valid transfer.
 
-dmaengine: xilinx: dpdma: fix crash on zero-length cyclic transfer
+Reject sg_len == 0 requests early; a zero-length transfer is meaningless
+anyway.
 
-This commit checks whether the descriptor list is empty after the loop in
-xilinx_dpdma_chan_prep_cyclic() to avoid a crash when buf_len is zero.
+This issue was found by static analysis.
 
-> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilin=
-x_dpdma.c
-> index d9a3542c4531c..bdfa85b80c6a8 100644
-> --- a/drivers/dma/xilinx/xilinx_dpdma.c
-> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
-> @@ -730,6 +730,9 @@ xilinx_dpdma_chan_prep_cyclic(struct xilinx_dpdma_cha=
-n *chan,
->  		last =3D sw_desc;
->  	}
-> =20
-> +	if (list_empty(&tx_desc->descriptors))
-> +		goto error;
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+---
+v1: https://lore.kernel.org/r/20261026115113.3359939-1-lixicaicai@gmail.com
+v2: split the two independent fixes into separate patches as requested
+by Frank Li; no code change.
 
-[Severity: Medium]
-In xilinx_dpdma_chan_prep_cyclic(), every iteration of the loop either
-jumps to error or appends a descriptor via list_add_tail():
+ drivers/dma/loongson/loongson1-apb-dma.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-drivers/dma/xilinx/xilinx_dpdma.c:xilinx_dpdma_chan_prep_cyclic() {
-	unsigned int periods =3D buf_len / period_len;
-	unsigned int i;
-
-	tx_desc =3D xilinx_dpdma_chan_alloc_tx_desc(chan);
-	if (!tx_desc)
-		return NULL;
-
-	for (i =3D 0; i < periods; i++) {
-		...
-		list_add_tail(&sw_desc->node, &tx_desc->descriptors);
-
-		buf_addr +=3D period_len;
-		last =3D sw_desc;
-	}
-}
-
-Because of this, list_empty(&tx_desc->descriptors) can only be true when
-periods is 0, so checking after the loop allocates tx_desc with
-xilinx_dpdma_chan_alloc_tx_desc() only to immediately free it under the
-error label.
-
-Also, in the caller xilinx_dpdma_prep_dma_cyclic(), buf_len % period_len
-is evaluated without checking whether period_len is zero:
-
-drivers/dma/xilinx/xilinx_dpdma.c:xilinx_dpdma_prep_dma_cyclic() {
-	if (direction !=3D DMA_MEM_TO_DEV)
-		return NULL;
-
-	if (buf_len % period_len)
-		return NULL;
-
-	return xilinx_dpdma_chan_prep_cyclic(chan, buf_addr, buf_len,
-					     period_len, flags);
-}
-
-If period_len is 0 (for example, when both buf_len and period_len are 0),
-won't this still trigger a divide-by-zero crash before reaching
-list_empty()?
-
-Would it be cleaner to validate if (!buf_len || !period_len) upfront in
-xilinx_dpdma_prep_dma_cyclic(), matching how
-xilinx_dpdma_prep_interleaved_dma() checks if (!xt->numf || !xt->sgl[0].siz=
-e)
-before allocating a descriptor?
-
-Additionally, the commit message states:
-
-  The following list_first_entry() on the empty list returns a bad pointer
-  and causes a kernel oops.
-
-When the list is empty, list_first_entry() computes an offset from
-&tx_desc->descriptors and reads sw_desc->dma_addr relative to tx_desc,
-whereas the NULL pointer dereference happens on the next statement
-(last->hw.next_desc =3D ...) because last is initialized to NULL and never
-updated when periods is 0. Could the commit message be updated to reflect
-this?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103083132.1122=
-990-1-lixicaicai@gmail.com?part=3D1
+diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+index 89786cbd2..e7eb40584 100644
+--- a/drivers/dma/loongson/loongson1-apb-dma.c
++++ b/drivers/dma/loongson/loongson1-apb-dma.c
+@@ -302,6 +302,9 @@ ls1x_dma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+ 	dev_dbg(chan2dev(dchan), "sg_len=%u flags=0x%lx dir=%s\n",
+ 		sg_len, flags, dmaengine_get_direction_text(dir));
+ 
++	if (!sg_len)
++		return NULL;
++
+ 	desc = ls1x_dma_alloc_desc();
+ 	if (!desc)
+ 		return NULL;
+-- 
+2.30.2
