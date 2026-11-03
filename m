@@ -1,11 +1,11 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793734691;
-	b=KMjLoDjCMo8Lu+u9jjUbSA0ontlHA3SdFiJozM1CSuHFcYn6egKJXBnd42CRxws5Glp+
-	 hZChKmLF6Zo6AGZhdzjLXTYJOVjzQgYfLE5BK34rP3z07BSjqo/AmzRMXu7ENUaPZJVZs
-	 z8fboIZMhg3J8GCvvXQJpb8dR3yKu6OPSGoTLFHJStkqO0OLu/zNPuAMkpXKM887y2IKR
-	 +qtmjDdZxc5F6n1zmAZA8vj6vvwde9U/2Of8rK5slLTEdJo01+2ZYzwpQD8C4n5p2qABU
-	 4kbp1ZNBrb4YBXuh+YOHpFs4lXurkTen/U8WgImOuDrliBMW7ZobaqBkX+eGSfgLX4w==
+	b=m3COhQfZali2e6ZebLvC5skJjnczrzDtwGUHbXhd/IEtz46b2DpVDfrAVGorQ2IelSVM
+	 l55/4M81kOIujSzkW3uJegrX/c2Aci2KW7kILUfQXEVURT6HRH8Tyn5pOlhDO9bLe6CYW
+	 NxTTRAURj6Us8zLv6czkWOSWFIGid1I5J6LY6neUoCg2nWhi0YmXxkNn4BthcAp7H9Xw+
+	 cfhAdYYIlnjvNT0PX97bhTjS7/XR4gHeYpugqELdCpbrdOBTyGjwY2tXYQV8TkYnclSh+
+	 elaTo5GagAioLgg9Rr8JwVFW9raVswhjvFlNS9T50ORLxVAqDPxmO9E/W+urTri992Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793734691;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
@@ -13,76 +13,76 @@ ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
 	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
 	 X-Developer-Key;
-	bh=8PPx/HR4xDG+iQY+cv1KoaG7KZBkWYuC6hmVzUweW8E=;
-	b=HXIJJ5/BvqYjRCdxgSWZpP7A4xWWFwR34Y6OBaDhaDSTCBpefzVCXHxjt060oKRE3aoy
-	 reXLpRdGvTVmKPzmDQxlwUiax7iejOMEhx8celNOxTHYpq4KWRLEwsSKnt/OdsUq4tUJ5
-	 WzMSl7noXSl5IP83gCSYFODhxQkrVCbomV3Sn3Rj5A58qni88VfiVDqHcTi76VjhEIMXS
-	 Kovp40KERrrH4cNRxQ9fnT4nI+6Vn8eOvlRRHL1onUxqet2cQssYxeXRsbqx3W8Mrdw8d
-	 tvni2Tv+s79sA6HbOe03w6Yh6jxtt/V8npu2pznM54AItyzZBBIohlGgdFmR+mi6lJQ==
+	bh=NWn56ujqJNytV1vPtoqL3CvdGqy200m0NoH7JljBi/k=;
+	b=MPFJpDHv4gsMysmgBK+cemDQTtHUcNpMzODpIMPrrwl9mGdqasDv2vEdJTr1RiM7HqJs
+	 0hrLj1RfaXdUvAMhH3F0Fp5+1lniInirktzyZ3PwZpQ19iUCD1JNY+j+9kVC+T4FOjZzX
+	 fCtNfQ0XKhgv0S9aLiHDHcUTddbkAjxVw29fQH2bcHQtPKO55npxiJE2yMYhLOX+BjQrK
+	 reKjxO59akAdww8rih7wrlkY/39mPqsiEggl84MtzsTgu+xLRCqSUA5YpII/SOttNDD/3
+	 7HxJFFxjJobRc68Zbvtd2bVaQy3zJx3W/9QGceJuf0Bb4WAH/WmISqD0Yrxtee8KaCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=baylibre.com;
 	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Fpvs0M3M;
-	arc=none smtp.remote-ip=209.85.128.48
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=pOPsALAh;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0AA606A334
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 19:38:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D0AA606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F9E606A336
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 19:38:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39F9E606A336
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Fpvs0M3M
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a1fbd52ab6so34752955e9.0
-        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 11:38:10 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=pOPsALAh
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a5036bbac7so29229855e9.3
+        for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 11:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1793734689; x=1794339489; darn=vger.kernel.org;
+        d=baylibre.com; s=google; t=1793734690; x=1794339490; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8PPx/HR4xDG+iQY+cv1KoaG7KZBkWYuC6hmVzUweW8E=;
-        b=Fpvs0M3MJhfioY9sbGDh6sQpSD9Paq/GLsra9eG2IsBCECMHqW/VdV9qY4TiuxhRrr
-         cTyFX27EkNM+Kzl1cJR6W+R5Cg/eP7GdbSQPB2wa4aI5XQr4JWBXaYh7RtYF5UJjx4NY
-         3VkuqRbCTUOJ7l6YaSZVQOiiAnB9YSyjVYUczbVorXCkvTMEDGUiSZXj70NDg3xhDHvn
-         c+lBuNeaJ05Um34iCSb8ldNZU5474mF4yP+njoF3/NcIx/WC2oKmpdbEO9Pg4BlxSrIK
-         d56ApTQNhRN6nt5+gLZz5T8FNuHz25vvI2rTl9zzKLpwN7MUJShsl+VbpL/3K67EoxKa
-         C3FA==
+        bh=NWn56ujqJNytV1vPtoqL3CvdGqy200m0NoH7JljBi/k=;
+        b=pOPsALAhm9jkkyGAFY5NGarqG2OF44tDjpDFElBHy9wA3fNmrymkDIxuqrOl3BE3oo
+         fCld77gct4VQwVy+Gph4HBex+k9dsndFcjGShF+ekEQcGHVJEnW1Xdpr3Qjkno3x28Aq
+         FKgFa1+G2Ht7z6Mgl+mdBNPkw6p2X/fUQB/rdARfZd4A9QkLk4TsVchYZ7FQ+YaVKxxb
+         ENdrj7Vsjd3ScoH2IZ3TNEhhstxeu72xuSE958q9C1kI//83JSbD7AI4ehaAuHC2sbXw
+         0rUYEWBNGB2b3zLmSPIGEPI7JKMfi6bcbxf9zmfvxrFJDZRlH0kpmvrNTSywnclD3ztE
+         lzFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793734689; x=1794339489;
+        d=1e100.net; s=20260707; t=1793734690; x=1794339490;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=8PPx/HR4xDG+iQY+cv1KoaG7KZBkWYuC6hmVzUweW8E=;
-        b=dcvVl9Nvrh0W9GtNilksxBabmzrLpidowBXvHl98KNu6cCsjF+hGekdJ35+peDGvdI
-         A4t7Zm3iIdteWdfjCu7zZ8Ex5eIczXKPotI34vk8OEpwNvS5rPyUueedZyUf6CjbRzbp
-         jrl8aGg1xKpEZLMnffZbB/lb/zRoGe0P2qkjXPDH5T6oyczfcLgQ/7PA+OdsIzIaEZ3N
-         +zR9HWtFKgs+LtFL97mx7WuhTZgNN9yQYlEIy4Sbe1JZy+6pf1Quf3YmF2pq3UrFXvDw
-         VM8SAxfoEVrgFB8X9Krjox57me52d+cj7hRiOQbaPcoUU0ucrNWfajUIUkzSP0tPM48Z
-         +WxQ==
-X-Gm-Message-State: APuU4Z+ONJQQ8C1qfj7BAQ7gdzZGxQI6qF44hB2kLoM/1kBMY8sYqpwx
-	5yO1fm9SzJX6MPBi+wBOXRIaen5U7zXsEj2XH78m+cTD3aPV79OBnZ6S9gbj7gAD5jA=
-X-Gm-Gg: AYBFou2oateiv+M9MJQSJrxDA0dPy+uavWuY37I6nleb6SUJPNcrchMpYBMLJ05+qVl
-	XChnPwrdQZfQ17TT6o4YB9JnUK1afzaRiudAcIGIkpfhZS4USX7WKCRyssW+YPe85Vl1JGODW9r
-	RdIB5xvY6j47UG0NfxuXSwxVQSnZLTTY5T5xs4TrYDSDE74BMw9mH66v0dVX9hzCegFnx+O0t+w
-	K6USbk1Hz+IXQ3A7RsmVoF9/IE3OivXeNf4U0UXBBQhiluCVb+uCQ2trahYmxVLXieX0tpJeuDr
-	O4aSZwvyU72TCupTu75NoQ+4WVmw9bnldOFUmQrKBDS135GmkR2cTbyqal6qHEMkf/OCM9AltqR
-	nC71FLPcMLV4z1y/fItEUYqTQ/Asy78vLJRYUG8iZNva93Efqo7lL5xaezAo+kkI31EWcWx6SpU
-	nqJW3DlRiTdm9Cc9GEFuaSi8Nwp6J6DFdjG4TnvLTtByuO/EvyNFr28Qm9JyyCkJ6BMWamaMH52
-	XrU98WUEORmyIVCs7Nzs3Bkakp15x4RCe81OOaZaoaxSM+ZXyGA1r66o1XLfN6hV5DCgW2Upu1h
-	iVJeq3L5KFoXEvXo6s3fKRHyMg==
-X-Received: by 2002:a05:600c:1387:b0:4a2:729:f7ce with SMTP id 5b1f17b1804b1-4ac17d16afbmr327136595e9.8.1793734688513;
-        Tue, 03 Nov 2026 11:38:08 -0800 (PST)
+        bh=NWn56ujqJNytV1vPtoqL3CvdGqy200m0NoH7JljBi/k=;
+        b=R+3uWz2X1mQhtJlFJY4wW/Nq2hyV5YBzneP3BL7nh5YwoPqdAr0fd8vIalAotwWkc+
+         pkLQLbmxeT8/mr3M7/26QVTSZQbYLCtNp6DPMTHHCO0CcXhO+K+4hcFpvc0QZKr7Sw9Y
+         tWTe3oPzifNhhUApbo4FgmOoAGdqEKIlSTUQElJoZm5Awl0h+Ck97+7gNT2GEVCLp+RO
+         tuT/PzRJIri/GmlMbj7vGPh9OUeQpIVyy1UjmgSR1w2dwrg/gu2x5yr4b3sqD03wyhEF
+         hEAD7pWgdcG6scHFjOJkwSdZEajJuVAkjkYmRVJj2QUjjHwfMxj8VrqtB1kmX1uEROUU
+         XNGw==
+X-Gm-Message-State: APuU4Z+YsS8SdpXryiJlFJcMriuBL8plCjvcUAoZspJLARFupkXWqHp1
+	7oA01WpznYsqnth1A+CbvTwui+RvUFWT5ttbo/VB20D6Fs/0Orr1AMcrNCmwnrrfFD8=
+X-Gm-Gg: AYBFou1DQUYxEcf7lMudz/t6NGnd7Wn97hGqLXhCW9lEXCSGjUesIKkC1wZhd5TP5Bf
+	ZCP9VWgf+w9rNlO2t1AkwnnCW5j+lQOIzu1yaJwjjr9YKuau4aHwd7GC+A+My/hTji0UVgF1VyB
+	Q5zxfjZXE1h0YzamKZXwi/S/asSUt1w+CEddMlaTsKkVl6gYbEy/B0fxb+agVMnaInDHZTw01Gs
+	nv73aWmORhhnIhhKuPnlb9bjMM0jkoNPDhNT9cT6EM/utPtATDgaFStVIFgt6khZz0jbupjH85F
+	vlUFYAq7c3ApmWSPBdZIcaT5JP6HZi4xJj4JrT5Kd7/AuMEaLU7MMl31pOOhVFS0ZKmLDxOQBqs
+	zvmxDL3GEHCFwy99+ucGtUSyHYWcJOSQqwMGy0+Ez1Q9vV1nZaRwqDowgCvsK9D5zJHCyuLNFSV
+	S46nivmhipTuFR74U0FoHmK9HPFhHSfQYBQTDwl/BF3545KezKch+qMoF723QqrvqSobg9H518X
+	pVsDmgzDzxxzkoV5gBdHFIU47MUE7nJ0JPmExT88HGEmkOaiwF7owADFXDc16pZVKv5fJJdROsV
+	IBLXA/sYqEmE5foIXPOMsW3Uuw==
+X-Received: by 2002:a05:600c:5249:b0:4a7:7f3f:6f8e with SMTP id 5b1f17b1804b1-4ac1228b5bfmr320484655e9.0.1793734689818;
+        Tue, 03 Nov 2026 11:38:09 -0800 (PST)
 Received: from localhost ([2001:4090:a244:81d0:2c16:1c4d:8a04:e0bf])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b41297c16asm5880115e9.3.2026.11.03.11.38.07
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b2a82cebdbsm88269195e9.3.2026.11.03.11.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 11:38:07 -0800 (PST)
+        Tue, 03 Nov 2026 11:38:09 -0800 (PST)
 From: "Markus Schneider-Pargmann (TI)" <msp@baylibre.com>
-Date: Tue, 03 Nov 2026 20:37:28 +0100
-Subject: [PATCH 1/4] dmaengine: ti: cppi41: Use td_queue to restore
- DMA_TDFDQ
+Date: Tue, 03 Nov 2026 20:37:29 +0100
+Subject: [PATCH 2/4] dmaengine: ti: cppi41: Fix register access in
+ suspend_late
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -94,7 +94,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261103-v7-3-topic-am335lpm-cppi41-v1-1-d7213446c5f5@baylibre.com>
+Message-Id: <20261103-v7-3-topic-am335lpm-cppi41-v1-2-d7213446c5f5@baylibre.com>
 References: <20261103-v7-3-topic-am335lpm-cppi41-v1-0-d7213446c5f5@baylibre.com>
 In-Reply-To: <20261103-v7-3-topic-am335lpm-cppi41-v1-0-d7213446c5f5@baylibre.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
@@ -104,58 +104,88 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
  "Francis, Sebin" <sebin.francis@ti.com>, 
  "Markus Schneider-Pargmann (TI)" <msp@baylibre.com>, stable@vger.kernel.org
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1510; i=msp@baylibre.com;
- h=from:subject:message-id; bh=B/woc6BJx2wq+Pk4aPkNjANUiNT1MPY10g3hs4IO0Lw=;
- b=owGbwMvMwCXWejAsc4KoVzDjabUkhqxXFlyRG8zuTBTpWpAlxTx3WtnpBxcO69g8tjr4bdF+e
- 4NuL4FVHaUsDGJcDLJiiiydiaFp/+V3HktetGwzzBxWJpAhDFycAjCR+kuMDN++hwdM3JT0Tyz0
- 942/oX37VxlO3nTyqs631XPZrW4d3sjA8IeLazrbguufuTwsdxSqh5uFz7nr4+m+Unp74tcVSVn
- tS7kB
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2344; i=msp@baylibre.com;
+ h=from:subject:message-id; bh=lXiRL/4EGMomZ+sZe31WR8MZI18NdjhygEMgW/x7zpM=;
+ b=owGbwMvMwCXWejAsc4KoVzDjabUkhqxXFvwTW/VP1Fd4LtTT6LlT6KO8YWJuuhuD2p5OfpNJ3
+ lZT7jp2lLIwiHExyIopsnQmhqb9l995LHnRss0wc1iZQIYwcHEKwEQKvzEyvIqxnuv47/Dz1Hz+
+ gq+3e5+ffuU++ZVen4kIQ8q2acLLljAyTL6j8ujp/PlLm6qEV+x+uH51THjW49/eaYqlgZb7pj4
+ 05QQA
 X-Developer-Key: i=msp@baylibre.com; a=openpgp;
  fpr=BADD88DB889FDC3E8A3D5FE612FA6A01E0A45B41
 
-In init_cppi41() td_queue.submit is used to setup DMA_TDFDQ. In
-suspend/resume the same value is read, stored and restored.
+cppi41_suspend() and cppi41_resume() access registers. However the
+device may be runtime suspended in which case it is not allowed to
+access the registers.
 
-To get rid of the suspend register access, use td_queue.submit in resume
-as well to restore the value.
+On suspend do not run disable_sched() when it is runtime suspended. This
+avoids accessing the registers and crashing the kernel during suspend.
 
+Resume when runtime suspended is delayed until cppi41_runtime_resume()
+is called using the variable ctx_lost. This keeps any access while the
+device is runtime suspended.
+
+Fixes: fdea2d09b997 ("dmaengine: cppi41: Add basic PM runtime support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
 ---
- drivers/dma/ti/cppi41.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/dma/ti/cppi41.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/ti/cppi41.c b/drivers/dma/ti/cppi41.c
-index 88756dccd62c..458d20b12462 100644
+index 458d20b12462..f5a824418fe7 100644
 --- a/drivers/dma/ti/cppi41.c
 +++ b/drivers/dma/ti/cppi41.c
-@@ -146,9 +146,6 @@ struct cppi41_dd {
+@@ -146,6 +146,9 @@ struct cppi41_dd {
  	struct list_head pending;	/* Pending queued transfers */
  	spinlock_t lock;		/* Lock for pending list */
  
--	/* context for suspend/resume */
--	unsigned int dma_tdfdq;
--
++	/* Register context may have been lost during system suspend */
++	bool ctx_lost;
++
  	bool is_suspended;
  };
  
-@@ -1174,7 +1171,6 @@ static int __maybe_unused cppi41_suspend(struct device *dev)
+@@ -1171,7 +1174,10 @@ static int __maybe_unused cppi41_suspend(struct device *dev)
  {
  	struct cppi41_dd *cdd = dev_get_drvdata(dev);
  
--	cdd->dma_tdfdq = cppi_readl(cdd->ctrl_mem + DMA_TDFDQ);
- 	disable_sched(cdd);
+-	disable_sched(cdd);
++	if (!pm_runtime_status_suspended(dev))
++		disable_sched(cdd);
++
++	cdd->ctx_lost = true;
  
  	return 0;
-@@ -1195,7 +1191,7 @@ static int __maybe_unused cppi41_resume(struct device *dev)
+ }
+@@ -1182,6 +1188,9 @@ static int __maybe_unused cppi41_resume(struct device *dev)
+ 	struct cppi41_channel *c;
+ 	int i;
  
- 	init_sched(cdd);
++	if (pm_runtime_status_suspended(dev))
++		return 0;
++
+ 	for (i = 0; i < DESCS_AREAS; i++)
+ 		cppi_writel(cdd->descs_phys, cdd->qmgr_mem + QMGR_MEMBASE(i));
  
--	cppi_writel(cdd->dma_tdfdq, cdd->ctrl_mem + DMA_TDFDQ);
-+	cppi_writel(cdd->td_queue.submit, cdd->ctrl_mem + DMA_TDFDQ);
- 	cppi_writel(cdd->scratch_phys, cdd->qmgr_mem + QMGR_LRAM0_BASE);
+@@ -1196,6 +1205,8 @@ static int __maybe_unused cppi41_resume(struct device *dev)
  	cppi_writel(QMGR_SCRATCH_SIZE, cdd->qmgr_mem + QMGR_LRAM_SIZE);
  	cppi_writel(0, cdd->qmgr_mem + QMGR_LRAM1_BASE);
+ 
++	cdd->ctx_lost = false;
++
+ 	return 0;
+ }
+ 
+@@ -1217,6 +1228,9 @@ static int __maybe_unused cppi41_runtime_resume(struct device *dev)
+ 	struct cppi41_dd *cdd = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
++	if (cdd->ctx_lost)
++		cppi41_resume(dev);
++
+ 	spin_lock_irqsave(&cdd->lock, flags);
+ 	cdd->is_suspended = false;
+ 	cppi41_run_queue(cdd);
 
 -- 
 2.55.0
