@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793719818;
-	b=bbEmT9aZr4gkAhHCgI7vD7Rkr9DIm98mgwv6WWLKbO53ldKDa88ZrIPEYXGkZuluK9mB
-	 AE4xWK9v5scsl54sYGCV5tVOt811xa+o2wZhjiURQTN2ziTbrJqvFoN0/fnRw3EV6V/Ar
-	 Qk3If6VHGto6IaBdUi2SM0FmWzs+nz6fLpsGQmBAbgYPwXRtcOfGH1x7Nn0Lwie9fCQP5
-	 4UyHUIJOHm2ZbkueUDhK1PIcosVkK1M/qfIXHkqNHCcJjhAakaZf5hhzr8BZa/YYoiJnj
-	 PYFLbkauwf9bzoXPA26Txhw9G6dm12TC3usOcPXhK/LC9LLI5ZMTNS/RU1NMLwxkKSg==
+	t=1793720097;
+	b=5F06LbSYLVF/HWDkoweMb4f1b/y9U2Gm9i81svPf71OcVImvn9oZOGs94nJUsWGUulYq
+	 7c2MnBS28coSsY+AP3Bx8ZLoZojcaba790l89YjxuyFmrctyAGIfM9NQqBb0rmOMBsTDc
+	 qb5uPX70iJnzntBlppTk31nLe7oSgmw7eKDuh42lhup6LejK30yWM7aDbFuXBoM5yg9rX
+	 KsZE0O9XjYdKtLjBe281ED4fSLADRkAT9O6FdxElAVag9EJN5lLk/3Ud2Z86GbzEgDWy8
+	 miHhOZ0zi9J77QEAQiH4yCprLRWth5NkM42YEcqJlcdZr00Rd1rCvEo6vS6PqtL4/gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793719818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793720097;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=5USuSpAY6BqKBJXRkghIPtIuqHJ67CoBJXg16mpKvCA=;
-	b=Y6B/ImDTzw/mjfqB0dpRePtZ+F7yX9dxl9AYyVL3PAMHwmXuMruJolXxsAwLmiVWi2bT
-	 /ifEVfYBWfIR1nLyNstIe0oED18jq/ZjxzWrHugqQ954Nu6oJLfSIEKrEeZM2fgP3CaKQ
-	 UoXKLmAfaKoALu0DK/7hOWtK2XwbQjmbkiiwJjltN1EH4XXb0moIaYXA43rarDUdIAVci
-	 IV51n7SaW30cCIeWBA27TGkWw+M17P3jlVVP8CqVpRAQD00as13VA8/13ojoU3WVRM6+s
-	 Vv6h8yehJ/KGm+MyYvI9uuOfsFaMP3WgOl8cMRisyI5zTFDZMXf2C8pqSCUuFkS7a5A==
+	bh=qRKSJuJfdvaq4TPk0dH3fL/nV91BhjtYgBu71pUkKew=;
+	b=pKGPfUQUJS0x/qghNiKjCTus9bTqfcof0Er7V+4zm96nFsFT/SLaqoJ+RJYVsgORmleK
+	 u+lNkUy9QJqSvLDsw9MDjghQfSYWrkW/kzIJBqNws7skyZEJfhVdlWWemK0UrmGGq3x9L
+	 c4BvZBiIOF0rETT8l4yAaer+FOwhV/J+1Gx554xRqQpTtqWXzr7/E5KB6slIH9STTw28V
+	 CK0a2O/6XgIGrDI95fKuRJgnp9fIGO3ETQKj/IwZq71j1qnouaQDrWIvwsu0fwEZIOaS/
+	 UEJ6Ot9REGIOHjk9QsdYd97KywMJY6AW1D6fe9qveTuYmlvDyiG2SPMx4lIIHiMjgfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V564JMZ1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MsRDJTGO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFFD606A331;
-	Tue,  3 Nov 2026 15:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4971B606D803;
+	Tue,  3 Nov 2026 15:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V564JMZ1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1271F00919;
-	Tue,  3 Nov 2026 15:30:17 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MsRDJTGO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7B71F00919;
+	Tue,  3 Nov 2026 15:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793719818;
-	bh=5USuSpAY6BqKBJXRkghIPtIuqHJ67CoBJXg16mpKvCA=;
+	s=k20260515; t=1793720096;
+	bh=qRKSJuJfdvaq4TPk0dH3fL/nV91BhjtYgBu71pUkKew=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=V564JMZ18rp3LLDtaoKcHIMWvfu2Wa279rjZfWf84BoQnNDu2Qv4dBAgwNQQuN8d/
-	 7emhaWmKX5l4YFg6BvTkDYOqYLIj+1lXCTS8Vm02kkx+qE4Ap/ZihOW3AJDeBf6k7p
-	 NRlRhU1qWoTz8qdAqSv6tcZV4RgYIM9Pt3hxspsR2hMwdcqpTDXrS7z8DVuUy2TTIi
-	 B9dIW8qdCki0Z1SlMgKVNmrX6GpjiRgzUYW3OLEPBX9qjnXB2/yWXRhfSF2yV/kIBc
-	 gMQB2l4hDi6Wl3X5c+VC62Z9NadcwuF8uNrXoiDcJinWeQbsfDCx4ja1UwHx7T5I6a
-	 M1QTKa0Li5maQ==
-Message-ID: <sashiko-outbox-195621@kernel.org>
+	b=MsRDJTGO+JDw7BOZcoDziAEdfhP8fQdTnjN6aL8/Jh7bmrVp0kIdXRKnIVTWgEnZI
+	 HCylapTJi4+ilie4mxin5myolbY3L5M85nmPt84za4mG+Hq75etdg8FR+llx0RwXoD
+	 Oj2+pLYl+TFrsI9ES+BePCyE57NEJV8Do3L5AeTA3PmBIde9EIyGI6AaiIdUbBdgVl
+	 UGBtY7pztDpiWOB7YPV+gzGaJbAyy+5gqaUbFbU1yrtFZaM98wJFzLIMBTauMJCAqY
+	 4thQ1jFfwyegc978Vg9d1Tol0mV+bNwLqSNcm0latThYWQulKHdKFyAXZusd9mODFW
+	 ReDmLbncjtYow==
+Message-ID: <sashiko-outbox-195623@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 2/7] dmaengine: add a bus for DMA channel devices
+Subject: Re: [PATCH v4 6/7] dmaengine: fsl-edma: support per-channel DT
+ child nodes
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?UGVuZyBGYW4gKE9TUyk=?= <peng.fan@oss.nxp.com>
 Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261103-edma-iommu-v3-v4-2-470415d418c5@Example.Com>
+In-Reply-To: <20261103-edma-iommu-v3-v4-6-470415d418c5@Example.Com>
 References: <20261103-edma-iommu-v3-v4-0-470415d418c5@Example.Com>
- <20261103-edma-iommu-v3-v4-2-470415d418c5@Example.Com>
+ <20261103-edma-iommu-v3-v4-6-470415d418c5@Example.Com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 03 Nov 2026 15:30:17 +0000
+Date: Tue, 03 Nov 2026 15:34:56 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,84 +63,73 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] dmaengine: bus name collision with SuperH dma_subsys in dma_bus_=
-init()
+- [Medium] dmaengine: fsl-edma: 64-bit modulo in fsl_edma_child_to_chan_id()
 --
 
-commit 6400cfe74e7a9d7882031548be64a3d0e53cb075
+commit 76cf0654e1725c0e3aaa1017f35c2a7303b2f234
 Author: Peng Fan <peng.fan@nxp.com>
 
-dmaengine: add a bus for DMA channel devices
+dmaengine: fsl-edma: support per-channel DT child nodes
 
-This commit adds a dedicated dma_chan_bus_type bus for DMA channel devices =
-and
-registers it at core_initcall so that per-channel IOMMU configuration can be
-performed properly. It also cleans up the unmap pools on initialization
-failure.
+This commit adds support for parsing per-channel devicetree child nodes in
+the fsl-edma driver to configure per-channel interrupts and IOMMU mappings.
+It introduces helpers to derive the channel index from the child MMIO
+address, obtain child interrupts before IRQ setup, and configure per-channel
+IOMMUs after device registration.
 
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index 34be53487a21d..3a297f2754915 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -1643,6 +1643,17 @@ void dma_run_dependencies(struct dma_async_tx_desc=
-riptor *tx)
+> diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+> index 30d548a723462..8691676b3b692 100644
+> --- a/drivers/dma/fsl-edma-main.c
+> +++ b/drivers/dma/fsl-edma-main.c
+
+[ ... ]
+
+> @@ -703,6 +720,184 @@ static int fsl_edma3_attach_pd(struct platform_devi=
+ce *pdev, struct fsl_edma_eng
+>  	return -EINVAL;
 >  }
->  EXPORT_SYMBOL_GPL(dma_run_dependencies);
 > =20
-> +static int dma_chan_bus_match(struct device *dev,
-> +			      const struct device_driver *drv)
+> +static int fsl_edma_child_to_chan_id(struct fsl_edma_engine *fsl_edma,
+> +				     struct device_node *child,
+> +				     struct resource *parent_res)
 > +{
-> +	return 0;
-> +}
+> +	const struct fsl_edma_drvdata *drvdata =3D fsl_edma->drvdata;
+> +	struct resource child_res;
+> +	u64 offset, ch_id;
+> +	int ret;
 > +
-> +const struct bus_type dma_chan_bus_type =3D {
-> +	.name  =3D "dma",
-> +	.match =3D dma_chan_bus_match,
-> +};
+> +	ret =3D of_address_to_resource(child, 0, &child_res);
+> +	if (ret)
+> +		return ret;
 > +
->  static int __init dma_bus_init(void)
->  {
->  	int err =3D dmaengine_init_unmap_pool();
-> @@ -1650,10 +1661,21 @@ static int __init dma_bus_init(void)
->  	if (err)
->  		return err;
-> =20
-> +	err =3D bus_register(&dma_chan_bus_type);
-> +	if (err)
-> +		goto err_destroy_unmap_pool;
+> +	if (!resource_contains(parent_res, &child_res))
+> +		return -EINVAL;
+> +
+> +	if (child_res.start < parent_res->start + drvdata->chreg_off)
+> +		return -EINVAL;
+> +
+> +	offset =3D child_res.start - parent_res->start - drvdata->chreg_off;
+> +	if (offset % drvdata->chreg_space_sz)
+> +		return -EINVAL;
+> +
+> +	ch_id =3D div_u64(offset, drvdata->chreg_space_sz);
 
 [Severity: Medium]
-Does registering dma_chan_bus_type with the name "dma" collide with the
-existing SuperH DMA subsystem bus?
+As reported by kernel test robot on v3 [1], in fsl_edma_child_to_chan_id() =
+in
+drivers/dma/fsl-edma-main.c, offset is a u64 and drvdata->chreg_space_sz is=
+ a
+u32. While the division uses div_u64(), evaluating offset %
+drvdata->chreg_space_sz directly above it promotes drvdata->chreg_space_sz =
+to
+u64 and emits a 64-bit modulo library call (__umoddi3 or __aeabi_uldivmod),
+which fails to link on 32-bit architectures when CONFIG_FSL_EDMA is enabled.
 
-In arch/sh/drivers/dma/dma-sysfs.c, SuperH already defines and registers a
-bus_type with the same name:
+Could this use div_u64_rem(offset, drvdata->chreg_space_sz, &rem) to compute
+both the alignment remainder and the channel ID quotient in a single step?
 
-    static const struct bus_type dma_subsys =3D {
-            .name =3D "dma",
-            .dev_name =3D "dma",
-    };
-
-    static int __init dma_subsys_init(void)
-    {
-            ...
-            ret =3D subsys_system_register(&dma_subsys, NULL);
-            if (unlikely(ret))
-                    return ret;
-    ...
-    }
-    postcore_initcall(dma_subsys_init);
-
-On SuperH configurations where both CONFIG_DMA_ENGINE=3Dy and CONFIG_SH_DMA=
-_API=3Dy
-are enabled (such as sh2007_defconfig), dma_bus_init() runs at core_initcall
-and registers /sys/bus/dma first. When dma_subsys_init() subsequently runs =
-at
-postcore_initcall, subsys_system_register() -> subsys_register() ->
-bus_register() fails with -EEXIST and triggers a sysfs duplicate filename
-warning, which then causes register_dmac() -> dma_create_sysfs_files() ->
-device_register() to fail with -EINVAL when registering SuperH DMA channels.
+[1] https://lore.kernel.org/r/202611031650.EONIRpF4-lkp@intel.com
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103-edma-iommu=
--v3-v4-0-470415d418c5@Example.Com?part=3D2
+-v3-v4-0-470415d418c5@Example.Com?part=3D6
