@@ -1,112 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793690335;
-	b=0FN8L+aZombgb551xEIZ5K5CEw3rwrb3RuXW5H+e1a2eMUvEeFe7nVd5Rcvc1k5HfKry
-	 TF8zKFqh4DnclSuXIBB3sVym0L5PY7rL7uPwNQAOZfO2+zIqPU2ON0+v1I2XG0+XtBw6O
-	 xaGI1UqL6Gsnwp5rybqiTFMrbCjQ6fnx+A3kFLCrA4HgWl7Vxk53sKYN2jAl/dbnCf+sw
-	 zrv7du7rWZpD3UhOpAUHOM6ZhqySPdCpNGQ8jxC6c9FbcZPFUBeEGa7LMH5I8limUxDbc
-	 VeG72Ud+023boIHMUHIaNek/fAKlfvHZTk7W0cOoRHAQctTwHqEYtu9ENxm10C6w5Rw==
+	t=1793690389;
+	b=aDpO/g6If5tiOQm2IuZ9VhK2hdkvZipvA2DZ0WhUTuiwYC0SIihWqxfAYBLpS3ONOa5A
+	 of0jiU/Ri68Oo/G3DVO4Csar4XAt9BEX5JEHrDkzN6Byp6TU0KKAnAT7tdnoZfbAHYaaL
+	 ue1axCUOZy80DnmEbsz8w3VIrsTPW0L30OGs+c6Nmp7bkA+pr/AGoLWmIKH7FHdW7Tbg3
+	 piDBvZzc6/O0T6pIA3DnrPlPc9UzPPAJYZNJij3YD0X7JL0++oWP0U13VaEPNbsPVenLH
+	 0BrmZJFPsvjwIyWnFes3ynqFGYE5c/+e2DGZQIx9vcOxDc/4Xn5rBwDMKqHSWm+XLZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793690335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793690389;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
 	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
 	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
 	 X-Proofpoint-Spam-Details;
-	bh=v8pOdlYxikwaLjp8OZvxPrNbyKTUCQqg7s1stn4Ba5s=;
-	b=y0YasL0YsjTIh6lqWl+us03TZHqG3LJGCxHWhOBeOYucwldQ4qvCWr1n3CxVU5DcBT9+
-	 ifpDMRRumMsoJ19vFHPYp5MnlC0SaycEuBlFGW/lDsv1pPNM/TIZWEfBGcwjk1dmAl7YE
-	 MEWy+N8AjI5irtSQntxVhrvByzT3SNT0MJRxH+1P1229purV+dSgJzdQKhN8x99bVW/rN
-	 40cBz9Uqz4wflWr8UXlo8QfNNKuVN7+m3soMuJ/vrqAXEIyoI/NVO+e46k42UWAUtJTrB
-	 viecmi5Odi/rhq5lYE/wAPAKcheJKNpZ2pEk0qs7R2OJvd5V6Je/DouTb59yoG20fvg==
+	bh=K2CG3b4t47yXaBdjLO2bPQOOsh8D5qOew3uLqFztY7I=;
+	b=tBQSeAM3eAzacjfBC+91D/B6mc69jRIWgvzDZDabcbFQoMWZx4A6B19bz2+CSkh9EWqK
+	 k7ZYaAUx9UhTCjMTG1VvQCJ8EI5v83S5uZr8BxipxVigi7woK+jVTzxtIewsZern/JffW
+	 FIFupf9PyWmMkroL/EPSuQPNFGPqJbc5JfiCOHfuKxAsjUA0BkPZxLcq7kZaLDkAX2j2B
+	 5YYQiZFlr737FU5oID5D0ydI/rhv9LD4rdUejqEKJ/hWE+VFzFdQ/qhFz1tMk9JG3iN0L
+	 +cNR9ijAVU45qrG/zp2+o0ic61hSrN4F9vQFCdZYhPKTav4xN9OqalXcqOqWZGIGQhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dqcF08tC;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hVAO5Isf;
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XpHOIXNz;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=feRmNSMU;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55167606A331
-	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 07:18:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 55167606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680D5606A329
+	for <dmaengine@vger.kernel.org>; Tue,  3 Nov 2026 07:19:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 680D5606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dqcF08tC;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hVAO5Isf
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A352kjL2449012
-	for <dmaengine@vger.kernel.org>; Tue, 3 Nov 2026 07:18:54 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XpHOIXNz;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=feRmNSMU
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A375dmr1180066
+	for <dmaengine@vger.kernel.org>; Tue, 3 Nov 2026 07:19:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	v8pOdlYxikwaLjp8OZvxPrNbyKTUCQqg7s1stn4Ba5s=; b=dqcF08tCDFFe0kRN
-	F3GsfZg4gjR1L2YUmj2gFaT8A63zPszurxFT8DOQi/rFb/5MYTochGkjFyynBrnp
-	2RV8I2QSVGJxKLr6XxG0e1MdBrwkkoKnoDSBm6YUv6jIdhQyU+MYidhsYqo9PwWE
-	ET7KTfPFhzWu9oC/14wa2P5dza9Av3E8iJ7CzqbCPIwyMsMD35YWj65VomHbF79d
-	0+cDEz8AYMfbWmLigiSjLARaI30Hj+Yw2esO8gxrm9e0DujEhKMvUD/khNI29Ccy
-	zLQDfwVok0RCHDtrBiTWyc2r3nfKJsuLijcXSZo2BkpncG/3qR1XcGj2gq9XU1TA
-	Q2Mywg==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hq94crfge-1
+	K2CG3b4t47yXaBdjLO2bPQOOsh8D5qOew3uLqFztY7I=; b=XpHOIXNzBBnR2/X2
+	0b5XmdXW1XJNxAsPUuItnr/snKzhBS2jog5fhps12ehBR+pxFTfWYobk15L4Zg37
+	6s4xGT93eIDOjB8Yb8gFc45sa5sMG4Zy9jUznTtNwCyB7UxY/XboUChTY516KLlg
+	g+tmhYGfBlIS0HId1HY7F2Nd9Wk+UzCWX4etmk6ZZ6vioB0D50uN976PfR4jUjDk
+	FZ/iYCxgFNXBmodZ1xbNkRoq8Yvh8wkAsXJjLoE0g07PDji/hS2bNiD4oX9uR3UI
+	8/VZmekeLcQWhP2t+LvkGlacFlL1ZFKfKiACLAH/gTOsiLVbtd/KTxTGU2cSA9TR
+	+NRRmg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hq081tfvy-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 07:18:54 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2eb2437d752so56000685ad.0
-        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 23:18:53 -0800 (PST)
+	for <dmaengine@vger.kernel.org>; Tue, 03 Nov 2026 07:19:47 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-89ff475a0deso3432602b3a.2
+        for <dmaengine@vger.kernel.org>; Mon, 02 Nov 2026 23:19:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1793690333; x=1794295133; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1793690387; x=1794295187; darn=vger.kernel.org;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=v8pOdlYxikwaLjp8OZvxPrNbyKTUCQqg7s1stn4Ba5s=;
-        b=hVAO5IsfdE/rzMifewHHAZbrqY55JGNRRe1yxZmh1Dm2jkAY8hvK4RHG9FveTcSKgN
-         /9YBfCrv0olr9VqPnSq2O04LMBiUXasgP2tPl3fuCt5V5kWdN8M/7HeR5iJDPfLlBqTR
-         pr06WL4ebIZYl5BTMENLuxfebQX0LwAaA48G7uWuJ9FSLWzSMYaHjal6Ihrdw3XuLb7O
-         yjflHRBtyPESc7iRc5DssZANqW/teG7ecP5S9vK6OIGfEx/2CaCbet5+n5aC507/B+Ec
-         iQs/eiOaLEBsTjGMXIZW4yupqQavxxdBWCrfrU/oKZn3KGoqszF69cOO5XnjxPWylHRf
-         igvw==
+        bh=K2CG3b4t47yXaBdjLO2bPQOOsh8D5qOew3uLqFztY7I=;
+        b=feRmNSMUJHeyYErxl9D2PeBg0cYtRqWnkkT5hJGcH3zfKFlek8t4SLbsdu6hLJ/gr1
+         C/TCVMoJF05kpAp3d/jg5KPN+7zI9r9SSHBj7YomYWEKbfdME38YnI7JtPqTKXZcrOWN
+         8EnHNN1Lw9U2/8/bqUOuWwKZzKrVsyqorelXeFE7wSm4yklfVNBL637pEpE9YZowvJWA
+         e3E/MZTvaa0eiCPsDdrm+vy27EztIu9flcFNlYZkNAyGCDPvlfoGr+w1O09wCsQB83nU
+         KO5qka6uSIkeOO3YPUaWIeKgY1WC/UMFBhsnxsVIuqzn5wJXwPoR0IH4l9lKnGYEFo9X
+         Ia7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793690333; x=1794295133;
+        d=1e100.net; s=20260707; t=1793690387; x=1794295187;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=v8pOdlYxikwaLjp8OZvxPrNbyKTUCQqg7s1stn4Ba5s=;
-        b=SBLHZkjFJNVgOY7ERHLBSapKHWgNemMzKOxkDtJp8SN7MyjT9S8zY+xAT0tMpkHctJ
-         3wUoxlNMmsP4gcj2ZC3MNVqg+Ifm4MDUb3fd4ljsXfE+h866NW1XH1VJXGUpA37BfDR0
-         ay39ectObAsBEH1WFu3TQNRIDnO+aUydtSeOYtlRqKytNWQ6aLvTuh6zssjOMI0QT+Cz
-         BwWY9DGvzGtxmBeBTXBZ9QCoXJLphVA83wUfJGFuTqHH2Ih8FxIlKUjYo0EZ64FKnRuP
-         eg/IMS6Erw4/RKV0LDcOJVnDWaTqzlemuLTc6uuP1MXC5X13asYffBpz2uyExVHI1H6l
-         ntKg==
-X-Forwarded-Encrypted: i=1; AKwUvBzNbNCCOzesQypsEYAM1kqLe03cezAaISWlgT+IgB9X5tou/Qf+j/NqBp5EOpHiUaLCyWJHqIKqsiM=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+CUxAVNwjvKsod+IyoQoW+6FsDXZurfYx+HRxBEGPxoQHFImGi
-	GE/9bDqFLr4jg5T9cauD2TuOVYfp36YUYP7AUKdbZkypumbK2T9bZcVZShwbR7sJCD5WafETaoi
-	E0AFFN+mTm4XFrIZW44w42EGJ60u43800MgGPB+vpHLtopSRcif3Zru5dzG0v9XM=
-X-Gm-Gg: AYBFou3lNIpSypaeZDC7kO16Ut6hNqI+RMzDa9mwnoP3aDtOouRtglmaDeVkcK0xBIw
-	Xzd1op1E9YMzho4nkDUAgI8IXWhWz1KkVkUZGs8NZiawr26R+y0ISJm2zKSo47kMmhxw/A+SrWG
-	Wj5IEso5DtG15Xui0hKIvwKU/TZ7dG+ja/0FKvc3SF5qzsI06SQoSbOLjCgIQYylmLRoaz4qico
-	sgEet8y6Yz4RnvZx1b7v9b6cOag9c/2/KdCzmqGfDVGFgOHsCSuKlXHBzpFYUXd5tyoZTPKwIoE
-	ACV5op1aHmAFM+iVgqSnWeRGu8lqZSukHp6Iz0fEUqKPfo8fcoTXfj5OCx2dVJNH6PKv9WQwoe1
-	GkmYQRH7zgTPeDTvv5DGzepYXuCJWBhmwWo0WJBFWsiF8pUcXrRhnc74Daj/artw74YjPMhqbiq
-	JNNDc=
-X-Received: by 2002:a17:903:37c7:b0:2e8:b5b2:a9f9 with SMTP id d9443c01a7336-2eb364e9f75mr109570975ad.37.1793690333076;
-        Mon, 02 Nov 2026 23:18:53 -0800 (PST)
-X-Received: by 2002:a17:903:37c7:b0:2e8:b5b2:a9f9 with SMTP id d9443c01a7336-2eb364e9f75mr109570835ad.37.1793690332620;
-        Mon, 02 Nov 2026 23:18:52 -0800 (PST)
+        bh=K2CG3b4t47yXaBdjLO2bPQOOsh8D5qOew3uLqFztY7I=;
+        b=m7sVh9B/k3zkJjDP9q3LEmvCYHbvYg4IzE4FP6+6rrN+T50dGkGOGGF90Zr9SGw2Hb
+         aQmniH30PP2UspQlDy6mewE06m3wiQ3zGL7CVYDc6YaMc+ETbi+kKId+3UFiWQM8mygQ
+         tgMwyAJjrH9X8wjp+f8KFRipaQ3YuQCDedUeIjLLabjFztu0WY7Y5qCBm70aKSbuFN6a
+         wiyBh83Iwxr9QUsBXVJ947XBdjsLtTR1L36A48LwhUBs/qittsRW/W4GxfUCdrb2ikU6
+         GqmuznB5zq8RLKAtmNeMpfzCec8cfAJkARTe/fWgwFNYoW1FimKhMoznbvtMa+UkAnzb
+         D7EQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzzSgeBv4por/qnT9sKJqSQUzG+TlLGkAGxER72TsoDD1ETXrpCcqOQDeJBDu1Ai7ndWtX6tHVKb6U=@vger.kernel.org
+X-Gm-Message-State: APuU4Z82wPedMU6AuD+zLgJbbl5gcotYi528E8E0FSew6tCKPdMQic10
+	g6IQKNeYb5Dq5NWo8G3MzmBcu1cHlYv9Xtvx1xEr1WqkAm8S3CvANftHMHdMn6jMsfIgY4FSdD4
+	6yYEpxbUcIoGTspT/HKpDr/kinJGNPHYpTGUgGg62bS0BqpWUjiZ/Y63bjhbsMV8=
+X-Gm-Gg: AYBFou1JODQm2ahXgLuD2HlIW3eq6kDUfYEN6FaToXQz5h6nzWPhzIoW3DSaxtyK5ut
+	QPxf55XKmMtnyH4stiw/AHiFvJE+mktn8lFddHMwYyNLNRtW1T3i2DXypJGCq4Y4pGVSudHejeh
+	s2MQA6ZsK1vfw6I4io5s/3yifiFSvGkxhsQzR+npZ8v8Fzm6EMM6Yr91r0xNa3foJSEAfWcqDKL
+	SL244GyBdjrYvMSs81Wn/KZNul5YIjaKuK5AVTH4lrp+Xy/cqkmrsNxBGvkI/teFLCjOE2jZxem
+	aTh1wy2qV+MDK0Zi9MWMkpMSdfRjWMC7JNAFHGFmeXQ5vlp60bzBC1o+oXhGmoc9M2OPhJVraZT
+	pxJwK0tqRp2HfctcD+/dyV1S7CAIcjLN45EVFPUQDHcSqGGWDZlWloQ3/IfaZJGaPRC1Po4yTjj
+	dhc/M=
+X-Received: by 2002:a05:6a00:181d:b0:89f:63f9:b6c4 with SMTP id d2e1a72fcca58-8a9bd9d6ff3mr8752585b3a.32.1793690386928;
+        Mon, 02 Nov 2026 23:19:46 -0800 (PST)
+X-Received: by 2002:a05:6a00:181d:b0:89f:63f9:b6c4 with SMTP id d2e1a72fcca58-8a9bd9d6ff3mr8752561b3a.32.1793690386349;
+        Mon, 02 Nov 2026 23:19:46 -0800 (PST)
 Received: from [10.217.218.73] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eb39298329sm35935305ad.61.2026.11.02.23.18.48
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8aad9c09086sm2768904b3a.23.2026.11.02.23.19.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Nov 2026 23:18:52 -0800 (PST)
-Message-ID: <fc929696-92ad-460a-b097-40e66a264252@oss.qualcomm.com>
-Date: Tue, 3 Nov 2026 12:48:46 +0530
+        Mon, 02 Nov 2026 23:19:45 -0800 (PST)
+Message-ID: <8b83c220-4dfd-433d-ae8f-8b65a4865c78@oss.qualcomm.com>
+Date: Tue, 3 Nov 2026 12:49:40 +0530
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -117,8 +117,8 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] i2c: qcom-geni: Add bus recovery support for GPI
- DMA mode
+Subject: Re: [PATCH v3 2/3] i2c: qcom-geni: Add bus recovery support for FIFO
+ mode
 To: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
         Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
         Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
@@ -127,128 +127,120 @@ Cc: naresh.maramaina@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
         dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-i2c@vger.kernel.org
 References: <20261027-20260826_aniket_randive_oss_qualcomm_com-v3-0-7f2a6e572de9@oss.qualcomm.com>
- <20261027-20260826_aniket_randive_oss_qualcomm_com-v3-3-7f2a6e572de9@oss.qualcomm.com>
- <b88efeae-6041-4189-a559-a16be07450bc@oss.qualcomm.com>
+ <20261027-20260826_aniket_randive_oss_qualcomm_com-v3-2-7f2a6e572de9@oss.qualcomm.com>
+ <acac5cec-6fa2-4465-9f66-a5e533404978@oss.qualcomm.com>
 Content-Language: en-US
 From: Aniket RANDIVE <aniket.randive@oss.qualcomm.com>
-In-Reply-To: <b88efeae-6041-4189-a559-a16be07450bc@oss.qualcomm.com>
+In-Reply-To: <acac5cec-6fa2-4465-9f66-a5e533404978@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=O+KsLx9W c=1 sm=1 tr=0 ts=6ae98ade cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDAyOCBTYWx0ZWRfX8fhniXDnDi2S
+ sjP+qLJ3pftCd0l4Kdy3f+2VVkOv/O2LH0BCii9W96VYP3s+rrE/PYkK2TWgIaHvimm+y8zBjOy
+ cT91rGggW4nf0fwnltuga28XUHH/f6k=
+X-Proofpoint-ORIG-GUID: 3sbB0LhQTd7dFDoIWx-d55dO_S7gbGoC
+X-Authority-Analysis: v=2.4 cv=F73C5ahN c=1 sm=1 tr=0 ts=6ae98b13 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=SV6vjZuu5MrVPe49oagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: s3xjEpcMeoy8WryGFbhvRv866boeHOsO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDAyOCBTYWx0ZWRfX0pTfih79EZvw
- 6YVNiRB1f+dcLX8wetUqDM34UelxBogL914A5OqsdqPa+ucIgNH+vQcNwtG2eH4PHh95WzxqNJu
- p3/VPubC8Z6zjenUmHqgsi+4wp8V/SkGTMwYH5toSfoWBv6kUtJaydBShBn3C5aQstU5UZaujkk
- HSOC2cP19nht2QJ+JVyX5lycKgWKCTSBIKZE3gvkK0TKMTxGTJrVyP6LJfxKfwQjen7pwprNYAe
- rIpJ/bbHPTKUJP4ewZtfmQ0BWp+9lqLEQPujDgXNFqEIDAgIYWtAoKKcK3GEPVL/u0r+twwwHgS
- gkdwHrnMsk1vgbY1RubBLd2w//ZNBYWoM3+RVqhENdhxDim7jsm/PbXVn8cf9PB3QMQB2jSwIbF
- 0ptJas8BUV+p2TK6ZhJ9Ko4HcaOzRtaz2rmLNz+QdA1PedpHY/z+HJgQUwsdU+HSGm8nJaK/WPk
- nXBqn6yHm9iiwM4iJ8w==
-X-Proofpoint-GUID: s3xjEpcMeoy8WryGFbhvRv866boeHOsO
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAzMDAyOCBTYWx0ZWRfX3Cny84ePseuE
- cRwjx5/oHeYYmUSO/U6eZKWASAEuCaQzgQBUzDxy5vn5T9nixYCFN6rxsIUP4z3GRiKcOcuRrmU
- sN/okKn06UzYLMVO9fKZuZhIpWN/UmY=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=NaWF0_NUFfviP6yxQe4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-GUID: 3sbB0LhQTd7dFDoIWx-d55dO_S7gbGoC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAzMDAyOCBTYWx0ZWRfX6sjnndkwI6tS
+ ZWBbINyvvqoN8MzVbaLq8XK9aaobYG1YYedcPSJkt2C5djNEfeqIfHPAIEz//4+UA3VDQ6x8Wic
+ XLWwoJT/xc6Hfxz9tucmGBRs2zRn1ekhWtKOZqGj0KhwgHZRHm5/2ki4PINqUQuPvlYwuaxpe8u
+ OfnqkRrWZfHy4EmbbVniAm97P2IiWt9BntTXaAL6eWG04Uy9yatpNuT14K5BRWhc3eOnUQwaJHG
+ CW1ded18VP/OiyIBBwDM9RxT0plSa1BdAHQqE/saMF2o6m+RxLtQoi00U2kDrckM1MgXzYy2Qm9
+ 1Hat48fEQH1f47Gj22aXT83ez2yRjp/ma9uj6rHOdbfnIGlLMIgpUmQM57Z92nNg83UHmxDTt0o
+ waJj3O+vpZi9NZxNFjGYyuX6x+FC3IQEnkcj15SGmcJcan501oIH15I7ZFCK+w2XUtZ+F5xbVDD
+ fVBg+yEz3iypm7M+VAQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-11-03_01,2026-11-02_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 suspectscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610300000
- definitions=main-2611030028
+ malwarescore=0 phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611030028
 
 
 
-On 10/27/2026 8:01 PM, Mukesh Savaliya wrote:
+On 10/27/2026 7:37 PM, Mukesh Savaliya wrote:
 > 
 > 
 > On 10/27/2026 10:43 AM, Aniket Randive wrote:
-> [...]
+> [...]> ---
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 127 +++++++++++++++++++++++++++ 
+>> +++++++++-
+>>   1 file changed, 126 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/ 
+>> i2c-qcom-geni.c
+>> index 60b6273f538c..d9e86f110ae9 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
 > 
->> +static int geni_i2c_gpi_bus_cmd(struct geni_i2c_dev *gi2c, enum 
->> i2c_op cmd)
+> [...]> +static int geni_i2c_recover_bus(struct i2c_adapter *adap)
 >> +{
->> +    const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
->> +    struct dma_async_tx_descriptor *desc;
->> +    struct gpi_i2c_config peripheral = {};
->> +    struct dma_slave_config config = {};
->> +    unsigned long time_left;
->> +    unsigned long flags;
->> +    dma_cookie_t cookie;
+>> +    struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
+>> +    u32 ios;
 >> +    int ret;
 >> +
->> +    config.peripheral_config = &peripheral;
->> +    config.peripheral_size = sizeof(peripheral);
->> +
->> +    peripheral.set_config  = 1;
->> +    peripheral.pack_enable = I2C_PACK_TX | I2C_PACK_RX;
->> +    peripheral.cycle_count = itr->t_cycle_cnt;
->> +    peripheral.high_count  = itr->t_high_cnt;
->> +    peripheral.low_count   = itr->t_low_cnt;
->> +    peripheral.clk_div     = itr->clk_div;
->> +    peripheral.op          = cmd;
->> +
->> +    ret = dmaengine_slave_config(gi2c->tx_c, &config);
->> +    if (ret) {
->> +        dev_err(gi2c->se.dev, "dma config error %d for bus cmd %u\n", 
->> ret, cmd);
+>> +    ret = pm_runtime_get_sync(gi2c->se.dev);
+>> +    if (ret < 0) {
+>> +        dev_err(gi2c->se.dev, "bus recovery failed, error turning SE 
+>> resources:%d\n", ret);
+>> +        pm_runtime_put_noidle(gi2c->se.dev);
 >> +        return ret;
 >> +    }
 >> +
->> +    desc = dmaengine_prep_slave_single(gi2c->tx_c, 0, 0, DMA_MEM_TO_DEV,
->> +                       DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
->> +    if (!desc)
->> +        return -EIO;
->> +
->> +    desc->callback_result = i2c_gpi_cb_result;
->> +    desc->callback_param = gi2c;
->> +
->> +    cookie = dmaengine_submit(desc);
->> +    if (dma_submit_error(cookie))
->> +        return -EIO;
-> 
-> Rather capture ret and return it if it's an error ?
-
-sure. I will make the change in next patch.
-> 
->> +
->> +    /*
->> +     * cur and err are shared with geni_i2c_irq() and the GPI callback
->> +     * i2c_gpi_cb_result(); both write err (the IRQ handler under
->> +     * gi2c->lock). Reset them under the lock before issuing the 
->> transfer.
->> +     */
->> +    spin_lock_irqsave(&gi2c->lock, flags);
->> +    gi2c->cur = NULL;
->> +    gi2c->err = 0;
->> +    spin_unlock_irqrestore(&gi2c->lock, flags);
->> +    reinit_completion(&gi2c->done);
-> Safe to init before dmaengine_submit().> + dma_async_issue_pending(gi2c- 
->  >tx_c);
+>> +    ret = gi2c->dev_data->set_rate(&gi2c->se, gi2c->clk_freq_out);
+>> +    if (ret) {
+>> +        dev_err(gi2c->se.dev, "bus recovery failed, error setting 
+>> clock rate: %d\n",
+>> +            ret);
+>> +        pm_runtime_put_autosuspend(gi2c->se.dev);
+> can use goto , jump there at exit with ret updated.
+> As 4 times i see pm_runtime_put_autosuspend().> +        return ret;
 
 Agree. I will make the change in next patch.
 
->> +
->> +    time_left = wait_for_completion_timeout(&gi2c->done, gi2c- 
->> >adap.timeout);
->> +    if (!time_left) {
->> +        dev_err(gi2c->se.dev, "timeout waiting for GPI bus cmd %u\n", 
->> cmd);
->> +        ret = dmaengine_terminate_sync(gi2c->tx_c);
->> +        if (ret)
->> +            dev_err(gi2c->se.dev, "DMA termination failed for bus cmd 
->> %u: %d\n",
->> +                cmd, ret);
->> +        return -ETIMEDOUT;
 >> +    }
 >> +
->> +    return gi2c->err;
+>> +    if (geni_i2c_bus_is_free(gi2c)) {
+>> +        pm_runtime_put_autosuspend(gi2c->se.dev);
+>> +        return 0;
+>> +    }
+>> +
+>> +    /* Bus clear cannot recover a target holding SCL low. */
+>> +    ios = readl_relaxed(gi2c->se.base + SE_GENI_IOS);
+>> +    if (!(ios & IO2_DATA_IN)) {
+>> +        pm_runtime_put_autosuspend(gi2c->se.dev);
+>> +        return -EBUSY;
+>> +    }
+>> +
+>> +    ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_BUS_CLEAR);
+>> +    if (!ret)
+>> +        ret = geni_i2c_fifo_bus_cmd(gi2c, I2C_STOP_ON_BUS);
+>> +
+>> +    /*
+>> +     * Recovery succeeds only once both bus lines are released. The bus
+>> +     * state is the authority, while a clean opcode status with either
+>> +     * line low is a failed recovery.
+>> +     */
+>> +    if (geni_i2c_bus_is_free(gi2c))
+>> +        ret = 0;
+>> +    else if (!ret)
+>> +        ret = -EBUSY;
+>> +
+> 
+> Please simplify with ternary condition ?
+> 
+
+Sure. I will do the change.
+
+>> +    pm_runtime_put_autosuspend(gi2c->se.dev);
+>> +
+>> +    return ret;
 >> +}
 >> +[...]
 
