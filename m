@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793760611;
-	b=fO3/fjtKvUV1bdluemLN+L4PnaVIhVuKIDk3i3mKcLyYQXyde08C0uoZ/OgXqyQANTr0
-	 LV6IOk+QGR1qnFNZiIB4e1P3gCeBCGQuIFWNvsqDqkfV699upMfrB5xPVgHbBcOrxSwEJ
-	 Mg7YGcT54jIwN7kYtg8GIBPS3bCxNqeuZCYff9RiCGjbO80TDKZbBH4dgHocqRpQOI5RI
-	 Xkt1tCJDL30Bs/+uogTY/+zbuj/S6LcN4Hsg2EunyDSYOq+i+0bOJc6df8sQoZgI+vOs1
-	 NuY9kV6kJJnl3NG8MSHIg0yx/bVGl/Vh8clivs2Ex1oPx4FmGaTvqTUipoSjn5hPytA==
+	t=1793760612;
+	b=WsyWJ/o/gRq4rChTXNateORpPclkjB/e0FqjlcZ+NQptpmf+XvQquQUMl0a3uSwJsUNh
+	 0rypNQZpbaAhaJ8oKqY9zlHHJqNYG8bkTWXsqVzpq5uB9xHrF+ATVwwPcldgDZ1/tS3cy
+	 O1+6KcEIqX/lUKoOEPfyDB4KJm1EOzUkhpdItDx7hACSdlylgneyemOUiPMnjfBLR1vj0
+	 8wl8bN9vpcbsOb76Td3Dcizl2+pnT1/3R9JguUsvxe8Pi5ANuEUQc11iIbC0GFWVIN2Z3
+	 /zkxAOg/Qh1OozBdl8deZnu3SfUGUFzjtcqFvlPooLtBi3EX+Op96/FD0g6f+GektLg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793760611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793760612;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=F7QhiC+uktKN1qhh3NgDDNa1dxCZvyPt8+LJosFTr00=;
-	b=QwoD3ozdqLAiw6rr43ua2TuPqlTxklWnS8/aEgGtSdFuSbeqINALo3xaP/fNqDOAnVuN
-	 KwNYx0hVF7MLBupHtsvgcJcL1FHqoeBMdNs+ISBMVxjl6nyPlK/TPLKIAR3fYCvutxKza
-	 V8FVVRdXl+hJDtY5OxfHCPpCMBLRPtebn6OaHCmisDQQJM3oLRjWUlmmrFVQ1uWmHmawy
-	 OKzPMLrrjhQ4xLgO1X1qHj7T1K/YZhsBNkeya+VYz0iPi+KOffpgktsrN9lcWLbkyG9k4
-	 JwX+YAjzuHBCOYK8dVaJTyPIvm7snl+6NKNjYBdhjC65FTHGdBhdTTm1ddAjslaUkRw==
+	bh=t/hcIWtNIzSivDcK+69CsCDWkpdF1ci85kq1UG7WRJU=;
+	b=NjWQdkOeqjcL0rW4EmZPXgx2JlSF8h9DQOzIPBpDtKtHzISra9Tm8xroVKNgE80OzVA0
+	 zm+uLZr9O3H0/HgxIyoCxD0dpY9uUvamvdRhsmhDAKxaZ3gU6dSOu5+djD0ytEHNwBalS
+	 lDtSmFf9ABVyXjrSNp76UuYHkzCpzAqDF7x5Ar+63xbWkp5gCZ/u9iChTmXK6jhXUKCSU
+	 WqGvbj8sQ9wH8Fm78Q7eKGFfrUQUs474ynLREZuF7OeHppgh5TSaAWDN0drIlFEAovEnv
+	 CsSe9fFcfYOvh3QSq6Rs3twQh2jL9sg4itKYrgRSiW3gdzwTgl2GixAjimbcAd4X68w==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H1TffzeN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="nsSXtc/t";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C621606EEA4;
-	Wed,  4 Nov 2026 02:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B822606A33F;
+	Wed,  4 Nov 2026 02:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H1TffzeN
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nsSXtc/t
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793760610;
-	b=dWBtBQ0dUUiHmTOQEnE6GfxtL2mxo7wSIuxoG89n4Hh1CeWFFHbg1qcr8ZhzBqZFZR6e
-	 Zc3xhlnRYU3eCAklSSgCy4DcjYwtvcc0pYOD69pp79DVNfz3cq0JHXGwUepQJcFJg31WY
-	 gilvRC2CkXh27H0nF7qqoG2kw3RR5BybmetL/HKp/CpDcm2dSnB/ruBwDMNI2lg6Jrjn1
-	 /6AyjX5TE7pVahxh+GRGp+1autwld0lAg79BGW1dzn8QmIJRg4cv8XdisvxREsEjl3ITB
-	 B0AS5h/N4VAm39sfOEz+0yKnK46XfKljxlZxVZP2VbDY/XDUUu3GpQeJlcRAcXDSTfA==
+	t=1793760612;
+	b=MsSXxa5hCMYJ4bz2MtAuHv9dlQgiM6O/8CALko/VsLrpEiOJ7VtC7Ivzo6rGarGAyzeP
+	 vG08hc9IoitqeQLudC1m4aVuwg2NepVcY4ekD9w1vsGWPh+Fym0zVlNMK0z8fh65nszTF
+	 2Iih8clOxGdvauhoif/+2GVbiQvManQb0PY/ZLfIC1JTHWfTh3Lz/yC6BKf+9O9IFoO31
+	 D4KSULXl/MatWivHLUEH0aaADVUf1CXKbc+VH8RCIzqWR4nvmVmRDYy5nyujleXLLuAGW
+	 eC7bPcC1I8TpMeVxxzoqgKvZLUBBVDx0mVhZAQmdvcsfdzQ5rDCiIhAkAlS2Wi6UNcQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793760610;
+	c=relaxed/relaxed; t=1793760612;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=F7QhiC+uktKN1qhh3NgDDNa1dxCZvyPt8+LJosFTr00=;
-	b=dZwaCIqcxKkEcelHKWUGwqwRrhGBMTwGRt0bp3q2cPLlqroEheJQsyzP63wqYZcycCZF
-	 811FnIuP6OvTI6nh8Z0YLZ5rbtIFlxd6S6N3qaeBmYBxFV4L6XSNIWPUg63hVFbDYS7P7
-	 kB+4D8DR3QSXa9QZUchl+XiqRqzLped77ryHMrQbittBwkUr0jE5LY8Oo2s5x/9TPUfbs
-	 kKudIFt58naiWDXadJheDEUQMMyHIB6hwkOJN/1Esq5JLfbWt7k5jzB/gYpIr4SCEL4dz
-	 NUCa/GZyw0sZjX5ZgLmxy58MlzY8ODraqW5fy2vpKdovKVxT6QE99cWbc3xqTVX6Niw==
+	bh=t/hcIWtNIzSivDcK+69CsCDWkpdF1ci85kq1UG7WRJU=;
+	b=AZk/BDdNz6x/9Z0L3v/ZW/lb+WabXIs2v1EoJg9eSgPzzQkPHv4eNUbh0inTNIIeyx9+
+	 BrLCtTztBel7mFFotwCrTD+eUCea6zvLG/iUOedR87ecOH/FoR5iBgLYm3W3Y+57jDvVH
+	 SwvWQLIlw3U1Y+qZJ7JglWmVKvtEewDWQM/0CYl+XJYb81I/MtoGGFO+iToGxaOw2dpvl
+	 aaU62qLq5pza6qR7Ico6X2wBtjVu8+aqxi/Tm4/ot4EqA3uZo1Ct7WVHARjmxlALRdNgE
+	 sddrwRXdwGVcQK3fw4jw9lHkznWqyIrusaHe8Ntyd4RrRxo/mNrQNRNWtWbR2KojX0w==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 068251F00A1E;
-	Wed,  4 Nov 2026 02:50:06 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 08A381F00A2A;
+	Wed,  4 Nov 2026 02:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793760610;
-	bh=F7QhiC+uktKN1qhh3NgDDNa1dxCZvyPt8+LJosFTr00=;
+	s=k20260515; t=1793760612;
+	bh=t/hcIWtNIzSivDcK+69CsCDWkpdF1ci85kq1UG7WRJU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=H1TffzeNGPJtAXGuq6NmcVp6RCPvKO+NrVP++yU4fMLmB9vp465cxLJp3S91tMSg6
-	 AQWhQQs1+VlQPUn+0Yx1J5bwQ5qgSK5x6iPshle3UjGy/eUL4UDZkW/qo9mtpCq4g8
-	 03DFoFeUZXrRU9pVFjG8JJO3Uk+vwg04y5gJIdhpjvwrXcVD9zUCPRf1vPbzTXqBu1
-	 k1FAqSquGL6bvPjD6BOoMIIg4SwtGuNS08ETQqzmOnVFjbwnFsJQzRYdADoFoboeyi
-	 xprmX6vF7Q5BIwothKI9sjwfORofCjiXyez8yEoRY0tF6eWCpIb4PO7/kxzr9iRGZ2
-	 /qBhSUxiHHnwg==
+	b=nsSXtc/tABPolpnIsnd5S4v8ypgeJ5DwCO62H7I4k/nCh2MnLd+l1PN9VVsa17Sv1
+	 yUuWXm6vPLlaqs17G3SNv/kzoQ5Pnj1yYBFtL3667U/7KeK88SlcUkoIuFJSCVoSmx
+	 EPKZsH8mqGQVx0vlTt3HfGWzw7YQTjcmnWqF2QJJhlp9Cd2kvJzuqKnL2X4DCd2lia
+	 YWfGCuoK4YvCUr6VVZ6SIOZmKLmiVwQ+75ZBm30c56ESokdkL4I0q/ytUjomXtLdf8
+	 iltOSUpJ2FgSg8z0ZgMbUSu/E7gDm/z88cYR6zPPAyyMwg9rsH9LejgFSx6FPFCzDS
+	 yfHFLT16KcFWw==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id EF8FD46C2B;
-	Wed,  4 Nov 2026 02:50:02 +0000 (UTC)
+	by lkml.kernel.org (Postfix) with ESMTP id 50D0146C43;
+	Wed,  4 Nov 2026 02:50:03 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Tue, 03 Nov 2026 20:49:55 -0600
-Subject: [PATCH v4 14/25] dmaengine: sdxi: Add unit tests for descriptor
- ring reservations
+Date: Tue, 03 Nov 2026 20:50:01 -0600
+Subject: [PATCH v4 20/25] dmaengine: sdxi: Add client context release with
+ update and sync
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -84,7 +84,7 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261103-sdxi-base-v4-14-3668ccc7aab8@amd.com>
+Message-Id: <20261103-sdxi-base-v4-20-3668ccc7aab8@amd.com>
 References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 In-Reply-To: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -98,11 +98,11 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
  dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-pci@vger.kernel.org, Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=6959;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=6419;
  i=nathan.lynch@amd.com; s=20260722; h=from:subject:message-id;
- bh=aKi4Ay4MoaaY5cf3ziwzqNP5NjJiIfhtNK1EskqUWzk=;
- b=k5kVxI7V5fAJrf8LM7B0y8xNArZD18+smrSlG93ovsDSA0VLriOzibjXjcat6psavSME3KbZw
- C1LPsu33jzuBExFWSKN0fUSp86lxXJBMQPzIygHlbweRxoWavRbv5lW
+ bh=DyUho94aHD/s6qLu87Q74yX1eWXQuWFBmFBUTNvyZ70=;
+ b=c0EsCJ4zJpMETA4m5fpESHZKanIxfR6hDGYSHc4bC7hNSdo9Pg5okyTxVUXk1fsqZ3HzOeq9t
+ +sBiss4oNUDB9jMLArRw2j30t61L+YAKvM2Z+4PjZcOIsu0SS5c1edn
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=pO5+BCw/TENGLvwX5NYZOZmZihcxjkxeFSMuk47erps=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260722 with
@@ -113,217 +113,203 @@ Content-Transfer-Encoding: 7bit
 
 From: Nathan Lynch <nathan.lynch@amd.com>
 
-Add hardware-independent KUnit tests for full-ring and single-slot
-reservations, invalid counts, inconsistent indices, insufficient space,
-and bounded reservations and descriptor access after ring wrap.
+Invalidate an unused, stopped client context and synchronize hardware
+caches before freeing its resources. Add administrative update, reservation, and
+completion-polling helpers.
 
-Include the SDXI KUnit configuration and test build support. Run with:
+Claim completion-status storage before making an irrevocable ring
+reservation. Return the claim if reservation fails, and release it after
+consuming a terminal result. A timeout leaves hardware ownership
+unresolved, so retain that block in the administrative pool until context
+teardown, even if the device writes its terminal signal later. Repeated
+timeouts can exhaust the pool, causing further claims to time out rather
+than reuse outstanding status blocks.
 
-  tools/testing/kunit/kunit.py run \
-    --kunitconfig=drivers/dma/sdxi/.kunitconfig
+If update or synchronization fails, retain the context and its ID for
+cleanup after function shutdown. Device-wide teardown frees clients after
+the best-effort function stop/reset path without submitting additional
+administrative operations.
 
-Co-developed-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 ---
- drivers/dma/sdxi/.kunitconfig |   4 ++
- drivers/dma/sdxi/Kconfig      |  10 +++
- drivers/dma/sdxi/Makefile     |   3 +
- drivers/dma/sdxi/ring_kunit.c | 147 ++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 164 insertions(+)
+ drivers/dma/sdxi/context.c | 128 +++++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/context.h |   6 +++
+ 2 files changed, 134 insertions(+)
 
-diff --git a/drivers/dma/sdxi/.kunitconfig b/drivers/dma/sdxi/.kunitconfig
-new file mode 100644
-index 000000000000..16a1ae04b156
---- /dev/null
-+++ b/drivers/dma/sdxi/.kunitconfig
-@@ -0,0 +1,4 @@
-+CONFIG_KUNIT=y
-+CONFIG_DMADEVICES=y
-+CONFIG_SDXI_CORE=y
-+CONFIG_SDXI_KUNIT_TEST=y
-diff --git a/drivers/dma/sdxi/Kconfig b/drivers/dma/sdxi/Kconfig
-index b91b44231a04..7217375c9216 100644
---- a/drivers/dma/sdxi/Kconfig
-+++ b/drivers/dma/sdxi/Kconfig
-@@ -26,3 +26,13 @@ config SDXI_PCI
+diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
+index 679c5cfab19d..5ca99ac8080c 100644
+--- a/drivers/dma/sdxi/context.c
++++ b/drivers/dma/sdxi/context.c
+@@ -106,6 +106,78 @@ static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
+ 	return_ptr(cxt);
+ }
  
- 	  To compile this driver as a module, choose M here: the module
- 	  will be named "sdxi-pci".
-+
-+config SDXI_KUNIT_TEST
-+	tristate "SDXI unit tests" if !KUNIT_ALL_TESTS
-+	depends on SDXI_CORE && KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  KUnit tests for parts of the SDXI driver. Does not require
-+	  SDXI hardware.
-+
-+	  If unsure, say N.
-diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
-index bfcb443f1e64..00e3f1cb0808 100644
---- a/drivers/dma/sdxi/Makefile
-+++ b/drivers/dma/sdxi/Makefile
-@@ -7,3 +7,6 @@ sdxi-core-y := \
- 
- obj-$(CONFIG_SDXI_PCI) += sdxi-pci.o
- sdxi-pci-y := pci.o
-+
-+obj-$(CONFIG_SDXI_KUNIT_TEST) += \
-+	ring_kunit.o
-diff --git a/drivers/dma/sdxi/ring_kunit.c b/drivers/dma/sdxi/ring_kunit.c
-new file mode 100644
-index 000000000000..7df85fc5549c
---- /dev/null
-+++ b/drivers/dma/sdxi/ring_kunit.c
-@@ -0,0 +1,147 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * SDXI descriptor ring management tests.
-+ *
-+ * Copyright Advanced Micro Devices, Inc.
-+ */
-+#include <kunit/device.h>
-+#include <kunit/test-bug.h>
-+#include <kunit/test.h>
-+#include <linux/container_of.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/module.h>
-+#include <linux/overflow.h>
-+#include <linux/packing.h>
-+#include <linux/string.h>
-+
-+#include "ring.h"
-+#include "submission.h"
-+
-+MODULE_IMPORT_NS("EXPORTED_FOR_KUNIT_TESTING");
-+
-+/* A submission queue backed by plain memory; no device or DMA required. */
-+static struct sdxi_sq *alloc_sq(struct kunit *t, u32 count)
++/* Claim completion storage before making a ring reservation irrevocable. */
++static int sdxi_cxt_reserve(struct sdxi_cxt *cxt, size_t nr,
++			    struct sdxi_ring_resv *resv,
++			    struct sdxi_completion *comp)
 +{
-+	struct sdxi_sq *sq;
++	int err;
 +
-+	sq = kunit_kmalloc(t, struct_size(sq, ring, count),
-+			   GFP_KERNEL | __GFP_ZERO);
-+	if (sq)
-+		sq->count = count;
-+	return sq;
++	err = sdxi_cst_pool_get_wait(cxt->cst_pool, comp);
++	if (err)
++		return err;
++
++	err = sdxi_ring_reserve(cxt->ring_state, nr, resv);
++	if (err)
++		sdxi_cst_pool_put(cxt->cst_pool, comp->cst_blk);
++
++	return err;
 +}
 +
-+static void valid(struct kunit *t)
++static int sdxi_cxt_poll_completion(struct sdxi_cxt *cxt,
++				    const struct sdxi_completion *comp)
 +{
-+	struct sdxi_ring_state r;
++	int err = sdxi_cst_blk_poll(comp->cst_blk);
++
++	/*
++	 * A timeout does not end hardware ownership. Keep these administrative
++	 * blocks claimed until context teardown, even if they complete later.
++	 * Repeated timeouts can exhaust the pool; allocation then times out too.
++	 */
++	if (err != -ETIMEDOUT)
++		sdxi_cst_pool_put(cxt->cst_pool, comp->cst_blk);
++	sdxi_ring_wake_up(cxt->ring_state);
++
++	return err;
++}
++
++/*
++ * Signal the function that a client context's control structures have
++ * been modified so it discards any privately cached copies of them.
++ * DSC_SYNC.CXT is required before the operation can be considered
++ * complete.
++ */
++static int sdxi_cxt_update(const struct sdxi_cxt *cxt)
++{
++	struct sdxi_cxt *adm = to_admin_cxt(cxt);
++	struct sdxi_slot upd, sync;
 +	struct sdxi_ring_resv resv;
-+	struct sdxi_sq *sq;
++	struct sdxi_completion comp;
++	int err;
 +
-+	sq = alloc_sq(t, SZ_1K);
-+	KUNIT_ASSERT_NOT_NULL(t, sq);
++	might_sleep();
 +
-+	sdxi_ring_state_init(&r, sq);
++	err = sdxi_cxt_reserve(adm, 2, &resv, &comp);
++	if (err)
++		return err;
 +
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&r, sq->count, &resv), 0);
-+	KUNIT_EXPECT_EQ(t, resv.range.start, 0);
-+	KUNIT_EXPECT_EQ(t, resv.range.end, sq->count - 1);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_resv_count(&resv), sq->count);
-+	KUNIT_EXPECT_EQ(t, le64_to_cpu(sq->write_index), sq->count);
++	upd = sdxi_ring_resv_slot(&resv, 0);
++	sync = sdxi_ring_resv_slot(&resv, 1);
 +
-+	/* A ring-sized reservation maps slot i onto ring entry i. */
-+	for (unsigned int i = 0; i < sq->count; i++) {
-+		KUNIT_EXPECT_EQ(t, sdxi_ring_resv_index(&resv, i), i);
-+		KUNIT_EXPECT_PTR_EQ(t, sdxi_ring_desc(&r, i), &sq->ring[i]);
++	sdxi_encode_cxt_upd(sdxi_slot_desc(upd), &(const struct sdxi_cxt_upd) {
++			.level = SDXI_CXT_UPD_LVL_L1,
++			.range = sdxi_cxt_range_single(cxt->id),
++		});
++	sdxi_encode_sync(sdxi_slot_desc(sync), &(const struct sdxi_sync) {
++			.filter = SDXI_SYNC_FLT_CXT,
++			.range = sdxi_cxt_range_single(cxt->id),
++		});
++	sdxi_cxt_submit(adm, upd, NULL, 0);
++	sdxi_cxt_submit(adm, sync, &comp, SDXI_CXT_SUBMIT_KICK);
++
++	return sdxi_cxt_poll_completion(adm, &comp);
++}
++
+ struct sdxi_cxt_ctl_cfg {
+ 	dma_addr_t ds_ring_ptr;
+ 	dma_addr_t cxt_sts_ptr;
+@@ -144,6 +216,16 @@ static int configure_cxt_ctl(struct sdxi_cxt_ctl *ctl, const struct sdxi_cxt_ctl
+ 	return 0;
+ }
+ 
++static void invalidate_cxt_ctl(struct sdxi_cxt_ctl *ctl)
++{
++	u64 ds_ring_ptr = le64_to_cpu(ctl->ds_ring_ptr);
++
++	FIELD_MODIFY(SDXI_CXT_CTL_VL, &ds_ring_ptr, 0);
++	WRITE_ONCE(ctl->ds_ring_ptr, cpu_to_le64(ds_ring_ptr));
++	dma_wmb();
++	*ctl = (typeof(*ctl)) { 0 };
++}
++
+ /*
+  * Logical representation of CXT_L1_ENT subfields.
+  */
+@@ -194,6 +276,17 @@ static int configure_L1_entry(struct sdxi_cxt_L1_ent *ent,
+ 	return 0;
+ }
+ 
++static void invalidate_L1_entry(struct sdxi_cxt_L1_ent *ent)
++{
++	u64 cxt_ctl_ptr = le64_to_cpu(ent->cxt_ctl_ptr);
++
++	FIELD_MODIFY(SDXI_CXT_L1_ENT_VL, &cxt_ctl_ptr, 0);
++	WRITE_ONCE(ent->cxt_ctl_ptr, cpu_to_le64(cxt_ctl_ptr));
++	dma_wmb();
++	*ent = (typeof(*ent)) { 0 };
++}
++
++
+ /* Publish the context control block and L1 entry to hardware. */
+ static int sdxi_publish_cxt(const struct sdxi_cxt *cxt)
+ {
+@@ -398,3 +491,38 @@ void sdxi_cxt_submit(struct sdxi_cxt *cxt, struct sdxi_slot slot,
+ 	if (flags & SDXI_CXT_SUBMIT_KICK)
+ 		sdxi_cxt_kick(cxt);
+ }
++
++/*
++ * Release an unused, stopped client context. On update/sync failure the
++ * context remains owned by the device and its resources are retained for
++ * cleanup after function shutdown; the caller must not reuse it.
++ */
++int sdxi_cxt_exit(struct sdxi_cxt *cxt)
++{
++	struct sdxi_dev *sdxi = cxt->sdxi;
++	struct sdxi_cxt_L1_ent *ent;
++	u8 state;
++	int err;
++
++	if (WARN_ON(sdxi_cxt_is_admin(cxt)))
++		return -EINVAL;
++
++	state = FIELD_GET(SDXI_CXT_STS_STATE, READ_ONCE(cxt->sq->cxt_sts.state));
++	if (state != CXTV_STOP_SW && state != CXTV_STOP_FN && state != CXTV_ERR_FN)
++		return -EBUSY;
++
++	ent = &sdxi->L1_table->entry[ID_TO_L1_INDEX(cxt->id)];
++	invalidate_L1_entry(ent);
++	invalidate_cxt_ctl(cxt->cxt_ctl);
++
++	err = sdxi_cxt_update(cxt);
++	if (err) {
++		dev_err(sdxi->dev,
++			"context %u release failed (%d), retaining resources until function shutdown\n",
++			cxt->id, err);
++		return err;
 +	}
 +
-+	sq->cxt_sts.read_index = cpu_to_le64(1);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&r, 1, &resv), 0);
-+	KUNIT_EXPECT_EQ(t, le64_to_cpu(sq->write_index), sq->count + 1);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_resv_count(&resv), 1);
-+
-+	/* The index space is unwrapped: index sq->count is entry 0. */
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_resv_index(&resv, 0), sq->count);
-+	KUNIT_EXPECT_PTR_EQ(t, sdxi_ring_desc(&r, sq->count), &sq->ring[0]);
-+}
-+
-+static void invalid(struct kunit *t)
-+{
-+	struct sdxi_ring_state rs;
-+	struct sdxi_ring_resv resv;
-+	struct sdxi_sq *sq;
-+
-+	sq = alloc_sq(t, SZ_1K);
-+	KUNIT_ASSERT_NOT_NULL(t, sq);
-+
-+	sdxi_ring_state_init(&rs, sq);
-+
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&rs, 0, &resv), -EINVAL);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&rs, sq->count + 1, &resv), -EINVAL);
-+
-+	sq->cxt_sts.read_index = cpu_to_le64(1);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&rs, 1, &resv), -EIO);
-+
-+	sq->cxt_sts.read_index = 0;
-+	sq->write_index = cpu_to_le64(sq->count);
-+	sdxi_ring_state_init(&rs, sq);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&rs, 1, &resv), -EBUSY);
-+
-+	sq->cxt_sts.read_index = cpu_to_le64(sq->count);
-+	sq->write_index = cpu_to_le64(sq->count + 1);
-+	sdxi_ring_state_init(&rs, sq);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve(&rs, sq->count, &resv), -EBUSY);
-+}
-+
-+static void bounded_reservations(struct kunit *t)
-+{
-+	struct sdxi_ring_state rs;
-+	struct sdxi_ring_resv resv;
-+	struct sdxi_sq *sq = alloc_sq(t, SZ_1K);
-+
-+	KUNIT_ASSERT_NOT_NULL(t, sq);
-+	sdxi_ring_state_init(&rs, sq);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve_range(&rs, 0, 2, &resv), -EINVAL);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve_range(&rs, 3, 2, &resv), -EINVAL);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve_range(&rs, 2, sq->count + 1, &resv),
-+			-EINVAL);
-+
-+	sq->write_index = cpu_to_le64(sq->count - 2);
-+	KUNIT_ASSERT_EQ(t, sdxi_ring_try_reserve_range(&rs, 2, 10, &resv), 0);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_resv_count(&resv), 2);
-+	KUNIT_EXPECT_EQ(t, resv.range.start, sq->count - 2);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve_range(&rs, 2, 10, &resv), -EBUSY);
-+	sq->cxt_sts.read_index = cpu_to_le64(1);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_try_reserve_range(&rs, 2, 10, &resv), -EBUSY);
-+	sq->cxt_sts.read_index = cpu_to_le64(5);
-+	KUNIT_ASSERT_EQ(t, sdxi_ring_try_reserve_range(&rs, 2, 10, &resv), 0);
-+	KUNIT_EXPECT_EQ(t, sdxi_ring_resv_count(&resv), 5);
-+	KUNIT_EXPECT_PTR_EQ(t, sdxi_slot_desc(sdxi_ring_resv_slot(&resv, 0)),
-+			    &sq->ring[0]);
-+}
-+
-+static struct kunit_case testcases[] = {
-+	KUNIT_CASE(valid),
-+	KUNIT_CASE(invalid),
-+	KUNIT_CASE(bounded_reservations),
-+	{}
-+};
-+
-+static int setup_device(struct kunit *t)
-+{
-+	struct device *dev = kunit_device_register(t, "sdxi-mock-device");
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(t, dev);
-+	t->priv = dev;
++	sdxi_free_cxt(cxt);
 +	return 0;
 +}
-+
-+static struct kunit_suite generic_desc_ts = {
-+	.name = "SDXI descriptor ring management",
-+	.test_cases = testcases,
-+	.init = setup_device,
-+};
-+kunit_test_suite(generic_desc_ts);
-+
-+MODULE_DESCRIPTION("SDXI descriptor ring tests");
-+MODULE_AUTHOR("Nathan Lynch");
-+MODULE_LICENSE("GPL");
+diff --git a/drivers/dma/sdxi/context.h b/drivers/dma/sdxi/context.h
+index f048e298f6de..71eef2c6243b 100644
+--- a/drivers/dma/sdxi/context.h
++++ b/drivers/dma/sdxi/context.h
+@@ -52,6 +52,12 @@ struct sdxi_cxt {
+ 
+ int sdxi_admin_cxt_init(struct sdxi_dev *sdxi);
+ struct sdxi_cxt *sdxi_cxt_new(struct sdxi_dev *sdxi);
++/*
++ * Caller must exclude users and stop the client before release. An update or
++ * synchronization failure retains the invalidated context for device teardown;
++ * the caller must not reuse it.
++ */
++int sdxi_cxt_exit(struct sdxi_cxt *cxt);
+ void sdxi_client_cxts_exit(struct sdxi_dev *sdxi);
+ 
+ enum sdxi_submit_flags {
 
 -- 
 2.56.0
