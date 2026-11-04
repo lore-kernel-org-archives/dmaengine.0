@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793797719;
-	b=Cx3EvIlB8axxyg5GOE+wqB3Zc/SSBW2KcqXVDLzF8Yz7wWBe/j5gPdyDSSy1avzKtnCf
-	 Fvx03OrItjChO0JxVKanrQKc5QPdq6NDea2n4bss9wybssgQlj+vReGUgNtoI6yDdiQoF
-	 RXFFxumsujq+VQmbv/LoO5bSigkccTMyaeeB6D5/qLko0p6w0EX7kTXRv5WT2Lx20HB0g
-	 niKMB7OfrJNSYjtLjArbt/PJhh1m+gdf21tTPEM6IPUgXQJBrqPSF0LOd32RELWJn+i0F
-	 WkDV3CgRdlf/vqIDNTXWGBvSA/DXhKSCLeuQfRfpXN+/wz3Mu9ro9akZWafc102u/Ow==
+	t=1793801016;
+	b=aq2N8Zn07UnGj9i1xSDbW0PHBVeSjJI7qiEMsm/gVgAGrldXoOosHKLkNlcsV2S33Su2
+	 eB0gvWSec17blFcf0tJumtF7yzPYCx+D3qp7ZzAnQl99EtnyHj7u8PPavvZqWO/HvIwJp
+	 m8zHmFj0eiIODLqWhyBAuAi8NkD+VIJMTDVaJ/J0MvmWm0ixnhrdwsSCEoUNQ1ClheFpj
+	 wsVqQ+SjXuhtNu9oCOgnhd/DSohpvKuspDFk0xZGSqIn9wZ1gcN/K5jNKMSPZG5m05t1P
+	 FAGcOB00Ef3tlxWRjtZIPEWc/4wOMdoC3DHVoypzt8kIEwfFGcJU9bXs7pC0oxI6HCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793797719;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=iSfIUyfCKRc55EWDt6I8EFOvGiqA3QTQENqRfeCCvks=;
-	b=xvpUx5ojOZAqSrewX25YT1dGt3p4LEq0fC9SFCnqW8w28/ldsK+z/X2p3jVPwywVlFzD
-	 DTuyMavL91HYjW78y1IE1nC010xXW55tDXRrgXfLF7s/Z4xhUGDyUlGQRqwr3/wXcTPK7
-	 ld0Hc/6qTp0a+qKi1zW25YeNtVB6XSffxe+11sZWEsz2deAao+kes5cx5tmS1sOqaL5R2
-	 8pAr+TcEP/5WvBQnIHYRX1/0xNjl0KU2lxREj73P+eI4r4zLUmDAD6DnmfBsGLSTgfSeb
-	 g66BC9mhS8upGohcwRSeCh1GyrtB9dmkIKzFrydlasUnL6Ikkmp9BObwdxCizXWSdPA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793801016;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=uknA9LO5XfZyma+M7n03w/JxLoJTVSxXbrmN0E2Qqwk=;
+	b=PeHiqWSnkeFtNH78B+P2dz6JguOCl/6vKYdtqVAr6wwHUaFqq1W63E0I5+bhndynxjON
+	 tEL75d4Xo93+JkMyWHFcjTq0IY72m8Z6V6VNkjKaWl3P/L4FJQ2jWkljN4FOZUUybkIMY
+	 xAWcbVGaoChaeclB2rAX/IYnAfiV0uKv28Ch9kvkv/vSCumhlB6/yoYMIGDFmCNKYWdMQ
+	 hapx9qUHnuP2L8JkJOg/1If3srC0D8hZaaJ/sAfiWwwFmYs4fx3SlduQz08XVir1T/blp
+	 l1o5w1t41rk6k6gPN3PvzjJV4XtIjg7csiLtdFlhaemtg8J4qekVDjKtdz6gNLcSz4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V9sZd8bJ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=G3zOtOlW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC183606A328;
-	Wed,  4 Nov 2026 13:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CC9606A31B;
+	Wed,  4 Nov 2026 14:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V9sZd8bJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162851F000C1;
-	Wed,  4 Nov 2026 13:08:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=G3zOtOlW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E94E1F000C1;
+	Wed,  4 Nov 2026 14:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793797718;
-	bh=iSfIUyfCKRc55EWDt6I8EFOvGiqA3QTQENqRfeCCvks=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=V9sZd8bJIFxMrU7+WNcU0VPC7l3364cc6ALuq7BG2BwHJvDC8+wA2Spdou3w+EpG1
-	 /wLJrYKBUz2KeQQ4kWKWHIJ7ISG3lh1m5QxbQlJ4OZra119sh1wic2hhYZvlsSsWZu
-	 46vppfPBHAos0S1f/3AY0aUcJ9b0AXl7ra9wDpo9o3M7YetQpnlyDnvem39vdQseaZ
-	 D1PuKZWR4JS+x8shlCkPKeRUL2snRyWKy8SE14qhT0wdBw4Tmz+kbUdfuqASryLTBj
-	 eHlORmOISZSBpY2NUIq5egOGtgXSsvjReS0K39hoBP/Qf9HQd+qMNmt7EHObmajOXo
-	 HOQhtYjsSy2EA==
-Message-ID: <sashiko-outbox-197326@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 2/5] dmaengine: arm-dma350: Add slave and cyclic
- transfer support
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jelly Jia" <Jelly.Jia@cixtech.com>
-Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261104124411.296640-3-Jelly.Jia@cixtech.com>
-References: <20261104124411.296640-1-Jelly.Jia@cixtech.com>
- <20261104124411.296640-3-Jelly.Jia@cixtech.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 04 Nov 2026 13:08:36 +0000
+	s=k20260515; t=1793801016;
+	bh=uknA9LO5XfZyma+M7n03w/JxLoJTVSxXbrmN0E2Qqwk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=G3zOtOlWX3MGmRDd5z/B4xbOCZZdTwCaGj35JCzfNwkvryB8Lgtd5yWEpArAooh63
+	 enx/9Uowo+XlfwgYddKPXN6IvHQ4UwitDFFZQoqMGWZ/5jrWG1mB7Ub2T8mrtnwK9C
+	 10xfSV0BEtoZVLwAlTkPWG8llG+QezSFxQ/L6TrOof5EMwuow2nGs3tAziCJ68WAZW
+	 46U0Jsi7d+s8ZenOVI99LKlKuV7LjsmcBEf85/SKzlI4/wLMBnG7KnScjRDe3ZQ9xR
+	 GBMlM7hGYZfi6l728afXvYzWPew12XKhawrid3K7RnZ5BRXRuMKvRnPbK27W++r1iK
+	 ngFpNwQY8LX+w==
+Date: Wed, 4 Nov 2026 15:03:32 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Shan-Chun Hung <shanchun1218@gmail.com>
+Cc: ychuang3@nuvoton.com, schung@nuvoton.com, vkoul@kernel.org, 
+	Frank.Li@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	kees@kernel.org, gustavoars@kernel.org, linux-arm-kernel@lists.infradead.org, 
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: dma: nuvoton,ma35d1-pdma: Document
+ MA35D1 PDMA controller
+Message-ID: <20261104-vole-of-legendary-plenty-811cf1@quoll>
+References: <20261103022202.2139674-1-shanchun1218@gmail.com>
+ <20261103022202.2139674-2-shanchun1218@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,165 +60,174 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261103022202.2139674-2-shanchun1218@gmail.com>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] dmaengine: arm-dma350: uninitialized sentinel and reset for dch-=
->req
-- [Medium] dmaengine: arm-dma350: clearing dch->desc on error in d350_irq()=
- loses error
---
+On Tue, Nov 03, 2026 at 10:22:01AM +0800, Shan-Chun Hung wrote:
+> Add binding for Nuvoton MA35D1 PDMA controller.
+> 
 
-commit 84e756dbc528524c6cc746a33846d36d67c475ad
-Author: Jelly Jia <Jelly.Jia@cixtech.com>
+Looks like valid Sashiko review, so only few nits, not a full review:
 
-dmaengine: arm-dma350: Add slave and cyclic transfer support
-
-This commit adds peripheral scatter-gather and cyclic DMA transfer support =
-to
-the arm-dma350 driver, including trigger configuration, coherent command po=
-ol
-management, period callbacks, and residue calculation.
-
-> diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
-> index fdc4cd2245798..cfe3bacfab687 100644
-> --- a/drivers/dma/arm-dma350.c
-> +++ b/drivers/dma/arm-dma350.c
-
-[ ... ]
-
-> @@ -207,14 +252,489 @@ static inline struct d350_chan *to_d350_chan(struc=
-t dma_chan *chan)
-
-[ ... ]
-
-> +static int d350_slave_params(struct d350_chan *dch,
-> +			     enum dma_transfer_direction direction,
-> +			     phys_addr_t *dev_cpu_addr,
-> +			     enum dma_data_direction *dev_dir,
-> +			     enum dma_slave_buswidth *width, u32 *maxburst)
-> +{
-> +	struct dma_slave_config config;
-> +	unsigned long flags;
-> +	int ret;
+> Signed-off-by: Shan-Chun Hung <shanchun1218@gmail.com>
+> ---
+>  .../bindings/dma/nuvoton,ma35d1-pdma.yaml     |  72 +++++++++++
+>  include/dt-bindings/dma/ma35d1-pdma.h         | 113 ++++++++++++++++++
+>  2 files changed, 185 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+>  create mode 100644 include/dt-bindings/dma/ma35d1-pdma.h
+> 
+> diff --git a/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml b/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+> new file mode 100644
+> index 000000000000..cd752571242c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+> @@ -0,0 +1,72 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/dma/nuvoton,ma35d1-pdma.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +	spin_lock_irqsave(&dch->vc.lock, flags);
-> +	config =3D dch->sconfig;
-> +	spin_unlock_irqrestore(&dch->vc.lock, flags);
+> +title: Nuvoton MA35D1 PDMA controller
 > +
-> +	ret =3D d350_check_slave_config(dch, &config);
-> +	if (ret)
-> +		return ret;
-> +	if (dch->req >=3D d350_chan_to_dmac(dch)->nreq)
-> +		return -EINVAL;
+> +description:
+> +  This describes the devicetree bindings for four Peripheral DMA engines to perform
 
-[Severity: Medium]
-Can this check in d350_slave_params() ever evaluate to true?
+Do not describe what the binding document is describe. Just describe
+that directly, so explain the hardware. Look at other examples.
 
-In d350_probe(), dmac is allocated with devm_kzalloc(), which zero-initiali=
-zes
-dch->req to 0 for all channels. Because d350_check_slave_config() already
-verifies d350_slave_supported(dch) (which requires nreq > 0), and the only
-place that updates dch->req is d350_of_xlate() after checking req < dmac->n=
-req,
-dch->req is always less than dmac->nreq. If a channel is requested without
-d350_of_xlate(), slave and cyclic transfers will silently use hardware trig=
-ger
-request line 0 instead of being rejected here.
+> +  memory-to-memory, memory-to-peripheral, or peripheral-to-memory data transfer
+> +  capable of supporting 10 channels, implemented in Nuvoton MA35D1 SoCs.
+> +
+> +maintainers:
+> +  - Shan-Chun Hung <shanchun1218@gmail.com>
+> +
+> +allOf:
+> +  - $ref: dma-controller.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: nuvoton,ma35d1-pdma
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  "#dma-cells":
+> +    const: 2
+> +    description:
+> +      The first cell is the channel number. The second cell is the
+> +      peripheral request source (REQSRC) selection, which defines which
+> +      peripheral is connected to that PDMA channel.
+> +
+> +  dma-channels:
+> +    const: 10
 
-In addition, d350_free_chan_resources() does not reset dch->req or clear
-dch->sconfig when freeing channel resources:
+Why isn't this implied by the compatible? Drop.
 
-static void d350_free_chan_resources(struct dma_chan *chan)
-{
-	struct d350_chan *dch =3D to_d350_chan(chan);
+> +
+> +additionalProperties: false
 
-	writel_relaxed(0, dch->base + CH_INTREN);
-	d350_terminate_all(chan);
-	d350_wait_for_stop(dch);
+This goes after required block.
 
-	free_irq(dch->irq, dch);
-	vchan_synchronize(&dch->vc);
-	vchan_free_chan_resources(&dch->vc);
-}
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - interrupts
+> +  - "#dma-cells"
+> +  - dma-channels
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/nuvoton,ma35d1-clk.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        dma-controller@40080000 {
+> +            compatible = "nuvoton,ma35d1-pdma";
+> +            reg = <0x0 0x40080000 0x0 0x2000>;
+> +            interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>;
+> +            clocks = <&clk PDMA0_GATE>;
+> +            #dma-cells = <2>;
+> +            dma-channels = <10>;
+> +        };
+> +    };
+> +
+> +...
+> diff --git a/include/dt-bindings/dma/ma35d1-pdma.h b/include/dt-bindings/dma/ma35d1-pdma.h
+> new file mode 100644
+> index 000000000000..0ddc99d29661
+> --- /dev/null
+> +++ b/include/dt-bindings/dma/ma35d1-pdma.h
 
-Should dch->req be initialized to an invalid sentinel such as U32_MAX (or
-dmac->nreq) in d350_probe(), and should d350_free_chan_resources() reset
-dch->req and clear dch->sconfig so stale request and slave configuration st=
-ate
-is not retained across channel release and reallocation?
+Filename must match the binding filename.
 
-[ ... ]
+> @@ -0,0 +1,113 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * Copyright (C) 2026 Nuvoton Technology Corp.
+> + */
+> +
+> +#ifndef __DT_BINDINGS_DMA_MA35D1_PDMA_H__
+> +#define __DT_BINDINGS_DMA_MA35D1_PDMA_H__
+> +
+> +#define MA35D1_PDMA_MEM			0
 
-> @@ -487,22 +1193,28 @@ static irqreturn_t d350_irq(int irq, void *data)
->  		else
->  			vd->tx_result.result =3D DMA_TRANS_ABORTED;
-> =20
-> -		vd->tx_result.residue =3D d350_get_residue(dch);
-> -	} else if (!(ch_status & CH_STAT_INTR_DONE)) {
-> -		dev_warn(dev, "Unexpected IRQ source? 0x%08x\n", ch_status);
-> -	}
-> -	writel_relaxed(ch_status, dch->base + CH_STATUS);
-> -
-> -	spin_lock(&dch->vc.lock);
-> -	vchan_cookie_complete(vd);
-> -	if (ch_status & CH_STAT_INTR_DONE) {
-> -		dch->status =3D DMA_COMPLETE;
-> -		dch->residue =3D 0;
-> -		d350_start_next(dch);
-> -	} else {
-> +		residue =3D d350_get_active_residue(dch);
-> +		vd->tx_result.residue =3D residue;
->  		dch->status =3D DMA_ERROR;
-> -		dch->residue =3D vd->tx_result.residue;
-> +		dch->residue =3D residue;
-> +		dch->desc =3D NULL;
-> +		if (desc->cyclic)
-> +			vchan_terminate_vdesc(vd);
-> +		else
-> +			vchan_cookie_complete(vd);
 
-[Severity: Medium]
-Does clearing dch->desc =3D NULL on the error path in d350_irq() cause error
-status to be lost?
+Hole
 
-When CH_STAT_INTR_ERR is raised for a non-cyclic descriptor, d350_irq() sets
-dch->status =3D DMA_ERROR and dch->desc =3D NULL, and calls
-vchan_cookie_complete(vd), which sets chan->completed_cookie to the failed
-descriptor's cookie.
+> +#define MA35D1_PDMA_UART0_TX		4
+> +#define MA35D1_PDMA_UART0_RX		5
+> +#define MA35D1_PDMA_UART1_TX		6
+> +#define MA35D1_PDMA_UART1_RX		7
+> +#define MA35D1_PDMA_UART2_TX		8
+> +#define MA35D1_PDMA_UART2_RX		9
+> +#define MA35D1_PDMA_UART3_TX		10
+> +#define MA35D1_PDMA_UART3_RX		11
+> +#define MA35D1_PDMA_UART4_TX		12
+> +#define MA35D1_PDMA_UART4_RX		13
+> +#define MA35D1_PDMA_UART5_TX		14
+> +#define MA35D1_PDMA_UART5_RX		15
+> +#define MA35D1_PDMA_UART6_TX		16
+> +#define MA35D1_PDMA_UART6_RX		17
+> +#define MA35D1_PDMA_UART7_TX		18
+> +#define MA35D1_PDMA_UART7_RX		19
+> +#define MA35D1_PDMA_UART8_TX		20
+> +#define MA35D1_PDMA_UART8_RX		21
+> +#define MA35D1_PDMA_UART9_TX		22
+> +#define MA35D1_PDMA_UART9_RX		23
+> +#define MA35D1_PDMA_UART10_TX		24
+> +#define MA35D1_PDMA_UART10_RX		25
+> +#define MA35D1_PDMA_UART11_TX		26
+> +#define MA35D1_PDMA_UART11_RX		27
+> +#define MA35D1_PDMA_UART12_TX		28
+> +#define MA35D1_PDMA_UART12_RX		29
+> +#define MA35D1_PDMA_UART13_TX		30
+> +#define MA35D1_PDMA_UART13_RX		31
+> +#define MA35D1_PDMA_UART14_TX		32
+> +#define MA35D1_PDMA_UART14_RX		33
+> +#define MA35D1_PDMA_UART15_TX		34
+> +#define MA35D1_PDMA_UART15_RX		35
+> +#define MA35D1_PDMA_UART16_TX		36
+> +#define MA35D1_PDMA_UART16_RX		37
+> +#define MA35D1_PDMA_QSPI0_TX		54
 
-Because dch->desc is now NULL, a subsequent call to d350_issue_pending() se=
-es
-!dch->desc and starts the next descriptor:
+You should not have holes in the ABI or this is not DT ABI, so drop or
+move out entire file from bindings.
 
-	spin_lock_irqsave(&dch->vc.lock, flags);
-	if (vchan_issue_pending(&dch->vc) && !dch->desc)
-		d350_start_next(dch);
-	spin_unlock_irqrestore(&dch->vc.lock, flags);
+Best regards,
+Krzysztof
 
-d350_start_next() overwrites dch->cookie and sets dch->status =3D
-DMA_IN_PROGRESS. If the consumer then queries d350_tx_status() for the fail=
-ed
-cookie, dma_cookie_status() returns DMA_COMPLETE, cookie =3D=3D dch->cookie=
- is
-false, and d350_find_queued_desc() returns NULL, so d350_tx_status() reports
-DMA_COMPLETE with a residue of 0 for the failed transfer.
-
-Clearing dch->desc in d350_irq() also prevents d350_terminate_all() from
-resetting dch->status back to DMA_COMPLETE:
-
-	if (dch->desc) {
-		if (dch->status !=3D DMA_ERROR)
-			vchan_terminate_vdesc(&dch->desc->vd);
-		dch->desc =3D NULL;
-		dch->status =3D DMA_COMPLETE;
-	}
-
-Should dch->desc remain set (or should d350_issue_pending() and
-d350_terminate_all() check dch->status =3D=3D DMA_ERROR) so that the error =
-state
-is preserved until the channel is terminated or queried?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261104124411.2966=
-40-1-Jelly.Jia@cixtech.com?part=3D2
