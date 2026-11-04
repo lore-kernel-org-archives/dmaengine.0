@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793760612;
-	b=iaHSF8+LOYOB1Zg3RuWWNtWkWL9FBCHNJ0moIGp6QezitMMgQ37MkL4rwO7o7tk5Paw9
-	 IFGcQ/VcUo1L8LXKKGSwk9Ct2rInPMgdqeHgf/ebefMZm8DMUuFmTgPM7Q678TtqBrubS
-	 LFhfzr3tj4N9K93PEUZOtoGx2TwMt2aPe6T1ibU45jgDoU8BzIvjnuD5U31tV2LZxuseg
-	 r6Orl9JRfoNNUlab+7QQmqVGuX92L+hmI6uLuc83TZwdfRdjpV7GtGchh8lafMcsGlAgJ
-	 KorHvIaD/H3l4XgmTNaI8i+SR/A8SbRaHvqjRO4umEOn0RYKKNDlp3cUJpoTciwqFgQ==
+	t=1793760613;
+	b=Os41R16AefoF0z46JF0INn8K4K/9RS3SddajqPgiit/90gQ7SM3bCikQjRp87kZxMKhM
+	 EtHGSqrR0OdRjMTCDCvp4uY7VENsbT2HXmb4DmyZSX3V466ERxe+7Dc4fRjLQgVbMy0kO
+	 rdFVZ7IDymflhYyWVn0rmaq3yyP96+t80oBDiAm6guj1ZTcjaQwZNwX8FGuFGruBJRred
+	 4a/28JyVijl4nI5ethlzKlzJKGqkQKeQyZhkIi1HszteMaHIke5kXL2vwJkrvGQLYObQI
+	 +yX6absQ90poF+9XYwqyPVSjLvCJIJx/AvNV3lqavP99/p4SXtSfc6XnirNtXRE+oSg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793760612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793760613;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=v3tom2/meHzCSXzSyf3WctlUBtWKz6mFCVzRtFGuF2E=;
-	b=k3Ia+ow6NuHgnQVJeMZMnImdADHlQorxMzfySIVeWezxGKImboQXYTQmSyBb1rBdzMrB
-	 /+v+Jz0zWOmvyINhQVmXYsLfSFpyeat1+BH7GYMvez9QTDNLHe57pqH4UxdTSp0tk9ESh
-	 NqI/SpTqv7tZWVbMwQOBqCs75rmxZdOrL2UvzKsBalt4vk7/qNqmcLfqdp2HrwbA7dZ2T
-	 28irlV0QR3cScSJLuGCJXrMdWbGw6k0mN2r7lcJrz2MQe0r51pntDuFQ7M/IRv+Y71Fp5
-	 z/qNZ+HtLJ2F7i0vUsnVuly7v14OIZOXX3l8dBYlZVuWcToXdHYg4bAQO7OHXij9Smw==
+	bh=pJkwV1AZ/ozwsddEeAyrFXDEUnf8mg/u8l9xIyCSEp0=;
+	b=xYOan/Hhx03O4JWeuSA9KsMvcU6+enFhjU796ypJbq+grFXL/yBth4kvJetKjwl9O6Eo
+	 eXaDToGewqR6fiVxfHVSHsmsQKh2m50IMTm7KA6nYiJtL2Q3KClkHXWtbeC1JiUW592HR
+	 dOc9grDlspiiMaj3yrE7GFq+0nggIqVgY3an3KvuBmaHoS17ann+lhqGnaq43tCmpAvtn
+	 zjfJs6jnvSIQWFO/3zsboiZRo/NTJV5GkkkaASgiBeZJiU3z59IEq5S3Q02nmBUoLYp/4
+	 1fwZd2TzDD4J28YldT+fPeCrkgywn2ovL5ge8PmPQsr9tSrjT0quKG751PJImpu1XEQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eOdZMB0X;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WOfvVnfY;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862EA606EEB2;
-	Wed,  4 Nov 2026 02:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5CF606EEBE;
+	Wed,  4 Nov 2026 02:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eOdZMB0X
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WOfvVnfY
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1793760612;
-	b=gEy78REI6BZH1eHf2Mgm6srRqJsA6AgmVuaw3yeR8NyJ6wqvBm3xgV7m+iPgaGdnAKS9
-	 fKIJITSy3dQIm35Mva1v2lnkR1mMMSXxKq8jDedcg5pg4ArgKfZbvmk6v6fCi2bUYoth7
-	 5qNrlRDJylACsk4elCGsMpM83whnmFMlBMJHSuH9ZoQEGvVoBg6qVNOh1IKlTot4R/ui5
-	 TlotU3CFu1zPKNM1unWaHiTZYCXcMQEbJMFdTbHeF1p01I5Fc4hkFZM7y5SJ0yxeQbcLM
-	 eagRx2K1UMJjGHFM29lkuuxdkRcalsHTKlXUu2rJGUzo6XU6GBLBIj6zQF05tuly2UQ==
+	b=KnfJmHw4ke+JBlczQciE9MSXmb9TMk3bbb2dcRuKjgMwdUe4eKjAflkR9lFYoT88tu42
+	 gQwHe41qT6ezMeAlmr/iGANevpe5U8ieC+fjey3+NO6SC4ApFaKam5xOLE4JyctVTahFi
+	 7GfjVWnEgNZnZMkwhFOcgHtfKROXv/UQEFbA2aBos/lPx/XOJA1wPnwKOTtrmjZVjxUtu
+	 8NA9JF9gb9KNDwh966XaBYBvk3lAwxUPv+ak0eli2V2elHWonS6QKckbuYtpGOyyHo4lK
+	 iQNcjbT1tS2KaEyvWKlePp67uPj5doF/54FhpqipLAJJV9VRpgrzmpeyBmQKUoQtA2A==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1793760612;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=v3tom2/meHzCSXzSyf3WctlUBtWKz6mFCVzRtFGuF2E=;
-	b=ocz+VSlah7rILLgblKcBFXLMnKTZZHMb6wtJi2YYHfVKanhEfVcCwtSlbBLJeZZuk6gb
-	 PWZQLxW6jFrNA56o/Wpw4rzHKdbs2dBZT6085jSC3bf9IWmdY2huXkyEnGnjn7GSLCayh
-	 s2rtc2W3VCqxqEnU7Z597RapsJ3f+guSal2aNDY1W4tLw4ekZKyeXZlIp0rQsg4j4tYHR
-	 p3xUmkMI10U4c5hn76RUlaW4um7ye2rF8MQ7tBeUUrA+btZ1NhAaeWEAE4WHQQaj3hAav
-	 jVHNImV4lXdzZ6YgCV6Sp1RYwo1qYr37k3Mfz2i4ElQzsHMvCBrnCnd6jaIMlencOEQ==
+	bh=pJkwV1AZ/ozwsddEeAyrFXDEUnf8mg/u8l9xIyCSEp0=;
+	b=jUR9albBI6MIstrc/p45no2GfgV5ChuW49UEIHezae68JTkrOtgXSjekCgAY4kr6lzoB
+	 Y7Ytobic+VsfofSjN80z766Pj02p2f8LugLYlMonWtzgBuCvaQ0kHc9hjF2X/kgJpZyD/
+	 rWhqcFPZ+pemvFHoVISUOnfukAXy160uw6M5hzOrvD77yUYEdJllyVmnTIqEqXN9Mzxc3
+	 JzXFG/MYANlTlbX2znvwBHT6nHj3ssqzE/VK4zvTL3adJkJwyGD0zFPNzMX2jiS5AL31u
+	 IrWYiH/VMVDM/tkDyDK3GpqVslosDeGqRJkf5jCCtfCedXEog8Mu1suxqKyWLdcKjPw==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id C03601F00A2C;
+	by smtp.kernel.org (Postfix) with ESMTPS id C368C1F000C1;
 	Wed,  4 Nov 2026 02:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1793760612;
-	bh=v3tom2/meHzCSXzSyf3WctlUBtWKz6mFCVzRtFGuF2E=;
+	bh=pJkwV1AZ/ozwsddEeAyrFXDEUnf8mg/u8l9xIyCSEp0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=eOdZMB0XI2v7dG6XQrRFJmCHx3EeF6L6E5FFg6c7GLm41AGkxjlB5ynO8jqWPYn3s
-	 BVevWfP1i8aAJHI/I6i8CKmczr89P9mcgSh9G9ZfrAJYG9XfAJF9kkDUqh7hLi2klw
-	 +jN0rm4RUzguhMeGrzF8wZgHk72r9JyLi9+yO9l5SMXUMUI3c5f5O28Q8YoSIMTQ+e
-	 mErBSoaKaDutVKl3cvXRWjEafFy8Nd8FA+fXYms9691uBjll3OvlcSHlKEvyrHXG6E
-	 XlJhjqVWTdq3PXFfe4cLyqFGtA0Uq+IATpogNit2duxzrfK8NqeKnHyLOdXdDqqjmB
-	 V0/ZTL5JQJgjw==
+	b=WOfvVnfY0ZILuLXT+8VPVvHJ72N7TXrKbX6Tgkz9h0nTRrdbD2Zxr2+BN4iTcqO+H
+	 vYfRu9sXRHKL/NpBm5wVJOKU+al36C2G9bIKgdPjf+oyv02Uu+rfW6H20HxaLJz31a
+	 FFOiamyMFbmqG2Z4NNlkyZ28vFvUaTf1Lbtzoj/2p1g2FGI40jLlctnrgmaZp4rhwC
+	 Zb0d21dqf66BHamBBG9RW/MWCzGlCIWhIoF4JpApn1cPbGX/qTkYBD0Gydfl68F1S5
+	 OhpKRXaVt9fVf882F1/sbw83bONzij+mDXkdtVQB6JbL68HPQ0LYxtBDnMFl9L08Av
+	 u21pC+1AdgJYQ==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 5E87A46C47;
+	by lkml.kernel.org (Postfix) with ESMTP id 6CB2146C4B;
 	Wed,  4 Nov 2026 02:50:03 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Tue, 03 Nov 2026 20:50:02 -0600
-Subject: [PATCH v4 21/25] dmaengine: sdxi: Provide context start and stop
- APIs
+Date: Tue, 03 Nov 2026 20:50:03 -0600
+Subject: [PATCH v4 22/25] dmaengine: sdxi: Encode copy and interrupt
+ descriptors
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -84,7 +84,7 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261103-sdxi-base-v4-21-3668ccc7aab8@amd.com>
+Message-Id: <20261103-sdxi-base-v4-22-3668ccc7aab8@amd.com>
 References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 In-Reply-To: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -98,11 +98,11 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
  dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-pci@vger.kernel.org, Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=3502;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=6594;
  i=nathan.lynch@amd.com; s=20260722; h=from:subject:message-id;
- bh=WiX3Tqeldc4IPKX4oqsKJ8nPLPgMYEiqvrHy0gtdIWQ=;
- b=PtTdQnyKMzWBAsxUOJc7gmMZe9bigIh1gKSIz4okf4v0hkrfEmgTIgq13+mcmGN8GsUs3Qx+g
- vvn3qjSRNHyC6ovn7H2hIYLzlOZmmebOMeZoQJK9yxEYv00XSWhWWPM
+ bh=4OfmiWXNOOdRLke0kwqMsLzBi0UssOb0ELX27UixZjI=;
+ b=nM9DDTdToud/GBbjuwOI3PdKaLnIaSatmvPyRBB2V5ZWOKEpXjSrQIe6tw8QbLGHcbZaUA3l4
+ SiGaZOvnxOuDy/jrC2CoREW64JYKiGP3bRZ712u6L87WYsuSuitJhRR
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=pO5+BCw/TENGLvwX5NYZOZmZihcxjkxeFSMuk47erps=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260722 with
@@ -113,109 +113,242 @@ Content-Transfer-Encoding: 7bit
 
 From: Nathan Lynch <nathan.lynch@amd.com>
 
-Implement client context start and stop by submitting administrative
-descriptors. Starting waits for the start descriptor to finish; stopping
-submits stop followed by synchronization and waits for the latter.
+Add copy and interrupt descriptor layouts and encoders. Both encoders
+accept operation-specific parameter structs.
 
-Use the administrative reservation and polling helpers to claim status
-blocks before reserving descriptors, release consumed results, and retain
-timed-out blocks until context teardown. Expose these operations through
-struct sdxi_cxt for clients such as the DMAengine provider.
+Copy descriptors are used to implement memcpy offload for the DMA
+engine provider, and interrupt descriptors are used to signal the
+completion of preceding descriptors in the ring.
+
+Conditionally expose sdxi_encode_size32() for unit testing.
 
 Co-developed-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 ---
- drivers/dma/sdxi/context.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++
- drivers/dma/sdxi/context.h |  3 +++
- 2 files changed, 64 insertions(+)
+ drivers/dma/sdxi/descriptor.c | 101 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/descriptor.h |  23 ++++++++++
+ drivers/dma/sdxi/hw.h         |  27 +++++++++++
+ 3 files changed, 151 insertions(+)
 
-diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
-index 5ca99ac8080c..0979fa35346b 100644
---- a/drivers/dma/sdxi/context.c
-+++ b/drivers/dma/sdxi/context.c
-@@ -364,6 +364,67 @@ int sdxi_admin_cxt_init(struct sdxi_dev *sdxi)
- 	return devm_add_action_or_reset(sdxi->dev, free_admin_cxt, sdxi);
- }
+diff --git a/drivers/dma/sdxi/descriptor.c b/drivers/dma/sdxi/descriptor.c
+index 424453ff7ba0..25b5d2862e79 100644
+--- a/drivers/dma/sdxi/descriptor.c
++++ b/drivers/dma/sdxi/descriptor.c
+@@ -5,14 +5,115 @@
+  * Copyright Advanced Micro Devices, Inc.
+  */
  
-+int sdxi_start_cxt(struct sdxi_cxt *cxt)
++#include <kunit/test-bug.h>
+ #include <kunit/visibility.h>
+ #include <linux/bitfield.h>
++#include <linux/bug.h>
++#include <linux/range.h>
++#include <linux/sizes.h>
+ #include <linux/types.h>
+ #include <asm/byteorder.h>
+ 
+ #include "hw.h"
+ #include "descriptor.h"
+ 
++VISIBLE_IF_KUNIT int __must_check sdxi_encode_size32(u64 size, __le32 *dest)
 +{
-+	struct sdxi_cxt *adm = to_admin_cxt(cxt);
-+	struct sdxi_ring_resv resv;
-+	struct sdxi_completion comp;
-+	struct sdxi_slot start;
++	/*
++	 * Sizes are encoded as value - 1:
++	 * value    encoding
++	 *     1           0
++	 *     2           1
++	 *   ...
++	 *    4G  0xffffffff
++	 * See SDXI 1.0 Table 6-8: DSC_DMAB_COPY Descriptor Format,
++	 * for example.
++	 */
++	if (size > 0 && size <= SZ_4G) {
++		*dest = cpu_to_le32((u32)(size - 1));
++		return 0;
++	}
++
++	/* Inhibit warning stack traces while testing. */
++	if (!kunit_get_current_test()) {
++		WARN_ON_ONCE(size == 0);
++		WARN_ON_ONCE(size > SZ_4G);
++	}
++
++	return -EINVAL;
++}
++EXPORT_SYMBOL_IF_KUNIT(sdxi_encode_size32);
++
++int sdxi_encode_copy(struct sdxi_desc *desc, const struct sdxi_copy *params)
++{
++	u64 csb_ptr;
++	u32 opcode;
++	__le32 size;
 +	int err;
 +
-+	might_sleep();
-+
-+	/* Administrative context activation is controlled by the function state. */
-+	if (WARN_ON(adm == cxt))
-+		return -EINVAL;
-+
-+	err = sdxi_cxt_reserve(adm, 1, &resv, &comp);
++	err = sdxi_encode_size32(params->len, &size);
 +	if (err)
 +		return err;
++	/*
++	 * Reject overlapping src and dst. "Software ... shall not
++	 * overlap the source buffer, destination buffer, Atomic
++	 * Return Data, or completion status block." - SDXI 1.0 5.6
++	 * Memory Consistency Model
++	 */
++	if (range_overlaps(&(const struct range) {
++				   .start = params->src,
++				   .end   = params->src + params->len - 1,
++			   },
++			   &(const struct range) {
++				   .start = params->dst,
++				   .end   = params->dst + params->len - 1,
++			   }))
++		return -EINVAL;
 +
-+	start = sdxi_ring_resv_slot(&resv, 0);
-+	sdxi_encode_cxt_start(sdxi_slot_desc(start), &(const struct sdxi_cxt_start) {
-+			.range = sdxi_cxt_range_single(cxt->id),
-+		});
-+	sdxi_cxt_submit(adm, start, &comp, SDXI_CXT_SUBMIT_KICK);
++	opcode = (FIELD_PREP(SDXI_DSC_SUBTYPE, SDXI_DSC_OP_SUBTYPE_COPY) |
++		  FIELD_PREP(SDXI_DSC_TYPE, SDXI_DSC_OP_TYPE_DMAB));
 +
-+	return sdxi_cxt_poll_completion(adm, &comp);
++	csb_ptr = FIELD_PREP(SDXI_DSC_NP, 1);
++
++	*desc = (typeof(*desc)) {
++		.copy = (typeof(desc->copy)) {
++			.opcode = cpu_to_le32(opcode),
++			.size = size,
++			.akey0 = cpu_to_le16(params->src_akey),
++			.akey1 = cpu_to_le16(params->dst_akey),
++			.addr0 = cpu_to_le64(params->src),
++			.addr1 = cpu_to_le64(params->dst),
++			.csb_ptr = cpu_to_le64(csb_ptr),
++		},
++	};
++
++	return 0;
 +}
++EXPORT_SYMBOL_IF_KUNIT(sdxi_encode_copy);
 +
-+void sdxi_stop_cxt(struct sdxi_cxt *cxt)
++int sdxi_encode_intr(struct sdxi_desc *desc,
++		     const struct sdxi_intr *params)
 +{
-+	struct sdxi_cxt *adm = to_admin_cxt(cxt);
-+	struct sdxi_slot stop, sync;
-+	struct sdxi_ring_resv resv;
-+	struct sdxi_completion comp;
-+	int err;
++	u64 csb_ptr;
++	u32 opcode;
 +
-+	might_sleep();
++	opcode = (FIELD_PREP(SDXI_DSC_SUBTYPE, SDXI_DSC_OP_SUBTYPE_INTR) |
++		  FIELD_PREP(SDXI_DSC_TYPE, SDXI_DSC_OP_TYPE_INTR));
 +
-+	/* Administrative context stopping is controlled by the function state. */
-+	if (WARN_ON(adm == cxt))
-+		return;
++	csb_ptr = FIELD_PREP(SDXI_DSC_NP, 1);
 +
-+	err = sdxi_cxt_reserve(adm, 2, &resv, &comp);
-+	if (WARN_ON_ONCE(err))
-+		return;
++	*desc = (typeof(*desc)) {
++		.intr = (typeof(desc->intr)) {
++			.opcode = cpu_to_le32(opcode),
++			.akey = cpu_to_le16(params->akey),
++			.csb_ptr = cpu_to_le64(csb_ptr),
++		},
++	};
 +
-+	stop = sdxi_ring_resv_slot(&resv, 0);
-+	sync = sdxi_ring_resv_slot(&resv, 1);
-+
-+	sdxi_encode_cxt_stop(sdxi_slot_desc(stop), &(const struct sdxi_cxt_stop) {
-+			.range = sdxi_cxt_range_single(cxt->id),
-+		});
-+	sdxi_encode_sync(sdxi_slot_desc(sync), &(const struct sdxi_sync) {
-+			.filter = SDXI_SYNC_FLT_STOP,
-+			.range = sdxi_cxt_range_single(cxt->id),
-+		});
-+	sdxi_cxt_submit(adm, stop, NULL, 0);
-+	sdxi_cxt_submit(adm, sync, &comp, SDXI_CXT_SUBMIT_KICK);
-+
-+	WARN_ON(sdxi_cxt_poll_completion(adm, &comp));
++	return 0;
 +}
++EXPORT_SYMBOL_IF_KUNIT(sdxi_encode_intr);
 +
- /*
-  * Temporary owner for context id until it can be assigned to a
-  * context object; enables scope-based cleanup.
-diff --git a/drivers/dma/sdxi/context.h b/drivers/dma/sdxi/context.h
-index 71eef2c6243b..acf41709c4de 100644
---- a/drivers/dma/sdxi/context.h
-+++ b/drivers/dma/sdxi/context.h
-@@ -60,6 +60,9 @@ struct sdxi_cxt *sdxi_cxt_new(struct sdxi_dev *sdxi);
- int sdxi_cxt_exit(struct sdxi_cxt *cxt);
- void sdxi_client_cxts_exit(struct sdxi_dev *sdxi);
+ int sdxi_encode_cxt_start(struct sdxi_desc *desc,
+ 			  const struct sdxi_cxt_start *params)
+ {
+diff --git a/drivers/dma/sdxi/descriptor.h b/drivers/dma/sdxi/descriptor.h
+index 9138f7c85f3a..cf071a281941 100644
+--- a/drivers/dma/sdxi/descriptor.h
++++ b/drivers/dma/sdxi/descriptor.h
+@@ -9,6 +9,7 @@
+  */
  
-+int sdxi_start_cxt(struct sdxi_cxt *cxt);
-+void sdxi_stop_cxt(struct sdxi_cxt *cxt);
+ #include <linux/bitfield.h>
++#include <linux/kconfig.h>
+ #include <linux/minmax.h>
+ #include <linux/ratelimit.h>
+ #include <linux/types.h>
+@@ -16,6 +17,10 @@
+ 
+ #include "hw.h"
+ 
++#if IS_ENABLED(CONFIG_KUNIT)
++int __must_check sdxi_encode_size32(u64 size, __le32 *dest);
++#endif
 +
- enum sdxi_submit_flags {
- 	SDXI_CXT_SUBMIT_KICK  = BIT(0),
- 	SDXI_CXT_SUBMIT_FENCE = BIT(1),
+ static inline void sdxi_desc_vl_expect(const struct sdxi_desc *desc, bool expected)
+ {
+ 	u8 vl = FIELD_GET(SDXI_DSC_VL, le32_to_cpu(desc->opcode));
+@@ -80,6 +85,24 @@ static inline struct sdxi_cxt_range sdxi_cxt_range_single(u16 nr)
+ 	return sdxi_cxt_range(nr, nr);
+ }
+ 
++struct sdxi_copy {
++	dma_addr_t src;
++	dma_addr_t dst;
++	u64 len;
++	u16 src_akey;
++	u16 dst_akey;
++};
++
++int sdxi_encode_copy(struct sdxi_desc *desc,
++		     const struct sdxi_copy *params);
++
++struct sdxi_intr {
++	u16 akey;
++};
++
++int sdxi_encode_intr(struct sdxi_desc *desc,
++		     const struct sdxi_intr *params);
++
+ struct sdxi_cxt_start {
+ 	struct sdxi_cxt_range range;
+ };
+diff --git a/drivers/dma/sdxi/hw.h b/drivers/dma/sdxi/hw.h
+index 51b2bcbeca90..71579eb3ac26 100644
+--- a/drivers/dma/sdxi/hw.h
++++ b/drivers/dma/sdxi/hw.h
+@@ -160,6 +160,25 @@ struct sdxi_desc {
+ 	static_assert(offsetof(struct tag_, csb_ptr) ==			\
+ 		      offsetof(struct sdxi_dsc_generic, csb_ptr))
+ 
++		/* SDXI 1.0 Table 6-8: DSC_DMAB_COPY Descriptor Format */
++		define_sdxi_dsc(sdxi_dsc_dmab_copy, copy,
++			__le32 size;
++			__u8 attr;
++			__u8 rsvd_0[3];
++			__le16 akey0;
++			__le16 akey1;
++			__le64 addr0;
++			__le64 addr1;
++			__u8 rsvd_1[24];
++		);
++
++		/* SDXI 1.0 Table 6-12: DSC_INTR Descriptor Format */
++		define_sdxi_dsc(sdxi_dsc_intr, intr,
++			__u8 rsvd_0[8];
++			__le16 akey;
++			__u8 rsvd_1[42];
++		);
++
+ 		/* SDXI 1.0 Table 6-14: DSC_CXT_START Descriptor Format */
+ 		define_sdxi_dsc(sdxi_dsc_cxt_start, cxt_start,
+ 			__u8 rsvd_0;
+@@ -215,11 +234,19 @@ static_assert(sizeof(struct sdxi_desc) == 64);
+ 
+ /* SDXI 1.0 Table 6-1: SDXI Operation Groups */
+ enum sdxi_dsc_type {
++	SDXI_DSC_OP_TYPE_DMAB    = 0x001,
+ 	SDXI_DSC_OP_TYPE_ADMIN   = 0x002,
++	SDXI_DSC_OP_TYPE_INTR    = 0x004,
+ };
+ 
+ /* SDXI 1.0 Table 6-2: SDXI Operation Groups, Types, and Subtypes */
+ enum sdxi_dsc_subtype {
++	/* DMA Base */
++	SDXI_DSC_OP_SUBTYPE_COPY    = 0x03,
++
++	/* Interrupt */
++	SDXI_DSC_OP_SUBTYPE_INTR = 0x00,
++
+ 	/* Administrative */
+ 	SDXI_DSC_OP_SUBTYPE_CXT_UPD      = 0x01,
+ 	SDXI_DSC_OP_SUBTYPE_CXT_START_NM = 0x03,
 
 -- 
 2.56.0
