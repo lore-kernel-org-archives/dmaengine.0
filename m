@@ -1,79 +1,78 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1793760612;
-	b=hw4qmCSG+aUlip6QFZuOrY8nZQWGsPosyIFGRS7j9pdEChGMphrTjWi60CPnJFL49zlq
-	 2b59o6nzxPa5n/8PF1vlpGwaU/y97+PUkyPXER6g6eqrNuSNAKX91QXRyyrWETzAeM462
-	 3emHqw1QK9M/kIW6errDn2Oxy7E5IR6kl/iAzCIfMQE7XIFhA5/xH5qpPmnV/cX0Uhu5P
-	 1F2NFYZRwlhBr9s75i6b0xbr9ONbCntDYQgK1Nyozs53GOa2e5ym2A32rV9aoS3Dv6Rb9
-	 t9C6BBZK0gY0QKIAMfheybJt9M2kZ+C2xf/hObRwl2YVRvrB+1TSufV6fck9Sgj71ig==
+	b=fw68Kos8a/S/c0F4H2mktcfsA0NwW+Xy6AY4a2yqekfzvsujC+mO/WDwVcfNNoHNi5of
+	 z6fs/zDYJWk7+uNaLf5juRhFQuBtevCUoNZBdtLsi4sspBRuiD5tng5pfTvHRUnGb1XTq
+	 l7stR43da4T9pOtejADFsYH7hL18JpQFI6uPzcAYl9ik6c6H7MYhX1u9VvrQXJl7l1z4X
+	 1yIVI1sLBr/k7t9LId78ACkM5mzLgTspMLN9aTVaA7XIxrPq+6OO2gZtQvKNtRXtOXYv7
+	 k4EX8AlS0Yp2t4BnUg7j7xoYniucD60CRO4T+pVH9xWhEmZhCz6Ff2Z+YxgfvL5EWQQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793760612;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=LJOIxfJLv0sJAdXcclidi4MfburOXblVLonzNGoSoik=;
-	b=XZlxIlg7lYoPomvTleLph/x2alAfXIlwsP3xOho/TUKe9ABLerp/jLikwhqwsdzY/U5i
-	 fv6b6FsjJBC6XSy1PQU5IGMhYRWGk1pHwTFBwK1u8q4tasoWxbyILHY3TcOTVW1e78FG6
-	 KCDcxYRXBwYIRNMfjzgfpFfMYhJnuqFM3r5WvDWVuBrkskO4YNrhHIhk2DoaWtsbwdlJr
-	 uPiUi08P2kc2vCW14TrzdjkpVc5F0MFO1mUWz5UEW+uWCKJtDExam/PWrgbVZMPz63ctS
-	 DkkovZNUJixHgvONLhBIeEHAWEBRxWECdMr+awrZUUFAhD0SX+4C0i8CsVjjjKxV/ow==
+	bh=OxOnFV8BUL8Q1qcserUkMALBuvULgWxjom4sV0vjumI=;
+	b=C3Df2nbBSUH6RZT8DZB8LpZjP0cYC0dISVO7dPu88Hg9kGVBgS/8wtkpSgu34qPirMdu
+	 lYa2ktOuSkoH25Zlpwd4FdtdxrF61AYq/RfdAyjJ3NRk3jCIbX0sdifyFwPLZwprIJGOi
+	 QmOg9Njs9SjJGCNyJMOmC+HyUy8cZ2SAb4YpQ7Py9q6xnM2kWVUbDy5wAjuTrmRkiRro/
+	 Hzm4i58KnPy36QD0kv20buhUvdkzoMxK5gdTOMPWs6L2C08xSOkO9IwdTYXAOekcRhjPq
+	 TFUN2pUFyNdvddePaQayZ+3jI5e+oyLDnR3jHgyK1JC+z+hSgUFQ57voeEM8gTymJtQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K6gqJTG2;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BbyiUzqw;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C560D606EEA7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D096B606EEA9;
 	Wed,  4 Nov 2026 02:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K6gqJTG2
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BbyiUzqw
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1793760611;
-	b=VojHC/nYuqxpy6k7ODWLTkXtrT3exVVSWwIOV5V2o/J2CUhR0EgtqhzkvJxOKl5FMnsE
-	 ogbqJvWpKiVoaVyDj1hFFvz2bUOq1JZNztr/fyQ+44JgC4KLk6CP2ysJ14VUQkpYfhRle
-	 rtKms0U3ObvysxWzWB3eQOn3Z73zffNereIH0kiZmzK7bViQAan3leb/+7URdMYIGLh0E
-	 EuNDM0bvOiKDLe+0JWTnR+IxmLzeKRRImx6ceR3ItxzURqaALzH7pwoT/Z5JUnMMROgnG
-	 sleaCcEKDoa2gUve/IaGhmncB8b60twjq+L/SNS05x5geRzAemq/A+KVxVNnufBevUQ==
+	b=sgfdvjh1sxHLUT5TE8igY+Og6iRXMtuvNuJdgQJWSvrMxgW5eUUNvJEIZCU9UDSCBNtd
+	 4n4iEGjAiYcWJzPliAcTg4PiyTbZnrM6OdIAfD4b3oLXXiMC21xLQZuPS5cS92sP6YCp2
+	 pUlDmgGrllV4Odi9M8zGLE4V8pWkZGZcgQWAoW9YzYPZBtns0/hbsYZ5aFBetR0XqkWXu
+	 8+l2lQYpvFIZ7U4gM4Ks+vFZ7d57VFcDpOva67QlzEI35mGL74eGRHMQVoT7OjpWIOizV
+	 sYQ9qiT31ZylTDG4djGV6PWRTvByULoNjOfzTSEloPZQUmTihYH9PlHrnrVP36Ewfjg==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1793760611;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=LJOIxfJLv0sJAdXcclidi4MfburOXblVLonzNGoSoik=;
-	b=vlS75Lz+UBtnXZ8ULDWxOa+bBJTqGQLwm7nq7r062l9Vs61v1op1Gk61UWlPiY1muULB
-	 2pfA2ig049aq1wiAN70UIGtGQH5ADzLgiaL7OhYyf9rSwqnsxs+8UkTAtTxLylwhJ2XA4
-	 urLypEIvXpDuIA5vy32ymI7Qqdlx8Qe73uOIlV4cecxDQa9TKfKtYfOKOpylfkNQXoJf7
-	 +YAvbYngSlHbd5nurdC7Y6mJ4paj2F6pFThzcvk5EFC+w4OrjgB/lKIMsiG1Is5DnmNBI
-	 4CaK3xnURvCUw4PJenZ894geZTea8I5NeLGMeNmTHubfdQqEA4f4kkDCpQtPIWDL20Q==
+	bh=OxOnFV8BUL8Q1qcserUkMALBuvULgWxjom4sV0vjumI=;
+	b=NYRuwAd6ILcHDI8yQ//11g3dLRUjdQrUt4WMCg67Rq0Agqhy41npoKCOL06viqdF1MVr
+	 9lGfdsptw3q132wwmiqeCdK68svPKaJFP2CPZliKd5AScbwi6xLunHplBz+OKxo/Gid7H
+	 ppOb4j5BNCp23rF3lt3yEIBM/vqXYE/sk6hovRA5x83udyadNzZ1hiZ4L28QJhmsj1WWP
+	 fzZLbR1mD68H+o07x2Mg5r8uhAAHu0q35FLnHpBWmcH9PsnbcNIwwjqOPYNoJoz9NmLVm
+	 Naj4R/HxbXjmdHcSE4KZyVh/qDebK+xKrMuzWNhyE+fY9s1OlrGlUWpngsjK6r+iD2w==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 44AC71F0157D;
-	Wed,  4 Nov 2026 02:50:09 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 730671F00A18;
+	Wed,  4 Nov 2026 02:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1793760611;
-	bh=LJOIxfJLv0sJAdXcclidi4MfburOXblVLonzNGoSoik=;
+	bh=OxOnFV8BUL8Q1qcserUkMALBuvULgWxjom4sV0vjumI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=K6gqJTG2CMyE0uS+uxkoycy6EFWGtED19QV4oiYwkIl3Mbu29+Oyvc4CApOakCjKf
-	 RXh3ETH2Cm6rRXrkQTLAcOvt9vBHQqRKybpgxNPI64/xvvyUDVIakVpEgyn139/8Co
-	 Rd0fN7OOCtjtcBR7XLD0EwedWLFBk7MHKYgl4HUy0A9dsVxwfJV+0rLGAP/KRaN715
-	 8UYu3WQw7UEB7gowJ0s/tQV0yhkOHdHS8iVxt/YK5tvbhJesdepW7sCbG5RXnsQxOa
-	 UBT5jQD7RC5aU18pjEgb1cD8HGqQMXygLhrPtJj1EhMwoHKZwdGJWIxJ5dnuDgfGeU
-	 4fjB6n4d/m6BQ==
+	b=BbyiUzqwrSTImXLHdPqBQlQKXmDUx1yRwdi8vWz9chqQP6n9MZVcyRMXRYDtniw+3
+	 SOPmmZW9EPn5xKXQJXKNEiTqz7UnvJMqwR48+J6Nbow3hgflKEVJQ2UElkXetNlam4
+	 C4jhoabjzspKqoeKHBiaJO2hFFFHUodjgWhT/5hvCavPA7alQ0HHrXsxAEoYsoDDlU
+	 8Pw+e2ysNCLlbXLk6W4E+cmAhqqi8m86bn7TvaJR8puWxrVwTlLVysEwL07Xu2w/D2
+	 SBUFsfrf4R12gS5q+JLhfInLPT9TUDbAP/obpDFeW7zbBPkUPvAQsO9iuUVo8MTeRD
+	 L9xhhWcG1GmRQ==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 86B9746C53;
+	by lkml.kernel.org (Postfix) with ESMTP id 1B7A846C33;
 	Wed,  4 Nov 2026 02:50:03 +0000 (UTC)
 From: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
-Date: Tue, 03 Nov 2026 20:50:05 -0600
-Subject: [PATCH v4 24/25] dmaengine: sdxi: MSI/MSI-X vector allocation and
- mapping
+Date: Tue, 03 Nov 2026 20:49:57 -0600
+Subject: [PATCH v4 16/25] dmaengine: sdxi: Add completion status block API
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -84,7 +83,7 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261103-sdxi-base-v4-24-3668ccc7aab8@amd.com>
+Message-Id: <20261103-sdxi-base-v4-16-3668ccc7aab8@amd.com>
 References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 In-Reply-To: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
@@ -98,11 +97,11 @@ Cc: Bjorn Helgaas <bhelgaas@google.com>,
  dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-pci@vger.kernel.org, Nathan Lynch <nathan.lynch@amd.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=6357;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793760600; l=10310;
  i=nathan.lynch@amd.com; s=20260722; h=from:subject:message-id;
- bh=rAeqXk/oG8Bg3LI60ESSqL+dK+1F4GFWd8SwD/KZQBQ=;
- b=ob+2RYgPGyvNwaOXm7mhnmhqfsBE3/zKQtqIcu3drdcSoJm65Ipt35WAh0xWIYjFvh2rKBLOH
- i+PMoPOyBa+Dcd2XEYpaH2hOUwAAueyLYfUZtxXF/LVK0ZFNRwAYW1T
+ bh=j3/k2eey6V1fTjlbEcUw0J0Ib+RLO8BnpFndZkQrQuo=;
+ b=FvoUQFy+G7v1ZNLSls1amzLgHZt4W9q2+4zjA0qVRLskW0QY54PAG8gFoXI8bMwAeqFh5bGvP
+ GO2WgVmxyYTAF/jxWrs/D2YyBtWsILoaW/qaUHNLZfPa/osFBZmCAsK
 X-Developer-Key: i=nathan.lynch@amd.com; a=ed25519;
  pk=pO5+BCw/TENGLvwX5NYZOZmZihcxjkxeFSMuk47erps=
 X-Endpoint-Received: by B4 Relay for nathan.lynch@amd.com/20260722 with
@@ -113,207 +112,339 @@ Content-Transfer-Encoding: 7bit
 
 From: Nathan Lynch <nathan.lynch@amd.com>
 
-Request MSI/MSI-X vectors for the error log interrupt and up to one
-interrupt per supported client context. Reserve vector 0 for the error log
-and track the remaining allocated vectors with an IDA.
+Introduce completion status handling and a fixed-capacity pool owned by
+each context. Only the 32-byte-aligned status blocks are DMA-visible;
+a private bitmap and spinlock track claims independently of descriptor
+ring indices.
 
-Introduce sdxi_alloc_vector() and sdxi_free_vector() which are thin
-wrappers around the IDA that tracks the allocated vector range.
+Preallocate storage during context allocation. Claiming and initializing
+a block cannot allocate memory and fails only when capacity is exhausted.
+Provide a bounded, killable wait for administrative callers, and wake
+waiters when blocks are returned. Release blocks only after consumption,
+unpublished rollback, or hardware quiescence; destroy the pool only when
+hardware and software no longer access it.
 
-Introduce sdxi_vector_to_irq() which invokes a new get_irq() bus op to
-translate the device-relative index to the Linux IRQ number for use
-with request_irq() etc. For PCI this dispatches to pci_irq_vector().
+Represent a completion-status block by its CPU pointer and DMA address.
+Check the little-endian signal with READ_ONCE(), then use dma_rmb() before
+consuming error status or operation results. Polling returns success,
+-EIO for a terminal error, or -ETIMEDOUT without relinquishing ownership.
 
 Co-developed-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Wei Huang <wei.huang2@amd.com>
 Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 ---
- drivers/dma/sdxi/device.c |  3 +++
- drivers/dma/sdxi/pci.c    | 30 ++++++++++++++++++++++++++-
- drivers/dma/sdxi/sdxi.h   | 53 +++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 85 insertions(+), 1 deletion(-)
+ drivers/dma/sdxi/Makefile     |   1 +
+ drivers/dma/sdxi/completion.c | 152 ++++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/sdxi/completion.h |  48 +++++++++++++
+ drivers/dma/sdxi/context.c    |   7 ++
+ drivers/dma/sdxi/context.h    |   4 ++
+ drivers/dma/sdxi/hw.h         |  15 +++++
+ 6 files changed, 227 insertions(+)
 
-diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
-index 8786be71d3e3..30c4e687cedf 100644
---- a/drivers/dma/sdxi/device.c
-+++ b/drivers/dma/sdxi/device.c
-@@ -11,6 +11,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/dmapool.h>
- #include <linux/export.h>
-+#include <linux/idr.h>
- #include <linux/iopoll.h>
- #include <linux/jiffies.h>
- #include <linux/limits.h>
-@@ -437,6 +438,7 @@ int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
- 
- 	sdxi->dev = dev;
- 	sdxi->bus_ops = ops;
-+	ida_init(&sdxi->vectors);
- 	xa_init_flags(&sdxi->client_cxts, XA_FLAGS_ALLOC1);
- 	dev_set_drvdata(dev, sdxi);
- 
-@@ -459,6 +461,7 @@ void sdxi_unregister(struct device *dev)
- 	/* Stop/reset is best effort if the hardware cannot be quiesced. */
- 	sdxi_dev_stop(sdxi);
- 	sdxi_client_cxts_exit(sdxi);
-+	ida_destroy(&sdxi->vectors);
- }
- EXPORT_SYMBOL_NS_GPL(sdxi_unregister, "SDXI");
- 
-diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
-index d196ab5cf6f1..ef978ca22db1 100644
---- a/drivers/dma/sdxi/pci.c
-+++ b/drivers/dma/sdxi/pci.c
-@@ -31,8 +31,9 @@ static int sdxi_pci_init(struct sdxi_dev *sdxi)
- {
- 	struct pci_dev *pdev = sdxi_to_pci_dev(sdxi);
- 	struct device *dev = &pdev->dev;
-+	u32 cap1_max_cxt;
- 	u64 cap1;
--	int ret;
-+	int vecs, ret;
- 
- 	ret = pcim_enable_device(pdev);
- 	if (ret)
-@@ -63,6 +64,27 @@ static int sdxi_pci_init(struct sdxi_dev *sdxi)
- 	sdxi->has_mailbox = pdev->is_virtfn ||
- 		pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_SRIOV);
- 
-+	/*
-+	 * Allocate the minimum required set of vectors plus one for
-+	 * each client context supported by the function.
-+	 *
-+	 * pci_alloc_irq_vectors() handles calling pci_free_irq_vectors()
-+	 * automatically despite not being called pcim_*. See
-+	 * pci_setup_msi_context().
-+	 */
-+	cap1_max_cxt = FIELD_GET(SDXI_MMIO_CAP1_MAX_CXT,
-+				 sdxi_read64(sdxi, SDXI_MMIO_CAP1));
-+	vecs = pci_alloc_irq_vectors(pdev, SDXI_MIN_VECTORS,
-+				     SDXI_MIN_VECTORS + cap1_max_cxt,
-+				     PCI_IRQ_MSI | PCI_IRQ_MSIX);
-+	if (vecs < 0)
-+		return dev_err_probe(dev, vecs,
-+				     "failed to allocate MSIs (max_cxt=%u)\n",
-+				     cap1_max_cxt);
+diff --git a/drivers/dma/sdxi/Makefile b/drivers/dma/sdxi/Makefile
+index 00e3f1cb0808..eacad504a816 100644
+--- a/drivers/dma/sdxi/Makefile
++++ b/drivers/dma/sdxi/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_SDXI_CORE) += sdxi-core.o
+ sdxi-core-y := \
++	completion.o  \
+ 	context.o     \
+ 	device.o      \
+ 	ring.o
+diff --git a/drivers/dma/sdxi/completion.c b/drivers/dma/sdxi/completion.c
+new file mode 100644
+index 000000000000..c07a0fc101c8
+--- /dev/null
++++ b/drivers/dma/sdxi/completion.c
+@@ -0,0 +1,152 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * SDXI Descriptor Completion Status Block handling.
++ *
++ * Copyright Advanced Micro Devices, Inc.
++ */
++#include <linux/bitfield.h>
++#include <linux/bitmap.h>
++#include <linux/dma-mapping.h>
++#include <linux/iopoll.h>
++#include <linux/slab.h>
++#include <linux/spinlock.h>
++#include <linux/wait.h>
 +
-+	sdxi->nr_vectors = vecs;
-+	dev_dbg(sdxi->dev, "allocated %u vectors\n", sdxi->nr_vectors);
++#include "completion.h"
++#include "hw.h"
 +
- 	pci_set_master(pdev);
- 	return 0;
- }
-@@ -86,9 +108,15 @@ static int sdxi_pci_reset(struct sdxi_dev *sdxi)
- 	return err;
- }
- 
-+static int sdxi_pci_get_irq(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	return pci_irq_vector(sdxi_to_pci_dev(sdxi), nr);
-+}
-+
- static const struct sdxi_bus_ops sdxi_pci_ops = {
- 	.init = sdxi_pci_init,
- 	.reset = sdxi_pci_reset,
-+	.get_irq = sdxi_pci_get_irq,
- };
- 
- static int sdxi_pci_probe(struct pci_dev *pdev,
-diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
-index aaa43eab00b3..07044d837d9a 100644
---- a/drivers/dma/sdxi/sdxi.h
-+++ b/drivers/dma/sdxi/sdxi.h
-@@ -8,8 +8,10 @@
- #ifndef DMA_SDXI_H
- #define DMA_SDXI_H
- 
-+#include <linux/bug.h>
- #include <linux/compiler_types.h>
- #include <linux/dev_printk.h>
-+#include <linux/idr.h>
- #include <linux/io.h>
- #include <linux/types.h>
- #include <linux/xarray.h>
-@@ -25,6 +27,18 @@
- #define L1_CXT_CTRL_PTR_SHIFT		6
- #define L1_CXT_AKEY_PTR_SHIFT		12
- 
-+enum {
-+	/* Reserve vector 0 for the error log interrupt. */
-+	SDXI_ERROR_VECTOR = 0,
-+
-+	/*
-+	 * Request at least one vector to account for the error log
-+	 * interrupt. Increment this if the driver gains more
-+	 * dedicated interrupts (e.g. one for the admin context).
-+	 */
-+	SDXI_MIN_VECTORS = 1,
++/* Only the status blocks themselves are visible to hardware. */
++struct sdxi_cst_pool {
++	struct sdxi_cst_blk *blocks;
++	dma_addr_t dma;
++	unsigned int count;
++	spinlock_t lock;
++	wait_queue_head_t wait;
++	unsigned long *allocated;
 +};
 +
- struct sdxi_dev;
- 
- /**
-@@ -41,6 +55,10 @@ struct sdxi_bus_ops {
- 	 * @reset: Bus-specific recovery when the native stop sequence fails.
- 	 */
- 	int (*reset)(struct sdxi_dev *sdxi);
-+	/**
-+	 * @get_irq: Map device interrupt index to Linux IRQ number.
++static void sdxi_cst_pool_init(struct sdxi_cst_pool *pool, unsigned int count)
++{
++	pool->count = count;
++	spin_lock_init(&pool->lock);
++	init_waitqueue_head(&pool->wait);
++}
++
++struct sdxi_cst_pool *sdxi_cst_pool_create(struct sdxi_dev *sdxi,
++					unsigned int count)
++{
++	struct sdxi_cst_pool *pool;
++
++	if (!count)
++		return NULL;
++
++	pool = kzalloc_obj(*pool, GFP_KERNEL);
++	if (!pool)
++		return NULL;
++
++	pool->allocated = bitmap_zalloc(count, GFP_KERNEL);
++	if (!pool->allocated) {
++		kfree(pool);
++		return NULL;
++	}
++
++	/* SDXI 1.0a 6.1.1 requires a 32-byte-aligned completion block. */
++	pool->blocks = dma_alloc_coherent(sdxi->dev,
++					 array_size(count, sizeof(*pool->blocks)),
++					 &pool->dma, GFP_KERNEL);
++	if (!pool->blocks) {
++		bitmap_free(pool->allocated);
++		kfree(pool);
++		return NULL;
++	}
++
++	sdxi_cst_pool_init(pool, count);
++	return pool;
++}
++
++void sdxi_cst_pool_destroy(struct sdxi_dev *sdxi, struct sdxi_cst_pool *pool)
++{
++	dma_free_coherent(sdxi->dev, array_size(pool->count, sizeof(*pool->blocks)),
++			  pool->blocks, pool->dma);
++	bitmap_free(pool->allocated);
++	kfree(pool);
++}
++
++bool sdxi_cst_pool_get(struct sdxi_cst_pool *pool, struct sdxi_completion *comp)
++{
++	unsigned long flags;
++	unsigned int index;
++
++	spin_lock_irqsave(&pool->lock, flags);
++	index = find_first_zero_bit(pool->allocated, pool->count);
++	if (index < pool->count)
++		__set_bit(index, pool->allocated);
++	spin_unlock_irqrestore(&pool->lock, flags);
++	if (index == pool->count)
++		return false;
++
++	comp->cst_blk = &pool->blocks[index];
++	comp->cst_blk_dma = pool->dma + index * sizeof(*pool->blocks);
++	sdxi_cst_blk_init(comp->cst_blk);
++	return true;
++}
++
++int sdxi_cst_pool_get_wait(struct sdxi_cst_pool *pool,
++			 struct sdxi_completion *comp)
++{
++	long ret;
++
++	ret = wait_event_killable_timeout(pool->wait,
++					 sdxi_cst_pool_get(pool, comp), HZ);
++	if (ret < 0)
++		return ret;
++	return ret ? 0 : -ETIMEDOUT;
++}
++
++void sdxi_cst_pool_put(struct sdxi_cst_pool *pool, struct sdxi_cst_blk *cst)
++{
++	unsigned int index = cst - pool->blocks;
++	unsigned long flags;
++
++	if (WARN_ON_ONCE(index >= pool->count))
++		return;
++
++	spin_lock_irqsave(&pool->lock, flags);
++	WARN_ON_ONCE(!__test_and_clear_bit(index, pool->allocated));
++	spin_unlock_irqrestore(&pool->lock, flags);
++	wake_up_all(&pool->wait);
++}
++
++
++enum sdxi_completion_state sdxi_cst_blk_check(const struct sdxi_cst_blk *cst)
++{
++	u64 signal = le64_to_cpu(READ_ONCE(cst->signal));
++
++	if (signal != SDXI_CST_BLK_SIGNAL_TERMINAL)
++		return SDXI_COMPLETION_PENDING;
++	/*
++	 * The final ER state (and the operation's effects) are
++	 * guaranteed visible only after a cleared signal is observed.
++	 * See SDXI 1.0 5.6 Memory Consistency Model.
 +	 */
-+	int (*get_irq)(struct sdxi_dev *sdxi, unsigned int index);
++	dma_rmb();
++
++	if (FIELD_GET(SDXI_CST_BLK_ER, le32_to_cpu(cst->flags)))
++		return SDXI_COMPLETION_ERROR;
++
++	return SDXI_COMPLETION_DONE;
++}
++
++int sdxi_cst_blk_poll(const struct sdxi_cst_blk *cst)
++{
++	enum sdxi_completion_state state;
++	int ret;
++
++	ret = read_poll_timeout(sdxi_cst_blk_check, state,
++				state != SDXI_COMPLETION_PENDING,
++				10, USEC_PER_SEC, false, cst);
++	if (ret)
++		return ret;		/* -ETIMEDOUT */
++
++	return state == SDXI_COMPLETION_ERROR ? -EIO : 0;
++}
+diff --git a/drivers/dma/sdxi/completion.h b/drivers/dma/sdxi/completion.h
+new file mode 100644
+index 000000000000..f91f44b9b516
+--- /dev/null
++++ b/drivers/dma/sdxi/completion.h
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Copyright Advanced Micro Devices, Inc. */
++#ifndef DMA_SDXI_COMPLETION_H
++#define DMA_SDXI_COMPLETION_H
++
++#include <linux/compiler_attributes.h>
++#include "sdxi.h"
++#include "hw.h"
++
++
++/* A completion status block and the device address the hardware needs. */
++struct sdxi_completion {
++	struct sdxi_cst_blk *cst_blk;
++	dma_addr_t cst_blk_dma;
++};
++
++struct sdxi_cst_pool;
++
++/* Software completion states derived from CST_BLK. */
++enum sdxi_completion_state {
++	SDXI_COMPLETION_PENDING,
++	SDXI_COMPLETION_DONE,
++	SDXI_COMPLETION_ERROR,
++};
++
++struct sdxi_cst_pool *sdxi_cst_pool_create(struct sdxi_dev *sdxi,
++					unsigned int count);
++/* Hardware and software must no longer access any blocks before destruction. */
++void sdxi_cst_pool_destroy(struct sdxi_dev *sdxi, struct sdxi_cst_pool *pool);
++/* Claims and initializes a block; false means the fixed pool is exhausted. */
++bool sdxi_cst_pool_get(struct sdxi_cst_pool *pool, struct sdxi_completion *comp);
++int sdxi_cst_pool_get_wait(struct sdxi_cst_pool *pool,
++			 struct sdxi_completion *comp);
++/* Release only after consumption, unpublished rollback, or hardware quiescence. */
++void sdxi_cst_pool_put(struct sdxi_cst_pool *pool, struct sdxi_cst_blk *cst);
++
++
++static inline void sdxi_cst_blk_init(struct sdxi_cst_blk *cst)
++{
++	*cst = (typeof(*cst)) {
++		.signal = cpu_to_le64(SDXI_CST_BLK_SIGNAL_INIT),
++	};
++}
++
++int __must_check sdxi_cst_blk_poll(const struct sdxi_cst_blk *cst);
++enum sdxi_completion_state sdxi_cst_blk_check(const struct sdxi_cst_blk *cst);
++
++#endif /* DMA_SDXI_COMPLETION_H */
+diff --git a/drivers/dma/sdxi/context.c b/drivers/dma/sdxi/context.c
+index 956bb06f9499..60cc812df204 100644
+--- a/drivers/dma/sdxi/context.c
++++ b/drivers/dma/sdxi/context.c
+@@ -22,6 +22,7 @@
+ #include <asm/barrier.h>
+ #include <asm/rwonce.h>
+ 
++#include "completion.h"
+ #include "context.h"
+ #include "hw.h"
+ #include "ring.h"
+@@ -56,6 +57,8 @@ static void sdxi_free_cxt(struct sdxi_cxt *cxt)
+ 	if (cxt->akey_table)
+ 		dma_free_coherent(sdxi->dev, sizeof(*cxt->akey_table),
+ 				  cxt->akey_table, cxt->akey_table_dma);
++	if (cxt->cst_pool)
++		sdxi_cst_pool_destroy(sdxi, cxt->cst_pool);
+ 	if (cxt->sq)
+ 		sdxi_sq_free(sdxi, cxt->sq);
+ 	ida_destroy(&cxt->akey_ida);
+@@ -85,6 +88,10 @@ static struct sdxi_cxt *sdxi_alloc_cxt(struct sdxi_dev *sdxi)
+ 	if (!cxt->sq)
+ 		return NULL;
+ 
++	cxt->cst_pool = sdxi_cst_pool_create(sdxi, DEFAULT_DESC_RING_ENTRIES);
++	if (!cxt->cst_pool)
++		return NULL;
++
+ 	cxt->akey_table = dma_alloc_coherent(dev, sizeof(*cxt->akey_table),
+ 					     &cxt->akey_table_dma, GFP_KERNEL);
+ 	if (!cxt->akey_table)
+diff --git a/drivers/dma/sdxi/context.h b/drivers/dma/sdxi/context.h
+index cad5a153ec22..94e0fc45f281 100644
+--- a/drivers/dma/sdxi/context.h
++++ b/drivers/dma/sdxi/context.h
+@@ -16,6 +16,9 @@
+ #include "sdxi.h"
+ #include "submission.h"
+ 
++struct sdxi_completion;
++struct sdxi_cst_pool;
++
+ /* Use a 4 KiB AKey table, the minimum architectural size. */
+ struct sdxi_akey_table {
+ 	struct sdxi_akey_ent entry[SZ_4K / sizeof(struct sdxi_akey_ent)];
+@@ -40,6 +43,7 @@ struct sdxi_cxt {
+ 	dma_addr_t akey_table_dma;
+ 
+ 	struct sdxi_sq *sq;
++	struct sdxi_cst_pool *cst_pool;
+ 
+ 	struct sdxi_ring_state *ring_state;
  };
+diff --git a/drivers/dma/sdxi/hw.h b/drivers/dma/sdxi/hw.h
+index b333e091c583..c1bff631a5ae 100644
+--- a/drivers/dma/sdxi/hw.h
++++ b/drivers/dma/sdxi/hw.h
+@@ -110,6 +110,21 @@ struct sdxi_akey_ent {
+ } __packed __aligned(16);
+ static_assert(sizeof(struct sdxi_akey_ent) == 16);
  
- struct sdxi_dev {
-@@ -61,6 +79,9 @@ struct sdxi_dev {
- 
- 	struct dma_pool *cxt_ctl_pool;
- 
-+	unsigned int nr_vectors;
-+	struct ida vectors;
++/* SDXI 1.0 Table 6-4: CST_BLK (Completion Status Block) */
++struct sdxi_cst_blk {
++	__le64 signal;
++	__le32 flags;
++#define SDXI_CST_BLK_ER BIT(31)
++	__u8 rsvd_0[20];
++} __packed __aligned(32);
++static_assert(sizeof(struct sdxi_cst_blk) == 32);
 +
- 	struct sdxi_cxt *admin_cxt;
- 	struct xarray client_cxts; /* context id -> (struct sdxi_cxt *) */
- 
-@@ -69,6 +90,38 @@ struct sdxi_dev {
- 	const struct sdxi_bus_ops *bus_ops;
- };
- 
-+/**
-+ * sdxi_alloc_vector() - Allocate an interrupt vector.
-+ *
-+ * A vector that will have the same lifetime as the device does not
-+ * need to be released explicitly. Otherwise the vector must be
-+ * released with sdxi_free_vector().
-+ */
-+static inline int sdxi_alloc_vector(struct sdxi_dev *sdxi)
-+{
-+	return ida_alloc_range(&sdxi->vectors, SDXI_MIN_VECTORS,
-+			       sdxi->nr_vectors - 1, GFP_KERNEL);
-+}
++/* SDXI 1.0 4.4.2 Completion-Status Modes */
++enum sdxi_cst_blk_signal {
++	SDXI_CST_BLK_SIGNAL_TERMINAL = 0,
++	SDXI_CST_BLK_SIGNAL_INIT     = 1,
++};
 +
-+/**
-+ * sdxi_free_vector() - Release a previously allocated index.
-+ */
-+static inline void sdxi_free_vector(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	ida_free(&sdxi->vectors, nr);
-+}
-+
-+/**
-+ * sdxi_vector_to_irq() - Translate an allocated interrupt vector to
-+ *                        Linux IRQ number suitable for passing to
-+ *                        request_irq() et al.
-+ */
-+static inline int sdxi_vector_to_irq(struct sdxi_dev *sdxi, unsigned int nr)
-+{
-+	WARN_ON_ONCE(!ida_exists(&sdxi->vectors, nr));
-+	return sdxi->bus_ops->get_irq(sdxi, nr);
-+}
-+
- int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
- void sdxi_unregister(struct device *dev);
- 
+ struct sdxi_desc {
+ 	union {
+ 		/*
 
 -- 
 2.56.0
