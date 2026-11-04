@@ -1,131 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.10
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793761623;
-	b=xuDgQyMpcZ5EsZqZtPIBThN6KyD7IVFRwIEpuDL4OQO/nCNBrgiEffCokGS6TJoorQNt
-	 688g7hq2+JYa8uyUNtC2wOsui8McNJcc3d80FeQsGZLcpdmDLlS9/2XuZfpH8dGiV7pXe
-	 6gZ4gNVJESnMvTLHeSH5+noDWf12LwsNtwORokmllQqEfx6ahjkEdFiBDIMBwu1u4tPLC
-	 r6yYDnCt1lSvfC+DLTa0nAPxVVVkNjfDYBc2YG2aSwhCXvMQX8Byg12ituOhZJgmdi+oG
-	 7vZ6addDTiERQIkAdRt0KR+lqMLQZYf97TLE75m4ISPM5+6uBCbzR6NXzVvNyWdKBBA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793761623;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:In-Reply-To:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=5bEwnFqAmphGmBwS+VPqs9hGaekCvuBPHrxQJI6EYnA=;
-	b=nzuNKqj2FI18f3xG8hLal0d38MkaNC4XyIeRBlP3Gz1XZXyiZkC5boulY6PRQ6MlxyJ6
-	 i/1Tpvsh3un+lkirNxHu8+JOgZ/oFmAfr0i45T/xC2B2rkv/Uph7RnJvlhEzDjdcsyITi
-	 UV0DKrZY3I0tcuDD8+U/3NO98tILddRqCGI8ORiAJyZuwaNEbuyRnd3Zbuv0jX6NC+S8A
-	 mODpdERLJZlDV+ukR+/Hy1aeNtKJ6fQ0zuYPX0Diiy+6qyZ1zvhZQtUqp4zQM+L01KOgv
-	 +hMN7+JEarzW/DhmrinDDvi3NoGIJ5uqEagor80p8ZOemZUoVGE+Qwyxg2PGRAi8lsg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cu4qNU88;
-	arc=fail smtp.remote-ip=192.198.163.10
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793762151;
+	b=w1PxhEePJyJA2ci65ZMphsRCr3hrLwb3Slecug01t24Jegft86v8LAuIm3f5AWNJE4kx
+	 TV9w5YXLOviMCYxNwQvAwbO9XLZrQjAqZQRX4E8onwC24MD3Ak4SgBtUzYEBBem7l8ogq
+	 1SAGdvQOyKrJivvWIqWuiJf5KpigBk1klweBSEu6SCcjJcK+jp/Okzy47NwpXrImd71qA
+	 XXupMqZp0XdK/I9I+BaGRAApnBql7hEeQTckheOqCxh8AlFZeYbgg7AOUWpMwpqYoNHLI
+	 QZ6PH8AvxoIrkoaEg4sJWVRRAWu+CSxWbu7KL+2Uy94nn3FIzhxNG55AH89h+bgNnLA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793762151;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=uYJF07BCGEEpbrc+vXQyQ6V28x6DgLk6q4sUVWA5mto=;
+	b=WnLy7tUSoBUqYGl/GNYr9aPA75mzabu7u1SS5oSplieWcvSjJUdPsp9rEHkcHW+XgJPb
+	 rd+EQeyjlH2kiY1fgCVFLs/VIipqzQlh0KHydUblvv1T+LXpcRYHgHVZHNdt5F+tNgI3x
+	 lAgcyCMLkjzNE0t3Cuzt9X3AVqu5VBSaAygrcRZIh+b9Oo5Wnavwc5Xc6viu4thyjfnLp
+	 HkvY29WZ1tUJ19g7r6SegIyNkCcR4hxH5EjFb+LAgxblOJ6rjX8++2CqH2ByVnQEom60O
+	 SrEBtDE5jvYJOndhOstuiXM7YTvp78VhD3WmTXGcWnkjQPyWxTNfGqVRc2tj2SWCd6Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="BiU/NEqc";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358F0606A326;
-	Wed,  4 Nov 2026 03:07:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 358F0606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFF6606A31B;
+	Wed,  4 Nov 2026 03:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cu4qNU88
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793761623; x=1825297623;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=IDMgQ+uP9/NrFd0SMaexTj9VQ9OTVY8G/d2uB16vfLY=;
-  b=cu4qNU883BjmkliqD/iY6sE5GX08xQX4SHzTvbNUtzSUEYNUuICvqKw6
-   7JtrG85MVZxnD7MWE2HAfw15yJ48e5hi39iCpVprITiui+7B4BdryJtTE
-   GwTrzhJJgkSNMGEuMn17IMAFqcKNXXtEP6CPm8PsghFnVNkybX/Kdslmu
-   paBOpxch3t4Vf3hfM1sQg6R0Ij5KgL8FBqyHippFWiZV5gsdW3k7MNNiO
-   +0YHmlD9EM/Ccui6VAP+xSPR/IoX22AWy5AzYy0yKS+nySmNfgIFeqtf9
-   rmi4FGLLPNk1Xf8MZlQsDztx2rtdQaAUrW0qv2fyWDdjjkmEZsIJvAs4S
-   w==;
-X-CSE-ConnectionGUID: bSI+D5QqQSad7SyJgOUxpQ==
-X-CSE-MsgGUID: kWCt4uZnSMGyGb8aBFr8hg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11955"; a="2406555"
-X-IronPort-AV: E=Sophos;i="6.27,194,1787036400"; 
-   d="scan'208";a="2406555"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 19:07:02 -0800
-X-CSE-ConnectionGUID: 5XpeyzzFQpKyqCqvep858g==
-X-CSE-MsgGUID: ELzMJgL7QZa3lb/sXRZDUg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,194,1787036400"; 
-   d="scan'208";a="6712841"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2026 19:07:01 -0800
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 3 Nov 2026 19:07:00 -0800
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Tue, 3 Nov 2026 19:07:00 -0800
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.43) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Tue, 3 Nov 2026 19:07:00 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EPV1jfRXlYNpzp6Vi965ZFbgzwi6AM3NvsoY9/T8PduKxH7N2QIqXt3y6YFvJH5wgZ3Hg9gFWI4eIs8tAIowzIwEzTULDsGRXRkLEhcSYzxICHCkgURge/3cUIabz7zHBMKd9lRWpwZVlc1Rqo2tzeW/6vvw3Ovrk189TBEgY940qdL2o3GedST1+E7emlLS0+mzdbZiLFE8Y/mPvsjguF0ocZYJWVPB00uZ48Edd2CAQKDh6q30maMnaJll28mPKrCiz0BL64W+tzaCpYOUvR533HdkFoqPotv9J9B+jMatRaupgcNB8Yvoby/kAoY+7JXUqYdNUTjV/A6OLbT6jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5bEwnFqAmphGmBwS+VPqs9hGaekCvuBPHrxQJI6EYnA=;
- b=vpsV4Ea5P9Ts8X/i/CFNQhYgn7EURWBLgZxrSEsZQP6ZbGhnp5kXWwoELN3fUdv2ZEUEKq0GcNdeAAIYXpRLbQkAr+t+SqZM/q9ilCeNyZxhYReK3seTnxHj5FC73wR5Ty54ut7CanLpuIwDnSPkwLpPc6hmK2k9apuhYRP1c5Ra/B2c6PBZeqebIOtUFq3UrSK7wGCU4L8Gkn3YIJVg+h+bGr/P3gDCCDehS1+G+V0bu+24rAJnbegt3JqFidH9c8vHmLc6S5CK9q/6OnUA/tmx0hkSCY4wdnm7uji0p9h67JcD0cdLwWN9F9J26IVRz30MdODFceXeOZlBNsdmMg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by PH0PR11MB5782.namprd11.prod.outlook.com (2603:10b6:510:147::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Wed, 4 Nov
- 2026 03:06:51 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8%5]) with mapi id 15.21.0569.011; Wed, 4 Nov 2026
- 03:06:51 +0000
-Date: Tue, 3 Nov 2026 19:06:47 -0800
-From: Alison Schofield <alison.schofield@intel.com>
-To: Dave Jiang <dave.jiang@intel.com>
-CC: <linux-cxl@vger.kernel.org>, <nvdimm@lists.linux.dev>,
-	<linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, Vishal Verma <vishal.l.verma@intel.com>,
-	Matthew Wilcox <willy@infradead.org>, Jan Kara <jack@suse.cz>, "Davidlohr
- Bueso" <dave@stgolabs.net>, Jonathan Cameron <jic23@kernel.org>, Vinod Koul
-	<vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Subject: Re: [PATCH] MAINTAINERS: Update CXL, NVDIMM, DAX, and others for djbw
-Message-ID: <auqhR3H98vkCdHTk@aschofie-mobl2.lan>
-References: <20261103201547.4079847-1-dave.jiang@intel.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20261103201547.4079847-1-dave.jiang@intel.com>
-X-ClientProxiedBy: MW4PR03CA0346.namprd03.prod.outlook.com
- (2603:10b6:303:dc::21) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BiU/NEqc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63661F000C1;
+	Wed,  4 Nov 2026 03:15:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793762151;
+	bh=uYJF07BCGEEpbrc+vXQyQ6V28x6DgLk6q4sUVWA5mto=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=BiU/NEqcMeUMJ4Qb/pbwCr1zxm2CJZbHWhiwJwH1hNr8YPecLEug8V6U4Zq7LYj8U
+	 KTa0qsIfflzicX8Q9utWTVdk20+dQNficz9AgKK1BFIo9Q7IfsqDzXilsg02BT43Or
+	 h2S6THY4u4qCIfhiSp3IfiJDI5Z+WvXBhlJmzc2cC/J1rFNaJMLPynCbSlmapdKIdk
+	 tQtiS6IvC/jDzn12LEEFtT9crYBfRtcP94WQT8XStar48zWSZH3vax/tWqWBVSxCV0
+	 6PBOgYIOQjueiaqy22f7lFeCRB7rQUt6PRXGSj5wi/ZvfM4l813tkzY/+knJ5M3pDA
+	 X7xvV9jvUNx7Q==
+Message-ID: <sashiko-outbox-196592@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v4 24/25] dmaengine: sdxi: MSI/MSI-X vector allocation
+ and mapping
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Nathan Lynch" <nathan.lynch@amd.com>
+Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261103-sdxi-base-v4-24-3668ccc7aab8@amd.com>
+References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
+ <20261103-sdxi-base-v4-24-3668ccc7aab8@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 04 Nov 2026 03:15:50 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -134,77 +60,80 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|PH0PR11MB5782:EE_
-X-MS-Office365-Filtering-Correlation-Id: b8502037-3280-44a6-73f2-08df3a20ac00
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|21046099003|22082099003|56012099006|18002099003|261022105027099003|11063799006|10067099003|261028144727099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info: UoYp7x/KE8qYATzCLnbEWEotlR5fb9Fh6iLr/EcEKf4qzM9dWqx6yhR093ZzzT7tEkzZyodQKWE/rQElBgYktnsSldRuQlCkEq7EFU77XNUMIGkNdUnoFcD3ktN31zmyRlt+UYYGcpUtPuphO1B0HhpLDG0+wSSI07bCmoBRgN7wDo4qqPb5zvEsBgp5wXdXwJFU5ka1rJKMFueB+a7jWOg02SroFhuO94A3grkrdKTfAcz+jEeExmPWfz6MHqdUoKwYmZJzx0nmjzf7fgQrCUaJoB0o6Cr7dc8N25PPQWQMhORYs5AOIcnSfPoxRlItfT0NDGCrH/7ViGrcwbP9B0F50x+Cz3YnqxzSpwEJ5LHIewAmBt2HAPPk8I1lSK3mPdoqi+7v9g5xdZhPZ4Kzv/kU9WDA5tAJmzMh/GXMEAudomvvZ+m8BTK+SaN+JMixUfOdH27zFhR/FhcVFN+KFwS2D52qboWGYUeT3GxwJsQtfANcrWZoaVXwCuBBcBCcre3dOiOcz2lga/MEH4EYw9sjrBp2Jkc5U4aY1FClk7S7ZnqkjD3KNQ3l6unnH8JHc+u+bz3EEV4BKikBpl1Pj1lVpHnyCr5MC/iTmMipQhK56E5fGEVZJUPsBkCmRGQBWUGOtYmy3lQ+ERqtG920ml3po/1jPPerlgn92hhVSm8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(21046099003)(22082099003)(56012099006)(18002099003)(261022105027099003)(11063799006)(10067099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gjS/+5Ordpuz9gXpV1H3p1nCsdxe3t2IKKWcze5Cy5M+ilAqkNZg6G0CsIog?=
- =?us-ascii?Q?p9qx2F4NNMFWEQwsEfap8uh9ZFZW7lnHOOonmtNrE17EhS+OgJkEQGI47O5F?=
- =?us-ascii?Q?h0fyN6jxxd3ISvCncf0Ja66qbHnKz7rDfvJPo4j2SoiQmgFmTC+KucNnz3qo?=
- =?us-ascii?Q?ncvUKFFxYwstNcuVz7c4NwvaaFcpFluWGET/Kh3UHk2/qXsv6NCC2NuE5IyG?=
- =?us-ascii?Q?nckTWMiRdcF6ul/fKRjJ9OnnP25D5QQGiTUxQ9OP+pzequ0mguQFjeJRKt6C?=
- =?us-ascii?Q?7mqDIY6uaWpd98cdGhfswFOprHBSn2OlxI1Gn+HeMgKG+CShnyCo9X9N3P8P?=
- =?us-ascii?Q?drpvb8hXGuquKVof0cnQgLwc0bMMo9aheUv/cgnVwGlIulY1jmlni/GB+It5?=
- =?us-ascii?Q?CtFbzEptMLi52TzGR/Cno/ghkvVI+qFmRkJN8JPK/AIghei1UcMm5P0aW3wn?=
- =?us-ascii?Q?davbZTh2fce9NzTxknj43WlJSYfRPowg4uPduQUJ9frrUvs1z+ri9Gg8IZPu?=
- =?us-ascii?Q?SrKKcptf4pCHPULPaJiX3m071z12mNHaVvH3ep+1/b8SJhdLn6zpj0MFCvCy?=
- =?us-ascii?Q?cNlZ7NMsEuY3ZnZMAY+q6ybI+VxQJHGl6Noiu54evU8kvbbtJ+/zmLYGNU/u?=
- =?us-ascii?Q?edRn3KR6p3rNwQFAtSVdj9dBTIxI/ZRoDWv63/vTI51MQr+pkcW/Q2uSB3up?=
- =?us-ascii?Q?opfe8QenszxSVuQG/BDmDNTLlrUgyiH0Bw8VK2SFHZdm5kWCi5UA5XWID/qb?=
- =?us-ascii?Q?NqKHP52isB++UDS4mBRgD9dVcuHUOgwCBVaWolLLnXTBUUr+LPf8X0LrjP6M?=
- =?us-ascii?Q?HkFNd8Z5VusSj7jqpsfDN0azwXhq6Xh5c0kaotWXK/20Nj77ItqpRIxL1Y+2?=
- =?us-ascii?Q?YODotCHRp2usddQOabHT1uZxZa+81LYSQtXgP09hbss4OkkLsI3wj0MVKNR4?=
- =?us-ascii?Q?OCt4x3DdP/dOv79pi3DS1VoCwy0LkkGARmRnhvXxC8xYRH8V3sC8DpCMEqzz?=
- =?us-ascii?Q?ZxTd1wLROLAckyqQ7eviGagCZK4DMox/Zpw736U5cT0Y2oqCwDR8RcmtWeVe?=
- =?us-ascii?Q?YBEDuP5Nvj/87pye8Vm59ri78M7AK11W2zKwpJJNuC0nZ6uhqMvqqr1dToF8?=
- =?us-ascii?Q?5E1l7p06O+v9cD309VrPjh4dAehUHloRyE/aSLO7eSrMkd4+cIsJ8+CfOm/w?=
- =?us-ascii?Q?zLP4cgoYEslhUh3oWymtUD8vwqoEeUs1azvHlFjyKXtcA3MEbrTPgRWkuljQ?=
- =?us-ascii?Q?MMc14FJBzyEKA54MWSY6Tb/f7AC1jPwPEE4s70KU2KE/1FBpOEjZZH9SiWRv?=
- =?us-ascii?Q?0D5TounaJuveS5eLIyNPj9sdhbFM5/Li8UKSKnm1M8pKJf7/aMT4mNGoxH4D?=
- =?us-ascii?Q?h/GS7ua5nsxjvEC0YJJBm4Jo56J8Pmo6nO1hhIPXmEi4Rgb4AGYmTWK5xzmM?=
- =?us-ascii?Q?V7E2ceAZhLDR3Lcoc61klN/ZR+F10uegmkUlEsk9DuuTVVWHlLUMeq315uYS?=
- =?us-ascii?Q?ogK5mWd7J3LGJwCRwTHLXQ/AX6nwVjvlvmc4rZ6RD4dRIegpxPqYnyif9vRB?=
- =?us-ascii?Q?WT4Dj+HY8PvJHFty4xucUvtzCELPXavRUBNEe1wwjmbdIaqyAUafqVAr80V7?=
- =?us-ascii?Q?X49PxVRzaoTnA56oPvudhs7ZcFX9AldCG6X3ES/V0UiAEMyX4/jwdnGa7S5f?=
- =?us-ascii?Q?RJ6oVjXBF3MnWt/7RwAkZfXWatJpY269uatd9yF4L666RkhoL0WDM62JKDw+?=
- =?us-ascii?Q?d0jyHb9sl1TXdFuOZiF+y+VT0ZyGiNg=3D?=
-X-Exchange-RoutingPolicyChecked: XhONVnxwx2yHIGiygiHRWbDreOdT4AllJBNsU73DHX2TcW42U37rBS6fEGMLhRQDPYoB/eLCAcyE3jo1zmhR2kKMrdZFYiiF0CyM3emGZE9mlJ3p/DWsa5EHHI78gBFSJIv7+KgHByGErLFQd6Pcj4Pa+cBq42yOiEFLgFP1MPhi9LQcsW8gJS2zIV80gF/FjcWw0scdxLrFOE0QpdoZghLrRcp4I8BJ4CTW3794RADIV9gJ3aaiWPPyJPxcqhI//cXJ0eMy6NIHjAS1Zb62PQTiYYrznJnOFZWtSy/OnhkiVElsOcR2VV0zAduEbGpcmiTtSAdCSA+GBojRhdoSxA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8502037-3280-44a6-73f2-08df3a20ac00
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 03:06:51.3691
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zp1LFBtt3p+/hNCK++OyzbKWkQdLNrFAGVRQ6phALKXmhBJxxa/Nl7FF9G3SM1hncZRs0sALM0Taa5pItlv1ZG4KIjHUdUPkHGUzh7+SxhE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5782
-X-OriginatorOrg: intel.com
 
-On Tue, Nov 03, 2026 at 01:15:47PM -0700, Dave Jiang wrote:
-> Dan is no longer with us. Removing entries in MAINTAINERS to prevent
-> people from keep emailing his address.
-> 
-> async_tx will be essentially orphaned. There has been discussion of
-> deprecation for the feature on the dmaengine mailing list.
-> 
-> fsdax will no longer have a maintainer. But there are reviewers still
-> and Alison Schofield will continue to wrangle patches for DAX overall.
-> 
-> Cc: Alison Schofield <alison.schofield@intel.com>
-> Cc: Vishal Verma <vishal.l.verma@intel.com>
-> Cc: Matthew Wilcox <willy@infradead.org>
-> Cc: Jan Kara <jack@suse.cz>
-> Cc: Davidlohr Bueso <dave@stgolabs.net>
-> Cc: Jonathan Cameron <jic23@kernel.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Frank Li <Frank.Li@kernel.org>
-> Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] dmaengine: sdxi: incomplete kernel-doc comments in sdxi.h
+--
 
-Acked-by: Alison Schofield <alison.schofield@intel.com>
+commit fccd22f95bf4bdc550267ac2709b80e00e1e9267
+Author: Nathan Lynch <nathan.lynch@amd.com>
+
+dmaengine: sdxi: MSI/MSI-X vector allocation and mapping
+
+This commit allocates MSI/MSI-X vectors for the SDXI error log interrupt
+and client contexts, tracking non-reserved vectors with an IDA. It also
+adds helpers to allocate, free, and map device-relative vector indices to
+Linux IRQ numbers via a new get_irq bus operation.
+
+> diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
+> index aaa43eab00b33..07044d837d9af 100644
+> --- a/drivers/dma/sdxi/sdxi.h
+> +++ b/drivers/dma/sdxi/sdxi.h
+
+[ ... ]
+
+> @@ -69,6 +90,38 @@ struct sdxi_dev {
+>  	const struct sdxi_bus_ops *bus_ops;
+>  };
+> =20
+> +/**
+> + * sdxi_alloc_vector() - Allocate an interrupt vector.
+> + *
+> + * A vector that will have the same lifetime as the device does not
+> + * need to be released explicitly. Otherwise the vector must be
+> + * released with sdxi_free_vector().
+> + */
+> +static inline int sdxi_alloc_vector(struct sdxi_dev *sdxi)
+> +{
+> +	return ida_alloc_range(&sdxi->vectors, SDXI_MIN_VECTORS,
+> +			       sdxi->nr_vectors - 1, GFP_KERNEL);
+> +}
+> +
+> +/**
+> + * sdxi_free_vector() - Release a previously allocated index.
+> + */
+> +static inline void sdxi_free_vector(struct sdxi_dev *sdxi, unsigned int =
+nr)
+> +{
+> +	ida_free(&sdxi->vectors, nr);
+> +}
+> +
+> +/**
+> + * sdxi_vector_to_irq() - Translate an allocated interrupt vector to
+> + *                        Linux IRQ number suitable for passing to
+> + *                        request_irq() et al.
+> + */
+> +static inline int sdxi_vector_to_irq(struct sdxi_dev *sdxi, unsigned int=
+ nr)
+> +{
+> +	WARN_ON_ONCE(!ida_exists(&sdxi->vectors, nr));
+> +	return sdxi->bus_ops->get_irq(sdxi, nr);
+> +}
+
+[Severity: Low]
+sdxi_alloc_vector(), sdxi_free_vector(), and sdxi_vector_to_irq() in
+drivers/dma/sdxi/sdxi.h use the /** kernel-doc comment marker without
+describing the @sdxi and @nr parameters or including Return: sections for
+sdxi_alloc_vector() and sdxi_vector_to_irq().
+
+Running scripts/kernel-doc on drivers/dma/sdxi/sdxi.h (for example via
+make HEADER_CHECK=3Ddrivers/dma/sdxi headercheck) emits kernel-doc warnings
+for the undescribed parameters and missing return value descriptions.
+
+Should these comments document @sdxi, @nr, and Return:, or use regular /*
+comments instead?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103-sdxi-base-=
+v4-0-3668ccc7aab8@amd.com?part=3D24
