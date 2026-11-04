@@ -1,106 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.116
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793796624;
-	b=gPDMbC0Zutk0gY1d7lRN8H9A9cAqaxEK/N5VQFr1X0VfXq/qA2r8+p6o/K9nImT4+zBO
-	 k9iJR7yFXYyNBlec51zRoLMcipzZSShb4qSg0TF6kI8HfeDZ4hHKvpBmsDyXCYP6fne1q
-	 E22gR+mfAE9/+54IWrx7fFAsmjJurXU2S4TBKKgMSR0eHXcUsMqHJ037U6sFxiN8LLI/I
-	 CqlBFSrTW1sd0Mj0yl/WlygTiPm3Ld4IMll8uMPQfe/++eczxXxOXG5NSOUBRP/xfq3yh
-	 HnnuPYuCcs9WDBNnQd3jMxqqre13ST1Bl3cD7b7ZjtDZnty6UXBrQ3/aJR22GCsYiAA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793796624;
-	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
-	 Received-SPF:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:Content-Type:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=SESczS/q1YLMBZXT3cKcd36pJ1CvkoXdN2+do27f3Ww=;
-	b=3KKIbM2YnAxQVMMreRui0wzyeB6dX2sxwazbMiDgB7bob5hjrPv2szLdnSFqcpRqiX5+
-	 c4qQZFYdgEKOHgeJ88QEBlzxs5B+PEIOZs7fVsrjbbYxtZgfoD418D4JQ1b2aJewYtyll
-	 I22xT9QzfrSC838suj91KqgWqZOE2HvKv7p4JUgtQGGC3jDEqMNQl4op8P/H6n3MOqPkd
-	 mkCgWgmfrY1vSRNciDhA44x3X+BvAJkqWDHu7vF3OCGSUmF2p8FYGEjUxSFz7ZWE19L20
-	 6dBPKk03YrxARfze90pRnH1uVL8uH7OexCpr2bJoUpmjHcVTck62DxN3uDRjzAlxEYQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=cixtech.com;
-	spf=pass smtp.mailfrom=cixtech.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.75.116
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022116.outbound.protection.outlook.com [40.107.75.116])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793797719;
+	b=Cx3EvIlB8axxyg5GOE+wqB3Zc/SSBW2KcqXVDLzF8Yz7wWBe/j5gPdyDSSy1avzKtnCf
+	 Fvx03OrItjChO0JxVKanrQKc5QPdq6NDea2n4bss9wybssgQlj+vReGUgNtoI6yDdiQoF
+	 RXFFxumsujq+VQmbv/LoO5bSigkccTMyaeeB6D5/qLko0p6w0EX7kTXRv5WT2Lx20HB0g
+	 niKMB7OfrJNSYjtLjArbt/PJhh1m+gdf21tTPEM6IPUgXQJBrqPSF0LOd32RELWJn+i0F
+	 WkDV3CgRdlf/vqIDNTXWGBvSA/DXhKSCLeuQfRfpXN+/wz3Mu9ro9akZWafc102u/Ow==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793797719;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=iSfIUyfCKRc55EWDt6I8EFOvGiqA3QTQENqRfeCCvks=;
+	b=xvpUx5ojOZAqSrewX25YT1dGt3p4LEq0fC9SFCnqW8w28/ldsK+z/X2p3jVPwywVlFzD
+	 DTuyMavL91HYjW78y1IE1nC010xXW55tDXRrgXfLF7s/Z4xhUGDyUlGQRqwr3/wXcTPK7
+	 ld0Hc/6qTp0a+qKi1zW25YeNtVB6XSffxe+11sZWEsz2deAao+kes5cx5tmS1sOqaL5R2
+	 8pAr+TcEP/5WvBQnIHYRX1/0xNjl0KU2lxREj73P+eI4r4zLUmDAD6DnmfBsGLSTgfSeb
+	 g66BC9mhS8upGohcwRSeCh1GyrtB9dmkIKzFrydlasUnL6Ikkmp9BObwdxCizXWSdPA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V9sZd8bJ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C4A606A33C;
-	Wed,  4 Nov 2026 12:50:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40C4A606A33C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mm1IkyH4vsSAzvD2XMkzprEXIPC1ciaQXhV0o562l1mOSNmuJbs2J2AJeh0bpcRKYrwNo8GhX+riiSLygxqj2NBztIXKQ+JEdO2XiHyjOFrOLMyCREJuvjLyZ0dv3EUikW3oElPrhWuOPlqh8+frRLWrX60MO8NYqePQwJXM+gRtzCcH2EuhFgVYHtHnHJQ8d6LxR7SXJA2YT6KVHXwQle1frnMwgEdJaFeb5yfzCLoTqdV8U9MVhtoey4lUOsH0+dPDxSm4sjw0iXWNdYMGqm5zqaJ2giVdw0jDF4Yl957iUu0zQanNwd7IhXzsni4IUa8n6KezHL4E+f8qiTDC3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SESczS/q1YLMBZXT3cKcd36pJ1CvkoXdN2+do27f3Ww=;
- b=Y8X1k5l4n6IaCQyBugmEGZiaPafa3/SCitxbjOIkA8GsDjJA6ijx4edWbJht3J98ojwnA5O3+AOda4sZ7FHkg2Vmty9GqDi28FGdbQbAGOHy5ia/A1YNkygo5W/K6++DMIeO4v9znYCSSpuHdmhr7sZ+XUfzeBZM3IOz3A3CxTeXs6HySwFjRcB60KqRUaPDzop7mW7TSV8Isb/BnUq3RvTL9F00DfvnCau88/vVGo8dyHZ81/IBhLEbuMJ5U0yx5cqawn80T83bfiBmDyyLmZEWWfUyr3UXZtRHZhdbq8SJUx/t328x5mNvSqWBUqITdgFsyynq0b/bq56sZH9Cgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
- dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
- not signed); arc=none (0)
-Received: from SI2P153CA0010.APCP153.PROD.OUTLOOK.COM (2603:1096:4:140::13) by
- TY1PPF4A2CDB296.apcprd06.prod.outlook.com (2603:1096:408::910) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.592.9; Wed, 4 Nov 2026 12:50:20 +0000
-Received: from SG1PEPF000082E6.apcprd02.prod.outlook.com
- (2603:1096:4:140:cafe::1c) by SI2P153CA0010.outlook.office365.com
- (2603:1096:4:140::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.4 via Frontend Transport; Wed, 4
- Nov 2026 12:50:20 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
- 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
-Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- SG1PEPF000082E6.mail.protection.outlook.com (10.167.240.5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.592.5 via Frontend Transport; Wed, 4 Nov 2026 12:50:20 +0000
-Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 872BF40920F7;
-	Wed,  4 Nov 2026 20:44:38 +0800 (CST)
-From: Jelly Jia <Jelly.Jia@cixtech.com>
-To: vkoul@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	robin.murphy@arm.com,
-	sboyd@kernel.org,
-	bmasney+clk@redhat.com,
-	jbrunet+clk@baylibre.com
-Cc: devicetree@vger.kernel.org,
-	Frank.Li@kernel.org,
-	cix-kernel-upstream@cixtech.com,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Jelly.Jia@cixtech.com,
-	linux-clk@vger.kernel.org,
-	joakim.zhang@cixtech.com
-Subject: [PATCH v2 1/5] dt-bindings: soc: cix: Describe the Sky1 AUDSS DMA IRQ controller
-Date: Wed,  4 Nov 2026 20:44:33 +0800
-Message-ID: <20261104124437.296753-2-Jelly.Jia@cixtech.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261104124437.296753-1-Jelly.Jia@cixtech.com>
-References: <20261104124437.296753-1-Jelly.Jia@cixtech.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC183606A328;
+	Wed,  4 Nov 2026 13:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V9sZd8bJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162851F000C1;
+	Wed,  4 Nov 2026 13:08:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793797718;
+	bh=iSfIUyfCKRc55EWDt6I8EFOvGiqA3QTQENqRfeCCvks=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=V9sZd8bJIFxMrU7+WNcU0VPC7l3364cc6ALuq7BG2BwHJvDC8+wA2Spdou3w+EpG1
+	 /wLJrYKBUz2KeQQ4kWKWHIJ7ISG3lh1m5QxbQlJ4OZra119sh1wic2hhYZvlsSsWZu
+	 46vppfPBHAos0S1f/3AY0aUcJ9b0AXl7ra9wDpo9o3M7YetQpnlyDnvem39vdQseaZ
+	 D1PuKZWR4JS+x8shlCkPKeRUL2snRyWKy8SE14qhT0wdBw4Tmz+kbUdfuqASryLTBj
+	 eHlORmOISZSBpY2NUIq5egOGtgXSsvjReS0K39hoBP/Qf9HQd+qMNmt7EHObmajOXo
+	 HOQhtYjsSy2EA==
+Message-ID: <sashiko-outbox-197326@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v5 2/5] dmaengine: arm-dma350: Add slave and cyclic
+ transfer support
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Jelly Jia" <Jelly.Jia@cixtech.com>
+Cc: devicetree@vger.kernel.org, dmaengine@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261104124411.296640-3-Jelly.Jia@cixtech.com>
+References: <20261104124411.296640-1-Jelly.Jia@cixtech.com>
+ <20261104124411.296640-3-Jelly.Jia@cixtech.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 04 Nov 2026 13:08:36 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -109,122 +60,165 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E6:EE_|TY1PPF4A2CDB296:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 7a7c5198-9c1d-42a4-4940-08df3a722f3d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|23010399003|1800799024|82310400026|36860700016|56012099006|261021121427099003|261021123027099003|261009223027099003|261026140227099003|261102123227099003|261022105027099003|261026121527099003|261028144727099003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	DekKW72KU2SYPJngJK7BT+FCZs8PCAzz+jhbC1VyXdPZZzAwQLNrUYPk5jGZuXd+0w8o8Q0eJw3kf38/4vsp97gsMwFrrUAuRuXZfOw6Ev7Wr2uizloTaERnGoC4llah3ILNk9lH9sDisOqVoX8KK1bhtYhg2aOUeLQEQqgopQaK3jQ3YuXT9vCGdUZlneQkPdLVHX3ZcttIXTatiamcdf+PsKgva+pDWyfHwNAAISxbRxhSUDClghlmLOzZ5PrJdA8Lsjh836z3R3uyElH8i7S5JwDmMAht+Psq0ld/ZsC08jXO12rz8pCFfiOjUOlMQOiZEjWIjd6edKw7T2/PMI/qL0isuPgyKr9ixP/8Qc1LygKbm1gxpqjtebIxZa2rjikgfhD/4KtgWrwQFeGY73u1cN+xIoLQ3knZD51C5Q59GpIRFREWHJiA8yf+tBUAUnZeHRFlmQokr5nubHU683I06Dwau4rqEljblVYoJOVNkHWu152VFyWMONKZHLvn45atT2lhbZtz48OGMtuE+DyBDWg+0dlKx2Nk3eCv1vXNjBC6L9flL8hIc/fpL+ofq1U2cUUlqEAcGqz/JLRoxfa//lsge1PpcauaFn2eAplT93xsdV0nBq/TXKg8FlO0k3hSY4lYWe7leHkXSIu7PeKtv7TxGea5Zun8vi5RiPLLs2SQcq1uErGSi+n+XdEj9G40wCqOsGP2ubGJe6BfMA==
-X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(1800799024)(82310400026)(36860700016)(56012099006)(261021121427099003)(261021123027099003)(261009223027099003)(261026140227099003)(261102123227099003)(261022105027099003)(261026121527099003)(261028144727099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	lAqKGEuoRhhmSrBONapvi1VFQFUgRzokd8hCK6KL/mId09ojcqGmN9TbkHt+SCP0rfhMhVgxnUzK1M/ADXnLfswIbNcvw/yr+s/4b0Bf/wdBf9wqj0XnGMQlj5BMIb8LV1JyYikEg/wE1GEfMjb1Yqjr1A0L6fynYKDGGdWcN40+0tYTyWd3UCKR7gz2QB2FlUka7u7LJZ06kKXXm8O4FHrnsnBLQoJyS4syCH/61sqesNlSwhomJ6fIrwUMWt0siaonraTx5wMgttNUCeRlr9+lw0y5qEgveXb8d+EDdXSywPPhRwNkvC9I8JIsvD4R7zHAHq7hD8G5jqQDpD+2lE165ghW47/0HGQx/YJSKRYcD0qCaOFjEe2rrQSSHtKocKwe44XSVP/DA5pUn8v1agXokRcysQpcEva8ZNnTWDzCuTmzHRnjz+72CFcDZC6M
-X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2026 12:50:20.1380
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a7c5198-9c1d-42a4-4940-08df3a722f3d
-X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SG1PEPF000082E6.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF4A2CDB296
 
-The AUDSS CRU contains a separate AP interrupt gate for each of the eight
-DMA-350 channels. The enabled inputs are combined onto one GIC interrupt.
-These gates are part of the CRU register block, not the DMA controller.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [Medium] dmaengine: arm-dma350: uninitialized sentinel and reset for dch-=
+>req
+- [Medium] dmaengine: arm-dma350: clearing dch->desc on error in d350_irq()=
+ loses error
+--
 
-Describe the CRU as an interrupt-controller in addition to its clock and
-reset functions. A child interrupt specifier contains the DMA channel
-index, matching the corresponding gate bit; the parent interrupt is the
-combined GIC line.
+commit 84e756dbc528524c6cc746a33846d36d67c475ad
+Author: Jelly Jia <Jelly.Jia@cixtech.com>
 
-Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
----
- .../bindings/soc/cix/cix,sky1-audss-cru.yaml  | 37 ++++++++++++++++++-
- 1 file changed, 35 insertions(+), 2 deletions(-)
+dmaengine: arm-dma350: Add slave and cyclic transfer support
 
-diff --git a/Documentation/devicetree/bindings/soc/cix/cix,sky1-audss-cru.yaml b/Documentation/devicetree/bindings/soc/cix/cix,sky1-audss-cru.yaml
-index 50dd0593e1d9..aa0c557abec0 100644
---- a/Documentation/devicetree/bindings/soc/cix/cix,sky1-audss-cru.yaml
-+++ b/Documentation/devicetree/bindings/soc/cix/cix,sky1-audss-cru.yaml
-@@ -28,6 +28,12 @@ description: |
-   The SoC syscon NoC (or bus) reset is described via resets. The audio
-   subsystem power domain is described via power-domains.
- 
-+  The same register block contains the eight DMA-350 channel interrupt
-+  gates at offset 0x54. When the node is an interrupt-controller, the
-+  cell is the DMA channel index (0 through 7). The corresponding gate
-+  bit is unmasked while that interrupt is requested, and the eight
-+  inputs are combined onto the parent GIC interrupt.
-+
- properties:
-   compatible:
-     const: cix,sky1-audss-cru
-@@ -45,6 +51,18 @@ properties:
-     description:
-       Reset indices are defined in include/dt-bindings/reset/cix,sky1-audss-cru.h.
- 
-+  interrupt-controller: true
-+
-+  '#interrupt-cells':
-+    const: 1
-+    description:
-+      The cell is the DMA-350 channel index, 0 through 7.
-+
-+  interrupts:
-+    maxItems: 1
-+    description:
-+      Combined DMA-350 channel interrupt after the CRU gates.
-+
-   clocks:
-     items:
-       - description: I2S parent clock for sampling rates multiple of 8kHz.
-@@ -75,18 +93,33 @@ required:
-   - power-domains
-   - resets
- 
-+allOf:
-+  - if:
-+      required:
-+        - interrupt-controller
-+    then:
-+      required:
-+        - '#interrupt-cells'
-+        - interrupts
-+
- additionalProperties: false
- 
- examples:
-   - |
--    audss_cru: clock-controller@7110000 {
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    clock-controller@7110000 {
-         compatible = "cix,sky1-audss-cru";
-         reg = <0x7110000 0x10000>;
-         #clock-cells = <1>;
--        #reset-cells = <1>;
-         clocks = <&scmi_clk 76>, <&scmi_clk 78>,
-                  <&scmi_clk 70>, <&scmi_clk 71>;
-         clock-names = "x8k", "x11k", "sys", "48m";
-+        #interrupt-cells = <1>;
-+        interrupt-controller;
-+        interrupts = <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH 0>;
-         power-domains = <&smc_devpd 0>;
-+        #reset-cells = <1>;
-         resets = <&s5_syscon 31>;
-     };
--- 
-2.54.0
+This commit adds peripheral scatter-gather and cyclic DMA transfer support =
+to
+the arm-dma350 driver, including trigger configuration, coherent command po=
+ol
+management, period callbacks, and residue calculation.
 
+> diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
+> index fdc4cd2245798..cfe3bacfab687 100644
+> --- a/drivers/dma/arm-dma350.c
+> +++ b/drivers/dma/arm-dma350.c
+
+[ ... ]
+
+> @@ -207,14 +252,489 @@ static inline struct d350_chan *to_d350_chan(struc=
+t dma_chan *chan)
+
+[ ... ]
+
+> +static int d350_slave_params(struct d350_chan *dch,
+> +			     enum dma_transfer_direction direction,
+> +			     phys_addr_t *dev_cpu_addr,
+> +			     enum dma_data_direction *dev_dir,
+> +			     enum dma_slave_buswidth *width, u32 *maxburst)
+> +{
+> +	struct dma_slave_config config;
+> +	unsigned long flags;
+> +	int ret;
+> +
+> +	spin_lock_irqsave(&dch->vc.lock, flags);
+> +	config =3D dch->sconfig;
+> +	spin_unlock_irqrestore(&dch->vc.lock, flags);
+> +
+> +	ret =3D d350_check_slave_config(dch, &config);
+> +	if (ret)
+> +		return ret;
+> +	if (dch->req >=3D d350_chan_to_dmac(dch)->nreq)
+> +		return -EINVAL;
+
+[Severity: Medium]
+Can this check in d350_slave_params() ever evaluate to true?
+
+In d350_probe(), dmac is allocated with devm_kzalloc(), which zero-initiali=
+zes
+dch->req to 0 for all channels. Because d350_check_slave_config() already
+verifies d350_slave_supported(dch) (which requires nreq > 0), and the only
+place that updates dch->req is d350_of_xlate() after checking req < dmac->n=
+req,
+dch->req is always less than dmac->nreq. If a channel is requested without
+d350_of_xlate(), slave and cyclic transfers will silently use hardware trig=
+ger
+request line 0 instead of being rejected here.
+
+In addition, d350_free_chan_resources() does not reset dch->req or clear
+dch->sconfig when freeing channel resources:
+
+static void d350_free_chan_resources(struct dma_chan *chan)
+{
+	struct d350_chan *dch =3D to_d350_chan(chan);
+
+	writel_relaxed(0, dch->base + CH_INTREN);
+	d350_terminate_all(chan);
+	d350_wait_for_stop(dch);
+
+	free_irq(dch->irq, dch);
+	vchan_synchronize(&dch->vc);
+	vchan_free_chan_resources(&dch->vc);
+}
+
+Should dch->req be initialized to an invalid sentinel such as U32_MAX (or
+dmac->nreq) in d350_probe(), and should d350_free_chan_resources() reset
+dch->req and clear dch->sconfig so stale request and slave configuration st=
+ate
+is not retained across channel release and reallocation?
+
+[ ... ]
+
+> @@ -487,22 +1193,28 @@ static irqreturn_t d350_irq(int irq, void *data)
+>  		else
+>  			vd->tx_result.result =3D DMA_TRANS_ABORTED;
+> =20
+> -		vd->tx_result.residue =3D d350_get_residue(dch);
+> -	} else if (!(ch_status & CH_STAT_INTR_DONE)) {
+> -		dev_warn(dev, "Unexpected IRQ source? 0x%08x\n", ch_status);
+> -	}
+> -	writel_relaxed(ch_status, dch->base + CH_STATUS);
+> -
+> -	spin_lock(&dch->vc.lock);
+> -	vchan_cookie_complete(vd);
+> -	if (ch_status & CH_STAT_INTR_DONE) {
+> -		dch->status =3D DMA_COMPLETE;
+> -		dch->residue =3D 0;
+> -		d350_start_next(dch);
+> -	} else {
+> +		residue =3D d350_get_active_residue(dch);
+> +		vd->tx_result.residue =3D residue;
+>  		dch->status =3D DMA_ERROR;
+> -		dch->residue =3D vd->tx_result.residue;
+> +		dch->residue =3D residue;
+> +		dch->desc =3D NULL;
+> +		if (desc->cyclic)
+> +			vchan_terminate_vdesc(vd);
+> +		else
+> +			vchan_cookie_complete(vd);
+
+[Severity: Medium]
+Does clearing dch->desc =3D NULL on the error path in d350_irq() cause error
+status to be lost?
+
+When CH_STAT_INTR_ERR is raised for a non-cyclic descriptor, d350_irq() sets
+dch->status =3D DMA_ERROR and dch->desc =3D NULL, and calls
+vchan_cookie_complete(vd), which sets chan->completed_cookie to the failed
+descriptor's cookie.
+
+Because dch->desc is now NULL, a subsequent call to d350_issue_pending() se=
+es
+!dch->desc and starts the next descriptor:
+
+	spin_lock_irqsave(&dch->vc.lock, flags);
+	if (vchan_issue_pending(&dch->vc) && !dch->desc)
+		d350_start_next(dch);
+	spin_unlock_irqrestore(&dch->vc.lock, flags);
+
+d350_start_next() overwrites dch->cookie and sets dch->status =3D
+DMA_IN_PROGRESS. If the consumer then queries d350_tx_status() for the fail=
+ed
+cookie, dma_cookie_status() returns DMA_COMPLETE, cookie =3D=3D dch->cookie=
+ is
+false, and d350_find_queued_desc() returns NULL, so d350_tx_status() reports
+DMA_COMPLETE with a residue of 0 for the failed transfer.
+
+Clearing dch->desc in d350_irq() also prevents d350_terminate_all() from
+resetting dch->status back to DMA_COMPLETE:
+
+	if (dch->desc) {
+		if (dch->status !=3D DMA_ERROR)
+			vchan_terminate_vdesc(&dch->desc->vd);
+		dch->desc =3D NULL;
+		dch->status =3D DMA_COMPLETE;
+	}
+
+Should dch->desc remain set (or should d350_issue_pending() and
+d350_terminate_all() check dch->status =3D=3D DMA_ERROR) so that the error =
+state
+is preserved until the channel is terminated or queried?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261104124411.2966=
+40-1-Jelly.Jia@cixtech.com?part=3D2
