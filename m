@@ -1,49 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793827688;
-	b=eCAMCkpWf/Q9h0CZNdPDfP6f8Ixo48cXQr6gFQnh+C7uZSzpotgXeBnTZm6qnhLbEkDX
-	 mA2sJj4XukQziHkTuLDXwb7aoJVAuNN6eq8crPyjl+mo4awQ0lv/z1pQPYVG84PL5z5kq
-	 uEdRLL7IrcuInwogsBK7eF4wtPCeii7hIIQKtipCsvt+vz7KJ72q4GW6HVks6HFvGPHby
-	 jVHp+YszBgT0YFeaZQXouDsoVGZ4pp37FEe84k1SdIbWlQQleCwmw8CfTDf5zQ+Cvm6dG
-	 dnV/mX8yiTuGVVLrv17mgbGR+eXj+hAeK8Cvc8jIrr2n6eg34P3lxxjRjT/dKUVa19A==
+	t=1793828746;
+	b=dZiQA/ELuvM4zrlNxSDw4ZZ53D4toS71z+pKA8REhuCT6Sc3wZ6eqar31l05Pyl28rsP
+	 mOhKAicZpsjWgBFUhTpKqgo/j1bVrXT2nFHLSjZTLwzpcb/9JSJiCrVPoGXCrbD9OZzll
+	 cjq7dDmDRi1N27O5m3HK8jwPlcgcOIDdYn5NV2yl1u3o8F/yMFLdN81U06y1FMEBtm3XD
+	 sooZkYloTyRHpAY3Oi15E54N3fyu/vIl0T0FnT7Hp/NvtTRLo73wS2shTYnoxmE1Jqm5s
+	 ZysRxT8+6EfBxhHII/RTvZtw2xEQfRKKaJaSz27Lf1I4ndn3P/cH3nNnX2q+01ewgOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793827688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793828746;
 	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
-	 X-Mailer;
-	bh=9fO88CzZ4KxwmnRZKO53UzsL+vV6yYBAF2v/XvLPKlI=;
-	b=EXk16ENr/fp7Jd6jVLf7PwE3vnnnjjQkYsVWTKVM1s++IEYXh3Od8L8SFrRgm4J4qtcW
-	 LCw1tJpFZfS5tRbSAUJ0y5twvwU1FW6y6gSakAjntZrfss8zlIWIDz2lt2aZ/x51bw1+w
-	 8wpgSVZydtqy+L/fEqqoPdhhlcMBGUXwj+rCDD7KHIn4JTSHEso/F/U6aFp3eZeCbRB8o
-	 tyQJGTKXpb8K9w+e8Ilvt8YuoiwRDVfu26eLLO450OCErBIGIL/d0ACjeiD2obI39x15O
-	 sD7iRKXlNv9rcoVYN5BCLZs2zl23t0t5Ptq9EhIURTk+d16mdsRPL38A59dpT9mRhkA==
+	 X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=lqjLb+mG6Paw67aPWiBPzyeEWmphVu8ONgODVgCa5Sk=;
+	b=qb9709oFa8W+4DKUfilw7pCZkqMeVb3KahbeQ4wP0V5B35WLxXP+FIqQx2D92rxcBDwk
+	 kAWWkceOGLw8Hwrx+Z+opeXhcPPHegdHmzbjukJC/T/v8W97AC/CMJ3ayqrHQfPmlDq+5
+	 RIHVXf+5BZKETT/vS3VSnX85rBk9jqvVHBIW+zUKZDhBC3buIU9ci0WDoG9iJiTGaXPBi
+	 Q8HFow+CIsfg9auFyo/wNVq+LA8K7wvIfkJ4Rd8CyrOVbizPGLR87pqRb21l+upZqHl5B
+	 qmkfLM9E7Dq2pLH95kQiP1QDwVQNF1emQAglPizJ7p/8ccM76LUSy8GOSmnXVsXLXMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XQI4xlaX;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UBxRSSwD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90DD606B2E4
-	for <dmaengine@vger.kernel.org>; Wed,  4 Nov 2026 21:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78916606A331;
+	Wed,  4 Nov 2026 21:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XQI4xlaX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E121F000C1;
-	Wed,  4 Nov 2026 21:28:05 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UBxRSSwD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5E71F000C1;
+	Wed,  4 Nov 2026 21:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793827687;
-	bh=9fO88CzZ4KxwmnRZKO53UzsL+vV6yYBAF2v/XvLPKlI=;
+	s=k20260515; t=1793828746;
+	bh=lqjLb+mG6Paw67aPWiBPzyeEWmphVu8ONgODVgCa5Sk=;
 	h=From:Date:Subject:To:Cc;
-	b=XQI4xlaXILHLS+YVBWPv+SC5GHIsgp7U+bD9rpklNNEHYQgpjjw2Rp6IjQRkhWJMc
-	 63kpjcCojCAuVbbNGMG+py81f+Bi65zyo0dTa+mQw4FEGLmD/xnmk2ZZikfSAvfdUz
-	 mHGuxc0k55SPCZowkucWtyzpMdvTwt0tJuZzgma/pO5dG+dIKt/pMFX3IVwoE+1NG9
-	 C8LUbMrCzEaON+++0UOaP4d7vKF3E8SS0HhuQXsYPAwga+0Az2VyYBYTOST8hqdxbp
-	 qcPJxRR2KrTSZBjrMGlO9AQvPCD1D6Ibk0sWUBc+tT2a3n7P3iro1pdrkFgpHXSJ/O
-	 y7MzmvT0LoUSw==
-From: Linus Walleij <linusw@kernel.org>
-Date: Wed, 04 Nov 2026 22:28:02 +0100
-Subject: [PATCH] dmaengine: ste_dma40: Keep prepared descriptors across
- termination
+	b=UBxRSSwDd5V0GiU7DpH+nPyMq/Maum4d2vpncqrIBLDu2lUK98IphgRclwl+zGP9k
+	 gEvL2g8aUyHLOmOdUwPUeK2PDLgF2NKyWbjcp/KGXE2+y7vUp9vBavjegYBHng3/Yx
+	 5+a3JMKjU0kka8aXoLwIYEi3IxuGsQyNdgsVD8+JTAJJUZ8T2p5UQiP8ZXuRrRYHcS
+	 pcBPL7s5D7hKET/god8/S1UMhJkew0GHil3YYHiHXepbN1w2wCo0u/OWDjLsUyvhL4
+	 Az8NtbAYfIkmM+HBYZbvXPlqRTS3JJr1dLD1hngK6nKagKN57Oz6wgYgontgVzE4Mr
+	 KNSv+QnjQ4c1g==
+From: Eugen Hristev <ehristev@kernel.org>
+Date: Wed, 04 Nov 2026 23:45:32 +0200
+Subject: [PATCH] dmaengine: pl330: Bound UNTIL loop
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -55,97 +54,114 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261104-dma40-fixes-v1-1-48c5180f5210@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAA/x3JTQqAIBAG0KsM31pBQwq9SrSwZqpZ9INCBNHdg
- 972PahSVCoSPShyadVjRyJvCNOa90WsMhKhcU3rvQuWtxycnfWWajny2LoYxo4jDOEs8gcS9cP
- 7fnI5mrldAAAA
-X-Change-ID: 20261104-dma40-fixes-d9db6094b7d9
+Message-Id: <20261104-b4-pl330-until-v1-1-b541929da163@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHun62oC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzNDQwMT3SQT3YIcY2MD3dK8kswcXYtEIwtzSwvD1BTTFCWgpoKi1LTMCrC
+ B0bEQfnFpUlZqcgnIFKXaWgAl+MUdcgAAAA==
+X-Change-ID: 20261104-b4-pl330-until-8a287981ed5d
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
- Ulf Hansson <ulfh@kernel.org>, Linus Walleij <linusw@kernel.org>
-X-Mailer: b4 0.16.0
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Eugen Hristev <ehristev@kernel.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2972; i=ehristev@kernel.org;
+ h=from:subject:message-id; bh=yBmITGHz7EZUELEqDKOPgjfsBeFhSjNtZTuRzp+q7Eg=;
+ b=owGbwMvMwCXWkjcnuXne3fmMp9WSGLJeL2/JcxHPTTqy95HjjaX9n8RaLFVCo9/OOVJ+pOnms
+ uzojCUBHaUsDGJcDLJiiizVJv9qhft3uJ90tVSBmcPKBDKEgYtTACbi85Hhv3uF244dV2y99l+e
+ 1fp2c9S8601TUr90/L+novLfbMvki74M/4O1Z5hPlWg1qvdzUfkuf3adotNN77jUlRI81Qm386r
+ EGQE=
+X-Developer-Key: i=ehristev@kernel.org; a=openpgp;
+ fpr=AB184498D27A77B65D7852C81EB31E020EAC2FC8
 
-MMCI can prepare the next request while the current DMA transfer is
-running. If the current request fails, its error handler terminates the
-channel before the next descriptor has been submitted.
+Bound UNTIL loop with a timeout.
+It may happen that by accident pl330 will read/write a wrong address
+and generate a bus fault. In such cases it will not complete the
+condition that UNTIL waits for. To have the driver continue and not
+hang, use a timeout.
 
-d40_term_all() frees that descriptor from prepare_queue, although MMCI
-still holds its pointer. Submitting it later accesses freed memory in
-d40_tx_submit(). A reported crash writes to 0x104 through a list pointer
-containing LIST_POISON1, which is consistent with this sequence.
-
-Termination only cancels transfers that have been submitted. Leave
-prepared descriptors on prepare_queue so the client can still submit
-them, and release any remaining prepared descriptors when the channel
-resources are freed. Keep tracking them so abandoned descriptors are
-reclaimed at channel teardown.
-
-Fixes: 82babbb361f2 ("dmaengine/ste_dma40: fix memory leak due to prepared descriptors")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Assisted-by: Github Copilot
+Signed-off-by: Eugen Hristev <ehristev@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ drivers/dma/pl330.c | 36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 74dd4cbdc3c0..f1cbc719c4f0 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1166,14 +1166,6 @@ static void d40_term_all(struct d40_chan *d40c)
- 			d40_desc_free(d40c, d40d);
- 		}
+diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+index c2d0b473b8f4..9ced60fef9ff 100644
+--- a/drivers/dma/pl330.c
++++ b/drivers/dma/pl330.c
+@@ -248,8 +248,15 @@ enum pl330_byteswap {
+  */
+ #define MCODE_BUFF_PER_REQ	256
  
--	/* Release descriptors in prepare queue */
--	if (!list_empty(&d40c->prepare_queue))
--		list_for_each_entry_safe(d40d, _d,
--					 &d40c->prepare_queue, node) {
--			d40_desc_remove(d40d);
--			d40_desc_free(d40c, d40d);
--		}
--
- 	d40c->pending_tx = 0;
- }
+-/* Use this _only_ to wait on transient states */
+-#define UNTIL(t, s)	while (!(_state(t) & (s))) cpu_relax();
++/* returns true if state reached within loop budget */
++#define UNTIL(t, s, loops) \
++	({ \
++		unsigned long _l = (loops); \
++		while (!(_state(t) & (s)) && _l) { \
++			cpu_relax(); _l--; \
++		 } \
++		!!(_state(t) & (s)); \
++	 })
  
-@@ -2222,7 +2214,8 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ #ifdef PL330_DEBUG_MCGEN
+ static unsigned cmd_line;
+@@ -979,7 +986,8 @@ static void _stop(struct pl330_thread *thrd)
+ 	u32 inten = readl(regs + INTEN);
  
- static int d40_free_dma(struct d40_chan *d40c)
+ 	if (_state(thrd) == PL330_STATE_FAULT_COMPLETING)
+-		UNTIL(thrd, PL330_STATE_FAULTING | PL330_STATE_KILLING);
++		UNTIL(thrd, PL330_STATE_FAULTING | PL330_STATE_KILLING,
++		      msecs_to_loops(5));
+ 
+ 	/* Return if nothing needs to be done */
+ 	if (_state(thrd) == PL330_STATE_COMPLETING
+@@ -1059,12 +1067,24 @@ static bool _trigger(struct pl330_thread *thrd)
+ 
+ static bool pl330_start_thread(struct pl330_thread *thrd)
  {
--
-+	struct d40_desc *d40d;
-+	struct d40_desc *_d;
- 	int res = 0;
- 	u32 event = D40_TYPE_TO_EVENT(d40c->dma_cfg.dev_type);
- 	struct d40_phy_res *phy = d40c->phy_chan;
-@@ -2252,6 +2245,12 @@ static int d40_free_dma(struct d40_chan *d40c)
- 	/* Release descriptor state; this does not access DMA40 registers. */
- 	d40_term_all(d40c);
- 
-+	/* Release any prepared descriptors the client did not submit. */
-+	list_for_each_entry_safe(d40d, _d, &d40c->prepare_queue, node) {
-+		d40_desc_remove(d40d);
-+		d40_desc_free(d40c, d40d);
-+	}
++	/* msecs_to_loops(5) gives the same budget used by _until_dmac_idle */
++	const unsigned long tout = msecs_to_loops(5);
 +
- 	res = pm_runtime_resume_and_get(d40c->base->dev);
- 	if (res >= 0) {
- 		res = d40_channel_execute_command(d40c, D40_DMA_STOP);
-@@ -2508,10 +2507,7 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
- 		goto free_desc;
- 	}
+ 	switch (_state(thrd)) {
+ 	case PL330_STATE_FAULT_COMPLETING:
+-		UNTIL(thrd, PL330_STATE_FAULTING | PL330_STATE_KILLING);
++		if (!UNTIL(thrd, PL330_STATE_FAULTING | PL330_STATE_KILLING,
++			   tout)) {
++			dev_err(thrd->dmac->ddma.dev,
++				"pl330: thread stuck in FAULT_COMPLETING\n");
++			return false;
++		}
  
--	/*
--	 * add descriptor to the prepare queue in order to be able
--	 * to free them later in terminate_all
--	 */
-+	/* Track prepared descriptors until submission or channel release. */
- 	list_add_tail(&desc->node, &chan->prepare_queue);
+ 		if (_state(thrd) == PL330_STATE_KILLING)
+-			UNTIL(thrd, PL330_STATE_STOPPED)
++			if (!UNTIL(thrd, PL330_STATE_STOPPED, tout)) {
++				dev_err(thrd->dmac->ddma.dev,
++					"pl330: thread stuck KILLING->STOPPED\n");
++				return false;
++			}
+ 		fallthrough;
  
- 	spin_unlock_irqrestore(&chan->lock, flags);
+ 	case PL330_STATE_FAULTING:
+@@ -1073,7 +1093,11 @@ static bool pl330_start_thread(struct pl330_thread *thrd)
+ 
+ 	case PL330_STATE_KILLING:
+ 	case PL330_STATE_COMPLETING:
+-		UNTIL(thrd, PL330_STATE_STOPPED)
++		if (!UNTIL(thrd, PL330_STATE_STOPPED, tout)) {
++			dev_err(thrd->dmac->ddma.dev,
++				"pl330: thread stuck, not reaching STOPPED\n");
++			return false;
++		}
+ 		fallthrough;
+ 
+ 	case PL330_STATE_STOPPED:
 
 ---
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20261104-dma40-fixes-d9db6094b7d9
+base-commit: 6d0933ae9d46674a6ea63a87e9e9ab4e662670c9
+change-id: 20261104-b4-pl330-until-8a287981ed5d
 
 Best regards,
 --  
-Linus Walleij <linusw@kernel.org>
+Eugen Hristev <ehristev@kernel.org>
 
