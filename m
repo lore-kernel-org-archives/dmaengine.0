@@ -1,93 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793886067;
-	b=sogFWqNvYU+jUhGvR9C6WvtmfTlEkxNECSkv+AUQvlfGum7W0XlGRjJKUuzENWcclSDZ
-	 PscIiP1pZUbojHHXyCwTM8qHReXfmPjPkRmcP/F996fByb6sz2nNTFmpqs14fg7nzb0Iz
-	 3z4hWsD+BmskJPn5faquKNc/MpxQsYieP22c/083l9U34QFlYxeKmQFj1SeY7lWQNaufY
-	 15sokT4JwsWJKyww90nFiR23nBMKROsj8161HWNclf4XJeSoe6Y+QC+DqqZJKf+2IlenD
-	 JqHDKTFv6hLhXIvTKpRNFd6rHlzUriG58oFarKyqZs8doFAD43R/esq0eKiu5V/LOZA==
+	t=1793886927;
+	b=HY7EECJOFCDEjbTMNNYp0bzm5IgWIzgud0b5A19DLNAKo2X4OSn9xZ/GXxoj8W49iTRQ
+	 smTkwf3HO8gs/1RmG1pkJnGkiRkBWnBq9M0JhXVCuSp4rTwfJtnbwmJ78b5t29Fcg/M9b
+	 QxqE46c7dysbQO/QgHiJf5G/kH1jJVlIXarLKkVCMvUpklKlloLayn/lQek1wPlaTBedH
+	 kOAgtHsfe+tyC9BZUU5nw7EMj4/+0+WbFyIJgijYXHh/S/NCs3Y+/4BA2sPgn52WznfZ0
+	 LCKulK9mkxztl+7ZqU9xs/DD7mXBPwkYgEaPFMeEoZ64HOVFxn3+GoSTaotsk3iUUzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793886067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793886927;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:
-	 X-Google-Original-From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=hp6UnAz42BYtWNNKJvUUuqRoOotKOANhhbOdLXq6OJQ=;
-	b=dZ90YcPWerkUAgjIoYgFrIyynpvaatHij3JlCMY+CotoDONlclOzBVFpIsK60RvQDHQZ
-	 v9Sa6ceLss0tMUt8d44NcIWKAsgJX2d0y2l1LwKrIiOyMeXsMcLmH5iQ1lOR8H51xGUiv
-	 Pzo/fIsFOLtVH24E1LsWS66Zb9AI1Ebf3AjsfqBmrWug6qNuGE/DyHkvSq9p4+10V29Kl
-	 hAHQjdM9z2s3EhvodJH0koxrejjq2m7r3KJSKfHcjo61VTx22secJkhLBEYzrc+VTN/px
-	 FenhAEMR5FQo16pLKzO/kwToV3SS5a7jyUbRE03oIoXHSfAUZsJB1RyzSjr0PaAiaDg==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
+	b=xRemORdiMwRhxbeQw6sGDyAsR8ROE+Qp0Q3EeIzRTXfJEwGIqguSKVJ2fgWaY+ghUbkl
+	 70Xj71uStelGgCJEU4yu6ymZF9Z64JIc6IHh1/If2Xe2NeW4l5AFJZUHClWHSVcTH39nP
+	 /Sw9ykwbozlHT9HOhGeJwSXezmE1DqXiWYaYCzMLLsk8xutB/0095sSbuA3nW/kID8/J7
+	 1i1hLeb0LN3Bx7kVSR95n4AgUeudiH0iRf4sfyhwPZtS7K0NByT/hKXTsUltFGN/kj10j
+	 3edxwVIYVZ1tCXd6l//c9s2O2ctpZpTmSkMRKkeMJYRTV1UwhriNUMtTX0EjwSLxRlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ok3bum+k;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Kj3FRHjq;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE82D606A329
-	for <dmaengine@vger.kernel.org>; Thu,  5 Nov 2026 13:41:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE82D606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFB3606A326
+	for <dmaengine@vger.kernel.org>; Thu,  5 Nov 2026 13:55:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ECFB3606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ok3bum+k
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a20bde60a0so17117605e9.3
-        for <dmaengine@vger.kernel.org>; Thu, 05 Nov 2026 05:41:06 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Kj3FRHjq
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a2167bd087so16538125e9.3
+        for <dmaengine@vger.kernel.org>; Thu, 05 Nov 2026 05:55:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793886065; x=1794490865; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=hp6UnAz42BYtWNNKJvUUuqRoOotKOANhhbOdLXq6OJQ=;
-        b=Ok3bum+kYvQiNNVPVy7x8MhzFunyBfvADRAhnTB7+cwO6+tugOJ5xnDLLZ00Z/OrAv
-         x2Ov0Z3BIhC+y54oNNHHdjxPDHGTaOu0dDuCLDwwRYlpAbhrAcq6dFE3gf6mL5fUDg8k
-         8ealx2J5YgdeV2VsojZOo50+pz4krGWNKLR2i8ZJ1t+CJdU8D2sec5z6MSsy+vSnWbiO
-         V3sU+/tkhsBax7Yn2j58u3JPx12C37ybV16YgzMQk4wg3LgtWX4DKieZmDdRI3s2S+xQ
-         9FtVVf0ZRrb653tAUV7bkLTGC/H+5Pu62VBqeY6peUn03Qk2O1/huQUJNsj6tyB8399H
-         WFKg==
+        d=gmail.com; s=20260707; t=1793886925; x=1794491725; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
+        b=Kj3FRHjq0kS/QTeHwpyO8VCSgN6xpI7T6ctPjb4MUWfs7l/H4yrVwZEhVC6L3tlMkH
+         250J55XIf2giNP4eWE51mfyODlexkBd5EkK7AL3V1jh1b3qYq0c0qFv8y2BJL11o+JVw
+         ekwvqeobN8QF3k9/c8nX76JCktawT4ZcBnaHhWBp1JWUJ7iEl5BKtzlo6YlKOi8XUBUy
+         71KghEP3YOkymNlnZhxugnO/dJ6sXS9jyCKb4cOI7Wwenk+pjthuWACtBWIjtIBEntUg
+         tadnLar0JoQNTHrhW5FJ5uI7sQs1iVaF++07p/NPQuHMBqHcNwibPXsZwxCFF9VUZS97
+         7aOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793886065; x=1794490865;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hp6UnAz42BYtWNNKJvUUuqRoOotKOANhhbOdLXq6OJQ=;
-        b=ds6sUV3ANtHfIk5GaGGKUzKdyzj+fJ8D+z9ry8PlWEs1FWJiVUB36DjZMXZyP2vNXl
-         8B90meMiXYPGDkNAREhvBuHlsv+nYukhThEPZ+98Tpkpm2ObWzRNOll6obbrPKHsEDm1
-         nuAvcD9q1Wl9WRbjncyrs59VFjK7HDNVwIRx6vAqliPqua9Gj0vrXA8zuc0UMYjmJ4Nu
-         TZfITjt+LZwf30vV3yO/X+PvfWfRv8wNNrzfOTHo/vbUlw3UvPLtJ4edneN8Fga+DajG
-         ZLEYkYb7WyLBqIn3Nd5A+RbJUBqo8SfnHpRGLKewCCJMaj3U0Ly32TUAcR2DS0vlkTSx
-         C6xQ==
-X-Gm-Message-State: APuU4Z+uH+rCgAU9WIgQjOoEg8SyfTbge0aT6QI/6AcFwc+Gr8SP9xOW
-	gK/PfOFP1NogzOiy5Ibhgi3FsFFkdfDh5GCJDxuV79CgbYD9oiELr54o2X3jMyMw
-X-Gm-Gg: AYBFou302JlG7t4eWeY/ryApcKV+UjgP77eqpTePgxDw+F2AuRHJ725+XH7kbfKcpLn
-	DSUEqOHAcV7NEQdkSNTraJD/sYmkoDHcAktSRKHPOROxuue14CuyyvrwinMwhg+iyRkjECPXAjG
-	GkhXJ9S7O/Wfqil3axDKC09/GL3RpFmGHTUWxKNWHgcxKXh0CJKFTCsaVJkqGztNA2c9/zqsYGy
-	J4BFYLW5b0VcdURIn0T8j2MfkuE6DYE6nRQmboO8e99lPRbwHWDiwuTQdsoCHu1Ve52VcEz7n3p
-	B7S14PX3bY+rTxGTdwBJKW+Uhq4+T8PKjjKOPPxv7RiCkJ3IHanF27EG3DG/EByertcEqTnD11Z
-	ADQY9QcUEyLAYNP91+fX3YNNUhE3Zqc64AFIbWMwDs7xrw/LjvWQ10T7qHOTm/agWY2oKWkmcaY
-	AvRBGsRBcqMhzcdZrht5blGvVQlYK5fXSp///xz53aYsGSKcUA8OIuMbdKW89TlZFy3JZ6cAYTQ
-	6rg0CvcZp3oIPxJUe2T2CyZdMMJL5UlGYAqdE7uR6o9mNybp3lVY0nuXmQ++wnbh0LcF+TBdPBK
-	jPX9Lb/x+sZKGaJPSPY/rLjSZXOcCcUMpGE/dKkb7AzP
-X-Received: by 2002:a05:600c:6095:b0:49e:7c8c:361d with SMTP id 5b1f17b1804b1-4ac182dc30fmr374890485e9.22.1793886064798;
-        Thu, 05 Nov 2026 05:41:04 -0800 (PST)
-Received: from localhost.localdomain ([46.188.59.33])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b64809c39csm13472965e9.4.2026.11.05.05.41.03
+        d=1e100.net; s=20260707; t=1793886925; x=1794491725;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZOan7uVPwS+Sq0zaneJfTrgsA8Jqv1vwKBJC+yJr4FA=;
+        b=oR19wLKg2rHffjYb/w2Ld30CoF6vY7E2HUSqwuknD7G8ez3NYZFxpEpyCVw+grIB0p
+         AzQOPhy4ru6eg0l0Gxbm/apVnMW7KcbToaLZFu/dnDazwCPRZ8TPa6MTuV8hs7yAZIxy
+         wRIgUyOD/wL4aGd2ia/CUsjT1FyXAzlTtwWvRXQq151Nj0WkhZ1ZUYgw8E7v/T8TGEB+
+         9oZeRE2oNmF8wduxsdrNk2296HuvnHnuMvTsHsC9HJ3vv8Z5iMiWguQ0RJCd+JFRMX9I
+         K30XzOIST5UiGiRfkUYHuytRX4ihF6FMYf7fe7noHD+nvmKBQ4TxQ2xmyqTkqc/2WivS
+         tFCg==
+X-Gm-Message-State: APuU4Z8CkiWm7Bj06YWoO2KTSgHgWSBYKuv++uMLLfhJiHLHfiACfGxN
+	sDEkJD0NqXjNdbimg5EvL3euAmZ7cEnoMpkZiuVNOta+eHcIMAj2a5y5
+X-Gm-Gg: AYBFou304rkp9+X5zMVtWLUpvcziQtXBtIAuuZNZ0OrELfVipd7x68s6XdLao9rfG4t
+	NAsqojer1sRdj2SHL8/k+HtfKfMmr4feACuWRRD7oi8eepQOFgkRwMKIHdWGQeCY8ze6B3B9ZRE
+	R/Hwj2p1fJosNlV9z0Rf3OxgkSWCIP7PmSjNDQIxoqSIG1S1CeElKGpvCvxCBeiddFqgQNdvcpj
+	jFcsyshYR+anLzCr28PZdyYHWDAlG7/ITZUyK3afI1Ch9rj/w3SmuvXDA1hkKBkIu0cd8jVDoAm
+	JvAv3Rx4Bv63uZSrKJ10E8KO2hRr1YxILEK/N5LHpf68pFW+6EuJmb3VPUIePQXnk1qLrRJc861
+	Xoh4q6iSfd3JGO7ALWs28QdFGUYt0qYVVGIeT06yyT9xDcWlXpNqVTzibvWMN/ZVC/MQlmVDjUc
+	3XqeqwzCDsdl1Z2CFdiDLsXhCtbrnC3VcZZ1UlsdSLqTBPf8MJ7sR+hyuyYQbfkQWIE3vr6CR4P
+	hx0Swu1GcsK6V0eG46BqoNoP75v0lYSrISKG4P9zBILgB0fnNPdklYIh2ysbOhEtvBvkYfeaaix
+	h4iuaglSKNQZbpl02Ngqi7FpDqxxyPvhmg==
+X-Received: by 2002:a05:600c:811a:b0:4a2:1e1:d55 with SMTP id 5b1f17b1804b1-4ac187a6b30mr413265455e9.28.1793886925187;
+        Thu, 05 Nov 2026 05:55:25 -0800 (PST)
+Received: from killingmachine ([46.188.59.33])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b56f5e65b0sm76604845e9.11.2026.11.05.05.55.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 05:41:04 -0800 (PST)
+        Thu, 05 Nov 2026 05:55:24 -0800 (PST)
+Date: Thu, 5 Nov 2026 16:55:23 +0300
 From: Sergey Matsievskiy <matsievskiysv@gmail.com>
-X-Google-Original-From: Sergey Matsievskiy <s.matsievskiy@yadro.com>
-To: dmaengine@vger.kernel.org
-Cc: lars@metafoo.de,
-	vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>
-Subject: [PATCH] dmaengine: axi-dmac: add reset deassert logic
-Date: Thu,  5 Nov 2026 16:40:40 +0300
-Message-ID: <20261105134040.315317-1-s.matsievskiy@yadro.com>
-X-Mailer: git-send-email 2.47.3
+To: sashiko-reviews@lists.linux.dev
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH] dmaengine: axi-dmac: fix incorrect segment size
+ calculation
+Message-ID: <auyKylfYyK9-pHKJ@killingmachine>
+References: <20261105131547.305510-1-matsievskiysv@gmail.com>
+ <sashiko-outbox-199139@kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -97,47 +96,15 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-199139@kernel.org>
 
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
+On Thu, Nov 05, 2026 at 01:26:06PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] dmaengine: axi-dmac: 32-bit overflow in axi_dmac_prep_slave_sg()
 
-Add optional shared reset deassert logic, sometimes required for
-communication with the device.
-
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
----
- drivers/dma/dma-axi-dmac.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index d47ff27e1408..98aaccd26a26 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -24,6 +24,7 @@
- #include <linux/of_address.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
-+#include <linux/reset.h>
- #include <linux/slab.h>
- 
- #include <dt-bindings/dma/axi-dmac.h>
-@@ -1211,10 +1212,16 @@ static int axi_dmac_probe(struct platform_device *pdev)
- 	struct axi_dmac *dmac;
- 	struct clk *clk;
- 	struct regmap *regmap;
-+	struct reset_control *rstc;
- 	unsigned int version;
- 	u32 irq_mask = 0;
- 	int ret;
- 
-+	rstc = devm_reset_control_get_optional_shared_deasserted(&pdev->dev, NULL);
-+	if (IS_ERR(rstc))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(rstc),
-+				     "failed to deassert reset\n");
-+
- 	dmac = devm_kzalloc(&pdev->dev, sizeof(*dmac), GFP_KERNEL);
- 	if (!dmac)
- 		return -ENOMEM;
--- 
-2.47.3
-
+I don't think that this warning is applicable. Both arguments are 32 bit
+integers and the result of the division should also fit into 32
+bits. Intermediate promotion to 64 bit integers should not have negative side
+effects.
