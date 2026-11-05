@@ -1,101 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.28
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793903111;
-	b=kL1Oouk45NCVPqiWLJrKaDzoWd3DYpt3PXsI1WuR7sw11YUPHNfXzWDxzsGIeH/bEKD4
-	 OJbgWTJ2F0JJ/KPoUoqxz2NEBko8ILq5VRuwdKNCq0PT/lSoLcHaiYfamNNvEdz6DNBhT
-	 d0dBWqPtbeTCHqxjHe2cS7MecJIHj/bLhtNB3iJ/VLj33zhnO2UWB00T1Fdo5w9aGU8x5
-	 XeBY03DtfnIb6SGZ/jvVU2xLT9Tu/gDaYmoQV4TS1R1PtvbXiDQSDiDjRKO+ojzOuNwbp
-	 o92mIBB2djYFZfiqbk9VjZHVNnPHeCWKMoP8SBFsA28DQzJDWfHkdWOlbrJVla7K9NQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793903111;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=ZEA2DTtadowjkxYcfut9XEi9b15Ly/KJBBywlNAdT/M=;
-	b=dZ9jTp5hBFs5Wd19QzuNVagjqUpud5gRgXyV62Uw2EM685TM6/l7GCxvvUbARLUdClea
-	 Eu6HYSR5nukC5qypiQspSHQZNvF2IcrR71GfK4WnnKiALsYEXjRq4Hhr8x7NAkPV6NjGE
-	 y/ripsax4AzLEGq8dFdurjWRUu20dgn1B7IH0Khk3bqQEwlN5qEZ9n1yK9yPziWI/RH30
-	 2Y6UZvHCnwzHBYEX1LkABeG6/pDLd85elaz3Z4HxVTNwlSpuzvE3Xqc8fboJIxj7FdtK9
-	 RnJZXl77VK2fWAGOXJrlLFK4QZVDLSjXejU4/qXQqgk+YBalYGSwVsh2h/RDW0SaGhg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ld5PB0tw;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.28
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012028.outbound.protection.outlook.com [52.101.48.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=23.251.234.50
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793906348;
+	b=VyMc7wza9SxkSk24hrF1MJOwKKs2oOa60L2lOLEh4IilHsVIbUOONEbknDhXaZvgUQ1T
+	 9HKmSVC8783M9LKkrVBn3zojl43SS+yvYPQk08jKVHHDrGz0mxEK3M5pMU6mlLoXHIOQi
+	 gW5vsrK1K/tS2fd/wxoNXqhYvu9PgOlo1ubDKEzZ/VNUIIbGlJXLNAql9dv4hek4PqWJL
+	 +Ot+GJHrocRAe//PumS6sS1Q3iJuBWZ5LeVryyCLhnxPHUSp1YidLLFs+q4VcXOh8o4Lb
+	 wAM3/4yA1Me4JfYdYAhiTp1NubW1kLG06+XVbhx+13QkZAJ2AEj9ldjp0odjk12m+dQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793906348;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:X-Mailer:From:To:Cc:
+	 Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:
+	 Content-Type:Feedback-ID:X-SES-Outgoing;
+	bh=4KTLjFOLB3Bw3rwGT8qot1q76+iLWn9KmQr9KnByOio=;
+	b=dNzbKIeSx7891+5XPmNzlfXDICa6oDAckulvgvlzq9j/7VBfNqxVHViXVxe9PwRMCroS
+	 7P3X3BBW6oIseRQdSP4SWWGiHun0alZd7uE9lV65hNbNCw2u7OQGo1284tNMR5HjyaNGX
+	 niEzKbc102dAFu4IcaWwbqXD8OFO8YlcdFhy4PFzLmnVsxyHRsPhBNUzMy3Uf+O6LDsTJ
+	 2/sp8snnkM5R8vBlA4AkeX6qrGGei+fSELfMmTod1gO4LghrJ4uVf2lRDhEtw05WgzNkB
+	 zgK45t6LBE72Q/Pxg1FogNl+hPptJAfJ1fwB2Ds95h3IhVhBJCNmcqF9s4N/FOJy+lQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=fqwqf.xyz;
+	spf=pass smtp.mailfrom=send.fqwqf.xyz;
+	dkim=pass header.d=fqwqf.xyz header.i=@fqwqf.xyz header.a=rsa-sha256 header.s=resend header.b=0LMjIwBb;
+	dkim=pass header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=zh4gjftm6etwoq6afzugpky45synznly header.b=YDzFYP+z;
+	arc=none smtp.remote-ip=23.251.234.50
+Received: from e234-50.smtp-out.ap-northeast-1.amazonses.com (e234-50.smtp-out.ap-northeast-1.amazonses.com [23.251.234.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092EC606A326;
-	Thu,  5 Nov 2026 18:25:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 092EC606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37698606D803;
+	Thu,  5 Nov 2026 19:19:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37698606D803
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fqwqf.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.fqwqf.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=ld5PB0tw
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GgfqT3A6uMWwS+47nZcBVZnTcUI8Od7GfQUB6LhwH3lY/7T/hTj7UjiH9XmikZ/TOqt6fasRkYxJFScIWXNTwYjKJC/2MMQ+f6KYmRsQfTvdBU4Z7tsoQytxReyVMRYX6qX9EwY1VPD+fu5mWd0BF644csd8c2f4yzs/NXz/N17Uriltw1881M0JRFADtmITwGZIWRlPpXdWlX/8/hk6CMbK4yQ9u38a3iFARRKW7+sxz9v4ft0+32gFHdE8N8fycAYVBg+PatmLDvTyWZXmA1sZ63YFJGFQ4ptIaov+Xibg8u8kwg7LurVcDZTiqUeVTtKdoxxXv6Y3UlnJGV7GZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZEA2DTtadowjkxYcfut9XEi9b15Ly/KJBBywlNAdT/M=;
- b=GRd1Gl6ofdCccUPEjl04wUXtDGDwn2SJ76f5hK2rvl/ol5/1c5zNTybAHUuFGqpMDM5EP9K41mvttWK6LQyt3BcIyNw7PaC2cd+jMJrlnZyH5Vv1zMeWaO/gFCs2UX4Fko6N7AlGAyWpxdOc6G+1py1QXa1A8dA2NA3FVR206SBfGQYdYM1ucPl7+U5bQFBLjr8J43o5m4/nbHA0IImkKJyAWdTKh4Cjxgh9aWHWI3JnTf1ys+57OOCWDFXyi1K8t/OlY3xn3Ak5Ogs0A21Lca7gwlNUyUiaWdmN5gd6+BjNM90n7+cK1y1XkHPuQaSsI+d0gdAEQrG32to2DCiidA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZEA2DTtadowjkxYcfut9XEi9b15Ly/KJBBywlNAdT/M=;
- b=ld5PB0twds1bTGzoORGINqZG8CbA9D6kmS/5Yo+nrAAnurZXWMboX0SR/58P5eSAXf/PqxWvMrWCJik2nI8Xh0Lj5F8shoDKgxAK1nsx7mS9JpFpMAKQoc884e8HkS6dxiyRdjfvAzsOoKnMoWRWLMugwTt85dH4N8ZyykKMQlQ=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24) by MN2PR12MB4046.namprd12.prod.outlook.com
- (2603:10b6:208:1da::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.10; Thu, 5 Nov
- 2026 18:25:08 +0000
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077]) by CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077%4]) with mapi id 15.21.0592.007; Thu, 5 Nov 2026
- 18:25:08 +0000
-Message-ID: <86e44623-7c4c-49f5-9bc4-3aaa15f26408@amd.com>
-Date: Thu, 5 Nov 2026 12:25:04 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/25] PCI: Add SNIA SDXI accelerator sub-class
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, David Rientjes <rientjes@google.com>,
- John.Kariuki@amd.com, Jonathan Cameron <jic23@kernel.org>,
- Kinsey Ho <kinseyho@google.com>,
- Mario Limonciello <mario.limonciello@amd.com>,
- PradeepVineshReddy.Kodamati@amd.com, Shivank Garg <shivankg@amd.com>,
- Stephen Bates <Stephen.Bates@amd.com>, Tycho Andersen <tycho@kernel.org>,
- Wei Huang <wei.huang2@amd.com>, Wei Xu <weixugc@google.com>,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org
-References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
- <20261103-sdxi-base-v4-1-3668ccc7aab8@amd.com> <auzGnNOril-cAyRw@SMW015318>
-Content-Language: en-US
-From: "Lynch, Nathan" <nathan.lynch@amd.com>
-In-Reply-To: <auzGnNOril-cAyRw@SMW015318>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA0PR12CA0007.namprd12.prod.outlook.com
- (2603:10b6:806:6f::12) To CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24)
+	dkim=pass (1024-bit key, unprotected) header.d=fqwqf.xyz header.i=@fqwqf.xyz header.a=rsa-sha256 header.s=resend header.b=0LMjIwBb;
+	dkim=pass (1024-bit key, unprotected) header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=zh4gjftm6etwoq6afzugpky45synznly header.b=YDzFYP+z
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
+	d=fqwqf.xyz; t=1793906345;
+	h=From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
+	bh=KjK6/it5+2sDEN6+68hm612BuS7rPhjf+Cw6EfwhY+Y=;
+	b=0LMjIwBbEXV9VRucSky8VB+NQdqv31r1REne19ATooStdbHX+56adyHFlDWtVxEj
+	FkK2gF4I/NiBi+29b8MfLpGmqFlkldRnKu2jZhGI4uY3d9XQmyge4rIwMFFH17bQbGR
+	m/Y45ysn0SydDhUKljfPni284lTo41RsMWM9cmnc=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=zh4gjftm6etwoq6afzugpky45synznly; d=amazonses.com; t=1793906345;
+	h=From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
+	bh=KjK6/it5+2sDEN6+68hm612BuS7rPhjf+Cw6EfwhY+Y=;
+	b=YDzFYP+zC6Rxrtg6NwWfbj7rC1WKjAyMGY64NSErEQFfQHijuFvqPEUN9xRHxtyj
+	REq2FY6i8QIzuUIiUYtdKTMRGOQnjv9MDPl8ztGSiFCKlSf49gz0Yll+AStUY3lorAA
+	wjSAXMgFmJU1vQhiJp1ANGl9n8rgmc461kWooOZU=
+X-Mailer: git-send-email 2.53.0
+From: Jizhou Tong <fqwqf@fqwqf.xyz>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Frank.Li@kernel.org, dmaengine@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] dmaengine: qcom: gpi: match control interrupts to the
+ pending command
+Message-ID: <010601a1ad2686dd-235641c9-2f2e-49d3-9ef9-3070b49614ce-000000@ap-northeast-1.amazonses.com>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 5 Nov 2026 19:19:05 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -105,84 +68,147 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHAPR12MB999249:EE_|MN2PR12MB4046:EE_
-X-MS-Office365-Filtering-Correlation-Id: ef7d61a8-168c-4861-c9db-08df3b6a1f0f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|23010399003|11063799006|4143699003|261026140227099003|56012099006|261009223027099003|261022105027099003|261026121527099003|261028144727099003|18002099003|22082099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	6N6nWTdcmnZiR9ld61cK/3xoD7LvEh2dsFUJQcyMdaKqW6SyfNiL+NMT2NTd/podVsapP6S0UILP68/6Q0K0hp8Yiz5pqZvqchgcSFEsBejHH2kvfWcAu3eYgs4KgWGNYo6N2sXiSi1byz6IOKXWByeB4jb8fR6HUmflLTBBOAIRtuIQAFadyaCJUSeWVBpQtZsh7bVNQCJTTbO5Mz7FupDgNSMQm1r1Bs18/DbkU2ug3fxlXViWkrUolp8Wru2UZAsZWXGvGxBGHmZiLBWpaMB9QGHJtPJia5h1d6exyigNh/WvP3hCLZCliJ7Txxgmlqn47MYIWJEH1ahyfMrW2cGwSczz9Koe6mE8d+Hg8ItUQwx39CV8CdM/Y2cQNSaAJvrSEfIadKytI9/jnVdypHbLJ3p1rZJNoJTdW2yEO7TqLdpwdMHwVhXVcc13hQTBJJE9EXT+NtWFvnII0K5//B/k0q8hwgUWFnn0nIk12tcMU+bcdFVRbMh3LjweylKRFlhmbXArcU8//ORW4Sfp06MRhK1ko/Gp7XdWyp2YEr9Dl6CnEloHhUAfsjoH3Mo8b3A+l/MQYWX7t3lXImbnR3GF8N6sjX0MY57wJko3AWn87l76iT2srz1ltOBpAfJrDNjK1VY2YgqDAgE+mHnVi+Byup/oSJRjlcBTwY+B3Fs=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHAPR12MB999249.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(23010399003)(11063799006)(4143699003)(261026140227099003)(56012099006)(261009223027099003)(261022105027099003)(261026121527099003)(261028144727099003)(18002099003)(22082099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RUc1djVldWdycVk3MXBUVG9XR215c0FMcVRVWVBYSWthbU5EbFE4RUpQUU5W?=
- =?utf-8?B?aEpEc3RkOFpJamtRcy9uL3QyN0l0S2JSYkh0TG01WVVXWHVIUEJQMVlNVFZi?=
- =?utf-8?B?allIbmF2WXlKL3V1dzBuSUVRVU90Mis5cnovZi9ITmhlQmhDSUZWUTZtNmRp?=
- =?utf-8?B?YUNZU1FSQ1RXOWdUNmhYNHc1MUNIZHlwU3AxN05NMzNUcjBEa1hlc2FIK09U?=
- =?utf-8?B?V3F0VElKR2lEeTc5OThkUTcyc0lUZXZ2TlNZbUR4VjJ5a1htcUJJSlV6ZlpT?=
- =?utf-8?B?U2VYZERodGVscW82Z0lCNU4yZnhNei9tZmo5cDMvRE5VWEdZWm9Zd3Z6MlBy?=
- =?utf-8?B?YmRvVkplb2FOSTVnWE0xdGF6Vnc2YjBrdElKSDh0dWpZN1hqRnFmWU9pZzZQ?=
- =?utf-8?B?NHVXdTI5ZVZLMk10OUVHUHBOSUoxUWp0QVcyZFVINExtNWFDd0E5SkkyRnF1?=
- =?utf-8?B?a1BCSXNJQ0NpSUNLWW9Db21wc00yV2RFQlBoNDg0UDBFZXZvZXIzUEFRNWdU?=
- =?utf-8?B?MVZJcjJCUFdReGRpd1JVUmJpUEswck84amFpeE40SmdnWUtNYjlGZ2lKUWxW?=
- =?utf-8?B?ckIraXE0eDd2cTM2cmxaWnptSjlMaXNSa0xkU2E0YzM4MU5WSzcxZ1hVMXZi?=
- =?utf-8?B?Vk43U0hxVTU5eU53UnBkSDlOYUdTY1F3RC9SeW0zOHRBUXB0M1dVYWF4elln?=
- =?utf-8?B?WnZDNW51QVFYNkdJK1BDdzVOanRGblM2R3JmeFd1S1BuRkxUN3VzVGxpVHh0?=
- =?utf-8?B?VjV6QnI5ZEtoTVQ3ZGZMMWpZUzh5YVFrakZCakV5V1I0OTEycWJPWlJpYkYw?=
- =?utf-8?B?Zy9WYkQraUZJd0k2Sm1iYXNUWGgvZ2xIUFRKM1VpYmxZMEZnU3VxNHBnOHZL?=
- =?utf-8?B?L2o5aDVIWi85bFZ3VDE2U3U0M05JRDlUdVhMMkFsQzRXUW44SXc4MmRjVkRh?=
- =?utf-8?B?UUFkdEg5TEkvZjF1YzJ6cDh1aEx5dzhhd1dKbXZHYUoveWNnZGtmSkpRQlNZ?=
- =?utf-8?B?S2FYVW15dGp1ZjhuLzNPMW5IOTBHRzU2SHF0bitKd05KVkh3TkFEaGQzV0w4?=
- =?utf-8?B?T2NBTHBmbTJnQmlKYk11YWc0VDY4MEo0MGdHL3JyVStOY1YzSW5RQzlCc1Zr?=
- =?utf-8?B?TXRhWHV6azhyNkxKdjlCclhDcmd0dzZNb0tCUk1UTTkvNWRDYkFBSndTbDkr?=
- =?utf-8?B?UnBwY21lanpNcGx4QzMvN1BOMWFoTlhabVFYeFNRb2tkSG5UTGhFblg3UkZS?=
- =?utf-8?B?aUxpVHZTcTN2OHNYWFhkemtYZU11bWl1UzNkRFZzNVdQRGlOZlB2WUVEY240?=
- =?utf-8?B?RFduQlJjU0hKUFFyQjNINnNMTTRicGFxOFlRZHJsWGRDd1pIYlIxaWx3Zjli?=
- =?utf-8?B?bFJyTFoyVDMzbjZOdTBDS3dZVmFVQ0VjZWZSV0tteXJPRWYwY2R1amVva1Qw?=
- =?utf-8?B?QVRHSllTdXFGTytmN0pUcE8xZ1dlQ0htQzROYW4wMkhTaUNwVmlVOStpb1h1?=
- =?utf-8?B?NzArbTBDTmc2OThabENpamxQeEt0U0EvQ1NxeFRvSWdlS2psNEk4cm9LK2c0?=
- =?utf-8?B?YXRNN1VVM3FoMUQ1QWFwNkFGNCt1OTBiKzlGV1VFZENZVHByS0FsbDRKWHls?=
- =?utf-8?B?MGkvS2tQalhKNlprL09OakxMdjA3Y3djZkJzclVrMEM1R2NBME9qdnBJRmVw?=
- =?utf-8?B?cEw3WG0rTXd2Szc1VFNkd1M2ZEpvNmlkQ1FvME5LZi82Z0cxZ09xVzAzMHNx?=
- =?utf-8?B?MENCQVcwOW5XV05wRDhDTGRxK1d4dUdCWmNRc3QwWlROTVAwM1QyUWVUZnpl?=
- =?utf-8?B?TWQ2dFVqRXg3UTBIcDFicFhRdmN0Y3NRSi9PYWdCcmNJSFU1dlVaR0hvVjly?=
- =?utf-8?B?TWhwRVU1S1ZRM0FJaU9CZnA2YmdNODRVaWVxNENPMzVjaDdSeVpYWjBZemtt?=
- =?utf-8?B?WkdKZlQ1WXRpbnVaQ3BtNWtZWURNd1dHanNjUjRmSjBRVE9RYi96b1A0QVFa?=
- =?utf-8?B?d3ZIYlJTVHd5WERqc0FFUmRSaU9pdWJiVkpOSXJVTm1XcTczd1AyRTBZcTVm?=
- =?utf-8?B?K1pBS2xJSytwWWJSbHR3ekcrVGdVcmNpOXhDU2NZTzc3aXhDVHVnNk1MZEFW?=
- =?utf-8?B?NnpyOGI2VXN5K0pJbHZzSklvdkI0VGVNTzVpZldIa0E5QVJPMUhEcm45VmUz?=
- =?utf-8?B?ZmpUSS8vamxRZngza29BdHl4TkJxSnoxT3pKQ0pHM1pBc0kzdFJ3MHoybFMw?=
- =?utf-8?B?NkJGR3Q2NXA3eXdiZWRDS0JxU1FGQXFLWGUwZzFMZm5MYmQzaFUxLzVodk10?=
- =?utf-8?Q?mnlkarvtzECqA2UKKp?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ef7d61a8-168c-4861-c9db-08df3b6a1f0f
-X-MS-Exchange-CrossTenant-AuthSource: CHAPR12MB999249.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Nov 2026 18:25:08.4717
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5NMs06/LBh3r5M92Cb8yx6oBhoRlhKPz1Fy4ztEGHUL1bO+E0BQ5hhOr/2/+Ij5BIK6vmkj2i/NThJxgAK1sKQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4046
+Content-Type: text/plain; charset=utf-8
+Feedback-ID: :1.ap-northeast-1.6BGMgStFQE7EJYq5syaCRzdneEHVt/+DAaGDrqUmDs9QLO4/SllUBZ3fHvnZ8rcAX/3IjUyTRgi5JFZsWrikFHwlPJqCkqEMlxDFM4JXh+ycxH/J5Tudg5bGdz6h4331g1L1EFsGR8kuYNfGLsrxz4Nym4YXoPcZxeVkrHry4Zx21n8vEVLEjc7s+OCM8PU9:1.ap-northeast-1.DTXDV/V9GPBWozcllKo8innbNB2qs2O/3F8XZSzd9ZM=:AmazonSES
+X-SES-Outgoing: 2026.11.05-23.251.234.50
 
-On 11/5/2026 12:10 PM, Frank Li wrote:
->> diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
->> index 030c86dd6d67..dcb26f52b5a1 100644
->> --- a/include/linux/pci_ids.h
->> +++ b/include/linux/pci_ids.h
->> @@ -154,6 +154,7 @@
->>
->>  #define PCI_BASE_CLASS_ACCELERATOR   0x12
->>  #define PCI_CLASS_ACCELERATOR_PROCESSING     0x1200
->> +#define PCI_CLASS_ACCELERATOR_SDXI           0x120100
-> 
-> Does it use for differecne drivers? I remember PCI maintainer require
-> Only add new item when more than one driver use it.
+Each GPI instance shares one command completion between its two transfer
+channels and event ring. Both control interrupt handlers complete that
+object regardless of which target the pending command addresses. A
+control interrupt for the other channel or event ring can therefore end
+the wait early. During channel deallocation, it also applies the synthetic
+not-allocated state to every channel reported in the interrupt status.
 
-Oh I wasn't aware. There may be a vfio driver in the future, but I could
-keep this definition internal to this driver until then.
+Record the pending command and target under pm_lock before writing the
+command register. Only complete a pending command for the matching target,
+and restrict the deallocation state override to that target. Clear the
+pending flag after the wait, including on timeout. Preserve updates of
+hardware state and the STOP_IN_PROC transition handling for all channels.
+
+The existing ctrl_lock serializes command issuers. This change matches
+the interrupt target, not individual command generations: it does not
+attempt to distinguish late completions for successive commands to the
+same target after a timeout.
+
+Signed-off-by: Jizhou Tong <fqwqf@fqwqf.xyz>
+---
+This is independent of the downstream QSPI controller changes used on
+my Surface Laptop 7. A version of the target-matching logic is in that
+working kernel, but I have not reproduced the delayed-control-IRQ race
+on an otherwise upstream kernel.
+
+The patch applies to dmaengine next at =
+6628e7d4c6b. An ARM64 W=3D1 module
+build passes against my prepared kernel =
+build. An ASan/UBSan harness using
+the actual send and interrupt functions =
+passes 3,206 command/IRQ cases,
+including mismatched channel/event =
+notifications, STOP_IN_PROC, timeout
+and pending-state cleanup. The =
+unmodified driver fails that harness.
+
+base-commit: =
+ee9c669f9bf5fd2c24206746ded9382fe810df89
+
+ drivers/dma/qcom/gpi.c | 23 =
+++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index a5055a6273..9479adf55d 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -514,6 +514,8 @@ struct gpii {
+ 	struct tasklet_struct ev_task; /* event processing tasklet */
+ 	struct completion cmd_completion;
+ 	enum gpi_cmd gpi_cmd;
++	u32 cmd_chid;
++	bool cmd_pending;
+ 	u32 cntxt_type_irq_msk;
+ 	bool ieob_set;
+ };
+@@ -684,16 +686,23 @@ static int gpi_send_cmd(struct gpii *gpii, struct =
+gchan *gchan,
+ 	dev_dbg(gpii->gpi_dev->dev,
+ 		"sending cmd: %s:%u\n", =
+TO_GPI_CMD_STR(gpi_cmd), chid);
+=20
+-	/* send opcode and wait for =
+completion */
++	/* Publish the command and its target atomically with =
+respect to IRQs. */
++	write_lock_irq(&gpii->pm_lock);
+ 	reinit_completion(&gpii->cmd_completion);
+ 	gpii->gpi_cmd =3D gpi_cmd;
++	gpii->cmd_chid =3D chid;
++	gpii->cmd_pending =3D true;
+=20
+ 	cmd_reg =3D IS_CHAN_CMD(gpi_cmd) ? gchan->ch_cmd_reg : gpii->ev_cmd_reg;
+ 	cmd =3D IS_CHAN_CMD(gpi_cmd) ? GPII_n_CH_CMD(gpi_cmd_info[gpi_cmd].opcode=
+, chid) :
+ 				     GPII_n_EV_CMD(gpi_cmd_info[gpi_cmd].opcode, 0);
+ 	gpi_write_reg(gpii, cmd_reg, cmd);
++	write_unlock_irq(&gpii->pm_lock);
+ 	timeout =3D wait_for_completion_timeout(&gpii->cmd_completion,
+ 					      msecs_to_jiffies(CMD_TIMEOUT_MS));
++	write_lock_irq(&gpii->pm_l=
+ock);
++	gpii->cmd_pending =3D false;
++	write_unlock_irq(&gpii->pm_lock);
+ 	if (!timeout) {
+ 		dev_err(gpii->gpi_dev->dev, "cmd: %s completion =
+timeout:%u\n",
+ 			TO_GPI_CMD_STR(gpi_cmd), chid);
+@@ -770,7 +779,8 @@ =
+static void gpi_process_ch_ctrl_irq(struct gpii *gpii)
+ 		 * not change hardware status. So overwriting software state
+ 		 * to default state.
+ 		 */
+-		if (gpii->gpi_cmd =3D=3D =
+GPI_CH_CMD_DE_ALLOC)
++		if (gpii->cmd_pending && gpii->cmd_chid =3D=3D chid=
+ &&
++		    gpii->gpi_cmd =3D=3D GPI_CH_CMD_DE_ALLOC)
+ 			state =3D DEFAULT_CH_STATE;
+ 		gchan->ch_state =3D state;
+=20
+@@ -779,7 +789,9 @@ static void gpi_process_ch_ctrl_irq(struct gpii *gpii)
+ 		 * Stop in process is a transition state and we will wait for
+ 		 * stop interrupt before notifying.
+ 		 */
+-		if (gchan->ch_state !=3D =
+CH_STATE_STOP_IN_PROC)
++		if (gpii->cmd_pending && IS_CHAN_CMD(gpii->gpi_cm=
+d) &&
++		    gpii->cmd_chid =3D=3D chid &&
++		    gchan->ch_state !=3D =
+CH_STATE_STOP_IN_PROC)
+ 			complete_all(&gpii->cmd_completion);
+ 	}
+ }
+@@ -877,13 +889,14 @@ static irqreturn_t gpi_handle_irq(int irq, void =
+*data)
+ 			 * cmd does not change hardware status. So overwriting
+ 			 * software state to default state.
+ 			 */
+-			if (gpii->gpi_cmd =
+=3D=3D GPI_EV_CMD_DEALLOC)
++			if (gpii->cmd_pending && gpii->gpi_cmd =
+=3D=3D GPI_EV_CMD_DEALLOC)
+ 				ev_state =3D DEFAULT_EV_CH_STATE;
+=20
+ 			gpii->ev_state =3D ev_state;
+ 			dev_dbg(gpii->gpi_dev->dev, "setting =
+EV state to %s\n",
+ 				TO_GPI_EV_STATE_STR(gpii->ev_state));
+-			complete_all(&gpii->cmd_completion);
++			if (gpii->cmd_pending && !=
+IS_CHAN_CMD(gpii->gpi_cmd))
++				complete_all(&gpii->cmd_completion);
+ 			type &=3D ~(GPII_n_CNTXT_TYPE_IRQ_MSK_EV_CTRL);
+ 		}
+=20
+--=20
+2.53.0
 
