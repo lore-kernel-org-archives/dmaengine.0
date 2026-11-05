@@ -1,91 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793884595;
-	b=WOTXPv/U58mV3fs00e4OVlW6fdn4Cog7buiX+Ka3n8zleFW/V1pWoycAZk+gL9YcgfGA
-	 1P11ucQjM0u6qs2ChgLVTWd4gAzp/dbKNlQptX0mZTfjOFbpcGkHalVEKNZKYwCfMyxDG
-	 MfqmdRedB78aiGcmvRC5R1/5+jrDU2zAWLUaCpN9/txDzcLNtm0BM5T0uqoMFq29bdIzx
-	 LDhkIIxLM91RdgUmIK45n+mT42KJvB7hzKN9LcSq8yhpnmtSBflb/xjJCzdmmtvUI4xDO
-	 J3IZJVOIKdKUF+J4e6ouCt5TTVlbAX5/kbzB+TvI50HScuY9Za493FguxOBu6Q2bY9A==
+	t=1793885167;
+	b=wqjJXfpWgfk58lz5n7+FdQE1YlFuzhENAATwmJM6wWkz1puE+WxINumA+/N9zSC0/h8k
+	 k7X7pU4iiTN+dInZRUIb9c45Ih9996Xx7WzuJK4WZ3JLvG+Pf+SVEFeb5igqaZvwVhZFs
+	 +5//ZgwM9lyeWhRWE6Qd5o/43jYyhnI4HhQ5wU8UvpJv+0FovpwR1uedv6ZOxKTpLmy4x
+	 3m7EvymDXoQva7/aytitwHG1sa7SV93CbzL52jcgsWcaXTW57Lgdcfaf8sW0/QFjJullF
+	 68BO/4CxBCCPO9RQ46O0BUrz9kMp0wfZe6uddz4qIJi6feRxnKOsW+43mXeUwmeneyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793884595;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=6mxWBwIYL2Hy5NVtOCWPPkiruMQvPSnA3ve7z9sZrNE=;
-	b=uzQUgFqvY7wdQTzgVYyQ8yXZQxgUAQ8mbV+NAxx9KzkqvdxyDH+o9GZSpQNzk4h6DldR
-	 D48c2ELn+ESOC+76Y2SZmuXZNU/Jp2Vci/4vVuid8h4DAbNcjK0RW396WzQecvT8dInEs
-	 nQVrRxKxltt3U8LbVHmtEKFVxi9vQDTtjTmmgQTLNwusYJSyII5KTpyr4KFt6RNZ6xO0B
-	 DKHdcO7KwvJowYHQur/8l71lvfk2MBSHFoy5AsXUc9XosnAofhEvihGHaPZBQDCrnsLXp
-	 WHO7zLUgvZCOit/Ub+f/IlBcUnSfSFRlV2CaelTzC7yagpKydMcH0ePNAqxhJg18//Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793885167;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=x26vePr9gSTZIqDXOfIfCUvoU4SE+IXLZ3SDFdos47c=;
+	b=YYvC5xFizOuQCQRC/rI63L8MMtXCdQEv1mVXLHd472KJIU6Wx5zUEnt2B9JlWK6BdofT
+	 9pFramNzHk2HO4/Ms1IPuaEIEXh6Q018HW1Osast3eXRVbzr9RMBxG6cvh7KeGw483ZNc
+	 Tv0pEdauDUmvCQrFvWO1Cf/8vw5tQ58MdQN6Z+IucWXWP3CESaaeSXxEthSp2LQIUngcG
+	 lEZf6nlFSGjkZPT/jm+5LythgfDy3J80YU24bYGBR19G9ouuVKMXpl5BHPv4egBNoFFNO
+	 5YPKonzG04rsrbYBn1hBE3LeHJL/XbMM5DkBtym4eK/SyMok2WpU7D7VUXoJTWfus5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="jrlFr/Le";
-	arc=none smtp.remote-ip=209.85.208.181
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AuTldtX+;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C18606A329
-	for <dmaengine@vger.kernel.org>; Thu,  5 Nov 2026 13:16:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5C18606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95C0606A31B
+	for <dmaengine@vger.kernel.org>; Thu,  5 Nov 2026 13:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jrlFr/Le
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-3ac91f5aa89so16527261fa.1
-        for <dmaengine@vger.kernel.org>; Thu, 05 Nov 2026 05:16:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793884593; x=1794489393; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=6mxWBwIYL2Hy5NVtOCWPPkiruMQvPSnA3ve7z9sZrNE=;
-        b=jrlFr/Leg3DRlXDUvgLbN+j+d3+SRiGujKLzOvLaj1hoZrD9uT2CJZ+BETquXeXRdJ
-         i/zEkUO5ztSznEUt0iNhxDN8cjyqo9baFfLd/uE0NoMI/qQyaosN9P+frVQZ43EUXT5W
-         lk+GRuBk93dOam+HYSe5QLN/XTStYt8CeOXEufsEYlsVrw/D+3g/Tyk51mZvtZ13ZpGy
-         sbCdQAZepwTrVohzGmOVqpCJ4ssWgX0+LBc8tjIfc9RtzKnNVQ3iUzjHvZ/soW/W1O9n
-         ifB1xReLjgjHaDRdqEeccGY0e+UTbuF5klDozRUh12DC5vfm0MVchW55bMpRtDCgqU9h
-         Q5/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793884593; x=1794489393;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6mxWBwIYL2Hy5NVtOCWPPkiruMQvPSnA3ve7z9sZrNE=;
-        b=ZZBAkaYdJ9hO58+/kxAsZtfBwQQdPyiD/CXkseuJzXET1pn/m6PEQ9lwIun//Ysw2B
-         rr7hKIxTLnqYbyltVSol+8wj/kccWcc3uxR5TZwF4QOKIPGwt/5y+9qfAHeYomqDP6uj
-         Xk6joZJFLpony0ZYYBw2zJZUVSvHH/7JmrnfYLcjuNq34IZ3c4r6xUemWbJxBNKCfhGY
-         RphYhvKzCCvv9FXHFd8bIPU0+Ny4f8kgvKjnmjZu1hMEvpHgMCLYYj1OS4KwesWrRUnY
-         x1EcJNoJmjQ+Gx9noyCWObssfb8CVh4F+sepENE4O0h+qiWADd8Rn+qJrgIoYSsAs6ew
-         b4kw==
-X-Gm-Message-State: APuU4Z+oZgotOqzYBh9Zopgg+sQsV+12fgJhyVhsR6QsdmaDLncxr0IK
-	oyQV+XcBpR1fmSL5Bv8eHfoWThN7vep4Alg81dRc75jC5ZaCCHdzX+j6AiQHkbsW
-X-Gm-Gg: AYBFou2qAcMCqtEt+nkci+OZtvxPdTtCMO2vQ4SkoJ7V3ezEvYL0yUo7F1wIH/aj3CN
-	twxl4mC/zuCOGirRAiI/JuMXsHDiLGA8BjXiGNDDn7nGg3U75b7Kfegl5TGdO3sZKuxw60M3Bf/
-	WvE+LPme3uJZQsAIJwOzL+82/jG23VU7rru2ttbK6mGCrFSPNs/xPdgMJN2Raa5/mT6oMI2NENw
-	PsuPuz+Td7j5tETzallcGTviQYxpYpPJ3KPnQihoLitZKMof+m8T3Nd7E1SF9nFqRhL2dEExWli
-	d0eFRy442EF92uyncrxe2GW2v+jpsi4WBnZp5VJ6/4Fl3kwoVUX9tl/9BPUdGXRHkIawRSWFAZA
-	EnvDh/Qjt+6nSMahxSoJj3Z1u44XgqZhZfCKdlHKczIhvalCQw1TjwkyUqBGhP/90KMYkQrlf4c
-	ESXeCC/7eXSemEKD8fld3b8c56z0Qf1jDtvzAdpSTPKEMDbejMt3ntEYNaA9Z4iWAkYqtTF/pv/
-	rnSxxOyqoFjCWIhq7OemPSfbIuSgk9xBepgxxbj8CY8Oe4sihWvRhmEFh+ruLIcD+xdXF8/UOF7
-	84pMCTOEhZxjGMnfWA74FqXU5jbLYXe0f9uuDCEwarCI
-X-Received: by 2002:a05:651c:150a:b0:3ab:4458:ba24 with SMTP id 38308e7fff4ca-3acb7b44b89mr54522391fa.21.1793884592626;
-        Thu, 05 Nov 2026 05:16:32 -0800 (PST)
-Received: from localhost.localdomain ([46.188.59.33])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3acdc37e536sm11313651fa.3.2026.11.05.05.16.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 05:16:32 -0800 (PST)
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: lars@metafoo.de,
-	vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>
-Subject: [PATCH] dmaengine: axi-dmac: fix incorrect segment size calculation
-Date: Thu,  5 Nov 2026 16:15:47 +0300
-Message-ID: <20261105131547.305510-1-matsievskiysv@gmail.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AuTldtX+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3ED1F000C1;
+	Thu,  5 Nov 2026 13:26:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793885166;
+	bh=x26vePr9gSTZIqDXOfIfCUvoU4SE+IXLZ3SDFdos47c=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=AuTldtX+1DHr7/GycRyNzgpBBQkqcWHakMDzKc2xsS0+3cMNXJ7AFrWlC96ylfQXy
+	 3UQgHrgFOvkdzJFQtWihbE8+UZk88gE1gDHyNaAVSP+BlTTKvLs9fnGnB+nh41wAkQ
+	 DSVL+/5itvSi98DajoY86ykP1p1WsD4YZjhCi34XgmxjyxlJB5qLWMh9GoV/+K+Zvb
+	 BWkG6KCa0u8D10OeKyiNZHnUuXoSR0J3+se73cunLzf4+hHOs/Bmc46LV0cBajqCYi
+	 w2TM9dS1k9SedUb2Dw10U2rWGdikHF5jfafhvsIXBzy60gULFog0N2tKa/MDRyHel3
+	 KfWqekf/3nc1A==
+Message-ID: <sashiko-outbox-199139@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: axi-dmac: fix incorrect segment size
+ calculation
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sergey Matsievskiy" <matsievskiysv@gmail.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261105131547.305510-1-matsievskiysv@gmail.com>
+References: <20261105131547.305510-1-matsievskiysv@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 05 Nov 2026 13:26:06 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -94,50 +59,91 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-When chan->max_length has a value of 0xffffffff (which is a possible IP
-configuration), DIV_ROUND_UP returns 0, resulting in incorrect number of
-segments calculation. Fix this by using DIV_ROUND_UP_ULL division
-function.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] dmaengine: axi-dmac: 32-bit overflow in axi_dmac_prep_slave_sg()
+--
 
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
----
- drivers/dma/dma-axi-dmac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+commit 6fad587f5aff185e8ba37fde1bcd2a484b6fa19d
+Author: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 02acde918117..0a308630e542 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -707,7 +707,7 @@ static struct axi_dmac_sg *axi_dmac_fill_linear_sg(struct axi_dmac_chan *chan,
- 	unsigned int len;
- 
- 	/* Split into multiple equally sized segments if necessary */
--	num_segments = DIV_ROUND_UP(period_len, chan->max_length);
-+	num_segments = DIV_ROUND_UP_ULL(period_len, chan->max_length);
- 	segment_size = DIV_ROUND_UP(period_len, num_segments);
- 	/* Take care of alignment */
- 	segment_size = ((segment_size - 1) | chan->length_align_mask) + 1;
-@@ -753,7 +753,7 @@ axi_dmac_prep_peripheral_dma_vec(struct dma_chan *c, const struct dma_vec *vecs,
- 		return NULL;
- 
- 	for (i = 0; i < nb; i++)
--		num_sgs += DIV_ROUND_UP(vecs[i].len, chan->max_length);
-+		num_sgs += DIV_ROUND_UP_ULL(vecs[i].len, chan->max_length);
- 
- 	desc = axi_dmac_alloc_desc(chan, num_sgs);
- 	if (!desc)
-@@ -840,7 +840,7 @@ static struct dma_async_tx_descriptor *axi_dmac_prep_dma_cyclic(
- 		return NULL;
- 
- 	num_periods = buf_len / period_len;
--	num_segments = DIV_ROUND_UP(period_len, chan->max_length);
-+	num_segments = DIV_ROUND_UP_ULL(period_len, chan->max_length);
- 	num_sgs = num_periods * num_segments;
- 
- 	desc = axi_dmac_alloc_desc(chan, num_sgs);
--- 
-2.47.3
+dmaengine: axi-dmac: fix incorrect segment size calculation
 
+This commit switches segment count calculations in axi-dmac from DIV_ROUND_=
+UP
+to DIV_ROUND_UP_ULL to avoid 32-bit unsigned integer overflow when
+chan->max_length is 0xffffffff.
+
+> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> index d47ff27e1408f..bfa83ccfd7dc0 100644
+> --- a/drivers/dma/dma-axi-dmac.c
+> +++ b/drivers/dma/dma-axi-dmac.c
+> @@ -706,7 +706,7 @@ static struct axi_dmac_sg *axi_dmac_fill_linear_sg(st=
+ruct axi_dmac_chan *chan,
+>  	unsigned int len;
+> =20
+>  	/* Split into multiple equally sized segments if necessary */
+> -	num_segments =3D DIV_ROUND_UP(period_len, chan->max_length);
+> +	num_segments =3D DIV_ROUND_UP_ULL(period_len, chan->max_length);
+
+[Severity: High]
+Can axi_dmac_prep_slave_sg() under-allocate desc->sg[] and write out of
+bounds on 32-bit architectures when chan->max_length is 0xffffffff?
+
+While axi_dmac_fill_linear_sg(), axi_dmac_prep_peripheral_dma_vec(), and
+axi_dmac_prep_dma_cyclic() now use DIV_ROUND_UP_ULL(), axi_dmac_prep_slave_=
+sg()
+still calculates num_sgs via sg_nents_for_dma() before calling
+axi_dmac_alloc_desc() and axi_dmac_fill_linear_sg():
+
+drivers/dma/dma-axi-dmac.c:axi_dmac_prep_slave_sg() {
+	...
+	num_sgs =3D sg_nents_for_dma(sgl, sg_len, chan->max_length);
+	desc =3D axi_dmac_alloc_desc(chan, num_sgs);
+	if (!desc)
+		return NULL;
+
+	dsg =3D desc->sg;
+
+	for_each_sg(sgl, sg, sg_len, i) {
+		...
+		dsg =3D axi_dmac_fill_linear_sg(chan, direction, sg_dma_address(sg), 1,
+			sg_dma_len(sg), dsg);
+	}
+	...
+}
+
+In lib/scatterlist.c, sg_nents_for_dma() uses DIV_ROUND_UP() with unsigned
+int sg_dma_len(sg) and size_t len:
+
+lib/scatterlist.c:sg_nents_for_dma() {
+	...
+	for_each_sg(sgl, sg, sglen, i)
+		nents +=3D DIV_ROUND_UP(sg_dma_len(sg), len);
+	return nents;
+}
+
+On 32-bit architectures where size_t is 32 bits wide, passing len =3D 0xfff=
+fffff
+causes DIV_ROUND_UP(sg_dma_len(sg), len) to overflow 32-bit arithmetic and
+evaluate to 0 for any scatterlist entry with length >=3D 2.
+
+When that happens, axi_dmac_alloc_desc(chan, num_sgs) either dereferences
+desc->sg[num_sgs - 1].hw out of bounds when num_sgs is 0:
+
+drivers/dma/dma-axi-dmac.c:axi_dmac_alloc_desc() {
+	...
+	/* The last hardware descriptor will trigger an interrupt */
+	desc->sg[num_sgs - 1].hw->flags =3D AXI_DMAC_HW_FLAG_LAST | AXI_DMAC_HW_FL=
+AG_IRQ;
+	...
+}
+
+or allocates fewer sg entries than needed while the updated
+axi_dmac_fill_linear_sg() computes num_segments =3D 1 via DIV_ROUND_UP_ULL()
+and advances dsg past the end of desc->sg[].
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261105131547.3055=
+10-1-matsievskiysv@gmail.com?part=3D1
