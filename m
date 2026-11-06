@@ -1,49 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=159.226.251.25
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793954876;
-	b=QujYjPnwHdi74SXyp7AD1RyO3cZPSCd4g+v7Sl5D/tcMDHMuCve6GJ3ypXkpYVrlhJyZ
-	 Z960H+0B68il6UJfxWkKVBEAoKrFU5wV/dOGKaf26O7VRM9uHJTsmhnZ4ro0ASx/AbLp8
-	 H8KxdTOo4GMgGg4BDzC6tP+fDvYY6cwgIWat1t0F5a9qWTl+1m9vg+OqqhM9fFY3u47TZ
-	 REaHAxQk/1LU74sDWQjc7AFhZds8CR5JNbQ6lHpeTJUExO51qzMCbpGmxFscYUtD2Kdk9
-	 f/qaHVS3HBqlOceg2aXpHh2oYr9fobvhRGm6QfEYe2/YfaUByOklIT3lU7szPQeN1TA==
+	t=1793955161;
+	b=0UdbPH+HjOCQDzxOS0YPd/wL1j9UfaCb3XCfl0tIjY3+Ck4dlDAucdLrI4CQ35ceWHhV
+	 2eSoEhPgrAwXMQseRyqCh9l4f8nDr0KBDbDE0/M8y/MuZ6uxzF4YryKuiqoh6IEuQZrrD
+	 NnWWxteRdR023/bZ1H8rKj067Q8tUjW7P4cYSPGuon15jr8vNTjLZa8l85Ed3u+/OaMYo
+	 MkaNPIzzorDiIjX7cZtyRihE+sMNDxiUolX5rTZ4UFjbdLVQ+9rZarZz8pIr1d6xjVfeF
+	 +wZfP7JswPia60lFrDsRL2bb1865db1P08fPDgjZJRCEI9IfZ3H0bwA7KW4o5sHxWLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793954876;
-	h=DMARC-Filter:Received:Subject:From:To:Cc:Date:Message-ID:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version:X-CM-TRANSID:
-	 X-Coremail-Antispam:X-Originating-IP:X-CM-SenderInfo;
-	bh=h/4lCx5YHTMucoB1S7Px0zKZz/f5KR98aiYQ/OUQG/Y=;
-	b=hC6zugrgIz/E/MverNNM+X6wN///EMqN9Ez+J/37vmr1TAHI+tPL+xAvPNtDUd2FCl3K
-	 pGdLhPl2laQBeTVM8EtCB7NDc5i9zhJWuJoKIdcP5GznWBMyMlxJFCDjt3eowQk5HBoIb
-	 VpqgF3S3aMiatkoP6tk3yC34X/cSPBeR/gQD7mf7Nq9yMjiIM0cxOXR55dakMXAHulljb
-	 BZDgllcAPyAhXXi9fIL4ITnWC6ah0lLfNou4KSREtABePSekLSG5iBl5/EaCZi42PWLbv
-	 62r6pYGnFt0eb35Ocf0AFOFhUhI37Q/oO9fue4D+iksFWJLvgQjwd2SWwZMx2NvgKBw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793955161;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=MuuXBQELOv+fPGFUl6gGvL/P7JDyYcKQ9yz9ZPgh3eY=;
+	b=RQlF2glOoR+dk0OejjKIJscmYw7MgufrcJqLE2E4l4OK4MlJCFYweKoyO8dmj+xUAzCf
+	 sfOlHFj//kBEQzKhPxg6gldsMGos2PmUuPM6aTVdxT3X0u7+Pa77ThMOhqYGy8GqoVO/6
+	 j1vnp7IX7HNAccjiVTu7JnR4rWRpS9+3tAL4G1mGL7vrOQZIbOU5bAKNblL7ijb5jVMAa
+	 RuG+mHfLgY3lVLVrv1ylABx7zrBy1qYk2EmLaJ33I9BgJz0x1ozrhDcBoeiuGlhP072Gv
+	 Wr88qfHjlYtEjSDuO/lRyv3H8UQI12hdvj2VEmc1OKSmuEgp5EpmaPbhiDv26AKJRcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=iscas.ac.cn;
-	spf=pass smtp.mailfrom=iscas.ac.cn;
-	arc=none smtp.remote-ip=159.226.251.25
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mmbSftam;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95638606A326;
-	Fri,  6 Nov 2026 08:47:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95638606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [172.100.0.8] (unknown [36.110.52.2])
-	by APP-05 (Coremail) with SMTP id zQCowAD3kbczlO1qD41uAA--.1707S2;
-	Fri, 06 Nov 2026 16:47:47 +0800 (CST)
-Subject: [PATCH v2] dmaengine: switchtec-dma: Fix device reference leak in
- switchtec_dma_create()
-From: Wentao Liang <vulab@iscas.ac.cn>
-To: Logan Gunthorpe <logang@deltatee.com>,
- Kelvin Cao <kelvin.cao@microchip.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, vulab@iscas.ac.cn
-Date: Fri, 06 Nov 2026 08:47:27 -0000
-Message-ID: <179395484742.2120950.2917629799587193019@iscas.ac.cn>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4549E606A328
+	for <dmaengine@vger.kernel.org>; Fri,  6 Nov 2026 08:52:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mmbSftam
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1711F0089F;
+	Fri,  6 Nov 2026 08:52:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793955161;
+	bh=MuuXBQELOv+fPGFUl6gGvL/P7JDyYcKQ9yz9ZPgh3eY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=mmbSftam/HEm3VGGxeb4R0C+XNTooZApCdAGSTPc+TiCEOntAeCP6PjCt+9ohAKWZ
+	 c3a5V4VqXdKcQBwYB4kJjJerGXVq7T4YUYoX32J7nff7POBZ1Gn7LrnA8LCZtBqUpz
+	 MLGScuvE0y/0fVd5p9vEtoKmjRorzFGjAafAsG0o/aZvX7I77ELmgPcOiRmmzJTBWT
+	 Jas1idhEUSo5cmse4660ttcFp6yMTGfE1e3+YPIpDPYf/7uZCXVadNt1OH6jLKj1mb
+	 T8tXyGlPdsQsuimTejrmbDZfliIWYhMT6/zzRCnYbbjatDI5krhRDmnf7rENqcVw6N
+	 nLiOPCpGtTw5A==
+Message-ID: <sashiko-outbox-201091@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] dmaengine: qcom_hidma: Fix runtime PM leak in
+ hidma_issue_task()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Wentao Liang" <vulab@iscas.ac.cn>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <179395457228.2120679.13809646473624751961@iscas.ac.cn>
+References: <179395457228.2120679.13809646473624751961@iscas.ac.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 06 Nov 2026 08:52:40 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -52,69 +59,73 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-X-CM-TRANSID:zQCowAD3kbczlO1qD41uAA--.1707S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZFWrCry5Zr1rCFW8Gw4fAFb_yoW8ur1DpF
-	W5Was3GrWjyr1UKa1Uu3W7ZFyj9w4Sy3yF9rW8Aw13ur98X345JryxW340qry8CF97GFnI
-	qFyYyrykWa40yrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUva1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
-	w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
-	IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E
-	87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c
-	8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_
-	WrylYx0Ex4A2jsIE14v26F4UJVW0owAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
-	1lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r126r1DMxAIw28IcxkI7VAK
-	I48JMxAIw28IcVCjz48v1sIEY20_Gr43Wr1UJr1l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
-	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
-	6r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
-	IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
-	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyT
-	uYvjfUw_-PUUUUU
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBwEDA2rtTw36PAABsE
 
-switchtec_dma_create() takes a reference on the PCI device with
-get_device() and stores it in dma->dev. The reference is normally
-dropped by switchtec_dma_release(), the device_release() callback, which
-only runs once dma_async_device_register() has succeeded and the device
-is later unregistered. If the registration fails, the error path frees
-the dma device directly without ever dropping that extra reference,
-leaking the reference taken on the PCI device.
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] dmaengine: qcom_hidma: stranded descriptors and PM leak in
+  hidma_issue_task()
+--
 
-Drop the reference with put_device() on the error path.
+commit 5c9f6221932ae0db0413c36b36c0997430c109f5
+Author: Wentao Liang <vulab@iscas.ac.cn>
 
-Fixes: d9587042b50f ("dmaengine: switchtec-dma: Introduce Switchtec DMA engine skeleton")
-Cc: stable@vger.kernel.org
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
----
-Changes in v2:
-- Rebase on top of the switchtec-dma fixes from Logan Gunthorpe, which
-  are now in mainline. The change itself is unchanged, so the Reviewed-by
-  tag is kept.
-- Link to v1: https://lore.kernel.org/all/20260916093332.2003909-1-vulab@iscas.ac.cn/
-- Sorry for the very late reply; thanks for pointing me at your series.
+dmaengine: qcom_hidma: Fix runtime PM leak in hidma_issue_task()
 
-To Frank's question in the thread: no, switchtec_dma_remove() does not
-need put_device() either. switchtec_dma_release() is reached through
-dma_device_release() once the registered device gets unregistered, and
-that is where the reference taken by get_device() belongs; dropping it in
-remove() as well would put the PCI device reference twice.
+This commit replaces pm_runtime_get_sync() with pm_runtime_resume_and_get()
+in hidma_issue_task() and returns early without calling hidma_ll_start()
+when runtime resume fails.
 
- drivers/dma/switchtec_dma.c | 1 +
- 1 file changed, 1 insertion(+)
+> diff --git a/drivers/dma/qcom/hidma.c b/drivers/dma/qcom/hidma.c
+> index 1349066b1544d..c49cf622e5fb5 100644
+> --- a/drivers/dma/qcom/hidma.c
+> +++ b/drivers/dma/qcom/hidma.c
+> @@ -219,7 +219,8 @@ static void hidma_issue_task(struct tasklet_struct *t)
+>  {
+>  	struct hidma_dev *dmadev =3D from_tasklet(dmadev, t, task);
+> =20
+> -	pm_runtime_get_sync(dmadev->ddev.dev);
+> +	if (pm_runtime_resume_and_get(dmadev->ddev.dev) < 0)
+> +		return;
+>  	hidma_ll_start(dmadev->lldev);
+>  }
 
-diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-index a386c3a284e6..713ba7ba1125 100644
---- a/drivers/dma/switchtec_dma.c
-+++ b/drivers/dma/switchtec_dma.c
-@@ -1333,6 +1333,7 @@ static int switchtec_dma_create(struct pci_dev *pdev)
- 	switchtec_dma_chans_disable(pdev, swdma_dev);
- 	switchtec_dma_chans_release(pdev, swdma_dev);
- 	switchtec_dma_chans_free(swdma_dev);
-+	put_device(dma->dev);
- 
- err_exit:
- 	if (swdma_dev->chan_status_irq >= 0)
--- 
-2.34.1
+[Severity: Medium]
+Does returning early here leave queued descriptors stranded on
+mchan->active and still leak the runtime PM reference taken in
+hidma_issue_pending()?
 
+Before scheduling dmadev->task, hidma_issue_pending() already queues the
+descriptors into dmadev->lldev and increments the runtime PM usage count:
+
+drivers/dma/qcom/hidma.c:hidma_issue_pending() {
+	spin_lock_irqsave(&mchan->lock, flags);
+	list_for_each_entry_safe(qdesc, next, &mchan->queued, node) {
+		hidma_ll_queue_request(dmadev->lldev, qdesc->tre_ch);
+		list_move_tail(&qdesc->node, &mchan->active);
+	}
+	...
+	/* PM will be released in hidma_callback function. */
+	status =3D pm_runtime_get(dmadev->ddev.dev);
+	if (status < 0)
+		tasklet_schedule(&dmadev->task);
+	else
+		hidma_ll_start(dmadev->lldev);
+}
+
+pm_runtime_get() increments dev->power.usage_count unconditionally, even
+when it returns a negative error such as -EINPROGRESS or -EACCES.
+
+When pm_runtime_resume_and_get() fails in hidma_issue_task(), it only drops
+the second reference that it took itself, leaving the reference from
+pm_runtime_get() elevated.  Skipping hidma_ll_start() without aborting the
+queued TREs also leaves those descriptors stuck on mchan->active and
+lldev->pending_tre_list, so hidma_callback() never runs to complete the
+transfers or call pm_runtime_put_autosuspend().
+
+When pm_runtime_resume_and_get() succeeds, both hidma_issue_pending() and
+hidma_issue_task() have incremented usage_count, while hidma_callback()
+only drops one reference.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/179395457228.212067=
+9.13809646473624751961@iscas.ac.cn?part=3D1
