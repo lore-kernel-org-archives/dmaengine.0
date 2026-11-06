@@ -1,56 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793979155;
-	b=XTPrNOTkKOkj2VgFDRQMmOxNm/u+LEKJOGqmfWTYqCuIEP9VBEfYv/4X9U5M0VYrMpCC
-	 5YtDihhEilre2IBpDUEpfkK/oEhYJFHwkfzX+2c4L1sbiJjBeTA9Xx2YEG93fPMXyXO1Q
-	 LjFUCR0BEvp06rRuyDkeyD2mJBzHywkSVE2Mynn0S9aQoP/sE3AHwrwZnaXFZCWGi8Awr
-	 7rdg49r1LCt/SjohxIMG68WAwcDpVdfXfPYWhtlfCldNsvsPDqSDW8UY5ckHcdsJ9VNCj
-	 fZBi3dcemC/6/XI7l+eGXOsfSJ928st5iMMCIAwEZcKCUlvrnBgUxxs3K3dNZo0gOEg==
+	t=1793984257;
+	b=QubL6mX50Ys9GFssrS4LBAOORxySYL5bvC4WQs6aM6SCAlldnutm4p0fXVtj3Xh1Nbbd
+	 cvMq9/As7YA+K3VTavwn2MUjloCQMZ0MGkTm5KCjI0sAPsn4yimLXWIfYv9ToD9PcuLb8
+	 iqhyJX2DgouDtB9FDuO5hYIgaHUQ2Oo7DKAXsFPbZlAE458eT740gdlRlNi4/Bo/+L9Rj
+	 6u3KSm+xanXfYXkbeKOqwrlQJSjOWw3rjeDTuj+cTjUZMPDTnTwyjAZ951YC800Q6UCTr
+	 QVjRLTjVT344YiiqnOyjxygFbmu8j232p0FGOgyLkM8TVbiZgq5Pc6v4+5Y5mM9Ir+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793979155;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=rMl1U7nW/90t6rAF9C09fPiFlgzHGi6pf3vP5zsdLEo=;
-	b=IjjIjq1D+6/RnYEHjdVL+cW9PxGQcu6XWGS4Nl44lecDk8KnKjjCVB2PXWOfu8/Ru3Xe
-	 ZCIkMegHiiIyj+cypbOHz2FNIdDkS3eJEmDoPLgJu5W9OBoyYqtWCDfsI9sKFKqCHoFpd
-	 agyNZg17vz75opv26pf/Z3ewgkJn9J8ebx/fb5GUrrJgtshADPNOeaIKACLOvOCjXajCg
-	 +6DCuu0m0U7UptUErTa6BBgwAOA8J3Kc4BPxNo6HKYiI0WveSf8ZvdKBBrj0ZfSZsQrUK
-	 Qp0as8zV6Ub7JoqEB3ywuoJuQWP4i8wgxoFCzWrJD//ImB7JkFdD6zOmaxDAlpWRPbg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793984257;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=Dui2HnVpfjzkzxu9M35L+PlJD8C9n4WzI7XNWWzwiiw=;
+	b=QW/whkO7Idqp3r8pTwuZCPzaLQekXcafcHitNfayOiCmSZesM6ZSoLLZmk7wgazGnZOc
+	 8gr2N8JjekvYj+h2uXsAGUGj2/z/UakHLuQtkUcDPKfCHWx7ek/tAnYc03O7EFrsXKrkw
+	 Sn1UwJu8AtDqCptLgaBCcXZwR88XEogxcHsJqIAuBO5cB9et19m5626iUerfGaggghhoa
+	 uN2Rt7NTaYHgHIZLEe8SAFzeC4MMV8k4wejXnbDK4Jp3t1SNSosVaAYdQ5kQ+IvZUOhnb
+	 SkJTsw/2A/T5SXFJQmFfApmfvFp6gsUal/X1fsodxfFkhQs/BkuEqdb90uFysVxchUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kcLnXvYU;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=JOFE8Euv;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFEA606A32E;
-	Fri,  6 Nov 2026 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C497606A33C
+	for <dmaengine@vger.kernel.org>; Fri,  6 Nov 2026 16:57:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C497606A33C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kcLnXvYU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDC41F0089F;
-	Fri,  6 Nov 2026 15:32:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793979154;
-	bh=rMl1U7nW/90t6rAF9C09fPiFlgzHGi6pf3vP5zsdLEo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kcLnXvYUEWWrBvAo08yoYrjkW+c9s8Zh9CJVM+RvoTJvRoEApeQcSddXogm7N7eiT
-	 we8EtwvudiAJc48jRjw9QWvAp/6GqIidxZNkXNraMT8wmoIAX2WtnbzFEO7NF71RF4
-	 c6abvOo7BBPjyPUSW5N8UxC2MYa/ooHa65xbLs6aMT+w31c5arc8GJZDirAfN76KFi
-	 zamrxKxD1rsSB7Ph9h6lm6EFdsJUPLYG5EaMGHA0i6fE07hxAREvh8V8Oh7nXVTgLE
-	 NtE/77LSxdC6yiMKmHmaEGkvc7p7nzDDEHTZjLuom8wsJHBBnxWiSDGejf4ln4N8la
-	 x8hQ4wcO3H50A==
-Message-ID: <sashiko-outbox-201699@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6/6] spi: spi-geni-qcom: Add QSPI support over GPI DMA
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jyothi Kumar Seerapu" <jyothi.seerapu@oss.qualcomm.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261106-qspi_upstream_series-v1-6-21f43042dd60@oss.qualcomm.com>
-References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
- <20261106-qspi_upstream_series-v1-6-21f43042dd60@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 06 Nov 2026 15:32:33 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=JOFE8Euv
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4b7252a32c8so7539205e9.0
+        for <dmaengine@vger.kernel.org>; Fri, 06 Nov 2026 08:57:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1793984255; x=1794589055; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Dui2HnVpfjzkzxu9M35L+PlJD8C9n4WzI7XNWWzwiiw=;
+        b=JOFE8EuvP/aiaExAz3zhbWKSmdofbIo2gyAi15JmBQowqrHdneLciitNKgOd/Rc1MY
+         TqlwQ0qZ6+zprLi8oRzpeZdfT9rm4Gk/2vmpzUyY+WYVrFq/4VnGWu0F92eSYknQ9eca
+         irv+2yYK4tyLv49lJoGUX8YQNNFvczC/QXgxtd5OBkAnr7myUkbuqiIoV2K3p4F1obdH
+         Hit0fyb+jSGiSyYi6k7b2PCp0Nplky8lQRcW62b9a1jHv9+1r6ph2IuIoqmuX0KV/xai
+         49KfI4QeYxnwjMZnTkPOQWP+BsrShNRyaJdZxDrxjQM18awoxYdnpxd7/h6wjQeogqtO
+         LtZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793984255; x=1794589055;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Dui2HnVpfjzkzxu9M35L+PlJD8C9n4WzI7XNWWzwiiw=;
+        b=PnTRq1HPYh1LohGMmyuBExipByZ3dLTz5p28oY0cLPUGMV1ADUQPnteexQ0kQKVc3y
+         N+DYc6FPRsmRyf3iO5QXe/fSkwGKIyFzDv3LIeLAxDk9Z7gopkqb4OOmh53RQH35Baza
+         Ncoq042d+tgQOYJIGPMiFKTlMrIMx0TLipDzIEy+/0mVTK038yJA1NtbxMyuwqDcBfJm
+         yMEML4Zsx1PXo4ACE04UGJ8Ti0XIxPf9tymipP4oTAyf9I4DgZ+NAkmga1pEzlaCQRvb
+         LFOT7gvOQsDTEwpcT2axuFiBGM4T/OO+51Hl7teQk4kSU7wgDTlKCe1oGTmU6qvuePKW
+         1T2w==
+X-Forwarded-Encrypted: i=1; AKwUvByRwSrNz+4hxcwa7dKKfRb5b4/dFSLuNyns/oJzGAd4ATOMf4fYG5iJ8wVnopTmmu1Hy/n4xT9z+HE=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/XwT2a/V3GhEKgbLuBBwpBeFZvqO18k/OScyKAMckM6GhYUrL2
+	CiKG3DsTSvztg5SdPWzPBVaOB21LUbW4TIt4b2CkmEswLhvsp1E69OOLtyB3Hrkaoi0=
+X-Gm-Gg: AYBFou13izKGXe3w6zBeXSUVVsC/hEfVlvdJ3HLMe+fiXfwazAe93CV4sIlLKDJZQAo
+	A9PdDHA5uHNUQfVstienAwrBukkhvALETNZnyUleTXGePzN5B9ZN5aRBiWhnjEdqhmDqEdKWnHc
+	CR23YQ9gP8GW65tZgvsfP5fPdH1e37llAzGoOhaxrnCBx3k/AWIH5+6j5YVElGumjr7+lub62XR
+	26fqQYmtbfPK2aSvY12rtxqFjcNyxkyp8+/f7l7YqU6fcD6JheMO1vNiXOn1gkUKVPdFPBSj3LB
+	lrJyC883an3hAolH4lDJsKTCF1jOKHU+2q/pwdoMeqcsKMt1ah6gCufkkZxZIP6fo+xcDhAc8Oe
+	qgMtMb1ei/bgjq1c6F5IpCVX9arU5Zyfsb6AF99eN6MRNBCnttBje6KgbtaT36Q08gnvs5Jg4KX
+	DUhXYTX0rPmJZX+rsuLmAe/wKbkn+C3ZCmzNZByzxA/aVSuYgd7RVxDYM/E4fnuofrkXGeu1kVO
+	1Yvmuf0Br8BEWUvwjm5rIJgx9nh91j31u97wfpwvhHNzZwJP2O3rKpJNc69VZjrqfdcaSNN5NSV
+	5hygDNTHLjTNOlJM6mGfN2zKJDlaUP9R
+X-Received: by 2002:a05:600c:a013:b0:4a1:c6fd:4db0 with SMTP id 5b1f17b1804b1-4b6df5eabebmr51738615e9.19.1793984254955;
+        Fri, 06 Nov 2026 08:57:34 -0800 (PST)
+Received: from localhost ([2a02:8071:56d1:2de0:1d24:d58d:2b65:c291])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4b571f46538sm144730095e9.5.2026.11.06.08.57.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2026 08:57:34 -0800 (PST)
+Date: Fri, 6 Nov 2026 17:57:32 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Shan-Chun Hung <shanchun1218@gmail.com>
+Cc: ychuang3@nuvoton.com, schung@nuvoton.com, vkoul@kernel.org, 
+	Frank.Li@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	kees@kernel.org, gustavoars@kernel.org, linux-arm-kernel@lists.infradead.org, 
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH 2/2] dmaengine: ma35d1-pdma: Add MA35D1 PDMA driver
+Message-ID: <au4GkvPTXmcvReoj@monoceros>
+References: <20261103022202.2139674-1-shanchun1218@gmail.com>
+ <20261103022202.2139674-3-shanchun1218@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,250 +99,46 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xgc4symavcbtq745"
+Content-Disposition: inline
+In-Reply-To: <20261103022202.2139674-3-shanchun1218@gmail.com>
 
-Thank you for your contribution! Sashiko AI review found 4 potential
-issues to consider:
-- [High] spi: spi-geni-qcom: dummy_data len treated as cycles in
-  setup_gsi_xfer()
-- [Medium] spi: spi-geni-qcom: uncombined dummy_data sent as TX in
-  setup_gsi_xfer()
-- [Medium] spi: spi-geni-qcom: unreset started flag in
-  spi_geni_transfer_one_message()
-- [Medium] spi: geni-qcom: unvalidated tx_nbits and phase split in
-  setup_gsi_xfer()
---
 
-commit d6c09f855544d5373d7663c53224613976d60d6e
-Author: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+--xgc4symavcbtq745
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 2/2] dmaengine: ma35d1-pdma: Add MA35D1 PDMA driver
+MIME-Version: 1.0
 
-spi: spi-geni-qcom: Add QSPI support over GPI DMA
+Hello,
 
-This commit adds QSPI controller support over GPI DMA for the
-qcom,geni-qspi compatible, combining TX, optional dummy, and RX transfers
-into a single SPI_TX_RX command.
+On Tue, Nov 03, 2026 at 10:22:02AM +0800, Shan-Chun Hung wrote:
+> +#include <linux/mod_devicetable.h>
+> [...]
+> +#include <linux/platform_device.h>
 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index c2c3400b24c41..26dad85a590e3 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-[ ... ]
-> @@ -412,27 +421,50 @@ spi_gsi_callback_result(void *cb, const struct dmae=
-ngine_result *result)
-[ ... ]
->  static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_mas=
-ter *mas,
-> -			  struct spi_device *spi_slv, struct spi_controller *spi)
-> +			  struct spi_device *spi_slv, struct spi_controller *spi,
-> +			  struct spi_transfer *tx_rx_xfer)
->  {
->  	unsigned long flags =3D DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
->  	struct dma_slave_config config =3D {};
->  	struct gpi_spi_config peripheral =3D {};
-> -	struct dma_async_tx_descriptor *tx_desc, *rx_desc;
-> +	struct dma_async_tx_descriptor *tx_desc, *rx_desc =3D NULL;
-> +	struct spi_transfer *last =3D tx_rx_xfer ?: xfer;
->  	int ret;
-> =20
-> +	/* QSPI receives data only as part of a combined TX-then-RX command. */
-> +	if (mas->dev_data->is_qspi && xfer->rx_buf && !tx_rx_xfer)
-> +		return -EOPNOTSUPP;
-> +
->  	config.peripheral_config =3D &peripheral;
->  	config.peripheral_size =3D sizeof(peripheral);
->  	peripheral.set_config =3D true;
-> @@ -443,20 +475,21 @@ static int setup_gsi_xfer(struct spi_transfer *xfer=
-, struct spi_geni_master *mas
->  		mas->cur_speed_hz =3D xfer->speed_hz;
->  	}
-> =20
-> -	if (xfer->tx_buf && xfer->rx_buf) {
-> +	if (mas->dev_data->is_qspi && tx_rx_xfer) {
-> +		/* Combine the command and data phases into one hardware command. */
-> +		peripheral.cmd =3D SPI_TX_RX;
-> +		peripheral.rx_len =3D get_xfer_len_in_words(tx_rx_xfer, mas);
-> +	} else if (xfer->tx_buf && xfer->rx_buf) {
->  		peripheral.cmd =3D SPI_DUPLEX;
->  	} else if (xfer->tx_buf) {
->  		peripheral.cmd =3D SPI_TX;
->  		peripheral.rx_len =3D 0;
->  	} else if (xfer->rx_buf) {
->  		peripheral.cmd =3D SPI_RX;
-> -		if (!(mas->cur_bits_per_word % MIN_WORD_LEN)) {
-> -			peripheral.rx_len =3D ((xfer->len << 3) / mas->cur_bits_per_word);
-> -		} else {
-> -			int bytes_per_word =3D (mas->cur_bits_per_word / BITS_PER_BYTE) + 1;
-> -
-> -			peripheral.rx_len =3D (xfer->len / bytes_per_word);
-> -		}
-> +		peripheral.rx_len =3D get_xfer_len_in_words(xfer, mas);
-> +	} else {
-> +		dev_err(mas->dev, "Invalid transfer: no tx_buf or rx_buf\n");
-> +		return -EINVAL;
->  	}
+Please don't use <linux/mod_devicetable.h>. <linux/platform_device.h> is
+good enough to provide of_device_id already. If you insist on full iwyu,
+please use <linux/device-id/of.h> instead.
 
-[Severity: Medium]
-Can an uncombined dummy_data transfer or a bufferless transfer be sent on
-the bus as an active SPI_TX DMA transfer here?
+Best regards
+Uwe
 
-In GENI_GPI_DMA mode, spi->flags has SPI_CONTROLLER_MUST_TX set, so
-spi_map_msg() sets xfer->tx_buf =3D spi->dummy_tx on every non-empty
-transfer without a tx_buf (and callers such as spi_mem_exec_op() also
-populate tx_buf on dummy_data transfers).  If a dummy_data transfer is not
-merged into a [TX, dummy, RX] sequence in spi_geni_transfer_one_message(),
-or if a transfer has no caller-supplied tx_buf or rx_buf, xfer->tx_buf is
-still non-NULL.  It bypasses the bufferless check in
-spi_geni_transfer_one_message() and takes the SPI_TX branch in
-setup_gsi_xfer() with dummy_cycles =3D 0, driving dummy_tx bytes onto the
-data lines instead of tri-stating or returning an error.  Because
-xfer->tx_buf is always populated in GPI DMA mode, the SPI_RX and -EINVAL
-branches here are also unreachable.
+--xgc4symavcbtq745
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> @@ -466,6 +499,17 @@ static int setup_gsi_xfer(struct spi_transfer *xfer,=
- struct spi_geni_master *mas
->  	peripheral.pack_en =3D true;
->  	peripheral.word_len =3D xfer->bits_per_word - MIN_WORD_LEN;
-> =20
-> +	/* TRE_SPI_C0_DUMMY_CYCLES in the CONFIG0 TRE is an 8-bit field */
-> +	if (mas->dummy_len > U8_MAX) {
-> +		dev_err(mas->dev, "Dummy cycles %u exceed hardware limit %u\n",
-> +			mas->dummy_len, (unsigned int)U8_MAX);
-> +		return -EINVAL;
-> +	}
-> +	peripheral.dummy_cycles =3D mas->dummy_len;
-> +
-> +	if (mas->dev_data->is_qspi)
-> +		peripheral.qspi_mode =3D spi_geni_qspi_mode(last);
-[ ... ]
-> @@ -1058,6 +1153,54 @@ static int spi_geni_transfer_one_message(struct sp=
-i_controller *spi,
->  	spi_geni_set_cs(spi_slv, !xfer->cs_off);
-> =20
->  	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
-> +		mas->dummy_len =3D 0;
-> +		last_xfer =3D xfer;
-> +
-> +		/*
-> +		 * Combine a TX phase, optional dummy phase and RX phase into
-> +		 * one QSPI command.
-> +		 */
-> +		if (mas->dev_data->is_qspi && mas->cur_xfer_mode =3D=3D GENI_GPI_DMA &&
-> +		    xfer->len && xfer->tx_buf && xfer->tx_buf !=3D spi->dummy_tx &&
-> +		    !xfer->rx_buf && !xfer->dummy_data &&
-> +		    !list_is_last(&xfer->transfer_list, &msg->transfers)) {
-> +			next_xfer =3D list_next_entry(xfer, transfer_list);
-> +
-> +			if (next_xfer->dummy_data &&
-> +			    !list_is_last(&next_xfer->transfer_list, &msg->transfers)) {
-> +				/* The current client supplies the dummy length in cycles. */
-> +				mas->dummy_len =3D next_xfer->len;
-> +				next_xfer =3D list_next_entry(next_xfer, transfer_list);
-> +			}
+-----BEGIN PGP SIGNATURE-----
 
-[Severity: High]
-Does assigning next_xfer->len directly to mas->dummy_len program the wrong
-number of dummy clock cycles for standard SPI clients?
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmruBvIACgkQj4D7WH0S
+/k7itAf+LYAMF4hi693tZ3vEcl9qdHQIjdqKde20tlG9djgG8wsFu0VZ/opYIUir
+Ba2Ft+nXyZ+omHvukP/oarePmgmCz7dlRmpi6tKOAV+werJYpdagvT2ZHxjF2/eU
+SRq3hKVqHZVh/RS7hfRwxcPjy41xhU8PPT9ijH9syFoVtOUYbKKLjzdGTFdq0VNm
+TeXK1teYk1wcOc1zWnVsLIdMk2DtMOGpFMisNxIvSXPHr8CPqfQh3ZhDwVLC6WpK
+Jo3OwmvckiCe8ewY1FX7j/uIvM0c69sIBKKFnHgagXSTXFfhUgxYs4I/UgegsndF
+7ViQI0kKjp36E6n5RxerITZ5eDHGng==
+=zoc2
+-----END PGP SIGNATURE-----
 
-In struct spi_transfer, len is always in bytes: the SPI core validates
-word alignment, allocates dummy_tx, DMA-maps the buffer, and accounts
-msg->actual_length (below in this function) in bytes, and callers such as
-spi_mem_exec_op() set len =3D op->dummy.nbytes and tx_nbits =3D
-op->dummy.buswidth.  Passing next_xfer->len directly into
-peripheral.dummy_cycles without converting bytes to cycles via
-(next_xfer->len * BITS_PER_BYTE) / next_xfer->tx_nbits programs too few
-dummy cycles (for example, 8x too few in 1-bit mode), corrupting QSPI read
-data.
-
-> +
-> +			/* Ignore the TX buffer inserted by SPI_CONTROLLER_MUST_TX. */
-> +			if (next_xfer->len && next_xfer->rx_buf && !next_xfer->dummy_data &&
-> +			    (!next_xfer->tx_buf || next_xfer->tx_buf =3D=3D spi->dummy_tx)) {
-> +				last_xfer =3D next_xfer;
-> +			} else {
-> +				mas->dummy_len =3D 0;
-> +			}
-> +		}
-> +
-> +		if (last_xfer !=3D xfer) {
-> +			next_xfer =3D xfer;
-> +			for (;;) {
-> +				/* A combined command cannot change timing or CS between phases. */
-> +				if (next_xfer->speed_hz !=3D xfer->speed_hz ||
-> +				    next_xfer->bits_per_word !=3D xfer->bits_per_word ||
-> +				    next_xfer->cs_off || next_xfer->dtr_mode ||
-> +				    next_xfer->word_delay.value ||
-> +				    (next_xfer !=3D last_xfer &&
-> +				     (next_xfer->cs_change || next_xfer->delay.value))) {
-> +					ret =3D -EOPNOTSUPP;
-> +					goto out_err;
-> +				}
-> +				if (next_xfer =3D=3D last_xfer)
-> +					break;
-> +				next_xfer =3D list_next_entry(next_xfer, transfer_list);
-> +			}
-> +		}
-
-[Severity: Medium]
-Does combining transfers into SPI_TX_RX drop the bus width of the TX and
-dummy phases and fail to combine split command/address transfers?
-
-In setup_gsi_xfer(), peripheral.qspi_mode is derived only from
-spi_geni_qspi_mode(last), ignoring xfer->tx_nbits on the TX transfer and
-next_xfer->tx_nbits on the dummy transfer, and this validation loop does
-not check whether the phase bus widths are compatible with the single GO
-TRE mode.  In addition, because spi_geni_probe() sets SPI_TX_DUAL/QUAD and
-SPI_RX_DUAL/QUAD without implementing ctlr->mem_ops, spi_mem_exec_op()
-splits reads with an address into four transfers ([CMD TX, ADDR TX, DUMMY,
-DATA RX]); the combiner above only merges a single TX transfer before
-DUMMY and DATA RX, sending CMD TX as a separate SPI_TX command.
-
-> +
->  		if ((xfer->tx_buf || xfer->rx_buf) && xfer->len) {
->  			reinit_completion(&mas->xfer_done);
-> =20
-> @@ -1066,16 +1209,17 @@ static int spi_geni_transfer_one_message(struct s=
-pi_controller *spi,
->  				     ((xfer->tx_sg.nents || xfer->rx_sg.nents) &&
->  				      xfer->tx_sg.nents <=3D 1 && xfer->rx_sg.nents <=3D 1);
->  			if (dma_synced)
-> -				spi_geni_dma_sync(spi, xfer, true);
-> +				spi_geni_dma_sync(spi, xfer, last_xfer, true);
-> =20
-> -			ret =3D spi_geni_transfer_one(spi, spi_slv, xfer);
-> +			ret =3D spi_geni_transfer_one(spi, spi_slv, xfer,
-> +						    last_xfer =3D=3D xfer ? NULL : last_xfer);
->  			if (ret < 0) {
->  				dev_err(mas->dev, "Transfer failed: %d\n", ret);
->  				goto out_err;
->  			}
->  			started =3D true;
-> =20
-> -			ret =3D spi_geni_wait_for_xfer(spi, xfer);
-> +			ret =3D spi_geni_wait_for_xfer(spi, xfer, last_xfer);
->  			if (ret)
->  				goto out_err;
-> =20
-> @@ -1085,7 +1229,7 @@ static int spi_geni_transfer_one_message(struct spi=
-_controller *spi,
->  				goto out_err;
->  			}
->  			if (dma_synced) {
-> -				spi_geni_dma_sync(spi, xfer, false);
-> +				spi_geni_dma_sync(spi, xfer, last_xfer, false);
->  				dma_synced =3D false;
->  			}
->  		} else if (xfer->len) {
-
-[Severity: Medium]
-Should started be reset to false after a transfer completes, just like
-dma_synced?
-
-If one transfer in a message completes normally and a subsequent transfer
-fails validation before hardware submission (such as the combined-phase
-check above or the -EOPNOTSUPP / -EINVAL checks in setup_gsi_xfer()),
-out_err sees started =3D=3D true from the earlier transfer and calls
-spi_geni_handle_err() on an idle controller, resetting the GPI DMA
-channels or issuing cancel/abort commands that time out.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106-qspi_upstr=
-eam_series-v1-0-21f43042dd60@oss.qualcomm.com?part=3D6
+--xgc4symavcbtq745--
