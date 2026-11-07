@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.74.135
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.229.108
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794058235;
-	b=duTkhgkRP+G9UQP0dCQnB54NtsGhw+nd0ukmwZLKE59mZog8qsJ+BMUaE//4UHtq/hzs
-	 lzHzImjWRq44rFW6NSh3pQm3lo1ZePkP7NH4tSoWYaJr/AiET/mT0VzoLDwr+oxE6/F/F
-	 PYk+6Xj/LrqOEUMkDTDgAHy9aNAAMQ954OpzRWaDlTs2dF5fS6aPoLcS11pHBj5yTDC52
-	 tHZL0YtqQUfPfg52tzcO0DRhZYkfvwblowkgG7SvGuGPGl5zf5C/fAIdbQ3S35iKa7waY
-	 2iHFKqAJzD73NL1qxAXfnBcHKRQ8uCmGZsEHl0rK9KBbCzq0WfeuaP/HafhWTw4ktgg==
+	t=1794058239;
+	b=QUqb4LmIOLNX9TmjH+qzRhvmrZ9fupFAvR8WwzSk7Spuj7+OrMnIqXmJjVXZX3r9L+gA
+	 ucAlLRHPjPd/JDL+tRKX9zlTaaCaoAR/arGiS802LW/r4dMmd0Ti/68Yzl+ux6CHNCsCt
+	 pEDD4lovzIYnNIUDg1xipoRBFw0oqod8miKhS7kUt4+oke0oO2uGHDRDeYFZAF5LHPMii
+	 8CPoc8bJd+fATCVehG/Eb/7HednFSdCiwoFX2JxzeiaUcRCyZpQUnib9MGYDZguN3HUjm
+	 0LMEW0PAMmR8o6hmGm9MtsWzlCkn2Jp7eSGXSwInmaFwBL1y09GLKLhBeflINugPzJw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794058235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794058239;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
@@ -24,54 +24,54 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=/P/+DmCTrLU5Pw+nTaV4w+qH9EATz3dsofkyNM8H32c=;
-	b=zxvaAXzzbvnUJkxAbBKyEMgVosSy+rLhHuMy5RwntZqYVv488Cnn48XSF3bhcNsGlJDN
-	 3FO8bqVMbpi3sFvSTLv6oi3Mp9xdAPF9NE77xgFymmLDWxXOsDLtnwZF1XCoV0pYcLcH4
-	 GlE0q6L9KUK4PUqddQzAOvP8lTDPjRFdBA2+McvPYTzKLoB9Sk+RJ7pEDBsLn0DP4LRuX
-	 ly6XUS7m+tsON99RicmU+yTN9ZC5NWWqLY7fb/Vx/Nc59t32qu5W638ghHRgLexygsouM
-	 Ol/jeDEjuQkrfzVEChu9IV8yXfX+OOP+JRrKw104NhNCTJzh8WN7aYZ3eC0R6VHVXFQ==
+	bh=CfjTeteyRJKsnipb9hCVblBCo0qAO0bCdmqldpmNcR0=;
+	b=NVb/0YBsw549RHKP9Kvjaf1BaBBoVS54Gx8MnX8BLzaHOBvBl83nUrl/ntETbwP0TzMn
+	 HSSEbk8fnIlBryl2GedlEdEd2xNIWLGpvC+H7g+n/fZgLQaQYkjNcyvt0mrqLrAu3qK7R
+	 khf+5OsCgy4liQxyzvzEaZvUHh9l5WqO8MeRpOqPzBJOZiSoHc3E6dyAkWaD0KZsnqxen
+	 S7RyqrhabxhLe8t7xRGwLV8TWjJiRq1y4GdCtKilp24l3B0Sds1Z1o/JXZznQOskRaWkG
+	 akLrZuC0D7mDGo9cQkCNE6Ku0DFTa5bgAA6N3A/OBRgJbAg6Ygg5sN5V31nIdDZkBNA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=valinux.co.jp;
 	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=pass header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=GMul4P1V;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.74.135
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021135.outbound.protection.outlook.com [40.107.74.135])
+	dkim=pass header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=TROq1HlC;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.229.108
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020108.outbound.protection.outlook.com [52.101.229.108])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81900606A32D;
-	Sat,  7 Nov 2026 13:30:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81900606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81920606A332;
+	Sat,  7 Nov 2026 13:30:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81920606A332
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=GMul4P1V
+	dkim=pass (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=TROq1HlC
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sa6fWJYtepRorVYTKB8BM6PT3Xwnj2mFvJRcdZTsgWglbufiS1MF+55/YwY+SPg7otqOm1XcB4AuUsOuHvQlsqH4C+SDcwNMdkWoQPa08SRg3aYi8Wr8yYwKZzh9dzWKtarQIedFFBeAEn9cMBo6tkvKNTcL9o9OOTBZ8ikgAYJzghZnZJ3inn9Y4fk5g4ayja7DzLNK4O/xG+mToJnXcBFjRFkOkgR53VhFzNeCaukq0FOF3wLkB+1+FXCadmvdUhga5kXK77XWZGdNPCpYB4OQ++xBL17Wzl1dbRQVXkrcwt5hYDRBGqZ63qZIJxcgsO28L2WZ+IChWSjvCLGg3w==
+ b=VHb6y7476IFDhQka3pyOJ3XkDEq0/udS+vfFYCCJEgDUWOuYDP7mrt9UnFCQ4ka6SH/onPk2dhsQ54f8KFAu0Lq/xeG8+q7o9laNRGPb1BM+UfmB1bv0Fpazihk4secKkHi+dFF3UghQaXHW3mdFzbW1gsvw42pFatR4yJRqx5EbVHW6r56Ym7Zdvh8C3rgE6LAQLrNv1hhZBsVJOvMRkKLrOXDOP9EwcsFoOcGLG26qTzBv5R00AT5Wgc3PKn8hPCESzbj5X1jnPo82xZviVn3JAIoAzEA0OMiN9IRFEZacr4rqz9ftAwMQx+2HtORQAdQd1Hk/uskK+s3+cy5DRQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/P/+DmCTrLU5Pw+nTaV4w+qH9EATz3dsofkyNM8H32c=;
- b=vtt8B7BJY1Vzt4Vr0GpMVsEG/C8BoloATsmHipnsV9Wg9M4Azfhsg1ymmYggjrv6WfXuaEvOpN5PVcC8+Z78ppv3UsRpCfWMq7+IU0Ebj8+vL4h95G0rux+xcthmNCdxvEjoTq0nxf0Dtg0NAf70YXSpGHGMXfCodIeBCjnvM3MRkmJCL5HmAs+eMEpDq2P7GCKItOaWyXDNSJ1jcIwn6iTHvHHaQ5LQUexc/vTdvwcHMhp9SbPgP82SacImG6tua8/ZzDia/TdIgZixSyAfchSbTaM6owK9DJrFgZiSh1EOwyLngLwsjlIYwkFJzv8TNGy4+Ejz7aY6uDgGkakjHg==
+ bh=CfjTeteyRJKsnipb9hCVblBCo0qAO0bCdmqldpmNcR0=;
+ b=O0mQp5BhsIdJdilWxzwpydkO1s9oRiEmhWamVGCG0CmfghdUiFAItcf1ta2tzYGHZOkYFs3qw1d+8H9yosm1VSDuyxxIi1MuS2DvdQCoQm4BbSEHRxgCHsNJXwNhF+r5HMcmjp/3xPSGXHsZuWQ3dW8Phml8cTseLaz8gLNr/b91XIxd3n0exZ8BZy3VrhseaPL6kTbmG97kgX+E4FRYALXNDWSCTBzEyRrrgqIhY2VD0dO+jnUhKPYYilIxmgCOAvL/ZKq9sbkP7bJUCESHgY4vdu40mU4crtiqdNw29B4/mBznCpxzmwRKWRn45adsYGXYryKp6CDqFoiz+QVSKw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/P/+DmCTrLU5Pw+nTaV4w+qH9EATz3dsofkyNM8H32c=;
- b=GMul4P1VmUy9gF6wCPnnjSHGIxqwC5HbyLyxtLp53onM4NhMQjnpQ52YbVdNHvFWF2x73I2bbR+lnrpLyx4c+h+KZ4OJSioOBxyCWtrMAUNlbrC/1Ic/nwhjsGln/GcFkBI4QDBb9oEK5/BpMclqAo1Kri+jvO4/A3HCuAfg8qQ=
+ bh=CfjTeteyRJKsnipb9hCVblBCo0qAO0bCdmqldpmNcR0=;
+ b=TROq1HlCD5ltoFINJCuSjIN1p7lpV9e2Jq31LaX0IrF2DCt7oOoh6U/pd5hBVtyKeaTjHIxjZGSvvEE6APzmjU4oQEkFihCODmCpblgDdu48VKvftV61GDRGFnGuxanZvhIhzCFJvGzBDrvqxt+ywvpeN9T/rwg7pzw7XVyO13A=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by TY4P286MB5504.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:25c::11) with
+ by TYWP286MB3222.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2d0::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.11; Sat, 7 Nov
- 2026 13:30:31 +0000
+ 2026 13:30:35 +0000
 Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
  ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
  ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0592.010; Sat, 7 Nov 2026
- 13:30:31 +0000
+ 13:30:35 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
@@ -84,16 +84,16 @@ Cc: Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-pci@vger.kernel.org
-Subject: [PATCH v8 2/7] dmaengine: dw-edma: Avoid resetting an LL on stale stopped status
-Date: Sat,  7 Nov 2026 22:30:22 +0900
-Message-ID: <20261107133027.364237-3-den@valinux.co.jp>
+Subject: [PATCH v8 7/7] dmaengine: dw-edma: Add trace support
+Date: Sat,  7 Nov 2026 22:30:27 +0900
+Message-ID: <20261107133027.364237-8-den@valinux.co.jp>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261107133027.364237-1-den@valinux.co.jp>
 References: <20261107133027.364237-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TY6P301CA0030.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:3ba::17) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+X-ClientProxiedBy: TY4P286CA0114.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:37c::12) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
  (2603:1096:405:325::11)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -105,154 +105,283 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TY4P286MB5504:EE_
-X-MS-Office365-Filtering-Correlation-Id: aacf0368-493d-4022-633e-08df3cd34bba
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TYWP286MB3222:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6455c126-e84c-47ab-a1df-08df3cd34e1c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|7416014|10070799003|1800799024|366016|18002099003|22082099003|10067099003|261026140227099003|56012099006|261102123227099003|261028144727099003|261022105027099003|261021121427099003|261009223027099003|261021123027099003|261026121527099003|261022075727099003;
+	BCL:0;ARA:13230040|23010399003|7416014|376014|366016|1800799024|10070799003|22082099003|18002099003|10067099003|261102123227099003|261026121527099003|261009223027099003|261021121427099003|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	jAs+xLytDx4cV2raHSlNa+IitTF0z6z7Y1IVqvUAwn8/xRGKFaWYeYwwC4lW/bPKTTwIYHm1lQhTSheeldIH6P9WS8hnS5/sWeOGvt6rH17reaLnSTV37CSllBzLHo3Um1Dzf/9xVd1bZwtVFBmDictURR9r/tZz1LhF4Nn1WDzDU5Fc0jolkiBMtxE9qkTqFcfyQFfZM4HH8z6rPd5cZ4VAdqd/H2Cn5ieTr/DLXuNK0+pMsomjHxCPwQEAaHLbp6E7G3dM5h5XSLVbqo26FXtZ5abAawDXDgQQbK5QoXN04HlaJ4yIar5fZotgD9pEKpx4Cezs5Vt/3LYup0hbkPTVWbxkaOVquZzpaMTerInioMFr9N0YLc/356ZWDJ7rvhKCP4UAnTsnO6L9x8WHtZ43kWkVvSxicXjJbsQrtLnBCv1hUzg21kpgrzm5zn5mz8fHMCJjv7qFuxkjynW1pdRp+XD569Ojug7faRLKIYvEqU3M56WUzTkeCAWv1JfgjKHkNbW+GHc85Kx4pEoSJj5eCOYft5/mioITwiIvYsWgc/SREm4qww3nfAuzqA5jy7d0/bstbF0Ab9pL22VIorRNv+TtQy/qFN0bZd0R7odCjsw+JPReNseDHO0jf3GswMSBRCtrpRyK5IabXnPmUClEJYMEOESSRABeMY6TUMI=
+	s5GhFnfRg7weoxF/RLeirYN4phfJoUhGEQBiQdBMqbTbMd++f97AuQMKL0/c4Sr8x9VrSrT2pYQfJmJda/IOfG3hTnfvHH3CayaYyxAH12pmPhpCLfFwbAR+rvb3e28FmVktOBuYH4Q5DSA8h3+uknbzyATulLbi4h4MqCtXEnX6ahmJUv8nbYcY0g0Wg7LNSc2rWNQt8r4evj6AJbTob8giu53ieLuCNPAtClZgYvMiNYgYiwaqPJ89MIDqh4s9EWeyzO+uNbce9ja4qwMN9JpGOjgPjAm30Ctz9fD5MhfEh0vYieIrt9eCr2yLiSKM170bTeFlTn+dl9WN0UfmjmiXN3w6ffMl1i05XHaHM7f1FYJ5cc7gKnlTW1x8b+zq9ykcHiz7XFBDEA+Q6+wpDB2JYYrdxTh7XQ9ADUmqQLgOri6BEeZsxGFtYMEydDx1M+OsCD1K7ChMfJ0GsDh1dyNpYpbl4JtfipdPi7tTkI3AAdDvJZ1iuHY23xZ22mpXgX4InoWcVn5HK9kLBrxuntOotjMOuJNzfFAfKmkY455jnW4Y8mZ5kGbygDJomWanUHR84eLvol9MLuEsC6oEDSRpk8dNK0ON7Ss5tjvYi7xhN6MGocybSsEF2A9Xm0FlaFBVOtokBo23kWK6pXjMzTSHY1u6+ObyP8azegL16XE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(7416014)(10070799003)(1800799024)(366016)(18002099003)(22082099003)(10067099003)(261026140227099003)(56012099006)(261102123227099003)(261028144727099003)(261022105027099003)(261021121427099003)(261009223027099003)(261021123027099003)(261026121527099003)(261022075727099003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(10070799003)(22082099003)(18002099003)(10067099003)(261102123227099003)(261026121527099003)(261009223027099003)(261021121427099003)(56012099006);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?OiGuF0kWAoCOii8m6S2xvvwc3zBVWq3+aK/xac10RjLYe9hjGzCYH6STe/yw?=
- =?us-ascii?Q?U2k8a8YWoFXDMB5BkbWLSPRMo2gxFHHARY5bgxIMgvUMPG90WjuQWbyzCEfU?=
- =?us-ascii?Q?QRFPa/j7PhcmNY2+L7Vy5d6CuVtHkWPDIHJ20iDtwe41x7X1/uHYuBAxUom5?=
- =?us-ascii?Q?Ioxvz6rWQQInW3JegAAEDWTjEOHo3V34uP7T5N9vGfQkJZtH0XomFjN0hRVC?=
- =?us-ascii?Q?d/WmsvKuiaH2RsIHIdtS8ps3zcbHijk1dTrhnmOBZNFRqb9Rz1SqGflTDHAL?=
- =?us-ascii?Q?3kmsa71MmeSYAoZojBYET7TtjuIvGKxkZ/GCWDAtgGLOFeOZ4uaQjFFjeiqc?=
- =?us-ascii?Q?elotgE2d1yxc/Q7hl3fC5i6VTjN4ND5SqA1LmShRc8EglPGzJx/QqS1v3Fc9?=
- =?us-ascii?Q?2e9ZisXNVDsZwrHhtgcCcvIWP+/RVv6syTzLpIj9YsTTFE4PJE9edH1jsAE7?=
- =?us-ascii?Q?uqwI8H2zKmnwQbpWVC77Ppmsqc2vLuu410aaqT+MnVIpVOCOAWL1UOYjRS6u?=
- =?us-ascii?Q?IebjNKKMGfRgrRsLgtrQx+/VtHv/nBoCHZbf5u/XELR/KDlcwPKXonVlW3Ul?=
- =?us-ascii?Q?EP5MR49pYgjVwTL+sR4kQFtKXNlMcGfl7PzWf28Dza+HDRbyngo+H6sMl18k?=
- =?us-ascii?Q?ZJtIyFCIfpSpK8C1gkZrzdu4OIo1QabnTBanOSgWyWj1iAbz34iw8kYaZRqU?=
- =?us-ascii?Q?YG8RLqPEAg+mVB2/hFR2IasTjMK/OUA6GVrbWHMX9wrptB49U2wWVUycu3Ru?=
- =?us-ascii?Q?U6x/r0gJQZDekQg86IRINmunqb6qsl3SpazdeliOcPL3UJY1DtOQ8CRETbmD?=
- =?us-ascii?Q?0/x0S+z03cICOXyoIKGqSEIUm6car3zxEYYEPGbQ5P52wp4dzT91fLl33c93?=
- =?us-ascii?Q?EAsIifjeWTON4FpREzHFiX9D8rl+vOI/ozOJGYSvR2/pAngsYSS6/47rtMnp?=
- =?us-ascii?Q?rq0QvGzsh40XT1s70oZ78uPx6R97JKaU32HxPYaLnLhouMJBKrBEvoO1TPHw?=
- =?us-ascii?Q?hQwulJODYJs7dIetp6TqXKfVKZ/8TZoHYls1CZ/jPodn1pZYsd72k/VTf4vJ?=
- =?us-ascii?Q?KOf1d5YGTNqJ8RRB8jLpQI1tZMac9XfE/Ny5y4B+mMqKYOfVDCenw5XePnuX?=
- =?us-ascii?Q?Pvjw2/yFnxQyBAQsGv8xgWQeKNNtRiwwalCJODMHpxLXI7jFMWrMQHOmCtp0?=
- =?us-ascii?Q?eajC8tHHMKbLYs337gRYS2nmu4jfGCdALsppLDPmFfxZiPUnJL9p3kkp1k6C?=
- =?us-ascii?Q?LVculwVeLl/JqS13iMC+BkLKTYxKvbrUaA3K3pCNVck8GgAMhkJ9sH8rhueB?=
- =?us-ascii?Q?42t8/Y07HTNWEOMUnMPqdXfpvHtonne6EcO+/12KxxZaKBY0TVGwNrJmSAxD?=
- =?us-ascii?Q?0MZfZ/4aXx/EJTnc/jzjDCCslVvdQy0PhzoYLVG+JwWR61zI3mm530zzg0gf?=
- =?us-ascii?Q?dug8eBHG6lNnh8NZiDgY0fEWA1/YDNkZDZMlr/O1kZlL3RW0QFqyqiYuNsfH?=
- =?us-ascii?Q?lTvaAjj0O32q/dXUm0lsCdaEHOBpulOrSpr8EQT77ZwPI+rQj1MlEQkwvowu?=
- =?us-ascii?Q?v6UQ3SczOFC+oN1gnSXTlKAGQArYHLGJkgJQXcge6sZoud5t8V5trTYZba78?=
- =?us-ascii?Q?WHxykicAEXlNNv0bJNF/LiNm/6YZJ0EziVLSVPCe8sNRk87ZI2WH9uS50X6L?=
- =?us-ascii?Q?vEc+nQ9pwWu0i9ZzaJh+KWF88QhsycRs0kH6YzR2Zm6MtcfyR/FQslO2q31l?=
- =?us-ascii?Q?Go7pe9gvHYK3GP8ZIvsQxrsJqCSbUd/zdZVj/bX2tE5nNg47oU7M?=
+	=?us-ascii?Q?s97dKdEs8jSVCunTs4IJa82cSt4scwC/pJ+jUxKDsYm2JgdkOSCkgcXQFZnZ?=
+ =?us-ascii?Q?ATAlW1ver4FGbLBBEWgm8E5Hp05OAaj3DGAxhuy2GbWLCVKmsWOW3jQCMQFv?=
+ =?us-ascii?Q?ctE3i/Behld/EORSYYpfrFc+FSXQjjA2njXFjgfcGgHxoxkoVuSb5Qkb01zx?=
+ =?us-ascii?Q?zO+o5kai9CZ375vVaHn6gxs8rwv3jFiEBuBOXJ0gf4aBMoNl76+amgAADqfD?=
+ =?us-ascii?Q?H4XY63wd60/LCWAmWNf4CoWtPZ8xOwb1x9qra+ifC5lGwBxxve7wv+Mxsb8o?=
+ =?us-ascii?Q?s2tZ7VoLHk6TXN6iqg8b6WIMy7TMS/mPZIx+QDLTjRnx6BhiEYlHQCuaqyae?=
+ =?us-ascii?Q?FUekL0Bj+J6Uig3qwvvMtxTRjfSPboz++yi/0KDhRYwGZf/bkqWeLhmSdegV?=
+ =?us-ascii?Q?A3U/hyaFC0Xtli+3LB/uOStoFURkMsi/FUB2taAQhWBSB8zsU9fd1lO7Raip?=
+ =?us-ascii?Q?tV/6Xy4tE7PKlXGKzygeGNOuKWM/f4bJsMmn/wet+UjVbYAAtT/5mfQUZBII?=
+ =?us-ascii?Q?pB/D6eOOY9HkD0dAe8LIipdPJwpWFWcvTE/lv/xOZ9MUfU0pHLrwwoIbCz67?=
+ =?us-ascii?Q?RACPS4r3J087umwKo9+dM22bkcGP/bZF0UfSqMoB+Rl/lPdAMgI0yE9ET5N7?=
+ =?us-ascii?Q?C4CEKuP3kzUsUxjjA3pGRXz1KH1/cuwIvgKIqX4WOdv9f2b99PefBaS1nuC0?=
+ =?us-ascii?Q?LsS8km9+uTs67C2Z1Y5+hISQTMrHFFYrIzTFc4QHK6EK7B2/7NqKNJO/VZtY?=
+ =?us-ascii?Q?JgUHZjHk/FPG0XW30bwOBQGNQprgziViyKcgEcyOsBRYBWpLfQubFRYbwQKe?=
+ =?us-ascii?Q?4hWthXA5EORDshspMf9TZDgy+ymseZA4Da08FhLlmaAVaDjKa6VsLs4vk8lB?=
+ =?us-ascii?Q?NRHoRtsIGeqkHFQMsJYwfAA3K+4Ubm2+vt0JkN27BXVJBSr1iPmrWZ5o3EMJ?=
+ =?us-ascii?Q?lQZNSbDJXGat7vYOh7mnDOvrIp01OEJA6bBgBttovDc+ZSDCrGycXf1bSIhQ?=
+ =?us-ascii?Q?1u3EqaZ0+EBMON9cU7mO5hE4pNqzmPzP/jH2siUWWDv9C6mgFqo7y5L01WX9?=
+ =?us-ascii?Q?dI3Tmfx4xXPdZnqW8NbHu6gyPdMu1FYrnMRIZoJEHAAwbjM66AMfRSFtxmgQ?=
+ =?us-ascii?Q?7Gut2FCSSnGwBKuVUqT2sj9c0jhO9fA1G06uM1pmdYnoJvrJeJeAmJJfa3vp?=
+ =?us-ascii?Q?a1FwvT70PELXYMZ+zweUey+YmNnj06298bh9Nj+LDfD91jGf0ND+fR6DXs8c?=
+ =?us-ascii?Q?gs+X5yV5WOeqFcMpmU/T/G562s+hisnPyy3mjYcx0107xRb/GxSUPNBMkgE7?=
+ =?us-ascii?Q?//iKWrm8/SoFnIYb0aq/U6vY6fBUUP854f/PKEb/XX6vgYRRnlps+KpT9Ub5?=
+ =?us-ascii?Q?llhXUu2+3D3M7rmx4qRzJfH0dnzMoVaxTIgrTyVaQWrKur0VF+If5tsYYvxn?=
+ =?us-ascii?Q?q4UhXnckyxH1AgXSlsm6Edk6Mjq4JtxhWZIWnY82ha9BcsZwK2asZrmY+5eH?=
+ =?us-ascii?Q?rIWF90mTfF+dhwjT7xFOswX81lRbHgfMhFQRcUDOWVbnPGaJSL1iPj9U9Xau?=
+ =?us-ascii?Q?3xtWTP+QoHJomgLczh17Ii/bg0UNsMaa4fFccyD9Wz37KJvsXI6TLTX9/Jl/?=
+ =?us-ascii?Q?FjhvXlNiwzB2xu9F6njF8qgErS8SaZdLPoLPlC0u1hS71WXO0xWREE1iP6VN?=
+ =?us-ascii?Q?FRTlGFyYs9LF2GCehJRm6scFltiWLawMGWTQNuR2IoxTqJsSqJrd3i+itPne?=
+ =?us-ascii?Q?BDYcyF7GhHW2ETGbidPkHEpxz8ZWtprrPBjc0CPYU2ZIMq68LB66?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: aacf0368-493d-4022-633e-08df3cd34bba
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6455c126-e84c-47ab-a1df-08df3cd34e1c
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 13:30:31.6813
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2026 13:30:35.6793
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5XhZ9KYFzbJJlkk50IeWNQilUlTEsnq+IqEvB4/Vud6+67QFCMV/vaO1MMLUOw4SDbVJJgQLtec9xg3IAD91vQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB5504
+X-MS-Exchange-CrossTenant-UserPrincipalName: CKREj+NSHIUzDC2/bKAxE+aGAT3OtR2soE6TYoml2p9MuL8LEdKa/GHQ1hvy4fNCaXFgdxrMBtNihIGFrDhU3Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB3222
 
-CS can still report STOPPED briefly after a doorbell write, before the
-DMA engine starts consuming the published LL entries. Finishing
-termination relying solely on that value can reset the ring while a
-transfer is about to start, leaving hardware and software ring positions
-out of sync and stalling subsequent transfers.
+From: Frank Li <Frank.Li@nxp.com>
 
-Require LLP to reach the published tail, on top of the standard criteria
-(ie. CS=STOPPED and zero transfer size) before
-dw_edma_finish_termination(). Non-LL mode behavior is unchanged.
+Add tracepoints for LL publication, descriptor append and completion,
+and doorbells. Record channel and ring indices to help diagnose stalls.
 
-Cc: stable@vger.kernel.org
-Fixes: db79c4e264ef ("dmaengine: dw-edma: Make DMA link list work as a circular buffer")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Co-developed-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 ---
 Changes from v7:
-  - Resample LLP and stop status if stopped to catch progress made after
-    the first LLP read (follow-up to Sashiko's review).
+  - No changes.
 
-@Frank: Dropped your R-b due to the change; would appreciate another
-look.
+ drivers/dma/dw-edma/Makefile        |   2 +
+ drivers/dma/dw-edma/dw-edma-core.c  |   9 +++
+ drivers/dma/dw-edma/dw-edma-core.h  |   2 +
+ drivers/dma/dw-edma/dw-edma-trace.c |   4 +
+ drivers/dma/dw-edma/dw-edma-trace.h | 117 ++++++++++++++++++++++++++++
+ 5 files changed, 134 insertions(+)
+ create mode 100644 drivers/dma/dw-edma/dw-edma-trace.c
+ create mode 100644 drivers/dma/dw-edma/dw-edma-trace.h
 
- drivers/dma/dw-edma/dw-edma-core.c | 45 ++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
-
+diff --git a/drivers/dma/dw-edma/Makefile b/drivers/dma/dw-edma/Makefile
+index 83ab58f87760..5f395fa1ede4 100644
+--- a/drivers/dma/dw-edma/Makefile
++++ b/drivers/dma/dw-edma/Makefile
+@@ -1,8 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
++CFLAGS_dw-edma-trace.o		:= -I$(src)
+ obj-$(CONFIG_DW_EDMA)		+= dw-edma.o
+ dw-edma-$(CONFIG_DEBUG_FS)	:= dw-edma-v0-debugfs.o	\
+ 				   dw-hdma-v0-debugfs.o
++dw-edma-$(CONFIG_TRACING)	+= dw-edma-trace.o
+ dw-edma-objs			:= dw-edma-core.o	\
+ 				   dw-edma-v0-core.o	\
+ 				   dw-hdma-v0-core.o $(dw-edma-y)
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index b08bb31657c9..0c8b9545a5ba 100644
+index bcf4fca34591..94cdf7fb6370 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -146,6 +146,44 @@ static bool dw_edma_ll_pending(struct dw_edma_chan *chan)
- 	return chan->ll_head != chan->ll_done;
- }
- 
-+static bool dw_edma_ll_stopped(struct dw_edma_chan *chan)
-+{
-+	return dw_edma_core_ch_status(chan) == DMA_COMPLETE &&
-+	       !dw_edma_core_ch_transfer_size(chan);
-+}
-+
-+static int dw_edma_ll_read_idx(struct dw_edma_chan *chan, bool *stopped)
-+{
-+	int idx;
-+
-+	/* Sample LLP first in case the engine starts between the reads. */
-+	idx = dw_edma_core_ll_cur_idx(chan);
-+	*stopped = dw_edma_ll_stopped(chan);
-+	if (*stopped) {
-+		/*
-+		 * Re-read once to catch the final LLP if the channel remains
-+		 * stopped. If it restarts, later interrupts will report
-+		 * further progress.
-+		 */
-+		idx = dw_edma_core_ll_cur_idx(chan);
-+		*stopped = dw_edma_ll_stopped(chan);
-+	}
-+
-+	return idx;
-+}
-+
-+static bool dw_edma_ll_drained(struct dw_edma_chan *chan)
-+{
-+	bool stopped;
-+	int idx;
-+
-+	idx = dw_edma_ll_read_idx(chan, &stopped);
-+	if (idx == chan->ll_max)
-+		idx = 0;
-+
-+	return stopped && idx >= 0 && (u32)idx == chan->ll_head;
-+}
-+
- static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
- {
- 	struct dw_edma_chan *chan = desc->chan;
-@@ -455,7 +493,9 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
- 		dw_edma_finish_termination(chan);
- 	} else if (chan->status == EDMA_ST_IDLE) {
- 		dw_edma_finish_termination(chan);
--	} else if (dw_edma_core_ch_status(chan) == DMA_COMPLETE) {
-+	} else if (chan->non_ll ?
-+		   dw_edma_core_ch_status(chan) == DMA_COMPLETE :
-+		   dw_edma_ll_drained(chan)) {
- 		/*
- 		 * The channel is in a false BUSY state, probably didn't
- 		 * receive or lost an interrupt
-@@ -790,7 +830,8 @@ static void dw_edma_done_interrupt_locked(struct dw_edma_chan *chan)
- 		if (!vd)
+@@ -259,6 +259,7 @@ static void dw_edma_ll_consume(struct dw_edma_chan *chan, int idx,
+ 		if (desc->done_burst != desc->nburst)
  			break;
  
--		dw_edma_finish_termination(chan);
-+		if (chan->non_ll || dw_edma_ll_drained(chan))
-+			dw_edma_finish_termination(chan);
- 		break;
++		trace_dw_edma_complete_desc(desc);
+ 		dw_edma_complete_vdesc(vd, DMA_TRANS_NOERROR);
+ 	}
  
- 	default:
+@@ -285,6 +286,12 @@ static void dw_edma_core_ll_start(struct dw_edma_desc *desc)
+ 				     chan->ll_head, chan->cb,
+ 				     i == desc->nburst - 1 || free == 1);
+ 
++		trace_dw_edma_fill_ll(chan, chan->ll_head,
++				      desc->vd.tx.cookie,
++				      desc->burst[i].sar,
++				      desc->burst[i].dar, desc->burst[i].sz,
++				      chan->cb);
++
+ 		chan->ll_head++;
+ 
+ 		if (chan->ll_head == chan->ll_max) {
+@@ -338,6 +345,7 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 		if (!chan->ll_valid)
+ 			dw_edma_core_reset_ll(chan);
+ 
++		trace_dw_edma_append_desc(desc);
+ 		dw_edma_core_start(desc);
+ 		ret = 1;
+ 	}
+@@ -401,6 +409,7 @@ static void dw_edma_core_ll_sync(struct dw_edma_chan *chan)
+ static void dw_edma_core_ch_doorbell(struct dw_edma_chan *chan)
+ {
+ 	dw_edma_core_ll_sync(chan);
++	trace_dw_edma_doorbell(chan);
+ 	dw_edma_core_do_ch_doorbell(chan);
+ }
+ 
+diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
+index 84a811bdcb6d..769c0c08a711 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.h
++++ b/drivers/dma/dw-edma/dw-edma-core.h
+@@ -154,6 +154,8 @@ struct dw_edma {
+ 	const struct dw_edma_core_ops	*core;
+ };
+ 
++#include "dw-edma-trace.h"
++
+ typedef void (*dw_edma_handler_t)(struct dw_edma_chan *chan,
+ 				  unsigned int events);
+ 
+diff --git a/drivers/dma/dw-edma/dw-edma-trace.c b/drivers/dma/dw-edma/dw-edma-trace.c
+new file mode 100644
+index 000000000000..2620ad61a943
+--- /dev/null
++++ b/drivers/dma/dw-edma/dw-edma-trace.c
+@@ -0,0 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#define CREATE_TRACE_POINTS
++#include "dw-edma-core.h"
+diff --git a/drivers/dma/dw-edma/dw-edma-trace.h b/drivers/dma/dw-edma/dw-edma-trace.h
+new file mode 100644
+index 000000000000..0b199ab30b9a
+--- /dev/null
++++ b/drivers/dma/dw-edma/dw-edma-trace.h
+@@ -0,0 +1,117 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Copyright 2023 NXP.
++ */
++
++#undef TRACE_SYSTEM
++#define TRACE_SYSTEM dw_edma
++
++#if !defined(__LINUX_DW_EDMA_TRACE) || defined(TRACE_HEADER_MULTI_READ)
++#define __LINUX_DW_EDMA_TRACE
++
++#include <linux/types.h>
++#include <linux/tracepoint.h>
++
++DECLARE_EVENT_CLASS(dw_edma_desc_info,
++	TP_PROTO(struct dw_edma_desc *desc),
++	TP_ARGS(desc),
++	TP_STRUCT__entry(
++		__field(size_t, nburst)
++		__field(size_t, start_burst)
++		__field(dma_cookie_t, cookie)
++		__field(u32, id)
++		__field(u8, dir)
++	),
++	TP_fast_assign(
++		__entry->nburst = desc->nburst;
++		__entry->start_burst = desc->start_burst;
++		__entry->id = desc->chan->id;
++		__entry->dir = desc->chan->dir;
++		__entry->cookie = desc->vd.tx.cookie;
++	),
++	TP_printk("chan %u%c desc %d nburst %zu start_burst %zu",
++		__entry->id,
++		__entry->dir ? 'R' : 'W',
++		__entry->cookie,
++		__entry->nburst,
++		__entry->start_burst)
++);
++
++DEFINE_EVENT(dw_edma_desc_info, dw_edma_append_desc,
++	TP_PROTO(struct dw_edma_desc *desc),
++	TP_ARGS(desc)
++);
++
++DEFINE_EVENT(dw_edma_desc_info, dw_edma_complete_desc,
++	TP_PROTO(struct dw_edma_desc *desc),
++	TP_ARGS(desc)
++);
++
++TRACE_EVENT(dw_edma_doorbell,
++	TP_PROTO(struct dw_edma_chan *chan),
++	TP_ARGS(chan),
++	TP_STRUCT__entry(
++		__field(u32, id)
++		__field(u8, dir)
++		__field(u32, done)
++		__field(u32, head)
++	),
++	TP_fast_assign(
++		__entry->id = chan->id;
++		__entry->dir = chan->dir;
++		__entry->done = chan->ll_done;
++		__entry->head = chan->ll_head;
++	),
++	TP_printk("chan %u%c done %u head %u",
++		__entry->id,
++		__entry->dir ? 'R' : 'W',
++		__entry->done,
++		__entry->head)
++);
++
++TRACE_EVENT(dw_edma_fill_ll,
++	TP_PROTO(struct dw_edma_chan *chan, u32 idx, dma_cookie_t cookie, u64 src,
++		 u64 dest, u32 sz, bool flag),
++	TP_ARGS(chan, idx, cookie, src, dest, sz, flag),
++	TP_STRUCT__entry(
++		__field(u32, idx)
++		__field(u64, src)
++		__field(u64, dest)
++		__field(u32, sz)
++		__field(u32, id)
++		__field(dma_cookie_t, cookie)
++		__field(bool, flag)
++		__field(u8, dir)
++	),
++	TP_fast_assign(
++		__entry->idx = idx;
++		__entry->src = src;
++		__entry->dest = dest;
++		__entry->sz = sz;
++		__entry->id = chan->id;
++		__entry->dir = chan->dir;
++		__entry->cookie = cookie;
++		__entry->flag = flag;
++	),
++	TP_printk("chan %u%c %d [%u] %c src: %08llx dest: %08llx sz: %04x",
++		__entry->id,
++		__entry->dir ? 'R' : 'W',
++		__entry->cookie,
++		__entry->idx,
++		__entry->flag ? 'C' : 'c',
++		__entry->src,
++		__entry->dest,
++		__entry->sz)
++);
++
++#endif
++
++/* This part must be outside the header guard. */
++
++#undef TRACE_INCLUDE_PATH
++#define TRACE_INCLUDE_PATH .
++
++#undef TRACE_INCLUDE_FILE
++#define TRACE_INCLUDE_FILE dw-edma-trace
++
++#include <trace/define_trace.h>
 -- 
 2.54.0
 
