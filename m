@@ -1,97 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.2
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794089711;
-	b=v/m9xfBSaUJm/mmjZOp5XaRkJoUcKgrDcN7ICiPtC7NAqEYCNtQwvV17iOsPP5QCJdSs
-	 CbtGvjF8LZOvCo35euVSR7mDmQ4rcyAs/KUYb8scD+RLaEtNYRmQbE738+P6d6XW1TC5M
-	 qCD1XJJzwdY4CK0mvqdWdxVC3vapnn9uv2RbNYShQcAgzxSUGyJqadExFHC9oZHu3kdjJ
-	 3oWCYDqQM11GHWXJzlsz9yydjdKBcKWJVoVdi3wg9hnRqsXWk89XA7ryZlGpm4bBrTqFx
-	 TUnwNFFk/n7/0km6XG5ZUgZUZrFkNGn3/cuGFGBZBMuVkAot8AcemffvbleuKu/y0EA==
+	t=1794089975;
+	b=nctj1hCHBe41p2AfB7mx2fxrAHtP+mxG5sw9u616dMETpGySkG9uYvQ+n2VVdz95G2I+
+	 WsZdezBUSnkCmaKm+lNUyIPgE9XSF8FgTWumQvx4UA1GpVGD49W6HplITD27D2Rd8h02M
+	 NSRbyhPrM2UiLzjd28g54vvuYo3ROir4d8jvM2RyxNg/ttxfcxk1UuFuD/FfvnHkllOzx
+	 eYqIboFoyRdu6lQf8z+kZCR9zt+rkwWV5JhdctCVr7P22KwZWImSIThsCKtfrjG6AmHok
+	 dSAEXNlbAjZmBk4Lp/dPkIi9Ib32FpCVKv6FlG315JhCqazSJCks8NjyFezvgLw+4iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794089711;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=rtChpQ65eeoLVdZ/dFUA18szw3uQepSIX2YdKa6qr4g=;
-	b=UaofXAtYZVKSwLQHl1SW4bFLJuU0kztapIDeZPitOnZAD/r5A03z4NIdRgxa5ZeG5GJl
-	 QNFUZ9bBa6c43Pbo+GlYsjeHp9PsaPltrND09pR0r5gTp1au2UHUiVyrr0ycwKNy5djRz
-	 4xYaN6UqST2erFFDE6jXiWV0NeM7XQ5+/1zCH1/EC6ILvx+YGn2jTayTdfRyMnuFBWGuM
-	 d9/d/ILZ+qDE3yCVaBjki2MpoXpmq5UV99ewD0nVV+2/NswCC8Ay39Ajk80RMzTeS2P1N
-	 Ka82zb1dXO6fCI5erSD53gvoZYsw4BHxaxpAdgNaykbhPwEqRTu9nJDqx8eW7dPFzew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794089975;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=6yTshcC+kMNtusEXrIUTVAXfstX6kUxzoCO1/pFNKRs=;
+	b=xsSy3WaXn7/1+CTjxN4/WLpQHi8s7SRqQhzyAfVGvuz5f0ZdKU9lEsRLrcNGiy4dajLK
+	 4P0rOuSzXbHr/H2x+MRW3lBQjGRlUpNjFcRirp5tqnzEhIKxDO2EIUVmQHr5/TDv0qgMg
+	 +BcuVPx1mjjZgYRSzpWiVEn483BMwxob1adt3zXxcS2D3iQ0lxEDCw8pJwG0gBoAlkibN
+	 fHncnChSMiWT6iTuHC25g34aioLMIS6XWW8lzPM4qf7iOmbm6Jm1DWAmDLWh8xF7qOiqM
+	 fjzANcPhHfYK3e45WaXs1lY1N72AWqc3MvrsR6Ek9ZyAA+agNgegb72s0xM79HPY+wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kTpmOR66;
-	arc=none smtp.remote-ip=74.125.229.2
-Received: from mail-dy2-f2.google.com (mail-dy2-f2.google.com [74.125.229.2])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ly3ZAZ8Y;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A76606A333
-	for <dmaengine@vger.kernel.org>; Sat,  7 Nov 2026 22:15:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C2A76606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D557606A32C
+	for <dmaengine@vger.kernel.org>; Sat,  7 Nov 2026 22:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kTpmOR66
-Received: by mail-dy2-f2.google.com with SMTP id 5a478bee46e88-370ebdde89eso100975eec.1
-        for <dmaengine@vger.kernel.org>; Sat, 07 Nov 2026 14:15:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794089710; x=1794694510; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=rtChpQ65eeoLVdZ/dFUA18szw3uQepSIX2YdKa6qr4g=;
-        b=kTpmOR66dBAIZkOKjeV1xswlTFvCGfcB1D5HxfKVUivRzVFMkk/UcARm7blrsZiYwZ
-         isqPtifc+JRwjb+eRX0uyk+d8xiaSsOfHL/MH1ezmplm0akBw+v6bDmQdO2DpfCGDH0m
-         2IDYRwjzTSqsgXTWTs5Ix5qBq4g83lDPefss02DtmhWSPRzZxxTP2oztUTWWW9D83m4d
-         5YXjrxqut0QXpRhkvz3YRAX9vmlqnkpKGdexKwYEvUJdkn67VaQWvHpjApQ884/2VK/J
-         ioGgxSWAMjcVBpKkgWCCT8y5dyAjyNQeIdpoz0bmLnfMorwgk1wEwb1Up013iZzd+8PY
-         2ZjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794089710; x=1794694510;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=rtChpQ65eeoLVdZ/dFUA18szw3uQepSIX2YdKa6qr4g=;
-        b=Hi+UQmMGffhv1KctwxoQWtBIQ595VCivq+zQ9Yh3cKFrxJxa9x31HgKYGMsBAZJ6/V
-         CQgqv7M1mbeE6xwuZ1pNwv69P1sS5utmkd8t/vnnw5G1E6SBUIS3DOYjgM8c0B0mhfmg
-         6CnZY0k1HY921AAuEeCE6/n5RYvJuiQ3o2xzzZD5Ad7abOgIuu4bv85wDYpNy5gPq5xj
-         T/chlcRSxwTXPxmWeBsSD5w/eE/Pw0zsJ7XGlNf+pcmLTuEbW1FKsGEXWudpmDkHoizr
-         7viip2PS1azjwDuv+iSQLP+UFSKa48MhR+Ypttxcja+LE5opkoqH1Ufoz3zyRR49M5Ua
-         vB4Q==
-X-Forwarded-Encrypted: i=1; AKwUvBzkwTzy5N9aS16hQ5LjhYH8iHP17N7rz+Nu3sX45DEG2QHJQDFu5GWa9C23Mq3vDCddRqUHjuxmGd4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9/7LkrRLhqne5J5vOo1DxjJEVHU1UDVGmZyn+uDz7vXykdZltx
-	r7zoeWd/T7jGRM+04cZcPkOB0jl5z/BX3xwic0ODAbLsJH6lVcU2dq0W
-X-Gm-Gg: AYBFou0BPdS+9Ra3Dymm1cTJd6K/0ZzkzsG/BcZXAhOnOQOoMIVw3P6WTVo79lCROad
-	wv+o591EccJ9FntkiXQ+gl2i6avLQY33Trqg6PU5Yv3yen18rsw8lVOdcsfSOH1x71vzyeUzQlc
-	ZWN04ZBabEHHBiRMf8LhpUmYxewGPNyaxnpRXX+iQZMese4K87flkX0vTvqVynhT1Xk48T8Fkw0
-	0a46SK6CQ6bLFHyJOkZPVr4E2Kp6DdWdBmjawU2zZHxgc8oCG7FXzwg8afwgCiIOevAvZ2R2Y92
-	63+f0AL8DUC1SxkWIR8LtzIZx3QgaroWY7uNH9940ZrK2RWoaM8PQ0KccUQOBAPEKxtZql1TAbz
-	Hyq6SMKeDr33ntSt/Tp3f4XKuUEPnKojORHq2hMjJKVqZ34VnpyqePzzA93V7db5ha4LVN/Xrze
-	SvqJj+BK6fFNHxsoW5XawBU56TMVCl8N8sY4DtU/0i4mlI9mIXFxXwNSe6iDB3Z93ux5jgM1ddc
-	Ks3sDJrhVpN/XHdE/kBs4UNKu8V8+vbvaFMIrSGP2F2tGUF1+mFvhVbb9KZf+Q6KBRZkpjvhFfH
-	JJJJ5sim5Ii9/TEwLruI/hubWA4NBI7jQOUbXSV1PPQ1tgTE6c2sezZ6mi5gfqV41ParYe16Obt
-	ZwjMjDm7sflKOYXazr0bB8nQ4Uj1PYPdfUQIOOQ==
-X-Received: by 2002:a05:701b:4348:b0:163:bee9:b250 with SMTP id a92af1059eb24-1b25d321963mr8857586c88.22.1794089709615;
-        Sat, 07 Nov 2026 14:15:09 -0800 (PST)
-Received: from localhost.localdomain ([98.148.34.5])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b3755eb6efsm1465914c88.4.2026.11.07.14.15.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Nov 2026 14:15:09 -0800 (PST)
-From: Hungyu Lin <dennylin0707@gmail.com>
-To: okaya@kernel.org,
-	vkoul@kernel.org
-Cc: Frank.Li@kernel.org,
-	andy.shevchenko@gmail.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	dennylin0707@gmail.com
-Subject: [PATCH] dmaengine: qcom: hidma: avoid world-writable channel sysfs files
-Date: Sat,  7 Nov 2026 22:15:00 +0000
-Message-ID: <20261107221500.96825-1-dennylin0707@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ly3ZAZ8Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B44F1F0089F;
+	Sat,  7 Nov 2026 22:19:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794089975;
+	bh=6yTshcC+kMNtusEXrIUTVAXfstX6kUxzoCO1/pFNKRs=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ly3ZAZ8YQw+Ul+WtXey20Xbml7522/DY6Yqk8sN8U0w2pTP61ZUJ5P0A43i6HhqBK
+	 SvrkjuFaGndqefThHD9Uy9ZO34AIKIWdfq7J08SE9ptfByRf4xfHeKi28sfwCeS6cH
+	 gdYuJV7NiT2a5Rwo7xHo9Vx1pPVSUbzwKZhP+GXAdFgXBLqu4+VM7SLDKFgv1WSNtR
+	 cMtQEPHqhAOz3QYzqRuOxhKZ2/DFipHo+ohtEBMBZv336Cf4glMYRfHWWE1os68/mJ
+	 xqU5pmfwka4vQTZb1Ynv/Reedepks3160Wk2z4xBv40LK6Er8bc7jtSubWAImXhqov
+	 lrBx7qpGpBzGQ==
+Message-ID: <sashiko-outbox-203364@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: hidma: avoid world-writable channel
+ sysfs files
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Hungyu Lin" <dennylin0707@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261107221500.96825-1-dennylin0707@gmail.com>
+References: <20261107221500.96825-1-dennylin0707@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 07 Nov 2026 22:19:34 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -100,47 +59,59 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-hidma_mgmt_init_sys() creates the per-channel priority and weight
-attributes with S_IRUGO | S_IWUGO, so any local user can write them.
-A write stores the new value and calls hidma_mgmt_setup(), which
-programs it into the channel's QoS register.
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [Critical] dmaengine: qcom: hidma_mgmt: kobject leak and UAF in
+  hidma_mgmt_init_sys() [1]
+--
 
-Attributes declared with __ATTR() are checked at build time by
-VERIFY_OCTAL_PERMISSIONS(), which rejects world-writable modes. These
-two are created at runtime with a mode passed to
-create_sysfs_entry_channel(), so the check does not reach them.
+commit 44ad6eea44504d623e4ff527b7da4680661c450d
+Author: Hungyu Lin <dennylin0707@gmail.com>
 
-Make them writable by the owner only, the 0644 that __ATTR_RW() uses.
+dmaengine: qcom: hidma: avoid world-writable channel sysfs files
 
-Fixes: 7f8f209fd6e0 ("dmaengine: add Qualcomm Technologies HIDMA management driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
----
- drivers/dma/qcom/hidma_mgmt_sys.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This commit restricts the per-channel priority and weight sysfs attributes
+in hidma_mgmt_init_sys() from world-writable (S_IRUGO | S_IWUGO) to 0644.
 
-diff --git a/drivers/dma/qcom/hidma_mgmt_sys.c b/drivers/dma/qcom/hidma_mgmt_sys.c
-index 9672ef9ee8fc..53b991752e80 100644
---- a/drivers/dma/qcom/hidma_mgmt_sys.c
-+++ b/drivers/dma/qcom/hidma_mgmt_sys.c
-@@ -265,13 +265,13 @@ int hidma_mgmt_init_sys(struct hidma_mgmt_dev *mdev)
- 	/* populate parameters that are per channel */
- 	for (i = 0; i < mdev->dma_channels; i++) {
- 		rc = create_sysfs_entry_channel(mdev, "priority",
--						(S_IRUGO | S_IWUGO), i,
-+						0644, i,
- 						mdev->chroots[i]);
- 		if (rc)
- 			return rc;
- 
- 		rc = create_sysfs_entry_channel(mdev, "weight",
--						(S_IRUGO | S_IWUGO), i,
-+						0644, i,
- 						mdev->chroots[i]);
- 		if (rc)
- 			return rc;
--- 
-2.43.0
+> diff --git a/drivers/dma/qcom/hidma_mgmt_sys.c b/drivers/dma/qcom/hidma_m=
+gmt_sys.c
+> index 9672ef9ee8fc0..53b991752e805 100644
+> --- a/drivers/dma/qcom/hidma_mgmt_sys.c
+> +++ b/drivers/dma/qcom/hidma_mgmt_sys.c
+> @@ -265,13 +265,13 @@ int hidma_mgmt_init_sys(struct hidma_mgmt_dev *mdev)
+>  	/* populate parameters that are per channel */
+>  	for (i =3D 0; i < mdev->dma_channels; i++) {
+>  		rc =3D create_sysfs_entry_channel(mdev, "priority",
+> -						(S_IRUGO | S_IWUGO), i,
+> +						0644, i,
+>  						mdev->chroots[i]);
+>  		if (rc)
+>  			return rc;
+> =20
+>  		rc =3D create_sysfs_entry_channel(mdev, "weight",
+> -						(S_IRUGO | S_IWUGO), i,
+> +						0644, i,
+>  						mdev->chroots[i]);
+>  		if (rc)
+>  			return rc;
+
+[Severity: Critical]
+This problem wasn't introduced by this patch, but does hidma_mgmt_init_sys()
+leak kobjects and leave dangling sysfs attributes on failure or driver
+unbind [1]?
+
+If any step in hidma_mgmt_init_sys() fails, it returns without calling
+kobject_put() on chanops or mdev->chroots[i] or removing previously created
+sysfs files, and hidma_mgmt_driver has no .remove callback to clean them up
+on unbind either.  Because the attribute structs, names, and mdev itself are
+allocated with devm_kmalloc(), devres frees them on probe failure or device
+unbind while the sysfs files remain exposed, causing a use-after-free when
+userspace reads or writes those attributes.
+
+[1] https://sashiko.dev/#/bug/linux-68f0e3d9-2e4a-4922-9d34-c92a40fad2aa
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261107221500.9682=
+5-1-dennylin0707@gmail.com?part=3D1
