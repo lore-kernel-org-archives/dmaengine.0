@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794091418;
-	b=Rer7v8eYkX5mTQFHFI8DUbSJTidanH4Ckc2GQ4P/aq2d3g9xasyIg53AyC+ATg8QVAH0
-	 LlbszJuN5ePiOo3ZBKvK+ZPxxcNFhPdxrmArnztoPkPkJPi2tTsz/QGea91WthseFsoUj
-	 jkyyAlEQECz23mFbjLaDDWNIxGO76ozML7Z6Img/UiRpw2evYfe05+B7Gz1e9tRDsRkmt
-	 8SRq/KJDuLqqbzqpPqsDBw1cWM/xYlQqGs3B6ZkcZQk/JBLHmvmswDjiN45emUAf9kSSi
-	 dboEdh1FqjWQtNnCtDLg1qbAVAfFngfy5XBx6fyRhgMx9rDjJ7IC6/EtU+ry4F3g4HA==
+	t=1794091419;
+	b=ZDady9HppTeFrNGnhsaxaj51yJ6GIIUMVsBJ9SK5rR7FMnlkgiwXWvkmUVf/wRjddVCK
+	 rP6Cq7nm84H2Gxxe+urOngDL4MLP7pCAIOzL9glyzOarZ8az57lqJG3I7J0mPkfDJaWtW
+	 6HEoU+rye1URkYJ1a9ntcf7v7wFOEIH2hlSPCp79bNCpvtj/wA17HhgmzlpKiK4Idf/RH
+	 PHOPLzyDC8iCD36jCRYeaeO2N6hLBwiZ7VHR/Q6PgaRJ5PrZBrUK9QUA8qC9Iy9ueqlJy
+	 5NWn0Ev2htr6IQusuQyXzoYLT6qEK0UQ/MEm9mZIyB5cZIq41EHtTLC6YLOs+MeIJxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794091418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794091419;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=+hcYI/bpAooFVE+vWiFApfOpXwGF4jtepx4NjpJ1tnQ=;
-	b=NBlV07xlOH1gocQJihCoYaATo6fmOmf5I3qhsId56JPy/vxsmmOxMSrWqxeTRWmgWWuv
-	 U/GW2zSLsD+OAFG1ou13tddk368HiN00gF3RcKFUhbrryxf5jfggnoTTzMJXWQtsB9E99
-	 RaB42i+RkVrqpB2xVobtEod/pAYMm2ZEHa7ltBpom5I4I6x6yUiZMOgVn9uqwu6C1pAHg
-	 SKptOfntkj1CP+ftUBYIhBIjpF+rQWOZIYjJf0mXGO2M6OeNR5w6kSH9k6O9i43H9Qm59
-	 1Qm3bHpipCCYkkKNR43+uzWTuReX6srV5OJ5etPgr5vuO5hd2omx0MAQmIcj8xlqj4g==
+	bh=DbcPG+5eRbI4+g13ygMo6Xh9piP/NnySmfotbo/iWfY=;
+	b=eAk1YHTFc+lU3P7ZGmHIxRifdyraKv0vUlpumnk4yk4+R3DSTY+aahSEauKqiQNOALxs
+	 H2LBc7wijLLLlr0Jl0UwyZF5nt9IfTp3AOEVXBcIWti/LRb1Ia3ca7yQ/wbVzGdSBmXat
+	 bp4so8eLSpXWhgarMAlLAPlyzC1+wgA3GS6GFJwj2zeDvsorhf1ZVDmz9kIwjA7Gl5Dz2
+	 2l45cWmQBCIxD+7ojNnYqqZKAGu2FHtdGdZec5v2w+BsVHEUdznUDh4YfxNyXxkZQMRu+
+	 xwd4WwG6xlYRxQDsLTdC/fP/ExGvIo/IExVUZzdhK1O9jgkwo5bC5zO4rr8bvfvD3kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yo4DuOmw;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HsDw7dau;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F947606A326;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BF3606A32F;
 	Sat,  7 Nov 2026 22:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yo4DuOmw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9242A1F0089F;
-	Sat,  7 Nov 2026 22:43:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HsDw7dau
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DF01F008A1;
+	Sat,  7 Nov 2026 22:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794091417;
-	bh=+hcYI/bpAooFVE+vWiFApfOpXwGF4jtepx4NjpJ1tnQ=;
+	s=k20260515; t=1794091418;
+	bh=DbcPG+5eRbI4+g13ygMo6Xh9piP/NnySmfotbo/iWfY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Yo4DuOmwOxE7M3b947MR03jhsVbuh1IMqH1ca/eyC5F0cUei0HY6wsiR0muI5uNzP
-	 QmqSVxpQ+RS6a0eR2Qd641eGCcquNTo4AtLxEIkYA6CeYsjpjLwXbImhB1AnesBDg6
-	 +tj4cXKaCYrKDXQ2ZtHBfXTCSSKH1u5+oyNx8fHlB1yB72+kRFJRwTuZHsnytt12Bn
-	 CcJ7bvAKE9WZwChjbzJIKCZjSQJUHF3pwiAh7Dg4zJjFuvqeqUdR4bMXT/kDuc+SLA
-	 OOmQO65Cw3fwnuKmZbVjFPRNfrKUhPq4fHvoGsOCK6j330/nCq9qkhCht2uCXacJ1B
-	 JD+sNFeozRZOA==
-Message-ID: <sashiko-outbox-203371@kernel.org>
+	b=HsDw7dauZ7qSgxPFBdY2zs5CpdkfYRMM0EK7atJU6Ah/+kY0uUEifwcm/qgAUF1b3
+	 txfBV2NJuLY8Lsq1sylHy9+TFResmoIow/6mcDgYNWfRMCZVMwEvN1o8QFdu94+Coq
+	 ZiVxAsNsuTEyYOAezmhyU6odAFs7fAS3Vg93oytCOCzy6UJfgN1vXd/sooplLCxEGN
+	 q6DW7gNVA74qFz6ZfkRsrBYd1qAE0TXGDSudBidwnCDpKKlPZanM2vYiZeKv//orrB
+	 WUfV9RVUtxn5ppemjlWh42f3BsDz9EiYzq1A5238sYGC6NAHbzz+CehNF2lc98nrTB
+	 Vt41Kze0caWfQ==
+Message-ID: <sashiko-outbox-203372@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/3] net: xilinx: axienet: use
- dmaengine_prep_slave_sg_context()
+Subject: Re: [PATCH 3/3] ASoC: sprd: use dmaengine_prep_slave_sg_context()
+ instead of device_prep_slave_sg()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: Frank.Li@oss.nxp.com
 Cc: dmaengine@vger.kernel.org, linux-sound@vger.kernel.org, imx@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261106-rio_sg-v1-2-bc54b4bd8c95@nxp.com>
+In-Reply-To: <20261106-rio_sg-v1-3-bc54b4bd8c95@nxp.com>
 References: <20261106-rio_sg-v1-0-bc54b4bd8c95@nxp.com>
- <20261106-rio_sg-v1-2-bc54b4bd8c95@nxp.com>
+ <20261106-rio_sg-v1-3-bc54b4bd8c95@nxp.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 07 Nov 2026 22:43:37 +0000
+Date: Sat, 07 Nov 2026 22:43:38 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -61,106 +61,74 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] net: xilinx: axienet: unused dma_dev left in
-  axienet_start_xmit_dmaengine()
-It also noticed 1 related pre-existing issue this patch does not
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
 introduce:
-- [Critical] net: axienet: use-after-free in axienet_stop() [1]
+- [Critical] ASoC: sprd: double-free in sprd_platform_compr_free() [1]
 --
 
-commit b4bb968eb4c8d380631e7d9eb4acd99d61288c16
+commit 7137d268eefd6fca1c12f5ab33b970d39d707688
 Author: Frank Li <Frank.Li@nxp.com>
 
-net: xilinx: axienet: use dmaengine_prep_slave_sg_context()
+ASoC: sprd: use dmaengine_prep_slave_sg_context() instead of device_prep_sl=
+ave_sg()
 
-This commit replaces the direct call to dma_dev->device_prep_slave_sg() in
-axienet_start_xmit_dmaengine() with dmaengine_prep_slave_sg_context().
+This commit replaces direct calls to chan->device->device_prep_slave_sg()
+with dmaengine_prep_slave_sg_context() in sprd-pcm-compress.c and
+sprd-pcm-dma.c.
 
-> diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/=
-net/ethernet/xilinx/xilinx_axienet_main.c
-> index 8a50cad1c104f..fff3530d9359d 100644
-> --- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-> +++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-> @@ -1006,9 +1006,10 @@ axienet_start_xmit_dmaengine(struct sk_buff *skb, =
-struct net_device *ndev)
->  		app_metadata[0] |=3D 2; /* Tx Full Checksum Offload Enabled */
->  	}
-> =20
-> -	dma_tx_desc =3D dma_dev->device_prep_slave_sg(lp->tx_chan, skbuf_dma->s=
-gl,
-> -			sg_len, DMA_MEM_TO_DEV,
-> -			DMA_PREP_INTERRUPT, (void *)app_metadata);
-> +	dma_tx_desc =3D dmaengine_prep_slave_sg_context(lp->tx_chan, skbuf_dma-=
->sgl,
-> +						      sg_len, DMA_MEM_TO_DEV,
-> +						      DMA_PREP_INTERRUPT,
-> +						      (void *)app_metadata);
->  	if (!dma_tx_desc)
->  		goto xmit_error_unmap_sg;
-
-[Severity: Low]
-Does replacing dma_dev->device_prep_slave_sg() leave dma_dev unused in
-axienet_start_xmit_dmaengine()?
-
-Earlier in axienet_start_xmit_dmaengine(), dma_dev is still declared and
-assigned from lp->tx_chan->device:
-
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c:axienet_start_xmit_dmaeng=
-ine() {
-	...
-	struct dma_device *dma_dev;
-	...
-	dma_dev =3D lp->tx_chan->device;
-	...
-}
-
-With its only reader removed, this triggers a -Wunused-but-set-variable
-compiler warning and keeps a direct reference to struct dma_device and
-lp->tx_chan->device.
+> diff --git a/sound/soc/sprd/sprd-pcm-compress.c b/sound/soc/sprd/sprd-pcm=
+-compress.c
+> index f790b959cd4e4..7188adfa3f402 100644
+> --- a/sound/soc/sprd/sprd-pcm-compress.c
+> +++ b/sound/soc/sprd/sprd-pcm-compress.c
+> @@ -236,9 +236,9 @@ static int sprd_platform_compr_dma_config(struct snd_=
+soc_component *component,
+>  	 * We configure the DMA request mode, interrupt mode, channel
+>  	 * mode and channel trigger mode by the flags.
+>  	 */
+> -	dma->desc =3D dma->chan->device->device_prep_slave_sg(dma->chan, sg,
+> -							    sg_num, dir,
+> -							    flags, &link);
+> +	dma->desc =3D dmaengine_prep_slave_sg_context(dma->chan, sg,
+> +						    sg_num, dir,
+> +						    flags, &link);
+>  	if (!dma->desc) {
+>  		dev_err(dev, "failed to prepare slave sg\n");
+>  		ret =3D -ENOMEM;
 
 [Severity: Critical]
-This problem wasn't introduced by this patch, but can axienet_stop() cause
-a use-after-free on lp->tx_skb_ring [1] while
-axienet_start_xmit_dmaengine() is running?
+This problem wasn't introduced by this patch, but can a failure in
+sprd_platform_compr_dma_config() or sprd_platform_compr_set_params()
+cause a double free of dma->chan in sprd_platform_compr_free() [1]?
 
-When lp->use_dmaengine is enabled, axienet_stop() frees lp->tx_skb_ring and
-its entries without quiescing the transmit path:
+The error paths in both functions call dma_release_channel() without
+clearing dma->chan to NULL:
 
-drivers/net/ethernet/xilinx/xilinx_axienet_main.c:axienet_stop() {
+sound/soc/sprd/sprd-pcm-compress.c:sprd_platform_compr_dma_config() {
 	...
-	if (!lp->use_dmaengine) {
-		WRITE_ONCE(lp->stopping, true);
-		flush_work(&lp->dma_err_task);
-
-		napi_disable(&lp->napi_tx);
-		napi_disable(&lp->napi_rx);
-	}
-	...
-		for (i =3D 0; i < TX_BD_NUM_MAX; i++) {
-			skbuf_dma =3D lp->tx_skb_ring[i];
-			...
-			kfree(skbuf_dma);
-		}
-		kfree(lp->tx_skb_ring);
-	...
+config_err:
+	kfree(sg);
+sg_err:
+	dma_release_channel(dma->chan);
+	return ret;
 }
 
-CPU0                              CPU1
-axienet_stop()
-                                  axienet_start_xmit_dmaengine()
-  kfree(skbuf_dma)
-  kfree(lp->tx_skb_ring)
-                                    axienet_get_tx_desc()
-                                      <-- use-after-free
+sound/soc/sprd/sprd-pcm-compress.c:sprd_platform_compr_set_params() {
+	...
+params_err:
+	dma_release_channel(stream->dma[0].chan);
+config_err:
+	dma_release_channel(stream->dma[1].chan);
+	return ret;
+}
 
-A concurrent transmit on CPU1 can fetch and use a descriptor from
-lp->tx_skb_ring after CPU0 has freed it, corrupting memory or crashing the
-kernel.
+When the stream is later closed, sprd_platform_compr_free() checks
+if (dma->chan) and calls dma_release_channel() a second time on the same
+channel pointer.
 
-[1] https://sashiko.dev/#/bug/linux-6b22a4e9-355d-4ab5-829f-c56ef38ce667
+[1] https://sashiko.dev/#/bug/linux-2a0aea76-9cc7-47d0-8767-b0cd95e62054
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261106-rio_sg-v1-=
-0-bc54b4bd8c95@nxp.com?part=3D2
+0-bc54b4bd8c95@nxp.com?part=3D3
