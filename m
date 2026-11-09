@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794230208;
-	b=zrFZNlXTFdJghXCT07O5gixiM3Kdu2zvA1LBADlfZN9KqSdUuVyEoppnqDMStGJON1e8
-	 TWySd74q1oam0fGbKCmZTTKultiwRhe4upPvgTzBRucFyITm5p0Dz0+71a3s3YNe6GlEa
-	 aV06DfZNUA/Kt8y96J+zoRCOEAi4kxdCRM5VZ4eWhkM9q9ZAfuwT+5kXMFOrRcanytfDH
-	 7H6hUmUoovaVIhiEATEeVC9DtWFb1Dhp0hDSHfo5XuskZrw2OajGgpgq4KlHitdciA3p4
-	 GUVee+1rFY+/UfvOyZ1rGlEXQY9sp/E5kQL7eP3sif1KIgdTWCmdMB8CibJnXfwpulA==
+	t=1794231742;
+	b=RcgyrwkB+BUWsUypOFNxGd9pjq0U9hKg2KP2U8FKAJ8jt7iJuaMVzBqhuiIb8Xs8tjXe
+	 bilCph0JGwDCzLHAOBf3oTCoJ3qWA5SjHIA/W3cUST1tD8tlNNmS8OrdbKhOnqbr5ajvE
+	 41YWx57cDTpSo5zVLDQEEkzdLNuVWrFVT8USc9ITo/L9ZdYuVuY/iyNeldeU5eaimyTZY
+	 f82dH78iNmzQvsOzoAiFfuclUTIalMk/hDl9/avUts6XXqyi7QMyf5LQQai3xDyYn4bCK
+	 JT29MxPy6Gpyp8ss3B3mZQSxEFB6kQ/oe6Bv0xtPmsKMUJyyMp5K/Kdeoa5EyLzIttg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794230208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794231742;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=DJZPcRbincN2Flmn0XzWIYGVCGZ+6GUHIJvSkNagofM=;
-	b=RY8rGAhTTvoENTMHqMkm5dB6Y72opD5zn9WO1omb+Z2oj3E1XMSO1F1A8Uqbo98/6aRI
-	 NhjIZgL7YPuCJl9A7QEN/mYp2fTkR3TkYvj8sYy0eMLXPk83tktdZe4u6Zy8TvyMjTDrP
-	 YWtdy1FnZltY/gK+7CeuI4amrJf8xTkAI0tO1lTnotvvbMD7cz94n/bYPL7Kme7t75m3Y
-	 +ckxm02wLP/et0JLjY3n8fbl52bUKlRMJsphbB1pnkuXDML6aRJOqNppCVeLO/z3+ra1s
-	 HSAXhZKr/LwF1ipMhdKuwApVlMfV0G/SAmf1g+fCQYJi0z83gTl7p0jUfayQAjZNTBw==
+	bh=V1VyfPRVQ6WKw+adqIpGNxRy4La6pXaOj9EXqKAAuxA=;
+	b=QhadXVReW51ws2nTQnBvK6U1qFBU0c1/WX+jIDyz7hRvNc8vEbdnLXrK/5UdNlOocGQM
+	 26TskF5RkAfQpgn1aj2ElWh/Ux9ogjEUiUEnAalL+LumBvMg3m19FMHKfOc96gYcDuomu
+	 CsyGvhozc/IG7gemWu+n+ck6efgFj93g9HFsijQoNg/XMCyvAn4kLeuMznkjONWiC8kqM
+	 I23qrIY7DcO0b8rryZFLAZ1U1JYdl9mLp+8MR8ag3UeGNr795JwiiZDnOLgFfPMZQQF32
+	 4Rw6cECzjhFCmm6CedRAJiHxmMZZ7LA++Im22VKWcpLPOZxubkfG3gA5nwpb3cuXplw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QzFxeMox;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kUNASCaE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A312B606A325;
-	Mon,  9 Nov 2026 13:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DBF606A330;
+	Mon,  9 Nov 2026 13:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QzFxeMox
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422911F0089F;
-	Mon,  9 Nov 2026 13:16:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kUNASCaE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEAF1F0089F;
+	Mon,  9 Nov 2026 13:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794230208;
-	bh=DJZPcRbincN2Flmn0XzWIYGVCGZ+6GUHIJvSkNagofM=;
+	s=k20260515; t=1794231742;
+	bh=V1VyfPRVQ6WKw+adqIpGNxRy4La6pXaOj9EXqKAAuxA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QzFxeMox9FdkZ2u7XwmZNmFg/6SH/4OkYDiOeM/es4Zkigp73LJCh9RFxWqhkbBwd
-	 bOhikqceoK5Teh87RaeaA2h9iKGEUyOIRL4HEtXcUN9yfCIMYn9QlSRdNKMwQQcNMj
-	 vtjH9LanRUvxBgWMEKhhmUHnOzo+37FEZF0LDvjN9edS8vTjKnkk8mLNFKpzY9gFKo
-	 75rMKNCiMK9plFuUXXycbajy4nHzqPBArHWrb+6CPqqaaOj9bCW+ja3C3r1+v9GwNZ
-	 wl1ITNQZGJy8Q509MrXDq0ddk8RCvElmhA7NP69HGoNIloXGOThV+snSyuO4pqgkLd
-	 nAvhA9b5Irv7A==
-Date: Mon, 9 Nov 2026 14:16:44 +0100
+	b=kUNASCaEcxlf5t831seV1lc+5Tao81kCLLtM++XjpN1btQrk3q4GGEPVNbWOAH456
+	 BxKeQDzb2NujGbJ462bl37iOISAGegDSltXto2X0J2OLWu7YjBwZ5pjc5SHfDZDsn7
+	 uy6O8v0OedPCJnXGlNxuOMKYLYFbGpvqB5haufpyfofeZlgZIIx98+nBq+ZUqCx/L6
+	 52Pe2604JbzKULeGK+A4yil5/F75wgu1oeZvMjnlGzzY5YONQK3XfDlS5Yf+sFatCt
+	 aUSDjx4GLO3J9vfAD6Lt43BFMl0QkpOZZUT5jsPiRLBxbHPL+m1zWs+xWZ8H2tSiOQ
+	 MXzVGsr9KEzgQ==
+Date: Mon, 9 Nov 2026 14:42:18 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Shan-Chun Hung <shanchun1218@gmail.com>
-Cc: ychuang3@nuvoton.com, schung@nuvoton.com, vkoul@kernel.org, 
-	Frank.Li@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	kees@kernel.org, gustavoars@kernel.org, linux-arm-kernel@lists.infradead.org, 
-	dmaengine@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: dma: nuvoton,ma35d1-pdma: Document
- MA35D1 PDMA controller
-Message-ID: <20261109-petite-imposing-ermine-fbbbcd@quoll>
-References: <20261109052900.2960473-1-shanchun1218@gmail.com>
- <20261109052900.2960473-2-shanchun1218@gmail.com>
+To: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/6] dt-bindings: dma: qcom-gpi: Add QSPI protocol
+ identifier
+Message-ID: <20261109-wandering-miraculous-mamba-0cf21a@quoll>
+References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
+ <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -63,18 +64,15 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261109052900.2960473-2-shanchun1218@gmail.com>
+In-Reply-To: <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
 
-On Mon, Nov 09, 2026 at 01:28:59PM +0800, Shan-Chun Hung wrote:
-> Add binding for Nuvoton MA35D1 PDMA controller.
-> 
-> Signed-off-by: Shan-Chun Hung <shanchun1218@gmail.com>
-> ---
->  .../bindings/dma/nuvoton,ma35d1-pdma.yaml     | 71 +++++++++++++++++++
->  1 file changed, 71 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+On Fri, Nov 06, 2026 at 08:31:20PM +0530, Jyothi Kumar Seerapu wrote:
+> Add QCOM_GPI_QSPI to identify QSPI (Quad SPI) channels in GPI DMA
+> specifiers. Its value, 9, matches the GENI serial engine firmware
+> protocol ID for QSPI.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+What is GENI serial engine firmware? How does the Linux rely on it that
+we add bindings for it?
 
 Best regards,
 Krzysztof
