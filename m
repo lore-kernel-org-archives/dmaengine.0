@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794202155;
-	b=o66oNXNhGqpHIK+hPprrrY2FEKPiAPnJYwQuKJ65cEZErH2nx7cWIymtfhsZb4kH9pMV
-	 uCtKyOKEpCcrx+O3HQwEAxINGMvh4ZDvXe8wmWdyF9AX4RJ0q88/FGLFnh9cej3GKT/WS
-	 BXsFjAbJRtBItl8O63XUnB+Mcz/zOLINIKuLQSa90F2JAF7YqwD0NZ+CB+K9jO8MwVyUY
-	 YI4DAOj5F2devz6/2IXuitnVXWfIJn8fVJyNwxgtCCuiFrPZxZwvfWzAl2X5SYS7Q9mJG
-	 IBVk2ptqYKrIqOnEBk8OE5mmIV6rrtcvfo1xEIDcuZRUsghJfPJ7ilp6rzAYgwOdY+g==
+	t=1794202151;
+	b=al/k9HkIB8E8W4hwszpNLbb7DKwUnlUOXtSAHuq34vjMxs5t2AGk8w92Q4j2manjfqBs
+	 5xsTfsC8s0gDSzlrp//Yj0SfW+d1cZkaM1stbbetJV35ovujLfunbaKmBjJ5LX3qGe5dA
+	 rBOJYm0cybdpbrlMmr108JPSgen3C5xORKXU0bmBGqQLlv4CAhUH+5DqYa3mFY8+v7uhl
+	 UomHvjJKhPd0Bskf/L5EPg6DcF37qpYhKW2dSN8NlO0GE+x/PBP/Cf0vzsjJlH98slfVM
+	 4zV4+3hX/WLi62c/1J5PdyVUJwc2cMqP0J3AMx2tbCvzyUdKI/iLDlAeNJqGYxw8xVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794202155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794202151;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o/Zu8d9pjMW/MzpeHmGEy9jntTL7TUHvfpSM9hyMkeI=;
-	b=NPqoJtiVvcAmXpkm+YsuVaBr1PiscqyBj491u4SQOB+J3CWOMi9qopECR6dRYgYZa9so
-	 Ecn2djIbq+5xBv46IoE2EwkpNlJXgfSF/IgYQ6aROZOsdtoGfMKtzd67UpSU7YyC/IkG7
-	 w788I5FIpQrrf/KiucsOfq3/D9beMZytjTHqvrXnbNDLzg15ayD60iNjLqWadUd6cLJLI
-	 lTgL6wnNlF/4NXap25w2ndWDcUeSeaszdP5S5jfcnwfIjyUn2ntFOcdcO/qvZ6cn1vbq4
-	 LNEAXOe7FwvuyZkHQUqXNjUjJoiNbK4va9dBMZJGq+zsvizslSM2W0XhWewaSxgjp+A==
+	bh=+2wCtwxXKIDkxHcE0WIbk0DNcnVd4qsfVLWBnePcPdM=;
+	b=Rd88JlTpRf5byEUJalp4Flu13hp504KGAmqrXhTbt/prfvck72poIIrXy5hGByewpA9S
+	 pSI0KkvhQf4j8SHQpBZ9L2kLRMfJdCClI6NJQsAJS1i5hQhcIjGyLIkkfJsJ9rA9GquTI
+	 WZCVlupyDEEZGjA09OTCVSXqrcrW05vlRsRGcVAZ8lbnQBdYYMbvq2OUJdYtN4xk3nqzf
+	 tSMRcgirgewIA8c6OV8xGd9JudpN9xWCVT1qPXwKXT3Hk3dnYycwKOJmbYMFZYkbgz4EX
+	 whkJZR+zjIPLUvF6wDiNJaWn0XyE6LtsVRSXpT+b4Y624qzgieXqYGoal0AsQmLo8ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0ELv7xnh;
-	arc=none smtp.remote-ip=209.85.210.176
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="LX/HvpaV";
+	arc=none smtp.remote-ip=209.85.210.178
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6189E606D838
-	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 05:29:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6189E606D838
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DE4606D80D
+	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 05:29:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C3DE4606D80D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0ELv7xnh
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8b29b83fdf1so163863b3a.2
-        for <dmaengine@vger.kernel.org>; Sun, 08 Nov 2026 21:29:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LX/HvpaV
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8a594d313a3so244505b3a.1
+        for <dmaengine@vger.kernel.org>; Sun, 08 Nov 2026 21:29:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794202154; x=1794806954; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794202150; x=1794806950; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=o/Zu8d9pjMW/MzpeHmGEy9jntTL7TUHvfpSM9hyMkeI=;
-        b=0ELv7xnhBjXLA7OQwudqcIzL/o1BjIovz0HBs+rIVtTTrk9MWz9mJShZ0d3rMK9bcN
-         EjVOg30yJMCFkuL6XAHSSUSMy88CJJaBPhKtWH5k03L9sqYr/OKoMEs10ebHw4TrOIXY
-         0VWAuGoIJgJczRyPFvHAWB9c6z8bG2ntDUy4p5bJZFt67BmwqLAd/0Lx4rTndWyF9CEC
-         EI+RGVHIWNArETna4OR9SPDnyHAaheLtD+D15FiMIAel0wQcBW9YVgjTse5xKw5Cci1x
-         lXpAS4lGYPFyLvXNhKQv4IjCD6/xWG+ndzbZhf7BhBhhvv6LrjaY1cw91noXEeAw7BgB
-         FIzQ==
+        bh=+2wCtwxXKIDkxHcE0WIbk0DNcnVd4qsfVLWBnePcPdM=;
+        b=LX/HvpaVQDBWsfT2+0kqohS3rHoUvbJMJyHIyGTYM75vhqzY44mOOPLBOQOMGmRZMc
+         fdSEenpF6UfrQx6rMyoOVZ4GED/c28nfS4NqAjp3hbg2HovMPvtZjFz89gtZh148mf3q
+         3LbDIHsqHCVgGuemSPtTR4l/uaQUQKEtq0wP7k9NeoNPGOGNlwoBDFEE7xuLGjbXZihb
+         IOewJOuL/zQ4bPoCjl4ncxrMrrKtn+izP4xIzIMs7bhPHeTn3ke2Ilc7N+d8OB6zPb2v
+         G/+1KoKBborVG/JHGQzrZDgAmhdxsS5R/i6Bv7+cuGec4aS6QcdutHHFAz/GUUpNrum/
+         9mjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794202154; x=1794806954;
+        d=1e100.net; s=20260707; t=1794202150; x=1794806950;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=o/Zu8d9pjMW/MzpeHmGEy9jntTL7TUHvfpSM9hyMkeI=;
-        b=UwjxQ7NnU/4FLt5yhiKlsgQaMMQw7J34RVz+eNr+9R1Gk4d1x+8j/X5KvcDZs/fEOk
-         pAmKrpSIWQ1RNIpisqWFtpOw4SeYrlUwxK8gtEk0cBXAFfKuvvx11VuZBRY+W6b787zz
-         MC6gWBP/cyokkB/3FUcNVbCs+vuTUVBWcxPJcE3v90MeNnO29BZlPVXIAFy90/ddpMxg
-         BQek3Chjn0T1i+KYXkw7hUSlF+eLuSMT5PasFNn4MGrsY8PHxDqqbmo9cxC6O6ojfPJ/
-         MMhiYXXzXIeGyXd9iENU2hWVbSvjf4K5nzKq5BPX28KKAe/vpkgPsFOStUO+bi49RrfC
-         KP2g==
-X-Forwarded-Encrypted: i=1; AL+hErF3H178CIRHTObtFeSOv1KflrzI1PzbaIyxJoiUBmov1K71ILbyTi1ssP6N00QeXb3QbeEfwm12dIg=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+SUeO05XXt/7ntQ5b48Kj3zf967ifi+RoFGygK2HDGtYnqeFvJ
-	FvQpPdzxugs+Dr5bdNcU3chZwsngnZEePjZmociz055zmipMTGR4OyeV
-X-Gm-Gg: AYBFou39p5EE9+IjWC9fPYp8mGllwRxLbqbQ/QlODTKCOKTDq5whVkDPZHsfCGGUVuT
-	X57csRNt8WMQ7vBHEmwLx1dw6wpor+Yhc0Z2x0q588jq9YVabArUvo6a1+QEff5ObToa05qRro0
-	y9xqvu7qOV6wD3DHtxinkFUTQGYIyeitlFFWriTwgTpzeCW4noEiNDdvPSZGehujces9SSx4H3b
-	j8lTK9ujAaj3IbRyYEHOWNzVLi3Ycf/ym3gIjzJeoUoeP4Xsq9EsewIuAooeNXgLCFBF+GNRJoH
-	HL2bJP2c+Z5mbao6KoG8HJf+TQSvwhhDQHH2V25xkdigm626hcqRcraQcNMlVagt3r7aOViIymA
-	EV1YjgIvdKRyun1xwlwQ9xFryJltty1/S8TsmTljZsCVcAwkwj1FBwYmtWOxyxw6z3G1gy2QU06
-	F0uMme0vUz5RfkAdlKi35kyCsN0CQfr+eti3L5qQ0dV5eKGidk3aBBpbyzWBcJgjg59i6shMuHC
-	MXs/oPUsopVN7TZYeri/NTHo0YpLWg5xvZVkX/GWbC6LRRu85cunnw3d6txU8N3aCV5dDGlHikv
-	dh324LPcb6zO9rwiPnG8gPJc2bpqR5O262v9Cca+8zOTNdwfhXGFYXZ/uXLzIqgftbPGgYf1oNj
-	K4Pi1YEhcOMQ+Ksvvpbbx0th2IZasMoh4/bAn
-X-Received: by 2002:a05:6a20:160e:b0:3de:53c1:b627 with SMTP id adf61e73a8af0-3eed3325837mr3088295637.43.1794202153524;
-        Sun, 08 Nov 2026 21:29:13 -0800 (PST)
+        bh=+2wCtwxXKIDkxHcE0WIbk0DNcnVd4qsfVLWBnePcPdM=;
+        b=XTDKK0pty2vWNu8lDX4eKGS/aeWnbVD1AvQTH4eOKUJZ773qWLGbJKStQIALhycIOp
+         vAnHZO3DO8WX7k2xPVyjB9CUFdXMtYOuHjwYH+iRLJnteUnGn7nrHouZWzBAxhA4pDad
+         vIhzUOSPl++4+SDihDf1QaoJdrv1oFb6vbI7DLyWsRbZ1rC5NGMOStO8oOGB+bPyKJQj
+         Y1sNiQLHnovuYLOo+sn7+kqtj3y+TSMKh8Fumm7mpFrZTHjSCKo5HE3kDsPTuLTaKCVA
+         uhAW9j87ETqT9IzGNhdT+1sNJZDWpG4jveZT8+sMYVy0h9CNKL6P0QKj+sH1cQz7Ncbv
+         lKgA==
+X-Forwarded-Encrypted: i=1; AL+hErGgI4pyVs5Grfv01KzHS1pUHaWvNyVSCmEatn9GHHtT1ZLrj0ugvw8J3pZTVGrlAhVF5dAfhwLE5bE=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9ec9b4GmRUYsYcJ+j8qmTCMvYPaVBkbUnATjrNFzhWbHShwd/+
+	QIbwgXAVylvCFHmZqtty/zzRv4Jf9gZbYKSn+bxXyIUm+yhRpO50SWwZ
+X-Gm-Gg: AYBFou2HHPzADNp3e7AVbiaXKqbCQOUpJbWIz2LvPlnZxtoTaJLuRFdAQVz59nZOAge
+	0NLNeTrydrBDs0PSHh6n3tIaT5j0Kh8gK8ZBqy3yYTGa1Jk4HzWhj/ijjxDX+1j94aXdtOHFahN
+	yg5WLmXTN6vg7x6zdw5pMyNnuYsqHiOtnSc55OC5cd8oVLpKy0NtcIFcoVatBsSYSth5iLMHEa4
+	aNHkokReOOSspzpaVGIaVrYvUxjQpmQYCzd87ISXEE8jsMfL6/Za6oB9RtaEnjgqYzq1AwqCsgU
+	2dtROcJP7iVVpx26IH5mngbp35/2O2EncN1j4nhgcbP1h1yYic1mqEs5B0bGzWe4X/mn66bsgO6
+	zrbmEUWtCri9t6DHosVpcFHCnE/aJ6ZqE7efAuIls5FOo8L1t11MlMkpj08zyDaiv3X4019YRLx
+	stUExUjM7PA9zdFRSnrkimA8fztYl9IRH1B/CHYevffjKOTwtMvqVY9vJyUK/gcGHvHtyEp+o6e
+	614KgRJh6F7Qz2Ly9q4M+0pDRAIDNmFzv2L8wFQhjOYWU417mo2S19P69+pBMVTtbRDPWGngSUT
+	9jNMraCAR9EM0HUR2CaAjT0EVT7wkOLsdgzdix1eCYnTtQ89hIUEaglLeIrs/xn4S9SDpNOs8rd
+	kgKIkTM8NvEcQtH8=
+X-Received: by 2002:a05:6a20:ef1a:b0:3e5:904c:78d3 with SMTP id adf61e73a8af0-3eed5ce2668mr2545295637.69.1794202149963;
+        Sun, 08 Nov 2026 21:29:09 -0800 (PST)
 Received: from localhost.localdomain (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb9681385fsm1180899a12.6.2026.11.08.21.29.10
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cdb9681385fsm1180899a12.6.2026.11.08.21.29.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2026 21:29:13 -0800 (PST)
+        Sun, 08 Nov 2026 21:29:09 -0800 (PST)
 From: Shan-Chun Hung <shanchun1218@gmail.com>
 To: ychuang3@nuvoton.com,
 	schung@nuvoton.com,
@@ -95,9 +95,9 @@ To: ychuang3@nuvoton.com,
 	linux-kernel@vger.kernel.org,
 	linux-hardening@vger.kernel.org
 Cc: Shan-Chun Hung <shanchun1218@gmail.com>
-Subject: [PATCH v2 2/2] dmaengine: ma35d1-pdma: Add MA35D1 PDMA driver
-Date: Mon,  9 Nov 2026 13:29:00 +0800
-Message-Id: <20261109052900.2960473-3-shanchun1218@gmail.com>
+Subject: [PATCH v2 1/2] dt-bindings: dma: nuvoton,ma35d1-pdma: Document MA35D1 PDMA controller
+Date: Mon,  9 Nov 2026 13:28:59 +0800
+Message-Id: <20261109052900.2960473-2-shanchun1218@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20261109052900.2960473-1-shanchun1218@gmail.com>
 References: <20261109052900.2960473-1-shanchun1218@gmail.com>
@@ -112,731 +112,91 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a driver for the PDMA controller found in the Nuvoton MA35D1 SoC.
-It supports up to 10 channels with memory-to-memory, slave scatter-gather
-and cyclic transfers.
+Add binding for Nuvoton MA35D1 PDMA controller.
 
 Signed-off-by: Shan-Chun Hung <shanchun1218@gmail.com>
 ---
- drivers/dma/Kconfig       |  12 +
- drivers/dma/Makefile      |   1 +
- drivers/dma/ma35d1-pdma.c | 672 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 685 insertions(+)
- create mode 100644 drivers/dma/ma35d1-pdma.c
+ .../bindings/dma/nuvoton,ma35d1-pdma.yaml     | 71 +++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
 
-diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
-index 01f96a8257e5..3d4d09e459f1 100644
---- a/drivers/dma/Kconfig
-+++ b/drivers/dma/Kconfig
-@@ -404,6 +404,18 @@ config LPC32XX_DMAMUX
- 	  Support for PL080 multiplexed DMA request lines on
- 	  LPC32XX platrofm.
- 
-+config MA35D1_PDMA
-+	tristate "Nuvoton MA35D1 PDMA Engine"
-+	depends on ARCH_MA35 || COMPILE_TEST
-+	select DMA_ENGINE
-+	select DMA_VIRTUAL_CHANNELS
-+	help
-+	  Support the Nuvoton MA35D1 PDMA engine. This engine is integrated
-+	  into Nuvoton MA35D1 chips. This DMA controller can transfer data
-+	  from memory to memory, memory to peripheral and peripheral to memory.
-+	  If you have a board based on such a SoC and wish to use DMA, say Y
-+	  or M here.
-+
- config MCF_EDMA
- 	tristate "Freescale eDMA engine support, ColdFire mcf5441x SoCs"
- 	depends on M5441x || (COMPILE_TEST && FSL_EDMA=n)
-diff --git a/drivers/dma/Makefile b/drivers/dma/Makefile
-index f62d12b08e15..dd99f7d12d4d 100644
---- a/drivers/dma/Makefile
-+++ b/drivers/dma/Makefile
-@@ -52,6 +52,7 @@ obj-y += idxd/
- obj-$(CONFIG_K3_DMA) += k3dma.o
- obj-$(CONFIG_LPC18XX_DMAMUX) += lpc18xx-dmamux.o
- obj-$(CONFIG_LPC32XX_DMAMUX) += lpc32xx-dmamux.o
-+obj-$(CONFIG_MA35D1_PDMA) += ma35d1-pdma.o
- obj-$(CONFIG_MILBEAUT_HDMAC) += milbeaut-hdmac.o
- obj-$(CONFIG_MILBEAUT_XDMAC) += milbeaut-xdmac.o
- obj-$(CONFIG_MMP_PDMA) += mmp_pdma.o
-diff --git a/drivers/dma/ma35d1-pdma.c b/drivers/dma/ma35d1-pdma.c
+diff --git a/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml b/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
 new file mode 100644
-index 000000000000..fef78e6d10d7
+index 000000000000..d05971662a5d
 --- /dev/null
-+++ b/drivers/dma/ma35d1-pdma.c
-@@ -0,0 +1,672 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Nuvoton MA35D1 PDMA controller driver
-+ *
-+ * Copyright (C) 2026 Nuvoton Technology Corp.
-+ *
-+ * Author: Shan-Chun Hung <shanchun1218@gmail.com>
-+ */
-+
-+#include <linux/bitfield.h>
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/dmaengine.h>
-+#include <linux/interrupt.h>
-+#include <linux/io.h>
-+#include <linux/list.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_dma.h>
-+#include <linux/platform_device.h>
-+#include <linux/reset.h>
-+#include <linux/slab.h>
-+#include <linux/spinlock.h>
-+#include <linux/types.h>
-+
-+#include "virt-dma.h"
-+
-+/* PDMA registers */
-+#define PDMA_DSCT_CTL		0x000
-+#define PDMA_DSCT_SA		0x004
-+#define PDMA_DSCT_DA		0x008
-+#define PDMA_DSCT_NEXT		0x00c
-+#define PDMA_CHCTL		0x400
-+#define PDMA_SWREQ		0x408
-+#define PDMA_INTEN		0x418
-+#define PDMA_ABTSTS		0x420
-+#define PDMA_TDSTS		0x424
-+#define PDMA_CHRST		0x460
-+#define PDMA_REQSEL		0x480
-+
-+/* Bitfields in PDMA registers */
-+#define PDMA_OP_BASIC		BIT(0)
-+#define PDMA_OP_SCATTER		BIT(1)
-+#define PDMA_OP_MSK		GENMASK(1, 0)
-+#define PDMA_TXTYPE		BIT(2)
-+#define PDMA_TBINTDIS		BIT(7)
-+#define PDMA_SAFIX		GENMASK(9, 8)
-+#define PDMA_DAFIX		GENMASK(11, 10)
-+
-+#define PDMA_MAX_CHANS		10
-+#define PDMA_MAX_CHAN_BEATS	(U16_MAX + 1)
-+
-+#define PDMA_WIDTH(w)		FIELD_PREP(GENMASK(13, 12), (w) >> 1)
-+#define PDMA_TXCNT(cnt)		FIELD_PREP(GENMASK(31, 16), (cnt) - 1)
-+#define PDMA_CH_OFFSET(ch)	((ch) * 0x10)
-+
-+#define PDMA_SLAVE_BUSWIDTHS	(BIT(DMA_SLAVE_BUSWIDTH_1_BYTE)  | \
-+				 BIT(DMA_SLAVE_BUSWIDTH_2_BYTES) | \
-+				 BIT(DMA_SLAVE_BUSWIDTH_4_BYTES))
-+
-+struct ma35d1_sg {
-+	u32 ctl;
-+	u32 src;
-+	u32 dst;
-+	u32 next;
-+};
-+
-+struct ma35d1_desc {
-+	struct ma35d1_chan *ch;
-+	bool cyclic;
-+	struct virt_dma_desc vd;
-+	dma_addr_t dma_addr;
-+	size_t dma_len;
-+	u32 sg_len;
-+	struct ma35d1_sg sg[] __counted_by(sg_len);
-+};
-+
-+struct ma35d1_chan {
-+	struct device *dev;
-+	struct ma35d1_pdmadev *pdmadev;
-+	struct virt_dma_chan vc;
-+	void __iomem *base;
-+	int id;
-+	struct ma35d1_desc *desc;
-+	struct dma_slave_config cfg;
-+	/* second #dma-cells argument from devicetree */
-+	u32 request;
-+};
-+
-+struct ma35d1_pdmadev {
-+	struct dma_device ddev;
-+	/* protects read-modify-write of shared controller registers */
-+	spinlock_t lock;
-+	int irq;
-+	struct ma35d1_chan channels[PDMA_MAX_CHANS];
-+};
-+
-+static inline struct ma35d1_chan *to_ma35d1_pdma_chan(struct dma_chan *c)
-+{
-+	return container_of(c, struct ma35d1_chan, vc.chan);
-+}
-+
-+static inline struct ma35d1_desc *to_ma35d1_pdma_desc(struct virt_dma_desc *vd)
-+{
-+	return container_of(vd, struct ma35d1_desc, vd);
-+}
-+
-+static inline void ma35d1_pdma_reg_set(struct ma35d1_chan *ch, u32 offset, u32 mask)
-+{
-+	writel(readl(ch->base + offset) | mask, ch->base + offset);
-+}
-+
-+static inline void ma35d1_pdma_reg_clear(struct ma35d1_chan *ch, u32 offset, u32 mask)
-+{
-+	writel(readl(ch->base + offset) & ~mask, ch->base + offset);
-+}
-+
-+static void ma35d1_pdma_desc_free(struct virt_dma_desc *vd)
-+{
-+	struct ma35d1_desc *d = to_ma35d1_pdma_desc(vd);
-+
-+	dma_unmap_single(d->ch->dev, d->dma_addr, d->dma_len, DMA_TO_DEVICE);
-+	kfree(d);
-+}
-+
-+static int ma35d1_terminate_all(struct dma_chan *chan)
-+{
-+	LIST_HEAD(head);
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	unsigned long flags, pdmadev_flags;
-+
-+	spin_lock_irqsave(&ch->vc.lock, flags);
-+
-+	spin_lock_irqsave(&ch->pdmadev->lock, pdmadev_flags);
-+	ma35d1_pdma_reg_clear(ch, PDMA_CHCTL, BIT(ch->id));
-+	spin_unlock_irqrestore(&ch->pdmadev->lock, pdmadev_flags);
-+
-+	writel(BIT(ch->id), ch->base + PDMA_TDSTS);
-+	writel(BIT(ch->id), ch->base + PDMA_ABTSTS);
-+
-+	if (ch->desc) {
-+		vchan_terminate_vdesc(&ch->desc->vd);
-+		ch->desc = NULL;
-+	}
-+
-+	vchan_get_all_descriptors(&ch->vc, &head);
-+	spin_unlock_irqrestore(&ch->vc.lock, flags);
-+
-+	vchan_dma_desc_free_list(&ch->vc, &head);
-+
-+	return 0;
-+}
-+
-+static void ma35d1_synchronize(struct dma_chan *chan)
-+{
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+
-+	vchan_synchronize(&ch->vc);
-+}
-+
-+static void ma35d1_pdma_setup_channel(struct ma35d1_chan *ch)
-+{
-+	u32 offset, reg, shift;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&ch->pdmadev->lock, flags);
-+
-+	if ((readl(ch->base + PDMA_CH_OFFSET(ch->id)) & GENMASK(1, 0)) != 0) {
-+		reg = readl(ch->base + PDMA_CHCTL);
-+		writel(0, ch->base + PDMA_CH_OFFSET(ch->id));
-+		ma35d1_pdma_reg_set(ch, PDMA_CHRST, BIT(ch->id));
-+		writel(reg | BIT(ch->id), ch->base + PDMA_CHCTL);
-+	} else {
-+		writel(0, ch->base + PDMA_CH_OFFSET(ch->id));
-+		ma35d1_pdma_reg_set(ch, PDMA_CHCTL, BIT(ch->id));
-+	}
-+	ma35d1_pdma_reg_set(ch, PDMA_INTEN, BIT(ch->id));
-+
-+	offset = PDMA_REQSEL + (ch->id & ~GENMASK(1, 0));
-+	shift = (ch->id & GENMASK(1, 0)) * 8;
-+	ma35d1_pdma_reg_clear(ch, offset, GENMASK(7, 0) << shift);
-+	ma35d1_pdma_reg_set(ch, offset, ch->request << shift);
-+
-+	spin_unlock_irqrestore(&ch->pdmadev->lock, flags);
-+}
-+
-+static int ma35d1_slave_config(struct dma_chan *chan, struct dma_slave_config *cfg)
-+{
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+
-+	memcpy(&ch->cfg, cfg, sizeof(*cfg));
-+
-+	return 0;
-+}
-+
-+static int ma35d1_slave_width(struct ma35d1_chan *ch, enum dma_transfer_direction dir)
-+{
-+	enum dma_slave_buswidth width;
-+
-+	if (dir == DMA_MEM_TO_DEV) {
-+		width = ch->cfg.dst_addr_width;
-+	} else if (dir == DMA_DEV_TO_MEM) {
-+		width = ch->cfg.src_addr_width;
-+	} else {
-+		dev_err(ch->dev, "invalid DMA direction %d\n", dir);
-+		return -EINVAL;
-+	}
-+
-+	if (width != DMA_SLAVE_BUSWIDTH_1_BYTE && width != DMA_SLAVE_BUSWIDTH_2_BYTES &&
-+	    width != DMA_SLAVE_BUSWIDTH_4_BYTES) {
-+		dev_err(ch->dev, "invalid DMA width %d\n", width);
-+		return -EINVAL;
-+	}
-+
-+	return width;
-+}
-+
-+static struct ma35d1_desc *ma35d1_desc_alloc(struct ma35d1_chan *ch, u32 sg_len)
-+{
-+	struct ma35d1_desc *d;
-+
-+	d = kzalloc(struct_size(d, sg, sg_len), GFP_ATOMIC);
-+	if (!d)
-+		return NULL;
-+
-+	d->sg_len = sg_len;
-+	d->dma_len = sizeof(*d->sg) * sg_len;
-+	d->dma_addr = dma_map_single(ch->dev, d->sg, d->dma_len, DMA_TO_DEVICE);
-+	if (dma_mapping_error(ch->dev, d->dma_addr)) {
-+		dev_err(ch->dev, "dma mapping error for channel\n");
-+		kfree(d);
-+		return NULL;
-+	}
-+
-+	return d;
-+}
-+
-+static struct dma_async_tx_descriptor *
-+ma35d1_desc_submit(struct ma35d1_chan *ch, struct ma35d1_desc *d, bool cyclic,
-+		   unsigned long tx_flags)
-+{
-+	dma_sync_single_for_device(ch->dev, d->dma_addr, d->dma_len, DMA_TO_DEVICE);
-+	d->cyclic = cyclic;
-+	d->ch = ch;
-+
-+	return vchan_tx_prep(&ch->vc, &d->vd, tx_flags);
-+}
-+
-+static struct dma_async_tx_descriptor *
-+ma35d1_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dst, dma_addr_t src,
-+		       size_t len, unsigned long tx_flags)
-+{
-+	int i;
-+	size_t tlen, max_chunk;
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	struct ma35d1_desc *d;
-+	u32 sg_len, width = 1;
-+
-+	if (ch->request != 0) {
-+		dev_err(ch->dev, "%s: channel is bound to a peripheral request\n", __func__);
-+		return NULL;
-+	}
-+
-+	if (!len) {
-+		dev_err(ch->dev, "invalid memcpy length\n");
-+		return NULL;
-+	}
-+
-+	if (IS_ALIGNED(src, 4) && IS_ALIGNED(dst, 4) && IS_ALIGNED(len, 4))
-+		width = 4;
-+
-+	max_chunk = (size_t)PDMA_MAX_CHAN_BEATS * width;
-+
-+	sg_len = DIV_ROUND_UP_ULL(len, max_chunk);
-+	d = ma35d1_desc_alloc(ch, sg_len);
-+	if (!d)
-+		return NULL;
-+
-+	for (i = 0; i < sg_len; i++) {
-+		tlen = min_t(size_t, len, max_chunk);
-+		d->sg[i].src = src;
-+		d->sg[i].dst = dst;
-+		d->sg[i].ctl = PDMA_WIDTH(width) | PDMA_TXCNT(tlen / width) | PDMA_TBINTDIS |
-+				PDMA_OP_SCATTER;
-+		d->sg[i].next = d->dma_addr + PDMA_CH_OFFSET(i + 1);
-+		src += tlen;
-+		dst += tlen;
-+		len -= tlen;
-+	}
-+	d->sg[sg_len - 1].ctl &= ~(PDMA_OP_MSK | PDMA_TBINTDIS);
-+	d->sg[sg_len - 1].ctl |= PDMA_OP_BASIC;
-+
-+	return ma35d1_desc_submit(ch, d, false, tx_flags);
-+}
-+
-+static struct dma_async_tx_descriptor *
-+ma35d1_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
-+		     u32 sg_len, enum dma_transfer_direction dir,
-+		     unsigned long tx_flags, void *context)
-+{
-+	int i, width;
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	struct ma35d1_desc *d;
-+	struct scatterlist *sgent;
-+
-+	width = ma35d1_slave_width(ch, dir);
-+	if (width < 0)
-+		return NULL;
-+
-+	if (!sg_len) {
-+		dev_err(ch->dev, "SG entry length is zero\n");
-+		return NULL;
-+	}
-+
-+	for_each_sg(sgl, sgent, sg_len, i) {
-+		unsigned int len = sg_dma_len(sgent);
-+
-+		if (!len || len % width || len / width > PDMA_MAX_CHAN_BEATS) {
-+			dev_err(ch->dev, "invalid SG segment length %u\n", len);
-+			return NULL;
-+		}
-+
-+		if (!IS_ALIGNED(sg_dma_address(sgent), width)) {
-+			dev_err(ch->dev, "SG address not aligned to DMA width\n");
-+			return NULL;
-+		}
-+	}
-+
-+	d = ma35d1_desc_alloc(ch, sg_len);
-+	if (!d)
-+		return NULL;
-+
-+	for_each_sg(sgl, sgent, sg_len, i) {
-+		if (dir == DMA_MEM_TO_DEV) {
-+			d->sg[i].ctl = PDMA_WIDTH(width) | PDMA_DAFIX;
-+			d->sg[i].src = sg_dma_address(sgent);
-+			d->sg[i].dst = ch->cfg.dst_addr;
-+		} else {
-+			d->sg[i].ctl = PDMA_WIDTH(width) | PDMA_SAFIX;
-+			d->sg[i].src = ch->cfg.src_addr;
-+			d->sg[i].dst = sg_dma_address(sgent);
-+		}
-+		d->sg[i].ctl |= PDMA_TXCNT(sg_dma_len(sgent) / width) | PDMA_TBINTDIS |
-+				PDMA_TXTYPE | PDMA_OP_SCATTER;
-+		d->sg[i].next = d->dma_addr + PDMA_CH_OFFSET(i + 1);
-+	}
-+
-+	d->sg[sg_len - 1].ctl &= ~(PDMA_OP_MSK | PDMA_TBINTDIS);
-+	d->sg[sg_len - 1].ctl |= PDMA_OP_BASIC;
-+
-+	return ma35d1_desc_submit(ch, d, false, tx_flags);
-+}
-+
-+static struct dma_async_tx_descriptor *
-+ma35d1_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr, size_t buf_len,
-+		       size_t period_len, enum dma_transfer_direction dir,
-+		       unsigned long flags)
-+{
-+	int i, sg_len, width;
-+	size_t offset = 0;
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	struct ma35d1_desc *d;
-+
-+	width = ma35d1_slave_width(ch, dir);
-+	if (width < 0)
-+		return NULL;
-+
-+	if (!buf_len || !period_len || period_len / width > PDMA_MAX_CHAN_BEATS) {
-+		dev_err(ch->dev, "Invalid buffer/period length\n");
-+		return NULL;
-+	}
-+
-+	if (buf_len % period_len) {
-+		dev_err(ch->dev, "Buffer length not multiple of period length\n");
-+		return NULL;
-+	}
-+
-+	if (period_len % width) {
-+		dev_err(ch->dev, "Period length must be a multiple of DMA width\n");
-+		return NULL;
-+	}
-+
-+	if (!IS_ALIGNED(dma_addr, width)) {
-+		dev_err(ch->dev, "Buffer address not aligned to DMA width\n");
-+		return NULL;
-+	}
-+
-+	sg_len = buf_len / period_len;
-+	d = ma35d1_desc_alloc(ch, sg_len);
-+	if (!d)
-+		return NULL;
-+
-+	/* Split the buffer into period size chunks. */
-+	for (offset = 0, i = 0; offset < buf_len; offset += period_len, i++) {
-+		if (dir == DMA_MEM_TO_DEV) {
-+			d->sg[i].ctl = PDMA_WIDTH(width) | PDMA_TXCNT(period_len / width) |
-+					PDMA_DAFIX;
-+			d->sg[i].src = dma_addr + offset;
-+			d->sg[i].dst = ch->cfg.dst_addr;
-+		} else {
-+			d->sg[i].ctl = PDMA_WIDTH(width) | PDMA_TXCNT(period_len / width) |
-+					PDMA_SAFIX;
-+			d->sg[i].src = ch->cfg.src_addr;
-+			d->sg[i].dst = dma_addr + offset;
-+		}
-+		d->sg[i].ctl |= PDMA_TXTYPE | PDMA_OP_SCATTER;
-+		d->sg[i].next = d->dma_addr + PDMA_CH_OFFSET(i + 1);
-+	}
-+	d->sg[sg_len - 1].next = d->dma_addr;
-+
-+	return ma35d1_desc_submit(ch, d, true, flags);
-+}
-+
-+static struct dma_chan *ma35d1_of_xlate(struct of_phandle_args *dma_spec, struct of_dma *of)
-+{
-+	struct ma35d1_pdmadev *pdmadev = of->of_dma_data;
-+	struct dma_chan *chan;
-+	unsigned int chan_id, reqsel;
-+
-+	if (dma_spec->args_count != 2)
-+		return NULL;
-+
-+	chan_id = dma_spec->args[0];
-+	reqsel = dma_spec->args[1];
-+	if (chan_id >= PDMA_MAX_CHANS || reqsel > GENMASK(7, 0))
-+		return NULL;
-+
-+	chan = dma_get_slave_channel(&pdmadev->channels[chan_id].vc.chan);
-+	if (chan)
-+		pdmadev->channels[chan_id].request = reqsel;
-+
-+	return chan;
-+}
-+
-+static void ma35d1_free_chan_resources(struct dma_chan *chan)
-+{
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+
-+	ma35d1_terminate_all(chan);
-+	vchan_free_chan_resources(&ch->vc);
-+	ch->request = 0;
-+	memset(&ch->cfg, 0, sizeof(ch->cfg));
-+}
-+
-+static void ma35d1_pdma_start(struct ma35d1_chan *ch)
-+{
-+	struct ma35d1_desc *d = ch->desc;
-+
-+	if (d->sg_len == 1 && !d->cyclic) {
-+		writel(d->sg[0].src, ch->base + PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_SA);
-+		writel(d->sg[0].dst, ch->base + PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_DA);
-+		writel(d->sg[0].ctl, ch->base + PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_CTL);
-+	} else {
-+		writel(d->dma_addr, ch->base + PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_NEXT);
-+		ma35d1_pdma_reg_clear(ch, PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_CTL, PDMA_OP_MSK);
-+		ma35d1_pdma_reg_set(ch, PDMA_CH_OFFSET(ch->id) + PDMA_DSCT_CTL, PDMA_OP_SCATTER);
-+	}
-+
-+	/* Memory-to-memory has no peripheral request, so trigger it by software. */
-+	if (ch->request == 0)
-+		writel(BIT(ch->id), ch->base + PDMA_SWREQ);
-+}
-+
-+static void ma35d1_pdma_start_desc(struct dma_chan *chan)
-+{
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	struct virt_dma_desc *vd;
-+
-+	vd = vchan_next_desc(&ch->vc);
-+	if (!vd) {
-+		ch->desc = NULL;
-+		return;
-+	}
-+
-+	list_del(&vd->node);
-+	ch->desc = to_ma35d1_pdma_desc(vd);
-+	ma35d1_pdma_setup_channel(ch);
-+	ma35d1_pdma_start(ch);
-+}
-+
-+static void ma35d1_issue_pending(struct dma_chan *chan)
-+{
-+	struct ma35d1_chan *ch = to_ma35d1_pdma_chan(chan);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&ch->vc.lock, flags);
-+
-+	if (vchan_issue_pending(&ch->vc) && !ch->desc)
-+		ma35d1_pdma_start_desc(chan);
-+
-+	spin_unlock_irqrestore(&ch->vc.lock, flags);
-+}
-+
-+static void ma35d1_pdma_complete(struct ma35d1_chan *ch)
-+{
-+	if (!ch->desc)
-+		return;
-+
-+	vchan_cookie_complete(&ch->desc->vd);
-+	ma35d1_pdma_start_desc(&ch->vc.chan);
-+}
-+
-+static irqreturn_t ma35d1_pdma_interrupt(int irq, void *devid)
-+{
-+	int i;
-+	bool handled = false;
-+	struct ma35d1_pdmadev *pdmadev = devid;
-+	struct ma35d1_chan *ch;
-+
-+	for (i = 0; i < PDMA_MAX_CHANS; i++) {
-+		unsigned long flags;
-+		bool done, abort;
-+
-+		ch = &pdmadev->channels[i];
-+
-+		spin_lock_irqsave(&ch->vc.lock, flags);
-+
-+		done = readl(ch->base + PDMA_TDSTS) & BIT(i);
-+		abort = readl(ch->base + PDMA_ABTSTS) & BIT(i);
-+
-+		if (done || abort) {
-+			handled = true;
-+
-+			/* Ack both flags first so a new descriptor is not completed twice. */
-+			writel(BIT(i), ch->base + PDMA_TDSTS);
-+			writel(BIT(i), ch->base + PDMA_ABTSTS);
-+
-+			if (ch->desc) {
-+				if (abort) {
-+					ch->desc->vd.tx_result.result = DMA_TRANS_ABORTED;
-+					ma35d1_pdma_complete(ch);
-+				} else if (ch->desc->cyclic) {
-+					vchan_cyclic_callback(&ch->desc->vd);
-+				} else {
-+					ma35d1_pdma_complete(ch);
-+				}
-+			}
-+		}
-+
-+		spin_unlock_irqrestore(&ch->vc.lock, flags);
-+	}
-+
-+	return handled ? IRQ_HANDLED : IRQ_NONE;
-+}
-+
-+static int ma35d1_pdma_probe(struct platform_device *pdev)
-+{
-+	int i, ret;
-+	struct clk *pdma_clk;
-+	struct reset_control *rst;
-+	struct device *dev = &pdev->dev;
-+	struct device_node *node = dev->of_node;
-+	struct ma35d1_chan *ch;
-+	struct ma35d1_pdmadev *pdmadev;
-+	void __iomem *reg_base;
-+
-+	pdma_clk = devm_clk_get_enabled(dev, NULL);
-+	if (IS_ERR(pdma_clk))
-+		return dev_err_probe(dev, PTR_ERR(pdma_clk), "Failed to get clk\n");
-+
-+	rst = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
-+	if (IS_ERR(rst))
-+		return dev_err_probe(dev, PTR_ERR(rst), "Failed to get reset\n");
-+
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-+	if (ret)
-+		return ret;
-+
-+	pdmadev = devm_kzalloc(dev, sizeof(*pdmadev), GFP_KERNEL);
-+	if (!pdmadev)
-+		return -ENOMEM;
-+
-+	pdmadev->irq = platform_get_irq(pdev, 0);
-+	if (pdmadev->irq < 0)
-+		return pdmadev->irq;
-+
-+	reg_base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(reg_base))
-+		return dev_err_probe(dev, PTR_ERR(reg_base),
-+				     "Failed to map pdma global registers\n");
-+
-+	dma_cap_zero(pdmadev->ddev.cap_mask);
-+	dma_cap_set(DMA_SLAVE, pdmadev->ddev.cap_mask);
-+	dma_cap_set(DMA_PRIVATE, pdmadev->ddev.cap_mask);
-+	dma_cap_set(DMA_MEMCPY, pdmadev->ddev.cap_mask);
-+	dma_cap_set(DMA_CYCLIC, pdmadev->ddev.cap_mask);
-+
-+	pdmadev->ddev.dev = dev;
-+	pdmadev->ddev.src_addr_widths = PDMA_SLAVE_BUSWIDTHS;
-+	pdmadev->ddev.dst_addr_widths = PDMA_SLAVE_BUSWIDTHS;
-+	pdmadev->ddev.directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_MEM);
-+	pdmadev->ddev.device_prep_dma_memcpy = ma35d1_prep_dma_memcpy;
-+	pdmadev->ddev.device_prep_slave_sg = ma35d1_prep_slave_sg;
-+	pdmadev->ddev.device_prep_dma_cyclic = ma35d1_prep_dma_cyclic;
-+	pdmadev->ddev.device_free_chan_resources = ma35d1_free_chan_resources;
-+	pdmadev->ddev.device_issue_pending = ma35d1_issue_pending;
-+	pdmadev->ddev.device_tx_status = dma_cookie_status;
-+	pdmadev->ddev.device_config = ma35d1_slave_config;
-+	pdmadev->ddev.device_terminate_all = ma35d1_terminate_all;
-+	pdmadev->ddev.device_synchronize = ma35d1_synchronize;
-+
-+	spin_lock_init(&pdmadev->lock);
-+	INIT_LIST_HEAD(&pdmadev->ddev.channels);
-+	for (i = 0; i < PDMA_MAX_CHANS; i++) {
-+		ch = &pdmadev->channels[i];
-+		ch->dev = dev;
-+		ch->pdmadev = pdmadev;
-+		ch->id = i;
-+		ch->base = reg_base;
-+		ch->vc.desc_free = ma35d1_pdma_desc_free;
-+		vchan_init(&ch->vc, &pdmadev->ddev);
-+	}
-+
-+	ret = devm_request_irq(dev, pdmadev->irq, ma35d1_pdma_interrupt, 0, pdev->name, pdmadev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to request IRQ\n");
-+
-+	platform_set_drvdata(pdev, pdmadev);
-+
-+	ret = dma_async_device_register(&pdmadev->ddev);
-+	if (ret)
-+		return ret;
-+
-+	ret = of_dma_controller_register(node, ma35d1_of_xlate, pdmadev);
-+	if (ret) {
-+		dma_async_device_unregister(&pdmadev->ddev);
-+		for (i = 0; i < PDMA_MAX_CHANS; i++)
-+			tasklet_kill(&pdmadev->channels[i].vc.task);
-+		return dev_err_probe(dev, ret, "of_dma_controller_register failed\n");
-+	}
-+
-+	return 0;
-+}
-+
-+static void ma35d1_pdma_remove(struct platform_device *pdev)
-+{
-+	struct ma35d1_pdmadev *pdmadev = platform_get_drvdata(pdev);
-+	void __iomem *base = pdmadev->channels[0].base;
-+	int i;
-+
-+	/* Stop new requests before the hardware is quiesced. */
-+	of_dma_controller_free(pdev->dev.of_node);
-+	dma_async_device_unregister(&pdmadev->ddev);
-+
-+	writel(0, base + PDMA_CHCTL);
-+	writel(0, base + PDMA_INTEN);
-+	synchronize_irq(pdmadev->irq);
-+
-+	for (i = 0; i < PDMA_MAX_CHANS; i++)
-+		tasklet_kill(&pdmadev->channels[i].vc.task);
-+}
-+
-+static const struct of_device_id ma35d1_pdma_match[] = {
-+	{ .compatible = "nuvoton,ma35d1-pdma" },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, ma35d1_pdma_match);
-+
-+static struct platform_driver ma35d1_pdma_driver = {
-+	.probe = ma35d1_pdma_probe,
-+	.remove = ma35d1_pdma_remove,
-+	.driver = {
-+		.name = "ma35d1-pdma",
-+		.of_match_table = ma35d1_pdma_match,
-+	},
-+};
-+module_platform_driver(ma35d1_pdma_driver);
-+
-+MODULE_DESCRIPTION("PDMA controller driver for Nuvoton MA35D1");
-+MODULE_AUTHOR("Shan-Chun Hung <shanchun1218@gmail.com>");
-+MODULE_LICENSE("GPL");
++++ b/Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+@@ -0,0 +1,71 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/dma/nuvoton,ma35d1-pdma.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Nuvoton MA35D1 PDMA controller
++
++description:
++  The MA35D1 SoC has four Peripheral DMA (PDMA) controllers. Each controller
++  has 10 channels and performs memory-to-memory, memory-to-peripheral and
++  peripheral-to-memory transfers.
++
++maintainers:
++  - Shan-Chun Hung <shanchun1218@gmail.com>
++
++allOf:
++  - $ref: dma-controller.yaml#
++
++properties:
++  compatible:
++    const: nuvoton,ma35d1-pdma
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  resets:
++    maxItems: 1
++
++  "#dma-cells":
++    const: 2
++    description:
++      The first cell is the PDMA channel number. The second cell is the
++      peripheral request source number, as listed in the reference manual.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - interrupts
++  - "#dma-cells"
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/nuvoton,ma35d1-clk.h>
++    #include <dt-bindings/reset/nuvoton,ma35d1-reset.h>
++
++    soc {
++        #address-cells = <2>;
++        #size-cells = <2>;
++
++        dma-controller@40080000 {
++            compatible = "nuvoton,ma35d1-pdma";
++            reg = <0x0 0x40080000 0x0 0x2000>;
++            interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>;
++            clocks = <&clk PDMA0_GATE>;
++            resets = <&sys MA35D1_RESET_PDMA0>;
++            #dma-cells = <2>;
++        };
++    };
++
++...
 -- 
 2.25.1
 
