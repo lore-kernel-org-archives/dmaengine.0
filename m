@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794200986;
-	b=d8pLCPBzo8QEcIS6xgX9if2rizAA2RtXmtjESAeW+7MzbCHX2pMIMSear66MPqlh0a7C
-	 4wGUBBMeulJ25NsbkMgphlY5Au4UBgj/RFN0E4B/lXH/cjEGWm6WSRORZI1hrx33d1Zbe
-	 HzbDDJ5BWNkO0WTKUIseLWapHSm0khj+w2DfzPlT8fOguuQveXEZgkNOu2OR5sMPDjy/U
-	 wiySWBz5V/sbz8LnUK2IHalI0KbP0rRCoS11miTSOqrAUVVej/zWlFdncL2DBEpanMPKS
-	 if8l/poQni1zdiTnCLtwYGlW+ioKwjJ2Mbe3H2QgGXmEBJKw496fJYcfIjhMU6F3/sw==
+	t=1794201027;
+	b=DKNKnlsqbWNRyGUijD7kofI32u+uZeJZDTnOriG0bRZw7wq5J/eGPxIsnQqML2c3cEWf
+	 bKrd0rMCHH4tv+lNLAgLFnRWA+G52BeCZqVixPn5rgys5akiOSo6TauPMmKWmi2tLNeBK
+	 SsmW4PLdWagx38Gxk1OgLd6n9g69b7kgKLwGhz9qQ6nJ/QR/IP7rZJsGtIP/58bwp0jrd
+	 EG5PEpI7hn9wDOYzX0KY5VfKDdWH3HizZQtVvG9/JZw/tRPVGOpc63x+GcGR6qYMmlpAP
+	 KG/BBzj4QG0NX7kADjs7LWbIvChZS/vImn9DaoVYc2iq6aTwHsSo+U/gGxkb5n7Dg+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794200986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794201027;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=HQH8N5NmXlt8AbGdle/BrNy6AknMpg2QnEbOlLsVEAo=;
-	b=bNt0rcJ9FBFOv0CdoTYjqL4RMsQLv8tt5zynyyGZYq/4zr7phaIW7vtRCKYKSU8NApdO
-	 D8B8s7UUb30aJsMS8rQ2dPGqypt6Lk2jM8Vcb3meIWcn4JCNxReigLPQRlRDEByZJbjf4
-	 NN3vV2s0qVyw2IMCygXGdnv21fDPUCDhFNya7/VdpEZjld8uxDqxGwC8xMuIdjghwkNgh
-	 q7YI9DZb3/hQzcblUbiM1LT0e5xXzcHA8lFyCkMpZH4tdAK1FIWiAt59I23LQrE50+vYU
-	 ba2Cg9MC1DUO+HtbDNbZjrMj7ivLpo0thxBLIvyTGWK1rK+dQiRX6qEZUkObo/SLGoQ==
+	bh=/NPir8mHi5mJNH4iHBXK3aLGX+ARFEWqbNiESTvPUnw=;
+	b=bPoR8Hl4hmLSLh+lJTHq6J7Stv9aENxEDfRqsjcr9q11IR6ns1yhrvWK9r7UBa3UAm6e
+	 HbhDbSgWxSRidVOQRnV965LatXfXCEP2jX9MvAP7YizwDGpse1FSN5Va49uok9ybC6pTp
+	 jZgNT0AGbEPER7jyTKxVB8NpBBe960FuOlqeDPEsg2YaFA8RmdwjK8O3cUKNHLE/x+sxQ
+	 khAuBgnd62FKVzuVn4ayijtipIcZYhhLSIS7uqZTBr0EgmffR/MaDjqz0KDNEhDM+Nupn
+	 jH6dx1H2Q+lXR7UpV/u1ypZwe3Bxz6YwTBknsi3Lpmx/HW3IISkkXnaU9NKytcv4mKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D7kX0uRW;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MzmuGrPk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460B9606A321
-	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 05:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A460606A322
+	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 05:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D7kX0uRW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B281F0089F;
-	Mon,  9 Nov 2026 05:09:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MzmuGrPk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DB31F0089F;
+	Mon,  9 Nov 2026 05:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794200985;
-	bh=HQH8N5NmXlt8AbGdle/BrNy6AknMpg2QnEbOlLsVEAo=;
+	s=k20260515; t=1794201026;
+	bh=/NPir8mHi5mJNH4iHBXK3aLGX+ARFEWqbNiESTvPUnw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=D7kX0uRWRKXJIfmh29fTKN5OQZRp+2WjMXryvu2JeUXn1AMCLyI0o7ay1R2S0XbC6
-	 V6/MuvT9Vt1SQgsggqmQMoTfpV/GgQb4rfMpDt3Dg4EivPzEOcbkJsJRcPpZn0AuOf
-	 5yni6J+5hj1UzBHkCXdHSXmZdcKPl5zJTaaT1pMA8kqwriTdwyboJqB8Q76iLDvroE
-	 xHfmE8WkD+TJ/nLU5iQVFgYhTTGWeNwtOnhVcEB3XO4A3OmivBq0opiXUlkFpHuFQL
-	 yvp7Ltok2lLQ7aCO1OC8nHo3QrL1OVmZWq+TmmfwDTprb9vP1dbuBm2s8XkFUki12W
-	 94Nvlu1A6s+eg==
-Message-ID: <sashiko-outbox-204415@kernel.org>
+	b=MzmuGrPkXtAMRfi70C0i33Lj40e/KGWRvg7cPlBGDXSj+hLY5UTwlUOnzKkKHI4gP
+	 ksPRg8+NXqjGMvGmfvHguTt95oJv1wN7wv/5KjUA55up5dn2d9R0F+1KVtfuzEWKH7
+	 8rjSc5HwyTIQ7fNE7UImoJzlqRBw0rzDG04t0Sx6mgVt8b3LVmF3W3n6AL8Gj+48xV
+	 xP4S5S6Y/LDWm02U50r0qUjl+lDjcQBlPBywjILM6MbFFbVtASJADttoaGdnf2ksj6
+	 hXw+ssRF+rfmAohCAHr0Mfb1x29sGHzO4eA5m0q2wPxgh7ziPKXLgwfqbZkRG16wsU
+	 dBRngJPm4QWsA==
+Message-ID: <sashiko-outbox-204416@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: tegra: only advertise supported pause
- operations
+Subject: Re: [PATCH 1/3] dmaengine: dw-axi-dmac: poll the correct enable bit
+ during termination
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "James Hilliard" <james.hilliard1@gmail.com>
 Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261108-submit-tegra186-dma-pause-caps-v1-v1-1-9cc9b17a033d@gmail.com>
-References: <20261108-submit-tegra186-dma-pause-caps-v1-v1-1-9cc9b17a033d@gmail.com>
+In-Reply-To: <20261108-submit-dw-axi-dma-stop-pause-v1-v1-1-c48ec19e9ee4@gmail.com>
+References: <20261108-submit-dw-axi-dma-stop-pause-v1-v1-0-c48ec19e9ee4@gmail.com>
+ <20261108-submit-dw-axi-dma-stop-pause-v1-v1-1-c48ec19e9ee4@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 09 Nov 2026 05:09:45 +0000
+Date: Mon, 09 Nov 2026 05:10:25 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,43 +61,75 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: tegra: redundant pause checks in
-  tegra_dma_device_pause()
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [Critical] dmaengine: dw-axi-dmac: use-after-free in
+  dma_chan_terminate_all() [1]
 --
 
-commit 3ce960c2c1d14548e97fac4df9585c921b1d04e0
+commit af0999f332d674abe73e6d4b71aee90f2aef6ba8
 Author: James Hilliard <james.hilliard1@gmail.com>
 
-dmaengine: tegra: only advertise supported pause operations
+dmaengine: dw-axi-dmac: poll the correct enable bit during termination
 
-This commit registers the device_pause and device_resume callbacks in
-tegra_dma_probe() only when cdata->hw_support_pause is set, preventing SoCs
-such as Tegra186 from advertising unsupported pause capabilities.
+This commit updates dma_chan_terminate_all() to poll axi_chan_is_hw_enable()
+so that upper-bank channel enable bits (channels 16 through 31) are checked
+before freeing descriptors.
 
-> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dm=
-a.c
-> index e76c58f213d84..72266f490e8a3 100644
-> --- a/drivers/dma/tegra186-gpc-dma.c
-> +++ b/drivers/dma/tegra186-gpc-dma.c
-> @@ -1518,8 +1518,10 @@ static int tegra_dma_probe(struct platform_device =
-*pdev)
->  	tdma->dma_dev.device_terminate_all =3D tegra_dma_terminate_all;
->  	tdma->dma_dev.device_tx_status =3D tegra_dma_tx_status;
->  	tdma->dma_dev.device_issue_pending =3D tegra_dma_issue_pending;
-> -	tdma->dma_dev.device_pause =3D tegra_dma_device_pause;
-> -	tdma->dma_dev.device_resume =3D tegra_dma_device_resume;
-> +	if (cdata->hw_support_pause) {
-> +		tdma->dma_dev.device_pause =3D tegra_dma_device_pause;
-> +		tdma->dma_dev.device_resume =3D tegra_dma_device_resume;
-> +	}
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
+/dw-axi-dmac/dw-axi-dmac-platform.c
+> index 7520c78f55ccf..49f65486e8626 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> @@ -1181,16 +1181,15 @@ static irqreturn_t dw_axi_dma_interrupt(int irq, =
+void *dev_id)
+>  static int dma_chan_terminate_all(struct dma_chan *dchan)
+>  {
+>  	struct axi_dma_chan *chan =3D dchan_to_axi_dma_chan(dchan);
+> -	u32 chan_active =3D BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
+>  	unsigned long flags;
+> -	u32 val;
+> +	bool enabled;
+>  	int ret;
+>  	LIST_HEAD(head);
+> =20
+>  	axi_chan_disable(chan);
+> =20
+> -	ret =3D readl_poll_timeout_atomic(chan->chip->regs + DMAC_CHEN, val,
+> -					!(val & chan_active), 1000, 50000);
+> +	ret =3D read_poll_timeout_atomic(axi_chan_is_hw_enable, enabled, !enabl=
+ed,
+> +				      1000, 50000, false, chan);
 
-[Severity: Low]
-Can the !tdc->tdma->chip_data->hw_support_pause checks in
-tegra_dma_device_pause() and tegra_dma_device_resume() be dropped now that
-both callbacks are only registered when cdata->hw_support_pause is true?
+[Severity: Critical]
+This problem wasn't introduced by this patch, but can dma_chan_terminate_al=
+l()
+race with dma_chan_issue_pending() [1] and free descriptors while the
+channel is active?
+
+axi_chan_disable() and the poll loop run before chan->vc.lock is acquired:
+
+CPU0                                  CPU1
+dma_chan_terminate_all()
+  axi_chan_disable(chan)
+  read_poll_timeout_atomic(...)
+                                      dma_chan_issue_pending()
+                                        spin_lock_irqsave(&chan->vc.lock, .=
+..)
+                                        vchan_issue_pending(&chan->vc)
+                                        axi_chan_start_first_queued(chan)
+                                        spin_unlock_irqrestore(...)
+  spin_lock_irqsave(&chan->vc.lock, ...)
+  vchan_get_all_descriptors(&chan->vc, &head)
+  spin_unlock_irqrestore(...)
+  vchan_dma_desc_free_list(&chan->vc, &head)  <-- use-after-free by DMA
+
+Because CPU1 re-enables the channel after the poll finishes, the hardware
+continues processing descriptors that CPU0 then collects and frees.
+
+[1] https://sashiko.dev/#/bug/linux-d3e7b3db-d97f-48be-a317-9ef1a4cd9953
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108-submit-teg=
-ra186-dma-pause-caps-v1-v1-1-9cc9b17a033d@gmail.com?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108-submit-dw-=
+axi-dma-stop-pause-v1-v1-0-c48ec19e9ee4@gmail.com?part=3D1
