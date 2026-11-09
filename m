@@ -1,94 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.179
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794211797;
-	b=iz7WKGh9hMKteLLYURo6lxbJR3v7ix+cM6rarzZ+dudr8pp5MCt13W7FVw2oUf4cdN+j
-	 IPjutIIYSeBcCKP2L4rI8QIPys+FS6VFqQKwlFO/n/3/z9wJYAeudyRZxU60KynJ+6kk7
-	 SoINE7IQ/0IuWEf/iXxSFRVJw29ag2Yo8j/zJPjawALYJIm5qga/NUJO1TuU+fejlehdJ
-	 G+QYKeFtRW5CE2gFzNyiSEifqVNJA7vTue8bb30Cz7FIYULClrVE4etdt3e7YEDSW9Qpe
-	 bSpjV8K/Hq+7WjJ+LFMiCyAAcmqV5zSJSeOKt/60VebQlsmna8a42/zCIFRefbDMaUQ==
+	t=1794216119;
+	b=1k45SpLP74Pfc34gPTns8JFLLsD1FqAmj82Ex/9Jq5QoadCGVc4bWFyRYDsWffbSsTkY
+	 jKLPnGRTkJB0TsWVkK5oe9h/dzCy2vJxOP+Rv2JT9HQSZqoMt0QlNRttwKQ4YxO1Deq26
+	 m/ufffcsrJUUCKBngZw+Oo1y1uyNjJajQo+gCQcu0A76ho1MGqIQG/53MZRdZt5H30m0F
+	 RpOWZTVpRtkfUlnJDrFZEp5MxiBdZx2BLSdesAL5XaRmmuUM5U4hrdNzGJZtwJ526L2RG
+	 g7nlU49sOWcPjquwUsFaPwm89e6JtRwpM3n28O1fb2SNrBeoFEkpOrP6qfzQGc6xzCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794211797;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=ztQlNM7XWz4CEoSo6w0e4xwJ1jm6ckTfoK4mBSuQIVc=;
-	b=zbV0TG/hG2r3JtN4ig/mpazYLtaUhInFFG/ViNbAQ4abrPq7oPjLYhrN6MTdkUiOpSGr
-	 2Nf/Cw0wCkuw6I6inS0+ft5fJvC0el4ZKGE/+3kDqBWRrC2lSLWYZY0t5p6+EgRSc8uPZ
-	 y6m5fmf19tB4BDnNRHPkfgwhTIIgzMJHpr50mug7+JJq1ZhVOMcvMq8JDEis7ckyzH/Xo
-	 QYcn4rvLiH8MirW+E3xF8fHwj31Rj9qG++ZazDJYOP22VrI6EMBynpnnKgcKiXFYcOWqw
-	 bJj/pY/J2j4U5eJm7TZjqTBA1E9EX6QjCmv6YbY7Wv7X9VuIbD+8FRje4RbEoXU4WXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794216119;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=+4/Tw2/BZgl/GDlD4gANvwDshf9nsMa1DlxhHC1kPEM=;
+	b=0IhtAb1l7pl9UrW8uM583dqqMCNP8zqoKItJPbcw5530iFEk5TT/+IISwUgYn7xWMgGA
+	 XYcJ0zrMsOJKUNvHMNGnv8oF4PlmBAGfypsSvg5FcX+PKJHbLoO2X/XZedPjPuZgdSCgq
+	 BlqLZEUG38458I4tx7C5YqcJLfb5Up1/g0qrXTuUT9lExd9kV/Q2YdZmEJunoBIfuiSng
+	 eHUSdZbsjB3kJS+3ACrQdYAV6N1uVR55Xa63E3ELNp68xWr07576pRiDeIYaWZ2Uy0FkF
+	 sMv6vkzX6KOdIyy271UrlIrzslhqLu4PK05k97NEBbj6rFWXMk9f7Km19MogBzdiwpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w8GXBhUy;
-	arc=none smtp.remote-ip=74.125.82.179
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Gk5HEWLd;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=F60+zxxb;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E23A606A31C
-	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 08:09:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E23A606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51704606A322
+	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 09:21:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51704606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=w8GXBhUy
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-36a315ed211so679308eec.0
-        for <dmaengine@vger.kernel.org>; Mon, 09 Nov 2026 00:09:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Gk5HEWLd;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=F60+zxxb
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A96AhYG066515
+	for <dmaengine@vger.kernel.org>; Mon, 9 Nov 2026 09:21:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+4/Tw2/BZgl/GDlD4gANvwDshf9nsMa1DlxhHC1kPEM=; b=Gk5HEWLddCvbNRg7
+	F6S5zLwNpdHTXhqPXDQmcJERUtxJqYTZUAYR6fq5CHz6tBAv4SJ6xTMeVq9IoDLv
+	Cl8KwIP/HcQUs77bmYl3rdkIAtKb06OT4glPy21fmbwzkRk2ugW8va5jJfNvqwX8
+	AjPG2fzQuYcTKtAz0BEFyC5XttO/tRzLYMXhLPOz5K1EAcplY0qK9fYNFPqDPF4m
+	o0H0s+RujeC4NuqmQWGMC/k1Zbz5T3/sz/tM/2YhGPA0aPwTEGyTQn+GlER3WtW7
+	k+BdkyCdgUDWbeIJIfpS7l1MOGDnLLKC16sGpRby+L1qTV66A1xdurbsDwIQsHiA
+	f0rJXg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hsujxdq4h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Mon, 09 Nov 2026 09:21:58 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-92eebb130dcso19963885a.1
+        for <dmaengine@vger.kernel.org>; Mon, 09 Nov 2026 01:21:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794211797; x=1794816597; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ztQlNM7XWz4CEoSo6w0e4xwJ1jm6ckTfoK4mBSuQIVc=;
-        b=w8GXBhUyTBNA5I6vw+zUjd2EKLqqGh6hy8FxyCgrtCmny5K67D5B6rQE6QFOPd6V4N
-         jkFVI2pEKed1G9uE9R5cMCoF7aFqlC5drolEAv/pnK0Sn+YrtT/TmahNNCH7xS71amhe
-         ny3d6XQKb0IwhNyheyRIQWiQjjpEc7RyYyTuqp3rK9uv10VIY3HmZjwlCSp9wiQHv1IP
-         z97vSRmENuHlBPqfr9QJIMzHAudOH3FpS+2Jj+lYjio3hBZiTRVSqc77fNA6drEW3M5i
-         erXP9eQFraE0BVum28c9fHS+chuHjXdAHm0feRXcB+UfgYZ2841XgEv0MlFZVO36LQsS
-         Zjdg==
+        d=oss.qualcomm.com; s=google; t=1794216117; x=1794820917; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+4/Tw2/BZgl/GDlD4gANvwDshf9nsMa1DlxhHC1kPEM=;
+        b=F60+zxxb/bj2pVeqRV1me/rbvfq92afsvImtmwRm6LmytjYT4g+pioFFAPNINfGxcF
+         L119daqN2FTs9R3V2AG/iynKeN0apoO/nYGmpCfRyt0Tt2hwB8BIWBQRVEGySExucd6E
+         prn7wZUINpJ6fQ2ycN7Lp714swurmSM709Ap7C1jX9NMnPTqd8iVWHanbQWISTXY/DMe
+         sXp2h3mUXBHd7IKqasoBh2i+jLPM6lcTQwVodlz9XlB01jtEtVw3WLNjV7Iie0WGPHV+
+         bUB0qkhlMoXP8f5ELWPMzwh7Pahrz7lKkNXlfZ+AAD0bwmW9WESgCU2WLP2DuI9PpO8q
+         eLtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794211797; x=1794816597;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20260707; t=1794216117; x=1794820917;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ztQlNM7XWz4CEoSo6w0e4xwJ1jm6ckTfoK4mBSuQIVc=;
-        b=gLkqOUZiMaOm+vkd+CI9f94fAjFqu0jkdKM0Aypu++iLMgxt3MC5ncHJfVm+KdXc/X
-         vQZQO7yeJVsO+zQFxAgIveknk3Djt+AkuJmlL2Mnzyg/MILk37YzdZn7VNgECrrhiHyi
-         9r8+NqJ4R66DtGLZxKo89k+P/ETvlgl1Iiyq1DHl63brNlvYsLQcl43rYnxQcKQPs1lg
-         mNEWhmvvjVDT1Qx3K3FM2dDeeMlNStGpn2v8lpOLYD21MCDh6EKBaAvOf90IPI57fTvF
-         d73J1j9qgMXqIsbWlAZzyUkpUeSuIptYdW2pLdrkY9PymkUQc91ytQpEc6qI6AJ8jhwB
-         CAwQ==
-X-Forwarded-Encrypted: i=1; AL+hErHlnNQdPZj9kpjWDqn7Ijg+BnU68S/KAYysfZ8G3PPgI6GfTlB4axGSmx7pQa2JrXYgexd/S6ZkBYg=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/VA21loQrj5St3+cKWNuRzw9ptw6vE26etLaLLnodOL1Eqnbre
-	aD6YaX52VwFjTvKnQZNy9mhCbwQ/uRPhLkA6KUAIsTovyxQaQhvsmJnpuQ/CAuwj
-X-Gm-Gg: AYBFou0FUOT5xgqcIiJDiEJ5ML2Zt96Oha82w5/t1/TI/b2ORykVhdS1CenUo/ZXCKr
-	lR4qDD1V8l5VmpQUZ/QT1xv44JqKg5cz+RBbYCGOiPWND10Qxul/bCla14MDNmzIIqrqwls0JJd
-	cP269aNUZLal8MFcXcxPI7MLrxP6A8SHcwkiL0JEds3ksuCt2qjGxZs3FLxTQ8yp9vsBhVWEyMV
-	w8oF7MHm1lRyvEGa6bVA33Uc8/Ye/24VQQV3zzd9iVpuF46HqK6belgNK2bsttsdeAaz8PrCB7j
-	ULBjcLULUfwEdpTMC8WsXFz05tvOXiNAzrdvjbsWXOnZjM5grcdBmbevH22KomXeCiD3ZR1i+At
-	iSTS9s6DnterDI1uDztF0LAfSgSBqBIY31yqqOKl0QnwnJNqpPbIb166G9uTGcUpQOQcEpuvK2N
-	A0XQNCO+bmxSaO0Q+Q5foMkUacAAta2WX8GZkKZqoRo1U4zf+NNwgMQaNFCkscUW16ysW0dJlC5
-	y/hpkl1dChG/eoUKLcffSgKeTuBA0yFSmjExldxMODgQ6YfJ7auF/K5kSr8szWxYAU8bedYkphL
-	qjQEbbJxbJKhpWV7qELyNUrGS1MfBE3HUcrUuw6+rhwwypZY
-X-Received: by 2002:a05:7300:ce09:b0:372:7af9:bb0d with SMTP id 5a478bee46e88-3727af9cbd5mr5545311eec.19.1794211796529;
-        Mon, 09 Nov 2026 00:09:56 -0800 (PST)
-Received: from hj.. ([163.239.22.29])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3726039c635sm10835245eec.0.2026.11.09.00.09.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 00:09:55 -0800 (PST)
-From: hyunjungg <hj351016@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	Zhangfei Gao <zhangfei.gao@marvell.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Hyunjung Ko <hj351016@gmail.com>
-Subject: [PATCH] dmaengine: mmp_pdma: kill tasklet on channel teardown
-Date: Mon,  9 Nov 2026 17:09:44 +0900
-Message-ID: <20261109080944.1368218-1-hj351016@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        bh=+4/Tw2/BZgl/GDlD4gANvwDshf9nsMa1DlxhHC1kPEM=;
+        b=sc2M7DRPR6JdYsDlzAVyldnCw8bWDuv98o9JaDzPt8X4KnbkcUAaQn1kOGg7ERkDUA
+         CT9hBthrqhICnvv2UE9XOKS/QuHGqYHUHV4NlQXvCOZIdQrGKk6KM63hAUCEsHajS5F+
+         etPkG5LCAiL+KhUQwwkp5RxyNl+nx6FPl1HuaMLRrL2S39WNwpMGI4NsVIMDX47VFNyh
+         9nCFiGyqKdaHWyFbKCJ8j0KvujnTXkUgi/kNAaIEzkmA+rkaJU1WcfaytPqCQqe+dZ8N
+         lO/YY9S6VqDWphoth8jagfpmspGc8788VjhtDuW1UmtJqHu/dxzU+elKikUTok2oXRDW
+         k2qA==
+X-Forwarded-Encrypted: i=1; AL+hErHbWq6RCljmIWH7MZE+skJWVTe+WRccqaaaeoMp4THY5uE6j9EjABDTn3AEM5jJu5HdpkBf8qpwb9Q=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+1X1cMLxd/S1M45fFWpysAjyw550zOSSu4VhxO8aQ3TrtvPGDf
+	u+tmZxg6bL3PKwgye1FU3KgLZ7pEmWvhKoVZgD9e42AxESSr2tYEoquA62T7DojjQtCTltX13gx
+	XIsCIVneTSxARH/Lh1whAmkrT5Ct4oQ7++0/8winwo4+AEzF3z7ybzfLPZLKTXr9rufNdPfY=
+X-Gm-Gg: AYBFou045mTUT+1EORcI9qNjcRM3FbJ3NaQ3ww/fLlVdv6H7u3LQOUiEfwA7dIsoThn
+	yn/WQper+GPNRW7C+E48oYbaca8fU/ioaHCQ6pTV11xJQk26LT3Zhw0hxM6AXzWBp62Xd8PKMLi
+	D7rVwpOiKyPzyNVkVhrP6989+yq6eBMvSiPkXW7fCS60F3NCA/J66qX+/OGxDOqNU+CHqzwOCdp
+	qZgJXrAiYBFjiV2pNAfz2Q6RMQDy/zqpTupZJyEIdtuUcnP9yLChTaxsr00/7lECYvtPJUQfW7s
+	/0TcuVUFllX4e9oIz7micUwPd7AupH0eWdLbtdQgYUA/8Yd0udxsB2mjKyT+1GFM8FZOhl9WYqn
+	3wbzo0Ewi/MDTburUxFdeSEgscJJjNH6zCT4kL81i7abYn4lqYkJRgeJ+es8xH+tiL82euQ==
+X-Received: by 2002:a05:620a:2253:20b0:939:c7d1:7471 with SMTP id af79cd13be357-947842bd236mr505025885a.4.1794216117419;
+        Mon, 09 Nov 2026 01:21:57 -0800 (PST)
+X-Received: by 2002:a05:620a:2253:20b0:939:c7d1:7471 with SMTP id af79cd13be357-947842bd236mr505023985a.4.1794216116974;
+        Mon, 09 Nov 2026 01:21:56 -0800 (PST)
+Received: from [192.168.226.72] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b721ef33f1sm1191344a12.35.2026.11.09.01.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Nov 2026 01:21:55 -0800 (PST)
+Message-ID: <01375dbc-e497-4ed6-97ad-93280969c54f@oss.qualcomm.com>
+Date: Mon, 9 Nov 2026 10:21:53 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -98,56 +115,58 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dmaengine: qcom: gpi: convert to subsys_platform_driver()
+To: Brian Masney <bmasney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20261106-dma-gpi-subsys-v1-1-b37dcb4ba3c4@redhat.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20261106-dma-gpi-subsys-v1-1-b37dcb4ba3c4@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: mSTHx-iO7gT1-kL-H6eecB3H9MdBUKkt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTA5MDAzNyBTYWx0ZWRfX3CHG7B4HsjVA
+ IEWNJVqq4p2wWjj1WREmOLD1UFQQs54UNz7LwdbBeKwCmIWYUZu9EcA6Z7C7lCyV4U9+KJSjAgx
+ ZAhbOJES2Wm4/fjF5JIAMVIAXI2yb26T8nQ9Wx96KHwKyoOULwVCHTms7qXoADiktXZrGZAYPGY
+ iayR/v7usPEBdQD4FEj79HKR/AzJMw9Ta7SLGDIDFeFcGkW/D4B+48/mHlATEHDT15wu2YjA8n6
+ hH9qvqjzxqqPuUx4rn1h3B6wGEnCi4Zwq56RcZxnTKsVU8lipBBEy6wQRPIqUC7u3J8wa6cMOTM
+ twZdH65AY2Yqtiy6qoW94LmsqwI6Kug54fEscOONT6qgERaJXxsT1M8o4U8rov7Sy61ceoGiZBK
+ z+UXtvSAWmN7ABQPtXi4UIqDaC6sufkPdr+WcBozNoxs8t7ZxW4YyZUcxnHFKD51LLlqC5yzubl
+ qNWOuvZO2x8EmcCFDfA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTA5MDAzNyBTYWx0ZWRfX/MWOrs4jq9wl
+ zqKKgZwE9mc4Kk6amhbzew9pCrt3yGAAi0w0ScydjbPpVNMpPsvImFs9dXBnh6Wi6aX4kcznxyt
+ aDSVQXxOf3qxASEzad5oFVeRiY8kUSM=
+X-Authority-Analysis: v=2.4 cv=TeIDJhQh c=1 sm=1 tr=0 ts=6af190b6 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=0tVWl-7fB1VfZMg2ewEA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: mSTHx-iO7gT1-kL-H6eecB3H9MdBUKkt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-09_03,2026-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 bulkscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 clxscore=1011 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611090037
 
-From: Hyunjung Ko <hj351016@gmail.com>
+On 11/7/26 2:00 AM, Brian Masney wrote:
+> Reduce boilerplate code in this driver and convert it over to use
+> the macro subsys_platform_driver().
+> 
+> Note that this driver is configured in the Kconfig to be a tristate,
+> the driver doesn't have suppress_bind_attrs set, and there is no __exit
+> function defined. This change will add an __exit function that
+> unregisters the platform driver.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
+> ---
 
-The per-channel completion tasklet (dma_do_tasklet) is scheduled from the
-channel interrupt handler but is never torn down.  mmp_pdma_remove() frees
-the interrupts and unregisters the DMA device, but the channel objects --
-and with them the tasklet_struct -- are devm-allocated and are therefore
-freed only after .remove() returns.  A tasklet scheduled just before the
-interrupt was freed can still be pending at that point, so it runs against
-freed memory (use-after-free).
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Kill each channel's tasklet after the interrupts have been freed (so none
-can be re-scheduled) and before the DMA device is unregistered, mirroring
-the teardown fixes applied to other dmaengine drivers.
-
-Fixes: c8acd6aa6bed ("dmaengine: mmp-pdma support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
----
- drivers/dma/mmp_pdma.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index 8abd24e..2f0de65 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -1119,6 +1119,7 @@ static void mmp_pdma_remove(struct platform_device *op)
- {
- 	struct mmp_pdma_device *pdev = platform_get_drvdata(op);
- 	struct mmp_pdma_phy *phy;
-+	struct dma_chan *chan;
- 	int i, irq = 0, irq_num = 0;
- 
- 	if (op->dev.of_node)
-@@ -1140,6 +1141,14 @@ static void mmp_pdma_remove(struct platform_device *op)
- 		}
- 	}
- 
-+	/*
-+	 * The interrupts are gone now, so no new work can be scheduled.
-+	 * Kill any tasklet that is still pending before the channels are
-+	 * freed, otherwise it would run against freed memory.
-+	 */
-+	list_for_each_entry(chan, &pdev->device.channels, device_node)
-+		tasklet_kill(&to_mmp_pdma_chan(chan)->tasklet);
-+
- 	dma_async_device_unregister(&pdev->device);
- }
- 
--- 
-2.43.0
-
+Konrad
