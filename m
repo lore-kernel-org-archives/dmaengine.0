@@ -1,95 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794251180;
-	b=oxu1aIFmdUJD1Ek5xIOjbGMnzrmgoBuBzPU8MwIbkq6PhbqPMTCxu9vaaff1h8x8+c6/
-	 SvS3cFWv1VQpwL6mcyJyDMxB/sQgJHOFQfMXRjowy2lzJQ0VaZGQL0TIawtKH9mgP3mW9
-	 gpBl/m8IQ4VR7qRFk+2RFADM23Q+1z1SmvXKdNDlP6n10OyM91Tjlzz8MZ8k3KPsLm3cg
-	 T5G+9WxAcnpz67Fk6yditmay8yyO+StBmVrEa/b9KmfcwU7DmGN/ZPQwxiqFRr/FQyad1
-	 6c5umJ2KTJykeeyaivhN/O/6OOBhkPeBf3pZfwvFfvzMCa0LuvkSggNz0nlvyrDQkiQ==
+	t=1794264596;
+	b=3qnIl8qaV/Aki1cV5BR3XZQh7mB0Rn110MaJhYd8ucctSm82vFW9rFUr32EWgHNhi9o2
+	 LPWN2inPXJRJqChBUeaGTcDHUoCm7xXFGEE/ECf3mRR1VuXrii9z7B/zoFL+xJLv4Tvf8
+	 8Pe9n0FqkOjeEvS9DgpkJW1DCdauNFxQ86NdhvZKv603af537W1wCGP6p4cYc6wItvUWz
+	 W611CH947/arOj8xeCIrTNussj8QJAglWvuO89tfm6TPs8yNUBgHfmRS+wl/ET4bZnToG
+	 mwoLWpISFnYOVm8tgkezSCrLS0NTmjs9riaaK4Lw32/v1dz1ixb/lTS0l7V5OxeAbHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794251180;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=li5d2lfP83FaELH3ZUfaKJF8RdMswZJcZZJT9tiY5Ds=;
-	b=b5OHeOdQ6JR2EI1FsQIGBbwTwlrTW82IpVDRtRWWzRhCO2qAB3OkURB/KHqxXCnJqgSy
-	 oB/Qhrw2ctk9pBMIyeCqq7jWQbxbtdq+0ie0Q6fsztEKXD2oDNxzo0cmAjr0O1BBRPIQO
-	 DMo5FSkSH7DZo76TVfBQfMLti5tvQApR8wPVeg5PtVD6/+xrY/Ofjx4xb0Yjbj4exHsk9
-	 n4KkhaCzYkYgCG13wGX8KX5rS+naeGPs1bXvbKcp0XeGZLw2FzmyPlONUEYjL3xyJRmC7
-	 R3DKHKCOwaQq0q1pn5yW3RD38tq190fFZSUugJXfyqYPqdlwfRk+miB4P0AIYYeEOzQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794264596;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=hf+yqNYutAL2aRXI265QMA+VjlewtD9d2PAyBCFW/tY=;
+	b=3TkJ4iL0ktEjz4/BPHJC8iaVHEv7f9m3kvmBQpZXxyDpNe3WzHVexQ5BmqYFMeiYFfJ7
+	 Z8nE4/FN1YYJpaRKFgKjCf7DfaYAMiI8GXl+WYaaq8X1KA8CSn7fIkCfsNRx/NDaoWKgc
+	 m/hQsKBXl0fdp9a1gR+I239HHfoXNXDCjazwqS+lGRjrNCl9pCjs6dbDRQFQf7d1OSoNl
+	 BxoKXORMgbJUno63ZNLUu9C0ML1HzlsleZ5QYSOcTZV49SryHtyT76LpKjEMbSxMnkZrM
+	 eaz9Edraptzaok0KLQ1LpyzpoAhwQP7GKjfSeaJaLhqqAiYe1hKpjIOAweTzD0GQsKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mgcrea.io;
-	spf=pass smtp.mailfrom=mg-crea.com;
-	dkim=pass header.d=mgcrea.io header.i=@mgcrea.io header.a=rsa-sha256 header.s=google header.b=DzTk3SoV;
-	arc=none smtp.remote-ip=209.85.221.49
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="WMC/eAkC";
+	arc=none smtp.remote-ip=192.198.163.15
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DA8606A326
-	for <dmaengine@vger.kernel.org>; Mon,  9 Nov 2026 19:06:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19DA8606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mgcrea.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mg-crea.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4415606A31C;
+	Mon,  9 Nov 2026 22:49:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4415606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mgcrea.io header.i=@mgcrea.io header.a=rsa-sha256 header.s=google header.b=DzTk3SoV
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so1093239f8f.1
-        for <dmaengine@vger.kernel.org>; Mon, 09 Nov 2026 11:06:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mgcrea.io; s=google; t=1794251178; x=1794855978; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=li5d2lfP83FaELH3ZUfaKJF8RdMswZJcZZJT9tiY5Ds=;
-        b=DzTk3SoVBRaFcDjESOSlDz+HluB5pvDxRqpoAgww6sSmdd7ztACk0SYKoJNXXElEzi
-         ECwOk9lzQmIkXUZDisPBU/I3rITknP4L9GV/qOVXGKoIGiQZYdM25oyuzBiqiu3TP0LP
-         PSKPrRyrxSUNI4NJupNbxi87jQGw9w2QAgGLQf3sNbi1oPBHAc9nFnHWFA7NqXb1N9pv
-         oHakxtaaompDOsaKYA9XD6ftQfsAgYD6Mx1jbHmkNhE9RPjeCYKSm1zhYksnbnA0G7ny
-         GLuGN8vJW+lPB+6Qld9RCBsVduTHl9g57S9Upio6p+CdYoZeXn2seSyBMrjqNTAjG5mo
-         JFow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794251178; x=1794855978;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=li5d2lfP83FaELH3ZUfaKJF8RdMswZJcZZJT9tiY5Ds=;
-        b=peiP1NoKdoNL9CsLcIqHidxM3SY2ZIuORO8WMh4diQU8OsIupZD1HNAhqd7KQDdwCr
-         Y9w6Ja/+6ZJOY/e+7ORr/EiBtRVRpYZ6kHJu6fu4rDEtsZh7lRddfUlE9DbJOhXqJIpQ
-         sRpc7g+SuOVBMeQlWyrAdK7MQ3zDYcPrtbq4Y8Wh8bMALBUNrDc8374xJ4jg1ltw4eW5
-         03qtFTdXt9lGGJFTttrkfIXJq6RPT/bR6mUgfNS+IdAxA9+A+KYJ/NHMMmRMzyLr3svq
-         nEHvAKFZpuOQkBM3asKvBBXpp6QTLT08kxVJyo1if1fIrK2Vc0WEbi5B1mvQ5taD3z5W
-         9LQA==
-X-Forwarded-Encrypted: i=1; AL+hErGDJXzlpmAm0RytCiLojVK+ujct9D3KPSqeK+6vZQnX3dDrA5yAuYcQ8ol07MSXniM8Coe4vWJyICs=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/GRcP/wAp9Rrz0DzrZWoeYObbTAMBzdTQq7v+cJL0x/LT2V4nj
-	sG0cf17wjYXVjpIznm1FwMQ9V867LEuT4Dlt6ns/rZeavTBhvvM8BadeWBQQa7FUf40=
-X-Gm-Gg: AYBFou2RGkp4hnsJrIAMMq0sLoKPg92eckE8QUUopj5UdmVkx7zu2gbFfUR4bOZIegs
-	oFqbJ0ImXmmtSb5pGYcA8rJozv+uPtJCof14Lo68wC2fgUrBuM6FzLMSSiRtW7Rcfk16FKdpOO6
-	42u0wc/GuucSNo7CBd6wSvBg2QvV26wpVfQm5CZRxxGqI8mRRDSNlJnTao2Ky+McA39GNNpJ0o4
-	yA22gHBAv/2aLz5tn7E62phFcwRmqUjHoV91CxxDPwUl5gYf+dNynfhKzZwhnwpyrCQMvkUmHf4
-	evAmOjLDKDwSYU/L2/OqzK6AbDsGdHN3hnG7Q5X/CGVt7RaU+5u3eDMx8etSC5CueXKWziFXsYt
-	BPJ3yHewy3fLh++Ro/EiPoMgaWfSUbXx3lQdViX4aDEd7JDytn8YSX17Q/i4wWDuziEQ/7STRKp
-	aZnb57PAB5AG0VAQI34M90kP2aiO6RzUPPSsN8KnSNa/mBODr3ECiugbpTXbdN4qzcRlONneL4d
-	FBDHcEjtxJqFcTdwjooiJDNj8dpOmMV6Oz7+6wh9SKOibYjaPTNG9FM9lEQrEKaRtWLYSKYd1Dx
-	VCTWfvIbgEZR+n0qEzLeNLqaEaUQ8WP6b1yTDo2KlNAoqMHxMMkH2SFAxtyxE3A=
-X-Received: by 2002:a05:600c:1c1b:b0:4a2:1050:aff with SMTP id 5b1f17b1804b1-4ba02341314mr3514265e9.6.1794251178564;
-        Mon, 09 Nov 2026 11:06:18 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e0a:9d2:5a71:e834:fd4d:2ecb:b787])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba01fba476sm10178685e9.2.2026.11.09.11.06.17
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 09 Nov 2026 11:06:18 -0800 (PST)
-From: Olivier Louvignes <olivier@mgcrea.io>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Paul Cercueil <paul@crapouillou.net>,
-	Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-mips@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: dma-jz4780: Fix NULL dereference in tx_status after terminate
-Date: Mon,  9 Nov 2026 20:05:02 +0100
-Message-ID: <20261109190502.71581-1-olivier@mgcrea.io>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261023080953.16963-1-olivier@mgcrea.io>
-References: <20261023080953.16963-1-olivier@mgcrea.io>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WMC/eAkC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794264596; x=1825800596;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=V7lq3Nojdk4Wi4HvLSchpdyNNJVzu2RqwGA3f0BC3wI=;
+  b=WMC/eAkC2kw3STiIZDmNczvCnO2zwU+ooPQiVvlyFCLdIV5LAFW1KmqX
+   0sr1rHwz3ECvpBO9cBZb+sw0HrswBs4Widk689beMqs5riElw2hkekD4O
+   nHyF2hiY7WPLz9N/nFx2yptdQtOezBXJ2rgfEIgcURjCBSwhGnKDumpWc
+   aFdidFmpWcFgBHS8k50PNl7s+15jmqU9k8ccp68RkhTNoKJFKePs/Upug
+   tDHWFqI//eMO3mVe28I7ui05qfxV6O2HJzM2PDEDc3YMZaGeKtxAzkOFK
+   qv/GafwJuzO6hCbP9NNqKZL21xt+YB6HTNEynN3c2gm1Zl+v8CXU7cIPN
+   g==;
+X-CSE-ConnectionGUID: 7NwHCjzRT7avopTVuLHI9w==
+X-CSE-MsgGUID: griNA61wSD6DQccTCp7udg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2995970"
+X-IronPort-AV: E=Sophos;i="6.27,204,1787036400"; 
+   d="scan'208";a="2995970"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 14:49:55 -0800
+X-CSE-ConnectionGUID: g8JDfDVAS4SVWzVWmZmJxg==
+X-CSE-MsgGUID: vtYgExP0SwSsDgFv8Tk78g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,204,1787036400"; 
+   d="scan'208";a="9770089"
+Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.244.144])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 14:49:53 -0800
+Date: Tue, 10 Nov 2026 00:49:51 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Sergey Khimich <serghox@gmail.com>,
+	Sia Jee Heng <jee.heng.sia@intel.com>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/3] dmaengine: dw-axi-dmac: poll the correct enable bit
+ during termination
+Message-ID: <avJOD_jpXRpvspY1@ashevche-desk.local>
+References: <20261108-submit-dw-axi-dma-stop-pause-v1-v1-0-c48ec19e9ee4@gmail.com>
+ <20261108-submit-dw-axi-dma-stop-pause-v1-v1-1-c48ec19e9ee4@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -99,22 +83,39 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261108-submit-dw-axi-dma-stop-pause-v1-v1-1-c48ec19e9ee4@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Hi Vinod,
+On Sun, Nov 08, 2026 at 10:02:36PM -0700, James Hilliard wrote:
+> For channels 16 through 31, the channel enable bits occupy bits 32 through
+> 47 of the extended DMAC_CHEN register. dma_chan_terminate_all() only reads
+> the low word and tests BIT(chan->id), so it can conclude that an upper-bank
+> channel has stopped while its actual enable bit remains set. Descriptors
+> can then be freed while hardware still owns them.
+> 
+> Poll axi_chan_is_hw_enable(), which already handles both register banks
+> and the smaller channel layouts, instead of constructing another mask.
 
-On Fri, Oct 23, 2026 at 10:09:53AM +0200, Olivier Louvignes wrote:
-> jz4780_dma_terminate_all() sets jzchan->desc to NULL. The cookie of a
-> cyclic transfer never completes, so a later jz4780_dma_tx_status() call
-> with that cookie finds no descriptor on the channel's lists, takes the
-> else branch and reads jzchan->desc->vdesc.tx.cookie through the NULL
-> pointer.
+...
 
-Gentle ping on this one. It has Reviewed-by from Paul and Frank, and it
-still applies on dmaengine fixes. Without it, closing a playback stream
-oopses (trace in the commit message).
+> -	ret = readl_poll_timeout_atomic(chan->chip->regs + DMAC_CHEN, val,
+> -					!(val & chan_active), 1000, 50000);
+> +	ret = read_poll_timeout_atomic(axi_chan_is_hw_enable, enabled, !enabled,
+> +				      1000, 50000, false, chan);
 
-Could you take it for fixes?
+With a single argument it's readx_poll_timeout_atomic().
+While at it, you may use 1 * USEC_PER_MSEC and 50 * USEC_PER_MSEC instead of
+plain numbers.
 
-Thanks,
-Olivier
+	ret = readx_poll_timeout_atomic(axi_chan_is_hw_enable, chan,
+					enabled, !enabled,
+					1 * USEC_PER_MSEC, 50 * USEC_PER_MSEC);
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
