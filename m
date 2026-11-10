@@ -1,99 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316660;
-	b=pGKDdmvkqm0crdVIds9uCL/e0FVeTeDGsHn3Nfizr8fl42myDna7KdgBNhvxO1UfUsOg
-	 +vhJNzD4mgELdlppdqSju4hl0i4nirAWJSOGQJNQGvb8KieBGDZqsfFmW3btFqb3Dc97M
-	 dp08WQuBNTjCO4QlRaRYByMxZc3xWpO2oyNYIdxszuyu7POfBQ+qAxAwrhO1WwvR97oo8
-	 q6jFh2n20EWbAjJZZbkT9wzPudlGvtDnORqclgScMO4xAcOeY2CyE4TzyknmJyMSyXtQZ
-	 lEl4cufCMUqV5bu902vqBd21sMiHY7Nc28WdcFG0G3g9Xqkf52mVm139gU+hJFNoaHw==
+	t=1794320139;
+	b=cw2Yn/6hutQnB0jZ+lJIDsEPf1M4QvSMvyN2MYCjgsw89UV+4wCu3yk4NnPANmm0BYYF
+	 MDvBg+HbFpjL31/TYsy06Yg2bUiscC7eyuA1TTQA8J1T+cIa55xgu7YM868CUuOT6kCGJ
+	 EJouVdpcge0+M8pwoYNeTo4BIY8y1OWBxDBwQPIR8Mr6sFLrQtuKTcqaNXe3v90mNFSpX
+	 ySxI9rV/shkWpBeiH1jHm2zYEC7asYMxo5LHkO8B53nFfxZosiF33dxm7NFqezZW26pDf
+	 CX2kvSESADpKguFubScfRmdeZ25FieUadZ6kJX9BMPoFbVdMBghQDWlqqFP2iI0gYRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316660;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=1ZQe4ZEx+yAdgmqarlo9rAFQ6pOj0pg3LDUb//64KOo=;
-	b=wAEJAxQu+ZURLaIEkSRw97pzMbEeDb3T58H2xTX1VNP1+2rfjye41WouVYzglp3+sFrg
-	 IbctD6x2BiYmIFebZVv+dTEet0evYj8gHcPCtQeg5dIAnLoiR3WsWbcZ0Ywh4PFfuwmJT
-	 0c28SNkn8nsADuRpfVE8SJqBJty9J4NbXEE4pSiEY19Q4PrraxZbHwOZ2RRVqcPfum5td
-	 HyR59jpEyzusu/6xrUBcsjfL4MXbEuALs9TDW7jDWuPJ9QvJTu/gFZNTA6ND1ki0Sy/bF
-	 nvN3T38czh/e60YvdAKEXIW2Z5VWW2y7ag/z/7ClBcLDJQeqU2kpZuAnaNSty1ZdtLg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794320139;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=nw6s+fDrHO0AaEqaHh20eMoNuR5LHBINJWy33y+YkfE=;
+	b=Msb+gVPQEcJACCp/eVLAWhOsklwhIgAYHfF8ZgTe2dkvGlzKfPWhiwYFCAhEQn3OvtL/
+	 EfsgYOt5rgvIGg54qDV8x13Y68442CazDPcaSORZIFy5hgOw6d/1NI4J6kzw6bf+NZ1Wg
+	 3oP9+ymJSk0v4/Fvgp6p/Ij6OtCCvk8Faib97Pqw6ULGbkawC4Yy1jsZDj1G6o97+MK9l
+	 VuWkbssZngSuA1AcVwYeQnV8bVfzyZeFsUFclYIfo1JQw7LDqUjIUFtyJsyXh1tUitjw6
+	 05MYnJMSfOL65ihvh2PjHw1J7Ey0eOMtPF+Gprd+8IdthHDv5Rhuau+oKNl0L+MHe9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GwyFaAkY;
-	arc=none smtp.remote-ip=209.85.215.173
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ODIDrNIM;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D9B606B2EF
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:17:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 49D9B606B2EF
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8153606A334
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 14:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GwyFaAkY
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cd6028ff33fso925640a12.0
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:17:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316660; x=1794921460; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1ZQe4ZEx+yAdgmqarlo9rAFQ6pOj0pg3LDUb//64KOo=;
-        b=GwyFaAkYkQ+iXObJwQRiVIeWXFOaGVVEiQl7OQX0eBpgVvTp4gleCubPwbaChzzqLa
-         WF5YCTdlFX4+z2Q39DAlsnNajIwsvyiJEkE3bpqAl0TxBDef3lxV267U1h8KVloKrN7Z
-         1cu6ECVZAPOKN8Rttqk8llnpODT1gfPqxZpzMEMIvxcrV8LnzvxkuOVsu5fZsWK9dar8
-         HDg2jXcPnP2WhQ13Oys+2VGvzXZddpeILje2pCwEop8t9ilXWYnb8PoyoKU9yOXIj/L9
-         RMeX7i5cmk6ClidQO+JiEdcJUNfBclwQDO7D6huKjLUw0YqwNK+npQGU/pvxxzCwvNRk
-         GNhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316660; x=1794921460;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1ZQe4ZEx+yAdgmqarlo9rAFQ6pOj0pg3LDUb//64KOo=;
-        b=EgY2Vu6T9tu54CIJ0ZRwtvC9dFpcB0mwWrz9HZFBinGHic5BCOyfWfsZ7dH2WH0uJm
-         /+rFmeC7HuTEZ6ZTQ6o/Z1F1iiE1Tq76vawvSvuWt7GUCPebPMMjbAoyTkJRqjlCyV01
-         eQ1sREWLsXxBsR0G6zRue25dJLyo7M8gL/1JQpiLt+8YN3vQIKDR2Z6y5gDvDGax8306
-         Hgl51GmhFk7xTn2RGkdE9/yTUUZz9xNVYFfgG4kd7k9dAPal1M887OUBIUw51qX4vw7E
-         NtYIAEaxKyu1zOKLT6HKFQs8cn9UUXlxYSpw+ASt3QSQN72z9yGuzhO7kwDc7GJksWB3
-         y/KA==
-X-Forwarded-Encrypted: i=1; AL+hErFGc91ZtiR2jXW07EVt9cxc/dmykSvPJUfzZwhv7SKP+J2xZjU8QiDpZquUK2KXZ1vJQQYpS1AaHsA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+YLoVovVpH/vv+F4gqRFh3JzcXd/OGfnYehY4f/WgidaJsU4lh
-	hbfi8vnxIpweTEh+S60t5IFsT4KOVDrXLUMlrM7d+eTuCZd9DJ4w+8Wc
-X-Gm-Gg: AYBFou3DD1lZmP6ulbQi+SJRc5RJN2Wf2Qe2h8/IUing4K41kyjwgMDf0LxPDJ9CN02
-	NCmUM/7sBJA9LwdprWOKEi9dHoAuZ+01tDxmBNCQg+euab0pJLOtwjQe1w+dcgOR1wKs4csMLyx
-	BhZRc6YOd6CoKeQaWFmWArLfZfuzwQ89k2STp3K8VhhrHVZO8OttogZsB8GYlRTVbZ9IktHWr0C
-	jxW/AD182U2WFK5JRNkouUr7DHD9wFer3LhEuqYx+gCF7eR/HKwICKATtQGx2KPPnmMDuQNGqSF
-	EcQ3tUMWuSAMs/6dQLDMaCe8V618pIidzREKUJC+DQ6fyT2De19CAGgPUs1t59sYha5Ok9nTPyV
-	Vwo8gQT7VNdzIsEPb6XuHCkUZkBFdZdWDaVAV9KMzdM2ZS55+FBSe5s1GdhpuxYSFbmMDJvvjDB
-	yHVBtBhm4/kMqG6CvQ4wNisfjDdyJ9m0GRdDPOXO6nuBsCrRNWrODdtmtV/jFaiOusylKg/dHzf
-	dL8eXvdTctfShdR8kRO+Gy56RUwlHr/BifxDQ375ZnfbkblfORXtQrRU4z2bd3k1DcfsfmCZAH5
-	6TkixK8JDecWhHWUV1fdSK+JTKp2iSn5
-X-Received: by 2002:a17:90b:5485:b0:3ac:8527:3fc5 with SMTP id 98e67ed59e1d1-3b166b4157dmr2728930a91.3.1794316659586;
-        Tue, 10 Nov 2026 05:17:39 -0800 (PST)
-Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.17.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:17:39 -0800 (PST)
-From: Allen Pais <allen.lkml@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Allen Pais <allen.lkml@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Kelvin Cao <kelvin.cao@microchip.com>,
-	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH v4 33/33] dmaengine: switchtec: use channel BH helpers
-Date: Tue, 10 Nov 2026 05:13:33 -0800
-Message-ID: <7b1ffe42093c54956a295bde752c3663d1284f37.1794315350.git.allen.lkml@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ODIDrNIM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FCE1F008A2;
+	Tue, 10 Nov 2026 14:15:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794320138;
+	bh=nw6s+fDrHO0AaEqaHh20eMoNuR5LHBINJWy33y+YkfE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ODIDrNIMPi2NOZ8OHgrhVSm4DenhTvOvr0Z8xnasecdWHVTQA714fTLPWlLc1SYDM
+	 wNbuA8VBrUE65989iI2dQ+YyRNSnu+i0UqFiYlU/VmiNAWRSekqYpsqrt7U/odpAXJ
+	 VpO/pNUnaau/eXlgJudbFeAuWlKAYmYmwiwDE35m7U0TguvxiFpDdSHmloQnbbAGn1
+	 0Ob3L8Vpzq5m5x3qZ6VSrY4ESh9Z/rzncCHwVWfmvXyq9dLdrVk++6N7IYSkCdXH7X
+	 JKnT13xlpsh9X1ejglEIrBkrFLlaLzAkTuCsxAM+R0JG0d4OkhE8uZgWjLPEjV8S+9
+	 +pG35SuJFOFuA==
+Message-ID: <sashiko-outbox-207180@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Allen Pais" <allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
+ <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Nov 2026 14:15:38 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -102,97 +59,136 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Replace the per-channel descriptor completion tasklet with the shared
-dmaengine BH helpers. Client callbacks remain in softirq context while
-using the common scheduling and teardown mechanism.
+Thank you for your contribution! Sashiko AI review found 2 potential
+issues to consider:
+- [High] dmaengine: dmaengine_kill_bh() returns with bh_work still
+  queued on re-schedule
+- [Medium] dmaengine: flush_work() in dmaengine_kill_bh() triggers flush
+  dependency warn
+--
 
-Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
----
- drivers/dma/switchtec_dma.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+commit e183b161b65ac0da135cdea21e6916bb3483d703
+Author: Allen Pais <allen.lkml@gmail.com>
 
-diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-index a386c3a284e6..21b281ea7cd7 100644
---- a/drivers/dma/switchtec_dma.c
-+++ b/drivers/dma/switchtec_dma.c
-@@ -133,8 +133,6 @@ struct switchtec_dma_chan {
- 	/* Serialize hardware control register access */
- 	spinlock_t hw_ctrl_lock;
- 
--	struct tasklet_struct desc_task;
--
- 	/* Serialize descriptor preparation */
- 	spinlock_t submit_lock;
- 	bool ring_active;
-@@ -584,6 +582,7 @@ static void switchtec_dma_synchronize(struct dma_chan *chan)
- 
- 	int rc;
- 
-+	dmaengine_kill_bh(chan);
- 	switchtec_dma_abort_desc(swdma_chan, 1);
- 
- 	rc = enable_channel(swdma_chan);
-@@ -820,9 +819,10 @@ static int switchtec_dma_resume(struct dma_chan *chan)
- 	return ret;
- }
- 
--static void switchtec_dma_desc_task(unsigned long data)
-+static void switchtec_dma_desc_task(struct dma_chan *chan)
- {
--	struct switchtec_dma_chan *swdma_chan = (void *)data;
-+	struct switchtec_dma_chan *swdma_chan =
-+		container_of(chan, struct switchtec_dma_chan, dma_chan);
- 
- 	switchtec_dma_cleanup_completed(swdma_chan);
- }
-@@ -832,7 +832,7 @@ static irqreturn_t switchtec_dma_isr(int irq, void *chan)
- 	struct switchtec_dma_chan *swdma_chan = chan;
- 
- 	if (swdma_chan->comp_ring_active)
--		tasklet_schedule(&swdma_chan->desc_task);
-+		dmaengine_schedule_bh(&swdma_chan->dma_chan);
- 
- 	return IRQ_HANDLED;
- }
-@@ -1060,6 +1060,7 @@ static void switchtec_dma_free_chan_resources(struct dma_chan *chan)
- 	spin_unlock_bh(&swdma_chan->complete_lock);
- 
- 	switchtec_dma_chan_stop(swdma_chan);
-+	dmaengine_kill_bh(chan);
- 	switchtec_dma_abort_desc(swdma_chan, 0);
- 	switchtec_dma_free_desc(swdma_chan);
- 
-@@ -1086,8 +1087,6 @@ static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
- 	spin_lock_init(&swdma_chan->hw_ctrl_lock);
- 	spin_lock_init(&swdma_chan->submit_lock);
- 	spin_lock_init(&swdma_chan->complete_lock);
--	tasklet_init(&swdma_chan->desc_task, switchtec_dma_desc_task,
--		     (unsigned long)swdma_chan);
- 
- 	swdma_chan->mmio_chan_fw =
- 		swdma_dev->bar + SWITCHTEC_DMAC_CHAN_CFG_STS_OFFSET +
-@@ -1135,6 +1134,7 @@ static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
- 	chan = &swdma_chan->dma_chan;
- 	chan->device = dma;
- 	dma_cookie_init(chan);
-+	dmaengine_init_bh(chan, switchtec_dma_desc_task);
- 
- 	list_add_tail(&chan->device_node, &dma->channels);
- 
-@@ -1157,7 +1157,7 @@ static int switchtec_dma_chan_free(struct pci_dev *pdev,
- 	spin_unlock_bh(&swdma_chan->complete_lock);
- 
- 	pci_free_irq(pdev, swdma_chan->irq, swdma_chan);
--	tasklet_kill(&swdma_chan->desc_task);
-+	dmaengine_kill_bh(&swdma_chan->dma_chan);
- 
- 	switchtec_dma_chan_stop(swdma_chan);
- 
--- 
-2.43.0
+dmaengine: back channel BH helpers with WQ_BH
 
+This commit replaces the per-channel BH tasklet implementation with a
+dedicated WQ_BH | WQ_PERCPU workqueue while keeping the dmaengine_*_bh() API
+unchanged.
+
+> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> index f3c1283b161b6..97d8f9667ae5f 100644
+> --- a/drivers/dma/dmaengine.c
+> +++ b/drivers/dma/dmaengine.c
+[ ... ]
+> @@ -1449,9 +1451,34 @@ static void dmaengine_destroy_unmap_pool(void)
+[ ... ]
+> +static void dmaengine_flush_bh_work(struct work_struct *work)
+> +{
+> +	if (!work)
+> +		return;
+> +
+> +	flush_work(work);
+> +}
+> +
+> +static void dma_chan_bh_entry(struct work_struct *work)
+> +{
+> +	struct dma_chan *chan =3D container_of(work, struct dma_chan, bh_work);
+>  	dmaengine_bh_work_fn fn =3D READ_ONCE(chan->bh_work_fn);
+> =20
+>  	if (fn)
+> @@ -1467,7 +1494,7 @@ void dmaengine_init_bh(struct dma_chan *chan, dmaen=
+gine_bh_work_fn fn)
+[ ... ]
+> @@ -1487,7 +1513,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
+>  	if (!chan->bh_work_initialized)
+>  		return;
+> =20
+> -	tasklet_kill(&chan->bh_tasklet);
+> +	dmaengine_flush_bh_work(&chan->bh_work);
+>  }
+>  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
+
+[Severity: High]
+Can dmaengine_kill_bh() return with chan->bh_work still queued on the
+workqueue?
+
+Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting for a
+running tasklet to finish so concurrent tasklet_schedule() calls cannot
+re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
+invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_work is
+executing, insert_wq_barrier() places the flush barrier on worker->schedule=
+d,
+ahead of pool->worklist:
+
+CPU0                                  CPU1 (bh_worker)
+                                      process_one_work(&chan->bh_work)
+                                        set_work_pool_and_clear_pending()
+                                        dma_chan_bh_entry()
+dmaengine_kill_bh(chan)
+  flush_work(&chan->bh_work)
+    insert_wq_barrier()
+                                          ...
+                                            dmaengine_schedule_bh(chan)
+                                              queue_work(..., &chan->bh_wor=
+k)
+                                        /* dma_chan_bh_entry() returns */
+                                      process_scheduled_works()
+                                        /* runs barrier from
+                                         * worker->scheduled */
+  /* flush_work() returns */
+kfree(chan)
+                                      /* processes pool->worklist */
+                                      dma_chan_bh_entry()
+                                        chan->bh_work_fn  <-- use-after-free
+
+This is a regression when chan->bh_work is re-queued while
+dma_chan_bh_entry() is running, for example when a BH callback reschedules
+itself (such as dma_tasklet() in ste_dma40 or mv_chan_slot_cleanup() in
+mv_xor) or when a driver calls dmaengine_kill_bh() before tearing down its
+IRQ or timer (such as mtk_cqdma_remove() or tegra_adma_free_chan_resources(=
+)).
+Using cancel_work_sync(&chan->bh_work) or disable_work_sync(&chan->bh_work)
+depending on whether the channel may be used again would wait for any
+in-flight execution while preventing or draining concurrent re-schedules.
+
+> @@ -1687,15 +1713,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
+> =20
+>  static int __init dma_bus_init(void)
+>  {
+> -	int err =3D dmaengine_init_unmap_pool();
+> +	int err;
+> =20
+> +	dmaengine_bh_wq =3D alloc_workqueue("dmaengine_bh",
+> +					  WQ_BH | WQ_PERCPU, 0);
+
+[Severity: Medium]
+Does calling dmaengine_kill_bh() from a WQ_MEM_RECLAIM workqueue or a
+PF_MEMALLOC task trigger a WARN_ONCE() in check_flush_dependency()?
+
+dmaengine_bh_wq does not have WQ_MEM_RECLAIM set (and WQ_BH workqueues cann=
+ot
+set WQ_MEM_RECLAIM).  Because dmaengine_kill_bh() calls flush_work(), which
+passes from_cancel =3D false to __flush_work() -> check_flush_dependency(),
+flushing a pending or running chan->bh_work from a WQ_MEM_RECLAIM context
+hits the dependency warning:
+
+kernel/workqueue.c:check_flush_dependency() {
+	if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
+		return;
+
+	WARN_ONCE(current->flags & PF_MEMALLOC, ...);
+	WARN_ONCE((worker && ((worker->current_pwq->wq->flags &
+			       (WQ_MEM_RECLAIM | __WQ_LEGACY)) =3D=3D WQ_MEM_RECLAIM)), ...);
+}
+
+For example, sdhci allocates host->complete_wq with WQ_MEM_RECLAIM and runs
+sdhci_complete_work() -> sdhci_request_done() -> dmaengine_terminate_sync()
+-> dmaengine_synchronize() -> vchan_synchronize() -> dmaengine_kill_bh().
+Using cancel_work_sync() or disable_work_sync() in dmaengine_kill_bh() sets
+from_cancel =3D true and avoids this warning.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794315350.gi=
+t.allen.lkml@gmail.com?part=3D2
