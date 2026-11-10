@@ -1,57 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794332831;
-	b=ojoci3wxxKLi6eafe1JD8V9yIpKhd61VZo7/OVj9q6EcV57hiLRzexBYUSGo9R9b3DF1
-	 PEpbOjrb/m4LChPB/pdE0M2Y0Wjd9AVCGsx2D0/f0vNEqQT2faOHSX60S9S2mGRS8hA4j
-	 OLD6eB8WexFwGAALMZDsn396TPp2bHenO9jReflQzxclXy2NGL/tL42fsg50v99lQDiRc
-	 MMqK6cpqJPDP3cOiMaTifjZCP+kteNF5jyICYUF4Ud1lEv94ZvxKD9igHoDLtthNXs4Fn
-	 SVW++Zg3SydMIWeodoPtwEQJfeltG/wXSswiSlIGZu4K8kmR/4vMlinqbnADSeAXaEQ==
+	t=1794333052;
+	b=iloAoXon0ZJCUst944k2l+qXqfEZO6zrQzzLWB+q/4EB1jHg2m/QMvTf+K8NfN2429fB
+	 GhammlRLx1LoSugEkGpVQwPYlSglbd+xPPOtUNbGQJB32mUg38XTTtv46Fp9tIK1OdKxt
+	 YOSFimiEu/91t+ze3eqkOTVvHNCMShhQVlNtV7SCtlOnaOWjut+5nhjgCgZi2N3B+6F9k
+	 GrrN0YBAYbGK5vCel7/THwf768rKyhykbmb6w9Pqc44VXzyfnCN3GonAymLVJv/xCzj0q
+	 fxHPfBDn8B5V8kbeLJSUB3cMi4/kTYhD8cjLvjrSM32Q2NmfxKE9uI6+adMCaMdgXrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794332831;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=GAGZwdCIJ6oI01UrruZjJsCbx0Rq3e3ya8oMNd1r2UU=;
-	b=Isph36z5aXML1uxHUxgOM63990AzTs5q0JerC0jIwHpydnqlNdcOk5KSizCNvLAmZCY0
-	 bfTeO/GY2Ofd32ZD8tkqHZoK5wAysuANf4tbBmyeUnpdj8Q1m5L1bnLNruhdRn9eqTRIA
-	 bv3U5I1MfebU3eZ0MdmtjxeX/cMmaBhubctDPoaxoIK05AUBAhq9dgyPDMyxjgpy+tx8y
-	 3eK4D1JO1oKI9vD0q7jR07JYpW/DQipZiUb330Qe3X+l0kSGRq251DAqPZEiTuLLDFpMw
-	 LbC2ZObU8gOp2NDOM8E/ibJACZclrx483od8IPC2Wq6MnJPS9xN+bdil5zHSEL1EbjA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794333052;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-SA-Exim-Connect-IP:
+	 X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:X-Spam-Checker-Version:
+	 X-Spam-Level:X-Spam-Status:Subject:X-SA-Exim-Version:
+	 X-SA-Exim-Scanned;
+	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=;
+	b=Qr8hGz2H2X3AQdVNxqgvOErmnFdvvyExIr85AkBEbjwOp9L6lBzcPnftKUu0HbsZPof0
+	 BKyJ6w37AWEptrAjAfzl5pO4uE8FI4xGQCM6Ac/j1+7aakigVTlYc+2kIVDTNJl4YxKR/
+	 7Jxxr//BdFWZfzQN7eNzzWwNEbTvbZFOhLa8HOZJCz8m+POnmIiIGqDP0PUH/1c5KV0Ra
+	 l4DjopGJPHNH1Wqb9LeXLJdBwlZaP8iQMWjDVUoaQ8itNN/5C5YMUHNPY9jQiLgsta5NS
+	 jJHR63KAXdGLc3YrG28KcmFyrn17GsY2t3CjjyseSG4EI5c5SKu9+0Mtnd1voqMgrtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sqt4Yzga;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=deltatee.com;
+	spf=pass smtp.mailfrom=deltatee.com;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA;
+	arc=none smtp.remote-ip=204.191.154.188
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6A8606A31C
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 17:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD65B606A323;
+	Tue, 10 Nov 2026 17:50:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD65B606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Sqt4Yzga
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB851F008A7;
-	Tue, 10 Nov 2026 17:47:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794332831;
-	bh=GAGZwdCIJ6oI01UrruZjJsCbx0Rq3e3ya8oMNd1r2UU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Sqt4YzgapDpPI3mYrDUIhVM2T2mWaRO5wfeCictMioJni5qLevTVT0MyLJWoZARpR
-	 TjiNUsrZJv4om8oz6mR/0zk9jBJglJYGRyRkx2cxOKmeKreBvbmWqOyR1MR2itp+jU
-	 wy6fRnUQpTWsWtWwgyzzz2ZpO2y3i5OWAwG5Z8yJbUZiiFeJuBWXCxQpvyelmU9DrA
-	 D7mcDO1GZGbS4qrSS1sA8FXuLHp8Bwy7WzCcst+XaAruRdKm9X8+sy0DyWF+uiMZXb
-	 65F/IBDqnnmjWMf47fxWSlIB0CcrKOwJ+LR/mYGnJ+queOlEdZBccFEIlv1w/lWbSO
-	 i1rNUkZKEdjkw==
-Message-ID: <sashiko-outbox-207513@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 4/4] dmaengine: switchtec-dma: add pmon sysfs
- attributes
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>, dmaengine@vger.kernel.org
-Cc: vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261110173137.623764-5-logang@deltatee.com>
-References: <20261110173137.623764-1-logang@deltatee.com>
- <20261110173137.623764-5-logang@deltatee.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 17:47:10 +0000
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=JUudkuDA
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=OhBmBB5csoRwUskFDo3bdowpIsJJII9UaiaDaNs2X5E=; b=JUudkuDAVtlFw1EnsYsjLhHAhG
+	IyV35tZj3p7vLYnJEAJiPXH1DiWvDzDRgKCtpOu4nFObOrCq/0parJuG98XPw/Tf2MysTOBw5dcmI
+	sAS2e5TBQBdRqaS/kpbVlDZsSLGfh3sBNObCa8Jf75rJGvL82ZL+s0vsv+avZ4LgwWmhtgQWBzssT
+	o9bXbnfMXEGj+tbd4UUKs2bS7/xFNxxuGd2R9r+UMyiQh8Z8/WERLuB2VLQg2wrsf7bIr+IT8PTOw
+	IpFb502Ee1aCW956bbBFyv80WHx3mmsXVgVAW4Am14wNkDRDMx6M7tb8Xnx2+2+SxoUbgd9ucwhgW
+	sqjilA0A==;
+Received: from guinness.priv.deltatee.com ([172.16.1.162])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xQpze-00000000oJB-0dMp;
+	Tue, 10 Nov 2026 11:50:50 -0600
+Message-ID: <dbe72187-4c12-4a8f-a63f-0c4238e50ec5@deltatee.com>
+Date: Tue, 10 Nov 2026 11:50:49 -0600
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,110 +61,35 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org,
+ Kelvin Cao <kelvin.cao@microchip.com>
+References: <20261110173137.623764-1-logang@deltatee.com>
+ <20261110173137.623764-5-logang@deltatee.com>
+ <sashiko-outbox-207513@kernel.org>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
+In-Reply-To: <sashiko-outbox-207513@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 172.16.1.162
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, kelvin.cao@microchip.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH v4 4/4] dmaengine: switchtec-dma: add pmon sysfs
+ attributes
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: switchtec-dma: multi-line menu output in
-  latency_selector_show()
---
 
-commit a610541f39faa290edb39d9134f3a2df55bdae1a
-Author: Logan Gunthorpe <logang@deltatee.com>
 
-dmaengine: switchtec-dma: add pmon sysfs attributes
+On 2026-11-10 11:47, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Does latency_selector_show() violate the sysfs one-value-per-file rule?
+Strictly speaking yes, but we think the text printed is
+self-documentation that's worth having here. If others feel strongly
+against this we can revisit it.
 
-This commit adds a "switchtec-pmon" sysfs attribute group to expose
-Switchtec DMA performance monitoring registers per channel.
-
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index 1ebe17095c61a..774b418330ed7 100644
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-
-[ ... ]
-
-> @@ -1215,8 +1222,274 @@ static const struct attribute_group switchtec_con=
-fig_group =3D {
->  	.attrs =3D switchtec_config_attrs,
->  };
-> =20
-
-[ ... ]
-
-> +static ssize_t latency_selector_show(struct device *dev,
-> +				     struct device_attribute *attr, char *page)
-> +{
-> +	struct switchtec_dma_chan *swdma_chan;
-> +	struct chan_fw_regs __iomem *chan_fw;
-> +	u32 lat =3D 0;
-> +	int len;
-> +
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	swdma_chan =3D container_of(c, struct switchtec_dma_chan, dma_chan);
-> +	chan_fw =3D swdma_chan->mmio_chan_fw;
-> +
-> +	rcu_read_lock();
-> +	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-> +		rcu_read_unlock();
-> +		return -ENODEV;
-> +	}
-> +
-> +	lat =3D readl(&chan_fw->perf_latency_selector);
-> +	rcu_read_unlock();
-> +
-> +	len =3D sysfs_emit(page,
-> +			 "To select a latency type, write the type number\n");
-> +	len +=3D sysfs_emit_at(page, len, "(1 ~ 5) to latency_selector\n\n");
-> +
-> +	len +=3D sysfs_emit_at(page, len, "Latency Types:\n");
-> +	len +=3D sysfs_emit_at(page, len, "(1) SE Fetch latency");
-> +	if (lat & SWITCHTEC_LAT_SE_FETCH)
-> +		len +=3D sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len +=3D sysfs_emit_at(page, len, "\n");
-> +
-> +	len +=3D sysfs_emit_at(page, len, "(2) VDM latency");
-> +	if (lat & SWITCHTEC_LAT_VDM)
-> +		len +=3D sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len +=3D sysfs_emit_at(page, len, "\n");
-> +
-> +	len +=3D sysfs_emit_at(page, len, "(3) Read Immediate latency");
-> +	if (lat & SWITCHTEC_LAT_RD_IMM)
-> +		len +=3D sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len +=3D sysfs_emit_at(page, len, "\n");
-> +
-> +	len +=3D sysfs_emit_at(page, len, "(4) SE Processing latency");
-> +	if (lat & SWITCHTEC_LAT_SE_PROCESS)
-> +		len +=3D sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len +=3D sysfs_emit_at(page, len, "\n");
-> +
-> +	len +=3D sysfs_emit_at(page, len, "(5) FW NP TLP latency");
-> +	if (lat & SWITCHTEC_LAT_FW_NP)
-> +		len +=3D sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len +=3D sysfs_emit_at(page, len, "\n");
-> +
-> +	return len;
-> +}
-
-[Severity: Low]
-Does latency_selector_show() violate the sysfs one-value-per-file rule?
-
-Reading latency_selector emits multi-line usage instructions and a
-numbered menu marked with "(*)", while latency_selector_store() expects a
-single integer from 1 to 5 via kstrtoint(), so the output cannot be
-parsed as a single value or written back to the attribute.  Could
-latency_selector expose a single value (or a single-line space-separated
-list of tokens with brackets around the active selection, documented
-under Documentation/ABI/), or move human-oriented menus to debugfs?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110173137.6237=
-64-1-logang@deltatee.com?part=3D4
+Logan
