@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794333522;
-	b=GbLVO9BltV7mCq50h0U4VBHneYyYPokvgZbcOs/v7XGa831ORdGvPrO6zPh21gm5hRJx
-	 2kF+ylQealkI7gvsQpKOofs+C6tcRNkrP3SRADsy2tt3/XNFhN2pI6EArGsEy4QOPoIc1
-	 CZ5I57tu0sCYDb9cWTnA7FocrjkNE4hpdCGo8kiJXuYQqTFO8FZzBL6MYpsnT7tAtJgtj
-	 Pw+fMy/zsSlTuTU8fcwGGP9hDcuBBwFXjVEuNcllug8UYXELS8MkSh8fyBH6nhjV/oafw
-	 3G/wvuEBJem1ykCglFhAtM4odQJhG9w9CKM7ZTVkVW+Qlxu2V8SCftW366fZgrbaKWw==
+	t=1794333874;
+	b=JccPj+A7uLVr5TJLF0YKho9tMbAsoomGUHZ6OI/iaYmRiYcrZ2YZtnVVGmG6itxZlT7v
+	 WtStLFGiwQJZ223L3VdtC9gYNUYMQErOs802tb/dE9MTgjCwwDHK9vA5NZZTiePgh7VYh
+	 qUVl4opi5tNepqd80rtopZAJ1jp2DrrM5CRH0F51pYMT0tIHBBXTEqZon9QEP2XwuCZ77
+	 3CoQBl7y8aauGJxIG1qEcUy/b1M2RLrVY3gywcxf8O2kcWrzE/7MDaiAK8j4N+OAQMOzt
+	 CHVhggZWFaDQ1rugmbDYfUOFREeDo8PdmJMLr99WmZEUlybrHDKOrqd8ZbtGoaHIWdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794333522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794333874;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=OoZpsZ3RAC4wZtWOM/mA+ByKJRpvwubjorCJS1L/xuw=;
-	b=dGzlvaVA/bgrzbCMGkSm85RIZaWp9czgmiJbv/17ksjLLuSNqV0LLjzXd9Ie6rqWjqKj
-	 Gtwp0rFv34u6P5LbXS8qyDKPuoEDmPTux62dpHqs3Tq8FdEb5gmIREEFHpL8mPxHTAmC7
-	 H0H23M/aPniuBcQWVoRA7dnABSdDeylpLCxqe+tRO1Z3cOUdxSR2GalScMPvsnBHprT3T
-	 wy1x1WJlQ9zNZ2OI99o38EXiCAhfDneRFQSK2/CJvOxF4ilQq6zVEcvGcYzgBeguP4LtL
-	 T3vxyW9PGYHu8YVgh8NjjKn7tdF0g4DhWKLu2N58Bp966p8qEQ2XK2Gg0+cBlW+kXUQ==
+	bh=Im6eD6PEHap21DRCmNlwexzp6NvZdn170NUIQpaBsok=;
+	b=nFXBHvU/0QL9Yj+edczMPuT2GmkBSdA2GxV8Q4FMZ493cDS9wuhWmKaVcSWonl+8OXMa
+	 UyAsoEcOep7KO+HBn48mWKqfDIQy1yD/oXjI+02cn3CAhoPnvTuXdklS0PUHNljmbc28r
+	 EbaJrq33unzu4nXFarxuXMhzxzgRd/qMQtSulyBcMsEljvlRVaYtgMiD0d4fSAT7fYHCB
+	 ONGigbbq0g6Ry/Duhwh3croFk33X3gLQDM1ySFETgqq3j5AoQP6EirfDg9gsdhIA/VRiU
+	 GHl6CNWtd0RZJAzZ5DdzOTZk0noC3kLtbTAE1IMlHni1CNz2gBio3DmtnqCHvDBsv9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="AlN/ykR5";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WqupF7uZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD39E606A320
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 17:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E92606A320
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 18:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AlN/ykR5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BBA1F0089F;
-	Tue, 10 Nov 2026 17:58:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WqupF7uZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F7D1F0089F;
+	Tue, 10 Nov 2026 18:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794333521;
-	bh=OoZpsZ3RAC4wZtWOM/mA+ByKJRpvwubjorCJS1L/xuw=;
+	s=k20260515; t=1794333873;
+	bh=Im6eD6PEHap21DRCmNlwexzp6NvZdn170NUIQpaBsok=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=AlN/ykR5i63zUNv8vxMANI7tDEXeSxxfWIbWdsaajHuPNU2mvMJdQ8L04KSn0YZJX
-	 9Z+u5ZhIcizDGvA6k+BT+JI56LAFH6zvKclvXa9R3mPeQkkKSdYnE9xDdlcENXMEew
-	 Qi0HgrNLxFIYh3CorBWUZneSeFm38wpppRXotSzTuvihNZH16Csr+xlL3FIxR4MPeh
-	 x0r9eYruhUwInVIxKQH8ZiBZvbJpG/SYtbT9i3OnGnvN/f3NLa02HVxj8fyC0hispb
-	 dM3CZwWiUBELa5Y8ViFIz5P7zHFaqR6NSPq2Tqh0mscVAePVWhRjaSmPRYydMkUyIV
-	 ZOaxYYZ+wZeNw==
-Message-ID: <sashiko-outbox-207537@kernel.org>
+	b=WqupF7uZIlJGCq9kxtd6/nC0ul5MGLVCWrrAYxL5PR619D0TmQZCf0KCOhNDSvmlh
+	 E8rT3RE8R9aFHwJJqIDj4rzV8WOCrmL4jXkpEcdclSbySM2EVOC0AdkVwNXYZ9gPwL
+	 OhhqKog/u7ZwG3CFTG8/ccPuBZQdjCPDzxuJtndx7ccdrUCy25BulR+clkECnZvmjm
+	 ed2EGmH6Vfx8D76xtDeiyH2khvkKH1S9DyKaSsSQXgNfoZJyvBVrGcwXniGvkkMulw
+	 WkPH0JEltLE7ExHaK1z6YPO5LQcL9kjLMi3GH1jJKqAl2s+rQzI0WqaExPjcDreu/J
+	 anXS7k3WiffTw==
+Message-ID: <sashiko-outbox-207555@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 2/6] dmaengine: plx_dma: fix descriptor ring leak in
- alloc_chan_resources()
+Subject: Re: [PATCH v4 23/33] dmaengine: timb_dma: route callbacks via
+ channel BH
 Reply-To: sashiko-reviews@lists.linux.dev
-To: "Logan Gunthorpe" <logang@deltatee.com>, dmaengine@vger.kernel.org
-Cc: vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261110173927.624629-3-logang@deltatee.com>
-References: <20261110173927.624629-1-logang@deltatee.com>
- <20261110173927.624629-3-logang@deltatee.com>
+To: "Allen Pais" <allen.lkml@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <e9f90c61446942c160480ee81e220869de918105.1794315350.git.allen.lkml@gmail.com>
+References: <cover.1794315350.git.allen.lkml@gmail.com>
+ <e9f90c61446942c160480ee81e220869de918105.1794315350.git.allen.lkml@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 17:58:40 +0000
+Date: Tue, 10 Nov 2026 18:04:33 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -63,71 +63,165 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 2 potential
 issues to consider:
-- [Low] dmaengine: plx_dma: missing Fixes trailer for
-  alloc_chan_resources() leak fix
-- [Low] dmaengine: plx_dma: duplicate cleanup in plx_dma_free_desc()
+- [High] dmaengine: timb_dma: race in __td_ier_mask() and TIMBDMA_IER
+  updates
+- [High] dmaengine: timb_dma: race between timb_dma_chan_bh() and
+  channel teardown
 --
 
-commit db658b0054bd97de26e837fb78fec5b170b3aad1
-Author: Logan Gunthorpe <logang@deltatee.com>
+commit dc5312469115907bacab896cc42d4d204804abfc
+Author: Allen Pais <allen.lkml@gmail.com>
 
-> dmaengine: plx_dma: fix descriptor ring leak in alloc_chan_resources()
->
-> If the device is removed between plx_dma_alloc_desc() and the pdev
-> check, the error path frees hw_ring but leaks desc_ring and every
-> descriptor in it.
->
-> Add plx_dma_free_desc() and use it here and in
-> plx_dma_free_chan_resources().
->
-> Reported-by: Sashiko <sashiko-bot@kernel.org>
-> Link: https://lore.kernel.org/dmaengine/20260717223217.B6FBF1F000E9@smtp.=
-kernel.org
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+dmaengine: timb_dma: route callbacks via channel BH
 
-[Severity: Low]
-Should this include a Fixes tag for the commit that introduced the leak in
-plx_dma_alloc_chan_resources():
+This commit moves per-channel DMA completion handling from the controller
+tasklet to per-channel BH work items and drains the BH work during channel
+teardown and driver removal.
 
-  Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initializati=
-on and cleanup")
-
-> diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-> index 0a7ad2473cb13..bfccbb0c70e84 100644
-> --- a/drivers/dma/plx_dma.c
-> +++ b/drivers/dma/plx_dma.c
-> @@ -404,6 +404,16 @@ static int plx_dma_alloc_desc(struct plx_dma_dev *pl=
-xdev)
->  	return -ENOMEM;
+> diff --git a/drivers/dma/timb_dma.c b/drivers/dma/timb_dma.c
+> index 0acd7a36a3d0d..d24508e2a0bbf 100644
+> --- a/drivers/dma/timb_dma.c
+> +++ b/drivers/dma/timb_dma.c
+> @@ -433,6 +433,8 @@ static void td_free_chan_resources(struct dma_chan *c=
+han)
+> =20
+>  	dev_dbg(dmaengine_chan_dev(chan), "%s: Entry\n", __func__);
+> =20
+> +	dmaengine_kill_bh(&td_chan->chan);
+> +
+>  	/* check that all descriptors are free */
+>  	BUG_ON(!list_empty(&td_chan->active_list));
+>  	BUG_ON(!list_empty(&td_chan->queue));
+> @@ -575,17 +577,42 @@ static void td_tasklet(struct tasklet_struct *t)
+>  	for (i =3D 0; i < td->dma.chancnt; i++)
+>  		if (ipr & (1 << i)) {
+>  			struct timb_dma_chan *td_chan =3D td->channels + i;
+> -			spin_lock(&td_chan->lock);
+> -			__td_finish(td_chan);
+> -			if (!list_empty(&td_chan->queue))
+> -				__td_start_next(td_chan);
+> -			spin_unlock(&td_chan->lock);
+> +			dmaengine_schedule_bh(&td_chan->chan);
+>  		}
+> =20
+>  	ier =3D __td_ier_mask(td);
+>  	iowrite32(ier, td->membase + TIMBDMA_IER);
 >  }
 > =20
-> +static void plx_dma_free_desc(struct plx_dma_dev *plxdev)
+> +static void timb_dma_chan_bh(struct dma_chan *chan)
 > +{
-> +	int i;
+> +	struct timb_dma_chan *td_chan =3D container_of(chan, struct timb_dma_ch=
+an,
+> +						     chan);
+> +	struct timb_dma *td =3D tdchantotd(td_chan);
+> +	u32 ier;
 > +
-> +	for (i =3D 0; i < PLX_DMA_RING_COUNT; i++)
-> +		kfree(plxdev->desc_ring[i]);
+> +	spin_lock(&td_chan->lock);
+> +	__td_finish(td_chan);
+> +	if (!list_empty(&td_chan->queue))
+> +		__td_start_next(td_chan);
+> +	spin_unlock(&td_chan->lock);
+
+[Severity: High]
+Can a pending timb_dma_chan_bh() work item prematurely complete a newly
+submitted transfer after td_terminate_all() or td_issue_pending()?
+
+Previously, td_tasklet() took td_chan->lock and finished the active
+descriptor immediately.  Now, td_tasklet() only schedules the channel BH
+work, and td_terminate_all() tears down the active descriptor without
+canceling or flushing that work:
+
+CPU0 (<softirq>)                  CPU1
+td_tasklet()
+  dmaengine_schedule_bh()
+                                  td_terminate_all()
+                                    spin_lock_bh(&td_chan->lock)
+                                    __td_finish(td_chan)
+                                    spin_unlock_bh(&td_chan->lock)
+                                  td_tx_submit()
+                                    spin_lock_bh(&td_chan->lock)
+                                    __td_start_dma(td_chan)
+                                    spin_unlock_bh(&td_chan->lock)
+timb_dma_chan_bh()
+  spin_lock(&td_chan->lock)
+  __td_finish(td_chan)  <-- stops and unmaps the new in-flight transfer
+
+When the stale BH work runs, __td_finish() unmaps and completes the newly
+started descriptor at the head of td_chan->active_list while hardware DMA is
+still in flight.
+
+In addition, dmaengine_kill_bh() in td_free_chan_resources() only flushes
+td_chan->chan.bh_work without waiting for td->tasklet.  If td_tasklet() is
+pending or running on another CPU, it can schedule the channel BH after
+dmaengine_kill_bh() returns, or leave td_chan->active_list non-empty when
+td_free_chan_resources() reaches BUG_ON(!list_empty(&td_chan->active_list)).
+
 > +
-> +	kfree(plxdev->desc_ring);
+> +	/*
+> +	 * The controller tasklet re-armed IER before this channel was
+> +	 * finished. Recompute it now that the channel state has changed.
+> +	 */
+> +	ier =3D __td_ier_mask(td);
+> +	iowrite32(ier, td->membase + TIMBDMA_IER);
 > +}
 
-[Severity: Low]
-This isn't a bug, but plx_dma_free_desc() duplicates the free_and_exit
-cleanup at the end of plx_dma_alloc_desc() right above it:
+[Severity: High]
+Does calling __td_ier_mask(td) and writing TIMBDMA_IER without holding the
+channel locks race with concurrent channel completions and starts?
 
-drivers/dma/plx_dma.c:plx_dma_alloc_desc() {
-    ...
-free_and_exit:
-	for (i =3D 0; i < PLX_DMA_RING_COUNT; i++)
-		kfree(plxdev->desc_ring[i]);
-	kfree(plxdev->desc_ring);
-	return -ENOMEM;
+Previously, __td_finish() and __td_start_next() ran sequentially inside the
+single controller tasklet before calling __td_ier_mask(td).  Now, both
+td_tasklet() and each channel's timb_dma_chan_bh() call __td_ier_mask(td)
+without holding any td_chan->lock:
+
+drivers/dma/timb_dma.c:__td_ier_mask() {
+	for (i =3D 0; i < td->dma.chancnt; i++) {
+		struct timb_dma_chan *td_chan =3D td->channels + i;
+		if (td_chan->ongoing) {
+			struct timb_dma_desc *td_desc =3D
+				list_entry(td_chan->active_list.next,
+				struct timb_dma_desc, desc_node);
+			if (td_desc->interrupt)
+				ret |=3D 1 << i;
+		}
+	}
 }
 
-Moving plx_dma_free_desc() above plx_dma_alloc_desc() would allow
-free_and_exit to call plx_dma_free_desc(plxdev) as well.
+If another CPU is inside __td_finish() (from another channel's BH,
+td_terminate_all(), or td_issue_pending()), __td_ier_mask() can observe
+td_chan->ongoing =3D=3D true while list_move() empties td_chan->active_list:
+
+CPU0                              CPU1
+timb_dma_chan_bh()                __td_finish(td_chan)
+  spin_unlock(&td_chan->lock)
+  __td_ier_mask(td)
+    if (td_chan->ongoing)
+                                    td_chan->ongoing =3D false;
+                                    list_move(&td_desc->desc_node,
+                                              &td_chan->free_list);
+      td_desc =3D list_entry(
+        td_chan->active_list.next, ...)
+      if (td_desc->interrupt)  <-- out-of-bounds read off list head
+
+When active_list is empty, active_list.next points to &td_chan->active_list
+itself, so reading td_desc->interrupt reads past struct timb_dma_chan (and
+past the end of the struct timb_dma slab allocation on the last channel), or
+reads a freed descriptor if td_free_chan_resources() frees free_list.
+
+Second, writing ier to TIMBDMA_IER outside any lock races with
+__td_enable_chan_irq() when another channel starts a transfer, overwriting
+TIMBDMA_IER with a stale mask and losing that channel's completion
+interrupt.
+
+Third, td_irq() masks interrupts by writing 0 to TIMBDMA_IER and relies on
+td_tasklet() to clear TIMBDMA_ISR before re-enabling TIMBDMA_IER.  Because
+td_tasklet() now writes TIMBDMA_IER before timb_dma_chan_bh() runs
+__td_finish() to stop RX DMA and clear ongoing, and because
+timb_dma_chan_bh() can also write TIMBDMA_IER after td_irq() masks it for
+another channel but before td_tasklet() acknowledges TIMBDMA_ISR, an
+unacknowledged interrupt can be unmasked immediately and re-trigger
+td_irq().
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110173927.6246=
-29-1-logang@deltatee.com?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794315350.gi=
+t.allen.lkml@gmail.com?part=3D23
