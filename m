@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316636;
-	b=TevBAco6EU+x6y363oMPiH0j/npOol6DekfyFlQjExEl/rK09znw8l+oVblDPkA/mlNW
-	 WrNqszJu0C4XsKxJkS5QKFzEtRqdS3U6J0xCkC8Zr1xas9/3bhCB6an8FVUKf1sf5nhrO
-	 jOdVSPdqN043RkqZRL89N6kTPHllNqLOkQNH/+OlGbkBV0WI/l6y0ZIqikM0is5UUqmiB
-	 iDQb3q/XiMsng73cufaEWM6XFYjUxyTdsq6FQlfUutCndSKVY4QMjOQK1iWz3xSYJrUgb
-	 cHqLFj5BQs55t2yIk1hyOFBjLd2CbEnG5An9f/1TLEIv+6n8MTAElJA3fcpEk9FaVXA==
+	t=1794316643;
+	b=0GtAeREZ6k5uQCi1fOuEpcsdCSJpt2tQ+SbgiQzFTjDxwSsyOzCI4D3wPN+45JLeIS3C
+	 V4BXmYmBrQSjlECD0negzLsAOeVzOvt/QSJ++llW+AOo0aOQ2lIQR7AGAAv0n9rZqfLsZ
+	 voMwShYymGb+8KCeCtQo5AnJCkKMf+vDNiy6Dv/uRKMybtsnvhCZE2hNm96j7bs39GSUp
+	 fxQTr3pnB30vUEK6aqv645bSUlfb+5TlD9v4BnucsAOPhGJ33oZENxXL3eOY47+to7KFT
+	 QdNwRLz0v+HJcQ9WPH8ut1rTYskkDFlJeJAimrTM1ouUAWkAjlD3+jhGTGfBehKZ1kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316636;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316643;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l1pi1XUDschNZw5wd/NqRDLF/PgSvJCjkj/LDlLiJKI=;
-	b=nDacngpjpZkaranxZZWmOcy4HZu++lkvFPwECQZTrbbjPVxFkwvDW5essJeKZWxxh80v
-	 6fLF3bCOrsVKimfu4QaN6bJIvWFUzYs+Z3zrBJ1gayhULq+LmuRWyCqSyrzveR42YYhZT
-	 816BsWmPUoYh5iAsWHv2irw3Zkfo3VVpsJpL/dLItwXLkON2QU2GhX4J6gPoXtpNk2EcT
-	 J15dqBZQN0nc/Ra22+H9HrribIc7YRUuamZAdvOvmRaCapCoXkyJQZMfxqY922d9ada2U
-	 NguGH80WP9gWU4XiIo+jVu4wAOD+Y4yzUb5YnR5V8Gi5FzafzXQmvR0g0p7IFp2cVCA==
+	bh=ml3zJxxV6zteBKfYjRhx0ricvuNkb6CeX/qUwgIXjIs=;
+	b=d4NMto/dgUBRtm1VQDlsyvi2iW4OP+fE8+9vrYQVINVSCIPKJ0IYL6FxnH8wu5yv6Td9
+	 rgRrfwDiD8hGjGm2kCzU/ej5gpbrMyuyxpaZ+DTrGPpZybh4Z/jVp6Uh/jvlzehOl5G/A
+	 oCJULLuh94qKaqqGtt+ZoB/xPhDs7E9PFbp/7hHtrg913MXQU84BOCnVvfmBTNNNcjf3o
+	 EZplgdIwGQJENCCK0aQBgf5iPCpy/TYo0U/H2Nm6wk3VCJYKvEKObQEz4limdpW8n8p2j
+	 bnFvr4abE9/Ifox6Y7+/vVZDqeEZo1iHOyJBBIeAiGHXXw24OT0F57pYqtGOHJoKpLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Mh3cCAsf;
-	arc=none smtp.remote-ip=209.85.216.52
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=giNnwQEf;
+	arc=none smtp.remote-ip=209.85.216.48
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F01606ACD6
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:17:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4F01606ACD6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2628606ACE9
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:17:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2628606ACE9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Mh3cCAsf
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3ae7626d14aso1020976a91.2
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:17:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=giNnwQEf
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3ace1f3897cso1099740a91.0
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316635; x=1794921435; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794316642; x=1794921442; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=l1pi1XUDschNZw5wd/NqRDLF/PgSvJCjkj/LDlLiJKI=;
-        b=Mh3cCAsfNJiZEfERkAPdueKxjidLed2is4jMSorEMT8iWHNviGCAjbPOmNc4+92vD1
-         4HxIAaH87KC94BVFEOdeSDmVo4+5c0Ls6t34Z/LxDBvhorHB5a/Lw/XfkURu8WrZmY7/
-         3W6yLIdNTkljMtm2IvPT3NSy6Zw5YSOJI1o+CUb3F4tVffGchMVS//f0KmJ0YSrJ9Wcw
-         1+YRNJCH7xxNm2ubZ51tbJBlgbB5CIqTmgt/lqV9K6tBKEvBDXM+l6+UhpXd2+CDTJka
-         jE8H+ooaLKf1T5E+nYBvpi4pePf7mxOdM7P+0pUHeoG91tBnHsVWaGYwvu/wbxqytsob
-         KTtg==
+        bh=ml3zJxxV6zteBKfYjRhx0ricvuNkb6CeX/qUwgIXjIs=;
+        b=giNnwQEflUToyyLtq/59cQqoXFJz3maGvZr6eRUrUItqVzcS9xhHzN7Xr6sfibDPa1
+         p8V4dm6BRiUD1OHQaISuwb306Cuhw98jw963v/n8Z4p9agA3gPFG2IORMAu3AdPn/mL8
+         mrWO2/UH8CKX1H0i4KFjJjLXyZmGhpi9EHG1GpDLL9TKImskwzcDSZ6XGNST0LlozPpj
+         DLBR/8OxDE9JbZxP7dINJv52Akywoj1zPLdsklNPnPaVcvy9Q5nnh7Pjkl7iCHzCAlmJ
+         YkslGx3p2jagY83WiA1d0VsoIoA+xmrg4pwn5JNtUTQ86vjME9xJxY4fjPGjVID5Zao4
+         Tafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316635; x=1794921435;
+        d=1e100.net; s=20260707; t=1794316642; x=1794921442;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=l1pi1XUDschNZw5wd/NqRDLF/PgSvJCjkj/LDlLiJKI=;
-        b=05Xv7yDPuzgdkDw1Ty1D9HNv8YefWoCV3uLCs9wykHhgRtnDRiCCcsXsbUFBda4PhU
-         F1dCXgD6w1HlJRfX+ue9jwRGk94e/Q49vipcMNxo8DPsZKvdkeTxewcV1t13KC794wlJ
-         JuWXlFezAFPiPZHcQvbxZhm4mZwNcsnR9V6H1sz4FQ8p3+ZQNgteF4GeRpcCNg6ZkTNT
-         z6Gmav6haJroSdYNhzMGOQ9+OqKJyB2tllf4Acgj89qFCbGOJvz/AHiKTfiOjSLpyWSW
-         WcbHlcnIocOMH/SrcOCwdxid/bsX4TVZPFNH9Z1TUv3JKYKnXlm48r8Z8JcsxBIAbxHB
-         IGHw==
-X-Forwarded-Encrypted: i=1; AL+hErF16yQY/KjprNJYORNE4361kQ0pQi+/5jHRJ9i5nP5NYiwG/GlxPLRlI4hAVn66M5wrQLLpmz7GYjo=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+i3NFtxJTFkpAliyIViWPJtgom1SRDB5nybUkckeYwku+7rzLX
-	Q7i0PMnqf10cZGhO3icYtzK3oW9XP/mggLfC0IBLlw/p7/g1Da08TR2Pu9CKgA==
-X-Gm-Gg: AYBFou2xxwPV6uz1XJ+S1wgDD7/8eToOJsDZY8JMq59B/asljNCyrWdXmCbRYM3qTm8
-	qPwVE2y7D42D2DDMtH+tuTvmNUrJA/dkc8t9+QeUfgkOb04LzH0JoxUAd87VjitOCy0yeLMNvGE
-	vQEI5xJBM8TmfOLsfgxqHjA6GO/iFJlHDbOznYKKPOUyhS8pBOQ+E9mph7i5reX5CFWmkF+16a8
-	TVDGM4HJv39Y3lKr5CY7xtI2hkoWonFtgWxAafj1cFqf+hbfKhy0zsjL38yJvCAeJoviKNx/16S
-	cUKyu9ctN4X93f2YrqssoHz8R0Urr4wLWFQTMRJAcyleiybBAAiS/DBaUQGd9hA6L00M0el0vij
-	uAWfNU0xP8pX2K/91OsSj3RN+EyxKjEvq4T0DrXatLuVO/C/z6F2rmV7bxebqJISswsUtZnS6gD
-	ATxg3F4m0oC3S/1ZB8VEcSbAFH7UvpjxDjMaI3ynRdti3gvThGhh5DN9/hSkgx7osG7XRXBUJ9A
-	mTwiGIwwcnKQyN10Okml097johwWdX2jZK7sO+M9shpWNlX1HxyjfWNvt55KOE2qNFOUYsZsbuj
-	WmtdULfHIvhjAYpAHuMe6xdrz2nk9JJW
-X-Received: by 2002:a17:90b:3ec1:b0:3ab:189b:6981 with SMTP id 98e67ed59e1d1-3b166cde7b8mr2780267a91.48.1794316634965;
-        Tue, 10 Nov 2026 05:17:14 -0800 (PST)
+        bh=ml3zJxxV6zteBKfYjRhx0ricvuNkb6CeX/qUwgIXjIs=;
+        b=Q+1/RiK74poeSrwxC7FWksMpyBUE7M6KoX2gEX39U1r0vZuJrCTP910BKEGSZW7NTz
+         czeN2zZdIMp3F0zHEi2F2ActG/Bhnc8tU43psJTElhw2A+kexe2XfenHhsmLfIUc41em
+         NgGmUIwQcXESuJFYDw5sSGpPRZ7WlLbS82xqtGMareN1++QWXpYNZRN3wOPBQYXItAUi
+         hoqetr7qMj5Q8tDTb5IyXm1dTNF4K5dIXnd80faIKq1jK/xP2vLabqqJ3p2n7YeEQaQT
+         FVcexvTpzct9owRup/AhAJKC9cqgi88cfvRXE82UeYMk5LvcB1j8dB+3tEMRCQ6RZ3gi
+         WnJQ==
+X-Forwarded-Encrypted: i=1; AL+hErHHY30d2/sy43ZmcyADMcWUDe1AbqSVUhyKL0NGZayily2p1hWyR/Tmqs+O3kQ95CpqUanORp3Herk=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8bkBuo8qVz6xip0t1HX1i+DrCb7f19dzBVW2+cHiU4YqvqTtk6
+	hCq7jQqrFLMckgog7W5aWzD1hWkZJvcAaNaxvBpmcCuNMHMIeGlS8714
+X-Gm-Gg: AYBFou1xJLarQNIooxV1BLPjWi2PSrg8nHB1RUfTuuxL9hTVVoI/XnSTW5qLBTvYjma
+	yceRMEOa8AJb0G9QtB8JQmnaN3YRNEG4t+L0L+prIxbjYNbtm32COpkNXoNNJw4+uZP4a/FlHZv
+	PVnnNesIGPgWKfI98g53SV554rM9synJqB5UWY6lrrUoNdXCYSeiSOuLYXctsnAK+jrfm7vFuBP
+	5k62VtafomUDQrt0FqfF1jwiVudSfjHZ4uFtvoblG7oyyIo0ybdXgKIMBAueJxHcbx2jxGApjxb
+	50b59MNmK08yKLgODXsQmHUJEyQWWsOw4M32Ero9w5Y/TfABscFMtgq1HCkk36xSpvo9XM/aFb3
+	bzMLmjkUVXHJJSLOCjYH+WNCPT1zGHURUQWwbEUsHVGL/e33Tvurpap293B8LcSVJmdF6VV/0Vj
+	2PJX0Y7aDGeQZ452y7gu6WjMHNsozDDrPBCh6SG8Rqf6dSWo6UiYgkloEs7yhB1A05v12VY4L52
+	sKdGw8TDMTVdJNxR+HB7ABygH1pVO9LPvEaqFmkCoztQH1vSSwHxWTco6Y6DOlaY+uxfl69vNha
+	TlRon/yBVZ4lstrZfMgINjZZcDvJs4c=
+X-Received: by 2002:a17:90b:4a50:b0:3a7:f4d:b23d with SMTP id 98e67ed59e1d1-3b166d30739mr2698856a91.52.1794316641976;
+        Tue, 10 Nov 2026 05:17:21 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.17.14
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.17.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:17:14 -0800 (PST)
+        Tue, 10 Nov 2026 05:17:21 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
@@ -85,10 +85,13 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH v4 25/33] dmaengine: mv_xor_v2: use channel BH helpers
-Date: Tue, 10 Nov 2026 05:13:25 -0800
-Message-ID: <4ea53128f001eba3e96a6e0ecebc0651d918a155.1794315350.git.allen.lkml@gmail.com>
+	Paul Walmsley <pjw@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Frank Li <Frank.Li@kernel.org>,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH v4 28/33] dmaengine: sf-pdma: route error callbacks through channel BH
+Date: Tue, 10 Nov 2026 05:13:28 -0800
+Message-ID: <25d7826e0e6738356657f523e6f6cf3450e4b26c.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
@@ -103,89 +106,68 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace the device tasklet with the per-channel BH helper so descriptor
-callbacks run through dmaengine_*_bh.
+virt-dma now dispatches completion callbacks through per-channel BH work,
+but SF-PDMA invokes the client callback directly from its error tasklet
+after exhausting its retries. That descriptor is never actually
+completed: it stays on the issued list and in chan->desc, the cookie is
+never advanced, and the channel does not move on to the next transfer.
+
+Complete the failed descriptor through virt-dma instead, mirroring what
+the done tasklet does for a successful transfer: unlink it from the
+issued list, mark it DMA_TRANS_ABORTED with the untransferred size as
+residue, hand it to vchan_cookie_complete() so the client callback runs
+from the channel BH, and start the next issued descriptor if there is
+one. Reset the retry budget at the same point, as the done tasklet does
+after a successful retry, so the next descriptor does not inherit an
+exhausted retry count.
+
+During removal, kill the producer tasklets before the channel BH so they
+cannot enqueue callback work after it has been drained.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/mv_xor_v2.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/dma/sf-pdma/sf-pdma.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
-index 1920dcd5886e..3c8d7b065d3f 100644
---- a/drivers/dma/mv_xor_v2.c
-+++ b/drivers/dma/mv_xor_v2.c
-@@ -139,7 +139,6 @@ struct mv_xor_v2_descriptor {
-  * @reg_clk: reference to the 'reg' clock
-  * @dma_base: memory mapped DMA register base
-  * @glob_base: memory mapped global register base
-- * @irq_tasklet: tasklet used for IRQ handling call-backs
-  * @free_sw_desc: linked list of free SW descriptors
-  * @dmadev: dma device
-  * @dmachan: dma channel
-@@ -158,7 +157,6 @@ struct mv_xor_v2_device {
- 	void __iomem *glob_base;
- 	struct clk *clk;
- 	struct clk *reg_clk;
--	struct tasklet_struct irq_tasklet;
- 	struct list_head free_sw_desc;
- 	struct dma_device dmadev;
- 	struct dma_chan	dmachan;
-@@ -290,8 +288,8 @@ static irqreturn_t mv_xor_v2_interrupt_handler(int irq, void *data)
- 	if (!ndescs)
- 		return IRQ_NONE;
+diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
+index ca60fb46ade0..992f9f103702 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.c
++++ b/drivers/dma/sf-pdma/sf-pdma.c
+@@ -326,9 +326,21 @@ static void sf_pdma_errbh_tasklet(struct tasklet_struct *t)
  
--	/* schedule a tasklet to handle descriptors callbacks */
--	tasklet_schedule(&xor_dev->irq_tasklet);
-+	/* schedule a bottom half to handle descriptors callbacks */
-+	dmaengine_schedule_bh(&xor_dev->dmachan);
- 
- 	return IRQ_HANDLED;
- }
-@@ -346,8 +344,8 @@ mv_xor_v2_prep_sw_desc(struct mv_xor_v2_device *xor_dev)
- 
- 	if (list_empty(&xor_dev->free_sw_desc)) {
- 		spin_unlock_bh(&xor_dev->lock);
--		/* schedule tasklet to free some descriptors */
--		tasklet_schedule(&xor_dev->irq_tasklet);
-+		/* schedule bottom half to free some descriptors */
-+		dmaengine_schedule_bh(&xor_dev->dmachan);
- 		return NULL;
+ 	spin_lock_irqsave(&chan->lock, flags);
+ 	if (chan->retries <= 0) {
+-		/* fail to recover */
++		/* fail to recover: abort this descriptor and move on */
++		chan->retries = MAX_RETRY;
++		chan->xfer_err = false;
+ 		spin_unlock_irqrestore(&chan->lock, flags);
+-		dmaengine_desc_get_callback_invoke(desc->async_tx, NULL);
++
++		spin_lock_irqsave(&chan->vchan.lock, flags);
++		list_del(&desc->vdesc.node);
++		desc->vdesc.tx_result.result = DMA_TRANS_ABORTED;
++		desc->vdesc.tx_result.residue = desc->xfer_size;
++		vchan_cookie_complete(&desc->vdesc);
++
++		chan->desc = sf_pdma_get_first_pending_desc(chan);
++		if (chan->desc)
++			sf_pdma_xfer_desc(chan);
++		spin_unlock_irqrestore(&chan->vchan.lock, flags);
+ 	} else {
+ 		/* retry */
+ 		chan->retries--;
+@@ -601,9 +613,9 @@ static void sf_pdma_remove(struct platform_device *pdev)
+ 		devm_free_irq(&pdev->dev, ch->txirq, ch);
+ 		devm_free_irq(&pdev->dev, ch->errirq, ch);
+ 		list_del(&ch->vchan.chan.device_node);
+-		dmaengine_kill_bh(&ch->vchan.chan);
+ 		tasklet_kill(&ch->done_tasklet);
+ 		tasklet_kill(&ch->err_tasklet);
++		dmaengine_kill_bh(&ch->vchan.chan);
  	}
  
-@@ -553,10 +551,10 @@ int mv_xor_v2_get_pending_params(struct mv_xor_v2_device *xor_dev,
- /*
-  * handle the descriptors after HW process
-  */
--static void mv_xor_v2_tasklet(struct tasklet_struct *t)
-+static void mv_xor_v2_tasklet(struct dma_chan *chan)
- {
--	struct mv_xor_v2_device *xor_dev = from_tasklet(xor_dev, t,
--							irq_tasklet);
-+	struct mv_xor_v2_device *xor_dev =
-+		container_of(chan, struct mv_xor_v2_device, dmachan);
- 	int pending_ptr, num_of_pending, i;
- 	struct mv_xor_v2_sw_desc *next_pending_sw_desc = NULL;
- 
-@@ -760,7 +758,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_msi_irqs;
- 
--	tasklet_setup(&xor_dev->irq_tasklet, mv_xor_v2_tasklet);
-+	dmaengine_init_bh(&xor_dev->dmachan, mv_xor_v2_tasklet);
- 
- 	xor_dev->desc_size = mv_xor_v2_set_desc_size(xor_dev);
- 
-@@ -868,7 +866,7 @@ static void mv_xor_v2_remove(struct platform_device *pdev)
- 
- 	platform_device_msi_free_irqs_all(&pdev->dev);
- 
--	tasklet_kill(&xor_dev->irq_tasklet);
-+	dmaengine_kill_bh(&xor_dev->dmachan);
- }
- 
- #ifdef CONFIG_OF
+ 	if (pdev->dev.of_node)
 -- 
 2.43.0
 
