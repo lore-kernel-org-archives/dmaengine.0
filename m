@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316591;
-	b=A69wcVB3qDNOh4ukfoI32HvAsG4xpY+IVANmlkU8SjLXXjM/Gew9s88aEFrCqng5bpDW
-	 lGGVg3rXHriHp4dfd0DZZd5FxCFe+I8wleKqag9v7xpSuQNlWE+X0xnozLu0RdswiDK3p
-	 VycVHrZq9sDMRNkkOpK82nuvIG8EE/DpE+SFzvu+7BSst4iVH5c7k1rCuyo8BHTegtrpt
-	 aACr3yi66hPwgICJpIsvbmLg+dksgMPPSakdykF5ftGfrkDW2mW55iPPfHm2MWwlXJUkS
-	 lm+RyTcWZWg4XRfbCSpO3gJgzkqHNBQKgN4rAFXNVOY812e54kEH4agSQT3FErFlEpQ==
+	t=1794316594;
+	b=hTyldrwoPhBToVbsygQ37YQih9n7ifbt/B27S5R8wdVbauOmCT4cV2qoFFOW1AR6clu4
+	 +spbFNl+Umf2q1DUHOoWIUiIScgntUT6IKufYTFhowJSmrIF/Aoxh/MwtGn1PtE2j/Gp/
+	 4b70A6tQGga96wfhnVYaHB47c/uTyaYZ5WiU3pt1EmEg/eIN9yiCvtgnUYakM2f3Nx2tF
+	 OF2LWDfkW+qv9H7rLk2z7iCCp+EWONBMYHYjj3CCXJTYVDAexXnvIt4lY/IQrPFrEkjHL
+	 nvbKlowS7r/wqsTwmlAOiu4NfDZWjUE6BwZ8gzj9rF7u4FmqPuX6IGej4rncn1vRPiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316594;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cbtqy4auIRvKLrmPW0JIKtBfHxWyyh4zCU0f/Dy9WUw=;
-	b=0bgjv92V6CnVfsHmwTwjs1T/YUF4QOPg+RdbvZEkqrIi/b9NkFsSTN2/0ZeHp1c5FUOj
-	 LqQU62+y0E5wCZMXTrzQnb75ncUgYmhvK6oX894ZgOG4yH4S1HS6nHaaoEuBC+rMLxp8r
-	 it8cJgQO6folgqNWGOrm6jrdPcdWIZC8WPnUmac8xM6o7/D+LEMEE2wud1qq46bLIaokR
-	 RtmrQqlSjeCLlczMPEG6ShPrziPCHTtFLhR6sm+6DFt0sUkA0pmXKEL2HDrtm0yornhlz
-	 2UzIQXxMPJFAQt7xeemqmQl2bBNu3+8xNWfmMUIlg6a2Mx1749/ovZgLilhHf7k3ptw==
+	bh=qZHEEp/WhvMUT8kDbFYbUxr4m+LgX5e52LejEHQRlsU=;
+	b=LOUSrRXfVX+UQvNLyq9k++HGNDMfOqAvNQS+G+h6juKskwlpRXZCGS0jDb7rODEeUOgJ
+	 GZQrKvKi7D2w6VuvoIcWoHAHze6QGYrwllCn7FcthYLdqeOttCm1bJdf1c2M7ag166nrz
+	 aJN4GePHDs2E7gyyXtN0RwXEYliaXiT/ULXkidpBtHUnYE/NSfHz5+yxcvlGWMT30veH/
+	 8E6Dtei2V0Pnzb5GuioHZ1roS1k/hPNsGEECdXDj9YQ8cPkFYA9fMr5kSRoUciLRl8NbP
+	 bCn2YI8eB5B4oiDgdvtAFLwOTrTNPdRCNhLV1h9ef0Zenndh10mSBlhOjWIk/YaQBqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="KLUHh5m/";
-	arc=none smtp.remote-ip=209.85.215.171
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jHRJJ8rK;
+	arc=none smtp.remote-ip=209.85.216.50
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C643460A5BC2
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:16:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C643460A5BC2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7710760A5BCE
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:16:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7710760A5BCE
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KLUHh5m/
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cdba1bbde0bso732781a12.2
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:16:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jHRJJ8rK
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3b17b277a68so32361a91.1
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:16:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316590; x=1794921390; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794316593; x=1794921393; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Cbtqy4auIRvKLrmPW0JIKtBfHxWyyh4zCU0f/Dy9WUw=;
-        b=KLUHh5m/tm62c5WEfHBibvmKyuE+io3kSsYeVTE7wiy6chwZNdOCplsGyWSiZ1zxSr
-         98XFrRrkIU2oeXPeqegrrOW1jDgloERa7iG5d71t2jA3b0+Zhch7RJi8m3gqFIz/VJOv
-         uE/DX3XTqfNhiepEGw7hEtcuatUcvx3N5SH3cP5aW+iBma4dzpNXN9z4UntLEnzeHO0Z
-         f1JkNmYydacoBxbbGeqquJKUpe1HNGOEWYa4FoqKatJrLPPXpo3ENFhRnAx9Qs7UGtJ0
-         c6OmtL7dI5u28Oa2L82a9YxpSC2MCaHIun/WbAyhAFnNQXkfWMZ7bTnEigJ/70wgkRJI
-         ZDPg==
+        bh=qZHEEp/WhvMUT8kDbFYbUxr4m+LgX5e52LejEHQRlsU=;
+        b=jHRJJ8rKAgO6YRkN44UOmVIERzAKm0mfzJm0H3BzCfUBc+9WYNXXdBm76G5ZwLoFFj
+         XZI5c8V3Hc8CJq1rylu7wVKiyucvanSb1sr7ar+PmI9fG+p1fxbyhCrymC5Q/xzXvZCl
+         19hv9EXpBvtjyz2eh2suqyz+4pYY9r+UcPTK8qsEdBi61o947ME9TWM6NVcy5hk83Cwx
+         qtIHb6NgFGmZsye+KXE0Ifzo/4vIJeiu/rrT74O6dBXBs7ZICy3tZRo4c3qveYMt/M4P
+         mqFBSsbz+w4Ey1Vc+21owlgCIimTzHRC9kKLLwOTjOul0o0f1OrJtbMfY4pOawhr2RWq
+         SgeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316590; x=1794921390;
+        d=1e100.net; s=20260707; t=1794316593; x=1794921393;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Cbtqy4auIRvKLrmPW0JIKtBfHxWyyh4zCU0f/Dy9WUw=;
-        b=cIafJUeHP8qVLs5eHQ5ec5wIItuZcgH2Leg/HgUaLe4wNHfqLeYSWOSO6HWp9ulLyO
-         5//uGyWch+buv+EWgTb9nBLt6oZXqS3SDf3F+OLXAwQi8jcllsGdwZ65cKUtijRCC06b
-         ql9Np9q5EioVj1RZmG2ZM/gcqy4EnYVumm+HeLT+Lpbewc5ELI+PdRD+RV1KvMCZ3dQy
-         Sn1qOHOo8J6vmSktb7rK4tAWMERCap76mKHih2UJF2DzGiNLUq5evfURFjatT+jbN3Wp
-         aHCuZrNQjwf90V0KBMzxLYR2N1tlFgFIxkRc2jrlaCrGLfenGb4KyPxNpsGiRuTQlOav
-         b3Ww==
-X-Forwarded-Encrypted: i=1; AL+hErFJ42Rf2J9ztNoASfpyok60XZmBZVh9QbaZEMwP+mO0OKE7RnGdZYkVFl2wQBm9faVogFJ1UmyiIh8=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9UQUgPDM6jIHhI/8+rSkRZiyH2PHkZAPVTDL8ethMlwcG4XJcq
-	C/4gL4L8KCkyVUiDEIIFjzaA0W1/uGRe8QxExP1OHQM/zJVUFEjNUqu8o531tg==
-X-Gm-Gg: AYBFou1HuHXjFZ57rP20hcmW2tQuljqdU1m4Epm63ymbxKz9bA3pyRDaD+zTATOI+ow
-	qDJj5nqDHVhktMeqgwgZx27Ny6WrLaO3j0n4BDRolzQXzZPvKDLgcmdqDTcyFNI5bdN+xP46Y8M
-	GBOLbA+wdcSmYYIpJm0+XkDiK7sP4jK6Wwr5EEDOvTDTHpDCqiSLQhW4JAamN+v4zggnTZIYdWf
-	Wz6B8r8yad2k5mCPuXGqNM025eYNj6iFp4qJbfpk17eMenNlS5HCcO3i7e/Wq8QMOFsnKautSSl
-	olrSj2W9l6thgPzMxzjSjv/vCM5lsC4u6fMQr5CI71kkaaxZKV9f//oFSR+1XXYvl2x2yBf9wdm
-	tt5nsMpCT2TxVou6YWlOmSLVolqS7EynWJQtkhXka+nfOJKV1SyXMldFVVTgPDYJTWS7mxAeUzi
-	Ff7r4QEG6ga/CSIlHJPt4ptig6UY8++//6COmUtVOkHl5oCXQuGZv5xlhkqcD1+gXTc1zIyTK5w
-	qjBOJL3P0395lFGzo6hpygjvLxI44ZzWwC9n1afUTLZkKl1TZxoFGi+/PUbz9HZMZJRd2E69Iqb
-	5ftB6RPwkEvV+3j8i+uL10ToPAjTx4Mp
-X-Received: by 2002:a17:90b:55c5:b0:39e:6a80:dd9d with SMTP id 98e67ed59e1d1-3b166d05104mr2597242a91.36.1794316590191;
-        Tue, 10 Nov 2026 05:16:30 -0800 (PST)
+        bh=qZHEEp/WhvMUT8kDbFYbUxr4m+LgX5e52LejEHQRlsU=;
+        b=wzgQrZx+9ou+bSpqUae7CflclhkKy2IWuWUgQc55XoI3HAbSJHsEoIpbPzDuaxbnUC
+         I45iMcvahuB3chC0BBFmMuz77CUj8wgfIuqRZYYjhwTygCLmti+MKXKVEtjDcWyXqqbI
+         gHbNVOs3ROqlf+KZ15q7gbnCQ7AQF6g3Y2gfyOx5APlwhq4/drEVlo7dlxXSppcMS9v3
+         +/PVWHOVPpYTE0UGoZKKUDqmPpl4OvMXhMT+jyjGPoT7S73FUOiWO3TZRxF20MAQNN4Z
+         3h+VWnmUB7T/50B1v54xz/ExQPw6ixpWUsEFIJLOGLACwIwmLkpXS049aMzq9iqsLyQK
+         NllA==
+X-Forwarded-Encrypted: i=1; AL+hErGofjPnQ7miJbKCQXygiD4LstBg2fYUGrGWi0ZTEoMzSjxfIU15xWU1ybqgYCNH3YsfOIuJD61imsc=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/PhFJ2ucUR8/Ly27HA8zLPz1o43dDosSvDpK9QlNzsJ2sy+YdM
+	WP92A817aId5adJHsouznIsfpJ6Q+g3/SxYuheZUJx+5rOt0jOXbSWDv
+X-Gm-Gg: AYBFou0j1fDAbFfelAJNgIBIyJibWm4SOULC1DuKWFUi0zePP+BC7ZrPiw7dGPvH+7r
+	E6uVbrC2LQ4HFzQFBeXddvJ3pQVvaSBU+CuOG1VEX6Za1nUVJPVOuE4Fa40ay81ArIR7QdOlVEL
+	wvXBq0pla2UXR1tZZh1MZTTDO01psiNRj2gjE6rYLOxBdTcbRq6Xctz72PB852py8IPoCPQL4gK
+	XH+aY9Bd/pPvktUETDvuvrth8ifEI3WYBObz38n8VttVs4wSXK4hkDsrEoXUwIlmxwNcd7uVgyQ
+	zrn1M+cv5/rb0iBun7n7QORWnR0cBuyTzAsV6WlHkOJSo5Nq9L7QPIjpq/cwYz93i+hCjj4fhwm
+	3esDU563cO+c9JX3QVwHJJm1Funob37MDMxwb+gcdjnSaWPAUXm+dijjpwezMFY5aewJZvzZtWc
+	uAclIS1Ln0ctYrLvg4rNj3tgjG4gbgmgSFJQ3NJc8i6E2Iqv9kI+TlC51nt+7F8GvAwtK3XdQjy
+	Pzl/ZsDFvFJOdeDLL7BuuBV2FdZlEV/1Kjuv5NJ8yvwDcUG/sczSOL+EoJuaK1rrm+3TT56jNPt
+	ktnOxdZV9kuchWjmEGkL37jkNv24bxY=
+X-Received: by 2002:a17:90b:1c88:b0:3b0:9f53:e8a8 with SMTP id 98e67ed59e1d1-3b166ce1cbdmr2477769a91.52.1794316592783;
+        Tue, 10 Nov 2026 05:16:32 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.16.29
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.16.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:16:29 -0800 (PST)
+        Tue, 10 Nov 2026 05:16:32 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
@@ -86,9 +86,9 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH v4 14/33] dmaengine: nbpfaxi: switch callbacks to dmaengine BH
-Date: Tue, 10 Nov 2026 05:13:14 -0800
-Message-ID: <5e516217bad9982d82e820ea2d837a5512340e16.1794315350.git.allen.lkml@gmail.com>
+Subject: [PATCH v4 15/33] dmaengine: pch_dma: convert tasklet to dmaengine BH
+Date: Tue, 10 Nov 2026 05:13:15 -0800
+Message-ID: <f6df749807fe5f285ecf4b90411440fe24583e67.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
@@ -108,70 +108,72 @@ The handler continues to run in softirq context while dmaengine owns
 the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/nbpfaxi.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/dma/pch_dma.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
-index c9010938c30f..80e607065e8e 100644
---- a/drivers/dma/nbpfaxi.c
-+++ b/drivers/dma/nbpfaxi.c
-@@ -174,7 +174,6 @@ struct nbpf_desc_page {
- /**
-  * struct nbpf_channel - one DMAC channel
-  * @dma_chan:	standard dmaengine channel object
-- * @tasklet:	channel specific tasklet used for callbacks
-  * @base:	register address base
-  * @nbpf:	DMAC
-  * @name:	IRQ name
-@@ -200,7 +199,6 @@ struct nbpf_desc_page {
-  */
- struct nbpf_channel {
- 	struct dma_chan dma_chan;
--	struct tasklet_struct tasklet;
- 	void __iomem *base;
- 	struct nbpf_device *nbpf;
- 	char name[16];
-@@ -1125,9 +1123,10 @@ static struct dma_chan *nbpf_of_xlate(struct of_phandle_args *dma_spec,
- 	return dchan;
+diff --git a/drivers/dma/pch_dma.c b/drivers/dma/pch_dma.c
+index 88baf7ffec37..28d5e25d904b 100644
+--- a/drivers/dma/pch_dma.c
++++ b/drivers/dma/pch_dma.c
+@@ -91,7 +91,6 @@ struct pch_dma_chan {
+ 	struct dma_chan		chan;
+ 	void __iomem *membase;
+ 	enum dma_transfer_direction dir;
+-	struct tasklet_struct	tasklet;
+ 	unsigned long		err_status;
+ 
+ 	spinlock_t		lock;
+@@ -660,9 +659,10 @@ static int pd_device_terminate_all(struct dma_chan *chan)
+ 	return 0;
  }
  
--static void nbpf_chan_tasklet(struct tasklet_struct *t)
-+static void nbpf_chan_tasklet(struct dma_chan *c)
+-static void pdc_tasklet(struct tasklet_struct *t)
++static void pdc_tasklet(struct dma_chan *c)
  {
--	struct nbpf_channel *chan = from_tasklet(chan, t, tasklet);
-+	struct nbpf_channel *chan = container_of(c, struct nbpf_channel,
-+						 dma_chan);
- 	struct nbpf_desc *desc, *tmp;
- 	struct dmaengine_desc_callback cb;
+-	struct pch_dma_chan *pd_chan = from_tasklet(pd_chan, t, tasklet);
++	struct pch_dma_chan *pd_chan = container_of(c, struct pch_dma_chan,
++						    chan);
+ 	unsigned long flags;
  
-@@ -1228,7 +1227,7 @@ static irqreturn_t nbpf_chan_irq(int irq, void *dev)
- 	spin_unlock(&chan->lock);
+ 	if (!pdc_is_idle(pd_chan)) {
+@@ -702,7 +702,7 @@ static irqreturn_t pd_irq(int irq, void *devid)
+ 				if (sts0 & DMA_STATUS0_ERR(i))
+ 					set_bit(0, &pd_chan->err_status);
  
- 	if (bh)
--		tasklet_schedule(&chan->tasklet);
-+		dmaengine_schedule_bh(&chan->dma_chan);
+-				tasklet_schedule(&pd_chan->tasklet);
++				dmaengine_schedule_bh(&pd_chan->chan);
+ 				ret0 = IRQ_HANDLED;
+ 			}
+ 		} else {
+@@ -710,7 +710,7 @@ static irqreturn_t pd_irq(int irq, void *devid)
+ 				if (sts2 & DMA_STATUS2_ERR(i))
+ 					set_bit(0, &pd_chan->err_status);
  
- 	return ret;
- }
-@@ -1272,7 +1271,7 @@ static int nbpf_chan_probe(struct nbpf_device *nbpf, int n)
+-				tasklet_schedule(&pd_chan->tasklet);
++				dmaengine_schedule_bh(&pd_chan->chan);
+ 				ret2 = IRQ_HANDLED;
+ 			}
+ 		}
+@@ -872,7 +872,7 @@ static int pch_dma_probe(struct pci_dev *pdev,
+ 		INIT_LIST_HEAD(&pd_chan->queue);
+ 		INIT_LIST_HEAD(&pd_chan->free_list);
  
- 	snprintf(chan->name, sizeof(chan->name), "nbpf %d", n);
- 
--	tasklet_setup(&chan->tasklet, nbpf_chan_tasklet);
-+	dmaengine_init_bh(&chan->dma_chan, nbpf_chan_tasklet);
- 	ret = devm_request_irq(dma_dev->dev, chan->irq,
- 			nbpf_chan_irq, IRQF_SHARED,
- 			chan->name, chan);
-@@ -1477,7 +1476,7 @@ static void nbpf_remove(struct platform_device *pdev)
- 
- 		devm_free_irq(&pdev->dev, chan->irq, chan);
- 
--		tasklet_kill(&chan->tasklet);
-+		dmaengine_kill_bh(&chan->dma_chan);
+-		tasklet_setup(&pd_chan->tasklet, pdc_tasklet);
++		dmaengine_init_bh(&pd_chan->chan, pdc_tasklet);
+ 		list_add_tail(&pd_chan->chan.device_node, &pd->dma.channels);
  	}
  
- 	of_dma_controller_free(pdev->dev.of_node);
+@@ -925,7 +925,7 @@ static void pch_dma_remove(struct pci_dev *pdev)
+ 					 device_node) {
+ 			pd_chan = to_pd_chan(chan);
+ 
+-			tasklet_kill(&pd_chan->tasklet);
++			dmaengine_kill_bh(&pd_chan->chan);
+ 		}
+ 
+ 		dma_pool_destroy(pd->pool);
 -- 
 2.43.0
 
