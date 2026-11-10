@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316552;
-	b=fVfXLJpv38IpELk5qU7bBYURBUsiUALj5E0Yl8a8XJ47ivVdnUsWv3w6sWZouXKqPHmN
-	 nLA/n8hJ3S1bOX14kcI3aPPa7JeccizHafwvvW4LLBm+UrIBmMWTgrwjXiLGU8osdrjyt
-	 WAZwh6Q5sCH5pdRY6zKOPiuwan6Fh+Ag1bwAqqzSUEoXVuwUyq0l7YDgNE2R0UiSW/1Pw
-	 iqbgWAoLi/g7k2Eiw43e2W3NGJ0L77cGkffnNmonNQqNgQxpMMfd6c/O3rE74gMF+uiTB
-	 UbR/5OULxKP+JrxDOqrxyE9EzDCeSe+w/EqGITXDpietygHtJy6ct4tbpE349t9bzPQ==
+	t=1794316554;
+	b=vQWDjSjV5SvqfVI1CW9URvgRy2p5Nt4/14yUhBiCx+c6rLk9ns12n3b33a8XDXWaspVA
+	 LAXKikzvaivpoB5L78Eidh0mEWQLOSrRW47UMPsZ4QgFO84eVn9pqOo70JCCE245tn8n+
+	 z8ELkWCmG72QyK6ZxwKqCxQJ1SuoMFaHWP/ouUeCVMhZoBH/KvOWP9jOvjwobcW7j+Ib6
+	 LS3JpTwO+x0epVnA7pgANQ9geSyec5E5qzAj8aWHIjyWy3FU7bp1kCQX3fOY2d4noR3re
+	 taIsjxshKy8ziVCxfPD4NYCY9jYuKuSwNObvLbAWlAvFo2YxHHcI1FMJ03Nr3cXfC8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316554;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0P8WydTp3FMq5jOmu5TOWCdQW00c3EBUBRA4Y9UXlr0=;
-	b=oqVmWfjmMu5e7ZBlrkCPiWEvXs6+o0uTDWRUoYp07+XQqe16RY1aF1VKMYc5Xw/i0Fcu
-	 RoDkhGNW8ASAFqx40NpNmiknMCaPSe4ZsKNs3vxtdjqW0oOLRXCZ1+y1BjrG8ZgPiuZA1
-	 /jVf/awwuQk2B9UVFqYh9adNKkc35SwiY2POCoIAIE6sXVXR/3wvwc1SPRaYXlycI4Lg2
-	 YhyDE1c+/frSo8fibfyUKkU0uQLXPtemKRLap3QdlOLqgbhAabSFGMMrlf6xr8QBEkLIb
-	 mL5vdWOR1oSCgfHCPqIJ0xkHBWJqTy4LLPe70RKqfDR40oJo8numOG4tGVP7Twr4KKg==
+	bh=KWMIZLeeMFs1toVNbHnIwaIuja67UMsXw+1FYa/JCeo=;
+	b=MLAiqvTnymnUG5B6tvEwB9meFuxoO0N7XWZZaD6zpW+F8yByGY9AtkB9QWIsE50IHX/n
+	 vCRU26hmV3vWvEbb8dPqa2sD8qnIrG8JqEPPn36o1DUF5wfvmk+e4h5LUR+lx69Tm7yZr
+	 JFt2no9zGmbmeaEtaGHLVokVwEkN5L2KVVyB0gySkwCD7Xb59hUGEQEeWyGzr3Fm6XZ6C
+	 yGeLSvlJhb1cn+00gT81JZNymeNr28hQ7P1rgvCW1xzCwEgQzvjFdEpA1NkStvQNzPwY5
+	 8k1vyCn4xo1Q2GNWlDrvzCCh5QJarNQ5LkSGXrUyCLcyVHfnWvbDfbPNMXGCptqbm9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=m98KuahA;
-	arc=none smtp.remote-ip=209.85.216.53
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KsJ25AXr;
+	arc=none smtp.remote-ip=209.85.215.173
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D06F606E47C
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:15:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D06F606E47C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919B360A260F
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:15:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 919B360A260F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=m98KuahA
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-3ada4c06b7bso1038950a91.2
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:15:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KsJ25AXr
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cdb2e0062bbso755120a12.1
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316551; x=1794921351; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794316554; x=1794921354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=0P8WydTp3FMq5jOmu5TOWCdQW00c3EBUBRA4Y9UXlr0=;
-        b=m98KuahARQ1XF9RSU0cRNYwhBEiDATZMGlK5zz9OZxKq97jurznAKC/RepoMebmZ1q
-         2OaCPcoU/NRMDWdJEBr3ttZ5kU5yB7y0FqHRoCfFPF2IMTtzM2IA8ooKm3jcThgOKDzE
-         9o2lurDBzl6VS22cHV26osO2dZIa8CmRzxDMjFOBknFWioBoKgb0+j5yoPW7xruV4G1b
-         ObUGWCqMmbh69OBysdFffz58FKlaCSuMrJGVjNPrJ+CbtPQi5goyomAJ2pRrrNG+kOGu
-         L6ybQp6oNYeKQ9qMyQBPVu6+4RS9Rtmj4g/TGobpSg8RYOXV92LCJdrqBROcYvIcl6W8
-         IJWg==
+        bh=KWMIZLeeMFs1toVNbHnIwaIuja67UMsXw+1FYa/JCeo=;
+        b=KsJ25AXrsSWkxSwuJGjB9hHCi5tDaW0AfG9/2gz9Ol7P/hU/030sXpLllJTAt0cLGg
+         eBj/8MifwHI2osy9l2IScRiXmFkSdV6a7btdxW/fOVmQj2OFH/Vn4vSKQw8thjobPAIA
+         X07cltLw2Q9a+3kGu5dcuJ7JIEXRD25U0BQmE+jAofq9LgOXSHH2Xh1LSO7y9nLWqzm+
+         GgFFrXKz2x79rFl0YjcxmtxJg5p3fNaK1rKzYhFl6yqUsomB/NJmrJ63a4W8E4mce2tt
+         rxrVYQbeZNMku3I4l4U9LjlLaWltPGCQDbbrJpVhNM4PJp2yygz+Si92seoOYIbOnvPc
+         K6Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316551; x=1794921351;
+        d=1e100.net; s=20260707; t=1794316554; x=1794921354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0P8WydTp3FMq5jOmu5TOWCdQW00c3EBUBRA4Y9UXlr0=;
-        b=UZZCxNZnr2RHbQmN9X9ELhzcJxrIhLaW+TItcccKFHQlRj04qpnmbEUyY3YfJ6RbWt
-         yWzeOFVpHy+DkjRoLTgii2dXYokhhbWn/4oFnxeG1DYiHaZPCjNU4bNUSH1HS6a65MpD
-         9UjGO/24cgeNzAhf8xkxuFVLNn5SA8UQ1jV5PV6UrZA+ObGAnKczHfT3r3YeilrV4Zg4
-         9EgSeZ3fexZnTkHmOQNpWS+YlQmtFUmIeJZ4yDUbwq3q4amAYRGwFEH3hlF/KsYB9egD
-         9G6TyzQhaFUDivL5Ap8ECsig0u7Y/I3hf/KK2uL4RBWRyLcwli7gZYZtEIRzgOeLfxm6
-         NZew==
-X-Forwarded-Encrypted: i=1; AL+hErECVVLOXj54jD9EnqguEj2mQZRo28cntUMjEJzGhOoKrgboAW2t4G6Tz1zRYBid2ry2TiUWV72Iz2Q=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/B+MwQVXUs00CKKEt43C8BcF8k7NLmhV/omRDUGF8qnHoiCXJK
-	dSFU9XRIORxDiGW1rJsvquYeehrpiOzUksd9sybne1g1fpCGe9o38vKO
-X-Gm-Gg: AYBFou3TRc9lKC0h5jdB51FN8jSzyMRnuHRxjgrcMTCv0r4doNpYUvb31VtaIeuRKkH
-	YChgW2ST3gFJXAyPmu/HTQb4sXmfcaPY/4UTtwoZPKKtCNUIghAg+Pti8JWpCuXxhtWKwR1f6sJ
-	VjKzWTzfVDJmY1w0cdd4dhb3bjLJkrPPUzV7+kHI3+PeD9uLNerj+j9x3aceS173aktkJ3l1AO/
-	5lt+VxIeZa4FRpvPq4o55zB9yYCNAu+Hb4t8p0gqIsUtGvjIqi1t32R+qau+PXHI8qupnqjfnbn
-	vsZ2Yiq1JM1hEL78+IvWcbOhlxvpDvJGdDQUabsSP9bcPb2Z8ULRvw2QOjKq7NR7CbIH3HwBA05
-	B9NANjmXaEHoTK8U4qVAFucYHGt+4bc340fLXHbaMOH+HV+njhlp0oleBXwZBtvL/ShmpzA8BZ1
-	58EDuWraUp1KEHLpEqwka4F541B+2Ay5hnHTMqA8DdRyPHhwRUGDs+rfi5b6gAYaSlMsKkxxIv7
-	Up//UWbb6urnf5nrjzeppV71deR59LMRoHcImDc+kxhsBazXWiMpmEi4Bc+ymJxQ3UEND8O/tqp
-	yBJejmTHVr9O9ou6s41bpOkYsZ04UoY=
-X-Received: by 2002:a17:90b:578f:b0:3b0:91ce:672e with SMTP id 98e67ed59e1d1-3b166c92430mr2883561a91.17.1794316550818;
-        Tue, 10 Nov 2026 05:15:50 -0800 (PST)
+        bh=KWMIZLeeMFs1toVNbHnIwaIuja67UMsXw+1FYa/JCeo=;
+        b=CLcqxCg82gonGNeaDzw8kkJ4R3VN0KLJuNwxuMVnA17wFpx8LEJME7lOoRa0tuFuqA
+         c9lET+s2wO3UMbXPtGt+yhHd+VJYWQ9CwS6q+2D9jmc1TFatvb9nMRVsBtDLiZw+M52z
+         yA+f51ZeG99hP2C+SXK4dSj3btogpSznl6FWO7qLKQY8zsnV2BMxzJpqy3xxkmXiygEK
+         PLqWAfKxj7Z5nafrp01E3MD9aDddf+LLhVz3nZri36pfb85HHf+jleqblXapaLzkzixE
+         nNEV8OBa6Klkfq1sfYiZBsuoK/S4bxv+KiMzX3IRfkDyYXOmob1KYGfE/zWLHvcmFrUx
+         LT8w==
+X-Forwarded-Encrypted: i=1; AL+hErFmgh1tDTktKh3ARCmb/yzAqxip9UKx9JIVMYryw7ritbsswX/5edlOMAMBx95FkFXf9ZpP5/xsuBg=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8WpBfnMG5wq3of/XlbGXQALwlf7i56xGIxlzLVljRsyN12BG1s
+	11lgzXmx9ZCjHiXkR5HVsAKDrkaoEXu38yv4ZX3lJjFrOAHVMPAIx92p
+X-Gm-Gg: AYBFou0kGNOpJHILDkXLzImPd8dlf3QdVLRGwpNgMeLxL4pX3G9tGn+UozkSnEsxSFa
+	0wYj87wNY0Zwc2EMXQLdNnzIej+fzVrvHg26qCYMY0rIG+kNUBT15rUsPlzrb9vCx4Rf8RxyEM0
+	w6/5k1wu0KPSNMvJzJPveYf2BBqYWxUOWRnzXCJS8czqtdPTM3WZjV6hO5Pu9rbcI6pLK+TmNkA
+	BoUGDICfT6z+5W59/nqZCBXNO5H70WQKI3gH+5pqvMD+rV3RWTrB03sbmHeZdTabVyvCk+RiDqq
+	1FTQUvkyQvvMLtWl2f2eazkoTBlY89eK3I8rfyQuuofe2kxXQeKgtb/mt+0k8Ef4MO8l8MGhuLp
+	nkdIQsqioEWKj8oCuYsUsZ1Qbf7qo+HJkqTVHHHAlbLPULkmXqBLHD2HFk43hWkX4dDGlrNM2rc
+	YjBGiK26K9ltGoPUFyqfCLw9cGSgI4xnFNQPCE2Hc48qRVVcvBlxpPq+5I4OHrq6JfHVa/IRlHf
+	9S2QI/NMfZ4UGEnmeDeltJAvSMEhz3LWY8BtJk5bMHebm7RETwKfLZKCmQSMGsMOPvtWXO8ruUz
+	DteeLc6psEnFywNUuYmBBV606fz9GwAm
+X-Received: by 2002:a17:90a:e7d2:b0:3ab:c80:9365 with SMTP id 98e67ed59e1d1-3b166d11497mr2661682a91.42.1794316553404;
+        Tue, 10 Nov 2026 05:15:53 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.15.50
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.15.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:15:50 -0800 (PST)
+        Tue, 10 Nov 2026 05:15:53 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
@@ -85,12 +85,10 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Frank Li <Frank.Li@kernel.org>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v4 04/33] dmaengine: at_xdmac: move irq bottom half to dmaengine BH
-Date: Tue, 10 Nov 2026 05:13:04 -0800
-Message-ID: <373d4fa23c4c5b9898a02ad7a0568ce1d828081d.1794315350.git.allen.lkml@gmail.com>
+	Frank Li <Frank.Li@kernel.org>
+Subject: [PATCH v4 05/33] dmaengine: ep93xx: hook callbacks via dmaengine BH
+Date: Tue, 10 Nov 2026 05:13:05 -0800
+Message-ID: <b5d5937dc553fed9b30127ce3ce898b89cddea02.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
@@ -112,69 +110,65 @@ the common scheduling and teardown mechanism.
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/at_xdmac.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/dma/ep93xx_dma.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index ef0dfe9d37ba..ae2ff7c0bd56 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -228,7 +228,6 @@ struct at_xdmac_chan {
- 	u32				save_cndc;
- 	u32				irq_status;
- 	unsigned long			status;
+diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+index 8a0b66a7d886..b073d9164e83 100644
+--- a/drivers/dma/ep93xx_dma.c
++++ b/drivers/dma/ep93xx_dma.c
+@@ -167,7 +167,6 @@ struct ep93xx_dma_chan_cfg {
+  * @dma_cfg: channel number, direction
+  * @irq: interrupt number of the channel
+  * @clk: clock used by this channel
+- * @tasklet: channel specific tasklet used for callbacks
+  * @lock: lock protecting the fields following
+  * @flags: flags for the channel
+  * @buffer: which buffer to use next (0/1)
+@@ -196,7 +195,6 @@ struct ep93xx_dma_chan {
+ 	struct ep93xx_dma_chan_cfg	dma_cfg;
+ 	int				irq;
+ 	struct clk			*clk;
 -	struct tasklet_struct		tasklet;
- 	struct dma_slave_config		sconfig;
- 
+ 	/* protects the fields following */
  	spinlock_t			lock;
-@@ -1754,9 +1753,9 @@ static void at_xdmac_handle_error(struct at_xdmac_chan *atchan)
- 	/* Then continue with usual descriptor management */
+ 	unsigned long			flags;
+@@ -796,9 +794,9 @@ static void ep93xx_dma_advance_work(struct ep93xx_dma_chan *edmac)
+ 	spin_unlock_irqrestore(&edmac->lock, flags);
  }
  
--static void at_xdmac_tasklet(struct tasklet_struct *t)
-+static void at_xdmac_tasklet(struct dma_chan *chan)
+-static void ep93xx_dma_tasklet(struct tasklet_struct *t)
++static void ep93xx_dma_tasklet(struct dma_chan *chan)
  {
--	struct at_xdmac_chan	*atchan = from_tasklet(atchan, t, tasklet);
-+	struct at_xdmac_chan	*atchan = to_at_xdmac_chan(chan);
- 	struct at_xdmac		*atxdmac = to_at_xdmac(atchan->chan.device);
- 	struct at_xdmac_desc	*desc;
- 	struct dma_async_tx_descriptor *txd;
-@@ -1860,7 +1859,7 @@ static irqreturn_t at_xdmac_interrupt(int irq, void *dev_id)
- 			if (atchan->irq_status & (AT_XDMAC_CIS_RBEIS | AT_XDMAC_CIS_WBEIS))
- 				at_xdmac_write(atxdmac, AT_XDMAC_GD, atchan->mask);
+-	struct ep93xx_dma_chan *edmac = from_tasklet(edmac, t, tasklet);
++	struct ep93xx_dma_chan *edmac = to_ep93xx_dma_chan(chan);
+ 	struct ep93xx_dma_desc *desc, *d;
+ 	struct dmaengine_desc_callback cb;
+ 	LIST_HEAD(list);
+@@ -853,12 +851,12 @@ static irqreturn_t ep93xx_dma_interrupt(int irq, void *dev_id)
+ 	switch (edmac->edma->hw_interrupt(edmac)) {
+ 	case INTERRUPT_DONE:
+ 		desc->complete = true;
+-		tasklet_schedule(&edmac->tasklet);
++		dmaengine_schedule_bh(&edmac->chan);
+ 		break;
  
--			tasklet_schedule(&atchan->tasklet);
-+			dmaengine_schedule_bh(&atchan->chan);
- 			ret = IRQ_HANDLED;
- 		}
+ 	case INTERRUPT_NEXT_BUFFER:
+ 		if (test_bit(EP93XX_DMA_IS_CYCLIC, &edmac->flags))
+-			tasklet_schedule(&edmac->tasklet);
++			dmaengine_schedule_bh(&edmac->chan);
+ 		break;
  
-@@ -2310,7 +2309,7 @@ static int at_xdmac_probe(struct platform_device *pdev)
- 		return PTR_ERR(atxdmac->clk);
- 	}
+ 	default:
+@@ -1414,7 +1412,7 @@ static struct ep93xx_dma_engine *ep93xx_dma_of_probe(struct platform_device *pde
+ 		INIT_LIST_HEAD(&edmac->active);
+ 		INIT_LIST_HEAD(&edmac->queue);
+ 		INIT_LIST_HEAD(&edmac->free_list);
+-		tasklet_setup(&edmac->tasklet, ep93xx_dma_tasklet);
++		dmaengine_init_bh(&edmac->chan, ep93xx_dma_tasklet);
  
--	/* Do not use dev res to prevent races with tasklet */
-+	/* Do not use devm resources to prevent races with the BH worker */
- 	ret = request_irq(atxdmac->irq, at_xdmac_interrupt, 0, "at_xdmac", atxdmac);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can't request irq\n");
-@@ -2390,7 +2389,7 @@ static int at_xdmac_probe(struct platform_device *pdev)
- 		spin_lock_init(&atchan->lock);
- 		INIT_LIST_HEAD(&atchan->xfers_list);
- 		INIT_LIST_HEAD(&atchan->free_descs_list);
--		tasklet_setup(&atchan->tasklet, at_xdmac_tasklet);
-+		dmaengine_init_bh(&atchan->chan, at_xdmac_tasklet);
- 
- 		/* Clear pending interrupts. */
- 		while (at_xdmac_chan_read(atchan, AT_XDMAC_CIS))
-@@ -2451,7 +2450,7 @@ static void at_xdmac_remove(struct platform_device *pdev)
- 	for (i = 0; i < atxdmac->dma.chancnt; i++) {
- 		struct at_xdmac_chan *atchan = &atxdmac->chan[i];
- 
--		tasklet_kill(&atchan->tasklet);
-+		dmaengine_kill_bh(&atchan->chan);
- 		at_xdmac_free_chan_resources(&atchan->chan);
- 	}
- }
+ 		list_add_tail(&edmac->chan.device_node,
+ 			      &dma_dev->channels);
 -- 
 2.43.0
 
