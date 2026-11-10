@@ -1,58 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.133
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794305781;
-	b=UwJGJhwa3TYD01nU0DuinbM2noWKjsx72+AeSTr4tX5brS8VYcZtEpEPLY1vHwhaMXOS
-	 aY0JAIRBOIdErhcoLqpqDqGi48FHMl0DgCbzioYSCDpMLTjDy9JIW7hdsrMy/p5mAC2jc
-	 E5ngGz2AhECtss5zoMZdImeSs16VQXMGHiJAJHCQ7wjZrC1/KBhCRWDdVZ4zzVE9QQw9D
-	 pXMtLT2KkFAaUiUjB8KXEq1o6XQ26pB3wT5HxK3yN4Uokux3DSuOD4wCsIfJYKxfkqxha
-	 B6OMmEpk2wJPq3cwckalrHz5tUZuvhwxHHn95eHEAPNOuM4TMnNePVr/U8SnjvdBw0A==
+	t=1794306681;
+	b=RVxfszEyriwJVw5BaVGvsxW5oD2ldj2Wk0VwOHFiHFGeIfEjbu7oemnpmHgwA9fVSjfY
+	 ODjVcx7ykJpBsMfknV3IZWhB6tqIjnEcrAbVbpXJ6gBz9Ejq/MPqWCeV5J+/EMfM4dgh2
+	 vkcM55uYq29x4IZJtXS8SbBORYLxQeaDiI/42zNpo++NJvoj1+9EF72bIPgfeRZJfegtg
+	 3LdPAqt+ubAY69PrZUJMeW4rssM7sGG2n0q4Pbw5Ic6WQC4mQwUiArmMcmuJaKfCWz2lx
+	 7pofCSVNHqwWAROiNgEfb0/4eN3zfSXTXVLERC7Tk6Vvv5Ol1DTFfMlnrl0NMQoRjAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794305781;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:From:To:Cc:
-	 Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=dPioBLrQavDl1oDERVdJfgiE5w3wxNV9+Q+s93Fp5bo=;
-	b=XOsSAq/SlxWyB9QPrGe/LcApKKdS9WgHNsWD8TVxtGjtCDYErVaAMFjN1nZvLtg3et4W
-	 LeD9WygL8DKv1u7aVQg0GJvIxWU4td46K4md68tcBVQsANXg+y7Y1Nfph2e0ZgWe8heK4
-	 5gJUIYv//rbLjuzEeM3Uli/M12fM5jUqlL93BIj3S/yzktiWBwQ5ia4K1o6iJaf4W85yM
-	 kNstnmmnStvw/3wLKSNrEVVhMTVHGq9znZjYuzV7Cs7IjR18NTIuzbVYPgOKPkchzuVNv
-	 oFcBO7BIioQnlu1uiixVkP/bZzlcuPIBuutTxGu9VJUand3hyzDoJNEPfn29aoovd6g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794306681;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=QgZMixIxLAg53dY0VhcDGgcDQw04JElk01qwve4w8qo=;
+	b=E+gacC/+Q+GTolEkQwHAcRAYH3g96wEMpaHjui2369SxfXW2XRTpIkkUKmcNcPpeQrhu
+	 XPNto+HgPT4TeCF4UjTnl8NCbdbZjBUxSjr6C8/obqEJiieVjvcbDo+9USyEJ8MjJLQUi
+	 7rkZ6Y3wOa/jKd2RTLTrsCVr5ADEGYuk1aERsLacMxkslxLtcM+O7k0E0c7mILHM8o/my
+	 YouaQQZ93SLhbnzrS36lMcu6zQm8RZ4Ylc7O5gtvuj8sVZpKXvdLT1oJjQnFvIecDMs+R
+	 mPoQ9VOWOl8ESqioNgzWYbmHv8fTn6yNrtXOC1sknmFYDUzL2KaRniqE1X9/whHCQlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=P0IfwGw6;
-	arc=none smtp.remote-ip=115.124.30.133
-Received: from out30-133.freemail.mail.aliyun.com (out30-133.freemail.mail.aliyun.com [115.124.30.133])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kY7fi84s;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF00D606A336;
-	Tue, 10 Nov 2026 10:16:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF00D606A336
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38E5606A325
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 10:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=P0IfwGw6
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1794305774; h=From:To:Subject:Date:Message-ID:MIME-Version;
-	bh=dPioBLrQavDl1oDERVdJfgiE5w3wxNV9+Q+s93Fp5bo=;
-	b=P0IfwGw6edmM73e3dc8MnUX7LyikwELDPfsmWrENtRPDTScZOOdqsArM484rKQYlz04v9R1it0wMBrs+e1ZW+Le410IEjvTLJvRime8Pzwdxgyy/WQOxJNTN4yqfPYWdD+phSkKGOLPM/PltdSs9ActL9x9RuEZarUPvMAxplsE=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R611e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033045098064;MF=zhejun_huang@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0XEV0hO6_1794305773;
-Received: from localhost.localdomain(mailfrom:zhejun_huang@linux.alibaba.com fp:SMTPD_---0XEV0hO6_1794305773 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Tue, 10 Nov 2026 18:16:14 +0800
-From: zhejun_huang@linux.alibaba.com
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Zhejun Huang <zhejun_huang@linux.alibaba.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] dmaengine: Free channel ID after device_unregister()
-Date: Tue, 10 Nov 2026 18:16:07 +0800
-Message-ID: <20261110101607.13784-1-zhejun_huang@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kY7fi84s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC741F008A1;
+	Tue, 10 Nov 2026 10:31:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794306680;
+	bh=QgZMixIxLAg53dY0VhcDGgcDQw04JElk01qwve4w8qo=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=kY7fi84slo9o1CRIn5Xr1U3HHyulMo00rXTv0XP3zqXGGQFTG9JF841lXPlxsxu8F
+	 wRLlZaC5z5deMVvF/En3QsbZVEzMgjq2ieL/GlC7byk1P+UsyHGVb7qRVTDdCFnYeS
+	 w0h7ifcDE29aCNnQn5iAr55uUuslltLMIh1GWRmLO8MbQhfHAPV7KUcqgWP3pA48Z5
+	 pA5m4cK14obbqaNdnqNnfl5M8hX7Z+mhrBYAo7l4FGbCyoI5BaqhFyKi8OtYQks1WF
+	 lhoBeo7wAZZXAycfyxKDk8MJfpYu4dlpmO/cYsmX9X+wn+NN0OHZ/Y3HhmN0QGGVtY
+	 J+NEK/1yky7fQ==
+Message-ID: <sashiko-outbox-206873@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: Free channel ID after device_unregister()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: zhejun_huang@linux.alibaba.com
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261110101607.13784-1-zhejun_huang@linux.alibaba.com>
+References: <20261110101607.13784-1-zhejun_huang@linux.alibaba.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Nov 2026 10:31:19 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -61,48 +58,73 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Zhejun Huang <zhejun_huang@linux.alibaba.com>
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [Medium] dmaengine: IDA leak on error path in
+  dma_async_device_register() [1]
+--
 
-__dma_async_device_channel_unregister() frees the channel ID before calling
-device_unregister(). Between ida_free() and device_del() a concurrent
-__dma_async_device_channel_register() on the same device can reallocate the
-ID and try to register a device with the same name while the old one is
-still present, failing with -EEXIST.
+commit e2b5dc17e7cb70401abfdf640998b8028522d873
+Author: Zhejun Huang <zhejun_huang@linux.alibaba.com>
 
-This is reachable in practice: idxd calls these functions from its
-per-workqueue probe and remove callbacks, which are only serialized by a
-per-wq mutex. Enabling one wq while another is being removed therefore
-runs them concurrently on the same dma_device.
+dmaengine: Free channel ID after device_unregister()
 
-Move ida_free() after device_unregister() so that device_del() removes the
-name before the ID becomes reusable.
+This commit moves the ida_free() call in
+__dma_async_device_channel_unregister() after device_unregister() so that a
+concurrent channel registration cannot reuse the channel ID before the old
+device name is removed.
 
-Fixes: 0821009445a8 ("dmaengine: fix channel index enumeration")
-Cc: <stable@vger.kernel.org> # 5.7+
-Signed-off-by: Zhejun Huang <zhejun_huang@linux.alibaba.com>
----
- drivers/dma/dmaengine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> index 34be53487a21d..2642abf105d76 100644
+> --- a/drivers/dma/dmaengine.c
+> +++ b/drivers/dma/dmaengine.c
+> @@ -1171,8 +1171,8 @@ static void __dma_async_device_channel_unregister(s=
+truct dma_device *device,
+>  	device->chancnt--;
+>  	chan->chan_dev->chan =3D NULL;
+>  	mutex_unlock(&dma_list_mutex);
+> -	ida_free(&device->chan_ida, chan->chan_id);
+>  	device_unregister(dmaengine_chan_dev(chan));
+> +	ida_free(&device->chan_ida, chan->chan_id);
+>  	free_percpu(chan->local);
+>  }
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index 34be53487a21..2642abf105d7 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -1171,8 +1171,8 @@ static void __dma_async_device_channel_unregister(struct dma_device *device,
- 	device->chancnt--;
- 	chan->chan_dev->chan = NULL;
- 	mutex_unlock(&dma_list_mutex);
--	ida_free(&device->chan_ida, chan->chan_id);
- 	device_unregister(dmaengine_chan_dev(chan));
-+	ida_free(&device->chan_ida, chan->chan_id);
- 	free_percpu(chan->local);
- }
- 
+[Severity: Medium]
+This problem wasn't introduced by this patch, but does the error path in
+dma_async_device_register() leak IDs from device->chan_ida and dma_ida
+[1]?
 
-base-commit: d48723711bae9b8cdc56719c448ba42fef28cbee
--- 
-2.50.1 (Apple Git-155)
+drivers/dma/dmaengine.c:dma_async_device_register() {
+    ...
+err_out:
+	/* if we never registered a channel just release the idr */
+	if (!device->chancnt) {
+		ida_free(&dma_ida, device->dev_id);
+		return rc;
+	}
 
+	list_for_each_entry(chan, &device->channels, device_node) {
+		if (chan->local =3D=3D NULL)
+			continue;
+		mutex_lock(&dma_list_mutex);
+		chan->chan_dev->chan =3D NULL;
+		mutex_unlock(&dma_list_mutex);
+		device_unregister(dmaengine_chan_dev(chan));
+		free_percpu(chan->local);
+	}
+	return rc;
+}
+
+If registration fails after at least one channel has been registered (for
+example, on a subsequent channel or in dma_chan_get()), device->chancnt is
+non-zero.  The open-coded cleanup loop unregisters the channels without
+freeing each chan->chan_id or destroying device->chan_ida, and
+device->dev_id is never freed from dma_ida.
+
+[1] https://sashiko.dev/#/bug/linux-39bbcde3-023e-41e2-afef-7a2c13f45a17
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110101607.1378=
+4-1-zhejun_huang@linux.alibaba.com?part=3D1
