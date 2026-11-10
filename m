@@ -1,98 +1,147 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316524;
-	b=P5/srvHE1JAsr8aVKfB7CY7wfj7sajzNA9MHj2NTI39PNOdsLbe7TsS7KGi7aMMVXjQY
-	 xItgTm1uDcfbgrtvNOlwJKOTR8Q/CjhKi52R6exc0mik46qIaEQ+RIwGxntEomJFOzTIE
-	 52FOgGu99l/uSkEc4sO0y9eb8gTb2cQDCj6+ptzTerus9CLPpr/lrza/BT0FagGsKK8VU
-	 LY4yheKc21XRxthuolD+AQ2X9i2jPeqcMYM5Y5XN73KhJKzePSGFQ700cFqtIckkSToGB
-	 h96kUndiBGmUP5IiYq9nofLR0WWKmfmEoVsNoIxdgemgSgUDtntdoIotYTOB3svwyrg==
+	t=1794316543;
+	b=DMnLFDYbUY6pnGbpmZKffphZexJr6+P6DYGBeB2zHfynHuRgmBDFW0OMmO2tUVfAiJ1O
+	 4IXIJ5H2PE9KSIMhDluaaJ+VEJ1QYitDjF9MQUV9qw0dHPCsSFanb2AivT1kGH3c3Oi9V
+	 lsIo5YrX6HSqR/ga7iQt4sQ2qlvjSJ48zrw+A+4FCZK9dsvw0w41BYdIirj0znGGd3+B7
+	 0n2sHIqSzjAJzi8SwML1InfbWtaKQt3fQly0clJpyXEunBgdvl+zFnAD93SyPPthh1yGP
+	 RHhtMNKJgQlovRJsdh4e4+KgLq9B2XjBOGIIi3CgFtSmJOOn8s7GMNKZGJnP4XoD8Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316543;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=xALy9/3B3JmFvBeVlhVKJosdW61/lASfDzGu+28LETQ=;
-	b=PQcI7H5dGeuxoDgXIOir9rrCOw4jHNtQxc8d9FTpmWZJoIrbzHzdVRVvRdf3GRyjai8Y
-	 BpDk3g01K6M/5yCwtxzFRFNz7XWvosdBjNkx7/o30teApVH3ZmkXUBgbdC9mOC4FSlh2z
-	 ZyHXjxMJa1fkRgr2AEKyjyaSuNw1OEX4IPOVWuCITRI/ksb5drNHiTz6H8OFJpYDS/bmm
-	 D+nQ4EbscC1eabk2XSI5sFnPE2ucVzLaNonhd6xEk1LgLUBVWUlixkoq7d2j/6/WiaHwR
-	 wYzqAneBjRNh94LjIFcUhWtZAI/cmlC0YRUwhWwmmOhsi1ak66r8IlFIWMoXd55lYyQ==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gWTTq5dv/I66UNaYS5lsfUTpJsiUMvTdfdpova6Cxz0=;
+	b=zOa+foyYdSysO2oMkpDRhbQOmGsfHoBlMNagr6gcBO6umLc6yG/oysG4uMOO67SygZpr
+	 XjkeA4lw9hSn8IRFgYyEKS82YwfBSYbbTujAQKbO0J4TB7AZWN8md2a113yNpm1ogEdh0
+	 A5ai8SVdrLYuTPjrSQt/CPtRZj9U6f/sURnjBxd2dlncX3XdhQM1pjG+uo26LldFtTCYb
+	 PLyWwiMpi1Xl3hLMliTtz9rhbRYEJOenG4GalYSjmax8doJKJH46/2URjauDm8+q+Wbm5
+	 gcZNlYE7cOEblw//D+/EXFp6n2XkygI11QVtUv3HWBTl+95Ir/20D0SvKYfMl3KTpZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PhCu2bBr;
-	arc=none smtp.remote-ip=209.85.216.41
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mFTx+tav;
+	arc=none smtp.remote-ip=209.85.216.42
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D0F606A7C8
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:15:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64D0F606A7C8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7B7606B6F0
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:15:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F7B7606B6F0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=PhCu2bBr
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3b0d0b80fb9so1198047a91.1
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:15:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mFTx+tav
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3b0ae87069dso993691a91.2
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:15:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316523; x=1794921323; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xALy9/3B3JmFvBeVlhVKJosdW61/lASfDzGu+28LETQ=;
-        b=PhCu2bBrxUyvWeRsqj0Mlz09JVJ9KuKACyHaz++YQOBiOIdAe0WaaMT7bM44k+kuWu
-         IYhSzvN99GZ3WdCOWnNKdRphG55uKOnJPEr1KwL/0T3wjRAisbM78sJnvSsB/ls5E6pG
-         jLI3n6R2hji0LMIw9LKUuIqkKizComOkJv82qdAdNmnP7+3tP4Y9k3yGD9qXlZ4zS9iy
-         plln8RMEmp/+kuda+0GBERAoO+9jlv2x72rS5Mn/nTXOGoVfYHT/+sf/ClP4bjOWCT5+
-         Wcr4ttjkYIDYtWW+nNkUZxz934OmNznf+PmOOmzKc8gcKjDi0q+jGV0W2W2T30U0Akt7
-         LpGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316523; x=1794921323;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1794316542; x=1794921342; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xALy9/3B3JmFvBeVlhVKJosdW61/lASfDzGu+28LETQ=;
-        b=lQJJJ2x4UgGfAkS0ubf+kp1U+L1Jf+mSA+RBFpNA7iWxDgoYteD0e1phMQDQEGvs27
-         /KmDuQDF8PX7FtixrfEbbDLgF2EUFyg0koITURVsMOqW2ZwqQfrP7YhF4zcQJr2x/zuK
-         5L2Y3sM70yOMEoPWlnngd2chkxuEGiM32zcsst3RRmWdPCsR71qXUC2ag62bCn2MtLDD
-         /vCiROIQkWhJ1qe/drdnUJ2SO2cibj5+cbH3MkwgPLPxB+Jvr0Lrs8O5iwhtl2eKjKn7
-         ESYPrQm8bDz4r3C6Y5ncCum2UA+2/BvKWnTCIiSRz0858vVwyNRdBjEKxoTDd6WEUyyw
-         +vog==
-X-Forwarded-Encrypted: i=1; AL+hErEKc9UzUcBexvKJ0mbW2kfZaWTfocRSTihdS7iSZWBWNu7E7W9yPIgXcshEhRrgAXUJYswDt/0tPt0=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9+P0+6uTumcxg7nsjZbzcQ4l/dyUtbuWY0IfugwQVzfLhVhKiw
-	mt5fiwjeT6KIUQnNWyAbxOS6G53dXy8hxq9uEty93Cb/LfdvXM/8CuFR
-X-Gm-Gg: AYBFou0Qc0+A7gg3QfhhMUaAY6M3deEmesGKRnZaMnYe5I6O5Z5xYZmOHkgTt+vvcDo
-	e92sSKQP6R9wwQjiyiLas5ZR8ZAyaQCpyC29bHcE3GuTmgtnNqIYaCNgubEGbBzmRmgA/514Hhk
-	1HCcjrcp0xtR0ohqxzgmlx51MR77b7WQsMr5/EsTWH9EV/H8Xf09pONA/n0s798UTji+o5IcAAD
-	KsoEOc0gJdZC7H5yUHT8+BJyyQ8oD013WkFxYgl6xwtVG+9qtJQJ59mHLjvniUf0S5LxUTSreZe
-	mlPto+BE+zDYgoPoaAZBRGxMDhT4b/N4/IfT7LX3TZ1XvAh0w+yF9kOLvpLWFokwRfWy0goOCh+
-	X/YPbun4+sWDqVdPF5O+I6BUZ4CE4SajS2M1mWpHD/Leeq00mIk2/JWjLHbpN69j1JC8OGgsopE
-	TjRZsBlhUCRP4yPuNi0tUmC9liuB6Z17faLCAaDMc/QsPZJDX0xLdZmG4GB8sd8PjrdL/vCpTrF
-	SkLjKf2ruMyzePnHmF7o1avF36yFqvQYkiVnFBwDcJtXiFqD7pHqfzzy3r9nH5NEH5Azy/IoMRO
-	695ZzM6Nc8P+B9mbYCQ4vqtRP4ccTdk=
-X-Received: by 2002:a17:90b:1d47:b0:3ac:9d14:feb2 with SMTP id 98e67ed59e1d1-3b166cf8ccfmr2706997a91.35.1794316522421;
-        Tue, 10 Nov 2026 05:15:22 -0800 (PST)
+        bh=gWTTq5dv/I66UNaYS5lsfUTpJsiUMvTdfdpova6Cxz0=;
+        b=mFTx+tavP5+c/C9vphlYuQjwE1nBVKr1r/V5goj5JGChR211/us6Lmy6IMjujMCAJn
+         V/toLraRcAXfp2OvxlnEAK3aO4xkZ8xLSMN7eeQew+6CS0MUt+ODqafkKr7s5D4qU0pX
+         gxVhqAVA01rQNacg5mniI+aZNG9akSNH++hi4WgzSdm9oMS6vYKWCo9njkOnm4V2fpDh
+         e6yQ0DmPsPvnb7C6Fc2gxeCXjnmaSBl6IP6XhUCpqvsB+F2gZMFjlmnPNAkw/vbBYax5
+         j1v47OLnJvr/MO/HTrpJbfIaNeNnWy0bF0Q/EvyEiWTVnaoxy7IWDV0A0lUWV0F4DDzq
+         OvcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794316542; x=1794921342;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gWTTq5dv/I66UNaYS5lsfUTpJsiUMvTdfdpova6Cxz0=;
+        b=KdTGhxZmcpujut0EAJ97otHuEYQFf4vR6f7cG/RPH5zo3MCHHdQXhD0Kujv4Y9TMkW
+         vt0aE+XtQmBGGLbZjrhteubsKmfrC4nKkRpPpZOm1mrJxAMnmMZeANrqLgszP6uBsQLZ
+         kYoDpdIQWKWph7RWRr0T64C9jBgjoRIACWbtoLNke0v1/YxuHdxYzh9WHbUi0cZ4WtZa
+         +O8FR++3WI1RbMzR3s7v3Tidrt7mWa1bi2Ht5Vd0tLp6DoXMGnE7sM1EQIw05PdR4Iaj
+         6jV27IbM/+C4142hZedzA8bsqYz6AFeowsyhkYviHpufm/a8i6ja7HyBQOgVKRn5W18h
+         OMOg==
+X-Forwarded-Encrypted: i=1; AL+hErHFp+ddS6wv5cncUfwieadZm8VGQfGhsJPyuG6tGc+UYuOpbgRQXvAHFzEa65m/So0MC+MPuQ1XhPQ=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+fTWIPjCBfFIMOZfeLjGfDQlIkSl2l5vy+ukTmXWqT4sRl0glO
+	rlCXXoNJon1W+r8uGjtk6Q6WbKN1D+NW0lYBgF/WZ4LO75RDEt16asYS
+X-Gm-Gg: AYBFou0rnCkIOUuap6KYPZz4sie1wOL0kaqF+SOtwFFH7lJeGJN7QhsVjubcmoGXgfh
+	i+3YrZQvwqJlPTkVBlVbzeMXd/2ele3ltk8EPDEoqRPOYd1JETUJyvNOgOBPvdcYWNg1BT7jsXs
+	TOv+UQV+InGXOmBhwpcXfuXbFWL4EnTJQ5Yh3+nod36is+1SXyKthaQ9NS/QKYSSbDX2OtqZzHI
+	hkFKDDVI2YYSHEhuEHm/GrUq0rcglegLabmIG1Vg6MlRKy30bV2mDtsZg4nU9oIPt41QqNuw3ZL
+	mGlpj2TUDX3b+izO/j2XHwORSjLmwXm4XplZtpYgZVfgvv8r6oxz1ArFcBLy7M+eGRGoQIwdBWM
+	Y0+YAMLVNgU8238POrV19WUUHQkfGqAB6GhpYRN4/R51jUtbE9Fv+wALOp5HEnEaw4+TWGPxxMn
+	D2hxCZ3aUG8sxcIXeDGyAJ7VK8R8Xm7etffTQ0Nj8k2pVgjvR3bDoGey7ac72lfUcdAUBcKWbF7
+	QKV2doYWENmUdZu4mQY+uFWzSdFW/L1HXCAluErk63JqGwgFezo4nbJL+nTN7UvPJjKi7hDpz2T
+	vcVBhnsu9lBD3gtVf9qhJoO/LvO9peY=
+X-Received: by 2002:a17:90b:1d47:b0:3ac:9d14:feb2 with SMTP id 98e67ed59e1d1-3b166cf8ccfmr2707857a91.35.1794316541655;
+        Tue, 10 Nov 2026 05:15:41 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.15.21
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.15.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:15:22 -0800 (PST)
+        Tue, 10 Nov 2026 05:15:40 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Logan Gunthorpe <logang@deltatee.com>,
 	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 00/33] dmaengine: migrate channel tasklets to WQ_BH
-Date: Tue, 10 Nov 2026 05:13:00 -0800
-Message-ID: <cover.1794315350.git.allen.lkml@gmail.com>
+	linux-kernel@vger.kernel.org,
+	Frank Li <Frank.Li@kernel.org>,
+	Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Zhou Wang <wangzhou1@hisilicon.com>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Paul Walmsley <pjw@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-mips@vger.kernel.org,
+	imx@lists.linux.dev,
+	linux-mediatek@lists.infradead.org,
+	linux-actions@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v4 01/33] dmaengine: add tasklet-backed channel BH helpers
+Date: Tue, 10 Nov 2026 05:13:01 -0800
+Message-ID: <c515f9757c8d89501ecbb0f2f4530fd3b800c976.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
+References: <cover.1794315350.git.allen.lkml@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -104,227 +153,775 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Vinod, Frank and Arnd,
+DMAengine drivers commonly use a per-channel tasklet to invoke client
+callbacks. Add helpers that initialize, schedule, and kill a channel
+bottom half, with an initial tasklet-backed implementation that preserves
+the existing execution context.
 
-This series moves DMAengine client completion bottom halves from private
-tasklets to a common per-channel API backed by WQ_BH.
+Convert virt-dma to the new API and remove its private tasklet. Update all
+drivers that directly kill or override that tasklet in the same change so
+no stale users remain. While touching the completion handler, avoid forming
+a result pointer from a NULL cyclic descriptor.
 
-The first patch introduces the dmaengine_*_bh() API with a tasklet backend
-and converts virt-dma to it. It also updates every driver that directly
-accesses the removed virt_dma_chan tasklet, keeping the patch buildable on
-its own. This separates the driver-facing API from its implementation
-without changing callback context.
+This establishes a backend-independent API before changing how channel
+bottom halves are dispatched.
 
-The second patch switches that backend to a dedicated WQ_BH | WQ_PERCPU
-workqueue. WQ_BH keeps callbacks in softirq context, while the common API
-centralizes initialization, scheduling, and synchronization. The
-workqueue helpers remain internal to DMAengine, and dmaengine_kill_bh()
-drains scheduled callbacks to preserve tasklet_kill() semantics.
-
-The remaining patches convert driver-owned channel completion tasklets.
-Tasklets used for controller-level processing, recovery, or other
-non-client-callback work are deliberately left alone because the
-appropriate replacement may differ by driver.
-
-As agreed in the RFC discussion, selecting hardirq callback delivery is a
-separate API change and is not part of this series.
-
-Frank asked about DMAengine users outside drivers/dma/ that still
-open-code completion tasklets. Those will be converted in a follow-up
-series once this one has landed, to keep this set from growing further.
-
-Earlier discussion:
-https://lore.kernel.org/all/20260108080332.2341725-1-allen.lkml@gmail.com/
-
-v2:
-https://lore.kernel.org/all/cover.1785183549.git.allen.lkml@gmail.com/
-
-v3:
-https://lore.kernel.org/all/cover.1786384168.git.allen.lkml@gmail.com/
-
-Changes since v3:
-- post as a new thread instead of in reply to v3 (Andy)
-- rebase onto v7.4-rc2. The ste_dma40 rework merged for 7.4-rc1 added
-  tasklet_schedule() calls in the d40_queue_start() error paths and a
-  devm action that kills the channel tasklets; both now use the BH
-  helpers. fsldma and mv_xor gained tasklet_kill() calls in their channel
-  remove and error paths, which are converted as well. zynqmp_dma and
-  altera-msgdma only needed context fixes. The new amlogic-dma driver and
-  the new at_hdmac channel cleanup path kill the virt-dma channel tasklet
-  directly and are converted in 01/33.
-- drop the DW DMA patch (v3 31/34). Andy considers it unneeded churn
-  ahead of a larger cleanup of that driver.
-- pl330: initialize the channel BH at probe time instead of in
-  alloc_chan_resources(). dmaengine_init_bh() warns when called on an
-  already initialized channel, and channels can be re-requested.
-- txx9dmac: channels served by the shared controller interrupt keep
-  scanning descriptors from the controller tasklet. v3 scheduled a BH
-  that was never initialized for them.
-- timb_dma: recompute TIMBDMA_IER from the channel BH once the channel
-  has been finished, and drain the channel BHs on remove and in the probe
-  error path.
-- mpc512x: drain the channel BHs in mpc_dma_remove().
-- sf-pdma: reset the retry budget when abandoning a descriptor, and
-  spell out in the changelog how the new error path mirrors the done
-  tasklet (Frank).
-- hidma: leave hidma_free() unchanged (Frank). Drain the BH in
-  free_chan_resources() and in remove(), after killing the low-level
-  completion tasklet and before hidma_ll_uninit(), and add a
-  device_synchronize() callback.
-- qcom-gpi: synchronize the vchan before the channel ring is freed, and
-  add a device_synchronize() callback.
-- collect Frank Li's Reviewed-by from v3. I kept it on patches that only
-  picked up mechanical conversions from the rebase (01, 06, 12, 17, 21,
-  27, 30). timb_dma, txx9dmac, mpc512x, pl330 and qcom-gpi changed
-  enough that I have not carried his tag forward on those.
-
-The driver changes above came out of going through the Sashiko reports on
-v3. Most of what it flagged are pre-existing teardown and locking issues
-in the individual drivers that this series does not make worse; those are
-out of scope here.
-
-Review tags retained on unchanged standalone patches:
-- 09/33 IOAT: Acked-by Dave Jiang
-- 17/33 STE DMA40: Reviewed-by Linus Walleij (the rebase only added the
-  mechanical conversions mentioned above)
-- 27/33 PLX DMA and 33/33 Switchtec: Reviewed-by Logan Gunthorpe
-
-Review tags received on v2 patches now folded into 01/33:
-- v2 41/64 HSU: Reviewed-by Andy Shevchenko
-- v2 60/64 BAM DMA: Acked-by Bartosz Golaszewski
-
-The HSU and BAM DMA changes remain in 01/33, but those patch-specific
-trailers are not attached to the substantially broader 37-file patch.
-Andy and Bartosz are copied here and on 01/33 for visibility.
-
-Testing:
-- build-tested on top of v7.4-rc2 with W=1 for drivers/dma/, with no new
-  warnings compared to the base commit:
-  - arm64, x86_64 and arm allmodconfig
-  - powerpc 44x/katmai_defconfig + AMCC_PPC440SPE_ADMA,
-    mpc512x_defconfig + MPC512X_DMA, mpc85xx_smp_defconfig + FSL_DMA, and
-    the same with FSL_DMA replaced by FSL_RAID
-  - mips rbtx49xx_defconfig + TXX9_DMAC
-- every patch builds on its own (drivers/dma/) with the arm64 and x86_64
-  allmodconfig configurations
-- the series also applies cleanly on dmaengine/next (currently v7.4-rc1)
-- scripts/checkpatch.pl --strict is clean on all 33 patches
-- the sf-pdma and hidma changes are compile-tested only; testing on
-  hardware would be appreciated
-
-Allen Pais (33):
-  dmaengine: add tasklet-backed channel BH helpers
-  dmaengine: back channel BH helpers with WQ_BH
-  dmaengine: apple-admac: use dmaengine BH callback
-  dmaengine: at_xdmac: move irq bottom half to dmaengine BH
-  dmaengine: ep93xx: hook callbacks via dmaengine BH
-  dmaengine: fsldma: migrate tasklet to dmaengine BH
-  dmaengine: fsl_raid: run completions via dmaengine BH
-  dmaengine: imx-dma: flip per-chan tasklet to dmaengine BH
-  dmaengine: ioat: convert cleanup tasklet to dmaengine BH
-  dmaengine: mmp_pdma: replace per-chan tasklet with dmaengine BH
-  dmaengine: mmp_tdma: hook completions to dmaengine BH
-  dmaengine: mv_xor: convert irq tasklet to dmaengine BH
-  dmaengine: mxs-dma: use dmaengine BH scheduling
-  dmaengine: nbpfaxi: switch callbacks to dmaengine BH
-  dmaengine: pch_dma: convert tasklet to dmaengine BH
-  dmaengine: ppc4xx: replace irq tasklet with dmaengine BH
-  dmaengine: ste_dma40: convert per-channel tasklet to dmaengine BH
-  dmaengine: xgene-dma: wire descriptor cleanup to dmaengine BH
-  dmaengine: xilinx-dma: use dmaengine BH instead of tasklets
-  dmaengine: xilinx-dpdma: kill vchan BH on remove
-  dmaengine: zynqmp-dma: switch completion tasklet to dmaengine BH
-  dmaengine: tegra20-apb: use channel BH helpers
-  dmaengine: timb_dma: route callbacks via channel BH
-  dmaengine: txx9dmac: route callbacks via channel BH
-  dmaengine: mv_xor_v2: use channel BH helpers
-  dmaengine: mpc512x: route callbacks via channel BH
-  dmaengine: plx_dma: use channel BH helpers
-  dmaengine: sf-pdma: route error callbacks through channel BH
-  dmaengine: pl330: route callbacks via channel BH
-  dmaengine: altera-msgdma: use channel BH helpers
-  dmaengine: hidma: defer callbacks via channel BH
-  dmaengine: qcom-gpi: defer callbacks via vchan
-  dmaengine: switchtec: use channel BH helpers
-
- drivers/dma/altera-msgdma.c                   | 14 +--
+Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+---
  drivers/dma/amlogic-dma.c                     |  4 +-
- drivers/dma/apple-admac.c                     | 16 ++--
  drivers/dma/at_hdmac.c                        |  2 +-
- drivers/dma/at_xdmac.c                        | 13 ++-
  drivers/dma/bcm2835-dma.c                     |  2 +-
- drivers/dma/dma-axi-dmac.c                    | 10 ++-
+ drivers/dma/dma-axi-dmac.c                    | 10 +++--
  drivers/dma/dma-jz4780.c                      |  2 +-
- drivers/dma/dmaengine.c                       | 89 ++++++++++++++++++-
+ drivers/dma/dmaengine.c                       | 42 +++++++++++++++++++
  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    |  2 +-
  drivers/dma/dw-edma/dw-edma-core.c            |  2 +-
- drivers/dma/ep93xx_dma.c                      | 12 ++-
  drivers/dma/fsl-edma-common.c                 |  2 +-
  drivers/dma/fsl-qdma.c                        |  2 +-
- drivers/dma/fsl_raid.c                        | 11 +--
- drivers/dma/fsl_raid.h                        |  1 -
- drivers/dma/fsldma.c                          | 12 +--
- drivers/dma/fsldma.h                          |  1 -
  drivers/dma/hisi_dma.c                        |  2 +-
  drivers/dma/hsu/hsu.c                         |  2 +-
  drivers/dma/idma64.c                          |  4 +-
  drivers/dma/img-mdc-dma.c                     |  2 +-
- drivers/dma/imx-dma.c                         | 26 +++---
  drivers/dma/imx-sdma.c                        |  4 +-
- drivers/dma/ioat/dma.c                        | 14 +--
- drivers/dma/ioat/dma.h                        |  3 +-
- drivers/dma/ioat/init.c                       |  2 +-
  drivers/dma/k3dma.c                           |  2 +-
  drivers/dma/loongson/loongson1-apb-dma.c      |  2 +-
  drivers/dma/mediatek/mtk-cqdma.c              |  2 +-
  drivers/dma/mediatek/mtk-hsdma.c              |  2 +-
  drivers/dma/mediatek/mtk-uart-apdma.c         |  4 +-
- drivers/dma/mmp_pdma.c                        | 13 ++-
- drivers/dma/mmp_tdma.c                        |  9 +-
- drivers/dma/mpc512x_dma.c                     | 78 ++++++++++------
- drivers/dma/mv_xor.c                          | 14 +--
- drivers/dma/mv_xor.h                          |  2 -
- drivers/dma/mv_xor_v2.c                       | 20 ++---
- drivers/dma/mxs-dma.c                         | 11 ++-
- drivers/dma/nbpfaxi.c                         | 13 ++-
  drivers/dma/owl-dma.c                         |  2 +-
- drivers/dma/pch_dma.c                         | 14 +--
- drivers/dma/pl330.c                           | 19 ++--
- drivers/dma/plx_dma.c                         | 12 +--
- drivers/dma/ppc4xx/adma.c                     | 14 +--
- drivers/dma/ppc4xx/adma.h                     |  2 -
  drivers/dma/pxa_dma.c                         |  2 +-
  drivers/dma/qcom/bam_dma.c                    |  4 +-
- drivers/dma/qcom/gpi.c                        | 27 +++++-
- drivers/dma/qcom/hidma.c                      | 24 ++++-
  drivers/dma/qcom/qcom_adm.c                   |  4 +-
  drivers/dma/sa11x0-dma.c                      |  2 +-
- drivers/dma/sf-pdma/sf-pdma.c                 | 18 +++-
+ drivers/dma/sf-pdma/sf-pdma.c                 |  2 +-
  drivers/dma/sprd-dma.c                        |  2 +-
  drivers/dma/st_fdma.c                         |  2 +-
- drivers/dma/ste_dma40.c                       | 29 +++---
  drivers/dma/sun6i-dma.c                       |  2 +-
- drivers/dma/switchtec_dma.c                   | 16 ++--
  drivers/dma/tegra186-gpc-dma.c                |  2 +-
- drivers/dma/tegra20-apb-dma.c                 | 18 ++--
  drivers/dma/tegra210-adma.c                   |  2 +-
  drivers/dma/ti/edma.c                         |  2 +-
- drivers/dma/ti/k3-udma.c                      | 12 +--
+ drivers/dma/ti/k3-udma.c                      | 12 +++---
  drivers/dma/ti/omap-dma.c                     |  2 +-
- drivers/dma/timb_dma.c                        | 41 +++++++--
- drivers/dma/txx9dmac.c                        | 10 +--
- drivers/dma/txx9dmac.h                        |  1 -
- drivers/dma/virt-dma.c                        | 12 +--
- drivers/dma/virt-dma.h                        |  7 +-
- drivers/dma/xgene-dma.c                       | 19 ++--
- drivers/dma/xilinx/xilinx_dma.c               | 20 ++---
- drivers/dma/xilinx/xilinx_dpdma.c             |  1 +
- drivers/dma/xilinx/zynqmp_dma.c               | 19 ++--
- include/linux/dmaengine.h                     | 28 ++++++
- 74 files changed, 503 insertions(+), 316 deletions(-)
+ drivers/dma/virt-dma.c                        | 12 +++---
+ drivers/dma/virt-dma.h                        |  7 ++--
+ include/linux/dmaengine.h                     | 28 +++++++++++++
+ 37 files changed, 128 insertions(+), 57 deletions(-)
 
-
-base-commit: 7475ea8b58616b33c04afb976cf0fbaad9dd63fb
+diff --git a/drivers/dma/amlogic-dma.c b/drivers/dma/amlogic-dma.c
+index 684121d13fca..4a14b2f777c6 100644
+--- a/drivers/dma/amlogic-dma.c
++++ b/drivers/dma/amlogic-dma.c
+@@ -707,10 +707,10 @@ static void aml_dma_remove(struct platform_device *pdev)
+ 	for (i = 0; i < MAX_CHAN_ID; i++) {
+ 		aml_chan = aml_dma->aml_rch[i];
+ 		if (aml_chan)
+-			tasklet_kill(&aml_chan->vchan.task);
++			dmaengine_kill_bh(&aml_chan->vchan.chan);
+ 		aml_chan = aml_dma->aml_wch[i];
+ 		if (aml_chan)
+-			tasklet_kill(&aml_chan->vchan.task);
++			dmaengine_kill_bh(&aml_chan->vchan.chan);
+ 	}
+ 	destroy_workqueue(aml_dma->free_wq);
+ }
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index b024aa2d34b2..991c572d5c19 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1944,7 +1944,7 @@ static void at_dma_cleanup_channels(struct at_dma *atdma)
+ 			device_node) {
+ 		/* Disable interrupts */
+ 		atc_disable_chan_irq(atdma, i++);
+-		tasklet_kill(&to_at_dma_chan(chan)->vc.task);
++		dmaengine_kill_bh(chan);
+ 		list_del(&chan->device_node);
+ 	}
+ }
+diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
+index d41b0f6ec427..62844b44696b 100644
+--- a/drivers/dma/bcm2835-dma.c
++++ b/drivers/dma/bcm2835-dma.c
+@@ -829,7 +829,7 @@ static void bcm2835_dma_free(struct bcm2835_dmadev *od)
+ 	list_for_each_entry_safe(c, next, &od->ddev.channels,
+ 				 vc.chan.device_node) {
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 	}
+ 
+ 	dma_unmap_page_attrs(od->ddev.dev, od->zero_page, PAGE_SIZE,
+diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+index dbc31b185c4d..91ec19dd4df8 100644
+--- a/drivers/dma/dma-axi-dmac.c
++++ b/drivers/dma/dma-axi-dmac.c
+@@ -1195,9 +1195,11 @@ static int axi_dmac_detect_caps(struct axi_dmac *dmac, unsigned int version)
+ 	return 0;
+ }
+ 
+-static void axi_dmac_tasklet_kill(void *task)
++static void axi_dmac_kill_bh(void *data)
+ {
+-	tasklet_kill(task);
++	struct dma_chan *chan = data;
++
++	dmaengine_kill_bh(chan);
+ }
+ 
+ static void axi_dmac_free_dma_controller(void *of_node)
+@@ -1302,8 +1304,8 @@ static int axi_dmac_probe(struct platform_device *pdev)
+ 	 * Put the action in here so it get's done before unregistering the DMA
+ 	 * device.
+ 	 */
+-	ret = devm_add_action_or_reset(&pdev->dev, axi_dmac_tasklet_kill,
+-				       &dmac->chan.vchan.task);
++	ret = devm_add_action_or_reset(&pdev->dev, axi_dmac_kill_bh,
++				       &dmac->chan.vchan.chan);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+index e610aba09418..27eaf2fa077c 100644
+--- a/drivers/dma/dma-jz4780.c
++++ b/drivers/dma/dma-jz4780.c
+@@ -1018,7 +1018,7 @@ static void jz4780_dma_remove(struct platform_device *pdev)
+ 	free_irq(jzdma->irq, jzdma);
+ 
+ 	for (i = 0; i < jzdma->soc_data->nb_channels; i++)
+-		tasklet_kill(&jzdma->chan[i].vchan.task);
++		dmaengine_kill_bh(&jzdma->chan[i].vchan.chan);
+ }
+ 
+ static const struct jz4780_dma_soc_data jz4740_dma_soc_data = {
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 34be53487a21..f3c19fbb2a01 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -1449,6 +1449,48 @@ static void dmaengine_destroy_unmap_pool(void)
+ 	}
+ }
+ 
++static void dma_chan_bh_entry(struct tasklet_struct *tasklet)
++{
++	struct dma_chan *chan = from_tasklet(chan, tasklet, bh_tasklet);
++	dmaengine_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
++
++	if (fn)
++		fn(chan);
++}
++
++void dmaengine_init_bh(struct dma_chan *chan, dmaengine_bh_work_fn fn)
++{
++	if (WARN_ON(!fn))
++		return;
++
++	if (WARN_ON(chan->bh_work_initialized))
++		return;
++
++	chan->bh_work_fn = fn;
++	tasklet_setup(&chan->bh_tasklet, dma_chan_bh_entry);
++	chan->bh_work_initialized = true;
++}
++EXPORT_SYMBOL_GPL(dmaengine_init_bh);
++
++bool dmaengine_schedule_bh(struct dma_chan *chan)
++{
++	if (WARN_ON(!chan->bh_work_initialized))
++		return false;
++
++	tasklet_schedule(&chan->bh_tasklet);
++	return true;
++}
++EXPORT_SYMBOL_GPL(dmaengine_schedule_bh);
++
++void dmaengine_kill_bh(struct dma_chan *chan)
++{
++	if (!chan->bh_work_initialized)
++		return;
++
++	tasklet_kill(&chan->bh_tasklet);
++}
++EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
++
+ static int __init dmaengine_init_unmap_pool(void)
+ {
+ 	int i;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 940b196b69d1..425c25028a49 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1657,7 +1657,7 @@ static void dw_remove(struct platform_device *pdev)
+ 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
+ 				 vc.chan.device_node) {
+ 		list_del(&chan->vc.chan.device_node);
+-		tasklet_kill(&chan->vc.task);
++		dmaengine_kill_bh(&chan->vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index d682074eaa0e..2cceb87dffb8 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -1505,7 +1505,7 @@ int dw_edma_remove(struct dw_edma_chip *chip)
+ 	dma_async_device_unregister(&dw->dma);
+ 	list_for_each_entry_safe(chan, _chan, &dw->dma.channels,
+ 				 vc.chan.device_node) {
+-		tasklet_kill(&chan->vc.task);
++		dmaengine_kill_bh(&chan->vc.chan);
+ 		list_del(&chan->vc.chan.device_node);
+ 	}
+ 
+diff --git a/drivers/dma/fsl-edma-common.c b/drivers/dma/fsl-edma-common.c
+index 513b0f4e5be2..85cc8791659d 100644
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -1158,7 +1158,7 @@ void fsl_edma_cleanup_vchan(struct dma_device *dmadev)
+ 	list_for_each_entry_safe(chan, _chan,
+ 				&dmadev->channels, vchan.chan.device_node) {
+ 		list_del(&chan->vchan.chan.device_node);
+-		tasklet_kill(&chan->vchan.task);
++		dmaengine_kill_bh(&chan->vchan.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+index 27c632e6fa78..b901fe1046ef 100644
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -1254,7 +1254,7 @@ static void fsl_qdma_cleanup_vchan(struct dma_device *dmadev)
+ 	list_for_each_entry_safe(chan, _chan,
+ 				 &dmadev->channels, vchan.chan.device_node) {
+ 		list_del(&chan->vchan.chan.device_node);
+-		tasklet_kill(&chan->vchan.task);
++		dmaengine_kill_bh(&chan->vchan.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+index d3ec1819aa5d..16279c332e9d 100644
+--- a/drivers/dma/hisi_dma.c
++++ b/drivers/dma/hisi_dma.c
+@@ -720,7 +720,7 @@ static void hisi_dma_disable_qps(struct hisi_dma_dev *hdma_dev)
+ 
+ 	for (i = 0; i < hdma_dev->chan_num; i++) {
+ 		hisi_dma_disable_qp(hdma_dev, i);
+-		tasklet_kill(&hdma_dev->chan[i].vc.task);
++		dmaengine_kill_bh(&hdma_dev->chan[i].vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/hsu/hsu.c b/drivers/dma/hsu/hsu.c
+index ce24e840af59..ec530e0e1296 100644
+--- a/drivers/dma/hsu/hsu.c
++++ b/drivers/dma/hsu/hsu.c
+@@ -499,7 +499,7 @@ int hsu_dma_remove(struct hsu_dma_chip *chip)
+ 	for (i = 0; i < hsu->nr_channels; i++) {
+ 		struct hsu_dma_chan *hsuc = &hsu->chan[i];
+ 
+-		tasklet_kill(&hsuc->vchan.task);
++		dmaengine_kill_bh(&hsuc->vchan.chan);
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
+index e3db213e564b..d7089c4b3787 100644
+--- a/drivers/dma/idma64.c
++++ b/drivers/dma/idma64.c
+@@ -610,14 +610,14 @@ static void idma64_remove(struct idma64_chip *chip)
+ 
+ 	/*
+ 	 * Explicitly call devm_request_irq() to avoid the side effects with
+-	 * the scheduled tasklets.
++	 * scheduled BH work.
+ 	 */
+ 	devm_free_irq(chip->dev, chip->irq, idma64);
+ 
+ 	for (i = 0; i < idma64->dma.chancnt; i++) {
+ 		struct idma64_chan *idma64c = &idma64->chan[i];
+ 
+-		tasklet_kill(&idma64c->vchan.task);
++		dmaengine_kill_bh(&idma64c->vchan.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+index b91807d5ae82..22288f3bae55 100644
+--- a/drivers/dma/img-mdc-dma.c
++++ b/drivers/dma/img-mdc-dma.c
+@@ -1031,7 +1031,7 @@ static void mdc_dma_remove(struct platform_device *pdev)
+ 
+ 		devm_free_irq(&pdev->dev, mchan->irq, mchan);
+ 
+-		tasklet_kill(&mchan->vc.task);
++		dmaengine_kill_bh(&mchan->vc.chan);
+ 	}
+ 
+ 	pm_runtime_disable(&pdev->dev);
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 749f1fe77907..9bf70a682e22 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -2399,11 +2399,11 @@ static void sdma_remove(struct platform_device *pdev)
+ 	int i;
+ 
+ 	devm_free_irq(&pdev->dev, sdma->irq, sdma);
+-	/* Kill the tasklet */
++	/* Kill the channel BH */
+ 	for (i = 0; i < MAX_DMA_CHANNELS; i++) {
+ 		struct sdma_channel *sdmac = &sdma->channel[i];
+ 
+-		tasklet_kill(&sdmac->vc.task);
++		dmaengine_kill_bh(&sdmac->vc.chan);
+ 		sdma_free_chan_resources(&sdmac->vc.chan);
+ 	}
+ 
+diff --git a/drivers/dma/k3dma.c b/drivers/dma/k3dma.c
+index 079dda13cf0c..571237b15182 100644
+--- a/drivers/dma/k3dma.c
++++ b/drivers/dma/k3dma.c
+@@ -975,7 +975,7 @@ static void k3_dma_remove(struct platform_device *op)
+ 
+ 	list_for_each_entry_safe(c, cn, &d->slave.channels, vc.chan.device_node) {
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 	}
+ 	tasklet_kill(&d->task);
+ 	clk_disable_unprepare(d->clk);
+diff --git a/drivers/dma/loongson/loongson1-apb-dma.c b/drivers/dma/loongson/loongson1-apb-dma.c
+index 10a1920ff6c2..c91e933b186a 100644
+--- a/drivers/dma/loongson/loongson1-apb-dma.c
++++ b/drivers/dma/loongson/loongson1-apb-dma.c
+@@ -547,7 +547,7 @@ static void ls1x_dma_chan_remove(struct ls1x_dma *dma)
+ 
+ 		if (chan->vc.chan.device == &dma->ddev) {
+ 			list_del(&chan->vc.chan.device_node);
+-			tasklet_kill(&chan->vc.task);
++			dmaengine_kill_bh(&chan->vc.chan);
+ 		}
+ 	}
+ }
+diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+index a7000608ddea..8c536c4e04ec 100644
+--- a/drivers/dma/mediatek/mtk-cqdma.c
++++ b/drivers/dma/mediatek/mtk-cqdma.c
+@@ -894,7 +894,7 @@ static void mtk_cqdma_remove(struct platform_device *pdev)
+ 		vc = &cqdma->vc[i];
+ 
+ 		list_del(&vc->vc.chan.device_node);
+-		tasklet_kill(&vc->vc.task);
++		dmaengine_kill_bh(&vc->vc.chan);
+ 	}
+ 
+ 	/* disable interrupt */
+diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
+index ad5883cf6165..2a2b4c38a3f5 100644
+--- a/drivers/dma/mediatek/mtk-hsdma.c
++++ b/drivers/dma/mediatek/mtk-hsdma.c
+@@ -1032,7 +1032,7 @@ static void mtk_hsdma_remove(struct platform_device *pdev)
+ 		vc = &hsdma->vc[i];
+ 
+ 		list_del(&vc->vc.chan.device_node);
+-		tasklet_kill(&vc->vc.task);
++		dmaengine_kill_bh(&vc->vc.chan);
+ 	}
+ 
+ 	/* Disable DMA interrupt */
+diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
+index bf242c4c262f..127e1d6a30a1 100644
+--- a/drivers/dma/mediatek/mtk-uart-apdma.c
++++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+@@ -312,7 +312,7 @@ static void mtk_uart_apdma_free_chan_resources(struct dma_chan *chan)
+ 
+ 	free_irq(c->irq, chan);
+ 
+-	tasklet_kill(&c->vc.task);
++	dmaengine_kill_bh(&c->vc.chan);
+ 
+ 	vchan_free_chan_resources(&c->vc);
+ 
+@@ -463,7 +463,7 @@ static void mtk_uart_apdma_free(struct mtk_uart_apdmadev *mtkd)
+ 			struct mtk_chan, vc.chan.device_node);
+ 
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+index 31a6c6e01a75..43663f4539f0 100644
+--- a/drivers/dma/owl-dma.c
++++ b/drivers/dma/owl-dma.c
+@@ -1050,7 +1050,7 @@ static inline void owl_dma_free(struct owl_dma *od)
+ 	list_for_each_entry_safe(vchan,
+ 				 next, &od->dma.channels, vc.chan.device_node) {
+ 		list_del(&vchan->vc.chan.device_node);
+-		tasklet_kill(&vchan->vc.task);
++		dmaengine_kill_bh(&vchan->vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/pxa_dma.c b/drivers/dma/pxa_dma.c
+index bf03009bb966..29bcda3f785b 100644
+--- a/drivers/dma/pxa_dma.c
++++ b/drivers/dma/pxa_dma.c
+@@ -1216,7 +1216,7 @@ static void pxad_free_channels(struct dma_device *dmadev)
+ 	list_for_each_entry_safe(c, cn, &dmadev->channels,
+ 				 vc.chan.device_node) {
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index e62e411dc8f8..823b92099bcc 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1389,7 +1389,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	free_irq(bdev->irq, bdev);
+ err_bam_channel_exit:
+ 	for (i = 0; i < bdev->num_channels; i++)
+-		tasklet_kill(&bdev->channels[i].vc.task);
++		dmaengine_kill_bh(&bdev->channels[i].vc.chan);
+ err_tasklet_kill:
+ 	tasklet_kill(&bdev->task);
+ err_disable_clk:
+@@ -1416,7 +1416,7 @@ static void bam_dma_remove(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < bdev->num_channels; i++) {
+ 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
+-		tasklet_kill(&bdev->channels[i].vc.task);
++		dmaengine_kill_bh(&bdev->channels[i].vc.chan);
+ 
+ 		if (!bdev->channels[i].fifo_virt)
+ 			continue;
+diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
+index b38ee75a9637..f306b3c841de 100644
+--- a/drivers/dma/qcom/qcom_adm.c
++++ b/drivers/dma/qcom/qcom_adm.c
+@@ -918,8 +918,8 @@ static void adm_dma_remove(struct platform_device *pdev)
+ 		/* mask IRQs for this channel/EE pair */
+ 		writel(0, adev->regs + ADM_CH_RSLT_CONF(achan->id, adev->ee));
+ 
+-		tasklet_kill(&adev->channels[i].vc.task);
+-		adm_terminate_all(&adev->channels[i].vc.chan);
++		dmaengine_kill_bh(&achan->vc.chan);
++		adm_terminate_all(&achan->vc.chan);
+ 	}
+ 
+ 	devm_free_irq(adev->dev, adev->irq, adev);
+diff --git a/drivers/dma/sa11x0-dma.c b/drivers/dma/sa11x0-dma.c
+index a6fa431530e3..e14566fa2d74 100644
+--- a/drivers/dma/sa11x0-dma.c
++++ b/drivers/dma/sa11x0-dma.c
+@@ -891,7 +891,7 @@ static void sa11x0_dma_free_channels(struct dma_device *dmadev)
+ 
+ 	list_for_each_entry_safe(c, cn, &dmadev->channels, vc.chan.device_node) {
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 		kfree(c);
+ 	}
+ }
+diff --git a/drivers/dma/sf-pdma/sf-pdma.c b/drivers/dma/sf-pdma/sf-pdma.c
+index 4770ec3470cb..ca60fb46ade0 100644
+--- a/drivers/dma/sf-pdma/sf-pdma.c
++++ b/drivers/dma/sf-pdma/sf-pdma.c
+@@ -601,7 +601,7 @@ static void sf_pdma_remove(struct platform_device *pdev)
+ 		devm_free_irq(&pdev->dev, ch->txirq, ch);
+ 		devm_free_irq(&pdev->dev, ch->errirq, ch);
+ 		list_del(&ch->vchan.chan.device_node);
+-		tasklet_kill(&ch->vchan.task);
++		dmaengine_kill_bh(&ch->vchan.chan);
+ 		tasklet_kill(&ch->done_tasklet);
+ 		tasklet_kill(&ch->err_tasklet);
+ 	}
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 55ccbb902926..704b05885cd9 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1231,7 +1231,7 @@ static void sprd_dma_remove(struct platform_device *pdev)
+ 	list_for_each_entry_safe(c, cn, &sdev->dma_dev.channels,
+ 				 vc.chan.device_node) {
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 	}
+ 
+ 	of_dma_controller_free(pdev->dev.of_node);
+diff --git a/drivers/dma/st_fdma.c b/drivers/dma/st_fdma.c
+index a82058e27aa4..875d506d4686 100644
+--- a/drivers/dma/st_fdma.c
++++ b/drivers/dma/st_fdma.c
+@@ -733,7 +733,7 @@ static void st_fdma_free(struct st_fdma_dev *fdev)
+ 	for (i = 0; i < fdev->nr_channels; i++) {
+ 		fchan = &fdev->chans[i];
+ 		list_del(&fchan->vchan.chan.device_node);
+-		tasklet_kill(&fchan->vchan.task);
++		dmaengine_kill_bh(&fchan->vchan.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 3b849833e08f..f4543e8af789 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -1136,7 +1136,7 @@ static inline void sun6i_dma_free(struct sun6i_dma_dev *sdev)
+ 		struct sun6i_vchan *vchan = &sdev->vchans[i];
+ 
+ 		list_del(&vchan->vc.chan.device_node);
+-		tasklet_kill(&vchan->vc.task);
++		dmaengine_kill_bh(&vchan->vc.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+index ec12b7288b43..30fe6cfcc82a 100644
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -1284,7 +1284,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+ 	tegra_dma_terminate_all(dc);
+ 	synchronize_irq(tdc->irq);
+ 
+-	tasklet_kill(&tdc->vc.task);
++	dmaengine_kill_bh(&tdc->vc.chan);
+ 	tdc->config_init = false;
+ 	tdc->slave_id = -1;
+ 	tdc->sid_dir = DMA_TRANS_NONE;
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 607f8e0848ac..0c73dc61622a 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -811,7 +811,7 @@ static void tegra_adma_free_chan_resources(struct dma_chan *dc)
+ 
+ 	tegra_adma_terminate_all(dc);
+ 	vchan_free_chan_resources(&tdc->vc);
+-	tasklet_kill(&tdc->vc.task);
++	dmaengine_kill_bh(&tdc->vc.chan);
+ 	free_irq(tdc->irq, tdc);
+ 	pm_runtime_put(tdc2dev(tdc));
+ 
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index f3a98654d126..01f9739f120c 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -2557,7 +2557,7 @@ static void edma_cleanupp_vchan(struct dma_device *dmadev)
+ 	list_for_each_entry_safe(echan, _echan,
+ 			&dmadev->channels, vchan.chan.device_node) {
+ 		list_del(&echan->vchan.chan.device_node);
+-		tasklet_kill(&echan->vchan.task);
++		dmaengine_kill_bh(&echan->vchan.chan);
+ 	}
+ }
+ 
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 75bd1977fb42..b58c9bb22ddf 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -4042,12 +4042,12 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
+ }
+ 
+ /*
+- * This tasklet handles the completion of a DMA descriptor by
++ * This BH handles the completion of a DMA descriptor by
+  * calling its callback and freeing it.
+  */
+-static void udma_vchan_complete(struct tasklet_struct *t)
++static void udma_vchan_complete(struct dma_chan *chan)
+ {
+-	struct virt_dma_chan *vc = from_tasklet(vc, t, task);
++	struct virt_dma_chan *vc = to_virt_chan(chan);
+ 	struct virt_dma_desc *vd, *_vd;
+ 	struct dmaengine_desc_callback cb;
+ 	LIST_HEAD(head);
+@@ -4112,7 +4112,7 @@ static void udma_free_chan_resources(struct dma_chan *chan)
+ 	}
+ 
+ 	vchan_free_chan_resources(&uc->vc);
+-	tasklet_kill(&uc->vc.task);
++	dmaengine_kill_bh(&uc->vc.chan);
+ 
+ 	bcdma_free_bchan_resources(uc);
+ 	udma_free_tx_resources(uc);
+@@ -5610,8 +5610,8 @@ static int udma_probe(struct platform_device *pdev)
+ 		if (!uc->name)
+ 			return -ENOMEM;
+ 		vchan_init(&uc->vc, &ud->ddev);
+-		/* Use custom vchan completion handling */
+-		tasklet_setup(&uc->vc.task, udma_vchan_complete);
++		/* Override the default vchan completion handler */
++		uc->vc.chan.bh_work_fn = udma_vchan_complete;
+ 		init_completion(&uc->teardown_completed);
+ 		INIT_DELAYED_WORK(&uc->tx_drain.work, udma_check_tx_completion);
+ 	}
+diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+index 93b6a4682085..aad968331162 100644
+--- a/drivers/dma/ti/omap-dma.c
++++ b/drivers/dma/ti/omap-dma.c
+@@ -1521,7 +1521,7 @@ static void omap_dma_free(struct omap_dmadev *od)
+ 			struct omap_chan, vc.chan.device_node);
+ 
+ 		list_del(&c->vc.chan.device_node);
+-		tasklet_kill(&c->vc.task);
++		dmaengine_kill_bh(&c->vc.chan);
+ 		kfree(c);
+ 	}
+ }
+diff --git a/drivers/dma/virt-dma.c b/drivers/dma/virt-dma.c
+index 7961172a780d..d407af6cc1da 100644
+--- a/drivers/dma/virt-dma.c
++++ b/drivers/dma/virt-dma.c
+@@ -77,12 +77,12 @@ struct virt_dma_desc *vchan_find_desc(struct virt_dma_chan *vc,
+ EXPORT_SYMBOL_GPL(vchan_find_desc);
+ 
+ /*
+- * This tasklet handles the completion of a DMA descriptor by
+- * calling its callback and freeing it.
++ * This bottom-half handler completes a DMA descriptor by invoking its
++ * callback and freeing it.
+  */
+-static void vchan_complete(struct tasklet_struct *t)
++static void vchan_complete(struct dma_chan *chan)
+ {
+-	struct virt_dma_chan *vc = from_tasklet(vc, t, task);
++	struct virt_dma_chan *vc = to_virt_chan(chan);
+ 	struct virt_dma_desc *vd, *_vd;
+ 	struct dmaengine_desc_callback cb;
+ 	LIST_HEAD(head);
+@@ -98,7 +98,7 @@ static void vchan_complete(struct tasklet_struct *t)
+ 	}
+ 	spin_unlock_irq(&vc->lock);
+ 
+-	dmaengine_desc_callback_invoke(&cb, &vd->tx_result);
++	dmaengine_desc_callback_invoke(&cb, vd ? &vd->tx_result : NULL);
+ 
+ 	list_for_each_entry_safe(vd, _vd, &head, node) {
+ 		dmaengine_desc_get_callback(&vd->tx, &cb);
+@@ -131,7 +131,7 @@ void vchan_init(struct virt_dma_chan *vc, struct dma_device *dmadev)
+ 	INIT_LIST_HEAD(&vc->desc_completed);
+ 	INIT_LIST_HEAD(&vc->desc_terminated);
+ 
+-	tasklet_setup(&vc->task, vchan_complete);
++	dmaengine_init_bh(&vc->chan, vchan_complete);
+ 
+ 	vc->chan.device = dmadev;
+ 	list_add_tail(&vc->chan.device_node, &dmadev->channels);
+diff --git a/drivers/dma/virt-dma.h b/drivers/dma/virt-dma.h
+index abf2ae737c30..8e7c0ca8623a 100644
+--- a/drivers/dma/virt-dma.h
++++ b/drivers/dma/virt-dma.h
+@@ -21,7 +21,6 @@ struct virt_dma_desc {
+ 
+ struct virt_dma_chan {
+ 	struct dma_chan	chan;
+-	struct tasklet_struct task;
+ 	void (*desc_free)(struct virt_dma_desc *);
+ 
+ 	spinlock_t lock;
+@@ -111,7 +110,7 @@ static inline void vchan_cookie_complete(struct virt_dma_desc *vd)
+ 		 vd, cookie);
+ 	list_add_tail(&vd->node, &vc->desc_completed);
+ 
+-	tasklet_schedule(&vc->task);
++	dmaengine_schedule_bh(&vc->chan);
+ }
+ 
+ /**
+@@ -142,7 +141,7 @@ static inline void vchan_cyclic_callback(struct virt_dma_desc *vd)
+ 	struct virt_dma_chan *vc = to_virt_chan(vd->tx.chan);
+ 
+ 	vc->cyclic = vd;
+-	tasklet_schedule(&vc->task);
++	dmaengine_schedule_bh(&vc->chan);
+ }
+ 
+ /**
+@@ -239,7 +238,7 @@ static inline void vchan_synchronize(struct virt_dma_chan *vc)
+ 	LIST_HEAD(head);
+ 	unsigned long flags;
+ 
+-	tasklet_kill(&vc->task);
++	dmaengine_kill_bh(&vc->chan);
+ 
+ 	spin_lock_irqsave(&vc->lock, flags);
+ 
+diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+index 805668fbe437..b0d69e3083d6 100644
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -12,6 +12,7 @@
+ #include <linux/scatterlist.h>
+ #include <linux/bitmap.h>
+ #include <linux/types.h>
++#include <linux/interrupt.h>
+ #include <asm/page.h>
+ 
+ /**
+@@ -295,6 +296,10 @@ enum dma_desc_metadata_mode {
+ 	DESC_METADATA_ENGINE = BIT(1),
+ };
+ 
++struct dma_chan;
++
++typedef void (*dmaengine_bh_work_fn)(struct dma_chan *chan);
++
+ /**
+  * struct dma_chan_percpu - the per-CPU part of struct dma_chan
+  * @memcpy_count: transaction counter
+@@ -337,6 +342,9 @@ struct dma_router {
+  * @router: pointer to the DMA router structure
+  * @route_data: channel specific data for the router
+  * @private: private data for certain client-channel associations
++ * @bh_tasklet: bottom-half tasklet stored per-channel
++ * @bh_work_fn: callback executed when @bh_tasklet runs
++ * @bh_work_initialized: indicates whether @bh_tasklet has been initialized
+  */
+ struct dma_chan {
+ 	struct dma_device *device;
+@@ -375,6 +383,9 @@ struct dma_chan {
+ 	void *route_data;
+ 
+ 	void *private;
++	struct tasklet_struct bh_tasklet;
++	dmaengine_bh_work_fn bh_work_fn;
++	bool bh_work_initialized;
+ };
+ 
+ #define DMA_CHAN_ID_STATIC	BIT(30)
+@@ -1970,6 +1981,9 @@ struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name);
+ 
+ void dma_release_channel(struct dma_chan *chan);
+ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
++void dmaengine_init_bh(struct dma_chan *chan, dmaengine_bh_work_fn fn);
++bool dmaengine_schedule_bh(struct dma_chan *chan);
++void dmaengine_kill_bh(struct dma_chan *chan);
+ #else
+ static inline struct dma_chan *dma_find_channel(enum dma_transaction_type tx_type)
+ {
+@@ -2017,6 +2031,20 @@ static inline int dma_get_slave_caps(struct dma_chan *chan,
+ {
+ 	return -ENXIO;
+ }
++
++static inline void dmaengine_init_bh(struct dma_chan *chan,
++				     dmaengine_bh_work_fn fn)
++{
++}
++
++static inline bool dmaengine_schedule_bh(struct dma_chan *chan)
++{
++	return false;
++}
++
++static inline void dmaengine_kill_bh(struct dma_chan *chan)
++{
++}
+ #endif
+ 
+ static inline int dmaengine_desc_set_reuse(struct dma_async_tx_descriptor *tx)
 -- 
 2.43.0
 
