@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316631;
-	b=s1MPC1XXu+x+nB5aF+F4jaKZvctzaXdXy7iQF+vn8pB2qDpvMnRGOxnH7IGqXKP78Cnt
-	 UbbamgQZjnohtpVy1A6HeJGfl8E8VdZRIrztyIJQ55C/rwPJ/A0PkUFUBjdx9Zlyl1JUj
-	 oSrXcrfD2wylty4kOt3oMVBI9Wf7IEjwzAgZUdFT7qKJsXg4bWBwSRtCnubRuUKWb41iy
-	 ATNhaONNdTH7N44JbOjqgAiI0KHAiaKm4Xt4NnaqbHYRHpCVMlcgpoe50SNRtZh8kj6uN
-	 ndcVLNjRERv7L3a/YZOUjNXQ995JqT5freLSQDaSAN/B7pe25q93q9HHnMCd7snlY7A==
+	t=1794316628;
+	b=XGzRmTSKq25xQEgIf49UmjGWCE2ORpw5fi1u3TLZeHpw/M5GIBReohUyhBAB2Rk8e/Kw
+	 tycQC3NMRn69P+HrNZ8AGXyj7+OmgwIee5A4J+gY1gQORHNbjTImAKWpsp4U/Hhq1e7X+
+	 AKZoeI/yJmKjI09vbdqURdUN0gTpPhc5SjUt7J+E31k8vpvrMlerdGmB3ONcHpOpHwVOy
+	 KeSxgdoSikw8p2PXhfMk5HqiRBW3gQB+JJdWdK8WRP3iUKRNzO6BAWu76srJNXmw7gdK6
+	 qfUSuSb3XLmPk/Zht7C/h1WTw79PWubHKpDmBHo8TYCoayGQPqk8e9KmLrY6MbalUaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316628;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mQpYBoUkzC/8SCTUHySkHk/Y3ystrO8zczp3tQ3CUnY=;
-	b=xUhPB1QvWmgHbh/6zZqYb1JDNSsyI0A5Q1eyRezAuNeXMgDRKlvqqZr8E6fmGJqPi+cL
-	 tHFu54VgjoXwptcYlW9bteMrB3xjrZdlEj6nHStmcE46ECT7GNZ9eSYt8iv3FJk0g3j4p
-	 +TX7YaTC/CqvZbDESBPx1jvCoHU0RLEzpPH19KNGNfyYI7Nt4JcrcWIIeF3RwF3QCPxNP
-	 h08+RWmpLotKfp/JgvCUEVKgXiJNh2vDQbRuyXC2dIHuZvx4qbay+ZXAZGtx4nhDqZVzX
-	 h6dUUVb4SA8pH1Rxd1Gl40qSGpNvuB6MuDPNc8hBmnDYxSgYEZi4pW56rYi6uvZzl0A==
+	bh=k7zLnAyoVidxBagrObrQW+VXa8Bn65haoh8mvK0I/ys=;
+	b=YrKz/gfBGcHAgwH3pCAn23vs3oUcVzmxl8kZr7ces3cKdi4WU0/JyvxFOJJ/wxnPTm7h
+	 RFaFtQlvnjoCyga6xFVAhFvb8ChUoFczzEkuxJApZMHsJ18+/H1klwUH8qKDVXOrlL3gt
+	 JuYQDO0fuL4p4iSupJPno6FAR4WPr6e3ald7hVZEVN1wP6QSIoZuwjTVjbZr53mUvaoWR
+	 vszHVMcsUHbBqMAKekY3YD/w5YodRpSU0nsMI24d6e5NGvblAkBVIsmNxSN/PmE2q8m/Y
+	 d6GyNpydrRFs9MSGuP1qs8JMKci+G4l8PDiZwP2Y8FO5xw1PHmLnnrZpYBIM/nKiKcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FZAQxtc9;
-	arc=none smtp.remote-ip=209.85.215.170
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iJzPMyHL;
+	arc=none smtp.remote-ip=209.85.215.172
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9439860707A4
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:17:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9439860707A4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2355C607078F
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:17:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2355C607078F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FZAQxtc9
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-cc4aa0246b7so754099a12.3
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:17:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iJzPMyHL
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cd60c5da24cso1031144a12.0
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:17:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316630; x=1794921430; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794316627; x=1794921427; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=mQpYBoUkzC/8SCTUHySkHk/Y3ystrO8zczp3tQ3CUnY=;
-        b=FZAQxtc9vnpznm7RKJSLf+NOe3hcXZrXKDquJl32G8Aic6Hpb5dUVmnTZGQfnfqsQ4
-         A5N+Hnk5FgL+P+uIEVGc0fenBNSLPSYsujyjQiRsNJo7eS49QIY7UDsgtC3N9DnZ0WOd
-         h1nY3vbDcbPjFLzcBmJr1ybYkHSqy4lHEMhXBe5bg0kiaVCUPzjjfSxunqgtRH72qD4p
-         LUrrV13aTnTPF+tAJ1xAlKUbk3gVl64p2Y3hf/vQzd1xtCPIvUToAP7nwpqra0Szst25
-         o7Hzps7tsNlXiLQ8OJa3SEFmzYD3jx8l8qphRW5C66FfVcFy/7jlK7Y+TAmXKKUfcK3u
-         5h/g==
+        bh=k7zLnAyoVidxBagrObrQW+VXa8Bn65haoh8mvK0I/ys=;
+        b=iJzPMyHLL8Vau2nqkZYnF6VgvsaI+kZjntDLJrch4Thy32nLJ4Q0yBzu6DO8M3nksm
+         j+P4zjMSF+awp8SypcQjduaQtVsMmSic6tznF5VhJpJ6jg6XF9+B4VMxNtAxJO40ytL7
+         dWOGXg5BSSHU74ldFVreAa9MyX6LuwviTyupbVF74809p8icjKEKqZ30Jy+dGxC0QW79
+         QIoCGL8YQB5ENB8xqZSN9dYzMKZwVKjRLVxyRRTxTstCvfeXk/u7QlmNyXnwrdX7tdHa
+         LK30mgXbdXMtZMtL/6bXe0nwwdExgpa3c8K2nxm4CrUC8wgeUSBy0yp0F9QLV+PC4yDC
+         Yn1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316630; x=1794921430;
+        d=1e100.net; s=20260707; t=1794316627; x=1794921427;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mQpYBoUkzC/8SCTUHySkHk/Y3ystrO8zczp3tQ3CUnY=;
-        b=zyvFVwU3VGPYqtknavE5BnL58WsXaHft0NAFbbeVZTAnYtCcK2+oB4fhmSoOaTmHhI
-         7HbTFzBNWyoZcm6x6inoibrW0SUdoD586XXNtNPQ2zqRNJiZzAPdi7jyy+ibwrrtJRhh
-         QamC7A2HJRxrVnIwMbQyREoLmHKl95WalDKLfU4lEXxcObgktmRqbd4zM3HQAMVpBBZg
-         /JQUQFeHGiV67+ITFR7HuZGd86sZomYf/k3gVVFaTwkfnhW8dqDMis8lgI0Ryn/vsOQk
-         Ztc2XkHNsL/7cW838q1twyp1236+Cqgc6Az1OnE8SdghmRooJo5Y9C0r7eFJyTobfpv8
-         /cBw==
-X-Forwarded-Encrypted: i=1; AL+hErGDueyA1dw2mWBuiM2Foq4/gQ5luxOWc2yicS81kbI1bf6yydKOPBfxvcpp164mxnLKBU+kDfUxtT4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9/ijsiyWrV6XPcQpIA1KtpabOzNixRAj1xAEDxPOIcsyAYx7mR
-	0UjbZP1PiOPeMmir2kLpvZm8ih3g28P+TgLwKgx4LlzOHSJht5+kEMJy
-X-Gm-Gg: AYBFou3DfclfuGnn9H9LZsreXvKJTh5kZ034GYxLlaXtLOVJyBwfnTWta9zOX18TOsj
-	MlZ+hAVNLBnqeEylONiv0iu8ZnDnAagkuEhPrFzWhXEo2rOPu+nr+3ICR1t4j+jyU4Yini62+Sp
-	T/CJFdtYqyKF9q6UztXg/v5Ki2MUQqLs75JRviEEQU5OX6nyFZnzz1t1Cgmm7ejMO7HW8Tz4Bjw
-	Q7Ldc0QVKsT170OTnl0vreVIEMvrG9xvK6Vs5qYw2ZxG9zfu2bbjIFlxI5dnBaFN175xwCPnduA
-	i6rMm7WS5ixCFCKSPy/FWI78tSq+UScT8YGli404zd5pVRWnh2LA1tEatMVa0pr+2hs/nyXr3RE
-	hSwGFaWPSaa8jjqeyLinNt/MtyzPole1zagFW+4CmqZDm35MYf5pPUGOUzhbUZCbEk8ZyKrXGBa
-	VyWwmSi8hhQBIunf2Ey2ZdJqvVN6Nkjc7Om6xlkHhROKaU0S3uBsqMNFYkVwJDgSPDY10QV/BIm
-	F8csAMsSsfnGan0m3ioTld4krCsMgB4P+vmLRX/iNacdvp9nVrCOHutmxm/ki36t5/Tp5AeTBPJ
-	M3OO7q847lYdBIVeIu0nsJxm5KBv1xY=
-X-Received: by 2002:a17:90b:540b:b0:3b0:db75:4bcf with SMTP id 98e67ed59e1d1-3b166d049famr2592552a91.42.1794316629958;
-        Tue, 10 Nov 2026 05:17:09 -0800 (PST)
+        bh=k7zLnAyoVidxBagrObrQW+VXa8Bn65haoh8mvK0I/ys=;
+        b=kNfWnG0JaS7KC6otaf8yd2ouuLyPkzWznEBn2c/NAwcAa+b+iOhVQLpoZs8yv9bjHm
+         CrvFy1ZTLcebBZ2O6QH4Ba+gRfe5nz0baSIlP73SXdrTh/0vYwNkuDXjbhG3HkxWbfD5
+         LdqRTzTohefmZ8/ZjYHMEYCvuNcXZmgO4YOU5NqYFDkAuzzUJXhlh+Qe+fQJIcpI2bdk
+         5M5UsHu69gagNGPljQI1np2Sgu6PE4CNitsXi5r5AwRWB249N6NFUpxjz+aIPV5DkM3e
+         zGSHUIiyjgQKRCKKfrpjFuAVM59aM6RF6ncUQIIr6mUsXubGvAku2FthQwA37UjNoYwo
+         t2Uw==
+X-Forwarded-Encrypted: i=1; AL+hErEuwrm+DMAz9PQh2SXvn2ZpnP9aDkmyv3fMYPq5actlXu4nt4VQqiCx2YuFz8qFaSyLObaC1gVv/U8=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9k13jQtnhWAeSoxIp30ouhI2SW9VJ3kVtwPtVxz5LBmPUm5fOT
+	/ieSoJIP90SD0QOTaEMU6+7OhvwP1ChX2E8NAyPKxXPBkVA+Hxzmbf7l
+X-Gm-Gg: AYBFou3/U+nnZrV2gSHVei6k/D4vFN5bxe/SZ3YIHypBTqLjg9M6Lo6csEzfWMq8Fmw
+	CJTYxYpg/poJcO97KYzZTDzRTQzkV7KeJwtoDFP87LdAAxYd7RrFKEVWkIcSsRZFog39cWXdDTc
+	yYgiq34buITO4gkljBEWUf5HBlTbdCRSm5atMHXvzKsIanspYyiQNpXqAiW37DjdBaNrTCLmH9y
+	Xg8RU0dBemn9hdxY0xSAULlv4SRkPJWTTiVYeomaSuFhvi1i8Zcf34HqVSQKnwrm3BqyeXCaGmm
+	uycQ8zo4xVEaNe43q5ocZ/H6uvO8G+KTuJ1TNT1An6SqcC3K0tG66CCB/AoG0fzSnrCquxFHAqG
+	WP9vHOng90SLCY1eqK68+hKy0QvdruhAeZlb2lYQXTAbxN/9ZZLctoG0IZGydZH4qN6LvLttb7G
+	Z9FUcY8X3ccA55rJ/L92EkFualR6A7IIZWaRqN/7e3zkRNRAK+/DaudcLw/ZbSRVSnXfwa8eGkZ
+	RodUQU7hNfLA4woOgPv/0PnmFy0gij8mDYKEjwvT+44oPNRBS5pF/7c4q9ptNEN1BeSBQfJvOtL
+	wg+cIrPC/Q84XQAGn24osHxIA5DJUco=
+X-Received: by 2002:a17:90b:3808:b0:3ac:b2e6:317d with SMTP id 98e67ed59e1d1-3b166fa2a9dmr2789894a91.35.1794316627523;
+        Tue, 10 Nov 2026 05:17:07 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.17.09
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.17.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:17:09 -0800 (PST)
+        Tue, 10 Nov 2026 05:17:07 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
@@ -85,10 +85,14 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>
-Subject: [PATCH v4 23/33] dmaengine: timb_dma: route callbacks via channel BH
-Date: Tue, 10 Nov 2026 05:13:23 -0800
-Message-ID: <e9f90c61446942c160480ee81e220869de918105.1794315350.git.allen.lkml@gmail.com>
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Frank Li <Frank.Li@kernel.org>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v4 22/33] dmaengine: tegra20-apb: use channel BH helpers
+Date: Tue, 10 Nov 2026 05:13:22 -0800
+Message-ID: <23ec6d1f25c7715939ee1d00984645028f33ddca.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
@@ -103,116 +107,87 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Schedule per-channel BH work for completions so callbacks run through
-the dma_chan deferral mechanism while keeping the controller tasklet for
-IRQ handling.
-
-The controller tasklet recomputes TIMBDMA_IER before the deferred work
-has finished the channel, so have the channel BH recompute and rewrite
-the mask once the channel state has settled. This keeps the interrupt
-enable mask consistent with what the single tasklet used to produce.
-
-Drain the channel BHs in td_remove() and in the probe error path so no
-completion work can run after the controller memory is freed.
+Switch the per-channel tasklet to dmaengine_*_bh so completion handling
+runs through the shared per-channel deferral mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
 ---
- drivers/dma/timb_dma.c | 41 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 36 insertions(+), 5 deletions(-)
+ drivers/dma/tegra20-apb-dma.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/timb_dma.c b/drivers/dma/timb_dma.c
-index 0acd7a36a3d0..d24508e2a0bb 100644
---- a/drivers/dma/timb_dma.c
-+++ b/drivers/dma/timb_dma.c
-@@ -433,6 +433,8 @@ static void td_free_chan_resources(struct dma_chan *chan)
+diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+index 7ff8c0241f61..2eca4a2567cb 100644
+--- a/drivers/dma/tegra20-apb-dma.c
++++ b/drivers/dma/tegra20-apb-dma.c
+@@ -194,9 +194,8 @@ struct tegra_dma_channel {
+ 	struct list_head	free_dma_desc;
+ 	struct list_head	cb_desc;
  
- 	dev_dbg(dmaengine_chan_dev(chan), "%s: Entry\n", __func__);
+-	/* ISR handler and tasklet for bottom half of isr handling */
++	/* ISR handler for bottom-half processing */
+ 	dma_isr_handler		isr_handler;
+-	struct tasklet_struct	tasklet;
  
-+	dmaengine_kill_bh(&td_chan->chan);
-+
- 	/* check that all descriptors are free */
- 	BUG_ON(!list_empty(&td_chan->active_list));
- 	BUG_ON(!list_empty(&td_chan->queue));
-@@ -575,17 +577,42 @@ static void td_tasklet(struct tasklet_struct *t)
- 	for (i = 0; i < td->dma.chancnt; i++)
- 		if (ipr & (1 << i)) {
- 			struct timb_dma_chan *td_chan = td->channels + i;
--			spin_lock(&td_chan->lock);
--			__td_finish(td_chan);
--			if (!list_empty(&td_chan->queue))
--				__td_start_next(td_chan);
--			spin_unlock(&td_chan->lock);
-+			dmaengine_schedule_bh(&td_chan->chan);
- 		}
- 
- 	ier = __td_ier_mask(td);
- 	iowrite32(ier, td->membase + TIMBDMA_IER);
+ 	/* Channel-slave specific configuration */
+ 	unsigned int slave_id;
+@@ -632,9 +631,10 @@ static void handle_cont_sngl_cycle_dma_done(struct tegra_dma_channel *tdc,
+ 	}
  }
  
-+static void timb_dma_chan_bh(struct dma_chan *chan)
-+{
-+	struct timb_dma_chan *td_chan = container_of(chan, struct timb_dma_chan,
-+						     chan);
-+	struct timb_dma *td = tdchantotd(td_chan);
-+	u32 ier;
-+
-+	spin_lock(&td_chan->lock);
-+	__td_finish(td_chan);
-+	if (!list_empty(&td_chan->queue))
-+		__td_start_next(td_chan);
-+	spin_unlock(&td_chan->lock);
-+
-+	/*
-+	 * The controller tasklet re-armed IER before this channel was
-+	 * finished. Recompute it now that the channel state has changed.
-+	 */
-+	ier = __td_ier_mask(td);
-+	iowrite32(ier, td->membase + TIMBDMA_IER);
-+}
-+
-+static void td_kill_chan_bh(struct timb_dma *td, int nr_channels)
-+{
-+	int i;
-+
-+	for (i = 0; i < nr_channels; i++)
-+		dmaengine_kill_bh(&td->channels[i].chan);
-+}
-+
- 
- static irqreturn_t td_irq(int irq, void *devid)
+-static void tegra_dma_tasklet(struct tasklet_struct *t)
++static void tegra_dma_tasklet(struct dma_chan *chan)
  {
-@@ -692,6 +719,7 @@ static int td_probe(struct platform_device *pdev)
- 		INIT_LIST_HEAD(&td_chan->active_list);
- 		INIT_LIST_HEAD(&td_chan->queue);
- 		INIT_LIST_HEAD(&td_chan->free_list);
-+		dmaengine_init_bh(&td_chan->chan, timb_dma_chan_bh);
+-	struct tegra_dma_channel *tdc = from_tasklet(tdc, t, tasklet);
++	struct tegra_dma_channel *tdc = container_of(chan, struct tegra_dma_channel,
++						     dma_chan);
+ 	struct dmaengine_desc_callback cb;
+ 	struct tegra_dma_desc *dma_desc;
+ 	unsigned int cb_count;
+@@ -670,7 +670,7 @@ static irqreturn_t tegra_dma_isr(int irq, void *dev_id)
+ 	if (status & TEGRA_APBDMA_STATUS_ISE_EOC) {
+ 		tdc_write(tdc, TEGRA_APBDMA_CHAN_STATUS, status);
+ 		tdc->isr_handler(tdc, false);
+-		tasklet_schedule(&tdc->tasklet);
++		dmaengine_schedule_bh(&tdc->dma_chan);
+ 		wake_up_all(&tdc->wq);
+ 		spin_unlock(&tdc->lock);
+ 		return IRQ_HANDLED;
+@@ -819,7 +819,7 @@ static void tegra_dma_synchronize(struct dma_chan *dc)
+ 	 */
+ 	wait_event(tdc->wq, tegra_dma_eoc_interrupt_deasserted(tdc));
  
- 		td_chan->descs = pchan->descriptors;
- 		td_chan->desc_elems = pchan->descriptor_elements;
-@@ -724,6 +752,7 @@ static int td_probe(struct platform_device *pdev)
- 	free_irq(irq, td);
- err_tasklet_kill:
- 	tasklet_kill(&td->tasklet);
-+	td_kill_chan_bh(td, pdata->nr_channels);
- 	iounmap(td->membase);
- err_free_mem:
- 	kfree(td);
-@@ -736,6 +765,7 @@ static int td_probe(struct platform_device *pdev)
+-	tasklet_kill(&tdc->tasklet);
++	dmaengine_kill_bh(&tdc->dma_chan);
  
- static void td_remove(struct platform_device *pdev)
- {
-+	struct timb_dma_platform_data *pdata = dev_get_platdata(&pdev->dev);
- 	struct timb_dma *td = platform_get_drvdata(pdev);
- 	struct resource *iomem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	int irq = platform_get_irq(pdev, 0);
-@@ -743,6 +773,7 @@ static void td_remove(struct platform_device *pdev)
- 	dma_async_device_unregister(&td->dma);
- 	free_irq(irq, td);
- 	tasklet_kill(&td->tasklet);
-+	td_kill_chan_bh(td, pdata->nr_channels);
- 	iounmap(td->membase);
- 	kfree(td);
- 	release_mem_region(iomem->start, resource_size(iomem));
+ 	pm_runtime_put(tdc->tdma->dev);
+ }
+@@ -1317,7 +1317,7 @@ static void tegra_dma_free_chan_resources(struct dma_chan *dc)
+ 	dev_dbg(tdc2dev(tdc), "Freeing channel %d\n", tdc->id);
+ 
+ 	tegra_dma_terminate_all(dc);
+-	tasklet_kill(&tdc->tasklet);
++	dmaengine_kill_bh(&tdc->dma_chan);
+ 
+ 	list_splice_init(&tdc->pending_sg_req, &sg_req_list);
+ 	list_splice_init(&tdc->free_sg_req, &sg_req_list);
+@@ -1511,7 +1511,7 @@ static int tegra_dma_probe(struct platform_device *pdev)
+ 		tdc->id = i;
+ 		tdc->slave_id = TEGRA_APBDMA_SLAVE_ID_INVALID;
+ 
+-		tasklet_setup(&tdc->tasklet, tegra_dma_tasklet);
++		dmaengine_init_bh(&tdc->dma_chan, tegra_dma_tasklet);
+ 		spin_lock_init(&tdc->lock);
+ 		init_waitqueue_head(&tdc->wq);
+ 
+@@ -1617,7 +1617,7 @@ static int __maybe_unused tegra_dma_dev_suspend(struct device *dev)
+ 	for (i = 0; i < tdma->chip_data->nr_channels; i++) {
+ 		struct tegra_dma_channel *tdc = &tdma->channels[i];
+ 
+-		tasklet_kill(&tdc->tasklet);
++		dmaengine_kill_bh(&tdc->dma_chan);
+ 
+ 		spin_lock_irqsave(&tdc->lock, flags);
+ 		busy = tdc->busy;
 -- 
 2.43.0
 
