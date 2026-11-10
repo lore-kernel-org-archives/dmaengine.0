@@ -1,106 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=162.62.57.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316617;
-	b=FLpiUDGf5aJabO2zKH2xAfc3BLTDDo63w+0lEG+MZn5cbo8iR9VCWVQ+rQ4/U8JrvFnh
-	 8gX5wlPVdrcQuSQrxCcZHwTMK7cl4DTmKhVzE9Jg3Bypbgk8ogl3yXhtZ5CVH6KnYEodo
-	 XmbHe1La9O0Sa3YUxbkBeJlnL5PB7uuaL1o7RUWlExiQOhK8vMP2iCBRR3A6/o+a/ejEo
-	 2iypVV2YgRk0NFRYWzz0muV16f2rxEStH6elTLSWv/b625kVTRu25g+mNaHnJLkxkijZW
-	 xZGtAsYE3tQEcJOsUAfUViIKN4l5ZvIbBOu6r/uY1/NnYWgaFDGcJk7hvNk6nxSb5zQ==
+	t=1794316618;
+	b=HYbmXqasnxfe3HZYVkwHmJXJPsfPfmiwaXB0XSfwZSuswIYZjI52SA5dXEp26kmufl5b
+	 R8yYSuomQFt4vSdM7MJc5UzC1kaGVMo9OUuRfyFV+gUukzql2Y7TEJ2qDQiN6vLRaZjiC
+	 fY340TmvUnlUV3sy85BsDmd26Vqgz6/vxBJdsAMXC9u30LiReDDA3T1eClYaRdHz7obc0
+	 zTR80I83kxlE0aIaXgA/1hnQi5mRBScf4T1yQk9PciQZRXCU98fHTJ6q/68BbJy2KMOOB
+	 FpR4Q1IYmY8bKN6xAdeMu/Dhx+diUEFihJ78fgNEL3DlMNWUfMEpaT9lLp11LXqksAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316617;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=bcm4s+IXhIHN8NFhDrr675ONGZF6+mquo3EIHxy/j7E=;
-	b=IaLisKUPTG/NjmeDmEJ++nJAb0DvzWQXzWeEI8zBfQohBw02AQwuOnEkNc1VvFMboZMD
-	 1FuSJza1GFFTCXVobq5n8uraU8ppKVbWTY3o8T0GOcXx+yztLNSrVULgkdlHIdLAxcViB
-	 1ndblDiE1MT2wOcUFgfxFv1RqB2HL23y41tJxiM8gLZnfIf48n+v1iBqCzLHcGPo6i5HI
-	 fjNxdGtnlMqP+eUJGeToBSgsOMe25iPy/NGEW1wAu3VcyONInPgg0Byq263Cv5TJ55xzb
-	 CpDpJzOwtKb1PNSEmmHQLkuzsCHvAFAB45Ay3xcvjpXclskAXv3n3mXVRRrEr4UnT0Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316618;
+	h=DMARC-Filter:DKIM-Signature:Received:X-QQ-mid:Message-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:From:To:Cc:Subject:Date:X-OQ-MSGID:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=lPw/5S58DZQlTesLTVHv+YY88dgiz6gD3h2+DSTc3Zk=;
+	b=YEqoEuPd/Xtuv6yBaU6SabdVoo+XEiCvE0dC2cALr9Qo47uzUMXr/jAXbXNpmdYATfRn
+	 sTiKk0qr43MA9Sc9UCNOSyuFzIdDd9VtdBanRWBdJDj7PmnsROKLWbM0keyY0Fi4/gUHn
+	 S8LrQgZqcHSgd68bW7bZMEXlzRd37QQxeyjVo94EOsXx1s14BG+S6Ln7uYjNt/wjRtjNk
+	 YFNzviwS2TIPMOwtOQEMPMRAj+W/l1e2amVl7RvLkbb66yLBLtKLHvuPe2KNBm9W35O+v
+	 UKVfVSophKa1+FaM2r414w4Wh8xAkjDqpLeCuz36Pi5xCUsVVrO6rupquTkOBdEwljg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xyDlQKgG;
-	arc=none smtp.remote-ip=209.85.216.45
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=qq.com;
+	spf=pass smtp.mailfrom=qq.com;
+	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=bvWPjXOO;
+	arc=none smtp.remote-ip=162.62.57.49
+Received: from out162-62-57-49.mail.qq.com (out162-62-57-49.mail.qq.com [162.62.57.49])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7054606A771
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:16:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7054606A771
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B07606A326;
+	Tue, 10 Nov 2026 13:16:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C7B07606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xyDlQKgG
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3ace1f3897cso1099457a91.0
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316616; x=1794921416; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bcm4s+IXhIHN8NFhDrr675ONGZF6+mquo3EIHxy/j7E=;
-        b=xyDlQKgGsmPx05GGe6UfpYw7YlYAuNhgNmcHk8s2GNpUBl16nYZEYIGDPCyUtknZ79
-         4xE3QLZog/xLzwcbsgMBvkHpSaJDlYgU2VTaTRNegxePFbuS9PwRnjXzBA3ASZ9jA2SY
-         zz7ZJQEwORPhX7+rslxZZ1vWYBDmgx7FrKymW0Q4ZBwmN4JCZJh1GEmpv1PLyFFtQk6F
-         ktjZLqi8uAj8xwlVzbw9k4ahVlT9cl+vSdnWldC6KD4xxF/MTqElY+bi6CDenDBbYPL3
-         ptzSJFmwGr8mW9mOzQEV/TTW2aEXZUxw6BS1t/aiBKTDpvN6yVMZag0NjCrx6ghtVESI
-         x8Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316616; x=1794921416;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bcm4s+IXhIHN8NFhDrr675ONGZF6+mquo3EIHxy/j7E=;
-        b=XIfuszx5P112FrRUW1a5wf/Ote6RFL3g59fMNSf34tLyRHvPBca1QOYKKxPFlO6nY+
-         gzlNdeblqrDBukxUhFfcSQevXj6MJHIycoMxCoy+RjIt/tigNrZJ09+T8Av/1vVlwGV4
-         nkpYh+mlmNhtShPLgMs0wGOjyRZdkBuIRZDGSrdMdJMd153xgPX6UGhSnA6c6xtuKUqx
-         b6atbfKGnyK2/jWNQyvn+43zcKJJ5ZbjayFU86IYgxuOKNHMeV4ylhmStRzwcZth8Uj7
-         LDJrV/HGF7gvfwk5bqXz9hnK8h0EPWYsFLG5VGan1vnWXRn30kkOFnxZ4ZF6WBcbx+ks
-         kk9Q==
-X-Forwarded-Encrypted: i=1; AL+hErGxbQzNL2qo1zuGu7R4fAB+CegcPaUI4EnrAKt5P4m6PyE8BQSs65h8yiB1l8MODLfFCQgMK2gkGnM=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8h+1vX2QfLfvaO75Uzc+/lmJrLHKzDt9Y5eUxw/YoFbtcS/H/j
-	nzFNmmx40gDHYCoLe1JQYRXDx4PNxFYAJOW2co00/2uFf7xcN+A2oKXc
-X-Gm-Gg: AYBFou2k/DraPwXQiyWqrjYbdmJdcD4d7I6WeHFFNlmAwKdYzZBEgHeQqU57acbDNwL
-	mkL6h9WnxNk5Dj3GBAy7lg3V0lIth3uYxY4q7ihzBviXxEg3aIF5HFAq7Ruv28fgNnIUKQEogY8
-	sGldav68GxBSJDhyO/q+jfyvDghGCovdS2ZG0piN2NRAkYJw9nblyTAr2vGLA+T6/x/vOGUQbT3
-	yEqGF5sgDVqrnR1flAS9m8MwhdVn/jEgQ8DYxqyPbhnPO2dkEn86yrw/c+XL00s3DzrXQtXlPh3
-	TMcLLI6BrLUYQraHe6JeuGi0K7EfWPN1BJn5UNkDkmkPAfXgRMhGmtFGiLYRGPgzWbqMQ+1WXhS
-	e6TXeuUGKGhJzKLJAHFjV0AVxw733J2ZVOBXOnhygFZ70/ZkgBJynT8Mo002WYbyuHIsVVMF+L0
-	EJNl19UGOkhGLioAVVreapF1c2AvjboEPQthB2vZxHHCsd/fcgLApNND5KYBa+pWCz0T5MBdMDX
-	mjaPA32TcYckMQxaWEOH1SDiDyTEb01mPBEWRK1QH3l01e9Z2LWRKJbstDUUSfqFe6KmXY2rX8+
-	W5Kg0Jubit+c/2QCxOK5VGjxWC2cN88=
-X-Received: by 2002:a17:90b:4a48:b0:3b0:d365:f8ed with SMTP id 98e67ed59e1d1-3b166cd7209mr2729464a91.21.1794316615778;
-        Tue, 10 Nov 2026 05:16:55 -0800 (PST)
-Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.16.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:16:55 -0800 (PST)
-From: Allen Pais <allen.lkml@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Allen Pais <allen.lkml@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=bvWPjXOO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1794316611; bh=lPw/5S58DZQlTesLTVHv+YY88dgiz6gD3h2+DSTc3Zk=;
+	h=From:To:Cc:Subject:Date;
+	b=bvWPjXOOxayNzPao+CtRgDv4eOeP7ME8tDnwbCD6rssTpOWWtt4dU+8zV8OiFTSRh
+	 x+9GLxLcfy9k0mY2cHpDnsJK8ZO7fSEEiQQrbkGi/f4j0bRi5O6ridM2Cd03zgAS+T
+	 xjJcUDYdVnNB90UnKTlnNxUPrCkz9dIOatdPjiIQ=
+Received: from localhost.localdomain ([14.155.185.171])
+	by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+	id 4313A2FB; Tue, 10 Nov 2026 21:16:49 +0800
+X-QQ-mid: xmsmtpt1794316609t1zb1lv87
+Message-ID: <tencent_C00D995A9F70206DFD1330DCB1222EEBCB07@qq.com>
+X-QQ-XMAILINFO: NbgegmlEc3JupLwDnYE/eysQuAMoZk0KnKqN0idjV7dUwPWDmHk9Hyv/9aGE4I
+	 uhPvZrMrY1pcYcHgj9SfXc+q8+JZXPmODcw67jaGCObYyvkZKgg4oWWmX75cUK1K59D3/fOzuu+M
+	 JGI+07CuaVDnjWOtvh7SwQ8dncemMVML2ch2qHKs6nVZNfP75scvViAm8utkw1DmQytcj+4RRNC9
+	 JLs0qkjVdK79DGRESyQmA9XRzBSVU1/i36E2EeIsr3pCpjV3Srl7ZvIsZ+vD4tcvfj5IO1eBIV1N
+	 JEfR3aJZjR3zK6q8bvGeonx0OAnq6dY6/V7tn4nXyHRPztd/vVXWS0enkXGvcN7PaKegYfLTkn4p
+	 +nk0FoVhNxq5NJjLZTTDylHGBKeHRugiv+IC/Ye6miAp8Br8CeJ64LfxRK27SM2qngSq6uJIQUWV
+	 tvhUpo3S9yDrjIYHXVUZP3y1jursJDacqXM87BhfzE0BxF+J5184HIQYYkS6n4/cXKbFmk30OUl9
+	 MHHghCTg5zvZ3kF4Dm5yiQBaqH8uncUSJBb4SvmNi9Q5Sd6miKAlFjH46SttFrVfN/82W3tfnq86
+	 OXbldRaQ0d7lOrSsE1Ry6UQC+GzT35M2osgIk2EK/CORIE0P7MAIXj3mFN9K7xdzbZHbtqri5SeS
+	 Ljpf0kGMRKVKWp189whOkZ7C1I6DcEVqAVE2qs+t4iT1Lcq8FHowG5qpQKWlIo7c0r+1rQ1SGCGw
+	 C2kCqWQCieuVygZYXSeADQvdqfzjG9GB813AiQpZvOngsm5EYXZPRkqoC/vrd40/mEZJclE773Xb
+	 HkhRRV5xGDmcxl4F4Smw9671AwdLkiHsrWmpS3ZTg/UNbcqx5mR+CuoPSKBouKaX6GopUoIJq+gV
+	 4Yg/FKMh0Jyz5mysDWALmUDYXVJ1utFsiGFZjfOR8GrpdvBY2wZF2eWGOrGHGObmPIr6AZ6cDLK9
+	 jiloXVMClOB+edshaXcjG2XAYT0GrsHrFdLRhBeHZR2DAPL26IuvoCr05tCbzAs4M5gySBoPx6xh
+	 EpvEkSPCBnzgI/HdJ3+Cq+o+7jwT8CKOqFvof6yJQPTvCDF8iTJvGi5G+JUq599/SKC0QXOgEPqP
+	 jljps2I3ylLveIplRJg1c07Nlne6UCz/kOyMx6kjp3mJN0pdt3KxOqTFs8ww==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+From: Wang YuWei <1973615295@qq.com>
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Alex Bereza <alex@bereza.email>,
-	Marek Vasut <marex@nabladev.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v4 19/33] dmaengine: xilinx-dma: use dmaengine BH instead of tasklets
-Date: Tue, 10 Nov 2026 05:13:19 -0800
-Message-ID: <b17d718ce2500611e33331d29d10e3ab5de07a39.1794315350.git.allen.lkml@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
-References: <cover.1794315350.git.allen.lkml@gmail.com>
+	Wang YuWei <1973615295@qq.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] dmaengine: dw-axi-dmac: Fix use-after-free on cyclic terminate
+Date: Tue, 10 Nov 2026 21:16:49 +0800
+X-OQ-MSGID: <20261110131649.13218-1-1973615295@qq.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -112,98 +83,84 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace the per-channel tasklet with the shared dmaengine BH helper.
-The handler continues to run in softirq context while dmaengine owns
-the common scheduling and teardown mechanism.
+dma_chan_terminate_all() frees all descriptors but leaves vc->cyclic
+pointing at the active cyclic descriptor. If a period interrupt has
+already run vchan_cyclic_callback() and the vchan tasklet has not run
+yet, the tasklet later reads the callback from the freed descriptor:
 
-Signed-off-by: Allen Pais <allen.lkml@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+  CPU0                                  CPU1
+  axi_chan_block_xfer_complete()
+    vchan_cyclic_callback(vd)
+      vc->cyclic = vd
+      tasklet_schedule()
+                                        dmaengine_terminate_sync()
+                                          dma_chan_terminate_all()
+                                            vchan_get_all_descriptors()
+                                            vchan_dma_desc_free_list()
+                                              -> vd freed
+                                          dw_axi_dma_synchronize()
+                                            tasklet_kill()
+  vchan_complete()
+    vd = vc->cyclic          <- freed
+    cb = vd->tx.callback     <- garbage
+
+tasklet_kill() waits for the scheduled tasklet rather than cancelling
+it, so dmaengine_terminate_sync() does not close the window. Any cyclic
+user can hit this, e.g. ALSA via pcm_dmaengine. It was found with an
+out-of-tree 8250 driver that runs UART RX as a cyclic transfer, where
+closing the port crashed in the tasklet:
+
+  Unable to handle kernel execute from non-executable memory
+  lr : vchan_complete+0xbc/0x23c
+
+The window is normally only as long as it takes the tasklet to run, but
+it grows when the tasklet is delayed under heavy interrupt load, which
+is how it was hit here.
+
+The active descriptor stays on desc_issued in this driver. Take it off
+and pass it to vchan_terminate_vdesc(), which clears vc->cyclic under
+vc.lock, as other virt-dma drivers do in terminate_all().
+
+Fixes: 1deb96c0fa58 ("dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang YuWei <1973615295@qq.com>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+Tested on the v6.1 based vendor kernel on the hardware where the crash
+was seen; build-tested only on mainline (arm64, W=1).
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index b89f2c3c1579..d23658c927c7 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -414,7 +414,6 @@ struct xilinx_dma_tx_descriptor {
-  * @err: Channel has errors
-  * @idle: Check for channel idle
-  * @terminating: Check for channel being synchronized by user
-- * @tasklet: Cleanup work after irq
-  * @config: Device configuration info
-  * @flush_on_fsync: Flush on Frame sync
-  * @desc_pendingcount: Descriptor pending count
-@@ -453,7 +452,6 @@ struct xilinx_dma_chan {
- 	bool err;
- 	bool idle;
- 	bool terminating;
--	struct tasklet_struct tasklet;
- 	struct xilinx_vdma_config config;
- 	bool flush_on_fsync;
- 	u32 desc_pendingcount;
-@@ -1173,11 +1171,12 @@ static void xilinx_dma_chan_desc_cleanup(struct xilinx_dma_chan *chan)
- 
- /**
-  * xilinx_dma_do_tasklet - Schedule completion tasklet
-- * @t: Pointer to the Xilinx DMA channel structure
-+ * @c: Pointer to the Xilinx DMA channel structure
-  */
--static void xilinx_dma_do_tasklet(struct tasklet_struct *t)
-+static void xilinx_dma_do_tasklet(struct dma_chan *c)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 7520c78f5..4d41c7538 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1182,6 +1182,7 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
  {
--	struct xilinx_dma_chan *chan = from_tasklet(chan, t, tasklet);
-+	struct xilinx_dma_chan *chan = container_of(c,
-+			struct xilinx_dma_chan, common);
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
+ 	u32 chan_active = BIT(chan->id) << DMAC_CHAN_EN_SHIFT;
++	struct virt_dma_desc *vd;
+ 	unsigned long flags;
+ 	u32 val;
+ 	int ret;
+@@ -1202,6 +1203,17 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
  
- 	xilinx_dma_chan_desc_cleanup(chan);
- }
-@@ -1979,7 +1978,7 @@ static irqreturn_t xilinx_mcdma_irq_handler(int irq, void *data)
- 		spin_unlock(&chan->lock);
- 	}
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
  
--	tasklet_hi_schedule(&chan->tasklet);
-+	dmaengine_schedule_bh(&chan->common);
- 	return IRQ_HANDLED;
- }
++	/*
++	 * The active descriptor stays on desc_issued. Hand it to
++	 * vchan_terminate_vdesc() so that a cyclic callback still pending in
++	 * the vchan tasklet is dropped before the descriptor is freed below.
++	 */
++	vd = vchan_next_desc(&chan->vc);
++	if (vd) {
++		list_del(&vd->node);
++		vchan_terminate_vdesc(vd);
++	}
++
+ 	vchan_get_all_descriptors(&chan->vc, &head);
  
-@@ -2038,7 +2037,7 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
- 		spin_unlock(&chan->lock);
- 	}
- 
--	tasklet_schedule(&chan->tasklet);
-+	dmaengine_schedule_bh(&chan->common);
- 	return IRQ_HANDLED;
- }
- 
-@@ -2740,7 +2739,7 @@ static void xilinx_dma_synchronize(struct dma_chan *dchan)
- {
- 	struct xilinx_dma_chan *chan = to_xilinx_chan(dchan);
- 
--	tasklet_kill(&chan->tasklet);
-+	dmaengine_kill_bh(&chan->common);
- }
- 
- /**
-@@ -2831,7 +2830,7 @@ static void xilinx_dma_chan_remove(struct xilinx_dma_chan *chan)
- 	if (chan->irq > 0)
- 		free_irq(chan->irq, chan);
- 
--	tasklet_kill(&chan->tasklet);
-+	dmaengine_kill_bh(&chan->common);
- 
- 	list_del(&chan->common.device_node);
- }
-@@ -3161,8 +3160,7 @@ static int xilinx_dma_chan_probe(struct xilinx_dma_device *xdev,
- 			str_enabled_disabled(chan->has_sg));
- 	}
- 
--	/* Initialize the tasklet */
--	tasklet_setup(&chan->tasklet, xilinx_dma_do_tasklet);
-+	dmaengine_init_bh(&chan->common, xilinx_dma_do_tasklet);
- 
- 	/*
- 	 * Initialize the DMA channel and add it to the DMA engine channels
+ 	chan->cyclic = false;
 -- 
-2.43.0
+2.34.1
 
