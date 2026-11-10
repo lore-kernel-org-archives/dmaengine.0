@@ -1,68 +1,71 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794332547;
-	b=pm8s1b+UVd6tz8i5N6cyL7BTXObYOzrk+JilWogSskxF2tZgN7dPST5W/bw5iNfCpxSS
-	 cWCCqmLsDJXcnACbdULXJ59KgkOn3XlQ/shKsIwO5/l3lEh/Dis03JXrPkSf3jOXEBAyO
-	 YEl0HDazlfRvTLAwFfuyUb4UMhaN0IAs60rmEN+rEqs/ko7BlzxInF3LA3r6ZifJwVVid
-	 YAcT3N6on9RvaIQe8dcn37MpXKhNsyiThYBQ0QPKref1/AhSIVhtHv71yEmvriMKZp4L9
-	 LUCLBXnK/tLHQf4+/Pq3i+1AeXE4QRr1nUroRGOs8CRhxqDUkTIZI7Q0qGyQ8CdLPPg==
+	t=1794332548;
+	b=RCA73jYP9VV+t/6p/xBg5vxg00x2UIXnOCafV/99Dyxs6vUl3JKLcDgeorIqZOKNU0lI
+	 tW8mL6CPnnHdtp7bzgp5L0iZdCMq7Yvw+TPRpHjGJS2VaQ04Nr5+/KgM30hAFKqvFNIxu
+	 1wC+FqelPOgHHt+zu3teXQEyKkdEvLd/zYGm9dm4wEYmLArkxLXEXZT9Nqrd5PD1F0Tv7
+	 wJKKTBiKEJVU0rSFC75nK+4XdeY0/JWijeD/9WQ0Asy2p9lI1S+Gpn7n8JljBuFrRUobY
+	 bRhiTXnMF5hILnXiXjdVPLjWJa60JUchEfy4m14GjRiMDnaBf9r18DHufNQASI0i/9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794332547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794332548;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
-	 X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:Subject:
-	 X-SA-Exim-Version:X-SA-Exim-Scanned;
-	bh=RnfwxMikUC0UtSTBV3H3pNVkjpTTbo1qY6oOlvX7a8s=;
-	b=H93IDY43hNIPMTz1CPq+OsbdGx3r0q8NHt3MfWSHvRBHcAKso9d9D13fSVyuapEogKGu
-	 wrs80hxYdNseO83EWOdJ1OMGfxHgEsd+erXWWb3W64sfCYcQy8G0IJvd72zZAD1syyAKb
-	 yt812p5gOaygaNdEEeGBN67N0jl3B/+x7YzKgvQdZ0GRVvOs29xKKQlTJZHSfAaPm15Cl
-	 C4XiJ3/rFsGhDXht8FE+Hf/kjba2sVZGgwUdngDOfrs7hOc0SvDXW9rHiMc0ySbxvPuAY
-	 E0gG9s1S7sVQ7sqDYXk7s4IDHXxaEigO1lgHFg9BV9MziMwizh/tWyzvNfTQBHEeUzA==
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:
+	 X-SA-Exim-Mail-From:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
+	 Subject:X-SA-Exim-Version:X-SA-Exim-Scanned;
+	bh=cb47iL65oswQ8WLZQVWKYoJyz09JI7YusvkLIU90heE=;
+	b=xhOH605irMTj1xPkpX1XncfArMaD29311KBX568uxR4dWHJcpx9wRqkWQF0kTuu+7mZj
+	 QsZgrJqw+EHWC99B7oHAza8Z1EZ3WR23/pYRq8db8SrZv30aUmZXgasGTAni5SRvXeQnP
+	 acDOro+KSnGkUEs+mD7rqF8nCwhaCTNvFifQ+487X0oL6sBH4hUg3AlmXBZBLBJFDvQdJ
+	 e7EW43aRq1xCwve705qfStCc1mfWfMu3pbUVfitZ679lVPy7LXip3PCwwgnZaArmNdqqW
+	 ZJKG8BKa7kSMNueA6PGNW/GDY1pCwVzjxuZyii8VB4lnr/ngz679MTdlsKFgAyiEq/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deltatee.com;
 	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=V8L50zFP;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=hoGHb4NA;
 	arc=none smtp.remote-ip=204.191.154.188
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9364606A31C;
-	Tue, 10 Nov 2026 17:42:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A9364606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D107F606A32D;
+	Tue, 10 Nov 2026 17:42:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D107F606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=V8L50zFP
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=hoGHb4NA
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
-	:references:content-disposition:in-reply-to;
-	bh=RnfwxMikUC0UtSTBV3H3pNVkjpTTbo1qY6oOlvX7a8s=; b=V8L50zFPjsORH8bpLrbq9ab+9z
-	vUgnBLVumAIYBB6BvWb6PeeYFQMIcPxA+HMaQaDBjqVMCF9nNyMp2ZE1QIOgk4Xq1ll7/GnQHRKE5
-	mUafhXfsHWopgQzqEQhpmdvQZnWNPZ6YRII10r7jipuTA4T4ZoL0UwSLm3gBbeWLjufpRAB4M2Xm8
-	WzOKlZNd1QuvuyqYujrLL24nh5t+ShBmfGM1gVQT2vPEdrWVhEOw6vbA6biy4TtK4QNdRTmbE25fJ
-	an6DpZ6kIkRCXNKPEU4Fuw1/Xm1ct2+HVMmSTdVkzlQzc6M//l3pvwpTeixPvHu2XP6QHGFZ0gY7w
-	iYCmZirw==;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=cb47iL65oswQ8WLZQVWKYoJyz09JI7YusvkLIU90heE=; b=hoGHb4NATR0k8G+LLu42ETlZR3
+	uv9JzxZjHc1nrfm4iR2h2/Y0Z/IqaNqSBe4IjRE+Hdvn3+LHVlSoPIZlDLw+KEJqLpkm/uyFsvWQm
+	aNLRrtzFzmjpVoq8W58MKFW1W4RR2WWQjDpErF41yAhurai329MB8bkQzqCFAdSXEHFeEz5nrH93V
+	+LN0eTT/8JO6OESQwYFTJQorYKyXVFjJxaXvx7pIJwl0l4HXJHTJTVAtL/iJyjMwtfwCNXj4aWHr9
+	orXmGoiDBRr1130S6190KshOe7ZIF0pWllUSOXRYvgCYAgsDj9tEtThAuLucvyi9itEoao5v3LQxj
+	8YCaijMQ==;
 Received: from donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xQprU-00000000o78-2M3M;
-	Tue, 10 Nov 2026 11:42:25 -0600
+	id 1xQprV-00000000o7H-2nRe;
+	Tue, 10 Nov 2026 11:42:26 -0600
 Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xQpqf-00000002cVj-47bt;
+	id 1xQpqg-00000002cVl-0V1F;
 	Tue, 10 Nov 2026 11:41:34 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.li@nxp.com>,
-	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue, 10 Nov 2026 11:39:21 -0600
-Message-ID: <20261110173927.624629-1-logang@deltatee.com>
+	Logan Gunthorpe <logang@deltatee.com>,
+	Frank Li <Frank.Li@nxp.com>
+Date: Tue, 10 Nov 2026 11:39:22 -0600
+Message-ID: <20261110173927.624629-2-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261110173927.624629-1-logang@deltatee.com>
+References: <20261110173927.624629-1-logang@deltatee.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -74,55 +77,102 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, logang@deltatee.com
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, logang@deltatee.com, Frank.li@nxp.com, Frank.Li@nxp.com
 X-SA-Exim-Mail-From: logang@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v2 0/6] plx_dma fixes
+Subject: [PATCH v2 1/6] dmaengine: plx_dma: don't call pci_irq_vector() under rcu_read_lock()
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-This is v2 from my series last week. It fixes a bug Sashiko found,
-updates the commit message of the dma_rmb() patch to better explain
-the issue, collects Frank's Reviewed-by tags and rebases on the latest
-rc2.
+plx_dma_free_chan_resources() calls pci_irq_vector() inside an RCU
+read-side section, but msi_domain_get_virq() takes the mutex that
+protects the device's MSI descriptors. Releasing a channel, for example
+at the end of a dmatest run, triggers:
 
-Also, this is series isn't high priority to me, I'm just trying to
-fix Sashiko warnings. If there's spare review bandwidth I'd prefer
-the time spent on my other series[1].
+  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:623
+  ...
+  RCU nest depth: 1, expected: 0
+  Call Trace:
+   __mutex_lock+0x113/0x2350
+   msi_domain_get_virq+0x227/0x2f0
+   pci_irq_vector+0x9a/0xc0
+   plx_dma_free_chan_resources+0x178/0x58f [plx_dma]
+   dma_chan_put+0x157/0x380
+   dma_release_channel+0xac/0x2e0
 
-This series is based off of v7.4-rc2.
+Store the IRQ number at probe time and use it everywhere
+pci_irq_vector() was called, so the teardown path no longer needs to
+look it up.
 
-Thanks,
+Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initialization and cleanup")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/plx_dma.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Logan
-
-[v1] https://lore.kernel.org/all/20261103155202.461725-1-logang@deltatee.com/
-[1]  https://lore.kernel.org/all/20261110173137.623764-1-logang@deltatee.com/
-
---
-
-Changes since v1:
-  * Serialize descriptor completion with a new complete_lock so
-    callbacks stay in order and can't still be running after
-    plx_dma_free_chan_resources() returns (per Sashiko)
-  * Expand the commit message and comment for the dma_rmb() patch to
-    explain why the barrier is needed (per Frank)
-  * Collect Frank's Reviewed-by tags
-  * Rebased onto v7.4-rc2 (no conflicts)
-
-Logan Gunthorpe (6):
-  dmaengine: plx_dma: don't call pci_irq_vector() under rcu_read_lock()
-  dmaengine: plx_dma: fix descriptor ring leak in alloc_chan_resources()
-  dmaengine: plx_dma: use writel() for the 32-bit PLX_REG_CTRL register
-  dmaengine: plx_dma: add dma_rmb() after observing write-back status
-  dmaengine: plx_dma: use spin_lock_bh() in plx_dma_process_desc()
-  dmaengine: plx_dma: don't invoke client callbacks with ring_lock held
-
- drivers/dma/plx_dma.c | 94 ++++++++++++++++++++++++++++++++-----------
- 1 file changed, 70 insertions(+), 24 deletions(-)
-
-
-base-commit: 7475ea8b58616b33c04afb976cf0fbaad9dd63fb
+diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+index 409898e92c32..0a7ad2473cb1 100644
+--- a/drivers/dma/plx_dma.c
++++ b/drivers/dma/plx_dma.c
+@@ -104,6 +104,7 @@ struct plx_dma_dev {
+ 	struct dma_device dma_dev;
+ 	struct dma_chan dma_chan;
+ 	struct pci_dev __rcu *pdev;
++	int irq;
+ 	void __iomem *bar;
+ 	struct tasklet_struct desc_task;
+ 
+@@ -452,7 +453,6 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct plx_dma_dev *plxdev = chan_to_plx_dma_dev(chan);
+ 	size_t ring_sz = PLX_DMA_RING_COUNT * sizeof(*plxdev->hw_ring);
+-	struct pci_dev *pdev;
+ 	int irq = -1;
+ 	int i;
+ 
+@@ -463,9 +463,8 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
+ 	plx_dma_stop(plxdev);
+ 
+ 	rcu_read_lock();
+-	pdev = rcu_dereference(plxdev->pdev);
+-	if (pdev)
+-		irq = pci_irq_vector(pdev, 0);
++	if (rcu_dereference(plxdev->pdev))
++		irq = plxdev->irq;
+ 	rcu_read_unlock();
+ 
+ 	if (irq > 0)
+@@ -510,8 +509,9 @@ static int plx_dma_create(struct pci_dev *pdev)
+ 	RCU_INIT_POINTER(plxdev->pdev, pdev);
+ 	plxdev->bar = pcim_iomap_table(pdev)[0];
+ 
+-	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
+-			 KBUILD_MODNAME, plxdev);
++	plxdev->irq = pci_irq_vector(pdev, 0);
++
++	rc = request_irq(plxdev->irq, plx_dma_isr, 0, KBUILD_MODNAME, plxdev);
+ 	if (rc)
+ 		goto free_plx;
+ 
+@@ -545,7 +545,7 @@ static int plx_dma_create(struct pci_dev *pdev)
+ 
+ put_device:
+ 	put_device(&pdev->dev);
+-	free_irq(pci_irq_vector(pdev, 0),  plxdev);
++	free_irq(plxdev->irq, plxdev);
+ free_plx:
+ 	kfree(plxdev);
+ 
+@@ -594,7 +594,7 @@ static void plx_dma_remove(struct pci_dev *pdev)
+ {
+ 	struct plx_dma_dev *plxdev = pci_get_drvdata(pdev);
+ 
+-	free_irq(pci_irq_vector(pdev, 0),  plxdev);
++	free_irq(plxdev->irq, plxdev);
+ 
+ 	rcu_assign_pointer(plxdev->pdev, NULL);
+ 	synchronize_rcu();
 -- 
 2.47.3
 
