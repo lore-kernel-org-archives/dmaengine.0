@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794316563;
-	b=YjQ1Cp0uMVn/j1kp8YZyalCOFN3LCtCBJTpS+67z5Sd2JE5Zo9Dze+JLp/DOfASYIS8M
-	 SuxCRjD7YRQkj9hGJf1Vi/0g4U+nd4z76F2aXZnlXaEmNt/oWUqKQxvJJ3fS9YkEqqTJh
-	 PekG2/VZVB7LOozEvOfVrqVi4n+UTk9Mhk4s3WxMQDdvQV+7Cf7PXvWmf35CNh4AhIEK5
-	 f7jPLUNK2vHCb8e5U8U757ardbdYWiuGxGKbSfz3IH3kimUcc/RINWvYjpXWt6Ep3q0Ha
-	 a1njokL27THztvf/GMG9wDNO4Pr3VhMy73H1UwEYJF/SH+N9ZCaaVoaFN7HpQjPOHvw==
+	t=1794316576;
+	b=u8TSW8syP7faG4y+f4PX3pHEGB1OTPU7BLosD+KFjgrlu4RLEMKoq35XLpV0UJ8+18kV
+	 nWacAADqDJUn4k3p5H20K2G7MkgwPR+dxUNf8hYlv4N5B4+WuoPimX8duv0pcw1IDjIdc
+	 MCD5dqPVvpprxpHuCgS1kIsoNER+ML6FtTPKTM3DKyPe/Q4xrsin2+TFBwTE1bdkooOOk
+	 MOyjVAn+Gaenz0R357G//nsMGtoG7k0fTYotbXDeL8v+IanttlYYgv+GJ4tJCn4EWZYgi
+	 hyfze14Mz5m6RblINcjfxk75wcJ3e/vSCRCT5H2fsdm+8nXIEITj/mXSF0f2+5TZwvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794316563;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794316576;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x5xprZt5NhCzwKafxuBKE8lrYdP4CbowwmixO5skWSc=;
-	b=0OxgK/nVPKUREV06kNyHsNWAkwWV713zNIDVom2Vza17EnJuW12Bvq94pvU2oTLdkJ8G
-	 9r15MijiLJtRcLWT1aos1OhGZDmplB7HZSNPdrpQIvfMIxOOqp2eXCLSCGwiATNf6Tn4h
-	 HEaH1g4TaRlLJpe99FLmKXtf62yY6eepXkcifeJzhJZxRFxVOF0aBTN0RdkXXwIvbGFPL
-	 mQ6FS6SWb7RwRyx0QOTBN+CBjKLkFHCDIhZ6H4Z3FhvO3V5YpfBvf6ujQN49GaXyrmkdc
-	 VNMmZaknDu/LRmnwY2vjKWgqxzbS7o3dBCn6MFhBF51aHsIzjEutm5dnCMtXDQhIlTQ==
+	bh=xwC9sqXF5mh2uTIdq7M8qAdiSSeBGCn6t06LEK6oyCI=;
+	b=3/pEU3CDpiuo/V5viAac13Z3ZL2MuvygbS6+KAAHu+AZ1Dmvfja25O228Ha10tIOMBdU
+	 TPWOW7dVmiikpzWISK0I7PtLEDzc/uGxaptyJ1ImNnCQvWPu+bkh7oeXgh1wTAeylC8AX
+	 qu0TqvzHH7nDmkZUo156RlWr9ICa9EbtZADhNgjRDcjIlSO+OMMeEK22R8sNb89Gid9h9
+	 RBNlUtWLlqXLOgu/IMzmbZwBslxuZShRhN7XVFf5gaCF4UfcOq0tzVf7fOaDCvgYcZzVc
+	 ao7+1ge6uEgToqbeteCRksucRc6tc5Wt0Oi1uoxxXPnqOVpOuAuPDTk7l9wIur4PEgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cwtTOuk+;
-	arc=none smtp.remote-ip=209.85.216.43
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=slYXGY7A;
+	arc=none smtp.remote-ip=209.85.216.45
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463D560A3806
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:16:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 463D560A3806
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B325606BFE4
+	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 13:16:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B325606BFE4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cwtTOuk+
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3b09a83d12aso1360094a91.2
-        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:16:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=slYXGY7A
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3adac5c10e3so1111318a91.0
+        for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 05:16:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794316563; x=1794921363; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1794316576; x=1794921376; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=x5xprZt5NhCzwKafxuBKE8lrYdP4CbowwmixO5skWSc=;
-        b=cwtTOuk+6xgyf6G9J7gkaWOMI+dOo5JpGD9h+viPFQLnb3n1dujfrVMHhzk2tDfZqm
-         MbMYkEUIzcozLznCqWQKPdjhglfEZ53B/1wrUcbJbVAaKOCsmwFWfKK919xWQUac8O6b
-         VeY8TItOjRbz6jDHujqbr97BIsklZQn7sncvV3M9Gt3AqziDa9K1ZFf5tPAW0hl4ySuN
-         noxGIDZW5ZwBXycT8ngQ71wuiznDBdsAZPCIZKXuq4AldCaFtdrV0KSVQVD0IuuvgvYX
-         kF4gqrL5cRje0xNJ6jDNIw0E0UtjXQE7L85QuoP0yT0Ix6MVIpPmZXDpXTNQyCZIDy7D
-         skXQ==
+        bh=xwC9sqXF5mh2uTIdq7M8qAdiSSeBGCn6t06LEK6oyCI=;
+        b=slYXGY7ASWEuctXx4XOIeuT6w5CHZs6EEJCudNCGQY7AotNNdk1jfY3ajKzoHDDsFE
+         3XpneljvuXIivgxCR0L4Mc0FAzGiw3yM0ywKOcik20dB9xoEu8+OhgRRIuQfnRxHY2uG
+         qKP/nzpthHzfpeKaJsZ/XI+cS9yyvVx2/qxYMPKw0aTji45tv8Vli7/1ov8ZfMERA4Fq
+         NhoFVxJZUhIlkAkyPQ9SVPXHNrqok1LHMUBeE6DO0+sllViKViXS6G3XqEsYIrteMDvS
+         e0Kz4SEo4h8T5aWm1m/uIBoUnKq1GJzznAf0wPFB3SWslQTrUrqzHulzThRq5npQNEtI
+         tppA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794316563; x=1794921363;
+        d=1e100.net; s=20260707; t=1794316576; x=1794921376;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=x5xprZt5NhCzwKafxuBKE8lrYdP4CbowwmixO5skWSc=;
-        b=BEA+1yqgfKSMTIb9U0b7APlqqCNzDfvY/cAtnx/PwJt0/UxcGfuu1xCOoHlKLPsHCi
-         TytHlzrAdBg6oREiB9Ec3w8oZ1PyEgQEjOFJpBP/AmjYKq1MhjdWTHVG3vRH+CkWsAAX
-         lQCNAGDYc0/IAT1Coh/6LP+HzX/H+WbJug0GfUWIOZbMjhyqlW4cmzlPpQaeiP33Y5hd
-         MtwRDxvbUJZKflydzh9nPPyWiL5I/Wz4AtEZEfbKdtTCFZq5+ATHVRZhdM13q9cCBeFA
-         KhOevQbc8NMQDjfREFwptO9StFa5R3iEQ1taDV8yY3lkcdMjEhY5aU3zNX/WsP8S3T3d
-         eBpA==
-X-Forwarded-Encrypted: i=1; AL+hErEE+Imhp9xCq+WnmGFBQGdOULXSt/hRkZwVAU50yUq66ujE6X/+J2nabNr7RuikP6YkIOMSIE5aHdg=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/FxRkXaBAzYlokBkaLPxL6fX3ivbTrEZLEKcF6ERcNqYoCDaCt
-	izfQA9HudJng1oLjDTcxvjsjyzVI+EU5fLA4Nl5WOZRSnKVFwMpCWYHm
-X-Gm-Gg: AYBFou2L7Y4fR3Ug6aAu3IAaZ5s0Pw7Xai24b3e8lNtmj+nuKo6fNnaWPt/CaYv79Ov
-	7wWk6ymOJIr2Zg9/IxxdAKtafx6cTRej3lGT03Pmld0Wzxap9/Go9m6maSIcABN/FbidO09qcP1
-	/sLUTeaPeKfgohWbmj3dBIOy7x4MPhOBdatH+gZsPDBGAC6gI4TA3Wzc6PyHVIK/J5hLITHKLO4
-	9Ew+JdM6eSgXkT1AieNQTU9TPPuylF2LY5QQZFsThQpW1CUkFwonbQEYPt6vO8SeYldhPQEq5R5
-	9d7/f69GZRDLwGfnm9fxaAfdSctfiYyXXBHTBwtHTJeCxjUT4JmWFvU9nLvAwckeK0qxq8ow+ng
-	rTXEeyyx3TYINREKWdd1cLLQX5etpmjQ8r7V3QVupNdnvlef6rezKwm605uUIqR1CtuccEAuwEU
-	h8QAlTYQhL0K0odbJPKy/0IZ5fnxUlLgasy9CxoPZ6b8Q2ouFf+t+cZjDJXi5KWUZhCLUQJmWnG
-	IE8H/WEVnRwUbnHpZjHBFYtvZn+hpK+/9z+HTiVWumJq5OmggwRJe2AWpvlQCV+7wyvrUWyEfKZ
-	hjoZxtu+3ocEATsa0RJZ5PJd9OY4Hs3l
-X-Received: by 2002:a17:90b:4a87:b0:3a8:c0cd:57fb with SMTP id 98e67ed59e1d1-3b166cbd030mr2853475a91.42.1794316562378;
-        Tue, 10 Nov 2026 05:16:02 -0800 (PST)
+        bh=xwC9sqXF5mh2uTIdq7M8qAdiSSeBGCn6t06LEK6oyCI=;
+        b=SaK11SCfRIzRig31mhy4IkQJPbtWDI8CHEwNaurQ4DIviDIVjKXJGwB/ydN/ipWT1C
+         jluFE+wx0nOWdVhJVLJDYl/KJ1wgsniay53CJ5qpWlVWXT6m2hv8EJ4t5PHipcxJ/Uck
+         nyDLERhmxU6Hpkvs+YfcNixbiEM0GyroLnOrrfTZGvjfNSkXkIR/lLqQ1D+ZvMeofPlr
+         jVUKY+BptEWyHhvrFfiH795gd1/Y3uiMTyFfSPt+GlNFqiGBDZSA2g15A69NahEKxFuI
+         aritfTOISJXjXRdjmqv1AiA6JF1rp5KOaGNm1upH+BL4Ji+MMLjrXCqrE+D5uHr/pKy5
+         IAXA==
+X-Forwarded-Encrypted: i=1; AL+hErFub3lcvJ4UDASSiYznaT9iwqCgX1HvGCP9s4i4o6sldLp1du5WUCtIEjOXgNQktUYb0y+JYt7vnO4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9q5ejriTc4uEK6NVxlGKr1ciRiMkc1tuajRBCbbYJKNPiA+VHQ
+	8g26UkUhfLsbglbrTNkIPwlvFFzBewncYb/WKu+oO+xoKlxz1i1cBiTL
+X-Gm-Gg: AYBFou1iyj6qsdYzmSEewSeZL6E1SUya86frJejZowZUQ2EdQvJpI5S47vJnnfgDcz4
+	QykkoSGZ090lfsapb/nyeNS5w7yIUDUMQMi+TDDhr7w2ryGIEwk0JzDjdfO3U1W1wFBOSxcPU9g
+	vgIklLHfmguh1LwkPyNnpgdhjCivASGeyesvn8xfvv9TsJ0IPBJAFPVuHdXxg3vl67e0QvUcmRp
+	yOUpLx7g+NtRjeQRDwFfSJXoOfQbrtR/3U3DXOTHx4EOCziALGL+e/WP5OxcNLw8LuLDdHOJI/N
+	Kbaieug181toy0LVTCiVFrXnbt/VvyBmFRZTh7qEDH5o/XD0+/DQgxJdtTzXrw97aRbAiDf9/1n
+	6hc6lwmTKpHPbetWMEKHkQIpWwXAjFV94YGkhpWXovPAhk2xRXd30Tt87Lp2jU6r1HDCvt4xP68
+	dvSyp7vFeu0O7xRmu18NW1AcNYPIdCpFMEVbXj7fRkWnWS4Ermfq620Zv6NZotYFu5O8guKcEPj
+	RKosvzQJ+KUE8WFN70AXXER4MLdgKS/4uFy66uNJStsmg1UGAiANkR7egTFGhD6/jX1CkMCE3+h
+	F1SmKDtORcNxbaztAubngSadbdSNzqc=
+X-Received: by 2002:a17:90b:4b03:b0:3b0:99f8:eba8 with SMTP id 98e67ed59e1d1-3b166cfd406mr2820964a91.66.1794316575604;
+        Tue, 10 Nov 2026 05:16:15 -0800 (PST)
 Received: from cryptic.lan ([2001:569:7077:be00:8191:2bfc:aa6d:704b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.16.01
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16769b589sm3806975a91.5.2026.11.10.05.16.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 05:16:01 -0800 (PST)
+        Tue, 10 Nov 2026 05:16:15 -0800 (PST)
 From: Allen Pais <allen.lkml@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Allen Pais <allen.lkml@gmail.com>,
@@ -85,15 +85,16 @@ Cc: Allen Pais <allen.lkml@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	Dave Jiang <dave.jiang@intel.com>,
 	Frank Li <Frank.Li@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v4 08/33] dmaengine: imx-dma: flip per-chan tasklet to dmaengine BH
-Date: Tue, 10 Nov 2026 05:13:08 -0800
-Message-ID: <bb9ba66250d97a83048c5bcce45b20a1ea6ca6af.1794315350.git.allen.lkml@gmail.com>
+	Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH v4 09/33] dmaengine: ioat: convert cleanup tasklet to dmaengine BH
+Date: Tue, 10 Nov 2026 05:13:09 -0800
+Message-ID: <6736142ec0740f8d1bc2e26eca05732ec4752913.1794315350.git.allen.lkml@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1794315350.git.allen.lkml@gmail.com>
 References: <cover.1794315350.git.allen.lkml@gmail.com>
@@ -113,98 +114,97 @@ The handler continues to run in softirq context while dmaengine owns
 the common scheduling and teardown mechanism.
 
 Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+Acked-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- drivers/dma/imx-dma.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/dma/ioat/dma.c  | 14 +++++++-------
+ drivers/dma/ioat/dma.h  |  3 +--
+ drivers/dma/ioat/init.c |  2 +-
+ 3 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/imx-dma.c b/drivers/dma/imx-dma.c
-index ca1d08e90a06..a9d05b2e2205 100644
---- a/drivers/dma/imx-dma.c
-+++ b/drivers/dma/imx-dma.c
-@@ -145,7 +145,6 @@ struct imxdma_channel {
- 	struct imxdma_engine		*imxdma;
- 	unsigned int			channel;
- 
--	struct tasklet_struct		dma_tasklet;
- 	struct list_head		ld_free;
- 	struct list_head		ld_queue;
- 	struct list_head		ld_active;
-@@ -344,8 +343,8 @@ static void imxdma_watchdog(struct timer_list *t)
- 
- 	imx_dmav1_writel(imxdma, 0, DMA_CCR(channel));
- 
--	/* Tasklet watchdog error handler */
--	tasklet_schedule(&imxdmac->dma_tasklet);
-+	/* BH watchdog error handler */
-+	dmaengine_schedule_bh(&imxdmac->chan);
- 	dev_dbg(imxdma->dev, "channel %d: watchdog timeout!\n",
- 		imxdmac->channel);
- }
-@@ -390,8 +389,8 @@ static irqreturn_t imxdma_err_handler(int irq, void *dev_id)
- 			imx_dmav1_writel(imxdma, 1 << i, DMA_DBOSR);
- 			errcode |= IMX_DMA_ERR_BUFFER;
- 		}
--		/* Tasklet error handler */
--		tasklet_schedule(&imxdma->channel[i].dma_tasklet);
-+		/* BH error handler */
-+		dmaengine_schedule_bh(&imxdma->channel[i].chan);
- 
- 		dev_warn(imxdma->dev,
- 			 "DMA timeout on channel %d -%s%s%s%s\n", i,
-@@ -448,8 +447,8 @@ static void dma_irq_handle_channel(struct imxdma_channel *imxdmac)
- 			imx_dmav1_writel(imxdma, tmp, DMA_CCR(chno));
- 
- 			if (imxdma_chan_is_doing_cyclic(imxdmac))
--				/* Tasklet progression */
--				tasklet_schedule(&imxdmac->dma_tasklet);
-+				/* BH progression */
-+				dmaengine_schedule_bh(&imxdmac->chan);
- 
- 			return;
- 		}
-@@ -462,8 +461,8 @@ static void dma_irq_handle_channel(struct imxdma_channel *imxdmac)
- 
- out:
- 	imx_dmav1_writel(imxdma, 0, DMA_CCR(chno));
--	/* Tasklet irq */
--	tasklet_schedule(&imxdmac->dma_tasklet);
-+	/* Schedule the IRQ BH */
-+	dmaengine_schedule_bh(&imxdmac->chan);
- }
- 
- static irqreturn_t dma_irq_handler(int irq, void *dev_id)
-@@ -592,9 +591,10 @@ static int imxdma_xfer_desc(struct imxdma_desc *d)
- 	return 0;
- }
- 
--static void imxdma_tasklet(struct tasklet_struct *t)
-+static void imxdma_tasklet(struct dma_chan *chan)
- {
--	struct imxdma_channel *imxdmac = from_tasklet(imxdmac, t, dma_tasklet);
-+	struct imxdma_channel *imxdmac = container_of(chan, struct imxdma_channel,
-+						      chan);
- 	struct imxdma_engine *imxdma = imxdmac->imxdma;
- 	struct imxdma_desc *desc, *next_desc;
- 	unsigned long flags;
-@@ -1142,7 +1142,7 @@ static int __init imxdma_probe(struct platform_device *pdev)
- 		INIT_LIST_HEAD(&imxdmac->ld_free);
- 		INIT_LIST_HEAD(&imxdmac->ld_active);
- 
--		tasklet_setup(&imxdmac->dma_tasklet, imxdma_tasklet);
-+		dmaengine_init_bh(&imxdmac->chan, imxdma_tasklet);
- 		imxdmac->chan.device = &imxdma->dma_device;
- 		dma_cookie_init(&imxdmac->chan);
- 		imxdmac->channel = i;
-@@ -1211,7 +1211,7 @@ static void imxdma_free_irq(struct platform_device *pdev, struct imxdma_engine *
- 		if (!is_imx1_dma(imxdma))
- 			disable_irq(imxdmac->irq);
- 
--		tasklet_kill(&imxdmac->dma_tasklet);
-+		dmaengine_kill_bh(&imxdmac->chan);
+diff --git a/drivers/dma/ioat/dma.c b/drivers/dma/ioat/dma.c
+index ee93b029f9e3..c7a63dbac6e2 100644
+--- a/drivers/dma/ioat/dma.c
++++ b/drivers/dma/ioat/dma.c
+@@ -110,7 +110,7 @@ irqreturn_t ioat_dma_do_interrupt(int irq, void *data)
+ 	for_each_set_bit(bit, &attnstatus, BITS_PER_LONG) {
+ 		ioat_chan = ioat_chan_by_index(instance, bit);
+ 		if (test_bit(IOAT_RUN, &ioat_chan->state))
+-			tasklet_schedule(&ioat_chan->cleanup_task);
++			dmaengine_schedule_bh(&ioat_chan->dma_chan);
  	}
+ 
+ 	writeb(intrctrl, instance->reg_base + IOAT_INTRCTRL_OFFSET);
+@@ -127,7 +127,7 @@ irqreturn_t ioat_dma_do_interrupt_msix(int irq, void *data)
+ 	struct ioatdma_chan *ioat_chan = data;
+ 
+ 	if (test_bit(IOAT_RUN, &ioat_chan->state))
+-		tasklet_schedule(&ioat_chan->cleanup_task);
++		dmaengine_schedule_bh(&ioat_chan->dma_chan);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -161,11 +161,11 @@ void ioat_stop(struct ioatdma_chan *ioat_chan)
+ 	/* flush inflight timers */
+ 	timer_delete_sync(&ioat_chan->timer);
+ 
+-	/* flush inflight tasklet runs */
+-	tasklet_kill(&ioat_chan->cleanup_task);
++	/* flush inflight BH runs */
++	dmaengine_kill_bh(&ioat_chan->dma_chan);
+ 
+ 	/* final cleanup now that everything is quiesced and can't re-arm */
+-	ioat_cleanup_event(&ioat_chan->cleanup_task);
++	ioat_cleanup_event(&ioat_chan->dma_chan);
  }
  
+ static void __ioat_issue_pending(struct ioatdma_chan *ioat_chan)
+@@ -690,9 +690,9 @@ static void ioat_cleanup(struct ioatdma_chan *ioat_chan)
+ 	spin_unlock_bh(&ioat_chan->cleanup_lock);
+ }
+ 
+-void ioat_cleanup_event(struct tasklet_struct *t)
++void ioat_cleanup_event(struct dma_chan *c)
+ {
+-	struct ioatdma_chan *ioat_chan = from_tasklet(ioat_chan, t, cleanup_task);
++	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
+ 
+ 	ioat_cleanup(ioat_chan);
+ 	if (!test_bit(IOAT_RUN, &ioat_chan->state))
+diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
+index e8a880f338c6..4bdb1ae937e4 100644
+--- a/drivers/dma/ioat/dma.h
++++ b/drivers/dma/ioat/dma.h
+@@ -111,7 +111,6 @@ struct ioatdma_chan {
+ 	struct ioatdma_device *ioat_dma;
+ 	dma_addr_t completion_dma;
+ 	u64 *completion;
+-	struct tasklet_struct cleanup_task;
+ 	struct kobject kobj;
+ 
+ /* ioat v2 / v3 channel attributes
+@@ -385,7 +384,7 @@ int ioat_reset_hw(struct ioatdma_chan *ioat_chan);
+ enum dma_status
+ ioat_tx_status(struct dma_chan *c, dma_cookie_t cookie,
+ 		struct dma_tx_state *txstate);
+-void ioat_cleanup_event(struct tasklet_struct *t);
++void ioat_cleanup_event(struct dma_chan *c);
+ void ioat_timer_event(struct timer_list *t);
+ int ioat_check_space_lock(struct ioatdma_chan *ioat_chan, int num_descs);
+ void ioat_issue_pending(struct dma_chan *chan);
+diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+index a57024c4b066..ab5068d60110 100644
+--- a/drivers/dma/ioat/init.c
++++ b/drivers/dma/ioat/init.c
+@@ -765,7 +765,7 @@ ioat_init_channel(struct ioatdma_device *ioat_dma,
+ 	list_add_tail(&ioat_chan->dma_chan.device_node, &dma->channels);
+ 	ioat_dma->idx[idx] = ioat_chan;
+ 	timer_setup(&ioat_chan->timer, ioat_timer_event, 0);
+-	tasklet_setup(&ioat_chan->cleanup_task, ioat_cleanup_event);
++	dmaengine_init_bh(&ioat_chan->dma_chan, ioat_cleanup_event);
+ }
+ 
+ #define IOAT_NUM_SRC_TEST 6 /* must be <= 8 */
 -- 
 2.43.0
 
