@@ -1,57 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794332158;
-	b=JTstv21NoRtanb9XWHmXXhQKwVF2miIa0GWvPlsveiZdBrPt2YD2zylfcMtuOSJusmVs
-	 zsExUGqA2FdIhtEJdhYilv1LCdSVV1iJsnSumYQ4MNSajdfaRD6LkNX5wX0CSjyccyNXs
-	 bVl8k5/0W21LVFblIWfW0k57tWvuV+qM62H0Mm2HS32a6gWultEaPqTewEPF0UVBhHOdh
-	 ZgBwpgKM3xkRE0isBle2HUrm7eGJ7AiKX6vLI0X4DGrhGPjrSsBtMC97crusIaXoGrv/A
-	 kqu1W5CSj3cEeZl2Grq3o6CYNnFXLwbQLEghkTuCJMdU4EYCbRwiTQmzErzfDieqz9g==
+	t=1794332547;
+	b=pm8s1b+UVd6tz8i5N6cyL7BTXObYOzrk+JilWogSskxF2tZgN7dPST5W/bw5iNfCpxSS
+	 cWCCqmLsDJXcnACbdULXJ59KgkOn3XlQ/shKsIwO5/l3lEh/Dis03JXrPkSf3jOXEBAyO
+	 YEl0HDazlfRvTLAwFfuyUb4UMhaN0IAs60rmEN+rEqs/ko7BlzxInF3LA3r6ZifJwVVid
+	 YAcT3N6on9RvaIQe8dcn37MpXKhNsyiThYBQ0QPKref1/AhSIVhtHv71yEmvriMKZp4L9
+	 LUCLBXnK/tLHQf4+/Pq3i+1AeXE4QRr1nUroRGOs8CRhxqDUkTIZI7Q0qGyQ8CdLPPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794332158;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=gyGFEu4rN8jRbXCLt87X2nJtSCwcM2eV/xdLHYuHZ2c=;
-	b=StFIjS9DFfeVPe2mHuh5p2OnAuzpnnwFpYW1BE6DQ9tnAAp6xa4Uuo6qEtUUCPNYg315
-	 EpWa4E8PScJmol1r3oYPthSuq4GaXT5FglNTTSaQvjG6lvGhgWcHygVIYSPpwOouEhDRA
-	 T6KyeALKVVA6xDVw6oF3TXd+qxxxMQ4rBbzoTDyG0Yd2GNf/RbWd3oEfpbVDQLr2uBGT6
-	 2l8H+CU44Ltj1J3VwEljHVCVwl8Q0As6lSjeJEkF/qXyieBBcrAGtja3srbQJvSaJcB3T
-	 jYYIBHW8Jv7GHoFnOjaxXWgfMxlk9GfVTcnLRpPhKTQoTQ/nOGT939l3DLLjCTw1n+g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794332547;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
+	 X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:Subject:
+	 X-SA-Exim-Version:X-SA-Exim-Scanned;
+	bh=RnfwxMikUC0UtSTBV3H3pNVkjpTTbo1qY6oOlvX7a8s=;
+	b=H93IDY43hNIPMTz1CPq+OsbdGx3r0q8NHt3MfWSHvRBHcAKso9d9D13fSVyuapEogKGu
+	 wrs80hxYdNseO83EWOdJ1OMGfxHgEsd+erXWWb3W64sfCYcQy8G0IJvd72zZAD1syyAKb
+	 yt812p5gOaygaNdEEeGBN67N0jl3B/+x7YzKgvQdZ0GRVvOs29xKKQlTJZHSfAaPm15Cl
+	 C4XiJ3/rFsGhDXht8FE+Hf/kjba2sVZGgwUdngDOfrs7hOc0SvDXW9rHiMc0ySbxvPuAY
+	 E0gG9s1S7sVQ7sqDYXk7s4IDHXxaEigO1lgHFg9BV9MziMwizh/tWyzvNfTQBHEeUzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fINU+LAl;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=deltatee.com;
+	spf=pass smtp.mailfrom=deltatee.com;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=V8L50zFP;
+	arc=none smtp.remote-ip=204.191.154.188
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D1F60A6F70
-	for <dmaengine@vger.kernel.org>; Tue, 10 Nov 2026 17:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9364606A31C;
+	Tue, 10 Nov 2026 17:42:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A9364606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fINU+LAl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820B91F008A1;
-	Tue, 10 Nov 2026 17:35:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794332157;
-	bh=gyGFEu4rN8jRbXCLt87X2nJtSCwcM2eV/xdLHYuHZ2c=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fINU+LAlzdIDHN0Br9Axkg0XbW5pSDHrJdQlgbiriZL/BMqxDfsd8kipI9lZrbzJm
-	 FV3iRH0XaVaL3LfOQ3UAT3/coLHE99U/xAoVms72zD4o1jgaP4jIyqIACziYenCZze
-	 YTpc3dfw2KF3TVZ49RHU99ciCYOxs21sg9LggI0JgdEWK3pDGLGV8W01RpN7VlB9Ix
-	 JnleqrRbrcNuTtWYHwpcGaw9I4TNTQ2g4DDrCdAtSWtdC0JODF2lobCD8nNn3ojsLl
-	 CikhoCXja/f+ilixCf/eUzQa5rsTJ3n/vlg2ODLJdJoahIQCN2gpIatkc31QrD7Y2q
-	 2A2L01mQxNplQ==
-Message-ID: <sashiko-outbox-207489@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 19/33] dmaengine: xilinx-dma: use dmaengine BH
- instead of tasklets
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Allen Pais" <allen.lkml@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <b17d718ce2500611e33331d29d10e3ab5de07a39.1794315350.git.allen.lkml@gmail.com>
-References: <cover.1794315350.git.allen.lkml@gmail.com>
- <b17d718ce2500611e33331d29d10e3ab5de07a39.1794315350.git.allen.lkml@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 17:35:57 +0000
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=V8L50zFP
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
+	:references:content-disposition:in-reply-to;
+	bh=RnfwxMikUC0UtSTBV3H3pNVkjpTTbo1qY6oOlvX7a8s=; b=V8L50zFPjsORH8bpLrbq9ab+9z
+	vUgnBLVumAIYBB6BvWb6PeeYFQMIcPxA+HMaQaDBjqVMCF9nNyMp2ZE1QIOgk4Xq1ll7/GnQHRKE5
+	mUafhXfsHWopgQzqEQhpmdvQZnWNPZ6YRII10r7jipuTA4T4ZoL0UwSLm3gBbeWLjufpRAB4M2Xm8
+	WzOKlZNd1QuvuyqYujrLL24nh5t+ShBmfGM1gVQT2vPEdrWVhEOw6vbA6biy4TtK4QNdRTmbE25fJ
+	an6DpZ6kIkRCXNKPEU4Fuw1/Xm1ct2+HVMmSTdVkzlQzc6M//l3pvwpTeixPvHu2XP6QHGFZ0gY7w
+	iYCmZirw==;
+Received: from donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xQprU-00000000o78-2M3M;
+	Tue, 10 Nov 2026 11:42:25 -0600
+Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xQpqf-00000002cVj-47bt;
+	Tue, 10 Nov 2026 11:41:34 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>
+Date: Tue, 10 Nov 2026 11:39:21 -0600
+Message-ID: <20261110173927.624629-1-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,57 +71,58 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, logang@deltatee.com
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v2 0/6] plx_dma fixes
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: xilinx-dma: HI_SOFTIRQ priority loss in
-  xilinx_mcdma_irq_handler()
+This is v2 from my series last week. It fixes a bug Sashiko found,
+updates the commit message of the dma_rmb() patch to better explain
+the issue, collects Frank's Reviewed-by tags and rebases on the latest
+rc2.
+
+Also, this is series isn't high priority to me, I'm just trying to
+fix Sashiko warnings. If there's spare review bandwidth I'd prefer
+the time spent on my other series[1].
+
+This series is based off of v7.4-rc2.
+
+Thanks,
+
+Logan
+
+[v1] https://lore.kernel.org/all/20261103155202.461725-1-logang@deltatee.com/
+[1]  https://lore.kernel.org/all/20261110173137.623764-1-logang@deltatee.com/
+
 --
 
-commit 959cca11cf1a0ddb7da4355d351b00c62da10f51
-Author: Allen Pais <allen.lkml@gmail.com>
+Changes since v1:
+  * Serialize descriptor completion with a new complete_lock so
+    callbacks stay in order and can't still be running after
+    plx_dma_free_chan_resources() returns (per Sashiko)
+  * Expand the commit message and comment for the dma_rmb() patch to
+    explain why the barrier is needed (per Frank)
+  * Collect Frank's Reviewed-by tags
+  * Rebased onto v7.4-rc2 (no conflicts)
 
-dmaengine: xilinx-dma: use dmaengine BH instead of tasklets
+Logan Gunthorpe (6):
+  dmaengine: plx_dma: don't call pci_irq_vector() under rcu_read_lock()
+  dmaengine: plx_dma: fix descriptor ring leak in alloc_chan_resources()
+  dmaengine: plx_dma: use writel() for the 32-bit PLX_REG_CTRL register
+  dmaengine: plx_dma: add dma_rmb() after observing write-back status
+  dmaengine: plx_dma: use spin_lock_bh() in plx_dma_process_desc()
+  dmaengine: plx_dma: don't invoke client callbacks with ring_lock held
 
-This commit replaces the per-channel tasklet in the Xilinx DMA driver with
-the shared dmaengine bottom-half helper.
+ drivers/dma/plx_dma.c | 94 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 70 insertions(+), 24 deletions(-)
 
-> diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_=
-dma.c
-> index b89f2c3c1579c..d23658c927c74 100644
-> --- a/drivers/dma/xilinx/xilinx_dma.c
-> +++ b/drivers/dma/xilinx/xilinx_dma.c
 
-[ ... ]
+base-commit: 7475ea8b58616b33c04afb976cf0fbaad9dd63fb
+-- 
+2.47.3
 
-> @@ -1979,7 +1978,7 @@ static irqreturn_t xilinx_mcdma_irq_handler(int irq=
-, void *data)
->  		spin_unlock(&chan->lock);
->  	}
-> =20
-> -	tasklet_hi_schedule(&chan->tasklet);
-> +	dmaengine_schedule_bh(&chan->common);
->  	return IRQ_HANDLED;
->  }
-
-[Severity: Low]
-Does replacing tasklet_hi_schedule() with dmaengine_schedule_bh() here
-regress MCDMA completion priority?
-
-dma_bus_init() allocates dmaengine_bh_wq without WQ_HIGHPRI:
-
-drivers/dma/dmaengine.c:dma_bus_init() {
-	...
-	dmaengine_bh_wq =3D alloc_workqueue("dmaengine_bh",
-					  WQ_BH | WQ_PERCPU, 0);
-	...
-}
-
-Because WQ_HIGHPRI is not set, dmaengine_schedule_bh() runs the bottom
-half in TASKLET_SOFTIRQ rather than HI_SOFTIRQ, which silently undoes
-c77d4c5081aa ("dmaengine: xilinx_dma: Use tasklet_hi_schedule for timing
-critical usecase") and places MCDMA completions behind network softirqs.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1794315350.gi=
-t.allen.lkml@gmail.com?part=3D19
