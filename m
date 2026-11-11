@@ -1,58 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794434113;
-	b=3v/9d9tWnOhQ2L2whBXJxZIobFkcNkuQ6ha5K79V8P6jE+edd5D1lxX5Gr53y9itEPsl
-	 HLyjqLz7Go3OSoqrZj90aXzjmy4HkUXK+ZEK7Kwbu9fN6udM5w7gDJJiFOb1XMyBwYWmX
-	 fbbGt5d1lWrPcASKc3+EtPQwLrQ/XZealpHc5lQn6N8Efit3VbZ37zt/nG+SiODTC9RSj
-	 doYHdFm3o+/iE3T5AKmKJZrakZOm90cFkq+C2gp/arwEPok0EqA8Q2KcvwOeIlk6/FTR8
-	 Xf5VfTLJHcxx1BcA3U6XxR+sq7CqyUKiEgpTl8FjIdK5ZOFyK/l1c1NCERaNNCWHGCg==
+	t=1794435090;
+	b=OMg3JBcBPK9dXm9vPjiiHb6+RVrM40Lg5nwG77lkjVLCqYS2pFqDMfhua+sR6tSw90Jl
+	 z/OxUZoXQikArpd1GrxsIkBXQ7WHmw89BXPENnF6jKduqbGFjovBWaH2iILg8iDCkOR8k
+	 g7WW8GLUjL4dQNiE2yNlqfUf3cORrmfXYjo/HlkOJgs121iRa8YrnO76naH6RVH79flBR
+	 7FgurFQ2jb6CDmh59/M8BsTnthFrgqjmacjA0KEP+AbE30y9feFcVWiSGLecTsNEWDhKe
+	 2ZYG27/AQhmRvvtfg5oxJwIK28tqbrUmhcm++2fFb6wMTobUjGU9mvEvTTxYSyUL74w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794434113;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=J3h7yhT76OoVl+YPlyQUkEfkSBobXxiSaZcngFPs/zs=;
-	b=I/d7EYqKW1PvX35uD/Sk04j6Cbk9tFoR6VUxmXyclTDGAIzmcYVyfWqEelmeYGxyaXId
-	 jiTd0LfVG3Vycx0Q6Ucfk4g+IcSg4ELbs3lrI5elrD54Yh8CMv7UySGJo1m+sq9hb4ksm
-	 MBYmm/5pt/Z3amqo1N0ocfEHHCfhErYTGa3vMXgqqrbt2jBX0FdI+jd/Jt0HaOKAUanXA
-	 x4pwwpq3E73XXak7I8t24rjB21GcbqIAsopRPtIGkHQILuOlemlbNr01QrhXXevpCyiw3
-	 m9MWBhKZr5dKkdeiVrRYvBq0NSXdRXsuEkA0OivqJWcW5OFS+5V2zz0gjFyShWZuaLQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794435090;
+	h=Received:DKIM-Signature:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=MUGi+6yGnkd+Ifly32JGBty8CIYlhjDD8RBpprRWoYE=;
+	b=blUqNaRtvyAjLyPs8c4aDGwh7E4gdRqsOUtbS2HiIXnrQhM29ZtgBEXl1U3GWHFjrXtR
+	 1fdyTQ2a+brQuVlxb1rNVxZDPSI9xFN6KjOJIp1B5PM3I2MUVkyKGw1nPOMXM28od0pfj
+	 BgkjNz3zT482bVdI0HHfrD5oLuEZL4SOU7jvav2Ah5zb3Ne7hMuZflD+wl6f5FkXCTT+M
+	 fAZRnpxKa+nL9fBNf0ee75fItBki3DKF9k/T4PiYxuF/3gMX+xJJ+h9GBANjSJdsHkqow
+	 uyUdWmXA/2NyhffOLYE738tDTlc+WqFDfhrwudjqFKcuymjuc8Jq80peyLa2lY811Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="dm+bsZy/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l+CZocFO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281BA60A6F4E;
-	Wed, 11 Nov 2026 21:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06CE606A31C;
+	Wed, 11 Nov 2026 22:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dm+bsZy/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B785B1F00A09;
-	Wed, 11 Nov 2026 21:55:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l+CZocFO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B461F00A05;
+	Wed, 11 Nov 2026 22:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794434113;
-	bh=J3h7yhT76OoVl+YPlyQUkEfkSBobXxiSaZcngFPs/zs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dm+bsZy/KS+m3BxYZBwy/U9U1lnunO8RqkVnZo6T42XuBVpM/VhiG4LMKiPK00Hih
-	 kFHmNNLnAidGu9rwgA5xPaIoLZV7fekzSDUZIVQO1115i4lvCJ3iRq+w7MasqQQp84
-	 t8iKZWWU/ZGnSnPONOEGcZ5j2wJxjKQbwFMCSYP3vOeRE8S8JzcyiOAPOP/Xr0Jwgw
-	 OD9gQzx/3b3PWsVdzSnm45JzwGXZC8t1KexM6boOjI4Pi38n8OH/onyj6PJynZ/eUH
-	 0giCAmJs8Bl+9+3pbsj9F0Dt8ORttz6PSiLwxvIqr0A8Mi31vDs+syawPzto3bDhmV
-	 Sk+vtDmnGq6Sg==
-From: Lee Jones <lee@kernel.org>
-To: lee@kernel.org,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Subject: [PATCH 10/10] dmaengine: dmatest: Avoid unsigned underflow in min_odd()
-Date: Wed, 11 Nov 2026 21:52:48 +0000
-Message-ID: <20261111215349.1983909-11-lee@kernel.org>
-X-Mailer: git-send-email 2.56.0.567.gdb80ae8cd5-goog
-In-Reply-To: <20261111215349.1983909-1-lee@kernel.org>
-References: <20261111215349.1983909-1-lee@kernel.org>
+	s=k20260515; t=1794435090;
+	bh=MUGi+6yGnkd+Ifly32JGBty8CIYlhjDD8RBpprRWoYE=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=l+CZocFOipkssoSR4nDy8rXOPR4VscQyi4qnCL1vXPFwNQg8OaBOIuOCaInl8e96r
+	 ZwlRc1i7/6L4/vzQN+0L0DwnuPbmtt67pfOjPY+vb0dxgPlPB90E7P0j1anEKLviQv
+	 5LSrrdNHXhS/UOfzdhgQspSktdWd9/8F+qEEiPz38DK/XgFrpRqK9aYp87/QrAjErI
+	 +jyYnf8ekRSoAZKyHF1Fbpjw6W39yy9fnq3WO2Y5eYee09N9qA/Vhq3yWy92aWaXID
+	 32hmABD3dDPq1uccKqdLQN7VMxwxRDRnsHMjk9Ep7IHrJhQHw1C9tJr6BxPRHmK5Aw
+	 R1QVhNtVNZuIA==
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,50 +49,63 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 2/5] clk: cix: Handle Sky1 AUDSS DMA interrupt gates
+ as an irqchip
+From: Brian Masney <masneyb@kernel.org>
+To: Jelly Jia <Jelly.Jia@cixtech.com>
+Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, robin.murphy@arm.com, sboyd@kernel.org, 
+ bmasney+clk@redhat.com, jbrunet+clk@baylibre.com, 
+ devicetree@vger.kernel.org, Frank.Li@kernel.org, 
+ cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, joakim.zhang@cixtech.com, 
+ Brian Masney <masneyb@kernel.org>
+In-Reply-To: <20261106013520.1134450-3-Jelly.Jia@cixtech.com>
+References: <20261106013520.1134450-1-Jelly.Jia@cixtech.com>
+ <20261106013520.1134450-3-Jelly.Jia@cixtech.com>
+Date: Wed, 11 Nov 2026 17:11:24 -0500
+Message-Id: <179443508445.1143992.8301638068435530250.b4-review@b4>
+X-Mailer: b4 0.17-dev-7ca47
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1393; i=masneyb@kernel.org;
+ s=20250903; h=from:subject:message-id;
+ bh=mfXkakMz9SQLnadusaEu+YqUiKYZPgdb6OV+3ZdFD4k=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLK+vOD9uZVb4uv3nHldHjJmJjzhf5Q2x70WmpclWMz7W
+ +QIq+bxjlIWBjEuBlkxRZYluUYFEamrbO/d0WSBmcPKBDKEgYtTACZiycTI8O5dXbIQ18kz2+d/
+ VygRbQh/eI+l8Dr3DPbTzS/t9x94/ZWR4RNX2yHlgn8zhYU2lpdo71SbWh0lLsL4/8tpp88+Mdx
+ +DAA=
+X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
+ fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-When either argument to min_odd() is zero (for example when a DMA device
-reports max_xor or max_pq as 0), val evaluates to 0 and val - 1
-underflows to UINT_MAX.  In dmatest_func(), this sets src->cnt to
-UINT_MAX, which wraps around the (src->cnt + dst->cnt) >= 255 check and
-causes dmatest_alloc_test_data() to pass 0 to kcalloc() and dereference
-ZERO_SIZE_PTR.
+Hi Jelly,
 
-Return 0 from min_odd() when the minimum value is 0, and abort
-dmatest_func() if src->cnt is 0.
+> The AUDSS CRU INFO_AP_IRQC register gates each DMA-350 channel interrupt
+> onto the shared AP GIC line. Manage these gates with an irqchip in the
+> CRU driver, keeping access to CRU registers out of the DMA driver. Mask
+> and unmask the corresponding AP gate through the IRQ core; this controls
+> interrupt delivery, not AP/DSP channel ownership.
+> 
+> The register exposes gate state but no per-channel pending status. Poll
+> each enabled child's DMA handler to check its channel-local status. Use
+> level flow handling so disabled and oneshot-threaded interrupts remain
+> masked, and mark the children as polled because IRQ_NONE is expected
+> when a different channel caused the parent interrupt.
+> 
+> Use a raw regmap lock for the hard-IRQ callbacks and keep the CRU powered
+> while its IRQ resources are in use or being torn down. Quiesce the parent
+> IRQ before runtime suspend and move system sleep handling to noirq.
+> Save and restore the interrupt gates and software reset state with the
+> other CRU context. Dispose of child mappings before removing the domain.
+> 
+> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
 
-Fixes: 8be9e32b310c ("dmatest: adjust invalid module parameters for number of source buffers")
-Closes: https://sashiko.dev/#/bug/linux-ca967586-4fc1-47a3-8616-4a9d21fe7455
-Cc: stable@vger.kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
----
- drivers/dma/dmatest.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+The irqchip driver doesn't belong in the clk subsystem, and it needs to
+go in the irqchip subsystem. You can use the auxilary device like what's
+done for the reset driver today.
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 2ae3469397f3..5f768bb9a29f 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -457,6 +457,9 @@ static unsigned int min_odd(unsigned int x, unsigned int y)
- {
- 	unsigned int val = min(x, y);
- 
-+	if (!val)
-+		return 0;
-+
- 	return val % 2 ? val : val - 1;
- }
- 
-@@ -650,6 +653,9 @@ static int dmatest_func(void *data)
- 	} else
- 		goto err_thread_type;
- 
-+	if (!src->cnt)
-+		goto err_free_coefs;
-+
- 	/* Check if buffer count fits into map count variable (u8) */
- 	if ((src->cnt + dst->cnt) >= 255) {
- 		pr_err("too many buffers (%d of 255 supported)\n",
+Brian
+
 -- 
-2.56.0.567.gdb80ae8cd5-goog
-
+Brian Masney <masneyb@kernel.org>
