@@ -1,78 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794434036;
-	b=rSEQcY03Hl1nDuOp1HlekDMNhUh7tE7DyOdomvWgfWq6PXPH1+QLR6dWFDo3rJeKpbTi
-	 WevKloAZSV6jQIqgakHKEXuV+JuO/kJsplc/arHcvBGQMmICFyv2NOk7Zn5PTFkkIEhQ5
-	 Tp5LE7AZR2R/Ae4nBKnc1opv2+I5stP4tiZ57NmGCIkDAPQqIRAZEd6CT+QxXnkGkTsT2
-	 xTEGHvS17nYiHGuB2BaPLnTZ03+bMLNAQLJLt3p/BQB5QjnWqKzIx6mvVVCp5xm1KMHIa
-	 tZ4rn5diiykh1bF9kg77TXUXZAVW4V5PpVm4BaVUOFSjTselNrBUYx+Zr1ldwFvclHA==
+	t=1794434044;
+	b=eA7VjuQVQoc9WP8TLQiXGrA3K0D9cifqlgqHn3kEu2JDoecO7YoCScJy+S+fW+dAICyq
+	 lTncf6bN8606imna4UZGCA4G4t6tBWvE901JDJ/mu5ip6fbamW+jIBmYHWmQrqIResrN6
+	 84+cu8o54aonynx9mu7bq3H3wRkl+fB2t8U++o1gUIy+olRDeAFjcUJvZ7tFT0V8zqFVz
+	 TVoZameXZjux1VK8NHQxGpO+j+y1sWMIKPBlVGHzSGBGaYffAIpYMcsLgqyodxJntxW5L
+	 4+cMNJvHJpgqedsSJNbSAUAuFufKpHewQL9z23W4IWv6FrI0fJEJc77XW6QrbmpGKZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794434036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794434044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vo+Xid6UcgteTwGX3R58YBsHWjRppW5tyw1bkBxSt4I=;
-	b=E6+iVvcNDBCqFfp/dgbXjW/sEf8U0ULLNC0HB/9u+ETpOITWS2ZhISubGiKyu1Ta62SA
-	 UKGV4JyPp4ZoMLPdSP38ZDs2Q02/0h642epvkzXrQvxG0KF16uDnC09mCedqXHtmu4E3u
-	 zzr8X1/b3kJfUQ9sFQyE9LE76O2n6Ap5j2FYaxa3xhN/Jxh1d4obnpYwrtuZmIxAyOOX9
-	 Sn6kq086w7Ds40gMFxObO1TVdayixHQul8NGHuOd3SxfDajAS7YuhOjHJvtcFQwvIdNsW
-	 vwMO2Z2ZNe2DlGhGztIgAIdKTxe3qLpqtGfCQDErrMJ+2UJ7G/pTT9BrM3S5B1G5/EA==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=hPA+fu9c0eiFI0kD+EAZDiNVDC8pWETQJZNKgYAh3VA=;
+	b=TXH46ayW1ftoFUk1ol+BkkqGKPAvI8aMQkL2y+QFmwluL9u9gMbTHsXC043bQD3KEZyR
+	 s/FTFNfotJ7pnHB5D5HnY3MmSGcvO6oAWo9HoR4S/G/3FAz4yfeAvp8EAYVPsTTrZiyVM
+	 Tnz9h1pC47bl3skiDluf/RHpqY9CC7r/2tIP8Yg1P1vLw6StciQFjGIUnzu0ErutRb5vS
+	 STGF1zh8NU0xM+wc0CGIzdNsa2NKoTwfofSRDY0YEltLzD6Fud6Jxz3q6roBZQGqHjC1O
+	 i8HALVzD5iGD8yOKcRh0/eSdq+YTT75ETMaJ2ktmIE0RBZBnVPdcLSgkNKOQv4qnWCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="iPI/oWpC";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=I6fYCzH9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308CE606A883;
-	Wed, 11 Nov 2026 21:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA9C606A332;
+	Wed, 11 Nov 2026 21:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iPI/oWpC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9C61F00A07;
-	Wed, 11 Nov 2026 21:53:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=I6fYCzH9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F961F00A05;
+	Wed, 11 Nov 2026 21:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794434036;
-	bh=vo+Xid6UcgteTwGX3R58YBsHWjRppW5tyw1bkBxSt4I=;
-	h=From:To:Cc:Subject:Date;
-	b=iPI/oWpCeHnCEMErtUbB2VDRAaWW9J2fj7z9qM9xNObLw+vhYbiTeAAwKI1GUFzpB
-	 8J6tK9NjXMawtWmXJ7EtuvUVZzv8i3Jpo8wL8PB1fsAMjH0l4TLB9N0tWy/8P5qAs1
-	 NTb4kOWKJ9UHTsJy7quNX5jyg9qB1PzdgIaBm78Mui3Pk/VxmwHT9TUjJTvesjDWmH
-	 F1rZ6wO/8t6MTYTfWN4BNEmcCIYAHoqq4cZVBcz5j41IjehzfuTZ8B9YHn4DWdlYn1
-	 oIGezAmdft8/q/HoSW91hLiKYlQpj3zSQDRMHUe/bqnI+HxDaqih3NGGAF6AB5swkP
-	 NchItdGVZuArA==
+	s=k20260515; t=1794434043;
+	bh=hPA+fu9c0eiFI0kD+EAZDiNVDC8pWETQJZNKgYAh3VA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=I6fYCzH9vtquPOYO2/OGhOXQLElzmSJourux0mDbKslwE779M+rDv9rZg2EPmpaB2
+	 +W/+rpyY2B1MY5Ak7oLqSBb5F8LIpPyLqeYLTiASg897wK358FSri8vCHIM6Rzi/In
+	 vyGVqtcZLFp5XPEKHS2MdV1pP3OQC7Bq1Wh1m6KaC83CidrR5kKv0PEinzAAtl1yVF
+	 N3ZQqxdz1Eh1DL6iC+yPeOoUX3KJpbsA19yWzgglHFwn96uk6UvHxH6T802SPx360k
+	 lPr677ptj4jCC2mfKG3Atso2I9joI4ci/RDpBUeepQdbRJGaZ8H+YhCeZNeK4wH6SK
+	 UCoSssM2wiCJA==
 From: Lee Jones <lee@kernel.org>
-To: lee@kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Alex Smith <alex@alex-smith.me.uk>,
-	Andrey Volkov <avolkov@varma-el.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dale Farnsworth <dfarnsworth@mvista.com>,
-	dmaengine@vger.kernel.org,
-	Frank Li <Frank.Li@kernel.org>,
-	Gary R Hook <gary.hook@amd.com>,
-	Grant Likely <grant.likely@secretlab.ca>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Joachim Eastwood <manabian@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mips@vger.kernel.org,
-	Paul Cercueil <paul@crapouillou.net>,
-	Peter Pearse <peter.pearse@arm.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sanjay R Mehta <sanju.mehta@amd.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Sylvain Munaut <tnt@246tNt.com>,
+To: lee@kernel.org,
 	Vinod Koul <vkoul@kernel.org>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
-Subject: [PATCH 00/10] dmaengine: Fix teardown races, resource leaks, and error handling
-Date: Wed, 11 Nov 2026 21:52:38 +0000
-Message-ID: <20261111215349.1983909-1-lee@kernel.org>
+	Frank Li <Frank.Li@kernel.org>,
+	Peter Pearse <peter.pearse@arm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Joachim Eastwood <manabian@gmail.com>,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+Subject: [PATCH 01/10] dmaengine: pl08x: Defer OF DMA controller registration until slave setup
+Date: Wed, 11 Nov 2026 21:52:39 +0000
+Message-ID: <20261111215349.1983909-2-lee@kernel.org>
 X-Mailer: git-send-email 2.56.0.567.gdb80ae8cd5-goog
+In-Reply-To: <20261111215349.1983909-1-lee@kernel.org>
+References: <20261111215349.1983909-1-lee@kernel.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -82,68 +64,82 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-These issues were reported by Sashiko.
+pl08x_of_probe() registers the controller with
+of_dma_controller_register() before pl08x_dma_init_virtual_channels()
+initialises the slave channels list and before
+dma_async_device_register() registers the slave DMA device, and
+pl08x_probe() does not unregister the OF DMA controller if subsequent
+initialisation fails.
 
-Cc: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: Alex Smith <alex@alex-smith.me.uk>
-Cc: Andrey Volkov <avolkov@varma-el.com>
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Dale Farnsworth <dfarnsworth@mvista.com>
-Cc: dmaengine@vger.kernel.org
-Cc: Frank Li <Frank.Li@kernel.org>
-Cc: Gary R Hook <gary.hook@amd.com>
-Cc: Grant Likely <grant.likely@secretlab.ca>
-Cc: Jacky Huang <ychuang3@nuvoton.com>
-Cc: Joachim Eastwood <manabian@gmail.com>
-Cc: Linus Walleij <linusw@kernel.org>
-Cc: linux-amlogic@lists.infradead.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-mips@vger.kernel.org
-Cc: Paul Cercueil <paul@crapouillou.net>
-Cc: Peter Pearse <peter.pearse@arm.com>
-Cc: Philipp Stanner <pstanner@redhat.com>
-Cc: Raju Rangoju <Raju.Rangoju@amd.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Sanjay R Mehta <sanju.mehta@amd.com>
-Cc: Shan-Chun Hung <schung@nuvoton.com>
-Cc: Sylvain Munaut <tnt@246tNt.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Cc: Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>
+Move of_dma_controller_register() after dma_async_device_register() for
+the slave device and unwind slave device registration if OF controller
+registration fails.
 
-Lee Jones (10):
-  dmaengine: pl08x: Defer OF DMA controller registration until slave
-    setup
-  dmaengine: ae4dma: Unregister DMA engine in ae4_pci_remove()
-  dmaengine: ptdma: Unmap descriptor in pt_do_cleanup()
-  dmaengine: ptdma: Remove completed descriptor under vc.lock in
-    pt_cmd_callback_work()
-  dmaengine: amlogic: Destroy free_wq after devres DMA device
-    unregistration
-  dmaengine: arm-dma350: Query dma_cookie_status() under vc.lock in
-    d350_tx_status()
-  dmaengine: bestcomm: Defer publishing bcom_eng until initialisation
-    completes
-  dmaengine: bestcomm: Check rh_create() return value in
-    bcom_sram_init()
-  dmaengine: jz4780: Fix descriptor cleanup on hwdesc setup failure
-  dmaengine: dmatest: Avoid unsigned underflow in min_odd()
+Fixes: aa4734da6674 ("dmaengine: pl08x: support dt channel assignment")
+Closes: https://sashiko.dev/#/bug/linux-4e233fb9-3b0c-4442-b601-c6706c9f5aba
+Cc: stable@vger.kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+---
+ drivers/dma/amba-pl08x.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
- drivers/dma/amba-pl08x.c                | 23 +++++++++
- drivers/dma/amd/ae4dma/ae4dma-pci.c     |  1 +
- drivers/dma/amd/ptdma/ptdma-dmaengine.c |  4 +-
- drivers/dma/amlogic-dma.c               |  3 +-
- drivers/dma/arm-dma350.c                |  3 +-
- drivers/dma/bestcomm/bestcomm.c         | 69 +++++++++++++------------
- drivers/dma/bestcomm/sram.c             |  6 +++
- drivers/dma/dma-jz4780.c                |  5 +-
- drivers/dma/dmatest.c                   |  6 +++
- 9 files changed, 80 insertions(+), 40 deletions(-)
-
+diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+index 543c2eb8cfa8..d8441e338502 100644
+--- a/drivers/dma/amba-pl08x.c
++++ b/drivers/dma/amba-pl08x.c
+@@ -2678,6 +2678,12 @@ static int pl08x_of_probe(struct amba_device *adev,
+ 
+ 	pl08x->pd = pd;
+ 
++	return 0;
++}
++
++static int pl08x_of_register(struct amba_device *adev,
++			     struct pl08x_driver_data *pl08x)
++{
+ 	return of_dma_controller_register(adev->dev.of_node, pl08x_of_xlate,
+ 					  pl08x);
+ }
+@@ -2688,6 +2694,12 @@ static inline int pl08x_of_probe(struct amba_device *adev,
+ {
+ 	return -EINVAL;
+ }
++
++static inline int pl08x_of_register(struct amba_device *adev,
++				    struct pl08x_driver_data *pl08x)
++{
++	return 0;
++}
+ #endif
+ 
+ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
+@@ -2944,6 +2956,15 @@ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
+ 			__func__, ret);
+ 			goto out_no_slave_reg;
+ 		}
++		if (np) {
++			ret = pl08x_of_register(adev, pl08x);
++			if (ret) {
++				dev_warn(&pl08x->adev->dev,
++					 "%s failed to register OF DMA controller - %d\n",
++					 __func__, ret);
++				goto out_no_of_dma;
++			}
++		}
+ 	}
+ 
+ 	amba_set_drvdata(adev, pl08x);
+@@ -2954,6 +2975,8 @@ static int pl08x_probe(struct amba_device *adev, const struct amba_id *id)
+ 
+ 	return 0;
+ 
++out_no_of_dma:
++	dma_async_device_unregister(&pl08x->slave);
+ out_no_slave_reg:
+ 	dma_async_device_unregister(&pl08x->memcpy);
+ out_no_memcpy_reg:
 -- 
 2.56.0.567.gdb80ae8cd5-goog
 
