@@ -1,56 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794413878;
-	b=4q4rg8kU8kyjxH3SGiLFLvjffrh7Zij1KRfXz2DB+r5aoUUH1lJPI1mBp0i4R9zpgRiV
-	 +O1vMPAIG6bFVgDkRCHy3zfvaMjK/nUs+FpO/EOMlVsot+JRW2mgIY8X+SbtEHbMVDaVY
-	 XnEzS9prH+kC9yyS65yxDA/7hrohb2+95LQ+KqYYDAmHo9/iW/cB2BzPcGV1l3fnYlRdW
-	 i+J+aoh1vffl8atKHbsu0mUjyVqximY3jZaf8mbU2MQOwAmfgWWUt9uZ71HwdrdGWjK8b
-	 m5Ru81gT9LhRF97IyEMABtNj9202hlB7UQySvrncKB+8R4bENCmdMXbXBUt165GbFLA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794413878;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=BJpPLIbmeucN+vIkxcj/0mgsBZYsQdTQIzOJjcy5+4s=;
-	b=bUfjjf0rhE9aPQmGfwXIF58dZaVOZk/sDdf2OJ5Qr1JkgOgd5Lm9Hd7DpnFC4nZcaiv4
-	 812dRS4oIxe7n6InH8l0D5er9Mv72v8ZUGQuaZAUbl17yLZP8ATE4hzc0ogPMlOM9sKep
-	 SksRgSG0R7JE+/XBvmR4/y6ALSjkFhlX4XoBPIrSVDaJaDOojbCrBWugQ0/TW7y999eeu
-	 oGNFISLhhJMrwvzUFmy+VERpW2fGB2vkFuF+l4egG9purpaG3MMLt6x14XBqOYuAoHfIl
-	 epRLIcRpRD0vcJKobS/rUuyRt2wv6VFGOvMxpVPJBussxIHbDW27XI7kUkwW064axGg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b1mfb8Y6;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794418067;
+	b=U0uMbtS0Lvxay2zP0RFyC+s4g9EoxQaAMZkIxB21cKRDdGEtbNNt+WWANP4rcS/u4tvT
+	 +4UiT1MRge5dP3nOqZiSFTcrUSWWxXHthhnBEWUPKr0vaIXQInMDuqIp1gqokY5XL5B4+
+	 bdtaKG5O6eRqMBsGt2dSachnK2gs8ZbHlfHwtY+l4Vwu1KkTKy6Ed9ISc6F4yQISIN5w3
+	 hbTv/Dt6W/c3HC9pgnY6PNIsu/kpJHIo4qtO/xd2Af6FD7ZvvTiy0h1p7Ebz4GID712pX
+	 EzAcjhUeAvtEiNub65CKJ+1xQEUwPo3EtJZAfVWVOjRrTJQnuuhikb8NBm67i8WpfPg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794418067;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=03mMARXF/20tAUZEo6HisWHoJiJeJy9dIxh8he9h454=;
+	b=JhQhHTMHnE7STRppwxFqdAChfIVs4u7lGriEcUUE8/mF9Nl1Ajmf3SMLV/mKS2tyL/TD
+	 qoBMphNeM182rZTX48jMfuLUNKpcna6HKgqYelivelOs+rPIUZVZaJl0YHsjSfevG96is
+	 C5OgTwTJUe595Ci2s4vcJUWLWfhkYUn8EtTeFKxECljS3R8o71swMVXgMOtq6HaSbt5Gq
+	 LG/AD/Umb9w5DBLSAYHi+ARSeZhSIJ262yLqpPB/wjuQ2aOEJ3TqDNzhjUJPhN5sAzGmn
+	 leMQLw3oSHxTNWF1BIqJfzf9eAyhIE8o0IrcC3plXZk0cTZLtWkPLHQPTNcq3JJRL7w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=V731rRDQ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.12
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012012.outbound.protection.outlook.com [52.101.66.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095A606A321
-	for <dmaengine@vger.kernel.org>; Wed, 11 Nov 2026 16:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9227606A32A;
+	Wed, 11 Nov 2026 17:27:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9227606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b1mfb8Y6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226531F00A05;
-	Wed, 11 Nov 2026 16:17:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794413878;
-	bh=BJpPLIbmeucN+vIkxcj/0mgsBZYsQdTQIzOJjcy5+4s=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=b1mfb8Y6509YLR04MzWJUQGCtBpzcyJw3ndi3uIil7T+O2erOGnTztUuqq4jM5BJk
-	 S/ROqZ6FjYFjWByZMkPqnHpySLQTThTKHkRXziHwwb2ViQOW1SAqwGgET3UQb6XtXU
-	 6xACxu74JqMVWIN0DP/84ODkrdbP1TQN84ZIwxTvH51i2vh2oEjfuTj5mpGlgNWPUD
-	 tEzBtRc26H9HXAfoujJNGLzArNz2j677+uv1VJDt2VAcRIb/h1XJYpUz+L9ejhpm7g
-	 AZvwY4hqkqP1WooccOF+p1sF/mxAQCifczVTtVIdmwwdaopKommFK9f2UiqJzLWIPj
-	 kQAcqRcE0JV+A==
-Message-ID: <sashiko-outbox-209270@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: pl330: report a failed transfer through
- callback_result
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Sungho Kim" <sungho.kim@furiosa.ai>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261111152109.1551738-1-sungho.kim@furiosa.ai>
-References: <20261111152109.1551738-1-sungho.kim@furiosa.ai>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 11 Nov 2026 16:17:57 +0000
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=V731rRDQ
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EbvCmEssOfd7xTDf1kFiQ2LeCFT7RK1DHbohSbIpuX4+/cYZOT/Zv67dzNNFOd+OLplmoBcVzTdIILICLG+ZwGkHtJSMUZUGMxaYpzN8+Hrq/j2+vpfobzT1VemNJF599L37T/sDhE0v0N6ruquNc3fhmoh8hiScHsfyNSZA5bG1cJ0Aa1gKCMtLamN1E947MYMHTZMvPPZ9rzo22XyDAoEngwMUNHHzlMWz+39izLQEZnwkWB/ppeP087+HGfOJgeiMHlBqvYhaSyRcLLMFghVo0HHurGE5oSD3k2yqlSOs8hTFYd6i85Kr8nT2lgGilJJ7UEkNHckE65hU3VIGrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=03mMARXF/20tAUZEo6HisWHoJiJeJy9dIxh8he9h454=;
+ b=uSe5u9JNEGucIenXLZcsqZV04OmSe+P1j1gBC/xT0Qfq0vIJT5jpVfkruskMetS5h0RldY01Vi5FtKVj3S2acjahzYtr6HVkz/ajtbuvcB/Jw1RGYadWde/TTil0H1C5iwtgpR9ALhnqWgovGfe0hkw7KE1gOUpftvELsEeSgUOmiyFU+uEf4OMlR8CQKUHqxxfCJkowTwFeh5n6Tsxk1mVUnaqoLP7e8k9X3eXVrKg1b5UgX/clsqbfPCiDbcsj7OSFL+PKiOY5wYN8A0cWxQAaP+1wRDe8TecXV+UfuRjCNq4TbeYKn+j/RNC7fACKuUkk5YvTElyjL0meC1R8jA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=03mMARXF/20tAUZEo6HisWHoJiJeJy9dIxh8he9h454=;
+ b=V731rRDQVcqalewnDhrZlZZHgGHSrfZpYOQOjdeBtwXZfmyh1Stikt5IjPfeavNf7F48o2jslx2et8xxRaKcsyhGopIeDi4x7SiHaR+B06T0JMJsAh34TG/GWeV1kYVNmzagUhcXvI54KipCcxjrlhjuXy+OyZCu6ofXCDvlLUlJUqV9Bgz+CYFqx7ft1ApvSuM9ewFIj4121ikuBKIwmrkO2NaMXmqPY3dI9M/f+hn8Ptyx4aKMi0ybBNX8/s1E14ZrwECg0bmXn/ufeXN9Hl9igMaiwD1BpCN9pPpek3cYtNSUXSOvZvjprUlxLiOLX4cZB9UhkaNhajLbA21doA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by DBBPR04MB7882.eurprd04.prod.outlook.com (2603:10a6:10:1e7::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Wed, 11 Nov
+ 2026 17:27:43 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.007; Wed, 11 Nov 2026
+ 17:27:43 +0000
+Date: Wed, 11 Nov 2026 11:27:31 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
+To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
+	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH v5 1/7] dmaengine: fsl-edma: unregister channels before
+ vchan cleanup
+Message-ID: <avSlg1SXLBBF9bzZ@SMW015318>
+References: <20261111-edma-iommu-v3-v5-0-2537cebe6ca2@nxp.com>
+ <20261111-edma-iommu-v3-v5-1-2537cebe6ca2@nxp.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261111-edma-iommu-v3-v5-1-2537cebe6ca2@nxp.com>
+X-ClientProxiedBy: DS7PR03CA0065.namprd03.prod.outlook.com
+ (2603:10b6:5:3bb::10) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,201 +111,126 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DBBPR04MB7882:EE_
+X-MS-Office365-Filtering-Correlation-Id: beb61bb0-e235-4ae6-9ba8-08df40191847
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|7416014|376014|366016|23010399003|1800799024|22082099003|18002099003|261009223027099003|56012099006|4143699003|11063799006|261028144727099003|261102123227099003|261021121427099003|261026140227099003|261021123027099003|261022105027099003|260925021911599003|260925022911599003|260925021311599003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	sOpQEEdxo0PvzrM5XxyjM7gGNehxDGXg9csWpc+/jCxGCcbwzVHG2jLf8EMJTTSTHLFpAakPgEstwKLKsh2wz9qICSUETR4dA0TMscsLpps9EyNRttLkNXhD5cfaLAYA1j3VD6IfwOEZ4/lr85aBXIiNOkAL4NlV5anPN+S49h0lyjdeM/z0lZ7rWFG+U/pSS5TILYkGJiLkYbDU3RJuG5iSvPAL3Z5z1Y/kWu1WNhB7NowOnEX4C3m97ODvQIe49lk5+td+yfXuv/0XUrEjCJS52kndesGhw2OCo0zhpuTws5zijrcOiD8+HUKiC9kVn4LyJCdeAMyahpfLenClW+czs/fioFC6H8i0rqRPvNUEa7Rq3ZmTfmq8MRJ6IaStkhxz6r9t77Jlhl2ZQXnhL7RtnfnZtxiVeWptE6FDKzrUxRcR2ysT+JcGrhcjIzUBxmxezH0l1Qk7xe+pWThxj2XSNOGFoOOFk5MUigFYiY8WML1zcHcyphfAq7m/HHKqWEBRnNTN0OHfxqSllA14JTz+o7X7t9619p76yxpOlsJkxnrvF6h+fFMHue4x/AzaZ1CGbjp09l+jXT29KiHB5dRvWKfmt0QjWRspeeiEc+rTbWcG7Rs3WS+11YU8mpJyUyTXnviF0V4OB5FS0zRJ9D6h9U7RESabdFlFTeNDy8c=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(7416014)(376014)(366016)(23010399003)(1800799024)(22082099003)(18002099003)(261009223027099003)(56012099006)(4143699003)(11063799006)(261028144727099003)(261102123227099003)(261021121427099003)(261026140227099003)(261021123027099003)(261022105027099003)(260925021911599003)(260925022911599003)(260925021311599003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?A/OhqhAC7byzWTHV9UadXb44hcvUmorkneMhj3ACJUnX+dgx2czRfP1zV+55?=
+ =?us-ascii?Q?ItUpn5lEX1zIH2eYA7eSmcHHyX4RF2tky6m1D7oNe2SmY8QZBCN+1PTUkvEe?=
+ =?us-ascii?Q?AuaIbQOK7NQpaJEpCMvmcSeYlRJmtRfVJ/YTN29k6cNsPCUXafR2FH/lmSyG?=
+ =?us-ascii?Q?3WWmEUvyT33IEAskSRDKtKQwe2w5EnWUx4eMboItqeEVCFv49kdbcttplTfx?=
+ =?us-ascii?Q?/fsnw5GipTkf10atIuRI39S8d8qKNcl4rEI90fmoI0AI8FJ4zq/5hnHDAahl?=
+ =?us-ascii?Q?aK0I8KFytHzvVPD6mYsCBTTSypuQrkgZsXc+K+kipnguxu7BVd+5NG7U0X9k?=
+ =?us-ascii?Q?Plcr/ArQaM4R3tFxNIxtbUJiC5tRwTuwjIrJ1N8gfA1kvgciXKc7CF4Mr9BH?=
+ =?us-ascii?Q?UVGikGrFGFyvlE+qNvbnx2vkOp57tIG4pXQXRuQ0ma2e8IVyDv+mazgzsX8T?=
+ =?us-ascii?Q?SZrtYkjcEMnRxns1PiDfYjClgKi7aW+fZ6w95iiG/LrDVPxqQJQPINdV2Rnb?=
+ =?us-ascii?Q?MBAvRo/49TV1+e5KDNSy4RZ577akZ8U9fdaU0kMw+lUAqHOtwLDgH+EJNE06?=
+ =?us-ascii?Q?5IKki5NhM15pA6xynXDQD5IXv+A0rpE+beGU/ATzLvbj9kpzFlxQJRtGKAS3?=
+ =?us-ascii?Q?dRPgICG3oR0wDUOLnRK1iSpiuuXiIlvomvKfBbQAjmdOt7vdbdbAnobamF4I?=
+ =?us-ascii?Q?GYGJSapn5lvLjJb9Z6KdwvkfQukNkG38oKvm5icfZXLBNlkini/BDWKLc5ig?=
+ =?us-ascii?Q?Af9n03QUEPx12v2GsYybmHGXpDWUvst/X0p2ZYMCYDi7sU081p6GoG838Rva?=
+ =?us-ascii?Q?70iVA3CbdXNYzyym/guq1/29jgzQStHoM7KheK91aagED3A5/dmiNLmP650U?=
+ =?us-ascii?Q?/wJTaMhK5qQ7GP5YYYyCDK98y6BpHerz5V/odCntpTO310CY8sLpC8Rfibx6?=
+ =?us-ascii?Q?oH3DzH1r9Vy27XFkcvvdxvnqGdVEW5VI1cdNRKJko93tGWou43Y3Q+RJOMRM?=
+ =?us-ascii?Q?anzuoi8dxaVBN/5AEyyTzILdwH03bEfPLlu18A5axhvfeBhALs9r/qi4km39?=
+ =?us-ascii?Q?YA8FMCn85pM6U7SFcAapB0oizqUq5dcqB8RMdH+ISqJK8BuPWRELi825Mr2C?=
+ =?us-ascii?Q?4fZCHVhxOX7EVyqiyRAnwnPvyFH3nmu4aeDQCJ/4yrTqRL7SA/t/rmmaFLlb?=
+ =?us-ascii?Q?Z7RnZ8ActdrKfy6y3XA+gK6R1XgLwvPbNSHUOio3NTSy1D6eDfcZYd8Tchtf?=
+ =?us-ascii?Q?CnlcYglmpow3QAbm8MSH9PYhVfeo7OItgRuked+2Hj/LNhZNDs9WCjM8/P23?=
+ =?us-ascii?Q?6Wry1p8LEjPVGJXdn7Ld0j4X9kfcWACMRl+VaU0mRIA8U8fTBS+Qu5NxmUpP?=
+ =?us-ascii?Q?eQwtcBdS3yBm1KKTcVQMqMhAK/SvbUVzlkSySQeDYalxfB4BVTQeuzdqNT1U?=
+ =?us-ascii?Q?qoxyWQ4Km5PtyixJ7fBeWYngIrrnHSFx3MoWWzW9xEkOkRSJJ+qEuqKH4+dI?=
+ =?us-ascii?Q?BsJBCxJ+lCgVMrAV/5ODIYAY8jJXOlCjGZ4yjBw4M2U+WwH3MfpBCptMIfZO?=
+ =?us-ascii?Q?KJsFaBNz+jcdEqODxI7Bcnlg+0zlvEnwkhpqpYv1IhbURGaylRIAswlcoc2B?=
+ =?us-ascii?Q?UrEYqv645iWWuFlTOKMfB2Q9QpjCrkr21/fTeAKgqIRuRxsmolGUpKL2H4Hs?=
+ =?us-ascii?Q?x0K0q/7EJctYQlLKhDqWqYQAPd2X0jb0y3v9FgN1jNGXaYbA1AITTONVq1z4?=
+ =?us-ascii?Q?WuGfFTXj4RN2IhjVkV832ALBmRWu9wD9ihjwD9KIEY954kkGyVoy?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: beb61bb0-e235-4ae6-9ba8-08df40191847
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2026 17:27:43.7510
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3B3MtJdU/IVibSPpC3EYisEGEKgLAhgP2NjNKn4IGWW5ptd1t6JM+WWXQLUDciGxF5EcQ0eexpzoCGsjjarwHOeK98pP54X4C42RO+KlbXqlU+XVp/2l4gcZJJ73VRuK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7882
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] dmaengine: pl330: out-of-order completion in fill_queue()
-  corrupts pch->result
-It also noticed 2 related pre-existing issues this patch does not
-introduce:
-- [High] dmaengine: pl330: synchronous pl330_tasklet() call in
-  pl330_issue_pending() [1]
-- [Critical] dmaengine: pl330: desc_pool list corruption in
-  pl330_terminate_all() [2]
---
+On Wed, Nov 11, 2026 at 09:47:29PM +0800, Peng Fan (OSS) wrote:
+> From: Peng Fan <peng.fan@nxp.com>
+>
+> Since commit 4035726a6b72 ("dmaengine: fsl-edma: Use managed API
+> dmaenginem_async_device_register()"), dma_async_device_unregister() runs
+> as a devres action after fsl_edma_remove(). However, fsl_edma_remove()
+> still calls fsl_edma_cleanup_vchan() first, which removes every channel
+> from dma_dev.channels.  When the devres action later runs,
+> dma_async_device_unregister() sees an empty channel list and never
+> unregisters the channel devices. They remain visible in /sys/class/dma.
+>
+> Keep the vchan cleanup, but register it as a devres action before
+> dmaenginem_async_device_register(). Devres actions run in reverse
+> order, so the DMA channels are unregistered first and the vchan list is
+> cleaned up afterwards. Remove the premature cleanup call from
+> fsl_edma_remove().
+>
+> Fixes: 4035726a6b72 ("dmaengine: fsl-edma: Use managed API dmaenginem_async_device_register()")
+> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+> ---
 
-commit 5e7b59c03f80710bfb7ee7db9e4f312f02ac2fb2
-Author: Sungho Kim <sungho.kim@furiosa.ai>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-dmaengine: pl330: report a failed transfer through callback_result
-
-This commit records descriptor transfer failures in the PL330 driver and
-reports DMA_TRANS_ABORTED through callback_result when the last descriptor
-of a transaction completes.
-
-> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-> index 977a9fde80adb..72e83dfdcecbb 100644
-> --- a/drivers/dma/pl330.c
-> +++ b/drivers/dma/pl330.c
-
-[ ... ]
-
-> @@ -2059,6 +2069,7 @@ static inline void fill_queue(struct dma_pl330_chan=
- *pch)
->  		} else {
->  			/* Unacceptable request */
->  			desc->status =3D DONE;
-> +			desc->result =3D DMA_TRANS_ABORTED;
->  			dev_err(pch->dmac->ddma.dev, "%s:%d Bad Desc(%d)\n",
->  					__func__, __LINE__, desc->txd.cookie);
->  			tasklet_schedule(&pch->task);
-> @@ -2101,12 +2112,26 @@ static void pl330_tasklet(struct tasklet_struct *=
-t)
-> =20
->  	while (!list_empty(&pch->completed_list)) {
->  		struct dmaengine_desc_callback cb;
-> +		struct dmaengine_result res =3D { .residue =3D 0 };
-> =20
->  		desc =3D list_first_entry(&pch->completed_list,
->  					struct dma_pl330_desc, node);
-> =20
->  		dmaengine_desc_get_callback(&desc->txd, &cb);
-> =20
-> +		/*
-> +		 * callback_result is only on the last descriptor of a transaction
-> +		 * (tx_submit copies just callback to the periods of a cyclic
-> +		 * one), so a failure of an earlier descriptor is held on the
-> +		 * channel until the last one completes.
-> +		 */
-> +		if (pch->result =3D=3D DMA_TRANS_NOERROR)
-> +			pch->result =3D desc->result;
-> +		res.result =3D pch->result;
-> +		if (desc->last)
-> +			pch->result =3D DMA_TRANS_NOERROR;
-> +		desc->result =3D DMA_TRANS_NOERROR;
-
-[Severity: Medium]
-Can an out-of-order failure in fill_queue() misattribute pch->result across
-descriptors?
-
-When pl330_submit_req() fails with an error other than -EAGAIN (for example
--ENOMEM when a request exceeds the microcode buffer), fill_queue() marks
-that descriptor DONE with DMA_TRANS_ABORTED while earlier descriptors on
-pch->work_list are still BUSY in the hardware thread:
-
-drivers/dma/pl330.c:pl330_tasklet() {
-	list_for_each_entry_safe(desc, _dt, &pch->work_list, node)
-		if (desc->status =3D=3D DONE) {
-			if (!pch->cyclic)
-				dma_cookie_complete(&desc->txd);
-			list_move_tail(&desc->node, &pch->completed_list);
-		}
-}
-
-pl330_tasklet() moves DONE descriptors to pch->completed_list ahead of
-earlier BUSY descriptors.  If an earlier transaction's last descriptor is
-still BUSY when the first descriptor of the next transaction is rejected by
-fill_queue(), the rejected descriptor completes first and sets
-pch->result =3D DMA_TRANS_ABORTED, which is then reported and cleared when
-the earlier transaction finishes without error.  Similarly, within a
-multi-descriptor transaction, if the last descriptor is rejected while an
-earlier descriptor is BUSY, callback_result runs before the hardware stops
-and resets pch->result to DMA_TRANS_NOERROR; if the in-flight descriptor
-later faults, pch->result is left stuck at DMA_TRANS_ABORTED for the next
-transaction.
-
->  		if (pch->cyclic) {
->  			desc->status =3D PREP;
->  			list_move_tail(&desc->node, &pch->work_list);
-> @@ -2126,7 +2151,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
-> =20
->  		if (dmaengine_desc_callback_valid(&cb)) {
->  			spin_unlock_irqrestore(&pch->lock, flags);
-> -			dmaengine_desc_callback_invoke(&cb, NULL);
-> +			dmaengine_desc_callback_invoke(&cb, &res);
->  			spin_lock_irqsave(&pch->lock, flags);
->  		}
->  	}
-
-[Severity: High]
-This problem wasn't introduced by this patch, but pl330_issue_pending()
-calls pl330_tasklet() directly in the caller's context [1], running
-completion callbacks synchronously inside dma_async_issue_pending():
-
-drivers/dma/pl330.c:pl330_issue_pending() {
-	...
-	list_splice_tail_init(&pch->submitted_list, &pch->work_list);
-	spin_unlock_irqrestore(&pch->lock, flags);
-
-	pl330_tasklet(&pch->task);
-}
-
-If a descriptor on pch->work_list was marked DONE by dma_pl330_rqcb() or
-rejected by fill_queue(), a client calling dma_async_issue_pending() under
-its own lock deadlocks when its completion callback re-acquires that lock:
-
-  spin_lock(&client->lock)
-  <hardirq>
-    dma_pl330_rqcb()
-      desc->status =3D DONE
-      tasklet_schedule(&pch->task)
-  dma_async_issue_pending()
-    pl330_issue_pending()
-      pl330_tasklet(&pch->task)
-        dmaengine_desc_callback_invoke()
-          client_complete_cb()
-            spin_lock(&client->lock)  <-- deadlock
-
-The direct pl330_tasklet() call also races with the scheduled tasklet when
-pch->work_list becomes empty, allowing both contexts to set
-power_down =3D true and call pm_runtime_put_autosuspend(), underflowing the
-controller's runtime PM usage counter.
-
-[ ... ]
-
-> @@ -2295,6 +2321,7 @@ static int pl330_terminate_all(struct dma_chan *cha=
-n)
-> =20
->  	power_down =3D pch->active;
->  	pch->active =3D false;
-> +	pch->result =3D DMA_TRANS_NOERROR;
-> =20
->  	/* Mark all desc done */
->  	list_for_each_entry(desc, &pch->submitted_list, node) {
-
-[Severity: Critical]
-This problem wasn't introduced by this patch, but pl330_terminate_all() and
-pl330_free_chan_resources() splice descriptors back into pl330->desc_pool
-without holding pl330->pool_lock [2]:
-
-drivers/dma/pl330.c:pl330_terminate_all() {
-	...
-	list_splice_tail_init(&pch->submitted_list, &pl330->desc_pool);
-	list_splice_tail_init(&pch->work_list, &pl330->desc_pool);
-	list_splice_tail_init(&pch->completed_list, &pl330->desc_pool);
-	spin_unlock_irqrestore(&pch->lock, flags);
-	...
-}
-
-drivers/dma/pl330.c:pl330_free_chan_resources() {
-	...
-	spin_lock_irqsave(&pl330->lock, flags);
-	...
-	if (pch->cyclic)
-		list_splice_tail_init(&pch->work_list, &pch->dmac->desc_pool);
-
-	spin_unlock_irqrestore(&pl330->lock, flags);
-	...
-}
-
-Can this corrupt pl330->desc_pool when another channel concurrently
-allocates or frees descriptors under pl330->pool_lock via pluck_desc() or
-add_desc()?
-
-CPU0                              CPU1
-pl330_terminate_all()             pl330_get_desc()
-  spin_lock_irqsave(&pch->lock)     pluck_desc(&pl330->desc_pool,
-                                               &pl330->pool_lock)
-                                      spin_lock_irqsave(&pl330->pool_lock)
-  list_splice_tail_init(...,          list_del_init(&desc->node)
-    &pl330->desc_pool)                  <-- concurrent list mutation
-                                      spin_unlock_irqrestore(&pl330->pool_l=
-ock)
-  spin_unlock_irqrestore(&pch->lock)
-
-[1] https://sashiko.dev/#/bug/linux-130356b0-b34d-4ec8-b462-9a2ed651bcf4
-[2] https://sashiko.dev/#/bug/linux-ecddac4a-242e-4dfb-895d-8ed9e5e87844
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111152109.1551=
-738-1-sungho.kim@furiosa.ai?part=3D1
+>  drivers/dma/fsl-edma-main.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+> index da5139911488..7f82dcb7831d 100644
+> --- a/drivers/dma/fsl-edma-main.c
+> +++ b/drivers/dma/fsl-edma-main.c
+> @@ -31,6 +31,11 @@ static void fsl_edma_synchronize(struct dma_chan *chan)
+>  	vchan_synchronize(&fsl_chan->vchan);
+>  }
+>
+> +static void fsl_edma_cleanup_vchan_action(void *data)
+> +{
+> +	fsl_edma_cleanup_vchan(data);
+> +}
+> +
+>  static irqreturn_t fsl_edma_tx_handler(int irq, void *dev_id)
+>  {
+>  	struct fsl_edma_engine *fsl_edma = dev_id;
+> @@ -881,6 +886,12 @@ static int fsl_edma_probe(struct platform_device *pdev)
+>
+>  	platform_set_drvdata(pdev, fsl_edma);
+>
+> +	ret = devm_add_action_or_reset(&pdev->dev,
+> +				       fsl_edma_cleanup_vchan_action,
+> +				       &fsl_edma->dma_dev);
+> +	if (ret)
+> +		return ret;
+> +
+>  	ret = dmaenginem_async_device_register(&fsl_edma->dma_dev);
+>  	if (ret)
+>  		return dev_err_probe(&pdev->dev, ret,
+> @@ -905,7 +916,6 @@ static void fsl_edma_remove(struct platform_device *pdev)
+>  	struct fsl_edma_engine *fsl_edma = platform_get_drvdata(pdev);
+>
+>  	fsl_edma_irq_exit(pdev, fsl_edma);
+> -	fsl_edma_cleanup_vchan(&fsl_edma->dma_dev);
+>  }
+>
+>  static int fsl_edma_suspend_late(struct device *dev)
+>
+> --
+> 2.34.1
+>
