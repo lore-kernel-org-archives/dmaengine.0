@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794434063;
-	b=efwrTfcUqe3RmRMmdU3u2emCROBghsW6QtUtqQ8ogGLQlwv4McpgNW9FcFYbH9zp6Zrj
-	 pJgZmIkTW7ku/GuSqdDibE9MJNvkEi2IUp2YuLrkBc1Xy/7XxrMD8ZyMAuG4lghrL0nHd
-	 oUmYo5ehp7z1SklS0FIiHa1Lymg4DgWH+1ICSOSPrcrnALnjf+97OOvm5afIJiSSE+3FX
-	 xCA+mro/olTSEBl04iKBVxAmLQRTapHYRINHQp4xuj65jqrbdwHHawtH/D/qLLE3BVVfu
-	 PGyViEB2FmLdZ2KBNDYAaDn1RxcBK+hp2XEBgYUtddv3zrEuPaDVLPw7knQCm8cazfA==
+	t=1794434070;
+	b=1XQiYdxgjACmV4dVG5/fdo1gdR4KqGolPjGVOU2VL/nfpmm0bwdROBNDXGHHdjoOFsRd
+	 VRs3lVzjR0SZKj0OUcq5OPeFdyVYiku974zw0qZbhxj0KRNUd0U/6GXf+iiU2wBRO9iv6
+	 Z2jx4rx8XdBCi3NXnb6MItZF88E0KFZV36XUoYXWoanhxG9JT3de1X0AIZwQoI3QVAk9p
+	 XC94NQBsS4XUYGYRtl592CdHYz4Vu2/SaSVtp1y9RVrXczMeVCeCb0x2QnJllAOlWBiM8
+	 Kjjt+ysTzAzWRNRJ2dgRpOyUKGXnTNKmYJ94qUSXj062uVy1qXgeTEdu6jpygZ3B0Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794434063;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794434070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ddmwTTE4OrnrhabR1xw8Jv7Wv16fLWDKLghb2wkDmiM=;
-	b=WKgdyVfWg9/DXz6YvlYgB/0is876ja2GS6v8FdGod7Sd3o6WQ0z5qIhAyrVpcZiUVVsh
-	 G2gvl2JIPa25/hDGD2J94YaFnFi4FH/ItHElqZoeTwMR76Ivy1ZXfyXZiHAsIDtl/ErLz
-	 bbKEF4h6VHI/e9QAFKUcbwszYCYOx5OFvWVHpbOkPpG+p0rRtemjuaVDR+tcNXbAROVX9
-	 2W/DKVIqKkNL+sHzU8xq6HJQKv43nhR8gSHMqRkXwV+U+z3Ti70+EMtCUrdd+M0P8glx3
-	 WnVvE9il+psIhF4jtAGyLxlQBCzJKan0FNUsFKEtNVdmLgZT1bartJR5jzzL1w14IQg==
+	bh=qbbVSSZ18QduMW9a7kRjl8YW+ZLWyejC/m6DNHJKzrY=;
+	b=MkGLVR8J1F63/xLl9EGdWLNNsAQNPYHDewxIOEvkyDa0ztA/oxV68U53w+V+GbM7Ucfh
+	 jmFKDQPQNxz9A0aXyn4gF0gW4BxkSLkztzJTmVAqgJqllJAXyiv75lRPJQGb9mNWDTv6L
+	 eiaJm09bTadlJyild5v9U3H0JGYQOV2g2FA5e6gGL8gT/MLFB/iUppEbrGXZD7ExzFoGl
+	 v0eZIFlxb8b1aUBjvMEc6vhpzBbPBAHZtxPI8REcF4yFYBqzSZjhYBBD2yWcFLLsoSmXN
+	 f48pLIaGe42Qr30ACo00pJh3lVOxaoM4shnCMSzcCitL72QwZfeozHERggEfiJHaClg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YTlG7oHo;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GuJcArqt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F78B606A332;
-	Wed, 11 Nov 2026 21:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C4F606A336;
+	Wed, 11 Nov 2026 21:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YTlG7oHo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA87E1F00ACC;
-	Wed, 11 Nov 2026 21:54:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GuJcArqt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7F91F00A05;
+	Wed, 11 Nov 2026 21:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794434063;
-	bh=ddmwTTE4OrnrhabR1xw8Jv7Wv16fLWDKLghb2wkDmiM=;
+	s=k20260515; t=1794434069;
+	bh=qbbVSSZ18QduMW9a7kRjl8YW+ZLWyejC/m6DNHJKzrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTlG7oHoXHKdOz+rtjvkx5K6EqiBq6f+zu8H6ytM0ieezyYwzEg504QkpCWzigi1+
-	 dT2vl+rMbGEMWIMAO+LcOSxfra4Bemf1L8LpeIfX3NBnLAJm4DtdJKgd+8SLqBFNcW
-	 JjSE16zMoYqlv/KU9XN3GNaEv+z4DCnBlB2LxfIcrIPYjXC9zndvpJdXZYB+UqTWX+
-	 MMnqn/pqWR1s+/cUkDqQgUtegR93i0CUg+HzQ/+13cML8RO0/H6+AgFI36KOSdLddC
-	 0RLpgQiSwzGTwiY0eWuXO5T3MJF9gvBHcGWp2XGOgoZBvpnPjjSQa7/xXIGfuwqN/5
-	 wxpbV/ge17hKA==
+	b=GuJcArqtRWgpcW3/iiNc0Myd06Ci+MUICC96sK64lkdyUs/ATY/M60kvgm21m3Z1C
+	 rcVEdnQBmeUuIrO4YIQwQErfvoCz88lCNyKNXqEIdMTWMCpGGwEzPJEygHNVzIQB2k
+	 XlA8nAd4cUPjqGk1RTDHckLBunDgmVu1CQQ5R9fZjWgQ5ym8AzP7StMpBe5o3qFiDx
+	 1PTorrHv8kwH1e9W7Wg26zc3L6u3WU0pZf1+PEda2/wu9rSEsH3v4itaWMv+/Bc8bN
+	 fDOySJoruvvQmwmlprIgUs2wN3NRHc9yThLO5Pw22QUuBKa+C//HFMSBX/xLactVYu
+	 76fL4uqTlCqBA==
 From: Lee Jones <lee@kernel.org>
 To: lee@kernel.org,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
@@ -49,9 +49,9 @@ To: lee@kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Subject: [PATCH 03/10] dmaengine: ptdma: Unmap descriptor in pt_do_cleanup()
-Date: Wed, 11 Nov 2026 21:52:41 +0000
-Message-ID: <20261111215349.1983909-4-lee@kernel.org>
+Subject: [PATCH 04/10] dmaengine: ptdma: Remove completed descriptor under vc.lock in pt_cmd_callback_work()
+Date: Wed, 11 Nov 2026 21:52:42 +0000
+Message-ID: <20261111215349.1983909-5-lee@kernel.org>
 X-Mailer: git-send-email 2.56.0.567.gdb80ae8cd5-goog
 In-Reply-To: <20261111215349.1983909-1-lee@kernel.org>
 References: <20261111215349.1983909-1-lee@kernel.org>
@@ -66,34 +66,41 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When descriptors are freed on abort via vchan_dma_desc_free_list(),
-pt_do_cleanup() frees the descriptor without calling
-dma_descriptor_unmap(), leaking any attached dmaengine_unmap_data and
-DMA mappings.
+pt_cmd_callback_work() drops chan->vc.lock before calling
+list_del(&desc->vd.node), racing with concurrent virt-dma list
+operations such as pt_terminate_all().
 
-Call dma_descriptor_unmap(&vd->tx) in pt_do_cleanup() before freeing the
-descriptor.
+Move list_del(&desc->vd.node) inside the chan->vc.lock critical section,
+matching pt_handle_active_desc().
 
-Fixes: b0b4a6b10577 ("dmaengine: ptdma: register PTDMA controller as a DMA resource")
-Closes: https://sashiko.dev/#/bug/linux-58b8113b-167a-4398-9be2-c2f3cbf73358
+Fixes: 656543989457 ("dmaengine: ptdma: Utilize the AE4DMA engine's multi-queue functionality")
+Closes: https://sashiko.dev/#/bug/linux-55f1563b-5563-492a-a291-1a5b772ffd42
 Cc: stable@vger.kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 ---
- drivers/dma/amd/ptdma/ptdma-dmaengine.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/amd/ptdma/ptdma-dmaengine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/dma/amd/ptdma/ptdma-dmaengine.c b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
-index 22e7b3ae26a1..405d3d3b7f8a 100644
+index 405d3d3b7f8a..da50c7d15348 100644
 --- a/drivers/dma/amd/ptdma/ptdma-dmaengine.c
 +++ b/drivers/dma/amd/ptdma/ptdma-dmaengine.c
-@@ -91,6 +91,7 @@ static void pt_do_cleanup(struct virt_dma_desc *vd)
- 	struct pt_dma_desc *desc = to_pt_desc(vd);
- 	struct pt_device *pt = desc->pt;
+@@ -365,6 +365,7 @@ static void pt_cmd_callback_work(void *data, int err)
  
-+	dma_descriptor_unmap(&vd->tx);
- 	kmem_cache_free(pt->dma_desc_cache, desc);
+ 		dma_cookie_complete(tx_desc);
+ 		dma_descriptor_unmap(tx_desc);
++		list_del(&desc->vd.node);
+ 	} else {
+ 		tx_desc = NULL;
+ 	}
+@@ -373,7 +374,6 @@ static void pt_cmd_callback_work(void *data, int err)
+ 	if (tx_desc) {
+ 		dmaengine_desc_get_callback_invoke(tx_desc, NULL);
+ 		dma_run_dependencies(tx_desc);
+-		list_del(&desc->vd.node);
+ 		vchan_vdesc_fini(vd);
+ 	}
  }
- 
 -- 
 2.56.0.567.gdb80ae8cd5-goog
 
