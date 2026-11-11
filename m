@@ -1,91 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794410493;
-	b=GQ+XHFAZr7eN4S6GyHKxulsvY8ogSEh35KB3Xg47XJh1+FU3wsTZ/kRbCWhPITwXu3CD
-	 telXryW6RLSyxIynsLSs+CLxTBz6zdyuNP76yXeI/Q9BD3oka3w6/OYlcFc66owrqqtMi
-	 +8K4VQCaqFrRjvBXlaAFbsIEZjmQmoszCft/ekwMQZnVPiNTrQh9bchv/zpOp98k+Um/v
-	 NFup0McObN9ku+xQUGliELgM6fJEec6BPLfgByPZ6+bMR+RI7HEoN4fkdkOEneFN2GPVK
-	 H6QX2L1PCJNSK/U8tTYKrpRoe+3ADUhR3Yv6nM3eVP6cIY7rITcIeqFwjfsas/urQCQ==
+	t=1794413878;
+	b=4q4rg8kU8kyjxH3SGiLFLvjffrh7Zij1KRfXz2DB+r5aoUUH1lJPI1mBp0i4R9zpgRiV
+	 +O1vMPAIG6bFVgDkRCHy3zfvaMjK/nUs+FpO/EOMlVsot+JRW2mgIY8X+SbtEHbMVDaVY
+	 XnEzS9prH+kC9yyS65yxDA/7hrohb2+95LQ+KqYYDAmHo9/iW/cB2BzPcGV1l3fnYlRdW
+	 i+J+aoh1vffl8atKHbsu0mUjyVqximY3jZaf8mbU2MQOwAmfgWWUt9uZ71HwdrdGWjK8b
+	 m5Ru81gT9LhRF97IyEMABtNj9202hlB7UQySvrncKB+8R4bENCmdMXbXBUt165GbFLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794410493;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=vcM1XHbJaDYY1o8UTgUvOJULrKbAVAkgtgj4pxKK5cM=;
-	b=MqVotYdDTkXIWqHCVpXFDZr2lSOrPlpoHNHYCrVih7iWzAOwlhpCREGd7+11pobN0iXg
-	 RzZVS9s6wwJlMAYvye0twXcVtnUHeONzC0DUdFLEard446elCNTRZVm2lQGmHuNP63tPc
-	 ZmoIDv5563sUvzf2qnZH+lgkgGNfmVlHJ4cqpsmdoPXbcRq9vqCuoWEF9l79doxy5FqTt
-	 JuvOufH7uz4KlTiafv2cdd/Xwenb4fPa8oXuT2f89d0qOethioihQWi9OI0p7uGUT//8g
-	 vkGuCC9pbnw88W6P6fO5Pq98zH4WkjRscq0MW25bvG0DDz9PgV3/nICKXKGrn1zcYyQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794413878;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=BJpPLIbmeucN+vIkxcj/0mgsBZYsQdTQIzOJjcy5+4s=;
+	b=bUfjjf0rhE9aPQmGfwXIF58dZaVOZk/sDdf2OJ5Qr1JkgOgd5Lm9Hd7DpnFC4nZcaiv4
+	 812dRS4oIxe7n6InH8l0D5er9Mv72v8ZUGQuaZAUbl17yLZP8ATE4hzc0ogPMlOM9sKep
+	 SksRgSG0R7JE+/XBvmR4/y6ALSjkFhlX4XoBPIrSVDaJaDOojbCrBWugQ0/TW7y999eeu
+	 oGNFISLhhJMrwvzUFmy+VERpW2fGB2vkFuF+l4egG9purpaG3MMLt6x14XBqOYuAoHfIl
+	 epRLIcRpRD0vcJKobS/rUuyRt2wv6VFGOvMxpVPJBussxIHbDW27XI7kUkwW064axGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=furiosa.ai;
-	spf=none smtp.mailfrom=furiosa.ai;
-	dkim=pass header.d=furiosa.ai header.i=@furiosa.ai header.a=rsa-sha256 header.s=google header.b=c9a2pXRo;
-	arc=none smtp.remote-ip=74.125.82.181
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b1mfb8Y6;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6842E606A334
-	for <dmaengine@vger.kernel.org>; Wed, 11 Nov 2026 15:21:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6842E606A334
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=furiosa.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=furiosa.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095A606A321
+	for <dmaengine@vger.kernel.org>; Wed, 11 Nov 2026 16:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=furiosa.ai header.i=@furiosa.ai header.a=rsa-sha256 header.s=google header.b=c9a2pXRo
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-37071c0f42aso5655979eec.0
-        for <dmaengine@vger.kernel.org>; Wed, 11 Nov 2026 07:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=furiosa.ai; s=google; t=1794410491; x=1795015291; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vcM1XHbJaDYY1o8UTgUvOJULrKbAVAkgtgj4pxKK5cM=;
-        b=c9a2pXRoSpRqO3bXGLwqqb8axR2+UHb4wbIBY354YfVFEXjJr9YptH50ahUaY4G2qa
-         j86tV/Z/9fqn9fPjDmgAa5O1O3/klg7egDlCPN/2VfJ30BKg9ejyl9639joAKTLaLSNm
-         vtII1RP8Y4G3c2Gy6008L7L6G3NeowGmgvrCY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794410491; x=1795015291;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=vcM1XHbJaDYY1o8UTgUvOJULrKbAVAkgtgj4pxKK5cM=;
-        b=pxM1wqSUvLbZ858m4OGT06vzozZ8a3jmkRZcDRszVTm60JCDiPGMZjnf1u5G8/x1si
-         k1O/Rc7CRdKmaEjYswPlxZcUg4PbggTjkmziHhIdpDAVXH0QUR+Wx/ynhrARG4cktEhb
-         tHJAelIngja0QfrfD0RH9h0kOHqiGhJsTFAQOGs0cqr8tDt92pnY8G+AgIYAe89JiSr3
-         MpDNaWRS58JDjjdNQ+ifxBH28GmoEurHGBhPu+5FCTMf1RNIZ7ZbvqCq0WrHlQ3GpyKa
-         3ixgf4pP8QjQcRtFdSSl+LQivcPbauOTb9WGilXFv8MpND0h/bBqcZeK19jn8a0UcWBh
-         Srdg==
-X-Forwarded-Encrypted: i=1; AL+hErFoiBJVlOVMuvo+FATVa4y+df0dQ6UpPTCDxcfNXtDDxD9ObcilZ3Jt4BRqcP+9gs2I3vdsqqVf0Fc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8DlhrbUWyvTinl5T6RwomRswmvlEHjjVFYMRwSDK8Fsg0m/gNT
-	C5CSx0F/lr0XbWJcdgRYr1Lt90aZpngy7LLfKO+dNJjHGqyMM4EzT7xXfGEtgi4hzhL54WvtnFe
-	2PxFHDgs=
-X-Gm-Gg: AYBFou3caha2wYiTnaXSvWLDL3p2od+mqRx1EqqPXaspCxMXXkynPF5pk/s/kx5Dbau
-	CwjrfURmWLdgC6zxQxah7xm02Ygkqox+tYJUhOmRGTlIFiQS7dCy9GW5yzLlEWfkmbZOhkT+iZf
-	Pi3lgzuhCZVnDmatXIukoFaxn8ycL+g8b9UXSunxeNi3k4GifYZbl/i9UUMTdNIgM5VCQ8SoRR5
-	7yqmY4TtCoIfZJUrvp09mD8J0EnAGfnbM6jjCzUVIOjKkSUh3zICXIf5a+1TFVUTXFTkXWhg/+X
-	vrutH1Nn/Ba20t3jGuQSNaSdGYVsIhSHm9MTaCBy9ioaXHHyT95MvtTsSqdMRhyPhcvcdFaPVdi
-	wryIK3YSK6s3MCj7DzGA71cTYbnqIraxHMzvTcyjg2gzUf64ZIIV50wasK1csmJjqdGZGW3L+5X
-	Li6gauI889XfXlYidN2p1VsIoYNHviXG6kkTlUDIq6QvSkncaqX220+oT7d3Z1AvIhOIzE/222u
-	HciNvgPJT1i0zc6QYKVLmcPbbpvhXZmkytCRf8JRJ+tDhAvGt6PoyaZYk9Pmg9L0HV4HzdpljC7
-	m9+2Oqrkuj5ty9C23d65wdFHL3fi5jmSRqwpcYcDHEj99X9xNPoOJ34lK9XAi++3SVEmpWni//M
-	HonLZrRyaBj7CUTlhQD3klDesbkpW85Y9P6dg73c=
-X-Received: by 2002:a05:7300:e9c8:20b0:376:49a8:a87e with SMTP id 5a478bee46e88-3768579fb42mr3477954eec.6.1794410490223;
-        Wed, 11 Nov 2026 07:21:30 -0800 (PST)
-Received: from furiosa-sungho.nest.netbird.furiosa.in ([119.196.190.183])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3751dae6377sm15806266eec.3.2026.11.11.07.21.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 07:21:27 -0800 (PST)
-From: Sungho Kim <sungho.kim@furiosa.ai>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sungho Kim <sungho.kim@furiosa.ai>
-Subject: [PATCH] dmaengine: pl330: report a failed transfer through callback_result
-Date: Thu, 12 Nov 2026 00:21:08 +0900
-Message-ID: <20261111152109.1551738-1-sungho.kim@furiosa.ai>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b1mfb8Y6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226531F00A05;
+	Wed, 11 Nov 2026 16:17:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794413878;
+	bh=BJpPLIbmeucN+vIkxcj/0mgsBZYsQdTQIzOJjcy5+4s=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=b1mfb8Y6509YLR04MzWJUQGCtBpzcyJw3ndi3uIil7T+O2erOGnTztUuqq4jM5BJk
+	 S/ROqZ6FjYFjWByZMkPqnHpySLQTThTKHkRXziHwwb2ViQOW1SAqwGgET3UQb6XtXU
+	 6xACxu74JqMVWIN0DP/84ODkrdbP1TQN84ZIwxTvH51i2vh2oEjfuTj5mpGlgNWPUD
+	 tEzBtRc26H9HXAfoujJNGLzArNz2j677+uv1VJDt2VAcRIb/h1XJYpUz+L9ejhpm7g
+	 AZvwY4hqkqP1WooccOF+p1sF/mxAQCifczVTtVIdmwwdaopKommFK9f2UiqJzLWIPj
+	 kQAcqRcE0JV+A==
+Message-ID: <sashiko-outbox-209270@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: pl330: report a failed transfer through
+ callback_result
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sungho Kim" <sungho.kim@furiosa.ai>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261111152109.1551738-1-sungho.kim@furiosa.ai>
+References: <20261111152109.1551738-1-sungho.kim@furiosa.ai>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 11 Nov 2026 16:17:57 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -94,122 +59,201 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-A channel fault still completes the descriptor as a success, and the
-callback is invoked with a NULL result. Record the outcome and pass
-DMA_TRANS_ABORTED to callback_result on a fault, an abort or a rejected
-request, reporting it on the last descriptor of the transaction.
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] dmaengine: pl330: out-of-order completion in fill_queue()
+  corrupts pch->result
+It also noticed 2 related pre-existing issues this patch does not
+introduce:
+- [High] dmaengine: pl330: synchronous pl330_tasklet() call in
+  pl330_issue_pending() [1]
+- [Critical] dmaengine: pl330: desc_pool list corruption in
+  pl330_terminate_all() [2]
+--
 
-Signed-off-by: Sungho Kim <sungho.kim@furiosa.ai>
----
- drivers/dma/pl330.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+commit 5e7b59c03f80710bfb7ee7db9e4f312f02ac2fb2
+Author: Sungho Kim <sungho.kim@furiosa.ai>
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index c2d0b473b..d479d73cb 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -458,6 +458,12 @@ struct dma_pl330_chan {
- 	/* for cyclic capability */
- 	bool cyclic;
- 
-+	/*
-+	 * First failure among the completed descriptors of a transaction,
-+	 * reported once its last descriptor completes.
-+	 */
-+	enum dmaengine_tx_result result;
-+
- 	/* for runtime pm tracking */
- 	bool active;
- };
-@@ -534,6 +540,8 @@ struct dma_pl330_desc {
- 	struct pl330_reqcfg rqcfg;
- 
- 	enum desc_status status;
-+	/* How the transfer of this descriptor ended */
-+	enum dmaengine_tx_result result;
- 
- 	int bytes_requested;
- 	bool last;
-@@ -1572,6 +1580,8 @@ static void dma_pl330_rqcb(struct dma_pl330_desc *desc, enum pl330_op_err err)
- 	spin_lock_irqsave(&pch->lock, flags);
- 
- 	desc->status = DONE;
-+	if (err != PL330_ERR_NONE)
-+		desc->result = DMA_TRANS_ABORTED;
- 
- 	spin_unlock_irqrestore(&pch->lock, flags);
- 
-@@ -2059,6 +2069,7 @@ static inline void fill_queue(struct dma_pl330_chan *pch)
- 		} else {
- 			/* Unacceptable request */
- 			desc->status = DONE;
-+			desc->result = DMA_TRANS_ABORTED;
- 			dev_err(pch->dmac->ddma.dev, "%s:%d Bad Desc(%d)\n",
- 					__func__, __LINE__, desc->txd.cookie);
- 			tasklet_schedule(&pch->task);
-@@ -2101,12 +2112,26 @@ static void pl330_tasklet(struct tasklet_struct *t)
- 
- 	while (!list_empty(&pch->completed_list)) {
- 		struct dmaengine_desc_callback cb;
-+		struct dmaengine_result res = { .residue = 0 };
- 
- 		desc = list_first_entry(&pch->completed_list,
- 					struct dma_pl330_desc, node);
- 
- 		dmaengine_desc_get_callback(&desc->txd, &cb);
- 
-+		/*
-+		 * callback_result is only on the last descriptor of a transaction
-+		 * (tx_submit copies just callback to the periods of a cyclic
-+		 * one), so a failure of an earlier descriptor is held on the
-+		 * channel until the last one completes.
-+		 */
-+		if (pch->result == DMA_TRANS_NOERROR)
-+			pch->result = desc->result;
-+		res.result = pch->result;
-+		if (desc->last)
-+			pch->result = DMA_TRANS_NOERROR;
-+		desc->result = DMA_TRANS_NOERROR;
-+
- 		if (pch->cyclic) {
- 			desc->status = PREP;
- 			list_move_tail(&desc->node, &pch->work_list);
-@@ -2126,7 +2151,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
- 
- 		if (dmaengine_desc_callback_valid(&cb)) {
- 			spin_unlock_irqrestore(&pch->lock, flags);
--			dmaengine_desc_callback_invoke(&cb, NULL);
-+			dmaengine_desc_callback_invoke(&cb, &res);
- 			spin_lock_irqsave(&pch->lock, flags);
- 		}
- 	}
-@@ -2167,6 +2192,7 @@ static int pl330_alloc_chan_resources(struct dma_chan *chan)
- 
- 	dma_cookie_init(chan);
- 	pch->cyclic = false;
-+	pch->result = DMA_TRANS_NOERROR;
- 
- 	pch->thread = pl330_request_channel(pl330);
- 	if (!pch->thread) {
-@@ -2295,6 +2321,7 @@ static int pl330_terminate_all(struct dma_chan *chan)
- 
- 	power_down = pch->active;
- 	pch->active = false;
-+	pch->result = DMA_TRANS_NOERROR;
- 
- 	/* Mark all desc done */
- 	list_for_each_entry(desc, &pch->submitted_list, node) {
-@@ -2579,6 +2606,7 @@ static struct dma_pl330_desc *pluck_desc(struct list_head *pool,
- 		list_del_init(&desc->node);
- 
- 		desc->status = PREP;
-+		desc->result = DMA_TRANS_NOERROR;
- 		desc->txd.callback = NULL;
- 		desc->txd.callback_result = NULL;
- 	}
--- 
-2.53.0
+dmaengine: pl330: report a failed transfer through callback_result
 
+This commit records descriptor transfer failures in the PL330 driver and
+reports DMA_TRANS_ABORTED through callback_result when the last descriptor
+of a transaction completes.
+
+> diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+> index 977a9fde80adb..72e83dfdcecbb 100644
+> --- a/drivers/dma/pl330.c
+> +++ b/drivers/dma/pl330.c
+
+[ ... ]
+
+> @@ -2059,6 +2069,7 @@ static inline void fill_queue(struct dma_pl330_chan=
+ *pch)
+>  		} else {
+>  			/* Unacceptable request */
+>  			desc->status =3D DONE;
+> +			desc->result =3D DMA_TRANS_ABORTED;
+>  			dev_err(pch->dmac->ddma.dev, "%s:%d Bad Desc(%d)\n",
+>  					__func__, __LINE__, desc->txd.cookie);
+>  			tasklet_schedule(&pch->task);
+> @@ -2101,12 +2112,26 @@ static void pl330_tasklet(struct tasklet_struct *=
+t)
+> =20
+>  	while (!list_empty(&pch->completed_list)) {
+>  		struct dmaengine_desc_callback cb;
+> +		struct dmaengine_result res =3D { .residue =3D 0 };
+> =20
+>  		desc =3D list_first_entry(&pch->completed_list,
+>  					struct dma_pl330_desc, node);
+> =20
+>  		dmaengine_desc_get_callback(&desc->txd, &cb);
+> =20
+> +		/*
+> +		 * callback_result is only on the last descriptor of a transaction
+> +		 * (tx_submit copies just callback to the periods of a cyclic
+> +		 * one), so a failure of an earlier descriptor is held on the
+> +		 * channel until the last one completes.
+> +		 */
+> +		if (pch->result =3D=3D DMA_TRANS_NOERROR)
+> +			pch->result =3D desc->result;
+> +		res.result =3D pch->result;
+> +		if (desc->last)
+> +			pch->result =3D DMA_TRANS_NOERROR;
+> +		desc->result =3D DMA_TRANS_NOERROR;
+
+[Severity: Medium]
+Can an out-of-order failure in fill_queue() misattribute pch->result across
+descriptors?
+
+When pl330_submit_req() fails with an error other than -EAGAIN (for example
+-ENOMEM when a request exceeds the microcode buffer), fill_queue() marks
+that descriptor DONE with DMA_TRANS_ABORTED while earlier descriptors on
+pch->work_list are still BUSY in the hardware thread:
+
+drivers/dma/pl330.c:pl330_tasklet() {
+	list_for_each_entry_safe(desc, _dt, &pch->work_list, node)
+		if (desc->status =3D=3D DONE) {
+			if (!pch->cyclic)
+				dma_cookie_complete(&desc->txd);
+			list_move_tail(&desc->node, &pch->completed_list);
+		}
+}
+
+pl330_tasklet() moves DONE descriptors to pch->completed_list ahead of
+earlier BUSY descriptors.  If an earlier transaction's last descriptor is
+still BUSY when the first descriptor of the next transaction is rejected by
+fill_queue(), the rejected descriptor completes first and sets
+pch->result =3D DMA_TRANS_ABORTED, which is then reported and cleared when
+the earlier transaction finishes without error.  Similarly, within a
+multi-descriptor transaction, if the last descriptor is rejected while an
+earlier descriptor is BUSY, callback_result runs before the hardware stops
+and resets pch->result to DMA_TRANS_NOERROR; if the in-flight descriptor
+later faults, pch->result is left stuck at DMA_TRANS_ABORTED for the next
+transaction.
+
+>  		if (pch->cyclic) {
+>  			desc->status =3D PREP;
+>  			list_move_tail(&desc->node, &pch->work_list);
+> @@ -2126,7 +2151,7 @@ static void pl330_tasklet(struct tasklet_struct *t)
+> =20
+>  		if (dmaengine_desc_callback_valid(&cb)) {
+>  			spin_unlock_irqrestore(&pch->lock, flags);
+> -			dmaengine_desc_callback_invoke(&cb, NULL);
+> +			dmaengine_desc_callback_invoke(&cb, &res);
+>  			spin_lock_irqsave(&pch->lock, flags);
+>  		}
+>  	}
+
+[Severity: High]
+This problem wasn't introduced by this patch, but pl330_issue_pending()
+calls pl330_tasklet() directly in the caller's context [1], running
+completion callbacks synchronously inside dma_async_issue_pending():
+
+drivers/dma/pl330.c:pl330_issue_pending() {
+	...
+	list_splice_tail_init(&pch->submitted_list, &pch->work_list);
+	spin_unlock_irqrestore(&pch->lock, flags);
+
+	pl330_tasklet(&pch->task);
+}
+
+If a descriptor on pch->work_list was marked DONE by dma_pl330_rqcb() or
+rejected by fill_queue(), a client calling dma_async_issue_pending() under
+its own lock deadlocks when its completion callback re-acquires that lock:
+
+  spin_lock(&client->lock)
+  <hardirq>
+    dma_pl330_rqcb()
+      desc->status =3D DONE
+      tasklet_schedule(&pch->task)
+  dma_async_issue_pending()
+    pl330_issue_pending()
+      pl330_tasklet(&pch->task)
+        dmaengine_desc_callback_invoke()
+          client_complete_cb()
+            spin_lock(&client->lock)  <-- deadlock
+
+The direct pl330_tasklet() call also races with the scheduled tasklet when
+pch->work_list becomes empty, allowing both contexts to set
+power_down =3D true and call pm_runtime_put_autosuspend(), underflowing the
+controller's runtime PM usage counter.
+
+[ ... ]
+
+> @@ -2295,6 +2321,7 @@ static int pl330_terminate_all(struct dma_chan *cha=
+n)
+> =20
+>  	power_down =3D pch->active;
+>  	pch->active =3D false;
+> +	pch->result =3D DMA_TRANS_NOERROR;
+> =20
+>  	/* Mark all desc done */
+>  	list_for_each_entry(desc, &pch->submitted_list, node) {
+
+[Severity: Critical]
+This problem wasn't introduced by this patch, but pl330_terminate_all() and
+pl330_free_chan_resources() splice descriptors back into pl330->desc_pool
+without holding pl330->pool_lock [2]:
+
+drivers/dma/pl330.c:pl330_terminate_all() {
+	...
+	list_splice_tail_init(&pch->submitted_list, &pl330->desc_pool);
+	list_splice_tail_init(&pch->work_list, &pl330->desc_pool);
+	list_splice_tail_init(&pch->completed_list, &pl330->desc_pool);
+	spin_unlock_irqrestore(&pch->lock, flags);
+	...
+}
+
+drivers/dma/pl330.c:pl330_free_chan_resources() {
+	...
+	spin_lock_irqsave(&pl330->lock, flags);
+	...
+	if (pch->cyclic)
+		list_splice_tail_init(&pch->work_list, &pch->dmac->desc_pool);
+
+	spin_unlock_irqrestore(&pl330->lock, flags);
+	...
+}
+
+Can this corrupt pl330->desc_pool when another channel concurrently
+allocates or frees descriptors under pl330->pool_lock via pluck_desc() or
+add_desc()?
+
+CPU0                              CPU1
+pl330_terminate_all()             pl330_get_desc()
+  spin_lock_irqsave(&pch->lock)     pluck_desc(&pl330->desc_pool,
+                                               &pl330->pool_lock)
+                                      spin_lock_irqsave(&pl330->pool_lock)
+  list_splice_tail_init(...,          list_del_init(&desc->node)
+    &pl330->desc_pool)                  <-- concurrent list mutation
+                                      spin_unlock_irqrestore(&pl330->pool_l=
+ock)
+  spin_unlock_irqrestore(&pch->lock)
+
+[1] https://sashiko.dev/#/bug/linux-130356b0-b34d-4ec8-b462-9a2ed651bcf4
+[2] https://sashiko.dev/#/bug/linux-ecddac4a-242e-4dfb-895d-8ed9e5e87844
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261111152109.1551=
+738-1-sungho.kim@furiosa.ai?part=3D1
