@@ -1,55 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.119
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794368268;
-	b=GuORfG3K0eBL10TR0R66aHA8uS5GccUVxbxusibQamyrepCQHFE7s17YlyTPbuBMqDE4
-	 GA9jWjX2hlyAh7ELhtNDPHhHvpxQTTm7cudFurf1NSzgAy/k3OP+KrjU71RrFxJ7WQMzB
-	 Rbj5YfLQwLizcyOXU+VfNLXrkhTtFrfTV1mxGzBRNBzh21087jTafIWmQX1pDzkB/0hvH
-	 gVnab2fXTZPU7LfWqA6GwCbDCsbZGlR9iDrKUxq1hX1oMgaybVwMOj1JQiVjS8eKWCcrI
-	 OsmtVex2LRwFJLvyOtZrExPKfSoOZ1wkZFAW2p0uy+gn7J+3ayQvx5jU2mRk0lIYqCw==
+	t=1794368374;
+	b=k9cVSkuiFk2ZQHYfKSSfliBq44PAeM/3G9FkH/dZZMmkUaoRG20KNoQCNYlRnQ8JxLn3
+	 1oh+9qFrWwJQyPtOfgWtnvPpzWZj73A2Y6e9jXfp9ocmcpWaZ317Xr5yWXz9b8QNW8iHJ
+	 7lrSRv1XnQ1fV0Jb0IZSZJw5jkk/01+GfYXvi30PYYYMvHxAQjIVQBTn2H0et2figFV5B
+	 i28qD/m4jafzKsjFUyV/tSDVLaTuTLERn5jgKj994fO/qcmteqTlqzT1Q2gzevw+Z5K7w
+	 VsMbGggxWZiV048h7sRBrIOBaoXj0goy+l0BlDfOmBQW1PN3L5iNDi95vbV19xSQddQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794368268;
-	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Date:From:To:
-	 Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=SHSJaLDFDkacYxtFwT5M58m/AQXWzZwL8fhLRhQfG64=;
-	b=kHAB599EPmhDAXxen5DhonQM8kdl0/ojKzGpACN51xh13jk4R60+w3ABAZ8mEw+eFCvt
-	 WgODnnKmln613rR268FPLGaDqxyH3VEduxMPSqQKFcY5Q5TovcvzB+2Gd29uuygrgpEOr
-	 O/RoYwXRZTPWUi32Y/SLweilSk1vTXcjZsAorKhd5agRdepOqFNcrAh0EoHhdBPDKra6f
-	 X/cT66IsuBSl12vzfjM89tODDKXbcQBHmJl7Mgl9LmLTRGMaaPBxlFXqb6s7zRIKtp5gf
-	 7nA/7tGF3woFIZ7LWMAHT0PHYzefxIfXsqxYYN0ltdgc7UN8ph0FoH97ID0Plg4ya/w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794368374;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=l2c2fFzOfzjySeAipItHl+f+wvlC3hKWM3P0lTrOgEU=;
+	b=wiFkkhVqyMUfIEn8kLkb7N12CzO/IPgjTgmuLsugykfBKFy+S9ngUFwo0cCOwYMqLmsI
+	 gafvC5VSq7WRHBuS7dyxo+Qcmcb7ALiHdR+1lyMHoC8Sz7YshTXgGjwKQjqUSYm/+gxKY
+	 7LCbsj6RSRbyhHZ7GHR1SsJ1L7VA2661BEeT4Tsltu7q63gR7EW/5Pb20EAwrkaIp/X/S
+	 YzSEviYDDo9acPf8wCYkO+5mUGOoIDzEpcYNBu5g0KhDehJ8nQI9zN1/XuWSvHhc4KNFu
+	 cS15jrjXTVUzjGEdZG7mjjbwB7psEAk5vRrY2k/Wy9wXgKTAzvyn+PEbWqcpRQljz2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.alibaba.com;
-	spf=pass smtp.mailfrom=linux.alibaba.com;
-	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=Wg0kksoi;
-	arc=none smtp.remote-ip=115.124.30.119
-Received: from out30-119.freemail.mail.aliyun.com (out30-119.freemail.mail.aliyun.com [115.124.30.119])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EFokUFlU;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65E0606A320;
-	Wed, 11 Nov 2026 03:37:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A65E0606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030A1606A31C
+	for <dmaengine@vger.kernel.org>; Wed, 11 Nov 2026 03:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=Wg0kksoi
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1794368262; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	bh=SHSJaLDFDkacYxtFwT5M58m/AQXWzZwL8fhLRhQfG64=;
-	b=Wg0kksoiDRh0hjlPDvt2ulV4xAQudicJ7xokaiYVaRUG6vEptkxJwb+0E5vE2saEZfs6U9Ozcgbu7OR7+fgmEH1CYJxb92J3yRXDGk7d4VFNQMDizD/pFsVkNKY1SrapZ95MAulHXR/ISej8X4rIettCQvm6eU1xTc0qeo3Y3KM=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R131e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=yaoyuan@linux.alibaba.com;NM=1;PH=DS;RN=6;SR=0;TI=SMTPD_---0XEXUHV1_1794368261;
-Received: from localhost(mailfrom:yaoyuan@linux.alibaba.com fp:SMTPD_---0XEXUHV1_1794368261 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Wed, 11 Nov 2026 11:37:42 +0800
-Date: Wed, 11 Nov 2026 11:37:41 +0800
-From: Yao Yuan <yaoyuan@linux.alibaba.com>
-To: zhejun_huang@linux.alibaba.com
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: Free channel ID after device_unregister()
-Message-ID: <galxjmixgdozdnwrwnjqwru3mwlmoczpygidfprvqtnd5aljxh@ucv6ltg3wbtq>
-References: <20261110101607.13784-1-zhejun_huang@linux.alibaba.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EFokUFlU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572D51F0089F;
+	Wed, 11 Nov 2026 03:39:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794368373;
+	bh=l2c2fFzOfzjySeAipItHl+f+wvlC3hKWM3P0lTrOgEU=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=EFokUFlU1UHPTOTN/1wWccrpWwUzVw/TRsvcKIWuZx8LB79etP53B5sfEzJ4FBrSU
+	 Km4VutlSMIZMhp3gAOXw76eYz0kut6Xz/oOjuLSBVwhQS6lbg4NG7N0PTtBa1WeheH
+	 YEJ56tmYGQc125iFECj08BMubrFqVfWOO6KxTnPFf3zwwTN1C4unMACgN3z6GYHfMO
+	 6wmNTBeKv36h+sjJ/KNCflkWAIQSFulqy0GoeKJt8qcrCQuBVmrfxe/5Tf3iatfsky
+	 I2DJh6FCpdBrQH/R5T+hpUClziRKRhKj/6SR0LzNY1cZ24BKqCQkf/Onf764mhSZIt
+	 mf6dE/Cx8B01g==
+Message-ID: <sashiko-outbox-208213@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 4/4] dmaengine: dw-axi-dmac: preserve pending pause
+ requests
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "James Hilliard" <james.hilliard1@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261110-submit-dw-axi-dma-stop-pause-v1-v3-4-35fdfba8b61d@gmail.com>
+References: <20261110-submit-dw-axi-dma-stop-pause-v1-v3-0-35fdfba8b61d@gmail.com>
+ <20261110-submit-dw-axi-dma-stop-pause-v1-v3-4-35fdfba8b61d@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 11 Nov 2026 03:39:32 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -58,54 +60,73 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261110101607.13784-1-zhejun_huang@linux.alibaba.com>
 
-On Tue, Nov 10, 2026 at 06:16:07PM +0800, zhejun_huang@linux.alibaba.com wrote:
-> From: Zhejun Huang <zhejun_huang@linux.alibaba.com>
->
-> __dma_async_device_channel_unregister() frees the channel ID before calling
-> device_unregister(). Between ida_free() and device_del() a concurrent
-> __dma_async_device_channel_register() on the same device can reallocate the
-> ID and try to register a device with the same name while the old one is
-> still present, failing with -EEXIST.
->
-> This is reachable in practice: idxd calls these functions from its
-> per-workqueue probe and remove callbacks, which are only serialized by a
-> per-wq mutex. Enabling one wq while another is being removed therefore
-> runs them concurrently on the same dma_device.
->
-> Move ida_free() after device_unregister() so that device_del() removes the
-> name before the ID becomes reusable.
->
-> Fixes: 0821009445a8 ("dmaengine: fix channel index enumeration")
-> Cc: <stable@vger.kernel.org> # 5.7+
-> Signed-off-by: Zhejun Huang <zhejun_huang@linux.alibaba.com>
-> ---
->  drivers/dma/dmaengine.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> index 34be53487a21..2642abf105d7 100644
-> --- a/drivers/dma/dmaengine.c
-> +++ b/drivers/dma/dmaengine.c
-> @@ -1171,8 +1171,8 @@ static void __dma_async_device_channel_unregister(struct dma_device *device,
->  	device->chancnt--;
->  	chan->chan_dev->chan = NULL;
->  	mutex_unlock(&dma_list_mutex);
-> -	ida_free(&device->chan_ida, chan->chan_id);
->  	device_unregister(dmaengine_chan_dev(chan));
-> +	ida_free(&device->chan_ida, chan->chan_id);
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] dmaengine: dw-axi-dmac: stale chan->cyclic across alloc,
+  error, and prep failure
+--
 
-Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+commit 9842b102714b426daae54ae8ebc997ef84ba1d86
+Author: James Hilliard <james.hilliard1@gmail.com>
 
->  	free_percpu(chan->local);
->  }
->
->
-> base-commit: d48723711bae9b8cdc56719c448ba42fef28cbee
-> --
-> 2.50.1 (Apple Git-155)
->
+dmaengine: dw-axi-dmac: preserve pending pause requests
+
+This commit tracks pending channel suspend requests, active descriptors, and
+deferred cyclic restarts so pause and resume operations do not lose
+hardware suspend acknowledgments or race with transfer completion.
+
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
+/dw-axi-dmac/dw-axi-dmac-platform.c
+> index bb305ab94d02b..6f15fcb790a80 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+
+[ ... ]
+
+> @@ -543,6 +548,10 @@ static int dma_chan_alloc_chan_resources(struct dma_=
+chan *dchan)
+>  		pm_runtime_put(chan->chip->dev);
+>  		return -ENOMEM;
+>  	}
+> +	chan->desc =3D NULL;
+> +	chan->pause_requested =3D false;
+> +	chan->is_paused =3D false;
+> +	chan->cyclic_restart =3D false;
+>  	dev_vdbg(dmaengine_chan_dev(dchan), "%s: allocating\n", axi_chan_name(c=
+han));
+> =20
+>  	return 0;
+> @@ -1087,6 +1096,8 @@ static noinline void axi_chan_handle_err(struct axi=
+_dma_chan *chan, u32 status)
+>  	vchan_cookie_complete(vd);
+> =20
+>  	/* Try to restart the controller */
+> +	chan->desc =3D NULL;
+> +	chan->cyclic_restart =3D false;
+>  	axi_chan_start_first_queued(chan);
+> =20
+>  out:
+
+[Severity: Medium]
+Should dma_chan_alloc_chan_resources() and axi_chan_handle_err() also reset
+chan->cyclic to false?
+
+chan->cyclic is only cleared on a successful dma_chan_terminate_all(), and
+neither dw_axi_dma_chan_prep_slave_sg() nor dma_chan_prep_dma_memcpy()
+resets it.  If a prior dma_chan_terminate_all() timed out or was skipped
+before channel release, or if a cyclic transfer fails in
+axi_chan_handle_err(), chan->cyclic stays true.  Any subsequent non-cyclic
+transfer then takes the cyclic branch in axi_chan_block_xfer_complete(),
+which skips vchan_cookie_complete() and clearing chan->desc, leaving the
+completed descriptor on vc.desc_issued, blocking further queued descriptors,
+and re-enabling the hardware channel.
+
+Similarly, dw_axi_dma_chan_prep_cyclic() sets chan->cyclic =3D true before =
+the
+dw_axi_dma_set_hw_desc() loop and leaves it set if the err_desc_get error
+path is taken.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110-submit-dw-=
+axi-dma-stop-pause-v1-v3-0-35fdfba8b61d@gmail.com?part=3D4
