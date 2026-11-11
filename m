@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794434100;
-	b=2o+JTOm0nI1OugtwoHL21/spUwlOEZOIii4WcNYEU4+QW2ABFHVNfBeNRd2GapU+zt9F
-	 OCysvkeVGuD1PBmU73TToMljY+JDzi5nEhBWNBL+969xkmlWP6uoTsV0+AqYZ8X+tRjqE
-	 GXD9Z6sgGHLoTk6OImOg+Os2rU2eFKE2YO/6R+H5vp9Sjhm6GE2a4LpMyTTHW7x/lRYzZ
-	 0aNlYLNWkGeL7ZuI4euAe3dJVbGDiF5TSHbYlfwC4CX8HbeX5p/BBIMY1+6s7XgvLZl3c
-	 hiA75MjuItKGVVDm0CJjfleh7jMRoNA84vR2/aw5gXQhrXnhgY4CNDmbqu4TSQqYvdg==
+	t=1794434107;
+	b=UdhtPhz390JwJBCAJ9X+EQpVkRs/ky3JHPHfaU3LP79TVrKwXsw5yUW4SNmqqMsOMYAC
+	 tF7om2YoeTxV0mBTmaOzGHSbdMTMCfVG+GJITrSY/SqgIeV8eEuG5liDlr8n8n1BS0DaD
+	 3uk97dzSvqafGi4QyQ2h0qvoT5loR9GEErGheWhmUqyfQQANRtFTck/yts+/+IcEJtd1u
+	 8+llxJNgQDdC9fqS3/q+VEITJ5cY0SqBiboDCNxRVKW+XT6+GVhAqRjRjkR+WYYiq0V4C
+	 3Qtt1jHbvspe+0LTm0NiokGrJgxxyKQAdcXbkgfmrL2t8e407u0W+tUu8RRO5hBstkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794434100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794434107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=YpATtb9CRJROOdQJGZVI7OOr5rIfYH3Wyflv4TMGDlU=;
-	b=RlBsIlKnyP6JKFcIsXHjERYRqltQs+a/D6diqQ9OdIqiESpxBdoI2qYC8e488VW8PRU4
-	 WJe7yrY+fQYXKzTgCWWwNWeT+ZuxFfPt4phS2gXALsU0pwE2PnTYp0A69xyfUlAvaEYSx
-	 tmPLc3cn4ISfliGlMmYlAAN5tJEfLCEjZIGaJTqNW2bbl8X4k9T8VU019mNUgWp46Bcob
-	 Mgb03a1oe/TJ2PM1kezgl1Zw7sfMzIs4WTPpUigUcMuHGLzgbSVlIFuMQDIf7uAQQpCvS
-	 fv8yO1g/b58QJSlAY78yNZAIcf1mOntUD18Qjqr3014r0UFncERK+MgH1jYviITAwig==
+	bh=zF9oubV0Jz/J6ZKNGy23up8DmkWa0Io4zaM5l+k/zvI=;
+	b=I1oeoKa294JuHBwgeFWVG9EnKKl8boB6YykEs6+iz7xVo68u6mPJ3fD77/TZcNwGXs7c
+	 WpaWnq5LvhuikPo5qKJ7vt1EeAPA43ziJMFafLzTlz8I7cXE0DkkBPjdP7v1Yi7LsywGO
+	 IjUMJDj1ZD6lPsPurQZX5NWFg+VFzV468KSTcxHWMeiZRHQjbLL+PTT+hyLge0oaxuQ0V
+	 7iPjG8NrL0DWWlN3ifkwGN7HgiqwOHyMZyOc0iUM1/r7sjOBqLBo+/u7coZwYdPBtFmVc
+	 SOuvhJgs1jZ2uJ/iMOmanGuyI2GOXWjtcXTIE2MSO1MpzcxCV38pXUOrbHZyoobsLwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dLcFk7Mk;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hFRo9d+0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF560A2625;
-	Wed, 11 Nov 2026 21:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4C160A2637;
+	Wed, 11 Nov 2026 21:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dLcFk7Mk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F364D1F00A06;
-	Wed, 11 Nov 2026 21:54:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hFRo9d+0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BF61F00A11;
+	Wed, 11 Nov 2026 21:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794434100;
-	bh=YpATtb9CRJROOdQJGZVI7OOr5rIfYH3Wyflv4TMGDlU=;
+	s=k20260515; t=1794434106;
+	bh=zF9oubV0Jz/J6ZKNGy23up8DmkWa0Io4zaM5l+k/zvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dLcFk7MkZ89xniHB4Yq1Ikv92uOz0S+AbyJXVJeToeCxEVv+SdH8piJiMqqOqsiem
-	 kQ31jmIn4vxkUsHVmNBwAeT1lvAfXxznGwMEcmHS2bg9DcUFfWNyKsbqUiwZIA2CGF
-	 itMAnYoE99DGVIQdd953v6J5OMdgHx0bTeYZK7xFftIY+geXzblMDiqQfZsiVUs/gU
-	 j6EIqyCjBJtEVAPj3of+essWEdouJt/ypWHb4D/Brm0LImpF85aQv5euhQK4xliJHX
-	 CcqKK7Q/y0Bxj0GfyBFl1vR+SjIJpt2J/VT7R6YANRxH3E3AOwBCGB8ZbWYE0rtKqR
-	 t9FKOff9sWQNA==
+	b=hFRo9d+0qGSj9Qj5KGuhFp/5/yxDwVgiwew7zeF1kOBU+rHwR6u78AWruoszIPTQ5
+	 j9ijTyp+uL7aBku4UBARF4yJVcK9ciVYisHcMgn6oEJVMdLBQFNVTeaOkeiUJNyqfQ
+	 g4mamFn3Sf417ik+Mkq9r1u4hmsw1TgX+kvaRXBYPAD+LlfBYdN7BCHleg4bZVy3Fb
+	 NMiRP/CV2AooyaDMuk4Mvtlpf+QvgOa49ef6cIlwjh6531eLxRirY8JuJ1ps/W6KTL
+	 QLF4Ho7Rmu+FqRU8sGWdc6AUn6hrh4EmOlqqttF//qjHFDCXvBeZSwk8Hu/xYOIbrW
+	 tLRSPAEGTB2FA==
 From: Lee Jones <lee@kernel.org>
 To: lee@kernel.org,
+	Paul Cercueil <paul@crapouillou.net>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Sylvain Munaut <tnt@246tNt.com>,
-	Grant Likely <grant.likely@secretlab.ca>,
+	Alex Smith <alex@alex-smith.me.uk>,
+	Zubair Lutfullah Kakakhel <Zubair.Kakakhel@imgtec.com>,
+	linux-mips@vger.kernel.org,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Subject: [PATCH 08/10] dmaengine: bestcomm: Check rh_create() return value in bcom_sram_init()
-Date: Wed, 11 Nov 2026 21:52:46 +0000
-Message-ID: <20261111215349.1983909-9-lee@kernel.org>
+Subject: [PATCH 09/10] dmaengine: jz4780: Fix descriptor cleanup on hwdesc setup failure
+Date: Wed, 11 Nov 2026 21:52:47 +0000
+Message-ID: <20261111215349.1983909-10-lee@kernel.org>
 X-Mailer: git-send-email 2.56.0.567.gdb80ae8cd5-goog
 In-Reply-To: <20261111215349.1983909-1-lee@kernel.org>
 References: <20261111215349.1983909-1-lee@kernel.org>
@@ -65,46 +67,56 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-rh_create() returns ERR_PTR(-ENOMEM) on allocation failure.
-bcom_sram_init() assigns this return value directly to bcom_sram->rh
-without checking IS_ERR() and passes it to rh_attach_region(), which
-dereferences the error pointer.
+When jz4780_dma_setup_hwdesc() fails in jz4780_dma_prep_slave_sg() or
+jz4780_dma_prep_dma_cyclic(), the error paths pass &jzchan->desc->vdesc
+to jz4780_dma_desc_free() instead of the newly allocated &desc->vdesc.
+This leaks the newly allocated descriptor and either dereferences NULL
+when jzchan->desc is NULL or frees the currently active descriptor while
+it is still in flight.  Furthermore, jz4780_dma_desc_free() derives
+jzchan from vdesc->tx.chan, which is not yet initialised before
+vchan_tx_prep() is called.
 
-Check IS_ERR(bcom_sram->rh) after rh_create() and unmap the SRAM region
-on failure.
+Initialise desc->vdesc.tx.chan in jz4780_dma_desc_alloc() and pass
+&desc->vdesc to jz4780_dma_desc_free() in the preparation error paths.
 
-Fixes: 2f9ea1bde0d1 ("[POWERPC] bestcomm: core bestcomm support for Freescale MPC5200")
-Closes: https://sashiko.dev/#/bug/linux-c3caaf6f-9a88-4451-b40e-d061c1fdeabd
+Fixes: d894fc6046fe ("dmaengine: jz4780: add driver for the Ingenic JZ4780 DMA controller")
+Closes: https://sashiko.dev/#/bug/linux-b39121ef-5ffb-401a-9d04-0afccd467bde
 Cc: stable@vger.kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 ---
- drivers/dma/bestcomm/sram.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/dma/dma-jz4780.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/bestcomm/sram.c b/drivers/dma/bestcomm/sram.c
-index 09ef5142c26c..df4d90cee465 100644
---- a/drivers/dma/bestcomm/sram.c
-+++ b/drivers/dma/bestcomm/sram.c
-@@ -88,6 +88,10 @@ int bcom_sram_init(struct device_node *sram_node, char *owner)
+diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+index ac2094e65ecf..c3974c825ba7 100644
+--- a/drivers/dma/dma-jz4780.c
++++ b/drivers/dma/dma-jz4780.c
+@@ -248,6 +248,7 @@ jz4780_dma_desc_alloc(struct jz4780_dma_chan *jzchan, unsigned int count,
+ 		return NULL;
+ 	}
  
- 	/* Create an rheap (defaults to 32 bits word alignment) */
- 	bcom_sram->rh = rh_create(4);
-+	if (IS_ERR(bcom_sram->rh)) {
-+		rv = PTR_ERR(bcom_sram->rh);
-+		goto error_unmap;
-+	}
++	desc->vdesc.tx.chan = &jzchan->vchan.chan;
+ 	desc->count = count;
+ 	desc->type = type;
  
- 	/* Attach the free zones */
- 	regaddr_p = NULL;
-@@ -111,6 +115,8 @@ int bcom_sram_init(struct device_node *sram_node, char *owner)
+@@ -379,7 +380,7 @@ static struct dma_async_tx_descriptor *jz4780_dma_prep_slave_sg(
+ 					      sg_dma_len(&sgl[i]),
+ 					      direction);
+ 		if (err < 0) {
+-			jz4780_dma_desc_free(&jzchan->desc->vdesc);
++			jz4780_dma_desc_free(&desc->vdesc);
+ 			return NULL;
+ 		}
  
- 	return 0;
+@@ -426,7 +427,7 @@ static struct dma_async_tx_descriptor *jz4780_dma_prep_dma_cyclic(
+ 		err = jz4780_dma_setup_hwdesc(jzchan, &desc->desc[i], buf_addr,
+ 					      period_len, direction);
+ 		if (err < 0) {
+-			jz4780_dma_desc_free(&jzchan->desc->vdesc);
++			jz4780_dma_desc_free(&desc->vdesc);
+ 			return NULL;
+ 		}
  
-+error_unmap:
-+	iounmap((void __iomem *)bcom_sram->base_virt);
- error_release:
- 	release_mem_region(res.start, resource_size(&res));
- error_free:
 -- 
 2.56.0.567.gdb80ae8cd5-goog
 
