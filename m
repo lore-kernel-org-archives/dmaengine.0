@@ -1,57 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794388087;
-	b=4qDDJEOHG/khR1GVOBmutI1MgVxtJMR/YYCh5lFoSOr04ubfg5FjIAvP1tYyVrJLSkHW
-	 c5OGn3z3vSluhzHlTUxmdUrGzkSnKnAb6khv+hsE0va+zYLMsk7ZLcHQxMCxiY5bYuneT
-	 TeqI42W6pUlaAXqTLf9woaGgQ9lPVASVXf37igeTcCRaY43RBYRffBMybMoqoYc7hUBTJ
-	 e9sfba23NEK7NnPaCogCL5I0cYNY8LxS2hYBUVj+d59uU6WvU0d9tGB+xFP8KquvUSbii
-	 v0cH+5UCcnv4yooPRmNDnXB/FvUlhMLsAtldlNuJ8sImJi71DAbMbaiSPvqQpHknxnA==
+	t=1794400629;
+	b=Yks3jpPC4wEtpyhZJePeiGzAEF4pRkTDuPiw8rT0/TCxhb68xlu2sCBhgkcGoFRIpkTu
+	 OeeYnk4J4MFMgwYfkM9x4KOHtA46kqLWUbGZ+UhIe5OMgoPKjQBAZvTFyKVOi8sRLDojj
+	 gy7Z1bUnzoe+ULlCE92Cg3Qf8TyxIUlEnt3OOlApnLDJyLo/paeSCTqqriGTE6OKfWiDg
+	 DUuIBdewOtWQ4xEXe7yAf3vF9a6LIjVv2Moc9bqq+1lQ6R1lrdxR/1Ab7aWir9RxDwcAz
+	 +O0OcMEZn7L2WNRhdNrGiVfrw41r5a1YaC+hurS+QdxAa4EiLKsO17/vH+lK0s0ALkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794388087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794400629;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=fQpynz/U/r8Ihf0QA0gj96/iqALNmMISQ/47HnazT0s=;
-	b=49C1rngXhN2d14vWZ1qqGclu2v5GF0hWUONEG+ioa35qLyKEiH6/1P/P2oeDkFnUq34t
-	 sMgEmwT31hzjj1AbX0Dp2SCGcZGMQsZCG3B5Ja2IzGgXQYTt8jXLXRbUSBE409A71ZLB2
-	 ssOQudhXZyKk75BuurUdlPeJCN51+LOpVSR2Sry/lQr5xAwvGPw1PzQUbyDOgbQRHZjdP
-	 YyBKs7iOp3TANn7q2oJ9FSruolMzVC+izd8+k9DkIv1TlzyiekMalzt/VU1GwwEnOGLnu
-	 lgytXiwWAEETvxyoq/uJx43kqSGtkP6gu1bfPUK8mYXAbcWEMLclI8csaxix/Kzh1og==
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=DrEyZ9Dy/vdt9Enxk47/lufRYYKMANPK/dWOzZVfB0Q=;
+	b=3V2kMgtZqOcRKjwOi9vyb7bF/aboFaTL9pFCcEZ90soUAcd+sP6TWuc1MWUpMMwruV6n
+	 iNvpHtJPhlroXAoK+kAD6mnG/Ce664gOB+CzcS6kNstynqqh9VfrdnH2JPCigyNOEgLwJ
+	 6c3vUgNzlMQDiDO+D13oFEJwdn+jJRpR70mohrNGdGd38Cvyl0b+WRp+pT7aukijSRngO
+	 Xxga5z3qLq6oaPYFiECknuBWUrZ/ACiATbenBjh/jycI4Ubfd7T/M/bBo4jaLj1PNbzfW
+	 BmNvcpzz4/vQ+WQUVPrg8LD0aeWi8Gr52bt7FS6dBuWNX7Un94vX5bg6oa1WV4Uc80w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R4Mm4EH5;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fm8TTeVI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7B5606A321;
-	Wed, 11 Nov 2026 09:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C0E606A31C;
+	Wed, 11 Nov 2026 12:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R4Mm4EH5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B581F00A05;
-	Wed, 11 Nov 2026 09:08:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fm8TTeVI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5654C1F00A05;
+	Wed, 11 Nov 2026 12:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794388086;
-	bh=fQpynz/U/r8Ihf0QA0gj96/iqALNmMISQ/47HnazT0s=;
+	s=k20260515; t=1794400629;
+	bh=DrEyZ9Dy/vdt9Enxk47/lufRYYKMANPK/dWOzZVfB0Q=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=R4Mm4EH5tpBex6GKVUdMpA85tYm1jIVj+193GxnPLC540MbymgL/mRceafbmGbGTk
-	 zQo611f6N9cZ19+rcXFgQyOrDTykpDCmMpL7a4oeFj1beqOfmd1vDRZsugnTNntMgU
-	 Qos7Jf9/sw1cCiEhNdJgDnhMeqMkW42ojBaMvnqAgaAdNqsA4zDKg/lMFRQKeSQuaB
-	 ikWFL/jrqPO6uPYcR+UYXYk0RQw8eDKtVE2wr4oqVltF07gQrmq9E91Oykgh99AToW
-	 aGZbbNWVradI7nqyeEZZofi0QOUYHvBUXD9mJc2RpngdFPthyISSaCr6bAePR9kjTk
-	 GisNLwuoAYqxg==
-Date: Wed, 11 Nov 2026 10:08:03 +0100
+	b=Fm8TTeVIKgELMl8vk3ebBz7NjeNXK0VYlflbnvI+1DhF7tIPs8mjFhfsCxu4SsCEC
+	 dZj5z/6m0WsxBJK8mNC/CKIelsRlDPZdTa/pY7f0UXzHHt8WfrwUmxE9lglxm2Jtzy
+	 ius5pA6JqZ9CZAaURmR4YUp0cICYP8cHohV5iTpnxTi5YmKzzykZdIlMaAN0TRnmYd
+	 Zxzr5OmMoCKOA8mBYNhaX5S/A7N19hoWoLQBvBH9PJz6uTXVtIKiSKOWwV5aPYIwXo
+	 y8K+aQpIJIsvL9F+8W77GqC4igMTpEEwNnrjNb7YCtMZsInr7OcxaULuCk0CQzOWS6
+	 ScuUbS0ZJToZw==
+Date: Wed, 11 Nov 2026 13:37:05 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, robin.murphy@arm.com, sboyd@kernel.org, bmasney+clk@redhat.com, 
-	jbrunet+clk@baylibre.com, devicetree@vger.kernel.org, Frank.Li@kernel.org, 
-	cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, joakim.zhang@cixtech.com
-Subject: Re: [PATCH v3 1/5] dt-bindings: soc: cix: Describe the Sky1 AUDSS
- DMA IRQ controller
-Message-ID: <20261111-victorious-persimmon-chimera-de9e4e@quoll>
-References: <20261106013520.1134450-1-Jelly.Jia@cixtech.com>
- <20261106013520.1134450-2-Jelly.Jia@cixtech.com>
+To: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/6] dt-bindings: dma: qcom-gpi: Add QSPI protocol
+ identifier
+Message-ID: <20261111-daring-salamander-from-tartarus-4c72bd@quoll>
+References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
+ <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
+ <20261109-wandering-miraculous-mamba-0cf21a@quoll>
+ <2fc8f7ea-651e-466e-9346-c47e0a38c5bb@oss.qualcomm.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -63,40 +67,34 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261106013520.1134450-2-Jelly.Jia@cixtech.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2fc8f7ea-651e-466e-9346-c47e0a38c5bb@oss.qualcomm.com>
 
-On Fri, Nov 06, 2026 at 09:35:16AM +0800, Jelly Jia wrote:
-> +  interrupts:
-> +    maxItems: 1
-> +    description:
-> +      Combined DMA-350 channel interrupt after the CRU gates.
-> +
->    clocks:
->      items:
->        - description: I2S parent clock for sampling rates multiple of 8kHz.
-> @@ -75,18 +93,33 @@ required:
->    - power-domains
->    - resets
->  
-> +allOf:
-> +  - if:
-> +      required:
-> +        - interrupt-controller
-> +    then:
-> +      required:
-> +        - '#interrupt-cells'
+On Mon, Nov 09, 2026 at 08:03:29PM +0530, Jyothi Kumar Seerapu wrote:
+>=20
+>=20
+> On 11/9/2026 7:12 PM, Krzysztof Kozlowski wrote:
+> > On Fri, Nov 06, 2026 at 08:31:20PM +0530, Jyothi Kumar Seerapu wrote:
+> > > Add QCOM_GPI_QSPI to identify QSPI (Quad SPI) channels in GPI DMA
+> > > specifiers. Its value, 9, matches the GENI serial engine firmware
+> > > protocol ID for QSPI.
+> >=20
+> > What is GENI serial engine firmware? How does the Linux rely on it that
+> > we add bindings for it?
+>=20
+> Hi Krzysztof,
+> GENI firmware runs on the serial engine=E2=80=99s programmable sequencers=
+ and
+> implements protocols such as SPI and QSPI. Linux configures the engine and
+> submits transfers to it.
+> The existing GPI DMA specifier includes a client protocol ID. Linux progr=
+ams
+> this ID into the DMA channel and selects the corresponding descriptor
+> format. QCOM_GPI_QSPI adds the QSPI protocol encoding 9 to that interface.
+> I will clarify this in the commit description in V2.
 
-This one you can drop
-
-> +        - interrupts
-
-And everything could be simplified with:
-
-dependentRequired:
-  interrupt-controller: [ interrupts ]
-
-> +
->  additionalProperties: false
+Does not really answer. I see no reason why GENI firmware needs ABI for
+Linux.
 
 Best regards,
 Krzysztof
