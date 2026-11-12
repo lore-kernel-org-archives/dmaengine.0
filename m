@@ -1,87 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794486248;
-	b=uQPrD/j5HrbCeFgAkw8Edk32SrwV9DD8brFwnPZdq4KAUUjI7jFG6cXxbE0lyhC30k0X
-	 PzMrYhhXTgJot9BOWaj2SDQEArUKH8hZ6W2jZEs5Y2GpzhB08nI01l3e4Lnfa+Br7dvRx
-	 UNmh3nAsUpzt9IWU/yH0I03EYB4i71ZaagHFIrUOnZ5digwX+mIjdVKabjtMLgGAOyaW/
-	 6CPcmljqRbOXTyjhvoGopZOfslFnJQh+MfSLkmI7ezLElmn0iF0t6p+kYo2t8uFRt2GgN
-	 9fpoDiprMWS/c1PeBjD0OpQqRAVbVfywQzlbC0XFlFS2w8nhpLwyFjkllf+isVRaELQ==
+	t=1794486251;
+	b=j6KGmiuh5YjFh5N9LUYrO79DM6NrOj4YgM5ASXj+RKKDrOtpwcKAxKTqbswG2SkXDLJK
+	 SgI0ODG9Pwk/4WNySomAKfsj3ilVzZHmvOmJYcqpJGkItTtbiIEHrzLNk/fQ0fZO+axgs
+	 fkLOohg5xn8tB3sd7nPqkjrRCcWqecbF/ukPTAkEXMkIhY5cZ1R1zAFzD3RR3vOeLqYIq
+	 JS5kKmS2hYXyOVtxcsglgXoEkWofRlN0IV/ZIt1oTyRHJYcA34eiEMh6CCOWUKi3SVWtQ
+	 tM2qywL5ZQ/b0FRznDke1zwhBLsxVW5nGbhq6abe7bMSQQ8b+aep2CTYXYcyFzQDtOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794486248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794486251;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=6jjbM3FM0vEh41D6tTAiBxzcbzcUKnDu2QUW56tX9Ug=;
-	b=iu4YvzFBuoSBUAPNxVeWT30DWzP7pUPNhR7goL975q5eJLRkmQiRExZmGgiG/75ymNLA
-	 K1/luE3Zm2tfscwhZdRUZf2mpKwtIbPku8Pq835F/dxlE1LkQhVhaWN90YgbkWT0SRTzH
-	 ETIPehYtC5nTGJ/VCLFvkuaTtcaIotA5sBQXYBEIkhJTeM0OZ9uynG0g+aMgaS6l5c4S/
-	 sgjdvaIv476limgPdZulLVKonwdSbs0Jj2EoddFeq20JKAv0Rax+Q22BUdTBNlZb6y4br
-	 MGjwvL+hPcLlnXFYQyoogTZWMtH0llJY728V9MnkzhUcM0mV+z36FoZ7XirckiVzkHQ==
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
+	bh=/ZBMYoBxxkgJg0D0vcbzX29og9IbLQS/nBwET3T49RQ=;
+	b=1cr/lrTShlsv6D7wt+87C86wjVteB9pIIt/V0V2690ugfTyGgrkidEXVwTN2y9xha8gv
+	 /0aG3O5NxAHKBCeBLtLS89keK0v6YDwfs44Lr56iA6Rl0PqZl3To4SB0bM2f8ObFzVAXo
+	 R2fdmWALNFdlsc4fzWHKH9NJyjcsDJE7g7ZlB2+5aGh/IATfR5KFjvHkiNzyq6M9i8nKa
+	 LFt4IdE0jocyru+tBVKVYhXoN62REBoQOvRuWdQ4qgx7FcFlNUcA1odA7W6VP7onPGL2l
+	 DO6eefEArM/ZMnQfybFo0AB/3vb8H7cGHLY4xbB9DZxn1wv3HYZYPmT/DU4aDPVCLfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=02Ee+baK;
-	arc=none smtp.remote-ip=209.85.208.53
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L23mmaik;
+	arc=none smtp.remote-ip=209.85.208.49
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD1B606A321
-	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 12:24:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AD1B606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFFC606A33F
+	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 12:24:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4FFFC606A33F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=02Ee+baK
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6ae305e3bd9so6587492a12.0
-        for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 04:24:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L23mmaik
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b547d6c07bso5009190a12.1
+        for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 04:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794486247; x=1795091047; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=6jjbM3FM0vEh41D6tTAiBxzcbzcUKnDu2QUW56tX9Ug=;
-        b=02Ee+baK1h1XUD6WO/nascEjWrwiuWrZ9E9j2MFQcrZI5K14rA7YSabQFZqCFSvC3N
-         ikyw7KKQgOI1ld3nNdFDTDd5OmzNRUttM1oIZghE0ToKxHlOE17aLobyJRitiIoejqNG
-         SX3XX8oHBl/GOFBVpjPgVTxjDbSle/WjdqOh3U8OGGI/2vZzio5/iVz5eAVVsJpDRnvM
-         eyx92Iw2Ybw9Da1/5/WmCEY9yES7r+L+75EybPosobSiFFqEC9MOqcLtX8lqUVwiDxVi
-         4V//JpLYWXeWE0e02nucAt510hEbI43eS7S3Xlwp/s0W1fjuv1UYI6ioe2Sj6ehZ70DD
-         nZmg==
+        d=gmail.com; s=20260707; t=1794486249; x=1795091049; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/ZBMYoBxxkgJg0D0vcbzX29og9IbLQS/nBwET3T49RQ=;
+        b=L23mmaikCY+Jsd315IBXg/zTyoa42t+VmyZ8aMGiwsxXeY380o8Ap88X5Mqxl02op/
+         bHe2uj8e5n02XfWkRCEhI9hln7bZO4WxZFqr09arcjJBJPde0vc82w9kXA2I3yzvuwtY
+         s4A058wfU8lQtbpSfH9Nx3tZxRmY1tfIheJNflspNjHhCURoxKdqXL+Pt6P2OOTurmFS
+         NEYQdyw33s9Qa6EmKiWsYojXpcW1LYz9Ea7gDHvnKG2tFKQwG/KmkFHC8JaXTb4FRfwK
+         oatWn9QLLbwjn3AJDpx6X7WxREYDlaC8TiMm3heez2+AvSjmtEIS8pYMOelizS+fAVOL
+         l82Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794486247; x=1795091047;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=6jjbM3FM0vEh41D6tTAiBxzcbzcUKnDu2QUW56tX9Ug=;
-        b=AJOCscqLtoslPJdg8kYvFtueuDdW2S1qnLTblgvOJvawlaTNZa6HGa1qRYGpEDX1+h
-         /8YEXFA6cgAmf3/+3r7wu0Z++Ic5ztGe593c4zmliwKcoTB+6mRCIRtJRuqK+rfp8nLq
-         l6FGLSRayNZSfGtb5Uzuq6wWPYGOnVKX6qCEM11R00xwuc802/qS57iCBbJH0evdHT+u
-         wdn+cEssxVa1flPo/wwG9bIWeNKNW/1eNAm+SB+FA7Plpw9JthKz7J/P1bN3ZPUNDUsx
-         i/aAB9cNSEkg+9XIms8efrtsE6m6lg2Mh0PK5O0ha+GmWocPvNLKexZOgCUNtRpum1bR
-         m8lA==
-X-Forwarded-Encrypted: i=1; AL+hErEqs0Qeu2mmKlOwdd3MRGzVPrhNrifd0HdqGnL4aLyATVgNxlOBhdOinfIK8CqJHK0MioIegffApo0=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/lLG+AMXLhxe73Bex2V+PHW1ZY2XX3SDTiDcWArv6msZ406+mE
-	57t+Q9/bc+W9xv8MoqXTWgJTMNhIW4W7Pf/WdWE9VDeLN+PMqapxYYnc
-X-Gm-Gg: AYBFou1QR4VU36TogKARhbQH0rRIV2AQ3hznrrW2cxFRY6f3Ic+mPDrnMCQQkKnzLGp
-	/VuMqTICZKyR39Dh24OtjUg7mhHrMahXpddr9usyTxiKTNotKoy2tGfERpbyKG2XpjM9D59GB4D
-	B4JyR2oql0Lj5WrgjCMjUizLffb0bzDOHjZpwKDqPHfsRiaWHY+Vsn2Fl8F4GguOEkh5/5JCWCW
-	PBXZ9zKoWgo9wRhpWZiZPE4D+EMPu/l6lfZh4UqepLr8URIaNBTwVhcCApZRMdrTuC4U0FvLPcK
-	peR+QqdwfOuK7JpE7zqb7HvAXhlhY50ZcpQ5FngJL5I8lOzfYKeWUQpUdkVrinXT5+JcVDF1sUc
-	a/F1KGQ8zx15m1CeWAf2b78r+DNRrfJDCxH3/TMvRV3zZm9r7VlwO8XIoP3uY7lQGeS04XlGwsC
-	ZmfldX8MNBy1fdJZW1nApvWBAMFOhNZ0u7V9X14IAsvcSLdhzXsuGR+qHOnnQ46ux9mh4NXSZEn
-	DlBa3y+ci75s4aEJowi5Rqah/3v5dRH/rtzHnu+yTFouMns2ri8CIJkSMcPs4ZkJPzn2eNDIuo9
-	YUwoBgUKpJMg4KtyUQ2BIriFvXjwvq4+v8dh5iF0
-X-Received: by 2002:aa7:da59:0:b0:6b3:b10c:40f9 with SMTP id 4fb4d7f45d1cf-6b77770232emr3279335a12.31.1794486246730;
-        Thu, 12 Nov 2026 04:24:06 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794486249; x=1795091049;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/ZBMYoBxxkgJg0D0vcbzX29og9IbLQS/nBwET3T49RQ=;
+        b=nwQH/anhLs2S+ixBQ9+LxvwRnh4oxD0nPv0I+q/JnqeiSep5LXmAs1r1ktM5Hz3bPN
+         C0yKeCMCq7cydk5Frz6DBi8jWM4OLlE+a7uPRFFIbVjTNLed6GAnotPm72Goynd5d10b
+         OTEwfLvM8W9bvEj9u6zChNtalAvusopaf8wmYbDgfQF6qeHnTwCq07riCMrP5rW/+xeq
+         XtvZrzQ5biPTZkyD/1E1AgY3H06nnltIFHKyr19YnbL1ycD95yFyNrPrP+5ma74y17fz
+         4PR6F5RbpMhfgKv26nOSQ4Gnzm1zqizuqQFmz22LkvEmQuxS9lg4rVGv643ouT20WeZw
+         2EGg==
+X-Forwarded-Encrypted: i=1; AL+hErEjEe2VHrZ3O2Zm9reDgEYVcmZMelu+suKCMfvWdIipmGFl9JqzBwlxBUCNF3r1zD8qdF7g9370ucs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+ASohuYB5VMgrSp3KIodwz/eiCS3fCnF1bkpRya/HoIhsZFl5e
+	jdO30ejJ6z+JEIKFbQUhANoF6T4HoB7J5N074zX+dRfw7jAPO90cWY4M
+X-Gm-Gg: AYBFou26wS9oqOEoOcCLHJKQrb172FRlW9VoQ+EFJQikfQ2txmWeSDnl2QxDFNMpcBj
+	ALjlgm5tblVIlC7gc/SRFboa0kVBfWMCLWxcAp74w6fzPmGEQSUvtk0V6BR6DbprYyhFjP1Ile7
+	Twh9s8TI5W2r1v8C+05ODhhulMIi3D0lW2VqwSNEY8/NhVLmrtRl1pY+bNG83uTLUCAKOCiLNps
+	LUtBeZ9mOEUS2G/0paITrMqyafEUrttlr1GGH7LuDyaSVu1LPngihYeQ8c5ddXWoDXH2UBDB5zg
+	JPq6zd5mp3vrPwcVJ7wXAWDrOsNbWjsmt9/VvalCVne56ji28em9l+eyAuW5c14If4yZgUbT5Az
+	l+zcjdVpOkljZzWnOrALKIXQWUdr7nZDjHZnDWqvaFUU2edA+DIYpiSx/I+b4oVNpfCRfD2eDR3
+	LmIBz2E7ePfSRF4hOyp2pPHSSfZJLmot9V9LKvvGR/yFhhFxpOwQs+Mz0LxNexeygHWox590PtD
+	az5d//K0NgyHqvzJGcJ6N3gK93MDPJZtqLB+7hQ97kD6TXTbtXQeKydgI51hbW+DqXxjupjIGFa
+	P0JBtQTOe+wgYq0PwKPRu37vPZnbBVZ/WF1JjUVA
+X-Received: by 2002:aa7:df0e:0:b0:6b6:fed8:e3bb with SMTP id 4fb4d7f45d1cf-6b7773edf13mr3161861a12.13.1794486248604;
+        Thu, 12 Nov 2026 04:24:08 -0800 (PST)
 Received: from crispy-cucumber.local ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b77918d094sm1835931a12.26.2026.11.12.04.24.04
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b77918d094sm1835931a12.26.2026.11.12.04.24.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 04:24:06 -0800 (PST)
+        Thu, 12 Nov 2026 04:24:07 -0800 (PST)
 From: Erikas Bitovtas <xerikasxx@gmail.com>
-Subject: [PATCH 0/2] arm64: dts: qcom: sc7180: enable GPI DMA
-Date: Thu, 12 Nov 2026 14:23:21 +0200
-Message-Id: <20261112-sc7180-gpi-dma-v1-0-2a8eceb49563@gmail.com>
+Date: Thu, 12 Nov 2026 14:23:22 +0200
+Subject: [PATCH 1/2] dt-bindings: dma: qcom-gpi: add SC7180 GPI DMA
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -93,10 +93,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5EQBCF4atIrVWiSTSuIhatulCTDNLFZBJxd
- 423+xbvP0A5CCs0yQGBf6KyzBEmTYAmN4+M4qMhz/LSxKGSNVWG4yrovw6dtXVZ+JoNEcTTGni
- Q/xNsu9e69x+m7a7AeV78i3zncgAAAA==
-X-Change-ID: 20261111-sc7180-gpi-dma-a77963d9e1cc
+Message-Id: <20261112-sc7180-gpi-dma-v1-1-2a8eceb49563@gmail.com>
+References: <20261112-sc7180-gpi-dma-v1-0-2a8eceb49563@gmail.com>
+In-Reply-To: <20261112-sc7180-gpi-dma-v1-0-2a8eceb49563@gmail.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
@@ -104,33 +103,29 @@ To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Erikas Bitovtas <xerikasxx@gmail.com>, Vitalii Skorkin <nikroksm@mail.ru>
+ Erikas Bitovtas <xerikasxx@gmail.com>
 X-Mailer: b4 0.15.2
 
-Enable GPI DMA controller for SC7180 SoC. This can be used to
-make access to I2C, SPI and UART peripherals faster.
-
-Tested on Samsung Galaxy A72 on an I2C peripheral, in particular the
-Samsung S3NRN4V NFC module located in i2c0 0x27. The peripheral driver
-is not upstream yet, submission can be found here:
-https://lore.kernel.org/all/20260811220135.472380-1-jorijnvdgraaf@catcrafts.net/
+Document the device tree compatible for the SC7180 GPI DMA controller.
 
 Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
-Erikas Bitovtas (1):
-      dt-bindings: dma: qcom-gpi: add SC7180 GPI DMA
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Vitalii Skorkin (1):
-      arm64: dts: qcom: sc7180: Add GPI DMA
+diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+index dc7bdf7c4201..01766475d1b5 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+@@ -36,6 +36,7 @@ properties:
+               - qcom,qdu1000-gpi-dma
+               - qcom,sa8775p-gpi-dma
+               - qcom,sar2130p-gpi-dma
++              - qcom,sc7180-gpi-dma
+               - qcom,sc7280-gpi-dma
+               - qcom,sc8280xp-gpi-dma
+               - qcom,sdx75-gpi-dma
 
- .../devicetree/bindings/dma/qcom,gpi.yaml          |   1 +
- arch/arm64/boot/dts/qcom/sc7180.dtsi               | 101 +++++++++++++++++++++
- 2 files changed, 102 insertions(+)
----
-base-commit: aaa2f954c21b205a0bcd0961e5b2be4e82e58455
-change-id: 20261111-sc7180-gpi-dma-a77963d9e1cc
-
-Best regards,
---  
-Erikas Bitovtas <xerikasxx@gmail.com>
+-- 
+2.56.1
 
