@@ -1,87 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794486252;
-	b=Gip6SpdKcZEaE/CS9qkj509+EdkT7JdJS3eUS01Jm7x9q+5+rb+kmG3ukRWOMaFIEKyJ
-	 JYl6yCz2lKqKOJQqdgYKmhSmET3+7UWknm7FLrzH8G5p2Mg2gQeGO6rBYXazOvRXsf45N
-	 Q/+WTxb6FQ1b34vecbWFzwC+ue8SfGZbkU2ieBQ4iGbZg2U4hAyEVHU7fPCwAMP27/GXp
-	 SVf3RO1liORKQhA6jHQvokEhRR+dz4eEFptC2UEScLqDDjMTAB19UXQJ9vrgPkiIyTyO5
-	 9vhR4nk2E2iIiJjhRgjQW6iXGpBQKg3vkpd2i+Ee2Et/plaYSA8ygHAZgtSaGGZQHwQ==
+	t=1794491285;
+	b=5s5jyAOmPT8Rqrbudf3+stpTZl53DytrMiDtWr8bqQ0uy723hro29WJmD8SS7Kx/TIIl
+	 /hz2JWxlIp1WtqXXxCHpLZOvm1u2aOirpPnsoQ35pitiJiRdSTgGOvki2fAsSmwIA2p+A
+	 HJkFnf1QpIev/2UdfytaM9YHVQkqXa4sSXeXuW0QbeGNI4dHFqawIYaULYKtjvq+A18Br
+	 d8G0coZADMI/V5J3peRdViyHN+KBQTVO7TTWoNpAVOpjMRGZclIRzbPaGoPlsMLyfVnIH
+	 ALdldXDHNUyYEAtkQqwWMz/EZnOkd9xNO8EoIhCRn2EbnOCMMhNAL90cZc/CL91AwPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794486252;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=GsIbIoeOdN4hRu67cJKyoEtdVFyqYqyLk0dos7CScCU=;
-	b=22FZh67rifC8dR7eOSpEiTK0ZD9Avcx3TKR5azlfEfAOdOk++VjAb5PaGv/k1vrhvTFC
-	 tMZa7IOmX/jaGt9STT4P11jgYjWvGX08d53vQLSbGU0xbHU7fA7zzhDZFpD3C3F2qhSAu
-	 t6+0CwN34of7wEr8d0kaO9yxAPGKiL8ZhEo3RZb5LEcYyFz8k+TLnG9sVPm8dWcyBobrm
-	 NYdY3j3hVZV3Sp+pQVTAzbnzKIT37iS1rH3aQ8o4tt5Ro/mQe2raCspJrkcf0iLdIlxiU
-	 SjrEPPCJRfamVPt1TWajJIMdFbzup4ni1Rg2ozKm6llOv2DN0Z5GzhVPTup+Jqqt0UA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794491285;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-GUID:X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=U+W2nYGry4hKMV2JuVK3PdNvH+FLPLTAkEAHuaqJzqE=;
+	b=kxjz7Z6xjhkYebVZ+js7kkYD0Cf8gtpsAa1ERa9HlEe8w4A3Xb5SikivDadSB9sFg82N
+	 tFsVCG5MaRJ0o7+GbOcp/9CXSMxFqmCyh9o15AFlLpT9gkPNnHzarS6eIoxoCwdKvS9t/
+	 yLvtleM3VIadCWt94SfVp1YeMsyjPbGffjg8uIH9IamnoRdN6bkwyYjpLAhahytaug544
+	 JObo3oX0ZamdLU69UwgI755UI14v9RMMUI6q7Q0eVIH8HWaElfEG/azO7C4zLGJfapH+v
+	 Ueqq10+73NhEpZAATL8GGHuRaxvEDpl6vn+v9BmzcO1ju5W2uFeD5X6se8yEymxhtVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xRCnTnlw;
-	arc=none smtp.remote-ip=209.85.208.51
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hq5ed0vU;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=be2W0OH3;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCDA606A33B
-	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 12:24:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBCDA606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FB4606A337
+	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 13:48:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 50FB4606A337
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xRCnTnlw
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b4bd3d98bfso5006692a12.1
-        for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 04:24:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hq5ed0vU;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=be2W0OH3
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AC8vWUi4149282
+	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 13:48:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	U+W2nYGry4hKMV2JuVK3PdNvH+FLPLTAkEAHuaqJzqE=; b=hq5ed0vUkzkNuUs5
+	mXglYr6PA/HYKeuC7/0cQzccV4zjo16sbgqlY0VQr/p4uTGzmXQdsEwYrpzn+b29
+	rfs7sSQ85pKLLtRqrz0CJMMbwNPKz2UyHLJDT7dJlM289/k5AJTzDmTiXkaRSFVb
+	Yb9UANoH7spvuqsMktXYVVGUaZAxSIGUdU71683lmatlu5MwA4MlYWsC2IDG3+hW
+	jAPq/lRftHqp+nGO83WwxRognk073p3HuVJoxPVA+PkI3aUsVs0OtGYRMzKg9FYJ
+	goECocsSKnSekf4xYWc5aqavga5TAqBN/I4WpOWq0fWd8ffby2UC44wNZOnjq8p1
+	43J/cw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hvxc63n89-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 13:48:03 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-91f03ea17f4so35104706d6.1
+        for <dmaengine@vger.kernel.org>; Thu, 12 Nov 2026 05:48:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794486250; x=1795091050; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GsIbIoeOdN4hRu67cJKyoEtdVFyqYqyLk0dos7CScCU=;
-        b=xRCnTnlwyQK/GwQHxD3U4V7068WV71muUSmVB9T+ddX6SRehGgIRfKDBahkM38wTRv
-         kNZp5kkNQzsufsP7DK7ZzC+86U4LtwZ/ulFefiWzKJ8kG+5b4enkrM+5Wt3q5Dd4Cud9
-         f1SW0m8Ng3vnfQD+16RQHbrBZ0rte2lorC2UhcHuZIPqevOF0tP0IE+QcVf2d2ARWXJR
-         Bgw8Zi+IRfyhg15kYLr2z4JdAKyo0ZI4qiEPudMMsoXS3+HTWqJNUSbHsxXS5ideZ7JG
-         dBqxoKOUg/XpiFtpkkpYfwXWYXaJBbnyVPEQZu8XpYe3BdCLBvTjtAUpMlO6WlBWvz9C
-         25Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794486250; x=1795091050;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=oss.qualcomm.com; s=google; t=1794491283; x=1795096083; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GsIbIoeOdN4hRu67cJKyoEtdVFyqYqyLk0dos7CScCU=;
-        b=TBK5RQffTS+HhQ6/2FwOnSTfzI+rrjkTjzKJNuC3PjAdFB7TyG0M2OrOQG+pfLi1Yb
-         wsx7PoEjtpOpDDEKAkqkCMDO+Bv0UoP8FedgWWhK6H2wBsI9ydIO9C3dHhO5DfMh7xc9
-         IleVz+ffvuRuvczYLnIhIghCfVFKouJ8gG9vlNWLcnLKry7pOiD1eQ2fjKH6SyPV+XUj
-         XG/6DhPJjv468DfzMm3PtZw4FnBx4X5XDz1rcO+4FA6b6mfReyl+AUC41MXQ17qo9e7m
-         qmhKdas7NE5ih5ai2mp6FXvY4265BLrKkCYgg/zw8Mtq2wbdaH1mgR9fbJT87JjNXfp9
-         m0QQ==
-X-Forwarded-Encrypted: i=1; AL+hErH7mAY9Gdk1gOCl5z8gNFG/JUCRrRz8rTlp0KRjrKVO3oPOCSghvg9IxqP3XA5nEXqqXubJRd5zMyc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/5KuKBf9cuKFxas1DX3dbPgDiaBylDu5XU7hnnGDFiNGO9ueGP
-	NCzG5dHVTHhpmjhRfrhugrxDR+Zvl7/pEjve5iYbWwhn4hW14sBzGP2Y
-X-Gm-Gg: AYBFou3TRXXN/y9o9mpDXu/4KHeLhek/dmTE+N3w/Oq93APlijHZhuHzLm2rMMNPEr1
-	jr2EHLEJJkFCZWbEfzZj5PXCH14cnNbdD5t6qKs+DnGGIgV9nBeMuqYUJsjP0yuql7BN7AN4Z+5
-	sUGsjS4IkizvOi7iA3LathamJRynAsljRmglkkDbaz1DM735gycigBCaT5/pZABwjo2kXUMzTWw
-	BXc+28Ovig+sl+mEajpS7IbrCL6dE0lFneLGZFAri2NdGBGA5gF82m5zjvwALGD3NWCciOVA879
-	kyXbVg/x3vjLPtTMFJ/+JzQ2PQ+goVuNhn2AtRzEhJMRF1LpP9Y1HU102qbg3qGygR3uNyni2UY
-	fAwFjEG3TFpJH+hAbfP6/FHo2IGJYc6bjd7ESdQ+vOLkDWIBtpyVSNiz7PnNbqVBWN48VTOw9Bg
-	fGN/4pBB9X30UAUoIpTJsJVsgNTJ9sIdasFTzNZZfw16NEZzcskqW606JKWk90iPJbTWAQJtl0e
-	jqFcvZzPP507XUrkGyS1k4UOc4rzBmoP/T1ZARbnVULiAKyCoGskeHXIQQMEP6L15fft3unWQfB
-	mbGMBf51CAwS3qrMYKuBFnKBSZfe8lJGtbHDWSgt
-X-Received: by 2002:a05:6402:5607:b0:6b7:b872:27b6 with SMTP id 4fb4d7f45d1cf-6b7b872305cmr250988a12.13.1794486250115;
-        Thu, 12 Nov 2026 04:24:10 -0800 (PST)
-Received: from crispy-cucumber.local ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b77918d094sm1835931a12.26.2026.11.12.04.24.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2026 04:24:09 -0800 (PST)
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-Date: Thu, 12 Nov 2026 14:23:23 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sc7180: Add GPI DMA
+        bh=U+W2nYGry4hKMV2JuVK3PdNvH+FLPLTAkEAHuaqJzqE=;
+        b=be2W0OH36Sr+oIDxYJx9kEhbnPGhKxIqWsB5jS4QhwS0lAoiYWw2XSrh2t7gNR0sz5
+         ETd36Vw80LM5r5AzM9Gf+HMzho12nbd/qXEaFN0bBP2FMwzCD8t8wga9vqWHGhQV/Vm0
+         INAch9nBPIjJ54YDdn6XXIzLxvZMBodMca4OmWB8Ua34YE6ZlCqZn8M8nftisYGHlFEi
+         5kWu3uXZzNJp8rOhjzuD790Bua5X3pSmLQfv6kYspUiWXdx2E9dsF1tMB/pUN3/R34yk
+         bxk0Xq63VaR7KHcXe7Ro0mFW28crTtCJQQ6VMNkZUzxxwWEYLz6oZQPCiv3YdA7z9vOE
+         Y1GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794491283; x=1795096083;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=U+W2nYGry4hKMV2JuVK3PdNvH+FLPLTAkEAHuaqJzqE=;
+        b=YjewynVIdP7U5l7q8GCm80i7CMKsKY949AVSxNIdVUzpGWdzZXQlcRt7zWjfOfE5k9
+         p/es7EaGN81kKlAcK9eE1p0OKGfABSAf4w9AK0zSlv0sZYXgSKk9lDfjOmn422YEjk0U
+         z5FRCLixbOiptsNIfvfz97bXmbFUaZIjL7ggzfcl5yxg9jVyODqLKeQyXWul0It4zZ2O
+         FebxD9rbOYPXaAUWYbu1LCJ8BFt+Mz8Ug+wAU3Pk+IID4aweVp9Z9qBwJ9nSBrhkWgG6
+         +MFt7nDAICeVp4yG4iYZ3FLFKTF/kOlyLJP+th50IxSr9pZJ1/Ia+ZcMnZzn0ySfExWg
+         ViOw==
+X-Forwarded-Encrypted: i=1; AL+hErElUuhNe0Mz2EYolBMpmLoo4IjccZgn8aFHTFHiWp7KO5W2H/X1naEiFFWfR4XDugUVrAIXC/IyLuc=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8i9oJmTh+2lvaah/vKHmjFZnEcTOWAgWCpfdbS8vuDFbQMOsAH
+	qW/Zbvmxt5B+aAR8QsT+b+qGEgwlOTMXQEKEQ+yAo4jjh6aKZafWkXAlvFRnnisTIL0WkgBk9n1
+	31NM4JUUQIHu5ypEaPxMwIhCdKejayXSrz38HwpvCpP4tTyn6ZlCVsf6hjIBRlQo=
+X-Gm-Gg: AYBFou2VrFOnitaA0Cyv/hPZNiHxRd0UTUVAf7q6E6WH8is8EbDwLm7jJWAQT3W+QCE
+	rmQhTNKcIlJvHFuQLn4DQxcnQoLgkEjhCF2QNgMGrm2LeeCBKyV3H3BFu0WZ+ZSF1Czh6WNWdj+
+	MLCdn9NfjSzw8yn4DLqjh00qfnAgiKp1SGZ/Lh97Nr4/B28mpX3wiaGFPTZmS+hAXtD6HkWL0H6
+	DMx1yQ/ouKwL6zjBT061W0NPAyRJCcOh0kRKZwh3zsdl+6tbcURsuZ17e3TTnLV5vbHxrQOB9Ke
+	mb744L16bGqceNgHMPSXjHdg9cBYmh+ssBp7P09LAN1/zFoJh9L4x94feQdRLw4fHu3nSaVFGbC
+	OoxIV9sLVxl0XjG6NGtdHZzkpT/UOvnSeqaJV9lQQ1CMs/u2MtIAGyFJvZHTLeWQnWHD5ljLI2s
+	/pfFk=
+X-Received: by 2002:a05:620a:1b96:b0:93c:9c0b:3898 with SMTP id af79cd13be357-947affc1c3bmr930694685a.59.1794491283023;
+        Thu, 12 Nov 2026 05:48:03 -0800 (PST)
+X-Received: by 2002:a05:620a:1b96:b0:93c:9c0b:3898 with SMTP id af79cd13be357-947affc1c3bmr930691485a.59.1794491282604;
+        Thu, 12 Nov 2026 05:48:02 -0800 (PST)
+Received: from [10.218.50.86] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5c16be05ba1sm325697e87.50.2026.11.12.05.47.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2026 05:48:01 -0800 (PST)
+Message-ID: <c9427a03-8b45-4e35-a29d-7ebe30f07ed7@oss.qualcomm.com>
+Date: Thu, 12 Nov 2026 19:17:50 +0530
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -91,299 +116,95 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-sc7180-gpi-dma-v1-2-2a8eceb49563@gmail.com>
-References: <20261112-sc7180-gpi-dma-v1-0-2a8eceb49563@gmail.com>
-In-Reply-To: <20261112-sc7180-gpi-dma-v1-0-2a8eceb49563@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Erikas Bitovtas <xerikasxx@gmail.com>, Vitalii Skorkin <nikroksm@mail.ru>
-X-Mailer: b4 0.15.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] dt-bindings: dma: qcom-gpi: Add QSPI protocol
+ identifier
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
+ <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
+ <20261109-wandering-miraculous-mamba-0cf21a@quoll>
+ <2fc8f7ea-651e-466e-9346-c47e0a38c5bb@oss.qualcomm.com>
+ <20261111-daring-salamander-from-tartarus-4c72bd@quoll>
+Content-Language: en-US
+From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+In-Reply-To: <20261111-daring-salamander-from-tartarus-4c72bd@quoll>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: ypKopIfRxppV-ZL8rSQrDOkwhPwvOIos
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEyMDA1NCBTYWx0ZWRfXxgStVE41fLVd
+ yknITUuWzoCrPwtWcOsIiQfQtaJqc3WGejv78me2RUlq7nBCuDz531RDeOZRiHdjlf6bAnp/yh5
+ ifVDAKQCqvVytokjKzzw01HRe5MnPNOFwX3qHVe95GDdw1IsPbT8rTJmlXLFyg2/Rb/YdecfD/x
+ FhACX5Y/NH2IcJblKMS324FQd4mQVBKeq96SQ/z79AGxUMqCcef0tjciEu6+PyApTTxzd7Kp9u4
+ t34tUR47UGf+2sorFLyslRaQHTHNPC+b5bqxfxjzyw3hz2EOWjHCTZClDcetjD6N/SLZNLM39kw
+ M3uw/xI5HjdMdLLw69eiHbEnGOCif7ZhCbNLq1WoWh357TC975GftMIUlusCfqNJaarpJDlKGtI
+ Z5lmfA5/d+H2jQ5hE2gETMtlJ/3YNuI43xFu06V/pEVkCi0XbedKoRB4AA0ZU/ZeaQyWiyliGzF
+ Z2S1s62GV9WYh8adFEQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEyMDA1NCBTYWx0ZWRfXx/ohPi7h5AVE
+ KvfRScq3wtcSyfO9kncbYog5lRfqAnJ5r93z4DV1zzgXObAR0NA1CWAFjpZ5S+Fsq0+x+FeMc86
+ PHBezCf1B/sj1aUpMvBdx6VYUVtzeqo=
+X-Proofpoint-GUID: ypKopIfRxppV-ZL8rSQrDOkwhPwvOIos
+X-Authority-Analysis: v=2.4 cv=O/ysLx9W c=1 sm=1 tr=0 ts=6af5c393 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=dNOB8qFnOFInGeeiHp8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-12_01,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
+ definitions=main-2611120054
 
-From: Vitalii Skorkin <nikroksm@mail.ru>
 
-Add support for GPI DMA on SC7180. This SoC uses the same GPI DMA as
-SM6350.
 
-Signed-off-by: Vitalii Skorkin <nikroksm@mail.ru>
-Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 101 +++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+On 11/11/2026 6:07 PM, Krzysztof Kozlowski wrote:
+> On Mon, Nov 09, 2026 at 08:03:29PM +0530, Jyothi Kumar Seerapu wrote:
+>>
+>>
+>> On 11/9/2026 7:12 PM, Krzysztof Kozlowski wrote:
+>>> On Fri, Nov 06, 2026 at 08:31:20PM +0530, Jyothi Kumar Seerapu wrote:
+>>>> Add QCOM_GPI_QSPI to identify QSPI (Quad SPI) channels in GPI DMA
+>>>> specifiers. Its value, 9, matches the GENI serial engine firmware
+>>>> protocol ID for QSPI.
+>>>
+>>> What is GENI serial engine firmware? How does the Linux rely on it that
+>>> we add bindings for it?
+>>
+>> Hi Krzysztof,
+>> GENI firmware runs on the serial engine’s programmable sequencers and
+>> implements protocols such as SPI and QSPI. Linux configures the engine and
+>> submits transfers to it.
+>> The existing GPI DMA specifier includes a client protocol ID. Linux programs
+>> this ID into the DMA channel and selects the corresponding descriptor
+>> format. QCOM_GPI_QSPI adds the QSPI protocol encoding 9 to that interface.
+>> I will clarify this in the commit description in V2.
+> 
+> Does not really answer. I see no reason why GENI firmware needs ABI for
+> Linux.
+> 
+This extends the existing GPI DMA binding, not a GENI firmware ABI.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 29e345a6a13f..8bf669ce9f89 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -12,6 +12,7 @@
- #include <dt-bindings/clock/qcom,lpasscorecc-sc7180.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,videocc-sc7180.h>
-+#include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,osm-l3.h>
-@@ -881,6 +882,26 @@ opp-384000000 {
- 			};
- 		};
- 
-+		gpi_dma0: dma-controller@800000  {
-+			compatible = "qcom,sc7180-gpi-dma", "qcom,sm6350-gpi-dma";
-+			reg = <0 0x00800000 0 0x60000>;
-+			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <10>;
-+			dma-channel-mask = <0x1f>;
-+			iommus = <&apps_smmu 0x56 0x0>;
-+			#dma-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_0: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x008c0000 0 0x6000>;
-@@ -908,6 +929,9 @@ i2c0: i2c@880000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -928,6 +952,9 @@ spi0: spi@880000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma0 0 0 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -962,6 +989,9 @@ i2c1: i2c@884000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -982,6 +1012,9 @@ spi1: spi@884000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1016,6 +1049,9 @@ i2c2: i2c@888000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1052,6 +1088,9 @@ i2c3: i2c@88c000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1072,6 +1111,9 @@ spi3: spi@88c000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1106,6 +1148,9 @@ i2c4: i2c@890000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1142,6 +1187,9 @@ i2c5: i2c@894000 {
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1162,6 +1210,9 @@ spi5: spi@894000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_0 0 &qup_virt SLAVE_QUP_CORE_0 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1182,6 +1233,26 @@ uart5: serial@894000 {
- 			};
- 		};
- 
-+		gpi_dma1: dma-controller@a00000 {
-+			compatible = "qcom,sc7180-gpi-dma", "qcom,sm6350-gpi-dma";
-+			reg = <0 0x00a00000 0 0x60000>;
-+			interrupts = <GIC_SPI 645 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 646 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 647 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 648 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 649 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 650 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 651 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 653 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 654 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <10>;
-+			dma-channel-mask = <0x3f>;
-+			iommus = <&apps_smmu 0x4d6 0x0>;
-+			#dma-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_1: geniqup@ac0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x00ac0000 0 0x6000>;
-@@ -1209,6 +1280,9 @@ i2c6: i2c@a80000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1229,6 +1303,9 @@ spi6: spi@a80000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_1 0 &qup_virt SLAVE_QUP_CORE_1 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1263,6 +1340,9 @@ i2c7: i2c@a84000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1299,6 +1379,9 @@ i2c8: i2c@a88000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1319,6 +1402,9 @@ spi8: spi@a88000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_1 0 &qup_virt SLAVE_QUP_CORE_1 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1353,6 +1439,9 @@ i2c9: i2c@a8c000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1389,6 +1478,9 @@ i2c10: i2c@a90000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1409,6 +1501,9 @@ spi10: spi@a90000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_1 0 &qup_virt SLAVE_QUP_CORE_1 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1443,6 +1538,9 @@ i2c11: i2c@a94000 {
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
-+				dma-names = "tx", "rx";
- 				power-domains = <&rpmhpd SC7180_CX>;
- 				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
-@@ -1463,6 +1561,9 @@ spi11: spi@a94000 {
- 				interconnects = <&qup_virt MASTER_QUP_CORE_1 0 &qup_virt SLAVE_QUP_CORE_1 0>,
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>;
- 				interconnect-names = "qup-core", "qup-config";
-+				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
-+				dma-names = "tx", "rx";
- 				status = "disabled";
- 			};
- 
+The third argument of the DMA specifier in the dmas property selects
+the peripheral protocol. The GPI driver programs this value into the
+channel's SCRATCH_0 PROTO field and selects the corresponding transfer
+descriptor format. QCOM_GPI_QSPI adds the QSPI selector to this interface.
 
--- 
-2.56.1
+My reference to the GENI firmware ID was misleading. I will clarify
+the GPI channel requirement in v2.
+
+> Best regards,
+> Krzysztof
 
