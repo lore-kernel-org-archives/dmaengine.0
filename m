@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.55
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794600221;
-	b=gfVJLN5OgkMelmb6zwr8tzI5rXs0OP+Jh+11319FFgQ5Nof2LYyjZzxNk3zMrFEgDkX8
-	 rNjrOnHO0PW5yIQM38jE9Bq6pRWy50wPW49m8NKw1Zq1D2t/+F4zK/rfBGyoEb9g9gccn
-	 RI7miBNX9SZq8qNz/muuFgbU34Drf4ePyTxDcTqFoFUj3q3ynrpmffrYsb5+J68+brl6t
-	 /vArgsoz/fI0tPGwqZ4DPzzirx5kz0SSJyp0K1ORQOoBgML2DVsdzu23PI6l6dPnhDK5r
-	 8xfMS5sKXxubtlB6W2j0kTQ7quw5UYPxrtzH5VTdhzo1RtJGe0dD9oEieTsMClV5B9w==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.159.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794600283;
+	b=qQVS/9xV9d51elWVZUK0snAnMeI8IN8+k3PwBsmGNcWCGBlqH/A5FcNCP8gcBImQviL+
+	 EIKnugMhMxhoNVIjKrb89x/s4aW33c/G4zIK0vIJRLc0Qxyy54rtIgA1V3+Qgf+/HSYfi
+	 9XcireOqy/Q7Xxl4+6bVplGA/+SRjMfq9nroNwLi55Yp/0ScHpby/zmPenfCDvAPVau9N
+	 nQRtFUcL15u8foci1ZW5d6qJmgDul6ybt43492ffiqpXBRYQnvBRnnLkj2TjEzNpEQtr6
+	 nl/Lf5T1Mya99bBMQfTayeAB7XCuI3UWY627+oe6xh7/TuXQ+eu16Ur/dqgscMitl8A==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794600221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794600283;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,77 +24,72 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=xjTlavLfGSkb19cYdSHKo8yZO1OR7r0Xz+e0QP7xHQ8=;
-	b=jmAlyoOuTWtbVnAR8WI/rQ9zRwuAjirI7kVlFSvIj8OrFu60M+mm2Y8W1Qm5kXbLrUW2
-	 VUh2Dw/33M7eL0dmFKO354GAk5vSLPJQtbaDYygg5l368BvMflGIA5T1PhcreLccuWUsg
-	 wJKpw0+hi4gFm+mfw6+F60Ofg8EIBfzg7U8QD65ger0au+9xfZedX/VNYczwF7vSnYohx
-	 8gHiRpydb1W61Etm2J8PvxnJvAvUqD5LAXWyFyhD/FGO5ZQ5hrg3ACvNP0BVAeqWNgrhA
-	 Kfnu2y1nIpr3LGemMgNmLVX8jdBu0w2kBosopOMQzHoLaKiPrWEFTeVg79I3G5m7kTA==
+	bh=my1P96R50u8+L398DThu7Aw/skAq9kj14o1z9Rbd2Xk=;
+	b=2vGZhq4JVm2HF5/2meUN1P4jj3YxsuRE9k9KR8ESu6HxCgGI/7qKehL4lnZufGhF22cw
+	 UbcMafYsZxLqFmyWW5Jv9bwjOFNr5zQAVpt8GZQJGERW+3VVYDkkqmgDoONusigSktP/T
+	 Ud1+MyoshRlNf3Km0bLTQQ1JfcgHuaZ59DwX98V9ToFXdBpkdB4LIZrEals2Kibyg7IPV
+	 sNKCuXsh4dGI9Y7G2dL0qLrhthR+I9Yd6Mxib74cnRkAcqqoNRI7h2VJoIpLcopFRZHWb
+	 MZncERSC7Qx2jwESswr6i4CpyxY+QY+gS1fbKqJDMVWi3DaD2+fhoLFmjGsYl4JV68g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=wIi0Coim;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.55
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013055.outbound.protection.outlook.com [40.107.159.55])
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3;
+	arc=fail smtp.remote-ip=40.107.159.12
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013012.outbound.protection.outlook.com [40.107.159.12])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC51D606A88E;
-	Fri, 13 Nov 2026 20:03:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC51D606A88E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33C606A338;
+	Fri, 13 Nov 2026 20:04:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F33C606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=wIi0Coim
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K4QqZLIKkbQCxh/GxKPKfWCgm8sJCij32PBy5HKZxv2q9B5sAjbvpRQXHC2ZPHGI/9CdO31iIA5bwsp36VIM4fv0H7FnLzlLHz0h5d8hnuHOnWYq8UAUIvt7zU7Z4APyvhZqkgyccL4aDMfkCSHcGJPfaTha5/+0LmGgD3wE+obZhcjPEV4ESxFJhJjlMbjCyjU0+SKO+eqRKAoDR5fYFLYpztNcIqqM6kgiaW2Dq8AwI3Hi4xsEblQURICAaFESK1HeQj17cE7XZx8ARbwtKc6gnJaMNRHXSr4BGAFOYam9fe2vmNfHCN23OohOeatYMyZa2CBi/QOigAcbzLRlTg==
+ b=BpwFV/1J7SmBoU/oo3rRLMzgcuNFSHAV1kmSwocDqZevKznvxqsbZDaA+93RNmcbVVbH4s9OrnWdzIq242OAG4hANZhBOlE7HYYMxFZoXY53lsA2pHdrDM+MgUWQUlhuxY0Nh2LP4NgVVal0xAuLW9+afFP9Z1HShc4FkF2KJDo3AIxJt54x6oLejRzu9CFLzx6eSmXf/O5dd9B6LOuDC22SCupZ6I1S0/riF/vPIF79LgnkIiQafVS9yCXy6mEfp6kByAMkJ6Pkg11x41Owo27m2KK0ZUK7byrAsRV0q8Of/86d6o8DmWXypKGm05XstmE2l1/4NeNCHa9J8Ub92Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xjTlavLfGSkb19cYdSHKo8yZO1OR7r0Xz+e0QP7xHQ8=;
- b=ZTLZNBf6zLSR8Gqzis6r84sLIkYbFUwjSWN3+bkQ/M6sBaRv648qXOtS/AHgBoi24BwcelRq4fwYu2p6j7HTqWqWooaBUktWrv9VYGieiPueL9UcpUmD1MRD6F88++9wbYXGaRDK9RJiQm+8bqQL8UvEglwGLMXbDoF3vx+OFZiir5svrb3g527yJzAMgCxhwePpc5VkBvC7JNV2XRizuIY2EJf10aVX17McoJWkaVVXym8BsOj8NAiBIvslwDGcrw/Rf7hOQ08eh0RFCo/cgiHlR+DszLLXbsX9XLTh4PNW0sQqDmjDx3nXeQvgOCVPeVg6HEuCns4lczLYBHR6QQ==
+ bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
+ b=j/wbTZ1Y+ddNli8AT0szGuc+I5+OBN9BCGkBanU8fvJBe9p7LBCwuPsTmKKAb2tBElLsTHA3LgWlhwLZ3I7gA2JE9YgNVIi8XvbFXaY5/Uc4afC/GISlKZt9cN4PQMTiXOcfhIXg6u8QinMYjchqm8pS4xB4wyUZOAvF8O5DhSxOuigd0Ds0t0GklrHskXYMgbRCW4a9afC02YDIMJnqZZI4fy8qwbVU8lx7ShGyxg21tyUFiNAUUTbv4mVXp+/TuQyjeRpNfydIHpQ1uKrFWbSKiT/AoUnDgvTkP6pJ7kK8JRImeG9HteAV/liPOkTKnnQFTJ2HSQ1cXwZ77RpOjg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xjTlavLfGSkb19cYdSHKo8yZO1OR7r0Xz+e0QP7xHQ8=;
- b=wIi0CoimtMjVh/EGY3XN/dWC/glqfjc7MRxMGgYno+sFaq7pTZubSNJbv/tJBp+CAgmDb1wU9i9fNlbqBgA5fHjDiZMm3neFazogBGDpX/PoJSlVx40e+E2FrsUme6YZKijtjto65VHmkFxOd9NSSkeyCyD2+hsHhFZYLL0Ww9ruWBQM4zsjdyu32PEfX8XB6I147OsD0pQv7ZBHT55sG3nlHA1TctPzK1zjW+M/kCJ+r11xFcsi0HOYL41Drz1YPh+pBlTM0vyUJOiU5E0l2SiotqUaevJFqbSKOQBIy5UrpgID2wlOA2BJ5fr/QcyQOCjj96T6kQcWk8VqpObY8Q==
+ bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
+ b=uiSENmo3DbncW/56vtN1Z1ghzR2tVAd8nUXQ0zgSldP5iWUldCrHnP/5qP3E5CyeM3ZxgXRxeMxuafNRRED+GdPZqCY4XXzuQWnagb9QFhngymKhpWNZSjnSGQXAAtyQU4zIou0/qd1If8M15e6LlpXTKwUeGhxlCljF/Pn08czCcrYJ6QrmFQTlH1L3cRruJskP9Sa3TVZEHCx7FyL+DhJAVClKycwHH+I2ZMahz94Oz7FOiGsftweAaqLjem/JT4qow1qn63MyAqcKBuWGObteWkr67G6dB5xo7fM87W2B/ewvB6vWUndHGkXK/guKzlZCl3gV1svQYGu4s8kX0w==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
  by DU4PR04MB11753.eurprd04.prod.outlook.com (2603:10a6:10:615::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 20:03:36 +0000
+ 2026 20:04:40 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
- 20:03:36 +0000
-Date: Fri, 13 Nov 2026 15:03:28 -0500
+ 20:04:40 +0000
+Date: Fri, 13 Nov 2026 15:04:34 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: Binbin Zhou <zhoubb.aaron@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Xuerui Wang <kernel@xen0n.name>, loongarch@lists.linux.dev,
-	devicetree@vger.kernel.org, Keguang Zhang <keguang.zhang@gmail.com>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 3/4] dmaengine: loongson: loongson2-apb-cmc-dma: Program
- CNDTR when advancing sg
-Message-ID: <avdtEPKqoCqCiUvn@lizhi-Precision-Tower-5810>
+To: sashiko-reviews@lists.linux.dev
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add
+ pause/resume support
+Message-ID: <avdtUqpPcPf9Ykbo@lizhi-Precision-Tower-5810>
 References: <cover.1792988985.git.zhoubinbin@loongson.cn>
- <dcb49d67055cc41af3bd68cce01c05e73a7c2787.1792988985.git.zhoubinbin@loongson.cn>
-Content-Type: text/plain; charset=us-ascii
+ <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-184805@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <dcb49d67055cc41af3bd68cce01c05e73a7c2787.1792988985.git.zhoubinbin@loongson.cn>
-X-ClientProxiedBy: DS1P223CA0027.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:8:44e::18) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-184805@kernel.org>
+X-ClientProxiedBy: DSZP220CA0024.NAMP220.PROD.OUTLOOK.COM (2603:10b6:5:281::8)
+ To MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -106,90 +101,158 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DU4PR04MB11753:EE_
-X-MS-Office365-Filtering-Correlation-Id: e7a4d8bb-efda-4d78-42ab-08df41c13406
+X-MS-Office365-Filtering-Correlation-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|23010399003|19092799006|10067099003|11063799006|4143699003|56012099006|261026121527099003|261021121427099003|261102123227099003|261009223027099003|22082099003|18002099003;
+	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|19092799006|10067099003|11063799006|4143699003|56012099006|260925021911599003|260925022911599003|260925021311599003|261022105027099003|261028144727099003|261026121527099003|261026140227099003|261022075727099003|261009223027099003|22082099003|18002099003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	zGRXIPLWmUBDhOiSpZOiMtZ+WLYCsfWuXX7/fKz0dGwVhPOpWdXqzvZv7/FFBO/VbbgcitZiJ7XMBEWrmUX7qySS6TYe2B34ZUouNjoX7zfH+R/YvvXCjctR0Q71cLou7LV1l7Uv1vXLbBX8fbxRpctQinZOBk7YNMuYUZtXerVwpDf8nUKXHc5S2RJHBGwgCz0cFUJDXbzT5Bi/eGNRiXgjpaiRr0iJ7xMXytTCYpCyQnV3L/V8/vJX4yWcGJLwHlWb4jPX1ywvMav1RE5+V0vGTsxBQF9k7ztwOl3drZfss6Pun68JBNkdoUXhpxNErFsAXRYG2tCWUZ1xVLdCu5rf7QA7TZcasfguy3uc7cLIP2zeGNpXEiaPi+3NAo0ahu4vAAupRzznNZlnwBYJpPAZbMYpARlLnm0wG7Yuxr3ck+0hs8YVkJqiw+z5gtaBr/pEtMS4bCzNXDdlSUmvQTEnRecBkJnhfsuckkKIcsY8Xzum4ZBDdTvyfviByDfXTNu2WZGG3X+jhbFBSAkWUPn8VURIgeU/eSDwjs3VbCXUIQXOLz6E7dKW+wOPKAFt6MTHSaDfbnWXpvjUbO2vNwPo4lL0Kt9L4DJ014N43ZWUJnzipZfggYPduWeIZdnFsBMNZjsMpfl1DSuDQAKV7BI8Wh1wISbq4p/fNvv6G1Q=
+	25kYAKWcNWyNpZG1rr7VQcPfPCfuh56oHoncnb+pPRTihcGG/HKFqpPjYrpsSzMpwk2dhCuYJG+ozBgVf0MRQ1sgLaBPzKp+a/IQsmMKUXNanUn+0YiSeGVSFJM6E6WH4eZBV0py06mgCVsqPtijrb0DLb1Gy+c0G0l0uugUBByk6rb2MW6jPdMNX5F7nRpCXHXliKINglTfD4BJbIZi6HI99gnhFabRZ1eI1H6u0lRzMaUHUdN1Bv96JLYymdylDQFNvVik1scX7OXfvkQR5n26e0wLrwgdV2sQLqrd4XLbjJDBI1MU3EjgygIb77WLIfvDjEAye8kUZADpL1Zz322hOxGjEAhlCvmN8rphB6CJtR4ffHxFAksh3d7p0o5OiLMF7lRMlnyW68C1DgO+bJNRjvhccUJQMPZSz+biF/yHj3WLKQK/AeLbXsyr4B8ehkkLMfCsorwM7jxEWJTYf1A23ErAD4GbNybg4iUIjQN+WnCLGIeM057wD3n+b9LFi7uR3tuyhDnIOOjJ00D8LekEnNEi1jlN6EAVHv+Msb5BWa0ai/9IT8GGqbDjmJCIJEnNTsWljbPC2QEjlk0JZNhE5HTOLPVub9lbjNwkjag=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(23010399003)(19092799006)(10067099003)(11063799006)(4143699003)(56012099006)(261026121527099003)(261021121427099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(19092799006)(10067099003)(11063799006)(4143699003)(56012099006)(260925021911599003)(260925022911599003)(260925021311599003)(261022105027099003)(261028144727099003)(261026121527099003)(261026140227099003)(261022075727099003)(261009223027099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nFc9oZRSC+Hfn8AMY9q8n7XUwgw+g+vcai0Cd1XeAeu+/YtjgxGUIhDC0aWC?=
- =?us-ascii?Q?ZvtRl45+11Os5vNpV2wQqcM69+j015FfhEDVvb7A348113wzLRoabr0PHsmQ?=
- =?us-ascii?Q?PZlKs/gRCIu1lo9Dz2+sOpB5sLvIMB1S0shiyq/3Cl/wqW3P7Wb6HTd+ZGVU?=
- =?us-ascii?Q?209J5MFvqEYJD4LH1m3tGUkVOaahzItNDyNKBagTcEVLSzXjPf4TamDKryAf?=
- =?us-ascii?Q?7q9SU0nwFKGuUAnVKRpMawvx6lW9VSlkmPcHJi8fV//vCIAGS8Bai5/R7kYp?=
- =?us-ascii?Q?KqwP8ryMVtFQYnPMFbh3XWFihrL7m1ri4sRSZgoXbXXNk7vNvDF9HbbqTeHF?=
- =?us-ascii?Q?oOrRSsAN38XWkP85JmR2OXww0HfkvblNMsZcKhUwXVOC2ZRb6yIplgFqOIsI?=
- =?us-ascii?Q?FMk0XlYQj3y3lXFFrUB9Gfb+gYdFl+N6qoFQ5wg2L2mEWTAgtaV3LAOrpY5B?=
- =?us-ascii?Q?SI/iLdrmdEoYA1uCzM6JnSK/9xxeFAEq0tjVCJc4vCAFqma0NrAw/6dxtBUh?=
- =?us-ascii?Q?bqEPMxAeQ1hJSX1FU9ng6i8x4Q5FhQ1AwCfouR7XdNqGcA5W30f7jcUFl1r4?=
- =?us-ascii?Q?6Y2gAuFdr7XCFl3GuJglZezYiInzuWCRWg7jA8HRPiqimeZUpYIYJf21dqPB?=
- =?us-ascii?Q?CZeoXFemqPhCakC82C7NiBSxSXzHbcMX+PIUfnFwAgVjTgYeg7TUlPuxIuZE?=
- =?us-ascii?Q?2awmhYSeoGLOiK6OcJoY74wg5TYB7JdjGtJH2WPan+lJZPBZ0IbX82iMASXx?=
- =?us-ascii?Q?ni9rgQ2AxvN41zB2T7Zu/7yJ5Dv2JJow+/VmmexQZED8fkdc+wkVRnesQvUm?=
- =?us-ascii?Q?Hh4syFl5dM7a2eWeMvlceI9NzbPsIhPKDN+tWVtMMzAQqQM80F5KC/516Taa?=
- =?us-ascii?Q?GnsDB+sd8t2EFZmBr6tVsJl8D2+gbnnS+pgXSP4F7C9bS6B6jarmyuh2baaf?=
- =?us-ascii?Q?ixhuOnFwS+bSrkzQ32Q740yTMia34QePqDquIuXQ+rhzkXCBp5yNJygwIvry?=
- =?us-ascii?Q?KHLQlerezTiPYtviWax1d8nVpR9suWZfv6Om2LDVWkm5jOy3cRYo9+KuNArP?=
- =?us-ascii?Q?Ljz7s0LOofNzUD1hMZirjhBGwN1B+DgXzWLy62wXHdnmQhInqexzj0zADimR?=
- =?us-ascii?Q?M0Y6PtrNWdTO3AuwiOAyJRe+/4/2lC6MaUyfr2p2r9G9aVqtMt+WqxCGBsUm?=
- =?us-ascii?Q?braNuc0PFOTm5PsF1cUZQ9ezyRveFEI1nPSZK6ocVwLYozRAySKa4M+/jr0k?=
- =?us-ascii?Q?nCarsJL1Oo/xAxMfM7/0oh/5y4fHRiXfLVWhAde/jI04NQUqiIsmRCQgmY2r?=
- =?us-ascii?Q?cULdVyJJoTW9dVysBxVwSAeCxCvk2GXYDmeZlhLMknPXriyC9aLxl8almHgs?=
- =?us-ascii?Q?oPEAYYA+p8iLwIunNnEQNRMNot8xsHKVj8E3zFWuJP1ALCb31/VJ/xsbXJ1n?=
- =?us-ascii?Q?uUPOv/R1aG7SjWUlj8h5GqFZMCBABkhxTYhFzP/Oahwz/cztOSgtgjMio3wu?=
- =?us-ascii?Q?6zz1VlQmiYjXsM1Yh0y522EqUy5hWKT9+CqYUeGZMzpspcxmLT15f84J/vdi?=
- =?us-ascii?Q?Ep9DXNtUew4VyOyZYYEz1Z7oaYnjPxN6Sz/wjY2BGUdCEhef3muxXc29yps0?=
- =?us-ascii?Q?x0U9qlBPeBTh4ukmAjwHasXlUWqIj0jyfeHnMCq81ks0NaUHQt9tALkIawKd?=
- =?us-ascii?Q?v0e5RcK6kxkg/wGNoeAs3KJUAc2U7A9t+IwhK+BuFd6czZCM2pVtlSVQ2HOI?=
- =?us-ascii?Q?iqP857r0G/0SphZFDneOoGN5glN23fMg/5QjR8te3tRLF7rZoLOa?=
+	=?iso-8859-1?Q?0+sjJeyxfpzzJrpe22wDMhJJeaGzvSfsBZgJZg/hTL8sBvJmvrSsDJa9hc?=
+ =?iso-8859-1?Q?eL2mlsin1lIrUs5kHBlAh7QaBOqid8wHCy2QpgIRsspDLjzvryCHKcgd7b?=
+ =?iso-8859-1?Q?vnxLjwuQzud4syKsFcsgjXQ2YEqBhb7IkzneXa/Y2M4/Wa5/OAgqJMt7Db?=
+ =?iso-8859-1?Q?uaDm4VwDRlf5jhcTd8cqXcf7BJl426I/KTtlEYikg4FAFIBwOHYFsZHbjl?=
+ =?iso-8859-1?Q?kdnGaKY2vIMLuL9klkzZikNfCVzJIO3vs6cE5BLOjzDShll8om79gu5zjb?=
+ =?iso-8859-1?Q?J2zqgre8ePhVvITItY2MIqMiKstqn/xSPxCe3hMfWN3WPdLanWzjinm/u6?=
+ =?iso-8859-1?Q?qUdchlksEyrlHIutTyIcwiOIRJ5NdVnVxuq6quJI3Anyoq1fEYy0dVKXQV?=
+ =?iso-8859-1?Q?nlAOFnIqJ+/Y3mJ20+hYl9G3XXKmNw11BIGr7xdxJWfh2YjFe7SmCng8Yz?=
+ =?iso-8859-1?Q?vgrL1VyXfeJVMRkomnH5xsWdIfmQIDYwSu1LkQYJC0RYwOjIiKYqEzFhsr?=
+ =?iso-8859-1?Q?pd4wsblVnTkcNr8yVRiOZL2kFZjKcgR88P0woGDG0lgImThoaShqkYnMZs?=
+ =?iso-8859-1?Q?Tj5LPE8e2k8wh7H7yD+kfPRRWsHYQlUpu15joUPyqKOMms2lPZuDYLfZhP?=
+ =?iso-8859-1?Q?6aAl82WYU7KkAE2YJJvCTJeneVuEuxSzvUcb4l4M4PcbREseO4BKYthfVr?=
+ =?iso-8859-1?Q?oAyxKfPezvg+pkDNjTYmz2npptvDAGPXXMCoz/yVlBOGrVYjXr6wYfVB6m?=
+ =?iso-8859-1?Q?S4QErIsCyK8QwVAfY+gRIsf0KS7nYaAl1X3ThR0mA79akzlz7XSxTdDHsZ?=
+ =?iso-8859-1?Q?5OI9/GmjBeFU6qEQmEhKHai0uOXBbZ2Sg5T5Jcy5coE899oaR/Sq7OdyRE?=
+ =?iso-8859-1?Q?itD0EZ3/JXgJ3PPKjTPyB5xdf62s4g/68dXOs2KnxTczSFdkxUPy+8iv8z?=
+ =?iso-8859-1?Q?c8F3jErangr7VpK0tXOxU95+0QQ83oEeyzf8bs3fYEdKGwryntbUPZYlSQ?=
+ =?iso-8859-1?Q?E9yX+ld1DwxW/R1c3WmXl141VsRtvoLS/KP/zN4STGpl6D42AJM6YQEABJ?=
+ =?iso-8859-1?Q?73D7Og7j9IfYX8M2dRaVOGC4/G035z8H5p0jw+Ai4IkYWWYpvWqISqEWsw?=
+ =?iso-8859-1?Q?f/ii4sMm8Y8bLworZgCcaspACTg+inSJwUvuNOsw4wk6LDtTrPjr5A1+RH?=
+ =?iso-8859-1?Q?ezUI2EkfvXE5WvgcMExllPkpkebgftyhy2fDr8W+pgjVh7opuUpDrJmMOK?=
+ =?iso-8859-1?Q?6L8nraPzpHlAN85QpeNjtB6XHWH4Nile1Qoz/u3jqv+kXJI0iPKbHZ3UGD?=
+ =?iso-8859-1?Q?fwtUSZeV1tJ59C8eKd7KPsdLDBhYefA6Jo1cDNgFVHviFRFtpWFhbohDme?=
+ =?iso-8859-1?Q?gQ5JRD8h65ekzZ1VAazaKmzqKgJ4+Py20vHHHieJZ6ZF5tz9YkMnAu34dI?=
+ =?iso-8859-1?Q?IAcxUvfuGmetqrZUpeMYWTfX3o46L3Ui4rI16pJrMBOWT7Hs4KH31FaHFv?=
+ =?iso-8859-1?Q?6dCEJNC9pzlH1sR2IquMNVEqmmO2PjN/mp9qv89X6ptk1EXL0WeGvwFy4u?=
+ =?iso-8859-1?Q?ZAj2GqzuHC+HR5GesViLwURuuILLWbse5SmLKUbH8Y+v4eeCs3tURbHUOR?=
+ =?iso-8859-1?Q?s2oJHqA4CNEwTggyiZc5iETkj9HTv8I0ihJeLDZipSG/tfP3/S+0AaXEcQ?=
+ =?iso-8859-1?Q?mpIuFYchQTspZYSNmpP869MWBMYbcUfMSc4EZH3lorxqDbD7RwfhOd7rYg?=
+ =?iso-8859-1?Q?5KKf1pn0pK4ITkddb5kYWjykvCDt5vNmn69+uuTJ05HsOOoefouRO6zrM9?=
+ =?iso-8859-1?Q?xxWSRaKDOnzlXbuChUq8/NjJDiFvA1SXbPv9p1GSWUw7dRINRiHw?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e7a4d8bb-efda-4d78-42ab-08df41c13406
+X-MS-Exchange-CrossTenant-Network-Message-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:03:36.7835
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:04:40.9449
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /N2I8cfW6rIV/mcXrquUljzd8Gcse0ONyUdkUTdGzFu5kgKhT77sVAEM2j4tn0D78e/GEzZoEc5rEyehFEMBaJEsfy0UpVbHAd1PV2hV7kVVSVTHdi4I6bqrsHvlTcfy
+X-MS-Exchange-CrossTenant-UserPrincipalName: uHSsQh57v+SoCrx8ixzbR09K6frxchsqVeKy29LiSCPkilMbgaPknW6ITXQRurW41Tg7s2Gj7EL/T6Ic436OulxbnKS+cGfbni+OWr/YL4l+4A2Xs58Wwkz+AHqYSS89
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB11753
 
-On Mon, Oct 26, 2026 at 12:31:22PM +0800, Binbin Zhou wrote:
-> When configure_next_sg() moves to the next scatterlist entry it updates
-> CMAR but leaves CNDTR at the value left over from the previous entry.
-> The controller therefore keeps using a stale transfer count, so the
-> hardware does not move the amount of data the descriptor describes.
->
-> Program CNDTR together with CMAR so software and hardware progress stay
-> in sync.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 1c0028e725f1 ("dmaengine: loongson: New driver for the Loongson Multi-Channel DMA controller")
-> Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-> ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  drivers/dma/loongson/loongson2-apb-cmc-dma.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> index 8b8d530d60c3..c654e0572902 100644
-> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> @@ -266,6 +266,7 @@ static void loongson2_cmc_dma_configure_next_sg(struct loongson2_cmc_dma_chan *l
->
->  	sg_req = &lchan->desc->sg_req[lchan->next_sg];
->  	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CMAR, id, sg_req->chan_reg.cmar);
-> +	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CNDTR, id, sg_req->chan_reg.cndtr);
->
->  	/* Start transition */
->  	ccr |= LOONGSON2_CMCDMA_CCR_EN;
+On Mon, Oct 26, 2026 at 09:35:17AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] dmaengine: loongson: loongson2_cmc_dma_start_transfer() clears pause state
+> - [Medium] dmaengine: loongson: loongson2_cmc_dma_tx_status() ignores pause if !state
 > --
-> 2.52.0
+
+Please check above issues
+
+Frank
+
 >
+> commit 8e161a43d78d90e76eaddc39b1b96c7a28b1dd6c
+> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+>
+> dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
+>
+> This commit adds pause and resume support to the Loongson-2 APB CMC DMA
+> driver by clearing and restoring LOONGSON2_CMCDMA_CCR_EN while preserving
+> the hardware transfer position. It also updates status reporting and
+> cyclic scatterlist advancement to honor the paused state.
+>
+> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > index c654e05729024..a4153ea854623 100644
+> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>
+> [ ... ]
+>
+> > @@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_cmc_dma_chan *lchan)
+> >  	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
+> >
+> >  	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
+> > +
+> > +	lchan->paused = false;
+> >  }
+>
+> [Severity: Medium]
+> Can this reset lchan->paused and restart DMA when a segment completion
+> interrupt races with loongson2_cmc_dma_pause() on a non-cyclic transfer?
+>
+> loongson2_cmc_dma_pause() allows pausing any channel with an active
+> lchan->desc, including non-cyclic slave_sg transfers. If a scatterlist
+> segment finishes and latches LOONGSON2_CMCDMA_TCI just before
+> loongson2_cmc_dma_pause() acquires lchan->vchan.lock and sets
+> lchan->paused = true, the interrupt handler will subsequently run:
+>
+>   loongson2_cmc_dma_chan_irq()
+>     -> loongson2_cmc_dma_handle_chan_done()
+>       -> loongson2_cmc_dma_start_transfer()
+>
+> Unlike the cyclic path in loongson2_cmc_dma_configure_next_sg(), the
+> non-cyclic path in loongson2_cmc_dma_handle_chan_done() calls
+> loongson2_cmc_dma_start_transfer():
+>
+> 	loongson2_cmc_dma_stop(lchan);
+> 	...
+> 	/* Start DMA */
+> 	reg->ccr |= LOONGSON2_CMCDMA_CCR_EN;
+> 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, reg->ccr);
+>
+> This clears lchan->paused = false in loongson2_cmc_dma_stop() and
+> unconditionally sets LOONGSON2_CMCDMA_CCR_EN for the next scatterlist
+> entry or next queued descriptor. Should non-cyclic scatterlist
+> advancement also preserve lchan->paused and avoid re-enabling the channel
+> while paused?
+>
+> [ ... ]
+>
+> > @@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
+> >  			/* Active descriptor: compute residue from hardware progress */
+> >  			state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
+> >  									lchan->next_sg);
+> > +			/*
+> > +			 * A paused channel still has an active descriptor but is not making
+> > +			 * progress. Report DMA_PAUSED so clients can distinguish it from a
+> > +			 * running transfer.
+> > +			 */
+> > +			if (lchan->paused && status == DMA_IN_PROGRESS)
+> > +				status = DMA_PAUSED;
+> >  		} else if (vdesc) {
+> >  			/* Queued descriptor not yet started: residue is the total length */
+> >  			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
+>
+> [Severity: Medium]
+> What happens if a client queries transfer status on a paused channel with
+> a NULL state pointer, such as via dmaengine_tx_status(chan, cookie, NULL)
+> or dma_async_is_tx_complete()?
+>
+> Earlier in loongson2_cmc_dma_tx_status():
+>
+> 	status = dma_cookie_status(chan, cookie, state);
+> 	if (status == DMA_COMPLETE || !state)
+> 		return status;
+>
+> When state is NULL, loongson2_cmc_dma_tx_status() returns early before
+> acquiring lchan->vchan.lock and checking lchan->paused, so it will return
+> DMA_IN_PROGRESS instead of DMA_PAUSED for the active paused descriptor.
+> Should the lchan->paused check still be performed when state is NULL?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1792988985.git.zhoubinbin@loongson.cn?part=4
