@@ -1,97 +1,138 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.61
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.78
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794603491;
-	b=IH1znQxuAvbnkgLf0PWVxzeLWWJW2ZJRhmDHy7v+bTZLK0ZM3qK2f+f1+BXhJEf0/Nd9
-	 BBwBOI7iAKbY+STN6d2WV+IwukZOwWF1xDRLjIivc3oeIINd74led5TLvMV8+3EUrPWkC
-	 CyqvlSnPtv5s9lH4ouJ++1I30Ke3AlHm4w7CobLr3BzzhjBgJVCFnRKLNQxTmJrJH9L48
-	 KnS3LnKwpmq0k7zh6NPuU1zTqj/qZIVsvGmKI51JJ7qanyW5pTyCj5+eltmm8xldoVIwh
-	 T17CaKx7FJBIFTCzr7OabDpZTEOlyl1+SdQPzNKD81RVtn1VkEiXj26Q6j++CDTiBvA==
+	t=1794604804;
+	b=3AcJuwXm8/miZYa1k/1q+zSycjbY5S38+AMI49emOWC3eLkOcnXacSDzs1whrZGVBKc1
+	 Z31oziqPzTstVvnH8qGfKmTbwdQS4fFBVhD/SkmC1EEBDi8jO0cXIvDH3RUAb2GyQEFTX
+	 JWO4zV8+lwM8oStgF6N8OUPyvE8MPT86qCLse1RikMA3MrS/DFyaxNqD6N1DlEGspfWF8
+	 9CLtazu54aoA+c9a12iiqBJX77oUn8QqPlugt6XQviy2XKtANYVKxYYBhRMQsU3/mhAf4
+	 d7FLGbvZNWz8FS6wcDs+2m0l6I25MJlvkyL11JU7c4D3UCBr6cQCpakXA+lq0QRYRWQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794603491;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794604804;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:Accept-Language:
+	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:msip_labels:
+	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=2F6PvEKYGHQJADODQVdR1ExJ/NL5IYL43p0jd3w1HoQ=;
-	b=0oeAs4upAK5IS4BKiIX0FRZPicadcjh6Rspke6MyO6qlSuHVXQclJUZvqfLBc7IPu62O
-	 fFT1T3A5eE3R/Md1Kt0Azi8dO7t4beaUqxgiyTQFvUcBMbc5Hb2ZQ3fDVovnYCYDerqei
-	 krLkWTf/jX3sa61+JI2W9LA2sJo73lS6IgvnN2x68YxUy5rMyMue7O75l+ymYzOLCp4ad
-	 bBDrXZSc7BvuuUS4lGdJLEsHXrofYjXD1PV0q3GNN8NVpwcqRk/Q8u5mTh/PsoxZstUPk
-	 jsYjQyQ0F8jeEyWOYA8vzeBujVVVh/vEmRjuawPU5H6KXXBV0kdeu703gy57XdxgLlA==
+	bh=N4F/k/aISYCN1exZkWKm7aqK5VMzNONGdLSKEySBuPM=;
+	b=MowAnV4r/lxz2H4tar/Te60fABism52oz3BAMoF7TiZFkjJNDnFowrTa0ApQpHje3iPA
+	 roEof7N3w5vBahX/yk57oeh4Rbo2vRHqFPnRhftzAWXQk+yard1LdeXYD384i6Cbw83Qr
+	 xLrQioldMaip+/0+1z1D/WKNbYmkar9fZDpgZiCTgSt6WUjLvr4mqga4fOLAfjfnJ3rWO
+	 AdqiACqKSU3s2jzqZynAmyX3vOobxUn0GB9/9sdiVZ40CJE2oglw6SpIClWbmtVIFoaeO
+	 E3/G/a3WOBhjxONFbO/VmO3VoF+wnDyafplTgeqWfHUklwpNM9+QeLn+SyEfGv/XbRA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dhNLyvNv;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.61
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013061.outbound.protection.outlook.com [52.101.72.61])
+	dmarc=none header.from=accuratesound.ca;
+	spf=pass smtp.mailfrom=accuratesound.ca;
+	dkim=pass header.d=NETORG5777562.onmicrosoft.com header.i=@NETORG5777562.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NETORG5777562-onmicrosoft-com header.b=KmEXYCfZ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.193.78
+Received: from YT6PR01CU002.outbound.protection.outlook.com (mail-canadacentralazon11022078.outbound.protection.outlook.com [40.107.193.78])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EED606A335;
-	Fri, 13 Nov 2026 20:58:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77EED606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1671606A330
+	for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 21:20:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1671606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=accuratesound.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=accuratesound.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dhNLyvNv
+	dkim=pass (1024-bit key) header.d=NETORG5777562.onmicrosoft.com header.i=@NETORG5777562.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NETORG5777562-onmicrosoft-com header.b=KmEXYCfZ
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=h0iMlkbo4rI2Lz1QfObfbUZ6Qe0qN+Eqd4HxstgJyhW3LoPGgLXPpxWbmm+jAW547th++mQIa9Bx2z6XSiqmuh+XjEEP0o8cKFXQSk1skIZ/YLZzdiKbvZj+FDyxlMIbgDXzFd5OzR1da1GPRXxzuNXSKLbL/YmnKb6p098XQH3m0Uu+CrxnVrWs527jI/+bk6aBJw/d36z6ILPk3QkDHWMRrLymcQbYJvpbL3ZvmscQ2IwI5B0ujdeqAzsP2qaWq/XXWQ/mVSYJXzI188tWIxC4HcaspbTiQvQcNC9mndw3MMFoAtXYCcBm+zKk9UEdOJD+FhR8r+UyWfjsxqbmIw==
+ b=XNmgJoD8+JYEAmTbTTXF55/ukYhpEeyzb+6vnoxP/gBWvpSUKxW+7saBSD6l4c4CJU001bxRYz2p71fDp5SxKDTqj5WO8Wh+HuCeCCfWfWElvTaLMbHN/zFpVF0jWOuJVSM7CVp2wzLsqHI8vuo2/0YfuTf6weL35FCkG4IjS76O/yK8XVZXy64A7sAVQhG8qurrikmdnsjUEO2rKxmsG99Sijgda39noAJFshJjfOYs4SJ/8ewueirlwSw3226ybK4J6ktP9tPBWKOeOROzUUx/ewmvxn23qDJRulQJBl5Gn+zLL3rez0T/7EPdnwlov0YePrer0ueS4xqq8Y7w0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2F6PvEKYGHQJADODQVdR1ExJ/NL5IYL43p0jd3w1HoQ=;
- b=uUxcYj1b3FmwwUMdCVhZRjFmt8phwotmGZ1Ndj4SruP1PXgBccXLp6hRpDQLZpVeXLLij+yZLFccqzc0sMA0Lz1vKgU8jUbJbeFyFbkG6nkvhlw6BzAZUkrkqa6va0L7sCELtUa6qJRbm08fLM7/57oOo5PvScje9dFgKA4y8uBpOk/Ye4/NxsbFOuADooMmcZ8o9Pac0UPz88OYB2UYAW14PT/xbER3evQonQsd0YMjA338aki7yqDIFUKuqFa2cQFMM10w/8h0vWvDwqcnZ0cqDQ5gxKffLLwebEtQQ0q0Ft5qOfQFkZ5kRtcyQYyqTA+g0YOUPOrwAERMpryNtw==
+ bh=N4F/k/aISYCN1exZkWKm7aqK5VMzNONGdLSKEySBuPM=;
+ b=kVMHPgm5MqWGvIkd0BWO2RmRAe+K+mk9hveMzBrTPYjStmm0GNDo26uRS6EJ/YUQdsz4j9f7Sw5R+LJWPBmG5bqCvuMruFP7PzTfWxcNDm316Vs4FDMM75RSvX0M5ddm8yP+NmPdCt85TXPpZjhaXcd6dsfaTXQwoCBZkEdRVyNw/09RKK+4vW7LE355PMrQOJGXfQq+aNq/JE6P5TJ/ajqJgEzcYFqj2JEzEbyUR9UbRh+xlWD8Jpp8OczYVPyPbjM0ohMKiF6I6WWHAlDMbsfv5IPDR3DLr7mi0JYYPW6zJ9y0qGCwIdY5EnidQbQF+H199vZUecQIvImGgPEWlg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=accuratesound.ca; dmarc=pass action=none
+ header.from=accuratesound.ca; dkim=pass header.d=accuratesound.ca; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=NETORG5777562.onmicrosoft.com; s=selector1-NETORG5777562-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2F6PvEKYGHQJADODQVdR1ExJ/NL5IYL43p0jd3w1HoQ=;
- b=dhNLyvNvFYD/60pzfJ/ojuFmKczCBEdGR6hG7LnQwjHgalWv+PhPcuosZu4aPN+cV5UutMIOxwdMHA0BxH40Yp2I1VVfLFf8TBctB2Jn7pdlFeEJlZpwUbZO/GzDcVLvl0DZaGEw/f65KZbrwb16eazRmCEDodPCok5PoBtM5KUdQM1IPndIrporLgjFWtgU2jlmswowBCQtes+Z0kie/GkrJ9q3HXj2VpJ+GzzSv6+1ouAm5Fi1bv0xFGpDx+/yWI1w18IDnr3ugLNYPqK7ARbp+rP5HjzpsYEMwj+f0cbFQKftnE7ke+Uhadh3Kx5yYgss4lSJojp3EJ0jFIe4eA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by BESPR04MB388775.eurprd04.prod.outlook.com (2603:10a6:b10:12c::14) with
- Microsoft SMTP Server (version=TLS1_2,
+ bh=N4F/k/aISYCN1exZkWKm7aqK5VMzNONGdLSKEySBuPM=;
+ b=KmEXYCfZKJpynL5fQEOvriuuoZOqODJ93jvAu7Es+hZsvRcqfQy7YWTFiy3l8GhbVULKF98j2ImkaLdepqFBIuhyBQhIkVymWkvArP8omEXUHc9NK32e30ft+wzTi5nLWodiEsvMSiAGudTIRbayJZ9comSEfownp8DncPMZra8=
+Received: from YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1c2::21) by YT2PR01MB10573.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:ed::14) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 20:58:06 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
- 20:58:06 +0000
-Date: Fri, 13 Nov 2026 15:57:59 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.murphy@arm.com, sboyd@kernel.org,
-	bmasney+clk@redhat.com, jbrunet+clk@baylibre.com,
-	devicetree@vger.kernel.org, Frank.Li@kernel.org,
-	cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org, joakim.zhang@cixtech.com
-Subject: Re: [PATCH v3 4/5] dmaengine: arm-dma350: Honour dma-channel-mask
-Message-ID: <avd51_V5aLh3YQrn@lizhi-Precision-Tower-5810>
-References: <20261106013520.1134450-1-Jelly.Jia@cixtech.com>
- <20261106013520.1134450-5-Jelly.Jia@cixtech.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261106013520.1134450-5-Jelly.Jia@cixtech.com>
-X-ClientProxiedBy: DS1PR03CA0009.namprd03.prod.outlook.com
- (2603:10b6:8:450::15) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+ 2026 21:19:58 +0000
+Received: from YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::bde:6c2d:c5a7:18db]) by YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::bde:6c2d:c5a7:18db%5]) with mapi id 15.21.0615.008; Fri, 13 Nov 2026
+ 21:19:58 +0000
+From: Mitch Barnett <mitch@accuratesound.ca>
+To: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>
+Subject: [RFC] dmaengine: dw-axi-dmac: cyclic alias lifetime and failed-stop
+ teardown (RPi 5)
+Thread-Topic: [RFC] dmaengine: dw-axi-dmac: cyclic alias lifetime and
+ failed-stop teardown (RPi 5)
+Thread-Index: AQHdc7H3GV4hELcr/0KKcQN7qVSMSw==
+Date: Fri, 13 Nov 2026 21:19:58 +0000
+Message-ID:
+ <YT6PR01MB63707769A78186335441B06879D87F2@YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=accuratesound.ca;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: YT6PR01MB637077:EE_|YT2PR01MB10573:EE_
+x-ms-office365-filtering-correlation-id: a0f19167-bf3b-4065-1003-08df41cbdecb
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|38070700021|7055299009|10067099003|56012099006|261022105027099003|261026130827099003|261022113327099003|261028144727099003|261026121527099003|261021130227099003|261021121427099003|261022075727099003|261021123027099003|261021135927099003|261026140227099003|261102123227099003|261022115727099003|261009223027099003|6133799003|18002099003|83080400003;
+x-microsoft-antispam-message-info:
+ V+wnTURinh4g54LbxBs4A7whZBUQ2HVUOWg1+9jH/S9du9/KqqyG6/gYU/h20MAjuEiGQDdQHrS+0oBaUWnaN0QIFzFbRKicx5Y0i3INqZ4ZlBkE8HWYx/aIf2queBHw1xo6SraSxf0fYFO75up3+9Rp16nuKpamownsq6v7m1ICf/Rt4BB9vCNbm2f9iohZsQXUdS7/FzdRbBZ/N3UMSj0MW11lRd8h1wGb/qwFZ4yv1CnCXiAfaTpBCHq8m/YLBTALatXXg3/zwwlFNv0xvdTWRRPswIZS3mWphUrb2781Mct5HpgN7d4PqqZq8BWRkYKNKTo3NS2qw6GmLWAZjxlxWImESYAVbSSiHNPwlQj/4VrJijhGFYF/pCEzIJWzwr87yTYvXcXoL94xWGfUPVeCkKZW7FcM34ETlP3uF2JCNpolhzDK5SsZ+670EUdLjpJ+qawA5n1N8MRG92iGhNKko1S93B4K7TBLxEulRuQ90kZ7YKmn2wFXEdcwoGtDhaciw1WLP8jR8SQdDdC456HY25p3EcsAChPRCcsm0lVuqeyyuAdcqZk36vJQUh1OVNBfD90TGGGbysKzzzYTX71DzZDySzUDDurjEcr/fNWOUUn+5yPkjfTCnsPBR3CH/Q5JLhHbmMi29+U5OHeq9Z1n8+FLpL6Q1EQL9yw/wSwrhIMZiswiqJI2OSr42JDLxmWwwOHrQCYAam4XRDo4/EwjzkFDgI0ZfGWjzZErsYU=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(38070700021)(7055299009)(10067099003)(56012099006)(261022105027099003)(261026130827099003)(261022113327099003)(261028144727099003)(261026121527099003)(261021130227099003)(261021121427099003)(261022075727099003)(261021123027099003)(261021135927099003)(261026140227099003)(261102123227099003)(261022115727099003)(261009223027099003)(6133799003)(18002099003)(83080400003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?teP/UiSLCgU3nVhgGeIHqZNeXHpjCJajU6JWquU6EtARnG2uV0Fy5AFTKK?=
+ =?iso-8859-1?Q?WSwZwNd4a2vRiMuU4FxLlbVJ+XxMONBc2c9haE3xs56JDHV69lNReIQBYM?=
+ =?iso-8859-1?Q?CtthtrFSrQUrTgMQq0dGYblfJfNK42kh5DNNnD0X4BOM/tyG8kT2FiNgwT?=
+ =?iso-8859-1?Q?aAg+V89yCy+b6/DtUAldob+2iB17emi80gemGXVTwO6apugizPaf06uBoQ?=
+ =?iso-8859-1?Q?8I2ms3ACXHm9u9jRwT6CaLYMe6mRNtqO5z5Lml0yNg0ieHH9FswLmMZe2Y?=
+ =?iso-8859-1?Q?8l6tOUTa8Icrk/8eCoY85snIu/70TNjW1HfodToh9skv/rXCMCpNv0HaiV?=
+ =?iso-8859-1?Q?z79bhWP19dYiLdNKxJpu7eEBZT3LQT8cHTV9gXggx8C6+lvXPz4mplOYAX?=
+ =?iso-8859-1?Q?YfIwuYGYISOBx1Larc+JNKQ7a9KmXvEnx3F0Vyd6wPDqzC6QzztenvPiG9?=
+ =?iso-8859-1?Q?oKZSq28pZHbfj2jXaYA8naPSfMm+gvzcqWEkbJK1hHCEPxqVmSJoxkb5KA?=
+ =?iso-8859-1?Q?XgkB3aMWBiXC/AqvIdLo9zOw8OusNZBvKA1nzE7Fun0N7d2HBJ+AxLVKz2?=
+ =?iso-8859-1?Q?UJQdyTR/MPlsGdpWWHH5j6/PRFMqeGEAr0LuOH0yieyPM5LUXLHJnxELU3?=
+ =?iso-8859-1?Q?JmqXhlJ2NnYMSO9dhsdZ+R5/KzT9u1KNEjoHd3L9Dr27M28O3X6JGgGzrC?=
+ =?iso-8859-1?Q?NVC8RN85nXQPGMf84QGJSv6XnOweUGPKy4bajoOMLl54cg3ky8CWKgyLf7?=
+ =?iso-8859-1?Q?MNMvgufQMz/MCYVR7e2torvTAVBcKLRTze1KQ21n1alcjA+fIPjZtdosvH?=
+ =?iso-8859-1?Q?TzHwOa/lxQeUXHaegJYXIEbcZ00zndtheJeJsCFGQJp2nCO6wtu2EeAcN+?=
+ =?iso-8859-1?Q?yek76b0JFauMjecOV2p+EOjyjhuA3B0NxhHQuIdWODgSst/V+Z/FxQCv47?=
+ =?iso-8859-1?Q?/pLyTwMyutXKPQPW61TM86XoXZNc+3KnWaX528e7sKbGQKYEo8w2KmiLTe?=
+ =?iso-8859-1?Q?9wq0nMJeASbIsk7PC+JKRxKyjHVwWdW6fdvt4CQ2Z/zbXmxxQuSxDxLuGG?=
+ =?iso-8859-1?Q?gZkJAsNbKA5Se3ghTLiI080m85DMezWsiNCRks182K1g/5FxA6jO+Hyoog?=
+ =?iso-8859-1?Q?An8OGEJcKupZ1+vQg+ZdW3eclOKmML+DQNb4N6sOUiFEmJi249ySmHSbOw?=
+ =?iso-8859-1?Q?boczC1lCse0YrN2jxE5lwiPH3hVs+OCJxdJkw9mCZoR0aOph0k6nej5HPx?=
+ =?iso-8859-1?Q?fuzZGMwW0nXCGo+I5QAQTxs6LJv1KdFP72pLTY4rzq0hmDsmCcpV3Wa79N?=
+ =?iso-8859-1?Q?mjxb0TZCAYzdQyyEMtGVOkWOCGk/ZoYofBsyJpVx8d0yL6GmWjNYxyUv5c?=
+ =?iso-8859-1?Q?kSDHYTDT613Na8/r2Y5/8rCy0aomWM6Onr1g36/j1mywiCJirYH+AY7B64?=
+ =?iso-8859-1?Q?SVhxcP9kHHArwtu1pOG0YhA6sLZMiiYW4Izju0yhMD8L+CqE1X2Mi3V+Ot?=
+ =?iso-8859-1?Q?wxxTy4WHDHKmcSQVa0UDuNIaBYh0MNpxIdQMYs+OJ+b/F6x07pPM54BvQo?=
+ =?iso-8859-1?Q?1iglgA01NGA4DCMnKrBRlZtfz8kVzKq8dqkr2ENkYm33Co11SUb4G/nZ7k?=
+ =?iso-8859-1?Q?gM9pkjAqMPnChyuH5+5qca8uGgCll27qKsrqYM0wxuHJn2urrSK5Su8z8v?=
+ =?iso-8859-1?Q?c/uiYV1+5txw6kOyjy2OXMpAs6jSloa0N+30b6KFJuKI0GzOMUycKVIFZM?=
+ =?iso-8859-1?Q?iWStLyqy/JEXGxccLw/D43TjP16jkqqrQLa+M2zp6fBR4e?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -101,128 +142,127 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|BESPR04MB388775:EE_
-X-MS-Office365-Filtering-Correlation-Id: e8da7c88-a9af-4ac3-38fa-08df41c8d127
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|376014|7416014|23010399003|1800799024|18002099003|22082099003|6133799003|56012099006|261021121427099003|11063799006|4143699003|261028144727099003|261022105027099003|261021123027099003|261102123227099003|261009223027099003|10067099003|261026140227099003;
-X-Microsoft-Antispam-Message-Info:
-	UaOlL5ubWw+jb1LBabYOughU1W9+C+6IXNlGBK7xvl0GbKAB9oXMF5Ny42Z+6fXJFwmurD6gsA8wvL4Nft724TPVU2or9pmDOwxONbOZ0DSm7DxnWc8GWncbtre5O/R2etnqmV4J4EL+vX+gZ01Y8QWDAH5hWv/ZM7COI/YgbscSBwSqTpCIyL2aOqQZ0H1Q3O4/jsNXtQkM90dbzR8GU/EoHHu+dPM41NsMWHPXvrEqrULcjOUH8GzJbe0J23FebJU3BOc4e6ZWErrD30eJrVYi9DzF1AUZepx6cE1NKjpJTVss8kpVbgG6bebSm3LyD/ZSjAt5SPOTnWFumefT+kv7xZYre8V9zzPmTtGLVU7C6QOBftWZopUHfHmWDXmjb3pmFN00evilF74sUuf4uj3yK31k+sQgEcqBLaDJgHrraQKJNZhGG1ubm7IuV4/ihFJPDQJM/xm+g0mb8P2ZP3kM7yo4oHyM9TEjXd1wYEUv9uAF1WHu2zjesSuNZskCgpF/zDYqJTdnrvjvISdqQSJkAuE+xdfBusfNLfEU3EZzj9yNa8qgpMJy7zlz2qH4nmerFezHTEwGzVxAI34W6WDHb/uwOCCO4LEn/zPDn8Kiv4C1LA39MnEf8aITibcV6Lj5gOnuN2VJ18+Ar/a1Mf/VxreafDtu+7fcV+X8f6Y=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(376014)(7416014)(23010399003)(1800799024)(18002099003)(22082099003)(6133799003)(56012099006)(261021121427099003)(11063799006)(4143699003)(261028144727099003)(261022105027099003)(261021123027099003)(261102123227099003)(261009223027099003)(10067099003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nq9PHAgDPCJGCjnA4N0aF8dNqgr1XJ0YPIRhMMOr++DI8OsEbjXeN+kX9pvR?=
- =?us-ascii?Q?mHGJuKZ/oG+ggKUsrGijZtg+U5Yf4fHWSpLjrnAyppEW9eK6IiLiy8pWtoxf?=
- =?us-ascii?Q?jwvOjd6Wbl/dd+9dji37fCW2EKUAfpRYCGKqeZQTsgCOnGSv6E/yHO2k65zW?=
- =?us-ascii?Q?JEn1G6JmKbk26Yhv6LgffGIQ0rhHXV1Y1YUJXiTel9lWDKFyvoTLANMPyuD8?=
- =?us-ascii?Q?0GhcUf++oOUEC8/O78mmwDXznD4R42c0JFV2+1v93dNI8G8rpfu02Ni9e/4G?=
- =?us-ascii?Q?1wZEBXwUKtp5g5V55DUtzrU9r7TJ05piYhTY4AK8mjufwMYuTE5Vcr7b6Ur+?=
- =?us-ascii?Q?w/Qt2n/C2Ln3qlamEQdireDocxnhWyZxawNPO8XqKkOWeec8XXHi4jy42rYw?=
- =?us-ascii?Q?m4TPe59qL7n6mUsV4DofGopCl35uLyqG7UsYXsjYpHup7tTI7/nHe9JAdokN?=
- =?us-ascii?Q?15xOboUq3aQ6TIZrbrxHMVnl91dr8wr4gD4zvzyFBrvZ2l4fY63CF5EDEBHd?=
- =?us-ascii?Q?PahKL9TSg8fLrglBCTWvWdHnW9pY74ktGfWPdFGFMMMwuzvtoDmbegnHeE1u?=
- =?us-ascii?Q?cBLzuGW0Z+91NM8x6M/0qq4NXInSbUdfHrxGd9QdBylg9UWqqEDmIQYtnK0e?=
- =?us-ascii?Q?2fNj2MfUkSqNE74z9p2azqP1Ac7+8Ll1O62AgViYX2I1PT8XeVjsf9109+vB?=
- =?us-ascii?Q?ucBq0hwxq9TMFTOpWLmeyjXX5wiakj8jGhfiJwtV2+BLHkJU8c/XO/QTOg9G?=
- =?us-ascii?Q?dZfz/y2TEsRF/7PXhdEfqMY3qE1yEsJhu7b8UJNzSxPtP5QcTdWHfPo69Yhh?=
- =?us-ascii?Q?O7fvoT09pJ/qL/TPjJc6rY48hRSTXOOI/6iQLrovF4wD+QCKS6e3A5doX3oo?=
- =?us-ascii?Q?ywi5BCh5MGZ5VWjTrMbBbLy6DnBczN1WoafYWN2C1+TDfql8j1z8nhmLdR75?=
- =?us-ascii?Q?BuVKIEd106ZaoPEqsrf/NYCPRiaE9vCgcotfODIdJLnMS9C3crp2rEdTjIjF?=
- =?us-ascii?Q?9bXRmIVQG+s66Scem12ii7S2NKM709jSuUu3yfaxkUXxyPoQVUH+RCUwOCSx?=
- =?us-ascii?Q?u2gpXjjJAxK9IVZQhmC7F2WdcqRMBZUwBNLAuNppf2YXgxM9HYsLsN9p5QGN?=
- =?us-ascii?Q?z1dXR9CehKn16DvcO6QN/+7k0v33zvYIv9t8lsmACf/eVYqlmSU5YLJKb2Vp?=
- =?us-ascii?Q?PQWfJlB1OhttvwzUO8sljsC/r2vqfbqDRjqb5kOwxIxV99bqCFgTpVgGK1Sl?=
- =?us-ascii?Q?clduO+x6if4OeFoU+RrpKwMGJ2XP1qjop0zpXByHbRWCjwjaj5zEAIOQGeek?=
- =?us-ascii?Q?xKQqB4yS8s+rAfK8tOdY1m3+QGFOtHxCWHvnYAVcjurZE8EnDIQsCns7gKqW?=
- =?us-ascii?Q?iEY8U3qmQtFFT9rIPl1YdNeV3mQ226GVo7WHLtOb7SNqwW1E1o81KQRh0vl8?=
- =?us-ascii?Q?Hie4gYL8GZAxl8WfkulmJznn0CsYDzP2cOf7QBZ6Jbsev2ESTONyk1ACZHvm?=
- =?us-ascii?Q?kgcckdlxhcoyUZ/dbRmrQr3ofu6DFNoQir3qcDSo92mmXow9fakcJv6WDndk?=
- =?us-ascii?Q?xL2GmBhUwp80bSFXVH9XG/onARBIVIW8CxozCd2m3mMIh7SuJi++Hq3wwDYc?=
- =?us-ascii?Q?nmfbtLyhFnI/a49WATj3XU/5fvlNrBjLIqVWhep/d5UqQerWNbcb+fk1NXI5?=
- =?us-ascii?Q?HKWK9ynO4OhPo7U2c5MbFy69uTkIezLQYVultQ7mHqfOOwJ33iVaS7JHQPzy?=
- =?us-ascii?Q?Ec8S7mN4Gzt9Lj8e1+U7jE1C+VV3ZPFX53gESLUpB4aNo2YkggS5?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8da7c88-a9af-4ac3-38fa-08df41c8d127
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-OriginatorOrg: accuratesound.ca
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:58:06.8762
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: a0f19167-bf3b-4065-1003-08df41cbdecb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2026 21:19:58.1470
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5/X0l1PISxitZY/RX7WZxgGL6BQKph+8PuADXrQvIK8UgTuh9ExGkvRIhCABDElCMAJhFdKPiXiSRlDQgbT3sO+himRS6WwjX6GOGUvvnF+4aSu79ZscPvleU7UsNtUg
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BESPR04MB388775
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f5b64d99-3ae6-4f97-ba65-24522cb51004
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: TudrqNdTXv1XYl2z2eQMOzYia3BFM1poOhwjRuEOKPrDYbg6o9j8sO8bBEBP5bZ2aWPkiBa/IyM8K4IBaWRIiw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB10573
 
-On Fri, Nov 06, 2026 at 09:35:19AM +0800, Jelly Jia wrote:
-> DMA-350 channels may be reserved for firmware or another processor.
-> Read the optional dma-channel-mask property and register only the channels
-> whose bits are set. If the property is absent, preserve the existing
-> behaviour and expose every hardware channel.
->
-> Skip masked channels before accessing their channel registers or
-> initializing their interrupts and virt-dma state. This avoids clearing
-> or configuring channels reserved for firmware or another processor.
->
-> DMA-350 supports at most eight channels, so a single u32 covers every
-> hardware channel without an additional 32-channel guard.
->
-> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
-> ---
-
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-
->  drivers/dma/arm-dma350.c | 19 ++++++++++++++++++-
->  1 file changed, 18 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
-> index c0ed7e86a269..6f26d74295a1 100644
-> --- a/drivers/dma/arm-dma350.c
-> +++ b/drivers/dma/arm-dma350.c
-> @@ -1265,9 +1265,10 @@ static int d350_probe(struct platform_device *pdev)
->  	struct clk *clk;
->  	struct d350 *dmac;
->  	void __iomem *base;
-> +	u32 chan_mask = U32_MAX;
->  	u32 reg;
->  	int ret, nchan, dw, aw, r, p;
-> -	bool coherent, memset;
-> +	bool coherent, has_chan_mask, memset;
->
->  	clk = devm_clk_get_optional_enabled(dev, NULL);
->  	if (IS_ERR(clk))
-> @@ -1340,6 +1341,19 @@ static int d350_probe(struct platform_device *pdev)
->  	dmac->dma.device_caps = d350_caps;
->  	INIT_LIST_HEAD(&dmac->dma.channels);
->
-> +	/*
-> +	 * dma-channel-mask is optional. Firmware-reserved channels stay
-> +	 * clear; if the property is absent, Linux may use every channel.
-> +	 */
-> +	has_chan_mask = device_property_present(dev, "dma-channel-mask");
-> +	if (has_chan_mask) {
-> +		ret = device_property_read_u32(dev, "dma-channel-mask",
-> +					       &chan_mask);
-> +		if (ret)
-> +			return dev_err_probe(dev, ret,
-> +					     "failed to read dma-channel-mask\n");
-> +	}
-> +
->  	reg = readl_relaxed(base + DMANSECCTRL + NSEC_CTRL);
->  	writel_relaxed(reg | INTREN_ANYCHINTR_EN,
->  		       base + DMANSECCTRL + NSEC_CTRL);
-> @@ -1349,6 +1363,9 @@ static int d350_probe(struct platform_device *pdev)
->  	for (int i = 0; i < nchan; i++) {
->  		struct d350_chan *dch = &dmac->channels[i];
->
-> +		if (has_chan_mask && !(chan_mask & BIT(i)))
-> +			continue;
-> +
->  		dch->base = base + DMACH(i);
->  		writel_relaxed(CH_CMD_CLEAR, dch->base + CH_CMD);
->
-> --
-> 2.54.0
->
+Hello DMAengine maintainers,=0A=
+=0A=
+I am investigating shutdown/interrupt reliability on a disposable Raspberry=
+ Pi 5 with a cyclic ALSA DMA RX path.=0A=
+=0A=
+I have been reviewing Wang YuWei's November 10 cyclic UAF proposal and Jame=
+s Hilliard's November 13 v5 stop/pause series, particularly patch 3/5. Coul=
+d I ask for guidance on a few possible lifetime and fail-closed gaps while =
+I prepare independent kernel/KASAN tests?=0A=
+=0A=
+Source baseline:=0A=
+=0A=
+Raspberry Pi Linux 6.18.50, dw-axi-dmac-platform.c=0A=
+=0A=
+SHA-256:=0A=
+52d7f988122b4bde80b5da61ad6d2518cec8af6650a5fe08a4628c6ca8e48084=0A=
+=0A=
+Byte-matched to:=0A=
+raspberrypi/linux@cff533aec2fa601846766b32ff57204e0a61bed7=0A=
+=0A=
+Neither proposed patch has been built or tested by me. A previous RX "IRQ w=
+ith no descriptors" warning occurred near capture STOP, but the raw interru=
+pt bits and event ordering were not captured. I do not attribute that warni=
+ng to the races below. Earlier TX stop warnings concerned a separate channe=
+l.=0A=
+=0A=
+I ran a source-executed userspace ASan harness against the exact virt-dma.c=
+ and virt-dma.h, with mocked Linux APIs, interrupts, hardware, and platform=
+ STOP logic.=0A=
+=0A=
+GCC and Clang reproduced four forced-interleaving heap-use-after-free trace=
+s involving:=0A=
+=0A=
+1) Pending cyclic callback alias after STOP/free.=0A=
+=0A=
+2) Alias surviving an error-completed-list transition.=0A=
+=0A=
+3) That error-completed alias under an abstract issued-head-only Wang strat=
+egy.=0A=
+=0A=
+4) An executing callback_result client accessing freed descriptor result st=
+orage.=0A=
+=0A=
+An ALSA-style legacy callback control did not dereference that result point=
+er.=0A=
+=0A=
+These are software counterexamples, not KASAN, the actual DesignWare platfo=
+rm driver running, or an RP1 hardware diagnosis.=0A=
+=0A=
+=0A=
+MY QUESTIONS=0A=
+=0A=
+1. Cyclic descriptor lifetime=0A=
+=0A=
+If a period interrupt sets vc->cyclic=3DD, then an error path moves D from =
+desc_issued to desc_completed before termination, can an issued-head-only v=
+chan_next_desc() check miss the alias when all lists are freed?=0A=
+=0A=
+What termination pattern accounts for pending cyclic, completed-list, and a=
+lready-executing result callbacks without blocking in atomic context?=0A=
+=0A=
+=0A=
+2. Failed-stop teardown=0A=
+=0A=
+Hilliard v5 3/5 returns the stop timeout and retains transfer descriptors, =
+which is valuable.=0A=
+=0A=
+However, generic ALSA STOP may discard that error, dmaengine_synchronize() =
+returns void, and later device_free_chan_resources() can still release the =
+descriptor pool.=0A=
+=0A=
+What fail-closed recovery or quarantine contract is expected if hardware ne=
+ver becomes idle?=0A=
+=0A=
+=0A=
+3. IRQ latency and hardware quiescence=0A=
+=0A=
+V5 3/5 holds spin_lock_irqsave() across a potentially 50 ms stop poll.=0A=
+=0A=
+Is there a preferred short-lock IRQ publication/rearm cutoff that avoids th=
+is interval?=0A=
+=0A=
+Does RP1's cleared CH_EN state itself establish LLI fetch quiescence, or is=
+ an additional barrier required?=0A=
+=0A=
+=0A=
+I would be happy to share the minimal userspace reproducer and follow up wi=
+th independently obtained kernel KASAN traces from the disposable Pi 5 if u=
+seful.=0A=
+=0A=
+No driver change, backport, product fix, or firmware implication is being c=
+laimed. Any correction to the source ordering or advice on which existing t=
+hread to follow would be appreciated.=0A=
+=0A=
+=0A=
+PUBLIC REFERENCES=0A=
+=0A=
+Exact Raspberry Pi source:=0A=
+https://github.com/raspberrypi/linux/blob/cff533aec2fa601846766b32ff57204e0=
+a61bed7/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c=0A=
+=0A=
+Wang's November 10 proposal:=0A=
+https://lkml.iu.edu/2611.1/07555.html=0A=
+=0A=
+Hilliard's November 13 v5 series:=0A=
+https://kernelthread.org/t/20261113-submit-dw-axi-dma-stop-pause-v1-v5-0-85=
+23a27b5788%40gmail.com=0A=
+=0A=
+=0A=
+Thank you,=0A=
+=0A=
+Mitch=0A=
