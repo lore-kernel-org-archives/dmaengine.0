@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.159.12
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794600283;
-	b=qQVS/9xV9d51elWVZUK0snAnMeI8IN8+k3PwBsmGNcWCGBlqH/A5FcNCP8gcBImQviL+
-	 EIKnugMhMxhoNVIjKrb89x/s4aW33c/G4zIK0vIJRLc0Qxyy54rtIgA1V3+Qgf+/HSYfi
-	 9XcireOqy/Q7Xxl4+6bVplGA/+SRjMfq9nroNwLi55Yp/0ScHpby/zmPenfCDvAPVau9N
-	 nQRtFUcL15u8foci1ZW5d6qJmgDul6ybt43492ffiqpXBRYQnvBRnnLkj2TjEzNpEQtr6
-	 nl/Lf5T1Mya99bBMQfTayeAB7XCuI3UWY627+oe6xh7/TuXQ+eu16Ur/dqgscMitl8A==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.31
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794600777;
+	b=Raqx7FAZ5ZEv7HTbNWpOOfx5A9KIfqN5jokZcp2fpXcHMjILpbIe1RQpb5CbqAC2Fji4
+	 V9g1SsiutkMZxtvRi9jhb3x6Nqs23onsNEGtbhEJYrvf27h9hASS0pkrtokBD3Sq/9fU/
+	 DnwU8mSRrPwPSEb5RY2v4xDtukq7kf8UWs4ydAPxlhB0IbV3/jioOZTrEFs2FYBVp2cch
+	 yKDDMZKRosrfhAMhtW8m9l0o0LwKA2AGFuultwwPL5O4AIpGO41DgPPn7pUyMqDShLMTa
+	 YoXpAogP6cKvfEOXarlZbakTWEfjDX39Dzqkr8i3+cejrUyx1oSlc2LOyRPMtRh4zwA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794600283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794600777;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,72 +24,81 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=my1P96R50u8+L398DThu7Aw/skAq9kj14o1z9Rbd2Xk=;
-	b=2vGZhq4JVm2HF5/2meUN1P4jj3YxsuRE9k9KR8ESu6HxCgGI/7qKehL4lnZufGhF22cw
-	 UbcMafYsZxLqFmyWW5Jv9bwjOFNr5zQAVpt8GZQJGERW+3VVYDkkqmgDoONusigSktP/T
-	 Ud1+MyoshRlNf3Km0bLTQQ1JfcgHuaZ59DwX98V9ToFXdBpkdB4LIZrEals2Kibyg7IPV
-	 sNKCuXsh4dGI9Y7G2dL0qLrhthR+I9Yd6Mxib74cnRkAcqqoNRI7h2VJoIpLcopFRZHWb
-	 MZncERSC7Qx2jwESswr6i4CpyxY+QY+gS1fbKqJDMVWi3DaD2+fhoLFmjGsYl4JV68g==
+	bh=Wy9/0MnmDtimUt7oWx+bQcIqKKlyrTf838TqAszUCYg=;
+	b=1LPsXSSij76EFOIccnlVDilz9G57VckkYeEb3/DLn4o0e2cpICopDfXpsjOUJXQfdieQ
+	 j1wKJZ/CkI2UMtohcJ4WqD2zmVlNEOrknpGqtcc9vTX5hUb7MRGXuOJaaS3mfMoZDmVf9
+	 /B4FAF/FmqC7k7e55eGz8jxqLorIWLlIQD4b+bJ3Lnh99PIYawO13tMEDAsNZhc9o6mcL
+	 oiq2KKSSZdGrP3PizhNdjka1uyx8KYJbY27YTvmPSTyfzc+XZbdXS7fJAXVrxD7f2i/u2
+	 w1SeYLbLuMQWZbvJ1bpEDRwt0kgELNEYgBZNKTNYEGY2blYP1Rbfj82xWH1cUy7bOPg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3;
-	arc=fail smtp.remote-ip=40.107.159.12
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013012.outbound.protection.outlook.com [40.107.159.12])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dzy1gJrg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.31
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010031.outbound.protection.outlook.com [52.101.69.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33C606A338;
-	Fri, 13 Nov 2026 20:04:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F33C606A338
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C326606A323;
+	Fri, 13 Nov 2026 20:12:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C326606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=uiSENmo3
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dzy1gJrg
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BpwFV/1J7SmBoU/oo3rRLMzgcuNFSHAV1kmSwocDqZevKznvxqsbZDaA+93RNmcbVVbH4s9OrnWdzIq242OAG4hANZhBOlE7HYYMxFZoXY53lsA2pHdrDM+MgUWQUlhuxY0Nh2LP4NgVVal0xAuLW9+afFP9Z1HShc4FkF2KJDo3AIxJt54x6oLejRzu9CFLzx6eSmXf/O5dd9B6LOuDC22SCupZ6I1S0/riF/vPIF79LgnkIiQafVS9yCXy6mEfp6kByAMkJ6Pkg11x41Owo27m2KK0ZUK7byrAsRV0q8Of/86d6o8DmWXypKGm05XstmE2l1/4NeNCHa9J8Ub92Q==
+ b=MwKAmT74kOF08Y/gk4FF02U1P8gFpSESTqLoQK/qRgLPR8nJi+SJQEgd50QgvXyRKqhXZX5/tlTO9WkrN/krrneP1/F+aLK887MncoARwChMG8rN0rD7WLD2GkXwIr7sIQuyoGIC7MUYRf53MXiCsF+sJ4OM4MBHKWgpwySu50xJkO4fKltVV8azbvOkIxBk9BfA02YXfJjuBzD+m4DL8DL/PUQQA81NMre4ZkxN+cweBS6OBGTrl++tiVYK+S08uWJPdx7jYfAtkRGPaVQUrHeyujX3CayKZkbv3Do2hknuiHjLsi7/AdK0R1NZosyBgkHfYv2GIF51bFFxP1ZJjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
- b=j/wbTZ1Y+ddNli8AT0szGuc+I5+OBN9BCGkBanU8fvJBe9p7LBCwuPsTmKKAb2tBElLsTHA3LgWlhwLZ3I7gA2JE9YgNVIi8XvbFXaY5/Uc4afC/GISlKZt9cN4PQMTiXOcfhIXg6u8QinMYjchqm8pS4xB4wyUZOAvF8O5DhSxOuigd0Ds0t0GklrHskXYMgbRCW4a9afC02YDIMJnqZZI4fy8qwbVU8lx7ShGyxg21tyUFiNAUUTbv4mVXp+/TuQyjeRpNfydIHpQ1uKrFWbSKiT/AoUnDgvTkP6pJ7kK8JRImeG9HteAV/liPOkTKnnQFTJ2HSQ1cXwZ77RpOjg==
+ bh=Wy9/0MnmDtimUt7oWx+bQcIqKKlyrTf838TqAszUCYg=;
+ b=zFWGOZs0YkgsS31T1Lr64hiZdFNYZoJievfeX2Allq9LP1sruexCPOi9CRUbGMJf7h1BOB4eUbZLtvuKGkCg6PGQfjdsSIf2rxljL+SLRekv7fj9ZL2FyBp+wL32DFIfu/hTX7MtPX4l6VlJZrPjgtGrSQuiSRcr0zjxSYoMCn2l7MhKle+WWK27ZUnKRsxdFsDdrpdFTZiOs96z1bHGud3PqOrE6G/KbsUw4f/4FUvhc2uUIptcvn/Mgoi6yvqPXrpdTYvVP+jwzLZUEU6FC4Oir9V9w/e/IoYuPDCBbSlaqX2RI9uQNuzL4VkWWOM1TYsEXch889aTWaM22o12mw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l9zdcbjJiJckYZVG0tkNrMHarCVdgPuP9lhX1/UDHlU=;
- b=uiSENmo3DbncW/56vtN1Z1ghzR2tVAd8nUXQ0zgSldP5iWUldCrHnP/5qP3E5CyeM3ZxgXRxeMxuafNRRED+GdPZqCY4XXzuQWnagb9QFhngymKhpWNZSjnSGQXAAtyQU4zIou0/qd1If8M15e6LlpXTKwUeGhxlCljF/Pn08czCcrYJ6QrmFQTlH1L3cRruJskP9Sa3TVZEHCx7FyL+DhJAVClKycwHH+I2ZMahz94Oz7FOiGsftweAaqLjem/JT4qow1qn63MyAqcKBuWGObteWkr67G6dB5xo7fM87W2B/ewvB6vWUndHGkXK/guKzlZCl3gV1svQYGu4s8kX0w==
+ bh=Wy9/0MnmDtimUt7oWx+bQcIqKKlyrTf838TqAszUCYg=;
+ b=dzy1gJrgfbVRi3OeYVgxOHrafP4rF3dqDiShuaM9p5w/APmGH+tYtj6sZbXAB9HrvY2Qns4EgHH17T4FFGLiMPtv/ol9Np7izwSxE4Vwuy7jn3XtCQy0w0XS2Z8XSKnJpbwhBoN8PTDPeUGCHRCu1BIbphZToqOKWOVBZRuhq/lqr7jLM7cNAiG7qArtBuRf3MvT3adoZJyE62k0x4fzBllazwwvvYn7NIB+6lvLD5cjyRstjmpSvaXstsXZXbiXH++kxAU7xQsDgTJ26ltAPqZvpp79hNilLVnWZKXwjgtaJaqCq/aB/STl0ywaG5JT9Y9OCTOo0MoWcTBBDM5qPA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by DU4PR04MB11753.eurprd04.prod.outlook.com (2603:10a6:10:615::18) with
+ by AM0PR04MB6866.eurprd04.prod.outlook.com (2603:10a6:208:183::16) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 20:04:40 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.592.13; Fri, 13 Nov
+ 2026 20:12:53 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
- 20:04:40 +0000
-Date: Fri, 13 Nov 2026 15:04:34 -0500
+ 20:12:53 +0000
+Date: Fri, 13 Nov 2026 15:12:44 -0500
 From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 4/4] dmaengine: loongson: loongson2-apb-cmc-dma: Add
- pause/resume support
-Message-ID: <avdtUqpPcPf9Ykbo@lizhi-Precision-Tower-5810>
-References: <cover.1792988985.git.zhoubinbin@loongson.cn>
- <92800ae186112366116647ee4f50d4ba09249ef8.1792988985.git.zhoubinbin@loongson.cn>
- <sashiko-outbox-184805@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
+To: James Hilliard <james.hilliard1@gmail.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>, Arnd Bergmann <arnd@arndb.de>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jens Kuske <jenskuske@gmail.com>,
+	Jean-Francois Moine <moinejf@free.fr>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Chengfeng Ye <cyeaa@connect.ust.hk>,
+	Nguyen Minh Tien <tien.nguyenminh@embeddedlinux.blog>,
+	dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Sashiko <sashiko-bot@kernel.org>
+Subject: Re: [PATCH v3 4/9] dmaengine: sun6i: serialize physical channel
+ ownership
+Message-ID: <avdvPDEeQtFHZLWL@lizhi-Precision-Tower-5810>
+References: <20261023-submit-sun6i-dma-lifetime-next-v1-v3-0-ef1acb0be768@gmail.com>
+ <20261023-submit-sun6i-dma-lifetime-next-v1-v3-4-ef1acb0be768@gmail.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-184805@kernel.org>
-X-ClientProxiedBy: DSZP220CA0024.NAMP220.PROD.OUTLOOK.COM (2603:10b6:5:281::8)
- To MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+In-Reply-To: <20261023-submit-sun6i-dma-lifetime-next-v1-v3-4-ef1acb0be768@gmail.com>
+X-ClientProxiedBy: DS7PR03CA0154.namprd03.prod.outlook.com
+ (2603:10b6:5:3b2::9) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -100,159 +109,297 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DU4PR04MB11753:EE_
-X-MS-Office365-Filtering-Correlation-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM0PR04MB6866:EE_
+X-MS-Office365-Filtering-Correlation-Id: 43f3cae6-b0b0-480d-2770-08df41c28003
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|19092799006|10067099003|11063799006|4143699003|56012099006|260925021911599003|260925022911599003|260925021311599003|261022105027099003|261028144727099003|261026121527099003|261026140227099003|261022075727099003|261009223027099003|22082099003|18002099003|3023799007;
+	BCL:0;ARA:13230040|1800799024|23010399003|376014|7416014|366016|19092799006|18002099003|22082099003|4143699003|56012099006|261102123227099003|261028144727099003|261009223027099003|261021121427099003|261026121527099003|261022075727099003|261021123027099003|261022105027099003|261026140227099003|10067099003|11063799006|41080700001;
 X-Microsoft-Antispam-Message-Info:
-	25kYAKWcNWyNpZG1rr7VQcPfPCfuh56oHoncnb+pPRTihcGG/HKFqpPjYrpsSzMpwk2dhCuYJG+ozBgVf0MRQ1sgLaBPzKp+a/IQsmMKUXNanUn+0YiSeGVSFJM6E6WH4eZBV0py06mgCVsqPtijrb0DLb1Gy+c0G0l0uugUBByk6rb2MW6jPdMNX5F7nRpCXHXliKINglTfD4BJbIZi6HI99gnhFabRZ1eI1H6u0lRzMaUHUdN1Bv96JLYymdylDQFNvVik1scX7OXfvkQR5n26e0wLrwgdV2sQLqrd4XLbjJDBI1MU3EjgygIb77WLIfvDjEAye8kUZADpL1Zz322hOxGjEAhlCvmN8rphB6CJtR4ffHxFAksh3d7p0o5OiLMF7lRMlnyW68C1DgO+bJNRjvhccUJQMPZSz+biF/yHj3WLKQK/AeLbXsyr4B8ehkkLMfCsorwM7jxEWJTYf1A23ErAD4GbNybg4iUIjQN+WnCLGIeM057wD3n+b9LFi7uR3tuyhDnIOOjJ00D8LekEnNEi1jlN6EAVHv+Msb5BWa0ai/9IT8GGqbDjmJCIJEnNTsWljbPC2QEjlk0JZNhE5HTOLPVub9lbjNwkjag=
+	J51UpPzi6074PmTe1TpS57XDcyf8OdG/e4EgMmiKV6YJvM3uv21Eo7MqxO2vvpIV33mmOsQ61Sm/Tqd+yK5cqkDfp6Fm7BilZU3VIIGcjucphcDp0dAML8ZGXR88CQhXgRIrcutwKKzeU1pFynNcLS80qqcStYG+XuwQ5Q2FvbHEOTleMlsGgRdFNWIWK+glwzaloKa2u1r+V68sFwkZzhAtQrgpWuj5gz130lvv2O2HDOH3g5L7HmTsgJ496KZxFJy11sLW+1feE9eQdX+7PEMRSooWreAq6XHe59KkvGXAid7UEpMevxhwAvSCN3cl2bP6nEDF+RH4no9czpk38f/a125EXi3hf/8Q3DGothBmtXmhSADA8SsNpyWbitYrwfd8TjqxYoA1f7Me+G9jo99nMKopQkQhw5Yc9BjsdEHiVbgrU7ncv/zZUbaiD6VdPTcItx63BAaSLc0WjEdb+ETpE1ZW5AHY5FYqbdeYmFkmKv5l3StJ98CAozH6MXWopQGbxuKB2v1nxewLRywSbcH0hoyEdF6mEr07ibEBqVUY45MIQ1pkIbCgc4j3tX7ALM4/RkhEg4ipO1GTnMwnhLj19kGyztxGTngkgTkJNuGiy6QfSPaK3c0Lom/bL4Ze+5TDfFkt0DfhrYlwBrzVDDAWkhbkCZTd4Js6REegArU=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(19092799006)(10067099003)(11063799006)(4143699003)(56012099006)(260925021911599003)(260925022911599003)(260925021311599003)(261022105027099003)(261028144727099003)(261026121527099003)(261026140227099003)(261022075727099003)(261009223027099003)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(7416014)(366016)(19092799006)(18002099003)(22082099003)(4143699003)(56012099006)(261102123227099003)(261028144727099003)(261009223027099003)(261021121427099003)(261026121527099003)(261022075727099003)(261021123027099003)(261022105027099003)(261026140227099003)(10067099003)(11063799006)(41080700001);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?0+sjJeyxfpzzJrpe22wDMhJJeaGzvSfsBZgJZg/hTL8sBvJmvrSsDJa9hc?=
- =?iso-8859-1?Q?eL2mlsin1lIrUs5kHBlAh7QaBOqid8wHCy2QpgIRsspDLjzvryCHKcgd7b?=
- =?iso-8859-1?Q?vnxLjwuQzud4syKsFcsgjXQ2YEqBhb7IkzneXa/Y2M4/Wa5/OAgqJMt7Db?=
- =?iso-8859-1?Q?uaDm4VwDRlf5jhcTd8cqXcf7BJl426I/KTtlEYikg4FAFIBwOHYFsZHbjl?=
- =?iso-8859-1?Q?kdnGaKY2vIMLuL9klkzZikNfCVzJIO3vs6cE5BLOjzDShll8om79gu5zjb?=
- =?iso-8859-1?Q?J2zqgre8ePhVvITItY2MIqMiKstqn/xSPxCe3hMfWN3WPdLanWzjinm/u6?=
- =?iso-8859-1?Q?qUdchlksEyrlHIutTyIcwiOIRJ5NdVnVxuq6quJI3Anyoq1fEYy0dVKXQV?=
- =?iso-8859-1?Q?nlAOFnIqJ+/Y3mJ20+hYl9G3XXKmNw11BIGr7xdxJWfh2YjFe7SmCng8Yz?=
- =?iso-8859-1?Q?vgrL1VyXfeJVMRkomnH5xsWdIfmQIDYwSu1LkQYJC0RYwOjIiKYqEzFhsr?=
- =?iso-8859-1?Q?pd4wsblVnTkcNr8yVRiOZL2kFZjKcgR88P0woGDG0lgImThoaShqkYnMZs?=
- =?iso-8859-1?Q?Tj5LPE8e2k8wh7H7yD+kfPRRWsHYQlUpu15joUPyqKOMms2lPZuDYLfZhP?=
- =?iso-8859-1?Q?6aAl82WYU7KkAE2YJJvCTJeneVuEuxSzvUcb4l4M4PcbREseO4BKYthfVr?=
- =?iso-8859-1?Q?oAyxKfPezvg+pkDNjTYmz2npptvDAGPXXMCoz/yVlBOGrVYjXr6wYfVB6m?=
- =?iso-8859-1?Q?S4QErIsCyK8QwVAfY+gRIsf0KS7nYaAl1X3ThR0mA79akzlz7XSxTdDHsZ?=
- =?iso-8859-1?Q?5OI9/GmjBeFU6qEQmEhKHai0uOXBbZ2Sg5T5Jcy5coE899oaR/Sq7OdyRE?=
- =?iso-8859-1?Q?itD0EZ3/JXgJ3PPKjTPyB5xdf62s4g/68dXOs2KnxTczSFdkxUPy+8iv8z?=
- =?iso-8859-1?Q?c8F3jErangr7VpK0tXOxU95+0QQ83oEeyzf8bs3fYEdKGwryntbUPZYlSQ?=
- =?iso-8859-1?Q?E9yX+ld1DwxW/R1c3WmXl141VsRtvoLS/KP/zN4STGpl6D42AJM6YQEABJ?=
- =?iso-8859-1?Q?73D7Og7j9IfYX8M2dRaVOGC4/G035z8H5p0jw+Ai4IkYWWYpvWqISqEWsw?=
- =?iso-8859-1?Q?f/ii4sMm8Y8bLworZgCcaspACTg+inSJwUvuNOsw4wk6LDtTrPjr5A1+RH?=
- =?iso-8859-1?Q?ezUI2EkfvXE5WvgcMExllPkpkebgftyhy2fDr8W+pgjVh7opuUpDrJmMOK?=
- =?iso-8859-1?Q?6L8nraPzpHlAN85QpeNjtB6XHWH4Nile1Qoz/u3jqv+kXJI0iPKbHZ3UGD?=
- =?iso-8859-1?Q?fwtUSZeV1tJ59C8eKd7KPsdLDBhYefA6Jo1cDNgFVHviFRFtpWFhbohDme?=
- =?iso-8859-1?Q?gQ5JRD8h65ekzZ1VAazaKmzqKgJ4+Py20vHHHieJZ6ZF5tz9YkMnAu34dI?=
- =?iso-8859-1?Q?IAcxUvfuGmetqrZUpeMYWTfX3o46L3Ui4rI16pJrMBOWT7Hs4KH31FaHFv?=
- =?iso-8859-1?Q?6dCEJNC9pzlH1sR2IquMNVEqmmO2PjN/mp9qv89X6ptk1EXL0WeGvwFy4u?=
- =?iso-8859-1?Q?ZAj2GqzuHC+HR5GesViLwURuuILLWbse5SmLKUbH8Y+v4eeCs3tURbHUOR?=
- =?iso-8859-1?Q?s2oJHqA4CNEwTggyiZc5iETkj9HTv8I0ihJeLDZipSG/tfP3/S+0AaXEcQ?=
- =?iso-8859-1?Q?mpIuFYchQTspZYSNmpP869MWBMYbcUfMSc4EZH3lorxqDbD7RwfhOd7rYg?=
- =?iso-8859-1?Q?5KKf1pn0pK4ITkddb5kYWjykvCDt5vNmn69+uuTJ05HsOOoefouRO6zrM9?=
- =?iso-8859-1?Q?xxWSRaKDOnzlXbuChUq8/NjJDiFvA1SXbPv9p1GSWUw7dRINRiHw?=
+	=?us-ascii?Q?fjFICgYuSGAyN5OpSyidYZ05NjArkFAZzSegs9b3B+j2MFBFZtvJIKFIN3mp?=
+ =?us-ascii?Q?aoP6Ej6Am/Cm5Y5rQMoZl3ts24R5PRrMTGcDZYApJv+1wSBVUk+CtjL15THq?=
+ =?us-ascii?Q?JUdNvDK7ugYBX0tbs0HdkgkqB5ppKJjirrNJRgUaCBvClwYazs1OQpaqJeZt?=
+ =?us-ascii?Q?mxwyO5DG3kuNSgGugGgxPWnrQKn0+oW505w+3eDja+6pPeTqMloYbHj+qdxH?=
+ =?us-ascii?Q?1jMiEN93u8QL6QBT9OJ2Ml69Z4gyzjBc1h3wMgbCO33jZUTlZZ4X0cqcr2CP?=
+ =?us-ascii?Q?nNSChLSHQ1Hs8wGLYmw5Y/BBqXMT2Z/MZYryIFx7IWhUvc0rvI9XGopwuOVg?=
+ =?us-ascii?Q?Joei4tJjzm+u0KqnFcXFHxiFDRbHx/Fs4ScLhvQ/iQ+CzMORYfmZNjbG1IwT?=
+ =?us-ascii?Q?BAAmp6toPSYcooojNuYU6bfp3agt2Gq2U//Myf7aC0T50CPejPhvA3+ugo6R?=
+ =?us-ascii?Q?2dXrv6RntNvDLRe5LXQ1qNNa6YEqamnyroqdQ/qpVbhd/YYtNVGJ2fANdFwQ?=
+ =?us-ascii?Q?Gat9kea1l9X7P892Mz7/kDNNe9Jo3KWCLzF9c0oJFHJyfKL7Z9CfjNsTHLdB?=
+ =?us-ascii?Q?PAWn5JLCtjCY2V2hoP5/lGFNPtM2pBaZsDvDyDveXdROwHdXU3nYZdahpI/g?=
+ =?us-ascii?Q?es5TIdfMMd2lvK3RJ+AvxF1VHMwM4w6CPxzBWKw+uItNCW07ZQ/QBiOQ2bLi?=
+ =?us-ascii?Q?4NFpbG7plYrIci4uxTL2zwUqClI+wo+ZPDreDV/ElwMvzpaA0WLAJOBQko7L?=
+ =?us-ascii?Q?GuZKKjFlyPYGU14St+9N0ha1dTWgQ+QJml8fL3Fr1Y2ujI4J/cvXKVEkm+3L?=
+ =?us-ascii?Q?k2PHhGdrlTm68aPtKi1Z0O0FdynyKvVcc3A0b+Tl9X31Lc9QpMUSEIOOYhiH?=
+ =?us-ascii?Q?rMB44FK9JVlLdy8q4JwtllZcpMgnr449/lw3bcoALkcOSPgIs7diK3pSdYtd?=
+ =?us-ascii?Q?7gkeZVPMLpePBA7MBDX5ir813b2gomD1fJrx2T4GID9xtVRWPCmbrXgQF/LH?=
+ =?us-ascii?Q?s3KeZwnQ8eChj71Pv+rAJ+4oWIAfavPw7HA520yqxTM33mSbmkhTEw8BGgM1?=
+ =?us-ascii?Q?PV1ANdxeNeZd8vf00Poit1iAJ61FB6Bcd6Lo7TJUuuxK1TVHg4Sh3nvRDx7f?=
+ =?us-ascii?Q?42LrieUWpuvCmcZrSMZK4D5hZR64qpNfk0iUOD4gCWUgQ7723BWjD1/RYTw5?=
+ =?us-ascii?Q?DQPWQ1yKXIW6cqIphDAWdGyOWVMOhWTgQih72tE6NyHsbR3jTHtrWGQxmVkv?=
+ =?us-ascii?Q?65UAUoGpSGoAS1sMaMXH1mafiaeI1sZ/3SO59s6//bhzJIwmNFw3x413v2O4?=
+ =?us-ascii?Q?VmD5zzmRP5zUGM+IpO/R3pt8JyMXlBUsq4zAfAvSx1IfpPI/2/8dZq2+Gyde?=
+ =?us-ascii?Q?UcR9nH/e0PczSgVpAfdgZ9+8yZ9xU+qJ2QVL1FLP4jAtvNGQMPM8xNLsfsqw?=
+ =?us-ascii?Q?+Kp7vrr6G9aRv77Sa09EDYl8yUOmi1bOI/7N2+nsuC0Cwal4MfOABEjRdHGF?=
+ =?us-ascii?Q?opkcUznNZWlV1ac2XiRHTeBB78drycjQV2qeZuaq4IStnotS2RCkztDlB2ou?=
+ =?us-ascii?Q?RfCg1j7JfyhAm/Yf5Vvr9P0p6H0Jykg002JNn/ttsCxNYHutIYgPHO0F4BaU?=
+ =?us-ascii?Q?5ARgDU+STUHMoqS6YCd0NwKwAZuLex39xk9kik4z3RwaoqUkP4XlSTJ33rcx?=
+ =?us-ascii?Q?7JR64u30r3/TD9vTH1B8JDZAeDVWAiZT+WFWFPFzSrSxO+Zs7V7isvqpoFY0?=
+ =?us-ascii?Q?1n0ad8UaAJnTq0/yXJA/ofHmsGJW7MvacPQe9b/OTYrvLj1K9yFR?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88e30fda-9fbf-4246-286c-08df41c15a33
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43f3cae6-b0b0-480d-2770-08df41c28003
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:04:40.9449
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 20:12:53.8026
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uHSsQh57v+SoCrx8ixzbR09K6frxchsqVeKy29LiSCPkilMbgaPknW6ITXQRurW41Tg7s2Gj7EL/T6Ic436OulxbnKS+cGfbni+OWr/YL4l+4A2Xs58Wwkz+AHqYSS89
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB11753
+X-MS-Exchange-CrossTenant-UserPrincipalName: ++U/AruOMPqm0/Uw6OanABBwSYBJue9KBlCdE7q1r5iquBpHTmrYm8AuOEbu1+G8ROyZ3P/WxUUastVX5rPB97oUVRtWJIM08lM9t3Lh3t0RK39cpx+3Od4faGHUYwqs
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB6866
 
-On Mon, Oct 26, 2026 at 09:35:17AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] dmaengine: loongson: loongson2_cmc_dma_start_transfer() clears pause state
-> - [Medium] dmaengine: loongson: loongson2_cmc_dma_tx_status() ignores pause if !state
+On Fri, Oct 23, 2026 at 05:38:23PM -0600, James Hilliard wrote:
+> The allocator changes vchan->phy and pchan->vchan under sdev->lock, but
+> termination reads the physical channel before taking either lock. The IRQ
+> handler also takes an unprotected owner snapshot. Termination can miss a
+> new assignment or detach an owner while an interrupt is about to complete
+> its descriptor. A sampled IRQ can also be applied after reassignment.
+>
+> Protect physical-channel ownership with sdev->lock across allocation,
+> interrupt handling, pause, termination and residue queries. Read and
+> acknowledge IRQ status under that lock, and allocate and start each pending
+> channel in the same critical section. This also serializes updates to the
+> shared interrupt-enable registers.
+>
+> Nest vc.lock inside the device lock when accessing descriptor lists or
+> updating cookies, including cyclic notifications. virt-dma takes vc.lock
+> independently when preparing, submitting and completing descriptors, so
+> the device lock does not replace it. Client callbacks run outside both
+> locks in the virtual-channel tasklet.
+>
+> Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+> Reported-by: Sashiko <sashiko-bot@kernel.org>
+> Closes: https://lore.kernel.org/r/20260706065650.34B131F00A3A@smtp.kernel.org
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> ---
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+
+>  drivers/dma/sun6i-dma.c | 67 ++++++++++++++++++++++++-------------------------
+>  1 file changed, 33 insertions(+), 34 deletions(-)
+>
+> diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+> index 435d7daa1c0f..d3a63c866645 100644
+> --- a/drivers/dma/sun6i-dma.c
+> +++ b/drivers/dma/sun6i-dma.c
+> @@ -217,6 +217,10 @@ struct sun6i_dma_dev {
+>  	struct clk		*clk;
+>  	struct clk		*clk_mbus;
+>  	int			irq;
+> +	/*
+> +	 * Physical channels, pending list and registers; nests outside vc.lock.
+> +	 * virt-dma also takes vc.lock independently for its lists and cookies.
+> +	 */
+>  	spinlock_t		lock;
+>  	struct reset_control	*rstc;
+>  	struct tasklet_struct	task;
+> @@ -524,11 +528,11 @@ static void sun6i_dma_tasklet(struct tasklet_struct *t)
+>  	struct sun6i_dma_dev *sdev = from_tasklet(sdev, t, task);
+>  	struct sun6i_vchan *vchan;
+>  	struct sun6i_pchan *pchan;
+> -	unsigned int pchan_alloc = 0;
+>  	unsigned int pchan_idx;
+>
+> +	spin_lock_irq(&sdev->lock);
+>  	list_for_each_entry(vchan, &sdev->slave.channels, vc.chan.device_node) {
+> -		spin_lock_irq(&vchan->vc.lock);
+> +		spin_lock(&vchan->vc.lock);
+>
+>  		pchan = vchan->phy;
+>
+> @@ -545,10 +549,9 @@ static void sun6i_dma_tasklet(struct tasklet_struct *t)
+>  				pchan->vchan = NULL;
+>  			}
+>  		}
+> -		spin_unlock_irq(&vchan->vc.lock);
+> +		spin_unlock(&vchan->vc.lock);
+>  	}
+>
+> -	spin_lock_irq(&sdev->lock);
+>  	for (pchan_idx = 0; pchan_idx < sdev->num_pchans; pchan_idx++) {
+>  		pchan = &sdev->pchans[pchan_idx];
+>
+> @@ -557,31 +560,20 @@ static void sun6i_dma_tasklet(struct tasklet_struct *t)
+>
+>  		vchan = list_first_entry(&sdev->pending,
+>  					 struct sun6i_vchan, node);
+> +		spin_lock(&vchan->vc.lock);
+>
+>  		/* Remove from pending channels */
+>  		list_del_init(&vchan->node);
+> -		pchan_alloc |= BIT(pchan_idx);
+>
+>  		/* Mark this channel allocated */
+>  		pchan->vchan = vchan;
+>  		vchan->phy = pchan;
+>  		dev_dbg(sdev->slave.dev, "pchan %u: alloc vchan %p\n",
+>  			pchan->idx, &vchan->vc);
+> +		sun6i_dma_start_desc(vchan);
+> +		spin_unlock(&vchan->vc.lock);
+>  	}
+>  	spin_unlock_irq(&sdev->lock);
+> -
+> -	for (pchan_idx = 0; pchan_idx < sdev->num_pchans; pchan_idx++) {
+> -		if (!(pchan_alloc & BIT(pchan_idx)))
+> -			continue;
+> -
+> -		pchan = sdev->pchans + pchan_idx;
+> -		vchan = pchan->vchan;
+> -		if (vchan) {
+> -			spin_lock_irq(&vchan->vc.lock);
+> -			sun6i_dma_start_desc(vchan);
+> -			spin_unlock_irq(&vchan->vc.lock);
+> -		}
+> -	}
+>  }
+>
+>  static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+> @@ -590,9 +582,11 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+>  	u32 channels_per_reg = sdev->cfg->num_channels_per_reg;
+>  	struct sun6i_vchan *vchan;
+>  	struct sun6i_pchan *pchan;
+> +	unsigned long flags;
+>  	int i, j, ret = IRQ_NONE;
+>  	u32 status;
+>
+> +	spin_lock_irqsave(&sdev->lock, flags);
+>  	for (i = 0; i < DIV_ROUND_UP(sdev->num_pchans, channels_per_reg); i++) {
+>  		status = sun6i_read_irq_stat(sdev, i);
+>  		if (!status)
+> @@ -608,14 +602,14 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+>  			pchan = sdev->pchans + i * channels_per_reg + j;
+>  			vchan = pchan->vchan;
+>  			if (vchan && (status & vchan->irq_type)) {
+> +				spin_lock(&vchan->vc.lock);
+>  				if (vchan->cyclic) {
+>  					vchan_cyclic_callback(&pchan->desc->vd);
+>  				} else {
+> -					spin_lock(&vchan->vc.lock);
+>  					vchan_cookie_complete(&pchan->desc->vd);
+>  					pchan->done = pchan->desc;
+> -					spin_unlock(&vchan->vc.lock);
+>  				}
+> +				spin_unlock(&vchan->vc.lock);
+>  			}
+>
+>  			status = status >> DMA_IRQ_CHAN_WIDTH;
+> @@ -625,6 +619,7 @@ static irqreturn_t sun6i_dma_interrupt(int irq, void *dev_id)
+>  			tasklet_schedule(&sdev->task);
+>  		ret = IRQ_HANDLED;
+>  	}
+> +	spin_unlock_irqrestore(&sdev->lock, flags);
+>
+>  	return ret;
+>  }
+> @@ -931,19 +926,20 @@ static int sun6i_dma_pause(struct dma_chan *chan)
+>  {
+>  	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(chan->device);
+>  	struct sun6i_vchan *vchan = to_sun6i_vchan(chan);
+> -	struct sun6i_pchan *pchan = vchan->phy;
+> +	struct sun6i_pchan *pchan;
+>  	unsigned long flags;
+>
+>  	dev_dbg(dmaengine_chan_dev(chan), "vchan %p: pause\n", &vchan->vc);
+>
+> +	spin_lock_irqsave(&sdev->lock, flags);
+> +	pchan = vchan->phy;
+>  	if (pchan) {
+>  		writel(DMA_CHAN_PAUSE_PAUSE,
+>  		       pchan->base + DMA_CHAN_PAUSE);
+>  	} else {
+> -		spin_lock_irqsave(&sdev->lock, flags);
+>  		list_del_init(&vchan->node);
+> -		spin_unlock_irqrestore(&sdev->lock, flags);
+>  	}
+> +	spin_unlock_irqrestore(&sdev->lock, flags);
+>
+>  	return 0;
+>  }
+> @@ -978,15 +974,14 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+>  {
+>  	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(chan->device);
+>  	struct sun6i_vchan *vchan = to_sun6i_vchan(chan);
+> -	struct sun6i_pchan *pchan = vchan->phy;
+> +	struct sun6i_pchan *pchan;
+>  	unsigned long flags;
+>  	LIST_HEAD(head);
+>
+>  	spin_lock_irqsave(&sdev->lock, flags);
+> +	spin_lock(&vchan->vc.lock);
+> +	pchan = vchan->phy;
+>  	list_del_init(&vchan->node);
+> -	spin_unlock_irqrestore(&sdev->lock, flags);
+> -
+> -	spin_lock_irqsave(&vchan->vc.lock, flags);
+>
+>  	if (pchan && pchan->desc && pchan->desc != pchan->done) {
+>  		struct virt_dma_desc *vd = &pchan->desc->vd;
+> @@ -1007,7 +1002,8 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+>  		pchan->done = NULL;
+>  	}
+>
+> -	spin_unlock_irqrestore(&vchan->vc.lock, flags);
+> +	spin_unlock(&vchan->vc.lock);
+> +	spin_unlock_irqrestore(&sdev->lock, flags);
+>
+>  	vchan_dma_desc_free_list(&vchan->vc, &head);
+>
+> @@ -1018,8 +1014,9 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
+>  					   dma_cookie_t cookie,
+>  					   struct dma_tx_state *state)
+>  {
+> +	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(chan->device);
+>  	struct sun6i_vchan *vchan = to_sun6i_vchan(chan);
+> -	struct sun6i_pchan *pchan = vchan->phy;
+> +	struct sun6i_pchan *pchan;
+>  	struct sun6i_dma_lli *lli;
+>  	struct virt_dma_desc *vd;
+>  	struct sun6i_desc *txd;
+> @@ -1027,11 +1024,12 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
+>  	unsigned long flags;
+>  	size_t bytes = 0;
+>
+> +	spin_lock_irqsave(&sdev->lock, flags);
+> +	spin_lock(&vchan->vc.lock);
+>  	ret = dma_cookie_status(chan, cookie, state);
+>  	if (ret == DMA_COMPLETE || !state)
+> -		return ret;
+> -
+> -	spin_lock_irqsave(&vchan->vc.lock, flags);
+> +		goto out;
+> +	pchan = vchan->phy;
+>
+>  	vd = vchan_find_desc(&vchan->vc, cookie);
+>  	txd = to_sun6i_desc(&vd->tx);
+> @@ -1045,9 +1043,10 @@ static enum dma_status sun6i_dma_tx_status(struct dma_chan *chan,
+>  		bytes = sun6i_get_chan_size(pchan);
+>  	}
+>
+> -	spin_unlock_irqrestore(&vchan->vc.lock, flags);
+> -
+>  	dma_set_residue(state, bytes);
+> +out:
+> +	spin_unlock(&vchan->vc.lock);
+> +	spin_unlock_irqrestore(&sdev->lock, flags);
+>
+>  	return ret;
+>  }
+>
 > --
-
-Please check above issues
-
-Frank
-
+> 2.53.0
 >
-> commit 8e161a43d78d90e76eaddc39b1b96c7a28b1dd6c
-> Author: Binbin Zhou <zhoubinbin@loongson.cn>
->
-> dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
->
-> This commit adds pause and resume support to the Loongson-2 APB CMC DMA
-> driver by clearing and restoring LOONGSON2_CMCDMA_CCR_EN while preserving
-> the hardware transfer position. It also updates status reporting and
-> cyclic scatterlist advancement to honor the paused state.
->
-> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > index c654e05729024..a4153ea854623 100644
-> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
->
-> [ ... ]
->
-> > @@ -184,6 +185,8 @@ static void loongson2_cmc_dma_stop(struct loongson2_cmc_dma_chan *lchan)
-> >  	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, ccr);
-> >
-> >  	loongson2_cmc_dma_irq_clear(lchan, LOONGSON2_CMCDMA_MASKI);
-> > +
-> > +	lchan->paused = false;
-> >  }
->
-> [Severity: Medium]
-> Can this reset lchan->paused and restart DMA when a segment completion
-> interrupt races with loongson2_cmc_dma_pause() on a non-cyclic transfer?
->
-> loongson2_cmc_dma_pause() allows pausing any channel with an active
-> lchan->desc, including non-cyclic slave_sg transfers. If a scatterlist
-> segment finishes and latches LOONGSON2_CMCDMA_TCI just before
-> loongson2_cmc_dma_pause() acquires lchan->vchan.lock and sets
-> lchan->paused = true, the interrupt handler will subsequently run:
->
->   loongson2_cmc_dma_chan_irq()
->     -> loongson2_cmc_dma_handle_chan_done()
->       -> loongson2_cmc_dma_start_transfer()
->
-> Unlike the cyclic path in loongson2_cmc_dma_configure_next_sg(), the
-> non-cyclic path in loongson2_cmc_dma_handle_chan_done() calls
-> loongson2_cmc_dma_start_transfer():
->
-> 	loongson2_cmc_dma_stop(lchan);
-> 	...
-> 	/* Start DMA */
-> 	reg->ccr |= LOONGSON2_CMCDMA_CCR_EN;
-> 	loongson2_cmc_dma_write(lddev, LOONGSON2_CMCDMA_CCR, lchan->id, reg->ccr);
->
-> This clears lchan->paused = false in loongson2_cmc_dma_stop() and
-> unconditionally sets LOONGSON2_CMCDMA_CCR_EN for the next scatterlist
-> entry or next queued descriptor. Should non-cyclic scatterlist
-> advancement also preserve lchan->paused and avoid re-enabling the channel
-> while paused?
->
-> [ ... ]
->
-> > @@ -534,6 +545,13 @@ static enum dma_status loongson2_cmc_dma_tx_status(struct dma_chan *chan, dma_co
-> >  			/* Active descriptor: compute residue from hardware progress */
-> >  			state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
-> >  									lchan->next_sg);
-> > +			/*
-> > +			 * A paused channel still has an active descriptor but is not making
-> > +			 * progress. Report DMA_PAUSED so clients can distinguish it from a
-> > +			 * running transfer.
-> > +			 */
-> > +			if (lchan->paused && status == DMA_IN_PROGRESS)
-> > +				status = DMA_PAUSED;
-> >  		} else if (vdesc) {
-> >  			/* Queued descriptor not yet started: residue is the total length */
-> >  			struct loongson2_cmc_dma_desc *ldesc = to_lmdma_desc(vdesc);
->
-> [Severity: Medium]
-> What happens if a client queries transfer status on a paused channel with
-> a NULL state pointer, such as via dmaengine_tx_status(chan, cookie, NULL)
-> or dma_async_is_tx_complete()?
->
-> Earlier in loongson2_cmc_dma_tx_status():
->
-> 	status = dma_cookie_status(chan, cookie, state);
-> 	if (status == DMA_COMPLETE || !state)
-> 		return status;
->
-> When state is NULL, loongson2_cmc_dma_tx_status() returns early before
-> acquiring lchan->vchan.lock and checking lchan->paused, so it will return
-> DMA_IN_PROGRESS instead of DMA_PAUSED for the active paused descriptor.
-> Should the lchan->paused check still be performed when state is NULL?
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1792988985.git.zhoubinbin@loongson.cn?part=4
