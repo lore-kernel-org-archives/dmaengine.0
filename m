@@ -1,57 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794563800;
-	b=2KHzj76aoaD3/RjvR4H7qCh6kTCkhKGglh1h+WYvD8rXitCJuN3Gr3R2PhFjSVMqJKNp
-	 OQWsdq8omdE+siQ7g2XvtVZMaX2Z/XLUeD7/ehEVgPJBIkAzT0s0psl23VYTWVY184nRd
-	 TayIIqv1rLNBDC7ec205pYKMRdVFDMbibIo9FMt7o+znhYM0/8UZDVey+of9DxoSg3PQ0
-	 BPHvHKQ6kkO/NXcbdzDFtJ8o7H7ojJd5VeLsZKOL/iMpxjhID4teEJGPtnXCYkB17KHRf
-	 p+6kN/Wx3PRgECvCpljpysfw/wM4M+1pCNIqiPWvz7wliWs35ynk/fst4wrqIURaBMw==
+	t=1794564867;
+	b=Sms8PUHuZYVgaLQc3twezyHO5xKZD2QRE4fTs3SdOiqqPnr70akejggqL2dojEjc8YXF
+	 R7/QoX9YdMfBLlbdk2PWU5wOMzn5M3akzdzF7JDRXXS9Y/rjjwi/0JlaI3oGthjsuDAle
+	 X9mnU5zYiUmpJy6EBQRzO4YecfqjkqMdPiP0b9mFvR7V/ugYaogygL0JP1iuO4ANOa8cy
+	 fiN9sWHFGMGNFvNzD4VNw1JZWTLNwEbQhyF/9l6t2Wbnrpnv5GRKM5SJkl+dt9naAHtxG
+	 MQkKfnP9n+lZ2MmEIYHQ1fW1LHhCS5YJRZwKllbSgSXSd1pWInW+7b9vM0jHSfGt1vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794563800;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=IgGEgmLOwiHuCe78JvST/Gq/YLNBuvUkHsFjkeRJ67A=;
-	b=4Bnuuurst65oLw7EITJ7fPwgemv6ylrM9tj54YcdY3uY7UZgJImEzSlaxUVHmiPRn+ZN
-	 ZxQQFV+1CPMbNPiKu/BamI/iXZRuee8PJLIDtBenR826Y7q8rGJe67/lguIkWQ4qTplej
-	 +mfic8rC4hOcZVFqgUfCpTz72xH/6iYH/+KyCnfIE6HQm6oEWLHa4qy33arX0wxQGzqwy
-	 NkZN3/7AW2ag+pKb89QmCGsTzUjDPlCE+uXyTcsXHanMG9kXPIWVSfGtVUvAlK9UJbN6N
-	 duD2oJvKYVsiUuuDcieUAQWyyU+ffA07G3dAhJ5d/ZJh59Yc8gC4swpVpArEjj5i49g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794564867;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=ZsOlRIP84+cd0ceqPpUVOhUaXHip+vkj83YXh3mKpJs=;
+	b=raL9JZpXY1ez+azxfPJIhaVGwwII+Ew5xm1gAD0MrcmE4N0nWHjw/MpprU5pf+W9ODJ/
+	 IKYupyBQZlXCJEpBnCoPhVdVRDEnXrftb5FEAg9w3gFxFcrEqRh+jyqGeGZsE3iY8DhaE
+	 9ND9cXdpui7GcCuPT98pM8c1zWe92OPAXBCzOkfzzaznqNMjmANR7GO/vYLsaqFzq7eg7
+	 LTIYHB3+7GPUJStDK2FWitGI1JiBlwGiZMUmeoMnXrfhK4yY7oX3CAAydksiNMKjfIgGC
+	 JpTbmC4k3BJQhRB0XKwDBrVeQWfYF+KHKUF+GymIsd6x6seBi24oYBZ06n5NEvXD7Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K9RtA6wO;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mlEZuqpP;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=a2A56IHW;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C6B606A327
-	for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 09:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB730606A323
+	for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 10:14:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BB730606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K9RtA6wO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1E81F000C4;
-	Fri, 13 Nov 2026 09:56:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794563800;
-	bh=IgGEgmLOwiHuCe78JvST/Gq/YLNBuvUkHsFjkeRJ67A=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=K9RtA6wOhWujwvEEopI9oVrgOzx320eMv9Mb+ctfzb5slpHNBXybthUXqQ36qSrPV
-	 lcpyYmwwqVY57xqrCmAgWA/jz3zHEDOszej+uuECcJieg5IN8o35szHQzvAHihqVUo
-	 vCOcliEEEpM+QJnFWKUGJdjRhVUNEccUDxit76osuPMvh74kxzXNQnv7cFWJ5oNR9P
-	 NMRYxuAXL3h3lOrESRsjGm9UsvRyT2SvpPxEWERxJck926sqLkXIU6nnm9gCzV5niA
-	 8NbAmnzDZ1OedL/6Wo/VHUfWRA4AmNNVNhJg9geyHNjfr5tps/GTsKAQQTfwHgXMvq
-	 dHwr49XDtww/Q==
-Message-ID: <sashiko-outbox-212590@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 5/5] dmaengine: dw-axi-dmac: preserve pending pause
- requests
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "James Hilliard" <james.hilliard1@gmail.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261113-submit-dw-axi-dma-stop-pause-v1-v5-5-8523a27b5788@gmail.com>
-References: <20261113-submit-dw-axi-dma-stop-pause-v1-v5-0-8523a27b5788@gmail.com>
- <20261113-submit-dw-axi-dma-stop-pause-v1-v5-5-8523a27b5788@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 13 Nov 2026 09:56:39 +0000
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mlEZuqpP;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=a2A56IHW
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AD8VKaB2515666
+	for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 10:14:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZsOlRIP84+cd0ceqPpUVOhUaXHip+vkj83YXh3mKpJs=; b=mlEZuqpPF39alVmw
+	XApYRuTPVfcUjxNT7dsmKkyxJoShSvtBNG+fLek1nLHG70UzKQRbzrcvnkLKFYwK
+	DEfLzqXRzlr8qZ0mJp+KNcOHGf2U1t1nYMgV8RNUzHqFwKioGKfbuJpwj8oSIzKl
+	LxVXHOlPqZvCwOBn4oqVl5vtESxQcv7LlRKJTO9l8w3shUxM54tiLIguftfH/beJ
+	L6DY+IveQp47j4Ua7BKxWSJNA6oPow9lEbHwMHnuzxS6fshlU5fjZjbqOtf8VpAv
+	RfoLRt9GEYMawZ4SUQ4hQmxDS07WleaqdVj0Aj0E7OoEZHnpHuAbKxW2wwQYhjlb
+	7XbDAw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hwg1bbju7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 10:14:25 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-5362ce9df1eso1810831cf.2
+        for <dmaengine@vger.kernel.org>; Fri, 13 Nov 2026 02:14:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1794564865; x=1795169665; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZsOlRIP84+cd0ceqPpUVOhUaXHip+vkj83YXh3mKpJs=;
+        b=a2A56IHWfz1Y/iMrxV/OtURhgg43OmJZPKyPYHBigugByNwOv7JDh2CQwY8i3kAjip
+         mfF8ViBhuayCRal30yAG1f/0Ak2B4XC+vqSzIZL5cOxH/zpb3ZoVmhZfJNTfaU6gXPAy
+         rrbl7/D3Ag4v3JJv0suWyJhcO4IZXt0BnKS5B/E0w9tQyOj/wb9eHArMtsRtgNIdtc08
+         Xl0c54vLzzXJQk+0oUYOVehbIZO+tfRK8oopWGUPxez6rQDa4NM///1N5Vdyp1lR92DH
+         k9ZXiLItg2Kd6x9FdRLv3Xc8gXy/lpkON4gGsBGijTYBcTzAAmOdDg3Mu/iibtRJDJ26
+         yTEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794564865; x=1795169665;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ZsOlRIP84+cd0ceqPpUVOhUaXHip+vkj83YXh3mKpJs=;
+        b=eGz68QEUv4FBGfnOVNnX8kTsmhpRV/OM4TBbNM/UEyAXTOJ8juSP1shcSl2ZJ/bVk2
+         Tl9vH1j5OqFreVpmQpb77c7vNdtBY8NhEotdiYqiMcGzNMMXRZ3bNVnpuFjlyAAGePSH
+         aYtxojnASyia5wtiqPwGq8Vt4BDrumzvhVrmffoH0jDr756hr2w+Kr+0XrLVyEX5uoHX
+         +Xb0CxVQEQYFB1CdeUzXu94/yO4eIJvNDy3oTas/l/jy/+r7pwWxZMfRQB2FIQRY2qw5
+         IzaImCaUsNgzXD0UjoW91PPikB6W3aXIIGeR2pNCgvergatSm7DOM7NMlxvZX+ARBLFf
+         RE2Q==
+X-Forwarded-Encrypted: i=1; AL+hErGRG0gVHe4ihOHZIFYVO5LZzjaTcpLcggVtxYpSmTR58PyRnyT9xI4dFX8ma6SheRmlMaQRdHEM9vs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+K7d5y/C5nispMV9Kjny9ycBYcxJSIVPfDiusfJsFb6M4vZ/Ef
+	zH/TTZoL2la0jJsrKz5MxNZCCCYT6RBXOw81ZoZVQwMKiw43RUD1gLSDrnlSG6RiU+mMIRWfgUR
+	g0d/j+YrdDo1l9o5d01y/RGokCWW8UYfec7rkLiUyqq0nqhWlj4u6Tif8F3hKwrt8jNITJQ0=
+X-Gm-Gg: AYBFou1bCJFLQB26T2BpqCYjaBJzzEfOTsN1KsAhBbas7dH2mvAQODqOq6xjkou48fC
+	tG6FRXhJCe5dknFscGSs4s1FhxYOeOMTpFGPVaxjKn44mbiF3CeZYJIbzIKG+JljFBKJ9oKAEx5
+	lYapZA3nfZGpFBL9Zh2XLzPhwwCzZHgqAV7Y4V66+tZTca81LUDjMvRKoHjNexA1n8pa43Cnzf0
+	d+XJr7yj+x5tT9K8hV8TphIBGqfU5Sz3g+zvYtZPGvkyUTF+Cg+wAwOBaVn3BFG0N878onrzMEb
+	whOoT6MOk/3EWDO8xj7xqjoPu3BtqMpp702ZX3ZUymYaHq9hrEgB7qysS4PsW5IvK25PdxqX0jz
+	YswU0teSd4LLUH3IyUXYj/PAy5/n+UIbbZJNmALMYJv84vJaSPIkItO3zbgpYuw1CCmDHJEw=
+X-Received: by 2002:ac8:1009:0:b0:54d:2f0d:a83f with SMTP id d75a77b69052e-55ac667e23bmr32303291cf.3.1794564864783;
+        Fri, 13 Nov 2026 02:14:24 -0800 (PST)
+X-Received: by 2002:ac8:1009:0:b0:54d:2f0d:a83f with SMTP id d75a77b69052e-55ac667e23bmr32302991cf.3.1794564864268;
+        Fri, 13 Nov 2026 02:14:24 -0800 (PST)
+Received: from [192.168.226.72] ([178.235.128.140])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6b7c264d99csm729164a12.36.2026.11.13.02.14.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2026 02:14:23 -0800 (PST)
+Message-ID: <58b64727-4b36-4328-9abd-116b984eb7af@oss.qualcomm.com>
+Date: Fri, 13 Nov 2026 11:14:20 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,59 +114,129 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] dt-bindings: dma: qcom-gpi: Add QSPI protocol
+ identifier
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
+References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
+ <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
+ <20261109-wandering-miraculous-mamba-0cf21a@quoll>
+ <2fc8f7ea-651e-466e-9346-c47e0a38c5bb@oss.qualcomm.com>
+ <20261111-daring-salamander-from-tartarus-4c72bd@quoll>
+ <c9427a03-8b45-4e35-a29d-7ebe30f07ed7@oss.qualcomm.com>
+ <5b6e4031-4c52-4b67-82c2-0033d13b15d6@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <5b6e4031-4c52-4b67-82c2-0033d13b15d6@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=c6Q+0h9l c=1 sm=1 tr=0 ts=6af6e301 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=NEAV23lmAAAA:8 a=O3q0-ZaapwhYWF49y_EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: _r36SD0-fuBiQUdypWc7LMiso4ycnhYJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTEzMDA0MCBTYWx0ZWRfX7mj+QjLjg+WT
+ RPGU+3VCW73S0vVNd/R0xVykCjwpoi9cJ4tMkyHEUCt2KQ0xreumpMDXq+b6CdAVx2Dll4UIXzJ
+ AkJExSQ46L5K/UUq5ft2iQOttT+dBr9N4yIPb270mfafsA2+RHeh44LA57a7cMb/BITWag4aBlI
+ lcdLDJ50fylMDxerFZ6XwMej9ZCYtwhbbi3l3GUXRMxgTplFhzk5u1LdErWMCFBksZiVlPrnoS0
+ gAywF5DL9t9reNuQ0LqWxlkJpJr4aTKUv4cOEjaN9760fkfNgH1Vpkny1wLY5ftI075kgppQ1Bl
+ qvyHUVk8yPJCr+YbtWt7kLFvMpDT8rCxu4jLS59ulqUF447lhl74D9Thm8R5hTGUBbbpXX+lXbI
+ 0G+vJR0nL4atgpxCTpihoatVGIlqRmkDzEuylai997wiYvUilzsN+1rUZm9q5Xxlbzm5xU1QCel
+ 8NS5KLM0sr4AiHdX5sw==
+X-Proofpoint-ORIG-GUID: _r36SD0-fuBiQUdypWc7LMiso4ycnhYJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTEzMDA0MCBTYWx0ZWRfX7VVQxXSbnLNk
+ dN7R40nX+jzh0MRAvq5Dn7nruelqvvW+9yQwEH+VWpNqqgoXZDoMRSI70pgp4WeA9xXBdTBloeB
+ Fw/Fecavepm8qtwkhRG6/T4CRiJjnT0=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-13_03,2026-11-11_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611130040
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] dmaengine: dw-axi-dmac: cyclic completion in
-  axi_chan_block_xfer_complete() bypasses suspend cleanup
---
+On 11/12/26 2:57 PM, Krzysztof Kozlowski wrote:
+> On 12/11/2026 14:47, Jyothi Kumar Seerapu wrote:
+>>
+>>
+>> On 11/11/2026 6:07 PM, Krzysztof Kozlowski wrote:
+>>> On Mon, Nov 09, 2026 at 08:03:29PM +0530, Jyothi Kumar Seerapu wrote:
+>>>>
+>>>>
+>>>> On 11/9/2026 7:12 PM, Krzysztof Kozlowski wrote:
+>>>>> On Fri, Nov 06, 2026 at 08:31:20PM +0530, Jyothi Kumar Seerapu wrote:
+>>>>>> Add QCOM_GPI_QSPI to identify QSPI (Quad SPI) channels in GPI DMA
+>>>>>> specifiers. Its value, 9, matches the GENI serial engine firmware
+>>>>>> protocol ID for QSPI.
+>>>>>
+>>>>> What is GENI serial engine firmware? How does the Linux rely on it that
+>>>>> we add bindings for it?
+>>>>
+>>>> Hi Krzysztof,
+>>>> GENI firmware runs on the serial engine’s programmable sequencers and
+>>>> implements protocols such as SPI and QSPI. Linux configures the engine and
+>>>> submits transfers to it.
+>>>> The existing GPI DMA specifier includes a client protocol ID. Linux programs
+>>>> this ID into the DMA channel and selects the corresponding descriptor
+>>>> format. QCOM_GPI_QSPI adds the QSPI protocol encoding 9 to that interface.
+>>>> I will clarify this in the commit description in V2.
+>>>
+>>> Does not really answer. I see no reason why GENI firmware needs ABI for
+>>> Linux.
+>>>
+>> This extends the existing GPI DMA binding, not a GENI firmware ABI.
+> 
+> OK, so it is not ABI for the firmware. Period. Let's stop discussing this.
 
-commit d0a0ce5ca0c535aeb1aa58ba2ac57a8edf27e326
-Author: James Hilliard <james.hilliard1@gmail.com>
+It is a firmware ABI, the various protocols each have their own magic
+number and the firmware needs to know the right one. The GPI DMA driver
+uses exactly that information and programs it into the core:
 
-dmaengine: dw-axi-dmac: preserve pending pause requests
+gpi_of_dma_xlate():
+  gchan->protocol = args->args[2];
 
-This commit tracks pending pause requests and active descriptors across
-polling timeouts, interrupt handling, and cyclic transfer completions so
-that pause and resume operations do not lose hardware suspend
-acknowledgments or prematurely restart transfers.
+gpi_alloc_chan():
+  gpi_write_reg(gpii, gpii->regs + GPII_n_CH_k_SCRATCH_0_OFFS(id, chid),
+                GPII_n_CH_k_SCRATCH_0(pair_chid, chan->protocol, chan->seid));
+							^^
 
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index 1a53fbc951a91..cd9a5b45d295a 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+It doesn't necessarily _have to_ be the DT ABI, but since it's
+bijective, an identity mapping seems like the sanest choice. The
+holes are a result of some of the other protocols not being
+supported upstream (yet?).
 
-[ ... ]
 
-> @@ -1134,11 +1145,18 @@ static void axi_chan_block_xfer_complete(struct a=
-xi_dma_chan *chan)
->  			}
->  		}
-> =20
-> -		axi_chan_enable(chan);
-> +		if (chan->pause_requested) {
-> +			chan->is_paused =3D true;
-> +			chan->cyclic_restart =3D true;
-> +		} else {
-> +			axi_chan_enable(chan);
-> +		}
 
-[Severity: Medium]
-Does setting chan->is_paused =3D true here bypass the suspend cleanup in
-axi_chan_wait_for_suspend() when a cyclic segment completes after
-dma_chan_pause() times out?
+But we already know this value in most cases (if the firmware is
+present). Once upon a time I tried to de-multiplex the GENI nodes:
 
-If dma_chan_pause() writes the channel suspend bit and times out with
--EAGAIN, and the cyclic segment then finishes in hardware before the
-caller retries dma_chan_pause() or calls dma_chan_resume(), this branch
-sets chan->is_paused =3D true without calling axi_chan_disable() or
-clearing DWAXIDMAC_IRQ_SUSPENDED.  A subsequent dma_chan_pause() or
-dma_chan_resume() will then hit the early return in
-axi_chan_wait_for_suspend(), skipping axi_chan_is_suspended() (which
-calls axi_chan_disable() for completed transfers) and leaving any late
-DWAXIDMAC_IRQ_SUSPENDED status uncleared across pause retries.
+https://github.com/quic-kdybcio/linux/commits/topic/single_node_genise/
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261113-submit-dw-=
-axi-dma-stop-pause-v1-v5-0-8523a27b5788@gmail.com?part=3D5
+particularly:
+
+https://github.com/quic-kdybcio/linux/commit/02e4671d8f9c3743a8e1a520cae75a455912eca7
+
+which (for x1e80100.dtsi) only keeps a single node per QUP instance
+(and not NUM_PROTOCOLS nodes for each one)
+
+But I think for removing this completely we'd need to move this
+information into a new property (qcom,protocol?) which would encode
+exactly the same value to convey that to the fw loader.
+
+FWIW I can pick up that work again if we agree on the bindings.
+
+Konrad
