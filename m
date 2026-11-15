@@ -1,57 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794727889;
-	b=kT4UrzeRY6UiF1J7rq0NWqBLVgpqr0QYM2usyRvd+kyDoT1SxjoH86s9fKJ/Z5pbRpUB
-	 EntDf5yI1yKsI31hJxQkxkAXGd4Ri8fG/Do//CxNVvLITITz90Yczqak9IEQSHdi53YkZ
-	 3UyfhsX0d4kAROVIwHacSm7ydkXHUW+Zw6MPLJ38XUVfB4iz1QHRvIAXoEZh9EYR/aEFu
-	 R5Un8fNNwn2DQ5G3ROi/FMT+d6GTEBobaa0wwXxB0C9aud1Wenzkr5gc/ki72AsdkVamE
-	 WwyGTy4h+40fnElv419sQrmP6MUFN7YOV8k/n8w12fpuEl1o5jIEBCORxbNo2w2iCfg==
+	t=1794729786;
+	b=vJcScS5FwG5JQZXSD0Kd7xJusdb3tzSMuKpG1okOJg4wyJW+GMuB/juaM/8vwKn5OkVB
+	 obDld2R4hU+V0zSaG2pE8l/1oP/G4OtApHVUB0iqYyNkPLwDekNTlaKAqVGWiCU+ubU6s
+	 0FBoAgLSnebzs0gLIJiwfxTram41IyUTpaptTWBVB2wbVKHvY6rMynHYTpnNz7w3D6P50
+	 Jw6pMN8s87sepaJEfbJTdW3PG6yBz+x/7aec4F7e4q/sIUK7Jr3mnRzwSRYYdbXEpccXI
+	 VGKJzexHey+evnIH3mNrIHo2RxDQDjGf8YWh8Q3K1V1f3PkMoOIzgdRXG96DSvnsHsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794727889;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=IzFKSxuu4m41LZMj2VLvpbK2gHDdjGYHMPxWvUwctfc=;
-	b=eirn9nKeCKFJyJlpzopldjjIALDN9pZULMKE0uTkwh87w/M/hehz5Da92RhRCe2/Mseu
-	 SBjqcb2cpIHW+2zz23JsHJsV9LvEX7mWKgIz55EjmxKeWrWs2IszPdDRRVi+Cf7uahEcd
-	 +d7DucjBhSEJcZjyGWMovZArclrYwGUEsxFZULLkH8YK1R+dqYkygRd7pSCl34JmKlD3g
-	 rxhDYujKAlbqSn4eaR2VNn7TjYKAClLx1eC40NAIttK2cK4Flg4ftj0vTHRp8JkqEka3A
-	 kJvxAoHvAGkqMLA5uH1QMSpcVivgvHLpxgI2E/36Zjssq0GHHgH6duWdajFvkf93veA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794729786;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-CM-TRANSID:X-Coremail-Antispam:X-CM-SenderInfo;
+	bh=2cHoKfMTCq8qVifnRs0Z8Ntt3pn0su/nfO0nJQ9487s=;
+	b=nqdvBY4m2JaQ1xF1b7QV+xkANklnehoi6Krd4ZcdUK40oVOtF9ehg9MwfUwo+VUDgA5v
+	 +YqHVfcxTpkSlYCzrVMa2ip+O0zdjVE4nOUFcXRp9UQMuk1jEQbBGoMK5jCCTJxEFFP1E
+	 OZmOz1A7yvCDvTRWSh5uXTz/o2EBHVQPwTx2EB7QyObKkYX8Lqrzptc5HhnvNZ2lTSCRS
+	 x3RMTt09Px9k3AG1oHAmFvsD/luHdLw8YVaxCxCekGR0yE+WTcp6R9Q4vT+S4euH/gGC2
+	 6mn6rYJXybcaIVoGowF3L8G51xmXQWA9PdSiPU8vKjKeyodJjqnov0Sufd6rnoh4Grg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="MA9+mU/q";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=163.com;
+	spf=pass smtp.mailfrom=163.com;
+	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=dGFRbzx3;
+	arc=none smtp.remote-ip=117.135.210.3
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF91F606A31A;
-	Sun, 15 Nov 2026 07:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F01606A329;
+	Sun, 15 Nov 2026 08:03:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25F01606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MA9+mU/q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F091F1F000C4;
-	Sun, 15 Nov 2026 07:31:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794727889;
-	bh=IzFKSxuu4m41LZMj2VLvpbK2gHDdjGYHMPxWvUwctfc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=MA9+mU/qqPpdx9KjDqWocTtpcnAvh2YkXBaD2PfKgHeduhWrgxlPiXcJmuVcf3yUy
-	 g5mkgiW7Hq+Fcw2ZtiDP55w928oCYrPRATJ8bubblQvBUk18T4/gYP35j51MgPMTGk
-	 QXWKwMl9ndBcSPkr3xc6NHYMtU8N5qygQCfUFzE7ZIGQ2SruR6G1mdopM/s1YH09Dm
-	 TNurhNhxObtT4AuESeUZODM/vvoQTI2u73LA6b+djefSK0MEsR7lrMygFm4nfDrc59
-	 CCRdFgXp+BHXCDLmTjM0kI59aroMYu1dTdzRUMOv0xFeDgLAx1Jgm3rWdEvN6hQZ34
-	 N9Z0aYb3zxo2A==
-Message-ID: <sashiko-outbox-215262@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 05/10] dmaengine: dw: calculate residue in the status
- getter
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "James Hilliard" <james.hilliard1@gmail.com>
-Cc: dmaengine@vger.kernel.org, linux-serial@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261115-submit-dw-dma-synchronize-v1-v7-5-8d58f3d49e4d@gmail.com>
-References: <20261115-submit-dw-dma-synchronize-v1-v7-0-8d58f3d49e4d@gmail.com>
- <20261115-submit-dw-dma-synchronize-v1-v7-5-8d58f3d49e4d@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 07:31:28 +0000
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=dGFRbzx3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=2c
+	HoKfMTCq8qVifnRs0Z8Ntt3pn0su/nfO0nJQ9487s=; b=dGFRbzx3fNZVhnYwa2
+	mdZ982tnEwZzeHvABeQ1FQjbJZeTHWYKl92Yo+9Sv2o8j1g/LIeUNFkGhblbfiZh
+	smQZMvkfAZQ0y3SulsA6GlanApw9VU1EV4c8/9eL9fBf3wJnzngR0LzNYpXd8w9C
+	6qy/Q8wajVI4z7kJHuVXR8cYY=
+Received: from user-VMware-Virtual-Platform.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id _____wB3fJUmZ_lqQz57HA--.24354S2;
+	Sun, 15 Nov 2026 16:02:46 +0800 (CST)
+From: Ziheng Wei <zihengw03@163.com>
+To: Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] dmaengine: at_xdmac: handle empty transfer list in tx_status
+Date: Sun, 15 Nov 2026 16:02:45 +0800
+Message-ID: <20261115080245.910534-1-zihengw03@163.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,51 +62,75 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wB3fJUmZ_lqQz57HA--.24354S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxCry3Aw1kAw17CF45GrWDXFb_yoW5Gr43pa
+	yfG3y5CryktF4ruF1kG3W09ay5ZF4rCayUuayDW3s8uF4Yvr4rW3s7t34jqF98Wrs5XFyv
+	yF4Ut3s3CryDGrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07bU-erUUUUU=
+X-CM-SenderInfo: p2lkv0ljzqjqqrwthudrp/xtbC7Qb7TGr5ZyavCQAA3o
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: dw: inaccurate Fixes tag in
-  dwc_get_residue_and_status() fix
---
+at_xdmac_device_terminate_all() removes every descriptor from
+atchan->xfers_list without completing their cookies, so
+dma_cookie_status() keeps reporting a terminated cookie as
+DMA_IN_PROGRESS. at_xdmac_tx_status() then calls list_first_entry()
+on the empty list and uses the list head, which lives inside struct
+at_xdmac_chan, as a descriptor: active_xfer and xfer_size are read
+from neighbouring channel fields, and if active_xfer happens to be
+non-zero the residue loop walks a descs_list made of those fields.
 
-commit b5c22abc9b7baff822cfeb84f5f8ea11d403b05b
-Author: Serge Semin <fancer.lancer@gmail.com>
+For audio this is a routine path. The generic dmaengine PCM calls
+dmaengine_terminate_async() on TRIGGER_STOP and later
+dmaengine_tx_status() on the same cookie from
+snd_dmaengine_pcm_sync_stop() and on close. What happens depends on
+the struct layout. On a 32-bit build active_xfer overlays
+sconfig.device_fc, which is normally false, so only a bogus residue
+is reported. With CONFIG_DEBUG_SPINLOCK the larger spinlock_t puts
+active_xfer on the held lock word and descs_list on the owner_cpu and
+owner fields, so the loop follows a pointer that is not a descriptor.
 
-> dmaengine: dw: calculate residue in the status getter
->
-> Calculate hardware-LLP residue while looking up the requested cookie under
-> the channel lock. The scanner and the status getter currently take that
-> lock separately, allowing a descriptor to start between the scanner's
-> residue update and the status query.
->
-> Have dwc_get_hard_llp_desc_residue() return a local residue value from a
-> fresh LLP snapshot. Keep the persistent residue field for software-LLP
-> block accounting, subtracting the current block's progress when reporting
-> status. The descriptor scanner continues to advance software-LLP blocks
-> and complete cookies from RAW.XFER, including for polled transfers.
->
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA c=
-ontroller")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-> [james: retain polled completion and software-LLP progress]
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Report a residue of 0 when no descriptor is queued.
 
-[Severity: Low]
-Commit 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA
-controller") did not implement residue calculation or dwc_get_residue().
-Calculating hardware-LLP residue in dwc_scan_descriptors() and reading it
-under a separate dwc->lock acquisition in dwc_get_residue() was introduced
-by commit 4702d5244ca9 ("dw_dmac: return proper residue value"), and
-per-descriptor desc->residue lookup via dwc_find_desc() was introduced by
-commit b68fd0976286 ("dmaengine: dw: move residue to a descriptor").
+Found by LLM-assisted source review. Not tested on hardware; the
+layout analysis above is from reading the code only.
 
-Should the Fixes tag instead be:
+Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ziheng Wei <zihengw03@163.com>
+---
 
-  Fixes: 4702d5244ca9 ("dw_dmac: return proper residue value")
-  Fixes: b68fd0976286 ("dmaengine: dw: move residue to a descriptor")
+Notes:
+    The changelog was drafted with an AI assistant from my analysis;
+    I have reviewed the code, the fix and the text.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115-submit-dw-=
-dma-synchronize-v1-v7-0-8d58f3d49e4d@gmail.com?part=3D5
+ drivers/dma/at_xdmac.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index ef0dfe9d3..bcfbb41ea 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -1553,7 +1553,16 @@ at_xdmac_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
+ 
+ 	spin_lock_irqsave(&atchan->lock, flags);
+ 
+-	desc = list_first_entry(&atchan->xfers_list, struct at_xdmac_desc, xfer_node);
++	desc = list_first_entry_or_null(&atchan->xfers_list, struct at_xdmac_desc,
++					xfer_node);
++	/*
++	 * The list is empty once the channel has been terminated, while the
++	 * cookie of the terminated transfer is still reported as in progress.
++	 */
++	if (!desc) {
++		dma_set_residue(txstate, 0);
++		goto spin_unlock;
++	}
+ 
+ 	/*
+ 	 * If the transfer has not been started yet, don't need to compute the
+
+base-commit: 97d73c8251226cf27cc6656b4c542869bb8c69fa
+-- 
+2.43.0
+
