@@ -1,52 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.75.144.95
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794737230;
-	b=xTRaV7/2lRzfhxlx/16TOkF0aH8z3Zw98HEsiJezf3noy/eI0iWJBbxwY1gtF+gy4YHB
-	 MFO9FOSNHyXZubDLUnPj0yj0miZHPL4X5J5g/kh5cefFzaleAcHkuE2k+ZgcrVr0bZH08
-	 y04HfFMF/ONFnUJrvMSWAO+RzB6vYkdii1ydTlU+NP+VMlU94gL3gvN7ES+n3wuupCE0y
-	 p43+3Ystls0beAsPs1ItQzZsD0Vl2uu1yhIysPEjg9i3NoH4kfUpyVmKfv2PN0rj8C4ju
-	 sy0TMlOpa413nriEL+iyKSdZd0kagJs5tIywF4spgI4v6DhsHrUvGAjrmqjo2RHrdAw==
+	t=1794751371;
+	b=NhoqQMDGRRTINx0oua3LZy2hIKkuJUi+0F+O9TOScgtjOVc8F9duOO9x9rJZj0KDgGSu
+	 FMAjNTbiG+OR8c/BqAxD7cbnr4PnMEkXNOXxnVYasJXeoXAO1fRP90POTB/Zo8Sbk/gz8
+	 EjNUxy923vjWnoxkZbam0pVtc/RsIxOnMSpO4yKVi0CEGUSGczits3kBcbUFWOm1LIvU1
+	 9ukdHVvwhc78bVM6C3Eo4y0k+rVJm6uLjS+rddgK+B28flWSiue1EiWs/XXeVo5dr1QK6
+	 w4UZ34r6TBiB8Z6NdFbNvbI5Mgo4EJ+pRB0sprYmriHtfl5i9mNSf2AiFCORfHUiVnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794737230;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=dCeztQ5HxwDrALbFNUBOun9ui9uCjFJ8+NCiMnBHpH4=;
-	b=rQVL9FVZ7jnSudfCawa6sk0zCo6R32IKf/DepL/iFKUEdI5e0HOUh3NqKZHTxCKTg03m
-	 KtMZSis+Z4Z1gvSgE90TJFAg5iZO/Q5QRRbwd0714XNELJZBWgOWv3hkYlHx/qL3PVIRv
-	 iHSM3UY/FoTk0mAWeyEcRIi8w3qfgowkaYbewyYKVGAHeIV+u272RpL+SWoFF0wZvJPXI
-	 NO7kV7Q65keJWzaQf5sdtUQjgxJGhjsfsBGTfIyFc8dRrRnVSPYTj+V7ST2w/IHCcv18E
-	 5QRfNcJIs+AKs8hhHSSgCAMH7FlAZTKWP8q+yu03vbhfJom5BvZrzb2ljeEBxlfGW8g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794751371;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:From:Subject:Date:
+	 Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key;
+	bh=L8xLGYVH3k+8EgRXZyKrd8PgBYSTsjRfbQ37kLtIgTY=;
+	b=ODDd6T4JMgUqOcA+y6LQDJKapdUucclpb9FjN0joWMx9mcIhfoUl7CUj7py5uQtFo1uM
+	 XNe04qRwLksFpQyzhHaktovF2L/6qST13AIjPGr2ey/2Mk+rN4huwFSYSvnciThajPpwF
+	 0WI9pVPVTdPOuHGlYkfxxFjA+p4Wekibf7CqY/cwopY9gJb6oXL/LB9JEQT0UypyveDa5
+	 WqkSpjLeXm9LvPaQk7baF94XxbYCFLqrkY8p3MNU4LOEI1elyz0NPsXyFeyDNVTg0e7Ib
+	 JhNH/F9D5FMCUQ5ej6xRS9uNLeSQ17W3OoV8rlTSl/GcTWr62zKwBG5QsPL1/GnL0IA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=mainlining.org;
+	spf=pass smtp.mailfrom=mainlining.org;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=r1viSbAv;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=w2HwxNQ6;
+	arc=none smtp.remote-ip=5.75.144.95
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F816606A31D
-	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 10:07:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEAF1F000CB
-	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 10:07:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794737230;
-	bh=dCeztQ5HxwDrALbFNUBOun9ui9uCjFJ8+NCiMnBHpH4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ffULzAqtUK7kI4kzvHl1JdD6bHzKJ7H17fEJCLFK4rJN2W25ELqwOuy+22FRsAnoP
-	 EwzXFKs+GQlpSCw9KRwbQyqfuoffTGjkLKnXpoSAc77jX1QZp2ZjSqfcwFdA0QHpQG
-	 xkCbuSGmElOVvo67dSqfBVeRIfZVyJ+YYxbHjASYJyV+hL83tTTm71/mmEIM0S1C3W
-	 JxtRObjt4H24/Pq0bR5r/7wuLxxPmQ/CqkG0o8ggPCFYvHGsYz151Bxo2moxz7rqw3
-	 +FRYVmSRGs8jQDXMPZqoP6AAMIA98VxTfRvLr/XcS1JK3I62ueosjqdXsdYCOOgmt+
-	 yw8uIR/3a01uQ==
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b785ca42ebso3831889a12.2
-        for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 02:07:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErHV64xwjIT8Mn34yL9Qqr7PjvRlO5nmKuygaH9oR8xAksXEB4Y2Z4i6jRdP1nM2iCr1N4g6Tjem4/A=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+/hBlczkHTZF5OqCgml29d7RaXjzkodZ+t1o9x+lhGNB/KBNll
-	7rXV6d9KIYhi/Qn/i2LS6f+gqbTjjojM+4CeoY25mYS63mMRC4ppSiLoQ+YJxrIN25PMSYnvEoc
-	kvZZ5/D+NEwuzhMRzCLaBcVbj4e+1cpA=
-X-Received: by 2002:a05:6402:42c6:b0:6b5:76be:be54 with SMTP id
- 4fb4d7f45d1cf-6b7c0c6fac2mr6104789a12.35.1794737228536; Sun, 15 Nov 2026
- 02:07:08 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCEF60A383F;
+	Sun, 15 Nov 2026 14:02:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBCEF60A383F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=r1viSbAv;
+	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=w2HwxNQ6
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1794751364; bh=L8xLGYVH3k+8EgRXZyKrd8P
+	gBYSTsjRfbQ37kLtIgTY=; b=r1viSbAvO/rDEcOLpZdwQE34QgwFyvH7Nb9m6CWi4EEO5Sf6CG
+	cjf/6PdAtUAoT2zileX5U5OBfXmlCtZGa4qRH5juFK5whCeptYS8SL2UJ+3RjFofdw0QJ8uWptH
+	FWoFsZF1FXrzOZnfMqKsYJSYHiFEc6B+fMEEEXdw1fFHtpN4qhjJKBgZ9zBToiCosKOJi/uSPJZ
+	pIFF7gKFj+jAut2okgDT7hqMkxAg7rcH9Viy8tiQDri09jHnY0b4CyLh4qVBS8fgjg5b1Iwp5iN
+	Wzb628eT4Kdk1TPFndw8J3ntBREQIp7qYUAGqZjIPkoJuMCcqaMG1VpX6viJy6MQUpg==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1794751364; bh=L8xLGYVH3k+8EgRXZyKrd8P
+	gBYSTsjRfbQ37kLtIgTY=; b=w2HwxNQ6MLt8/Hk3gjZhpMahwsQPHbr4CiLejeu28/2L5f9FN/
+	TXqbV6rwADQveOcjrN9/Hc9ywEQD3QToKuDg==;
+From: Nickolay Goppen <setotau@mainlining.org>
+Subject: [PATCH 0/3] dmaengine: Add support for immediate commands
+Date: Sun, 15 Nov 2026 17:02:42 +0300
+Message-Id: <20261115-qcom-bam-dma-immediate-v1-0-9a0df4ca3be1@mainlining.org>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -56,53 +60,66 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1792988985.git.zhoubinbin@loongson.cn>
-In-Reply-To: <cover.1792988985.git.zhoubinbin@loongson.cn>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Sun, 15 Nov 2026 18:06:57 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H5o5UYAoq1cBoBXxP3-jReEHKgjFbFswW+6q_FMBqHA6w@mail.gmail.com>
-X-Gm-Features: AclHuK8xpqb4LMAXdAN5nwsCuwWH11cUlBYujIxrgNPO5PisqkyzXwB5SmcGFG8
-Message-ID: <CAAhV-H5o5UYAoq1cBoBXxP3-jReEHKgjFbFswW+6q_FMBqHA6w@mail.gmail.com>
-Subject: Re: [PATCH 0/4] loongson2-apb-cmc-dma: Fixes issues and pause/resume support
-To: Binbin Zhou <zhoubinbin@loongson.cn>
-Cc: Binbin Zhou <zhoubb.aaron@gmail.com>, Huacai Chen <chenhuacai@loongson.cn>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	Xuerui Wang <kernel@xen0n.name>, loongarch@lists.linux.dev, devicetree@vger.kernel.org, 
-	Keguang Zhang <keguang.zhang@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMwQqDMAyA4VeRnBcwFVfYq4wdahpnBtGtVRHEd
+ 7fbjt/h/3fIklQy3KodkqyadRoL6FIBD2F8CmosBle7KxG1+OHJsAuG0QKqmUQNs2DrPTUNe89
+ OoMTvJL1uv/H98Xdeupfw/L3BcZwMsuNVegAAAA==
+X-Change-ID: 20261115-qcom-bam-dma-immediate-577133c77c2e
+To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+ Randy Dunlap <rdunlap@infradead.org>
+Cc: dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Nickolay Goppen <setotau@mainlining.org>, 
+ Sireesh Kodali <sireeshkodali1@gmail.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794751364; l=1978;
+ i=setotau@mainlining.org; s=20250815; h=from:subject:message-id;
+ bh=KLb0ocTbeYFA6ePesTNKBcDGe/DlIQdK1DaNB180ZCE=;
+ b=glRsAbWZXw/lsfW93DEFHf7mJLXlH31PaDWDkbfyisRbJS9UuzdsCITKefipzGo7yP7xfT0TJ
+ ycbJfw2QJk6Au/ekNmLZ/MD2Vc7Ypw/Yzxtu769rvCICxFsmqObdSku
+X-Developer-Key: i=setotau@mainlining.org; a=ed25519;
+ pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 
-For the whole series:
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+The IPA v2.x block, found on some older Qualcomm SoCs, uses BAM DMA to
+send and receive packets from the AP. It also uses BAM to receive
+commands from the AP (and possibly the modem). These commands are
+encoded as "Immediate Commands". 
 
+Immediate (IMM) (only for BAM-NDP): Allows the software to create
+descriptors of type immediate, which does not generate any data
+transmissions or registers configuration, it is simply supplied to the
+peripheral, the peripheral then parses its fields (which are
+irrelevant to the BAM). Only the flags of this descriptor are relevant
+to the BAM, address and size are irrelevant, and BAM simply passes
+them as is to the peripheral. This can be used for the software to
+operate peripheral-specific operations within regular data operations.
+Immediate descriptors are published on the sidebands as 1 byte size
+descriptor, once BAM_NDP fetches an immediate descriptor, it publishes
+all recently fetched descriptors including the immediate descriptor
+with immediate indication, to inform the peripheral that the last
+published descriptor was immediate descriptor.
 
-On Mon, Oct 26, 2026 at 12:31=E2=80=AFPM Binbin Zhou <zhoubinbin@loongson.c=
-n> wrote:
->
-> Hi all:
->
-> This series fixes three bugs in the Loongson 2 APB CMC DMA driver and
-> adds pause/resume support on top.
->
-> Thanks.
-> Binbin
->
-> Binbin Zhou (4):
->   dmaengine: loongson: loongson2-apb-cmc-dma: Fix cyclic residue wrap
->     NULL dereference
->   dmaengine: loongson: loongson2-apb-cmc-dma: Fix residue for queued
->     descriptors
->   dmaengine: loongson: loongson2-apb-cmc-dma: Program CNDTR when
->     advancing sg
->   dmaengine: loongson: loongson2-apb-cmc-dma: Add pause/resume support
->
->  drivers/dma/loongson/loongson2-apb-cmc-dma.c | 134 +++++++++++++++++--
->  1 file changed, 124 insertions(+), 10 deletions(-)
->
->
-> base-commit: aff5e6a77fc69a7c490246465940d18422d7c631
-> --
-> 2.52.0
->
->
+Adding support for immediate commands is trivial, but requires 
+also adding Immediate Commands to the dmaengine API, which is 
+what this patch series does.
+
+Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+---
+Sireesh Kodali (3):
+      doc: dmaengine: client-api: Add immediate commands in the DMA client API
+      dmaengine: Add support for immediate commands in the client API
+      dmaengine: bam_dma: Add support for immediate commands
+
+ Documentation/driver-api/dmaengine/provider.rst | 10 ++++++++++
+ drivers/dma/qcom/bam_dma.c                      |  3 +++
+ include/linux/dmaengine.h                       |  4 ++++
+ 3 files changed, 17 insertions(+)
+---
+base-commit: 84abb955b1015477aa11a96e2f3ac1b938b77f48
+change-id: 20261115-qcom-bam-dma-immediate-577133c77c2e
+
+Best regards,
+--  
+Nickolay Goppen <setotau@mainlining.org>
