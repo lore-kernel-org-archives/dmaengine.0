@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794757942;
-	b=pXDnvnGji3tb7SNhJFJHYoZGVOkPS3nrkye/8Vg/TmxRGHi8YQpsSCp3h6gfDSkcoEuZ
-	 e7v4MUopwimV0kp/HHBWJdfr+Poxsf5EMWn+hzeq2fouUyH7hI+HYSWBzVakmNfIhp9Yv
-	 UEwDALUYqhD72T/D80zpNc7AhY+oRL9cn4Iv53UJOhKXNdyc4J352dmDyP5kaCxW5r25b
-	 VaSwjRZmQHmlk3uHmUfF4SfauNTWRwz5H01P/uZ9zywxPVY8KYlXRIFKvW2Jm/2GjRwrG
-	 JrfulG5MWz4Uh7ROdiOIq5aFDZu9yvrzbLeryJJaAmx14yZ2t3S0qQwZZRntouqkSiw==
+	t=1794758891;
+	b=NAPPc4oJ0q394bpmbBefQyG0vNrXsKT6NnYOqJ2f4Lo5TGjorvWlFPw2qE1Ca756Q4p3
+	 72Vu29o1edUZKZH5tkNIGRSz9Q+OiLp/3dpB3sW2b+9jZ2IgNGKeRPbvWL/wJC45VhuRm
+	 HGtkfSIvCywM6WdxXPTl9U2arahdAbt84QLSTrvqZigzLSDvXm7jBXy6URhxQI+NjTKhQ
+	 XjXApXpmIbFwfOJu1z3MuyJgY5dtDF2j03lo55ww3kSe1Dl3fkBb8Zb+r5Xwv97N29bu8
+	 ajttXqGrnsWuQgOGWxPQSiLHr7x7SOINKxteOMzd+FzbTnxrfEaKF0i2GDy/bKy9AUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794757942;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=nTjFplutDyO+6B0L2q9B2Wxl1+E3m6fypJVZ+ZBVxqg=;
-	b=rgvdoDBsyl5xlE5QhtzHqHFynjxU9kzgNSRqxyg+gj95RyWxsqmLdmbnfz51QuSb4Y+9
-	 rnNqbkpmseGroYLThBO9UVmaKa6FosJ4ng1oFN6DCwYzHl6PWYXSu1IEFPIi6sH91mBpv
-	 uNhE8lxMAIHsJzzLsYUjFgul6v3USJVFWOYGzGgXNJrGCZCbUESH4heZCkGYHClXHT5tF
-	 DHyUMQ/ggUBRfFwN9QXGl6DnGP3nwe34YeqNgF9r8KA9nq/v/r0wsleLeO6RT8ZIAa9jI
-	 Y3TJm0YGBpoE0eGDkXCYtABd9+49G0Wrg93ZDWiQz9ZVZpmfUGLqyw40Eoyypiz/KEQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794758891;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=zDfrKJ94HnRjLGYluUr6li09yhWAW9fMvQaCWhimqKg=;
+	b=Wj0adOV5TUR0sZN5G+LMsOZyBJQknwfUuTyQO7h6rWhUqatNHslOyllNbUQqaMt3Owlh
+	 imiNKIwem92W0P8Y3HIpszcuMKUGavGVqHJYTl5amYPfbBl1eLcuuy47WEDtmLFjOcvHq
+	 kNpO7Mcb8cyHb9hDink8C9zWKHs133C6eSiznCDfYrOx3r5SBtgDqui+M6sjfFmxy265i
+	 ERk76CfGSIjWRy9GtiqWoG9u9hchCcLsV6q7zY6VLXdyEW3rRYFAgR6DguhfdJirpozGn
+	 hOk0nwFQpDyx3G3AUTy3SibkbQ1lEpCPTf5mk2eG8xdrsgAgIT6sLFNnKEWRj2VAcNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mainlining.org;
-	spf=pass smtp.mailfrom=mainlining.org;
-	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=XLobJJu1;
-	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=9+eZUvgX;
-	arc=none smtp.remote-ip=5.75.144.95
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VjffTvRr;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8995606A31D;
-	Sun, 15 Nov 2026 15:52:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8995606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B477D606A31A
+	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 16:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mainlining.org header.i=@mainlining.org header.a=rsa-sha256 header.s=202507r header.b=XLobJJu1;
-	dkim=pass header.d=mainlining.org header.i=@mainlining.org header.a=ed25519-sha256 header.s=202507e header.b=9+eZUvgX
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1794757923; bh=nTjFplutDyO+6B0L2q9B2Wx
-	l1+E3m6fypJVZ+ZBVxqg=; b=XLobJJu1Sp0iKBB7AarH1kkFYcI1a6OH0Amjv9u201lAnHV2WM
-	CTQaZgS3NKcEmR7kMKPiUAlqQDuX9yCNw1XPVH7Td/u43vTcP6tp2tYMGkhrwU0qbROvG1Hcw+z
-	Qzb3O2EXuA8H0AK86nEmRy0Mm/YkZWJ2GCT14kcM8CifLIhvFH7oU+Tyuo3u9JWwia6Mnk7xQyH
-	k5WsBIIYDtPaOYrLLZ5AmeXwJsFBy9dmE6Gs+TCbmmMo+KEi7oFOYc2OfoaamfSFRIWDowUAifP
-	hR7j2N/yCYmzNxG/VOmtM0lI3nbQ0cOZ1GAgTQmcKc5fCxwbI9CJ4VTJN3DMICFGsmA==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Subject:Date:From; t=1794757923; bh=nTjFplutDyO+6B0L2q9B2Wx
-	l1+E3m6fypJVZ+ZBVxqg=; b=9+eZUvgXS2Z37ak7RCy4qYe9lWlZepFQVRoZaXRWf43aSV4yB5
-	EaBusvXqUnguui8dgRrFznCiuA/201lZE0CA==;
-From: Nickolay Goppen <setotau@mainlining.org>
-Date: Sun, 15 Nov 2026 18:52:02 +0300
-Subject: [PATCH] dmaengine: qcom: bam_dma: Report the residue of packet
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VjffTvRr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F246A1F000C4;
+	Sun, 15 Nov 2026 16:08:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794758891;
+	bh=zDfrKJ94HnRjLGYluUr6li09yhWAW9fMvQaCWhimqKg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=VjffTvRr6fl0d/oTOCKn+MhI9W8bebu5EyfZxYFyFeM/xMr5RWDUEbZs1KDr2Qjv2
+	 Pv66D4CqQThWk5NDbO2Y+o9oyLr+PfOluDNarS4Kx3sjoqtoZtEREYlzIOFSpDpzQz
+	 tKC7Irbv3C4i/KJfP18476jUJdpJIfWsug0nrqdrb4o5YOH6m/zj4wBYCzu/kKEOzi
+	 6VZ2DkMi0n8SOU0DCYVnh4JMu7yvph9zUeMY0tb9Y8UN8rQRN+IJ0E9C4Vko/d0XmG
+	 4TSrEohAQFXl+WdPBuhl+k1o2ol04OEHOzfTSb/zKcwKwl97BmlKEnjT2Ob525/t0S
+	 xhQtQmzPlTvNw==
+Message-ID: <sashiko-outbox-215642@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Report the residue of packet
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Nickolay Goppen" <setotau@mainlining.org>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
+References: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 15 Nov 2026 16:08:10 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -58,112 +58,164 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrB1IohbsVYqLMRnbEaJtEkUQ7
- 260y7f4f4fIQTjCs9gh8CpR5ilDlwXYD01vRnHZYJR5aK0b/NnZY08enSf0nMhRIhyqmpvWuFo
- pC7n9Bh5ku7+v7u+49CPbdM3gOE4BtdETeQAAAA==
-X-Change-ID: 20261115-qcom-bam-dma-metadata-f34e592d400c
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Nickolay Goppen <setotau@mainlining.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794757923; l=3031;
- i=setotau@mainlining.org; s=20250815; h=from:subject:message-id;
- bh=nbWHp5UD+m3jmg5mPKY+XUaOPKi5dA/h7fGX+FvVAs4=;
- b=ZzYKVsRiGlh2aARMVM8cC00ltMblUL2jpMeqqMjz+EBGi/ruTX7+ajkO7OXF6T89XIoRdh3s7
- twSRhVNxsuLBePdb1s/gUTj4ieREVFkNo2MsdHbEezQ/DxOt9xpNC9a
-X-Developer-Key: i=setotau@mainlining.org; a=ed25519;
- pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
 
-The BAM writes back the number of bytes actually received into the
-descriptor that ended an RX transfer. Report this through the standard
-dmaengine_result (residue = length - transferred) so clients get the
-packet length from callback_result().
+Thank you for your contribution! Sashiko AI review found 3 potential
+issues to consider:
+- [High] dmaengine: qcom: bam_dma: missing opening brace in
+  bam_fifo_xfer_len()
+- [High] dmaengine: qcom: bam_dma: undeclared metadata_ops in
+  bam_prep_slave_sg()
+- [Medium] dmaengine: qcom: bam_dma: missing read barrier in
+  process_channel_irqs()
+It also noticed 2 related pre-existing issues this patch does not
+introduce:
+- [Critical] dmaengine: qcom: bam_dma: ring buffer space miscalculation
+  in bam_start_dma() [1]
+- [High] dmaengine: qcom: bam_dma: unclocked register access in
+  bam_dma_irq() [2]
+--
 
-Assisted-by: LLM
-Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
----
-IPA v2.x uses BAM to send and receive IP packets, to and from the AP.
-However, unlike its predecessor BAM-DMUX, it doesn't send information
-about the packet length, but ipa2 driver will need that. To find the 
-length of the packet, one must instead read the difference between 
-packet length and residue.
----
- drivers/dma/qcom/bam_dma.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+commit e40d68fe8bef09bdcbef42721a06c3fd7ad7197d
+Author: Nickolay Goppen <setotau@mainlining.org>
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index e62e411dc8f8..b5cfe3ce3406 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -65,6 +65,7 @@ struct bam_async_desc {
- 
- 	u32 num_desc;
- 	u32 xfer_len;
-+	size_t transferred;
- 
- 	/* transaction flags, EOT|EOB|NWD */
- 	u16 flags;
-@@ -447,6 +448,30 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
- 		r.ee_mult * bdev->ee;
- }
- 
-+/**
-+ * bam_fifo_xfer_len - bytes transferred for a completed descriptor chunk
-+ * @bchan: BAM channel the chunk was queued on
-+ * @async_desc: BAM async descriptor owning the chunk
-+ *
-+ * For RX pipes the BAM overwrites the size field of the descriptor that
-+ * ended the transfer with the number of bytes actually written to memory,
-+ * which can be less than the buffer size (e.g. an IPA packet).  Those
-+ * values live in the FIFO copy, not in async_desc->desc[].
-+ */
-+
-+static u32 bam_fifo_xfer_len(struct bam_chan *bchan,
-+			     const struct bam_async_desc *async_desc)
-+	struct bam_desc_hw *fifo = PTR_ALIGN(bchan->fifo_virt,
-+					     sizeof(struct bam_desc_hw));
-+	u32 len = 0;
-+	unsigned int i;
-+
-+	for (i = bchan->head; i < bchan->head + async_desc->xfer_len; i++)
-+		len += le16_to_cpu(fifo[i % MAX_DESCRIPTORS].size);
-+
-+	return len;
-+}
-+
- /**
-  * bam_reset() - reset and initialize BAM registers
-  * @bdev: bam device
-@@ -732,6 +757,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
- 		} while (remainder > 0);
- 	}
- 
-+	async_desc->vd.tx.metadata_ops = &metadata_ops;
-+
- 	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
- }
- 
-@@ -881,6 +908,11 @@ static u32 process_channel_irqs(struct bam_device *bdev)
- 			if (avail < async_desc->xfer_len)
- 				break;
- 
-+			async_desc->transferred +=
-+				bam_fifo_xfer_len(bchan, async_desc);
-+			async_desc->vd.tx_result.residue =
-+				async_desc->length - async_desc->transferred;
-+
- 			/* manage FIFO */
- 			bchan->head += async_desc->xfer_len;
- 			bchan->head %= MAX_DESCRIPTORS;
+dmaengine: qcom: bam_dma: Report the residue of packet
 
----
-base-commit: 2cc223d6ffadd48e25eff0c8a03108a5d7a61c41
-change-id: 20261115-qcom-bam-dma-metadata-f34e592d400c
+This commit calculates the number of bytes transferred from the BAM FIFO
+descriptors and reports the transfer residue in async_desc->vd.tx_result.re=
+sidue
+upon descriptor completion.
 
-Best regards,
---  
-Nickolay Goppen <setotau@mainlining.org>
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index e62e411dc8f8b..b5cfe3ce34060 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+
+[ ... ]
+
+> @@ -447,6 +448,30 @@ static inline void __iomem *bam_addr(struct bam_devi=
+ce *bdev, u32 pipe,
+>  		r.ee_mult * bdev->ee;
+>  }
+> =20
+> +/**
+> + * bam_fifo_xfer_len - bytes transferred for a completed descriptor chunk
+> + * @bchan: BAM channel the chunk was queued on
+> + * @async_desc: BAM async descriptor owning the chunk
+> + *
+> + * For RX pipes the BAM overwrites the size field of the descriptor that
+> + * ended the transfer with the number of bytes actually written to memor=
+y,
+> + * which can be less than the buffer size (e.g. an IPA packet).  Those
+> + * values live in the FIFO copy, not in async_desc->desc[].
+> + */
+> +
+> +static u32 bam_fifo_xfer_len(struct bam_chan *bchan,
+> +			     const struct bam_async_desc *async_desc)
+> +	struct bam_desc_hw *fifo =3D PTR_ALIGN(bchan->fifo_virt,
+> +					     sizeof(struct bam_desc_hw));
+> +	u32 len =3D 0;
+> +	unsigned int i;
+> +
+> +	for (i =3D bchan->head; i < bchan->head + async_desc->xfer_len; i++)
+> +		len +=3D le16_to_cpu(fifo[i % MAX_DESCRIPTORS].size);
+> +
+> +	return len;
+> +}
+
+[Severity: High]
+bam_fifo_xfer_len() is missing its opening '{' after the parameter list,
+which breaks the build when CONFIG_QCOM_BAM_DMA is enabled.
+
+[Severity: Critical]
+This problem wasn't introduced by this patch, but in bam_start_dma(), the
+producer side of the same descriptor FIFO ring buffer miscalculates
+available space [1] and can overwrite in-flight DMA descriptors:
+
+drivers/dma/qcom/bam_dma.c:bam_start_dma() {
+	...
+		avail =3D CIRC_SPACE(bchan->tail, bchan->head,
+				   MAX_DESCRIPTORS + 1);
+	...
+		bchan->tail +=3D async_desc->xfer_len;
+		bchan->tail %=3D MAX_DESCRIPTORS;
+}
+
+CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096), which returns 4095
+when the ring is empty (tail =3D=3D head), while bchan->tail and bchan->head
+wrap modulo MAX_DESCRIPTORS (4095).  Enqueuing 4095 descriptors wraps
+bchan->tail back to bchan->head, making a full ring appear empty so
+subsequent submissions overwrite active descriptors before hardware
+processes them.
+
+> @@ -732,6 +757,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave=
+_sg(struct dma_chan *chan,
+>  		} while (remainder > 0);
+>  	}
+> =20
+> +	async_desc->vd.tx.metadata_ops =3D &metadata_ops;
+> +
+>  	return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
+>  }
+> =20
+
+[Severity: High]
+metadata_ops is not declared anywhere in this file or its included headers,
+which causes compilation to fail.
+
+> @@ -881,6 +908,11 @@ static u32 process_channel_irqs(struct bam_device *b=
+dev)
+>  			if (avail < async_desc->xfer_len)
+>  				break;
+> =20
+> +			async_desc->transferred +=3D
+> +				bam_fifo_xfer_len(bchan, async_desc);
+> +			async_desc->vd.tx_result.residue =3D
+> +				async_desc->length - async_desc->transferred;
+> +
+>  			/* manage FIFO */
+>  			bchan->head +=3D async_desc->xfer_len;
+>  			bchan->head %=3D MAX_DESCRIPTORS;
+
+[Severity: Medium]
+Can bam_fifo_xfer_len() read stale fifo[].size values before the hardware
+descriptor writeback is observed?
+
+bchan->fifo_virt is allocated with dma_alloc_wc() (Normal Non-Cacheable
+memory on ARM/ARM64, which allows speculative loads), and earlier in
+process_channel_irqs() BAM_P_SW_OFSTS is read with readl_relaxed():
+
+drivers/dma/qcom/bam_dma.c:process_channel_irqs() {
+	...
+		offset =3D readl_relaxed(bam_addr(bdev, i, BAM_P_SW_OFSTS)) &
+				       P_SW_OFSTS_MASK;
+}
+
+Because readl_relaxed() has no read barrier and the address of
+fifo[i % MAX_DESCRIPTORS].size does not depend on offset, the CPU can
+speculatively load the initial buffer size written by bam_start_dma()
+instead of the byte count written back by the BAM hardware, reporting the
+wrong residue to clients.  Using readl() for BAM_P_SW_OFSTS or adding a
+dma_rmb() before reading fifo[].size would order the reads.
+
+[Severity: High]
+This problem wasn't introduced by this patch, but bam_dma_irq() calls
+process_channel_irqs() before acquiring a runtime PM reference [2]:
+
+drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
+	...
+	srcs |=3D process_channel_irqs(bdev);
+	...
+	ret =3D pm_runtime_get_sync(bdev->dev);
+}
+
+If a shared or spurious interrupt fires while the BAM controller is
+runtime-suspended with its clocks disabled, the readl_relaxed() of
+BAM_IRQ_SRCS_EE at the start of process_channel_irqs() accesses an
+unclocked register and triggers a synchronous external abort.
+
+[1] https://sashiko.dev/#/bug/linux-a877fd6c-244a-404b-88a7-7d77506711a9
+[2] https://sashiko.dev/#/bug/linux-0ca05019-399c-4f9d-a7e1-d74c7ddced75
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115-qcom-bam-d=
+ma-metadata-v1-1-52e4de54ffd3@mainlining.org?part=3D1
