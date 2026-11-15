@@ -1,55 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=34.2.82.16
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794778896;
-	b=c8dtfAyqHKobrG3iJ3WzWsdpCyeBcdJo5vT6YSQZdLf8VnMf43/3Y/TeH5jxpB9wOnO2
-	 LWjkp2nl9BktT2PMew6ok3rzmULT80YjZyvM09Uq8TJ5hiWxFxH/onQp1VkSB1VVkRd40
-	 uJqndnu7LyRpRByRIymFhqhBMpGoLuo8UVyqUiTWOqOqkqvP7dEvtHDBhNsVez/+Rr6qk
-	 9Womv+T4wZrwLUVoTrTJc0MVrxUe7Quf1kK+e+9URYpq0D6fMAkYymIyDEFPM7tonC8eX
-	 7ac0HiB+6kFKXLlqvB6yHyUwNUvdpUPKkCCdpV/WjNzH4z/+LCvJqVA4awQSOpAy24w==
+	t=1794780923;
+	b=Cs5wpnFqcrj67Z2Gs0HlYckWWBuB7GlduaXYQAXPDTWDleiG52eJT+A4o7qHpZX+mSMr
+	 uNPIieHXnJUnKMLqhhyaqPmuWJBQflG9uc8GC/k2MWEId5ZxoJJ+J38NBORrzgE7mFrfv
+	 SW2tE4/vu4wxvz/VbizOT/dH9s5gIt09vXuniNkQlHQZMzEXjf+zxkhUiVp/G4fitmtSK
+	 fdi/NUwqU0tWRQavMJkV8yG1zorkQRDOzi7sXyPtCI+Vw7Eo9I9wHmt6C4DRCov+rSsv/
+	 Do07z28gwXqYAFtEdiWH63IFxqpQ4UmMnSL1tHeLNLf6R9Taos2VjU8pv15sUPDf8CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794778896;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=w+anAIYdKnvcawtUKf0L0dAIaM6Z4JUQgSAWVjpWsFY=;
-	b=0Dfj8d1IVzPmSTm77xUT28PXQ+1Mx61/SUYzye74xEaDpM8yS+OxLHGFPq7CvyI9c1MG
-	 WK3hSKfriM5piqc3NBXlJG0/9SC2MKwV3Jkq5cDTY4j8+YeyUcU3j7omLoRRwWbWQYczT
-	 Q8JZHvcjaWgrrQykGk2QxN3TpVLDaqY53U9ViLR3tfaRwrbD5WkspBu2UDjVGiPd57iHO
-	 +pmgClyZN+7vD2YsGgAePcXJhb+uKwv3NxG8NPL0Wshnf4+SgpNKEd9XvDxq9nTjvbGMR
-	 pRTdudGI/wLpUI9AewOIHs6bqdj0JskuAB3g3j7GGYaLqhmeN6aW02VySss0Mr/dcTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794780923;
+	h=DMARC-Filter:DKIM-Signature:X-SONIC-DKIM-SIGN:X-YMail-OSG:X-Sonic-MF:
+	 X-Sonic-ID:Received:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
+	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
+	 References;
+	bh=2F2z0ZuZcbyuAjZU7VnocXFK2M42aX34gNp3ecJ79HQ=;
+	b=rs9335VnXpAWuAJyZ90rXgoR/d79sWGMSEpLDICFbtQ2FYxORz9JXGMz+0qkzWfOuMgt
+	 /rU31Ipbfka8CSqK31muyp5+TXXolrchMdUdTbgxTVIDNENuRY9lzEY/WlbnIkaVaQZmW
+	 TzL5zyxnqerW2UU3lvxVUZmHCGPUvUzZV3vvKJsn5O2QPHLNJAtmtno1jfzgBmovTNZDR
+	 95LAFAWvgb6hpGLWli9EG1mpsIQSqlYudkzOMmWYotLcqkYjSoLquZWreU567HVV8BfjL
+	 7JxEKZXjs2OSjmPZwxbkwwyfYOEEUmvCbuzCqtD6uyH1RPRH7P4pk//U3Kqxf63z/pQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="gXoHsQE/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=yahoo.pl;
+	spf=pass smtp.mailfrom=yahoo.pl;
+	dkim=pass header.d=yahoo.pl header.i=@yahoo.pl header.a=rsa-sha256 header.s=s2048 header.b=S9cTi6Lh;
+	arc=none smtp.remote-ip=34.2.82.16
+Received: from sonic.asd.mail.yahoo.com (sonic-euwe1-0017.asd.mail.yahoo.com [34.2.82.16])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF6606A32F
-	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 21:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709D9606A332
+	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 22:15:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 709D9606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gXoHsQE/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9621F000C4;
-	Sun, 15 Nov 2026 21:41:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794778895;
-	bh=w+anAIYdKnvcawtUKf0L0dAIaM6Z4JUQgSAWVjpWsFY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=gXoHsQE/mUEGlNreFugjrDc9LrPB72dMTy2UgSCkk47GCmwH+Xl8v+l+iMvOt9Z+E
-	 8AnZppeIPuCBWrBKqB63BLlOzrP8NVhMdWgid1hI9A3BBRtZ3IIsBad7g+URn8DFNK
-	 iZ9DbNs3d3+Ajn05HVcqpPfjPh36MTIeKB3V+JYvgahrMOEVgFhUpU1JvEXvJJCWDw
-	 4/eA8jfUJbWBtZX0iHkZYTf766t3eJMH+5q9NdUUZBTO2zIsolmLMPGDcIzZwqbhUi
-	 ojiK9hUUA2/DgBiOmQaJFC9SAFTDO2P+Bp2PCxq11Dc7DxHZVFmA4i0WxNenXlVtPv
-	 Va1tzpTtdiO9w==
-Message-ID: <sashiko-outbox-215867@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] dmaengine: ste_dma40: Use power domain for LCLA SRAM
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Linus Walleij" <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org>
-References: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 21:41:35 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=yahoo.pl header.i=@yahoo.pl header.a=rsa-sha256 header.s=s2048 header.b=S9cTi6Lh
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.pl; s=s2048; t=1794780920; bh=2F2z0ZuZcbyuAjZU7VnocXFK2M42aX34gNp3ecJ79HQ=; h=From:Date:Subject:Content-Type:To:Cc:References:From:Subject:Reply-To:Content-Type; b=S9cTi6LhY2apmj7BjKqKoB6081fiDVvPkhdFmk6IwYe/09zZLaOALZS+Dgd39bOOaURQXTmpUXUNTeGq6AapHsf6rFcejEiMyrOnGlpP3G347uE/xqLWTG7kVIbX8CZcl/m2TugR3VWfHHYQ1e0G7exbuFw/5E9baKIRDRvbpTfL5fjNRNyONjgApKeJJBd428H85pJBkXIGpNvPqmSUrTkx3LG5DkNnz91ZeKR211hJ55XGzsQv2oZPWyC6jXvqVZ++VGlWB6kBnN1GSf6F+Ye2DT4Tno+M1PwRsKKe1BZEuicwof73VUu4zbgrvg1oziaukydIYavc0NXVoGeGpg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1794780920; bh=8io4HMmBHjf90ncS3kftgptXmHBAbxhh8oY345FWlNT=; h=X-Sonic-MF:From:Date:Subject:To:From:Subject; b=BgYWuToiTRfg8CGs5ho8lBXG0m6MxIayP55YOLU24JCSnH5KZcEGxc/emTtCNbnIIxTkcbKAe3qSp4LCBai7PAXFjiwwlCrihLx7G8LkcYfVegDz2DBW/ycqvYZRkbAV+BJUR2vYhfXaiMUnQDE4K2UNhg4OnqoopMhBOd/OFoRic3zHXh9WZ/NPpprNRJnUTMH8LBtmLXmlfuAtqz5ouqTWUZNbMXtQ/56Lt5oPRWO3rudL96J5bHBC9IaHSjGw8ZibxYrfXQwBkX/fmfI5XOx0ICypgiQhHiOgDsj8Z3BZXuPfDeyOCTNLitzllj+NWTN1mX0riP6Nc4pKk2pPXw==
+X-YMail-OSG: cKdOGDwVM1nsX0eogjTveVDoZYwLm_y6FI.Lo4VvAN2AVen6dCWuS3SKdH8QymF
+ HeJz658itmZov0GrRBecn.AnHGSmNhlVPkLpFcVLhDHZp65m0SpLum7F0c8I6VN095Ni6vJA0yvu
+ aR13Ze84FTAL8N71GQ2rcTkzY3FR.ywrLd7V5SxvHaMPoaM8r_bF8Ocy8cdLjt3Wcra2YvWY41nN
+ Y0i9u6K1puJGacQTAfFBOAw8646rzO.MEiGkEPr85mUrnXyqqVRQgULk1AJFF7bMPM9c4wT_1e3B
+ nUVnNAR0g_NZlSemHcWAV1HDRLUpNKMy8.uwby7FpgcmVuRB7jqjWUkHGvUZ7UNDrSljjqYY8jc8
+ LYDJyZXqK2xSiEaIRpAxf9ZqSQFCW._7kuXjXI1wrAhA7oLup7M_1r9wD3vZyODwJb5efhm_9qfY
+ 0_WPdJxsMklP.dgbiwQHyztaGnc7A1GA2GX2rmS73yRiIPRiZV2r923nXBDYRwPcatT2SYMtbHWQ
+ N7zm1.F__3c9DGGAz9JmACjUNI2VIb3Ugsl_cJmDVI2GZ5oCVhZrOjlvSOkYPcA7tSjca9zQLmWe
+ LcOuTlNd18fUalEYUqcBmwaYTfhBOWna0PbTRkCDB6VWo4eQINDGVezm2JrKrASq0tfJcCloJ829
+ 7ZayR39ZYVjrll5hGGKl68BINKvC7Iv7UatLzhoyjaNJB3AeKP7QfixrLX4_7rHcExm4PTleGxKw
+ vXC03llRSI7HTYrLGpZhVS45_duPX_jr1wtrd3sajsHb4nQXSR1cSKEZBBGBL6P_x8VQiHFdPiAE
+ DQeY0oDEgDbuwcQWqrpZEMpKB1_j.aYtNoIf2HKkAy1c1I_dM4uNzuG2M0_AvAoWsJ9JdlzGBvHB
+ hoCbZ270BCJ3mS4KhQy3.LpBXg4Fk6qdS.bzvyHxEMEiMtQpeX8qddNMEQFGLX1PBQgCKIQm3vq1
+ toB910W0hy_5BuY3AH69x06uPh0JV6FBrbhy0vg0RLhq.h8q4vYjwG8isaL8Mrpwh8CIAHzOB5Bn
+ nEH2xcYQ2gxXANdy_jfdbWyaVc1GkMSgAp3co9JJJHoK4E6LH3PxjqeVYMjTJ_d8XkxiXAPG_oMo
+ 8Idse8deYm181fMvYMo5ust2.FJbJVxd18dDmEahAOLt9mvmYgtEIgaSADih0kIwyVVjJnNUSGZW
+ LvKoNECYZO319rDu3YIIV_IE7Q0zY3cRmNvOsKOxMRX5v9_y4u3rRRlELD1C1eD0E4xKLpm8c3CU
+ 6AgoMdd9IWse3SrmH2PyvmxqbgurRd.mJNSLx.nWnJOYddYQf5Bgn1P50oduQrV_0mzg7MTC05fO
+ 153eHdM1PiEnaEglv4J_98E_dBDkJmzxlUNQ_OxW5I1S6XVoN.mRj0t7P5LfK3o1bZdx5DqU83T9
+ FoCdZQ_g62dmz9M.yIF9alxZvegJLc2X_LCRK0in2aD1C3N4WVRFw.92KTHkzjOUnXAVnsUBZl4H
+ SZKmiVSsIxiU0j1_XmQD3AP0rJbMLGJz3uRvixs5gBTtUyaf6yU5epo9HnqhYzRDX_KqQN2SRX.r
+ KIzDNSHcxvy9AgdBm0W5p7sELB6lF3ZAza7U9cIGvjZsO_Lj7bShCJJMZUWNpwy44kDxsoHghqM.
+ ZjsWLg1_2riOdlWLtkADNqzTnSPUdhVl5MCHrlvi9p1cgpz0eBSn7iXvqepF6WojlLKzV7rK0Axj
+ I_b1VOMumhlWN7MNIZoLHjDpZcfLObnD06PsT3G3_JRgpJ_V2YgAfun9wr6DDHWtUfGBUwT69n5z
+ 5k1sMhrA5FNYYXTNH3mCNrBYND13Rs_fvJsFRXRAHxvj6SCchMevNSkuJPcTXsOj6jJ3t93sOXhh
+ JZCYhc97StbFWZI8bC8n8rBnA6TViv_Tk8P20cibLUy4abFCEXHY8qClTTzroImtoGNRhn1lf3QK
+ wfvfvV0tGYz8R.C9kKFj3r67Zfir17KzJ9osLThKbAwzxpBBOLeb5M52ArZK3jde8qrjmyxu8pyB
+ JFPkDhQ20RVFpKTj93t95wgE-
+X-Sonic-MF: <tomasz.unger@yahoo.pl>
+X-Sonic-ID: 49e5a92c-a159-440c-ab6e-d16bcb01beff
+Received: from sonic.gate.mail.ne1.yahoo.com by mail-asdoutdeli-p-cin-euwe1-prod-sonicconsumer-svc-104 with HTTP; Sun, 15 Nov 2026 22:15:20 +0000
+Received: from dip25.lsn.ir2.yahoo.com ([87.248.99.34])
+          by hello (SMTP) with SMTP ID c8d60a975a832e99b8d64eff3def6a17;
+          Sun, 15 Nov 2026 22:15:17 +0000 (UTC)
+From: Tomasz Unger <tomasz.unger@yahoo.pl>
+Date: Sun, 15 Nov 2026 23:15:15 +0100
+Subject: [PATCH] dmaengine: bcm2835-dma: Add missing
+ of_dma_controller_free()
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -58,187 +83,118 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261115-bcm2835-dma-of-dma-free-v1-1-d539234bfec5@yahoo.pl>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMywqDMBCF4VeRWXfAiY2XvkrpQuOJnYIXklYK4
+ rs31dXhW5x/o4igiHTLNgpYNeo8JcglI/dspwGsfTKZ3JQiYrlzo6kLy/3Y8uyP8QFg+NpWVen
+ yRq6U3kuA1+9Rvj9Ox0/3gnv/c7TvPwce4ll7AAAA
+X-Change-ID: 20261115-bcm2835-dma-of-dma-free-ef85776c0914
+To: Vinod Koul <vkoul@kernel.org>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Frank Li <Frank.Li@kernel.org>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ dmaengine@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ stable@vger.kernel.org, Tomasz Unger <tomasz.unger@yahoo.pl>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794780915; l=3260;
+ i=tomasz.unger@yahoo.pl; s=20260311; h=from:subject:message-id;
+ bh=jV0a/9DTGW1SPvNbP0Mt26tL8Imf7uBrc5dwl3yGkZM=;
+ b=CscCH9wbwWmQedrCZPpnmGMn+DkzApvTh/R9gV9+S6vD7i2g0um3z09nUEFA3pGeMASBZjqbA
+ dpj+AHnai5fDlH/VxgdEU7Wo+HF8NFz+66pNTc7PPRNQXcZNozKTnGp
+X-Developer-Key: i=tomasz.unger@yahoo.pl; a=ed25519;
+ pk=EPPsO91uz/0J2cTQ6ol+dgxYaieEc9dKSXWUb51n46c=
+References: <20261115-bcm2835-dma-of-dma-free-v1-1-d539234bfec5.ref@yahoo.pl>
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: ste_dma40: chained dev_err_probe() in d40_probe()
-  clobbers reason
-It also noticed 2 related pre-existing issues this patch does not
-introduce:
-- [Critical] dmaengine: ste_dma40: use-after-free in d40_free_dma() [1]
-- [Critical] dmaengine: ste_dma40: DMA API bypass in d40_lcla_allocate()
-  [2]
---
+bcm2835_dma_probe() registers the controller with
+of_dma_controller_register(), but of_dma_controller_free() is never
+called, neither when dma_async_device_register() fails nor in
+bcm2835_dma_remove().
 
-commit 1b5cce170c6b1253e8f796cc9973f76ac7915f4f
-Author: Linus Walleij <linusw@kernel.org>
+The entry stays on the global of_dma_list and keeps a pointer to the
+driver data, which is devm-allocated and freed when the device is
+unbound. The next DMA channel request for this node is passed to
+bcm2835_dma_xlate() with the freed structure and, depending on what
+that memory holds by then, either fails or crashes. As the stale entry
+is found first, this still happens after the controller has been bound
+again.
 
-dmaengine: ste_dma40: Use power domain for LCLA SRAM
+On a Raspberry Pi 4 Model B, unbinding vc4 and the DMA controller and
+then binding vc4 again results in:
 
-This commit replaces the LCLA ESRAM regulator and obsolete named memory
-resource with LCLA SRAM phandle lookup and runtime PM of the SRAM device
-owning the ESRAM34 power domain.
+  Unable to handle kernel NULL pointer dereference at virtual address
+  0000000000000018
+  Call trace:
+   find_candidate+0x64/0x210 (P)
+   dma_get_any_slave_channel+0x64/0xd0
+   bcm2835_dma_xlate+0x24/0x48
+   of_dma_request_slave_channel+0x178/0x2a8
+   dma_request_chan+0x20c/0x380
+   snd_dmaengine_pcm_register+0xa4/0x2a0 [snd_soc_core]
+   devm_snd_dmaengine_pcm_register+0x60/0xc0 [snd_soc_core]
+   vc4_hdmi_bind+0x4d4/0x8e8 [vc4]
 
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index f1cbc719c4f09..eca1ae95fe1c9 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
-[ ... ]
-> @@ -2270,7 +2291,7 @@ static int d40_free_dma(struct d40_chan *d40c)
->  		d40c->base->lookup_phy_chans[phy->num] =3D NULL;
-> =20
->  	if (d40c->busy)
-> -		pm_runtime_put_autosuspend(d40c->base->dev);
-> +		d40_transfer_runtime_put(d40c->base);
-> =20
->  	d40c->busy =3D false;
->  	d40c->phy_chan =3D NULL;
+Free the controller on the probe error path and in remove. In remove,
+do it before unregistering the DMA device, so that no channel can be
+requested through the node while the device is going away.
 
-[Severity: Critical]
-This problem wasn't introduced by this patch, but can calling d40_term_all()
-before d40_channel_execute_command(d40c, D40_DMA_STOP) in d40_free_dma() ca=
-use
-a hardware use-after-free [1]?
+The bug was found and the fix drafted with the help of an AI coding
+assistant (Claude).
 
-drivers/dma/ste_dma40.c:d40_free_dma() {
-    ...
-	d40_term_all(d40c);
-    ...
-	res =3D pm_runtime_resume_and_get(d40c->base->dev);
-	if (res >=3D 0) {
-		res =3D d40_channel_execute_command(d40c, D40_DMA_STOP);
-    ...
-}
+Fixes: 96286b576690 ("dmaengine: Add support for BCM2835")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-fable-5-2
+Signed-off-by: Tomasz Unger <tomasz.unger@yahoo.pl>
+---
+Verified on a Raspberry Pi 4 Model B: without the patch the sequence
+described in the commit message oopses; with it, binding vc4 while the
+controller is unbound is deferred and HDMI audio gets its DMA channels
+back once the controller is bound again. Both paths (remove and a forced
+dma_async_device_register() failure) were also run under KASAN in QEMU
+raspi4b: slab-use-after-free in find_candidate() without the patch, no
+report with it.
+---
+ drivers/dma/bcm2835-dma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-When tearing down an active channel, d40_term_all() unmaps and frees the
-active descriptors while the DMA controller is still running and accessing
-that memory until D40_DMA_STOP is issued.
+diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
+index 06d830d36882..cf29d897450e 100644
+--- a/drivers/dma/bcm2835-dma.c
++++ b/drivers/dma/bcm2835-dma.c
+@@ -1011,13 +1011,15 @@ static int bcm2835_dma_probe(struct platform_device *pdev)
+ 	if (rc) {
+ 		dev_err(&pdev->dev,
+ 			"Failed to register slave DMA engine device: %d\n", rc);
+-		goto err_no_dma;
++		goto err_of_dma;
+ 	}
+ 
+ 	dev_dbg(&pdev->dev, "Load BCM2835 DMA engine driver\n");
+ 
+ 	return 0;
+ 
++err_of_dma:
++	of_dma_controller_free(pdev->dev.of_node);
+ err_no_dma:
+ 	bcm2835_dma_free(od);
+ 	return rc;
+@@ -1027,6 +1029,7 @@ static void bcm2835_dma_remove(struct platform_device *pdev)
+ {
+ 	struct bcm2835_dmadev *od = platform_get_drvdata(pdev);
+ 
++	of_dma_controller_free(pdev->dev.of_node);
+ 	dma_async_device_unregister(&od->ddev);
+ 	bcm2835_dma_free(od);
+ }
 
-[ ... ]
-> @@ -3640,13 +3655,9 @@ static void __init d40_hw_init(struct d40_base *ba=
-se)
-> =20
->  	/* Write which interrupt to clear */
->  	writel(pcicr, base->virtbase + base->gen_dmac.interrupt_clear);
-> -
-> -	/* These are __initdata and cannot be accessed after init */
-> -	base->gen_dmac.init_reg =3D NULL;
-> -	base->gen_dmac.init_reg_size =3D 0;
->  }
-> =20
-> -static int __init d40_lcla_allocate(struct d40_base *base)
-> +static int d40_lcla_allocate(struct d40_base *base)
->  {
->  	struct d40_lcla_pool *pool =3D &base->lcla_pool;
->  	size_t lcla_size =3D SZ_1K * base->num_phy_chans;
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20261115-bcm2835-dma-of-dma-free-ef85776c0914
 
-[Severity: Critical]
-This problem wasn't introduced by this patch, but shouldn't
-d40_lcla_allocate() write pool->dma_addr instead of
-virt_to_phys(base->lcla_pool.base) to D40_DREG_LCLA [2]?
+Best regards,
+--  
+Tomasz Unger <tomasz.unger@yahoo.pl>
 
-drivers/dma/ste_dma40.c:d40_lcla_allocate() {
-    ...
-	pool->dma_addr =3D dma_map_single(base->dev, pool->base, lcla_size,
-					DMA_TO_DEVICE);
-	if (dma_mapping_error(base->dev, pool->dma_addr)) {
-		pool->dma_addr =3D 0;
-		ret =3D -ENOMEM;
-		goto free_page_list;
-	}
-
-	writel(virt_to_phys(base->lcla_pool.base),
-	       base->virtbase + D40_DREG_LCLA);
-    ...
-}
-
-Programming raw CPU physical addresses instead of the mapped DMA address
-bypasses IOMMU translations and bus offsets, which also happens in
-d40_prep_sg_phy() where virt_to_phys(desc->lli_phy.src) and
-virt_to_phys(desc->lli_phy.dst) are passed to d40_phy_sg_to_lli().
-
-[ ... ]
-> @@ -3781,13 +3791,70 @@ static int __init d40_of_probe(struct device *dev,
->  	return 0;
->  }
-> =20
-> -static int __init d40_probe(struct platform_device *pdev)
-> +static int d40_lcla_sram_setup(struct d40_base *base)
-> +{
-[ ... ]
-> +	if (!IS_ALIGNED(res.start, LCLA_ALIGNMENT) ||
-> +	    resource_size(&res) < SZ_1K * base->num_phy_chans ||
-> +	    res.end > U32_MAX) {
-> +		of_node_put(parent);
-> +		return dev_err_probe(dev, -EINVAL, "Invalid LCLA SRAM region\n");
-> +	}
-[ ... ]
-> @@ -3844,26 +3911,12 @@ static int __init d40_probe(struct platform_devic=
-e *pdev)
->  		d40_err(dev, "Failed to ioremap LCPA region\n");
->  		goto report_failure;
->  	}
-> -	/* If lcla has to be located in ESRAM we don't need to allocate */
-> -	if (base->plat_data->use_esram_lcla) {
-[ ... ]
-> -	} else {
-> +	ret =3D d40_lcla_sram_setup(base);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "Failed to set up LCLA SRAM\n");
-> +		goto destroy_cache;
-> +	}
-> +	if (!base->lcla_pool.esram) {
->  		ret =3D d40_lcla_allocate(base);
->  		if (ret) {
->  			d40_err(dev, "Failed to allocate LCLA area\n");
-[ ... ]
-> @@ -3954,22 +3987,18 @@ static int __init d40_probe(struct platform_devic=
-e *pdev)
->  		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
->  				 SZ_1K * base->num_phy_chans,
->  				 DMA_TO_DEVICE);
-> -
-> -	if (!base->plat_data->use_esram_lcla &&
-> -	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
-> +	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
->  		free_pages((unsigned long)base->lcla_pool.base,
->  			   base->lcla_pool.alloc_order);
-> =20
->  	kfree(base->lcla_pool.base_unaligned);
-> -
-> -	if (base->lcpa_regulator) {
-> -		regulator_disable(base->lcpa_regulator);
-> -		regulator_put(base->lcpa_regulator);
-> -	}
-> +	if (base->lcla_link)
-> +		device_link_del(base->lcla_link);
-> +	if (base->lcla_dev)
-> +		put_device(base->lcla_dev);
-> =20
->   report_failure:
-> -	d40_err(dev, "probe failed\n");
-> -	return ret;
-> +	return dev_err_probe(dev, ret, "probe failed\n");
->  }
-
-[Severity: Low]
-Does calling dev_err_probe(dev, ret, "probe failed\n") at report_failure
-overwrite the deferred probe reason recorded earlier by d40_lcla_sram_setup=
-()
-or platform_get_irq()?
-
-When d40_lcla_sram_setup() returns -EPROBE_DEFER, d40_probe() records "Fail=
-ed
-to set up LCLA SRAM" via dev_err_probe() and jumps to destroy_cache, which
-falls through to report_failure and replaces that reason in debugfs
-devices_deferred with "probe failed".  On non-deferral errors such as an
-invalid LCLA SRAM region, chaining dev_err_probe() across
-d40_lcla_sram_setup(), its caller, and report_failure also logs up to three
-error messages for a single failure.
-
-[1] https://sashiko.dev/#/bug/linux-36e6bab6-2c91-434c-83be-1363c42736bc
-[2] https://sashiko.dev/#/bug/linux-ca33b515-31eb-4b66-afe9-8493aaf2e04a
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115-ux500-dma4=
-0-powerdomain-v1-1-da8b6e1a0376@kernel.org?part=3D1
