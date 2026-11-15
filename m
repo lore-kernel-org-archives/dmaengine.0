@@ -1,59 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.3
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794729786;
-	b=vJcScS5FwG5JQZXSD0Kd7xJusdb3tzSMuKpG1okOJg4wyJW+GMuB/juaM/8vwKn5OkVB
-	 obDld2R4hU+V0zSaG2pE8l/1oP/G4OtApHVUB0iqYyNkPLwDekNTlaKAqVGWiCU+ubU6s
-	 0FBoAgLSnebzs0gLIJiwfxTram41IyUTpaptTWBVB2wbVKHvY6rMynHYTpnNz7w3D6P50
-	 Jw6pMN8s87sepaJEfbJTdW3PG6yBz+x/7aec4F7e4q/sIUK7Jr3mnRzwSRYYdbXEpccXI
-	 VGKJzexHey+evnIH3mNrIHo2RxDQDjGf8YWh8Q3K1V1f3PkMoOIzgdRXG96DSvnsHsg==
+	t=1794730798;
+	b=CJro/+x39TzTh0k1yWxdaMBRqACd+LA4q/fzXFBs1UUa22ZpUuRW4lwz9QehZ5x+++Ak
+	 C8n3vk5acCnC1e3t25+h+PMN32A1PBuNQqKRLEMzMtbjm7QN/mMDEVDIoxY2YOf1rA3kY
+	 ub9cbHdFLfxixjOVrkRg+EWjtMW3jLoM3opWtn5TiNsqidkm1opBgLFKlIycJk8rBDwG7
+	 I0vCo38/uGa06zK1pkDAbBPoxws4BdFhNBBx7e6Ngpp150WYCt1yZrzYe8f7p5iQkGtRv
+	 OvAQ8nD6lCTzoLq5xO6IPe/rgpuzSRK5U/xGPrr/biiRhvFjsWXmMMujBkAZUyNpF2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794729786;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 X-CM-TRANSID:X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=2cHoKfMTCq8qVifnRs0Z8Ntt3pn0su/nfO0nJQ9487s=;
-	b=nqdvBY4m2JaQ1xF1b7QV+xkANklnehoi6Krd4ZcdUK40oVOtF9ehg9MwfUwo+VUDgA5v
-	 +YqHVfcxTpkSlYCzrVMa2ip+O0zdjVE4nOUFcXRp9UQMuk1jEQbBGoMK5jCCTJxEFFP1E
-	 OZmOz1A7yvCDvTRWSh5uXTz/o2EBHVQPwTx2EB7QyObKkYX8Lqrzptc5HhnvNZ2lTSCRS
-	 x3RMTt09Px9k3AG1oHAmFvsD/luHdLw8YVaxCxCekGR0yE+WTcp6R9Q4vT+S4euH/gGC2
-	 6mn6rYJXybcaIVoGowF3L8G51xmXQWA9PdSiPU8vKjKeyodJjqnov0Sufd6rnoh4Grg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794730798;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=5j7Rwm2P0PJF0PvP7jwrVutdkVt9Ye+i1TDwdN0dvsk=;
+	b=EgOAlgyHCO04/MFPIpo2btk9zfUlhtjgZtqVyfUyIB3tDPjmjfrHU6PfswTliwjonnOd
+	 LjpNL67QWNc5tELlEHCYQjLD6y6Vu+X+ax5wNzNb75fOhDFnAZOoLjoSZ05M6pcYnU+Lq
+	 47lzcLBWUI8JLbMwagA6D+C/2NFargkynppqycjtbZMgIdpORdqFqVbDQlQ82pjYB1SYe
+	 E58YRiUOPIrTu9Bd8LvXFgEjfjH4fAUqMLjIABkO5bW9WMd0JMuBVlyuEc9vd6rAsKUKb
+	 4RuYVIE761YHBZd0qxdrhapWbutylsHiXN4CpyNZXyrljleW6r/PUGNMndQCWkD7YgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=dGFRbzx3;
-	arc=none smtp.remote-ip=117.135.210.3
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GsUM0zGV;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F01606A329;
-	Sun, 15 Nov 2026 08:03:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25F01606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11EA606A31F
+	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 08:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=dGFRbzx3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=2c
-	HoKfMTCq8qVifnRs0Z8Ntt3pn0su/nfO0nJQ9487s=; b=dGFRbzx3fNZVhnYwa2
-	mdZ982tnEwZzeHvABeQ1FQjbJZeTHWYKl92Yo+9Sv2o8j1g/LIeUNFkGhblbfiZh
-	smQZMvkfAZQ0y3SulsA6GlanApw9VU1EV4c8/9eL9fBf3wJnzngR0LzNYpXd8w9C
-	6qy/Q8wajVI4z7kJHuVXR8cYY=
-Received: from user-VMware-Virtual-Platform.localdomain (unknown [])
-	by gzga-smtp-mtada-g1-0 (Coremail) with SMTP id _____wB3fJUmZ_lqQz57HA--.24354S2;
-	Sun, 15 Nov 2026 16:02:46 +0800 (CST)
-From: Ziheng Wei <zihengw03@163.com>
-To: Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH] dmaengine: at_xdmac: handle empty transfer list in tx_status
-Date: Sun, 15 Nov 2026 16:02:45 +0800
-Message-ID: <20261115080245.910534-1-zihengw03@163.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GsUM0zGV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270E51F000C4;
+	Sun, 15 Nov 2026 08:19:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794730798;
+	bh=5j7Rwm2P0PJF0PvP7jwrVutdkVt9Ye+i1TDwdN0dvsk=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=GsUM0zGVF9t6DY2SmHrlX7f57fjYuvpVXIwwKYNYCT6oSlUwkqzdapoPZ+KRD1JUM
+	 aOzgVokt3StP+WVuxL47phyQMmet6nL2Bb291luqG+qOSOBi+39ZmGh8c5xSmJx1I7
+	 Oq71RXI/sh0LsZ+ICZVLYYNf+b4tqCdl4TmmWLcRNEt0lpdO2E9Tr+Y8ELn2M7iTc9
+	 1/zyLtqAkkFSf5o/DHW5SiUYRZpCpkt6dsslCj3y0zJjUsS8naRfszZYkU2Pv5WR25
+	 FmTozy0c4g259+uA6NsjMJFRFXerm6okLAioEX8hxh1kvVlF62blHdllC9Ncm1pc2S
+	 GUz1S6137jblQ==
+Message-ID: <sashiko-outbox-215288@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: at_xdmac: handle empty transfer list in
+ tx_status
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Ziheng Wei" <zihengw03@163.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261115080245.910534-1-zihengw03@163.com>
+References: <20261115080245.910534-1-zihengw03@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 15 Nov 2026 08:19:57 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,75 +59,76 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wB3fJUmZ_lqQz57HA--.24354S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCry3Aw1kAw17CF45GrWDXFb_yoW5Gr43pa
-	yfG3y5CryktF4ruF1kG3W09ay5ZF4rCayUuayDW3s8uF4Yvr4rW3s7t34jqF98Wrs5XFyv
-	yF4Ut3s3CryDGrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07bU-erUUUUU=
-X-CM-SenderInfo: p2lkv0ljzqjqqrwthudrp/xtbC7Qb7TGr5ZyavCQAA3o
 
-at_xdmac_device_terminate_all() removes every descriptor from
-atchan->xfers_list without completing their cookies, so
-dma_cookie_status() keeps reporting a terminated cookie as
-DMA_IN_PROGRESS. at_xdmac_tx_status() then calls list_first_entry()
-on the empty list and uses the list head, which lives inside struct
-at_xdmac_chan, as a descriptor: active_xfer and xfer_size are read
-from neighbouring channel fields, and if active_xfer happens to be
-non-zero the residue loop walks a descs_list made of those fields.
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [High] dmaengine: at_xdmac: unchecked list_first_entry() in
+  at_xdmac_tasklet() [1]
+--
 
-For audio this is a routine path. The generic dmaengine PCM calls
-dmaengine_terminate_async() on TRIGGER_STOP and later
-dmaengine_tx_status() on the same cookie from
-snd_dmaengine_pcm_sync_stop() and on close. What happens depends on
-the struct layout. On a 32-bit build active_xfer overlays
-sconfig.device_fc, which is normally false, so only a bogus residue
-is reported. With CONFIG_DEBUG_SPINLOCK the larger spinlock_t puts
-active_xfer on the held lock word and descs_list on the owner_cpu and
-owner fields, so the loop follows a pointer that is not a descriptor.
+commit 7130c1ad653839b18d68794e4d33147aad0531b5
+Author: Ziheng Wei <zihengw03@163.com>
 
-Report a residue of 0 when no descriptor is queued.
+dmaengine: at_xdmac: handle empty transfer list in tx_status
 
-Found by LLM-assisted source review. Not tested on hardware; the
-layout analysis above is from reading the code only.
+This commit uses list_first_entry_or_null() in at_xdmac_tx_status() and
+reports a zero residue when atchan->xfers_list is empty after channel
+termination.
 
-Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ziheng Wei <zihengw03@163.com>
----
+> diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+> index ef0dfe9d37ba3..bcfbb41ea4bc1 100644
+> --- a/drivers/dma/at_xdmac.c
+> +++ b/drivers/dma/at_xdmac.c
+> @@ -1553,7 +1553,16 @@ at_xdmac_tx_status(struct dma_chan *chan, dma_cook=
+ie_t cookie,
+> =20
+>  	spin_lock_irqsave(&atchan->lock, flags);
+> =20
+> -	desc =3D list_first_entry(&atchan->xfers_list, struct at_xdmac_desc, xf=
+er_node);
+> +	desc =3D list_first_entry_or_null(&atchan->xfers_list, struct at_xdmac_=
+desc,
+> +					xfer_node);
+> +	/*
+> +	 * The list is empty once the channel has been terminated, while the
+> +	 * cookie of the terminated transfer is still reported as in progress.
+> +	 */
+> +	if (!desc) {
+> +		dma_set_residue(txstate, 0);
+> +		goto spin_unlock;
+> +	}
 
-Notes:
-    The changelog was drafted with an AI assistant from my analysis;
-    I have reviewed the code, the fix and the text.
+[Severity: High]
+This problem wasn't introduced by this patch, but can at_xdmac_tasklet()
+and at_xdmac_handle_error() also call list_first_entry() on an empty
+atchan->xfers_list [1]?
 
- drivers/dma/at_xdmac.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+CPU0                                  CPU1
+at_xdmac_interrupt()
+  atchan->irq_status =3D ...
+  tasklet_schedule(&atchan->tasklet)
+                                      at_xdmac_device_terminate_all()
+                                        spin_lock_irqsave(&atchan->lock)
+                                        list_del(&desc->xfer_node)
+                                        clear_bit(AT_XDMAC_CHAN_IS_CYCLIC)
+                                        spin_unlock_irqrestore(...)
+at_xdmac_tasklet()
+  spin_lock_irq(&atchan->lock)
+  desc =3D list_first_entry(&atchan->xfers_list, ...)
+  if (!desc->active_xfer)             <-- out-of-bounds read
+  list_del(&desc->xfer_node)          <-- list corruption
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index ef0dfe9d3..bcfbb41ea 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1553,7 +1553,16 @@ at_xdmac_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
- 
- 	spin_lock_irqsave(&atchan->lock, flags);
- 
--	desc = list_first_entry(&atchan->xfers_list, struct at_xdmac_desc, xfer_node);
-+	desc = list_first_entry_or_null(&atchan->xfers_list, struct at_xdmac_desc,
-+					xfer_node);
-+	/*
-+	 * The list is empty once the channel has been terminated, while the
-+	 * cookie of the terminated transfer is still reported as in progress.
-+	 */
-+	if (!desc) {
-+		dma_set_residue(txstate, 0);
-+		goto spin_unlock;
-+	}
- 
- 	/*
- 	 * If the transfer has not been started yet, don't need to compute the
+at_xdmac_device_terminate_all() empties atchan->xfers_list and clears the
+cyclic flag without clearing atchan->irq_status or stopping the scheduled
+tasklet.  When at_xdmac_tasklet() runs, it sees the stale
+atchan->irq_status bits and computes a bogus descriptor pointer from the
+empty list head, causing an out-of-bounds read and corrupting
+atchan->xfers_list and atchan->free_descs_list if desc->active_xfer reads
+as non-zero.
 
-base-commit: 97d73c8251226cf27cc6656b4c542869bb8c69fa
--- 
-2.43.0
+[1] https://sashiko.dev/#/bug/linux-bba900ca-f8ae-4ff8-a433-e3d7588cc938
 
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115080245.9105=
+34-1-zihengw03@163.com?part=3D1
