@@ -1,48 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794777995;
-	b=VvovFNxZe694G/a+FFmbet4/21aNVDjsxt5FL3Jqxnuzu3s4Yp4lU2MO64kkM7Tgd0uw
-	 gNO7vZJ3fI7IZw3ERXyPPwDjBffQrdJY2RkhEVkz3gpTnSJL/t0TH+GrPgg86+0Bw9HS2
-	 p4M3FLZjKNZcEvOWZbB0PrgTu0PoVrRYPyy7LlA6fBZYZvWzQfOuruGj+KhvxmDIxpnR5
-	 3rmHPp4yZd7P3e7UmdYUUScr+nmq2IktlI+B04fdYxV8QrIDU0iC8W3x2TLSYX7eCnKEZ
-	 Pr/UqWjcc8XKIlgB6wu5nM9+JHX3cuwZuFfbAja2JtYY1F646VFMyx7ulSeoirN6pPw==
+	t=1794778896;
+	b=c8dtfAyqHKobrG3iJ3WzWsdpCyeBcdJo5vT6YSQZdLf8VnMf43/3Y/TeH5jxpB9wOnO2
+	 LWjkp2nl9BktT2PMew6ok3rzmULT80YjZyvM09Uq8TJ5hiWxFxH/onQp1VkSB1VVkRd40
+	 uJqndnu7LyRpRByRIymFhqhBMpGoLuo8UVyqUiTWOqOqkqvP7dEvtHDBhNsVez/+Rr6qk
+	 9Womv+T4wZrwLUVoTrTJc0MVrxUe7Quf1kK+e+9URYpq0D6fMAkYymIyDEFPM7tonC8eX
+	 7ac0HiB+6kFKXLlqvB6yHyUwNUvdpUPKkCCdpV/WjNzH4z/+LCvJqVA4awQSOpAy24w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794777995;
-	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
-	 X-Mailer;
-	bh=PuaIHoWEvgowmrhR0iBIgldANWhvuzsLIJwy5SDUW8o=;
-	b=QvggpZ58W8DXiexlrIqPSVOQwri3BMdzNfmT0cjjPGSgSYH/rxwBmJO0eceifV43dbSL
-	 h2zmUgXDfWniK/44YDcToLNwOMclyKth6pDUIuzkRH9S6zUAXV25YNBgaG+CYQF0JJqO3
-	 McuHDnF/RGclzHWTx3fMlHaY2hyWPr3S08nNh5g/sELfMjXpKeC1kHls8E/uiQY9cSWmv
-	 YEaDdqEljDgWVz3kzDzxDkH63RyeFv3ukCDY1Af7bgAIuHL9q+9hm29O09NTTj2ZdJOMv
-	 fkZi0PcCk8QnSggEcyskktWVixdRKIafpHrMFLA8CrQ+Y3bWtoPqjYrT0Tps6WvkF7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794778896;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=w+anAIYdKnvcawtUKf0L0dAIaM6Z4JUQgSAWVjpWsFY=;
+	b=0Dfj8d1IVzPmSTm77xUT28PXQ+1Mx61/SUYzye74xEaDpM8yS+OxLHGFPq7CvyI9c1MG
+	 WK3hSKfriM5piqc3NBXlJG0/9SC2MKwV3Jkq5cDTY4j8+YeyUcU3j7omLoRRwWbWQYczT
+	 Q8JZHvcjaWgrrQykGk2QxN3TpVLDaqY53U9ViLR3tfaRwrbD5WkspBu2UDjVGiPd57iHO
+	 +pmgClyZN+7vD2YsGgAePcXJhb+uKwv3NxG8NPL0Wshnf4+SgpNKEd9XvDxq9nTjvbGMR
+	 pRTdudGI/wLpUI9AewOIHs6bqdj0JskuAB3g3j7GGYaLqhmeN6aW02VySss0Mr/dcTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nsL7GhHF;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="gXoHsQE/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E382A606A32C;
-	Sun, 15 Nov 2026 21:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CF6606A32F
+	for <dmaengine@vger.kernel.org>; Sun, 15 Nov 2026 21:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nsL7GhHF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7B61F000C4;
-	Sun, 15 Nov 2026 21:26:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gXoHsQE/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9621F000C4;
+	Sun, 15 Nov 2026 21:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794777994;
-	bh=PuaIHoWEvgowmrhR0iBIgldANWhvuzsLIJwy5SDUW8o=;
-	h=From:Date:Subject:To:Cc;
-	b=nsL7GhHFiVF0x7jEGWrr795VGRtQ5EPfIx9obHF0qJJfj2pVDeV280JHyGM+q2VdT
-	 1r8UQLije1kGY18cuKEUEYKpY4K6ZNXDBMdmy9pCT0uf9l9OqFbkcuSyrcVDMLWKIy
-	 Q1qz0ERqOiP2jPuGvpxmtlAMFZS5cXK6mJVYyTny+C0w6y9neEAF880EV830fnUL3u
-	 LDfd4qZfRJP03GkyiPamlHvXDH2mMn9jSKkih0DIXqtRt4H2wONIRoVrnk33m5mFIl
-	 4dvQP9P6MdfRcDvbYAkVDXXqxzEnQeoQcTHUyzJAztXHGrlJ52iBNhF4RymN/HhIOd
-	 Zq28GrUHLMoKQ==
-From: Linus Walleij <linusw@kernel.org>
-Date: Sun, 15 Nov 2026 22:26:27 +0100
-Subject: [PATCH] dmaengine: ste_dma40: Use power domain for LCLA SRAM
+	s=k20260515; t=1794778895;
+	bh=w+anAIYdKnvcawtUKf0L0dAIaM6Z4JUQgSAWVjpWsFY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=gXoHsQE/mUEGlNreFugjrDc9LrPB72dMTy2UgSCkk47GCmwH+Xl8v+l+iMvOt9Z+E
+	 8AnZppeIPuCBWrBKqB63BLlOzrP8NVhMdWgid1hI9A3BBRtZ3IIsBad7g+URn8DFNK
+	 iZ9DbNs3d3+Ajn05HVcqpPfjPh36MTIeKB3V+JYvgahrMOEVgFhUpU1JvEXvJJCWDw
+	 4/eA8jfUJbWBtZX0iHkZYTf766t3eJMH+5q9NdUUZBTO2zIsolmLMPGDcIzZwqbhUi
+	 ojiK9hUUA2/DgBiOmQaJFC9SAFTDO2P+Bp2PCxq11Dc7DxHZVFmA4i0WxNenXlVtPv
+	 Va1tzpTtdiO9w==
+Message-ID: <sashiko-outbox-215867@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: ste_dma40: Use power domain for LCLA SRAM
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Linus Walleij" <linusw@kernel.org>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org>
+References: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 15 Nov 2026 21:41:35 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -51,574 +58,187 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261115-ux500-dma40-powerdomain-v1-1-da8b6e1a0376@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAA/x3MOwrDMAwA0KsIzRFISe3BVykdnFpuNcQONvlAy
- N0LfQd4F3Ztph0DXNh0t261YAAZAN/fWD5KljAAjjx6EXG0nY6Z0hIfTGs9tKW6RCskk4vO+5m
- nnHEAXJtmO//z83XfP4rTEwVpAAAA
-X-Change-ID: 20261115-ux500-dma40-powerdomain-135a566b03ff
-To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Ulf Hansson <ulfh@kernel.org>, 
- linux-pm@vger.kernel.org, Frank Li <Frank.li@oss.nxp.com>, 
- Linus Walleij <linusw@kernel.org>
-X-Mailer: b4 0.16.0
 
-Replace the LCLA ESRAM regulator with runtime PM of the SRAM device
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Low] dmaengine: ste_dma40: chained dev_err_probe() in d40_probe()
+  clobbers reason
+It also noticed 2 related pre-existing issues this patch does not
+introduce:
+- [Critical] dmaengine: ste_dma40: use-after-free in d40_free_dma() [1]
+- [Critical] dmaengine: ste_dma40: DMA API bypass in d40_lcla_allocate()
+  [2]
+--
+
+commit 1b5cce170c6b1253e8f796cc9973f76ac7915f4f
+Author: Linus Walleij <linusw@kernel.org>
+
+dmaengine: ste_dma40: Use power domain for LCLA SRAM
+
+This commit replaces the LCLA ESRAM regulator and obsolete named memory
+resource with LCLA SRAM phandle lookup and runtime PM of the SRAM device
 owning the ESRAM34 power domain.
 
-Use the existing LCLA SRAM phandle instead of the never-set
-use_esram_lcla flag and the obsolete named memory resource.
-The bool indicating if we use LCLA SRAM seems pointless, let's just
-check if it's NULL or not. Simpler.
+> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+> index f1cbc719c4f09..eca1ae95fe1c9 100644
+> --- a/drivers/dma/ste_dma40.c
+> +++ b/drivers/dma/ste_dma40.c
+[ ... ]
+> @@ -2270,7 +2291,7 @@ static int d40_free_dma(struct d40_chan *d40c)
+>  		d40c->base->lookup_phy_chans[phy->num] =3D NULL;
+> =20
+>  	if (d40c->busy)
+> -		pm_runtime_put_autosuspend(d40c->base->dev);
+> +		d40_transfer_runtime_put(d40c->base);
+> =20
+>  	d40c->busy =3D false;
+>  	d40c->phy_chan =3D NULL;
 
-Acquire the SRAM runtime PM reference when allocating a DMA channel,
-before taking its spinlock, and release it when the channel is freed.
-Descriptor preparation can run under a client's spinlock, so it cannot
-synchronously resume the SRAM.
+[Severity: Critical]
+This problem wasn't introduced by this patch, but can calling d40_term_all()
+before d40_channel_execute_command(d40c, D40_DMA_STOP) in d40_free_dma() ca=
+use
+a hardware use-after-free [1]?
 
-Acquiring a handle to the SRAM can fail and then we defer probe.
+drivers/dma/ste_dma40.c:d40_free_dma() {
+    ...
+	d40_term_all(d40c);
+    ...
+	res =3D pm_runtime_resume_and_get(d40c->base->dev);
+	if (res >=3D 0) {
+		res =3D d40_channel_execute_command(d40c, D40_DMA_STOP);
+    ...
+}
 
-Since we can defer probe(), probe() and friends can't be tagged as
-__init anymore, and it's better like this anyway.
+When tearing down an active channel, d40_term_all() unmaps and frees the
+active descriptors while the DMA controller is still running and accessing
+that memory until D40_DMA_STOP is issued.
 
-Keep a stateless device link for system-sleep ordering without adding
-a runtime PM dependency to the IRQ-safe DMA controller.
+[ ... ]
+> @@ -3640,13 +3655,9 @@ static void __init d40_hw_init(struct d40_base *ba=
+se)
+> =20
+>  	/* Write which interrupt to clear */
+>  	writel(pcicr, base->virtbase + base->gen_dmac.interrupt_clear);
+> -
+> -	/* These are __initdata and cannot be accessed after init */
+> -	base->gen_dmac.init_reg =3D NULL;
+> -	base->gen_dmac.init_reg_size =3D 0;
+>  }
+> =20
+> -static int __init d40_lcla_allocate(struct d40_base *base)
+> +static int d40_lcla_allocate(struct d40_base *base)
+>  {
+>  	struct d40_lcla_pool *pool =3D &base->lcla_pool;
+>  	size_t lcla_size =3D SZ_1K * base->num_phy_chans;
 
-Suggested-by: Frank Li <Frank.li@oss.nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
----
-The Ux500 genpd prerequisites have been merged into the powerdomain tree.
-Probably the fix sent earlier should be merged first:
-"dmaengine: ste_dma40: Keep prepared descriptors across termination"
+[Severity: Critical]
+This problem wasn't introduced by this patch, but shouldn't
+d40_lcla_allocate() write pool->dma_addr instead of
+virt_to_phys(base->lcla_pool.base) to D40_DREG_LCLA [2]?
 
-The SRAM driver will be patched separately.
----
- drivers/dma/ste_dma40.c | 253 +++++++++++++++++++++++++++---------------------
- 1 file changed, 142 insertions(+), 111 deletions(-)
+drivers/dma/ste_dma40.c:d40_lcla_allocate() {
+    ...
+	pool->dma_addr =3D dma_map_single(base->dev, pool->base, lcla_size,
+					DMA_TO_DEVICE);
+	if (dma_mapping_error(base->dev, pool->dma_addr)) {
+		pool->dma_addr =3D 0;
+		ret =3D -ENOMEM;
+		goto free_page_list;
+	}
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index f1cbc719c4f0..eca1ae95fe1c 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -21,8 +21,8 @@
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_dma.h>
-+#include <linux/of_platform.h>
- #include <linux/amba/bus.h>
--#include <linux/regulator/consumer.h>
- 
- #include "dmaengine.h"
- #include "ste_dma40.h"
-@@ -41,7 +41,6 @@
-  * certain use cases.
-  * @num_of_soft_lli_chans: The number of channels that needs to be configured
-  * to use SoftLLI.
-- * @use_esram_lcla: flag for mapping the lcla into esram region
-  * @num_of_memcpy_chans: The number of channels reserved for memcpy.
-  * @memcpy_channels: The event lines used for memcpy.
-  * @num_of_phy_chans: The number of physical channels implemented in HW.
-@@ -52,7 +51,6 @@ struct stedma40_platform_data {
- 	int				 disabled_channels[STEDMA40_MAX_PHYS];
- 	int				*soft_lli_chans;
- 	int				 num_of_soft_lli_chans;
--	bool				 use_esram_lcla;
- 	int				 num_of_memcpy_chans;
- 	u32				 memcpy_channels[D40_MEMCPY_MAX_CHANS];
- 	int				 num_of_phy_chans;
-@@ -301,7 +299,7 @@ struct d40_reg_val {
- 	unsigned int val;
- };
- 
--static __initdata struct d40_reg_val dma_init_reg_v4a[] = {
-+static struct d40_reg_val dma_init_reg_v4a[] = {
- 	/* Clock every part of the DMA block from start */
- 	{ .reg = D40_DREG_GCC,    .val = D40_DREG_GCC_ENABLE_ALL},
- 
-@@ -319,7 +317,8 @@ static __initdata struct d40_reg_val dma_init_reg_v4a[] = {
- 	{ .reg = D40_DREG_LCTIS2, .val = 0xFFFFFFFF},
- 	{ .reg = D40_DREG_LCTIS3, .val = 0xFFFFFFFF}
- };
--static __initdata struct d40_reg_val dma_init_reg_v4b[] = {
-+
-+static struct d40_reg_val dma_init_reg_v4b[] = {
- 	/* Clock every part of the DMA block from start */
- 	{ .reg = D40_DREG_GCC,    .val = D40_DREG_GCC_ENABLE_ALL},
- 
-@@ -413,6 +412,7 @@ struct d40_desc {
-  * struct d40_lcla_pool - LCLA pool settings and data.
-  *
-  * @base: The virtual address of LCLA. 18 bit aligned.
-+ * @esram: I/O mapping when LCLA resides in SRAM instead of system memory.
-  * @dma_addr: DMA address, if mapped
-  * @base_unaligned: The original kmalloc pointer, if kmalloc is used.
-  * This pointer is only there for clean-up on error.
-@@ -423,6 +423,7 @@ struct d40_desc {
-  */
- struct d40_lcla_pool {
- 	void		*base;
-+	void __iomem	*esram;
- 	dma_addr_t	dma_addr;
- 	void		*base_unaligned;
- 	unsigned int	 alloc_order;
-@@ -578,7 +579,8 @@ struct d40_gen_dmac {
-  * to phy_chans entries.
-  * @plat_data: Pointer to provided platform_data which is the driver
-  * configuration.
-- * @lcpa_regulator: Pointer to hold the regulator for the esram bank for lcla.
-+ * @lcla_dev: SRAM device for the ESRAM bank used by LCLA.
-+ * @lcla_link: Device link to keep system PM ordered against LCLA.
-  * @phy_res: Vector containing all physical channels.
-  * @lcla_pool: lcla pool settings and data.
-  * @lcpa_base: The virtual mapped address of LCPA.
-@@ -613,7 +615,8 @@ struct d40_base {
- 	struct d40_chan			**lookup_log_chans;
- 	struct d40_chan			**lookup_phy_chans;
- 	struct stedma40_platform_data	 *plat_data;
--	struct regulator		 *lcpa_regulator;
-+	struct device			 *lcla_dev;
-+	struct device_link		 *lcla_link;
- 	/* Physical half channels */
- 	struct d40_phy_res		 *phy_res;
- 	struct d40_lcla_pool		  lcla_pool;
-@@ -630,6 +633,25 @@ struct d40_base {
- 	struct d40_chan			 phy_chans[];
- };
- 
-+static int d40_lcla_runtime_get(struct d40_base *base)
-+{
-+	if (!base->lcla_dev)
-+		return 0;
-+
-+	return pm_runtime_resume_and_get(base->lcla_dev);
-+}
-+
-+static void d40_lcla_runtime_put(struct d40_base *base)
-+{
-+	if (base->lcla_dev)
-+		pm_runtime_put(base->lcla_dev);
-+}
-+
-+static void d40_transfer_runtime_put(struct d40_base *base)
-+{
-+	pm_runtime_put_autosuspend(base->dev);
-+}
-+
- static bool chan_is_physical(struct d40_chan *chan)
- {
- 	return chan->log_num == D40_PHY_CHAN;
-@@ -859,7 +881,6 @@ static void d40_log_lli_to_lcxa(struct d40_chan *chan, struct d40_desc *desc)
- 	bool cyclic = desc->cyclic;
- 	int curr_lcla = -EINVAL;
- 	int first_lcla = 0;
--	bool use_esram_lcla = chan->base->plat_data->use_esram_lcla;
- 	bool linkback;
- 
- 	/*
-@@ -912,7 +933,6 @@ static void d40_log_lli_to_lcxa(struct d40_chan *chan, struct d40_desc *desc)
- 	for (; lli_current < lli_len; lli_current++) {
- 		unsigned int lcla_offset = chan->phy_chan->num * 1024 +
- 					   8 * curr_lcla * 2;
--		struct d40_log_lli *lcla = pool->base + lcla_offset;
- 		unsigned int flags = 0;
- 		int next_lcla;
- 
-@@ -936,16 +956,17 @@ static void d40_log_lli_to_lcxa(struct d40_chan *chan, struct d40_desc *desc)
- 		 * One unused LCLA in the cyclic case if the very first
- 		 * next_lcla fails...
- 		 */
--		d40_log_lli_lcla_write(lcla,
--				       &lli->dst[lli_current],
--				       &lli->src[lli_current],
--				       next_lcla, flags);
--
--		/*
--		 * Cache maintenance is not needed if lcla is
--		 * mapped in esram
--		 */
--		if (!use_esram_lcla) {
-+		if (pool->esram) {
-+			/* LCPA and LCLA use the same four-word SRAM layout. */
-+			d40_log_lli_lcpa_write(pool->esram + lcla_offset,
-+					       &lli->dst[lli_current],
-+					       &lli->src[lli_current],
-+					       next_lcla, flags);
-+		} else {
-+			d40_log_lli_lcla_write(pool->base + lcla_offset,
-+					       &lli->dst[lli_current],
-+					       &lli->src[lli_current],
-+					       next_lcla, flags);
- 			dma_sync_single_range_for_device(chan->base->dev,
- 						pool->dma_addr, lcla_offset,
- 						2 * sizeof(struct d40_log_lli),
-@@ -1661,7 +1682,7 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
- 			d40_desc_done(d40c, d40d);
- 			d40c->pending_tx++;
- 			d40c->busy = false;
--			pm_runtime_put_autosuspend(d40c->base->dev);
-+			d40_transfer_runtime_put(d40c->base);
- 			tasklet_schedule(&d40c->tasklet);
- 			return ERR_PTR(err);
- 		}
-@@ -1717,7 +1738,7 @@ static void dma_tc_handle(struct d40_chan *d40c)
- 		if (d40_queue_start(d40c) == NULL) {
- 			d40c->busy = false;
- 
--			pm_runtime_put_autosuspend(d40c->base->dev);
-+			d40_transfer_runtime_put(d40c->base);
- 		}
- 	}
- 
-@@ -2270,7 +2291,7 @@ static int d40_free_dma(struct d40_chan *d40c)
- 		d40c->base->lookup_phy_chans[phy->num] = NULL;
- 
- 	if (d40c->busy)
--		pm_runtime_put_autosuspend(d40c->base->dev);
-+		d40_transfer_runtime_put(d40c->base);
- 
- 	d40c->busy = false;
- 	d40c->phy_chan = NULL;
-@@ -2646,6 +2667,12 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
- 	struct d40_chan *d40c =
- 		container_of(chan, struct d40_chan, chan);
- 	bool is_free_phy;
-+
-+	/* Preparation and submission may run with the client's spinlock held. */
-+	err = d40_lcla_runtime_get(d40c->base);
-+	if (err < 0)
-+		return err;
-+
- 	spin_lock_irqsave(&d40c->lock, flags);
- 
- 	dma_cookie_init(chan);
-@@ -2703,6 +2730,8 @@ static int d40_alloc_chan_resources(struct dma_chan *chan)
- 	pm_runtime_put_autosuspend(d40c->base->dev);
-  unlock:
- 	spin_unlock_irqrestore(&d40c->lock, flags);
-+	if (err < 0)
-+		d40_lcla_runtime_put(d40c->base);
- 	return err;
- }
- 
-@@ -2725,6 +2754,10 @@ static void d40_free_chan_resources(struct dma_chan *chan)
- 	if (err)
- 		chan_err(d40c, "Failed to free channel\n");
- 	spin_unlock_irqrestore(&d40c->lock, flags);
-+
-+	/* Keep SRAM powered if stopping the channel failed. */
-+	if (!d40c->phy_chan)
-+		d40_lcla_runtime_put(d40c->base);
- }
- 
- static struct dma_async_tx_descriptor *d40_prep_memcpy(struct dma_chan *chan,
-@@ -2877,7 +2910,7 @@ static int d40_terminate_all(struct dma_chan *chan)
- 	 */
- 	d40_term_all(d40c);
- 	if (d40c->busy)
--		pm_runtime_put_autosuspend(d40c->base->dev);
-+		d40_transfer_runtime_put(d40c->base);
- 	d40c->busy = false;
- 
- 	spin_unlock_irqrestore(&d40c->lock, flags);
-@@ -3047,9 +3080,9 @@ static int d40_set_runtime_config_write(struct dma_chan *chan,
- 
- /* Initialization functions */
- 
--static void __init d40_chan_init(struct d40_base *base, struct dma_device *dma,
--				 struct d40_chan *chans, int offset,
--				 int num_chans)
-+static void d40_chan_init(struct d40_base *base, struct dma_device *dma,
-+			  struct d40_chan *chans, int offset,
-+			  int num_chans)
- {
- 	int i = 0;
- 	struct d40_chan *d40c;
-@@ -3123,8 +3156,8 @@ static void d40_ops_init(struct d40_base *base, struct dma_device *dev)
- 	dev->dev = base->dev;
- }
- 
--static int __init d40_dmaengine_init(struct d40_base *base,
--				     int num_reserved_chans)
-+static int d40_dmaengine_init(struct d40_base *base,
-+			      int num_reserved_chans)
- {
- 	int err ;
- 
-@@ -3201,29 +3234,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
- #ifdef CONFIG_PM_SLEEP
- static int dma40_suspend(struct device *dev)
- {
--	struct d40_base *base = dev_get_drvdata(dev);
--	int ret;
--
--	ret = pm_runtime_force_suspend(dev);
--	if (ret)
--		return ret;
--
--	if (base->lcpa_regulator)
--		ret = regulator_disable(base->lcpa_regulator);
--	return ret;
-+	return pm_runtime_force_suspend(dev);
- }
- 
- static int dma40_resume(struct device *dev)
- {
--	struct d40_base *base = dev_get_drvdata(dev);
--	int ret = 0;
--
--	if (base->lcpa_regulator) {
--		ret = regulator_enable(base->lcpa_regulator);
--		if (ret)
--			return ret;
--	}
--
- 	return pm_runtime_force_resume(dev);
- }
- #endif
-@@ -3313,7 +3328,7 @@ static const struct dev_pm_ops dma40_pm_ops = {
- 
- /* Initialization functions. */
- 
--static int __init d40_phy_res_init(struct d40_base *base)
-+static int d40_phy_res_init(struct d40_base *base)
- {
- 	int i;
- 	int num_phy_chans_avail = 0;
-@@ -3405,8 +3420,8 @@ static void d40_drop_kmem_cache_action(void *d)
- 	kmem_cache_destroy(desc_slab);
- }
- 
--static int __init d40_hw_detect_init(struct platform_device *pdev,
--				     struct d40_base **retbase)
-+static int d40_hw_detect_init(struct platform_device *pdev,
-+			      struct d40_base **retbase)
- {
- 	struct stedma40_platform_data *plat_data = dev_get_platdata(&pdev->dev);
- 	struct device *dev = &pdev->dev;
-@@ -3592,7 +3607,7 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
- 	return 0;
- }
- 
--static void __init d40_hw_init(struct d40_base *base)
-+static void d40_hw_init(struct d40_base *base)
- {
- 
- 	int i;
-@@ -3640,13 +3655,9 @@ static void __init d40_hw_init(struct d40_base *base)
- 
- 	/* Write which interrupt to clear */
- 	writel(pcicr, base->virtbase + base->gen_dmac.interrupt_clear);
--
--	/* These are __initdata and cannot be accessed after init */
--	base->gen_dmac.init_reg = NULL;
--	base->gen_dmac.init_reg_size = 0;
- }
- 
--static int __init d40_lcla_allocate(struct d40_base *base)
-+static int d40_lcla_allocate(struct d40_base *base)
- {
- 	struct d40_lcla_pool *pool = &base->lcla_pool;
- 	size_t lcla_size = SZ_1K * base->num_phy_chans;
-@@ -3728,8 +3739,7 @@ static int __init d40_lcla_allocate(struct d40_base *base)
- 	return ret;
- }
- 
--static int __init d40_of_probe(struct device *dev,
--			       struct device_node *np)
-+static int d40_of_probe(struct device *dev, struct device_node *np)
- {
- 	struct stedma40_platform_data *pdata;
- 	int num_phy = 0, num_memcpy = 0, num_disabled = 0;
-@@ -3781,13 +3791,70 @@ static int __init d40_of_probe(struct device *dev,
- 	return 0;
- }
- 
--static int __init d40_probe(struct platform_device *pdev)
-+static int d40_lcla_sram_setup(struct d40_base *base)
-+{
-+	struct device *dev = base->dev;
-+	struct device_node *np, *parent;
-+	struct platform_device *sram;
-+	struct resource res;
-+	bool ready;
-+	int ret;
-+
-+	np = of_parse_phandle(dev->of_node, "sram", 1);
-+	if (!np)
-+		return 0;
-+
-+	ret = of_address_to_resource(np, 0, &res);
-+	parent = of_get_parent(np);
-+	of_node_put(np);
-+	if (ret) {
-+		of_node_put(parent);
-+		return ret;
-+	}
-+	if (!parent)
-+		return -EINVAL;
-+
-+	if (!IS_ALIGNED(res.start, LCLA_ALIGNMENT) ||
-+	    resource_size(&res) < SZ_1K * base->num_phy_chans ||
-+	    res.end > U32_MAX) {
-+		of_node_put(parent);
-+		return dev_err_probe(dev, -EINVAL, "Invalid LCLA SRAM region\n");
-+	}
-+
-+	sram = of_find_device_by_node(parent);
-+	of_node_put(parent);
-+	if (!sram)
-+		return -EPROBE_DEFER;
-+	base->lcla_dev = &sram->dev;
-+
-+	device_lock(base->lcla_dev);
-+	ready = device_is_bound(base->lcla_dev);
-+	device_unlock(base->lcla_dev);
-+	if (!ready)
-+		return -EPROBE_DEFER;
-+
-+	base->lcla_link = device_link_add(dev, base->lcla_dev,
-+					  DL_FLAG_STATELESS);
-+	if (!base->lcla_link)
-+		return -ENOMEM;
-+
-+	/* The SRAM driver owns the containing region. */
-+	base->lcla_pool.esram = devm_ioremap(dev, res.start, resource_size(&res));
-+	if (!base->lcla_pool.esram)
-+		return -ENOMEM;
-+
-+	writel(res.start, base->virtbase + D40_DREG_LCLA);
-+	dev_info(dev, "using LCLA SRAM at %pa\n", &res.start);
-+
-+	return 0;
-+}
-+
-+static int d40_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
- 	struct device_node *np = pdev->dev.of_node;
- 	struct device_node *np_lcpa;
- 	struct d40_base *base;
--	struct resource *res;
- 	struct resource res_lcpa;
- 	void *dmaenginem_reg_group;
- 	int num_reserved_chans;
-@@ -3844,26 +3911,12 @@ static int __init d40_probe(struct platform_device *pdev)
- 		d40_err(dev, "Failed to ioremap LCPA region\n");
- 		goto report_failure;
- 	}
--	/* If lcla has to be located in ESRAM we don't need to allocate */
--	if (base->plat_data->use_esram_lcla) {
--		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
--							"lcla_esram");
--		if (!res) {
--			ret = -ENOENT;
--			d40_err(dev,
--				"No \"lcla_esram\" memory resource\n");
--			goto report_failure;
--		}
--		base->lcla_pool.base = devm_ioremap(dev, res->start,
--						    resource_size(res));
--		if (!base->lcla_pool.base) {
--			ret = -ENOMEM;
--			d40_err(dev, "Failed to ioremap LCLA region\n");
--			goto report_failure;
--		}
--		writel(res->start, base->virtbase + D40_DREG_LCLA);
--
--	} else {
-+	ret = d40_lcla_sram_setup(base);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "Failed to set up LCLA SRAM\n");
-+		goto destroy_cache;
-+	}
-+	if (!base->lcla_pool.esram) {
- 		ret = d40_lcla_allocate(base);
- 		if (ret) {
- 			d40_err(dev, "Failed to allocate LCLA area\n");
-@@ -3879,26 +3932,6 @@ static int __init d40_probe(struct platform_device *pdev)
- 		goto destroy_cache;
- 	}
- 
--	if (base->plat_data->use_esram_lcla) {
--
--		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
--		if (IS_ERR(base->lcpa_regulator)) {
--			d40_err(dev, "Failed to get lcpa_regulator\n");
--			ret = PTR_ERR(base->lcpa_regulator);
--			base->lcpa_regulator = NULL;
--			goto destroy_cache;
--		}
--
--		ret = regulator_enable(base->lcpa_regulator);
--		if (ret) {
--			d40_err(dev,
--				"Failed to enable lcpa_regulator\n");
--			regulator_put(base->lcpa_regulator);
--			base->lcpa_regulator = NULL;
--			goto destroy_cache;
--		}
--	}
--
- 	writel_relaxed(D40_DREG_GCC_ENABLE_ALL, base->virtbase + D40_DREG_GCC);
- 
- 	pm_runtime_irq_safe(base->dev);
-@@ -3954,22 +3987,18 @@ static int __init d40_probe(struct platform_device *pdev)
- 		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
- 				 SZ_1K * base->num_phy_chans,
- 				 DMA_TO_DEVICE);
--
--	if (!base->plat_data->use_esram_lcla &&
--	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
-+	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
- 		free_pages((unsigned long)base->lcla_pool.base,
- 			   base->lcla_pool.alloc_order);
- 
- 	kfree(base->lcla_pool.base_unaligned);
--
--	if (base->lcpa_regulator) {
--		regulator_disable(base->lcpa_regulator);
--		regulator_put(base->lcpa_regulator);
--	}
-+	if (base->lcla_link)
-+		device_link_del(base->lcla_link);
-+	if (base->lcla_dev)
-+		put_device(base->lcla_dev);
- 
-  report_failure:
--	d40_err(dev, "probe failed\n");
--	return ret;
-+	return dev_err_probe(dev, ret, "probe failed\n");
- }
- 
- static const struct of_device_id d40_match[] = {
-@@ -3978,15 +4007,17 @@ static const struct of_device_id d40_match[] = {
- };
- 
- static struct platform_driver d40_driver = {
-+	.probe = d40_probe,
- 	.driver = {
- 		.name  = D40_NAME,
- 		.pm = &dma40_pm_ops,
- 		.of_match_table = d40_match,
-+		.suppress_bind_attrs = true,
- 	},
- };
- 
- static int __init stedma40_init(void)
- {
--	return platform_driver_probe(&d40_driver, d40_probe);
-+	return platform_driver_register(&d40_driver);
- }
- subsys_initcall(stedma40_init);
+	writel(virt_to_phys(base->lcla_pool.base),
+	       base->virtbase + D40_DREG_LCLA);
+    ...
+}
 
----
-base-commit: becfc375b0ee95818c531ed43ecda26c90f7617a
-change-id: 20261115-ux500-dma40-powerdomain-135a566b03ff
+Programming raw CPU physical addresses instead of the mapped DMA address
+bypasses IOMMU translations and bus offsets, which also happens in
+d40_prep_sg_phy() where virt_to_phys(desc->lli_phy.src) and
+virt_to_phys(desc->lli_phy.dst) are passed to d40_phy_sg_to_lli().
 
-Best regards,
---  
-Linus Walleij <linusw@kernel.org>
+[ ... ]
+> @@ -3781,13 +3791,70 @@ static int __init d40_of_probe(struct device *dev,
+>  	return 0;
+>  }
+> =20
+> -static int __init d40_probe(struct platform_device *pdev)
+> +static int d40_lcla_sram_setup(struct d40_base *base)
+> +{
+[ ... ]
+> +	if (!IS_ALIGNED(res.start, LCLA_ALIGNMENT) ||
+> +	    resource_size(&res) < SZ_1K * base->num_phy_chans ||
+> +	    res.end > U32_MAX) {
+> +		of_node_put(parent);
+> +		return dev_err_probe(dev, -EINVAL, "Invalid LCLA SRAM region\n");
+> +	}
+[ ... ]
+> @@ -3844,26 +3911,12 @@ static int __init d40_probe(struct platform_devic=
+e *pdev)
+>  		d40_err(dev, "Failed to ioremap LCPA region\n");
+>  		goto report_failure;
+>  	}
+> -	/* If lcla has to be located in ESRAM we don't need to allocate */
+> -	if (base->plat_data->use_esram_lcla) {
+[ ... ]
+> -	} else {
+> +	ret =3D d40_lcla_sram_setup(base);
+> +	if (ret) {
+> +		dev_err_probe(dev, ret, "Failed to set up LCLA SRAM\n");
+> +		goto destroy_cache;
+> +	}
+> +	if (!base->lcla_pool.esram) {
+>  		ret =3D d40_lcla_allocate(base);
+>  		if (ret) {
+>  			d40_err(dev, "Failed to allocate LCLA area\n");
+[ ... ]
+> @@ -3954,22 +3987,18 @@ static int __init d40_probe(struct platform_devic=
+e *pdev)
+>  		dma_unmap_single(base->dev, base->lcla_pool.dma_addr,
+>  				 SZ_1K * base->num_phy_chans,
+>  				 DMA_TO_DEVICE);
+> -
+> -	if (!base->plat_data->use_esram_lcla &&
+> -	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
+> +	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
+>  		free_pages((unsigned long)base->lcla_pool.base,
+>  			   base->lcla_pool.alloc_order);
+> =20
+>  	kfree(base->lcla_pool.base_unaligned);
+> -
+> -	if (base->lcpa_regulator) {
+> -		regulator_disable(base->lcpa_regulator);
+> -		regulator_put(base->lcpa_regulator);
+> -	}
+> +	if (base->lcla_link)
+> +		device_link_del(base->lcla_link);
+> +	if (base->lcla_dev)
+> +		put_device(base->lcla_dev);
+> =20
+>   report_failure:
+> -	d40_err(dev, "probe failed\n");
+> -	return ret;
+> +	return dev_err_probe(dev, ret, "probe failed\n");
+>  }
 
+[Severity: Low]
+Does calling dev_err_probe(dev, ret, "probe failed\n") at report_failure
+overwrite the deferred probe reason recorded earlier by d40_lcla_sram_setup=
+()
+or platform_get_irq()?
+
+When d40_lcla_sram_setup() returns -EPROBE_DEFER, d40_probe() records "Fail=
+ed
+to set up LCLA SRAM" via dev_err_probe() and jumps to destroy_cache, which
+falls through to report_failure and replaces that reason in debugfs
+devices_deferred with "probe failed".  On non-deferral errors such as an
+invalid LCLA SRAM region, chaining dev_err_probe() across
+d40_lcla_sram_setup(), its caller, and report_failure also logs up to three
+error messages for a single failure.
+
+[1] https://sashiko.dev/#/bug/linux-36e6bab6-2c91-434c-83be-1363c42736bc
+[2] https://sashiko.dev/#/bug/linux-ca33b515-31eb-4b66-afe9-8493aaf2e04a
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115-ux500-dma4=
+0-powerdomain-v1-1-da8b6e1a0376@kernel.org?part=3D1
