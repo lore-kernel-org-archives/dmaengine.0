@@ -1,80 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1794800608;
-	b=ueBMAVtcN8d6g0cOfHTGrwS6YGVjxVZNGnLiu+x3BL68ahla8oD+ndxQIrCEa8HwwECr
-	 18gfugbhY3hO6hn3c67dCjtCiFbw9eXVcYz50c7RAHLhzEBQNvYHVGW0koSYJHh7cXPRD
-	 cF58wKP5gF4gpNjSps1MLyMI5t4QBCM7lS+9Wp5aGqPDNDuDtu2XiZQIOTpJmxn5TeNJb
-	 1PXzLiNKvCqw2h3W7XI+kx7cj+NUZqZ4KcSO1sbcfftMC538kMLZIboDHu1vfTWymqmbE
-	 fAnsCMoCozwPSuThI5nKgT3f7PftiwYurBrrpQSwDnGEP8PIPjaRg+B3GnBQm1m6lTw==
+	b=AsIOJwY1dyIo67/+fCi5EacJbYXTPmMwQRiUDb1LFdj6zdW4squzBNQL8vVd3hW00o+8
+	 Ps4hIKr36JfeukIpSVhoT17YnMCMxCRo/cUVlGQHwa5+6WnslAMACv3KXxLXdB2nVybXn
+	 3Nh27fSK2KA7kst1hxijRI1mZnoQ3TT4fPJHnUKXL1J3X3IWcuj9FixKI0fgg0MpnfO7L
+	 4eizQU6atX/svMYpNQFiy9IUBF+/rdTDD9YU+OPXUNQg6QA2GVDWiMIdUUfvT0xBAROzz
+	 iq7WRKZ+V62v7I04QVGOXVgW+CfzYnhCikDESCG2KbTo0bRlGhZN+RJWY7kF+bASVZA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794800608;
-	h=Received:DKIM-Signature:Received:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=diVBD2VkmpnO19+y6uxOj++Hyp7pmtKu+pacPLZU/Cw=;
-	b=aMm6gUP9AtBymW0vAz+AODZoTsfHSf/owwEWzMZgz1qWP7mDnNALu2a83x1T7hOoscMw
-	 sUXsEZWx580KH44jCDfpgz4KcOQazFG1cGbkTILIxsUsN/K2Gc0j0ztZ2si2/pXfPoLtA
-	 KGIWrApsc8YaSeTRFxlSb+MQieN45rnOtdJKWtLn2wkYUyroy6tQCyfmgLyfrkzmLwPHh
-	 olZsYnZGKc9MLJUEq6q/N+yNgNWJN3EkegMzcgeQRRZhPnHDUC1ikr1P7WgL49eBiiwcn
-	 kXyEIsZoAOiI7V51YhOEzUHefo+gW10WVewvCL5YtXCVhv2aJiAxRBnT7TTOIvoT6PQ==
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=rervMkY6uXEE2jYUjmiiBu1ppctPzt4btsrENqQbJxk=;
+	b=wKsaGlvoYBORV3uMdVjdtaoZm2g3AEH4T/24sU7g+cPQUkVKdLuvu0GgWN9SArC2aGbo
+	 eJprf5MjzdGxw7af9Gc7qnF/N7A82mMZ+s7EEjvLpMkVgHecwXnlFySBIDAWunUDqskOO
+	 Qh4dKID0hO6kxP2P2LSiq8eIfiyw3/6phu1pjcy9D2OIyXgZCFRXZYx/tSwdhk+GPpv69
+	 pcwxzN9KAA7Wkrk7YyAB6jIbRCHkEsv/fezSnC0728+6n+SqAdXgU8pPewsTG1YiHxnsP
+	 wMC7zb5QV8ZEdzqRka6ZYOVJ9sow+qMo3f9R8ZzgSIhVk5NnTVaT57Gna5Bcd1JesTA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=El4XI0+H;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GQmJEaD1;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD68606A338;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D58606A32C;
 	Mon, 16 Nov 2026 03:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=El4XI0+H
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GQmJEaD1
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1794800608;
-	b=Lj2qjQpicMho/FuicI+td2RWZLNob0pYfmIo23BoH6Ug6RXRxHqZq31VGuV8YGWtBB5L
-	 r4ekJZkCUYmmJML3DzcdMkcAkYHyhJtHtQ63RQU8YKOrQjfw9fjoE7SQgSiBwjgzE18By
-	 6VDXGGued96Mv893SFzVyBfh/wo3GgBocb6C2uuDyPnyHylhWpN2AOnHkGgYNTVZHnjSU
-	 3po/UbVOciu/YB3XHLN4Ni4gaiiOHyhSoW9LBEKsGqO8Od2H2T4rx1EgJCkzXp/KMN6hz
-	 Ij0enwUYr69Bwp2itHRiXu3q6jZsj4rrW2BS+EAd7Qy+tLHK5JhPtD9jRqbES05yn+g==
+	b=MMJYGT/dIZOFVKKUtlnfaHFvCxVrRcuBhPc8Ve94kMffTN/7uWRPhWlbMN2vIDSsINIJ
+	 os6RcW4fHhpheOI5hbCuE+KYDNkH+BjEsjK8M8OHmi+SYusZzbh1BLsMtS4wb8VETkLh9
+	 hGWkyoBWrJpZtX+da5WXKXcuTPMu0pI08h+/DHXwhraCpFmLOy4XF784szLyU0zSnH5la
+	 Qbf8YnaDv7xDI+uMXNcqYFkN4TvjklNUJNe32jnys5FM9FeceakMZC+qUbzpaxO+bEE7O
+	 /2/5fQSCYrB5JI6VPrhNbc6xHGmlDAzgtEtDDheqjcmtKPzjDrQk+7Xo3wg9Su/icPQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1794800608;
-	h=DKIM-Signature:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:To:Cc:X-Mailer:
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=diVBD2VkmpnO19+y6uxOj++Hyp7pmtKu+pacPLZU/Cw=;
-	b=ASGeUkrXgcW+EdKuzYoc/8QcYQHBgdGMMUG8lcRvkytHdQQ96Ky/PTlXzcxukyG8fwjq
-	 m1oXMHLkiioK3MPtC+9tB87a4W+OV0l+n3iQqZHeAqSsk3GZsUp1sfZrUBAzpE2mdTuAz
-	 cEMim0BDkpeU4kP3un8QOfta5L1yhsGuJ1htRvXVvixQXJCXGuE6yJ2PkAK8eJBL6zl3+
-	 8Oy60ZI+PGCEnd6nUh5LLtNa62mlLgojH6KJjJKPFkK2egHyQFH8q1FozHJVpwnK/dqJt
-	 +/Hph9CPO5ZVRRj+vQZm49/r335jTYNYyBkD0Td/lfrb1+Kge0heCoLEWIsdPjN7iMQ==
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=rervMkY6uXEE2jYUjmiiBu1ppctPzt4btsrENqQbJxk=;
+	b=aMMCC5adrYXbQUIv2ZCpuPrVD8hkTn6RL6VIA90+MiYzuzcH4MirYdF2bEoeqDOcMIPK
+	 zP37KHuPnIcrUUeqqyEOTRPn0bh8pqQm2p0X483okqN0BzBGxoGBBGE9hbGpApT6Te/Tt
+	 r0c+qIpoo+ygKER+PuhxaLV0oZlTHfJrZDQaOCsGCqzecCwQQ/GMuviC19XNuA8oMj6iW
+	 pzX2IUQ5vfVhN8JY4mLwDm5cnn/+R5mAWss9DTwFVh4CpfEH/EJc/oSy6F46WdBRHim9+
+	 Nc0GDqp+pSpDHCZuQAhpOY00oCeX+1JxCXieRx/srLlzkUJiro8QxHUFH+bc/raGXqA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id DDBE61F000C6;
-	Mon, 16 Nov 2026 03:43:26 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 0A15C1F000C8;
+	Mon, 16 Nov 2026 03:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1794800608;
-	bh=diVBD2VkmpnO19+y6uxOj++Hyp7pmtKu+pacPLZU/Cw=;
-	h=From:Subject:Date:To:Cc:Reply-To;
-	b=El4XI0+H4/0Z2fOo71sLC1cwiWfp6vvT1EJhuzMaNu/nuxBnCWldn8yuertPCaqc4
-	 w1HeWKqEeVr3JtuIIXPKVmxfnUXwsMgdrV4YUPrbSoKz3Ki6E2QWGwBJKuvD+cMst4
-	 EFr1N/W+yfXuB+3eMcTfPJZn0NsEAWeHXqFx3ftYhs9vTTVc2+zSXfvwkvsz4z+pfl
-	 3H9HUzR9i+626z9To7C6j2/eKg/wwbbT8ICx9aA7ZOmf8r6IIAOQlTWQYZRhGYLzpT
-	 NhEc1Ae2rNcO47noegqJL8Wu3SErIEFjIYUh/Cgdx3I/R6mPtkIJEMQjQ+bObffrl7
-	 K+DkgRzq+S8qg==
+	bh=rervMkY6uXEE2jYUjmiiBu1ppctPzt4btsrENqQbJxk=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
+	b=GQmJEaD1jCIVNjTCHt9knWfJNnogxkt5h0vusf8Thl3g2heLg3VdKJJSzRHv4K92m
+	 qhkwJiXcjt7TQkTggFIcCM5AWaHYq6zN1rVLM6LpMU3aQP5kSLN4NIvyM9iwxDSNo1
+	 iRtFJ7LabnUaxWAaImSQQiow45VzlwfEEeWJJv+UmeS6hcYRM6IfFirT3YXD+yCgfQ
+	 vsTjgpCVB/Cqi3aU9WaBqwwiKnjIGJJ9Xxi6PfOLp1TkVul46HSlUN1YbPkx/Da20M
+	 ftckA/muI5zoVvXRfVpRXc8LPN5timIbB1Bnr7sClYX7IzTUVjKqQik+6jL317vsPw
+	 DYpoF4S9eyfng==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 3EACE4A2F7;
+	by lkml.kernel.org (Postfix) with ESMTP id 8A5CA4A2FF;
 	Mon, 16 Nov 2026 03:43:26 +0000 (UTC)
 From: "Jeff C. Jensen via B4 Relay" <devnull+kernel.nullptr.com@kernel.org>
-Subject: [PATCH v2 0/3] dmaengine: xilinx_dma: Fix AXI DMA descriptor ring
- ordering
-Date: Sun, 15 Nov 2026 19:43:03 -0800
-Message-Id: <20261115-xilinx-dma-work-v2-0-681ed00c15a1@nullptr.com>
+Date: Sun, 15 Nov 2026 19:43:06 -0800
+Subject: [PATCH v2 3/3] dmaengine: xilinx_dma: Allocate AXI DMA segments in
+ ring order
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -85,11 +84,9 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMd7+moC/3WNwQ6CMBBEf4X0bLXdqBBP/ofhUOgWNkJLtogYw
- r9b8OzxZebNLCIiE0ZxyxbBOFGk4BPAIRN1a3yDkmxiAQquWgHImTrys7S9ke/AT3l24IzNi9z
- qi0jWwOho3hcfZeLKRJQVG1+3205gasiffpUUtxTHwJ/9f9Kb9P9q0lJJUM6gAcxNoe7+1XXDy
- Mc69KJc1/ULbWVOS88AAAA=
+Message-Id: <20261115-xilinx-dma-work-v2-3-681ed00c15a1@nullptr.com>
+References: <20261115-xilinx-dma-work-v2-0-681ed00c15a1@nullptr.com>
+In-Reply-To: <20261115-xilinx-dma-work-v2-0-681ed00c15a1@nullptr.com>
 To: Vinod Koul <vkoul@kernel.org>, dmaengine@vger.kernel.org
 Cc: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>, 
  Suraj Gupta <suraj.gupta2@amd.com>, 
@@ -100,123 +97,589 @@ Cc: Frank Li <Frank.Li@kernel.org>, Michal Simek <michal.simek@amd.com>,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
  "Jeff C. Jensen" <kernel@nullptr.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4922; i=kernel@nullptr.com;
- s=openpgp-2026; h=from:subject:message-id;
- bh=WTb0MFnOjuP6hNkB2z/k2TJHSECjZrXnGDk81ZRc60c=;
- b=owGbwMvMwCV2439B4wpuQQ7G02pJDFm/qu9KRV5e3PbCd0H5Jr1lqsfdtHZF+ZzzSfCYJyx1S
- enIK37pjlIWBjEuBlkxRZbjx6btzLf1ryuqvl8FM4eVCWQIAxenAEzk3keG3ywSPy3Zzx5im7f+
- sT37idld33qebLrUM8my4Hy46ucXdS0MfwWVnl+4FZ26OXLt3DvCtSVnHWbxzjhV22G7cL3T586
- GudwA
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19104;
+ i=kernel@nullptr.com; s=openpgp-2026; h=from:subject:message-id;
+ bh=m3MSwnN7n5V5nsqLV1LOEDlZq897SmEETuZEeASAHW0=;
+ b=owGbwMvMwCV2439B4wpuQQ7G02pJDFm/qu/ePDHf0VmmMPia1NSvyXM3xLVEGN/8c087Tefap
+ Hspr9v3d5SyMIhxMciKKbIcPzZtZ76tf11R9f0qmDmsTCBDGLg4BWAiR68x/K8uXrN8l7xyoIeE
+ f8dGq+T/wRNOBbUlzzjpv+37rLXMeY8Z/srNLSnROVDgZLO74nXuNf2lDIEyyZ9jPpxVvvx3Ytc
+ XFhYA
 X-Developer-Key: i=kernel@nullptr.com; a=openpgp;
  fpr=C7C696B96F3D4F7E727BDF7AD8FF7081A80B1108
 X-Endpoint-Received: by B4 Relay for kernel@nullptr.com/openpgp-2026 with
  auth_id=1265
 X-Original-From: "Jeff C. Jensen" <kernel@nullptr.com>
 Reply-To: kernel@nullptr.com
+Content-Transfer-Encoding: 7bit
 
-This series fixes descriptor handling problems in the AXI DMA driver
-that I ran into while streaming from programmable logic into a single
-S2MM channel on a Zynq-7020.
+From: "Jeff C. Jensen" <kernel@nullptr.com>
 
-Patches 1 and 2 are small fixes to the preparation paths. A transfer
-whose entries are all zero length built a descriptor with no segments,
-and the cyclic period count could be truncated on 64-bit builds.
+The AXI DMA driver builds a static ring of hardware descriptors
+(segments) when the channel is allocated, each linked to the next in
+pool order, and the engine follows those links.
+xilinx_dma_prep_slave_sg() writes no next pointers within a descriptor,
+and a descriptor appended while the engine is running is reached through
+the next pointer of the previous tail. Segments are handed out from
+free_seg_list, so this only works while the free list stays in pool
+order.
 
-Patch 3 is the main change. The driver hands out segments from a free
-list, while the engine follows the descriptor ring in pool order, so the
-two must stay in step. Commit cee9c863ee68 fixed one way they drift
-apart. The Sashiko review of that commit [1] pointed out three more, and
-patch 3 removes them all by allocating consecutive ring positions
-instead of free list entries.
+Commit cee9c863ee68 ("dmaengine: xilinx_dma: Fix hardware buffer
+descriptor reuse order") fixed one way the free list falls out of that
+order. As the Sashiko review of that patch pointed out [1], others
+remain:
 
-The series is based on v7.4-rc1, the dmaengine fixes branch at
-6628e7d4c6b2, and builds on cee9c863ee68 and 7ed1e3070c9b.
+ - xilinx_dma_chan_desc_cleanup() drops chan->lock while it runs a
+   completion callback, and frees the descriptor afterwards. If the
+   channel is terminated in that window, the newer segments are returned
+   first and the oldest descriptor's segments end up at the tail of the
+   free list.
 
-Testing
-=======
+ - A preparation that runs out of segments returns its partial
+   allocation to the tail of the free list, possibly after a completion
+   on another CPU has freed newer ones. It does so without taking
+   chan->lock, so it can also corrupt the list.
 
-Every patch builds for arm (multi_v7_defconfig) and arm64 (defconfig),
-with the driver built in and as a module, with W=1 and sparse, and
-passes checkpatch --strict. I tested the series on hardware as a
-backport to the AMD vendor kernel, described below; the patches as
-posted, against v7.4-rc1, are build-tested only.
+ - A submission rejected because a cyclic transfer is running frees its
+   segments while older ones are still in use.
 
-The backport ran on the AMD 6.12.40 vendor kernel together with
-aa99c4d1d63b, cee9c863ee68 and 7ed1e3070c9b, and with 38433a6fdfb7 so
-that the patches apply as posted, on a Zynq-7020 with one AXI DMA v7.1
-S2MM channel: scatter-gather, 32-bit, no DRE and the 512-segment pool.
-No client in these tests uses the dma_vec path, and the vendor kernel
-lacks 607869003479, so the dma_vec path and the transfer chaining that
-commit adds are build-tested only with these changes.
+Once the free list and the ring disagree, a later descriptor gets
+segments that are not adjacent in the ring, and the engine follows a
+next pointer into a cleaned segment with a zero length field. With a
+delay added to widen the first window, a receive stream fails right
+after a terminate:
 
- - A test client streamed 640128-byte packets at 80 per second from a
-   pattern generator, refilled the channel from the completion callback
-   and from a thread on the other CPU, and checked every sample. Two 60
-   s runs passed, each running out of segments about 15000 times. Cases
-   for pool capacity, a zero-length scatterlist, the buffer-length
-   boundary and cyclic followed by slave-sg also passed.
+  xilinx-vdma 40400000.dma: Channel 7a90d35b has errors 10, cdr 3f053780 tdr 3f059a00
 
- - Our production client streamed nine sessions, more than 160000
-   packets, with every sample checked on the receiving host.
+Rather than keeping the free list in order on every path, allocate by
+ring position. Count the segments a transaction needs, then reserve that
+many consecutive positions, starting at a cursor, under chan->lock: all
+of them or none. A bitmap tracks the positions in use. Allocation no
+longer depends on the order in which segments are freed, so neither the
+terminate path nor the completion path can disturb it. The count uses
+xilinx_dma_calc_copysize(), like the preparation loops, so the two
+always agree.
 
-To reproduce what patch 3 fixes: without the series, the test client ran
-for 10 minutes without an error, both on the vendor kernel with the
-three backports and on the vendor kernel with aa99c4d1d63b alone. The
-windows are small, so I added a test-only 500 us busy-wait between the
-completion callback and the free in xilinx_dma_chan_desc_cleanup(). The
-test client terminates the channel once at the start of each run while
-packets keep arriving. On the vendor kernel with the backports, all
-three 20 s runs failed, one with a DMA internal error and two with the
-channel stalled. With patches 1-3 added, the same three runs passed, and
-so did one with a 2000 us busy-wait. I could not reproduce the
-partial-preparation case: the test client serializes its preparations
-against its own callback, which leaves that window open only between the
-callback and the free.
+The slave-sg, cyclic and dma_vec paths all count and reserve before
+building a descriptor, so a failed preparation leaves the channel
+unchanged. A submission rejected on a busy cyclic channel cancels its
+reservation and rewinds the cursor under the same lock.
 
-Not tested: MM2S, two-channel controllers, CDMA, VDMA and MCDMA.
+This relies on commit 7ed1e3070c9b ("dmaengine: xilinx_dma: Fix hardware
+buffer descriptor chain after cyclic DMA") to restore the segment links
+after a cyclic transfer. The AXI MCDMA pool keeps its free list and is
+not changed.
 
-Known limitations
-=================
-
- - The AXI MCDMA pool keeps its free list, so the terminate and
-   partial-preparation problems remain there. My design does not use AXI
-   MCDMA, and I did not test it. Extending the reservation to MCDMA
-   would be possible future work.
-
- - The other two issues in the Sashiko review, the chan->terminating
-   race with submit and dma_run_dependencies() under chan->lock, are not
-   addressed here.
-
-This series was developed with the help of Claude Code, an LLM coding
-assistant; I reviewed all of the code and text.
-
-[1] https://lore.kernel.org/all/20260817094004.A74621F000E9@smtp.kernel.org/
-
+Link: https://lore.kernel.org/all/20260817094004.A74621F000E9@smtp.kernel.org/ [1]
+Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
+Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
+Fixes: 92d794dfb699 ("dmaengine: vdma: Add support for cyclic dma mode")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Jeff C. Jensen <kernel@nullptr.com>
 ---
-Changes in v2:
-- Drop patch 4, which withheld an engine whose reset did not complete,
-  and RFC patch 5, which recovered it: a reset timeout most likely
-  means a hardware fault (Frank Li)
-- Rebase onto v7.4-rc1 and collect Reviewed-by tags; patches 1-3 are
-  otherwise unchanged
-- Drop the Assisted-by tags after 1e035297ffda ("docs: remove
-  Assisted-by references"); the cover letter states the tool use
-- Link to v1: https://lore.kernel.org/r/20261022-xilinx-dma-work-v1-0-20faea2e7a80@nullptr.com
+ drivers/dma/xilinx/xilinx_dma.c | 279 ++++++++++++++++++++++++++++++++--------
+ 1 file changed, 224 insertions(+), 55 deletions(-)
 
----
-Jeff C. Jensen (3):
-      dmaengine: xilinx_dma: Reject transfers that map no data
-      dmaengine: xilinx_dma: Fix cyclic period count truncation
-      dmaengine: xilinx_dma: Allocate AXI DMA segments in ring order
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index ba4fa1aafc50..69f61ba1652b 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -33,6 +33,7 @@
+  *
+  */
+ 
++#include <linux/bitmap.h>
+ #include <linux/bitops.h>
+ #include <linux/dmapool.h>
+ #include <linux/dma/xilinx_dma.h>
+@@ -400,7 +401,9 @@ struct xilinx_dma_tx_descriptor {
+  * @pending_list: Descriptors waiting
+  * @active_list: Descriptors ready to submit
+  * @done_list: Complete descriptors
+- * @free_seg_list: Free descriptors
++ * @free_seg_list: Free AXI MCDMA descriptors
++ * @seg_used: AXI DMA segments in use, indexed by ring position
++ * @seg_next: Ring position the next AXI DMA reservation starts at
+  * @common: DMA common channel
+  * @desc_pool: Descriptors pool
+  * @dev: The dma device
+@@ -440,6 +443,8 @@ struct xilinx_dma_chan {
+ 	struct list_head active_list;
+ 	struct list_head done_list;
+ 	struct list_head free_seg_list;
++	DECLARE_BITMAP(seg_used, XILINX_DMA_NUM_DESCS);
++	u32 seg_next;
+ 	struct dma_chan common;
+ 	struct dma_pool *desc_pool;
+ 	struct device *dev;
+@@ -750,30 +755,53 @@ xilinx_cdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
+ }
+ 
+ /**
+- * xilinx_axidma_alloc_tx_segment - Allocate transaction segment
++ * xilinx_axidma_reserve_segments - Reserve a run of AXI DMA segments
+  * @chan: Driver specific DMA channel
++ * @count: Segments needed, at most XILINX_DMA_NUM_DESCS
++ * @start: Ring position of the first reserved segment, set on success
+  *
+- * Return: The allocated segment on success and NULL on failure.
++ * Reserves @count consecutive ring positions starting at @chan->seg_next,
++ * wrapping at the pool end. The engine fetches descriptors in ring order, so
++ * the run cannot be placed anywhere else.
++ *
++ * Return: 0 on success, -ENOMEM when the run is not free. A failure leaves the
++ * ownership bitmap and @chan->seg_next unchanged.
+  */
+-static struct xilinx_axidma_tx_segment *
+-xilinx_axidma_alloc_tx_segment(struct xilinx_dma_chan *chan)
++static int xilinx_axidma_reserve_segments(struct xilinx_dma_chan *chan,
++					  u32 count, u32 *start)
+ {
+-	struct xilinx_axidma_tx_segment *segment = NULL;
+ 	unsigned long flags;
++	int ret = -ENOMEM;
++	u32 i;
+ 
+ 	spin_lock_irqsave(&chan->lock, flags);
+-	if (!list_empty(&chan->free_seg_list)) {
+-		segment = list_first_entry(&chan->free_seg_list,
+-					   struct xilinx_axidma_tx_segment,
+-					   node);
+-		list_del(&segment->node);
++
++	for (i = 0; i < count; i++) {
++		if (test_bit((chan->seg_next + i) % XILINX_DMA_NUM_DESCS,
++			     chan->seg_used))
++			goto out;
+ 	}
++
++	*start = chan->seg_next;
++	for (i = 0; i < count; i++)
++		__set_bit((chan->seg_next + i) % XILINX_DMA_NUM_DESCS,
++			  chan->seg_used);
++	chan->seg_next = (chan->seg_next + count) % XILINX_DMA_NUM_DESCS;
++	ret = 0;
++
++out:
+ 	spin_unlock_irqrestore(&chan->lock, flags);
+ 
+-	if (!segment)
+-		dev_dbg(chan->dev, "Could not find free tx segment\n");
++	if (ret)
++		dev_dbg(chan->dev, "no run of %u free tx segments\n", count);
+ 
+-	return segment;
++	return ret;
++}
++
++static struct xilinx_axidma_tx_segment *
++xilinx_axidma_run_segment(struct xilinx_dma_chan *chan, u32 start, u32 i)
++{
++	return &chan->seg_v[(start + i) % XILINX_DMA_NUM_DESCS];
+ }
+ 
+ /**
+@@ -836,13 +864,18 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+  * xilinx_dma_free_tx_segment - Free transaction segment
+  * @chan: Driver specific DMA channel
+  * @segment: DMA transaction segment
++ *
++ * Called with chan->lock held, so no reservation sees the segment between its
++ * links being restored and its ownership being released.
+  */
+ static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
+ 				struct xilinx_axidma_tx_segment *segment)
+ {
++	lockdep_assert_held(&chan->lock);
++
+ 	xilinx_dma_clean_hw_desc(chan, segment);
+ 
+-	list_add_tail(&segment->node, &chan->free_seg_list);
++	__clear_bit(segment - chan->seg_v, chan->seg_used);
+ }
+ 
+ /**
+@@ -946,6 +979,34 @@ xilinx_dma_free_tx_descriptor(struct xilinx_dma_chan *chan,
+ 	kfree(desc);
+ }
+ 
++/**
++ * xilinx_dma_cancel_tx_descriptor - Discard a descriptor before submission
++ * @chan: Driver specific DMA channel
++ * @desc: Prepared descriptor
++ *
++ * Called with chan->lock held. On an AXI DMA channel, releases the reservation
++ * of @desc and rewinds @chan->seg_next to its first segment, so that no
++ * cleaned segment is left between two live descriptors. @desc must hold the
++ * most recent reservation on the channel.
++ */
++static void xilinx_dma_cancel_tx_descriptor(struct xilinx_dma_chan *chan,
++					    struct xilinx_dma_tx_descriptor *desc)
++{
++	struct xilinx_axidma_tx_segment *first;
++
++	lockdep_assert_held(&chan->lock);
++
++	if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
++		first = list_first_entry_or_null(&desc->segments,
++						 struct xilinx_axidma_tx_segment,
++						 node);
++		if (first)
++			chan->seg_next = first - chan->seg_v;
++	}
++
++	xilinx_dma_free_tx_descriptor(chan, desc);
++}
++
+ /* Required functions */
+ 
+ /**
+@@ -995,10 +1056,6 @@ static void xilinx_dma_free_chan_resources(struct dma_chan *dchan)
+ 	xilinx_dma_free_descriptors(chan);
+ 
+ 	if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
+-		spin_lock_irqsave(&chan->lock, flags);
+-		INIT_LIST_HEAD(&chan->free_seg_list);
+-		spin_unlock_irqrestore(&chan->lock, flags);
+-
+ 		/* Free memory that is allocated for BD */
+ 		dma_free_coherent(chan->dev, sizeof(*chan->seg_v) *
+ 				  XILINX_DMA_NUM_DESCS, chan->seg_v,
+@@ -1241,9 +1298,9 @@ static int xilinx_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 				((i + 1) % XILINX_DMA_NUM_DESCS));
+ 			chan->seg_v[i].phys = chan->seg_p +
+ 				sizeof(*chan->seg_v) * i;
+-			list_add_tail(&chan->seg_v[i].node,
+-				      &chan->free_seg_list);
+ 		}
++		bitmap_zero(chan->seg_used, XILINX_DMA_NUM_DESCS);
++		chan->seg_next = 0;
+ 	} else if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
+ 		/* Allocate the buffer descriptors. */
+ 		chan->seg_mv = dma_alloc_coherent(chan->dev,
+@@ -1328,6 +1385,98 @@ static int xilinx_dma_calc_copysize(struct xilinx_dma_chan *chan,
+ 	return copy;
+ }
+ 
++/**
++ * xilinx_axidma_count_split - Count the descriptors a length splits into
++ * @chan: Driver specific DMA channel
++ * @len: Length in bytes
++ *
++ * Splits @len with xilinx_dma_calc_copysize(), so the count equals the number
++ * of segments a preparation builds for @len. Intermediate chunks are rounded
++ * down for alignment, so the count depends on the channel alignment as well as
++ * on @len.
++ *
++ * Return: The descriptor count, which is zero for a zero length, or -EINVAL if
++ * a split makes no progress or @len needs more descriptors than the pool holds.
++ */
++static int xilinx_axidma_count_split(struct xilinx_dma_chan *chan, size_t len)
++{
++	size_t used = 0;
++	int count = 0;
++
++	while (used < len) {
++		size_t copy = xilinx_dma_calc_copysize(chan, len, used);
++
++		if (!copy || count == XILINX_DMA_NUM_DESCS)
++			return -EINVAL;
++
++		used += copy;
++		count++;
++	}
++
++	return count;
++}
++
++/**
++ * xilinx_axidma_count_sg - Count the descriptors a mapped scatterlist needs
++ * @chan: Driver specific DMA channel
++ * @sgl: Mapped scatterlist
++ * @sg_len: Number of mapped entries in @sgl
++ *
++ * Return: The descriptor count, or -EINVAL if the list splits into no
++ * descriptors at all or into more than the pool holds.
++ */
++static int xilinx_axidma_count_sg(struct xilinx_dma_chan *chan,
++				  struct scatterlist *sgl, unsigned int sg_len)
++{
++	struct scatterlist *sg;
++	unsigned int i;
++	int total = 0;
++
++	for_each_sg(sgl, sg, sg_len, i) {
++		int count = xilinx_axidma_count_split(chan, sg_dma_len(sg));
++
++		if (count < 0 || count > XILINX_DMA_NUM_DESCS - total)
++			return -EINVAL;
++
++		total += count;
++	}
++
++	if (!total)
++		return -EINVAL;
++
++	return total;
++}
++
++/**
++ * xilinx_axidma_count_vecs - Count the descriptors an array of DMA vectors needs
++ * @chan: Driver specific DMA channel
++ * @vecs: DMA vectors
++ * @nb: Entry count
++ *
++ * Return: The descriptor count, or -EINVAL if the vectors split into no
++ * descriptors at all or into more than the pool holds.
++ */
++static int xilinx_axidma_count_vecs(struct xilinx_dma_chan *chan,
++				    const struct dma_vec *vecs, size_t nb)
++{
++	size_t i;
++	int total = 0;
++
++	for (i = 0; i < nb; i++) {
++		int count = xilinx_axidma_count_split(chan, vecs[i].len);
++
++		if (count < 0 || count > XILINX_DMA_NUM_DESCS - total)
++			return -EINVAL;
++
++		total += count;
++	}
++
++	if (!total)
++		return -EINVAL;
++
++	return total;
++}
++
+ /**
+  * xilinx_dma_tx_status - Get DMA transaction status
+  * @dchan: DMA channel
+@@ -2107,6 +2256,10 @@ static void append_desc_queue(struct xilinx_dma_chan *chan,
+  * xilinx_dma_tx_submit - Submit DMA transaction
+  * @tx: Async transaction descriptor
+  *
++ * An AXI DMA channel reserves segment runs in ring order, so a transaction must
++ * be submitted, or its rejection handled, before the next one is prepared on
++ * the same channel.
++ *
+  * Return: cookie value on success and failure value on error
+  */
+ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+@@ -2117,8 +2270,11 @@ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 	unsigned long flags;
+ 	int err;
+ 
++	spin_lock_irqsave(&chan->lock, flags);
++
+ 	if (chan->cyclic) {
+-		xilinx_dma_free_tx_descriptor(chan, desc);
++		xilinx_dma_cancel_tx_descriptor(chan, desc);
++		spin_unlock_irqrestore(&chan->lock, flags);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -2127,13 +2283,13 @@ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 		 * If reset fails, need to hard reset the system.
+ 		 * Channel is no longer functional
+ 		 */
++		spin_unlock_irqrestore(&chan->lock, flags);
+ 		err = xilinx_dma_chan_reset(chan);
+ 		if (err < 0)
+ 			return err;
++		spin_lock_irqsave(&chan->lock, flags);
+ 	}
+ 
+-	spin_lock_irqsave(&chan->lock, flags);
+-
+ 	cookie = dma_cookie_assign(tx);
+ 
+ 	/* Put this transaction onto the tail of the pending queue */
+@@ -2311,15 +2467,26 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
+ 	struct xilinx_axidma_tx_segment *segment, *head, *prev = NULL;
+ 	size_t copy;
+ 	size_t sg_used;
++	u32 start = 0, taken = 0;
+ 	unsigned int i;
++	int needed;
+ 
+ 	if (!is_slave_direction(direction) || direction != chan->direction)
+ 		return NULL;
+ 
++	needed = xilinx_axidma_count_vecs(chan, vecs, nb);
++	if (needed < 0)
++		return NULL;
++
+ 	desc = xilinx_dma_alloc_tx_descriptor(chan);
+ 	if (!desc)
+ 		return NULL;
+ 
++	if (xilinx_axidma_reserve_segments(chan, needed, &start)) {
++		xilinx_dma_free_tx_descriptor(chan, desc);
++		return NULL;
++	}
++
+ 	dma_async_tx_descriptor_init(&desc->async_tx, &chan->common);
+ 	desc->async_tx.tx_submit = xilinx_dma_tx_submit;
+ 
+@@ -2331,10 +2498,8 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
+ 		while (sg_used < vecs[i].len) {
+ 			struct xilinx_axidma_desc_hw *hw;
+ 
+-			/* Get a free segment */
+-			segment = xilinx_axidma_alloc_tx_segment(chan);
+-			if (!segment)
+-				goto error;
++			segment = xilinx_axidma_run_segment(chan, start,
++							    taken++);
+ 
+ 			/*
+ 			 * Calculate the maximum number of bytes to transfer,
+@@ -2362,9 +2527,6 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
+ 		}
+ 	}
+ 
+-	if (list_empty(&desc->segments))
+-		goto error;
+-
+ 	head = list_first_entry(&desc->segments, struct xilinx_axidma_tx_segment, node);
+ 	desc->async_tx.phys = head->phys;
+ 
+@@ -2381,10 +2543,6 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_peripheral_dma_vec(
+ 		desc->async_tx.metadata_ops = &xilinx_dma_metadata_ops;
+ 
+ 	return &desc->async_tx;
+-
+-error:
+-	xilinx_dma_free_tx_descriptor(chan, desc);
+-	return NULL;
+ }
+ 
+ /**
+@@ -2410,16 +2568,28 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
+ 	struct scatterlist *sg;
+ 	size_t copy;
+ 	size_t sg_used;
++	u32 start = 0, taken = 0;
+ 	unsigned int i;
++	int needed;
+ 
+ 	if (!is_slave_direction(direction))
+ 		return NULL;
+ 
++	/* reserve exactly the segments the loop below builds */
++	needed = xilinx_axidma_count_sg(chan, sgl, sg_len);
++	if (needed < 0)
++		return NULL;
++
+ 	/* Allocate a transaction descriptor. */
+ 	desc = xilinx_dma_alloc_tx_descriptor(chan);
+ 	if (!desc)
+ 		return NULL;
+ 
++	if (xilinx_axidma_reserve_segments(chan, needed, &start)) {
++		xilinx_dma_free_tx_descriptor(chan, desc);
++		return NULL;
++	}
++
+ 	dma_async_tx_descriptor_init(&desc->async_tx, &chan->common);
+ 	desc->async_tx.tx_submit = xilinx_dma_tx_submit;
+ 
+@@ -2431,10 +2601,8 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
+ 		while (sg_used < sg_dma_len(sg)) {
+ 			struct xilinx_axidma_desc_hw *hw;
+ 
+-			/* Get a free segment */
+-			segment = xilinx_axidma_alloc_tx_segment(chan);
+-			if (!segment)
+-				goto error;
++			segment = xilinx_axidma_run_segment(chan, start,
++							    taken++);
+ 
+ 			/*
+ 			 * Calculate the maximum number of bytes to transfer,
+@@ -2466,9 +2634,6 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
+ 		}
+ 	}
+ 
+-	if (list_empty(&desc->segments))
+-		goto error;
+-
+ 	segment = list_first_entry(&desc->segments,
+ 				   struct xilinx_axidma_tx_segment, node);
+ 	desc->async_tx.phys = segment->phys;
+@@ -2486,10 +2651,6 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_slave_sg(
+ 		desc->async_tx.metadata_ops = &xilinx_dma_metadata_ops;
+ 
+ 	return &desc->async_tx;
+-
+-error:
+-	xilinx_dma_free_tx_descriptor(chan, desc);
+-	return NULL;
+ }
+ 
+ /**
+@@ -2513,7 +2674,8 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_dma_cyclic(
+ 	struct xilinx_axidma_tx_segment *segment, *head_segment, *prev = NULL;
+ 	size_t copy, sg_used, periods;
+ 	unsigned int num_periods;
+-	int i;
++	u32 start = 0, taken = 0;
++	int i, per_period;
+ 	u32 reg;
+ 
+ 	if (!period_len)
+@@ -2528,11 +2690,24 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_dma_cyclic(
+ 	if (!is_slave_direction(direction))
+ 		return NULL;
+ 
++	/* the division bounds per_period * num_periods without overflow */
++	per_period = xilinx_axidma_count_split(chan, period_len);
++	if (per_period <= 0)
++		return NULL;
++	if ((u32)per_period > XILINX_DMA_NUM_DESCS / num_periods)
++		return NULL;
++
+ 	/* Allocate a transaction descriptor. */
+ 	desc = xilinx_dma_alloc_tx_descriptor(chan);
+ 	if (!desc)
+ 		return NULL;
+ 
++	if (xilinx_axidma_reserve_segments(chan, per_period * num_periods,
++					   &start)) {
++		xilinx_dma_free_tx_descriptor(chan, desc);
++		return NULL;
++	}
++
+ 	chan->direction = direction;
+ 	dma_async_tx_descriptor_init(&desc->async_tx, &chan->common);
+ 	desc->async_tx.tx_submit = xilinx_dma_tx_submit;
+@@ -2543,10 +2718,8 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_dma_cyclic(
+ 		while (sg_used < period_len) {
+ 			struct xilinx_axidma_desc_hw *hw;
+ 
+-			/* Get a free segment */
+-			segment = xilinx_axidma_alloc_tx_segment(chan);
+-			if (!segment)
+-				goto error;
++			segment = xilinx_axidma_run_segment(chan, start,
++							    taken++);
+ 
+ 			/*
+ 			 * Calculate the maximum number of bytes to transfer,
+@@ -2594,10 +2767,6 @@ static struct dma_async_tx_descriptor *xilinx_dma_prep_dma_cyclic(
+ 	}
+ 
+ 	return &desc->async_tx;
+-
+-error:
+-	xilinx_dma_free_tx_descriptor(chan, desc);
+-	return NULL;
+ }
+ 
+ /**
 
- drivers/dma/xilinx/xilinx_dma.c | 285 ++++++++++++++++++++++++++++++++--------
- 1 file changed, 232 insertions(+), 53 deletions(-)
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20261022-xilinx-dma-work-4f2fad787d15
-
-Best regards,
 -- 
-Jeff C. Jensen <kernel@nullptr.com>
+2.43.0
 
 
