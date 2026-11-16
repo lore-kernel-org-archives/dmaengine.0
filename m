@@ -1,83 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.14
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794845691;
-	b=A6V6Daw8avH3ZJ25Oqdbt54hJZlCNDad3v2Jt7ZPSYuyxPEwgSC6/K8k/JojV2NwVEjl
-	 Irp+n+jq/hBY3H2PXuxftGsZkOZ145gmqgSR7UiXrylJlp0Y2+DSotQd6jJ4kjILWx638
-	 cU0nVAsOtEanmTuBR8o+O51GwvgG2IhFZdKYVAyE7f2z67sGQuCkvyAbcrpaUfGke+J9w
-	 JoX72wUirNkrDlh7F7fhyLKU590+bu9vi6SMoEzXuYlNzP0omIqnugxzP3banqh/hmHnW
-	 OPW7H8okMRujxAANXO1kDdXZM+blTjeGVmEpwKVnlNXPAwXO/lUsju7GLR1Mcf+0sCw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794845691;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization;
-	bh=N7wQpVQ+bTcbptKNuYSOq1g/ZGresd4OfMg6HHxOoag=;
-	b=RX8QLb9pWMvQm0PAgPUaNZ3HJYdfH89kxUh/hXkLKKo98wOGTcmRmam4NZx5OhkJv7UE
-	 8ZdWE6PJSt8fjnpH07aC8jCBDR6e9rDXnLh5jHokWg9vuNmqrIQt4SXT2lRXaCMuz+8is
-	 RFWQYr9yIj4qcBaNASyhjQSaSa271z3wh4cCYGB2f4NwPqxdlHgSySWDZZhW6DK4pOnW2
-	 NIg7GKng1j7jECQ4gDGD+sxr6PKyujtpShIfmt8sZ/SqKKQjEA1CUWGkFQIlukhgduyWJ
-	 UnUYVDUMgdYiXwTSVuapsylBpCbutK38OXt7ZXNoB9kLqdhTGWHB2KMYDLyvk3jw+Ew==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="EW4/4GAX";
-	arc=none smtp.remote-ip=192.198.163.14
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.7
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794848159;
+	b=pJQCmmsHsJkah6j0S5NxPMmLYAqzimCOixa+Pr1KV0LkzVtgMJQDvhSXSLF4DWoJNkf9
+	 0epinkDsQRSUeFp5GicJZveuhg74T2hCuNFxpc4Bf6MUqGGLRsJWR6zClT8By2HhD3tK0
+	 JG4b3oHbgtI1Q/uhfYVkdOa/xpuATdCFPtkk51SxW2n5tr7mqIo9snXm+BVvWSfn0pXys
+	 KegjaH4Wzo5Ox3jz2AH1mTT8SkCGs0bp80w1amflcq7E1Bd/y2zCDSTo6MYgxluWFuY5W
+	 oig6+yINscP61tvyd2cV/lhV/Mmprn4aO9NcrnJ3JR+UhmnJhRPdyVkg7nqQo6uKFsw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794848159;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=b5jmQ+tC0YavRr54vIVtQOf5BBZ6aEk4FcFpuCpy7PQ=;
+	b=yeXNpVNOvqKEL67iTUw+DxBnljmOh1bXK4NA5Tv4rfuqvsNSDYHGHSYMCCD/nuySd+/t
+	 N94kllF3hXYbnngeBp5slDsOjw+UN9YLlGRlIv7OSErDRkCvZiTeP8u0oEZ67KQXUNbrR
+	 NyBUIGBsAcs58qlU4BvL6Fjor3UeB+K+ikKo5p+nsnO0BmbZtsqWt9uPbKcC2rk5rfAvR
+	 ZMbbDqQYZyZ89hPSDBgj3WSZnCDtlLevi8dFp76UtIILeB3SKrSIYdkMmjT7aCbTZELKx
+	 eOF7n5E2E88CK46Ov9/R8CL4ZbkjegNJRVHOcfXawRRPVfv/c7rYQbUcrOM1wPjH+6g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Q4A7PA8H;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.7
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010007.outbound.protection.outlook.com [52.101.69.7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD2D606A322;
-	Mon, 16 Nov 2026 16:14:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BD2D606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B317606A32A;
+	Mon, 16 Nov 2026 16:55:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B317606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EW4/4GAX
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794845692; x=1826381692;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2qWksjfKSQubdHdo66uJX986+dh3EH0BJB8sxwmWIKc=;
-  b=EW4/4GAXaSvLd8buqlvrcAdPkO0blXK9jSlG9ZhlMbOv3IgRzoUpmCl3
-   6J0qPwEUCoE4YICX2PI6lYMDgrltkOFV4ZQdfiTRGaMVlUKOa6k7itPLG
-   7dmmZtl3PontzT7DObsjx4EkeMcUXaoC2SeCzao0yW907IV7uduEU2JYu
-   ZXWS05FMPoOxw4ytVDi9TWfUcgg+EicRcw2fugAKuD+GOAwFayLGep/DM
-   Og4hKXCAKW5XTx1AUenFYhY+DsbWmeN2PXBS4Ko2j2U8WEqDgFjPGUknP
-   7RliuWXT0HWlS5uZaEyFwLVqu0+QKEVPIEuTawvtzCFl4zBG1qEEacmzS
-   g==;
-X-CSE-ConnectionGUID: 4eNOjWQLQA6VSJu3JluYww==
-X-CSE-MsgGUID: 0ZAjSXMDST+CsYdJXgtU5Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11968"; a="3479439"
-X-IronPort-AV: E=Sophos;i="6.27,217,1787036400"; 
-   d="scan'208";a="3479439"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 08:14:51 -0800
-X-CSE-ConnectionGUID: 4FKOGO9wT5yTDyoPEq7VnA==
-X-CSE-MsgGUID: 5f7Ksyp+Q8mrRdhLO+8XeQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,217,1787036400"; 
-   d="scan'208";a="9990259"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.90])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2026 08:14:47 -0800
-Date: Mon, 16 Nov 2026 18:14:45 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: Viresh Kumar <vireshk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Dan Williams <djbw@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	dmaengine@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>, stable@vger.kernel.org
-Subject: Re: [PATCH v8 5/6] dmaengine: dw: calculate residue in the status
- getter
-Message-ID: <avsr9Xy9WR-C7VzD@ashevche-desk.local>
-References: <20261116-submit-dw-dma-synchronize-v1-v8-0-4a82d64fcd1a@gmail.com>
- <20261116-submit-dw-dma-synchronize-v1-v8-5-4a82d64fcd1a@gmail.com>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Q4A7PA8H
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RhO0wnRNJ3sDlFUG3wKMIMUlZivkMRvjmWXQyOKYJ4ibcaiFXYUq/3nm5Q75eeGeLsFg+jg2A1CvKt7GCtH6flpVo/bcbGXRhFSCDcn3STyzpbU2ef4Ctpux7fAqPt60itePriGeDPQe0Am7uVWAp3pOMcpTLQ1mBCR2wCdho173Eo1H2aWtxLXSubUw8p2T4rD6kulnueaX2j04jWOk8QJYrxa3VQx83UdPUIW5GxfBJhqdEBiGkyLtpLE9iDpTZyyjb0YK3fEAA9+vrnB/7sU5KiklZY63WDTcVf5fhNEaOIWvhMSp19jMkY1BH0UVZq7DpyDffj/5DpYenLr7gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=b5jmQ+tC0YavRr54vIVtQOf5BBZ6aEk4FcFpuCpy7PQ=;
+ b=tXSFoRJlqBhUBuORwj0fLXeh743Snzp8UZomoe/yqRo0iq83GxIw/0qsRXWbpSuABBDVeC4ltYmpHPs6Z0j3eqVMtpu6WL6Z3TKB+xRIQBIK9RUcgceqtyjaaciY3P3DUBJp3VXsidF6OqfNwflK9AnDfJXC06LmjJcnjxZzgRNBlT9wSRB8NSe2sHK7P+l+f6W3VZ6qqZUoiXJR0LD3pN2MrEv6kDQbUt+WEC8xBRFSY8wURCvkP+CzRNjs6+NBNVJ/1f9NaUsgeMj89ytWTzlAFOkixu3xrvkCgNe08mHGtAsV2hlZGN4WACW3aTwKbcoLScSt4Od83dXJPzpWGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b5jmQ+tC0YavRr54vIVtQOf5BBZ6aEk4FcFpuCpy7PQ=;
+ b=Q4A7PA8HR/071GfIxTnB3Clh5NpgF/ZOlAtE8XmP+Z7ueY7SyE0YrqAQGUWAaWVcYsLa3J0FAZTf+fBvupbkKbR0sq5Dhh4LpPWq/3KH3EV+R4kyMfdFmwbfI0+pUn2JOwE1kHM0FO4gGoKSDfsq3ESW83yQErj8hXqPSq9qID4gYVsOmbel7e/NokXWldevgtXSzNhj7a0Ui0tshvgcPUlWmTu+S66SXGZA91rgtdx/lVanlXEyXZVi6hlN1lEWAnHcbO7SUYCMUTj4IK8bUQC1Z2J9Wv767vMvDhzhcmYRVQKC+mFe1J/BbSQZ5ASLPCAShbHH3LXTECOylkOeVQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by PAXPR04MB8349.eurprd04.prod.outlook.com (2603:10a6:102:1bd::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Mon, 16 Nov
+ 2026 16:55:55 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Mon, 16 Nov 2026
+ 16:55:55 +0000
+Date: Mon, 16 Nov 2026 10:55:42 -0600
+From: Frank Li <Frank.li@oss.nxp.com>
+To: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
+	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH v7 3/9] iommu: register the DMA channel bus for IOMMU
+ notifications
+Message-ID: <avs1jnMrYjHkQss3@SMW015318>
+References: <20261116-edma-iommu-v3-v7-0-32794ba8efbf@nxp.com>
+ <20261116-edma-iommu-v3-v7-3-32794ba8efbf@nxp.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261116-edma-iommu-v3-v7-3-32794ba8efbf@nxp.com>
+X-ClientProxiedBy: PH5P220CA0008.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:34a::6) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -87,53 +112,110 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261116-submit-dw-dma-synchronize-v1-v8-5-4a82d64fcd1a@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PAXPR04MB8349:EE_
+X-MS-Office365-Filtering-Correlation-Id: 119da20d-6b64-4518-0c92-08df44027a9d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|19092799006|376014|7416014|23010399003|366016|22082099003|18002099003|261009223027099003|4143699003|56012099006|11063799006|261102123227099003|261028144727099003|261026121527099003|261026140227099003|261022105027099003|261021121427099003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	lAS3hJTm0k+U9BC9qfaDDoOM5w4ciN0A1Gs4bh0RttiouLeDPk0QJWJrO+yvyGacHR/gaKyNWLELeyVRO/YAO7H1YBOiIAbVT00cd2riolj1W0b1RdZ0VkIwsFjGKy6cB52yIkRw+KlHpcHxMbA1S5472R+HT4M4VSPYwb7m6UcJ9Ml5Iqk6iq+uxXtMSNxWhosJPTNEHUrM49aNq8GRON+fbHW8zyEyXW6ICply4n6A0ksrylaJdKeUdtm/BUYwx0QZ9P/agvtkQZHKYcSv2fNoWF7/uPqTNluYet45p48zQJkadBCoCluHR5u1XbDjdhn+BMw5ZtcbKoQdHIqnjWOBYvxRY1BTkcZG28mp4LgDL9MvTSdlH2kL9G2jM+wMG1blfzwGz0WtVXG2Wr9LnHlxgYkWtzu3JWk1ONwYpFUg6EFfoCCbiy9mRdMJSWf3X2wpOoXYn5NCAM/MpGhPLqqCkHq45VuZZbcQyhGhpSvmgMEQpVLL/CLOvU39h3nYD2xjSX6+f2PrAy5LCkUsBpJxuSdCmP7XzuWuLr9EIexEY1ZCBhYonuIIjS1rcmlHEjUzm4qKBpL7D79Idb0/GUbcIQ59BYZgBIRmGVR8dLYZbKwmZZtOUjP4V9gHR7M5CdLHOD4/Ov928KzizmxnzucXhn/g9Rug9J2BTdmM0Xc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(376014)(7416014)(23010399003)(366016)(22082099003)(18002099003)(261009223027099003)(4143699003)(56012099006)(11063799006)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(261022105027099003)(261021121427099003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?JGgEbNQbgvQ81CtOmRcJ9ORJpgnTNh0aIpVwgSid8NerR1xuXR3e8hO1SRvA?=
+ =?us-ascii?Q?XfSeOdrS/q6IeEbv3NP2T3zx8LNtrf9mS6jArOQj/uD5LZImhFIYIHmpJBON?=
+ =?us-ascii?Q?JFdpg54DCiFHSmWe/yvplTA8RZ1RzjfNfuWLATbFckdohJxuM3lfSM3hTfPC?=
+ =?us-ascii?Q?DwwVJNaw5XSVy1/h3KTfOMofzahjfCJ/iemWgHcAQ6mPmggMRUQ/j/UDbk27?=
+ =?us-ascii?Q?ZbS38N21j18ClpEkWOpUdbv04aQut2HCPg+258bJi1tpyvzqaD0d4JeYS1i+?=
+ =?us-ascii?Q?2cDaKhli5DCv8Arn8j9WCyQ3j4ty5uYEXuorV9E7PsUFuf1130oBPkZoupKM?=
+ =?us-ascii?Q?zx8uQmV+0hy+FBVhOAKWpDOzkgJvpic6RPNq8Bd89RULgUw/VreaDijL9U1V?=
+ =?us-ascii?Q?AJHFhlzIzU2XqAHnvWdM2JRgZtXjke8kJl1ny/2RnkDA2Yzb/E/YW0lCB72h?=
+ =?us-ascii?Q?0dWqyMZcp6R6y3ydqM65m+RYAsRfHETFH8PbAj8e+nB4QEaqLg+dmN+uzAul?=
+ =?us-ascii?Q?AS8rcIMaxxGKJErBnT/+uCA793fvBf/MUhdqGTdJ6bwAQoGNnOB2Fw5CcZGv?=
+ =?us-ascii?Q?Vvh1jzdAAoJsHY31riC3ZMQu9BdGzs8NsOa1bU+8kOVTTLzTqPB4z7rX7OTi?=
+ =?us-ascii?Q?duNN3rOEf7ZVHz8fbbKSah2LYbqlN09x4T4Tiq9EAJ1Gk5G1QyBYmOCOVbA4?=
+ =?us-ascii?Q?t5ccvx4xZ9Lp4hm3nisJF5iPEnE96dLhywEftbj6dnTCID3txUuSUCFQ0ok3?=
+ =?us-ascii?Q?H3Ty4u4M6WaeANJpj7ZXwmfbQOpwmOiHXrIC7IvdMWgLA/jNwaEogGaRk0Al?=
+ =?us-ascii?Q?eLkU2iVQEQ3dsfta5gzRtvwodoruogw46qOhO76WXwmifwBdQd5Caduw59It?=
+ =?us-ascii?Q?9xFCn980v8rTMr3yS1U9HpmNCH41jBb9PNy/+hzgLB5Mv6RKWSLppDP5YD75?=
+ =?us-ascii?Q?qYcEZtO53gj67UGVzoVs138dS3SW+K+d6IydJUi4muRFM/ehPsp5mAz4w3c0?=
+ =?us-ascii?Q?CNHKV4WHXbAoiiVLbjAvuIpeh50EComq6QOaDnMuJ3zXySgqcCTzYUem/hkg?=
+ =?us-ascii?Q?UBh5Dj6LxbQWyH2fGtZXYC9kGJO8HxEeqJpIze34IrTf4oG7okO8Mubo/T8X?=
+ =?us-ascii?Q?Pqe8XusxSjtnfU0yc50w07ZBP5ZNpqgjDsMCOjPuLtzviixQCpgQ7+19zYZH?=
+ =?us-ascii?Q?AB/oIQWAIwRFu+vVuuSjfEiSA5DUc/XpcdTznD76RvprKxK3+lyceNPT2OBR?=
+ =?us-ascii?Q?U/jRoj0Y1Bvg///+EOJl8wKlLmxRE/BcVtCGm0zRAYVY23bgrP7oAuGTDH/p?=
+ =?us-ascii?Q?Sdvobiv/pOLUtO3AUU0HhwrgAnWNDUe3HRT1oArOFNhRFHqBTDcIN3ZS33R7?=
+ =?us-ascii?Q?RlFrNuSmeG6kltGMTSQYduKCdWnUBV4IZ+lkMf3f5gZyLbAJhB6ZiWqOHlHX?=
+ =?us-ascii?Q?EeydZjWgvgtAfZheLl5CkS7mf158Xk5AIiEURvGXkRFCne1PXleiZoQZCI2Z?=
+ =?us-ascii?Q?sQ8a9FRvOSdvG1Nue1VnLo4uP2ufi0wSWDHbZgPAI9F1C3FWV3fr/kWY6ef8?=
+ =?us-ascii?Q?3gvNNHpQJZQvy/QomcP4bXnWrnhsDyEClJcr5O1pJapjQ0/GFnmXjw9DJzUX?=
+ =?us-ascii?Q?5nfI1KkBUrL2mQs87Wx4Jh62vSXt3TS9mp7A2AhO7Fu+K4Z8vMDmuYlaNZCm?=
+ =?us-ascii?Q?nh97KmlOmf+fcPhOGEPjS7aBe6Rhtngx4xoqQ/74SF7s+bfqBxVatxdDJ3Yr?=
+ =?us-ascii?Q?Y6mJ1XyYsFAIB/X6uGFRzCsLwMte9aZZF1qTF1Jh9KwSOWkL3vO8?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 119da20d-6b64-4518-0c92-08df44027a9d
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2026 16:55:54.9741
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4x7HfUm0jNGmjbLNC12fBqhhp1nx53ooSQD6xkbP/Ru0tco060G73bnYocr7oxXOr4f04VCX+nu6SguhnpJl3zCwd9xVXpNasxBWZpl0uEDL16zSbKVF38Fub50Ohe6k
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8349
 
-On Mon, Nov 16, 2026 at 03:52:33AM -0700, James Hilliard wrote:
+On Mon, Nov 16, 2026 at 11:05:24AM +0800, Peng Fan (OSS) wrote:
+> From: Peng Fan <peng.fan@nxp.com>
+>
+> DMA channel devices are about to be registered on a dedicated DMA channel
+> bus so that they get a properly balanced bus association before
+> device_register().
+>
+> Add that bus to iommu_buses[] so the IOMMU core installs its bus notifier
+> for it. This allows of_dma_configure() to probe a per-channel IOMMU and,
+> more importantly, lets BUS_NOTIFY_REMOVED_DEVICE release the IOMMU group
+> and domain when the channel device is unregistered.
+>
+> The dmaengine bus is registered from a core_initcall, before any IOMMU
+> driver can call iommu_device_register(), which iterates iommu_buses[] and
+> fails if a bus has not been registered yet. Guard the entry with
+> CONFIG_DMA_ENGINE because the bus does not exist when the DMA engine core
+> is not built.
+>
+> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+> ---
 
-> Calculate hardware-LLP residue while looking up the requested cookie under
-> the channel lock. The descriptor scanner updates cached residue only when
-> no transfer-complete event is pending. If a status query completes the
-> current transaction and starts the next one, that new transaction's cached
-> residue has not been initialized and a query for its cookie reports zero.
-> 
-> Have dwc_get_hard_llp_desc_residue() return a local residue value from a
-> fresh LLP snapshot. Keep the persistent residue field for software-LLP
-> block accounting, subtracting the current block's progress when reporting
-> status. The descriptor scanner continues to advance software-LLP blocks
-> and complete cookies from RAW.XFER, including for polled transfers.
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-...
-
->  	desc = dwc_find_desc(dwc, cookie);
->  	if (desc) {
->  		if (desc == dwc->desc) {
-> -			residue = desc->residue;
-> -			if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags) && residue)
-> +			if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
-> +				residue = desc->residue;
->  				residue -= dwc_get_sent(dwc);
-> +			} else {
-> +				residue = dwc_get_hard_llp_desc_residue(dwc, desc);
-> +			}
-
-It can be written in a shorter form
-
-			if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags))
-				residue = desc->residue - dwc_get_sent(dwc);
-			else
-				residue = dwc_get_hard_llp_desc_residue(dwc, desc);
-
->  			if (test_bit(DW_DMA_IS_PAUSED, &dwc->flags))
->  				*status = DMA_PAUSED;
->  		} else {
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+>  drivers/iommu/iommu.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index b486b8bbd1fc..ab31cd15d1d5 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -8,6 +8,7 @@
+>
+>  #include <linux/amba/bus.h>
+>  #include <linux/device.h>
+> +#include <linux/dmaengine.h>
+>  #include <linux/kernel.h>
+>  #include <linux/bits.h>
+>  #include <linux/bug.h>
+> @@ -191,6 +192,9 @@ static const struct bus_type * const iommu_buses[] = {
+>  #ifdef CONFIG_ARM_AMBA
+>  	&amba_bustype,
+>  #endif
+> +#ifdef CONFIG_DMA_ENGINE
+> +	&dmaengine_chan_bus_type,
+> +#endif
+>  #ifdef CONFIG_FSL_MC_BUS
+>  	&fsl_mc_bus_type,
+>  #endif
+>
+> --
+> 2.34.1
+>
