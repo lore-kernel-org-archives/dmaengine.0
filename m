@@ -1,112 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794825429;
-	b=UFGLIwH+vmvkavZ7kDh+yc0275p/3+PafGhUbLX55ggIDKlII/WnqJ6SWSzEXXfJamat
-	 tymkUfy+p+4OKgdTFkZ580z9SDlZcfhFiVfBE1cQgaN705NNIAjm5jKunJSD1AiMgyRw5
-	 sf5KzkBiE+kFs3lM0530nRuYJxNkq67nahfqs7buHAOhRGC6qY/jYjwH6NNurasw9ApeP
-	 KQ439CLlagQ5sYcqc4ccNrNhES8Kr3GQQl3zbrDOzPJOabaCExNvme1Eun8yY9/3zL89Z
-	 PUGzD8b8AOpjJIIaXWfXdiR3rZxMI1T7/tXMcPlHTr7XwyGwV1biAmrGEz8L/B6iNdQ==
+	t=1794826385;
+	b=I/w27C9/cMj5OEWvafv5IjMZ9I2t+lMb0b0kPmM8NTeSIzEMAOvW145gKxXwPOynyIbb
+	 1EKTSRymHbXbuzS0PL/LqEEaIzzV/t6ZkIRERQj0jdh/O28sz1tK+daRX43D5TQkm+4Yb
+	 0EnK6azJzlQV5uo9KTvU1D7jwfuhaNyOH9gZqDsmGEf22O/KhSZGnZSeLTrYDALOe3b2P
+	 n3sNaaZUyUDtJnluvkObCRs/Bcj0bFk/4t2TgztVZP/sWmTeWY858E6yeUy0LB1K7hx65
+	 dAbDf+ESGMX4YCWZSy5pDd9+hoZNDGcsNv2IWuqybeRY+T9mIHBUl+wz9bd52XiqAKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794825429;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Proofpoint-Spam-Info:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
-	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=OKzx0WFamDGxi1lhlFcpXjjwrC6ez8FTZm7ETCzF7RI=;
-	b=SucILfC2X9i0QVpmv6Zo2opqCm5uLJeB49afq3+TcSpU/fB+Mth1Gy9tWxXk0l8Faonf
-	 hYEbWeKzft/9jc8rX34VwOdUtZi7DsGCpShoE7NbKcIFwj7NAdYfzgPcZH4vWKWy1BAAb
-	 cus+olnj+KPgHiKhjEMimXMlMR8SqtFUfm53/27zf/piDX7yy2UMNPIDsXz1pxRDLuVrL
-	 DzY2bzF8kBUgI0fI3Q8Z2k7ScLcGDYF1NEkf01Kf9LD4Jl/IFzSFdVnUuDW/MeLPFgNkI
-	 D7D2Fa4Dg3/McBhJp1ItID2PykHXomG3SsGIgF+YXFqp1wr7NkmGmJHSzRKYhiR4bEg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794826385;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=Tj/8Pm2fTV3ey8dapsvWMJiajUxVVR1CyAbN2iUPwZw=;
+	b=CZx7y+wRXVb3TDv+v+NtzQQ+LnArBzRS+5Ml9V/pjal81HTgC9YMwlQqmMh5cFlHhETV
+	 tnQjJSMuqd0vkQs6DalcF8NpF7jAjp0UGh2On9VlT7XorZFN+EVT1zcPS95as+2k73hWh
+	 nDFIl/npDXbm03K/oB++/YLbkunjLCFoCTUC29eITZUqMVLq/EDsX7OWfdCA7wRVoHskX
+	 N+gUeo4VIBb81XFG2ZmaojsKYtl5Rmtjb0BFW3Y8m+Xg67T1q0/jGj1F5MbLJbn3pCFe7
+	 XxUz1OzjG7Elfmy+mQJ+dzlW3X0tjnCAiMvt856OQk6z4alNb+dZG+lf6AoJU/AJV4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ii3LY256;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DZtfeLiw;
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rIfAPW0P;
+	arc=none smtp.remote-ip=209.85.210.50
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0232606A331
-	for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 10:37:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0232606A331
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78D9606A32F
+	for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 10:53:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E78D9606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ii3LY256;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DZtfeLiw
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AGA2cX7953343
-	for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 10:37:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OKzx0WFamDGxi1lhlFcpXjjwrC6ez8FTZm7ETCzF7RI=; b=Ii3LY256aW5XqhcZ
-	W//p8pPdYPjkQ9PQfjeYCNCNWY/y0zC4kYV1I1N67IIN99o02io/Y848tjsrnCEV
-	nwoRyZgBN9JtLJns3QbejJcpJVtD/D5lnmuWJxxeOfFaYf5rimOCmOk3bGPluQ5u
-	TwzT9wkHByCEkSO9se4AMH5jfaHV6FGjk5HSO3/P3YhV9EYBL1v+T5TyrieTBOaH
-	ukUY4qEiz3wawR3zbwFiZXyse5/eMmU7kpFvsbGJC4k/dPAGX/MOMbw4d/kOb/p+
-	W0rkEIjsjNp9aFMKlCQzBWSlyQDVUdagtI/AVKrj0gfqbj+Ayl2y6HCj7OPG+4Br
-	rWt/BQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hyyqy844a-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 10:37:07 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3b167bc8e16so2932300a91.1
-        for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 02:37:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=rIfAPW0P
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-833e671ee9fso4408206a34.0
+        for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 02:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1794825427; x=1795430227; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OKzx0WFamDGxi1lhlFcpXjjwrC6ez8FTZm7ETCzF7RI=;
-        b=DZtfeLiwdExmU1TbpIxZAy5XYLxuRG18zdCAW9OzECgFIQZVgC6DREz3PNPWA22KCJ
-         GaBNb1t7/ZUGq8CxlJnJbOfYdM997uZc31OvRPISAqhPuKfK3FkgT6AZ8O+WmAIVzyDx
-         7PnrPdRmdHrEFhH1KJfBNiqhmZFD9X5Tj0Z+ysDaK/0cjUZRLFLFLA4oxmx3Vwcl8ADf
-         SwM8ei2yck9YJZy1VDKhXfYnLbMj4kmDvUxncU43Yun6lWz6VuvTW9eQ4hV68hH76Dly
-         6gXEIoK4Iy4DmG3hPTGiMhvl9E8iWHZ3i02rokdD2KPtlE8hfYvTzVO9l7NdE5cuepRf
-         YvJw==
+        d=gmail.com; s=20260707; t=1794826384; x=1795431184; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Tj/8Pm2fTV3ey8dapsvWMJiajUxVVR1CyAbN2iUPwZw=;
+        b=rIfAPW0PvGowM9yXVlgvAomAq2XEyvblM2w77mNogN6pOTbJ8YN39Kl4O64YPc8XOS
+         4PAy/3Stcv2puEl6ljj9JEBj6rvE00zzTvjJa5zlpNm5dXPOrWBVegRK21j/buuFqPJh
+         DJktr6wOTrjiQ0tIPeaLLlKd40/lj/M63DXCYM01RsGDzik/iydblKhAxlnli2JBsYyf
+         pvPdXen+amqMVFJmjKqBmbv6G1OwYpwWvE9oJ6KB/yconVN/sZw+NJ9bU52ewSegLbFp
+         EetTDw/NIii1F4ksX6sdrDeKZOQPttOksC1jH+m+t7AK6Cws2aifp0F5KTzT5b48lZaP
+         ZEzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794825427; x=1795430227;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OKzx0WFamDGxi1lhlFcpXjjwrC6ez8FTZm7ETCzF7RI=;
-        b=NFdL2bRWz2FHCKVvzvFQHYTWt9NQ94cdVYRgwDS/TBrlaLDl9Hs5DO8dphrX/H13TR
-         RISVDUM8hm4GJWyRJJJeQ/izc1HOXRSv/BvbK7JCHXS+K/oMJMyh9WEu3wKiJonK5s06
-         Ruxb0sUJv3Zo7FAywkfSs5VCFBaFPpuqQGBS4pwWI9reHgNy0JzKf8YSe7OY7Q0jVlJu
-         w6OfORSJhQcArA3b95B8XF1kh8ibDaXKLEagMM6vwK6eWhXyc9tTKutC/9y7mdNZ+7gP
-         8szRKsJIjOLojf2B6WGQdDjWFXWb9P0u6FEeHN+fYKuZfs0XzzxmsokjCLSelO939SmK
-         VslA==
-X-Forwarded-Encrypted: i=1; AL+hErE3CrpHflqWORpAwhIIJXzrdpOor+eOIwpWJfmQN9/0ipFyTC6RuMjUL1fJkAanzK3a1eKg8g8lpbc=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9j2XhTw7Zg03u4nKKVTGX4mNs30IH+SMNBv4rGBBy07aYLVAkD
-	+dwIrIuWf6lOibVUl1RCnMFAUyk+h15JzcqupCE3knjWRnTdk768qQXuDUCVNaVrpMA17FhGUIl
-	3cLQZBhfwEWVf9ZsvY8WSpaWVUI6Svede/C2J9JVyiH9zReGE8Y2r7GxKzspgtrU=
-X-Gm-Gg: AZFdTZejUEk2ES7JPzt29L2NwAoXdcyb60buXNH2Xic14WA4HlN+T17+vg6wsSQ2wAy
-	RFTnU8+HcYszZJNYCRTRdkr7K40Q8RKcD8ffGMHAeVf6G7npgcXVDA7xsSnkLKcUhtZaPY2btRl
-	VtsL9pz9DQwRIsw2TzaDe6cInKTyKXTmp2eQiQC6jmgpSsZpLLYeTfZnILBSzJh2jYkv7U2A2w+
-	is/QtGYq36mt0ARB/ZaCghs/7dXvXiDmLLxu0ihq1KilCNRWesZIrxpgU92/I/do/vq33PggKT2
-	jNzI8W+SK5kgLoSeg1OmhWaTa+Z9fj375d2ueUQj1fMl2TVen5B+Ke4AKnll0ZBBeYnUuEpB7pT
-	YDniBYdTLGNNf9VV6dz5As1Yn4NG3/O0G5PL2L0VHUz+QfFWAcLRl0Zqy11G5XunafUqR971F0I
-	+mhG4=
-X-Received: by 2002:a17:90b:3d87:b0:3ac:9259:122c with SMTP id 98e67ed59e1d1-3b1b0a3956bmr9673717a91.40.1794825426521;
-        Mon, 16 Nov 2026 02:37:06 -0800 (PST)
-X-Received: by 2002:a17:90b:3d87:b0:3ac:9259:122c with SMTP id 98e67ed59e1d1-3b1b0a3956bmr9673681a91.40.1794825426012;
-        Mon, 16 Nov 2026 02:37:06 -0800 (PST)
-Received: from [10.218.50.86] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1b3d279d8sm8190788a91.2.2026.11.16.02.37.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Nov 2026 02:37:05 -0800 (PST)
-Message-ID: <21346a70-3ca6-4b9e-9a15-294004a1ef01@oss.qualcomm.com>
-Date: Mon, 16 Nov 2026 16:06:59 +0530
+        d=1e100.net; s=20260707; t=1794826384; x=1795431184;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Tj/8Pm2fTV3ey8dapsvWMJiajUxVVR1CyAbN2iUPwZw=;
+        b=rXLZSpBMUoqHf5AxD+I+bz94McO5FER+hgI/gmFZB0a+i1NKaiPJJ0DxlKr3pKYbhj
+         L3Y6rjp26eoXj90TR+26YsjadSfQw00KJH5tEsQah/4K5fa+5yqYDL5p5AN9XXMXKacz
+         v8mXfM/apEO077wf4cJTbaM/7ZCJn6M17awvxN+BgnlCb9hUGWcG581N7C++T2ewKmdj
+         9m3K6BugISh88SrR/HF1IQUZ2HLFUXupTHuk/Hk36oDZ809Zxx28C5LNpo6W3nE9C3St
+         //Wp+t7xSON3TbiohgR4Ib6Yv/onqGl99bBOX+p1Fal1VNR+QRgrUPhqEjYYCQjgG+qQ
+         BlVw==
+X-Forwarded-Encrypted: i=1; AL+hErHwsrbFP+O+BKFuB/wBplSIH2LRw1DGp7z7hnuJnspr78PrdO+HXbTNA5l8/56ax5mKzYAk+yZS4tY=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/Llw3nOKh7tMb0LTAQHkI+9Uw+670r6ynTH1Qjg/YbE8DKyEa7
+	UmUQ2nYO0JrS9SZpNQLSgfJRzQ6bQkqqCZxf1Ol+d9Cbz1l2MeWvsYP4
+X-Gm-Gg: AYBFou2Dpd5xgdKReKakLuWIcIu0PQPZ4IoJNFqDe6/I6IYr/DSlv+y7G3liPYGE9cK
+	85W/EtHI0x8jX/Nyf/RNfUL0qUdPfAg6UrDI93flxOxuVTs6BDhWEamzZllJqPHZzH9FE3DVEax
+	HdGEi+tY2pPDT6RtCLU/oIuNB6z7bu2mRqOqjFe5kcWz1T9jUtgmDmOaUdFkQUnyAp1B4hvS+LP
+	CNPA4SGCGHsmnmSAs6FVLw7JZdCmYGS5q0c9/YRcUNy6wx+NeTJtWvGlbY1Ojmbo5zlnlx93X0I
+	PZrKa0GKki15xOX4YSluo940vzX/VVJVfO/g5CxGlpIFdLH8W7J66zn2n+K3ViR1ADS+W0mSrYZ
+	QZu5Znf/cHLYKswAjs5xRUWeBpV6iOIh380wh/imhPmUD4RvGZA2xxHXllOfHgKf21bYtMZGFTk
+	OIcs2fxaaV4NEeA2zEraFPxM3D3+OaIDOpXcLHQ00JOpDOnRkQ5k29MUBgMt5t5X67RkgIDx1zM
+	CbfmwYq7I/RGKOv7sEM3E8NACUe3xW3BcAee9H9IL2DlDUxIXjGV1q/gRZak4nOfEJ/i1JkUegT
+	zf+D+obdHO5mfzYXjDQDAmB0Ce1zMgnqJXQVRNV3pxCAsmaw6nzVw36x03/Zf3M0x2ovwVbLww/
+	20aLo7djwv38xf0R4krz86cVuuqdMdbbjRjhiuA6SBvJ5Vxm4/u0qoqY93vviTrIb9C57mdnZLz
+	Hg/Pt+IFvMGh4j1/fGwUHGaJ6r1hWf5s6GzR++UxfLcLsRoZ34/rs=
+X-Received: by 2002:a05:6830:2e13:b0:81f:8a6d:7b52 with SMTP id 46e09a7af769-862898f68e1mr11462851a34.24.1794826383865;
+        Mon, 16 Nov 2026 02:53:03 -0800 (PST)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-862b08b8b5bsm5555546a34.5.2026.11.16.02.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Nov 2026 02:53:03 -0800 (PST)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH v8 0/6] dmaengine: dw: serialize completion and termination
+Date: Mon, 16 Nov 2026 03:52:28 -0700
+Message-Id: <20261116-submit-dw-dma-synchronize-v1-v8-0-4a82d64fcd1a@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -116,144 +93,182 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] dt-bindings: dma: qcom-gpi: Add QSPI protocol
- identifier
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
- <20261106-qspi_upstream_series-v1-2-21f43042dd60@oss.qualcomm.com>
- <20261109-wandering-miraculous-mamba-0cf21a@quoll>
- <2fc8f7ea-651e-466e-9346-c47e0a38c5bb@oss.qualcomm.com>
- <20261111-daring-salamander-from-tartarus-4c72bd@quoll>
- <c9427a03-8b45-4e35-a29d-7ebe30f07ed7@oss.qualcomm.com>
- <5b6e4031-4c52-4b67-82c2-0033d13b15d6@kernel.org>
- <58b64727-4b36-4328-9abd-116b984eb7af@oss.qualcomm.com>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-In-Reply-To: <58b64727-4b36-4328-9abd-116b984eb7af@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE2MDA0MiBTYWx0ZWRfX96ZBXkrBy7tJ
- NZPHyn8kv8N7TO4JjN9BKPWMfLwkKULJz99hxJMU0Mb2CowPumfDT+rxmFDpbCUwjUlQ1hlY7bO
- 0kmGheS3QLcCu3RknTEUq1nn3NHHbow=
-X-Proofpoint-GUID: jFB-9J2QWWp7KhmsTXrEzvvnetM3x_H2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE2MDA0MiBTYWx0ZWRfXyF7QwXqY3Xds
- H2197r3Jd6m08dkfJASpvJIc3H87o1T2Lp2/cMew6D2208Ul4HnDVG4fnFY/c2JMq+vnU0mZDWw
- fwUbnLiE1fi5nZVm70IGk60OAyCYruVsfxaBo5UoXhdJr2izSyHXFiqaB06aRVx7idTK46q69L1
- LyXPKFTkHXQlYhIk1xrWo+61fjpnDxE4EUZ3hNMbAHrbW3ngFBnkxYVMGOOHRfdieHak7A220dN
- bSbj2SKtVNOZ9SYp91chzWQJ5w35cU15+P6Rw27UomLdhFO6LN6tHVyn22dZ6j+e6cmO/SMwTNd
- TxbUJBui3nKpq9zZwOgn9G1m+FiGL6FvnElfqWExi3uqhzNNS9h4FKfLtcJOPO+Ojsv85wWnuu4
- rg+Hrhj5EyfUP8AqWmcZRQ1JomQQdudhpaQQ3BvT0tS35xJTcbt0bjgNUwUi68HFEgwvy2cOAJ2
- RaRylLq7+N0K1mML88Q==
-X-Proofpoint-ORIG-GUID: jFB-9J2QWWp7KhmsTXrEzvvnetM3x_H2
-X-Authority-Analysis: v=2.4 cv=ePeGH3p1 c=1 sm=1 tr=0 ts=6afadcd3 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=NEAV23lmAAAA:8 a=89fLKjHVl8os-4pLqkoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-16_03,2026-11-11_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611160042
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43QwU7EIBAG4FfZcBaFKVDqyfcwHigMXYxtN6VW1
+ 03f3enuwVoPNeHyk5kvP1xYxiFhZo+HCxtwSjn1HQV7d2D+6LoGeQqUGQgwUoDk+b1u08jDBw+
+ t4/nc+ePQd+kL+SQ5ai2iKmOQwTEiTgPG9Hnln19umfZf0Y+LuUzULiOvB0fMckUmdk3q8OG2R
+ xPHlMd+OF8bTnKR/lmGjuTGRas9BBNN9dS0Lr3d+75lS5kJ1hjsYMAF16AUVip4Z/0WK9ZYsYM
+ VhHkDdRTKRu1xi6k1Vu1girCITqkyVBGs3mL6ByNtB9OEhQJEWWob6/jnz8wa23umIQwQhS+UB
+ VBhi5UrTOodrCTMBmpVBFXhb2ye528mjfUyygIAAA==
+X-Change-ID: 20261021-submit-dw-dma-synchronize-v1-e550f47fd1da
+To: Viresh Kumar <vireshk@kernel.org>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Dan Williams <djbw@kernel.org>
+Cc: Serge Semin <fancer.lancer@gmail.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Jiri Slaby <jirislaby@kernel.org>, 
+ =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+ dmaengine@vger.kernel.org, linux-serial@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>, 
+ Lars-Peter Clausen <lars@metafoo.de>, 
+ James Hilliard <james.hilliard1@gmail.com>, stable@vger.kernel.org, 
+ Frank Li <Frank.Li@nxp.com>
+X-Mailer: b4 0.17-dev
 
+Use virt-dma for transaction ownership, deferred client callbacks and
+per-channel synchronization. Keep DW hardware event processing under the
+same channel lock, including polled completion and software-LLP progress.
 
+The first two patches serialize completion and error recovery with
+termination. The third replaces the private descriptor queues with
+virt-dma, including cookie accounting, callback synchronization and channel
+release. Three separate patches then extract hardware-LLP residue
+calculation, calculate it in the status getter and report queued residue.
 
-On 11/13/2026 3:44 PM, Konrad Dybcio wrote:
-> On 11/12/26 2:57 PM, Krzysztof Kozlowski wrote:
->> On 12/11/2026 14:47, Jyothi Kumar Seerapu wrote:
->>>
->>>
->>> On 11/11/2026 6:07 PM, Krzysztof Kozlowski wrote:
->>>> On Mon, Nov 09, 2026 at 08:03:29PM +0530, Jyothi Kumar Seerapu wrote:
->>>>>
->>>>>
->>>>> On 11/9/2026 7:12 PM, Krzysztof Kozlowski wrote:
->>>>>> On Fri, Nov 06, 2026 at 08:31:20PM +0530, Jyothi Kumar Seerapu wrote:
->>>>>>> Add QCOM_GPI_QSPI to identify QSPI (Quad SPI) channels in GPI DMA
->>>>>>> specifiers. Its value, 9, matches the GENI serial engine firmware
->>>>>>> protocol ID for QSPI.
->>>>>>
->>>>>> What is GENI serial engine firmware? How does the Linux rely on it that
->>>>>> we add bindings for it?
->>>>>
->>>>> Hi Krzysztof,
->>>>> GENI firmware runs on the serial engine’s programmable sequencers and
->>>>> implements protocols such as SPI and QSPI. Linux configures the engine and
->>>>> submits transfers to it.
->>>>> The existing GPI DMA specifier includes a client protocol ID. Linux programs
->>>>> this ID into the DMA channel and selects the corresponding descriptor
->>>>> format. QCOM_GPI_QSPI adds the QSPI protocol encoding 9 to that interface.
->>>>> I will clarify this in the commit description in V2.
->>>>
->>>> Does not really answer. I see no reason why GENI firmware needs ABI for
->>>> Linux.
->>>>
->>> This extends the existing GPI DMA binding, not a GENI firmware ABI.
->>
->> OK, so it is not ABI for the firmware. Period. Let's stop discussing this.
-> 
-> It is a firmware ABI, the various protocols each have their own magic
-> number and the firmware needs to know the right one. The GPI DMA driver
-> uses exactly that information and programs it into the core:
-> 
-> gpi_of_dma_xlate():
->    gchan->protocol = args->args[2];
-> 
-> gpi_alloc_chan():
->    gpi_write_reg(gpii, gpii->regs + GPII_n_CH_k_SCRATCH_0_OFFS(id, chid),
->                  GPII_n_CH_k_SCRATCH_0(pair_chid, chan->protocol, chan->seid));
-> 							^^
-> 
-> It doesn't necessarily _have to_ be the DT ABI, but since it's
-> bijective, an identity mapping seems like the sanest choice. The
-> holes are a result of some of the other protocols not being
-> supported upstream (yet?).
+Status polling can complete transfers without invoking client callbacks in
+the polling context, while synchronization waits for callbacks already
+running on the selected channel.
 
-Hi Konrad,
-Thanks for clarifying.
-The existing GPI DMA binding uses its third cell to identify the client
-protocol. The driver takes that value from DT and programs it directly
-into the channel's SCRATCH_0 protocol field.
-Its mandatory to maintain protocol ID-9 for QSPI.
+Each whole transaction has one virt-dma descriptor. Its child hardware LLIs
+remain owned by the driver and are freed together after the callback.
+The controller tasklet continues to process hardware events; virt-dma
+handles client notifications. Submitted transactions become eligible to
+start at issue_pending(), and residue lookup covers both submitted and
+issued queues.
 
-The holes are for other protocols: AFC - 6, SPMI - 7, HID_QSPI - 8 and 
-yes those are not part of upstream yet.
+The series builds on Serge Semin's channel-restart and callback work
+[0-2], using virt-dma following Andy's review [3].
 
-> 
-> 
-> 
-> But we already know this value in most cases (if the firmware is
-> present). Once upon a time I tried to de-multiplex the GENI nodes:
-> 
-> https://github.com/quic-kdybcio/linux/commits/topic/single_node_genise/
-> 
-> particularly:
-> 
-> https://github.com/quic-kdybcio/linux/commit/02e4671d8f9c3743a8e1a520cae75a455912eca7
-> 
-> which (for x1e80100.dtsi) only keeps a single node per QUP instance
-> (and not NUM_PROTOCOLS nodes for each one)
-> 
-> But I think for removing this completely we'd need to move this
-> information into a new property (qcom,protocol?) which would encode
-> exactly the same value to convey that to the fw loader.
-> 
-> FWIW I can pick up that work again if we agree on the bindings.
-> 
-> Konrad
+Based on dmaengine/fixes at 6628e7d4c6b2.
+
+[0] https://lore.kernel.org/r/20240911184710.4207-1-fancer.lancer@gmail.com
+[1] https://lore.kernel.org/r/20240911184710.4207-2-fancer.lancer@gmail.com
+[2] https://lore.kernel.org/r/20240911184710.4207-3-fancer.lancer@gmail.com
+[3] https://lore.kernel.org/r/avrHOJ-fVZOO32bI@ashevche-desk.local
+
+Assisted-by: Codex:gpt-6-astra
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+
+---
+Changes in v8:
+- Replace the private callback-deferral and synchronization patches with
+  a virt-dma conversion, following Andy's review.
+- Place the conversion after the completion and error-recovery fixes,
+  incorporating cookie ordering, completion-list cleanup and channel-release
+  draining in the same patch.
+- Keep residue extraction, status calculation and queued-residue reporting
+  separate, adapting them to virt-dma's active, issued and submitted state.
+- Use per-channel virt-dma callback draining while preserving polled
+  completion, software-LLP advancement and controller-tasklet exclusion
+  during resource release.
+- Keep child hardware LLIs under a single transaction descriptor and
+  distinguish submitted transactions from issued work.
+- Correct the residue-calculation and queued-residue Fixes tags to identify
+  the commits that introduced the affected paths, following Sashiko's review.
+- Attribute the cookie-completion and channel-release fixes included in the
+  conversion to the lock-splitting change, following Andy's tag review.
+- Link to v7: https://patch.msgid.link/20261115-submit-dw-dma-synchronize-v1-v7-0-8d58f3d49e4d@gmail.com
+
+Changes in v7:
+- Use a scoped channel-lock guard in dwc_tx_status(), following Frank's
+  review, keeping polled completion and residue lookup in the same scope.
+- Collect Frank's Reviewed-by tags for the residue and completion patches.
+- Link to v6: https://patch.msgid.link/20261103-submit-dw-dma-synchronize-v1-v6-0-2ee0c348224d@gmail.com
+
+Changes in v6:
+- Keep dwc_get_hard_llp_desc_residue() next to dwc_get_sent() when
+  converting it to return residue, following Frank's review.
+- Remove inherited RFC notes from the individual patches, retaining
+  the revision history in this cover letter.
+- Link to v5: https://patch.msgid.link/20261102-submit-dw-dma-synchronize-v1-v5-0-d3207758fbf9@gmail.com
+
+Changes in v5:
+- Rebase onto dmaengine/fixes at 6628e7d4c6b2, using the shared
+  dmaengine_chan_dev() helper for channel logging.
+- Split residue handling into a behavior-preserving extraction, status
+  calculation, scanner simplification and queued-residue reporting,
+  following Frank's review.
+- Share completed-descriptor freeing between the tasklet and channel
+  release, retaining callbacks for normal completion and suppressing
+  them during teardown. Name the helper dwc_free_completed().
+- Carry Frank's additional review tags and put the submitter sign-off
+  after the review tags.
+- Link to v4: https://patch.msgid.link/20261029-submit-dw-dma-synchronize-v1-v4-0-fea447d9f285@gmail.com
+
+Changes in v4:
+- Split v3's callback-deferral patch into cookie accounting, residue
+  calculation, channel-release draining and callback-deferral patches,
+  following Frank's review. The resulting seven-patch series preserves
+  v3's final implementation.
+- Place device_synchronize before callback deferral so clients can drain
+  deferred notifications when the completion list is introduced.
+- Carry Frank's Reviewed-by tags on the unchanged channel-completion,
+  error-recovery and device_synchronize patches.
+- Link to v3: https://patch.msgid.link/20261023-submit-dw-dma-synchronize-v1-v3-0-c62bf048f5ce@gmail.com
+
+Changes in v3:
+- Order channel-completion and error-recovery locking before callback
+  deferral, retaining four patches.
+- Require a locked RAW.XFER event before retiring a transfer; zero source
+  residue alone cannot establish destination completion.
+- Preserve polled completion and software-LLP progress in tx_status(),
+  queuing client notifications for the controller tasklet.
+- Serialize cookie updates with termination and report queued residue.
+- Drain deferred notifications on channel release and let a pending
+  tasklet return without MMIO after the last channel is released.
+- Adapt Serge's two patches and retain his authorship and revision notes.
+  Drop the Tested-by tags that covered their earlier implementations.
+- Identify the introduction of the synchronization API in the final
+  patch's Fixes tag.
+- Link to v2: https://patch.msgid.link/20261022-submit-dw-dma-synchronize-v1-v2-0-5244e94dca8c@gmail.com
+
+Changes in v2:
+- Carry Serge Semin's two posted fixes before the synchronization change,
+  preserving his authorship and revision notes. Add the requested stable
+  Cc trailers and Andy Shevchenko's Tested-by tags to those unchanged fixes.
+- Add a separate error-recovery fix for stale error status, empty channel
+  lists and software-LLP state when terminating or restarting a channel.
+- Use tasklet_disable()/tasklet_enable() instead of tasklet_kill() so
+  synchronization preserves scheduling requests from other channels.
+- Explain descriptor ownership during termination and acknowledge the
+  shared-tasklet scheduling race reported by Sashiko.
+- Link to v1: https://patch.msgid.link/20261021-submit-dw-dma-synchronize-v1-v1-1-6af85c2d6f69@gmail.com
+
+Revision history from Serge's series:
+
+Link: https://lore.kernel.org/dmaengine/20240802080756.7415-1-fancer.lancer@gmail.com/
+Changelog RFC:
+- Add a new patch:
+  [PATCH 2/2] dmaengine: dw: Fix XFER bit set, but channel not idle error
+  fixing the "XFER bit set, but channel not idle" error.
+- Instead of just dropping the dwc_scan_descriptors() method invocation
+  calculate the residue in the Tx-status getter.
+
+---
+James Hilliard (3):
+      dmaengine: dw: serialize error recovery with channel termination
+      dmaengine: dw: use virt-dma for descriptor and callback ownership
+      dmaengine: dw: report residue for queued transfers
+
+Serge Semin (3):
+      dmaengine: dw: Fix XFER bit set, but channel not idle error
+      dmaengine: dw: extract hardware-LLP residue calculation
+      dmaengine: dw: calculate residue in the status getter
+
+ drivers/dma/dw/Kconfig  |   1 +
+ drivers/dma/dw/core.c   | 493 ++++++++++++++++++++----------------------------
+ drivers/dma/dw/dw.c     |   2 +-
+ drivers/dma/dw/idma32.c |  18 +-
+ drivers/dma/dw/regs.h   |  24 +--
+ 5 files changed, 226 insertions(+), 312 deletions(-)
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+base-tree: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git fixes
+change-id: 20261021-submit-dw-dma-synchronize-v1-e550f47fd1da
+
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
