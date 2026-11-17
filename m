@@ -1,91 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794895329;
-	b=2XapkGDABsDnNSn+fWggrKUFB7cg7xXcpEKzJoK8yvkFo24BO3r9DyhCwujVdu6zoE43
-	 4ALfn38qdJ5ImPsaLptlG5Zly0sTnsV5Zx+14FmPIuXIvgnBxrxUDXyVEbXpyUuXxmVXg
-	 oinwS5YeFqPtx2jXElDkOxcOMhCi/NxnFtIxms3HrlmE9KzeM+lLv2NAKYLDPo+7+6jgl
-	 O1fPD0IOBBLmyOcOT4EOLAGsv76aJ71xA8fsBZqmYFcBUTLWj/RrAKAy295hXpQ8GrMGU
-	 68IMggS8avEw7M0DXf7LC0hmm3H2shjYN7ip9S/5AIWuKGvmhR45laCyPv0ouNmbVhQ==
+	t=1794895334;
+	b=Tb/YZZZ9aSR6jAldpBZu5mkuq0VApcTr5XRGD75rCrpzof9iynwYZYVbtpAtSUL07kak
+	 KXlDScvFIzHtiQ98IJPlXoyZH0dC7YdkXN14FLExvSTdn450i9gepWavhSoopbDu0dyNc
+	 tOt5/tuHUiscn6yztdN1+tyYitLo3cjZ/JpF2qpcB7qGhPFVUBbYhAq5lNmPqRIPsHIRG
+	 XD7ZriuTNNtVw9H2+Zu1croGu4BgBIhI9jeAlLVBscH9ZzydP3lqKSQRcxq1Xk0wAv/HQ
+	 II7JaJESGSYC1eU2aR8JpxLHRoi6RohLrWPGKdYYxD2VMf7EJXT2ujdPKbBFaoPN/3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794895329;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=kdFONMEpSsExQurD2X7JvvBNBeHJ+tNFPqAE2qVsxuQ=;
-	b=bdDySxSmaMSiMBCXuQkTlfHj9qPhJAHwBBq+E2pltAGPqw3mkPfPtVfuxEGpH37PpRir
-	 CMAm6ALEsD2JzxlA+yj6zBRTOS4yIt9VRZ9RSeMAjBXv2u1hZNqfzJGK9+7gNrAQrgi7/
-	 xg0mJsbnxx6TteLJe2xkoS10086odb6cH9DOa9PPdxWmJZ4Hhyf89KXJKgHis/diOqK4r
-	 A5Or5TaPpKaXjnzFJ2fdxHzeJpFBZs3B+SVPKsoXWJO7xvZqGeRel8gzNbVidknuoLfr6
-	 NSA+fW4M8N0aaIT8+eFJmbJZEAa3TOx5JPUeeIWjWddi6kygliyHH8/KXF9ftDLyqYA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794895334;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=lvQmTnPidiEnzeOrZUvLLHxYBSJgQymGBmIbkQCkFQM=;
+	b=QXGUN52Bcibm0sVpwp4qN9x68Ievz3LUB03ZhQ7PbWXCntEAkktdvFHWZtpwFX98Bvvo
+	 qZp2dTqT6bNrrJPrpA3lZyEh8OGtFS23puC+36sX0rh+kftqqMPtIlL1byo9j8aKzm49z
+	 Bspp2C6mvNRF30uedJ2UgoACoMo839gx7s0aykbH5hhlH3r8EjzyIGytIVHJw8fJW4vp6
+	 8VmPO2m+e05itDnRRvGBP02RBrYI/esv9OMgbZPVX/14AOEi5S98scvCkRvX6yeumqag0
+	 95rdvzoQN0yxnkFAVnU5iQ7vuOjaTUKlADO0aoH64M0yiLNss56edZm0tX/4VeTNa8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="AkVkSAZ/";
-	arc=none smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CKA+An72;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332AD606A31C
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 06:02:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 332AD606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC82606A31C
+	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 06:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AkVkSAZ/
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a5b2be99a8so28788505e9.2
-        for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 22:02:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794895327; x=1795500127; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=kdFONMEpSsExQurD2X7JvvBNBeHJ+tNFPqAE2qVsxuQ=;
-        b=AkVkSAZ/bgxnWLchZVPyXBpFJgxlQi9sUzpUlYuivxhV5ziy4YIrv6nW+++8p4n+Nu
-         LCn+9ZIwNPFilulP6fwNKTgfi/q6ICDl7SjtuHRZ6NtOg/WuDT35TUuvYmnRgsXkyrqQ
-         VJ/WvZ6dYo+y00kxF3Un4x2oTplio+MweQhyQpF6EyAfpRPI1Ppv09wOuwuCU8FVdUls
-         XZZxwS/SnR9O953Gbtc7970rxdQjJi6CzPGQISxxugfi+PW/PVl3ypzDey1Qxqv1lHDN
-         U5fn+34QKPvq9AtIm6DZhXtsGWoEb2xinLz9C6schyCuKSzJZaJ6fA3+qtMyUWSCbPfc
-         p9og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794895327; x=1795500127;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=kdFONMEpSsExQurD2X7JvvBNBeHJ+tNFPqAE2qVsxuQ=;
-        b=CcxpQ7KiR5MwphDeBmDkMFBFnjuFJpstSZtxkLRn5eztR8VvX7ca4CjVp5xToiB8tN
-         0L6P0tk/+BUCOnG+SCxOZMNMwcR1SjRwjzxEU9bjckhtDDqiTaZwbi7Y5ho5XWhq0s1d
-         C2Wij1MXPaWGvVYknYizG2oUBMiHizPCbpRPE4PaiqDsNPFZUeHs7WjPIhE247MGYHRB
-         RP8q8UtQK2LFS2fFBe9+R7H0F3uDpCyv1NUuBlPMOq05t6Yz2FMe9mgcJauVm1FdwLRp
-         W0xE342xzjBAlwu+mgW+7y2HRE/c4l4gmuoK+cxp4VMs11X3YTHqHmgyFZ1TT74IK3Sr
-         kUGw==
-X-Gm-Message-State: APuU4Z9xFR8I/85d6heaw12lN++9lw8rFoCsEHIkueNEILeiBnIHs9Hu
-	aT7IW5a6pJ7cMb1Vt18mnS+gf3IFl/h3lvpPuEXI9dGHTRBZ0AjOMqby7LfiAtaG
-X-Gm-Gg: AYBFou3nSWoyppASPAPo2CbD/Q6ChbYTdgP8TsX11N/wAmGrP0bX8Eb7FXc8drtyDec
-	0X/fIIYy0gvPjPzPPcb8RUX7AV+3QA+Q4bPiMHhZ9McINNjuPdlr288NEG+EdA3i/j9/uzY7GO9
-	HU+nFIN3gFZYPaAYXhJJGMUwVhpaiaDrmXH6sI7pAoq96LXFut1CtBBAXTNl2XDftC6AEc5ga2I
-	QhMlMBVqqBnyEm59cIYxKZxZvu4Sck23ubL9aaFR24e3zE9tMwP21jCiuMdjISIjLPzi4f5iPu7
-	fpkEudGYVaiwyeWxIgzpVva4YGvHBzeQXJg5u872V3Rb5NpIZfm/dhtIriaXe95Jsem+oIhG9XF
-	nap5WFChGitUW+zy/CZ9JjpnqRVq3d4ZBF8tGpqQaVd+vMTgAWQ1x5gtamyILgovXO/XUjzeK+5
-	9cnF1hDomcP/8M5x5KCHMbOHvTEpY+70tiG7XeLoqRDFI6sWiehBRBIvFd+TNDAuxM1WjF14z1l
-	sGiCPKcgUlG0xnaGMVgYbL71W6n9yKGeZ7yG/iwyIlbZ8NRsTDO/NjGZjsYq7GF+EUBZqgaQWrj
-	MvQvVBMkQVE37GVDyE+fC8ehpJcd+uCK0DuQHM17aHmtmwFRIkHBxb31BXzwZlXhBg==
-X-Received: by 2002:a05:600c:3509:b0:4a1:dbdf:17a8 with SMTP id 5b1f17b1804b1-4bb559f2cc3mr258857695e9.2.1794895327227;
-        Mon, 16 Nov 2026 22:02:07 -0800 (PST)
-Received: from localhost.localdomain ([46.188.59.33])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4a33c344a58sm3455470f8f.34.2026.11.16.22.02.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 22:02:06 -0800 (PST)
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
-To: dmaengine@vger.kernel.org
-Cc: lars@metafoo.de,
-	vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>
-Subject: [PATCH] dmaengine: axi-dmac: change IRQ to threaded mode
-Date: Tue, 17 Nov 2026 09:01:24 +0300
-Message-ID: <20261117060124.27914-1-matsievskiysv@gmail.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CKA+An72
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F3B1F000C4;
+	Tue, 17 Nov 2026 06:02:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794895333;
+	bh=lvQmTnPidiEnzeOrZUvLLHxYBSJgQymGBmIbkQCkFQM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=CKA+An72dOiOOmHE3igcJAXWnFsz774+BoMkh/q8670TLHGzM3gRXSQQ3gGXaZS8O
+	 w0SZ3QRMmLnKdPtVbHLZvhERhMUJynnqmeiNhlTe7I9o+eAIQaqw4lbNISN5ZVmZZi
+	 i99zHbgAmmxW5EO8MBEUFsGzxgx23nNJP0e2L5pYt2sV1kqLq2/XOanJKVhQFLe526
+	 Vmfv3/oOL6PSpcweShU8vay1dEb1VSeFZnqc8lhvR+LmvUpJKQMvdTuTNmHjLL7c8u
+	 jBCOeHa7uZK/1GSS290GvxKH1mEuBDTZnPLrDtRR/c1WbososAguqu4CI5JAqm0Yda
+	 fvx68Bw4XOtJQ==
+Message-ID: <sashiko-outbox-218236@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 1/1] dmaengine: axi-dmac: fix incorrect segment size
+ calculation
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sergey Matsievskiy" <matsievskiysv@gmail.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261117054054.22409-2-matsievskiysv@gmail.com>
+References: <20261117054054.22409-1-matsievskiysv@gmail.com>
+ <20261117054054.22409-2-matsievskiysv@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 17 Nov 2026 06:02:12 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -94,69 +60,110 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Threaded IRQ handlers run in a less critical context compared to normal
-IRQs, so they can perform more complex and time-consuming operations
-without causing significant delays in other parts of the kernel.
-Additionally, regmap-irqchip requires child devices to handle IRQs in
-threaded mode.
+Thank you for your contribution! Sashiko AI review found 3 potential
+issues to consider:
+- [High] dmaengine: axi-dmac: 32-bit overflow in
+  axi_dmac_prep_slave_sg()
+- [Medium] dmaengine: axi-dmac: 32-bit overflow in
+  axi_dmac_fill_linear_sg()
+- [Low] dmaengine: axi-dmac: missing Fixes trailers in commit message
+--
 
-In this patch change IRQ to threaded mode for compatibility with
-regmap-irqchip.
-Switch spin_lock() to spin_lock_irqsave() in IRQ handler as it may be
-interrupted in threaded mode. spin_lock_irqsave() prevents recursive
-spinlock deadlock.
+commit f72f25e5b5e585f311e3609163b81e15ebf9fa27
+Author: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
----
- drivers/dma/dma-axi-dmac.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+> dmaengine: axi-dmac: fix incorrect segment size calculation
+>
+> When chan->max_length has a value of 0xffffffff (which is a possible IP
+> configuration), DIV_ROUND_UP returns 0, resulting in incorrect number of
+> segments calculation. Fix this by using DIV_ROUND_UP_ULL division
+> function.
+>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
-index 98aaccd26a26..4a340e382e44 100644
---- a/drivers/dma/dma-axi-dmac.c
-+++ b/drivers/dma/dma-axi-dmac.c
-@@ -583,6 +583,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq, void *devid)
- {
- 	struct axi_dmac *dmac = devid;
- 	unsigned int pending;
-+	unsigned long flags;
- 	bool start_next = false;
- 
- 	pending = axi_dmac_read(dmac, AXI_DMAC_REG_IRQ_PENDING);
-@@ -591,7 +592,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq, void *devid)
- 
- 	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_PENDING, pending);
- 
--	spin_lock(&dmac->chan.vchan.lock);
-+	spin_lock_irqsave(&dmac->chan.vchan.lock, flags);
- 	/* One or more transfers have finished */
- 	if (pending & AXI_DMAC_IRQ_EOT) {
- 		unsigned int completed;
-@@ -602,7 +603,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq, void *devid)
- 	/* Space has become available in the descriptor queue */
- 	if ((pending & AXI_DMAC_IRQ_SOT) || start_next)
- 		axi_dmac_start_transfer(&dmac->chan);
--	spin_unlock(&dmac->chan.vchan.lock);
-+	spin_unlock_irqrestore(&dmac->chan.vchan.lock, flags);
- 
- 	return IRQ_HANDLED;
- }
-@@ -1324,8 +1325,10 @@ static int axi_dmac_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = devm_request_irq(&pdev->dev, dmac->irq, axi_dmac_interrupt_handler,
--			       IRQF_SHARED, dev_name(&pdev->dev), dmac);
-+	ret = devm_request_threaded_irq(&pdev->dev, dmac->irq, NULL,
-+					axi_dmac_interrupt_handler,
-+					IRQF_SHARED | IRQF_ONESHOT,
-+					dev_name(&pdev->dev), dmac);
- 	if (ret)
- 		return ret;
- 
--- 
-2.47.3
+[Severity: Low]
+Should this bug fix include Fixes tags for the commits that introduced
+these calculations?
 
+  Fixes: 921234e0c5d7 ("dmaengine: axi-dmac: Split too large segments")
+  Fixes: 74609e568670 ("dmaengine: dma-axi-dmac: Implement device_prep_peri=
+pheral_dma_vec")
+
+> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> index dbc31b185c4d4..30ea905840fe2 100644
+> --- a/drivers/dma/dma-axi-dmac.c
+> +++ b/drivers/dma/dma-axi-dmac.c
+> @@ -706,7 +706,7 @@ static struct axi_dmac_sg *axi_dmac_fill_linear_sg(st=
+ruct axi_dmac_chan *chan,
+>  	unsigned int len;
+> =20
+>  	/* Split into multiple equally sized segments if necessary */
+> -	num_segments =3D DIV_ROUND_UP(period_len, chan->max_length);
+> +	num_segments =3D DIV_ROUND_UP_ULL(period_len, chan->max_length);
+>  	segment_size =3D DIV_ROUND_UP(period_len, num_segments);
+>  	/* Take care of alignment */
+>  	segment_size =3D ((segment_size - 1) | chan->length_align_mask) + 1;
+
+[Severity: Medium]
+Can segment_size still overflow 32-bit unsigned arithmetic here when
+chan->max_length is smaller than UINT_MAX (for example, 0x01000000 for a
+24-bit X_LENGTH configuration) and period_len is within num_segments - 1
+of UINT_MAX?
+
+In that case, period_len + num_segments - 1 wraps around in 32-bit
+DIV_ROUND_UP(), making segment_size evaluate to 0 before and after the
+alignment adjustment.  The loop below then subtracts 0 from len on each
+iteration and advances sg past the end of desc->sg[].  Using
+DIV_ROUND_UP_ULL(period_len, num_segments) avoids the overflow.
+
+> @@ -752,7 +752,7 @@ axi_dmac_prep_peripheral_dma_vec(struct dma_chan *c, =
+const struct dma_vec *vecs,
+>  		return NULL;
+> =20
+>  	for (i =3D 0; i < nb; i++)
+> -		num_sgs +=3D DIV_ROUND_UP(vecs[i].len, chan->max_length);
+> +		num_sgs +=3D DIV_ROUND_UP_ULL(vecs[i].len, chan->max_length);
+> =20
+>  	desc =3D axi_dmac_alloc_desc(chan, num_sgs);
+>  	if (!desc)
+> @@ -839,7 +839,7 @@ static struct dma_async_tx_descriptor *axi_dmac_prep_=
+dma_cyclic(
+>  		return NULL;
+> =20
+>  	num_periods =3D buf_len / period_len;
+> -	num_segments =3D DIV_ROUND_UP(period_len, chan->max_length);
+> +	num_segments =3D DIV_ROUND_UP_ULL(period_len, chan->max_length);
+>  	num_sgs =3D num_periods * num_segments;
+> =20
+>  	desc =3D axi_dmac_alloc_desc(chan, num_sgs);
+
+[Severity: High]
+Does axi_dmac_prep_slave_sg() still hit the same 32-bit overflow on
+32-bit architectures when chan->max_length is 0xffffffff?
+
+drivers/dma/dma-axi-dmac.c:axi_dmac_prep_slave_sg() {
+	...
+	num_sgs =3D sg_nents_for_dma(sgl, sg_len, chan->max_length);
+	desc =3D axi_dmac_alloc_desc(chan, num_sgs);
+	...
+	for_each_sg(sgl, sg, sg_len, i) {
+		...
+		dsg =3D axi_dmac_fill_linear_sg(chan, direction, sg_dma_address(sg), 1,
+			sg_dma_len(sg), dsg);
+	}
+}
+
+sg_nents_for_dma() computes DIV_ROUND_UP(sg_dma_len(sg), len) with an
+unsigned int dividend and a size_t divisor.  On 32-bit platforms with
+chan->max_length =3D=3D 0xffffffff, that addition wraps and counts 0 segmen=
+ts
+for every scatterlist entry with length >=3D 2, causing
+axi_dmac_alloc_desc() to index desc->sg[num_sgs - 1] out of bounds when
+num_sgs is 0 or axi_dmac_fill_linear_sg() to write past the end of
+desc->sg[].
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261117054054.2240=
+9-1-matsievskiysv@gmail.com?part=3D1
