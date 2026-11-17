@@ -1,68 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.119.170.32
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794931160;
-	b=bpdczuC+fGaSxmWp7Y/EFEFS6HLiAHGZ5vTuJRxXlqQAkbZwaAQaUNyN7SiZJFGjY3c/
-	 f3jJkOnn9IX+D+Bnvj45kpb+qMXTwgvASh/VQWhxMVztYFVBDybW5QCw9/amDGdQI0MWB
-	 G0qpdbJSGqxLlKzAbSOxEDIZdg7qBV9fb//+oWKwIN2uUK7JOgSGUmOkjks5CQdycB6sM
-	 afbtegFrVM7BtCWYwRcbvoT4DbFtxyaB/uanmdGyabvDL2zCQHukeWhHTqrYTn3Jv6t+p
-	 mvUI2TQz+zQEzzU1Bs9UqwoboISDRT+mmykLXz48aa1pciF+Q33cVepGjoCMxNN2CHA==
+	t=1794932775;
+	b=dEvt/KqFyGGfKew+pA5YJ0e1pWJbDmerxurHXI4cy5ObCykY+7N/Fu6m2/NJsjllt3sk
+	 +JmDAbbM//m7h3FXFhZKljvfA//FSKGeCgUHWUprW3UfzHgQs0dFv5bWCRH4Muv4rmoT3
+	 +c8tfqlRyajfsZoUXVschj6qbNetCahZvCJwCm6xLAEWdunudpyZ4qxOQm4//WWoTzdTH
+	 2FO4LuEKTMtFZOLYlwbyg4W4V9Jl8K3+x9l3RWHVmOq+CN1JfeVuEzGDyig+zPfn6gdrh
+	 vnziJV1NjxhYftdkJvSFWEM4MY9dXy1XyyjUaxR3MhVaKialzEP0R/5NP08mPeJX8YA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794931160;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:From:To:Cc:References:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=h/3rF4Eul2ZUedOC6ysniY/GPouHi/AlQBH3kKs+gsU=;
-	b=CRHHhMvnhG3tX0tnikj43nb+zjO/ltR4wAlqpUjtyn6sBf7j17REOmjEm6BztX/DZXXO
-	 9/pKfnXHPTYeW+fY56y8ajODOFpu76gZbwMZNdJcYtpX4gLqzbS2xf9lchbYp9Jq0NTVX
-	 DZNJ6I6mhUBm0XVOcixo2u7MEUf7JnQcJR6WjbDZQbf1bPYlonFZVitU7bPQI4aVc4Xgm
-	 oJzFB78loQlWaOogNJmlnclGTmptGhoVROXoTk7ankouSPC2iolIg4eZAoa4ucrRF+Crg
-	 s3W0FT0h5OYMFJVXkHAdF36bEM2Cepyg/+4MnVm+IMV9LxLG+y2/YKjI1bqSu9M2STg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794932775;
+	h=DMARC-Filter:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
+	 References:Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=a4gjRdu3o+vVl5H2q8lXRC3wVpAmReSzbcYychrcUo8=;
+	b=n5z/y0ipaHvTXFLFoXT1mEdA2veKh+0YMkBQpARtJSw9rgvfuzj6MhS8Ligk+ZrWw6fq
+	 SVAmPfl+RP8jCYsSQBgR6ZBRlzv7NLam+AnoHoWaGRyvVyU7ohB818f2C9jvXRDAFcfqc
+	 Ub3Q+XjRl70eNYNPfVCdLVFz6Ksob6MoQTcYMnMWKmevpvBXzqYvy6BzneyOXtR28sC9G
+	 Dio17Osygp+kN5MvhqB77d1WKrJ0ha6nndmRuS2Z0VrWubsYBY5xg6D7E+fP1sDJAX73U
+	 ZVIuOpT7t4xgUWDlGIlzTNeQnn5er7uHiXdw9KkWIbsgO/GPHvPjjuTcDJeQJxNwnXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=gQhrWKfl;
-	arc=none smtp.remote-ip=198.175.65.10
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=crapouillou.net;
+	spf=pass smtp.mailfrom=crapouillou.net;
+	arc=none smtp.remote-ip=185.119.170.32
+Received: from aposti.net (aposti.net [185.119.170.32])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F23606A31C;
-	Tue, 17 Nov 2026 15:59:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20F23606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=gQhrWKfl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794931161; x=1826467161;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=ogO0mTz2AgaJsonmWpeYAFiZBu7kzIrrb/QfEOJdD04=;
-  b=gQhrWKflq+V/fS9kOmsJsBXjvnbkXbXTbVV8Edy7QaiNNjL+OUiPt2u2
-   zwuOp0jv2CxGW8+AQDlrPSiknZQZUhdZpN4wN5UY7FFBahMPdfKp5M6qK
-   smXMVr1Fx09ZHRXHO3Mc6Lu/8B33Hd0dbhIO1St/pYmDarz62g7+ot0az
-   3plaMCD5yZZhKvqaoZ7WpJX+9zNedikxsxy8IdIZZdaNV1XZ4Ygy5XNZk
-   n7O8hAU4tW6z8FDVBIBzXKSjZak10RkdC40KLftVKKrb7LGoUMhlaWsrf
-   c1bP5C0mmiQ2TtoO5QKxFEwU0ELX7LV3roqcorLeMKBMTNcqaQpBf5jnM
-   w==;
-X-CSE-ConnectionGUID: p/wGnStpR8SOitX6LNoSsA==
-X-CSE-MsgGUID: HyUHJGMWQqe7VgWwEwNfLQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11969"; a="3625151"
-X-IronPort-AV: E=Sophos;i="6.27,218,1787036400"; 
-   d="scan'208";a="3625151"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 07:58:04 -0800
-X-CSE-ConnectionGUID: xExwgk48SUKFDOhmSkw7kQ==
-X-CSE-MsgGUID: WZojkiUMQy2BW7p8NZgTBA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,218,1787036400"; 
-   d="scan'208";a="9930907"
-Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.108.197]) ([10.125.108.197])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Nov 2026 07:58:01 -0800
-Message-ID: <d6a3c6a9-71f7-406d-9ae9-33b3566768eb@intel.com>
-Date: Tue, 17 Nov 2026 08:57:59 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A881606A31C;
+	Tue, 17 Nov 2026 16:26:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4A881606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
+Message-ID: <c9f9b41ff36254ce0dd968ed190e265b1d2eb906.camel@crapouillou.net>
+Subject: Re: [PATCH 09/10] dmaengine: jz4780: Fix descriptor cleanup on
+ hwdesc setup failure
+From: Paul Cercueil <paul@crapouillou.net>
+To: Lee Jones <lee@kernel.org>, Vinod Koul <vkoul@kernel.org>, Frank Li	
+ <Frank.Li@kernel.org>, Alex Smith <alex@alex-smith.me.uk>, Zubair Lutfullah
+ Kakakhel <Zubair.Kakakhel@imgtec.com>, linux-mips@vger.kernel.org,
+ dmaengine@vger.kernel.org, 	linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+Date: Tue, 17 Nov 2026 17:26:01 +0100
+In-Reply-To: <20261111215349.1983909-10-lee@kernel.org>
+References: <20261111215349.1983909-1-lee@kernel.org>
+	 <20261111215349.1983909-10-lee@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -72,140 +53,71 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: Update CXL, NVDIMM, DAX, and others for
- djbw
-From: Dave Jiang <dave.jiang@intel.com>
-To: linux-cxl@vger.kernel.org, nvdimm@lists.linux.dev,
- linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Alison Schofield <alison.schofield@intel.com>,
- Vishal Verma <vishal.l.verma@intel.com>, Matthew Wilcox
- <willy@infradead.org>, Jan Kara <jack@suse.cz>,
- Davidlohr Bueso <dave@stgolabs.net>, Jonathan Cameron <jic23@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Alistair Popple <apopple@nvidia.com>,
- Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-References: <20261110210152.3494345-1-dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20261110210152.3494345-1-dave.jiang@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
+Hi Lee,
 
+Le mercredi 11 novembre 2026 =C3=A0 21:52 +0000, Lee Jones a =C3=A9crit=C2=
+=A0:
+> When jz4780_dma_setup_hwdesc() fails in jz4780_dma_prep_slave_sg() or
+> jz4780_dma_prep_dma_cyclic(), the error paths pass &jzchan->desc->vdesc
+> to jz4780_dma_desc_free() instead of the newly allocated &desc->vdesc.
+> This leaks the newly allocated descriptor and either dereferences NULL
+> when jzchan->desc is NULL or frees the currently active descriptor while
+> it is still in flight.=C2=A0 Furthermore, jz4780_dma_desc_free() derives
+> jzchan from vdesc->tx.chan, which is not yet initialised before
+> vchan_tx_prep() is called.
+>=20
+> Initialise desc->vdesc.tx.chan in jz4780_dma_desc_alloc() and pass
+> &desc->vdesc to jz4780_dma_desc_free() in the preparation error paths.
+>=20
+> Fixes: d894fc6046fe ("dmaengine: jz4780: add driver for the Ingenic JZ478=
+0 DMA
+> controller")
+> Closes: https://sashiko.dev/#/bug/linux-b39121ef-5ffb-401a-9d04-0afccd467=
+bde
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Lee Jones <lee@kernel.org>
 
-On 11/10/26 2:01 PM, Dave Jiang wrote:
-> Dan is no longer with us. Removing entries in MAINTAINERS to prevent
-> people from keep emailing his address.
-> 
-> Frank will take over for async_tx until the feature is removed.
-> 
-> Alistair will take over on fsdax with Alison continue to wrangle patches
-> for DAX overall patches.
-> 
-> Cc: Alison Schofield <alison.schofield@intel.com>
-> Cc: Vishal Verma <vishal.l.verma@intel.com>
-> Cc: Matthew Wilcox <willy@infradead.org>
-> Cc: Jan Kara <jack@suse.cz>
-> Cc: Davidlohr Bueso <dave@stgolabs.net>
-> Cc: Jonathan Cameron <jic23@kernel.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Frank Li <Frank.Li@kernel.org>
-> Cc: Alistair Popple <apopple@nvidia.com>
-> Acked-by: Davidlohr Bueso <dave@stgolabs.net>
-> Acked-by: Vishal Verma <vishal.l.verma@intel.com>
-> Acked-by: Alison Schofield <alison.schofield@intel.com>
-> Acked-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-> Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-> 
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
 
-Applied to cxl/next:
-9b5da39088f4
+Cheers,
+-Paul
+
 > ---
-> 
-> v2:
-> - Add Frank as reviewer for async_tx.
-> - Alistair has been working on fsdax and agreed to be maintainer.
-> ---
->  MAINTAINERS | 12 +++---------
->  1 file changed, 3 insertions(+), 9 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 93abbb315065..58bdd5eff5c2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4294,7 +4294,7 @@ S:	Maintained
->  F:	crypto/rsa*
->  
->  ASYNCHRONOUS TRANSFERS/TRANSFORMS (IOAT) API
-> -R:	Dan Williams <djbw@kernel.org>
-> +R:	Frank Li <Frank.li@oss.nxp.com>
->  S:	Odd fixes
->  W:	http://sourceforge.net/projects/xscaleiop
->  F:	Documentation/crypto/async-tx-api.rst
-> @@ -6726,7 +6726,6 @@ M:	Jonathan Cameron <jic23@kernel.org>
->  M:	Dave Jiang <dave.jiang@intel.com>
->  M:	Alison Schofield <alison.schofield@intel.com>
->  M:	Vishal Verma <vishal.l.verma@intel.com>
-> -M:	Dan Williams <djbw@kernel.org>
->  R:	Ira Weiny <iweiny@kernel.org>
->  R:	Li Ming <ming.li@zohomail.com>
->  R:	Richard Cheng <icheng@nvidia.com>
-> @@ -7621,7 +7620,6 @@ S:	Maintained
->  F:	scripts/dev-needs.sh
->  
->  DEVICE DIRECT ACCESS (DAX)
-> -M:	Dan Williams <djbw@kernel.org>
->  M:	Vishal Verma <vishal.l.verma@intel.com>
->  M:	Dave Jiang <dave.jiang@intel.com>
->  M:	Alison Schofield <alison.schofield@intel.com>
-> @@ -10315,12 +10313,12 @@ F:	include/linux/fcntl.h
->  F:	include/uapi/linux/fcntl.h
->  
->  FILESYSTEM DIRECT ACCESS (DAX)
-> -M:	Dan Williams <djbw@kernel.org>
-> +M:	Alistair Popple <apopple@nvidia.com>
->  R:	Matthew Wilcox <willy@infradead.org>
->  R:	Jan Kara <jack@suse.cz>
->  L:	linux-fsdevel@vger.kernel.org
->  L:	nvdimm@lists.linux.dev
-> -S:	Supported
-> +S:	Maintained
->  F:	fs/dax.c
->  F:	include/linux/dax.h
->  F:	include/trace/events/fs_dax.h
-> @@ -13455,7 +13453,6 @@ F:	drivers/platform/x86/intel/hid.c
->  
->  INTEL I/OAT DMA DRIVER
->  M:	Dave Jiang <dave.jiang@intel.com>
-> -R:	Dan Williams <djbw@kernel.org>
->  L:	dmaengine@vger.kernel.org
->  S:	Supported
->  Q:	https://patchwork.kernel.org/project/linux-dmaengine/list/
-> @@ -15278,7 +15275,6 @@ K:	libie
->  
->  LIBNVDIMM BTT: BLOCK TRANSLATION TABLE
->  M:	Vishal Verma <vishal.l.verma@intel.com>
-> -M:	Dan Williams <djbw@kernel.org>
->  M:	Dave Jiang <dave.jiang@intel.com>
->  M:	Alison Schofield <alison.schofield@intel.com>
->  L:	nvdimm@lists.linux.dev
-> @@ -15288,7 +15284,6 @@ P:	Documentation/nvdimm/maintainer-entry-profile.rst
->  F:	drivers/nvdimm/btt*
->  
->  LIBNVDIMM PMEM: PERSISTENT MEMORY DRIVER
-> -M:	Dan Williams <djbw@kernel.org>
->  M:	Vishal Verma <vishal.l.verma@intel.com>
->  M:	Dave Jiang <dave.jiang@intel.com>
->  M:	Alison Schofield <alison.schofield@intel.com>
-> @@ -15307,7 +15302,6 @@ F:	Documentation/devicetree/bindings/pmem/pmem-region.yaml
->  F:	drivers/nvdimm/of_pmem.c
->  
->  LIBNVDIMM: NON-VOLATILE MEMORY DEVICE SUBSYSTEM
-> -M:	Dan Williams <djbw@kernel.org>
->  M:	Vishal Verma <vishal.l.verma@intel.com>
->  M:	Dave Jiang <dave.jiang@intel.com>
->  M:	Alison Schofield <alison.schofield@intel.com>
-> 
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-
+> =C2=A0drivers/dma/dma-jz4780.c | 5 +++--
+> =C2=A01 file changed, 3 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
+> index ac2094e65ecf..c3974c825ba7 100644
+> --- a/drivers/dma/dma-jz4780.c
+> +++ b/drivers/dma/dma-jz4780.c
+> @@ -248,6 +248,7 @@ jz4780_dma_desc_alloc(struct jz4780_dma_chan *jzchan,
+> unsigned int count,
+> =C2=A0		return NULL;
+> =C2=A0	}
+> =C2=A0
+> +	desc->vdesc.tx.chan =3D &jzchan->vchan.chan;
+> =C2=A0	desc->count =3D count;
+> =C2=A0	desc->type =3D type;
+> =C2=A0
+> @@ -379,7 +380,7 @@ static struct dma_async_tx_descriptor
+> *jz4780_dma_prep_slave_sg(
+> =C2=A0					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sg_dma_len(&sgl[i]),
+> =C2=A0					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 direction);
+> =C2=A0		if (err < 0) {
+> -			jz4780_dma_desc_free(&jzchan->desc->vdesc);
+> +			jz4780_dma_desc_free(&desc->vdesc);
+> =C2=A0			return NULL;
+> =C2=A0		}
+> =C2=A0
+> @@ -426,7 +427,7 @@ static struct dma_async_tx_descriptor
+> *jz4780_dma_prep_dma_cyclic(
+> =C2=A0		err =3D jz4780_dma_setup_hwdesc(jzchan, &desc->desc[i],
+> buf_addr,
+> =C2=A0					=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 period_len, direction);
+> =C2=A0		if (err < 0) {
+> -			jz4780_dma_desc_free(&jzchan->desc->vdesc);
+> +			jz4780_dma_desc_free(&desc->vdesc);
+> =C2=A0			return NULL;
+> =C2=A0		}
+> =C2=A0
