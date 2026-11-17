@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794933569;
-	b=lvcV/fgy2Xvr7bTowV0+m2GupY4khfOmDhPcons/4rnrCzZ+IX8VMDNb7ShwXmwmvw30
-	 LX52FquqSAz44jmx8YrWCk4l2XPU8JSAEBBN0ScitLl+ZcCN1542Rg14FPWZ2Ob2gPHwC
-	 hrmCRj8Nrc1xZ7M8iqE3P9ZvKCcbxlTWKsB9l1ZElEI5jJBUtK/MkhZCFihrg4LZ3XtVl
-	 UPOAhhnzAPf/KtZIlems/w2dCEThFAgmXz0htp1j5OJGWdl+YJ8lTrMbG4fthVF8dJJuz
-	 MjE455/IETQTJitwFEQd1KjSjK9iTF6Lalj+sLbPyfyOXsE80BSP6gdJQu0SL+ImoEw==
+	t=1794933575;
+	b=wu/HxTVdDNBm2GLFq6Qupyw3MUUzUlEvrLn/aBP1s1NEy/7xbyvmsw9X6Vn3yTDygwwO
+	 SmCICowwE4DtjMRSh8mZZXDmPr3hmdmHxT7y23MDFiaKIjevmXO+cYK0ILG0PVAMQIaIO
+	 r1+Fjm/t0kRziqKEoIlgWkgU2P75RR1UARsj7zRytdeiLZncGTGwuAaioByihVyD51Th+
+	 /AdosVLuO94Wr0jNRNbEs5ZZW+XbVrdrGFx4J3HdSsPL+O1ffWlBY5AJtYXZy+0hgeOzI
+	 xjbhvlfET4HOIKIQFS+GP8l8C8BtvNO+H4vid72/FOOHg0Q39WV41WB/bpvzEI6ieWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794933569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794933575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=sGJi7hvXe3a9OqGC6JOAa78jR+ZgfQUCIcX0WKJpETc=;
-	b=xptnMQ/ncyTcIbXvghIMOSiDHpoLHyvaEQTa3X8WtYq80y3u4eZQlk6X17Ajz27Ha4+x
-	 dhOT5JyHNG4uFFrPrYkC3eoszofKsMkO3HyEAhNwiGAe7LvTNGewNza82pD8tzEwBeycg
-	 gSoLO3p/9wOxyODmgviotnoMndLsrh7WXwZkb72fpYYuMsshLCFyVWKnnjNMEYpvab7D8
-	 yS0cSi6EpIzl17cbltA8FBcCUAPnPO7ZZAY1RkpOnELvGlWizdbtzlwERHy3uG7SYHH89
-	 rg1ZvXwiuWrhOgt3Wi1ghpZox107xg0Z+U0z3Zq/mZQUAUOj+R3QBhEXWP5OsQMEJSw==
+	bh=vLoVgA+veJqTpjMFRVugYtaxfUxaYoc9q6xhl97RMvU=;
+	b=e9HcYZWuAtIHw195sJpnOrf/ZugDf5GyOXBepGZEOYJe6GGCWwJxGfib7Ed914Byu1ox
+	 XUU2DOXuN0drBj04fkEw2AuhM0sX4JAUSc5lqoZyaTNev5c8uu5dmR08EegXw82Y7jUMm
+	 RPjxsEStTD/aqmPh+wl+zcAxbSJPOT39RIIr5LIUW87CJcYKsaqqtUMdfovgpt45fkGBD
+	 S9AWpODhxvMZ+ZQQvfMX/zkno4BX1VPqWvlR+dXX64ul4rcq18uh/0LhpdWOxBK+4zqhQ
+	 kIQOP2B1O+NLBQT4ynwgHln6248AAX8aRnU9wE3zfozhXwrXYLGBCUz+BrkjqSaYZHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ix3+7jXq;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j6zCXuLX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2CD606A33D;
-	Tue, 17 Nov 2026 16:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FAE606A31C;
+	Tue, 17 Nov 2026 16:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ix3+7jXq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0E91F000C5;
-	Tue, 17 Nov 2026 16:39:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j6zCXuLX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76E31F000C7;
+	Tue, 17 Nov 2026 16:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794933569;
-	bh=sGJi7hvXe3a9OqGC6JOAa78jR+ZgfQUCIcX0WKJpETc=;
+	s=k20260515; t=1794933575;
+	bh=vLoVgA+veJqTpjMFRVugYtaxfUxaYoc9q6xhl97RMvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ix3+7jXqXudtB+1zTjW4xONci8jKWPa+RA6oGqMF9Fj57RiQ8yseN0leNB9IOZgxJ
-	 YMnbA+4Dr2/eOCl2axK2oCsTiq8flid1cOaFMdmJOMGLJeqhBchE06cmddr0bfoOwv
-	 +cD5PsUmbTO3FQNgx9CCGtB607oUzvJQTBKt2c12NQIOmpETm/D6zcxt9dFZ+kv2sn
-	 +cRyT2uHb0stV6iOhFaCuswwDg0UDNCElLvBOjdXjnV3NZXrpRN2LrgE0zfyXVYqXf
-	 zHtBJVmieO+cEWqpm1UWCl2ONfUcOY1FD0RuHyYJmQJkTEd2C1OXlnM1Bf90m3L6TA
-	 HUbwteYWjP94A==
+	b=j6zCXuLXskRg2UAfyCmySlRFsTiic2B2JM1s4vxoROJuyOTUNQiehpisUMjkagay4
+	 pP1neCOoR1yuAuW3ZiHyxpYMFxFyUsUt+dG3R6k7FngPJdNY+9IgCn93qqmGKLj1ia
+	 RS65UhonXKGcXJB1C12vLIFVBl0YEtUcEZz/fvNOHnA1TJ1kJV/7kMxmGrnvLelWpi
+	 bVEGqveRYRVvsWOFBYcMSonH/stuG6GK5llJ0ahZoQW73Ci8iQ8peIcVphIMkSCZ5b
+	 t61+jNibC73rhNSt3JZs40kkukOwDuq6cCfwJPqf6VcgCfZ0nkMa7S3/Fvm5LfWDHY
+	 +rpKlkki/4k9Q==
 From: Lee Jones <lee@kernel.org>
 To: lee@kernel.org,
-	Paul Cercueil <paul@crapouillou.net>,
 	Vinod Koul <vkoul@kernel.org>,
 	Frank Li <Frank.Li@kernel.org>,
-	Alex Smith <alex@alex-smith.me.uk>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	linux-mips@vger.kernel.org,
+	Akinobu Mita <akinobu.mita@gmail.com>,
 	dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Subject: [PATCH v2 10/11] dmaengine: jz4780: Fix descriptor cleanup on hwdesc setup failure
-Date: Tue, 17 Nov 2026 16:37:11 +0000
-Message-ID: <20261117163809.622249-11-lee@kernel.org>
+Subject: [PATCH v2 11/11] dmaengine: dmatest: Avoid unsigned underflow in min_odd()
+Date: Tue, 17 Nov 2026 16:37:12 +0000
+Message-ID: <20261117163809.622249-12-lee@kernel.org>
 X-Mailer: git-send-email 2.56.0.679.gc527c65306-goog
 In-Reply-To: <20261117163809.622249-1-lee@kernel.org>
 References: <20261117163809.622249-1-lee@kernel.org>
@@ -67,59 +64,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When jz4780_dma_setup_hwdesc() fails in jz4780_dma_prep_slave_sg() or
-jz4780_dma_prep_dma_cyclic(), the error paths pass &jzchan->desc->vdesc
-to jz4780_dma_desc_free() instead of the newly allocated &desc->vdesc.
-This leaks the newly allocated descriptor and either dereferences NULL
-when jzchan->desc is NULL or frees the currently active descriptor while
-it is still in flight.  Furthermore, jz4780_dma_desc_free() derives
-jzchan from vdesc->tx.chan, which is not yet initialised before
-vchan_tx_prep() is called.
+When either argument to min_odd() is zero (for example when a DMA device
+reports max_xor or max_pq as 0), val evaluates to 0 and val - 1
+underflows to UINT_MAX.  In dmatest_func(), this sets src->cnt to
+UINT_MAX, which wraps around the (src->cnt + dst->cnt) >= 255 check and
+causes dmatest_alloc_test_data() to pass 0 to kcalloc() and dereference
+ZERO_SIZE_PTR.
 
-Initialise desc->vdesc.tx.chan in jz4780_dma_desc_alloc() and pass
-&desc->vdesc to jz4780_dma_desc_free() in the preparation error paths.
+Return 0 from min_odd() when the minimum value is 0, and abort
+dmatest_func() if src->cnt is 0.
 
-Fixes: fc878efe84c3 ("dmaengine: jz4780: fix resource leaks on error exit return")
-Closes: https://sashiko.dev/#/bug/linux-b39121ef-5ffb-401a-9d04-0afccd467bde
+Fixes: 8be9e32b310c ("dmatest: adjust invalid module parameters for number of source buffers")
+Closes: https://sashiko.dev/#/bug/linux-ca967586-4fc1-47a3-8616-4a9d21fe7455
 Cc: stable@vger.kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 ---
 
-v1 => v2: Correct the Fixes: tag to fc878efe84c3
+v1 => v2: No changes
 
- drivers/dma/dma-jz4780.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/dmatest.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/dma/dma-jz4780.c b/drivers/dma/dma-jz4780.c
-index ac2094e65ecf..c3974c825ba7 100644
---- a/drivers/dma/dma-jz4780.c
-+++ b/drivers/dma/dma-jz4780.c
-@@ -248,6 +248,7 @@ jz4780_dma_desc_alloc(struct jz4780_dma_chan *jzchan, unsigned int count,
- 		return NULL;
- 	}
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 2ae3469397f3..5f768bb9a29f 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -457,6 +457,9 @@ static unsigned int min_odd(unsigned int x, unsigned int y)
+ {
+ 	unsigned int val = min(x, y);
  
-+	desc->vdesc.tx.chan = &jzchan->vchan.chan;
- 	desc->count = count;
- 	desc->type = type;
++	if (!val)
++		return 0;
++
+ 	return val % 2 ? val : val - 1;
+ }
  
-@@ -379,7 +380,7 @@ static struct dma_async_tx_descriptor *jz4780_dma_prep_slave_sg(
- 					      sg_dma_len(&sgl[i]),
- 					      direction);
- 		if (err < 0) {
--			jz4780_dma_desc_free(&jzchan->desc->vdesc);
-+			jz4780_dma_desc_free(&desc->vdesc);
- 			return NULL;
- 		}
+@@ -650,6 +653,9 @@ static int dmatest_func(void *data)
+ 	} else
+ 		goto err_thread_type;
  
-@@ -426,7 +427,7 @@ static struct dma_async_tx_descriptor *jz4780_dma_prep_dma_cyclic(
- 		err = jz4780_dma_setup_hwdesc(jzchan, &desc->desc[i], buf_addr,
- 					      period_len, direction);
- 		if (err < 0) {
--			jz4780_dma_desc_free(&jzchan->desc->vdesc);
-+			jz4780_dma_desc_free(&desc->vdesc);
- 			return NULL;
- 		}
- 
++	if (!src->cnt)
++		goto err_free_coefs;
++
+ 	/* Check if buffer count fits into map count variable (u8) */
+ 	if ((src->cnt + dst->cnt) >= 255) {
+ 		pr_err("too many buffers (%d of 255 supported)\n",
 -- 
 2.56.0.679.gc527c65306-goog
 
