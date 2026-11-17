@@ -1,93 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.29
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794939198;
-	b=GbvoDDv4A5ZwxhYnUYlBxq6hscdLI15UeL264VoMmWlg0VG4+rcaccracd+6od3Qg1JG
-	 CYBkNyk0Ufzz6UNHpID3bOjcGYMOuoSBvO81xlfvakDErdawyVsAwNNVJkj/tfoP/Da82
-	 kwExzAM2xB3i38mU6Jkf4AVDMiAX1L5n02+dSZvabRsQ0NYxNO4lVsh+LH7IgmoggZpjj
-	 gkcWNESWImdpVC+JdTfqmRxtNqFRiizF9mhSzKo7GNFY6P/4pVxpWvLy9QpnwoiiRiY7M
-	 cZkyGCRK/kPeuOwSWURCu+dBhR3RjRgnxoi2UO3N5r9Kt97t12tKs24lLX2r7jEIQrg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794939198;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=OW87j3lO4AP1KW+aUA4a/5Dk1YG7RYcrbQjqZEfZC5g=;
-	b=Jv0B6jIML1xVfcmKV9lNLrR7EFYAMn4JUaQht51LBVoPvtJm6vX2MARn1kb9qtPRYT5o
-	 dw2s0LEN11+KTNEaQF77LRaPE4EtZzC5/g5xumW5601mszhxc6MthCrQsv4F1j7sYkvmq
-	 u3hQYVYG9s2RsojE3x3BRHbjVEV8UsBwoyPiaow1TtmXZZ98BinR5KKpzaEXNzjYM8Oe0
-	 WVVnkCL1thOYuJ3pXE0X7Mnz8ryFLdFEscr//lTLM9ywsfEQYxiOrgJmxdJHVA0aMVLWy
-	 mEwzQgQ6Porn49cAScB8wDmz0bMLBufnGgQvnnnQMJ79W97xZnRTrJDACE8Ps10MQFA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="KIL/HF/Y";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.29
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010029.outbound.protection.outlook.com [52.101.69.29])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.177
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794939421;
+	b=Mx4KTITWrDXJvd/THLTVr15iMylGgJqvFyETqDITEHDAy7YErwVp0ttxc7CmlYEVaUuZ
+	 Uu7LIKCcdflvWuundfStGNqLGeFRC4/aaGOvHp0B1rDalDZn/4ofIvFSMeKxuEbzaXba4
+	 o3/WO431LrdR321Vv8v/tAbgiMHflkEGKE1gNkJVh6qHFe85pgt6Fcl87/yxB+niA+paE
+	 3hR5AW8tt1gRP2/XTv+MTFewAKPc0e0S24LFbR85eaFNmEnINCbPeXpSaXIHzKXUUvyI2
+	 Bxpz2DsU4MTRJ8KJ4hYCnJLTXF7cyFXLwbQXqhcHdudJx0LGPnqEKiDZnlTso1dSJ4w==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794939421;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=pepFJC4WupF41wk+cSidNw5vmFTw1POO1gRenleZ+aQ=;
+	b=YJH23mU+IwCNQZnC3eQbThEdLldLU3S77CV5dDFcNAlpJYhVKzzXtKMXhgl/N9cKoEmP
+	 ULF3WyrxgAPE/+Zi+5PRn0ZgxvzvPg03qP47ZOuVSKremc7dYDFj85y/d8cfv+jSXCaqA
+	 uqZt9lCs91eGJNv7zFQ9z3JObFGxcw0+Df+Yg1RTWctAAWsQRnnOFelVaQMwEEMepihLK
+	 KV92z3WiapZ/U/zz/rQRMChXsUJptzEjhhUA+sQ7rDfBeJqmiOPiibv9+kNGGXAx4HFCL
+	 JRdpSN7awDZ7zPd710O79fnm7VwikKFy7SP7qjKv03cck5ygI+dbbEq2MVE5tu84Bjw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=ziepe.ca;
+	spf=pass smtp.mailfrom=ziepe.ca;
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b="oR2/h2jA";
+	arc=none smtp.remote-ip=209.85.160.177
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4209606A31C;
-	Tue, 17 Nov 2026 18:13:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4209606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E291A606A339
+	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 18:17:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E291A606A339
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=KIL/HF/Y
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J2rPaR4LdkqQm2LuL8ld6iP04+LeBW3dkPQNc6OXlsGSRoAwZpH7bAveoTcYo4AFAcgiNVIaDElhPdXcE9Guxb9b73vBuxbBvUuMzFajB4f1lyRdfzIVyHMQw6nkHfv6r80hXqBu5g5FvrOUVzLfydS2UF521pQPCDYfqZOm99pWDvzD/pjq0LqD1+vU72jbZYtTGLx3CoISGRpgdzAOb6AaI7E1EYhXGZy95vBKpflmVuFMLCSnwZgAfpxye0REGjs15D9Kt5cbKY1dntA2YH3bgGwsV1XhA3bV7JSlpzluPi1h1HNrqq7czXrWwy1qXIJidgvOISyvxI8/bv0k4w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OW87j3lO4AP1KW+aUA4a/5Dk1YG7RYcrbQjqZEfZC5g=;
- b=l4M7JjU+o4MO1LQDH6Y6v53mm7r8aENc1I7KBvbOstZL5JVEVY0CUDiqamH5wnFGomRSMfWBQF96Rq6KCjXjKxXAu8NhEr6kjKJVHXT+Btv/uoYo0Atae3BA4ALx5s3X/5qALHRGPt43LYBRNQPHMKZaTJu2gYQcNtP8OC7NfMbTo2biKmHdos/QmDw8/9odSqBqC8GxYW2GtwAGL2ORg610lsTHEdS7tuFKXJW06+EQzw4Wi3jXuK13vtZyiG1rwmXemzJHdubWe6Hw52CXQbwYIorm3gHv9cLys082OkofNbZQOB8npLN6aLjM56WHtvkmFbU7thqD2oeWUw06HA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OW87j3lO4AP1KW+aUA4a/5Dk1YG7RYcrbQjqZEfZC5g=;
- b=KIL/HF/YctJpj69Era1wfKgmS1K2rFY8BWprn5tfkWecSKHN2iGAa5XvgOwIfPrvyV2Udzj8C7BY6vwvBsdEcegC+VAPLz8Pigfb9xufY5Oy3A8Y5MER2v4bTPWpMlJPMuvnC27TC/acbxkCtnL5mKFtF66wbRleOXPh/W4Wu/6Ys0EJOEPk7cS/zyJMDNkKeWdQf4ZYuDpew4NltIPa7+gCB9BC25jdnOmIxjV9Y2vK1yyhoqsTMTQdxDqNEZHB6Y0yJWlx7kxwOFi4yS75CDPBPmwpzngtkEOMCU7ssywIchh5DYVGeyTnnWg2Yc+ckML8xOLz+jQUF019DvjiFA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by DB9PR04MB11663.eurprd04.prod.outlook.com (2603:10a6:10:608::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 18:13:15 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 18:13:15 +0000
-Date: Tue, 17 Nov 2026 13:13:07 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Alex Guo <alexguo1023@gmail.com>
-Cc: vkoul@kernel.org, afaerber@suse.de, mani@kernel.org,
-	Frank.Li@kernel.org, dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: owl: Check IRQ lookup result
-Message-ID: <avyZM-6gM4amnQMT@lizhi-Precision-Tower-5810>
-References: <CAAi4Z-d5eV8FM5sYJj1gqudWyioF++fG8P6uGX_LxbiKSXjekw@mail.gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAAi4Z-d5eV8FM5sYJj1gqudWyioF++fG8P6uGX_LxbiKSXjekw@mail.gmail.com>
-X-ClientProxiedBy: PH8P220CA0017.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:345::21) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=oR2/h2jA
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5364042eecfso1033651cf.2
+        for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 10:17:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1794939420; x=1795544220; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=pepFJC4WupF41wk+cSidNw5vmFTw1POO1gRenleZ+aQ=;
+        b=oR2/h2jAzlatMI8qr/+m1DFzN+AOiaSQgHdPXWe5z72GMo9l1CPO7f/2XlVcMdb/B2
+         HRmaYUUcJTaFWTfKUc8Xk+XLRDQ4qs8suoHcYjExtCJ+bUPN22DItmiL//KxCV9mJkxB
+         6uPBt9ZUIYvq6BEgYq0HPaAgB9Eg+HXh3wQOyyqXrlKTb8J7Fv4BcnJP47XUrI/ppZ38
+         fWF5w0hkc/gBrxi3nFI852j0wmuAewg0IU+JVmVMRM6eqUl2XzkYg1dx2IUJOZwh8izG
+         n/Nw+wIYfbB2Yh4xAMzqmPTFplWOwDEfXGfAYloQ+zAopYlpZwUpFUXTPl2+I786AYPM
+         FmsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794939420; x=1795544220;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=pepFJC4WupF41wk+cSidNw5vmFTw1POO1gRenleZ+aQ=;
+        b=qHoCwHwwnhWr+YbzG5AYBQC6gaaY5zWK2+fsb3Sngwf6O4c/RQ5hN1QPfnq4ofeleP
+         AUa0n29LgzMui+0WnRlosgwcjY/OQq6jew0ooxNhPI+JaRRNNNJhyEUHMSuRdq8BvOvH
+         sbo4IgqQu0O1Ovk+GysGSM52u8ukibUSIWAZkFjBevqmYvcjdZHGkC1YCNVqMZkQPWDH
+         kr9N47L7Ytv3Y48c7/kLzELqMBjO9+r8CUGHlE666mhDGhDG18XJpHXBR4hjzsPsyoP7
+         YGM8B7PYRRae2wLg6+29mVzCMJnDBH/HuwjVpTU1mcS24KKrHA0B/x1QlQ4+3wUxGC9f
+         29KQ==
+X-Forwarded-Encrypted: i=1; AL+hErFlOQzbQWeaKmKOBneN/uyjGL65LhKrvNIDvp3RQrJPEyWbly/u4C3nZqNPQBrJLS2ddbb7YPYsM/g=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8njVGV1jDVHMwHdbWL3i0MxFybHGU5UkS0cL7QD/DrHrcJd7Z3
+	w2AHVzHS3inuYMoDa5JChxWk95X/BXhq/g1PpNe7WOsJ+Pabj+fPfwDaiEtbzOAl5Y4=
+X-Gm-Gg: AYBFou1jQt0eodoFypU8Ne276RktEsM3g2KO+nApipKJyveINc9jtyo5l1MBrRGXEEd
+	SSsOM2eKSEWuXvt46n+mDYv1szVxYG51l1vIVinjjWLhNGilquNtcYo22HXahoeXuh+Bwpfc9YS
+	ogKQeEk1M8UMZlVObSGXqwDME2nj8q57sjqU6vkI0iG/1vyBu+HVwTkuUG6A++04jK5RAJOM7uD
+	z286DINpqpofY/JxHRanjkFFm4yyd/CyHOUTmnVxbZqayPx+NyNNaSklaq37DEUwtOZihdWNKEu
+	b5vjGVuYo2s/8Fgtnu+47rZ7Z1ncJpyZpze+IPTh2furEVWxfsaVW6yp5/tFvIJL0fV+KOCTv0u
+	xzrYLcjBE2uBom+wFjO9OFKTKbxoTfyWbVXQbRtwfZePv1VBGLjKqLpMLCSkqizmgkWaz2df7+O
+	UcBtQXMZtlbmFiM/jrebsmd+s273Sb2n427A+VDv2OwD7FIFrOCygA3dHiGq09/9VeAL0UNYzz8
+	OsYrd1Kl1Qg4/lRgDblVHZchiwm0eJzpH4wNkZs/jMOhbq3818Du0H7JKLhQKo7Uy3K6Y+HYnWb
+	/5VLMQ==
+X-Received: by 2002:a05:622a:1b10:b0:55c:3b4b:45 with SMTP id d75a77b69052e-55d5a538613mr1980541cf.24.1794939419724;
+        Tue, 17 Nov 2026 10:16:59 -0800 (PST)
+Received: from ziepe.ca ([142.166.156.71])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d5907ee6dsm2590361cf.19.2026.11.17.10.16.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 10:16:58 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xTNjm-0000000D0qg-02mP;
+	Tue, 17 Nov 2026 14:16:58 -0400
+Date: Tue, 17 Nov 2026 14:16:57 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Peng Fan <peng.fan@linux.dev>
+Cc: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>, Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
+	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH v6 0/9] dmaengine: add DMA channel bus and fsl-edma
+ per-channel IOMMU support
+Message-ID: <20261117181657.GF2606445@ziepe.ca>
+References: <20261112-edma-iommu-v3-v6-0-b038edb8ce6f@nxp.com>
+ <20261116193021.GB2452510@ziepe.ca>
+ <avwQl18smAW4R6ec@fedora>
+ <20261117130005.GC2606445@ziepe.ca>
+ <avxs_TU6FHn7MMx8@fedora>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -97,99 +121,65 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DB9PR04MB11663:EE_
-X-MS-Office365-Filtering-Correlation-Id: 56a407b3-fd9d-4e2b-7325-08df44d672cb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|19092799006|366016|376014|1800799024|18002099003|22082099003|11063799006|56012099006|261028144727099003|261022105027099003|261026140227099003|261021121427099003|261102123227099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	PQdrGhBGgt9Dzm1z4CMZTE7GVPy2TCu/ZHPhkchPyaguuHmSCZOIn/jBBGypErzkNaKKiEfap+o7+0diOqXBjLHOpWOS+wRibkM+VtY24qNFUzQxviK8J6NzlZFGeI+lRaFMIZjAZ/qWHAM9zUr/pI+ygFLUxA+UlTNSLAOp1nOy5/fqYMaGd7duJicoNoezF0bxpbQDeZa7gB1EXF9M4aXxNKdTouhIanv+e7+df7TpmVC+D7hmMWIa5l/PY0hHVBKiq9KyLkQqueB/sB2KMdtrSw2x0Y8MkfwCd5FWcOUZK2f4CCKYklQeUSU3E/J4b/jWQASUkbP8gKt8NZfrzlUT3WuBoZAmU1E/Yzq9I5jK4nUVMwHDENkglyLmuKRhRUk8M9Vw2HJTZ0wKXbJFzcrasftNsMtQRSA+2dbh2qDQSYu2Mi5m2vBNjmxMDIteKdFyOG5oQcWG3i0W5RHLCpVLkAu54YfyV6Txv1q3WX8Bksgnj2fpKzvTdi/pumJEDTNsTt6YENrtReISM/cZEHkvyLDBRVLO5wx9EoBLakZMehgN7SCdXm23uAZ8RCqpdUnnzCgvFv2zB56MYuR+XtZOFctff2UXEozHWisPpk5r6Z/+uODb6VpjfBDbN1uU2E4gUIjSTEH0oTGLWpx77NM7xV+2QnAg109cp6/gyo4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(19092799006)(366016)(376014)(1800799024)(18002099003)(22082099003)(11063799006)(56012099006)(261028144727099003)(261022105027099003)(261026140227099003)(261021121427099003)(261102123227099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jfUCA1lD7lz+uN3evUsFKH7CBXn1ZNBcMV2dqdvjOH2xyba7GOQJR2vx4SbD?=
- =?us-ascii?Q?tzp3IUfCVMKo/FmMDpsnufxTop7rsC4HbI+til9igdks06/gHYegO40z+n0K?=
- =?us-ascii?Q?8a+gqvWUq/uxBZEjbSNlNCHeIKUf9r+yJP1eLY5jTa2mxmmZw/obtBqSkn66?=
- =?us-ascii?Q?poableEXaHG/w4bwKG3upwoO0n5llRLeWdxPW1ASqE21ZwNf9ghmSsVRxnZW?=
- =?us-ascii?Q?Qaf2bzUlJAVG6/S1gv4nNW0i3kT3JmH6IX3DNUvxgTsh0JmJxARm42ssp6jz?=
- =?us-ascii?Q?ZsVcKjvKgNcmg3qkdvgT/KKmucFBbAV/5q6x+IV4lJ/1McT5z5MStO1D1PjG?=
- =?us-ascii?Q?F0hgRntMSf9IP1RNhifhDuUbtx5F8GRnekld+RijZI3aGHOUDpjGKW8duIIi?=
- =?us-ascii?Q?JCwgJSBNzyf5v+Hbs1c3o5w4kRBUR1FSHZCSfNQnf5uCpumPqVGibARsBTtW?=
- =?us-ascii?Q?ZsD13km3TkWLGi9s+Yh7w+V6nWHA3TV384tjUn2WismgPs+C3TBi5+xvwPNV?=
- =?us-ascii?Q?RV5+mtZ9BHwys6c6hYqiSLmxgLnj0gxxnC9WfOtBoNLpiuKpWdleheLfGC9a?=
- =?us-ascii?Q?uiAfch5b+6juPi4aiMDhLFj+m3lpQnGP6XNls2kpvvcgNQYkfTdc9mezAj1N?=
- =?us-ascii?Q?MRR0U1hudk13GSca4e1FvobKT0gBIhapjk/y7CY0roQ1N9r9jGbf2zbVrP40?=
- =?us-ascii?Q?dOQo5K3GnywqR0cMwT7vjq54jABqI74nuv+hkjN8fewqetyQ6Ca1ZGJsXDTS?=
- =?us-ascii?Q?ZFhslG2HRwdsr6IoiFnVGv+ObkI0S1ge8qXhXQ3zL5RF4yLY3Lc7tOzRzd5B?=
- =?us-ascii?Q?xBviVLumws8zG8USEY9WFcRfGjjvT/BVVNzyB0BYhTcBlR3hC/KajEkvkac/?=
- =?us-ascii?Q?HHSG6Ic26p9IL7hvcFYBtpVpuMoT35yQq3GxW4q2+DZQuVQ3anGczQd9h3EW?=
- =?us-ascii?Q?Gm7ZKt6OCjKShzAP2p1SK7yU1/jc5FE9eUvMqMlg1SlkvbHK/HK8pBu0di3l?=
- =?us-ascii?Q?CPvO/TKeX7teJgANkpOldclLXju/Yl8Brtj3tARXcfLmY3FazT8+6jL4ACBs?=
- =?us-ascii?Q?e8aZeSxLL+iz6rC1VX9naASBWBDntUuYrThBh8dm7TWY1pValOqqrz3TrdbY?=
- =?us-ascii?Q?Y0jjVLKDeuCLQz/U7SCmdVtpzWXNmXKnxTEtOS4UuhyOdgwbggrMzoKFakRV?=
- =?us-ascii?Q?eljSZYKO4IKkFVcFOGEnIA760jrHTa/jaLWpvnou9/DTFwyWoyUvsj+xS/8J?=
- =?us-ascii?Q?byLFr5TVmcpVsX5ZHU3ydvXXF76EatwaA3jenyuMYkm/9JU7hQSozyCA6gEI?=
- =?us-ascii?Q?Y/4sOvRekZ+pfJO17LbmEVzcw0Sn4iOn/WtXOBUzCg3u7WfJOQWlre+xFh+t?=
- =?us-ascii?Q?yyXGF/h0gETmXiGNkylBZQyF12MoNqt1anLHH4Nh7+2td0UpIMwJ5/YD7PY3?=
- =?us-ascii?Q?fG7z1LRSO+TFgp3/rUVr8FnS63DqUvFCl8DPVkPKv1fnO7pClml7gE04kIIj?=
- =?us-ascii?Q?gsMeSWJFOW+XRZ/fYXBTi+W6dwheL8LezgUFdTYFH6Dnri+T26f+wOYK2fKu?=
- =?us-ascii?Q?wMXxaQ4ZSOXVem28UHcSFTnBvh7EIal+ZKnpz2c5+qayQEFaXkUP+OOo1esL?=
- =?us-ascii?Q?zY+UJ9UuMGczML3Sv6Y7WxrXMwS0riQZRqjjKaEXtVZuyRqs9tv6oHJqmSym?=
- =?us-ascii?Q?rVxAkljjatfjQjOuxfzzNY0YFNuVBl97+75mrIFQkYnlwn6JtLu+3DJdQeBW?=
- =?us-ascii?Q?m8ZQpFtZD9oO+0geVbMN4a4NsRA1szmAQWvuq9QUV/qcwEfYh3ng?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56a407b3-fd9d-4e2b-7325-08df44d672cb
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 18:13:15.0188
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cn2H9XWKcAm09125WtCQewuzLonW2NuPpaJuZqv6EVJ+NqraTAbLsW6g9IiJCI+W2v3I5E2SA3CL3BY1d3nb8YP6kPO9yBqwiyH1pTp+WJ4cZ/7yb2vMsONL5Ux/aG7g
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB11663
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <avxs_TU6FHn7MMx8@fedora>
 
-On Sun, Nov 15, 2026 at 02:45:05PM +0800, Alex Guo wrote:
-> owl_dma_probe() passes the result of platform_get_irq() to
-> devm_request_irq() even when the lookup fails. The request can replace
-> the original error with -EINVAL.
->
-> Return the lookup error before requesting the DMA interrupt, so a
-> deferred probe can be retried.
->
-> A similar issue was fixed in commit 47c3e06ed95a
-> ("spi: tegra210-quad: Fix missing IRQ check in tegra_qspi_probe").
->
+On Tue, Nov 17, 2026 at 11:04:29PM +0800, Peng Fan wrote:
 
-Drop this paragraph.
+> - Keep the DMA controller as one device and describe its channel Stream
+>   IDs in the controller node (ordered list, no per-channel child nodes and
+>   no requester-ID map).
+> - Add a generic dmaengine/IOMMU mechanism that assigns one of those
+>   Stream IDs to each dma_chan_dev, so the channel gets its own IOMMU
+>   context/domain without inventing a DT device.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+IMHO what you really need here is some way to get the DMA API for a
+"PASID" combined with some way to convert SIDs in an iommus property
+into a "PASID".
 
-> Fixes: 47e20577c24d ("dmaengine: Add Actions Semi Owl family S900 DMA driver")
-> Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-> ---
-> Build-tested the affected driver object with Clang 18 for arm64.
-> No hardware test was performed.
->
->  drivers/dma/owl-dma.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
-> index 31a6c6e01a75..daea82718229 100644
-> --- a/drivers/dma/owl-dma.c
-> +++ b/drivers/dma/owl-dma.c
-> @@ -1156,6 +1156,9 @@ static int owl_dma_probe(struct platform_device *pdev)
->          * simplification.
->          */
->         od->irq = platform_get_irq(pdev, 0);
-> +       if (od->irq < 0)
-> +               return od->irq;
-> +
->         ret = devm_request_irq(&pdev->dev, od->irq, owl_dma_interrupt, 0,
->                                dev_name(&pdev->dev), od);
->         if (ret) {
-> --
-> 2.43.0
+How exactly that looks, I'm, not sure, but you probably do need a
+struct device to do DMA with as that is integral to how the DMA API
+works.
+
+If that is a real struct device or some proxy, I don't know. Long ago
+there was some work on this topic and struct device per PASID seemed
+to be the direction people were interested in.
+
+> - Use the SMMUv3 shared-SID support (still under reviewing) for channels that
+>   must share a SID.
+
+If you get struct device handles for the SID then you don't need this
+at all since you'd have exactly N handles with no overlap.
+
+You don't need to force the struct devices you want to use in the DMA
+channel's model to be exactly used as the DMA device..
+ 
+> This keeps DT describing real hardware (the controller's SIDs) and moves
+> the Linux-specific unbundling into the core instead of a per-driver
+> binding. Each channel occupies 64KB MMIO region and works independently.
+> With separate DT node, it will be easy for us to do channel device passthrough
+> when using Xen hypervisor. Now moving away from this, the remaining question is
+> how to expose a channel for Xen/per-channel passthrough without a per-channel
+> DT node, seems I need to add some code in Xen hypervisor to support channel
+> passthrough.
+
+Normally you'd make a VFIO driver for this, especially if you have a
+"PASID". You really care about Xen? It is so weird in this area?
+
+> >Again, since this is the 3rd - 4th case like this, it seems like a
+> >popular hardware choice and we should try to do better to make Linux
+> >support if we can.
+> 
+> Yeah, I saw QCOM VPU case and thought child node usage was agreed from
+> Krzysztof's reply. So I use same idea here.
+
+It was but at that point it was the only one. Now there are two QCOM
+ones, this and maybe another I forget.
+
+Also, IIRC, it wasn't quite like this, the DT was supposed to create
+real platform devices. This kernel creates struct devices and attaches
+them to DT was the first idea that was pushed back on when it became
+too complicated.
+
+Jason
