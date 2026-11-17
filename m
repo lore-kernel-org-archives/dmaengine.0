@@ -1,112 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794936524;
-	b=ZyhFyMLT+1K3JpBC9q7Eigvd29fWQuRvBk/sdXD74yQNY7VNoFc66XEODFljQFZJVukd
-	 d2UYwcJjPkjCSn4yyqNnYYl5rGzvo+srAXCquhyJnXpwY37REMcJeJdymTPfv8qlaS6CB
-	 oJ9SzMMS5DJ1ohZYV/SmbItpxl+OzDtgjD/SlY9J9hvdBqvVrg3j+yamJv7d/99F63eLT
-	 c2h869sVPoum+d8QSjtJGqo5IB4gJIOA84Zn2sUzbcZcaRmdu5Y3/ObIsH0MeR2bBq1Ca
-	 Ubw0/Zo43I6Z/prnGD58Z+CN34n3l6i5VbYQZ+rVL7z9YN/H9+W1k5D2m5OZK8Yr8Xw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794936524;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Authority-Analysis:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=m59IIPBua2w7sRwklChTFwkcB8b0jQnLsj1mDH8BTZU=;
-	b=QfHKiTXDAtI5Kp5W/or+P1+3LVkR63OC0kY/Z0YZ87+bTb66+8jh9nrLFskHTzqaDK2L
-	 O/XTPQzOCn2J9m0iyfU3GvI0rX8HwOs7VdbCrk8m1Jc0aIw2PJ4PnOdPzEqEDmzSk9NXJ
-	 zhqpfnx+BvOf+CuFKbfa+y209DE+S6AXyjudLWdgQVZQgYqCuDVk6xoCgcRUXbX6xuR43
-	 SqYh4fRimhvNXgLck/fNQctcrx8OZL0pU0PtP1orlER84UmzUvZvLg+isP0l8s/53HPhd
-	 UhMm302caBQre9iHYHP984j5X73cP9NL/LAUpnJyD9hVwZX2+uyc8OoybyxbxaVhukw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HJnEhgb2;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HfUGYUI5;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794938388;
+	b=yBDkjVdjPM527xSPUtupFgLVzBUpcZz6P2NWBf0FGLSHaMzuEUkInALFHWGwDDG/h6W2
+	 n8UEcoYWAZh8Qlj3MBeiqxTxwV8m2Hgu9axOz80LVrg0HUkTuuufcqD+XtylwVKJsXDgy
+	 VOJPhaq/8BKzrB8cEd1+Ryrhaepy0HvXG2YAp4HjCk58AnYa5AWlWG635Kn08j7Qdh3fP
+	 jiSw0AQIYHXokDZ4Ikma5tA2jRIWzY1eqWVYGu9o2Hd6/CppAVkbshg3y5pJRSPtFRgD6
+	 tSAo+uGKqHruWmbwkk0hycmyMNU+YZb4yFB7m01ZrCl0Et2KaZw67rhiExgqHJTLffA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794938388;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=B2T5SEmhoR7nNnYCSXkt4w3vpbti48DzRL0exdU3ihE=;
+	b=ZwIYLiuTLkEHlh6Y/5DNDWhhw2guuTa4Ug/osUv3xmsXHb/zMpjoaMePGB1Ss3p9JA7y
+	 DEFNOiQAX1asSZc7UVJUae++f+mAB23LzZDOdL28RNCuMuuE24+I1DuW8VjM+7pl7iDuq
+	 hNTEnGPa6KuOCzqfC5zefWGXQZTgHu41P4JfDqBwrYHTuu6Hl/2lcKzAOq5bhPy9F/xVp
+	 +FYN8ZAxBg3a05YI3WMf29pTToEdQ19w/M83GZ1IGcYnqkWA4kTWcGSao6q9tosElLD6+
+	 gxMX4KpN3yjkx0GqP9sLmnn5UxLEr+N/723ciLlYDYRTLg9pgTTOXJ0bPO5hU/oQzzw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dJIRysDw;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.18
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013018.outbound.protection.outlook.com [52.101.72.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AC8606A33D
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 17:28:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59AC8606A33D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EC3606A31C;
+	Tue, 17 Nov 2026 17:59:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91EC3606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HJnEhgb2;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HfUGYUI5
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AHFQe3J1916197
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 17:28:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	m59IIPBua2w7sRwklChTFwkcB8b0jQnLsj1mDH8BTZU=; b=HJnEhgb2bdQlZQjE
-	Kj3chHu8kiRM9GDtJyJ5j9eKdiU34ayyp8yocjjJ7NzMEMGXXjAHYO80adE+dv9l
-	IwJTnWmRmS3mqivaKRAv9BWXSSNRwn0Eci4Zw6+gFmIn1QNGapJWYw1ipIMM0yPw
-	5VI1WASclYFa/UEoqv/95IlFHkMNgNduE46RommRNzv++Bb0JHJm8tTK+i+5VjlG
-	l1OZ5l9tfLTzX6DMAzKpXp3SRPqmjcDZqfU7P6Fj4FAavzqznt9ERRV7m7wCH2a7
-	ZaARfp83EReIFAkOvHx9FYGgaBTdXWf/HkRLwcrdjsnoFJfmNYWzS0BTL5WYs3OK
-	EmOlfw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j0nc81t5n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 17:28:43 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-36f26e6abe9so136202eec.0
-        for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 09:28:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1794936523; x=1795541323; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=m59IIPBua2w7sRwklChTFwkcB8b0jQnLsj1mDH8BTZU=;
-        b=HfUGYUI5bLGSt3P0OKF7qFC2McEXz8w6uzdskEjdT5/RqHjki+Vjwd3M2kPzFpYBJV
-         ljJVhcQe4DA2GBubeOI8ZPUFuFqF12BS0/zQ8VfNUAmINC3Va/KJWqvU+BJaU5U25XxW
-         jrXZwkNSvSayRf3EjViWZt01FpPXEo2C2SWapRr6/NImR0peKh6v2WeI1EE8OtqC6uu7
-         IG2xJ9/IFl28qN8CfmUaCbJF2NHWiWi25s5bD4luOGMY9vA6Kizpr4z0RUGmttVrIJTW
-         IIHm4ueWzb0r4h4y8X2l0zM+acqJG7+jGUFMcqckQL+3ekESITrBJFTTJWvNssDsztsJ
-         tooQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794936523; x=1795541323;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=m59IIPBua2w7sRwklChTFwkcB8b0jQnLsj1mDH8BTZU=;
-        b=DccJjHqOYFvoKmuIBuxhPelpsl3h9X7jtRYHxxFa0gSMDgx3W2ukWMZPU9oJwAiquM
-         3ZErCRRPWHwAmvpSqpdB9DBcPBoKwZ0rrmkzsydUm9i140cbuawM4CFafsvIYNEN7VCE
-         +/7q4ozXEjSbOK4464hbPO8Sy06MMP5PpinogedoNS10b0DaI+eEuqp7FWwAhicolFVW
-         DTNpW9BzFCRK0utt/KkCzMCw51nqFstGUyH7PVd+CLYkhxh0eCceSq0NW3dXAbm0oSQv
-         DbngicM6VS6xkj53jUrL1ucJL8QN/onfg2xg0PTgvBSIvxQx3UDakge1MMDQHEElK0Rs
-         v0ew==
-X-Forwarded-Encrypted: i=1; AL+hErEk4q9ydrhasZiKMkkckMGEmDgpiZA/dlS94CSPzsL9mFxCKXXwQsUZyhU6jIYbtfBJR+jygQMng/I=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+RUMiFyrcsD23PW9cKGMuspbSkibN2yM3A9AtEd84mHAsBmYTQ
-	uVYAWhY3uEMgSBufE2UE4ulwusWjhJvQcWpEL8OtNrO0YR8EKqu1yknojPJgjKwpF/gllEZqrOS
-	fnAnB1FBuSiJ5RKuNqu8WIq8P08NdV0MJdWtVLIGoqdslBoUbGDyBJickC6W5Me8=
-X-Gm-Gg: AYBFou37lebQFW5SKgyvpwU0ot7AkfcJikwp4KiT/A9J/ztZIpsDOexK/2XB2nnfUan
-	UBBDUshNySujcJVSVzbWAD2jC9ZfFUoe5hJGTmHL9zbM2OBQA/hShebLQrqrxQZYLJtqtB8xxCY
-	YPDvvQYbiJ44E6qZonM6RtCbxwP6+BSTfKiTR7c4d8YlUGIA/umv+Zf3KEHGJad1lAj7AK6TbaS
-	k8fJKh7C7TWsqcW0wlf2CJfFASVE3Ra7ueoTDhEx/aLXj+w/zxlFappo1zkuYRkk5xdE5xYdUHo
-	QBMwYKzZpBQ9z8TkyUJIjAThrxdxcQJTXo/zFlirxuEReD9y9RBzQZV+R28lBcjAogA0o4L49JO
-	QPEy8GbP2PjrYI37RDEcslNRg0GsU0kpWrF4ut6BLPlECewKR3Yzq4O33hwR+MNX/BLHchjkk5F
-	ut2NaJs/D1J4+jeIcg
-X-Received: by 2002:a05:7301:188a:b0:37b:e40:397e with SMTP id 5a478bee46e88-3827ff7aef9mr93351eec.14.1794936521236;
-        Tue, 17 Nov 2026 09:28:41 -0800 (PST)
-X-Received: by 2002:a05:7301:188a:b0:37b:e40:397e with SMTP id 5a478bee46e88-3827ff7aef9mr93316eec.14.1794936520694;
-        Tue, 17 Nov 2026 09:28:40 -0800 (PST)
-Received: from [192.168.1.66] ([103.172.4.28])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-379565d269asm48943359eec.23.2026.11.17.09.28.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Nov 2026 09:28:40 -0800 (PST)
-Message-ID: <1d294300-0077-426b-9bbf-35e42861236a@oss.qualcomm.com>
-Date: Tue, 17 Nov 2026 22:58:29 +0530
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dJIRysDw
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cxfVNelie/ovzvAmZU/dGtJIVQUTQCJ3XxsmcSY70eJj1q5wZfL2EMjV1dzOciTpYBabrIbSQuYCj1yNN2+w0GGDPW3TC7NDTzKV86GeQvZ/ZDJ5hCVQwaArCXK3QWJs/O6UjGDnkc+4q0k6MFdJfunAZq5/anzQZ9D0sdLcTns4YKEHWTGZBrHy8w5HtWMMLP8bwC9d7htsmwABTbQgEkizB7wqIBH10y68ySc1Hy5C6gy9YNgc8efnt9dQRqpbMqwSMs+VMajrJjgGBAxGsPY2QMITnByEByuR2LvqKnDurMMTrWRaV6VcJ39H80KZyPvoAgZ7Ahg9NsPtuUUsrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=B2T5SEmhoR7nNnYCSXkt4w3vpbti48DzRL0exdU3ihE=;
+ b=RXml1ilYr5iTy90tf4L7CbRUtytEq1fvGxUxJHvYP+y+fC5hyuoxiBJx4jz6UGZxXJUeUZR/3GSkDYPBdX1jHChKbpFcTTgA94X+lRs+DqXKDqNn+ARx47SlMQnulH3CSfJN4DVm9ZP9yqWQMLW/S7HYSdo2yf9jR8kwdC5pn/86cxSPwRblWnMen04XiqJXkL+gDnxKui5bdLdon1Fnle8h8JSOUjMb6g5dhq6UsxLEOwbh0HV7QK5zJkzKSU3QgXhv8Q1dShpomsam8Z47pYRfN0x5N9EjUOjIbJQbsSPhtfq4LRv90n43mgD+YXphk7BKiwQ07vKTq7O4GcBvfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=B2T5SEmhoR7nNnYCSXkt4w3vpbti48DzRL0exdU3ihE=;
+ b=dJIRysDwy6Dvc7lbDxiII6BRql+e0jwmvyMEJVQiX6DHRHzkBePBY2Thz3YnQARjD/zVl3oX14y6cIkQZ9B2uSMC4pUbdf3z9fKVWie0kdlNd8HrimiYDsyMUFLSzFgZBGOO50v1pQMakgGVdJAntMZnyLciQGZTU3MuB2I4CQyZ6nrz64vTFIg/CI0Lzg/WhEgZAY1FbyLSvSrem/kK1u+YPN/Ms2y2XJQKLaPEq0LPMr/w3mBOhHMV0tEVrOu2XObW2j5okzZlIWOnHjXaYCA7NWbAcDgtjGdjByEMg+KG2Tk6Yg26qXi0iKdQVZrHQuLkeLUm3DRakFpWSbnFnA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by BR0PR04MB608003.eurprd04.prod.outlook.com (2603:10a6:2c8:49::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 17:59:44 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 17:59:44 +0000
+Date: Tue, 17 Nov 2026 12:59:36 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: Logan Gunthorpe <logang@deltatee.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.li@nxp.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
+	Kelvin Cao <kelvin.cao@microchip.com>
+Subject: Re: [PATCH v4 1/4] dmaengine: add per-channel sysfs attribute groups
+ via chan_groups
+Message-ID: <avyWCL7TzS9JX4Ys@lizhi-Precision-Tower-5810>
+References: <20261110173137.623764-1-logang@deltatee.com>
+ <20261110173137.623764-2-logang@deltatee.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261110173137.623764-2-logang@deltatee.com>
+X-ClientProxiedBy: PH0P220CA0004.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:d3::22) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -116,107 +102,207 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] soc: qcom: geni-se: Define the QSPI firmware protocol
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org
-References: <20261106-qspi_upstream_series-v1-0-21f43042dd60@oss.qualcomm.com>
- <20261106-qspi_upstream_series-v1-4-21f43042dd60@oss.qualcomm.com>
- <20261109-stimulating-oyster-of-respect-620b7b@quoll>
- <61646f06-87f1-48da-9b88-8898bb488af7@oss.qualcomm.com>
- <20261111-prudent-polite-shoebill-add35c@quoll>
- <b1b753ac-cb74-4b9c-8fd0-31777a020878@oss.qualcomm.com>
- <4060e67a-553b-4e1b-9e17-e6a742e62a3a@kernel.org>
-Content-Language: en-US
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-In-Reply-To: <4060e67a-553b-4e1b-9e17-e6a742e62a3a@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=LaipeTfi c=1 sm=1 tr=0 ts=6afc8ecb cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=kYVgg70FI5gtGbgwxQSixA==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=rBq-xhpCJJ2lye-X4V4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTE3MDA2OSBTYWx0ZWRfXyGhIxLyTsrh4
- DEPTje+2r9Vd9n0DneqdD6g6l9mZRe70xPWAtkM4gjGNmU7kBgQiW7SEEyHJWPKVmF9XSwVGZEt
- lEbZekEm/0p83VFj/kZQKIw0hfuv7XA=
-X-Proofpoint-GUID: tY4B-DFExZXRWg35_jIFc7LevdC0lyYr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTE3MDA2OSBTYWx0ZWRfX74Kh8lZsc5zi
- 7dA07Yn6mLlJWg1SJb38gCG8cyOZUX3twOEVRMv8Ogws5yLQVAo4qtQNbs5jA1SJY/sjkGkUXIX
- BGw5nqDo6tR38oS2oJtmcEMoBz+poWezo2Li+Y2kVe5rGCE+ZNGaF4J98//MRVCm14HTtxhQJ4I
- bXGnoV7eBZSG3ConVAgUuyisZfznU3LFY1CsvlmfjcH5LQDovVZ8RBaHH0KnEwfEWEBsfmECNwC
- t+NAkW7kuLds8b1YT4To+KxlY+ENdmHHCIDvAkrxRdZ20T141I3WVkTaPjqcg0iiMvHVQG8lHj9
- rqb98sszsUmPuYcS/05C1No6rAxXW8P2oGZZtGAvyiLxO9FNj0PpQ5xMk4pPz0+6kPakPSF7+Da
- 2ALjtfY09n/jjUrh9XnF0jvCxYuOvHXtof8rHW5p3qpPKPd4y+BsSx9j0kkLGTFAL2anWJvb7kA
- EVJlCdZ+YOGNpb3gKRA==
-X-Proofpoint-ORIG-GUID: tY4B-DFExZXRWg35_jIFc7LevdC0lyYr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-17_03,2026-11-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611170069
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|BR0PR04MB608003:EE_
+X-MS-Office365-Filtering-Correlation-Id: d35d0f40-6e23-43d9-ed27-08df44d48fb9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|19092799006|376014|23010399003|366016|18002099003|6133799003|22082099003|261009223027099003|11063799006|56012099006|4143699003|261026135527099003|261102123227099003|261102130727099003|261028144727099003|10067099003|261026140227099003|261026121527099003|261021121427099003|261022075727099003|261026130827099003|261022105027099003|261022113327099003|261021123027099003|261022115727099003|261021130227099003|261021133027099003|261021135927099003|5023799004;
+X-Microsoft-Antispam-Message-Info:
+	RPzNHdUmQ+wvosJsh+CFmBHmiKqh5QOMpFe99E0N3H63GQeTgXf4psR7i8LC97HqF6zrOKTV7rqcE1V9PqqI0TL+vezAKFN/DKSerFAo33c+ei33Kn5bpwfgNiTi2DZiEffVEtijELq2dR5DeOdM2unrtIqIMeXw/K11oY5W2giHCGQ+7Ppt8mgRdMYTcNLp0DJ89xIiqSwBPy8gQEi5DVdPbsJq/dvhhNIoSDUhQEDT95natDghxZYuN8sOuv+TCSQiGJN8LeV3JMyGncWASjHIYOz0pqDKVfeqBT9PqNNE+341Z8P9gfKzPhcOLd+G7r3oOP8tgBL2+2CqkOoZUwLdleRPYuUEQDJaDz8X8pSJs3VBzIEIDnf9YHL46hjhpOwhWX3JPi/KC2WXXR6tMTCxbMWGk2UhSU0BMzwxMxOBmyEL9JWTbGFwcB+loiXtXCMOn62IPCNIu+vPQiWtx8ofgeIv0qpC4HwWtL7lD0GWeUVJbQvmEUHi2RLWMt0CwziGoiP1Va/1bbBRrSM+AHVztYyFdoKbhWKU952DBZmeKkZD5gt5/AF18ABQ9/IE56oSYjqRYADrixFoZcHEmer5nxiun9DFFPLRVGje4Nv5esGC6xoEdhBZrEcNclFrcGDeneXn0Kv5XWTxp/w/UQZNBmiRnaJA8s57hs3q8Xc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(19092799006)(376014)(23010399003)(366016)(18002099003)(6133799003)(22082099003)(261009223027099003)(11063799006)(56012099006)(4143699003)(261026135527099003)(261102123227099003)(261102130727099003)(261028144727099003)(10067099003)(261026140227099003)(261026121527099003)(261021121427099003)(261022075727099003)(261026130827099003)(261022105027099003)(261022113327099003)(261021123027099003)(261022115727099003)(261021130227099003)(261021133027099003)(261021135927099003)(5023799004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?oB2dtexN9YQbh3X8PRTmSb8WX5HJ77ecqHYYyHg2K6HYOXsMvI3siMVGOLNL?=
+ =?us-ascii?Q?gfhuqb+Ks+dhJ9Um5sRHLOPcdYLI3W/EErD/5YFLrXn2D7YrJ3DbP/bkFDAj?=
+ =?us-ascii?Q?tYxSqRI88Yn9WUZ1g8hhxyy2rBB1KTyCYBPd0RwKw7Ktl7Sh/Neue6xKtPSV?=
+ =?us-ascii?Q?i3dPYD+Q+Z4WJRjxtAdPGPg1GGZJl/wnZS6eToiHhc4Wv4Ufi+QbmmkfKOLl?=
+ =?us-ascii?Q?CLP7qP6OBq2KPZiG8L8d+RVj4Io2fnl6ADgWmYCl8qyyhEuK6wWHSabhMDPX?=
+ =?us-ascii?Q?L7GtJ2SL+KOjtx+6I9hSa4L/NWXVmTxeCfsSipfAn1kglLle/HZwMRaYabL6?=
+ =?us-ascii?Q?0RZGegBKiqDm3OutiKNMO1B8RDukEnHN2hytTWcQSNcZI5+ealn5Ek3Nskfc?=
+ =?us-ascii?Q?K4IWe+P7oEMIX9yf/pMgZbjYi1LEFkv1F5f1NakQ9nLbT/0dDu69Ep7GJDxq?=
+ =?us-ascii?Q?6gLG8zxmJ8TrqOJFsD2tVQo8HLD/IHOjqrFpwLsAo+DQbOQ0DBVlDvCm9hYz?=
+ =?us-ascii?Q?MK3c4y2UXyxrp+5Vc+oBiDaOW5YZBpj6Gn4RbkAQjYFmbh+6M3VWFw6Lnu5v?=
+ =?us-ascii?Q?YWL//s/9UoVgPyi8xoRDfrlGX3HdroRDxmA8MC1uA1hZMJytcKgnxm2McXPc?=
+ =?us-ascii?Q?9aoeWqot/YCykP1GDeYbvqKeH2KuMMFfkgTvR9+ZL7IdRbm7k4mJZzll774F?=
+ =?us-ascii?Q?+x5gFD69lOnyGcDCU9JiL4Qzz0CmEsTL9Fry1fMlivJFVLuV9JNg0YRSugav?=
+ =?us-ascii?Q?QC/Zi8UiyGIULmtrL5ZdQ7tgWcGuYv8RWRQykPhkatWZgBPadgi+Xg/7J01m?=
+ =?us-ascii?Q?VmJ2IHYtYxMkFdF7X5sJe4ZDVmz2PoOfaIwSAqSAPQXZ/EUEa91cBxQ8MQ8t?=
+ =?us-ascii?Q?ZG61SpO8KmcL54Mz44HQCtg5xjPIDFAxCt+UJK8eZM5NG/jhYbXeUGGsOGcH?=
+ =?us-ascii?Q?Njg4Pfe0lUBNA1EBNJ49spFl4xRBxiGi/BaHMo8Ow06RHB0HT54r6XbyH4q7?=
+ =?us-ascii?Q?IFv5eWiOewO5fvYdYZSiKyVsOQGlCA2Xrjk6Rit2rxnM/cg6DjHV4Bw/6/3x?=
+ =?us-ascii?Q?Zk9HzbGRyJSRoBye/q6jzsJM+UYTcmT3kh3BriBCCeT5eXOK3jRicmtadiRl?=
+ =?us-ascii?Q?yL/nKC75cNxsqt95CMPu3Vj5/O9+7ODeN/+yM9K9PiGyF+VwftToB8NTmcuZ?=
+ =?us-ascii?Q?r//3JLbT50qJ3xn+HFYfN+myIJpT2h1hYjzjcnv4eDQlqv6GXXV9hLswQ9YK?=
+ =?us-ascii?Q?XZxy0BMUj4UcqXVF597WE/MrVHfcuQKEzTv0sKq8qAKG1w8s9bv3y7OVi3eP?=
+ =?us-ascii?Q?eZKSjGmWWClvHv8ZNL6ZDxluqO77lirrgXSiwSce+k2cR4tLwNnTv6hjzo7C?=
+ =?us-ascii?Q?1+iGbcUEwCuzl0fHBeDAhjqZ8e0CV6+wuK+n6HFwQlZgW21oTuFdrrL1RRHQ?=
+ =?us-ascii?Q?7AYpGJI9sOK44g5tFB6Iyi2i5yIQUTETw30FTCMJxY4i/LJysirOsooybkvi?=
+ =?us-ascii?Q?QXBeuIiZrT11QvlxGTiIJtNLWAzuMmsVR1ECcnme1yYSEmBrSUxLBcelTlqD?=
+ =?us-ascii?Q?5RCOEvbQaWUSApFrmYJns+qGOxEeSZAcouF9sDq4rzC5JNNIV5RmfhTFrsOJ?=
+ =?us-ascii?Q?npKw05eIC/YZa6R0BtBriWJ/yJciP+Tqy0wlJlyQp+xIqNuht5m+LeonlxYV?=
+ =?us-ascii?Q?84SGQ/Ix5XjstYpDvKMQ3T6SRngEONkzG8PJ8ELLjMfHrJdbMQf+ewxv8OTi?=
+ =?us-ascii?Q?2ysCvjW+r2nfNksen801Z+p3dnQjCBa+yVKL43awVRWtVwupYeLk?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d35d0f40-6e23-43d9-ed27-08df44d48fb9
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 17:59:44.5909
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pStjKBdzGDfyq1UkwtJGmP7jngjhy3GVus1XgyCTNM3zJLjmjEQ/5xOb1su9G/SagNB6lY64uuB3p+D96f66GOrnp0gSXVgYMFFuOhySQt/GgKciNWBT7AgDROdPu5Nf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BR0PR04MB608003
 
+On Tue, Nov 10, 2026 at 11:31:33AM -0600, Logan Gunthorpe wrote:
+> Each channel already gets its own struct device (dma_chan_dev),
+> registered with device_register()/device_unregister() and torn down
+> correctly by chan_dev_release(). Let drivers add their own sysfs
+> attributes to that device directly, via a new dma_device.chan_groups
+> field.
+>
+> This avoids drivers needing a second, separately-managed kobject to
+> expose driver-specific attributes. That's a use-after-free issue:
+> kobject_put() can invoke the ktype's release() and free the structure
+> embedding dma_chan while the core (or the driver) still expects to
+> reference it afterward, so avoiding it requires careful ordering and
+> bookkeeping that's easy to get wrong. The channel's struct device
+> already has the correct lifetime, and sysfs_create_group() supports
+> the same named-subdirectory layout (attribute_group.name) that a bare
+> kobject would provide.
+>
+> To let show()/store() callbacks safely recover the struct dma_chan from
+> the struct device they're attached to without exposing dma_list_mutex
+> itself to drivers, add a small dmaengine_chan_from_dev_lock() /
+> dmaengine_chan_from_dev_unlock() pair that take / release the lock, and
+> wrap them in a dmaengine_chan_from_dev CLASS so callers can write:
+>
+> 	CLASS(dmaengine_chan_from_dev, c)(dev);
+> 	if (!c)
+> 		return -ENODEV;
+>
+> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+> ---
+>  drivers/dma/dmaengine.c   | 27 +++++++++++++++++++++++++++
+>  drivers/dma/dmaengine.h   | 19 +++++++++++++++++++
+>  include/linux/dmaengine.h |  4 ++++
+>  3 files changed, 50 insertions(+)
+>
+> diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> index 34be53487a21..38f601bf41e1 100644
+> --- a/drivers/dma/dmaengine.c
+> +++ b/drivers/dma/dmaengine.c
+> @@ -161,6 +161,32 @@ static struct dma_chan *dev_to_dma_chan(struct device *dev)
+>  	return chan_dev->chan;
+>  }
+>
+> +/**
+> + * dmaengine_chan_from_dev_lock - take dma_list_mutex and convert a channel's
+> + *	struct device to its dma_chan
+> + * @dev: the channel's struct device, embedded in struct dma_chan_dev
+> + *
+> + * Returns NULL if the channel has already been unregistered. Pairs with
+> + * dmaengine_chan_from_dev_unlock(); see the dmaengine_chan_from_dev CLASS in
+> + * drivers/dma/dmaengine.h.
+> + */
+> +struct dma_chan *dmaengine_chan_from_dev_lock(struct device *dev)
+> +{
+> +	mutex_lock(&dma_list_mutex);
+> +	return dev_to_dma_chan(dev);
+> +}
+> +EXPORT_SYMBOL_GPL(dmaengine_chan_from_dev_lock);
+> +
+> +/**
+> + * dmaengine_chan_from_dev_unlock - release the channel lookup lock
+> + * @chan: unused; matches the value produced by dmaengine_chan_from_dev_lock()
+> + */
+> +void dmaengine_chan_from_dev_unlock(struct dma_chan *chan)
+> +{
+> +	mutex_unlock(&dma_list_mutex);
+> +}
+> +EXPORT_SYMBOL_GPL(dmaengine_chan_from_dev_unlock);
+> +
+>  static ssize_t memcpy_count_show(struct device *dev,
+>  				 struct device_attribute *attr, char *buf)
+>  {
+> @@ -1117,6 +1143,7 @@ static int __dma_async_device_channel_register(struct dma_device *device,
+>
+>  	dmaengine_chan_dev(chan)->class = &dma_devclass;
+>  	dmaengine_chan_dev(chan)->parent = device->dev;
+> +	dmaengine_chan_dev(chan)->groups = device->chan_groups;
 
+if echo channel have same groups, why need copy it to dma_chan?
 
-On 11/12/2026 7:26 PM, Krzysztof Kozlowski wrote:
-> On 12/11/2026 14:48, Jyothi Kumar Seerapu wrote:
->>
->> On 11/11/2026 6:10 PM, Krzysztof Kozlowski wrote:
->>> On Mon, Nov 09, 2026 at 08:13:33PM +0530, Jyothi Kumar Seerapu wrote:
->>>>>> -static const char * const protocol_name[] = { "None", "SPI", "UART", "I2C", "I3C", "SPI SLAVE" };
->>>>>> +static const char * const protocol_name[] = {
->>>>>> +	"None", "SPI", "UART", "I2C", "I3C", "SPI SLAVE",
->>>>>> +	[GENI_SE_QSPI] = "QSPI",
->>>>> Why are you creating holes in this array?
->>>> Hi Krzysztof,
->>>> The array is indexed by the GENI protocol ID. QSPI uses ID 9, while the
->>>> existing entries cover IDs 0–5, so the designated initializer leaves entries
->>>> 6–8 empty.
->>>> The added NULL check rejects these unused entries before accessing the
->>>> protocol name. Appending "QSPI" directly would incorrectly associate it with
->>>> ID 6.
->>> And it should be 6. Just look at uses of this.
->> Hi Krzysztof,
->>
->> The QUP Hardware Programming Guide assigns protocol ID 9 to QSPI.
->> This enum represents the serial engine's protocol IDs,
->> rather than consecutive indices for the name table.
->>
->> The SPI/QSPI driver uses this ID to request the appropriate firmware
->> and validate the protocol read from GENI_FW_REVISION_RO. The firmware
->> loader also matches this ID against the firmware header's protocol
->> field. Changing QSPI to 6 would make these checks expect a different
->> protocol ID.
-> You miss the point. This is just a table for Linux driver, not what is
-> programmed. So please explain me, if firmware comes with new protocol,
-> e.g. OSPI with id 10000000, are you going to use that as an index?
-> 
-> Really, why are we discussing this?
+>  	chan->chan_dev->chan = chan;
+>  	chan->chan_dev->dev_id = device->dev_id;
+>  	spin_lock_init(&chan->lock);
+> diff --git a/drivers/dma/dmaengine.h b/drivers/dma/dmaengine.h
+> index 42a3cfa7e597..f03248a091df 100644
+> --- a/drivers/dma/dmaengine.h
+> +++ b/drivers/dma/dmaengine.h
+> @@ -214,6 +214,25 @@ int dma_async_device_channel_register(struct dma_device *device,
+>  void dma_async_device_channel_unregister(struct dma_device *device,
+>  					 struct dma_chan *chan);
+>
+> +/*
+> + * dmaengine_chan_from_dev_lock() / dmaengine_chan_from_dev_unlock() bracket
+> + * a critical section across which a channel's struct device can be safely
+> + * converted back to its struct dma_chan: dmaengine_chan_from_dev_lock()
+> + * returns NULL if the channel has already been unregistered, and the lock
 
-GENI_SE_QSPI is also compared directly with the firmware header's
-protocol field and GENI_FW_REVISION_RO, where QSPI is encoded as 9.
-I therefore propose retaining 9 for those comparisons, without
-using it as an array index.
+where return NULL when already been unregistered
 
-Can I replace the sparse array with a switch-based helper that
-returns the name for each supported protocol and rejects unknown
-IDs. This avoids holes and remains independent of the numerical
-protocol values.
+static struct dma_chan *dev_to_dma_chan(struct device *dev)
+{
+        struct dma_chan_dev *chan_dev;
 
+        chan_dev = container_of(dev, typeof(*chan_dev), device);
+        return chan_dev->chan;
+}
 
-> 
-> Best regards,
-> Krzysztof
-
+Frank
+> + * it takes must be held for as long as the returned channel (or anything
+> + * derived from it) is accessed.
+> + *
+> + * Use these through the dmaengine_chan_from_dev CLASS below rather than calling
+> + * them directly.
+> + */
+> +struct dma_chan *dmaengine_chan_from_dev_lock(struct device *dev);
+> +void dmaengine_chan_from_dev_unlock(struct dma_chan *chan);
+> +
+> +DEFINE_CLASS(dmaengine_chan_from_dev, struct dma_chan *,
+> +	     dmaengine_chan_from_dev_unlock(_T),
+> +	     dmaengine_chan_from_dev_lock(dev),
+> +	     struct device *dev)
+> +
+>  #ifdef CONFIG_DEBUG_FS
+>  #include <linux/debugfs.h>
+>
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 805668fbe437..944c8b0f5848 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -839,6 +839,9 @@ struct dma_filter {
+>   * @dev: struct device reference for dma mapping api
+>   * @owner: owner module (automatically set based on the provided dev)
+>   * @chan_ida: unique channel ID
+> + * @chan_groups: optional NULL-terminated array of sysfs attribute groups
+> + *	added to each channel's struct device, for driver-specific per-channel
+> + *	attributes
+>   * @src_addr_widths: bit mask of src addr widths the device supports
+>   *	Width is specified in bytes, e.g. for a device supporting
+>   *	a width of 4 the mask should have BIT(4) set.
+> @@ -923,6 +926,7 @@ struct dma_device {
+>  	struct device *dev;
+>  	struct module *owner;
+>  	struct ida chan_ida;
+> +	const struct attribute_group **chan_groups;
+>
+>  	u32 src_addr_widths;
+>  	u32 dst_addr_widths;
+> --
+> 2.47.3
+>
