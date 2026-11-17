@@ -1,94 +1,149 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.162.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1794865225;
-	b=PG8fd0XJurzv1G9jc0l/4F+CVIpet3FcfN8PVF/UkqE7uh7rcYg/KLJHhKBhW+7AAJ94
-	 LBEPpmU5EMYaYmUdV9y2lhsatm6YsNQ9Yw8mD48S5prpG01eEsiNzhZevBcAGMCgjqT/F
-	 zZd8wXwoUWM1G4Jjh1ZZdz0x2dGRGzz7Dotkto+04F/ddxxheIMS+YCundJ+wE41sXBEK
-	 ntYcuiIsayLl7xwgon2qvC4R03KRDIEQgpqgBWADI99iZz+eF3yD1x9lsT8g9wrXLmjIW
-	 GT4+FBbvrvrcw/gjayIuyYsVIys97G0pu1KXhX3gvNCnZmN2dd/0SvBy3XiwY1AdoIg==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.109
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794883384;
+	b=M9JWo5wUoiazW89U+Fn4Rsrgc85aPmc1s5c1ZFg6Qmn7V+p1cuCRYzdbs63NE78t3Ie7
+	 C3gCKpHIIgFvTkfBACaBI/D1A9rqAfVShWqYNs0q4L75sfDCAZIciEhbByrKDleFikob8
+	 N/BD0KYOWVLnCMR+fDdizHeqe5J0tx3XvY8Z/3YFJTfQ3+tQq+UQZa6s7k6W8s11GpUVJ
+	 M/oMW0qcvSMIwSz9t/PzqJAFzrB5WwG1mTx6DphrqudMupizqJCL4qcvsjnBsdgrdwft5
+	 wGyRSH0JteW/L6U+VPbjoB/dicPav0xefDYsKgMnLhV7SrmqF6KWP9XAV4+FokWbltA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794865225;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794883384;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 msip_labels:x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=NEqR5F+6rhUtd1TxER1Hgq6r45/JKSGFY9+RnpfuTPY=;
-	b=dKHKkjbxlkU3xX3Ot40D9ntQhYfXemZ+IbqWvX8ft8Vxry7Qkg+lx/V2aWF3l/I0uOqG
-	 0FcdXocc+l7BnJibXobd3FR7W+HfPZRYT/nnkZdgBQM9uyjNqC4F0Fkjl2OjFNyYF7Qi7
-	 l8ljnBck0dHbRcZUfCROgFYY/RkWNNffQfHV4dNn99n3LrSvuOAxJPRgh4Jyjscj+mi/H
-	 EkvZi7Vw1hca8dUu3WNA8HmAzKD+174e2ZOvygpBMIyWAEha8d3UvVAUk7OVpL+vk5vYa
-	 ukisPBRkgcPCmmPpo1kP/8lwrgp9I9F1y+4jrVBHH6xW/V0kd73VK2VrihFAo2Lpj4w==
+	bh=gFWb5+rDSTW92n+RG91qqVJAFoL63+0iupytjh+Ad5g=;
+	b=R2W7t8ekIcIvucfYy2NWQHf8vtH4ti/MbJaTFiCOcwhORP6G+Ow12aK35xUeICNVXOdg
+	 9sXkyBnokQwNIz/HlPof6qSJwUSGSzYJCDc88Fw3hLmVPGgWZwwL4+svqs2dZo6ixDJTx
+	 NqPOhOfC5zR1hPdytEYt2JN12bor0l2JJBvuTqbcUpBj1B8HVYmnAnMXW23V4oN/jMIDK
+	 fm74hIG2mGPg0OOKMyBP9l2SeizRbaI4CpzhwUXjy5hurjOoN6oZYcFwMMs+N5gUt76fv
+	 7MWS5mc5k9nJ6pGTXB4gixvM23z+y2bi09Gb8rUU2E0tm3emgr+rlYV3FNNkKwFGl8A==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=CxH9QYay;
-	arc=fail smtp.remote-ip=40.107.162.51
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013051.outbound.protection.outlook.com [40.107.162.51])
+	dmarc=none header.from=accuratesound.ca;
+	spf=pass smtp.mailfrom=accuratesound.ca;
+	dkim=pass header.d=NETORG5777562.onmicrosoft.com header.i=@NETORG5777562.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NETORG5777562-onmicrosoft-com header.b=vfIOZPRM;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.191.109
+Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020109.outbound.protection.outlook.com [52.101.191.109])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CF5606A33F
-	for <dmaengine@vger.kernel.org>; Mon, 16 Nov 2026 21:40:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6CF5606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9CE606A32C;
+	Tue, 17 Nov 2026 02:43:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F9CE606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=accuratesound.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=accuratesound.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=CxH9QYay
+	dkim=pass (1024-bit key, unprotected) header.d=NETORG5777562.onmicrosoft.com header.i=@NETORG5777562.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NETORG5777562-onmicrosoft-com header.b=vfIOZPRM
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M5/rsdM6ZQQgXojrNYpTaHHXUdBx1EWz3Ew75d4PkUXrr/Wt272TD8TKj2UX7uMOchdCiGj3F/e0brJqx2w00C98hYYlajV9ycsZTdZduI3VbivJ2SWEjvFSvIraZzSAHeUmccyB2EOKM1RqHiSRZUPCN2wNTEFQVKRydqukd9BPQz/XtyxK0AaUAJ1anbZwNa8qQZl73txZG0v05xw9cy6odqtMLWtC2LpjG9QIZovUC0Hbg++RPzBjGkCZd3tqtC2xKSO+X1pdapbcdjPubOv4VFiXtO7oEaD6jdFmV3ZJaRvUnBkLIgzAMgeqzbtgvOPFhAP4/8DDBkpX6SZStQ==
+ b=nbkBOnPHCtkOkYv907M3nRH/ygb3t0D5taxMK+ZG4frxPoFIlJEthhDw4Y3vFpxQuIc76+HDWi0LO6Mn0Iqzqqmax+9KIGoIMN03S9AetLvpVhbljeP5Pl8xbETLyk+WkbuWe1D3x3npuozSjwdxPLEb20AZCIFzwq7VKsHHOzhURH9r2ozySxbj7gLEyBM4+0ttKu24aRs7DBafCyuaDFXb7rsf6Qf/4HV4LHkAj17k2er6p30dm9biXz88PJ+DvHeiEkVs/p0CBmynP/AL/qJ7//brcQ9q5hD5vegECo70jaOlvuezuYAbjJCsuwTu3OiX/MdnPs7fCUQBvU/qAg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VDZeuk87OtOt1VstirK5RKgTiukh98+GPhQZ6qo+F50=;
- b=CtXXBq8S8KLDBQrXFVEAl1mjZ7e1ArDOzZrPczB8P/hB7IQki1whkeg8/7rNcJ3cMEUx+88Qb39/Xgku4iPRO30dTLXp1LIOv6DTkKi6mkBnU8WBzne6+k4qG5tVrAld2wpH2DJkbztJk5igWFTPezpfI4LQlShmO/Vq2gaQTxTA+AqTQh4cPkVbrkaxtJEGsm+orl1u7XlmZvTnWVBAZ3iHfY66r7azQR4UDBY/Oy0q4HVzxC0VN+ApwQFozA2c3H7d4+57IlD5CtWLCrj1vbcWeueimCW7AQIE1JDhzUnCRr0ZvJkJTN59svC8iINGRUzeEQsV7ILyYBfLIh3/GA==
+ bh=gFWb5+rDSTW92n+RG91qqVJAFoL63+0iupytjh+Ad5g=;
+ b=dr9sF2ZXFYqbqQZiowhAxfLQj8xaPqgfMXcEJe/JT8EHxm6K2vBJcecA3AsfPsyEFvB7Q5RBcNuAo2dY+M82IBHPrz/y96oqW/AQoJWME+sMHLwhMIJyBquetre7o8CtJ8rifksqMB+OuxciK826JMXih6l2hhCqt2ovWzJmbuYX/AJgXLxT2EecwgDGf/MXKeGOZgZWSuOqlEMfJbLWhH5OG+0BKh+BA5JsrTB+mX7o1/k2hYbubkjwRuCMPqYyv1eFVt1AI/3aLqM0VLazMxXHHVCAMrJ11TV+I2oMfc9fBQcw8ioU1XCADPWVUQu7K/HuGyVBcyqPpXLeNd/Hpg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ smtp.mailfrom=accuratesound.ca; dmarc=pass action=none
+ header.from=accuratesound.ca; dkim=pass header.d=accuratesound.ca; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=NETORG5777562.onmicrosoft.com; s=selector1-NETORG5777562-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VDZeuk87OtOt1VstirK5RKgTiukh98+GPhQZ6qo+F50=;
- b=CxH9QYayJEV3rKl0H7Rk5xfvbpnGV7bcSepjMC6fmDxgXerVvPZYQXcYARIWwYhuRvpHLsOdxoYYPLpa74DAC1JCuUtHOTdrIO4JruBspLK5EpGjG9nIRu0HcYIuFr11sEfRnFeF5KETwYSPERM3A3AkvRlDtUasdo5T1XmIZOyCv6KyT8nERgbU/9TokCWnco1FLBcVpU36Sk2PV/xP5T9zyMsB71QI3m6tOdWjEcUQzFVVLMP7AhCSGRe5RKrt9F8gWYebACkiCzlVKCRjkgb4CCw6kIlyOql8qE8nHJxfqj/HCdj5C7ojvJ3o+Y+jakt5sGk5frZn1ER8ATCIxA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by GV1PR04MB10378.eurprd04.prod.outlook.com (2603:10a6:150:1d4::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Mon, 16 Nov
- 2026 21:40:22 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Mon, 16 Nov 2026
- 21:40:22 +0000
-Date: Mon, 16 Nov 2026 15:40:13 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Allen Pais <allen.lkml@gmail.com>, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
-Message-ID: <avt4PU04jy8a4e_i@SMW015318>
-References: <cover.1794315350.git.allen.lkml@gmail.com>
- <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
- <sashiko-outbox-207180@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-207180@kernel.org>
-X-ClientProxiedBy: PH8P220CA0029.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:348::13) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+ bh=gFWb5+rDSTW92n+RG91qqVJAFoL63+0iupytjh+Ad5g=;
+ b=vfIOZPRMDF9M2K8thPAQ6/zMtINJkGQg/w6HOWgM8jRzRsnsk0Xsw58M2rqCBPz7+7HO+4OkvLKhSG80BWlzjWiJF76PBG16tjmQsK9LFns2iIPMsmTwkD2jylnJj6fSXs0xV5UapfR6gQ+BlxZD/iuFbLA6WFf36A2RAs6s5sw=
+Received: from YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:1c2::21) by YT2PR01MB8455.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:b6::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
+ 2026 02:42:57 +0000
+Received: from YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::bde:6c2d:c5a7:18db]) by YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::bde:6c2d:c5a7:18db%5]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
+ 02:42:57 +0000
+From: Mitch Barnett <mitch@accuratesound.ca>
+To: James Hilliard <james.hilliard1@gmail.com>, Eugeniy Paltsev
+	<Eugeniy.Paltsev@synopsys.com>, Vinod Koul <vkoul@kernel.org>, Frank Li
+	<Frank.Li@kernel.org>, Sergey Khimich <serghox@gmail.com>, Andy Shevchenko
+	<andriy.shevchenko@linux.intel.com>, Sia Jee Heng <jee.heng.sia@intel.com>
+CC: "dmaengine@vger.kernel.org" <dmaengine@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Wang YuWei
+	<1973615295@qq.com>
+Subject: Re: [PATCH v6 0/7] dmaengine: dw-axi-dmac: fix termination and pause
+ acknowledgment
+Thread-Topic: [PATCH v6 0/7] dmaengine: dw-axi-dmac: fix termination and pause
+ acknowledgment
+Thread-Index: AQHddY/oukdpTCc1mECo/+A2m7/saLcxi++S
+Date: Tue, 17 Nov 2026 02:42:57 +0000
+Message-ID:
+ <YT6PR01MB637077E06DBE5CD43E1EE13E43D87B2@YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM>
+References:
+ <20261115-submit-dw-axi-dma-stop-pause-v1-v6-0-bcb23d1e7029@gmail.com>
+In-Reply-To:
+ <20261115-submit-dw-axi-dma-stop-pause-v1-v6-0-bcb23d1e7029@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=accuratesound.ca;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: YT6PR01MB637077:EE_|YT2PR01MB8455:EE_
+x-ms-office365-filtering-correlation-id: 04191b1c-528e-4a63-b094-08df44547cd1
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|7416014|23010399003|366016|18002099003|22082099003|6133799003|261009223027099003|3023799007|260925021911599003|56012099006|260925022911599003|5023799004|260925021311599003|261102123227099003|261028144727099003|261026121527099003|261026140227099003|261021121427099003|261021123027099003|261022105027099003|261022075727099003|261022113327099003|38070700021|10067099003|7055299009;
+x-microsoft-antispam-message-info:
+ Xfzd5l/pTO63o0t4L7p8q8zm3ad0JhJq9FhbZFUecTRk2zGD65fhjvotMeNtkbhhk9ZlXnYBODkJD38PJJsXXBBEZKrJU2Bnem9P5/xV5ZDeFVssMEDmrYlCGz1qosPzTyWKasVEHKmpZqy+enD99vQ1hH0wIyUw959ceBqd4aCyusXdxQqJR9KWpRz9Ko/c2mInk/EMEvHghwi4F04ITv/2szKM/rN6VpGpZpj7jZmuqHz841/nt2N16wEVaNsPiFuOPY34rUGu6JF3fM5V/VATcGedyCMpOHpPpFvex5ZOx65FjcIvsjiL8C4bGxEkKjRHFofDxiloZCAtsnNZjvuq2LCJ7kljWMcy/yh/ZjFhvWsB2I2jrdqf49Oe8Q4dIfEBvmoUNXvhsPWx4SYceCpFS1SWk1z91mbkXYvWcGaQ9iWSv/2xfktNkZWziM/jxP/hcUFcndkQEwdUeOr9vHYo0C3yRfvq+btoo8+kMSQ/aeHFAnHMs2a+5w6fdGRFIimhDC76ZoyZ+XvkhaGSzinpeh7mGnVi+FTn6slA1jPmRWpvyOdn6TA0dkH4Sm6vwJOi5qhntA85QI48iJWjhsC0g8K9CmWXbJOBVkEyGHu6wQIwAGKPDbKwTvdhX/fSOyqaVN+NDNRWRUTOZhhcskMwi+9gF2IsgO9n9uIIBO6jngrtIlOe08nEeubNhaN/ZiOR13AM/FuDQhO2ZSrqzw==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(23010399003)(366016)(18002099003)(22082099003)(6133799003)(261009223027099003)(3023799007)(260925021911599003)(56012099006)(260925022911599003)(5023799004)(260925021311599003)(261102123227099003)(261028144727099003)(261026121527099003)(261026140227099003)(261021121427099003)(261021123027099003)(261022105027099003)(261022075727099003)(261022113327099003)(38070700021)(10067099003)(7055299009);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?cKt8e5wux89ixIOqM30JzQzcK0jS94XgRG0v/n1sPYDsSi07Rn2C5BwX?=
+ =?Windows-1252?Q?1jeJhLdNgPeeOAO2QL/z+IfHYHij4eX/EBncwcfVjkZ1zXUeWgYPwKKm?=
+ =?Windows-1252?Q?Ljx4MhG2MF3CMZEN4klAddmJYtfKC697iwNxQtNTru3f1RuKPR76YWxw?=
+ =?Windows-1252?Q?Bexe059IPlEuk0dNw6KF216G8wEaieGAaPjTTU196E8DKAeAoYvWK9qV?=
+ =?Windows-1252?Q?RYuSJPjmatBfn403oVZGTaifJAoFtWfKgv+1JC2AB2K6l7ffKPwQf1NV?=
+ =?Windows-1252?Q?yI9f3jwb1Uy4prAKKv6tLg4Rxe26SMMEjfU/VhfysaE5Tgt9SjPrTqGa?=
+ =?Windows-1252?Q?L1Pw7QnJ+HkjRNpV3+MmqNGTOIDF3BX2PIGbU7F5i9qczChgO/5AqhuS?=
+ =?Windows-1252?Q?dz/7UKJJLM0CUZNtx0dtRPhmeLOVtRo+cQPZHB0XIxN6a8B+SC+EW8UJ?=
+ =?Windows-1252?Q?nJafve0qe3jC0RS9lKsN0z3hTIO6sDG9uAzYGXi748rge4MxarvokgXl?=
+ =?Windows-1252?Q?n6lNUJB1P850t9D0Mc3egX4f9llkzQ4q1vcViwJjCZO5YcEKY1+4xabY?=
+ =?Windows-1252?Q?9SPVpzmVTGXrE5ITSHgsuE9C6jtc07r6VsCKw9P54BdsmpBN7Gr8VmID?=
+ =?Windows-1252?Q?ql19qXwV9914sX4X3beZCknQyrPEJu8E8DchJ9Iq/7k+HTpyIrDReNzd?=
+ =?Windows-1252?Q?OoawBXdCLJFcFajRaCn4y+7o7Ec+dfG5zf8JAqcr5Dv0Vvfny16ueTib?=
+ =?Windows-1252?Q?lAuEUJrrv76vkzCUMCrmEebFwmETlaR03ymEEvNE4G3FMNw6mtCxrJMn?=
+ =?Windows-1252?Q?9zg3tAg3BIYMrxYOaTBMVdB435QUAkOYakFlEV+94cXMTUsLWy/tugXf?=
+ =?Windows-1252?Q?nJdCkGxDHlvHqkkPlUkq89xdOz7kAae45ODnnjds7PNFv053trWCtmFx?=
+ =?Windows-1252?Q?7ouIiMAj+w5tJd7NocO9CU/sUScySXsbzrQxofOGL4bJdZdB6Tr5qufH?=
+ =?Windows-1252?Q?pLOlzzVFJnONbQNSn3cYLK4l1ciRZQLW2qZK1AIIW8VEgvsd1deqmGOa?=
+ =?Windows-1252?Q?T8qPmYks1b20OTkvkFp8jBNHGCRUdqWXdKik0HSFwyM5TLm6ZTU5iy8s?=
+ =?Windows-1252?Q?2iFv3m0GjRttcZ1adlRQ+MsxY8tJWRs1EQv+7+vBXyoFVLBuT4aFYPnF?=
+ =?Windows-1252?Q?E/FLQ+pYm9n+hMZSXMYIikwmoFiQGAGRPqnN9sl26iHog6fStCrnVMcr?=
+ =?Windows-1252?Q?CKY/S1ijCSNB95S1cYteNL7VR1rZuOnatEcQ5cAlGnJXzN1W34lAI0db?=
+ =?Windows-1252?Q?+mH3vLK1vgniGh4a1phgjDfVZb8yMpLOSVOkDKUl0cZdZQAWtAC9rWw1?=
+ =?Windows-1252?Q?z5MSrsY2Q62jyOADnToOy+NqNTukTJQRwJ3Zvu+Ru1QKemTGcWYCuCLn?=
+ =?Windows-1252?Q?l0wMpHMeLQGsnPano4BIjSyRIC/0Qnj+Hnmomf4PE+TaUSd49y+9L0/1?=
+ =?Windows-1252?Q?0MOQ9FbdRSqQHCUmWE0CL0JqOUFUgNz/j/NYszSwoeS3KJxwprg+kwUT?=
+ =?Windows-1252?Q?EBFgEnm2PjRu/mkOXj6dEOoPJ7TofStVJ9QYnE8Hl0JoyJwWJtK0XVsq?=
+ =?Windows-1252?Q?//xz2wbdp1faBlCWVDyMU6gr39GGEWQgiDKscMvPFngJscu6fIkqf3+A?=
+ =?Windows-1252?Q?AReJ2ILT7QRfuxTafHVCM89EFdWaGHywZjGB+hKiSULIdSmrWB/tirr3?=
+ =?Windows-1252?Q?NYewzfo1IBtPWmCYdmK+cGbXNcdZlafYmUEwLyPgFsfe+LIPqrcOJpC3?=
+ =?Windows-1252?Q?q1wKdz1wBmMVH3KTjr9Ta6OVpcQ84ongQQPo4jYIpMQCnVfN?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -98,191 +153,233 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GV1PR04MB10378:EE_
-X-MS-Office365-Filtering-Correlation-Id: 69141105-4230-4548-bc0d-08df442a376e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|366016|376014|18002099003|22082099003|6133799003|11063799006|4143699003|56012099006|260925022911599003|260925021311599003|260925021911599003|261009221727099003|261026121527099003|261026140227099003|261102130727099003|261102123227099003|261022075727099003|261022105027099003|261021121427099003|261009223027099003|261028144727099003|261009223327099003|261009221227099003|261009220027099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	nzF4CwKy1AwENDmuEYCOmkx+U83sLnffeypoCwngivajsci7Ed0e2fcR6HnUO/UMh4C1/jUkYNQUo5QbFyDNBCL/Hbvghowg5+BkqNziIzESCsan0Y7CFmztAaVvUOKGsN2VyioYMeYDmBGijRrmdSI9G43tO5TzE3pw51HRvBsh0DnqYA1DgpoSJFDB/05Hn0EW+OT3xb00TKc1uE3TpXmPxJNKM1Wdr3sxcW9gHY5mzkC9XLkJjjwJWki4LFL3vEqwNEBRsXAPT+/6ZIAGjv+ZhoiyCvbZdgbYDuZ81n6HSXsRFol4QwzMYBiA/wZ4xP3Vj/YVeWtKwLZxb3i3ioihKdEsamlQNt03ZIV4+rmSOkOA4vNfrjhPLTzoXzCjsmbT6TRxv/kuxxl4dkMSVUrIquEaJPrq3OScA7pORgthrdsrDBUWtMqxOl7MoXE5hwdhavdvfWScT2Z/I5C0OqoMk3ACgWNOwqzS6X3EoYlsqQf0pSDY3GK6/BukBztGa0Hvs4cKL3r32b/SwsFafunPyvb9383uHuDXX8+eIh/2d5xjvzGCt9hKl8lNXBwRltFBcoYxSBh0KanJpJyatDYJ5t50NvaidEre0EojLhQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(366016)(376014)(18002099003)(22082099003)(6133799003)(11063799006)(4143699003)(56012099006)(260925022911599003)(260925021311599003)(260925021911599003)(261009221727099003)(261026121527099003)(261026140227099003)(261102130727099003)(261102123227099003)(261022075727099003)(261022105027099003)(261021121427099003)(261009223027099003)(261028144727099003)(261009223327099003)(261009221227099003)(261009220027099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?ayeUYTRdbjeQukYaMR9/EkkBoiIklFh5arS+dLcSXReV+S3SgPbUVCMrdc?=
- =?iso-8859-1?Q?M4Y5Uqej8Zd4ciVqx/8PmhlmoBLVkCEuiAYec9SFhoW7tzBiqOHWuUSCFb?=
- =?iso-8859-1?Q?H8H3bY2hIYremqxwvfZYxUC7+BbK31knFFY6Oi3LEGeqf0LMceRacJTMur?=
- =?iso-8859-1?Q?pmKpESe6ClhiFy8KhuDToZZxPW/1nPTKn9BLDMrPfNWRTWa6Mv5KQd6GZ4?=
- =?iso-8859-1?Q?2QidmnWFD1QuaWlFZqyEayqkJar8eWPPwndEO4NxCuWMtNmnBpZbyNuBPy?=
- =?iso-8859-1?Q?lJRShGbHEyLuwpLxsZCp0x3EnbeUpk9SoGPge5mI9eTMZHnmmFJg79TXqP?=
- =?iso-8859-1?Q?lF6rGbS8TSdNWAjACSbzNguVUHTQIkS/hnSS9pd2NvBe9ie113fqi0Y5Yr?=
- =?iso-8859-1?Q?5KvvEqvrWuE+/QcuEL58EMO4NUsuj7VveV3Ln9bFO6/+K+rZsVCOHjmKe5?=
- =?iso-8859-1?Q?KNvJIEeO8l7RR8ETg9qG90x10U+c9hj4HT5tBJvDqwnyjr/pP+2hJNYErk?=
- =?iso-8859-1?Q?67XJK9xcKGT5hHCFWS9SaoYslDECCHZLOZekK+QXdAYWX72JMZh+UDIOUj?=
- =?iso-8859-1?Q?wCe3IMaPu6kgKcyDJLmZv0KCRCGNcnWZKitAIBg2L73A7tVG42otVLzo22?=
- =?iso-8859-1?Q?QgJ48NnknLDsMNOdmyAowkIfFLew9Y4KVNAcXhTdMnZoEdYx5M2phmAqV4?=
- =?iso-8859-1?Q?va6h8qkXRVEejbtP3zey8VBdbcTfyrebbfUBGLI28lff+pKa0MV6+o6c5D?=
- =?iso-8859-1?Q?Oq4h9vasJ1MA5Ce0decw3T0IF/UIZedVy6yG9Ko+YGDgxd/3NbLTbp6C3W?=
- =?iso-8859-1?Q?sPLavO4/6E/wQrC4P1VL0RkhjqBQ0b0/MirpRqtZe5LfZ+coDcWkv0rt79?=
- =?iso-8859-1?Q?wc3YXCkTr2pe0/T3SD/VwmLXFE5pE81r+84LJGNNevKZstgdOSQ99hUnM7?=
- =?iso-8859-1?Q?fHvZ76nvgUeYOu/pHtuYmM2LpQxerxzzho36zaQ9kbLl5VT+5FV9TElLJr?=
- =?iso-8859-1?Q?EIZd6QnhvyhkGHJPP32D4ePC65/DILQjIOX6QDU/8Hv8Z1l2oVXgF2QQ0u?=
- =?iso-8859-1?Q?hFsyVrhVPY7M0ElXLPzqn0ESCj8GfEpiRO+Obibu73ltW6szZCi2OgsN/k?=
- =?iso-8859-1?Q?7xOxq3+84fL0SYYuos0QP5MzcD2YGzmAOMNdplXpozC7Nn5P+qkM5lf17b?=
- =?iso-8859-1?Q?EmWHZqt92+eFxnsJat9tEOlr0cSM6GepUtNww/4ikll4DHInPxiuJp64xi?=
- =?iso-8859-1?Q?3BXnHK4q3JOtgk2LnuwtG4tqu7oJRikbMHoac9R+Mk5+uxBQw6x6KFqZNN?=
- =?iso-8859-1?Q?0hCztAPIbMNgAYRBSJCglqWmR3cYPhtCBasxixyZwOUGNBEtUvyAqPwOSC?=
- =?iso-8859-1?Q?mFCCKEm2EabYiVBb/UK5aw66H6c+VzGVzDC4q+DUMmNKDEvCTHRQQHGzfQ?=
- =?iso-8859-1?Q?3joRgi6Zo72W9RHV7uiHzK8WP+uas+9uyWeBJKiM7c+PBY2M9ZEVmrWYHJ?=
- =?iso-8859-1?Q?lQens8jQpDob8epMK7oO+yLzIq1NN4oYjZSW73pYDVDvSepXdFkY7FKVmO?=
- =?iso-8859-1?Q?S/a9Mkc8t8KytMfF12tDK7RJinToKueNZ36P9tfPXnBYI8zz/1e5+Gx8Be?=
- =?iso-8859-1?Q?3ox+OyLVjcEZmuFhgsHv+p5tv2YL/rRA0z9VrQhKQ+s8JvpkpujB81M+oe?=
- =?iso-8859-1?Q?m90Bh6cRV3QhhdE0q5IvajletSfZLo1qbD1BwN63AhGWG9Jyf3/YAvtWuZ?=
- =?iso-8859-1?Q?i8HmbhONE+3bupqQ8b+qUwIi2C2jyL0vq4Sfv1SUC2xqUgRmy5WBDhENUe?=
- =?iso-8859-1?Q?7u3fSDeMEaupt5BYpTu5vAoxrmBp90Thny9JB8NW2T94hf3ObaZv?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69141105-4230-4548-bc0d-08df442a376e
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-OriginatorOrg: accuratesound.ca
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2026 21:40:22.1296
+X-MS-Exchange-CrossTenant-AuthSource: YT6PR01MB637077.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04191b1c-528e-4a63-b094-08df44547cd1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2026 02:42:57.1558
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: NGwdY6rL6thH1bTIr8O7O/8hwIghCBqDUCl06OSaztFgcEy0MNmCNRErU2/TaykJ4HEVLB5iOb305H9tTQyj8ab8op6PMG/YxHUYk/c/w0/baZGIze/WUycA+gdW2EBZ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10378
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f5b64d99-3ae6-4f97-ba65-24522cb51004
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: d9j/N4LQDrYoYTEX+lkVkH0qMyV5vaOCvwm+9Khh8BNyGLBynuU20L2Q+Zxo7iNNc2mzexRvji5ZKMFzC/NI9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB8455
 
-On Tue, Nov 10, 2026 at 02:15:38PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] dmaengine: dmaengine_kill_bh() returns with bh_work still
->   queued on re-schedule
-> - [Medium] dmaengine: flush_work() in dmaengine_kill_bh() triggers flush
->   dependency warn
-> --
->
-> commit e183b161b65ac0da135cdea21e6916bb3483d703
-> Author: Allen Pais <allen.lkml@gmail.com>
->
-> dmaengine: back channel BH helpers with WQ_BH
->
-> This commit replaces the per-channel BH tasklet implementation with a
-> dedicated WQ_BH | WQ_PERCPU workqueue while keeping the dmaengine_*_bh() API
-> unchanged.
->
-> > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-> > index f3c1283b161b6..97d8f9667ae5f 100644
-> > --- a/drivers/dma/dmaengine.c
-> > +++ b/drivers/dma/dmaengine.c
-> [ ... ]
-> > @@ -1449,9 +1451,34 @@ static void dmaengine_destroy_unmap_pool(void)
-> [ ... ]
-> > +static void dmaengine_flush_bh_work(struct work_struct *work)
-> > +{
-> > +	if (!work)
-> > +		return;
-> > +
-> > +	flush_work(work);
-> > +}
-> > +
-> > +static void dma_chan_bh_entry(struct work_struct *work)
-> > +{
-> > +	struct dma_chan *chan = container_of(work, struct dma_chan, bh_work);
-> >  	dmaengine_bh_work_fn fn = READ_ONCE(chan->bh_work_fn);
-> >
-> >  	if (fn)
-> > @@ -1467,7 +1494,7 @@ void dmaengine_init_bh(struct dma_chan *chan, dmaengine_bh_work_fn fn)
-> [ ... ]
-> > @@ -1487,7 +1513,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
-> >  	if (!chan->bh_work_initialized)
-> >  		return;
-> >
-> > -	tasklet_kill(&chan->bh_tasklet);
-> > +	dmaengine_flush_bh_work(&chan->bh_work);
-> >  }
-> >  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
->
-> [Severity: High]
-> Can dmaengine_kill_bh() return with chan->bh_work still queued on the
-> workqueue?
->
-> Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting for a
-> running tasklet to finish so concurrent tasklet_schedule() calls cannot
-> re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
-> invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_work is
-> executing, insert_wq_barrier() places the flush barrier on worker->scheduled,
-> ahead of pool->worklist:
->
-
-Can you check this one?
-
-Frank
-
-> CPU0                                  CPU1 (bh_worker)
->                                       process_one_work(&chan->bh_work)
->                                         set_work_pool_and_clear_pending()
->                                         dma_chan_bh_entry()
-> dmaengine_kill_bh(chan)
->   flush_work(&chan->bh_work)
->     insert_wq_barrier()
->                                           ...
->                                             dmaengine_schedule_bh(chan)
->                                               queue_work(..., &chan->bh_work)
->                                         /* dma_chan_bh_entry() returns */
->                                       process_scheduled_works()
->                                         /* runs barrier from
->                                          * worker->scheduled */
->   /* flush_work() returns */
-> kfree(chan)
->                                       /* processes pool->worklist */
->                                       dma_chan_bh_entry()
->                                         chan->bh_work_fn  <-- use-after-free
->
-> This is a regression when chan->bh_work is re-queued while
-> dma_chan_bh_entry() is running, for example when a BH callback reschedules
-> itself (such as dma_tasklet() in ste_dma40 or mv_chan_slot_cleanup() in
-> mv_xor) or when a driver calls dmaengine_kill_bh() before tearing down its
-> IRQ or timer (such as mtk_cqdma_remove() or tegra_adma_free_chan_resources()).
-> Using cancel_work_sync(&chan->bh_work) or disable_work_sync(&chan->bh_work)
-> depending on whether the channel may be used again would wait for any
-> in-flight execution while preventing or draining concurrent re-schedules.
->
-> > @@ -1687,15 +1713,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
-> >
-> >  static int __init dma_bus_init(void)
-> >  {
-> > -	int err = dmaengine_init_unmap_pool();
-> > +	int err;
-> >
-> > +	dmaengine_bh_wq = alloc_workqueue("dmaengine_bh",
-> > +					  WQ_BH | WQ_PERCPU, 0);
->
-> [Severity: Medium]
-> Does calling dmaengine_kill_bh() from a WQ_MEM_RECLAIM workqueue or a
-> PF_MEMALLOC task trigger a WARN_ONCE() in check_flush_dependency()?
->
-> dmaengine_bh_wq does not have WQ_MEM_RECLAIM set (and WQ_BH workqueues cannot
-> set WQ_MEM_RECLAIM).  Because dmaengine_kill_bh() calls flush_work(), which
-> passes from_cancel = false to __flush_work() -> check_flush_dependency(),
-> flushing a pending or running chan->bh_work from a WQ_MEM_RECLAIM context
-> hits the dependency warning:
->
-> kernel/workqueue.c:check_flush_dependency() {
-> 	if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
-> 		return;
->
-> 	WARN_ONCE(current->flags & PF_MEMALLOC, ...);
-> 	WARN_ONCE((worker && ((worker->current_pwq->wq->flags &
-> 			       (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM)), ...);
-> }
->
-> For example, sdhci allocates host->complete_wq with WQ_MEM_RECLAIM and runs
-> sdhci_complete_work() -> sdhci_request_done() -> dmaengine_terminate_sync()
-> -> dmaengine_synchronize() -> vchan_synchronize() -> dmaengine_kill_bh().
-> Using cancel_work_sync() or disable_work_sync() in dmaengine_kill_bh() sets
-> from_cancel = true and avoids this warning.
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/cover.1794315350.git.allen.lkml@gmail.com?part=2
+Hi James,=0A=
+=0A=
+Thank you for incorporating the descriptor-callback lifetime and IRQ/channe=
+l-reuse fixes in v6.=0A=
+=0A=
+We've continued investigating the remaining STOP/ABORT safety question on o=
+ur Raspberry Pi 5 (RP1) test system, particularly the lifetime of client-ow=
+ned ALSA PCM buffers after unsuccessful DMA termination.=0A=
+=0A=
+We've completed several additional investigations against Raspberry Pi Linu=
+x 6.18.50, pinned at cff533aec2fa601846766b32ff57204e0a61bed7:=0A=
+=0A=
+1. DMAengine/ALSA STOP contract (V24R33): Eight source-executed host tests =
+passed. A simulated dmaengine_terminate_async() failure (-ETIMEDOUT) is not=
+ propagated by snd_dmaengine_pcm_trigger(). The snd_dmaengine_pcm_sync_stop=
+() path returns success after callback synchronization without independentl=
+y verifying hardware quiescence.=0A=
+=0A=
+2. ALSA buffer lifetime (V24R34/V24R35): Twelve further source-executed hos=
+t cases passed. The pinned ALSA core can release managed dynamic buffers de=
+spite an hw_free error. Preallocated buffers can be detached and subsequent=
+ly reused. This exposes a potential client-memory lifetime problem independ=
+ently of the DMA driver's descriptor pool.=0A=
+=0A=
+3. Live RP1 configuration (V24R36=96V24R39): Read-only inspection confirmed=
+ the HiFiBerry Digi sound card bound through snd-rpi-wm8804 and designware-=
+i2s. The live I=B2S1 device tree contains TX/RX DMA mappings and no I=B2S i=
+nterrupt property. However, its PCM streams do not expose the expected prea=
+lloc entries, and we're still reconciling the effective PCM component and a=
+llocator.=0A=
+=0A=
+These are source-level tests and read-only hardware configuration checks. W=
+e have not reproduced a client-buffer use-after-free on RP1 hardware.=0A=
+=0A=
+We've also prepared an isolated combination incorporating Raspberry Pi's pe=
+r-channel ABORT implementation (PR #7654). It compiles against our matching=
+ kernel source, but we have deliberately not installed or exercised it on t=
+he hardware.=0A=
+=0A=
+Our remaining concern is that retaining DMA descriptors does not establish =
+that independently owned PCM pages are safe to release. The Synopsys DW_axi=
+_dmac documentation cautions that an ABORT does not necessarily complete ou=
+tstanding AXI transactions.=0A=
+=0A=
+Could you or the other DMAengine maintainers clarify two points?=0A=
+=0A=
+1. Hardware quiescence: Is there an RP1-specific hardware condition, or sup=
+ported controller recovery sequence, that positively guarantees all outstan=
+ding DMA transactions have completed after a failed STOP followed by ABORT?=
+ In particular, does this account for in-flight AXI/PCIe writes and the sha=
+red DMA master?=0A=
+=0A=
+2. Client-buffer ownership: If no such guarantee exists, what would be the =
+preferred upstream approach to preventing ALSA from freeing or reusing DMA-=
+addressable PCM memory after an unrecoverable termination failure? Would th=
+is require a coordinated DMAengine/ALSA fail-closed mechanism, including th=
+e HW_FREE, error-cleanup, close, and device-removal paths?=0A=
+=0A=
+We're holding off on forced STOP/ABORT testing until we can establish a def=
+ensible memory-lifetime contract.=0A=
+=0A=
+Any guidance on the hardware guarantee or appropriate upstream design would=
+ be greatly appreciated.=0A=
+=0A=
+Thanks again for your work on this.=0A=
+=0A=
+Kind regards,=0A=
+Mitch Barnett=0A=
+Accurate Sound=0A=
+=0A=
+References:=0A=
+=0A=
+Raspberry Pi per-channel ABORT implementation:=0A=
+https://github.com/raspberrypi/linux/pull/7654=0A=
+=0A=
+Pinned Raspberry Pi kernel source:=0A=
+https://github.com/raspberrypi/linux/tree/cff533aec2fa601846766b32ff57204e0=
+a61bed7=0A=
+=0A=
+________________________________________=0A=
+From: James Hilliard <james.hilliard1@gmail.com>=0A=
+Sent: Sunday, November 15, 2026 10:00 PM=0A=
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>; Vinod Koul <vkoul@kerne=
+l.org>; Frank Li <Frank.Li@kernel.org>; Sergey Khimich <serghox@gmail.com>;=
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>; Sia Jee Heng <jee.hen=
+g.sia@intel.com>=0A=
+Cc: Mitch Barnett <mitch@accuratesound.ca>; dmaengine@vger.kernel.org <dmae=
+ngine@vger.kernel.org>; linux-kernel@vger.kernel.org <linux-kernel@vger.ker=
+nel.org>; James Hilliard <james.hilliard1@gmail.com>; stable@vger.kernel.or=
+g <stable@vger.kernel.org>; Wang YuWei <1973615295@qq.com>=0A=
+Subject: [PATCH v6 0/7] dmaengine: dw-axi-dmac: fix termination and pause a=
+cknowledgment=0A=
+=A0=0A=
+Keep cyclic mode in each descriptor so failed preparation and queued=0A=
+work cannot change the completion handling of another transfer.=0A=
+=0A=
+Use the layout-aware channel enable check during termination and retain=0A=
+transfer resources when the channel does not stop. Preserve suspension=0A=
+status for the pause and resume paths, including acknowledgments that=0A=
+arrive after a polling timeout or during another channel's interrupt.=0A=
+=0A=
+Keep a pending pause across cyclic segment completion and resume the=0A=
+segment only after the client releases the pause. Track the active=0A=
+descriptor until completion so queued work cannot reissue it while its=0A=
+interrupt is pending.=0A=
+=0A=
+Retain terminated descriptors until their callbacks have drained, including=
+=0A=
+cyclic descriptors that error handling has moved to the completed list.=0A=
+Serialize interrupt status collection with channel reuse so an old event=0A=
+cannot complete a replacement transfer.=0A=
+=0A=
+This series uses the shared virt-dma descriptor-retirement helper [0].=0A=
+=0A=
+[0] https://lore.kernel.org/r/20261115-submit-sun4i-dma-callback-lifetime-v=
+1-v2-1-fb7d258702f8@gmail.com/=0A=
+=0A=
+Assisted-by: Codex:gpt-6-astra=0A=
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>=0A=
+---=0A=
+Changes in v6:=0A=
+- Retain descriptors through callback synchronization using the posted=0A=
+=A0 virt-dma helper, covering pending, executing and error-completed cyclic=
+=0A=
+=A0 callbacks raised in Mitch's follow-up.=0A=
+- Serialize interrupt status collection with channel reuse and clear old=0A=
+=A0 completion and error status after successful termination.=0A=
+- Link to v5: https://patch.msgid.link/20261113-submit-dw-axi-dma-stop-paus=
+e-v1-v5-0-8523a27b5788@gmail.com=0A=
+=0A=
+Changes in v5:=0A=
+- Use a positive enabled-channel condition in the suspend-status helper,=0A=
+=A0 following Andy's review.=0A=
+- Initialize the resume result immediately before its first use.=0A=
+- Separate the lock-protected channel bitfields from the preceding fields.=
+=0A=
+- Link to v4: https://patch.msgid.link/20261112-submit-dw-axi-dma-stop-paus=
+e-v1-v4-0-3ebc24b243db@gmail.com=0A=
+=0A=
+Changes in v4:=0A=
+- Add a preparatory fix for cyclic mode leaking between transfers,=0A=
+=A0 following Sashiko's review. Store the mode in each descriptor so=0A=
+=A0 failed preparation, error recovery and queued work cannot change=0A=
+=A0 another transfer's completion handling.=0A=
+- Link to v3: https://patch.msgid.link/20261110-submit-dw-axi-dma-stop-paus=
+e-v1-v3-0-35fdfba8b61d@gmail.com=0A=
+=0A=
+Changes in v3:=0A=
+- Wrap the atomic polling calls by argument group and correct their=0A=
+=A0 continuation indentation, following Andy's review.=0A=
+- Move the termination return-value check simplification into the=0A=
+=A0 channel-enable polling patch.=0A=
+- Separate the pause-loop conversion to atomic polling from the=0A=
+=A0 pending-request and cyclic-restart changes.=0A=
+- Annotate the suspend-wait helper with its channel-lock requirement.=0A=
+- Pack the lock-protected flags into existing padding while keeping=0A=
+=A0 cyclic separately writable, following Andy's review.=0A=
+- Link to v2: https://patch.msgid.link/20261109-submit-dw-axi-dma-stop-paus=
+e-v1-v2-0-64adc48df793@gmail.com=0A=
+=0A=
+Changes in v2:=0A=
+- Use readx_poll_timeout_atomic() for the single-argument status helpers=0A=
+=A0 and express the termination polling interval and timeout in millisecond=
+s,=0A=
+=A0 following Andy's review.=0A=
+- Track pending suspend requests separately from confirmed suspension so=0A=
+=A0 resume can handle acknowledgments received after a pause timeout.=0A=
+- Use the atomic polling helper, including its final status check, and=0A=
+=A0 report -EAGAIN if resume cannot yet cancel a pending suspend request.=
+=0A=
+- Defer cyclic restart while paused and track the active descriptor until=
+=0A=
+=A0 completion, preventing resume or issue_pending from reissuing it.=0A=
+- Reset pause state on successful termination and channel allocation;=0A=
+=A0 clear stale status when starting a new descriptor.=0A=
+- Link to v1: https://patch.msgid.link/20261108-submit-dw-axi-dma-stop-paus=
+e-v1-v1-0-c48ec19e9ee4@gmail.com=0A=
+=0A=
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>=0A=
+To: Vinod Koul <vkoul@kernel.org>=0A=
+To: Frank Li <Frank.Li@kernel.org>=0A=
+To: Sergey Khimich <serghox@gmail.com>=0A=
+To: Sia Jee Heng <jee.heng.sia@intel.com>=0A=
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>=0A=
+Cc: dmaengine@vger.kernel.org=0A=
+Cc: linux-kernel@vger.kernel.org=0A=
+=0A=
+---=0A=
+James Hilliard (7):=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: keep cyclic mode in the descriptor=
+=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: poll the correct enable bit during =
+termination=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: retain descriptors when termination=
+ times out=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: use atomic polling for suspend ackn=
+owledgment=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: preserve pending pause requests=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: retain descriptors until callbacks =
+drain=0A=
+=A0=A0=A0=A0=A0 dmaengine: dw-axi-dmac: serialize interrupt status with cha=
+nnel reuse=0A=
+=0A=
+=A0drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 183 +++++++++++++++++--=
+------=0A=
+=A0drivers/dma/dw-axi-dmac/dw-axi-dmac.h=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0 10=
+ +-=0A=
+=A02 files changed, 130 insertions(+), 63 deletions(-)=0A=
+---=0A=
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4=0A=
+base-tree: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.gi=
+t fixes=0A=
+change-id: 20261108-submit-dw-axi-dma-stop-pause-v1-c93f1e767169=0A=
+prerequisite-patch-id: fc343480330da5ff95e5271997fa71107977c2b8=0A=
+=0A=
+Best regards,=0A=
+--=A0=0A=
+James Hilliard <james.hilliard1@gmail.com>=0A=
