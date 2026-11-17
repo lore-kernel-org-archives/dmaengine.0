@@ -1,18 +1,18 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.84
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.127.73
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794908627;
-	b=Hhs4qpOwNr2zUJ//i6P/YhX+38vOS77DcmaiykCMmL3bcFTs6fJ/AUz09GMV6EcRgrJx
-	 RafwumbcHwn+vYARyj9PzDPv3W8m7D8SUcutso3jSeYs8vVJfePxof9zRD219CAAFU4pB
-	 Vwi6I2TlFPkQxTmzRjayrJ5bpjs2QhD/4tYrpSH9wQifhetva9AeN1VkSGr8e+EKtzgYR
-	 XnRiB12AYh3Q4qVcvTuQ2R5qKZbV9pMv8ym0vH0vaY9blBBL4QqSLb0E6ISPPRwR5hcIh
-	 hp3m20BWMQbtz+G9ej4kyIS0DZ8BL5acq4TPGZR1FLnsy1+zRBDXIAHZEu020o+d3kQ==
+	t=1794908654;
+	b=ymWALpblVdCB09URHmfXZyrzlUfimEfnCmwPuRJZI5fZ5/UAl5oS62AxzbELuIVVKyIX
+	 vFoOdtMyYy9PF3/AiHjrS5/thivVyIJFA2T00Hk2N6Q2twkRcPSqoXihRB5CCE6G+DIkg
+	 dUo5gc5iDKMMfDg0T2ccCCen4s+4bUJUvraphvU+fTVaAu1Ro7LtfnOFyUIzqH16dXuuK
+	 UxUqIj8WXshG6lakWqZR+qFGm/dkRpSyRj0JrqfH2ZYhfb0EdXxSsTZpBOW4MmDPMLeif
+	 FXMQHO3A3wHxji7smoeMYM5vcM8mw1zEtZiOjtWTrp2stsXMVZ9FVDDuGQiDNgVHeBg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794908627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794908654;
 	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
 	 Received-SPF:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:Content-Type:
+	 X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:Content-Type:
 	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
 	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
 	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
@@ -25,46 +25,46 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=CYZRM522jsotT+mYGbZi/HF1GOonj0Msu3pPKcHltIQ=;
-	b=D7JHrZ2f82DnqlfpGLHN4dMGU2J0crVHmDTd8hpf8YruanpMGzM48/GAuPLuF5Y+M1ib
-	 s6PoJlyQPuBIBw3OBxAlcvSrH09rf9xZKQnpF/mgsOTBJWXSQA/jGoJiIHbKv/ySI8RZR
-	 b4pNSFaFtEk/G0hwsFVIfjlkEHH8ErGSEqimopAZLreP991X3HjTpZ5yOpMy5TAODr1JE
-	 ptYZg3LZ+Mem6Oz9x6myYCEGnDndqQeoBYAqVEePYRuaQD+/zHlFX7Mm390WvQaIQgNvN
-	 9YCp+tPi0bJMp2pVmjeud0J+9ZcB8FzkHju1TmIIn4ReKnBUZCYOVKRPcz5kjdP8AHA==
+	bh=h2xoCu77JB2CKHqXFOK/9xN5zdGfQruJ6NkfVX2vsbs=;
+	b=rer+YPPsdO1nOwtle+CJkVPSbiLDaBAuI7Of9yBPaZfkn/L3b1ABDQCtq2rF0epEQB/V
+	 +SV/P+K9zSofx9jL9GeEejPnVqu+RhTu1bEL20TCqI3O1NvhlMIuUrvkfgv6e9IPa5RMH
+	 s8vw1D4hTexXLybRTlQ4au/vr+NEaPGPNNF6hC21sIkFHsjmds6YD3svQK/eYByhdbKPp
+	 VEcu+Wu6fFf7jczBiS0ZUuLsTOGNfyS8FHuPlKxs7TtJqRVahqKA2S7Iyq3l8D7A23hmg
+	 xwJINeNCLJ0sSVyovp4mfBWS8wm1V8aFVub/ejoxF68mRW/T0qjBh1GhiS4Hl8kcZKA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=none header.from=cixtech.com;
 	spf=pass smtp.mailfrom=cixtech.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.126.84
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazon11022084.outbound.protection.outlook.com [52.101.126.84])
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.127.73
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11023073.outbound.protection.outlook.com [52.101.127.73])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794D360A3801;
-	Tue, 17 Nov 2026 09:43:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 794D360A3801
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2763606A329;
+	Tue, 17 Nov 2026 09:44:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2763606A329
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GJyHjbbOp9y/5E5wf3P4luw2P2vRuCNGf7mzyfX51O6fcrkVls0jsckLe3yxOp5kg8tExKVcncdXyFHJa/qOq3vcfeCdEGKQ4Th/wwwozWPcy+ssEV5V7p91rdl7j6LIj3rS8AmlJ66wtLmxT1WFI/URkRrWo9Pkm06I9EYnFAlwkkqBShRL2B44Vz9o0nFylk2nM7FNLxMzKTv86qSD2kLLtOnKwGcPRenyqwbfcL/Te1igkH1dEcKYC4sGaLwAkvtbj10/ptRV72SLhRScjZqiVT2hTCGRStOVjHLgRvKSC3Wg8vuvxbpR3uuktM32VtXka88c9z2KLiBK/8xkyg==
+ b=XbdzjUpm+Pcnx4wQRz/noYYnJXE4933ccjemi6/SUPUQvNCuFTg2Oi+aibwmpO6se87Sn39fTYIJr0me53IwbWcv6cQ91VND5jFOag1VtiBZdEJloqvG0E/Qn4/N4hO6nlXeHdbqvNjOzjd9w0Sz74pm8WTEEqy/fzqA0JstWHAGeFU/GlqOJCrnFy4cPKlmsS4qanSkEtbEkItm3Gqii6D62NzVl7Jq540BOy4GwsRwvKWR2ESWOdtQliZwwQuh8u6Q4OnjWscEZQL9Ajk66H9dCTt46NthNhvHGYxF+03k4KM/Ma/LVRt3cWLaBeex9zJ3SMEI26iQhthowr+F8A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CYZRM522jsotT+mYGbZi/HF1GOonj0Msu3pPKcHltIQ=;
- b=ZUp38fb3MCYb86I3kM6/HrRF0U/IZuR1xZoCR/oOI/TnD3GIey+akN5+DckpxYYpKJ/qRccUJJSUHzllL89Cxn6RoAbhNsNVrwQpn1A7Kku6yWLDiLU21uMjUVh7DDZrNyIeDBL4n/UwDXmCq5Jwi/x98vn3QnRho03eMJSKNCNyJqescoPGCRbKfeXCy6ytkF3hF1Lk2BrrB7SX7ywauXGnS7TePvBWwqzZCFQQescaQ/L/z7Djy/MCff3gsbzp0cuz4ZdhrFPFsfXSZzOKXXDbmRqKZudVwEWlHv22eovJo/x87EN1HN6YIexn+NlPjJkl/U42NP/1UvoUvpZD4Q==
+ bh=h2xoCu77JB2CKHqXFOK/9xN5zdGfQruJ6NkfVX2vsbs=;
+ b=msQdbIZG4T3G3Hk9OKPFdnexFuoki4KpNBAXfRVjTh1nD5gzUG5QQjlzEQK2Uwvr4+YDtn39tZTuctxfP3RjDajr0OV2iPoKlAl692vfpfqmk0E68sOhTblRUPvjRuRvBWmcGR7jm5fB3oCnGa4KcWrk7oEd0HFaMC8TDC4Wwfi14QuJUhVe3+V1bg43MX/6oOc6y5Fqmf+azRrshTiscxRToaOA8vNIaelPmuiTITY9U/aMZzmNqt6lLoxsHWzTDXNbA8fTjxXrclYaO4Gzt7Hc8eEDLLgdyWNQnon0htWbWzeh2mVGP5jYVCqDWJezDElw4XKsHCQdnUnwdw4U3Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
  dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
  not signed); arc=none (0)
-Received: from TY4P286CA0034.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:2b2::13)
- by TY1PPFB8C1195D3.apcprd06.prod.outlook.com (2603:1096:408::922) with
- Microsoft SMTP Server (version=TLS1_2,
+Received: from SI3PR01CA0008.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:296::7) by SE3PR06MB7960.apcprd06.prod.outlook.com
+ (2603:1096:101:2ea::13) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.7; Tue, 17 Nov
- 2026 09:43:44 +0000
-Received: from TY2PEPF0000AB88.apcprd03.prod.outlook.com
- (2603:1096:405:2b2:cafe::3) by TY4P286CA0034.outlook.office365.com
- (2603:1096:405:2b2::13) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 09:44:10 +0000
+Received: from SG2PEPF000B66CD.apcprd03.prod.outlook.com
+ (2603:1096:4:296:cafe::74) by SI3PR01CA0008.outlook.office365.com
+ (2603:1096:4:296::7) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.14 via Frontend Transport; Tue,
- 17 Nov 2026 09:43:44 +0000
+ 17 Nov 2026 09:44:10 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
  header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
@@ -72,31 +72,36 @@ Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
  222.71.101.198 as permitted sender) receiver=protection.outlook.com;
  client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
 Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- TY2PEPF0000AB88.mail.protection.outlook.com (10.167.253.11) with Microsoft
+ SG2PEPF000B66CD.mail.protection.outlook.com (10.167.240.27) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Tue, 17 Nov 2026 09:43:44 +0000
+ 15.21.615.4 via Frontend Transport; Tue, 17 Nov 2026 09:44:09 +0000
 Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 7375F40920EB;
-	Tue, 17 Nov 2026 17:43:38 +0800 (CST)
+	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 69099427EFC5;
+	Tue, 17 Nov 2026 17:44:08 +0800 (CST)
 From: Jelly Jia <Jelly.Jia@cixtech.com>
 To: vkoul@kernel.org,
 	Frank.Li@kernel.org,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	robin.murphy@arm.com
+	robin.murphy@arm.com,
+	sboyd@kernel.org,
+	bmasney+clk@redhat.com,
+	jbrunet+clk@baylibre.com,
+	tglx@kernel.org
 Cc: devicetree@vger.kernel.org,
 	cix-kernel-upstream@cixtech.com,
 	dmaengine@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	Jelly.Jia@cixtech.com
-Subject: [PATCH v7 07/10] dmaengine: arm-dma350: Track descriptor byte lengths explicitly
-Date: Tue, 17 Nov 2026 17:43:32 +0800
-Message-ID: <20261117094335.1393735-8-Jelly.Jia@cixtech.com>
+	Jelly.Jia@cixtech.com,
+	linux-clk@vger.kernel.org,
+	joakim.zhang@cixtech.com,
+	radu@rendec.net
+Subject: [PATCH v4 0/5] soc: cix: Add the Sky1 AUDSS DMA-350 interrupt path
+Date: Tue, 17 Nov 2026 17:44:03 +0800
+Message-ID: <20261117094408.1393837-1-Jelly.Jia@cixtech.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261117094335.1393735-1-Jelly.Jia@cixtech.com>
-References: <20261117094335.1393735-1-Jelly.Jia@cixtech.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -109,132 +114,99 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY2PEPF0000AB88:EE_|TY1PPFB8C1195D3:EE_
+X-MS-TrafficTypeDiagnostic: SG2PEPF000B66CD:EE_|SE3PR06MB7960:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 4f0b8b3b-d62b-43ed-db57-08df448f454d
+X-MS-Office365-Filtering-Correlation-Id: 68a1f679-0a98-4676-a068-08df448f5467
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|7416014|376014|1800799024|82310400026|23010399003|261022105027099003|261026130827099003|56012099006|261021123027099003|261021121427099003|10067099003|261021130227099003|261021133027099003|261021135927099003|261102123227099003|261026140227099003|261009223027099003|261026121527099003|261022075727099003|261022113327099003|261026135527099003|261022115727099003|261028144727099003|18002099003|22082099003|3023799007;
+	BCL:0;ARA:13230040|7416014|1800799024|376014|82310400026|23010399003|36860700016|921020|10067099003|260925021911599003|260925021311599003|260925022911599003|261021121427099003|56012099006|261022075727099003|261021123027099003|261026121527099003|261022105027099003|261026140227099003|261028144727099003|261102123227099003|261009223027099003|18002099003;
 X-Microsoft-Antispam-Message-Info:
-	osignJsEbbxtuB8s1+2aC0f2WoDseOWTlao7ePAlmCNjU/jyBuQY8oFnSnPdV6Mag2ZxM7ZRMiIPq8r+ODXYSZ1pYkiFLQB4MRjfOgeJR/Gx7l8neLWVGjFQoqcTWaHeqSlZ7lcGNwOLYN8cmrqbMFAO+4KX/ym+DmYKF4WM6FNZH8Xz8SQwCXTdPHNQ3SW9jPHktml7129US7cw+pCE66/DGwsFqKiKfJJzGwmc5vPifO3X8hFZxcWTzIepificWLk4dEyKRimqoJ6W6yunpFpwLcwtEhTmZzt+fj0QT2K061iFAqXut4L1LqNrUUvGN3KA7O1K84EvvvI9LgMrJQP2/4k3Cg6U/Ded6R8gv4to/JoMdkTi3+0v1cav3E5sPQWfMgR2WhRKyTscmSoxDtLAB8KJAm/cDFzPxOnOnc27o5sX5AMlhxNd7d2Wp6ZkhJeh6wrkv/kxsEFCldqoB0s1TkbUm+G9MhLMosMz9AHLhIepL3rGw4znE5GP9GqR958pdkUwnaVC0wi0tp7OMkWV4FLfjSncilHnDvByQqNFUYCAYS893EOzZDZJVIFODQTbVK3NzVpEiaNQapsRK00BVa5crVJvkfSO9a5lh7nlza34HN6lGHZXl/z0/Zbv1CZEIYtslcUDiQcFD6KeuH4/OFtEAXbPigV13CUELoJsZlOvbHaWz0/wBnFVG5mw1p6rr49cHwHovPmXMm9BhQ==
+	mPy7c8QsqBIYz5lyBj6BPCMDkc1e9Ji31FFN9mZLWGxkuQDBUUCpRaaVbOV78UxkdiYL20JHGl6G9aekWVRA9gG8kly6gXAO9H+e8VHJvf2whtgdZp3YHIBEFYVig5MDwFtWswPnXblyrh2AFzOYa8DoRzWi59fJlW5ChE3eBDnsL6sDidBHjAGFTVIqeP1RObm+NWaFLTMelD1mnsrM/OnedcdZKL0qUojKDSwgMBiwIVoJUCI8xt0PbYrHycrL+qFaROK/xXJEtBUTA48lDAHC6U5uIaX48uWM2yGYT43HD60nJdQd/j0ljOLJMT5rr4X1CyC28VsvBQnfgMH8zSP9WoWFu8FBSGsV/9+X/v3ttgKysWCXfoO8yKDxs2dRd1AHU7tkYhGkv6gPmuK++XOF0ztIca7f7r0XVuk+jvkOZtyIpkRjNK20Y4VVt4tmJD0UqyTM90Rfb5b6YiMVxkx61XECkbvKujHq9YvWLY7LgeYcr971YbNwaOjB2nOKX6QDz4BGlvIvMgLx6ylOIjm3lgaEcu0oK6v7kTKJaIp4HNUPAgaJTrcmoCyLM7BI4p4GGoZ9KRSVEwaT0YM9by4RspOyfrrA9LI9LPYNJvL89x3Hebcz0OZR2z5X9Zon8KW8+1T3z4efv9WalrMTTSnVskrdZTl5wtklTNvXZn3yvXilR37WSkrzeCFv6W6BWWNVdhyhiQN5t3uEcG5c8A==
 X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(7416014)(376014)(1800799024)(82310400026)(23010399003)(261022105027099003)(261026130827099003)(56012099006)(261021123027099003)(261021121427099003)(10067099003)(261021130227099003)(261021133027099003)(261021135927099003)(261102123227099003)(261026140227099003)(261009223027099003)(261026121527099003)(261022075727099003)(261022113327099003)(261026135527099003)(261022115727099003)(261028144727099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1102;
+	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(82310400026)(23010399003)(36860700016)(921020)(10067099003)(260925021911599003)(260925021311599003)(260925022911599003)(261021121427099003)(56012099006)(261022075727099003)(261021123027099003)(261026121527099003)(261022105027099003)(261026140227099003)(261028144727099003)(261102123227099003)(261009223027099003)(18002099003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	5CpbyMqPcfcTecdvFGYCD+cfpy0BfurY99StJbBOqcNsoo7yDk5QkmoTyQkFVDH3YXcdpsrAZd+/NaktrP/ifF5qFQASIj+6R4NJR8zHvJ4F+AU8FQbAx7vSSzku0vCv32d39le3xNLYPZj2pRWsEmq09GcTeF8Ev5s0Nc2+AAMOHzUXi7yh2bAeVQXIBiJ9WiT3wIpYbNaFNHTsvlQ2p4JQ9/bkF5Mg4ZUwRDQmQjdfBvzflf3I36Pd9mdAwOP2RroijkvpBlVrn/CgH+QZSvrOrE3tkZTELk91FRq0YFpNAvaKaB5nXlgyMUw3KFNTiUv+Iwrxl9qR2UXzg4g5KiWGAdJU/ud3YpFAqYnxWL8Nl0fji8XEdqDrgkfmR88G90OZ0fof/h3xwz9DVnVaD4wQx9LNOEzsYSOsUF8JI3yxr7syppuOk9Vl4LLMV3aJ
+	QNd7NSAmig+j+WCs/Bu8380QTk3Fab8na7jAJ4j71KynooPSbOv8qmwklO/Rslg2rKWBRGGESdi1Bs1Ck5VFwDmXAIMal8OXaBFNMlUb3Z9qAgzIM3ovQl/W/HykZ2mOgQ8qO21y5bI93mpkbOFgX5HASpNJKOulyRxioXcMOEyK2VJypQyvwJz4fX+kSn+7y6qxjC0hUo6IcaSPdFMSxMqKJc6S2yuRFtQMIfFkOnucD5AAzf2/8jUg4yYteMMMQCWMJkTB/AODQs0cBLnj0FnyOR76bvbhi09mRrg0/xIMVbD7VjBt1HNmJKYePk6H5xkHluOtyxRti2ST+cxJUiAuPwxmiw3iGdmWRo53BGFJ0To19RFTuolOEDrqUdnj0mnXC650/RLiS3lIrQ/HCJsy2FCMxsw3iBgWNpBZkdEYjPSNW0gjevmRE8QIKU3C
 X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 09:43:44.1593
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 09:44:09.5123
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f0b8b3b-d62b-43ed-db57-08df448f454d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68a1f679-0a98-4676-a068-08df448f5467
 X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	TY2PEPF0000AB88.apcprd03.prod.outlook.com
+	SG2PEPF000B66CD.apcprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPFB8C1195D3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR06MB7960
 
-Keep the total transfer length in the descriptor instead of deriving it
-from memcpy/memset-specific size fields. This allows the queued-status and
-start paths to report the total length for linked peripheral work.
+Hello,
 
-Use local size fields when constructing existing memcpy/memset commands.
-Keep these CPU-consumed command words and their MMIO loader in CPU byte
-order; little-endian pool storage is introduced with peripheral support.
+This series adds the CIX Sky1 AUDSS DMA-350 interrupt path through the
+audio subsystem CRU and restricts DMA channel registration using the
+optional dma-channel-mask property. No audio client drivers are added.
+DTS enablement is kept separate from this revision.
 
-Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
----
- drivers/dma/arm-dma350.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+It depends on the companion v7 series, "dmaengine: arm-dma350: Add slave
+support and Sky1 integration". Apply that series first.
 
-diff --git a/drivers/dma/arm-dma350.c b/drivers/dma/arm-dma350.c
-index bf87460c1c20..465a8b9b722a 100644
---- a/drivers/dma/arm-dma350.c
-+++ b/drivers/dma/arm-dma350.c
-@@ -178,8 +178,7 @@ enum ch_cfg_memattr {
- struct d350_desc {
- 	struct virt_dma_desc vd;
- 	u32 command[16];
--	u16 xsize;
--	u16 xsizehi;
-+	size_t bytes;
- 	u8 tsz;
- };
- 
-@@ -224,15 +223,18 @@ static struct dma_async_tx_descriptor *d350_prep_memcpy(struct dma_chan *chan,
- {
- 	struct d350_chan *dch = to_d350_chan(chan);
- 	struct d350_desc *desc;
-+	u16 xsize;
-+	u16 xsizehi;
- 	u32 *cmd;
- 
- 	desc = kzalloc_obj(*desc, GFP_NOWAIT);
- 	if (!desc)
- 		return NULL;
- 
-+	desc->bytes = len;
- 	desc->tsz = __ffs(len | dest | src | (1 << dch->tsz));
--	desc->xsize = lower_16_bits(len >> desc->tsz);
--	desc->xsizehi = upper_16_bits(len >> desc->tsz);
-+	xsize = lower_16_bits(len >> desc->tsz);
-+	xsizehi = upper_16_bits(len >> desc->tsz);
- 
- 	cmd = desc->command;
- 	cmd[0] = LINK_CTRL | LINK_SRCADDR | LINK_SRCADDRHI | LINK_DESADDR |
-@@ -247,8 +249,8 @@ static struct dma_async_tx_descriptor *d350_prep_memcpy(struct dma_chan *chan,
- 	cmd[3] = upper_32_bits(src);
- 	cmd[4] = lower_32_bits(dest);
- 	cmd[5] = upper_32_bits(dest);
--	cmd[6] = FIELD_PREP(CH_XY_SRC, desc->xsize) | FIELD_PREP(CH_XY_DES, desc->xsize);
--	cmd[7] = FIELD_PREP(CH_XY_SRC, desc->xsizehi) | FIELD_PREP(CH_XY_DES, desc->xsizehi);
-+	cmd[6] = FIELD_PREP(CH_XY_SRC, xsize) | FIELD_PREP(CH_XY_DES, xsize);
-+	cmd[7] = FIELD_PREP(CH_XY_SRC, xsizehi) | FIELD_PREP(CH_XY_DES, xsizehi);
- 	cmd[8] = dch->coherent ? TRANSCFG_WB : TRANSCFG_NC;
- 	cmd[9] = dch->coherent ? TRANSCFG_WB : TRANSCFG_NC;
- 	cmd[10] = FIELD_PREP(CH_XY_SRC, 1) | FIELD_PREP(CH_XY_DES, 1);
-@@ -262,15 +264,18 @@ static struct dma_async_tx_descriptor *d350_prep_memset(struct dma_chan *chan,
- {
- 	struct d350_chan *dch = to_d350_chan(chan);
- 	struct d350_desc *desc;
-+	u16 xsize;
-+	u16 xsizehi;
- 	u32 *cmd;
- 
- 	desc = kzalloc_obj(*desc, GFP_NOWAIT);
- 	if (!desc)
- 		return NULL;
- 
-+	desc->bytes = len;
- 	desc->tsz = __ffs(len | dest | (1 << dch->tsz));
--	desc->xsize = lower_16_bits(len >> desc->tsz);
--	desc->xsizehi = upper_16_bits(len >> desc->tsz);
-+	xsize = lower_16_bits(len >> desc->tsz);
-+	xsizehi = upper_16_bits(len >> desc->tsz);
- 
- 	cmd = desc->command;
- 	cmd[0] = LINK_CTRL | LINK_DESADDR | LINK_DESADDRHI |
-@@ -283,8 +288,8 @@ static struct dma_async_tx_descriptor *d350_prep_memset(struct dma_chan *chan,
- 
- 	cmd[2] = lower_32_bits(dest);
- 	cmd[3] = upper_32_bits(dest);
--	cmd[4] = FIELD_PREP(CH_XY_DES, desc->xsize);
--	cmd[5] = FIELD_PREP(CH_XY_DES, desc->xsizehi);
-+	cmd[4] = FIELD_PREP(CH_XY_DES, xsize);
-+	cmd[5] = FIELD_PREP(CH_XY_DES, xsizehi);
- 	cmd[6] = dch->coherent ? TRANSCFG_WB : TRANSCFG_NC;
- 	cmd[7] = FIELD_PREP(CH_XY_DES, 1);
- 	cmd[8] = (u8)value * 0x01010101;
-@@ -387,7 +392,7 @@ static void d350_synchronize(struct dma_chan *chan)
- 
- static u32 d350_desc_bytes(struct d350_desc *desc)
- {
--	return ((u32)desc->xsizehi << 16 | desc->xsize) << desc->tsz;
-+	return desc->bytes;
- }
- 
- static struct virt_dma_desc *d350_find_queued_desc(struct d350_chan *dch,
+The CRU gates eight DMA channel inputs onto a shared GIC interrupt.
+Implement the irqchip as an auxiliary driver under drivers/irqchip/,
+following the existing reset auxiliary device pattern. It shares the
+parent regmap and the same CRU DT node; no new hardware node is needed.
+The existing reset driver is unchanged.
+
+There is no per-channel pending status in the gate register. Poll enabled
+children using level flow handling with IRQ_IS_POLLED, retaining masking
+for disabled and oneshot-threaded children. The domain's PM device is
+the IRQ child. Its PM callbacks quiesce the parent IRQ around parent CRU
+power transitions; shared clock, reset and register context remain with
+the CRU driver. Use noirq ordering for system sleep and dispose mappings
+before removing the domain. No sleepable resume runs in hard IRQ context.
+
+Changes since v3:
+- Move the IRQ implementation out of the clock subsystem into a separate
+  auxiliary irqchip driver; keep the parent-side registration and shared
+  CRU context in the clock driver. (Brian.)
+- Simplify the interrupt-controller dependency with dependentRequired
+  and drop the redundant conditional #interrupt-cells requirement.
+  (Krzysztof.)
+- Retain the channel-mask binding and its Reviewed-by; collect Frank's
+  Reviewed-by for the unchanged mask behaviour.
+
+Previous version:
+https://lore.kernel.org/r/20261106013520.1134450-1-Jelly.Jia@cixtech.com
+
+Jelly Jia (5):
+  dt-bindings: soc: cix: Describe the Sky1 AUDSS DMA IRQ controller
+  irqchip: Add the Sky1 AUDSS auxiliary interrupt controller
+  clk: cix: Register the Sky1 AUDSS IRQ auxiliary device
+  dt-bindings: dma: arm,dma-350: Document dma-channel-mask
+  dmaengine: arm-dma350: Honour dma-channel-mask
+
+ .../devicetree/bindings/dma/arm,dma-350.yaml  |   3 +
+ .../bindings/soc/cix/cix,sky1-audss-cru.yaml  |  31 ++-
+ MAINTAINERS                                   |   1 +
+ drivers/clk/cix/clk-sky1-audss.c              |  37 ++-
+ drivers/dma/arm-dma350.c                      |  16 +-
+ drivers/irqchip/Kconfig                       |  16 ++
+ drivers/irqchip/Makefile                      |   1 +
+ drivers/irqchip/irq-sky1-audss.c              | 255 ++++++++++++++++++
+ 8 files changed, 354 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/irqchip/irq-sky1-audss.c
+
+
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+prerequisite-patch-id: aad1bc3c30a4825048143a3e0395e696201548e9
+prerequisite-patch-id: 2e9d1a314d10e25bcd4e2285b36471200a9f17e6
+prerequisite-patch-id: cf5b4f0b15f7e217ded422fa78c169653004d70b
+prerequisite-patch-id: b1a307c60ed1189999dbae31770cc5e4afe569e0
+prerequisite-patch-id: b78624ba53dce6857d20b65d3393ca5c77fd2c6e
+prerequisite-patch-id: d19a15bf5a6aed8ab078eab07594dbdfd81bbcaf
+prerequisite-patch-id: ac650cba94ae1fc52c25e6e1cf67e3af38cf92fa
+prerequisite-patch-id: 53807c6c2b9d9deef242023baf70ac7e9f73a87b
+prerequisite-patch-id: 62385082b538a0f354f44a70c2c251771238e047
+prerequisite-patch-id: caf492d9e693ce5901d8c4512906258607b435a6
 -- 
 2.54.0
 
