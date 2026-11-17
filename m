@@ -1,112 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.68
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794897752;
-	b=Fjy54Um2RFbTKaftidzcwlvlGO8XxM92GyydIJJLk9Zfir0GBcsHiyvc0kw7xzQC4nAW
-	 vvbKv4M079VjLDnCVcEUUeQdSs027d1uBG0A0BMLXGbYS/zdh6MKqeXBudNxL5g/PDa+Y
-	 HUEDm9fLlY/YsewVpKSveFBUg6GIJNtkagRoSDFNnPxrk08T3R4V4mm8tbqNPboGuqw91
-	 b/pbop/r3HcqNdpyMK0s2uK3BFAg5k821t2YoR5+9RRnIY+fD+xfMzfybK2xOE4fHdE2J
-	 plqRydRI1POaaUZGjbURl6/EnlG9gHE4wlFqiDN91QH4hxhOJRJ0/8q/ORNMGWoDccA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794897752;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Received:Received:From:To:CC:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:
-	 Content-Type:X-NV-OnPremToCloud:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=WQiT5xVdO1xOhFpbbCbp0ldMZffMEAlNq/1PkKK/ZR0=;
-	b=ps/D6bDzJYfQ7+CaGVnOgRfJGwKTA8CTCwdnCKTEHUbRp7+k+baLQD6qAja4nk9Q2jAc
-	 PIvmo2tEzdIGNnUE+JVwHeQq5kLRuyp1lClQDBG0FW0AjHiy64RMV9dA2Vf/cijPKBXR9
-	 Y22GMcNZvMVf0IaUs7rXtZNj+SFerzdjoQIcNb8PaGMIDJ5eC8vaiRlS0joQ2KCA3MlLt
-	 GNLS5NSgy55g8ZlGXOtPdBCiyZFdd5rLjV2jIj3kJvX/fQUBYR0VlAjV4IvXXpV0nBQ52
-	 W+idcM+MBTbK9ylSNmG5OCxJg1SZTt+HgFa415/x2j8A2pGelevTb+f3scCKgqgx5/g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Gi6vfg6Z;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.196.68
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013068.outbound.protection.outlook.com [40.93.196.68])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794897923;
+	b=tQytFhZs7jDCV0qgzPEmLy27/NfB1VWBy7EJhMdDpwx837lvxbpL79c5HLFO/Hn8MUrC
+	 QkcsOuquBpQtw2YQbtVHEettxK6spf3B7KadPBCTAz/voRgNgZOnK/y2DpR1/fU53yLPa
+	 ofzEeIyZXb32VuJxMp6g/Ebp7l5pX7urDnvzErmoQwDvjfUQQhoS4+IMEfb/V7QbEOTYI
+	 enWWA8cuAapgcya+sKtaGDHdcColsl/wWgvlcpotS72Om2KTC0lOHsesYJsxH0tp+4skb
+	 kVSS++bPIUACWdQnLdg65RfCb1oE10rN0JMi8Pn7yQQgVyCk8VpDXrst89haJIn8nBg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794897923;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=oJrKx6agKbgNQIM4l0b6ULsKnx4LIM8tVbx72J00oOk=;
+	b=1o/A02TKJHiCDJKvG4uasu2EWaDB9snbxKYSqaS5n+JqiKvfEwny73og7bkwFGn0F7LP
+	 rpVaTtqcpBzBlvHucQn41lEU4TTQhMqQOBsTdivKH6sRtn28/vKrtK1Mng9tMNN8ePrOO
+	 8kl4CVPWSm/j3TDMNZWaCR9X7Y8cu2Qsx+hgGbsJ6OB0se5JP7KSk81RoYlAT613R8BTw
+	 VuX9wS1w0+asjkYcbFnm3ZqbF40Buikt2jvg5fKQppjoOSeWRCDc69wLwAvEUuHYzx2zb
+	 q/Qii5YY3puBwInpxchPaIQ+3MSnbitpPbSqy8seUTBjj2eVjMdKmCRira3YWHV/tPA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IvJBEsyg;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD915606A31C;
-	Tue, 17 Nov 2026 06:42:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD915606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02A3606A31C
+	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 06:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Gi6vfg6Z
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=c7RRnCE9RH4Osll24cDRrJydlMBxGSKxV2yilpAAZ7OFyptK3B/lawss0sIUrHSMSj2iCdnJH2ZaLd1J1Idhm02OfG/ZC7KesG7WvKkf/UebmTuYi+iXPPxYG2rnrw2fX3A9+5paHrAXU2BXEAGd9wkAdQQV980/7/A6spWOj/wf21TIQPnh5ETlvYgumwEHrDtvK+Je9E3rzySUC7M5Oz9RWQ+P40rB5OnUv49BsLk1K3G1zFhw8HVms09NcThHg1v8jrQK4W/R/nurAkgHom13lrcyvlgNJzeWtI7yjtQVaJtOV9qgvTmb+0RJDLFa0bV/6iSBuu1uwkCucG5Rmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WQiT5xVdO1xOhFpbbCbp0ldMZffMEAlNq/1PkKK/ZR0=;
- b=XwhKlUAgxNizHjptpf2NCqSM4a6euIxYy8CO5kCi36KA8Wl4wEl+FWaniTdzyoWwGVOkDSuPBiCUunAMmCpXcQfubFXKqzIHcuOCHYFW7CmLWoK3e04cyNNOcZIq2eKfSm6L6PjPJxVFckBm6bmHQwdDXyiXHhHvz+6xxi2pErVb8KSTHT48VlUeg3WKAdfdHM1YUwCNbMtWE2aP/+NpVNkHz2IOksiI7dgAQXPpQ+6c4M1+1I9mfSDkYGM/SJ+zmNyatKDdricyDxWBy2hwkOY/nN0prWqD1nfNlxKSpY3w9ZMwLvCo/+DeCiXMxhrk7Cj7ILrjDX/rLUVHwg2mnA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WQiT5xVdO1xOhFpbbCbp0ldMZffMEAlNq/1PkKK/ZR0=;
- b=Gi6vfg6ZYBrWoa09gYmyamnMLXGLfyMCsotcD2tUG4dgk6xiGiWEVqtu6rxgMcGrYIw1gesZPgZjQRmc22EXiorfllSJYwz3DCD1KGEh3SwhPTMQ9LLUl62BGs6vxrowOEe27CWc+Pjo08mjHbayYAwnas8ZcSAEdMvm3854BEgm8emjf33shq6mXGv02gfVTA+0UX3wYklS4iMxbzWURp+ivz6RfPNpm0wzNPuAdfNXuT6uzjWkLyZgTBCE2m7OlGhlpfraMRa90Q0YaUCEmf0Q7vCANbgwQ+s5viyDYxgZWfZFskCF77oxTcAoAmZJWIYJ8uvtnyAS3d5pe8Lr+A==
-Received: from MW4PR04CA0113.namprd04.prod.outlook.com (2603:10b6:303:83::28)
- by DM4PR12MB6135.namprd12.prod.outlook.com (2603:10b6:8:ac::5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.14; Tue, 17 Nov 2026 06:42:21 +0000
-Received: from MWH0EPF000DD310.namprd05.prod.outlook.com
- (2603:10b6:303:83:cafe::97) by MW4PR04CA0113.outlook.office365.com
- (2603:10b6:303:83::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.13 via Frontend Transport; Tue,
- 17 Nov 2026 06:42:21 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 216.228.118.232) smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- MWH0EPF000DD310.mail.protection.outlook.com (10.167.249.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.615.4 via Frontend Transport; Tue, 17 Nov 2026 06:42:21 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Mon, 16 Nov
- 2026 22:42:04 -0800
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.57; Mon, 16 Nov 2026 22:42:03 -0800
-Received: from build-akhilrajeev-noble-20260927.internal (10.127.8.11) by
- mail.nvidia.com (10.126.190.180) with Microsoft SMTP Server id 15.2.2562.57
- via Frontend Transport; Mon, 16 Nov 2026 22:41:59 -0800
-From: Akhil R <akhilrajeev@nvidia.com>
-To: <james.hilliard1@gmail.com>
-CC: <Frank.Li@kernel.org>, <akhilrajeev@nvidia.com>, <digetx@gmail.com>,
-	<dmaengine@vger.kernel.org>, <jonathanh@nvidia.com>, <ldewangan@nvidia.com>,
-	<linux-kernel@vger.kernel.org>, <linux-tegra@vger.kernel.org>,
-	<pkunapuli@nvidia.com>, <rgumasta@nvidia.com>, <stable@vger.kernel.org>,
-	<thierry.reding@kernel.org>, <treding@nvidia.com>, <vkoul@kernel.org>
-Subject: [PATCH v2] dmaengine: tegra: only advertise supported pause operations
-Date: Tue, 17 Nov 2026 06:41:42 +0000
-Message-ID: <20261117064143.4024726-1-akhilrajeev@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261109-submit-tegra186-dma-pause-caps-v1-v2-1-accf568bf0cc@gmail.com>
-References: <20261109-submit-tegra186-dma-pause-caps-v1-v2-1-accf568bf0cc@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IvJBEsyg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BE51F000C4;
+	Tue, 17 Nov 2026 06:45:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794897923;
+	bh=oJrKx6agKbgNQIM4l0b6ULsKnx4LIM8tVbx72J00oOk=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=IvJBEsygW+j0fshLSGH+p73T6NG0FE528iSANejdg1Irv2E/OFDbVJmlSc+grR1BY
+	 cc+eCtXs2SWJUoGZlNlxWD3qVh+R3TCr1yFzoLNSpeWAIsIr/w8WRixvErSB+tvaY/
+	 ZcWCszHaH8Mg/szFyZL+lm1fihTI1F4Q5kbHe4t6EY2Nl+9wfV9hQI9S+tF118fnmT
+	 zvpvDFXFj6ZKRuM1NgeARYMe/RB2NcTKdKT1FLAaJjOhcu8KSeWRZ9q7yZA9Igpkfc
+	 s+biTBxjzDI7O5nrnhol00ky8Kggb3hb7rHERCYqj8AUWNs9mqdYhuYOFkEl9Rx8Gp
+	 fw3bCOPBxWwfA==
+Message-ID: <sashiko-outbox-218277@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: axi-dmac: change IRQ to threaded mode
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sergey Matsievskiy" <matsievskiysv@gmail.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261117060124.27914-1-matsievskiysv@gmail.com>
+References: <20261117060124.27914-1-matsievskiysv@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 17 Nov 2026 06:45:22 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -115,122 +58,142 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000DD310:EE_|DM4PR12MB6135:EE_
-X-MS-Office365-Filtering-Correlation-Id: af4f07c9-06a1-48e9-42e8-08df4475eebb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|82310400026|36860700016|10067099003|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|261022075727099003|261021123027099003|261021121427099003|261022105027099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	UxR59Z3IR2fxAf4Nn/Sc6afXiJSkXn9ULbFClIhpHm1rzmKySVkhMaEZ9Zo7J3+B17oux3Leua9CYPBrbxdm2eAM2cvGK2vGKdirjUux75QJ2ey1CXLvdGD0bT7CHPdTYE31JvMPetwxPjjYjoaZUGRw1YbzIoC3reTVjMl5uiKY2i9sk8y6u0Ke4XZU01De52yLhGsKC1ra6F7Ob5KYhZNtJgbQ1Y5bOzyRhnETpOaaGfgf26B1IpUvY5d79A8bLGrWXby3Zc+mDItjCgQIWxco5BqstJ01JPNiz8MnwqDUPsO1ntOzUbqUlH0Ei26gGPAr7klS0OoNjDrSH91DdJYtoafLHW2ChDaB+Bb6jKts05tGKuRaPCgjQTdlfjGFtB6L9pduqn/mTJ6TptELbfo9wWldDPMnvEQ0iXlCrbpgjmj+AjcPB7WjpC/qrpDNDPPqw0wod4fihrFNT/IDgfEHWPEHtW3pdocjau33sDq2b5Z1wb3H7N90EUcMVHTOsZaHjeo/hiFyyHLdgovVgLpii9CV5aHrk4Pfds6oCNUEWaA/iG5XIWVZDpwsrKu+5H6733i0mAXaozvjtQ2mvISxd2QYI+0LKExvmwTQBBCyUgZ9ymFKMRObnYD6c7nPQdPN5LA+XF3CvbQ5wY28e44VxY4PohTvZmkytOd6WZFyTq5GXCcSwsiuhdqcK+hPYRvxwjQ9KX0KhzRzTD8+cQ==
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(82310400026)(36860700016)(10067099003)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(261022075727099003)(261021123027099003)(261021121427099003)(261022105027099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	ZxOWg16sbrEpFWwwC+1/Ubj6wMpw0Of3g7ynQekIaSpUuc6bf+kb0UAy7lg2wUP0PbTawL7CLfWY64ZFGaH/gVe0gwXoN1daz+/wkk1gNZ6blM0ncJzsljbfPKKSfbUhiDTt7BwGAQle+Pe2ljCk3Pmv/TFSYPdfQx9y/PJxpLbRGFb1zmuB1qSb2x2lxY9rGWijxLFHf7Ptj5/W5Vm0hQRxvsL0kysQ4i/i4zjzdudGFmZxPCF++md6heueqmxOWO9JDdJtc0ZX7GLRRjrjRs6FBwgQiRm4OV2Lr8DVu1yoLSTN0sk4cytHVHz0wZmSXFS4qIqpG4XCY4sVRrBH+k4g4qx0MKVO/ypFtCh+7ZvrJhcdkoP2GAUrympauaiKwGMAuw7mTuWRiWp4t8+1y0ab1qk30ErpmRjbyO/Zr+GZKgIoYf95et8fH7Ge1Lk5
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 06:42:21.6487
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: af4f07c9-06a1-48e9-42e8-08df4475eebb
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000DD310.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6135
 
-On Mon, 09 Nov 2026 20:02:14 -0700, James Hilliard wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [High] dmaengine: axi-dmac: threaded IRQ race with
+  axi_dmac_synchronize()
+It also noticed 1 related pre-existing issue this patch does not
+introduce:
+- [High] dmaengine: dma-axi-dmac: cyclic desc use-after-free in
+  axi_dmac_terminate_all() [1]
+--
 
-> Tegra186 does not support pausing a channel, but the driver installs
-> device_pause and device_resume for every variant. Both callbacks return
-> -ENOSYS on Tegra186.
-> 
-> dma_get_slave_caps() derives cmd_pause and cmd_resume from the presence
-> of these callbacks. Clients such as generic 8250 therefore accept RX DMA
-> channels that cannot satisfy their pause requirement. A receive timeout
-> then reaches an unsupported pause operation instead of being excluded
-> when the channel capabilities are checked.
-> 
-> Only install the pause and resume callbacks when the matched chip data
-> advertises hardware support. Keep them available on Tegra194 and later,
-> and remove their now-redundant checks for unsupported hardware.
-> 
-> Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+commit fcedf11ce19d4d148f53f6d8bd9c6a0e04ee8801
+Author: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-Reviewed-by: Akhil R <akhilrajeev@nvidia.com>
+dmaengine: axi-dmac: change IRQ to threaded mode
 
-> ---
-> Changes in v2:
-> - Remove the capability checks from the pause and resume callbacks now that
->   they are registered only on hardware that supports them.
-> - Link to v1: https://patch.msgid.link/20261108-submit-tegra186-dma-pause-caps-v1-v1-1-9cc9b17a033d@gmail.com
-> 
-> To: Laxman Dewangan <ldewangan@nvidia.com>
-> To: Jon Hunter <jonathanh@nvidia.com>
-> To: Vinod Koul <vkoul@kernel.org>
-> To: Frank Li <Frank.Li@kernel.org>
-> To: Thierry Reding <thierry.reding@kernel.org>
-> To: Akhil R <akhilrajeev@nvidia.com>
-> To: Pavan Kunapuli <pkunapuli@nvidia.com>
-> To: Dmitry Osipenko <digetx@gmail.com>
-> Cc: Thierry Reding <treding@nvidia.com>
-> Cc: dmaengine@vger.kernel.org
-> Cc: linux-tegra@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->  drivers/dma/tegra186-gpc-dma.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
-> index e76c58f213d8..bd606b71e714 100644
-> --- a/drivers/dma/tegra186-gpc-dma.c
-> +++ b/drivers/dma/tegra186-gpc-dma.c
-> @@ -419,9 +419,6 @@ static int tegra_dma_device_pause(struct dma_chan *dc)
->         unsigned long flags;
->         int ret;
-> 
-> -       if (!tdc->tdma->chip_data->hw_support_pause)
-> -               return -ENOSYS;
-> -
->         spin_lock_irqsave(&tdc->vc.lock, flags);
->         ret = tegra_dma_pause(tdc);
->         spin_unlock_irqrestore(&tdc->vc.lock, flags);
-> @@ -445,9 +442,6 @@ static int tegra_dma_device_resume(struct dma_chan *dc)
->         struct tegra_dma_channel *tdc = to_tegra_dma_chan(dc);
->         unsigned long flags;
-> 
-> -       if (!tdc->tdma->chip_data->hw_support_pause)
-> -               return -ENOSYS;
-> -
->         spin_lock_irqsave(&tdc->vc.lock, flags);
->         tegra_dma_resume(tdc);
->         spin_unlock_irqrestore(&tdc->vc.lock, flags);
-> @@ -1518,8 +1512,10 @@ static int tegra_dma_probe(struct platform_device *pdev)
->         tdma->dma_dev.device_terminate_all = tegra_dma_terminate_all;
->         tdma->dma_dev.device_tx_status = tegra_dma_tx_status;
->         tdma->dma_dev.device_issue_pending = tegra_dma_issue_pending;
-> -       tdma->dma_dev.device_pause = tegra_dma_device_pause;
-> -       tdma->dma_dev.device_resume = tegra_dma_device_resume;
-> +       if (cdata->hw_support_pause) {
-> +               tdma->dma_dev.device_pause = tegra_dma_device_pause;
-> +               tdma->dma_dev.device_resume = tegra_dma_device_resume;
-> +       }
->         tdma->dma_dev.device_synchronize = tegra_dma_chan_synchronize;
->         tdma->dma_dev.residue_granularity = DMA_RESIDUE_GRANULARITY_BURST;
-> 
-> 
-> ---
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+This commit converts axi_dmac_interrupt_handler() to a threaded interrupt
+handler using devm_request_threaded_irq() and switches vchan.lock acquisiti=
+on
+in the handler to spin_lock_irqsave().
 
-Best Regards,
-Akhil
+> diff --git a/drivers/dma/dma-axi-dmac.c b/drivers/dma/dma-axi-dmac.c
+> index dbc31b185c4d4..c4b6f6ae6be8c 100644
+> --- a/drivers/dma/dma-axi-dmac.c
+> +++ b/drivers/dma/dma-axi-dmac.c
+> @@ -582,6 +582,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq=
+, void *devid)
+>  {
+>  	struct axi_dmac *dmac =3D devid;
+>  	unsigned int pending;
+> +	unsigned long flags;
+>  	bool start_next =3D false;
+> =20
+>  	pending =3D axi_dmac_read(dmac, AXI_DMAC_REG_IRQ_PENDING);
+> @@ -590,7 +591,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq=
+, void *devid)
+> =20
+>  	axi_dmac_write(dmac, AXI_DMAC_REG_IRQ_PENDING, pending);
+> =20
+> -	spin_lock(&dmac->chan.vchan.lock);
+> +	spin_lock_irqsave(&dmac->chan.vchan.lock, flags);
+>  	/* One or more transfers have finished */
+>  	if (pending & AXI_DMAC_IRQ_EOT) {
+>  		unsigned int completed;
 
+[Severity: High]
+This problem wasn't introduced by this patch, but can axi_dmac_terminate_al=
+l()
+cause a use-after-free on the active cyclic descriptor [1] in
+vchan_complete()?
+
+CPU0                              CPU1
+axi_dmac_interrupt_handler()
+  axi_dmac_transfer_done()
+    vchan_cyclic_callback()
+      vc->cyclic =3D vd;
+      tasklet_schedule(&vc->task)
+                                  axi_dmac_terminate_all()
+                                    list_splice_tail_init(..., &head)
+                                    vchan_dma_desc_free_list(..., &head)
+                                      axi_dmac_desc_free()
+vchan_complete()
+  vd =3D vc->cyclic;
+  dmaengine_desc_get_callback(&vd->tx, &cb)  <-- use-after-free
+
+axi_dmac_terminate_all() splices chan->active_descs into its free list and
+frees the descriptors without calling vchan_terminate_vdesc(), leaving
+vc->cyclic pointing to the freed axi_dmac_desc when the scheduled tasklet
+runs.
+
+> @@ -601,7 +602,7 @@ static irqreturn_t axi_dmac_interrupt_handler(int irq=
+, void *devid)
+>  	/* Space has become available in the descriptor queue */
+>  	if ((pending & AXI_DMAC_IRQ_SOT) || start_next)
+>  		axi_dmac_start_transfer(&dmac->chan);
+> -	spin_unlock(&dmac->chan.vchan.lock);
+> +	spin_unlock_irqrestore(&dmac->chan.vchan.lock, flags);
+> =20
+>  	return IRQ_HANDLED;
+>  }
+> @@ -1317,8 +1318,10 @@ static int axi_dmac_probe(struct platform_device *=
+pdev)
+>  	if (ret)
+>  		return ret;
+> =20
+> -	ret =3D devm_request_irq(&pdev->dev, dmac->irq, axi_dmac_interrupt_hand=
+ler,
+> -			       IRQF_SHARED, dev_name(&pdev->dev), dmac);
+> +	ret =3D devm_request_threaded_irq(&pdev->dev, dmac->irq, NULL,
+> +					axi_dmac_interrupt_handler,
+> +					IRQF_SHARED | IRQF_ONESHOT,
+> +					dev_name(&pdev->dev), dmac);
+
+[Severity: High]
+Does moving axi_dmac_interrupt_handler() to a thread without updating
+axi_dmac_synchronize() and axi_dmac_terminate_all() introduce a race with
+channel termination and teardown?
+
+axi_dmac_synchronize() only calls vchan_synchronize() (which kills the vchan
+tasklet) and does not call synchronize_irq(dmac->irq), while
+axi_dmac_interrupt_handler() reads and clears AXI_DMAC_REG_IRQ_PENDING befo=
+re
+acquiring dmac->chan.vchan.lock:
+
+CPU0 (IRQ thread)                 CPU1
+axi_dmac_interrupt_handler()
+  pending =3D axi_dmac_read(...)
+  axi_dmac_write(..., pending)
+                                  dmaengine_terminate_sync()
+                                    axi_dmac_terminate_all()
+                                    axi_dmac_synchronize()
+                                      vchan_synchronize()
+                                  axi_dmac_issue_pending()
+                                    axi_dmac_start_transfer()
+  spin_lock_irqsave(&vchan.lock)
+  axi_dmac_transfer_done()
+    list_del(&active->vdesc.node)
+    vchan_cookie_complete()       <-- completes and frees new transfer
+
+When an interrupt fires just before dmaengine_terminate_sync(), the woken I=
+RQ
+thread can run after a new transfer is issued and apply the stale
+AXI_DMAC_IRQ_EOT to the new descriptor on chan->active_descs.  In chan->hw_=
+sg
+mode, axi_dmac_transfer_done() unconditionally pops and completes the head =
+of
+chan->active_descs, freeing the descriptor and its chan->pool SG entries via
+axi_dmac_desc_free() while DMA hardware is still using them.
+
+Similarly, during dma_release_channel(), an in-flight IRQ thread can run af=
+ter
+vchan_synchronize() and schedule the vchan tasklet while
+axi_dmac_free_chan_resources() is destroying chan->pool.
+
+[1] https://sashiko.dev/#/bug/linux-b5d0e7ef-3ad0-4c97-9c79-1694077caf95
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261117060124.2791=
+4-1-matsievskiysv@gmail.com?part=3D1
