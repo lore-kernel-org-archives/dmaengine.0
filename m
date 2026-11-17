@@ -1,111 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.20
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794934324;
-	b=cNVBm4I0mPTdZaa6trIVxA9lngd5wndpJEw8BykznTKlm54KpI5RqCmq+h/dc/RXfCXS
-	 C68//SXR0AK44lmzTUPs/FDUBaJyzPq5mD/2dGefFfQ8d38EXz7ymvkIdfVDJVXdlMF2l
-	 bQjNkZg7zTmmb7BMWd3rztPxLxoMaVNAshbvjJq9bsgg4du8qqAlilMwpQoLQM6yDMHRH
-	 G4fWFky60v05JGCXCbm15je8Pax71E5yXBBvLg1svMvfoPoRJbc6kiPdhs3M6VmvDeGZU
-	 J9ZemETW8RSHGcX2vWCVNPUKNL4q01QCLoehj1chU3x/u29g6/8K/Ns0BmG+CsSMkzg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794934324;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=dVyO6p3THBEdpg71tAu/mvRTYtcQze6lRLEq/wqk/xE=;
-	b=mO38tqOBQAz8732UEgQavwkLRl1oH01aUyBnGQXDiaeqkiSdAP8w58fEz/aPqVam61kH
-	 sHFkmHrBZeE0CvFslnwCKdvercMxdowIUbf+zMs5XKnUwscskhv2o80MLYHzlospdcadt
-	 mCf7pizKk7cgJ2gdEPZpvXe90I4GVVLafqRZP1MvVGvamsOrkQXkuCgLR7eFAvhVByz/Q
-	 fZIe9s2ROfETH34Yty0NiR87MSr88OIBW/olRqZwip631gB5KnzZ6YK0CCAsGDuGRA/lC
-	 BG/NnUjYtqswa/eiZ5/I6BlTrZOyB6ZC3kGZxySilsv0QwVbYMb1uTqZ74/IvBtpBqw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Z9NkscsY;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.20
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011020.outbound.protection.outlook.com [52.101.65.20])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794934354;
+	b=2xeZUOoBoLyGFqGiqVu+EzaM3FIACcM7uAPKLnIHgcKX/yAQGAJsWZnNUjZ4VV+lQyQZ
+	 b7mzH4WXQGb+ZdJg7LlAeefphsiQ1j6AYQyo1UJ3TbcOm8FD8/IGt8dSxlV7ucw9qDG3C
+	 WIJ1uaEuXBKNcx1M3pGf1R7nDJRbuq+mp9qTup3jjtMMxhN00kaaTb421lQhFULjJ3O+/
+	 XNtBhrP0V5yR7f49LHJL4T7a2yRPIhDmL7GPu4/GJbNgwG9VFzdIPBg9dxvgBQGddKZna
+	 GZ6CbX3uHc8Qrs7dNV8Xzu1YNPIjTwXYC7i+3zTP+8Q5y2fN25EQqYNheQ3HBKg13Mw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794934354;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:
+	 X-SA-Exim-Mail-From:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
+	 Subject:X-SA-Exim-Version:X-SA-Exim-Scanned;
+	bh=7dLKSAHChIyhMicgLoF8jO08Si95vun/YXMAQqai4g8=;
+	b=hg19nxTkVqxwqrpcFETHc9w0oYKDNrwwCnmo7UOuASqy10H7UvthU79zCpkwT0vvWPc6
+	 UItxzHF8uPOIQr/d1JWcPSbL11CIurYXlNFrErQvPu2ZTv0CujTjgtTPZJE65vuM4LN1A
+	 ClW0tfMkbrwaPsnIbxD72VPa9BqIT8eKDmOzGlErq+HUIHBeQ5zJrGrthabwLT/qDug4R
+	 AhC26Zev/cYt6VBxcKWRNxHzHNVzzCbM/TyF2S/OANmUNbII8oTg1LFq1GARN3v3zLvgD
+	 Yo/X3sI6Sg6Iqh4f5mfZzdBQ+Fv2D6nzvB+Hr5RALxUvXZ+wgxXtKb8gl2q/rA+Ljfg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=deltatee.com;
+	spf=pass smtp.mailfrom=deltatee.com;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b="ekL8tE/J";
+	arc=none smtp.remote-ip=204.191.154.188
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8EB606A332;
-	Tue, 17 Nov 2026 16:52:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE8EB606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FC5606A31C;
+	Tue, 17 Nov 2026 16:52:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76FC5606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Z9NkscsY
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vVoP0Q/stD2JD5joPEj8Yxcv7z5HsriVPfZs26k/I1Q0Yx8AFp9FzDD1oY3Mf17JcEN1IWa6xGLb5HQH2N3PHVLdZKn4dml0hLUULzjmku37la63gq4J/1ENxPqSPR2HNt4kXF7Gi1kEyAkugGdO1K9NkFDMO8UYbH6zSs+/18jlldUFaxopzby9Gc5QHP1NQK63mCPdGBk+b2KmdclhvluBtjzA8tV57iYqELxejd1R8ORywcXfd6LuQspnEbuBZVkocVOazCEZQTw2KjZN4Ny7ofdTi9IccUR33sLRGghi4i0NfYDPNIqua/nHQ4k/JZE6NdvRLfPjcjzFf0UixQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dVyO6p3THBEdpg71tAu/mvRTYtcQze6lRLEq/wqk/xE=;
- b=Eg4acNsZk1m1vNUnUMLw03bSdcwFhIRNbpH1NLllPUtM2eQbFUoflutzxETGJVr6QO1V8v33Zix27wwJXeSbDF78BzKe4WTcZRWrFUbQ++SN9vEGGjdzmVqJY/8iYyIKcfZSJEXJtkRi2UsKEKeCnM+n7bW82cGiGGdjZhk/yiTY5Ga9q9kTgf680Vo3JzVJuvoSgbDON3YWg4xGZrAxkuXMEx4Mjtz/NxnKb8nB3N/wxwhXcWOQ8H30OJpLGd38huLZ6IIvRzZLQTNJVuFVJllAa/uxvBVkTQni0bw+RncTTQNN8KPAJfz0zAi5EUj+WxzR1y2iud46LwAj7xOCgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dVyO6p3THBEdpg71tAu/mvRTYtcQze6lRLEq/wqk/xE=;
- b=Z9NkscsYRJVF9ug61yqXN8D3f0brAehMeFsOA9cwDU+xm56BwI2BUhlPRDXuyGQe79wGq74Wmtzd1ebCST+ghmgh6OXOCNEjwgSFOpXkuOSbQs41CU/dTa+l9n9WJDxY9Sv8FYKwfcFxuRBV5UtOaORvUAQFcMbkdhoeyMh6USOiZmRJSjxwg550zLavUCtpGiV5yonAh00FTauoWMK7IlxFTyVMUoafPpQtHCmw3GwiOjexfGBQ8Qg0lEn6HXzSkhq2hj+REgsfbHgyiEstxlx+cGViPXgp8Kr7XM0XpgKJBQyFmM9ODDRXAecviseBpw5/Peav+9eTFL4YdNwgvQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by PR3PR04MB7418.eurprd04.prod.outlook.com (2603:10a6:102:8b::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 16:52:00 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 16:52:00 +0000
-Date: Tue, 17 Nov 2026 10:51:47 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Peng Fan <peng.fan@linux.dev>, "Peng Fan (OSS)" <peng.fan@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
-	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Peng Fan <peng.fan@nxp.com>
-Subject: Re: [PATCH v6 0/9] dmaengine: add DMA channel bus and fsl-edma
- per-channel IOMMU support
-Message-ID: <avyGI6QmuZ3DUqc9@SMW015318>
-References: <20261112-edma-iommu-v3-v6-0-b038edb8ce6f@nxp.com>
- <20261116193021.GB2452510@ziepe.ca>
- <avwQl18smAW4R6ec@fedora>
- <20261117130005.GC2606445@ziepe.ca>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261117130005.GC2606445@ziepe.ca>
-X-ClientProxiedBy: PH8PR02CA0033.namprd02.prod.outlook.com
- (2603:10b6:510:2da::6) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (2048-bit key, unprotected) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=ekL8tE/J
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=7dLKSAHChIyhMicgLoF8jO08Si95vun/YXMAQqai4g8=; b=ekL8tE/J+A5SZht2GJbE1qkv0w
+	jVMvYSRM65IgB9TueHGrORvIEIElHeqwyi+VIFumVq3xBvZvGjEqpId+5PiCphcvUrskWWuetKtid
+	oQ/SDqs5V7kgrSl2oOQvUbyK/wpCMgSS62k6fi5BD5iMHoQkidCRtuPuPWSIfNldhYIJoNqzDqfjt
+	1ykYuhTLgAbhljZTLViC9BGPaaRjh3BULhlmi7tO3vrhCCW5irEGOEtAICW9Cfk5jUZeQXCTDeq1J
+	kCG6vt6tzKTMoDDoyK9LJ18ys13d9KcSRwIIgXRl2jQOFxvI/5K3OGhc3AVjhWw76gt/x1HAPjIIV
+	xa74sXNg==;
+Received: from donard.priv.deltatee.com ([172.16.1.31])
+	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xTMQ4-00000001RA8-31lH;
+	Tue, 17 Nov 2026 10:52:33 -0600
+Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
+	(envelope-from <logang@deltatee.com>)
+	id 1xTMPB-0000000388g-3CaD;
+	Tue, 17 Nov 2026 10:51:37 -0600
+From: Logan Gunthorpe <logang@deltatee.com>
+To: dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Sashiko <sashiko-bot@kernel.org>
+Date: Tue, 17 Nov 2026 10:51:33 -0600
+Message-ID: <20261117165135.746241-5-logang@deltatee.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261117165135.746241-1-logang@deltatee.com>
+References: <20261117165135.746241-1-logang@deltatee.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -115,145 +75,62 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PR3PR04MB7418:EE_
-X-MS-Office365-Filtering-Correlation-Id: 870379bf-55ad-4163-055d-08df44cb1921
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|19092799006|7416014|376014|1800799024|22082099003|18002099003|11063799006|4143699003|56012099006|261022075727099003|261026121527099003|261028144727099003|10067099003|261021123027099003|261026140227099003|261009223027099003|261022105027099003;
-X-Microsoft-Antispam-Message-Info:
-	SazQsnZKPFNZdqw7ek1CuWN+pYYD1Doq79Bd/iNYBym5lJAH1RHVt30CG6LGMzqtaTCrrGhnrP44yRl15x1yS+Nfqy2+Q/biVxURoNE0NatfS7b/01Wg5wvPwFeDjzWFaRFszLC8sfJBRaJyjk0hd8q15SvUYh5WLbm36ynz7khpZFcyh2J5kMnjtNSAErAXTfhpKoqzzwsQYuUhxNOM7J6fQYg04/B1Z8VSN7dSxENIj7VdOAwGlvlwNiQAzWKpEfAf/MF5QVzEeUjX5LL56SwCXKh8EhuGXSP5Ny7FGrINvw5hsls32mxFw/EFO0Q2ztGUk2xSYeyzzn83VLfl2JF9D2IeoI14nFLwUHuEtkQy2McS4j1AEKABfUu+9nxc+F4DVu7pzcjldp5PPqtzITZ7APER/6EnRVE3oFScUP27bZiUP6tUUVQzliRf4ZHVvVU40gpiJI/zG0fWBu+iGCsIxV7Ohii870e7BlhqVeri7bC9h4glpbZVPCGdhoR0PL5Po5RyYP2F22nIOzDBNiaFDSm7gI5wprtauiPX58zieYWMezYFuB7j1sCt9Gjo6M6uSdrnTh+ajsU0HRMSHg9wQle9nG3Ob6cJIpcHzLJMAf3Waqko2ZpGTTPlZjNE
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(19092799006)(7416014)(376014)(1800799024)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006)(261022075727099003)(261026121527099003)(261028144727099003)(10067099003)(261021123027099003)(261026140227099003)(261009223027099003)(261022105027099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?MeWH8g4nZGQLSHfaoCHVd1zh3gtQsafT313wXN2wqFivdHKSqZS/jkam4iJz?=
- =?us-ascii?Q?Y00M0JLAQQauExAnIgzVFbvcBGYKmKpGMrMxjqkfALQ76slKFTKkhZJlBQlI?=
- =?us-ascii?Q?ekjOmCAzpVNW3Wn0IuSpvgqeMs5Ax9zHBeBrmuif4D0QXsbYu89wURu9fTcf?=
- =?us-ascii?Q?7BsvyuGT03r6rH+eHrN+43TIB1eUQKv4HFkunqO4P6G8XILzpgCyfIdJwEWV?=
- =?us-ascii?Q?rsrXPkQYuWKCNbTFGIXusD9W8o0yYTFI8He7GKRP4Xp/B2cRNwpcyBh3Ek+2?=
- =?us-ascii?Q?EOxr2DBSCqk/kmv1lJ35MRDNkyDo1HeU+0HKmhsPKroOzdi3Y7aYSD0NCY2t?=
- =?us-ascii?Q?ZynHGvRoueIF3Zc4Bj0B2l80uzJ5RWIf7jjZlHA33I21ihKS4A9WQl/VasHX?=
- =?us-ascii?Q?MIqc9PCX9uzPU3PePi8L2Pl8TruNzsYmOGGweYpOMxtrInunDuiaO0oaBS0n?=
- =?us-ascii?Q?EEsdCXA7bjji/5DHLJB6ejaqhD84FMXUTbW3Hv6KhFukpTNODX5H2KmyUxxQ?=
- =?us-ascii?Q?i+ACJ0fvIUxGHBZMgIuooZY8+2EYToXh/9iYyjDleiNe8ETA7sGjvIwFWqB6?=
- =?us-ascii?Q?383QCWgJqgFYIAvWCn71PsRFqXmqDizAB7a7T0C6HCgkhk92KiQQsEY3ytwc?=
- =?us-ascii?Q?fpC2DDjnsFC4LGRz7N+vqT5GRpVyAub8ZH4FM/23nO+wE0uxw/LGjpFa8OVy?=
- =?us-ascii?Q?jskcgbSG3rNjQVM3xQM5i6g7LqrVbPqGmEfmYK2OMoaEhu/8wcPVowj1Gws3?=
- =?us-ascii?Q?e1R4z6BiE+G0G7tsnlc89gqUt2HuzuWNq5Uj+mc5W12iEGqQ5Y7ZO9fAgbvf?=
- =?us-ascii?Q?nJ8rMVxSHNfAb3QlFUzPkcrV0YYAJinhZ/IDsctdt/eRtmCX4mzpGW5xu2RX?=
- =?us-ascii?Q?M5Y1hupHhI48JrLVNrqQiRfXCmX2dKsb2a2zUTO4FicWFrCnOIeazUyh4sFm?=
- =?us-ascii?Q?Ql4sz9aCGXsLnTKF7DbxkD9rwh84oBqQihNLvivdRYZfkk41uX6o7kF8e6Fj?=
- =?us-ascii?Q?n8dlEvh7x0uAD+1n9JHvNI+pNkkT9LvorUA5eqNyiA9pTQi4kQ2zPG35FXeT?=
- =?us-ascii?Q?IUC5Uj6YaMA4hUx1AuSBYuDHV9J9BRX+zaQH+oS/gsKR6DgDDjIegAJAifdm?=
- =?us-ascii?Q?rkLGL38QgcSjR1Hz9GG9psY/ZDxYCUYmWgH1R2PxRBoEG0HdQLypTypFsEDm?=
- =?us-ascii?Q?3q7JIYw9U0SDAlz9GsEleoh0nrlMMFn5TUNqDiqIrnrhZiMlTtFHQLRdcAcD?=
- =?us-ascii?Q?jIT+cnQl4+4gMoJKzbo6O6NBFU3QyvZfwlztjy3hTiKSpoP/cH8oi2gGbEJl?=
- =?us-ascii?Q?330ITKeCOv6J5sSM1hEt7nYQwAi0FpN/tg3IwnAnrf6oN08gjNmp5bOcqR/4?=
- =?us-ascii?Q?65EafpfRx+yfSlp54ILL4p3ALtjXS8jXu4sdiTDMwwgf2SE/XgB8ZdxyD6ju?=
- =?us-ascii?Q?Pv0DH5b/x7MZdrEbWkoSdsV6yj6ItaF48GYUUoal9uJgs1LpeOG6zSDX2QAe?=
- =?us-ascii?Q?Flp9hUopU5Wuh4D6VFU/xNYBvTEEGgdRlzESbTbw5QH2sIIOC29fRFJCSHX0?=
- =?us-ascii?Q?0OPkAnY4e1IKu8dt4B7BhrX7Du2WfrERx3J8t+N6XfeD+q8kbdJPfGEOdqDu?=
- =?us-ascii?Q?mLyKrX1oWchsMT6S32Ebf9jeOYqsPij3AVDWKzsotrFqamRlTFu2Z4upEH/h?=
- =?us-ascii?Q?RcoTeGLYla7X7rHcZVLHvPtrf3pjM283Lx0iqlr1Ow+imV/nzHPr9hX0CqXe?=
- =?us-ascii?Q?sBl9jXVpR1pfeFTgdsprJ5Gn7Zu+6n6RXehH8l7enXH1aADJU4vi?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 870379bf-55ad-4163-055d-08df44cb1921
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 16:52:00.2739
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PfEMMDNhmuDH+xggEhbSqf9/onhTgWgB261YnKlVPYC2bdB94VtD6I7a5ebTHQOym2H1qgFc++r7sSoOioBmeGJVCw1FGyle3WSHXMqvuuA34SJWbdF/5QQLSmkBQNE2
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR04MB7418
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 172.16.1.31
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, Frank.li@nxp.com, logang@deltatee.com, vkoul@kernel.org, sashiko-bot@kernel.org
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: [PATCH v3 4/6] dmaengine: plx_dma: add dma_rmb() after observing write-back status
+X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-On Tue, Nov 17, 2026 at 09:00:05AM -0400, Jason Gunthorpe wrote:
-> [You don't often get email from jgg@ziepe.ca. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> On Tue, Nov 17, 2026 at 04:30:15PM +0800, Peng Fan wrote:
-> > On Mon, Nov 16, 2026 at 03:30:21PM -0400, Jason Gunthorpe wrote:
-> > >On Thu, Nov 12, 2026 at 03:53:03PM +0800, Peng Fan (OSS) wrote:
-> > >> I used iommu-map for eDMA, but iommu experts rejected it:
-> > >> "Using iommu-map to describe synthetic dma_chan_dev devices that the
-> > >> kernel creates is the same kind of DT abuse from over here:"
-> > >> More info: https://lore.kernel.org/all/20260917144804.GI3196566@ziepe.ca/
-> > >>
-> > >> So I followed here [2] as Krzysztof wrote for QCOM VPU:
-> > >> "Thanks Jason for context and detailed arguments. Robin did not chime in
-> > >> yet, but from what I understood the DT-child-node approach will be the
-> > >> way we should go here.
-> > >>
-> > >> I accept above point of view and I am fine with this, thus Vishnu and
-> > >> Vikash - please go ahead with DT-child-node solution we had some time ago."
-> > >> [2] https://lore.kernel.org/linux-iommu/c7b956a9-d3e8-4e18-b780-5d08f5cd2ca1@kernel.org/
-> > >>
-> > >> This series adds per-channel DT child node support to fsl-edma and, as a
-> > >> prerequisite, introduces a proper bus for DMA channel devices.
-> > >
-> > >To be fair this is discouraged too, now that I've seen 3-4 people
-> > >trying to do exactly the same thing I'm not as positive about the
-> > >DT-child-node hack.
-> >
-> > I may not describe it clear in cover-letter.
-> >
-> > I understand the concern. Let me explain why I believe it is justified here
-> > rather than a hack.
-> >
-> > On i.MX eDMA each channel has its own interrupt, its own register region,
-> > and on i.MX8QM even its own power domain. Each channel may also have its
-> > own Stream ID, or share one when SIDs are scarce. These are genuine
-> > per-channel hardware resources, not software fiction.
-> >
-> > In dmaengine each channel is already modeled as a channel device (see
-> > dmaengine_chan_dev()), and this series puts those devices on a real bus
-> > (dmaengine_chan_bus_type) as a prerequisite. The DT child node simply
-> > describes that existing device, so its reg/interrupts/power-domains/iommus
-> > are attached per channel instead of as index-matched flat lists on the
-> > controller.
->
-> If they are real devices then why can't they come out as platform
-> devices?
+Completing a descriptor involves two loads that must be ordered:
 
-It cause complex when consumer to bindle channel dynmatically.
+1. Reading desc->hw->flags_and_size and checking that VALID is clear.
+2. Reading the destination buffer, which may happen in:
+   a. dma_unmap_page() via dmaengine_unmap(), when a bounce buffer
+      is in use.
+   b. The client's callback, or its processing after polling with
+      tx_status().
 
-for example:
+On a weakly ordered CPU like arm64, nothing forces load 2 to happen
+after load 1, even though load 2 is only reached when load 1 says the
+transfer is done. The CPU can predict that the VALID check won't
+break out of the loop and issue load 2 early. If the device hadn't
+finished writing at that moment, load 2 returns stale data, and when
+load 1 then confirms the prediction nothing is redone, so the stale
+data is used. This is the load-load control dependency case described
+in Documentation/memory-barriers.txt.
 
-consumer_A
-{
-	dmas = <&dma_provider ID>;
-}
+Add a dma_rmb() after the status check so loads after it can't be
+satisfied before the status read.
 
-if each channel is platform devices,
+Fixes: 4d3df16840a2 ("dmaengine: plx-dma: Implement descriptor submission")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/dmaengine/20260717223217.B6FBF1F000E9@smtp.kernel.org
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/plx_dma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-consumer_A
-{
-        dmas = <&dma_provider_chan0 ID>;
-}
+diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
+index d3b814933989..7af29b901bd5 100644
+--- a/drivers/dma/plx_dma.c
++++ b/drivers/dma/plx_dma.c
+@@ -148,6 +148,13 @@ static void plx_dma_process_desc(struct plx_dma_dev *plxdev)
+ 		if (flags & PLX_DESC_FLAG_VALID)
+ 			break;
+ 
++		/*
++		 * Don't allow any read of the data the device wrote to be
++		 * performed before the status read above shows the
++		 * descriptor is complete.
++		 */
++		dma_rmb();
++
+ 		res.residue = desc->orig_size - (flags & PLX_DESC_SIZE_MASK);
+ 
+ 		if (flags & PLX_DESC_WB_SUCCESS)
+-- 
+2.47.3
 
-Consumer_A will have to bindle to chan0. Actually, dma engine support bind
-to any free channel. It will be problem when there are not enough channels
-for all peripheral.
-
-
->
-> I think you are overstating how independent they are. Many single
-> devices have per "channel" resources like MMIO and IRQs. That's
-> totally normal. It doesn't make the sub resources independent devices.
->
-> AFAICT what you have here is some HW designer used SID where they
-> should have used SSID and you are trying to hack DT to make that
-> usable because Linux does not support a SID as SSID model today.
->
-> Again, since this is the 3rd - 4th case like this, it seems like a
-> popular hardware choice and we should try to do better to make Linux
-> support if we can.
-
-What's your prefer?
-
-Frank
-
->
-> Jason
