@@ -1,55 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.2
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794941109;
-	b=an+kpTbFGLUMLifEXUYH3XtmljgfxbrpNt2k3l4LqrUib0/9MvLMu35tR1P6PSVB72+7
-	 THYP1+5KBdEltW3ChOJ276C8jQ7HhgygDkgV6Nnn4SkESKZ2umYJqlM+4c+gi+Gp9OkNI
-	 RIiJcbPCe0gI7V4drvx7y5FGOPGa4qXnwPolvzzcnG/P7B9QEf2yAGuIwEQhDtUZgOODv
-	 BfeXMfy7Dw+xjZcOFnQ+wOPjBBnNwZqroLU4qjUAb2fPmjdKbgGesPipz5D9yAORxI1rG
-	 cwXtXYbtHBiZClybZL0tqohBM2ZVsBYOsmP8KQ2Y3cyUchek3YPGCc32Vop/bVWcUsw==
+	t=1794942835;
+	b=imaMVHf8hZ5pkxpQsveWe70aC966hJGpZUAW/qLWVCmOtmVPQTFao+0oLOS8KN7D53LJ
+	 Iy33L0suun30lCib7WXXqkevMzPL1DS5kI+bs+lpEA9CkCicKqQlm4dxYwl6TWwgOX/rR
+	 89Kx52iAM3uNCsw8kTgZvhKQhiH4YednzzkB4JlBq5OaDy+70gxi8ytdGkTPCUD4+nzts
+	 qmbD+aDbX6t0k5ETYg2PrMIQX3OqsY66oF//myiGQ0gP8T3RCfguU/O5ws3uecd9JkjwW
+	 gGy9fk7WImEd0WGeLn2hQBqb28rvUeY63l0/iZXJBH5gkCGH+Pp6jzCPIMYsZUErrPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794941109;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=uPOBkM8XHvjxf6D69jNgl5qPdmKhqGLkdSlcUC+YtjE=;
-	b=nOBcp5R6///ah77VEPnO2xAUFzKzZYekcM8Yg+C366bENjLXmNuuWbqbStKVzi1skAUi
-	 RxX6SNL3u0bDtKo1Sea1cDY67zkeU+NJ70mWzdZvTSmhXc9JxOdvGSiTabDvv3TcNEuQ/
-	 bIdwvs9r9FZQ6+JCyP9Kl1kP4UDjgUaNGMeD5gEGcDjrJU92e85V84bYOqnWnhUUkvUoD
-	 e+qn4Zfr4BO+1A91t1094NF4QWNOtoblgPuA+wwjeJnJNZzB3XyfLAse3qm7pRLn56zM2
-	 3fdjxk/wNsiZ3Z4vKz+Ie0Fcy3v3iKzAI8aoeRStRU9O/xrtoMoCS/ipp53U1MObIrg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794942835;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:
+	 X-CM-SenderInfo;
+	bh=cV6zCHqgqIXodqu1pLKZgWGLibpyplphNM97IttR0BM=;
+	b=PiBGWkIpcA0WHXm68rtewKII3yG9zuLWxWwVkKby8Sv33pMTny0b/kVs8sU5hxIhPPtB
+	 w9rMElAq7AlAMIfmEyvK+eqN74f7ff0ht5Q07aZ0Glk5TaHHGR9whyZdHJXPeVO6M4iuy
+	 etSFE5hYZcXv5cZg0kHyqkdXXTZqFiBCidQbxzSDGqItZXdt66UWWiqBo5/Mu+rM1u5on
+	 +dffpFMOIbeg7djOb9mFO6zoqv4S4ZJr5QYZbAuDKsWMA4OlqbaGoGYfvfYEbhTVNnZKr
+	 OC/7z+Y0pnpMDOJonmPbmctk8M2JxPjgQy37bNDTbdJzy1ph6OK4ypF6qMGxpMJt9ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VpWnjZFe;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=163.com;
+	spf=pass smtp.mailfrom=163.com;
+	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=N7ECeJyd;
+	arc=none smtp.remote-ip=117.135.210.2
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F56606A32C
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 18:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43CD606A32C;
+	Tue, 17 Nov 2026 19:13:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D43CD606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VpWnjZFe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621E81F000C9
-	for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 18:45:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794941109;
-	bh=uPOBkM8XHvjxf6D69jNgl5qPdmKhqGLkdSlcUC+YtjE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=VpWnjZFev7hqxJNnHkW9IJkptijODim3FLkLoIuM/cpV//MAbRRyFtQTgh6BtszJ3
-	 Nl6vWsnBsbYlwR7miREdM74QZDlKxovSmfh6OtgJnirjOxq4LFS1IH8E6SCl6QD9Sv
-	 xw73a7mUXpDkP7ylyKktSlUssuQSxXFdx3F8wOjfXRfK0OdNR7/KT96Jyr2BKhjH+0
-	 pO37BJEEh3ePXtwPkMhiizGdy9+W5+W9+Xj+yLwIboVfdbDax4wL7TtdUimt7SFy5a
-	 I1HRvPoSDgif7TdE+GVsKlNLHMVKwb+wbu5zMXoJWXx046lzUcTzfL7ae+smC+9T0O
-	 zwMCV7rpGILrw==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5c1479a959aso61813e87.2
-        for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 10:45:09 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErEH6af8StkieCFk8aulCpQT4pn2YdBbzTgM3na5D6xETDOF9mO04xyh/5s2SEQw9QaTBgCwAcatO1M=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8qMZ72nJATRDTz5LH9X65qghhtkExmdftirWRKOglPvocVJ8n8
-	wTwhhgKX9eKbfRbxH+G9aE2QgHk5b+GFkwT9nns6G52/a3cD8WY44DwIlGFf085dkPp9pExnRPq
-	MDADutF01PurO/jpIijptjkivHbF9+cY=
-X-Received: by 2002:a05:6512:1192:b0:5c0:d7c:7a1 with SMTP id
- 2adb3069b0e04-5c1aa08118bmr1807e87.25.1794941108077; Tue, 17 Nov 2026
- 10:45:08 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=N7ECeJyd
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=cV
+	6zCHqgqIXodqu1pLKZgWGLibpyplphNM97IttR0BM=; b=N7ECeJydX0kt4fxJRf
+	FXJZUmNKhDNUee+aGAxUZoQrkuwhdGcxX965+MU4qSdMrvEbwYAnkx1Tm3wGxSEQ
+	Y1+PPV5Y0dWMJBu9oLziAhCDPlDSr4CWvYviR3wLbko/sqyFHuyXDqRzEKAX2L3Z
+	DMyFfQ2XueZkg0CUEuNWkbALI=
+Received: from user-VMware-Virtual-Platform.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id _____wD3X7BHp_xqK590Hw--.29024S2;
+	Wed, 18 Nov 2026 03:13:12 +0800 (CST)
+From: Ziheng Wei <zihengw03@163.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: at_xdmac: handle empty transfer list in tx_status
+Date: Wed, 18 Nov 2026 03:13:11 +0800
+Message-ID: <20261117191311.2146922-1-zihengw03@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <avyaLhOo8fdAIvUi@lizhi-Precision-Tower-5810>
+References: <20261115080245.910534-1-zihengw03@163.com> <avyaLhOo8fdAIvUi@lizhi-Precision-Tower-5810>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,43 +67,29 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20261117163809.622249-1-lee@kernel.org> <20261117163809.622249-2-lee@kernel.org>
-In-Reply-To: <20261117163809.622249-2-lee@kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 17 Nov 2026 19:44:56 +0100
-X-Gmail-Original-Message-ID: <CAD++jLny1FRt8v7NwX8FHYAOC_mdygcV3FtscFwzfxHEUgBDGw@mail.gmail.com>
-X-Gm-Features: Aa3M54omOtNfN5qw5Jdx7qnLkJd6KWvB55VIdOj8gYh_ahd_56SSbUwGQ5J1bxM
-Message-ID: <CAD++jLny1FRt8v7NwX8FHYAOC_mdygcV3FtscFwzfxHEUgBDGw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/11] dmaengine: pl08x: Defer OF DMA controller
- registration until slave setup
-To: Lee Jones <lee@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
-	Peter Pearse <peter.pearse@arm.com>, Joachim Eastwood <manabian@gmail.com>, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD3X7BHp_xqK590Hw--.29024S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrAFy5uw13CF13Aw4xJFWxtFb_yoWxWwb_uF
+	s3G392y3yUCF4fCF42kF4Ikr9IkFWxX3WIq340q34SyF9xAFZ5JrZYg343X3WfJwn5tws8
+	C3y5ZryfCw1YgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0K2NJUUUUU==
+X-CM-SenderInfo: p2lkv0ljzqjqqrwthudrp/xtbC7QrVJmr8p0oNSAAA3q
 
-On Tue, Nov 17, 2026 at 5:38=E2=80=AFPM Lee Jones <lee@kernel.org> wrote:
+On Tue, Nov 17, 2026 at 01:17:18PM -0500, Frank Li wrote:
+> suppose below patch can fix this problem
+> https://lore.kernel.org/dmaengine/avdni52GEjf_B3vE@lizhi-Precision-Tower-5810/
 
-> pl08x_of_probe() registers the controller with
-> of_dma_controller_register() before pl08x_dma_init_virtual_channels()
-> initialises the slave channels list and before
-> dma_async_device_register() registers the slave DMA device, and
-> pl08x_probe() does not unregister the OF DMA controller if subsequent
-> initialisation fails.
->
-> Move of_dma_controller_register() after dma_async_device_register() for
-> the slave device and unwind slave device registration if OF controller
-> registration fails.
->
-> Fixes: aa4734da6674 ("dmaengine: pl08x: support dt channel assignment")
-> Closes: https://sashiko.dev/#/bug/linux-4e233fb9-3b0c-4442-b601-c6706c9f5=
-aba
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Lee Jones <lee@kernel.org>
+Hi Frank,
 
-Fair enough,
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+Thank you for the pointer. It looks like the same empty-list issue in
+the Xilinx driver, and the list_first_entry_or_null() guard is also
+what this patch uses in at_xdmac_tx_status().
 
-Yours,
-Linus Walleij
+Since my issue arises after terminate_all() empties xfers_list in the
+at_xdmac driver, I am not sure whether you meant the Xilinx patch as a
+reference for the guard, or had another suggestion in mind. I would
+appreciate any clarification.
+
+Thanks,
+Ziheng
+
