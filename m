@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.46
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.1
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795031698;
-	b=oZegyDvUhI+/fTcD/v9kZkNb4KGGUiWsHEIaKfcU8MSIyyQsYVlQhIFSEjzRwpndjUB6
-	 NjRbrH3VURA0V9ecup2iZOxuIVXbejqnJy90P/wQ8at/B58TyQQ8EzivyX3tEQafJ8Na3
-	 S4pLTtn712t/W8cTtsaH0VgFnsHEntlgsn4dYBt+00yunfMJyHz7t0y0b4BiBLWxNUO9K
-	 ZGJG3ASuUwH/FtdQxx4rMTMkkHL6iDGxFDLT0fj+LSyq28hVJnMdnX+ZNkDPb2xOo+Jsy
-	 h0qxqjiJQyo6ycCvdCIsIffGM2Qw/3anGmwsbZ+be8KGyK5si6LJGfDGXn40fbICEeg==
+	t=1795032216;
+	b=tYlwnq1yMy5c9Gb0z6BEAbJDFfgMesS+Vaane8G7vikYD4BsxDacHBoBFCWl/yWubsEQ
+	 LAuob4qn3f00/iLDASGwbI8kXo+LX2+rG1xLrvYvh6G05V0ZnNdb6NwEX9rLZIeAVDsUY
+	 m4h4nAv9vizyfcSI+JcG3x9cXKnLHIdQAG/bbp2OmRo2u6To5j5v07OJzlQyt8MCqTYKL
+	 E4scEsVjO+P4giBvbQOSUCc9LNR04BGym+ZPx4OcJuqcf1MBM55s5gvf/KtebkL9pLDMS
+	 VOVdk3aasE4yXG0H2N/8G9zlcwFCY+lAuwVNndqDoVVZwHPlCAT++dC+y+CO7eVOEhA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032216;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,70 +24,74 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
-	b=IfMJitzhLJrSoGlhLrRNfqrzvnhFMkha8mTi29jUuQditrpWreLZ3E5x55ARIH+bFcy5
-	 7FE64aKEamO7uwh+iCoxPJObta0fL9zYqkPF7unKX3k9uixB+djkcTbcRECvMEKzY3Zm3
-	 dcnduE2lPtJz1QXzBVY07kNPCq4OtqWOcQd154Uj02DU8wv2urDKuQc74JCdkzMm6whyq
-	 yPwNnckB063EOQ/eur4uiCg7SlCCz6XG6w3B6qaFVWdEzBT8VWLZLG0bKf4x9pIjvBesY
-	 G+GVIrO0ATEXupjjW70msba4bVWYmP0S40npmVjqBmLAdZ6/OQU8a+BE0Q9zog7ruyQ==
+	bh=qbPNbVU2BIkPX9A6bZeUI6LHQoHnYAzExOCQqgAWqnA=;
+	b=D9YrX/kUbwF+BO+sLs8Cnv+bL7dUqqe4reBDS9SMjldzqSBEjaiz8BIL2GdxKPAt/puc
+	 iee5+EyZd8mo/C/Kyb7tATGpJb7MzYsNospPF+fUoIjLFPEiUM2EZ2AFWuRxCLju/YqFD
+	 KOMl4Uqz3fKDe2Lh0iIawuNzxDV1ahg/2St+D0nMYiBs0tCZ73Ns6RyYrdrL/1sfZO8O1
+	 Cm+hVa2wsVxUO2xHCIG86kbYUMgJiFJIxiT6iauzK0aigUIVYRmd2o149tUwkSvUSmzHX
+	 DRpEC7J480hkKUgBC+ddNkL6DemzVQgUN9cFkL5ZaHR7B3V9XcamdN+WVlPZJX4fV7Q==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mqZZzNoN;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.46
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013046.outbound.protection.outlook.com [40.107.162.46])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=kMYKg4co;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.72.1
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013001.outbound.protection.outlook.com [52.101.72.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58459606A32A
-	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 19:54:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58459606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9690E606A31C;
+	Wed, 18 Nov 2026 20:03:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9690E606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=mqZZzNoN
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=kMYKg4co
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fUjEP9HbLBKFTDBkAIuiV8CMKU78P4tSn26wNGPokaSUqLVDiZjdvdpPCy9r5uEUjSOmFhScMbd2pyLm/0bi18yMpBTQmcQjzeC+i0vu0u1P6nZeg3i78ykMj2aqAxmCFNOcAiEjwNlJUc2EiA1qtQhaAtu6VO3JpQ+yw/tyno+EhDnf43Z13F5xRTPSux8plfd7syHhVLvCkg4gezem0mbe3/2y4W0G5V1OtJNrH4DLSyKgc1J4iCAmPov24DRRS8bWAZVKVvtpXsPWFZR2XpZjUcunSYz2vrhtVn41zz4US6UY/WtFCLuqGJZu4UFo1OR9JbsmvPf4fXghn3NDOA==
+ b=XNroMiJXhN4m/BsULCSGQzVir8IyyWqa1HEUvA1dhcPSEvIfBG+FmQ9oqo/jU5jtoAjCJEH8P0qQNx39YbJ1BVWczrXPnBS5TmJKwJAP/YACDs3C+Z9y5/NF3rsp0GctJI8v0A0mwicVxU7wBrVyM4Qs6ozB0ch7gxSaNXNRlRn0mJ6wFFVfX0T7h4TETNaU7jOVt9xyI9NQ1ioS1fOpGSuzR2J+2wFwHFIPKUwEMrbj+pGai3lRgm7ye8qe5HsjTP5hjBmCW2ZgXU7h/JWWcDxTOctgNUxJmBrQFdiEdur3mQwlImCrnJuQw/l6GHnmoE3pBVG2l0yIdyifMeIaXw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
- b=LDsqGsbVt3mmjWJyrtS7Jq7BmKD6ezW/3Xf/uYIDUHqxY3E5fxfMdmeTjdmg7ARzRtw7hl/N2C2VHJDm/QH6VAWiS+KOQjSwp/SuOnJtS/0B8eYDAMlutAus+EZ9paDT8xsLUbjz8Hmwr2uASAR8UwXvsUZwNbpgGlcpt9aUTmYaUh0M8vLwLIuqJ2PMcAhvL9odkCQmUevN98Zl5BS4CVBqyoPUQoibdzqRGPXzB52CsLPqttN698ZsLbv9fEanXTgjiRWE448oxgeD2GUf6IUOuYvi0CQ1nayoFLj/IKxonywETZCr2aEOa7Lw88MdoWkwtYoJ3G+bpSdJcfWVvw==
+ bh=qbPNbVU2BIkPX9A6bZeUI6LHQoHnYAzExOCQqgAWqnA=;
+ b=Rq2kkRVhCDsvEnu2aulfO6MImnG4KTwqc+pf2IfUkoe13m3d+Iwm5+GDFfO4yE5GHRkz+FDveBubJRiJaChxf00EzuCUiVT+c1rojNNAaWjklOenNbXKWJhx+hKTe3fO3sW4Pk9+siQVLLyGBWIgPnOKQJOS/gGT+qKsFOpNlENX/T9zGkq9Ck0CGaMWrDIxUHZilwhzw3Xb0DA1zIOjlIrnUJwAhD6kMXE9tpxrgAQF0TaxO/h37i8bnFLrucQGR1Xj0nWKVna8L84oFHgeToXuB/P9UUGGQKYV/6A8f8KVJsgxgbc2DRjOp4xGyseWER0PzbW1XZe05u059T+9GA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JjMc+EGolz/MzgbY50j8q67RQZyzIjz8flmUPrsjD0w=;
- b=mqZZzNoN+v6sKcHlNeHkvzJGYM+ywrByQybLrXST9R25AWsSU7TwTFMTRpwVJobwY4XtYayRlX4GWfVN92IE8c7k9BA0RHjX5GlmehxtMXEuo3z+OCI1EpiJx2wDgoSovpaHUsyQaN82hjSLf7+K4N9fe7vk+xyda2PUegDlLa/DTgVhP84uKCPZ1veaR1yXQgPtaLebLrEMNJT9K/LTYjtxNqwsHHroUm7/1X5nBmnuAMNRKeV6o7r4PXe4InCtVC3EXtysS1SsQ5j/k89PKpuFirr0e6TJ8ePDGgv3ff5fT5xoowGUZR5EZJXzUauqY02Ko1aFcSUQm6FE7a5J7A==
+ bh=qbPNbVU2BIkPX9A6bZeUI6LHQoHnYAzExOCQqgAWqnA=;
+ b=kMYKg4co6sAhSc0i4ARZv+JydfCVvfUCmllzPm12NSock6I9mn/mlOKDZxGKdXOXHq34GtSxRs40pIf5IvwD8EfD6U8E2+TuI5K3HTFRWNuFM8Cfdk4lrkJxsImDQyaPdkV+PK7NWznWT6LQmGCPTBJoNKgJNW0u7ezpuMhzGbYfzj7sXC8/XM+DjrkflVzaNblyK0jQVLEvyU70TBHwPO77kKyGPnq0Xq8m4C476C0XIfGHEF57vuz5IiLCUbwUfeC9dk3rB5IznycTPMhUgZ0sNnusHHHZCkC08jsSDP4zZrycdAoENkoMxme/DAXs8xCRa3RRQtZ2LFOGYvuBTw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
  by AS8PR04MB7893.eurprd04.prod.outlook.com (2603:10a6:20b:2ab::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 19:54:42 +0000
+ 2026 20:03:31 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 19:54:42 +0000
-Date: Wed, 18 Nov 2026 13:54:34 -0600
+ 20:03:31 +0000
+Date: Wed, 18 Nov 2026 14:03:22 -0600
 From: Frank Li <Frank.li@oss.nxp.com>
 To: Nickolay Goppen <setotau@mainlining.org>
-Cc: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org,
-	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Report the residue of packet
-Message-ID: <av4CehTB2v1Bqp6K@SMW015318>
-References: <20261115-qcom-bam-dma-metadata-v1-1-52e4de54ffd3@mainlining.org>
- <sashiko-outbox-215642@kernel.org>
- <7ac6f154-952c-412d-8ae3-b4e07a334ee1@mainlining.org>
-Content-Type: text/plain; charset=utf-8
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>, dmaengine@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: Re: [PATCH 2/3] dmaengine: Add support for immediate commands in the
+ client API
+Message-ID: <av4Eis87C7QBxkd4@SMW015318>
+References: <20261115-qcom-bam-dma-immediate-v1-0-9a0df4ca3be1@mainlining.org>
+ <20261115-qcom-bam-dma-immediate-v1-2-9a0df4ca3be1@mainlining.org>
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7ac6f154-952c-412d-8ae3-b4e07a334ee1@mainlining.org>
-X-ClientProxiedBy: PH7P222CA0001.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:33a::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
+In-Reply-To: <20261115-qcom-bam-dma-immediate-v1-2-9a0df4ca3be1@mainlining.org>
+X-ClientProxiedBy: PH7P221CA0001.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:32a::7) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -100,230 +104,100 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AS8PR04MB7893:EE_
-X-MS-Office365-Filtering-Correlation-Id: d260f411-e524-4de2-ba4f-08df45adc973
+X-MS-Office365-Filtering-Correlation-Id: 207f5d0e-9f3d-4257-d0ac-08df45af04a9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|19092799006|376014|261021135927099003|261022075727099003|10067099003|11063799006|56012099006|4143699003|261026140227099003|261028144727099003|261021121427099003|261022105027099003|261026121527099003|261102123227099003|261009223027099003|22082099003|18002099003|6133799003;
+	BCL:0;ARA:13230040|1800799024|376014|7416014|19092799006|23010399003|366016|22082099003|18002099003|261009223027099003|3023799007|4143699003|56012099006|11063799006|261026121527099003|261102123227099003|261028144727099003|261026140227099003|261021121427099003|261022105027099003|261021135927099003|261022113327099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	OuD4gMhXAhYBHfs5jGRgehD4K712ZyXVPdJfqw0UN793ft3eH9ayV2yrLBGg1LFvZZqPd2bYtNjngOUFvPjTVN+n1QGON9RVYTpzNfz73+UuBrfAcemko1UVWE/Rs+cJUxyd/YgCHQ+0UgNMpSng2+7TqkFpZntPv5Ymh1b4m40obuzBCT0Xrgu6+81oL8mKJm6ntOKpQEZdNoTkPJg7dG6DwssIXdxcVzmrz7SfES62q/IV3TGD/e4vbJzczuNDCO0REdkrcRqqCkz9dlv/Iobv1flauOblPQbB4lB6h+B4UQ/f+JQTLuPgpLQm3U4VFpbqEHl9Q4GWrm4T/iYEQDwO5hLv3vj5yNiNMnlFzJ0usaR18S5ciCYSj1pC13ywn+rK/hw2Pircb9clxKTZ+H+SL92McQVq9uf4dG5spoxm4A5WPSAahTcDARjHh7UEqbrHZGcUdiXIPBOkeR7YIXPZp8/WcXp/I4NI5GPIMlfSZJvHTz7HQWofXl1UEYQuwBXjHBN4d6LpcqD6Jcr/Z79Hj3fr1TZ/BzpYR4BnAHw8ZpWtncmMtBmkhpqOL03vjeSiqyiGT5UA3NW5mfU85SlnEC7LSPByVN1n05g95OM=
+	lo90tM4YyXjtOYYzIE09d1NPhxqeApsdX5IMpxF1MoigY0nkd1bVGEg0nMpdbtZHuV1An7+qnIt7tkSR0yTeNNsV9820Is68aNd3jYLEJ7TtaSqwFCVTbKyz1kJgXGEnAw7kG6nGlVH6K7HVL+ofdUA9Logl9ERwoU5Tik4hdARln8+msOgkv1AsKfM+WBYsvraCpgBPQua8UNdq1EBZvqYdL+L99Q9bOKGBFogai+ZfhppWB1riWgaub+t5mcdazeST+pREp1ysx+ZGb7C7aTPaipUtjC+Xw8gD/BOQ3Ln7h45utu4k/9+C1uebpiITdbPc59S79cIg3vdmcSOejCPLsIPUktCkLzWGklr3qjaMliQHPDTo2Okfa6WBiGRPMsQFqbnoadMcXQXJWi3dfXUOl/9wP1IusZVvwN2SGX2iWapjLGZf6Eock+srOtvk8Fm+ZRk80lW77hRZokrv0k3DD2rLxeCSSu51JcVsAkRCdwEDnALUnHWmY3HxQR27VTzntHLFWXmq+xnh5Ei0uv0KufJalm1WcU1Fu3HkdXnHGxP62qMyCrx8/xvcjvvef9xU7cuclqLJaJ2vig6/0uVCgDBwz+OpimIg07XxxuLfckbasKwnDgNJjN659P+ENtZ9al928wWFQjLEys7rVtFOc9Viv+8heep2VoX6Lss=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(19092799006)(376014)(261021135927099003)(261022075727099003)(10067099003)(11063799006)(56012099006)(4143699003)(261026140227099003)(261028144727099003)(261021121427099003)(261022105027099003)(261026121527099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(19092799006)(23010399003)(366016)(22082099003)(18002099003)(261009223027099003)(3023799007)(4143699003)(56012099006)(11063799006)(261026121527099003)(261102123227099003)(261028144727099003)(261026140227099003)(261021121427099003)(261022105027099003)(261021135927099003)(261022113327099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UEZ3d3BDbmV5SUVEMjdtRENUbXAxb0gyUExSL05SeUFwNlQ1K3JlenQzSEtu?=
- =?utf-8?B?SEZKSjltZitTYmlCcFhaOHJhOHcrN2FqdHlSUjArbkRIZ0N4SWhTSUk0MWhL?=
- =?utf-8?B?eTdHVDRrcno0ZDJBTEpOUnY5VHkybnI1QTBhWjZxbUdpR3hrM0wvMHJlaDRr?=
- =?utf-8?B?L3g4R1RmN0J1SXRsTnJqZkVaVVUrcFpKWDF5aEI1Rzcvd0xiWmVZQkFsdkpv?=
- =?utf-8?B?ZDBKU0ZTYVE1TDZ5YzFpYUltOUxQUGd1OEJLUGNXQ3BkampwbytwOXg3TU42?=
- =?utf-8?B?enZQeUNJM2YyZkE2SnZMZU45YUFJbTE0NFZMVUlHaE9vODlEejhCVU4rQldl?=
- =?utf-8?B?SnhHOVBMRE5oNXZqeG9tb1BRSUM0Ym9WYS9tMUZONytDaGdSMVQ3VVFiMXgv?=
- =?utf-8?B?MU1sb0xRUU1yNVRkdEhkVXdPbnk3cGJQblF4TG9tTzJSNWVrTEFoQlFlaUN6?=
- =?utf-8?B?ZldGVXdFYmdCUE1yWTV5YUl3NXRKV0Vxem5Bc3lsUTVkS3FzOTd4aktUdDY4?=
- =?utf-8?B?QzZnWVNhRDlNZ2NEYTF3SDNLNEc1bnNrM3pLNG5NYmVKMG1Qd3c1MitwaHpn?=
- =?utf-8?B?QkVYVmdON3FwVXFMbUNQVDRxWExHcmNoNGFCcFp6WVY1UTlPZ3ZKNitSckVG?=
- =?utf-8?B?YkF5U0cvMjNoWGZYZVhMQ1VQVVVTUXFLMkszaFRWVmFaVEVjTmZEdVVrbC8y?=
- =?utf-8?B?aVlWRFFpVkRhZmp6Vm9rSVU3K0Z0blpublpVSGJEdzBHUDl0d2I4OW1FOGlh?=
- =?utf-8?B?U0xFU1BjSEVLalhLRjNXY2xqVmV5VWxlbXVQVEtQT3YzcDYrNnJIZmpVeExQ?=
- =?utf-8?B?NEZiSXhiSkVJNmNMUldUblFSeituWkpKNkdDWCtHQ2pUMVpwcEdzTWJrOFpQ?=
- =?utf-8?B?OWh3S3EyR2J4WnBob2NFOGNVTG14UGc0bUw1S2puaVM5VTRuYmFnaUVlQVdz?=
- =?utf-8?B?MStVc2d3bnNpcTRhNFhOaXd0cnF2QzFydTU2T3ZvTDY4aVFxYU5CSWJrdlkv?=
- =?utf-8?B?eEtVT2pzVXd6b2k4REpMazl6dHVJd3JRaUFmMWNFRytUVHpleXdybW5jY1hN?=
- =?utf-8?B?Y3IxRkc4OFZoU2loemRuWU44cWMyNStxLzFFVXJySkl4WHhYSFgwREltWjVn?=
- =?utf-8?B?K3NrUDA1VWh0aWEweHBGbVFJTmxrcVIzSjNLMU50OHZBY2VUVm0vVGZtOVpE?=
- =?utf-8?B?RU1uUXptQjVCWENlWjVHMW0zZWhWUHNYR3FyVFhndVVjNFJHMFhUYTl3VXJp?=
- =?utf-8?B?L0pyVFNBbzlKNzRuaGh5cTdqYUhydHliZ3JZWi9XQzJBOFRycG9aV3FySHJ3?=
- =?utf-8?B?d2NYMUk3ZndSRWVmdmpjNnEwcTlYeDJjUWM3Z0c4TnUzcHJoMFQyTjVScElW?=
- =?utf-8?B?bmZOWnBzUmp0SjVmYkFFK3NWVWdLMHF5MFhuTW5Mditsc21zOGtWcFVyM3l3?=
- =?utf-8?B?MlBLVnpuZ3ZrdzRzTVJPaGRyYmZwOU10SkRaMTZQRW1XZzRwNWM1ZGpNR3po?=
- =?utf-8?B?Nnd2SmxvM0QyQmRRWGlGa0FXZnNUSHBxRTZSRTdacm9haWFRdkxBRDgrUHhR?=
- =?utf-8?B?MGE4Q3g2WXVqZTF6VjZoWmVpa0kwc0RxVVlzQXg4OStKSSt6bkdzREhFdWpX?=
- =?utf-8?B?SGZFemwxM1JNRVg2S2F0VUVDMkJmVm5ZbXNuNVIySERxNXpIMTV3VkxzR2Jw?=
- =?utf-8?B?SnpRQXNKamQvQm9yNW9iZGVrMVdFQVhqSWNWamJuMDNTZTB6Ulo3Yi9iMGVP?=
- =?utf-8?B?c0dSY1VPYTB0bkdqeVphOEM2Um0wTjZ1OWZtcUtmQVhza29uVENQaW9lWjV6?=
- =?utf-8?B?WHZjYm5PWkJnYkpvUEtxTXpqVWc3S3pCTWVYZEszVStDTVdVeUdWZlMwRW1I?=
- =?utf-8?B?SjdMVnFzcGlDemZHZHFqLzhZL1loV0hSMFJ3YkNLNWpSWjc3TTBNSUxGVUZB?=
- =?utf-8?B?WUpmNUZHeUM3ZlZ3WFpMR2RWaGQzYlJ2QVJCSDZQUWMycFRieVlUemlGaW5P?=
- =?utf-8?B?Sm5CUjVjVS9oeGNvTFk0ZE1OTTkydjVZUkxwWlZ0SlZLdjN4NURiV1B3dkNV?=
- =?utf-8?B?Rkw0Z0VCNzdIN2FCZEVzUXZiQnNSSEpSNlZNSi9aQ2hmM3dFdW1oT3Fic1hF?=
- =?utf-8?B?TU5sU0wyNjVQcTNxNkFWeXJPRVlmUGVTUnRtMEs3OHlhaTYvT3hUUUoxbXhq?=
- =?utf-8?B?bm00ZkQ5NHE0RXVPOHVGK2ZnSDlaZWZaMVkyLzg2bU5DekJyR01pZXQwM0dV?=
- =?utf-8?B?Z0tlY2NSbk9lNHVvWXMzZ2tZVUI4dzQyUy9TVjcrUURxc1d5aXo4QWllR1Fi?=
- =?utf-8?B?S2xKcUhaL0dBSUZnVXJPc0NEV0hUcTdGNXQ2ZnVzczVRbFRjNERWSWVFRjM2?=
- =?utf-8?Q?3KafPb3VZ1nfxu1P+WUPbbsfuq4WPm1H2cSQ1?=
+	=?us-ascii?Q?HfNgRWWQ7GRmTKiSYGISqiPe/zy3K9iK0rCptpoM4eFyzDclhalCQt1E6yp4?=
+ =?us-ascii?Q?ggchrd5rG500tu1dzPKWbQdTyqWvbalaCvfBqOSEEkN/fB+mFnc41wAMTPnY?=
+ =?us-ascii?Q?umgUckP+nYgxs3j0zZPHJxvaM0JoNO1QTj0vayZuYWQNEpTiWmBlIpEJld97?=
+ =?us-ascii?Q?mZ77DYzDRRjVO16ipbOlK8vB1CBmOyxBqj3Z6isjmjD5PiE0/zs1WrhxVIrk?=
+ =?us-ascii?Q?brJxXn9GE+uHms2BW+XuTZYEPsSf8Kut39F8+oWYx3jz5O7NvF2gmQ5Idbc+?=
+ =?us-ascii?Q?QZ6dSBNg59bdPqEpZjN0MbGNzj0uVyeroZSZ/y+6GA8rpOeRy01NiAMriBsM?=
+ =?us-ascii?Q?ej1QVMlTicdBiH00lbQ5ZnIjMHK2fyHKbdjrk+vXNeeQsm4X5t3trd6zNmf3?=
+ =?us-ascii?Q?3HL5N2RJInfeB9+HSg8Gr597N1EzKrpnMWOkpB0MvGzy0nGttLXbT3Zzl135?=
+ =?us-ascii?Q?NIfv/SaETQOkexicm+/Lnr6+XIbZwSywhT7m5edjoaSm/qfB6VoPCo3L/mS4?=
+ =?us-ascii?Q?74yY2qzFL3bYG+3mWc0JgRzOCe8L6ttF9rpU7s4dAeTdYDKH6SZuY/hHhx4m?=
+ =?us-ascii?Q?bDt+CJHHaUHC1dGL7y7KHWSwqDUh6nweJZ0uGq/PwkKltxTSLSnCPRf+6YeB?=
+ =?us-ascii?Q?Y4TVeYBuAR7n/GZK5DvlzP66Vti5XyoVKkw8Q3thTswlMhBRnID+wRta05Fa?=
+ =?us-ascii?Q?JO+o2lynHL5+Rf6XmXGnCFPx3jBVQ2g1hN6XU4CrMApzeNaQaD3EOVUL2EN6?=
+ =?us-ascii?Q?/jtS5e461t8KkLJI67sWcXfwedrvdxDVt/82ziUaSGZ0bWtBJD/5Q554Z3ja?=
+ =?us-ascii?Q?n/zTM1bNygxhF/9ZZ7rPnyS2Ph9Lz5x6RaBAe/2dX8czW4sgaMcklK6hAu8R?=
+ =?us-ascii?Q?wFTkNxMP+IMe7R4Fwq6C2U2GhNDDGjywKy0nisfNhEM32AtUKyJ65c+7EtqW?=
+ =?us-ascii?Q?j9+iXoHNLbdqA06m6J8mDqQdbQcLt3EgZNicar+v8cDAyPMBMT/avmwkQ2yB?=
+ =?us-ascii?Q?j7CJo59P6a1x6C8Cq2RQjGvR6BxzWs4ExxI+WNSZ8KuJS1Bo/f27VaP13MBe?=
+ =?us-ascii?Q?id1c6I8inuzuEdWZD3aqvv3zqEbZKznjBwVirtE6qwm9Dtgj8QXkgfDMeVxS?=
+ =?us-ascii?Q?yDwudgOdywH+diynJme9qEOFh6jyCfAoAVlTuffwmPCl55dDVikNbNO54FV1?=
+ =?us-ascii?Q?wie2LaHOgsDgLMqCu1r6pdk85WFbR25amhknjPRwEC+tl1F76CPRyh/agIa0?=
+ =?us-ascii?Q?Zt28YsRh9u3HGmApRLr/wWbcbVjImFpggpLfPHFsllMz7XJt0KNu+/HoYXhp?=
+ =?us-ascii?Q?+fPFPNQ5KPRjnqA5e0Uwn2euKPg18lQyzaiy8+O591JNytnN/qZCKMFd/dAP?=
+ =?us-ascii?Q?wphVSat5+63tqP7GXXMpuVII6zg8+DoyopmFOA5xL/ime+aXJXRIA0XLX/kM?=
+ =?us-ascii?Q?hu9eyUYcfvQ+FhzNZO/PHB+FTDXqopaKh2HiDtvD8XDQ05VK5Ro5nyitImj+?=
+ =?us-ascii?Q?Pfr5FPLWJW+c18LM8xQeiQiSpNj93/AaxjPTvk9oa8F4n+SUSV/QSEdpOa8K?=
+ =?us-ascii?Q?Xx49NT0aQg58/AXkxQKWr3vG1qUYP143VCqIpddQRH4ZxbsH9IFCs+wzKGtR?=
+ =?us-ascii?Q?NMk57IbUovpOTJ5blZ/o9C7L5TAuqCGtbOMizynQxtbjAJN9N5xCMaGGuVtv?=
+ =?us-ascii?Q?/zbw/bTrurgwWCrlHxELSHb78RGwA+ZWCwaKm8gGGQJFLFlEe6nmrLM83ocd?=
+ =?us-ascii?Q?Scu1PnX+40y871OS8ZocSAl93Dt3OQ/Fuvye0XewlFf22XeNTM4H?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d260f411-e524-4de2-ba4f-08df45adc973
+X-MS-Exchange-CrossTenant-Network-Message-Id: 207f5d0e-9f3d-4257-d0ac-08df45af04a9
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 19:54:42.3424
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 20:03:31.1820
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eo1qxLcsjtioG7Xp80ZcFUeZNbbs6/znEgNXn9K4l05/MzAUJSK0ZddCBxtmhY615gIDI28gSeoe+DmkPvKQN3Yzg9+panZwZIefnOc8ZWYnG1vFuCBSbFaN2D/2pG3v
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6gngHv4g/2evvjMyFFwpaHNW68fyHjYaaVPU93YchWhvt7m04f5xFb5UuKgqS/EnXXdNXS8F3Gr41pugAwdNLi2pQRqQIoscmXTdeR9+XPw1VN7WFSMjDCE7l6px+Nft
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7893
 
-On Sun, Nov 15, 2026 at 07:14:34PM +0300, Nickolay Goppen wrote:
-> [Вы нечасто получаете письма от setotau@mainlining.org. Узнайте, почему это важно, по адресу https://aka.ms/LearnAboutSenderIdentification ]
+On Sun, Nov 15, 2026 at 05:02:44PM +0300, Nickolay Goppen wrote:
+> [You don't often get email from setotau@mainlining.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 >
-> 15.11.2026 19:08, sashiko-bot@kernel.org пишет:
-> > Thank you for your contribution! Sashiko AI review found 3 potential
-> > issues to consider:
-> > - [High] dmaengine: qcom: bam_dma: missing opening brace in
-> >    bam_fifo_xfer_len()
-> > - [High] dmaengine: qcom: bam_dma: undeclared metadata_ops in
-> >    bam_prep_slave_sg()
-> > - [Medium] dmaengine: qcom: bam_dma: missing read barrier in
-> >    process_channel_irqs()
-> > It also noticed 2 related pre-existing issues this patch does not
-> > introduce:
-> > - [Critical] dmaengine: qcom: bam_dma: ring buffer space miscalculation
-> >    in bam_start_dma() [1]
-> > - [High] dmaengine: qcom: bam_dma: unclocked register access in
-> >    bam_dma_irq() [2]
-> > --
-> >
-> > commit e40d68fe8bef09bdcbef42721a06c3fd7ad7197d
-> > Author: Nickolay Goppen <setotau@mainlining.org>
-> >
-> > dmaengine: qcom: bam_dma: Report the residue of packet
-> >
-> > This commit calculates the number of bytes transferred from the BAM FIFO
-> > descriptors and reports the transfer residue in async_desc->vd.tx_result.residue
-> > upon descriptor completion.
-> >
-> > > diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> > > index e62e411dc8f8b..b5cfe3ce34060 100644
-> > > --- a/drivers/dma/qcom/bam_dma.c
-> > > +++ b/drivers/dma/qcom/bam_dma.c
-> > [ ... ]
-> >
-> > > @@ -447,6 +448,30 @@ static inline void __iomem *bam_addr(struct bam_device *bdev, u32 pipe,
-> > >              r.ee_mult * bdev->ee;
-> > >   }
-> > >
-> > > +/**
-> > > + * bam_fifo_xfer_len - bytes transferred for a completed descriptor chunk
-> > > + * @bchan: BAM channel the chunk was queued on
-> > > + * @async_desc: BAM async descriptor owning the chunk
-> > > + *
-> > > + * For RX pipes the BAM overwrites the size field of the descriptor that
-> > > + * ended the transfer with the number of bytes actually written to memory,
-> > > + * which can be less than the buffer size (e.g. an IPA packet).  Those
-> > > + * values live in the FIFO copy, not in async_desc->desc[].
-> > > + */
-> > > +
-> > > +static u32 bam_fifo_xfer_len(struct bam_chan *bchan,
-> > > +                         const struct bam_async_desc *async_desc)
-> > > +    struct bam_desc_hw *fifo = PTR_ALIGN(bchan->fifo_virt,
-> > > +                                         sizeof(struct bam_desc_hw));
-> > > +    u32 len = 0;
-> > > +    unsigned int i;
-> > > +
-> > > +    for (i = bchan->head; i < bchan->head + async_desc->xfer_len; i++)
-> > > +            len += le16_to_cpu(fifo[i % MAX_DESCRIPTORS].size);
-> > > +
-> > > +    return len;
-> > > +}
-> > [Severity: High]
-> > bam_fifo_xfer_len() is missing its opening '{' after the parameter list,
-> > which breaks the build when CONFIG_QCOM_BAM_DMA is enabled.
-> >
-> > [Severity: Critical]
-> > This problem wasn't introduced by this patch, but in bam_start_dma(), the
-> > producer side of the same descriptor FIFO ring buffer miscalculates
-> > available space [1] and can overwrite in-flight DMA descriptors:
-> >
-> > drivers/dma/qcom/bam_dma.c:bam_start_dma() {
-> >       ...
-> >               avail = CIRC_SPACE(bchan->tail, bchan->head,
-> >                                  MAX_DESCRIPTORS + 1);
-> >       ...
-> >               bchan->tail += async_desc->xfer_len;
-> >               bchan->tail %= MAX_DESCRIPTORS;
-> > }
-> >
-> > CIRC_SPACE() is called with MAX_DESCRIPTORS + 1 (4096), which returns 4095
-> > when the ring is empty (tail == head), while bchan->tail and bchan->head
-> > wrap modulo MAX_DESCRIPTORS (4095).  Enqueuing 4095 descriptors wraps
-> > bchan->tail back to bchan->head, making a full ring appear empty so
-> > subsequent submissions overwrite active descriptors before hardware
-> > processes them.
-> >
-> > > @@ -732,6 +757,8 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
-> > >              } while (remainder > 0);
-> > >      }
-> > >
-> > > +    async_desc->vd.tx.metadata_ops = &metadata_ops;
-> > > +
-> > >      return vchan_tx_prep(&bchan->vc, &async_desc->vd, flags);
-> > >   }
-> > >
-> > [Severity: High]
-> > metadata_ops is not declared anywhere in this file or its included headers,
-> > which causes compilation to fail.
-> >
-> > > @@ -881,6 +908,11 @@ static u32 process_channel_irqs(struct bam_device *bdev)
-> > >                      if (avail < async_desc->xfer_len)
-> > >                              break;
-> > >
-> > > +                    async_desc->transferred +=
-> > > +                            bam_fifo_xfer_len(bchan, async_desc);
-> > > +                    async_desc->vd.tx_result.residue =
-> > > +                            async_desc->length - async_desc->transferred;
-> > > +
-> > >                      /* manage FIFO */
-> > >                      bchan->head += async_desc->xfer_len;
-> > >                      bchan->head %= MAX_DESCRIPTORS;
-> > [Severity: Medium]
-> > Can bam_fifo_xfer_len() read stale fifo[].size values before the hardware
-> > descriptor writeback is observed?
-> >
-> > bchan->fifo_virt is allocated with dma_alloc_wc() (Normal Non-Cacheable
-> > memory on ARM/ARM64, which allows speculative loads), and earlier in
-> > process_channel_irqs() BAM_P_SW_OFSTS is read with readl_relaxed():
-> >
-> > drivers/dma/qcom/bam_dma.c:process_channel_irqs() {
-> >       ...
-> >               offset = readl_relaxed(bam_addr(bdev, i, BAM_P_SW_OFSTS)) &
-> >                                      P_SW_OFSTS_MASK;
-> > }
-> >
-> > Because readl_relaxed() has no read barrier and the address of
-> > fifo[i % MAX_DESCRIPTORS].size does not depend on offset, the CPU can
-> > speculatively load the initial buffer size written by bam_start_dma()
-> > instead of the byte count written back by the BAM hardware, reporting the
-> > wrong residue to clients.  Using readl() for BAM_P_SW_OFSTS or adding a
-> > dma_rmb() before reading fifo[].size would order the reads.
-> >
-> > [Severity: High]
-> > This problem wasn't introduced by this patch, but bam_dma_irq() calls
-> > process_channel_irqs() before acquiring a runtime PM reference [2]:
-> >
-> > drivers/dma/qcom/bam_dma.c:bam_dma_irq() {
-> >       ...
-> >       srcs |= process_channel_irqs(bdev);
-> >       ...
-> >       ret = pm_runtime_get_sync(bdev->dev);
-> > }
-> >
-> > If a shared or spurious interrupt fires while the BAM controller is
-> > runtime-suspended with its clocks disabled, the readl_relaxed() of
-> > BAM_IRQ_SRCS_EE at the start of process_channel_irqs() accesses an
-> > unclocked register and triggers a synchronous external abort.
-> >
-> > [1] https://sashiko.dev/#/bug/linux-a877fd6c-244a-404b-88a7-7d77506711a9
-> > [2] https://sashiko.dev/#/bug/linux-0ca05019-399c-4f9d-a7e1-d74c7ddced75
+> From: Sireesh Kodali <sireeshkodali1@gmail.com>
 >
-> I will address the issues of the patch in next respin, but I don't know
-> what to do with issues that |
-> wasn't introduced by my patch.
+> Immediate commands are needed by the IPA network driver, so that it can
+> send commands via BAM to the IPA microcontroller.
+>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+> ---
+>  include/linux/dmaengine.h | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
+> index 805668fbe437..56c49254ed04 100644
+> --- a/include/linux/dmaengine.h
+> +++ b/include/linux/dmaengine.h
+> @@ -200,6 +200,9 @@ struct dma_vec {
+>   *  transaction is marked with DMA_PREP_REPEAT will cause the new transaction
+>   *  to never be processed and stay in the issued queue forever. The flag is
+>   *  ignored if the previous transaction is not a repeated transaction.
+> + *  @DMA_PREP_IMM_CMD: tell the driver that the data passed to the DMA API is
+> + *  immediate command data and the descriptor should be in a different format
+> + *  from the normal data and descriptor
 
-You can address existing issue later.
+does dmaengine_desc_attach_metadata() work for your case?
 
 Frank
 
+>   */
+>  enum dma_ctrl_flags {
+>         DMA_PREP_INTERRUPT = (1 << 0),
+> @@ -212,6 +215,7 @@ enum dma_ctrl_flags {
+>         DMA_PREP_CMD = (1 << 7),
+>         DMA_PREP_REPEAT = (1 << 8),
+>         DMA_PREP_LOAD_EOT = (1 << 9),
+> +       DMA_PREP_IMM_CMD = (1 << 10),
+>  };
+>
+>  /**
 >
 > --
-> Best regards,
-> Nickolay
+> 2.56.1
