@@ -1,103 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794956426;
-	b=VTqwS7M2TMATz/e02QuAfy6rks4jtwrM5Aa9nTapD/K5i4NTvCj+iqmYgMPjUfh7Q8Oh
-	 4uFan3/Dc5JcNgCJloukYMErHyXXsEQTGBQBIFZ6Dar3ejSGmgRM5Vc8d+y3ffgaDanok
-	 hj8Rk/oTiPSUZRX7IFySiqUXh0ghPPaMAxiiSnu6yfQwZrBfSHjE0ldaWpwu1aujvbg4w
-	 kgDr30aSC1ajWpGhRuyw6Vie/aLLgUsaYGTYE1GrE6wtMGicV6ECFH4tgidq/nBv40daJ
-	 5itKF20RvcR39oUF7l3s48Lim9kUu7WdCJMxt+P0THfxXiuoA/+YGtHEmviB/tr1Leg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794956426;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=yR+0jW95Z0CWoC3ggQ1II8lfkYqcV8Kwm0XIFAvC0V4=;
-	b=p5uLcqsKF9Nj0lVGgyTchEpRg7TczLdmrKmz99FcbnBo9954sUBE4bChXN5hAAfkmWVW
-	 SzO3+Z3qKUhov4oBtgVL3D7U0NWmsL5CtbWRa92aQde0VtrxXLvr6itWciQx2FIjcXYKD
-	 YI+ur1eZWd8w3bU7Mtsp4OCYZWso1cqfdEPTmL7DQWYXgXuwaTE76Op7raeoBWjqwYnG5
-	 9mxgH4iMy1SMn7jehY07jZHgnWflCsMmXOuc02VTlSkNRIo+1K74vZQwsPRTOhJlOWtLt
-	 gG462dP39QbTq7fd+DRm/eYaZvwwpbDsIHIKcHSfyIO2oifpbE1RxzxYIUyEQr8frfg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=F+pO8dW9;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.18
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010018.outbound.protection.outlook.com [40.93.198.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.161.47
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794960475;
+	b=aB3MYwb4B6m7dkDZCCzI9AWiYUA0WKrNL32ba9uK+qThEsbPjkdx7ekgnH/eDL3vMVZ9
+	 4kUrOp/DSVfSrT1iJidIl4ajLnGrQEV6aReNPsKxi2GUnMtW69TcNk9J6CXvdjM4C5z0N
+	 AXNXOufnHZuO1UcaVg1GXhOOBamKsstphQbflso2TE2kDzgP/sUanku2ylIa9gVmB84s8
+	 3QDvWoZPej2uIOTYCPYQxnwsMM7yEaKIAN9uj/RXuscVdW+dSGTPGMc+v9XSsgVBRgRhg
+	 Q8ElYHMzM+H5BkquNlH3VkSSUhp5zK1DdgiJ7DwXdyQePDOjmRhWenWZWVBwdV1qGvg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794960475;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=Bl3W5aQMmq5HJBKFRVehRWJZkxZwzzcvP3FrIH0GS3o=;
+	b=wOVFWLKcegI20UBIjFYPIjktj8zY6xteWQ+h9Bu8uj14zkQkKq2ZQvYMop2oIwAcAquG
+	 t78rAaetXbbXRBs+vhD5X/oOdkNoktreOmZhQVFcYoh5DNhZHHU8vxW0eRvTIasHP8hzd
+	 gK8bzNnpah6TaBzRIo5CAU66Lhx/gpFu1S1orZ9yclajuvXq+kmsCgGfqs9wWVmDCNp/4
+	 Z7Ck5Qkyk90+jdI7+lWyC0wPBBQy1M2CP7JwHhp8wozvCRkjOaPFx6hpGkgGPoB+05eOv
+	 5MaP9EhChVklfYF7S1OzgmUhKsk+Hf5mjNqJFIghkPwAZOl8Fhv3je/gBUgFREWjWCw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7EKJyEN;
+	arc=none smtp.remote-ip=209.85.161.47
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DBD606A31C;
-	Tue, 17 Nov 2026 23:00:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 00DBD606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07969606A331
+	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 00:07:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 07969606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=F+pO8dW9
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z5SfKHM59JHgj1YKGGaauZ1RBwg8rBL0sP8qcSKzXrXyHgNGzJQ0EnX20QKzVxMn+m1wTh7R/c1Mgv0ydgd/01s1055A0HvEMxxDg2eT+iLjc++9DPbRnFlPCjvKs3wcDZM/ACtK/LjgJ24Ab4HJVu5Iark/TfFle292WzMOEcQPyYr7anGe3Rb2MrcLenF44plP/Rzc/g7jTMjH7KhDAQkJIMLLihLWzoPjf5SDJqhl1Kk2E9LO5A9xmsouF8/Qj9OYupQ0s11WonmBRNu2SFjEePYIDno+U4n6FroEFw7P9JNDD5DYKhNxr66OTLoI/lpGUmc3cPAteP7UU+K3yg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yR+0jW95Z0CWoC3ggQ1II8lfkYqcV8Kwm0XIFAvC0V4=;
- b=qY0Jngumic30t/lVxZi/gP+lma4hG7ZhypAU+jSVYiL3KAmuz6p4u/7wIOXdrou5IDV1B7/J8Np+bPE6Aobrf79VRaRfYuOK+DM4Ey+/AiLgrxrDuUTOJkr5cdIrWuPB8eZN8n09a7zaJxHxWsFGPMdMM1n4wrdqPv69sOif34YacbjYoZA09a1BMtegd03zdHlp/tLaCqfKvOjP7s+Sic4960XV8b8kMXu3sbqM06QSkPZD7wJe/bhnEOcRsViDPtWHhnJLtMgPdPZK9oL5ZRlpB9afbCIzIQf4xNkOa3835etmfkIR5rJ9MxsuHc1bRpmceOEvxewUVPAsPEfYyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yR+0jW95Z0CWoC3ggQ1II8lfkYqcV8Kwm0XIFAvC0V4=;
- b=F+pO8dW9AKXa9GSmQzHo7FgQHLwi0Ze9wK8PQg02PamJrIuyMBy97Zq2FeEqvidlBQQiTMmTaqbNeURNBIHoHxj8t9LttVZIq6C+NEL+8nXyAK8unAmNu3CoIamkBwo461E/SHKli24Bd6d6MhF3liMcqJwQYuSfge6qgepzrBE=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24) by DM6PR12MB4419.namprd12.prod.outlook.com
- (2603:10b6:5:2aa::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 23:00:20 +0000
-Received: from CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077]) by CHAPR12MB999249.namprd12.prod.outlook.com
- ([fe80::1cfd:535b:cec6:5077%4]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 23:00:20 +0000
-Message-ID: <5d125299-468b-4aaf-b8e7-304fbed26ca0@amd.com>
-Date: Tue, 17 Nov 2026 17:00:16 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/25] dmaengine: sdxi: Encode context start, stop,
- update, and sync descriptors
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, David Rientjes <rientjes@google.com>,
- John.Kariuki@amd.com, Jonathan Cameron <jic23@kernel.org>,
- Kinsey Ho <kinseyho@google.com>,
- Mario Limonciello <mario.limonciello@amd.com>,
- PradeepVineshReddy.Kodamati@amd.com, Shivank Garg <shivankg@amd.com>,
- Stephen Bates <Stephen.Bates@amd.com>, Tycho Andersen <tycho@kernel.org>,
- Wei Huang <wei.huang2@amd.com>, Wei Xu <weixugc@google.com>,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org
-References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
- <20261103-sdxi-base-v4-19-3668ccc7aab8@amd.com>
- <avdGL_FiPYeBOW6Q@lizhi-Precision-Tower-5810>
-Content-Language: en-US
-From: "Lynch, Nathan" <nathan.lynch@amd.com>
-In-Reply-To: <avdGL_FiPYeBOW6Q@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA9PR11CA0011.namprd11.prod.outlook.com
- (2603:10b6:806:6e::16) To CHAPR12MB999249.namprd12.prod.outlook.com
- (2603:10b6:610:300::24)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s7EKJyEN
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-71ad099391dso236406eaf.3
+        for <dmaengine@vger.kernel.org>; Tue, 17 Nov 2026 16:07:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794960474; x=1795565274; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=Bl3W5aQMmq5HJBKFRVehRWJZkxZwzzcvP3FrIH0GS3o=;
+        b=s7EKJyENJzabOd+ChQTSi9RCtCnBOVv2xhr2xygiKRvOXsM3E63Q99mem0WD7wsQu5
+         MyYvNZvLkcOAcUpbB6qEwCSa3QzH605tLKPdDafUr9vdhhP9d7HPiO1SwVjl3sf2Vr8i
+         ndb4aEPcwl0px777EuqfrGXkoss5/WrbEuAsdkQ5Px14qrnJJIpPylLR/Fwsiuc4of/d
+         Wfqq8n0Mda0eOor1SLvcYgwyGUBPYDlhSHvGDfymtX8JYM6qXqdUzX7opzJiG3xPWn5G
+         4Nen+EgVHC8K798bb7u145EOg9bPnBdk0ITGz0lb441/AP/jPv5l87PPi4A1u5lVBAm0
+         I8mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794960474; x=1795565274;
+        h=cc:to:content-transfer-encoding:content-type:mime-version
+         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Bl3W5aQMmq5HJBKFRVehRWJZkxZwzzcvP3FrIH0GS3o=;
+        b=F1GM1U4c0IhnHgs6xHMKY4QkVQr+XSU7qQXzjLPE+lqNN1VVbvxLG6LtcyZAgAXLeX
+         INLY2OLYY3kqJssMGvo4QdhAWtvHtKjNAfsJ3wpTu/VDriyFNKn9WX8L94jvd78FX7pF
+         A7xB9a7juKXxX4lxnKQY73r6EdQgeNAQBviBHmxIWa3OT7eAmtVU+fc9xzTfGfJqYYwA
+         fA4kmZjXHS9+yv/VGg+/pSqISkE4NovLG7/DIYuePuM+acX44O+o97T0U767wEtK/lxP
+         MVBIVygHIBhj2yw0lC5+UxiQmA539wVJRiMm8EmUBexmZM6vdXBUjY9CM2URU80kvMMd
+         XxJg==
+X-Forwarded-Encrypted: i=1; AL+hErEdaxvnIbgkZr/Ip4Tks9ve3UO58tGiqKys8S1TX62qfG/Kv4T8Ww6bUovWnY5LrlzIMDdV/STWhKU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+aT/ZJXkeqE976WGLSZhj7/iKk2MDVb3hBV7ImawzJH9zrwQJe
+	99OjSSowRzmk/jKOR96xUprK84pq7WGT3HGKdFygbK8WCyxVKo0U7vuD
+X-Gm-Gg: AYBFou1JONklMYfDJNM8mKIJKlP7smivrKF1TgNpMmUlWyqZpbnCtBD6khjbzBA7RgE
+	V04SvOv3g/XI6ZCGfZPyqyHUbhBl3i+H0r+lH8rzmCe1TJdw2v7LrYoHRdqML0gtq1EmL0H14lI
+	m6ckOqJoqa2BxTgUDwHuE1zJrJZYjdhXEmQ3BZOmcO1MxHFd5/oyVJIOacJupPssqlkjUgFDL1w
+	FZrbN5PbtIxRPU7ier9r0n1HGLkXHQv9rMFdEtnCg5UEODP4q1z4ez+t4wZWXA171u61WHs3bF3
+	V4jxTdcyjVjFJX0JNcnkl3TaXvkxE/Hlt8b8pn1cTeb97cXvJ9VUh4MPGjHEKs+qhQsIAsUSte2
+	e0nNzMtagPLnU2z7x2nVYXbKPnCWgMGjVf33bR8mZj7D2eKzj88QXlxOMGzvrJtWS6gmTfaPU/f
+	NJ/trbuGkNEBif4hn6vR/eMHSvQLJ4t6jU1rsZlranDT+MhxLHHBdWm90Ae4cYaSRqeQQDqYfpb
+	gs77hQFKlgpsMhjtsAjxazEWxMX+eVW5XRi0Qal+Yt8+vS4CvoJ+6TjF3E4BLMsFSKAVsoCIPiK
+	ieSbz3V0mfVbn1zAu6hHwxkimm5k4GhOmuZD5WHaWn5gRNsVfy96nA22Sl37q6RzKKRrXTdgQvm
+	IMpCBVLT8nOEY2FGrPnQ+C1JUtG6GVB5MAohQsGm0wC9hRBhWMTWWhukVargRShJGXSMmIH7uu0
+	0B9Y4BHTThd5UB9xlTDurkBjEGLBQhlAzD7gIOvGopFu/pZYpxgqM=
+X-Received: by 2002:a05:6808:1304:b0:4f5:eaac:5151 with SMTP id 5614622812f47-5774181a19dmr1349662b6e.39.1794960473879;
+        Tue, 17 Nov 2026 16:07:53 -0800 (PST)
+Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-5777b393d40sm434954b6e.17.2026.11.17.16.07.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 16:07:53 -0800 (PST)
+From: James Hilliard <james.hilliard1@gmail.com>
+Subject: [PATCH v7 0/8] dmaengine: dw-axi-dmac: fix termination and pause
+ acknowledgment
+Date: Tue, 17 Nov 2026 17:07:39 -0700
+Message-Id: <20261117-submit-dw-axi-dma-stop-pause-v1-v7-0-d5f2309afd72@gmail.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -107,102 +94,140 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHAPR12MB999249:EE_|DM6PR12MB4419:EE_
-X-MS-Office365-Filtering-Correlation-Id: c56b435f-7c65-4bc0-0b1e-08df44fe8e19
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|23010399003|366016|1800799024|4143699003|11063799006|56012099006|10067099003|261021121427099003|261102123227099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	ln9ayHvfonowcp05KuA16ukgxS6pKTzYtbI6oTO87aqJ9WxdAu1eZC9uucX6srZIQ8oyzpPKD7Ll1F1N7ppyYx5Pqu3jaW3LXqEyavQC0gtXICAyTQiNH4MgMPHO3SK/U++TtporpspC6zC6HXLXfb4yfHOk5ywiVrrBRTgaVJDo8HMr9Ze5torAAqt1CFKBT5j3Y25eke8iq6MI0QszhI4xH0kWt0WS8MZuhkBf85Ez+NcLLt5ggFG1HJivP7XywLcN99OOXUVwhLkBgQHviBZ04Tlet+m9TNV0vfRozb9MrRKyuV0v1T710KY6wwJkofwm+xhE+g9iDXD8IJy0lnxx/d64nf6FGJgxybwDcgmI98bqGAyiJseHYhxmnqsO968ptWhQuxdq8VdpaUrG3cneKs/d9Zw3aVw6mlWCsHHzU8DY2o640ChJtaJeUQOabAbLDBsRLilVtWERE3sfiTWlRJjEp/2Lvur4wymhTq70TPK9Z5n/uwf/8fdQddzZyyglcO2fmxdNSHHqEGSLBYzGWtaRGBx4BcDv711S6BlhTkkIIfRsoIszxP7vR+/49GJjVi6u8cXSDMkGSUmCouQdTb5MD/JWlTjQkW/GGGPy7o1nTdwBSYnurZH0Xwz0GSqsq6dVdy9tSD7GMZLfVhPYkNxF7pRa7/SEvbVuCEk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHAPR12MB999249.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(23010399003)(366016)(1800799024)(4143699003)(11063799006)(56012099006)(10067099003)(261021121427099003)(261102123227099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cmJsM0xkaWdzQmJkbkh3ZzFvc0xOb3VMMGhCQjdhaG1zb0hPNE5nN1BOUHF6?=
- =?utf-8?B?Q00xanYrbU5ZdStrYmdpcWorR3BHOHplNmVmdUZURHMzRThXMWF5V2lPOVFz?=
- =?utf-8?B?eG81bTVhelFxMnBMOFFzeVlVbkhsdWFHUmtMUVlFTDVCVkhPbjU2bWozTzln?=
- =?utf-8?B?d2ZXQmphSFFvNHBVbTh4NTJqSE5HUkt3ejZOS2pOTTl3QnR5SXl6ZllwUTdJ?=
- =?utf-8?B?MElGbFhmaURBV0w3dDBKNWNqY3NTeTNOU2VBRlhlaC9SY0hnQWZVVm5tTTV3?=
- =?utf-8?B?NGtKNGowc3FHODdDZFVnZUU1cHpWWXA5aUdKREhoMUlMWmRwaVdPUGhZUHZh?=
- =?utf-8?B?ZzdkNHhPdTJmNkVjN3ZJOGpWZExlWnlnZXRrdUdiUFEyS1haZ3BmaUFabm4v?=
- =?utf-8?B?SmlCdzBscXJaR3RlR0JvYzg5OFJFbUZyaXVBa3pYRFk5dUVlYVptaFh5dXVz?=
- =?utf-8?B?eXNFWWdjYWRxNXJNQlgzeEhOdDRENGNBeGxQQVpPYVJuR21IVEVqKzdZaG81?=
- =?utf-8?B?bnVjYTdQYUtaNytGdktBY29KOUxpMk1CbDNwV3YxMEM3T2VEaWV1NUNkR0la?=
- =?utf-8?B?V0dMaytLMWZKSWJsY1gvOTdZeHowU0FLVjVYMzFRSDFncy9zLzE5bUpMM1gz?=
- =?utf-8?B?S2dSUmhNOGovTUVRNzdSelVjY2Z1blg5WHpsL2dyVmFvc3NJNzRhNEdlbkFS?=
- =?utf-8?B?c1NaMm1sK0UrK283TEx3blBLTGdnZFBaTDRKSVlrY3BpM2IvMkdmeGlxRm04?=
- =?utf-8?B?cEdQUzZDUWVqZW8ra0JzV0ZDcVZIWGR0Z1lWdHFoVFNxM3ZIbHF0Vy8xclIz?=
- =?utf-8?B?Tys3VjhkQWY2dWh6UzFwY2hGdUNYRVczbVdCNWFocXVxb3ljY3NtVWtlaVdN?=
- =?utf-8?B?cFpLUDJUZDJCTFhML2FrMTNQaDVBMHhsZE5wUDJadk9IL09lVEtHRVZxOTFT?=
- =?utf-8?B?Njh0dCs2clRxSit6Y3ZjSEpUejZIOXNTMHcyTTVQOHpmSUtSOGprNnNJdFRH?=
- =?utf-8?B?R1E3RENBbjFUWHl5Rm44Rm44U3NVWjc4V1cxeEhhM0xEdzFDa1lEalA1NUhx?=
- =?utf-8?B?emUzZGhVY2dMOTZoVFFsdFZscnM1eXgyRFd3VzVSQXIwMk5kMjJ0eExmUnh5?=
- =?utf-8?B?V1B3NHJFTGtTN05paVdFM0FjQ0xzUGlMSkFMRVlhcFVCWXoxMTIrYmVrdmtp?=
- =?utf-8?B?Mmg3cGNNYzdZNkp5MUVYeDh2VGlLc1VHU0IwZjFkTzlxeFBWWTR4NDBGcVdx?=
- =?utf-8?B?aDZZM2FnbHhoZmRBbCsxYWIrb1ZEK1pLcVRVTWlzMWdsNUR6ZHhPVWxVZWxJ?=
- =?utf-8?B?bHU1TVppWEM5U0JSY3JyR0trNTNmZSsrOHkwRzhXcmMybG5zODRCVm5TMktp?=
- =?utf-8?B?Z3RvTFd1NjhBNnQ5ZkRab0pLQTlBcmNrL3R1bmhjMkJucWltQTBVcGNxcnVQ?=
- =?utf-8?B?U0F1RGJ2Q1diaVhuVkVYbjVzQk9vbEFWMFM2WXBqQ0M2NGMxSzdHZloxRnJQ?=
- =?utf-8?B?WFlzTURMTE9TK2pkSmpPYTZPMUZZVWRiV1RYVDV0SUFDUDFyQzY3ckFOcXpQ?=
- =?utf-8?B?Nno3cjUrSFA5cTdmenJRSVBpOXlOeTBiOFVrcEd5Lzg1dFdjOGVWS0hwZU10?=
- =?utf-8?B?WDJ0ZWlCbytCRGNUUkdCbnliMXNxWWFjVlIza2hQRCtEQ1pidDQ4OEN1cWNG?=
- =?utf-8?B?cXRrRkJwS21GYUVsamVjQURySlZqZFR0am5kb2JRTUo1V3doY1NTeGpUaDhZ?=
- =?utf-8?B?aU9VdWRrSGN0YlVCdTRhblNVUjlIRlJVU3ZqNjU1S3Jzcm52UFVUNURROEZJ?=
- =?utf-8?B?R09CSFIzR21XZDJIM3pFTkJhblpCQlJRVEU3d1hLRS9sQ1hwRlNaeGR2TzBF?=
- =?utf-8?B?NU9ETnExMm5keGhJQlM5TFdIbmdqWHpoQnFSb2hoWFB1ZXA5UkIyL2xBNWto?=
- =?utf-8?B?V0wzNVd1VlR5VkFHVUE3VFJvRXMyVTd4djlaQUg1cjJYeElrWWZxdGpneGNr?=
- =?utf-8?B?SGRUeVd2UVJ4UnM5NHV1WVRQR3poUkZ3engxRngrQ3BIdDk0SFFyUlkwZjRw?=
- =?utf-8?B?djV2eXlFeGZmNVVQZUY0ZnNESTgzc3N6YVJReTEydCs1QU55RnlvUm9hSDh1?=
- =?utf-8?B?a05kWG1mcHB3RFBTaDhPR3lsTndmRUdtSGVkbzZUMFVlZVpqcUFBKzRoUjNT?=
- =?utf-8?B?eWxJc2dCemRwVjNObzNjRGltZFRqK3M0aERzSUtvbjYvM0JHQ2lCbTMxZFp2?=
- =?utf-8?B?S0FyMmZhVmNVaCtISkh0djJXV1FabUVOSm9yeURMdFI2NGZjblhSOC9xb0pL?=
- =?utf-8?B?ZnRwM3oxSFRVWnNweFVwWUxHS0ZNMHpPUEZ6c3hpN3FSM0ZobFROQT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c56b435f-7c65-4bc0-0b1e-08df44fe8e19
-X-MS-Exchange-CrossTenant-AuthSource: CHAPR12MB999249.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 23:00:20.7859
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uSXbt2zGynPKPGMyYSRXc+J/oD/7XptIguEx8C7hJBCJqnkG8rqoyo+/k9ya+fVpAzpnEQQKXfBJmLk8B0nBqQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4419
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43Sy2rDMBAF0F8JXketNXpn1f8oXegxilXqJLUdN
+ yXk3ztOKBhDccGb0ePogu+16rEr2Fe7zbXqcCx9OR5oMNtNFRt/2CMrieYKatCc15b159CWgaU
+ v5i+Fpdazfjie2Mmfe2QjZ9GJzNFow7WrSDl1mMvl/sLr22Mm4h3jMLHTieDpZuj8ITbTEh3o8
+ PP5jwf0dKMptNR930OPfJL/n4++mkVpMXKHDlG+7FtfPp7isa2mfCPMPbfuAXla+kRmysaJpSd
+ mHq/XPUGeUDnl4G3QPC09Ofdg3ZOThyGCDCBFCktPzT2x7inyrALhwQRlrF16eu6pdU+TF2IAk
+ ag2Nbi5d9v+9uFMzRweLXoUhvbJ3W20BosmyagDqGgTt5kLqZDy1Qm4Bec9GpT3LvohNlTo3SZ
+ HIYW0tRB18ipnp1CB4c6Z7A39JuOMiRAsRbj9AEzkafkkAwAA
+X-Change-ID: 20261108-submit-dw-axi-dma-stop-pause-v1-c93f1e767169
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+ Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
+ Sergey Khimich <serghox@gmail.com>, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+ Sia Jee Heng <jee.heng.sia@intel.com>
+Cc: Mitch Barnett <mitch@accuratesound.ca>, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, James Hilliard <james.hilliard1@gmail.com>, 
+ stable@vger.kernel.org, Wang YuWei <1973615295@qq.com>
+X-Mailer: b4 0.17-dev
 
-On 11/13/2026 11:17 AM, Frank Li wrote:
-> On Tue, Nov 03, 2026 at 08:50:00PM -0600, Nathan Lynch wrote:
->> diff --git a/drivers/dma/sdxi/hw.h b/drivers/dma/sdxi/hw.h
->> index edc43190148c..51b2bcbeca90 100644
->> --- a/drivers/dma/sdxi/hw.h
->> +++ b/drivers/dma/sdxi/hw.h
->> @@ -142,12 +142,89 @@ struct sdxi_desc {
->>  #define SDXI_DSC_SE  BIT(1)
->>  #define SDXI_DSC_FE  BIT(2)
->>  #define SDXI_DSC_CSR BIT(4)
->> +#define SDXI_DSC_SUBTYPE GENMASK(15, 8)
->> +#define SDXI_DSC_TYPE    GENMASK(26, 16)
->>
->>  /* For csb_ptr field */
->> +#define SDXI_DSC_NP BIT_ULL(0)
->>  #define SDXI_DSC_CSB_PTR GENMASK_ULL(63, 5)
->>
->> +#define define_sdxi_dsc(tag_, name_, op_body_)				\
->> +	struct tag_ {							\
->> +		__le32 opcode;						\
->> +		op_body_						\
->> +		__le64 csb_ptr;						\
->> +	} __packed __aligned(64) name_;					\
->> +	static_assert(sizeof(struct tag_) ==				\
->> +		      sizeof(struct sdxi_dsc_generic));			\
->> +	static_assert(offsetof(struct tag_, csb_ptr) ==			\
->> +		      offsetof(struct sdxi_dsc_generic, csb_ptr))
->> +
->> +		/* SDXI 1.0 Table 6-14: DSC_CXT_START Descriptor Format */
->> +		define_sdxi_dsc(sdxi_dsc_cxt_start, cxt_start,
-> 
-> Is indent wrong? suppose define_sdxi_dsc() use previous
-> #define define_sdxi_dsc(tag_, name_, op_body_)
-I'm not sure what I was going for here; I can make these parts align better.
+Keep cyclic mode in each descriptor so failed preparation and queued
+work cannot change the completion handling of another transfer.
+
+Use the layout-aware channel enable check during termination and retain
+transfer resources when the channel does not stop. Preserve suspension
+status for the pause and resume paths, including acknowledgments that
+arrive after a polling timeout or during another channel's interrupt.
+
+Keep a pending pause across cyclic segment completion and resume the
+segment only after the client releases the pause. Track the active
+descriptor until completion so queued work cannot reissue it while its
+interrupt is pending.
+
+Retain terminated descriptors until their callbacks have drained, including
+cyclic descriptors that error handling has moved to the completed list.
+Serialize interrupt status collection with channel reuse so an old event
+cannot complete a replacement transfer.
+
+Keep shared IRQ handlers out of uninitialized or suspended hardware, and
+drain them before disabling clocks or removing channel devices.
+
+This series uses the shared virt-dma descriptor-retirement helper [0].
+
+[0] https://lore.kernel.org/r/20261115-submit-sun4i-dma-callback-lifetime-v1-v2-1-fb7d258702f8@gmail.com/
+
+Assisted-by: Codex:gpt-6-astra
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Changes in v7:
+- Guard shared interrupts until hardware and channel registration are ready,
+  following Sashiko's review, and hold an active runtime PM reference while
+  handling them.
+- Balance probe/removal power references and drain handlers before clock
+  shutdown, including forced system suspend.
+- Link to v6: https://patch.msgid.link/20261115-submit-dw-axi-dma-stop-pause-v1-v6-0-bcb23d1e7029@gmail.com
+
+Changes in v6:
+- Retain descriptors through callback synchronization using the posted
+  virt-dma helper, covering pending, executing and error-completed cyclic
+  callbacks raised in Mitch's follow-up.
+- Serialize interrupt status collection with channel reuse and clear old
+  completion and error status after successful termination.
+- Link to v5: https://patch.msgid.link/20261113-submit-dw-axi-dma-stop-pause-v1-v5-0-8523a27b5788@gmail.com
+
+Changes in v5:
+- Use a positive enabled-channel condition in the suspend-status helper,
+  following Andy's review.
+- Initialize the resume result immediately before its first use.
+- Separate the lock-protected channel bitfields from the preceding fields.
+- Link to v4: https://patch.msgid.link/20261112-submit-dw-axi-dma-stop-pause-v1-v4-0-3ebc24b243db@gmail.com
+
+Changes in v4:
+- Add a preparatory fix for cyclic mode leaking between transfers,
+  following Sashiko's review. Store the mode in each descriptor so
+  failed preparation, error recovery and queued work cannot change
+  another transfer's completion handling.
+- Link to v3: https://patch.msgid.link/20261110-submit-dw-axi-dma-stop-pause-v1-v3-0-35fdfba8b61d@gmail.com
+
+Changes in v3:
+- Wrap the atomic polling calls by argument group and correct their
+  continuation indentation, following Andy's review.
+- Move the termination return-value check simplification into the
+  channel-enable polling patch.
+- Separate the pause-loop conversion to atomic polling from the
+  pending-request and cyclic-restart changes.
+- Annotate the suspend-wait helper with its channel-lock requirement.
+- Pack the lock-protected flags into existing padding while keeping
+  cyclic separately writable, following Andy's review.
+- Link to v2: https://patch.msgid.link/20261109-submit-dw-axi-dma-stop-pause-v1-v2-0-64adc48df793@gmail.com
+
+Changes in v2:
+- Use readx_poll_timeout_atomic() for the single-argument status helpers
+  and express the termination polling interval and timeout in milliseconds,
+  following Andy's review.
+- Track pending suspend requests separately from confirmed suspension so
+  resume can handle acknowledgments received after a pause timeout.
+- Use the atomic polling helper, including its final status check, and
+  report -EAGAIN if resume cannot yet cancel a pending suspend request.
+- Defer cyclic restart while paused and track the active descriptor until
+  completion, preventing resume or issue_pending from reissuing it.
+- Reset pause state on successful termination and channel allocation;
+  clear stale status when starting a new descriptor.
+- Link to v1: https://patch.msgid.link/20261108-submit-dw-axi-dma-stop-pause-v1-v1-0-c48ec19e9ee4@gmail.com
+
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
+To: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>
+To: Sergey Khimich <serghox@gmail.com>
+To: Sia Jee Heng <jee.heng.sia@intel.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: dmaengine@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+---
+James Hilliard (8):
+      dmaengine: dw-axi-dmac: keep cyclic mode in the descriptor
+      dmaengine: dw-axi-dmac: poll the correct enable bit during termination
+      dmaengine: dw-axi-dmac: retain descriptors when termination times out
+      dmaengine: dw-axi-dmac: use atomic polling for suspend acknowledgment
+      dmaengine: dw-axi-dmac: preserve pending pause requests
+      dmaengine: dw-axi-dmac: retain descriptors until callbacks drain
+      dmaengine: dw-axi-dmac: serialize interrupt status with channel reuse
+      dmaengine: dw-axi-dmac: guard shared IRQs across the controller lifetime
+
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 260 +++++++++++++++++--------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  11 +-
+ 2 files changed, 190 insertions(+), 81 deletions(-)
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+base-tree: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git fixes
+change-id: 20261108-submit-dw-axi-dma-stop-pause-v1-c93f1e767169
+prerequisite-patch-id: fc343480330da5ff95e5271997fa71107977c2b8
+
+Best regards,
+--  
+James Hilliard <james.hilliard1@gmail.com>
 
