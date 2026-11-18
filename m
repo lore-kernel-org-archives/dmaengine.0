@@ -1,98 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.199
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794990551;
-	b=M613tj5VysWpGpIgAP5eS7OSGbjml/uBRop1P/UYSzq/gx+zGgF6WtyqET92qFsuvHGV
-	 u8eb5RbMXxtxqqDlj0rb9tjjd07yc77lng7U11/PcuIh5nvZXqKV8H5CDSJya70a2gL3E
-	 ezZGL9+KVzYmhXBSvSDa8wf8jc/fv5wORwkk287lZt9zyUiiT/lPzInW01ptg5OcxmLiu
-	 KR0hj9H2YZUEyaeysHziuamrf35Eu91qQ6NTNSYQiclET4x9fte8HQni1KlMSVxMkPhL4
-	 k2z7EICIinwnAXes8cVtvGpHTkXnbwAMEonJUfO5/WQUal6kx8tR5nEAoBjxM5WH4ag==
+	t=1794996548;
+	b=nnLAKNT2Dt/+oWJUzu2WipkJ6t8rs6QK0+5BO0CflBgOa7O3Fx76NhANjIulS89e3oOt
+	 4074tQ6dbYRvhZYJOJWseSYPhwU6nCSCDhNX/i32PlciFM+MqY2c96IWJwB7flGc2nMbT
+	 Zlq64Q/xZooNzvE9TkQaxA07jv4w3M6CSV7aRihdc7Jzh4+APohkrJU+Vqz800uqcmzuQ
+	 K7QMn9te/z2QtyJq0evLJZA5KVtsI+S2UevwELtTcDqwjs9DYRxG4f4qkOr1DjhtEJnhM
+	 2kFsKi5E4+DQNjaT817Nd2gAnX95PeozE/Oz5xHVl15GxrL7Apz6EezTrARe1eg/LQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794990551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794996548;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=9UGBPvO48P3EgdXF7lGcaY7uZ9DVFVaWCHXXjikO568=;
-	b=uZiajYfSWPiBk3wVftFNydjBuWXMCUvG0ZJydfJBUu+/la95IIepTGxOBzMp5ws5wDGv
-	 u4woVIEQMJ59nw+JwDnUDZ9t+viXrKOslZpxrJ+PVcp7/VGEcrNV4ycz5tgWmOtji7chJ
-	 JpS46RkeG69yDJLlK5Iq1ppPJyc5BL0XfzGPO/3RIotHTU8rJst/9u8DhVYHnvw+Fz2zU
-	 DDSlgAaUbduOKTHTvLP6clVgkr/4usqIhrvxIFHpEikSzWIwKdpZqQROADxWBNjIiFHY7
-	 U0hxnvYs+U6aUFEJvnyVwlBV7HfiH2tfbIfRKpQSo1QGscU9lXfOu4/8Y2vjc5TiO9A==
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
+	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
+	b=JWs/wBS3OTXO1vu08+VVNv9JZ+O1NHOtmY4tZLFpwmOOH4uv6+A3fog1eUUVTTX3kGkl
+	 sg6jZoJj05wlIfDksHxMOV8qQXTtXotIeeyf2S8LwPlUMo0Z8lLmuD4GI4XMh0ZYtYyNI
+	 WJPEUhc1sbBORMtvw97TMRscxIU2/om0xtzEPuVYOk7Rp9sfPyHze2qMfpamo5p46WR6d
+	 hlKSpUfhyCjcw4ufhoqcKiAZW3metk4E8WmGSA3lv3fr9f9r1su9/E2vGEkRd+UKSYoR5
+	 AVJATBH8td0i2Satxrvmx40wTseVJHp7bT2MKuf5ZsbQwFrkumTh6N8lHndMqi5cIgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cuk7bWkz;
-	arc=none smtp.remote-ip=209.85.210.175
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--amitamishra.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G14vOFv3;
+	arc=none smtp.remote-ip=209.85.210.199
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F86606A32A
-	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 08:29:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24F86606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A33606A325
+	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 10:09:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15A33606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--amitamishra.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cuk7bWkz
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-8a4c72951b8so490393b3a.3
-        for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 00:29:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G14vOFv3
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8aa185840bdso745502b3a.3
+        for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 02:09:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794990550; x=1795595350; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=9UGBPvO48P3EgdXF7lGcaY7uZ9DVFVaWCHXXjikO568=;
-        b=cuk7bWkzMMm5x76oCo5yGlxbnQnQQiyj/9+xGoCzHelgE73VaiREeZ0xkR0PSNGHJH
-         uti9RHNYBagVOenN4MN74Me5QLp2oOkcGTF5V0ONhIs5tiaxkzKrT1A2PZZVPwDMIiiR
-         qLZjgeuXhf9lkh+8XBcA+IzR0jzsfhovUOj0FuStEWGRZROhZqsSvCXk0ZTla4gm6//5
-         hoYC/VKHwjXxoLEPPxrDD9M1brVnmFax6vsf+zog4J+M1HKuFuruvVzLrYugEPVZryxM
-         cxKM/7M6CxXo6S2C77W5PioobfmhLP8nUlhY+9YL8nyK2nQ6qrtNL8vyAaALRvaQjEwm
-         BfOA==
+        d=google.com; s=20260707; t=1794996547; x=1795601347; darn=vger.kernel.org;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
+        b=G14vOFv3Ujb4z9LNJX6zHgOB/CiwYIy9Oy8Jt5I6Gz3ApMFDg7KvkQ6RdNztHu3C8c
+         qziMNmi2uJwjjaGR1vEA01vJ0dWRcsexxdNVY3WbxuuoGZ00IDI5nfaFpfm2TOVvOmEv
+         v6GBlsjWXLTtTTxV/GBDpFeJg3Lnac74OjZ1x9PjbqKwQWKRLSbDHwJkWH1Xbwre/Oyq
+         daIGMoFrDrnzXyHsjznsigqT+tDVSneoU1pbr0wCyfdQRCZrV/uqPnvH3EesfIHdEkK/
+         q1rQAwwD0IsLN3y5YmG2rO3PFMh07S/0ZSqHrTRr1v6g7FbtivSzK02Bzn0XmTaGF8je
+         T/Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794990550; x=1795595350;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=9UGBPvO48P3EgdXF7lGcaY7uZ9DVFVaWCHXXjikO568=;
-        b=zD911vYCKXgdQNEpXlJaMGKGfrCeN71zQ92b2ag8KWTSUAv3muy15btvNlFx4xyj8e
-         +SNzI3fmb6shQsNhJgYz92fXOjKkL80YES4n+b8joRsU+Gmam3VV+IxykIav2fbqX6WC
-         Zbx5pr8kFUfNUsKe62p9mZPORZA3dEWb/8o+Tx9eIDhFqLrj3UpaeGFiZpKZynGiR5sc
-         e+ubaHlln9ci4eXhi+LVDciXUIX0yqOCBYl0ND16qKoWEj8CSlteXe+09SxQlmnFF37E
-         /GKFEf4ODEksWU1h4uVfWN0lLNYLXny0erd2SxVNfUe4wH6wlDG1zAKX7yr6qzrRCCjx
-         quVw==
-X-Forwarded-Encrypted: i=1; AL+hErGDRQsLi/T6N1BTPxFy0Iq3PfIIIMpgF6sIAvSUpr3nlBO4ohUD8wNu3jupgVI+W6E3PbDlV+XxBzM=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+d5v0Ljhpf//HHv+BYYgXwwa4Wr7+owNtqaSotQza6kPl8uxza
-	9ib67BMmGdJ+xj58wJJoGdlH5Gx2tXN1IbFeRfFCJg5wydS8RoMeFhUq
-X-Gm-Gg: AYBFou1U4L8Z8M8yv+f9Jyo1D1Cc+6LKaymsr7+859Wwc21pdqi3A+w1iAwwhrnKK7X
-	yqwwp+NcnCKbIoJ/S+Y21Gmhj7BtDdeSkrVZZ4cvOUC/G+F/ZwumSzWh5pQfPJZgyUsql9rsbHN
-	XTygRvegclncxqCjg7VI4fSBXBYiSIpX89lDKqR/rU4OitZ9E2LzumElyTAF1Yg29VgWpuN7MSz
-	9dTHnDRp+paXG6fQo6A9t/9+0KdkSGWPYQfN5EAJ4272PEMyZX0nrQvvExEGLqRsfHIdkI5KuK8
-	AZgDukYaIPJVPgslPZV6u5AeeU6hEuov9p6Df3crJ50+lYRp1epRcunIEOlv2ZOey9Bi7X6/3TO
-	cSGpBj3j0xHlHQVNQ2S8UdYD7+3Jj8tRQ3yA2NStyI/NXTB+nlV6K7RC0n2dhH7M6XL+B7UxX3Z
-	qVoYl81lODt/Fm1MclCFcQV3GjUbwwJTUK+AFhbwGM++CUSMalUlf9RLUnp0Ut+euRqEGaxivbi
-	/PzBVcxQmCylE8L5ha0C5WQqmnrK2aLYw0R7rYsiRD0kIEviE0iibHUIOIpApHeEmrtqEzgJ9FP
-	qlpv/89zjq0rBv7dquRuzLg/M46jOJhVM7xSbeGqbnA7dX8l2Q==
-X-Received: by 2002:a05:6a00:1da0:b0:899:5183:acdb with SMTP id d2e1a72fcca58-8c5d0f24a1fmr1572117b3a.1.1794990550197;
-        Wed, 18 Nov 2026 00:29:10 -0800 (PST)
-Received: from hj.. ([163.239.22.29])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c5cb35db4esm784426b3a.35.2026.11.18.00.29.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 00:29:09 -0800 (PST)
-From: Hyunjung Ko <hj351016@gmail.com>
-To: =?UTF-8?q?Am=C3=A9lie=20Delaunay?= <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	dmaengine@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Hyunjung Ko <hj351016@gmail.com>
-Subject: [PATCH] dmaengine: stm32-dmamux: don't resume runtime PM under a spinlock
-Date: Wed, 18 Nov 2026 17:28:53 +0900
-Message-ID: <20261118082853.926607-1-hj351016@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20260707; t=1794996547; x=1795601347;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
+        b=qYqNCRr7JAYLeF2mdycNyHZEDb7ZlOzxc5u9yZ3YCtKc2zT19sA1yMLwf7ddUZczyT
+         iMrzKjQOvFDIFMSPQmFgapbxHGqnUM7eqw4nxROdQilAEYWWwcKuP/PRs94NHX7dK2j4
+         kE03S7lSsfN4+re9ptiblsrO8J1A6CvLw/GMv1KoHxzp5K0GFXVhuMZlMuML1EUVBlXl
+         jOho3Jq9s+o7i/ZC51F2pKwbj+vGmu5qGWWdomBqEdbqUYHQNYIF9aT6AU4jU8yo/6JQ
+         86cUWyoqKP5ZrocVO1/0P4lk/+nVK60OrfCR7tk1XktlEp5R++V6Kbl+M6Oxm8hCQK6A
+         ucuA==
+X-Forwarded-Encrypted: i=1; AL+hErEi23JNkgewM0aaKfR2bfAIzR0KoUZgpIxuECtkaHIxbi89me03LbHKuxPKlAsycl85Alxe5tJkIA4=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/mCEzb5I/YucWADWg+sqy/zYQTO4HX1SAk2xZnSN8iL+ave+zG
+	aX1xUWzBP0sENUsHvmoB9UW4tVfB/EO/egI3+uvXzsLEXhLG4CbfwYwa81jtemdLwn+R4g2lkvS
+	tdGJuvJrWypQS8AaUrPv1qKeljw==
+X-Received: from pfdf8.prod.google.com ([2002:aa7:8b08:0:b0:8c5:fdd3:6020])
+ (user=amitamishra job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:1c8e:b0:87d:ee98:606 with SMTP id d2e1a72fcca58-8c5d45de9a8mr1864339b3a.23.1794996547074;
+ Wed, 18 Nov 2026 02:09:07 -0800 (PST)
+Date: Wed, 18 Nov 2026 10:08:39 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -101,45 +75,68 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.703.gf848ed807c-goog
+Message-ID: <20261118100839.3090172-1-amitamishra@google.com>
+Subject: [PATCH] dmaengine: dmatest: terminate channel on timeout or error
+From: Amita Mishra <amitamishra@google.com>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Frank Li <Frank.Li@kernel.org>, Dan Williams <djbw@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+	Amita Mishra <amitamishra@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-stm32_dmamux_route_allocate() calls pm_runtime_resume_and_get() while
-holding dmamux->lock with interrupts disabled. The runtime-resume
-callback stm32_dmamux_runtime_resume() calls clk_prepare_enable(), which
-can sleep, and the device is not marked pm_runtime_irq_safe(), so this
-can sleep in atomic context.
+In interrupt mode (!params->polled), when wait_event_freezable_timeout()
+times out (!done->done) or dma_async_is_tx_complete() reports a
+non-DMA_COMPLETE status, dmatest_func() jumps to error_unmap_continue and
+calls dmaengine_unmap_put() without terminating the DMA channel first.
+Channel termination via dmaengine_terminate_sync() only happens later
+when the test thread exits, unlike the polled path which terminates the
+channel immediately after dma_sync_wait().
 
-The lock does not protect anything here: the dma_inuse bitmap is already
-updated under the lock earlier in the function, and this second critical
-section only wraps the pm_runtime call. Drop the lock around it.
+If the DMA controller is still actively transferring when the source and
+destination buffers are unmapped, an IOMMU-backed DMA engine will trigger
+use-after-unmap translation faults, or overwrite the buffers while the
+next iteration reinitializes them. In addition, if the timed-out transfer
+completes during a subsequent iteration, its callback sets the shared
+per-thread done flag and wakes done_wait prematurely, causing the next
+iteration to fail with "completion busy status".
 
-Fixes: 4f3ceca254e0 ("dmaengine: stm32-dmamux: Add PM Runtime support")
+Terminate the channel with dmaengine_terminate_sync() on both the timeout
+and non-DMA_COMPLETE error paths before unmapping the buffers, skipping
+the redundant call on timeout when params->polled has already terminated
+the channel.
+
+Fixes: 4076e755dbec ("dmatest: convert to dmaengine_unmap_data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+Signed-off-by: Amita Mishra <amitamishra@google.com>
 ---
- drivers/dma/stm32/stm32-dmamux.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/dma/dmatest.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/stm32/stm32-dmamux.c b/drivers/dma/stm32/stm32-dmamux.c
-index 57318715d9f3..890328b3d302 100644
---- a/drivers/dma/stm32/stm32-dmamux.c
-+++ b/drivers/dma/stm32/stm32-dmamux.c
-@@ -139,13 +139,9 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
- 	}
+diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+index 2ae3469397f3..950b7a9e7769 100644
+--- a/drivers/dma/dmatest.c
++++ b/drivers/dma/dmatest.c
+@@ -852,6 +852,8 @@ static int dmatest_func(void *data)
+ 		}
  
- 	/* Set dma request */
--	spin_lock_irqsave(&dmamux->lock, flags);
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret < 0) {
--		spin_unlock_irqrestore(&dmamux->lock, flags);
-+	if (ret < 0)
- 		goto err_put_dma_spec_np;
--	}
--	spin_unlock_irqrestore(&dmamux->lock, flags);
- 
- 	mux->request = dma_spec->args[0];
- 
+ 		if (!done->done) {
++			if (!params->polled)
++				dmaengine_terminate_sync(chan);
+ 			result("test timed out", total_tests, src->off, dst->off,
+ 			       len, 0);
+ 			goto error_unmap_continue;
+@@ -859,6 +861,7 @@ static int dmatest_func(void *data)
+ 			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
+ 					 dev->cap_mask) &&
+ 			     status == DMA_OUT_OF_ORDER)) {
++			dmaengine_terminate_sync(chan);
+ 			result(status == DMA_ERROR ?
+ 			       "completion error status" :
+ 			       "completion busy status", total_tests, src->off,
+
+base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
 -- 
-2.43.0
+2.56.1.703.gf848ed807c-goog
 
