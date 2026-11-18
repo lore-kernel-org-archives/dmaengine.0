@@ -1,102 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.10
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.27
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795025110;
-	b=Ud78ymWoEZYCM6VSV1HD1OwVE0xAv9vzPl5XRY6KCrWOsA1hs+iKP8Z4lyR9i6tjFTxG
-	 BbfZ1igivOAR/BwYshc30rllCK/8IQ2waU2nWsFeXHlabeLvS2+MLBLIDJ7QkevWFv6JK
-	 Xfqb5ooIR8JMUWu7buGaJ6s6Wkquz3g6WKVMntI3RSB9yeqICoHF/EswVtUeUbql6IC9B
-	 iAag58uciwsjNPosdRQaz0ZlL4JAuc2hmBCFkpTPnJfA3XflXppsbvTdRnYKlEasviXle
-	 64bcznAKkrioAeCfirzONt9RgkP5QWkGVq2s5S3MkxKrkZ74eUGeyAVOiBMNL7o/Fug==
+	t=1795026105;
+	b=KYrKHWQNl8su1i8U3+7NZ8MtESE1MMvzcXsgXy8U5QkaSN/5bde/EJDH2VorSbNVInGr
+	 sb7r3UkA8VdPLfnQNGqmcBVb49DagR6ylEnqrixeabZQ8I8mRPWELsgR8K/gYbXQK81ar
+	 kDb6BLZfslpTuhycJ225yBjpBRBQQd/sG8b/Y12eOcOH22PiJrfIQw6tDFP4c4mb6CD8S
+	 QGO9DFHNg8tXjAysMxPb+XH2OZMojONSAqB38uvtHS/XnsxGOwynmFA9dKjkJE1Yw97OT
+	 YBmfn+q0Qk4tzPA4i5wwgBe9dUGR5CqKUOjtDZY4+eBrv1anUk02uwRphMWn0LvtDwQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025110;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026105;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
 	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
 	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
 	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
 	 X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=3OEnshcqScdW/XUib4DojicIFDahZHGrijeaTSyZKq0=;
-	b=HWIIGdlGR7O28KPfQLa+NaqT8zhizY6GBGAg7EMveuYcAuIS1mocStDI0SlApbYFQJX1
-	 yVvM2a6K4KxFsXWiUf9/Q7H1UoyF30bZ+kmCv7HnujlnudlIsMNf7tDB/3XMRT0BVuBBO
-	 LzrAGl3Eh5b4Y/PMMRqhubwHEf4Ma+gxqAuwQz6tPWCw7oy609DRRfccPGF77YIicND81
-	 97VgZiibvH2+2JGXN75P4qa2kza1Y8JvUMptS3kCM0qYacuxtBeoX8ec/WaGlJ9t3sL1w
-	 2ykEdpcfJH9ONs9yTi7jPlmSqV8QKWaYBuj/hcOfxz5YA+b1obN1bqjxM9Xa2ZXvB8Q==
+	bh=+RjrsMo1wlOqEsK/cd65y47zWVlQQUb8SgKleyWEtTw=;
+	b=nSRdVB2uTCU8ti4nWquOlZ7xmt/IXqgHaTXyUhvqIN4IYK96aTN88HcFqkj4mzPcVwkg
+	 ayr7vd/L9h2bUtfF2645iSUuhBwTZz1S2Z8N6XDeITsBqJlO+76nYIsyiOtZABHO2Abch
+	 a+K2t5gWKbS0AbIYJeULAdBeJ9skaQYw0Gw6/7REP7DS32Ehrx8RIU2gobV8DjVtPTAHH
+	 IETCrpXKuX2lGsY9rgy71JtAlgf4Kj/CL6e+fwpQ6CUnKq/WMRTFXK5e5i9jFcy+K1wh9
+	 b+dKqPRGrlSwdeEs4leLx6KjIW/f60MwTbS+QyI4ZAvvDy99o8MdiI1DkVgNffm/jsQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=T7QHEeRp;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.10
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013010.outbound.protection.outlook.com [40.107.159.10])
+	dmarc=pass header.from=foss.st.com;
+	spf=pass smtp.mailfrom=foss.st.com;
+	dkim=pass header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=TJnW3jsu;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.27
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012027.outbound.protection.outlook.com [52.101.66.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E8C606A31C;
-	Wed, 18 Nov 2026 18:05:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61E8C606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1654606A31C;
+	Wed, 18 Nov 2026 18:21:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1654606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=T7QHEeRp
+	dkim=pass (2048-bit key, unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=TJnW3jsu
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P2kPJmgtPJZn0tY1xCVJ6CWBwICK2O2HBb00t2nUDqoyow5z7vyc3bQJNCom/e0mxYUJB7P38niK97OdWGSkTo4lg9yN5LgmAUAksppBAgGTHM8yTbWHIylzgM9LNPEB/Tyc99I84hI8oFdBBsMMkhNzNGI7TIqZsetyok+K6eysJpSE7qLND0F75HhUmdqDEUvPY+602UvvFB/4OXqCW0O9qg1JmBxij+GkaEVJvPoVt4xxbuXKj0wN5+SYz3KkxEON0XeyH4ZM4O5Kjcu0Zu2y3kHkgdjWafN1D4cX35GQxI08OtOCk5ApxGADCA23pMf6o7f9JYpCR5bz73tdVg==
+ b=Y2RVYGk3Y/E7yNCEGAvsxflffKmCYyD/ZdoKM3FFt0is+ii5HASuOQZZI986pz0vkhyyMWX32k9hsoOCxiaL36vf7nAy81Pdyofo6LfseIJBWScdJs8pjifuB7r/9KIwut7vyQc6uJ1RYWJCyfYnUAOyj9rknZj1LZws6st99hLvI4CyIuGRjLq08ttA8O0tMRgXvdzBia3PLhVXMyiDX6MFlQB6c6JlBUxZh+Ad4nhQg9pDiFTs2QTDCCtJRvNmH2M0MkLoO3tAcCOqJ6AB4LOEc+OEK1+YWFHjqr9CGkQLyOTj1yS6BlFjW1z6/Q5MIhYDJ+T6qbd01boIjGrbmA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3OEnshcqScdW/XUib4DojicIFDahZHGrijeaTSyZKq0=;
- b=muKL2a6cFlBAhjP6nUzOihADDO31yeDNKQS8UgJdyp/Np34WAMrCUn4tyzFqVnrSyyC1ChdI7BpZXtpcvWOJboaRMdrKbbjdonpDtTlo4JMfAFx0eMA6uwZVmFVRPsRx41bl7nOFKvyOv/edHqTfPmJa8h1k4we9Fs1ZHZyxU8Pri31+2uokaRgYQVuvEDttGInPEk/YY84lHstkzwJw32gOSFNEOJVIgmCSaFRqNBauv94OSBpJWlgRsBqGbadi4XPc+f7zRI5no6am2h7EOPB+qAdzhCMUnE+hagupWvF756z+GFnW5GfJAbbdkBLwIalzO9tM2s1CqLdhvPr9rg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
+ bh=+RjrsMo1wlOqEsK/cd65y47zWVlQQUb8SgKleyWEtTw=;
+ b=YRjoNh2jCwu1mqHgj8IJhCOZZqoTqHeqpJwE54wcMp+XbuBxCs2x5KprRmugSgM2QC/oZWQL1jOoLwSC+S0UTuWEW/NBk5Jx7oe87AR/wvci6X20/58Vj5cd2X5Z/TRUF8wVdptXoqHRWiqLFIRPTach2vbdQ14qIS/u4wpePkIRGHfQVyRsLS8WHpcP0e1HARFCrxfDslVWXo+e7aT2Dk89nb+Ck6kqcM6S5s8Jy0JCByYlzudeHJl3SaxtxZIASQxOj8VD4a1YspcW3xaZ4TZIsZp2DnGV3gSgZHdrCyED3KoBWZojIuy35jk2bgGXMbfZMkYelRX9lcaPtB+BtQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 164.130.1.60) smtp.rcpttodomain=gmail.com smtp.mailfrom=foss.st.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3OEnshcqScdW/XUib4DojicIFDahZHGrijeaTSyZKq0=;
- b=T7QHEeRpBuxMG2DmWhzgw5oZzRPnSyXjVYyw2BlpwOJImMDdQmFUPCXTGG4A0fdtL0QQSo/h+XbC66mnO+Sw5oJavM9vqQ1EyForG7wPocp9FVsCr4gxNnzgaqZdEFH0xslx7KoJEdPcCaOc1oxSjzwj7ycQgXz9RXHEU07gmAOi9WKDSF7QC0W6EzeU+ydT5awskOeSdbXAtkHRQce993KPiNfME6wy+fnBq9XE5ezwT2J2hyL2RBDa9fRuioYIz9fFp3xceNi/xVQ83WYSbezDu7xzYXUk0T/3nnWWeyEeKQSJlxOzwfKn/p4Wm4GznmiBYZhraIW/NFafDMA1Fw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AM9PR04MB7522.eurprd04.prod.outlook.com (2603:10a6:20b:282::6) with
+ bh=+RjrsMo1wlOqEsK/cd65y47zWVlQQUb8SgKleyWEtTw=;
+ b=TJnW3jsuTHbpRq3Ve9zPi3LfyHDfHmuolNlMLNHt31TYgaS+4+YV+EyepnCB0sUS5XyzgENh6HWKUdP3K6W9fRXWCKSeOUxWFlHmEoPcGZbJrT3sH5yFM712sSvimrJncQ1cPY3Kp02ecUDGVg4n2gA282Vui4/qulJ5r8OBkhjbpCUXkD227rjIBJKfZxg4zA67jmYNaR8ra5VFQUYHQpYNFQXWL71GTh/djS0R/Pcuujo8evZa3RJ4eTIpdeJtL/byFCRhg8ojCXwuzhklqF8VdJoAf1FWXqeOSN0/P0hdlTkrC2sMZce2zWQ4mrrhVWsgkmPsrkISFQ+692DgwA==
+Received: from MA2P292CA0027.ESPP292.PROD.OUTLOOK.COM (2603:10a6:250::16) by
+ AS2PR10MB6896.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:5fb::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 18:05:05 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 18:05:05 +0000
-Date: Wed, 18 Nov 2026 12:04:55 -0600
-From: Frank Li <Frank.li@oss.nxp.com>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: Viresh Kumar <vireshk@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Dan Williams <djbw@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	dmaengine@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>
-Subject: Re: [PATCH v9 3/6] dmaengine: dw: use virt-dma for descriptor and
- callback ownership
-Message-ID: <av3oxznSW_5oH8la@SMW015318>
-References: <20261117-submit-dw-dma-synchronize-v1-v9-0-7dc066ed0bcf@gmail.com>
- <20261117-submit-dw-dma-synchronize-v1-v9-3-7dc066ed0bcf@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261117-submit-dw-dma-synchronize-v1-v9-3-7dc066ed0bcf@gmail.com>
-X-ClientProxiedBy: PH8P223CA0018.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:510:2db::28) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.6; Wed, 18 Nov
+ 2026 18:21:40 +0000
+Received: from MAD0EPF000008B0.eurprd04.prod.outlook.com
+ (2603:10a6:250:0:cafe::a7) by MA2P292CA0027.outlook.office365.com
+ (2603:10a6:250::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.615.14 via Frontend Transport; Wed,
+ 18 Nov 2026 18:21:40 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=fail (sender IP
+ is 164.130.1.60) smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=foss.st.com;
+Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
+ designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.60; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.60) by
+ MAD0EPF000008B0.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.615.4 via Frontend Transport; Wed, 18 Nov 2026 18:21:40 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
+ (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Wed, 18 Nov
+ 2026 19:22:41 +0100
+Received: from [10.252.8.55] (10.252.8.55) by STKDAG1NODE2.st.com
+ (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Wed, 18 Nov
+ 2026 19:21:39 +0100
+Message-ID: <512ee5b6-e257-4b77-846f-41ab8f6f90d0@foss.st.com>
+Date: Wed, 18 Nov 2026 19:21:38 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -106,173 +104,130 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dmaengine: stm32-dmamux: don't call runtime PM under a
+ spinlock
+To: Hyunjung Ko <hj351016@gmail.com>, Vinod Koul <vkoul@kernel.org>, Frank Li
+	<Frank.Li@kernel.org>
+CC: Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+	<alexandre.torgue@foss.st.com>, <dmaengine@vger.kernel.org>,
+	<linux-stm32@st-md-mailman.stormreply.com>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<stable@vger.kernel.org>
+References: <90b4417d-f2fe-498a-8128-3229eb284d8c@foss.st.com>
+ <20261118152843.1126665-1-hj351016@gmail.com>
+Content-Language: en-US
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+In-Reply-To: <20261118152843.1126665-1-hj351016@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: ENXCAS1NODE2.st.com (10.75.128.138) To STKDAG1NODE2.st.com
+ (10.75.128.133)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM9PR04MB7522:EE_
-X-MS-Office365-Filtering-Correlation-Id: e19048a3-3272-4a7b-d176-08df459e7905
+X-MS-TrafficTypeDiagnostic: MAD0EPF000008B0:EE_|AS2PR10MB6896:EE_
+X-MS-Office365-Filtering-Correlation-Id: 50157988-218b-4bef-bd70-08df45a0ca9b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|19092799006|366016|376014|7416014|18002099003|6133799003|22082099003|261021121427099003|5023799004|11063799006|56012099006|261028144727099003|261022075727099003|4143699003|261022105027099003|261026140227099003|261026121527099003|261021123027099003|10067099003|261102123227099003;
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|36860700016|23010399003|18002099003|22082099003|6133799003|261009223027099003|13003099007|56012099006|261026121527099003|4143699003|261026140227099003|261102123227099003|261028144727099003|261021123027099003|261022105027099003|261021121427099003|10067099003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	+CYawqqDanKO7xenj3ABPY9MgEFqenFEcPm/1PY0V1UZtU7wnr/K1WHhWm7xpqnwhPca0OL3PCLGsVoQwdkUKhT3+G+FhgCxxOqMRPwupEMjS7b3sZyHNZfbcybwM7pc3e7qLDOVMf4mYbzAG0QXa0yORWrDXQsAO+7WDMah1Iui4IhaPBCLWj2N8gm2JjhhEmTlnRdcF/aBZm/fqxPctkr28u/S9PC8RvegiYTAND+71wcX50kEQ0H4Z7IUlcuws6AeqmL+ewIqQ4qaTlXbOKfTUCMqR4vB1O24tCyb4g4SDm+4TlA7f0egAoFqyzDhxRerAOcm6ALeYy04RHfz8gG1+3wsy5vBIwHFhB052fbtULaJOOKi9LdF4GA3qb/H9Pw+tqLPr+h6B4y9zaPFfVdo8AM5Ys4VnjZxpZLBygUScdjIVZm6jTwjZ3uFhdXoMcKiUffs1AmdL0KGIIEuY1WsDBE0wuFF2Uwacl/34C2cPvbmqMRQ1L6J2PK3jiaLevkK1KoeifAm0Wiu8MwYa3gHwxA3xsjdSyNsEG1nxwy903Z/SqK2tbLP/iuI5xF3m3ifZAhPTUQIjhr6mJrdSblDOX2naTabQpzUedAqaANk3o5FdZHdxh/NiO7F1e02
+	bsk6whgrCxGg5d05pXP8PiDsk77TkXPhrH9+M1/gh6yOwS1mEHUj36pKQkLkwL+LZZxFJl8TqP2enmDMGzA4zXtI73ZJ3CgBL5puljXTgRJQ+bLcH26UcxEoGsOVy3WrXv/Tet6cBGY118mdpDdQFK05eH5zVRRop8SZvedxoY/ahmbVe28wn7Zh6ktpPzT+AhKm/Sp5P7hTc6by/4qUyU6V+8XXjCUQLGO7FWxWY92FPjz9+CKID1nIJc0YZhFuJCMFZgvP4cfxpVuwCCIcuvbOibfiaIoJlBdtnCoH7ouhEsbcxw13OyP/5KL947q28WpzzAHfNEaXBW6Nu1YmNwlSOGsG27uD5cnCML2nbWYaOtYTqm+6JNv4M73maByHp2M03VrvDTZJBbtg26hx417F7KhdY4Jjxavny9rAhYNkm+FH1nav+96tUhQO34XCL0yPymgaxNRrTEELIZX7mq+md2JdkUUPxKgsep5iow+BYeWjc7/7Yykz+OEmhcD2948IqRvqpZWlvqsAZrlOjfHk2x8zrnkKYfYWPJbleQnFSr66UzUAo9tRU24l+YeMowP5R9bYcl3w1OfXsle5bU8zcRFBGZdM1Fyvf+zDAy/jS0n6A76INFNnA4EQ8qr7ksbV1lTWGi4g3C6cwRJYJg==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(19092799006)(366016)(376014)(7416014)(18002099003)(6133799003)(22082099003)(261021121427099003)(5023799004)(11063799006)(56012099006)(261028144727099003)(261022075727099003)(4143699003)(261022105027099003)(261026140227099003)(261026121527099003)(261021123027099003)(10067099003)(261102123227099003);DIR:OUT;SFP:1101;
+	CIP:164.130.1.60;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(23010399003)(18002099003)(22082099003)(6133799003)(261009223027099003)(13003099007)(56012099006)(261026121527099003)(4143699003)(261026140227099003)(261102123227099003)(261028144727099003)(261021123027099003)(261022105027099003)(261021121427099003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?iN2UvmrTb+N19pdtsi2SX7T7CGgcSk1Tm6fC7nVbYoyUG+aSMjiOsXHL3Opm?=
- =?us-ascii?Q?3bB9MRbeOTy8Y6MpKmaydo8t6b8Y4YjxxGqQ0AJvmRgDuo8lAhRIFwMtGStp?=
- =?us-ascii?Q?BjOrDu8xQtJ/fIjJspyMhdYh7pft5mCWoGgm1p3fIf6XaCszRvQEZxcPwxkw?=
- =?us-ascii?Q?ZFo/XM9Zys6LPi5oNDEWph1GxmFfpPM6V4be5NbuJgxruoqV9EKZYNST3QC8?=
- =?us-ascii?Q?zKmfvplkCxEeNVQThEamr6VFdLZKi/ym5dLxYIOCVjzls78K3V5cEMzSGQBw?=
- =?us-ascii?Q?xS3sdbat5nkgVtkbZRi1gYFuthcPuoowAb2vqcRPY9EDdB4ITvVf35+Wzyho?=
- =?us-ascii?Q?YtsiDpjZAwjNuzpynbM7uo4cxeREOoYCmidH8pmo+JMxCFiuKp/OrSqjyj7l?=
- =?us-ascii?Q?JF/EF182GF8vRYuvKI3zHTt49qkI4eoL3hBiQfQ/xxS7wUKfPvOL0OUEqNEZ?=
- =?us-ascii?Q?hRHr6Ta6VrvsIWjVPTIL4GBLsL/bL+WfoU/RwMh2O4ddyzU5GPGxhRr2Ns5E?=
- =?us-ascii?Q?yPBHCWThq3d2l46Y58JKg3szw8J08uvwVP6MXpaQ2LgWZnWAYfuZNX1P8HYU?=
- =?us-ascii?Q?uRD7PqLVmRiYnUZ59+LBrtSnQYhkjNM8feXxLbQNAz9FAoEhHEtl1ooCutAZ?=
- =?us-ascii?Q?erTMCSAJvS2CjXkuCeRlL6kwnOINTuYSuHLfMIhCo2YOByoHqcKgQLTh4B22?=
- =?us-ascii?Q?xZTI1DyI2QDfxsCsumMYCpo6R+JNYep3ZiuJNS2SyBjVWO0IecybJ+XG9A38?=
- =?us-ascii?Q?6s+F9Ho60e38VckXE4sNTYhaShLdlyHPhDl5G6SwWUBNiffVDEGG8WWGTJNb?=
- =?us-ascii?Q?QxMlytJugsBnobT99Hr3mwi3998qvEGk0lckPXPcO5ztN/PLFvPt4N+s5RCA?=
- =?us-ascii?Q?a3c6W7HmUja3JLmu6QJcDm+/9L8nd66R7Y5RKr/AoP5qMn8zPxYR0nyemauH?=
- =?us-ascii?Q?SIHEZbWCzPkVHxCtVi5AAi/Q3kH1jWy3kaJuWyWX3cgeAuT/XnCG0tkhKgVg?=
- =?us-ascii?Q?y/2C7ZAB1nhNO3JsR1dMLlkN1wzFsWSbt8eL3/4A0dUSmdZYZGms+P16mJdn?=
- =?us-ascii?Q?4Vmkdc08SpJAFIdggx1fG3P8SsNjbUeQ5vVNlLK7tuw/dAnMi01/eXZqYygq?=
- =?us-ascii?Q?IPIjbwdbs37wo0TlS281pHrDlJUq25xsVrR6TyoUrQ5alMjOsPaAxiYQjD9d?=
- =?us-ascii?Q?sHHWfMIrhJkqCePIaORrOrdLf7cHKKYzXeqsytUYrPC5CyQEiSK5riIOzx7S?=
- =?us-ascii?Q?+R5zaANuQh5PfkTZMzNnXnsjJfyZYm7sE5ITXdzkwkV7/CuhveA53VWOWEoB?=
- =?us-ascii?Q?066R2ewsD2u91rUTYCAlh0D6650/4FAgErtEsYOlCP4HULqwSnKGZFQU5i6t?=
- =?us-ascii?Q?A93jYjfqP/vHILfNBvkS8IDoNvKoN0/iBAjQhWu07sCJohGKcY+/rOT4BHJP?=
- =?us-ascii?Q?cuUZitoHeyBib9bIDf/K3X2trkCXXPP9ZxIJzooAvGJ5+PH9sZx2/XAI8BM2?=
- =?us-ascii?Q?WSchIlpf4DEN+lzMdiP2s5KgySWr9Wm7ZIphevxNyCb+sozIr/oZuYl2M/LT?=
- =?us-ascii?Q?e/Jf1fJdJHDqA/oV0jotBdyIEa+1m4KRNw5KUG/BCFIC1akqvKEwk1jbBS1D?=
- =?us-ascii?Q?JGPfKn/a7Fn40Vd85h9wwaettQ4klZJqpqluIzB7KOqAmUMl7Ejm03x04kUG?=
- =?us-ascii?Q?zjMdAZ3ieRuiE6RjJd0JWYFGjAL4cg8qwxmDR8m766e6f26H+uQ9rgGJmGIO?=
- =?us-ascii?Q?fxyn+okzL/UDt8LyJeUX49yl56gMDEeSi9REb9GQHqu8Yp4zdLTB?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e19048a3-3272-4a7b-d176-08df459e7905
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 18:05:04.9875
+	eQtNnHY8fsBammgSgKr4rz9dPEJDEU133FY4aV142vU3fx6TP8emmej14Fu+mlXEVlUGt0KA6wOQuec8xVUCGcefz+x3UMmNE5nGOQrZhBzlj47vIveXuwTNXhZLCJgExSID1NUaoK6Db910uzk+7CqQuFXUJVWb+hICaKck9M0oRsUkdHmt/ZlNuXicM02zqtqfgKy7mZR4hRgBqFx1kfYlafIqU6QZsTowkJeie16oGqvKdv3kfNaAcOOXsPg9TLFG4kRvtaUQZm+d3B8aAzL5Igt+qQTlpkOKXTpqD+4y+awMMq8cVmZ/4sTvN2h36NKLcT41Dmr+aJK+E9NFjFJxnx/61xjfFOPf5He05/tYoPHloHDDUdDCjejE3++jarxXaUmpBRI+WMbmGYtAaEQFEviWCK7CEA3GtLukuJgC3GO/gilaUsHcAmmJ3ltG
+X-OriginatorOrg: foss.st.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 18:21:40.5037
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ft0II5RQRMlipwTKPtVCC9Un3zsQFoVgb4waimg64oCrhLGSp39gMSDNlWeAB4lddxnE7OfrUdnIN/CQtelgi+1x0H02eqbjK8xC2Kr0jxgcK/gUZZ7/1Au2iTrxe90z
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7522
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50157988-218b-4bef-bd70-08df45a0ca9b
+X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.60];Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MAD0EPF000008B0.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR10MB6896
 
-On Tue, Nov 17, 2026 at 03:48:38PM -0700, James Hilliard wrote:
-> The status getter can invoke a client's completion callback while polling
-> the hardware. An 8250 RX timeout calls it with the port lock held, and the
-> callback takes that same lock. Termination also lacks a synchronization
-> hook to wait for callbacks already detached from the channel's queues.
->
-> Use virt-dma for transaction queues, cookie completion and callback
-> delivery. Keep the active transaction and hardware state under vc.lock.
-> Polling still processes RAW.XFER and advances software-LLP blocks, so
-> clients such as catpt can complete transfers with the controller interrupt
-> masked. Client callbacks run only from the per-channel virt-dma tasklet.
->
-> Submit only the first block of each transaction to virt-dma. Its child
-> LLIs remain on the driver's hardware-chain list and are freed together
-> after the callback returns. Keep the controller tasklet for hardware
-> event processing and error recovery.
->
-> Complete cookies under vc.lock before handing descriptors to the callback
-> tasklet. Complete terminated cookies in submission order without invoking
-> their callbacks, so a concurrent termination cannot advance the completed
-> cookie past an older completion that later moves it backwards. Newly
-> submitted transactions become eligible to start when issue_pending()
-> moves them to the issued queue.
->
-> Implement device_synchronize with vchan_synchronize(), which drains only
-> the selected channel's callbacks. Drain them before releasing channel
-> resources as well. Exclude the controller tasklet while clearing channel
-> configuration and powering down, and let a pending run return without
-> register access after the last channel has been released.
->
-> This implements the callback deferral proposed by Serge Semin using the
-> shared infrastructure suggested by Andy Shevchenko.
->
-> Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
-> Fixes: 69cea5a00d31 ("dmaengine/dw_dmac: Replace spin_lock* with irqsave variants and enable submission from callback")
-> Fixes: b36f09c3c441 ("dmaengine: Add transfer termination synchronization support")
-> Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> Link: https://lore.kernel.org/r/20240911184710.4207-3-fancer.lancer@gmail.com
-> Link: https://lore.kernel.org/r/avrHOJ-fVZOO32bI@ashevche-desk.local
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+On 11/18/26 16:28, Hyunjung Ko wrote:
+> stm32_dmamux_route_allocate() calls pm_runtime_resume_and_get() while
+> holding dmamux->lock with interrupts disabled, and stm32_dmamux_free()
+> calls pm_runtime_put_sync() in the same way.  The runtime callbacks
+> enable and disable the clock with clk_prepare_enable() /
+> clk_disable_unprepare(), which can sleep, and the device is not marked
+> pm_runtime_irq_safe(), so both sleep in atomic context.
+> 
+> The lock was in the wrong place: it did not protect the runtime PM call,
+> while the CCR write in stm32_dmamux_route_allocate() was left unlocked
+> even though stm32_dmamux_free() writes the same register under the lock.
+> Move the runtime PM calls outside the lock in both functions and take
+> the lock for the CCR write instead, matching stm32_dmamux_free().
+> 
+> Fixes: 4f3ceca254e0 ("dmaengine: stm32-dmamux: Add PM Runtime support")
+> Cc: stable@vger.kernel.org
+> Suggested-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+> Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+
+I’ve tested your patch on the stm32mp157f-dk2. Thanks!
+
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Tested-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+
 > ---
-...
->
->  struct dw_dma_chan {
-> -	struct dma_chan			chan;
-> +	struct virt_dma_chan		vc;
-
-This patch is too big to review.
-
-Suggest create prepare patch change dma_chan to virt_dma_chan and remove
-spinlock_t lock by using vc.lock.
-
-So functional it is same.
-
-Than base on prepare patch to switch to use vc's queue.
-
-Frank
-
->  	void __iomem			*ch_regs;
->  	u8				mask;
->  	u8				priority;
-> @@ -273,14 +274,9 @@ struct dw_dma_chan {
->  	/* software emulation of the LLP transfers */
->  	struct list_head	*tx_node_active;
->
-> -	spinlock_t		lock;
+> v2: Amelie Delaunay pointed out that v1 was correct but incomplete:
+>      - also take dmamux->lock for the CCR write in
+>        stm32_dmamux_route_allocate(), which stm32_dmamux_free() already
+>        does for the same register;
+>      - also move pm_runtime_put_sync() out of the lock in
+>        stm32_dmamux_free(), which has the same sleep-in-atomic problem.
+>      Link to v1: https://lore.kernel.org/all/20261118082853.926607-1-hj351016@gmail.com/
+> 
+>   drivers/dma/stm32/stm32-dmamux.c | 13 ++++++-------
+>   1 file changed, 6 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/dma/stm32/stm32-dmamux.c b/drivers/dma/stm32/stm32-dmamux.c
+> index 5731871..8290122 100644
+> --- a/drivers/dma/stm32/stm32-dmamux.c
+> +++ b/drivers/dma/stm32/stm32-dmamux.c
+> @@ -73,10 +73,10 @@ static void stm32_dmamux_free(struct device *dev, void *route_data)
+>   	stm32_dmamux_write(dmamux->iomem, STM32_DMAMUX_CCR(mux->chan_id), 0);
+>   	clear_bit(mux->chan_id, dmamux->dma_inuse);
+>   
+> -	pm_runtime_put_sync(dev);
 > -
-> -	/* these other elements are all protected by lock */
-> +	/* these other elements are all protected by vc.lock */
->  	unsigned long		flags;
-> -	struct list_head	active_list;
-> -	struct list_head	queue;
-> -
-> -	unsigned int		descs_allocated;
-> +	struct dw_desc		*desc;
->
->  	/* hardware configuration */
->  	unsigned int		block_size;
-> @@ -307,7 +303,7 @@ __dwc_regs(struct dw_dma_chan *dwc)
->
->  static inline struct dw_dma_chan *to_dw_dma_chan(struct dma_chan *chan)
->  {
-> -	return container_of(chan, struct dw_dma_chan, chan);
-> +	return container_of(chan, struct dw_dma_chan, vc.chan);
->  }
->
->  struct dw_dma {
-> @@ -391,18 +387,18 @@ struct dw_desc {
->  #define lli_write(d, reg, v)		((d)->lli.reg = cpu_to_le32(v))
->
->  	/* THEN values for driver housekeeping */
-> -	struct list_head		desc_node;
-> +	/* Only the first block is submitted to virt-dma. */
->  	struct list_head		tx_list;
-> -	struct dma_async_tx_descriptor	txd;
-> +	struct virt_dma_desc		vd;
->  	size_t				len;
->  	size_t				total_len;
->  	u32				residue;
->  };
->
-> -#define to_dw_desc(h)	list_entry(h, struct dw_desc, desc_node)
-> +#define to_dw_desc(h)	list_entry(h, struct dw_desc, vd.node)
->
->  static inline struct dw_desc *
-> -txd_to_dw_desc(struct dma_async_tx_descriptor *txd)
-> +vd_to_dw_desc(struct virt_dma_desc *vd)
->  {
-> -	return container_of(txd, struct dw_desc, txd);
-> +	return container_of(vd, struct dw_desc, vd);
->  }
->
-> --
-> 2.53.0
->
+>   	spin_unlock_irqrestore(&dmamux->lock, flags);
+>   
+> +	pm_runtime_put_sync(dev);
+> +
+>   	dev_dbg(dev, "Unmapping DMAMUX(%u) to DMA%u(%u)\n",
+>   		mux->request, mux->master, mux->chan_id);
+>   
+> @@ -139,13 +139,9 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+>   	}
+>   
+>   	/* Set dma request */
+> -	spin_lock_irqsave(&dmamux->lock, flags);
+>   	ret = pm_runtime_resume_and_get(&pdev->dev);
+> -	if (ret < 0) {
+> -		spin_unlock_irqrestore(&dmamux->lock, flags);
+> +	if (ret < 0)
+>   		goto err_put_dma_spec_np;
+> -	}
+> -	spin_unlock_irqrestore(&dmamux->lock, flags);
+>   
+>   	mux->request = dma_spec->args[0];
+>   
+> @@ -156,8 +152,11 @@ static void *stm32_dmamux_route_allocate(struct of_phandle_args *dma_spec,
+>   	dma_spec->args[0] = mux->chan_id - min;
+>   	dma_spec->args_count = 4;
+>   
+> +	spin_lock_irqsave(&dmamux->lock, flags);
+>   	stm32_dmamux_write(dmamux->iomem, STM32_DMAMUX_CCR(mux->chan_id),
+>   			   mux->request);
+> +	spin_unlock_irqrestore(&dmamux->lock, flags);
+> +
+>   	dev_dbg(&pdev->dev, "Mapping DMAMUX(%u) to DMA%u(%u)\n",
+>   		mux->request, mux->master, mux->chan_id);
+>   
+
