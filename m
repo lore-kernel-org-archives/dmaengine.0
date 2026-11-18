@@ -1,98 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.17
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795033575;
-	b=lvv2eGKEXCLYWUiODawxS29HhS8MdEfsJ+vO0kYzg8ZRla230a2Ub23j4PLlC5C0Vgwv
-	 Il5ebSHjiQ8mQGaXvyNiZGH3wz2lkGTrp9pBGWqbHw7s882OLkLz2hZzBvxXSpDuYVU6G
-	 yDMEPE3nVgJq9lZRNRY39biRYmCPdWUf8HZu9IavUDfzxYdN1GWPcRg33ET2Q3PwKl/Ta
-	 kVMFmmiz9jsKdBxViX9x4272ODQzKmdjQbkjKnr5eXIKUbcwMQuUiszJ3xAJScs0kFW0U
-	 EUCGrlxTVmPgqxuIaPcEGOCj0JFx4B204wVod2npfo9HsjIPRZZyuQzQ5RqTi5Aj0PQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033575;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=WUiUya0RoBaglTkpkJIpKmvBEXkcdL6BChTVgeWR1K4=;
-	b=apRMHzb3Aqbh4DP5rxMhsfiayX+jfO0IMRK6PKRSWb0mSzjsmgI+Imp42Hbl7YHXkxdt
-	 dFkYXGErd9zBSTFL71BQVP5tNDoEzYA+OhH1tJwhqqn5gEpMwl3kLPh+6CnZOfXxbI7Y3
-	 6d9gRudSPMsBUR1pXQHvj1HrRIIHDLaA6cqeek8EwbaJELCP4mIsHka4qUCdiiVDZTUXm
-	 D7kchH0LN7SpQ3mgai4gJDQRUCHAa0lsHCab78hM1cFvLxKax4T/DiXCBmBhakqwKL0VV
-	 GM8hZVrczzup+qR8zzoceU0hJLMfdQ6LKA/plf4e9ibS/rfYdjZV6CYNkryTY0XPjhg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=QHuFMH7g;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.159.17
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013017.outbound.protection.outlook.com [40.107.159.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=34.2.82.16
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795040558;
+	b=rrO/ph9ylP+ewGe6KtLEv6czfaKtWzTx45DUDogIykantZJhgUrRLXe0lROKIjXb0Gmk
+	 IfS3aV2P2oWTyhv7AZ05cdMXEC3zJ2EnTQK6NFjx+cFmrWlvhD66rXl6ucgNLmoTICoIg
+	 iHBI28AUSC9ApdWRUE5Nm81Q+P/nOGGDpREimQXt7iieGpoG05JDRiKh6LRQsU8o1p9W3
+	 5s4qnM/gATDq9MMfhcmH2Ha9q1OMOTAYYiKvaIY/Za4tN7Wlc7zh7RBV5U0qjHvSjHj3H
+	 SHh5e6xr59B0j8AIEH6Dz5evyvyULlEv1/i6G9NJX/wB0lxJ8VQdC/Q2QSPLCL5Zq2g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040558;
+	h=DMARC-Filter:DKIM-Signature:X-SONIC-DKIM-SIGN:X-YMail-OSG:X-Sonic-MF:
+	 X-Sonic-ID:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=07Hk40Tpzd0exU21rqFe2WaV4XF0cHbqrd9OCHEx29s=;
+	b=gD/XklMbYD6Pvca8Q/xHuB3jlMUGc7m3/KyLzOa7e5omL96H+2sU/SIdK+HNuN5VoDuj
+	 Fje71sVHZXTTOrIYsvtuQ4TOs9vBpFqCau73VupQlpEuOlVwxFi3hM3X0vo/Wyi6EVtY6
+	 sOWiUNMi75ezPIinevaWVPqiGp4lqOqMVuNwDSHMU1yewWh7DoVYrETNQJ0ZeJSGBbt1o
+	 Y7r1462vPagvvZKLsZuyS4jQUHeofRekYKLeXVY6nF65SGqElFDABeKOK0QhRsWRpymT5
+	 +dun5Gcud+K962tLwjOXqTk6o5XL1jJWmDG7SqQbmNumey3QmKRPa10NIKe2tVwy4eg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=yahoo.pl;
+	spf=pass smtp.mailfrom=yahoo.pl;
+	dkim=pass header.d=yahoo.pl header.i=@yahoo.pl header.a=rsa-sha256 header.s=s2048 header.b=A0PNf8EG;
+	arc=none smtp.remote-ip=34.2.82.16
+Received: from sonic.asd.mail.yahoo.com (sonic-euwe1-0017.asd.mail.yahoo.com [34.2.82.16])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F08F606A32A;
-	Wed, 18 Nov 2026 20:26:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F08F606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B87F606A338
+	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 22:22:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B87F606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=QHuFMH7g
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Cz6+6UBkKiAQHPiskFkv62eUBVsOzEUhq9YHhXB96XqK/fBpCYH2U+vV4zpB4U4wiK/z+x73v0xcBce0v2sawsC1CnvogcQpg6zQdThqBeMZFVX/RO9hcHeVU7UI6P7zg/GfBnY3fsFcPiifRp0wnQeQ/WnBM1drKKgtclkv5BkExdrb9msW7DkPc4n8BFR17U/NMmU/FEoSCYUsYrvNXFmtD55zIvFerCsYcnb3eYdcA+cHJpEOzyrxRdgyxPuZH12C1LHE0rQzjGPRRRl4EOSICtWXw62eIeZW3CZ/7FsyNvPWncIGVs3NAbCxKZ5rM6AhUYI/HN5rlzFBzEvciA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WUiUya0RoBaglTkpkJIpKmvBEXkcdL6BChTVgeWR1K4=;
- b=Lvi6o8MTLkhtM086/NuD9fmNyqw3JfxNsq5hKoSCsfQRsgyOuQdsZ3br23v+uVKnkHhRtqF2XkuD0cNYa3wCaDsUfVTxMteE/DLhbMDaArukwlx29i5dZXXpMQHfy6pJo4N04YQ6g41dWHR7r23A0RmojpxZ/nBCEwlDRprEgyUfq4i+/AmihALHcoeN2a5a+pCSQmCCw7kBCqLNf9Fv2srip07izkdRRZ0i/zXVreUfHSER+cifCkSnZWBHt39jYNnE4OQ14lntB46PCz+UTTaUKtA8yuYr/cpz1PgSP+/cs/yVd/bR8Qo4rNt/pzow1GDWwp3dQxjQuct+vzVrfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WUiUya0RoBaglTkpkJIpKmvBEXkcdL6BChTVgeWR1K4=;
- b=QHuFMH7g413JoPbffR1LnnD+WUGNGr2bDTrBdtDEd8ufhGRBYVdGat+JmRhR53cA2rdxjnzajuSFrSqkEeCQ2gni9eGS33aC3a7Txfd4JCe/hOJHB8ZcUkS0NpvuE0oYewIqyKKHaVXv4uDu36P/HELfyYR9NTm9AyhoGhtC8jr0Peoi9cUHbqOMncA9VTRUguolXCqYELHRKN6J5zIiLUcAV5L1Wd6rZ6EYG+ypkkxV0JlhMSNf0a0jqPlXtuUA7EwpL2NUqa8cbSTPyuGtItAevzpQPUInzPICnwzQxpXk5HoajeKbSp8xrkGV6D6ffeXSx+kYE8wxCzlCO4XV3Q==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AM8PR04MB7938.eurprd04.prod.outlook.com (2603:10a6:20b:24e::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Wed, 18 Nov
- 2026 20:26:11 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 20:26:11 +0000
-Date: Wed, 18 Nov 2026 15:26:04 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: Logan Gunthorpe <logang@deltatee.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.li@nxp.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>,
-	Kelvin Cao <kelvin.cao@microchip.com>
-Subject: Re: [PATCH v4 4/4] dmaengine: switchtec-dma: add pmon sysfs
- attributes
-Message-ID: <av4J3CexdnCy3per@lizhi-Precision-Tower-5810>
-References: <20261110173137.623764-1-logang@deltatee.com>
- <20261110173137.623764-5-logang@deltatee.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261110173137.623764-5-logang@deltatee.com>
-X-ClientProxiedBy: PH7P220CA0040.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:32b::24) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (2048-bit key, unprotected) header.d=yahoo.pl header.i=@yahoo.pl header.a=rsa-sha256 header.s=s2048 header.b=A0PNf8EG
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.pl; s=s2048; t=1795040555; bh=07Hk40Tpzd0exU21rqFe2WaV4XF0cHbqrd9OCHEx29s=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To:Content-Type; b=A0PNf8EGpsyGv55j6FXHvQ+iIdclsGLckSUqutiiajr6W29ucpTLWPZJM3bfgwH54QvJc6P0xPeFuwdqGuXSdy7Gsrh2eAcAfZ57Ge9GzPxMAri1mYalZtCF3krgYR10UUityK0ZZ9wuD9NbMG3whKgIqSPuqpJth+QOkbf1RfVuBWQZMdcO9fOB6I6aF/rVpkoXJ2cHzWdl2RdE/2snu526QIBpQfl0I+l9+VCZMpEgqSlZn/Gu7wD8YUnUjGn82T1bdU7Qn2krsa9sHtouXWV5Ix73QigfQBwhXAM6zE8yYyhkENEcr0Sf6sFVJomBwAqHk3jpZmOcmAcrPHM4mQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1795040555; bh=ccBSLLeMHNMCOjiTq3s1KL5ikKwzDgI3u7O26Fa7zeO=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=L/YNxzC5q/QkFHR6rTeMKVTXhP0uaRsloQw/f9BcmGA5innpu+CMjBNJhuXE0UQJ+7L735lylKRZnu3ICIkRzV+akRIHvJo4gZTidccNF354eR7IQAKSd8Mee1aKVIlx370jXWpbiAABXmgXrE9os0kiK3GaVaL9Gy9tSBgM9XwOdCTComaULdHPIekmaMq8KAoKxJjhKv08qoTl2xvfnHdeL3zDzag3XzkP/Zk/IMOOeywPw0yZFEggGMlUZ5BiMCaUzMv14DddbtAeCQEk03MMP8IEXNeHUjI+FeWCXQzrsQZSfsmhiD4j4RmYPZDkkg5Et0mz2mjj33bvbzjSYg==
+X-YMail-OSG: E2zfUyEVM1liH8nrgR03BY6MMlnSLxTZiL4_OBke00d8BKt1HdeSS03_GrfkSqr
+ r9GCOc9.sBOLMNOXYZjK4nMOtJmWBHU1ME5YheUvKyHBHSwtGUEgWtG7zaq1c6FNdezLuaLxA.Xp
+ Yw3zGp2ZcmWE4pntiPfB6ZobFOYDCIMqSUP4wUrtDIgNZk__QG2cydAdDYWhYr3T4PlPg3Auk7dX
+ PecEbRNaDLxXPcSVG3zd6HUWMVCzccr3IJayk6WXtYO9o3dHn_tdKDR5Gp80D3RmuoU.K8bVCkmZ
+ 78PrrACxbiDFQopx_yZZ_GrMiwfNCeeFyTitneeZB2YBc9WMCfR5bcWhResYxcknauhnxQnCLtdw
+ 4.b2pZG60ZC7cqM7.z0O.xDbZ4oeaz5hlAUHR2PRCvs.W7K5dAxfv4lJ2XB7QSZxLo3.ozCdRnjv
+ K4bVWwWp0PrW.AZizoSKL6OF.i38BScvBNMWv2QZgB0hDqaxfZEuSuvJrRL6LEu8stZk4xvnR9xU
+ Q.9EwD2P2eEYILkCucgbeVopluAfte2JWDyuxpgcIJybhhW4JhlH5NY4YGjG.HkheBQq_3ZV23Y2
+ A16Tdhu6KTPxT8vtErjJh2d_SGkLehTL53Kd7NMJiw_MugeZgabadCiXUjTn1.b__kzvOnb5.aq0
+ Cy3I.lWLr5u5Ob4iWd2_Gj2Fqq6QGHtdUh1JribzK548K7rJO4gjY.kX54bSO4Kr1m7hWIP6OpKy
+ GwVJ27xsMtZZzmlS9KOZruP_xpiFx6wh0_7pjrHeaV16YG2qzixnVhV5Yvg4QhoVdRITSLJfA0_6
+ YYpCgkPchhWoDVJqNI.tjOmklhaUpp2rDHVvFPIDqqG_HcmpHFJKRp1XN3xbjNwgLbdYWYyF9xGn
+ 2ZGy1QMoP7XH3rw1ZckxsavCPbkZKCvdGPe2bLAB.IEFM43KKzWD5ch76SobnEFv_4IeAWyPPINe
+ 2EAy9zNwOoCXDbSVZAw9_hQMreoHCy5ZUXA3pRnNB588xuYx4tDhJIbqqNz.IVEeKS18LvmEU4qd
+ bbewjsO2fmBaOaslcOcwG_GJk9jDoG.UxwgiXWgrCtXU88jEOWbdEuMfca6V6bCoejBVS2Qi09bm
+ rlFixmrRHH6OLx.5HCbFROnaKTn5qHCtptwJcjKYnBBbIzBxCfbH.pO5eoqg4tPz3t_yiA3u7gRA
+ M9.G.KZIgAjOVBb8k0ILs3iTAKp_whkGcQOZDQDWSwQudtq2RjBpaKZzI1sMZwSYpE5lCTsw1F5R
+ wmNe9qhYhdL2CpxU5rMOOraG8PEXtnV6wIoT7KbytqlOEG_67J5dIx5oZ_QRYVHAcShuFedKcSSn
+ ihZjrob147ay12HRfKgNfv30Lje81TP0woEB0tgAjQQV0rxESgXgjYbuYrx0zD9e9uWKPiaPk1uU
+ 7e1jIM6SD_W9gmdesHdAgAw2RJ4TnmPBbtSkF8aTdJALodEYNU8hHzSrQ5jjvOYCeVStEiBy_L6W
+ maJzYNVU2o_kk1YzXLINJT3Rq3Eo_4AbqI4.v.zHdvJHRtUU.xHbML1f2tOPsa_DK0bn0LeOhYHS
+ _dvNJ20Oa6r3BZMAYnrd2ixmV3WaMEIhq9d13prdNmSvBd.By5jTkQ8Gne6ZmWX2WPg_A0fdNcNE
+ hVP.Z0PTICyR6z_FxO0FJOsIFguVfYLOWzQNNW.why79tm6W4YQbzC3U1QsnFGV1LSoqGJaVwVY.
+ daNdATXaSqglCV4N5f1JIXiWdJmd.XCK61e8yw1arqBmLSksiipY9b0PwC.6LWENZyzksqglRIi5
+ dy8buFOCLAMXaULCIBKvBeYc3qbCEEImHI2h2Vd83cOTh7y0GFNhra93jRr9v2dkWoKDw2nEkfFa
+ TghEdCMf8BLthrv7BBsVLj9.7Ca.iXaaNDNnQfRDnqf39ZPBhMg.fxfIrDQhIam9Yx2disLL84So
+ MPGJ1fAZnFOPI3yf66YMaHDnUHu6mhqjLaom3AnJI23fN1yhruKj2QWazVjAy9bdqiE0AYhB8dHF
+ dbeTLLDW6XjqRkM6uaIAJ7m9vOQ--
+X-Sonic-MF: <tomasz.unger@yahoo.pl>
+X-Sonic-ID: 0eafbce0-69f4-485d-810c-5d0ee321b30c
+Received: from sonic.gate.mail.ne1.yahoo.com by mail-asdoutdeli-p-cin-euwe1-prod-sonicconsumer-svc-104 with HTTP; Wed, 18 Nov 2026 22:22:35 +0000
+Received: from dip120.lsn.ir2.yahoo.com ([87.248.99.129])
+          by hello (SMTP) with SMTP ID 97eb8e7d0ce49dbbcc92550550a7216e;
+          Wed, 18 Nov 2026 22:22:33 +0000 (UTC)
+From: Tomasz Unger <tomasz.unger@yahoo.pl>
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Frank Li <Frank.Li@kernel.org>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	dmaengine@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: bcm2835-dma: Add missing of_dma_controller_free()
+Date: Wed, 18 Nov 2026 23:22:30 +0100
+Message-ID: <20261118222230.123431-1-tomasz.unger@yahoo.pl>
+X-Mailer: git-send-email 2.56.1
+In-Reply-To: <av3_yVSq9CKqix6o@SMW015318>
+References: <av3_yVSq9CKqix6o@SMW015318>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -102,381 +98,44 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM8PR04MB7938:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3fb7714b-e21b-4855-34eb-08df45b22fce
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|376014|366016|23010399003|1800799024|18002099003|22082099003|6133799003|261026140227099003|56012099006|261009223027099003|261102123227099003|4143699003|11063799006|261028144727099003|261022105027099003|261021121427099003|261021123027099003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	cNzk/W3vI650F/lpFqdfC+KbbY0E0p5gIzuADur4mtW6FsFEcUgwwll7f8Uc08EIGR4L8MkNdZcX2hMP3R2bZxGuO37Uvag/n+BwJ345nRZBd3Czf3UNO/LgfDRAkY/Uh/CRzlYJ8oW0iUic6uKp2UyEHq6f1b48YUZG7B0+UL0IONK9onx17MWz/zZ6rFu8O6TIg/XI6CrEfxJ8iSoyFSK7HzUom0gH0yPg9LkBgjhdoRkwR0jCCLbSUXjyfiR3iB1tY8CbX8J/FMZ/7wer96p4PMlzdCdV7h6Erz+83f+fOfKYpNgPujxcaaCsDEST0A4CJgynyTrj99qPXlN0RKb7W/4irggdoueZUKtdT3bZV2O7UUqCkZToXXc/yNTZMg6jdg86UCtenB8SKaOuYYAx+x0XREKwn7X71SlR6CHxGXEUgM7UJ+meLv/aHFIlzCdp0P7D3WqNJgKbYEqWzBc6dgmm5UJEsEEP8gWlVVJmanZFCK1IPqmIFxYDujlrWrWS9miiLnhX6RS0KGNWCtpKlP5PYL5CZviViZFBf+R6p4XwodHY4bgnAzUzZO1Rix4q8ckJ0a4qTbvorl3YKjdPsZ7SfTZOmoOqj7eNNI4JTIU2EGlweZFOJolVZu6w3Dxj3uQ830XY50MOJrXjhcrBdyWQNhbm4FBTnEy/DUI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(366016)(23010399003)(1800799024)(18002099003)(22082099003)(6133799003)(261026140227099003)(56012099006)(261009223027099003)(261102123227099003)(4143699003)(11063799006)(261028144727099003)(261022105027099003)(261021121427099003)(261021123027099003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0pqF8n3iSBnHKP2qddud6txtbrh6MvEKb5ZmymH1RBnOMqXVmDG+u2kbZtEd?=
- =?us-ascii?Q?W91RAqsaojx2thyIZKegubuozfPglFW7lgVQ5qbwE/BxDG9dgT5w2rZqj5sF?=
- =?us-ascii?Q?BTt0MQF6Gj5mJTomT2fFPeSxSiX7fx1dcrDp0fwSfd4PQrEDAzcyttNs+B/V?=
- =?us-ascii?Q?DPRoTGF3v7Mo1umJsw38zvTQVyu/njbvw8s+HsotOeIFIxly+Tzg5MJ+cu95?=
- =?us-ascii?Q?KgP5yAUT1b7R1P4iRzPwsyAs0V5dhU1sLOAk0jlSYuFdvrlDDnfVMU4HzxDe?=
- =?us-ascii?Q?Sb2KxKENfySbRckADrkQeUtnnztvl1B8boUlM/Ev/MfidfLOjdIeDSIYs10l?=
- =?us-ascii?Q?1rksUw5zP4bwRm7aGyC7M1lPML7VISRDvYiVdiPY+E6jDBwANLekpU19hWgY?=
- =?us-ascii?Q?cWtwsU7A938OOfn5tGLBo118NvhkilLOpGjBgxNhAOXzWQJK4XLjs0Gx0anI?=
- =?us-ascii?Q?yY4uS9y/IwBe+n4MZ9iDcm1cUW3nJo22Y7s72gvDmD0aU/5+sQdWCeLJEQE5?=
- =?us-ascii?Q?Xbz9PRepmuGPnCWVf2zkicvXcrmCCR9612jHLc/rR2iNGCo8UU6oDg5B5708?=
- =?us-ascii?Q?8ICJonGm12OEeF/6N841BF3LLgLOKQV2Dl26QMJBy79uAiJbcGpKFbzDhitA?=
- =?us-ascii?Q?1S1bilEG8ftbZ0OHLPgMMzQG3t7ZS14WOBEyiI9PPBZ5stKuQIvp/9X7/gjK?=
- =?us-ascii?Q?GOCXHjCjJyb47d7eBjYN+wfgtcVU8/ZjgJoqSPySU5ey0hkr0hv1aIjau4u2?=
- =?us-ascii?Q?czQTcmaYY4q8iYifSMdkCUqd49N35TCPT2dcn0AVrOJmXV/tndBi9etSNi8o?=
- =?us-ascii?Q?v8zHcxhNe1DvpQOY0qMjSqTCZbG2Oy3Xicq0D7clN9+a5SobOedHFiaf4PfH?=
- =?us-ascii?Q?Z//X44IviWtPMNbp5QxBkoVoeBIrmjX6AJj/MD+gzKrh3zuai0pwLXBxm6Hy?=
- =?us-ascii?Q?ZWoskx4JUmSLi+cqJ/tlfUN9p2Zt16uT222Gebtwr0aXyNPNwiVJZhx1Qm0T?=
- =?us-ascii?Q?YBmKMOu+PRB1WNpdym+iViDdh2XB0hz2A8Tkhn9wgZMgpEUXD8/EXqHGVU7X?=
- =?us-ascii?Q?YG1S1VDEj68ZzCauofXCZztwD1mMFDx55kWoUj8bOCktayTT9cBGMlVJs2hA?=
- =?us-ascii?Q?mqi8KVARfL7MdbgjA0k3qjPurgAFjEfpiQ56eVLIExFtkqNo3DimO1ly0tFl?=
- =?us-ascii?Q?i/WpUrXA2p7DNi8RxCccogsO13rIIajQUPlqCJlCLCFOiKmx4P0ZV4zvBlj7?=
- =?us-ascii?Q?Kj4XB03UXcdaDLcjYxqcBHhpuHBHHGJJTmMZ7Tk9C7oMoS95rJ7e14LzLrdt?=
- =?us-ascii?Q?WLCmW7vK4iEpXexOBStfJHEhcDDUnvwH6n1OE7toCSShGcbh9JdTFWh4kDJG?=
- =?us-ascii?Q?xns7q16LuaoydArMRhPQ9kNCa3nUkTEk4marrZHx/CF0L8WUKIR6PvJVO0XW?=
- =?us-ascii?Q?N+HPw9XqhqHRQVcOYkkDLkNMb2/uR1+ZtTt94Cz5irW302Ce8BVFnuag6nfP?=
- =?us-ascii?Q?iD2OjQdXhrpUvi2XV9qAWmui3PPkjUuM/X93s7HvbqdYafLcKoftayd/bfc2?=
- =?us-ascii?Q?pW/APQ9yjSqSg8hmS+BnVj4BRv2fHpbPNG+kAztCeVsbwEe3YFqWWJA5oUuj?=
- =?us-ascii?Q?6XXt7+y5arEGJr/n8VMRgMTLZoo4HcFxrGfGKPVr+K66NcYNJSId0QUs0H/E?=
- =?us-ascii?Q?okWcRz+a535KYBwABt8fMFhLowpTrB/2F1lDb7Xyg0iGBqehnBrDHHMlAKz6?=
- =?us-ascii?Q?w/QvXCFDCtc6m38ZxjLpwlmapCj2LSHJ8LhS032XVyLvR2zLTs7N?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3fb7714b-e21b-4855-34eb-08df45b22fce
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 20:26:11.9232
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mGl+pjkvJsN/C2Y+fBGBUUXikCKex+3bFsXhVpjq94p+XdxpEbEMN4YQD3gpowrXWtHVHPJBHxXH7LCmf3mvE0+VjueQpwuIDfHEhE/XC1LPFryO0T70E84fI4j28vKz
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM8PR04MB7938
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 10, 2026 at 11:31:36AM -0600, Logan Gunthorpe wrote:
-> Switchtec hardware exposes some performance monitor registers which
-> can be used to monitor various statistics of the hardware.
+On Wed, Nov 18, 2026 at 01:43:05PM -0600, Frank Li wrote:
+> On Sun, Nov 15, 2026 at 11:15:15PM +0100, Tomasz Unger wrote:
+>> @@ -1027,6 +1029,7 @@ static void bcm2835_dma_remove(struct platform_device *pdev)
+>>  {
+>>        struct bcm2835_dmadev *od = platform_get_drvdata(pdev);
+>>
+>> +      of_dma_controller_free(pdev->dev.of_node);
 >
-> Expose these as a "switchtec-pmon" sysfs attribute group, alongside
-> the "switchtec-config" group added previously.
->
-> The various registers are read through a small shared pmon_show()
-> helper parameterized by a reader function pointer, rather than a
-> macro, to avoid generating the whole read + rcu_read_lock/unlock +
-> sysfs_emit sequence per attribute.
->
-> Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
-> ---
+> use devm_of_dma_controller_register() to fix this problem
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Hi Frank,
 
->  drivers/dma/switchtec_dma.c | 273 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 273 insertions(+)
->
-> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-> index 1ebe17095c61..774b418330ed 100644
-> --- a/drivers/dma/switchtec_dma.c
-> +++ b/drivers/dma/switchtec_dma.c
-> @@ -12,6 +12,7 @@
->  #include <linux/pci.h>
->  #include <linux/delay.h>
->  #include <linux/iopoll.h>
-> +#include <linux/io-64-nonatomic-lo-hi.h>
->
->  #include "dmaengine.h"
->
-> @@ -91,6 +92,12 @@ struct chan_hw_regs {
->  #define SE_BUF_LEN_MASK		GENMASK_U32(20, 12)
->  #define SE_THRESH_MASK		GENMASK_U32(31, 23)
->
-> +#define SWITCHTEC_LAT_SE_FETCH   BIT(0)
-> +#define SWITCHTEC_LAT_VDM        BIT(1)
-> +#define SWITCHTEC_LAT_RD_IMM     BIT(2)
-> +#define SWITCHTEC_LAT_FW_NP      BIT(3)
-> +#define SWITCHTEC_LAT_SE_PROCESS BIT(4)
-> +
->  #define SWITCHTEC_CHAN_ENABLE	BIT(1)
->
->  struct chan_fw_regs {
-> @@ -1215,8 +1222,274 @@ static const struct attribute_group switchtec_config_group = {
->  	.attrs = switchtec_config_attrs,
->  };
->
-> +static ssize_t pmon_show(struct device *dev, char *page,
-> +			 u64 (*reader)(struct chan_fw_regs __iomem *chan_fw))
-> +{
-> +	struct switchtec_dma_chan *swdma_chan;
-> +	u64 val;
-> +
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
-> +
-> +	rcu_read_lock();
-> +	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-> +		rcu_read_unlock();
-> +		return -ENODEV;
-> +	}
-> +
-> +	val = reader(swdma_chan->mmio_chan_fw);
-> +	rcu_read_unlock();
-> +
-> +	return sysfs_emit(page, "0x%llx\n", val);
-> +}
-> +
-> +static u64 read_se_count(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return lo_hi_readq(&chan_fw->perf_fetched_se_cnt_lo);
-> +}
-> +
-> +static ssize_t se_count_show(struct device *dev,
-> +			     struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_se_count);
-> +}
-> +static DEVICE_ATTR_RO(se_count);
-> +
-> +static u64 read_byte_count(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return lo_hi_readq(&chan_fw->perf_byte_cnt_lo);
-> +}
-> +
-> +static ssize_t byte_count_show(struct device *dev,
-> +			       struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_byte_count);
-> +}
-> +static DEVICE_ATTR_RO(byte_count);
-> +
-> +static u64 read_se_pending(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readw(&chan_fw->perf_se_pending);
-> +}
-> +
-> +static ssize_t se_pending_show(struct device *dev,
-> +			       struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_se_pending);
-> +}
-> +static DEVICE_ATTR_RO(se_pending);
-> +
-> +static u64 read_se_buf_empty(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readw(&chan_fw->perf_se_buf_empty);
-> +}
-> +
-> +static ssize_t se_buf_empty_show(struct device *dev,
-> +				 struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_se_buf_empty);
-> +}
-> +static DEVICE_ATTR_RO(se_buf_empty);
-> +
-> +static u64 read_chan_idle(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readl(&chan_fw->perf_chan_idle);
-> +}
-> +
-> +static ssize_t chan_idle_show(struct device *dev,
-> +			      struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_chan_idle);
-> +}
-> +static DEVICE_ATTR_RO(chan_idle);
-> +
-> +static u64 read_latency_max(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readl(&chan_fw->perf_lat_max);
-> +}
-> +
-> +static ssize_t latency_max_show(struct device *dev,
-> +				struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_latency_max);
-> +}
-> +static DEVICE_ATTR_RO(latency_max);
-> +
-> +static u64 read_latency_min(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readl(&chan_fw->perf_lat_min);
-> +}
-> +
-> +static ssize_t latency_min_show(struct device *dev,
-> +				struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_latency_min);
-> +}
-> +static DEVICE_ATTR_RO(latency_min);
-> +
-> +static u64 read_latency_last(struct chan_fw_regs __iomem *chan_fw)
-> +{
-> +	return readl(&chan_fw->perf_lat_last);
-> +}
-> +
-> +static ssize_t latency_last_show(struct device *dev,
-> +				 struct device_attribute *attr, char *page)
-> +{
-> +	return pmon_show(dev, page, read_latency_last);
-> +}
-> +static DEVICE_ATTR_RO(latency_last);
-> +
-> +static ssize_t latency_selector_show(struct device *dev,
-> +				     struct device_attribute *attr, char *page)
-> +{
-> +	struct switchtec_dma_chan *swdma_chan;
-> +	struct chan_fw_regs __iomem *chan_fw;
-> +	u32 lat = 0;
-> +	int len;
-> +
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
-> +	chan_fw = swdma_chan->mmio_chan_fw;
-> +
-> +	rcu_read_lock();
-> +	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-> +		rcu_read_unlock();
-> +		return -ENODEV;
-> +	}
-> +
-> +	lat = readl(&chan_fw->perf_latency_selector);
-> +	rcu_read_unlock();
-> +
-> +	len = sysfs_emit(page,
-> +			 "To select a latency type, write the type number\n");
-> +	len += sysfs_emit_at(page, len, "(1 ~ 5) to latency_selector\n\n");
-> +
-> +	len += sysfs_emit_at(page, len, "Latency Types:\n");
-> +	len += sysfs_emit_at(page, len, "(1) SE Fetch latency");
-> +	if (lat & SWITCHTEC_LAT_SE_FETCH)
-> +		len += sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len += sysfs_emit_at(page, len, "\n");
-> +
-> +	len += sysfs_emit_at(page, len, "(2) VDM latency");
-> +	if (lat & SWITCHTEC_LAT_VDM)
-> +		len += sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len += sysfs_emit_at(page, len, "\n");
-> +
-> +	len += sysfs_emit_at(page, len, "(3) Read Immediate latency");
-> +	if (lat & SWITCHTEC_LAT_RD_IMM)
-> +		len += sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len += sysfs_emit_at(page, len, "\n");
-> +
-> +	len += sysfs_emit_at(page, len, "(4) SE Processing latency");
-> +	if (lat & SWITCHTEC_LAT_SE_PROCESS)
-> +		len += sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len += sysfs_emit_at(page, len, "\n");
-> +
-> +	len += sysfs_emit_at(page, len, "(5) FW NP TLP latency");
-> +	if (lat & SWITCHTEC_LAT_FW_NP)
-> +		len += sysfs_emit_at(page, len, " (*)\n");
-> +	else
-> +		len += sysfs_emit_at(page, len, "\n");
-> +
-> +	return len;
-> +}
-> +
-> +static ssize_t latency_selector_store(struct device *dev,
-> +				      struct device_attribute *attr,
-> +				      const char *page, size_t count)
-> +{
-> +	struct switchtec_dma_chan *swdma_chan;
-> +	struct chan_fw_regs __iomem *chan_fw;
-> +	ssize_t ret = count;
-> +	int lat_type;
-> +
-> +	CLASS(dmaengine_chan_from_dev, c)(dev);
-> +
-> +	if (!c)
-> +		return -ENODEV;
-> +
-> +	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
-> +	chan_fw = swdma_chan->mmio_chan_fw;
-> +
-> +	if (kstrtoint(page, 0, &lat_type) < 0)
-> +		return -EINVAL;
-> +
-> +	switch (lat_type) {
-> +	case 1:
-> +		lat_type = SWITCHTEC_LAT_SE_FETCH;
-> +		break;
-> +	case 2:
-> +		lat_type = SWITCHTEC_LAT_VDM;
-> +		break;
-> +	case 3:
-> +		lat_type = SWITCHTEC_LAT_RD_IMM;
-> +		break;
-> +	case 4:
-> +		lat_type = SWITCHTEC_LAT_SE_PROCESS;
-> +		break;
-> +	case 5:
-> +		lat_type = SWITCHTEC_LAT_FW_NP;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	rcu_read_lock();
-> +	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
-> +		ret = -ENODEV;
-> +		goto err_unlock;
-> +	}
-> +
-> +	spin_lock(&swdma_chan->hw_ctrl_lock);
-> +	if (swdma_chan->hw_cfg_locked) {
-> +		spin_unlock(&swdma_chan->hw_ctrl_lock);
-> +		ret = -EBUSY;
-> +		goto err_unlock;
-> +	}
-> +
-> +	writel(lat_type, &chan_fw->perf_latency_selector);
-> +	spin_unlock(&swdma_chan->hw_ctrl_lock);
-> +
-> +err_unlock:
-> +	rcu_read_unlock();
-> +
-> +	return ret;
-> +}
-> +static DEVICE_ATTR_RW(latency_selector);
-> +
-> +static struct attribute *switchtec_pmon_attrs[] = {
-> +	&dev_attr_se_count.attr,
-> +	&dev_attr_byte_count.attr,
-> +	&dev_attr_se_pending.attr,
-> +	&dev_attr_se_buf_empty.attr,
-> +	&dev_attr_chan_idle.attr,
-> +	&dev_attr_latency_max.attr,
-> +	&dev_attr_latency_min.attr,
-> +	&dev_attr_latency_last.attr,
-> +	&dev_attr_latency_selector.attr,
-> +	NULL,
-> +};
-> +
-> +static const struct attribute_group switchtec_pmon_group = {
-> +	.name = "switchtec-pmon",
-> +	.attrs = switchtec_pmon_attrs,
-> +};
-> +
->  static const struct attribute_group *switchtec_groups[] = {
->  	&switchtec_config_group,
-> +	&switchtec_pmon_group,
->  	NULL,
->  };
->
-> --
-> 2.47.3
->
+Thanks for the review. I tried that, but with only the OF registration
+moved to devres, the controller entry is removed after
+bcm2835_dma_remove() has returned, i.e. after
+dma_async_device_unregister() and bcm2835_dma_free().
+
+In that window bcm2835_dma_xlate() can still be reached through the
+node. dma_async_device_unregister() has already freed chan->local and
+dropped the last device reference (dma_device_release() does
+list_del_rcu(&device->global_node)), while the channels stay on
+od->ddev.channels until bcm2835_dma_free(). A client requesting a
+channel at that point goes through find_candidate(), dma_chan_get()
+fails with -ENODEV and global_node is deleted a second time. The same
+applies to the dma_async_device_register() error path in probe.
+
+Doing it right with devres would mean converting the whole teardown:
+a devm action for bcm2835_dma_free(), dmaenginem_async_device_register(),
+and devm_of_dma_controller_register() last, so that the OF entry is
+removed first. That is a larger change, and
+devm_of_dma_controller_register() only exists since v7.1, while this
+fixes a bug from the original driver and is tagged for stable.
+
+So I would prefer to keep this patch as a minimal fix that backports
+cleanly, and send the devres conversion as a separate follow-up.
+Would that work for you?
+
+Thanks,
+Tomasz
