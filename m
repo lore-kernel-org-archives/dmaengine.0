@@ -1,72 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.199
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794996548;
-	b=nnLAKNT2Dt/+oWJUzu2WipkJ6t8rs6QK0+5BO0CflBgOa7O3Fx76NhANjIulS89e3oOt
-	 4074tQ6dbYRvhZYJOJWseSYPhwU6nCSCDhNX/i32PlciFM+MqY2c96IWJwB7flGc2nMbT
-	 Zlq64Q/xZooNzvE9TkQaxA07jv4w3M6CSV7aRihdc7Jzh4+APohkrJU+Vqz800uqcmzuQ
-	 K7QMn9te/z2QtyJq0evLJZA5KVtsI+S2UevwELtTcDqwjs9DYRxG4f4qkOr1DjhtEJnhM
-	 2kFsKi5E4+DQNjaT817Nd2gAnX95PeozE/Oz5xHVl15GxrL7Apz6EezTrARe1eg/LQA==
+	t=1794997021;
+	b=eIR+vNMSs4iUNxJFv/G0cquNbbvqTLxxo+U/1PhxUpeho+NlOQX6Td8ogNnHqHUxrnb7
+	 VDFb19RPMtRWL5MOas5ynDdJMfWdMorkOJo1YQx0ntX4ssWlBJ7HpNRglYZkTWzQ63TK/
+	 LAu4Rz4GO+IvEp55Oqa6x4Q9ei/9DztERAxEzxwqPNPMdF/d+pEK6q4Gf2VnXbvkrpCYO
+	 UQztiwVdWth7iNty5ZdJPbcXhJdSijPZwolM9tA/Xkg62WXK0gUQuQUeya63ivizEk3N7
+	 ldt7rcfPvitSL/uFxabxO0E1H7RJKDt1alWWie+2NTcU5IpTR0Rt3xFjWBr9kdO3YAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794996548;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Received:Date:Mime-Version:
-	 X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
-	b=JWs/wBS3OTXO1vu08+VVNv9JZ+O1NHOtmY4tZLFpwmOOH4uv6+A3fog1eUUVTTX3kGkl
-	 sg6jZoJj05wlIfDksHxMOV8qQXTtXotIeeyf2S8LwPlUMo0Z8lLmuD4GI4XMh0ZYtYyNI
-	 WJPEUhc1sbBORMtvw97TMRscxIU2/om0xtzEPuVYOk7Rp9sfPyHze2qMfpamo5p46WR6d
-	 hlKSpUfhyCjcw4ufhoqcKiAZW3metk4E8WmGSA3lv3fr9f9r1su9/E2vGEkRd+UKSYoR5
-	 AVJATBH8td0i2Satxrvmx40wTseVJHp7bT2MKuf5ZsbQwFrkumTh6N8lHndMqi5cIgw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794997021;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=xiINgtqolrZA/FZLLtdEzNNmepL0tt/bgGu21PT68uM=;
+	b=KKKJpat+ZVhfsnIgvBYcM5hxWp+JLfAGdXET4PJchSsbxSMzS/JXd/wfksJ1wht+q4rQ
+	 5KhtEvk1f/5Vx1wGrwTlUjWKqrJM2V9Mif3L3mQ2P3Imhx5Nez/LtMt6EP8ySF9QIJLDw
+	 WaVMkANXrIcKyMuV8It1jFfoFMzNmh/gSDPKEaZlkTdqpLbqtLiphIq/fZx7pZlXZ7mZL
+	 5fpmzw7PkxKB9j47QoIap+crNpiLArN/DBsPxOLEWt8qhxg1C0uiEL2hbV3KuT6bwkCCR
+	 0tIx/Y2xYcy0lfLxQ7ms1Gp9bRICAHLDxqUh0XsiCigJ19SgcobR42Y61+ZMzr0CcSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--amitamishra.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G14vOFv3;
-	arc=none smtp.remote-ip=209.85.210.199
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="R/JioySf";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A33606A325
-	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 10:09:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15A33606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--amitamishra.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15254606A320
+	for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 10:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=G14vOFv3
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8aa185840bdso745502b3a.3
-        for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 02:09:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1794996547; x=1795601347; darn=vger.kernel.org;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
-        b=G14vOFv3Ujb4z9LNJX6zHgOB/CiwYIy9Oy8Jt5I6Gz3ApMFDg7KvkQ6RdNztHu3C8c
-         qziMNmi2uJwjjaGR1vEA01vJ0dWRcsexxdNVY3WbxuuoGZ00IDI5nfaFpfm2TOVvOmEv
-         v6GBlsjWXLTtTTxV/GBDpFeJg3Lnac74OjZ1x9PjbqKwQWKRLSbDHwJkWH1Xbwre/Oyq
-         daIGMoFrDrnzXyHsjznsigqT+tDVSneoU1pbr0wCyfdQRCZrV/uqPnvH3EesfIHdEkK/
-         q1rQAwwD0IsLN3y5YmG2rO3PFMh07S/0ZSqHrTRr1v6g7FbtivSzK02Bzn0XmTaGF8je
-         T/Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794996547; x=1795601347;
-        h=content-type:cc:to:from:subject:message-id:mime-version:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+B1TOH9oUaUU/yKHKlpMG2Fg0rcqqVsIpnka2NiH2/I=;
-        b=qYqNCRr7JAYLeF2mdycNyHZEDb7ZlOzxc5u9yZ3YCtKc2zT19sA1yMLwf7ddUZczyT
-         iMrzKjQOvFDIFMSPQmFgapbxHGqnUM7eqw4nxROdQilAEYWWwcKuP/PRs94NHX7dK2j4
-         kE03S7lSsfN4+re9ptiblsrO8J1A6CvLw/GMv1KoHxzp5K0GFXVhuMZlMuML1EUVBlXl
-         jOho3Jq9s+o7i/ZC51F2pKwbj+vGmu5qGWWdomBqEdbqUYHQNYIF9aT6AU4jU8yo/6JQ
-         86cUWyoqKP5ZrocVO1/0P4lk/+nVK60OrfCR7tk1XktlEp5R++V6Kbl+M6Oxm8hCQK6A
-         ucuA==
-X-Forwarded-Encrypted: i=1; AL+hErEi23JNkgewM0aaKfR2bfAIzR0KoUZgpIxuECtkaHIxbi89me03LbHKuxPKlAsycl85Alxe5tJkIA4=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/mCEzb5I/YucWADWg+sqy/zYQTO4HX1SAk2xZnSN8iL+ave+zG
-	aX1xUWzBP0sENUsHvmoB9UW4tVfB/EO/egI3+uvXzsLEXhLG4CbfwYwa81jtemdLwn+R4g2lkvS
-	tdGJuvJrWypQS8AaUrPv1qKeljw==
-X-Received: from pfdf8.prod.google.com ([2002:aa7:8b08:0:b0:8c5:fdd3:6020])
- (user=amitamishra job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:1c8e:b0:87d:ee98:606 with SMTP id d2e1a72fcca58-8c5d45de9a8mr1864339b3a.23.1794996547074;
- Wed, 18 Nov 2026 02:09:07 -0800 (PST)
-Date: Wed, 18 Nov 2026 10:08:39 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R/JioySf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9E71F000C5;
+	Wed, 18 Nov 2026 10:17:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794997020;
+	bh=xiINgtqolrZA/FZLLtdEzNNmepL0tt/bgGu21PT68uM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=R/JioySfZ94lN1irY9aDH+AAlUI+/kmLnAi6g6MZENHRZWAy1lkwNCLf0D++wGjpA
+	 4dUOU3p+hTRpGcXU/aEo31QcRvM1/NwtJm3NKUo5LKWjkq2wHhJWSQ+DDuT54/clIt
+	 Dtd5qy0cRVVkbHWAaKjw9JJAS2sI8a5mrBBPf7ZJhbecHGyaY1uKrJYxWkHWJ3K9eJ
+	 w8XbwJIetK0OODrxdsntwqh8zs8fl6q7EcxnAs2DHreKCCuIy91r2Vlnl9M6UrSpjb
+	 JsdqlLWgD0Zzyf2MNY72/jFkIKoVUZubjNkjy4wQ0JGWSboknv0QYLcfhspoj6nUPm
+	 S5DZ2RU9Hq1Eg==
+Message-ID: <sashiko-outbox-220671@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: dmatest: terminate channel on timeout or
+ error
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Amita Mishra" <amitamishra@google.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261118100839.3090172-1-amitamishra@google.com>
+References: <20261118100839.3090172-1-amitamishra@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 18 Nov 2026 10:16:59 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -75,68 +59,61 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.56.1.703.gf848ed807c-goog
-Message-ID: <20261118100839.3090172-1-amitamishra@google.com>
-Subject: [PATCH] dmaengine: dmatest: terminate channel on timeout or error
-From: Amita Mishra <amitamishra@google.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, Dan Williams <djbw@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
-	Amita Mishra <amitamishra@google.com>
-Content-Type: text/plain; charset="UTF-8"
 
-In interrupt mode (!params->polled), when wait_event_freezable_timeout()
-times out (!done->done) or dma_async_is_tx_complete() reports a
-non-DMA_COMPLETE status, dmatest_func() jumps to error_unmap_continue and
-calls dmaengine_unmap_put() without terminating the DMA channel first.
-Channel termination via dmaengine_terminate_sync() only happens later
-when the test thread exits, unlike the polled path which terminates the
-channel immediately after dma_sync_wait().
+Thank you for your contribution! Sashiko AI review found no new issues
+in this patch, but noticed 1 related pre-existing issue it does not
+introduce:
+- [High] dmaengine: dmatest: integer underflow in min_odd() [1]
+--
 
-If the DMA controller is still actively transferring when the source and
-destination buffers are unmapped, an IOMMU-backed DMA engine will trigger
-use-after-unmap translation faults, or overwrite the buffers while the
-next iteration reinitializes them. In addition, if the timed-out transfer
-completes during a subsequent iteration, its callback sets the shared
-per-thread done flag and wakes done_wait prematurely, causing the next
-iteration to fail with "completion busy status".
+commit 15e7b971cd84dccd06d2762018cf300f9236dc53
+Author: Amita Mishra <amitamishra@google.com>
 
-Terminate the channel with dmaengine_terminate_sync() on both the timeout
-and non-DMA_COMPLETE error paths before unmapping the buffers, skipping
-the redundant call on timeout when params->polled has already terminated
-the channel.
+dmaengine: dmatest: terminate channel on timeout or error
 
-Fixes: 4076e755dbec ("dmatest: convert to dmaengine_unmap_data")
-Cc: stable@vger.kernel.org
-Signed-off-by: Amita Mishra <amitamishra@google.com>
----
- drivers/dma/dmatest.c | 3 +++
- 1 file changed, 3 insertions(+)
+This commit calls dmaengine_terminate_sync() before unmapping DMA buffers
+when a transfer times out or completes with an error in dmatest_func().
 
-diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-index 2ae3469397f3..950b7a9e7769 100644
---- a/drivers/dma/dmatest.c
-+++ b/drivers/dma/dmatest.c
-@@ -852,6 +852,8 @@ static int dmatest_func(void *data)
- 		}
- 
- 		if (!done->done) {
-+			if (!params->polled)
-+				dmaengine_terminate_sync(chan);
- 			result("test timed out", total_tests, src->off, dst->off,
- 			       len, 0);
- 			goto error_unmap_continue;
-@@ -859,6 +861,7 @@ static int dmatest_func(void *data)
- 			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
- 					 dev->cap_mask) &&
- 			     status == DMA_OUT_OF_ORDER)) {
-+			dmaengine_terminate_sync(chan);
- 			result(status == DMA_ERROR ?
- 			       "completion error status" :
- 			       "completion busy status", total_tests, src->off,
+> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+> index 2ae3469397f37..950b7a9e77695 100644
+> --- a/drivers/dma/dmatest.c
+> +++ b/drivers/dma/dmatest.c
+> @@ -852,6 +852,8 @@ static int dmatest_func(void *data)
+>  		}
+> =20
+>  		if (!done->done) {
+> +			if (!params->polled)
+> +				dmaengine_terminate_sync(chan);
+>  			result("test timed out", total_tests, src->off, dst->off,
+>  			       len, 0);
+>  			goto error_unmap_continue;
+> @@ -859,6 +861,7 @@ static int dmatest_func(void *data)
+>  			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
+>  					 dev->cap_mask) &&
+>  			     status =3D=3D DMA_OUT_OF_ORDER)) {
+> +			dmaengine_terminate_sync(chan);
+>  			result(status =3D=3D DMA_ERROR ?
+>  			       "completion error status" :
+>  			       "completion busy status", total_tests, src->off,
 
-base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
--- 
-2.56.1.703.gf848ed807c-goog
+[Severity: High]
+This problem wasn't introduced by this patch, but can min_odd() underflow
+when computing src->cnt earlier in dmatest_func() [1]?
 
+drivers/dma/dmatest.c:min_odd() {
+	unsigned int val =3D min(x, y);
+
+	return val % 2 ? val : val - 1;
+}
+
+When a DMA device reports max_xor or max_pq as 0 (or xor_sources /
+pq_sources is 0), val is 0 and min_odd() returns UINT_MAX.  That bypasses
+the (src->cnt + dst->cnt) >=3D 255 check by wrapping around, after which
+dmatest_alloc_test_data() passes d->cnt + 1 =3D=3D 0 to kcalloc() and
+dereferences ZERO_SIZE_PTR when writing d->raw[0].
+
+[1] https://sashiko.dev/#/bug/linux-ca967586-4fc1-47a3-8616-4a9d21fe7455
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261118100839.3090=
+172-1-amitamishra@google.com?part=3D1
