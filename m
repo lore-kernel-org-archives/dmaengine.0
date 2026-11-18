@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.15
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.29
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795021497;
-	b=ebC42lUkiJfDYMJRGCry827/vdBSRoAm8u3k4NjnEWb31yxJJRWR+Z5OD6r4WeydOAY4
-	 ZxPSNL49ViRrNL7cLMuQcBywSWaw8pdNGsWhWCz95wd6SxlqFUN9weDwyMaCBvMpHWcJB
-	 u1sCodErzVy5HgNIRk4fKrQrWrR7LAS5Te5EC3E3qZssgwXmyup9QTjRNUZSIGJ91kZiz
-	 fHbHmp8XmCA3hapdU0naPyVEDi2ra9ciyB9HmhRC6DgzqOwEjwLG5tPzwUaHz/tS9p+oa
-	 Ak56czBon0XV0qTnCWdvpKg9CrK4MCWYEIoH0AgZiDLyMoh+gModAYAzf/1kw3N9SsA==
+	t=1795022137;
+	b=T/1pCO7j/C/jKWV2kMDT65NXzxlrBcf1j44yI45hZHrab4l0lljqS1LgQXqo05fDCqGk
+	 891gCEU/Z9Kf5ZGrfwMoMR+qS0ZokQ2Wno0eQ2dPNG9oswafl9naWGcpNi/fGodhkO5E3
+	 KsqYrx2ak7PO/TMxkAmdNSPKO+jLsgFaY1Qj4WjGL+2NsJPXn5VwfI5RbHBwQmdWNl7ZI
+	 oa5n2x9jmg8Hr1qG3GInBZAz0fLYhdx4MIONqlHyVVHuRRUeNXEm137ew0p5jVLhk3qdN
+	 nWkJf2SwtEac/lk6jgRaAMRiiNt6JgYQGAYH6TtNv3lIFGxb6sDhmFo1KeL6JekvIGg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022137;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
 	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,68 +24,81 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=GAO6IYhoBQXWxy//8MhmCY3Mz+rDP6zjTTPSdyEpsA4=;
-	b=PdNQlvtTA0jWYIpc1J5sp/Yl5N+GWcRtAdAv5tJ5074AjCi5TqRr22lboJt0o/6K2L45
-	 l93qt90/2XUFZ61Jx2jopFoOo5ifdbbC7ddlJm2mcg3oXe5RYS7pLrtw0SD30FgFKnQvm
-	 UCeBpkJqDE80eqaUNzZbzkvK8rmTVExLJn0E7gUZABkMRNSxLa69K2XQB+9AS28Opr+cw
-	 xKs6RtLHP6tGFMeaBmvAUd/cMtJDll5JVnClTKglii3KUY2e4sZpqsvUlqZXpAHfdRhvk
-	 ar6jI7F42DHQ1TfH7SS4lp3wzbXcKGp6R68FL99JR2dMNCUTh0vQ3uWNmfIQ7f+RNXg==
+	bh=fXSfYWa2fhjUhlvut7EoHcpOwzFdqoq+QOjqDYbWe/U=;
+	b=3A8LEJVAtUTx9CQib5th4EnKWiIAJAjWpw66n71kRNlws0xuSRg35DnEpBUIE6kAKMtW
+	 PXAYhaz5npxlXZfi8rBYS9JF27azspEi7m911xCVCo2YqTsoCdmnTzExgYphTrst3xnNn
+	 SSASbTeBHU0XTdu8p1ZHD7iahjhY5Z0AN1jaVzLgD4SNVWoWzwRfvrQvRfFut1VO9FUrs
+	 91Px5eTp5B9ZdV3Dy7OrX0nBbHrK10H6VtMtR1dHb7hhUBg+lv2v+a2YntFMabSiv4q4t
+	 so4IX9BVo3YcQ4oj6m7BUesFHhP5VL619nU17Bt+TTYZEIXbpqzmOnl2U0bCz3TME9g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=nNcgR2xs;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.65.15
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011015.outbound.protection.outlook.com [52.101.65.15])
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=pk+kj5Au;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.66.29
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012029.outbound.protection.outlook.com [52.101.66.29])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA8660A2608;
-	Wed, 18 Nov 2026 17:04:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DA8660A2608
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC256606A31C;
+	Wed, 18 Nov 2026 17:15:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC256606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=nNcgR2xs
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=pk+kj5Au
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gy3y+mFsBSxXSlnDN0u9HkYtyV9SfueZot4AkEWro1tm5fuhgyQCdGrvaoerHsOgjxGAgNTNsGrxdczcEArKUg267R78M2wc7SsoIaprCbRg0+GjfT6zi1UoxF0sAZojgnARaDDnjE+H7B7Px0P5ri4wKokVPcfN87Vns0hJJRWntjRDPSv0x+9duonswP+hQ6qhjourJWHMC648VjK7XPoTvw1rEK84EORsT1Np7y5meuA6gg3hNySQFUa3+Cf0tbBEgHIyen3iudNKEVAF0JdXhuTB5xJyulWIYbPU5Ibj0CGKVuQJ7SehmLfdV/Y2s1iGqi5c3V7JeWmzN11L+A==
+ b=iMPJR4pfQIhA0PIXikYqd9oUF4nOJS1Tgx0eFRILPXsq9wryHIgB6EXidBJ1ajhWSL4KSy8ZGHPK3884v5eckD5A61en02AuI7LsWg2btgVNHIeUTJf2BajYBEOT5n81X6/w9mbdUIIV7Kc3aqM5TtxacNCCz8PU1SstYivrVCwFOTs0naF5MU/CYAz5+S8dOddsePh0a7Zv7Goz1GJXDrbDUA/xDTMMPSgQ2oA2S9G02vDVJnNHr+DlwjL4c7q8mmkNSD3HIe8DyAl5vLx36rMJbRkXQm+Jtm8BXzGjdhzdELRJd2QoEcIiKQr+p3NKEVq8f8Wb0NPkUIyl9nbz9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GAO6IYhoBQXWxy//8MhmCY3Mz+rDP6zjTTPSdyEpsA4=;
- b=ILJTuZdeABNeDTlTEuAv5kvcZKGHh2WjxKVMi9+qn2YIfYlv81zUrkZHgxIsgkyAMjtmNvS7gd+uYvLkITDG3SedTEqeC4KQRzQaU4DHvYdidddWlokq7KUdoU0oZ3zwA+qeICzoyxf/Th4HUtuVMCf5xltnX/PTHUZ6jwRPwpCPf7MXKWPkPVLZnJQvYtk8CVz1YHvwj47DUMTMYmCviRTiZQNi8INysy3523QrK1UTAcz6oKpjCP36bM5hHBuCkZJsMl+w+tDwJoBt4KQCTD+js9j2w/HhzWN4T6UTooEg24Lxiwwdwmobv2T0mGymCLAzygnuuBHm8as4oaYg+A==
+ bh=fXSfYWa2fhjUhlvut7EoHcpOwzFdqoq+QOjqDYbWe/U=;
+ b=ogIWVdRMzWt2zINrNAlUWJUwhLSPnshZfogDeJgh/athBzLXnQi/WuopAP3fV4J/x7l3bYf4FQkkc8LK+jLcClfb2HoSskn+e96UTUElyqDlFRRmJhhCSnYHw4E/1F1pnxGu4tBk1rcWRLN8lAWacj3jKWUvYE6WRx/74ci4gYxsXy3py18AdvMdPy6XpKuvYjnFkRhQvj2RdtE1dpeiEL/rc8rlJvO3jSL+1yuXe7cBPw5D7uExwCIk6hZQPgZ/DPH80udZk0/kk2qNq7BHAEiyl+zWPvAmfAkQECDcKFFH2LLN7xEPKy+cdtYUYahEP4G3eVCLhxpgCP2xXZUP8w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GAO6IYhoBQXWxy//8MhmCY3Mz+rDP6zjTTPSdyEpsA4=;
- b=nNcgR2xs2C9YLuiFmtOWb/ZuKl+fm0TTZTFmO6IITUhWtjG3UbBnh16oKJThDMom4yYolTcLpcFk0dbG4keqP0i+wD59nR0zIgmnlvRjvyU0T84iCIj1YKwYQnlnm6Gcl23iUnR0VE16eilnf5U9PAryyQrKE0nBO84+UH5yUhL55Us7FnKgVlnoiUFolu5dx3hx9N0UGXbfHGJIPWH5Y5AcyYcDdFsV1a7jsQ6Lk06vmEQ25m9jj6TJ0Zy9Yu53SLTmXBoxSR/suTLosJ9LxoUyVs0TWUZqbJTYM6/gbk9F86v6hYBfsRlGOho33dVpMLI8pmCyZ/9ioPlw2RNMHw==
+ bh=fXSfYWa2fhjUhlvut7EoHcpOwzFdqoq+QOjqDYbWe/U=;
+ b=pk+kj5Au3RZVFXwGp0j5i6tQ1Vl7n5U7XU0SNQ9iwPQBGE2cF5GvIPci223HfCiTC6LqPI6NNWa39y2BoSLbPFnj9a/iPw8UJQPSkyt1A1DrGSioNLNpvkhHXvJc8gMnxZQrjJD8BnQA+hVtaZkeI5PL0iN6NZ3fpRhZK3CVZMjYAoE0I+/Ne9c2BTf3T/vCfkg4qZnBLaHW+Y9ZFjwRmapPZ/MIumBLZi41BM9ELNZdiRxqA6WcxH42BehDKZdd++NL9CefPJ5gSKRqrPg8YmxV3RvphbGnyBn7cvw3sWlHvHtWCEpQynY2pHfz70hUsHWcriI8PA4GaMsDD0664A==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by PAWPR04MB9814.eurprd04.prod.outlook.com (2603:10a6:102:37f::22) with
+ by AS8PR04MB8450.eurprd04.prod.outlook.com (2603:10a6:20b:346::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 17:04:52 +0000
+ 2026 17:15:34 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%4]) with mapi id 15.21.0615.013; Wed, 18 Nov 2026
- 17:04:52 +0000
-Date: Wed, 18 Nov 2026 11:04:44 -0600
+ 17:15:34 +0000
+Date: Wed, 18 Nov 2026 11:15:24 -0600
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Amita Mishra <amitamishra@google.com>
+To: "Golla, Nagendra" <Nagendra.Golla@amd.com>
 Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Dan Williams <djbw@kernel.org>, dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: dmatest: terminate channel on timeout or error
-Message-ID: <av3arNfXL8zWJv3P@SMW015318>
-References: <20261118100839.3090172-1-amitamishra@google.com>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Abin Joseph <abin.joseph@amd.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, git@amd.com
+Subject: Re: [PATCH v5 4/4] dmaengine: zynqmp_dma: Add per-channel reset
+ support
+Message-ID: <av3dLAxz5TvMf1J6@SMW015318>
+References: <20261106-adma_per_channel_reset_v5-v5-0-f9990669362f@amd.com>
+ <20261106-adma_per_channel_reset_v5-v5-4-f9990669362f@amd.com>
+ <avtpSXEdyeWpghqd@SMW015318>
+ <5cbd17e2-f3ee-44a7-9a6d-bde4380520d7@amd.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261118100839.3090172-1-amitamishra@google.com>
-X-ClientProxiedBy: PH2PEPF0000385A.namprd17.prod.outlook.com
- (2603:10b6:518:1::7c) To MI3PR04MB12438.eurprd04.prod.outlook.com
+In-Reply-To: <5cbd17e2-f3ee-44a7-9a6d-bde4380520d7@amd.com>
+X-ClientProxiedBy: PH8PR02CA0043.namprd02.prod.outlook.com
+ (2603:10b6:510:2da::12) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
@@ -97,117 +110,158 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|PAWPR04MB9814:EE_
-X-MS-Office365-Filtering-Correlation-Id: f6a8e5b1-7504-4e9f-7dc9-08df45960fe4
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AS8PR04MB8450:EE_
+X-MS-Office365-Filtering-Correlation-Id: e8699656-ae2d-41ab-5695-08df45978e54
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|19092799006|23010399003|10067099003|11063799006|56012099006|261026140227099003|261026121527099003|261028144727099003|261021121427099003|261022075727099003|261022105027099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|23010399003|376014|7416014|366016|1800799024|19092799006|261022075727099003|261021123027099003|4143699003|11063799006|56012099006|261026140227099003|261028144727099003|10067099003|261022105027099003|261021121427099003|261026121527099003|261102123227099003|261009223027099003|22082099003|18002099003|6133799003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	jXuQPOj1f1o5zQwiSVC0hjPhSFKTJ5cxrBf02sXOOrZ+FtAKJ0slChPDjM3WeJJx54NgFKIc8gWc0IC1pxvW3FNodUEtiI5zh4xX4ggC1FhQTIrgWuG15aGRAWv0pIMYnJGd99oV6WGI5HA2GshZxdbAvK08UchnXgJ6oK4j7PpSO/CBDjm5i4R+52nWclQkgaZhI/1iDe7XB3pF1C69DzdKYHLAdFQCHHZ2ynztXihDly4c5EVT8feKhOFyQuqOLUPu3+Q9GvB6UQiu4csHLK035/56X1vUehHbVeAjin9QlBix4VI4UjOLLX9w82ORByKvEcFR6ssguLJYajGmCZea+PSf7jmmK+gEk2EUPTMc70mGRL467JxQDn6o2W60+zNQc34ZzigOkIig7+XCxBTL5sxDhktw55tCnrziO8F86TM4sXh9jsWC7puoOngKLTZt0ceYGCN5sHx1cyPDFzXxLks/Z4tQqPA0S2vGfWWdXF15AV1XsfHkacuLoQ1Bk5Ycwj7VDByBZM21nQyY4IhA7t5d6tXQchRLN/lJr7yXwhVhF3655ilTtTXh/nu9LrDaR467eBADpH8MPqebJ15x3mrXlc4aPWJOxm2cV1DEmT2i81wSdKil0A5tPQkYTaPACMCyty8uhAC7Gjv032g86pF+F7YJ88WoThheCuI=
+	yDSiku9Ulccn+RhD72a3u4zCPQl6rXVvO92iwlUiDp9sTMFgB650JTYK/0KrHtNP1Q8XN6VsuwjAAhTmC3jqxlr23wC2F8NXmV+Bu1zVfPf2NG6XhtkPbPqbGvVfBV+I2iyAWciJuAZh2/a8IeXi/VVwyw+fjRelsd/0cA9ofpL/W3APSgcK4/kwE8GtNtuCwBtOkJdO2lHzTIhp6p9hPsBn6hrU7VogUv0Oxq7E4A+gr4HEXPuHdMZtq45OT8rodQ22npv3BgeUbeXJ1R7P70AEsXYOuK+tSAvR/aLH83F9L4M8AuXg5y5HI+6pFUgwidkk9npWdm+VuzJ5KTelh86QKnFT3ETVKWnaWCgljsQYn8QpCpNq/eLVF6TarSCOA/WXmnQrtIy35MPkdM/TfbdjDhshezi1FDWftUX6Hidpv6GOrWljJN75aQ6qhlmVCaFz5B1/gl3bj/63XwMcziUL3shuX5ULD1BBNQ5nxcFnZp88uZHSYuaDUZUqWkHw+hZfqnliG/HxbKU2LZBk7465tHvby7+sbwRAoMiHOBgCgTkssx34SIu66Tfd8qrf4/tYt+ujLvs5mWd3Qh/Hvd/0DbBVYyVLDgQkl72lQltjWeUNv53C6PjhIpLpJo+fafTK+EkWyxUQ7ZjWxJR3v0tbxf4y5P+1QY9NizOz4IA=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(19092799006)(23010399003)(10067099003)(11063799006)(56012099006)(261026140227099003)(261026121527099003)(261028144727099003)(261021121427099003)(261022075727099003)(261022105027099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(7416014)(366016)(1800799024)(19092799006)(261022075727099003)(261021123027099003)(4143699003)(11063799006)(56012099006)(261026140227099003)(261028144727099003)(10067099003)(261022105027099003)(261021121427099003)(261026121527099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?rXV5JSo/9EUmkOn+9Kk8XPCx1usYsQZ0AGvZHmtRkxiDp3Lv5Fo7vZSLRkl4?=
- =?us-ascii?Q?98qicUatuWIsSQZje0qDwucQYNJhOUGyis9dUbBaOewe4/iw76uDzgh2ZB2U?=
- =?us-ascii?Q?8ETznaxD/yss3E89mhIcqa33qyez/C0ZmC9ErSBLMnXGJnIY8JhrbnwD1lgY?=
- =?us-ascii?Q?anjrsH9uJ31O0JogZvRTh7DajS1JJ7m7uFQWMgtMHityeBIaCuJXq4ehZTFL?=
- =?us-ascii?Q?MEWuelfJwfr5eMGMe06ciTMm/+gzwqJsMhXX3C6j2WHg2rxMF8wKX3tZk4ky?=
- =?us-ascii?Q?7F14qwRR0Xh96n8igEtc52AcutBb//CFqFloNa4trEjy3pgmA9uwtvhBwMbo?=
- =?us-ascii?Q?WhVuOA97VgJb/5+6JwiNPaIN8v7nypV+tH32olcyNABD70Zdacy/AddjmpMF?=
- =?us-ascii?Q?JDpyfcwhgOSvwBfn/CmjTC9B2eSZOd5Nf/7n3kYNTj/3MgY2vi+jDKP5IF3x?=
- =?us-ascii?Q?7TFfDIQcEnfU11HKt3vRr5eLhVYVt6gI1xWpgWyjipsxOJYfUV8G8hFga5OJ?=
- =?us-ascii?Q?vXYNO0qIDGoTa1MXJ6tn7QUsfYJk77Xgu7hAVhUUuHj/zu0miJVgeaLiQl62?=
- =?us-ascii?Q?OBML80AeEDQ/sJqb4Y11tVBTsjTB8shmMKYio0S6g74FY9CASCdzhKkaPld4?=
- =?us-ascii?Q?/NFvM4Zl4Kjwir4b05qx3MP8npfLI/JLn325IgAOjWicraprKKbdrLvbYr7i?=
- =?us-ascii?Q?LreE+xDdwv3ioM7F6UU2+gV6eH9CS88IReOu/sK7fkq9qlcRhOBL3jpoLG5F?=
- =?us-ascii?Q?A6xANnSN5Kz8/g4FvbcyBhMBiNvO+JpOezK7o3XXIQ/LBngGui64yI8ofSvg?=
- =?us-ascii?Q?MRi0kQuJVsV2Np1rZ4mLk9KfnqiOFZve9oJss6n2UieaMRm3usZuXNr9kl5K?=
- =?us-ascii?Q?qMnSyQv1QGWQFmRnaIEqQNbD2U0OR0uh75SMv7dOr5xe6tmLPbHjTWtlzxqZ?=
- =?us-ascii?Q?+zbuE9AcjMlWyLd3mm6qOPqnMV77RCogIelNWUwZN4c9sFZ4deqYFL34Qo4z?=
- =?us-ascii?Q?CHRQctUt03VVNbMPsFoYV6YyqNNo7EFzTGXkSDeV/VZ9eef90b2efOWvi+Bc?=
- =?us-ascii?Q?8NFZWKOqh4taoidnHuCMFFNrVeoa1oiuCsl5HX8WGrQJcueIO+HSQ+0v3YFw?=
- =?us-ascii?Q?teCA2zPnuNNGGSSUDNvGHkKnSbea/Hs48lDqjTlPFwO2lJq4lyTrzub6e5jk?=
- =?us-ascii?Q?Rfbcyhg+60ZruBvQpLteTFX05huRdOGkFkjVaWK8mxFhXXBbd3Et6Uox4RAA?=
- =?us-ascii?Q?6Y4MZAjmk+nYlDwf977eu9fazqCS80eAk5V6JiQH/3bGXhkBOU6P6QK3i0yb?=
- =?us-ascii?Q?0nsvu5GA3hYb29X9yIsPbYPkOhxs98MSpsQW0w2wDKcvVoPBWohuu1UAaLRo?=
- =?us-ascii?Q?9LiFhApFihZ1lfbWqsfaDBzlkikxL8qMV9iE63hakEi45bRr6BLPpf3LDGyG?=
- =?us-ascii?Q?RcDtXmNPEOpf/7TfOCQCYw+ub3dHoQORKi4X4MKbJqNIUplQlm6tPbW8NdJm?=
- =?us-ascii?Q?IOEfQB/3u2k0aqYvs30Sbt4prQGvbWZoap+WnP2iE2sSUyXHv839sLny31Rh?=
- =?us-ascii?Q?ZXD3sUGaT0G1KKqBJHkeN6D5O7U0t7JQBuPc4szo24vUg3mM3zxpPZ0/XgHs?=
- =?us-ascii?Q?FJ3NpaOmWMudx996RCIHnYcC5/EzWAx3XibO5rdTahFAD8Jmtl3PIDIvAZv0?=
- =?us-ascii?Q?HjZqAkWxmy5o6mDizYm6QF4z3EAgPX6FpF6v3Er+WWfEyehlSIPFcs4FcNxf?=
- =?us-ascii?Q?WQNIFeI0YyUfCVjrCfthKAnTGZPq0uGGszjzuqN5oycNLat5Uk+K?=
+	=?us-ascii?Q?6ckT1bhubWpzdIh9ymSWTUHsrpJE2Y6G4nDyDOfOCstK5L+VCJlAe+O/qV7p?=
+ =?us-ascii?Q?RfLQ6DIKmVY8oj/4Zksy6LpFnusxsnsFY5wgM0MFyQEq5kzv4XecGrsp3LVV?=
+ =?us-ascii?Q?KoxB5aejS2xgSMW9T6uioPrJNghD6cnHUKt5KhQ8RUBEqU+6YILU1xGzoC4E?=
+ =?us-ascii?Q?JV+MivzJ+QVj/WMXn6O9qwsywWGWWPqBGfWjlyo8YtBcysnfyWZhNdDVnS6n?=
+ =?us-ascii?Q?l7sACo3e888ihE1606HaeV/HkA5Bw96RSMSmXqEYa6Si4zM6xwadj6pCJ2mf?=
+ =?us-ascii?Q?8RjJMu4JPWN6tfXRGWfPXwegxnLgETvBfHcer+AvO3kDZ8IqothZ+BRZb9KK?=
+ =?us-ascii?Q?+a6ZxY+CeClWwhTov+ZzuI3l/UtAhQpu8LAVInkn0g9cAixlRxo4cDti2sHQ?=
+ =?us-ascii?Q?Sbp64J6f/x8Cwkyh4e01hLOVkDOjawyeF0n2wmbcWzcpYWA1G8ywMT7w/KeV?=
+ =?us-ascii?Q?iHE5vAdfjb2YcAzd67izkP5ZTvAJd/s7GsRR/cvlNH2EcYQx0AGGU75C3Fuf?=
+ =?us-ascii?Q?OlJO7AsXIO8GVvq2xzQeSB/5YNgfRCnSkw6GikNHFE9PPaTrHRxpoY6Lt7jN?=
+ =?us-ascii?Q?FP4wJ+X69l3yrxWi2Utgh4Qb7KlusqdSKyETCJnfjBvPWxNIlWg8YKqh0vEG?=
+ =?us-ascii?Q?1JZPmeCyTsWitxTr4oHlfyfngv18hCMIGpin8TJxbgR1bBjy4Ll2lC+dCaTL?=
+ =?us-ascii?Q?zoHT8ztJ9uhMWdgD+cnW7VmlPk8jxK8V8jivEdYRaoDkk5nplOsMPgCqbN1O?=
+ =?us-ascii?Q?xtKsQQPFe6UZTUhiaVmV+M5tzHY06Hy1HzD7ct/I5G5/e0tFCEsh6ROmKW9P?=
+ =?us-ascii?Q?y2Q4Q2mCuM0Gk5ZD/87OIyQGQ1MmJ0HT2AxxLvBD7Cws6clLbaQZNuSHryYl?=
+ =?us-ascii?Q?1rd2/DHkslNctaxrnS4DAWTZuEABIjZaNAJwbqKSaibnxJ0B/yx0MEIh3/Ys?=
+ =?us-ascii?Q?Xv2lfV8na/nofONaM9s0slP+rhRhI6nDuZVWjXbq1LO6CKt/k27hEehnUWV4?=
+ =?us-ascii?Q?RnxAPH6x0ZJYiSQFjh/grBFWhuva3JyR7m2OBJM4d//sVyFoyA9BjvJzq6l4?=
+ =?us-ascii?Q?4Xl2FwAPbMiuR45MsdOcbJcYXhhVL8oMEM/geK85uTDMmfEp1CPr9zS51eCw?=
+ =?us-ascii?Q?l2IXgYqJVk5uzMgYHfsvBXkaMaZ0M5HEIFpxsA3t5AsLPuJNOI7/ee+a2V8n?=
+ =?us-ascii?Q?npOOyH50BSbKLul5RptMTCCWWnh8ly1RZMdriGBYBsDP45IgEVd0tt3Ynwge?=
+ =?us-ascii?Q?+xyZBqROIl7zO0hPJ7NYrfVbelKS3lt5Ht3uMTWR+WCARrny5tSPOUBNPGkG?=
+ =?us-ascii?Q?66etITMp5flP4RAsxClF2sQMKL5Gjvbr7xarZqmnhjSJxZVmckq+cpB9UsVi?=
+ =?us-ascii?Q?vyYHn4iCDcWo8r4n6keQ+OnKq8TwHpUOJOBu5J9B8/vBr6QKDpAMi5KhnmdJ?=
+ =?us-ascii?Q?//6bL/0m8sDbuxgh5r2Cmgu934Cbh1irrVmYjonzmLGCZS8eFpBWH0xivCmM?=
+ =?us-ascii?Q?PP6NVY54y+Zz44ha18JY93ytYjZTT01rhkrvp++YxoWkVkmgejN0gGS1tV9F?=
+ =?us-ascii?Q?omqjY44FBldpCehJvNiwSWr3o5TQKT8kOuO7MKaQFPmKPvBVFJb1MFYjZEdT?=
+ =?us-ascii?Q?+6w354Zr/csGBaPZbPwKQbhW0Sd2PHO6yEA4NXs0/M1XWfXMf4THZjwpferz?=
+ =?us-ascii?Q?dKGRH/mH6SQba+FgzRtgi1XoCDidK8OEf6fSVfbXOGqfY8Km5iIQI8caIjzE?=
+ =?us-ascii?Q?1tPxBOpGqe88NdxuEddtPgrpQcAw3aCOVMFcHWVcBxFxGKE193Em?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6a8e5b1-7504-4e9f-7dc9-08df45960fe4
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8699656-ae2d-41ab-5695-08df45978e54
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 17:04:52.4799
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 17:15:34.1427
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gGyKO1zeePtj5irvJ6PK5vuyzvpihmrsK4lymO3vmrMkYd0hewfqw6MrkGXCL2Krc+U65wB8q3D/ot8LWKPYvnns8oiHivBkgwQeTiRP4BoR42MZPbY5+dsCvHHIVaCf
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR04MB9814
+X-MS-Exchange-CrossTenant-UserPrincipalName: PtmDeMwL6OkcdAVs9zs11iD4c0FKsDo1pzeXYUrdV2cxvQ5APNDpJIsks1Sk2yy4oTs38xBN9wFw7l93z35R2r0pa4LOiJGjNZNuo75D63e19bPhanqHOuFyvwBRrP0O
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8450
 
-On Wed, Nov 18, 2026 at 10:08:39AM +0000, Amita Mishra wrote:
-> [You don't often get email from amitamishra@google.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On Wed, Nov 18, 2026 at 11:54:30AM +0530, Golla, Nagendra wrote:
+> Hi Frank,
 >
-> In interrupt mode (!params->polled), when wait_event_freezable_timeout()
-> times out (!done->done) or dma_async_is_tx_complete() reports a
-> non-DMA_COMPLETE status, dmatest_func() jumps to error_unmap_continue and
-> calls dmaengine_unmap_put() without terminating the DMA channel first.
-> Channel termination via dmaengine_terminate_sync() only happens later
-> when the test thread exits, unlike the polled path which terminates the
-> channel immediately after dma_sync_wait().
+> On 11/17/2026 2:06 AM, Frank Li wrote:
+> > On Fri, Nov 06, 2026 at 03:40:26PM +0530, Golla Nagendra wrote:
+> > > Versal Gen2 and Versal Net expose a dedicated reset line per ZDMA
+> > > channel. Trigger a reset pulse during probe using device_reset().
+> > >
+> > > For Versal Net and Versal Gen2, reset is a required DT property, so
+> > > probe returns an error if the reset property is missing. For legacy
+> > > SoCs, the reset path is skipped.
+> > >
+> > > Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+> > > ---
+> > >   drivers/dma/xilinx/zynqmp_dma.c | 10 +++++++++-
+> > >   1 file changed, 9 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+> > > index cb0eb13f9b05..12696fa44c66 100644
+> > > --- a/drivers/dma/xilinx/zynqmp_dma.c
+> > > +++ b/drivers/dma/xilinx/zynqmp_dma.c
+> > > @@ -19,6 +19,7 @@
+> > >   #include <linux/clk.h>
+> > >   #include <linux/io-64-nonatomic-lo-hi.h>
+> > >   #include <linux/pm_runtime.h>
+> > > +#include <linux/reset.h>
+> > >
+> > >   #include "../dmaengine.h"
+> > >
+> > > @@ -937,6 +938,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+> > >   	if (IS_ERR(chan->regs))
+> > >   		return PTR_ERR(chan->regs);
+> > >
+> > > +	match_data = of_device_get_match_data(&pdev->dev);
+> > > +	if (match_data && match_data->has_reset) {
+> > > +		err = device_reset(&pdev->dev);
+> > > +		if (err)
+> > > +			return dev_err_probe(&pdev->dev, err,
+> > > +					     "failed to reset channel\n");
+> > > +	}
+> > > +
+> >
+> > Use device_reset_optional() will simple code. Your binding already verify
+> > dts, needn't check again.
 >
-> If the DMA controller is still actively transferring when the source and
-> destination buffers are unmapped, an IOMMU-backed DMA engine will trigger
-> use-after-unmap translation faults, or overwrite the buffers while the
-> next iteration reinitializes them. In addition, if the timed-out transfer
-> completes during a subsequent iteration, its callback sets the shared
-> per-thread done flag and wakes done_wait prematurely, causing the next
-> iteration to fail with "completion busy status".
+> Thanks for the review
 >
-> Terminate the channel with dmaengine_terminate_sync() on both the timeout
-> and non-DMA_COMPLETE error paths before unmapping the buffers, skipping
-> the redundant call on timeout when params->polled has already terminated
-> the channel.
+> The binding schema restricts the resets property to Versal Gen2 and Versal
+> Net, where it is required.
 >
-> Fixes: 4076e755dbec ("dmatest: convert to dmaengine_unmap_data")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Amita Mishra <amitamishra@google.com>
-> ---
+> An unconditional device_reset_optional() does not enforce this required
+> property for Versal Gen2 and Versal Net devices in alignment with the DT
+> binding schema. If the required reset is missing, device_reset_optional()
+> would allow the driver to continue probing.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Yes, but I suppose function doesn't work without reset at dts, which is
+same as that driver is not probed. And new dts require pass CHECK_DTBS.
 
->  drivers/dma/dmatest.c | 3 +++
->  1 file changed, 3 insertions(+)
 >
-> diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
-> index 2ae3469397f3..950b7a9e7769 100644
-> --- a/drivers/dma/dmatest.c
-> +++ b/drivers/dma/dmatest.c
-> @@ -852,6 +852,8 @@ static int dmatest_func(void *data)
->                 }
+> Whereas, in the current approach, the match-data check limits reset handling
+> to Versal Gen2 and Versal Net. Calling device_reset() for those compatibles
+> enforces the required reset property and ensures that probe fails if the
+> required reset is missing or cannot be applied, in alignment with the DT
+> binding schema.
 >
->                 if (!done->done) {
-> +                       if (!params->polled)
-> +                               dmaengine_terminate_sync(chan);
->                         result("test timed out", total_tests, src->off, dst->off,
->                                len, 0);
->                         goto error_unmap_continue;
-> @@ -859,6 +861,7 @@ static int dmatest_func(void *data)
->                            !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
->                                          dev->cap_mask) &&
->                              status == DMA_OUT_OF_ORDER)) {
-> +                       dmaengine_terminate_sync(chan);
->                         result(status == DMA_ERROR ?
->                                "completion error status" :
->                                "completion busy status", total_tests, src->off,
+> For legacy compatibles, the driver skips reset handling even if an old or
+> unvalidated DTB contains an unexpected resets property.
+
+Fixes these dts.
+
 >
-> base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
-> --
-> 2.56.1.703.gf848ed807c-goog
+> Hence, we prefer the current approach. Could you please advise if you see
+> any concerns?
+
+Similar case is about clk_get_optional(). Only check critical problem, like
+out of ranges.
+
+Frank
+
+>
+> Thanks,
+> Nagendra
+> >
+> > Frank
+> >
+> > >   	chan->bus_width = ZYNQMP_DMA_BUS_WIDTH_64;
+> > >   	chan->dst_burst_len = ZYNQMP_DMA_MAX_DST_BURST_LEN;
+> > >   	chan->src_burst_len = ZYNQMP_DMA_MAX_SRC_BURST_LEN;
+> > > @@ -952,7 +961,6 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+> > >   		return -EINVAL;
+> > >   	}
+> > >
+> > > -	match_data = of_device_get_match_data(&pdev->dev);
+> > >   	if (match_data)
+> > >   		chan->irq_offset = match_data->offset;
+> > >
+> > >
+> > > --
+> > > 2.43.7
+> > >
 >
