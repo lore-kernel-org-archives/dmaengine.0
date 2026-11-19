@@ -1,54 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.115
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795087356;
-	b=tyItQSBGjcpXwKoAlrE0+l1kR74hUuN7PsCxkpxER8+Lqx4OPwgdWCmJ98+D1yBhU0g9
-	 gMnLwkspnhbNYqZxShgIfsuXzoAtxDLux+auKvBGo9iaO+Dl0FtWAmQvoN8GwzVnLEdD/
-	 lpgbHVgwD+PknKmh0IHzRAcxukMcT1ccTPg223zF3K2EiDQ+VyOUQ0YNY78t3XLvEdOd+
-	 4QeQzbGit6oDrpXrbCVL+hT3oWCAoC3lJOwiPVpCHg1R/e2PVBL5Y8LxTs3lCcNURKbER
-	 RXhE3wA3Lufk1a9QvXJt5Z+EUXs44QdNPfsVNAt5hGYQuTFQe1jAiv6pnO+88Iy3sjQ==
+	t=1795087608;
+	b=5Q5YT08DnT5zDeif9GAyZrpCJe0YuOZkXvHQldbzKEoC1JkWrp7ImEZNJvTNFxNpXq5T
+	 y/vF4WDdMQliBFKDyp4lf6VYeHL+rbtxLzn7IZlucFeM8c3jbMj2neG9/kS6OW2CuTb25
+	 /21zAtq2u2Qt8Qyq0G7b/NTv5Mj3kcBYK/opPB596DWifrb99B1mLYkQ74gIz97wVVDck
+	 ypw5tY9tl1G3qPTxvdLEGe2gMRyuWSwHxt+Fzeg9IeNCmQAHgCgV19eqpWslWZvENhlsn
+	 miCvw0aOpJ/nb+C84h737EUgfJnxFnLz0Un/KC76RFgJ+jqWNDXyqFHKWmksbN02x0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795087356;
-	h=DMARC-Filter:DKIM-Signature:X-Lms-Return-Path:X-Mailer:To:From:
-	 Subject:Mime-Version:X-Original-From:Message-Id:
-	 Content-Transfer-Encoding:Cc:Date:Content-Type;
-	bh=MlCLrDqrSeighfhjWv2DVS6iyNrp+yoODMT7KhOE6ys=;
-	b=X0E3vYVmwOmb2cadPCNGm3dMtyvWLYQEojBiBQOLh64kRqPYIrY6nDIdJ88hVU0Sr/lC
-	 0QLusUXguKgel3WHfYSXnx1YA6eTKBrS/WMI+K6C1yNwZhdXrDkkEAmvdFZ976SWd7JV3
-	 45wySfn7DX/Px4nVActzGHijUO0LYxMamLVZQ5nrq+Y2uoEPupedb4rob9dAXObFDaHgB
-	 GaCeDtX3MExgFGfqHHyZ5EZ08rsYLpEuezFei0UrRE5/5opB9nWccYGuXBwwrJPKp6anm
-	 An9CO0shoYGsnNX/Z+qk2MhEzEOmJvoe/nLN+2vu8/j57WfdaKvRqOOquhTnlZOVXCA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795087608;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=hihMc8xWalFD1jLREOEPnQmXRmKw1wLBTGaYMA7TzEc=;
+	b=ZTsqYujF91LKQWBXpierkKmBzOhPzWFSUwMuHS76EDXCMgox2ufZKu2Ovbj/htNs5Xlq
+	 RlFrY48PNkZfq04lC63TfdG383HE4R4YN3Yc7nFg9KYVd0EGr6spQK1tLoef6IZnsUPT0
+	 l4erLfaSIM02Eu7EzYPQ+eNTbYRrMGYnLPFycXvd4la67UDwBJ9wTtIGOglXY2waw5Rvd
+	 RuJqor8KGurW0jv3oZhu14YvjsjBSB/hqrKOQzlQpUJ92bU3Z7dmku4wlcABfYxpCmzxO
+	 KQowwVwrsiDhEhrHRws8JXX8QvoVhH46JeiyBEhJ84aDh7U+t7k3FeTOv3VK13hZybg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bytedance.com;
-	spf=pass smtp.mailfrom=bytedance.com;
-	dkim=pass header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b="iAPcuc0/";
-	arc=none smtp.remote-ip=209.127.231.115
-Received: from va-2-115.ptr.blmpb.com (va-2-115.ptr.blmpb.com [209.127.231.115])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Y4IXuzwI;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D27606A325
-	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 11:22:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99D27606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8B2606A320
+	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 11:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b=iAPcuc0/
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1795087351; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=MlCLrDqrSeighfhjWv2DVS6iyNrp+yoODMT7KhOE6ys=;
- b=iAPcuc0/JrAUWLHy4WgUJAT29FXj06PRkR23OeNyXIrfX5/vY8+NOUG/wigajhPysAMAKi
- tA7QV3kLjqJ2FHIgAr5qQwUsu4TepIMvNcjo2cyPMUgHuxqy5QPzYTLuGWIOWAw3pVLvMh
- smSae0+QgSsSD/fiedUD2PXpa8nAhlzmPqqgEyMP0EXbPanciaCwyt4RklICj1be4dzGxE
- gc7+DuCSFXC3klOOCax47ceDB8PQBdf52NkcLx9Dr13yxQixID8naBpFNQO8KMn64wiAgY
- kyU/poGDX3ZN4zWz2Oss3mfusRBMJk1pYxDwYKMAMNtS+xj3F2UDK3blTNiBCg==
-X-Lms-Return-Path: <lba+26afedbf5+85e03d+vger.kernel.org+weiguixiong@bytedance.com>
-X-Mailer: git-send-email 2.55.0
-To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>, 
-	<dmaengine@vger.kernel.org>
-From: "Guixiong Wei" <weiguixiong@bytedance.com>
-Subject: [PATCH] dmaengine: idxd: Restrict DSACAP reads to DSA devices
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Y4IXuzwI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17EE1F000C4;
+	Thu, 19 Nov 2026 11:26:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795087608;
+	bh=hihMc8xWalFD1jLREOEPnQmXRmKw1wLBTGaYMA7TzEc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Y4IXuzwI35RXCjOJH1gUypP0PyLYHaPXT6Fz9+KEM4j4v+yZ0xsmzLpRpmUmm+pP/
+	 A9Dru7Q5WBTuvNbPJ7QUe21guyGrFevA+umWU+45a6Ro3d9qluIA8sk8HWoUuSeotP
+	 KIHyt0z6t6fhQEiSf9wIsC1vDaMI2PXqSBjPQAGEWimRwM9Sdi6YkPPBYuYOuTKAQn
+	 25gamgjcxhusvIurPbOp4SsNN9WBCE8lhowlDoI/kPASqWUpJZOl589XomXgbuc+2e
+	 ViSmrAVxkxYZijXo4Zrdq2DaLVd6WmWWvOGnpX+Mbk6djl0aGt48Lm+W2dTvnYiGx1
+	 Tkc6/Z1AgdyhQ==
+Message-ID: <sashiko-outbox-223029@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: Restrict DSACAP reads to DSA devices
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Guixiong Wei" <weiguixiong@bytedance.com>, dmaengine@vger.kernel.org
+Cc: vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261119112212.92663-2-weiguixiong@bytedance.com>
+References: <20261119112212.92663-2-weiguixiong@bytedance.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 19 Nov 2026 11:26:47 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -57,46 +58,36 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-Mime-Version: 1.0
-X-Original-From: Guixiong Wei <weiguixiong@bytedance.com>
-Message-Id: <20261119112212.92663-2-weiguixiong@bytedance.com>
-Content-Transfer-Encoding: 7bit
-Cc: "Guixiong Wei" <weiguixiong@bytedance.com>, 
-	"Dave Jiang" <dave.jiang@intel.com>, "Vinod Koul" <vkoul@kernel.org>, 
-	"Frank Li" <Frank.Li@kernel.org>, <linux-kernel@vger.kernel.org>, 
-	"Yi Sun" <yi.sun@intel.com>
-Date: Thu, 19 Nov 2026 19:22:07 +0800
-Content-Type: text/plain; charset=UTF-8
 
-idxd_read_caps() reads DSACAP0-2 whenever the hardware version is 3 or
-later, regardless of the accelerator type. On IAA devices, offset 0x180
-is IAACAP, which is already read by the separate IAA capability path.
-The additional reads populate DSA capability fields that are not used
-by IAA devices.
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Low] dmaengine: idxd: missing Fixes trailer for unguarded DSACAP
+  register reads
+--
 
-Restrict DSACAP reads to DSA devices, matching the device type check used
-for dsacaps sysfs visibility and SGL support.
+commit 20d136fa0348a2bd1e8670da1c059a69c7edbff4
+Author: Guixiong Wei <weiguixiong@bytedance.com>
 
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
----
- drivers/dma/idxd/init.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> dmaengine: idxd: Restrict DSACAP reads to DSA devices
+>
+> idxd_read_caps() reads DSACAP0-2 whenever the hardware version is 3 or
+> later, regardless of the accelerator type. On IAA devices, offset 0x180
+> is IAACAP, which is already read by the separate IAA capability path.
+> The additional reads populate DSA capability fields that are not used
+> by IAA devices.
+>
+> Restrict DSACAP reads to DSA devices, matching the device type check used
+> for dsacaps sysfs visibility and SGL support.
+>
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 4b827a3297564..1a8638adf8c7d 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -560,7 +560,8 @@ static void idxd_read_caps(struct idxd_device *idxd)
- 	}
- 	multi_u64_to_bmap(idxd->opcap_bmap, &idxd->hw.opcap.bits[0], 4);
- 
--	if (idxd->hw.version >= DEVICE_VERSION_3) {
-+	if (idxd->data->type == IDXD_TYPE_DSA &&
-+	    idxd->hw.version >= DEVICE_VERSION_3) {
- 		idxd->hw.dsacap0.bits = ioread64(idxd->reg_base + IDXD_DSACAP0_OFFSET);
- 		idxd->hw.dsacap1.bits = ioread64(idxd->reg_base + IDXD_DSACAP1_OFFSET);
- 		idxd->hw.dsacap2.bits = ioread64(idxd->reg_base + IDXD_DSACAP2_OFFSET);
+[Severity: Low]
+Since this fixes the unguarded DSACAP0-2 reads in idxd_read_caps(),
+should it include a Fixes: tag?
 
-base-commit: 666539eecdf4db623f5e3c3e55cf9f2dfad24aa4
--- 
-2.55.0
+  Fixes: 8308510b9365 ("dmaengine: idxd: Expose DSA3.0 capabilities through=
+ sysfs")
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261119112212.9266=
+3-2-weiguixiong@bytedance.com?part=3D1
