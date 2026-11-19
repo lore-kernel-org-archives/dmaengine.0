@@ -1,83 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.115
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795084178;
-	b=ygPIQLmYgREJ4anj6t4V+DceJJxHrvzkaCXMMO6pUQ6X9Uc1a44lEIO9vVkOBREE8FSA
-	 nD6L4hunupiW0BdQkr0Y048gHnaRDGcxl88VmDh8ntrBeXLr17lrZBRIU6rBJHfaGMb+U
-	 BHFA6RP0O41ofFWfS2AKtYHOUJveBdPj/Az7Gt68ibnI8qt0PoKyhGC4ambXjgbZLRpxC
-	 XEOsUaS7LMAYm373sNg6dX/I28D2KfY6gXL51AxtfBHrSORqianLw+dz2Y5ZN9ybfCTPG
-	 uEOpgty9ZRpZId0QWgSqsVB/BNFKVEPr48QCZ3sE713fc4VVtG4VbdFMu9dsdjovxdg==
+	t=1795087356;
+	b=tyItQSBGjcpXwKoAlrE0+l1kR74hUuN7PsCxkpxER8+Lqx4OPwgdWCmJ98+D1yBhU0g9
+	 gMnLwkspnhbNYqZxShgIfsuXzoAtxDLux+auKvBGo9iaO+Dl0FtWAmQvoN8GwzVnLEdD/
+	 lpgbHVgwD+PknKmh0IHzRAcxukMcT1ccTPg223zF3K2EiDQ+VyOUQ0YNY78t3XLvEdOd+
+	 4QeQzbGit6oDrpXrbCVL+hT3oWCAoC3lJOwiPVpCHg1R/e2PVBL5Y8LxTs3lCcNURKbER
+	 RXhE3wA3Lufk1a9QvXJt5Z+EUXs44QdNPfsVNAt5hGYQuTFQe1jAiv6pnO+88Iy3sjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795084178;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization;
-	bh=dUSNnRZL1irG1RiGj+Z8r6wLhmGb7tyTO4JuEMlYrRU=;
-	b=WUD4W1XaaLi6u7apk55AImUWf7/U1AJ2HJNYjml1s4aC3+n72oMo1PsKuyvIaHqiTTVl
-	 y1mngfIrGfjebwrK3tiqA+XwJi/avC1lwrFBrLIWDazXtfrZ6S3OCOOJUVzQBYjHTZ/vT
-	 y1nTWWvCqClRokjLVMXTga+pHpJRbzQVF09PaT3scssRprmzK5YAEAVnZ5dy8ZeIf0myA
-	 D3b2pULpZ4agxzataMkOybk/2fLLwUjO1hYdE88771XN4B/N2X0ieA69PRnrGRZXOoR7S
-	 FfdOAPDj2A2qkZOSzD7mPIN2WS4f/2B+VI6ooMPD1IM0qkNiUfEQQEzxvYTe0yEjGEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795087356;
+	h=DMARC-Filter:DKIM-Signature:X-Lms-Return-Path:X-Mailer:To:From:
+	 Subject:Mime-Version:X-Original-From:Message-Id:
+	 Content-Transfer-Encoding:Cc:Date:Content-Type;
+	bh=MlCLrDqrSeighfhjWv2DVS6iyNrp+yoODMT7KhOE6ys=;
+	b=X0E3vYVmwOmb2cadPCNGm3dMtyvWLYQEojBiBQOLh64kRqPYIrY6nDIdJ88hVU0Sr/lC
+	 0QLusUXguKgel3WHfYSXnx1YA6eTKBrS/WMI+K6C1yNwZhdXrDkkEAmvdFZ976SWd7JV3
+	 45wySfn7DX/Px4nVActzGHijUO0LYxMamLVZQ5nrq+Y2uoEPupedb4rob9dAXObFDaHgB
+	 GaCeDtX3MExgFGfqHHyZ5EZ08rsYLpEuezFei0UrRE5/5opB9nWccYGuXBwwrJPKp6anm
+	 An9CO0shoYGsnNX/Z+qk2MhEzEOmJvoe/nLN+2vu8/j57WfdaKvRqOOquhTnlZOVXCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QeuDAEbS;
-	arc=none smtp.remote-ip=192.198.163.11
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=bytedance.com;
+	spf=pass smtp.mailfrom=bytedance.com;
+	dkim=pass header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b="iAPcuc0/";
+	arc=none smtp.remote-ip=209.127.231.115
+Received: from va-2-115.ptr.blmpb.com (va-2-115.ptr.blmpb.com [209.127.231.115])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8F5606A320;
-	Thu, 19 Nov 2026 10:29:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5F8F5606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D27606A325
+	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 11:22:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99D27606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QeuDAEbS
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795084178; x=1826620178;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xlfDxzEZtd4xvDMcGxhAWOaHGccCW55yOUxKu6tohL8=;
-  b=QeuDAEbSuLO6EWoFuRe2puh6/eY+kmGhp9/yDankziOetgZHgNWqAuZ0
-   i/3jGi3nWhlsL61pMyokZ7mRHxmL0mbfgpW6//zHXnuwxlGjwAAdw51jV
-   Pju/kysFAOB0gEPqT7V4feK9vInXv1HFs5Gsa6nSCMXexQBZazTPZRfAL
-   KgPsW7+sGqzXBR3LvLlMs8ZBm+APwFpOkkWNRvtvV4kmPwiHtS4DcPUen
-   prA2Hg/YS1gSSZSi6fZ4xpdjIblfHxhxPMIFKcgj/YnkyNIQJt5JXXazB
-   QpGB1QjEGrMxxMpx7++HrnfAXdAdpHXu93CI/lnL3AA4UMvbabWteEsEc
-   g==;
-X-CSE-ConnectionGUID: pWRcAB8HSqGznSPW+usWsA==
-X-CSE-MsgGUID: ZUHAY4G7RVG80gWG99Y7hQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11970"; a="3847465"
-X-IronPort-AV: E=Sophos;i="6.27,220,1787036400"; 
-   d="scan'208";a="3847465"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 02:29:38 -0800
-X-CSE-ConnectionGUID: 0nWMvIVPTG64FSxYgTh2vw==
-X-CSE-MsgGUID: hH96snwBTV6ImwKrhzd1ZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,220,1787036400"; 
-   d="scan'208";a="12355092"
-Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.61])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2026 02:29:35 -0800
-Date: Thu, 19 Nov 2026 12:29:32 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: James Hilliard <james.hilliard1@gmail.com>
-Cc: Viresh Kumar <vireshk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>, Dan Williams <djbw@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	dmaengine@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>
-Subject: Re: [PATCH v10 4/7] dmaengine: dw: use virt-dma for descriptor and
- callback ownership
-Message-ID: <av7PjEXWiWpp1LR6@ashevche-desk.local>
-References: <20261119-submit-dw-dma-synchronize-v1-v10-0-3a737597a0d1@gmail.com>
- <20261119-submit-dw-dma-synchronize-v1-v10-4-3a737597a0d1@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=2212171451 header.b=iAPcuc0/
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1795087351; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=MlCLrDqrSeighfhjWv2DVS6iyNrp+yoODMT7KhOE6ys=;
+ b=iAPcuc0/JrAUWLHy4WgUJAT29FXj06PRkR23OeNyXIrfX5/vY8+NOUG/wigajhPysAMAKi
+ tA7QV3kLjqJ2FHIgAr5qQwUsu4TepIMvNcjo2cyPMUgHuxqy5QPzYTLuGWIOWAw3pVLvMh
+ smSae0+QgSsSD/fiedUD2PXpa8nAhlzmPqqgEyMP0EXbPanciaCwyt4RklICj1be4dzGxE
+ gc7+DuCSFXC3klOOCax47ceDB8PQBdf52NkcLx9Dr13yxQixID8naBpFNQO8KMn64wiAgY
+ kyU/poGDX3ZN4zWz2Oss3mfusRBMJk1pYxDwYKMAMNtS+xj3F2UDK3blTNiBCg==
+X-Lms-Return-Path: <lba+26afedbf5+85e03d+vger.kernel.org+weiguixiong@bytedance.com>
+X-Mailer: git-send-email 2.55.0
+To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>, 
+	<dmaengine@vger.kernel.org>
+From: "Guixiong Wei" <weiguixiong@bytedance.com>
+Subject: [PATCH] dmaengine: idxd: Restrict DSACAP reads to DSA devices
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -86,68 +57,46 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261119-submit-dw-dma-synchronize-v1-v10-4-3a737597a0d1@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Mime-Version: 1.0
+X-Original-From: Guixiong Wei <weiguixiong@bytedance.com>
+Message-Id: <20261119112212.92663-2-weiguixiong@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Cc: "Guixiong Wei" <weiguixiong@bytedance.com>, 
+	"Dave Jiang" <dave.jiang@intel.com>, "Vinod Koul" <vkoul@kernel.org>, 
+	"Frank Li" <Frank.Li@kernel.org>, <linux-kernel@vger.kernel.org>, 
+	"Yi Sun" <yi.sun@intel.com>
+Date: Thu, 19 Nov 2026 19:22:07 +0800
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, Nov 19, 2026 at 03:01:38AM -0700, James Hilliard wrote:
-> The status getter can invoke a client's completion callback while polling
-> the hardware. An 8250 RX timeout calls it with the port lock held, and the
-> callback takes that same lock. Termination also lacks a synchronization
-> hook to wait for callbacks already detached from the channel's queues.
-> 
-> Use virt-dma for transaction queues, cookie completion and callback
-> delivery. Keep the active transaction and hardware state under vc.lock.
-> Polling still processes RAW.XFER and advances software-LLP blocks, so
-> clients such as catpt can complete transfers with the controller interrupt
-> masked. Client callbacks run only from the per-channel virt-dma tasklet.
-> 
-> An 8250 RX timeout consumes the transfer length minus the reported
-> residue. On a bus error, source reads do not establish how many bytes
-> reached the destination. Credit only whole blocks whose completion the
-> driver observed while advancing a software-linked transfer. For a
-> hardware-linked transfer, treat the whole buffer as unconfirmed.
-> 
-> Report the abort and the same residue to result callbacks and status
-> pollers, even after another transfer completes. Reserve the error record
-> during preparation, when clients can still handle allocation failure.
-> Use the normal virt-dma submission path; neither submission nor fault
-> reporting needs to allocate. Keep only failed cookies after descriptor
-> release, until the cookie is reused or the channel is released.
-> 
-> Submit only the first block of each transaction to virt-dma. Its child
-> LLIs remain on the driver's hardware-chain list and are freed together
-> after the callback returns. Keep the controller tasklet for hardware
-> event processing and error recovery.
-> 
-> Complete cookies under vc.lock before handing descriptors to the callback
-> tasklet. Complete terminated cookies in submission order without invoking
-> their callbacks, so a concurrent termination cannot advance the completed
-> cookie past an older completion that later moves it backwards. Newly
-> submitted transactions become eligible to start when issue_pending()
-> moves them to the issued queue.
-> 
-> Implement device_synchronize with vchan_synchronize(), which drains only
-> the selected channel's callbacks. DMAengine calls it before releasing
-> channel resources. Exclude the controller tasklet while clearing channel
-> configuration and powering down, and let a pending run return without
-> register access after the last channel has been released.
-> 
-> This implements the callback deferral proposed by Serge Semin using the
-> shared infrastructure suggested by Andy Shevchenko.
+idxd_read_caps() reads DSACAP0-2 whenever the hardware version is 3 or
+later, regardless of the accelerator type. On IAA devices, offset 0x180
+is IAACAP, which is already read by the separate IAA capability path.
+The additional reads populate DSA capability fields that are not used
+by IAA devices.
 
-...
+Restrict DSACAP reads to DSA devices, matching the device type check used
+for dsacaps sysfs visibility and SGL support.
 
-> Link: https://lore.kernel.org/r/20240911184710.4207-3-fancer.lancer@gmail.com
-> Link: https://lore.kernel.org/r/avrHOJ-fVZOO32bI@ashevche-desk.local
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+---
+ drivers/dma/idxd/init.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Same issue. And I think I have told you about it a few times before.
+diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
+index 4b827a3297564..1a8638adf8c7d 100644
+--- a/drivers/dma/idxd/init.c
++++ b/drivers/dma/idxd/init.c
+@@ -560,7 +560,8 @@ static void idxd_read_caps(struct idxd_device *idxd)
+ 	}
+ 	multi_u64_to_bmap(idxd->opcap_bmap, &idxd->hw.opcap.bits[0], 4);
+ 
+-	if (idxd->hw.version >= DEVICE_VERSION_3) {
++	if (idxd->data->type == IDXD_TYPE_DSA &&
++	    idxd->hw.version >= DEVICE_VERSION_3) {
+ 		idxd->hw.dsacap0.bits = ioread64(idxd->reg_base + IDXD_DSACAP0_OFFSET);
+ 		idxd->hw.dsacap1.bits = ioread64(idxd->reg_base + IDXD_DSACAP1_OFFSET);
+ 		idxd->hw.dsacap2.bits = ioread64(idxd->reg_base + IDXD_DSACAP2_OFFSET);
 
+base-commit: 666539eecdf4db623f5e3c3e55cf9f2dfad24aa4
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+2.55.0
