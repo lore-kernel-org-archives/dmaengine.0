@@ -1,90 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795104108;
-	b=2fzF1omNjLGThwiUXfzkcS0rMOZsrZMrXRbFCaQvz2e4Jb8l/GVHxiZRcfHQdcm7uYTa
-	 m0x42FJC34K3tdACB7Y61EsZNSM/CWdJp1iQJY7nOflkSAIP/ySHoCTJPi64Fsi+lAUSG
-	 t7JQxPTIwDZH5+sjG1joXxery409BaDyxSuqBlk3ssyp77Nmsn4H7fUkNBJf09SGHSgsW
-	 vAZWiz7EySJKd18Xmn8XdepTEIaPPoO+4rvQlW6N22KvSQqQsUw3RKXvWbNzOs2yQfpmz
-	 VCW8BdU4+pt7g7jVyAZwCvcaA25NN+iIqK7RVROKUeGwjPBltMwRLng7r3c2g5Vu0jg==
+	t=1795104109;
+	b=MxprzWrgoHyDDiyOAcWvr3BFlHGGMaZHnut3i/wJZ8jxJh1uCS3BRmK9SsrNY3Ywc4OK
+	 QF42HKG7cHtsh+I7Sz55DrQZHVHAToscMp7tINHUx3jLe8hKcDKbnIc3XjUA0pnywi/Ju
+	 xnVL6xqRmlzbMJr3HghZFUTH7wIjp2Fc9uHAn/c9HrW17EFNSVLVY9PVPGOra3jz7a5nw
+	 ISNnjJMApkwYThMuu4/NXbX09U6w8Cq67titEneQ0NajBXnfJN6kYbTvHRL6vwp+SnoET
+	 EeVKTy15KHeHYiopc7EFipYLBpNmO85ubxCAk3nKJOEn8LEwc/GfTecwwOX+vYztEOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795104108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795104109;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
-	bh=/ZxPIuLt+/kiepGNuwG64GaZNG5kVNJvtdcH3UsJ5V8=;
-	b=W1ND3DedOcmSdLQL8WE+gvj+8AR+bozZAs6yCWO3PEe8ByUmA7F6lr2v2g/zYzD/7ld7
-	 cwzZQRXhomPKzP93mQ80DCAvBwCV1XZ5EJX3ovguYxB6AbzMmmFU9v+2dbAXrm6ol/gQ7
-	 oEkObSv+a3dTzB3TJiCFmYKSlu7BQsK03uRgqLD0fh2xVYDfPAkN5Zmr+2i3DmflIyYVt
-	 KRBKFRLrOzH5IROX8ap89JO20YB1Q23zuJ+gMFrzMsjNlwgW7doPSkDTmBSsUGeehR4rC
-	 oJaLQGrCgxFeSoVeAiZqH7MmqdqyNNN0a5i7XTAs/xoDugaiSOmO7IGTu9yH9grgu7w==
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
+	bh=YjkX+SIhmCFu9w6Er5NTY8ZxVe8WqPbD/o8Zqp+diPw=;
+	b=OKArExqIr2+X9VoeGBw52tA3PaB+poi1n9+nU2cxTnJxEtqShJ17rEUekqoCUq3OzZt6
+	 R4YeWaDvJBd37dCrsZobVlR8ymlvPcKqdyzmupGRc+/Ll1ZvmrWtrGH4cTpkm9PLJsNLt
+	 vMeJF3OPKlNASSe8P0gDRlREU3hvJ8Y5zmcYaM0jQBZthX8i+bZZ/YRZ8ZmhpjWAvhPiv
+	 KD33EX3ntJzO4i8SDLu7YuqR5nQTUrN4ks+Ps4MwyvaCySZz7SOD5InuEP9WObaT8x8FU
+	 a3qVn73zNFVAKVXjmh0foXZlVXTgNC6XHlgGmcHLoZlvXFnvhvz9wQPws5NcrjF3EtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Tl+HGnHa;
-	arc=none smtp.remote-ip=209.85.128.173
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gsF6tYcY;
+	arc=none smtp.remote-ip=209.85.128.181
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC5B606A320
-	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 16:01:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9EC5B606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A90606A32F
+	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 16:01:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4A90606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Tl+HGnHa
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8b4c685c751so20796197b3.1
-        for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 08:01:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gsF6tYcY
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-8b335eeb340so21734617b3.0
+        for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 08:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795104107; x=1795708907; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=/ZxPIuLt+/kiepGNuwG64GaZNG5kVNJvtdcH3UsJ5V8=;
-        b=Tl+HGnHaqVMQ8e83+0+G/PBH9EvpKLU+LRYt+fR2tmuIj5npjpUgDWN0uMm1iEGTur
-         jtu3qMfDFHWS/WM0IanTtuo/GppWeWMfJj09pvaQJnm+uBeDpRVk2P+HGsLl6ZfhAd/h
-         P0KccTU1rj/57isj+90nFFBY1T61sGV2KEBc1Ok6weaEafrMsNyUrvBBPwU2Bab5STmX
-         51ozJWMnx6yHZwAY9PRMAO8jne2OFys70hzmlTCjIANDFg3Jz2i4y3agLUAvi5nfQ7L5
-         XT+5Ei+npXDCcCoG7psJ854BWoIijw2SekT/jcGKm94LaVvopkzv67HPbiqkMskeIiEt
-         XZVQ==
+        d=gmail.com; s=20260707; t=1795104108; x=1795708908; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YjkX+SIhmCFu9w6Er5NTY8ZxVe8WqPbD/o8Zqp+diPw=;
+        b=gsF6tYcYJ8FC3cel931aNMGVn5nCBhw8tRjL8x+3fFjZEU2LMzexo+lcuHehFyBpfk
+         suq7g2olxPfa0mZWy5fNnqXsQzLqdOwK6HtIaDW8tjK6jUbszUBul8YFd5T/gtVurhd/
+         9GyaWFHTFsU4RE4Q0YUa9ll2eyoh3NHel7ynrhJZ6VOLWDATgM0l6YZK48ZLvZ+EURvH
+         rIk5UvJwM75ceh8djNUXar/9weE7ol6em6D+tdeH0HD4wuSysrjL3L5NILFhYDc5DmD/
+         nf1ZE7cjZSos43rc58Q8Zk8UZI3cv6FoRmdY3Fva29SR/tC0VDNgfzq14EMEMYnWzEa8
+         HrVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795104107; x=1795708907;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/ZxPIuLt+/kiepGNuwG64GaZNG5kVNJvtdcH3UsJ5V8=;
-        b=OTmF7uzapfAtJQQJ8TituQfVRFNd6nlfuigJWohQwM+bsLlsnHu/DXWYKSveJaX/c/
-         lfaAxYmPl55IVP0oqsbNQf+wks9E8PKDNvYqLynayMmLY0eRG6zjQNX74qDiIGPRbgMC
-         iun+YiGcSFlM5XY2uhhy08nSnLC/cJX8nmv/m8RYVLqTG3inGro7bLgBdA99zs5gG0+U
-         wiosJczJfMEPi9FYll13EVhAv+gxdhvM5umX8RgLAS/0hkB/dHsUR02+UF4RNwvL2T/V
-         jsdYShHTCs+PQ4MLaKHS7XhIaaLfoiS4I909KYNAf/EfWBHiEb/vSVKXFXI7eVFkgkrQ
-         0KUQ==
-X-Forwarded-Encrypted: i=1; AL+hErG3uEwIKvQC2BP7O4Wn9dc1ywTYm2ptUrEjQ/vHOqfGRJ1z385FU7/Zr55O+D4qjLi0tGkpMdwr/+A=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+LeC7fz8TSMBk6aJee7BJlmozVfwvRcTJhFD4A89jGZguLZFCC
-	VP8ICnHIlHxwI5KKWxh285IX4LeQKVy4s616pk8zHqZq4QCiwl4tBXQZ
-X-Gm-Gg: AZFdTZdgo5LyYlfFmdNjczFaBCcIsRFtlvMLbQFcFeMkgjMbgTmQg3e/3RHb5Idcq5h
-	5Ys3W+KBaFW7Jm0dxmsG7gsbfXahai5jaxOpPG3k6cB3c8bhIlvaPDQpp08PgoOkxlJuvQk5F9D
-	3gFvcOoTK6r6rEhIT070hINBoR261SHSecg5OgvR4Vr015Ag/75bxomj6q7hPDJMZ548IrwAZwG
-	O7MBN5E8fD4WIaeTAUN9JrZ0ZPoZnxvjzRxF/T42IWVZil1VS9X/wTdz0aKWWmtkgU2ZGRfjjh5
-	Vs7fyik6yQJfYpDPCl2BUFEbgiObojhsOHo9WgLK//63SLugJpLUT9bRz4TlTLp6nYlEoCMWsDV
-	E71a3QHG5Mq2ruxPFbcYPQJdXFWpOE2FXTOT8qi6nNERVrBqj9Qr9euSB6b+zRTKBMlu2Qm/7Yn
-	5o7LwFYZpuxX6+JZ5z/v76XAlD7RBZvtL3DtY7HFR+DOW2ZhXy7nA3UU7pFBOwKzsR5dEeGuObm
-	kTQZakDskVAONj5+q9g1tKasMO2Ul3u0wSc2dEUx0rRlhtCrqJfRRjFJj4uhvSzTxIZCJ0MyOPL
-	A97c53NNZfSU9dvLiDoRaCSQTVZmI/SCJmiSC0b1fANg+LFsFlXQUupDjm4SZyqjlAPX15PeNEe
-	uJf9LmX8hIeqyqm1KzUiRCRwfQCHJ/kdlTTmqnScMc0m8fp8WT6FxUqCgkTNkXp3MgwgMWUjEvg
-	RPYtpq+QCBUeGP3Nz98AK5gWZZUCxqmSHRo7kTNs4OGZkM7ZrR+oI=
-X-Received: by 2002:a05:690c:370a:b0:8a9:693a:324 with SMTP id 00721157ae682-8b520524d38mr523527b3.109.1795104106234;
-        Thu, 19 Nov 2026 08:01:46 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795104108; x=1795708908;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YjkX+SIhmCFu9w6Er5NTY8ZxVe8WqPbD/o8Zqp+diPw=;
+        b=FtuIaghiOn/ga6/3LhkB4xso86PA0CceNpW538N7I6367AXE05Q/VE4kr9SYLrGGq2
+         4oVOs9pAom1hVtBfTCnqPZrwEm3ABmFFxSRdfiAy8pDEdELve1NOLajux7ROxwaTExjw
+         mZqPOoG9h8SxDMF6TsweZlB/ziNoEsNK78WcSQ/ZzTO2JYlEFawWOVhAEN05kWKRPU6X
+         r2WDwOnofZp1d7m1PNFOuwZlIHB1ZZkpE3f+vmWhg2off8QQ5Sdt6LMnOm5lgZ9uMXkO
+         daBz4/45h4TN+eT3PaF2/VTsRPKd+6Quo8aAL5K4zIqEtzFK3HO+uuerXnvDevFccdqQ
+         xWYg==
+X-Forwarded-Encrypted: i=1; AL+hErGRhmppn+Rd/V7OEy1HYSAmvpovvTbZIRm7nE7wsaDEfn3Tvw5sxnlDYRTo0BmwmSShzEGr3aWMy5o=@vger.kernel.org
+X-Gm-Message-State: APuU4Z8V1z+yXIEGIJCz59t/wdTcrjN+BZ0PnVDu5Wttiqwdycy+FvP9
+	mLrNrB4OiE9X+8OjTha/uKEZhRdth4Dhmp412Mcn91oNHicTxujBurCo
+X-Gm-Gg: AZFdTZci4phtxOh3HIbcLvsqaPOOy+8tKyazCSQwN0n6khtyAklD8E/VllhBWp8qK/G
+	0zvSh0Z/wKABjKzKQTj9grlkSlRzv0EZSRjkvqzDw2JHB2ajMxqmUbqrW8rQRDfScxu5WFjA1Lf
+	ChJsOr7TbVz+ubss8ZGIT1g06wtyc8d6b2IIbW3AFzHqXVg+pDDaXztHrCBYk+2he3KiHdfbSXg
+	77/CeOgimaKb9SSHX2F/f6E48oHyNjDzdI72xBEU1gfO2UxpfD9WF0zZwGa0spe0sjcvoMSGO4J
+	5VyyJpfRjL53ic+FD11mqCk6hDNWb3d04hThjHerqoGz4tMFqnkRA2OvzctFk6Frq9zaEyVeDpU
+	f+5EeSeKrBHTSmoV+GFvEkJ7iI35823Mk8IIauavtvBhiWv8uMB/hvkKEQoMFmSU3UiaEUP1ezX
+	da3leNYinpQ5kG074lW3+RZf9hWIhzWSG6UOxXiyjb9fM0Zj6mWIaxVgboQcVWr31gOG5nJc94c
+	o6R+JMemYWTmLZ1RcZ+VWrjGRxfKluQ8Bn1R85uDkGVCfqfV+b5LtMjGNFS5sVj1zn7WB1ztr/y
+	DFxMoSTUuRx4n7DCsWrUwDFTmqSakh181G1st+Vfixsh/sKISOo3fHulINYDtkWV1nU25FQOO5K
+	oYqOty7ojsBFuBW7wYNxJzKEAvigjaVebi5Xth1GrQnhhSxv8J9Jx/vx1yzzcNNLzDgoNSnCRax
+	4pq4n/a7XKGJ89TWr/hAyNxVz+2SmyzFD4Mt+roWW7txhL9LJmPp0=
+X-Received: by 2002:a05:690c:4448:b0:8b3:5969:f25c with SMTP id 00721157ae682-8b520435b4cmr656757b3.31.1795104107663;
+        Thu, 19 Nov 2026 08:01:47 -0800 (PST)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b52031aa4bsm623267b3.34.2026.11.19.08.01.44
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b52031aa4bsm623267b3.34.2026.11.19.08.01.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 08:01:45 -0800 (PST)
+        Thu, 19 Nov 2026 08:01:47 -0800 (PST)
 From: James Hilliard <james.hilliard1@gmail.com>
-Subject: [PATCH v8 0/9] dmaengine: dw-axi-dmac: fix termination and pause
- acknowledgment
-Date: Thu, 19 Nov 2026 09:00:55 -0700
-Message-Id: <20261119-submit-dw-axi-dma-stop-pause-v1-v8-0-f8e7fe60594c@gmail.com>
+Date: Thu, 19 Nov 2026 09:00:56 -0700
+Subject: [PATCH v8 1/9] dmaengine: dw-axi-dmac: keep cyclic mode in the
+ descriptor
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -96,15 +96,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/43T22rjMBAG4FcJvq5aaXQYKVd9j2UvdBg1Ks2ht
- pPNUvruHScUjKG44JvR4dMI/f7oBuobDd1289H1dGlDOx648A+bLu/i4YVEK1x3IMEpJb0Yzmn
- fRlH+iXhtouyjGMbjSZzieSBxUSIHXRWhQ+VCx8qpp9qutxP+/L3XTLxSHid2WpEi70x9POTdN
- MQLenp/+uEAN+3YNR7q/9+avqhJ/n1//EmRjaesAgUi8/yyj+3tMR/33dTfBeZeWPeAPWdiYbN
- UDHrp6Zmn5Lqn2dO2lpqiT06VpWfmHqx7ZvIoZTAJjC5p6dm5p9c9y563oCNgsuj90nNzz657j
- r2UE+jCsZEQlh7OPVz3kL1iK2gZYi0Ic+/z4TtfZ076eE/lPYA8z+524xx4wmKyS2CzL8pXpY0
- lvq8soDyEGAnJ3LIdx7zjH2S7qVkbbbzUWpZoaw2WLKAKAWtEfnYMiBmS5xY+vwCBwHycdAMAA
- A==
-X-Change-ID: 20261108-submit-dw-axi-dma-stop-pause-v1-c93f1e767169
+Message-Id: <20261119-submit-dw-axi-dma-stop-pause-v1-v8-1-f8e7fe60594c@gmail.com>
+References: <20261119-submit-dw-axi-dma-stop-pause-v1-v8-0-f8e7fe60594c@gmail.com>
+In-Reply-To: <20261119-submit-dw-axi-dma-stop-pause-v1-v8-0-f8e7fe60594c@gmail.com>
 To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
  Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, 
  Sergey Khimich <serghox@gmail.com>, 
@@ -112,137 +106,119 @@ To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
  Sia Jee Heng <jee.heng.sia@intel.com>, Baruch Siach <baruch@tkos.co.il>
 Cc: Mitch Barnett <mitch@accuratesound.ca>, dmaengine@vger.kernel.org, 
  linux-kernel@vger.kernel.org, James Hilliard <james.hilliard1@gmail.com>, 
- stable@vger.kernel.org, Frank Li <Frank.Li@nxp.com>, 
- Wang YuWei <1973615295@qq.com>
+ stable@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
 X-Mailer: b4 0.17-dev
 
-Keep cyclic mode in each descriptor so failed preparation and queued
-work cannot change the completion handling of another transfer.
+dw_axi_dma_chan_prep_cyclic() sets chan->cyclic before allocating all the
+hardware descriptors and leaves it set when preparation fails. The flag
+also survives cyclic transfer errors and channel resource release. A
+subsequent noncyclic transfer then takes the cyclic completion path,
+leaving its cookie incomplete and its descriptor on the issued list.
+Its zero period_len can also cause a division by zero.
 
-Use the layout-aware channel enable check during termination and retain
-transfer resources when the channel does not stop. Preserve suspension
-status for the pause and resume paths, including acknowledgments that
-arrive after a polling timeout or during another channel's interrupt.
+Resetting the flag on failure or channel allocation is not sufficient:
+preparing cyclic work while an ordinary transfer is active changes how
+that transfer's completion interrupt is handled.
 
-Keep a pending pause across cyclic segment completion and resume the
-segment only after the client releases the pause. Track the active
-descriptor until completion so queued work cannot reissue it while its
-interrupt is pending.
+Store the mode in each descriptor and use the completed descriptor's
+mode in the interrupt handler. Cyclic preparation sets only its own
+descriptor's flag, while the zero-initialized noncyclic descriptors keep
+it clear. Error recovery and channel reuse then use the next descriptor's
+mode without relying on channel-wide cleanup.
 
-Retain terminated descriptors until their callbacks have drained, including
-cyclic descriptors that error handling has moved to the completed list.
-Serialize interrupt status collection with channel reuse so an old event
-cannot complete a replacement transfer.
-
-Require at least one IRQ before registering the controller. Keep shared
-IRQ handlers out of uninitialized or suspended hardware, and drain them
-before disabling clocks or removing channel devices.
-
-This series uses the shared virt-dma descriptor-retirement helper [0].
-
-[0] https://lore.kernel.org/r/20261115-submit-sun4i-dma-callback-lifetime-v1-v2-1-fb7d258702f8@gmail.com/
-
-Assisted-by: Codex:gpt-6-astra
+Fixes: 1deb96c0fa58 ("dmaegine: dw-axi-dmac: Support device_prep_dma_cyclic()")
+Closes: https://lore.kernel.org/r/sashiko-outbox-208213@kernel.org/
+Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes in v8:
-- Use read_poll_timeout_atomic() for stop and suspend polling and a
-  scoped IRQ-save guard during termination, following Frank's review.
-- Propagate deferred IRQ discovery and reject controllers without IRQs
-  before registering their DMA channels.
-- Keep controller interrupts masked until DMA registration completes.
-  Serialize the hardware mask with handler admission and rearming across
-  power transitions, following Sashiko's review of v7 patch 8.
-- Leave a suspended controller powered down on removal.
-- Link to v7: https://patch.msgid.link/20261117-submit-dw-axi-dma-stop-pause-v1-v7-0-d5f2309afd72@gmail.com
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 35 ++++++++++++--------------
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  2 +-
+ 2 files changed, 17 insertions(+), 20 deletions(-)
 
-Changes in v7:
-- Guard shared interrupts until hardware and channel registration are ready,
-  following Sashiko's review, and hold an active runtime PM reference while
-  handling them.
-- Balance probe/removal power references and drain handlers before clock
-  shutdown, including forced system suspend.
-- Link to v6: https://patch.msgid.link/20261115-submit-dw-axi-dma-stop-pause-v1-v6-0-bcb23d1e7029@gmail.com
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 7520c78f55cc..6dae63024721 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -801,7 +801,7 @@ dw_axi_dma_chan_prep_cyclic(struct dma_chan *dchan, dma_addr_t dma_addr,
+ 
+ 	chan->direction = direction;
+ 	desc->chan = chan;
+-	chan->cyclic = true;
++	desc->cyclic = true;
+ 	desc->length = 0;
+ 	desc->period_len = period_len;
+ 
+@@ -1117,25 +1117,23 @@ static void axi_chan_block_xfer_complete(struct axi_dma_chan *chan)
+ 		goto out;
+ 	}
+ 
+-	if (chan->cyclic) {
+-		desc = vd_to_axi_desc(vd);
+-		if (desc) {
+-			llp = lo_hi_readq(chan->chan_regs + CH_LLP);
+-			for (i = 0; i < count; i++) {
+-				hw_desc = &desc->hw_desc[i];
+-				if (hw_desc->llp == llp) {
+-					axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
+-					hw_desc->lli->ctl_hi |= cpu_to_le32(CH_CTL_H_LLI_VALID);
+-					desc->completed_blocks = i;
+-
+-					if (((hw_desc->len * (i + 1)) % desc->period_len) == 0)
+-						vchan_cyclic_callback(vd);
+-					break;
+-				}
++	desc = vd_to_axi_desc(vd);
++	if (desc->cyclic) {
++		llp = lo_hi_readq(chan->chan_regs + CH_LLP);
++		for (i = 0; i < count; i++) {
++			hw_desc = &desc->hw_desc[i];
++			if (hw_desc->llp == llp) {
++				axi_chan_irq_clear(chan, hw_desc->lli->status_lo);
++				hw_desc->lli->ctl_hi |= cpu_to_le32(CH_CTL_H_LLI_VALID);
++				desc->completed_blocks = i;
++
++				if (((hw_desc->len * (i + 1)) % desc->period_len) == 0)
++					vchan_cyclic_callback(vd);
++				break;
+ 			}
+-
+-			axi_chan_enable(chan);
+ 		}
++
++		axi_chan_enable(chan);
+ 	} else {
+ 		/* Remove the completed descriptor from issued list before completing */
+ 		list_del(&vd->node);
+@@ -1204,7 +1202,6 @@ static int dma_chan_terminate_all(struct dma_chan *dchan)
+ 
+ 	vchan_get_all_descriptors(&chan->vc, &head);
+ 
+-	chan->cyclic = false;
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ 
+ 	vchan_dma_desc_free_list(&chan->vc, &head);
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index d8dd07efe60f..3c86e5d468ea 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -50,7 +50,6 @@ struct axi_dma_chan {
+ 	struct axi_dma_desc		*desc;
+ 	struct dma_slave_config		config;
+ 	enum dma_transfer_direction	direction;
+-	bool				cyclic;
+ 	/* these other elements are all protected by vc.lock */
+ 	bool				is_paused;
+ };
+@@ -105,6 +104,7 @@ struct axi_dma_desc {
+ 	u32				length;
+ 	u32				period_len;
+ 	u32				nr_hw_descs;
++	bool				cyclic;
+ };
+ 
+ struct axi_dma_chan_config {
 
-Changes in v6:
-- Retain descriptors through callback synchronization using the posted
-  virt-dma helper, covering pending, executing and error-completed cyclic
-  callbacks raised in Mitch's follow-up.
-- Serialize interrupt status collection with channel reuse and clear old
-  completion and error status after successful termination.
-- Link to v5: https://patch.msgid.link/20261113-submit-dw-axi-dma-stop-pause-v1-v5-0-8523a27b5788@gmail.com
-
-Changes in v5:
-- Use a positive enabled-channel condition in the suspend-status helper,
-  following Andy's review.
-- Initialize the resume result immediately before its first use.
-- Separate the lock-protected channel bitfields from the preceding fields.
-- Link to v4: https://patch.msgid.link/20261112-submit-dw-axi-dma-stop-pause-v1-v4-0-3ebc24b243db@gmail.com
-
-Changes in v4:
-- Add a preparatory fix for cyclic mode leaking between transfers,
-  following Sashiko's review. Store the mode in each descriptor so
-  failed preparation, error recovery and queued work cannot change
-  another transfer's completion handling.
-- Link to v3: https://patch.msgid.link/20261110-submit-dw-axi-dma-stop-pause-v1-v3-0-35fdfba8b61d@gmail.com
-
-Changes in v3:
-- Wrap the atomic polling calls by argument group and correct their
-  continuation indentation, following Andy's review.
-- Move the termination return-value check simplification into the
-  channel-enable polling patch.
-- Separate the pause-loop conversion to atomic polling from the
-  pending-request and cyclic-restart changes.
-- Annotate the suspend-wait helper with its channel-lock requirement.
-- Pack the lock-protected flags into existing padding while keeping
-  cyclic separately writable, following Andy's review.
-- Link to v2: https://patch.msgid.link/20261109-submit-dw-axi-dma-stop-pause-v1-v2-0-64adc48df793@gmail.com
-
-Changes in v2:
-- Use readx_poll_timeout_atomic() for the single-argument status helpers
-  and express the termination polling interval and timeout in milliseconds,
-  following Andy's review.
-- Track pending suspend requests separately from confirmed suspension so
-  resume can handle acknowledgments received after a pause timeout.
-- Use the atomic polling helper, including its final status check, and
-  report -EAGAIN if resume cannot yet cancel a pending suspend request.
-- Defer cyclic restart while paused and track the active descriptor until
-  completion, preventing resume or issue_pending from reissuing it.
-- Reset pause state on successful termination and channel allocation;
-  clear stale status when starting a new descriptor.
-- Link to v1: https://patch.msgid.link/20261108-submit-dw-axi-dma-stop-pause-v1-v1-0-c48ec19e9ee4@gmail.com
-
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
-To: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>
-To: Sergey Khimich <serghox@gmail.com>
-To: Sia Jee Heng <jee.heng.sia@intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-
----
-James Hilliard (9):
-      dmaengine: dw-axi-dmac: keep cyclic mode in the descriptor
-      dmaengine: dw-axi-dmac: poll the correct enable bit during termination
-      dmaengine: dw-axi-dmac: retain descriptors when termination times out
-      dmaengine: dw-axi-dmac: use atomic polling for suspend acknowledgment
-      dmaengine: dw-axi-dmac: preserve pending pause requests
-      dmaengine: dw-axi-dmac: retain descriptors until callbacks drain
-      dmaengine: dw-axi-dmac: serialize interrupt status with channel reuse
-      dmaengine: dw-axi-dmac: require an IRQ before registering the controller
-      dmaengine: dw-axi-dmac: guard shared IRQs across the controller lifetime
-
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 311 +++++++++++++++++--------
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h          |  13 +-
- 2 files changed, 218 insertions(+), 106 deletions(-)
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-base-tree: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git fixes
-change-id: 20261108-submit-dw-axi-dma-stop-pause-v1-c93f1e767169
-prerequisite-patch-id: fc343480330da5ff95e5271997fa71107977c2b8
-
-Best regards,
---  
-James Hilliard <james.hilliard1@gmail.com>
+-- 
+2.53.0
 
