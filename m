@@ -1,77 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.3
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795111779;
-	b=qTkpl93SP2x9Ky8NSxRW5oNO+dx6QfgI7NTmQOV6wivg5kFkQ0YZjecjg4M/GxtjqyqI
-	 NJI8iL1oGVFJbQbEQcYlyupxdQ6ak2vGh58QvtWygSr1uety68/UH7jmaS5J+16R90Q2N
-	 hc3v6iYvtTOywxdaRmf8CJ8ERYkOhNs3s5EYlkIWfRAHl3KY9ttZC7svLIrUvFVsC5aG1
-	 vYKC8JbIBAfMUl3rRqk9tpcCeud0EJ1qucn9jaPaZoTUrcd89OgG7+0wpOAZdnBy0c0Px
-	 Lq+Cmdk8hBnoJKUevlpt/JUeCZcEK6f8s4yAag6FL4Tvy7OQt1cJmO+5FCE0LvMqQ0Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795111779;
-	h=DMARC-Filter:DKIM2-Signature:Message-Instance:DKIM-Signature:
-	 X-UI-Sender-Class:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport;
-	bh=4pzlK7APXFFNs8KRHKtFyCyPqMX2Qs7X1T3NN43GZHM=;
-	b=cEHQDHCr3zUbj1X8s9J5A/Earpr64KCe5iNLW1lJ1pBesKCMkRT3S7EBBdH94GtoAwiC
-	 RX0oH/kB0SC7mrqKgtwhRLP1ESaPRCrPG9i+ZEgjtc4A9KTHBMoY5dlvqYEISKpktOJ1W
-	 VrXwtGGHK76jvG7GqIgQdGZqioPU5dzs7/2ken4DisZCJ7+JaQoGRdp5mi02lFbvFzCZk
-	 wT2lSc4RlP5I/DQvcoGWNecPv0UO6/UvKqwa8TdqtFKAnZye2HtcRtp7IzqRH0hcP6kh0
-	 R293DWUlB25YDrkuCq49xC6LytENqTSEiv+PkogtcmpM7jUyDlKBkpAngjJgdPRTsgA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=web.de;
-	spf=pass smtp.mailfrom=web.de;
-	dkim=pass header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=vmyw12Oh;
-	arc=none smtp.remote-ip=212.227.15.3
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.5
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795119813;
+	b=lcMwn3aazLLRRXaG43yLBJUKxn3J016ghTFDYYCMlHc+Rl8YJWqjb9B9yRfNlOiLycAv
+	 XcYj8nuPDV2HODlHbP32xDtyPEAqH48HIPQdBllwClGfKyQ7N2+bOz/FmqsIVUUknB57a
+	 wx9nn2W2arPkFBNpqRejcGAvsvs9lnroMm3FUQ4KRSA/WvpKWIlZbKxZDTeE5aqrrDydE
+	 5SskPcVqoUDRpZ0fNVuc0pZ2MAEJSEEwFdpy5HRCaeI+oIvaZLWgbLvSCM6CIfakCvPBr
+	 5C/EWMierTL9JYARegeWtm9f3DlcB/nk0Xg70tPn1squmC1g2eGyAWxcaW5UqeepwLg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795119813;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 From:To:CC:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy:X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=j1CHra7rmNJbXqqfNxq6MXep67Lhx8y6Gc4Cjprwyvk=;
+	b=MhyrcAO9vJPuAwhlM7mBmSs91Ck7JW+8Bgngf6jr2Wof5s1M/O0sETGhkQd0WYqzRo0L
+	 7zwwj5fyXO0RFF6CHmicwOGJhi6LX7F5cLbUF+XkgeTwXtBJt4x87IbeaXz644TPrIJ8Z
+	 b3YSfWgdGyk9TzQ9Fy894dLGon1TI/P74LfLcIsVPJIVpoX3ruFZc669aV2DwgERX6z9n
+	 BaO8iGqi0Vb8uYxnFHoOQs1hC1bliFZ9KafpDyDjSqCSC1wwm0/wFqUpbPU5Aowxt+4Oa
+	 pfZxC7vf/13zKsui27kGIa+yvlDoZxiyxr/nVQ+N8iqimb1r2fkNAUzNmbR1mJAfv+A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=0N8d6pmo;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.5
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010005.outbound.protection.outlook.com [52.101.201.5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E463C606A324
-	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 18:09:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E463C606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7EC606A326;
+	Thu, 19 Nov 2026 20:23:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC7EC606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=vmyw12Oh
-DKIM2-Signature:  i=1; m=1; t=1795111777;
- mf=PE1hcmt1cy5FbGZyaW5nQHdlYi5kZT4=;
- rt=PGRtYWVuZ2luZUB2Z2VyLmtlcm5lbC5vcmc+;
- d=web.de;
- s=s29768273:rsa-sha256:tfRGWTUQCjKVMdn4IbLPEPS9xa0p
-   XaM90rAFK96GrkwbkAap0rj+jG8iomS52dXyuGMIJNqdhTqCS+yQDebvZzmymfkfCeDUpE8TaqG
-   eN2vtcfsLBZqLmahv8+MYB91cG+FlLKvVDW4SzkRD+fyrtAGfsMKrP4p1NHKMy4eaxrWBJnwzYG
-   wF9u9D6rQFnIXxKxrZSJZpa+tUm4m+MFxpU2be2ZB91O6GZEvCziSqQwVYSFRN/w4TNkVJ/wcmK
-   bRnXzqo3hZGQub9IcJ8OitGAbWRI8vcsm29zkADCujOYLoboUMeCG8qBnjfOylwEX0tA8DgtX85
-   S1+SNhQNM6UERQ==;
-Message-Instance:  m=1;
- h=sha256:
-   IJIgimPT7if0rMrwBDlAYcUqTyp7n8+zjxsRor7oyD0=:
-   fD+/ALIqYHbm0xPktAw0/uaEfNRiOdjOWoDcBJ8h55w=,
-  sha512:
-   X0I0lh8lVXaMOqxXw99Qb1NWqE+XzlHj5S3Ibh5oniOnQp0qQSiIG3HS6xrHFv8k3BS7/Pv5i4uzKCs5QDttLQ==:
-   l00xTuG4iPJDbekjLeNFE4ai8iYflAfhC6agtLhM6Wv9hYRUJWL+veX3+6L1f3zuh/mt5II2wHrMQxCFT/iayg==;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1795111761; x=1795716561; i=markus.elfring@web.de;
-	bh=4pzlK7APXFFNs8KRHKtFyCyPqMX2Qs7X1T3NN43GZHM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=vmyw12OhW8beDcEMsY8/7JQB2oESku+HPHiuBZ8GqwS1jZ0KZ6SmNXj1po2nOltx
-	 gm5hHBkvuqUfdKUOKstigHOmE60zjDKw2wDZaKGQGLwTDRTlVuiQzq3zMcw4+3wy/
-	 moHPbUrQDmStArjwmD8NoGanZhZpy3VHztAwGyqeHlnjRGxjX7lJBajZt4Ucb+d7J
-	 F58K8yPDq13llV2351oC90rLQicZX03BLXq7r+zalP08N4fmql8LBqvWp+W2GlAkG
-	 rs3CqePOe181TZ6HEiHF9A3RaBCh3sJvIa1SSxtcInU/uBXww6uRn9IbGblzbYvBf
-	 Gxb80Y8mRKmDIfIfKQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MBjIG-1xHy283k6O-004vnH; Thu, 19
- Nov 2026 19:09:20 +0100
-Message-ID: <1e2fe486-f497-4263-b759-5876f2f5bd2d@web.de>
-Date: Thu, 19 Nov 2026 19:09:19 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=0N8d6pmo
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZcXmYCzhN73E/4hgsitlC09Jaaa/PXe+OV2u49uevdI27BUrJk94Oh7gJk2qwqwkKBYjNXjCIAxg8A+PCiuqVrVyrtdIkUFSxqelcucAUEObWWjHs9W8z5Qvf7HdBTzR1/lnRbgIBk5WM1T3FpVpPpjBM4yL6m430IQsWhXutMvZQylFTiALvDPLZVAc61VDn8Roj1LTDJlnprDaOq/kPiBCMzTXP4532YqQ6xLK8eaeHd6O9jVXXRM5oTgGBfjQ0D/JXYuPBi+2Ey23IYOd1ErM+EllNf9KGEyHa2UIooeVCmXoL+L+F2u4DZaUO02/9lq7/RFh6tfpWG9Y4qJ1Pw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j1CHra7rmNJbXqqfNxq6MXep67Lhx8y6Gc4Cjprwyvk=;
+ b=pT6mX9+4u1glC0lsCtau3O/AEEvnxahMp7offq9EnnZ6OQlDqoFS+6xtvROd1eC4RmV/p4hkA5AsaWEkwxj+m2H/Q2kXwBUjZeHAPUQWlPEaARZqgyjOPwiHdPB8qbnahJV4zaXV/B296WWwbArlBz9opeoeuGQB1fEI4dGJRCxFjxs7/BPEvlBGGYIyWGAoPwpwIROfOp3C02z6OFGkQac+1wxgOc2iZssEwMSN48zutnGrCizDtdQxFMPqaXzlL2eH1hsNRxFHlMFKJnstm4NUjRBCl+l3yVfTpJY0HtKCswR6KBsaTiScc5f6EYwNT9LOccsGIaY9+Rw0SJKN2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=j1CHra7rmNJbXqqfNxq6MXep67Lhx8y6Gc4Cjprwyvk=;
+ b=0N8d6pmoWL9/1hleQq8H8H5VEkkBpSmMywTIw9t2LPMgsakD0JzHTkalbpGq6Hfe9VeIrDuX14ULWeY92SyRwYLy5AqUvTHSeO/QZUj7se8RXTaFRiC9YRkDjBXEL4XPA6i5Aab9CcBYGAweGt0rXEy25nlAGBRgV/0tAKabWmM=
+Received: from BL1PR13CA0135.namprd13.prod.outlook.com (2603:10b6:208:2bb::20)
+ by LV2PR12MB5894.namprd12.prod.outlook.com (2603:10b6:408:174::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.639.10; Thu, 19 Nov
+ 2026 20:23:28 +0000
+Received: from IA0PEPF0000003E.namprd03.prod.outlook.com
+ (2603:10b6:208:2bb:cafe::5b) by BL1PR13CA0135.outlook.office365.com
+ (2603:10b6:208:2bb::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.639.7 via Frontend Transport; Thu, 19
+ Nov 2026 20:23:28 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ IA0PEPF0000003E.mail.protection.outlook.com (10.167.249.75) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.639.5 via Frontend Transport; Thu, 19 Nov 2026 20:23:28 +0000
+Received: from weiserver.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.57; Thu, 19 Nov
+ 2026 14:23:26 -0600
+From: Wei Huang <wei.huang2@amd.com>
+To: <dmaengine@vger.kernel.org>
+CC: <vkoul@kernel.org>, <Frank.Li@kernel.org>, <shuah@kernel.org>,
+	<nathan.lynch@amd.com>, <wei.huang2@amd.com>, <mario.limonciello@amd.com>,
+	<Stephen.Bates@amd.com>, <tycho@kernel.org>, <suravee.suthikulpanit@amd.com>,
+	<rientjes@google.com>, <John.Kariuki@amd.com>, <jic23@kernel.org>,
+	<weixugc@google.com>, <bhelgaas@google.com>, <Shyam.Iyer@dell.com>,
+	<linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+	<linux-pci@vger.kernel.org>
+Subject: [PATCH v1 00/44] dmaengine: sdxi: add userspace control and management support
+Date: Thu, 19 Nov 2026 14:22:36 -0600
+Message-ID: <20261119202321.1734355-1-wei.huang2@amd.com>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -81,159 +109,280 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: dmaengine: dw: Use devm_clk_get_optional_enabled() in dw_probe()
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev,
- dmaengine@vger.kernel.org
-Cc: Frank Li <Frank.Li@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- LKML <linux-kernel@vger.kernel.org>, kernel-janitors@vger.kernel.org
-References: <8e3534b7-ae64-4c1f-819d-0ba390737b84@web.de>
- <sashiko-outbox-223487@kernel.org> <av8pd_aQFFSSMkDg@SMW015318>
- <216e7cd0-10b9-45a0-9eba-b53cbc6fda4f@web.de> <av804gPG5A8_8UkG@SMW015318>
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <av804gPG5A8_8UkG@SMW015318>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:wfG2JC3LwFQSM/sUiAqXL8/9Fp5UEVDJLeg95C7r97BRdqMl0UB
- 8+ljVb9cvjLbfrZkGj012hWvz0bvce0McSr2WlpMofmn4a+OKbj9YKy4N7eTyUynx0P4F06
- IuamYEBrPcbaRTlngU2yJmnaeDEGj4ZSbMwELyYCyU95KGwKFl/g3QMEX1WqYR/t6u6yXiS
- x15b5PnqNiXm6gX5JHOWA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:4ERn8dNs6NM=;dImiIZh4Kbe7GU4B4Rhj9IXSzkt
- 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
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PEPF0000003E:EE_|LV2PR12MB5894:EE_
+X-MS-Office365-Filtering-Correlation-Id: d43880ca-99d7-4f38-3ed8-08df467af8cb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|36860700016|82310400026|23010399003|10067099003|261022075727099003|261026121527099003|56012099006|261026140227099003|11063799006|261022105027099003|261009223027099003|261021123027099003|261021121427099003|261022113327099003|261102124527099003|261102123227099003|261028144727099003|18002099003|6133799003|13003099007|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	WGpnDmrzrV0ahhynTqLXleAz3458aO19jPY40nTJg0wf0yhVNruKfdAeWZL88ReJgbVs8QCSn4EXqBko+K+7OmacuivWhti0UBbCiqb245yOTLrBKrOFatk06exEqUjg7dJImHS1uba5S0KPYUArTgrAfp18dph8rRMXrbdbyUkNxCv5K7HrE9QVdDcsv7wXU1s+vVgpfy6hARiA3AWqtnELtG78K/z322gp63nQwOIf6u29j4u71wM9MhVTl9FuEkIdEwi1X79cfYrqJOnArNqhkPGhVSOCow2PEu+2iFMhlCUY+sPpXF698z9v/q0hZUKLfST3BT4pBnkFs4z8W+/D+hjkVVM+Ns5EZeGsgybWsljBLDJG2AzwWZV7jye/QdltGdhFgKKYyXjyM5kq7WYx8l3L9mcVCKMylu1WohchnNUSm/Uvqqc1d0aCRDyRZajIfyvyWB8IKQ6CyemfKwhRvznjzeQDLIP/O4DM72tq3iWSwSDSpGrpxDrFHT83s5gm4i4Oqbdr7rLTVGVwO2e/f7xbwoYnA9zaMQ4yy/RML4hbo/e1R+CtdgfHJfqabd+PT6P5U4uZpbedUuqhOorxeJTqy5Zo2R6L6Vo7jZ/qlpWR7dtHIU4mV0E8WWW04uCL8o0tXiLeaSyhTlIDGuXClaVk4eU7pWZ2FZj6ahA=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(36860700016)(82310400026)(23010399003)(10067099003)(261022075727099003)(261026121527099003)(56012099006)(261026140227099003)(11063799006)(261022105027099003)(261009223027099003)(261021123027099003)(261021121427099003)(261022113327099003)(261102124527099003)(261102123227099003)(261028144727099003)(18002099003)(6133799003)(13003099007)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	pJzxJPwVtUyXQ99GsqYAQvGcuEDxpVi5ujwuOz8VBXuBSeM6T63dxJROUgm6X7uyqKFkYoXIkp+aZqP7hAScXQwyhhIjAFYiCkYz59PbC5x9HeS30UV7Db0Lw8RtxLsIgX10sRu3Q8/xFs8yX+NnFBt+zEKttytVyf+LHBNWN8RgDNZvXw+w+K2ZMllLAngWxJ1Dleqqkf4GTzwlHHz77fibZX6M45icE4xBDI43lUtq3XOLmjYH3tdRcunRO2BBVUTe8HOFKyQfE+yd6Z8qqNxAwskKk+iDxVajRtEqNjgS0hong8wFykARLtO63AflLZKWngTaT98v6pe42vNPiLmNexWAwv2z3UBuUFRDND+g/xm1sA/mq4JG00J6ftrxtFLVbDiAULsWFIhe5BDdU+8elfistrITYiJC9aDJM95PTr9zgGg+NqOik81Beagi
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2026 20:23:28.3458
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d43880ca-99d7-4f38-3ed8-08df467af8cb
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	IA0PEPF0000003E.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5894
 
->> Do you find these two function calls really not equivalent to another k=
-nown function call?
->> https://elixir.bootlin.com/linux/v7.4-rc1/source/include/linux/clk.h#L6=
-80-L699
->=20
-> What's your point?
+This series extends the existing SDXI phase 1 "base" driver with versioned
+userspace-facing interfaces for the native SDXI software stack: device
+discovery and management, process-owned execution contexts, and a
+constrained vendor-extension framework.
 
-I wonder why the cleanup procedure would need to be different after the pr=
-oposed refactoring
-for the implementation of the function =E2=80=9Cdw_probe=E2=80=9D.
-https://elixir.bootlin.com/linux/v7.4-rc1/source/drivers/dma/dw/platform.c=
-#L24-L92
+This series applies on top of Nathan Lynch's phase 1 "base" v4 patchset,
+ending at commit b8b01d7ab1e5 ("dmaengine: sdxi: Add DMA engine provider").
+This series is available at:
 
+    https://github.com/AMDESE/linux-sdxi/tree/sdxi-phase2-upstream-v1
 
->                    Sashiko just remind you need remove
-> clk unprepare at error path
+At a high level, this new series adds:
 
-It got the impression that this function call would be still relevant
-(behind the label =E2=80=9Cerr_dw_dma_probe=E2=80=9D) according to a faile=
-d statement =E2=80=9Cret =3D data->probe(chip);=E2=80=9D.
+  - A versioned ioctl UAPI and character-device interface for discovery
+    and management.
+  - Userspace contexts with process-bound context fds, SVA-backed rings,
+    per-context doorbell mappings, and eventfd interrupt delivery.
+  - A typed vendor-extension path that accepts structured requests rather
+    than raw descriptors, plus an AMD QoS implementation.
+  - Test coverage (KUnit + kselftests) and MAINTAINERS updates.
 
+Patch map:
 
->                             and remove() function
+  - Patches 1-9: hardware and admin groundwork (feature gating, hardware
+    layouts, admin operations, context hierarchy, RKey setup, error logs).
+  - Patches 10-13: userspace-context foundations (resource separation,
+    process/SVA and context lifetimes, eventfd delivery, and fatal-error
+    cleanup).
+  - Patches 14-27: versioned ioctl UAPI + character device (discovery and
+    management, context-fd operations, vendor plumbing, tracing,
+    suspend/resume).
+  - Patches 28-34: AMD QoS vendor feature (capabilities, configuration,
+    assignment, telemetry), with KUnit coverage.
+  - Patches 35-44: kselftests (context creation, dataplane basics, error
+    paths, ioctls), plus MAINTAINERS updates.
 
-Do you expect more functionality from a devm_clk_get_optional_enabled() ca=
-ll
-than from the combination of devm_clk_get_optional() and clk_prepare_enabl=
-e() so far?
+The interface is structured to separate management from the dataplane. A
+device fd represents one SDXI function and is used for discovery and
+function-wide management. SDXI_CREATE_CXT binds the caller's mm through
+IOMMU SVA, programs userspace-owned ring state, and returns a process-bound
+context fd for context-scoped control and mapping only that context's
+doorbell. Userspace submits native descriptors through the SVA-backed ring
+and mapped doorbell; context interrupts are delivered through a bound
+eventfd. The kernel owns and validates context and key tables and issues
+administrative operations for lifecycle and management requests.
 
-Regards,
-Markus
+Function-wide mutation and RKey management require CAP_SYS_ADMIN. Context
+ioctls and doorbell mappings are restricted to the creating thread group
+and mm. AKeys written by non-admin callers are limited to the local
+function and bound PASID. Vendor handlers authorize typed requests. AMD
+QoS composes descriptors on the kernel-owned admin context and is PF-only
+and CAP_SYS_ADMIN-gated.
 
+Companion userspace projects are available at:
 
->> =E2=80=A6
->>>> --
->>>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/8e3534b7-ae64=
--4c1f-819d-0ba390737b84@web.de?part=3D1
+  - libsdxi: userspace library
+    https://github.com/AMDESE/libsdxi/tree/sdxi-phase2-upstream-v1
+
+  - sdxi-cli: command-line tool
+    https://github.com/AMDESE/sdxi-cli/tree/sdxi-phase2-upstream-v1
+
+libsdxi wraps the UAPI and provides device discovery, context lifecycle,
+key management, event handling, and vendor helpers. Sample programs
+provide quick tests:
+
+  $ ./samples/memcopy --dev /dev/sdxi0
+  $ ./samples/cxt_intr --dev sdxi1
+
+sdxi-cli is an SDXI management tool built on libsdxi. Representative
+device inspection commands are:
+
+  $ sdxi devices
+  $ sdxi show sdxi0 --verbose
+  $ sdxi attrs sdxi0
+
+SDXI supports vendor-specific extensions. This patchset adds AMD QoS
+management through a separate vendor handler (sdxi-amd-qos when built as
+a module). AMD QoS userspace management is provided in sdxi-cli under a
+vendor namespace:
+
+  $ sdxi amd qos cap sdxi0
+  $ sdxi amd qos status sdxi0
+  $ sdxi amd qos assign sdxi0 --pool 1 --cxt 1
+
+This patchset has been tested on both bare metal and virtual machines with
+a passed-through VF, with the SDXI core, PCI driver, and KUnit tests built
+as modules.
+
+SDXI (Smart Data Accelerator Interface) is a SNIA standard for a
+memory-to-memory data mover and acceleration interface, developed by
+industry contributors including Dell, AMD, VMware, etc. The SDXI
+specifications and related material are available at:
+
+  - SDXI v1.0a and v1.1 specifications: https://www.snia.org/sdxi
+
+Thanks,
+-Wei
+
+Wei Huang (44):
+  dmaengine: sdxi: cache hardware version for feature gating
+  dmaengine: sdxi: define key and error MMIO registers
+  dmaengine: sdxi: define SDXI hardware layouts
+  dmaengine: sdxi: encode admin descriptors
+  dmaengine: sdxi: support timeout-aware completion waits
+  dmaengine: sdxi: support the full context table hierarchy
+  dmaengine: sdxi: implement synchronous admin operations
+  dmaengine: sdxi: add core RKey table management
+  dmaengine: sdxi: handle hardware error logs
+  dmaengine: sdxi: separate context and submission resources
+  dmaengine: sdxi: support userspace context lifetimes
+  dmaengine: sdxi: route context interrupts to eventfd
+  dmaengine: sdxi: kill user contexts on fatal errors
+  dmaengine: sdxi: define the ioctl UAPI surface
+  dmaengine: sdxi: add internal ioctl definitions
+  dmaengine: sdxi: register core character devices
+  dmaengine: sdxi: implement fixed-size ioctl dispatch
+  dmaengine: sdxi: implement userspace context file operations
+  dmaengine: sdxi: validate and copy key ioctl payloads
+  dmaengine: sdxi: implement RKey management ioctls
+  dmaengine: sdxi: implement AKey management ioctls
+  dmaengine: sdxi: expose operation-group discovery
+  dmaengine: sdxi: implement typed vendor admin transport
+  dmaengine: sdxi: expose character device attributes
+  dmaengine: sdxi: add PF and VF device naming
+  dmaengine: sdxi: add SDXI trace events
+  dmaengine: sdxi: support suspend and resume
+  dmaengine: sdxi: amd: define QoS request formats
+  dmaengine: sdxi: amd: add QoS validation scaffolding
+  dmaengine: sdxi: amd: build QoS admin descriptors
+  dmaengine: sdxi: amd: prevalidate QoS operations
+  dmaengine: sdxi: amd: execute QoS vendor operations
+  dmaengine: sdxi: amd: register QoS vendor handler
+  dmaengine: sdxi: amd: test QoS validation with KUnit
+  selftests: sdxi: add build scaffold
+  selftests: sdxi: add shared descriptor and context helpers
+  selftests: sdxi: test context creation
+  selftests: sdxi: test NOP descriptor submission
+  selftests: sdxi: test copy submission and ring wrap
+  selftests: sdxi: exercise dataplane error paths
+  selftests: sdxi: test device ioctls
+  selftests: sdxi: test vendor admin ioctls
+  selftests: sdxi: test RKey ioctls
+  MAINTAINERS: cover SDXI UAPI, vendor files, and selftests
+
+ MAINTAINERS                                   |    3 +
+ drivers/dma/sdxi/.kunitconfig                 |    1 +
+ drivers/dma/sdxi/Kconfig                      |   25 +-
+ drivers/dma/sdxi/Makefile                     |   13 +-
+ drivers/dma/sdxi/admin.c                      |  290 ++++
+ drivers/dma/sdxi/admin.h                      |   45 +
+ drivers/dma/sdxi/amd/Makefile                 |    6 +
+ drivers/dma/sdxi/amd/qos.c                    | 1135 ++++++++++++++
+ drivers/dma/sdxi/amd/qos.h                    |   95 ++
+ drivers/dma/sdxi/amd/qos_kunit.c              |  180 +++
+ drivers/dma/sdxi/completion.c                 |   37 +-
+ drivers/dma/sdxi/completion.h                 |    4 +
+ drivers/dma/sdxi/context.c                    |  980 ++++++++++--
+ drivers/dma/sdxi/context.h                    |   74 +-
+ drivers/dma/sdxi/descriptor.c                 |   89 ++
+ drivers/dma/sdxi/descriptor.h                 |   27 +
+ drivers/dma/sdxi/descriptor_kunit.c           |  150 ++
+ drivers/dma/sdxi/device.c                     |  423 +++++-
+ drivers/dma/sdxi/dma.c                        |   22 +-
+ drivers/dma/sdxi/error.c                      |  371 +++++
+ drivers/dma/sdxi/error.h                      |   18 +
+ drivers/dma/sdxi/hw.h                         |   80 +
+ drivers/dma/sdxi/intr.c                       |  320 ++++
+ drivers/dma/sdxi/intr.h                       |   21 +
+ drivers/dma/sdxi/ioctl.c                      | 1331 +++++++++++++++++
+ drivers/dma/sdxi/ioctl.h                      |   78 +
+ drivers/dma/sdxi/keys.c                       |  577 +++++++
+ drivers/dma/sdxi/keys.h                       |   29 +
+ drivers/dma/sdxi/mmio.h                       |   27 +-
+ drivers/dma/sdxi/pci.c                        |   91 +-
+ drivers/dma/sdxi/process.c                    |  200 +++
+ drivers/dma/sdxi/process.h                    |   43 +
+ drivers/dma/sdxi/sdxi.h                       |   96 +-
+ drivers/dma/sdxi/sysfs.c                      |   70 +
+ drivers/dma/sdxi/sysfs.h                      |   13 +
+ drivers/dma/sdxi/trace.c                      |    9 +
+ drivers/dma/sdxi/trace.h                      |  137 ++
+ drivers/dma/sdxi/vendor.c                     |  138 ++
+ drivers/dma/sdxi/vendor.h                     |   42 +
+ drivers/dma/sdxi/version.h                    |   32 +
+ include/uapi/linux/sdxi.h                     |  569 +++++++
+ tools/testing/selftests/Makefile              |    1 +
+ tools/testing/selftests/sdxi/.gitignore       |    7 +
+ tools/testing/selftests/sdxi/Makefile         |   35 +
+ tools/testing/selftests/sdxi/admin_cmd.c      |  104 ++
+ tools/testing/selftests/sdxi/config           |    2 +
+ tools/testing/selftests/sdxi/context.c        |  343 +++++
+ tools/testing/selftests/sdxi/copy.c           |   40 +
+ tools/testing/selftests/sdxi/device.c         |  245 +++
+ tools/testing/selftests/sdxi/error.c          |   24 +
+ tools/testing/selftests/sdxi/lib/context.c    |  195 +++
+ tools/testing/selftests/sdxi/lib/descriptor.h |   55 +
+ .../selftests/sdxi/lib/fixture-context.h      |  126 ++
+ .../selftests/sdxi/lib/fixture-device.h       |   44 +
+ tools/testing/selftests/sdxi/lib/lib.c        |  206 +++
+ tools/testing/selftests/sdxi/lib/lib.h        |   61 +
+ tools/testing/selftests/sdxi/nop.c            |   30 +
+ tools/testing/selftests/sdxi/rkey.c           |  413 +++++
+ 58 files changed, 9603 insertions(+), 219 deletions(-)
+ create mode 100644 drivers/dma/sdxi/admin.c
+ create mode 100644 drivers/dma/sdxi/admin.h
+ create mode 100644 drivers/dma/sdxi/amd/Makefile
+ create mode 100644 drivers/dma/sdxi/amd/qos.c
+ create mode 100644 drivers/dma/sdxi/amd/qos.h
+ create mode 100644 drivers/dma/sdxi/amd/qos_kunit.c
+ create mode 100644 drivers/dma/sdxi/error.c
+ create mode 100644 drivers/dma/sdxi/error.h
+ create mode 100644 drivers/dma/sdxi/intr.c
+ create mode 100644 drivers/dma/sdxi/intr.h
+ create mode 100644 drivers/dma/sdxi/ioctl.c
+ create mode 100644 drivers/dma/sdxi/ioctl.h
+ create mode 100644 drivers/dma/sdxi/keys.c
+ create mode 100644 drivers/dma/sdxi/keys.h
+ create mode 100644 drivers/dma/sdxi/process.c
+ create mode 100644 drivers/dma/sdxi/process.h
+ create mode 100644 drivers/dma/sdxi/sysfs.c
+ create mode 100644 drivers/dma/sdxi/sysfs.h
+ create mode 100644 drivers/dma/sdxi/trace.c
+ create mode 100644 drivers/dma/sdxi/trace.h
+ create mode 100644 drivers/dma/sdxi/vendor.c
+ create mode 100644 drivers/dma/sdxi/vendor.h
+ create mode 100644 drivers/dma/sdxi/version.h
+ create mode 100644 include/uapi/linux/sdxi.h
+ create mode 100644 tools/testing/selftests/sdxi/.gitignore
+ create mode 100644 tools/testing/selftests/sdxi/Makefile
+ create mode 100644 tools/testing/selftests/sdxi/admin_cmd.c
+ create mode 100644 tools/testing/selftests/sdxi/config
+ create mode 100644 tools/testing/selftests/sdxi/context.c
+ create mode 100644 tools/testing/selftests/sdxi/copy.c
+ create mode 100644 tools/testing/selftests/sdxi/device.c
+ create mode 100644 tools/testing/selftests/sdxi/error.c
+ create mode 100644 tools/testing/selftests/sdxi/lib/context.c
+ create mode 100644 tools/testing/selftests/sdxi/lib/descriptor.h
+ create mode 100644 tools/testing/selftests/sdxi/lib/fixture-context.h
+ create mode 100644 tools/testing/selftests/sdxi/lib/fixture-device.h
+ create mode 100644 tools/testing/selftests/sdxi/lib/lib.c
+ create mode 100644 tools/testing/selftests/sdxi/lib/lib.h
+ create mode 100644 tools/testing/selftests/sdxi/nop.c
+ create mode 100644 tools/testing/selftests/sdxi/rkey.c
+
+-- 
+2.56.1
