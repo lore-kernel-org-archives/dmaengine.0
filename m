@@ -1,45 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052575;
-	b=IsAODSoGcBQkHiwDTliF7gZtRZEmnnI++2GL/kPkDPp+nPW5WGN7Dz79OQDKoN4PHLK2
-	 4JW2qTNgEm2F90aDzMjOxglpeIlQeVPNEbqQnLCredhoPDDv6lrHgX9369tTC88ETBsnu
-	 ZwOhGl3dcySlyThUusQPtWVilt1K1FJouKBd0MAL4+GM8Z/2ndyN7dwdfm4+UOAeM0TsF
-	 FqYsC8cgASqJVSzttboMOw6gmKwtYOkiyPoswKbOTW5oNkk2zFr+RUfIptbGoOKlGY6fX
-	 kOvCEOU3yesbiC+PQIRiWab/a8FHzcOVYMO1caB3nvOA76gpqTrdfHFwAEhfoFJNNxA==
+	t=1795053297;
+	b=CUiUV/O9ynUID09rtAB4Ml7VlkrbafFpyUoqcpkZ52EbPr5vUOFQ9EU5/Rb/bqnj2tg8
+	 JS961o7gDfXByVitCUCzz9tPMt6F9ashzRvEJWC5KsKW41xMhCoq+a/LQW8GEjX8RJMH7
+	 nLVkZkA21DJrfL7VCBBS30QD082mumX47Eq+SfvsotFKDtFZvUbb5h4XtXlWpbJgLQ4ej
+	 kMcnu+r+6YOkrtaYrtTPiTVLRs4sSxE29GUbnkw6kEQ4AV6LEzXYgK0CpTPOdI2ECiyhR
+	 p2zS/luvd024URlg4kVQYvlox472Atd9DtlOGw3O+7rKeK/pQkjUeGQ1axQ3ks74mjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052575;
-	h=Received:DKIM-Signature:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
-	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=TNJqWRDLQtqezoNq5nZn5mof+TYc54a++ODP8eRnVHc=;
-	b=H4HC2fi8hkpnU+kMry5ivvgCW6ZE1tCfz4IkG+Nri6F91LLCsm0J7CzhT829Qgbpzc1S
-	 1J/eYvtbtyV5PUgy/fAUEuvgzy8pMEsL4PJ3rYex692N8TEwSkHzcqMtyuw7zxoVs+Bic
-	 SQkbBaFNTDLkGHmL/8YFq8SkN6P6okwXYkwVza/mlBUhjo4Ld7bGpHP7mf5qBhNptzvRp
-	 zY9qBh+18MZjlZhhXwOYKT/SEp0R1WioptlBy46WvAP5VNqNnI60ObwUCnR6FoCkKCtd7
-	 2wwWJd21U9hCnqtaTI2LvkEOSYShNRye8QCMQXJIjM4v7NknXFyOJyAgp2PtilmspDg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053297;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=nDoAWY11ZCr0ihHoFalCpChIz8Et8oFGy4RrYPRx3SQ=;
+	b=KKTerVNLtlkefgxjgGmviO5653qHriQaNg5XyGGPXoN4SXApN6TOBBaHwB96JANRn6HO
+	 nW88wd7uN8igEF0MuEcOfoT1HhAoekCMCwId+9rkwYMtjDiJB7usOYTZS4jgxAyZHQXbM
+	 XM8YKbZa87cMSd37hqXEQrhRaHfiKZLP51TvVXcu6eSI8UtGwmv6sEtdrKv/TFMrzdrxd
+	 WHYJ3B0ERXDUTLQhgxquFLkfNAa8BWDuzlwSoCL4t+tckBoe0vnq8/jr3XbeeXAhTSbR1
+	 Zmsm9rELO99cPvZxemN1E0krtgPDjgaQtMUEgezKOeWW4ZC9muhC3yCRJaFMnCdoVhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YbqZ2o6L;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nltqhrd0;
+	arc=none smtp.remote-ip=209.85.215.174
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1515E606A31C;
-	Thu, 19 Nov 2026 01:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF71C60A260A
+	for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 01:54:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF71C60A260A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YbqZ2o6L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C3D1F000C4;
-	Thu, 19 Nov 2026 01:42:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795052574;
-	bh=TNJqWRDLQtqezoNq5nZn5mof+TYc54a++ODP8eRnVHc=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=YbqZ2o6LybiBta1rVCuHeCUhjeSQM4UAwL8chwlTCTSEP/ugY8MEYxDAT6M7UieQO
-	 U4optAag57zlP6HGMestwOoBI1eaiT0pOUB9CR0Y5P1f4xWXEHQ/xXnvUiXaKZMEAK
-	 8Lcc3M9Cu00ikxCZES/uCbMiA7qiFsdDNfDA/FO2VWnVDUUhUQXP4D53jVnQ/krk+m
-	 AlfjgqJJRuNRjX3LzXj+//gi7dTWPThK6PIUfBgCAJxkAZ6ooxHQ2bsmNBTUUPZuMP
-	 iI6bpL21zUuzj1oLwoxIGzjvFkJbiUnLLxUqQi0uxWoWjKwiy99MdycmpuJXt5swlu
-	 s5DTv37MSkGCQ==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nltqhrd0
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cddac941ed1so752999a12.2
+        for <dmaengine@vger.kernel.org>; Wed, 18 Nov 2026 17:54:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795053296; x=1795658096; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nDoAWY11ZCr0ihHoFalCpChIz8Et8oFGy4RrYPRx3SQ=;
+        b=nltqhrd0MMDZ7546deiSsw2uwq42t4c3i4uOD0uXOHy2rm2POJCcz0TxFstDHvoHpM
+         /7crJUPoUAefBTJsrcZgBfnDlE7lNpDD/qTTwId33wMljgUFI61lnGlVDcLB1YofRILd
+         FQUNgnLEgmL3uaUgOIGiu24veyJztsWw/OMqkQbHz8X5G+bHP8OojWbSlR/cjnoU1va1
+         4cXxRINSVIrjwcRrrdxFNK2+yD0MrGLpdL6QMQ4MqtQO6GuTvicIdWLHmnun1fGBX/b1
+         aQHourZFOB3X7BBJZbioOFbRdaH/AxGZg7lUk+4G+UF4GQxmu5WqJa1nDWRqIOXzCj7q
+         qcig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795053296; x=1795658096;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nDoAWY11ZCr0ihHoFalCpChIz8Et8oFGy4RrYPRx3SQ=;
+        b=VOexnLmvrDkaKNWcTYXlp6vB7+cbYhrq5b+GApWZZ6CqeQj7lpOVsjD44N4U9y2db3
+         v4kcA2b5lHOJ3el76rw+bUR1zjUYsMG36qFTQD+DxRjI1iyzFMzqFhracchKKFMdoxwP
+         fzM+MmUnmrNSO8HXk936KwlMXuJJ8qYuyp/cJPqLTXEV0kRYEFnTLVK050x7cQU0hVLU
+         21ynLAiOOcFTgJyW+RNTiRLz08f45mMJGSYsNDJOwgDQ3/vbaihZcopB9AL2GozBYkq1
+         Mj5MgcvyGSDiWkweZlofLvT5pnSkAOFdd+qyd1aN92hfMBJ41T4yxjcss4dVXzstJvZ5
+         KtkA==
+X-Forwarded-Encrypted: i=1; AL+hErGNlqNl3fNMcL3cj0qjrcqpolqOtr0Hl4KTz0tR+xh9b2aXQOypAkaa7y8CST32k5ifugHxKEMXvUg=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+GhkQm8FIfV8WFylSf/2h7O70wHFz7i/a/MCEjmLDUD7rW+XI4
+	F0RHb8oRwTHbvXD6oucRyOeKIaPVam/SOeIExnsS6USGvtIbOypp5ZgM
+X-Gm-Gg: AZFdTZfgLffnDdTxkQv44Uvx2m6BAARgFRKlqlCqhbQCuvVsix/Jwvxk7FkDBexzupx
+	MEK0qKSokwIO8k/T+/akZAGziwYiC2ipoPm/+HxW/bijkjE8sY3Mx0i96AaDBX5DqUtQcvEm/KN
+	QXmebuD/bd6FHjaVQSHs9mlI6TCsdtVfkccijNTbAQpFJi3i+vHEG3qQtw48dLiSNh/UojFiWmK
+	EzOU/8tkWqjbVFVRm+ydhurjfryt4eec1pnoqYHBDRMZTLLyyCEZb1sUU7rV32x42BA0nf/a5ao
+	YS/LE1daBrSbma9zFj5usRe+8mWA5FfVE1brtcd6+J0iWej9yAnsZfkyzdalftc+y5XJfHrQkmP
+	qx/bZ56MeHVm1omod+ORl8yG44c0XE0y/RsEu8tk2ivbmHZD33cZBlnt5AfVqEEx3XP5bbvA9UP
+	VW7b2oDEXypNSaJuqiV+2gcoosKB2BOpeThGIWt3lmpCAID8P6Kjm+wreiQpaWzTxC361ox01PI
+	aIKQ0w9ei613C2IarnK02ZOiDzhcYlN3jCP3lZrgKxcS0FgqkCpThLgR8caoWcCDJk4IZsfGffp
+	XVOBNoAQQF1QT7W3VQYd22G1QgM/t+q6PFnqGTAosFnX95ADzR7uKVZEtK3vVn3aNrXl4V18nnh
+	4jHIA8uH3Zu8+rn6pHLNtaTOg3njWzv4k5SN0
+X-Received: by 2002:a17:90b:2ec7:b0:3ac:a139:1b13 with SMTP id 98e67ed59e1d1-3b3d07a85e6mr4560280a91.29.1795053296137;
+        Wed, 18 Nov 2026 17:54:56 -0800 (PST)
+Received: from localhost.localdomain (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3fe03c3d4sm773081a91.14.2026.11.18.17.54.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2026 17:54:55 -0800 (PST)
+From: Shan-Chun Hung <shanchun1218@gmail.com>
+To: ychuang3@nuvoton.com,
+	schung@nuvoton.com,
+	vkoul@kernel.org,
+	Frank.Li@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	kees@kernel.org,
+	gustavoars@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Cc: Shan-Chun Hung <shanchun1218@gmail.com>
+Subject: [PATCH v3 0/2] dmaengine: ma35d1-pdma: Add MA35D1 PDMA driver
+Date: Thu, 19 Nov 2026 09:54:45 +0800
+Message-Id: <20261119015447.160470-1-shanchun1218@gmail.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -49,189 +107,61 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v4 3/5] clk: cix: Register the Sky1 AUDSS IRQ auxiliary
- device
-From: Brian Masney <masneyb@kernel.org>
-To: Jelly Jia <Jelly.Jia@cixtech.com>
-Cc: vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, 
- krzk+dt@kernel.org, conor+dt@kernel.org, robin.murphy@arm.com, 
- sboyd@kernel.org, bmasney+clk@redhat.com, jbrunet+clk@baylibre.com, 
- tglx@kernel.org, devicetree@vger.kernel.org, 
- cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-clk@vger.kernel.org, joakim.zhang@cixtech.com, radu@rendec.net, 
- Brian Masney <masneyb@kernel.org>
-In-Reply-To: <20261117094408.1393837-4-Jelly.Jia@cixtech.com>
-References: <20261117094408.1393837-1-Jelly.Jia@cixtech.com>
- <20261117094408.1393837-4-Jelly.Jia@cixtech.com>
-Date: Wed, 18 Nov 2026 20:42:47 -0500
-Message-Id: <179505256752.187996.952601612639868708.b4-review@b4>
-X-Mailer: b4 0.17-dev-8145e
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4931; i=masneyb@kernel.org;
- s=20250903; h=from:subject:message-id;
- bh=aXJ9C26UieRByax4ACS+gov5jq9nofkOwnsEGr9engA=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLL+hUiEcaTk/F45R5EtfaKBzzS9SQLKDzkW/XLqqIn1l
- j3i+P5DRykLgxgXg6yYIsuSXKOCiNRVtvfuaLLAzGFlAhnCwMUpABNZJ8Hwv5C1M+SA6PnfQYyP
- vq+c2pon8E9T00sp87RwxCzxTdpCrQz/c2rrq1Vbb3ntWBFsN32me9/bIKNF5lnCm9a1KZ+XLH/
- CAAA=
-X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
- fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+Content-Transfer-Encoding: 8bit
 
-Hi Jelly,
+This series adds the PDMA controller driver and DT binding for the
+Nuvoton MA35D1 SoC.
 
-> Register an auxiliary IRQ device for CRU nodes declaring an interrupt
-> controller, following the existing reset device pattern. Share a raw-lock
-> regmap with the IRQ driver and preserve gate/reset context while powering
-> down the CRU. Restore the parent before child IRQ delivery resumes using
-> noirq system-sleep ordering.
-> 
-> The existing reset-sky1-audss.c is unchanged. Auxiliary child teardown must
-> run before parent regmap/runtime-PM cleanup.
-> 
-> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
-> ---
->  drivers/clk/cix/clk-sky1-audss.c | 37 +++++++++++++++++++++++++++++---
->  1 file changed, 34 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/clk/cix/clk-sky1-audss.c b/drivers/clk/cix/clk-sky1-audss.c
-> index e096b8121df3..fa51cdf4f4bd 100644
-> --- a/drivers/clk/cix/clk-sky1-audss.c
-> +++ b/drivers/clk/cix/clk-sky1-audss.c
-> @@ -2,6 +2,7 @@
->  // Copyright 2026 Cix Technology Group Co., Ltd.
->  
->  #include <linux/auxiliary_bus.h>
-> +#include <linux/bits.h>
+The driver supports memory-to-memory, slave scatter-gather and cyclic
+transfers.
 
-This doesn't appear to be needed.
+Tested on the MA35D1 SOM board with Linux v7.4-rc3:
+ - memory-to-memory with dmatest (2000 iterations of 1MB buffers, no failures)
+ - slave scatter-gather with a local (not yet submitted) QSPI patch
+ - cyclic slave with a local (not yet submitted) I2S patch
 
->  #include <linux/clk.h>
->  #include <linux/clk-provider.h>
->  #include <linux/device.h>
-> @@ -18,7 +19,9 @@
->  #define INFO_CLK_GATE				0x10
->  #define INFO_CLK_DIV				0x14
->  #define INFO_CLK_MUX				0x18
-> +#define INFO_AP_IRQC				0x54
->  #define INFO_MCLK				0x70
-> +#define INFO_SW_RESETN				0x78
->  
->  #define SKY1_AUDSS_CLK_PARENTS_CNT		4
->  #define SKY1_AUDSS_NUM_CLKS			(CLK_MCLK4 + 1)
-> @@ -28,7 +31,9 @@ static u32 sky1_reg_save[][2] = {
->  	{ INFO_CLK_GATE,  0 },
->  	{ INFO_CLK_DIV, 0 },
->  	{ INFO_CLK_MUX, 0 },
-> +	{ INFO_AP_IRQC, 0 },
->  	{ INFO_MCLK, 0 },
-> +	{ INFO_SW_RESETN, 0 },
+Changes in v3:
+ - Use dma_alloc_coherent() for the hardware SG table instead of
+   kzalloc() + dma_map_single(); defer descriptor free in terminate_all().
+ - Rename ma35d1_desc_submit() to ma35d1_desc_prep_done(); prep() only
+   prepares the descriptor.
+ - Rewrite the IRQ handler: read and ack TDSTS/ABTSTS once, then iterate
+   the set bits.
+ - Address issue identified by Sashiko AI review:
+   - Terminate the descriptor with vchan_terminate_vdesc() when a cyclic
+     transfer is aborted, avoiding a use-after-free in vchan_complete().
+ - Request the IRQ after the DMA device is registered.
+ - Use devm_of_dma_controller_register() and
+   dmaenginem_async_device_register(), and drop remove(); a devm action
+   stops the hardware and kills the tasklets.
 
-This, along with the defines should go in a separate commit.
+Changes in v2:
+ - Address issues identified by Sashiko AI review:
+   - Program registers on descriptor start instead of prep.
+   - Fix interrupt completion handling and return IRQ_NONE when idle.
+   - Set PDMA_TBINTDIS on intermediate memcpy chunks.
+   - Validate scatter-gather lengths and bus width alignment.
+   - Fix channel request assignment in of_xlate().
+   - Safe controller teardown order in remove().
+   - Drop peripheral timeout support to simplify driver.
+ - binding: describe the hardware in the description, and drop
+   dma-channels and the dt-bindings header.
+ - Use a fixed number of 10 channels and trim the includes.
 
->  };
->  
->  static const char * const sky1_audss_clk_names[SKY1_AUDSS_CLK_PARENTS_CNT] = {
-> @@ -519,6 +524,7 @@ static const struct regmap_config sky1_audss_regmap_config = {
->  	.reg_bits = 32,
->  	.val_bits = 32,
->  	.reg_stride = 4,
-> +	.use_raw_spinlock = true,
->  };
->  
->  struct sky1_audss_clks_priv {
-> @@ -928,6 +934,21 @@ static int sky1_audss_clks_enable(struct sky1_audss_clks_priv *priv)
->  	return err;
->  }
->  
-> +static int sky1_audss_irq_controller_register(struct device *dev)
-> +{
-> +	struct auxiliary_device *adev;
-> +
-> +	if (!IS_ENABLED(CONFIG_IRQ_SKY1_AUDSS) ||
-> +	    !of_property_present(dev->of_node, "interrupt-controller"))
-> +		return 0;
-> +
-> +	adev = devm_auxiliary_device_create(dev, "irq", NULL);
-> +	if (!adev)
-> +		return -ENODEV;
-> +
-> +	return 0;
+Signed-off-by: Shan-Chun Hung <shanchun1218@gmail.com>
 
-The reset registration code currently has:
+Shan-Chun Hung (2):
+  dt-bindings: dma: nuvoton,ma35d1-pdma: Document MA35D1 PDMA controller
+  dmaengine: ma35d1-pdma: Add MA35D1 PDMA driver
 
-    #if IS_ENABLED(CONFIG_RESET_SKY1_AUDSS)
-
-    static int sky1_audss_reset_controller_register(struct device *dev)
-    {
-    ...
-    }
-    #else
-    static int sky1_audss_reset_controller_register(struct device *dev)
-    {
-    	return 0;
-    }
-
-I don't care which pattern you use but make it consistent within this
-driver.
-
-> +}
-> +
->  static void sky1_audss_clks_disable(struct sky1_audss_clks_priv *priv)
->  {
->  	const struct sky1_audss_clks_devtype_data *devtype_data = priv->devtype_data;
-> @@ -1110,6 +1131,13 @@ static int sky1_audss_clk_probe(struct platform_device *pdev)
->  		goto fail_pm;
->  	}
->  
-> +	/* Remove auxiliary children before the parent runtime-PM cleanup. */
-> +	ret = sky1_audss_irq_controller_register(dev);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "failed to set up AUDSS DMA IRQs\n");
-> +		goto fail_pm;
-> +	}
-> +
->  	pm_runtime_put_sync(dev);
->  
->  	return 0;
-> @@ -1125,6 +1153,7 @@ static int __maybe_unused sky1_audss_clk_runtime_suspend(struct device *dev)
->  	const struct sky1_audss_clks_devtype_data *devtype_data = priv->devtype_data;
->  	unsigned long flags;
->  	int i;
-> +	int ret;
-
-The ret can be folded into the line above.
-
->  
->  	spin_lock_irqsave(&priv->lock, flags);
->  	for (i = 0; i < devtype_data->reg_save_size; i++)
-> @@ -1132,7 +1161,9 @@ static int __maybe_unused sky1_audss_clk_runtime_suspend(struct device *dev)
->  			    devtype_data->reg_save[i][0], &devtype_data->reg_save[i][1]);
->  	spin_unlock_irqrestore(&priv->lock, flags);
->  
-> -	reset_control_assert(priv->rst_noc);
-> +	ret = reset_control_assert(priv->rst_noc);
-> +	if (ret)
-> +		return ret;
-
-Should this be a separate patch?
-
->  
->  	sky1_audss_clks_disable(priv);
->  
-> @@ -1170,8 +1201,8 @@ static int __maybe_unused sky1_audss_clk_runtime_resume(struct device *dev)
->  static const struct dev_pm_ops sky1_audss_clk_pm_ops = {
->  	SET_RUNTIME_PM_OPS(sky1_audss_clk_runtime_suspend,
->  			   sky1_audss_clk_runtime_resume, NULL)
-> -	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> -				pm_runtime_force_resume)
-> +	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> +				      pm_runtime_force_resume)
-
-The IRQ driver uses the new pm_ptr(). Please use that.
-
-Brian
+ .../bindings/dma/nuvoton,ma35d1-pdma.yaml     |  71 ++
+ drivers/dma/Kconfig                           |  12 +
+ drivers/dma/Makefile                          |   1 +
+ drivers/dma/ma35d1-pdma.c                     | 662 ++++++++++++++++++
+ 4 files changed, 746 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/dma/nuvoton,ma35d1-pdma.yaml
+ create mode 100644 drivers/dma/ma35d1-pdma.c
 
 -- 
-Brian Masney <masneyb@kernel.org>
+2.25.1
+
