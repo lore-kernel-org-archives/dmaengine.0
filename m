@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795167149;
-	b=R0lXyabnKr9riqdmxenzXhiIql13tATcStt2sGVq8UWoD5hRpOOzFo+1G4PuE+GipQer
-	 dZAhFiHYdMHNvbKazip34QWnO+yBJRA/+5AxlW1ejQQ3qkQ932Q+OZa1SR/ILdOdH6GlE
-	 4DcxvbbxbVpGY9RsANjheBmLTdladSPnsd/o678yAfX4ZQNu0I00xPz37F9lmpQNNgRSp
-	 x1j6jbVTMwnAWiSGpkQeIEW5dIgGREuAwinq3dSwcfUf+HYSZbmJ52rItyIO18EVY8anp
-	 xXWdl3W4c/P2a3GJGIiO4YxBKBx2EKxHiGoJ4SNzGaar9GdC2LwdFN3d+VyEsQNtAKQ==
+	t=1795167263;
+	b=4SCJiuhebxa/iz57bB1r4X2QAfl9BDD7nnL2zBVJls+L9mDAk/f2DC6ehW4chxnDqhd6
+	 sudLWMB8KLY461oqUmygu1xmZXvjELX92b5X2v7Ew4FS7/u2StrdYnV7iwUoYN61/yKnp
+	 mRh/fVTiGjcmkHv97Na1Ak6aPcOf6Q5+eUkPH7k6MxTYP20GGeIGov338DN+aT+tied5/
+	 M08C9KZTGGwZK/3WlfhHPcSLjlg1oryjcuqA8WBtNcUyY5UzInXrE2VIZqj5CPrlKRf9l
+	 6eUQIr9OgdizSSyKp8K+N7YZOJdfEtkmb68eBAUO1KX3H/pi+yLKDDbmFZRufLnIWEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795167149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795167263;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=N2TX84muOckIlzBgwTaSk5sr6HXNB/fegPx1qDVmWWg=;
-	b=K6IKVrsWYh3FYxIGzMT9b6Ydp802VBKWUuwfUkEV5Rwg1gUhHeUIzEzSrZGV8Do2FkxP
-	 vP0IdGPGzD+tHw2ndSyVq8wZTRYZ8KFv485bu0W42kOBfWRBoWUKFLb6ArWmAU9rdA91n
-	 R2LMFRKa4KwwhCTOjW9mPQV7pCcP+0PGz9ykr8+yacJqIfbEa29RgZWdWD3ADHnjn7QmG
-	 x2ZQ+ka2uDTL6MLOSsSoQL/ZfF7PIJi6peW8CE6WvtbQJ1r/elzsrWpG7t7NvBlefFrh8
-	 Z/oaGv78slB5qRZ0XBY7MRXrPJulpmTT9tG7DWxdDPqyeYslANUHzi4luTbf9Y2rLCg==
+	bh=FyhXCGx1D5FQ/QjssCKzHZAG1k4JmZiWIiy6DahHUjc=;
+	b=en0vTd7zyqb2sGKqskqlDxLJEXTh0muf2qv8tPhnlJ20CWq8qwpfcD0GTCsC+KTsNK2f
+	 bdQsZLv3+n/1i9VHESx39g1iyXW85bAV0/fv+wW4Ntr+YE9pL/xu7Wh6EbLIwdl+agXsj
+	 5a1zR7HOtR5yS/AjUZwLpWUhnc1Q5gIOVuPRG2RzCr5upZjXDP9FP0EjRgO3ZkOffEJ6+
+	 t/fbLpNK6UziueVjFC1U2vxs4ccNZCrR2eWHRLH7iPSyo+okZbKB7sldST3MEuF48FfPu
+	 bwdsbYZdAXcaxsgFcorudvIrKUZ4RoUSZeqj4rvTjLvv/BISELjjx3PJ0DKwj6rb0/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="b+aayWs/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oISNH2kC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF012606A320;
-	Fri, 20 Nov 2026 09:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6672360A2605;
+	Fri, 20 Nov 2026 09:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b+aayWs/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081771F000C6;
-	Fri, 20 Nov 2026 09:32:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oISNH2kC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532651F000C4;
+	Fri, 20 Nov 2026 09:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795167148;
-	bh=N2TX84muOckIlzBgwTaSk5sr6HXNB/fegPx1qDVmWWg=;
+	s=k20260515; t=1795167263;
+	bh=FyhXCGx1D5FQ/QjssCKzHZAG1k4JmZiWIiy6DahHUjc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=b+aayWs/8zNGLRP2GlXUtmz8xp5X+5vLouh0IlkRXw7wkKAbJfTUheIfkHnKomjRy
-	 TXx4/fabragKwGwqDmaGDetXZvXckvRdRTJnmUCDnHn2htfw8xXWbYJbLb/BfzOTkD
-	 yWd89VPKBAtk23Yl6XNHeq/H3mbJfxwAWLiDyNRkBIAqKuxv5mOiT3/JbbuA6rqHUc
-	 FbMLwvet808w+6qZINkn2COvA9CiH4Ggd56c7kmeBn7fA2WIHtQ5lVgedUE5X75phA
-	 tgn1tcExMLn9b/9ULyDBBcf19MFieDjpWD58uQ0Zs3UDeWoEev6d9M7J4XOXtIpV7k
-	 QdhBZFUdSsucw==
-Date: Fri, 20 Nov 2026 15:02:25 +0530
+	b=oISNH2kCDFfauqXANsmJSk/43zxI4r0lfXyp0NuWeSttlGl7XSnlkBJpEzuF8Vj/0
+	 g+hnR7q2NBJegHWgQYOt5ITx0NOVVPIUSJU9WQ6OhlP9kNaxPKHbftoUYGFWbARbol
+	 SWNd+aogNGmnPgQjQhMzzsHP4PEKvaNAQuYJwWdUWjVNSTFOzpiPCwlTfg4kvOpfiT
+	 8kfKpAbZ9TOhamN+awIe3YEz6hrdzf+fJth3E1yY5P5rlZ/RCE8yogejQSLyBasnmS
+	 KN34cCzfuG/mvDuN7P/iyi4n6W4cK1WnYyjiOfD0qDUd3qbOfX04zOb0g5/wRQ2tUB
+	 S0YRAcAfAYQ3Q==
+Date: Fri, 20 Nov 2026 15:04:19 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Rui Wang <wr574332525@163.com>
-Cc: Eugeniy.Paltsev@synopsys.com, Frank.Li@kernel.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6] dmaengine: dw-axi-dmac: report paused state and
- residue in tx_status
-Message-ID: <awATqdO3Ltn5JiLg@parshuram>
-References: <20260928035133.2046-1-wr574332525@163.com>
+To: rolanddreier@rivian.com
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] dmaengine: dw-axi-dmac: Fix LLP search, error
+ reporting, and error dump
+Message-ID: <awAUG_fO8eAkQq-c@parshuram>
+References: <20261006-dw-axi-fixes-v1-0-3b319e456d93@rivian.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,37 +60,20 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260928035133.2046-1-wr574332525@163.com>
+In-Reply-To: <20261006-dw-axi-fixes-v1-0-3b319e456d93@rivian.com>
 
-On 28-09-26, 11:51, Rui Wang wrote:
-> The driver implements device_pause/device_resume, but device_tx_status
-> keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
-> tell a paused channel apart from a running one. Report DMA_PAUSED when
-> the channel is paused and the cookie is still in flight, including for
-> callers that pass a NULL dma_tx_state, and clear the stale is_paused
-> flag in dma_chan_terminate_all(), which disables the channel and thus
-> implicitly cancels the paused state.
+On 06-10-26, 01:03, Roland Dreier via B4 Relay wrote:
+> One patch that build's on Jia Wang's fix for error-path LLI dump: the
+> same bug is present in axi_chan_block_xfer_complete(), although it's
+> not clear that it could ever be hit in practice, because the llp being
+> searched for should always be found.
 > 
-> Also, the residue of an in-flight transfer is currently derived from
-> the number of completed LLI blocks, so it only advances in block-size
-> steps and stays stale for the duration of a large block. Read the
-> current hardware pointer (CH_SAR for MEM_TO_DEV and MEM_TO_MEM, CH_DAR
-> for DEV_TO_MEM) and walk the descriptor's LLIs to compute how many
-> bytes have actually been transferred. The 64-bit pointer is sampled
-> with a tearing-safe double read, as the transfer may be running
-> concurrently. The pointer is only consulted for the descriptor most
-> recently programmed into the hardware, tracked in the previously
-> unused chan->desc field; any other descriptor has not been started yet
-> and keeps reporting its full length. When the transfer has just
-> completed but the descriptor has not been reaped yet, the pointer sits
-> at the end of the last block and the residue naturally reads as 0. The
-> pointer registers are pre-loaded with the first block's addresses when
-> the channel is programmed, so a stale pointer left by a previous
-> transfer (e.g. when its buffer is reused) can never be observed before
-> the first LLI fetch completes. Cyclic descriptors keep the
-> block-granular accounting.
+> Then two fixes for failed transfer handling: one to report status in
+> tx_result so that clients can know when a transfer hit an error, and
+> another to make log messages more informative than "Bad descriptor
+> submitted".
 
-This fails on dmaengine/next. Can you please rebase
+This fails for me against current code, please rebase on dmaengine/next
 
 -- 
 ~Vinod
