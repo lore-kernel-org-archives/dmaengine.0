@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795168858;
-	b=fDBmTcIXP7RS3C7IV932AeVoYr7mA17XJ85eYSXTmzUJtz5dMTZ5ypNQ7dhxQBmtDRIU
-	 Z4iLa+9vh6W/oUhirsmwnJKrG50yLn/EBqTKfEtzJlVdnokiUJxZ3Tku5GC8XTrbvME+u
-	 ftNmKyuaI4C7KIeuvzFKlSK0CR2ujEFL3lnyl0kORhef09FvGwE0SIkb+VBgdaxymEted
-	 5FD8O3ZJuQLNA1kWqhk7554OgiwBfIbzrSiE21hfnvMTajTQYjlPXhAsQCeaV6s1Syr81
-	 xJbMUeHsxIh1Tm3BkOJi/PH4gFCwTOYI5Owk6m0iz+T8xww0vKRveOnQ800iOaG3Gqw==
+	t=1795168860;
+	b=BPWvfslW2vWrzz/3myjh109Ut6NjnPSA4QkWEI6QnBRVK6OzEaXGPGjT+W52IUrPX2Vk
+	 6YukEnjr8AGtEcTXL+zPtJU1gFQUe1l41YmQBR5eM5ZJiQ/HXgEGUWAqwphvNZQykTrMp
+	 rMSAEZVDu3uT99TOj/zXQcJbGBEgayFpFrxzXtEnPVkMlLXb1ceYaRRMs/TtQ4ZM8SSEX
+	 Y11oEm68hYKykUFxtXdoXakgVKxE/rfRHy7Z9iPPsDqFZF5YZcePJVMIU5Yus61qhsjKy
+	 Gx0mgS6JovgB4KW6KhlUh5Ohe2ccyzC8IiDZoPE3O5Sh+r8IGYLE8oTYbO0Hpg7ExDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795168858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795168860;
 	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
 	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 X-Mailer;
-	bh=5/GWWF39b0UG/gg32Ki3MJFclUxQuCyhKJHt8MgDaIA=;
-	b=T4hWKlStGHJbFiuNxnQCTLeTdmwsW3S1AcBtygHKbIsQGw/eQzW+F9K9FGTuinHTLP0i
-	 TEszc09nfIZJ8uYN5FTqDWSQ41k7npA9E4erx/DGN555YKNX8fm+MW4AQ7SL7LVQiw+by
-	 aCNRPHt4YEnB0DvvAiXtLuTtCFth4muK6/DHMtEIDOUMiy9BY0zAOZBcqKII5Vt2w8Zxj
-	 yx0bs+sQ1JdM70ekdr2SI+j9rF9SxOQ6A+S+r9xEP5V/iiHOo0WXL1Yhh1BQOGJ6E4pwB
-	 O6o2glMFBvnGX2/FWjL4Gq376lSrQ2cZA+t78KTlGbbQg18qZCPZYHCyANloLz+EAWw==
+	bh=iANM5Y9LdTKMa/15tweq1qjTR+3444ej71CB7Fgksrk=;
+	b=Jn/ac3oxMrcJ0V0nUubl2r0cAJeHxGGy5LlGHPXZkRLZ8IP1jqymg6qS5z/46LfZJO8O
+	 3TTOVp55gMV16OMNgYS34VgQgTCloPQcG/61e1kM2yhaFup6tR9i3iQ7szxfEGwUH78Jk
+	 zmm7uBIWnhTRFGQT9uCykmtZikYGFnRvT8gNaZ56P+2YWpCLEqtOkcGv4N2oAi9wZaksd
+	 vBzuO8tQmL5qIXvia22NNZ+uFXehVZrvHR4wqBXso0lTi/ElXQOMyEBZYEREy2kg++0nD
+	 xKJrp2phEcq6UoIPfhIebxLD2H4e2+M2G/vXAyzccJWraewJd1OAnhD/ctJXEWOHH/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RmNX3PQl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RkRn7Q4k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC43606A330;
-	Fri, 20 Nov 2026 10:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6F2606A32C;
+	Fri, 20 Nov 2026 10:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RmNX3PQl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50BE1F000D0;
-	Fri, 20 Nov 2026 10:00:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RkRn7Q4k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6028A1F000C4;
+	Fri, 20 Nov 2026 10:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795168857;
-	bh=5/GWWF39b0UG/gg32Ki3MJFclUxQuCyhKJHt8MgDaIA=;
+	s=k20260515; t=1795168860;
+	bh=iANM5Y9LdTKMa/15tweq1qjTR+3444ej71CB7Fgksrk=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=RmNX3PQlxdDJsVIrIf2QipU48ERpvXwjyMDEEm5gyHtSBPzsstBUBnicVNLqa6oLX
-	 RevLkQQ/988mRhGjKPWJzs3jXBHpU1VoSffrI5d4fl9K3DqDujCOeEqrtjazj8MV6d
-	 K/3AwBkJVLWCxzYNbqrg0/BZUKrcmFE+sCJaZgVPW31UQwu8OtEZ6aXE4tONeHMN//
-	 /n3VNqJ+EOsrJdhiNWybFsrS0MNxq7kzjDJx28L8wpQHs2JaR10j+l+LahqrVXFoYu
-	 3/hMzbc07AI1WQbnKZI84Lka/EuWakrNbMENCaQlZ+6Dr31cv4WKNbBbD3veOWrjYL
-	 z9jzdc4ANLsfg==
+	b=RkRn7Q4knrnVsk3rATSTSFWclJhKOQYpqpV+R0hTEnEAvBep0crk3AK80uPM2Q6qy
+	 Bbm4DDuuPFJqymje/G0D4npvtaBrdImx15SSnTgYU7Rl+S4W861j64cfdj4TfAUb+l
+	 HGUuG6te3tXWaQFYqlcJDryU+YCaaXETTeOkFAb0rt3F1eIPlPx04/OoKlAldwfVe9
+	 LNH5Yvrx+9SPzK4tSJV/p9mkjC6y1DLpRGRJ5L+rqKM64ANR59PQ99KNHG2Z9LfbBY
+	 lWzJrKpcCNajjKFw8MmNy16nfxdjShkqIUZ8t4z955V+dIdQCjLbrL3dfXWJDOUPcz
+	 YPFEDmaU1RyXA==
 From: Vinod Koul <vkoul@kernel.org>
-To: dmaengine@vger.kernel.org, Rosen Penev <rosenp@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, linux-kernel@vger.kernel.org
-In-Reply-To: <20260915180919.8899-1-rosenp@gmail.com>
-References: <20260915180919.8899-1-rosenp@gmail.com>
-Subject: Re: [PATCH] dmaengine: bestcomm: drop unneeded sram exports
-Message-Id: <179516885631.45276.10010375432650136083.b4-ty@kernel.org>
-Date: Fri, 20 Nov 2026 15:30:56 +0530
+To: Keguang Zhang <keguang.zhang@gmail.com>, 
+ Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
+Cc: Frank Li <Frank.Li@kernel.org>, Frank Li <Frank.li@oss.nxp.com>, 
+ linux-mips@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
+References: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
+Subject: Re: [PATCH v3] dmaengine: loongson1-apb-dma: avoid using iterator
+ variable after list_for_each_entry()
+Message-Id: <179516885803.45276.9680446903666595138.b4-ty@kernel.org>
+Date: Fri, 20 Nov 2026 15:30:58 +0530
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,20 +66,24 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Tue, 15 Sep 2026 11:09:19 -0700, Rosen Penev wrote:
-> bcom_sram_init(), bcom_sram_cleanup(), bcom_sram_alloc() and
-> bcom_sram_free() are only called from bestcomm.c, which is part of
-> the same bestcomm-core module as sram.c.  Remove the now-pointless
-> EXPORT_SYMBOL_GPL() statements; the functions stay non-static because
-> they cross compilation units within the module.  bcom_sram itself
-> remains exported for the inline helpers in sram.h.
+On Thu, 17 Sep 2026 16:30:25 +0000, Mahad Ibrahim wrote:
+> ls1x_dma_tx_status() locates the descriptor actively being processed by
+> walking the LLI list and comparing the hardware reported next descriptor
+> pointer against each element's next-descriptor pointer.
+> 
+> A list_for_each_entry macro is used in the comparison phase, which at
+> the end of the loop leaves the lli pointer at the currently executing LLI.
+> However this also subsequently runs for a non-match lli, in which it
+> points at the head. This causes a type confusion bug which treats the
+> head, which is a ls1x_dma_desc, as a ls1x_dma_lli object. Additionally it
+> goes forwards and prints garbage via the dev_dbg.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: bestcomm: drop unneeded sram exports
-      commit: 4dbb746bb236b2da90549f0e3240e3da2c50022c
+[1/1] dmaengine: loongson1-apb-dma: avoid using iterator variable after list_for_each_entry()
+      commit: 5d4f5cdad22b181559c0bc8088f3ae9572ae4362
 
 Best regards,
 -- 
