@@ -1,89 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.42
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795202963;
-	b=iERz9JJRclU8/uzk9RJFMcOjDArKyxVftDJy2GoJ+Bb0wuHW2aDNSwyy1KdjpFR4zr3I
-	 DqHtDnO/hCRHkdfAv6edVWjudKXJCP1GbJcqsEiX5CCCM4l96ZOeUQFegUP90Orodi2i+
-	 fHO2G77E/Bsn+4I1jwTvpLztckYa4DwUR+66ThpQ8+AQ0Emc4vhR+dLhp85k+qynNLILm
-	 YDFBdLf8cbWeKGUto8W+0kVo0NLFUYu+piJmFlsiBvP3/8krasYu3TByRwem6Sb/WSCt6
-	 kGk3dWohhwW4qYtZhVHZrIB6o3EfVhFrcmP342Ckk1pCE3UT/b6JPPl5UsJncsqe2KQ==
+	t=1795202968;
+	b=S/yKpmbYZx4CclJRnZc1Ee+23IX8iiMmI9ntKvFyXCgwfOomZ5CV36ADh/+aZuN+r91s
+	 5fen9HDCrsYtS7+evZlEKnrsc72I4zdSlFLb0pdUXuMuIz56iO/jRhh/Z9RMkRXiQEjqX
+	 3RWv9Tf9+A90Gj86LOZbaJ4t0fSlRjYGiGbroTE49JFykldPjHKHKpHQqf0LIXhaOL+0B
+	 DberO4BXFa6/ZkzMwPM71h2NcAxxaKc4ENEqEL/q714MkjSbujSKu0anOuE+rxzBAYWa8
+	 r0tGRMhpgA2gkERevyn1DiPqshUbQjaiCkFjAV6s7PtAtWUReMtZxGoXgXXpRDRbOJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795202963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795202968;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=hGuUwi14BtrG6oK4Cb5Lx0Qvligx+kNB88RfEtMblHk=;
-	b=g3qmOiWfTGtBqQUI+/ohkExOyBMFQZQwb9/3BGnHQ68ErRuoT4VSBbowZTjbSMLRuoCP
-	 O78srzNWimAVvvd+4y+fLXOfewvMlvZ3qIASVS2nwY6nnynb+5ubJI9OFT986wQfOMdxe
-	 VIKNkDODOarQFepztFJ8wWF6IR9uxl/NfdQeew/syQuQiJOprlq1XYd1zELp5nSkFBRTt
-	 a3qpr3tLFXMcdSNIEmO0TotD5jr4t7DSB/gjWyWs6IRScCKpv2ZBilo7FnPuRvWYifoby
-	 ha7Fk1IY62ApO7/7IQ9izFa2xOLSstXnQHEvUl66H3+fP4pK2TYiInSdClxpHlYdb9w==
+	bh=8iMRjuRYcF4McU5oAcfjhaFVNBi74zXUONElTye6Dss=;
+	b=kYPk7wB/AaoVWC24ImnaVGBqMBeyHXxYUjw8MUUTxydBylW0OtPkrQaKbw17tMmcAXfC
+	 oAlwqsPgAgU9B08XgqTC6W0Cl+YFOFnuS6TNo0sFErheKbAyxW3W7zC2x7g/lJnCKRY+5
+	 LBrKPjTJHYEptSCKlkoM88p1OoS2S9Vdks7SmNlJH7tx9ZE0eRiS/tT1muBTF9tRZz02+
+	 kpt/jvfA0LAh+70j+idjdpORLWMaU6Z3FKC70owkRpClZsQuu8YpS7uaSeS6J7W+/eLEo
+	 Pth4UZTZ0NZRfSRwKmbeZ7DYHjixzDGb12oBaUVpX6rwZSjLcecWKusgli1OUl8/cvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nmAhhXBz;
-	arc=none smtp.remote-ip=209.85.160.42
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v6t6kGOR;
+	arc=none smtp.remote-ip=209.85.160.46
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076E360A2602
-	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 19:29:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 076E360A2602
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F9F60A260D
+	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 19:29:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 48F9F60A260D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nmAhhXBz
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-4b0348a4c79so886925fac.0
-        for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 11:29:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=v6t6kGOR
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-451a49abd8aso1350591fac.3
+        for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 11:29:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795202961; x=1795807761; darn=vger.kernel.org;
+        d=gmail.com; s=20260707; t=1795202962; x=1795807762; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=hGuUwi14BtrG6oK4Cb5Lx0Qvligx+kNB88RfEtMblHk=;
-        b=nmAhhXBzxVzn9p03rkZL76RcOoq9DtAYRZ2dLD3f3fGfQOg6CElL3L4phHXPolhwej
-         Nja0FuS7fduH8trrNRr2CO3lS43Qb97NFviAgEi0GOGYabrtg5pUD8kuSHf5CN0uuo/N
-         x5QXqcsLXSh0YGF4+8pMZsCplUjReXI5UVNGNK6g6UYu+19tIwRzZ315RD/Qb0eo6K7A
-         VaZ6Jp7lhjQCQYe5bsr7b8ZK0xjCCTCnC/ymUfCO9IQGjLg/C1e485nPkTIABfGlyFvC
-         WCJ2P6p75VzTPJ0AClmpzd+Xd8X9ovt5Ox5yGP/zg3mbUV8pGefgJyQWteFg0dLNXbF5
-         x+fw==
+        bh=8iMRjuRYcF4McU5oAcfjhaFVNBi74zXUONElTye6Dss=;
+        b=v6t6kGORdxIdQmUVD5viWzdyLuDoPagG+VZIRcB0Mjjtg8hYs+J8Tt+vd47tpH9twc
+         jc2gAr8M7/yqViZP/AsZMyj2djpCh7ZxhP+MnZDa2cVtnhJcjalFMZqC8d+8mouWUYZ1
+         DFsZ9PSrVNfh3y0o8XWFK/91kfzsPr2eaFghaA3E/fpd+1SqLekntM80TYIdJOvz5RJy
+         p4qj/A0r67tDAlf7pOrzq5Cgs91E4f0ixDwHqeEN3lHJE9pqDvtH5n3XxCfQjicRM7XZ
+         qmY0bpUdYhKZARi7pDJy5VY3lzAHNVUbqxSdg1aN2yLAdG7Qw3KvNBWd9uskgrQ+Hnqm
+         NO7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795202961; x=1795807761;
+        d=1e100.net; s=20260707; t=1795202962; x=1795807762;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=hGuUwi14BtrG6oK4Cb5Lx0Qvligx+kNB88RfEtMblHk=;
-        b=qvwls2t5iG6BRbP/xIeA7/4dUJKrnHaJUxVEkm9K09OCc41Lgyca80D3ZwO4aU9mzu
-         rPiWuSrktBqApfSvq9Zc0i/qyHSlkEJbbv8UXf8aFgWOtnOv+MCSJPufkpzrEYQv04CH
-         II2gjPUDGhhEBBXvCvH/PIEGnME0EwTE93YK+xYLCaCA7yUEQOenG8qFcmkMhU/WguEA
-         W8/bc1vc4mwmWZVOclalaMWjOaFZZwFoZzEaSx3b4+ic0mR/aCM6QZIyiTX8qlxYFtke
-         V1+C1cOF6WjzSO6KewPYEfwErmkmz7udZxTISDfYeWsWw++hYmyrUdXvCARkqG82le9L
-         tvrw==
-X-Forwarded-Encrypted: i=1; AL+hErElxXmPaWfcjPlNNhZdshombjuz1t+P5INOjNSGaxxmH8KkpMw+tsBujJJooo82jmz5HCIt2Aua1EU=@vger.kernel.org
-X-Gm-Message-State: APuU4Z96rNCUKVI4XoNJ4dcizTGOucp0c0dPh3wg+sCMoow9IMe0104j
-	/EqevNQ9tidaz0VG3HuHXjNYpD92R7ka9L6OLWr+SDmgeSlQvfzMi658
-X-Gm-Gg: AZFdTZd0lAj9zWV39Dg00htI56AfSpdBL6Sbb0gsQyT6UuEK4IQZfYwIfKShGQ+ZxuM
-	BQ5RAEvwXnCwqs7xVMWFxdRbrTPPpgkkrffYNRmQ3u77X1+a1kW7VMS8ES7/GIrZUfwS9yS5seK
-	oJb4/VgrUt5FP6y+HUkT++7a2qFvt+5L1A18JsUbymdjqwFWr3pz4C4cxaFF6cEwan7QdYH87gq
-	E6qcymluKCd48SwSiZ7KU4KzpNcgIbt+jZtcOCVphQPe5NWABGJDS5a8dKBs6OTlG2lWUlklMRL
-	dxyo6SdLdxMDe2+xVmB2C2jZbRXVVEfgr019Xc6I6RpluAjAjRJiLg/ZoPUtacxh9+158BxyHin
-	NqT2c0l0HMD+bxvtB4DQcxDXRA7Sr0FgkxiMg075G4H4KApMXKOpVqlrxo9oDAuUg0mlbZr2u8Q
-	JqMZ9CFWS3TddoMDebk05ndnlB3jeMNCHbEQ0ZKrJnib2+FHkHh/SKwTrrNZpTaJFux8h4VgN1g
-	8AGvG9+51FCTfdinIrj78RKnSp6/2ZsxaKKCiIXR7EhUWLEpgRwF5l1i6hg0777tx9jh18HweFU
-	gqAGjmTaELL6QEfBoacXCHZMGqPla8SPbsm/nCBQEfdybVMoNa9sf6UEC7pIQhTS/8BIJh3eeqL
-	o6u5xCbsuAijdoE0WUUiFvy9/nkVaDWVIFLjT7Pey8ASj35fFcEfH4Iq5e50mOUPXyWIqNnaEAd
-	hYEYwVZkQb6H2nzRfvXjera/ulB53E7TGN6fZ/2+aQuJNFFoxcpWcj
-X-Received: by 2002:a05:6870:6123:b0:4ba:1f23:e713 with SMTP id 586e51a60fabf-4bc83a665b9mr3639958fac.32.1795202960827;
-        Fri, 20 Nov 2026 11:29:20 -0800 (PST)
+        bh=8iMRjuRYcF4McU5oAcfjhaFVNBi74zXUONElTye6Dss=;
+        b=yuhWee22kMYECns7R/r0+x7i0G8AEDosdEzgOLNz9vG9HLAWnaXUyGLr5xcRLNkJC+
+         K4B2GWfOR+Ut08Oe0MeH3sEZsZEBj99dfBVk02WmhjjafM9xsA2emlzgwZOe2OrZmsa9
+         WgbrYi+MfPpihqlexBETEH4kUTbOAs8T4k6nPrvQkXiDfNVXJ5w1xNoSBdcZItZdfthj
+         /TjbyGBbabDgKREOcHf6iGvYKKlXbIvbCAPGJgZyFMKTnuhb91Qsd6s/dvUgMGdqREjw
+         yQCJgheKZjnW5sT/QOKPao18Sh+ZZ14/HMdS9238881eeC7TVfX7RBrKPqy+NR84gG2e
+         7STA==
+X-Forwarded-Encrypted: i=1; AL+hErEfpKjlp/n2SZz4axMUrHi166nxW0FLfyiXZ8GDEFdaUjcv//0bgCPpmIyeynAJNgUejHFS8oO6Ut8=@vger.kernel.org
+X-Gm-Message-State: APuU4Z89xzoc4vrDxoXeA82pJ/4xMy1SXNokCw7dwMPHgr7S91YL9eqN
+	+e6o4gX800ZRBhgYAzOyUuqbv28mBSVs2P83ZtRMPURIqyVko+dSNb4+
+X-Gm-Gg: AZFdTZfN8TaqFUjh1lsWPNmuleZcpNE7V6ouCiJARvXh5dOyktsTrf10uuONSN5Gu0I
+	azD5s6HtGPu6oDLzs+d22+S4iuRajR2b8tFvCjttdcGZWloIG4uxW/hFGETmrk1iKilYnS5LGng
+	bDWHPaxG/aspJnZjaoP6OhoLeDMtH4L7qH2LQY+sB+QnhpJA4TJ/Gb2U5QkaJsj47Kw6TTZVwbR
+	dGRWRo66nwwo1x56vuV6Uiam7nwL6aSeID6DNBNneXrH5Q3fxWxmvyWYXXjemXRJ0zMquh8A7uH
+	xQ0Y9/Ke+MoIiP7f7ZOCQ2XJG6l/DFLw9+qS4AQG77VKSppDazWYNdRxhClJ7liIrCtGeNMgweV
+	ZhpYM0koIMKaUebbneQV/0eUdNMCIYENJKnE7LFKjAvSBZ2tPAybzOvq9KJ70J+kie+nnm7XPF/
+	1DakTljZXQiHmE/19KH9AIU8np3ux+uEFZ5JImOezeBHhxsHuqdqpifpz7iH0p6/ctvUf5d8tw6
+	D497DpDUPT2E5G9qcyfU/BMvRMgIRBrPG2kyrBeuIBljga2IQlL5DJy7XAIwvo3zgcJFAMzAh98
+	BCCsMYEAkxHVTKr0eyD+4dlHJDcpMUUJbPQd+isvqC7n1RYaFzUA0/wvmr9e1fpRC8XaGGu+a7U
+	QG8N32yzXD1iJzEsz90Q82NKhmJoZgyoOfLI5EXTVDGJwewk6qqthHExBa2x+H1pCDmXSOfohuQ
+	cI5R/T2qbLYZ1Dg2ZY/HO2tRZLJ2xdEhsKShlntX1N/+k/q7HL5Ncl
+X-Received: by 2002:a05:6870:ad0f:b0:48f:e0e5:a202 with SMTP id 586e51a60fabf-4bc852ff2d0mr3932476fac.54.1795202962021;
+        Fri, 20 Nov 2026 11:29:22 -0800 (PST)
 Received: from [127.0.1.1] (174-29-1-49.hlrn.qwest.net. [174.29.1.49])
         by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4bc5f7ae7dcsm3434498fac.8.2026.11.20.11.29.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 11:29:20 -0800 (PST)
+        Fri, 20 Nov 2026 11:29:21 -0800 (PST)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 20 Nov 2026 12:29:09 -0700
-Subject: [PATCH v11 3/7] dmaengine: dw: embed a virt-dma channel
+Date: Fri, 20 Nov 2026 12:29:10 -0700
+Subject: [PATCH v11 4/7] dmaengine: dw: use virt-dma for descriptor and
+ callback ownership
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -95,7 +96,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261120-submit-dw-dma-synchronize-v1-v11-3-9b9166bc2cc7@gmail.com>
+Message-Id: <20261120-submit-dw-dma-synchronize-v1-v11-4-9b9166bc2cc7@gmail.com>
 References: <20261120-submit-dw-dma-synchronize-v1-v11-0-9b9166bc2cc7@gmail.com>
 In-Reply-To: <20261120-submit-dw-dma-synchronize-v1-v11-0-9b9166bc2cc7@gmail.com>
 To: Viresh Kumar <vireshk@kernel.org>, 
@@ -109,583 +110,916 @@ Cc: Serge Semin <fancer.lancer@gmail.com>,
  dmaengine@vger.kernel.org, linux-serial@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Sashiko <sashiko-bot@kernel.org>, 
  Lars-Peter Clausen <lars@metafoo.de>, 
- James Hilliard <james.hilliard1@gmail.com>, Frank Li <Frank.Li@nxp.com>
+ James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.17-dev
 
-Move the DMAengine channel and its lock into an embedded virt_dma_chan.
-Keeping channel registration, descriptor queues and callback delivery
-unchanged separates the mechanical member changes from the conversion
-to virt-dma queue management.
+The status getter can invoke a client's completion callback while polling
+the hardware. An 8250 RX timeout calls it with the port lock held, and the
+callback takes that same lock. Termination also lacks a synchronization
+hook to wait for callbacks already detached from the channel's queues.
 
-Suggested-by: Frank Li <Frank.Li@nxp.com>
+Serge Semin proposed leaving transfer completion to the controller
+tasklet [1]. Clients such as catpt poll with the controller interrupt
+masked, so the status getter still needs to process RAW.XFER and
+advance software-LLP blocks.
+
+Use virt-dma for transaction queues, cookie completion and callback
+delivery. Keep the active transaction and hardware state under vc.lock.
+Run client callbacks only from the per-channel virt-dma tasklet.
+
+An 8250 RX timeout consumes the transfer length minus the reported
+residue. On a bus error, source reads do not establish how many bytes
+reached the destination. Credit only whole blocks whose completion the
+driver observed while advancing a software-linked transfer. For a
+hardware-linked transfer, treat the whole buffer as unconfirmed.
+
+Report the abort and the same residue to result callbacks and status
+pollers, even after another transfer completes. Reserve the error record
+during preparation, when clients can still handle allocation failure.
+Use the normal virt-dma submission path; neither submission nor fault
+reporting needs to allocate. Keep only failed cookies after descriptor
+release, until the cookie is reused or the channel is released.
+
+Submit only the first block of each transaction to virt-dma. Its child
+LLIs remain on the driver's hardware-chain list and are freed together
+after the callback returns. Keep the controller tasklet for hardware
+event processing and error recovery.
+
+Complete cookies under vc.lock before handing descriptors to the callback
+tasklet. Complete terminated cookies in submission order without invoking
+their callbacks, so a concurrent termination cannot advance the completed
+cookie past an older completion that later moves it backwards. Newly
+submitted transactions become eligible to start when issue_pending()
+moves them to the issued queue.
+
+Implement device_synchronize with vchan_synchronize(), which drains only
+the selected channel's callbacks. DMAengine calls it before releasing
+channel resources. Exclude the controller tasklet while clearing channel
+configuration and powering down, and let a pending run return without
+register access after the last channel has been released.
+
+Fixes: 3bfb1d20b547 ("dmaengine: Driver for the Synopsys DesignWare DMA controller")
+Fixes: 69cea5a00d31 ("dmaengine/dw_dmac: Replace spin_lock* with irqsave variants and enable submission from callback")
+Fixes: b36f09c3c441 ("dmaengine: Add transfer termination synchronization support")
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240911184710.4207-2-fancer.lancer@gmail.com [1]
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
- drivers/dma/dw/core.c   | 112 ++++++++++++++++++++++++------------------------
- drivers/dma/dw/dw.c     |   2 +-
- drivers/dma/dw/idma32.c |  18 ++++----
- drivers/dma/dw/regs.h   |   9 ++--
- 4 files changed, 70 insertions(+), 71 deletions(-)
+ drivers/dma/dw/Kconfig |   1 +
+ drivers/dma/dw/core.c  | 500 +++++++++++++++++++++++++------------------------
+ drivers/dma/dw/regs.h  |  26 ++-
+ 3 files changed, 271 insertions(+), 256 deletions(-)
 
+diff --git a/drivers/dma/dw/Kconfig b/drivers/dma/dw/Kconfig
+index a9828ddd6d06..444702c4a059 100644
+--- a/drivers/dma/dw/Kconfig
++++ b/drivers/dma/dw/Kconfig
+@@ -7,6 +7,7 @@
+ config DW_DMAC_CORE
+ 	tristate
+ 	select DMA_ENGINE
++	select DMA_VIRTUAL_CHANNELS
+ 
+ config DW_DMAC
+ 	tristate "Synopsys DesignWare AHB DMA platform driver"
 diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
-index f7ca9da5af90..3df696e41ff2 100644
+index 3df696e41ff2..0d2407c6472b 100644
 --- a/drivers/dma/dw/core.c
 +++ b/drivers/dma/dw/core.c
-@@ -53,7 +53,7 @@ static dma_cookie_t dwc_tx_submit(struct dma_async_tx_descriptor *tx)
- 	dma_cookie_t		cookie;
- 	unsigned long		flags;
+@@ -8,6 +8,7 @@
+  */
  
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 	cookie = dma_cookie_assign(tx);
+ #include <linux/bitops.h>
++#include <linux/cleanup.h>
+ #include <linux/delay.h>
+ #include <linux/dmaengine.h>
+ #include <linux/dma-mapping.h>
+@@ -41,35 +42,6 @@
  
- 	/*
-@@ -63,7 +63,7 @@ static dma_cookie_t dwc_tx_submit(struct dma_async_tx_descriptor *tx)
- 	 */
+ /*----------------------------------------------------------------------*/
  
- 	list_add_tail(&desc->desc_node, &dwc->queue);
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 	dev_vdbg(dmaengine_chan_dev(tx->chan), "%s: queued %u\n",
- 		 __func__, desc->txd.cookie);
- 
-@@ -72,7 +72,7 @@ static dma_cookie_t dwc_tx_submit(struct dma_async_tx_descriptor *tx)
- 
+-static struct dw_desc *dwc_first_active(struct dw_dma_chan *dwc)
+-{
+-	return to_dw_desc(dwc->active_list.next);
+-}
+-
+-static dma_cookie_t dwc_tx_submit(struct dma_async_tx_descriptor *tx)
+-{
+-	struct dw_desc		*desc = txd_to_dw_desc(tx);
+-	struct dw_dma_chan	*dwc = to_dw_dma_chan(tx->chan);
+-	dma_cookie_t		cookie;
+-	unsigned long		flags;
+-
+-	spin_lock_irqsave(&dwc->vc.lock, flags);
+-	cookie = dma_cookie_assign(tx);
+-
+-	/*
+-	 * REVISIT: We should attempt to chain as many descriptors as
+-	 * possible, perhaps even appending to those already submitted
+-	 * for DMA. But this is hard to do in a race-free manner.
+-	 */
+-
+-	list_add_tail(&desc->desc_node, &dwc->queue);
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-	dev_vdbg(dmaengine_chan_dev(tx->chan), "%s: queued %u\n",
+-		 __func__, desc->txd.cookie);
+-
+-	return cookie;
+-}
+-
  static struct dw_desc *dwc_desc_get(struct dw_dma_chan *dwc)
  {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	struct dw_desc *desc;
- 	dma_addr_t phys;
+ 	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
+@@ -80,12 +52,8 @@ static struct dw_desc *dwc_desc_get(struct dw_dma_chan *dwc)
+ 	if (!desc)
+ 		return NULL;
  
-@@ -82,7 +82,7 @@ static struct dw_desc *dwc_desc_get(struct dw_dma_chan *dwc)
- 
- 	dwc->descs_allocated++;
+-	dwc->descs_allocated++;
  	INIT_LIST_HEAD(&desc->tx_list);
--	dma_async_tx_descriptor_init(&desc->txd, &dwc->chan);
-+	dma_async_tx_descriptor_init(&desc->txd, &dwc->vc.chan);
- 	desc->txd.tx_submit = dwc_tx_submit;
- 	desc->txd.flags = DMA_CTRL_ACK;
- 	desc->txd.phys = phys;
-@@ -91,7 +91,7 @@ static struct dw_desc *dwc_desc_get(struct dw_dma_chan *dwc)
+-	dma_async_tx_descriptor_init(&desc->txd, &dwc->vc.chan);
+-	desc->txd.tx_submit = dwc_tx_submit;
+-	desc->txd.flags = DMA_CTRL_ACK;
+-	desc->txd.phys = phys;
++	desc->vd.tx.phys = phys;
+ 	return desc;
+ }
  
- static void dwc_desc_put(struct dw_dma_chan *dwc, struct dw_desc *desc)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	struct dw_desc *child, *_next;
- 
+@@ -97,14 +65,86 @@ static void dwc_desc_put(struct dw_dma_chan *dwc, struct dw_desc *desc)
  	if (unlikely(!desc))
-@@ -109,7 +109,7 @@ static void dwc_desc_put(struct dw_dma_chan *dwc, struct dw_desc *desc)
+ 		return;
+ 
+-	list_for_each_entry_safe(child, _next, &desc->tx_list, desc_node) {
+-		list_del(&child->desc_node);
+-		dma_pool_free(dw->desc_pool, child, child->txd.phys);
+-		dwc->descs_allocated--;
++	list_for_each_entry_safe(child, _next, &desc->tx_list, vd.node) {
++		list_del(&child->vd.node);
++		dma_pool_free(dw->desc_pool, child, child->vd.tx.phys);
+ 	}
+ 
+-	dma_pool_free(dw->desc_pool, desc, desc->txd.phys);
+-	dwc->descs_allocated--;
++	kfree(desc->error);
++	dma_pool_free(dw->desc_pool, desc, desc->vd.tx.phys);
++}
++
++static void dwc_desc_free(struct virt_dma_desc *vd)
++{
++	struct dw_dma_chan *dwc = to_dw_dma_chan(vd->tx.chan);
++
++	dwc_desc_put(dwc, vd_to_dw_desc(vd));
++}
++
++static struct dma_async_tx_descriptor *
++dwc_tx_prep(struct dw_dma_chan *dwc, struct dw_desc *desc, unsigned long flags)
++{
++	if (flags & DMA_CTRL_REUSE)
++		goto err;
++
++	/* Reserve a record now so neither submission nor error completion can fail. */
++	desc->error = kmalloc_obj(*desc->error, GFP_ATOMIC);
++	if (desc->error)
++		return vchan_tx_prep(&dwc->vc, &desc->vd, flags);
++err:
++	dwc_desc_put(dwc, desc);
++	return NULL;
++}
++
++static int dwc_error_cmp(const void *key, const struct rb_node *node)
++{
++	const struct dw_dma_error *error = rb_entry(node, struct dw_dma_error, node);
++
++	return *(const dma_cookie_t *)key - error->cookie;
++}
++
++static int dwc_error_cmp_nodes(struct rb_node *a, const struct rb_node *b)
++{
++	return dwc_error_cmp(&rb_entry(a, struct dw_dma_error, node)->cookie, b);
++}
++
++static void dwc_retire_cookie(struct dw_dma_chan *dwc, struct virt_dma_desc *vd)
++{
++	struct dw_desc *desc = vd_to_dw_desc(vd);
++	struct dw_dma_error *error = desc->error;
++	struct rb_node *old;
++
++	lockdep_assert_held(&dwc->vc.lock);
++	/* A numeric cookie may still have an error from before it wrapped. */
++	if (vd->tx_result.result == DMA_TRANS_ABORTED) {
++		error->cookie = vd->tx.cookie;
++		error->residue = vd->tx_result.residue;
++		old = rb_find_add(&error->node, &dwc->errors, dwc_error_cmp_nodes);
++		if (!old) {
++			desc->error = NULL;
++			return;
++		}
++		rb_entry(old, struct dw_dma_error, node)->residue = error->residue;
++	} else {
++		old = rb_find(&vd->tx.cookie, &dwc->errors, dwc_error_cmp);
++		if (old) {
++			rb_erase(old, &dwc->errors);
++			kfree(rb_entry(old, struct dw_dma_error, node));
++		}
++	}
++}
++
++static void dwc_free_errors(struct dw_dma_chan *dwc)
++{
++	struct dw_dma_error *error, *next;
++	struct rb_root errors;
++
++	scoped_guard(spinlock_irqsave, &dwc->vc.lock) {
++		errors = dwc->errors;
++		dwc->errors = RB_ROOT;
++	}
++	rbtree_postorder_for_each_entry_safe(error, next, &errors, node)
++		kfree(error);
+ }
  
  static void dwc_initialize(struct dw_dma_chan *dwc)
+@@ -209,7 +249,7 @@ static void dwc_dostart(struct dw_dma_chan *dwc, struct dw_desc *first)
+ 
+ 	dwc_initialize(dwc);
+ 
+-	channel_writel(dwc, LLP, first->txd.phys | lms);
++	channel_writel(dwc, LLP, first->vd.tx.phys | lms);
+ 	channel_writel(dwc, CTL_LO, DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+ 	channel_writel(dwc, CTL_HI, 0);
+ 	channel_set_bit(dw, CH_EN, dwc->mask);
+@@ -217,47 +257,20 @@ static void dwc_dostart(struct dw_dma_chan *dwc, struct dw_desc *first)
+ 
+ static void dwc_dostart_first_queued(struct dw_dma_chan *dwc)
  {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
+-	struct dw_desc *desc;
++	struct virt_dma_desc *vd;
  
- 	dw->initialize_chan(dwc);
- 
-@@ -122,7 +122,7 @@ static void dwc_initialize(struct dw_dma_chan *dwc)
- 
- static inline void dwc_dump_chan_regs(struct dw_dma_chan *dwc)
- {
--	dev_err(dmaengine_chan_dev(&dwc->chan),
-+	dev_err(dmaengine_chan_dev(&dwc->vc.chan),
- 		"  SAR: 0x%x DAR: 0x%x LLP: 0x%x CTL: 0x%x:%08x\n",
- 		channel_readl(dwc, SAR),
- 		channel_readl(dwc, DAR),
-@@ -150,7 +150,7 @@ static inline void dwc_chan_disable(struct dw_dma *dw, struct dw_dma_chan *dwc)
- static inline void dwc_do_single_block(struct dw_dma_chan *dwc,
- 				       struct dw_desc *desc)
- {
--	struct dw_dma	*dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma	*dw = to_dw_dma(dwc->vc.chan.device);
- 	u32		ctllo;
- 
- 	/*
-@@ -169,16 +169,16 @@ static inline void dwc_do_single_block(struct dw_dma_chan *dwc,
- 	dwc->tx_node_active = dwc->tx_node_active->next;
- }
- 
--/* Called with dwc->lock held and bh disabled */
-+/* Called with dwc->vc.lock held and bh disabled */
- static void dwc_dostart(struct dw_dma_chan *dwc, struct dw_desc *first)
- {
--	struct dw_dma	*dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma	*dw = to_dw_dma(dwc->vc.chan.device);
- 	u8		lms = DWC_LLP_LMS(dwc->dws.m_master);
- 	unsigned long	was_soft_llp;
- 
- 	/* ASSERT:  channel is idle */
- 	if (dma_readl(dw, CH_EN) & dwc->mask) {
--		dev_err(dmaengine_chan_dev(&dwc->chan),
-+		dev_err(dmaengine_chan_dev(&dwc->vc.chan),
- 			"%s: BUG: Attempted to start non-idle channel\n",
- 			__func__);
- 		dwc_dump_chan_regs(dwc);
-@@ -191,7 +191,7 @@ static void dwc_dostart(struct dw_dma_chan *dwc, struct dw_desc *first)
- 		was_soft_llp = test_and_set_bit(DW_DMA_IS_SOFT_LLP,
- 						&dwc->flags);
- 		if (was_soft_llp) {
--			dev_err(dmaengine_chan_dev(&dwc->chan),
-+			dev_err(dmaengine_chan_dev(&dwc->vc.chan),
- 				"BUG: Attempted to start new LLP transfer inside ongoing one\n");
- 			return;
- 		}
-@@ -224,7 +224,7 @@ static void dwc_dostart_first_queued(struct dw_dma_chan *dwc)
- 
- 	list_move(dwc->queue.next, &dwc->active_list);
- 	desc = dwc_first_active(dwc);
--	dev_vdbg(dmaengine_chan_dev(&dwc->chan), "%s: started %u\n", __func__, desc->txd.cookie);
-+	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: started %u\n", __func__, desc->txd.cookie);
- 	dwc_dostart(dwc, desc);
- }
- 
-@@ -239,9 +239,9 @@ dwc_descriptor_complete(struct dw_dma_chan *dwc, struct dw_desc *desc,
- 	unsigned long			flags;
- 	struct dmaengine_desc_callback	cb;
- 
--	dev_vdbg(dmaengine_chan_dev(&dwc->chan), "descriptor %u complete\n", txd->cookie);
-+	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "descriptor %u complete\n", txd->cookie);
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 	dma_cookie_complete(txd);
- 	if (callback_required)
- 		dmaengine_desc_get_callback(txd, &cb);
-@@ -253,7 +253,7 @@ dwc_descriptor_complete(struct dw_dma_chan *dwc, struct dw_desc *desc,
- 		async_tx_ack(&child->txd);
- 	async_tx_ack(&desc->txd);
- 	dwc_desc_put(dwc, desc);
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 	dmaengine_desc_callback_invoke(&cb, NULL);
- }
-@@ -261,7 +261,7 @@ dwc_descriptor_complete(struct dw_dma_chan *dwc, struct dw_desc *desc,
- /* Returns how many bytes were already received from source */
- static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	u32 ctlhi = channel_readl(dwc, CTL_HI);
- 	u32 ctllo = channel_readl(dwc, CTL_LO);
- 
-@@ -277,7 +277,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	unsigned long flags;
- 	LIST_HEAD(list);
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 	llp = channel_readl(dwc, LLP);
- 	status_xfer = dma_readl(dw, RAW.XFER);
- 
-@@ -285,7 +285,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 		/* Everything we've submitted is done */
- 		dma_writel(dw, CLEAR.XFER, dwc->mask);
- 		if (list_empty(&dwc->active_list)) {
--			spin_unlock_irqrestore(&dwc->lock, flags);
-+			spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 			return;
- 		}
- 
-@@ -311,7 +311,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 				/* Submit next block */
- 				dwc_do_single_block(dwc, child);
- 
--				spin_unlock_irqrestore(&dwc->lock, flags);
-+				spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 				return;
- 			}
- 
-@@ -320,7 +320,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 		}
- 
- 		if (dma_readl(dw, CH_EN) & dwc->mask) {
--			dev_err(dmaengine_chan_dev(&dwc->chan),
-+			dev_err(dmaengine_chan_dev(&dwc->vc.chan),
- 				"BUG: XFER bit set, but channel not idle!\n");
- 
- 			/* Try to continue after resetting the channel... */
-@@ -330,7 +330,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 		/* Detach the completed transfer before starting queued work. */
- 		list_splice_init(&dwc->active_list, &list);
- 		dwc_dostart_first_queued(dwc);
--		spin_unlock_irqrestore(&dwc->lock, flags);
-+		spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 		list_for_each_entry_safe(desc, _desc, &list, desc_node) {
- 			list_del_init(&desc->desc_node);
-@@ -340,17 +340,17 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	}
- 
- 	if (list_empty(&dwc->active_list)) {
--		spin_unlock_irqrestore(&dwc->lock, flags);
-+		spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-	if (list_empty(&dwc->queue))
++	vd = vchan_next_desc(&dwc->vc);
++	if (!vd)
  		return;
- 	}
  
- 	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
--		dev_vdbg(dmaengine_chan_dev(&dwc->chan), "%s: soft LLP mode\n", __func__);
--		spin_unlock_irqrestore(&dwc->lock, flags);
-+		dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: soft LLP mode\n", __func__);
-+		spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 		return;
- 	}
- 
--	dev_vdbg(dmaengine_chan_dev(&dwc->chan), "%s: llp=%pad\n", __func__, &llp);
-+	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: llp=%pad\n", __func__, &llp);
- 
- 	list_for_each_entry_safe(desc, _desc, &dwc->active_list, desc_node) {
- 		/* Initial residue value */
-@@ -358,7 +358,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 
- 		/* Check first descriptors addr */
- 		if (desc->txd.phys == DWC_LLP_LOC(llp)) {
--			spin_unlock_irqrestore(&dwc->lock, flags);
-+			spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 			return;
- 		}
- 
-@@ -366,7 +366,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 		if (lli_read(desc, llp) == llp) {
- 			/* This one is currently in progress */
- 			desc->residue -= dwc_get_sent(dwc);
--			spin_unlock_irqrestore(&dwc->lock, flags);
-+			spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 			return;
- 		}
- 
-@@ -375,7 +375,7 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 			if (lli_read(child, llp) == llp) {
- 				/* Currently in progress */
- 				desc->residue -= dwc_get_sent(dwc);
--				spin_unlock_irqrestore(&dwc->lock, flags);
-+				spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 				return;
- 			}
- 			desc->residue -= child->len;
-@@ -384,12 +384,12 @@ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	}
- 
- 	/* Residue describes source reads; only RAW.XFER completes a transfer. */
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- }
- 
- static inline void dwc_dump_lli(struct dw_dma_chan *dwc, struct dw_desc *desc)
- {
--	dev_crit(dmaengine_chan_dev(&dwc->chan), "  desc: s0x%x d0x%x l0x%x c0x%x:%x\n",
-+	dev_crit(dmaengine_chan_dev(&dwc->vc.chan), "  desc: s0x%x d0x%x l0x%x c0x%x:%x\n",
- 		 lli_read(desc, sar),
- 		 lli_read(desc, dar),
- 		 lli_read(desc, llp),
-@@ -403,7 +403,7 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	struct dw_desc *child;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 
- 	/* Termination may have cleared the error since the tasklet sampled it. */
- 	if (!(dma_readl(dw, RAW.ERROR) & dwc->mask))
-@@ -430,20 +430,20 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
- 	 * controller flagged an error instead of scribbling over
- 	 * random memory locations.
- 	 */
--	dev_WARN(dmaengine_chan_dev(&dwc->chan), "Bad descriptor submitted for DMA!\n"
-+	dev_WARN(dmaengine_chan_dev(&dwc->vc.chan), "Bad descriptor submitted for DMA!\n"
- 				       "  cookie: %d\n", bad_desc->txd.cookie);
- 	dwc_dump_lli(dwc, bad_desc);
- 	list_for_each_entry(child, &bad_desc->tx_list, desc_node)
- 		dwc_dump_lli(dwc, child);
- 
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 	/* Pretend the descriptor completed successfully */
- 	dwc_descriptor_complete(dwc, bad_desc, true);
- 	return;
- 
- unlock:
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- }
- 
- static void dw_dma_tasklet(struct tasklet_struct *t)
-@@ -872,7 +872,7 @@ static int dwc_config(struct dma_chan *chan, struct dma_slave_config *sconfig)
- 
- static void dwc_chan_pause(struct dw_dma_chan *dwc, bool drain)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	unsigned int		count = 20;	/* timeout iterations */
- 
- 	dw->suspend_chan(dwc, drain);
-@@ -888,16 +888,16 @@ static int dwc_pause(struct dma_chan *chan)
- 	struct dw_dma_chan	*dwc = to_dw_dma_chan(chan);
- 	unsigned long		flags;
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 	dwc_chan_pause(dwc, false);
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 	return 0;
- }
- 
- static inline void dwc_chan_resume(struct dw_dma_chan *dwc, bool drain)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 
- 	dw->resume_chan(dwc, drain);
- 
-@@ -909,12 +909,12 @@ static int dwc_resume(struct dma_chan *chan)
- 	struct dw_dma_chan	*dwc = to_dw_dma_chan(chan);
- 	unsigned long		flags;
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 
- 	if (test_bit(DW_DMA_IS_PAUSED, &dwc->flags))
- 		dwc_chan_resume(dwc, false);
- 
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 	return 0;
- }
-@@ -927,7 +927,7 @@ static int dwc_terminate_all(struct dma_chan *chan)
- 	unsigned long		flags;
- 	LIST_HEAD(list);
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 
- 	clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
- 
-@@ -941,7 +941,7 @@ static int dwc_terminate_all(struct dma_chan *chan)
- 	list_splice_init(&dwc->queue, &list);
- 	list_splice_init(&dwc->active_list, &list);
- 
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 
- 	/* Flush all pending and queued descriptors */
- 	list_for_each_entry_safe(desc, _desc, &list, desc_node)
-@@ -968,7 +968,7 @@ static u32 dwc_get_residue_and_status(struct dw_dma_chan *dwc, dma_cookie_t cook
- 	unsigned long flags;
- 	u32 residue;
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 
- 	desc = dwc_find_desc(dwc, cookie);
- 	if (desc) {
-@@ -985,7 +985,7 @@ static u32 dwc_get_residue_and_status(struct dw_dma_chan *dwc, dma_cookie_t cook
- 		residue = 0;
- 	}
- 
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
- 	return residue;
- }
- 
-@@ -1016,10 +1016,10 @@ static void dwc_issue_pending(struct dma_chan *chan)
- 	struct dw_dma_chan	*dwc = to_dw_dma_chan(chan);
- 	unsigned long		flags;
- 
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
- 	if (list_empty(&dwc->active_list))
- 		dwc_dostart_first_queued(dwc);
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-	list_move(dwc->queue.next, &dwc->active_list);
+-	desc = dwc_first_active(dwc);
+-	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: started %u\n", __func__, desc->txd.cookie);
+-	dwc_dostart(dwc, desc);
++	list_del(&vd->node);
++	dwc->desc = vd_to_dw_desc(vd);
++	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: started %u\n", __func__, vd->tx.cookie);
++	dwc_dostart(dwc, dwc->desc);
  }
  
  /*----------------------------------------------------------------------*/
-@@ -1094,7 +1094,7 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
- 	BUG_ON(!list_empty(&dwc->queue));
+ 
+-static void
+-dwc_descriptor_complete(struct dw_dma_chan *dwc, struct dw_desc *desc,
+-		bool callback_required)
+-{
+-	struct dma_async_tx_descriptor	*txd = &desc->txd;
+-	struct dw_desc			*child;
+-	unsigned long			flags;
+-	struct dmaengine_desc_callback	cb;
+-
+-	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "descriptor %u complete\n", txd->cookie);
+-
+-	spin_lock_irqsave(&dwc->vc.lock, flags);
+-	dma_cookie_complete(txd);
+-	if (callback_required)
+-		dmaengine_desc_get_callback(txd, &cb);
+-	else
+-		memset(&cb, 0, sizeof(cb));
+-
+-	/* async_tx_ack */
+-	list_for_each_entry(child, &desc->tx_list, desc_node)
+-		async_tx_ack(&child->txd);
+-	async_tx_ack(&desc->txd);
+-	dwc_desc_put(dwc, desc);
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-
+-	dmaengine_desc_callback_invoke(&cb, NULL);
+-}
+-
+ /* Returns how many bytes were already received from source */
+ static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
+ {
+@@ -270,121 +283,78 @@ static inline u32 dwc_get_sent(struct dw_dma_chan *dwc)
+ 
+ static void dwc_scan_descriptors(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ {
+-	dma_addr_t llp;
+-	struct dw_desc *desc, *_desc;
++	struct dw_desc *desc;
+ 	struct dw_desc *child;
+-	u32 status_xfer;
+-	unsigned long flags;
+-	LIST_HEAD(list);
+-
+-	spin_lock_irqsave(&dwc->vc.lock, flags);
+-	llp = channel_readl(dwc, LLP);
+-	status_xfer = dma_readl(dw, RAW.XFER);
+-
+-	if (status_xfer & dwc->mask) {
+-		/* Everything we've submitted is done */
+-		dma_writel(dw, CLEAR.XFER, dwc->mask);
+-		if (list_empty(&dwc->active_list)) {
+-			spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-			return;
+-		}
++	dma_addr_t llp;
+ 
+-		if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+-			struct list_head *head, *active = dwc->tx_node_active;
++	lockdep_assert_held(&dwc->vc.lock);
+ 
+-			/*
+-			 * We are inside first active descriptor.
+-			 * Otherwise something is really wrong.
+-			 */
+-			desc = dwc_first_active(dwc);
++	llp = channel_readl(dwc, LLP);
++	if (!(dma_readl(dw, RAW.XFER) & dwc->mask))
++		goto residue;
+ 
+-			head = &desc->tx_list;
+-			if (active != head) {
+-				/* Update residue to reflect last sent descriptor */
+-				if (active == head->next)
+-					desc->residue -= desc->len;
+-				else
+-					desc->residue -= to_dw_desc(active->prev)->len;
++	dma_writel(dw, CLEAR.XFER, dwc->mask);
++	if (!dwc->desc)
++		return;
+ 
+-				child = to_dw_desc(active);
++	desc = dwc->desc;
++	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
++		struct list_head *head = &desc->tx_list;
++		struct list_head *active = dwc->tx_node_active;
+ 
+-				/* Submit next block */
+-				dwc_do_single_block(dwc, child);
++		if (active != head) {
++			/* Update residue to reflect last sent descriptor. */
++			if (active == head->next)
++				desc->residue -= desc->len;
++			else
++				desc->residue -= to_dw_desc(active->prev)->len;
+ 
+-				spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-				return;
+-			}
++			child = to_dw_desc(active);
+ 
+-			/* We are done here */
+-			clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
++			/* Submit next block, including for polled transfers. */
++			dwc_do_single_block(dwc, child);
++			return;
+ 		}
+ 
+-		if (dma_readl(dw, CH_EN) & dwc->mask) {
+-			dev_err(dmaengine_chan_dev(&dwc->vc.chan),
+-				"BUG: XFER bit set, but channel not idle!\n");
++		clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
++	}
+ 
+-			/* Try to continue after resetting the channel... */
+-			dwc_chan_disable(dw, dwc);
+-		}
++	if (dma_readl(dw, CH_EN) & dwc->mask) {
++		dev_err(dmaengine_chan_dev(&dwc->vc.chan),
++			"BUG: XFER bit set, but channel not idle!\n");
+ 
+-		/* Detach the completed transfer before starting queued work. */
+-		list_splice_init(&dwc->active_list, &list);
+-		dwc_dostart_first_queued(dwc);
+-		spin_unlock_irqrestore(&dwc->vc.lock, flags);
++		/* Try to continue after resetting the channel... */
++		dwc_chan_disable(dw, dwc);
++	}
+ 
+-		list_for_each_entry_safe(desc, _desc, &list, desc_node) {
+-			list_del_init(&desc->desc_node);
+-			dwc_descriptor_complete(dwc, desc, true);
+-		}
++	dwc->desc = NULL;
++	dwc_retire_cookie(dwc, &desc->vd);
++	vchan_cookie_complete(&desc->vd);
++	dwc_dostart_first_queued(dwc);
++	return;
++
++residue:
++	desc = dwc->desc;
++	if (!desc || test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags))
+ 		return;
+-	}
+ 
+-	if (list_empty(&dwc->active_list)) {
+-		spin_unlock_irqrestore(&dwc->vc.lock, flags);
++	desc->residue = desc->total_len;
++	if (desc->vd.tx.phys == DWC_LLP_LOC(llp))
+ 		return;
+-	}
+ 
+-	if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags)) {
+-		dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: soft LLP mode\n", __func__);
+-		spin_unlock_irqrestore(&dwc->vc.lock, flags);
++	if (lli_read(desc, llp) == llp) {
++		desc->residue -= dwc_get_sent(dwc);
+ 		return;
+ 	}
+ 
+-	dev_vdbg(dmaengine_chan_dev(&dwc->vc.chan), "%s: llp=%pad\n", __func__, &llp);
+-
+-	list_for_each_entry_safe(desc, _desc, &dwc->active_list, desc_node) {
+-		/* Initial residue value */
+-		desc->residue = desc->total_len;
+-
+-		/* Check first descriptors addr */
+-		if (desc->txd.phys == DWC_LLP_LOC(llp)) {
+-			spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-			return;
+-		}
+-
+-		/* Check first descriptors llp */
+-		if (lli_read(desc, llp) == llp) {
+-			/* This one is currently in progress */
++	desc->residue -= desc->len;
++	list_for_each_entry(child, &desc->tx_list, vd.node) {
++		if (lli_read(child, llp) == llp) {
+ 			desc->residue -= dwc_get_sent(dwc);
+-			spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ 			return;
+ 		}
+-
+-		desc->residue -= desc->len;
+-		list_for_each_entry(child, &desc->tx_list, desc_node) {
+-			if (lli_read(child, llp) == llp) {
+-				/* Currently in progress */
+-				desc->residue -= dwc_get_sent(dwc);
+-				spin_unlock_irqrestore(&dwc->vc.lock, flags);
+-				return;
+-			}
+-			desc->residue -= child->len;
+-		}
+-
++		desc->residue -= child->len;
+ 	}
+-
+-	/* Residue describes source reads; only RAW.XFER completes a transfer. */
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ }
+ 
+ static inline void dwc_dump_lli(struct dw_dma_chan *dwc, struct dw_desc *desc)
+@@ -401,26 +371,26 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ {
+ 	struct dw_desc *bad_desc;
+ 	struct dw_desc *child;
+-	unsigned long flags;
++	size_t residue;
++	bool soft_llp;
+ 
+-	spin_lock_irqsave(&dwc->vc.lock, flags);
++	lockdep_assert_held(&dwc->vc.lock);
+ 
+ 	/* Termination may have cleared the error since the tasklet sampled it. */
+ 	if (!(dma_readl(dw, RAW.ERROR) & dwc->mask))
+-		goto unlock;
++		return;
+ 
+ 	dwc_chan_disable(dw, dwc);
+-	clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
+-	if (list_empty(&dwc->active_list))
+-		goto unlock;
++	soft_llp = test_and_clear_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags);
++	if (!dwc->desc)
++		return;
+ 
+-	/*
+-	 * The descriptor currently at the head of the active list is
+-	 * borked. Since we don't have any way to report errors, we'll
+-	 * just have to scream loudly and try to carry on.
+-	 */
+-	bad_desc = dwc_first_active(dwc);
+-	list_del_init(&bad_desc->desc_node);
++	bad_desc = dwc->desc;
++	/* On a bus error only previous software-LLP completions confirm delivery. */
++	residue = soft_llp ? bad_desc->residue : bad_desc->total_len;
++	bad_desc->vd.tx_result.residue = min_t(size_t, residue, U32_MAX);
++	bad_desc->vd.tx_result.result = DMA_TRANS_ABORTED;
++	dwc->desc = NULL;
+ 	dwc_dostart_first_queued(dwc);
+ 
+ 	/*
+@@ -431,42 +401,46 @@ static void dwc_handle_error(struct dw_dma *dw, struct dw_dma_chan *dwc)
+ 	 * random memory locations.
+ 	 */
+ 	dev_WARN(dmaengine_chan_dev(&dwc->vc.chan), "Bad descriptor submitted for DMA!\n"
+-				       "  cookie: %d\n", bad_desc->txd.cookie);
++				       "  cookie: %d\n", bad_desc->vd.tx.cookie);
+ 	dwc_dump_lli(dwc, bad_desc);
+-	list_for_each_entry(child, &bad_desc->tx_list, desc_node)
++	list_for_each_entry(child, &bad_desc->tx_list, vd.node)
+ 		dwc_dump_lli(dwc, child);
+ 
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
++	dwc_retire_cookie(dwc, &bad_desc->vd);
++	vchan_cookie_complete(&bad_desc->vd);
++}
+ 
+-	/* Pretend the descriptor completed successfully */
+-	dwc_descriptor_complete(dwc, bad_desc, true);
+-	return;
++static void dwc_handle_channel(struct dw_dma *dw, struct dw_dma_chan *dwc)
++{
++	lockdep_assert_held(&dwc->vc.lock);
+ 
+-unlock:
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
++	if (dma_readl(dw, RAW.ERROR) & dwc->mask)
++		dwc_handle_error(dw, dwc);
++	else
++		dwc_scan_descriptors(dw, dwc);
+ }
+ 
+ static void dw_dma_tasklet(struct tasklet_struct *t)
+ {
+ 	struct dw_dma *dw = from_tasklet(dw, t, tasklet);
+ 	struct dw_dma_chan *dwc;
+-	u32 status_xfer;
+-	u32 status_err;
++	unsigned long flags;
+ 	unsigned int i;
++	u32 status;
+ 
+-	status_xfer = dma_readl(dw, RAW.XFER);
+-	status_err = dma_readl(dw, RAW.ERROR);
++	/* Channel release may have drained a polled completion before this run. */
++	if (!dw->in_use)
++		return;
+ 
+-	dev_vdbg(dw->dma.dev, "%s: status_err=%x\n", __func__, status_err);
++	status = dma_readl(dw, RAW.XFER) | dma_readl(dw, RAW.ERROR);
+ 
+ 	for (i = 0; i < dw->dma.chancnt; i++) {
+ 		dwc = &dw->chan[i];
+-		if (test_bit(DW_DMA_IS_CYCLIC, &dwc->flags))
+-			dev_vdbg(dw->dma.dev, "Cyclic xfer is not implemented\n");
+-		else if (status_err & (1 << i))
+-			dwc_handle_error(dw, dwc);
+-		else if (status_xfer & (1 << i))
+-			dwc_scan_descriptors(dw, dwc);
++		spin_lock_irqsave(&dwc->vc.lock, flags);
++		/* The snapshot selects work; recheck events under the channel lock. */
++		if (status & dwc->mask)
++			dwc_handle_channel(dw, dwc);
++		spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ 	}
+ 
+ 	/* Re-enable interrupts */
+@@ -574,8 +548,8 @@ dwc_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
+ 		if (!first) {
+ 			first = desc;
+ 		} else {
+-			lli_write(prev, llp, desc->txd.phys | lms);
+-			list_add_tail(&desc->desc_node, &first->tx_list);
++			lli_write(prev, llp, desc->vd.tx.phys | lms);
++			list_add_tail(&desc->vd.node, &first->tx_list);
+ 		}
+ 		prev = desc;
+ 	}
+@@ -586,10 +560,9 @@ dwc_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest, dma_addr_t src,
+ 
+ 	prev->lli.llp = 0;
+ 	lli_clear(prev, ctllo, DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+-	first->txd.flags = flags;
+ 	first->total_len = len;
+ 
+-	return &first->txd;
++	return dwc_tx_prep(dwc, first, flags);
+ 
+ err_desc_get:
+ 	dwc_desc_put(dwc, first);
+@@ -662,8 +635,8 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 			if (!first) {
+ 				first = desc;
+ 			} else {
+-				lli_write(prev, llp, desc->txd.phys | lms);
+-				list_add_tail(&desc->desc_node, &first->tx_list);
++				lli_write(prev, llp, desc->vd.tx.phys | lms);
++				list_add_tail(&desc->vd.node, &first->tx_list);
+ 			}
+ 			prev = desc;
+ 
+@@ -711,8 +684,8 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 			if (!first) {
+ 				first = desc;
+ 			} else {
+-				lli_write(prev, llp, desc->txd.phys | lms);
+-				list_add_tail(&desc->desc_node, &first->tx_list);
++				lli_write(prev, llp, desc->vd.tx.phys | lms);
++				list_add_tail(&desc->vd.node, &first->tx_list);
+ 			}
+ 			prev = desc;
+ 
+@@ -736,7 +709,7 @@ dwc_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
+ 	lli_clear(prev, ctllo, DWC_CTLL_LLP_D_EN | DWC_CTLL_LLP_S_EN);
+ 	first->total_len = total_len;
+ 
+-	return &first->txd;
++	return dwc_tx_prep(dwc, first, flags);
+ 
+ err_desc_get:
+ 	dev_err(dmaengine_chan_dev(chan),
+@@ -923,7 +896,7 @@ static int dwc_terminate_all(struct dma_chan *chan)
+ {
+ 	struct dw_dma_chan	*dwc = to_dw_dma_chan(chan);
+ 	struct dw_dma		*dw = to_dw_dma(chan->device);
+-	struct dw_desc		*desc, *_desc;
++	struct virt_dma_desc	*vd;
+ 	unsigned long		flags;
+ 	LIST_HEAD(list);
+ 
+@@ -937,26 +910,40 @@ static int dwc_terminate_all(struct dma_chan *chan)
+ 
+ 	dwc_chan_resume(dwc, true);
+ 
+-	/* active_list entries will end up before queued entries */
+-	list_splice_init(&dwc->queue, &list);
+-	list_splice_init(&dwc->active_list, &list);
++	if (dwc->desc) {
++		dwc_retire_cookie(dwc, &dwc->desc->vd);
++		dma_cookie_complete(&dwc->desc->vd.tx);
++		vchan_terminate_vdesc(&dwc->desc->vd);
++		dwc->desc = NULL;
++	}
++	list_for_each_entry(vd, &dwc->vc.desc_issued, node) {
++		dwc_retire_cookie(dwc, vd);
++		dma_cookie_complete(&vd->tx);
++	}
++	list_for_each_entry(vd, &dwc->vc.desc_submitted, node) {
++		dwc_retire_cookie(dwc, vd);
++		dma_cookie_complete(&vd->tx);
++	}
++	vchan_get_all_descriptors(&dwc->vc, &list);
+ 
+ 	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ 
+-	/* Flush all pending and queued descriptors */
+-	list_for_each_entry_safe(desc, _desc, &list, desc_node)
+-		dwc_descriptor_complete(dwc, desc, false);
++	vchan_dma_desc_free_list(&dwc->vc, &list);
+ 
+ 	return 0;
+ }
+ 
+-static struct dw_desc *dwc_find_desc(struct dw_dma_chan *dwc, dma_cookie_t c)
++static void dwc_synchronize(struct dma_chan *chan)
+ {
+-	struct dw_desc *desc;
++	struct dw_dma_chan *dwc = to_dw_dma_chan(chan);
+ 
+-	list_for_each_entry(desc, &dwc->active_list, desc_node)
+-		if (desc->txd.cookie == c)
+-			return desc;
++	vchan_synchronize(&dwc->vc);
++}
++
++static struct dw_desc *dwc_find_desc(struct dw_dma_chan *dwc, dma_cookie_t c)
++{
++	if (dwc->desc && dwc->desc->vd.tx.cookie == c)
++		return dwc->desc;
+ 
+ 	return NULL;
+ }
+@@ -965,14 +952,13 @@ static u32 dwc_get_residue_and_status(struct dw_dma_chan *dwc, dma_cookie_t cook
+ 				      enum dma_status *status)
+ {
+ 	struct dw_desc *desc;
+-	unsigned long flags;
+ 	u32 residue;
+ 
+-	spin_lock_irqsave(&dwc->vc.lock, flags);
++	lockdep_assert_held(&dwc->vc.lock);
+ 
+ 	desc = dwc_find_desc(dwc, cookie);
+ 	if (desc) {
+-		if (desc == dwc_first_active(dwc)) {
++		if (desc == dwc->desc) {
+ 			residue = desc->residue;
+ 			if (test_bit(DW_DMA_IS_SOFT_LLP, &dwc->flags) && residue)
+ 				residue -= dwc_get_sent(dwc);
+@@ -985,29 +971,48 @@ static u32 dwc_get_residue_and_status(struct dw_dma_chan *dwc, dma_cookie_t cook
+ 		residue = 0;
+ 	}
+ 
+-	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ 	return residue;
+ }
+ 
++static enum dma_status
++dwc_cookie_status(struct dw_dma_chan *dwc, dma_cookie_t cookie, struct dma_tx_state *state)
++{
++	enum dma_status status = dma_cookie_status(&dwc->vc.chan, cookie, state);
++	struct rb_node *node;
++
++	if (status != DMA_COMPLETE || cookie < DMA_MIN_COOKIE)
++		return status;
++
++	node = rb_find(&cookie, &dwc->errors, dwc_error_cmp);
++	if (!node)
++		return DMA_COMPLETE;
++
++	dma_set_residue(state, rb_entry(node, struct dw_dma_error, node)->residue);
++	return DMA_ERROR;
++}
++
+ static enum dma_status
+ dwc_tx_status(struct dma_chan *chan,
+ 	      dma_cookie_t cookie,
+ 	      struct dma_tx_state *txstate)
+ {
+ 	struct dw_dma_chan	*dwc = to_dw_dma_chan(chan);
++	struct dw_dma		*dw = to_dw_dma(chan->device);
+ 	enum dma_status		ret;
+ 
+-	ret = dma_cookie_status(chan, cookie, txstate);
+-	if (ret == DMA_COMPLETE)
++	guard(spinlock_irqsave)(&dwc->vc.lock);
++
++	ret = dwc_cookie_status(dwc, cookie, txstate);
++	if (ret != DMA_IN_PROGRESS)
+ 		return ret;
+ 
+-	dwc_scan_descriptors(to_dw_dma(chan->device), dwc);
++	/* Poll completion even when the client has masked the controller IRQ. */
++	dwc_handle_channel(dw, dwc);
+ 
+-	ret = dma_cookie_status(chan, cookie, txstate);
+-	if (ret == DMA_COMPLETE)
+-		return ret;
++	ret = dwc_cookie_status(dwc, cookie, txstate);
++	if (ret == DMA_IN_PROGRESS)
++		dma_set_residue(txstate, dwc_get_residue_and_status(dwc, cookie, &ret));
+ 
+-	dma_set_residue(txstate, dwc_get_residue_and_status(dwc, cookie, &ret));
+ 	return ret;
+ }
+ 
+@@ -1017,7 +1022,7 @@ static void dwc_issue_pending(struct dma_chan *chan)
+ 	unsigned long		flags;
+ 
+ 	spin_lock_irqsave(&dwc->vc.lock, flags);
+-	if (list_empty(&dwc->active_list))
++	if (vchan_issue_pending(&dwc->vc) && !dwc->desc)
+ 		dwc_dostart_first_queued(dwc);
+ 	spin_unlock_irqrestore(&dwc->vc.lock, flags);
+ }
+@@ -1086,14 +1091,18 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
+ 	struct dw_dma		*dw = to_dw_dma(chan->device);
+ 	unsigned long		flags;
+ 
+-	dev_dbg(dmaengine_chan_dev(chan), "%s: descs allocated=%u\n", __func__,
+-			dwc->descs_allocated);
++	/* The controller tasklet also accesses channel registers. */
++	tasklet_disable(&dw->tasklet);
+ 
+ 	/* ASSERT:  channel is idle */
+-	BUG_ON(!list_empty(&dwc->active_list));
+-	BUG_ON(!list_empty(&dwc->queue));
++	BUG_ON(dwc->desc);
++	BUG_ON(!list_empty(&dwc->vc.desc_issued));
++	BUG_ON(!list_empty(&dwc->vc.desc_submitted));
  	BUG_ON(dma_readl(to_dw_dma(chan->device), CH_EN) & dwc->mask);
  
--	spin_lock_irqsave(&dwc->lock, flags);
-+	spin_lock_irqsave(&dwc->vc.lock, flags);
++	vchan_free_chan_resources(&dwc->vc);
++	dwc_free_errors(dwc);
++
+ 	spin_lock_irqsave(&dwc->vc.lock, flags);
  
  	/* Clear custom channel configuration */
- 	memset(&dwc->dws, 0, sizeof(struct dw_dma_slave));
-@@ -1104,7 +1104,7 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
- 	channel_clear_bit(dw, MASK.BLOCK, dwc->mask);
- 	channel_clear_bit(dw, MASK.ERROR, dwc->mask);
+@@ -1111,6 +1120,8 @@ static void dwc_free_chan_resources(struct dma_chan *chan)
+ 	if (!dw->in_use)
+ 		do_dw_dma_off(dw);
  
--	spin_unlock_irqrestore(&dwc->lock, flags);
-+	spin_unlock_irqrestore(&dwc->vc.lock, flags);
++	tasklet_enable(&dw->tasklet);
++
+ 	dev_vdbg(dmaengine_chan_dev(chan), "%s: done\n", __func__);
+ }
  
- 	/* Disable controller in case it was a last user */
- 	dw->in_use &= ~dwc->mask;
-@@ -1221,13 +1221,13 @@ int do_dma_probe(struct dw_dma_chip *chip)
+@@ -1221,13 +1232,11 @@ int do_dma_probe(struct dw_dma_chip *chip)
  	for (i = 0; i < pdata->nr_channels; i++) {
  		struct dw_dma_chan	*dwc = &dw->chan[i];
  
--		dwc->chan.device = &dw->dma;
--		dma_cookie_init(&dwc->chan);
-+		dwc->vc.chan.device = &dw->dma;
-+		dma_cookie_init(&dwc->vc.chan);
- 		if (pdata->chan_allocation_order == CHAN_ALLOCATION_ASCENDING)
--			list_add_tail(&dwc->chan.device_node,
-+			list_add_tail(&dwc->vc.chan.device_node,
- 					&dw->dma.channels);
- 		else
--			list_add(&dwc->chan.device_node, &dw->dma.channels);
-+			list_add(&dwc->vc.chan.device_node, &dw->dma.channels);
+-		dwc->vc.chan.device = &dw->dma;
+-		dma_cookie_init(&dwc->vc.chan);
+-		if (pdata->chan_allocation_order == CHAN_ALLOCATION_ASCENDING)
+-			list_add_tail(&dwc->vc.chan.device_node,
+-					&dw->dma.channels);
+-		else
+-			list_add(&dwc->vc.chan.device_node, &dw->dma.channels);
++		dwc->vc.desc_free = dwc_desc_free;
++		dwc->errors = RB_ROOT;
++		vchan_init(&dwc->vc, &dw->dma);
++		if (pdata->chan_allocation_order != CHAN_ALLOCATION_ASCENDING)
++			list_move(&dwc->vc.chan.device_node, &dw->dma.channels);
  
  		/* 7 is highest priority & 0 is lowest. */
  		if (pdata->chan_priority == CHAN_PRIORITY_ASCENDING)
-@@ -1236,7 +1236,7 @@ int do_dma_probe(struct dw_dma_chip *chip)
+@@ -1236,12 +1245,8 @@ int do_dma_probe(struct dw_dma_chip *chip)
  			dwc->priority = i;
  
  		dwc->ch_regs = &__dw_regs(dw)->CHAN[i];
--		spin_lock_init(&dwc->lock);
-+		spin_lock_init(&dwc->vc.lock);
+-		spin_lock_init(&dwc->vc.lock);
  		dwc->mask = 1 << i;
  
- 		INIT_LIST_HEAD(&dwc->active_list);
-@@ -1358,8 +1358,8 @@ int do_dma_remove(struct dw_dma_chip *chip)
- 	tasklet_kill(&dw->tasklet);
+-		INIT_LIST_HEAD(&dwc->active_list);
+-		INIT_LIST_HEAD(&dwc->queue);
+-
+ 		channel_clear_bit(dw, CH_EN, dwc->mask);
+ 
+ 		dwc->direction = DMA_TRANS_NONE;
+@@ -1306,6 +1311,7 @@ int do_dma_probe(struct dw_dma_chip *chip)
+ 	dw->dma.device_pause = dwc_pause;
+ 	dw->dma.device_resume = dwc_resume;
+ 	dw->dma.device_terminate_all = dwc_terminate_all;
++	dw->dma.device_synchronize = dwc_synchronize;
+ 
+ 	dw->dma.device_tx_status = dwc_tx_status;
+ 	dw->dma.device_issue_pending = dwc_issue_pending;
+@@ -1359,6 +1365,8 @@ int do_dma_remove(struct dw_dma_chip *chip)
  
  	list_for_each_entry_safe(dwc, _dwc, &dw->dma.channels,
--			chan.device_node) {
--		list_del(&dwc->chan.device_node);
-+			vc.chan.device_node) {
-+		list_del(&dwc->vc.chan.device_node);
+ 			vc.chan.device_node) {
++		vchan_synchronize(&dwc->vc);
++		dwc_free_errors(dwc);
+ 		list_del(&dwc->vc.chan.device_node);
  		channel_clear_bit(dw, CH_EN, dwc->mask);
  	}
- 
-diff --git a/drivers/dma/dw/dw.c b/drivers/dma/dw/dw.c
-index e56974e7d4af..fd4f57476b67 100644
---- a/drivers/dma/dw/dw.c
-+++ b/drivers/dma/dw/dw.c
-@@ -14,7 +14,7 @@
- 
- static void dw_dma_initialize_chan(struct dw_dma_chan *dwc)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	u32 cfghi = is_slave_direction(dwc->direction) ? 0 : DWC_CFGH_FIFO_MODE;
- 	u32 cfglo = DWC_CFGL_CH_PRIOR(dwc->priority);
- 	bool hs_polarity = dwc->dws.hs_polarity;
-diff --git a/drivers/dma/dw/idma32.c b/drivers/dma/dw/idma32.c
-index dac617c183e6..52e591f8410b 100644
---- a/drivers/dma/dw/idma32.c
-+++ b/drivers/dma/dw/idma32.c
-@@ -35,7 +35,7 @@
- 
- static unsigned int idma32_get_slave_devfn(struct dw_dma_chan *dwc)
- {
--	struct device *slave = dwc->chan.slave;
-+	struct device *slave = dwc->vc.chan.slave;
- 
- 	if (!slave || !dev_is_pci(slave))
- 		return 0;
-@@ -45,7 +45,7 @@ static unsigned int idma32_get_slave_devfn(struct dw_dma_chan *dwc)
- 
- static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
- {
--	struct dw_dma *dw = to_dw_dma(dwc->chan.device);
-+	struct dw_dma *dw = to_dw_dma(dwc->vc.chan.device);
- 	void __iomem *misc = __dw_regs(dw);
- 	u32 cfghi = 0, cfglo = 0;
- 	u8 dst_id, src_id;
-@@ -55,12 +55,12 @@ static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
- 	value = readl(misc + DMA_REGACCESS_CHID_CFG);
- 
- 	value &= ~REGACCESS_CHID_MASK;
--	value |= dwc->chan.chan_id;
-+	value |= dwc->vc.chan.chan_id;
- 
- 	writel(value, misc + DMA_REGACCESS_CHID_CFG);
- 
- 	/* Configure channel attributes */
--	value = readl(misc + DMA_CTL_CH(dwc->chan.chan_id));
-+	value = readl(misc + DMA_CTL_CH(dwc->vc.chan.chan_id));
- 
- 	value &= ~(CTL_CH_RD_NON_SNOOP_BIT | CTL_CH_WR_NON_SNOOP_BIT);
- 	value &= ~(CTL_CH_RD_RS_MASK | CTL_CH_WR_RS_MASK);
-@@ -85,10 +85,10 @@ static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
- 		return;
- 	}
- 
--	writel(value, misc + DMA_CTL_CH(dwc->chan.chan_id));
-+	writel(value, misc + DMA_CTL_CH(dwc->vc.chan.chan_id));
- 
- 	/* Configure crossbar selection */
--	value = readl(misc + DMA_XBAR_SEL(dwc->chan.chan_id));
-+	value = readl(misc + DMA_XBAR_SEL(dwc->vc.chan.chan_id));
- 
- 	/* DEVFN selection */
- 	value &= ~XBAR_SEL_DEVID_MASK;
-@@ -106,17 +106,17 @@ static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
- 		return;
- 	}
- 
--	writel(value, misc + DMA_XBAR_SEL(dwc->chan.chan_id));
-+	writel(value, misc + DMA_XBAR_SEL(dwc->vc.chan.chan_id));
- 
- 	/* Configure DMA channel low and high registers */
- 	switch (dwc->direction) {
- 	case DMA_MEM_TO_DEV:
--		dst_id = dwc->chan.chan_id;
-+		dst_id = dwc->vc.chan.chan_id;
- 		src_id = dwc->dws.src_id;
- 		break;
- 	case DMA_DEV_TO_MEM:
- 		dst_id = dwc->dws.dst_id;
--		src_id = dwc->chan.chan_id;
-+		src_id = dwc->vc.chan.chan_id;
- 		break;
- 	default:
- 		/* Memory-to-Memory and Device-to-Device are ignored for now */
 diff --git a/drivers/dma/dw/regs.h b/drivers/dma/dw/regs.h
-index 5969d9cc8d7a..f47b42d638dd 100644
+index f47b42d638dd..7b15276d158f 100644
 --- a/drivers/dma/dw/regs.h
 +++ b/drivers/dma/dw/regs.h
-@@ -13,6 +13,7 @@
+@@ -10,6 +10,7 @@
+ #include <linux/bitops.h>
+ #include <linux/interrupt.h>
+ #include <linux/dmaengine.h>
++#include <linux/rbtree.h>
  
  #include <linux/io-64-nonatomic-hi-lo.h>
  
-+#include "../virt-dma.h"
- #include "internal.h"
+@@ -276,10 +277,8 @@ struct dw_dma_chan {
  
- #define DW_DMA_MAX_NR_REQUESTS	16
-@@ -264,7 +265,7 @@ enum dw_dmac_flags {
+ 	/* these other elements are all protected by vc.lock */
+ 	unsigned long		flags;
+-	struct list_head	active_list;
+-	struct list_head	queue;
+-
+-	unsigned int		descs_allocated;
++	struct dw_desc		*desc;
++	struct rb_root		errors;
+ 
+ 	/* hardware configuration */
+ 	unsigned int		block_size;
+@@ -380,6 +379,12 @@ struct dw_lli {
+ 	__le32		dstat;
  };
  
- struct dw_dma_chan {
--	struct dma_chan			chan;
-+	struct virt_dma_chan		vc;
- 	void __iomem			*ch_regs;
- 	u8				mask;
- 	u8				priority;
-@@ -273,9 +274,7 @@ struct dw_dma_chan {
- 	/* software emulation of the LLP transfers */
- 	struct list_head	*tx_node_active;
++struct dw_dma_error {
++	struct rb_node		node;
++	dma_cookie_t		cookie;
++	u32			residue;
++};
++
+ struct dw_desc {
+ 	/* FIRST values the hardware uses */
+ 	struct dw_lli			lli;
+@@ -390,18 +395,19 @@ struct dw_desc {
+ #define lli_write(d, reg, v)		((d)->lli.reg = cpu_to_le32(v))
  
--	spinlock_t		lock;
--
--	/* these other elements are all protected by lock */
-+	/* these other elements are all protected by vc.lock */
- 	unsigned long		flags;
- 	struct list_head	active_list;
- 	struct list_head	queue;
-@@ -307,7 +306,7 @@ __dwc_regs(struct dw_dma_chan *dwc)
+ 	/* THEN values for driver housekeeping */
+-	struct list_head		desc_node;
++	/* Only the first block is submitted to virt-dma. */
+ 	struct list_head		tx_list;
+-	struct dma_async_tx_descriptor	txd;
++	struct virt_dma_desc		vd;
++	struct dw_dma_error		*error;
+ 	size_t				len;
+ 	size_t				total_len;
+-	u32				residue;
++	size_t				residue;
+ };
  
- static inline struct dw_dma_chan *to_dw_dma_chan(struct dma_chan *chan)
+-#define to_dw_desc(h)	list_entry(h, struct dw_desc, desc_node)
++#define to_dw_desc(h)	list_entry(h, struct dw_desc, vd.node)
+ 
+ static inline struct dw_desc *
+-txd_to_dw_desc(struct dma_async_tx_descriptor *txd)
++vd_to_dw_desc(struct virt_dma_desc *vd)
  {
--	return container_of(chan, struct dw_dma_chan, chan);
-+	return container_of(chan, struct dw_dma_chan, vc.chan);
+-	return container_of(txd, struct dw_desc, txd);
++	return container_of(vd, struct dw_desc, vd);
  }
- 
- struct dw_dma {
 
 -- 
 2.53.0
