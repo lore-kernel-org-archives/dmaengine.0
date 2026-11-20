@@ -1,109 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.76
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.45
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795152939;
-	b=xiK39Rjs432JdnDGxOkExcxjKTwBY1j7wD+KveaADwSFlTSVm4VmLfJZNrFROdHoBPb8
-	 6/uzis2C4USmdAbfZoWvxQrkY2jlT8eQxLT3S3wOvuyRJiXsTyqJD0prltSGmzsFIRTP7
-	 /RDsg6Tb5JZSPjBdJ7VHKv0qgg30ejIbkmjOqL8Qb5XoWKhjRY94X6tVtOigFFH4kkU6a
-	 vazJxroY5kGPa1IaaZOGL8e+oSSpUf6E7UjPSnlDz8SFe2xLo8kEpBwIAn8FeVQbNY2ZJ
-	 CFiYJPfw3NTVQ5p5bI72fLcyXmwZnSCdefZ97j0BnWuCULCuKnYxNhovQ9whJaLQbyw==
+	t=1795153361;
+	b=GV3/E3Etyjgg1iQVWudzOgOKwZ0w8wsqAeyZtsF6Qmx2nbZ3Ij50WOKtE8voWnjKZhj5
+	 Q44ReM3lXRFI9p/sXcXz18EUPi7/9HbYxBhd5N9/Me5duRzi/vBn5vcCwjiKhrXnkeYHw
+	 hbbkdTrzNCKxWjmI8HMK4YPVeeADm9DosM62W1veTJqFN4Hz5ibOlVtXPBwVIyKInMeZW
+	 3wo7KVb496R7hbemJSWkEfIJBiuBeyiFG+me/mz4cPodGRCOXXgOvl+bdEFWSrUF8eEZ0
+	 FdnefN5KTDZYcBSALli/phP4cRfTx4y3WYrr7yaMKcVSYolm3+5WHn02Gt6jWcic0lA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795152939;
-	h=DMARC-Filter:Received:Received:X-MS-Exchange-Authentication-Results:
-	 Received-SPF:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:Content-Type:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=nzwWT3ESrbmTnBdheacJ7T2KZemBnvRCxOtLHQCJeuc=;
-	b=ZdngqX0otvHBaL+BaMGGYL76MauJb+8Gsyx4ro3qpTjY0gBHhQMSZH0256Bn7h5EPVyf
-	 jvPV4gHn2seMDcJRBR/2ITFG8BrwQMlXo2PdQIUQE/x0rp5f1Y2keLUpAW2xjm08/xPMd
-	 6uZnLRfrDqBxzXF8cDlP/ZD8rhbbj2s2YtmJladyVCyJbI+o1kx3gwZnQRaPx0B8sglNr
-	 TrtCIl2ltNbGF+VYF7eZbiAazaBX1r+1XO5ta4phvJqHWcdO1UmR+9kGrKX+EL/QC0tDt
-	 gWwYWOy+gp5jms4kcRVX7P7KdD622fI9bVC1TdLjdYomvvT+JxbMeuZ4JDotYGNAfmQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795153361;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
+	b=NLzK5AYndOnVOT3kBguD61VAkbeDf75oEwms12CJu7bJUIvv/pY43TZETgJUK7e9b1cL
+	 yBnq0aAVkJKAtLM9WVLwOF4gjNUJcf//3YhZd6pPhqliJwa3jZFoHgQPzb/kX6eqMxK1O
+	 3W63CjMHO/970GoswNFy3xG60BBjvCyTQxf+NKHQBTCvkFq+qrmLvIcWAjlvTm4UQ+923
+	 KKsHh9236M9bSWMuqUz83+9vZQKKZO5a9gbPCZiGpCpw7bfzV49pcwjNv+W8YBXbjIsBr
+	 0Kixu7447AS6tiWwJ20o4EJ5PyB71oU+kx4y4/GIrVf6f1QmVbKCg7sUGvDlqUz81Cw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=cixtech.com;
-	spf=pass smtp.mailfrom=cixtech.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.76
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023076.outbound.protection.outlook.com [40.107.44.76])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=t8Pay2JW;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.45
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B7F60A261D;
-	Fri, 20 Nov 2026 05:35:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86B7F60A261D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cixtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cixtech.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vuBXvLhuzYbCPJcQohDg/9hnFCY6RXdWu9xul6XZg5KxTkneHzM6E2KnhMFpnRcUOSC3i5unxoDadvOgcmcfdusXcxB4u4DdXL6/4kK6wn380Qj6Fc1FzASvzGRAGnc1hNbLYk0CTwgvcaH3yDboEfSEUG5wQEhV0Fh9MBJbIjGH4jgtXTG0jm7aMcuVBZKWsZ37uiLSqO8lPRNOVoxNaSI/C0BQzljbJY/X7nxa7cxdRaHys+AZgDhaHKwPTSxCwp9fhe8+GWUY4eOPq+znylUxXCPcj6GOzY5i+xzE6Izch8NrvSQWMcxrtYZ8CoUKQ39CVZCIeIo1K2+1IFelCg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nzwWT3ESrbmTnBdheacJ7T2KZemBnvRCxOtLHQCJeuc=;
- b=PUPVIQaOkfAsi66TQr02fmkop4oWS13m6EbrqaPp+yZ/hqFBIwXctPooHEskueJp9s9o7ntAx0H2+7P7l9S9Ne/Y/qgi3afQaU3WdqAjiLNVW/y29Yo+ppsw6/Ch1f5RG88Ml983vLJsl/H2xzg0L+6LIr96XFGg3sgnLxE4NSXKXhWUM1f//YKyYDZqsrbgTOFAWhsiFrJNSEinny14CaddNYgXhGfTCq+XSJlOVzTp2TxJxT0Wp0B5du3ANawva7fU0KgLUN8e49543dstG9hMoZdIbUIdm/OM7V6/kwK3NfWyRPLPjm+BDhuOLpzo8L7CTv0+FGZ884dwIGi/lg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 222.71.101.198) smtp.rcpttodomain=arm.com smtp.mailfrom=cixtech.com;
- dmarc=bestguesspass action=none header.from=cixtech.com; dkim=none (message
- not signed); arc=none (0)
-Received: from SI2PR02CA0050.apcprd02.prod.outlook.com (2603:1096:4:196::11)
- by TYZPR06MB6076.apcprd06.prod.outlook.com (2603:1096:400:33b::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.1; Fri, 20 Nov
- 2026 05:35:34 +0000
-Received: from SG1PEPF000082E8.apcprd02.prod.outlook.com
- (2603:1096:4:196:cafe::78) by SI2PR02CA0050.outlook.office365.com
- (2603:1096:4:196::11) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.639.12 via Frontend Transport; Fri,
- 20 Nov 2026 05:35:34 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 222.71.101.198) smtp.mailfrom=cixtech.com; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=cixtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of cixtech.com designates
- 222.71.101.198 as permitted sender) receiver=protection.outlook.com;
- client-ip=222.71.101.198; helo=smtprelay.cixcomputing.com; pr=C
-Received: from smtprelay.cixcomputing.com (222.71.101.198) by
- SG1PEPF000082E8.mail.protection.outlook.com (10.167.240.9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.639.5 via Frontend Transport; Fri, 20 Nov 2026 05:35:33 +0000
-Received: from ubuntu (unknown [172.20.64.99])
-	by smtprelay.cixcomputing.com (Postfix) with ESMTPSA id 746B040920E7;
-	Fri, 20 Nov 2026 13:35:31 +0800 (CST)
-From: Jelly Jia <Jelly.Jia@cixtech.com>
-To: vkoul@kernel.org,
-	Frank.Li@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	robin.murphy@arm.com,
-	sboyd@kernel.org,
-	bmasney+clk@redhat.com,
-	jbrunet+clk@baylibre.com,
-	tglx@kernel.org
-Cc: devicetree@vger.kernel.org,
-	cix-kernel-upstream@cixtech.com,
-	dmaengine@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Jelly.Jia@cixtech.com,
-	linux-clk@vger.kernel.org,
-	joakim.zhang@cixtech.com,
-	radu@rendec.net
-Subject: [PATCH v5 4/6] clk: cix: Register the Sky1 AUDSS IRQ auxiliary device
-Date: Fri, 20 Nov 2026 13:35:27 +0800
-Message-ID: <20261120053529.371923-5-Jelly.Jia@cixtech.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261120053529.371923-1-Jelly.Jia@cixtech.com>
-References: <20261120053529.371923-1-Jelly.Jia@cixtech.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60543606A325
+	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 05:42:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60543606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=t8Pay2JW
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3adac5c10e3so346556a91.0
+        for <dmaengine@vger.kernel.org>; Thu, 19 Nov 2026 21:42:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795153361; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FguEvaK4Vk0eXKi9EUDkDioUAgfENBqKabVkMY55wQQ/WMSbHpdpHvvFfNjIpHXhAr
+         nUQfk++eDJKuwWDw1CVoeQHan0pZV00MlaQZ+e9BarVr6GF7ht2czwh4y5TevyFcVlFN
+         sVkYkiBSwVxygdkMXEz0MxXBtNdLGeD2gYtRJSUjDBjmZMjBeuGs0pJhdZMkgatHhmND
+         nCJ6fkNHc4VEooV/mr0UTiOTbG1zxU02gYvYdtkSbVU9CiBd4/I5eOMSxudHSA7F6cZZ
+         K2YwDlwNijMUjqMy2yARmrtaisSijdNlw15focnlwNtaYBnXc4ipVQm9gEFBK9hxE7ql
+         lvFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
+        fh=go+VPJt0tEz76vE2GRmu7Qw1UGWkenG0XYiABaXtN5s=;
+        b=RgFKt6rhHJl/GhiBdOuAcwk+IdAaHCOL4hdmdZ0n6dOU2jN2neZB0WRSEmuTrxMYES
+         tMUZV1cYdDfLkMIX0zkd+JBa7rMlxZeNcEmWjHkCKBDw41lUg22BsAAKOkw5RHpMEa/0
+         f/VkmoKDYx2vaw7jN21dJjgY0v254697s1Q/pauuomiBL+zVHDDbkQwMaakUGEM5hcvy
+         gMlQ4frnBXMrNEb694Atflr2eRnr7vgHxPvMxXlkvfM1rAIlwe/tB6b1Aw+3G2+cA7OS
+         V1aMwusO+htslfpZzrjY/siqmEkKi+yAJehcisX1paYWqQBMam7roucAeCyXQtI0LQPg
+         PsYg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795153361; x=1795758161; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
+        b=t8Pay2JWg7SW/hJDfwPJr+1XydfJJXmvZiY5H4hT/JUCx8ZvZnqBiOL6uQ7SdKyXFx
+         VM6LOzLQKIV6ABC7+tCXDYqzAS585HBJEmZIngdPQfqKNlVrarqFRgkxtgq7ibzLM0jj
+         BDTBoRlZ8G0CqUveUPps/jUk7+Nqgqd+iuSk8pEac/G2dgi3I7FES0EEPg4tey98kEDH
+         FQh7PxvpcyXdKa7EIXFfQ5mYvGs9uYB74/Zw1QGE8xDnVIfrri1p7yZbZeL+Cwas/M+4
+         2DQVjrlXwBXm96NeiP1y7aoqZJFu9C9nWCtHHA3c3ki0I6z7D3Uujgly4N5xBarFp8Kh
+         vs8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795153361; x=1795758161;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9qjgGXuBHBLvMHrjXiMEeKTNvTNqRqMclyrqR/WfruA=;
+        b=2LVCreL+anI7Z/ajePFAuetmm/4oAPvenqMuqrZ3KM8jForlA9myT94zqC/IFE15EK
+         odHeq1eoZ3wo3CgnPThL9QNLN/ebXgH5KrWfpmGO47BmPrtFcC7M4R4fe1ko3+MhvzpO
+         u7VWUkJdblpjtbfUMqZQ3V0Gt4xLnDiURAs0nWNp6WhwgQJnSVz9XpuQiff57fIpxyzg
+         Zri5tqcQdsN6CtG/jpahjLp+YKmQ+w2zmoXVVPNq2iKSTRf8US0qsug2rG17IR5I967h
+         p9R2qhJVoFK606/OJ+5MS2HO04OIveuJz8JbPjiEsvhBoL5Uhf0P0fTipAE9wR7dBWRA
+         nLoA==
+X-Forwarded-Encrypted: i=1; AL+hErFzle2h/hDCOpnjSRgWk7EIC92bRRoAZt4lPFJMa+qT7AChkGhxAoYc5CrjxIXZCw9gBC+WUTIldTo=@vger.kernel.org
+X-Gm-Message-State: APuU4Z91wZ2SWo2HWaRjDjLlpipeBTeuAuFsy7RG3LaMui7y7sNUNkLg
+	XQlz7aUs+adXLdPjAUlyN65Rbdc2ZZVUeOJmycPHClBqjjTkQkDGdqppewVD5Q7hOCur4k+AM+3
+	Pr0tEAH0e/IETR6YMogqPMPHkAMRCnqA=
+X-Gm-Gg: AZFdTZfcnry+s+Koc06J8+JoFsXeD10oTnKhPEv2OpIfB0RMrf+ZZRDZzf8QQrLjC/h
+	wGvk9+ER2NQS9Ngk9A8/gcawz5yriNgkzcP49cQmq7Dgh55Y+xFmGmakwFXWWji31ho2ROBfIfb
+	r5wQUtHIAQoM/AGgJwodUjbVEMOMN8bj8Lf9B9JwZLvY+/+10TS2aeoAJTUJv+Y8+N7GRUSxwQu
+	BkwIJmFG9RdM2FR79bIphNdwxe4Gev6DxzDA34+GtjdW0RUhpsTDopys3X+5LV/0vUQkZiVwYyj
+	JMxFkPywCDhn7rEOClpWrn//4g50xaENZicRpjO36okw1+8MyCOqCc6ho2c2AuUaNzUS9uU4i7W
+	XIwFpBMZlxoy89Nc062rDQlWqvALgyHXx4eG3dwoEXn6CQvwiRsz/6OvJlVZNbpoP5fgP8Co=
+X-Received: by 2002:a17:90b:50:b0:3b0:9e2c:9b5f with SMTP id
+ 98e67ed59e1d1-3b41c7b6044mr1574916a91.2.1795153360678; Thu, 19 Nov 2026
+ 21:42:40 -0800 (PST)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -113,140 +104,186 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E8:EE_|TYZPR06MB6076:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 2de1c2da-ce88-4ba0-db90-08df46c81911
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|36860700016|1800799024|82310400026|376014|7416014|261026140227099003|261026121527099003|261021121427099003|261022105027099003|261021123027099003|261028144727099003|921020|261102123227099003|56012099006|10067099003|18002099003|22082099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	AAe3tQNMvG2GkioPp1Py4E05aq5lKq/fGkVhhdz+GQMfEfaO7O7PuthBrwx1o2qRPohg9+jxw1Mt+v0EuPoNXWkI70Gp0JW/38GDkYLOe5jM46setgbOfQTPKEkkrS8k4sMo69M1e05da3PNRAGQEGUzY7bbOngbSnl2EHF/eXMtvVVizUmuKJ1JbPX3s3R4+TVm0fFEnx3izrsLIJf7y8wXaiPdw9xneRM65QvBvd3wNloWcrXCE2PrKaMwyNd1wike/rHmCaXmkbRU2O+c60/UkKcYVuzft7DwfD4ZF55GWgKhwfq9QMkxmTTpzIwwC+cJdAjGtL9gpUYkYxzcLmNO5FtonOuQokC8+IJwWwff0MwPztfi6PbAAaCSCmyQ+TjV7aRnWPhr0/m8ltm6eEvg90NZLUcfM9isvm5pic6mE8AQdyQBKIa8n6TUMTndD+1jCR/KCYGHnQ3IPf2G/RjkqZUNNmgJ0t31/T5fjtO0x/WDQt8bBDBQAhlRpmNXAwYyXZY2gaPzXyc9sAsyPHIfiZZhTciggNO7Tm0JfRimDipanvKFz6s/I2gqxMe9+5LJrd7PoAGSUF2k3GMXDhTw1rJkSDz0KFpHSS81Pta+av9RuINrb/iCe/KkJYdiTy+snUssT1MaQWp6dRa25L68KxIoJJ4nI0N5lldYeLmuADlOwbUyldwdEh/zubMuiZSbHrcXbYrayRL6kwEYAngEMPGi+iHg+3M7Cp/vXfvY1Y62NWGDpQ0VVSVfyrCk
-X-Forefront-Antispam-Report:
-	CIP:222.71.101.198;CTRY:CN;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:smtprelay.cixcomputing.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(36860700016)(1800799024)(82310400026)(376014)(7416014)(261026140227099003)(261026121527099003)(261021121427099003)(261022105027099003)(261021123027099003)(261028144727099003)(921020)(261102123227099003)(56012099006)(10067099003)(18002099003)(22082099003)(261009223027099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	yE452XGkgxgfrNMkr2qTzEb+5Z6iZm/B1qAyV49V+W1xdYxXAHKvYNVArSMjDep5CmURJHb3K/IIyZ5lzjm6x3FJVhXkU+C5MnfGUGag/veBhkdnz3TBeHu/hEXiPCeKKf/LZGtSlHIbdxNUdyVip7NC3T6fnAGI8Bmff2F2xf5mXWDEc1aF7CB32QvccwZOHqOtbacdctb8cAgW2xui4J1cK/UXrcucYNoiH3JjTbSnXN88qEJhgWc43Mn+jduzyQ6AlGjWt4fxDL25ogbHmUiDKuKxZwFnF96F2Q2O29lNV2QZpRjBNQnh7VhPgOaj9h4x3dUdGyUt/siHphjjMfHA/FPM0Bu0lXLz6hDNSM/iHUKTDuCYGOAbgh5xwIdiH+F7SsbsZ7ne5gzGSamnA3C5gdXHIc16xxJFJRu+J+cLavUoycwXPF+kO1MN2789
-X-OriginatorOrg: cixtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2026 05:35:33.6003
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2de1c2da-ce88-4ba0-db90-08df46c81911
-X-MS-Exchange-CrossTenant-Id: 0409f77a-e53d-4d23-943e-ccade7cb4811
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0409f77a-e53d-4d23-943e-ccade7cb4811;Ip=[222.71.101.198];Helo=[smtprelay.cixcomputing.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SG1PEPF000082E8.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6076
+References: <cover.1794315350.git.allen.lkml@gmail.com> <717bb0b82658f1dd800f6b1bc06b9cf283f77361.1794315350.git.allen.lkml@gmail.com>
+ <sashiko-outbox-207180@kernel.org> <avt4PU04jy8a4e_i@SMW015318>
+In-Reply-To: <avt4PU04jy8a4e_i@SMW015318>
+From: Allen <allen.lkml@gmail.com>
+Date: Thu, 19 Nov 2026 22:42:26 -0700
+X-Gm-Features: AclHuK9-2Bsk_aSPveBTWccQ93xL5tYOvp8iXytO_p3NzhyIMiI8TSBO85p9bjE
+Message-ID: <CAOMdWS++nM+r8G+YUj-hk48KKvYH23yv2f-4X9C5F6n+KZqJ+w@mail.gmail.com>
+Subject: Re: [PATCH v4 02/33] dmaengine: back channel BH helpers with WQ_BH
+To: Frank Li <Frank.li@oss.nxp.com>
+Cc: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, 
+	vkoul@kernel.org, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Register an auxiliary IRQ device for CRU nodes declaring an interrupt
-controller, following the existing reset device pattern. Share a raw-lock
-regmap with the IRQ driver so its hard IRQ callbacks can access the CRU.
+> On Tue, Nov 10, 2026 at 02:15:38PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 2 potential
+> > issues to consider:
+> > - [High] dmaengine: dmaengine_kill_bh() returns with bh_work still
+> >   queued on re-schedule
+> > - [Medium] dmaengine: flush_work() in dmaengine_kill_bh() triggers flus=
+h
+> >   dependency warn
+> > --
+> >
+> > commit e183b161b65ac0da135cdea21e6916bb3483d703
+> > Author: Allen Pais <allen.lkml@gmail.com>
+> >
+> > dmaengine: back channel BH helpers with WQ_BH
+> >
+> > This commit replaces the per-channel BH tasklet implementation with a
+> > dedicated WQ_BH | WQ_PERCPU workqueue while keeping the dmaengine_*_bh(=
+) API
+> > unchanged.
+> >
+> > > diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+> > > index f3c1283b161b6..97d8f9667ae5f 100644
+> > > --- a/drivers/dma/dmaengine.c
+> > > +++ b/drivers/dma/dmaengine.c
+> > [ ... ]
+> > > @@ -1449,9 +1451,34 @@ static void dmaengine_destroy_unmap_pool(void)
+> > [ ... ]
+> > > +static void dmaengine_flush_bh_work(struct work_struct *work)
+> > > +{
+> > > +   if (!work)
+> > > +           return;
+> > > +
+> > > +   flush_work(work);
+> > > +}
+> > > +
+> > > +static void dma_chan_bh_entry(struct work_struct *work)
+> > > +{
+> > > +   struct dma_chan *chan =3D container_of(work, struct dma_chan, bh_=
+work);
+> > >     dmaengine_bh_work_fn fn =3D READ_ONCE(chan->bh_work_fn);
+> > >
+> > >     if (fn)
+> > > @@ -1467,7 +1494,7 @@ void dmaengine_init_bh(struct dma_chan *chan, d=
+maengine_bh_work_fn fn)
+> > [ ... ]
+> > > @@ -1487,7 +1513,7 @@ void dmaengine_kill_bh(struct dma_chan *chan)
+> > >     if (!chan->bh_work_initialized)
+> > >             return;
+> > >
+> > > -   tasklet_kill(&chan->bh_tasklet);
+> > > +   dmaengine_flush_bh_work(&chan->bh_work);
+> > >  }
+> > >  EXPORT_SYMBOL_GPL(dmaengine_kill_bh);
+> >
+> > [Severity: High]
+> > Can dmaengine_kill_bh() return with chan->bh_work still queued on the
+> > workqueue?
+> >
+> > Unlike tasklet_kill(), which holds TASKLET_STATE_SCHED while waiting fo=
+r a
+> > running tasklet to finish so concurrent tasklet_schedule() calls cannot
+> > re-queue it, process_one_work() clears WORK_STRUCT_PENDING_BIT before
+> > invoking dma_chan_bh_entry().  When flush_work() runs while chan->bh_wo=
+rk is
+> > executing, insert_wq_barrier() places the flush barrier on worker->sche=
+duled,
+> > ahead of pool->worklist:
+> >
+>
+> Can you check this one?
 
-Restore the parent before child IRQ delivery resumes using noirq
-system-sleep ordering. Use the same PM callback macros as the IRQ driver.
-Auxiliary child teardown must run before parent regmap/runtime-PM cleanup.
-The existing reset-sky1-audss.c is unchanged.
+  I have a fix which I am validating, and will post it in a day.
 
-Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
----
- drivers/clk/cix/clk-sky1-audss.c | 45 +++++++++++++++++++++++++++-----
- 1 file changed, 39 insertions(+), 6 deletions(-)
+Thanks,
+Allen
 
-diff --git a/drivers/clk/cix/clk-sky1-audss.c b/drivers/clk/cix/clk-sky1-audss.c
-index 1da86f6def4f..34edd19bb95f 100644
---- a/drivers/clk/cix/clk-sky1-audss.c
-+++ b/drivers/clk/cix/clk-sky1-audss.c
-@@ -523,6 +523,7 @@ static const struct regmap_config sky1_audss_regmap_config = {
- 	.reg_bits = 32,
- 	.val_bits = 32,
- 	.reg_stride = 4,
-+	.use_raw_spinlock = true,
- };
- 
- struct sky1_audss_clks_priv {
-@@ -932,6 +933,31 @@ static int sky1_audss_clks_enable(struct sky1_audss_clks_priv *priv)
- 	return err;
- }
- 
-+#if IS_ENABLED(CONFIG_IRQ_SKY1_AUDSS)
-+
-+static int sky1_audss_irq_controller_register(struct device *dev)
-+{
-+	struct auxiliary_device *adev;
-+
-+	if (!of_property_present(dev->of_node, "interrupt-controller"))
-+		return 0;
-+
-+	adev = devm_auxiliary_device_create(dev, "irq", NULL);
-+	if (!adev)
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
-+#else
-+
-+static int sky1_audss_irq_controller_register(struct device *dev)
-+{
-+	return 0;
-+}
-+
-+#endif /* CONFIG_IRQ_SKY1_AUDSS */
-+
- static void sky1_audss_clks_disable(struct sky1_audss_clks_priv *priv)
- {
- 	const struct sky1_audss_clks_devtype_data *devtype_data = priv->devtype_data;
-@@ -1114,6 +1140,13 @@ static int sky1_audss_clk_probe(struct platform_device *pdev)
- 		goto fail_pm;
- 	}
- 
-+	/* Remove auxiliary children before the parent runtime-PM cleanup. */
-+	ret = sky1_audss_irq_controller_register(dev);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to set up AUDSS DMA IRQs\n");
-+		goto fail_pm;
-+	}
-+
- 	pm_runtime_put_sync(dev);
- 
- 	return 0;
-@@ -1123,7 +1156,7 @@ static int sky1_audss_clk_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int __maybe_unused sky1_audss_clk_runtime_suspend(struct device *dev)
-+static int sky1_audss_clk_runtime_suspend(struct device *dev)
- {
- 	struct sky1_audss_clks_priv *priv = dev_get_drvdata(dev);
- 	const struct sky1_audss_clks_devtype_data *devtype_data = priv->devtype_data;
-@@ -1143,7 +1176,7 @@ static int __maybe_unused sky1_audss_clk_runtime_suspend(struct device *dev)
- 	return 0;
- }
- 
--static int __maybe_unused sky1_audss_clk_runtime_resume(struct device *dev)
-+static int sky1_audss_clk_runtime_resume(struct device *dev)
- {
- 	struct sky1_audss_clks_priv *priv = dev_get_drvdata(dev);
- 	const struct sky1_audss_clks_devtype_data *devtype_data = priv->devtype_data;
-@@ -1172,10 +1205,10 @@ static int __maybe_unused sky1_audss_clk_runtime_resume(struct device *dev)
- }
- 
- static const struct dev_pm_ops sky1_audss_clk_pm_ops = {
--	SET_RUNTIME_PM_OPS(sky1_audss_clk_runtime_suspend,
--			   sky1_audss_clk_runtime_resume, NULL)
--	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
--				pm_runtime_force_resume)
-+	RUNTIME_PM_OPS(sky1_audss_clk_runtime_suspend,
-+		       sky1_audss_clk_runtime_resume, NULL)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				  pm_runtime_force_resume)
- };
- 
- static const struct sky1_audss_clks_devtype_data sky1_devtype_data = {
--- 
-2.54.0
+>
+> Frank
+>
+> > CPU0                                  CPU1 (bh_worker)
+> >                                       process_one_work(&chan->bh_work)
+> >                                         set_work_pool_and_clear_pending=
+()
+> >                                         dma_chan_bh_entry()
+> > dmaengine_kill_bh(chan)
+> >   flush_work(&chan->bh_work)
+> >     insert_wq_barrier()
+> >                                           ...
+> >                                             dmaengine_schedule_bh(chan)
+> >                                               queue_work(..., &chan->bh=
+_work)
+> >                                         /* dma_chan_bh_entry() returns =
+*/
+> >                                       process_scheduled_works()
+> >                                         /* runs barrier from
+> >                                          * worker->scheduled */
+> >   /* flush_work() returns */
+> > kfree(chan)
+> >                                       /* processes pool->worklist */
+> >                                       dma_chan_bh_entry()
+> >                                         chan->bh_work_fn  <-- use-after=
+-free
+> >
+> > This is a regression when chan->bh_work is re-queued while
+> > dma_chan_bh_entry() is running, for example when a BH callback reschedu=
+les
+> > itself (such as dma_tasklet() in ste_dma40 or mv_chan_slot_cleanup() in
+> > mv_xor) or when a driver calls dmaengine_kill_bh() before tearing down =
+its
+> > IRQ or timer (such as mtk_cqdma_remove() or tegra_adma_free_chan_resour=
+ces()).
+> > Using cancel_work_sync(&chan->bh_work) or disable_work_sync(&chan->bh_w=
+ork)
+> > depending on whether the channel may be used again would wait for any
+> > in-flight execution while preventing or draining concurrent re-schedule=
+s.
+> >
+> > > @@ -1687,15 +1713,28 @@ EXPORT_SYMBOL_GPL(dma_run_dependencies);
+> > >
+> > >  static int __init dma_bus_init(void)
+> > >  {
+> > > -   int err =3D dmaengine_init_unmap_pool();
+> > > +   int err;
+> > >
+> > > +   dmaengine_bh_wq =3D alloc_workqueue("dmaengine_bh",
+> > > +                                     WQ_BH | WQ_PERCPU, 0);
+> >
+> > [Severity: Medium]
+> > Does calling dmaengine_kill_bh() from a WQ_MEM_RECLAIM workqueue or a
+> > PF_MEMALLOC task trigger a WARN_ONCE() in check_flush_dependency()?
+> >
+> > dmaengine_bh_wq does not have WQ_MEM_RECLAIM set (and WQ_BH workqueues =
+cannot
+> > set WQ_MEM_RECLAIM).  Because dmaengine_kill_bh() calls flush_work(), w=
+hich
+> > passes from_cancel =3D false to __flush_work() -> check_flush_dependenc=
+y(),
+> > flushing a pending or running chan->bh_work from a WQ_MEM_RECLAIM conte=
+xt
+> > hits the dependency warning:
+> >
+> > kernel/workqueue.c:check_flush_dependency() {
+> >       if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
+> >               return;
+> >
+> >       WARN_ONCE(current->flags & PF_MEMALLOC, ...);
+> >       WARN_ONCE((worker && ((worker->current_pwq->wq->flags &
+> >                              (WQ_MEM_RECLAIM | __WQ_LEGACY)) =3D=3D WQ_=
+MEM_RECLAIM)), ...);
+> > }
+> >
+> > For example, sdhci allocates host->complete_wq with WQ_MEM_RECLAIM and =
+runs
+> > sdhci_complete_work() -> sdhci_request_done() -> dmaengine_terminate_sy=
+nc()
+> > -> dmaengine_synchronize() -> vchan_synchronize() -> dmaengine_kill_bh(=
+).
+> > Using cancel_work_sync() or disable_work_sync() in dmaengine_kill_bh() =
+sets
+> > from_cancel =3D true and avoids this warning.
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.179431535=
+0.git.allen.lkml@gmail.com?part=3D2
 
+
+
+--
+       - Allen
