@@ -1,56 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.139
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795170077;
-	b=sUYAQgV3pzcyOQt+JGZi8hs7dPSaDUpjUAfXfDix9STxWvFvEGph6X0IgW9Oxw0FkRQG
-	 FpFJB+Q0XQ9dEfTKs+ZLuB13mX1o8ALm8qDx1fKCs8uHYUbnIJQomLvC5PCE5Ahjm4F9H
-	 Vj2uOjOYpe7TeiX3KTy58pbSCozDVRtMo/yfWCnGh32A12V0zD9xWgTXz7c/q6cOMSiuJ
-	 1cU9r5Zk/z2+TAMgzqNQh2JsUeipIKw4uZga0KPxXHTzR/VO00uZB4FGM3L17yUmdHdqM
-	 bLyKVUeNFCTcqoJRl1P+pjp17SRka4LAF13yf2h7zQhqvsJCk9l0IzwIugsJZs7XPzQ==
+	t=1795171083;
+	b=Dv1u8F0768qzO4hPfk8LJgXCDp38hC9PcepXZfGZFnybH00XwTZnE/FaZMSJuSY7ZRv0
+	 097CZcxAy9LprznVtiD1NAlBsl0SOY0WRQYpB0Wv/Fi+anmlqv1Eh4bhhXNaUNEevbOzi
+	 HakQrem7GHKRXh7JtAMn+SAzFkYZenQrbgxFvRsHZCXOJ/LUC5s0dybYQCPzTB3u/57YW
+	 zmffrXGTc9/cOjV0yXTWYalPueX5RHtnla36usYH5dv/i+Kj5Omkz8/m66N0CvhKsdPNn
+	 nTik5Zp1/+6cnK2yZdy8HC/Q5WIu4lt28Cew/XXQrh4nld4HRRJWKz/521bUOuaEWjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795170077;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=JLSfz6AN0DcIuVFwXX0GESStQlTO4cLd3pTias0gyuo=;
-	b=erY6Imt7WOW4/jrIIfVDSBZc9US3I5RKq9+6SAwz8urg3VwyoqepFT9+UrxlPOUt5v5r
-	 uscT85nFMpHSJOjl92pKKOed1wMm5u6+DwOnU57B242RGq4M3EbFScaHfW9Mfr/q8Gnzm
-	 v2FKiGr1BaFJirFYIgI16I+dHuKzEINwudJ0x4Zvs0YdGid6SHhruCzWb522OyQm0wkMV
-	 7YWEpVSv7k+R+4N143nOKs0VrFhmU0E1jiDqjhMgSctR98ECstipu4AtirdTNnp+nuqMU
-	 sacTJ1Q/w9SumAoSnpn6+sBmOwGgSzm/EfLoqVNg3C0e+UN8j/wRU47HXd7IjE4vwaA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795171083;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=tukFCQ+V59hFAVr2BrPF0eFqsF6upzRbKksfR9edfnU=;
+	b=cG591q7gBZL13YiujfxvucA6OGNdxVQIZOtB2k8ZjNLJshRhj916aQwBLhbyvfvKkHBR
+	 6Yw96YqNRICkSufcZsBzPJ98qzinr7mhrddPvMpJJZ1s3BykMRfHRNq+MUpsA7mOqytWQ
+	 rvKT2p5yPLTdX0RwsjiaaHyCHV9FsN89vlr/bRDvaP480WbG3H/7+Nj8y6MLlH/T8kjEc
+	 c8T5I/dOqObBWYQvSK0fpPh7O8jnvs9C2XT0/DX7wadmdHObWkjZsbTdyJxhfzaq/30Es
+	 0LEeyF9hS1k2pDR1DtU+B840EIyvdjwjJd3mBfhCzpakBmrzV0n6shm9BN2v8fD5Wqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bNoYjaSi;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=T+Igg2Ib;
+	arc=none smtp.remote-ip=74.125.229.139
+Received: from mail-dl2-f11.google.com (mail-dl2-f11.google.com [74.125.229.139])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9094A606A32C
-	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 10:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75737606A325
+	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 10:38:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75737606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bNoYjaSi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CC01F000D2;
-	Fri, 20 Nov 2026 10:21:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795170077;
-	bh=JLSfz6AN0DcIuVFwXX0GESStQlTO4cLd3pTias0gyuo=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bNoYjaSiw6MqcYOHDmNvWEitnMoLDYaB5MmUN3kNMQYrXzjTT6zI+QM3W6eP+JyrW
-	 KcG1WXDvPXmgowsOvrp6abVgtrCRfr2bOfgHIGvorSdaJhbFkUIwLe+EGu45K/U8sP
-	 W9XPANprytEnqqj7GpVoeWD2k78FgXRjF3WwR0fslDXiMCAh/pxeSWqo4ypIcHG1tI
-	 /A3dHUO/V3NlY0A5VxFOtkayQei/dbPolCE2AFGREyRXuSCyyrekMjSE4WAPegty0p
-	 44Wv8UckjBd7DsJDZmi8lbmjOuAJt9csUOgw8Y9t5VukcuiGSNTm/BFEL8TkviCBCX
-	 wzYKe64740Tjg==
-Message-ID: <sashiko-outbox-224921@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7] dmaengine: dw-axi-dmac: report paused state and
- residue in tx_status
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Rui Wang" <wr574332525@163.com>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261120101012.1789-1-wr574332525@163.com>
-References: <20261120101012.1789-1-wr574332525@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 10:21:16 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=T+Igg2Ib
+Received: by mail-dl2-f11.google.com with SMTP id a92af1059eb24-1b345449fcbso35492c88.1
+        for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 02:38:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795171082; x=1795775882; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=tukFCQ+V59hFAVr2BrPF0eFqsF6upzRbKksfR9edfnU=;
+        b=T+Igg2IbHSXbk3lUJ3V7ipg4dr2b5O7bN74Mb7eoJ2RwD+IFN4q++noFuV/aBDbbk+
+         wrR91TFXQuk9t/ZR5OcttYIIZP2iNUlFqwzRJS8cyEmGQd+Toz5FJgNllcei/BI3T1r6
+         JuVE4A2kVAFcdSeDPoimS1OVOCqe6MSlkDXB/Aelb0zStu4lK+ZckOSLM/3eXe6nNZRs
+         zTBTX9qfRMZ2VYPwgasXqBdT+f5ydRoQQ1l3vAxUAzg9e2pwi+rZW+tqIBujrgi1a/v+
+         Dpimv1Ic0DFUbO0ij24mK5miKyTtw3pGWj85fUtbOxTWRIFiWFxPu3L+gAYHV2zZ78Y3
+         gtmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795171082; x=1795775882;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tukFCQ+V59hFAVr2BrPF0eFqsF6upzRbKksfR9edfnU=;
+        b=wvibNucknDp+qO65TYZgc6Z5INZWoBYyrbXPkV9ejfDLlxBaO0E/jhsHexyEEhqWCf
+         T0jHQs3ZTVj45rt9DGa4xbk9fxSzfqglTFwgOa0MTmruMDO2j1ALgrSFmZlqp80DAkh+
+         huk/pHcXUHOJfNcwGP7HOLxVenJfAI+am3Lut9niIhmCJ/wXVTFeo4TcyfdKh7OSqOK9
+         AggYe1lawu+Vv4GCqH8ZK2iI//He6TIdaB9NmsfNCGTR4C6BVKbYQ2FIRp+qlfWiVN/9
+         BFfYafZ+Oxfeyya4HGtHF2kf8O20cP4muNtFGODCP7nh7GYAkmipi4fbL7zoUG5Gl2BF
+         MdVA==
+X-Forwarded-Encrypted: i=1; AL+hErGDS0LhbnVI7tI4byuGgLZNeRUHaQA/wHD8TzQaBxM0liv+z7DHBTGEZNMTUyZmin+8q+IN8MBK89U=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/uUu+1yQf+I1M/0h3onJUEek0BM9ASV9WRJWLp/k9JXuQTemkg
+	TJJ9+xKXF0S3tJ1cXZlrk/j5vQ9JFBgXEVy2Ed4msb1hUqTwlu2sGp02
+X-Gm-Gg: AYBFou3hJ+XlfAeAmC2x7+GVUoEI2JMgM4KxYWHow9Vv6ZOvVtUeV3A61jlLiUNlFG5
+	AnJ8AFD+JU21jSEGITAB7CsooPdrBezKk1OelqZkbsCYRTLINpCdd3Ft4JbfhSP/fhcIAMPDpz8
+	14fV0NDB+JXh7vrq0B7smZO2160+qiMoSeU+N7kd5ZmX1lgfR+btcDEWuqMFpjNSK6zCnoPeMqm
+	trwJtoqxKHKfxiE/zSplDc67Y8LMp4bGXgzffDMegHgY5jkpPIeD4fk1FK3bqlxtcS18u4e/UbJ
+	Ju6Wy0gzDchgwTSu6hvvbmQwij6irKvuPDbnK30pJF4J78bESwgN7q3WA/JtIEyUuVbzBfR49CV
+	VXWKtRykE9lkwvHswuFY1ICELsuwCcenrhc2Hu0trZKnSYBjlRSgYn0GpLBCClmhNuo+BBfNN4X
+	/o1oa2nxWj8OGp+Bg+Rc163kI2+sXh1rUE47gNPvMDmZbndnLlh5Z6ngPdGv2ZsCmNtNwlBNpyS
+	4ImqtyRhMWpZFUepQ1lgP/Qn36RhLMZboAl4JqWUzMc5Bn1DHPTnBuluaq89o/DqdyPUMpZ/qP9
+	JguCLX9GAikLRVbdV12/WEcsS5+pHr2lqj6Xt5DnyRdsRVGkBEIqVxrtJOYRw39V7jMhBrMtjdJ
+	MbYvVWEOpLDeM/5FzXa2s4vE/Y2nrOMlk9xv00A==
+X-Received: by 2002:a05:701a:cccb:20b0:1b2:3448:840f with SMTP id a92af1059eb24-1b55686ffd7mr2284653c88.7.1795171082505;
+        Fri, 20 Nov 2026 02:38:02 -0800 (PST)
+Received: from localhost.localdomain ([98.148.34.5])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b556831d45sm8924731c88.11.2026.11.20.02.38.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 02:38:02 -0800 (PST)
+From: Hungyu Lin <dennylin0707@gmail.com>
+To: okaya@kernel.org,
+	vkoul@kernel.org
+Cc: Frank.Li@kernel.org,
+	andy.shevchenko@gmail.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dennylin0707@gmail.com,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH v2] dmaengine: qcom: hidma: avoid world-writable channel sysfs files
+Date: Fri, 20 Nov 2026 10:37:53 +0000
+Message-ID: <20261120103753.56194-1-dennylin0707@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -59,125 +101,51 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential
-issues to consider:
-- [Medium] dmaengine: dw-axi-dmac: wrong block match in
-  axi_chan_get_xferred()
-- [Low] dmaengine: dw-axi-dmac: missing Fixes trailer for commit
-  8e55444da65c
---
+hidma_mgmt_init_sys() creates the per-channel priority and weight
+attributes with S_IRUGO | S_IWUGO, so any local user can write them.
+A write stores the new value and calls hidma_mgmt_setup(), which
+programs it into the channel's QoS register.
 
-commit c8d0c69cc29c111365ef5036a266d8a0e8d86f5b
-Author: Rui Wang <wr574332525@163.com>
+Attributes declared with __ATTR() are checked at build time by
+VERIFY_OCTAL_PERMISSIONS(), which rejects world-writable modes. These
+two are created at runtime with a mode passed to
+create_sysfs_entry_channel(), so the check does not reach them.
 
-> dmaengine: dw-axi-dmac: report paused state and residue in tx_status
->
-> The driver implements device_pause/device_resume, but device_tx_status
-> keeps reporting DMA_IN_PROGRESS for a paused channel, so clients cannot
-> tell a paused channel apart from a running one. Report DMA_PAUSED when
-> the channel is paused and the cookie is still in flight, including for
-> callers that pass a NULL dma_tx_state, and clear the stale is_paused
-> flag in dma_chan_terminate_all(), which disables the channel and thus
-> implicitly cancels the paused state.
->
-> Also, the residue of an in-flight transfer is currently derived from
-> the number of completed LLI blocks, so it only advances in block-size
-> steps and stays stale for the duration of a large block. Read the
-> current hardware pointer (CH_SAR for MEM_TO_DEV and MEM_TO_MEM, CH_DAR
-> for DEV_TO_MEM) and walk the descriptor's LLIs to compute how many
-> bytes have actually been transferred. The 64-bit pointer is sampled
-> with a tearing-safe double read, as the transfer may be running
-> concurrently. The pointer is only consulted for the descriptor most
-> recently programmed into the hardware, tracked in the previously
-> unused chan->desc field; any other descriptor has not been started yet
-> and keeps reporting its full length. When the transfer has just
-> completed but the descriptor has not been reaped yet, the pointer sits
-> at the end of the last block and the residue naturally reads as 0. The
-> pointer registers are pre-loaded with the first block's addresses when
-> the channel is programmed, so a stale pointer left by a previous
-> transfer (e.g. when its buffer is reused) can never be observed before
-> the first LLI fetch completes. Cyclic descriptors keep the
-> block-granular accounting.
->
-> Tested on an FPGA platform.
->
-> Signed-off-by: Rui Wang <wr574332525@163.com>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Make them writable by the owner only, the 0644 that __ATTR_RW() uses.
 
-[Severity: Low]
-This restores the DMA_PAUSED check and fixes the burst-granularity residue
-reporting in dma_chan_tx_status().  Should this include:
+Fixes: 7f8f209fd6e0 ("dmaengine: add Qualcomm Technologies HIDMA management driver")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+---
+v2: Collect Reviewed-by tag; no code change.
+v1: https://lore.kernel.org/all/20261107221500.96825-1-dennylin0707@gmail.com/
 
-  Fixes: 8e55444da65c ("dmaengine: dw-axi-dmac: Support burst residue granu=
-larity")
+ drivers/dma/qcom/hidma_mgmt_sys.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma=
-/dw-axi-dmac/dw-axi-dmac-platform.c
-> index 7520c78f55ccf..5e90d7d6c3282 100644
-> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-> @@ -355,33 +355,110 @@ static void vchan_desc_put(struct virt_dma_desc *v=
-desc)
->  	axi_desc_put(vd_to_axi_desc(vdesc));
->  }
-> =20
-> +/*
-> + * Read a 64-bit channel address register while the transfer may be
-> + * running. The two 32-bit halves cannot be read atomically on all
-> + * platforms, so sample the high half before and after the low half
-> + * and retry if it moved (the low half wrapped in between).
-> + */
-> +static u64 axi_chan_readq(struct axi_dma_chan *chan, u32 reg)
-> +{
-> +	u32 hi, lo, hi2;
-> +
-> +	do {
-> +		hi =3D readl(chan->chan_regs + reg + 4);
-> +		lo =3D readl(chan->chan_regs + reg);
-> +		hi2 =3D readl(chan->chan_regs + reg + 4);
-> +	} while (unlikely(hi !=3D hi2));
-> +
-> +	return (u64)hi << 32 | lo;
-> +}
-> +
-> +/*
-> + * Return the number of bytes already transferred by the descriptor
-> + * currently on the hardware (running, paused or just completed), based
-> + * on the current read or write position: CH_SAR for MEM_TO_DEV and
-> + * MEM_TO_MEM, CH_DAR for DEV_TO_MEM. Must be called with vc.lock held.
-> + */
-> +static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
-> +				struct axi_dma_desc *desc)
-> +{
-> +	struct axi_dma_hw_desc *hw_desc;
-> +	bool dst =3D chan->direction =3D=3D DMA_DEV_TO_MEM;
-> +	u64 pos, start;
-> +	u32 xferred =3D 0;
-> +	int i;
-> +
-> +	pos =3D axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
-> +
-> +	for (i =3D 0; i < desc->nr_hw_descs; i++) {
-> +		hw_desc =3D &desc->hw_desc[i];
-> +		start =3D le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
-> +
-> +		/* Current position is inside this block: partial progress */
-> +		if (pos >=3D start && pos <=3D start + hw_desc->len)
-> +			return xferred + (u32)(pos - start);
-
-[Severity: Medium]
-Can axi_chan_get_xferred() match the wrong LLI block when a scatter-gather
-transfer reuses the same physical buffer across multiple SG entries (such
-as SPI dummy transfers using a shared zero or scratch page) or when a later
-SG block sits immediately below an earlier one in physical memory so its
-end address equals the earlier block's start?
-
-Because the loop checks only the address range without consulting CH_LLP to
-identify the active LLI, pos matches the earlier entry in desc->hw_desc[]
-and reports a smaller transferred byte count, causing the reported DMA
-residue to jump backwards.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120101012.1789=
--1-wr574332525@163.com?part=3D1
+diff --git a/drivers/dma/qcom/hidma_mgmt_sys.c b/drivers/dma/qcom/hidma_mgmt_sys.c
+index 9672ef9ee8fc..53b991752e80 100644
+--- a/drivers/dma/qcom/hidma_mgmt_sys.c
++++ b/drivers/dma/qcom/hidma_mgmt_sys.c
+@@ -265,13 +265,13 @@ int hidma_mgmt_init_sys(struct hidma_mgmt_dev *mdev)
+ 	/* populate parameters that are per channel */
+ 	for (i = 0; i < mdev->dma_channels; i++) {
+ 		rc = create_sysfs_entry_channel(mdev, "priority",
+-						(S_IRUGO | S_IWUGO), i,
++						0644, i,
+ 						mdev->chroots[i]);
+ 		if (rc)
+ 			return rc;
+ 
+ 		rc = create_sysfs_entry_channel(mdev, "weight",
+-						(S_IRUGO | S_IWUGO), i,
++						0644, i,
+ 						mdev->chroots[i]);
+ 		if (rc)
+ 			return rc;
+-- 
+2.43.0
