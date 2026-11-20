@@ -1,72 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=111.22.67.137
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795160108;
-	b=JD4oaE+QSfPHzOsiJLmhUNhP6ekFGEHmkhlhZ+m0M2gs2dpjYEYB772avnXJc81Pb/u7
-	 YUh5ePeFi8A4FITDvm4xKqoqEiddPogbmVjuo9Mnss6mBMXNA0YjwKSmGMKor0/UG5XmK
-	 /1A6VPbHy8Nlo2dRk+0nA7UywvDgTYRCJdmgsQPt9OUz2Pb1AwwlglKiCxgcnqSFcLh7z
-	 xYp/zUNLvGuAUNF+lSrJDgqwTZsS6p13a9NGEE+W0fuk+zUI2wV7khUBmlzFBNFR0IRJt
-	 /CdrPMXjLzrYYGD/P+EUyddDDmjOYKdTZZW8t/9lBzuESdz+4ACROk3XId6YaNUbPCg==
+	t=1795164618;
+	b=c+SRKl7vFCK9SlPZKxX4hfCZ5/rQEVF5dUVBjyDWXlbvgBb7OqyRuc4+qxBUiSZK9GkI
+	 mpq+rZGg4h7XPkQFSBeYgOwUP4srAnZDAVIEuHswu8aaNDWlGyrGNEwlCdAWUR9e3vMmB
+	 2PCfpAomtiRjR8/O3pzu0IbQlrKdB5GACMzvsU8VHGuA+nSahWuUFXle/KS7CZvj3MaHN
+	 SNehTEJj5HhaNVAY9ZTFiGgGrNMNqjRdIWtpGYHbZyw6xfK9mxloDcWCEMa7c6SWLyCca
+	 +7SH2DFbo6GLxGu4ywlTjk3V2pnZ+vqPsmDowBvk83MFI7LPsuHEgBOnmcvkKAMljQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795160108;
-	h=DMARC-Filter:DKIM-Signature:X-RM-TagInfo:X-RM-SPAM-FLAG:Received:
-	 X-RM-TRANSID:X-RM-TagInfo:X-RM-SPAM-FLAG:Received:X-RM-TRANSID:From:
-	 To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kec65nPuayZJIdLamceFeb78dl+Li2+/4Nk8tZLJLo4=;
-	b=LWvxIdctitxcuiKR6H0x7WvxgUAWv5Av5M3y3iPz4hIB/kOO2kxE4dvyxTiWYp64RoOl
-	 9e9JN2Jd0Qf5wYoCMxY8xzOp0mZ7pdcUceMIrJjAgILI4ymgZNb6uIB7iXYeoPldX7WrA
-	 embd104C/ELjnnaw9595WPSI7cr7/Lk4+9I2MhO50iXe69CgJicoPkaB5qn5mO4g+9+U6
-	 Z2u+NabsU5fOnclHnOKJlMrXeGskT6tVsMJbZYSq1EsaU/fjCK/+7mq2DuCyjzCDLgbLN
-	 iNS0xv289pzHqyPJwvP+mQ7IMF+X3uyCAJtDs1nc9i9a2aAbqgfNxfkD/cnWVXTcYOA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795164618;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=1Ips5gNFNHVDk9WkT0yECCMeelogWLU5bZ3nsGCf99w=;
+	b=BpfYAxanXeTJNSm0err3qAH41mAq6gVHN5Hwp4dYgyw94s9Mqgr03y14BJM+rQYiflr/
+	 Opqe3TcdeervKKz7Tm0Sx88HXZrHM6muNHJVjrdUGwM/PfZACYXSAAyUQakTbRNRoUVRb
+	 Rf8NJbGhliefxSQgA/kZDA2WXCt6cWgB6PZbGoRKl9jRCbKp0vTTlunn6ro3zsKbc1Yen
+	 GMtPVUHwOGbjIfrCQzQbTXoll54uiTo0ETK8jdsfTwutt0ysRKg/7d4w8kjOfNgx56aZe
+	 QPhz+b5DNrv2telxm83rA63xR88Epg5lZ2Ce4mjJMmd5SYMFEsK9A5OovNaMACeEOBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cmss.chinamobile.com;
-	spf=pass smtp.mailfrom=cmss.chinamobile.com;
-	dkim=pass header.d=cmss.chinamobile.com header.i=@cmss.chinamobile.com header.a=rsa-sha256 header.s=default header.b=jpaswRm9;
-	arc=none smtp.remote-ip=111.22.67.137
-Received: from cmccmta4.chinamobile.com (cmccmta4.chinamobile.com [111.22.67.137])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D0F606A320;
-	Fri, 20 Nov 2026 07:35:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 34D0F606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cmss.chinamobile.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cmss.chinamobile.com
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pt4gNGEw;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5595606A320;
+	Fri, 20 Nov 2026 08:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=cmss.chinamobile.com header.i=@cmss.chinamobile.com header.a=rsa-sha256 header.s=default header.b=jpaswRm9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=cmss.chinamobile.com; s=default; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=jpaswRm9sWgP5G2bbC4Y0YN9Q90tOhB07cIN7rZW1NhieFDYMCQ9kIxha/yG4oUzJNnLvXu8mH12E
-	 h9RZth6WNI7ChB27YoKz3m5tsN/CUesLSFIIlZ610gQd0R7PfCwa2KqUya9jusWuo9piaop+mFSW1J
-	 tTfUA4Loagwara58=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG:00000000
-Received:from spf.mail.chinamobile.com (unknown[10.188.0.87])
-	by rmmx-syy-dmz-app08-12008 (RichMail) with SMTP id 2ee86afff8228b4-c601f;
-	Fri, 20 Nov 2026 15:35:02 +0800 (CST)
-X-RM-TRANSID:2ee86afff8228b4-c601f
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG:00000000
-Received:from DESKTOP-3K8GUTQ (unknown[223.108.79.97])
-	by rmsmtp-syy-appsvr06-12006 (RichMail) with SMTP id 2ee66afff824879-1b755;
-	Fri, 20 Nov 2026 15:35:01 +0800 (CST)
-X-RM-TRANSID:2ee66afff824879-1b755
-From: Xiangwu Lai <laixiangwu@cmss.chinamobile.com>
-To: vkoul@kernel.org
-Cc: Xiangwu Lai <laixiangwu@cmss.chinamobile.com>,
-	amelie.delaunay@foss.st.com,
-	Frank.Li@kernel.org,
-	mcoquelin.stm32@gmail.com,
-	alexandre.torgue@foss.st.com,
-	dmaengine@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: stm32-mdma: Fix runtime PM reference leak in pm_suspend()
-Date: Fri, 20 Nov 2026 15:34:59 +0800
-Message-ID: <20261120073500.333-1-laixiangwu@cmss.chinamobile.com>
-X-Mailer: git-send-email 2.50.1.windows.1
-In-Reply-To: <20261102104432.873-1-laixiangwu@cmss.chinamobile.com>
-References: <20261102104432.873-1-laixiangwu@cmss.chinamobile.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pt4gNGEw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39191F000CA;
+	Fri, 20 Nov 2026 08:50:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795164617;
+	bh=1Ips5gNFNHVDk9WkT0yECCMeelogWLU5bZ3nsGCf99w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Pt4gNGEwGWQFvJVbir+puWF+wd2jZCjy2k0bSCVybJyG1ho3rFwaml++4b43rbXWS
+	 qmDjiMQyNrffl3iqdvXzJLm56IMTKk3ZaEZGuRThvo6DZa5CmBWo5siLNQznCXMI0f
+	 2jwIdoct49Iz3uT4OLqXzFySZhDxuWTY4h3uSwBjs9xm3nk8pPrcDB2qqzFmgvIf17
+	 BqEkxiUDT0rp3MyCgSa8KvfFr7hTDwaSxGH4DIyC3qSjswLm2jkiblAeu8YtOfcTad
+	 MPrCbLDpjXrbCxxEb7Uxekpcli17YE4rTFJwyCxTVlrcp0zwB+hXiDLsUU86e2lec+
+	 xuXJUYLuBdz5w==
+Date: Fri, 20 Nov 2026 14:20:13 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Dave Jiang <dave.jiang@intel.com>
+Cc: linux-cxl@vger.kernel.org, nvdimm@lists.linux.dev,
+	linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Alison Schofield <alison.schofield@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Matthew Wilcox <willy@infradead.org>, Jan Kara <jack@suse.cz>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <jic23@kernel.org>, Frank Li <Frank.Li@kernel.org>
+Subject: Re: [PATCH] MAINTAINERS: Update CXL, NVDIMM, DAX, and others for djbw
+Message-ID: <awAJxeXEA2yykiV-@parshuram>
+References: <20261103201547.4079847-1-dave.jiang@intel.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -76,35 +62,25 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261103201547.4079847-1-dave.jiang@intel.com>
 
-Hi Vinod,
+Hi Dave,
 
-gentle ping on this patch:
+On 03-11-26, 13:15, Dave Jiang wrote:
+> Dan is no longer with us. Removing entries in MAINTAINERS to prevent
+> people from keep emailing his address.
 
-  [PATCH] dmaengine: stm32-mdma: Fix runtime PM reference leak in pm_suspend()
-  https://lore.kernel.org/r/20261102104432.873-1-laixiangwu@cmss.chinamobile.com
-
-stm32_mdma_pm_suspend() takes a runtime PM reference with
-pm_runtime_resume_and_get() and returns -EBUSY without dropping it when
-a channel is still enabled, so each aborted suspend leaks one
-reference.  The patch adds the missing pm_runtime_put_sync() on the
--EBUSY path.
-
-The patch carries both Reviewed-by tags since early November:
-
-  Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-  Reviewed-by: Frank Li <Frank.Li@kernel.org>
-
-The sibling fix for stm32-dma is pending on the same topic as well
-(Reviewed-by: Amelie Delaunay and Frank Li):
-
-  [PATCH] dmaengine: stm32-dma: Fix runtime PM reference leak in pm_suspend()
-  https://lore.kernel.org/r/20261102104108.794-1-laixiangwu@cmss.chinamobile.com
-
-Could these two be queued for the next merge window?
-
-Thanks,
-Xiangwu Lai
+Can you please add the entry in Credits. We will miss Dan, his
+presence cannot go away, he stays always here.
 
 
+> 
+> async_tx will be essentially orphaned. There has been discussion of
+> deprecation for the feature on the dmaengine mailing list.
+
+I think we can fold this one into dmaengine entry as well
+
+-- 
+~Vinod
