@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795168862;
-	b=f9y4Q1DsNQCwGcwvutKanMMe1SN+M7EfDJxSrpHDSuTV6T/XV2ow1GNKNfRJ/qeOD7Tj
-	 4/Mw4BQ+1ECoPedUXVuFwzXr1gS2d845v1xXtTrcUyVwwWSGJQ5tD3rH1o2gjC8CVucax
-	 /IOBLC2SPc7SS/iySI9382sQa/7AX2mVhCb6Xq2YbIDgJSL9ISKi0hyMizvJ+vLFkPbuX
-	 3DL5F7KlF5Sz1U0pz4t87ymTVvm0nvFOdUUTUas8fgsCtU3ywLS9QytJk4XeRXJLh2BoA
-	 WhSMr0FAvf7UGYWhsftxAsg3Buy9QoO9BG9czsuTft8GMxH07F7bUmdy+B0Hn2pYl2w==
+	t=1795168866;
+	b=GgHL126j1HgHeS18IQHuctfOjfBx2CuOTB3On8q8T6eGlAR6i+SNsZbK+bpK0RUe13GG
+	 OT7us1525ZE6/uk5n7ozZb78I99RDBi01GoTTTrTUupyOZBsBeWi2pGsaqHx5FHuz20kA
+	 xlHPqYWilocQmDmSnS5QjGyjYhftvkyMXjxTccOntaTwIYi2nqsTqNuiWHYLqwvS3bsyR
+	 nviGjm5HMR2XCSRBcMqdOXjs0PULpbaR+7vfAGnhzHipi4ZS1mZTWbTA85DmQfZK3xjbr
+	 K/VHq5U9+BI7XGxYBWgGnPFfjb4MEyPfZ/3c3vMCFS6Ugs3urvaTcdz62mV0WXGO3PQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795168862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795168866;
 	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
 	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 X-Mailer;
-	bh=f0QcVKMNxcAaXVPUdnauwtdaPEL3ZR0aSqMrJrb/WHs=;
-	b=rB98o4qc85ZnYnwa+8SYIhIr8XsdYGEAg/eonAReu+FfMwFkAI0U7rVmD57Qvza+sSy6
-	 8NUpmxqJCjAu7T1r4UgFneOMw0uQn7V4ZHSimbLgEcVSXeQdjZ6KFbQ4q5g/VFSkd/zba
-	 HiPk8tWVvO3AuJWXvB6cGDsz505Z6SO4PSXVJbiwi3KE+NfgRGvt1HCxbTxL2JGjsKBWH
-	 ZjiwtdR/KIBGlf0iKvCrBzugzUs9EbuTKUDx9DT1f2lvihgFZ2YEuI2D8qAZ+oj/GXviU
-	 gjCIRJBbFw9MzVyNCLXWWVYvONxgIRfFQ9+2A/2Sl5aANKdjsZAgX2QMFrPY44a0g1w==
+	bh=TEM/lwyfYjFDZGkgKWhS1fxpehScreTDFbg06MSARgw=;
+	b=VuSw6bgoUiaZEDFsMJlgD0MQBpmWlTYStlAfSa6iGM31zf6GjBWG+OupO8wicJHnUtAp
+	 vA/JcN7Y7SnTNF2dJr4cyTBDLpdAYdbdrEwFXrutapgwCCYs3N+6h21kITgaKXvMf3hS4
+	 1eYZYBL+86OICDRI2mRjHCeHM8R4Xi3lgdBS33hMiUZCDhrMaQioyhXF91DxNhZn/FenD
+	 vQWNOGu4JmRCyBNU+OtkOeWMBQLKpC0Wv1Ck+e5KfrDGohS6kmL0L7MICwwbwIqEFcfht
+	 Q/iby0K7CiNA81DC6FEMcRZUpJKLb0+Atpw5wJtlHGeDcY7E/7wxN+TAyauJ0hABxDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hmg8jGDt;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eTyJ47H8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A5B606A338
-	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 10:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0196A606A336;
+	Fri, 20 Nov 2026 10:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hmg8jGDt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6B1F000E6;
-	Fri, 20 Nov 2026 10:01:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eTyJ47H8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D711F000ED;
+	Fri, 20 Nov 2026 10:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795168861;
-	bh=f0QcVKMNxcAaXVPUdnauwtdaPEL3ZR0aSqMrJrb/WHs=;
+	s=k20260515; t=1795168865;
+	bh=TEM/lwyfYjFDZGkgKWhS1fxpehScreTDFbg06MSARgw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=hmg8jGDt8XAKD/VpB+EWhCs7JAB9pnfLfz8g/vNKrTxhAO7PP1F/XANO7ZiFI1Fxm
-	 PRGmkB9Ihq6mcDu+XAx+lzycVc9GxjkrcVfYWglD2z7QJWgRUSQnC7yFy1ckCDnPdL
-	 hO5SYvSfpAnTWajIZZQNjICiH0FNOYW65odDW53iq4pg7ZvlxSLJqtcIdN+c9b4GPK
-	 JnI/gBeHJbRmVMgoLQAlsfadhVwhHzQc4gEmMuSoYogPnySkLdQP9TmBhoBkTSlG2c
-	 obluLw1rcbYX5Rzfj5CcMzareT+cCORoQBsBxflK7CzZLJBF0lpup9jRfBVlbCbeUz
-	 ijgf53hS0GDPA==
+	b=eTyJ47H88RxfllOMLe3j4uRy4TDGOMXxDlsrUGB0NkCv7mdelT+iDZz5Vp/AUpsWP
+	 kcvxInSd5A+0y4JrnK4CQI+F0FAbylJTG0m7e+zscGOY8Ja5Vel8UByfPJZBR/whBl
+	 8soi7Ep2obpUTllFowND+1ZQzUKvhGRzdwwKu5l52oU2BQf7XySa7s4ZLeDgC7udPy
+	 6F23xDG69QwDOR3mXqvhUU7Vvbl17b4AXYTHjbQo1g0X9Ycw5zt1gW5+nWecXidYBI
+	 C59zpSStvY8G2eIKL32g3Y7iVSjITDnVrlu1vV6iN2atR26u1BN4jPUpLt7prrdiWL
+	 lUfQk6f5FwomQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: Frank Li <Frank.Li@kernel.org>, Linus Walleij <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org
-In-Reply-To: <20261102-dmaengine-fixes-v2-1-d0473b3a0ed5@kernel.org>
-References: <20261102-dmaengine-fixes-v2-1-d0473b3a0ed5@kernel.org>
-Subject: Re: [PATCH v2] dmaengine: Use unique debugfs names
-Message-Id: <179516886046.45276.6715278438764227251.b4-ty@kernel.org>
-Date: Fri, 20 Nov 2026 15:31:00 +0530
+To: Vinicius Costa Gomes <vinicius.gomes@intel.com>, 
+ Dave Jiang <dave.jiang@intel.com>, Frank Li <Frank.Li@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Peng Fan <peng.fan@nxp.com>, 
+ Kees Cook <kees@kernel.org>, "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+Cc: linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20260918141622.3022876-1-peng.fan@oss.nxp.com>
+References: <20260918141622.3022876-1-peng.fan@oss.nxp.com>
+Subject: Re: [PATCH] dmaengine: use assign_bit() where applicable
+Message-Id: <179516886198.45276.2354167655096140791.b4-ty@kernel.org>
+Date: Fri, 20 Nov 2026 15:31:01 +0530
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,21 +68,20 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Mon, 02 Nov 2026 10:23:39 +0100, Linus Walleij wrote:
-> DMA40 registers multiple dma_device instances for the same platform
-> device. The DMAengine debugfs code uses dev_name(dma_dev->dev) as the
-> directory name, so the second and third registrations try to create the
-> same directory and print duplicate-name warnings.
+On Fri, 18 Sep 2026 22:16:17 +0800, Peng Fan (OSS) wrote:
+> Convert open-coded if/else with set_bit/clear_bit and their
+> non-atomic __set_bit/__clear_bit variants to the assign_bit/__assign_bit
+> API.
 > 
-> Keep the existing device-name directory for the first registration, but
-> use a dev_id-suffixed fallback when that name already exists.
+> Done with Coccinelle semantic patch.
+> 
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: Use unique debugfs names
-      commit: e65c7ef7a0b920c42e67d52e70f2e5ebd63bc918
+[1/1] dmaengine: use assign_bit() where applicable
+      commit: 15e06365b056e9e73723295a1de9205159e28f1f
 
 Best regards,
 -- 
