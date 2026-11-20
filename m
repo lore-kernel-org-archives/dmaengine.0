@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795168860;
-	b=BPWvfslW2vWrzz/3myjh109Ut6NjnPSA4QkWEI6QnBRVK6OzEaXGPGjT+W52IUrPX2Vk
-	 6YukEnjr8AGtEcTXL+zPtJU1gFQUe1l41YmQBR5eM5ZJiQ/HXgEGUWAqwphvNZQykTrMp
-	 rMSAEZVDu3uT99TOj/zXQcJbGBEgayFpFrxzXtEnPVkMlLXb1ceYaRRMs/TtQ4ZM8SSEX
-	 Y11oEm68hYKykUFxtXdoXakgVKxE/rfRHy7Z9iPPsDqFZF5YZcePJVMIU5Yus61qhsjKy
-	 Gx0mgS6JovgB4KW6KhlUh5Ohe2ccyzC8IiDZoPE3O5Sh+r8IGYLE8oTYbO0Hpg7ExDg==
+	t=1795168862;
+	b=f9y4Q1DsNQCwGcwvutKanMMe1SN+M7EfDJxSrpHDSuTV6T/XV2ow1GNKNfRJ/qeOD7Tj
+	 4/Mw4BQ+1ECoPedUXVuFwzXr1gS2d845v1xXtTrcUyVwwWSGJQ5tD3rH1o2gjC8CVucax
+	 /IOBLC2SPc7SS/iySI9382sQa/7AX2mVhCb6Xq2YbIDgJSL9ISKi0hyMizvJ+vLFkPbuX
+	 3DL5F7KlF5Sz1U0pz4t87ymTVvm0nvFOdUUTUas8fgsCtU3ywLS9QytJk4XeRXJLh2BoA
+	 WhSMr0FAvf7UGYWhsftxAsg3Buy9QoO9BG9czsuTft8GMxH07F7bUmdy+B0Hn2pYl2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795168860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795168862;
 	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
 	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 X-Mailer;
-	bh=iANM5Y9LdTKMa/15tweq1qjTR+3444ej71CB7Fgksrk=;
-	b=Jn/ac3oxMrcJ0V0nUubl2r0cAJeHxGGy5LlGHPXZkRLZ8IP1jqymg6qS5z/46LfZJO8O
-	 3TTOVp55gMV16OMNgYS34VgQgTCloPQcG/61e1kM2yhaFup6tR9i3iQ7szxfEGwUH78Jk
-	 zmm7uBIWnhTRFGQT9uCykmtZikYGFnRvT8gNaZ56P+2YWpCLEqtOkcGv4N2oAi9wZaksd
-	 vBzuO8tQmL5qIXvia22NNZ+uFXehVZrvHR4wqBXso0lTi/ElXQOMyEBZYEREy2kg++0nD
-	 xKJrp2phEcq6UoIPfhIebxLD2H4e2+M2G/vXAyzccJWraewJd1OAnhD/ctJXEWOHH/Q==
+	bh=f0QcVKMNxcAaXVPUdnauwtdaPEL3ZR0aSqMrJrb/WHs=;
+	b=rB98o4qc85ZnYnwa+8SYIhIr8XsdYGEAg/eonAReu+FfMwFkAI0U7rVmD57Qvza+sSy6
+	 8NUpmxqJCjAu7T1r4UgFneOMw0uQn7V4ZHSimbLgEcVSXeQdjZ6KFbQ4q5g/VFSkd/zba
+	 HiPk8tWVvO3AuJWXvB6cGDsz505Z6SO4PSXVJbiwi3KE+NfgRGvt1HCxbTxL2JGjsKBWH
+	 ZjiwtdR/KIBGlf0iKvCrBzugzUs9EbuTKUDx9DT1f2lvihgFZ2YEuI2D8qAZ+oj/GXviU
+	 gjCIRJBbFw9MzVyNCLXWWVYvONxgIRfFQ9+2A/2Sl5aANKdjsZAgX2QMFrPY44a0g1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RkRn7Q4k;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hmg8jGDt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6F2606A32C;
-	Fri, 20 Nov 2026 10:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A5B606A338
+	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 10:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RkRn7Q4k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6028A1F000C4;
-	Fri, 20 Nov 2026 10:00:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hmg8jGDt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6B1F000E6;
+	Fri, 20 Nov 2026 10:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795168860;
-	bh=iANM5Y9LdTKMa/15tweq1qjTR+3444ej71CB7Fgksrk=;
+	s=k20260515; t=1795168861;
+	bh=f0QcVKMNxcAaXVPUdnauwtdaPEL3ZR0aSqMrJrb/WHs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=RkRn7Q4knrnVsk3rATSTSFWclJhKOQYpqpV+R0hTEnEAvBep0crk3AK80uPM2Q6qy
-	 Bbm4DDuuPFJqymje/G0D4npvtaBrdImx15SSnTgYU7Rl+S4W861j64cfdj4TfAUb+l
-	 HGUuG6te3tXWaQFYqlcJDryU+YCaaXETTeOkFAb0rt3F1eIPlPx04/OoKlAldwfVe9
-	 LNH5Yvrx+9SPzK4tSJV/p9mkjC6y1DLpRGRJ5L+rqKM64ANR59PQ99KNHG2Z9LfbBY
-	 lWzJrKpcCNajjKFw8MmNy16nfxdjShkqIUZ8t4z955V+dIdQCjLbrL3dfXWJDOUPcz
-	 YPFEDmaU1RyXA==
+	b=hmg8jGDt8XAKD/VpB+EWhCs7JAB9pnfLfz8g/vNKrTxhAO7PP1F/XANO7ZiFI1Fxm
+	 PRGmkB9Ihq6mcDu+XAx+lzycVc9GxjkrcVfYWglD2z7QJWgRUSQnC7yFy1ckCDnPdL
+	 hO5SYvSfpAnTWajIZZQNjICiH0FNOYW65odDW53iq4pg7ZvlxSLJqtcIdN+c9b4GPK
+	 JnI/gBeHJbRmVMgoLQAlsfadhVwhHzQc4gEmMuSoYogPnySkLdQP9TmBhoBkTSlG2c
+	 obluLw1rcbYX5Rzfj5CcMzareT+cCORoQBsBxflK7CzZLJBF0lpup9jRfBVlbCbeUz
+	 ijgf53hS0GDPA==
 From: Vinod Koul <vkoul@kernel.org>
-To: Keguang Zhang <keguang.zhang@gmail.com>, 
- Mahad Ibrahim <mahad.ibrahim.dev@gmail.com>
-Cc: Frank Li <Frank.Li@kernel.org>, Frank Li <Frank.li@oss.nxp.com>, 
- linux-mips@vger.kernel.org, dmaengine@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
-References: <20260917163025.7171-1-mahad.ibrahim.dev@gmail.com>
-Subject: Re: [PATCH v3] dmaengine: loongson1-apb-dma: avoid using iterator
- variable after list_for_each_entry()
-Message-Id: <179516885803.45276.9680446903666595138.b4-ty@kernel.org>
-Date: Fri, 20 Nov 2026 15:30:58 +0530
+To: Frank Li <Frank.Li@kernel.org>, Linus Walleij <linusw@kernel.org>
+Cc: dmaengine@vger.kernel.org
+In-Reply-To: <20261102-dmaengine-fixes-v2-1-d0473b3a0ed5@kernel.org>
+References: <20261102-dmaengine-fixes-v2-1-d0473b3a0ed5@kernel.org>
+Subject: Re: [PATCH v2] dmaengine: Use unique debugfs names
+Message-Id: <179516886046.45276.6715278438764227251.b4-ty@kernel.org>
+Date: Fri, 20 Nov 2026 15:31:00 +0530
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -66,24 +62,21 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.3
 
 
-On Thu, 17 Sep 2026 16:30:25 +0000, Mahad Ibrahim wrote:
-> ls1x_dma_tx_status() locates the descriptor actively being processed by
-> walking the LLI list and comparing the hardware reported next descriptor
-> pointer against each element's next-descriptor pointer.
+On Mon, 02 Nov 2026 10:23:39 +0100, Linus Walleij wrote:
+> DMA40 registers multiple dma_device instances for the same platform
+> device. The DMAengine debugfs code uses dev_name(dma_dev->dev) as the
+> directory name, so the second and third registrations try to create the
+> same directory and print duplicate-name warnings.
 > 
-> A list_for_each_entry macro is used in the comparison phase, which at
-> the end of the loop leaves the lli pointer at the currently executing LLI.
-> However this also subsequently runs for a non-match lli, in which it
-> points at the head. This causes a type confusion bug which treats the
-> head, which is a ls1x_dma_desc, as a ls1x_dma_lli object. Additionally it
-> goes forwards and prints garbage via the dev_dbg.
+> Keep the existing device-name directory for the first registration, but
+> use a dev_id-suffixed fallback when that name already exists.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] dmaengine: loongson1-apb-dma: avoid using iterator variable after list_for_each_entry()
-      commit: 5d4f5cdad22b181559c0bc8088f3ae9572ae4362
+[1/1] dmaengine: Use unique debugfs names
+      commit: e65c7ef7a0b920c42e67d52e70f2e5ebd63bc918
 
 Best regards,
 -- 
