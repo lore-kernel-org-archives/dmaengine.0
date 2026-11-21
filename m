@@ -1,40 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=37.205.14.76
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795213280;
-	b=ce3i9fd9jDVb95dQA8oZBLy8Xyxc+jAQ4+McZkQeIjv/JKNNThOYCkqfomb4TCSxJPbN
-	 /7Ej8RLhymOz7PVcBMBn4xftZjEPLbZva/lOpj+6I4ycnFru/RzLWL4gkJqITmVoLCRTt
-	 7UN7PaJubC1bBtT8vZ0eVBmQBzjGfAuhNFhZr52i1zGMmmnI/bC7E6a/nXyVlW+FGXS7o
-	 R+f6nIcNXitNqfXYAJ61tf3R/3Hjw+ZERBdJjV2Q+tvEED9H4aAUHZ7QjcOUjcYAQ6ggY
-	 B4/hsdR9yPYT14P1qickHXiDEO2aGXr+NoVx6igIZjYhTM/zkH6N7DlkHGgMGeAGnCg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795213280;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795220489;
+	b=R9A2jea3kD3buJrS5kOR3odIuw/KANtobZTUsYaW7rXLxXZb2Z0IuGFaHmrFHuRLAVqN
+	 hfliNYtPQhXkkXFTrGolmIR8ZMRyWg64zNinnGDPFQvNDxeg2ikJu/BFhkagES1Bn1i+F
+	 9kRJeRAXTxythcqa180hqVfwm7aX9gwq9j6f+Ul+WF1fv+G5KNCwLOy6Ki/lPAUlMTZ5B
+	 gWdzVSIcfnfH4AlRFuCsPPhKeGQSsGNT0amZHue1U67l1/Ni5jzLmqkmqp227TpjMC+0t
+	 6E3Tg4qVUbtRSHmxN9yRU3dE07D+jQp5iDpnnLAKUJJpEet2F1dtI4/o39uNgS1M2Fg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795220489;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=HtjsvQjuaW5XWQJwTHQ8JKbnBx5reofdO+ZDjzl6S0M=;
-	b=eM30B7AqTPNcTzQAg2TO69BP8fYCGpe402aPCVb7gC7No+6JftfBBvQcQ/54iNe4l3V+
-	 uRu1E1Bf8/TiGEuc3BcKnNlVRAEucvHR1VycbOIBBWRX0G3PedMdvnfoS5SWqrMuCbhJ6
-	 2A6wbo7+RiNl4NlwMW6RtRQpcDNimCbmSt2Ct96DVxvvxpVfDNlfSvtuJ66CLdR6QgYkv
-	 UnK1EViRUqXiQaMHANfwI371PX3dhufiGsPH/GIOblVi8rmCDDjBYPuKyQqBr/+oWFELT
-	 gV7UKtc07ukQxhLSWY0IzObtZzxad2MWZR3rq5c/31X353l2qN/EKfydlyTJOwpYWXQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gpxsee.org;
-	spf=pass smtp.mailfrom=gpxsee.org;
-	arc=none smtp.remote-ip=37.205.14.76
-Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	bh=LYqdc75BT1lTbF77dS8F5BOtPhAT/8YInZ5Fdxp9xiA=;
+	b=MyMYrfxgnTnM21gyA+wJ7FYgJ1c0/bhiOjUfgZOj/s70ctwL/xje+yC0iprIhlF0Yc26
+	 WQ05X8rsovtva5NSgx5qLOZYOm2Gx3aLB1LGRU3YmKhyTDt70vBwiO+9rWnxmtPIy90DI
+	 AozLO2EV3FhhFObgPo3n9X4YDitC7NHh7Bxv3bnhxqJqwXC4k713sGNYfU/by4+6qTnTD
+	 cu8zPRQ06eEMy80rWKgDD8kzWW2q4PTxMwlgL4lv8nc7YHHAGoGEqJpMq2l6oV0wRzVI6
+	 KcQnvzF8YZHWhYs9sMPvxfwdD2d2EOLVA8ABD0BR7/hcf1IL+hQ2xELO0KnH/rio0lQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TYO2HNiW;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F94D606A6A4
-	for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 22:21:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F94D606A6A4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
-Received: from [192.168.1.135] (unknown [85.193.41.0])
-	by mx.gpxsee.org (Postfix) with ESMTPSA id 5F1C9C1911;
-	Fri, 20 Nov 2026 23:21:12 +0100 (CET)
-Message-ID: <47182dbe-018a-4ca6-b20c-f6e2afa5f474@gpxsee.org>
-Date: Fri, 20 Nov 2026 23:21:12 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69095606A6A4
+	for <dmaengine@vger.kernel.org>; Sat, 21 Nov 2026 00:21:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69095606A6A4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TYO2HNiW
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6b7ddb99db4so1852930a12.0
+        for <dmaengine@vger.kernel.org>; Fri, 20 Nov 2026 16:21:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795220487; cv=none;
+        d=google.com; s=arc-20260327;
+        b=JSyx92oXvinUgvWQUk1mEMMNXmoq3gv2LNO5dU6l3p3R5lb5lYK3+Jx6Q7jFWoTFIj
+         HsCPigyGCdHkm4MR/H3T4s6GjYrSa+kjLZVRzdPNMGFG2H+Oi45Vdnh8jJEpf8vSGERY
+         I3wZqg7lPUs6v7o7/DQ418kcUeU6h1B/V4gWRrDJ65QoxELXp01T00czZmWu5r+OFia8
+         GZQ1reAIgI8BL/Mg6zCiq9pW8/OJDUics6MyR2WEwfxXblxrXalhSHCiUVJHZBMFDwHL
+         erMpyAfwtihwoll+Gwwpjdwi4IDznFKcztvm13BjkhyJ0mQ4fQk5QBmCiIh/snp3TnNc
+         FILw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LYqdc75BT1lTbF77dS8F5BOtPhAT/8YInZ5Fdxp9xiA=;
+        fh=sJwXN6PSTohsAa4UDHf0pgOsg7MYq1JruJC0VmeUVoo=;
+        b=stkqn0h22GbhRmHBrOuUE2FZnq5dN8wyUzYizS0CrGyEkReMtwOHHsenrsaKyAI2jW
+         izx/glKqiiBfyvrq+w3PoFGq4e43faVBk1d1MsXzlfetU4jinnHPVquu6wIhl4nHuDjf
+         R+rW33Ymc0CE+AD+jj6k1tJQ1sPHd00ldAX8eu20yomhoisW/nVL+Xjb11ur0mIaTz4b
+         G/wxCyY+mcOdbaPju6SDhvMUw+hxjTmvf42rkWG4eCaRgCCcKE99w/63tRv00Qf0DnWi
+         yNgPYmo1tz69oGi9kp3ruCkHKe/Kbwke7JUp8b+K7lx8WLYYEurcEmqLvgPOoi8aegIS
+         uCpw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795220487; x=1795825287; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LYqdc75BT1lTbF77dS8F5BOtPhAT/8YInZ5Fdxp9xiA=;
+        b=TYO2HNiWuepoW06nbobCJniMr/SVwOjbrEILFva6FDPxxhWfo2p0OmFN9HppetgWbi
+         Bj1zkKw7O9INM/eATtfbluu0xl7N9u09LRV/PSA6dCUwoiWn7PS/B4UTcZeup9RpZc5h
+         j6ACF1yON49//HU4v8fJgKTI7t7IhUITfoZR4VcvG6Oe+LJN5R0e4F1xouCks9eZk+3Y
+         60q+kRIgUQl/TRxACjaDSBGwJGpQYtrCIB3l+a23mbf/UuP0deRMQSj/errX4BXv/cM+
+         KhD6iJFtv7+780BgQ5a5p6GuSuJJG7gEDMdIikmmPxQieFKLQ/rQzu8TUzSkCIwjMqo6
+         1Q5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795220487; x=1795825287;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LYqdc75BT1lTbF77dS8F5BOtPhAT/8YInZ5Fdxp9xiA=;
+        b=Auqa9wt1/O11KRuzQVKRpIGRluIJb8IEFHan7MPiLKDJoVMBSpqyOYBNyzJJOFdzlO
+         05YUFeRVTJ8qphtHRm4BAGJXgu6HNUqgXTeOtPJIBq6JFFTO53UEJqMqOf3Hbjm0r8WG
+         w84ahQL286mZKDP6t5nrJ3hPQgDaYdR6thv3sQxT1SixoQgRe4Fo27YnyJFtiFDHVbFg
+         jjIj2SlFUYI2EmTRdT0oFiNnDubAo7fTTQly25gRpUZ3PIwJkvEcLRGU0D/DcCrplv2c
+         Td9GrV8JUGRwxcGZfxQWu/TK1/e6KURAt31tiuMJAU6m1s68WBuo3ghK7KHd+dsZqBWx
+         OQ9w==
+X-Gm-Message-State: APuU4Z89qs5u56yzx87x2bvsDsv4WlwOnZG9EdoXac9Wmthjap1gqrg3
+	NqHi2gowrwSjZ3d91TfBmUZ1eVPcmu2O5GMR7xeVoVUMsPy3YtAxDtRsy6qa5jccv6xb0M6HPGb
+	iVxWQOTHyQiVBMBCkl8kZA7LNJ+XzJz0=
+X-Gm-Gg: AZFdTZegg6C/pnKDbe3e2uTZmjDFvqAOtDiY7gjQ5L8eY6oeLcxDqyH+uj5LjRw/aHb
+	ENoyLc0pHZcGJlkNLR4uOLjoA5z2oH2QP9fDAXnznBreeIQyEfYyE0L5NqpbeFYjJzxhEdEdtkf
+	fO2uTQIp6r0Ei8YELAEF+R1H1mHWYrlgE3y04HBJlviOamf/GMJvL0NWPlvsFQ39koIMmovH4+B
+	tJ5NlOWecs7uAmNg4e7jhHZUAqelRMN2o4Uj194GRrOi1XV77w48aaXoVEKu2sVRlzIDVWbB49a
+	dxyYo3Cxr1BJtgI6OWKis/gmqd128HgsFIQzXVfCrhO6m1dY8T9WDcyuDMyjWcqVXeVbl3+Ximg
+	VP/RnqJH2dTHJYhVkS4MEf6QqlA5YfC5wMdzdH62GyUtkChUCxnjZEhnezkyDeo2BF0lvP58aUu
+	0L+bFcktQCZbyOtQ/KXBmRShBsE8glxqt0RXbYAleQO6/OtXheKi/14I8DnX8iXFGj0NP5Kwjdz
+	+ynCjvIUaFUq5FycsadZmRGd1HnoiGmmB1FXelJlY03GQiwyQ==
+X-Received: by 2002:a05:6402:280e:b0:6b5:875a:c2a0 with SMTP id
+ 4fb4d7f45d1cf-6ba37d4d344mr3340540a12.24.1795220486608; Fri, 20 Nov 2026
+ 16:21:26 -0800 (PST)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -44,265 +105,33 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] dmaengine: xilinx: xdma: Fix broken PM
- suspend/resume
-To: Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
- Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Michal Simek <michal.simek@amd.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- =?UTF-8?Q?Martin_T=C5=AFma?= <martin.tuma@digiteqautomotive.com>
-References: <20261120172356.5858-1-tumic@gpxsee.org>
- <20261120172356.5858-2-tumic@gpxsee.org>
- <754c498c-7252-3f2b-54e6-3ebfdf0181ff@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Martin_T=C5=AFma?= <tumic@gpxsee.org>
-In-Reply-To: <754c498c-7252-3f2b-54e6-3ebfdf0181ff@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20260917232930.128927-1-rosenp@gmail.com> <awAQMEu_OULFyBpl@parshuram>
+In-Reply-To: <awAQMEu_OULFyBpl@parshuram>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 20 Nov 2026 16:21:14 -0800
+X-Gm-Features: Aa3M54oEXJbT4boYUjqj_4oeLXlapmGV48mqldJNJIbz8dYcbx4pMjtMHhUbgoA
+Message-ID: <CAKxU2N_5+V7QsnDoAHTt_F5_MhXTTKn2t07zpGAuuy5U64SFPA@mail.gmail.com>
+Subject: Re: [PATCHv2] dmaengine: ste_dma40: allow COMPILE_TEST
+To: Vinod Koul <vkoul@kernel.org>
+Cc: dmaengine@vger.kernel.org, Frank Li <Frank.Li@kernel.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-
-On 11/20/26 22:40, Lizhi Hou wrote:
-> 
-> On 11/20/26 09:23, tumic@gpxsee.org wrote:
->> From: Martin Tůma <martin.tuma@digiteqautomotive.com>
->>
->> Add the missing PM suspend/resume callbacks that properly reconfigure
->> the XDMA HW on PCIe suspend/resume.
-> 
-> Just wondering if we could destroy xdma platform device in your PCIe 
-> suspend routine and re-create xdna device in PCIe resume?
-> 
-
-While this may also be theoretically possible, there are several 
-arguments against this:
-
-- Every driver using the device would have to do it instead of doing 
-nothing and rely on the already established infrastructure for PM in the 
-kernel. And it is not a simple "one function call" which would be needed
-(and duplicated in every driver), there is some additional 
-re-configuration needed, eg. the user IRQs.
-- The creation/destroying of platform devices does a lot more stuff than 
-just initializing some registers. It fiddles with the IRQ and memory 
-allocation/deallocation which you don't want or even can't do while the 
-system is in a PM suspend or PM resume state.
-
-M.
-
-> Lizhi
-> 
->>
->> Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
->> ---
->>   drivers/dma/xilinx/xdma.c | 147 ++++++++++++++++++++++++++++++++------
->>   1 file changed, 124 insertions(+), 23 deletions(-)
->>
->> diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
->> index 9d827c9a1267..d6772b38d8f7 100644
->> --- a/drivers/dma/xilinx/xdma.c
->> +++ b/drivers/dma/xilinx/xdma.c
->> @@ -123,6 +123,7 @@ struct xdma_desc {
->>    * @irq_start: Start IRQ assigned to device
->>    * @irq_num: Number of IRQ assigned to device
->>    * @status: Initialization status
->> + * @usr_irq_mask: User IRQ mask for PM suspend/resume
->>    */
->>   struct xdma_device {
->>       struct platform_device    *pdev;
->> @@ -135,6 +136,7 @@ struct xdma_device {
->>       u32            irq_start;
->>       u32            irq_num;
->>       u32            status;
->> +    u32            usr_irq_mask;
->>   };
->>   #define xdma_err(xdev, fmt, args...)                    \
->> @@ -398,6 +400,27 @@ static int xdma_xfer_stop(struct xdma_chan *xchan)
->>                   CHAN_CTRL_RUN_STOP);
->>   }
->> +/**
->> + * xdma_reconfig_channels - Reconfigure DMA channels
->> + * @xdev: DMA device pointer
->> + * @chans: channels configuration
->> + * @chan_num: number of channels
->> + */
->> +static int xdma_reconfig_channels(struct xdma_chan *chans,
->> +                  u32 chan_num)
->> +{
->> +    int i, ret;
->> +
->> +    for (i = 0; i < chan_num; i++) {
->> +        /* init channel hardware */
->> +        ret = xdma_channel_init(&(chans[i]));
->> +        if (ret)
->> +            return ret;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   /**
->>    * xdma_alloc_channels - Detect and allocate DMA channels
->>    * @xdev: DMA device pointer
->> @@ -1018,6 +1041,55 @@ static int xdma_set_vector_reg(struct 
->> xdma_device *xdev, u32 vec_tbl_start,
->>       return 0;
->>   }
->> +/**
->> + * xdma_irq_config - Configure IRQs
->> + * @xdev: DMA device pointer
->> + */
->> +static int xdma_irq_config(struct xdma_device *xdev)
->> +{
->> +    u32 user_irq_start;
->> +    int ret;
->> +
->> +    /* configure hardware IRQ registers */
->> +    ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->> +                  XDMA_CHAN_NUM(xdev));
->> +    if (ret) {
->> +        xdma_err(xdev, "failed to set channel vectors: %d", ret);
->> +        return ret;
->> +    }
->> +
->> +    /* configure user IRQ registers if needed */
->> +    user_irq_start = XDMA_CHAN_NUM(xdev);
->> +    if (xdev->irq_num > user_irq_start) {
->> +        ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->> +                      user_irq_start,
->> +                      xdev->irq_num - user_irq_start);
->> +        if (ret) {
->> +            xdma_err(xdev, "failed to set user vectors: %d", ret);
->> +            return ret;
->> +        }
->> +    }
->> +
->> +    /* enable channels interrupts */
->> +    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->> +    if (ret) {
->> +        xdma_err(xdev, "failed to enable channel IRQs: %d", ret);
->> +        return ret;
->> +    }
->> +
->> +    /* enable user interrupts if needed */
->> +    if (xdev->irq_num > user_irq_start) {
->> +        ret = regmap_write(xdev->rmap, XDMA_IRQ_USER_INT_EN_W1S,
->> +                   xdev->usr_irq_mask);
->> +        if (ret) {
->> +            xdma_err(xdev, "failed to enable user IRQs: %d", ret);
->> +            return ret;
->> +        }
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   /**
->>    * xdma_irq_init - initialize IRQs
->>    * @xdev: DMA device pointer
->> @@ -1025,7 +1097,6 @@ static int xdma_set_vector_reg(struct 
->> xdma_device *xdev, u32 vec_tbl_start,
->>   static int xdma_irq_init(struct xdma_device *xdev)
->>   {
->>       u32 irq = xdev->irq_start;
->> -    u32 user_irq_start;
->>       int i, j, ret;
->>       /* return failure if there are not enough IRQs */
->> @@ -1060,28 +1131,8 @@ static int xdma_irq_init(struct xdma_device *xdev)
->>           irq++;
->>       }
->> -    /* config hardware IRQ registers */
->> -    ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->> -                  XDMA_CHAN_NUM(xdev));
->> -    if (ret) {
->> -        xdma_err(xdev, "failed to set channel vectors: %d", ret);
->> -        goto failed_init_c2h;
->> -    }
->> -
->> -    /* config user IRQ registers if needed */
->> -    user_irq_start = XDMA_CHAN_NUM(xdev);
->> -    if (xdev->irq_num > user_irq_start) {
->> -        ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->> -                      user_irq_start,
->> -                      xdev->irq_num - user_irq_start);
->> -        if (ret) {
->> -            xdma_err(xdev, "failed to set user vectors: %d", ret);
->> -            goto failed_init_c2h;
->> -        }
->> -    }
->> -
->> -    /* enable interrupt */
->> -    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->> +    /* configure all HW IRQ registers */
->> +    ret = xdma_irq_config(xdev);
->>       if (ret)
->>           goto failed_init_c2h;
->> @@ -1297,15 +1348,65 @@ static int xdma_probe(struct platform_device 
->> *pdev)
->>       return ret;
->>   }
->> +/**
->> + * xdma_suspend - PM suspend callback
->> + * @dev: XDMA device pointer
->> + */
->> +static int xdma_suspend(struct device *dev)
->> +{
->> +    struct xdma_device *xdev = dev_get_drvdata(dev);
->> +    int ret;
->> +
->> +    ret = regmap_read(xdev->rmap, XDMA_IRQ_USER_INT_EN,
->> +              &xdev->usr_irq_mask);
->> +    if (ret) {
->> +        xdma_err(xdev, "User IRQ vector backup failed: %d", ret);
->> +        return ret;
->> +    }
->> +
->> +    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1C, ~0);
->> +    if (ret)
->> +        xdma_err(xdev, "DMA channels IRQ disable failed: %d", ret);
->> +
->> +    return ret;
->> +}
->> +
->> +/**
->> + * xdma_resume - PM resume callback
->> + * @dev: XDMA device pointer
->> + */
->> +static int xdma_resume(struct device *dev)
->> +{
->> +    struct xdma_device *xdev = dev_get_drvdata(dev);
->> +    int ret;
->> +
->> +    ret = xdma_reconfig_channels(xdev->h2c_chans, xdev->h2c_chan_num);
->> +    if (ret) {
->> +        xdma_err(xdev, "H2C channels reconfiguration failed: %d", ret);
->> +        return ret;
->> +    }
->> +
->> +    ret = xdma_reconfig_channels(xdev->c2h_chans, xdev->c2h_chan_num);
->> +    if (ret) {
->> +        xdma_err(xdev, "C2H channels reconfiguration failed: %d", ret);
->> +        return ret;
->> +    }
->> +
->> +    return xdma_irq_config(xdev);
->> +}
->> +
->>   static const struct platform_device_id xdma_id_table[] = {
->>       { "xdma", 0},
->>       { },
->>   };
->>   MODULE_DEVICE_TABLE(platform, xdma_id_table);
->> +static DEFINE_NOIRQ_DEV_PM_OPS(xdma_dev_pm_ops, xdma_suspend, 
->> xdma_resume);
->> +
->>   static struct platform_driver xdma_driver = {
->>       .driver        = {
->>           .name = "xdma",
->> +        .pm = pm_sleep_ptr(&xdma_dev_pm_ops),
->>       },
->>       .id_table    = xdma_id_table,
->>       .probe        = xdma_probe,
-> 
-
+On Fri, Nov 20, 2026 at 1:17=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrote=
+:
+>
+> On 17-09-26, 16:29, Rosen Penev wrote:
+> > The driver only uses portable kernel APIs and AMBA bit-field macros fro=
+m
+> > <linux/amba/bus.h>. Allow building on other architectures via
+> > COMPILE_TEST for wider compile coverage.
+> >
+> > Also add missing HAS_IOMEM as COMPILE_TEST also enables configs that
+> > don't necessarily have it.
+>
+> Have you tested and verified that it builds on diff archs?
+yes
+>
+> --
+> ~Vinod
