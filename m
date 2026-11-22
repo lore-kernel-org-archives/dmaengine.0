@@ -1,55 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795341732;
-	b=qaHQla3iPy6aYYJ0PAsT/vfi6r0c4a6UvVIlBOmqtX4SzIKAA93sKAJ8YTrIytQJgrzQ
-	 QEtDJOAeLRQG6lgEKq1VqPHTi2tI6cTUvg7pRESWXCHKS3cdF5y2n4D7/HyLaiOF6o+FH
-	 gXgJpivIR5igwnTYi8DuX7wZTqpg43Rtnjka/N9clftza+ROu36TIyP45xuAgBbiPvpSO
-	 W7MaGOH1aqriLmEC5Q5justfIp07oYXqZh8BRV9SDVSB9vBNG6zBaRhWxU2hoDqmIB2M5
-	 +56wdKkXSG3Gx/9BS1YyN0vOhppKJJ60M1q9/IPb2kxgp/SKKHqIV8vaR1QmBYtOE9Q==
+	t=1795384942;
+	b=pBEACgA36xFSDDxXG+1RQfD522q8s3R/vqcG1WpafCscgR4wsKojkM91+EearyjAlLpN
+	 udKJMpbydgO+5NkAPmhk+pQEYepZvWd0NMdFuRBAdiHmttCwxYF1JO0NRNgQBng4BznUC
+	 SO+oFFLm98opsX+QMraPG7YcuZOfK3Vle/+Pduacu1gzoSGz5hIp3h/vyPhyD3iGcGv3o
+	 RbLOeAZinykQ+Dlf/BcHUICvuC52CXFlaOoO2xI6Ev3ElIaRmZ6waBGRnZM4SQGmHWHDe
+	 DMOuO5kvASvd5ZHFy+Z1hpP34IJFyOD7xOfv/vP2gO4/syNVJdYwnVas5cXsRK78C0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795341732;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=iPXeVbUPSAnwOCmXI1Is/kb8j/fBzUSx76g6BvVy96U=;
-	b=oYNXM02DFal/gHarlrLKFdWAE7NqWmKD0JUDeqKyvGCAAVwu148pGug1lwIGHU0y3eB6
-	 hFN8VMU55qFFqsrTkqTJeFo81dVvkB/f9MghMtDB/SwoOh1jydF/JHb0ujo5ZRQKy9lOX
-	 fH6PkwTEQs+I5JPMZ0HyJEXk5q9xjvCnNH36i1vCYOgyf3UpGxezezoaxQ7bfpdtww26e
-	 3O+G9uwRRRxn3xik473EcNqt6ivDPspIFBhKMKK36LZIax5jU4s55PXq15uc4VBAiITxh
-	 +9/qM+gfDWUnnuCtK3+4RQ4Ayoa0BKu16n1Ho70KbIM2JME5tJwrVpQcZpS31tZbt7g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795384942;
+	h=Received:DKIM-Signature:Mime-Version:Content-Transfer-Encoding:
+	 Content-Type:Date:Message-Id:Subject:Cc:To:From:References:
+	 In-Reply-To;
+	bh=sTtlSSaGTpDBtcMHiOircAIvmiTH+Ctop/XsFzGC1x4=;
+	b=YrgCw7fc82efjOJR6aqKPcSwalSW3k8vQUHIYDJVI37d9CBiToehWm/1ktwwymQWL6Au
+	 svoB7yp+0z1su71Hd0PFrG5Nz0ensrulMD/zKBsuvTb4eZkW4szYQKpqve8SdVqOhaNC9
+	 rpXHgTRZ0G5Hg9lObkmlBU8Tx36zXCsAu90qa2oSdJ1RpKVfZn2VTpdKMJellxju98pBd
+	 lQ7x4g3dBPSLJkeB4pX7VQTWEnhJIBU8fqJl3690tWQtBED2+6yS5r5cH/ivr2aZa7umF
+	 oaG5QKUfA4/qFx5fhDpAyRJVmhYyRytxOTiVWaI8Cmn0IGGlcCD4X9b3p1tq8Kfh2TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h5RJAm3c;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k2Hc6xFR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FB0606A332
-	for <dmaengine@vger.kernel.org>; Sun, 22 Nov 2026 10:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C7D606A31A;
+	Sun, 22 Nov 2026 22:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h5RJAm3c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237ED1F000C0;
-	Sun, 22 Nov 2026 10:02:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k2Hc6xFR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DB11F000C6;
+	Sun, 22 Nov 2026 22:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795341732;
-	bh=iPXeVbUPSAnwOCmXI1Is/kb8j/fBzUSx76g6BvVy96U=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=h5RJAm3cR0tNnB+vTD76WE344VI4W2hkmYxNgSdTuSOityX1UuNFsMevecZqHmQI/
-	 l0mqcLEzzIQiDojqAFWWfzDto01jxmzx8cE0it7kH7xbNkUKawOJEfKsNPjTW0h3wI
-	 5mP/ID98AjCVOhY/GAnUXjJ9ENhBc113fLxFUK9ygYejFuwS5r5JwDL6AfoXLgCTeG
-	 YnVW1bb9JDH6LtiXKITawIIXfmj0jmx6UkcnK27DzmM2M7P58NxuoK4Ga+tsBkLsJt
-	 5fX5Dmcwgr/+ePTXq39F7iHXo9cxv/QkrT3tb8vFyek6DfKl8c9U0GYR8DMItmf4+Y
-	 KIYGqqdIm6Nog==
-Message-ID: <sashiko-outbox-227882@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] dmaengine: ste_dma40: Use power domain for LCLA SRAM
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Linus Walleij" <linusw@kernel.org>
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261122-ux500-dma40-powerdomain-v2-1-8a0ebfc75b80@kernel.org>
-References: <20261122-ux500-dma40-powerdomain-v2-1-8a0ebfc75b80@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 22 Nov 2026 10:02:11 +0000
+	s=k20260515; t=1795384942;
+	bh=sTtlSSaGTpDBtcMHiOircAIvmiTH+Ctop/XsFzGC1x4=;
+	h=Date:Subject:Cc:To:From:References:In-Reply-To;
+	b=k2Hc6xFRtkicPKFvuKT7zGdEMFSb//oYzAC6yGi4WET4vMctzGLV95ptNtrt42XPr
+	 WQXnncoUOn8vCWB5V+5BOCSO1YRgvEGvWFlC6kSpFwx64JgBjdDeDjN8t0GAWjAHIl
+	 OTUhOZXnH51x9+wu6dE5+5xRqac3uNPyE7pzVVKvZEWUvPhn37jeV+RfXXnvGy2n+o
+	 5fpjybhz8GWsaKNEldr/b1vfp4LchA2oilYAZk48pyxh0hZg4h3t2J1QwAu6uVH9h7
+	 a22sYJ2GBWGWAOsKWbURM4twq7Z2FvgS7RP2m5XNLf/srWoFugU+HT+1vi7WOYs8uY
+	 PaUfPtPCWI/6w==
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -58,72 +48,104 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 22 Nov 2026 23:02:06 +0100
+Message-Id: <DN22U90WCTGB.1REAOP1PQUMIQ@kernel.org>
+Subject: Re: [PATCH v4 0/9] Add __must_init and require explicit
+ kobj_type::release
+Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Kees Cook"
+ <kees@kernel.org>, "Miguel Ojeda" <ojeda@kernel.org>, "Rafael J . Wysocki"
+ <rafael@kernel.org>, "Madhavan Srinivasan" <maddy@linux.ibm.com>, "Srish
+ Srinivasan" <ssrish@linux.ibm.com>, "Michael Ellerman"
+ <mpe@ellerman.id.au>, "Nicholas Piggin" <npiggin@gmail.com>, "Christophe
+ Leroy" <chleroy@kernel.org>, "Nayna Jain" <nayna@linux.ibm.com>, "Mimi
+ Zohar" <zohar@linux.ibm.com>, "Yoshinori Sato"
+ <ysato@users.sourceforge.jp>, "Rich Felker" <dalias@libc.org>, "John Paul
+ Adrian Glaubitz" <glaubitz@physik.fu-berlin.de>, "Juergen Gross"
+ <jgross@suse.com>, "Stefano Stabellini" <sstabellini@kernel.org>,
+ "Oleksandr Tyshchenko" <oleksandr_tyshchenko@epam.com>, "Nathan Chancellor"
+ <nathan@kernel.org>, "Nick Desaulniers" <ndesaulniers@google.com>, "Viresh
+ Kumar" <viresh.kumar@linaro.org>, "Zhongqiu Han"
+ <zhongqiu.han@oss.qualcomm.com>, "Alexander Aring" <aahringo@redhat.com>,
+ "Felix Kuehling" <felix.kuehling@amd.com>, =?utf-8?q?Christian_K=C3=B6nig?=
+ <christian.koenig@amd.com>, "Zhihao Cheng" <chengzhihao1@huawei.com>,
+ "Sumanth Korikkar" <sumanthk@linux.ibm.com>, "Bill Wendling"
+ <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
+ <driver-core@lists.linux.dev>, <llvm@lists.linux.dev>,
+ <linux-hardening@vger.kernel.org>, <linux-fsdevel@vger.kernel.org>,
+ <linux-doc@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+ <linux-pm@vger.kernel.org>, <linuxppc-dev@lists.ozlabs.org>,
+ <linux-sh@vger.kernel.org>, <linux-s390@vger.kernel.org>,
+ <gfs2@lists.linux.dev>, <xen-devel@lists.xenproject.org>,
+ <linux-mtd@lists.infradead.org>, <amd-gfx@lists.freedesktop.org>,
+ <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+ <agordeev@linux.ibm.com>, <airlied@gmail.com>, <alexander.deucher@amd.com>,
+ <catalin.marinas@arm.com>, <chao@kernel.org>, <deller@gmx.de>,
+ <dennis.dalessandro@cornelisnetworks.com>, <dmaengine@vger.kernel.org>,
+ <gor@linux.ibm.com>, <hca@linux.ibm.com>, <jaegeuk@kernel.org>,
+ <James.Bottomley@HansenPartnership.com>, <jgg@ziepe.ca>,
+ <jlbec@evilplan.org>, <johan@kernel.org>, <joseph.qi@linux.alibaba.com>,
+ <leon@kernel.org>, <lihuisong@huawei.com>, <linusw@kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <linux-erofs@lists.ozlabs.org>,
+ <linux-f2fs-devel@lists.sourceforge.net>, <linux-fbdev@vger.kernel.org>,
+ <linux-omap@vger.kernel.org>, <linux-parisc@vger.kernel.org>,
+ <linux-rdma@vger.kernel.org>, <mark@fasheh.com>, <neescoba@cisco.com>,
+ <ocfs2-devel@lists.linux.dev>, <satishkh@cisco.com>, <simona@ffwll.ch>,
+ <sre@kernel.org>, <vkoul@kernel.org>, <will@kernel.org>, <xiang@kernel.org>
+To: "Ian Rogers" <irogers@google.com>
+From: "Danilo Krummrich" <dakr@kernel.org>
+References: <20261119192520.1983406-1-irogers@google.com>
+ <20261122215639.1178566-1-dakr@kernel.org>
+In-Reply-To: <20261122215639.1178566-1-dakr@kernel.org>
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: ste_dma40: chained dev_err_probe() in d40_probe()
-  clobbers reason
---
+(Cc: more people previously Cc'd on v2)
 
-commit 8e29cc445c923c05eae5636fd084025260aae617
-Author: Linus Walleij <linusw@kernel.org>
+On Sun Nov 22, 2026 at 10:56 PM CET, Danilo Krummrich wrote:
+> On Thu, 19 Nov 2026 11:25:11 -0800, Ian Rogers wrote:
+>> [PATCH v4 0/9] Add __must_init and require explicit kobj_type::release
+>
+> Applied, thanks!
+>
+>   Branch: driver-core-testing
+>   Tree:   git://git.kernel.org/pub/scm/linux/kernel/git/driver-core/drive=
+r-core.git
+>
+> [1/9] Compiler Attributes: Add __must_init macro
+>       commit: b8a53320a885
+> [2/9] powerpc/secvar: Add missing kobject release callback to secvar_ktyp=
+e
+>       commit: 4d5d4dd2a2e2
+> [3/9] sh: sq: Add missing kobject release callback to ktype_percpu_entry
+>       commit: d19384f2f3c7
+> [4/9] cpufreq: governor: Initialize kobj_type release callback statically
+>       commit: 009365942c15
+> [5/9] dlm: Wait for kobject release before freeing dlm_ls
+>       commit: 48ae948f4285
+> [6/9] xen/sys-hypervisor: Add release callback to hyp_sysfs_kobj_type
+>       commit: ecaf88d385c1
+> [7/9] ubifs: sysfs: Use kset_create_and_add() for ubifs_kset
+>       commit: 25d952902dee
+> [8/9] drm/amdkfd: Free queue in procfs_queue_type kobject release callbac=
+k
+>       commit: 6d4ff4a020cf
+> [9/9] kobject: Require explicit initialization of struct kobj_type::relea=
+se
+>       commit: 45eeed1f8094
+>
+> The patches will appear in the next linux-next integration (typically wit=
+hin 24
+> hours on weekdays).
+>
+> The patches are in the driver-core-testing branch and will be promoted to
+> driver-core-next after validation.
 
-dmaengine: ste_dma40: Use power domain for LCLA SRAM
+I've now picked this up; I will keep this series in driver-core-testing for=
+ a
+few more days before moving it to driver-core-next. Please let me know if t=
+here
+are any concerns with the series, particularly the comments in patch 9.
 
-This commit replaces the LCLA ESRAM regulator and named memory resource
-with an OF SRAM phandle and runtime PM management of the SRAM device.
-
-> diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-> index f1cbc719c4f09..eca1ae95fe1c9 100644
-> --- a/drivers/dma/ste_dma40.c
-> +++ b/drivers/dma/ste_dma40.c
-[ ... ]
-> @@ -3781,13 +3791,70 @@ static int __init d40_of_probe(struct device *dev,
->  	return 0;
->  }
-> =20
-> -static int __init d40_probe(struct platform_device *pdev)
-> +static int d40_lcla_sram_setup(struct d40_base *base)
-> +{
-[ ... ]
-> +	if (!IS_ALIGNED(res.start, LCLA_ALIGNMENT) ||
-> +	    resource_size(&res) < SZ_1K * base->num_phy_chans ||
-> +	    res.end > U32_MAX) {
-> +		of_node_put(parent);
-> +		return dev_err_probe(dev, -EINVAL, "Invalid LCLA SRAM region\n");
-> +	}
-[ ... ]
-> @@ -3844,26 +3911,12 @@ static int __init d40_probe(struct platform_devic=
-e *pdev)
->  		d40_err(dev, "Failed to ioremap LCPA region\n");
->  		goto report_failure;
->  	}
-[ ... ]
-> +	ret =3D d40_lcla_sram_setup(base);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "Failed to set up LCLA SRAM\n");
-> +		goto destroy_cache;
-> +	}
-[ ... ]
-> @@ -3954,22 +3987,18 @@ static int __init d40_probe(struct platform_devic=
-e *pdev)
-[ ... ]
->   report_failure:
-> -	d40_err(dev, "probe failed\n");
-> -	return ret;
-> +	return dev_err_probe(dev, ret, "probe failed\n");
->  }
-
-[Severity: Low]
-Does calling dev_err_probe() at report_failure overwrite the deferred
-probe reason recorded by d40_lcla_sram_setup() or platform_get_irq() with
-"probe failed"?
-
-When d40_lcla_sram_setup() fails with a non-deferral error such as
--EINVAL, chaining dev_err_probe() across d40_lcla_sram_setup(), its caller
-in d40_probe(), and report_failure also logs up to three error messages
-for the same failure.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122-ux500-dma4=
-0-powerdomain-v2-1-8a0ebfc75b80@kernel.org?part=3D1
+Thanks,
+Danilo
