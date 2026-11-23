@@ -1,57 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795397694;
-	b=u1Eqxg+yBUKa7ybM7+r+HXs1eIcutwYFYDNcRBjuu0dNbPOi95OcFoJfkbVrn2mMrK3v
-	 OIzsqDh8oGLn0t9RFO8FPVQcq87WqcNXn2yJ7LDVVVMLVtnUlz8y1MU3p8O4AxJrJ9Rex
-	 vL93viAS27q1Arcc3/XPwwtCSjoYLgNJC1eygUQmnd0Dn2yKy81WqLEL2rJ1loVOmgY0O
-	 sc2UWhQWrhSFRj4qs+hYm7nYW79O79zi+CnStAjaeGmv4diOMKmwSsqVvZTLeaveAm9m4
-	 RO30yazp/1UZPWlTVcPiVJ7/R+/j6Zu8MAfCa6RxiMZbLw4M2FW2T2Klh9CfKxI0HMw==
+	t=1795422205;
+	b=2bMI2ZYsbh6FWidvVDZSm3DUN6rn4Rns5jFC8h6W52gjSJ3B5v+qO0sUomSLdShF92tv
+	 zXDU6uoP5VLPifqXEROd++XeXBxkK65vHi1N0v+isFeIpddfhYscP+X41oXQLfzRYf69T
+	 aXDpDLUjzAnbvHkjbgWMh7ogw9GrYAExTLwSRAtDEuJatguORVyWtli6elILl/BfdeGqB
+	 aZikjY2uj1DeUWe/ZaUtnDQinoOZgK9/7OuEJE1tZyRGrr/CxTrArfteUSCZOhq8Qotw6
+	 N+toqB57mIfod4+TKS119ZX02l7bAw/UVdKvqtmYiiZu5tQ+jL/1ISJnwYZ7wOinqSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795397694;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=RiqirlH3UXlbDIlpJI/Xyu8pMJqdP0jykv9VHffhkgA=;
-	b=4Egne5NY8LMcQFhnl58KEfIuAoVqyleLxmV7/d1v4pqUXDwtArlhQ+lSt/iBLuvtxz2B
-	 t5daCIGPcOKNBK0EQozmbbYef+oyC2mXRk9K/Tk8+33SJkp/v0gKj34/3KJc6X3QhHmX0
-	 82lFvywhZzpTPqTPeO2r70i+qiuD0f4eSL5TtEMijLj5kEMQahuB5ejpyxMn9S4dpOE3q
-	 pfDuUwqqcHKHnEPc+xcds3RQbNdykK/K1n8gVzJL/sLMnZ36kqSU3m/0OcEi36HAtjGB3
-	 nGg+EXe/2GZTggr3uYlP5QVQd/zH9jOllrYxBo121ZIXzvfQ2VHeUS0pu8i8NFePT1g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795422205;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=z+UaNPJX5505dCbZSDZnTfq/B37UFxlyuCT94x8JJm0=;
+	b=P3dlnrsSsoVnYPQUeSIopNLEomJcEtjYOAfkzW9k7Ze5Xuj5YmOG4xLAzeEm4Fz7ZOUM
+	 dNyI1hWuIkpVOvuFm8fZC8eHDEmpvJpl/6QcC4SPf4OF6x3r0Pp/2w6TK8/JBMcZ02OvB
+	 Spf8v/bt+uKIpRbxeQvJGXqv1yow1smpBqIiBsL82fKOYygSRIG7GOCbaqydXT4FoFgTF
+	 aRUWMqbbpYTK9UOxmEeaEoFgmxvGVFkojPAsDzigCGfL0A7UOkhv6lHJNK1Bqx/xipB+g
+	 qcT5m7IeJR9Pg8IrkUiICkAZdSZ8qyPUr63uQZ4NmhHdNo0ReM6g7Gm40vvzJldCKbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ekdIBCb5;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HIXi08gN;
+	arc=none smtp.remote-ip=198.175.65.17
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5076606A31A;
-	Mon, 23 Nov 2026 01:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD687606A31A;
+	Mon, 23 Nov 2026 08:23:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AD687606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ekdIBCb5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C0F1F000C6;
-	Mon, 23 Nov 2026 01:34:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795397694;
-	bh=RiqirlH3UXlbDIlpJI/Xyu8pMJqdP0jykv9VHffhkgA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ekdIBCb5qYBphlct9a/6+JapSBJNf4IjF3gGNlPv1pJcY9lalva1MGLXhtTPV1lwT
-	 l7rQpmStMEoX+MR3c2WSGouarG6Zc3/0JtZzrTFDsFCTrciqbq6v8oYTBA72XNLylx
-	 1tWpwBun1HwgGfC/CbSO/fd0Ltml7p4y8orf0xjWSHbN5EkFQ5vUSpWFSAK0YEkKXZ
-	 oyds5bhE2maxFWTvxpeNNB8Ku+Nve8Qeimy8jYVbZizFY7LEL+JK95Vrib7v8EhsoP
-	 MkR8bztZrPwFyQtCA44i1/pIlO4lkEr8u5qvRDXyqIUV2hw8W6zjiFGU8BdcB0hmip
-	 Y3FNQ/uKRStHQ==
-Message-ID: <sashiko-outbox-228521@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/3] dmaengine: fsl-edma: use BIT_ULL for 64-bit channel
- mask
-Reply-To: sashiko-reviews@lists.linux.dev
-To: =?utf-8?b?UGVuZyBGYW4gKE9TUyk=?= <peng.fan@oss.nxp.com>
-Cc: imx@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261123-edma-fixes-v1-2-59d5da374a16@nxp.com>
-References: <20261123-edma-fixes-v1-0-59d5da374a16@nxp.com>
- <20261123-edma-fixes-v1-2-59d5da374a16@nxp.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 23 Nov 2026 01:34:53 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HIXi08gN
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1795422205; x=1826958205;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=G4WwUmOOHvcoR/PgEdhp1ehfxdymzS9sZh81isA7SyI=;
+  b=HIXi08gNacSrg4U7sBwbzwKc2SRzS1+Lyxs7AHlh/B9BM9cokxxkL9ve
+   +4aRMTMRDqTbD96JYWgkQatAdW1FWLUlTK1bnbHGyKNnTwtxgR5AFwNdD
+   XDPOnjKFcgPREHzZOYoI/g/cj2RhRVGIl9225J7i5T71oDTMKBiAUxL1H
+   fa9KzK2pqoSuMnChgZ73EMvoe4JRj0m5N33EcElbSMka5IsgaoDGMOn6p
+   nuhY+x10MmhjQwkubzYD5MW1F+K+Mc/rEPAturejLltWza8iXR4Z2ijHD
+   OZ2xMWfmdj2r9qDz1T3a7MB9yonQUQPVk8V90oRKreELBhKuRslFH424O
+   g==;
+X-CSE-ConnectionGUID: 0BEr25Y8S/KloOeZf6DbTQ==
+X-CSE-MsgGUID: dCxH3ZspQb2okEryGMxBEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11974"; a="4233108"
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="4233108"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 00:23:24 -0800
+X-CSE-ConnectionGUID: pRzJFGYQSZi4cO6/hILKQA==
+X-CSE-MsgGUID: x1HI3+QqS+2/uJJsvD2nbg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,227,1787036400"; 
+   d="scan'208";a="11013347"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.204])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Nov 2026 00:23:22 -0800
+Date: Mon, 23 Nov 2026 10:23:19 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: dmaengine@vger.kernel.org, Frank Li <Frank.Li@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, Viresh Kumar <vireshk@kernel.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	kernel-janitors@vger.kernel.org,
+	Christophe Jaillet <christophe.jaillet@wanadoo.fr>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	Serge Semin <fancer.lancer@gmail.com>
+Subject: Re: [PATCH v3] dmaengine: dw: Use devm_clk_get_optional_enabled() in
+ dw_probe()
+Message-ID: <awP3997Cz3ERsthB@ashevche-desk.local>
+References: <357f5490-8920-4199-a4ac-3f105cabbc78@web.de>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -60,84 +83,28 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <357f5490-8920-4199-a4ac-3f105cabbc78@web.de>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Low] dmaengine: fsl-edma: missing Fixes: trailer for chan_masked
-  BIT_ULL() fix
-It also noticed 1 related pre-existing issue this patch does not
-introduce:
-- [Critical] dmaengine: fsl-edma: use-after-free in
-  fsl_edma3_detach_pd() [1]
---
+On Sat, Nov 21, 2026 at 09:32:49AM +0100, Markus Elfring wrote:
+> From: Markus Elfring <elfring@users.sourceforge.net>
+> Date: Sat, 21 Nov 2026 09:16:47 +0100
 
-commit 61ad7f34b4fcfc1b5709f370095dce7e4b0ea1d5
-Author: Peng Fan <peng.fan@nxp.com>
+Frank, FYI, the above From: header is one of the correct approaches to submit
+the author. The Date: one is not wrong either (`git am` should swallow it).
 
-> dmaengine: fsl-edma: use BIT_ULL for 64-bit channel mask
->
-> chan_masked is a u64 bitmap, but several checks use BIT(), which uses
-> unsigned long and overflows on 32-bit architectures for channels >=3D 32.
-> Use BIT_ULL() so the upper channels are tested correctly.
->
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Signed-off-by: Peng Fan <peng.fan@nxp.com>
+> Reuse existing functionality from devm_clk_get_optional_enabled()
+> instead of keeping duplicate source code.
+> Clean up disable_unprepare() at error handling path and dw_remove().
+> 
+> This issue was detected by using the Coccinelle software.
 
-[Severity: Low]
-This fixes the 32-bit BIT() overflow on the 64-bit chan_masked bitmap
-introduced in commit 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3
-support") and replicated in commits 2838a897654c ("dmaengine: fsl-edma: Do
-not suspend and resume the masked dma channel when the system is
-sleeping"), ccfa3131d4a0 ("dmaengine: fsl-edma: implement the cleanup path
-of fsl_edma3_attach_pd()"), and d175222f5e90 ("dmaegnine: fsl-edma: add
-edma error interrupt handler").  Should this include a Fixes: tag for
-72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support") (and optionally
-for the follow-up commits)?
+-- 
+With Best Regards,
+Andy Shevchenko
 
-> diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
-> index 7f82dcb7831d0..818b9b986f131 100644
-> --- a/drivers/dma/fsl-edma-main.c
-> +++ b/drivers/dma/fsl-edma-main.c
 
-[ ... ]
-
-> @@ -641,7 +641,7 @@ static void fsl_edma3_detach_pd(struct fsl_edma_engin=
-e *fsl_edma)
->  	int i;
-> =20
->  	for (i =3D 0; i < fsl_edma->n_chans; i++) {
-> -		if (fsl_edma->chan_masked & BIT(i))
-> +		if (fsl_edma->chan_masked & BIT_ULL(i))
->  			continue;
->  		fsl_chan =3D &fsl_edma->chans[i];
->  		if (fsl_chan->pd_dev_link)
-
-[Severity: Critical]
-This problem wasn't introduced by this patch, but does
-fsl_edma3_detach_pd() trigger a use-after-free on fsl_chan->pd_dev
-[1]?
-
-drivers/dma/fsl-edma-main.c:fsl_edma3_detach_pd() {
-    ...
-		if (fsl_chan->pd_dev_link)
-			device_link_del(fsl_chan->pd_dev_link);
-		if (fsl_chan->pd_dev) {
-			dev_pm_domain_detach(fsl_chan->pd_dev, false);
-			pm_runtime_dont_use_autosuspend(fsl_chan->pd_dev);
-			pm_runtime_set_suspended(fsl_chan->pd_dev);
-		}
-    ...
-}
-
-After device_link_del() removes the stateless device link,
-dev_pm_domain_detach() calls genpd_dev_pm_detach() -> device_unregister(),
-which drops the last reference to the virtual genpd device and frees
-fsl_chan->pd_dev.  The subsequent pm_runtime_dont_use_autosuspend() and
-pm_runtime_set_suspended() calls then lock and modify the freed device
-during an attach error, probe failure, or driver unbind.
-
-[1] https://sashiko.dev/#/bug/linux-274f4f33-0d23-4b6b-a957-25b9d8ad2f6a
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-edma-fixes=
--v1-0-59d5da374a16@nxp.com?part=3D2
