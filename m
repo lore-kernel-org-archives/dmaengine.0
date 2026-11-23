@@ -1,40 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=37.205.14.76
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795451589;
-	b=SNMsd0ybMEXpHSepeyREv37yz1+wCz6rA5tUQyzHQjKgNusUFXFPVSTpuXW77/66qWZk
-	 xgtfQhw4fskCn38FgZE0Txg26sJOqpZ/mpQscEQefRv5/6SVd+MJAS/Pjw980QxgN1PFE
-	 L9Ymy+WtUiyKAd/86DDLBcSSCyVmy2mk7noISvDbOse3t+PMYe/kDPqWuGLcIKQxIEBSw
-	 3XAqEKqAF4KjKaCUIw6OCkHnc2/rt5QUvm68qHk6BQNJd1pt+bbAhnLAkbRd44v6NQ2XZ
-	 Eouo1e0FML7IoBlsxztpOXEtgeRKk9dkberDTQGlOhgnOaNl2kBbfQqwu4ow3cI9nYA==
+	t=1795452953;
+	b=vtV+jAhi2+Oo0pGHWprZb4UgSCr9Z+HX5M2GLDRt1PIgi46Y1tLeor6c6tsUuKUhgbbj
+	 bHLflUpsbms2kwn+iO+LMosVywo09/+ncUbEIO6bICM9+ES3Fpqht6444Qc6jHTrW6qJ9
+	 gryVVL+hQbCOa48yUL6/Dx0RvLhuTeU3s+62TZoqFJ6pRMEryYsUKSv0VemwS1VUTI3yB
+	 6UQajyKCWUAR697jQNEy8jykCQB/tT3Qh97c33VK+0DDhp3Ld0iqWBM+9azzVgBs9c3dA
+	 +UqEweQBQLpzuBP5EZuPv2E/iZcFMXR3hz7LYubnNPb/kGSamj0yoQATTwfDRb/If0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795451589;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=WTsNMoDgz+6rYNzhf1TDqkTqDZUxXtxKcRwXyf4YzDs=;
-	b=1R2sxj6vIkKdR9xJjbEce6SGfq7Va6D+pIf0xXxJDuw5YzUW2Hj/ygNd+mj2TmbhPPcg
-	 /VfMKjA+I6nDRbByOwu8TnGaciwWU/QwCzKpqzyVQN73CXnLtzfzh+FKdqyXZqfpqM5yl
-	 yWNLwtGeST1WMMYLAMdP37s7NAMAxKcb1XzJtVAYDvwxea9eXcQQ0OEaWdakBKAhHJcmh
-	 eo9/Qz3r7ItXw8ULhchHJas6kKcQLOChTEtp5V8KuB6p93CIe7OQlNenJ5CrwQNszokXE
-	 oubXn99kCnN0j6GPSY0ny7L5FqI6/j+k5U6POFm/DcGuwBow2aj8i/fV8G5Xj28PaTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795452953;
+	h=Received:DKIM-Signature:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=DVuO288S4OHkKdmhORY1dPwKToeS5NVnqdlS1+sSYF8=;
+	b=zLup+8pSwWxpiypAnpPKUOJ85tBcSuO2MeaoyFhZg+AJo5FhhjY9KLNGtURDvmg5QzvY
+	 vLzzu1mo9dl3XEKqDgOq8H4tVIfH/3GJt4YubILcPCmoDFVN5YyMWubbp1m5tTkgL0/+h
+	 S57nPeDxAnhCetK1XlJCItoMOWjDoBY1Uwsbl73VlnxNq6i4uu7X09RmOHOU5lLs/SMt/
+	 KA1YL99fqmge92zpEfvu+2+jSExHdKGVUJiCRKtuEHZWValgeu9aAA4IYNO6+5fBxz35W
+	 DCuzX/S6XJ7QxHXer3lsAu0qwNw5gxLAwYoR1ZEvmgVF7voEv681M0lT3pQD0LQJXaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gpxsee.org;
-	spf=pass smtp.mailfrom=gpxsee.org;
-	arc=none smtp.remote-ip=37.205.14.76
-Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NQnLsAOF;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A2A606A31F
-	for <dmaengine@vger.kernel.org>; Mon, 23 Nov 2026 16:33:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D2A2A606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
-Received: from [192.168.4.18] (unknown [62.77.71.229])
-	by mx.gpxsee.org (Postfix) with ESMTPSA id 22DE1C126E;
-	Mon, 23 Nov 2026 17:33:03 +0100 (CET)
-Message-ID: <7285f4da-c5c7-4077-b6cd-bc7921ab04a1@gpxsee.org>
-Date: Mon, 23 Nov 2026 17:33:01 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD56606A31F;
+	Mon, 23 Nov 2026 16:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NQnLsAOF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C58D1F000C0;
+	Mon, 23 Nov 2026 16:55:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795452952;
+	bh=DVuO288S4OHkKdmhORY1dPwKToeS5NVnqdlS1+sSYF8=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=NQnLsAOF6LEkdxRgrWA+Y6Dd8hDOrVSQ28JC2tOvRkADqHKyOrdSs7yQ47vE55y3v
+	 wR75XKuELYqRHeSnS5JvN1upBWMBTIFDySyNDdcPrc+825ElLNQtfMqq7UBVf9T5Ek
+	 HE2volKb9SVQYRAAFxyMcxOmjieGVzbHnohAYMePuqzPaJgb+VsFmCMr3Jwbw6g1ER
+	 Xv6aOijWTBdX6XEJXT5SacatXj1VBOhcIVXqkjt7r4b8RXBRIkSMGq9XMvppvkKjam
+	 qs52kNGtnSkw5zU2lsuQlL3X8xZTYiAuenrf6u/YIu8gMwfL0RW2JofUMFiIqFm5S6
+	 sDsugy0srrUUA==
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -44,261 +49,48 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1] dmaengine: xilinx: xdma: Fix broken PM
- suspend/resume
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
- Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Michal Simek <michal.simek@amd.com>, dmaengine@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,
- =?UTF-8?Q?Martin_T=C5=AFma?= <martin.tuma@digiteqautomotive.com>
-References: <20261123122236.5460-1-tumic@gpxsee.org>
- <20261123122236.5460-2-tumic@gpxsee.org> <awRlXmBFmE8R82qv@SMW015318>
-Content-Language: en-US
-From: =?UTF-8?Q?Martin_T=C5=AFma?= <tumic@gpxsee.org>
-In-Reply-To: <awRlXmBFmE8R82qv@SMW015318>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v5 3/6] clk: cix: Preserve Sky1 AUDSS interrupt and
+ reset context
+From: Brian Masney <masneyb@kernel.org>
+To: Jelly Jia <Jelly.Jia@cixtech.com>
+Cc: vkoul@kernel.org, Frank.Li@kernel.org, robh@kernel.org, 
+ krzk+dt@kernel.org, conor+dt@kernel.org, robin.murphy@arm.com, 
+ sboyd@kernel.org, bmasney+clk@redhat.com, jbrunet+clk@baylibre.com, 
+ tglx@kernel.org, devicetree@vger.kernel.org, 
+ cix-kernel-upstream@cixtech.com, dmaengine@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, joakim.zhang@cixtech.com, radu@rendec.net, 
+ Brian Masney <masneyb@kernel.org>
+In-Reply-To: <20261120053529.371923-4-Jelly.Jia@cixtech.com>
+References: <20261120053529.371923-1-Jelly.Jia@cixtech.com>
+ <20261120053529.371923-4-Jelly.Jia@cixtech.com>
+Date: Mon, 23 Nov 2026 11:55:36 -0500
+Message-Id: <179545293652.209212.13817685318206713956.b4-review@b4>
+X-Mailer: b4 0.17-dev-8145e
+X-Developer-Signature: v=1; a=openpgp-sha256; l=624; i=masneyb@kernel.org;
+ s=20250903; h=from:subject:message-id;
+ bh=dlN8f5waGDkpgx6y+Hr2A3mh8IFsF1SXgakq51pTHIs=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGLJZCnj0eiaWdbxJfHKr9OKuiLrVaT1LmUIiBU+uVVVJ7
+ lFh+BjRUcrCIMbFICumyLIk16ggInWV7b07miwwc1iZQIYwcHEKwEQceBn+e0fsncxTtr3pT+rq
+ 2R9lmM35thsd23BggXjdq1SDnReOH2dk+FzskFH0sGj/R9NJzV9qLrb8X+chlzntd+9y04iMKuY
+ SRgA=
+X-Developer-Key: i=masneyb@kernel.org; a=openpgp;
+ fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 
-On 11/23/26 5:10 PM, Frank Li wrote:
-> On Mon, Nov 23, 2026 at 01:22:36PM +0100, tumic@gpxsee.org wrote:
->> From: Martin Tůma <martin.tuma@digiteqautomotive.com>
->>
->> Add the missing PM suspend/resume callbacks that properly reconfigure
->> the XDMA HW on PCIe suspend/resume.
+> The AUDSS CRU saves its clock configuration before runtime suspend, but
+> the save list does not include the AP interrupt gates or software reset
+> state. If that state is lost across a CRU power transition, restoring
+> the clocks alone does not restore the configuration of its consumers.
 > 
+> Add INFO_AP_IRQC and INFO_SW_RESETN to the existing save and restore
+> list so the interrupt gate and reset configuration is preserved with
+> the rest of the CRU context.
 > 
-> Can you talk about more about why need reconfigure the XDMA HW? Does it
-> power lost?
-> 
+> Signed-off-by: Jelly Jia <Jelly.Jia@cixtech.com>
 
-Yes, XDMA is a DMA controller used on PCIe cards. When the OS goes to 
-suspend, it powers off the complete PCIe bus and as a result the XDMA HW 
-completely looses all the configuration set up in probe(). On resume, 
-the HW must be reconfigured, otherwise you end up with a broken, 
-iresponsible PCIe card when the system wakes up.
+Reviewed-by: Brian Masney <masneyb@kernel.org>
 
-M.
-
-> Frank
-> 
->>
->> Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
->> ---
->>   drivers/dma/xilinx/xdma.c | 146 ++++++++++++++++++++++++++++++++------
->>   1 file changed, 123 insertions(+), 23 deletions(-)
->>
->> diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
->> index 9d827c9a1267..fade49eaf1a8 100644
->> --- a/drivers/dma/xilinx/xdma.c
->> +++ b/drivers/dma/xilinx/xdma.c
->> @@ -123,6 +123,7 @@ struct xdma_desc {
->>    * @irq_start: Start IRQ assigned to device
->>    * @irq_num: Number of IRQ assigned to device
->>    * @status: Initialization status
->> + * @usr_irq_mask: User IRQ mask for PM suspend/resume
->>    */
->>   struct xdma_device {
->>   	struct platform_device	*pdev;
->> @@ -135,6 +136,7 @@ struct xdma_device {
->>   	u32			irq_start;
->>   	u32			irq_num;
->>   	u32			status;
->> +	u32			usr_irq_mask;
->>   };
->>
->>   #define xdma_err(xdev, fmt, args...)					\
->> @@ -398,6 +400,26 @@ static int xdma_xfer_stop(struct xdma_chan *xchan)
->>   			    CHAN_CTRL_RUN_STOP);
->>   }
->>
->> +/**
->> + * xdma_reconfig_channels - Reconfigure DMA channels
->> + * @chans: channels configuration
->> + * @chan_num: number of channels
->> + */
->> +static int xdma_reconfig_channels(struct xdma_chan *chans,
->> +				  u32 chan_num)
->> +{
->> +	int i, ret;
->> +
->> +	for (i = 0; i < chan_num; i++) {
->> +		/* init channel hardware */
->> +		ret = xdma_channel_init(&chans[i]);
->> +		if (ret)
->> +			return ret;
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->>   /**
->>    * xdma_alloc_channels - Detect and allocate DMA channels
->>    * @xdev: DMA device pointer
->> @@ -1018,6 +1040,55 @@ static int xdma_set_vector_reg(struct xdma_device *xdev, u32 vec_tbl_start,
->>   	return 0;
->>   }
->>
->> +/**
->> + * xdma_irq_config - Configure IRQs
->> + * @xdev: DMA device pointer
->> + */
->> +static int xdma_irq_config(struct xdma_device *xdev)
->> +{
->> +	u32 user_irq_start;
->> +	int ret;
->> +
->> +	/* configure hardware IRQ registers */
->> +	ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->> +				  XDMA_CHAN_NUM(xdev));
->> +	if (ret) {
->> +		xdma_err(xdev, "failed to set channel vectors: %d", ret);
->> +		return ret;
->> +	}
->> +
->> +	/* configure user IRQ registers if needed */
->> +	user_irq_start = XDMA_CHAN_NUM(xdev);
->> +	if (xdev->irq_num > user_irq_start) {
->> +		ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->> +					  user_irq_start,
->> +					  xdev->irq_num - user_irq_start);
->> +		if (ret) {
->> +			xdma_err(xdev, "failed to set user vectors: %d", ret);
->> +			return ret;
->> +		}
->> +	}
->> +
->> +	/* enable channels interrupts */
->> +	ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->> +	if (ret) {
->> +		xdma_err(xdev, "failed to enable channel IRQs: %d", ret);
->> +		return ret;
->> +	}
->> +
->> +	/* enable user interrupts if needed */
->> +	if (xdev->irq_num > user_irq_start) {
->> +		ret = regmap_write(xdev->rmap, XDMA_IRQ_USER_INT_EN_W1S,
->> +				   xdev->usr_irq_mask);
->> +		if (ret) {
->> +			xdma_err(xdev, "failed to enable user IRQs: %d", ret);
->> +			return ret;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->>   /**
->>    * xdma_irq_init - initialize IRQs
->>    * @xdev: DMA device pointer
->> @@ -1025,7 +1096,6 @@ static int xdma_set_vector_reg(struct xdma_device *xdev, u32 vec_tbl_start,
->>   static int xdma_irq_init(struct xdma_device *xdev)
->>   {
->>   	u32 irq = xdev->irq_start;
->> -	u32 user_irq_start;
->>   	int i, j, ret;
->>
->>   	/* return failure if there are not enough IRQs */
->> @@ -1060,28 +1130,8 @@ static int xdma_irq_init(struct xdma_device *xdev)
->>   		irq++;
->>   	}
->>
->> -	/* config hardware IRQ registers */
->> -	ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->> -				  XDMA_CHAN_NUM(xdev));
->> -	if (ret) {
->> -		xdma_err(xdev, "failed to set channel vectors: %d", ret);
->> -		goto failed_init_c2h;
->> -	}
->> -
->> -	/* config user IRQ registers if needed */
->> -	user_irq_start = XDMA_CHAN_NUM(xdev);
->> -	if (xdev->irq_num > user_irq_start) {
->> -		ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->> -					  user_irq_start,
->> -					  xdev->irq_num - user_irq_start);
->> -		if (ret) {
->> -			xdma_err(xdev, "failed to set user vectors: %d", ret);
->> -			goto failed_init_c2h;
->> -		}
->> -	}
->> -
->> -	/* enable interrupt */
->> -	ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->> +	/* configure all HW IRQ registers */
->> +	ret = xdma_irq_config(xdev);
->>   	if (ret)
->>   		goto failed_init_c2h;
->>
->> @@ -1297,15 +1347,65 @@ static int xdma_probe(struct platform_device *pdev)
->>   	return ret;
->>   }
->>
->> +/**
->> + * xdma_suspend - PM suspend callback
->> + * @dev: XDMA device pointer
->> + */
->> +static int xdma_suspend(struct device *dev)
->> +{
->> +	struct xdma_device *xdev = dev_get_drvdata(dev);
->> +	int ret;
->> +
->> +	ret = regmap_read(xdev->rmap, XDMA_IRQ_USER_INT_EN,
->> +			  &xdev->usr_irq_mask);
->> +	if (ret) {
->> +		xdma_err(xdev, "User IRQ vector backup failed: %d", ret);
->> +		return ret;
->> +	}
->> +
->> +	ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1C, ~0);
->> +	if (ret)
->> +		xdma_err(xdev, "DMA channels IRQ disable failed: %d", ret);
->> +
->> +	return ret;
->> +}
->> +
->> +/**
->> + * xdma_resume - PM resume callback
->> + * @dev: XDMA device pointer
->> + */
->> +static int xdma_resume(struct device *dev)
->> +{
->> +	struct xdma_device *xdev = dev_get_drvdata(dev);
->> +	int ret;
->> +
->> +	ret = xdma_reconfig_channels(xdev->h2c_chans, xdev->h2c_chan_num);
->> +	if (ret) {
->> +		xdma_err(xdev, "H2C channels reconfiguration failed: %d", ret);
->> +		return ret;
->> +	}
->> +
->> +	ret = xdma_reconfig_channels(xdev->c2h_chans, xdev->c2h_chan_num);
->> +	if (ret) {
->> +		xdma_err(xdev, "C2H channels reconfiguration failed: %d", ret);
->> +		return ret;
->> +	}
->> +
->> +	return xdma_irq_config(xdev);
->> +}
->> +
->>   static const struct platform_device_id xdma_id_table[] = {
->>   	{ "xdma", 0},
->>   	{ },
->>   };
->>   MODULE_DEVICE_TABLE(platform, xdma_id_table);
->>
->> +static DEFINE_NOIRQ_DEV_PM_OPS(xdma_dev_pm_ops, xdma_suspend, xdma_resume);
->> +
->>   static struct platform_driver xdma_driver = {
->>   	.driver		= {
->>   		.name = "xdma",
->> +		.pm = pm_sleep_ptr(&xdma_dev_pm_ops),
->>   	},
->>   	.id_table	= xdma_id_table,
->>   	.probe		= xdma_probe,
->> --
->> 2.56.1
->>
-
+-- 
+Brian Masney <masneyb@kernel.org>
