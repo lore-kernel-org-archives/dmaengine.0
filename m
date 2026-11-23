@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.45
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.60
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795425448;
-	b=NjiKxDSWDYzniP4idYn+jS8KOOuEzqCfpILaNJoTA24sejKGllHoeNz3Aazk0mi58u+e
-	 g6uIBMLkm7YU+yPr2pSnUU00DXYq26jI2pN2hkr4OchT4UsFhaZvJz8uPwUd9ootWZDr/
-	 FWhKkv0/IMItFWitQ2SbaCl4x5+PAPCMRq3INAY2aKfbV50clL0rq/YzjDxH9rZsTJaDw
-	 9OO87A0XU6DzL12EGX+WC7vvWkHTqQHzYYCCqFBxalhsxrqUnNPWqbxpJhImmZ6AbNh05
-	 3aoI2PfXJnjRah9lFY/Qez2P3uV3EP02DLo5eFhzGdbmhUHJs+bWG0t5SnqVnP7md0Q==
+	t=1795425457;
+	b=TtqPNAhENZK4oHHbPyiCkqgLKgrSYmbidAoo6/vYHOYcODSVG96WKnA8qGV6UYO2CBp1
+	 fif4qP0vzsm+m3DOQELSHDazJ/+wizkulvyNybOgJ7xrEB+EQ7vOQY5aPkXfas3QxPQHP
+	 S4aSP+FqNfQXwdgdvYmpbIXT61FhikYf6hi0zGn4tEz2CJopRJXvZrgF7yKI+O1caXtpa
+	 F23s5KPFLd5+nVXZSYp+cKabbWgFgUXJUIFLZQEtYihE4Bfmi+KJVtijzzbrFftvQSFTL
+	 xljhNOIUWsYKk/OloTrCdcOLYBcuqpjtU0rC2GkG5UOstmMxwhOhhjLhW15uNB/q7zQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795425448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795425457;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:
 	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
 	 Received:From:Date:Subject:MIME-Version:Content-Type:
@@ -26,76 +26,76 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-FromEntityHeader:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=oz6UNjZCoPmMY1WXN5knPFkTJJzqyQ0AK2l/KmH4Irc=;
-	b=CdhGZUj1ADf3qP6WooWVnsbjR20KVij/+H53ajPIM3XK1syRyIWjy5L+aiRFWWOToWDK
-	 XGi1DN2Bzo2OHHV1ypq3y2JPxW2ihMLwF75Txavgh67zLOofr8RPc7+nqyu66NJqjQ86W
-	 oLUiEcr4yFwYUcKdTrofRkWjT6ALTDKBpnQSkOkZiC4FyxldF2cnPXihamVjezpiMBLuD
-	 mXItW7WK81gcZ/ONziFY384BD2r8bTq+cYQOfE5kTdZ84j1M1zfIQNl1Tman9dl0L23R+
-	 glySs6zJyfUqHHOa/w7s//xGDjQNt1Z0lzABqxjggoMIJ/BhysgiHPuQotmOGS6sskQ==
+	bh=6uf3MBc3V2g1zBvM6rT+T4LoTTN981m1+NShEL0RYGU=;
+	b=U8bLuolDv3t7ftoSJ4ZanNjVwJnBj7Knbxol9m349S6xupG2GqkHENb/DnG1cs25/JHd
+	 Q+kekDXncV2Kdk9+ghfYYDpp19vTEAZ1+sXivupn67uHb+XzNug1OCYZiLaY9t5cNKfL1
+	 w8o6acbPr6XfJ5CVfvGUUpAHXdAJK0T1pXSbKoSFmmaNiHat1LmNfBpMBTlmndbCTG6Dv
+	 m2lgY2Fyt0x6zb3vOHJNSPLd42JUFZUu+qQWb0hIPpnTcjSL8EXi9OsCp5vjZp2qTzSKB
+	 mRidxpQfJhEl85xZhW6CarCUXdeSlNFMV7XppcrkDyQgbkISOziywFeSIh1t8Wmm+Uw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=foss.st.com;
 	spf=pass smtp.mailfrom=foss.st.com;
-	dkim=pass header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=Df9PskDk;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.69.45
-Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010045.outbound.protection.outlook.com [52.101.69.45])
+	dkim=pass header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=efdoQU1Q;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.130.60
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011060.outbound.protection.outlook.com [40.107.130.60])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8074606A33E;
-	Mon, 23 Nov 2026 09:17:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8074606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764FE60A2634;
+	Mon, 23 Nov 2026 09:17:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 764FE60A2634
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=Df9PskDk
+	dkim=pass (2048-bit key, unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=efdoQU1Q
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bWXzTf2kXXVYusy9peQHy+tHZjzpGUNjCuv4x5SQomNG9QIiwa61nkUDQ8ciIJKu4UBvtLt7xEokyLiM+bXUdJ6aYanKzhzdttRh+7qsZ/39VnOGh5jGKqZ0ixK//8SuzDU6Gyp4TeR3D+LNQMHKT7137F0ZRyhoyaW0Iwe1l8cYjWZDneyaE5dhd6YpmmYasWWUBlUC5+8vqNHcfmxAOecp4224O5uqPeFCjVgSvV1Te/mGy/fC9tb+v26aIm8pMgZhxyN+1U57FVWicVCACzJC5ucj7SUvAqUQIbazUWkfefp3o2EUSs3M6JRY13WrTE+Gw9qYOAHuavzq2NygqQ==
+ b=pPLwAnJ7MFeGQ+BKnepyDZHwuaZv58mn43JL02nvD39/AFbD3u0hoBluHCsQr6IQ8djGRF3dqcqWprE26092kZxmIA0He8Ca9jf+SX8PU0KS0XDrz6sTaB9S8t3ZoSJ5Eb57H9stTrgPwCiU8NH2dnXv/AdxAvM7nFfrTstuIy6mRpVd6zDhIBhQW/ZK8FbKYRqJT1AzYXW2qU0KK20ni5YcCe1L2jvVxDFdfaqo1vQPnIcgtvRDJKpixz6uV81xEWXL9DH6TlXmsVv9Ju1I4y7uMLbY+P4BTf1Taquc/9IF215Kh/zAzxn/rNlah90Q9RLI4FU2w/ugBjeClwirnQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oz6UNjZCoPmMY1WXN5knPFkTJJzqyQ0AK2l/KmH4Irc=;
- b=jN4t3Pd1i4p2Yy7Abc/78x1dsz6zV4KH5OQkLbHG4EIAb2aIFpP1xapJEzXBtolbUVT95Cxb3uOCjcuWSxPXZhitwhSUIUI+r9a+cZTdJO+B+8aNHjrzM5D7EPqihtwQDH1OXcJLl5m/syNwPs4/DKjS9+9SWo95ojTGigIm7YCcDYdXvk85NuLxPzNVQ4iTjseZ9My+TUwCgOl4G0FDlK0WG4d5XkqiWXbMzKZsIATexWB4iZPg7KGV6Aqzv57Vk3LCAUvZgI/0fxMh8NwSfZTv7t/8Z0NALAwMK2Uma23QDD1oOrug/eHS3dKsZW546jd8xuz8+KrmhgtFnZZ+ig==
+ bh=6uf3MBc3V2g1zBvM6rT+T4LoTTN981m1+NShEL0RYGU=;
+ b=x5h9/hOXqOEWbyvXek2793Hm1un/lh/ouGFDwJt6oohapkklUJKEGrX+ejiHfzQmyItczVrLgjwMq4fjwbatwvwTm7qDp87LZjh5oWcv9/EsFtq7MGKbThAmHYnay+EMrxHKCpwzatHepsbDjaOJ9EliQ3yiHLBVBudhggEy2pKhtIQZSKq5mHUFFW2CyvqcLbIJyBFS9PC0KlEq73Y3n8q08e9Pe2/dQtcN3coC9EvRvhyZD8ycuHSuaCdpiD/1wBXc24P83K88g9PepSgD38z6YWHujeeaObKREsfNoiH9fTcytBEH2PL3BNWD7a6ajNWL/VFh2E9Yplb79J9Atw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 164.130.1.59) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=foss.st.com;
+ 164.130.1.60) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=foss.st.com;
  dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oz6UNjZCoPmMY1WXN5knPFkTJJzqyQ0AK2l/KmH4Irc=;
- b=Df9PskDkwLQXeFSaFBBXfVA1QNkDMqYJNqkKbSnHyGevIwQbqa4m9wTN8cCmaWwmYGDrltn6phQMeerVM7xq3/tFrUrxurCurz/yy9zWpWt7aFDm3MEGSiHdYh++b8VYAJsDc+QW/AHdreZQPB60toDN6fijIp7iY1B2LrrHB3JrUrmgNXcJgu0jNIGt7hqTWYJ9bPFw6hzsydz1BJlX+8cbIocQj4tP0w4mik+zVwvmP+aO+sP3DNCPmXFEGyKRglL3zNHSLGfO8z983s7b7g9a8VT6vGtihqSTZgBzK2baC4NFXS+WO0EXfuLtEe7I5mTMQlqNo8CVvIW3Ovq/pg==
-Received: from AS8PR04CA0011.eurprd04.prod.outlook.com (2603:10a6:20b:310::16)
- by DU0PR10MB6274.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:3ed::14) with
+ bh=6uf3MBc3V2g1zBvM6rT+T4LoTTN981m1+NShEL0RYGU=;
+ b=efdoQU1QgYD+c3oZHiLMkdZrSJ7wN9wzj6xoTN/vXOQznt6lS0JzmTf710uwjjk+srRh7bQD/u3KMQZvXzNCcy5D61PP0TP1K8buFj4z+xcoffVwYRRwGmteWrvOcxcwyt5w25etvYKpy7e0yoerRSUENJg74jiMH2ixt0LoBmEabEqVaOSt81wkJksSlbw3znuH4trSTBXKJfdfghnFO3EoxDvqxqI9t3SKAxpH6/ltIuB7LVPD4E8jqv2XJ7aDUZ2nnrSKo6giHMGu5jHIgHM97YkZn9U+vTalnwEzp9kGL9yheWtNR7ng8geJTxvjobRoFSPewqMzc6qCqlSsrg==
+Received: from VI1PR07CA0273.eurprd07.prod.outlook.com (2603:10a6:803:b4::40)
+ by PA1PR10MB9201.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:4eb::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.4; Mon, 23 Nov
- 2026 09:17:21 +0000
-Received: from AMS1EPF0000009C.eurprd02.prod.outlook.com
- (2603:10a6:20b:310:cafe::5f) by AS8PR04CA0011.outlook.office365.com
- (2603:10a6:20b:310::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.639.14 via Frontend Transport; Mon,
- 23 Nov 2026 09:17:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.662.3; Mon, 23 Nov
+ 2026 09:17:22 +0000
+Received: from ZR1PEPF0000E6BB.eurprd07.prod.outlook.com
+ (2603:10a6:803:b4:cafe::17) by VI1PR07CA0273.outlook.office365.com
+ (2603:10a6:803:b4::40) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.662.5 via Frontend Transport; Mon, 23
+ Nov 2026 09:17:22 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=fail (sender IP
- is 164.130.1.59) smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ is 164.130.1.60) smtp.mailfrom=foss.st.com; dkim=none (message not signed)
  header.d=none;dmarc=fail action=none header.from=foss.st.com;
 Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
- designate 164.130.1.59 as permitted sender) receiver=protection.outlook.com;
- client-ip=164.130.1.59; helo=smtpO365.st.com;
-Received: from smtpO365.st.com (164.130.1.59) by
- AMS1EPF0000009C.mail.protection.outlook.com (10.167.242.73) with Microsoft
+ designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.60; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.60) by
+ ZR1PEPF0000E6BB.mail.protection.outlook.com (10.167.241.74) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.639.5 via Frontend Transport; Mon, 23 Nov 2026 09:17:21 +0000
-Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpo365.st.com
- (10.250.44.71) with Microsoft SMTP Server (version=TLS1_2,
+ 15.21.639.5 via Frontend Transport; Mon, 23 Nov 2026 09:17:22 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
+ (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Mon, 23 Nov
- 2026 10:18:09 +0100
+ 2026 10:18:26 +0100
 Received: from localhost (10.48.87.222) by STKDAG1NODE2.st.com (10.75.128.133)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Mon, 23 Nov
- 2026 10:17:20 +0100
+ 2026 10:17:21 +0100
 From: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Date: Mon, 23 Nov 2026 10:17:06 +0100
-Subject: [PATCH v2 2/4] dmaengine: stm32-dma3: set LL base address when
- transfer starts
+Date: Mon, 23 Nov 2026 10:17:07 +0100
+Subject: [PATCH v2 3/4] dmaengine: stm32-dma3: validate LLI pool
+ allocations and fix cleanup
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -107,7 +107,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20261123-dma3-fixes-v2-2-0a5b013f79d2@foss.st.com>
+Message-ID: <20261123-dma3-fixes-v2-3-0a5b013f79d2@foss.st.com>
 References: <20261123-dma3-fixes-v2-0-0a5b013f79d2@foss.st.com>
 In-Reply-To: <20261123-dma3-fixes-v2-0-0a5b013f79d2@foss.st.com>
 To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, "Maxime
@@ -116,95 +116,116 @@ To: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, "Maxime
 	<amelie.delaunay@foss.st.com>
 CC: <dmaengine@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
 	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<stable@vger.kernel.org>, Frank Li <Frank.Li@nxp.com>
+	<stable@vger.kernel.org>
 X-Mailer: b4 0.16.0
 X-ClientProxiedBy: ENXCAS1NODE2.st.com (10.75.128.138) To STKDAG1NODE2.st.com
  (10.75.128.133)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMS1EPF0000009C:EE_|DU0PR10MB6274:EE_
-X-MS-Office365-Filtering-Correlation-Id: be2ac969-d505-4fb0-84c9-08df49429467
+X-MS-TrafficTypeDiagnostic: ZR1PEPF0000E6BB:EE_|PA1PR10MB9201:EE_
+X-MS-Office365-Filtering-Correlation-Id: c6e05402-bbf3-46ae-5b53-08df494294db
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|376014|261102123227099003|261026140227099003|261022105027099003|261022075727099003|261028144727099003|5023799004|11063799006|56012099006|10067099003|18002099003|22082099003|261021121427099003|261021123027099003|6133799003|261009223027099003;
+	BCL:0;ARA:13230040|82310400026|1800799024|376014|36860700016|23010399003|18002099003|22082099003|6133799003|261009223027099003|11063799006|56012099006|261102124527099003|261102123227099003|261021123027099003|261021121427099003|261028144727099003|261022075727099003|261026140227099003|261022105027099003|261026121527099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	GymJLQ/ZPc0SuiOWKbM1KwoyD7QFwJlY4j1VirDjBGi3n+ENaeGb6kfaataGvumUD45A7TJpjuXiuoX+KxZOB6Ogt+RWMrbQGuByrM3Z0UkM/wSibqK/RoYzexeRPF6/UpvftuEsPzZTt5Wv3y9OR1LQlYc01v0FHiFqTFhsv96Eva5zYgZE0ao05wHSFTmpRNDdjYSxREXv9RazNp3ZfZ59H1esPTJazyGYzvEXWLOLxGguvopxO7fQD8uTGufsS4wa/a37qvm0w/wRWu+RzIchj6V+8hVc7p/9AukzoieyntEGGZZAnQW9OwphdGoxwr3ufEOFsqw6ojXLm5Ln0FyOGZQLf4eA5pylUTgv1C3mXCYgziTWoJ0f09uX/XI8dahjslc7uPnWRef8wsHxuPOtVG8miSg4tdPHnILWwlhYlhyw2c8OD9LDeMkmya1l64zkUkiJdrlRWXRcWEG8WlJpRuf/G2cgxf3dcZDJttQEbHdV4HRXlccjKc+RlkUiqUbIdsAPdya/iV/Ps4Nx26B3AZ+CWu0uKqdKEKlu1nL6lKnoyDIlS1zBbm0i4zObtYMc8xgh/aVgA265UwBlr+dpa0yfSIuF/C3krMjAYgtH42+1xnuFfeLoxECW7/tJFpWK3R3X97GwcD5nuX0fshkQK81oc54D9fgTiyZkAn4m2EjBmeGVWAUVdLYr+Q7FYdHjJj96bHy54VmoZuj6Sg==
+	4lgtPJLXx2n4lRh0pHu2YK0oApKov9iDp2CyKXZ6JM5m10dHX599LxBeQZc1u7cRRs1HUpjJZ536WXqP1G89cddTtr8DC+Ej7FWmXsZNcRJDWZtUOhkdCyC32GEBv+QIIU+xHuL+BK8qYJXN8JONyL5sQQNsKuz36h0RY3v+anNkk5zbMgueq0NcxfQx3+XRhQx4ZolAqZcead+rRvyJa3a0AW4XphD1h/vOGK9rsjUFCEngQnMubxYIjV/YfqqXeCjP+j213V2BkM7aIziTL5E+tcQLl2RPI0AOOjroWaRsj1TlUSEJH3Rjz0GuOvXT6B07VKgXJExUYAlipWNEn1BucPq7rrDU+u+Ute++qZbiUBUuZnKDua/t++rcixbKhQ/CTmuhdp6BKi2YbfeHriRXCn3juWuJ5KqNmckVS5xtIFbIH1UCdjsKlO3Le8k8EDJvAB7hfWiJ5/Gey1wNgU8eeFyZOHQ6MRWI/YXilcdPMz/969TnAQSl8ucYtyCthiBUEO7AYi6nWE8CVpmkitNX0nXRb2HFyBlCGa3imWfKVz0vh0mFJR/hwtOhRpNk5wNQa5HEzUsVbyuBOj/Meu94m6m3/sIzzhBV84tpSB6hjMhyg3D+FK5/pDvHGt0R+Y0tbcxsUlSljqq2nAw4Fg5ywP2NEHQO2SCSmp8I6EBN88Zh9DOVaHYSyUZ7xFev+pxux7kF3u5W9BQ4jw4NQg==
 X-Forefront-Antispam-Report:
-	CIP:164.130.1.59;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(376014)(261102123227099003)(261026140227099003)(261022105027099003)(261022075727099003)(261028144727099003)(5023799004)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003)(261021121427099003)(261021123027099003)(6133799003)(261009223027099003);DIR:OUT;SFP:1101;
+	CIP:164.130.1.60;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(36860700016)(23010399003)(18002099003)(22082099003)(6133799003)(261009223027099003)(11063799006)(56012099006)(261102124527099003)(261102123227099003)(261021123027099003)(261021121427099003)(261028144727099003)(261022075727099003)(261026140227099003)(261022105027099003)(261026121527099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	7HCvgkuhYll2wNLGqbEkngAxAnV7hC7TdHAigxqgSNrWhmpC/+4w2uUwn3ix129I4G5sO64fJAWKu65awy5xcFk5Vrmogo15kJNwQQm8IwLDzN+aQqIC/5vGej27T80SohrTPaB10W1K/h1ksDHCVw0PBeFXe5R9PapgMWRv2/XXhyoAYJl36OBm2Qhz3mwi2H442Ype0bXNCZ6Wo0cb30ECdRZxLEHAsf3D0tmRGMdHyzqS9rLIAT6SHEs4X2qOB6rnWIVNFxt4G/H3LlKR4PEHG5Eb/I0F5QNPIIVoy7M3W8XwIiwvbrOu/BmzptFQ7OCLwuv3kg91d4H9MfEPVdSI3AO22Z6aRauchxJqJVAsaXj6t2Bdrc+fKE1IsBO3D8uxEQb9ZSZAGDt/ySnXyrwqW3BlfFFmAKzOyGri0Gc3D+EnOhUUCXXSrsgJz7Im
+	Rs9vkVWiGmFgWy4WZKHqDkZPo0yUAYjoLh9fSaurqYEVZieJCZYaOHzdJnvjaxVUMbDsgqS1G14OxcHlvw5E2C548yFp08ZKD74CoOi42zsaET+fNwEW3iEK1hV9HpTX21PbuxAcHPaabsyXys+sr4SFiOa+Li7xVPvgRLbXOhu4P25xuQYE9VUvwDWW0MJzD4oe+vAst6xr01mL/Gvu+IVTpMy63EatnhNIMY1LTlNflnuAx82Cgpzx3HR0KZahS0bddaNzX4+iiTojUNdISh6kd6ikE75TuTU4R0nL0F/3C4xSdnKlxhjk3vGjDy6ylej0fTahitZu1fcqV7qOBvnKtngLy4Filoo/c0YWHYCc6l2102SwcipAS15kXezadRtlhIGvmNTUwNHPIgT215Hn/fDZfoDHbBY6JIcLRfTK/h0W7yp0tmJh+MBK6Uop
 X-OriginatorOrg: foss.st.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 09:17:21.5600
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2026 09:17:22.3622
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: be2ac969-d505-4fb0-84c9-08df49429467
+X-MS-Exchange-CrossTenant-Network-Message-Id: c6e05402-bbf3-46ae-5b53-08df494294db
 X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.59];Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.60];Helo=[smtpO365.st.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	AMS1EPF0000009C.eurprd02.prod.outlook.com
+	ZR1PEPF0000E6BB.eurprd07.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR10MB6274
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR10MB9201
 
-Linked-list (LL) is allocated in stm32_dma3_chan_desc_alloc(). The LL is
-then used when starting the transfer in stm32_dma3_chan_start(). Nothing
-prevents a user from preparing another transfer before starting the
-previous one. If, for the same channel, another kind of transfer is
-prepared (using dmaengine_prep_xxx API), the LL base address may change.
-This address could be overwritten in the CxLBAR register if the channel is
-disabled, or the CxLBAR might not be updated if the channel is enabled,
-leading to a mismatch between the transfer being started and the LL pointed
-to by CxLBAR register.
+All descriptors in a linked list must share the same 64 KiB address
+window because CLBAR provides the common upper address bits. The DMA pool
+boundary only constrains individual allocations, not the whole list, so
+descriptors in a single list may be allocated from different pool pages in
+different windows.
 
-To avoid this, write the LL base address in CxLBAR when starting the
-transfer instead of when the linked-list is allocated.
+Check each descriptor's base address and reject lists that span multiple
+windows, instead of letting the hardware fetch descriptors from wrong
+addresses. Track the last allocated entry so that the error path frees
+exactly the descriptors that were allocated, including the one that
+failed the window check.
+
+While at it, simplify the ccr initialisation, which is functionnaly
+equivalent to the previous code.
 
 Fixes: f561ec8b2b33 ("dmaengine: Add STM32 DMA3 support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 ---
-Changes in v2:
-- emtpy line added  emtpy between parapragh following Frank Li's review
----
- drivers/dma/stm32/stm32-dma3.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/dma/stm32/stm32-dma3.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-index a464e0cefd64..a056f73fbe02 100644
+index a056f73fbe02..7c509a69f5e5 100644
 --- a/drivers/dma/stm32/stm32-dma3.c
 +++ b/drivers/dma/stm32/stm32-dma3.c
-@@ -396,7 +396,6 @@ static void stm32_dma3_chan_dump_hwdesc(struct stm32_dma3_chan *chan,
- 
+@@ -397,7 +397,8 @@ static void stm32_dma3_chan_dump_hwdesc(struct stm32_dma3_chan *chan,
  static struct stm32_dma3_swdesc *stm32_dma3_chan_desc_alloc(struct stm32_dma3_chan *chan, u32 count)
  {
--	struct stm32_dma3_ddata *ddata = to_stm32_dma3_ddata(chan);
  	struct stm32_dma3_swdesc *swdesc;
- 	int i;
+-	int i;
++	int i, last_alloc_idx = -1;
++	dma_addr_t base_addr = 0;
  
-@@ -423,10 +422,6 @@ static struct stm32_dma3_swdesc *stm32_dma3_chan_desc_alloc(struct stm32_dma3_ch
- 	}
- 	swdesc->ccr = 0;
- 
--	/* Set LL base address */
--	writel_relaxed(swdesc->lli[0].hwdesc_addr & CLBAR_LBA,
--		       ddata->base + STM32_DMA3_CLBAR(chan->id));
--
- 	/* Set LL allocated port */
- 	swdesc->ccr &= ~CCR_LAP;
- 
-@@ -790,6 +785,10 @@ static void stm32_dma3_chan_start(struct stm32_dma3_chan *chan)
- 	writel_relaxed(hwdesc->cdar, ddata->base + STM32_DMA3_CDAR(id));
- 	writel_relaxed(hwdesc->cllr, ddata->base + STM32_DMA3_CLLR(id));
- 
-+	/* Set LL base address */
-+	writel_relaxed(chan->swdesc->lli[0].hwdesc_addr & CLBAR_LBA,
-+		       ddata->base + STM32_DMA3_CLBAR(chan->id));
+ 	/*
+ 	 * If the memory to be allocated for the number of hwdesc (6 u32 members but 32-bytes
+@@ -419,18 +420,38 @@ static struct stm32_dma3_swdesc *stm32_dma3_chan_desc_alloc(struct stm32_dma3_ch
+ 							&swdesc->lli[i].hwdesc_addr);
+ 		if (!swdesc->lli[i].hwdesc)
+ 			goto err_pool_free;
 +
- 	/* Clear any pending interrupts */
- 	csr = readl_relaxed(ddata->base + STM32_DMA3_CSR(id));
- 	if (csr & CSR_ALL_F)
++		last_alloc_idx = i;
++
++		if (i == 0) {
++			base_addr = swdesc->lli[0].hwdesc_addr & CLBAR_LBA;
++			continue;
++		}
++
++		/*
++		 * dma_pool boundary=SZ_64K only guarantees that one allocation does not span a 64KB
++		 * boundary. It does not guarantee that all allocations of a given linked-list land
++		 * in the same 64KB address window required by CLBAR/CLLR addressing.
++		 */
++		if (base_addr != (swdesc->lli[i].hwdesc_addr & CLBAR_LBA)) {
++			dev_err(vchan_chan_dev(&chan->vchan), "LLI crosses a 64KB window (%pad)\n",
++				&swdesc->lli[i].hwdesc_addr);
++			goto err_pool_free;
++		}
+ 	}
+-	swdesc->ccr = 0;
+ 
+ 	/* Set LL allocated port */
+-	swdesc->ccr &= ~CCR_LAP;
++	swdesc->ccr = FIELD_PREP(CCR_LAP, 0);
+ 
+ 	return swdesc;
+ 
+ err_pool_free:
+ 	dev_err(vchan_chan_dev(&chan->vchan), "Failed to alloc descriptors\n");
+-	while (--i >= 0)
+-		dma_pool_free(chan->lli_pool, swdesc->lli[i].hwdesc, swdesc->lli[i].hwdesc_addr);
++	while (last_alloc_idx >= 0) {
++		dma_pool_free(chan->lli_pool, swdesc->lli[last_alloc_idx].hwdesc,
++			      swdesc->lli[last_alloc_idx].hwdesc_addr);
++		last_alloc_idx--;
++	}
+ 	kfree(swdesc);
+ 
+ 	return NULL;
 
 -- 
 2.43.0
