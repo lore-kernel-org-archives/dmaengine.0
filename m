@@ -1,47 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=37.205.14.76
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795431755;
-	b=PupxEpOrzEfmrE7ER76TIL+Llxhb0A8Ckk3iKCJKZR+CSLfMVJ2tjeKbVzhQkFjMbsPL
-	 Etzdx83fxrPCTSWDXxGae8lpNCLDi8bEYcRQ5XaFUaPKTK1XmxvgXRH01oshXfJ0eDNB+
-	 6IwQQAWrmEoD4PsyfdODWOWm4Unlbm1xhv/PumGSv5EwrVnw8WMq5gPqW+YUtg/dhx6Du
-	 gRiXrxfkku5Ep1HXw4e1GJmHgR9z7vEyYnTA1PpgQIW/00Hk76YD9uQZmuLWJpT42wtWy
-	 sgE+lmNDxb7r31WBhVVP0OdYtHBg1WBl8as+ATkdYBnsZP0uWVz1mBE78Irnx4CfC0Q==
+	t=1795436586;
+	b=NwU5gC7mrYfcCTKD48SSt2VCxucv0T816uaiFnxNoAhcSd/92FIacmvizyx6UzThOrWv
+	 WWjiBNNduxtepMOlq11rZY0Ep6n3YviHPhSmjg6w9MPekXR8xsNzaZYy7goidZ5ao6T48
+	 s778s1hYloqmBXypqDfEifOAJOr38jl45blgZvxpcrvhg6b9scDG4shT+kaCNVgl8wF4Q
+	 Gebm3tLUj79DvKrv3OuoorCu/MtXqdj/ZcXd9gQ5ClMGJHC6BwtivjWRiHxlDUeuH7pG/
+	 DBW3iiKY+eMOPP4I6SbKlNTW4Hw2CA+vaA0yz/tLQoC0Iuc3ELuK6uAbxxsgI+RVsTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795431755;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=UlzfcXh+CNnxF1/O6sGZNDQpzwhENM9AgD1sdDiZQ0E=;
-	b=hnvpqMVWsNtlrdsmpzYuVSOWxQbOmKG6BfezSCjJ2u6zsMMQUgbpxyRCXwxojUvTX8Qd
-	 2R8M0cGXd90c3deIu2BN/O9oSbu+6HuDpjMunT8JeN7br3gUlXFf6GGp+cJaR0I2Jf5W/
-	 foYsJYGg3SjAyRz27UElVdjVz64d4qOB7GKvRNO3ndrjM14nICLGadzl9jqQg405Sit6S
-	 6RtpyD53qup2OnR7nlibPF1dU2MixzHcvHZ2lcgeRBYMn5U7m+Wv4+i3CVJ9H5kYPR8Iq
-	 ttkFWC/1FJTuO7FumoWiyj0yPfsVkj3pVl/nH27CMZxvnzEGOO/AUS9HibZeDZYNdlA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795436586;
+	h=DMARC-Filter:Received:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CyQ0o9WVz8accDZel3cTFGEBMTNvH811X58qSZJHyvM=;
+	b=QeJvdFIjD7W4cmAPGsZK/Hllb/OAH95qik0bwA809TTjxcJegGAkUxV8cokfpqlgYShe
+	 ZZSnPBmnllUF4J9sp4Kl6MAAQeM5TJMIBMl+YECYQ0dIVUciV1wj1y4isO1FUaTJal6Ks
+	 t2QHs2JmDBKQjyW0MGhLogaskgsQzHpPT9NzNsH9rwvNm6TzqD1WLlZPQItq7W06ljbnk
+	 thfKYG3NhrcJkP7f7Q/a1xR9TH5/ZPv851d3juZ1Uc1uJldN3rhBFemuFiwNqn2H7fhzX
+	 EmkbSjdYYhjEnhHtmZYYnYvsU59rQtuPSW6Ytv3A2+0o+SmNm9A3uimkRigMsPY/i5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lQ2ti56H;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=none header.from=gpxsee.org;
+	spf=pass smtp.mailfrom=gpxsee.org;
+	arc=none smtp.remote-ip=37.205.14.76
+Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1EE606A32C;
-	Mon, 23 Nov 2026 11:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lQ2ti56H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409FB1F000C6;
-	Mon, 23 Nov 2026 11:02:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795431754;
-	bh=UlzfcXh+CNnxF1/O6sGZNDQpzwhENM9AgD1sdDiZQ0E=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=lQ2ti56HgOLvZQ+snX0qzWOH5X+4cz5JgkTnMpOFB2yLxXsl5Wm3BHMQKwQlBvKZh
-	 odc+Xg8v4PoUrHvbGH9J/9w55VbUP1oiRuoahUTNIZDspgiEo0xXPxe9GD5oX2tRhu
-	 FxtAz1ZAFWwj8DMNesbqXFvnLu4Aw3XITh8IpI7rlWhxQbubyW6tByt6Mi3BGOVSwQ
-	 wWWlN/q5y+GS2TSkG6w9uOKQXl2f07+AQxQEzEVfDP7FYfOoGupmJxxfErczBhJd28
-	 qc38rnwyOEkntRjyNb8DlTrmLZPr7gZBqyzSLEOHdgS+XJ62QXZhA76KG5yXg5P6RU
-	 7qrZi5m8+e2ag==
-Message-ID: <296b2280-f825-446b-b128-f37bc41f1eb3@kernel.org>
-Date: Mon, 23 Nov 2026 12:02:30 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4130606A333
+	for <dmaengine@vger.kernel.org>; Mon, 23 Nov 2026 12:23:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4130606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
+Received: from localhost (unknown [62.77.71.229])
+	by mx.gpxsee.org (Postfix) with ESMTPSA id C6A4FC11F8;
+	Mon, 23 Nov 2026 13:22:52 +0100 (CET)
+From: tumic@gpxsee.org
+To: Lizhi Hou <lizhi.hou@amd.com>,
+	Brian Xu <brian.xu@amd.com>,
+	Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Frank Li <Frank.Li@kernel.org>,
+	Michal Simek <michal.simek@amd.com>
+Cc: dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>
+Subject: [PATCH v4 0/1] dmaengine: xilinx: xdma: Fix broken PM suspend/resume
+Date: Mon, 23 Nov 2026 13:22:35 +0100
+Message-ID: <20261123122236.5460-1-tumic@gpxsee.org>
+X-Mailer: git-send-email 2.56.1
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -51,55 +55,32 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] dmaengine: remove redundant
- pm_runtime_dont_use_autosuspend() calls
-To: Frank Li <Frank.li@oss.nxp.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
- Frank Li <Frank.Li@kernel.org>, linux-arm-kernel@lists.infradead.org,
- dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20261030145901.1393-1-crofts@kernel.org>
- <auS_PrwhMwhc5BNk@SMW015318>
-Content-Language: en-US
-From: Joshua Crofts <crofts@kernel.org>
-In-Reply-To: <auS_PrwhMwhc5BNk@SMW015318>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 30-Oct-26 17:01, Frank Li wrote:
-> On Fri, Oct 30, 2026 at 02:58:58PM +0000, Joshua Crofts wrote:
->> [You don't often get email from crofts@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->>
->> Since commit d1706f9da9f4 ("PM: runtime: call pm_runtime_dont_use_autosuspend() on reinit()"),
->> driver core is now responsible for undoing any
->> pm_runtime_use_autosuspend() calls on driver exit.
->>
->> Remove the redundant function calls.
->>
->> Joshua Crofts (3):
->>   dmaengine: at_xdmac: remove redundant
->>     pm_runtime_dont_use_autosuspend() calls
->>   dmaengine: qcom: remove redundant pm_runtime_dont_use_autosuspend()
->>     calls
->>   dmaengine: ti: remove redundant pm_runtime_dont_use_autosuspend()
->>     calls
-> 
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> 
->>
->>  drivers/dma/at_xdmac.c     | 2 --
->>  drivers/dma/qcom/bam_dma.c | 1 -
->>  drivers/dma/ti/cppi41.c    | 5 +----
->>  3 files changed, 1 insertion(+), 7 deletions(-)
->>
->>
->> base-commit: d89e1d186ec9271bf78e62771779e9fc03bf0fc3
->> --
->> 2.47.3
->>
+From: Martin Tůma <martin.tuma@digiteqautomotive.com>
 
-Hi, gentle ping on this series!
+Changes in v4:
+- Fixed parameters documentation of xdma_reconfig_channels().
+- Removed unnecessary parentheses around chans[i] in xdma_channel_init()
+  call.
 
+Changes in v3:
+- Reuse the HW IRQ configuration code in init and suspend.
+
+Changes in v2:
+- Added missing user IRQs reconfiguration.
+- Prevent warnings when CONFIG_PM_SLEEP is disabled.
+- Fixed documentation/indent.
+
+Martin Tůma (1):
+  dmaengine: xilinx: xdma: Fix broken PM suspend/resume
+
+ drivers/dma/xilinx/xdma.c | 146 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 123 insertions(+), 23 deletions(-)
+
+
+base-commit: 65e4fd942f72a9dba0e4e257290c4fa1aa756854
 -- 
-Kind regards,
-Joshua Crofts
+2.56.1
+
