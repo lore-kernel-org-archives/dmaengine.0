@@ -1,79 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795395200;
-	b=MBe6t89yMWuzPDi9dTcd0V4Ywr9eBY6NvMj2vnVahjcyo2unHYeST9uJMvyJF4eikyX6
-	 JaAiTsrMH6EPkYy5SBDcNZp6Tuq5BXf6e4KrDJt7Yi+duo6KbOgLcTW0mbN3Tm+Jq4qx8
-	 +ZgD7+CWafxOjJp1tUO3CQIRmLiAdtmiU15t/8SKKRh0iNd/qPlVenkQ6Zc+RjsoS/5x5
-	 v82Iz3lPLq9iyBGpWyZ1RJ9SymUrFDmK9c1C7AywSlY9s4P5mlGF78FWlwKCsOWAGO3V/
-	 xmb3iKaALaWKM+ahdui67lE6ucx16dp2gtaGNQl0liDomXqCmIMwf62bl76xFl3OLAw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795395200;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-Endpoint-Received:X-Original-From:Reply-To;
-	bh=eSw5Z0+yIQVkx+BQEpJQ+jfzywFUxYk8ZiC2TGjHOi8=;
-	b=42lYeEi5caFwbGhEa/J+wgMtkR66fKbcpYLN+3Yfq8YfXWGDcNal8hebaQ3vq0u/+bqk
-	 QUdlJrTWt0jtkExOG4ZnDtECpZEDqnWik+CwR/FFnwty3lsVDZ0EOSyXsinAXhqYU+zAN
-	 4uUry2RpHPeuycQrSdSe8Sl6U22dnsfQaPw53ZmNc9MXb8t+3Y3Vbty+mVgWK2VStw19a
-	 pVzqkDOofcVdYoWNE4f2e0F1EdKASEi/v0/VtXfKN4ksExkYlQ+zLvbmtsRCrxgl69wUs
-	 37Q7OVtdR+SYrvNvFGmyRcQUVDFepyMZfFSeYYsx9w0lVGM6XOqUdlYsNX2GYs2k2AQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QG8sqYzX;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795396169;
+	b=qigaqaGM7alYF/rzSsQERbC0nI3POAGNUfYroPrx7NB4mmLMZWSzf4XHSfffiWhGPQcl
+	 VYHr2eIjSZB1yQNaiDweAKbIomtHP9TDIVnt2I3mTJ0bQOIzKHOLC+s57iOE2GrY5xz23
+	 pkato/E17YZD98jVPoDmd6fEyuJ7sDWfPbSnoRJUHyihCrk4Rb+SSkfKDPPMXCZ09cw3E
+	 4frC/GTBu7bvx6NgxTKWyXwqUJC4sRdM4LLpwWdWk5kT18arSjJtEmnbbpci8LTb7tD+A
+	 2wQi/os7kH2KmTkeWDMjlAI3O5AW7ynt0kv2KVvltqHttzyon+85CudyThp5a7HN4Ng==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795396169;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=1MjaqHmM5C5XU1vyvh9JSmAimK6pmg3JHXUPYV/mlm8=;
+	b=ZATivpA7sHewOlr71jySsc+UjvlLYdI8DygU7k2bKqcHnCsVtSNwF8CiEUQzH9OSnV2t
+	 fmvjL/eYf9A4xVoPJ0iP/JYDwgwV5BD85hASASNhZw7b+mTg/2P6LEWmKa/+VlkPQbHpD
+	 vnT81eFWepQ7nnfU2LQe02gLOrwvVBsuEC6WpYtdQdo39KiUwyArz1lvt/5aB6Dspx/HM
+	 Sj8zKdvTbO+SAwDtvtcTukoiD6/8TXufj+vXrgCL8IkcfJLYGlDuCQg7m8yS4M393FlQv
+	 Eyj+4hXppAGGm6repM7XoBVoXWunV+ehoPGhRoYzfuAj8uIA+XqBjLFZwWHjiYGIWRg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dykjPnXO;
+	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D417606A31D;
-	Mon, 23 Nov 2026 00:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCC0606A31A
+	for <dmaengine@vger.kernel.org>; Mon, 23 Nov 2026 01:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QG8sqYzX
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795395199;
-	b=yQk2EOIwe+qLggSF3BK6BTLM5SWSyseWKxXGC9Eqcg2a8UrEcNWJTuG2Bvawk0RM0ZDY
-	 tj7Id4SLZwSHH1OgbdiiZ+nmW7Vx5zduxc3hv18kZj7xqj3PBo1Yv4yLougzmIod5SFzP
-	 zaqQq6n1JukoLHxH6DI4ns4jxXC7t2fBLiB2o2y86gMtEkRFG92R98EWA+XzHAeF3McuP
-	 SstR/MK6zfl9LCyRcdnWx+vSYSJLM29T7sbYX561tQK4F8PeFiyRvK1pTfpVtnDZqwsiu
-	 6/8Q7IQg7GcpshYqZcoCm3SDgJWPMCzmLujLQBkkXPsF7+AeVtd54/Trzdh3Fk4ap0w==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795395199;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=eSw5Z0+yIQVkx+BQEpJQ+jfzywFUxYk8ZiC2TGjHOi8=;
-	b=zkCYJP4ElasAKtok/fRXP2iezd1eDpKLbrKONLbM9nX3940fLMPAEB6V8eN9u52V+UKd
-	 aVqDdP5mtIux+5lf+jAsr/W/VciYw20upCFMkCs9H605df/opJz7k5qmHecY8GwebY9f2
-	 1nB337x46kD8n82sEpqHDACcYCC7zcrHF4byABFK4K0xLoQSgdmoNKCMXFTtoAyPS6ptl
-	 KSTP4rcXHzkBFgcRo2bKiEOAcZxIpPccUG7tTiPrta//knEREHym3mhmCmQbF7cPjptX9
-	 5CPjiYAjE1l3C9hwQrQHxXK6EOhvueQ6R8MrT7CSLYR2Qoz4tjfQlfqauvciOWGirMA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 63E1F1F000CA;
-	Mon, 23 Nov 2026 00:53:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dykjPnXO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2351F000C0;
+	Mon, 23 Nov 2026 01:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795395199;
-	bh=eSw5Z0+yIQVkx+BQEpJQ+jfzywFUxYk8ZiC2TGjHOi8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=QG8sqYzXMNYuO0MnWoa/6VChRBnBK/9UzCES8DUE0HGJDWhr0EdTh/8JIDt/chOJx
-	 7UYp4zMThFY/qQlAR7mkJcxwH26srEU8nL9PE4JVBC607EXxeXuf8Lr0ISdaWvNZy3
-	 kdI/9eULILb+PvoJmA+X9gjyDxGqeAM8rpKvhaYUdXadid64HLiizlsD1J2MC8+k7O
-	 tiTmfXIpEX1R+mv/cu5i5HvBUw6dxMZk37pXGC1DuF/qSLTkKDO1ivN2fZOXzL/crA
-	 xH77HBO+lG3fuiuD1soeur4i5NVySVLlKqB4AWs7sZsm3oWInHaFo/7S8uB37YczhV
-	 FL9MaE/be5RFg==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id D8F584C298;
-	Mon, 23 Nov 2026 00:53:06 +0000 (UTC)
-From: Suyuan Wang via B4 Relay <devnull+shyckless.gmail.com@kernel.org>
-Date: Mon, 23 Nov 2026 00:53:06 +0000
-Subject: [PATCH 1/2] dmaengine: at_xdmac: Kill the channel tasklets in
+	s=k20260515; t=1795396169;
+	bh=1MjaqHmM5C5XU1vyvh9JSmAimK6pmg3JHXUPYV/mlm8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=dykjPnXOx9huyMlZUi+LwFpBk/HDvRB8ys72S0m8yIAlgy9Qcgo8QLfkbvx+gjG4V
+	 IsueL356r5omib0oTpe9OZy1b8tN8AqXml5Np0o0onMee3X68K/Bj+CLR6QcnjQL0r
+	 yZD2rwwCpaHC0eFOCTo9eZgbm7MSMtZBaz4wGYbICXmKkJs1qsmwkAXrQRIm/bcB+W
+	 c4sTwQh+h0YeYMGrMMLw/1cn6gpYVM1PGjWxfky5RSHFeB6RUFzZQJMG1mQ4K/yzyJ
+	 EzuIGOKTFMCa1I40G4f6oxq7lcmRmuQ9HBMGyacGFTvBKDqs6ga9k2LNbLideCBfrl
+	 wTu/u1uh0NM/g==
+Message-ID: <sashiko-outbox-228507@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/2] dmaengine: at_xdmac: Kill the channel tasklets in
  remove again
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Suyuan Wang" <shyckless@gmail.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261123-dma-chancnt-v1-1-f0eea0a4bb63@gmail.com>
+References: <20261123-dma-chancnt-v1-0-f0eea0a4bb63@gmail.com>
+ <20261123-dma-chancnt-v1-1-f0eea0a4bb63@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 23 Nov 2026 01:09:28 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -82,84 +60,78 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261123-dma-chancnt-v1-1-f0eea0a4bb63@gmail.com>
-References: <20261123-dma-chancnt-v1-0-f0eea0a4bb63@gmail.com>
-In-Reply-To: <20261123-dma-chancnt-v1-0-f0eea0a4bb63@gmail.com>
-To: vkoul@kernel.org, ludovic.desroches@microchip.com
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Frank.Li@kernel.org, allen.lkml@gmail.com, dave.jiang@intel.com, 
- dmaengine@vger.kernel.org, andriy.shevchenko@linux.intel.com
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795395185; l=1963;
- i=shyckless@gmail.com; s=default; h=from:subject:message-id;
- bh=0bu2ZG6YjZNYO8i4NTeIpO5xmk3AyoVwzgyIl6x73y0=;
- b=GN+9Tcxa5FdlvNodTuggieGgo/+wwVABpHuK75TugVN8dd466Y8HGsvRXU0on8ZU1XQA21oCK
- S5A7eaMLqmhBmmnCBans7qbDW/+3QfKLdOgtOHH+EXq4UTwUItjv2Rz
-X-Developer-Key: i=shyckless@gmail.com; a=ed25519;
- pk=pMtccVGiWES3bV+7YBFuBclkvq2n2HBHQ5azaBrK2lY=
-X-Endpoint-Received: by B4 Relay for shyckless@gmail.com/default with
- auth_id=1498
-X-Original-From: Suyuan Wang <shyckless@gmail.com>
-Reply-To: shyckless@gmail.com
 
-From: Suyuan Wang <stevewong@hust.edu.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [Medium] dmaengine: at_xdmac: chan_dev UAF and unclocked MMIO in
+  at_xdmac_remove()
+--
 
-at_xdmac_remove() kills the channel tasklets and frees the channel
-resources in a loop after free_irq():
+commit d1b41bac9406538e5524be5f60b8b97177c4c118
+Author: Suyuan Wang <stevewong@hust.edu.cn>
 
-	for (i = 0; i < atxdmac->dma.chancnt; i++) {
-		...
-		tasklet_kill(&atchan->tasklet);
-		at_xdmac_free_chan_resources(&atchan->chan);
-	}
+dmaengine: at_xdmac: Kill the channel tasklets in remove again
 
-Since commit e81274cd6b52 ("dmaengine: add support to dynamic
-register/unregister of channels"), dma_async_device_unregister()
-unregisters each channel and decrements dma.chancnt for it, so the
-count is 0 by the time the loop runs and the loop does nothing. A
-tasklet scheduled by an interrupt can then run after atxdmac, which is
-devm-allocated, has been freed.
+This commit saves atxdmac->dma.chancnt before dma_async_device_unregister()
+decrements it to zero so the per-channel tasklet cleanup loop in
+at_xdmac_remove() runs again.
 
-Read the channel count before unregistering the device.
+> diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+> index ef0dfe9d37ba3..ef4012c225730 100644
+> --- a/drivers/dma/at_xdmac.c
+> +++ b/drivers/dma/at_xdmac.c
+> @@ -2436,6 +2436,8 @@ static int at_xdmac_probe(struct platform_device *p=
+dev)
+>  static void at_xdmac_remove(struct platform_device *pdev)
+>  {
+>  	struct at_xdmac	*atxdmac =3D (struct at_xdmac *)platform_get_drvdata(pd=
+ev);
+> +	/* dma_async_device_unregister() decrements dma.chancnt to 0 */
+> +	int		nr_channels =3D atxdmac->dma.chancnt;
+>  	int		i;
+> =20
+>  	at_xdmac_off(atxdmac, true);
+> @@ -2448,7 +2450,7 @@ static void at_xdmac_remove(struct platform_device =
+*pdev)
+> =20
+>  	free_irq(atxdmac->irq, atxdmac);
+> =20
+> -	for (i =3D 0; i < atxdmac->dma.chancnt; i++) {
+> +	for (i =3D 0; i < nr_channels; i++) {
+>  		struct at_xdmac_chan *atchan =3D &atxdmac->chan[i];
+> =20
+>  		tasklet_kill(&atchan->tasklet);
 
-Found with a static analysis tool and checked by hand.
+[Severity: Medium]
+Does re-enabling this loop after dma_async_device_unregister() cause
+at_xdmac_free_chan_resources() to dereference a freed chan->chan_dev?
 
-Fixes: e81274cd6b52 ("dmaengine: add support to dynamic register/unregister of channels")
-Cc: stable@vger.kernel.org
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Suyuan Wang <stevewong@hust.edu.cn>
----
- drivers/dma/at_xdmac.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+dma_async_device_unregister() unregisters each channel device, triggering
+chan_dev_release() -> kfree(chan_dev) and leaving chan->chan_dev dangling.
+When the loop below runs at_xdmac_free_chan_resources(&atchan->chan) with a
+non-empty free_descs_list, it passes dmaengine_chan_dev(chan)
+(&chan->chan_dev->device) to dev_dbg(), which is a use-after-free:
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index ef0dfe9d37ba..ef4012c22573 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -2436,6 +2436,8 @@ static int at_xdmac_probe(struct platform_device *pdev)
- static void at_xdmac_remove(struct platform_device *pdev)
+drivers/dma/at_xdmac.c:at_xdmac_free_chan_resources() {
+    ...
+	list_for_each_entry_safe(desc, _desc, &atchan->free_descs_list, desc_node)=
  {
- 	struct at_xdmac	*atxdmac = (struct at_xdmac *)platform_get_drvdata(pdev);
-+	/* dma_async_device_unregister() decrements dma.chancnt to 0 */
-+	int		nr_channels = atxdmac->dma.chancnt;
- 	int		i;
- 
- 	at_xdmac_off(atxdmac, true);
-@@ -2448,7 +2450,7 @@ static void at_xdmac_remove(struct platform_device *pdev)
- 
- 	free_irq(atxdmac->irq, atxdmac);
- 
--	for (i = 0; i < atxdmac->dma.chancnt; i++) {
-+	for (i = 0; i < nr_channels; i++) {
- 		struct at_xdmac_chan *atchan = &atxdmac->chan[i];
- 
- 		tasklet_kill(&atchan->tasklet);
+		dev_dbg(dmaengine_chan_dev(chan), "%s: freeing descriptor %p\n", __func__=
+, desc);
+		list_del(&desc->desc_node);
+		dma_pool_free(atxdmac->at_xdmac_desc_pool, desc, desc->tx_dma_desc.phys);
+	}
+    ...
+}
 
--- 
-2.34.1
+In addition, because free_irq() and tasklet_kill() run after
+dma_async_device_unregister() and clk_disable_unprepare(), an in-flight
+interrupt or scheduled tasklet can also dereference the freed chan->chan_dev
+and access XDMAC MMIO registers after the controller clock has been disable=
+d.
+Should free_irq(), tasklet_kill(), and at_xdmac_free_chan_resources() run
+before dma_async_device_unregister() and clk_disable_unprepare()?
 
-
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123-dma-chancn=
+t-v1-0-f0eea0a4bb63@gmail.com?part=3D1
