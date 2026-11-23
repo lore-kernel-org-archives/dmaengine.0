@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795446522;
-	b=BZZvkSNBCmJvdMDLWHNYlf0LEjRQuLOifecaAPEmwnAOkl5BCeJ6x7YjC04uIc2bBA/D
-	 j4AA7kjOd62MhPPLnvsDhuto4gkCq/5YzpiuoyMfvkDlgWPyBPUDU7YaoY38zCkU/eMlm
-	 PV+b04T8HUJZBGy3MvJQefICD3Ks0rhrsHQlvCkLV3yo5DNMbsXVFnvebObDJbK6wI74f
-	 hQvk1J91xxNh5iMOouaL+Sg7X9M15HetZ3h6U64hFO2XDiqJYkOr+yYJ6tlprh8JSqjO6
-	 9L20fdtICajGB+iYKBivRyJ+UYXRhCldy0nIhrtTJKhKMR4s5Rn5rUI7mBsdE/o/UNg==
+	t=1795446553;
+	b=oFnhpwStIinLd3a2rQSzIasG8x8aTcJbL3L6vBGdsALAHhFe0sNLegkD3CLleON6dzpF
+	 FA/zBWfcoW0hHhZT9Bit8chiXzeBjE7fJXHxPGWSHcD75TiBX+3wOzGRozJLyHrxoss2i
+	 4Y6hl8jLtqWIe1cigyOF2yAFADT1CT+bWEGEafOTmfAzjjuar4yRpw+y88yRPFGImk4yB
+	 06nSUlisAKa6hClefe1wyUeNp1DEJyRSFRpVydeQbzd90nJaDUXgpr46+cjFo0jmG9RdP
+	 kuhR3pQpi7sJympjgxec41iCKbSK1s8C9QkarG1KOAy++/SGhr2wyXYC7pD95HkVoDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795446522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795446553;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=cBnjnfPrI5GqXOR0gLmz+atrHWpsioGJfdWD9aN4KPs=;
-	b=ddwRHEL09cRXYK9eSD7oxFUrU0BWRa29RlpAWpiH158nk4PNqLrJqaxDztsA99kLwky+
-	 PFClIaGzoH9Ix1zXtSQFGvMl2GheBdCJZCOQcrGcDxf4+7r/Zp6diItFyqvZTL5EiYW2x
-	 /111+Rbr8pUdtoXABeNxUPtuVv7OViNJXhQ+AeddJ4WjiolAMrYQ85wOYcmWNYFBvBf9o
-	 WJsd3FObSbpRMceb5Tk3XYqFKsqIXVwmhlySUQyUxKqbKNrLlcXtFV/nr3RJ4VTg22nKP
-	 TRzWi/AyE65DB0LcGm4TSJ5ZGAqzjQXrOgxXTLgv1uPnNuMKCIHTX7BdMMAJhqfrKyA==
+	bh=O0I3oMMaLQevDn9qj5uUVhPOD4pkBQxviqxeY0uv2SQ=;
+	b=U5bd9r84wc1zpN2l/MkeZzXCRA7B9weEDPdyq8zLQsIEY+8duz0EVk2UtluyDUvILtxz
+	 Qttzl/8nec+wGR3/vlqErlKfdTmqvehRf7xLJs3uEoD8NXIs6/9/rNwJUr0M8oRLFHh4R
+	 W5y5aeyW8bLC8Os9FGxhDTL/Hwr2Cyg5Wp6CCd1qy+sGGfaDlEeYG05Ea/bPVbvtqOpYq
+	 HE9JqunN0NAU7r3dzOOe//vLn9sUH8D394Esz3EpLU+baWFrbNJEA5RkVYZ57YncMD+1a
+	 yrVstTQFtrJmKDfGvWWCZgBU4gZCyB2l2QA5d8AQJGYlyzJgy6nUb46/wkX+kRzSZ1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kzg52ZXu;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="oRE/1sli";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3577606A31F;
-	Mon, 23 Nov 2026 15:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C864B606A31A;
+	Mon, 23 Nov 2026 15:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kzg52ZXu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC4D1F000C0;
-	Mon, 23 Nov 2026 15:08:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oRE/1sli
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6721F000C4;
+	Mon, 23 Nov 2026 15:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795446521;
-	bh=cBnjnfPrI5GqXOR0gLmz+atrHWpsioGJfdWD9aN4KPs=;
+	s=k20260515; t=1795446552;
+	bh=O0I3oMMaLQevDn9qj5uUVhPOD4pkBQxviqxeY0uv2SQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kzg52ZXum6sSfq9YhB5+hMGcLkHSK2PSxOUBiSSkYqvjZTOenX1UTFQeOutdwLRVc
-	 PQf1AzoNq1uD60e/uAxuUuc67HkW1sGU9Jn4dZFSNE5+mSqCBPI6hkB9sHn639Ekml
-	 bJIxjqkSBCR5pQF4BSxl4V9fafIG0iq6uVtZZSaUD/TlAqYotlIOAnI/AtUltZHf22
-	 DfrEW5mEfRcSOX3JzdB5yIHasjwP3D5U+54W62AKt/AUJZLTqsztrwL2WnHhg2S7Ys
-	 1BlNvLWNJfFJzty0nK/TCDT5wcx7Rbw218sVjurpeZbp9IeTPUCFBas80XkY5WT4Hf
-	 uAcAkS9jjCDZA==
-Message-ID: <sashiko-outbox-229497@kernel.org>
+	b=oRE/1slizhkOhT6KJyTWqO/k5QGBs+uHsazP/8znsXZefGW4jbtVbzSmXeaq8N5BZ
+	 YhmWMorNhxfERWqp+lMs2dLHHggSmH8oZcCBMVHRgiYRlBeb7zLQ8KMD21cjYd4X58
+	 KdjuJp2HCuVqwxTGVxctxIthvK2lvvi9zvRURFNw35UvWn/JLqgJO/mGJ32sZkuuqu
+	 hltbBChKBY5iaX8Az7zPF4rXjSL/j6GGw2M/5dGAmpl0O00QKT2d7D99znmqIi77Rb
+	 p6/bIPwOY3+zbd1sueKpLeIgTzZyh4KB+g+ZZucPFrR++Ln8nnbJrWzpDMcAFIRRAt
+	 U0AT6BEduX9KA==
+Message-ID: <sashiko-outbox-229498@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 05/28] dmaengine: bcm2835: Fixes for dma_abort
+Subject: Re: [PATCH v3 22/28] dmaengine: bcm2835: Add BCM2711 40-bit DMA
+ support
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Andrea della Porta" <andrea.porta@suse.com>
 Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-In-Reply-To: <20261123145728.29082-6-andrea.porta@suse.com>
+In-Reply-To: <20261123145728.29082-23-andrea.porta@suse.com>
 References: <20261123145728.29082-1-andrea.porta@suse.com>
- <20261123145728.29082-6-andrea.porta@suse.com>
+ <20261123145728.29082-23-andrea.porta@suse.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 23 Nov 2026 15:08:40 +0000
+Date: Mon, 23 Nov 2026 15:09:12 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,108 +63,59 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 1 potential
 issue to consider:
-- [High] dmaengine: bcm2835: broken NEXTCB abort and write drain in
-  bcm2835_dma_abort()
+- [Medium] dmaengine: bcm2835: missing BCM2711_DMA40_IGNORE in
+  to_bcm2711_srci()
 --
 
-commit a058188488f658c2a3df2427a8957114d4f32435
-Author: Dom Cobley <popcornmix@gmail.com>
+commit 43d03cc19b62f4a54ac975aa54643cf367639895
+Author: Andrea della Porta <andrea.porta@suse.com>
 
-dmaengine: bcm2835: Fixes for dma_abort
+dmaengine: bcm2835: Add BCM2711 40-bit DMA support
 
-This commit updates bcm2835_dma_abort() to clear BCM2835_DMA_NEXTCB,
-issue BCM2835_DMA_ABORT with a shorter poll timeout, and suppress the
-timeout error message when DREQ pacing is enabled.
+This commit adds support for the BCM2711 40-bit DMA channels, which use a
+different register layout and control block format than the legacy BCM2835
+DMA channels.
 
 > diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-> index 063e1b2aabe3c..51e3a40dbaece 100644
+> index 0ea903274286f..a98ea67d3406e 100644
 > --- a/drivers/dma/bcm2835-dma.c
 > +++ b/drivers/dma/bcm2835-dma.c
-> @@ -419,7 +419,7 @@ static void bcm2835_dma_fill_cb_chain_with_sg(
->  static void bcm2835_dma_abort(struct bcm2835_chan *c)
->  {
->  	void __iomem *chan_base =3D c->chan_base;
-> -	long timeout =3D 10000;
-> +	long timeout =3D 100;
-> =20
->  	/*
->  	 * A zero control block address means the channel is idle.
-> @@ -428,19 +428,33 @@ static void bcm2835_dma_abort(struct bcm2835_chan *=
-c)
->  	if (!readl(chan_base + BCM2835_DMA_ADDR))
->  		return;
-> =20
-> -	/* Write 0 to the active bit - Pause the DMA */
-> -	writel(0, chan_base + BCM2835_DMA_CS);
-> +	/* We need to clear the next DMA block pending */
-> +	writel(0, chan_base + BCM2835_DMA_NEXTCB);
-> +
-> +	/* Abort the DMA, which needs to be enabled to complete */
-> +	writel(readl(chan_base + BCM2835_DMA_CS) | BCM2835_DMA_ABORT | BCM2835_=
-DMA_ACTIVE,
-> +	       chan_base + BCM2835_DMA_CS);
-> =20
-> -	/* Wait for any current AXI transfer to complete */
-> -	while ((readl(chan_base + BCM2835_DMA_CS) &
-> -		BCM2835_DMA_WAITING_FOR_WRITES) && --timeout)
-> +	/* wait for DMA to be aborted */
-> +	while ((readl(chan_base + BCM2835_DMA_CS) & BCM2835_DMA_ABORT) && --tim=
-eout)
->  		cpu_relax();
-> =20
-> -	/* Peripheral might be stuck and fail to signal AXI write responses */
-> -	if (!timeout)
-> +	/* Write 0 to the active bit - Pause the DMA */
-> +	writel(readl(chan_base + BCM2835_DMA_CS) & ~BCM2835_DMA_ACTIVE,
-> +	       chan_base + BCM2835_DMA_CS);
-> +
-> +	/*
-> +	 * Peripheral might be stuck and fail to complete
-> +	 * This is expected when dreqs are enabled but not asserted
-> +	 * so only report error in non dreq case
-> +	 */
-> +	if (!timeout && !(readl(chan_base + BCM2835_DMA_TI) &
-> +	   (BCM2835_DMA_S_DREQ | BCM2835_DMA_D_DREQ)))
->  		dev_err(c->vc.chan.device->dev,
-> -			"failed to complete outstanding writes\n");
-> +			"failed to complete pause on dma %d (CS:%08x)\n", c->ch,
-> +			readl(chan_base + BCM2835_DMA_CS));
-> =20
-> +	/* Set CS back to default state and reset the DMA */
->  	writel(BCM2835_DMA_RESET, chan_base + BCM2835_DMA_CS);
+
+[ ... ]
+
+> @@ -487,6 +564,199 @@ static u32 bcm2835_dma_cs_flags(struct bcm2835_chan=
+ *c)
+>  	return BCM2835_DMA_CS_FLAGS(c->dreq);
 >  }
+> =20
+> +static inline u32 to_bcm2711_ti(u32 info)
+> +{
+> +	return ((info & BCM2835_DMA_INT_EN) ? BCM2711_DMA40_INTEN : 0) |
+> +		((info & BCM2835_DMA_WAIT_RESP) ? BCM2711_DMA40_WAIT_RESP : 0) |
+> +		((info & BCM2835_DMA_S_DREQ) ?
+> +		 (BCM2711_DMA40_S_DREQ | BCM2711_DMA40_WAIT_RD_RESP) : 0) |
+> +		((info & BCM2835_DMA_D_DREQ) ? BCM2711_DMA40_D_DREQ : 0) |
+> +		BCM2711_DMA40_PER_MAP((info >> 16) & 0x1f);
+> +}
+> +
+> +static inline u32 to_bcm2711_srci(u32 info)
+> +{
+> +	return ((info & BCM2835_DMA_S_INC) ? BCM2711_DMA40_INC : 0) |
+> +	       ((info & BCM2835_DMA_S_WIDTH) ? BCM2711_DMA40_SIZE_128 : 0) |
+> +	       BCM2711_DMA40_BURST_LEN(BCM2835_DMA_GET_BURST_LENGTH(info));
+> +}
 
-[Severity: High]
-Does this reintroduce the abort regressions fixed by commit 9e528c799d17
-("dmaengine: bcm2835: Fix abort of transactions")?
+[Severity: Medium]
+Should to_bcm2711_srci() also translate BCM2835_DMA_S_IGNORE into
+BCM2711_DMA40_IGNORE?
 
-Commit 9e528c799d17 replaced this BCM2835_DMA_NEXTCB and
-BCM2835_DMA_ABORT sequence with pausing the channel, waiting for
-BCM2835_DMA_WAITING_FOR_WRITES to clear, and asserting BCM2835_DMA_RESET.
-When a channel is blocked on an unasserted DREQ, no AXI write is in
-flight, so BCM2835_DMA_WAITING_FOR_WRITES is already clear and the
-existing pause-and-reset path completes immediately without timing out.
-
-Reverting to BCM2835_DMA_ABORT introduces three problems:
-
-1. BCM2835_DMA_NEXTCB is written while BCM2835_DMA_ACTIVE is still set,
-which per the BCM2835 ARM Peripherals specification is only safe when the
-channel is paused; racing with control block completion can cause
-BCM2835_DMA_ABORT to abort only the current control block and start the
-next one.
-
-2. After clearing BCM2835_DMA_ACTIVE, the code writes BCM2835_DMA_RESET
-without waiting for BCM2835_DMA_WAITING_FOR_WRITES to clear, so
-bcm2835_dma_terminate_all() can reset the channel and free descriptors
-while AXI writes are still in flight.
-
-3. Because BCM2835_DMA_ABORT never completes while a channel is held on
-an unasserted DREQ, every termination of a DREQ-blocked channel (such as
-dmaengine_terminate_async() on the companion channel at the end of
-one-way transfers in bcm2835_spi_dma_rx_done() and
-bcm2835_spi_dma_tx_done()) now busy-waits for the full 100-iteration
-(~20 us) timeout with interrupts disabled under c->vc.lock.
+bcm2711_dma_cb_init() calls bcm2835_dma_prepare_cb_info(), which sets
+BCM2835_DMA_S_IGNORE in info when zero_page is true, and passes info to
+to_bcm2711_srci().  Because to_bcm2711_srci() drops that bit,
+BCM2711_DMA40_IGNORE is left unused and zero-page transfers on 40-bit
+channels will read from DRAM instead of letting the hardware synthesize
+zeroes.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123145728.2908=
-2-1-andrea.porta@suse.com?part=3D5
+2-1-andrea.porta@suse.com?part=3D22
