@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1795520764;
-	b=b/2A1nSYejw0NaT1JJhSC7I8Ar2bWSzg7w7WNWcl43UEC+3rds2oQL1iYgQHjTEWEpB0
-	 1ZgeuT/v2YDMrsjHkLLjlgn2OAjpI37h/AdJj5bfysaoCynVYNs36wEPFg9TvVW46KOaU
-	 hohCohsvxhPutmI+OfNHZ3Ci0hIMjXugsvqXl+4ql/8NaOsTNgXymxwTUYu2ikZg67pCA
-	 zpWGC3hcWxzTH1mDToZxNzU7hpIO+9KtgaOpkRrEwUo9waYeGNupr9HoAl+OsmzRm8FqJ
-	 TyDMQOdFN4+zrKP9Dex3OW9SKKYe7Owy7AB096eI1CGFuJmxAQuKtYPB4Xx1gKqqp1Q==
+	b=k5c/Jd2yhG9+6wL7J7paY1RVjLuQFeFtKCFOtnruAUG2+LTFH/52grcpdL3fX32F+XHp
+	 s7z9CfE6ApACUdIy0Ba14J1ZJsZk1y4+6QNS2XEnftRSxa1UGUpN2LSh33tHswB6sJ76V
+	 eVhqDo74jQiF/HwiP40FtBZ9V0Xa2jdRAcjiGefWGnUUefjO5w94PfloU04hvqmP1Q+WI
+	 KjOsKMk6cdwgvOMKSd84P07VPuc97TWBx8nghIcs0uLBI5A9COgCFnUGc8CCH30pwDX05
+	 tMcbvlM1qsefZKHBBs8y+VqI837+s+HwqIvpc7ORX10GGSXVPaFS5q49lcy6RlKJuVA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795520764;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=acZ5G+lisXcEu5RmYGpRLGH9S4UYMk+oTxoL3nhYKoU=;
-	b=wLUiNRSm+yvCm/Uqt/lNdROyfCTWvKuvT9kNAZG+eCIX8bgJNvzenFT+qnpCqh0JrHig
-	 fLcLPE+bMmdt8KQnPpxCxpNt81P8bUBIDl/yXgk/0owM55IYlhj5IvF9/7OPV90Fja23D
-	 r7Dym0flTqYIB+0k39bOTVus+ZjNprYSCxbk/mQhgqVfDB4Gnh1SO8g0wipyLDNGmUWxS
-	 A/+NtCQXDvGuG5g2WPHuTv03ozcnZc4UclwALaR4ne1F+VYoK1KEamdd5buqC2RGYtcq0
-	 0EQEg+PE5aS5plEumUOCuI8HVtUqCbmiA7ol0xMiqBn6sxncV8alDxQc3lgSiy6R6lQ==
+	bh=ctESXlsj/tQw78qKccyyw41rHk8mwJdvFvJzwqXjKrE=;
+	b=G9b0wvMWHPMStue6jFIp82eJENP5vx+wd5CUsfiso60rupy6dRPx6he2nJDp710fwd8N
+	 P25RZb9vhPCN7UgroS6I8FzpCsZO3wExioY8PhEkBempdw9K4WzCzFT8BLfcfW3QxDstI
+	 k9cV+NUnqPYORiqbenhclUJmLrKDB+84m56YiAlDTNxLGSvjZiVSyDyGMxOh4zsQuNCZQ
+	 IM6SMC8C1Bu2eEVWOoBRjd5mtvFT1IjkNI2CSLS0D6bP55Lf1hBHnJf6M51g2B/55wCaZ
+	 bOw7kY+w997Oj6CDXRk2ZvDWkwO6+xvPfs2krCBTnvk+JYNLw9MHqIX+q9I+4mbJ5PA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l3OvRFMt;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="lFnFI/f4";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD1160A2627;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3D7606A69C;
 	Tue, 24 Nov 2026 11:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l3OvRFMt
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lFnFI/f4
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795520764;
-	b=bw9EquyCPM93qX8k2y1x2yxbzWJB3NVOyyM/RIkEXJZDzjToyh/yLxfy6an0Yvkgq61E
-	 DhkdS6f09je5uSOCxz45RtQAozP48luP5vehpwtf8wfwNKo8M44Cpjp0TDXzSDln9DPIe
-	 0ctCtwQJXuzm+QNjn12zmvkS/7tY6jxyW/+x/zrs6mtLPMWsm5B9Cjr64WfCE78wFqAAZ
-	 KFfzm6BJu7f3RSfvNEoS/VyGPihMz81be38VaDq8P/xIvlVUgCHovaT7xmz5DlTk60AYm
-	 Cv7vi4tARApPu/S5EE9LnvREFsKABNMeGyz5AFpMagp+wErBRhk0aH/1Xbcgm647XBQ==
+	t=1795520763;
+	b=ZzBUmKydJIIC2TtVxvAyU6jzLRpeS7t/qUumDxj3EaLOdodIyzvX5oYKj/Ijox0MH0SA
+	 hFzl4ptVm/lheWDIEqRrKWl1NRs33j0Rc9OwogOYcrWVpYijc3lVoDj/lnwurJwDTKI9c
+	 VF/QxWcu1SmCeDxOkxBCS6esrh1oh+7jYF+jQa43kTCeXLhPlR34oBLY1ke2ckpU9IdPp
+	 9lC+BxrafevgtnQQQPm0IsOLHVX9k5mt6P6o4SL/sTQi49OL/1K8tMR2c/1rZCCJ5LoDx
+	 0opTmTBNBX4rfnSN+/Qugah3hnNWwUeASE648TOxjadaatvz+V3OYOueRrYsyOhV3BA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795520764;
+	c=relaxed/relaxed; t=1795520763;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=acZ5G+lisXcEu5RmYGpRLGH9S4UYMk+oTxoL3nhYKoU=;
-	b=CDb5FSDgcrK5Hfv7wUFdbS7aoBqnCykxMs9mXl78MMKxNRy6dPScHVPMngKV9UAFVnNP
-	 +UQ+rM5gU0GhhO2AheQxQ1ZCAc+d0La5JtuGB5q+VOvDJUJ5nwc+P8/t4Dqvet/El6ZOD
-	 FLtRpLexRKVg5Uxbfo+ROy05tEMpY8tvyFq5PBQYOeVSDCnmUBJBwenBj9Fed8paDNge+
-	 74RpMjv8Pr0QpYWWYoC7V3TGfTpY4ycO7ziKsw12arNNAWza7c+CYKmUoyWqI6AFnmCeN
-	 +KYZnwlJNyDrc9vbtTQS987/5PvdUY6mEMvr9pXF4c0oEZD/RBKveuS7iss4sNCLfCg==
+	bh=ctESXlsj/tQw78qKccyyw41rHk8mwJdvFvJzwqXjKrE=;
+	b=3bTsBMurO3ZsTWSah0PzrAHHBEySeu5Zt5q2S+ZD10TGKDY67IjBU7XpjRIwZmVVEdW/
+	 2oY5OSxMxsuQE/X0KjKs+LOkmDsTMQkq8MdsvAz2n10+V8y3BuANP7U2/wAxeCe65NtkR
+	 k3K1MI5OH6NBdzC7LWmlwU/VXaS30nHoJW8fzB4u8lAGSSkUZCGW0sdRNOhtfdCf/PV3S
+	 OacmVbQGITN2mwSDWdOpmxzCuf8r6HRccp66ScQgXv1MYInRdDMxb5xmxZ2Ya975EqsRl
+	 5BImWCaqiVUGLy14Tvd5BIWh1AU7ENEOBym3K87rheAvE9ZD8O1qiYy4ll7gnBFAl4w==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 99CD51F0156B;
-	Tue, 24 Nov 2026 11:45:39 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 55F421F00ADE;
+	Tue, 24 Nov 2026 11:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795520764;
-	bh=acZ5G+lisXcEu5RmYGpRLGH9S4UYMk+oTxoL3nhYKoU=;
+	s=k20260515; t=1795520763;
+	bh=ctESXlsj/tQw78qKccyyw41rHk8mwJdvFvJzwqXjKrE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=l3OvRFMt3SaCC5eU7W6jx8mDQz5Nubkvs9lzxWYZTBtzZjJA7pBZkl5dB0n+4WGGn
-	 3Eox9lRDNVVzFE+YZTyKHbAng3RHXuflezh3gvD4B5Kl22S6vF/YA7e0IB7LtcPvN0
-	 Ypy8cwifn88vVGFxgI7Pzc83ehUeD3q2mZhSOfofMTGtpqyurj4oTE1X8UtUGQhq/k
-	 IeTLuxWWlnoFoCN63ByufjBY3uvTUBlpl1vFhgWeRLVvXpiova0dyw/7krVziQLXkW
-	 6FaNs6kYT6R+up6wYMs0VoCj14N1UTOVsPV6OvcCRVSD57wxTIrTp810HC6E9wHGAn
-	 +wSuR53pVMvtg==
+	b=lFnFI/f4uKiKl+AVsL4Iz391DBjrLVnFaq6k+AZ8HiXQlzLtAqI19AEVLonVxFx9P
+	 mH9cuEB3FoTkO6b44fNEA17t3ImpvkTdhFyNHlR4bSJhhoLOYeeWkL72b5MYQ40VGI
+	 ySZltxQFcaihX7Kbn96/S1ozwqkocCxWiHFmccyJQnv70ysFQ/8GupdI3ZiU4dyPJC
+	 VpQ2/BWtrTjv+Q3j02p68F5F2CLjeJZYJa6Luz71XjwO7wXUjExdW6G828Xj7Cv0ry
+	 Rxgf81JlrjCByLE22OOmSFUt6dU7JX7jiE4PSSlpPbHTm2Ht9vHhjok3mBh2y/Lpc+
+	 PCpEwIlt9KR8g==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 497A04CA1B;
+	by lkml.kernel.org (Postfix) with ESMTP id 9A97F4CA27;
 	Tue, 24 Nov 2026 11:45:28 +0000 (UTC)
 From: Sai Sree Kartheek Adivi via B4 Relay <devnull+s-adivi.ti.com@kernel.org>
-Date: Tue, 24 Nov 2026 17:15:15 +0530
-Subject: [PATCH v13 13/20] drivers: soc: ti: k3-ringacc: handle absence of
- tisci
+Date: Tue, 24 Nov 2026 17:15:18 +0530
+Subject: [PATCH v13 16/20] dmaengine: ti: k3-psil-am62l: Add AM62Lx PSIL
+ and PDMA data
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -84,7 +84,7 @@ List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261124-dma-upstream-v13-v13-13-bd4251fdc6d4@ti.com>
+Message-Id: <20261124-dma-upstream-v13-v13-16-bd4251fdc6d4@ti.com>
 References: <20261124-dma-upstream-v13-v13-0-bd4251fdc6d4@ti.com>
 In-Reply-To: <20261124-dma-upstream-v13-v13-0-bd4251fdc6d4@ti.com>
 To: Vignesh Raghavendra <vigneshr@ti.com>, Vinod Koul <vkoul@kernel.org>, 
@@ -96,11 +96,11 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
  sebin.francis@ti.com, Sai Sree Kartheek Adivi <s-adivi@ti.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795520724; l=11619;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795520724; l=11940;
  i=s-adivi@ti.com; s=20261124; h=from:subject:message-id;
- bh=RjpH58LQn/sIqsaO0zS7uBAOD+lV6jEHfbvDLrpoGhM=;
- b=+yqHTDrbmw1uw9Zfodr7aEgsvBQDbIJxb4IP9vIfVjjqabO7DwBdsUr6EFVtneoBLJIt8qqGL
- HznDpNlGsZ2BJXDmHT00QWgty6hLGKaBsde+EUDjJ1Igar3UtxMLDT0
+ bh=VyGrMmqCqqj/ee2mdMD1vovMjeoRhnoVUUNwnIxNK/E=;
+ b=6cHF+0aBGaaBh092EmL4SLdh8BoXwinVti8SQGja+FB/tyXa7SNtwqzJn0yzwZOuDL0LnnQph
+ p8s9FmTvt+EDgv52kWjIn0cvBL+X2JGmGyUcjHM/Cplcx3o1Gom+UcA
 X-Developer-Key: i=s-adivi@ti.com; a=ed25519;
  pk=EtOwVxmXDuYMgw3DqFtPDBpf8ZvbO89w1fJm4w5yPI8=
 X-Endpoint-Received: by B4 Relay for s-adivi@ti.com/20261124 with
@@ -111,363 +111,395 @@ Content-Transfer-Encoding: 7bit
 
 From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-Handle absence of tisci with direct register writes. This will support
-platforms that do not have tisci firmware like AM62L.
+Add PSIL and PDMA data for AM62Lx SoC.
+
+Introduce new PSIL_EP_PDMA_XYMF type for channels that have multiple
+selectable fifos. Also add a new fifo_id field to psil_endpoint_config
+to specify the selectable fifo_id.
 
 Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 ---
- drivers/soc/ti/k3-ringacc.c       | 209 ++++++++++++++++++++++++++++++++++----
- include/linux/soc/ti/k3-ringacc.h |  18 ++++
- 2 files changed, 208 insertions(+), 19 deletions(-)
+ drivers/dma/ti/Makefile        |   3 +-
+ drivers/dma/ti/k3-psil-am62l.c | 169 +++++++++++++++++++++++++++++++++++++++++
+ drivers/dma/ti/k3-psil-priv.h  |   5 ++
+ drivers/dma/ti/k3-psil.c       | 106 ++++++++++++++++++++++++--
+ include/linux/dma/k3-psil.h    |   3 +
+ 5 files changed, 279 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/soc/ti/k3-ringacc.c b/drivers/soc/ti/k3-ringacc.c
-index 8c5f685e10f68..8094bb821f5f9 100644
---- a/drivers/soc/ti/k3-ringacc.c
-+++ b/drivers/soc/ti/k3-ringacc.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/dma-mapping.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-@@ -46,6 +47,53 @@ struct k3_ring_rt_regs {
- 	u32	hwindx;
+diff --git a/drivers/dma/ti/Makefile b/drivers/dma/ti/Makefile
+index 3b91c02e55eaf..41bfba944dc6c 100644
+--- a/drivers/dma/ti/Makefile
++++ b/drivers/dma/ti/Makefile
+@@ -14,6 +14,7 @@ k3-psil-lib-objs := k3-psil.o \
+ 		    k3-psil-am62.o \
+ 		    k3-psil-am62a.o \
+ 		    k3-psil-j784s4.o \
+-		    k3-psil-am62p.o
++		    k3-psil-am62p.o \
++		    k3-psil-am62l.o
+ obj-$(CONFIG_TI_K3_PSIL) += k3-psil-lib.o
+ obj-$(CONFIG_TI_DMA_CROSSBAR) += dma-crossbar.o
+diff --git a/drivers/dma/ti/k3-psil-am62l.c b/drivers/dma/ti/k3-psil-am62l.c
+new file mode 100644
+index 0000000000000..ee77fae3787a4
+--- /dev/null
++++ b/drivers/dma/ti/k3-psil-am62l.c
+@@ -0,0 +1,169 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ *  Copyright (C) 2024-2025 Texas Instruments Incorporated - https://www.ti.com
++ */
++
++#include <linux/kernel.h>
++
++#include "k3-psil-priv.h"
++
++#define PSIL_PDMA_XY_TR(x, ch)					\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_PDMA_XY,		\
++			.mapped_channel_id = ch,		\
++			.default_flow_id = -1,			\
++		},						\
++	}
++
++#define PSIL_PDMA_XYMF_TR(x, ch, fifo)				\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_PDMA_XYMF,		\
++			.mapped_channel_id = ch,		\
++			.default_flow_id = -1,			\
++			.fifo_id = fifo,			\
++		},						\
++	}
++
++#define PSIL_PDMA_XY_PKT(x, ch)					\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_PDMA_XY,		\
++			.mapped_channel_id = ch,		\
++			.pkt_mode = 1,				\
++			.default_flow_id = -1			\
++		},						\
++	}
++
++#define PSIL_ETHERNET(x, ch, flow_base, flow_cnt)		\
++	{							\
++		.thread_id = x,					\
++		.ep_config = {					\
++			.ep_type = PSIL_EP_NATIVE,		\
++			.pkt_mode = 1,				\
++			.needs_epib = 1,			\
++			.psd_size = 16,				\
++			.mapped_channel_id = ch,		\
++			.flow_start = flow_base,		\
++			.flow_num = flow_cnt,			\
++			.default_flow_id = flow_base,		\
++		},						\
++	}
++
++#define PSIL_PDMA_MCASP(x, ch)				\
++	{						\
++		.thread_id = x,				\
++		.ep_config = {				\
++			.ep_type = PSIL_EP_PDMA_XY,	\
++			.pdma_acc32 = 1,		\
++			.pdma_burst = 1,		\
++			.mapped_channel_id = ch,	\
++			.default_flow_id = -1		\
++		},					\
++	}
++
++/* PSI-L source thread IDs, used for RX (DMA_DEV_TO_MEM) */
++static struct psil_ep am62l_src_ep_map[] = {
++	/* PDMA_MAIN1 - UART0-6 */
++	PSIL_PDMA_XY_PKT(0x4400, 0),
++	PSIL_PDMA_XY_PKT(0x4401, 2),
++	PSIL_PDMA_XY_PKT(0x4402, 4),
++	PSIL_PDMA_XY_PKT(0x4403, 6),
++	PSIL_PDMA_XY_PKT(0x4404, 8),
++	PSIL_PDMA_XY_PKT(0x4405, 10),
++	PSIL_PDMA_XY_PKT(0x4406, 12),
++	/* PDMA_MAIN0 - SPI0 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0x4300, 16, 0),
++	PSIL_PDMA_XYMF_TR(0x4300, 18, 1),
++	PSIL_PDMA_XYMF_TR(0x4300, 20, 2),
++	PSIL_PDMA_XYMF_TR(0x4300, 22, 3),
++	/* PDMA_MAIN0 - SPI1 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0x4301, 24, 0),
++	PSIL_PDMA_XYMF_TR(0x4301, 26, 1),
++	PSIL_PDMA_XYMF_TR(0x4301, 28, 2),
++	PSIL_PDMA_XYMF_TR(0x4301, 30, 3),
++	/* PDMA_MAIN0 - SPI2 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0x4302, 32, 0),
++	PSIL_PDMA_XYMF_TR(0x4302, 34, 1),
++	PSIL_PDMA_XYMF_TR(0x4302, 36, 2),
++	PSIL_PDMA_XYMF_TR(0x4302, 38, 3),
++	/* PDMA_MAIN0 - SPI3 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0x4303, 40, 0),
++	PSIL_PDMA_XYMF_TR(0x4303, 42, 1),
++	PSIL_PDMA_XYMF_TR(0x4303, 44, 2),
++	PSIL_PDMA_XYMF_TR(0x4303, 46, 3),
++	/* PDMA_MAIN2 - MCASP0-2 */
++	PSIL_PDMA_MCASP(0x4500, 48),
++	PSIL_PDMA_MCASP(0x4501, 50),
++	PSIL_PDMA_MCASP(0x4502, 52),
++	/* PDMA_MAIN0 - AES */
++	PSIL_PDMA_XY_TR(0x4700, 65),
++	/* PDMA_MAIN0 - ADC */
++	PSIL_PDMA_XY_TR(0x4503, 80),
++	PSIL_PDMA_XY_TR(0x4504, 81),
++	PSIL_ETHERNET(0x4600, 96, 96, 16),
++};
++
++/* PSI-L destination thread IDs, used for TX (DMA_MEM_TO_DEV) */
++static struct psil_ep am62l_dst_ep_map[] = {
++	/* PDMA_MAIN1 - UART0-6 */
++	PSIL_PDMA_XY_PKT(0xC400, 1),
++	PSIL_PDMA_XY_PKT(0xC401, 3),
++	PSIL_PDMA_XY_PKT(0xC402, 5),
++	PSIL_PDMA_XY_PKT(0xC403, 7),
++	PSIL_PDMA_XY_PKT(0xC404, 9),
++	PSIL_PDMA_XY_PKT(0xC405, 11),
++	PSIL_PDMA_XY_PKT(0xC406, 13),
++	/* PDMA_MAIN0 - SPI0 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0xC300, 17, 0),
++	PSIL_PDMA_XYMF_TR(0xC300, 19, 1),
++	PSIL_PDMA_XYMF_TR(0xC300, 21, 2),
++	PSIL_PDMA_XYMF_TR(0xC300, 23, 3),
++	/* PDMA_MAIN0 - SPI1 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0xC301, 25, 0),
++	PSIL_PDMA_XYMF_TR(0xC301, 27, 1),
++	PSIL_PDMA_XYMF_TR(0xC301, 29, 2),
++	PSIL_PDMA_XYMF_TR(0xC301, 31, 3),
++	/* PDMA_MAIN0 - SPI2 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0xC302, 33, 0),
++	PSIL_PDMA_XYMF_TR(0xC302, 35, 1),
++	PSIL_PDMA_XYMF_TR(0xC302, 37, 2),
++	PSIL_PDMA_XYMF_TR(0xC302, 39, 3),
++	/* PDMA_MAIN0 - SPI3 - CH0-3 */
++	PSIL_PDMA_XYMF_TR(0xC303, 41, 0),
++	PSIL_PDMA_XYMF_TR(0xC303, 43, 1),
++	PSIL_PDMA_XYMF_TR(0xC303, 45, 2),
++	PSIL_PDMA_XYMF_TR(0xC303, 47, 3),
++	/* PDMA_MAIN2 - MCASP0-2 */
++	PSIL_PDMA_MCASP(0xC500, 49),
++	PSIL_PDMA_MCASP(0xC501, 51),
++	PSIL_PDMA_MCASP(0xC502, 53),
++	/* PDMA_MAIN0 - SHA */
++	PSIL_PDMA_XY_TR(0xC700, 64),
++	/* PDMA_MAIN0 - AES */
++	PSIL_PDMA_XY_TR(0xC701, 66),
++	/* PDMA_MAIN0 - CRC32 - CH0-1 */
++	PSIL_PDMA_XYMF_TR(0xC702, 67, 0),
++	PSIL_PDMA_XYMF_TR(0xC702, 68, 1),
++	/* CPSW3G */
++	PSIL_ETHERNET(0xc600, 64, 64, 2),
++	PSIL_ETHERNET(0xc601, 66, 66, 2),
++	PSIL_ETHERNET(0xc602, 68, 68, 2),
++	PSIL_ETHERNET(0xc603, 70, 70, 2),
++	PSIL_ETHERNET(0xc604, 72, 72, 2),
++	PSIL_ETHERNET(0xc605, 74, 74, 2),
++	PSIL_ETHERNET(0xc606, 76, 76, 2),
++	PSIL_ETHERNET(0xc607, 78, 78, 2),
++};
++
++struct psil_ep_map am62l_ep_map = {
++	.name = "am62l",
++	.src = am62l_src_ep_map,
++	.src_count = ARRAY_SIZE(am62l_src_ep_map),
++	.dst = am62l_dst_ep_map,
++	.dst_count = ARRAY_SIZE(am62l_dst_ep_map),
++};
+diff --git a/drivers/dma/ti/k3-psil-priv.h b/drivers/dma/ti/k3-psil-priv.h
+index a577be97e3447..970afd46a79e6 100644
+--- a/drivers/dma/ti/k3-psil-priv.h
++++ b/drivers/dma/ti/k3-psil-priv.h
+@@ -35,6 +35,10 @@ struct psil_ep_map {
  };
  
-+#define K3_RINGACC_RT_CFG_REGS_OFS	0x40
-+#define K3_DMARING_CFG_ADDR_HI_MASK	GENMASK(3, 0)
-+#define K3_DMARING_CFG_ASEL_SHIFT	16
-+#define K3_DMARING_CFG_SIZE_MASK	GENMASK(15, 0)
-+
-+/**
-+ * struct k3_ring_cfg_regs - The RA Configuration Registers region
-+ *
-+ * @ba_lo: Ring Base Address Low Register
-+ * @ba_hi: Ring Base Address High Register
-+ * @size: Ring Size Register
-+ */
-+struct k3_ring_cfg_regs {
-+	u32	ba_lo;
-+	u32	ba_hi;
-+	u32	size;
-+};
-+
-+#define K3_RINGACC_RT_INT_REGS_OFS		0x140
-+#define K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE	BIT(0)
-+#define K3_RINGACC_RT_INT_ENABLE_SET_TR			BIT(2)
-+
-+/**
-+ * struct k3_ring_intr_regs {
-+ *
-+ * @enable_set: Ring Interrupt Enable Register
-+ * @resv_1: Reserved
-+ * @clr: Ring Interrupt Clear Register
-+ * @resv_2: Reserved
-+ * @status_set: Ring Interrupt Status Set Register
-+ * @resv_3: Reserved
-+ * @status: Ring Interrupt Status Register
-+ * @resv_4: Reserved
-+ * @status_masked: Ring Interrupt Status Masked Register
-+ */
-+struct k3_ring_intr_regs {
-+	u32	enable_set;
-+	u32	resv_1;
-+	u32	clr;
-+	u32	resv_2;
-+	u32	status_set;
-+	u32	resv_3;
-+	u32	status;
-+	u32	resv_4;
-+	u32	status_masked;
-+};
-+
- #define K3_RINGACC_RT_REGS_STEP			0x1000
- #define K3_DMARING_RT_REGS_STEP			0x2000
- #define K3_DMARING_RT_REGS_REVERSE_OFS		0x1000
-@@ -139,6 +187,8 @@ struct k3_ring_state {
-  * struct k3_ring - RA Ring descriptor
-  *
-  * @rt: Ring control/status registers
-+ * @cfg: Ring config registers
-+ * @intr: Ring interrupt registers
-  * @fifos: Ring queues registers
-  * @proxy: Ring Proxy Datapath registers
-  * @ring_mem_dma: Ring buffer dma address
-@@ -158,6 +208,8 @@ struct k3_ring_state {
-  */
- struct k3_ring {
- 	struct k3_ring_rt_regs __iomem *rt;
-+	struct k3_ring_cfg_regs __iomem *cfg;
-+	struct k3_ring_intr_regs __iomem *intr;
- 	struct k3_ring_fifo_regs __iomem *fifos;
- 	struct k3_ringacc_proxy_target_regs  __iomem *proxy;
- 	dma_addr_t	ring_mem_dma;
-@@ -467,15 +519,49 @@ static void k3_ringacc_ring_reset_sci(struct k3_ring *ring)
- 	struct k3_ringacc *ringacc = ring->parent;
- 	int ret;
+ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id);
++struct psil_endpoint_config *psil_get_ep_config_by_id(u32 channel_id,
++						      bool is_pktdma,
++						      u32 *thread_id,
++						      bool *dev_to_mem);
  
--	ring_cfg.nav_id = ringacc->tisci_dev_id;
--	ring_cfg.index = ring->ring_id;
--	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_COUNT_VALID;
--	ring_cfg.count = ring->size;
-+	/*
-+	 * The register-poll path below uses the atomic poll variant because
-+	 * this function can be called from atomic context (e.g. K3 UDMA V2's
-+	 * autopair-timeout cleanup, which runs under uc->vc.lock, including
-+	 * from hardirq context). This is only safe because K3 UDMA V2 never
-+	 * sets ringacc->tisci, so this function always takes this branch for
-+	 * V2 callers. If V2 ever gains TI SCI firmware-managed ring support,
-+	 * the branch below will need an atomic-safe path as well, since a
-+	 * TI SCI mailbox RPC cannot be made non-sleeping.
-+	 */
-+	if (!ringacc->tisci) {
-+		u32 reg;
-+
-+		if (!ring->cfg)
-+			return;
-+
-+		reg = readl(&ring->cfg->size);
-+		reg &= ~K3_DMARING_CFG_SIZE_MASK;
-+		writel(reg, &ring->cfg->size);
-+
-+		ret = readl_poll_timeout_atomic(&ring->cfg->size, reg,
-+						 !(reg & K3_DMARING_CFG_SIZE_MASK),
-+						 1, 100);
-+		if (ret) {
-+			dev_err(ringacc->dev, "ring %d size clear timeout\n",
-+				ring->ring_id);
-+			return;
-+		}
+ /* SoC PSI-L endpoint maps */
+ extern struct psil_ep_map am654_ep_map;
+@@ -46,5 +50,6 @@ extern struct psil_ep_map am62_ep_map;
+ extern struct psil_ep_map am62a_ep_map;
+ extern struct psil_ep_map j784s4_ep_map;
+ extern struct psil_ep_map am62p_ep_map;
++extern struct psil_ep_map am62l_ep_map;
  
--	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
--	if (ret)
--		dev_err(ringacc->dev, "TISCI reset ring fail (%d) ring_idx %d\n",
--			ret, ring->ring_id);
-+		reg = readl(&ring->cfg->size);
-+		reg |= ring->size;
-+		writel(reg, &ring->cfg->size);
-+	} else {
-+		ring_cfg.nav_id = ringacc->tisci_dev_id;
-+		ring_cfg.index = ring->ring_id;
-+		ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_COUNT_VALID;
-+		ring_cfg.count = ring->size;
-+
-+		ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-+		if (ret)
-+			dev_err(ringacc->dev, "TISCI reset ring fail (%d) ring_idx %d\n",
-+				ret, ring->ring_id);
-+	}
+ #endif /* K3_PSIL_PRIV_H_ */
+diff --git a/drivers/dma/ti/k3-psil.c b/drivers/dma/ti/k3-psil.c
+index c4b6f0df46861..1c4ae124d172d 100644
+--- a/drivers/dma/ti/k3-psil.c
++++ b/drivers/dma/ti/k3-psil.c
+@@ -28,6 +28,7 @@ static const struct soc_device_attribute k3_soc_devices[] = {
+ 	{ .family = "J784S4", .data = &j784s4_ep_map },
+ 	{ .family = "AM62PX", .data = &am62p_ep_map },
+ 	{ .family = "J722S", .data = &am62p_ep_map },
++	{ .family = "AM62LX", .data = &am62l_ep_map },
+ 	{ /* sentinel */ }
+ };
+ 
+@@ -71,12 +72,70 @@ struct psil_endpoint_config *psil_get_ep_config(u32 thread_id)
  }
+ EXPORT_SYMBOL_GPL(psil_get_ep_config);
  
- void k3_ringacc_ring_reset(struct k3_ring *ring)
-@@ -501,6 +587,9 @@ static void k3_ringacc_ring_reconfig_qmode_sci(struct k3_ring *ring,
- 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_RING_MODE_VALID;
- 	ring_cfg.mode = mode;
- 
-+	if (!ringacc->tisci)
-+		return;
-+
- 	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
- 	if (ret)
- 		dev_err(ringacc->dev, "TISCI reconf qmode fail (%d) ring_idx %d\n",
-@@ -576,10 +665,40 @@ static void k3_ringacc_ring_free_sci(struct k3_ring *ring)
- 	ring_cfg.index = ring->ring_id;
- 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
- 
--	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
--	if (ret)
--		dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
--			ret, ring->ring_id);
-+	if (!ringacc->tisci) {
-+		u32 reg;
-+
-+		writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE | K3_RINGACC_RT_INT_ENABLE_SET_TR,
-+		       &ring->intr->clr);
-+
-+		reg = readl(&ring->cfg->size);
-+		reg &= ~K3_DMARING_CFG_SIZE_MASK;
-+		writel(reg, &ring->cfg->size);
-+
-+		ret = readl_poll_timeout(&ring->cfg->size, reg,
-+					  !(reg & K3_DMARING_CFG_SIZE_MASK),
-+					  1, 100);
-+		if (ret) {
-+			dev_err(ringacc->dev, "ring %d size clear timeout\n",
-+				ring->ring_id);
-+			return;
-+		}
-+
-+		reg = readl(&ring->cfg->size);
-+		reg |= ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
-+
-+		writel(reg, &ring->cfg->size);
-+
-+		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
-+		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
-+				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
-+				&ring->cfg->ba_hi);
-+	} else {
-+		ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
-+		if (ret)
-+			dev_err(ringacc->dev, "TISCI ring free fail (%d) ring_idx %d\n",
-+				ret, ring->ring_id);
-+	}
- }
- 
- int k3_ringacc_ring_free(struct k3_ring *ring)
-@@ -670,15 +789,36 @@ int k3_ringacc_get_ring_irq_num(struct k3_ring *ring)
- }
- EXPORT_SYMBOL_GPL(k3_ringacc_get_ring_irq_num);
- 
-+u32 k3_ringacc_ring_get_irq_status(struct k3_ring *ring)
++struct psil_endpoint_config *psil_get_ep_config_by_id(u32 channel_id,
++						       bool is_pktdma,
++						       u32 *thread_id,
++						       bool *dev_to_mem)
 +{
-+	struct k3_ringacc *ringacc = ring->parent;
-+	struct k3_ring *fwd_ring = &ringacc->rings[ring->ring_id];
++	int i;
 +
-+	if (!fwd_ring->intr)
-+		return 0;
++	mutex_lock(&ep_map_mutex);
++	if (!soc_ep_map) {
++		const struct soc_device_attribute *soc;
 +
-+	return readl(&fwd_ring->intr->status);
++		soc = soc_device_match(k3_soc_devices);
++		if (soc) {
++			soc_ep_map = soc->data;
++		} else {
++			pr_err("PSIL: No compatible machine found for map\n");
++			mutex_unlock(&ep_map_mutex);
++			return ERR_PTR(-ENOTSUPP);
++		}
++	}
++
++	if (soc_ep_map->src) {
++		for (i = 0; i < soc_ep_map->src_count; i++) {
++			struct psil_ep *ep = &soc_ep_map->src[i];
++
++			if (ep->ep_config.mapped_channel_id != (s16)channel_id)
++				continue;
++			if ((bool)ep->ep_config.pkt_mode != is_pktdma)
++				continue;
++			*thread_id = ep->thread_id;
++			*dev_to_mem = true;
++			mutex_unlock(&ep_map_mutex);
++			return &ep->ep_config;
++		}
++	}
++
++	if (soc_ep_map->dst) {
++		for (i = 0; i < soc_ep_map->dst_count; i++) {
++			struct psil_ep *ep = &soc_ep_map->dst[i];
++
++			if (ep->ep_config.mapped_channel_id != (s16)channel_id)
++				continue;
++			if ((bool)ep->ep_config.pkt_mode != is_pktdma)
++				continue;
++			*thread_id = ep->thread_id;
++			*dev_to_mem = false;
++			mutex_unlock(&ep_map_mutex);
++			return &ep->ep_config;
++		}
++	}
++
++	mutex_unlock(&ep_map_mutex);
++	return ERR_PTR(-ENOENT);
 +}
-+EXPORT_SYMBOL_GPL(k3_ringacc_ring_get_irq_status);
++EXPORT_SYMBOL_GPL(psil_get_ep_config_by_id);
 +
-+void k3_ringacc_ring_clear_irq(struct k3_ring *ring, u32 status)
-+{
-+	struct k3_ringacc *ringacc = ring->parent;
-+	struct k3_ring *fwd_ring = &ringacc->rings[ring->ring_id];
-+
-+	if (!fwd_ring->intr)
-+		return;
-+
-+	writel(status, &fwd_ring->intr->status);
-+}
-+EXPORT_SYMBOL_GPL(k3_ringacc_ring_clear_irq);
-+
- static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
+ int psil_set_new_ep_config(struct device *dev, const char *name,
+ 			   struct psil_endpoint_config *ep_config)
  {
- 	struct ti_sci_msg_rm_ring_cfg ring_cfg = { 0 };
- 	struct k3_ringacc *ringacc = ring->parent;
- 	int ret;
+ 	struct psil_endpoint_config *dst_ep_config;
+-	struct of_phandle_args dma_spec;
+-	u32 thread_id;
++	struct of_phandle_args dma_spec = { 0 };
++	u32 thread_id = 0;
++	u32 channel_id = 0;
++	bool by_channel_id = false;
+ 	int index;
  
--	if (!ringacc->tisci)
--		return -EINVAL;
--
- 	ring_cfg.nav_id = ringacc->tisci_dev_id;
- 	ring_cfg.index = ring->ring_id;
- 	ring_cfg.valid_params = TI_SCI_MSG_VALUE_RM_ALL_NO_ORDER;
-@@ -689,6 +829,24 @@ static int k3_ringacc_ring_cfg_sci(struct k3_ring *ring)
- 	ring_cfg.size = ring->elm_size;
- 	ring_cfg.asel = ring->asel;
+ 	if (!dev || !dev->of_node)
+@@ -90,17 +149,52 @@ int psil_set_new_ep_config(struct device *dev, const char *name,
+ 				       index, &dma_spec))
+ 		return -ENOENT;
  
-+	if (!ringacc->tisci) {
-+		u32 reg;
+-	thread_id = dma_spec.args[0];
++	if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-pktdma")) {
++		bool dev_to_mem;
+ 
+-	dst_ep_config = psil_get_ep_config(thread_id);
++		if (dma_spec.args_count < 1) {
++			of_node_put(dma_spec.np);
++			return -EINVAL;
++		}
 +
-+		writel(ring_cfg.addr_lo, &ring->cfg->ba_lo);
-+		writel((ring_cfg.addr_hi & K3_DMARING_CFG_ADDR_HI_MASK) +
-+				(ring_cfg.asel << K3_DMARING_CFG_ASEL_SHIFT),
-+				&ring->cfg->ba_hi);
++		by_channel_id = true;
++		channel_id = dma_spec.args[0];
++		thread_id = dma_spec.args[0];
++		dst_ep_config = psil_get_ep_config_by_id(dma_spec.args[0],
++							  true,
++							  &thread_id, &dev_to_mem);
++	} else if (of_device_is_compatible(dma_spec.np, "ti,am62l-dmss-bcdma")) {
++		bool dev_to_mem;
 +
-+		reg = readl(&ring->cfg->size);
-+		reg &= ~K3_DMARING_CFG_SIZE_MASK;
-+		reg |= ring_cfg.count & K3_DMARING_CFG_SIZE_MASK;
++		if (dma_spec.args_count < 3) {
++			of_node_put(dma_spec.np);
++			return -EINVAL;
++		}
 +
-+		writel(reg, &ring->cfg->size);
-+		writel(K3_RINGACC_RT_INT_ENABLE_SET_COMPLETE | K3_RINGACC_RT_INT_ENABLE_SET_TR,
-+		       &ring->intr->enable_set);
-+		return 0;
++		by_channel_id = true;
++		channel_id = dma_spec.args[2];
++		thread_id = dma_spec.args[2];
++		dst_ep_config = psil_get_ep_config_by_id(dma_spec.args[2],
++							  false,
++							  &thread_id, &dev_to_mem);
++	} else {
++		thread_id = dma_spec.args[0];
++		dst_ep_config = psil_get_ep_config(thread_id);
 +	}
-+
- 	ret = ringacc->tisci_ring_ops->set_cfg(ringacc->tisci, &ring_cfg);
- 	if (ret)
- 		dev_err(ringacc->dev, "TISCI config ring fail (%d) ring_idx %d\n",
-@@ -1347,6 +1505,11 @@ static int k3_ringacc_probe_dt(struct k3_ringacc *ringacc)
- 		return PTR_ERR(ringacc->rm_gp_range);
+ 	if (IS_ERR(dst_ep_config)) {
+-		pr_err("PSIL: thread ID 0x%04x not defined in map\n",
+-		       thread_id);
++		if (by_channel_id)
++			pr_err("PSIL: channel ID 0x%04x not defined in map\n",
++			       channel_id);
++		else
++			pr_err("PSIL: thread ID 0x%04x not defined in map\n",
++			       thread_id);
+ 		of_node_put(dma_spec.np);
+ 		return PTR_ERR(dst_ep_config);
  	}
  
-+	if (!IS_ENABLED(CONFIG_TI_SCI_INTA_MSI_DOMAIN)) {
-+		dev_err(dev, "TI_SCI_INTA_MSI_DOMAIN is required for a DT-probed ringacc with ti,sci\n");
-+		return -ENODEV;
-+	}
-+
- 	return ti_sci_inta_msi_domain_alloc_irqs(ringacc->dev,
- 						 ringacc->rm_gp_range);
- }
-@@ -1481,9 +1644,12 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
++	mutex_lock(&ep_map_mutex);
+ 	memcpy(dst_ep_config, ep_config, sizeof(*dst_ep_config));
++	mutex_unlock(&ep_map_mutex);
  
- 	mutex_init(&ringacc->req_lock);
- 
--	base_rt = devm_platform_ioremap_resource_byname(pdev, "ringrt");
--	if (IS_ERR(base_rt))
--		return ERR_CAST(base_rt);
-+	base_rt = data->base_rt;
-+	if (!base_rt) {
-+		base_rt = devm_platform_ioremap_resource_byname(pdev, "ringrt");
-+		if (IS_ERR(base_rt))
-+			return ERR_CAST(base_rt);
-+	}
- 
- 	ringacc->rings = devm_kzalloc(dev,
- 				      sizeof(*ringacc->rings) *
-@@ -1499,6 +1665,10 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
- 		struct k3_ring *ring = &ringacc->rings[i];
- 
- 		ring->rt = base_rt + K3_DMARING_RT_REGS_STEP * i;
-+		ring->cfg = base_rt + K3_RINGACC_RT_CFG_REGS_OFS +
-+			    K3_DMARING_RT_REGS_STEP * i;
-+		ring->intr = base_rt + K3_RINGACC_RT_INT_REGS_OFS +
-+			     K3_DMARING_RT_REGS_STEP * i;
- 		ring->parent = ringacc;
- 		ring->ring_id = i;
- 		ring->proxy_id = K3_RINGACC_PROXY_NOT_USED;
-@@ -1512,7 +1682,8 @@ struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
- 		ring->flags = K3_RING_FLAG_REVERSE;
- 	}
- 
--	ringacc->tisci_ring_ops = &ringacc->tisci->ops.rm_ring_ops;
-+	if (ringacc->tisci)
-+		ringacc->tisci_ring_ops = &ringacc->tisci->ops.rm_ring_ops;
- 
- 	dev_info(dev, "Number of rings: %u\n", ringacc->num_rings);
- 
-diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
-index 7b7fc237c08f5..2a9b7834bc430 100644
---- a/include/linux/soc/ti/k3-ringacc.h
-+++ b/include/linux/soc/ti/k3-ringacc.h
-@@ -156,6 +156,23 @@ u32 k3_ringacc_get_ring_id(struct k3_ring *ring);
-  */
- int k3_ringacc_get_ring_irq_num(struct k3_ring *ring);
- 
-+/**
-+ * k3_ringacc_ring_get_irq_status - Get the irq status for the ring
-+ * @ring: pointer on ring
-+ *
-+ * Returns the interrupt status
-+ */
-+u32 k3_ringacc_ring_get_irq_status(struct k3_ring *ring);
-+
-+/**
-+ * k3_ringacc_ring_clear_irq - Clear the given interrupts
-+ * @ring: pointer on ring
-+ * @status: mask of interrupt status bits to clear
-+ *
-+ * Clears only the interrupt status bits set in @status on the ring
-+ */
-+void k3_ringacc_ring_clear_irq(struct k3_ring *ring, u32 status);
-+
- /**
-  * k3_ringacc_ring_cfg - ring configure
-  * @ring: pointer on ring
-@@ -263,6 +280,7 @@ struct k3_ringacc_init_data {
- 	const struct ti_sci_handle *tisci;
- 	u32 tisci_dev_id;
- 	u32 num_rings;
-+	void __iomem *base_rt;
+ 	of_node_put(dma_spec.np);
+ 	return 0;
+diff --git a/include/linux/dma/k3-psil.h b/include/linux/dma/k3-psil.h
+index 5f106d852f1cf..36e347311f8b2 100644
+--- a/include/linux/dma/k3-psil.h
++++ b/include/linux/dma/k3-psil.h
+@@ -35,6 +35,7 @@ enum udma_tp_level {
+ enum psil_endpoint_type {
+ 	PSIL_EP_NATIVE = 0,
+ 	PSIL_EP_PDMA_XY,
++	PSIL_EP_PDMA_XYMF,
+ 	PSIL_EP_PDMA_MCAN,
+ 	PSIL_EP_PDMA_AASRC,
+ };
+@@ -78,6 +79,8 @@ struct psil_endpoint_config {
+ 	u16 flow_start;
+ 	u16 flow_num;
+ 	s16 default_flow_id;
++	/* XYMF FIFO index (0-3 for CS0-CS3), Only for PSIL_EP_PDMA_XYMF */
++	u8 fifo_id;
  };
  
- struct k3_ringacc *k3_ringacc_dmarings_init(struct platform_device *pdev,
+ int psil_set_new_ep_config(struct device *dev, const char *name,
 
 -- 
 2.55.0
