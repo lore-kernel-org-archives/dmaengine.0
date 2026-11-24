@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795535510;
-	b=dRWVNaoR8YESC8mR3kaG2TwOMw2/b8V3WiR2XcCuoqhY05R4LUYDNASBdn66Qpswb6yn
-	 QOLS1VkT5vk1Q53Seb/enOiAjwJ0YeU2EWIGRp00rbaD7I0OijHcjeCN9HksiJpdchgeI
-	 f8xVqd5QMHjkO9t40wpsmK8VLhh2UbXiwUZIxwWI5IpLXKGlYflnMC1Kt6k4hmCMbz7Vt
-	 6h6WsLo3lZ9kGmmJrYo4TDVyEwnMRNvSU8Css+CTkOXNtcCUSJ/o/JV6q4YVRFbmgAAAK
-	 nVyLW1+5DlLaJNelLr4oL/kJcAS1q6z8k+tlGRQxHsyHcU6/6MoqU4BZHhq/Exx7Eiw==
+	t=1795535511;
+	b=hV3M6Z02nff++lXvvGM5/pryQv/GdMVLPV996KLYeTpUw1pAgbVQnu98CiSH/HLeYNLP
+	 z71VfjHNeKWbDJkXpcEW1Pufjg+2WCcM2Pg8bYtukMr7YfAVpuq/AU3/kZ+Zqioz6MHl9
+	 ss0eRFeGVdyNXZ9bT86k7vrkHbiHYU5e6kfudOYDAzV8rZH2rGNIrNv41pLq0wVyh1qmS
+	 Dg+UFF/aLYOfMtFNrjb175hsWItLBd/s4avAoR742iKIyGBsUIxxYaoP+3ixCwjdA3xr8
+	 URwjT4aVQrtH62yu5nFMRZGkzBlGqW3enZ0TlxbJLcKzheaQlCEPDmVN4c69J2Ps03w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795535510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795535511;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:
 	 X-SA-Exim-Mail-From:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
 	 Subject:X-SA-Exim-Version:X-SA-Exim-Scanned;
-	bh=eCV+8xZkN3QA09Y6pKYiI4M+xXBKk52mxpHeetIvOJ4=;
-	b=TQW3HXC6bB+LSp022Bbzg2y2MVU1sklQ/UbWb+WmSGbVc0fYxGRBWr+vdjOZlOuazCDu
-	 E4PcT6lgtSmEkuBdRNu6wmzKYg/fFU5N9BaADvQa1Riir7Uha1wRrZiP6pIPTniFR//2r
-	 I1N8CfDGnh3MgfILVrKPwoBwI2h5ckVv1VS2ZoN8+xfKCnSHW4bbFhecm5rrATCGG8akw
-	 jOBOHIv0erNA+OhP/JR9jYXEPt67yzohE0x4csomuY2Gc89oZqPGhGjVFDggVpbBeiy58
-	 LZg2+f4G3zL0ZNhBO5xJcmEoTepnDpK702o+XnGdTQx+ZqVetEcgLoV+9Um6c1ujEoQ==
+	bh=3OzpN3yKuM6PacqG+Pfu69fgjtLlMlg6ijoO2WX32BY=;
+	b=FWt9sY8ccDYV8ggBNACL2+LB2++TzdnWsEZJkE8AVhAZBXoVyxcDoejhggaTUh4t2A7U
+	 +bGuxE5QGMST18358M7mmZ8sg1BtSI+Rd6Bqve0kEiJI/PDPdF8p81pNlJsilTbKG4660
+	 19ociSmLaDqupn+z08ZShtxUQYlkLJtJn4+4rjOjA0w0Zz6CqdcDF+WGSRNQijGJjhaAy
+	 dG/dQaEnSLCvdfU0u4dvbiX8iu05EwaVVRoLDi1iDaw2Yk8lLhWAnTWgp6b4kRms8PIDF
+	 UuKPRVAyT03z3CYVW7LpTkijHYgIzXuUxX0hqdIXnVsJiJtIXLWhyoj0UpMOygiQCIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deltatee.com;
 	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=OAL1DdYl;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=FdQn2t8q;
 	arc=none smtp.remote-ip=204.191.154.188
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596DA606A692;
-	Tue, 24 Nov 2026 15:51:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 596DA606A692
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE7B606A6A8;
+	Tue, 24 Nov 2026 15:51:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5AE7B606A6A8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=OAL1DdYl
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=FdQn2t8q
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=eCV+8xZkN3QA09Y6pKYiI4M+xXBKk52mxpHeetIvOJ4=; b=OAL1DdYlnuDYzLcRxW73mo5IDs
-	a5Lt75ja6xzfiG8TMozE72bZh1Vhw4VAYg6r9O1ZyLXL5AqtbHdbJxsZ1xaI3Ougj8GyD7gCNI0+d
-	plL/K2uNrGdOqD58CFIIPJ8bFzz7FfU7fAuV/298Fx1GYjA1VUXD3rVSYwvY0OpiyCBHosFkn98rt
-	7zbmp34e0a7RDA2zrKEiIDuh4OIEFd6XD+rk/UKjQ5k4hiuJSpvx92yysAVCSLhIh6V/ntIom8VBG
-	V7LBkoFhWAgm0eBuoQ9JldzHegakaFR2wZB7UDIMiK92bbLEuC1v0s7kFyvUdq9IDP8IIcEwcDcLO
-	qPFNQxww==;
+	bh=3OzpN3yKuM6PacqG+Pfu69fgjtLlMlg6ijoO2WX32BY=; b=FdQn2t8qS8TtWDNVRJZELc724r
+	BhUATjS9ym75EigSI73paZ3iEHBegFkFlCuedtAm+Nh4/GY+MZLrz7OeJ1bujnOcRT3/YGRXOwrDo
+	dikPlLFFa5M33PTimOn4AVjzLfxhx2EUo9BflOxHIDVW62gaHuhdRU13Rf546QfDqS3GOUUXqlYjO
+	HFCxkO+sACjSwW1+Gcj+0OVvZAqdP5WEHzcqSAZB/O5qDVeRxKmXzSpJRVZwQeLVZm/pCKD/y/YAx
+	Iuwy4wsHP5dVsN/ZCnuDu4IpDQLwcg/EP3vTOuJSSLXN5cmd44mhvCd1dCb8QTMcrPXcRxgYUlOoq
+	MAh9djkw==;
 Received: from donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVso2-00000000mbo-05oU;
-	Tue, 24 Nov 2026 09:51:43 -0600
+	id 1xVso3-00000000mc2-2kyU;
+	Tue, 24 Nov 2026 09:51:44 -0600
 Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVsmn-00000003rRd-3nDO;
-	Tue, 24 Nov 2026 09:50:25 -0600
+	id 1xVsmo-00000003rRf-0A8b;
+	Tue, 24 Nov 2026 09:50:26 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -66,8 +66,8 @@ Cc: Frank Li <Frank.li@nxp.com>,
 	Kelvin Cao <kelvin.cao@microchip.com>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Frank Li <Frank.Li@nxp.com>
-Date: Tue, 24 Nov 2026 09:50:21 -0600
-Message-ID: <20261124155024.920403-3-logang@deltatee.com>
+Date: Tue, 24 Nov 2026 09:50:22 -0600
+Message-ID: <20261124155024.920403-4-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261124155024.920403-1-logang@deltatee.com>
 References: <20261124155024.920403-1-logang@deltatee.com>
@@ -85,319 +85,243 @@ X-SA-Exim-Connect-IP: 172.16.1.31
 X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com, Frank.li@nxp.com, Frank.Li@nxp.com
 X-SA-Exim-Mail-From: logang@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v5 2/4] dmaengine: ioatdma: convert per-channel sysfs to chan_groups
+Subject: [PATCH v5 3/4] dmaengine: switchtec-dma: add config sysfs attributes
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-Use the new dma_device.chan_groups mechanism to add ioat's "quickdata"
-per-channel attributes directly to the channel's existing struct
-device, instead of a second, separately managed kobject
-(ioat_ktype/ioat_kobject_add()/ioat_kobject_del()).
+Add sysfs configuration options for switchtec-dma channels, using
+dma_device.chan_groups the same way the ioatdma conversion does:
+attach a "switchtec-config" attribute group directly to the channel's
+existing struct device, with each show()/store() recovering the
+struct dma_chan via the dmaengine_chan_from_dev CLASS.
 
-Each show()/store() now recovers the struct dma_chan via
-dev_to_dma_chan() under dma_list_mutex, the same safe pattern already
-used by the core attributes, returning -ENODEV once the channel has
-been unregistered rather than reading it after the fact.
+The read-modify-write of the shared perf_cfg register is protected by
+hw_ctrl_lock, and writes are rejected with -EBUSY while the channel is
+allocated to a client (hw_cfg_locked), instead of a TOCTOU-prone
+chan->client_count check.
 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
 ---
- drivers/dma/ioat/dma.h   |   6 +-
- drivers/dma/ioat/init.c  |   5 +-
- drivers/dma/ioat/sysfs.c | 166 +++++++++++++++------------------------
- 3 files changed, 67 insertions(+), 110 deletions(-)
+ drivers/dma/switchtec_dma.c | 179 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 179 insertions(+)
 
-diff --git a/drivers/dma/ioat/dma.h b/drivers/dma/ioat/dma.h
-index e8a880f338c6..d36cc2df74ea 100644
---- a/drivers/dma/ioat/dma.h
-+++ b/drivers/dma/ioat/dma.h
-@@ -103,7 +103,6 @@ struct ioatdma_chan {
- 	#define IOAT_CHAN_DOWN 0
- 	#define IOAT_COMPLETION_ACK 1
- 	#define IOAT_RESET_PENDING 2
--	#define IOAT_KOBJ_INIT_FAIL 3
- 	#define IOAT_RUN 5
- 	#define IOAT_CHAN_ACTIVE 6
- 	struct timer_list timer;
-@@ -112,7 +111,6 @@ struct ioatdma_chan {
- 	dma_addr_t completion_dma;
- 	u64 *completion;
- 	struct tasklet_struct cleanup_task;
--	struct kobject kobj;
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index a386c3a284e6..1ebe17095c61 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -132,6 +132,11 @@ struct switchtec_dma_chan {
  
- /* ioat v2 / v3 channel attributes
-  * @xfercap_log; log2 of channel max transfer length (for fast division)
-@@ -190,7 +188,7 @@ struct ioat_ring_ent {
- };
+ 	/* Serialize hardware control register access */
+ 	spinlock_t hw_ctrl_lock;
++	/*
++	 * Set while the channel is allocated to a client; blocks sysfs
++	 * hw config changes
++	 */
++	bool hw_cfg_locked;
  
- extern int ioat_pending_level;
--extern const struct kobj_type ioat_ktype;
-+extern const struct attribute_group *ioat_groups[];
- extern struct kmem_cache *ioat_cache;
- extern struct kmem_cache *ioat_sed_cache;
+ 	struct tasklet_struct desc_task;
  
-@@ -393,8 +391,6 @@ void ioat_issue_pending(struct dma_chan *chan);
- /* IOAT Init functions */
- bool is_bwd_ioat(struct pci_dev *pdev);
- struct dca_provider *ioat_dca_init(struct pci_dev *pdev, void __iomem *iobase);
--void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type);
--void ioat_kobject_del(struct ioatdma_device *ioat_dma);
- int ioat_dma_setup_interrupts(struct ioatdma_device *ioat_dma);
- void ioat_stop(struct ioatdma_chan *ioat_chan);
- #endif /* IOATDMA_H */
-diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
-index a57024c4b066..984078920c2b 100644
---- a/drivers/dma/ioat/init.c
-+++ b/drivers/dma/ioat/init.c
-@@ -541,8 +541,6 @@ static void ioat_dma_remove(struct ioatdma_device *ioat_dma)
+@@ -1029,6 +1034,10 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
+ 	dev_dbg(dmaengine_chan_dev(chan), "MRRS:        0x%x\n",
+ 		FIELD_GET(PERF_MRRS_MASK, perf_cfg));
  
- 	ioat_disable_interrupts(ioat_dma);
++	spin_lock(&swdma_chan->hw_ctrl_lock);
++	swdma_chan->hw_cfg_locked = true;
++	spin_unlock(&swdma_chan->hw_ctrl_lock);
++
+ 	return SWITCHTEC_DMA_SQ_SIZE;
  
--	ioat_kobject_del(ioat_dma);
--
- 	dma_async_device_unregister(dma);
+ err_ring_inactive:
+@@ -1046,11 +1055,180 @@ static int switchtec_dma_alloc_chan_resources(struct dma_chan *chan)
+ 	return rc;
  }
  
-@@ -1185,12 +1183,11 @@ static int ioat3_dma_probe(struct ioatdma_device *ioat_dma, int dca)
- 		goto err_disable_interrupts;
- 	}
- 
-+	dma->chan_groups = ioat_groups;
- 	err = dma_async_device_register(&ioat_dma->dma_dev);
- 	if (err)
- 		goto err_disable_interrupts;
- 
--	ioat_kobject_add(ioat_dma, &ioat_ktype);
--
- 	if (dca)
- 		ioat_dma->dca = ioat_dca_init(pdev, ioat_dma->reg_base);
- 
-diff --git a/drivers/dma/ioat/sysfs.c b/drivers/dma/ioat/sysfs.c
-index 976134df8108..9bdc0fbf7696 100644
---- a/drivers/dma/ioat/sysfs.c
-+++ b/drivers/dma/ioat/sysfs.c
-@@ -14,134 +14,95 @@
- 
- #include "../dmaengine.h"
- 
--struct ioat_sysfs_entry {
--	struct attribute attr;
--	ssize_t (*show)(struct dma_chan *, char *);
--	ssize_t (*store)(struct dma_chan *, const char *, size_t);
--};
--
--static ssize_t cap_show(struct dma_chan *c, char *page)
-+static ssize_t cap_show(struct device *dev, struct device_attribute *attr,
-+			char *page)
- {
--	struct dma_device *dma = c->device;
-+	struct dma_device *dma;
- 
++static __always_inline ssize_t perf_cfg_show(struct device *dev, char *page,
++					     unsigned int mask)
++{
++	struct switchtec_dma_chan *swdma_chan;
++	struct chan_fw_regs __iomem *chan_fw;
++	u32 perf_cfg;
++	int value;
++
 +	CLASS(dmaengine_chan_from_dev, c)(dev);
 +
 +	if (!c)
 +		return -ENODEV;
 +
-+	dma = c->device;
- 	return sysfs_emit(page, "copy%s%s%s%s%s\n",
- 		dma_has_cap(DMA_PQ, dma->cap_mask) ? " pq" : "",
- 		dma_has_cap(DMA_PQ_VAL, dma->cap_mask) ? " pq_val" : "",
- 		dma_has_cap(DMA_XOR, dma->cap_mask) ? " xor" : "",
- 		dma_has_cap(DMA_XOR_VAL, dma->cap_mask) ? " xor_val" : "",
- 		dma_has_cap(DMA_INTERRUPT, dma->cap_mask) ? " intr" : "");
--
- }
--static const struct ioat_sysfs_entry ioat_cap_attr = __ATTR_RO(cap);
-+static DEVICE_ATTR_RO(cap);
- 
--static ssize_t version_show(struct dma_chan *c, char *page)
-+static ssize_t version_show(struct device *dev, struct device_attribute *attr,
-+			    char *page)
- {
--	struct dma_device *dma = c->device;
--	struct ioatdma_device *ioat_dma = to_ioatdma_device(dma);
-+	struct ioatdma_device *ioat_dma;
- 
++	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
++	chan_fw = swdma_chan->mmio_chan_fw;
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		rcu_read_unlock();
++		return -ENODEV;
++	}
++
++	perf_cfg = readl(&chan_fw->perf_cfg);
++	value = field_get(mask, perf_cfg);
++
++	rcu_read_unlock();
++	return sysfs_emit(page, "0x%x\n", value);
++}
++
++static __always_inline ssize_t perf_cfg_store(struct device *dev,
++					      const char *page, size_t count,
++					      unsigned int mask)
++{
++	struct switchtec_dma_chan *swdma_chan;
++	struct chan_fw_regs __iomem *chan_fw;
++	ssize_t ret = count;
++	u32 perf_cfg;
++	int value;
++
 +	CLASS(dmaengine_chan_from_dev, c)(dev);
 +
 +	if (!c)
 +		return -ENODEV;
 +
-+	ioat_dma = to_ioatdma_device(c->device);
- 	return sysfs_emit(page, "%d.%d\n",
- 			   ioat_dma->version >> 4, ioat_dma->version & 0xf);
- }
--static const struct ioat_sysfs_entry ioat_version_attr = __ATTR_RO(version);
-+static DEVICE_ATTR_RO(version);
- 
--static ssize_t
--ioat_attr_show(struct kobject *kobj, struct attribute *attr, char *page)
-+static ssize_t ring_size_show(struct device *dev, struct device_attribute *attr,
-+			      char *page)
- {
--	const struct ioat_sysfs_entry *entry;
--	struct ioatdma_chan *ioat_chan;
-+	CLASS(dmaengine_chan_from_dev, c)(dev);
- 
--	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
--	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
-+	if (!c)
-+		return -ENODEV;
- 
--	if (!entry->show)
--		return -EIO;
--	return entry->show(&ioat_chan->dma_chan, page);
--}
--
--static ssize_t
--ioat_attr_store(struct kobject *kobj, struct attribute *attr,
--const char *page, size_t count)
--{
--	const struct ioat_sysfs_entry *entry;
--	struct ioatdma_chan *ioat_chan;
--
--	entry = container_of_const(attr, struct ioat_sysfs_entry, attr);
--	ioat_chan = container_of(kobj, struct ioatdma_chan, kobj);
--
--	if (!entry->store)
--		return -EIO;
--	return entry->store(&ioat_chan->dma_chan, page, count);
--}
--
--static const struct sysfs_ops ioat_sysfs_ops = {
--	.show	= ioat_attr_show,
--	.store  = ioat_attr_store,
--};
--
--void ioat_kobject_add(struct ioatdma_device *ioat_dma, const struct kobj_type *type)
--{
--	struct dma_device *dma = &ioat_dma->dma_dev;
--	struct dma_chan *c;
--
--	list_for_each_entry(c, &dma->channels, device_node) {
--		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
--		struct kobject *parent = &c->dev->device.kobj;
--		int err;
--
--		err = kobject_init_and_add(&ioat_chan->kobj, type,
--					   parent, "quickdata");
--		if (err) {
--			dev_warn(to_dev(ioat_chan),
--				 "sysfs init error (%d), continuing...\n", err);
--			kobject_put(&ioat_chan->kobj);
--			set_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state);
--		}
--	}
--}
--
--void ioat_kobject_del(struct ioatdma_device *ioat_dma)
--{
--	struct dma_device *dma = &ioat_dma->dma_dev;
--	struct dma_chan *c;
--
--	list_for_each_entry(c, &dma->channels, device_node) {
--		struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
--
--		if (!test_bit(IOAT_KOBJ_INIT_FAIL, &ioat_chan->state)) {
--			kobject_del(&ioat_chan->kobj);
--			kobject_put(&ioat_chan->kobj);
--		}
--	}
--}
--
--static ssize_t ring_size_show(struct dma_chan *c, char *page)
--{
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
- 	return sysfs_emit(page, "%d\n", (1 << ioat_chan->alloc_order) & ~1);
- }
--static const struct ioat_sysfs_entry ring_size_attr = __ATTR_RO(ring_size);
-+static DEVICE_ATTR_RO(ring_size);
- 
--static ssize_t ring_active_show(struct dma_chan *c, char *page)
-+static ssize_t ring_active_show(struct device *dev,
++	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
++	chan_fw = swdma_chan->mmio_chan_fw;
++
++	if (kstrtoint(page, 0, &value) < 0)
++		return -EINVAL;
++
++	if (value < 0 || value > field_max(mask))
++		return -EINVAL;
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		ret = -ENODEV;
++		goto err_unlock;
++	}
++
++	spin_lock(&swdma_chan->hw_ctrl_lock);
++	if (swdma_chan->hw_cfg_locked) {
++		spin_unlock(&swdma_chan->hw_ctrl_lock);
++		ret = -EBUSY;
++		goto err_unlock;
++	}
++
++	perf_cfg = readl(&chan_fw->perf_cfg);
++	perf_cfg = (perf_cfg & ~mask) | field_prep(mask, value);
++	writel(perf_cfg, &chan_fw->perf_cfg);
++	spin_unlock(&swdma_chan->hw_ctrl_lock);
++
++err_unlock:
++	rcu_read_unlock();
++	return ret;
++}
++
++static ssize_t burst_scale_show(struct device *dev,
 +				struct device_attribute *attr, char *page)
- {
-+	CLASS(dmaengine_chan_from_dev, c)(dev);
++{
++	return perf_cfg_show(dev, page, PERF_BURST_SCALE_MASK);
++}
 +
-+	if (!c)
-+		return -ENODEV;
++static ssize_t burst_scale_store(struct device *dev,
++				 struct device_attribute *attr,
++				 const char *page, size_t count)
++{
++	return perf_cfg_store(dev, page, count, PERF_BURST_SCALE_MASK);
++}
++static DEVICE_ATTR_RW(burst_scale);
 +
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
- 	/* ...taken outside the lock, no need to be precise */
- 	return sysfs_emit(page, "%d\n", ioat_ring_active(ioat_chan));
- }
--static const struct ioat_sysfs_entry ring_active_attr = __ATTR_RO(ring_active);
-+static DEVICE_ATTR_RO(ring_active);
- 
--static ssize_t intr_coalesce_show(struct dma_chan *c, char *page)
-+static ssize_t intr_coalesce_show(struct device *dev,
-+				  struct device_attribute *attr, char *page)
- {
-+	CLASS(dmaengine_chan_from_dev, c)(dev);
++static ssize_t mrrs_show(struct device *dev,
++			 struct device_attribute *attr, char *page)
++{
++	return perf_cfg_show(dev, page, PERF_MRRS_MASK);
++}
 +
-+	if (!c)
-+		return -ENODEV;
++static ssize_t mrrs_store(struct device *dev,
++			  struct device_attribute *attr,
++			  const char *page, size_t count)
++{
++	return perf_cfg_store(dev, page, count, PERF_MRRS_MASK);
++}
++static DEVICE_ATTR_RW(mrrs);
 +
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
- 	return sysfs_emit(page, "%d\n", ioat_chan->intr_coalesce);
- }
- 
--static ssize_t intr_coalesce_store(struct dma_chan *c, const char *page,
--size_t count)
-+static ssize_t intr_coalesce_store(struct device *dev,
-+				   struct device_attribute *attr,
-+				   const char *page, size_t count)
- {
- 	int intr_coalesce = 0;
++static ssize_t interval_show(struct device *dev,
++			     struct device_attribute *attr, char *page)
++{
++	return perf_cfg_show(dev, page, PERF_INTERVAL_MASK);
++}
 +
-+	CLASS(dmaengine_chan_from_dev, c)(dev);
++static ssize_t interval_store(struct device *dev,
++			      struct device_attribute *attr,
++			      const char *page, size_t count)
++{
++	return perf_cfg_store(dev, page, count, PERF_INTERVAL_MASK);
++}
++static DEVICE_ATTR_RW(interval);
 +
-+	if (!c)
-+		return -ENODEV;
++static ssize_t burst_size_show(struct device *dev,
++			       struct device_attribute *attr, char *page)
++{
++	return perf_cfg_show(dev, page, PERF_BURST_SIZE_MASK);
++}
 +
- 	struct ioatdma_chan *ioat_chan = to_ioat_chan(c);
- 
- 	if (sscanf(page, "%du", &intr_coalesce) != -1) {
-@@ -153,20 +114,23 @@ size_t count)
- 
- 	return count;
- }
-+static DEVICE_ATTR_RW(intr_coalesce);
- 
--static const struct ioat_sysfs_entry intr_coalesce_attr = __ATTR_RW(intr_coalesce);
--
--static const struct attribute *const ioat_attrs[] = {
--	&ring_size_attr.attr,
--	&ring_active_attr.attr,
--	&ioat_cap_attr.attr,
--	&ioat_version_attr.attr,
--	&intr_coalesce_attr.attr,
-+static struct attribute *ioat_attrs[] = {
-+	&dev_attr_ring_size.attr,
-+	&dev_attr_ring_active.attr,
-+	&dev_attr_cap.attr,
-+	&dev_attr_version.attr,
-+	&dev_attr_intr_coalesce.attr,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(ioat);
- 
--const struct kobj_type ioat_ktype = {
--	.sysfs_ops = &ioat_sysfs_ops,
--	.default_groups = ioat_groups,
-+static const struct attribute_group ioat_attr_group = {
-+	.name = "quickdata",
-+	.attrs = ioat_attrs,
++static ssize_t burst_size_store(struct device *dev,
++				struct device_attribute *attr,
++				const char *page, size_t count)
++{
++	return perf_cfg_store(dev, page, count, PERF_BURST_SIZE_MASK);
++}
++static DEVICE_ATTR_RW(burst_size);
++
++static ssize_t arb_weight_show(struct device *dev,
++			       struct device_attribute *attr, char *page)
++{
++	return perf_cfg_show(dev, page, PERF_ARB_WEIGHT_MASK);
++}
++
++static ssize_t arb_weight_store(struct device *dev,
++				struct device_attribute *attr,
++				const char *page, size_t count)
++{
++	return perf_cfg_store(dev, page, count, PERF_ARB_WEIGHT_MASK);
++}
++static DEVICE_ATTR_RW(arb_weight);
++
++static struct attribute *switchtec_config_attrs[] = {
++	&dev_attr_burst_scale.attr,
++	&dev_attr_mrrs.attr,
++	&dev_attr_interval.attr,
++	&dev_attr_burst_size.attr,
++	&dev_attr_arb_weight.attr,
++	NULL,
 +};
 +
-+const struct attribute_group *ioat_groups[] = {
-+	&ioat_attr_group,
++static const struct attribute_group switchtec_config_group = {
++	.name = "switchtec-config",
++	.attrs = switchtec_config_attrs,
++};
++
++static const struct attribute_group *switchtec_groups[] = {
++	&switchtec_config_group,
 +	NULL,
- };
++};
++
+ static void switchtec_dma_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct switchtec_dma_chan *swdma_chan =
+ 		container_of(chan, struct switchtec_dma_chan, dma_chan);
+ 
++	spin_lock(&swdma_chan->hw_ctrl_lock);
++	swdma_chan->hw_cfg_locked = false;
++	spin_unlock(&swdma_chan->hw_ctrl_lock);
++
+ 	spin_lock_bh(&swdma_chan->submit_lock);
+ 	swdma_chan->ring_active = false;
+ 	spin_unlock_bh(&swdma_chan->submit_lock);
+@@ -1313,6 +1491,7 @@ static int switchtec_dma_create(struct pci_dev *pdev)
+ 	dma->device_terminate_all = switchtec_dma_terminate_all;
+ 	dma->device_synchronize = switchtec_dma_synchronize;
+ 	dma->device_release = switchtec_dma_release;
++	dma->chan_groups = switchtec_groups;
+ 
+ 	rc = dma_async_device_register(dma);
+ 	if (rc) {
 -- 
 2.47.3
 
