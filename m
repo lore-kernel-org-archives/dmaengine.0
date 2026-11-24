@@ -1,112 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795522602;
-	b=4G3iIqRQOWKj29EU0eRQvlkPXoQWEh+cd13THxwl6/5zeO5kFTUxbyZopFO89bXZNT8K
-	 Lg/LCllPC0XsEvNpP2DiuRnmDH0WVMVAWWqJ2bXmWdLqcI4vhjv3zHVeWqo+EV6sRIqSS
-	 wE3lHQguYSyRMhBejvX3tN5DZ6LdC4rzREUeFVkLXSlmRLKDbbmbMShtG4hWCdrIuTczi
-	 6/lm14XxQQIxx6lSYNx0UEEhoVry0GrCvR9bnQdQboVlAP2yrpJXzTnrA8BLVJ3M46nTL
-	 ni1jm7ngybBfVogQvu/Y11K7QA5MSCNu3TAlowDBU+IhpBwNvzn8ZQfSfZNinZMx8fw==
+	t=1795522645;
+	b=mqHvmEC/N6bkfLtSWTbdLMRsbUI4yDD0sUdGlmrX6b8548mdTDQXMvtsMsK0xanVFS6w
+	 g1lv14LB7FeuguutXHN/7G80ufIMwdPfUr5s+X7Md567D0QTECt4YAp6XijvKz4pV8TGs
+	 COE2lDC9UoJWYqBCLk/U+90qaXxO+OyUr14NrJJx8aPPKIMKImvfQdlVVDW7uJBHN48qL
+	 5YbS4RDXCXdH6L/Ne5PI9fZPy6LkLlx3oriwriBf51gclDncrtSQJufkO5Gh//JxFZ5Se
+	 bwRd38Gop2tGXMp0f/7Q8U00neE/0dVCaamOtIuAke4oRElSPlkUEXSFbFVHA6weq1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795522602;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-GUID:X-Authority-Analysis:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=Wl/yMnsgHbcfWltNGwf12AGxgVf092YP4bXDTGy/p/A=;
-	b=NMiMvvxU5kGI64dZmlQQlWXvcgJhVfgEoBQldJ+GpeyQBXrgfqA0+P+/MVY/1F1xdpy5
-	 QOI0MYvI87U59bkLMI7JrHNWVyb8xDSN7/mdSA9E3ZHf8124mG6SXLOHvA/p+bb4myUi0
-	 snwNtPy/vS1WkRx3IPQl43GG+rocK1GGi8d3fVTXRPLJyuxir6Bgl7SnPYwIGIwYEAm/w
-	 xW3u0fshtm6yJY23APdO58xoiudWa4hB100fw6KskYm5S1t0U1HMfD2lXEBLZktt/LAU4
-	 FWxwyZVXWYC3HqR42uYnqPaD1Luu7r9EyVuZHlO6LKTvbX40V0NZRtGoFqk49289eUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795522645;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=iQDtwKLSY6XGNsCnBAWAOm/FMWrmNW/P5tcn2XTRPbQ=;
+	b=H3uN5xVfDm8zQnzhPJsXBs4yBcOnLgyCJMsI8Jkv8mo0LPeyL2u0DcPigS9WR9Lshq0g
+	 h3HNH/w9fnnaRkaowfPaubYz+TlkjCK+T9hpDhv/7zEgaSUkj6SdAdhtPqjxxSdlqsK7b
+	 UySpe/Er8Sn90A8ut/jg1i9087DMCNdTlCRsqNfhkL+E3b8falroOX1+EV6h6jZEcBVlO
+	 m+7mMiyk14WyblWfTgdggIC+x+Q+zdva6fpgzLYrVltM4/FFNalQi5bMO2QBxHKz4TzSH
+	 dUR3lfBybtLgCzsgES0ngtSR75Rd+V5I8GNqZUiwiwkiy4BF6jsZ4RoF3P4V/WsGwIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jzBghQON;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="Ob/uh1Q1";
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="ksr4//NC";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2B4606A32E
-	for <dmaengine@vger.kernel.org>; Tue, 24 Nov 2026 12:16:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA2B4606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50AE606A321;
+	Tue, 24 Nov 2026 12:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jzBghQON;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ob/uh1Q1
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOAuLIZ636671
-	for <dmaengine@vger.kernel.org>; Tue, 24 Nov 2026 12:16:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wl/yMnsgHbcfWltNGwf12AGxgVf092YP4bXDTGy/p/A=; b=jzBghQONb8KQdKrc
-	ra1AN3R2zjN15e87Tsqpo5j862bVg6Oa4N2T2zLvAoJ7NnIv9pBZhyZMVId2V8eW
-	SDtyJFoOfqJFn2Bon3fyUnSxePMHs4WyNIAauTMReWQimEGGHZnZkOuwhjKYX6/G
-	G1bHKBCl9XSBFcKZAQJwI2WtvXaoM0Ifpo3AsuFyzu+YpgpCOanQLcRtuFbSromv
-	gRwYvDaTciJjI2/kcJnQXy2ZHf6FrT+HnOsvCWb6VF2xzHVwD56Sp3iZm2wW+gSN
-	mCyIFPXzWoTylw/Or0rvHvjIRi2Hd4elJ4zNDOGUWx+B6LJCtjYf2YLJ1iXaUyEc
-	4evEwg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j54rphmbx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <dmaengine@vger.kernel.org>; Tue, 24 Nov 2026 12:16:39 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8a59717b0c0so3162479b3a.3
-        for <dmaengine@vger.kernel.org>; Tue, 24 Nov 2026 04:16:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795522599; x=1796127399; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Wl/yMnsgHbcfWltNGwf12AGxgVf092YP4bXDTGy/p/A=;
-        b=Ob/uh1Q1yiO5qXo0HHZ4wEX4DukVmD3zc5muCGRjPk/6vgD19bQb9s2GhPvI0txlD6
-         qiZYaXE2rlxPGZ8UdOWXvMDCMlOy4XmtBUOD34ZrPav3smvNKZS1WHtxIml8IObnoRiA
-         R7F5CaRt2w1+scdSmBgZVuXkV5tt/2MaiW5mla4VQkM5Xn3b11vzGwUfcEZyee1oDC8o
-         DhYYLXmMYLFWsBVFSSODfaLXA8TBcTNgRfYWFns2klh3UsKN38cPoySQKEK7U+ntsSAB
-         +mldM6x402PLikh+IMO2XvMJ6b7NWmwjHvcfqZwn2KN2A7EF/GXxP9jPjnfvmbvYBYHB
-         D+yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795522599; x=1796127399;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Wl/yMnsgHbcfWltNGwf12AGxgVf092YP4bXDTGy/p/A=;
-        b=hhx28scU9T8BCc96UiL3XCgQqQl+esspIUlmBlaDDEeaYbnDOiJz9YdcGcZgw0/3Vq
-         wAEHeeVh+R+P6zl7i44+cvXd8Ws8lTY6Wmmr8XMF0b0kWSVWwO1CkZ7JJ5nErbYC7g3N
-         +ZYg5wgxKq6p6Ul2lR8nOJR2QtbDXsP0VmCVL2+1JZphmZL3CzssrXXTnYewQS5JEcZj
-         14JqYCIWymad05XnYOKPSUnClAX9Km11JeyYvyMeedrCyNn/pGg+0tZC33fdNj0C1RBl
-         F7q+P4V99RMO/qTv7rzrYjDPIqGAktiru5HGlBVQnN6ouHZDZ5wxqOm0noHWSW2+MN47
-         R+6Q==
-X-Forwarded-Encrypted: i=1; AL+hErFeDHvYikjd4EwicXjwPvYFLQcs9OetiD0Y5M4bEcbku+oL7Ir3yRTXWQou5kAmM7t6Qw6NqMLcMTA=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/7YIsp90jObIhGAfWSEyV4CkYtRUqUsp+T7ZaRfi2hvxvrO+c+
-	blDooKjTvnmkKUOwVsVwUFKNED4Gq7/gqROwCMEr5pNGDKztL8Enj/IIPFVJuh/82L1sU7UdUtW
-	cjbeCyxnlJfNWZ0BfEV5AkoltPlsh+NQwKNRaw+NXI47xvxa0B99xtTUGtn+kqDKJRQQLGnA=
-X-Gm-Gg: AZFdTZdoW4hCPx5/SDovnF9aiPvyp4gmO/kfJN+Q2vuKZIPh8MhzkRsuMgP0fV03MFP
-	4cMirunh3fUmGmwchzJexS+uoGtex/F6bI+uUG3H/QC+YYaej5VuNGGlG7dKZCcX4zsiTRnQtzQ
-	FGSgCxmJrW2BVuG64OiR4EzXY6QyHtMZ2SOfJR8YPQ0RIKI1B+D1qrEfyp9G2vgQhMJQ11koTJw
-	/BkaCWCzlrk120jN/u40NByW+OVxCdI55iPkZeVsDgf05CqW3GcKcwnLfywjKelTiKyzZrm8AQn
-	7aERYXedEl9TQbQeZdNLK9pb0NXcT0mOjAxgRA2PXEa2hs+UZdZu6pwxErY5OS4UftajT8Le6ti
-	+MhDF/87CZIpg6Vy936xPblgqjdwwEuMbWmO64kehUciOab8gZDRXoh/8umXMgpcAOIdKA6yytF
-	8RX40STV27
-X-Received: by 2002:a05:6a00:2d06:b0:8a9:95d6:31f4 with SMTP id d2e1a72fcca58-8c87c8605d3mr12316802b3a.32.1795522598200;
-        Tue, 24 Nov 2026 04:16:38 -0800 (PST)
-X-Received: by 2002:a05:6a00:2d06:b0:8a9:95d6:31f4 with SMTP id d2e1a72fcca58-8c87c8605d3mr12316762b3a.32.1795522597617;
-        Tue, 24 Nov 2026 04:16:37 -0800 (PST)
-Received: from hu-jseerapu-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c8706844a0sm7245572b3a.1.2026.11.24.04.16.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2026 04:16:37 -0800 (PST)
-From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-Date: Tue, 24 Nov 2026 17:45:27 +0530
-Subject: [PATCH v2 6/6] spi: spi-geni-qcom: Add QSPI support over GPI DMA
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ksr4//NC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EAD1F000F0;
+	Tue, 24 Nov 2026 12:17:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795522645;
+	bh=iQDtwKLSY6XGNsCnBAWAOm/FMWrmNW/P5tcn2XTRPbQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ksr4//NC4iSszOgInHzgVV1sh1wbHiecOHHqGbBzFGwmb0oxatX+T6h5eYFr/dmAV
+	 DvsxSXIMu9FeI6yrzrvtjUFhkqHeRSLRPtCUZ76GBLVL/TfEeiciiSTizRr3UEEPCx
+	 Tk7PS+bFavA2l9Lir3RTJBegUqvl6yCvjvcm5UWRSPdMtT0p33CNYnoSmhLZ0GqUt1
+	 9W0b+pjB73dr+FjsskIXF2SqnPmlbtHooRrX5KfHi80uVsppwY8zw1czmNkQPKW+ok
+	 8kFiYewjzA5A6E66GzHeHMJUZEHSCRGvS0APCuhJhunN9uNmy3xGcvihxKdX2r/Nfs
+	 +GnszqcUMrRmg==
+Message-ID: <sashiko-outbox-231120@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v13 17/20] dmaengine: ti: k3-udma-v2: New driver for K3
+ BCDMA_V2
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Sai Sree Kartheek Adivi" <s-adivi@ti.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261124-dma-upstream-v13-v13-17-bd4251fdc6d4@ti.com>
+References: <20261124-dma-upstream-v13-v13-0-bd4251fdc6d4@ti.com>
+ <20261124-dma-upstream-v13-v13-17-bd4251fdc6d4@ti.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 24 Nov 2026 12:17:24 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -115,584 +60,625 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261124-qspi_qup_upstream-v2-6-cd69894107c8@oss.qualcomm.com>
-References: <20261124-qspi_qup_upstream-v2-0-cd69894107c8@oss.qualcomm.com>
-In-Reply-To: <20261124-qspi_qup_upstream-v2-0-cd69894107c8@oss.qualcomm.com>
-To: Mark Brown <broonie@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abel Vesa <abelvesa@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795522563; l=19167;
- i=jyothi.seerapu@oss.qualcomm.com; h=from:subject:message-id;
- bh=b4O51bksvwSGRGuT8mYSlWgLtexmFNit16EZPulKYI4=;
- b=EXp5pd1zxSbUUCDNcDed+DfLIvyX4kD9C9ahKVgImpoVxXqQw51UN9Dn5KsmPXTbjOKbh+fBc
- Y2dgP+LMuY2Dm/LfGy5tsUAhR7lYVMAqQcq96gTcb3Oin9oCTHrXNxp
-X-Developer-Key: i=jyothi.seerapu@oss.qualcomm.com; a=ed25519;
- pk=9vafyYsia0OnBKWSEwhmWe3hPVQfI2T1xOs5dPaFvEo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA0NyBTYWx0ZWRfX0L0Y/4kDZQ1P
- iCN2kpPq5TtlGDomzOEH452xnQaYTOg754011txZtgY3h+X3jISX4rm9uTfYE5zPy+zqfIHfftC
- zK9vk2IF0CWqqgeFkPuFecUFcarO8z1eNXGviRHwOMLvp8x3CWx3/x+ebk2IXEhY6CYuz74ToqO
- Qmpcah047yV1z+NVlbzOTXE6yR4Y6rSaDkxrNKpvcbj0pZNS7eGhZ1D9riXqFIVLfPy+evkWuup
- aqm7vw8wFqbZ+HHm2KAtT0jATSFcreOLg0MJWDgodtW7u52PMR+21PaIN0LNuCTcuWjFduc/LgH
- eV/d0e17HrkIS7XYwYrOB5fReJSZuWo8Hts/ASTRK5PlqYjCNw+CzIyGZISNygZJcfTnTqx4fFL
- M0/eIhBXkGdiHRnhOWRNqAQrdKyj1wHhirIOHW8hOGk8bq6Ww+PCWn1WU8otdOQY0cirAhZKLB+
- FDfUb+FhDrU/EFM0IeQ==
-X-Proofpoint-GUID: W9wGILD14NLVhxGeifMp7cAZZ_uAdxhB
-X-Authority-Analysis: v=2.4 cv=MvbHeGae c=1 sm=1 tr=0 ts=6b058027 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=WfK9vUvZa93p8ZDr3I4A:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA0NyBTYWx0ZWRfX7arEa/0Ztn3z
- 2gSNf605j1CUqbP6L8eNzadS+UASvvO6OObE/oMH3u8iAbT5QNz+OcW8TV3Fr7SiaH4zr5El3Sg
- q8+Y4iRFN8Jv3mNrKa3Zix2zT9Pzuf0=
-X-Proofpoint-ORIG-GUID: W9wGILD14NLVhxGeifMp7cAZZ_uAdxhB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_02,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611240047
 
-Add QSPI support to the GENI SPI driver using the qcom,geni-qspi
-compatible. Select the QSPI firmware protocol and enable single, dual
-and quad SDR transfers. QSPI operation is supported only in controller
-mode and requires GPI DMA.
+Thank you for your contribution! Sashiko AI review found 11 potential
+issues to consider:
+- [High] dmaengine: ti: k3-udma-v2: out-of-bounds bchan access in
+  bcdma_v2_get_bchan()
+- [High] dmaengine: ti: k3-udma-v2: silent descriptor drop on autopair
+  timeout in udma_v2_start()
+- [Medium] dmaengine: ti: k3-udma-v2: udma_v2_ring_irq_handler() returns
+  IRQ_NONE on flush
+- [Medium] dmaengine: ti: k3-udma: missing BCDMA V2 EOP flag in
+  udma_prep_dma_cyclic_tr()
+- [Medium] dmaengine: ti: k3-udma-v2: leak of RX flush DMA mappings on
+  probe failure
+- [Medium] dmaengine: ti: k3-udma-v2: stale channel state in
+  bcdma_v2_alloc_chan_resources() and udma_get_tchan()
+- [Medium] dmaengine: ti: k3-udma-v2: descriptor leak in
+  udma_v2_remove() when cancelling purge_work
+- [Medium] dmaengine: ti: k3-udma-v2: DMA mapping leak on
+  udma_v2_probe() error paths
+- [Low] dmaengine: ti: k3-udma-v2: missing select SOC_TI in config
+  TI_K3_UDMA_V2
+- [Low] dmaengine: ti: k3-udma: udma_get_tchan() leaves uc->chan set on
+  tflow error
+- [Low] dmaengine: ti: k3-udma-v2: dead check in udma_v2_dma_filter_fn()
+  and unused trigger_param
+--
 
-QSPI read transactions consist of a command/address TX phase, an optional
-dummy phase and an RX data phase that must be executed as a single
-hardware command. Detect and combine the corresponding SPI transfers into
-one SPI_TX_RX command before submitting it to GPI DMA.
+commit 613c4655807ce30177b428151a0dff0e431dafb4
+Author: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-Update message accounting, DMA buffer synchronization and timeout
-calculations to cover all transfers consumed by a combined QSPI command.
+dmaengine: ti: k3-udma-v2: New driver for K3 BCDMA_V2
 
-Wait for both TX and RX DMA completions within a shared timeout budget
-before completing a combined read. This prevents the RX buffer from
-being unmapped while receive DMA is still active.
+This commit adds the k3-udma-v2 driver to support the TI K3 BCDMA_V2
+controller used on AM62L and updates k3-udma-common to handle V1 and V2
+differences.
 
-Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
----
- drivers/spi/spi-geni-qcom.c | 269 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 214 insertions(+), 55 deletions(-)
+> diff --git a/drivers/dma/ti/Kconfig b/drivers/dma/ti/Kconfig
+> index a389ae04ec930..e6a2cf37062e7 100644
+> --- a/drivers/dma/ti/Kconfig
+> +++ b/drivers/dma/ti/Kconfig
+> @@ -49,6 +49,19 @@ config TI_K3_UDMA
+>  	  Enable support for the TI UDMA (Unified DMA) controller. This
+>  	  DMA engine is used in AM65x and j721e.
+> =20
+> +config TI_K3_UDMA_V2
+> +	tristate "Texas Instruments K3 UDMA v2 support"
+> +	depends on ARCH_K3 || COMPILE_TEST
+> +	depends on TI_SCI_INTA_IRQCHIP
+> +	select DMA_ENGINE
+> +	select DMA_VIRTUAL_CHANNELS
+> +	select TI_K3_UDMA_COMMON
+> +	select TI_K3_RINGACC
+> +	select TI_K3_PSIL
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 631908522957..c2f14554c4a1 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -70,7 +70,6 @@
- #define SPI_TX_ONLY		1
- #define SPI_RX_ONLY		2
- #define SPI_CS_ASSERT		8
--#define SPI_CS_DEASSERT		9
- #define SPI_SCK_ONLY		10
- /* M_CMD params for SPI */
- #define SPI_PRE_CMD_DELAY	BIT(0)
-@@ -84,11 +83,20 @@
- #define GSI_CPHA		BIT(4)
- #define GSI_CPOL		BIT(5)
- 
-+/* Raw QSPI GO mode values encoded by the GPI DMA driver into the GO TRE. */
-+#define QSPI_SINGLE_SDR		0x0
-+#define QSPI_SINGLE_DDR		(BIT(2) | BIT(3))
-+#define QSPI_DUAL_SDR		BIT(2)
-+#define QSPI_DUAL_DDR		(BIT(1) | BIT(2))
-+#define QSPI_QUAD_SDR		BIT(1)
-+#define QSPI_QUAD_DDR		BIT(0)
-+
- struct geni_spi_desc {
- 	int (*resources_init)(struct geni_se *se);
- 	int (*set_rate)(struct geni_se *se, unsigned long clk_freq);
- 	int (*power_on)(struct geni_se *se);
- 	int (*power_off)(struct geni_se *se);
-+	bool is_qspi;
- };
- 
- struct spi_geni_master {
-@@ -123,6 +131,7 @@ struct spi_geni_master {
- 	struct dma_chan *rx;
- 	int cur_xfer_mode;
- 	const struct geni_spi_desc *dev_data;
-+	u32 dummy_len;
- 	struct notifier_block panic_nb;
- 	struct gpio_desc *ready_gpio;
- };
-@@ -418,27 +427,50 @@ spi_gsi_callback_result(void *cb, const struct dmaengine_result *result)
- 	if (result->result != DMA_TRANS_NOERROR) {
- 		dev_err(&spi->dev, "DMA txn failed: %d\n", result->result);
- 		trace_geni_se_regs(&mas->se);
--		spi->cur_msg->status = -EIO;
-+		WRITE_ONCE(spi->cur_msg->status, -EIO);
- 	} else if (!result->residue) {
- 		dev_dbg(&spi->dev, "DMA txn completed\n");
- 	} else {
- 		dev_err(&spi->dev, "DMA xfer has pending: %d\n", result->residue);
- 		trace_geni_se_regs(&mas->se);
--		spi->cur_msg->status = -EIO;
-+		WRITE_ONCE(spi->cur_msg->status, -EIO);
- 	}
- 
- 	complete(&mas->xfer_done);
- }
- 
-+static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
-+				 struct spi_geni_master *mas);
-+
-+static u32 spi_geni_qspi_mode(const struct spi_transfer *xfer)
-+{
-+	unsigned int buswidth = xfer->rx_buf ? xfer->rx_nbits : xfer->tx_nbits;
-+
-+	switch (buswidth) {
-+	case SPI_NBITS_DUAL:
-+		return QSPI_DUAL_SDR;
-+	case SPI_NBITS_QUAD:
-+		return QSPI_QUAD_SDR;
-+	default:
-+		return QSPI_SINGLE_SDR;
-+	}
-+}
-+
- static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas,
--			  struct spi_device *spi_slv, struct spi_controller *spi)
-+			  struct spi_device *spi_slv, struct spi_controller *spi,
-+			  struct spi_transfer *tx_rx_xfer)
- {
- 	unsigned long flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
- 	struct dma_slave_config config = {};
- 	struct gpi_spi_config peripheral = {};
--	struct dma_async_tx_descriptor *tx_desc, *rx_desc;
-+	struct dma_async_tx_descriptor *tx_desc, *rx_desc = NULL;
-+	struct spi_transfer *last = tx_rx_xfer ?: xfer;
- 	int ret;
- 
-+	/* QSPI receives data only as part of a combined TX-then-RX command. */
-+	if (mas->dev_data->is_qspi && xfer->rx_buf && !tx_rx_xfer)
-+		return -EOPNOTSUPP;
-+
- 	config.peripheral_config = &peripheral;
- 	config.peripheral_size = sizeof(peripheral);
- 	peripheral.set_config = true;
-@@ -449,20 +481,21 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 		mas->cur_speed_hz = xfer->speed_hz;
- 	}
- 
--	if (xfer->tx_buf && xfer->rx_buf) {
-+	if (mas->dev_data->is_qspi && tx_rx_xfer) {
-+		/* Combine the command and data phases into one hardware command. */
-+		peripheral.cmd = SPI_TX_RX;
-+		peripheral.rx_len = get_xfer_len_in_words(tx_rx_xfer, mas);
-+	} else if (xfer->tx_buf && xfer->rx_buf) {
- 		peripheral.cmd = SPI_DUPLEX;
- 	} else if (xfer->tx_buf) {
- 		peripheral.cmd = SPI_TX;
- 		peripheral.rx_len = 0;
- 	} else if (xfer->rx_buf) {
- 		peripheral.cmd = SPI_RX;
--		if (!(mas->cur_bits_per_word % MIN_WORD_LEN)) {
--			peripheral.rx_len = ((xfer->len << 3) / mas->cur_bits_per_word);
--		} else {
--			int bytes_per_word = (mas->cur_bits_per_word / BITS_PER_BYTE) + 1;
--
--			peripheral.rx_len = (xfer->len / bytes_per_word);
--		}
-+		peripheral.rx_len = get_xfer_len_in_words(xfer, mas);
-+	} else {
-+		dev_err(mas->dev, "Invalid transfer: no tx_buf or rx_buf\n");
-+		return -EINVAL;
- 	}
- 
- 	peripheral.loopback_en = !!(spi_slv->mode & SPI_LOOP);
-@@ -472,6 +505,17 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 	peripheral.pack_en = true;
- 	peripheral.word_len = xfer->bits_per_word - MIN_WORD_LEN;
- 
-+	/* TRE_SPI_C0_DUMMY_CYCLES in the CONFIG0 TRE is an 8-bit field */
-+	if (mas->dummy_len > U8_MAX) {
-+		dev_err(mas->dev, "Dummy cycles %u exceed hardware limit %u\n",
-+			mas->dummy_len, (unsigned int)U8_MAX);
-+		return -EINVAL;
-+	}
-+	peripheral.dummy_cycles = mas->dummy_len;
-+
-+	if (mas->dev_data->is_qspi)
-+		peripheral.qspi_mode = spi_geni_qspi_mode(last);
-+
- 	ret = get_spi_clk_cfg(mas->cur_speed_hz, mas,
- 			      &peripheral.clk_src, &peripheral.clk_div);
- 	if (ret) {
-@@ -480,18 +524,17 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 	}
- 
- 	/*
--	 * Set fragmentation to keep CS asserted after this transfer when:
--	 *  - non-last transfer with cs_change=0: keep CS asserted between chained transfers
--	 *  - last transfer with cs_change=1: keep CS asserted after the message
--	 *    (e.g. TPM TIS SPI uses cs_change=1 on single-transfer messages to
--	 *     keep CS asserted across header, wait-state and data phases)
-+	 * Set fragmentation from the last transfer consumed by this command.
-+	 * Keep CS asserted between transfers when cs_change is clear, or after
-+	 * the message when the final transfer sets cs_change.
- 	 */
--	peripheral.fragmentation = list_is_last(&xfer->transfer_list, &spi->cur_msg->transfers) ?
--				   xfer->cs_change : !xfer->cs_change;
-+	peripheral.fragmentation =
-+		list_is_last(&last->transfer_list, &spi->cur_msg->transfers) ?
-+		last->cs_change : !last->cs_change;
- 
- 	if (peripheral.cmd & SPI_RX) {
- 		dmaengine_slave_config(mas->rx, &config);
--		rx_desc = dmaengine_prep_slave_sg(mas->rx, xfer->rx_sg.sgl, xfer->rx_sg.nents,
-+		rx_desc = dmaengine_prep_slave_sg(mas->rx, last->rx_sg.sgl, last->rx_sg.nents,
- 						  DMA_DEV_TO_MEM, flags);
- 		if (!rx_desc) {
- 			dev_err(mas->dev, "Err setting up rx desc\n");
-@@ -508,11 +551,15 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 					  DMA_MEM_TO_DEV, flags);
- 	if (!tx_desc) {
- 		dev_err(mas->dev, "Err setting up tx desc\n");
--		return -EIO;
-+		ret = -EIO;
-+		goto err_free_rx_desc;
- 	}
- 
- 	dmaengine_desc_set_callback(tx_desc, NULL, spi_gsi_callback_result, spi);
- 
-+	if (peripheral.cmd == SPI_TX_RX)
-+		dmaengine_desc_set_callback(rx_desc, NULL, spi_gsi_callback_result, spi);
-+
- 	if (peripheral.cmd & SPI_RX)
- 		dmaengine_submit(rx_desc);
- 	dmaengine_submit(tx_desc);
-@@ -522,6 +569,11 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
- 
- 	dma_async_issue_pending(mas->tx);
- 	return 0;
-+
-+err_free_rx_desc:
-+	if (rx_desc)
-+		rx_desc->desc_free(rx_desc);
-+	return ret;
- }
- 
- static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
-@@ -649,17 +701,27 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	proto = geni_se_read_proto(se);
- 
- 	if (spi->target) {
-+		if (mas->dev_data->is_qspi) {
-+			dev_err(mas->dev, "QSPI is not supported in target mode\n");
-+			return -EINVAL;
-+		}
- 		if (proto != GENI_SE_SPI_SLAVE) {
- 			dev_err(mas->dev, "Invalid proto %d\n", proto);
- 			return -EINVAL;
- 		}
- 		spi_slv_setup(mas);
- 	} else if (proto == GENI_SE_INVALID_PROTO) {
--		ret = geni_load_se_firmware(se, GENI_SE_SPI);
-+		ret = geni_load_se_firmware(se, mas->dev_data->is_qspi ?
-+					   GENI_SE_QSPI : GENI_SE_SPI);
- 		if (ret) {
- 			dev_err(mas->dev, "spi master firmware load failed ret: %d\n", ret);
- 			return ret;
- 		}
-+	} else if (mas->dev_data->is_qspi) {
-+		if (proto != GENI_SE_QSPI) {
-+			dev_err(mas->dev, "Invalid proto %d, expected QSPI\n", proto);
-+			return -EINVAL;
-+		}
- 	} else if (proto != GENI_SE_SPI) {
- 		dev_err(mas->dev, "Invalid proto %d\n", proto);
- 		return -EINVAL;
-@@ -705,6 +767,10 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 		fallthrough;
- 
- 	case 0:
-+		if (mas->dev_data->is_qspi) {
-+			dev_err(mas->dev, "QSPI is not supported in FIFO mode\n");
-+			return -EOPNOTSUPP;
-+		}
- 		mas->cur_xfer_mode = GENI_SE_FIFO;
- 		geni_se_select_mode(se, GENI_SE_FIFO);
- 		/* setup_spi_params assumes that these registers start with a zero value */
-@@ -930,7 +996,8 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 
- static int spi_geni_transfer_one(struct spi_controller *spi,
- 				 struct spi_device *slv,
--				 struct spi_transfer *xfer)
-+				 struct spi_transfer *xfer,
-+				 struct spi_transfer *rx_xfer)
- {
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
- 	int ret;
-@@ -950,7 +1017,7 @@ static int spi_geni_transfer_one(struct spi_controller *spi,
- 		return ret;
- 	}
- 
--	return setup_gsi_xfer(xfer, mas, slv, spi);
-+	return setup_gsi_xfer(xfer, mas, slv, spi, rx_xfer);
- }
- 
- static int spi_geni_setup(struct spi_device *slv)
-@@ -1004,30 +1071,46 @@ static void spi_geni_set_cs(struct spi_device *spi_slv, bool enable)
- }
- 
- static void spi_geni_dma_sync(struct spi_controller *spi,
--			      struct spi_transfer *xfer, bool for_device)
-+			      struct spi_transfer *first,
-+			      struct spi_transfer *last, bool for_device)
- {
--	/* The core maps buffers with DMA_ATTR_SKIP_CPU_SYNC. */
--	if (for_device) {
--		if (xfer->tx_sg_mapped)
--			dma_sync_sgtable_for_device(spi->cur_tx_dma_dev,
--						    &xfer->tx_sg, DMA_TO_DEVICE);
--		if (xfer->rx_sg_mapped)
--			dma_sync_sgtable_for_device(spi->cur_rx_dma_dev,
--						    &xfer->rx_sg, DMA_FROM_DEVICE);
--	} else {
--		if (xfer->rx_sg_mapped)
--			dma_sync_sgtable_for_cpu(spi->cur_rx_dma_dev,
--						 &xfer->rx_sg, DMA_FROM_DEVICE);
--		if (xfer->tx_sg_mapped)
--			dma_sync_sgtable_for_cpu(spi->cur_tx_dma_dev,
--						 &xfer->tx_sg, DMA_TO_DEVICE);
-+	struct spi_transfer *xfer = first;
-+
-+	/*
-+	 * The core maps buffers with DMA_ATTR_SKIP_CPU_SYNC. Match its per-transfer
-+	 * synchronization for every mapped buffer from first through last,
-+	 * including transfers consumed by a combined QSPI command.
-+	 */
-+	for (;;) {
-+		if (for_device) {
-+			if (xfer->tx_sg_mapped)
-+				dma_sync_sgtable_for_device(spi->cur_tx_dma_dev,
-+							    &xfer->tx_sg, DMA_TO_DEVICE);
-+			if (xfer->rx_sg_mapped)
-+				dma_sync_sgtable_for_device(spi->cur_rx_dma_dev,
-+							    &xfer->rx_sg, DMA_FROM_DEVICE);
-+		} else {
-+			if (xfer->rx_sg_mapped)
-+				dma_sync_sgtable_for_cpu(spi->cur_rx_dma_dev,
-+							 &xfer->rx_sg, DMA_FROM_DEVICE);
-+			if (xfer->tx_sg_mapped)
-+				dma_sync_sgtable_for_cpu(spi->cur_tx_dma_dev,
-+							 &xfer->tx_sg, DMA_TO_DEVICE);
-+		}
-+
-+		if (xfer == last)
-+			break;
-+		xfer = list_next_entry(xfer, transfer_list);
- 	}
- }
- 
- static int spi_geni_wait_for_xfer(struct spi_controller *spi,
--				  const struct spi_transfer *xfer)
-+				  const struct spi_transfer *first,
-+				  const struct spi_transfer *last)
- {
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
-+	unsigned int num_completions = first == last ? 1 : 2;
-+	unsigned long time_left;
- 	u64 bits, ms;
- 
- 	if (spi_controller_is_target(spi)) {
-@@ -1039,14 +1122,24 @@ static int spi_geni_wait_for_xfer(struct spi_controller *spi,
- 		return 0;
- 	}
- 
--	bits = (u64)xfer->len * BITS_PER_BYTE;
--	ms = div_u64(bits * MSEC_PER_SEC, xfer->speed_hz ?: 100000);
-+	/* Use single-lane timing for all phases as an upper bound. */
-+	bits = (u64)first->len * BITS_PER_BYTE;
-+	if (last != first)
-+		bits += (u64)last->len * BITS_PER_BYTE + mas->dummy_len;
-+	ms = div_u64(bits * MSEC_PER_SEC, first->speed_hz ?: 100000);
- 	ms = min_t(u64, ms * 2 + 200, UINT_MAX);
- 
--	if (!wait_for_completion_timeout(&mas->xfer_done, msecs_to_jiffies(ms))) {
--		dev_err(mas->dev, "Transfer timed out\n");
--		return -ETIMEDOUT;
--	}
-+	/* Wait for all expected completions before returning buffer ownership. */
-+	time_left = msecs_to_jiffies(ms);
-+	do {
-+		time_left = wait_for_completion_timeout(&mas->xfer_done, time_left);
-+		if (!time_left) {
-+			dev_err(mas->dev, "Transfer timed out\n");
-+			return -ETIMEDOUT;
-+		}
-+		if (READ_ONCE(spi->cur_msg->status) != -EINPROGRESS)
-+			break;
-+	} while (--num_completions);
- 
- 	return 0;
- }
-@@ -1056,7 +1149,7 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- {
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
- 	struct spi_device *spi_slv = msg->spi;
--	struct spi_transfer *xfer, *next_xfer;
-+	struct spi_transfer *xfer, *next_xfer, *last_xfer;
- 	bool keep_cs = false;
- 	bool dma_synced = false;
- 	bool started = false;
-@@ -1066,6 +1159,54 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- 	spi_geni_set_cs(spi_slv, !xfer->cs_off);
- 
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
-+		mas->dummy_len = 0;
-+		last_xfer = xfer;
-+
-+		/*
-+		 * Combine a TX phase, optional dummy phase and RX phase into
-+		 * one QSPI command.
-+		 */
-+		if (mas->dev_data->is_qspi && mas->cur_xfer_mode == GENI_GPI_DMA &&
-+		    xfer->len && xfer->tx_buf && xfer->tx_buf != spi->dummy_tx &&
-+		    !xfer->rx_buf && !xfer->dummy_data &&
-+		    !list_is_last(&xfer->transfer_list, &msg->transfers)) {
-+			next_xfer = list_next_entry(xfer, transfer_list);
-+
-+			if (next_xfer->dummy_data &&
-+			    !list_is_last(&next_xfer->transfer_list, &msg->transfers)) {
-+				/* The current client supplies the dummy length in cycles. */
-+				mas->dummy_len = next_xfer->len;
-+				next_xfer = list_next_entry(next_xfer, transfer_list);
-+			}
-+
-+			/* Ignore the TX buffer inserted by SPI_CONTROLLER_MUST_TX. */
-+			if (next_xfer->len && next_xfer->rx_buf && !next_xfer->dummy_data &&
-+			    (!next_xfer->tx_buf || next_xfer->tx_buf == spi->dummy_tx)) {
-+				last_xfer = next_xfer;
-+			} else {
-+				mas->dummy_len = 0;
-+			}
-+		}
-+
-+		if (last_xfer != xfer) {
-+			next_xfer = xfer;
-+			for (;;) {
-+				/* A combined command cannot change timing or CS between phases. */
-+				if (next_xfer->speed_hz != xfer->speed_hz ||
-+				    next_xfer->bits_per_word != xfer->bits_per_word ||
-+				    next_xfer->cs_off || next_xfer->dtr_mode ||
-+				    next_xfer->word_delay.value ||
-+				    (next_xfer != last_xfer &&
-+				     (next_xfer->cs_change || next_xfer->delay.value))) {
-+					ret = -EOPNOTSUPP;
-+					goto out_err;
-+				}
-+				if (next_xfer == last_xfer)
-+					break;
-+				next_xfer = list_next_entry(next_xfer, transfer_list);
-+			}
-+		}
-+
- 		if ((xfer->tx_buf || xfer->rx_buf) && xfer->len) {
- 			reinit_completion(&mas->xfer_done);
- 
-@@ -1074,16 +1215,17 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- 				     ((xfer->tx_sg.nents || xfer->rx_sg.nents) &&
- 				      xfer->tx_sg.nents <= 1 && xfer->rx_sg.nents <= 1);
- 			if (dma_synced)
--				spi_geni_dma_sync(spi, xfer, true);
-+				spi_geni_dma_sync(spi, xfer, last_xfer, true);
- 
--			ret = spi_geni_transfer_one(spi, spi_slv, xfer);
-+			ret = spi_geni_transfer_one(spi, spi_slv, xfer,
-+						    last_xfer == xfer ? NULL : last_xfer);
- 			if (ret < 0) {
- 				dev_err(mas->dev, "Transfer failed: %d\n", ret);
- 				goto out_err;
- 			}
- 			started = true;
- 
--			ret = spi_geni_wait_for_xfer(spi, xfer);
-+			ret = spi_geni_wait_for_xfer(spi, xfer, last_xfer);
- 			if (ret)
- 				goto out_err;
- 
-@@ -1093,7 +1235,7 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- 				goto out_err;
- 			}
- 			if (dma_synced) {
--				spi_geni_dma_sync(spi, xfer, false);
-+				spi_geni_dma_sync(spi, xfer, last_xfer, false);
- 				dma_synced = false;
- 			}
- 		} else if (xfer->len) {
-@@ -1103,6 +1245,11 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- 			goto out_err;
- 		}
- 
-+		/* Account for all phases and use the final phase's delay and CS. */
-+		while (xfer != last_xfer) {
-+			msg->actual_length += xfer->len;
-+			xfer = list_next_entry(xfer, transfer_list);
-+		}
- 		msg->actual_length += xfer->len;
- 		ret = spi_transfer_delay_exec(xfer);
- 		if (ret)
-@@ -1134,7 +1281,7 @@ static int spi_geni_transfer_one_message(struct spi_controller *spi,
- 
- 	/* Return buffer ownership only after DMA has completed or been stopped. */
- 	if (dma_synced)
--		spi_geni_dma_sync(spi, xfer, false);
-+		spi_geni_dma_sync(spi, xfer, last_xfer, false);
- 
- 	if (ret || !keep_cs)
- 		spi_geni_set_cs(spi_slv, false);
-@@ -1382,7 +1529,10 @@ static int spi_geni_probe(struct platform_device *pdev)
- 		return ret;
- 
- 	spi->bus_num = -1;
--	spi->mode_bits = SPI_CPOL | SPI_CPHA | SPI_LOOP | SPI_CS_HIGH;
-+	spi->mode_bits = mas->dev_data->is_qspi ?
-+			 (SPI_CPOL | SPI_CPHA | SPI_CS_HIGH |
-+			  SPI_TX_DUAL | SPI_RX_DUAL | SPI_TX_QUAD | SPI_RX_QUAD) :
-+			 (SPI_CPOL | SPI_CPHA | SPI_LOOP | SPI_CS_HIGH);
- 	spi->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
- 	spi->num_chipselect = 4;
- 	spi->max_speed_hz = 50000000;
-@@ -1516,6 +1666,14 @@ static const struct geni_spi_desc geni_spi = {
- 	.power_off = geni_se_resources_deactivate,
- };
- 
-+static const struct geni_spi_desc geni_qspi = {
-+	.resources_init = geni_se_resources_init,
-+	.set_rate = geni_spi_set_clock_and_bw,
-+	.power_on = geni_se_resources_activate,
-+	.power_off = geni_se_resources_deactivate,
-+	.is_qspi = true,
-+};
-+
- static const struct geni_spi_desc sa8255p_geni_spi = {
- 	.resources_init = geni_se_domain_attach,
- 	.set_rate = geni_se_set_perf_opp,
-@@ -1523,6 +1681,7 @@ static const struct geni_spi_desc sa8255p_geni_spi = {
- 
- static const struct of_device_id spi_geni_dt_match[] = {
- 	{ .compatible = "qcom,geni-spi", .data = &geni_spi },
-+	{ .compatible = "qcom,geni-qspi", .data = &geni_qspi },
- 	{ .compatible = "qcom,sa8255p-geni-spi", .data = &sa8255p_geni_spi },
- 	{}
- };
+[Severity: Low]
+Should TI_K3_UDMA_V2 also select SOC_TI (like TI_K3_UDMA does)?
+TI_K3_RINGACC is inside an "if SOC_TI" block in drivers/soc/ti/Kconfig, so
+enabling TI_K3_UDMA_V2 under COMPILE_TEST with SOC_TI=3Dn triggers a Kconfig
+unmet direct dependencies warning.
 
--- 
-2.34.1
+[ ... ]
 
+> diff --git a/drivers/dma/ti/k3-udma-common.c b/drivers/dma/ti/k3-udma-com=
+mon.c
+> index ff5c9aedaecf3..42d918c6ba168 100644
+> --- a/drivers/dma/ti/k3-udma-common.c
+> +++ b/drivers/dma/ti/k3-udma-common.c
+
+[ ... ]
+
+> @@ -349,6 +355,16 @@ udma_prep_slave_sg_tr(struct udma_chan *uc, struct s=
+catterlist *sgl,
+>  	else
+>  		asel =3D (u64)uc->config.asel << K3_ADDRESS_ASEL_SHIFT;
+> =20
+> +	/*
+> +	 * BCDMA V2 stalls and stops processing further TRs if a TR's ICNT0
+> +	 * is not a multiple of 16 bytes. Setting EOP on every TR (not just
+> +	 * the last one) avoids that stall condition. Intentional, not a bug.
+> +	 */
+> +	if (uc->ud->match_data->type =3D=3D DMA_TYPE_BCDMA &&
+> +	    uc->ud->match_data->version =3D=3D K3_UDMA_V2 &&
+> +	    dir =3D=3D DMA_MEM_TO_DEV)
+> +		extra_flags =3D CPPI5_TR_CSF_EOP;
+
+[ ... ]
+
+> @@ -958,7 +974,8 @@ udma_prep_dma_cyclic_tr(struct udma_chan *uc, dma_add=
+r_t buf_addr,
+>  	 * As we are in cyclic mode, we do not know which period might be the
+>  	 * last one, so set the flag for each period.
+>  	 */
+> -	if (uc->config.ep_type =3D=3D PSIL_EP_PDMA_XY &&
+> +	if ((uc->config.ep_type =3D=3D PSIL_EP_PDMA_XY ||
+> +	    uc->config.ep_type =3D=3D PSIL_EP_PDMA_XYMF) &&
+>  	    uc->ud->match_data->type =3D=3D DMA_TYPE_BCDMA) {
+>  		period_csf =3D CPPI5_TR_CSF_EOP;
+>  	}
+
+[Severity: Medium]
+Does udma_prep_dma_cyclic_tr() also need CPPI5_TR_CSF_EOP on the first TR
+of a split period for BCDMA V2 DMA_MEM_TO_DEV transfers?
+
+When period_len >=3D SZ_64K, udma_get_tr_counters() splits the period into
+num_tr =3D=3D 2 TRs with tr0_cnt0 =3D SZ_64K - BIT(align_to) (at most 8-byte
+aligned, so never a multiple of 16 bytes).  In the num_tr =3D=3D 2 branch of
+udma_prep_dma_cyclic_tr(), the first TR only gets CPPI5_TR_CSF_SUPR_EVT
+while period_csf is only applied to the second TR, hitting the BCDMA V2
+stall condition described in udma_prep_slave_sg_tr().
+
+[ ... ]
+
+> @@ -2058,6 +2099,8 @@ int udma_get_tchan(struct udma_chan *uc)
+>  		uc->tchan =3D NULL;
+>  		return ret;
+>  	}
+> +	if (ud->match_data->version =3D=3D K3_UDMA_V2)
+> +		uc->chan =3D uc->tchan;
+> =20
+>  	if (ud->tflow_cnt) {
+>  		int tflow_id;
+
+[Severity: Low]
+If the tflow_map check right below fails, udma_get_tchan() clears
+uc->tchan =3D NULL and returns -ENOENT, leaving uc->chan dangling (and
+udma_put_tchan() will not clear uc->chan once uc->tchan is NULL):
+
+drivers/dma/ti/k3-udma-common.c:udma_get_tchan() {
+	...
+		if (test_bit(tflow_id, ud->tflow_map)) {
+			dev_err(ud->dev, "tflow%d is in use\n", tflow_id);
+			clear_bit(uc->tchan->id, ud->tchan_map);
+			uc->tchan =3D NULL;
+			return -ENOENT;
+		}
+}
+
+Should uc->chan be cleared on that error path, or set after the tflow_map
+check succeeds?
+
+[ ... ]
+
+> diff --git a/drivers/dma/ti/k3-udma-v2.c b/drivers/dma/ti/k3-udma-v2.c
+> new file mode 100644
+> index 0000000000000..b401d4ba17ded
+> --- /dev/null
+> +++ b/drivers/dma/ti/k3-udma-v2.c
+
+[ ... ]
+
+> +		/* Poll for autopair completion */
+> +		read_poll_timeout_atomic(udma_v2_check_chan_autopair_completion,
+> +					 status, status !=3D 0, 100, 500, false, uc);
+> +
+> +		if (status <=3D 0) {
+> +			udma_chanrt_write(uc, UDMA_CHAN_RT_CTL_REG, 0);
+> +			/*
+> +			 * udma_start_desc() above already pushed uc->desc to
+> +			 * the hardware ring. Since the channel never actually
+> +			 * started, no completion interrupt will ever arrive
+> +			 * to free it - drain the ring and free it here to
+> +			 * avoid leaking it.
+> +			 */
+> +			udma_reset_rings(uc);
+> +			udma_desc_free(&uc->desc->vd);
+> +			uc->desc =3D NULL;
+> +			return -ETIMEDOUT;
+> +		}
+> +
+> +		break;
+> +	case DMA_MEM_TO_DEV:
+> +		/* Config remote TR */
+> +		if (uc->config.ep_type =3D=3D PSIL_EP_PDMA_XY ||
+> +		    uc->config.ep_type =3D=3D PSIL_EP_PDMA_XYMF) {
+> +			u32 val =3D PDMA_STATIC_TR_Y(uc->desc->static_tr.elcnt) |
+> +				  PDMA_STATIC_TR_X(uc->desc->static_tr.elsize);
+> +
+> +			if (uc->config.enable_acc32)
+> +				val |=3D PDMA_STATIC_TR_XY_ACC32;
+> +			if (uc->config.enable_burst)
+> +				val |=3D PDMA_STATIC_TR_XY_BURST;
+> +
+> +			udma_chanrt_write(uc,
+> +					  UDMA_CHAN_RT_STATIC_TR_XY_REG,
+> +					  val);
+> +
+> +			/* save the current staticTR configuration */
+> +			memcpy(&uc->static_tr, &uc->desc->static_tr,
+> +			       sizeof(uc->static_tr));
+> +		}
+> +
+> +		if (uc->config.ep_type =3D=3D PSIL_EP_PDMA_XYMF)
+> +			udma_chanrt_write(uc, UDMA_CHAN_RT_FIFO_SEL_REG, uc->config.fifo_id);
+> +
+> +		udma_chanrt_write(uc, UDMA_CHAN_RT_CTL_REG,
+> +				  UDMA_CHAN_RT_CTL_EN | UDMA_CHAN_RT_CTL_AUTOPAIR);
+> +
+> +		/* Poll for autopair completion */
+> +		read_poll_timeout_atomic(udma_v2_check_chan_autopair_completion,
+> +					 status, status !=3D 0, 100, 500, false, uc);
+> +
+> +		if (status <=3D 0) {
+> +			udma_chanrt_write(uc, UDMA_CHAN_RT_CTL_REG, 0);
+> +			/*
+> +			 * udma_start_desc() above already pushed uc->desc to
+> +			 * the hardware ring. Since the channel never actually
+> +			 * started, no completion interrupt will ever arrive
+> +			 * to free it - drain the ring and free it here to
+> +			 * avoid leaking it.
+> +			 */
+> +			udma_reset_rings(uc);
+> +			udma_desc_free(&uc->desc->vd);
+> +			uc->desc =3D NULL;
+> +			return -ETIMEDOUT;
+> +		}
+
+[Severity: High]
+When autopairing times out in either DMA_DEV_TO_MEM or DMA_MEM_TO_DEV,
+won't freeing uc->desc directly with udma_desc_free() leave the DMA client
+hanging forever?
+
+uc->desc has already been unlinked from vc->desc_issued, and callers such
+as udma_issue_pending() and udma_v2_ring_irq_handler() ignore the return
+value of ud->start(uc).  Freeing the descriptor directly without completing
+its cookie or invoking the virt-dma completion callback gives the client no
+notification that the transfer finished or failed, and any remaining
+descriptors queued on vc->desc_issued are never started.  It also bypasses
+vchan_vdesc_fini(), freeing DMA_CTRL_REUSE descriptors instead of returning
+them to vc->desc_allocated.
+
+Could udma_start_desc() be called after autopairing succeeds (or could the
+descriptor be put back on vc->desc_issued / completed with an error)?
+
+[ ... ]
+
+> +static irqreturn_t udma_v2_ring_irq_handler(int irq, void *data)
+> +{
+> +	struct udma_chan *uc =3D data;
+> +	struct udma_dev *ud =3D uc->ud;
+> +	struct udma_desc *d;
+> +	dma_addr_t paddr =3D 0;
+> +	u32 intr_status, reg;
+> +
+> +	switch (uc->config.dir) {
+> +	case DMA_DEV_TO_MEM:
+> +		intr_status =3D  k3_ringacc_ring_get_irq_status(uc->rflow->r_ring);
+> +		break;
+> +	case DMA_MEM_TO_DEV:
+> +	case DMA_MEM_TO_MEM:
+> +		intr_status =3D  k3_ringacc_ring_get_irq_status(uc->tchan->tc_ring);
+> +		break;
+> +	default:
+> +		return IRQ_NONE;
+> +	}
+> +
+> +	if (!intr_status)
+> +		return IRQ_NONE;	/* Not this channel's interrupt */
+> +
+> +	if (intr_status & K3_RINGACC_RT_INT_STATUS_TR) {
+> +		reg =3D udma_chanrt_read(uc, UDMA_CHAN_RT_CTL_REG);
+> +
+> +		/* check teardown status */
+> +		if ((reg & UDMA_CHAN_RT_CTL_TDOWN) && !(reg & UDMA_CHAN_RT_CTL_EN))
+> +			complete_all(&uc->teardown_completed);
+> +		udma_v2_udma_irq_handler(irq, data);
+> +
+> +		/*
+> +		 * Do not also process K3_RINGACC_RT_INT_STATUS_COMPLETE here
+> +		 * even if it is set: udma_v2_udma_irq_handler() may already
+> +		 * have completed uc->desc above, and falling through to the
+> +		 * ring-pop completion path below would complete the same
+> +		 * descriptor a second time. The COMPLETE bit is left pending
+> +		 * and the (level-triggered) IRQ line re-fires on its own, so
+> +		 * it gets handled on the next, separate invocation instead.
+> +		 */
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	if (udma_pop_from_ring(uc, &paddr) || !paddr)
+> +		return IRQ_NONE;
+
+[Severity: Medium]
+Should this return IRQ_HANDLED (as udma_ring_irq_handler() in k3-udma.c
+does) instead of IRQ_NONE?
+
+intr_status was already confirmed non-zero for this ring above.  When a
+non-cyclic RX channel is torn down while !uc->desc, udma_v2_stop() pushes
+the RX flush descriptor; when that flush descriptor completes,
+udma_pop_from_ring() pops and acknowledges it in the ring doorbell and
+returns -ENOENT because udma_desc_is_rx_flush() is true.  Returning
+IRQ_NONE here reports a serviced interrupt as spurious to the generic IRQ
+layer.
+
+[ ... ]
+
+> +static int bcdma_v2_get_bchan(struct udma_chan *uc)
+> +{
+> +	struct udma_dev *ud =3D uc->ud;
+> +	enum udma_tp_level tpl;
+> +	int ret;
+> +
+> +	if (uc->bchan) {
+> +		dev_dbg(ud->dev, "chan%d: already have bchan%d allocated\n",
+> +			uc->id, uc->bchan->id);
+> +		return 0;
+> +	}
+> +
+> +	/*
+> +	 * Use normal channels for peripherals, and highest TPL channel for
+> +	 * mem2mem
+> +	 */
+> +	if (uc->config.tr_trigger_type)
+> +		tpl =3D 0;
+> +	else
+> +		tpl =3D ud->bchan_tpl.levels - 1;
+> +
+> +	/*
+> +	 * UDMA V2 uses a static 1:1 mapping between the virtual channel index
+> +	 * (uc->id) and the hardware bchan/tchan/rchan index -- unlike V1, which
+> +	 * dynamically allocates from a shared pool. Passing uc->id directly to
+> +	 * __udma_reserve_*() is intentional, not a bug.
+> +	 */
+> +	uc->bchan =3D __udma_reserve_bchan(ud, tpl, uc->id);
+> +	if (IS_ERR(uc->bchan)) {
+> +		ret =3D PTR_ERR(uc->bchan);
+> +		uc->bchan =3D NULL;
+> +		return ret;
+> +	}
+> +	uc->chan =3D uc->bchan;
+> +	uc->tchan =3D uc->bchan;
+> +
+> +	return 0;
+> +}
+> +
+> +static int bcdma_v2_alloc_bchan_resources(struct udma_chan *uc)
+> +{
+> +	struct k3_ring_cfg ring_cfg;
+> +	struct udma_dev *ud =3D uc->ud;
+> +	int ret;
+> +
+> +	ret =3D bcdma_v2_get_bchan(uc);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret =3D k3_ringacc_request_rings_pair(ud->ringacc, ud->match_data->chan=
+_cnt + uc->id, -1,
+> +					    &uc->bchan->t_ring,
+> +					    &uc->bchan->tc_ring);
+
+[Severity: High]
+Can passing uc->id to __udma_reserve_bchan() and
+k3_ringacc_request_rings_pair() access ud->bchan_map, ud->bchans, and
+ud->ringacc->rings out of bounds?
+
+udma_v2_probe() registers ch_count =3D ud->bchan_cnt + ud->tchan_cnt =3D 144
+virtual channels (uc->id in 0..143), while ud->bchans and ud->bchan_map
+only have ud->bchan_cnt (16) entries and ud->ringacc has 144 ring pairs
+(128..143 for bchans 0..15).  When slave channels are requested first,
+__dma_request_channel() assigns them virtual channels starting from
+uc->id =3D 0 (while their hardware split channels are reserved via
+uc->config.mapped_channel_id).  If a DMA_MEM_TO_MEM channel is then
+requested after 16 virtual channels are already in use (or when
+dmaengine_get() walks all 144 channels), uc->id is >=3D 16:
+
+1. __udma_reserve_bchan(ud, tpl, uc->id) indexes past the 16-bit
+   ud->bchan_map and 16-element ud->bchans array.
+2. k3_ringacc_request_rings_pair() is called with
+   fwd_id =3D ud->match_data->chan_cnt + uc->id >=3D 144, indexing past
+   ringacc->rings_inuse and ringacc->rings[] and writing the ring pointers
+   into the out-of-bounds uc->bchan.
+3. Even when uc->id < 16, any slave peripheral that claimed virtual channel
+   0..15 blocks that bchan ID from being used.
+
+Note that a later patch in this series, commit "dmaengine: ti: k3-udma:
+Validate resource ID and fix logging in reservation", adds an
+id >=3D ud->res_cnt check in __udma_reserve_bchan(), which turns the
+out-of-bounds access into -EINVAL, but bchan allocation will still fail
+whenever uc->id >=3D 16.  Should bcdma_v2_get_bchan() pass -1 to
+__udma_reserve_bchan() and use uc->bchan->id for the ring and IRQ index
+(at line 683: irq_ring_idx =3D ud->match_data->chan_cnt + uc->bchan->id), as
+V1 bcdma_get_bchan() does?
+
+[ ... ]
+
+> +static int bcdma_v2_alloc_chan_resources(struct dma_chan *chan)
+> +{
+
+[ ... ]
+
+> +	switch (uc->config.dir) {
+> +	case DMA_MEM_TO_MEM:
+> +		/* Non synchronized - mem to mem type of transfer */
+> +		dev_dbg(uc->ud->dev, "%s: chan%d as MEM-to-MEM\n", __func__,
+> +			uc->id);
+> +
+> +		ret =3D bcdma_v2_alloc_bchan_resources(uc);
+> +		if (ret)
+> +			return ret;
+> +
+> +		irq_ring_idx =3D ud->match_data->chan_cnt + uc->id;
+> +		break;
+> +	case DMA_MEM_TO_DEV:
+> +		/* Slave transfer synchronized - mem to dev (TX) transfer */
+> +		dev_dbg(uc->ud->dev, "%s: chan%d as MEM-to-DEV\n", __func__,
+> +			uc->id);
+> +
+> +		ret =3D udma_v2_alloc_tx_resources(uc);
+> +		if (ret) {
+> +			uc->config.remote_thread_id =3D -1;
+> +			return ret;
+> +		}
+> +
+> +		uc->config.src_thread =3D ud->psil_base + uc->tchan->id;
+> +		uc->config.dst_thread =3D uc->config.remote_thread_id;
+> +		uc->config.dst_thread |=3D K3_PSIL_DST_THREAD_ID_OFFSET;
+> +
+> +		irq_ring_idx =3D uc->tchan->id;
+> +
+> +		break;
+> +	case DMA_DEV_TO_MEM:
+> +		/* Slave transfer synchronized - dev to mem (RX) transfer */
+> +		dev_dbg(uc->ud->dev, "%s: chan%d as DEV-to-MEM\n", __func__,
+> +			uc->id);
+> +
+> +		ret =3D udma_v2_alloc_rx_resources(uc);
+> +		if (ret) {
+> +			uc->config.remote_thread_id =3D -1;
+> +			return ret;
+> +		}
+> +
+> +		uc->config.src_thread =3D uc->config.remote_thread_id;
+> +		uc->config.dst_thread =3D (ud->psil_base + uc->rchan->id) |
+> +					K3_PSIL_DST_THREAD_ID_OFFSET;
+> +
+> +		irq_ring_idx =3D uc->rchan->id;
+> +
+> +		break;
+> +	default:
+> +		/* Can not happen */
+> +		dev_err(uc->ud->dev, "%s: chan%d invalid direction (%u)\n",
+> +			__func__, uc->id, uc->config.dir);
+> +		return -EINVAL;
+> +	}
+> +
+> +	/* check if the channel configuration was successful */
+> +	if (ret)
+> +		goto err_res_free;
+
+[Severity: Medium]
+When bcdma_v2_alloc_bchan_resources(), udma_v2_alloc_tx_resources(), or
+udma_v2_alloc_rx_resources() fails, returning directly skips err_res_free
+and leaves uc->config modified by udma_v2_dma_filter_fn() (and makes the
+"if (ret) goto err_res_free;" after the switch unreachable).
+
+If a subsequent unfiltered request (such as DMA_MEMCPY via
+dma_request_chan_by_mask()) picks that virtual channel, it will see stale
+slave or triggered fields (such as uc->config.dir or tr_trigger_type)
+instead of a clean DMA_MEM_TO_MEM configuration.  Should those failure
+paths jump to err_res_free so udma_reset_uchan(uc) resets uc->config?
+
+[ ... ]
+
+> +	if (ucc->tr_trigger_type) {
+> +		ucc->dir =3D DMA_MEM_TO_MEM;
+> +		goto triggered_bchan;
+> +	} else {
+> +		u32 thread_id;
+> +		bool dev_to_mem;
+> +
+> +		ep_config =3D psil_get_ep_config_by_id(filter_param->channel_id,
+> +						      (ud->match_data->type =3D=3D DMA_TYPE_PKTDMA),
+> +						      &thread_id, &dev_to_mem);
+> +		if (IS_ERR(ep_config)) {
+> +			dev_err(ud->dev, "No config for channel %u\n",
+> +				filter_param->channel_id);
+> +			ucc->atype =3D 0;
+> +			ucc->asel =3D 0;
+> +			return false;
+> +		}
+> +		ucc->remote_thread_id =3D thread_id;
+> +		ucc->dir =3D dev_to_mem ? DMA_DEV_TO_MEM : DMA_MEM_TO_DEV;
+> +	}
+> +	if (IS_ERR(ep_config)) {
+> +		dev_err(ud->dev, "No configuration for psi-l thread 0x%04x\n",
+> +			ucc->remote_thread_id);
+> +		ucc->dir =3D DMA_MEM_TO_MEM;
+> +		ucc->remote_thread_id =3D -1;
+> +		ucc->atype =3D 0;
+> +		ucc->asel =3D 0;
+> +		return false;
+> +	}
+
+[Severity: Low]
+This second "if (IS_ERR(ep_config))" block is unreachable because the if
+branch jumps to triggered_bchan and the else branch already returns false
+when IS_ERR(ep_config).  Also, filter_param.trigger_param is populated in
+udma_v2_of_xlate() below, but never read anywhere.
+
+[ ... ]
+
+> +	ret =3D udma_setup_rx_flush(ud);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (i =3D 0; i < ud->bchan_cnt; i++) {
+> +		struct udma_bchan *bchan =3D &ud->bchans[i];
+> +
+> +		bchan->id =3D i;
+> +		bchan->reg_rt =3D ud->mmrs[V2_MMR_BCHANRT] + i * 0x1000;
+> +	}
+> +
+> +	for (i =3D 0; i < ud->tchan_cnt; i++) {
+> +		struct udma_tchan *tchan =3D &ud->tchans[i];
+> +
+> +		tchan->id =3D i;
+> +		tchan->reg_rt =3D ud->mmrs[V2_MMR_CHANRT] + i * 0x1000;
+> +	}
+> +
+> +	for (i =3D 0; i < ud->rchan_cnt; i++) {
+> +		struct udma_rchan *rchan =3D &ud->rchans[i];
+> +
+> +		rchan->id =3D i;
+> +		rchan->reg_rt =3D ud->mmrs[V2_MMR_CHANRT] + i * 0x1000;
+> +	}
+> +
+> +	for (i =3D 0; i < ud->rflow_cnt; i++) {
+> +		struct udma_rflow *rflow =3D &ud->rflows[i];
+> +
+> +		rflow->id =3D i;
+> +		/*
+> +		 * BCDMA_V2 has no dedicated rflow register space, so
+> +		 * ud->rflow_rt is never mapped for it; only compute reg_rt
+> +		 * when a base address actually exists (PKTDMA_V2).
+> +		 */
+> +		rflow->reg_rt =3D ud->rflow_rt ? ud->rflow_rt + i * 0x2000 : NULL;
+> +	}
+> +
+> +	for (i =3D 0; i < ch_count; i++) {
+> +		struct udma_chan *uc =3D &ud->channels[i];
+> +
+> +		uc->ud =3D ud;
+> +		uc->vc.desc_free =3D udma_desc_free;
+> +		uc->id =3D i;
+> +		uc->bchan =3D NULL;
+> +		uc->tchan =3D NULL;
+> +		uc->rchan =3D NULL;
+> +		uc->config.remote_thread_id =3D -1;
+> +		uc->config.mapped_channel_id =3D -1;
+> +		uc->config.default_flow_id =3D -1;
+> +		uc->config.dir =3D DMA_MEM_TO_MEM;
+> +		uc->name =3D devm_kasprintf(dev, GFP_KERNEL, "%s chan%d",
+> +					  dev_name(dev), i);
+> +		if (!uc->name)
+> +			return -ENOMEM;
+> +
+> +		vchan_init(&uc->vc, &ud->ddev);
+> +		/* Use custom vchan completion handling */
+> +		tasklet_setup(&uc->vc.task, udma_vchan_complete);
+> +		init_completion(&uc->teardown_completed);
+> +		INIT_DELAYED_WORK(&uc->tx_drain.work, udma_check_tx_completion);
+> +	}
+> +
+> +	/* Configure the copy_align to the maximum burst size the device suppor=
+ts */
+> +	ud->ddev.copy_align =3D udma_get_copy_align(ud);
+> +
+> +	ret =3D dma_async_device_register(&ud->ddev);
+> +	if (ret) {
+> +		dev_err(dev, "failed to register slave DMA engine: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	platform_set_drvdata(pdev, ud);
+> +
+> +	ret =3D of_dma_controller_register(dev->of_node, udma_v2_of_xlate, ud);
+> +	if (ret) {
+> +		dev_err(dev, "failed to register of_dma controller\n");
+> +		dma_async_device_unregister(&ud->ddev);
+> +	}
+> +
+> +	return ret;
+> +}
+
+[Severity: Medium]
+Do the error returns after udma_setup_rx_flush() leak the RX flush
+dma_map_single() mappings?
+
+udma_setup_rx_flush() creates three non-devm streaming DMA mappings on
+devm_kzalloc() buffers (and also does not unmap earlier mappings if a later
+allocation or mapping inside udma_setup_rx_flush() fails).  If
+devm_kasprintf(), dma_async_device_register(), or
+of_dma_controller_register() fails in udma_v2_probe(), devres frees the
+buffers while the DMA mappings remain active because
+udma_teardown_rx_flush(ud) is only called in udma_v2_remove().
+
+[ ... ]
+
+> +static void udma_v2_remove(struct platform_device *pdev)
+> +{
+> +	struct udma_dev *ud =3D platform_get_drvdata(pdev);
+> +
+> +	of_dma_controller_free(pdev->dev.of_node);
+> +	dma_async_device_unregister(&ud->ddev);
+> +	cancel_work_sync(&ud->purge_work);
+> +	udma_teardown_rx_flush(ud);
+> +}
+
+[Severity: Medium]
+Can cancel_work_sync(&ud->purge_work) leak descriptors still queued on
+ud->desc_to_purge?
+
+For channels with !uc->use_dma_pool (all slave and triggered channels),
+udma_desc_free() queues freed descriptors onto ud->desc_to_purge and
+schedules ud->purge_work to free their dma_alloc_coherent() TR buffers.
+If ud->purge_work is pending when udma_v2_remove() runs,
+cancel_work_sync() cancels the work without running udma_purge_desc_work().
+Should this call flush_work(&ud->purge_work) (or drain ud->desc_to_purge)
+instead?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261124-dma-upstre=
+am-v13-v13-0-bd4251fdc6d4@ti.com?part=3D17
