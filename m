@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795535508;
-	b=xl79SuH+iaHkzr8gCi7a7DjzBkldqOeVE4lvwYSnE1mGYGW9vkRxkvzadtqmQl9yNCHA
-	 d1w/QVm6SM7wy265z5P0mLr4X1fwdYsDu7YpIV2tL7CC6y2U10bn0PUOBhUZzzU7jk+n2
-	 u+iFilrJ0F6LR12eBT/u5hqezfAAz/TjEk9rJpMW15CbRHzpEzT++v+/8Q2DbYxrqfUbR
-	 hzOucMxdiQeto5l6VGUWds8pM7zkRiJdY+Cw2tLIskb10QEfHuoe5yL/ADOV31Ztz1OyV
-	 lOyVB/0LRqd+ogeMrdkdkM/hlGe6/wZl8H4hMsBP8whoqecjefq2XLxiQ6C4GKq/d7g==
+	b=pViWRGzpcjH2lDnIf01lnz5mDE7Wh1egvuaoixpqqV/pNK1WkY7wWYP7WBDNMxR5YXZi
+	 dsz8ebjPRkmSSmjx9YvFjf20/msBGiUKkHEZOkpZePx7Nx/yey7vKBLUE6CbnPEJdFCRr
+	 EnFsonzcoH0k8LJOhQgaa6gWYAr4t+lFoU8hk3A1TDWJw/wiUlbkiisbJ9ICTILn24PxF
+	 d0IWP+EbQ24QOfJgpBXoEzbX5tXTzmkSUl2JpZmp+syF0J9oi3mWv+5u9GJzyIj/H2aCj
+	 oikmDYveAiQkA0uZtCsWY2GQ0tldV4OQCFLCEYmxHJ5pzO9HBE3pz5GgHIXZD7T+XYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795535508;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:
-	 X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:Subject:
-	 X-SA-Exim-Version:X-SA-Exim-Scanned;
-	bh=/3ysLOGehL2wy1T7nIUymmIjNN0nr6X8cUbgCSogqf4=;
-	b=pd9ePmBMOAb3fbIIiTrCHot1pqOghRE3qsc3jIrgUBNNDUGWe1jAz68uECmhKM7dXJY9
-	 HmfTGcD7HTibLQCfaQnGRt/f/pTqLo1LbKcy88dRXWTmaHPpcJQy3ghqgY6SxvNjERCr0
-	 WMOgBd6S/SlD7IGrZW9mzRDZXGfZBVIF/M2+nLdXQbKrycOGSsPpwRoFDohKJbzjzg6RC
-	 luDgTehfLxrGe+A2sjsh+1RYWCuRL9ACZQt2xbE2aquNISzRUA8mU7EDqYYkqa3C9j259
-	 C0AlXx6tgbdn68cakvVThgHXVi37iHTaFK/T9JbG0KiX09MhhpayU1z+aT9U7W5p0+w==
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:
+	 X-SA-Exim-Mail-From:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
+	 Subject:X-SA-Exim-Version:X-SA-Exim-Scanned;
+	bh=6baCYTH8I0r8TfwZxiswCXJZqAHcjanXixpDVvV33+k=;
+	b=j7TZ3k0cE1SXlvgPAfa5zW+Wj/6kMJ33vPlXF5LQGla4uZElZ2uCeMAF7yHtcvdIKeWi
+	 G5Mhu2YOzP7ybvVAF8Bjs7u46yE6Tw3JteERAbM++2mMGD6sE76X2IygHSDX3MEuW0i+T
+	 YjcOYUcrOjON5NkOdrrHxdlZ5U47BBhpvbCD/ybe6OtBxbPm8z2txor8+VNmOTRPMUWoG
+	 SYqYGd+V1ag56kTzWuICp+eU2zDq3m5fJajcopebKPJdQ1ReuwukW0wPzBlFnoQzgVqZZ
+	 zDh6bv7caOvBwtwMxD5o5h2Vf7s1DLzQRsIz/fM/g+BplIJogZZwxvt24L30UELJ6lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deltatee.com;
 	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=I6P8f3GM;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=U7LMJIXp;
 	arc=none smtp.remote-ip=204.191.154.188
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90828606A321;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6F2606A31E;
 	Tue, 24 Nov 2026 15:51:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90828606A321
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F6F2606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=I6P8f3GM
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=U7LMJIXp
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:MIME-Version:Message-ID:Date:Cc:To:From
-	:references:content-disposition:in-reply-to;
-	bh=/3ysLOGehL2wy1T7nIUymmIjNN0nr6X8cUbgCSogqf4=; b=I6P8f3GMMrDRUyddhULt3iSSo9
-	NiYC+IbYUepJ44C0mw11xfyGAfP+MuEJ1QdiLzCP/GsWZZTnoMK/up2Su+9dW76LVOOUSm3gMIzSm
-	605bO79L7NNFiNZvfbDlBQOBZmeSU+QJrIYpEEvtDRPSf8C4MNBwd65UuiQhBiT1jO5bpGcMKaIlC
-	kFMsgybT8mAdl0frf0vDnU27yynTSZp7IX9IhUWeGgxmJ9gbrLqpXygLVzQtSSr/kr0zgmtqezSCl
-	yHc0XFEMVFShy98i/SDKENqaQNNVLXUQkms4JxW2svF5TMNSYSZG3JYKb53CEzP9joNB0Hq02X6xs
-	mx6Pf9tg==;
+	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Cc:To:From:content-disposition;
+	bh=6baCYTH8I0r8TfwZxiswCXJZqAHcjanXixpDVvV33+k=; b=U7LMJIXpzCnuu0FY49EsAjzOq4
+	Z/2bkjqJa8D4GF0RVBTf1di8U5yFEtVryy6B+LlFlrTvxImKh5ZOjd8pw5NHriCjkKML9v45dw4I6
+	FNeH0Yl4THIeeeGYkbsitIP4OdUmUqg7VArT7AveRf2Aruessxqz/kn6JbPlBw16xgWYxjCiFSZjs
+	5v7jC14jXadWsv7Wgufknt9ic40g1wYcxv3LM2ps8jW2RnSJO/5xdDtjmM8PrMhMDTACwDmXbE3U2
+	ZLkGl1ETyBzweuj6bikXBNiKjK8Z/stBiucgRTAqiWkFqNbk5cmYE8/Tp84a4uRP08dC9y0XNoWI4
+	SII81IyA==;
 Received: from donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVsnz-00000000mbO-0CS0;
-	Tue, 24 Nov 2026 09:51:40 -0600
+	id 1xVso5-00000000mcH-0nY8;
+	Tue, 24 Nov 2026 09:51:46 -0600
 Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVsmn-00000003rRZ-2ZSL;
-	Tue, 24 Nov 2026 09:50:25 -0600
+	id 1xVsmo-00000003rRh-0lB2;
+	Tue, 24 Nov 2026 09:50:26 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -64,10 +64,13 @@ Cc: Frank Li <Frank.li@nxp.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Kelvin Cao <kelvin.cao@microchip.com>,
-	Logan Gunthorpe <logang@deltatee.com>
-Date: Tue, 24 Nov 2026 09:50:19 -0600
-Message-ID: <20261124155024.920403-1-logang@deltatee.com>
+	Logan Gunthorpe <logang@deltatee.com>,
+	Frank Li <Frank.Li@nxp.com>
+Date: Tue, 24 Nov 2026 09:50:23 -0600
+Message-ID: <20261124155024.920403-5-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261124155024.920403-1-logang@deltatee.com>
+References: <20261124155024.920403-1-logang@deltatee.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -79,75 +82,330 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, Frank.li@nxp.com, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, hch@infradead.org, christophe.jaillet@wanadoo.fr, dave.jiang@intel.com, linux@weissschuh.net, kelvin.cao@microchip.com, logang@deltatee.com, Frank.li@nxp.com, Frank.Li@nxp.com
 X-SA-Exim-Mail-From: logang@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v5 0/4] Add sysfs interface to switchtec-dma
+Subject: [PATCH v5 4/4] dmaengine: switchtec-dma: add pmon sysfs attributes
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-This is just a resend with Frank's Reviewd-by tags collected on all the
-patches. I'm hoping this can be picked up for v7.5.
+Switchtec hardware exposes some performance monitor registers which
+can be used to monitor various statistics of the hardware.
 
-This patch set is based (cleanly) on v7.4-rc4.
+Expose these as a "switchtec-pmon" sysfs attribute group, alongside
+the "switchtec-config" group added previously.
 
-Logan
+The various registers are read through a small shared pmon_show()
+helper parameterized by a reader function pointer, rather than a
+macro, to avoid generating the whole read + rcu_read_lock/unlock +
+sysfs_emit sequence per attribute.
 
-[v4] https://lore.kernel.org/all/20261110173137.623764-1-logang@deltatee.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+---
+ drivers/dma/switchtec_dma.c | 273 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 273 insertions(+)
 
---
-
-Changes since v4:
- - Added Frank Li's Reviewed-by tags (covers all patches)
- - Rebased on v7.4-rc4
-
-Changes since v3:
- - Added Dave Jiang's Reviewed-by tag
- - Rebased on v7.4-rc2
-
-Changes since v2:
- - Renamed the new channel lookup helpers to use the dmaengine_ prefix:
-   dma_chan_from_dev_lock() and dma_chan_from_dev_unlock() are now
-   dmaengine_chan_from_dev_lock() and dmaengine_chan_from_dev_unlock(),
-   and the dma_chan_from_dev CLASS is now dmaengine_chan_from_dev.
-   (Per Frank Li)
- - Rebased on v7.4-rc1
-
-Changes since v1:
- - Replaced the per-channel embedded-kobject approach entirely with a
-   new dma_device.chan_groups mechanism that attaches driver sysfs
-   attributes directly to the channel's existing struct device
-   instead of a second, separately-managed kobject. (Per Sashiko)
- - Fixed the busy-channel check in perf_cfg_store(): it now returns
-   -EBUSY instead of falsely reporting success, and the racy lockless
-   chan->client_count check has been replaced with a hw_cfg_locked
-   flag that's set/cleared under hw_ctrl_lock from
-   alloc/free_chan_resources(), closing a TOCTOU window against
-   concurrent channel allocation. (Per Sashiko)
- - Took the hw_ctrl_lock around the perf_cfg read-modify-write
-   so concurrent sysfs writes to different config attributes can't
-   interleave and lose an update. (Per Sashiko)
- - Converted latency_selector_show() from strcat() to
-   sysfs_emit()/sysfs_emit_at(). (Per Sashiko)
- - The PCI1008 device ID patch has been removed from this
-   series, expanded and sent separately.
-
-Logan Gunthorpe (4):
-  dmaengine: add per-channel sysfs attribute groups via chan_groups
-  dmaengine: ioatdma: convert per-channel sysfs to chan_groups
-  dmaengine: switchtec-dma: add config sysfs attributes
-  dmaengine: switchtec-dma: add pmon sysfs attributes
-
- drivers/dma/dmaengine.c     |  27 +++
- drivers/dma/dmaengine.h     |  19 ++
- drivers/dma/ioat/dma.h      |   6 +-
- drivers/dma/ioat/init.c     |   5 +-
- drivers/dma/ioat/sysfs.c    | 166 ++++++-------
- drivers/dma/switchtec_dma.c | 452 ++++++++++++++++++++++++++++++++++++
- include/linux/dmaengine.h   |   4 +
- 7 files changed, 569 insertions(+), 110 deletions(-)
-
-
-base-commit: b6a9fa34ce4187cb69d3c588a4bbffc31ce5db8f
---
+diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
+index 1ebe17095c61..774b418330ed 100644
+--- a/drivers/dma/switchtec_dma.c
++++ b/drivers/dma/switchtec_dma.c
+@@ -12,6 +12,7 @@
+ #include <linux/pci.h>
+ #include <linux/delay.h>
+ #include <linux/iopoll.h>
++#include <linux/io-64-nonatomic-lo-hi.h>
+ 
+ #include "dmaengine.h"
+ 
+@@ -91,6 +92,12 @@ struct chan_hw_regs {
+ #define SE_BUF_LEN_MASK		GENMASK_U32(20, 12)
+ #define SE_THRESH_MASK		GENMASK_U32(31, 23)
+ 
++#define SWITCHTEC_LAT_SE_FETCH   BIT(0)
++#define SWITCHTEC_LAT_VDM        BIT(1)
++#define SWITCHTEC_LAT_RD_IMM     BIT(2)
++#define SWITCHTEC_LAT_FW_NP      BIT(3)
++#define SWITCHTEC_LAT_SE_PROCESS BIT(4)
++
+ #define SWITCHTEC_CHAN_ENABLE	BIT(1)
+ 
+ struct chan_fw_regs {
+@@ -1215,8 +1222,274 @@ static const struct attribute_group switchtec_config_group = {
+ 	.attrs = switchtec_config_attrs,
+ };
+ 
++static ssize_t pmon_show(struct device *dev, char *page,
++			 u64 (*reader)(struct chan_fw_regs __iomem *chan_fw))
++{
++	struct switchtec_dma_chan *swdma_chan;
++	u64 val;
++
++	CLASS(dmaengine_chan_from_dev, c)(dev);
++
++	if (!c)
++		return -ENODEV;
++
++	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		rcu_read_unlock();
++		return -ENODEV;
++	}
++
++	val = reader(swdma_chan->mmio_chan_fw);
++	rcu_read_unlock();
++
++	return sysfs_emit(page, "0x%llx\n", val);
++}
++
++static u64 read_se_count(struct chan_fw_regs __iomem *chan_fw)
++{
++	return lo_hi_readq(&chan_fw->perf_fetched_se_cnt_lo);
++}
++
++static ssize_t se_count_show(struct device *dev,
++			     struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_se_count);
++}
++static DEVICE_ATTR_RO(se_count);
++
++static u64 read_byte_count(struct chan_fw_regs __iomem *chan_fw)
++{
++	return lo_hi_readq(&chan_fw->perf_byte_cnt_lo);
++}
++
++static ssize_t byte_count_show(struct device *dev,
++			       struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_byte_count);
++}
++static DEVICE_ATTR_RO(byte_count);
++
++static u64 read_se_pending(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readw(&chan_fw->perf_se_pending);
++}
++
++static ssize_t se_pending_show(struct device *dev,
++			       struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_se_pending);
++}
++static DEVICE_ATTR_RO(se_pending);
++
++static u64 read_se_buf_empty(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readw(&chan_fw->perf_se_buf_empty);
++}
++
++static ssize_t se_buf_empty_show(struct device *dev,
++				 struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_se_buf_empty);
++}
++static DEVICE_ATTR_RO(se_buf_empty);
++
++static u64 read_chan_idle(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readl(&chan_fw->perf_chan_idle);
++}
++
++static ssize_t chan_idle_show(struct device *dev,
++			      struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_chan_idle);
++}
++static DEVICE_ATTR_RO(chan_idle);
++
++static u64 read_latency_max(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readl(&chan_fw->perf_lat_max);
++}
++
++static ssize_t latency_max_show(struct device *dev,
++				struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_latency_max);
++}
++static DEVICE_ATTR_RO(latency_max);
++
++static u64 read_latency_min(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readl(&chan_fw->perf_lat_min);
++}
++
++static ssize_t latency_min_show(struct device *dev,
++				struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_latency_min);
++}
++static DEVICE_ATTR_RO(latency_min);
++
++static u64 read_latency_last(struct chan_fw_regs __iomem *chan_fw)
++{
++	return readl(&chan_fw->perf_lat_last);
++}
++
++static ssize_t latency_last_show(struct device *dev,
++				 struct device_attribute *attr, char *page)
++{
++	return pmon_show(dev, page, read_latency_last);
++}
++static DEVICE_ATTR_RO(latency_last);
++
++static ssize_t latency_selector_show(struct device *dev,
++				     struct device_attribute *attr, char *page)
++{
++	struct switchtec_dma_chan *swdma_chan;
++	struct chan_fw_regs __iomem *chan_fw;
++	u32 lat = 0;
++	int len;
++
++	CLASS(dmaengine_chan_from_dev, c)(dev);
++
++	if (!c)
++		return -ENODEV;
++
++	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
++	chan_fw = swdma_chan->mmio_chan_fw;
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		rcu_read_unlock();
++		return -ENODEV;
++	}
++
++	lat = readl(&chan_fw->perf_latency_selector);
++	rcu_read_unlock();
++
++	len = sysfs_emit(page,
++			 "To select a latency type, write the type number\n");
++	len += sysfs_emit_at(page, len, "(1 ~ 5) to latency_selector\n\n");
++
++	len += sysfs_emit_at(page, len, "Latency Types:\n");
++	len += sysfs_emit_at(page, len, "(1) SE Fetch latency");
++	if (lat & SWITCHTEC_LAT_SE_FETCH)
++		len += sysfs_emit_at(page, len, " (*)\n");
++	else
++		len += sysfs_emit_at(page, len, "\n");
++
++	len += sysfs_emit_at(page, len, "(2) VDM latency");
++	if (lat & SWITCHTEC_LAT_VDM)
++		len += sysfs_emit_at(page, len, " (*)\n");
++	else
++		len += sysfs_emit_at(page, len, "\n");
++
++	len += sysfs_emit_at(page, len, "(3) Read Immediate latency");
++	if (lat & SWITCHTEC_LAT_RD_IMM)
++		len += sysfs_emit_at(page, len, " (*)\n");
++	else
++		len += sysfs_emit_at(page, len, "\n");
++
++	len += sysfs_emit_at(page, len, "(4) SE Processing latency");
++	if (lat & SWITCHTEC_LAT_SE_PROCESS)
++		len += sysfs_emit_at(page, len, " (*)\n");
++	else
++		len += sysfs_emit_at(page, len, "\n");
++
++	len += sysfs_emit_at(page, len, "(5) FW NP TLP latency");
++	if (lat & SWITCHTEC_LAT_FW_NP)
++		len += sysfs_emit_at(page, len, " (*)\n");
++	else
++		len += sysfs_emit_at(page, len, "\n");
++
++	return len;
++}
++
++static ssize_t latency_selector_store(struct device *dev,
++				      struct device_attribute *attr,
++				      const char *page, size_t count)
++{
++	struct switchtec_dma_chan *swdma_chan;
++	struct chan_fw_regs __iomem *chan_fw;
++	ssize_t ret = count;
++	int lat_type;
++
++	CLASS(dmaengine_chan_from_dev, c)(dev);
++
++	if (!c)
++		return -ENODEV;
++
++	swdma_chan = container_of(c, struct switchtec_dma_chan, dma_chan);
++	chan_fw = swdma_chan->mmio_chan_fw;
++
++	if (kstrtoint(page, 0, &lat_type) < 0)
++		return -EINVAL;
++
++	switch (lat_type) {
++	case 1:
++		lat_type = SWITCHTEC_LAT_SE_FETCH;
++		break;
++	case 2:
++		lat_type = SWITCHTEC_LAT_VDM;
++		break;
++	case 3:
++		lat_type = SWITCHTEC_LAT_RD_IMM;
++		break;
++	case 4:
++		lat_type = SWITCHTEC_LAT_SE_PROCESS;
++		break;
++	case 5:
++		lat_type = SWITCHTEC_LAT_FW_NP;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	rcu_read_lock();
++	if (!rcu_dereference(swdma_chan->swdma_dev->pdev)) {
++		ret = -ENODEV;
++		goto err_unlock;
++	}
++
++	spin_lock(&swdma_chan->hw_ctrl_lock);
++	if (swdma_chan->hw_cfg_locked) {
++		spin_unlock(&swdma_chan->hw_ctrl_lock);
++		ret = -EBUSY;
++		goto err_unlock;
++	}
++
++	writel(lat_type, &chan_fw->perf_latency_selector);
++	spin_unlock(&swdma_chan->hw_ctrl_lock);
++
++err_unlock:
++	rcu_read_unlock();
++
++	return ret;
++}
++static DEVICE_ATTR_RW(latency_selector);
++
++static struct attribute *switchtec_pmon_attrs[] = {
++	&dev_attr_se_count.attr,
++	&dev_attr_byte_count.attr,
++	&dev_attr_se_pending.attr,
++	&dev_attr_se_buf_empty.attr,
++	&dev_attr_chan_idle.attr,
++	&dev_attr_latency_max.attr,
++	&dev_attr_latency_min.attr,
++	&dev_attr_latency_last.attr,
++	&dev_attr_latency_selector.attr,
++	NULL,
++};
++
++static const struct attribute_group switchtec_pmon_group = {
++	.name = "switchtec-pmon",
++	.attrs = switchtec_pmon_attrs,
++};
++
+ static const struct attribute_group *switchtec_groups[] = {
+ 	&switchtec_config_group,
++	&switchtec_pmon_group,
+ 	NULL,
+ };
+ 
+-- 
 2.47.3
+
