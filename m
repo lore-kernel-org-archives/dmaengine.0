@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795543348;
-	b=iH4hfBhexVTiolqsZlbiy+oB4cfzPHnf0HhnTKcb91YBf7X0sibay1QiVtLeS2w01Nju
-	 LtNweWVwKoUtVL4VKB+tA0QbMOLiFH/3/zoJQwmQP02Nx7aJBAAlJH1a/ALjZLsBCLvVE
-	 ijy1TZ3uP473flh8ssfHe7BeKBsT2leTTGg6NI6o9qpbpqio1fW571U8NIs4XuvgQqV3l
-	 u9/jGT7UNV0pq/VkY/94YFW0CYF2bvdGPOjNY+f9oIqnEToWAnZBBGMKrrks0LHk+SBI0
-	 lfMw0sGSxa0Jfv+VnUeyKxN84eW4+uzONws7f57lT67uiSH4b73z7iDHYhRm6qcv+Lw==
+	t=1795543349;
+	b=KYciy1SD3MoSQZDkGai8GoMCFqd8RS5MNcIBDXCnnMrY/BDLfdAPkNf/CUUedeB0HEnQ
+	 RhVQSBjlBi/Z93S15hBLrq+EHMY04rb90sN4BKVw83lFbagLGV5TUvzxG/JRh+uKbW+dH
+	 ag6ZeBKs21SDLeQGHpkbZNLpwJLy0w/XVnTbA+2qzTPQDeWuT5Fjh2zx1csEyEjDJIVBR
+	 HQQWeg58n4lobXcHmCl6bvwzEVyRMXdPVPUSY5lFWsyYDGCsAficA8Zv23YM1g6LF8Rp4
+	 9oHvlcnFxiTCA4fKmSrAHEKQbT9NiC5Sg6XYlUQiCoM3Sluja1oHzuEgHllwhypvHRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795543348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795543349;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-SA-Exim-Connect-IP:X-SA-Exim-Rcpt-To:
 	 X-SA-Exim-Mail-From:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
 	 Subject:X-SA-Exim-Version:X-SA-Exim-Scanned;
-	bh=cb47iL65oswQ8WLZQVWKYoJyz09JI7YusvkLIU90heE=;
-	b=J5cSJF4vxYdVK4MsADQ8Yc8fYy/KR+5mwwyZe6cvEs2hA+0IzihcNiygC7rvERrmGNvS
-	 9TulGPQBba7pFgjoFv809nYGWSEQ21YRqyG0TOvDmsO2EH8jyK9Ofmsa9+P7Sz1xRmfVu
-	 3BGiwZwnkJCKcHsfOkCDhKHPKc9zEG243qcCxfua0UUWfREl1MLVAP9lHuYUUggjzt+h9
-	 VJBQfo+lSxe00zPXNOSBzZ1nqiW+2H/U8IzjO9qLYZK2KLOcLi0HC/dFrz9h7rSnbocqH
-	 f0Qie5bPZzBjDU8q/Jq33vE9HJmFdjvki7y/XmDdULwZVbjxPEplsqxE320WpKgwjtQ==
+	bh=MGxOimM5MwVxunTMPXf1eXM/vKgrxjzG3aM8xXRKgdQ=;
+	b=plw7NSuRVvlNg6YWKlN7ZurIg0eMhyms7Nwvd1O2tWyhgfFrL04FOj6wLPB97EY5DdeX
+	 an79FmeMQ/K4Lvw5BrmpS1Nd4uD8LDKZKB5AAH/ic4Fj+mg2VZHeChEl0hBnEcPSkDUGv
+	 DidoijvnFABNgUCmpPmu/1k+g1qYQf3sDCLNYvKKv9Q93e5BLRkw2o35a/NtR0DNrd5Vt
+	 lxaocxu3h79KOu8E1ff8DDqefriDCIaje39oA6eWUPFfa5QYosslo7eB7k9q6wLGAic6m
+	 rZe53QM6/6S0c0YR+7jaH67w5psi+dp75v7wF2r5SvNc0Bseq1mG0J8nuJRD4iqL34w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deltatee.com;
 	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=FwsTB5yg;
+	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=thN+p4Wx;
 	arc=none smtp.remote-ip=204.191.154.188
 Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD16606A336;
-	Tue, 24 Nov 2026 18:02:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDD16606A336
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0878606A685;
+	Tue, 24 Nov 2026 18:02:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0878606A685
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=FwsTB5yg
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=thN+p4Wx
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=deltatee.com; s=20200525; h=Subject:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Cc:To:From:content-disposition;
-	bh=cb47iL65oswQ8WLZQVWKYoJyz09JI7YusvkLIU90heE=; b=FwsTB5ygvjGpqiGynNE82XMpoR
-	wSBzmXdXRcWtYo7LWLMGiYyy5i6i40xhY8EdbwugZvOdav4nKc9oAiv0GoGXavkPpj25lyg5sAcw6
-	HNDwwXAj6itU6P5cbe+vn6WkZ9GVbpI1pFIWBRgiCtXfkHy1sPo/uDzI/bQ1WfBle83cIRl97F83q
-	QiL+San30wP19CRs9JtXkQ0IPgRs7zxZu/R+Ut9Wp30QAbe6tsYEpF3y5vtSSakgrdebdDTQN1zW/
-	6b74KTMAzZphAHIBex78prTy3tzE40co6hDZ1mQeWWxeD36hDMIl19ZLF7z8OZdhxkYYiFUcC5Z6w
-	34mNycCA==;
+	bh=MGxOimM5MwVxunTMPXf1eXM/vKgrxjzG3aM8xXRKgdQ=; b=thN+p4WxxdJ6RLMJ8NEYnCrwCI
+	UdIt/heehx+NmvmR0UGuAV5Nz9F+zF/bR1qYnuRk4EDo2ITDBxyWOoL6VYS/ucipsMe1X28h1I878
+	E8Z0xvSGxTlhy3WUCefuo+aUxb6JCPTYd26VIhAJOPGYUUgSWODhtnpfwSmc+aQw9m/xCNHse2nCI
+	Lb0bLW/qITx3TguzWABMMoccHmo7YrDtVR6u4QAolA5JdiNwRfMA4guEU0he4apbfDNZlAeQlgH/K
+	ZaA9sNHhA9S+6KOCevc/S65CCN7MW5m1R/TbULUkMGW52TCAFEMitg5ViSpwQU4Dh2vOrJWg7PvIY
+	un/YO8vQ==;
 Received: from donard.priv.deltatee.com ([172.16.1.31])
 	by ale.deltatee.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVuqY-00000000oKl-0ML5;
-	Tue, 24 Nov 2026 12:02:26 -0600
+	id 1xVuqZ-00000000oKy-0xhS;
+	Tue, 24 Nov 2026 12:02:28 -0600
 Received: from logang by donard.priv.deltatee.com with local (Exim 4.98.2)
 	(envelope-from <logang@deltatee.com>)
-	id 1xVupj-00000003ruy-46zM;
+	id 1xVupk-00000003rv0-0X7O;
 	Tue, 24 Nov 2026 12:01:36 -0600
 From: Logan Gunthorpe <logang@deltatee.com>
 To: dmaengine@vger.kernel.org,
@@ -60,9 +60,10 @@ To: dmaengine@vger.kernel.org,
 	Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.li@nxp.com>,
 	Logan Gunthorpe <logang@deltatee.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Frank Li <Frank.Li@nxp.com>
-Date: Tue, 24 Nov 2026 12:01:27 -0600
-Message-ID: <20261124180132.922222-2-logang@deltatee.com>
+Date: Tue, 24 Nov 2026 12:01:28 -0600
+Message-ID: <20261124180132.922222-3-logang@deltatee.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261124180132.922222-1-logang@deltatee.com>
 References: <20261124180132.922222-1-logang@deltatee.com>
@@ -77,102 +78,99 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 172.16.1.31
-X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, logang@deltatee.com, Frank.li@nxp.com, Frank.Li@nxp.com
+X-SA-Exim-Rcpt-To: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, logang@deltatee.com, vkoul@kernel.org, sashiko-bot@kernel.org, Frank.li@nxp.com, Frank.Li@nxp.com
 X-SA-Exim-Mail-From: logang@deltatee.com
 X-Spam-Level: 
-Subject: [PATCH v4 1/6] dmaengine: plx_dma: don't call pci_irq_vector() under rcu_read_lock()
+Subject: [PATCH v4 2/6] dmaengine: plx_dma: fix descriptor ring leak in alloc_chan_resources()
 X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
 X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
-plx_dma_free_chan_resources() calls pci_irq_vector() inside an RCU
-read-side section, but msi_domain_get_virq() takes the mutex that
-protects the device's MSI descriptors. Releasing a channel, for example
-at the end of a dmatest run, triggers:
+If the device is removed between plx_dma_alloc_desc() and the pdev
+check, the error path frees hw_ring but leaks desc_ring and every
+descriptor in it.
 
-  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:623
-  ...
-  RCU nest depth: 1, expected: 0
-  Call Trace:
-   __mutex_lock+0x113/0x2350
-   msi_domain_get_virq+0x227/0x2f0
-   pci_irq_vector+0x9a/0xc0
-   plx_dma_free_chan_resources+0x178/0x58f [plx_dma]
-   dma_chan_put+0x157/0x380
-   dma_release_channel+0xac/0x2e0
-
-Store the IRQ number at probe time and use it everywhere
-pci_irq_vector() was called, so the teardown path no longer needs to
-look it up.
+Add plx_dma_free_desc() and use it here, in plx_dma_free_chan_resources()
+and in the plx_dma_alloc_desc() error path.
 
 Fixes: c2dbcaa8c672 ("dmaengine: plx-dma: Implement hardware initialization and cleanup")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/dmaengine/20260717223217.B6FBF1F000E9@smtp.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
 ---
- drivers/dma/plx_dma.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/dma/plx_dma.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/dma/plx_dma.c b/drivers/dma/plx_dma.c
-index 409898e92c32..0a7ad2473cb1 100644
+index 0a7ad2473cb1..5b0e32fec79b 100644
 --- a/drivers/dma/plx_dma.c
 +++ b/drivers/dma/plx_dma.c
-@@ -104,6 +104,7 @@ struct plx_dma_dev {
- 	struct dma_device dma_dev;
- 	struct dma_chan dma_chan;
- 	struct pci_dev __rcu *pdev;
-+	int irq;
- 	void __iomem *bar;
- 	struct tasklet_struct desc_task;
+@@ -374,6 +374,16 @@ static irqreturn_t plx_dma_isr(int irq, void *devid)
+ 	return IRQ_HANDLED;
+ }
  
-@@ -452,7 +453,6 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
++static void plx_dma_free_desc(struct plx_dma_dev *plxdev)
++{
++	int i;
++
++	for (i = 0; i < PLX_DMA_RING_COUNT; i++)
++		kfree(plxdev->desc_ring[i]);
++
++	kfree(plxdev->desc_ring);
++}
++
+ static int plx_dma_alloc_desc(struct plx_dma_dev *plxdev)
  {
+ 	struct plx_dma_desc *desc;
+@@ -398,9 +408,7 @@ static int plx_dma_alloc_desc(struct plx_dma_dev *plxdev)
+ 	return 0;
+ 
+ free_and_exit:
+-	for (i = 0; i < PLX_DMA_RING_COUNT; i++)
+-		kfree(plxdev->desc_ring[i]);
+-	kfree(plxdev->desc_ring);
++	plx_dma_free_desc(plxdev);
+ 	return -ENOMEM;
+ }
+ 
+@@ -424,7 +432,7 @@ static int plx_dma_alloc_chan_resources(struct dma_chan *chan)
+ 	if (!rcu_dereference(plxdev->pdev)) {
+ 		rcu_read_unlock();
+ 		rc = -ENODEV;
+-		goto out_free_hw_ring;
++		goto out_free_desc;
+ 	}
+ 
+ 	writel(PLX_REG_CTRL_RESET_VAL, plxdev->bar + PLX_REG_CTRL);
+@@ -443,6 +451,8 @@ static int plx_dma_alloc_chan_resources(struct dma_chan *chan)
+ 
+ 	return PLX_DMA_RING_COUNT;
+ 
++out_free_desc:
++	plx_dma_free_desc(plxdev);
+ out_free_hw_ring:
+ 	dma_free_coherent(plxdev->dma_dev.dev, ring_sz, plxdev->hw_ring,
+ 			  plxdev->hw_ring_dma);
+@@ -454,7 +464,6 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
  	struct plx_dma_dev *plxdev = chan_to_plx_dma_dev(chan);
  	size_t ring_sz = PLX_DMA_RING_COUNT * sizeof(*plxdev->hw_ring);
--	struct pci_dev *pdev;
  	int irq = -1;
- 	int i;
+-	int i;
  
-@@ -463,9 +463,8 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
- 	plx_dma_stop(plxdev);
+ 	spin_lock_bh(&plxdev->ring_lock);
+ 	plxdev->ring_active = false;
+@@ -474,10 +483,7 @@ static void plx_dma_free_chan_resources(struct dma_chan *chan)
  
- 	rcu_read_lock();
--	pdev = rcu_dereference(plxdev->pdev);
--	if (pdev)
--		irq = pci_irq_vector(pdev, 0);
-+	if (rcu_dereference(plxdev->pdev))
-+		irq = plxdev->irq;
- 	rcu_read_unlock();
+ 	plx_dma_abort_desc(plxdev);
  
- 	if (irq > 0)
-@@ -510,8 +509,9 @@ static int plx_dma_create(struct pci_dev *pdev)
- 	RCU_INIT_POINTER(plxdev->pdev, pdev);
- 	plxdev->bar = pcim_iomap_table(pdev)[0];
+-	for (i = 0; i < PLX_DMA_RING_COUNT; i++)
+-		kfree(plxdev->desc_ring[i]);
+-
+-	kfree(plxdev->desc_ring);
++	plx_dma_free_desc(plxdev);
+ 	dma_free_coherent(plxdev->dma_dev.dev, ring_sz, plxdev->hw_ring,
+ 			  plxdev->hw_ring_dma);
  
--	rc = request_irq(pci_irq_vector(pdev, 0), plx_dma_isr, 0,
--			 KBUILD_MODNAME, plxdev);
-+	plxdev->irq = pci_irq_vector(pdev, 0);
-+
-+	rc = request_irq(plxdev->irq, plx_dma_isr, 0, KBUILD_MODNAME, plxdev);
- 	if (rc)
- 		goto free_plx;
- 
-@@ -545,7 +545,7 @@ static int plx_dma_create(struct pci_dev *pdev)
- 
- put_device:
- 	put_device(&pdev->dev);
--	free_irq(pci_irq_vector(pdev, 0),  plxdev);
-+	free_irq(plxdev->irq, plxdev);
- free_plx:
- 	kfree(plxdev);
- 
-@@ -594,7 +594,7 @@ static void plx_dma_remove(struct pci_dev *pdev)
- {
- 	struct plx_dma_dev *plxdev = pci_get_drvdata(pdev);
- 
--	free_irq(pci_irq_vector(pdev, 0),  plxdev);
-+	free_irq(plxdev->irq, plxdev);
- 
- 	rcu_assign_pointer(plxdev->pdev, NULL);
- 	synchronize_rcu();
 -- 
 2.47.3
 
