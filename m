@@ -1,118 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=207.180.195.6
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795620331;
-	b=qq6YPVzONOMDLMYrK3mgEO70J0dxchttC00n0a6J78/jewUxgRmZoHhDaCASYPoymTVv
-	 rpjMFndockFMy3R5InJBjY+J7ahdsZlpsNPzNoyedTJU02El4M+P4an8ym7cZfXLIdulR
-	 sa1iGqSCRhj6ZuAcWh4Mscm4v/jI/+4qP/Lhmo20ROujh9CwcNsFDje3ygty04Xuw6lt+
-	 pzAzegDy8vEc2CgfM2pkQiIcXFJE5Iki04PUTPCJAiIZkI4nP3oMBk3r12V25qsTXYub9
-	 XNeT8j+DNevBTEp61/SfR3lGaDB/UWQg3liAHfEBxqZfk1pZT/1uqlYVMsCuImvYTiQ==
+	t=1795623653;
+	b=Jykx9Ov0WjjFwX/ac+yfMMXkU99OwckMCtvVVyxqwYZIZVg5hp0ODHQUCJZCUbRzZTOG
+	 TrHWR2gqHWG6dkjP0KGSwzBkUqI/rXCkmPrQrwzlmk15HK65CrmLkVseOoP9pV83NyXe9
+	 8McWYzu0czcyLTIXPRZscZS40oW3WzFeCw6VFlz1bskk4Vi3O5gGlCx3gMStiF4zxyQon
+	 R0v5Q/RwqMjXFks2Ch7QOx+Zu+aSLQtuBNcvPEC/Nv9ODJXOupyEPxz5WDRzQ6f5IRLty
+	 qmcCD71ZnZ25SOCN0XLwOTF8eajBKu4+ni1lE/sAG5bUiwXsYGwFSyF9OQ7U0wGmewA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795620331;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
-	b=5ZIhMlsn3bPBfb1g0vjJCVnJ4pUKTmV4sr+C9gssmVCkLRBA+99xSblV2+bIRAndWEsJ
-	 MyW20olq2JDk4ZBo5iMs81xUpWyNpoD+4AMqfBuCNliqHSn8LH09YaTK0pBeJWUXd5Dfu
-	 1jZXIhAg3pw6xFKcIxJNEU4okK7eC/VuhsMkKV6oE5+QmzQDFDR+Hm/XijRpaDNF7N806
-	 dHZXpYmZ9UKToOcAurA1FqAOl+DHTDRHpAzuYqrAR8RAsMSo00MQEtfaG6zXBZcQJeflB
-	 fz2bQWJl8jhdiz+3/Sa/gEGDPi6aF7veg07vj0sCdDujmheZa1Jd/xhgaONtNTl7R4Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795623653;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Received:From:To:Cc:
+	 Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-Get-Message-Sender-Via:
+	 X-Authenticated-Sender:X-Source:X-Source-Args:X-Source-Dir;
+	bh=8icgpu1DPe9CwiufaeD3JXzxlIeQBKkQ8vZIG3B05Go=;
+	b=M0Xfrag8jXhAqRaow2PKcJlhrQZXbSnI1D89dT2loyLgMnD4oN7Ag4fHOox/9/xG13kB
+	 Nno9L06NkWFx0wrlW+U07YxeoE5yO8lJelDJSWYsxvBuB5jpB/zuXLV9FTXtz4gm7YM/R
+	 aDWozdc4tnQWWb1tFCVz6+g/t7ye7ZvLgWVf/CBfEU3B+9gAlzIopVAeS8NcWLnFOLqnu
+	 3Zt1Kp+5NvQ5xeybJ1KoPtBy7mw4LJDKVQRolWAqCik9onKO3hMPf0v3jmRql6mfWhzXY
+	 8e2IToYsJj0hC896iyrIGtyYDxl2BswcMuY3gWTXICEnPPSWv/EH/LZa/QIa07p2leg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=ziepe.ca;
-	spf=pass smtp.mailfrom=ziepe.ca;
-	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=iFk419Bq;
-	arc=none smtp.remote-ip=209.85.217.52
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=mkio.de;
+	spf=pass smtp.mailfrom=mkio.de;
+	dkim=pass header.d=mkio.de header.i=@mkio.de header.a=rsa-sha256 header.s=default header.b=nXqdFHEa;
+	arc=none smtp.remote-ip=207.180.195.6
+Received: from mail-relay.contabo.net (mail-relay.contabo.net [207.180.195.6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C389606A327
-	for <dmaengine@vger.kernel.org>; Wed, 25 Nov 2026 15:25:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C389606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7917606A321;
+	Wed, 25 Nov 2026 16:20:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A7917606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mkio.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mkio.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=iFk419Bq
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-7d2da166818so3529559137.0
-        for <dmaengine@vger.kernel.org>; Wed, 25 Nov 2026 07:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1795620330; x=1796225130; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
-        b=iFk419BqbfBi/6ObNDUZ2vsXpKfzRGG8soL1vwWsfo3s0278JXjr9iY8LX249svZsi
-         r6zCWgQOJswtMqBkGndgaQ0IvnnCAjGp65TR4XQNdfZ5sZPg0BgeutzGHAq8cM2f0LQv
-         k79Pa3Mi31cvvRuTHw0jZ0595qcyP7Hk6uoobP2Z5yd2mn/yT4hXNKxz8+kfBrSxNLDf
-         QHFAAQ74iOvDW0Lv4NLZloAJyTvOPgRcIasINF2MuVmMIVyHVBduWP93wMPTk4SQT8Wq
-         iiMNt8SR9mbCr9h27gdplCbxaAkt1KGPe3OqaB/mp7PDl4S4WFrxi6Ipq3bM+f7oWh6E
-         wrCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795620330; x=1796225130;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
-        b=D6x4WKuweSgw9l7KqhilZPUxQENo36BsYloTOecocwjKfTDAut7TsqNirW3pxnpGVm
-         ZiOei6D5E72xCvHCCaYR9r/+e6jNMMOug9JPbo/Lt9O/wrRgg3gv4dMTBhXm0WmcwnNS
-         sUEOtNAe17uOPylWeADRxs59ws1OO+kOKfWWcwws3dZBlAA4nnHEmnKaYhVF7h9f4sjW
-         VyOEafQ1zyMb58Ujf4ifnbrq3zZwa6ayjVqGgHyM5I6SnU7oIt5UrUSTLLiwmmZKa1Bp
-         WPPp6rgsIg1SbM6Kgxw6gUcb3EGqbtGKrg5roEgpzQe5wYxhkaZTRtSJW3TrzLMeSy1y
-         yfBA==
-X-Forwarded-Encrypted: i=1; AL+hErEFTfJ/eu/LhODeJONMr7E5VB1crncBspqMcCJ/jZWR0BUhDdAep/zIaZ6ynBW5ntohfONzCm+ygws=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/7IbnCzdQAz71JPG7J4CKUPx18t0WJyslQnmtW+JrLd1+2XXDP
-	IKv7rrNWujqmLuxNl/RdEF/IR4xPjz1PUtaYwOmm7dL6QFssA+goNmW+g4V7y/taFL8=
-X-Gm-Gg: AZFdTZcLe4gekcTj4h9NtWJGN+0sG5qm0DRz93aS1+NrqOOS16xoOec8u/vzvhhJhQa
-	p3d6zrDZbyet+l3CvVJ1CcsZCFgNjTxETUEvy1UtG2WJ+hOvuiBaqbAhWAm+1Quyvgz0Wt+FYVU
-	BcNNYMImhL3ZPBfZE4jxSiB4kZao7Q7Jc0VHTibOPNOGsJbLwT14uc6+NVrbLMrOcJTKmioFCvo
-	DqUH3srfXL6qcMcNAPntkZBlKmDlJCurlVRjpAZx+uyusHHlDHzD1EryEJycSMbDgg6gJOEJ8Yh
-	HS0x6PS7Se0sL/RiUQcshN/VrwbZtnCOlTFz/vQV0A8Rb0Ts9TnZUem7c3PFbhF5xeYtYQUuuuQ
-	dkNny54Yc+otvQuzJU3DoZFdOubhQJLgSXIchntZFn+5e182TddcC+S2fQ2DPIi/BD/aexCX9DO
-	8j8C2nKXgkmQyO6f+AViInsdVPLUJfXhmJ8aRInLexyN342TKHgyFSUPZKwoHBUjUQUiCoIBry6
-	5CH13rDkWmUnH1w00XTDkhA6tjnCpJxadvDlj7NYcF0XJNzi10qL2f+79dCNjlPEjg937enQnmM
-	SCOUZOyUC0P8gNEvJbjbPFgKvgk=
-X-Received: by 2002:a05:6102:3e8d:b0:7c3:fcb:180c with SMTP id ada2fe7eead31-7d739572406mr10710273137.20.1795620330327;
-        Wed, 25 Nov 2026 07:25:30 -0800 (PST)
-Received: from ziepe.ca ([142.177.118.84])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9213479655asm165007476d6.4.2026.11.25.07.25.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 07:25:29 -0800 (PST)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1xWEsD-00000001rUc-0W0U;
-	Wed, 25 Nov 2026 11:25:29 -0400
-Date: Wed, 25 Nov 2026 11:25:29 -0400
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Peng Fan <peng.fan@linux.dev>
-Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	"Peng Fan (OSS)" <peng.fan@oss.nxp.com>,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
-	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Peng Fan <peng.fan@nxp.com>
-Subject: Re: [PATCH v6 0/9] dmaengine: add DMA channel bus and fsl-edma
- per-channel IOMMU support
-Message-ID: <20261125152529.GK246011@ziepe.ca>
-References: <20261112-edma-iommu-v3-v6-0-b038edb8ce6f@nxp.com>
- <20261116193021.GB2452510@ziepe.ca>
- <avwQl18smAW4R6ec@fedora>
- <20261117130005.GC2606445@ziepe.ca>
- <awGWcq_nKWShC81B@fedora>
+	dkim=pass (2048-bit key) header.d=mkio.de header.i=@mkio.de header.a=rsa-sha256 header.s=default header.b=nXqdFHEa
+Received: from pxmg2.contabo.net (localhost.localdomain [127.0.0.1])
+	by mail-relay.contabo.net (Proxmox) with ESMTP id C87427C17FD;
+	Wed, 25 Nov 2026 17:20:49 +0100 (CET)
+Received: from m2731.contabo.net (m2731.contabo.net [193.34.145.203])
+	by mail-relay.contabo.net (Proxmox) with ESMTPS id A09047C17B8;
+	Wed, 25 Nov 2026 17:20:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mkio.de;
+	s=default; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8icgpu1DPe9CwiufaeD3JXzxlIeQBKkQ8vZIG3B05Go=; b=nXqdFHEaJaJYtQ6EVTg9Hh04YG
+	ZdcS3gpHJs+UkmSO7btwo/2DB6SDenDoCld4H9x+nwfPKPyMHmvyydeGoF0RrMqAnHxlSLliNaUh6
+	koifblSmOgwudhf0bVwVheJyt1ogisSqbX2HCBIc1a6pbAWuAAseEs+dC4wjY1tQzXE9AJTflo51A
+	0KZfyPhIC2K6DOtfR0l3KxeDJBOOufrBKXd52SlLpSyFoxqoH4riowVKeWnFnOo527n/Q+8sDb43A
+	N8MFD/vMp5u60hMoYKUI6gd1Iw92NnCuqm3V+dFfJXTLKJHSsuxbKjCeOXke31BG+anxEhaQsnL0i
+	udYFyBUA==;
+Received: from ip-078-042-120-089.um17.pools.vodafone-ip.de ([78.42.120.89]:63107 helo=p14s.int.kistler.com)
+	by m2731.contabo.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <mk@mkio.de>)
+	id 1xWFjk-00000005yhy-2o8v;
+	Wed, 25 Nov 2026 17:20:48 +0100
+From: Markus Klotzbuecher <mk@mkio.de>
+To: Mark Brown <broonie@kernel.org>
+Cc: linux-spi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	dmaengine@vger.kernel.org,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Subject: [PATCH] spi: omap2-mcspi: skip the TX drain wait in duplex
+Date: Wed, 25 Nov 2026 17:20:45 +0100
+Message-ID: <20261125162045.1222271-1-mk@mkio.de>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -122,48 +80,158 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <awGWcq_nKWShC81B@fedora>
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - m2731.contabo.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mkio.de
+X-Get-Message-Sender-Via: m2731.contabo.net: authenticated_id: mk@mkio.de
+X-Authenticated-Sender: m2731.contabo.net: mk@mkio.de
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 
-On Sat, Nov 21, 2026 at 09:02:42PM +0800, Peng Fan wrote:
+k3-udma completes a transfer towards a PDMA peer only once the peer has
+drained (udma_is_desc_really_done()). If it has not at the ring
+interrupt, k3-udma defers that check to a delayed work on the system
+workqueue. The McSPI depends on this: it prepares TX with
+DMA_PREP_INTERRUPT, and its TX callback clears the DMA write request,
+which has to stay set until the PDMA has passed on every byte. On
+PREEMPT_RT the kworker runs at normal priority, so each DMA transfer
+waits behind other tasks, for several ms under load.
 
-> Do you think it is reasonable to have chan device(not platform device) do dma
-> allocation? 
+Commit e8e2f92b1553 ("dmaengine: ti: k3-udma: Respond TX done if
+DMA_PREP_INTERRUPT is not requested") lets a consumer skip that check
+when it knows by other means that TX is done. Its first version was
+posted together with a McSPI change that waited for EOW instead [1],
+which was not applied.
 
-?
+In host mode full duplex the RX completion proves that every TX word
+has been shifted out, so once omap2_mcspi_rx_dma() has returned the
+PDMA holds no TX data. That is what k3-udma requires of a consumer that
+does not set DMA_PREP_INTERRUPT. Prepare TX there with DMA_CTRL_ACK
+only and without a callback, clear the write request after RX, and do
+not wait for the TX completion. Target mode and TX-only transfers keep
+the callback and the drain check.
 
-Any struct device that works with the DMA API should be able to do
-memory allocation consistent with its DMA parameters. That's an
-integral part of having a working DMA API.
+On an AM625 with PREEMPT_RT, a device on McSPI2 at 50 MHz and four
+transfers every 2 ms, two of them, 344 and 367 bytes, via DMA: the
+cyclic thread missed its deadline 217 times in 10 minutes idle and 1864
+times in 30 minutes under load without this change, and 0 and 1 times
+with it. No data errors in about 893k checked loopback updates.
 
-If you are asking if a struct device that can't do DMA should be able
-to do DMA allocation, then no, obviously it should not be able to do
-that.
+Link: https://lore.kernel.org/r/20220822091531.27827-1-vaishnav.a@ti.com [1]
+Signed-off-by: Markus Klotzbuecher <mk@mkio.de>
+---
+Notes:
+- Tested on 6.18.56 PREEMPT_RT with commit c126e07bde21 ("spi:
+  omap2-mcspi: handle DMA setup failures") backported and with the DMA
+  request bit lock patch:
+  https://lore.kernel.org/r/20261125161340.1218564-1-mk@mkio.de
+  On spi for-next the callback is set through
+  dmaengine_desc_set_callback() (commit 29fcd5d436c4); compile-tested
+  there.
+- Independent of that lock patch; applies to 266ae6df1980 alone.
+- The 2022 thread asked about TX data left in the PDMA when the IP stops
+  transmitting (externally clocked bus, delays). In host full duplex the
+  RX completion means every word was shifted out, whatever the delay;
+  an externally clocked bus is target mode, which keeps the drain check.
+  RX EOW is not used as the signal because RX data may still be in
+  flight to memory then.
+- omap-dma and edma complete a slave_sg descriptor regardless of
+  DMA_PREP_INTERRUPT; there the only change is that the write request is
+  cleared after RX instead of from the TX callback. Not tested on those.
+- As far as I can tell this is the first user of the k3-udma opt-out
+  from e8e2f92b1553, whose message gives the McSPI as the example.
+- On AM625, PEER_BCNT wraps below zero after the early decrement and is
+  back at 0 once the PDMA has drained, so a following transfer starts
+  from clean counters.
 
-AFAIK the main issue in most of these cases is the need to get a DMA
-capable struct device for a particular SID because of a confluence of
-decisions the HW designer has made and the Linux limitation of struct
-device baaed DMA.
+ drivers/spi/spi-omap2-mcspi.c | 34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-> I ask because if we allow chan device to do dma allocation, we need
-> to provide a dma channel bus for iommu_buses to fix tegre186(TBH, I
-> am not familar with this platform, it even has iommu-map for the dma node).
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index 061d50c65dfd..1eaa86c8d892 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -413,6 +413,18 @@ static void omap2_mcspi_tx_callback(void *data)
+ 	complete(&mcspi_dma->dma_tx_completion);
+ }
+ 
++/*
++ * In host full duplex the RX completion proves that every TX word was
++ * shifted out, so TX needs neither a callback nor k3-udma's peer drain
++ * check, which it defers to a kworker.
++ */
++static bool omap2_mcspi_tx_duplex(struct spi_device *spi,
++				  struct spi_transfer *xfer)
++{
++	return xfer->tx_buf && xfer->rx_buf &&
++	       !spi_controller_is_target(spi->controller);
++}
++
+ static int omap2_mcspi_tx_dma(struct spi_device *spi,
+ 			      struct spi_transfer *xfer,
+ 			      struct dma_slave_config cfg)
+@@ -421,6 +433,7 @@ static int omap2_mcspi_tx_dma(struct spi_device *spi,
+ 	struct omap2_mcspi	*mcspi;
+ 	struct omap2_mcspi_dma  *mcspi_dma;
+ 	struct dma_async_tx_descriptor *tx;
++	unsigned long flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
+ 
+ 	mcspi = spi_controller_get_devdata(spi->controller);
+ 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
+@@ -429,14 +442,18 @@ static int omap2_mcspi_tx_dma(struct spi_device *spi,
+ 	if (ret)
+ 		return ret;
+ 
++	if (omap2_mcspi_tx_duplex(spi, xfer))
++		flags = DMA_CTRL_ACK;
++
+ 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_tx, xfer->tx_sg.sgl,
+ 				     xfer->tx_sg.nents,
+-				     DMA_MEM_TO_DEV,
+-				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
++				     DMA_MEM_TO_DEV, flags);
+ 	if (!tx)
+ 		return -EIO;
+ 
+-	dmaengine_desc_set_callback(tx, omap2_mcspi_tx_callback, NULL, spi);
++	if (flags & DMA_PREP_INTERRUPT)
++		dmaengine_desc_set_callback(tx, omap2_mcspi_tx_callback, NULL,
++					    spi);
+ 
+ 	return dma_submit_error(dmaengine_submit(tx));
+ }
+@@ -672,6 +689,8 @@ static int omap2_mcspi_txrx_dma(struct spi_device *spi,
+ 					 &rx_submitted, &dma_started);
+ 		if (ret)
+ 			goto out;
++		if (omap2_mcspi_tx_duplex(spi, xfer))
++			omap2_mcspi_set_dma_req(spi, 0, 0);
+ 	} else if (tx) {
+ 		if (mcspi->target_aborted) {
+ 			ret = -EINTR;
+@@ -686,9 +705,12 @@ static int omap2_mcspi_txrx_dma(struct spi_device *spi,
+ 	}
+ 
+ 	if (tx) {
+-		ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_tx_completion);
+-		if (ret || mcspi->target_aborted)
+-			goto out;
++		if (!omap2_mcspi_tx_duplex(spi, xfer)) {
++			ret = mcspi_wait_for_completion(mcspi,
++							&mcspi_dma->dma_tx_completion);
++			if (ret || mcspi->target_aborted)
++				goto out;
++		}
+ 
+ 		if (spi_controller_is_target(mcspi->ctlr)) {
+ 			ret = mcspi_wait_for_completion(mcspi, &mcspi->txdone);
 
-If your question is 'should I be able to have a "board file" that
-creates DMA capable struct devices from C code" then I think that is a
-pretty "smells bad" solution. Especially if you have to then create
-fake busses and add them to iommu discovery.
+base-commit: 266ae6df1980a5a5c58735ae114ae62a2acad8db
+-- 
+2.53.0
 
-The DT should create the iommu devices as platform devices.
 
-There was yet another thread about this, so we are at like 5 drivers
-now with this kind of need? This was my suggestion on what an API
-could look like to solve this general problem:
-
-https://lore.kernel.org/r/20261119143151.GH3115493@ziepe.ca
-
-I recognize it would not be so easy to make, but it would be easier
-and safer to use.
-
-Jason
