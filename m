@@ -1,58 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795560818;
-	b=JgkIq9HZQsyYGF/7LjdTCmYDz65UfhBXaNFIg/JgM43fefUH9UJxipzB5e/XnHUUchLB
-	 0WRXsjzsegSOIt4uuob6bcmE4C5iIy5NA2F1ttug258EbiQX/ShpqmGRl2HTxUzKdEItg
-	 LaTRLLVOWNmgIpfHsu7WeJZy809kBOBYCSmXsWPT6pSngVGfKJNlLvGJtigciAMtvsCw0
-	 iVgwPpD10QC7KnL2go4b3LzEzJO1NA5OPPnAlY4rZ2pug2ZM7YK9HtrMSy8VcsENMiZsE
-	 6bnxOnV6yeKHAaeMCaJxFlTK2ywAQSr8Y01I+EMXWnjOPsSadD3AX3yPv3aLFVMJgUQ==
+	t=1795568489;
+	b=Bt9QKTtpfqRBumY69WTRhcug+VV8UEyfPEEmZ5X3ZRDioJTCMUUZvgikh0bJAzEr8ilx
+	 94VPqDfeI5NRoZQ2JvE8x5M5TN1CVtMLIqSExpX9c4GovZiaYcPDqedtNwxqqghiJu65/
+	 wvDruHlWw3VHV/7v4E53vcTnLjxH9pOHqafeJaxV/qomOvElpGnCX3vZjtjfZvYKuOIIZ
+	 14gMm3sE0xP/rg0xKJTv74l1LAaSoH6dUU7FOKaCk/X039g/SEXNTON73TIOc+WiM/xaF
+	 odeMTupX+ltM31ghHzbCYEynxtzlGkCflb/blmi/OPoZ5VkAcldzRwxmUhKXJV8p1KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795560818;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-SA-Exim-Connect-IP:
-	 X-SA-Exim-Rcpt-To:X-SA-Exim-Mail-From:X-Spam-Checker-Version:
-	 X-Spam-Level:X-Spam-Status:Subject:X-SA-Exim-Version:
-	 X-SA-Exim-Scanned;
-	bh=fB5eaI7Qj03swRVIu80Gf5lTHFrkJ1sj/Fsup7aCYW0=;
-	b=h64ZHeCBR+hQZSnLetfdz/trLfDvQEqadoXXLV+h0F213SoKypPL7OexOAAOMXxdSPyh
-	 5714xMmruU6OLhjQfDJ/d2aVJyZcW6fv20o+gJbJWMhSMxlvQDdEQATr0ZeRx1STlg5uQ
-	 GXilUpc2o4yx9yqe+DRd98jEJSPrKUlSp+ZxCaHtrymK08LvBX1GhRZCLQ+QBXyisb2BB
-	 wCk+gObfSHt0vux7Pj8eOKW5kRd+0vG5C8nUoJkjUWInD8EDDoZgEJFHA9swsjkMex52A
-	 5HNjIamegTmbyRmiCa/oWhCT/JvrqbQoqGaeodQvIf9kEZQGNFbZJSNiU5bAEe6hlkA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795568489;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=tD6D7eOpdU3J9Niw++brCIW9sp+eVurU7w2P3fH9VtI=;
+	b=n2iE72rD8DHBB3LSi9irTzRv6BCMv8XjNwUhFzx5shcUOLrmxnfOOcoyqhI6JE50MxU+
+	 OrnFJozfFqKikpn/QnEFFQKI+svIBSgXy9mk2X/ze70olTMn/xBDY+AqPv/1Qw84T36sj
+	 5Ib0ux/fKZfezWhpkz6LkZ2ski380FQutkqauGxFxoWeAPQYuuDBtGdEt60YL7fb9jAjW
+	 k8PWMT6UohS7FRiEirtABSfZFfcCgPiEHhqNijsb2glDz8Fl8VLYi2OxapMJw6GH8dymC
+	 dZ06LNSPQWyPewWXUfVfIHkqCtYAesKWXTZp64kYqaMgjY+e/1CPAqUL1Cyf7HnThwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=deltatee.com;
-	spf=pass smtp.mailfrom=deltatee.com;
-	dkim=pass header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=nTSf7usl;
-	arc=none smtp.remote-ip=204.191.154.188
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=emP3rh+P;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27331606A323;
-	Tue, 24 Nov 2026 22:53:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 27331606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C90606A31E;
+	Wed, 25 Nov 2026 01:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.a=rsa-sha256 header.s=20200525 header.b=nTSf7usl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=fB5eaI7Qj03swRVIu80Gf5lTHFrkJ1sj/Fsup7aCYW0=; b=nTSf7uslDvKlzQoEa/YhX7GO3N
-	Cel4BQu4UoaEZAKY1fud43sCAMPJ7RYFccBzs7IML5e0+9iL5p9lLL1qjEksuu2sj5dwICJUIFmzy
-	/XcA/ZlMIpPHsRfuCAFJ6Fl9Uj6YMlni7Tij8Tks8THAtE2Benszs4v5FvyAtwW6sYMEOTVM1TQ6j
-	0u0V85kgVt/7y+MQ744rmdhO2771ucedCAYEnquYv+RyLaDJt/TAvDL3J1/y18q4V/dc9Pnt7o7M7
-	6CGrIn/+BTJ1c2sIUJaRCKMXWs1TSLFMCnEpk+QT81ZQjScSXr2lCljdDgjhhkpg+tbCLMgYzto/3
-	JzgSEdAQ==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1xVzOK-00000000rPr-1tgg;
-	Tue, 24 Nov 2026 16:53:37 -0600
-Message-ID: <9f243227-c668-4980-8cd2-8c7e45940cf6@deltatee.com>
-Date: Tue, 24 Nov 2026 16:53:30 -0600
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=emP3rh+P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23951F000C4;
+	Wed, 25 Nov 2026 01:01:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795568488;
+	bh=tD6D7eOpdU3J9Niw++brCIW9sp+eVurU7w2P3fH9VtI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=emP3rh+PUBax4VRuK4Q3yqpr5+BKSRMsc6jx68NwEFb944vKzvA5faXk/XTJ4fO3H
+	 KrakpyE+t92ov6C6FKXXtkNm6Z3LIAV5YW+CoXQcquiPCcOzpL5PbYUMyIaHF4V8tQ
+	 GiVJFb9BwhcGhILcxh3FUttUNLZazpc5btnQlBdqk+YLMc4y2/pjraH01Jx816AOos
+	 c6iLUP1neetRKhQb8So+Ov/NgNsFXZ9XwqvDsXCl9tivj/Kq9SvAE2G5kqp17r/oys
+	 6wbxIaP1Lf8X3cycn25PHPW0giUO5525omuLocZv+h7TWu4Bjy+GMpQMCO/KLTG7IG
+	 WD3ObNlskmSZQ==
+Date: Wed, 25 Nov 2026 01:01:21 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org>
+Cc: nathan.lynch@amd.com, Vinod Koul <vkoul@kernel.org>, Frank Li
+ <Frank.Li@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, David Rientjes
+ <rientjes@google.com>, John.Kariuki@amd.com, Kinsey Ho
+ <kinseyho@google.com>, Mario Limonciello <mario.limonciello@amd.com>,
+ PradeepVineshReddy.Kodamati@amd.com, Shivank Garg <shivankg@amd.com>,
+ Stephen Bates <Stephen.Bates@amd.com>, Tycho Andersen <tycho@kernel.org>,
+ Wei Huang <wei.huang2@amd.com>, Wei Xu <weixugc@google.com>,
+ dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org
+Subject: Re: [PATCH v4 03/25] dmaengine: sdxi: Add PCI initialization
+Message-ID: <20261125010121.78c33243@jic23-hlaptop>
+In-Reply-To: <20261103-sdxi-base-v4-3-3668ccc7aab8@amd.com>
+References: <20261103-sdxi-base-v4-0-3668ccc7aab8@amd.com>
+	<20261103-sdxi-base-v4-3-3668ccc7aab8@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -62,130 +67,157 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-References: <20261124155024.920403-1-logang@deltatee.com>
- <20261124155024.920403-5-logang@deltatee.com>
- <sashiko-outbox-231501@kernel.org>
- <awXfpjkv0MBDvYyK@lizhi-Precision-Tower-5810>
-Content-Language: en-CA
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <awXfpjkv0MBDvYyK@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: Frank.li@oss.nxp.com, sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Level: 
-Subject: Re: [PATCH v5 4/4] dmaengine: switchtec-dma: add pmon sysfs
- attributes
-X-SA-Exim-Version: 4.2.1 (built Sun, 23 Feb 2025 07:57:16 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
+On Tue, 03 Nov 2026 20:49:44 -0600
+Nathan Lynch via B4 Relay <devnull+nathan.lynch.amd.com@kernel.org> wrote:
 
-
-On 2026-11-24 13:04, Frank Li wrote:
-> On Tue, Nov 24, 2026 at 03:59:03PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential
->> issue to consider:
->> - [Low] dmaengine: switchtec-dma: multi-line menu output in
->>   latency_selector_show()
->> --
->>
->> commit 88f647b9334dbbed040eb8ea50d2882f9874a0c9
->> Author: Logan Gunthorpe <logang@deltatee.com>
->>
->> dmaengine: switchtec-dma: add pmon sysfs attributes
->>
->> This commit adds a "switchtec-pmon" sysfs attribute group to expose
->> Switchtec DMA performance monitor registers per channel.
->>
->>> diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
->>> index 1ebe17095c61a..774b418330ed7 100644
->>> --- a/drivers/dma/switchtec_dma.c
->>> +++ b/drivers/dma/switchtec_dma.c
->> [ ... ]
->>> @@ -1215,8 +1222,274 @@ static const struct attribute_group switchtec_config_group = {
->>>  	.attrs = switchtec_config_attrs,
->>>  };
->> [ ... ]
->>> +static ssize_t latency_selector_show(struct device *dev,
->>> +				     struct device_attribute *attr, char *page)
->>> +{
->> [ ... ]
->>> +	len = sysfs_emit(page,
->>> +			 "To select a latency type, write the type number\n");
->>> +	len += sysfs_emit_at(page, len, "(1 ~ 5) to latency_selector\n\n");
->>> +
->>> +	len += sysfs_emit_at(page, len, "Latency Types:\n");
->>> +	len += sysfs_emit_at(page, len, "(1) SE Fetch latency");
->>> +	if (lat & SWITCHTEC_LAT_SE_FETCH)
->>> +		len += sysfs_emit_at(page, len, " (*)\n");
->>> +	else
->>> +		len += sysfs_emit_at(page, len, "\n");
->>> +
->>> +	len += sysfs_emit_at(page, len, "(2) VDM latency");
->>> +	if (lat & SWITCHTEC_LAT_VDM)
->>> +		len += sysfs_emit_at(page, len, " (*)\n");
->>> +	else
->>> +		len += sysfs_emit_at(page, len, "\n");
->>> +
->>> +	len += sysfs_emit_at(page, len, "(3) Read Immediate latency");
->>> +	if (lat & SWITCHTEC_LAT_RD_IMM)
->>> +		len += sysfs_emit_at(page, len, " (*)\n");
->>> +	else
->>> +		len += sysfs_emit_at(page, len, "\n");
->>> +
->>> +	len += sysfs_emit_at(page, len, "(4) SE Processing latency");
->>> +	if (lat & SWITCHTEC_LAT_SE_PROCESS)
->>> +		len += sysfs_emit_at(page, len, " (*)\n");
->>> +	else
->>> +		len += sysfs_emit_at(page, len, "\n");
->>> +
->>> +	len += sysfs_emit_at(page, len, "(5) FW NP TLP latency");
->>> +	if (lat & SWITCHTEC_LAT_FW_NP)
->>> +		len += sysfs_emit_at(page, len, " (*)\n");
->>> +	else
->>> +		len += sysfs_emit_at(page, len, "\n");
->>> +
->>> +	return len;
->>> +}
->>> +
->>> +static ssize_t latency_selector_store(struct device *dev,
->>> +				      struct device_attribute *attr,
->>> +				      const char *page, size_t count)
->>> +{
->> [ ... ]
->>> +	if (kstrtoint(page, 0, &lat_type) < 0)
->>> +		return -EINVAL;
->>
->> [Severity: Low]
->> Does latency_selector_show() violate the sysfs one-value-per-file rule in
->> Documentation/filesystems/sysfs.rst?
->>
->> Reading latency_selector emits multi-line usage instructions and a
->> numbered menu marking the active bit with "(*)", whereas
->> latency_selector_store() parses a single integer from 1 to 5 via
->> kstrtoint(), so the attribute's output cannot be parsed as a single value
->> or written back to the file.  Could latency_selector expose a single value
->> (or a single-line space-separated list of tokens with brackets around the
->> active selection, documented under Documentation/ABI/), or move the
->> human-formatted menu to debugfs?
+> From: Nathan Lynch <nathan.lynch@amd.com>
 > 
-> Yes, this is one problem, which need be addressed.
-> the sysfs one-value-per-file rule
-I responded to this in v4[1].
+> Add enough code to bind a SDXI device via the class code and map its
+> control registers and doorbell region.
+> 
+> Keep PCI resource setup in pci.c and register devices with the SDXI core
+> through bus operations.
+> 
+> Co-developed-by: Wei Huang <wei.huang2@amd.com>
+> Signed-off-by: Wei Huang <wei.huang2@amd.com>
+> Signed-off-by: Nathan Lynch <nathan.lynch@amd.com>
 
-We were really hoping to skirt that rule seeing we view the self
-documenting feature of the field worth having. If you really want to
-push this issue please let us know so we can create a new version
-promptly. I'd really like to get this merged this cycle.
+Just a few quick comments inline.
 
-Thanks,
+> diff --git a/drivers/dma/sdxi/device.c b/drivers/dma/sdxi/device.c
+> new file mode 100644
+> index 000000000000..0974a83bb45c
+> --- /dev/null
+> +++ b/drivers/dma/sdxi/device.c
+> @@ -0,0 +1,33 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * SDXI hardware device driver
+> + *
+> + * Copyright Advanced Micro Devices, Inc.
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/export.h>
+> +#include <linux/slab.h>
+> +
+> +#include "sdxi.h"
+> +
+> +int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops)
+> +{
+> +	struct sdxi_dev *sdxi;
+> +
+> +	sdxi = devm_kzalloc(dev, sizeof(*sdxi), GFP_KERNEL);
 
-Logan
+Perhaps switch now to devm_kzalloc_obj() and avoid the churn
+if it being updated once applied.  The mass change is there
+in rc3.
+
+> +	if (!sdxi)
+> +		return -ENOMEM;
+> +
+> +	sdxi->dev = dev;
+> +	sdxi->bus_ops = ops;
+> +	dev_set_drvdata(dev, sdxi);
+> +
+> +	return sdxi->bus_ops->init(sdxi);
+> +}
+> +EXPORT_SYMBOL_NS_GPL(sdxi_register, "SDXI");
+> +
+> +MODULE_AUTHOR("Wei Huang");
+> +MODULE_AUTHOR("Nathan Lynch");
+> +MODULE_DESCRIPTION("SDXI core");
+> +MODULE_LICENSE("GPL");
 
 
-[1]
-https://lore.kernel.org/all/dbe72187-4c12-4a8f-a63f-0c4238e50ec5@deltatee.com/
+> diff --git a/drivers/dma/sdxi/pci.c b/drivers/dma/sdxi/pci.c
+> new file mode 100644
+> index 000000000000..0778cde31f14
+> --- /dev/null
+> +++ b/drivers/dma/sdxi/pci.c
+
+> +
+> +static const struct sdxi_bus_ops sdxi_pci_ops = {
+> +	.init = sdxi_pci_init,
+> +};
+> +
+> +static int sdxi_pci_probe(struct pci_dev *pdev,
+> +			  const struct pci_device_id *id)
+> +{
+> +	return sdxi_register(&pdev->dev, &sdxi_pci_ops);
+
+This seems oddly miss balanced. Perhaps it's better to introduce
+an empty sdxi_unregister() ready for when it's needed later?
+
+
+> +}
+> +
+> +static void sdxi_pci_remove(struct pci_dev *pdev)
+> +{
+> +	pci_disable_sriov(pdev);
+> +}
+
+> +
+> +MODULE_IMPORT_NS("SDXI");
+> +MODULE_AUTHOR("Wei Huang");
+> +MODULE_AUTHOR("Nathan Lynch");
+> +MODULE_DESCRIPTION("SDXI PCIe interface driver");
+> +MODULE_LICENSE("GPL");
+> +module_pci_driver(sdxi_driver);
+
+This is normally placed near the struct pci_driver.  So before all
+the MODULE_ macros. I found a few examples of this style, but that
+one is much more common and makes sense given this is just generating
+boiler plate functions to register etc that structure.
+
+> diff --git a/drivers/dma/sdxi/sdxi.h b/drivers/dma/sdxi/sdxi.h
+> new file mode 100644
+> index 000000000000..d4c61ca2f875
+> --- /dev/null
+> +++ b/drivers/dma/sdxi/sdxi.h
+> @@ -0,0 +1,38 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * SDXI device driver header
+> + *
+> + * Copyright Advanced Micro Devices, Inc.
+> + */
+> +
+> +#ifndef DMA_SDXI_H
+> +#define DMA_SDXI_H
+> +
+> +#include <linux/compiler_types.h>
+> +#include <linux/types.h>
+> +
+> +struct sdxi_dev;
+> +
+> +/**
+> + * struct sdxi_bus_ops - Bus-specific methods for SDXI devices.
+> + */
+> +struct sdxi_bus_ops {
+> +	/**
+> +	 * @init: Map control registers and doorbell region, allocate
+> +	 *        IRQ ranges. Invoked before bus-agnostic SDXI
+> +	 *        function initialization.
+
+Trivial but comment wrap should be closer to 80 chars.
+
+> +	int (*init)(struct sdxi_dev *sdxi);
+> +};
+> +
+> +struct sdxi_dev {
+> +	struct device *dev;
+> +	void __iomem *ctrl_regs;	/* virt addr of ctrl registers */
+> +	void __iomem *dbs;		/* virt addr of doorbells */
+> +
+> +	const struct sdxi_bus_ops *bus_ops;
+> +};
+> +
+> +int sdxi_register(struct device *dev, const struct sdxi_bus_ops *ops);
+> +
+> +#endif /* DMA_SDXI_H */
+> 
+
