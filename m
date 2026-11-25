@@ -1,40 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=37.205.14.76
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.217.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795618326;
-	b=QObUlvIRBSxX518WPwJ2VJpt1xZwzxAK5OnsM/NpxdnNCAoQjoUhpAhQM+Om4S/7hB6R
-	 7KKxNSpeAlix7ye0XEQGhZd8AdbdjKOX8x3fPsa4/hkDXURpWfhK4mPK4hta6JVxZ7Tm3
-	 Lfk402i5p39wUoJEQfaG5Bj/tkpGBb2wgpRuHUrENdt0ppv+CjR4+8oVOPUKYu6WgRqhf
-	 FBH4h7CwY6WXxvWXOJg4hw0ceBk5B6M7ekvqXrhJpagqsOQpwIOD7xLXb40Q6mDXefM3d
-	 RuallBg1UYN4MOy2hv0IQD0OhTwv3L+zFH/F393JzRgNNM5XXg1job+Z3fuYZiKsLwg==
+	t=1795620331;
+	b=qq6YPVzONOMDLMYrK3mgEO70J0dxchttC00n0a6J78/jewUxgRmZoHhDaCASYPoymTVv
+	 rpjMFndockFMy3R5InJBjY+J7ahdsZlpsNPzNoyedTJU02El4M+P4an8ym7cZfXLIdulR
+	 sa1iGqSCRhj6ZuAcWh4Mscm4v/jI/+4qP/Lhmo20ROujh9CwcNsFDje3ygty04Xuw6lt+
+	 pzAzegDy8vEc2CgfM2pkQiIcXFJE5Iki04PUTPCJAiIZkI4nP3oMBk3r12V25qsTXYub9
+	 XNeT8j+DNevBTEp61/SfR3lGaDB/UWQg3liAHfEBxqZfk1pZT/1uqlYVMsCuImvYTiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795618326;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=7oxmC1mC7GZMwPEhucwdkR3sWAciexcVTvPbuPvoXpY=;
-	b=VEFW/n8u7Xdg/R4v7m8j+4V6621+BCaxZQbnZ1ZYDlhShThlB5RwFmDCZwTTo5tujDR0
-	 W1f921IIE0tccjI6ObZDF2ndmvqLaf90lxWZ6yDSvu1Cw81Ab6CpfhJTreltrl61LFrSH
-	 2x48LCfh8kdBVqkeBqKnMLQOGSgxSN/2MmCI8YDw5ilVKdvSy3i04odwrN6ngYOQpVGdc
-	 hf7/+iBVy5mHYDQxJlzmxZAveEWQunRx6sg1zm/pdeJvXtnAhnUL+C3HOB8H29yF5y4yN
-	 40luyet2r+b6K93dFnFGF7Y7IplWLBv+bkJv9wh6prmUqEkflACW20Ote8cjX+BcXvQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620331;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
+	b=5ZIhMlsn3bPBfb1g0vjJCVnJ4pUKTmV4sr+C9gssmVCkLRBA+99xSblV2+bIRAndWEsJ
+	 MyW20olq2JDk4ZBo5iMs81xUpWyNpoD+4AMqfBuCNliqHSn8LH09YaTK0pBeJWUXd5Dfu
+	 1jZXIhAg3pw6xFKcIxJNEU4okK7eC/VuhsMkKV6oE5+QmzQDFDR+Hm/XijRpaDNF7N806
+	 dHZXpYmZ9UKToOcAurA1FqAOl+DHTDRHpAzuYqrAR8RAsMSo00MQEtfaG6zXBZcQJeflB
+	 fz2bQWJl8jhdiz+3/Sa/gEGDPi6aF7veg07vj0sCdDujmheZa1Jd/xhgaONtNTl7R4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gpxsee.org;
-	spf=pass smtp.mailfrom=gpxsee.org;
-	arc=none smtp.remote-ip=37.205.14.76
-Received: from mx.gpxsee.org (mx.gpxsee.org [37.205.14.76])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=none header.from=ziepe.ca;
+	spf=pass smtp.mailfrom=ziepe.ca;
+	dkim=pass header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=iFk419Bq;
+	arc=none smtp.remote-ip=209.85.217.52
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C520606A31E
-	for <dmaengine@vger.kernel.org>; Wed, 25 Nov 2026 14:52:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C520606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gpxsee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gpxsee.org
-Received: from [192.168.4.18] (unknown [62.77.71.229])
-	by mx.gpxsee.org (Postfix) with ESMTPSA id A9F74C364F;
-	Wed, 25 Nov 2026 15:51:53 +0100 (CET)
-Message-ID: <1e8e9867-a6ad-4af6-9e27-d06f7540bf77@gpxsee.org>
-Date: Wed, 25 Nov 2026 15:51:52 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C389606A327
+	for <dmaengine@vger.kernel.org>; Wed, 25 Nov 2026 15:25:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C389606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.a=rsa-sha256 header.s=google header.b=iFk419Bq
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-7d2da166818so3529559137.0
+        for <dmaengine@vger.kernel.org>; Wed, 25 Nov 2026 07:25:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1795620330; x=1796225130; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
+        b=iFk419BqbfBi/6ObNDUZ2vsXpKfzRGG8soL1vwWsfo3s0278JXjr9iY8LX249svZsi
+         r6zCWgQOJswtMqBkGndgaQ0IvnnCAjGp65TR4XQNdfZ5sZPg0BgeutzGHAq8cM2f0LQv
+         k79Pa3Mi31cvvRuTHw0jZ0595qcyP7Hk6uoobP2Z5yd2mn/yT4hXNKxz8+kfBrSxNLDf
+         QHFAAQ74iOvDW0Lv4NLZloAJyTvOPgRcIasINF2MuVmMIVyHVBduWP93wMPTk4SQT8Wq
+         iiMNt8SR9mbCr9h27gdplCbxaAkt1KGPe3OqaB/mp7PDl4S4WFrxi6Ipq3bM+f7oWh6E
+         wrCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795620330; x=1796225130;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8twhPZWezouYqnEgR9F+FlFfS4vpJ/v0U2VffsuCrB0=;
+        b=D6x4WKuweSgw9l7KqhilZPUxQENo36BsYloTOecocwjKfTDAut7TsqNirW3pxnpGVm
+         ZiOei6D5E72xCvHCCaYR9r/+e6jNMMOug9JPbo/Lt9O/wrRgg3gv4dMTBhXm0WmcwnNS
+         sUEOtNAe17uOPylWeADRxs59ws1OO+kOKfWWcwws3dZBlAA4nnHEmnKaYhVF7h9f4sjW
+         VyOEafQ1zyMb58Ujf4ifnbrq3zZwa6ayjVqGgHyM5I6SnU7oIt5UrUSTLLiwmmZKa1Bp
+         WPPp6rgsIg1SbM6Kgxw6gUcb3EGqbtGKrg5roEgpzQe5wYxhkaZTRtSJW3TrzLMeSy1y
+         yfBA==
+X-Forwarded-Encrypted: i=1; AL+hErEFTfJ/eu/LhODeJONMr7E5VB1crncBspqMcCJ/jZWR0BUhDdAep/zIaZ6ynBW5ntohfONzCm+ygws=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/7IbnCzdQAz71JPG7J4CKUPx18t0WJyslQnmtW+JrLd1+2XXDP
+	IKv7rrNWujqmLuxNl/RdEF/IR4xPjz1PUtaYwOmm7dL6QFssA+goNmW+g4V7y/taFL8=
+X-Gm-Gg: AZFdTZcLe4gekcTj4h9NtWJGN+0sG5qm0DRz93aS1+NrqOOS16xoOec8u/vzvhhJhQa
+	p3d6zrDZbyet+l3CvVJ1CcsZCFgNjTxETUEvy1UtG2WJ+hOvuiBaqbAhWAm+1Quyvgz0Wt+FYVU
+	BcNNYMImhL3ZPBfZE4jxSiB4kZao7Q7Jc0VHTibOPNOGsJbLwT14uc6+NVrbLMrOcJTKmioFCvo
+	DqUH3srfXL6qcMcNAPntkZBlKmDlJCurlVRjpAZx+uyusHHlDHzD1EryEJycSMbDgg6gJOEJ8Yh
+	HS0x6PS7Se0sL/RiUQcshN/VrwbZtnCOlTFz/vQV0A8Rb0Ts9TnZUem7c3PFbhF5xeYtYQUuuuQ
+	dkNny54Yc+otvQuzJU3DoZFdOubhQJLgSXIchntZFn+5e182TddcC+S2fQ2DPIi/BD/aexCX9DO
+	8j8C2nKXgkmQyO6f+AViInsdVPLUJfXhmJ8aRInLexyN342TKHgyFSUPZKwoHBUjUQUiCoIBry6
+	5CH13rDkWmUnH1w00XTDkhA6tjnCpJxadvDlj7NYcF0XJNzi10qL2f+79dCNjlPEjg937enQnmM
+	SCOUZOyUC0P8gNEvJbjbPFgKvgk=
+X-Received: by 2002:a05:6102:3e8d:b0:7c3:fcb:180c with SMTP id ada2fe7eead31-7d739572406mr10710273137.20.1795620330327;
+        Wed, 25 Nov 2026 07:25:30 -0800 (PST)
+Received: from ziepe.ca ([142.177.118.84])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9213479655asm165007476d6.4.2026.11.25.07.25.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2026 07:25:29 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xWEsD-00000001rUc-0W0U;
+	Wed, 25 Nov 2026 11:25:29 -0400
+Date: Wed, 25 Nov 2026 11:25:29 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Peng Fan <peng.fan@linux.dev>
+Cc: Frank Li <Frank.Li@nxp.com>, Vinod Koul <vkoul@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	"Peng Fan (OSS)" <peng.fan@oss.nxp.com>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@kernel.org>,
+	Larisa IIeana Grigore <larisa.grigore@nxp.com>, imx@lists.linux.dev,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	iommu@lists.linux.dev, linux-tegra@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH v6 0/9] dmaengine: add DMA channel bus and fsl-edma
+ per-channel IOMMU support
+Message-ID: <20261125152529.GK246011@ziepe.ca>
+References: <20261112-edma-iommu-v3-v6-0-b038edb8ce6f@nxp.com>
+ <20261116193021.GB2452510@ziepe.ca>
+ <avwQl18smAW4R6ec@fedora>
+ <20261117130005.GC2606445@ziepe.ca>
+ <awGWcq_nKWShC81B@fedora>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -44,358 +122,48 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] dmaengine: xilinx: xdma: Fix broken PM
- suspend/resume
-To: Lizhi Hou <lizhi.hou@amd.com>, Brian Xu <brian.xu@amd.com>,
- Raj Kumar Rampelli <raj.kumar.rampelli@amd.com>,
- Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Michal Simek <michal.simek@amd.com>
-Cc: dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- =?UTF-8?Q?Martin_T=C5=AFma?= <martin.tuma@digiteqautomotive.com>
-References: <20261120172356.5858-1-tumic@gpxsee.org>
- <20261120172356.5858-2-tumic@gpxsee.org>
- <754c498c-7252-3f2b-54e6-3ebfdf0181ff@amd.com>
- <47182dbe-018a-4ca6-b20c-f6e2afa5f474@gpxsee.org>
- <c7f5a712-a2ca-2424-cc63-d262c21d5381@amd.com>
- <dce94458-c9bc-4762-902c-7094d9bdc3c8@gpxsee.org>
- <2e8444da-ad9f-033c-c22d-400b27bf0d76@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Martin_T=C5=AFma?= <tumic@gpxsee.org>
-In-Reply-To: <2e8444da-ad9f-033c-c22d-400b27bf0d76@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <awGWcq_nKWShC81B@fedora>
 
-On 11/24/26 6:57 PM, Lizhi Hou wrote:
-> 
-> On 11/24/26 02:35, Martin Tůma wrote:
->> On 11/23/26 8:00 PM, Lizhi Hou wrote:
->>>
->>> On 11/20/26 14:21, Martin Tůma wrote:
->>>>
->>>>
->>>> On 11/20/26 22:40, Lizhi Hou wrote:
->>>>>
->>>>> On 11/20/26 09:23, tumic@gpxsee.org wrote:
->>>>>> From: Martin Tůma <martin.tuma@digiteqautomotive.com>
->>>>>>
->>>>>> Add the missing PM suspend/resume callbacks that properly reconfigure
->>>>>> the XDMA HW on PCIe suspend/resume.
->>>>>
->>>>> Just wondering if we could destroy xdma platform device in your 
->>>>> PCIe suspend routine and re-create xdna device in PCIe resume?
->>>>>
->>>>
->>>> While this may also be theoretically possible, there are several 
->>>> arguments against this:
->>>>
->>>> - Every driver using the device would have to do it instead of doing 
->>>> nothing and rely on the already established infrastructure for PM in 
->>>> the kernel. 
->>>
->>> I am not sure if all xdma users would expect the same suspend and 
->>> resume happening automatically.
->>>
->>
->> Why wouldn't they? This is the standard Linux PM model that the driver 
->> is responsible for the device to be fully operational after resume 
->> like it was before suspend.
-> 
-> There is sound card case which uses cyclic dma. In this case, it might 
-> need to restart the data transfer after resume.
-> 
+On Sat, Nov 21, 2026 at 09:02:42PM +0800, Peng Fan wrote:
 
-The patch is a minimal patch that does only what unconditionally must be 
-done in the xdma driver during suspend as no one else can do that. It 
-expects the parent drivers that have initiated the DMA transfers to stop 
-them in their .suspend callbacks which are run before the xdma callback 
-is run (this is guaranted by the driver hierarchy and the PM 
-suspend/resume order).
+> Do you think it is reasonable to have chan device(not platform device) do dma
+> allocation? 
 
-> Also I did not see you stop the inflight DMA in the suspend callback? 
-> Would that work on other devices?
-> 
+?
 
-Again, this is left to the parent driver that knows best how to stop the 
-DMA transfers that it has initiated. All drivers are advised to do so in 
-ther .suspend callback. Some kind of "hard" stop may be added to xdma if 
-it is required by xdma self (or preventing some damage that I'm not 
-avere of). My tests with our HW did fine without such explicit stops in 
-xdma and the current state of the xdma driver violently cuts power to 
-the DMA transfers anyway, so it can not be worse than it is now with the 
-patch.
+Any struct device that works with the DMA API should be able to do
+memory allocation consistent with its DMA parameters. That's an
+integral part of having a working DMA API.
 
->>
->>> How about adding device_pause() and device_resume() callbacks to xdma 
->>> driver and use dmaengine_pause() and dmaengine_resume() in your pci 
->>> driver?
->>>
->>
->> This seems like a crazy workaround for something for which there 
->> already is a standard kernel mechanism that works fine. No one will 
->> like to implement some obscure special handling for xdma devices to 
->> make a standard case (PM suspend/resume) work. Especially when there 
->> is no real reason to do that as the standard method works fine 
->> (tested) for XDMA as well.
-> 
-> Just provide options to minimize the risk and unblock your work. Are you 
-> confident to have the common suspend/resume to handle all the cases? :)
-> 
+If you are asking if a struct device that can't do DMA should be able
+to do DMA allocation, then no, obviously it should not be able to do
+that.
 
-The only thing that I'm 100% confident is the patch is much better than 
-the current state where XDMA-based PCIe cards are left completely broken 
-after PM resume and the system must be restarted to make them work again.
+AFAIK the main issue in most of these cases is the need to get a DMA
+capable struct device for a particular SID because of a confluence of
+decisions the HW designer has made and the Linux limitation of struct
+device baaed DMA.
 
-There may be additional steps needed for some HW that I do not know 
-about, but I would let that up to additional patches when the 
-maintainers of that HW come with the issues.
+> I ask because if we allow chan device to do dma allocation, we need
+> to provide a dma channel bus for iommu_buses to fix tegre186(TBH, I
+> am not familar with this platform, it even has iommu-map for the dma node).
 
-M.
+If your question is 'should I be able to have a "board file" that
+creates DMA capable struct devices from C code" then I think that is a
+pretty "smells bad" solution. Especially if you have to then create
+fake busses and add them to iommu discovery.
 
-> 
-> Lizhi
-> 
->>
->> M.
->>
->>>
->>> Thanks
->>>
->>> Lizhi
->>>
->>>> And it is not a simple "one function call" which would be needed
->>>> (and duplicated in every driver), there is some additional re- 
->>>> configuration needed, eg. the user IRQs.
->>>> - The creation/destroying of platform devices does a lot more stuff 
->>>> than just initializing some registers. It fiddles with the IRQ and 
->>>> memory allocation/deallocation which you don't want or even can't do 
->>>> while the system is in a PM suspend or PM resume state.
->>>>
->>>> M.
->>>>
->>>>> Lizhi
->>>>>
->>>>>>
->>>>>> Signed-off-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
->>>>>> ---
->>>>>>   drivers/dma/xilinx/xdma.c | 147 +++++++++++++++++++++++++++++++ 
->>>>>> +------
->>>>>>   1 file changed, 124 insertions(+), 23 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
->>>>>> index 9d827c9a1267..d6772b38d8f7 100644
->>>>>> --- a/drivers/dma/xilinx/xdma.c
->>>>>> +++ b/drivers/dma/xilinx/xdma.c
->>>>>> @@ -123,6 +123,7 @@ struct xdma_desc {
->>>>>>    * @irq_start: Start IRQ assigned to device
->>>>>>    * @irq_num: Number of IRQ assigned to device
->>>>>>    * @status: Initialization status
->>>>>> + * @usr_irq_mask: User IRQ mask for PM suspend/resume
->>>>>>    */
->>>>>>   struct xdma_device {
->>>>>>       struct platform_device    *pdev;
->>>>>> @@ -135,6 +136,7 @@ struct xdma_device {
->>>>>>       u32            irq_start;
->>>>>>       u32            irq_num;
->>>>>>       u32            status;
->>>>>> +    u32            usr_irq_mask;
->>>>>>   };
->>>>>>   #define xdma_err(xdev, fmt, args...) \
->>>>>> @@ -398,6 +400,27 @@ static int xdma_xfer_stop(struct xdma_chan 
->>>>>> *xchan)
->>>>>>                   CHAN_CTRL_RUN_STOP);
->>>>>>   }
->>>>>> +/**
->>>>>> + * xdma_reconfig_channels - Reconfigure DMA channels
->>>>>> + * @xdev: DMA device pointer
->>>>>> + * @chans: channels configuration
->>>>>> + * @chan_num: number of channels
->>>>>> + */
->>>>>> +static int xdma_reconfig_channels(struct xdma_chan *chans,
->>>>>> +                  u32 chan_num)
->>>>>> +{
->>>>>> +    int i, ret;
->>>>>> +
->>>>>> +    for (i = 0; i < chan_num; i++) {
->>>>>> +        /* init channel hardware */
->>>>>> +        ret = xdma_channel_init(&(chans[i]));
->>>>>> +        if (ret)
->>>>>> +            return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    return 0;
->>>>>> +}
->>>>>> +
->>>>>>   /**
->>>>>>    * xdma_alloc_channels - Detect and allocate DMA channels
->>>>>>    * @xdev: DMA device pointer
->>>>>> @@ -1018,6 +1041,55 @@ static int xdma_set_vector_reg(struct 
->>>>>> xdma_device *xdev, u32 vec_tbl_start,
->>>>>>       return 0;
->>>>>>   }
->>>>>> +/**
->>>>>> + * xdma_irq_config - Configure IRQs
->>>>>> + * @xdev: DMA device pointer
->>>>>> + */
->>>>>> +static int xdma_irq_config(struct xdma_device *xdev)
->>>>>> +{
->>>>>> +    u32 user_irq_start;
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    /* configure hardware IRQ registers */
->>>>>> +    ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->>>>>> +                  XDMA_CHAN_NUM(xdev));
->>>>>> +    if (ret) {
->>>>>> +        xdma_err(xdev, "failed to set channel vectors: %d", ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    /* configure user IRQ registers if needed */
->>>>>> +    user_irq_start = XDMA_CHAN_NUM(xdev);
->>>>>> +    if (xdev->irq_num > user_irq_start) {
->>>>>> +        ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->>>>>> +                      user_irq_start,
->>>>>> +                      xdev->irq_num - user_irq_start);
->>>>>> +        if (ret) {
->>>>>> +            xdma_err(xdev, "failed to set user vectors: %d", ret);
->>>>>> +            return ret;
->>>>>> +        }
->>>>>> +    }
->>>>>> +
->>>>>> +    /* enable channels interrupts */
->>>>>> +    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->>>>>> +    if (ret) {
->>>>>> +        xdma_err(xdev, "failed to enable channel IRQs: %d", ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    /* enable user interrupts if needed */
->>>>>> +    if (xdev->irq_num > user_irq_start) {
->>>>>> +        ret = regmap_write(xdev->rmap, XDMA_IRQ_USER_INT_EN_W1S,
->>>>>> +                   xdev->usr_irq_mask);
->>>>>> +        if (ret) {
->>>>>> +            xdma_err(xdev, "failed to enable user IRQs: %d", ret);
->>>>>> +            return ret;
->>>>>> +        }
->>>>>> +    }
->>>>>> +
->>>>>> +    return 0;
->>>>>> +}
->>>>>> +
->>>>>>   /**
->>>>>>    * xdma_irq_init - initialize IRQs
->>>>>>    * @xdev: DMA device pointer
->>>>>> @@ -1025,7 +1097,6 @@ static int xdma_set_vector_reg(struct 
->>>>>> xdma_device *xdev, u32 vec_tbl_start,
->>>>>>   static int xdma_irq_init(struct xdma_device *xdev)
->>>>>>   {
->>>>>>       u32 irq = xdev->irq_start;
->>>>>> -    u32 user_irq_start;
->>>>>>       int i, j, ret;
->>>>>>       /* return failure if there are not enough IRQs */
->>>>>> @@ -1060,28 +1131,8 @@ static int xdma_irq_init(struct xdma_device 
->>>>>> *xdev)
->>>>>>           irq++;
->>>>>>       }
->>>>>> -    /* config hardware IRQ registers */
->>>>>> -    ret = xdma_set_vector_reg(xdev, XDMA_IRQ_CHAN_VEC_NUM, 0,
->>>>>> -                  XDMA_CHAN_NUM(xdev));
->>>>>> -    if (ret) {
->>>>>> -        xdma_err(xdev, "failed to set channel vectors: %d", ret);
->>>>>> -        goto failed_init_c2h;
->>>>>> -    }
->>>>>> -
->>>>>> -    /* config user IRQ registers if needed */
->>>>>> -    user_irq_start = XDMA_CHAN_NUM(xdev);
->>>>>> -    if (xdev->irq_num > user_irq_start) {
->>>>>> -        ret = xdma_set_vector_reg(xdev, XDMA_IRQ_USER_VEC_NUM,
->>>>>> -                      user_irq_start,
->>>>>> -                      xdev->irq_num - user_irq_start);
->>>>>> -        if (ret) {
->>>>>> -            xdma_err(xdev, "failed to set user vectors: %d", ret);
->>>>>> -            goto failed_init_c2h;
->>>>>> -        }
->>>>>> -    }
->>>>>> -
->>>>>> -    /* enable interrupt */
->>>>>> -    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1S, ~0);
->>>>>> +    /* configure all HW IRQ registers */
->>>>>> +    ret = xdma_irq_config(xdev);
->>>>>>       if (ret)
->>>>>>           goto failed_init_c2h;
->>>>>> @@ -1297,15 +1348,65 @@ static int xdma_probe(struct 
->>>>>> platform_device *pdev)
->>>>>>       return ret;
->>>>>>   }
->>>>>> +/**
->>>>>> + * xdma_suspend - PM suspend callback
->>>>>> + * @dev: XDMA device pointer
->>>>>> + */
->>>>>> +static int xdma_suspend(struct device *dev)
->>>>>> +{
->>>>>> +    struct xdma_device *xdev = dev_get_drvdata(dev);
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    ret = regmap_read(xdev->rmap, XDMA_IRQ_USER_INT_EN,
->>>>>> +              &xdev->usr_irq_mask);
->>>>>> +    if (ret) {
->>>>>> +        xdma_err(xdev, "User IRQ vector backup failed: %d", ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    ret = regmap_write(xdev->rmap, XDMA_IRQ_CHAN_INT_EN_W1C, ~0);
->>>>>> +    if (ret)
->>>>>> +        xdma_err(xdev, "DMA channels IRQ disable failed: %d", ret);
->>>>>> +
->>>>>> +    return ret;
->>>>>> +}
->>>>>> +
->>>>>> +/**
->>>>>> + * xdma_resume - PM resume callback
->>>>>> + * @dev: XDMA device pointer
->>>>>> + */
->>>>>> +static int xdma_resume(struct device *dev)
->>>>>> +{
->>>>>> +    struct xdma_device *xdev = dev_get_drvdata(dev);
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    ret = xdma_reconfig_channels(xdev->h2c_chans, xdev- 
->>>>>> >h2c_chan_num);
->>>>>> +    if (ret) {
->>>>>> +        xdma_err(xdev, "H2C channels reconfiguration failed: %d", 
->>>>>> ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    ret = xdma_reconfig_channels(xdev->c2h_chans, xdev- 
->>>>>> >c2h_chan_num);
->>>>>> +    if (ret) {
->>>>>> +        xdma_err(xdev, "C2H channels reconfiguration failed: %d", 
->>>>>> ret);
->>>>>> +        return ret;
->>>>>> +    }
->>>>>> +
->>>>>> +    return xdma_irq_config(xdev);
->>>>>> +}
->>>>>> +
->>>>>>   static const struct platform_device_id xdma_id_table[] = {
->>>>>>       { "xdma", 0},
->>>>>>       { },
->>>>>>   };
->>>>>>   MODULE_DEVICE_TABLE(platform, xdma_id_table);
->>>>>> +static DEFINE_NOIRQ_DEV_PM_OPS(xdma_dev_pm_ops, xdma_suspend, 
->>>>>> xdma_resume);
->>>>>> +
->>>>>>   static struct platform_driver xdma_driver = {
->>>>>>       .driver        = {
->>>>>>           .name = "xdma",
->>>>>> +        .pm = pm_sleep_ptr(&xdma_dev_pm_ops),
->>>>>>       },
->>>>>>       .id_table    = xdma_id_table,
->>>>>>       .probe        = xdma_probe,
->>>>>
->>>>
->>>
->>
-> 
+The DT should create the iommu devices as platform devices.
 
+There was yet another thread about this, so we are at like 5 drivers
+now with this kind of need? This was my suggestion on what an API
+could look like to solve this general problem:
+
+https://lore.kernel.org/r/20261119143151.GH3115493@ziepe.ca
+
+I recognize it would not be so easy to make, but it would be easier
+and safer to use.
+
+Jason
