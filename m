@@ -1,77 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795651785;
-	b=mW8xjSbksD+LJafORroVih0Vq+6nq33FOrBazIFO3VkSoeMAayBwKv/TsnadiojhFSSi
-	 nTCvm5BEFbDEEE27C2WavNkOEALLYve/0e75Vlv4sT6F4IEGLaCTGGvBCakr7Y8QxudYt
-	 UaWR/aZ4+qXzxRw0S20fKZ2t6tcq/a63kXvNhcj8DfD9BeXec5goMjpityP/7Bw0Dy41c
-	 4rwmYJp335JeRl7LdHAuMpL+MWlX5ptUQ7QknqXdUi/erxeNeZeE9Le3BZtGePMHvYSaN
-	 nYFuCFDoB0nt3b0WxE/4FnbdSR0aAhmFu8VfNzk5VijEdUm3XJrLLQC4f8FMJkfUJDw==
+	t=1795652401;
+	b=RKRZKriHZkiDG3vLwgu6bs6rkc8KRPIgw65vkZg/E1tdHz98ugk8qzuhqaZA4tDbyNCu
+	 3XjPwHXDrZCWtLbuOdLKnHPrTUMfHwYIWV4D8lIsAO3YKiMkzZX81pQsg1UPlmj7eae2N
+	 l83fzHvbbkKIJ9U0UInv1ZYNXeAOmm0A23PtZq0/wSnhLHux1eQe3jfJ8EQiDlvfS37re
+	 oSCljJfmYmbgxe1Tdzy44bJdHeQVuAimohEVFDUKzAaPzSCXn9vPiH9jHrORmVhxq0KH8
+	 +WsTL6QAklw8u87iJwjlj3fuZxN97qEc41S8XMA+gbigrwaQzMWLYkX2yNjgPMKuqrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795651785;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=b78t6Os4sAH3qjsyxE6k8yXo3EadbTdi4onIYpZO5Ck=;
-	b=b2atIuUqA838lppnVq5DLxsTMxzmhe/58kGEbZg/SYQU/eaYKyTR65DNFtWWYNWjNEky
-	 rHr87pZmeNSegZ1mMwK4kgZuXBGkHle1/9J5EYBdKi0ySXquk5XuLsCkQmF3wYwlDMLTn
-	 BMitUApZ4WEDQ6mlzdqIGZoxsqUrqC15AJ2nPT+TDq/M8NdY1v5DbcQJPxCEFQSOZTYfo
-	 Xw2QWJ4GQzqIKXDxMa8ufFSev1Kapkkq442keO4hM5O4Weal0N/2uAVmgsHPVDIuVvjDP
-	 6AHSGZ2PES8PzJ6eXc9uZDg9foW/GiBI96J7fSMnneCCzFfVDAJd4IG7kRWQDmPkihA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795652401;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=qZMDKWnTOaDA1G7qNoe6e8JYD5ZdwzSqrwN3AdutERM=;
+	b=p4c3Q6rh3/nzlqeeHhKUHhPM3Mc1A2YVkL4H3O1DEur/1fQBvHOJvUHc+t8+3eBJrGym
+	 M7QAUeFVLz/Q0rizq5vQzv6dSgjRavo3vnGeCfNPLXcuL48ANY6HHUz+kB5sl73R8zosw
+	 Eu0XJ2j6+A3L7Ynm7GOpT1E/RV9DbBG26FUA5WcYh3Ua4gWJG7IVtJ1bzYXXcAwZpCNXb
+	 BX8rOKGO7A4Nq5nKiY+IDxPn8zZBGvJ6Ze0ULCB7PM6zadV3th3efnElnGm0lzrsH9uw8
+	 H3Qykg06j89xjJJ4ApwX3IAgCWfI4l7hN+IXorEPhNq2HBWjhq7txU4AvYg4wEVp2jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cJ9bXgMd;
-	arc=none smtp.remote-ip=198.175.65.15
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PquAuHCb;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E09606A31E;
-	Thu, 26 Nov 2026 00:09:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4E09606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C172606A31E
+	for <dmaengine@vger.kernel.org>; Thu, 26 Nov 2026 00:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cJ9bXgMd
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795651785; x=1827187785;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=LvP5mZre8VsoM5eNNyoILwGnMME08JBoLfspF73wXmo=;
-  b=cJ9bXgMdzJAd0VWBxwA1goyiqWwE5oGzZilr1mPUTKLa3yXAr3feXbgN
-   I89Tdsf4oEcPRp2N2Rqv4vrGuPUmVKJ5b0eggJQ79/uJ6meCoeFP1z4eO
-   LuqQNgTf0jUkGs5hqSupfPyQncwYRAuNNUaLvQeqv+jPfsmL2zM4z5xYe
-   JuyJohEObKQIg9Jrzi1k+LH+2yFrdNmk+fB6nsYt1Hhi94xE5iZVzdsml
-   hBrc52a1Iar9PZAzS4xB1LvMEvRpwKpzrjtdTnhHSz+pmlE0dlcHMBhq2
-   gJ/4jmJxrKCxuLHh+ULVyBdAVk3KyGvYcDRKT9hN061I1mr7Ba9GVYcc5
-   g==;
-X-CSE-ConnectionGUID: +zilg5pNR+2Yo/nXMV8nVg==
-X-CSE-MsgGUID: Aa3n6PnMTlWdeS2ZxW7Y/Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11977"; a="4536708"
-X-IronPort-AV: E=Sophos;i="6.27,233,1787036400"; 
-   d="scan'208";a="4536708"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 16:09:44 -0800
-X-CSE-ConnectionGUID: wQHXDJjLTWmx0Wj+lNeOwA==
-X-CSE-MsgGUID: VU4jRMqaR1eXc0q513NL5A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,233,1787036400"; 
-   d="scan'208";a="11899238"
-Received: from vcostago-desk.jf.intel.com (HELO vcostago-desk) ([10.241.240.61])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 16:09:44 -0800
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-To: Yao Kai <yaokai34@huawei.com>, Vinod Koul <vkoul@kernel.org>
-Cc: Dave Jiang <dave.jiang@intel.com>, Frank Li <Frank.Li@kernel.org>,
- linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
- liuyongqiang13@huawei.com, Yao Kai <yaokai34@huawei.com>,
- stable@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: idxd: Avoid destroying the device workqueue
- twice
-In-Reply-To: <20261111021026.3354620-1-yaokai34@huawei.com>
-References: <20261111021026.3354620-1-yaokai34@huawei.com>
-Date: Wed, 25 Nov 2026 16:09:44 -0800
-Message-ID: <87v75ksbav.fsf@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PquAuHCb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D511F0089E;
+	Thu, 26 Nov 2026 00:20:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795652400;
+	bh=qZMDKWnTOaDA1G7qNoe6e8JYD5ZdwzSqrwN3AdutERM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PquAuHCb+72HA1N+fQcHwKBHayjeyIZAWF9TDA7eg/lSReVXlCVsxy1U+trixvR7B
+	 pOMF+J4uP+reNP4gPusSwZSdEL9y/Re6h/bPV73yGt7wT8BCFP8RxwWOsdfpnR9JRQ
+	 FGR3kVEcaQEiOOnu78an0q2uHwzjtpGukyqBxLdIJSQMVVgcRzopOEWIUpuN4S1YIn
+	 v/+6/ee/8zLTDQf90MeYedsLoX9Mnzjp1415eFsu5K4MWpKo8K92LD75IxgVBfcdmY
+	 R+8Kktcwu/ZxgjwjAVuCUkcbe9yEhFu9zwU1HGvdk++HsB/a35CMrPDpooZa0zvvJ1
+	 EViRwizAZjYZA==
+Message-ID: <sashiko-outbox-234461@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 8/8] dmaengine: idxd: Don't flush the descriptors on
+ terminate_all()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Vinicius Costa Gomes" <vinicius.gomes@intel.com>
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+In-Reply-To: <20261125-wt-idxd-fixes-v2-8-25a4691dfb9e@intel.com>
+References: <20261125-wt-idxd-fixes-v2-0-25a4691dfb9e@intel.com>
+ <20261125-wt-idxd-fixes-v2-8-25a4691dfb9e@intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 26 Nov 2026 00:19:55 +0000
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -80,42 +60,142 @@ List-Subscribe: <mailto:dmaengine+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain
 
-Hi,
+Thank you for your contribution! Sashiko AI review found 2 potential
+issues to consider:
+- [High] dmaengine: idxd: use-after-free of idxd_chan on quiesced WQ in
+  synchronize()
+- [Medium] dmaengine: idxd: terminated descriptors resubmitted on
+  invalid int handle
+--
 
-Yao Kai <yaokai34@huawei.com> writes:
+commit fcece576ebf908c4c4a2589f3aea6943e129e474
+Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-> If idxd_probe() fails after idxd_setup_internals() succeeds,
-> idxd_cleanup_internals() destroys idxd->wq. The PCI probe error path
-> then calls idxd_free(), whose put_device() invokes
-> idxd_conf_device_release() and destroys the same workqueue again.
-> The err_evl path in idxd_setup_internals() has the same problem.
-> This can corrupt the workqueue list or access freed memory.
->
-> Clear idxd->wq after both error-path destroy_workqueue() calls and
-> only destroy a non-NULL workqueue in the release callback. The NULL
-> check also handles failures before the workqueue is created, while
-> preserving its destruction on normal device removal.
->
-> Fixes: 3d33de353b1f ("dmaengine: idxd: Fix not releasing workqueue on .release()")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Yao Kai <yaokai34@huawei.com>
-> ---
+dmaengine: idxd: Don't flush the descriptors on terminate_all()
 
-I just sent v2 of the idxd-fixes series [1]. Setting ->wq to NULL
-doesn't fix the double frees of ->wqs, ->engines, ->groups (and
-friends) on the same error paths. My approach was a bit more general:
-remove the early frees and the early destroy_workqueue(), and rely on
-the kobject .release callback to free everything.
+This commit marks the DMA channel as terminated in idxd_dma_terminate_all()
+to suppress completion callbacks and defers draining and flushing pending
+descriptors to idxd_dma_synchronize().
 
-But if folks prefer this approach, I would gladly rebase my series on
-top of this one.
+> diff --git a/drivers/dma/idxd/dma.c b/drivers/dma/idxd/dma.c
+> index 9937b671f6376..f8ce06274ef46 100644
+> --- a/drivers/dma/idxd/dma.c
+> +++ b/drivers/dma/idxd/dma.c
+[ ... ]
+> @@ -47,7 +50,8 @@ void idxd_dma_complete_txd(struct idxd_desc *desc,
+>  	if (complete && tx->cookie) {
+>  		dma_cookie_complete(tx);
+>  		dma_descriptor_unmap(tx);
+> -		dmaengine_desc_get_callback_invoke(tx, &res);
+> +		if (!READ_ONCE(to_idxd_dma_chan(tx->chan)->terminated))
+> +			dmaengine_desc_get_callback_invoke(tx, &res);
+>  		tx->callback =3D NULL;
+>  		tx->callback_result =3D NULL;
+>  	}
 
-https://lore.kernel.org/all/20261125-wt-idxd-fixes-v2-0-25a4691dfb9e@intel.com/
+[Severity: Medium]
+Can a terminated descriptor that completes with DSA_COMP_INT_HANDLE_INVAL
+still be resubmitted instead of aborted?
 
+Earlier in idxd_dma_complete_txd(), a descriptor with status
+DSA_COMP_INT_HANDLE_INVAL is queued onto idxd->wq via
+idxd_queue_int_handle_resubmit() and returns before reaching the
+terminated check above:
 
-Cheers,
--- 
-Vinicius
+drivers/dma/idxd/dma.c:idxd_dma_complete_txd() {
+	if (desc->completion->status =3D=3D DSA_COMP_SUCCESS) {
+		res.result =3D DMA_TRANS_NOERROR;
+	} else if (desc->completion->status) {
+		if (idxd->request_int_handles && comp_type !=3D IDXD_COMPLETE_ABORT &&
+		    desc->completion->status =3D=3D DSA_COMP_INT_HANDLE_INVAL &&
+		    idxd_queue_int_handle_resubmit(desc))
+			return;
+...
+}
+
+Because idxd_flush_pending_descs() passes IDXD_COMPLETE_NORMAL whenever
+desc->completion->status is non-zero, both idxd_wq_thread() and
+idxd_flush_pending_descs() queue the terminated descriptor for
+asynchronous resubmission on idxd->wq without unmapping or freeing it.
+idxd_dma_synchronize() then clears idxd_chan->terminated and returns while
+idxd_int_handle_resubmit_work can still resubmit the descriptor to the
+device.
+
+> @@ -196,18 +200,43 @@ static void idxd_dma_release(struct dma_device *dev=
+ice)
+> =20
+>  static int idxd_dma_terminate_all(struct dma_chan *c)
+>  {
+> -	struct idxd_wq *wq =3D to_idxd_wq(c);
+> -
+> -	idxd_wq_flush_descs(wq);
+> +	/* The device still runs them, synchronize() waits for it */
+> +	WRITE_ONCE(to_idxd_dma_chan(c)->terminated, true);
+> =20
+>  	return 0;
+>  }
+> =20
+>  static void idxd_dma_synchronize(struct dma_chan *c)
+>  {
+> -	struct idxd_wq *wq =3D to_idxd_wq(c);
+> +	struct idxd_dma_chan *idxd_chan =3D to_idxd_dma_chan(c);
+> +	struct idxd_wq *wq =3D idxd_chan->wq;
+> =20
+>  	idxd_wq_drain(wq);
+> +	if (!READ_ONCE(idxd_chan->terminated))
+> +		return;
+> +
+> +	/*
+> +	 * Not wq_lock: dma_release_channel() calls this under dma_list_mutex,
+> +	 * which the WQ removal takes under wq_lock. The removal waits for
+> +	 * wq_active instead.
+> +	 */
+> +	if (!percpu_ref_tryget_live(&wq->wq_active)) {
+> +		wait_for_completion(&wq->wq_resurrect);
+> +		/* The WQ is quiesced, disabling it flushes them */
+> +		if (!percpu_ref_tryget_live(&wq->wq_active))
+> +			return;
+> +	}
+
+[Severity: High]
+Does returning early when wq->wq_active is dead cause a use-after-free on
+wq->idxd_chan when idxd_drv_disable_wq() later flushes the pending
+descriptors?
+
+In idxd_dmaengine_drv_remove(), idxd_unregister_dma_channel() frees
+wq->idxd_chan before idxd_drv_disable_wq() stops the IRQ and flushes the
+remaining descriptors:
+
+CPU0                                  CPU1
+idxd_dmaengine_drv_remove()           dma_release_channel()
+  mutex_lock(&wq->wq_lock)              mutex_lock(&dma_list_mutex)
+  __idxd_wq_quiesce(wq)                 idxd_dma_synchronize()
+    percpu_ref_kill(&wq->wq_active)       percpu_ref_tryget_live() -> false
+    ...                                   wait_for_completion()
+    complete(&wq->wq_resurrect)           percpu_ref_tryget_live() -> false
+  idxd_unregister_dma_channel(wq)         return
+    ...                                 mutex_unlock(&dma_list_mutex)
+    kfree(wq->idxd_chan)
+  idxd_drv_disable_wq(wq)
+    idxd_flush_pending_descs(&wq->ie)
+      idxd_dma_complete_txd()
+        dma_cookie_complete(tx)
+        to_idxd_dma_chan(tx->chan)->terminated  <-- use-after-free
+
+Each flushed descriptor's tx->chan still points into the freed
+wq->idxd_chan, so idxd_dma_complete_txd() writes
+tx->chan->completed_cookie and reads
+to_idxd_dma_chan(tx->chan)->terminated on freed memory (and idxd_wq_thread()
+can do the same before idxd_wq_free_irq() runs).  idxd_dma_synchronize()
+also returns to the caller while the IRQ thread and DMA mappings are still
+active.
+
+In addition, paths such as idxd_int_handle_revoke(), idxd_misc_thread() and
+idxd_halt() quiesce wq->wq_active without disabling the workqueue, leaving
+pending descriptors unmapped and leaked if idxd_dma_synchronize() returns
+early here.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261125-wt-idxd-fi=
+xes-v2-0-25a4691dfb9e@intel.com?part=3D8
