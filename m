@@ -1,71 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795650571;
-	b=WJIDWNobz5xOdtBdAknZ3+ttZDRoOCVKVdLwoLkb2/JTSFC+56jk0kFXezVxMuJjyyEW
-	 +sIN25XKNwLgSUmNALf2TlFIUdXEcHcjZ+381jclCdtYEVDUJm9zaBsZt2gAwWpKx8hTs
-	 Z8xjw865pdWf9ukkOona3ABtjJ+ZSug2HXW4H9U9SzflT6JbffJrUWw7PfjcW5jCb01CN
-	 qbZLG6manvpcDnSTMmLII6tGgngtsLJxFzYan20Cy2YV6A24FwsEaVpdMI0ARGNaYcuvj
-	 tQNTxqbgQ5GfcjyRcpXjbrjgy7SnZxDSqz5rGXNPqIbuMpMBJzP+ekS0hBF0ETYqRmA==
+	t=1795651785;
+	b=mW8xjSbksD+LJafORroVih0Vq+6nq33FOrBazIFO3VkSoeMAayBwKv/TsnadiojhFSSi
+	 nTCvm5BEFbDEEE27C2WavNkOEALLYve/0e75Vlv4sT6F4IEGLaCTGGvBCakr7Y8QxudYt
+	 UaWR/aZ4+qXzxRw0S20fKZ2t6tcq/a63kXvNhcj8DfD9BeXec5goMjpityP/7Bw0Dy41c
+	 4rwmYJp335JeRl7LdHAuMpL+MWlX5ptUQ7QknqXdUi/erxeNeZeE9Le3BZtGePMHvYSaN
+	 nYFuCFDoB0nt3b0WxE/4FnbdSR0aAhmFu8VfNzk5VijEdUm3XJrLLQC4f8FMJkfUJDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795650571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795651785;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:Date:Subject:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	 References:In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key;
-	bh=6fN5duMnfnCJSDb0zArp5P2k6KZSkFVuApGoqZRUelw=;
-	b=1tr+0QJ+ALlC/sD5kFZiqUxyNw0+a2bpINTf4zpNhnAmHlPP+U3dGI9A/k8mpShgmFSD
-	 hrBcw6N+ErSu6rwMdbIp0lrGO/71Xx6p7FVHi7vRanNLYu1NzJ9MT1ffEPRFsaA1jK0I+
-	 E9FmxFnRinYMtK5UabWWu57xvk5PkslQ8gi3C1qkw7Sh9vWp4SQZ/P9vWwWzBuW5FCBCW
-	 jNgtJgoEN4VjvBSsbvprIWdVqVgnKPvSldyc2Pzp2EKArk2NYo2i6ioueyT5iDkTX3tAj
-	 Ct7uGkdqfb/Ab3JwX/QPaVbx/8Elz4aDzuumqUIb4oNO3ISHghonVeqDXeaBRUdIQSA==
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=b78t6Os4sAH3qjsyxE6k8yXo3EadbTdi4onIYpZO5Ck=;
+	b=b2atIuUqA838lppnVq5DLxsTMxzmhe/58kGEbZg/SYQU/eaYKyTR65DNFtWWYNWjNEky
+	 rHr87pZmeNSegZ1mMwK4kgZuXBGkHle1/9J5EYBdKi0ySXquk5XuLsCkQmF3wYwlDMLTn
+	 BMitUApZ4WEDQ6mlzdqIGZoxsqUrqC15AJ2nPT+TDq/M8NdY1v5DbcQJPxCEFQSOZTYfo
+	 Xw2QWJ4GQzqIKXDxMa8ufFSev1Kapkkq442keO4hM5O4Weal0N/2uAVmgsHPVDIuVvjDP
+	 6AHSGZ2PES8PzJ6eXc9uZDg9foW/GiBI96J7fSMnneCCzFfVDAJd4IG7kRWQDmPkihA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QLioAOCX;
-	arc=none smtp.remote-ip=198.175.65.20
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cJ9bXgMd;
+	arc=none smtp.remote-ip=198.175.65.15
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C67606A68D;
-	Wed, 25 Nov 2026 23:49:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02C67606A68D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E09606A31E;
+	Thu, 26 Nov 2026 00:09:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4E09606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QLioAOCX
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cJ9bXgMd
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1795650571; x=1827186571;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=A6U8X1YiK/i6uxtPvC0C3LEDOycK5f55oEjqUNB7RQU=;
-  b=QLioAOCXcFsw1pw8cGLWOcNewkS4JhySgsYBL36IvzmcJzUdZsVYt8aK
-   EbbckRPnFel9Fo39vFwA+lU6EzH/LAolK63SFnD3fXnhxyAwuHh84olXS
-   C3grDSn20JUrMRYJmHnHJYsxNuJSozy0+lT1+li7nwemyrm1knA+TbP1b
-   Qs5EJEEhpwFELxUtqCxQ5imR9gyE9gl4kv/FikTraIhb1bMewqdW5MDEd
-   jvU4EbfS59BEvBnbxNkrhUnpCxZM3LiMeoyCuvHNeyWh474ZD8ni7J6Je
-   mdA5D6GjIV+2KjkzoK+bQp2x3u3iLU/yh+AVLNLEegou9DfzH7s+my42A
-   w==;
-X-CSE-ConnectionGUID: +X9+pw4iTFOD8tb/urjD9w==
-X-CSE-MsgGUID: jTv6G/l7TsytVHd7I8zcIA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11977"; a="4597294"
+  t=1795651785; x=1827187785;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=LvP5mZre8VsoM5eNNyoILwGnMME08JBoLfspF73wXmo=;
+  b=cJ9bXgMdzJAd0VWBxwA1goyiqWwE5oGzZilr1mPUTKLa3yXAr3feXbgN
+   I89Tdsf4oEcPRp2N2Rqv4vrGuPUmVKJ5b0eggJQ79/uJ6meCoeFP1z4eO
+   LuqQNgTf0jUkGs5hqSupfPyQncwYRAuNNUaLvQeqv+jPfsmL2zM4z5xYe
+   JuyJohEObKQIg9Jrzi1k+LH+2yFrdNmk+fB6nsYt1Hhi94xE5iZVzdsml
+   hBrc52a1Iar9PZAzS4xB1LvMEvRpwKpzrjtdTnhHSz+pmlE0dlcHMBhq2
+   gJ/4jmJxrKCxuLHh+ULVyBdAVk3KyGvYcDRKT9hN061I1mr7Ba9GVYcc5
+   g==;
+X-CSE-ConnectionGUID: +zilg5pNR+2Yo/nXMV8nVg==
+X-CSE-MsgGUID: Aa3n6PnMTlWdeS2ZxW7Y/Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11977"; a="4536708"
 X-IronPort-AV: E=Sophos;i="6.27,233,1787036400"; 
-   d="scan'208";a="4597294"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 15:49:28 -0800
-X-CSE-ConnectionGUID: H9lWDj/HTvaew+CUlQIsJw==
-X-CSE-MsgGUID: 2rHDEgx2QtWmFqhzQTgs+g==
+   d="scan'208";a="4536708"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 16:09:44 -0800
+X-CSE-ConnectionGUID: wQHXDJjLTWmx0Wj+lNeOwA==
+X-CSE-MsgGUID: VU4jRMqaR1eXc0q513NL5A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,233,1787036400"; 
-   d="scan'208";a="11873840"
-Received: from vcostago-desk.jf.intel.com (HELO [10.241.240.61]) ([10.241.240.61])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 15:49:28 -0800
+   d="scan'208";a="11899238"
+Received: from vcostago-desk.jf.intel.com (HELO vcostago-desk) ([10.241.240.61])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Nov 2026 16:09:44 -0800
 From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Date: Wed, 25 Nov 2026 15:49:04 -0800
-Subject: [PATCH v2 6/8] dmaengine: idxd: Initialize the WQ XArray before
- the WQ can be released
+To: Yao Kai <yaokai34@huawei.com>, Vinod Koul <vkoul@kernel.org>
+Cc: Dave Jiang <dave.jiang@intel.com>, Frank Li <Frank.Li@kernel.org>,
+ linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+ liuyongqiang13@huawei.com, Yao Kai <yaokai34@huawei.com>,
+ stable@vger.kernel.org
+Subject: Re: [PATCH] dmaengine: idxd: Avoid destroying the device workqueue
+ twice
+In-Reply-To: <20261111021026.3354620-1-yaokai34@huawei.com>
+References: <20261111021026.3354620-1-yaokai34@huawei.com>
+Date: Wed, 25 Nov 2026 16:09:44 -0800
+Message-ID: <87v75ksbav.fsf@intel.com>
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -75,61 +81,41 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261125-wt-idxd-fixes-v2-6-25a4691dfb9e@intel.com>
-References: <20261125-wt-idxd-fixes-v2-0-25a4691dfb9e@intel.com>
-In-Reply-To: <20261125-wt-idxd-fixes-v2-0-25a4691dfb9e@intel.com>
-To: Dave Jiang <dave.jiang@intel.com>, Vinod Koul <vkoul@kernel.org>, 
- Frank Li <Frank.Li@kernel.org>, Fenghua Yu <fenghuay@nvidia.com>, 
- Shuai Xue <xueshuai@linux.alibaba.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Vinicius Costa Gomes <vinicius.gomes@intel.com>
-X-Mailer: b4 0.17-dev-1b309
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795650562; l=1297;
- i=vinicius.gomes@intel.com; s=20230921; h=from:subject:message-id;
- bh=A6U8X1YiK/i6uxtPvC0C3LEDOycK5f55oEjqUNB7RQU=;
- b=A6T5ibewsM1WQGLWd3glvU3gMK2OCyEPI8e5FeQUVkpQpIuFEEQ4d4JGCMpfp4zLOr9d7OL8e
- gotOSUhg+91ANqTgWHRnq77yvT5zS1WJ+jsspYHoPW/9avZvz3lSjHj
-X-Developer-Key: i=vinicius.gomes@intel.com; a=ed25519;
- pk=aJkrtgqgT6TZ8iIHSG8/rTPsmlYnjMrUjCsMYvCzntk=
+Content-Type: text/plain
 
-idxd_setup_wqs() initializes wq->upasid_xa and wq->uc_lock last. Its
-error paths call put_device() on the WQ device before that, and the
-release callback, idxd_conf_wq_release(), calls xa_destroy() on the
-uninitialized XArray.
+Hi,
 
-Initialize both before device_initialize().
+Yao Kai <yaokai34@huawei.com> writes:
 
-Fixes: b022f59725f0 ("dmaengine: idxd: add idxd_copy_cr() to copy user completion record during page fault handling")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
----
- drivers/dma/idxd/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> If idxd_probe() fails after idxd_setup_internals() succeeds,
+> idxd_cleanup_internals() destroys idxd->wq. The PCI probe error path
+> then calls idxd_free(), whose put_device() invokes
+> idxd_conf_device_release() and destroys the same workqueue again.
+> The err_evl path in idxd_setup_internals() has the same problem.
+> This can corrupt the workqueue list or access freed memory.
+>
+> Clear idxd->wq after both error-path destroy_workqueue() calls and
+> only destroy a non-NULL workqueue in the release callback. The NULL
+> check also handles failures before the workqueue is created, while
+> preserving its destruction on normal device removal.
+>
+> Fixes: 3d33de353b1f ("dmaengine: idxd: Fix not releasing workqueue on .release()")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Yao Kai <yaokai34@huawei.com>
+> ---
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index 9cfb165a1569..e5b797c0ffef 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -197,6 +197,8 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
- 		conf_dev = wq_confdev(wq);
- 		wq->id = i;
- 		wq->idxd = idxd;
-+		mutex_init(&wq->uc_lock);
-+		xa_init(&wq->upasid_xa);
- 		device_initialize(conf_dev);
- 		conf_dev->parent = idxd_confdev(idxd);
- 		conf_dev->bus = &dsa_bus_type;
-@@ -231,8 +233,6 @@ static int idxd_setup_wqs(struct idxd_device *idxd)
- 			}
- 			bitmap_copy(wq->opcap_bmap, idxd->opcap_bmap, IDXD_MAX_OPCAP_BITS);
- 		}
--		mutex_init(&wq->uc_lock);
--		xa_init(&wq->upasid_xa);
- 		idxd->wqs[i] = wq;
- 	}
- 
+I just sent v2 of the idxd-fixes series [1]. Setting ->wq to NULL
+doesn't fix the double frees of ->wqs, ->engines, ->groups (and
+friends) on the same error paths. My approach was a bit more general:
+remove the early frees and the early destroy_workqueue(), and rely on
+the kobject .release callback to free everything.
 
+But if folks prefer this approach, I would gladly rebase my series on
+top of this one.
+
+https://lore.kernel.org/all/20261125-wt-idxd-fixes-v2-0-25a4691dfb9e@intel.com/
+
+
+Cheers,
 -- 
-2.56.1
-
+Vinicius
