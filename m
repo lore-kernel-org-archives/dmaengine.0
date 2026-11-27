@@ -1,112 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781964;
-	b=rw8zjrX8ko9VZPTD0jWGWC3ajFfH8dDc1IuEsEsNNV7aGpr7hPsS6h8f82EnReWsgHFc
-	 XS+HFHSgWcDfRIE/ZSRWicfLw8ITjmRzMhfsFlcm5NBwycren4rhrh2HcRuSESp9FTVqd
-	 AtS8PBZpAZTqw//+K7wy93NyUPiaXfZkcsacDpgjP+IPwYPnq07AOAw4pmOivwHewriTt
-	 5OerA1MZTr6rIIQgVArI4Ea4BMua0E+O+5pt0ONMs5q9QZcGF0+ntRu3cxzsCD4SRsNSY
-	 tbWQuaRaiXu4vopKJk1N20s3UCdLHN68iA7RCN/jx0QxRp06p+A3OMRxe+uCVrykwnw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781964;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+IW/uZ0j05LJqVLsSY6Erg+izYe5hqVn60TIR3SgAB8=;
-	b=sCeK7YRKCOvl3cPwUMvIgiHXbGxB5aNyoAiNGAysEGPzei0czd4eVnOX38tTlm9zDg3q
-	 dwilxIANZerHLkL3cKXA2ei6TayX7pJ7XaxnJxxJXpakZXqm/iOV0pRgjhfAmk2S9ojLA
-	 ROcXDK3x6qy4f0BwDrvTwS/ml12Vw4ILs8sXE4vM/v0MjsFzu15LXd8PPzB9SXLQx8mVX
-	 no/ha/Qtgzdq5F+0wsaNhZF3VuuYsOcnt17FyWl79031hCPA/7O7U3GvFaXRec7perDoK
-	 Y8PQJplgs7RHU71Nl0XDcgnwWuXhxdI//zaRJaRulPC8wtTljoYLptZLw4499SSHawA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=RWsFwaDj;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.58
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795790917;
+	b=1ZuQSaZE3vmAshMzheUdahMoptj5WRLHtyELNGQXvrBD72GP9d5NN4FpdhCV2bUQr7ao
+	 tbXwNgHTgpseUxWg4ZyhXRJEOQ4JhbVtYEExMB691rpqI09/8psY1XseWRLOhxpDmY1NF
+	 qHGxeTlG64KOekUuzFTH4RUqJrMUaclqpNtyWJxY6D4jrWxFq8bde0rA+lKZdH8SzcJDi
+	 L9paRFvT3RZu8dkMr0827h7x9HaRYVAVk2Q2p/It0h/7Z1UpBkJTIBgqRMjDfgjNCyBnh
+	 RzNF0cRTyT60LRFgUoin7+Uho/ibV/Ca/ZwWiZ21PLjZpEdpJzvPFd6y8NEU8Z5ZqKQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795790917;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=R42ocNus/7FqRlQdga3UY2UxbB1TzljZN62m44VSIoQ=;
+	b=YcqpfPcUHtYS+lDXKwmJG3H/T2v1uy8rdjb2v9iFtRVjxRQBURMwxNWmwFvqWzITRLJb
+	 qSqNgvDVnFT13SoidU+ulD7to1OJ5DJCzATBjyQMsPyzGl/zlm5cvAjSFJnuDqe6RHgDF
+	 IVxeUHzA9/6gGcDOQwQoVrUZriDwpE0NKs/scbCE57fqNx1WNOPTQoIMpkAGHrHQS5dkF
+	 7cqNath5A3ouz/XMzJbZM9R78GETsgf88PNuSJJYQ6un4FaG4/KAZttZ6+nZABDr640Do
+	 +7ISghDTz/A5E1E0IjBEq3+U/uigTqaG9pYkYFqyBZmQdwa3b32sMxPM2I6MUm/TQFQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=foss.st.com;
+	spf=pass smtp.mailfrom=foss.st.com;
+	dkim=pass header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=asSJJfoJ;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.83.58
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013058.outbound.protection.outlook.com [52.101.83.58])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379A2606C6D5
-	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:19:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 379A2606C6D5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5781D606A321
+	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 14:48:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5781D606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=RWsFwaDj
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-4a42b34e930so7034694f8f.2
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:19:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795781963; x=1796386763; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+IW/uZ0j05LJqVLsSY6Erg+izYe5hqVn60TIR3SgAB8=;
-        b=RWsFwaDj06AcQkXnUrqX7SDxFULhdAZXBD9zPLiKNyDdmryVwjctfsZP3uWZxFP724
-         LLBOw5EONTIxs+Gob63p3AElMXNVIT/hL8T9vgTn6A7NV8/j7bQk67aEGPUt+cWT0MSD
-         ve3lQZE7IKp/LNkjT+1w9ndILaGzmOwrpdYz0h85UAXF8eNnGFQgAOCpxNTF603Myr6z
-         n5V5QH623ZKLo/NeoFZQof7vWqZV+XhX3mzdwllT+gCk/s0cGvQlT0nF15dAR0wFiG7V
-         Bit3Pvegw8CYFTw1yhrcpb8cXZnV3686s0teEUYE2g97T5sNt9X3bog5TTxNVJCBd0ki
-         cv/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781963; x=1796386763;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+IW/uZ0j05LJqVLsSY6Erg+izYe5hqVn60TIR3SgAB8=;
-        b=lyK2xNQI4ZtXNTg1f24ZMhMCpbrwhE5tV7QM4C1DPQ+fl3L0/eLFbyz2hDrhGb3Jlm
-         C5X/M22EGIgb4bcvpUKgcFoVQ/fSkzrmMs2tA5scdqsZSmGC8wy6Tn2FatvFez2KmE63
-         gSp4rIhKcuBByJggJ7lsCxxIugaTvwKdtZ8uoH7C0mwpaL6/TfCHooxY519FoT+6fSHh
-         fBjF18HOmsG3csPhpvFrWC29SY/5nmqCpTi2tke2koOvHM1MjFFHh8ldMwX93Pugg8v2
-         s9LXEqCmalEvi92nc/L29lVtW7FIH5A/hpaOAkIZTICDFrMReoZ4JWEQOKXVZKmNZY9L
-         yorA==
-X-Forwarded-Encrypted: i=1; AL+hErFHXVYO50yZIHqDk5bOsBwPgLInAb3QKVNJBCj7QcJXNBxNyYKjuLYGQIAPyvc8GfJwnedlxVzlJiw=@vger.kernel.org
-X-Gm-Message-State: APuU4Z+dCqsVPTZQcBs++ysCqKqmB0GLUKrZt11/4j9cmwS/q6nbU6AE
-	OjLs6HAdBQ8w2oEBDwJzoAHKMoNjlvj8GwnsZL+FOE3T+K42mnN60GaHYNxVa0dqHxM=
-X-Gm-Gg: AZFdTZcvSZu95dCanvEl6FzwDxKx26l3pF/fhMh7DOxB+4GVTOcr+904b8dtEblU35z
-	EVpenplTWrI1e1qGmFDSQjQziFFgNDJuROVn/wZReiqQ1bvQdZRREni9FVAa1k6CGY6U0NGIwfQ
-	DfXWtFpqDvAcnrsXuuZ+q9A+xUgh9JJttLkEuUfRBvWGrsFPwNPvcwSg1DYfOuWASnQX012rSWr
-	JsnzC7uW+/hqfM/TbSCor5ner/yBDqvxONR6ukn/XD7YWhk9F7EugK3BJ6Qv+4FWKA1la6VcXEB
-	O8+mC8YD5oImWZUdEBEm+sEZlxYHQKS0oSSKloleZpnlVkpCbybINwRXoItDJiMRYo3V5zsFd6k
-	JJk2xTBmMwceoQbUF0/+vZ917dLX2QV+p9c99NMKI3h7yaE5AeAgnzAvJT5Jpoep0meaOe5JQxH
-	eyf4szEt6VqmNNCQo/6g0CEoUWYZU1VH23bt2pG2WrFYMtv113vjoz10q7b3koJlLOMFEW8mpGJ
-	3sDA+rCXC0WrSs3Py/fkLDwp4cKtLujHvBs+ItdHDImq4MBhyI6/2ceZiOarSmnubjGhOK7jDxh
-	ujjNbPogCCpxFZjd2f8Bfk/LsO4/
-X-Received: by 2002:a05:6000:290b:b0:4b7:8363:682 with SMTP id ffacd0b85a97d-4b7836306d3mr23949156f8f.16.1795781962728;
-        Fri, 27 Nov 2026 04:19:22 -0800 (PST)
-Received: from localhost ([195.94.148.180])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b10b2c9sm48478454f8f.31.2026.11.27.04.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 04:19:22 -0800 (PST)
-From: Andrea della Porta <andrea.porta@suse.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Saenz Julienne <nsaenz@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Phil Elwell <phil@raspberrypi.com>,
-	Dom Cobley <popcornmix@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Andrea della Porta <andrea.porta@suse.com>
-Subject: [PATCH v4 28/28] arm64: dts: broadcom: bcm2712: Enable HDMI audio
-Date: Fri, 27 Nov 2026 13:22:18 +0100
-Message-ID: <20261127122236.4976-29-andrea.porta@suse.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20261127122236.4976-1-andrea.porta@suse.com>
-References: <20261127122236.4976-1-andrea.porta@suse.com>
+	dkim=pass (2048-bit key, unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=asSJJfoJ
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WK6h1rGxmX0NBUurzF6gAioE2zqKoNPk3coe5Jqjled51iA5kj3HdveB8PpvkR3ARzKXlnjWVZqz0jx/3FTmYTz2bZ6Ii7QCdmgEbqcXWH4erTfHZJmqTvJjE0lX78C0PWZX0uVzvfGWhpwgoNkRsk8VARcH6LntEFae90Ih8Gg2sFp8N6U2oRj7S56IrPyGYdbfdt9OKCYX+mCILRUwXEUvQLFy8hEJfkmoNdO8YYjNeUynfMXrN3+CEgpQI568Bd32vtHqtoMI4T+bkRfjPrxg9MDISvaRiTUUpTeKIFdSHB3k/LtWE3KASXa23PI9CUFIlJIzRNIHb/O9EKML2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=R42ocNus/7FqRlQdga3UY2UxbB1TzljZN62m44VSIoQ=;
+ b=YvUkFqAu3Iw+wvtb/Cb0MPPkJQjxjVmnZ2Wj2lUNNJgiTesV6ml83+EPG4P6Bry4ClbukYUFv2H2lTI0zBm/AUb32Z+IiFGQ3gB6Dnur8paLJFsKXktdchpwjxwJ0mZGQZKfI7+QJFRmo+AMiBAyM/vq8niCIU0ZStP6WpjNAIhaxUSLpoQtElzoT91YTVuK0I0fMQE6L40w3eXEWa28a/KSD6/Rd40zuC6hjZFvEBNVWhErz0lqslAn7kYmenMPYe42fYhCgH/2enoQgCsZGkOU8NVFLmJBEWgIshucgkS1wxpq9AOTkb/XpyYD99KkxFybz+YjtLt8/Sd0D20UGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 164.130.1.60) smtp.rcpttodomain=mail.sdu.edu.cn smtp.mailfrom=foss.st.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R42ocNus/7FqRlQdga3UY2UxbB1TzljZN62m44VSIoQ=;
+ b=asSJJfoJ5zqpZiG0olm4+p7o3AF5g8iL38RYQ/joRtrgUBZztziwh2EvqAiDtJxgrKXwXAv0aff8JQldk4zGN33FcuxkCNkWXrqA9OdVSMOZH4UIpuBgDFe+1n2vdPCVWBjPKJjWlPYPeZRtRpXRbRFLs/cSyVawmXuDZY1jKKzUBZGXG+inJADCITIyEFdYKpJKvbPW6lvy5BfluM2xIHFkCfMjVKMrxwznUe9LXh4GAIQu5uoXGlyYed2u4/roFLaWXba4dU2S52ny2+xOijOWxMe0H93g3XzF5KyLmX5lSxRQkEGhWEXC7Jzn+e47Wg7Ir+2JGxfm3rigCC1Njw==
+Received: from AM9P250CA0027.EURP250.PROD.OUTLOOK.COM (2603:10a6:20b:21c::32)
+ by DB8PR10MB3738.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:118::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.688.4; Fri, 27 Nov
+ 2026 14:48:29 +0000
+Received: from AMS1EPF0000009D.eurprd02.prod.outlook.com
+ (2603:10a6:20b:21c:cafe::90) by AM9P250CA0027.outlook.office365.com
+ (2603:10a6:20b:21c::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.662.10 via Frontend Transport; Fri,
+ 27 Nov 2026 14:48:28 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=fail (sender IP
+ is 164.130.1.60) smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=foss.st.com;
+Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
+ designate 164.130.1.60 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.60; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.60) by
+ AMS1EPF0000009D.mail.protection.outlook.com (10.167.242.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.688.5 via Frontend Transport; Fri, 27 Nov 2026 14:48:27 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpO365.st.com
+ (10.250.44.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.56; Fri, 27 Nov
+ 2026 15:49:34 +0100
+Received: from [10.252.31.56] (10.252.31.56) by STKDAG1NODE2.st.com
+ (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Fri, 27 Nov
+ 2026 15:48:25 +0100
+Message-ID: <f2a156ee-55d4-4a00-ac75-bb51f1785a9d@foss.st.com>
+Date: Fri, 27 Nov 2026 15:48:23 +0100
 X-Mailing-List: dmaengine@vger.kernel.org
 List-Id: <dmaengine.vger.kernel.org>
 List-Post: <mailto:dmaengine@vger.kernel.org>
@@ -116,83 +104,72 @@ List-Unsubscribe: <mailto:dmaengine+unsubscribe@vger.kernel.org>
 List-Owner: <mailto:dmaengine+owner@vger.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] dmaengine: stm32: Pair DMA provider registration with
+ cleanup
+To: Tian Xuechen <202300460064@mail.sdu.edu.cn>, <vkoul@kernel.org>,
+	<mcoquelin.stm32@gmail.com>, <alexandre.torgue@foss.st.com>,
+	<cedric.madianga@gmail.com>, <pierre-yves.mordret@st.com>
+CC: <Frank.Li@kernel.org>, <dmaengine@vger.kernel.org>,
+	<linux-stm32@st-md-mailman.stormreply.com>,
+	<linux-arm-kernel@lists.infradead.org>
+References: <20261127113332.390552-1-202300460064@mail.sdu.edu.cn>
+Content-Language: en-US
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+In-Reply-To: <20261127113332.390552-1-202300460064@mail.sdu.edu.cn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: STKCAS1NODE1.st.com (10.75.128.134) To STKDAG1NODE2.st.com
+ (10.75.128.133)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AMS1EPF0000009D:EE_|DB8PR10MB3738:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6473c1bf-59e8-46fd-cc47-08df4c957f44
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|1800799024|376014|11063799006|261009223027099003|18002099003|22082099003|10067099003|56012099006|261028144727099003|261026140227099003|261022105027099003|261022075727099003;
+X-Microsoft-Antispam-Message-Info:
+	SrW9qepWu2aaSfaEg88TwG5qMqauZTqctXPOSMNu7YQVQjCbpYUaD3eQ0roa6ABxP3JpB/S+zvDTDXlqc6rNmaz8YqMOMgm7nidY8JDFdb3lijY09XULXNAE7yNIz5Z0SE8z2dFigCWCcCyXnLXNtBWDXJ3PAloMqCwX2dhSdffQ2EXcOsjqAW7vMJYmjVjjipAc4RvTkQgD6s2vJBaad0APdfqII+r+moGAN0m37Z5KuOKR8IE4DTilkRsoVast5+ls6vFhDCGK6vkSozZP3cLe18TzFENQewMHzVJNYluFD0XrlrVOxuVtgZooE2g/WkWAj3CiopWq1mDUZkT/mlR2XIPkbz/PwOpeuplrh6jvsFZ9OT26uNfV6//V1rt1h3DT36k+fuFLWvmCbg+UZ/zUaxBY7MquvmxrTNSmZHG6ByBPg5A/u51zFGK1EVScwe+NQ/VB+nG+0BeBFYYdeg62wJcIhos/9s7IZ/o/kS30SKUOtGeNeTrWUtTjdXpE1buIaZe4LRyUGG9WIqUVOjJDxJA5PhyQk0TCA4k2SFeMO6dkyX02h96NQZ44B5kmehZO7ZYVWKnD20psfCCvTsKZeS2tK6L6P9/qOsS9uSe6Yi3BRJSJZcvKFzqfLyQbnLaXOwSQzkcoYdTh9oCC47eFLQ5c3FlZyV5/Ijifw92Ec3N6Gh11VUoXcnc5RuLMZIkDNPI3TePaFL1K2/ZwSw==
+X-Forefront-Antispam-Report:
+	CIP:164.130.1.60;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(1800799024)(376014)(11063799006)(261009223027099003)(18002099003)(22082099003)(10067099003)(56012099006)(261028144727099003)(261026140227099003)(261022105027099003)(261022075727099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	S9Fkm6JeElzi4M1hgR+Nk7shSyV4AroJ+47aLIJNy3ZGwuCF+W1K9h3fju6OCIHU0vJUAMkUfS/59aPco54WQLYDFD1xzHMKKZP7QN90YjnpuzjINRmebISSaLzdb9WC6GDMTJGiXkNbjecMk9oCh1aSPwhL6r1sDgG5/YRTlK8KsI/rdYE1BghkpnX16kiudVLLP1GYWEpz9ciOFdlcGdffA7v5qWaCUDSV45vIWorMk47fuj/8+s8JEccGNJjWln6uHJEyPoUmi+DB734YWXameQgbCnC7NVM2xt2Ns9o4qwvAEHSfYaU3vXSQSLncCZwpvpgGmLWQKQLFxU2Zwil/rUHNDEkPYXGt5Fi9sfIxMI7hqMiQdrx3WB2fvTnoZvqKNfHwJPLfkiBClpw+QmBAyyV7S3nxMGaXhxEzNZMxVrvOOeOsSPdGalO/EgAP
+X-OriginatorOrg: foss.st.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2026 14:48:27.8168
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6473c1bf-59e8-46fd-cc47-08df4c957f44
+X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.60];Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	AMS1EPF0000009D.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR10MB3738
 
-The HDMI controllers of BCM2712 feed their MAI FIFO through the 40-bit
-DMA channels. Describe them, so that vc4 registers the HDMI audio
-devices.
+Hi,
 
-The DREQ lines of the HDMI audio changed between the C1 and D0 steppings
-(10/17 and 12/13 respectively), while the flags request multi-beat
-bursts, wide source reads and the AXI priorities used by the downstream
-Raspberry Pi device trees, where these values come from.
+On 11/27/26 12:33, Tian Xuechen wrote:
+> From: Tian Xuechen <202300460064@mail.sdu.edu.cn>
+> 
+> Unregister the STM32 DMA mux, DMA and MDMA providers when their devices
+> are removed.
+> 
+> Tian Xuechen (3):
+>    dmaengine: stm32-dmamux: Unregister the DMA router on removal
+>    dmaengine: stm32-dma: Unregister the OF controller and DMA device
+>    dmaengine: stm32-mdma: Use managed OF DMA controller registration
+> 
+> base-commit: 4dce97c6c265544342e716e62fd24bbb232590c5
 
-Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
----
- .../arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts | 15 +++++++++++++++
- arch/arm64/boot/dts/broadcom/bcm2712.dtsi         | 11 +++++++++++
- 2 files changed, 26 insertions(+)
+These built-in drivers are not intended to be unbound at runtime.
+STM32 DMAMUX routes peripherals DMA requests to STM32 DMA, and STM32 DMA 
+and MDMA channels may also be chained.
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-index ae4b7c587dbc..80073bec01b2 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-@@ -8,6 +8,21 @@ / {
- 	model = "Raspberry Pi 5 d0 Stepping";
- };
- 
-+/* The HDMI audio DREQs changed on D0 */
-+&hdmi0 {
-+	dmas = <&dma40 (12 | BCM2835_DMA_FLAG_BURST |
-+			BCM2835_DMA_FLAG_WIDE_SOURCE |
-+			BCM2835_DMA_FLAG_PRIORITY(10) |
-+			BCM2835_DMA_FLAG_PANIC_PRIORITY(15))>;
-+};
-+
-+&hdmi1 {
-+	dmas = <&dma40 (13 | BCM2835_DMA_FLAG_BURST |
-+			BCM2835_DMA_FLAG_WIDE_SOURCE |
-+			BCM2835_DMA_FLAG_PRIORITY(10) |
-+			BCM2835_DMA_FLAG_PANIC_PRIORITY(15))>;
-+};
-+
- &gio_aon {
- 	brcm,gpio-bank-widths = <15 6>;
- 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-index 7ba0fc540257..bedbd7a359f6 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+#include <dt-bindings/dma/brcm,bcm2835-dma.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/soc/bcm2835-pm.h>
- 
-@@ -483,6 +484,11 @@ hdmi0: hdmi@7c701400 {
- 			interrupt-names = "cec-tx", "cec-rx", "cec-low",
- 					  "hpd-connected", "hpd-removed";
- 			ddc = <&ddc0>;
-+			dmas = <&dma40 (10 | BCM2835_DMA_FLAG_BURST |
-+					BCM2835_DMA_FLAG_WIDE_SOURCE |
-+					BCM2835_DMA_FLAG_PRIORITY(10) |
-+					BCM2835_DMA_FLAG_PANIC_PRIORITY(15))>;
-+			dma-names = "audio-rx";
- 			status = "disabled";
- 		};
- 
-@@ -513,6 +519,11 @@ hdmi1: hdmi@7c706400 {
- 			interrupt-names = "cec-tx", "cec-rx", "cec-low",
- 					  "hpd-connected", "hpd-removed";
- 			ddc = <&ddc1>;
-+			dmas = <&dma40 (17 | BCM2835_DMA_FLAG_BURST |
-+					BCM2835_DMA_FLAG_WIDE_SOURCE |
-+					BCM2835_DMA_FLAG_PRIORITY(10) |
-+					BCM2835_DMA_FLAG_PANIC_PRIORITY(15))>;
-+			dma-names = "audio-rx";
- 			status = "disabled";
- 		};
- 
--- 
-2.51.0
+Rather than adding partial removal support, I think we should set 
+".suppress_bind_attrs = true" for stm32_dmamux_driver, stm32_dma_driver 
+and stm32_mdma_driver to prevent manual bind/unbind through sysfs.
 
+Regards,
+Amelie
