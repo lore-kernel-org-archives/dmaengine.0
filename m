@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781958;
-	b=q/tNEMc9MXY331TwB2eSMapB5XqKEuvTVgt2a2zMy9Vsv4sPC0VbmaaqTJ9jDYZveqEL
-	 YqEYUiESCp6jNTbuUKXFtlFuuPz7bDhTA9coP0kA5Xuwwrr4eZJOu7T6Eu9Lp/cgfw5PD
-	 d83LaPK9tICD3RgwMRe/MvWpK+xjpw9ivqTTwlUd4FiUUqXohV2NtG0ayu9PtnYGFynTE
-	 tvwD74MQnc/Ih2Dt7+oNnTo1IrVH+a79QXewZQF/vNN0Hgz9daLFc2zadva17/4kahOGL
-	 N/3jbgZAS57pco9ilBpIDLdDBW4sItMLE+Q5cd/sEnhKsy+HNRifqds1ys93mxCpW2A==
+	t=1795781963;
+	b=ukzCJJgKmC+KpoOw9ydorxc7ikSOiQwzb4MYv+PkYkKE8AhngIv/qwa+7vXw1NExUGbX
+	 /bc+i5hTCzlPwpGw2w8Mgr9JCeVSvAA8kQ1lK/dralYrJ8YwKOq7wbcETqe9GkAgkucic
+	 MC18WWtrRfj84Ygx9pLTzQS4SsjAEkkSRa8LFAuoJL3vWENdtxWHevlrBI1JC5XC2F1OA
+	 Fg3O6lWRoRr9xFORbJkHii9LBizKTx8o7du6Bv/nw+GTVqvHzjKLqyyqD9udo0kpr3Sm0
+	 kptmWZRFU2gbcaiOBeMDieYqi8iTDSjm0H8zp2ShVrbE2ydeyMULs8+U2P1al7mF1Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795781963;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fIqrTXpQ09CNC8YvGhqJeuUImdcgkDCbE32TjDI5dig=;
-	b=l/rXqt5opjFENnsIgUSYFqKkkq2+uO6WWCYonFi4ZdItm4/CembTW63PVyGLDMnAE5Zf
-	 Q1Z6qbgEpzoD6tL82JdWkbikwmOBpsfjV7sVBYcQ+OeFN3C+eJaFlUCH+BnKA4+5lnjlp
-	 6A6zdq30D2JaKAX3uEDUrSYZ3FyIBc+ulV1GYojH2Z5mWWymGfOUDTfog0OP8xNRQqHyf
-	 sq8UcPl+mi8WmgmTuq2QiWyVNxxuvkvPp89X8xoBO8PNVCM3Yp/wDKroP8BHAR9M+22Si
-	 0mI/2h38t6vWuq6+qOCAeRtDiJSX2ra0Ag29eCHSOKqUZnZ2H6O8uiA6Brl8/LHFFNg==
+	bh=TAUyWjx3s0iBrLHwbOuKPkGMyzRErvYGRD/IpYm7O+8=;
+	b=3LvQeFfv8OUU2+QL5wdIwcAksb9r9kBK9V13jhSYpHtgM+7Ax2dQS7jnRSR/ekVbC+FF
+	 OupNM5MS6tqng9hTmQ2ONDMGxju7C/OjGY9bF/kaIvW72qHpjghftwfkf5dViQx16gne3
+	 2lCoRiux67hKtvCsn9dY34xu3EsLDpBChf/rLd2wkYt+z7JFWcx8IARTKLpKcQBsXYrx0
+	 v7uusYDkoXJbFUqTVuzONgT6C67CqBMcW/2D1/YkaPKwI7G7brWnkSODAsgBaRv3hPSUx
+	 H+RwwxEsnZYlnSzWpODm57A88m3ML3l6tfRByMqxj+k+qJE02ev25pZ7Qz3hgz/sO8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.com;
 	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=DjIBRJaE;
-	arc=none smtp.remote-ip=209.85.221.53
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Dbs8B15w;
+	arc=none smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28766606B825
-	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:19:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28766606B825
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA7F606C6C7
+	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:19:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAA7F606C6C7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=DjIBRJaE
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-4ad6219f7d8so7274445f8f.0
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:19:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Dbs8B15w
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4bb6ba3b244so82160445e9.3
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:19:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795781957; x=1796386757; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1795781961; x=1796386761; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=fIqrTXpQ09CNC8YvGhqJeuUImdcgkDCbE32TjDI5dig=;
-        b=DjIBRJaEN4ZJKOZQQ9LSVf3UfMicBxgc0aHX+/pe4yAfyDZkY3cA7uwfQAQnS1sSZc
-         +np2LfT2AfMmvk1vRPqdWujPE2eSeSG5aTT3lZFH/wwat4beDVyk8OxOweS0gVX77XL0
-         G+c70JHOFWOCxAlQ/kszgaNLUEgpZl5N/fH7ZMfplH7ZYT3hWITx6eKpG5q4xSt4Nwba
-         t0sx/xVNqt7rnc5wYAQSJevxknVYK1pGLd24Zftxid9DwtqMsn+xCwyBvZrnYBeC2kxU
-         ENbW+tlztZTKqjd06eEVC4ZVOxfACQbMJSVXUUa168xebAnbEmrZluP388evlsbItXWf
-         0eLQ==
+        bh=TAUyWjx3s0iBrLHwbOuKPkGMyzRErvYGRD/IpYm7O+8=;
+        b=Dbs8B15wDQXL/Q+K8BykZJHcbFbvg3b30M+fsU/e9aYvv1qvCjPAJVtcmwcgsUBmkt
+         UOBZmmcytY+/yY31YseBCFY33BhBHE2iFQ0NR5Q8q5wkk9O8ToDSFTdPz0yS353J0Xss
+         qYGzL25GQ6NC76NdGdbi4clxc3n9t4HQR4Nsj37K/frX/pBRn3TBfTUlwMq5oO8w7AfG
+         fwz2ny+xEoAgkO9IVsc43XvF63xyBSbEy5+4iTWHG42c87k71Mnd1artF/HyCdOPsiNf
+         rzuukal00S+xnXTK06V2gWj6i6lo+iF0bnJmCnWq1kV+hEOiGuUP/0eA8NQQ/dz9OUEv
+         rs7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781957; x=1796386757;
+        d=1e100.net; s=20260707; t=1795781961; x=1796386761;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fIqrTXpQ09CNC8YvGhqJeuUImdcgkDCbE32TjDI5dig=;
-        b=G0m7aNt+Tllt0TaDmCGppfJaCYhoNU6SbExFfm+mmRhjhAz413vCHoNa3eTuptRmK3
-         hDadFg+XxLtRntoCed92gme0pynGA5TZLz1bGvzB16Cz8Mj2d1on8U8P+7Sia9TDUOBu
-         SVqBk3MVRsR9QtWNtyK5573ibaiTP6PlK/C6Jcl0j1+1ApNCgBb1E4ij8RrY9PozsEZC
-         Ra/gyp2MfPpj4FNhiNGuH92Teh35OsS2Rtl7/x2CtpWFjaTE7ogLVTgBdlw5uHRBiTnM
-         8XfRxEbqJejthsSd0A6D1yvhVlU/13ugc2qf4/VA5eM0hYxrFibqdrgBaTlWJCq2FmWI
-         o/Cg==
-X-Forwarded-Encrypted: i=1; AL+hErHzvTz1g93KE+mruhfDMG5Wirspw1vzz6HSmeF1/kPoPsOl/2ZY/OvzClAV3zsZrJfwhY55ugpyV+U=@vger.kernel.org
-X-Gm-Message-State: APuU4Z/keI1kc5MCZt7vSQApXZC/ao18nRiuYhhU3ID+9yr1lynixlDf
-	zhBRVkO5678RdVDz3obdFv+JOomES60ISo/QZq4ql8TW9ef/sh6RhzZD8pj9z2PlNMY=
-X-Gm-Gg: AZFdTZe01vpkSi+oKrP+Yc9R4uA4SFnNj1JukDZVSxdVx8Myu2YujYMnj8coAHpB6j8
-	qBHUBAuOhG3UdtHffvM0HrxN1TxKx23DozMrHmQKnlViOw8CuFX1sI0on8JbnZcNeLaF7DXdkC6
-	cUxX9mXaH1dGooguVJmBEWAW3s6nh2NAHzV6t7iTwYyuXsuiaUzs4lWw2A4QpejkeLv3r7Rq7s8
-	pDwwzeRMf22V+3OAS6QvVSKxcUh8psTMFaLkqss38sKhL7mGRIitI/xoJp2nKvxf3Ykr5cQccs1
-	mhThlKKrr6Z2YnRiODTB/U4yQQ4CIr2jx74+U3ybavF7d2uIm1d1D5Trwt+aRWVvAPZMWvCewPY
-	Iiyeba11OYe+NpXmM5Y0rqMdrtSzYLwpsFnVmLO7F2oy0jErbCivKAKHOrs8oFXR2XAUa8WDIHh
-	q/OqXnvUWLypcI2Vo/JKzPwn3J3J3JKtId59glCH8pIS+icRs7JJlAzL2t+jnqfpxyVLuHXuLYv
-	mI3DhpDjPxZschCYcgG3npkyBRfl+zUUNEa/68UNe/Q+m4+LkZFwmC10IsdVy4ad/+mCh8PtII+
-	rAacvkW7QZwsj4WFpHuLHTpSsrEH
-X-Received: by 2002:a05:600c:5246:b0:4bb:60ba:49e0 with SMTP id 5b1f17b1804b1-4bb88930707mr522882365e9.26.1795781956697;
-        Fri, 27 Nov 2026 04:19:16 -0800 (PST)
+        bh=TAUyWjx3s0iBrLHwbOuKPkGMyzRErvYGRD/IpYm7O+8=;
+        b=0+7a6+AyjBUHprUJFG/pwX8xC1PAwT71WP8+js/+TSuIFQF4elByKcSUEeT4fXy/mM
+         TYhGiE/LWtvJ1orccg4fpawpOHXeqO9xjciUEYxI0vpRXC+kTAIWE5Ki7kbSsNJQN/kz
+         vxyFT0XLjNRxKXhdt4Fk50Xumo26C7PP+PGryOyjyVXXZrkEhONDwOD2nqth5UhtxHkj
+         sYVPN8K1UJJKRR6aL2NaTPD6L78+qAO4aHXTUluuanR8MMdMsweQef27K1Sc1sQ6CZwZ
+         J/SWFzum423UdFkmHHS35uCglgWewV7EL1TTlAkgcrLTuGaGOZmxNHz1ZOp3+OgN6NUp
+         igKA==
+X-Forwarded-Encrypted: i=1; AL+hErGeGpLGARc4ZAk7SR3BVs6SZ3Vz/3zLDYYl/dfxpLtaIB+gvgwnotu/WlUpgh6AfZkPUn6Gd8am1jU=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/807LfxYwdcStHWOoDFATb/1DcKHucs9kHg1oD3iwowO1DRFTm
+	0QVsDLMdzfRRw/DntZM7d6wqvHxXRISkK72Z61a7OKVgXnZC0l2fEYfMBi/vqU9rrb0=
+X-Gm-Gg: AZFdTZcWD983C7Fpbtb3KRhJwy4PGTUhpc2Q2tvs5iettwtjI4ui9noqnKmRIT7QezG
+	qN7sX5KTmRpK4FhJYoHIU2ZHOu5dLM6beuSyvZp75U0uwiBUlclc8NJGW4G0F9DyBvallTbRgv9
+	9RvOaBWBj86Bs0VNKTz5Lqbz+aDHP4qH82GiWgIzxXs5Yp9cJE0MYH8pSy2wC1tjbPiM7KyUiKR
+	Gpz82pfpRjTpj0+qEmNWdanS9Fyojw/UkZznB1g1jCBESRcYmtIodzG+LpfPr6wMARTqv3Zzb5M
+	9xRlPoTQlN4eoH4bbWQpmUEFSAOzsxnANJKnYOFOtk08bglfhZ8G8WHk/9s7EGharOcyiPQZV1+
+	Wy3D6Td5XqIBr6Aa33A5jm5zMao4TbFDQiYLTB1S4oPBTiVFBRNlV66SrYTwGSMhmG/TWNaILzG
+	GWdGANARJCVL2neQvdAFzwMFQqe4dnzSaNLqa+I4sSDDUWOS8+9dfObOJIa2UGhPZ9OS6WHvzSO
+	QkZ+X/QAdajkKfY4yKK/ZWjYXam7WGdvjPN/B233D6fafwuDt1PS8M9lKFu4oFRqDk8LNmEPoMr
+	kDeYV4a5IimNmoxJ+YoITiY5hkCAeQtGJnlFMx4Jds5zjH2+MA==
+X-Received: by 2002:a05:600c:4e0d:b0:4bb:69b2:d3b3 with SMTP id 5b1f17b1804b1-4bb8881eea5mr489175485e9.27.1795781961245;
+        Fri, 27 Nov 2026 04:19:21 -0800 (PST)
 Received: from localhost ([195.94.148.180])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8d4f9aa8sm663488865e9.4.2026.11.27.04.19.15
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb90655f5asm451150685e9.1.2026.11.27.04.19.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 04:19:16 -0800 (PST)
+        Fri, 27 Nov 2026 04:19:20 -0800 (PST)
 From: Andrea della Porta <andrea.porta@suse.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.Li@kernel.org>,
@@ -101,9 +101,9 @@ Cc: Frank Li <Frank.Li@kernel.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Andrea della Porta <andrea.porta@suse.com>
-Subject: [PATCH v4 25/28] dmaengine: bcm2835: Add BCM2712 40-bit DMA support
-Date: Fri, 27 Nov 2026 13:22:15 +0100
-Message-ID: <20261127122236.4976-26-andrea.porta@suse.com>
+Subject: [PATCH v4 27/28] ARM: dts: broadcom: Set the DMA flags of the HDMI audio channel on BCM283x
+Date: Fri, 27 Nov 2026 13:22:17 +0100
+Message-ID: <20261127122236.4976-28-andrea.porta@suse.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20261127122236.4976-1-andrea.porta@suse.com>
 References: <20261127122236.4976-1-andrea.porta@suse.com>
@@ -118,69 +118,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-BCM2712 has six DMA channels (6 to 11) with the same programming model
-as the BCM2711 40-bit channels.
+The upper bits of the DMA specifier of the BCM2835 DMA controller carry
+per-channel flags, which nothing uses in the upstream device trees so
+far.
 
-These channels see both the RAM and the peripherals at their CPU
-physical address. The bus they sit on maps them 1:1, so device trees
-without dma-ranges are handled by the same fallback as the legacy
-channels, i.e. by reverting the ranges of the parent bus.
+Request wide (128-bit) source reads and skip waiting for the AXI write
+responses on the HDMI audio channel of BCM283x, as done for years by the
+downstream Raspberry Pi device trees. This reduces the bus traffic
+needed to feed the MAI FIFO.
 
-The remaining channels (0 to 5) use the legacy control block format,
-extended with the upper address bits stored in the stride field, and are
-not supported for now. The downstream device tree describes them with
-the same compatible, in a separate node: such a node is rejected thanks
-to the channel mask of the platform data.
+BCM2711 is left alone: the downstream device trees route its HDMI audio
+through the 40-bit channels, so there is no established set of flags for
+its legacy channels.
 
-Link: https://github.com/raspberrypi/linux/commit/99c26cc709c0e3658c3f8d78cfb856cc20bdd0e3
 Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
 ---
- drivers/dma/bcm2835-dma.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/arm/boot/dts/broadcom/bcm2835-common.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index 8fe71de2be0b..99c5e0b9298a 100644
---- a/drivers/dma/bcm2835-dma.c
-+++ b/drivers/dma/bcm2835-dma.c
-@@ -1546,8 +1546,38 @@ static const struct bcm2835_dma_cfg bcm2711_data = {
- 	.chan_mask = GENMASK(14, 11),
- };
+diff --git a/arch/arm/boot/dts/broadcom/bcm2835-common.dtsi b/arch/arm/boot/dts/broadcom/bcm2835-common.dtsi
+index 39eea8ce1058..77c7c13014d2 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2835-common.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm2835-common.dtsi
+@@ -4,6 +4,8 @@
+  * bcm2835, bcm2836 and bcm2837 implementations.
+  */
  
-+static const struct bcm2835_dma_cfg bcm2712_data = {
-+	.cs_reg = BCM2711_DMA40_CS,
-+	.cb_reg = BCM2711_DMA40_CB,
++#include <dt-bindings/dma/brcm,bcm2835-dma.h>
 +
-+	.int_mask = BCM2711_DMA40_INT,
-+	.active_mask = BCM2711_DMA40_ACTIVE,
-+
-+	.dma_mask = DMA_BIT_MASK(40),
-+
-+	.cb_get_length = bcm2711_dma_cb_get_length,
-+	.cb_get_addr = bcm2711_dma_cb_get_addr,
-+	.cb_init = bcm2711_dma_cb_init,
-+	.cb_set_src = bcm2711_dma_cb_set_src,
-+	.cb_set_dst = bcm2711_dma_cb_set_dst,
-+	.cb_set_next = bcm2711_dma_cb_set_next,
-+	.cb_set_length = bcm2711_dma_cb_set_length,
-+	.cb_append_extra = bcm2711_dma_cb_append_extra,
-+
-+	.to_cb_addr = bcm2711_dma_to_cb_addr,
-+
-+	.read_addr = bcm2711_dma_read_addr,
-+	.cs_flags = bcm2711_dma_cs_flags,
-+	.abort = bcm2711_dma_abort_chan,
-+
-+	/* the parent bus maps the peripherals 1:1 on BCM2712 */
-+	.legacy_bus_addr = bcm2835_dma_legacy_bus_addr,
-+	.chan_mask = GENMASK(11, 6),
-+};
-+
- static const struct of_device_id bcm2835_dma_of_match[] = {
- 	{ .compatible = "brcm,bcm2711-dma", .data = &bcm2711_data },
-+	{ .compatible = "brcm,bcm2712-dma", .data = &bcm2712_data },
- 	{ .compatible = "brcm,bcm2835-dma", .data = &bcm2835_data },
- 	{},
- };
+ / {
+ 	interrupt-parent = <&intc>;
+ 
+@@ -130,7 +132,8 @@ hdmi: hdmi@7e902000 {
+ 			clocks = <&clocks BCM2835_PLLH_PIX>,
+ 				 <&clocks BCM2835_CLOCK_HSM>;
+ 			clock-names = "pixel", "hdmi";
+-			dmas = <&dma 17>;
++			dmas = <&dma (17 | BCM2835_DMA_FLAG_NO_WAIT_RESP |
++				      BCM2835_DMA_FLAG_WIDE_SOURCE)>;
+ 			dma-names = "audio-rx";
+ 			status = "disabled";
+ 		};
 -- 
 2.51.0
 
