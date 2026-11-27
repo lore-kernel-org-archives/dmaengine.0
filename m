@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781932;
-	b=18yhZMB8jkHsW5/guGrfmGppiWv2viYn7M6gq4b4r7+H9mhaQwrbtJNQ7xYKv6Kh1VI5
-	 sFRV+fUB8wcjTDb+AKWvwOHkel2lV6QgeG8kSdxe0Q0RCZI5ykobii3qSSZAEezO0jIme
-	 BILxXKkCn0dBHgymuYv2lSCryb9zr/J47usQfmzbGWn+ueC/q4JRVKAwXor3D14rzFW8n
-	 EKYE7VVIpv/auev/oP1YCaPtjKfx7tqfPJM3zhot9HHSFnkEL0Pk6KAO+R7XKERkef9rS
-	 fH2Xr5QpUoURRNp1iRLFvxYad7ArCQtnqis4AJXzHb2vYca5K1C87MjpXLtIj+WqUKg==
+	t=1795781934;
+	b=44tsEgzggQ3CT6tXjEvCXFg+BGsu+4ZYbz6CZsJLnLZf7tL4W84PUS4OtU73l+rQfohL
+	 +dNVKXuqI1xFxTusX+lEIqjs4cKnUsLj/7xXF68HT3n10qq1QEyQU2ld1Do7V1jLOdF/N
+	 HtUvjCuHbVt34NDfTplFIwWrWnjXI/fZqpXKPAed86ySyMWWTzzFEBW1wh1DgOAfucmDy
+	 PXNIuI+05IH6k5XfJe4rbf7bUY9RpEwTLh76WGVdv29iEKnMufvIYeC90i3PKEfkrq9Z9
+	 ZU2/z9P/zgAZWE6CNrZNU2BECTtllcamVSfjuP7NaR3k/bOQeeuCp8gDYcqstwC2+0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795781934;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GOyuBOF8a8yZZPK9VBtSqGhwfFQMXh8N+abb8hJTCiQ=;
-	b=DFqqXgaez/QQ79sOVe1wgmmAtRgFcT55raKWC6u3lutAU53vLD0HDsQVXT0vw5KnleAH
-	 KTOOvr1cjfNLUKN/CJAQBWmlJdYbUZdJQ801OAe/Gbsk7lTgY3J7oKdNVIkq6yf3NNSoH
-	 LpRS2zt09n6m7zQ5PMgu4Lo2IAHbNhPetkMepSAnL/945NgSKSsHMG5uelAzmf1TL53dt
-	 YstEtWZ19HnjQjZW8Zjahm8m8GqTRDsdrntyW/axsXftJPusfDxH0N+0Epp2aREJF/nDW
-	 RMOzJkSOVMy5mT31Qif10qqOI9agdFwa402V6TETkUiKPBXMFKkzEYckIEcbW/Wc/Wg==
+	bh=tMNGeO93sTxsEO33pmW8bPBo/h98Zw55MeMFxQkFO1s=;
+	b=Hb7CKb3LZ3yvGlyKfYE1M5Tzf0UNG0jMoKpgxXgkTODAz6QTKQpub5EM6RkitnxpuQ/P
+	 inqjvhB830RaFotPVKWCBEkaZRT3Y/4UPyMrckg4KV4kX6TUeDers38cRXMRmyPXpJIii
+	 Bt8MrLZKm/WRjwedWv6ECHpX3360s6r9jJkmb20pa5HtyJ/5aIZlIqZIiC/15YWbgGDW/
+	 kSZJqn3HTuHWcU7gnwYKTWPfd1aQxUVmTv3dA2svE1+YxjIPodVesDdCdNr04MAH4Zm7w
+	 Zirucl4QYA6sK1mevThqeoXE44KarSdUDnCK59ypM3O9IsY5Y5nZ+K4YVAF13QqCzOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.com;
 	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Bk+dQz1R;
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=f7V+6qQp;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A15760A261F
-	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:18:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A15760A261F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D107C60A262E
+	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:18:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D107C60A262E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=Bk+dQz1R
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-490c3ae81d3so5033617f8f.2
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:18:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=f7V+6qQp
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48dee593f18so7529837f8f.3
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:18:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795781931; x=1796386731; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1795781932; x=1796386732; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=GOyuBOF8a8yZZPK9VBtSqGhwfFQMXh8N+abb8hJTCiQ=;
-        b=Bk+dQz1RJPEOaU8C7jk7QY1K0V4efd1qfGIPw9Av/4rR4y7jiJ4BLwJP8RiG1psv1E
-         WXOf8wVGNFLuU9gB4R2mIP9iwyYHCU4hkKwDgXn3JwZRjZJW6uC/zpHPkt8dfs9vY+/1
-         riz6B56rTXoKQdqamDsJL0xTemfdXo552kxQ4bhVhCLCP3ZEepkpMwPI76wFFBQh1c3i
-         vqbrzbcN82w82Kf6b3E4Fk1leYxZ1D1FCJKDFlIs+3Du1RAldh4nstao3hq/gW6k+eTH
-         1FNgVUn7CDCkiDWZXwMQcBFLULXcZ6b+R4smw7Ca7+lTHi7w7t7U9uSc+j1+4KczAmDL
-         YxNA==
+        bh=tMNGeO93sTxsEO33pmW8bPBo/h98Zw55MeMFxQkFO1s=;
+        b=f7V+6qQp9oKQCCyIIuvhYzNaC0PSDlXmV9Kf87U58Jdd8Tfa3UwNQPJaDGJm55jY2X
+         VY/VSZL9DjzgO71JIj+jKNYhtKYMfOTmiRhRLSvTW3Pmy7uiPzz6pOaFfmxELYynSdgd
+         s5wquoBzlT+vnNbtdzTC4idxwJddDlexIyKaK+uW/0nMlgN47rIH1AsLXnohCWo7TsdF
+         nfqd1KAGtBnCazYGG1sGY733YUGrXpyDrb+B2gQBwZKp7r/CS9hOzdaMAeMIj3ryyzc8
+         RSvyb5npBLRcjTdu0wVgp3uliyFCYIJ80rIOKhHMdYzk9NpXFzReqmI16qTSCA67f61h
+         Q5Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781931; x=1796386731;
+        d=1e100.net; s=20260707; t=1795781932; x=1796386732;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=GOyuBOF8a8yZZPK9VBtSqGhwfFQMXh8N+abb8hJTCiQ=;
-        b=el3msMtIZVPOzxPToQfCDTIcdsfCkEg61gIlPq4Gg9Eh0zbQ2NUimw93dp9TITdB9o
-         KZf8l8jWJp6HLnxmYeNAY2+LlIl6KgMEhnlzzxX7JdwbIYNmMUbPKaiA3CNXBsIaITgp
-         mwLREGy7qFPI7pEm9rXuMJjDSiDmzi7lomnVXu6YVBMNot4dOrQ9JNJ6lWlbsfkg8i0A
-         ftizoczl84WxZCo0l3c7or/PKXipjnNw5h/SNNIMmqqnfL8Ihjjc0Uc9Jnsp9Tk6C2Vt
-         sCIfrY8BOPV0KzfyViYYBiatWQN6g9zeKVy3EegCR9ck855OR1olybjrESaDoIk8bPwW
-         WCxQ==
-X-Forwarded-Encrypted: i=1; AL+hErHxeuLmjZBSvmJsGH0FFYNU15+GoABXiXWx8v4wCCFnqZpz07hVSqwqzs272ox1eEUq+qK/sYphOSQ=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9jr06AlvnWruKIl7DglNEYMvJIeIqPiV28565zgqhtKOHxVKrw
-	i7IOTIzC0F2M8WmtptjZGx8pZw0MKyjlilDPD3zJXtFImrvm7eaFyvxGkaaLkmkTF1k=
-X-Gm-Gg: AZFdTZemz49e3gBxw/bWy9peQR+BvihOdkikJ4NY/or4w4/p11Ynbs0kAtRhRd/H+h4
-	O+ZjVG+9iYB8aMSeDwcdc/Ivc4YT9iPQiqRUtJF3K2hgPPuGuT6tTcuFmb731jayHPKlNGnH10C
-	G6NW68CRybesUlhqgWS6EycaPsfE5K6TV9tjTPknyKI0ufLrB8nAzgp064DYOUj80rbn0b3pYQ2
-	EMPNAaRhqkEsKEd9JB7Vkafs2PSXmEh6LizQTJE1gmMHU/7Xpjcxd4L89e9q8w3j76JYLOqCksk
-	uPZkKBcBpusd5gYv2+mFtLofkT3Ho3/YP4cEIzX8qbTPPC+Be5hloST35y0TgBzFf8kZb656hGQ
-	sExvJFAnSQBy7UcULXPQMDIUmNMAp+8WvB9bCKSOGeKQWgaB4lLznwA30FaIcDvwV9m2WS+/fQN
-	Tusp2QDZb8ujq/FT42EsJ1abjcdCsOV+Qlklw4GtzCZ5NjImyG6yG4D2A+EuyhQOe02YJTRlBVW
-	Uatis14fbHccAes0paXjcDNJuFKTklUHQ9bAEhnILcTqaFfEDVVIKCiXlnW4+ZYI8lqoJRSK3IZ
-	EcQ5X2nEAGUAcUVhFvsqimzXXkf/
-X-Received: by 2002:a05:6000:4616:b0:4a8:cf12:6f34 with SMTP id ffacd0b85a97d-4abaab6318fmr47199743f8f.4.1795781930826;
-        Fri, 27 Nov 2026 04:18:50 -0800 (PST)
+        bh=tMNGeO93sTxsEO33pmW8bPBo/h98Zw55MeMFxQkFO1s=;
+        b=d+D/6m/b6NLy2mA1TRmFg2H6QqKK/An4qLqLfEfen7YkMkkOYY7+GqtRAHWzPiNkuF
+         H75+oJOlSL53vECQDEMbAjUMe6YFHj4dVJUaSHYucais7p7vvMs4AdNJtWVcgmwBwr3+
+         Ut7xjsmvTgOyql1OnWCEPEWD1XovmAm65W0+rdOkk620GLNK8Z6YpaPqAuYmrOihb8qi
+         SDzK4Yj3nZUjzEG+absJ/dAcKd6NNkxGE0mBwFx6u9Yo9HSmElgQcBsT3sYS03lV6vtg
+         lHKanWmkbRWk+nzrYR6zqrNcssAgRBZ44ZRENqicEsB4u5Vz3Ut8jnnU+BHcdMIQB8/J
+         GT9Q==
+X-Forwarded-Encrypted: i=1; AL+hErHegbO6sLmZK+CV7UUNWAFa5hGrsqMuha7V5yHshQZlm/QMlAZWtglcRp0ClHvfLkYBY3Yg95RtPrs=@vger.kernel.org
+X-Gm-Message-State: APuU4Z9gxWBmBSqUFKTYm697tcrMJ7/D11hua1i5Ju4A1q25AApYQp2B
+	0I+BVl7DqLthEMrJhfzvNO+9rgxCZWgDzVFeg7wsdyrXnPJ1Gb0vsmza2gkrxIMZrlo=
+X-Gm-Gg: AZFdTZeesjyfAhJs7ZNE+v69UPr+kYQO/huc1W7Oi301L6ar5gbM3HZnTdcMk8XoYvA
+	loAQXIZ5AMRKJ8bFJGLro5/v4UwhuEy9Hts+7X+J1AgkC/oUL5D1DU/fVWJ5fcerzYziK/+q6Zo
+	SfFc1dwApViGHAPIj0NO3PvyA72gbTnDaJLTqDuBYuHrnM7KxEzAvDEIgEjTUWfWCR+reDWt7Za
+	IECgLUC7cFZyMV4g7Etkfq/m27hw9YXXNa3tgHySo/v+HNTj3x5WlUzpw5g0Agw6M9u4/8mO/bh
+	R9YNZtUN84ZdsKi6VEdz6S/hafMdP9uouxJB7wT/EoGm2lPrYWGCjKiYvsyhmoxylpJ//IjNDQ7
+	a+sspLdhLA9ZnYPZk7I+umEs7MkDT5o6sMbIffZQuKyhExc+6/qkioJRmuwuHBa/dJszUj4g0lj
+	FO0CbxL7gwSemHa2GU2eOdwvWKjK+h6D553QyfypHBRJ/Vni95RLvLq6A1J72utq0kVPhq1l6v8
+	k/5vJf+tTJ+gKYTTZ6KxGpjwexYMDbru10xhMxXu9maYcwke/f5xcb98FqFIV8SYZA8RGQ6I08L
+	yiuQllVi1FPuyNETnnmnP0v8FW/I
+X-Received: by 2002:a05:6000:299c:10b0:4a7:9630:7b5a with SMTP id ffacd0b85a97d-4abb47b2043mr35030668f8f.47.1795781932170;
+        Fri, 27 Nov 2026 04:18:52 -0800 (PST)
 Received: from localhost ([195.94.148.180])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4bef07f9e0dsm3453019f8f.53.2026.11.27.04.18.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6b110c3csm44903360f8f.36.2026.11.27.04.18.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 04:18:50 -0800 (PST)
+        Fri, 27 Nov 2026 04:18:51 -0800 (PST)
 From: Andrea della Porta <andrea.porta@suse.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.Li@kernel.org>,
@@ -101,9 +101,9 @@ Cc: Frank Li <Frank.Li@kernel.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Andrea della Porta <andrea.porta@suse.com>
-Subject: [PATCH v4 07/28] dmaengine: bcm2835: Support common dma-channel-mask
-Date: Fri, 27 Nov 2026 13:21:57 +0100
-Message-ID: <20261127122236.4976-8-andrea.porta@suse.com>
+Subject: [PATCH v4 08/28] dmaengine: bcm2835: move CB info generation into separate function
+Date: Fri, 27 Nov 2026 13:21:58 +0100
+Message-ID: <20261127122236.4976-9-andrea.porta@suse.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20261127122236.4976-1-andrea.porta@suse.com>
 References: <20261127122236.4976-1-andrea.porta@suse.com>
@@ -118,48 +118,134 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Nowadays there is a generic property for dma-channel-mask in the DMA
-controller binding. So prefer this one instead of the old vendor specific
-one. Print a warning in case the old one is used. Btw use the result of
-of_property_read_u32() as return code in error case.
+Actually the generation of the Control Block info follows some simple
+rules. So handle this with a separate function to avoid open coding
+for every DMA operation. Another advantage is that we can easier
+introduce other platforms with different info bits.
 
 Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
 Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
 ---
- drivers/dma/bcm2835-dma.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/dma/bcm2835-dma.c | 53 +++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
-index d65a93be5fa1..d2e000e94347 100644
+index d2e000e94347..eb306397b0fa 100644
 --- a/drivers/dma/bcm2835-dma.c
 +++ b/drivers/dma/bcm2835-dma.c
-@@ -982,12 +982,20 @@ static int bcm2835_dma_probe(struct platform_device *pdev)
+@@ -228,6 +228,33 @@ static inline struct bcm2835_desc *to_bcm2835_dma_desc(
+ 	return container_of(t, struct bcm2835_desc, vd.tx);
+ }
+ 
++static u32 bcm2835_dma_prepare_cb_info(struct bcm2835_chan *c,
++				       enum dma_transfer_direction direction,
++				       bool zero_page)
++{
++	u32 result = WAIT_RESP(c->dreq) | WIDE_SOURCE(c->dreq) |
++		     WIDE_DEST(c->dreq) | BURST_LENGTH(c->dreq);
++
++	if (direction == DMA_MEM_TO_MEM)
++		return result | BCM2835_DMA_D_INC | BCM2835_DMA_S_INC;
++
++	/* Setup DREQ channel */
++	if (c->dreq != 0)
++		result |= BCM2835_DMA_PER_MAP(c->dreq);
++
++	if (direction == DMA_DEV_TO_MEM) {
++		result |= BCM2835_DMA_S_DREQ | BCM2835_DMA_D_INC;
++	} else {
++		result |= BCM2835_DMA_D_DREQ | BCM2835_DMA_S_INC;
++
++		/* non-lite channels can write zeroes w/o accessing memory */
++		if (zero_page && !c->is_lite_channel)
++			result |= BCM2835_DMA_S_IGNORE;
++	}
++
++	return result;
++}
++
+ static void bcm2835_dma_free_cb_chain(struct bcm2835_desc *desc)
+ {
+ 	size_t i;
+@@ -631,9 +658,7 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_dma_memcpy(
+ {
+ 	struct bcm2835_chan *c = to_bcm2835_dma_chan(chan);
+ 	struct bcm2835_desc *d;
+-	u32 info = BCM2835_DMA_D_INC | BCM2835_DMA_S_INC |
+-		   WAIT_RESP(c->dreq) | WIDE_SOURCE(c->dreq) |
+-		   WIDE_DEST(c->dreq) | BURST_LENGTH(c->dreq);
++	u32 info = bcm2835_dma_prepare_cb_info(c, DMA_MEM_TO_MEM, false);
+ 	u32 extra = BCM2835_DMA_INT_EN;
+ 	size_t max_len = bcm2835_dma_max_frame_length(c);
+ 	size_t frames;
+@@ -664,8 +689,7 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_slave_sg(
+ 	struct bcm2835_chan *c = to_bcm2835_dma_chan(chan);
+ 	struct bcm2835_desc *d;
+ 	dma_addr_t src = 0, dst = 0;
+-	u32 info = WAIT_RESP(c->dreq) | WIDE_SOURCE(c->dreq) |
+-		   WIDE_DEST(c->dreq) | BURST_LENGTH(c->dreq);
++	u32 info = bcm2835_dma_prepare_cb_info(c, direction, false);
+ 	u32 extra = BCM2835_DMA_INT_EN;
+ 	size_t frames;
+ 
+@@ -675,19 +699,14 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_slave_sg(
+ 		return NULL;
  	}
  
- 	/* Request DMA channel mask from device tree */
--	if (of_property_read_u32(pdev->dev.of_node,
--				 "brcm,dma-channel-mask",
--				 &chans_available)) {
--		dev_err(&pdev->dev, "Failed to get channel mask\n");
--		rc = -EINVAL;
--		goto err_no_dma;
-+	rc = of_property_read_u32(pdev->dev.of_node, "dma-channel-mask",
-+				  &chans_available);
-+
-+	if (rc) {
-+		/* Try deprecated property */
-+		if (of_property_read_u32(pdev->dev.of_node,
-+					 "brcm,dma-channel-mask",
-+					 &chans_available)) {
-+			dev_err(&pdev->dev, "Failed to get channel mask\n");
-+			goto err_no_dma;
-+		}
-+
-+		dev_warn(&pdev->dev,
-+			 "Please update the DT, replacing brcm,dma-channel-mask with dma-channel-mask\n");
+-	if (c->dreq != 0)
+-		info |= BCM2835_DMA_PER_MAP(c->dreq);
+-
+ 	if (direction == DMA_DEV_TO_MEM) {
+ 		if (c->cfg.src_addr_width != DMA_SLAVE_BUSWIDTH_4_BYTES)
+ 			return NULL;
+ 		src = c->cfg.src_addr;
+-		info |= BCM2835_DMA_S_DREQ | BCM2835_DMA_D_INC;
+ 	} else {
+ 		if (c->cfg.dst_addr_width != DMA_SLAVE_BUSWIDTH_4_BYTES)
+ 			return NULL;
+ 		dst = c->cfg.dst_addr;
+-		info |= BCM2835_DMA_D_DREQ | BCM2835_DMA_S_INC;
  	}
  
- 	/* get irqs for each channel that we support */
+ 	/* count frames in sg list */
+@@ -717,8 +736,8 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_dma_cyclic(
+ 	struct bcm2835_chan *c = to_bcm2835_dma_chan(chan);
+ 	struct bcm2835_desc *d;
+ 	dma_addr_t src, dst;
+-	u32 info = WAIT_RESP(c->dreq) | WIDE_SOURCE(c->dreq) |
+-		   WIDE_DEST(c->dreq) | BURST_LENGTH(c->dreq);
++	u32 info = bcm2835_dma_prepare_cb_info(c, direction,
++					       buf_addr == od->zero_page);
+ 	u32 extra = 0;
+ 	size_t max_len = bcm2835_dma_max_frame_length(c);
+ 	size_t frames;
+@@ -749,26 +768,16 @@ static struct dma_async_tx_descriptor *bcm2835_dma_prep_dma_cyclic(
+ 			      "%s: buffer_length (%zd) is not a multiple of period_len (%zd)\n",
+ 			      __func__, buf_len, period_len);
+ 
+-	/* Setup DREQ channel */
+-	if (c->dreq != 0)
+-		info |= BCM2835_DMA_PER_MAP(c->dreq);
+-
+ 	if (direction == DMA_DEV_TO_MEM) {
+ 		if (c->cfg.src_addr_width != DMA_SLAVE_BUSWIDTH_4_BYTES)
+ 			return NULL;
+ 		src = c->cfg.src_addr;
+ 		dst = buf_addr;
+-		info |= BCM2835_DMA_S_DREQ | BCM2835_DMA_D_INC;
+ 	} else {
+ 		if (c->cfg.dst_addr_width != DMA_SLAVE_BUSWIDTH_4_BYTES)
+ 			return NULL;
+ 		dst = c->cfg.dst_addr;
+ 		src = buf_addr;
+-		info |= BCM2835_DMA_D_DREQ | BCM2835_DMA_S_INC;
+-
+-		/* non-lite channels can write zeroes w/o accessing memory */
+-		if (buf_addr == od->zero_page && !c->is_lite_channel)
+-			info |= BCM2835_DMA_S_IGNORE;
+ 	}
+ 
+ 	/* calculate number of frames */
 -- 
 2.51.0
 
