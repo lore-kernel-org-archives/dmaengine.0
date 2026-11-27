@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781926;
-	b=AohzRoc1BzAiDdkBTATQwgUq/LJrYhuuNfvKl1Hsv9GrQLQhZAfpkBXNJLfNbHFLASxQ
-	 Z1GnWLrezX3libFkpk3W3rHtDvU1CNd3J7m1D9k6ZEKsqZ2JCT/9Yw5gdxnN3pYOhAAUn
-	 vkLAi8kl0pvr+9BV4ynnHy5nuePKAYnlYWaWWJRh8sslP0v8hBZXKzK9D7DbaWQGvg9GT
-	 Z0er/yFA5pkSI3a+9ry2MXHfLGsxhFPVf48sy5ZGBxEKW5+AT6uEah2GV2pl+KBDdx1y/
-	 2i2bMK1OPHhoctipFcta0lDLHOJQVL8e9VzldyRl+nAVMBfvuUl/noZQTjprqPmyPqw==
+	t=1795781927;
+	b=AWwRkDpbOKE70O79f9pMv35qE/ubHvo2GYJ27F8peyaFw04PUfVttZ85WswYYJMy/CwI
+	 E9W+ps0+ElW+kzktM42KMmWqLIigEIORX/EE+ycHB5ZQuX5F/QAW8QVvERLdOtxdX9Qpa
+	 moeQ/ujebIC0ek+xo63ba+qacCe0UibLFCaOHSWeM/Fy1Z4mwuz9DyvczN6uQz2eayiwb
+	 O5D4nO9yenpsCuiO3kgqCFRlAgTls1+kjcz87ZjS8FyXohQ87ye/qK21zkAu0eAOYor9z
+	 0Dbqy35v55YSsgYdKvKv6WC01LbS/jHgtjPgGQBu7V/CN+4BTPma/do77aHH9nLyg+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795781927;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nnn/mFpoR7L3dnATqzoKoqtIs3zKchqzDBWjzMLVr8g=;
-	b=48UrBT4Zw81Yt+tI8rga3e6wJ+s5tGuRYV8MXotpqlmittIxaAXzMTY8jFGzHS22G/Tu
-	 c3eTcevx4L09wLZvnwExIoEDVZaz1nnmKOCxukleCYG3YJ/iA2xhvk0Sp/z3iGAINcEwX
-	 gWgGZffdE0pFZEvgOFqY/y4whAgQNJ/DLtM5IUR8Li+YK+rBA/BTdnluuk6WDXDac6MAU
-	 YY31JSgim+dLnvHo5AWMhNVhnwNEEVrlopPCOMrPm0MMQhSibkSHiIcFT4vuRsvuzcD7U
-	 7CgRHpxQJ5KA1J32Cq+1ZDcbZM3Xld02uMY+Xxr160Fz0y/Pbc4bAuoSVgRRiVsDOuQ==
+	bh=CKw4sWprE2Ul+TtVWYzdYET0k07qC46nb2OuMsfTntI=;
+	b=QGNQ9zLdzu/T7d7XsY6AagBVEx5ZzNrKA+aHrbp3FZk+1TnJJRz+9Xr6SdhjZJBC5WQD
+	 FemVBh6HLB28RDnHofAgUQ5HJkseaHSZ51i9s/5Ksr3pVU62TC934OfmoYMmou9OKdR8t
+	 FJaiCdVoEfJbqjiYFPr03mWC5lKh4COHS91kssjNji9N8sAMBO5XNSZZeLfArTPKrVxy5
+	 nRYuJ/emqc8kuZdpEb+wHVAKCDuzVk2SsjC26vPAXw74Pp9t2sm99XyTXHeioo5keTLE2
+	 8wO5MP7WrZd8Bur1qXQitSDxr4TZESU1Jiw/+vdX08QEx7CtmgjqfW5ICbW6+mHkZUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.com;
 	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=SM47LHuP;
-	arc=none smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=gm4YxnjT;
+	arc=none smtp.remote-ip=209.85.221.42
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8768A606A693
-	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:18:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8768A606A693
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1A2606A69D
+	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:18:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CC1A2606A69D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=SM47LHuP
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-4a7b8abe209so6256681f8f.0
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:18:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=gm4YxnjT
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-4acb44dcd7bso7233273f8f.0
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795781924; x=1796386724; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1795781925; x=1796386725; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=nnn/mFpoR7L3dnATqzoKoqtIs3zKchqzDBWjzMLVr8g=;
-        b=SM47LHuPhTeAXndjkqj6zx/iIGjRZu9YMHQ/bxgxsXVsjd93y1tAIlNTKJ+2FJ3KRo
-         lgcnesAPP/2v8JH9utitM8SbbIyYjSHjGjCqG4Eg8WRhJ/KwRBAVFqh4spWziDMtXsZL
-         SQIn+woZGCT70hnYh7SLvDhdl/WOcV3HeEtvW/C4mgl3bQDaVXFpbFjQ6NYDVUiCU9F4
-         4cyeqOboJoFqvia7EUA2pNJs7ed76fW0wjqjLxWnEWVi5ruNhD8JM/5muIKqmjG6fUFP
-         0fEaVhfPfi4naerv+cwwg1wa/NLwQtuPpok7AyyGNxOI5KwijvnmPzK04kkBNaZx15E/
-         flVg==
+        bh=CKw4sWprE2Ul+TtVWYzdYET0k07qC46nb2OuMsfTntI=;
+        b=gm4YxnjTJo8cvnBF12yR3Ois9lkRxPejDTQhHNxMexm4Ty5zn+7vU5a1wL+3t2B4F9
+         aTlXtTNE0AQtCp5S4gHpgS278hDDMIQDtTP2F08ro2/sSw56agYQTISfcjWeZKj3Wsjx
+         azeVmSwOu51jzBSRC+5ynKGHwQ1DMU0fC2R95BTKF58SN+vjLmlXvjEYFLvUp+xL4+ON
+         gW28DPEOx+RcOP1a/qJYmeR6pacpYSIxy+abEhVBKxpSwZOZz4oAOcfjKTLi17pGESIF
+         ZzFvKqIRRuMI1zNrOfu64ZBaKksP2eMBbQ4nTF7Vo1nZAIxXJQwxBNzlz1ZcRLnhK9+B
+         +SwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781924; x=1796386724;
+        d=1e100.net; s=20260707; t=1795781925; x=1796386725;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nnn/mFpoR7L3dnATqzoKoqtIs3zKchqzDBWjzMLVr8g=;
-        b=AbeWHbtR9dwYnKdsopE/XnKRAYvPb2NVktQdvClPa/SSWiFt97w0w4nOeabC6zLnf4
-         CH0WfsQR8wTWwzZyy4HRteUbQykJ2SGAccVqcyjXblCfx24bS89ELB3/6fpwoXzbA4ni
-         0EhX+zd+42/Hkg50wokZR/nYHWde2J7AkIP0Mf8pf/n5vPdKOCscih06Wgmml+q9KDpY
-         XutZGO3UUPGGumgUW7Q8adsLPK+bPbolzq69P8hMhd3mfjYkhS+waDBo6017BVE7RT/o
-         JvZNvWcOQ4VI8laPeUcGdWYB4jjn9j4TgNjszMDQaNTpP4t44wwEc+pAmzg+QaDaWyzf
-         RpdA==
-X-Forwarded-Encrypted: i=1; AL+hErEA814N8N7eIGNTM4SyH6JRR3z0b3h+04sPJmmTYtN0ZPC4G4CkMC9VFaYl8Y/BPtbdJn/yBVdpc7g=@vger.kernel.org
-X-Gm-Message-State: APuU4Z8XtGmxrU6ugsaLpZKM5500GSAzPwjDrGhxvSxdJMonhV0YzkeK
-	qPFOAAn+YBTlVSe8eJs2pA19G2UOmpnHE8LQMBUsnY1ni6aCY1QpQ3Fgt3X2oJtxraI=
-X-Gm-Gg: AZFdTZcZKRkuHT0yCNGUKXMyrbJ9muEGPfVGnmF+/n/bhkxWK7bhbUpFGe8PuRqkrcM
-	k1IwW4rTZxhe5Jny1PutT+6MZQB0XynytMKVO0xJsduMakckIgDNuceTsO19xt5nQkSg2uxXqjj
-	kgK5DUT22vnLlC5ojeq/M/NX7ck9Zl9euoF6QP/4YnaNuDTNsEVDcjrUG5g5em93IArIKPXZ//7
-	esACKOTKefGomZ2wxlxJQOvhv8rRLQDYHQ/2qnK7I6dihW0YCLTgPNbFTOvta3DBWy6tXssk5HL
-	l+ppE4NpzdwaKqtqBkQZ+6MghDdS4q7MwoQ7/EGs6uxbdctM5g939miC2OyGDuDWZIKjnLLkcj7
-	FFrEpFN5gxTm3sbqmvHjYqPmQED+iM9kx6Wuh5eay/43IDTENK0gszzf2EdkENHTNRjbowPyFy3
-	nBunBIy4RdCfcfokQj66F5lQqcF7+iPQ1SZm5BThI2ZuxCyQeTQuPd+F16yu1g1RGSZEoYiuLJs
-	GDAz3iLhruiTkg1h2ZT8/9gCtPAI8NUj3BPb9LgWE568zs1Nfe0ocHs9KRxEZLuIWq68CoIN+z6
-	LmTKtRzRIR9CAmpzDWVdG8XUbs69
-X-Received: by 2002:a5d:64c9:0:b0:4a6:bc53:2478 with SMTP id ffacd0b85a97d-4abb0d5256fmr47792743f8f.13.1795781923925;
-        Fri, 27 Nov 2026 04:18:43 -0800 (PST)
+        bh=CKw4sWprE2Ul+TtVWYzdYET0k07qC46nb2OuMsfTntI=;
+        b=XXpqbmMMAEhEl5LEiH87UJe+2X8tsEqaNWrE00RJ5vaJsUPgpZ1VB6e1pbJYdZ6/Ll
+         5LcQgpqIknktC/zOkGv2vY6/IZ9C5jsylhMX3forseTsrgePD8LTMB3sRl/qtagp3I4r
+         9sJ2/mit+zbOCrqCZnmcr4T0TAWWSBlNSL6rBh1ld+Pkxr8qYgV/o4J0AQVmuahvjPEJ
+         1aMIlYenHpnX+lhmksczieCo6NWhbwBqHN65Ktl0hDkDDuFFTJCzPNh8plkIbrieyzKo
+         VgIMAoi9ZnqNs+eBHguQgSFUAOghla1//Wzf1CFuoBdvwKNFKyHgD5o2LUqfrASLrTGE
+         uKQg==
+X-Forwarded-Encrypted: i=1; AL+hErHSzXPLlNIPLoIcFqyknSc46zGuUZpzlnOmzDxHPiYN0XrovM987xAnvutXvAz6E74HfG87GCDaN4Y=@vger.kernel.org
+X-Gm-Message-State: APuU4Z/T7bjcgD4tAF0BmOlp+ETGw2PsYF2+qjzmjybOy6XprSw7JwA4
+	nkzjZQC2IYvYT86nzYqAzyxRNl4DbauWMk+kCaVLY1RqqKPcLwiH69z//fwy0NegXBk=
+X-Gm-Gg: AZFdTZeSydFVAQ3zUeo5P7QxTonQmHGtCNhPFcvkoyFcL0xHrqawYgnxSDb0GFE88RU
+	nyvQa057ZUja9L76TUUdZyWZwh8R7reFhVsyfpQHifomuTK6EHEBTp65X4ocpeDLC7KNFHeafMu
+	2w1UvcT99XUx74ChTjQsI+T0uRkzcdZBX5+4w8T/Wkvwmo9vthhroXNAHxLsGsL6RBNblwfifKh
+	PCnvTTIx2av8gBazezXOM7zIhF8dWRxMDkSIuV8QfVD3SrUkI56RXM5CskogHFVEcCY2q28mZXJ
+	Y2gXGjzmtNXeZFPG8ErtTFdhSrJio955HxLRU9NpeJUbYs8afKZCSm6iRqVdNKa+WAgHgxYSTH1
+	BsJQpYeEWbISm6r6LT+3dkV9GX5ddfKZ5E4p08qt6fPS+XCdOnNW9C5GP9nv8TMhNuYxgEMn2pj
+	umA/8Mb5kBIyc1dYNVjAMzwr7RUouFtPxTTWn6dxvmPC21omSvAPJuW1j057j+QnXvl7/5Yko9l
+	NJNQOt3b9Ir6TAqX4hQn/sc5poLrrc9SERTSXztOeggsmB7CqiUCPE7mdYWZUZJOmA0X058G22C
+	n+R9Bkfy2nm/oh6c+iYXzcWKZrLS
+X-Received: by 2002:a05:600c:1911:b0:4a1:7c56:d4e2 with SMTP id 5b1f17b1804b1-4bb8880cf84mr498430495e9.16.1795781925146;
+        Fri, 27 Nov 2026 04:18:45 -0800 (PST)
 Received: from localhost ([195.94.148.180])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab69bf62f7sm47786781f8f.13.2026.11.27.04.18.43
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8538b2c5sm673667305e9.5.2026.11.27.04.18.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 04:18:43 -0800 (PST)
+        Fri, 27 Nov 2026 04:18:44 -0800 (PST)
 From: Andrea della Porta <andrea.porta@suse.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.Li@kernel.org>,
@@ -101,9 +101,9 @@ Cc: Frank Li <Frank.Li@kernel.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Andrea della Porta <andrea.porta@suse.com>
-Subject: [PATCH v4 02/28] dt-bindings: dma: brcm,bcm2835-dma: Document the flags of the DREQ cell
-Date: Fri, 27 Nov 2026 13:21:52 +0100
-Message-ID: <20261127122236.4976-3-andrea.porta@suse.com>
+Subject: [PATCH v4 03/28] dmaengine: bcm2835: Add support for per-channel flags
+Date: Fri, 27 Nov 2026 13:21:53 +0100
+Message-ID: <20261127122236.4976-4-andrea.porta@suse.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20261127122236.4976-1-andrea.porta@suse.com>
 References: <20261127122236.4976-1-andrea.porta@suse.com>
@@ -118,78 +118,90 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The single specifier cell is not limited to the DREQ number: the upper
-bits carry per-channel flags (AXI priorities, wide accesses, burst and
-write-response handling), which the downstream Raspberry Pi device trees
-have been using for years and which the driver is going to support.
+From: Phil Elwell <phil@raspberrypi.org>
 
-Document the meaning of those bits and add a header defining them, so
-that device trees do not need to open code them.
+Add the ability to interpret the high bits of the dreq specifier as
+flags to be included in the DMA_CS register: the AXI priority and panic
+priority (used e.g. by the HDMI audio channels to keep the MAI FIFO fed),
+the wait for outstanding writes before signalling completion and the
+DISDEBUG flag. The original motivation for this change was the ability
+to set the DISDEBUG flag for SD card transfers to avoid corruption when
+using the VPU debugger.
 
+The flags occupy the same bits as the corresponding fields of the CS
+register, so they only need to be masked.
+
+Since the flags now affect every transfer issued on the channel, clear
+the dreq when the channel is released, so that a later user requesting
+the channel by capability (e.g. for memcpy) does not inherit the flags
+of the previous DT client.
+
+Signed-off-by: Phil Elwell <phil@raspberrypi.org>
+Co-developed-by: Andrea della Porta <andrea.porta@suse.com>
 Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
 ---
- .../bindings/dma/brcm,bcm2835-dma.yaml        | 13 ++++++++-
- include/dt-bindings/dma/brcm,bcm2835-dma.h    | 27 +++++++++++++++++++
- 2 files changed, 39 insertions(+), 1 deletion(-)
- create mode 100644 include/dt-bindings/dma/brcm,bcm2835-dma.h
+ drivers/dma/bcm2835-dma.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml b/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
-index c9b9a5490826..f81740e49301 100644
---- a/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
-+++ b/Documentation/devicetree/bindings/dma/brcm,bcm2835-dma.yaml
-@@ -37,7 +37,18 @@ properties:
-     maxItems: 16
+diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
+index 036a7a1727a5..5a9854a3c08e 100644
+--- a/drivers/dma/bcm2835-dma.c
++++ b/drivers/dma/bcm2835-dma.c
+@@ -33,6 +33,8 @@
+ #include <linux/of.h>
+ #include <linux/of_dma.h>
  
-   '#dma-cells':
--    description: The single cell represents the DREQ number.
-+    description: |
-+      The single cell contains the DREQ number in bits 0-4, optionally
-+      combined with the following per-channel flags, which are defined in
-+      include/dt-bindings/dma/brcm,bcm2835-dma.h:
-+        bits 16-19: AXI priority
-+        bits 20-23: AXI panic priority
-+        bit 24: use wide (128-bit) source reads
-+        bit 25: use wide (128-bit) destination writes
-+        bit 27: do not wait for AXI write responses
-+        bit 28: wait for outstanding writes before signalling completion
-+        bit 29: do not pause the channel when the debug signal is asserted
-+        bit 30: use multi-beat bursts
-     const: 1
++#include <dt-bindings/dma/brcm,bcm2835-dma.h>
++
+ #include "virt-dma.h"
  
-   brcm,dma-channel-mask:
-diff --git a/include/dt-bindings/dma/brcm,bcm2835-dma.h b/include/dt-bindings/dma/brcm,bcm2835-dma.h
-new file mode 100644
-index 000000000000..ace34c32a860
---- /dev/null
-+++ b/include/dt-bindings/dma/brcm,bcm2835-dma.h
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+ #define BCM2835_DMA_MAX_DMA_CHAN_SUPPORTED 14
+@@ -143,6 +145,15 @@ struct bcm2835_desc {
+ #define BCM2835_DMA_WAIT(x)	FIELD_PREP(GENMASK(25, 21), x) /* add DMA-wait cycles */
+ #define BCM2835_DMA_NO_WIDE_BURSTS BIT(26) /* no 2 beat write bursts */
+ 
 +/*
-+ * Flags of the DMA specifier of the BCM2835 DMA controller. They are ORed
-+ * with the DREQ number in the single cell of the specifier.
++ * Flags of the DMA specifier to be set in the CS register, they have the
++ * same layout as the corresponding CS register fields.
 + */
++#define BCM2835_DMA_CS_FLAGS(x) ((x) & (BCM2835_DMA_FLAG_PRIORITY(15) | \
++				      BCM2835_DMA_FLAG_PANIC_PRIORITY(15) | \
++				      BCM2835_DMA_FLAG_WAIT_FOR_WRITES | \
++				      BCM2835_DMA_FLAG_DIS_DEBUG))
 +
-+#ifndef _DT_BINDINGS_DMA_BRCM_BCM2835_DMA_H
-+#define _DT_BINDINGS_DMA_BRCM_BCM2835_DMA_H
+ /* debug register bits */
+ #define BCM2835_DMA_DEBUG_LAST_NOT_SET_ERR	BIT(0)
+ #define BCM2835_DMA_DEBUG_FIFO_ERR		BIT(1)
+@@ -435,7 +446,8 @@ static void bcm2835_dma_start_desc(struct bcm2835_chan *c)
+ 	c->desc = to_bcm2835_dma_desc(&vd->tx);
+ 
+ 	writel(c->desc->cb_list[0].paddr, c->chan_base + BCM2835_DMA_ADDR);
+-	writel(BCM2835_DMA_ACTIVE, c->chan_base + BCM2835_DMA_CS);
++	writel(BCM2835_DMA_ACTIVE | BCM2835_DMA_CS_FLAGS(c->dreq),
++	       c->chan_base + BCM2835_DMA_CS);
+ }
+ 
+ static irqreturn_t bcm2835_dma_callback(int irq, void *data)
+@@ -462,7 +474,8 @@ static irqreturn_t bcm2835_dma_callback(int irq, void *data)
+ 	 * if this IRQ handler is threaded.) If the channel is finished, it
+ 	 * will remain idle despite the ACTIVE flag being set.
+ 	 */
+-	writel(BCM2835_DMA_INT | BCM2835_DMA_ACTIVE,
++	writel(BCM2835_DMA_INT | BCM2835_DMA_ACTIVE |
++	       BCM2835_DMA_CS_FLAGS(c->dreq),
+ 	       c->chan_base + BCM2835_DMA_CS);
+ 
+ 	d = c->desc;
+@@ -512,6 +525,9 @@ static void bcm2835_dma_free_chan_resources(struct dma_chan *chan)
+ 	free_irq(c->irq_number, c);
+ 	dma_pool_destroy(c->cb_pool);
+ 
++	/* do not leak the flags of a DT client to the next user */
++	c->dreq = 0;
 +
-+/* AXI priority (0-15) of the channel */
-+#define BCM2835_DMA_FLAG_PRIORITY(x)		(((x) & 0xf) << 16)
-+/* AXI panic priority (0-15) of the channel */
-+#define BCM2835_DMA_FLAG_PANIC_PRIORITY(x)	(((x) & 0xf) << 20)
-+/* Use wide (128-bit) source reads */
-+#define BCM2835_DMA_FLAG_WIDE_SOURCE		(1 << 24)
-+/* Use wide (128-bit) destination writes */
-+#define BCM2835_DMA_FLAG_WIDE_DEST		(1 << 25)
-+/* Do not wait for the AXI write responses */
-+#define BCM2835_DMA_FLAG_NO_WAIT_RESP		(1 << 27)
-+/* Wait for the outstanding writes before signalling completion */
-+#define BCM2835_DMA_FLAG_WAIT_FOR_WRITES	(1 << 28)
-+/* Do not pause the channel when the debug signal is asserted */
-+#define BCM2835_DMA_FLAG_DIS_DEBUG		(1 << 29)
-+/* Use multi-beat bursts */
-+#define BCM2835_DMA_FLAG_BURST			(1 << 30)
-+
-+#endif /* _DT_BINDINGS_DMA_BRCM_BCM2835_DMA_H */
+ 	dev_dbg(c->vc.chan.device->dev, "Freeing DMA channel %u\n", c->ch);
+ }
+ 
 -- 
 2.51.0
 
