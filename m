@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.46
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795781946;
-	b=L05tbejixbKZJFvo7l7Nap2RrzA18jEfRt1LmKo+CPNC9t3ARqrrJSeUOQWzOeY9pRGt
-	 A64RghNHLdos0ZBhat0U0hNg5FtTzyJV0E9Rwy3vXttfEaaLqtd0azQdGNJlLBTxxvLC0
-	 M46iC669RdsUEv5Fgjy8dNGbiC1qnAqy8jZyyaN9gQ3IZ6C4UOdzX/TlKAauE8o9w9HoV
-	 RcwWJcA3LqlewM6BbtFd5sQOp2I4lZvWK7jebUMMbsaGbfX/Azys2fH0GpUsKBByvRXOv
-	 5yVCsnUGUxODqlKA5clktCikbhWz4Ht/93PQ0evrFjygyfHnBzJLLeSRlHc0Vsj12Bw==
+	t=1795781947;
+	b=QRGfVUcX2Lhfb/ZzA6QtK8vyt0XoocpOO+LBr4Bvy+XnvOe0sWTnmKjl/wj4vKxb9OIz
+	 xVs0EFdB0EnSB8x59MNs+Y29IyRfkCbRhAaYd0MwneRWZmT0mThhmCTS2KWr7PhqQR5MF
+	 LAC3DaFokJzDa68jEUFocm85jusunzOZxtw0UZtxs56UzbvXkMN5GuXzHETql/PK/XeOI
+	 EuGI6HcyLeXyOiWo8MuDTXfBE22dCUj8Ok/eMOQ4unLHQh9dJsTnU/3R9iFlui5QUePD8
+	 x/N+afz+aiF5UG6QdGAKWFz72u3fmuApzxoTa81wiN9WJgZopyMSZutE5AZrIFoHMxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795781946;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795781947;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcDUe7weJJYMrvTg7gVHHmg7tsUoApLJH7Q2bv9KvGA=;
-	b=uzTFVoujrDUXCYYGbE57dDhpCRmZX40y3+zpLtqD1I+qnu9ez/Lb7cpzcIo+QpFmKvQX
-	 KDwSh7bjVlQEIXc0ORnE34d024O4kijCrgiEeqq6urOqZJuI6XmuRre7c1fwOr0u5EW+G
-	 DzvKb4VowqADBQ51kePlMEz7r9VyZ9egVKJaqqz44j78XL3Lv/5s7uYJmjeqCv8xbuvFh
-	 Uk9xtyNRTAZP71XCdmOxqAWrrpL6M5udg4dNtLgN02sSulCkQcaCDCcrQiEE1dKst+N9m
-	 Qk4Z0Pp37w9+zDkJ32CspBc6YydSx+Fau3k45PDxhDBKs58PF50rUL1GaKPq62hGLlA==
+	bh=R4tDEGiURQM1Arylz9v3qFzT8K+oOXwhYEhcFQrcNqk=;
+	b=zZXgXy/2sAFrPfOhqf1HeXCr6kkUL2Q5PD+wJxUrz1+mhUYkDr75T6zyEhlcA12K6VsL
+	 5mhlzoJWDPRDOFr5iF2+AM4q/e3CsaDO0i1wdo8xOoRWtGT+lbH3upPLNprtk1dYw8BNb
+	 AOTta4MFhNQM6gyS8E0MS/d1jHQ74TnROw3TKJ8nxJHp/ueHNsU5yQ+J+DNk5o6XPk8SW
+	 mAweabOfG3NGDKgZwCTc3TiC8+/k3cfRvvtXr2onDj7exlwnAHQ2mhtIHjDd2qcimXMAr
+	 IOhENxOvuElnKZ24EhD5JeqrJBxHfA1f43z3N+GTz/a0ttzJxDxwv0f1SbH4qbl1Ofg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.com;
 	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=LlfDG8Yy;
-	arc=none smtp.remote-ip=209.85.128.51
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=cK7VwD4l;
+	arc=none smtp.remote-ip=209.85.221.46
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAA460A2609
-	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:19:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBAA460A2609
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF5660A5BE3
+	for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 12:19:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4EF5660A5BE3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=LlfDG8Yy
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4bb9d8e8e90so51695345e9.3
-        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:19:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=cK7VwD4l
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48e09aa5264so4703849f8f.2
+        for <dmaengine@vger.kernel.org>; Fri, 27 Nov 2026 04:19:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1795781944; x=1796386744; darn=vger.kernel.org;
+        d=suse.com; s=google; t=1795781946; x=1796386746; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=gcDUe7weJJYMrvTg7gVHHmg7tsUoApLJH7Q2bv9KvGA=;
-        b=LlfDG8Yybx7d37cHaAKtJuCuShAmNgy6eWz/R2KOTm7I9hXGIXKi0sotFty3knaimi
-         HHrLuLUb5LzIr+Jds4OpxTFmx2Hd+YW1Q8x/F9l6mQrhRKaWy7JNHREl9cMkwfxvdk9R
-         sypRCT9yjLx9cVwWn3LrI4/hdXhUbltxjBeEYeVINpc4Cpv7xOiyD8T1JgBbQXxXSdFg
-         8vRKdVm+OsVMbrZXM/p9QWru4RkckRMx7uuR7znUSLyZpuyzyO8oJEd+wteYJ2N6mi0Q
-         vcQ8jBTpOAMvCizu64UdHAT/AkLBPIulPoWJ4NUlm9BCX2cw5RfbKdXS4I4Wyfp9jOTp
-         CHNA==
+        bh=R4tDEGiURQM1Arylz9v3qFzT8K+oOXwhYEhcFQrcNqk=;
+        b=cK7VwD4lhiEURNmrx0uRZYLZwsRUZX9XwpeDLu685DQ/eBv0y4nmUjDgVBok9vrqJ2
+         MRZlocRElF4uFOlhpGZfJJxce2M5zbNRfdcwhh7wZDUq553Swtkac8kwNq30pCLl9ecT
+         8JGfgoPQZIWpohDlOHOT0Ph7vonifkWou1dg0DiBOO/rohzEnjuy7ynFTXsTELHq2ezB
+         J6aG05JPBIVhfXAfcwnBDaT0luBHM5Q0MsN4qZXR3rsnaRq0ycmZqy3mpcd9QuGyH/vC
+         AHcgkQ5LHT1bQadT69LdoRYEYXonfOJHMLzfwwjB+UgW4INoXSxIx4IGucob/t6iJibi
+         yO8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795781944; x=1796386744;
+        d=1e100.net; s=20260707; t=1795781946; x=1796386746;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gcDUe7weJJYMrvTg7gVHHmg7tsUoApLJH7Q2bv9KvGA=;
-        b=ZHo4L0zR+K1Il0XPDIjJFt9Xy731OzkBUJEbGcTdS//XUchi6fa3scyqzIscTYOIkm
-         TOUraV8SQ17yvQ359jUZ0AOB7hQN6qqr31kKplas52aASK3EUjs7IqEGjUS3tggU4p5B
-         W+VdEybnnmXpgMbrNf7kHCqtM0jBrGFq+bLTP6UMxJIEG/8JkDnuQxHw/NigZmXKM9tR
-         EHVgolsW5XaaQo+A3d+EcqIVh/X2LeZ3jYaPO5N3+cNhRdddlc6MFi/viHoM5D/JqWIL
-         5tV36cQaPvawbnwS/tNbBKao62tkYmQ1UTGe4VFle/4nZi9PsxKnoyfBwKZjb5Ev+lmo
-         oK1A==
-X-Forwarded-Encrypted: i=1; AL+hErFmYYy2pgpUMP/vo0Z9ZX3k4IuQSqji8V8Eu6+xyogdkUR7Bu85u9eQXqPiED1kTOYjBbgmAQ9KJPI=@vger.kernel.org
-X-Gm-Message-State: APuU4Z9ti7pPExhIMkq3Y7r6ukh2UB2J2UxE5jdUBOqH2RIn0+O0t53a
-	DRAvMtEExIHylaAfTlKgdVUZDOleWvPP7lWANkRjrCxfXsVb92Dh3GlTAbq+KdwoaeI=
-X-Gm-Gg: AZFdTZeu0adO423oM5h+YOpKHeM46NWV9j9u98c9v4fPR6Xt5/hEm1ooLlujAH9KAF4
-	bit2I7MNXwk3zrGI7XgY4QF/fOTSXC1xgOK5QDSus3VMpIE/eOIEGs8dSmQDGVHSgHK6JZ3wdZf
-	ypqzUY2qsJw9nvMHZNmKdtXv6YFslfCOUPY8heD1hAIDHgdCiFP/stsoD2l89RqWmHLg15Re4L6
-	ild/830z2qgMzuX0FA+B3dYIvigD8zk9gPOX2Jgzi2YDiBbop7xSOzhmoLOcloav9NpM5tItfyR
-	C9SC6pS2s0zJImooFUDe+UtCOn29IV4D3f2YMSwSfMCcUe1HiXwjcEBVpMfYVV02Sai38PYt1ET
-	nS+9tscHFvpmsF2gB08p/YCt5rIGACYeXFP7YYjnsXOuarC4opc2931Gul6JplQgN/+J9Yrt/Qu
-	CKJnor+Wdv7PzL+AfnyGsUBrgaSwXNmsWLJfI+87+WCUVHWir9kQUShphZxkn1cW+bguGw8kwFN
-	1ECaffx+/re93ouTkEQuLUGCgVEcTbJomdDbPiTABnEiXtuftfhtnY0HqC9kdj9ZM5wMZf60K4s
-	UzvHh5OKI9M7CCnwk8JvhGJsBPvQ6g==
-X-Received: by 2002:a05:600c:5246:b0:4a7:9006:b176 with SMTP id 5b1f17b1804b1-4bb887fe892mr524524725e9.7.1795781944276;
-        Fri, 27 Nov 2026 04:19:04 -0800 (PST)
+        bh=R4tDEGiURQM1Arylz9v3qFzT8K+oOXwhYEhcFQrcNqk=;
+        b=YurKny3tfAA81+BqMw9y99o2hj/+Q/0ah7CZRYeyY/LgIQVwPN4HOFGjvXcM523Foe
+         16FlQH803a9pyqy49kqla8xC9DL9COHCs9Aoss//52wiu6mQlt4Cko2PxQDcmxd2iouT
+         Cf9cGs20i017fMC7hOCxCTGd0XmkunKxzzLWeC/9gGhG5abXThmQHjETWITKkLUy2pTM
+         35vx8blnGx0FXnj/EqbU2vBuBg/WqJ0a3plz1NVk8r8y1AbH1CbceL33/9h3/Idkf288
+         YQsJRuyOVoJ5n8heVmAf8EJchewkRgG61CQnb5h7K1JGqYbJoVJs337NGChsNx9gdxJi
+         imYw==
+X-Forwarded-Encrypted: i=1; AL+hErHbf7iaAsyMQXBdRofDdu6Drke28sKtvAi6J6AdbwNhrZiOCirn7t0YGeb7CzEGb2yc9hXe3zx4bwg=@vger.kernel.org
+X-Gm-Message-State: APuU4Z+i1Ztfdl5SqbXtmLyP3Yay2mkrFD14V1RNQI396X6jvgWwr4lL
+	tDzkGQxuARL/dI8hB8K+NAMTEcIwFzsvYklxHmgxLLzkKiDjQNsdXNKSZYL7y9NFFu4=
+X-Gm-Gg: AZFdTZe+IcfR7Uyy6OSalOSnE6j8j2OtrvCX7RBpdsUu83Mhy2q2cd5zNwpDzJhzuJR
+	HcKMwPmDVYXINv2OwcV1x/auT1FFKU1zhPASctfSvdNdzJaaTL8KkVApBEjR7aAYLL60xucgwJT
+	tEyPuFNHK4BVTvMYyuNXhczsAptu4vcCunJfxXYHJ+QckKdSCJu6hGEZIUVbqAG6/vSOmScsNTt
+	qx/EvlLjjYYhIMrJCIzSNWLkIPApk/VIBI7RECxDzD62j0CiUjVUH/Yd0/KZz8o+IOzo/k8HrDy
+	HV5VD7C0UBMJnqpxd834p48JNkNc1bA7MpBgcPxoR8i35TImpYjuwbkc5+yG+69+9Vv6fv1yLgv
+	wq55TQMWVrFFuUgKUfYfnAGu22UHwERgpOM4JwBzzfVZAjMbdMRwzgjFyvr9T+4e2Zxd+/kbdAH
+	KtC/PmLpiHTIOG2whSZl2NkrnraXWrdoa8yVjO+UOTJPIjFAOi1x0I+ctoRZSx9JBz2tnY0nyAN
+	DJa9cyIrrt+1jrwfuSOmtSls8CUzT3jKQdETcqQDXD1NAO5cpApAkGg7SUYXKZFRUbkYVt+woBO
+	UwatICRgdspT9ew6iJLzdDQqzVUm
+X-Received: by 2002:a05:6000:2685:b0:4bc:9b4e:62c7 with SMTP id ffacd0b85a97d-4bc9b4e64ccmr8999178f8f.45.1795781945689;
+        Fri, 27 Nov 2026 04:19:05 -0800 (PST)
 Received: from localhost ([195.94.148.180])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb8849247asm702530165e9.7.2026.11.27.04.19.02
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4bef07f9e0dsm3454109f8f.53.2026.11.27.04.19.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2026 04:19:02 -0800 (PST)
+        Fri, 27 Nov 2026 04:19:05 -0800 (PST)
 From: Andrea della Porta <andrea.porta@suse.com>
 To: Vinod Koul <vkoul@kernel.org>
 Cc: Frank Li <Frank.Li@kernel.org>,
@@ -101,11 +101,14 @@ Cc: Frank Li <Frank.Li@kernel.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Andrea della Porta <andrea.porta@suse.com>,
-	Ulf Hansson <ulfh@kernel.org>,
-	linux-mmc@vger.kernel.org
-Subject: [PATCH v4 16/28] mmc: bcm2835: Pass the CPU physical address of SDDATA to the DMA engine
-Date: Fri, 27 Nov 2026 13:22:06 +0100
-Message-ID: <20261127122236.4976-17-andrea.porta@suse.com>
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org
+Subject: [PATCH v4 17/28] ASoC: bcm2835-i2s: Pass the CPU physical address of the FIFO to the DMA engine
+Date: Fri, 27 Nov 2026 13:22:07 +0100
+Message-ID: <20261127122236.4976-18-andrea.porta@suse.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20261127122236.4976-1-andrea.porta@suse.com>
 References: <20261127122236.4976-1-andrea.porta@suse.com>
@@ -120,12 +123,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The addresses in struct dma_slave_config are CPU physical addresses, and
-the DMA controller driver is responsible for translating them into its
-own view of the bus. The driver instead reads the untranslated address
-out of its reg property, which only happens to be what the BCM2835 DMA
-controller expects because the DMA engine driver used the address
-verbatim.
+The address of the DMA slave is handed to the DMA engine through the
+dma_slave_config, where it is meant to be a CPU physical address that
+the DMA controller driver translates into its own view of the bus. The
+driver instead reads the untranslated address out of its reg property,
+which only happens to be what the BCM2835 DMA controller expects because
+the DMA engine driver used the address verbatim.
 
 Now that the DMA engine driver translates slave addresses itself, use the
 CPU physical address of the register resource, which also gets rid of
@@ -133,66 +136,63 @@ the open coded parsing of the DT node.
 
 Signed-off-by: Andrea della Porta <andrea.porta@suse.com>
 ---
- drivers/mmc/host/bcm2835.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ sound/soc/bcm/bcm2835-i2s.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/mmc/host/bcm2835.c b/drivers/mmc/host/bcm2835.c
-index efd1903c3ccd..cea7b2b6d2f0 100644
---- a/drivers/mmc/host/bcm2835.c
-+++ b/drivers/mmc/host/bcm2835.c
-@@ -38,7 +38,6 @@
+diff --git a/sound/soc/bcm/bcm2835-i2s.c b/sound/soc/bcm/bcm2835-i2s.c
+index 208977828254..ad95412cc8b5 100644
+--- a/sound/soc/bcm/bcm2835-i2s.c
++++ b/sound/soc/bcm/bcm2835-i2s.c
+@@ -30,7 +30,6 @@
+ #include <linux/init.h>
  #include <linux/io.h>
- #include <linux/iopoll.h>
  #include <linux/module.h>
 -#include <linux/of_address.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
- #include <linux/scatterlist.h>
-@@ -147,7 +146,7 @@ struct bcm2835_host {
- 	struct mutex		mutex;
+ #include <linux/slab.h>
  
- 	void __iomem		*ioaddr;
--	u32			phys_addr;
-+	phys_addr_t		phys_addr;
- 
- 	struct clk		*clk;
- 	struct platform_device	*pdev;
-@@ -1369,7 +1368,7 @@ static int bcm2835_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct bcm2835_host *host;
- 	struct mmc_host *mmc;
--	const __be32 *regaddr_p;
-+	struct resource *res;
+ #include <sound/core.h>
+@@ -843,8 +842,7 @@ static int bcm2835_i2s_probe(struct platform_device *pdev)
+ 	struct bcm2835_i2s_dev *dev;
  	int ret;
+ 	void __iomem *base;
+-	const __be32 *addr;
+-	dma_addr_t dma_base;
++	struct resource *res;
  
- 	dev_dbg(dev, "%s\n", __func__);
-@@ -1382,23 +1381,14 @@ static int bcm2835_probe(struct platform_device *pdev)
- 	host->pdev = pdev;
- 	spin_lock_init(&host->lock);
+ 	dev = devm_kzalloc(&pdev->dev, sizeof(*dev),
+ 			   GFP_KERNEL);
+@@ -859,7 +857,7 @@ static int bcm2835_i2s_probe(struct platform_device *pdev)
+ 				     "could not get clk\n");
  
--	host->ioaddr = devm_platform_ioremap_resource(pdev, 0);
-+	host->ioaddr = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(host->ioaddr)) {
- 		ret = PTR_ERR(host->ioaddr);
- 		goto err;
- 	}
+ 	/* Request ioarea */
+-	base = devm_platform_ioremap_resource(pdev, 0);
++	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (IS_ERR(base))
+ 		return PTR_ERR(base);
  
--	/* Parse OF address directly to get the physical address for
--	 * DMA to our registers.
--	 */
--	regaddr_p = of_get_address(pdev->dev.of_node, 0, NULL, NULL);
--	if (!regaddr_p) {
--		dev_err(dev, "Can't get phys address\n");
--		ret = -EINVAL;
--		goto err;
+@@ -868,19 +866,12 @@ static int bcm2835_i2s_probe(struct platform_device *pdev)
+ 	if (IS_ERR(dev->i2s_regmap))
+ 		return PTR_ERR(dev->i2s_regmap);
+ 
+-	/* Set the DMA address - we have to parse DT ourselves */
+-	addr = of_get_address(pdev->dev.of_node, 0, NULL, NULL);
+-	if (!addr) {
+-		dev_err(&pdev->dev, "could not get DMA-register address\n");
+-		return -EINVAL;
 -	}
+-	dma_base = be32_to_cpup(addr);
 -
--	host->phys_addr = be32_to_cpup(regaddr_p);
-+	/* the DMA engine translates the address into its own view of the bus */
-+	host->phys_addr = res->start;
++	/* Set the DMA address, the DMA engine translates it */
+ 	dev->dma_data[SNDRV_PCM_STREAM_PLAYBACK].addr =
+-		dma_base + BCM2835_I2S_FIFO_A_REG;
++		res->start + BCM2835_I2S_FIFO_A_REG;
  
- 	host->dma_chan = NULL;
- 	host->dma_desc = NULL;
+ 	dev->dma_data[SNDRV_PCM_STREAM_CAPTURE].addr =
+-		dma_base + BCM2835_I2S_FIFO_A_REG;
++		res->start + BCM2835_I2S_FIFO_A_REG;
+ 
+ 	/* Set the bus width */
+ 	dev->dma_data[SNDRV_PCM_STREAM_PLAYBACK].addr_width =
 -- 
 2.51.0
 
